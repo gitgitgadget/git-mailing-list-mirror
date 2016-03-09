@@ -1,81 +1,72 @@
-From: "Anton Wuerfel" <anton.wuerfel@fau.de>
-Subject: libcurl dependency for implementing RFC3161 timestamps
-Date: Wed, 9 Mar 2016 12:24:22 +0100
-Message-ID: <59de05c280143e7dd3ead6139df7a525.squirrel@faumail.uni-erlangen.de>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: libcurl dependency for implementing RFC3161 timestamps
+Date: Wed, 9 Mar 2016 18:41:07 +0700
+Message-ID: <CACsJy8BNNQFP3LHxH06KewUjUVc1eox1mQPsg8b=acq-M=mHNQ@mail.gmail.com>
 References: <e57d18f6010c0b581b38a3daef145221.squirrel@faumail.uni-erlangen.de>
+ <59de05c280143e7dd3ead6139df7a525.squirrel@faumail.uni-erlangen.de>
 Mime-Version: 1.0
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: anton.wuerfel@fau.de, i4passt@cs.fau.de, phillip.raffeck@fau.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 09 12:24:48 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>, i4passt@cs.fau.de,
+	phillip.raffeck@fau.de
+To: Anton Wuerfel <anton.wuerfel@fau.de>
+X-From: git-owner@vger.kernel.org Wed Mar 09 12:41:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adcEK-0003h2-HJ
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 12:24:40 +0100
+	id 1adcUp-0007k3-4d
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 12:41:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932265AbcCILYc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Mar 2016 06:24:32 -0500
-Received: from mx-rz-2.rrze.uni-erlangen.de ([131.188.11.21]:57797 "EHLO
-	mx-rz-2.rrze.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932208AbcCILY2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Mar 2016 06:24:28 -0500
-Received: from boeck2.rrze.uni-erlangen.de (boeck2.rrze.uni-erlangen.de [131.188.11.32])
-	by mx-rz-2.rrze.uni-erlangen.de (Postfix) with ESMTP id 3qKrf01NJ8zPn5y
-	for <git@vger.kernel.org>; Wed,  9 Mar 2016 12:24:24 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fau.de; s=fau-2013;
-	t=1457522664; bh=oaF/cx4S3g0r+cAJ+9g7VHEc3TiXPB81OlD3P7IPNOg=;
-	h=In-Reply-To:References:Date:Subject:From:To:Cc:From:To:CC:
-	 Subject;
-	b=h8GPYDgfa7FFpzf4eLkzHr6ifLmr524dh/ED/wuX6+litcQsDVhKyP+eEB7yxMkAt
-	 megz8f8unYDKXsVw2bKNyGZi4Se3zy5OLU0IUnzLDsA6/+rcbf2MazhOnY3xOYkVsX
-	 lGIsw+qIIo3CEdTsO6A3/vfzpjMrY86HCVbRZFsuqnaebojttVGILXvfVo8LQd7fMN
-	 kwxpDaKplQTEE9QinqTX2/KPcHW8dPygaU7JrVjJCOpwyBMSp8uPO8oppGxoYEcb2v
-	 3fIsO/lx+ZOaTvGtymVKWcQw1hKCQNxvXfarn7nPkEWRLl3k5gBs2lf/Pop13VAtSq
-	 oVrMlM71dr3xg==
-X-Virus-Scanned: amavisd-new at boeck2.rrze.uni-erlangen.de (RRZE)
-Received: from mx-rz-2.rrze.uni-erlangen.de ([IPv6:::ffff:131.188.11.21])
-	by boeck2.rrze.uni-erlangen.de (boeck2.rrze.uni-erlangen.de [::ffff:131.188.11.32]) (amavisd-new, port 10026)
-	with LMTP id ug_R5ZkI_IYH; Wed,  9 Mar 2016 12:24:22 +0100 (CET)
-Received: from mx-rz-2.rrze.uni-erlangen.de (mx-rz-2.rrze.uni-erlangen.de [IPv6:2001:638:a000:1025::15])
-	by mx-rz-2.rrze.uni-erlangen.de (Postfix) with ESMTP id 3qKrdy3kp2zPn57;
-	Wed,  9 Mar 2016 12:24:22 +0100 (CET)
-X-RRZE-Submit-IP: 131.188.11.38
-Received: from faumail.uni-erlangen.de (smtp.uni-erlangen.de [131.188.11.38])
-	by smtp.uni-erlangen.de (Postfix) with ESMTP id 3qKrdy36tGzPn4l;
-	Wed,  9 Mar 2016 12:24:22 +0100 (CET)
-Received: from 131.188.42.190
-        by faumail.uni-erlangen.de with HTTP;
-        Wed, 9 Mar 2016 12:24:22 +0100
-In-Reply-To: <e57d18f6010c0b581b38a3daef145221.squirrel@faumail.uni-erlangen.de>
-User-Agent: SquirrelMail/1.4.23 [SVN]
+	id S932171AbcCILlk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Mar 2016 06:41:40 -0500
+Received: from mail-lb0-f171.google.com ([209.85.217.171]:35271 "EHLO
+	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753289AbcCILli (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2016 06:41:38 -0500
+Received: by mail-lb0-f171.google.com with SMTP id bc4so61024574lbc.2
+        for <git@vger.kernel.org>; Wed, 09 Mar 2016 03:41:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=zgNffizvP3R/nhg2Qj+UWZ5t9tndjAIwWnZBW2fe6HA=;
+        b=CI3YXxWtilK5Cog8wOX2RZ8KkpUk/Wgul+b2g9zzncymc5GCEzFRJNc2nNsYRqzXyN
+         0LzHcFO716aEw01O/2DG5S8NW4zlyXOg4w4v17as5XRBb40ifjcdY4VqB/Rquyx7RmQh
+         cgqaquMEkYml5+e6+gEkciePNXDdu/H04x07Ba7z9eGTJP0G2gOKEq63go02xGq7j35w
+         8gJoW3qoV6cYDVPtVvzOEqatt5vi0OrxZ/HSedyh0wM1ncIyVzkaSnWvX76VDLddncSE
+         m5H4WZDg4wHVQWbEHrVVtLerToo/6yFzVwiWj6+EobkwTUaqdsvw3vYDE/nHbkgWKf9v
+         wP0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=zgNffizvP3R/nhg2Qj+UWZ5t9tndjAIwWnZBW2fe6HA=;
+        b=JZ2wbeta2Urzj2EcRKMfUEAAoMvRRwJrpGOY8hFUCrhpNqYSK+YvdztuqKsA1rFMjf
+         vWpoyPmIcTYA24xtCVRzR/OwgNoiLrFJNDSVntQymKCipwJPDSn3058uDaTbRW+cInzM
+         f1t2U+qKtzk4GWi7W/RkX5A35I4vQwYFML1iOaCKwOugo902gkRvvebakCm5QCHqmjzm
+         sIiVtVUHD69TjsCzm/0NeNUCpfaURbHmi9gI/P9fn9/T614f1Q6QvE4RVqonYmojY+AK
+         sC0p+wgowtWF3nkezj1tsvQdsSoPc6bapl8xeqhSse/LkO5Whkug1IJvNg+oykF9xNSG
+         PsEg==
+X-Gm-Message-State: AD7BkJLMCyF+QwJ9di9VO+u3IvmL04UlEQfooj2z5yRwHxMOiQMIVWtrr34ghGb4WYciZJWMXYU8cglYHrsSzg==
+X-Received: by 10.25.212.213 with SMTP id l204mr11799469lfg.118.1457523696979;
+ Wed, 09 Mar 2016 03:41:36 -0800 (PST)
+Received: by 10.112.167.10 with HTTP; Wed, 9 Mar 2016 03:41:07 -0800 (PST)
+In-Reply-To: <59de05c280143e7dd3ead6139df7a525.squirrel@faumail.uni-erlangen.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288482>
 
-Hello,
+On Wed, Mar 9, 2016 at 6:24 PM, Anton Wuerfel <anton.wuerfel@fau.de> wrote:
+> -As git tag is a builtin part of the main git executable, introduce a
+> libcurl dependency for the main executable (maybe not best-practice).
 
-for implementing RFC3161 timestamps in git tag, HTTP POST requests have to
-be sent via libcurl. We already changed http.c to our needs.
+libcurl was part of the main executable and then split out because it
+increased startup time [1]. I don't know if it's still true nowadays,
+maybe you should do a simple test before deciding to go that way.
 
-Is there any best-practice how to introduce this libcurl dependency? There
-are several options:
-
--As git tag is a builtin part of the main git executable, introduce a
-libcurl dependency for the main executable (maybe not best-practice).
-
--Move git tag to a separate git-tag binary and introduce a libcurl
-dependency to this new submodule.
-
--Create an own submodule like git-http-timestamp with a libcurl dependency
-and call it from git tag and from other places where timestamp signatures
-are needed.
-
-Regards,
-Phillip Raffeck
-Anton Wuerfel
+[1] http://article.gmane.org/gmane.comp.version-control.git/123946
+-- 
+Duy
