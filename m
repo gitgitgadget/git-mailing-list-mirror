@@ -1,72 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 0/7] replacing strbuf_getline_lf() by strbuf_getline()
-Date: Wed, 09 Mar 2016 12:28:45 -0800
-Message-ID: <xmqqr3fjgzuq.fsf@gitster.mtv.corp.google.com>
-References: <56D28092.9090209@moritzneeb.de> <56D401C2.8020100@moritzneeb.de>
-	<56DF6D67.9040103@moritzneeb.de>
-	<xmqq37s0jxgg.fsf@gitster.mtv.corp.google.com>
-	<56DF78BD.2030506@moritzneeb.de>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH] add a commit.verbose config variable
+Date: Thu, 10 Mar 2016 02:02:28 +0530
+Message-ID: <CAFZEwPM6XLkp07ekBfDaAPcJLvKxRNCW=deFy+GasWYeqcjk-A@mail.gmail.com>
+References: <010201535cb62b56-9aa72755-b730-478c-9244-41a1ee69e231-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-To: Moritz Neeb <lists@moritzneeb.de>
-X-From: git-owner@vger.kernel.org Wed Mar 09 21:28:55 2016
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 09 21:33:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adkiy-0002AN-Qa
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 21:28:53 +0100
+	id 1adkn0-0005Kq-95
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 21:33:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753863AbcCIU2u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Mar 2016 15:28:50 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59745 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753847AbcCIU2s (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2016 15:28:48 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 87F994C7FD;
-	Wed,  9 Mar 2016 15:28:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0YcBDri1L3ufX7jl3id2RV4HtyE=; b=cDyUPV
-	ZsWMeWwnzeaPfrcKXRit/t/jsCSfw6OmbPBqu1mwt4mAA7cWSaO1a3/VHBlQLSbV
-	nbFrsu1K/T3knrQ65VcNOj2nuCDUZybEmp1ezoxS5QnEYdWPR1GH5tdk7pP/IKU7
-	of33yFo8JcY91pevNz7PtJ3TSzpA4pX+EbscY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Jl0t9os+cQ+4EApPHfhnO8CXqavHwi5o
-	IPE0vgFRlu5w4sQWypGMdCet+rpEXXA2pIrpp4qyV0vb7/W0gRAgb8adZbu+T94L
-	w/NAFNhaLmYbKefOr6ufBaGLmjEN/tvQF6pPEXvyG7oqzZXmaiWV068/+3wt6Dep
-	pqak1Dc+mbo=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7F4874C7FC;
-	Wed,  9 Mar 2016 15:28:47 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 05AC84C7FB;
-	Wed,  9 Mar 2016 15:28:46 -0500 (EST)
-In-Reply-To: <56DF78BD.2030506@moritzneeb.de> (Moritz Neeb's message of "Wed,
-	9 Mar 2016 02:13:33 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 86973E82-E635-11E5-AEAE-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753847AbcCIUck (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Mar 2016 15:32:40 -0500
+Received: from mail-yk0-f181.google.com ([209.85.160.181]:34481 "EHLO
+	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933881AbcCIUc3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2016 15:32:29 -0500
+Received: by mail-yk0-f181.google.com with SMTP id x17so26077175ykd.1
+        for <git@vger.kernel.org>; Wed, 09 Mar 2016 12:32:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to;
+        bh=iazjaAB0nhDg7qpCxG3EQrBYihC+eq/WECzWakn8TnU=;
+        b=jRy3T9TsGZIMg+srUUKcWh8v6meqnbmdhw3dmZdIYus12G5uuuO8HsEvI0XDaB9QDC
+         0Lyi3COgNHsHFsVH9HVworP8OheMZp2WbKmxaH1Jq/EdhNMzfBphxgWYAleYxPt5ngb3
+         JbRX4NdPK/JljjsU7Tclt+irJu8gstGw+XHPNQ/uG0qe/dcdRDJqm5vaN28z1eevs/z2
+         uJtPqF5JOJo/PiJRmn0tRSJ/m6RvCBykKha0X/RsCxQfeCFp0HmpaHUlp7s+Bs4+twdf
+         zlIrHbIztxZKWs99N3ZCrwUl0oI7U8Lrzhl0lNrHKoBg9E4jho/oixHS2b+fGiEOOVrS
+         3o1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to;
+        bh=iazjaAB0nhDg7qpCxG3EQrBYihC+eq/WECzWakn8TnU=;
+        b=QiKVEHQWJ3vr4SzzisQo9NkefJmvAq4rm8E5SJ3NlBfc7EFCMZE/pHtiP/glhLRhVM
+         AYKxmJXZyHgcWy6Gbdm500ddifEOd3K2ijCOVEOHoUKOBBznl3pBPXu8PH7jR6Bb7KmT
+         ETZ2u39m0+u74g2jlbiOmOMCqtclx35JkMDE9RCzaweAMf3soUfo/Fzk4MF58dADg31T
+         pM/krLjXAnDFCOg9yEuim9KI321BBwdZo5LMywiRHqditcnoGH6NA9BRs1vNxrBS4LhX
+         Wba78fhn7pFwtJPMn+x4ArR474yH1SU34lppt/oOHFo2AjJzbQ5MAirkPWiRcS9323Yw
+         WkTA==
+X-Gm-Message-State: AD7BkJIXbBw3y01h5+6EAOJsGCBQCD1fmeQ6F49zmHoP54f8OANi83cmxRWvD63BqSovqhRsOPRfzVmGT7cxZQ==
+X-Received: by 10.37.0.193 with SMTP id 184mr126064yba.53.1457555548453; Wed,
+ 09 Mar 2016 12:32:28 -0800 (PST)
+Received: by 10.13.203.137 with HTTP; Wed, 9 Mar 2016 12:32:28 -0800 (PST)
+In-Reply-To: <010201535cb62b56-9aa72755-b730-478c-9244-41a1ee69e231-000000@eu-west-1.amazonses.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288574>
 
-Moritz Neeb <lists@moritzneeb.de> writes:
+A previous version of this patch can be found at
+http://news.gmane.org/gmane.comp.version-control.git/287540 .
 
-> What I can imagine could lead towards finding regessions, though
-> maybe a bit aimless: Go through the list of changes/patches that
-> are supposed to be included in v2.8.0 and confirm they are working
-> as expected. This would be like a post-review.
+The changes in the patch are :-
+ - Fix typo "git config" to "git commit"
+ - Use a better commit message
+ - Drop a paragraph in commit message so as to not misguide readers
+ - Consider additional tests as suggested by Eric Sunshine
+ - Add an option "override-verbose" to git commit to override the
+"always true" setting if set in the configuration file
 
-That would be one way for a very dedicated contributor.
+It took me quite some time to send this patch. I was trying to write
+tests for this and send the patch together but I could not find the
+test examples that could be used from the existing code base. If
+someone has an idea in mind then I could probably write the tests.
+Though I have tested this personally for all the cases but I think it
+would be preferable to automate the job.
 
-Normal use of Git in your everyday workflow, noticing any unexpected
-behaviour and digging into it would be what I had in mind, though
-;-)
+Regards,
+Pranit Bauva
+IIT Kharagpur
