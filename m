@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [RFC/PATCH 14/48] builtin/apply: move 'update_index' global into 'struct apply_state'
-Date: Wed,  9 Mar 2016 18:48:42 +0100
-Message-ID: <1457545756-20616-15-git-send-email-chriscool@tuxfamily.org>
+Subject: [RFC/PATCH 16/48] builtin/apply: move 'cached' global into 'struct apply_state'
+Date: Wed,  9 Mar 2016 18:48:44 +0100
+Message-ID: <1457545756-20616-17-git-send-email-chriscool@tuxfamily.org>
 References: <1457545756-20616-1-git-send-email-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -12,51 +12,51 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 09 18:52:55 2016
+X-From: git-owner@vger.kernel.org Wed Mar 09 18:52:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adiHy-0007oT-25
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 18:52:50 +0100
+	id 1adiHz-0007oT-Cl
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 18:52:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933706AbcCIRwo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S933712AbcCIRws (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Mar 2016 12:52:48 -0500
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:33888 "EHLO
+	mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933697AbcCIRwo (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 9 Mar 2016 12:52:44 -0500
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:32837 "EHLO
-	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933699AbcCIRwi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2016 12:52:38 -0500
-Received: by mail-wm0-f52.google.com with SMTP id l68so203667488wml.0
-        for <git@vger.kernel.org>; Wed, 09 Mar 2016 09:52:37 -0800 (PST)
+Received: by mail-wm0-f43.google.com with SMTP id p65so203114493wmp.1
+        for <git@vger.kernel.org>; Wed, 09 Mar 2016 09:52:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=IVqkqp7PYbO5QPGEKQqkwVOgJ7TOCw4fHWnrALBXxfk=;
-        b=HeB+ZleBWgSQGAv0bBmwvpVQifW3nms9I5Q0bbiGmjwXsNbhFxYsbMT7I2uMvDsd3H
-         Q7xo90K87k7UWkw9JmiTM1GygDjZL+9PKnw88Is0RI5XoCQTkyAg8DlDeHydLWDzd2cr
-         c5jPZeqn/LnRVnSRGmVM06iIWrRuZ40GoTwd6yzNf8jxYdQsG8aaxS/ZRkGty0TTAqBT
-         bq8/3HtNiZq7bZ5DwgH2Ak4SDQQQH/CrSdBaj22oxL2eS2yubyRwP8rPRG85s4rTO0Rt
-         mw1X082cSIW8QNqRSUuyxGGn9a68GDEQNWJ21L39QAEuuCvkB8UaVMq9fhthRzvvB/r1
-         oy9A==
+        bh=2pH5jx1kccsBv63HsEQzioUie8c0BSFJ4gSjOPjNzYA=;
+        b=yiruGlaOmWaFUxRXX2DaqLOuLqClEvII7K11rlSo1Yat/GgAFiynqzvGIfyXo2OUwD
+         v58UrExgu8/3EBDxiKdMAuf86JHUNa599Mt/d7tUehIfgPWqD+QDb8fKc2S5YvI+4PCg
+         4/chnWB+ZB89L3eDe2iCnFHRcEM9hKCcl4OIq8DkvJE1T32OLjdyTGPAXp0pzyFlm3lY
+         Y7c+YifpIaeO9fO0Vej433E5XDn5ZjFFDtlrBz+ubtt6n4qq40WZILnWNHqTNEGJQ7H2
+         XOjjFjq3Q/YI76xhaJQqpK9PWUx/z5JA4XIQyphRyES14+kF4VaflAsFVlytWCJ6Wio8
+         sWLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=IVqkqp7PYbO5QPGEKQqkwVOgJ7TOCw4fHWnrALBXxfk=;
-        b=NCWZqViS96bwzpSgzO/3IGCzpIsAphWaofLnd06Dv1xUowsqT8wfCfXjh8d+3lW0OR
-         /S6Hk6YX5GpNrGMiJwbuZ6Yp/meMwUXIbFo1gRF5gQpUSAF7xqgYF1MbBn+Xm0oQJNEq
-         n3mlNgLqEZ5laGcP7CSXd/kTmrmCb0BgeK6BhmR8eZBevYoMFGaWzLVDU4Clxtx9Eoc5
-         nDsgPjlfGB7uzT3JV4qyh4KI0FOFdEi35h8mfqCMDtfBGwgHumQ46iYdbk8iXvEZ8wbj
-         zxhxDLVhdJ+U8CredMaVz+cnWqtx5NLtIr4wYOwoGtQKr8rLWyYwGDL7MLC7L/PHCi3j
-         1ZPA==
-X-Gm-Message-State: AD7BkJK0vxtrIEyb9eR2nfDOHTA2cMxOk5cPQU3zfzdHSWAQM09y1Duud0Y0ebZwV9M0LA==
-X-Received: by 10.194.21.197 with SMTP id x5mr34487260wje.90.1457545957230;
-        Wed, 09 Mar 2016 09:52:37 -0800 (PST)
+        bh=2pH5jx1kccsBv63HsEQzioUie8c0BSFJ4gSjOPjNzYA=;
+        b=a9BG7uVKDqnZHtR18yZiVXDPrNqG9YSbvI2kh9cKaVdmld61L6kCAmMSyqfG3UV70v
+         cbdwGtcSNsWRwBn5318vWPZd0V/yXqk6kVkitRUEHsSn6Of9ESqi4ZyATFDEljKXKTUT
+         nL6b5nX8vDx79Rp9mv+1Rk5jG6n5NwSFnVFrxTxxr7tlIjz8Fb+Rj9eLb7lQJE13rMt9
+         pjHksKQPQz8DVkaCo87geJ7T5q664RGiIp4xG6lsJZZ5dcdXL7KxUhVG0bGD7KERCWJA
+         n9hPdUNErEAeUPcEUYtCh4ZhMTrfJeRtSiCDQUBxxMX4UlDrBytxlWymQFWA0K1Hr/M2
+         /S5A==
+X-Gm-Message-State: AD7BkJJ2nAdP2HT7rSXCTpVPSv0PB8Z/tN3dJQoOib18LqQ3FcZqwOz7a9FMepiaQ4Cb7A==
+X-Received: by 10.28.176.200 with SMTP id z191mr336296wme.91.1457545962633;
+        Wed, 09 Mar 2016 09:52:42 -0800 (PST)
 Received: from localhost.localdomain ([80.215.161.239])
-        by smtp.gmail.com with ESMTPSA id e127sm24975419wma.20.2016.03.09.09.52.34
+        by smtp.gmail.com with ESMTPSA id e127sm24975419wma.20.2016.03.09.09.52.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 09 Mar 2016 09:52:36 -0800 (PST)
+        Wed, 09 Mar 2016 09:52:41 -0800 (PST)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.0.rc1.49.gca61272
 In-Reply-To: <1457545756-20616-1-git-send-email-chriscool@tuxfamily.org>
@@ -64,163 +64,157 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288503>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 46 +++++++++++++++++++++++++++-------------------
- 1 file changed, 27 insertions(+), 19 deletions(-)
+ builtin/apply.c | 37 +++++++++++++++++++++----------------
+ 1 file changed, 21 insertions(+), 16 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 4e0737c..a6026cc 100644
+index e3ca5c9..85aa817 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -40,6 +40,8 @@ struct apply_state {
- 	int check_index;
+@@ -31,6 +31,9 @@ struct apply_state {
+ 	int apply_with_reject;
+ 	int apply_verbosely;
  
- 	int unidiff_zero;
++	/* --cached updates only the cache without ever touching the working tree. */
++	int cached;
 +
-+	int update_index;
- };
- 
- /*
-@@ -51,7 +53,6 @@ struct apply_state {
+ 	/*
+ 	 *  --check turns on checking that the working tree matches the
+ 	 *    files that are being modified, but doesn't apply the patch
+@@ -49,12 +52,10 @@ struct apply_state {
+  *  --stat does just a diffstat, and doesn't actually apply
+  *  --numstat does numeric diffstat, and doesn't actually apply
+  *  --index-info shows the old and new index info for paths if available.
+- *  --cached updates only the cache without ever touching the working tree.
+  */
  
  static int p_value = 1;
  static int p_value_known;
--static int update_index;
- static int cached;
+-static int cached;
  static int diffstat;
  static int numstat;
-@@ -4099,9 +4100,9 @@ static void patch_stats(struct patch *patch)
- 	}
- }
- 
--static void remove_file(struct patch *patch, int rmdir_empty)
-+static void remove_file(struct apply_state *state, struct patch *patch, int rmdir_empty)
+ static int summary;
+@@ -3274,7 +3275,7 @@ static int load_patch_target(struct apply_state *state,
+ 			     const char *name,
+ 			     unsigned expected_mode)
  {
--	if (update_index) {
-+	if (state->update_index) {
+-	if (cached || state->check_index) {
++	if (state->cached || state->check_index) {
+ 		if (read_file_or_gitlink(ce, buf))
+ 			return error(_("read of %s failed"), name);
+ 	} else if (name) {
+@@ -3547,7 +3548,7 @@ static int check_preimage(struct apply_state *state,
+ 		return error(_("path %s has been renamed/deleted"), old_name);
+ 	if (previous) {
+ 		st_mode = previous->new_mode;
+-	} else if (!cached) {
++	} else if (!state->cached) {
+ 		stat_ret = lstat(old_name, st);
+ 		if (stat_ret && errno != ENOENT)
+ 			return error(_("%s: %s"), old_name, strerror(errno));
+@@ -3565,9 +3566,9 @@ static int check_preimage(struct apply_state *state,
+ 			if (checkout_target(&the_index, *ce, st))
+ 				return -1;
+ 		}
+-		if (!cached && verify_index_match(*ce, st))
++		if (!state->cached && verify_index_match(*ce, st))
+ 			return error(_("%s: does not match index"), old_name);
+-		if (cached)
++		if (state->cached)
+ 			st_mode = (*ce)->ce_mode;
+ 	} else if (stat_ret < 0) {
+ 		if (patch->is_new < 0)
+@@ -3575,7 +3576,7 @@ static int check_preimage(struct apply_state *state,
+ 		return error(_("%s: %s"), old_name, strerror(errno));
+ 	}
+ 
+-	if (!cached && !previous)
++	if (!state->cached && !previous)
+ 		st_mode = ce_mode_from_stat(*ce, st->st_mode);
+ 
+ 	if (patch->is_new < 0)
+@@ -3613,7 +3614,7 @@ static int check_to_create(struct apply_state *state,
+ 	    cache_name_pos(new_name, strlen(new_name)) >= 0 &&
+ 	    !ok_if_exists)
+ 		return EXISTS_IN_INDEX;
+-	if (cached)
++	if (state->cached)
+ 		return 0;
+ 
+ 	if (!lstat(new_name, &nst)) {
+@@ -4107,7 +4108,7 @@ static void remove_file(struct apply_state *state, struct patch *patch, int rmdi
  		if (remove_file_from_cache(patch->old_name) < 0)
  			die(_("unable to remove %s from index"), patch->old_name);
  	}
-@@ -4112,14 +4113,18 @@ static void remove_file(struct patch *patch, int rmdir_empty)
- 	}
- }
- 
--static void add_index_file(const char *path, unsigned mode, void *buf, unsigned long size)
-+static void add_index_file(struct apply_state *state,
-+			   const char *path,
-+			   unsigned mode,
-+			   void *buf,
-+			   unsigned long size)
+-	if (!cached) {
++	if (!state->cached) {
+ 		if (!remove_or_warn(patch->old_mode, patch->old_name) && rmdir_empty) {
+ 			remove_path(patch->old_name);
+ 		}
+@@ -4140,7 +4141,7 @@ static void add_index_file(struct apply_state *state,
+ 		    get_sha1_hex(s, ce->sha1))
+ 			die(_("corrupt patch for submodule %s"), path);
+ 	} else {
+-		if (!cached) {
++		if (!state->cached) {
+ 			if (lstat(path, &st) < 0)
+ 				die_errno(_("unable to stat newly created file '%s'"),
+ 					  path);
+@@ -4192,9 +4193,13 @@ static int try_create_file(const char *path, unsigned int mode, const char *buf,
+  * which is true 99% of the time anyway. If they don't,
+  * we create them and try again.
+  */
+-static void create_one_file(char *path, unsigned mode, const char *buf, unsigned long size)
++static void create_one_file(struct apply_state *state,
++			    char *path,
++			    unsigned mode,
++			    const char *buf,
++			    unsigned long size)
  {
- 	struct stat st;
- 	struct cache_entry *ce;
- 	int namelen = strlen(path);
- 	unsigned ce_size = cache_entry_size(namelen);
- 
--	if (!update_index)
-+	if (!state->update_index)
+-	if (cached)
++	if (state->cached)
  		return;
- 
- 	ce = xcalloc(1, ce_size);
-@@ -4229,13 +4234,14 @@ static void create_one_file(char *path, unsigned mode, const char *buf, unsigned
- 	die_errno(_("unable to write file '%s' mode %o"), path, mode);
- }
- 
--static void add_conflicted_stages_file(struct patch *patch)
-+static void add_conflicted_stages_file(struct apply_state *state,
-+				       struct patch *patch)
- {
- 	int stage, namelen;
- 	unsigned ce_size, mode;
- 	struct cache_entry *ce;
- 
--	if (!update_index)
-+	if (!state->update_index)
+ 	if (!try_create_file(path, mode, buf, size))
  		return;
- 	namelen = strlen(patch->new_name);
- 	ce_size = cache_entry_size(namelen);
-@@ -4256,7 +4262,7 @@ static void add_conflicted_stages_file(struct patch *patch)
- 	}
- }
+@@ -4272,7 +4277,7 @@ static void create_file(struct apply_state *state, struct patch *patch)
  
--static void create_file(struct patch *patch)
-+static void create_file(struct apply_state *state, struct patch *patch)
- {
- 	char *path = patch->new_name;
- 	unsigned mode = patch->new_mode;
-@@ -4268,22 +4274,24 @@ static void create_file(struct patch *patch)
- 	create_one_file(path, mode, buf, size);
+ 	if (!mode)
+ 		mode = S_IFREG | 0644;
+-	create_one_file(path, mode, buf, size);
++	create_one_file(state, path, mode, buf, size);
  
  	if (patch->conflicted_threeway)
--		add_conflicted_stages_file(patch);
-+		add_conflicted_stages_file(state, patch);
- 	else
--		add_index_file(path, mode, buf, size);
-+		add_index_file(state, path, mode, buf, size);
- }
+ 		add_conflicted_stages_file(state, patch);
+@@ -4598,7 +4603,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 			N_("instead of applying the patch, see if the patch is applicable")),
+ 		OPT_BOOL(0, "index", &state.check_index,
+ 			N_("make sure the patch is applicable to the current index")),
+-		OPT_BOOL(0, "cached", &cached,
++		OPT_BOOL(0, "cached", &state.cached,
+ 			N_("apply a patch without touching the working tree")),
+ 		OPT_BOOL(0, "unsafe-paths", &unsafe_paths,
+ 			N_("accept a patch that touches outside the working area")),
+@@ -4659,7 +4664,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
  
- /* phase zero is to remove, phase one is to create */
--static void write_out_one_result(struct patch *patch, int phase)
-+static void write_out_one_result(struct apply_state *state,
-+				 struct patch *patch,
-+				 int phase)
- {
- 	if (patch->is_delete > 0) {
- 		if (phase == 0)
--			remove_file(patch, 1);
-+			remove_file(state, patch, 1);
- 		return;
- 	}
- 	if (patch->is_new > 0 || patch->is_copy) {
- 		if (phase == 1)
--			create_file(patch);
-+			create_file(state, patch);
- 		return;
- 	}
- 	/*
-@@ -4291,9 +4299,9 @@ static void write_out_one_result(struct patch *patch, int phase)
- 	 * thing: remove the old, write the new
- 	 */
- 	if (phase == 0)
--		remove_file(patch, patch->is_rename);
-+		remove_file(state, patch, patch->is_rename);
- 	if (phase == 1)
--		create_file(patch);
-+		create_file(state, patch);
- }
- 
- static int write_out_one_reject(struct apply_state *state, struct patch *patch)
-@@ -4380,7 +4388,7 @@ static int write_out_results(struct apply_state *state, struct patch *list)
- 			if (l->rejected)
- 				errs = 1;
- 			else {
--				write_out_one_result(l, phase);
-+				write_out_one_result(state, l, phase);
- 				if (phase == 1) {
- 					if (write_out_one_reject(state, l))
- 						errs = 1;
-@@ -4456,8 +4464,8 @@ static int apply_patch(struct apply_state *state,
- 	if (whitespace_error && (ws_error_action == die_on_ws_error))
+ 	if (state.apply_with_reject && threeway)
+ 		die("--reject and --3way cannot be used together.");
+-	if (cached && threeway)
++	if (state.cached && threeway)
+ 		die("--cached and --3way cannot be used together.");
+ 	if (threeway) {
+ 		if (is_not_gitdir)
+@@ -4672,7 +4677,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
  		apply = 0;
- 
--	update_index = state->check_index && apply;
--	if (update_index && state->newfd < 0)
-+	state->update_index = state->check_index && apply;
-+	if (state->update_index && state->newfd < 0)
- 		state->newfd = hold_locked_index(&lock_file, 1);
- 
- 	if (state->check_index) {
-@@ -4722,7 +4730,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 				whitespace_error);
- 	}
- 
--	if (update_index) {
-+	if (state.update_index) {
- 		if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
- 			die(_("Unable to write new index file"));
- 	}
+ 	if (state.check_index && is_not_gitdir)
+ 		die(_("--index outside a repository"));
+-	if (cached) {
++	if (state.cached) {
+ 		if (is_not_gitdir)
+ 			die(_("--cached outside a repository"));
+ 		state.check_index = 1;
 -- 
 2.8.0.rc1.49.gca61272
