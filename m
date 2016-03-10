@@ -1,109 +1,328 @@
 From: Nicola Paolucci <npaolucci@atlassian.com>
-Subject: [PATCH 0/3] subtree: add 'git-subtree-repo' and list command
-Date: Thu, 10 Mar 2016 10:44:09 +0100
-Message-ID: <1457603052-53963-1-git-send-email-npaolucci@atlassian.com>
+Subject: [PATCH v3 1/3] contrib/subtree: 'add' stores 'git-subtree-repo'
+Date: Thu, 10 Mar 2016 10:44:10 +0100
+Message-ID: <1457603052-53963-2-git-send-email-npaolucci@atlassian.com>
+References: <1457603052-53963-1-git-send-email-npaolucci@atlassian.com>
 Cc: Dave <davidw@realtimegenomics.com>,
 	"David A . Greene" <greened@obbligato.org>,
 	Mathias Nyman <mathias.nyman@iki.fi>,
 	Nicola Paolucci <npaolucci@atlassian.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 10 10:45:18 2016
+X-From: git-owner@vger.kernel.org Thu Mar 10 10:45:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adx9f-0001oY-3c
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 10:45:15 +0100
+	id 1adx9k-0001oY-PS
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 10:45:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754681AbcCJJpG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2016 04:45:06 -0500
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:37634 "EHLO
-	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754555AbcCJJpB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2016 04:45:01 -0500
-Received: by mail-wm0-f50.google.com with SMTP id p65so20662544wmp.0
-        for <git@vger.kernel.org>; Thu, 10 Mar 2016 01:45:01 -0800 (PST)
+	id S1754682AbcCJJpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Mar 2016 04:45:08 -0500
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:34756 "EHLO
+	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754615AbcCJJpD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Mar 2016 04:45:03 -0500
+Received: by mail-wm0-f47.google.com with SMTP id p65so20713521wmp.1
+        for <git@vger.kernel.org>; Thu, 10 Mar 2016 01:45:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id;
-        bh=rekh7De1+f1H2kQp+dlT7VqwYbtx12MyqREz6G3Ziec=;
-        b=0Iy6VCsIsCNiQ2N9CPTIfv2NGoYWP5Kx0RVQkYVyTpqXbUqecg+LauwBZLjqs6Sw7H
-         Ryjw5pMk4tT+SYeuGZl+TwsjzrmWrDDhf1vHT5dyLJu0QcO3hWn9Tz5qtLAgnB/PiN2X
-         MOiMSNiA6ASBb4Ru+byD8C3AQMP0vYLeUakjgP8zKDUXcV6f6gXjsBmqY3TouU5J4nVz
-         J4uS0xR5K1kuR77D19hNz6Du3xbq2pri+2nAO7j878dFhPcK2f/ulEkr8k0yZEJthNmP
-         o3vkzxWmr3EfOP6Nnia5JORvsPCsHMtblF1DUqfvcg6nwVIab0Ck0+mAHtT8gr4vy4Bh
-         Criw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=w4XdYAGCW0bX+sd4G8IVR9zYE291we63WXepUDvjYkc=;
+        b=wrQnfxT2Ov7UU7X07kB8NIRct+owGzvULm46f0zad9VblVSGNfNmgKB4ejbGvNO/j6
+         BLxYLehggPPTOaQXRMicyFykqhpMA1NZYnp4UfVrxoM6Nt9uyPj+varMDPWBkv2jcl7D
+         bn8znxF8XsY4EZErBwvSYVLIG89i7lCpRNV1+4Wce3+io8Z3Mr5ABoJVMMhOezintFEM
+         Muz2dHoY5tECmTZW+KfHexDp2LcHQ0rtW8zDXexOsJcDenGhT0ueqDElpLurUdjab6wN
+         KInbedohK2ErMSsYIgFyX6QZS6dn9e75OO3bW2xUH8NBR4BPQCHq9BawrbKws6ILdw9M
+         5uNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=rekh7De1+f1H2kQp+dlT7VqwYbtx12MyqREz6G3Ziec=;
-        b=dOTqn9v8yMs6RR32d1jhWD2R/ztaOua8L9pwAwp8eV5KhpNDksiwMQqy+ptvaOo52b
-         iRnCqBHl0ZywkMQXffYIvqOM++gxw6gb1jO/D8hm+ttxS8ByogH457t0IruQvaN7hc19
-         2fvRj+llEPuT63lLsIviQfBhTSdN4YI/wYg+6KVZ/CGQqfD7LXFLlkoVhP9AmLvbPnTB
-         Y7AeI+QFIZhEEbZqnkMGQB7N+EtjMXsHHzQA77oY1MTtWSK/eAfyViElyAjBU6IUk3PN
-         FjXiS1bPY8sFEh7Nyn4NbsWiYi2HdXetr5XS6bTerbE7iHa+BrOLMsBUbptAvkoMgtfj
-         VdwA==
-X-Gm-Message-State: AD7BkJKbv0UC7akcJfHjXeP8pgnRiSHkPDZ0amUIMQhXJm5rKLtqV4z5bbxc3fbM35+Ely0c
-X-Received: by 10.194.114.166 with SMTP id jh6mr2624810wjb.39.1457603100357;
-        Thu, 10 Mar 2016 01:45:00 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=w4XdYAGCW0bX+sd4G8IVR9zYE291we63WXepUDvjYkc=;
+        b=S2nsEOpXXe8PNFgbMfuDdndJCSVQrqQ8gnZg2sPNqSZbmFZlEmkZJTo9/jwX2OzcDo
+         YTIo0hDSJeRp1u0Lye9bt7N1Bw/JIMzvNuvB5VzRSkztHANaET+JfkyBcJg7rzTDOsKi
+         xwFhWegYOBYtXCGod4g4CIEgiOEM+z18DYEHWXygC/qV1WgEznH4wEsAJl6gQLvXZ5q3
+         5CqcU2VJcFrD9Z/h3nCaM0UcQI6aAHyiRNjCP1aHP8Xuv5Pmp64UY5UzJ8xhFuSqBOXR
+         Pov4FVsueKuuJF6YoO44sc6KFH3TC55gKy+nEPiTW9zguGx4Zda98Ps/bXt2TkJP99ey
+         odKQ==
+X-Gm-Message-State: AD7BkJLjyDKkxFRwvubnVvuHuUWYEK52SlxsUi+ehQlnaDT53w6XNjbYT46tXllE9haPS2D6
+X-Received: by 10.28.158.149 with SMTP id h143mr2603717wme.61.1457603101269;
+        Thu, 10 Mar 2016 01:45:01 -0800 (PST)
 Received: from reborn.ams.atlassian.com ([46.243.25.78])
-        by smtp.gmail.com with ESMTPSA id q139sm2684747wmd.2.2016.03.10.01.44.59
+        by smtp.gmail.com with ESMTPSA id q139sm2684747wmd.2.2016.03.10.01.45.00
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Thu, 10 Mar 2016 01:44:59 -0800 (PST)
+        Thu, 10 Mar 2016 01:45:00 -0800 (PST)
 X-Mailer: git-send-email 2.7.1
+In-Reply-To: <1457603052-53963-1-git-send-email-npaolucci@atlassian.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288607>
 
-To my knowledge 'git subtree' currently lacks a way to
-track where injected repositories come from originally.
-Adding this information allows for useful extensions to 
-the command and makes it easier to use subtrees to track
-external dependencies.
+Git-subtree operations 'add' and 'pull', when called with the <repository>
+parameter will add this to the commit message:
+    git-subtree-repo: <repo_url>
 
-In this patch series I propose to add a 'git-subtree-repo'
-line to the meta-data stored when injecting a tree
-in a repository with 'git subtree add'. The result looks 
-like this:
+Other operations that don't have the <repository> information, like
+'merge' or 'add' without <repository> are unchanged. Users with such a
+workflow will be on their own with the --message parameter, if they'd
+like to record where the subtree came from.
+
+For example:
+
+$ git subtree add --prefix .vim/bundle/fireplace \
+    https://repo/user/vim-fireplace.git master --squash
+
+Will result in a commit like:
+
+    commit ce87dab198fecdff6043d88a26c55d7cd95e8bf9
+    Author: Bob Marley <bob@mahrley.com>
+    Date:   Tue May 12 13:37:03 2015 +0200
+
+    Squashed '.vim/bundle/fireplace/' content from commit b999b09
 
     git-subtree-dir: .vim/bundle/fireplace
     git-subtree-split: b999b09cd9d69f359fa5668e81b09dcfde455cca
     git-subtree-repo: https://repo/user/vim-fireplace.git
 
-Thanks a lot to Mathias Nyman who has cleaned up my idea to
-add 'git-subtree-repo' and already submitted it for review.
-I added a test and a tiny fix to his patch and I resend it 
-here (hence the v3 in the first patch).
+This allows new ways to interact with injected trees, for example
+a new command 'git subtree list' becomes possible:
 
-Using this extra value a simple 'git subtree list' command can 
-be implemented which scans the checked out branch for subtrees
-injected:
+$ git subtree list
+.vim/bundle/fireplace https://repo/user/vim-fireplace.git b999b0
 
-    $ git subtree list
-    .vim/bundle/fireplace https://github.com/tpope/vim-fireplace.git b999b0
+Signed-off-by: Mathias Nyman <mathias.nyman@iki.fi>
+Signed-off-by: Nicola Paolucci <npaolucci@atlassian.com>
+Thanks-to: Aleksi Aalto <aga@iki.fi>
+---
+ contrib/subtree/git-subtree.sh     | 73 +++++++++++++++++++++++++-------------
+ contrib/subtree/t/t7900-subtree.sh | 19 ++++++++++
+ 2 files changed, 68 insertions(+), 24 deletions(-)
 
-I also added an optional '--resolve' flag to retrieve symbolic
-remote refs associated with the commit ids of the remote repository:
-
-    $ git-subtree.sh list --resolve
-    
-    vim-airline  https://repo/bling/vim-airline.git 4fa37e5e[...]
-    vim-airline  https://repo/bling/vim-airline.git HEAD
-    vim-airline  https://repo/bling/vim-airline.git refs/heads/master
-
-
-Nicola Paolucci (3):
-  contrib/subtree: 'add' stores 'git-subtree-repo'
-  contrib/subtree: new list command to list subtrees
-  contrib/subtree: list --resolve gets symbolic refs
-
- contrib/subtree/git-subtree.sh     | 140 +++++++++++++++++++++++++++++--------
- contrib/subtree/git-subtree.txt    |  31 ++++++++
- contrib/subtree/t/t7900-subtree.sh |  63 +++++++++++++++++
- 3 files changed, 205 insertions(+), 29 deletions(-)
-
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index 7a39b30..278699b 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -335,18 +335,21 @@ add_msg()
+ 	dir="$1"
+ 	latest_old="$2"
+ 	latest_new="$3"
++	repo="$4" # optional
+ 	if [ -n "$message" ]; then
+ 		commit_message="$message"
+ 	else
+ 		commit_message="Add '$dir/' from commit '$latest_new'"
+ 	fi
+-	cat <<-EOF
+-		$commit_message
+-		
+-		git-subtree-dir: $dir
+-		git-subtree-mainline: $latest_old
+-		git-subtree-split: $latest_new
+-	EOF
++	echo $commit_message
++	echo
++	echo git-subtree-dir: $dir
++	echo git-subtree-mainline: $latest_old
++	echo git-subtree-split: $latest_new
++	if [ -n "$repo" ]; then
++		repo_url=$(get_repository_url "$repo")
++		echo "git-subtree-repo: $repo_url"
++	fi
+ }
+ 
+ add_squashed_msg()
+@@ -382,8 +385,9 @@ squash_msg()
+ 	dir="$1"
+ 	oldsub="$2"
+ 	newsub="$3"
++	repo="$4" # optional
+ 	newsub_short=$(git rev-parse --short "$newsub")
+-	
++
+ 	if [ -n "$oldsub" ]; then
+ 		oldsub_short=$(git rev-parse --short "$oldsub")
+ 		echo "Squashed '$dir/' changes from $oldsub_short..$newsub_short"
+@@ -397,6 +401,10 @@ squash_msg()
+ 	echo
+ 	echo "git-subtree-dir: $dir"
+ 	echo "git-subtree-split: $newsub"
++	if [ -n "$repo" ]; then
++		repo_url=$(get_repository_url "$repo")
++		echo "git-subtree-repo: $repo_url"
++	fi
+ }
+ 
+ toptree_for_commit()
+@@ -440,12 +448,13 @@ new_squash_commit()
+ 	old="$1"
+ 	oldsub="$2"
+ 	newsub="$3"
++	repo="$4" # optional
+ 	tree=$(toptree_for_commit $newsub) || exit $?
+ 	if [ -n "$old" ]; then
+-		squash_msg "$dir" "$oldsub" "$newsub" | 
++		squash_msg "$dir" "$oldsub" "$newsub" "$repo" |
+ 			git commit-tree "$tree" -p "$old" || exit $?
+ 	else
+-		squash_msg "$dir" "" "$newsub" |
++		squash_msg "$dir" "" "$newsub" "$repo" |
+ 			git commit-tree "$tree" || exit $?
+ 	fi
+ }
+@@ -517,6 +526,16 @@ ensure_valid_ref_format()
+ 	    die "'$1' does not look like a ref"
+ }
+ 
++get_repository_url()
++{
++	repo=$1
++	repo_url=$(git config --get remote.$repo.url)
++	if [ -z "$repo_url" ]; then
++		repo_url=$repo
++	fi
++	echo $repo_url
++}
++
+ cmd_add()
+ {
+ 	if [ -e "$dir" ]; then
+@@ -548,19 +567,18 @@ cmd_add()
+ cmd_add_repository()
+ {
+ 	echo "git fetch" "$@"
+-	repository=$1
++	repo=$1
+ 	refspec=$2
+ 	git fetch "$@" || exit $?
+ 	revs=FETCH_HEAD
+-	set -- $revs
++	set -- $revs $repo
+ 	cmd_add_commit "$@"
+ }
+ 
+ cmd_add_commit()
+ {
+-	revs=$(git rev-parse $default --revs-only "$@") || exit $?
+-	set -- $revs
+-	rev="$1"
++	rev=$(git rev-parse $default --revs-only "$1") || exit $?
++	repo="${@:2}" # optional
+ 	
+ 	debug "Adding $dir as '$rev'..."
+ 	git read-tree --prefix="$dir" $rev || exit $?
+@@ -575,12 +593,12 @@ cmd_add_commit()
+ 	fi
+ 	
+ 	if [ -n "$squash" ]; then
+-		rev=$(new_squash_commit "" "" "$rev") || exit $?
++		rev=$(new_squash_commit "" "" "$rev" "$repo") || exit $?
+ 		commit=$(add_squashed_msg "$rev" "$dir" |
+ 			 git commit-tree $tree $headp -p "$rev") || exit $?
+ 	else
+ 		revp=$(peel_committish "$rev") &&
+-		commit=$(add_msg "$dir" "$headrev" "$rev" |
++		commit=$(add_msg "$dir" "$headrev" "$rev" "$repo" |
+ 			 git commit-tree $tree $headp -p "$revp") || exit $?
+ 	fi
+ 	git reset "$commit" || exit $?
+@@ -609,7 +627,8 @@ cmd_split()
+ 	else
+ 		unrevs="$(find_existing_splits "$dir" "$revs")"
+ 	fi
+-	
++
++	rev="$1"
+ 	# We can't restrict rev-list to only $dir here, because some of our
+ 	# parents have the $dir contents the root, and those won't match.
+ 	# (and rev-list --follow doesn't seem to solve this)
+@@ -683,15 +702,20 @@ cmd_split()
+ 
+ cmd_merge()
+ {
+-	revs=$(git rev-parse $default --revs-only "$@") || exit $?
++	revs=$(git rev-parse $default --revs-only "$1") || exit $?
+ 	ensure_clean
+-	
+ 	set -- $revs
+ 	if [ $# -ne 1 ]; then
+ 		die "You must provide exactly one revision.  Got: '$revs'"
+ 	fi
++	do_merge "$@"
++}
++
++do_merge()
++{
+ 	rev="$1"
+-	
++	repo="$2" # optional
++
+ 	if [ -n "$squash" ]; then
+ 		first_split="$(find_latest_squash "$dir")"
+ 		if [ -z "$first_split" ]; then
+@@ -704,7 +728,7 @@ cmd_merge()
+ 			say "Subtree is already at commit $rev."
+ 			exit 0
+ 		fi
+-		new=$(new_squash_commit "$old" "$sub" "$rev") || exit $?
++		new=$(new_squash_commit "$old" "$sub" "$rev" "$repo") || exit $?
+ 		debug "New squash commit: $new"
+ 		rev="$new"
+ 	fi
+@@ -730,12 +754,13 @@ cmd_pull()
+ 	if [ $# -ne 2 ]; then
+ 	    die "You must provide <repository> <ref>"
+ 	fi
++	repo=$1
+ 	ensure_clean
+ 	ensure_valid_ref_format "$2"
+ 	git fetch "$@" || exit $?
+ 	revs=FETCH_HEAD
+-	set -- $revs
+-	cmd_merge "$@"
++	set -- $revs $repo
++	do_merge "$@"
+ }
+ 
+ cmd_push()
+diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
+index 3bf96a9..ed40e73 100755
+--- a/contrib/subtree/t/t7900-subtree.sh
++++ b/contrib/subtree/t/t7900-subtree.sh
+@@ -86,6 +86,11 @@ last_commit_message()
+ 	git log --pretty=format:%s -1
+ }
+ 
++squashed_commit_body()
++{
++	git log --pretty=format:%b --numstat HEAD^2
++}
++
+ subtree_test_count=0
+ next_test() {
+ 	subtree_test_count=$(($subtree_test_count+1))
+@@ -176,6 +181,20 @@ test_expect_success 'add subproj as subtree into sub dir/ with --squash and --pr
+ 	)
+ '
+ 
++next_test
++test_expect_success 'add --squash stores git-subtree-repo value' '
++	subtree_test_create_repo "$subtree_test_count" &&
++	subtree_test_create_repo "$subtree_test_count/sub proj" &&
++	test_create_commit "$subtree_test_count" main1 &&
++	test_create_commit "$subtree_test_count/sub proj" sub1 &&
++	(
++		cd "$subtree_test_count" &&
++		git fetch ./"sub proj" master &&
++		git subtree add --prefix="sub dir" "./sub proj" HEAD --squash &&
++		check_equal "$(squashed_commit_body | grep git-subtree-repo)" "git-subtree-repo: ./sub proj"
++	)
++'
++
+ #
+ # Tests for 'git subtree merge'
+ #
 -- 
 2.7.1
