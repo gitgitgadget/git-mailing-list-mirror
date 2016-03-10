@@ -1,70 +1,93 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH/RFC v3] add a commit.verbose config variable
-Date: Fri, 11 Mar 2016 03:08:51 +0530
-Message-ID: <CAFZEwPP5_rBKH_=0pv_3PszLYtnznXeGJg1+yjwbiH0m_BqdZQ@mail.gmail.com>
-References: <0102015361e5441b-bbc448b5-7307-451d-a951-f016f7ae4b1d-000000@eu-west-1.amazonses.com>
-	<xmqq7fhadnkv.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG?] fetch into shallow sends a large number of objects
+Date: Thu, 10 Mar 2016 16:40:42 -0500
+Message-ID: <20160310214042.GB32608@sigill.intra.peff.net>
+References: <20160307221539.GA24034@sigill.intra.peff.net>
+ <xmqqio0xn93q.fsf@gitster.mtv.corp.google.com>
+ <20160308121444.GA18535@sigill.intra.peff.net>
+ <CACsJy8Dk_g1O98UsDaeVS3VXmE2Mn5aR+w1OiFir+QwyJYLVZQ@mail.gmail.com>
+ <20160308132524.GA22866@sigill.intra.peff.net>
+ <20160310122020.GA24007@lanh>
+ <20160310211052.GC30595@sigill.intra.peff.net>
+ <xmqqbn6mdnyn.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 10 22:39:01 2016
+X-From: git-owner@vger.kernel.org Thu Mar 10 22:40:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ae8IK-0002YZ-Dy
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 22:38:56 +0100
+	id 1ae8K9-00046E-Mz
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 22:40:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932532AbcCJVix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2016 16:38:53 -0500
-Received: from mail-yw0-f172.google.com ([209.85.161.172]:33208 "EHLO
-	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932180AbcCJViw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2016 16:38:52 -0500
-Received: by mail-yw0-f172.google.com with SMTP id d65so79018787ywb.0
-        for <git@vger.kernel.org>; Thu, 10 Mar 2016 13:38:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=DnrQkfcG7dgzab0wd3agxUztcWhTXSzEPO80RiEord0=;
-        b=q1ZLHjiPLECGOSElTCv2b6PMhgo9D5v08YJ0ejxxyXQpSDB7u3l/FBLqSifFfhviYv
-         9dmmDTOJamfzqSrFgBRe/6szWC10iKOS699txLPeOLe8ucArXeBci89y80VvzB8e4PlY
-         2CXMmYMiCpPyEy11zP4UU6zKZ8Arx8+/+cGfd2aeoQHWd8z5mcF4JeMBh4hDHasUwGPD
-         41vULKbttFwI6Ep45eIs/dM5n+OODtWWl+qhE7LKlPMeYzS2mdvzlLN1ToNNAMzlA2QE
-         8m9yRXcr4HFwi/13cDRpaW9EVAvvO0ON41S5iwaSWForkD1yd6dYGPBriqwOLkyMmsjI
-         5UJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=DnrQkfcG7dgzab0wd3agxUztcWhTXSzEPO80RiEord0=;
-        b=QU3cdPMkGt0yrQqQkjWT/TWACiA13hvvNSuBp1oKbi3zyyFgGO+KWmDR2t3Y/tUPqp
-         oeCwPGDuhTD01S55k3ou8OzDWahBCnbh7hDVe9YpU0Ephqlm/AQGejDBTFVfIfEj7MzC
-         CnDZ3el3qi6Z7Vk5onPdDADUv+RkRKziQD3p/epNp+yloHVABrtSFBWWzSfAo0ixbQ2E
-         sJZAYhqSZylhkimJLXKilMHCw0N5+TZlX54GZPetgwaPUUhVCK7r76eV/hVZxZK+VAgt
-         EfO+QRs4+9KfoY7sVqPQoc9KslycAPYPW6HDnyX+vNPxX99aMCkIG82bgXj3Ct720mGM
-         41yA==
-X-Gm-Message-State: AD7BkJKLqNdIRzplbpQX+pn4h4TdoJabc16qYOXAn6cs3EnqJ5L5zhtIUi4q0CwbNuAeZA5iK9xD/4hFxe5sUw==
-X-Received: by 10.13.252.67 with SMTP id m64mr3538453ywf.67.1457645931565;
- Thu, 10 Mar 2016 13:38:51 -0800 (PST)
-Received: by 10.13.203.137 with HTTP; Thu, 10 Mar 2016 13:38:51 -0800 (PST)
-In-Reply-To: <xmqq7fhadnkv.fsf@gitster.mtv.corp.google.com>
+	id S932593AbcCJVkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Mar 2016 16:40:47 -0500
+Received: from cloud.peff.net ([50.56.180.127]:58051 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932180AbcCJVkp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Mar 2016 16:40:45 -0500
+Received: (qmail 5324 invoked by uid 102); 10 Mar 2016 21:40:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 10 Mar 2016 16:40:45 -0500
+Received: (qmail 29724 invoked by uid 107); 10 Mar 2016 21:41:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 10 Mar 2016 16:41:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Mar 2016 16:40:42 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqbn6mdnyn.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288646>
 
-On Fri, Mar 11, 2016 at 3:04 AM, Junio C Hamano <gitster@pobox.com>
-wrote:
-> But doesn't this belong to git_commit_config(), not
-> git_STATUS_config()?  Should "commit.verbose" make output from "git
-> status" verbose?
+On Thu, Mar 10, 2016 at 01:26:08PM -0800, Junio C Hamano wrote:
 
-True. It should belong to git_commit_config(). My bad. But
-surprisingly this code works. I have no idea why. I will update the
-Patch and I have also finished writing test so I will include that
-also.
+> > IMHO, that is the right thing. They asked for "C" as a shallow cut-off
+> > point, so anything that is a parent of "C" should be omitted as shallow,
+> > too. It has nothing to do with the numeric depth, which was just the
+> > starting point for generating the shallow cutoffs.
+> 
+> I think that is the right mental model.  The statement that "C and D
+> are current cut points" does not make much sense.  As you cannot
+> rewrite parents of commits after the fact, you cannot construct a
+> case like "when the shallow clone originally was made, two histories
+> were forked long time before B and D, and the cloner ended up with C
+> and D as the cutoff point, but now that we have the ancestry linkage
+> between B and D (and C and E), we need to make E a new cutoff".  The
+> original "shallow" implementation does not store "starting point +
+> number of depth" and instead translates that to the cut-off point
+> for this exact reason.
+
+OK, good. Now there are at least two of us who view it that way. :)
+
+> > Yeah, we definitely need an extension. I'm not sure if the extension
+> > should be "I know about spontaneous shallow/deepen responses; it's OK to
+> > send them to me" or "I want you to include the shallow points I send as
+> > boundary cutoffs for further shallow-ing of newly fetched history".
+> >
+> > They amount to the same thing when implementing _this_ feature, but the
+> > latter leaves us room in the future for a client to say "sure, I
+> > understand your spontaneous responses, but I explicitly _don't_ want you
+> > to do the boundary computation". I don't know if that is useful or not,
+> > but it might not hurt to have later on (and by adding it now, it "just
+> > works" later on with older servers/clients).
+> 
+> I am not sure what distinction you are worried about.  An updated
+> client that is capable of saying "you may give shallow/deepen
+> responses to me" can optionally be told not to say it to the server,
+> and that is equivalent to saying "I don't want you to send them", no?
+
+Mostly, I wondered if we would need to send spontaneous shallow lines
+for any other cases, and the client would not be able to say "I
+understand them and want them in case A, but not in case B".
+
+I do not have any case A in mind; it was just a general sense of "let's
+make feature flags as specific as possible to avoid painting ourselves
+into a corner". I'm OK with implementing it either way.
+
+-Peff
