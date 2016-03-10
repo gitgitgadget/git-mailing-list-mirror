@@ -1,172 +1,104 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 1/1] branch: allow conveniently adding new worktrees for new
- branches
-Date: Thu, 10 Mar 2016 12:34:28 +0100 (CET)
-Message-ID: <c5345f60e4ec247d57877e3e97a1eea5cb283d27.1457609615.git.johannes.schindelin@gmx.de>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 0/1] Introduce a way to create a branch and worktree at
+ the same time
+Date: Thu, 10 Mar 2016 18:51:55 +0700
+Message-ID: <CACsJy8BA7-ev9wTt6K45TgiNxOaBUXbN1P03U4EUAzAPy=7Faw@mail.gmail.com>
 References: <cover.1457609615.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 10 12:34:44 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Mar 10 12:52:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adyra-0000MS-Uw
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 12:34:43 +0100
+	id 1adz8p-0005Qo-Ms
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 12:52:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965718AbcCJLef (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2016 06:34:35 -0500
-Received: from mout.gmx.net ([212.227.17.20]:61724 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965662AbcCJLee (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2016 06:34:34 -0500
-Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0LdKs1-1ZvsYB1LxB-00iSW6; Thu, 10 Mar 2016 12:34:30
- +0100
-X-X-Sender: virtualbox@virtualbox
+	id S1751759AbcCJLw2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Mar 2016 06:52:28 -0500
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:34441 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750744AbcCJLw0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Mar 2016 06:52:26 -0500
+Received: by mail-lb0-f175.google.com with SMTP id xr8so104731962lbb.1
+        for <git@vger.kernel.org>; Thu, 10 Mar 2016 03:52:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=SYs1Pw66BKMM+smWdkqn0DvPHQ8dfbfbqIPLWg3WNCw=;
+        b=kyggABRjdWxYHN8Xdks9W8zI58f7F8Qyl/rcKfzT4Og+1h8+KfPR73ScoR1a5lZAtd
+         W8ZlkuipBQ3QIqOQKB+92Z+Nyesa4AXK5ayPAcMKc0YRzEtZokHJxKKpwlgegF3tK2dU
+         He02HpzeN44ufgfTZmEsBHiuW/gYRJ593TVgBRVmx1GDY39N/6fkmvJHy2Rb2uyYxgps
+         oq0/+CjhdZYQIK0n1HcyURKCoLEGSuXKW8QfjDkhwPIva2syZeraiiP2LVTNWRFW7nS6
+         Ox9IDGUnJpycCYzPv+XMJH/uZ+8VDbNePkGMFtRl/6cmbj+9QLKMYpvtt0sp0hp06/Mo
+         I/2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=SYs1Pw66BKMM+smWdkqn0DvPHQ8dfbfbqIPLWg3WNCw=;
+        b=GtgGDQ5Zw5wtFeqxGRDJQO0XK/AxLIhvC06dsTNZVS2qwsbLs+Hy/0MJyCuicbbOCh
+         0zj1yA8PH+8XMZYUZ2XR+RmbttlrBokb8BE0zXGufDkx5uHcIMTsK7c+Q3xE200j4F5f
+         9dBB9F1chogJ59dF68fDwRVwLzfaf1TR3thFGFg6Cee0pwHAMttnBg3LJ0AYgSLHkw7J
+         EWT8wF5i8zWGSufp0B4+tv+B5US4mhW5cbf0JS4KZ3SvHxlrMAA9Ols9A01m6sPVSCr7
+         tVdGO+iiFsj5ZKnPXCuLLFELttNBHIVIbSbHrIo2S7JotekFOr8BGptgciqUdkayj8Er
+         eI1A==
+X-Gm-Message-State: AD7BkJLNLGv1/EjQQW3wAy1cOehABQ9cbV74PGdxDQ6xFiZ4AO6cK9h6Y/5SCZxVWLozbKp71k60LxmSIb3BxQ==
+X-Received: by 10.25.147.202 with SMTP id v193mr1073164lfd.162.1457610745003;
+ Thu, 10 Mar 2016 03:52:25 -0800 (PST)
+Received: by 10.112.167.10 with HTTP; Thu, 10 Mar 2016 03:51:55 -0800 (PST)
 In-Reply-To: <cover.1457609615.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:4lAzf1iye7WEgdmatj6Zx/DvYoekv0NpCGotI8SV2y3k2m73qvW
- YStSFZjBlOWe5P/CmsS9Oita+yAehmjBu7BfdjH+7Z2qZrmU0Cf+T48yN3as5Z7mb25Ee2I
- gevPWHDKUAINASEi93dEqHJ18Cfrt8magUs8nZYVFEjviTa5N9T1f6CGsmHLoy7y6kySh33
- L1wflYajmapvK6C8BcG3Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ln6F/cSo9X0=:Lj3n5VtHKHzF4IJyXYj2eZ
- w+Anqm0bEB5SquVgCyYggv/qB85j3PCDtvlXpyUkWt7GwyqN0xzc6H1gNAxDBP/7xeJTgQULi
- /nok71ZqdSFB07IHLKISdDGH9vv6G+EY1VAD9+OTdDJGZSrDvc2cXx3o4jNRBFGmBsOPoUoNY
- 3cWcAMp4780mh+tlBtjil3kqtr8AYIiydYB1wTjWT203ScAHtPcYkNyjttOzplJZCxI4Bndpb
- 2ucjMm91LhyunGzVd44yxSMCY/5Xf4uFWB6sJioBbb5UNRtTxZqUKrze9ulP93+2r0VGDD6ym
- CKhW/fvm80jdySs1yZam+pw7WzrQZKMgUzX+MN6OMFvUhhvtix08H+mNbuL+tt/U0FnvDalzq
- S2BSYV4+g7P2vHWjOcUOTt53ilYurw+ac1Yf9YeHuF6VWc5pYXJttOHeVX3HQmZhff1H10kmL
- pEz9GNovc9kBlc0fssWFarB7NHSqNv2nUb15ZzBcKgehWg7HNsUYaPZA1mHxayQCQFOA+Xja+
- WHry/TN0+fyej66rCKrqtIPO9YBDqQ7kB+O1TQSlDgsY0aEWko0mJJVl3k3gyxDVpGhtCLTrc
- MhDpSlfciO+F8YM64rXcUhhNc1rSfGqyr+6ThJCg5z/bGuUiInjhcNiak99Z+dsx3505qLIpF
- 1BaDihsQx1Tu8/w29OqZwN3XnEPZFw7p1Az1QvkUrk+647hM1J+WadCPb43MtwUd5FSqJCraE
- bdM9tMQkbCiUW43dYOlbi5P5NQeAlmnCxCT9p1NrDA0uSAYhmW9z5i9NibqvzY+DSxBuJjjQ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288616>
 
-With the newly-introduced --worktree option, after a new branch was
-created we will add a corresponding new worktree with the same name
-automatically.
+On Thu, Mar 10, 2016 at 6:34 PM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> The invention of the `git worktree` command changed this developer's
+> working style dramatically. Rather than switching between branches all
+> the time, topic branches are created and checked out in newly-added
+> worktrees, to be reworked and refined until the topic branch is either
+> merged into `master` or abandoned.
+>
+> It gets rather tiresome, and also typo-prone, to call "git branch xyz
+> upstream/master && git worktree add xyz xyz" all the time.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/git-branch.txt |  5 +++--
- builtin/branch.c             | 27 +++++++++++++++++++++++++--
- 2 files changed, 28 insertions(+), 4 deletions(-)
+You can actually do "git worktree -b xyz xyz upstream/master" for the
+same effect. Maybe we can avoid "xyz" duplication with "-b -" or a new
+option name?
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 4a7037f..963cdcb 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 	[--column[=<options>] | --no-column]
- 	[(--merged | --no-merged | --contains) [<commit>]] [--sort=<key>]
- 	[--points-at <object>] [<pattern>...]
--'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branchname> [<start-point>]
-+'git branch' [--set-upstream | --track | --no-track] [-l] [-f] [-w | --worktree] <branchname> [<start-point>]
- 'git branch' (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
- 'git branch' --unset-upstream [<branchname>]
- 'git branch' (-m | -M) [<oldbranch>] <newbranch>
-@@ -46,7 +46,8 @@ which points to the current 'HEAD', or <start-point> if given.
- 
- Note that this will create the new branch, but it will not switch the
- working tree to it; use "git checkout <newbranch>" to switch to the
--new branch.
-+new branch, or use the `--worktree` option to add a new worktree of
-+the same name.
- 
- When a local branch is started off a remote-tracking branch, Git sets up the
- branch (specifically the `branch.<name>.remote` and `branch.<name>.merge`
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 7b45b6b..c681b2e 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -20,6 +20,7 @@
- #include "utf8.h"
- #include "wt-status.h"
- #include "ref-filter.h"
-+#include "run-command.h"
- 
- static const char * const builtin_branch_usage[] = {
- 	N_("git branch [<options>] [-r | -a] [--merged | --no-merged]"),
-@@ -605,7 +606,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- {
- 	int delete = 0, rename = 0, force = 0, list = 0;
- 	int reflog = 0, edit_description = 0;
--	int quiet = 0, unset_upstream = 0;
-+	int quiet = 0, unset_upstream = 0, new_worktree = 0;
- 	const char *new_upstream = NULL;
- 	enum branch_track track;
- 	struct ref_filter filter;
-@@ -622,6 +623,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 			BRANCH_TRACK_OVERRIDE),
- 		OPT_STRING('u', "set-upstream-to", &new_upstream, "upstream", "change the upstream info"),
- 		OPT_BOOL(0, "unset-upstream", &unset_upstream, "Unset the upstream info"),
-+		OPT_BIT('w', "worktree", &new_worktree, N_("add worktree for the new branch"), 1),
- 		OPT__COLOR(&branch_use_color, N_("use colored output")),
- 		OPT_SET_INT('r', "remotes",     &filter.kind, N_("act on remote-tracking branches"),
- 			FILTER_REFS_REMOTES),
-@@ -678,6 +680,13 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	if (!delete && !rename && !edit_description && !new_upstream && !unset_upstream && argc == 0)
- 		list = 1;
- 
-+	if (new_worktree) {
-+		if (delete || rename || new_upstream || unset_upstream)
-+			die("--worktree requires creating a new branch");
-+		if (new_worktree && (argc < 1 || argc > 2))
-+			die(_("--worktree needs a branch/worktree name"));
-+	}
-+
- 	if (filter.with_commit || filter.merge != REF_FILTER_MERGED_NONE || filter.points_at.nr)
- 		list = 1;
- 
-@@ -797,7 +806,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		strbuf_release(&buf);
- 	} else if (argc > 0 && argc <= 2) {
- 		struct branch *branch = branch_get(argv[0]);
--		int branch_existed = 0, remote_tracking = 0;
-+		int branch_existed = 0, remote_tracking = 0, res = 0;
- 		struct strbuf buf = STRBUF_INIT;
- 
- 		if (!strcmp(argv[0], "HEAD"))
-@@ -820,6 +829,17 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		create_branch(head, argv[0], (argc == 2) ? argv[1] : head,
- 			      force, reflog, 0, quiet, track);
- 
-+		if (new_worktree) {
-+			const char *child_argv[] = {
-+				"worktree", "add", NULL, NULL, NULL
-+			};
-+			child_argv[2] = child_argv[3] = argv[0];
-+			if ((res = run_command_v_opt(child_argv, RUN_GIT_CMD)))
-+				error(_("Could not create worktree %s"), argv[0]);
-+			else
-+				fprintf(stderr, _("New worktree set up at %s\n"), argv[0]);
-+		}
-+
- 		/*
- 		 * We only show the instructions if the user gave us
- 		 * one branch which doesn't exist locally, but is the
-@@ -828,10 +848,13 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		if (argc == 1 && track == BRANCH_TRACK_OVERRIDE &&
- 		    !branch_existed && remote_tracking) {
- 			fprintf(stderr, _("\nIf you wanted to make '%s' track '%s', do this:\n\n"), head, branch->name);
-+			if (new_worktree)
-+				fprintf(stderr, _("    # remove worktree %s/\n"), branch->name);
- 			fprintf(stderr, _("    git branch -d %s\n"), branch->name);
- 			fprintf(stderr, _("    git branch --set-upstream-to %s\n"), branch->name);
- 		}
- 
-+		return res;
- 	} else
- 		usage_with_options(builtin_branch_usage, options);
- 
+> Hence this
+> proposal: "git branch -w xyz upstream/master" to do the same.
+>
+> The plan is to also support "git branch -d -w xyz" once the `git
+> worktree` command learned a `remove` (or `delete`) subcommand.
+
+"git worktree remove" is coming (will be resent after -rc period). And
+I agree it's convenient for it to remove the branch as well because
+that happened to (and annoyed) me a few times. I still think it should
+be centered around git-worktree than git-branch though.
+
+> One possible improvement would be to add "/xyz/" to the parent
+> repository's .git/info/exclude, but this developer hesitates to
+> introduce that feature without the "delete" counterpart: those exclude
+> entries would likely go stale very quickly. Besides, there might be a
+> plan in the working to exclude worktrees automagically?
+
+That's needed because you add a worktree inside another worktree? I
+know that feeling, but I've changed my layout from ~/w/git as main
+worktree (and ~/w/git/.git as repo) to ~/w/git as a non-worktree dir
+that contains all worktrees, e.g. ~/w/git/reinclude-dir,
+~/w/git/worktree-config, ~/w/git/lmdb... My typical worktree add
+command is "git worktree add ../<some-name>" then move there and do
+stuff. No nested worktrees, no need to update exclude file (and no
+messing up emacs' rgrep command, which does not understand .gitignore
+anyway)
 -- 
-2.7.2.windows.1.8.g47d64e6.dirty
+Duy
