@@ -1,92 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Possible bug: --ext-diff ignored with --cc in git log
-Date: Thu, 10 Mar 2016 14:33:55 -0800
-Message-ID: <xmqqlh5qc698.fsf@gitster.mtv.corp.google.com>
-References: <E1adi8q-0005NJ-4G@smtp.tt-solutions.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH v4] commit: add a commit.verbose config variable
+Date: Fri, 11 Mar 2016 04:09:08 +0530
+Message-ID: <CAFZEwPOfK4qOQ5+8vVaspx+LM+QcG+gw2uKtyjQEu7jWdHxTGA@mail.gmail.com>
+References: <0102015362963f6a-626ad27e-e705-4a75-93a6-55a5f75d0226-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Vadim Zeitlin <vz-git@zeitlins.org>
-X-From: git-owner@vger.kernel.org Thu Mar 10 23:34:11 2016
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 10 23:39:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ae99f-0005Q1-LX
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 23:34:04 +0100
+	id 1ae9Eg-0001GC-Gt
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 23:39:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752498AbcCJWeA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2016 17:34:00 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58099 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752288AbcCJWd7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2016 17:33:59 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CD5114BA2F;
-	Thu, 10 Mar 2016 17:33:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=htsBeQt+a+qcUAIlRZbVp1MPZ1E=; b=N0t0fL
-	D2npW8sNC2Dj3ViEhvM/rBfkwlTqm74ctx6OEcEeMcXO8FE1knInEATL5x0PFuKR
-	8legSFHm3T4PKqdGhbHTFp6EDr40DZySP9fVRy3U/nwrgLwpYDbztmEFJb2ScreM
-	5vg4hfkebATBOTDQATov0WzQRq2Nc2yuPuxs4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=g7uD9D0nwwyT/P/c2THJ+IditzmPM5Gb
-	YfUTKVSLxLpm4rHoRuECtXVujXFU5UKoo6B0+ALeP9wgDTZO+zTZ6dwE4gQMdMxS
-	VVC9v9A3hVEAb4Hfmf9M647nccd9Agu2s7oWe3FZ6VQY3ENCsfapd1cVvOkjYaG3
-	cFbtSattvlo=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C55B84BA2E;
-	Thu, 10 Mar 2016 17:33:57 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 467C24BA2D;
-	Thu, 10 Mar 2016 17:33:57 -0500 (EST)
-In-Reply-To: <E1adi8q-0005NJ-4G@smtp.tt-solutions.com> (Vadim Zeitlin's
-	message of "Wed, 9 Mar 2016 18:43:10 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2D781F52-E710-11E5-A83C-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753596AbcCJWjK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Mar 2016 17:39:10 -0500
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:34010 "EHLO
+	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752641AbcCJWjJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Mar 2016 17:39:09 -0500
+Received: by mail-yw0-f194.google.com with SMTP id f6so5199923ywa.1
+        for <git@vger.kernel.org>; Thu, 10 Mar 2016 14:39:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to;
+        bh=71RjKE5exTH3EYEeCwb46KSwvpLpV0zUMt91MspeQtY=;
+        b=EZzl29nagyTIn89F2K0mVZlVLJsMzjYo7x6oqbeMapD+s1mgKt1tw2dVdQ1rHYHFwc
+         uZiU7yGSOYGeykRoKVI3ZJbCxCf+Zr5QuuQnsForssmA6LnyWsb3dsPYk7LQTfFzWq4S
+         dky1f7cP11EgD6WKcnVJO4Yo11JO9b8sU/GmvPPz/0mCnwizERAz2jvQco+J7a79gy27
+         LRnQdUIPkY1PS8KnJ2ROnszP2Zv9BkZKhhTrBAbZ9ZrjjibgCIaBolyn4vw8VtX6sqLP
+         AWoVVH4X3WU8x5wyQ2lYYafOtzom9MTm+HrnP61AgVvr7S2MO2fuNjIoaJXLSaNLOR8C
+         I1Tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to;
+        bh=71RjKE5exTH3EYEeCwb46KSwvpLpV0zUMt91MspeQtY=;
+        b=NdkmngjQMKxmI7pdaHadmidKQe1yxwjCq2kcuhPThFnOhtYN4vgDo1YCd1zGxIkr5J
+         2GR3WQThS00Mom3lb6ytPmkKBAsXUl1EO7rrNAwa8JVqRZN3Ex8kLdJRF21NWYOJuGHH
+         ibHp/lFC+LdAD58OOYu0W1orZ9wmVt4YapX5/LJtaRFnbUshq07fOCrxyQsCfZoLT+/o
+         +oaTxTvNM3a5xe1sBtgl67YT61gqIXw6ut4Uusrw3eSB8/JyM4FB/lV/4YLOVL0u8EQh
+         N3sTDyTI8Zbqys/R7cXvwOvKrlI8xzzr7csIm1iztzIrZJrfJiXQYWDj2KiAmlkgrfXX
+         /pXw==
+X-Gm-Message-State: AD7BkJLXk7zgfPRPWzAUH7T4cAzYXADWCH9zpvqnnFyMl7k+Gc/v72CBtKrHCtL1ohlyOtBN7/S94iZoQICSAg==
+X-Received: by 10.129.37.3 with SMTP id l3mr3351120ywl.128.1457649548411; Thu,
+ 10 Mar 2016 14:39:08 -0800 (PST)
+Received: by 10.13.203.137 with HTTP; Thu, 10 Mar 2016 14:39:08 -0800 (PST)
+In-Reply-To: <0102015362963f6a-626ad27e-e705-4a75-93a6-55a5f75d0226-000000@eu-west-1.amazonses.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288654>
 
-Vadim Zeitlin <vz-git@zeitlins.org> writes:
+Older versions of this patch can be found at :-
 
-> I.e. the
-> command "git log --ext-diff -p --cc" still outputs the real diff even for
-> the generated files, as if "--ext-diff" were not given. ...
-> Is the current behaviour intentional? I see it with all the git versions I
-> tried (1.7.10, 2.1.0, 2.7.0 and v2.8.0-rc1), but I don't really see why
-> would it need to work like this, so I hope it's an oversight and could be
-> corrected.
+[v3] : http://thread.gmane.org/gmane.comp.version-control.git/288634
 
-I think this is "intentional" in the sense that "--cc" feature is
-fundamentally and conceptually incompatible with "--ext-diff".
+[v2] : http://thread.gmane.org/gmane.comp.version-control.git/288569
 
- - The "external diff" feature is to allow third-party tools to
-   produce output that is vastly different from the usual "diff"
-   output, e.g. unlike the usual "diff", the output may not even be
-   line-oriented, and certainly would not have to follow the
-   convention of denoting the contents on old and new lines with "-"
-   and "+" prefixes.
+[v1] : http://thread.gmane.org/gmane.comp.version-control.git/287540
 
- - The "--cc" feature is to show multiple "diff" outputs in the
-   usual format with post-processing to coalesce them into a more
-   concise form, and fundamentally depends on (1) the output being
-   line-oriented and (2) the contents of old and new lines denoted
-   by "-"/"+" prefixes to be able to do so.
+The changes with respect to last version are :
+ - put the code in git_commit_config() instead of git_status_config()
+ - Add test to cover all possible scenarios
 
-I haven't tried it myself, but if the contents you are using
-ext-diff on can be compared in a format that is easy-to-read for
-humans by passing them first to "textconv" filter and then running
-the normal "diff" on, that may be a viable approach to do what you
-are trying to do, as "textconv" feature is meant to still produce
-the output that still follows the usual "diff" convention.  Its
-output should be usable by any tool (e.g. diffstat) meant to
-post-process patch output, and would be a better match for the
-"--cc" mechanism.
+Regards,
+Pranit Bauva
+IIT Kharagpur
