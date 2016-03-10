@@ -1,114 +1,80 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 04/19] index-helper: new daemon for caching index and
- related stuff
-Date: Thu, 10 Mar 2016 18:17:30 +0700
-Message-ID: <CACsJy8CqOOB6C6bWkVSEvtPuHxZR_avSb7z7hgo-vtv3gu44Cg@mail.gmail.com>
-References: <1457548582-28302-1-git-send-email-dturner@twopensource.com>
- <1457548582-28302-5-git-send-email-dturner@twopensource.com>
- <xmqqtwkffdus.fsf@gitster.mtv.corp.google.com> <xmqqpov3fdb6.fsf@gitster.mtv.corp.google.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH 0/1] Introduce a way to create a branch and worktree at the
+ same time
+Date: Thu, 10 Mar 2016 12:34:10 +0100 (CET)
+Message-ID: <cover.1457609615.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Turner <dturner@twopensource.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 10 12:18:10 2016
+X-From: git-owner@vger.kernel.org Thu Mar 10 12:34:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adybZ-0004wu-Jx
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 12:18:09 +0100
+	id 1adyrV-0000MS-C2
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 12:34:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965675AbcCJLSG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Mar 2016 06:18:06 -0500
-Received: from mail-lb0-f180.google.com ([209.85.217.180]:35177 "EHLO
-	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932895AbcCJLSC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Mar 2016 06:18:02 -0500
-Received: by mail-lb0-f180.google.com with SMTP id bc4so106885747lbc.2
-        for <git@vger.kernel.org>; Thu, 10 Mar 2016 03:18:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ln1F/KQs72Aw63vh06IMiopadajt8+HMhDIJ+SFFexI=;
-        b=TaCXKafO59FGtcrDgXfwnjC0oVyUzw48JrrevDSwE8/TJmMuojR1QNhUNtm3Tz0tIe
-         tT23YzH+P/40GWSF/us8OV9uXYeNpiX9rA49t9bfNt3HZ0s/AySZNjTmjzZlBW/41tSF
-         snKRnHhOok5Hcd7uHqv2+nZZrlxAOFYD7iS3GJEa4eahO/dhm1tTH5u50ypbIA1rbYxS
-         0ovVkQcvMqVE/uNa5Mbdhjeb56JM+4fR9EuT1NWURXa4FQrAG8Bj3KeHNxhtWnyg2Lr/
-         TWA51j1rULJVECmiiRZs87PTscRIRJTmHTqMjeF9SifdFcJkTp4hsO8N71fQ5Bfk+SQU
-         1gaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ln1F/KQs72Aw63vh06IMiopadajt8+HMhDIJ+SFFexI=;
-        b=Y+264tLmkT1xpdxbELiS/HfewopHaIzKD6sWHSyr5w1Xpub/oPxGRc6r5rTQljfTXw
-         Y0CRRFzMDKppnE8Ov9UsAcWkQMEQ3dcpdvUtdf0h2hF547Gn2IEk3qkpbVYHjkKJ9nFb
-         uoEjIJtPYlffrhM75ibqNCRpfCFWqfyYrCWA6SmpgSKbs3NT4s1Qwg+J4Zy4qr5l13I4
-         p8ZmEL6GG0q+NnVO3IZ18VpEGoHy6zOeE4mR2gf3bGaFGXZHyX7pidDjk6ESTvG8stnR
-         86g9tyVGRHsrTnam64aDEQOHfLaFdc0TmBM8XUhOimQjLxPQtyi8O/KwbvapV62d6E64
-         zsqw==
-X-Gm-Message-State: AD7BkJIsudAnPViAt8JgJgFsOV9uoAw3v7LWSH1v8YBaRnj8nO6enZQ18vsj9whPaFFAV8rGbINOgVjWl2Kuvg==
-X-Received: by 10.112.130.41 with SMTP id ob9mr966283lbb.81.1457608680483;
- Thu, 10 Mar 2016 03:18:00 -0800 (PST)
-Received: by 10.112.167.10 with HTTP; Thu, 10 Mar 2016 03:17:30 -0800 (PST)
-In-Reply-To: <xmqqpov3fdb6.fsf@gitster.mtv.corp.google.com>
+	id S964783AbcCJLeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Mar 2016 06:34:22 -0500
+Received: from mout.gmx.net ([212.227.17.20]:52339 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932738AbcCJLeV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Mar 2016 06:34:21 -0500
+Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LyVcA-1ZkWPN3VVG-015tRN; Thu, 10 Mar 2016 12:34:11
+ +0100
+X-X-Sender: virtualbox@virtualbox
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:r+EQnjzw9rNLCi8/CXqZ7Tii4nWRXNcM82t5e02CTVULFWKvuUZ
+ OlFWv+teeE0oFQLxuXV/KoeMIlcjAWa4CpZ8ZwP6mJQMD1pRYDnO5XAJ6VScfcFz7GgdtE9
+ AhPJ0Td37aOwnET4Dk31mceUNTOqJj2/7rNzTzTeq/94ztpDb03v99oj5+M0c8gluaFm2rs
+ CLQANnKN12pKkB/aYNK8A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:26Y7Wzrf32U=:60sVWfUYqtjnZEQ8tsb7MK
+ GamFrB16R4l4Qary66MoRnDhD459BTVAwAeGBR2rZs29BoWh4Mp/VnB5N6cdJ6WJwLp6T1Z5O
+ /uOxF6oLOoMbpSqk841/6p84Y1A63Pk/RBn0tpSFJK2mPHoQemJz8fQIPXep8K5vc/5bkFJQv
+ xoOchX5s0dzWAlKhNM5vOyDb05DjmbscNSbfc13G6KkP/EgAEo/x6BvIf99GOp9M/81il9V4L
+ BY4RbxAYycwzA88XU7KTUK+yqYDSxk0jvQMO7I/hL6LBZoKaM3YlrGg+0JW5qHOTq4g+nGMOi
+ vsHInXwsbc6xmREoYVLKeaiGfag0OXNlxXa4ZNyncfTsnDuA5X+KnTbzy+tGx27dw7hb9fGEZ
+ gxjQcWE19O3hO+6h9p1HxxyeMH9xa5YB03zygB7j+1DHdZt9x174wr3uxiRd9J/LDdd0ImpYH
+ pYVqNMehbS04Cnu6wP5L3W7QP1qBAu4/NxGLspXeqs2+JHsmvFIb9Z5Zqew4vUuSIyBlD2Jde
+ eVq3+pGnw4H1/RptKbnc1mhwnJOVxJfWuY3pJfMkPeS9l1yqB6DGDtHDpBftOz57sII07oQ+6
+ HhsOS69BUc5tOpTUCoySQll45Xe6indtFWNXviiysEVjmUo9jAv8wYnm2/+FJiTe6YOL509Ke
+ 3fCoURraJAhWkdgOv+42qmfs3d+zXyOgShWjhzKgyAxHTjW9JcR/mU2ENWujlfAwqrR7Ad82h
+ Zv9pIrVRtxZ9ScgUIkSlmTc54xoWWjh6+OB6AfDtw7J7Pv50+3hVpdtj9u8/oaMhb3KKXZT0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288614>
 
-On Thu, Mar 10, 2016 at 6:21 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> David Turner <dturner@twopensource.com> writes:
->>
->>> From: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
->>>
->>> Instead of reading the index from disk and worrying about disk
->>> corruption, the index is cached in memory (memory bit-flips happen
->>> too, but hopefully less often). The result is faster read. Read tim=
-e
->>> is reduced by 70%.
->>>
->>> The biggest gain is not having to verify the trailing SHA-1, which
->>> takes lots of time especially on large index files.
->
-> Come to think of it, wouldn't it be far less intrusive change to
-> just put the index on a ramdisk and skip the trailing SHA-1
-> verification, to obtain a similar result with the same trade off
-> (i.e. blindly trusting memory instead of being paranoid)?
+The invention of the `git worktree` command changed this developer's
+working style dramatically. Rather than switching between branches all
+the time, topic branches are created and checked out in newly-added
+worktrees, to be reworked and refined until the topic branch is either
+merged into `master` or abandoned.
 
-I'm straying off-topic again because this reminded me about lmdb :)
-=46or the record when I looked at lmdb I thought of using it as an inde=
-x
-format too. It has everything we wanted in index-v5. Good enough that
-we would not need index-helper and split-index to work around current
-index format. Though I finally decided it didn't fit well.
+It gets rather tiresome, and also typo-prone, to call "git branch xyz
+upstream/master && git worktree add xyz xyz" all the time. Hence this
+proposal: "git branch -w xyz upstream/master" to do the same.
 
-On the good side, lmdb is b+ trees, we can update directly on disk
-(without rewriting whole file), read directly from mmap'd file and not
-worry about corrupting it. There's no SHA-1 verification either (and
-we can do crc32 per entry if we want too). It's good.
+The plan is to also support "git branch -d -w xyz" once the `git
+worktree` command learned a `remove` (or `delete`) subcommand.
 
-But, it does not fit well the our locking model (but we can change
-this). And we sometimes want to create temporary throw-away indexes
-(e.g. partial commits) which I don't think is easy to do. And the
-reading directly from mmap does not give us much because we have to do
-byte endian conversion  anyway.
+One possible improvement would be to add "/xyz/" to the parent
+repository's .git/info/exclude, but this developer hesitates to
+introduce that feature without the "delete" counterpart: those exclude
+entries would likely go stale very quickly. Besides, there might be a
+plan in the working to exclude worktrees automagically?
 
-Hmm.. on second thought, even though lmdb can't be the default format
-(for a bunch of other limitations), it can still be an option for
-super big worktrees, just like index-helper being an optional
-optimization. Hm.. hm.. if we can support lmdb as index format in
-addition to the current format, bringing back some work from Thomas..
-We may still need a daemon or something to deal with watchman, but the
-underlying mechanism is exactly the same... David, Junio, what do you
-think?
---=20
-Duy
+
+Johannes Schindelin (1):
+  branch: allow conveniently adding new worktrees for new branches
+
+ Documentation/git-branch.txt |  5 +++--
+ builtin/branch.c             | 27 +++++++++++++++++++++++++--
+ 2 files changed, 28 insertions(+), 4 deletions(-)
+
+-- 
+2.7.2.windows.1.8.g47d64e6.dirty
