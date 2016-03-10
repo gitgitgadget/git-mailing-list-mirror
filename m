@@ -1,133 +1,115 @@
-From: Gregor Jasny <gjasny@googlemail.com>
-Subject: Git subtree stumbles over annotated tags
-Date: Thu, 10 Mar 2016 16:51:37 +0100
-Message-ID: <56E19809.5040305@googlemail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rebase -p: avoid grep on potentailly non-ASCII data
+Date: Thu, 10 Mar 2016 09:22:20 -0800
+Message-ID: <xmqq1t7ifdtf.fsf@gitster.mtv.corp.google.com>
+References: <alpine.DEB.2.10.1603080255030.2674@buzzword-bingo.mit.edu>
+	<56DEC4B4.2000902@web.de> <56DED770.4050603@drmicha.warpmail.net>
+	<20160308143556.GA10153@sigill.intra.peff.net>
+	<xmqqio0wk151.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.10.1603082127230.2674@buzzword-bingo.mit.edu>
+	<xmqqvb4vgzxs.fsf@gitster.mtv.corp.google.com>
+	<56E1256B.9030308@web.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------080903020505050005060303"
-To: git@vger.kernel.org, jupp0r@gmail.com
-X-From: git-owner@vger.kernel.org Thu Mar 10 16:51:49 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Anders Kaseorg <andersk@mit.edu>, git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Mar 10 18:22:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ae2sK-0000TR-QK
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 16:51:45 +0100
+	id 1ae4IA-0006I1-2f
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 18:22:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752774AbcCJPvm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2016 10:51:42 -0500
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:34769 "EHLO
-	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752455AbcCJPvk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2016 10:51:40 -0500
-Received: by mail-wm0-f51.google.com with SMTP id p65so34335510wmp.1
-        for <git@vger.kernel.org>; Thu, 10 Mar 2016 07:51:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=to:from:subject:message-id:date:user-agent:mime-version;
-        bh=btRJFA8P2JAsaJ0DhUL1SPpIHXiJ0lmX8wGGvc2JgOU=;
-        b=cXvMEWb39UXmPaPAXoiVGt628OA4mTN8W0aGOaL2OpT8AQ491Ao/Gv04CPQhQnB/KA
-         ztpmkCxK8kd/PEc1SpBaITpK8FqSwt10fkWZt+VtSY2ku8NtrYM1jA/MAjBFiHTaIetV
-         Id57tm8w21X/4t2KqTp00EXUhFCaItf+Z4AZaeNoqBT67N67ljzZgH9vUmdebKIyUAOs
-         4xHM6z3MjjMWHoAA+j6EKQtka+7eIYNQVuVcNPj1zq6x6A962vIlQqhfomxWnmUhvisj
-         m8ZLaDhWZnus+JKxx+HN5bYvHp/28bEjKMoca7D6HBtnQFpnzfmp5Fnafvjddr4Vl7xO
-         YmUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version;
-        bh=btRJFA8P2JAsaJ0DhUL1SPpIHXiJ0lmX8wGGvc2JgOU=;
-        b=YVrqT4pzMd/jiY1G3ZdrfygdxalLhSOCq6er7/034QrZZAVTGNai6JykWFd0XuaIER
-         SdfnKFk77/o5edWrtN4r4oNNhjBzp5DIPnb1OrqQPO60vrCViNAF0ygYaiGdfp+rf2fu
-         ppoCDegvnLKbQcD3h+o5aYgZBQ1NiOp2iwGT9bQNOXLq8ADeHpPNQS7q1mcnxAhkyIjP
-         o1mS3+v3mISTifvTP1H/RWfBj3wvUH2bzhniohVQG8GbN33ZLj8RxU2WG9ij0jwsRAgW
-         PrmroHmpHGE7P1yzvEWlfAH8RlxJFnrE6MzrJ0OXFjzXfZyKcX3lwA9nSSTsghrJGNRt
-         7JrQ==
-X-Gm-Message-State: AD7BkJJtc/8t1m+wG52XsXc5VTPfyq7GgtrkA+JT1TEAK6X00RaZujRLKbd7jN6KkYhBog==
-X-Received: by 10.28.214.6 with SMTP id n6mr4815511wmg.49.1457625099185;
-        Thu, 10 Mar 2016 07:51:39 -0800 (PST)
-Received: from gjasny01.ad.corp.expertcity.com ([2a02:810a:83c0:88fc:a845:9811:8b2e:8293])
-        by smtp.googlemail.com with ESMTPSA id g203sm3526775wmf.23.2016.03.10.07.51.38
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 10 Mar 2016 07:51:38 -0800 (PST)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:38.0)
- Gecko/20100101 Thunderbird/38.6.0
+	id S1754303AbcCJRW0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Mar 2016 12:22:26 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:52401 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753670AbcCJRWY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Mar 2016 12:22:24 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id CE43B49373;
+	Thu, 10 Mar 2016 12:22:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=bvpo0bzKHM7r
+	KMaxasELDVn8KGQ=; b=BYZNdkOEhAEwmZljRJtXb3anXncSftXAITJMrNLG3mZV
+	DiNg33E6xsWUc4h/4Vik9utu9kh2CcXQehSv60EbvdLPmPPwIwO/fasMUBwzxMtN
+	ub+ZJ6g21ExMMH0JQAh5dwP0zksl0tgg0Y+rV1/UqHYuoPAtqtQxo5C1yWy9RFs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=nt2tPV
+	xqv021YDCu1TLxS6zIFh4VvFzD8ib+0LKN47VITexql7Xl8FpaXRUIe24W6LtqCA
+	ISm2GFRt1r5UTX5a+6UXUsgE9vj0uzALiHMJo+yLGb+SlviE0aUSm5wRZZefPAUx
+	Bo243w3arY+e3lSm8eKoX4bpDGfKqJLHoT9Z0=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C4FA749372;
+	Thu, 10 Mar 2016 12:22:22 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 378E64936E;
+	Thu, 10 Mar 2016 12:22:22 -0500 (EST)
+In-Reply-To: <56E1256B.9030308@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Thu, 10 Mar 2016 08:42:35 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A658C47A-E6E4-11E5-B773-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288627>
 
-This is a multi-part message in MIME format.
---------------080903020505050005060303
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-Hello,
+> On 09.03.16 21:26, Junio C Hamano wrote:
+>> Anders Kaseorg <andersk@mit.edu> writes:
+> []
+>>  sane_grep () {
+>> -	GREP_OPTIONS=3D LC_ALL=3DC grep "$@"
+>> +	GREP_OPTIONS=3D LC_ALL=3DC grep @@SANE_TEXT_GREP@@ "$@"
+>>  }
+>> =20
+>>  sane_egrep () {
+>> -	GREP_OPTIONS=3D LC_ALL=3DC egrep "$@"
+>> +	GREP_OPTIONS=3D LC_ALL=3DC egrep @@SANE_TEXT_GREP@@ "$@"
+>>  }
+>>
+>
+> I always wondered why we do LC_ALL=3DC.
 
-today I discovered that it's a bad idea to "git subtree pull" from an
-annotated tag. This issue got discussed in those two threads:
+It is because, at least back when we started scripted Porcelains of
+Git, that is the only thing we could count on available everywhere,
+and more importantly, that is how you disable all the i18n gotchas
+and ask tools to use the traditional "a file stores a stream of
+bytes" semantics.
 
-http://comments.gmane.org/gmane.comp.version-control.git/247503
-http://comments.gmane.org/gmane.comp.version-control.git/248395
+> Isn't that begging for trouble, when we feed UTF-8, ISO-8895-1
+> or other stuff into a program and say LC_ALL=3DC at the same time ?
 
-I was under the impression that it is fixed in recent versions of git
-but my homebrew 2.7.0 still behaves badly. If I run the attached script
-to reproduce the issue I get the following error message:
+Yes and no.  It is true that in "C" ("POSIX"), behaviour on anything
+outside the portable and control character sets is undefined, so in
+theory, it is bad that we relied on that undefined behaviour to be
+to treat the input as just a stream of bytes.  But at the same time,
+it is no worse than letting the user's locale take effect or use
+hardcoded en_US.UTF-8 and passing unknown end user data that could
+be in latin1 and other stuff.  And sensible implementors of "C"
+locale seemed to choose the "stream of bytes" back when fa9d3485
+(git-am: force egrep to use correct characters set, 2009-09-25) was
+written, which is where LC_ALL=3DC comes from.  I wasn't around when
+that patch was accepted, so I cannot quite tell if it was done to
+fix a reported bug (i.e. it would reintroduce the bug if we lost
+LC_ALL=3DC) or it was done "just because".
 
-> git push using:  sub somebranch
-> fatal: 6d621d73ca18dc90424de0929357b5ae62988e00 is not a valid 'commit' object
-> Can't copy commit ab38e3fe1ff27f7f87505db37d35adc5c3ceed27
-
-> git ls-remote sub
-> 99be40f8e3a4c926d45507be53ab6918789b3a52	HEAD
-> 99be40f8e3a4c926d45507be53ab6918789b3a52	refs/heads/master
-> 6d621d73ca18dc90424de0929357b5ae62988e00	refs/tags/sometag
-> 99be40f8e3a4c926d45507be53ab6918789b3a52	refs/tags/sometag^{}
-
-Besides handling this bug could you please give me a hint how to repair
-my main repository? The problematic subtree pull happened some time ago
-so I cannot alter the pull itself. I could go the brutal approach and
-remove, then re-add the subtree but I guess there is a smarter approach.
-Any help is appreciated!
-
-Thanks,
-Gregor
-
---------------080903020505050005060303
-Content-Type: application/x-sh;
- name="reproduce.sh"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="reproduce.sh"
-
-#!/bin/bash
-
-set -e
-
-mkdir main sub
-
-cd sub
-git init .
-echo A > foo
-git add foo
-git commit -m "A"
-git tag sometag -a -m "some"
-
-cd ../main
-git init .
-echo initial > version
-git add version
-git commit -m "main initial"
-
-git remote add sub $PWD/../sub
-git subtree add --prefix mysub sub sometag --squash
-
-echo B > mysub/foo
-git add mysub/foo
-git commit -m "B"
-
-git subtree push --prefix mysub sub somebranch --squash
-
---------------080903020505050005060303--
+Back when e1622bfc (Protect scripted Porcelains from GREP_OPTIONS
+insanity, 2009-11-23) introduced sane_grep, the only caller of it
+that wanted to use LC_ALL=3DC was this callsite in "git am", and we no
+longer have that callsite since 783d7e86 (builtin-am: remove
+redirection to git-am.sh, 2015-08-04), so I think whatever fa9d3485
+wanted to do will not be broken if we removed LC_ALL=3DC from
+sane_grep.  It however is possible that any callsites of sane_grep
+added after e1622bfc implicitly depended on having LC_ALL=3DC in the
+implementation.
