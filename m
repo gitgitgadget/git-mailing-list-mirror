@@ -1,112 +1,133 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG?] fetch into shallow sends a large number of objects
-Date: Thu, 10 Mar 2016 16:10:53 -0500
-Message-ID: <20160310211052.GC30595@sigill.intra.peff.net>
-References: <20160307221539.GA24034@sigill.intra.peff.net>
- <xmqqio0xn93q.fsf@gitster.mtv.corp.google.com>
- <20160308121444.GA18535@sigill.intra.peff.net>
- <CACsJy8Dk_g1O98UsDaeVS3VXmE2Mn5aR+w1OiFir+QwyJYLVZQ@mail.gmail.com>
- <20160308132524.GA22866@sigill.intra.peff.net>
- <20160310122020.GA24007@lanh>
-Mime-Version: 1.0
+From: Marcus Kida <marcus.kida@gmail.com>
+Subject: Re: Bug: git branch -D can be used to delete branch which is currently checked out - Part 2
+Date: Fri, 11 Mar 2016 08:20:38 +1100
+Message-ID: <41E8F374-9E8A-48AE-A5D5-A3C24B79ED7E@gmail.com>
+References: <F6588CBF-D13E-475F-847F-6154370F4A2E@gmail.com> <alpine.DEB.2.20.1603101313220.4690@virtualbox>
+Mime-Version: 1.0 (Mac OS X Mail 9.2 \(3112\))
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 10 22:11:11 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 10 22:20:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ae7rP-0004uP-Vi
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 22:11:08 +0100
+	id 1ae80n-0004aT-Aa
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 22:20:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932509AbcCJVLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2016 16:11:00 -0500
-Received: from cloud.peff.net ([50.56.180.127]:58015 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932231AbcCJVK4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2016 16:10:56 -0500
-Received: (qmail 4033 invoked by uid 102); 10 Mar 2016 21:10:55 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 10 Mar 2016 16:10:55 -0500
-Received: (qmail 29307 invoked by uid 107); 10 Mar 2016 21:11:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 10 Mar 2016 16:11:10 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Mar 2016 16:10:53 -0500
-Content-Disposition: inline
-In-Reply-To: <20160310122020.GA24007@lanh>
+	id S932399AbcCJVUp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Mar 2016 16:20:45 -0500
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:34189 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932216AbcCJVUo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Mar 2016 16:20:44 -0500
+Received: by mail-pa0-f47.google.com with SMTP id fe3so59900596pab.1
+        for <git@vger.kernel.org>; Thu, 10 Mar 2016 13:20:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=dKwRaJeJnp5E6diLK54ZKiOn8u0ybmmXAxnreuGNplc=;
+        b=t5WLePbEsC2Pe9dits1CpAyJUTkA+bs+h7zjfOOmEttcTWpsM6uf8s2j/FYJerdSSu
+         nRUgcYTyEoM7KeaeR5F3s4Hq4uIiDUd9eTyujKrAZD3VnbcbSvtxCcnWv0XAWB4FWhhO
+         xh4xOm5RG3tdtisvqaGOS6puFlB2u7SEfn2x1NpuK5tXFGdG4nfeU4etHAGV/R+HWLxv
+         HYskxDkRWyFMNmfL2PeIs19cOoPgknuUeJhbMa3ljDO8kBi+5YTutFDi0T9LEvpsoyxn
+         eSMRjGrecCRNEZomgRPNScwMHpvCUKzUSXeB2pWsCVdcM+WupsYlZuxrcPnOmaG5r2jC
+         6Q1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=dKwRaJeJnp5E6diLK54ZKiOn8u0ybmmXAxnreuGNplc=;
+        b=NFUOHGdx4kQ6jZFrO4lpeGxtSpsX5jRCRLw7e133596hcYhbmQhydBGI4suQsktWqh
+         eJfPER17pXI1NnuYnfBpSUx4xy1XYZluBpn/mCqfelY3a01FyVMXSzg6J3geEWYRkxk0
+         d2yH3uYCO+HrrBO154e3LunqUAclntTtjF1FoOl0O3Z2t5F7/hNfU+X6HzR/hFOqIbUs
+         Kp73UmLXx6ebz7rEPGeB+/1chqqK+7yLG1u2/TpEGCWxuzNKi7v3V4256Cp7G8RSZEy4
+         nViBL7UHXY7l82gAXlefgSPfHoC9B3oNdrCmCFgI2t7furF7RCRIRSAwa/6v7iCcPFjK
+         bh4A==
+X-Gm-Message-State: AD7BkJICGCWxW5JSK3On4qTv2o8A8ckrerUtABsFkeJhrLE8RlufXVEK9z+N1+IfBAA5qA==
+X-Received: by 10.66.147.164 with SMTP id tl4mr7990043pab.40.1457644843716;
+        Thu, 10 Mar 2016 13:20:43 -0800 (PST)
+Received: from mkida.office.atlassian.com ([103.233.242.8])
+        by smtp.gmail.com with ESMTPSA id to9sm7645255pab.27.2016.03.10.13.20.41
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 10 Mar 2016 13:20:42 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.20.1603101313220.4690@virtualbox>
+X-Mailer: Apple Mail (2.3112)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288641>
 
-On Thu, Mar 10, 2016 at 07:20:20PM +0700, Duy Nguyen wrote:
+Hi Johannes,
+Hi Junio,
 
-> > +	else if (shallows.nr > 0) {
-> > +		struct rev_info revs;
-> > +		struct argv_array av = ARGV_ARRAY_INIT;
-> > +		struct commit *c;
-> > +		int i;
-> > +
-> > +		argv_array_push(&av, "rev-list");
-> > +		argv_array_push(&av, "--boundary");
-> 
-> Nice. I didn't know about --boundary. But will it work correctly in
-> this case?
-> 
->        --- B ---- C ---- F
->           /      /
->      --- D ---- E ---- G
-> 
-> C and D will be current shallow cut points. People "want" F and G.
-> "rev-list --boundary F G ^C ^D" would mark E as boundary/shallow too,
-> correct? If so the history from G will be one depth short on a normal
-> fetch.
+here you=E2=80=99ll find a patch to hotfix the =E2=80=9Cdelete-a-branch=
+-you=E2=80=99re-on" issue.
+As Junio already stated there=E2=80=99s many more places where case (in=
+)sensitivity is not handled correctly but this patch would at least pre=
+vent you from deleting the branch you=E2=80=99re currently working on (=
+which happened to me yesterday and lead to quite some additional stress=
+).
 
-IMHO, that is the right thing. They asked for "C" as a shallow cut-off
-point, so anything that is a parent of "C" should be omitted as shallow,
-too. It has nothing to do with the numeric depth, which was just the
-starting point for generating the shallow cutoffs.
+If you think this isn=E2=80=99t worth patching now, please discard my p=
+atch.
+If you think it=E2=80=99s worth patching and implementing a more advanc=
+ed filesystem backend at a later time, please apply it.
 
-That's just my mental model, though. I admit I don't actually use
-shallow clones myself, and maybe people would expect something else.
+If tested this and validate it works @ 2.8.0-rc1.=20
 
-> > _But_, the client is not prepared to handle this. We send "shallow"
-> > lines that it is not expecting, since it did not ask for any depth. So I
-> > think this logic would have to kick in only when the client tells us to
-> > do so.
-> 
-> Urgh.. not good. Perhaps a new extension to let the server know the
-> client can handle spontaneous "deepen" commands and only activate new
-> mode when the extension is present?
+Thank you.
 
-Yeah, we definitely need an extension. I'm not sure if the extension
-should be "I know about spontaneous shallow/deepen responses; it's OK to
-send them to me" or "I want you to include the shallow points I send as
-boundary cutoffs for further shallow-ing of newly fetched history".
+---
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 7b45b6b..46bde61 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -215,7 +215,7 @@ static int delete_branches(int argc, const char **a=
+rgv, int force, int kinds,
+ 		int flags =3D 0;
+=20
+ 		strbuf_branchname(&bname, argv[i]);
+-		if (kinds =3D=3D FILTER_REFS_BRANCHES && !strcmp(head, bname.buf)) {
++		if (kinds =3D=3D FILTER_REFS_BRANCHES && !strcasecmp(head, bname.buf=
+)) {
+ 			error(_("Cannot delete the branch '%s' "
+ 			      "which you are currently on."), bname.buf);
+ 			ret =3D 1;
+---
 
-They amount to the same thing when implementing _this_ feature, but the
-latter leaves us room in the future for a client to say "sure, I
-understand your spontaneous responses, but I explicitly _don't_ want you
-to do the boundary computation". I don't know if that is useful or not,
-but it might not hurt to have later on (and by adding it now, it "just
-works" later on with older servers/clients).
+Cheers,
+Marcus
 
-> > So what next? I think there's some protocol work here, and I think the
-> > overall design of that needs to be considered alongside the other
-> > "deepen" options your topic in pu adds (and of which I'm largely
-> > ignorant). Does this sufficiently interest you to pick up and roll into
-> > your other shallow work?
-> 
-> I can pick it up if you are busy with other stuff. But I'm also having
-> a couple other topics at the moment, so it may not progress very fast.
-
-Thanks. I don't think it is too urgent; it has been that way for a
-while. I certainly have plenty of other things to work on, but mostly I
-just feel a bit out of my depth on the shallow stuff. I haven't given it
-any real thought, and you obviously have.
-
--Peff
+> On 10 Mar 2016, at 11:15 PM, Johannes Schindelin <Johannes.Schindelin=
+@gmx.de> wrote:
+>=20
+> Hi Marcus,
+>=20
+> On Thu, 10 Mar 2016, Marcus Kida wrote:
+>=20
+>> Proposed solution:
+>>=20
+>> Use `strcasecmp`, `stricmp`, `strcmpi` here: https://github.com/git/=
+git/blob/f02fbc4f9433937ee0463d0342d6d7d97e1f6f1e/builtin/branch.c#L218
+>>=20
+>> Not sure if/which one of this will work on POSIX as well as MS too t=
+hough.
+>=20
+> This is not quite a solution (it is not a patch). And you *definitely=
+*
+> want to make the use of strcasecmp() contingent on ignore_case. You a=
+re
+> not alone on this world, after all, and other people have case-sensit=
+ive
+> filesystems. It's totally doable, of course.
+>=20
+> So, do you feel up to the task?
+>=20
+> Ciao,
+> Johannes
