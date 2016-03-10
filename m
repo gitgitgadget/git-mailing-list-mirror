@@ -1,86 +1,121 @@
-From: Stephen Morton <stephen.c.morton@gmail.com>
-Subject: Sample pre-push hook can crash
-Date: Thu, 10 Mar 2016 16:22:14 -0500
-Message-ID: <CAH8BJxHeyfpKsvjGfg5ZJ5YDQk6pzZp4ufHVEV=cFriL8j_4uw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG?] fetch into shallow sends a large number of objects
+Date: Thu, 10 Mar 2016 13:26:08 -0800
+Message-ID: <xmqqbn6mdnyn.fsf@gitster.mtv.corp.google.com>
+References: <20160307221539.GA24034@sigill.intra.peff.net>
+	<xmqqio0xn93q.fsf@gitster.mtv.corp.google.com>
+	<20160308121444.GA18535@sigill.intra.peff.net>
+	<CACsJy8Dk_g1O98UsDaeVS3VXmE2Mn5aR+w1OiFir+QwyJYLVZQ@mail.gmail.com>
+	<20160308132524.GA22866@sigill.intra.peff.net>
+	<20160310122020.GA24007@lanh>
+	<20160310211052.GC30595@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 10 22:22:22 2016
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 10 22:26:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ae82G-0005pN-98
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 22:22:20 +0100
+	id 1ae86F-0000lN-Fj
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 22:26:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932359AbcCJVWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2016 16:22:17 -0500
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:33814 "EHLO
-	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932216AbcCJVWQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2016 16:22:16 -0500
-Received: by mail-wm0-f45.google.com with SMTP id p65so4657143wmp.1
-        for <git@vger.kernel.org>; Thu, 10 Mar 2016 13:22:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=2ttCW7OCWEKekJEZ7uOZdqsfLQnINoI9H/MdLCWBFqg=;
-        b=S9K/AVgUBRp9XuWYegG8OX9f6mNUnmsochPoOAUybVAzJty5dNS+Xanloi5SVHa6zt
-         zOKdx0yDhKsyeqYD2YDNA2Kp8B8CI4pmu3u7VP0h+nXJkrhMN6YBqnPFBcUQvbdxF/up
-         vAADz1XHxnqIfrCiaFHSKTj8bhV3/7MhiT8pIqhEaPPNLScVv2SweX1wGOIK87vu1wzF
-         hk9m+DdP3kr3EDsR9aBQ/4Y9B26a/aPG+RbyWU1jOiy99ZGqubVdgVMWRHVCXf9Nlfpi
-         u3IoLNgziSkecFHswVofKehaThwrRt0atw/tM6EkA574HfjoG7UMz3EUjHiCEYZKGvgn
-         31Qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=2ttCW7OCWEKekJEZ7uOZdqsfLQnINoI9H/MdLCWBFqg=;
-        b=GVjeQ9Sf3ckE0Cq4yhRIIOgkHQ3avGARtDppGylZ6zFa/ezTjH7wucSNG2k3zMYvce
-         M1DsPc2guBrySW0te8iOutwbr29yCUsmKIQKQNNlDGVvxc4KiLVrbn+xkgXLjgGix7Z/
-         98kQRJfftyrn14IosUZTOCOPbNaj+Q7Nip+FwfyjlIYomv4HSSw7OGmV/GgEr1fvynGJ
-         iGPVc6T7bupo/fTAwizeN8+Hh9oks+DZQAIf61S+O/bX8WB0UtgmDLsrzh7ALZsDXz4j
-         PmWkBY56CMqJs7RTwFeohfCL0aFUffWuJz5o1HFX3O+XNpjjKRv29TmAD8Thmsc51EyJ
-         KZsw==
-X-Gm-Message-State: AD7BkJL7eqBfTJJ2JEu0bzCQEmjLbjVIRRx1xmvYv+gb+LxjxGkpOUmBeYfq0M1n5QqSUZBRFG6CIrA6eLshZw==
-X-Received: by 10.194.8.38 with SMTP id o6mr6239193wja.31.1457644934740; Thu,
- 10 Mar 2016 13:22:14 -0800 (PST)
-Received: by 10.194.63.82 with HTTP; Thu, 10 Mar 2016 13:22:14 -0800 (PST)
+	id S932500AbcCJV0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Mar 2016 16:26:21 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55582 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932377AbcCJV0L (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Mar 2016 16:26:11 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 63C3449855;
+	Thu, 10 Mar 2016 16:26:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=B4KqzsVDxkNLaJ4qr40ZdGj6dnA=; b=BPBhAc
+	dQS0o1G8xSykBDq+HkfOaFosQQt5b2mHCyUuQDUTdfdN68KOkGUJztjHo9KeUO/A
+	5UjZlpKiogH1oAwUVnISCkkbD/f+OeH+walUFcLhC8cO2VF2VHtVd+W+KNNC9EXc
+	2X/8Vt3fb5hCcn/P2KxGy7WyemrOdIk0SvjPY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=apdiZiakR5VMF7LjWpizgWsy5J5ixbmc
+	f1Ilu6q5T6MIYOPk16IkPmQiv5p7K0DSXF1NpL51xTJes/7g8t15RI3JUYJ+vE8P
+	zGni9dqMROgo9JhQL5ItopUqSvqUsmFF/xMExBsNMNNoxM8mEBdoEwQqOAS81Rua
+	dfzlqvsujPg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5AA9949854;
+	Thu, 10 Mar 2016 16:26:10 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CC3C949853;
+	Thu, 10 Mar 2016 16:26:09 -0500 (EST)
+In-Reply-To: <20160310211052.GC30595@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 10 Mar 2016 16:10:53 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B5144652-E706-11E5-9F9A-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288643>
 
-The sample pre-push hook provided with git [1] will crash if the local
-repo is not up to date with the remote as $remote_sha is not present
-in the local repo. I'm not sure if this patch is exactly correct, it's
-just provided as an example.
+Jeff King <peff@peff.net> writes:
 
-Given that people are likely crafting their own solutions based on the
-examples, it's probably good to get right.
+> On Thu, Mar 10, 2016 at 07:20:20PM +0700, Duy Nguyen wrote:
+>
+>> > +	else if (shallows.nr > 0) {
+>> > +		struct rev_info revs;
+>> > +		struct argv_array av = ARGV_ARRAY_INIT;
+>> > +		struct commit *c;
+>> > +		int i;
+>> > +
+>> > +		argv_array_push(&av, "rev-list");
+>> > +		argv_array_push(&av, "--boundary");
+>> 
+>> Nice. I didn't know about --boundary. But will it work correctly in
+>> this case?
+>> 
+>>        --- B ---- C ---- F
+>>           /      /
+>>      --- D ---- E ---- G
+>> 
+>> C and D will be current shallow cut points. People "want" F and G.
+>> "rev-list --boundary F G ^C ^D" would mark E as boundary/shallow too,
+>> correct? If so the history from G will be one depth short on a normal
+>> fetch.
+>
+> IMHO, that is the right thing. They asked for "C" as a shallow cut-off
+> point, so anything that is a parent of "C" should be omitted as shallow,
+> too. It has nothing to do with the numeric depth, which was just the
+> starting point for generating the shallow cutoffs.
 
-diff --git a/templates/hooks--pre-push.sample b/templates/hooks--pre-push.sample
-index 6187dbf..99ed984 100755
---- a/templates/hooks--pre-push.sample
-+++ b/templates/hooks--pre-push.sample
-@@ -36,9 +36,9 @@ do
-                        # New branch, examine all commits
-                        range="$local_sha"
-                else
-                        # Update to existing branch, examine new commits
--                       range="$remote_sha..$local_sha"
-+                       range="@{u}..$local_sha"
-                fi
+I think that is the right mental model.  The statement that "C and D
+are current cut points" does not make much sense.  As you cannot
+rewrite parents of commits after the fact, you cannot construct a
+case like "when the shallow clone originally was made, two histories
+were forked long time before B and D, and the cloner ended up with C
+and D as the cutoff point, but now that we have the ancestry linkage
+between B and D (and C and E), we need to make E a new cutoff".  The
+original "shallow" implementation does not store "starting point +
+number of depth" and instead translates that to the cut-off point
+for this exact reason.
 
-                # Check for WIP commit
-                commit=`git rev-list -n 1 --grep '^WIP' "$range"`
+> Yeah, we definitely need an extension. I'm not sure if the extension
+> should be "I know about spontaneous shallow/deepen responses; it's OK to
+> send them to me" or "I want you to include the shallow points I send as
+> boundary cutoffs for further shallow-ing of newly fetched history".
+>
+> They amount to the same thing when implementing _this_ feature, but the
+> latter leaves us room in the future for a client to say "sure, I
+> understand your spontaneous responses, but I explicitly _don't_ want you
+> to do the boundary computation". I don't know if that is useful or not,
+> but it might not hurt to have later on (and by adding it now, it "just
+> works" later on with older servers/clients).
 
-
-(This is just something I noticed and thought you might be interested
-in, but is not important to me. I actually do care about the smudge
-filter issue.)
-
-Stephen
-
-[1] https://github.com/git/git/blob/master/templates/hooks--pre-push.sample
+I am not sure what distinction you are worried about.  An updated
+client that is capable of saying "you may give shallow/deepen
+responses to me" can optionally be told not to say it to the server,
+and that is equivalent to saying "I don't want you to send them", no?
