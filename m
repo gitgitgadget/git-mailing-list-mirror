@@ -1,123 +1,98 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH] rebase -p: avoid grep on potentailly non-ASCII data
-Date: Thu, 10 Mar 2016 08:42:35 +0100
-Message-ID: <56E1256B.9030308@web.de>
-References: <alpine.DEB.2.10.1603080255030.2674@buzzword-bingo.mit.edu>
- <56DEC4B4.2000902@web.de> <56DED770.4050603@drmicha.warpmail.net>
- <20160308143556.GA10153@sigill.intra.peff.net>
- <xmqqio0wk151.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.10.1603082127230.2674@buzzword-bingo.mit.edu>
- <xmqqvb4vgzxs.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Anders Kaseorg <andersk@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Mar 10 08:43:02 2016
+From: Marcus Kida <marcus.kida@gmail.com>
+Subject: Bug: git branch -D can be used to delete branch which is currently checked out
+Date: Thu, 10 Mar 2016 19:20:21 +1100
+Message-ID: <CE5AE06C-0909-414E-B901-7CCF3A259465@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 9.2 \(3112\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 10 09:20:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1advFM-0001vJ-4O
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 08:43:00 +0100
+	id 1advpf-0005pC-Jk
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 09:20:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932396AbcCJHmz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2016 02:42:55 -0500
-Received: from mout.web.de ([212.227.15.4]:51849 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752396AbcCJHmy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2016 02:42:54 -0500
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb003) with
- ESMTPSA (Nemesis) id 0Le4PE-1a3kXG1jP2-00pski; Thu, 10 Mar 2016 08:42:42
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
- Gecko/20100101 Thunderbird/38.6.0
-In-Reply-To: <xmqqvb4vgzxs.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:m07/Rf2kqu2bOxBVtLLCXrSlZBdXwXhv0mrcApjIlf7jAzt9zWU
- pOAtBPS6337W/viXg/kRYmz1HoGJPX4DXs/wxNVET/fvOP8tdenrDpbEz7jYTGCaoAAG7bQ
- ScamBIpRQgcQQ04a1//3NbIYGtfPF0nsv90NxpKmrN4s4Yc+VaExP+W6aMuqmRV5suqUU71
- jGmlZR8/F6zolPILV3z+A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:H84OQJ+B0Pk=:OVVCQ2R/fMJ/JWZFqGu7WI
- fBmynUqw/abMhm0iHToZmkG8BoqLcP4atGTsH7pC6QBvxaIIzIIv8mT5uPYIOOBr9VIrP9Boz
- Jh2X9H5vWAEkmogM7PDOR8zlXzAmDdvDpZNQex+P78GzYHtCAVQ/pPxjsiYYmzmPyYH1qYWYr
- Rb99tUzhZXaG+enw/EteJwlvM3wl//He3BO25p95ZgThKEwNJ7iO3w5uAg0f0C8E9iPdbV7Cq
- VDGTpRo9sa9QGWL0Q6p1+7WQlmGbMw/24wEG5i83fc5eD+xA44tB0dbdmHNRYVU+mb/fedDxC
- HYNYGgFMe24AVux9VD9EV2xPbFXsVnhHS8TOccQq2/tl1fwmX0SYiMv8VACwI+FQMJzWbNRMd
- EagzMSQkAjap2ANSaRyWamrJtm/8AwFrm99u47sUsCvYAJKak1vEzDwUTRbKZTry4HTMdbIeB
- nrFjjPX7tNOex5EeL0pUCF8GVEpc4hYHbBesDTi08IY8jby87ZY12L03arVP0MlMWO9o8u9/f
- pu/Z2XGyIUBN+o2xuWYi609yTF+Gpps3IK4kCTvg8qa7WWd9Acr0mtUaQwVq5RtOzTVl3LGvP
- cp9vydlp0zSvoTcGSNm+4+SmvmM0pYxsl9+YfWv/9PjJPUcatGSq6gQKnwBzzAYZvtLlEoslw
- CwWKNgDT0X9wYbvbTTu7D5NDw6YcbhI2+qSnxXlWoy+/9qD5NnBZN0NFFf9um99XcwWwxVsV1
- 7vOH5VA/VqR0VQg05EGZmrYpuMpfb0H3kLpgYZ3k3P0pfEyhyZ3S+TRd3f7z8BuglsujoaZM 
+	id S1753122AbcCJIU1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Mar 2016 03:20:27 -0500
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:34789 "EHLO
+	mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751711AbcCJIU0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Mar 2016 03:20:26 -0500
+Received: by mail-pf0-f177.google.com with SMTP id 129so63233436pfw.1
+        for <git@vger.kernel.org>; Thu, 10 Mar 2016 00:20:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:content-transfer-encoding:subject:message-id:date:to
+         :mime-version;
+        bh=98SKOAVxQRnmuiwVxIKTurpaKzzgh3hV2kfXhgCwD5I=;
+        b=nx1i3QukxjOQhilpfb1Y/F5nr6phuAV04yUG79qFXcQ5wzgDVJpDqN1vOU99BnQLAW
+         7i79UB0nM2jBF8ObNC3y1sFg5gBH/59qio2UZgSpUit5PMDxpU8pkTZeiRht5T6AgDcN
+         6t9QC21n6xwKkuAlWLjQVKrNIXTlstvNIV4Ml3IXG+Tbww7YpbYZTLbegVDshRXMohMd
+         8TiO7GnGP5UMEh9bOhUcQ2/tIdiSD2+oyg/XUbMyfrUvBO4HmDi7hXAkPb1lvd8xOYug
+         615kXqdpl7u2bi7TnTmhZf3FePw9GhQZ4p/tGxNrhxqoS57cZ27Hhtwfk8kbVH/kQ2X0
+         Qvmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:content-transfer-encoding:subject
+         :message-id:date:to:mime-version;
+        bh=98SKOAVxQRnmuiwVxIKTurpaKzzgh3hV2kfXhgCwD5I=;
+        b=ErvSePlkWRyo6X7M+NA3KS9FzbxUf+ZYwpy75iY6GkqaRTyQcaFUi5ecgUAsyhkT9f
+         /sWBL+TzNhUyN1GcdGkvCPGTFUKxWMczWjiz404BsJH6MNXjR0khQQ9D0rgKPjXAW95/
+         0XdjIdKjoMGNX79LrTP5kwmnAr9ALQ263cOqNWMGUBQPJ71ve3Ra9NTO8Ra9ioMRDEAP
+         mw49jdjsbXEq1apLwPXdJJWXKdkABf4jFD4cQROONi4YL1PNeeBNl/fZDOVkDLawId82
+         Iu8rV7dJt+3G3p4w5NCQnWA4pGM59FJNtjybgPGO3XQk+uMTUnYwwpSAL8Sg4Xl6FUFZ
+         M4ww==
+X-Gm-Message-State: AD7BkJIIXtOPOY5GPX/3tz1dA/qogygAK0sWldJJghY1ci5XJLfqP3cAnjvvVsUwtIkGrw==
+X-Received: by 10.98.93.12 with SMTP id r12mr3185294pfb.64.1457598025663;
+        Thu, 10 Mar 2016 00:20:25 -0800 (PST)
+Received: from [192.168.0.7] ([49.191.133.138])
+        by smtp.gmail.com with ESMTPSA id 23sm3462760pfs.34.2016.03.10.00.20.23
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 10 Mar 2016 00:20:25 -0800 (PST)
+X-Mailer: Apple Mail (2.3112)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288600>
 
-On 09.03.16 21:26, Junio C Hamano wrote:
-> Anders Kaseorg <andersk@mit.edu> writes:
-[]
->  sane_grep () {
-> -	GREP_OPTIONS= LC_ALL=C grep "$@"
-> +	GREP_OPTIONS= LC_ALL=C grep @@SANE_TEXT_GREP@@ "$@"
->  }
->  
->  sane_egrep () {
-> -	GREP_OPTIONS= LC_ALL=C egrep "$@"
-> +	GREP_OPTIONS= LC_ALL=C egrep @@SANE_TEXT_GREP@@ "$@"
->  }
->
+Testes on: 
 
-I always wondered why we do LC_ALL=C.
-Isn't that begging for trouble, when we feed UTF-8, ISO-8895-1
-or other stuff into a program and say LC_ALL=C at the same time ?
+Mac OS X 10.11.3 (El Capitan) using Git 2.6.4
 
-On my Debian Linux system I have
-LANG=en_US.UTF-8
+Issue:
 
-and
+git branch -D can be used to delete branch which is currently checked out
 
-$ locale -a
-C
-C.UTF-8
-en_US.utf8
-POSIX
---------------
+Steps to reproduce:
 
-Mac OS has LANG unset, and reports
-locale -a
-en_US
-en_US.ISO8859-1
-en_US.ISO8859-15
-en_US.US-ASCII
-en_US.UTF-8
-#(and a lot more )
-C
-POSIX
+inside a git repository:
 
------
-My Centos has 
-LANG=en_US.UTF-8
+$ git checkout -b feature/myAwesomeFeature
 
-and reports e.g.
-en_US
-en_US.iso88591
-en_US.iso885915
-en_US.utf8
-(And many more)
+-> you end up in feature/myAwesomeFeature branch
 
-In t0204 we have
-    LANGUAGE=is LC_ALL="$is_IS_locale" git init repo >actual &&
-which is based on
-	# is_IS.UTF-8 on Solaris and FreeBSD, is_IS.utf8 on Debian
-	is_IS_locale=$(locale -a 2>/dev/null |
-in 
-lib-gettext.sh
+$ git checkout FEATURE/myAwesomeFeature
 
-Is there something we can steal here ?
+-> you end up in FEATURE/myAwesomeFeature branch
 
+$ git branch -D feature/myAwesomeFeature branch
 
-http://pubs.opengroup.org/onlinepubs/007908799/xbd/envvar.html
+-> BOOM you just deleted the branch you were at. Congrats you repo is dirty again.
+
+Actual behaviour:
+
+It seems like checking out / deleting branches is case insensitive thus you can delete a branch you are on by just using a different capitalisation when specifying the branch to delete.
+
+Expected behaviour:
+
+error: Cannot delete the branch 'FEATURE/myAwesomeFeature' which you are currently on.
+
+Thank you, please don't hesitate to contact me in case you need more info or if this has already been fixed in the meantime.
+
+Cheers,
+Marcus
