@@ -1,86 +1,125 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: Git Smart HTTP using Nginx
-Date: Thu, 10 Mar 2016 15:07:14 +0100
-Message-ID: <1457618834.11765.12.camel@kaarsemaker.net>
-References: <56E1730D.4030603@benmezger.nl>
+From: Stephen Morton <stephen.c.morton@gmail.com>
+Subject: Re: git smudge filter fails
+Date: Thu, 10 Mar 2016 09:45:19 -0500
+Message-ID: <CAH8BJxFmAQtoF+1Q7Ub5qWnz5UewrPS4e8JQWms254hO_E05Hw@mail.gmail.com>
+References: <CAH8BJxHwxp2BtzGBqi6J24Kh0TTGEdCx=-Scu+bx5N-ZVpBZNQ@mail.gmail.com>
+	<20160310015939.GA12709@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: Ben Mezger <me@benmezger.nl>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 10 15:07:28 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 10 15:45:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ae1FL-0004z1-MM
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 15:07:24 +0100
+	id 1ae1qA-0000uh-T0
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 15:45:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751777AbcCJOHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2016 09:07:20 -0500
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:34037 "EHLO
-	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751710AbcCJOHS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2016 09:07:18 -0500
-Received: by mail-wm0-f41.google.com with SMTP id p65so30159752wmp.1
-        for <git@vger.kernel.org>; Thu, 10 Mar 2016 06:07:18 -0800 (PST)
+	id S1752050AbcCJOpY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Mar 2016 09:45:24 -0500
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:36899 "EHLO
+	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751724AbcCJOpW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Mar 2016 09:45:22 -0500
+Received: by mail-wm0-f52.google.com with SMTP id p65so31769250wmp.0
+        for <git@vger.kernel.org>; Thu, 10 Mar 2016 06:45:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=pfyShyZ8dV4f3kHbuv1jCePkZFAYyRIxqe2iQdp1kfY=;
-        b=noS/njSb8sHZC4aQt4f9NjiHqZxepxhN/tdxQZQHSa4DSkoDG7cpZx1BbcltjY9w0v
-         cccpxHkzviJwTMUfT+79tM1UUblSP8dEidu1ehxq+KeIn4jyogqKsA8Prswbo6sQlErX
-         7aAU72JsYnMtT6xmDvM6O257VNU4Th+eUo2clfZSx1gV+EXljfWebUl+L87oqkfvTzyR
-         Usib39W2Q+63S8Hi8wDMZc/1NPfb3giCOsPye1mrFzHANONUoQdCIK0B36dl0UAXvwKw
-         23/ZEWvMmI2gzS3OHgJktYD1biwZNwMIGi9oX0z3h3DK09SLE0GABzBFTjAPVl9BtkLB
-         aB4w==
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=8WjDPdxCFFjQqkmZlyr6nz8EeE0so7LgWD+CphDCBKE=;
+        b=FtvpeXwfNAPn5wTLYK+WHBH+e66W1jYDipB7iZtSpt7a3/gmsszRdBr/Jvhx/vqStC
+         P+DPb5RjJqcR0HtDyPLRzYzbUFpjhtFOBYkfGQ1LlV9prFoEakauTbwV7IBKgp75+nqS
+         SJyqnX6w0Rxq42kwIX6zUFZvV2ErGojRCQQY0uLFQl5QSv7MWsDUhS/DSnAVI/iHk4Kx
+         W37g1e3VkZ73NIKf5EIN+Q2+JXZSqW44AtoCGzQdV8RblIkvDQPBGlrWdPyksBLad277
+         p3rTM39NmA5Qfkr68lNCDJ7xfb/gYFAV0J/ehTGacn4rKbtLbnGShC9wtgOx27IIHyzR
+         +GRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=pfyShyZ8dV4f3kHbuv1jCePkZFAYyRIxqe2iQdp1kfY=;
-        b=TpO3M7ASG9nSzGFzLh/x3IQHRrl9zCEZeSWvedVxvFBBCp2Z/bKkb8+ImnqmxPToCy
-         TKfaJQn+IkR3mfgtrTNAtoEf2O8EgZBWck1b3cG4dOOXW48mhOFw6PgTR+PdreZCLJdE
-         OyPP8XsEV6VLrnLBl8ew2aqWbQQEQn6mefkmcOrwzoJtH0jB0E2gPZua75kz0Qq3WLEj
-         VkxVxeGGMKDig/KaOmvqLVs3XUCdIR1xZQfeaxaMGygrhEAb4BOpLJxIa02Ii/uyhILN
-         eC93bpv87A9ZUcQr9NEvyH1Lw1U+NjNLtVuUp/4q+2xjdQdffXSJQQWHEJlqoyBvj1yz
-         FuoA==
-X-Gm-Message-State: AD7BkJLiOPh5m7e66WN/VxV4u8UkMFze3JJh/FZYdAK9NIVO2/r2wG+NBJ6PiTCji/n0/w==
-X-Received: by 10.28.51.9 with SMTP id z9mr3951688wmz.59.1457618836945;
-        Thu, 10 Mar 2016 06:07:16 -0800 (PST)
-Received: from seahawk.local (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id cb2sm3737392wjc.16.2016.03.10.06.07.15
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 10 Mar 2016 06:07:15 -0800 (PST)
-In-Reply-To: <56E1730D.4030603@benmezger.nl>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=8WjDPdxCFFjQqkmZlyr6nz8EeE0so7LgWD+CphDCBKE=;
+        b=Ls7SlgZh61qT1ibyEG2lDox4oRzbX1k2hAhZJOmHdrO+ahubWYUUAVPKFrXFTDuCv0
+         eojkuIh6ae4FmDaI27nM1q+Ah6vpEKLQFXOXcfXo6J/2X0F34W8LygPe80J4wK6bBJLA
+         dw9tsBMrbCzStEPjqckefRVxqEluA1SCfkSVm0eK5NMekUGmnRw8Ff34OL1+e3qyZddB
+         oZgtCHlpHQEhPboOJCvJUHqHSHUjj5dtFVbEVPmfOBbKwvMfdb1q0SUJTbGDGIE26idC
+         xkaAvY4N71ynV/4eXn4cGgGBs+9jGG0hnX0opVcNJhk41KeFD9Ebl5yl34/z86Mie/U8
+         g/hQ==
+X-Gm-Message-State: AD7BkJKJqxZcDCbt4RqD0MZ0moAExxLnE750NR0brFiC/JjWujQGFX+YQ0mOjBt6x7ba9YoSf8piqZdUnevdIg==
+X-Received: by 10.194.83.42 with SMTP id n10mr4401600wjy.20.1457621119792;
+ Thu, 10 Mar 2016 06:45:19 -0800 (PST)
+Received: by 10.194.63.82 with HTTP; Thu, 10 Mar 2016 06:45:19 -0800 (PST)
+In-Reply-To: <20160310015939.GA12709@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288625>
 
-On do, 2016-03-10 at 10:13 -0300, Ben Mezger wrote:
+I am a bit confused because this is basically the example used in
+ProGit [1] and it is fundamentally broken. In fact, if I understand
+correctly, this means that smudge filters cannot be relied upon to
+provide any 'keyword expansion' type tasks because they will all by
+nature have to query the file with 'git log'.
 
-> The git-scm.com only uses apache2 as an example of setting Git's
-> Smart
-> HTTP, and searching the web for the Nginx's config only gives me old
-> configs or not-functional configurations. Has anyone managed to get
-> Smart HTTP to work with Nginx and could give me a sample of the
-> .conf?
 
-This works for me, using fcgiwrap:
+(Note that although in my example I used 'git checkout', with an only
+slightly more complicated example I can make it fail on 'git pull'
+which is perhaps a much more realistic use case. That was probably
+implied in your answer, I just wanted to mention it.)
 
-    location ~ ^.*/(HEAD|info/refs|objects/info/.*|git-(upload|receive)-pack)$ {
-        fastcgi_pass unix:/var/run/fcgiwrap.socket;
-        fastcgi_param SCRIPT_FILENAME   /usr/lib/git-core/git-http-backend;
-        fastcgi_param PATH_INFO         $uri;
-        fastcgi_param GIT_PROJECT_ROOT  $repo_root;
-        fastcgi_param REMOTE_USER $remote_user;
-        include fastcgi_params;
-    }
+Steve
 
--- 
-Dennis Kaarsemaker
-http://www.kaarsemaker.net
+[1] https://git-scm.com/book/en/v2/Customizing-Git-Git-Attributes
+
+
+
+On Wed, Mar 9, 2016 at 8:59 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Mar 09, 2016 at 01:29:31PM -0500, Stephen Morton wrote:
+>
+>> git config --local filter.dater.smudge 'myDate=`git log
+>> --pretty=format:"%cd" --date=iso -1 -- %f`; sed -e
+>> "s/\(\\$\)Date[^\\$]*\\$/\1Date: $myDate \\$/g"'
+>
+> Your filter is running "git log" without a revision parameter, which
+> means it is looking at HEAD.
+>
+> And here....
+>
+>> git checkout no_foo
+>> git checkout master
+>> cat foo.c
+>> #observe keyword expansion lost
+>
+> You are expecting this second one to do:
+>
+>   1. Switch HEAD to "master".
+>
+>   2. Checkout files which need updating. Looking at HEAD in your filter
+>      then examines "master", and you see the commit timestamp of the
+>      destination.
+>
+> But that isn't how it is implemented. Checkout will handle the file
+> checkout _first_, as that is the part that is likely to run into
+> problems (e.g., rejecting a switch because it would lose changes in the
+> working tree). Only at the very end, after the change to the working
+> tree has succeeded, do we update HEAD.
+>
+> I think the order you are expecting is conceptually cleaner, but I don't
+> think we would want to switch it around (for reasons of efficiency and
+> robustness). And I don't think we would want to make a promise about the
+> ordering to callers either way, as it binds our implementation.
+>
+> So is there a way to reliably know the destination of a checkout? My
+> first thought was that we could add a placeholder similar to "%f" that
+> your filter could use. I'm not sure how we would handle the corner cases
+> there, though (e.g., do we always have a "destination" to report? If
+> not, what do we give the script?).
+>
+> I suspect you could also hack something together with a post-checkout
+> script, though it would probably be a lot less efficient (and might also
+> have some weird corner cases).
+>
+> -Peff
