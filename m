@@ -1,97 +1,75 @@
 From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: [PATCH/RFC v3] add a commit.verbose config variable
-Date: Thu, 10 Mar 2016 18:58:48 +0000
-Message-ID: <0102015361e5441b-bbc448b5-7307-451d-a951-f016f7ae4b1d-000000@eu-west-1.amazonses.com>
+Subject: Re: [PATCH/RFC v3] add a commit.verbose config variable
+Date: Fri, 11 Mar 2016 01:16:45 +0530
+Message-ID: <CAFZEwPNYFBXrUUt9sgHtOYvUVZwQYV-VbyNLWzMz5MFFqH+CkA@mail.gmail.com>
+References: <0102015361e5441b-bbc448b5-7307-451d-a951-f016f7ae4b1d-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Cc: Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Eric Sunshine <sunshine@sunshineco.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 10 20:14:58 2016
+X-From: git-owner@vger.kernel.org Thu Mar 10 20:46:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ae62w-0003DU-0j
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 20:14:54 +0100
+	id 1ae6Xq-00049E-RN
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 20:46:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753083AbcCJTOc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2016 14:14:32 -0500
-Received: from a6-243.smtp-out.eu-west-1.amazonses.com ([54.240.6.243]:46609
-	"EHLO a6-243.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752985AbcCJTO2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Mar 2016 14:14:28 -0500
-X-Greylist: delayed 938 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Mar 2016 14:14:28 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1457636328;
-	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=kGodO5U71V39l6RMj6eROlmc8ssAfnmHR8kw2SfRpIU=;
-	b=LFqo9G4dy5esR/lo+EaZmlU8zMerlde3dUdjlUtA/dJ/tJqifwIO4/udPYDg33hN
-	wZ9kEDJVwFzx/X1fLmLqN3cwc9Wq9MKm5SG8GvQhybHQDINjN0eBRjCtUixeGbOonxW
-	lOSxJ6KXf5qv9yMIhz5HviiyzjYmE73Rk504Mois=
-X-SES-Outgoing: 2016.03.10-54.240.6.243
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+	id S1753234AbcCJTqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Mar 2016 14:46:47 -0500
+Received: from mail-yw0-f175.google.com ([209.85.161.175]:35573 "EHLO
+	mail-yw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752736AbcCJTqq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Mar 2016 14:46:46 -0500
+Received: by mail-yw0-f175.google.com with SMTP id g127so76483726ywf.2
+        for <git@vger.kernel.org>; Thu, 10 Mar 2016 11:46:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=M60vix/VwaBSoghR0zaketuoUqqQgZNcC8P8o+lsO3I=;
+        b=DWxA6dDx5RsbrjKffKD9m8UJnN3olvzX7ID8UM1STz7PkAE1K+IdFA0S1RKuTywQWy
+         2KDFHj/cqqxforLoSSxnqMNinmQShqnO2cPGq/GxcfCI/HdA3tUZSqvi021nhTBDDR06
+         9vwnAUiuHO5+WGHuD3HCzrNobehAiEGBXVNslzLdMGHZ8B+OHx4wmBW0p058NY/tgODw
+         or5PrzjJVsWNHeHdiLGR0GmX+zkXotwRq775eKlsA6bjWE+dC929gb3ZBxhxjQp/rGgV
+         Emn1ya1xOuKF2QP2LxkgteqRy+8GESz/stnuH4oT48FacjUoHrG2BL+ny6n7Vn2pZ1eN
+         rtvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=M60vix/VwaBSoghR0zaketuoUqqQgZNcC8P8o+lsO3I=;
+        b=VUV6WAPDyjUU4HO8RLJF92xiYF3jzGGo11gS83jSJmY+rhXzoWhNmmEyVbcsHivLct
+         vS2HwigmjYWnbujJVM54f7kZ3pawaKjkeDZ641t0Wt6tfuN1yNgyaSuv7AoRjo/kKBHi
+         JBSFxMow08sNV+tfyX2UXaoF1aIJrq2hQmtIPRUCf1wwWsc8fYocHvWBFUUmMXW4j+P9
+         AW2Bn1On94iKU9S7QcjXJInqBSYzr0Pua4Qt9TKx2rbg4osloc3TtQWk+WvSerf8sG2v
+         TP6Gzt9iuTE8W604SILB2LqN3gq0Xrnfz8TRBjmH+0Lu53p6xzf9v/GOC7Khaw12HxfA
+         5KBA==
+X-Gm-Message-State: AD7BkJJOvy1s1YxGLbJJdSx9DlVQ33YzQHg4GO4/quCoE3HEqu9W7eXpz2kxy3C4o85Fn9bbFqk3EwuYoaChdw==
+X-Received: by 10.129.9.214 with SMTP id 205mr2859087ywj.53.1457639205139;
+ Thu, 10 Mar 2016 11:46:45 -0800 (PST)
+Received: by 10.13.203.137 with HTTP; Thu, 10 Mar 2016 11:46:45 -0800 (PST)
+In-Reply-To: <0102015361e5441b-bbc448b5-7307-451d-a951-f016f7ae4b1d-000000@eu-west-1.amazonses.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288635>
 
-Since many people always run the command with this option, it would be
-preferrable to specify it in the configuration file instead of passing
-the option with `git commit` again and again.
+Older versions of this patch can be found at :-
+[v2] : http://thread.gmane.org/gmane.comp.version-control.git/288569
+[v1] : http://thread.gmane.org/gmane.comp.version-control.git/287540
 
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
----
- Documentation/config.txt     | 4 ++++
- Documentation/git-commit.txt | 3 ++-
- builtin/commit.c             | 4 ++++
- 3 files changed, 10 insertions(+), 1 deletion(-)
+The changes are :
+ - Remove the concept of override-verbose
+ - Add the git_config_bool to the method git_status_config instead of cmd_commit
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 01cca0a..9b93f6c 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1110,6 +1110,10 @@ commit.template::
- 	"`~/`" is expanded to the value of `$HOME` and "`~user/`" to the
- 	specified user's home directory.
- 
-+commit.verbose::
-+	A boolean to specify whether to always include the verbose option
-+	with `git commit`. See linkgit:git-commit[1].
-+
- credential.helper::
- 	Specify an external helper to be called when a username or
- 	password credential is needed; the helper may consult external
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 9ec6b3c..3dcaac7 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -290,7 +290,8 @@ configuration variable documented in linkgit:git-config[1].
- 	what changes the commit has.
- 	Note that this diff output doesn't have its
- 	lines prefixed with '#'. This diff will not be a part
--	of the commit message.
-+	of the commit message. To activate this option permanently, the
-+	configuration variable `commit.verbose` can be set to true.
- +
- If specified twice, show in addition the unified diff between
- what would be committed and the worktree files, i.e. the unstaged
-diff --git a/builtin/commit.c b/builtin/commit.c
-index b3bd2d4..63ee0f2 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1310,6 +1310,10 @@ static int git_status_config(const char *k, const char *v, void *cb)
- 			return error(_("Invalid untracked files mode '%s'"), v);
- 		return 0;
- 	}
-+	if (!strcmp(k, "commit.verbose")) {
-+		verbose = git_config_bool(k, v);
-+		return 0;
-+	}
- 	return git_diff_ui_config(k, v, NULL);
- }
- 
+I have to yet figure out how to write the tests for this. I will see
+the examples that Matthieu Moy mentioned for their implementation.
 
---
-https://github.com/git/git/pull/205
+Regards,
+Pranit Bauva,
+IIT Kharagpur
