@@ -1,150 +1,89 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [BUG?] fetch into shallow sends a large number of objects
-Date: Thu, 10 Mar 2016 19:20:20 +0700
-Message-ID: <20160310122020.GA24007@lanh>
-References: <20160307221539.GA24034@sigill.intra.peff.net>
- <xmqqio0xn93q.fsf@gitster.mtv.corp.google.com>
- <20160308121444.GA18535@sigill.intra.peff.net>
- <CACsJy8Dk_g1O98UsDaeVS3VXmE2Mn5aR+w1OiFir+QwyJYLVZQ@mail.gmail.com>
- <20160308132524.GA22866@sigill.intra.peff.net>
+From: Ben Mezger <me@benmezger.nl>
+Subject: Git Smart HTTP using Nginx
+Date: Thu, 10 Mar 2016 10:13:49 -0300
+Message-ID: <56E1730D.4030603@benmezger.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 10 13:20:40 2016
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="J5vIi53xGjUF6nFPjnPdmsxxPOmGW1BVt"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 10 14:14:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adza3-0001XY-1J
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 13:20:39 +0100
+	id 1ae0Pv-00078V-44
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 14:14:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753802AbcCJMU1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2016 07:20:27 -0500
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:35307 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753779AbcCJMUY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2016 07:20:24 -0500
-Received: by mail-pa0-f41.google.com with SMTP id td3so39374967pab.2
-        for <git@vger.kernel.org>; Thu, 10 Mar 2016 04:20:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=3xd8K/3bXcXUV4mscP3tB//LaVa2iMYnJyCWd8oz+ZU=;
-        b=sI04h7qXSed6LlAkkkFinJm05+HmLuKeH1kgtWpwxKU1ZxFi+c5hMenC/UQ9vIEhDi
-         VlRqBeQHy0dCSI+znNMBJYN2W9pnPWkZTwPD3+ZDa9SLZHEKo4qAeHQysrGGhIZ2bRhx
-         8kO8WI+t7cAdhjqLzyQqXvk0HgWoyetbi1U/oeTEtGn0AI/z8r1hEtDSs5UkNQ0R/3B6
-         yq57NCsMELel1DVXWk0uspliGc7dg6+YGgNh1aVMQaFep0qAeJuu2f15dvwmJ8HhpLSX
-         p8uGU/pQ7VNkyOHsmMh5ZVdqg94GZhjp160L5WjRNYO8mGznsk7x1SJdx5aub/VXEsHT
-         O+Fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3xd8K/3bXcXUV4mscP3tB//LaVa2iMYnJyCWd8oz+ZU=;
-        b=ZmvI7L2gNMZiWkZ/zx6VocH9hL1rD9lFw+INcjeA/JZzjjpD0O4VrZidW6oLs7qT1b
-         6NM6ZQ04+Gu0tE6hf9tuM2HGZfrZLo8O0BgI0NHn0gELUZeSa36FrHlPkFFGbJ0X5scD
-         H8KpDquLNRBQLUCoOJMToqUpNRhjRfrlrtYaQfWPH2uPHf8zC1V6lZFzal9ssT2odERE
-         JvZH0kjENPilCa0p6U3BK25DZcMkRTFKUBlY3Y40qiWPWRmMHAJtKV5q2cOQRE8vbpIu
-         esXpqvm/51xMJG+sA0TX1Yhh7ccxCDiOkgE3MduRkWJ07eRng7LIl55MFzT/IGh1IQ8I
-         RsaQ==
-X-Gm-Message-State: AD7BkJLg5rtmP1hZi/vtCUbjK94coRr/CuhbZFZ9rVpSW9Tat2i5Ap/G3WQ2kIyRMiweEQ==
-X-Received: by 10.66.246.165 with SMTP id xx5mr4439138pac.87.1457612423130;
-        Thu, 10 Mar 2016 04:20:23 -0800 (PST)
-Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id v9sm5364679pfi.50.2016.03.10.04.20.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 Mar 2016 04:20:21 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Thu, 10 Mar 2016 19:20:20 +0700
-Content-Disposition: inline
-In-Reply-To: <20160308132524.GA22866@sigill.intra.peff.net>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751186AbcCJNOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Mar 2016 08:14:10 -0500
+Received: from mx2.mailbox.org ([80.241.60.215]:54242 "EHLO mx2.mailbox.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750997AbcCJNOI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Mar 2016 08:14:08 -0500
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [80.241.60.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mx2.mailbox.org (Postfix) with ESMTPS id E99F74353A
+	for <git@vger.kernel.org>; Thu, 10 Mar 2016 14:14:05 +0100 (CET)
+X-Virus-Scanned: amavisd-new at heinlein-support.de
+Received: from smtp1.mailbox.org ([80.241.60.240])
+	by hefe.heinlein-support.de (hefe.heinlein-support.de [91.198.250.172]) (amavisd-new, port 10030)
+	with ESMTP id UJePCfXJYbAt for <git@vger.kernel.org>;
+	Thu, 10 Mar 2016 14:14:04 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288620>
 
-On Tue, Mar 08, 2016 at 08:25:24AM -0500, Jeff King wrote:
-> I think this patch does roughly the right thing:
-> 
-> diff --git a/upload-pack.c b/upload-pack.c
-> index 4859535..da76f70 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -833,12 +833,41 @@ static void receive_needs(void)
->  		deepen_by_rev_list(av.argc, av.argv, &shallows);
->  		argv_array_clear(&av);
->  	}
-> -	else
-> -		if (shallows.nr > 0) {
-> -			int i;
-> -			for (i = 0; i < shallows.nr; i++)
-> -				register_shallow(shallows.objects[i].item->oid.hash);
-> +	else if (shallows.nr > 0) {
-> +		struct rev_info revs;
-> +		struct argv_array av = ARGV_ARRAY_INIT;
-> +		struct commit *c;
-> +		int i;
-> +
-> +		argv_array_push(&av, "rev-list");
-> +		argv_array_push(&av, "--boundary");
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--J5vIi53xGjUF6nFPjnPdmsxxPOmGW1BVt
+Content-Type: multipart/mixed; boundary="tOxhO4LwvS3LeHmuSTRLJmbad2emW49p8"
+From: Ben Mezger <me@benmezger.nl>
+To: git@vger.kernel.org
+Message-ID: <56E1730D.4030603@benmezger.nl>
+Subject: Git Smart HTTP using Nginx
 
-Nice. I didn't know about --boundary. But will it work correctly in
-this case?
+--tOxhO4LwvS3LeHmuSTRLJmbad2emW49p8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-       --- B ---- C ---- F
-          /      /
-     --- D ---- E ---- G
+Hi all,
 
-C and D will be current shallow cut points. People "want" F and G.
-"rev-list --boundary F G ^C ^D" would mark E as boundary/shallow too,
-correct? If so the history from G will be one depth short on a normal
-fetch.
+The git-scm.com only uses apache2 as an example of setting Git's Smart
+HTTP, and searching the web for the Nginx's config only gives me old
+configs or not-functional configurations. Has anyone managed to get
+Smart HTTP to work with Nginx and could give me a sample of the .conf?
 
-> +		for (i = 0; i < want_obj.nr; i++) {
-> +			struct object *o = want_obj.objects[i].item;
-> +			argv_array_push(&av, oid_to_hex(&o->oid));
->  		}
-> +		for (i = 0; i < shallows.nr; i++) {
-> +			struct object *o = shallows.objects[i].item;
-> +			argv_array_pushf(&av, "^%s", oid_to_hex(&o->oid));
-> +		}
-> +
-> +		init_revisions(&revs, NULL);
-> +		setup_revisions(av.argc, av.argv, &revs, NULL);
-> +		if (prepare_revision_walk(&revs))
-> +			die("revision walk setup failed");
-> +
-> +		while ((c = get_revision(&revs))) {
-> +			if (!(c->object.flags & BOUNDARY))
-> +				continue;
-> +			register_shallow(c->object.oid.hash);
-> +			packet_write(1, "shallow %s",
-> +				     oid_to_hex(&c->object.oid));
-> +		}
+Regards,
 
->  ...
-> _But_, the client is not prepared to handle this. We send "shallow"
-> lines that it is not expecting, since it did not ask for any depth. So I
-> think this logic would have to kick in only when the client tells us to
-> do so.
+Ben Mezger
 
-Urgh.. not good. Perhaps a new extension to let the server know the
-client can handle spontaneous "deepen" commands and only activate new
-mode when the extension is present?
 
-> So what next? I think there's some protocol work here, and I think the
-> overall design of that needs to be considered alongside the other
-> "deepen" options your topic in pu adds (and of which I'm largely
-> ignorant). Does this sufficiently interest you to pick up and roll into
-> your other shallow work?
+--tOxhO4LwvS3LeHmuSTRLJmbad2emW49p8--
 
-I can pick it up if you are busy with other stuff. But I'm also having
-a couple other topics at the moment, so it may not progress very fast.
---
-Duy
+--J5vIi53xGjUF6nFPjnPdmsxxPOmGW1BVt
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBCgAGBQJW4XMNAAoJENGNPNyhY4OGYjoP/0SkNMwvb4DV1hx7sI+AT8vB
++jAwON57X5YagfNvd2GWQP5jSdRj2iqw+wQKunQCz57UEig5LygxHYiPdQn9XdHR
+ahZtX3Fpz7LcDMcc+0/mlmdgaan6T5PAmKiv2CT+KF9eGUWcVU1tKImYOtNDR34h
+q4G5eRqYjCAuATeHSI5kgyLZ4q0Xo752TE4PIQMrf6iaUXz0NP4/IPr761Vsv7Ty
+TS6O4olPRJpwr3+Q6JCNEdOYNq1mE7zELh9y6fylj2ct9jtFX79WGq82rseQvUkO
+biNN/uxi1MqZ8OXAHQI8tjq9kRSolUSAS9TM7P8VR5y2AdeHzYUokGTchYRywveD
+eXD+DI0Q7Uz4icMcnFx4zQmHdZfo55s9cQapp/o3EIEIG72JLm4eGbg7d6voC8XC
+IKcvJIYqWT03BCRaawx50Ex0sQAO9YdcTPisA674j25qXnC4gDWN5TolmILwlajs
+BVWlyG77N75S73WLe6M3wMC0Z1twK6Y1BjIotDUMMBga24X0tZuawIbkZAXgKzmP
+OUWVmX5Z+sn7oqUFeI1MM5AEVeVLG/KQKiFrh4tJyobEMvqPM4XqpEXceyBRH/fY
+lVqXoucjjlDM+AwewIChzQAfHWLKe+dvuWWzaxsNg19qb2BLQ84fK+wT0H6D1NgO
+dpnW+0V2lZSX00e3rLfP
+=JuBe
+-----END PGP SIGNATURE-----
+
+--J5vIi53xGjUF6nFPjnPdmsxxPOmGW1BVt--
