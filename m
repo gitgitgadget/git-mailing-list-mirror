@@ -1,98 +1,114 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 01/19] trace.c: add GIT_TRACE_PACK_STATS for pack usage statistics
-Date: Thu, 10 Mar 2016 17:59:43 +0700
-Message-ID: <CACsJy8BdbhPXAoP9ZSxtK3+gnmDmfJ_wB1w2od2QPL5HACRfWA@mail.gmail.com>
+Subject: Re: [PATCH 04/19] index-helper: new daemon for caching index and
+ related stuff
+Date: Thu, 10 Mar 2016 18:17:30 +0700
+Message-ID: <CACsJy8CqOOB6C6bWkVSEvtPuHxZR_avSb7z7hgo-vtv3gu44Cg@mail.gmail.com>
 References: <1457548582-28302-1-git-send-email-dturner@twopensource.com>
- <1457548582-28302-2-git-send-email-dturner@twopensource.com>
- <xmqq4mcfgsxn.fsf@gitster.mtv.corp.google.com> <1457568342.13557.11.camel@twopensource.com>
+ <1457548582-28302-5-git-send-email-dturner@twopensource.com>
+ <xmqqtwkffdus.fsf@gitster.mtv.corp.google.com> <xmqqpov3fdb6.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Turner <dturner@twopensource.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu Mar 10 12:00:24 2016
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 10 12:18:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adyKK-0008Lx-CO
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 12:00:20 +0100
+	id 1adybZ-0004wu-Jx
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 12:18:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965528AbcCJLAR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2016 06:00:17 -0500
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:36677 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932519AbcCJLAO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2016 06:00:14 -0500
-Received: by mail-lb0-f179.google.com with SMTP id x1so106398345lbj.3
-        for <git@vger.kernel.org>; Thu, 10 Mar 2016 03:00:13 -0800 (PST)
+	id S965675AbcCJLSG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Mar 2016 06:18:06 -0500
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:35177 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932895AbcCJLSC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Mar 2016 06:18:02 -0500
+Received: by mail-lb0-f180.google.com with SMTP id bc4so106885747lbc.2
+        for <git@vger.kernel.org>; Thu, 10 Mar 2016 03:18:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=E0LEgc5dv4aqkpmkVCKwsO0p496V9se3bRwjOMnHAS8=;
-        b=oo7Dj/53WkdEIHHs2oZrj+f42Fy9RtTFTGX8rlext5SxsHrbSVW61zKwc/4x5+oPcR
-         eNs6c7NccTt9yVsZw5S9Xi0nQjyDhBnqk3+rHJKKI01eUqJ023+8r09DIdK3ebttuIfc
-         eRELmQAfVzeRj5gjvtNq/vCyDbbW3dabVQGrjbVayB8OFo3N7rk7O07ungu+P4aqYlR6
-         iS8kgupToUHq+bBm3m8BhJRuBYQGnZfWQenOP5TDwPMUkT+l4itnmg4H9GiAGc+zFFzD
-         9AVkvqS+kobyfeaGNq28wTP4O9ui6Y3UV9DQ60xfl5t56HtUcXi6qUNkS6rEOeVDqQsC
-         mv5A==
+         :cc:content-transfer-encoding;
+        bh=ln1F/KQs72Aw63vh06IMiopadajt8+HMhDIJ+SFFexI=;
+        b=TaCXKafO59FGtcrDgXfwnjC0oVyUzw48JrrevDSwE8/TJmMuojR1QNhUNtm3Tz0tIe
+         tT23YzH+P/40GWSF/us8OV9uXYeNpiX9rA49t9bfNt3HZ0s/AySZNjTmjzZlBW/41tSF
+         snKRnHhOok5Hcd7uHqv2+nZZrlxAOFYD7iS3GJEa4eahO/dhm1tTH5u50ypbIA1rbYxS
+         0ovVkQcvMqVE/uNa5Mbdhjeb56JM+4fR9EuT1NWURXa4FQrAG8Bj3KeHNxhtWnyg2Lr/
+         TWA51j1rULJVECmiiRZs87PTscRIRJTmHTqMjeF9SifdFcJkTp4hsO8N71fQ5Bfk+SQU
+         1gaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=E0LEgc5dv4aqkpmkVCKwsO0p496V9se3bRwjOMnHAS8=;
-        b=d9RQuCFOh8HEC/0TpyNYi/cv+j2msmdCPxZD/Adx19PugAxREuXb47g6HETJF2uQTv
-         UTpkQUetXHyfDpKzhR9365i/VIneiP2DR43vzBH/ty2BKrUDZ/tLOkMMv41qk58x/0u/
-         wO+gJTvilOWdwI40+d7bE1RUXI3vHegM21vHCxl32VfvLef16i1buEY/ehqVrEvXeu8H
-         pbOQ7mTk/h+bw+SWSOz1kkXvHPrs345ZlPiCtOawz8mG7KR/9feZ1yosLofgLtvPI78b
-         mANRxy8LBA1QEUq5LP8ozDBiqPbCBwXDhkFJgwNwFfjHgHnTsVXhK7awyjSWrxmJRAoe
-         nxPw==
-X-Gm-Message-State: AD7BkJKANuDrfmmmEoHhMHJOgsXkD3czuAGbM72nfi7ZO3CsidQjQwFdi4vk7YSljM63zy3Crg4zXOeynLbX0g==
-X-Received: by 10.112.171.163 with SMTP id av3mr947558lbc.145.1457607613131;
- Thu, 10 Mar 2016 03:00:13 -0800 (PST)
-Received: by 10.112.167.10 with HTTP; Thu, 10 Mar 2016 02:59:43 -0800 (PST)
-In-Reply-To: <1457568342.13557.11.camel@twopensource.com>
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ln1F/KQs72Aw63vh06IMiopadajt8+HMhDIJ+SFFexI=;
+        b=Y+264tLmkT1xpdxbELiS/HfewopHaIzKD6sWHSyr5w1Xpub/oPxGRc6r5rTQljfTXw
+         Y0CRRFzMDKppnE8Ov9UsAcWkQMEQ3dcpdvUtdf0h2hF547Gn2IEk3qkpbVYHjkKJ9nFb
+         uoEjIJtPYlffrhM75ibqNCRpfCFWqfyYrCWA6SmpgSKbs3NT4s1Qwg+J4Zy4qr5l13I4
+         p8ZmEL6GG0q+NnVO3IZ18VpEGoHy6zOeE4mR2gf3bGaFGXZHyX7pidDjk6ESTvG8stnR
+         86g9tyVGRHsrTnam64aDEQOHfLaFdc0TmBM8XUhOimQjLxPQtyi8O/KwbvapV62d6E64
+         zsqw==
+X-Gm-Message-State: AD7BkJIsudAnPViAt8JgJgFsOV9uoAw3v7LWSH1v8YBaRnj8nO6enZQ18vsj9whPaFFAV8rGbINOgVjWl2Kuvg==
+X-Received: by 10.112.130.41 with SMTP id ob9mr966283lbb.81.1457608680483;
+ Thu, 10 Mar 2016 03:18:00 -0800 (PST)
+Received: by 10.112.167.10 with HTTP; Thu, 10 Mar 2016 03:17:30 -0800 (PST)
+In-Reply-To: <xmqqpov3fdb6.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288613>
 
-On Thu, Mar 10, 2016 at 7:05 AM, David Turner <dturner@twopensource.com> wrote:
-> On Wed, 2016-03-09 at 14:58 -0800, Junio C Hamano wrote:
+On Thu, Mar 10, 2016 at 6:21 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
 >> David Turner <dturner@twopensource.com> writes:
-> ...
->> > trace_stats() is intended for GIT_TRACE_*_STATS variable group and
->> > GIT_TRACE_PACK_STATS is more like an example how new vars can be
->> > added.
-> ...
->
->> > +   pack_access_nr++;
->> >  }
 >>
->> This looks rather half-hearted, in that those who are interested in
->> this new number can run "wc -l" on the pack-access trace log without
->> adding a new "stats" anyway.  It may make the "stats" far more
->> useful to keep track of the summary information of what would be
->> written to the pack access log and add to the report_pack_stats()
->> output things like the average and median distance of seeks
->> (i.e. differences in the "obj_offset" into the same pack by two
->> adjacent pack accesse) and the variance, for example?
+>>> From: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+>>>
+>>> Instead of reading the index from disk and worrying about disk
+>>> corruption, the index is cached in memory (memory bit-flips happen
+>>> too, but hopefully less often). The result is faster read. Read tim=
+e
+>>> is reduced by 70%.
+>>>
+>>> The biggest gain is not having to verify the trailing SHA-1, which
+>>> takes lots of time especially on large index files.
 >
-> On reflection, I do not think I need this patch; it was in Duy's series
-> and the index stats patch would need to be rewritten slightly to get
-> rid of it, but I'm OK with that.  I wanted to make minimal changes to
-> Duy's patches, but I'd rather make larger changes than do work on
-> patches I don't need.
->
-> So unless Duy objects, I'm going to drop this from the series.
+> Come to think of it, wouldn't it be far less intrusive change to
+> just put the index on a ramdisk and skip the trailing SHA-1
+> verification, to obtain a similar result with the same trade off
+> (i.e. blindly trusting memory instead of being paranoid)?
 
-I wanted something to verify from the tests and this was the best I
-could come up. But since I added trace_printf_key(&trace_exclude,... I
-think that could serve better to show what's going on, and we can
-easily summarize from the trace if we want to. That's one option. If
-you can adjust the tests another way, I'm fine too.
--- 
+I'm straying off-topic again because this reminded me about lmdb :)
+=46or the record when I looked at lmdb I thought of using it as an inde=
+x
+format too. It has everything we wanted in index-v5. Good enough that
+we would not need index-helper and split-index to work around current
+index format. Though I finally decided it didn't fit well.
+
+On the good side, lmdb is b+ trees, we can update directly on disk
+(without rewriting whole file), read directly from mmap'd file and not
+worry about corrupting it. There's no SHA-1 verification either (and
+we can do crc32 per entry if we want too). It's good.
+
+But, it does not fit well the our locking model (but we can change
+this). And we sometimes want to create temporary throw-away indexes
+(e.g. partial commits) which I don't think is easy to do. And the
+reading directly from mmap does not give us much because we have to do
+byte endian conversion  anyway.
+
+Hmm.. on second thought, even though lmdb can't be the default format
+(for a bunch of other limitations), it can still be an option for
+super big worktrees, just like index-helper being an optional
+optimization. Hm.. hm.. if we can support lmdb as index format in
+addition to the current format, bringing back some work from Thomas..
+We may still need a daemon or something to deal with watchman, but the
+underlying mechanism is exactly the same... David, Junio, what do you
+think?
+--=20
 Duy
