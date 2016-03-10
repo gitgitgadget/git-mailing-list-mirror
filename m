@@ -1,106 +1,143 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git smudge filter fails
-Date: Thu, 10 Mar 2016 14:04:55 -0800
-Message-ID: <xmqqtwkec7lk.fsf@gitster.mtv.corp.google.com>
-References: <CAH8BJxHwxp2BtzGBqi6J24Kh0TTGEdCx=-Scu+bx5N-ZVpBZNQ@mail.gmail.com>
-	<20160310015939.GA12709@sigill.intra.peff.net>
-	<CAH8BJxFmAQtoF+1Q7Ub5qWnz5UewrPS4e8JQWms254hO_E05Hw@mail.gmail.com>
-	<20160310210544.GB30595@sigill.intra.peff.net>
+Subject: Re: [PATCH v3 2/2] mergetool: honor tempfile configuration when resolving delete conflicts
+Date: Thu, 10 Mar 2016 14:08:48 -0800
+Message-ID: <xmqqpov2c7f3.fsf@gitster.mtv.corp.google.com>
+References: <1457594039-22629-1-git-send-email-davvid@gmail.com>
+	<1457594039-22629-2-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Stephen Morton <stephen.c.morton@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 10 23:05:08 2016
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Joe Einertson <joe@kidblog.org>,
+	Charles Bailey <cbailey32@bloomberg.net>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 10 23:08:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ae8hd-00074B-ET
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 23:05:05 +0100
+	id 1ae8lM-0001jm-50
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 23:08:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932621AbcCJWFB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2016 17:05:01 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:65093 "EHLO
+	id S932536AbcCJWIw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Mar 2016 17:08:52 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64528 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932379AbcCJWE7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2016 17:04:59 -0500
+	with ESMTP id S932453AbcCJWIv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Mar 2016 17:08:51 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A50AB4B2BC;
-	Thu, 10 Mar 2016 17:04:57 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 643A34B38B;
+	Thu, 10 Mar 2016 17:08:50 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4EA9NN4084V1hFYA1oD912q3/jY=; b=p57VCu
-	4XUtZVq3LNQ8Vce8mYVJTEI4/sJyBphftVZ+K8TIO03GglfPNr0zHocP/OFAKfWZ
-	07897TasePiYE1X3lZ56fpDkzExcEpwbbe781sYGyPRcoSYsRCW+5G6L9frUX8x1
-	9US+lbwtO3D/15LRrMsRgkMerk+JhlpohhwWI=
+	:content-type; s=sasl; bh=gv8ZliKKpTJQN60BnCZnJXkehqE=; b=M1cIH4
+	4bxYhHg3f2DMcidh6geOD5mIAPoka2Sl9KTMrxpieVux8Hs2OdjwCS1ECGOOfu5a
+	QifTJiz9KWiknti2voPmoNXILLnh5aerXlTXpIwWzqwY7Pa5lhF+IeKCiLovoAHX
+	jhHsAkYywU7jazSHWC6UmUo3hSmWu/OmOR9Wo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WRV9DA7pWoxOPDt+SyL7hh8uP1Fic6MT
-	t32M6HYUYcYATrQiiIjUAxGl9WZXB0pii/FJ2XNnfp9WS5WOvHPXDF7C62OWdb52
-	nvX94KOMss4/0xalOXnA/7RBHw+WFw2Ok2N7x61FfgzQbjubzYnAOv1yEStKqdTt
-	qseGFsaSdRc=
+	:content-type; q=dns; s=sasl; b=RmNlcGAI0hxIk7u7UssK/OzRd2pxfaLj
+	Y+RlD6sjQuU8JicvbJafzOGo+GUBpT0QXRhWn50MY+ZnVVE06zXoD2pw6pqMLG2g
+	XW5DmKjObro1FpEmvhfPt6t3MOVMZdU7y/vzJg0CedL54cJ6slMKmfb5fhstGfbJ
+	Zilg/doiwKA=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9CBB04B2BB;
-	Thu, 10 Mar 2016 17:04:57 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5B2704B38A;
+	Thu, 10 Mar 2016 17:08:50 -0500 (EST)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 210654B2BA;
-	Thu, 10 Mar 2016 17:04:57 -0500 (EST)
-In-Reply-To: <20160310210544.GB30595@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 10 Mar 2016 16:05:44 -0500")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C73424B389;
+	Thu, 10 Mar 2016 17:08:49 -0500 (EST)
+In-Reply-To: <1457594039-22629-2-git-send-email-davvid@gmail.com> (David
+	Aguilar's message of "Wed, 9 Mar 2016 23:13:59 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2041F5C8-E70C-11E5-97AC-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: AAF27F3A-E70C-11E5-9766-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288651>
 
-Jeff King <peff@peff.net> writes:
+David Aguilar <davvid@gmail.com> writes:
 
-> On Thu, Mar 10, 2016 at 09:45:19AM -0500, Stephen Morton wrote:
+> Teach resolve_deleted_merge() to honor the mergetool.keepBackup and
+> mergetool.keepTemporaries configuration knobs.
 >
->> I am a bit confused because this is basically the example used in
->> ProGit [1] and it is fundamentally broken. In fact, if I understand
->> correctly, this means that smudge filters cannot be relied upon to
->> provide any 'keyword expansion' type tasks because they will all by
->> nature have to query the file with 'git log'.
+> This ensures that the worktree is kept pristine when resolving deletion
+> conflicts with the variables both set to false.
 >
-> Interesting. Perhaps I am missing something (I am far from an expert in
-> clean/smudge filters, which I do not generally use myself), but the
-> example in ProGit looks kind of bogus to me. I don't think it ever would
-> have worked reliably, under any version of git.
+> Signed-off-by: David Aguilar <davvid@gmail.com>
+> ---
+> Rebased to include tests and test fixes.
+
+Thanks.  Will queue after applying a single fix-up again.
+
 >
->> (Note that although in my example I used 'git checkout', with an only
->> slightly more complicated example I can make it fail on 'git pull'
->> which is perhaps a much more realistic use case. That was probably
->> implied in your answer, I just wanted to mention it.)
+>  git-mergetool.sh     | 11 ++++++++++-
+>  t/t7610-mergetool.sh | 25 +++++++++++++++++++++++++
+>  2 files changed, 35 insertions(+), 1 deletion(-)
 >
-> Yeah, I think the issue is basically the same for several commands which
-> update the worktree and the HEAD. Most of them are going to do the
-> worktree first.
-
-You can have a pair of branches A and B that have forked long time
-ago, and have a path F that has been changed identically since they
-forked, perhaps by cherry-picking the same change.  This happens all
-the time.
-
-If there were some mechanism that modifies the checked out version
-of F with information that depends on the history that leads to A
-(e.g. "which commit that is an ancestor of A last modified F?")
-when you check out branch A, it will become invalid when you do "git
-checkout B", because the path F will not change because they are the
-same between the branches.  In short, CVS $Id$-style substitutions
-that depend on the history fundamentally does not work, unless you
-are willing to always rewrite the whole working tree every time you
-switch branches.
-
-The smudge and clean filters are given _only_ the blob contents and
-nothing else, not "which commit (or tree) the blob is taken from",
-not "which path this blob sits in that tree-ish", not "what branch
-am I on" and this is a very much deliberate design decision made in
-order to avoid leading people to a misguided attempt to mimick CVS
-$Id$-style substitutions.
+> diff --git a/git-mergetool.sh b/git-mergetool.sh
+> index b06ae78..f67bab5 100755
+> --- a/git-mergetool.sh
+> +++ b/git-mergetool.sh
+> @@ -126,7 +126,12 @@ resolve_deleted_merge () {
+>  		case "$ans" in
+>  		[mMcC]*)
+>  			git add -- "$MERGED"
+> -			cleanup_temp_files --save-backup
+> +			if test "$merge_keep_backup" = "true"
+> +			then
+> +				cleanup_temp_files --save-backup
+> +			else
+> +				cleanup_temp_files
+> +			fi
+>  			return 0
+>  			;;
+>  		[dD]*)
+> @@ -135,6 +140,10 @@ resolve_deleted_merge () {
+>  			return 0
+>  			;;
+>  		[aA]*)
+> +			if test "$merge_keep_temporaries" = "false"
+> +			then
+> +				cleanup_temp_files
+> +			fi
+>  			return 1
+>  			;;
+>  		esac
+> diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+> index 39469d9..db723e8 100755
+> --- a/t/t7610-mergetool.sh
+> +++ b/t/t7610-mergetool.sh
+> @@ -279,6 +279,31 @@ test_expect_success 'mergetool produces no errors when keepBackup is used' '
+>  	: >expect &&
+>  	echo d | git mergetool a/a/file.txt 2>actual &&
+>  	test_cmp expect actual &&
+> +	! test -d a &&
+> +	git reset --hard HEAD
+> +'
+> +
+> +test_expect_success 'mergetool honors tempfile config for deleted files' '
+> +	test_config mergetool.keepTemporaries false &&
+> +	test_must_fail git merge move-to-b &&
+> +	echo d | git mergetool a/a/file.txt &&
+> +	! test -d a &&
+> +	git reset --hard HEAD
+> +'
+> +
+> +test_expect_success 'mergetool keeps tempfiles when aborting delete/delete' '
+> +	test_config mergetool.keepTemporaries true &&
+> +	test_must_fail git merge move-to-b &&
+> +	! (echo a; echo n) | git mergetool a/a/file.txt &&
+> +	test -d a/a &&
+> +	cat  >expect <<-\EOF &&
+> +	file_BASE_.txt
+> +	file_LOCAL_.txt
+> +	file_REMOTE_.txt
+> +	EOF
+> +	ls -1 a/a | sed -e "s/[0-9]*//g" >actual &&
+> +	test_cmp expect actual &&
+> +	git clean -fdx &&
+>  	git reset --hard HEAD
+>  '
