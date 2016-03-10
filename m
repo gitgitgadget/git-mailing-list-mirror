@@ -1,93 +1,101 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG?] fetch into shallow sends a large number of objects
-Date: Thu, 10 Mar 2016 16:40:42 -0500
-Message-ID: <20160310214042.GB32608@sigill.intra.peff.net>
-References: <20160307221539.GA24034@sigill.intra.peff.net>
- <xmqqio0xn93q.fsf@gitster.mtv.corp.google.com>
- <20160308121444.GA18535@sigill.intra.peff.net>
- <CACsJy8Dk_g1O98UsDaeVS3VXmE2Mn5aR+w1OiFir+QwyJYLVZQ@mail.gmail.com>
- <20160308132524.GA22866@sigill.intra.peff.net>
- <20160310122020.GA24007@lanh>
- <20160310211052.GC30595@sigill.intra.peff.net>
- <xmqqbn6mdnyn.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Sample pre-push hook can crash
+Date: Thu, 10 Mar 2016 13:43:08 -0800
+Message-ID: <xmqq37rydn6b.fsf@gitster.mtv.corp.google.com>
+References: <CAH8BJxHeyfpKsvjGfg5ZJ5YDQk6pzZp4ufHVEV=cFriL8j_4uw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 10 22:40:51 2016
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stephen Morton <stephen.c.morton@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 10 22:43:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ae8K9-00046E-Mz
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 22:40:50 +0100
+	id 1ae8MV-0006Cs-Gh
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 22:43:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932593AbcCJVkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2016 16:40:47 -0500
-Received: from cloud.peff.net ([50.56.180.127]:58051 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932180AbcCJVkp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2016 16:40:45 -0500
-Received: (qmail 5324 invoked by uid 102); 10 Mar 2016 21:40:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 10 Mar 2016 16:40:45 -0500
-Received: (qmail 29724 invoked by uid 107); 10 Mar 2016 21:41:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 10 Mar 2016 16:41:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Mar 2016 16:40:42 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqbn6mdnyn.fsf@gitster.mtv.corp.google.com>
+	id S932560AbcCJVnN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Mar 2016 16:43:13 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55915 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932180AbcCJVnL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Mar 2016 16:43:11 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2FB7649C81;
+	Thu, 10 Mar 2016 16:43:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7RSz0327eqLN6CRpASWyIudfbfg=; b=yNiGXY
+	2AZOEkTccHxImFnYPjKhnPJCDBg3davbGBpQEt7KSw+8AM/fAAHjTE6EBCdO2WA9
+	jXnFO8dwZFzqVLmB7v/ZebnY2i7w8bZMAP03scGSto9Ua+txhbhQDkJMJSw9LbLV
+	x9vv5shXlz0jVhhT8rfJz1wQ7RW03TU9EHJdg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Inkk9GcPRKJnoWl04RGi33WCXBok0hjk
+	OgZmeBpaXF8Kwhv6QV+er/gBUl53VHZV8TecydIE6yQ3OqIe7C7Lxn3S7XUQx5oo
+	p+kzWAh1zDvLTFgfTBZmhbxfirat2eQ0ZQAW1sbzg2u3uOaBprU/ATF8EO2FAcl0
+	m2o435JXCF8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2659349C80;
+	Thu, 10 Mar 2016 16:43:10 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9884849C7D;
+	Thu, 10 Mar 2016 16:43:09 -0500 (EST)
+In-Reply-To: <CAH8BJxHeyfpKsvjGfg5ZJ5YDQk6pzZp4ufHVEV=cFriL8j_4uw@mail.gmail.com>
+	(Stephen Morton's message of "Thu, 10 Mar 2016 16:22:14 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 14EBC58A-E709-11E5-9541-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288647>
 
-On Thu, Mar 10, 2016 at 01:26:08PM -0800, Junio C Hamano wrote:
+Stephen Morton <stephen.c.morton@gmail.com> writes:
 
-> > IMHO, that is the right thing. They asked for "C" as a shallow cut-off
-> > point, so anything that is a parent of "C" should be omitted as shallow,
-> > too. It has nothing to do with the numeric depth, which was just the
-> > starting point for generating the shallow cutoffs.
-> 
-> I think that is the right mental model.  The statement that "C and D
-> are current cut points" does not make much sense.  As you cannot
-> rewrite parents of commits after the fact, you cannot construct a
-> case like "when the shallow clone originally was made, two histories
-> were forked long time before B and D, and the cloner ended up with C
-> and D as the cutoff point, but now that we have the ancestry linkage
-> between B and D (and C and E), we need to make E a new cutoff".  The
-> original "shallow" implementation does not store "starting point +
-> number of depth" and instead translates that to the cut-off point
-> for this exact reason.
+> The sample pre-push hook provided with git [1] will crash if the local
+> repo is not up to date with the remote as $remote_sha is not present
+> in the local repo. I'm not sure if this patch is exactly correct, it's
+> just provided as an example.
+>
+> Given that people are likely crafting their own solutions based on the
+> examples, it's probably good to get right.
 
-OK, good. Now there are at least two of us who view it that way. :)
+It's probably good to get right, but I do not think use of @{u} is
+making it right, unfortunately.  You may not necessarily have @{u}
+configured, and you may not even pushing to the configured remote
+branch.
 
-> > Yeah, we definitely need an extension. I'm not sure if the extension
-> > should be "I know about spontaneous shallow/deepen responses; it's OK to
-> > send them to me" or "I want you to include the shallow points I send as
-> > boundary cutoffs for further shallow-ing of newly fetched history".
-> >
-> > They amount to the same thing when implementing _this_ feature, but the
-> > latter leaves us room in the future for a client to say "sure, I
-> > understand your spontaneous responses, but I explicitly _don't_ want you
-> > to do the boundary computation". I don't know if that is useful or not,
-> > but it might not hurt to have later on (and by adding it now, it "just
-> > works" later on with older servers/clients).
-> 
-> I am not sure what distinction you are worried about.  An updated
-> client that is capable of saying "you may give shallow/deepen
-> responses to me" can optionally be told not to say it to the server,
-> and that is equivalent to saying "I don't want you to send them", no?
+The spirit of the sample hook, I think, is to validate the new
+commits you are publishing, so if you cannot even determine which
+ones are new and which ones are not, failing the "push" by exiting
+with non-zero status is the right behaviour for this sample.
 
-Mostly, I wondered if we would need to send spontaneous shallow lines
-for any other cases, and the client would not be able to say "I
-understand them and want them in case A, but not in case B".
+So perhaps something like this may be more appropriate as an
+example.
 
-I do not have any case A in mind; it was just a general sense of "let's
-make feature flags as specific as possible to avoid painting ourselves
-into a corner". I'm OK with implementing it either way.
+ templates/hooks--pre-push.sample | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
--Peff
+diff --git a/templates/hooks--pre-push.sample b/templates/hooks--pre-push.sample
+index 6187dbf..7ef6780 100755
+--- a/templates/hooks--pre-push.sample
++++ b/templates/hooks--pre-push.sample
+@@ -41,7 +41,12 @@ do
+ 		fi
+ 
+ 		# Check for WIP commit
+-		commit=`git rev-list -n 1 --grep '^WIP' "$range"`
++		commit=`git rev-list -n 1 --grep '^WIP' "$range"` || {
++			# we do not even know about the range...
++			echo >&2 "Non-ff update to $remote_ref"
++			echo >&2 "fetch from there first"
++			exit 1
++		}
+ 		if [ -n "$commit" ]
+ 		then
+ 			echo >&2 "Found WIP commit in $local_ref, not pushing"
