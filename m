@@ -1,114 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Change in .gitignore handling: intended or bug?
-Date: Wed, 09 Mar 2016 16:59:45 -0800
-Message-ID: <xmqq60wvf8qm.fsf@gitster.mtv.corp.google.com>
-References: <1457057516.1962831.539160698.3C8B30BC@webmail.messagingengine.com>
-	<20160304055117.GB26609@ikke.info>
-	<1457071957.2027843.539286050.10CF8D0A@webmail.messagingengine.com>
-	<20160304115634.GC26609@ikke.info>
-	<CACsJy8AN7xxFuVX4c6aR_RdDiuDRPjqbXS8Y2+xD4pV8G2onfg@mail.gmail.com>
-	<xmqq4mcm17b4.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8BZm9pFdR+Njst7qZ1UnHUL9XpigM5pW+CLEicOc7ra8g@mail.gmail.com>
-	<xmqqlh5ungct.fsf@gitster.mtv.corp.google.com>
-	<xmqq8u1tmr6l.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8C5r2f76p3oq5oX_1P5Vqt9qd7TAafuKxJ=Y8baELbJog@mail.gmail.com>
-	<xmqqbn6olu1w.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8AUs-DAo-GceO9ND9RPVeDOfm_UM4ZuaeNWDwBVMu+dnQ@mail.gmail.com>
-	<xmqqk2lbil7k.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8D=OjLBN-EXyKM4NnGhSGftYX+RAaR9fg8ML3QWAAb+iQ@mail.gmail.com>
-	<xmqqd1r3f9rc.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git smudge filter fails
+Date: Wed, 9 Mar 2016 20:59:40 -0500
+Message-ID: <20160310015939.GA12709@sigill.intra.peff.net>
+References: <CAH8BJxHwxp2BtzGBqi6J24Kh0TTGEdCx=-Scu+bx5N-ZVpBZNQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Kevin Daudt <me@ikke.info>, Charles Strahan <charles@cstrahan.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 10 01:59:54 2016
+Content-Type: text/plain; charset=utf-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Stephen Morton <stephen.c.morton@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 10 02:59:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adoxE-0004V4-Tu
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 01:59:53 +0100
+	id 1adptE-0001uR-Pq
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 02:59:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934527AbcCJA7u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Mar 2016 19:59:50 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56853 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754327AbcCJA7s (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2016 19:59:48 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 27D7C4CD35;
-	Wed,  9 Mar 2016 19:59:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tM6a6IrC4bzwtbN32haExK0wtYQ=; b=Z8JghN
-	x8VMeL/wC/7FfGeIY8ZE8grei4IIwyzPhBDGjaMseoeyLZ+nkTKIADdntg4jfc7m
-	8laJKGaFGj7JqqcubcwcsFnJvJxxG6IuSJzrgEpRoM3kYszvUzjel6BsNn8WUYYp
-	zgp5gI+5oAQYMhVDdOk+U2pBS6u1cpaQMgQHQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=q24i2V1kzWYDInE1aNsGSYP8QQv1xPKH
-	BwR7m8lipThFoktG8xi0o5nb1safMeveZqDAaWAN3l4EGiPoU2aR9DYE6ouTRgpp
-	W9lB2BJzK8z34rV3tGDoq/bT7A03v+WzbDGpmHyTcy4A0g0NHYfodjjfrhKpGTWL
-	IhMXjTfL8X0=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1F3154CD34;
-	Wed,  9 Mar 2016 19:59:47 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7F3F54CD33;
-	Wed,  9 Mar 2016 19:59:46 -0500 (EST)
-In-Reply-To: <xmqqd1r3f9rc.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 09 Mar 2016 16:37:43 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 621049B6-E65B-11E5-835C-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1754383AbcCJB7p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Mar 2016 20:59:45 -0500
+Received: from cloud.peff.net ([50.56.180.127]:57604 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752486AbcCJB7n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2016 20:59:43 -0500
+Received: (qmail 11602 invoked by uid 102); 10 Mar 2016 01:59:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Mar 2016 20:59:42 -0500
+Received: (qmail 22171 invoked by uid 107); 10 Mar 2016 01:59:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Mar 2016 20:59:57 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Mar 2016 20:59:40 -0500
+Content-Disposition: inline
+In-Reply-To: <CAH8BJxHwxp2BtzGBqi6J24Kh0TTGEdCx=-Scu+bx5N-ZVpBZNQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288594>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Mar 09, 2016 at 01:29:31PM -0500, Stephen Morton wrote:
 
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> A bit off topic, but these two paragraphs may need rephrasing, I don't
->> really understand what it's trying to say
->>
->>  - If the pattern does not contain a slash '/', Git treats it as
->>    a shell glob pattern and checks for a match against the
->>    pathname relative to the location of the `.gitignore` file
->>    (relative to the toplevel of the work tree if not from a
->>    `.gitignore` file).
->>
->> Not sure why "relative to the location of .gitignore file" matters. We
->> basically just take `basename $path` out and try to match it.
->
-> That is because the documentation was written with ...
-> matches, even though '*.c' does not match 'd/hello.c' in the shell
-> glob sense,...
+> git config --local filter.dater.smudge 'myDate=`git log
+> --pretty=format:"%cd" --date=iso -1 -- %f`; sed -e
+> "s/\(\\$\)Date[^\\$]*\\$/\1Date: $myDate \\$/g"'
 
-Sorry, this does not make much sense, as d/e/hello.c would still
-match '*.c' in d/.gitignore.  So it is a straight-forward match
-against the basename, and there is nothing relative to the location
-of .gitignore.  If anything, relative to where the pattern is found
-should be relevant to a pattern _with_ slash in it.
+Your filter is running "git log" without a revision parameter, which
+means it is looking at HEAD.
 
-I should have been more careful and thought things through, but as
-this was an "off topic" comment, I didn't.  Sorry about that.
+And here....
 
-In any case, back to "on topic" part again; I couldn't come up with
-a better rewrite using named rules (partly because you need to
-clearly define each rule before referring them, and some of the
-rules are temporary workarounds for the 2.8 regression that will
-hopefully disappear in near future).  I think you understand the bug
-and the limitation of the current code a lot better than I do, so if
-you can please send a final version of the documentation update in
-the coming 18 hours (I have an option of using what is already
-queued on 'pu' as a fall-back-good-enough version but I want to keep
-the last-resort option as that--if I know a potential source of a
-better version, I'd choose to ask first ;-).
+> git checkout no_foo
+> git checkout master
+> cat foo.c
+> #observe keyword expansion lost
 
-Thanks.
+You are expecting this second one to do:
+
+  1. Switch HEAD to "master".
+
+  2. Checkout files which need updating. Looking at HEAD in your filter
+     then examines "master", and you see the commit timestamp of the
+     destination.
+
+But that isn't how it is implemented. Checkout will handle the file
+checkout _first_, as that is the part that is likely to run into
+problems (e.g., rejecting a switch because it would lose changes in the
+working tree). Only at the very end, after the change to the working
+tree has succeeded, do we update HEAD.
+
+I think the order you are expecting is conceptually cleaner, but I don't
+think we would want to switch it around (for reasons of efficiency and
+robustness). And I don't think we would want to make a promise about the
+ordering to callers either way, as it binds our implementation.
+
+So is there a way to reliably know the destination of a checkout? My
+first thought was that we could add a placeholder similar to "%f" that
+your filter could use. I'm not sure how we would handle the corner cases
+there, though (e.g., do we always have a "destination" to report? If
+not, what do we give the script?).
+
+I suspect you could also hack something together with a post-checkout
+script, though it would probably be a lot less efficient (and might also
+have some weird corner cases).
+
+-Peff
