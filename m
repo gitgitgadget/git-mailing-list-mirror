@@ -1,95 +1,88 @@
 From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH 01/19] trace.c: add GIT_TRACE_PACK_STATS for pack usage
- statistics
-Date: Wed, 09 Mar 2016 19:05:42 -0500
+Subject: Re: [PATCH 03/19] read-cache: allow to keep mmap'd memory after
+ reading
+Date: Wed, 09 Mar 2016 19:09:08 -0500
 Organization: Twitter
-Message-ID: <1457568342.13557.11.camel@twopensource.com>
+Message-ID: <1457568548.13557.13.camel@twopensource.com>
 References: <1457548582-28302-1-git-send-email-dturner@twopensource.com>
-	 <1457548582-28302-2-git-send-email-dturner@twopensource.com>
-	 <xmqq4mcfgsxn.fsf@gitster.mtv.corp.google.com>
+	 <1457548582-28302-4-git-send-email-dturner@twopensource.com>
+	 <xmqqziu7fe6u.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, pclouds@gmail.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 10 01:05:51 2016
+X-From: git-owner@vger.kernel.org Thu Mar 10 01:09:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ado6w-0004ih-Op
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 01:05:51 +0100
+	id 1adoAH-0007TK-Et
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 01:09:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754285AbcCJAFr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Mar 2016 19:05:47 -0500
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:35984 "EHLO
-	mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752147AbcCJAFp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2016 19:05:45 -0500
-Received: by mail-qk0-f175.google.com with SMTP id s68so27815030qkh.3
-        for <git@vger.kernel.org>; Wed, 09 Mar 2016 16:05:44 -0800 (PST)
+	id S933581AbcCJAJN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Mar 2016 19:09:13 -0500
+Received: from mail-qg0-f52.google.com ([209.85.192.52]:36309 "EHLO
+	mail-qg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752219AbcCJAJK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2016 19:09:10 -0500
+Received: by mail-qg0-f52.google.com with SMTP id u110so57063799qge.3
+        for <git@vger.kernel.org>; Wed, 09 Mar 2016 16:09:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=message-id:subject:from:to:cc:date:in-reply-to:references
          :organization:mime-version:content-transfer-encoding;
-        bh=vqu2Gg9EplijU/xfiHSZyhTj8leXJtrsO1nsVONDMX4=;
-        b=LdNzl4e7TpJHz8JVKhPmpEF0oqMxw93y1PNHQ8gq5wEG9ONpvPUjrMY3z74mJjEkoX
-         lQ6UnlinBOUE6daNYh6KbaQUcwq6iIRUO9763ZJDi1N9camLnvj/xG4XQMwXUI9vWHSA
-         FjMpiwyl3xn79F4CEJ9EBs0h1gMzPpcEd6Le+1EO5+wv6C3V5NTUor+CrIwB0rHAbJPS
-         BLOIxsQS1IxNljoH8b8mJvkoNc33ktPfFwA54HA2a6RDeyTqNitLu4dvfxIBtv5kv8TZ
-         MObOOUTfvQBT4WDWtSVjDeoiO1hokLg2IbyPhnq07ftauxON8XPuw6f82gZ/7uOKMkxd
-         zlTQ==
+        bh=7nvfMTR1uBBjhQs79DD1pvYMNvmE/h7ZvqAc6zaMS20=;
+        b=WH+lXi4ShLqc8lyPu9cqfaK66lRAfd1WpnlcINbP6CKpKWJgCpqH0iwKYfD3IWhsCM
+         A7bdMSgvvVx5ns7fE8Mie/irYERkNe3WGvFHYiY56UAGoEy6LdLqiVX8j8pG7bdtBOdT
+         Mu7pCgipvrrjETQWgJgrsb8kGBmGZUCWLNNPSapg4rU+8GN4M4eo3TNIBTxuMy4p5kOX
+         9JqjLMkgr3Yi6bR89Z3Vka3xHVFeXQ7NSBLID3fdc9V4kf9l8METtxXZ+IDFeaaESBBR
+         ucuflUqH9BCCW43cVByzoz3O/BA+fmjTZ41FlM6+5nBaM2XKDNkAloj3Csd5wIx0esrt
+         y5Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
          :references:organization:mime-version:content-transfer-encoding;
-        bh=vqu2Gg9EplijU/xfiHSZyhTj8leXJtrsO1nsVONDMX4=;
-        b=JCBrelTs6D+6POBNYaoZ2c0tQUEw1LZVLz7yHrBr3PO7MTbykmFp/9AeY1mOlE08fn
-         y3hy8cQSpQI/wExWVj6cfzBN8Wgpmt1mdxfKVRLQ2BMjMxC5TSzbDodbBgeu1BrtEH91
-         /DpYgRNymXP6QmyU0qBRFPagixbwCjSYKsIBfF6jc+DWoAl0VgsBu07EmDLHp4SGJMFK
-         H28QiJq37vtt+RWtGURX+/DEvfuPZX9VvNbDRiJ6kd4/qwXfsxcljyrDaOP3xcUj5c/V
-         JzjPxy/Iniycn2GdSQLX/tvFAisUiZQW4v2cwyRxGRRuKNE9oyMb/eZ02avkGgHGomzp
-         1qEw==
-X-Gm-Message-State: AD7BkJIqIemRGUylY9i36PuuDRggiA3opQW8i7wjLZO/FnczumqzijFZQwTiU4ec4yxeTA==
-X-Received: by 10.55.55.138 with SMTP id e132mr576804qka.11.1457568344296;
-        Wed, 09 Mar 2016 16:05:44 -0800 (PST)
+        bh=7nvfMTR1uBBjhQs79DD1pvYMNvmE/h7ZvqAc6zaMS20=;
+        b=FTQsHNY3DQRNoX6ciqJRuNVMv4VbFv+qdeJJL8Eu/vhA626d5f21s2+ztPabQAJg/I
+         rfHtRu/DENceA/jIaMgNOIBhXKpR1D2ydqldR19npEzJ7ZdDYhjinu1Q4CAx8rv/a+qC
+         qCI3dWKBvyq8dCIHQuM3B5aTiL9zNRwwO2DuBQOSH7s/msId2UvZvwvGZhrD2h0z0B4E
+         NDoy8DKQvPq4mdTGuglYjRvVoWg60CFkmUb2ZkfawNGx71NYmj544uXjiSg9xsI7tA/P
+         aEkl3QvDTxkQ1cAzR1auB9IprvaCIH9Z8gEBu0MGAUtAXyfObEEUNIyN74PPoroP3AfZ
+         zOqA==
+X-Gm-Message-State: AD7BkJLgt2rt7cNK0WNUQS80OMOTQ+But4X9KdDRTJPkgnK5YjTGxYDEV00G8k5gtJSR4Q==
+X-Received: by 10.140.96.85 with SMTP id j79mr650503qge.10.1457568549842;
+        Wed, 09 Mar 2016 16:09:09 -0800 (PST)
 Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id m5sm546320qki.15.2016.03.09.16.05.43
+        by smtp.gmail.com with ESMTPSA id 188sm560116qhi.1.2016.03.09.16.09.08
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 09 Mar 2016 16:05:43 -0800 (PST)
-In-Reply-To: <xmqq4mcfgsxn.fsf@gitster.mtv.corp.google.com>
+        Wed, 09 Mar 2016 16:09:09 -0800 (PST)
+In-Reply-To: <xmqqziu7fe6u.fsf@gitster.mtv.corp.google.com>
 X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288587>
 
-On Wed, 2016-03-09 at 14:58 -0800, Junio C Hamano wrote:
+On Wed, 2016-03-09 at 15:02 -0800, Junio C Hamano wrote:
 > David Turner <dturner@twopensource.com> writes:
-...
-> > trace_stats() is intended for GIT_TRACE_*_STATS variable group and
-> > GIT_TRACE_PACK_STATS is more like an example how new vars can be
-> > added.
-...
+>=20
+> > From: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+> >=20
+> > Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@g=
+mail.com>
+> > ---
+>=20
+> As usual in Duy's patches, this one seriously lacks "why".  And also
+> makes the reader wonder if the memory region is ever unmapped() and
+> if so under what condition.
 
-> > +	pack_access_nr++;
-> >  }
-> 
-> This looks rather half-hearted, in that those who are interested in
-> this new number can run "wc -l" on the pack-access trace log without
-> adding a new "stats" anyway.  It may make the "stats" far more
-> useful to keep track of the summary information of what would be
-> written to the pack access log and add to the report_pack_stats()
-> output things like the average and median distance of seeks
-> (i.e. differences in the "obj_offset" into the same pack by two
-> adjacent pack accesse) and the variance, for example?
+How about this:
 
-On reflection, I do not think I need this patch; it was in Duy's series
-and the index stats patch would need to be rewritten slightly to get
-rid of it, but I'm OK with that.  I wanted to make minimal changes to
-Duy's patches, but I'd rather make larger changes than do work on
-patches I don't need.
+Later, we will introduce git index-helper to share this memory with
+other git processes.
 
-So unless Duy objects, I'm going to drop this from the series.
+Since the memory will be shared, it will never be unmapped (although
+the kernel may of course choose to page it out).
