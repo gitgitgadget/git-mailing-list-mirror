@@ -1,80 +1,149 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/1] Introduce a way to create a branch and worktree at
- the same time
-Date: Thu, 10 Mar 2016 14:24:16 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603101422190.4690@virtualbox>
-References: <cover.1457609615.git.johannes.schindelin@gmx.de> <CACsJy8BA7-ev9wTt6K45TgiNxOaBUXbN1P03U4EUAzAPy=7Faw@mail.gmail.com> <CACsJy8D7+sXF9gRj15kidgK_xzSVHqChSFdqHpJ3PwxMOw2rHA@mail.gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] pull: drop confusing prefix parameter of
+ die_on_unclean_work_tree()
+Date: Thu, 10 Mar 2016 14:24:26 +0100 (CET)
+Message-ID: <974d0bfed38e8aa410e97e05022bc5dbbd78d915.1457615785.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 10 14:24:39 2016
+Cc: git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 10 14:24:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ae0Zx-0006cE-QY
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 14:24:38 +0100
+	id 1ae0a7-0006jE-1S
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 14:24:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751528AbcCJNYY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2016 08:24:24 -0500
-Received: from mout.gmx.net ([212.227.15.19]:61756 "EHLO mout.gmx.net"
+	id S1751417AbcCJNYh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Mar 2016 08:24:37 -0500
+Received: from mout.gmx.net ([212.227.17.22]:62755 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751398AbcCJNYX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2016 08:24:23 -0500
-Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0Lt1eU-1ZhCtn0Zkw-012c1J; Thu, 10 Mar 2016 14:24:17
+	id S1751418AbcCJNYg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Mar 2016 08:24:36 -0500
+Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MGFz9-1aavee49LT-00FAJD; Thu, 10 Mar 2016 14:24:28
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CACsJy8D7+sXF9gRj15kidgK_xzSVHqChSFdqHpJ3PwxMOw2rHA@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:9uKtEyK1Mby7LrkMm5apZ9W6ylPM61NHnkxiHlgl4r15GAv31WV
- yVqoqdGqGO21v1L8e0v+GU3rakEnusiE61T4k+nJIaLFdN3PgaW+s/GHol6F7kNrfQHJx8B
- avuqXyXrsYljvsjwBDI1g7bq/eOZ8wz3MIsQowlKYmqCNKD5cx7s8BnM3LflIRr6jxjTRMW
- 71ROQa4bdBCBXhhbmWicg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:jB74Nc2weIg=:a1rmw89Q0gr+8WxX3gML/S
- lHNpWNGWZyNijkPCXcxda2l8Y8ULNy0ZuZshuYYAzdYjprpR4ozaZTZcn9iGa/bXIobPOPEXT
- OWv7PteTgoaaQzc4sCnZl1CyDj8cEZXiRSEsojBtN69NCbOnuFFmlvSx2HdZPRoSrXaMRmQm2
- +jecrY37h7IkbJImdrlSZf9m2hVzxPK1Yl3iR2rNUQuaoJ1X/FCDx1TYXb8MmhhTjubtgHIB6
- BL620Vp6e0L1SKCcHyMynwYFJdQXaPEQz3XamNBB4wn/KCE0Kxg/+F4h/zrWlUIgZHcJVuR98
- enCvPCzMJQ1q5KnWcPQCXUPmQG2oI85cNyA2BJw1oXus+RvhhiCN49kmkAuH/cEmmyrPzeF19
- ifhAPb8rKY1CZij/ZlzMAUNc4Qdol/RZI+5+L5SS0ht4JqfTn7L2OxTyxsPgL1DmGxgHQYw8/
- yAnrZmNq5gHlOQxKjv3x0xCY1Hz2+5ULbVcm5XLwoFK75oPGyhVJ5Ad01MyEZ3h10cF3L/kOa
- Oc2OtA9dr5BUu9RdcWwZ3lH2DOYaKJv5LdpWmTyx0gw/8Spbmmlys6+jEd9ow3JKe9IdBMnQE
- fBvhH+aJ2T0yQOCaOywelTIBUrWdS/Rb1tCujcV4la3kRBy2gPu+RkTwLdNfhrW5mtEXV3GuY
- 0/1/KL0GFwS/lP/VEx9klKe2Cf1iY+JmWvAIPZGfJWyY+M6iksWvWJ/1LVmBWxUO76C9EYds7
- IfqjjkC9ps/5uq88gisjD88nH7vbC752L3m+YyR3fGef6XVFWfVCc0cmIS7U8mlwsnWF7Obm 
+X-Provags-ID: V03:K0:fNHbAN2IBzTRDxkMFNT+CcfVQ5dG6NQ0mA3ERiuSpmtSmqE7CUY
+ RSMiPCeFaGfhmP3fHqRwtUNr/DUXaOGeSz8iqDLgNjHWuDG5RU2o468aEzidIslWYqr/yrM
+ +wdtrRT9iaJy6gKMxOcSf4qt3fDmnjoTz036cqKv8GO3upIKWB43N0Usa/o+V4LFlKSI1jj
+ WcnLr4ZFHOceW+OsR1eSg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:GOutzDA9dfU=:qDMGLSJZFBiPUKyjJFMYao
+ qdeLbxT42Qc58JDSFxT4xFc7XUjp/fqmLP3o09HP8wWVTWexwvIyFERAvg9+nfFrjbI00oxjC
+ kJMRR7vNy88gJATy9Nn7Ay0UdXM4xgP4FTQQULju+pFXxEdZp3DNSLiNX1qT8dzY6VqKkFJHJ
+ NB8G3SMWNbF8/Em386Ec1poHZIE/L0VgU8irb0V7SvZ85tUhz/dbahDyPYexFkViOvnWzCpU9
+ Ze9zKniskxEIM/q4Qt/mpN3d51vI9DiUMFzxnRtzEZYuxZ44Q04mqWDNTbzCYNMHtuRCRuHgz
+ hBNzMPS33zo7QnAcEwVYlmyy/rSvuwG6b+2phJiQlFaUijdCeOS2HJbxKtqkBKQ+Ob0QEco5U
+ Im3x61kOYGYl0hMJu+1Fbi50FWcWqRB/KD1T6VnHS0XzOiNItfwfvopexZqcV4n84ykx0tocU
+ GoGAVcMyLNiMm34EZUxfplah7Z7d/hbBbJS0y9Ab0M2uMwwqR4bCWtOlgOHHAON0gmasbRQAq
+ J45+x4U1Fm+E+d9wXbBqNmes6OkuCz2Dx0O1QmC4TcqBsZAkm71oAb58huMmeZav5o2DnMQoH
+ dD5O0Wg4C97wGoCJe2FayWgx+Nacu1F/dvH8cT8Va3KMldDvyo2x6Rtr1EoitJN4yf88QMrLO
+ pvxoL1jiAFLINbEU/JT7/HDJQSxCKDDzXTvzF1JZT3gITMN/OSTTDMcaK63wwuUyqP+gExsnI
+ ho2vHwM9aLaqbN3zJwumOOuBFPbEHLHWnpTdTjxfkB+UIgVHiNERjMcFYRWnaa4hto47gZ7H 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288623>
 
-Hi Duy,
+In cmd_pull(), when verifying that there are no changes preventing a
+rebasing pull, we diligently pass the prefix parameter to the
+die_on_unclean_work_tree() function which in turn diligently passes it
+to the has_unstaged_changes() and has_uncommitted_changes() functions.
 
-On Thu, 10 Mar 2016, Duy Nguyen wrote:
+The casual reader might now be curious (as this developer was) whether
+that means that calling `git pull --rebase` in a subdirectory will
+ignore unstaged changes in other parts of the working directory. And be
+puzzled that `git pull --rebase` (correctly) complains about those
+changes outside of the current directory.
 
-> On Thu, Mar 10, 2016 at 6:51 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> >> It gets rather tiresome, and also typo-prone, to call "git branch xyz
-> >> upstream/master && git worktree add xyz xyz" all the time.
-> >
-> > You can actually do "git worktree -b xyz xyz upstream/master" for the
-> > same effect. Maybe we can avoid "xyz" duplication with "-b -" or a new
-> > option name?
-> 
-> Another option is just do "worktree -b xyz . upstream/master"
-> 
-> when the destination already exists and is a directory, the real
-> worktree location is <dest>/<branch name>. Similar to "mv abc def"
-> becomes "mv abc def/abc" when def is already a directory.
+The puzzle is easily resolved: while we take pains to pass around the
+prefix and even pass it to init_revisions(), the fact that no paths are
+passed to init_revisions() ensures that the prefix is simply ignored.
 
-Hmm. That sounds too clever to me. It is clever, alright, but it is also
-confusing: "Wait, what? Where is my... Darn! It already existed! And now I
-have my-cool-worktree/my-cool-worktree/! Blergh."
+That, combined with the fact that we will *always* want a *full* working
+directory check before running a rebasing pull, is reason enough to
+simply do away with the actual prefix parameter and to pass NULL
+instead, as if we were running this from the top-level working directory
+anyway.
 
-Please count that as mild opposition to that idea :-)
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/pull.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-Ciao,
-Dscho
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 10eff03..4ed46b3 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -308,12 +308,12 @@ static enum rebase_type config_get_rebase(void)
+ /**
+  * Returns 1 if there are unstaged changes, 0 otherwise.
+  */
+-static int has_unstaged_changes(const char *prefix)
++static int has_unstaged_changes()
+ {
+ 	struct rev_info rev_info;
+ 	int result;
+ 
+-	init_revisions(&rev_info, prefix);
++	init_revisions(&rev_info, NULL);
+ 	DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
+ 	DIFF_OPT_SET(&rev_info.diffopt, QUICK);
+ 	diff_setup_done(&rev_info.diffopt);
+@@ -324,7 +324,7 @@ static int has_unstaged_changes(const char *prefix)
+ /**
+  * Returns 1 if there are uncommitted changes, 0 otherwise.
+  */
+-static int has_uncommitted_changes(const char *prefix)
++static int has_uncommitted_changes()
+ {
+ 	struct rev_info rev_info;
+ 	int result;
+@@ -332,7 +332,7 @@ static int has_uncommitted_changes(const char *prefix)
+ 	if (is_cache_unborn())
+ 		return 0;
+ 
+-	init_revisions(&rev_info, prefix);
++	init_revisions(&rev_info, NULL);
+ 	DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
+ 	DIFF_OPT_SET(&rev_info.diffopt, QUICK);
+ 	add_head_to_pending(&rev_info);
+@@ -345,7 +345,7 @@ static int has_uncommitted_changes(const char *prefix)
+  * If the work tree has unstaged or uncommitted changes, dies with the
+  * appropriate message.
+  */
+-static void die_on_unclean_work_tree(const char *prefix)
++static void die_on_unclean_work_tree()
+ {
+ 	struct lock_file *lock_file = xcalloc(1, sizeof(*lock_file));
+ 	int do_die = 0;
+@@ -355,12 +355,12 @@ static void die_on_unclean_work_tree(const char *prefix)
+ 	update_index_if_able(&the_index, lock_file);
+ 	rollback_lock_file(lock_file);
+ 
+-	if (has_unstaged_changes(prefix)) {
++	if (has_unstaged_changes()) {
+ 		error(_("Cannot pull with rebase: You have unstaged changes."));
+ 		do_die = 1;
+ 	}
+ 
+-	if (has_uncommitted_changes(prefix)) {
++	if (has_uncommitted_changes()) {
+ 		if (do_die)
+ 			error(_("Additionally, your index contains uncommitted changes."));
+ 		else
+@@ -842,7 +842,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 
+ 		git_config_get_bool("rebase.autostash", &autostash);
+ 		if (!autostash)
+-			die_on_unclean_work_tree(prefix);
++			die_on_unclean_work_tree();
+ 
+ 		if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
+ 			hashclr(rebase_fork_point);
+-- 
+2.7.2.windows.1.8.g47d64e6.dirty
