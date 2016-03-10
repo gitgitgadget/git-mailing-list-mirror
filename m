@@ -1,110 +1,95 @@
 From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH 04/19] index-helper: new daemon for caching index and
- related stuff
-Date: Wed, 09 Mar 2016 19:01:19 -0500
+Subject: Re: [PATCH 01/19] trace.c: add GIT_TRACE_PACK_STATS for pack usage
+ statistics
+Date: Wed, 09 Mar 2016 19:05:42 -0500
 Organization: Twitter
-Message-ID: <1457568079.13557.7.camel@twopensource.com>
+Message-ID: <1457568342.13557.11.camel@twopensource.com>
 References: <1457548582-28302-1-git-send-email-dturner@twopensource.com>
-	 <1457548582-28302-5-git-send-email-dturner@twopensource.com>
-	 <xmqqtwkffdus.fsf@gitster.mtv.corp.google.com>
-	 <xmqqpov3fdb6.fsf@gitster.mtv.corp.google.com>
+	 <1457548582-28302-2-git-send-email-dturner@twopensource.com>
+	 <xmqq4mcfgsxn.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, pclouds@gmail.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 10 01:01:50 2016
+X-From: git-owner@vger.kernel.org Thu Mar 10 01:05:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ado2z-0001Sx-QE
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 01:01:46 +0100
+	id 1ado6w-0004ih-Op
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Mar 2016 01:05:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965047AbcCJABZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Mar 2016 19:01:25 -0500
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:35605 "EHLO
-	mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934532AbcCJABV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2016 19:01:21 -0500
-Received: by mail-qk0-f172.google.com with SMTP id o6so27833905qkc.2
-        for <git@vger.kernel.org>; Wed, 09 Mar 2016 16:01:20 -0800 (PST)
+	id S1754285AbcCJAFr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Mar 2016 19:05:47 -0500
+Received: from mail-qk0-f175.google.com ([209.85.220.175]:35984 "EHLO
+	mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752147AbcCJAFp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2016 19:05:45 -0500
+Received: by mail-qk0-f175.google.com with SMTP id s68so27815030qkh.3
+        for <git@vger.kernel.org>; Wed, 09 Mar 2016 16:05:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=message-id:subject:from:to:cc:date:in-reply-to:references
          :organization:mime-version:content-transfer-encoding;
-        bh=9O9VgAJ5dkCOOPUKVFGXRXaat1Zb62zDo8A5mLgy54s=;
-        b=uuz4KfXqP4pfdwSOa9TkyoMpiAmOReuArEsdytiWnZ0MvDwm+1CYCAKy7QCkG8dTb1
-         bp9AGcLSOWk4I4a+zVMEKKdAygop3io51UaqiwKyw9GXI47nAkyujps2UVVuOYa23khF
-         LB+kVWW8vg/BUjmYPaceF/UFuKzqAnXpk9Px0YE70ZDiUMih3vweFn4ixd8tLgiJQGZx
-         rl7ZfyVltytQ4qkjSvOCtkyGBUGtg0kHVgOQqYlJp/zT7Gv3Swbv7Y94i9eOTWoJ7BaZ
-         ovFpXt1AcfgnIA+zDu8lEsylx6OXaUjA/+SO+vC/k0aUCicvqz4ae45GSHcS2hj0iKKd
-         ZRsQ==
+        bh=vqu2Gg9EplijU/xfiHSZyhTj8leXJtrsO1nsVONDMX4=;
+        b=LdNzl4e7TpJHz8JVKhPmpEF0oqMxw93y1PNHQ8gq5wEG9ONpvPUjrMY3z74mJjEkoX
+         lQ6UnlinBOUE6daNYh6KbaQUcwq6iIRUO9763ZJDi1N9camLnvj/xG4XQMwXUI9vWHSA
+         FjMpiwyl3xn79F4CEJ9EBs0h1gMzPpcEd6Le+1EO5+wv6C3V5NTUor+CrIwB0rHAbJPS
+         BLOIxsQS1IxNljoH8b8mJvkoNc33ktPfFwA54HA2a6RDeyTqNitLu4dvfxIBtv5kv8TZ
+         MObOOUTfvQBT4WDWtSVjDeoiO1hokLg2IbyPhnq07ftauxON8XPuw6f82gZ/7uOKMkxd
+         zlTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
          :references:organization:mime-version:content-transfer-encoding;
-        bh=9O9VgAJ5dkCOOPUKVFGXRXaat1Zb62zDo8A5mLgy54s=;
-        b=llRxZJsUOsPh8V70P2kSeOIHDIBJ9jXPT7JvUJp1qjA3k2otNM3tnuR5WVCevdITHw
-         C7p7krKFoO+ezGxbCM0G79nvRq9wJM9z5Sj8ZBCduycjQ0/LtZAfFcqZB2nqairDwOi8
-         92VG0AY2ZWKop9tvPTx3l4i0YwQAxhhk+J0k1SIKYwggnS2joSQRtykcP/VPvDXVrVUf
-         FBJDTGs/uj9rSHVGK+61WcHNMse8RW7LCdf65/2WaPZE3ciNohXg5bcvcTu1rfedF2/L
-         uXx/X0vHHL7qrOWIWmErl87AoWN+XgqUzjPdYnezKVmkiLU2b/1p1eLi49xab3tweTfv
-         S2Rw==
-X-Gm-Message-State: AD7BkJJWaq9Y6IkwqftMRz8+syyMYqwSiEMvCprJncHWFCc5X9JQIj39O/K+vtWCBabCoA==
-X-Received: by 10.55.25.141 with SMTP id 13mr510300qkz.69.1457568080495;
-        Wed, 09 Mar 2016 16:01:20 -0800 (PST)
+        bh=vqu2Gg9EplijU/xfiHSZyhTj8leXJtrsO1nsVONDMX4=;
+        b=JCBrelTs6D+6POBNYaoZ2c0tQUEw1LZVLz7yHrBr3PO7MTbykmFp/9AeY1mOlE08fn
+         y3hy8cQSpQI/wExWVj6cfzBN8Wgpmt1mdxfKVRLQ2BMjMxC5TSzbDodbBgeu1BrtEH91
+         /DpYgRNymXP6QmyU0qBRFPagixbwCjSYKsIBfF6jc+DWoAl0VgsBu07EmDLHp4SGJMFK
+         H28QiJq37vtt+RWtGURX+/DEvfuPZX9VvNbDRiJ6kd4/qwXfsxcljyrDaOP3xcUj5c/V
+         JzjPxy/Iniycn2GdSQLX/tvFAisUiZQW4v2cwyRxGRRuKNE9oyMb/eZ02avkGgHGomzp
+         1qEw==
+X-Gm-Message-State: AD7BkJIqIemRGUylY9i36PuuDRggiA3opQW8i7wjLZO/FnczumqzijFZQwTiU4ec4yxeTA==
+X-Received: by 10.55.55.138 with SMTP id e132mr576804qka.11.1457568344296;
+        Wed, 09 Mar 2016 16:05:44 -0800 (PST)
 Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id d73sm533095qhc.23.2016.03.09.16.01.19
+        by smtp.gmail.com with ESMTPSA id m5sm546320qki.15.2016.03.09.16.05.43
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 09 Mar 2016 16:01:19 -0800 (PST)
-In-Reply-To: <xmqqpov3fdb6.fsf@gitster.mtv.corp.google.com>
+        Wed, 09 Mar 2016 16:05:43 -0800 (PST)
+In-Reply-To: <xmqq4mcfgsxn.fsf@gitster.mtv.corp.google.com>
 X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288586>
 
-On Wed, 2016-03-09 at 15:21 -0800, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->=20
-> > David Turner <dturner@twopensource.com> writes:
-> >=20
-> > > From: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.co=
-m>
-> > >=20
-> > > Instead of reading the index from disk and worrying about disk
-> > > corruption, the index is cached in memory (memory bit-flips
-> > > happen
-> > > too, but hopefully less often). The result is faster read. Read
-> > > time
-> > > is reduced by 70%.
-> > >=20
-> > > The biggest gain is not having to verify the trailing SHA-1,
-> > > which
-> > > takes lots of time especially on large index files.
->=20
-> Come to think of it, wouldn't it be far less intrusive change to
-> just put the index on a ramdisk and skip the trailing SHA-1
-> verification, to obtain a similar result with the same trade off
-> (i.e. blindly trusting memory instead of being paranoid)?
->=20
+On Wed, 2016-03-09 at 14:58 -0800, Junio C Hamano wrote:
+> David Turner <dturner@twopensource.com> writes:
+...
+> > trace_stats() is intended for GIT_TRACE_*_STATS variable group and
+> > GIT_TRACE_PACK_STATS is more like an example how new vars can be
+> > added.
+...
 
-1. If the index were stored on a ramdisk, we would *also* have to write
-it to durable storage to avoid losing the user's work when they power
-off.  That's more complicated. =20
+> > +	pack_access_nr++;
+> >  }
+> 
+> This looks rather half-hearted, in that those who are interested in
+> this new number can run "wc -l" on the pack-access trace log without
+> adding a new "stats" anyway.  It may make the "stats" far more
+> useful to keep track of the summary information of what would be
+> written to the pack access log and add to the report_pack_stats()
+> output things like the average and median distance of seeks
+> (i.e. differences in the "obj_offset" into the same pack by two
+> adjacent pack accesse) and the variance, for example?
 
-2. Duy notes that it is easier to add further optimizations to this --
-for instance, we could share a pre-parsed version of the index.  It
-would be harder to add these optimizations to the disk format, because
-(a) they would take up more space, and (b) they would probably be
-harder to write in a single pass, which is presently how index writing
-works.
+On reflection, I do not think I need this patch; it was in Duy's series
+and the index stats patch would need to be rewritten slightly to get
+rid of it, but I'm OK with that.  I wanted to make minimal changes to
+Duy's patches, but I'd rather make larger changes than do work on
+patches I don't need.
 
-3. If we wanted to just skip SHA-1 verification, we would not need a
-ramdisk; it's almost certain that the index would be in the disk cache
-most of the time, so regular storage should be very nearly as fast as a
-ramdisk. I think mlock might help ensure that the data remains in the
-cache, although I'm not sure what the permissions story is on that.
+So unless Duy objects, I'm going to drop this from the series.
