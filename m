@@ -1,98 +1,105 @@
-From: Vadim Zeitlin <vz-git@zeitlins.org>
-Subject: Re[2]: Possible bug: --ext-diff ignored with --cc in git log
-Date: Fri, 11 Mar 2016 03:04:46 +0100
-Message-ID: <E1aeCRp-0005Jn-C1@smtp.tt-solutions.com>
-References: <E1adi8q-0005NJ-4G@smtp.tt-solutions.com> <xmqqlh5qc698.fsf@gitster.mtv.corp.google.com>
+From: Mikael Magnusson <mikachu@gmail.com>
+Subject: Re: [PATCH 0/1] Introduce a way to create a branch and worktree at
+ the same time
+Date: Fri, 11 Mar 2016 03:57:12 +0100
+Message-ID: <CAHYJk3Sij4tH0i29Asahjj8KBdQj59jFRTCoYzO_XE_kt3SnDw@mail.gmail.com>
+References: <cover.1457609615.git.johannes.schindelin@gmx.de>
+	<CACsJy8BA7-ev9wTt6K45TgiNxOaBUXbN1P03U4EUAzAPy=7Faw@mail.gmail.com>
+	<alpine.DEB.2.20.1603101417590.4690@virtualbox>
 Mime-Version: 1.0
-Content-Type: MULTIPART/SIGNED; protocol="application/pgp-signature"; micalg=pgp-sha1; BOUNDARY="1041389241-41-1457661886=:12660"
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 11 03:05:14 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 11 03:57:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aeCS1-0000HG-6t
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Mar 2016 03:05:13 +0100
+	id 1aeDGa-0007S9-Ok
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Mar 2016 03:57:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933381AbcCKCFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Mar 2016 21:05:09 -0500
-Received: from sunset.tt-solutions.com ([82.240.17.225]:39482 "EHLO
-	smtp.tt-solutions.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933259AbcCKCFH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Mar 2016 21:05:07 -0500
-Received: from [192.168.17.86] (helo=Twilight)
-	by smtp.tt-solutions.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:256)
-	(Exim 4.80)
-	(envelope-from <vz-git@zeitlins.org>)
-	id 1aeCRp-0005Jn-C1; Fri, 11 Mar 2016 03:05:01 +0100
-In-Reply-To: <xmqqlh5qc698.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Mahogany 0.68.0 'Cynthia', running under Windows 7 (build 7601, Service Pack 1), 64-bit edition
-X-VZ-SMTP-Helo: Twilight
+	id S1754949AbcCKC5P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Mar 2016 21:57:15 -0500
+Received: from mail-qg0-f65.google.com ([209.85.192.65]:36252 "EHLO
+	mail-qg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754233AbcCKC5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Mar 2016 21:57:13 -0500
+Received: by mail-qg0-f65.google.com with SMTP id 14so6486211qgg.3
+        for <git@vger.kernel.org>; Thu, 10 Mar 2016 18:57:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=7eHq/VoUTPwJHBdwtXcFmGQACKUgdzCqBL+phop8tz4=;
+        b=p4CBLnspxwkYVIldakGCsma3irEgb3SYZQpsZ+3OFLAXOrPONrrpDXn9Jlh43IVVJA
+         mEkko7NwE1/iI8w8Y9Yqh6jr78UA3N6mJRnzf1bhz6CmpMtqk6DgNdL/7+u1BvbLFqeC
+         TJmcR44rJZJkDmd5Yw3mHYtWzuepVtFBSsJMoDz8T5ucmhCVSlxayTwpfdvgL4iNRrHm
+         60jnjLmwF9milabH0J3x6eultphGkghlYGzxMQeg8PybcsPNFRkYtYJn5iO2BGErP1fy
+         BGPgzzc7fVfIso3BGTOfrSgsB+bAlgf+iuOnOeL6smGAIktH98StZjD2cXi7q5y9DlsK
+         exZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=7eHq/VoUTPwJHBdwtXcFmGQACKUgdzCqBL+phop8tz4=;
+        b=b58/YaQVqD8dqnCDEMlpi/XrFQZq0/jT22pJC5ffZC7yFXIUCT2QSeSsyUUuRaNeX4
+         Q1+wWlO4vaM23YlEoiXYpv1Ioy93BSK+AcqZJTsJTYiMS8Ln6o3BP9TWbZAxMyCQgLVx
+         v23qAtVG+O+8C32aUNYZWdFP99l9v0WCN2OzEGTNuWV8gtGMgi5ryoVY/F6PWE7iPRGC
+         0JoH36vwcRxoCQkRFM6Pn6aJxGfHY/KZcgMzw20efbr3hIz/oMCGJbLXKFaAbebyI+D2
+         dqUXvoo7v0AHr0m9HcgSu5vV9hUfQiH2T+gyzaJI/Sl63W9QJ/HnaWlRu7PrQD74zBfN
+         9WQA==
+X-Gm-Message-State: AD7BkJIRuoAC7R0Nsnx58CWGMivL0Io0IwxxSR1tzXPzZPV9LiyzNbOPc5xuNG4wRNQzPwFJM8UxL3ykPwcgTg==
+X-Received: by 10.140.236.68 with SMTP id h65mr9272120qhc.13.1457665032600;
+ Thu, 10 Mar 2016 18:57:12 -0800 (PST)
+Received: by 10.55.177.194 with HTTP; Thu, 10 Mar 2016 18:57:12 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.20.1603101417590.4690@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288671>
 
---1041389241-41-1457661886=:12660
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-Disposition: INLINE
+On Thu, Mar 10, 2016 at 2:21 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Duy,
+>
+> On Thu, 10 Mar 2016, Duy Nguyen wrote:
+>
+>> On Thu, Mar 10, 2016 at 6:34 PM, Johannes Schindelin
+>> <johannes.schindelin@gmx.de> wrote:
+>> > One possible improvement would be to add "/xyz/" to the parent
+>> > repository's .git/info/exclude, but this developer hesitates to
+>> > introduce that feature without the "delete" counterpart: those exclude
+>> > entries would likely go stale very quickly. Besides, there might be a
+>> > plan in the working to exclude worktrees automagically?
+>>
+>> That's needed because you add a worktree inside another worktree? I
+>> know that feeling, but I've changed my layout from ~/w/git as main
+>> worktree (and ~/w/git/.git as repo) to ~/w/git as a non-worktree dir
+>> that contains all worktrees, e.g. ~/w/git/reinclude-dir,
+>> ~/w/git/worktree-config, ~/w/git/lmdb... My typical worktree add
+>> command is "git worktree add ../<some-name>" then move there and do
+>> stuff. No nested worktrees, no need to update exclude file (and no
+>> messing up emacs' rgrep command, which does not understand .gitignore
+>> anyway)
+>
+> This feels to me like it is working around the problem rather than solving
+> it. My worktrees are inside the corresponding top-level project for a
+> reason: I work with multiple projects, and having all of their worktrees
+> in a single $HOME/w/ directory would be rather confusing to me.
+>
+> I really want to keep my Git worktrees inside /usr/src/git/ (in Git for
+> Windows' SDK).
 
-On Thu, 10 Mar 2016 14:33:55 -0800 Junio C Hamano <gitster@pobox.com> wrote:
+You can have /usr/src/git/master, /usr/src/git/some-work-tree, etc,
+and /usr/src/git itself is not a git repository at all. That way
+/usr/src only has one git-related directory and no worktrees are
+nested. The only downside is if you work in master most of the time,
+you have to type "/master" more. I think this is what Duy suggested
+too, but you interpreted it as having /usr/src/git-master,
+/usr/src/git-some-work-tree etc?
 
-JCH> Vadim Zeitlin <vz-git@zeitlins.org> writes:
-JCH> 
-JCH> > I.e. the
-JCH> > command "git log --ext-diff -p --cc" still outputs the real diff even for
-JCH> > the generated files, as if "--ext-diff" were not given. ...
-JCH> > Is the current behaviour intentional? I see it with all the git versions I
-JCH> > tried (1.7.10, 2.1.0, 2.7.0 and v2.8.0-rc1), but I don't really see why
-JCH> > would it need to work like this, so I hope it's an oversight and could be
-JCH> > corrected.
-JCH> 
-JCH> I think this is "intentional" in the sense that "--cc" feature is
-JCH> fundamentally and conceptually incompatible with "--ext-diff".
-
- Thank you for your reply, Junio, I hadn't realized that --cc was dependent
-on textual diff output format before, but now I understand why it can't
-respect --ext-diff.
-
-JCH> I haven't tried it myself, but if the contents you are using
-JCH> ext-diff on can be compared in a format that is easy-to-read for
-JCH> humans by passing them first to "textconv" filter and then running
-JCH> the normal "diff" on, that may be a viable approach to do what you
-JCH> are trying to do, as "textconv" feature is meant to still produce
-JCH> the output that still follows the usual "diff" convention.  Its
-JCH> output should be usable by any tool (e.g. diffstat) meant to
-JCH> post-process patch output, and would be a better match for the
-JCH> "--cc" mechanism.
-
- I can't think of a way to make the output as concise as it is now (i.e.
-just a single line saying that a generated file has been modified but the
-changes to it are not being shown) with this approach.
-
- Maybe I'm clutching at straws here, but I wonder if it could be possible
-to have a file attribute specifying whether --cc or -m should be used for
-it when showing merges? Because this is, basically, what I want here: --cc
-for normal files for readability but -m for the files I'm not interested
-in. It's probably too specific to my particular hack^H^H^H^H use case to
-add support for it to Git itself, but I wanted to mention it on a chance
-that somebody else might think it's a good idea.
-
- Anyhow, thanks again for your explanation,
-VZ
-
---1041389241-41-1457661886=:12660
-Content-Type: APPLICATION/PGP-SIGNATURE
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (MingW32)
-
-iEYEABECAAYFAlbiJ74ACgkQBupB3k9sHobk/wCeNW3BeaZbrHAZJUB+e8xGIZSm
-pdoAoJuOI4BYlfSY+Azo227Fsntu7aMH
-=qsjH
------END PGP SIGNATURE-----
-
---1041389241-41-1457661886=:12660--
+-- 
+Mikael Magnusson
