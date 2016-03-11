@@ -1,115 +1,77 @@
-From: Jim Klimov <jim@jimklimov.com>
-Subject: [PATCH 3/6] gitweb.perl : added ability to DEBUG progression through
- "git archive"
-Date: Fri, 11 Mar 2016 14:24:46 +0100
-Message-ID: <1457702689-9084-3-git-send-email-jim@jimklimov.com>
-References: <1457702689-9084-1-git-send-email-jim@jimklimov.com>
-Content-Transfer-Encoding: 7BIT
-Cc: Jim Klimov <jim@jimklimov.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 11 14:30:51 2016
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v7 2/2] pull --rebase: add --[no-]autostash flag
+Date: Fri, 11 Mar 2016 14:30:28 +0100
+Message-ID: <vpq8u1p16rv.fsf@anie.imag.fr>
+References: <1456594902-21182-1-git-send-email-mehul.jain2029@gmail.com>
+	<1457497100-13045-1-git-send-email-mehul.jain2029@gmail.com>
+	<1457497100-13045-2-git-send-email-mehul.jain2029@gmail.com>
+	<CACRoPnRESpiNL_=rEgw7kRdKjek8Z=qVjPH=BEWsWeYn22YryQ@mail.gmail.com>
+	<CA+DCAeSvjyy6WO=n-wdo3_yHGSWmUC0Epbt-OYLF_fbuczeeKA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Paul Tan <pyokagan@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Mehul Jain <mehul.jain2029@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 11 14:30:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aeN9T-0000v6-CC
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Mar 2016 14:30:47 +0100
+	id 1aeN9S-0000v6-4T
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Mar 2016 14:30:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932105AbcCKNan (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Mar 2016 08:30:43 -0500
-Received: from relay-mtc.cos.ru ([81.5.113.8]:54710 "EHLO relay-mtc.cos.ru"
+	id S1753093AbcCKNak (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Mar 2016 08:30:40 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:56251 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932067AbcCKNaf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Mar 2016 08:30:35 -0500
-X-Greylist: delayed 317 seconds by postgrey-1.27 at vger.kernel.org; Fri, 11 Mar 2016 08:30:29 EST
-Received: from sunmail.cos.ru (mail.cos.ru [81.5.113.73])
-	by relay-mta.cos.ru (8.14.3+Sun/8.14.3) with ESMTP id u2BDOxJn025365
-	for <git@vger.kernel.org>; Fri, 11 Mar 2016 16:25:06 +0300 (MSK)
-Received: from debian8.roz.lab.etn.com. ([31.7.243.238])
- by sunmail.cos.ru (Sun Java(tm) System Messaging Server 6.3-7.04 (built Sep 26
- 2008; 64bit)) with ESMTPA id <0O3V0013IMPRKC00@sunmail.cos.ru> for
- git@vger.kernel.org; Fri, 11 Mar 2016 16:27:34 +0300 (MSK)
-X-Mailer: git-send-email 2.8.0.rc1.4.ge2bf47e.dirty
-In-reply-to: <1457702689-9084-1-git-send-email-jim@jimklimov.com>
-X-Greylist-Inspected: inspected by milter-greylist-4.5.12-COS (relay-mta.cos.ru [93.175.31.8]); Fri, 11 Mar 2016 16:25:07 +0300 (MSK) for IP:'81.5.113.73' DOMAIN:'mail.cos.ru' HELO:'sunmail.cos.ru' FROM:'jim@jimklimov.com'
-X-Greylist: Sender IP whitelisted, ACL 386 matched, not delayed by milter-greylist-4.5.12-COS (relay-mta.cos.ru [93.175.31.8]); Fri, 11 Mar 2016 16:25:07 +0300 (MSK)
+	id S1753087AbcCKNae (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Mar 2016 08:30:34 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u2BDUQ8Z008670
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Fri, 11 Mar 2016 14:30:26 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u2BDUS9j001496;
+	Fri, 11 Mar 2016 14:30:28 +0100
+In-Reply-To: <CA+DCAeSvjyy6WO=n-wdo3_yHGSWmUC0Epbt-OYLF_fbuczeeKA@mail.gmail.com>
+	(Mehul Jain's message of "Fri, 11 Mar 2016 18:45:01 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 11 Mar 2016 14:30:27 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u2BDUQ8Z008670
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1458307827.34785@hy9oqa5+Mgx8/qZHxzh2ow
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288685>
 
----
- gitweb/gitweb.perl | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+Mehul Jain <mehul.jain2029@gmail.com> writes:
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index c715472..fc5b62d 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -891,6 +891,7 @@ sub evaluate_query_params {
- # now read PATH_INFO and update the parameter list for missing parameters
- sub evaluate_path_info {
- 	return if defined $input_params{'project'};
-+	printf STDERR "path_info='$path_info'\n" if $DEBUG;
- 	return if !$path_info;
- 	$path_info =~ s,^/+,,;
- 	return if !$path_info;
-@@ -7336,6 +7337,24 @@ sub git_snapshot {
- 	if (!@snapshot_fmts) {
- 		die_error(403, "Snapshots not allowed");
- 	}
-+
-+	if ($DEBUG) {
-+		my $v; my $i;
-+		printf STDERR "path_info='".$path_info."'\n";
-+		printf STDERR "input_params: { ";
-+		foreach $i (keys (%input_params)) {
-+			$v = $input_params{$i};
-+			if (defined ($v)) {
-+				if ($i eq "extra_options" ) {
-+					printf STDERR "  '$i' => [".@{$v}."] ; ";
-+				} else {
-+				printf STDERR "  '$i' => '$v' ; ";
-+				}
-+			}
-+		}
-+		printf STDERR "} \n";
-+	}
-+
- 	# default to first supported snapshot format
- 	$format ||= $snapshot_fmts[0];
- 	if ($format !~ m/^[a-z0-9]+$/) {
-@@ -7367,6 +7386,13 @@ sub git_snapshot {
- 	my ($name, $prefix) = snapshot_name($project, $hash);
- 	my $filename = "$name$known_snapshot_formats{$format}{'suffix'}";
- 
-+	if ($DEBUG) {
-+		# name of the tarball to generate
-+		if (defined $filename)  { printf STDERR "filename='$filename'\n"; }
-+		# value of the 'f=' URL parameter
-+		if (defined $file_name) { printf STDERR "file_name='$file_name'\n"; }
-+	}
-+
- 	my %co = parse_commit($hash);
- 	exit_if_unmodified_since($co{'committer_epoch'}) if %co;
- 
-@@ -7398,12 +7424,15 @@ sub git_snapshot {
- 		%co ? (-last_modified => $latest_date{'rfc2822'}) : (),
- 		-status => '200 OK');
- 
-+	printf STDERR "Starting git-archive: $cmd\n" if $DEBUG;
- 	open my $fd, "-|", $cmd
- 		or die_error(500, "Execute git-archive failed");
-+	printf STDERR "Started git-archive...\n" if $DEBUG;
- 	binmode STDOUT, ':raw';
- 	print <$fd>;
- 	binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
- 	close $fd;
-+	printf STDERR "Finished posting output of git-archive...\n" if $DEBUG;
- }
- 
- sub git_log_generic {
+> On Fri, Mar 11, 2016 at 10:21 AM, Paul Tan <pyokagan@gmail.com> wrote:
+>>>  static int config_autostash = -1;
+>>
+>> Hmm, why can't config_autostash just default to 0?
+>
+> Previously Junio recommended not to explicitly initialize a
+> static to 0 (or NULL).
+> http://thread.gmane.org/gmane.comp.version-control.git/287709/focus=287726
+
+What Junio says is that you don't need to write
+
+static int config_autostash = 0;
+
+since it is equivalent to
+
+static int config_autostash;
+
+But there's nothing wrong with having a static variable defaulting to 0.
+
 -- 
-2.1.4
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
