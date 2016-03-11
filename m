@@ -1,85 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG?] fetch into shallow sends a large number of objects
-Date: Fri, 11 Mar 2016 13:16:35 -0500
-Message-ID: <20160311181635.GA31299@sigill.intra.peff.net>
-References: <20160307221539.GA24034@sigill.intra.peff.net>
- <xmqqio0xn93q.fsf@gitster.mtv.corp.google.com>
- <20160308121444.GA18535@sigill.intra.peff.net>
- <CACsJy8Dk_g1O98UsDaeVS3VXmE2Mn5aR+w1OiFir+QwyJYLVZQ@mail.gmail.com>
- <20160308132524.GA22866@sigill.intra.peff.net>
- <20160310122020.GA24007@lanh>
- <20160310211052.GC30595@sigill.intra.peff.net>
- <xmqqbn6mdnyn.fsf@gitster.mtv.corp.google.com>
- <20160310214042.GB32608@sigill.intra.peff.net>
- <CACsJy8BRhuSOs96fonjBJ0ok6JZJ3CwLkDPCP_9QQdROZUVh8w@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: Ability to remember last known good build
+Date: Fri, 11 Mar 2016 10:17:40 -0800
+Message-ID: <CAGZ79kZS7vnw5EskQHty9Cathv6FdE3L8wLstFwaWpMFHamSEw@mail.gmail.com>
+References: <CEDF59214E9E6A4CB418120F4FD7A0056E86A214@US-MBX2.ingrnet.com>
+	<xmqq60wsc2gh.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 11 19:24:17 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "Pedroso, Osiris" <osiris.pedroso@intergraph.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 11 19:27:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aeRg9-0000BC-FU
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Mar 2016 19:24:17 +0100
+	id 1aeRjX-0000BC-3I
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Mar 2016 19:27:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751172AbcCKSQk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Mar 2016 13:16:40 -0500
-Received: from cloud.peff.net ([50.56.180.127]:58494 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750819AbcCKSQi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Mar 2016 13:16:38 -0500
-Received: (qmail 9485 invoked by uid 102); 11 Mar 2016 18:16:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 11 Mar 2016 13:16:37 -0500
-Received: (qmail 5378 invoked by uid 107); 11 Mar 2016 18:16:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 11 Mar 2016 13:16:53 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Mar 2016 13:16:35 -0500
-Content-Disposition: inline
-In-Reply-To: <CACsJy8BRhuSOs96fonjBJ0ok6JZJ3CwLkDPCP_9QQdROZUVh8w@mail.gmail.com>
+	id S1751085AbcCKSRm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Mar 2016 13:17:42 -0500
+Received: from mail-ig0-f178.google.com ([209.85.213.178]:35525 "EHLO
+	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750944AbcCKSRl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Mar 2016 13:17:41 -0500
+Received: by mail-ig0-f178.google.com with SMTP id vf5so16757400igb.0
+        for <git@vger.kernel.org>; Fri, 11 Mar 2016 10:17:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=RIgF4zkhNuCKP6qi5tTKFBNwSY+L/ApNX4vJKOb6PGk=;
+        b=UblFrV8P6lv00d/Ky3ICxarEY81jSemVLkBAJZCtUvr6LTaGcJTpUReKlKXTErYEJE
+         s55Ehqbv8aJIAFS7wfeagrh31XyN0+myQtW+SVUse3TOblVDHdhILD7j8z7VqyuMB/84
+         uMGceyzZOiImhupiAiErccAIA7uaNLnGYdb9yAndgh+1AWJgKd9pL5sDiy0ywoZ+ATgD
+         Q3in93O4WMHm5hDQA2DooknJL4MAgaZ9w5JtGmAA/JEU89VQT0MMixAPgrCJnjF+Tp+c
+         rXncD76PucLpw0gXC54OhsMPJrX+pEqRE1p5DS1NOtpxDNjxEOwQ/Fe8UujTTsLECEIz
+         dGlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=RIgF4zkhNuCKP6qi5tTKFBNwSY+L/ApNX4vJKOb6PGk=;
+        b=f7h4hDmMDmj782JS6JOg1AtKjDE9EmcXPn4lhgHEsZA6mhpXe7QijZJI9o+FwZB7Q6
+         oQ8xABaOqZhbMQw4ZZG7xXWpk8r+bJm28Qk+udwCOQIiKjmwAWLAARygqrzMTfzqix16
+         HUSoyi1f2Ii52MbUIMu6FfHRjEVBQA2hMcl4ncpoNCUTliyolGu8mE5g3nkbq7VWFToU
+         z28xl1BeXlUAHnQ9WniyNvRWpGoOhmzlq7t0q8fSg1hTZZuSc5GISZh5Ap9g9ykBKMnB
+         2hLzqyWPLND+f3JlHTaTIcaXED6Qfu15UMUKFJiiOQ51q9ZoqesaAedsTsZRKgoJ5kwD
+         gruQ==
+X-Gm-Message-State: AD7BkJKyEVrJfnr+f0M5vBjtw86CaHBUjNs6ckc/3xpXaUnZmC+JHnTvVra4Dx3Kh2l4w2Uhr6ePHO2dX77RpVof
+X-Received: by 10.50.43.226 with SMTP id z2mr5605745igl.94.1457720260536; Fri,
+ 11 Mar 2016 10:17:40 -0800 (PST)
+Received: by 10.107.58.6 with HTTP; Fri, 11 Mar 2016 10:17:40 -0800 (PST)
+In-Reply-To: <xmqq60wsc2gh.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288695>
 
-On Fri, Mar 11, 2016 at 07:47:34AM +0700, Duy Nguyen wrote:
+On Fri, Mar 11, 2016 at 10:08 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> "Pedroso, Osiris" <osiris.pedroso@intergraph.com> writes:
+>
+>> I participate in an open source project that any pull merge is accepted, no matter what.
+>>
+>> This makes for lots of broken builds, even though we do have Travis-CI enabled on the project, because people will merge a request before even the build is complete.
+>>
+>> Therefore, I would like to remember the id of the commit of the last successful build. This would be updated by the Travis-CI script itself upon a successful build.
+>>
+>> I imagine best option would be to merge master to a certain branch named "Last_known_Linux_build" or "Last_known_Windows_build" or even "Last_known_build_all_tests_passing".
+>>
+>> I am new to git, but some other experienced co-volunteers tell me that it may not be possible due to authentication issues.
+>>
+>> Any better way of accomplishing this?
+>
+> "test && git branch -f last-good"?
 
-> Well, assume again that F and G are ref heads, and their respective
-> distance to C and D are the same (like the below graph), then "fetch
-> --deptch=<distance>" can mark C and D as shallow cut points because
-> --depth traverses from refs until the distance is met, it does not do
-> total exclusion ^C like rev-list.
-> 
->        --- B ---- C ---- H ---- F
->           /      /
->      --- D ---- E ---- G
+Travis-CI enabled, tells me they're using Github and are distributed,
+so one contributor would want to know the last known good state of
+a remote, that others push to, without testing all commits locally.
 
-Right, so I think we would only apply the "use existing cutoffs as
-bounds" thing when we were not otherwise given a --depth. Because it can
-definitely cause us to override the depth (and there's no need to; the
-point is to avoid linking in all of history, and --depth already solves
-that). So we probably do want the client to ask "I'm not giving you a
-depth, but please use my existing shallows as cutoffs".
+So maybe the question is better rephrased as: "How do we keep track of
+the last good state using the distributed nature of Git?"
 
-I think a more interesting case here is when we have C as a cutoff, and
-somebody fetches "E" directly. They are part of the truncated history.
-So we should exclude them from a fetch of "G", but if the user asked for
-them directly, that probably needs to override the existing shallow
-cutoff.
+I would rather ask the more fundamental question of the workflow
+of having everything merged despite tests failing. Also accepting
+pull requests no matter what, sounds suspicious to me. (Can I sneak
+in security issues or delete all files and it still is pulled?)
 
-We probably want to compute the --boundary of "E ^C", but then omit from
-that any items that are directly in want_obj. IOW, it is OK to truncate
-at depth=1 due to an existing cutoff, but not at depth=0. :)
-
-That does mean we would then fetch all of the history leading up to E,
-but I think that's OK. If the user didn't specify --depth and they are
-fetching from behind the shallow-cutoff point, we don't have any real
-way of knowing how much they wanted (though I guess it would also be
-sensible to just apply depth=1 in such a case).
-
--Peff
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
