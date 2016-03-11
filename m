@@ -1,72 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Ability to remember last known good build
-Date: Fri, 11 Mar 2016 10:08:14 -0800
-Message-ID: <xmqq60wsc2gh.fsf@gitster.mtv.corp.google.com>
-References: <CEDF59214E9E6A4CB418120F4FD7A0056E86A214@US-MBX2.ingrnet.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG?] fetch into shallow sends a large number of objects
+Date: Fri, 11 Mar 2016 13:16:35 -0500
+Message-ID: <20160311181635.GA31299@sigill.intra.peff.net>
+References: <20160307221539.GA24034@sigill.intra.peff.net>
+ <xmqqio0xn93q.fsf@gitster.mtv.corp.google.com>
+ <20160308121444.GA18535@sigill.intra.peff.net>
+ <CACsJy8Dk_g1O98UsDaeVS3VXmE2Mn5aR+w1OiFir+QwyJYLVZQ@mail.gmail.com>
+ <20160308132524.GA22866@sigill.intra.peff.net>
+ <20160310122020.GA24007@lanh>
+ <20160310211052.GC30595@sigill.intra.peff.net>
+ <xmqqbn6mdnyn.fsf@gitster.mtv.corp.google.com>
+ <20160310214042.GB32608@sigill.intra.peff.net>
+ <CACsJy8BRhuSOs96fonjBJ0ok6JZJ3CwLkDPCP_9QQdROZUVh8w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: "Pedroso\, Osiris" <osiris.pedroso@intergraph.com>
-X-From: git-owner@vger.kernel.org Fri Mar 11 19:08:23 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 11 19:24:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aeRU6-000358-J4
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Mar 2016 19:08:23 +0100
+	id 1aeRg9-0000BC-FU
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Mar 2016 19:24:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750867AbcCKSIT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Mar 2016 13:08:19 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58694 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750734AbcCKSIS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Mar 2016 13:08:18 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6FABA4BFA4;
-	Fri, 11 Mar 2016 13:08:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Cgy49ylBlQ0+d4Ly1fT827RfuG8=; b=tvWG1f
-	QkTiu5FWrkMq8m1RK0ddyi2vrZIoGVwWcpTcRHcOiC0X+sq6dhMeWvfYllrTFKeF
-	KLlOBxNds/H2U0MR3T9V8tZefo9yogu30PrgfmcMTrLeUH9LrYa1Zd7tqVAFN8nG
-	HPyzgV2uxJ4J458bxLLyXLQ62/hUwXqq0/qL4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lUETDD3gbg0tJo35bRODtKgUs8UUZNsM
-	rOoszsysSjO2REK4A96rPo+kg9UupQirt+n9dB9I2RCF1WaEbeBgiX4jv1Uz1ux6
-	eKXDRG+MBDdzIu0P0EsbYrfQ/3RU6C+j1r0iVxp2VDUx0NfXnXf1joMfl7TmzN05
-	hR44Ue3S9vc=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 663D04BF9D;
-	Fri, 11 Mar 2016 13:08:16 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D71ED4BF9C;
-	Fri, 11 Mar 2016 13:08:15 -0500 (EST)
-In-Reply-To: <CEDF59214E9E6A4CB418120F4FD7A0056E86A214@US-MBX2.ingrnet.com>
-	(Osiris Pedroso's message of "Fri, 11 Mar 2016 17:51:33 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3A1084E4-E7B4-11E5-8AA2-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751172AbcCKSQk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Mar 2016 13:16:40 -0500
+Received: from cloud.peff.net ([50.56.180.127]:58494 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750819AbcCKSQi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Mar 2016 13:16:38 -0500
+Received: (qmail 9485 invoked by uid 102); 11 Mar 2016 18:16:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 11 Mar 2016 13:16:37 -0500
+Received: (qmail 5378 invoked by uid 107); 11 Mar 2016 18:16:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 11 Mar 2016 13:16:53 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Mar 2016 13:16:35 -0500
+Content-Disposition: inline
+In-Reply-To: <CACsJy8BRhuSOs96fonjBJ0ok6JZJ3CwLkDPCP_9QQdROZUVh8w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288694>
 
-"Pedroso, Osiris" <osiris.pedroso@intergraph.com> writes:
+On Fri, Mar 11, 2016 at 07:47:34AM +0700, Duy Nguyen wrote:
 
-> I participate in an open source project that any pull merge is accepted, no matter what.
->
-> This makes for lots of broken builds, even though we do have Travis-CI enabled on the project, because people will merge a request before even the build is complete.
->
-> Therefore, I would like to remember the id of the commit of the last successful build. This would be updated by the Travis-CI script itself upon a successful build.
->
-> I imagine best option would be to merge master to a certain branch named "Last_known_Linux_build" or "Last_known_Windows_build" or even "Last_known_build_all_tests_passing".
->
-> I am new to git, but some other experienced co-volunteers tell me that it may not be possible due to authentication issues.
->
-> Any better way of accomplishing this?
+> Well, assume again that F and G are ref heads, and their respective
+> distance to C and D are the same (like the below graph), then "fetch
+> --deptch=<distance>" can mark C and D as shallow cut points because
+> --depth traverses from refs until the distance is met, it does not do
+> total exclusion ^C like rev-list.
+> 
+>        --- B ---- C ---- H ---- F
+>           /      /
+>      --- D ---- E ---- G
 
-"test && git branch -f last-good"?
+Right, so I think we would only apply the "use existing cutoffs as
+bounds" thing when we were not otherwise given a --depth. Because it can
+definitely cause us to override the depth (and there's no need to; the
+point is to avoid linking in all of history, and --depth already solves
+that). So we probably do want the client to ask "I'm not giving you a
+depth, but please use my existing shallows as cutoffs".
+
+I think a more interesting case here is when we have C as a cutoff, and
+somebody fetches "E" directly. They are part of the truncated history.
+So we should exclude them from a fetch of "G", but if the user asked for
+them directly, that probably needs to override the existing shallow
+cutoff.
+
+We probably want to compute the --boundary of "E ^C", but then omit from
+that any items that are directly in want_obj. IOW, it is OK to truncate
+at depth=1 due to an existing cutoff, but not at depth=0. :)
+
+That does mean we would then fetch all of the history leading up to E,
+but I think that's OK. If the user didn't specify --depth and they are
+fetching from behind the shallow-cutoff point, we don't have any real
+way of knowing how much they wanted (though I guess it would also be
+sensible to just apply depth=1 in such a case).
+
+-Peff
