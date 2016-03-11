@@ -1,94 +1,141 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Ability to remember last known good build
-Date: Fri, 11 Mar 2016 10:17:40 -0800
-Message-ID: <CAGZ79kZS7vnw5EskQHty9Cathv6FdE3L8wLstFwaWpMFHamSEw@mail.gmail.com>
-References: <CEDF59214E9E6A4CB418120F4FD7A0056E86A214@US-MBX2.ingrnet.com>
-	<xmqq60wsc2gh.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Possible bug: --ext-diff ignored with --cc in git log
+Date: Fri, 11 Mar 2016 10:20:42 -0800
+Message-ID: <xmqqziu4anb9.fsf@gitster.mtv.corp.google.com>
+References: <E1adi8q-0005NJ-4G@smtp.tt-solutions.com>
+	<xmqqlh5qc698.fsf@gitster.mtv.corp.google.com>
+	<E1aeCRp-0005Jn-C1@smtp.tt-solutions.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "Pedroso, Osiris" <osiris.pedroso@intergraph.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 11 19:27:02 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Vadim Zeitlin <vz-git@zeitlins.org>
+X-From: git-owner@vger.kernel.org Fri Mar 11 19:27:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aeRjX-0000BC-3I
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Mar 2016 19:27:02 +0100
+	id 1aeRmE-0000BC-0t
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Mar 2016 19:27:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751085AbcCKSRm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Mar 2016 13:17:42 -0500
-Received: from mail-ig0-f178.google.com ([209.85.213.178]:35525 "EHLO
-	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750944AbcCKSRl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Mar 2016 13:17:41 -0500
-Received: by mail-ig0-f178.google.com with SMTP id vf5so16757400igb.0
-        for <git@vger.kernel.org>; Fri, 11 Mar 2016 10:17:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=RIgF4zkhNuCKP6qi5tTKFBNwSY+L/ApNX4vJKOb6PGk=;
-        b=UblFrV8P6lv00d/Ky3ICxarEY81jSemVLkBAJZCtUvr6LTaGcJTpUReKlKXTErYEJE
-         s55Ehqbv8aJIAFS7wfeagrh31XyN0+myQtW+SVUse3TOblVDHdhILD7j8z7VqyuMB/84
-         uMGceyzZOiImhupiAiErccAIA7uaNLnGYdb9yAndgh+1AWJgKd9pL5sDiy0ywoZ+ATgD
-         Q3in93O4WMHm5hDQA2DooknJL4MAgaZ9w5JtGmAA/JEU89VQT0MMixAPgrCJnjF+Tp+c
-         rXncD76PucLpw0gXC54OhsMPJrX+pEqRE1p5DS1NOtpxDNjxEOwQ/Fe8UujTTsLECEIz
-         dGlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=RIgF4zkhNuCKP6qi5tTKFBNwSY+L/ApNX4vJKOb6PGk=;
-        b=f7h4hDmMDmj782JS6JOg1AtKjDE9EmcXPn4lhgHEsZA6mhpXe7QijZJI9o+FwZB7Q6
-         oQ8xABaOqZhbMQw4ZZG7xXWpk8r+bJm28Qk+udwCOQIiKjmwAWLAARygqrzMTfzqix16
-         HUSoyi1f2Ii52MbUIMu6FfHRjEVBQA2hMcl4ncpoNCUTliyolGu8mE5g3nkbq7VWFToU
-         z28xl1BeXlUAHnQ9WniyNvRWpGoOhmzlq7t0q8fSg1hTZZuSc5GISZh5Ap9g9ykBKMnB
-         2hLzqyWPLND+f3JlHTaTIcaXED6Qfu15UMUKFJiiOQ51q9ZoqesaAedsTsZRKgoJ5kwD
-         gruQ==
-X-Gm-Message-State: AD7BkJKyEVrJfnr+f0M5vBjtw86CaHBUjNs6ckc/3xpXaUnZmC+JHnTvVra4Dx3Kh2l4w2Uhr6ePHO2dX77RpVof
-X-Received: by 10.50.43.226 with SMTP id z2mr5605745igl.94.1457720260536; Fri,
- 11 Mar 2016 10:17:40 -0800 (PST)
-Received: by 10.107.58.6 with HTTP; Fri, 11 Mar 2016 10:17:40 -0800 (PST)
-In-Reply-To: <xmqq60wsc2gh.fsf@gitster.mtv.corp.google.com>
+	id S1751702AbcCKSUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Mar 2016 13:20:49 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51307 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751608AbcCKSUp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Mar 2016 13:20:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 04FBB4A2FA;
+	Fri, 11 Mar 2016 13:20:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MOxzsau3hyDlWTYiOICXYnupY+0=; b=kj7cqE
+	8RHYslsiXjX3zJoyJLhvv3grQOJPODuQZnUG70Eq2ZRmjpVbajVieQKyHWor7pwf
+	67j3Ldj6YFKlgdo4gV2nLEYkZpuizJQrstXTmcRZXt8rgR9/B6E2T9FExRoThPV+
+	3KaNdDtCokQ+5v2QR4Mvh4pcs6LLytTP3nMb0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fOq9srZaq5kFkxAJR6pR3luKWG8X0fWa
+	HkO+lBhjjtwdRo53EDgemX1n5YDdAi2Lot9yQ91Rz6dRTTyf27C4NlEc1PoCq3Pm
+	rv5mKXk5L/XT9Xi3flKdTJTDnDh1J74a7IpvL+/XH2Jo1qn0e3xStvIzPxd9A6aQ
+	zLx/zRnl/hM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F0E314A2F9;
+	Fri, 11 Mar 2016 13:20:43 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 768764A2F7;
+	Fri, 11 Mar 2016 13:20:43 -0500 (EST)
+In-Reply-To: <E1aeCRp-0005Jn-C1@smtp.tt-solutions.com> (Vadim Zeitlin's
+	message of "Fri, 11 Mar 2016 03:04:46 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F7AB6540-E7B5-11E5-AF32-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288696>
 
-On Fri, Mar 11, 2016 at 10:08 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> "Pedroso, Osiris" <osiris.pedroso@intergraph.com> writes:
+Vadim Zeitlin <vz-git@zeitlins.org> writes:
+
+> On Thu, 10 Mar 2016 14:33:55 -0800 Junio C Hamano <gitster@pobox.com> wrote:
 >
->> I participate in an open source project that any pull merge is accepted, no matter what.
->>
->> This makes for lots of broken builds, even though we do have Travis-CI enabled on the project, because people will merge a request before even the build is complete.
->>
->> Therefore, I would like to remember the id of the commit of the last successful build. This would be updated by the Travis-CI script itself upon a successful build.
->>
->> I imagine best option would be to merge master to a certain branch named "Last_known_Linux_build" or "Last_known_Windows_build" or even "Last_known_build_all_tests_passing".
->>
->> I am new to git, but some other experienced co-volunteers tell me that it may not be possible due to authentication issues.
->>
->> Any better way of accomplishing this?
+> JCH> Vadim Zeitlin <vz-git@zeitlins.org> writes:
+> JCH> 
+> JCH> > I.e. the
+> JCH> > command "git log --ext-diff -p --cc" still outputs the real diff even for
+> JCH> > the generated files, as if "--ext-diff" were not given. ...
+> JCH> > Is the current behaviour intentional? I see it with all the git versions I
+> JCH> > tried (1.7.10, 2.1.0, 2.7.0 and v2.8.0-rc1), but I don't really see why
+> JCH> > would it need to work like this, so I hope it's an oversight and could be
+> JCH> > corrected.
+> JCH> 
+> JCH> I think this is "intentional" in the sense that "--cc" feature is
+> JCH> fundamentally and conceptually incompatible with "--ext-diff".
 >
-> "test && git branch -f last-good"?
+>  Thank you for your reply, Junio, I hadn't realized that --cc was dependent
+> on textual diff output format before, but now I understand why it can't
+> respect --ext-diff.
 
-Travis-CI enabled, tells me they're using Github and are distributed,
-so one contributor would want to know the last known good state of
-a remote, that others push to, without testing all commits locally.
+Having established that, I should also add that "--cc fundamentally
+is incompatible with --ext-diff" does not justify that
+"--cc when given with --ext-diff just ignores and uses the usual
+diff".
 
-So maybe the question is better rephrased as: "How do we keep track of
-the last good state using the distributed nature of Git?"
+An equally (or even more) valid consequence could have been to
+disable "--cc" processing for paths that would trigger an external
+diff driver.  After all, the user told us that the contents would
+not compare well with the usual "diff"; we know that "--cc" output
+that summarizes the usual diff output is useless.
 
-I would rather ask the more fundamental question of the workflow
-of having everything merged despite tests failing. Also accepting
-pull requests no matter what, sounds suspicious to me. (Can I sneak
-in security issues or delete all files and it still is pulled?)
+What we show instead is an interesting thing to think about.
 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+For example, we _could_ also ignore what external diff driver
+produces in this case (as we know it won't be producing an
+appropriate input to the "--cc" post-processing), and pretend
+as if comparing an old version of foo.sln with a new version of
+foo.sln produced a diff like this:
+
+    diff --git a/foo.sln b/foo.sln
+    index d7ff46e,b829410
+    --- a/foo.sln
+    +++ b/foo.sln
+    @@ 1,1 @@
+    -d7ff46ec4a016c6ab7d233b9d4a196ecde623528  - generated file
+    +b829410f6da0afc14353b4621d2fdf874181a9f7  - generated file
+
+then you might see in a merge that merges two versions of foo.sln
+and result in another version of foo.sln in your "--cc" output a
+hunk that is like this:
+
+    diff --cc foo.sln
+    index d7ff46e,6c9aaa1..b829410
+    --- a/foo.sln
+    +++ b/foo.sln
+    @@@ 1,1 @@@
+    - d7ff46ec4a016c6ab7d233b9d4a196ecde623528  - generated file
+     -6c9aaa1ae63a2255a215c1287e38e75fcc5fc5d3  - generated file
+    ++b829410f6da0afc14353b4621d2fdf874181a9f7  - generated file
+
+which would at least tell you that there was a merge, and if the
+merge took the full contents of the file from one of the commits and
+recorded as the result of the merge, then you wouldn't see them in
+the "--cc" output.
+
+It happens that the above is fairly easily doable with today's Git
+without any modification.  Here is how.
+
+(1) Have this in your .git/config
+
+    [diff "uninteresting"]
+    	textconv = /path/to/uninteresting-textconv-script
+
+(2) Mark your .sln paths as uninteresting in your .gitattributes
+
+    *.sln	diff=uninteresting
+
+(3) Have this textconv filter in /path/to/uninteresting-textconv-script
+
+    #!/bin/sh
+    printf "%s generated file\n" "$(sha1sum <"$1")"
