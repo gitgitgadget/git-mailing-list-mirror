@@ -1,86 +1,62 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [RFC/PATCH 00/48] Libifying git apply
-Date: Fri, 11 Mar 2016 16:57:35 +0100
-Message-ID: <CAP8UFD2nPe8MqESWm5Yug4dqdCp5QqyM9R0u1zwL29BkpdbToQ@mail.gmail.com>
-References: <1457545756-20616-1-git-send-email-chriscool@tuxfamily.org>
-	<xmqqbn6nikn7.fsf@gitster.mtv.corp.google.com>
+From: Jordan Lewis <lewis.1378@gmail.com>
+Subject: Re: Git for collaboration on RDF data
+Date: Fri, 11 Mar 2016 16:34:04 +0000 (UTC)
+Message-ID: <loom.20160311T172300-746@post.gmane.org>
+References: <CALX5DUhUO9fM4SZ6F-Qof6JgDaWCaDmw+8ba-eT7iwD7v_7H0g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 11 16:57:45 2016
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 11 17:40:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aePRe-00026f-0K
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Mar 2016 16:57:42 +0100
+	id 1aeQ6o-00026u-EU
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Mar 2016 17:40:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932577AbcCKP5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Mar 2016 10:57:38 -0500
-Received: from mail-lb0-f173.google.com ([209.85.217.173]:34167 "EHLO
-	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932490AbcCKP5h (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Mar 2016 10:57:37 -0500
-Received: by mail-lb0-f173.google.com with SMTP id xr8so156294806lbb.1
-        for <git@vger.kernel.org>; Fri, 11 Mar 2016 07:57:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=DyeDKu86mNI2GJZHWLJ0DRnHzqCVE0wqkZ3XBej80lI=;
-        b=iQ+YIdkk6RUMBplhsIrZh1L7b9NBDUyhnI/fUI2yZVnCn6PhgdqXdg8BlNcolc6Nqd
-         xPinsGYtLPbluHEiDfY8FSKL8PaU8Aeb0V2d3dAVOqEVbZ++UIwpXrhlk3GxlC6yiHFi
-         xUh41YKi0wsR28e0P6UqHmEB6Au5AsuA6RwKfcMP76AIctvSJEQ8iuebDlYBKAorrXKE
-         d4Zh8p3TqRkBdb2e1wzdvDoLUywzw8nC5Dabbnf1Q0IcnhE+jcU/Zi9rBuJcsjX3tdvM
-         uvs5Pi3N+RJehTC3OZLxJd65HqFST8vJZmmVX3rewdR3XVI2a8n2OnVsb1AOcr8UoUfw
-         lv3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=DyeDKu86mNI2GJZHWLJ0DRnHzqCVE0wqkZ3XBej80lI=;
-        b=DHfAGhJ/mk4FRLRGUmfVAzXMagTSBXh7ndnz9Fx9skeFigW9y71oYD7pI/QjK6CrwM
-         FxoV0sPYfZxvH1Ht9zMQBMwqIrfA3rF5/bwuAI8J4xSJx2B2S4lhqW8EbdhqCRn9jJ/v
-         RO1B0gvFYDukfU3Px9q9a8wBLAbzlH7NRawmer/tzrMRUYnb6dABF+vnlUIjqspq9m7Z
-         oHzJGRzD9Jvx6CSTQ6+b8yyr+kXGYk4/YlNH38l3EzIBFK+9k5EKiLXI30l5/d46uwK8
-         71ruxYN1mrdUris4sJzHZDQ2u9Hi02iZpU5F5zXrmWbdU8sL+l/ba9FU2AtyYNLCnSeZ
-         s0oA==
-X-Gm-Message-State: AD7BkJIFiAiZir81JWBgTEzFx8P68FMBPC4TEKzkuCGRFi+PihqhwaHl8o2/gHJqEdUmZ7zZKBe5JlSOdxjIig==
-X-Received: by 10.25.8.1 with SMTP id 1mr2800161lfi.134.1457711855469; Fri, 11
- Mar 2016 07:57:35 -0800 (PST)
-Received: by 10.25.137.130 with HTTP; Fri, 11 Mar 2016 07:57:35 -0800 (PST)
-In-Reply-To: <xmqqbn6nikn7.fsf@gitster.mtv.corp.google.com>
+	id S932641AbcCKQkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Mar 2016 11:40:10 -0500
+Received: from plane.gmane.org ([80.91.229.3]:45854 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932549AbcCKQkI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Mar 2016 11:40:08 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1aeQ6d-0001yz-HF
+	for git@vger.kernel.org; Fri, 11 Mar 2016 17:40:03 +0100
+Received: from 50-246-88-25-static.hfc.comcastbusiness.net ([50-246-88-25-static.hfc.comcastbusiness.net])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 11 Mar 2016 17:40:03 +0100
+Received: from lewis.1378 by 50-246-88-25-static.hfc.comcastbusiness.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 11 Mar 2016 17:40:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 50.246.88.25 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288689>
 
-On Wed, Mar 9, 2016 at 7:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> One point I'd especially welcome feedback about is the fact that there
->> are many boolean options that are using OPT_BOOL(...), so they use an
->> int. And there are a few others that are using OPT_BIT(...), so they
->> use just a bit. I wonder if it is worth it to try to be consistent,
->> and maybe also to try to save some memory.
->>
->> Related to this, some of the variables for these options have not been
->> moved into the "apply_state" structure, because they are not global to
->> the file, but maybe for consistency they should be.
->
-> These might be worthy clean-ups but that is only if they are done
-> after we make sure conversion proper is done faithfully to the
-> original, i.e. without introducing unnecessary bugs.  I'd advise
-> against doing them before the libification is done.
+Hello Mark,
 
-Ok, I will try to avoid those kind of clean-ups.
+I realize this is an old post, but I was looking into doing exactly what you are
+ talking about. I did some research into JGIt to see if I could leverage any of
+that code to create an RDF Git-like experience. I came to the conclusion that
+I would either need to extend a lot of that codebase or create my own. I was
+leaning towards creating my own solution.
+
+I was wondering what you ended up doing for your case? Did you find any
+external libraries to help accomplish this? Was it a completely custom
+solution?
+
+Any pointers or advice would be greatly appreciated.
+
+Cheers,
+Jordan Lewis
