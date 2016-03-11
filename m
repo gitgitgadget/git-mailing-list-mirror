@@ -1,93 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/1] Introduce a way to create a branch and worktree at the same time
-Date: Thu, 10 Mar 2016 22:43:27 -0800
-Message-ID: <xmqqmvq5bjlc.fsf@gitster.mtv.corp.google.com>
-References: <cover.1457609615.git.johannes.schindelin@gmx.de>
-	<CACsJy8BA7-ev9wTt6K45TgiNxOaBUXbN1P03U4EUAzAPy=7Faw@mail.gmail.com>
-	<alpine.DEB.2.20.1603101417590.4690@virtualbox>
-	<CACsJy8AuBsF_rhuo_a_nqaVH1ApT3iAyozt1w2vkmvHmK17hZA@mail.gmail.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH v4] commit: add a commit.verbose config variable
+Date: Fri, 11 Mar 2016 13:30:32 +0530
+Message-ID: <CAFZEwPPbF30fr97WdZdbHwrF-b2VGkYiyTr3dDfdOAXd2SGFkQ@mail.gmail.com>
+References: <0102015362963f6a-626ad27e-e705-4a75-93a6-55a5f75d0226-000000@eu-west-1.amazonses.com>
+	<CAPig+cT+dmD2Nxw7z+x0Q2z_aJQFMwRwnb=dn1uH-_Nt9tnk4Q@mail.gmail.com>
+	<CAFZEwPMznAUBhgJgZ7aRvtH1W8hDYLci6khbw9EsWS9WGhSh=Q@mail.gmail.com>
+	<20160311054412.GA10841@flurp.local>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 11 07:43:38 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Roberto Tyley <robertotyley@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Mar 11 09:00:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aeGnR-0004MC-MJ
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Mar 2016 07:43:38 +0100
+	id 1aeI07-0001g6-1q
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Mar 2016 09:00:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754036AbcCKGnc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Mar 2016 01:43:32 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61670 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753394AbcCKGna (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Mar 2016 01:43:30 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1001A3D2E4;
-	Fri, 11 Mar 2016 01:43:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MbaNdsAASLtz9iaYvcfYukEowrY=; b=xVMK4J
-	GZYOoSkMVBiQY0NWwiEGmo4X+G29mr5eDAJKvP6KzSRKxonp2qtvG8qgFT1Njkli
-	0HzVlUhyIK72qybPw+aH5+hFHHiG8+q61+SZWA87K+blNtmLf89oOQUUfIfI17dR
-	VQtA7lvArggJQHtSS7rru4WUN3bSgpLc9+F0w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wP3EDi5OxT/eUIE6uCXZswPgNHRpw0Bj
-	avgQ0bzDIRbBOSpkfOJ/gG8O9Kwtpt9HHlN9S5FHb63Uww3EvCZn4axMKN4376eW
-	IIjGGiJ8Vjii33PbDvVs8uJG3J59JQHCeuwvMzgQ9/e+ZjVvwpJKLwIfi+3vJlxJ
-	tzc5QFOYwec=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0725E3D2E2;
-	Fri, 11 Mar 2016 01:43:29 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 814E43D2E1;
-	Fri, 11 Mar 2016 01:43:28 -0500 (EST)
-In-Reply-To: <CACsJy8AuBsF_rhuo_a_nqaVH1ApT3iAyozt1w2vkmvHmK17hZA@mail.gmail.com>
-	(Duy Nguyen's message of "Fri, 11 Mar 2016 07:56:36 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9017D726-E754-11E5-8416-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S934558AbcCKIAh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Mar 2016 03:00:37 -0500
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:35478 "EHLO
+	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934516AbcCKIAd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Mar 2016 03:00:33 -0500
+Received: by mail-yw0-f196.google.com with SMTP id s188so5704641ywe.2
+        for <git@vger.kernel.org>; Fri, 11 Mar 2016 00:00:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=hq5uCRoWumT40mOdqA9OIxhryrdvD15t+oeyYANzo9Q=;
+        b=k8FN2Hn0D/3GP6oOposKFx3KeAi0KLdgfhU66PBpaK6h9gfuZyHcBWYUv8JbuqMuHG
+         XMrmdYz0GGh+G83Tv2lIkj056RoX8Ps6B0mSAP+JDtqsO1vm8XCB6z8bSOIEeERNhH3K
+         AF74V2DnMLPhyqIuGmktKos+L5OnyWXnJZluH3dn1Byaim56MloAaHChE+W9Lg4El5S6
+         mfb75p3tUxVmxp8KZyDY0OGpHfTeApF+QutRUTSQuWQeC80M1Z4DZZ/jfH3tWxJR8aIP
+         /VPdWIKhkExH7TCDzZPlRu2valM/OmIvVyKGRtjZ/WrWpKgLSfekYo3wt8Woa20qbjyf
+         USKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=hq5uCRoWumT40mOdqA9OIxhryrdvD15t+oeyYANzo9Q=;
+        b=D8ZlEVH6WpGAa+atAwRQ4Rq718Ja1i0IMt16daVJCdVLNiaSOOl6DaIupgYlQjTDhF
+         w0qfLR1WKt8LD9x70Q6WlOQKfmYtZkzZMWO9zC/5n1u6Xvppblvm3ttuyM2vsJsy2JyQ
+         rLTrEovQYt8XoN+TSCKK/EWpZ553A4jeez8na/HgzL7ID3RuPteXkdhjhVqxMtzMQ650
+         4JcdWb/NikDy795ow2tlPpFEBMhYTdymVws9hwO3jqhLSh0MrB0s3YGKLKU01K94fFSa
+         aKbVJu8S4zMrRyYOarOE9HPF8+GAzzGVxtMX+xN9t6S+C8YLyGrWJveohuybw4lQTYzR
+         dskw==
+X-Gm-Message-State: AD7BkJKlboH2gCAM1+ZqbArLiVi6IgEfrkoBFeyTDoBVZ5IAl9KSqLAQUtn0Cd2cnwm40+NPSlVqdWbSCZv83w==
+X-Received: by 10.129.94.7 with SMTP id s7mr4553736ywb.93.1457683232811; Fri,
+ 11 Mar 2016 00:00:32 -0800 (PST)
+Received: by 10.13.203.137 with HTTP; Fri, 11 Mar 2016 00:00:32 -0800 (PST)
+In-Reply-To: <20160311054412.GA10841@flurp.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288676>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Fri, Mar 11, 2016 at 11:14 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
 
->> Granted, "git worktree remove" should be the work horse. But why not have
->> two ways to skin the same cat? I, again, would prefer the short 'n sweet
->> "git branch -d -w pull-rebase-prefix" invocation.
+> It's a bit tricky if you're not used to it, but check-for-diff
+> actually does what you want, and does so in a more direct way. While
+> it's true that it's not an "editor" per se, it does get access to the
+> entire block of text that would normally appear in your editor during
+> an interactive commit. And, this is happening before the commit has
+> been written to history. So, check-for-diff gets a chance to look at
+> the full text that would appear in your editor, and can therefore
+> check if it contains the expected "diff --git" string.
+
+Yes, this was new to me. Thanks for explaining it in an elaborate
+manner. It took me some time to actually understand the behavior of
+check-for-diff (a tricky one). And it does the task pretty nicely!
+
+> 'test_i18ngrep' is intended for strings which may be translated,
+> however, since the expected "diff --git" string should never be
+> translated, check-for-diff's use of 'grep' is correct, whereas
+> 'test_i18ngrep' would be misleading (if not actively wrong).
+
+I should have read the docs before using this method and not just
+blindly using it. I will definitely take care of that next time.
+
+> As an experiment, I rewrote the four new tests in terms of
+> check-for-diff (with "test_set_editor check-for-diff" already in
+> effect). Here's what they look like, and they function as expected:
 >
-> If you put effort into making it happen, I'm not stopping you :)
+>     test_expect_success 'commit.verbose true and --verbose omitted' '
+>         git -c commit.verbose=true commit --amend
+>     '
+>
+>     test_expect_success 'commit.verbose true and --no-verbose' '
+>         test_must_fail git -c commit.verbose=true commit --amend --no-verbose
+>     '
+>
+>     test_expect_success 'commit.verbose false and --verbose' '
+>         git -c commit.verbose=false commit --amend --verbose
+>     '
+>
+>     test_expect_success 'commit.verbose false and --verbose omitted' '
+>         test_must_fail git -c commit.verbose=false commit --amend
+>     '
+>
+> These are modeled after the "initial commit shows verbose diff" test
+> earlier in the script.
 
-I actually would ;-)  If I had to choose between the two, I'd prefer
-to see this new feature as part of the "worktree" subcommand, simply
-because "branch" is a fairly basic feature that can be used by those
-who are new to Git without knowing that the "worktree" feature even
-exists (hence not having to have one extra option description in its
-documentation that talks about "worktree" is a big plus).
-
-But that is only if I had to choose between the two.
-
-Personally, I think you are better off implementing this set of
-features as a set of shell aliases (be it bash or tcsh).  For one
-thing, you are likely to want to "chdir" to the newly created
-worktree built for the branch (or an existing one for the named
-branch) for the "take me to a worktree to work on this branch"
-feature.  The last action you would want that command to take is to
-take you there, and "git anything" subcommand would not let you do
-that (unless you tell your users to run "eval `git something`", a
-way similar to "ssh-agent -s", that is).
-
-That approach to implement the UI that directly faces the end users
-via scripting would let your users choose layouts more flexibly.
-Some people may want a repository and its worktrees next to each
-other, some others may want the worktrees embedded inside the main
-repository, yet some others may want layouts other than those two.
+Thanks a lot for helping me with the tests. I will add the status
+tests and then resend the patch. This was a nice exercise!
