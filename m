@@ -1,214 +1,101 @@
-From: Willy Tarreau <w@1wt.eu>
-Subject: [PATCH] sequencer.c: fix detection of duplicate s-o-b
-Date: Sat, 12 Mar 2016 14:08:44 +0100
-Message-ID: <20160312130844.GA25639@1wt.eu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] clone: add `--shallow-submodules` flag
+Date: Sat, 12 Mar 2016 11:29:50 -0800
+Message-ID: <xmqq60wra40h.fsf@gitster.mtv.corp.google.com>
+References: <1457739683-1972-1-git-send-email-sbeller@google.com>
+	<xmqqa8m4a5nx.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kYc1WR9CTBi1F3KpLaYRUSxNPQkQ2jk+P09pshR3jG8aw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 12 14:13:45 2016
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Sat Mar 12 20:30:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aejMU-00083D-RE
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Mar 2016 14:13:43 +0100
+	id 1aepEx-0001We-9R
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Mar 2016 20:30:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752462AbcCLNIs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Mar 2016 08:08:48 -0500
-Received: from wtarreau.pck.nerim.net ([62.212.114.60]:8328 "EHLO 1wt.eu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751818AbcCLNIs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Mar 2016 08:08:48 -0500
-Received: (from willy@localhost)
-	by pcw.home.local (8.15.2/8.15.2/Submit) id u2CD8ikf025652
-	for git@vger.kernel.org; Sat, 12 Mar 2016 14:08:44 +0100
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1752849AbcCLT34 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Mar 2016 14:29:56 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53107 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750782AbcCLT3y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Mar 2016 14:29:54 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E0A42489E2;
+	Sat, 12 Mar 2016 14:29:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=H0IKb+IoG8uHMmgrVrL2gNaocMc=; b=X5Q0W5
+	tnWxSJG3bC2sOgm35eEnfk+xYtM3cnXoM5ISNUSIti2VGXLmUaDCSLm/AeucLD/h
+	2Q3qP3O8HHAMVklFqMnc0Xqj/IoxJdeAG5YElvHaUnl6AKUadNeqys+5qqTEqRd7
+	qKEiHdstQxVLxHPlF5PJCjs/wCMA3Rehi4d24=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lPh6wjgYhbcCXQfu3da7364TfL8uAE2L
+	TfRZlzQkadsvWwm3U5R/RJ1aCkKvwJYZjWpA98Hn8yTd4cpmAsVnHQ3QrZAwimf5
+	DnJ14wzSVYSaWEAdnjji81gO3Ky8Vkt4u/EA0Pqh35PK4KUQA/NRvU4STy1vFKhN
+	cwMJxrgLj/c=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D8390489E1;
+	Sat, 12 Mar 2016 14:29:52 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 52462489DF;
+	Sat, 12 Mar 2016 14:29:52 -0500 (EST)
+In-Reply-To: <CAGZ79kYc1WR9CTBi1F3KpLaYRUSxNPQkQ2jk+P09pshR3jG8aw@mail.gmail.com>
+	(Stefan Beller's message of "Fri, 11 Mar 2016 16:56:33 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: CAFE77D4-E888-11E5-8090-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288750>
 
-Hi,
+Stefan Beller <sbeller@google.com> writes:
 
-after I upgraded my machine, I switched from git 1.7.12.2 to 2.6.4
-and experienced an annoying regression when dealing with stable
-kernel backports.
+> Why is it interesting for submodules but not for standard repositories?
+>
+> If I clone a repository without submodules, it is also not recorded
+> that I cloned with an explicit depth=1. If you fetch, you may end up with
+> a deeper history as git fetch doesn't do a "reshallow" to the configured
+> depth.
 
-I'm using a "dorelease" script which relies on git-cherry-pick's
-ability to properly detect duplicate s-o-b to ensure that all merged
-commits are properly signed in a release. Today while preparing the
-last 2.6.32 release, I did a git log before pushing and found some
-commits having two s-o-b lines with myself. I found that these ones
-were always those containing some backporting notes between the s-o-b
-lines (which we all do in stable branches to indicate what was changed
-in the backport process).
+Very simple.
 
-I didn't feel brave enough to individually deal with each offending
-patch by hand so instead I bisected the git changes and found that the
-behaviour changed with commit bab4d10 ("sequencer.c: teach append_signoff
-how to detect duplicate s-o-b").
+If you do not have submodule, you would always interact with the
+other side directly with "git fetch" or "git pull" and have total
+control over when you choose to pass or not to pass extra options to
+choose to 1. incrementally extend, 2. deepen, or 3. unshallow.  The
+user will always explicitly tell you, and knowing how you got there
+would not help you, as there is no need to guess for you.
 
-The reason is that function has_conforming_footer() immediately stops
-after the first non-conforming line without checking if there are
-conforming lines after. But if someone added signed-off-by anywhere
-after a non-conforming block, it should always be considered as part
-of the footer. Thus I adjusted the logic to check till the end of the
-footer and report the presence of valid rfc2822 or cherry-picked lines
-after the last non-conformant one and now it correctly handles all types
-of commits I had to deal with (ie: only adds s-o-b when it doesn't match
-the last one and doesn't add an empty line after a conformant one). For
-example, this footer :
+The user can do the same explicit "cd dir && git fetch" update in
+each submodule directory and give appropriate options to choose
+among the three, but I have an impression that your recent work is
+going in the direction of making commands that are run in the
+superproject recurse into submodules that automatically fetches and
+updates the history down there, discouraging users from working on
+individual submodules.  You lose the flexibility to explicitly
+choose among the three for individual submodules, and you may want
+to have some smart in your "run from the superproject and recurse"
+tools.
 
-    Signed-off-by: Mike Galbraith <umgwanakikbuti@gmail.com>
-    [bwh: Backported to 3.2:
-     - Adjust numbering in the comment
-     - Adjust filename]
-    Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
-    Cc: Byungchul Park <byungchul.park@lge.com>
-    Cc: Peter Zijlstra <peterz@infradead.org>
-    Cc: Willy Tarreau <w@1wt.eu>
-
-Used to be turned into this :
-
-    Signed-off-by: Mike Galbraith <umgwanakikbuti@gmail.com>
-    [bwh: Backported to 3.2:
-     - Adjust numbering in the comment
-     - Adjust filename]
-    Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
-    Cc: Byungchul Park <byungchul.park@lge.com>
-    Cc: Peter Zijlstra <peterz@infradead.org>
-    Cc: Willy Tarreau <w@1wt.eu>
-
-    Signed-off-by: Willy Tarreau <w@1wt.eu>
-
-And is now properly converted to :
-
-    Signed-off-by: Mike Galbraith <umgwanakikbuti@gmail.com>
-    [bwh: Backported to 3.2:
-     - Adjust numbering in the comment
-     - Adjust filename]
-    Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
-    Cc: Byungchul Park <byungchul.park@lge.com>
-    Cc: Peter Zijlstra <peterz@infradead.org>
-    Cc: Willy Tarreau <w@1wt.eu>
-    Signed-off-by: Willy Tarreau <w@1wt.eu>
-
-Also, cherry-picking the last commit above again would produce this
-before :
-
-    Signed-off-by: Mike Galbraith <umgwanakikbuti@gmail.com>
-    [bwh: Backported to 3.2:
-     - Adjust numbering in the comment
-     - Adjust filename]
-    Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
-    Cc: Byungchul Park <byungchul.park@lge.com>
-    Cc: Peter Zijlstra <peterz@infradead.org>
-    Cc: Willy Tarreau <w@1wt.eu>
-    Signed-off-by: Willy Tarreau <w@1wt.eu>
-
-    Signed-off-by: Willy Tarreau <w@1wt.eu>
-
-And it now is properly left untouched since the last s-o-b line
-is properly matched.
-
-I'm appending the patch, please include it upstream.
-
-Thanks!
-Willy
-
-
->From be9624a0df4c649d452f898925953a81dc9163fc Mon Sep 17 00:00:00 2001
-From: Willy Tarreau <w@1wt.eu>
-Date: Sat, 12 Mar 2016 13:35:35 +0100
-Subject: sequencer.c: fix detection of duplicate s-o-b
-
-Commit bab4d10 ("sequencer.c: teach append_signoff how to detect
-duplicate s-o-b") changed the method used to detect duplicate s-o-b,
-but it introduced a regression for a case where some non-compliant
-information are present in the footer. In maintenance branches, it's
-very common to add some elements after the signed-off and to add your
-s-o-b after. This is used a lot in the stable kernel series, for
-example this commit backported from 3.2 to 2.6.32 :
-
-    ALSA: usb-audio: avoid freeing umidi object twice
-
-    commit 07d86ca93db7e5cdf4743564d98292042ec21af7 upstream.
-
-    The 'umidi' object will be free'd on the error path by snd_usbmidi_free()
-    when tearing down the rawmidi interface. So we shouldn't try to free it
-    in snd_usbmidi_create() after having registered the rawmidi interface.
-
-    Found by KASAN.
-
-    Signed-off-by: Andrey Konovalov <andreyknvl@gmail.com>
-    Acked-by: Clemens Ladisch <clemens@ladisch.de>
-    Signed-off-by: Takashi Iwai <tiwai@suse.de>
-    Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
-    [wt: file is sound/midi/usbmidi.c in 2.6.32]
-    Signed-off-by: Willy Tarreau <w@1wt.eu>
-
-Prior to the commit above, a cherry-pick -s would not append an extra s-o-b.
-After this commit, a new line and a second s-o-b are added, making the footer
-look like this :
-
-    Signed-off-by: Andrey Konovalov <andreyknvl@gmail.com>
-    Acked-by: Clemens Ladisch <clemens@ladisch.de>
-    Signed-off-by: Takashi Iwai <tiwai@suse.de>
-    Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
-    [wt: file is sound/midi/usbmidi.c in 2.6.32]
-    Signed-off-by: Willy Tarreau <w@1wt.eu>
-
-    Signed-off-by: Willy Tarreau <w@1wt.eu>
-
-This patch improves the parsing of the footer by considering the
-presence of a valid rfc2822 line after possibly non-conformant lines.
-Indeed, if someone added an s-o-b or CC after some stuff, this line
-must properly be considered as part of the footer and not of the body.
-
-Signed-off-by: Willy Tarreau <w@1wt.eu>
----
- sequencer.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index e66f2fe..ab2c18d 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -64,6 +64,8 @@ static int has_conforming_footer(struct strbuf *sb, struct strbuf *sob,
- 	int len = sb->len - ignore_footer;
- 	const char *buf = sb->buf;
- 	int found_sob = 0;
-+	int found_valid = 0;
-+	int found_other = 0;
- 
- 	/* footer must end with newline */
- 	if (!len || buf[len - 1] != '\n')
-@@ -96,15 +98,18 @@ static int has_conforming_footer(struct strbuf *sb, struct strbuf *sob,
- 		if (found_rfc2822 && sob &&
- 		    !strncmp(buf + i, sob->buf, sob->len))
- 			found_sob = k;
--
--		if (!(found_rfc2822 ||
--		      is_cherry_picked_from_line(buf + i, k - i - 1)))
--			return 0;
-+		else if (found_rfc2822 ||
-+			 is_cherry_picked_from_line(buf + i, k - i - 1))
-+			found_valid = k;
-+		else
-+			found_other = k;
- 	}
- 	if (found_sob == i)
- 		return 3;
--	if (found_sob)
-+	if (found_sob > found_other)
- 		return 2;
-+	if (found_other > found_valid)
-+		return 0;
- 	return 1;
- }
- 
--- 
-2.6.4
+A submodule that was initially cloned with depth=1, perhaps because
+the user didn't know if the module was interesting to her in the
+context of working on the superproject before she had her clone of
+the superproject hence she only wanted to see what's there, and a
+submodule that was not even fetched initially when the superproject
+was cloned and later was "submodule init"ed and fetched with
+depth=1, would have the same shallow boundary, but the intent of the
+user would clearly be different in the larger picture.  I imagined
+that your "run in top-level and recurse to fetch in submodules"
+tools would benefit if it has more information to intuit what the
+end user meant.
