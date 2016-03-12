@@ -1,7 +1,7 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH/RFC/GSoC 12/17] rebase-todo: introduce rebase_todo_item
-Date: Sat, 12 Mar 2016 18:46:32 +0800
-Message-ID: <1457779597-6918-13-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH/RFC/GSoC 10/17] rebase-common: implement cache_has_uncommitted_changes()
+Date: Sat, 12 Mar 2016 18:46:30 +0800
+Message-ID: <1457779597-6918-11-git-send-email-pyokagan@gmail.com>
 References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -9,270 +9,157 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Stefan Beller <sbeller@google.com>, sam.halliday@gmail.com,
 	Paul Tan <pyokagan@gmail.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 12 11:47:51 2016
+X-From: git-owner@vger.kernel.org Sat Mar 12 11:47:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aeh5J-0006B3-Gm
+	id 1aeh5I-0006B3-Um
 	for gcvg-git-2@plane.gmane.org; Sat, 12 Mar 2016 11:47:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752667AbcCLKrk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Mar 2016 05:47:40 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:35884 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752584AbcCLKrc (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752634AbcCLKrh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Mar 2016 05:47:37 -0500
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:33147 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752541AbcCLKrc (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 12 Mar 2016 05:47:32 -0500
-Received: by mail-pa0-f49.google.com with SMTP id tt10so119743308pab.3
-        for <git@vger.kernel.org>; Sat, 12 Mar 2016 02:47:32 -0800 (PST)
+Received: by mail-pa0-f53.google.com with SMTP id fl4so118964638pad.0
+        for <git@vger.kernel.org>; Sat, 12 Mar 2016 02:47:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=kY4QLux9RLJXiI+8wSlP4OZAZl1vhkVuHpN/7OEJI1o=;
-        b=UJIql7JS4106vqPqNRDZncGNOqmuUkJHULo1qtwCU/p2MujkCiIAoVf/u2sguqqO7i
-         I5k1/LGXtkHrHLhPC4hl59QtbSaR2pcCYOIBYMd4rlrFoN6bR1dvkJcasXeEJPz9K/uk
-         F7bfP82w4aGaopclqKYsRVA6aenMjyzaoayqS1NpIv46gmhxw3BMyB6KiXxwmoianS+D
-         ZxNzbJSs7ycD/SQ3y8VJ/HHqqw5Bjg6GMwysiBNm8gNUMQ0mjTcTOYb9TNcftPjNjxkf
-         6dw9iEyL+REaGNHN6LU7G7KP9AhD5/A3XxYj8vE8XtUu5Q46gVw2uCb6N7QrmA0ffqzW
-         aoDQ==
+        bh=wZ6pbQ1/uNQJUWdb6QxO5xt5Y1KNCPf+4QiWKOi8VrY=;
+        b=rT9AIef6hLZdRP3Sw3O3YYM8Q7Wz6aQCLsvKoGG2TsVg2HqhBGZhq3+oOI8AEF4uvh
+         VSrvVe0GY5qFScbQVCiAcrMjBcmYPm+hcODvGbZJnKphcmsNtxL3UfgLrSUOx/3A64io
+         EA0ijk3MHm37gd+JE10ls9/7udMBxOAEKWMKrjR8s9YGOUvWVtVzRXvwFL7ZOhCp3pXi
+         c0KbgwZWocyvUERwsF851UnsmzevPgvyPiWIiwZhSWx0RoATM0fiSYpUHvdYTluxdvAG
+         v5OOmvQfSta2YbwQ+a/2ci08UbyFXAHwPV/RbGPnmz0plmROFlfb1UJkkkEkWE81MtQg
+         pU4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=kY4QLux9RLJXiI+8wSlP4OZAZl1vhkVuHpN/7OEJI1o=;
-        b=YTjFVItkFAVniUgyM6xcDMcMHQT29MKAVV7MRIiRT2ffsmG+lQ9EqL6THAUp6oSUTy
-         xR8bZT4JSBcIc3+Gx1+mWKQfENG42aQV50Orjkqj1WjiGRphz8lF09liaf8AMJrHlA71
-         1ifrzhLl9PPymFk9b+bFgWk4TWl1lbWZD4oUqWwWuvE6j+JsW6u9y1Ic50axpYcXHFBV
-         iPVL217gUDdGebpU39QNgwcBV31mks7luiYxSVPk9rp/OEtssHbd0Z4XTzp9vDSxJ0wJ
-         fz/CjNpPRT0Rt5SOi5ajtiqXoscMs8r+cQJklmyaUMIti7+6khK3bd09bLrRNaOR7NsT
-         x0Qw==
-X-Gm-Message-State: AD7BkJLHn+qogbFVcDiUZROWgylT6KtPaxRx4XE+iFqyaJWrjW7qAZht2AJxKgZ1EQtivQ==
-X-Received: by 10.66.97.8 with SMTP id dw8mr22930942pab.28.1457779652121;
-        Sat, 12 Mar 2016 02:47:32 -0800 (PST)
+        bh=wZ6pbQ1/uNQJUWdb6QxO5xt5Y1KNCPf+4QiWKOi8VrY=;
+        b=BfM6EMf947QAIXFnPQXUMTP3zdlwP4KnhMwJwFmG4IGRyZQvxJ0MR4iLRxdzJDjwE0
+         +Jmd1gkfCuDY48Ne+FM4VoWi3gGuB3pP6fGpKTOxU/gOIb6sfeqIQ1vbp5m7t8L7DZr3
+         IQS30c0eHmzBnsJbY9/q37na3FdNAwfN10sGu2io5xgTC3U50odfB+jNe+ODh64oRWFe
+         cwXyFLKUnh6P75AVbMlzsDZVHPepYlnz/Nj6iyox1NWLrpS0UitCtV1V8l1RTW5V0Sei
+         AAyGITdUeHNO7hIt5p5asxuH/uTzGGAOzE5KFsiD0sLQ1DDx5K+wu1OFv7CyPbkseGQq
+         GD8w==
+X-Gm-Message-State: AD7BkJLcILgS9lzbXehrT2f18D+N85dFb3vEASboqVf8fd152NR9VOW1chSkVhc99OpHkw==
+X-Received: by 10.66.221.167 with SMTP id qf7mr22701263pac.94.1457779646009;
+        Sat, 12 Mar 2016 02:47:26 -0800 (PST)
 Received: from yoshi.chippynet.com ([116.86.77.230])
-        by smtp.gmail.com with ESMTPSA id tb10sm18983519pab.22.2016.03.12.02.47.29
+        by smtp.gmail.com with ESMTPSA id tb10sm18983519pab.22.2016.03.12.02.47.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 12 Mar 2016 02:47:31 -0800 (PST)
+        Sat, 12 Mar 2016 02:47:25 -0800 (PST)
 X-Mailer: git-send-email 2.7.0
 In-Reply-To: <1457779597-6918-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288742>
 
-In an interactive rebase, commands are read and executed from a todo
-list (.git/rebase-merge/git-rebase-todo) to perform the rebase.
+In the upcoming git-rebase-to-C rewrite, it is a common opertation to
+check if the index has uncommitted changes, so that rebase can complain
+that the index is dirty, or commit the uncommitted changes in the index.
 
-In the upcoming re-implementation of git-rebase -i in C, it is useful to
-be able to parse each command into a data structure which can then be
-operated on. Implement rebase_todo_item for this.
+builtin/pull.c already implements the function we want. Move it to
+rebase-common.c so that it can be shared between all rebase backends and
+git-pull.
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- Makefile      |   1 +
- rebase-todo.c | 144 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- rebase-todo.h |  28 ++++++++++++
- 3 files changed, 173 insertions(+)
- create mode 100644 rebase-todo.c
- create mode 100644 rebase-todo.h
+ builtin/pull.c  | 22 +---------------------
+ rebase-common.c | 17 +++++++++++++++++
+ rebase-common.h |  5 +++++
+ 3 files changed, 23 insertions(+), 21 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index d43e068..8b928e4 100644
---- a/Makefile
-+++ b/Makefile
-@@ -782,6 +782,7 @@ LIB_OBJS += read-cache.o
- LIB_OBJS += rebase-am.o
- LIB_OBJS += rebase-common.o
- LIB_OBJS += rebase-merge.o
-+LIB_OBJS += rebase-todo.o
- LIB_OBJS += reflog-walk.o
- LIB_OBJS += refs.o
- LIB_OBJS += refs/files-backend.o
-diff --git a/rebase-todo.c b/rebase-todo.c
-new file mode 100644
-index 0000000..ac6b222
---- /dev/null
-+++ b/rebase-todo.c
-@@ -0,0 +1,144 @@
-+#include "cache.h"
-+#include "rebase-todo.h"
-+
-+/*
-+ * Used as the default `rest` value, so that users can always assume `rest` is
-+ * non NULL and `rest` is NUL terminated even for a freshly initialized
-+ * rebase_todo_item.
-+ */
-+static char rebase_todo_item_slopbuf[1];
-+
-+void rebase_todo_item_init(struct rebase_todo_item *item)
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 9e65dc9..6be4213 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -307,26 +307,6 @@ static enum rebase_type config_get_rebase(void)
+ }
+ 
+ /**
+- * Returns 1 if there are uncommitted changes, 0 otherwise.
+- */
+-static int has_uncommitted_changes(const char *prefix)
+-{
+-	struct rev_info rev_info;
+-	int result;
+-
+-	if (is_cache_unborn())
+-		return 0;
+-
+-	init_revisions(&rev_info, prefix);
+-	DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
+-	DIFF_OPT_SET(&rev_info.diffopt, QUICK);
+-	add_head_to_pending(&rev_info);
+-	diff_setup_done(&rev_info.diffopt);
+-	result = run_diff_index(&rev_info, 1);
+-	return diff_result_code(&rev_info.diffopt, result);
+-}
+-
+-/**
+  * If the work tree has unstaged or uncommitted changes, dies with the
+  * appropriate message.
+  */
+@@ -345,7 +325,7 @@ static void die_on_unclean_work_tree(const char *prefix)
+ 		do_die = 1;
+ 	}
+ 
+-	if (has_uncommitted_changes(prefix)) {
++	if (cache_has_uncommitted_changes()) {
+ 		if (do_die)
+ 			error(_("Additionally, your index contains uncommitted changes."));
+ 		else
+diff --git a/rebase-common.c b/rebase-common.c
+index 61be8f1..94783a9 100644
+--- a/rebase-common.c
++++ b/rebase-common.c
+@@ -29,6 +29,23 @@ int cache_has_unstaged_changes(void)
+ 	return diff_result_code(&rev_info.diffopt, result);
+ }
+ 
++int cache_has_uncommitted_changes(void)
 +{
-+	item->action = REBASE_TODO_NONE;
-+	oidclr(&item->oid);
-+	item->rest = rebase_todo_item_slopbuf;
-+}
++	struct rev_info rev_info;
++	int result;
 +
-+void rebase_todo_item_release(struct rebase_todo_item *item)
-+{
-+	if (item->rest != rebase_todo_item_slopbuf)
-+		free(item->rest);
-+	rebase_todo_item_init(item);
-+}
-+
-+void rebase_todo_item_copy(struct rebase_todo_item *dst, const struct rebase_todo_item *src)
-+{
-+	if (dst->rest != rebase_todo_item_slopbuf)
-+		free(dst->rest);
-+	*dst = *src;
-+	dst->rest = xstrdup(src->rest);
-+}
-+
-+static const char *next_word(struct strbuf *sb, const char *str)
-+{
-+	const char *end;
-+
-+	while (*str && isspace(*str))
-+		str++;
-+
-+	end = str;
-+	while (*end && !isspace(*end))
-+		end++;
-+
-+	strbuf_reset(sb);
-+	strbuf_add(sb, str, end - str);
-+	return end;
-+}
-+
-+int rebase_todo_item_parse(struct rebase_todo_item *item, const char *line, int abbrev)
-+{
-+	struct strbuf word = STRBUF_INIT;
-+	const char *str = line;
-+	int has_oid = 1, ret = 0;
-+
-+	while (*str && isspace(*str))
-+		str++;
-+
-+	if (!*str || *str == comment_line_char) {
-+		item->action = REBASE_TODO_NONE;
-+		oidclr(&item->oid);
-+		if (item->rest != rebase_todo_item_slopbuf)
-+			free(item->rest);
-+		item->rest = *str ? xstrdup(str) : rebase_todo_item_slopbuf;
++	if (is_cache_unborn())
 +		return 0;
-+	}
 +
-+	str = next_word(&word, str);
-+	if (!strcmp(word.buf, "noop")) {
-+		item->action = REBASE_TODO_NOOP;
-+		has_oid = 0;
-+	} else if (!strcmp(word.buf, "pick") || !strcmp(word.buf, "p")) {
-+		item->action = REBASE_TODO_PICK;
-+	} else {
-+		ret = error(_("Unknown command: %s"), word.buf);
-+		goto finish;
-+	}
-+
-+	if (has_oid) {
-+		str = next_word(&word, str);
-+		if (abbrev) {
-+			/* accept abbreviated object ids */
-+			if (get_oid_commit(word.buf, &item->oid)) {
-+				ret = error(_("Not a commit: %s"), word.buf);
-+				goto finish;
-+			}
-+		} else {
-+			if (word.len != GIT_SHA1_HEXSZ || get_oid_hex(word.buf, &item->oid)) {
-+				ret = error(_("Invalid line: %s"), line);
-+				goto finish;
-+			}
-+		}
-+	} else {
-+		oidclr(&item->oid);
-+	}
-+
-+	if (*str && isspace(*str))
-+		str++;
-+	if (*str) {
-+		if (item->rest != rebase_todo_item_slopbuf)
-+			free(item->rest);
-+		item->rest = xstrdup(str);
-+	}
-+
-+finish:
-+	strbuf_release(&word);
-+	return ret;
++	init_revisions(&rev_info, NULL);
++	DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
++	DIFF_OPT_SET(&rev_info.diffopt, QUICK);
++	add_head_to_pending(&rev_info);
++	diff_setup_done(&rev_info.diffopt);
++	result = run_diff_index(&rev_info, 1);
++	return diff_result_code(&rev_info.diffopt, result);
 +}
 +
-+void strbuf_add_rebase_todo_item(struct strbuf *sb,
-+				 const struct rebase_todo_item *item, int abbrev)
-+{
-+	int has_oid = 1;
+ void rebase_options_init(struct rebase_options *opts)
+ {
+ 	oidclr(&opts->onto);
+diff --git a/rebase-common.h b/rebase-common.h
+index 9d14e25..97d9a5b 100644
+--- a/rebase-common.h
++++ b/rebase-common.h
+@@ -11,6 +11,11 @@ void refresh_and_write_cache(unsigned int);
+  */
+ int cache_has_unstaged_changes(void);
+ 
++/**
++ * Returns 1 if there are uncommitted changes, 0 otherwise.
++ */
++int cache_has_uncommitted_changes(void);
 +
-+	switch (item->action) {
-+	case REBASE_TODO_NONE:
-+		has_oid = 0;
-+		break;
-+	case REBASE_TODO_NOOP:
-+		strbuf_addstr(sb, "noop");
-+		has_oid = 0;
-+		break;
-+	case REBASE_TODO_PICK:
-+		strbuf_addstr(sb, "pick");
-+		break;
-+	default:
-+		die("BUG: invalid rebase_todo_item action %d", item->action);
-+	}
-+
-+	if (has_oid) {
-+		strbuf_addch(sb, ' ');
-+		if (abbrev)
-+			strbuf_addstr(sb, find_unique_abbrev((unsigned char *)&item->oid.hash, DEFAULT_ABBREV));
-+		else
-+			strbuf_addstr(sb, oid_to_hex(&item->oid));
-+	}
-+
-+	if (*item->rest) {
-+		if (item->action != REBASE_TODO_NONE)
-+			strbuf_addch(sb, ' ');
-+		strbuf_addstr(sb, item->rest);
-+	}
-+
-+	strbuf_addch(sb, '\n');
-+}
-diff --git a/rebase-todo.h b/rebase-todo.h
-new file mode 100644
-index 0000000..2eedbb0
---- /dev/null
-+++ b/rebase-todo.h
-@@ -0,0 +1,28 @@
-+#ifndef REBASE_TODO_H
-+#define REBASE_TODO_H
-+
-+struct strbuf;
-+
-+enum rebase_todo_action {
-+	REBASE_TODO_NONE = 0,
-+	REBASE_TODO_NOOP,
-+	REBASE_TODO_PICK
-+};
-+
-+struct rebase_todo_item {
-+	enum rebase_todo_action action;
-+	struct object_id oid;
-+	char *rest;
-+};
-+
-+void rebase_todo_item_init(struct rebase_todo_item *);
-+
-+void rebase_todo_item_release(struct rebase_todo_item *);
-+
-+void rebase_todo_item_copy(struct rebase_todo_item *, const struct rebase_todo_item *);
-+
-+int rebase_todo_item_parse(struct rebase_todo_item *, const char *line, int abbrev);
-+
-+void strbuf_add_rebase_todo_item(struct strbuf *, const struct rebase_todo_item *, int abbrev);
-+
-+#endif /* REBASE_TODO_H */
+ /* common rebase backend options */
+ struct rebase_options {
+ 	struct object_id onto;
 -- 
 2.7.0
