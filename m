@@ -1,7 +1,7 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH/RFC/GSoC 06/17] rebase-am: introduce am backend for builtin rebase
-Date: Sat, 12 Mar 2016 18:46:26 +0800
-Message-ID: <1457779597-6918-7-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH/RFC/GSoC 11/17] rebase-merge: introduce merge backend for builtin rebase
+Date: Sat, 12 Mar 2016 18:46:31 +0800
+Message-ID: <1457779597-6918-12-git-send-email-pyokagan@gmail.com>
 References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -9,404 +9,445 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Stefan Beller <sbeller@google.com>, sam.halliday@gmail.com,
 	Paul Tan <pyokagan@gmail.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 12 11:47:28 2016
+X-From: git-owner@vger.kernel.org Sat Mar 12 11:47:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aeh4x-0005u9-7q
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Mar 2016 11:47:27 +0100
+	id 1aeh56-0005yz-3x
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Mar 2016 11:47:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752532AbcCLKrW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Mar 2016 05:47:22 -0500
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:35759 "EHLO
-	mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752310AbcCLKrO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Mar 2016 05:47:14 -0500
-Received: by mail-pf0-f173.google.com with SMTP id n5so63106367pfn.2
-        for <git@vger.kernel.org>; Sat, 12 Mar 2016 02:47:13 -0800 (PST)
+	id S1752610AbcCLKre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Mar 2016 05:47:34 -0500
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:33173 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751523AbcCLKra (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Mar 2016 05:47:30 -0500
+Received: by mail-pa0-f47.google.com with SMTP id fl4so118965312pad.0
+        for <git@vger.kernel.org>; Sat, 12 Mar 2016 02:47:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yPyUKvYTjhq0n8hrp4DxIdXWVt4C9i0jWs1JaZ5/1LQ=;
-        b=fwVoy1eUY8P7BteKlCsSiaODBh/ONYBzVfAfv+9p6t9wCGtP2dD8vVtUP8mRntWnJf
-         01zEym425dBoe2GA/5M3nBSJCKrLPQQXBfl4geH8eGEOvU5GT97Bic8q7dDNKkt+Wzx3
-         VgXq89sdAx6C1+hHRSI3SLV9cHDHf+NzIdjCizW+36/U7co24w2PDvySugg+HOr4Plfx
-         pES2gmy0Yv/K1ADnRfPCcZfJur6fFuFR9m9fjg5iwZE+WTb1e7V8KkXNXorwQK7vO0In
-         egwdXsKIeCVahkGWNHLpRpUoaRmQ3XN0w0/Whm9JcaHMKtKRIPek5Kg2Dfu0u86PXlLm
-         qUiA==
+        bh=H3kU+gOCx73Ays+iGqo/BWveU59yrONCN3GuscZhgOk=;
+        b=SQhk0qhrtCVyPf9ZuWWDLC2U7ATcogiq0O96mHgV7RP/iu8ExhgavwxP3Z+fOgapmD
+         wFONiXvrshpGw0RHKGltuXZmhwqac28Q9uh4HIFAY1NumqljOJseAdFFbaFoY8KTw75E
+         v2gacbDL9MLJnQ2O3Zv66I5dshZmpbda+Riv2S8wuE3YhFDZBZKdq1OzQqb5oWxikpa2
+         l/w1bmhO5gjUd4uomhPmLRFszfvGWDmzZcTXulTpnEppjPiitCkuUXRnwa9dC01wVa7/
+         55DKIuQbkLaS1T+CWj9nviaRS3SsgHqqp19xKEsHbN4x2xJkGQfbL1KvXjX3NtzYDSUZ
+         1ueA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=yPyUKvYTjhq0n8hrp4DxIdXWVt4C9i0jWs1JaZ5/1LQ=;
-        b=BNX05tP49WVuwPd0CWqFCLtVp+9TGSZ80RduKYBGRusn431sTLZNVAJFY4UFvXiBGA
-         Da16ZyWj+qnB/CldsNsX2xwK8zgEJKk20NbzZSv9BFkxcE+Y20Sv75onReUcGzunjR5M
-         PbL6vrAUR/40vB2Z33UVni9SsP+yRpFPLTfmjJ5kQaDoLNd81BD5Zqn1QVTvQML9dafN
-         f1jxTgFPH23vUfwFKG4gWZ21ahT4VqxZiIZc4oty2Zl2Hf/NUMDVrKG9EScW7d6TXhDH
-         4IIhOIhjvwUbtSNJsCnYaDS31B1zqXFOwqGcFLukcZBi6D1xUXscrF2D6hRLrVdPruAq
-         V0Vw==
-X-Gm-Message-State: AD7BkJJo0cAVSplYa9/pwP6RiC884UwhJSODi77ChBDf2qUHQsGhr8t1EHW17nzmaFnMgA==
-X-Received: by 10.98.86.146 with SMTP id h18mr14949858pfj.9.1457779633506;
-        Sat, 12 Mar 2016 02:47:13 -0800 (PST)
+        bh=H3kU+gOCx73Ays+iGqo/BWveU59yrONCN3GuscZhgOk=;
+        b=PBQUy8NIpt5olQcx8mjzlWQHrAF9dWqDqi7d7juQMO7C4yjcz58EavKf4IU9iSk3Y5
+         abS8PbXuRbozUbQ+dd/u4uIRDhnxOHCl3cYOyGIhLNDM0WFzMwtVtOcMNHZLLqIcWY/r
+         GLfYsY5uDGQkMJywpGNtpJjC7Qgp1J+D4KiIRyEmxJXGpykotuEktdzTpChqk1ThwdXl
+         Hw2v8OeG4ulFoiwaN/kqYjy+TdDR4KTjqMV6dFt28bk4vlqROgS0G9yiq/mUTUGUX1+b
+         Z4q5kE2sI7RTYxUOhXOKbXYu9D6jBdKSKrNfPuF+84WNRyyVA4LBQvl1hD0djjZp+oWH
+         lTLQ==
+X-Gm-Message-State: AD7BkJL1t2lI8Fpvbx2MJjeoSy0D+DNeI0LUKDAkVexTeo+AHUz8GySlemq4tDKeJAOXIw==
+X-Received: by 10.66.178.238 with SMTP id db14mr21231572pac.157.1457779649098;
+        Sat, 12 Mar 2016 02:47:29 -0800 (PST)
 Received: from yoshi.chippynet.com ([116.86.77.230])
-        by smtp.gmail.com with ESMTPSA id tb10sm18983519pab.22.2016.03.12.02.47.10
+        by smtp.gmail.com with ESMTPSA id tb10sm18983519pab.22.2016.03.12.02.47.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 12 Mar 2016 02:47:12 -0800 (PST)
+        Sat, 12 Mar 2016 02:47:28 -0800 (PST)
 X-Mailer: git-send-email 2.7.0
 In-Reply-To: <1457779597-6918-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288737>
 
-Since 7f59dbb (Rewrite rebase to use git-format-patch piped to git-am.,
-2005-11-14), git-rebase will by default use "git am" to rebase commits.
-This is done by first checking out to the new base commit, generating a
-series of patches with the commits to replay, and then applying them
-with git-am. Finally, if orig_head is a branch, it is updated to point
-to the tip of the new rebased commit history.
+Since 58634db (rebase: Allow merge strategies to be used when rebasing,
+2006-06-21), git-rebase supported rebasing with a merge strategy when
+the -m switch is used.
 
-Implement a skeletal version of this method of rebasing commits by
-introducing a new rebase-am backend for our builtin-rebase. This
-skeletal version can only call git-format-patch and git-am to perform a
-rebase, and is unable to resume from a failed rebase. Subsequent
-patches will re-implement all the missing features.
-
-The symmetric difference between upstream...orig_head is used because in
-a later patch, we will add an additional exclusion revision in order to
-handle fork points correctly.  See b6266dc (rebase--am: use
---cherry-pick instead of --ignore-if-in-upstream, 2014-07-15).
-
-The initial steps of checking out the new base commit, and the final
-cleanup steps of updating refs are common between the am backend and
-merge backend. As such, we implement the common setup and teardown
-sequence in the shared functions rebase_common_setup() and
-rebase_common_finish(), so we can share code with the merge backend when
-it is implemented in a later patch.
+Re-implement a skeletal version of the above method of rebasing in a new
+rebase-merge backend for our builtin-rebase. This skeletal version is
+only able to re-apply commits using the merge-recursive strategy, and is
+unable to resume from a conflict. Subsequent patches will re-implement
+all the missing features.
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
  Makefile         |   1 +
- builtin/rebase.c |  25 +++++++++++++
- rebase-am.c      | 110 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- rebase-am.h      |  22 +++++++++++
- rebase-common.c  |  81 ++++++++++++++++++++++++++++++++++++++++
- rebase-common.h  |   6 +++
- 6 files changed, 245 insertions(+)
- create mode 100644 rebase-am.c
- create mode 100644 rebase-am.h
+ builtin/rebase.c |  17 +++-
+ rebase-merge.c   | 256 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ rebase-merge.h   |  28 ++++++
+ 4 files changed, 300 insertions(+), 2 deletions(-)
+ create mode 100644 rebase-merge.c
+ create mode 100644 rebase-merge.h
 
 diff --git a/Makefile b/Makefile
-index b29c672..a2618ea 100644
+index a2618ea..d43e068 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -779,6 +779,7 @@ LIB_OBJS += prompt.o
- LIB_OBJS += quote.o
- LIB_OBJS += reachable.o
+@@ -781,6 +781,7 @@ LIB_OBJS += reachable.o
  LIB_OBJS += read-cache.o
-+LIB_OBJS += rebase-am.o
+ LIB_OBJS += rebase-am.o
  LIB_OBJS += rebase-common.o
++LIB_OBJS += rebase-merge.o
  LIB_OBJS += reflog-walk.o
  LIB_OBJS += refs.o
+ LIB_OBJS += refs/files-backend.o
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 40176ca..ec63d3b 100644
+index ec63d3b..6d42115 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -8,6 +8,22 @@
- #include "remote.h"
+@@ -9,10 +9,12 @@
  #include "branch.h"
  #include "refs.h"
-+#include "rebase-am.h"
-+
-+enum rebase_type {
-+	REBASE_TYPE_NONE = 0,
-+	REBASE_TYPE_AM
-+};
-+
-+static const char *rebase_dir(enum rebase_type type)
-+{
-+	switch (type) {
-+	case REBASE_TYPE_AM:
-+		return git_path_rebase_am_dir();
-+	default:
-+		die("BUG: invalid rebase_type %d", type);
-+	}
-+}
+ #include "rebase-am.h"
++#include "rebase-merge.h"
  
- /**
-  * Used by get_curr_branch_upstream_name() as a for_each_remote() callback to
-@@ -208,6 +224,15 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			die(_("Failed to resolve '%s' as a valid revision."), "HEAD");
+ enum rebase_type {
+ 	REBASE_TYPE_NONE = 0,
+-	REBASE_TYPE_AM
++	REBASE_TYPE_AM,
++	REBASE_TYPE_MERGE
+ };
+ 
+ static const char *rebase_dir(enum rebase_type type)
+@@ -20,6 +22,8 @@ static const char *rebase_dir(enum rebase_type type)
+ 	switch (type) {
+ 	case REBASE_TYPE_AM:
+ 		return git_path_rebase_am_dir();
++	case REBASE_TYPE_MERGE:
++		return git_path_rebase_merge_dir();
+ 	default:
+ 		die("BUG: invalid rebase_type %d", type);
+ 	}
+@@ -137,6 +141,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	struct rebase_options rebase_opts;
+ 	const char *onto_name = NULL;
+ 	const char *branch_name;
++	int do_merge = 0;
+ 
+ 	const char * const usage[] = {
+ 		N_("git rebase [options] [--onto <newbase>] [<upstream>] [<branch>]"),
+@@ -146,6 +151,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		OPT_GROUP(N_("Available options are")),
+ 		OPT_STRING(0, "onto", &onto_name, NULL,
+ 			N_("rebase onto given branch instead of upstream")),
++		OPT_BOOL('m', "merge", &do_merge,
++			N_("use merging strategies to rebase")),
+ 		OPT_END()
+ 	};
+ 
+@@ -225,7 +232,13 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
  	}
  
-+	/* Run the appropriate rebase backend */
-+	{
-+		struct rebase_am state;
-+		rebase_am_init(&state, rebase_dir(REBASE_TYPE_AM));
+ 	/* Run the appropriate rebase backend */
+-	{
++	if (do_merge) {
++		struct rebase_merge state;
++		rebase_merge_init(&state, rebase_dir(REBASE_TYPE_MERGE));
 +		rebase_options_swap(&state.opts, &rebase_opts);
-+		rebase_am_run(&state);
-+		rebase_am_release(&state);
-+	}
-+
- 	rebase_options_release(&rebase_opts);
- 	return 0;
- }
-diff --git a/rebase-am.c b/rebase-am.c
++		rebase_merge_run(&state);
++		rebase_merge_release(&state);
++	} else {
+ 		struct rebase_am state;
+ 		rebase_am_init(&state, rebase_dir(REBASE_TYPE_AM));
+ 		rebase_options_swap(&state.opts, &rebase_opts);
+diff --git a/rebase-merge.c b/rebase-merge.c
 new file mode 100644
-index 0000000..53e8798
+index 0000000..dc96faf
 --- /dev/null
-+++ b/rebase-am.c
-@@ -0,0 +1,110 @@
++++ b/rebase-merge.c
+@@ -0,0 +1,256 @@
 +#include "cache.h"
-+#include "rebase-am.h"
++#include "rebase-merge.h"
 +#include "run-command.h"
++#include "dir.h"
++#include "revision.h"
 +
-+GIT_PATH_FUNC(git_path_rebase_am_dir, "rebase-apply");
++GIT_PATH_FUNC(git_path_rebase_merge_dir, "rebase-merge");
 +
-+void rebase_am_init(struct rebase_am *state, const char *dir)
++void rebase_merge_init(struct rebase_merge *state, const char *dir)
 +{
 +	if (!dir)
-+		dir = git_path_rebase_am_dir();
++		dir = git_path_rebase_merge_dir();
 +	rebase_options_init(&state->opts);
 +	state->dir = xstrdup(dir);
++	state->msgnum = 0;
++	state->end = 0;
++	state->prec = 4;
 +}
 +
-+void rebase_am_release(struct rebase_am *state)
++void rebase_merge_release(struct rebase_merge *state)
 +{
 +	rebase_options_release(&state->opts);
 +	free(state->dir);
 +}
 +
-+int rebase_am_in_progress(const struct rebase_am *state)
++int rebase_merge_in_progress(const struct rebase_merge *state)
 +{
-+	const char *dir = state ? state->dir : git_path_rebase_am_dir();
++	const char *dir = state ? state->dir : git_path_rebase_merge_dir();
 +	struct stat st;
 +
-+	return !lstat(dir, &st) && S_ISDIR(st.st_mode);
++	if (lstat(dir, &st) || !S_ISDIR(st.st_mode))
++		return 0;
++
++	if (file_exists(mkpath("%s/interactive", dir)))
++		return 0;
++
++	return 1;
 +}
 +
-+int rebase_am_load(struct rebase_am *state)
++static const char *state_path(const struct rebase_merge *state, const char *filename)
 +{
-+	if (rebase_options_load(&state->opts, state->dir) < 0)
-+		return -1;
++	return mkpath("%s/%s", state->dir, filename);
++}
 +
++static int read_state_file(const struct rebase_merge *state, const char *filename, struct strbuf *sb)
++{
++	const char *path = state_path(state, filename);
++	if (strbuf_read_file(sb, path, 0) < 0)
++		return error(_("could not read file %s"), path);
++	strbuf_trim(sb);
 +	return 0;
 +}
 +
-+static int run_format_patch(const char *patches, const struct object_id *left,
-+		const struct object_id *right)
++static int read_state_ui(const struct rebase_merge *state, const char *filename, unsigned int *ui)
 +{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	int ret;
++	struct strbuf sb = STRBUF_INIT;
++	if (read_state_file(state, filename, &sb) < 0) {
++		strbuf_release(&sb);
++		return -1;
++	}
++	if (strtoul_ui(sb.buf, 10, ui) < 0) {
++		strbuf_release(&sb);
++		return error(_("could not parse %s"), state_path(state, filename));
++	}
++	strbuf_release(&sb);
++	return 0;
++}
 +
-+	cp.git_cmd = 1;
-+	cp.out = xopen(patches, O_WRONLY | O_CREAT, 0777);
-+	argv_array_push(&cp.args, "format-patch");
-+	argv_array_push(&cp.args, "-k");
-+	argv_array_push(&cp.args, "--stdout");
-+	argv_array_push(&cp.args, "--full-index");
-+	argv_array_push(&cp.args, "--cherry-pick");
-+	argv_array_push(&cp.args, "--right-only");
-+	argv_array_push(&cp.args, "--src-prefix=a/");
-+	argv_array_push(&cp.args, "--dst-prefix=b/");
-+	argv_array_push(&cp.args, "--no-renames");
-+	argv_array_push(&cp.args, "--no-cover-letter");
-+	argv_array_pushf(&cp.args, "%s...%s", oid_to_hex(left), oid_to_hex(right));
++static int read_state_oid(const struct rebase_merge *state, const char *filename, struct object_id *oid)
++{
++	struct strbuf sb = STRBUF_INIT;
++	if (read_state_file(state, filename, &sb) < 0) {
++		strbuf_release(&sb);
++		return -1;
++	}
++	if (sb.len != GIT_SHA1_HEXSZ || get_oid_hex(sb.buf, oid)) {
++		strbuf_release(&sb);
++		return error(_("could not parse %s"), state_path(state, filename));
++	}
++	strbuf_release(&sb);
++	return 0;
++}
 +
-+	ret = run_command(&cp);
-+	close(cp.out);
++static int read_state_msgnum(const struct rebase_merge *state, unsigned int msgnum, struct object_id *oid)
++{
++	char *filename = xstrfmt("cmt.%u", msgnum);
++	int ret = read_state_oid(state, filename, oid);
++	free(filename);
 +	return ret;
 +}
 +
-+static int run_am(const struct rebase_am *state, const char *patches)
++int rebase_merge_load(struct rebase_merge *state)
 +{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	int ret;
++	struct strbuf sb = STRBUF_INIT;
 +
-+	cp.git_cmd = 1;
-+	cp.in = xopen(patches, O_RDONLY);
-+	argv_array_push(&cp.args, "am");
-+	argv_array_push(&cp.args, "--rebasing");
-+	if (state->opts.resolvemsg)
-+		argv_array_pushf(&cp.args, "--resolvemsg=%s", state->opts.resolvemsg);
++	if (rebase_options_load(&state->opts, state->dir) < 0)
++		return -1;
 +
-+	ret = run_command(&cp);
-+	close(cp.in);
-+	return ret;
++	if (read_state_file(state, "onto_name", &sb) < 0)
++		return -1;
++	free(state->opts.onto_name);
++	state->opts.onto_name = strbuf_detach(&sb, NULL);
++
++	if (read_state_ui(state, "msgnum", &state->msgnum) < 0)
++		return -1;
++
++	if (read_state_ui(state, "end", &state->end) < 0)
++		return -1;
++
++	strbuf_release(&sb);
++	return 0;
 +}
 +
-+void rebase_am_run(struct rebase_am *state)
++static void write_state_text(const struct rebase_merge *state, const char *filename, const char *text)
 +{
-+	char *patches;
-+	int ret;
++	write_file(state_path(state, filename), "%s", text);
++}
 +
-+	rebase_common_setup(&state->opts, state->dir);
++static void write_state_ui(const struct rebase_merge *state, const char *filename, unsigned int ui)
++{
++	write_file(state_path(state, filename), "%u", ui);
++}
 +
-+	patches = git_pathdup("rebased-patches");
-+	ret = run_format_patch(patches, &state->opts.upstream, &state->opts.orig_head);
-+	if (ret) {
-+		unlink_or_warn(patches);
-+		fprintf_ln(stderr, _("\ngit encountered an error while preparing the patches to replay\n"
-+			"these revisions:\n"
-+			"\n"
-+			"    %s...%s\n"
-+			"\n"
-+			"As a result, git cannot rebase them."),
-+				oid_to_hex(&state->opts.upstream),
-+				oid_to_hex(&state->opts.orig_head));
-+		exit(ret);
-+	}
++static void write_state_oid(const struct rebase_merge *state, const char *filename, const struct object_id *oid)
++{
++	write_file(state_path(state, filename), "%s", oid_to_hex(oid));
++}
 +
-+	ret = run_am(state, patches);
-+	unlink_or_warn(patches);
-+	if (ret) {
-+		rebase_options_save(&state->opts, state->dir);
-+		exit(ret);
-+	}
-+
-+	free(patches);
++static void rebase_merge_finish(struct rebase_merge *state)
++{
 +	rebase_common_finish(&state->opts, state->dir);
++	printf_ln(_("All done."));
 +}
-diff --git a/rebase-am.h b/rebase-am.h
-new file mode 100644
-index 0000000..0b4348c
---- /dev/null
-+++ b/rebase-am.h
-@@ -0,0 +1,22 @@
-+#ifndef REBASE_AM_H
-+#define REBASE_AM_H
-+#include "rebase-common.h"
 +
-+const char *git_path_rebase_am_dir(void);
++/**
++ * Setup commits to be rebased.
++ */
++static unsigned int setup_commits(const char *dir, const struct object_id *upstream, const struct object_id *head)
++{
++	struct rev_info revs;
++	struct argv_array args = ARGV_ARRAY_INIT;
++	struct commit *commit;
++	unsigned int msgnum = 0;
 +
-+struct rebase_am {
-+	struct rebase_options opts;
-+	char *dir;
-+};
++	init_revisions(&revs, NULL);
++	argv_array_pushl(&args, "rev-list", "--reverse", "--no-merges", NULL);
++	argv_array_pushf(&args, "%s..%s", oid_to_hex(upstream), oid_to_hex(head));
++	setup_revisions(args.argc, args.argv, &revs, NULL);
++	if (prepare_revision_walk(&revs))
++		die("revision walk setup failed");
++	while ((commit = get_revision(&revs)))
++		write_file(mkpath("%s/cmt.%u", dir, ++msgnum), "%s", oid_to_hex(&commit->object.oid));
++	reset_revision_walk();
++	argv_array_clear(&args);
++	return msgnum;
++}
 +
-+void rebase_am_init(struct rebase_am *, const char *dir);
-+
-+void rebase_am_release(struct rebase_am *);
-+
-+int rebase_am_in_progress(const struct rebase_am *);
-+
-+int rebase_am_load(struct rebase_am *);
-+
-+void rebase_am_run(struct rebase_am *);
-+
-+#endif /* REBASE_AM_H */
-diff --git a/rebase-common.c b/rebase-common.c
-index 1835f08..8169fb6 100644
---- a/rebase-common.c
-+++ b/rebase-common.c
-@@ -1,5 +1,8 @@
- #include "cache.h"
- #include "rebase-common.h"
-+#include "dir.h"
-+#include "run-command.h"
-+#include "refs.h"
- 
- void rebase_options_init(struct rebase_options *opts)
- {
-@@ -95,3 +98,81 @@ void rebase_options_save(const struct rebase_options *opts, const char *dir)
- 	write_state_text(dir, "onto", oid_to_hex(&opts->onto));
- 	write_state_text(dir, "orig-head", oid_to_hex(&opts->orig_head));
- }
-+
-+static int detach_head(const struct object_id *commit, const char *onto_name)
++/**
++ * Merge HEAD with oid
++ */
++static void do_merge(struct rebase_merge *state, unsigned int msgnum, const struct object_id *oid)
 +{
 +	struct child_process cp = CHILD_PROCESS_INIT;
-+	int status;
-+	const char *reflog_action = getenv("GIT_REFLOG_ACTION");
-+	if (!reflog_action || !*reflog_action)
-+		reflog_action = "rebase";
-+	cp.git_cmd = 1;
-+	argv_array_pushf(&cp.env_array, "GIT_REFLOG_ACTION=%s: checkout %s",
-+			reflog_action, onto_name ? onto_name : oid_to_hex(commit));
-+	argv_array_push(&cp.args, "checkout");
-+	argv_array_push(&cp.args, "-q");
-+	argv_array_push(&cp.args, "--detach");
-+	argv_array_push(&cp.args, oid_to_hex(commit));
-+	status = run_command(&cp);
++	int ret;
 +
-+	/* reload cache as checkout will have modified it */
++	cp.git_cmd = 1;
++	argv_array_pushf(&cp.env_array, "GITHEAD_%s=HEAD~%u", oid_to_hex(oid), state->end - msgnum);
++	argv_array_pushf(&cp.env_array, "GITHEAD_HEAD=%s", state->opts.onto_name ? state->opts.onto_name : oid_to_hex(&state->opts.onto));
++	argv_array_push(&cp.args, "merge-recursive");
++	argv_array_pushf(&cp.args, "%s^", oid_to_hex(oid));
++	argv_array_push(&cp.args, "--");
++	argv_array_push(&cp.args, "HEAD");
++	argv_array_push(&cp.args, oid_to_hex(oid));
++	ret = run_command(&cp);
++	switch (ret) {
++	case 0:
++		break;
++	case 1:
++		if (state->opts.resolvemsg)
++			fprintf_ln(stderr, "%s", state->opts.resolvemsg);
++		exit(1);
++	case 2:
++		fprintf_ln(stderr, _("Strategy: recursive failed, try another"));
++		if (state->opts.resolvemsg)
++			fprintf_ln(stderr, "%s", state->opts.resolvemsg);
++		exit(1);
++	default:
++		fprintf_ln(stderr, _("Unknown exit code (%d) from command"), ret);
++		exit(1);
++	}
++
 +	discard_cache();
 +	read_cache();
-+
-+	return status;
 +}
 +
-+void rebase_common_setup(struct rebase_options *opts, const char *dir)
++/**
++ * Commit index
++ */
++static void do_commit(struct rebase_merge *state, unsigned int msgnum, const struct object_id *oid)
 +{
-+	/* Detach HEAD and reset the tree */
-+	printf_ln(_("First, rewinding head to replay your work on top of it..."));
-+	if (detach_head(&opts->onto, opts->onto_name))
-+		die(_("could not detach HEAD"));
-+	update_ref("rebase", "ORIG_HEAD", opts->orig_head.hash, NULL, 0,
-+			UPDATE_REFS_DIE_ON_ERR);
-+}
++	struct child_process cp = CHILD_PROCESS_INIT;
 +
-+void rebase_common_destroy(struct rebase_options *opts, const char *dir)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	strbuf_addstr(&sb, dir);
-+	remove_dir_recursively(&sb, 0);
-+	strbuf_release(&sb);
-+}
-+
-+static void move_to_original_branch(struct rebase_options *opts)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	struct object_id curr_head;
-+
-+	if (!opts->orig_refname || !starts_with(opts->orig_refname, "refs/"))
++	if (!cache_has_uncommitted_changes()) {
++		printf_ln(_("Already applied: %0*d"), state->prec, msgnum);
 +		return;
++	}
 +
-+	if (get_sha1("HEAD", curr_head.hash) < 0)
-+		die("get_sha1() failed");
++	cp.git_cmd = 1;
++	argv_array_push(&cp.args, "commit");
++	argv_array_push(&cp.args, "--no-verify");
++	argv_array_pushl(&cp.args, "-C", oid_to_hex(oid), NULL);
++	if (run_command(&cp)) {
 +
-+	strbuf_addf(&sb, "rebase finished: %s onto %s", opts->orig_refname, oid_to_hex(&opts->onto));
-+	if (update_ref(sb.buf, opts->orig_refname, curr_head.hash, opts->orig_head.hash, 0, UPDATE_REFS_MSG_ON_ERR))
-+		goto fail;
-+
-+	strbuf_reset(&sb);
-+	strbuf_addf(&sb, "rebase finished: returning to %s", opts->orig_refname);
-+	if (create_symref("HEAD", opts->orig_refname, sb.buf))
-+		goto fail;
-+
-+	strbuf_release(&sb);
-+
-+	return;
-+fail:
-+	die(_("Could not move back to %s"), opts->orig_refname);
++		fprintf_ln(stderr, _("Commit failed, please do not call \"git commit\"\n"
++					"directly, but instead do one of the following:"));
++		if (state->opts.resolvemsg)
++			fprintf_ln(stderr, "%s", state->opts.resolvemsg);
++		exit(1);
++	}
++	printf_ln(_("Committed: %0*d"), state->prec, msgnum);
 +}
 +
-+void rebase_common_finish(struct rebase_options *opts, const char *dir)
++static void do_rest(struct rebase_merge *state)
 +{
-+	const char *argv_gc_auto[] = {"gc", "--auto", NULL};
++	while (state->msgnum <= state->end) {
++		struct object_id oid;
 +
-+	move_to_original_branch(opts);
-+	close_all_packs();
-+	run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
-+	rebase_common_destroy(opts, dir);
++		if (read_state_msgnum(state, state->msgnum, &oid) < 0)
++			die("could not read msgnum commit");
++		write_state_oid(state, "current", &oid);
++		do_merge(state, state->msgnum, &oid);
++		do_commit(state, state->msgnum, &oid);
++		write_state_ui(state, "msgnum", ++state->msgnum);
++	}
++
++	rebase_merge_finish(state);
 +}
-diff --git a/rebase-common.h b/rebase-common.h
-index 051c056..067ad0b 100644
---- a/rebase-common.h
-+++ b/rebase-common.h
-@@ -24,4 +24,10 @@ int rebase_options_load(struct rebase_options *, const char *dir);
- 
- void rebase_options_save(const struct rebase_options *, const char *dir);
- 
-+void rebase_common_setup(struct rebase_options *, const char *dir);
 +
-+void rebase_common_destroy(struct rebase_options *, const char *dir);
++void rebase_merge_run(struct rebase_merge *state)
++{
++	rebase_common_setup(&state->opts, state->dir);
 +
-+void rebase_common_finish(struct rebase_options *, const char *dir);
++	if (mkdir(state->dir, 0777) < 0 && errno != EEXIST)
++		die_errno(_("failed to create directory '%s'"), state->dir);
 +
- #endif /* REBASE_COMMON_H */
++	rebase_options_save(&state->opts, state->dir);
++	write_state_text(state, "onto_name", state->opts.onto_name ? state->opts.onto_name : oid_to_hex(&state->opts.onto));
++
++	state->msgnum = 1;
++	write_state_ui(state, "msgnum", state->msgnum);
++
++	state->end = setup_commits(state->dir, &state->opts.upstream, &state->opts.orig_head);
++	write_state_ui(state, "end", state->end);
++
++	do_rest(state);
++}
+diff --git a/rebase-merge.h b/rebase-merge.h
+new file mode 100644
+index 0000000..f0b54ef
+--- /dev/null
++++ b/rebase-merge.h
+@@ -0,0 +1,28 @@
++#ifndef REBASE_MERGE_H
++#define REBASE_MERGE_H
++#include "rebase-common.h"
++
++const char *git_path_rebase_merge_dir(void);
++
++/*
++ * The rebase_merge backend is a merge-based non-interactive mode that copes
++ * well with renamed files.
++ */
++struct rebase_merge {
++	struct rebase_options opts;
++	char *dir;
++	unsigned int msgnum, end;
++	int prec;
++};
++
++void rebase_merge_init(struct rebase_merge *, const char *dir);
++
++void rebase_merge_release(struct rebase_merge *);
++
++int rebase_merge_in_progress(const struct rebase_merge *);
++
++int rebase_merge_load(struct rebase_merge *);
++
++void rebase_merge_run(struct rebase_merge *);
++
++#endif /* REBASE_MERGE_H */
 -- 
 2.7.0
