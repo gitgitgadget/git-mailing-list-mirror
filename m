@@ -1,7 +1,7 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH/RFC/GSoC 02/17] sha1_name: implement get_oid() and friends
-Date: Sat, 12 Mar 2016 18:46:22 +0800
-Message-ID: <1457779597-6918-3-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH/RFC/GSoC 01/17] perf: introduce performance tests for git-rebase
+Date: Sat, 12 Mar 2016 18:46:21 +0800
+Message-ID: <1457779597-6918-2-git-send-email-pyokagan@gmail.com>
 References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
@@ -9,171 +9,166 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Stefan Beller <sbeller@google.com>, sam.halliday@gmail.com,
 	Paul Tan <pyokagan@gmail.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 12 11:47:08 2016
+X-From: git-owner@vger.kernel.org Sat Mar 12 11:47:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aeh4e-0005bI-4q
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Mar 2016 11:47:08 +0100
+	id 1aeh4c-0005bI-Fa
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Mar 2016 11:47:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752428AbcCLKrE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Mar 2016 05:47:04 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:34912 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751833AbcCLKrB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Mar 2016 05:47:01 -0500
-Received: by mail-pa0-f49.google.com with SMTP id td3so92364860pab.2
-        for <git@vger.kernel.org>; Sat, 12 Mar 2016 02:47:01 -0800 (PST)
+	id S1752320AbcCLKrA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Mar 2016 05:47:00 -0500
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:34019 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751833AbcCLKq6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Mar 2016 05:46:58 -0500
+Received: by mail-pa0-f48.google.com with SMTP id fe3so103219704pab.1
+        for <git@vger.kernel.org>; Sat, 12 Mar 2016 02:46:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vwspGgFGAT/k+5kNeyZKfwIG9+a78zkeuSZgTgdI5rA=;
-        b=VrpLekTJR5AGTZuVy/roaojHn62HCmVKKmYmwcKuvnBtIoL9JaOJHqg3dONtiHv/UI
-         OK0uhI4zoIkVwfXY5xD3OJhB6BZ26TrrBGw3v1qTLswMyx0p4DViYwtOHk9pIy2Re4v3
-         3y1HT5Gk63kEwczVu/466iyHa1A/S0O6W+82OhsxIm8RMqrt7RvCwWHbGm4yvH4SHY0w
-         sPIRm5SDf/a8DplqELQZhhZhJucX369Om9sB3BTQevR00vftebQi1zrnty8EefQNihYN
-         vptBWrn0kNcJ+M5alElYnOCrQnwqeU1f1oakVextTHwGfmVLU4+z7XPuWb7RjySthvUi
-         k8gA==
+        bh=J+IikcyuMpFY+Tgzg2d+R8D15Cr2o7+DYCzim8fTxKM=;
+        b=MkEcu379MgcfK20Qpc9YyFXgmDK80PR0jqzZHB+pzzOK1/q0BgJM9I49p550PD9Ozw
+         iUodtp2S5Na+if2KSvYZOkIsykwv+ySi8WuSC2ZpxlHEusNHS1osx0spOK8+9hIpLGrj
+         cSH5Kq48buHbPHOgisjVRCAu3763HahMb10MGGBcagR5lXidzWnoada0c9YjQ+6nynS+
+         Bu5/1yC49hKwh7MpGB39A6/d2CEVtxkB09IR8qPYiCk5oTMCHhb9EWSqaWLS17FPq/aj
+         i9m7I3PX65WHSJhIgS7GRx8tN+hUJWuuI6+caLZ2FbG71APlkTJzTyQFaFmwQE7K4He3
+         AVrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=vwspGgFGAT/k+5kNeyZKfwIG9+a78zkeuSZgTgdI5rA=;
-        b=O8V921/m77WzSus/Dg2eZYOlnuC+z6NRZX+DZQXiInN1sfqXArZflKMWXTOilB8hbg
-         0fL7/lviM2YZdqHJITTl6EtJztnGA7L+OspEzftq8qsFKIqkeM2h7W1yk4R/skdNQuj5
-         OJgIqUuEscAh5EWZCeWjgHUkB+uaw7KxR/5+qfSVN1mpMBwqDVdhMbec5HSgHEY4nXYW
-         6+lMMoBbGKbgNtS5O+fXy7kxuiRoZ6JpHbcnO8/WhRGv8UhTdLI95dE/6ZVg9Pmi/YyS
-         G/+66pNWZLE4jmR+eV2H6XPg8ikuDPMrS4nfl3RFl2opTgzj56R7mL3nyHy86qGKCayg
-         Sqag==
-X-Gm-Message-State: AD7BkJJCcKxXVHBJ6cxgKbVXbSDW6uZGuHMhxaFe7vsOh4UHkjtPaxRqZmVILVpDd5H3jA==
-X-Received: by 10.66.90.136 with SMTP id bw8mr22775198pab.52.1457779621159;
-        Sat, 12 Mar 2016 02:47:01 -0800 (PST)
+        bh=J+IikcyuMpFY+Tgzg2d+R8D15Cr2o7+DYCzim8fTxKM=;
+        b=JdUyaKcg3WA3INQqCBMfLyRZwQE0ScLHRwWfRF86ogfOyhA8cDUDS90bK43tg4D6xm
+         dhsdValbCGVWsCsMv5nabYVTEusAayZe37AtTv76EShC3qc06ycggYeFSFnrsMpSMz+S
+         wZcCheJaH5fdAzR0tYcSJno5x1oQSXIqaA8LvS/et7frMuKRG6z2b9ycsAym9zLD7dCh
+         ht7b9aT+xfhkQCJ9JLowvvCm7vuo4ehqAv/43IXQj1q4xZ62ZJ5Zo16Dz7qUyP1XCbLg
+         jww4my2Flass4b21NtAm+N7nc/kAaqEwRICTfJjoOnQ6L0bigqMs8svV7jPc1t2P3T5C
+         S9vA==
+X-Gm-Message-State: AD7BkJKaj7n97cbRjecYHvQWgva86NE38eD5lo5i3Hnw3tVhIgKpNO5lS133x9oHwzqRAA==
+X-Received: by 10.66.97.8 with SMTP id dw8mr22928426pab.28.1457779617813;
+        Sat, 12 Mar 2016 02:46:57 -0800 (PST)
 Received: from yoshi.chippynet.com ([116.86.77.230])
-        by smtp.gmail.com with ESMTPSA id tb10sm18983519pab.22.2016.03.12.02.46.57
+        by smtp.gmail.com with ESMTPSA id tb10sm18983519pab.22.2016.03.12.02.46.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 12 Mar 2016 02:46:59 -0800 (PST)
+        Sat, 12 Mar 2016 02:46:56 -0800 (PST)
 X-Mailer: git-send-email 2.7.0
 In-Reply-To: <1457779597-6918-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288731>
 
-5f7817c (define a structure for object IDs, 2015-03-13) introduced the
-object_id struct to replace the used of unsigned char[] arrays to hold
-object IDs. This gives us the benefit of compile-time checking for
-misuse.
-
-To fully take advantage of compile-time type-checking, introduce the
-get_oid_*() functions which wrap the corresponding get_sha1_*()
-functions.
+To determine the speedup (or slowdown) of the upcoming git-rebase
+rewrite to C, add a simple performance test for each of the 3 git-rebase
+backends (am, merge and interactive).
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
- cache.h     |  6 ++++++
- sha1_name.c | 30 ++++++++++++++++++++++++++++++
- 2 files changed, 36 insertions(+)
+ t/perf/p3400-rebase.sh             | 25 +++++++++++++++++++++++++
+ t/perf/p3402-rebase-merge.sh       | 25 +++++++++++++++++++++++++
+ t/perf/p3404-rebase-interactive.sh | 26 ++++++++++++++++++++++++++
+ 3 files changed, 76 insertions(+)
+ create mode 100755 t/perf/p3400-rebase.sh
+ create mode 100755 t/perf/p3402-rebase-merge.sh
+ create mode 100755 t/perf/p3404-rebase-interactive.sh
 
-diff --git a/cache.h b/cache.h
-index b829410..55d443e 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1116,11 +1116,17 @@ struct object_context {
- #define GET_SHA1_ONLY_TO_DIE    04000
- 
- extern int get_sha1(const char *str, unsigned char *sha1);
-+extern int get_oid(const char *str, struct object_id *oid);
- extern int get_sha1_commit(const char *str, unsigned char *sha1);
-+extern int get_oid_commit(const char *str, struct object_id *oid);
- extern int get_sha1_committish(const char *str, unsigned char *sha1);
-+extern int get_oid_committish(const char *str, struct object_id *oid);
- extern int get_sha1_tree(const char *str, unsigned char *sha1);
-+extern int get_oid_tree(const char *str, struct object_id *oid);
- extern int get_sha1_treeish(const char *str, unsigned char *sha1);
-+extern int get_oid_treeish(const char *str, struct object_id *oid);
- extern int get_sha1_blob(const char *str, unsigned char *sha1);
-+extern int get_oid_blob(const char *str, struct object_id *oid);
- extern void maybe_die_on_misspelt_object_name(const char *name, const char *prefix);
- extern int get_sha1_with_context(const char *str, unsigned flags, unsigned char *sha1, struct object_context *orc);
- 
-diff --git a/sha1_name.c b/sha1_name.c
-index 3acf221..307dfad 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -1214,6 +1214,11 @@ int get_sha1(const char *name, unsigned char *sha1)
- 	return get_sha1_with_context(name, 0, sha1, &unused);
- }
- 
-+int get_oid(const char *name, struct object_id *oid)
-+{
-+	return get_sha1(name, oid->hash);
-+}
+diff --git a/t/perf/p3400-rebase.sh b/t/perf/p3400-rebase.sh
+new file mode 100755
+index 0000000..f172a64
+--- /dev/null
++++ b/t/perf/p3400-rebase.sh
+@@ -0,0 +1,25 @@
++#!/bin/sh
 +
- /*
-  * Many callers know that the user meant to name a commit-ish by
-  * syntactical positions where the object name appears.  Calling this
-@@ -1231,6 +1236,11 @@ int get_sha1_committish(const char *name, unsigned char *sha1)
- 				     sha1, &unused);
- }
- 
-+int get_oid_committish(const char *name, struct object_id *oid)
-+{
-+	return get_sha1_committish(name, oid->hash);
-+}
++test_description="Tests rebase performance with am backend"
 +
- int get_sha1_treeish(const char *name, unsigned char *sha1)
- {
- 	struct object_context unused;
-@@ -1238,6 +1248,11 @@ int get_sha1_treeish(const char *name, unsigned char *sha1)
- 				     sha1, &unused);
- }
- 
-+int get_oid_treeish(const char *name, struct object_id *oid)
-+{
-+	return get_sha1_treeish(name, oid->hash);
-+}
++. ./perf-lib.sh
 +
- int get_sha1_commit(const char *name, unsigned char *sha1)
- {
- 	struct object_context unused;
-@@ -1245,6 +1260,11 @@ int get_sha1_commit(const char *name, unsigned char *sha1)
- 				     sha1, &unused);
- }
- 
-+int get_oid_commit(const char *name, struct object_id *oid)
-+{
-+	return get_sha1_commit(name, oid->hash);
-+}
++test_perf_default_repo
++test_checkout_worktree
 +
- int get_sha1_tree(const char *name, unsigned char *sha1)
- {
- 	struct object_context unused;
-@@ -1252,6 +1272,11 @@ int get_sha1_tree(const char *name, unsigned char *sha1)
- 				     sha1, &unused);
- }
- 
-+int get_oid_tree(const char *name, struct object_id *oid)
-+{
-+	return get_sha1_tree(name, oid->hash);
-+}
++# Setup a topic branch with 50 commits
++test_expect_success 'setup topic branch' '
++	git checkout -b perf-topic-branch master &&
++	for i in $(test_seq 50); do
++		test_commit perf-$i file
++	done &&
++	git tag perf-topic-branch-initial
++'
 +
- int get_sha1_blob(const char *name, unsigned char *sha1)
- {
- 	struct object_context unused;
-@@ -1259,6 +1284,11 @@ int get_sha1_blob(const char *name, unsigned char *sha1)
- 				     sha1, &unused);
- }
- 
-+int get_oid_blob(const char *name, struct object_id *oid)
-+{
-+	return get_sha1_blob(name, oid->hash);
-+}
++test_perf 'rebase --onto master^' '
++	git checkout perf-topic-branch &&
++	git reset --hard perf-topic-branch-initial &&
++	git rebase --onto master^ master
++'
 +
- /* Must be called only when object_name:filename doesn't exist. */
- static void diagnose_invalid_sha1_path(const char *prefix,
- 				       const char *filename,
++test_done
+diff --git a/t/perf/p3402-rebase-merge.sh b/t/perf/p3402-rebase-merge.sh
+new file mode 100755
+index 0000000..b71ce12
+--- /dev/null
++++ b/t/perf/p3402-rebase-merge.sh
+@@ -0,0 +1,25 @@
++#!/bin/sh
++
++test_description="Tests rebase performance with merge backend"
++
++. ./perf-lib.sh
++
++test_perf_default_repo
++test_checkout_worktree
++
++# Setup a topic branch with 50 commits
++test_expect_success 'setup topic branch' '
++	git checkout -b perf-topic-branch master &&
++	for i in $(test_seq 50); do
++		test_commit perf-$i file
++	done &&
++	git tag perf-topic-branch-initial
++'
++
++test_perf 'rebase -m --onto master^' '
++	git checkout perf-topic-branch &&
++	git reset --hard perf-topic-branch-initial &&
++	git rebase -m --onto master^ master
++'
++
++test_done
+diff --git a/t/perf/p3404-rebase-interactive.sh b/t/perf/p3404-rebase-interactive.sh
+new file mode 100755
+index 0000000..aaca105
+--- /dev/null
++++ b/t/perf/p3404-rebase-interactive.sh
+@@ -0,0 +1,26 @@
++#!/bin/sh
++
++test_description="Tests interactive rebase performance"
++
++. ./perf-lib.sh
++. "$TEST_DIRECTORY"/lib-rebase.sh
++
++test_perf_default_repo
++test_checkout_worktree
++
++# Setup a topic branch with 50 commits
++test_expect_success 'setup topic branch' '
++	git checkout -b perf-topic-branch master &&
++	for i in $(test_seq 50); do
++		test_commit perf-$i file
++	done &&
++	git tag perf-topic-branch-initial
++'
++
++test_perf 'rebase -i --onto master^' '
++	git checkout perf-topic-branch &&
++	git reset --hard perf-topic-branch-initial &&
++	GIT_SEQUENCE_EDITOR=: git rebase -i --onto master^ master
++'
++
++test_done
 -- 
 2.7.0
