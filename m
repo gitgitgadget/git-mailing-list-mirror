@@ -1,112 +1,184 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC/PATCH] clone: add `--shallow-submodules` flag
-Date: Fri, 11 Mar 2016 16:56:33 -0800
-Message-ID: <CAGZ79kYc1WR9CTBi1F3KpLaYRUSxNPQkQ2jk+P09pshR3jG8aw@mail.gmail.com>
-References: <1457739683-1972-1-git-send-email-sbeller@google.com>
-	<xmqqa8m4a5nx.fsf@gitster.mtv.corp.google.com>
+From: Vadim Zeitlin <vz-git@zeitlins.org>
+Subject: Re[2]: Possible bug: --ext-diff ignored with --cc in git log
+Date: Sat, 12 Mar 2016 02:08:12 +0100
+Message-ID: <E1aeY2d-0006K7-6e@smtp.tt-solutions.com>
+References: <E1adi8q-0005NJ-4G@smtp.tt-solutions.com><xmqqlh5qc698.fsf@gitster.mtv.corp.google.com><E1aeCRp-0005Jn-C1@smtp.tt-solutions.com> <xmqqziu4anb9.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 12 01:56:44 2016
+Content-Type: MULTIPART/SIGNED; protocol="application/pgp-signature"; micalg=pgp-sha1; BOUNDARY="1124392672-41-1457744892=:12660"
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 12 02:08:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aeXrH-0006Mz-5b
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Mar 2016 01:56:43 +0100
+	id 1aeY2p-0006ZM-Bj
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Mar 2016 02:08:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752365AbcCLA4g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Mar 2016 19:56:36 -0500
-Received: from mail-io0-f170.google.com ([209.85.223.170]:35185 "EHLO
-	mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750980AbcCLA4e (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Mar 2016 19:56:34 -0500
-Received: by mail-io0-f170.google.com with SMTP id g203so165639827iof.2
-        for <git@vger.kernel.org>; Fri, 11 Mar 2016 16:56:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=Ed8ilqKudTkPl0wzI8eQsbfXWRz+J+L1jR7r1O9FPc0=;
-        b=bK//KSdBCrwJcYzQLbnDggXo1qrKYrzp7o3rIHpw4+YjtwXNN1ba+lkU/flk3fZaRU
-         HmpBokJ/nff6Awj1LNKxceDlAEFQDaeMBtHGa93rCs78jGmxBPE2bjCILyj+OA6T0foy
-         2NnBt1aoP9lIF54ofA3W4mGODLvOkDgJbOEvQMwatRfxqJ1j33McIXXmYVOp2goJJK1i
-         wX+9aTM3GfpukUIMCNIZSnC5lFCVao/Uww1AXzOfm1oBha+E+Q9ZrQeBPwD8GXY07R4c
-         3dOuNK/0h+26qRbuC7Pjxzj64cG3xKjJ6XfRCIjimOCgM0n5D9TEaF67po6Yxy0pqpil
-         Honw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=Ed8ilqKudTkPl0wzI8eQsbfXWRz+J+L1jR7r1O9FPc0=;
-        b=Ri+8fS5BjRN8+ujeHc7cTA6q6qqpCx05LRg81e4+QSRjvlDlKbUy1GOV64z2jf+aVg
-         ZgooO1n59o1tvrvwsUaigEgusmuTwrrte8PCfhD+Sofpw5BDe8SJek5ty449VJPhHHaR
-         s+BVLmi4R1UvAyEGHbUZYsxWayw/FP3+Y+YWq4VZ4bEABc6hSUfjGiBCuX6n8eyKNr3s
-         k9VK0XeIkeJ23SY9vOiBuEyPYRctPy2YBOpaU7+Hf0+N1jUYctQMgChACXheArfHsR4y
-         6B8W9seFgvA/ZuEtMXXQRfJ4un7QaHG9ZDOTwDjiB6L8Yx9YO3XxuNxZZizTaZw1o7mp
-         Cikw==
-X-Gm-Message-State: AD7BkJIk3cCzg4mBZgzONF7DwrWjt55IOSjWvfHH3vNk/fUTuuYsF3fuDuePJmEgHjq+kyBctS6wnok/eZrYqQZx
-X-Received: by 10.107.158.138 with SMTP id h132mr13440948ioe.174.1457744193839;
- Fri, 11 Mar 2016 16:56:33 -0800 (PST)
-Received: by 10.107.58.6 with HTTP; Fri, 11 Mar 2016 16:56:33 -0800 (PST)
-In-Reply-To: <xmqqa8m4a5nx.fsf@gitster.mtv.corp.google.com>
+	id S1753135AbcCLBIe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Mar 2016 20:08:34 -0500
+Received: from sunset.tt-solutions.com ([82.240.17.225]:49577 "EHLO
+	smtp.tt-solutions.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750980AbcCLBIe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Mar 2016 20:08:34 -0500
+Received: from [192.168.17.86] (helo=Twilight)
+	by smtp.tt-solutions.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:256)
+	(Exim 4.80)
+	(envelope-from <vz-git@zeitlins.org>)
+	id 1aeY2d-0006K7-6e; Sat, 12 Mar 2016 02:08:27 +0100
+In-Reply-To: <xmqqziu4anb9.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Mahogany 0.68.0 'Cynthia', running under Windows 7 (build 7601, Service Pack 1), 64-bit edition
+X-VZ-SMTP-Helo: Twilight
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288723>
 
-On Fri, Mar 11, 2016 at 4:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> When creating a shallow clone of a repository with submodules, the depth
->> argument does not influence the submodules, i.e. the submodules are done
->> as non-shallow clones. It is unclear what the best default is for the
->> depth of submodules of a shallow clone, so we need to have the possibility
->> to do all kinds of combinations:
->>
->> * shallow super project with shallow submodules
->>   e.g. build bots starting always from scratch. They want to transmit
->>   the least amount of network data as well as using the least amount
->>   of space on their hard drive.
->> * shallow super project with unshallow submodules
->>   e.g. The superproject is just there to track a collection of repositories
->>   and it is not important to have the relationship between the repositories
->>   intact. However the history of the individual submodules matter.
->> * unshallow super project with shallow submodules
->>   e.g. The superproject is the actual project and the submodule is a
->>   library which is rarely touched.
->>
->> The new switch to select submodules to be shallow or unshallow supports
->> all of these three cases.
->
-> I think something like this is necessary to prime the well, but the
-> more important (and intereseting) bit is how this shallowness is
-> going to be maintained and carried forward across the future updates
-> to the top-level supermodule.  A submodule that was cloned at depth=1
-> initially along with its supermodule when the latter was initially
-> cloned does not have to be indefinitely kept at depth=1, and there
-> would be a lot of creative ways to make it useful, but the creative
-> and useful logic would need a piece of information to tell the
-> future "submodule update" why the submodule repository is shallow to
-> take into account, I would imagine.
->
-> It is somewhat curious that there is no hint left in the submodule
-> repositories (e.g. their configfile) that they are originally
-> created with an explicit user request "I said that I want these
-> submodules to be cloned with depth=1", from that point of view.
+--1124392672-41-1457744892=:12660
+Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
+Content-Disposition: INLINE
 
-Why is it interesting for submodules but not for standard repositories?
-If I clone a repository without submodules, it is also not recorded
-that I cloned with an explicit depth=1. If you fetch, you may end up with
-a deeper history as git fetch doesn't do a "reshallow" to the configured
-depth.
+On Fri, 11 Mar 2016 10:20:42 -0800 Junio C Hamano <gitster@pobox.com> wrote:
 
-As the depth can easily change I view depth as a measure which is
-only valid at moment in time, after the operation succeeded we rather
-want to talk about the cut off points which were introduced by the
-shallow operation? And these are kept as is by default which is sane.
+JCH> Vadim Zeitlin <vz-git@zeitlins.org> writes:
+JCH> 
+JCH> >  Thank you for your reply, Junio, I hadn't realized that --cc was dependent
+JCH> > on textual diff output format before, but now I understand why it can't
+JCH> > respect --ext-diff.
+JCH> 
+JCH> Having established that, I should also add that "--cc fundamentally
+JCH> is incompatible with --ext-diff" does not justify that
+JCH> "--cc when given with --ext-diff just ignores and uses the usual
+JCH> diff".
+JCH> 
+JCH> An equally (or even more) valid consequence could have been to
+JCH> disable "--cc" processing for paths that would trigger an external
+JCH> diff driver.
+
+ FWIW I agree that this would make more sense than the current behaviour.
+But it still wouldn't be ideal if disabling "--cc" meant not showing any
+output for these files at all, we still want to know that the file has been
+modified as part of the commit, even if we don't care about its contents.
+
+JCH> After all, the user told us that the contents would not compare well
+JCH> with the usual "diff"; we know that "--cc" output that summarizes the
+JCH> usual diff output is useless.
+
+ This is so logical that it made me check how did "--cc" behave with the
+binary files because this argument seems to apply perfectly well to them
+too. And (unsurprisingly?) it already works just fine with them:
+
+	# I have alias g=git and I also suppress all successful output
+	$ g init
+	$ echo 'Binary\0file' > binary
+	$ g add binary
+	$ g commit -m 'Added'
+	$ echo '2nd line' >> binary
+	$ g commit -a -m 'Added 2nd line'
+	$ g checkout -b another HEAD~
+	$ echo 'another line' >> binary
+	$ g commit -a -m 'Added another line'
+	$ g checkout master
+	$ g merge
+	warning: Cannot merge binary files: binary (HEAD vs. another)
+	Auto-merging binary
+	CONFLICT (content): Merge conflict in binary
+	Automatic merge failed; fix conflicts and then commit the result.
+	$ vi binary # combine both versions
+	$ g commit
+	$ g show # finally I can show what all this is about
+	commit d30ae002cb52974228d50723fc8c9d7077e760da
+	Merge: ae542d2 3204f35
+	Author: Vadim Zeitlin <vz-xxx@zeitlins.org>
+	Date:   Sat Mar 12 01:57:55 2016 +0100
+
+	    Merge branch 'another'
+
+	diff --cc binary
+	index 31499e2,1730dfd..1eda50a
+	Binary files differ
+
+So it looks like it shouldn't be too difficult to make it also output
+"Files using custom diff viewer differ", what do you think?
+
+JCH> For example, we could also ignore what external diff driver
+JCH> produces in this case (as we know it won't be producing an
+JCH> appropriate input to the "--cc" post-processing), and pretend
+JCH> as if comparing an old version of foo.sln with a new version of
+JCH> foo.sln produced a diff like this:
+JCH> 
+JCH>     diff --git a/foo.sln b/foo.sln
+JCH>     index d7ff46e,b829410
+JCH>     --- a/foo.sln
+JCH>     +++ b/foo.sln
+JCH>     @@ 1,1 @@
+JCH>     -d7ff46ec4a016c6ab7d233b9d4a196ecde623528  - generated file
+JCH>     +b829410f6da0afc14353b4621d2fdf874181a9f7  - generated file
+JCH> 
+JCH> then you might see in a merge that merges two versions of foo.sln
+JCH> and result in another version of foo.sln in your "--cc" output a
+JCH> hunk that is like this:
+JCH> 
+JCH>     diff --cc foo.sln
+JCH>     index d7ff46e,6c9aaa1..b829410
+JCH>     --- a/foo.sln
+JCH>     +++ b/foo.sln
+JCH>     @@@ 1,1 @@@
+JCH>     - d7ff46ec4a016c6ab7d233b9d4a196ecde623528  - generated file
+JCH>      -6c9aaa1ae63a2255a215c1287e38e75fcc5fc5d3  - generated file
+JCH>     ++b829410f6da0afc14353b4621d2fdf874181a9f7  - generated file
+JCH> 
+JCH> which would at least tell you that there was a merge, and if the
+JCH> merge took the full contents of the file from one of the commits and
+JCH> recorded as the result of the merge, then you wouldn't see them in
+JCH> the "--cc" output.
+
+ Interesting, but I admit I don't really see any advantage of showing the
+SHA-1s here compared to what already happens with the binary files. Is
+there anything I'm missing?
+
+JCH> It happens that the above is fairly easily doable with today's Git
+JCH> without any modification.  Here is how.
+JCH> 
+JCH> (1) Have this in your .git/config
+JCH> 
+JCH>     [diff "uninteresting"]
+JCH>     	textconv = /path/to/uninteresting-textconv-script
+JCH> 
+JCH> (2) Mark your .sln paths as uninteresting in your .gitattributes
+JCH> 
+JCH>     *.sln	diff=uninteresting
+JCH> 
+JCH> (3) Have this textconv filter in /path/to/uninteresting-textconv-script
+JCH> 
+JCH>     #!/bin/sh
+JCH>     printf "%s generated file\n" "$(sha1sum <"$1")"
+
+ This is really ingenious, thanks! I'm probably indeed going to put this in
+place at least for now for our mail notification script because it's just
+too annoying to receive emails with thousands of lines of diffs to the
+generated files.
+
+ But I still think that it would make sense for "--cc" to behave as it does
+for the binary files for the ext-diffable ones too. I've never touched git
+code before but if you think it's a good idea and if you don't see any
+insurmountable difficulties in implementing this, I could try to make a
+patch doing it, please let me know if you think it could be useful.
+
+ And thanks again for your textconv hint!
+VZ
+
+--1124392672-41-1457744892=:12660
+Content-Type: APPLICATION/PGP-SIGNATURE
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (MingW32)
+
+iEYEABECAAYFAlbja/wACgkQBupB3k9sHoZxZACgkZry4lX6FeBB+awohb4W6BWA
+9zEAn2Ryr8xRSDZ6f9KmJf3a/wqDFJ+e
+=hwSK
+-----END PGP SIGNATURE-----
+
+--1124392672-41-1457744892=:12660--
