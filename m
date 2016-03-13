@@ -1,100 +1,139 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v1] git-p4: fix AsciiDoc formatting
-Date: Sun, 13 Mar 2016 18:46:36 +0100
-Message-ID: <F0F4FA8A-EB42-4990-A90E-6C9245E0A9DE@gmail.com>
-References: <1456830320-40411-1-git-send-email-larsxschneider@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: sunshine@sunshineco.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 13 18:46:48 2016
+From: Sidhant Sharma <tigerkid001@gmail.com>
+Subject: Re: [RFC/GSoC] Introduction
+Date: Mon, 14 Mar 2016 00:03:33 +0530
+Message-ID: <56E5B27D.7010808@gmail.com>
+References: <56E3BE3E.9070105@gmail.com>
+ <1924FEBB-46F2-46EE-B190-5289588D4BED@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Lars Schneider <larsxschneider@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 13 19:35:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afA6J-00050F-98
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Mar 2016 18:46:47 +0100
+	id 1afAr2-0007Sz-8e
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Mar 2016 19:35:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754195AbcCMRqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Mar 2016 13:46:43 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34732 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754144AbcCMRql convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Mar 2016 13:46:41 -0400
-Received: by mail-wm0-f65.google.com with SMTP id p65so11250706wmp.1
-        for <git@vger.kernel.org>; Sun, 13 Mar 2016 10:46:40 -0700 (PDT)
+	id S1752088AbcCMSdj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Mar 2016 14:33:39 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:35070 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751684AbcCMSdj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Mar 2016 14:33:39 -0400
+Received: by mail-pa0-f54.google.com with SMTP id td3so112481239pab.2
+        for <git@vger.kernel.org>; Sun, 13 Mar 2016 11:33:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=/kVx+eK5OdYiBZUAouhVcj8Kj5+zpb355VJzhQAlpUg=;
-        b=QJ4O8BXFBREmgVF6YWUeq9Kkx2bDBESKl1XEvfYBrBbznxgtMzoQDT8UecoO3rUbi0
-         2dABnYyyEGKmhiRWeLh7VE33n58nC/jBPT54ANTLlkHTAb9QJzhY6mG7jX3DVSqeEbbG
-         qUm6fFpsc/G2TUzZv5KwsbeJOCjEM5pPzw450x3wBmSijEeXTm0K6jOiPUrlJraAEuWJ
-         La/9C70JFocKaAV7OcHxBZrTIbJUcn9QIANgTBU6BiuznQjEDbda94no0C3G3/q3moim
-         fI48k7QjI2lF/7T/q6C2Hf7mu+O7Ts2khDFlxtFPsOaNoConkAg2OqBXZLtPIYOIU46k
-         l1xQ==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=OnQyR/wpuhRVvTnlPYnNB9vCXNHKWThUg/kzvkk/JD4=;
+        b=dWph3844iNkyKcDzw0B89FeOHTvLCiBSiwYzhNJYx+/kasG7BdbeMdbAtQqw7XbCv+
+         5J7/Kq0zrXkDhrOV/PSlt+ptbCoxuwYttmSlliT89XeW3ldG/H553ze7ZodIpcX/1UTe
+         14vxJVDyX1mW4R03YjCK3F8eS01PghAsikUZAYUL0DNodZXreS+qC+wXa586MgVzI9ky
+         oq4NOjwrk87SlmTrPK/4WBwDrsgi01FnIGPUcRQa/MLYMtInSXiR/KzoH52kbJ7ESFoB
+         T2h1+MNghPoOmz8U7vvToLI7YAc8CfgmRgcTItyoDF0HJ6VCjqURzEX9+Xq91t3zzq6m
+         K7Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=/kVx+eK5OdYiBZUAouhVcj8Kj5+zpb355VJzhQAlpUg=;
-        b=jWYcH4NrlP2ZMme5x0kqYzl/Byvg0zqfE7HDs4G/eiYES7kYoDd1D8igHx+XTyH0N/
-         KCEfGL2zn8Dmj0EPI9jjXZ5Z8ex8Ejdkc+RVb3umzvpsZWZsbn5rQo8sBMAxMeu2/uPO
-         ZKJLmhD1p5/dHt69gTv5HbVfbrn+eHVq+X2PtVuYR7f7lg2eguRwlekoVVVSeKHMVFW7
-         r3MLekamyRwXE82iTki2Co4q7gLbIymkpDPsD+TfqBTdDT125I33yGK6s5k7VGHk0MtC
-         F+2LFyHBOOaBCHelYHmpokoxK+lydM9w+fBQBFRf0IhDlaTw+r8bORz3SVzPr3rvKmV1
-         uY6A==
-X-Gm-Message-State: AD7BkJLClTH0FHZIV2cGJhDjloarvOPezqG9RuHgJDXdFSVeXn4XHxHGMNw2NitdgHqu/g==
-X-Received: by 10.28.173.71 with SMTP id w68mr14267102wme.88.1457891200036;
-        Sun, 13 Mar 2016 10:46:40 -0700 (PDT)
-Received: from slxbook3.fritz.box (p508BA6B3.dip0.t-ipconnect.de. [80.139.166.179])
-        by smtp.gmail.com with ESMTPSA id w133sm12431418wmd.3.2016.03.13.10.46.38
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 13 Mar 2016 10:46:39 -0700 (PDT)
-In-Reply-To: <1456830320-40411-1-git-send-email-larsxschneider@gmail.com>
-X-Mailer: Apple Mail (2.1878.6)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=OnQyR/wpuhRVvTnlPYnNB9vCXNHKWThUg/kzvkk/JD4=;
+        b=jt281AlqITM5Y+xUUzQ0moQhhXf5FRXVb6Ck37GTyvmfehJkYlSVlGY1SMpNSIjwEi
+         lsvCFyodXePuslZdkrwbFesVfSGW9x/wk7/ceZhETx9uHrJDR5uJgT0IDAguhhV5rA7w
+         o9MKouqd0CWpHaftbOiBW+ydgOjxzW2caaCFeSmqeIAck7egzpKfncjvdUMxLr/oGUPM
+         WAU0rb3cjMvWvdsImIE26D6LcCbbMUmFy88WG58/j/Khu45DOJdzKl9Gy8pVgDcxqEmU
+         NqFMHPAqoK24nCh+o4GKJUJVQcKFVMk95JpXnin7GojATkFWqZT3nDJoEL03A6s/QnCw
+         6AJA==
+X-Gm-Message-State: AD7BkJIQGc7vBI2VBEX+Ue74REgKabIZRf2XijMRRBF9zubFSc8+ZBwP5RTa5iTXhwl31g==
+X-Received: by 10.66.222.41 with SMTP id qj9mr32137371pac.136.1457894017791;
+        Sun, 13 Mar 2016 11:33:37 -0700 (PDT)
+Received: from [192.168.1.10] ([182.69.45.48])
+        by smtp.gmail.com with ESMTPSA id s7sm6064394pfi.12.2016.03.13.11.33.35
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 13 Mar 2016 11:33:37 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <1924FEBB-46F2-46EE-B190-5289588D4BED@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288758>
 
 
-On 01 Mar 2016, at 12:05, larsxschneider@gmail.com wrote:
 
-> From: Lars Schneider <larsxschneider@gmail.com>
-> 
-> Noticed-by: Eric Sunshine <sunshine@sunshineco.com>
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
-> Documentation/git-p4.txt | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
-> index 738cfde..140fc12 100644
-> --- a/Documentation/git-p4.txt
-> +++ b/Documentation/git-p4.txt
-> @@ -528,7 +528,7 @@ git-p4.largeFileSystem::
-> git config       git-p4.largeFileSystem GitLFS
-> -------------
-> +
-> -	[1] https://git-lfs.github.com/
-> +[1] https://git-lfs.github.com/
-> 
-> git-p4.largeFileExtensions::
-> 	All files matching a file extension in the list will be processed
-> --
-> 2.5.1
-> 
+On Sunday 13 March 2016 09:20 PM, Lars Schneider wrote:
+> Hi Sidhant,
+>
+> thanks for your interest in the 'Git Beginner' mode topic. I completely 
+> understand your motivation for the topic as your Git learning experience
+> matches mine. However, please be aware that this is no easy project. The
+> final implementation might be easy but it will require hard work to come 
+> up with a design for the beginner mode that the list considers to accept.
+> That being said, I am eager to learn about your ideas on the topic :-)
+Hi,
 
-Is there any chance to get this in? The formatting error is quite obvious here:
-https://git-scm.com/docs/git-p4
+I understand that this project will require much effort to find an acceptable
+solution and I'm prepared for it. I'm very excited to take this one up :)
 
-(while looking at this website I also noticed wrong double quotes around cp1252
-which I will fix with a subsequent patch)
+> Based on my previous discussions with Junio [3] I think on of the most 
+> important aspects is to ensure that Git does not become harder to use.
+> I thought a while about this requirement and I wonder if a wrapper called 
+> 'ggit' (guarded Git) could be a solution. The wrapper would pass all 
+> command line arguments to 'git' and check for potentially destructive 
+> commands. If such a command is detected then the user would see a warning. 
+> If the command is not destructive then 'ggit' would print a short instruction 
+> how to "undo" it. The ordinary Git user would not be affected at all by the 
+> wrapper. A novice Git user who is unsure about his/her command line
+> usage could use `ggit` as a safety net.
+>
+> I am curious about your opinions on this kind of approach. I wonder if
+> people would actually use such a wrapper.
+Coincidentally, my approach too is a wrapper around git as you suggest.
+The approach is simple and straight forward, but I wasn't sure if it would be
+accepted on the list, mainly because it may not look consistent with the current
+interface `git command [options]`. Perhaps a configuration like
+`core.beginnerMode` [4] might be apt? By default, it can be false, making git
+behave normally. When set, a safety-check can be run before the command is
+executed to ensure it's not potentially destructive. Very much like a wrapper
+but on the inside. There can be an option like `--no-beginner` to override
+this configuration from the command-line. I was wondering if there should be
+command-specific options as well, such as `beginner.allowForcePush`,
+`beginner.allowRebase` etc. for a finer control over what commands git would warn
+the user about. By default, all are set to false, and warning is shown when any
+of them is encountered. Another configuration that may be considered is
+`beginner.strict`, which when set would just print the warning and die, instead
+of giving the user an option to continue (though I'm a little unsure whether
+this one would be a good idea).
+One thing that bothers me about this approach is that unlike the explicit 'ggit'
+wrapper, an internal wrapper would add (unnecessary?) overhead for most commands,
+thus impacting the performance. Will that be an issue?
 
-Thanks,
-Lars
+Along with this, the idea of showing a short instruction for undoing commands
+sounds very nice as it'll help beginners to understand and use git better.
+
+I'm eager to know your opinions on this approach :)
+
+Other than this, I also tried to expand the list of potentially destructive
+commands and updated the list as follows (additions in brackets):
+
+* git rebase [ git pull --rebase ]
+* git reset --hard
+* git clean -f
+* git gc --prune=now --aggressive
+* git push -f [ git push <remote> :<branch>, git push <remote> +<branch> ]
+* [ git branch -D ]
+
+Are these additions appropriate? What other commands should be included?
+
+
+Thanks and regards,
+Sidhant Sharma
+
+
+[4]: http://thread.gmane.org/gmane.comp.version-control.git/285893/focus=286663
