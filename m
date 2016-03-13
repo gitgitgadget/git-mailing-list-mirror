@@ -1,97 +1,134 @@
-From: =?UTF-8?B?0J3QuNC60LjRgtCwINCh0L7QsdC+0LvQtdCy?= 
-	<n.a.sobolev@gmail.com>
-Subject: git-secret - store your private data inside a repository
-Date: Sun, 13 Mar 2016 17:11:30 +0300
-Message-ID: <CAO_bL1xQ0C+HYdZQVvyHx3ByPaaJTgpQYhY7h9f76eQXHKZ_SQ@mail.gmail.com>
+From: Eric Engestrom <eric@engestrom.ch>
+Subject: Re: [PATCH] fetch: show reference pointed by new tags
+Date: Sun, 13 Mar 2016 15:38:02 +0000
+Message-ID: <20160313153802.GG30298@engestrom.ch>
+References: <1457303694-16153-1-git-send-email-eric@engestrom.ch>
+ <xmqq60wzta2s.fsf@gitster.mtv.corp.google.com>
+ <xmqqwppfrtai.fsf@gitster.mtv.corp.google.com>
+ <xmqqd1r5mw4p.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 13 15:15:13 2016
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 13 16:38:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1af6nX-00057k-D9
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Mar 2016 15:15:11 +0100
+	id 1af85r-0004CC-Fw
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Mar 2016 16:38:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751322AbcCMOLc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Mar 2016 10:11:32 -0400
-Received: from mail-io0-f170.google.com ([209.85.223.170]:36481 "EHLO
-	mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751124AbcCMOLb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Mar 2016 10:11:31 -0400
-Received: by mail-io0-f170.google.com with SMTP id z76so195804155iof.3
-        for <git@vger.kernel.org>; Sun, 13 Mar 2016 07:11:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to
-         :content-transfer-encoding;
-        bh=FIIrMFdYMZkf0OcMnBHCdue92HjNZNOAEmqMvVJXx7o=;
-        b=IbzBCQjkXnrld4vGNN8ULxVzZKz6ojUpU+JFPitxnVxfiypvw/uRd/0jsPIdNwktVt
-         xlDud8rpYFoY2PQNVmFjQXigWZfYGm1bHTf9JRkV0jOvFfy8rtGJAWpsy6nztww6CQfu
-         yrsf1bg+ZreXdgIz/d+0mIUpN8J3qmUUX4TMWGv3bOoTYwbUECB5KkofvvWCIIJ4OR/s
-         hIv97sBB9V58U1fl5oTIfSa5REjEmvEPufU2mTp85SNDOy4PF5bUa2gG6cK7apLTl7Mk
-         HoUN50+h67VkxmZjgwB/gggNUMtnRhI5nu9ixiZ79YvyJzbW/edeytom0/cItNVco1si
-         vZIw==
+	id S1751283AbcCMPiI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Mar 2016 11:38:08 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:34797 "EHLO
+	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751238AbcCMPiF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Mar 2016 11:38:05 -0400
+Received: by mail-wm0-f48.google.com with SMTP id p65so72979632wmp.1
+        for <git@vger.kernel.org>; Sun, 13 Mar 2016 08:38:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-transfer-encoding;
-        bh=FIIrMFdYMZkf0OcMnBHCdue92HjNZNOAEmqMvVJXx7o=;
-        b=CN+W3kjtN1K6ohiOatMgAzWkjORtv9niG7Lj7m/xdwYbPP2f58HNLgSkazz8r5w7bJ
-         OWlZcwdkXpCuY8siR6cBitipBg23B4XglQuaD9eMsI1AWFbp7z1VIqY3xehzILJGSTom
-         zhCpUN52xUMgmHMMNyeuTDLVtWWiDXBeHKPpdM0GucnshmPBNd+YPd1ww8lp6PQ5GmwM
-         eiiy8cAXjYqoo5e1kAs21EkZb6p5In7Hz2QZjppujyhutSGB3azHKCAeBH/zuQ5MjNh5
-         gmBc6Ywz31wLmUyQyggsNE5FaFg19O5WswLQEWvHqLx5Y83Ca8Lrs07VmCtfHHAGIXWU
-         Rgug==
-X-Gm-Message-State: AD7BkJKGYOotBybL4fOZ5Q2UuBcn76/wnNIJRKQs4yF33+49zYk390/LdLC1C2Dt2d8gnJMzdMz7n5kZBovp1Q==
-X-Received: by 10.107.13.65 with SMTP id 62mr20014939ion.186.1457878290553;
- Sun, 13 Mar 2016 07:11:30 -0700 (PDT)
-Received: by 10.36.15.74 with HTTP; Sun, 13 Mar 2016 07:11:30 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=VZXU/3ucAak5mVSgPSkDlL6wiP2gbdxWPi/avfv8FbA=;
+        b=aAjBKDejpZfdCMuBgxrgyCvsIUZ2D3mPpDfrYuJDbCvZ8v+kVc5I5QLmkRwzz0R9v3
+         SGfWhMuifKghu48romABlAvxxThCSDQl3BKfYsqlmZL/W4ZL/JupPUWYskUR0QZe23UY
+         jF7i4s4LrEPUBxcKOV8TkiIkTR2vCRA9WFk1AqKHTRlMxSb/TKOuTvs5LlhJxR69dImu
+         C2Fx3T7kQ9bcy6MR0FUU5IU/j7qwP7Bc03l/ag5hWQc8xKBWVCNwZ+AUDiI6no2lLWF1
+         8y75ZMPj+mO54maRaW6QxSKy8MAncfjsDiWTn5YUqEb1nLzzUmkKVsrrYjxbH5tHRgNs
+         lKBg==
+X-Gm-Message-State: AD7BkJKfCg2/QbGTZ90G19bExxFxv+dKhSvhMoe3BmP8O0S+l9xvJ85qg/jpmQzyJfnZeA==
+X-Received: by 10.194.114.166 with SMTP id jh6mr19822218wjb.39.1457883483920;
+        Sun, 13 Mar 2016 08:38:03 -0700 (PDT)
+Received: from engestrom.ch (cpc87083-finc18-2-0-cust120.4-2.cable.virginm.net. [92.238.93.121])
+        by smtp.gmail.com with ESMTPSA id i5sm18222212wjx.15.2016.03.13.08.38.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 13 Mar 2016 08:38:03 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqd1r5mw4p.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288753>
 
-There=E2=80=99s a known problem in server configuration and deploying, =
-when
-you have to store your private data such as: database passwords,
-application secret-keys, OAuth secret keys and so on, outside of the
-git repository. Even if this repository is private, it is a security
-risk to just publish them into the world wide web. What are the
-drawbacks of storing them separately?
+Hi Junio,
 
-These files are not version controlled. Filenames change, locations
-change, passwords change from time to time, some new information
-appears, other is removed. And you can not tell for sure which version
-of the configuration file was used with each commit.
-When building the automated deployment system there will be one extra
-step: download and place these secret-configuration files where they
-need to be. So you have to maintain an extra secure server, where
-everything is stored.
-How does git-secret solve these problems?
+Thanks for the warm welcome, but after your explanation on the purpose
+of the second field, it looks like my patch was just a plain bad idea.
 
-git-secret encrypts files and stores them inside the git repository,
-so you will have all the changes for every commit.
-git-secret doesn=E2=80=99t require any other deploy operations rather t=
-han git
-secret reveal, so it will automatically decrypt all the required
-files.
-What is git-secret?
+I'm not that new to git (I've been using it actively for 6+ years), but
+as you guessed, I thought it was just redundant info as I had never see=
+n
+a tag with a different remote name (unlike new branches, for which you
+always see the `remote/branch` name), and I thought I might as well
+replace it with an other info. As you mentioned though, a tag can be
+used everywhere its hash can, so there's no point showing that either.
 
-git-secret is a bash tool to store your private data inside a git
-repo. How=E2=80=99s that? Basically, it just encrypts, using gpg, the t=
-racked
-files with the public keys of all the users that you trust. So
-everyone of them can decrypt these files using only their personal
-secret key. Why deal with all this private-public keys stuff? Well, to
-make it easier for everyone to manage access rights. There are no
-passwords that change. When someone is out - just delete his public
-key, reencrypt the files, and he won=E2=80=99t be able to decrypt secre=
-ts
-anymore.
+I guess I'll just take that as a lesson :]
+  =E2=80=9CMake sure you actually understand what the code is doing
+  before trying to modify it=E2=80=9D
 
-=46ind out more: https://sobolevn.github.io/git-secret/
+Cheers,
+Eric
+
+
+On Mon, Mar 07, 2016 at 08:28:06PM -0800, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>=20
+> > Junio C Hamano <gitster@pobox.com> writes:
+> >
+> > But I am merely guessing from the your patch text what the reasonin=
+g
+> > behind the change was and you are the one who had the original
+> > reason why you needed this change, so your "why" may be a lot more
+> > useful use case than the one I made up and called "semi-sensible"
+> > here.  The proposed log message needs to explain your "why".
+> >
+> > And if you explained "why", you may have heard other people agreein=
+g
+> > with you that this new piece of information is nice to have.  They
+> > may even have helped you by suggesting to add this extra informatio=
+n
+> > somewhere in the output, instead of replacing existing information
+> > in the output (which would lead to loss of convenience and
+> > information).
+>=20
+> I just thought of another possible explanation why you may have
+> thought that it is a good idea to clobber the right hand side of the
+> fetch report.  Perhaps you thought that LHS and RHS say the same
+> thing and that is redundant?
+>=20
+> Because "git fetch" is flexible and allows you to store what the
+> remote side called X locally as Y, the fetch report in the most
+> general form must say X on the remot side) was fetched and stored as
+> Y in the local repository, i.e.
+>=20
+> 	[new tag] X -> Y
+>=20
+> but it is excusable that people new to Git who never saw such a
+> renaming fetch to misunderstand that we are giving redundant
+> information.
+>=20
+> If that was the motivation, a possible way to change the behaviour
+> would be to show
+>=20
+> 	[new tag] X
+>=20
+> if and only if the remote side and the local side uses exactly the
+> sae name for the ref.  The lack of " -> " can clearly tell the user
+> that the output is telling us that what they call X is fetched and
+> stored as X (i.e. under the same name) locally.  A fetched ref that
+> does not update any local ref (i.e. the ones that are recorded only
+> in the FETCH_HEAD file) is shown as
+>=20
+> 	tag X -> FETCH_HEAD
+>=20
+> so there is no ambiguity there, either.
+>=20
+>=20
+>=20
