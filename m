@@ -1,87 +1,149 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC/GSoC 09/17] rebase-common: implement
- cache_has_unstaged_changes()
-Date: Mon, 14 Mar 2016 21:54:19 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603142151230.4690@virtualbox>
-References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com> <1457779597-6918-10-git-send-email-pyokagan@gmail.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: [PATCH v6] commit: add a commit.verbose config variable
+Date: Mon, 14 Mar 2016 20:50:47 +0000
+Message-ID: <0102015376e53b40-d25f7fdc-4ae1-4aae-b779-052fcf252071-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>, sam.halliday@gmail.com
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 14 21:54:39 2016
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 14 22:02:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afZVe-0003t2-VT
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 21:54:39 +0100
+	id 1afZdV-0001vY-Ub
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 22:02:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933489AbcCNUyc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2016 16:54:32 -0400
-Received: from mout.gmx.net ([212.227.15.18]:57219 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932351AbcCNUy1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2016 16:54:27 -0400
-Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MGS9o-1ab9e02PzM-00DEcT; Mon, 14 Mar 2016 21:54:20
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <1457779597-6918-10-git-send-email-pyokagan@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:7ScrXDHlPl5ppKHDpVKYTA8kL2U48eEQtj6+NBYrinh6ulAe5F4
- lFZEwEjJyYxt2QV4v9okU8xlDFSwJ4nTuIOypHM6i6Y/WCi/WuAjwSHFnLJIaImxYokwYfo
- UDj60uisy01J6rt5o+XW9fuLNsa3QFqxKdNj/rJewj/leFK19yB4mP4Yb3aO2sNC4Ge+zTF
- o1zWAEkc+7Sr7f2DbNoQQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:I6JtdRe8l6k=:OGN2CkwcZObUe2EcvkTLv4
- IdIbLJGBXGD+jBR1PafIbOVsui0BbfT9buxeFf9b+QCGi4f2RsiW+wKgEUgh87YvvpeoGXkwK
- +nLQPecYD0akAha8mN5htZ+hMKjkKKkPQCT/1/kz90A+GKDnIRKJ/fVphgcD+y0iplyAM0HLl
- VUAkmr038GVf5fsgqcxOS92yr49p9ApIle+8L548SAbVRZEWd4ZcjKdoXcsuWyKo1nSycH8xn
- iAjyNy5q+7gQF7O1hSmMQvdHGAzXjpeCbtx69fIZhr99FxE2avEhe7FcjLSiaoNQ8VS9xZfto
- Jz2NmiwdRMRroMGuwUpq9CkF5HByPybJyybmi7PaBH3rj1UtwQkBKVTway4lYV8aIWdJNd00t
- 3iC6NlnTvjyhCELsjkCNo12uhSo6jWDgHSuUkd4JoDbX/hxrjRQ7tXBL+/IB8NEflneo0SQR9
- ftfX2ZO11LgM+d4xdWwpFL247qzKpNXn+arlbwLcREj4hBz2vyXhmu+CGRgDgdWtJjPqfeNcU
- 46mVUgZgwNoMcg9U8x4DsqBywUMOIqDaWAFOZvh5hTcixuzz0lAS6FB7jtWjmc8roC3Onpajq
- PRrQlxa0KPrL8dXgpMMk8FA7XyZ+kBntbu+C0qWz6nIBFjEOBOFNzLveFcuVRtiaEqDNZW9xd
- 2TdPNUnIvZhoNakJohOuJhv3IbDO9W/wrY3TIOD97uZLw3TdqZhMqKZSRer53oq1oH1QwLorA
- bh/v8eHuulkt7gCUmKlCL3o0nK84fnqSBUiaS7N45O0/hTnOc/Xi8kl19Z0RYlHvk/wbVuUa 
+	id S933150AbcCNVCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2016 17:02:43 -0400
+Received: from a6-243.smtp-out.eu-west-1.amazonses.com ([54.240.6.243]:34722
+	"EHLO a6-243.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932609AbcCNVCl (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Mar 2016 17:02:41 -0400
+X-Greylist: delayed 712 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 Mar 2016 17:02:41 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1457988647;
+	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=bYdHgsInkWN/IDhFa5WeOLkxWCBwAK9Fzov7x7BjUxg=;
+	b=SCvsrQ4GdGd6Zg+iafe16goGbPGy6J+FbefvoCGBxU9WIQy/FoB2a0/yX0JOLnGa
+	bCaUFYANj3TdigEJXkarZDRZBSRoudmJFlvwIu4YYKOJRwflSZ/mF4YgxJ5ITD3DLnm
+	RAgYtXv3t2kUhmJdZVlAM9e8rES+dYzE8Lo58QhE=
+X-SES-Outgoing: 2016.03.14-54.240.6.243
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288811>
 
-Hi Paul,
+Add commit.verbose configuration variable as a convenience for those
+who always prefer --verbose.
 
-On Sat, 12 Mar 2016, Paul Tan wrote:
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 
-> In the upcoming git-rebase-to-C rewrite, it is a common operation to
-> check if the worktree has unstaged changes, so that it can complain that
-> the worktree is dirty.
-> 
-> builtin/pull.c already implements this function. Move it to
-> rebase-common.c so that it can be shared between all rebase backends and
-> git-pull.
+---
+The previous versions of this patch are:
+ - [v5] $gmane/288728
+ - [v4] $gmane/288652
+ - [v3] $gmane/288634
+ - [v2] $gmane/288569
+ - [v1] $gmane/287540
 
-This function is not specific to rebases, even if you only use it for
-those purposes for the moment.
+The changes with respect to the last version are :
+ - Use Helped-by tag instead of Mentored-by.
+ - Use "^diff --git" instead of "*diff --git".
+ - Add a different test to check whether the verbose option did not break status.
+---
+ Documentation/config.txt     |  4 ++++
+ Documentation/git-commit.txt |  3 ++-
+ builtin/commit.c             |  4 ++++
+ t/t7507-commit-verbose.sh    | 29 +++++++++++++++++++++++++++++
+ 4 files changed, 39 insertions(+), 1 deletion(-)
 
-In my 'interactive-rebase' branch, I moved it to wt-status (which is a
-more logical place, methinks).
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 01cca0a..9b93f6c 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1110,6 +1110,10 @@ commit.template::
+ 	"`~/`" is expanded to the value of `$HOME` and "`~user/`" to the
+ 	specified user's home directory.
+ 
++commit.verbose::
++	A boolean to specify whether to always include the verbose option
++	with `git commit`. See linkgit:git-commit[1].
++
+ credential.helper::
+ 	Specify an external helper to be called when a username or
+ 	password credential is needed; the helper may consult external
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 9ec6b3c..d474226 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -290,7 +290,8 @@ configuration variable documented in linkgit:git-config[1].
+ 	what changes the commit has.
+ 	Note that this diff output doesn't have its
+ 	lines prefixed with '#'. This diff will not be a part
+-	of the commit message.
++	of the commit message. See the `commit.verbose` configuration
++	variable in linkgit:git-config[1].
+ +
+ If specified twice, show in addition the unified diff between
+ what would be committed and the worktree files, i.e. the unstaged
+diff --git a/builtin/commit.c b/builtin/commit.c
+index b3bd2d4..e0b96231 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1505,6 +1505,10 @@ static int git_commit_config(const char *k, const char *v, void *cb)
+ 		sign_commit = git_config_bool(k, v) ? "" : NULL;
+ 		return 0;
+ 	}
++	if (!strcmp(k, "commit.verbose")) {
++		verbose = git_config_bool(k, v);
++		return 0;
++	}
+ 
+ 	status = git_gpg_config(k, v, NULL);
+ 	if (status)
+diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
+index 2ddf28c..35960b4 100755
+--- a/t/t7507-commit-verbose.sh
++++ b/t/t7507-commit-verbose.sh
+@@ -96,4 +96,33 @@ test_expect_success 'verbose diff is stripped out with set core.commentChar' '
+ 	test_i18ngrep "Aborting commit due to empty commit message." err
+ '
+ 
++test_expect_success 'commit.verbose true and --verbose omitted' '
++	git -c commit.verbose=true commit --amend
++'
++
++test_expect_success 'commit.verbose true and --no-verbose' '
++	test_must_fail git -c commit.verbose=true commit --amend --no-verbose
++'
++
++test_expect_success 'commit.verbose false and --verbose' '
++	git -c commit.verbose=false commit --amend --verbose
++'
++
++test_expect_success 'commit.verbose false and --verbose omitted' '
++	test_must_fail git -c commit.verbose=false commit --amend
++'
++
++test_expect_success 'commit.verbose true and --verbose' '
++	git -c commit.verbose=true commit --amend --verbose
++'
++
++test_expect_success 'commit.verbose false and --no-verbose' '
++	test_must_fail git -c commit.verbose=false commit --amend --no-verbose
++'
++
++test_expect_success 'status ignores commit.verbose=true' '
++	git status >actual &&
++	! grep "^diff --git" actual
++'
++
+ test_done
 
-Also, you might want to join my discussion with Junio about the sense or
-nonsense of keeping the prefix parameter instead of silently removing it
-while moving the functions.
-
-Furthermore, it is not really the cache (which I thought we settled on
-calling "index" these days) that has unstaged changes, but the working
-directory.
-
-For simplicity's sake, I therefore kept the has_unstaged_changes() name
-(it is not like there is a lot of confusion *what* can have unstaged
-changes).
-
-Ciao,
-Johannes
+--
+https://github.com/git/git/pull/205
