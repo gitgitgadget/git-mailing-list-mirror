@@ -1,80 +1,90 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] wt-status: allow "ahead " to be picked up by l10n
-Date: Mon, 14 Mar 2016 16:30:33 +0100
-Message-ID: <3b88641beff6b34ae8b86bf353e6fbb8f9e636f1.1457969307.git.git@drmicha.warpmail.net>
-References: <56E6D8C4.2010205@drmicha.warpmail.net>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 14 16:30:42 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [GSOC] Microproject "Move ~/.git-credential-cache to ~/.config/git"
+Date: Mon, 14 Mar 2016 08:42:42 -0700
+Message-ID: <xmqqshztawwd.fsf@gitster.mtv.corp.google.com>
+References: <CAKqreux4aYhXTE9kUHKoKCJ2-4KDWyi58ioCm-CWqXhUYCtEEw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 14 16:42:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afUS8-0007JL-Ag
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 16:30:40 +0100
+	id 1afUdv-0000Lx-Bt
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 16:42:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965509AbcCNPah (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2016 11:30:37 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:35264 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S965025AbcCNPaf (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Mar 2016 11:30:35 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id B971F21459
-	for <git@vger.kernel.org>; Mon, 14 Mar 2016 11:30:34 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute1.internal (MEProxy); Mon, 14 Mar 2016 11:30:34 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:date:from:in-reply-to:message-id:references:subject:to
-	:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=BsP/PBfuYlqNuJearqTIzE0F2ww
-	=; b=TWhbV+cwWc+i/AohfUNwvm4KpBfaVD/u0DivW42Gc+fb2NzX+lkwIZofrjV
-	KIsCF246Se6cDMEss6SFkesT0ogtZlQVZp8CtaasTyDnU6/uVRMsdWuckSVxJ5ef
-	43y7ukDR1n9DEL+XyJQm3WiizuQbW+9k0q6fQN9jbsh1DwyE=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=BsP/
-	PBfuYlqNuJearqTIzE0F2ww=; b=A6rp+GHf2s7SNWGmf2+IoqGMRds+45g3UeNf
-	Lt+gvB8mojP/Kc6Nh/r5pkVIHllDL/Q+6Jc5G1uUa7cFHAfJy8h9AvhTIyRH/JCb
-	RSDYwD33oRg5aO5FKzpepJSTZVyBj/UfCsdPFqto0W0zuOD2EWRcKkDyezkeyheI
-	BxNTatA=
-X-Sasl-enc: sE2EDcPZ3I6yOKPWBWbdW4CQr2kztzZn6rhgycBHokOH 1457969434
-Received: from localhost (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 52FF2C0001D;
-	Mon, 14 Mar 2016 11:30:34 -0400 (EDT)
-X-Mailer: git-send-email 2.8.0.rc2.197.g3b88641.dirty
-In-Reply-To: <56E6D8C4.2010205@drmicha.warpmail.net>
+	id S934506AbcCNPmq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Mar 2016 11:42:46 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64876 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933015AbcCNPmp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Mar 2016 11:42:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 90D614A47A;
+	Mon, 14 Mar 2016 11:42:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=+WnWEgqwws1J
+	wWbCpSZF2F2c8vw=; b=stYdtDd26MDk4VQsCiDDAsdpkiTAaOM+m0ESLCrnn8Ht
+	2R9Eo3d41r5A81J+zEiHedssm3C8N+pMwHw5bS/ZytGu282J2D3P0298srDTnQjv
+	S3tZkWQJt3OPsDzX/e+n6v9A1N4K/PICyZpSW08uIC2GngCSZWcihw4hSxMiW9o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=CdUfDZ
+	BKS61/JzC4+PyzcSHHH6sYmEyzKTUTfHvQyWF2iqLAtbOvSqB09BTK2NWhVSeBCL
+	QRpFiDHm+d3NHUbqRcKJKUG8HgGT24hNnocMlUnW99yKtxliKFehB0DReo8umYEL
+	SZyJfoq5z7g5bo30F3W2XWOXwZzLNgpf77FRc=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 88CB84A479;
+	Mon, 14 Mar 2016 11:42:44 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 02E3C4A477;
+	Mon, 14 Mar 2016 11:42:43 -0400 (EDT)
+In-Reply-To: <CAKqreux4aYhXTE9kUHKoKCJ2-4KDWyi58ioCm-CWqXhUYCtEEw@mail.gmail.com>
+	(=?utf-8?B?IuaDoOi9tue+pCIncw==?= message of "Mon, 14 Mar 2016 22:47:53
+ +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 64B42CFC-E9FB-11E5-BAA9-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288784>
 
-The extra pair of parentheses keeps the l10n engine from picking up the
-string. Remove them so that "ahead " ends up in git.pot.
+=E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqun@gmail.com> writes:
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- wt-status.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> I'm still confused about following:
+>
+> 1. should `~/.git-credential-cache` been moved to
+> `~/.cache/git/credential`(as the descreption of the micropject says)
+> or `~/.config/git/credential`(as the title of the microproject says)?
 
-diff --git a/wt-status.c b/wt-status.c
-index ab4f80d..ef74864 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1677,10 +1677,10 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
- 		color_fprintf(s->fp, header_color, LABEL(N_("behind ")));
- 		color_fprintf(s->fp, branch_color_remote, "%d", num_theirs);
- 	} else if (!num_theirs) {
--		color_fprintf(s->fp, header_color, LABEL(N_(("ahead "))));
-+		color_fprintf(s->fp, header_color, LABEL(N_("ahead ")));
- 		color_fprintf(s->fp, branch_color_local, "%d", num_ours);
- 	} else {
--		color_fprintf(s->fp, header_color, LABEL(N_(("ahead "))));
-+		color_fprintf(s->fp, header_color, LABEL(N_("ahead ")));
- 		color_fprintf(s->fp, branch_color_local, "%d", num_ours);
- 		color_fprintf(s->fp, header_color, ", %s", LABEL(N_("behind ")));
- 		color_fprintf(s->fp, branch_color_remote, "%d", num_theirs);
--- 
-2.8.0.rc2.197.g3b88641.dirty
+The latter, I'd think, as you noticed in 2. the former does not make
+much sense.
+
+> 2. If `~/.cache/git/credential` is the desired target, there seems
+> nothing to do with `XDG_CONFIG_HOME`.
+
+Yes, I think the intent of the problem specification is "if it is
+found in the XDG_CONFIG_HOME use $XDG_CONFIG_HOME/.config/git/* a
+the location to place it; by the way if the user does not have
+anything to explicitly say she wants to use a specific location for
+XDG_CONFIG_HOME, it defaults to "~/.config, hence the Git specific
+location becomes ~/.config/git/*".
+
+> 3. Does "without breaking compatibility with the old behavior." mean
+> that I should still try to connect to the unix socket placed at the
+> old place? If yes, which order is prefered?
+
+Let me be vague and oblique on purpose ;-)
+
+We used to have only ~/.gitconfig as the per-user location, and at
+some point in the history we added XDG_CONFIG_HOME support.  Study
+how that was done (hint: "git log" and "git blame" may be useful
+tools for this purpose), and imitate it.
