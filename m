@@ -1,76 +1,104 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH/RFC/GSoC 12/17] rebase-todo: introduce rebase_todo_item
-Date: Mon, 14 Mar 2016 14:43:59 +0100
-Message-ID: <CAP8UFD0Fw1ZOQzPfF=bbEsCOhkoHfV5B5ayprxR6kWr6vApT5Q@mail.gmail.com>
-References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com>
-	<1457779597-6918-13-git-send-email-pyokagan@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/1] Introduce a way to create a branch and worktree at
+ the same time
+Date: Mon, 14 Mar 2016 14:45:33 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603141445140.4690@virtualbox>
+References: <cover.1457609615.git.johannes.schindelin@gmx.de> <CACsJy8BA7-ev9wTt6K45TgiNxOaBUXbN1P03U4EUAzAPy=7Faw@mail.gmail.com> <alpine.DEB.2.20.1603101417590.4690@virtualbox> <CAHYJk3Sij4tH0i29Asahjj8KBdQj59jFRTCoYzO_XE_kt3SnDw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>, sam.halliday@gmail.com
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 14 14:44:08 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Mikael Magnusson <mikachu@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 14 14:45:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afSn1-00080k-39
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 14:44:07 +0100
+	id 1afSoc-0000hK-Vb
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 14:45:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964955AbcCNNoD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2016 09:44:03 -0400
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:36346 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932432AbcCNNoC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2016 09:44:02 -0400
-Received: by mail-lb0-f170.google.com with SMTP id x1so239398731lbj.3
-        for <git@vger.kernel.org>; Mon, 14 Mar 2016 06:44:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=nxzVvjoGPQsKBxFsL9hIbDVPJ1xnFpX7yFDM3o2v3fk=;
-        b=TOShDZPM2aJTU+l0s8kZdNg1OPa3zif9kjhXmBbur+IYYZDoI4mExf/uIoe41huV/V
-         koxz+OyVRYb/1ZoZh0PhTfOA8KMLowo3yA1ul0vDB64k6TJx5lt7/PXdTHnItVhhu5Qz
-         0bIVD/G/JzGSrHWdYKRrl1mwOGRhrX6FTb3qDBSbIpq+XXgzEUco2ItsiO5NI6HPqa2o
-         u0T2dNAKeKljmt5RUCvxeYnAFdXynEQmB7C4IXOXr4O+zWm8fF9XG6g/hGDwvjRKppyA
-         NNeBMbfQVh/Wutzd8+VAwoUfGnp51YPzBRBzzYNyqmQFd3d7Lq76ACo4MRHpp4oV3Rti
-         HZXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=nxzVvjoGPQsKBxFsL9hIbDVPJ1xnFpX7yFDM3o2v3fk=;
-        b=ky1X0I48fBBWrmn5elv1l1GjYkQUcnVVQZj8Zk7e9QWKZBuMl9gxzc4NjTNuQxhFr8
-         JIdE6gWCFb07i9QUL9S7sveCQzZ8ZpcTFvtpJ+cI5p3K2lTRDKbWzodUzCxxMxYbOdPn
-         Vwyb5UqzC+04Jc9F/gF0i8meRPue/eeJ/vh5y+rHbe1/7ypfm4FmmtbSsa+wS0aDkIAj
-         AGfhPgftnXGVDRPFUfiR3knxymTaTFmAwqVHsN4K1wr6w/2t393l9vFqpuf8mHHqSNiE
-         0anei868U5YYBOKqXGg+DMFeKH6Chw3s38Dkv2UmETbI3x9+GrAcwVhA73a7GnPmkhaB
-         g+9A==
-X-Gm-Message-State: AD7BkJKi5OqT75UpzImki8aDyq00A60H4+ncB9RBkVaQewjJq6ncGf5Hm978rNBHTB1gfBb9nCPpCiR4WjWjmg==
-X-Received: by 10.112.134.138 with SMTP id pk10mr7632922lbb.16.1457963039709;
- Mon, 14 Mar 2016 06:43:59 -0700 (PDT)
-Received: by 10.25.137.130 with HTTP; Mon, 14 Mar 2016 06:43:59 -0700 (PDT)
-In-Reply-To: <1457779597-6918-13-git-send-email-pyokagan@gmail.com>
+	id S964958AbcCNNpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2016 09:45:44 -0400
+Received: from mout.gmx.net ([212.227.17.21]:50212 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932102AbcCNNpm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2016 09:45:42 -0400
+Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MFz0E-1aZTJo2hAk-00EtHO; Mon, 14 Mar 2016 14:45:34
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <CAHYJk3Sij4tH0i29Asahjj8KBdQj59jFRTCoYzO_XE_kt3SnDw@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:hVjKEwyZF4FDEloRomCnyZWfQ516sj7RMDI4fXLNlHoEBN3K08I
+ 6fhAQ2liI8CslPyNuF7JGOjIJmKTVaVfOlA5Eg8wXGPdDOyyyE5qBQsahfWLO7xJVw8rJsN
+ /rZNJRf9y2+QIV2eKZiZ7bEkTL5Tjlf6nrvX2Hf63+2ijvlf/dT2RggE0TxsAbyzZPoOKAq
+ 6V8nOkqiM3/rq/ZxzCuow==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:d+PQL/53h7A=:n/IXWZSIDFbBm+jBN6SHcR
+ sxlu995cfnepU5TbEz2pQ4ZenKFBKdCmdR3VvUCMI7Q0SHGiQUFR2A+qcxgG+QqepiGopYO6J
+ P+jiAOMp8IKp6YwzcRAQFRbrfGK1BvNlHGGPFDu/CLmEW6GOvMwovkppa1evKr4flSix9fwrr
+ IPjIcZYrVz3HtSvhS7fdQD2iidtguR2dO1jPTV0IUzN/97beFZTT0HqOn9IzS1V3qix+8EZHa
+ 9Dblk+aOIcgcmWCytYsBD2bCgwj2EqYJkliANjNTDBwQZ7xCtVZB8ivoO4D+uLvqgFXSfkFm4
+ pH1qLY6nGnhrLUK0/FnGkftuaKgg+36wqed8+EIwHvCbWFrBmuoDPUYp7nOTsOJZQxfEoPYAr
+ 6Q5D4hmic/6k9ENocj0wc3YUmFj2xJe96ghDN+0aHaopMZg5mT16p50SLoITd7cCNl5i8lF+n
+ KiRyf0DkHBVDFIMhQUsKyCAh82RrQYOKmlrggKZSprd2+9gEVKXDXkPwOlLDoeCu/gFvm4uVi
+ 62O9kV/1MxnEFG5UUibQrmtkZeENaOX+zNd1PhlRjb92LQJocB9R2Vam/37J6v66VlDXQFKD1
+ c6ivV6SutvYr7xoCOZAlfZClZ1TE/RghCQY266brmSOeUIdnFfl+FriEnGaLprk4c3cA30Y7f
+ vxohAWIwOgodJu1h5X7rWzKQMZEgNyrSU0hyZ5uOJ2DzkG4gk6thbOJNsgY5UO4ZYR0avC3h7
+ bsmRj55WQjIwzzp157XYUvV3VOL+eIsa75e//JTRe1g726BgqAPUIblIgJOQMtrUXlr3iqcb 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288779>
 
-On Sat, Mar 12, 2016 at 11:46 AM, Paul Tan <pyokagan@gmail.com> wrote:
-> In an interactive rebase, commands are read and executed from a todo
-> list (.git/rebase-merge/git-rebase-todo) to perform the rebase.
->
-> In the upcoming re-implementation of git-rebase -i in C, it is useful to
-> be able to parse each command into a data structure which can then be
-> operated on. Implement rebase_todo_item for this.
+Hi Mikael,
 
-sequencer.{c,h} already has some code to parse and create todo lists
-for cherry-picking or reverting multiple commits, so I am wondering if
-it would be possible to share some code?
+On Fri, 11 Mar 2016, Mikael Magnusson wrote:
 
-Thanks!
+> On Thu, Mar 10, 2016 at 2:21 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > Hi Duy,
+> >
+> > On Thu, 10 Mar 2016, Duy Nguyen wrote:
+> >
+> >> On Thu, Mar 10, 2016 at 6:34 PM, Johannes Schindelin
+> >> <johannes.schindelin@gmx.de> wrote:
+> >> > One possible improvement would be to add "/xyz/" to the parent
+> >> > repository's .git/info/exclude, but this developer hesitates to
+> >> > introduce that feature without the "delete" counterpart: those exclude
+> >> > entries would likely go stale very quickly. Besides, there might be a
+> >> > plan in the working to exclude worktrees automagically?
+> >>
+> >> That's needed because you add a worktree inside another worktree? I
+> >> know that feeling, but I've changed my layout from ~/w/git as main
+> >> worktree (and ~/w/git/.git as repo) to ~/w/git as a non-worktree dir
+> >> that contains all worktrees, e.g. ~/w/git/reinclude-dir,
+> >> ~/w/git/worktree-config, ~/w/git/lmdb... My typical worktree add
+> >> command is "git worktree add ../<some-name>" then move there and do
+> >> stuff. No nested worktrees, no need to update exclude file (and no
+> >> messing up emacs' rgrep command, which does not understand .gitignore
+> >> anyway)
+> >
+> > This feels to me like it is working around the problem rather than solving
+> > it. My worktrees are inside the corresponding top-level project for a
+> > reason: I work with multiple projects, and having all of their worktrees
+> > in a single $HOME/w/ directory would be rather confusing to me.
+> >
+> > I really want to keep my Git worktrees inside /usr/src/git/ (in Git for
+> > Windows' SDK).
+> 
+> You can have /usr/src/git/master, /usr/src/git/some-work-tree, etc,
+> and /usr/src/git itself is not a git repository at all. That way
+> /usr/src only has one git-related directory and no worktrees are
+> nested. The only downside is if you work in master most of the time,
+> you have to type "/master" more. I think this is what Duy suggested
+> too, but you interpreted it as having /usr/src/git-master,
+> /usr/src/git-some-work-tree etc?
+
+That is a sensible workaround.
+
+The question is: why do I need a workaround?
+
+Ciao,
+Dscho
