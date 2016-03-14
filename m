@@ -1,149 +1,162 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: [PATCH v6] commit: add a commit.verbose config variable
-Date: Mon, 14 Mar 2016 20:50:47 +0000
-Message-ID: <0102015376e53b40-d25f7fdc-4ae1-4aae-b779-052fcf252071-000000@eu-west-1.amazonses.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [RFC/GSoC] Introduction
+Date: Mon, 14 Mar 2016 21:08:57 -0000
+Organization: OPDS
+Message-ID: <2F4E620D0B79497F837DC1D045B0467E@PhilipOakley>
+References: <56E3BE3E.9070105@gmail.com> <1924FEBB-46F2-46EE-B190-5289588D4BED@gmail.com> <xmqqk2l58s2a.fsf@gitster.mtv.corp.google.com> <FB2E0900-A77E-4AE2-A580-9192746A8ABA@gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 14 22:02:48 2016
+Cc: "Sidhant Sharma" <tigerkid001@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Lars Schneider" <larsxschneider@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 14 22:09:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afZdV-0001vY-Ub
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 22:02:46 +0100
+	id 1afZje-0006yL-Qx
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 22:09:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933150AbcCNVCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2016 17:02:43 -0400
-Received: from a6-243.smtp-out.eu-west-1.amazonses.com ([54.240.6.243]:34722
-	"EHLO a6-243.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932609AbcCNVCl (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Mar 2016 17:02:41 -0400
-X-Greylist: delayed 712 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 Mar 2016 17:02:41 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1457988647;
-	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=bYdHgsInkWN/IDhFa5WeOLkxWCBwAK9Fzov7x7BjUxg=;
-	b=SCvsrQ4GdGd6Zg+iafe16goGbPGy6J+FbefvoCGBxU9WIQy/FoB2a0/yX0JOLnGa
-	bCaUFYANj3TdigEJXkarZDRZBSRoudmJFlvwIu4YYKOJRwflSZ/mF4YgxJ5ITD3DLnm
-	RAgYtXv3t2kUhmJdZVlAM9e8rES+dYzE8Lo58QhE=
-X-SES-Outgoing: 2016.03.14-54.240.6.243
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+	id S932815AbcCNVJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2016 17:09:00 -0400
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:16999 "EHLO
+	smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932387AbcCNVI7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2016 17:08:59 -0400
+Received: from PhilipOakley ([92.22.74.143])
+	by smtp.talktalk.net with SMTP
+	id fZjUaIzhLrhpnfZjUarj7X; Mon, 14 Mar 2016 21:08:57 +0000
+X-Originating-IP: [92.22.74.143]
+X-Spam: 0
+X-Authority: v=2.1 cv=UqXDT7EB c=1 sm=1 tr=0 a=Xg0eXAnvs+o2/zmRCj3v+g==:117
+ a=Xg0eXAnvs+o2/zmRCj3v+g==:17 a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10
+ a=s5jvgZ67dGcA:10 a=8nJEP1OIZ-IA:10 a=pGLkceISAAAA:8 a=ybZZDoGAAAAA:8
+ a=VwQbUJbxAAAA:8 a=Tu2AlBILDdGIsXIDP5UA:9 a=wPNLvfGTeEIA:10 a=x8gzFH9gYPwA:10
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfOv6mCztiwD0bQTLWt3QCq/DGFCbG8uOk0xhYtWlGKrg+JH1ndczJfMflu2x2U4Df5bnRbx4FVaTkgA/CBQIoyBNbpSChbcVyLVCwyoDuPeeRGvftsf7
+ ILLDs4BLz47qC8GYHUN0GqdxWjrYhgPwkrR/4NgHAy+LBbz2W6hWJOR9xlbGjjliTEOHUOo8PE1QNt+c7fQQVsasAITpKFRk6rhKXTAuci3fyq+UA6qSracB
+ gpy8jl4Ow6qpy7cUTYpmNa7/0iCIlc4rzopGMSoDeE0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288812>
 
-Add commit.verbose configuration variable as a convenience for those
-who always prefer --verbose.
+From: "Lars Schneider" <larsxschneider@gmail.com>
+>
+> On 14 Mar 2016, at 07:57, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> Lars Schneider <larsxschneider@gmail.com> writes:
+>>
+>>> I thought a while about this requirement and I wonder if a wrapper 
+>>> called
+>>> 'ggit' (guarded Git) could be a solution. The wrapper would pass all
+>>> command line arguments to 'git' and check for potentially destructive
+>>> commands. If such a command is detected then the user would see a 
+>>> warning.
+>>
+>> I recall back in the days when people said that Hg's command set was
+>> so much more pleasant to use that some people thought about building
+>> Hg's command line UI on top of low level implementation of the Git's
+>> data structure.  Even before that time, there was an effort "Cogito"
+>> to build an alternate UI on top of Git core.  If "ggit" can be made
+>> reasonably feature complete in such a way that it lets beginners do
+>> all what they need to do, omitting many advanced/hairy features core
+>> Git may let users use (i.e. making trade-off between power and risk
+>> of misuse differently from core Git), that may be a reasonable way
+>> to offer a "beginner mode".
+>>
+>> The beauty of such an approach is that as long as "ggit" correctly
+>> talks the same on-wire protocol when interacting with other people's
+>> repositories, nobody needs to even know or care that you are using
+>> "ggit" exclusively.  Two systems can talk without problems.
+>>
+>> If "ggit" is made too limited, there is an issue.  Beginners may at
+>> some point need to transition to the real thing to fully exploit the
+>> power of Git, and they may need to unlearn "ggit" and learn Git.
+>
+> I think a "ggit" wrapper should not introduce any new commands or new
+> parameters. Everything should be passed unmodified to Git. The wrapper
+> would only add additional warnings such as "You are about to do X which
+> will permanently destroy Y. Do you want to continue?". Therefore
+> a transition from "ggit" to "git" would not require any learning effort.
+>
+> Maybe "ggit" could also be interpreted as "guided Git" (sounds more
+> friendly than "guarded Git"). I have the impression that many Git
+> beginners make mistakes because they don't have a mental model of Git,
+> yet. A "guided" Git version could explain the commands a bit more
+> detailed as they use Git (e.g. with ASCII graph examples).
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
++1 on "guided" as a softer more (beginner) friendly term.
 
----
-The previous versions of this patch are:
- - [v5] $gmane/288728
- - [v4] $gmane/288652
- - [v3] $gmane/288634
- - [v2] $gmane/288569
- - [v1] $gmane/287540
+>        I know
+> that's what man pages are for but I've encountered many users
+> (especially on Windows) that are not aware of man pages.
 
-The changes with respect to the last version are :
- - Use Helped-by tag instead of Mentored-by.
- - Use "^diff --git" instead of "*diff --git".
- - Add a different test to check whether the verbose option did not break status.
----
- Documentation/config.txt     |  4 ++++
- Documentation/git-commit.txt |  3 ++-
- builtin/commit.c             |  4 ++++
- t/t7507-commit-verbose.sh    | 29 +++++++++++++++++++++++++++++
- 4 files changed, 39 insertions(+), 1 deletion(-)
+In previous discussion it has been said that that (teaching and explaining) 
+is not the purpose of man pages. Rather, the man pages are for reference for 
+those who already have a reasonable idea of what they are doing, and use the 
+man page to check on details.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 01cca0a..9b93f6c 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1110,6 +1110,10 @@ commit.template::
- 	"`~/`" is expanded to the value of `$HOME` and "`~user/`" to the
- 	specified user's home directory.
- 
-+commit.verbose::
-+	A boolean to specify whether to always include the verbose option
-+	with `git commit`. See linkgit:git-commit[1].
-+
- credential.helper::
- 	Specify an external helper to be called when a username or
- 	password credential is needed; the helper may consult external
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 9ec6b3c..d474226 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -290,7 +290,8 @@ configuration variable documented in linkgit:git-config[1].
- 	what changes the commit has.
- 	Note that this diff output doesn't have its
- 	lines prefixed with '#'. This diff will not be a part
--	of the commit message.
-+	of the commit message. See the `commit.verbose` configuration
-+	variable in linkgit:git-config[1].
- +
- If specified twice, show in addition the unified diff between
- what would be committed and the worktree files, i.e. the unstaged
-diff --git a/builtin/commit.c b/builtin/commit.c
-index b3bd2d4..e0b96231 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1505,6 +1505,10 @@ static int git_commit_config(const char *k, const char *v, void *cb)
- 		sign_commit = git_config_bool(k, v) ? "" : NULL;
- 		return 0;
- 	}
-+	if (!strcmp(k, "commit.verbose")) {
-+		verbose = git_config_bool(k, v);
-+		return 0;
-+	}
- 
- 	status = git_gpg_config(k, v, NULL);
- 	if (status)
-diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
-index 2ddf28c..35960b4 100755
---- a/t/t7507-commit-verbose.sh
-+++ b/t/t7507-commit-verbose.sh
-@@ -96,4 +96,33 @@ test_expect_success 'verbose diff is stripped out with set core.commentChar' '
- 	test_i18ngrep "Aborting commit due to empty commit message." err
- '
- 
-+test_expect_success 'commit.verbose true and --verbose omitted' '
-+	git -c commit.verbose=true commit --amend
-+'
-+
-+test_expect_success 'commit.verbose true and --no-verbose' '
-+	test_must_fail git -c commit.verbose=true commit --amend --no-verbose
-+'
-+
-+test_expect_success 'commit.verbose false and --verbose' '
-+	git -c commit.verbose=false commit --amend --verbose
-+'
-+
-+test_expect_success 'commit.verbose false and --verbose omitted' '
-+	test_must_fail git -c commit.verbose=false commit --amend
-+'
-+
-+test_expect_success 'commit.verbose true and --verbose' '
-+	git -c commit.verbose=true commit --amend --verbose
-+'
-+
-+test_expect_success 'commit.verbose false and --no-verbose' '
-+	test_must_fail git -c commit.verbose=false commit --amend --no-verbose
-+'
-+
-+test_expect_success 'status ignores commit.verbose=true' '
-+	git status >actual &&
-+	! grep "^diff --git" actual
-+'
-+
- test_done
+Whether the man pages should have more examples (or a makefile option to 
+include them) may be part of the beginner mode mix, and may come out of (or 
+go into) the guidance examples.
 
---
-https://github.com/git/git/pull/205
+The Git data model is very powerful and it does take a lot of 'unlearning' 
+of old expectations (which is very hard) before the capabilities of the git 
+model become well established in the users mind. For example, remote 
+tracking branches are not remote but local, and are a reverse polish 
+description (a local branch which keeps track of a remote's branch, from the 
+last time you looked).
+
+Different people get different parts of the model in different orders and 
+different rates. Identifying the many issues (in model understanding) may be 
+a start for identifying which command/options should be targeted.
+
+>
+>
+>> This approach, if it wants to become successful in helping users,
+>> would take quite a lot of thinking and work to avoid omitting too
+>> much to necessitate users to migrate to Git.  But I can very well
+>> imagine that a new "Cogito 2" project (I am not saying that the UI
+>> Cogito tried to achieve were superiour or anything of that sort--I
+>> just needed a name, and picked one name that came to my mind) may
+>> get done by those who interact rarely with the core Git community
+>> and may live as one of many independent and viable third-party
+>> projects you find on GitHub.
+>>
+>> There however are two questions I do not offhand have good answers
+>> to: (1) if that kind of effort is of suitable size for GSoC, and (2)
+>> if it is suitable to be supported by the Git project proper.
+>
+> Good questions. I have no previous experience with GSoC Git projects
+> and therefore I am not qualified for an answer. However, my gut feeling
+> would be that a proof of concept implementation of a "ggit" wrapper
+> that does not add any new commands and only adds warnings for destructive
+> commands could be in the GSoC scope. However, Sidhant must be aware of
+> the fact that this is a controversial topic and therefore any future work
+> on this topic might be never merged into Git.
+>
+> I also thought about (2). The obvious advantage of having something like
+> "ggit" as part of Git core is that it would be shipped with the standard
+> Git distribution. That would especially help beginners. However,
+> maintenance is a very strong counter argument. Maybe "ggit" could
+> start as a separate project and if it picks up then Git core can still
+> decide to merge it?
+>
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
