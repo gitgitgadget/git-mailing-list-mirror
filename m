@@ -1,72 +1,93 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v6] commit: add a commit.verbose config variable
-Date: Mon, 14 Mar 2016 17:32:59 -0400
-Message-ID: <CAPig+cTj0AeAUPDm2MBE=72b98AU+0F90a6UwmorwrRoO0kx_A@mail.gmail.com>
-References: <0102015376e53b40-d25f7fdc-4ae1-4aae-b779-052fcf252071-000000@eu-west-1.amazonses.com>
-	<CAPig+cRC5kZCtELhTh3em0bv+mfeR58AKd3Y76VM+0J+C+zzcw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 14 22:33:10 2016
+From: Alexander Rinass <alex@fournova.com>
+Subject: Re: git diff does not precompose unicode file paths (OS X)
+Date: Mon, 14 Mar 2016 22:45:43 +0100
+Message-ID: <A81BB0E5-4879-4A86-9019-BB76734BA9EF@fournova.com>
+References: <0008C25D-C3F0-4A1F-8B50-4EF1E84CA04F@fournova.com> <56D97C8C.1060205@web.de> <D9E0FEEC-1987-4045-AD0F-4C7C76DC067B@fournova.com> <56D9D8C6.2060104@ramsayjones.plus.com> <8C785DB2-CEDB-435B-945B-00E4D98DBF99@fournova.com> <56DD41D5.60100@web.de> <5C6A30EF-ED0A-4D64-B971-CF873C64B46E@fournova.com> <56DEC5DD.2070407@web.de>
+Mime-Version: 1.0 (Mac OS X Mail 9.2 \(3112\))
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
+To: =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Mar 14 22:46:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afa6r-0008Ts-QI
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 22:33:06 +0100
+	id 1afaJH-0001g4-7o
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 22:45:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751086AbcCNVdC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2016 17:33:02 -0400
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:35270 "EHLO
-	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750901AbcCNVdA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2016 17:33:00 -0400
-Received: by mail-vk0-f65.google.com with SMTP id e185so15860746vkb.2
-        for <git@vger.kernel.org>; Mon, 14 Mar 2016 14:33:00 -0700 (PDT)
+	id S1751239AbcCNVps convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Mar 2016 17:45:48 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:37585 "EHLO
+	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750958AbcCNVpr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Mar 2016 17:45:47 -0400
+Received: by mail-wm0-f52.google.com with SMTP id p65so1502291wmp.0
+        for <git@vger.kernel.org>; Mon, 14 Mar 2016 14:45:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=ZvBMgXM4g2Fr2ofTz0fIIlj3VCVQ1PDb1pIM9RZUXDU=;
-        b=aaYYDG3QNHCDG0wkAEUDXU1VfTPGAnNhBzFtfD3iJZ4GfwEYUuiGLhaIraJ2SpMmJk
-         f5d2HWe2WG9xx09IS/h8bdYzti14MEVhoX5qZLZohotRZneWNoVJoz8CvnVgMfRYGe0n
-         kwC89HiZYblIHWxViASfHmEz6oYI9j9YKKcHyaFsF6r4DzdXvYcW/c4nrP8IIhZnZ4EA
-         /ij3JqIiSux6W0kLIL24RbQi494yfihevV3+l+0PFXB6PbVb7pXeggR9QWiuv0akho2o
-         9fcm8aLHU4shpyxRarDp3WVDemLSC1anEIikIiim4hKjUncJ3ktZdVThkI/7+C2ZUrpz
-         j20A==
+        d=fournova-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=N2X7ZuS2tVABLN8aBH1VzKf4vTUMzp/EEL5VcEhBRmY=;
+        b=LwJgnzB8rfGbzjBOlgF1hrJFhPhr5gxGeBEk66DgYQJV9cRQ3RELMpHDbewZ3YTwVf
+         dP/2u5Y54hTOGFvzgXhLQSCgFXnjOqt0pBXZkQ17ZEuiEipfQPDGtR98ESEkwZWgW9Dj
+         1BlUXkp3IWHGPmF1TGRvtVLK9QR3pp94C6mBnqIsM0xfAAufXYUIHusbKP2hjPYBb4FR
+         mmbciMQjAkGPNVTg+XxvjALvv69rgGWm3AYHPF6D7n7sWbydrdywyMORP0PaG8+dYBb0
+         Xx2VH7qU7pPmTrWLLOEqFGCxSPztCY/YSfjbqnt9tZtPWeMeIYyR34uJBm7blPhlEn3f
+         yVXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=ZvBMgXM4g2Fr2ofTz0fIIlj3VCVQ1PDb1pIM9RZUXDU=;
-        b=aVP1HCMFPkwAOxAunD7kmFPz5NZwtXOEzAXPk63Q7uHF4MnGtGyxoCOo2Huul+S+hx
-         9QM/Le/ul+GLFHIFcWO413idjgEh/iUIXYk0uj6xxg3rmQ+l5KcVi/yW0MGesZBF8uKW
-         Rqt9U/BxvdQejfkWcEdtxxFYAxbV83vIojOkYVLt3Hc6cdYf62Nl7CAVmfDlc+K3Ftz/
-         cZAALd2AXs0uLP/robOFE/yYHJXuuzzHbYE80PJCkq45vfgYEPYbMru/sVqJDqhFpDfI
-         ZXOl1JrrgF8i84IcY5it7/U5vBCalG2kxAPsxATWaTgr4R7JJxVsrNiS6nPLHDo9NrVP
-         bmEQ==
-X-Gm-Message-State: AD7BkJIrK4KF8fPzfkGtXQ/6gOJ/UeKhTrianb3YKms2o58GeS2H+/gCTeQR9w9UpS+uBl1bWhLqxOte8cqKjw==
-X-Received: by 10.31.141.2 with SMTP id p2mr27801594vkd.37.1457991179665; Mon,
- 14 Mar 2016 14:32:59 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Mon, 14 Mar 2016 14:32:59 -0700 (PDT)
-In-Reply-To: <CAPig+cRC5kZCtELhTh3em0bv+mfeR58AKd3Y76VM+0J+C+zzcw@mail.gmail.com>
-X-Google-Sender-Auth: Pu0SxsO4bUAW-yDTeQWdeMZGE5I
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=N2X7ZuS2tVABLN8aBH1VzKf4vTUMzp/EEL5VcEhBRmY=;
+        b=AOR+UXVT0VPlXedBsornJM0sH8nFH2xFtB0k/Ozyih4NYJHMw4vYH1ZpeAyUb7g0R9
+         lmL4VO02DShzjN7NU9Oo/YO6PjMZoGMf8Z6FuLvKqP/x5mq4ICB9sF0rOPHoagdDxIJ9
+         d27mRtRf4t1cK1CLIoFlrpfn7Yhhspdh2fIOX8Fa9MoB3g+ngiqNhIx1atCR6iKGIPVh
+         POiMSG5gTJoQchNUns0RYkQG939gk6jVWluCozIHNjHuVXFCboAo3lU29euZC9oPohjW
+         2l5ma28EgoatpmvCkUr1eEwNNMuWR86yUFiUPVgplqgrOMb+7gNbIfzLM0LNCqfacuZI
+         4Cog==
+X-Gm-Message-State: AD7BkJLs1dvnWSef4eqCdFEgVdMoCmDjWdvZBfqNLIvh8GEoURsGdHCYngsHgBPpDc81PA==
+X-Received: by 10.28.153.135 with SMTP id b129mr20914348wme.3.1457991945359;
+        Mon, 14 Mar 2016 14:45:45 -0700 (PDT)
+Received: from alexanders-macbook-pro.fritz.box (aftr-95-222-24-110.unity-media.net. [95.222.24.110])
+        by smtp.gmail.com with ESMTPSA id h7sm17846559wmf.9.2016.03.14.14.45.44
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 14 Mar 2016 14:45:44 -0700 (PDT)
+In-Reply-To: <56DEC5DD.2070407@web.de>
+X-Mailer: Apple Mail (2.3112)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288819>
 
-On Mon, Mar 14, 2016 at 5:21 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> This is missing the important "-c commit.verbose=false". Without it,
 
-I meant "-c commit.verbose=true", of course.
+> On 08 Mar 2016, at 13:30, Torsten B=C3=B6gershausen <tboegi@web.de> w=
+rote:
+>=20
+>>> And if not, I can put it on my TODO-stack.
+>> I have read through the official contribution guidelines and I think=
+ I can
+>> send an official patch.
+>>=20
+>> In this case, would you prefer to have a single commit since the cha=
+nge
+>> is related? Or would you prefer keeping it in separate commits, sinc=
+e
+>> they are different commands and I can use commit subjects like =E2=80=
+=9Cdiff:=E2=80=9D
+>> and =E2=80=9Cdiff-index:=E2=80=9D, etc.?
+>>=20
+> Thanks for the work.
+> The same issue fixed at different places:
+> I personally would prefer a single commit.
+>=20
+> Another thing is, if we want to add TC in t3910,
+> to avoid future regressions.
+> (Otherwise I can help with those)
 
-> you're not really testing anything interesting.
->
-> (It was missing in the "something like this" example test I typed
-> directly in the email of my last review[1], which I suppose is a good
-> lesson that "something like this" is not meant as "final" or "trust
-> this".)
+I created a test case but git diff exits with 0 if it does not recogniz=
+e the file=20
+path so the test case always succeeds. Can you give me a hint or one=20
+example test case?
