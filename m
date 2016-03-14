@@ -1,113 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] pull: drop confusing prefix parameter of
- die_on_unclean_work_tree()
-Date: Mon, 14 Mar 2016 14:42:32 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603141410590.4690@virtualbox>
-References: <974d0bfed38e8aa410e97e05022bc5dbbd78d915.1457615785.git.johannes.schindelin@gmx.de> <xmqqr3fidxs3.fsf@gitster.mtv.corp.google.com> <xmqqk2ladx36.fsf@gitster.mtv.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH/RFC/GSoC 12/17] rebase-todo: introduce rebase_todo_item
+Date: Mon, 14 Mar 2016 14:43:59 +0100
+Message-ID: <CAP8UFD0Fw1ZOQzPfF=bbEsCOhkoHfV5B5ayprxR6kWr6vApT5Q@mail.gmail.com>
+References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com>
+	<1457779597-6918-13-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 14 14:42:56 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>, sam.halliday@gmail.com
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 14 14:44:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afSln-00078h-3I
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 14:42:51 +0100
+	id 1afSn1-00080k-39
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 14:44:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964937AbcCNNmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2016 09:42:43 -0400
-Received: from mout.gmx.net ([212.227.15.19]:63412 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932432AbcCNNml (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2016 09:42:41 -0400
-Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LZz01-1ZyedY4Ahx-00lkKb; Mon, 14 Mar 2016 14:42:34
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqk2ladx36.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:IbMoJ/GP6w3cJYb9wNELbtMayozVykJKFdRnQrnyIL5HEh47ql1
- hcePuQI4J33GM5bVH2xcjLMa+p8yzcPvRvB6BZVyv4UfQWuGBZmApJ7I7wPwR7L2NCnSQ0O
- 4EUcwOIAwJJzedD+gi2PwFGKMJ8laRQX/QF1FO7yFuqyz/DcHjZZGn3sGLtVSE5dpq7z6NO
- 5a3ti6nxI9kEI5cTDqfDg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:rcjZSGxqTck=:6qn1HqH1aUbxriI/Lhw7mJ
- eDsQh07a6ocOzQlxB6eoFh5bRHQDXJp6H8qoVGy9v0U3Gm0iTHMT6nafpJgix26bU7kl4UEPl
- nfixLcvVusb57zAMvS7vKpIkFJyAxm++593JhV+gBmyi+fmaEREHvBDzp1AUN/J50OpGlbTkB
- zA5xLHrWS6N2486gCyllSCG/XQ2+WwtAlKYJ1Wzkjtfnrf0u5SyOXJmHZRUK0Ogu1lITusDhC
- mjQDZkbGmcMHwQ9j2MCRNi4gW7UBTqDL9/wBjaWiAX7+XT/a1Q9MMvFzFthGo6VXh/SEoazmV
- Z5UMfIwLhEuAYuxMUauImE1ARVjDwwAkOx9ztg4FwYxauGdzeTLZoc+v+R303UPHmt2BvbaNV
- nuIHcS9Z54c534x+u5BQJ7MKVyxYBl/dV++/8k6YcLWbGAip7pzXk+hTt+KQcH4r2SeEDFauO
- gEJsAIN49zku+La8Zn4KGJrgTWYtl1ToHL2pKZf7XgSThft56Ojx24prTUjeczI1TshdvDS+M
- rhvyrvgiq194WxsrnQhb0q+15HKJaoqHUrwuvperDDnP7f1OSlg+7MA6+dt7z2b06OSFOOz0Q
- YFXMIWu9nDrAdKQ7Un1VMdRxjz6ikZUSO8mIEqFgHIBqEcbJOcK6HPH8uN3lQKi7OU82WR1he
- qOpYv5YHucj1dfRO/MTSKxMKA51GPX01wNgc6a+8oNqanFWLUk2+Caj03DCJVbqA6SJeliy7H
- bnRFl9YaGD9bKl1o0CK4eOIckwVQQe01/LjnzEq1WYw1YL0jq+zB+AEVlamOTk4civqjRzW4 
+	id S964955AbcCNNoD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2016 09:44:03 -0400
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:36346 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932432AbcCNNoC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2016 09:44:02 -0400
+Received: by mail-lb0-f170.google.com with SMTP id x1so239398731lbj.3
+        for <git@vger.kernel.org>; Mon, 14 Mar 2016 06:44:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=nxzVvjoGPQsKBxFsL9hIbDVPJ1xnFpX7yFDM3o2v3fk=;
+        b=TOShDZPM2aJTU+l0s8kZdNg1OPa3zif9kjhXmBbur+IYYZDoI4mExf/uIoe41huV/V
+         koxz+OyVRYb/1ZoZh0PhTfOA8KMLowo3yA1ul0vDB64k6TJx5lt7/PXdTHnItVhhu5Qz
+         0bIVD/G/JzGSrHWdYKRrl1mwOGRhrX6FTb3qDBSbIpq+XXgzEUco2ItsiO5NI6HPqa2o
+         u0T2dNAKeKljmt5RUCvxeYnAFdXynEQmB7C4IXOXr4O+zWm8fF9XG6g/hGDwvjRKppyA
+         NNeBMbfQVh/Wutzd8+VAwoUfGnp51YPzBRBzzYNyqmQFd3d7Lq76ACo4MRHpp4oV3Rti
+         HZXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=nxzVvjoGPQsKBxFsL9hIbDVPJ1xnFpX7yFDM3o2v3fk=;
+        b=ky1X0I48fBBWrmn5elv1l1GjYkQUcnVVQZj8Zk7e9QWKZBuMl9gxzc4NjTNuQxhFr8
+         JIdE6gWCFb07i9QUL9S7sveCQzZ8ZpcTFvtpJ+cI5p3K2lTRDKbWzodUzCxxMxYbOdPn
+         Vwyb5UqzC+04Jc9F/gF0i8meRPue/eeJ/vh5y+rHbe1/7ypfm4FmmtbSsa+wS0aDkIAj
+         AGfhPgftnXGVDRPFUfiR3knxymTaTFmAwqVHsN4K1wr6w/2t393l9vFqpuf8mHHqSNiE
+         0anei868U5YYBOKqXGg+DMFeKH6Chw3s38Dkv2UmETbI3x9+GrAcwVhA73a7GnPmkhaB
+         g+9A==
+X-Gm-Message-State: AD7BkJKi5OqT75UpzImki8aDyq00A60H4+ncB9RBkVaQewjJq6ncGf5Hm978rNBHTB1gfBb9nCPpCiR4WjWjmg==
+X-Received: by 10.112.134.138 with SMTP id pk10mr7632922lbb.16.1457963039709;
+ Mon, 14 Mar 2016 06:43:59 -0700 (PDT)
+Received: by 10.25.137.130 with HTTP; Mon, 14 Mar 2016 06:43:59 -0700 (PDT)
+In-Reply-To: <1457779597-6918-13-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288778>
 
-Hi Junio,
+On Sat, Mar 12, 2016 at 11:46 AM, Paul Tan <pyokagan@gmail.com> wrote:
+> In an interactive rebase, commands are read and executed from a todo
+> list (.git/rebase-merge/git-rebase-todo) to perform the rebase.
+>
+> In the upcoming re-implementation of git-rebase -i in C, it is useful to
+> be able to parse each command into a data structure which can then be
+> operated on. Implement rebase_todo_item for this.
 
-On Thu, 10 Mar 2016, Junio C Hamano wrote:
+sequencer.{c,h} already has some code to parse and create todo lists
+for cherry-picking or reverting multiple commits, so I am wondering if
+it would be possible to share some code?
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > I think this is quite subjective, as I tend to take the presence of
-> > "prefix" to mean "the callee assumes that the caller has gone up to
-> > the root level already", and take the absense of use of "prefix" in
-> > the callee to mean "the callee is working on the whole tree", and
-> > discarding the parameter is robbing that clue from that point of
-> > view.
-> >
-> > So I am mildly opposed to most parts of this change, including not
-> > spelling out (void) as the list of parameters for a function that
-> > does not take any.
-> >
-> > I do think not passing "prefix" to init_revisions() would be the
-> > right thing.  In fact, that prefix is copied to rev, but the current
-> > end result is correct _only_ because the pathspec limit given by
-> > that "prefix" parameter to init_revisions() is not automatically
-> > copied to rev_info.diffopt, and the code is very misleading.
-> 
-> Another reason why it is more sensible to keep the prefix available,
-> but not use it to limit the extent of diff, to has_*_changes()
-> functions is that it would be easier for us to change our mind later
-> to allow the users to ask for more detailed output.  Instead of
-> "Cannot pull with rebase: You have unstaged changes, period.", you
-> may be asked to list which paths are dirty in such a case, and in
-> order to present the list relative to the directory where the user
-> started the command, you would need "prefix" available to the code
-> that calls into diff machinery somehow.
-
-Let me summarize.
-
-First, you argue that the prefix is a documented way to say: "This
-function needs to be called from the top-level directory".
-
-Nevermind that the parameter reads "prefix" instead of
-"this_parameter_means_you_have_to_call_this_from_the_top_level_directory".
-
-And then you say that it is not a bug to pretend to use said "prefix"
-value by passing it to init_revisions() only to ignore it presently due to
-some chain of side effects.
-
-In short: there is no bug, even if the code is really confusing, so much
-so that this developer got highly confused.
-
-And after that, you continue by stating that we need to keep the "prefix"
-parameter because we *might*, *eventually* fix the bug (that is not a
-bug at all?!?!?!)?
-
-Now I am even more confused than before.
-
-Ciao,
-Dscho
-
-P.S.: The idea that a rebasing pull might, at some stage in the future,
-want to require only part of the working directory to be clean, this idea
-also makes little sense to me.
+Thanks!
