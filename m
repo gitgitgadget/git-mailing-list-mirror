@@ -1,93 +1,150 @@
-From: Alexander Rinass <alex@fournova.com>
-Subject: Re: git diff does not precompose unicode file paths (OS X)
-Date: Mon, 14 Mar 2016 22:45:43 +0100
-Message-ID: <A81BB0E5-4879-4A86-9019-BB76734BA9EF@fournova.com>
-References: <0008C25D-C3F0-4A1F-8B50-4EF1E84CA04F@fournova.com> <56D97C8C.1060205@web.de> <D9E0FEEC-1987-4045-AD0F-4C7C76DC067B@fournova.com> <56D9D8C6.2060104@ramsayjones.plus.com> <8C785DB2-CEDB-435B-945B-00E4D98DBF99@fournova.com> <56DD41D5.60100@web.de> <5C6A30EF-ED0A-4D64-B971-CF873C64B46E@fournova.com> <56DEC5DD.2070407@web.de>
-Mime-Version: 1.0 (Mac OS X Mail 9.2 \(3112\))
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
-To: =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon Mar 14 22:46:00 2016
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: [PATCH v7] commit: add a commit.verbose config variable
+Date: Mon, 14 Mar 2016 21:38:19 +0000
+Message-ID: <010201537710be08-f31428b3-5df3-4694-8c4a-0e8f058131b3-000000@eu-west-1.amazonses.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 14 22:46:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afaJH-0001g4-7o
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 22:45:55 +0100
+	id 1afaK3-0002Kb-7b
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 22:46:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751239AbcCNVps convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Mar 2016 17:45:48 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:37585 "EHLO
-	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750958AbcCNVpr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Mar 2016 17:45:47 -0400
-Received: by mail-wm0-f52.google.com with SMTP id p65so1502291wmp.0
-        for <git@vger.kernel.org>; Mon, 14 Mar 2016 14:45:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fournova-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=N2X7ZuS2tVABLN8aBH1VzKf4vTUMzp/EEL5VcEhBRmY=;
-        b=LwJgnzB8rfGbzjBOlgF1hrJFhPhr5gxGeBEk66DgYQJV9cRQ3RELMpHDbewZ3YTwVf
-         dP/2u5Y54hTOGFvzgXhLQSCgFXnjOqt0pBXZkQ17ZEuiEipfQPDGtR98ESEkwZWgW9Dj
-         1BlUXkp3IWHGPmF1TGRvtVLK9QR3pp94C6mBnqIsM0xfAAufXYUIHusbKP2hjPYBb4FR
-         mmbciMQjAkGPNVTg+XxvjALvv69rgGWm3AYHPF6D7n7sWbydrdywyMORP0PaG8+dYBb0
-         Xx2VH7qU7pPmTrWLLOEqFGCxSPztCY/YSfjbqnt9tZtPWeMeIYyR34uJBm7blPhlEn3f
-         yVXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=N2X7ZuS2tVABLN8aBH1VzKf4vTUMzp/EEL5VcEhBRmY=;
-        b=AOR+UXVT0VPlXedBsornJM0sH8nFH2xFtB0k/Ozyih4NYJHMw4vYH1ZpeAyUb7g0R9
-         lmL4VO02DShzjN7NU9Oo/YO6PjMZoGMf8Z6FuLvKqP/x5mq4ICB9sF0rOPHoagdDxIJ9
-         d27mRtRf4t1cK1CLIoFlrpfn7Yhhspdh2fIOX8Fa9MoB3g+ngiqNhIx1atCR6iKGIPVh
-         POiMSG5gTJoQchNUns0RYkQG939gk6jVWluCozIHNjHuVXFCboAo3lU29euZC9oPohjW
-         2l5ma28EgoatpmvCkUr1eEwNNMuWR86yUFiUPVgplqgrOMb+7gNbIfzLM0LNCqfacuZI
-         4Cog==
-X-Gm-Message-State: AD7BkJLs1dvnWSef4eqCdFEgVdMoCmDjWdvZBfqNLIvh8GEoURsGdHCYngsHgBPpDc81PA==
-X-Received: by 10.28.153.135 with SMTP id b129mr20914348wme.3.1457991945359;
-        Mon, 14 Mar 2016 14:45:45 -0700 (PDT)
-Received: from alexanders-macbook-pro.fritz.box (aftr-95-222-24-110.unity-media.net. [95.222.24.110])
-        by smtp.gmail.com with ESMTPSA id h7sm17846559wmf.9.2016.03.14.14.45.44
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 14 Mar 2016 14:45:44 -0700 (PDT)
-In-Reply-To: <56DEC5DD.2070407@web.de>
-X-Mailer: Apple Mail (2.3112)
+	id S1751293AbcCNVqj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2016 17:46:39 -0400
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:60515
+	"EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750958AbcCNVqi (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Mar 2016 17:46:38 -0400
+X-Greylist: delayed 496 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 Mar 2016 17:46:38 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1457991499;
+	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=qfbXdwiah55EkDBmmMTASQmhbOzPTmTGIr5CP5gnhwo=;
+	b=dZe8RVJ1z0Y+HQvrBRQ3vnkyKYk+2wwgg15r0Hrb/D/vPUdWcdKxa6uy3jQDJM3V
+	xGSTIIQCAlPQ7EXzyca8dUnWZftgXkoGr5fjCHeCU4hb2Zq0limsy/1rVDEzFv3/36/
+	kzBxivWVe9rHb2zuYXhFvRQ+engnefcBJOmTdvBE=
+X-SES-Outgoing: 2016.03.14-54.240.7.12
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288820>
 
+Add commit.verbose configuration variable as a convenience for those
+who always prefer --verbose.
 
-> On 08 Mar 2016, at 13:30, Torsten B=C3=B6gershausen <tboegi@web.de> w=
-rote:
->=20
->>> And if not, I can put it on my TODO-stack.
->> I have read through the official contribution guidelines and I think=
- I can
->> send an official patch.
->>=20
->> In this case, would you prefer to have a single commit since the cha=
-nge
->> is related? Or would you prefer keeping it in separate commits, sinc=
-e
->> they are different commands and I can use commit subjects like =E2=80=
-=9Cdiff:=E2=80=9D
->> and =E2=80=9Cdiff-index:=E2=80=9D, etc.?
->>=20
-> Thanks for the work.
-> The same issue fixed at different places:
-> I personally would prefer a single commit.
->=20
-> Another thing is, if we want to add TC in t3910,
-> to avoid future regressions.
-> (Otherwise I can help with those)
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 
-I created a test case but git diff exits with 0 if it does not recogniz=
-e the file=20
-path so the test case always succeeds. Can you give me a hint or one=20
-example test case?
+---
+The previous versions of this patch are:
+ - [v6] $gmane/288811
+ - [v5] $gmane/288728
+ - [v4] $gmane/288652
+ - [v3] $gmane/288634
+ - [v2] $gmane/288569
+ - [v1] $gmane/287540
+
+The changes with respect to the last version are :
+ - Add '-c commit.verbose true'
+
+It is a mistake on my part. I was a bit sleepy.
+---
+ Documentation/config.txt     |  4 ++++
+ Documentation/git-commit.txt |  3 ++-
+ builtin/commit.c             |  4 ++++
+ t/t7507-commit-verbose.sh    | 29 +++++++++++++++++++++++++++++
+ 4 files changed, 39 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 01cca0a..9b93f6c 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1110,6 +1110,10 @@ commit.template::
+ 	"`~/`" is expanded to the value of `$HOME` and "`~user/`" to the
+ 	specified user's home directory.
+ 
++commit.verbose::
++	A boolean to specify whether to always include the verbose option
++	with `git commit`. See linkgit:git-commit[1].
++
+ credential.helper::
+ 	Specify an external helper to be called when a username or
+ 	password credential is needed; the helper may consult external
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 9ec6b3c..d474226 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -290,7 +290,8 @@ configuration variable documented in linkgit:git-config[1].
+ 	what changes the commit has.
+ 	Note that this diff output doesn't have its
+ 	lines prefixed with '#'. This diff will not be a part
+-	of the commit message.
++	of the commit message. See the `commit.verbose` configuration
++	variable in linkgit:git-config[1].
+ +
+ If specified twice, show in addition the unified diff between
+ what would be committed and the worktree files, i.e. the unstaged
+diff --git a/builtin/commit.c b/builtin/commit.c
+index b3bd2d4..e0b96231 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1505,6 +1505,10 @@ static int git_commit_config(const char *k, const char *v, void *cb)
+ 		sign_commit = git_config_bool(k, v) ? "" : NULL;
+ 		return 0;
+ 	}
++	if (!strcmp(k, "commit.verbose")) {
++		verbose = git_config_bool(k, v);
++		return 0;
++	}
+ 
+ 	status = git_gpg_config(k, v, NULL);
+ 	if (status)
+diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
+index 2ddf28c..5320f1e 100755
+--- a/t/t7507-commit-verbose.sh
++++ b/t/t7507-commit-verbose.sh
+@@ -96,4 +96,33 @@ test_expect_success 'verbose diff is stripped out with set core.commentChar' '
+ 	test_i18ngrep "Aborting commit due to empty commit message." err
+ '
+ 
++test_expect_success 'commit.verbose true and --verbose omitted' '
++	git -c commit.verbose=true commit --amend
++'
++
++test_expect_success 'commit.verbose true and --no-verbose' '
++	test_must_fail git -c commit.verbose=true commit --amend --no-verbose
++'
++
++test_expect_success 'commit.verbose false and --verbose' '
++	git -c commit.verbose=false commit --amend --verbose
++'
++
++test_expect_success 'commit.verbose false and --verbose omitted' '
++	test_must_fail git -c commit.verbose=false commit --amend
++'
++
++test_expect_success 'commit.verbose true and --verbose' '
++	git -c commit.verbose=true commit --amend --verbose
++'
++
++test_expect_success 'commit.verbose false and --no-verbose' '
++	test_must_fail git -c commit.verbose=false commit --amend --no-verbose
++'
++
++test_expect_success 'status ignores commit.verbose=true' '
++	git -c commit.verbose=true status >actual &&
++	! grep "^diff --git" actual
++'
++
+ test_done
+
+--
+https://github.com/git/git/pull/205
