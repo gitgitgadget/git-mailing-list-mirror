@@ -1,152 +1,84 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] diff: handle "-" as abbreviation of '@{-1}'
-Date: Mon, 14 Mar 2016 10:17:31 +0100
-Message-ID: <56E681AB.1000201@drmicha.warpmail.net>
-References: <1457748710-79370-1-git-send-email-senorsen.zhang@gmail.com>
- <CALZVapk9seKDpLGbyJ23UVxP97WAHkdXS+U+yrJoKf-2cLamAQ@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH/RFC/GSoC 00/17] A barebones git-rebase in C
+Date: Mon, 14 Mar 2016 19:15:45 +0700
+Message-ID: <CACsJy8BmiqFJ1tN6-uAWqXMUyvGRdWP2DVfgwE56Y1K9KHCsfQ@mail.gmail.com>
+References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Javier Domingo Cansino <javierdo1@gmail.com>,
-	Senorsen <senorsen.zhang@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 14 10:17:41 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>, sam.halliday@gmail.com
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 14 13:17:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afOd9-0002Eo-1n
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 10:17:39 +0100
+	id 1afRRD-00030w-BK
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 13:17:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932789AbcCNJRg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2016 05:17:36 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:52781 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932438AbcCNJRe (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Mar 2016 05:17:34 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-	by mailout.nyi.internal (Postfix) with ESMTP id EAAF820B3F
-	for <git@vger.kernel.org>; Mon, 14 Mar 2016 05:17:32 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute2.internal (MEProxy); Mon, 14 Mar 2016 05:17:32 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=b29NXS5rhoFD/A2sjPaxQkC7qpQ=; b=L9EJCi
-	fHnROZtQoVzHFkZZHsyZmzUmwm6RwjDmY7iT4fW5Y0fEnNpzKsqKJ9qY3u5q6dzl
-	oW5bjcgq35jsPDpIJJrdv6o09PQ5DG3VeaA9nCg3bMpQd0GyFAaJkQ8ks+bIDyyB
-	wbWqhe1M/m2NIJmPMkkKNToLq6nSDUnGRHb5M=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=b29NXS5rhoFD/A2
-	sjPaxQkC7qpQ=; b=JJ3X1ywqabRmWVK8Pe+Kx9lqdZRaNU6cHbFLzYB29t/PpnQ
-	/eWIk2a5E/EZr9MfiYVSOCMfz8tZCqWpbZ0LcwQsesIYkJGDtYbo1Ye1fhb6P3ei
-	5b+0ignIwjlwevi8y4C8U1WUfmOHkkEpuSvbFtvGVzojFqpf7L7eaoWbpK7o=
-X-Sasl-enc: GkAKBhfg9OwNXly8ZICrOWiGce2CuruGLcjGJjkVf+aP 1457947052
-Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 59F1F680097;
-	Mon, 14 Mar 2016 05:17:32 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
-In-Reply-To: <CALZVapk9seKDpLGbyJ23UVxP97WAHkdXS+U+yrJoKf-2cLamAQ@mail.gmail.com>
+	id S934275AbcCNMQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2016 08:16:28 -0400
+Received: from mail-lb0-f178.google.com ([209.85.217.178]:36382 "EHLO
+	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934235AbcCNMQQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2016 08:16:16 -0400
+Received: by mail-lb0-f178.google.com with SMTP id x1so235996548lbj.3
+        for <git@vger.kernel.org>; Mon, 14 Mar 2016 05:16:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=3RKrdzDqGemP6FF0oxLFqJqMN46mddkKs9mDjvM2utI=;
+        b=j2HMsiRV9zs+hLuuwe5MB7FJ+EXD5/6Aa3/MQE/lTx58YYoMiWmAcT6vOZzYKtxaFl
+         8hQy2Wfk4k/I8n1WXfdPp2ZXuQM1Eix1YRa5V1YMaUo/wQ6/nBgVNf+M+n66o9U6+0Q4
+         Wt5tt1VassMshW4WH4u+McdB5T5d+YnOVh7PIuREA+RLi1NVD9brrIDLWLVBGAj98fHC
+         DiH2zV0u+FjovV7YWRWUu773ncZR+LhslgkMvWL6EHZYNGcgLxETNjj12NPYolk9JdvC
+         X156ftvvdmy+TMcSPCoxCr/ClK3SanWWnfgEVKjKTsJa3UH/fQGQ7bRLZaYbmVSBVLUG
+         Xrmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=3RKrdzDqGemP6FF0oxLFqJqMN46mddkKs9mDjvM2utI=;
+        b=gy7gaPganGsJoo2Ash9Bg/agiYKt+l8nTlO7PwiW12nSnzzwuEfejaAbzCgGy1KDLx
+         YdviIeBxNRAv6dTy6J/5aU4VSzFU6FOIyRcfYteNaUzNAVB+IVpPuJiaigv1bssiXnMW
+         kbd5RVit5941wB5nDjp+eL/Ve68XNhHbOHcUBfaXYSoArUUKFUvlnFIBcQvrqcggYi0s
+         AuAJgUy6cMZjkNbAwp5pdKyGKqVYrdDNRWIEk/fF0zhC8+3N17NAzh6flI3SPm9wm/4X
+         joAbrTiN/hOaSwETAg8U0gSVhR39lwtOmhX38H+PXZX5WIygDSV80ap+icu2GaATjK6J
+         CsGQ==
+X-Gm-Message-State: AD7BkJJyYE1ZBarqYBL34Owby4qFWxLixGsAXEOxdKjp/pioDwK7VwNJxkuii3F2NQgilzuxRnN9uT1fSIK08w==
+X-Received: by 10.25.160.79 with SMTP id j76mr7842831lfe.83.1457957775037;
+ Mon, 14 Mar 2016 05:16:15 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Mon, 14 Mar 2016 05:15:45 -0700 (PDT)
+In-Reply-To: <1457779597-6918-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288776>
 
-Please bottom post - see below.
+On Sat, Mar 12, 2016 at 5:46 PM, Paul Tan <pyokagan@gmail.com> wrote:
+> So, we have around a 1.4x-1.8x speedup for Linux users, and a 1.7x-13x speedup
+> for Windows users. The annoying long delay before the interactive editor is
+> launched on Windows is gotten rid of, which I'm very happy about :-)
 
-Javier Domingo Cansino venit, vidit, dixit 12.03.2016 03:48:
-> dash is usually used for representing stdin / stdout as a file. I
-> think this could drive to error... but I would agree with transforming
-> -h1 to @{-1} or -h2 to @{-2} (-h representing head).
-> 
-> I do agree however that all those signs are thought with american
-> keyboards in mind. All those punctuation marks are usually hard to
-> type in other keyboards, and -h1 is way simpler than HEAD~ or @{-1}
-> 
-> This links provides an example of my worry:
-> http://stackoverflow.com/questions/15270970/is-it-possible-to-git-diff-a-file-against-standard-input
-> 
-> On Sat, Mar 12, 2016 at 2:11 AM, Senorsen <senorsen.zhang@gmail.com> wrote:
->>
->> Currently it just replace "-" in argv[] into "@{-1}".
->>
->> For example,
->>
->>     git diff -
->>
->> equals to
->>
->>     git diff @{-1}
->>
->> Signed-off-by: Senorsen <senorsen.zhang@gmail.com>
->> ---
->> Notes:
->>     Hello everyone, I'm Zhang Sen, a college student from Zhejiang University
->>     in China, and this is a patch for the microproject of GSoC 2016. I'm
->>     looking forward to contributing to Git and participating in GSoC 2016.
->>
->>     I have learnt some rules and guides from the documents, and carefully
->>     wrote this small patch, according to other code from git.
->>
->>     Thanks a lot!
->>
->>  builtin/diff.c | 5 +++++
->>  1 file changed, 5 insertions(+)
->>
->> diff --git a/builtin/diff.c b/builtin/diff.c
->> index 52c98a9..c110141 100644
->> --- a/builtin/diff.c
->> +++ b/builtin/diff.c
->> @@ -389,6 +389,11 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
->>                 }
->>         }
->>
->> +       for (i = 0; i < argc; i++) {
->> +               if (!strcmp(argv[i], "-"))
->> +                       argv[i] = "@{-1}";
->> +       }
->> +
->>         for (i = 0; i < rev.pending.nr; i++) {
->>                 struct object_array_entry *entry = &rev.pending.objects[i];
->>                 struct object *obj = entry->item;
->> --
->> 2.7.0
->>
+Nice numbers :-) Sorry I can't look at your patches yet. Just a very
+minor comment from diffstat..
 
-Please bottom post on this list. Thanks.
+>  rebase-am.c                        | 110 +++++++++++
+>  rebase-am.h                        |  22 +++
+>  rebase-common.c                    | 220 ++++++++++++++++++++++
+>  rebase-common.h                    |  48 +++++
+>  rebase-interactive.c               | 375 +++++++++++++++++++++++++++++++++++++
+>  rebase-interactive.h               |  33 ++++
+>  rebase-merge.c                     | 256 +++++++++++++++++++++++++
+>  rebase-merge.h                     |  28 +++
+>  rebase-todo.c                      | 251 +++++++++++++++++++++++++
+>  rebase-todo.h                      |  55 ++++++
 
-In git land, "checkout", "merge" and "revert" know "-" as an
-abbreviation for "@{-1}" already. No git command knows "-" as an
-abbreviation for "stdin".
-
-The analogy here is "cd -": switch to the previous directory.
-
-So, a user can expect git to switch to the previously checked out branch
-with "git checkout -".
-
-The use of "-" in "merge" and "revert" stress that analogy quite a bit
-already, and "diff" goes even further - I'm not a big fan of this. I
-feel we should think about the meaning of "-":
-
-"-" = "@{-1}": Then why not implement it at the revision machinery level
-(rather than per command)? Otherwise, we raise expectations that we
-don't meet.
-
-OR:
-
-"-" = "previous <thing>", with <thing> depending on the command context:
-Then <thing> may be the content of HEAD or a commit or what not, and,
-correspondingly, "-" should resolve to "@{-1}" (i.e. "HEAD@{1}") or
-"HEAD^" or what not.
-
-"git diff" is already a chameleon, diffing files, commits, blobs, index,
-automatically choosing the second side in the diff if you specify only
-one (or give options), and the questions which "-" blends in naturally
-may very well depend on the actual color of the chameleon :)
-
-Michael
+topdir is already very crowded. Maybe you could move all these files
+to "rebase" subdir.
+-- 
+Duy
