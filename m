@@ -1,121 +1,405 @@
-From: =?UTF-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
-Subject: Re: [GSOC] Microproject "Move ~/.git-credential-cache to ~/.config/git"
-Date: Tue, 15 Mar 2016 03:53:52 +0800
-Message-ID: <CAKqreuwgxzVTAUdZPf9+ivXCdW8F2Ksafw7V0pbLAaRPwGX9Uw@mail.gmail.com>
-References: <CAKqreux4aYhXTE9kUHKoKCJ2-4KDWyi58ioCm-CWqXhUYCtEEw@mail.gmail.com>
-	<xmqqshztawwd.fsf@gitster.mtv.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH/RFC/GSoC 04/17] builtin-rebase: parse rebase arguments
+ into a common rebase_options struct
+Date: Mon, 14 Mar 2016 13:05:08 -0700
+Message-ID: <CAGZ79kZ-XvYni0eFeYCk1HoTndOrABCqmz59-2ciz0Sv1W1r+Q@mail.gmail.com>
+References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com>
+	<1457779597-6918-5-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 14 20:54:05 2016
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Sam Halliday <sam.halliday@gmail.com>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 14 21:05:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afYZ2-0006Sr-HT
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 20:54:04 +0100
+	id 1afYjr-00070Q-So
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 21:05:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755966AbcCNTxy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Mar 2016 15:53:54 -0400
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:35604 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755505AbcCNTxx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Mar 2016 15:53:53 -0400
-Received: by mail-ob0-f181.google.com with SMTP id fp4so187935196obb.2
-        for <git@vger.kernel.org>; Mon, 14 Mar 2016 12:53:52 -0700 (PDT)
+	id S1755911AbcCNUFL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2016 16:05:11 -0400
+Received: from mail-io0-f172.google.com ([209.85.223.172]:32900 "EHLO
+	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755505AbcCNUFJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2016 16:05:09 -0400
+Received: by mail-io0-f172.google.com with SMTP id n190so236672534iof.0
+        for <git@vger.kernel.org>; Mon, 14 Mar 2016 13:05:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=BCsqPjwvTSLqIJw/LX0D6Tb+aHTjb1ZzIMSqLX2jDA0=;
-        b=DZlSYePuocsfb7d7xFY4zIMbkMy2vviyrwdOV1CZAXYf/pAXAb5y1q7MhWX9U8PW32
-         IQ/H9A2vc2vEcGXjfSbIh0f5ITSkMixO7F1kbP5F0ubbLWALcOE4RRm5wOCxpSEDeByW
-         0BdAQeCBCgSc4VsNbs8eK+bxJ5GPQs4v2lXoYRRgez2nL/MwQfyQs5/XA9Xy35fxyHXB
-         Q8/+bNwKVfZW1uQiUMCHcxORpZk5iaHDBE+73ukcvU92PyAny/uWwOY/GxPNpBbhGCGk
-         8rjzsiU1O7nSwNwUrUT0Ogg0y2dhWOIm0fzBQ5p7YQ6Q+/hlvfSoYh/ba6yQA8r3kZ1s
-         GmQQ==
+         :cc;
+        bh=D4mJKmomsTWdqB7Y/LUbKQRIWEB8h/50F4f5bZU7dNU=;
+        b=JtsP03+gGpHguvaeLyYmtWVeAJfB/WgiWFHLwUWvSvQT79i7wMIRI3sjBEHw1kQJif
+         jYw6lcQ0Qc7fNG2QasD1YpIlrrE2toZywec6fS7Di5Dne5mwELT872fNNkD08+SDaN4Y
+         5G1BTeuTzxz7lXUSUxhm06gyImFbpfy611Nw/iF0vcPRqjclcAmRu3bik9Bi0xOK/Rx0
+         CBBwXOJZ1ldUkHkjYib+EEr45XWe+FerqDyBrReQHxChaEoewGQPH0Zn42c1UofvRxEI
+         UKyfZK4Q/cwCo/r1R2aVRwWOJJFycr5mZKzeGRpuG/pLSiDTX4TuQd+D+m0pkBcwk7p6
+         tDOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=BCsqPjwvTSLqIJw/LX0D6Tb+aHTjb1ZzIMSqLX2jDA0=;
-        b=jk6ex6mT/d96tgvsudOnhd8x8sUOeFOvk6m8V6iuEi09K66QBMmQFn14Suf9W4w54v
-         FDfHrM7ekZPikp4Zip24IyvEWBrS+oE4JoT61t+uC1vxOuUOq7Q8hufhHnJTKydNk8YG
-         gWSww5qDubr+nkwmWinIpDmqeYQYcZbq97hfkJOu8ro/YfGDtYAIJcpcNklajwpSNdl/
-         ad/gf2N0mNEnfMQzFmiLyxqSjfmjxMQ1V7wp0Tv+p31oaOd7lTooZx+grZhJ9eSRSbT8
-         beaWIV97rx7puDcqTqONtTUZmYrP+Ejbn8A1BUFFBAz7kVbYInKA2hkleIHzESxinkzA
-         K8KA==
-X-Gm-Message-State: AD7BkJKZiqJ5xcsj8CA+X4lRWU9cEW5VSDbmoIhTq4E40x5zN5vThm4an1+4bez+WCRiVmBSp+tMBFPxH57D/g==
-X-Received: by 10.182.158.42 with SMTP id wr10mr14696881obb.37.1457985232479;
- Mon, 14 Mar 2016 12:53:52 -0700 (PDT)
-Received: by 10.157.43.68 with HTTP; Mon, 14 Mar 2016 12:53:52 -0700 (PDT)
-In-Reply-To: <xmqqshztawwd.fsf@gitster.mtv.corp.google.com>
+         :message-id:subject:from:to:cc;
+        bh=D4mJKmomsTWdqB7Y/LUbKQRIWEB8h/50F4f5bZU7dNU=;
+        b=iwGCSfAqm5Q4UYpVHrZkhM1BaKeq8yUnSyE6FCvp+x0arq0JAN/kCAhBsCpWwpZ8km
+         ybLqeF5cwZ3vGiRRQs6ts0zWp5x8RcFTYJAzOpfibsXkdR7shEYX3J25v1t2BXXmxovq
+         /KsIm77/FNx6pNONVJn0CVesWN2OneqmbkggeP/KSgi8RettTzCqNijjSib7L0x5LRF7
+         sLDiOHh6fVZ+dtt8YMVoKAytqk8DARbumxXqvfmaaHR0/SK4ASgmQRcrTW7bMdkek2TP
+         PSpr5sGaYhfntqcI/ZCq+OxdQ+zs3as6cXAy9EGBE3pikGcp3JQ7XhDP5rmnR7WlvZ7M
+         luLg==
+X-Gm-Message-State: AD7BkJLPN5zIqkYlAmw1NgbuzhJg7mJ1tuNKsSTgiEEYS5ZBAH1fNJ1qEDpDanPsBFXV9i8+60KFIUX0H9HkfrEH
+X-Received: by 10.107.12.88 with SMTP id w85mr26139879ioi.9.1457985908295;
+ Mon, 14 Mar 2016 13:05:08 -0700 (PDT)
+Received: by 10.107.132.164 with HTTP; Mon, 14 Mar 2016 13:05:08 -0700 (PDT)
+In-Reply-To: <1457779597-6918-5-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288804>
 
-2016-03-14 23:42 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
-> =E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqun@gmail.com> writes:
+On Sat, Mar 12, 2016 at 2:46 AM, Paul Tan <pyokagan@gmail.com> wrote:
+> A non-root rebase takes 3 arguments:
 >
->> I'm still confused about following:
->>
->> 1. should `~/.git-credential-cache` been moved to
->> `~/.cache/git/credential`(as the descreption of the micropject says)
->> or `~/.config/git/credential`(as the title of the microproject says)=
-?
+> * branch_name -- the branch or commit that will be rebased. If it is not
+>   specified, the current branch is used.
 >
-> The latter, I'd think, as you noticed in 2. the former does not make
-> much sense.
-
-I'm not sure. There is only a unix socket under ~/.git-credential-cache=
-=2E
-It's not a config.
-
-After reading the
-[spec](https://specifications.freedesktop.org/basedir-spec/basedir-spec=
--0.7.html)
-more carefully, I think that $XDG_RUNTIME_DIR may be a better choice th=
-an
-the above two. For ~/.git-credential-cache/socket is a unix socket and =
-should
-be used only runtime.
-
-On my computer, this variable is well defined and pointed to /run/user/=
-$UID.
-
-The problem is that there is no suitable default to it if $XDG_RUNTIME_=
-DIR is
-not set. I guess /tmp/git-$USER is a good choice.
-
->> 3. Does "without breaking compatibility with the old behavior." mean
->> that I should still try to connect to the unix socket placed at the
->> old place? If yes, which order is prefered?
+> * upstream -- The upstream commit to compare against. If it is not
+>   specified, the configured upstream for the current branch is used.
 >
-> Let me be vague and oblique on purpose ;-)
+> * onto (or newbase) -- The commit to be used as the starting point to
+>   re-apply the commits. If it is not specified, `upstream` is used.
 >
-> We used to have only ~/.gitconfig as the per-user location, and at
-> some point in the history we added XDG_CONFIG_HOME support.  Study
-> how that was done (hint: "git log" and "git blame" may be useful
-> tools for this purpose), and imitate it.
+> Since these parameters are used by all 3 rebase backends, introduce a
+> common rebase_options struct to hold all these options. Teach
+> builtin/rebase.c to handle the above arguments and store them in a
+> rebase_options struct. In later patches we will pass the rebase_options
+> struct to the appropriate backend to perform the rebase.
 >
+> Signed-off-by: Paul Tan <pyokagan@gmail.com>
+> ---
+>  Makefile         |   1 +
+>  builtin/rebase.c | 184 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+>  rebase-common.c  |  28 +++++++++
+>  rebase-common.h  |  23 +++++++
+>  4 files changed, 235 insertions(+), 1 deletion(-)
+>  create mode 100644 rebase-common.c
+>  create mode 100644 rebase-common.h
+>
+> diff --git a/Makefile b/Makefile
+> index ad98714..b29c672 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -779,6 +779,7 @@ LIB_OBJS += prompt.o
+>  LIB_OBJS += quote.o
+>  LIB_OBJS += reachable.o
+>  LIB_OBJS += read-cache.o
+> +LIB_OBJS += rebase-common.o
+>  LIB_OBJS += reflog-walk.o
+>  LIB_OBJS += refs.o
+>  LIB_OBJS += refs/files-backend.o
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 04cc1bd..40176ca 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -4,6 +4,112 @@
+>  #include "cache.h"
+>  #include "builtin.h"
+>  #include "parse-options.h"
+> +#include "rebase-common.h"
+> +#include "remote.h"
+> +#include "branch.h"
+> +#include "refs.h"
+> +
+> +/**
+> + * Used by get_curr_branch_upstream_name() as a for_each_remote() callback to
+> + * retrieve the name of the remote if the repository only has one remote.
+> + */
+> +static int get_only_remote(struct remote *remote, void *cb_data)
+> +{
+> +       const char **remote_name = cb_data;
+> +
+> +       if (*remote_name)
+> +               return -1;
+> +
+> +       *remote_name = remote->name;
+> +       return 0;
+> +}
+> +
+> +const char *get_curr_branch_upstream_name(void)
+> +{
+> +       const char *upstream_name;
+> +       struct branch *curr_branch;
+> +
+> +       curr_branch = branch_get("HEAD");
+> +       if (!curr_branch) {
+> +               fprintf_ln(stderr, _("You are not currently on a branch."));
+> +               fprintf_ln(stderr, _("Please specify which branch you want to rebase against."));
+> +               fprintf_ln(stderr, _("See git-rebase(1) for details."));
+> +               fprintf(stderr, "\n");
+> +               fprintf_ln(stderr, "    git rebase <branch>");
+> +               fprintf(stderr, "\n");
+> +               exit(1);
+> +       }
+> +
+> +       upstream_name = branch_get_upstream(curr_branch, NULL);
+> +       if (!upstream_name) {
+> +               const char *remote_name = NULL;
+> +
+> +               if (for_each_remote(get_only_remote, &remote_name) || !remote_name)
+> +                       remote_name = "<remote>";
+> +
+> +               fprintf_ln(stderr, _("There is no tracking information for the current branch."));
+> +               fprintf_ln(stderr, _("Please specify which branch you want to rebase against."));
+> +               fprintf_ln(stderr, _("See git-rebase(1) for details."));
+> +               fprintf(stderr, "\n");
+> +               fprintf_ln(stderr, "    git rebase <branch>");
+> +               fprintf(stderr, "\n");
+> +               fprintf_ln(stderr, _("If you wish to set tracking information for this branch you can do so with:"));
+> +               fprintf(stderr, "\n");
+> +               fprintf_ln(stderr, _("If you wish to set tracking information for this branch you can do so with:\n"
+> +               "\n"
+> +               "    git branch --set-upstream-to=%s/<branch> %s\n"),
+> +               remote_name, curr_branch->name);
+> +               exit(1);
+> +       }
+> +
+> +       return upstream_name;
+> +}
+> +
+> +/**
+> + * Given the --onto <name>, return the onto hash
+> + */
+> +static void get_onto_oid(const char *_onto_name, struct object_id *onto)
+> +{
+> +       char *onto_name = xstrdup(_onto_name);
+> +       struct commit *onto_commit;
+> +       char *dotdot;
+> +
+> +       dotdot = strstr(onto_name, "...");
 
-I have read almost every commit which contains "XDG", as well as their =
-diffs.
+So either the variable should be "dotdotdot" or "threedots",
+or there is a dot too much in the strstr.
 
-I think this issue I'm currently dealing with is a little different
-from formers,
-=46or this file is just an unix socket and never persistent. I could no=
-t just
-keep in step with old behavior unless that user manually create the fil=
-e
-at new-style path.
+"dotdot" was is used in some directory handling code, which
+this reminded me of. So I first wondered why we need to take
+care of parent directories.
 
-Of course I could check the existence of `~/.git-credential-cache` and
-`$XDG_CONFIG_HOME/git/credential-cache` to decide where to put
-the socket, but it's not elegant enough. Because, as mentioned above,
-the socket file itself is not persistent.
+> +       if (dotdot) {
+> +               const char *left = onto_name;
+> +               const char *right = dotdot + 3;
+> +               struct commit *left_commit, *right_commit;
+> +               struct commit_list *merge_bases;
+> +
+> +               *dotdot = 0;
+> +               if (!*left)
+> +                       left = "HEAD";
+> +               if (!*right)
+> +                       right = "HEAD";
+> +
+> +               /* git merge-base --all $left $right */
+> +               left_commit = lookup_commit_reference_by_name(left);
+> +               right_commit = lookup_commit_reference_by_name(right);
+> +               if (!left_commit || !right_commit)
+> +                       die(_("%s: there is no merge base"), _onto_name);
+
+_onto_name seems to be different than what was passed in,
+because of *dotdot = 0 before, is that intentional?
+
+> +
+> +               merge_bases = get_merge_bases(left_commit, right_commit);
+> +               if (merge_bases && merge_bases->next)
+> +                       die(_("%s: there are more than one merge bases"), _onto_name);
+> +               else if (!merge_bases)
+> +                       die(_("%s: there is no merge base"), _onto_name);
+> +
+> +               onto_commit = merge_bases->item;
+> +               free_commit_list(merge_bases);
+> +       } else {
+> +               onto_commit = lookup_commit_reference_by_name(onto_name);
+> +               if (!onto_commit)
+> +                       die(_("invalid upstream %s"), onto_name);
+> +       }
+> +
+> +       free(onto_name);
+> +       oidcpy(onto, &onto_commit->object.oid);
+> +}
+>
+>  static int git_rebase_config(const char *k, const char *v, void *cb)
+>  {
+> @@ -12,20 +118,96 @@ static int git_rebase_config(const char *k, const char *v, void *cb)
+>
+>  int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  {
+> +       struct rebase_options rebase_opts;
+> +       const char *onto_name = NULL;
+> +       const char *branch_name;
+> +
+>         const char * const usage[] = {
+> -               N_("git rebase [options]"),
+> +               N_("git rebase [options] [--onto <newbase>] [<upstream>] [<branch>]"),
+>                 NULL
+>         };
+>         struct option options[] = {
+> +               OPT_GROUP(N_("Available options are")),
+> +               OPT_STRING(0, "onto", &onto_name, NULL,
+> +                       N_("rebase onto given branch instead of upstream")),
+>                 OPT_END()
+>         };
+>
+>         git_config(git_rebase_config, NULL);
+> +       rebase_options_init(&rebase_opts);
+> +       rebase_opts.resolvemsg = _("\nWhen you have resolved this problem, run \"git rebase --continue\".\n"
+> +                       "If you prefer to skip this patch, run \"git rebase --skip\" instead.\n"
+> +                       "To check out the original branch and stop rebasing, run \"git rebase --abort\".");
+>
+>         argc = parse_options(argc, argv, prefix, options, usage, 0);
+>
+>         if (read_cache_preload(NULL) < 0)
+>                 die(_("failed to read the index"));
+>
+> +       /*
+> +        * Parse command-line arguments:
+> +        *    rebase [<options>] [<upstream_name>] [<branch_name>]
+> +        */
+> +
+> +       /* Parse <upstream_name> into rebase_opts.upstream */
+> +       {
+> +               const char *upstream_name;
+> +               if (argc > 2)
+> +                       usage_with_options(usage, options);
+> +               if (!argc) {
+> +                       upstream_name = get_curr_branch_upstream_name();
+> +               } else {
+> +                       upstream_name = argv[0];
+> +                       argv++, argc--;
+> +                       if (!strcmp(upstream_name, "-"))
+> +                               upstream_name = "@{-1}";
+> +               }
+
+So first we extract the upstream_name then branch_name,
+so the parsing is rather
+
+     rebase [<options>] [<upstream_name> [<branch_name>]]
+
+i.e. you cannot give branch name only?
+
+> +               if (get_oid_commit(upstream_name, &rebase_opts.upstream))
+> +                       die(_("invalid upstream %s"), upstream_name);
+> +               if (!onto_name)
+> +                       onto_name = upstream_name;
+> +       }
+> +
+> +       /*
+> +        * Parse --onto <onto_name> into rebase_opts.onto and
+> +        * rebase_opts.onto_name
+> +        */
+> +       get_onto_oid(onto_name, &rebase_opts.onto);
+> +       rebase_opts.onto_name = xstrdup(onto_name);
+> +
+> +       /*
+> +        * Parse <branch_name> into rebase_opts.orig_head and
+> +        * rebase_opts.orig_refname
+> +        */
+> +       branch_name = argv[0];
+> +       if (branch_name) {
+> +               /* Is branch_name a branch or commit? */
+> +               char *ref_name = xstrfmt("refs/heads/%s", branch_name);
+> +               struct object_id orig_head_id;
+> +
+> +               if (!read_ref(ref_name, orig_head_id.hash)) {
+> +                       rebase_opts.orig_refname = ref_name;
+> +                       if (get_oid_commit(ref_name, &rebase_opts.orig_head))
+> +                               die("get_sha1_commit failed");
+> +               } else if (!get_oid_commit(branch_name, &rebase_opts.orig_head)) {
+> +                       rebase_opts.orig_refname = NULL;
+> +                       free(ref_name);
+> +               } else {
+> +                       die(_("no such branch: %s"), branch_name);
+> +               }
+> +       } else {
+> +               /* Do not need to switch branches, we are already on it */
+> +               struct branch *curr_branch = branch_get("HEAD");
+> +
+> +               if (curr_branch)
+> +                       rebase_opts.orig_refname = xstrdup(curr_branch->refname);
+> +               else
+> +                       rebase_opts.orig_refname = NULL;
+> +
+> +               if (get_oid_commit("HEAD", &rebase_opts.orig_head))
+> +                       die(_("Failed to resolve '%s' as a valid revision."), "HEAD");
+> +       }
+> +
+> +       rebase_options_release(&rebase_opts);
+>         return 0;
+>  }
+> diff --git a/rebase-common.c b/rebase-common.c
+> new file mode 100644
+> index 0000000..5a49ac4
+> --- /dev/null
+> +++ b/rebase-common.c
+> @@ -0,0 +1,28 @@
+> +#include "cache.h"
+> +#include "rebase-common.h"
+> +
+> +void rebase_options_init(struct rebase_options *opts)
+> +{
+> +       oidclr(&opts->onto);
+> +       opts->onto_name = NULL;
+> +
+> +       oidclr(&opts->upstream);
+> +
+> +       oidclr(&opts->orig_head);
+> +       opts->orig_refname = NULL;
+> +
+> +       opts->resolvemsg = NULL;
+> +}
+> +
+> +void rebase_options_release(struct rebase_options *opts)
+> +{
+> +       free(opts->onto_name);
+> +       free(opts->orig_refname);
+> +}
+> +
+> +void rebase_options_swap(struct rebase_options *dst, struct rebase_options *src)
+> +{
+> +       struct rebase_options tmp = *dst;
+> +       *dst = *src;
+> +       *src = tmp;
+> +}
+> diff --git a/rebase-common.h b/rebase-common.h
+> new file mode 100644
+> index 0000000..db5146a
+> --- /dev/null
+> +++ b/rebase-common.h
+> @@ -0,0 +1,23 @@
+> +#ifndef REBASE_COMMON_H
+> +#define REBASE_COMMON_H
+> +
+> +/* common rebase backend options */
+> +struct rebase_options {
+> +       struct object_id onto;
+> +       char *onto_name;
+> +
+> +       struct object_id upstream;
+> +
+> +       struct object_id orig_head;
+> +       char *orig_refname;
+> +
+> +       const char *resolvemsg;
+> +};
+> +
+> +void rebase_options_init(struct rebase_options *);
+> +
+> +void rebase_options_release(struct rebase_options *);
+> +
+> +void rebase_options_swap(struct rebase_options *dst, struct rebase_options *src);
+> +
+> +#endif /* REBASE_COMMON_H */
+> --
+> 2.7.0
+>
