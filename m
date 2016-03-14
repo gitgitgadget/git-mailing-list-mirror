@@ -1,76 +1,83 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v6] commit: add a commit.verbose config variable
-Date: Mon, 14 Mar 2016 17:24:47 -0400
-Message-ID: <CAPig+cRzDbBu=wFmkUGUm58aJoz-4oecPWfbCc=4oO6geyKj5Q@mail.gmail.com>
-References: <0102015376e53b40-d25f7fdc-4ae1-4aae-b779-052fcf252071-000000@eu-west-1.amazonses.com>
-	<CAPig+cRC5kZCtELhTh3em0bv+mfeR58AKd3Y76VM+0J+C+zzcw@mail.gmail.com>
+Subject: Re: [PATCH v5] commit: add a commit.verbose config variable
+Date: Mon, 14 Mar 2016 17:29:28 -0400
+Message-ID: <CAPig+cTt+Mi=gOREG2zU7vbtB6qk7dVS3mWeMBY37ZwFp_oZng@mail.gmail.com>
+References: <01020153698edabd-73daa5db-3c3e-417b-8d83-6cbc04439d95-000000@eu-west-1.amazonses.com>
+	<CAPig+cQ+8+saxsGzV=-C2w-eSaaOf0MYC=zTQbH3CW2G5UE5uw@mail.gmail.com>
+	<CAFZEwPP_SZsk+B+1L93snQji=wg728P3Oq94oVJ+ZJkhmdC9Yw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 14 22:24:54 2016
+X-From: git-owner@vger.kernel.org Mon Mar 14 22:29:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afZyv-0002Q5-0p
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 22:24:53 +0100
+	id 1afa3S-0005km-Cx
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 22:29:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751816AbcCNVYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2016 17:24:50 -0400
-Received: from mail-vk0-f67.google.com ([209.85.213.67]:33851 "EHLO
-	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750979AbcCNVYs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2016 17:24:48 -0400
-Received: by mail-vk0-f67.google.com with SMTP id e6so15839923vkh.1
-        for <git@vger.kernel.org>; Mon, 14 Mar 2016 14:24:48 -0700 (PDT)
+	id S1752132AbcCNV3a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2016 17:29:30 -0400
+Received: from mail-vk0-f68.google.com ([209.85.213.68]:35430 "EHLO
+	mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751219AbcCNV33 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2016 17:29:29 -0400
+Received: by mail-vk0-f68.google.com with SMTP id e185so15853859vkb.2
+        for <git@vger.kernel.org>; Mon, 14 Mar 2016 14:29:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc;
-        bh=SPWMtZvbliI12z3KonnOKyD8p7Npqy8vKch7TIgRTWo=;
-        b=x8U2I6lFhQ/0bSjBoqJx4VHJHhIZ2G9T3hhH358C/vkdimcxbyURx+wFmYYiLJROjA
-         j7Tsidjykv8KrFv8KQEYTbScPIZCwBW4aR4+mIoMyvNZyuGF6vE3m0b7KLU4keaqJF+8
-         ISxsNLSNCRG/E47cZTlCMDqp9y+cIeNaoMpAzUKlGZYvFCL+SXdkjKkfI3jaPFmeUPeP
-         h2cU1n5ZMRAxh22BXe5ubSt7Yy5ietRYvZmApmE/UjaKjrj+4glQc96pCZWSdWU3ECea
-         4Nkafs1eQIJXKNFU7wKlkwDp9zfu98m1HxK37Yh0e09YBMntt6sFNmM/lXr4cou1e3IG
-         s2jw==
+        bh=D5AwYMqW4nactvDYjQFwizA3OawYyFm5PyWDyjjqRwA=;
+        b=GcBXu2FZ81wHIFWky0x6DGm9ua5bWXzLFmQb8Orh5/0/NxOaAds+dKuMPEQwNjP5mW
+         nb/h6UpKWxqUyMna6YCaAi3p0I+yiIvVK1+rAfaFAhQskrnVeV9ugWZUzBuYaVqTTzto
+         Rxt9Fn0A8V9EM2ms531NE18R1y52W8aY4JsuF3KLY+2C4MALOkrXEiw8rytv+3t7QocT
+         BEBTTJedHZp91D8hZ3MUFaMbAS26Rb5DcNKQNAGvUswjXAdzENyIL7EjVjo0u+Bzedej
+         lQ4Q0M3W/5rGjznH8a6vIpPDg93gzYGKh8jk2qxrG2NpMY/MX8DCfZr+SuQ0lyJ8wuT9
+         3SrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=SPWMtZvbliI12z3KonnOKyD8p7Npqy8vKch7TIgRTWo=;
-        b=WCt4tiMiXHPGRo0PpoR4D5LMDJ+m7T9whZcKr/h3bQdN1PQ2D5N0+jqMtwBhn7Fe8H
-         sUMKrIDrUTeCqnzSLl/PTxg9DNI5E9bictWaktQpgu01EqdgRReUuR0FWgh/+huDNQFo
-         /L3h7CE8YoUiE1YHHMi/p0Xy0vppfb7rjrb50Hb9X8J37dGOETIPxzywCyXEWkFSXpva
-         Ea9Dhi+ry5+N/SiUsd0lizp1KSmxJblfPjD2C7kn9H+pEyWWom5g6vINBWbj+W8d+gBL
-         vpng3yvpG/MD/C+4V9HmrZvNgkCuhISH/GxXP4E8M3zPzO+4rvXxF+mfZ+5TLdemjhoE
-         SKhw==
-X-Gm-Message-State: AD7BkJLBZ/SzsAG/sGseuKzFbgRiCiyTaUZhv10pkUMYgEN+DsIP1B5VN+HnDIiP1e9QY1DZYWCPlv9obZEr5Q==
-X-Received: by 10.31.141.2 with SMTP id p2mr27765148vkd.37.1457990687803; Mon,
- 14 Mar 2016 14:24:47 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Mon, 14 Mar 2016 14:24:47 -0700 (PDT)
-In-Reply-To: <CAPig+cRC5kZCtELhTh3em0bv+mfeR58AKd3Y76VM+0J+C+zzcw@mail.gmail.com>
-X-Google-Sender-Auth: ir4R-Da9wlQ2jGh-KKBwnyy815A
+        bh=D5AwYMqW4nactvDYjQFwizA3OawYyFm5PyWDyjjqRwA=;
+        b=F18dcWNGqv9ac40EMxC9lw/b7M69DgOqmPf9WfblcQo7UQOvEK69elLWSaYsdH62NX
+         S/rZEjOM/gkQXRXZQ8s4n/ykYe3b4b6hbwV+Wqhu7dVQiBlISNo6mfqAEJEgsJsCYQOF
+         qSYifHDVV4FwuerAxBwp72D8TUNc8Nloo4GdhL2KwKo85rUbXYIBF40o/5JMr3gN6kVX
+         OZPbnXGN2zLxF0uil8IqTbDrYdmvhiIiPhpbOEJT0UIIEIfU/lWNS9V4cX4L1FHCk8Bj
+         r2QGfu7PUtFh6OVhCuLPO2RWjy7+EjeAVmnXrmmWWr31+eYzzp4sOVSGsE7FeI5oP27P
+         546g==
+X-Gm-Message-State: AD7BkJJrQ9E10aaKQLDgg/5RZcZXtHqCKC+Fmbhw5GUVcH0gk6Yyr8NRUddSWLDvEqt/4t872nuGGYD8Ik0iEw==
+X-Received: by 10.31.182.143 with SMTP id g137mr27135833vkf.45.1457990968805;
+ Mon, 14 Mar 2016 14:29:28 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Mon, 14 Mar 2016 14:29:28 -0700 (PDT)
+In-Reply-To: <CAFZEwPP_SZsk+B+1L93snQji=wg728P3Oq94oVJ+ZJkhmdC9Yw@mail.gmail.com>
+X-Google-Sender-Auth: nL9NsVt448BJ7SOTrHHEPU5slEI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288816>
 
-On Mon, Mar 14, 2016 at 5:21 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> +test_expect_success 'status ignores commit.verbose=true' '
->> +       git status >actual &&
+On Mon, Mar 14, 2016 at 3:09 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+> On Mon, Mar 14, 2016 at 1:54 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> Not at all mandatory, but it wouldn't hurt to add a couple additional tests:
+>>
+>> * commit.verbose=true and --verbose
+>> * commit.verbose=false and --no-verbose
 >
-> This is missing the important "-c commit.verbose=false". Without it,
-> you're not really testing anything interesting.
->
-> (It was missing in the "something like this" example test I typed
-> directly in the email of my last review[1], which I suppose is a good
-> lesson that "something like this" is not meant as "final" or "trust
-> this".)
+> I was thinking of putting these tests as when I was debugging (simply
+> by printing verbose variable), I found that when commit.verbose=true
+> and --verbose the value of the variable `verbose` is 2. But then I
+> thought it wouldn't be that useful. But since you have pointed it out
+> now, I will definitely include them.
 
-That wasn't an intentional omission on my part, by the way -- I wasn't
-trying to mislead you -- it was just an example I typed on-the-fly
-without thinking too hard about it.
+The '2' is a result of OPT_VERBOSE() supporting multiple levels of
+verbosity (that is, "--verbose --verbose" could give more noisy output
+than "--verbose") for commands for which verbosity levels make sense.
+
+In this case, I wasn't suggesting these news tests for that reason,
+but merely to prove that the combinations behave in the expected way.
+By the way, the just-submitted v6 seems to be lacking these new tests
+(though, as I said, they are not by any means mandatory).
