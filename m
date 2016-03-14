@@ -1,116 +1,138 @@
-From: =?UTF-8?B?0J3QuNC60LjRgtCwINCh0L7QsdC+0LvQtdCy?= 
-	<n.a.sobolev@gmail.com>
-Subject: Re: git-secret - store your private data inside a repository
-Date: Mon, 14 Mar 2016 10:22:43 +0300
-Message-ID: <CAO_bL1y8tp5+NKdPqpwqJvX2xWY6Wg1oZbnRTKAVjKrg94b3BA@mail.gmail.com>
-References: <CAO_bL1xQ0C+HYdZQVvyHx3ByPaaJTgpQYhY7h9f76eQXHKZ_SQ@mail.gmail.com>
-	<robbat2-20160313T211905-684299027Z@orbis-terrarum.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Robin H. Johnson" <robbat2@gentoo.org>
-X-From: git-owner@vger.kernel.org Mon Mar 14 08:22:59 2016
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [RFC/GSoC] Introduction
+Date: Mon, 14 Mar 2016 09:16:01 +0100
+Message-ID: <FB2E0900-A77E-4AE2-A580-9192746A8ABA@gmail.com>
+References: <56E3BE3E.9070105@gmail.com> <1924FEBB-46F2-46EE-B190-5289588D4BED@gmail.com> <xmqqk2l58s2a.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Sidhant Sharma <tigerkid001@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 14 09:16:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afMq8-0005wD-1O
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 08:22:56 +0100
+	id 1afNfo-000503-3H
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 09:16:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755126AbcCNHWq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2016 03:22:46 -0400
-Received: from mail-io0-f177.google.com ([209.85.223.177]:36559 "EHLO
-	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755119AbcCNHWp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2016 03:22:45 -0400
-Received: by mail-io0-f177.google.com with SMTP id z76so212461649iof.3
-        for <git@vger.kernel.org>; Mon, 14 Mar 2016 00:22:44 -0700 (PDT)
+	id S964821AbcCNIQN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2016 04:16:13 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:32785 "EHLO
+	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933961AbcCNIQG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2016 04:16:06 -0400
+Received: by mail-wm0-f48.google.com with SMTP id l68so90847864wml.0
+        for <git@vger.kernel.org>; Mon, 14 Mar 2016 01:16:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=iT/qL9Lyv/3vImRAS8Jn4mknWTqch0x7E5kVoPf6QTY=;
-        b=CL5a5M5byARt8T2i6DjQKzCxePBCpuiNUtvZeUTe33WfarRb39F7g8FMONTJcZD4Gu
-         qGX51SzGTR6fgLcgTSCWUnN/rvmakx9Mj+pbBMhx+5nWSMbcSoEr0Ebieg0liPGqXm8s
-         dmybnpyOtxQ1YijUeRpL/3+IFCZUZrXkLn/9tgp8ISi3gAIeGSWiTH6BJ3nZILtSEKb9
-         bj2s5WStOQ92mVOqGSlBZcLB7Cqq/bM9pQo6j2WINvBggaIdrJSu6toO+Xk65eGZe5Sn
-         4GsJjYPewQWvia7x22oGSn7GimUGDSaoFB88bM2c6EdI36ruLGxeU2MJnWNI9F0qlO3a
-         vktw==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=zoMeUv7yn/UgLrBUTkBZPeukrcfZChJC/BCPriYn6RI=;
+        b=HrEDOFmdN3FWeAH/HrHzwxcbvhpp3vCS6fKMsE70Ii2eyeUh5wSxqKYNGUsPtWCv/h
+         aV5CDJw0rdqwa3Ck8I0BkjXSvbwpjtQBoEgNcLbuuK+g7VAo54vE1TUwQP9ezzUSI3E7
+         98bYouzyOQTATs9iIY64QqRC/N2wPvQxMuJZ8J0SgqH0pP1QI8V21BqUU3GBfZVWgXve
+         24yiWMtgdqRgmZaqIvHjQXCdcO3pSNBV6m6lB8FjdoIIOkjUMIcv3w3Y23PAKSzJVJQE
+         +qONRVSkTYb3wXWw6OuHkpFp0YmbtMnlxUuxSUkHhTYKDeN9VpQSrTdtT1T8Xgfer+qR
+         pIKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=iT/qL9Lyv/3vImRAS8Jn4mknWTqch0x7E5kVoPf6QTY=;
-        b=JnU6ea+DBlEP7zvbTBa4szwvF5ZnVkKdke8X01WS1hCO+mMBl1JZtCpVwPi3g7iMzL
-         jYr0/YavMo4CowopgMTluCbPtjVQE5wQHKuIoj9q/oHAmOw9zZx6H+HW58KeO2c4mzxW
-         b8Ptr3tP/Px57UHB9rLdN6dfutFiw7cNIpb/D8I1H6a4sUQBFlG7nLob+pnyx1vTaEdP
-         /nRK7ohMRkbNuuf13bf7jQ262BzfEs9U4AZCprDziq6mSU8kcWehHWInGyY61mickLoJ
-         bOzHiY7WGx+VNFjP1s1+q2WsLyui/KeFKUmNMMuEyvhLtJEmwiK+wd0n5RuIgqi5DNxg
-         13dQ==
-X-Gm-Message-State: AD7BkJJV6vwKpxpNLYed5pn3TKSrkU95kNy+RSrcWsonNDeVUVaDNoSOYZccd8mzZzvpnl5dgQBa6L4HkNXiOw==
-X-Received: by 10.107.13.65 with SMTP id 62mr22817113ion.186.1457940163852;
- Mon, 14 Mar 2016 00:22:43 -0700 (PDT)
-Received: by 10.36.15.74 with HTTP; Mon, 14 Mar 2016 00:22:43 -0700 (PDT)
-In-Reply-To: <robbat2-20160313T211905-684299027Z@orbis-terrarum.net>
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=zoMeUv7yn/UgLrBUTkBZPeukrcfZChJC/BCPriYn6RI=;
+        b=OHxmXlNaRjY7mqKCaRjrtDvmkdFHKvLXLRqb+J27lLIAuADovQJctKW1TFxdNzcZAR
+         /VYES4oKwoutULT1DTBxvK8sZAqI7sVnLIpRyD/IxyvM03oUWkkRvh8j7E8bmhD1Scp2
+         fEkxsppVJdxZuCWeILaR1C2ypmOsfKFpUWLQPA6PCmHXkkXU//AhsTvAs54tVns7U6G1
+         zbxYIN4gmpYKPRW90UkLIZ4eqrrPFuWf67imuSi9It4qL3tG8styub44rvH/qFKx9IKz
+         eKjW8dBHcIBH2HZLNJBaXcnv5BFGVKtUJewsWbfjFo1beoiwuIkI3/EKqdivyybG81Wl
+         futQ==
+X-Gm-Message-State: AD7BkJJ7MRjJ8NMtLxubGNV9U0628R0RIT+PVIPUjpVoNpPJxQ73yIcz3G03yQDDMlkgiQ==
+X-Received: by 10.194.186.170 with SMTP id fl10mr25941438wjc.29.1457943364957;
+        Mon, 14 Mar 2016 01:16:04 -0700 (PDT)
+Received: from slxbook3.fritz.box (p508BA989.dip0.t-ipconnect.de. [80.139.169.137])
+        by smtp.gmail.com with ESMTPSA id cb2sm21153683wjc.16.2016.03.14.01.16.03
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 14 Mar 2016 01:16:04 -0700 (PDT)
+In-Reply-To: <xmqqk2l58s2a.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288773>
 
-Robin, thank you for interest.
 
-I have not seen 'pwstore' before, but I don't like the idea to store
-headers inside the file. As it might break things. But I love the idea
-of groups and access rights. It is a direction I would like to follow.
-Also I like your suggestion about the key's white-list. That's a
-feature I have already planed for the future releases.
+On 14 Mar 2016, at 07:57, Junio C Hamano <gitster@pobox.com> wrote:
 
-I guess 'pass' was made for a single user. But 'git-secret' was made
-for multiple people. So you can invite someone to share your encrypted
-files and easily remove them. Also, I have noticed that 'pass' stores
-the encrypted files in the separate repository. Well, that's an
-arguable way to go. It has some benefits like: code-repository and
-pass-repository may have different access rights, different people
-involved. But there's a lack in consistency when you have two separate
-repositories.
+> Lars Schneider <larsxschneider@gmail.com> writes:
+> 
+>> I thought a while about this requirement and I wonder if a wrapper called 
+>> 'ggit' (guarded Git) could be a solution. The wrapper would pass all 
+>> command line arguments to 'git' and check for potentially destructive 
+>> commands. If such a command is detected then the user would see a warning.
+> 
+> I recall back in the days when people said that Hg's command set was
+> so much more pleasant to use that some people thought about building
+> Hg's command line UI on top of low level implementation of the Git's
+> data structure.  Even before that time, there was an effort "Cogito"
+> to build an alternate UI on top of Git core.  If "ggit" can be made
+> reasonably feature complete in such a way that it lets beginners do
+> all what they need to do, omitting many advanced/hairy features core
+> Git may let users use (i.e. making trade-off between power and risk
+> of misuse differently from core Git), that may be a reasonable way
+> to offer a "beginner mode".
+> 
+> The beauty of such an approach is that as long as "ggit" correctly
+> talks the same on-wire protocol when interacting with other people's
+> repositories, nobody needs to even know or care that you are using
+> "ggit" exclusively.  Two systems can talk without problems.
+> 
+> If "ggit" is made too limited, there is an issue.  Beginners may at
+> some point need to transition to the real thing to fully exploit the
+> power of Git, and they may need to unlearn "ggit" and learn Git.
 
-2016-03-14 2:52 GMT+03:00 Robin H. Johnson <robbat2@gentoo.org>:
-> Have you seen the much older pwstore tool?
-> https://github.com/formorer/pwstore
->
-> It does have some notable features missing from git-secret and similar
-> tools to this day.
-> - Whitelist of trusted keys to detect addition of unexpected keys.
-> - Specify what users/groups have access to any given file (via a header
->   in each file, which implies that the file must be plaintext).
->
-> I've wondered if storing metadata about the objects in notes might
-> improve matters:
-> - a clearsigned block with verifiable readable data (eg who in a team
->   can access)
-> - an encrypted block with the inner key (nice side effect that this
->   separates versioning of the wrapped inner key from the versioning of
->   the object).
->
-> This also a nice property that when you revoke/remove an outer (user)
-> key, can know implicitly the old secrets they had access to (which
-> should probably be rotated, as you don't know if they have a copy of
-> them outside of the system).
->
-> Yes, I'm aware of other system's like Hashicorp's Vault, but do
-> appreciate the simplicity of git-secret, pass [1], pwstore [2] and other
-> simpler tools.
->
-> [1] https://www.passwordstore.org/
-> [2] https://github.com/formorer/pwstore
->     It's at least as old as the Git history indicates, possibly
->         older, I don't know if the Git history included a full conversion of
->         SVN history.
->
-> --
-> Robin Hugh Johnson
-> Gentoo Linux: Developer, Infrastructure Lead, Foundation Trustee
-> E-Mail     : robbat2@gentoo.org
-> GnuPG FP   : 11ACBA4F 4778E3F6 E4EDF38E B27B944E 34884E85
+I think a "ggit" wrapper should not introduce any new commands or new
+parameters. Everything should be passed unmodified to Git. The wrapper
+would only add additional warnings such as "You are about to do X which 
+will permanently destroy Y. Do you want to continue?". Therefore
+a transition from "ggit" to "git" would not require any learning effort.
+
+Maybe "ggit" could also be interpreted as "guided Git" (sounds more 
+friendly than "guarded Git"). I have the impression that many Git 
+beginners make mistakes because they don't have a mental model of Git,
+yet. A "guided" Git version could explain the commands a bit more 
+detailed as they use Git (e.g. with ASCII graph examples). I know
+that's what man pages are for but I've encountered many users 
+(especially on Windows) that are not aware of man pages.
+
+
+> This approach, if it wants to become successful in helping users,
+> would take quite a lot of thinking and work to avoid omitting too
+> much to necessitate users to migrate to Git.  But I can very well
+> imagine that a new "Cogito 2" project (I am not saying that the UI
+> Cogito tried to achieve were superiour or anything of that sort--I
+> just needed a name, and picked one name that came to my mind) may
+> get done by those who interact rarely with the core Git community
+> and may live as one of many independent and viable third-party
+> projects you find on GitHub.
+> 
+> There however are two questions I do not offhand have good answers
+> to: (1) if that kind of effort is of suitable size for GSoC, and (2)
+> if it is suitable to be supported by the Git project proper.
+
+Good questions. I have no previous experience with GSoC Git projects
+and therefore I am not qualified for an answer. However, my gut feeling
+would be that a proof of concept implementation of a "ggit" wrapper
+that does not add any new commands and only adds warnings for destructive
+commands could be in the GSoC scope. However, Sidhant must be aware of
+the fact that this is a controversial topic and therefore any future work
+on this topic might be never merged into Git.
+
+I also thought about (2). The obvious advantage of having something like 
+"ggit" as part of Git core is that it would be shipped with the standard
+Git distribution. That would especially help beginners. However, 
+maintenance is a very strong counter argument. Maybe "ggit" could
+start as a separate project and if it picks up then Git core can still
+decide to merge it?
