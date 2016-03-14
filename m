@@ -1,68 +1,72 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5] commit: add a commit.verbose config variable
-Date: Mon, 14 Mar 2016 17:31:35 -0400
-Message-ID: <CAPig+cSEPBKR+Hd-8hqppNMrBOFa1GKs70cK7hzkbaNApgg8Lw@mail.gmail.com>
-References: <01020153698edabd-73daa5db-3c3e-417b-8d83-6cbc04439d95-000000@eu-west-1.amazonses.com>
-	<CAPig+cQ+8+saxsGzV=-C2w-eSaaOf0MYC=zTQbH3CW2G5UE5uw@mail.gmail.com>
-	<CAFZEwPP_SZsk+B+1L93snQji=wg728P3Oq94oVJ+ZJkhmdC9Yw@mail.gmail.com>
-	<CAPig+cTt+Mi=gOREG2zU7vbtB6qk7dVS3mWeMBY37ZwFp_oZng@mail.gmail.com>
+Subject: Re: [PATCH v6] commit: add a commit.verbose config variable
+Date: Mon, 14 Mar 2016 17:32:59 -0400
+Message-ID: <CAPig+cTj0AeAUPDm2MBE=72b98AU+0F90a6UwmorwrRoO0kx_A@mail.gmail.com>
+References: <0102015376e53b40-d25f7fdc-4ae1-4aae-b779-052fcf252071-000000@eu-west-1.amazonses.com>
+	<CAPig+cRC5kZCtELhTh3em0bv+mfeR58AKd3Y76VM+0J+C+zzcw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Cc: Git List <git@vger.kernel.org>
 To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 14 22:31:41 2016
+X-From: git-owner@vger.kernel.org Mon Mar 14 22:33:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afa5U-0007KB-VO
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 22:31:41 +0100
+	id 1afa6r-0008Ts-QI
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 22:33:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751425AbcCNVbh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2016 17:31:37 -0400
-Received: from mail-vk0-f66.google.com ([209.85.213.66]:33216 "EHLO
-	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750901AbcCNVbg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2016 17:31:36 -0400
-Received: by mail-vk0-f66.google.com with SMTP id c3so15856238vkb.0
-        for <git@vger.kernel.org>; Mon, 14 Mar 2016 14:31:35 -0700 (PDT)
+	id S1751086AbcCNVdC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2016 17:33:02 -0400
+Received: from mail-vk0-f65.google.com ([209.85.213.65]:35270 "EHLO
+	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750901AbcCNVdA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2016 17:33:00 -0400
+Received: by mail-vk0-f65.google.com with SMTP id e185so15860746vkb.2
+        for <git@vger.kernel.org>; Mon, 14 Mar 2016 14:33:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc;
-        bh=OQrwePaulIvItJIRpUoLeRGsUTpclkMY6+b7xeoMGEk=;
-        b=h3+Uez8tohMM+uSlSBvqG0q64XxJmkVBF80cVM8vkat5yQVVL4TiMCY9PaAHiNwPza
-         knamghL3AFqJ/NKhUSa4Idq4lG5rv4hXpDG2sNF6mCINWEqeCMqSoI2VFa2LCAw+jK1J
-         xJwuRbEj4mMUzFKlxj5Ny7az5De5OKpvS7kMOSScI2CVtdQMgaMY0xd1MyVJcdzE4Z4J
-         Ek4TuGbztavnqJKz+xzmAYhJl/nZ+PjW39RFNFnJSbCtP9qabMmEF6YYEyDSRllk+b3B
-         KR+Hcjv0y14RYXsmxRO8GBtx209jibflQrtGtupH+7u1nCNkFEb9Ze/jPQJGscAD3lMl
-         9ZBw==
+        bh=ZvBMgXM4g2Fr2ofTz0fIIlj3VCVQ1PDb1pIM9RZUXDU=;
+        b=aaYYDG3QNHCDG0wkAEUDXU1VfTPGAnNhBzFtfD3iJZ4GfwEYUuiGLhaIraJ2SpMmJk
+         f5d2HWe2WG9xx09IS/h8bdYzti14MEVhoX5qZLZohotRZneWNoVJoz8CvnVgMfRYGe0n
+         kwC89HiZYblIHWxViASfHmEz6oYI9j9YKKcHyaFsF6r4DzdXvYcW/c4nrP8IIhZnZ4EA
+         /ij3JqIiSux6W0kLIL24RbQi494yfihevV3+l+0PFXB6PbVb7pXeggR9QWiuv0akho2o
+         9fcm8aLHU4shpyxRarDp3WVDemLSC1anEIikIiim4hKjUncJ3ktZdVThkI/7+C2ZUrpz
+         j20A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=OQrwePaulIvItJIRpUoLeRGsUTpclkMY6+b7xeoMGEk=;
-        b=OCQs+qR+ixjRhD7xOZT9kPcs7saZ2DwOCBumGepSH7pTTzYFolte+EBJGOYXtpLuvQ
-         1xtqWMMJlklaqxwGhI+v5dz1puSZZHPoygg3fooy3svbm4Mta/9FPXFk6HDjayT1gn8z
-         GcXDOinBglSn8ulrdXVKW+OeBnL7sjO0VAuBRbCiaZyRYvokRa+DfI0qqYqmVj9NouFF
-         TqTTXicg0v1lRlsAByJhAF9T3t5eDg8umipPR+GTqHhDR2ANNs1EmHyM5O0C/ikh5E29
-         MnRWs86Oon89908tHewf3ob7JDixIbrI+sGHUoVlwDMnsef4EzYknc6SDHCdwAWD3C8e
-         ocew==
-X-Gm-Message-State: AD7BkJKt4Fp4w1LgZ93K8OzMvfeKxKCohTWmFMBAuqTGDHHe2jZfEL1KbeUHbC1rL8g5ExbjOdwqlst5Pm7pFg==
-X-Received: by 10.31.21.4 with SMTP id 4mr27275735vkv.151.1457991095374; Mon,
- 14 Mar 2016 14:31:35 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Mon, 14 Mar 2016 14:31:35 -0700 (PDT)
-In-Reply-To: <CAPig+cTt+Mi=gOREG2zU7vbtB6qk7dVS3mWeMBY37ZwFp_oZng@mail.gmail.com>
-X-Google-Sender-Auth: T53JFQmCNBN0MRieCz5E55sUiu4
+        bh=ZvBMgXM4g2Fr2ofTz0fIIlj3VCVQ1PDb1pIM9RZUXDU=;
+        b=aVP1HCMFPkwAOxAunD7kmFPz5NZwtXOEzAXPk63Q7uHF4MnGtGyxoCOo2Huul+S+hx
+         9QM/Le/ul+GLFHIFcWO413idjgEh/iUIXYk0uj6xxg3rmQ+l5KcVi/yW0MGesZBF8uKW
+         Rqt9U/BxvdQejfkWcEdtxxFYAxbV83vIojOkYVLt3Hc6cdYf62Nl7CAVmfDlc+K3Ftz/
+         cZAALd2AXs0uLP/robOFE/yYHJXuuzzHbYE80PJCkq45vfgYEPYbMru/sVqJDqhFpDfI
+         ZXOl1JrrgF8i84IcY5it7/U5vBCalG2kxAPsxATWaTgr4R7JJxVsrNiS6nPLHDo9NrVP
+         bmEQ==
+X-Gm-Message-State: AD7BkJIrK4KF8fPzfkGtXQ/6gOJ/UeKhTrianb3YKms2o58GeS2H+/gCTeQR9w9UpS+uBl1bWhLqxOte8cqKjw==
+X-Received: by 10.31.141.2 with SMTP id p2mr27801594vkd.37.1457991179665; Mon,
+ 14 Mar 2016 14:32:59 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Mon, 14 Mar 2016 14:32:59 -0700 (PDT)
+In-Reply-To: <CAPig+cRC5kZCtELhTh3em0bv+mfeR58AKd3Y76VM+0J+C+zzcw@mail.gmail.com>
+X-Google-Sender-Auth: Pu0SxsO4bUAW-yDTeQWdeMZGE5I
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288818>
 
-On Mon, Mar 14, 2016 at 5:29 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> By the way, the just-submitted v6 seems to be lacking these new tests
-> (though, as I said, they are not by any means mandatory).
+On Mon, Mar 14, 2016 at 5:21 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> This is missing the important "-c commit.verbose=false". Without it,
 
-Ignore me. They are present in v6, yet I somehow overlooked them.
+I meant "-c commit.verbose=true", of course.
+
+> you're not really testing anything interesting.
+>
+> (It was missing in the "something like this" example test I typed
+> directly in the email of my last review[1], which I suppose is a good
+> lesson that "something like this" is not meant as "final" or "trust
+> this".)
