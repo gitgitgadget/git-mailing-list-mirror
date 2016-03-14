@@ -1,193 +1,81 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH/RFC/GSoC 05/17] rebase-options: implement
- rebase_options_load() and rebase_options_save()
-Date: Mon, 14 Mar 2016 13:30:41 -0700
-Message-ID: <CAGZ79kYeYzi=J=dY27FqXp72BRe-Vmm4MR5Q6dFTMUP9CxYZcg@mail.gmail.com>
-References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com>
-	<1457779597-6918-6-git-send-email-pyokagan@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH/RFC/GSoC 12/17] rebase-todo: introduce rebase_todo_item
+Date: Mon, 14 Mar 2016 21:33:03 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603142131120.4690@virtualbox>
+References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com> <1457779597-6918-13-git-send-email-pyokagan@gmail.com> <CAP8UFD0Fw1ZOQzPfF=bbEsCOhkoHfV5B5ayprxR6kWr6vApT5Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
+Content-Type: text/plain; charset=US-ASCII
+Cc: Paul Tan <pyokagan@gmail.com>, Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
 	Duy Nguyen <pclouds@gmail.com>,
-	Sam Halliday <sam.halliday@gmail.com>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 14 21:30:49 2016
+	Stefan Beller <sbeller@google.com>, sam.halliday@gmail.com
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 14 21:33:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afZ8Z-0001aY-Fb
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 21:30:47 +0100
+	id 1afZBB-0003nK-OU
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 21:33:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756057AbcCNUao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2016 16:30:44 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:32972 "EHLO
-	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753263AbcCNUan (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2016 16:30:43 -0400
-Received: by mail-io0-f176.google.com with SMTP id n190so237491569iof.0
-        for <git@vger.kernel.org>; Mon, 14 Mar 2016 13:30:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=u4fntzyQ2UZrG31dabjgbKN5Vb2mn2mvVT2kM6fI8ZA=;
-        b=Vc0M2FUfgO9pcg2/MIpfTrhvKK0a5Rj1zQ+Rgr8nDFvfo4uwmHafzj/4MhKiCb8Zjo
-         xtGW+LR6Z3idQZPmlgYVCZhoJKdqK27mSaxQLCgcs4BcRTUu5lgF45TEbIcYz+2qUQHd
-         M+G9RpioeMVkQdM7uzsXyrw0zsminYiWyOptDfoXEi3DwbsXl9F+QLLzxO7mUsPMIkMj
-         MOBn5LELb11aWFB2dY5/Pypq8pQVqBWEx7p8A1JmSpee1QJMCwmbS1rU6VpgsmfUAjSB
-         V3oIo6UhuEuSizovUQCiinb+cm8YbjzJc2p66Y1a/QpHYCTnoLlBQyE8ZOAxNgdJ59T1
-         eJdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=u4fntzyQ2UZrG31dabjgbKN5Vb2mn2mvVT2kM6fI8ZA=;
-        b=SzO3kmS2LBYtmicqW2+dcbZpnP2RGKv3nly9kr0m10ZR7wUdZINVPCBxHXyDPLFZeC
-         PvRpGXYIiWpKW9pdlljyThcW1q/ZoAUt7Vmmrp1Wd7tjMLgZErwSgWIxkXMe73u8GW/y
-         gDiezTjLT32c5PS5VkKWfZb80TbwMVKnVqNcdfeCCfWE4W1Ten0YthK9/Wy7EjKmrVS8
-         4R4ALy/Menn0zGc7kzH7ZtZLS4NNNy5bXnSvltNzMG3/mkOz2R1eOk5sTrg34TAgItBN
-         JfOGFxG7h8F8xmAxaONwBGJ91/mlpIK/kYS8qM3hn//ilry5oJyuIEnBP3tcyLHZqrVt
-         TcwA==
-X-Gm-Message-State: AD7BkJLs04rAi0Lq1yDEOsnCm9z5wXk9uM8r6oJk9owCgXGgAb3Te4A37NYnBF3IE94scmyA03kCzOn9L0vnFlWo
-X-Received: by 10.107.167.80 with SMTP id q77mr29801885ioe.110.1457987441479;
- Mon, 14 Mar 2016 13:30:41 -0700 (PDT)
-Received: by 10.107.132.101 with HTTP; Mon, 14 Mar 2016 13:30:41 -0700 (PDT)
-In-Reply-To: <1457779597-6918-6-git-send-email-pyokagan@gmail.com>
+	id S1756081AbcCNUdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2016 16:33:25 -0400
+Received: from mout.gmx.net ([212.227.15.18]:57804 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755917AbcCNUdN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2016 16:33:13 -0400
+Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MVNDK-1aKBWI2U4U-00Ylk3; Mon, 14 Mar 2016 21:33:04
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <CAP8UFD0Fw1ZOQzPfF=bbEsCOhkoHfV5B5ayprxR6kWr6vApT5Q@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:30l+IbRxlwR7IJXkfbk2qaJmd/UAsVTpIkTJWyA1k6vb0JzCSRs
+ IYheDA7fcuPryFYqCgnP33edsB8Vi/Oj2cV5Lj4nn0tCN2oiLrgz6vRQY0aSD8QsI5GeqXK
+ xxbTqlJZIQhCHpw8wWvdocbs20aeoRLXYaAAP6+/nbDxd2ay++Pk12ScICERjZuLDC8Ek/b
+ Rsp8urtmIC92oxV3PTXkw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tU5zrwuaniw=:4T5WCnjedRG86/GImJ0xC/
+ DGy8/7L0oUK7h8xvaiHF4/MdGZyP+YYhJn/scO18bRnaBjiYA890QUFup2kDv12K2fAGL31BV
+ sYJXmhyQnJZYv7w+Jak14uMEl4UJeoV3uxK5COVFaaxi+hK5EKM+moy3YiFX+NcNyaXHkQVpS
+ ROSHMCOA1m82Qd6MRHgDIsINU5be0XRskmOwa2VszpRzOymlAfUrrcI56rF5tNdPL2/yGswyS
+ 4zJOu/vAIt539BOmfNDKPFM2HXd0lSIP8nkjx/a/KbX3GO8u4Wl7vNMIQ3t7pnayN21DW8r6F
+ d2XfvqkOBpcwa/N8bZDC1BMjVu98eRfrFpujSSRbAOSzNdy7PfoNgm+GsD3ku1ggYvPV0quth
+ gYhxiyN7kAry2IWHMI/p1GNIHnjoWMxBf8SMJaeCR0rf+qBIrPQO29+nRp0COWn0vehcyP1Mj
+ W5PN2uK7mxgtReDXABUosNhTd7y96T/gNzZRsOxg9j6Ip7Qez8nf3MAXHxiV1wrn1iN/FVTsT
+ noAaWbtRWDPETOUlGAAAXLZbqQan8pZjvF9j9uX7p1jlz4E+Sxltz7mB4vs9x/iW8UUFxCD7J
+ 1Whwp54miqAITGhuJyjYA47n/0UGZd/U8Lz4JMI7FLbhzu6ieQQjOY9CLMYgPRZlxY7zHcD/f
+ Z8nMaxxxJxTn5XU/qkrN+OtQFApO1kY70nf8F+pjvEPGOdlQ81lBX1dE2xbr8l6thR0UZrb/I
+ VF10WpggJyh9uocWG9k+e+NtFpenAvHNu/0EbBGUQ895se7XlW2w3/jLNhG6iB+FRySla/lt 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288807>
 
-On Sat, Mar 12, 2016 at 2:46 AM, Paul Tan <pyokagan@gmail.com> wrote:
-> These functions can be used for loading and saving common rebase options
-> into a state directory.
->
-> Signed-off-by: Paul Tan <pyokagan@gmail.com>
-> ---
->  rebase-common.c | 69 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  rebase-common.h |  4 ++++
->  2 files changed, 73 insertions(+)
->
-> diff --git a/rebase-common.c b/rebase-common.c
-> index 5a49ac4..1835f08 100644
-> --- a/rebase-common.c
-> +++ b/rebase-common.c
-> @@ -26,3 +26,72 @@ void rebase_options_swap(struct rebase_options *dst, struct rebase_options *src)
->         *dst = *src;
->         *src = tmp;
->  }
-> +
-> +static int state_file_exists(const char *dir, const char *file)
-> +{
-> +       return file_exists(mkpath("%s/%s", dir, file));
-> +}
+Hi Christian,
 
-How is this specific to the state file? All it does is create the
-leading directory
-if it doesn't exist? (So I'd expect file_exists(concat(dir, file)) to
-have the same
-result without actually creating the directory if it doesn't exist as
-a side effect?
+On Mon, 14 Mar 2016, Christian Couder wrote:
 
-If the dir doesn't exist it can be created in rebase_options_load explicitly?
+> On Sat, Mar 12, 2016 at 11:46 AM, Paul Tan <pyokagan@gmail.com> wrote:
+> > In an interactive rebase, commands are read and executed from a todo
+> > list (.git/rebase-merge/git-rebase-todo) to perform the rebase.
+> >
+> > In the upcoming re-implementation of git-rebase -i in C, it is useful to
+> > be able to parse each command into a data structure which can then be
+> > operated on. Implement rebase_todo_item for this.
+> 
+> sequencer.{c,h} already has some code to parse and create todo lists
+> for cherry-picking or reverting multiple commits, so I am wondering if
+> it would be possible to share some code?
 
+I did exactly that and plan to work full steam on that because I need it
+way before GSoC starts:
 
-> +
-> +static int read_state_file(struct strbuf *sb, const char *dir, const char *file)
-> +{
-> +       const char *path = mkpath("%s/%s", dir, file);
-> +       strbuf_reset(sb);
-> +       if (strbuf_read_file(sb, path, 0) >= 0)
-> +               return sb->len;
-> +       else
-> +               return error(_("could not read '%s'"), path);
-> +}
-> +
-> +int rebase_options_load(struct rebase_options *opts, const char *dir)
-> +{
-> +       struct strbuf sb = STRBUF_INIT;
-> +       const char *filename;
-> +
-> +       /* opts->orig_refname */
-> +       if (read_state_file(&sb, dir, "head-name") < 0)
-> +               return -1;
-> +       strbuf_trim(&sb);
-> +       if (starts_with(sb.buf, "refs/heads/"))
-> +               opts->orig_refname = strbuf_detach(&sb, NULL);
-> +       else if (!strcmp(sb.buf, "detached HEAD"))
-> +               opts->orig_refname = NULL;
-> +       else
-> +               return error(_("could not parse %s"), mkpath("%s/%s", dir, "head-name"));
-> +
-> +       /* opts->onto */
-> +       if (read_state_file(&sb, dir, "onto") < 0)
-> +               return -1;
-> +       strbuf_trim(&sb);
-> +       if (get_oid_hex(sb.buf, &opts->onto) < 0)
-> +               return error(_("could not parse %s"), mkpath("%s/%s", dir, "onto"));
-> +
-> +       /*
-> +        * We always write to orig-head, but interactive rebase used to write
-> +        * to head. Fall back to reading from head to cover for the case that
-> +        * the user upgraded git with an ongoing interactive rebase.
-> +        */
-> +       filename = state_file_exists(dir, "orig-head") ? "orig-head" : "head";
-> +       if (read_state_file(&sb, dir, filename) < 0)
-> +               return -1;
+https://github.com/git/git/compare/master...dscho:interactive-rebase
 
-So from here on we always use "orig-head" instead of "head" for
-interactive rebase.
-Would people ever rely on the (internal) file name and have e.g.
-scripts which operate
-on the "head" file ?
+Note: there are still a couple of things to be done. I will take care of
+them.
 
-
-> +       strbuf_trim(&sb);
-> +       if (get_oid_hex(sb.buf, &opts->orig_head) < 0)
-> +               return error(_("could not parse %s"), mkpath("%s/%s", dir, filename));
-> +
-> +       strbuf_release(&sb);
-> +       return 0;
-> +}
-> +
-> +static int write_state_text(const char *dir, const char *file, const char *string)
-> +{
-> +       return write_file(mkpath("%s/%s", dir, file), "%s", string);
-> +}
-
-Same comment as on checking the state files existence. I'm not sure if the side
-effect of creating the dir is better done explicitly where it is used.
-The concat of dir and
-file name can still be done in the helper though? (If the helper is
-needed at all then)
-
-> +
-> +void rebase_options_save(const struct rebase_options *opts, const char *dir)
-> +{
-> +       const char *head_name = opts->orig_refname;
-> +       if (!head_name)
-> +               head_name = "detached HEAD";
-> +       write_state_text(dir, "head-name", head_name);
-> +       write_state_text(dir, "onto", oid_to_hex(&opts->onto));
-> +       write_state_text(dir, "orig-head", oid_to_hex(&opts->orig_head));
-> +}
-> diff --git a/rebase-common.h b/rebase-common.h
-> index db5146a..051c056 100644
-> --- a/rebase-common.h
-> +++ b/rebase-common.h
-> @@ -20,4 +20,8 @@ void rebase_options_release(struct rebase_options *);
->
->  void rebase_options_swap(struct rebase_options *dst, struct rebase_options *src);
->
-> +int rebase_options_load(struct rebase_options *, const char *dir);
-> +
-> +void rebase_options_save(const struct rebase_options *, const char *dir);
-> +
->  #endif /* REBASE_COMMON_H */
-> --
-> 2.7.0
->
+Ciao,
+Dscho
