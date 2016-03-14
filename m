@@ -1,138 +1,124 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [RFC/GSoC] Introduction
-Date: Mon, 14 Mar 2016 09:16:01 +0100
-Message-ID: <FB2E0900-A77E-4AE2-A580-9192746A8ABA@gmail.com>
-References: <56E3BE3E.9070105@gmail.com> <1924FEBB-46F2-46EE-B190-5289588D4BED@gmail.com> <xmqqk2l58s2a.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Sidhant Sharma <tigerkid001@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 14 09:16:21 2016
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5] commit: add a commit.verbose config variable
+Date: Mon, 14 Mar 2016 04:24:22 -0400
+Message-ID: <CAPig+cQ+8+saxsGzV=-C2w-eSaaOf0MYC=zTQbH3CW2G5UE5uw@mail.gmail.com>
+References: <01020153698edabd-73daa5db-3c3e-417b-8d83-6cbc04439d95-000000@eu-west-1.amazonses.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 14 09:24:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afNfo-000503-3H
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 09:16:20 +0100
+	id 1afNnm-0001ic-5S
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 09:24:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964821AbcCNIQN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2016 04:16:13 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:32785 "EHLO
-	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933961AbcCNIQG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2016 04:16:06 -0400
-Received: by mail-wm0-f48.google.com with SMTP id l68so90847864wml.0
-        for <git@vger.kernel.org>; Mon, 14 Mar 2016 01:16:05 -0700 (PDT)
+	id S1754809AbcCNIYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2016 04:24:25 -0400
+Received: from mail-vk0-f67.google.com ([209.85.213.67]:36288 "EHLO
+	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750955AbcCNIYX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2016 04:24:23 -0400
+Received: by mail-vk0-f67.google.com with SMTP id j65so13957515vkg.3
+        for <git@vger.kernel.org>; Mon, 14 Mar 2016 01:24:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=zoMeUv7yn/UgLrBUTkBZPeukrcfZChJC/BCPriYn6RI=;
-        b=HrEDOFmdN3FWeAH/HrHzwxcbvhpp3vCS6fKMsE70Ii2eyeUh5wSxqKYNGUsPtWCv/h
-         aV5CDJw0rdqwa3Ck8I0BkjXSvbwpjtQBoEgNcLbuuK+g7VAo54vE1TUwQP9ezzUSI3E7
-         98bYouzyOQTATs9iIY64QqRC/N2wPvQxMuJZ8J0SgqH0pP1QI8V21BqUU3GBfZVWgXve
-         24yiWMtgdqRgmZaqIvHjQXCdcO3pSNBV6m6lB8FjdoIIOkjUMIcv3w3Y23PAKSzJVJQE
-         +qONRVSkTYb3wXWw6OuHkpFp0YmbtMnlxUuxSUkHhTYKDeN9VpQSrTdtT1T8Xgfer+qR
-         pIKA==
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=4a35UsUQncBZRql7RmrYzjwUmWCy8a/3GnVQxdK0UlY=;
+        b=bZbIMCv+GdZUKO5kpZrmBh+QVTrcsxSk82FmPzn0c1bDPKgk68L/Oe8o3rFto5zmyz
+         hU0Xi7hkTDY1iyuGU59MZMShIsQnOL0BjDiLwGG8AmS+O1wPREHO1T64UyTeIWFGG0cl
+         6RzBptnzjHfYOPKe1MkT0tXsjGfzp2TbbGxT6UXTpgjcv37LISHRRVP6C/9EC2aCApnp
+         EZO5whXeMuLwuyoHPIHiD7K6mfdLRZO5riUR49PojPu9z6IN3zsJ1jcio6cH51ImA4tv
+         WqHFIZOT5OlU9bHy7Km8xrEOSf//817O3GTjMDduTA7UnY5bPgd9Xx3nxwoNg8uObOhN
+         AFTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=zoMeUv7yn/UgLrBUTkBZPeukrcfZChJC/BCPriYn6RI=;
-        b=OHxmXlNaRjY7mqKCaRjrtDvmkdFHKvLXLRqb+J27lLIAuADovQJctKW1TFxdNzcZAR
-         /VYES4oKwoutULT1DTBxvK8sZAqI7sVnLIpRyD/IxyvM03oUWkkRvh8j7E8bmhD1Scp2
-         fEkxsppVJdxZuCWeILaR1C2ypmOsfKFpUWLQPA6PCmHXkkXU//AhsTvAs54tVns7U6G1
-         zbxYIN4gmpYKPRW90UkLIZ4eqrrPFuWf67imuSi9It4qL3tG8styub44rvH/qFKx9IKz
-         eKjW8dBHcIBH2HZLNJBaXcnv5BFGVKtUJewsWbfjFo1beoiwuIkI3/EKqdivyybG81Wl
-         futQ==
-X-Gm-Message-State: AD7BkJJ7MRjJ8NMtLxubGNV9U0628R0RIT+PVIPUjpVoNpPJxQ73yIcz3G03yQDDMlkgiQ==
-X-Received: by 10.194.186.170 with SMTP id fl10mr25941438wjc.29.1457943364957;
-        Mon, 14 Mar 2016 01:16:04 -0700 (PDT)
-Received: from slxbook3.fritz.box (p508BA989.dip0.t-ipconnect.de. [80.139.169.137])
-        by smtp.gmail.com with ESMTPSA id cb2sm21153683wjc.16.2016.03.14.01.16.03
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 14 Mar 2016 01:16:04 -0700 (PDT)
-In-Reply-To: <xmqqk2l58s2a.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Apple Mail (2.1878.6)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=4a35UsUQncBZRql7RmrYzjwUmWCy8a/3GnVQxdK0UlY=;
+        b=OCqqrd8URt0vgDsJHbM0kBEeyk4DQKi/ZLc2E8wf95napBwUUdd5xcr3XqUIWc6R1B
+         x452NdXuGAdgbf40fkNaqGPktfPG42TpqeYzctuvCAnndxGAL4XYBS9hm8AD8lMm90iR
+         +DZCFRjsF/uYUFh2AB+yVPc8WIf5LbJETRYNerW83H1AbEy7Jsux0P0h6GIlArNEjKSP
+         5Du44gcbfKYmzJST0vlPj0zGk//rTyfq+bPEFLeRXDYM5g3ZZfXFCuiBaDu605ZKDJ25
+         AlS+hCWKmDCFhXN3MKrz6eRnFjB4EsAfZaAithT4fAWJ/NJhgEJCL6TIxUfaCwsS46xg
+         KDRg==
+X-Gm-Message-State: AD7BkJIrkQeuLIlX3osTOrPPLztu2kviZsinUMVUU99x2Fm2gbiixydIqoAOjqn/V8UB3Y9huVjMznqi/8crTg==
+X-Received: by 10.31.21.4 with SMTP id 4mr23403483vkv.151.1457943862479; Mon,
+ 14 Mar 2016 01:24:22 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Mon, 14 Mar 2016 01:24:22 -0700 (PDT)
+In-Reply-To: <01020153698edabd-73daa5db-3c3e-417b-8d83-6cbc04439d95-000000@eu-west-1.amazonses.com>
+X-Google-Sender-Auth: ekIYBrCrAWNi72V3WrEWPxqGwNI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288774>
 
+On Sat, Mar 12, 2016 at 1:41 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+> Add commit.verbose configuration variable as a convenience for those
+> who always prefer --verbose.
+>
+> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+> Mentored-by: Eric Sunshine <sunshine@sunshineco.com>
 
-On 14 Mar 2016, at 07:57, Junio C Hamano <gitster@pobox.com> wrote:
+More typical would be to say Helped-by: rather than Mentored-by:.
 
-> Lars Schneider <larsxschneider@gmail.com> writes:
-> 
->> I thought a while about this requirement and I wonder if a wrapper called 
->> 'ggit' (guarded Git) could be a solution. The wrapper would pass all 
->> command line arguments to 'git' and check for potentially destructive 
->> commands. If such a command is detected then the user would see a warning.
-> 
-> I recall back in the days when people said that Hg's command set was
-> so much more pleasant to use that some people thought about building
-> Hg's command line UI on top of low level implementation of the Git's
-> data structure.  Even before that time, there was an effort "Cogito"
-> to build an alternate UI on top of Git core.  If "ggit" can be made
-> reasonably feature complete in such a way that it lets beginners do
-> all what they need to do, omitting many advanced/hairy features core
-> Git may let users use (i.e. making trade-off between power and risk
-> of misuse differently from core Git), that may be a reasonable way
-> to offer a "beginner mode".
-> 
-> The beauty of such an approach is that as long as "ggit" correctly
-> talks the same on-wire protocol when interacting with other people's
-> repositories, nobody needs to even know or care that you are using
-> "ggit" exclusively.  Two systems can talk without problems.
-> 
-> If "ggit" is made too limited, there is an issue.  Beginners may at
-> some point need to transition to the real thing to fully exploit the
-> power of Git, and they may need to unlearn "ggit" and learn Git.
+Also, place your sign-off last.
 
-I think a "ggit" wrapper should not introduce any new commands or new
-parameters. Everything should be passed unmodified to Git. The wrapper
-would only add additional warnings such as "You are about to do X which 
-will permanently destroy Y. Do you want to continue?". Therefore
-a transition from "ggit" to "git" would not require any learning effort.
+> ---
+> diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
+> index 2ddf28c..bb7ce7c 100755
+> --- a/t/t7507-commit-verbose.sh
+> +++ b/t/t7507-commit-verbose.sh
+> @@ -96,4 +96,22 @@ test_expect_success 'verbose diff is stripped out with set core.commentChar' '
+> +test_expect_success 'commit.verbose true and --verbose omitted' '
+> +       test_config commit.verbose true &&
+> +       ! git status | grep "*diff --git" &&
 
-Maybe "ggit" could also be interpreted as "guided Git" (sounds more 
-friendly than "guarded Git"). I have the impression that many Git 
-beginners make mistakes because they don't have a mental model of Git,
-yet. A "guided" Git version could explain the commands a bit more 
-detailed as they use Git (e.g. with ASCII graph examples). I know
-that's what man pages are for but I've encountered many users 
-(especially on Windows) that are not aware of man pages.
+This is a bogus regular expression; some greps may barf on it
+outright, while others will treat "*" as a literal. Either way, it
+could never match "diff --git" so the test would succeed by accident
+even if git-status did erroneously respect "commit.verbose".
 
+> +       git commit --amend
+> +'
 
-> This approach, if it wants to become successful in helping users,
-> would take quite a lot of thinking and work to avoid omitting too
-> much to necessitate users to migrate to Git.  But I can very well
-> imagine that a new "Cogito 2" project (I am not saying that the UI
-> Cogito tried to achieve were superiour or anything of that sort--I
-> just needed a name, and picked one name that came to my mind) may
-> get done by those who interact rarely with the core Git community
-> and may live as one of many independent and viable third-party
-> projects you find on GitHub.
-> 
-> There however are two questions I do not offhand have good answers
-> to: (1) if that kind of effort is of suitable size for GSoC, and (2)
-> if it is suitable to be supported by the Git project proper.
+I realize that it's possible to (mis)read Junio's recommendation[1]
+about also testing git-status as a hint to combine the git-commit and
+git-status checks into a single test, but that's not what was
+intended. These are conceptually distinct checks, thus they should
+each have a separate test. I'd suggest restoring the
+"commit.verbose=true and --verbose omitted" test as it was shown in
+[2], and then adding a new test in this script for git-status which
+looks something like this:
 
-Good questions. I have no previous experience with GSoC Git projects
-and therefore I am not qualified for an answer. However, my gut feeling
-would be that a proof of concept implementation of a "ggit" wrapper
-that does not add any new commands and only adds warnings for destructive
-commands could be in the GSoC scope. However, Sidhant must be aware of
-the fact that this is a controversial topic and therefore any future work
-on this topic might be never merged into Git.
+    test_expect_success 'status ignores commit.verbose=true' '
+        git status >actual &&
+        ! grep "^diff --git" actual
+    '
 
-I also thought about (2). The obvious advantage of having something like 
-"ggit" as part of Git core is that it would be shipped with the standard
-Git distribution. That would especially help beginners. However, 
-maintenance is a very strong counter argument. Maybe "ggit" could
-start as a separate project and if it picks up then Git core can still
-decide to merge it?
+[1]: http://article.gmane.org/gmane.comp.version-control.git/288648
+[2]: http://article.gmane.org/gmane.comp.version-control.git/288674
+
+> +test_expect_success 'commit.verbose true and --no-verbose' '
+> +       test_must_fail git -c commit.verbose=true commit --amend --no-verbose
+> +'
+> +
+> +test_expect_success 'commit.verbose false and --verbose' '
+> +       git -c commit.verbose=false commit --amend --verbose
+> +'
+> +
+> +test_expect_success 'commit.verbose false and --verbose omitted' '
+> +       test_must_fail git -c commit.verbose=false commit --amend
+> +'
+
+Not at all mandatory, but it wouldn't hurt to add a couple additional tests:
+
+* commit.verbose=true and --verbose
+* commit.verbose=false and --no-verbose
+
+>  test_done
