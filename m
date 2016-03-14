@@ -1,100 +1,81 @@
-From: =?UTF-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
-Subject: [GSOC] Microproject "Move ~/.git-credential-cache to ~/.config/git"
-Date: Mon, 14 Mar 2016 22:47:53 +0800
-Message-ID: <CAKqreux4aYhXTE9kUHKoKCJ2-4KDWyi58ioCm-CWqXhUYCtEEw@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [ANNOUNCE] Git v2.8.0-rc2
+Date: Mon, 14 Mar 2016 16:29:08 +0100
+Message-ID: <56E6D8C4.2010205@drmicha.warpmail.net>
+References: <xmqqr3fiaq9f.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 14 15:48:01 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 14 16:29:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afTmp-0002GF-SF
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 15:48:00 +0100
+	id 1afUQq-0006GN-LU
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 16:29:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934374AbcCNOrz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2016 10:47:55 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:35704 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752585AbcCNOry (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2016 10:47:54 -0400
-Received: by mail-ob0-f174.google.com with SMTP id fp4so178063265obb.2
-        for <git@vger.kernel.org>; Mon, 14 Mar 2016 07:47:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=saKeXbRmqfmPBooeF2z85NvbhX6iu2UCRgWReYe8SQo=;
-        b=UngtJ3ICj20PcP5HfHeILVJK7FjP94PxlzbuVY9LPlahrqWgn/OheTK9fXA1gtmn6D
-         CtvuybaOqSGmVjAtVQ2m/h5rk7n0rdBAj5RloRnEtf3cAjOEp5Qxw3WYBq7aydf0xcaT
-         xIvkq0jKnt/cEtfokAytYIfY7k70YJm9K2aVQfiXOPYEjHbJPR03V5ndn0lXz3PhWv/k
-         pI0OhWtTZgVBZ6y7ak6wtaWZKW62dC7nmLiqOcbVfw6lYNbGqu//KW8nanYzrUVMDBMK
-         /vRIS+9iDVyQNCd/2R2PaAIOyRgcrD1uzJEgV7CUBe6Tx9HXUFGLz3OAsC92nUNfpInE
-         cSpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=saKeXbRmqfmPBooeF2z85NvbhX6iu2UCRgWReYe8SQo=;
-        b=atQZQJDj6f5D2JWVc2CUpvTB1cat0cNzrQM90Kqhb8zbxlBOuDGMG3+kliGlU8GEdi
-         cqfgZo9YyB7PFI8mFNAFfYDWwQc4/B8fy1EwUCPiHS0v5pFLae3+7R8+WH/2MtDzN/yi
-         ZWMngsCMEt+cOFHrSNl+FupFY+YK9rT8Q0/AgZg2qtb30CHYOUVFLe+8NJZAmUwlD83e
-         MVUyFVsn93dcmOllSwHTFPT1VqimKYSJoDBpyGkt4B7+bZ7e9+9e8hymFcMp8BpS6F5X
-         gXCku7bkZEdjVWvC1YOcuB0lHfx7DfkJb/BSCdQ63S0wRteo7u40dKYNKXHCYsE8r332
-         a/SQ==
-X-Gm-Message-State: AD7BkJJrJOU8jrzYdAUuk/S68otMhGSuqgXBix0cBnOzGQl0ucE3jBWY1l4UIzzzZ1gK+P7LX0CA5QDikrZhpg==
-X-Received: by 10.182.158.42 with SMTP id wr10mr13676107obb.37.1457966873564;
- Mon, 14 Mar 2016 07:47:53 -0700 (PDT)
-Received: by 10.157.43.68 with HTTP; Mon, 14 Mar 2016 07:47:53 -0700 (PDT)
+	id S965407AbcCNP3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2016 11:29:13 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:44175 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S965025AbcCNP3L (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Mar 2016 11:29:11 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 404B320B1E
+	for <git@vger.kernel.org>; Mon, 14 Mar 2016 11:29:10 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute4.internal (MEProxy); Mon, 14 Mar 2016 11:29:10 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=1Nm5vkkCBFNQCF9RMD5gCEu4vS0=; b=ezsY77
+	b1eDyVRXpzC7W0bS2XatvuPF8jO0AloDqVZpahuokIijXioCHa0CenyTruF4Y9eg
+	Ya294qojv8L0vrvXpU67F9cZL4qLvPZBP0ry+ozDGLBVIGlPdVYl8bf55ZaGtm8y
+	ZvyNj8efDxCmPGWhBgLBX7a/k1wqrGFM4Hsv8=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=1Nm5vkkCBFNQCF9
+	RMD5gCEu4vS0=; b=ud6oNpuIE2uJH7G7SkTlzgThsaKJyl40IYu5spgMYZoeKX4
+	wvrU+Pz3yMYO+Y7IveTWnDrPAF+7UEc7ouFrX1il2sYM2/iwF5viM7TGgdKeq9k0
+	Ta4I+cS9q7zSlXtM2BhOIqxIypTWRRSoBrUmLzVOmOHu7ob8i5aHYIQA1laU=
+X-Sasl-enc: +ZO7FkmbGga5mW61kOpLh8zAOGF+LpKIpZoOL8pakl+8 1457969349
+Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 993BA680092;
+	Mon, 14 Mar 2016 11:29:09 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <xmqqr3fiaq9f.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288782>
 
-I'm Hui Yiqun, a master degress candidate of Tsinghua University. I'd
-like to participate GSOC 2016 as an developer of git.
+Hi Junio,
 
-I have basic knowledge about several programming languages (namely C,
-python, go and etc.), compilers and cmake which may help my
-development.
+Have you pulled git.pot for 2.8.0 already? [1]
 
-My github page is at [here](https://github.com/huiyiqun/). There are
-some tiny programs.
+Maybe I'm not up-to-date on the release cycle timing regarding l10n, but
+I was trying to fix a mixed translation/non-translation issue, and it
+turned out the reason is probably that it is not in "git.pot":
 
-I took part in a CDN project last year and learnt much about TCP/IP,
-web service and, most importantly, cooperation. However, I really want
-to learn how members of an opensource project work together.
+"behind " is in git.pot
+"ahead " is not in git.pot
 
-I have covered most of the available materials, such as list of ideas
-and micro-projects, `README.md`, `INSTALL` and
-`Documentation/CodingGuidelines`. So I decide to start my contribution
-with the microproject "Move ~/.git-credential-cache to ~/.config/git"
-found [here](http://git.github.io/SoC-2016-Microprojects/), which
-seems easy for me.
+Now, I can recreate git.pot locally, of course, but localisations such
+as de.po seem to have those translation commented out because they're
+missing from git.pot.
 
-I greped the source code and found out that there are two places where
-"git-credential-cache" are hard-coded:
+Basically, translations don't get proper testing at this point in the
+release cycle.
 
-1. credential-cache.c
-2. contrib/persistent-https/socket.go
+In fact, there seems to be another weird problem around that string.
+I'll follow up with a patch in a minute.
 
-At first sight, there are following tasks to do:
+Michael
 
-1. implement a function `xdg_cache_home` similar to `xdg_config_home`
-in `path.c`.
-2. replace the hard-coded path with an call to `xdg_cache_home`.
-
-I'm still confused about following:
-
-1. should `~/.git-credential-cache` been moved to
-`~/.cache/git/credential`(as the descreption of the micropject says)
-or `~/.config/git/credential`(as the title of the microproject says)?
-2. If `~/.cache/git/credential` is the desired target, there seems
-nothing to do with `XDG_CONFIG_HOME`.
-3. Does "without breaking compatibility with the old behavior." mean
-that I should still try to connect to the unix socket placed at the
-old place? If yes, which order is prefered?
-
-Thanks for your patience. I hope that my English didn't affect the
-communication.
+[1] http://permalink.gmane.org/gmane.comp.version-control.git/287774
