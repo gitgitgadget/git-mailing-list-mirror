@@ -1,150 +1,93 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: [PATCH v7] commit: add a commit.verbose config variable
-Date: Mon, 14 Mar 2016 21:38:19 +0000
-Message-ID: <010201537710be08-f31428b3-5df3-4694-8c4a-0e8f058131b3-000000@eu-west-1.amazonses.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC/GSoC 09/17] rebase-common: implement cache_has_unstaged_changes()
+Date: Mon, 14 Mar 2016 14:52:44 -0700
+Message-ID: <xmqqoaag9177.fsf@gitster.mtv.corp.google.com>
+References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com>
+	<1457779597-6918-10-git-send-email-pyokagan@gmail.com>
+	<alpine.DEB.2.20.1603142151230.4690@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 14 22:46:46 2016
+Content-Type: text/plain
+Cc: Paul Tan <pyokagan@gmail.com>, Git List <git@vger.kernel.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>, sam.halliday@gmail.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 14 22:52:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afaK3-0002Kb-7b
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 22:46:43 +0100
+	id 1afaQ7-0007Hz-CI
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 22:52:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751293AbcCNVqj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2016 17:46:39 -0400
-Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:60515
-	"EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750958AbcCNVqi (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Mar 2016 17:46:38 -0400
-X-Greylist: delayed 496 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 Mar 2016 17:46:38 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1457991499;
-	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=qfbXdwiah55EkDBmmMTASQmhbOzPTmTGIr5CP5gnhwo=;
-	b=dZe8RVJ1z0Y+HQvrBRQ3vnkyKYk+2wwgg15r0Hrb/D/vPUdWcdKxa6uy3jQDJM3V
-	xGSTIIQCAlPQ7EXzyca8dUnWZftgXkoGr5fjCHeCU4hb2Zq0limsy/1rVDEzFv3/36/
-	kzBxivWVe9rHb2zuYXhFvRQ+engnefcBJOmTdvBE=
-X-SES-Outgoing: 2016.03.14-54.240.7.12
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+	id S1752567AbcCNVwu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Mar 2016 17:52:50 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61456 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752481AbcCNVws (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2016 17:52:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5616C4D6D8;
+	Mon, 14 Mar 2016 17:52:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qYgYnXRaJw2wOVjGmyjxl454ddA=; b=sYTtkF
+	QWhvFM8RdGtkkiEZL+qlA/ReNiCJUP06cr8SBJB5AZvkgCG119Z+vGsvrLUBYh9L
+	IVQHmR/1sxiUYFRcyA8ryncrxj7i/lucvCF+QEXZYht2gYDbxGuDCu6tHCB/DgYq
+	biH4cUCzxUunFR9MO1TLKerWPz9HPlScyy5ho=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=B9Zsf4AkMhm5HB//dEAA8vzYfuwSpxSj
+	/WDcK5X7Tpg3lCVMNujsiKVpmtEYlpGc0RK8Cl/c4/ef5FvjQi6mhnRC571Znj3T
+	zgjOGVz/KFkCszwZwsJgB8r1te5ItVw/katpXHKfIZzSr6XKLywLNinlVU8PCGRE
+	0dJqM4wsHSQ=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4C6014D6D7;
+	Mon, 14 Mar 2016 17:52:46 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B471C4D6D6;
+	Mon, 14 Mar 2016 17:52:45 -0400 (EDT)
+In-Reply-To: <alpine.DEB.2.20.1603142151230.4690@virtualbox> (Johannes
+	Schindelin's message of "Mon, 14 Mar 2016 21:54:19 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1602F708-EA2F-11E5-8C50-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288821>
 
-Add commit.verbose configuration variable as a convenience for those
-who always prefer --verbose.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+> Also, you might want to join my discussion with Junio about the sense or
+> nonsense of keeping the prefix parameter instead of silently removing it
+> while moving the functions.
 
----
-The previous versions of this patch are:
- - [v6] $gmane/288811
- - [v5] $gmane/288728
- - [v4] $gmane/288652
- - [v3] $gmane/288634
- - [v2] $gmane/288569
- - [v1] $gmane/287540
+This is a tangent to Paul's topic, but it is an important tangent in
+the other thread, in that you didn't mention one thing there that I
+needed to make an accurate assessment.  I wasn't aware of your plan
+of moving it and use it in a context unrelated to "git pull", hence
+keeping the prefix would made perfect sense, as the enhanced error
+reporting (i.e. "not only I am saying that you have modified files
+and hence you cannot proceed, I can tell you which paths have been
+modified") would happen inside the function if done in that context.
 
-The changes with respect to the last version are :
- - Add '-c commit.verbose true'
+If the function will be made a public helper that may be called by
+anybody, a possible error reporting mechanism would be to give a
+list of modified paths to the caller that asks them, and have the
+caller apply its own "prefix" processing to make them relative.  The
+public helper function will not even be a position to say "you have
+modified files and hence you cannot proceed"--it will not be in a
+position to even issue an error message.  The only thing it should
+do is to communicate to the caller if there are modified files or
+not (and leaving the decision on what to do to the caller--after
+all, the caller may want to do something only when there are
+modified files, e.g. "add ." may decide not to do anything when
+there is no change--so "hence you cannot proceed" is not its
+business), and if the caller wants to see them, which paths are
+dirty.
 
-It is a mistake on my part. I was a bit sleepy.
----
- Documentation/config.txt     |  4 ++++
- Documentation/git-commit.txt |  3 ++-
- builtin/commit.c             |  4 ++++
- t/t7507-commit-verbose.sh    | 29 +++++++++++++++++++++++++++++
- 4 files changed, 39 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 01cca0a..9b93f6c 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1110,6 +1110,10 @@ commit.template::
- 	"`~/`" is expanded to the value of `$HOME` and "`~user/`" to the
- 	specified user's home directory.
- 
-+commit.verbose::
-+	A boolean to specify whether to always include the verbose option
-+	with `git commit`. See linkgit:git-commit[1].
-+
- credential.helper::
- 	Specify an external helper to be called when a username or
- 	password credential is needed; the helper may consult external
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 9ec6b3c..d474226 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -290,7 +290,8 @@ configuration variable documented in linkgit:git-config[1].
- 	what changes the commit has.
- 	Note that this diff output doesn't have its
- 	lines prefixed with '#'. This diff will not be a part
--	of the commit message.
-+	of the commit message. See the `commit.verbose` configuration
-+	variable in linkgit:git-config[1].
- +
- If specified twice, show in addition the unified diff between
- what would be committed and the worktree files, i.e. the unstaged
-diff --git a/builtin/commit.c b/builtin/commit.c
-index b3bd2d4..e0b96231 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1505,6 +1505,10 @@ static int git_commit_config(const char *k, const char *v, void *cb)
- 		sign_commit = git_config_bool(k, v) ? "" : NULL;
- 		return 0;
- 	}
-+	if (!strcmp(k, "commit.verbose")) {
-+		verbose = git_config_bool(k, v);
-+		return 0;
-+	}
- 
- 	status = git_gpg_config(k, v, NULL);
- 	if (status)
-diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
-index 2ddf28c..5320f1e 100755
---- a/t/t7507-commit-verbose.sh
-+++ b/t/t7507-commit-verbose.sh
-@@ -96,4 +96,33 @@ test_expect_success 'verbose diff is stripped out with set core.commentChar' '
- 	test_i18ngrep "Aborting commit due to empty commit message." err
- '
- 
-+test_expect_success 'commit.verbose true and --verbose omitted' '
-+	git -c commit.verbose=true commit --amend
-+'
-+
-+test_expect_success 'commit.verbose true and --no-verbose' '
-+	test_must_fail git -c commit.verbose=true commit --amend --no-verbose
-+'
-+
-+test_expect_success 'commit.verbose false and --verbose' '
-+	git -c commit.verbose=false commit --amend --verbose
-+'
-+
-+test_expect_success 'commit.verbose false and --verbose omitted' '
-+	test_must_fail git -c commit.verbose=false commit --amend
-+'
-+
-+test_expect_success 'commit.verbose true and --verbose' '
-+	git -c commit.verbose=true commit --amend --verbose
-+'
-+
-+test_expect_success 'commit.verbose false and --no-verbose' '
-+	test_must_fail git -c commit.verbose=false commit --amend --no-verbose
-+'
-+
-+test_expect_success 'status ignores commit.verbose=true' '
-+	git -c commit.verbose=true status >actual &&
-+	! grep "^diff --git" actual
-+'
-+
- test_done
-
---
-https://github.com/git/git/pull/205
+Incidentally, that is how wt_shortstatus_status() reports the list
+of modified paths, using s->prefix.
