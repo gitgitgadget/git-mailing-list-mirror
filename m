@@ -1,111 +1,121 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH v5] commit: add a commit.verbose config variable
-Date: Tue, 15 Mar 2016 00:39:40 +0530
-Message-ID: <CAFZEwPP_SZsk+B+1L93snQji=wg728P3Oq94oVJ+ZJkhmdC9Yw@mail.gmail.com>
-References: <01020153698edabd-73daa5db-3c3e-417b-8d83-6cbc04439d95-000000@eu-west-1.amazonses.com>
-	<CAPig+cQ+8+saxsGzV=-C2w-eSaaOf0MYC=zTQbH3CW2G5UE5uw@mail.gmail.com>
+From: =?UTF-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
+Subject: Re: [GSOC] Microproject "Move ~/.git-credential-cache to ~/.config/git"
+Date: Tue, 15 Mar 2016 03:53:52 +0800
+Message-ID: <CAKqreuwgxzVTAUdZPf9+ivXCdW8F2Ksafw7V0pbLAaRPwGX9Uw@mail.gmail.com>
+References: <CAKqreux4aYhXTE9kUHKoKCJ2-4KDWyi58ioCm-CWqXhUYCtEEw@mail.gmail.com>
+	<xmqqshztawwd.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 14 20:09:48 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 14 20:54:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afXsB-00052n-8l
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 20:09:47 +0100
+	id 1afYZ2-0006Sr-HT
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Mar 2016 20:54:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755784AbcCNTJn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2016 15:09:43 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:36408 "EHLO
-	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754808AbcCNTJm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2016 15:09:42 -0400
-Received: by mail-yw0-f194.google.com with SMTP id p65so12658774ywb.3
-        for <git@vger.kernel.org>; Mon, 14 Mar 2016 12:09:41 -0700 (PDT)
+	id S1755966AbcCNTxy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Mar 2016 15:53:54 -0400
+Received: from mail-ob0-f181.google.com ([209.85.214.181]:35604 "EHLO
+	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755505AbcCNTxx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Mar 2016 15:53:53 -0400
+Received: by mail-ob0-f181.google.com with SMTP id fp4so187935196obb.2
+        for <git@vger.kernel.org>; Mon, 14 Mar 2016 12:53:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=nsic3nsbp6LtvfHTPypCr4A7pQCbv7CFuyRos/H5Ap8=;
-        b=npwekLl2/jIw6Sb0WgYfPNcMV1srroPONaHq26FxgAmYANpLIvPY2V/kqcmVjxBpju
-         s68FGrhn8MSB65eY1PYlFvE8LVfYPmr8Ug+3YcZJF/nyHqlIxbjcLqunwB/RylhOiLmv
-         4BUJ+vJUmFA7WCdCcWoeLAHY4tVEuvhom4S3JTXjQpHKG5VNAfVVz5Ti6yaQKCav2YkB
-         U7AQEY4TE6zyI2oNQPmztCNcg6kY6KTUbMn7BIlA0fjCjqTQWit6eepQD9rN8LLfweaj
-         lUYIgCBITaqY00cMUj/4Fs/5bBICnQTy/vGRBQpd6giBo2TO/EhAliiC86yPRNgIvcsN
-         bZxA==
+         :cc:content-transfer-encoding;
+        bh=BCsqPjwvTSLqIJw/LX0D6Tb+aHTjb1ZzIMSqLX2jDA0=;
+        b=DZlSYePuocsfb7d7xFY4zIMbkMy2vviyrwdOV1CZAXYf/pAXAb5y1q7MhWX9U8PW32
+         IQ/H9A2vc2vEcGXjfSbIh0f5ITSkMixO7F1kbP5F0ubbLWALcOE4RRm5wOCxpSEDeByW
+         0BdAQeCBCgSc4VsNbs8eK+bxJ5GPQs4v2lXoYRRgez2nL/MwQfyQs5/XA9Xy35fxyHXB
+         Q8/+bNwKVfZW1uQiUMCHcxORpZk5iaHDBE+73ukcvU92PyAny/uWwOY/GxPNpBbhGCGk
+         8rjzsiU1O7nSwNwUrUT0Ogg0y2dhWOIm0fzBQ5p7YQ6Q+/hlvfSoYh/ba6yQA8r3kZ1s
+         GmQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=nsic3nsbp6LtvfHTPypCr4A7pQCbv7CFuyRos/H5Ap8=;
-        b=NGjYu5y9VVs7Ot2D2O29tr95Gu1SEERc8LLUZ1IE6srGsWTj5lWAamjsoMwM8zCyCo
-         gSwyS48Sccz3iLtHV9jjPNLsbZpd3YmXcYIrU6ZCTF7wI7xy9HsccXeNRj2wvKel5Gyp
-         UWlp29wzak4TVphNWC46qIb+Kg1hqXuxzp4umXr9OkWfS3VmUicUnnh3SptiFNFWg5Pg
-         GaXAxyP+UnE+X7j5HYavYj8ctHgdEeDPco41909ARFFxbBNsu0YK1N3fKWxETD+WbaAx
-         pqOAQPt1CXnG92j/Q4Pqe+939ZyM5N6hMeDazCXzd0O9cgh78F5SJ4VLvhwcarR74bCY
-         iKbw==
-X-Gm-Message-State: AD7BkJJMUFv0BUO9nXKIB1wfTeX9QMVqC0Ylt7w1kSTSsWuzvvHc8Jiv0INV0RztsAx314pNAFeAYWpwVeojSA==
-X-Received: by 10.129.37.3 with SMTP id l3mr12939520ywl.128.1457982580870;
- Mon, 14 Mar 2016 12:09:40 -0700 (PDT)
-Received: by 10.13.203.137 with HTTP; Mon, 14 Mar 2016 12:09:40 -0700 (PDT)
-In-Reply-To: <CAPig+cQ+8+saxsGzV=-C2w-eSaaOf0MYC=zTQbH3CW2G5UE5uw@mail.gmail.com>
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=BCsqPjwvTSLqIJw/LX0D6Tb+aHTjb1ZzIMSqLX2jDA0=;
+        b=jk6ex6mT/d96tgvsudOnhd8x8sUOeFOvk6m8V6iuEi09K66QBMmQFn14Suf9W4w54v
+         FDfHrM7ekZPikp4Zip24IyvEWBrS+oE4JoT61t+uC1vxOuUOq7Q8hufhHnJTKydNk8YG
+         gWSww5qDubr+nkwmWinIpDmqeYQYcZbq97hfkJOu8ro/YfGDtYAIJcpcNklajwpSNdl/
+         ad/gf2N0mNEnfMQzFmiLyxqSjfmjxMQ1V7wp0Tv+p31oaOd7lTooZx+grZhJ9eSRSbT8
+         beaWIV97rx7puDcqTqONtTUZmYrP+Ejbn8A1BUFFBAz7kVbYInKA2hkleIHzESxinkzA
+         K8KA==
+X-Gm-Message-State: AD7BkJKZiqJ5xcsj8CA+X4lRWU9cEW5VSDbmoIhTq4E40x5zN5vThm4an1+4bez+WCRiVmBSp+tMBFPxH57D/g==
+X-Received: by 10.182.158.42 with SMTP id wr10mr14696881obb.37.1457985232479;
+ Mon, 14 Mar 2016 12:53:52 -0700 (PDT)
+Received: by 10.157.43.68 with HTTP; Mon, 14 Mar 2016 12:53:52 -0700 (PDT)
+In-Reply-To: <xmqqshztawwd.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288803>
 
-On Mon, Mar 14, 2016 at 1:54 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Sat, Mar 12, 2016 at 1:41 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->> Add commit.verbose configuration variable as a convenience for those
->> who always prefer --verbose.
+2016-03-14 23:42 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
+> =E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqun@gmail.com> writes:
+>
+>> I'm still confused about following:
 >>
->> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
->> Mentored-by: Eric Sunshine <sunshine@sunshineco.com>
-
-> More typical would be to say Helped-by: rather than Mentored-by:.
+>> 1. should `~/.git-credential-cache` been moved to
+>> `~/.cache/git/credential`(as the descreption of the micropject says)
+>> or `~/.config/git/credential`(as the title of the microproject says)=
+?
 >
-> Also, place your sign-off last.
+> The latter, I'd think, as you noticed in 2. the former does not make
+> much sense.
 
-Sure!
+I'm not sure. There is only a unix socket under ~/.git-credential-cache=
+=2E
+It's not a config.
 
-> This is a bogus regular expression; some greps may barf on it
-> outright, while others will treat "*" as a literal. Either way, it
-> could never match "diff --git" so the test would succeed by accident
-> even if git-status did erroneously respect "commit.verbose".
+After reading the
+[spec](https://specifications.freedesktop.org/basedir-spec/basedir-spec=
+-0.7.html)
+more carefully, I think that $XDG_RUNTIME_DIR may be a better choice th=
+an
+the above two. For ~/.git-credential-cache/socket is a unix socket and =
+should
+be used only runtime.
 
-I was unaware about this. Thanks for pointing it out
+On my computer, this variable is well defined and pointed to /run/user/=
+$UID.
 
-> I realize that it's possible to (mis)read Junio's recommendation[1]
-> about also testing git-status as a hint to combine the git-commit and
-> git-status checks into a single test, but that's not what was
-> intended. These are conceptually distinct checks, thus they should
-> each have a separate test. I'd suggest restoring the
-> "commit.verbose=true and --verbose omitted" test as it was shown in
-> [2], and then adding a new test in this script for git-status which
-> looks something like this:
+The problem is that there is no suitable default to it if $XDG_RUNTIME_=
+DIR is
+not set. I guess /tmp/git-$USER is a good choice.
+
+>> 3. Does "without breaking compatibility with the old behavior." mean
+>> that I should still try to connect to the unix socket placed at the
+>> old place? If yes, which order is prefered?
 >
->     test_expect_success 'status ignores commit.verbose=true' '
->         git status >actual &&
->         ! grep "^diff --git" actual
->     '
-
-I misread Junio's recommendation. Will change this.
-
-> Not at all mandatory, but it wouldn't hurt to add a couple additional tests:
+> Let me be vague and oblique on purpose ;-)
 >
-> * commit.verbose=true and --verbose
-> * commit.verbose=false and --no-verbose
+> We used to have only ~/.gitconfig as the per-user location, and at
+> some point in the history we added XDG_CONFIG_HOME support.  Study
+> how that was done (hint: "git log" and "git blame" may be useful
+> tools for this purpose), and imitate it.
+>
 
-I was thinking of putting these tests as when I was debugging (simply
-by printing verbose variable), I found that when commit.verbose=true
-and --verbose the value of the variable `verbose` is 2. But then I
-thought it wouldn't be that useful. But since you have pointed it out
-now, I will definitely include them.
+I have read almost every commit which contains "XDG", as well as their =
+diffs.
 
-Regards,
-Pranit Bauva
+I think this issue I'm currently dealing with is a little different
+from formers,
+=46or this file is just an unix socket and never persistent. I could no=
+t just
+keep in step with old behavior unless that user manually create the fil=
+e
+at new-style path.
+
+Of course I could check the existence of `~/.git-credential-cache` and
+`$XDG_CONFIG_HOME/git/credential-cache` to decide where to put
+the socket, but it's not elegant enough. Because, as mentioned above,
+the socket file itself is not persistent.
