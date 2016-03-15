@@ -1,81 +1,74 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 0/1] Introduce a way to create a branch and worktree at
- the same time
-Date: Tue, 15 Mar 2016 21:07:01 +0700
-Message-ID: <CACsJy8A8OPZZnLs7dydvLMHz_CpU0xTaAAgmO9Vn2mABRywD6Q@mail.gmail.com>
-References: <cover.1457609615.git.johannes.schindelin@gmx.de>
- <CACsJy8BA7-ev9wTt6K45TgiNxOaBUXbN1P03U4EUAzAPy=7Faw@mail.gmail.com>
- <alpine.DEB.2.20.1603101417590.4690@virtualbox> <CACsJy8AuBsF_rhuo_a_nqaVH1ApT3iAyozt1w2vkmvHmK17hZA@mail.gmail.com>
- <xmqqmvq5bjlc.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1603150746490.4690@virtualbox>
- <CACsJy8B+c8=Y0Lb-TxjGF4689xP2Vyqjp4Q6CuffTLDWDMh3gg@mail.gmail.com> <alpine.DEB.2.20.1603151448220.4690@virtualbox>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH/RFC/GSoC 09/17] rebase-common: implement
+ cache_has_unstaged_changes()
+Date: Tue, 15 Mar 2016 15:15:46 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603151515030.4690@virtualbox>
+References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com> <1457779597-6918-10-git-send-email-pyokagan@gmail.com> <alpine.DEB.2.20.1603142151230.4690@virtualbox> <CACsJy8BOZsPcEgOLiBo4u4SAEzDVmFd_XgU3yq4P+rBGRyJx8w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 15 15:07:44 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Paul Tan <pyokagan@gmail.com>, Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>, sam.halliday@gmail.com
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 15 15:16:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afpdP-0001iD-4s
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 15:07:43 +0100
+	id 1afplQ-00076s-G7
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 15:16:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751883AbcCOOHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2016 10:07:34 -0400
-Received: from mail-lb0-f178.google.com ([209.85.217.178]:36363 "EHLO
-	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750833AbcCOOHd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2016 10:07:33 -0400
-Received: by mail-lb0-f178.google.com with SMTP id x1so24271749lbj.3
-        for <git@vger.kernel.org>; Tue, 15 Mar 2016 07:07:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=qVhSzn1thNb6lD+JKAgL45Tw/1asoAPWApVP7Dfl+Dw=;
-        b=wtuGsAtQZDU3gFhXK2hECwpIq6yApDz4SuswETg3LHZBJCzUbqNffQO1N2RCV1woM/
-         tvjfjMre/HOqPLJmKxRTypiQE7B6a0V9z/4ZzSyYk8y6+10S83RUCoUdHPMS13YS40BW
-         0CP8p+9E65ni/BtB5I6KfDZ4I46HXATAfv5YM8wTF0xNmpQajoPOYctg1csaU8Ns6tXB
-         dS/Z3ygrrA8R/mcQpCl2Zoff8/jLGD9ASWccxFZvo973GbUq61NRKcuzi4DugUpXuwfd
-         VkYdRxhl+qVcXbEARl5B0/aFzMZyON/kckZ/1scaMYix0otjG84v7dejT4iGY4QMyNdr
-         Nejw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=qVhSzn1thNb6lD+JKAgL45Tw/1asoAPWApVP7Dfl+Dw=;
-        b=F5bRBvdA0fneCVb5RhEJzQdSaMbfS1Ov2leMQHoMP4y5cIb/OOPgWdl2+ia4OzeW21
-         WTRi0Mw8v0g7Y9aBulwxiiMo/tY4Haxet/hYFFbhGNvxsDDYFtmyAdnyMs+RYxwxutMc
-         S1x0wVjyeqX7Bq3MM7iLc/t9i689+cGjo/z848DvEAjRV6TumjnoonVtD5AHjL6NqK52
-         5z0Sh7MNv6LVWiMJ5YMc5m464KAIFcnSe96kynwJPh6vj2FmHQyDSp+x3jmQYFg3/gj+
-         o3OGeUbwWDnUoS8l4QTaudWXUKxo9aiHOlSyIIgcXBQFZJBxyWw0HQ167fBUyoxRwFGZ
-         +9BA==
-X-Gm-Message-State: AD7BkJK7AsAh7p7IPt+P0n7XxNK4aHzhoApPKLBmfPhuE8zg88WyOchr0DFqMq3P65ZnAguCCXfYEP43XA2R8w==
-X-Received: by 10.25.211.75 with SMTP id k72mr9860343lfg.45.1458050851467;
- Tue, 15 Mar 2016 07:07:31 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Tue, 15 Mar 2016 07:07:01 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1603151448220.4690@virtualbox>
+	id S964881AbcCOOP4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2016 10:15:56 -0400
+Received: from mout.gmx.net ([212.227.15.19]:59535 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754106AbcCOOPz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 10:15:55 -0400
+Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MGBdv-1adNiu1Ivf-00FBSZ; Tue, 15 Mar 2016 15:15:47
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <CACsJy8BOZsPcEgOLiBo4u4SAEzDVmFd_XgU3yq4P+rBGRyJx8w@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:LFoJGKTz6/PjmhuHIlnu8KJ8cvfgr+1nFDrgwAhpGZr7wPZnMsc
+ o9sIk5iazZbL1Qp04CC30u5zbbny03f9sZ4Nul6e2HWgKYHZAnEInoz5lff9Uq7nMzYeDEd
+ HsrUkTEA2Rj0w9OPf4h+ZoNkVK5Ph0fcL/orTPIua5EH+HuVZyPyAoVNN5IXjgVN+5AvvHJ
+ I/WnIt6b9FRB01TE/bhRg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:t9g/luBYOuM=:fLeqJj1rmYtfSp5KaXHuyW
+ JZmUlf+E96nUoUMYGAs1alcCRh1rrWo88Z7SLQAV4rofYd4aN+HACVRim4LYSme6BmLXrbYAN
+ LtdtyhSDxHQTHABfvlikQ/qEVZ9whVZ4OSbuY4yDBCfRAFo954HY9L9ghR48tz7FGc7N5vZi0
+ kD51/2j2ngTS8FQ+OOlt2D7vo/rhxl4ZE485c5er63gJI3gjXpl178E3o3bhEQnEM688XH21i
+ LwUjgLBbO7WuFDzwV7zCMTxFgrCf3MfkBbcUxWUvz3VbfarAsNqP2HjUksnMed+AxEc3aJi5n
+ JTNrnrOA4W4xdHwVofFRuIGojrkGhbWF6fbf3HZTGuAWW0WAaqEnNXoXfPXSKlT7h3pkH2ifM
+ RqIWOt5ZiC9nIswUBvIcUJWP5gsewtLKGFsz6vF/y6RwqAD0ICJLgFDFiwuovtIYgsnmv9d2m
+ JGroWOb3ZWKQKVU4HWh6Js6Vn2P+Ss2NtUL0cV6ZpIIRuwVg5J1jsWv/TT+o92MhBRD7QGLAH
+ oXnvMnXg96+X1onthg9NCVZoLPbGObOTolygcdrlZbgYbm5bOd3+s+xE8WN9leT/ErKMlXqep
+ jKjgcPOrdweuuOnuy1gcEAR+Q5YlD71D9m9PGMH03xVvaM4pQmVYpQ7C+110Kia6szudnGaUz
+ iG8kGDHQYOYSE6umDt8wqoIble4U4iInefwjIIsSt8PGLkNNofsR4utECYva7IercCIsd3PNG
+ e952G5CGCteQBbBbn4+623PchPVCFpeLiiBw6OIf76QHQEF/U/wJ8PBW0ngXsJFBiBHOwAQU 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288855>
 
-On Tue, Mar 15, 2016 at 8:56 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Sure. And with the repository being put elsewhere, you also buy the tedium
-> to no longer be able to simply "less .git/rebase-apply/patch". Which I
-> have to type *a lot*. You win some, you lose some. If you ask me, you lose
-> some more, but in some cases that is worth it.
+Hi Duy,
 
-If you start to use git-worktree, you'll need to type even longer. I
-notice I do and am seriously considering an alias of `git rev-parse
---git-path rebase-apply/patch` to type less temporarily. But this is
-the lack of proper UI. "git rebase" should provide a way to look at
-this file (and maybe some others too). I just don't know what the
-option would be and how we align it with git-am, which shares this
-same problem.
--- 
-Duy
+On Tue, 15 Mar 2016, Duy Nguyen wrote:
+
+> On Tue, Mar 15, 2016 at 3:54 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > In my 'interactive-rebase' branch...
+> 
+> 64 commits! Maybe next time we should announce wip branches like this
+> when we start doing stuff so people don't overlap. Of course these
+> branches do not have to be perfect (and can be force pushed from time
+> to time, even).
+
+Much of this is cleanup in the beginning. And I tried to split out a patch
+I thought was uncontentious, and promptly ran into a philosophical
+discussion I did not seek ;-)
+
+Ciao,
+Dscho
