@@ -1,80 +1,64 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] submodule-config: use hashmap_iter_first()
-Date: Tue, 15 Mar 2016 15:30:07 -0400
-Message-ID: <CAPig+cRJKsdkGEr-_Z7pxKW-t9X45+Z4ZLzgk=aprMHMdmLNqg@mail.gmail.com>
-References: <1458069195-20888-1-git-send-email-kuleshovmail@gmail.com>
-	<CAGZ79kZ_wbJ2MGs_E-P_0eLk3JX_0QhT1c_BxqWCS+vrg8+xwA@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 1/4] lib-gpg: drop unnecessary "missing GPG" warning
+Date: Tue, 15 Mar 2016 20:33:39 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603152033140.4690@virtualbox>
+References: <1457309427-30124-1-git-send-email-sunshine@sunshineco.com> <1457309427-30124-2-git-send-email-sunshine@sunshineco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Alexander Kuleshov <kuleshovmail@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Mar 15 20:30:15 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Mar 15 20:34:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afufW-000761-KL
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 20:30:14 +0100
+	id 1afujA-0001JP-A8
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 20:34:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934905AbcCOTaL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2016 15:30:11 -0400
-Received: from mail-vk0-f43.google.com ([209.85.213.43]:33355 "EHLO
-	mail-vk0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932665AbcCOTaJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2016 15:30:09 -0400
-Received: by mail-vk0-f43.google.com with SMTP id k1so34386164vkb.0
-        for <git@vger.kernel.org>; Tue, 15 Mar 2016 12:30:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=pr9+xRPfE9C/rc6fMLR8T2D69Bzvjr8jG6HUhdPW5IE=;
-        b=xYsSTXaAbjoh6jfogjHcoIO5sxU+hOeIFmbE1vYTKa8fKOkzSltoAwtmWqTmNxYFcQ
-         NMU1v5uipKxtMTCto1cAF31PsbOJei/TtnMwSUr4OBo5NdzCe/1xgcScTLX+Cz9Dpx3W
-         BgMgJYncK0c3GbNJ5UiMqqPoj2vhOfHoUo2z1xYuMfZxQdsstJga9Yrqfnb2RtpeMoUO
-         sQDepCeTn/UtAYi7HghJOjOzGO5AmXGrZ1btBu9kGbyWhpvOvhds4TI7Q+4cf6eEAKHW
-         2D925vKW1AoNE58BWDCtyh8TH8iTgIstTpUQYy8izNZOjemhkfKA+pAA3A7ApXa4qTK5
-         31iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=pr9+xRPfE9C/rc6fMLR8T2D69Bzvjr8jG6HUhdPW5IE=;
-        b=mW1jiYf52qBpb+oBVAXxyojYjdo4gtFTP9WVJHw094LpzcrBYIk+WEFPBUZuYmoKVO
-         KX9QisMuF6QTdjoFmVtAXsA9vKDck4pwHUatD4r24NzolUC3w+q4+DcUcsv3OHq73rNM
-         PQwev+y1LluiDekmP4xPU6s60qIwLpHxxBDSRQuFZ8q66k1qOkNtadtrNMLDnzDAwE6z
-         2FGs2MoS1aiYu3OuNpoNVW1FWDaK/s5PCtxuOvkqG4xzCRmdU7ivcPIu/BNRIM22mAPc
-         Nu8ulogmqkhJmeVmZMXcnlDc57i0nHxUIQrI7xlZDfEw7qEBAR+8qvgOTu+v228xnsAh
-         AUGQ==
-X-Gm-Message-State: AD7BkJIhvJkra2WDlxb0b5YAwhA6uPTZA6nuAWBFhBfDlD351Ye/66X81RHUtXHdvsX4GaE5+opHSDTzf7AOgQ==
-X-Received: by 10.31.182.143 with SMTP id g137mr33120302vkf.45.1458070208058;
- Tue, 15 Mar 2016 12:30:08 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Tue, 15 Mar 2016 12:30:07 -0700 (PDT)
-In-Reply-To: <CAGZ79kZ_wbJ2MGs_E-P_0eLk3JX_0QhT1c_BxqWCS+vrg8+xwA@mail.gmail.com>
-X-Google-Sender-Auth: WoO0cYTLxzkICc9e1QL4VnQuh6c
+	id S965698AbcCOTd5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2016 15:33:57 -0400
+Received: from mout.gmx.net ([212.227.17.22]:55118 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750919AbcCOTdz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 15:33:55 -0400
+Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MUYiV-1aGEbe3WOh-00RLQY; Tue, 15 Mar 2016 20:33:41
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <1457309427-30124-2-git-send-email-sunshine@sunshineco.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:3Qk+mJwz1gOT9Y5jzP6LWLIM1FAi3VpvC9OagThEC6X//M/56Zw
+ ZaQ2be69tOqUK/xj98yE0Az5rNYMfosiDsrZw6A491D6UTw3Mef4NMXenoI+TA8TzADF7sr
+ lPIHeq+i8ui8V9Wc20BdraAm/8t26v7nogQIb9WyCc5Q/IcOuOApQ6EQJkmE2cNljJhOs44
+ mQyRz8CDjQVFiYvVeRN6Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:DFMgw0Lz7vA=:wMu2XYMfUwAnikgGanFuKl
+ gLmQBNnbRGJBROq5Awn5cdK6YLu7Zq/n7hAU1JjjSUTLWODNh3kaFD540YLDjPgG9HdeKdoVb
+ Wq3VHvDMqsqt2hc8I6igiiqqe5vSIoqsXk89ukTA+XF6xRVyVFVjYLcc8adb89V6C1eUnz056
+ VRX+UVZ7xQmDiMQAi2ov9xefDxA48sDJieM0bUjEpFqEREIOEbz0EVepE5jLxyrOtD/jeqqT/
+ /xx0B9agfDHddf7jnByef+9vi/2K9rYdkm7psAbKD9QMQy0rVDMVLZ82l7t6sinnv/zMwOFla
+ bmE4TUIljsnr5FxdRE1WJTsNmWkx/ynUiZZXnMTHGELTr/6d76VT5A/fEZYcZydPx5CisJlY6
+ ElmhKuo20IFWTMlhmcfBhsYN4Qed863uqauYgWz0R6WVaWl3vb2jzQpBKMlhzFi/Nv799iKmM
+ SXeSUe3wC2xUdSYYw4+QXa/qQ/8HkSlyYKPCD+nfpgavTXNGjHTYGpP19o3STBfWFO+MZAPzR
+ KD4dRx39vRISp1NTfXaR4KjZ/52wZgd3VbdO+apwqNswWR5Ie7VgWiDHOlbALke6Wq3ql1npq
+ FpSDBRFrSC+1DQ22tZbWebskg8TvF4QJlzH8nuc7hhwJHieSkvUoq1oE8slk08aj95t5J7DW5
+ z0wWjvciV5F5XPl9qDsFRLFq0DhLvD6Nj+2MyjhmOjMmYk1hxPWR9YuCLc1Vyn2cFGtyeLlhh
+ /+LJEJgFhLsOGVJiy359pu0ame6ZGuVBigjXeSw3kFLhv8NjBQgbhwYIomS12Qsiv4sOEDwe 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288899>
 
-On Tue, Mar 15, 2016 at 3:21 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Tue, Mar 15, 2016 at 12:13 PM, Alexander Kuleshov
-> <kuleshovmail@gmail.com> wrote:
->> from the <hashmap.h> for simplification.
->
-> I think what Eric wanted to point out, was to not have a continuous sentence
-> from commit message header to body.
+Hi Eric,
 
-Yes, thanks for clarifying that.
+On Sun, 6 Mar 2016, Eric Sunshine wrote:
 
-> Either leave the body blank (as it is obvious) or write a whole sentence there:
->
->   [PATCH v2] submodule-config: use hashmap_iter_first()
->
->   The hashmap API offers the `hashmap_iter_first` function as initializing and
->   getting the first entry is a common pattern. Use that instead of
-> doing initialization
->   by hand and then get the first entry.
+> I also sneaked in a minor style cleanup.
+
+Isn't this "snuck"?
+
+The patch is fine.
+
+Ciao,
+Dscho
