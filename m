@@ -1,170 +1,276 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [L10N] Kickoff for Git v2.8.0 l10n round 3
-Date: Wed, 16 Mar 2016 01:03:51 +0800
-Message-ID: <CANYiYbErntR1b3bsvwM5heXeKVccZk=Hyfw5PeBPkKu3xprbqQ@mail.gmail.com>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] l10n: de.po: translate 22 new messages
+Date: Tue, 15 Mar 2016 18:12:00 +0100
+Message-ID: <1458061920-22666-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Alexander Shopov <ash@kambanaria.org>,
-	Alex Henrie <alexhenrie24@gmail.com>,
-	Ralf Thielow <ralf.thielow@gmail.com>,
-	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-	Marco Paolone <marcopaolone@gmail.com>,
-	Changwoo Ryu <cwryu@debian.org>,
-	Marco Sousa <marcomsousa@gmail.com>,
-	Dimitriy Ryazantcev <DJm00n@mail.ru>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 15 18:03:59 2016
+Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	phillip.szelat@gmail.com, matthias.ruester@gmail.com,
+	magnus.goerlitz@googlemail.com,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 15 18:12:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afsNy-0004iV-Ep
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 18:03:58 +0100
+	id 1afsVv-0002kP-4j
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 18:12:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932778AbcCORDz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Mar 2016 13:03:55 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:38890 "EHLO
-	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932161AbcCORDx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Mar 2016 13:03:53 -0400
-Received: by mail-wm0-f49.google.com with SMTP id l68so36027762wml.1
-        for <git@vger.kernel.org>; Tue, 15 Mar 2016 10:03:52 -0700 (PDT)
+	id S934877AbcCORMH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Mar 2016 13:12:07 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:38227 "EHLO
+	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934827AbcCORME (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 13:12:04 -0400
+Received: by mail-wm0-f51.google.com with SMTP id l68so36365386wml.1
+        for <git@vger.kernel.org>; Tue, 15 Mar 2016 10:12:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc
+        h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=qf6KlrQqViNN/uPH+F/5IwFKXanz7dpZF6aL3i16eYI=;
-        b=xnJEvFXoVjnSqHqHyOjRapUrwbU8lgluBXEPkRsq5BGst/OIXBqRIs/BPpcB3iouZ2
-         ZbkJZVQjVdPSi79VMI7aQcosRxOaRyam9pe1V6XDjVndzcbQcpiTDEgHWaw05mutN2v5
-         ayUTmzoXnI2Zk0WUv+2qQgB2YM2lOGjCO9pJOYcFII//Zxo5u0Sx+j5DNCWnsY0qbTXE
-         mOiOZfS0yNcmGLUWnHLCx2FAXT2FBIyn/B/LYKV41k0rX0PUGeG/88dJkjL1W+LBAoAC
-         2oj2mI9uaT3lJm2kRfPAjdmxAxyJWHLcztSS6NnZxmAiNS+mNu3xoh9pOWhZ0biwEFE3
-         YLsQ==
+        bh=RX7aroNR8M/t02AHm5JAQQL43FIQFkIgMr0ZKkgqQvM=;
+        b=NWXBqUQwMYKsZ0k7oFlXneslAulL7lv/I6ZeYQ1phPfy5j8RVbCax04DV5wMg6tXoC
+         gLvlsxgIR06d1e0egMKESTtRTJ15uY37hxSbvpOtkXDXWKzB4nB9jzEkDyi/K6q8VIEN
+         Ud/ZxvhlggcmXdcb4sBKY6XYjW+KIM+9BsPQMqhBFTGxA5NSrimu9A9y6u1kBpleIqJJ
+         Ke3CLJO9Un+7tZ0yJpYklNordSGTI2IlaQY1SLOJ7krFe+MSblWQWLGvRjGBvBduxqnh
+         FxDiqCCTXwh2s9j/lgeCQIHCYgNPBBbTiiVHoFW5Uo7l7ZrYBiwveAqj4qW/ZozO3H9N
+         MMbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=qf6KlrQqViNN/uPH+F/5IwFKXanz7dpZF6aL3i16eYI=;
-        b=CZJNegYnw0rjriJ15eu2ML0FWzplPPwgS2biY6W8Y6mFo4UkZ3PavhK+CCYdOHJuWR
-         K/nT6QRY4JB1GGesGx6M3kmrJE1+LRbVayVggr/v6RnYvFSFBj+r9GGdUYk9fsPIj78i
-         H16536sHsd6JYxCDiGsCebjrntTdTtEFJFZpKUU8R7fpTfm4ZZ3ehY6Rw5KlFBxWS61C
-         FGX+MEpPGQbiCYHzP4ACeIkVeqf6YWd7Noc53rWtTlYGc5m0N926HEYvCE7B8YKsyWL6
-         CdW5mSydemVIaDaBGJfa3BuLKOgYeeHnqgg2EqsS7lJrPGNZ4KPeClwzlpvT3st1hV/n
-         /P6Q==
-X-Gm-Message-State: AD7BkJLU8uxJdiSSlc9nC+kIJHcm+l72202l4/mb4viDepBknC9qRJHlnQu6qmXxRlHHLb0WukuYGOXlRKvwMA==
-X-Received: by 10.194.216.40 with SMTP id on8mr34228928wjc.40.1458061431156;
- Tue, 15 Mar 2016 10:03:51 -0700 (PDT)
-Received: by 10.194.54.8 with HTTP; Tue, 15 Mar 2016 10:03:51 -0700 (PDT)
+        bh=RX7aroNR8M/t02AHm5JAQQL43FIQFkIgMr0ZKkgqQvM=;
+        b=fzZrmF+cK57sX6QB+8j+7waKvOvct8m0UfbAhemhRoDJvAAAgdo9j/GO/Z5pNHbfMS
+         V9UsIXG9t9AsvWDNZ0wiGzgTTQMUTyKiAFn4nf4H1kllUPMsi8oi1tJzlareAmIBW5WR
+         P82+h3pRDf7doZcsiIX0CkdcOsnFI5QNt6pTuF4TZ6ArkSO4IV5lZwAFG9BV5OpVC9Lf
+         xSIrxW4NTQc8PTBwSTwRFsWcLPhuVTueV8GCG4denqhRL6vUVceNFs3puxfVENhjCU/f
+         lSc4yl8wkbddzozrlilWHf/yhN6MkJaZn/whqQhGzE8GJF9C/96c1HoYhvaITknoJBUp
+         zMWw==
+X-Gm-Message-State: AD7BkJJcgbrHZK7olNdHDog5mN2RGSgo60Tpy9aH/MWjMh2Q6Cfg8hx2pYwKoqwDlctymQ==
+X-Received: by 10.194.8.38 with SMTP id o6mr31611483wja.31.1458061922980;
+        Tue, 15 Mar 2016 10:12:02 -0700 (PDT)
+Received: from localhost (cable-86-56-55-109.cust.telecolumbus.net. [86.56.55.109])
+        by smtp.gmail.com with ESMTPSA id v188sm21621578wmv.3.2016.03.15.10.12.01
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 15 Mar 2016 10:12:02 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0.rc2.181.g7f8255e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288883>
 
-Hi guys,
+Translate 22 new messages came from git.pot update in f1522b2
+(l10n: git.pot: v2.8.0 round 2 (21 new, 1 removed)) and a5a4168
+(l10n: git.pot: Add one new message for Git 2.8.0).
 
-One tiny update triggered this round of l10n. Wait for your merge reque=
-st.
-Thank you.
-
----------- Forwarded message ----------
-=46rom: Jiang Xin <worldhello.net@gmail.com>
-Date: 2016-03-16 0:51 GMT+08:00
-Subject: [GIT PULL] l10n updates for 2.8.0 round 2
-To: Junio C Hamano <gitster@pobox.com>
-
-
-Hi Junio,
-
-The following changes since commit db6696f653b917509dac1ac13b922e12773a=
-84ff:
-
-  Merge branch 'mg/wt-status-mismarked-i18n' (2016-03-14 10:46:17 -0700=
-)
-
-are available in the git repository at:
-
-  git://github.com/git-l10n/git-po tags/l10n-2.8.0-rnd2
-
-for you to fetch changes up to 5c0c220c53823e2a9ebe8e566e649ca30cd7e8e0=
-:
-
-  l10n: zh_CN: for git v2.8.0 l10n round 3 (2016-03-16 00:27:40 +0800)
-
-----------------------------------------------------------------
-l10n-2.8.0-rnd2
-
-----------------------------------------------------------------
-Audric Schiltknecht (1):
-      l10n: fr.po: Correct case in sentence
-
-Changwoo Ryu (2):
-      l10n: ko.po: Update Korean translation
-      l10n: ko: Update Korean translation
-
-Christoph Hoopmann (1):
-      l10n: de.po: fix typo
-
-Dimitriy Ryazantcev (2):
-      l10n: ru.po: update Russian translation
-      l10n: ru.po: update Russian translation
-
-Jean-Noel Avila (2):
-      l10n: fr.po v2.8.0 round 1 2509t
-      l10n: fr.po v2.8.0 round 2
-
-Jiang Xin (12):
-      l10n: git.pot: v2.8.0 round 1 (48 new, 16 removed)
-      Merge branch 'master' of https://github.com/vnwildman/git
-      Merge branch 'ko/merge-l10n' of https://github.com/changwoo/git-l=
-10n-ko
-      Merge branch 'master' of git://github.com/nafmo/git-l10n-sv
-      l10n: zh_CN: for git v2.8.0 l10n round 1
-      Merge branch 'master' of git://github.com/git-l10n/git-po
-      l10n: git.pot: v2.8.0 round 2 (21 new, 1 removed)
-      Merge branch 'russian-l10n' of https://github.com/DJm00n/git-po-r=
-u
-      l10n: zh_CN: for git v2.8.0 l10n round 2
-      Merge branch 'master' of git://github.com/git-l10n/git-po
-      l10n: git.pot: Add one new message for Git 2.8.0
-      l10n: zh_CN: for git v2.8.0 l10n round 3
-
-Peter Krefting (2):
-      l10n: sv.po: Fix inconsistent translation of "progress meter"
-      l10n: sv.po: Update Swedish translation (2509t0f0u)
-
-Ralf Thielow (5):
-      l10n: TEAMS: update Ralf Thielow's email address
-      l10n: de.po: add space to abbreviation "z. B."
-      l10n: de.po: fix interactive rebase message
-      l10n: de.po: translate "command" as "Befehl"
-      l10n: de.po: translate 48 new messages
-
-Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n (1):
-      l10n: vi.po (2509t): Updated Vietnamese translation
-
- po/TEAMS    |    2 +-
- po/de.po    | 2993 +++++++++++++++++++++++++++++----------------------=
------
- po/fr.po    | 3033 +++++++++++++++++++++++++++++++--------------------=
-------
- po/git.pot  | 2881 +++++++++++++++++++++++++++++----------------------=
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
 ---
- po/ko.po    | 3106 ++++++++++++++++++++++++++++++++-------------------=
+ po/de.po | 68 ++++++++++++++++++++++++++++++++------------------------=
 --------
- po/ru.po    | 3018 ++++++++++++++++++++++++++++++---------------------=
-------
- po/sv.po    | 2895 +++++++++++++++++++++++++++++----------------------=
-----
- po/vi.po    | 2894 +++++++++++++++++++++++++++++----------------------=
-----
- po/zh_CN.po | 3011 +++++++++++++++++++++++++++++++--------------------=
-------
- 9 files changed, 12830 insertions(+), 11003 deletions(-)
+ 1 file changed, 34 insertions(+), 34 deletions(-)
 
---
-Jiang Xin
+diff --git a/po/de.po b/po/de.po
+index edee6db..7093139 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -1150,14 +1150,14 @@ msgid "unrecognized format: %%(%s)"
+ msgstr "nicht erkanntes Format: %%(%s)"
+=20
+ #: ref-filter.c:77
+-#, fuzzy, c-format
++#, c-format
+ msgid "%%(body) does not take arguments"
+-msgstr "--worktrees akzeptiert keine weiteren Argumente"
++msgstr "%%(body) akzeptiert keine Argumente"
+=20
+ #: ref-filter.c:84
+-#, fuzzy, c-format
++#, c-format
+ msgid "%%(subject) does not take arguments"
+-msgstr "--worktrees akzeptiert keine weiteren Argumente"
++msgstr "%%(subject) akzeptiert keine Argumente"
+=20
+ #: ref-filter.c:101
+ #, c-format
+@@ -1200,14 +1200,14 @@ msgid "positive width expected with the %%(alig=
+n) atom"
+ msgstr "Positive Breitenangabe f=C3=BCr %%(align) erwartet"
+=20
+ #: ref-filter.c:244
+-#, fuzzy, c-format
++#, c-format
+ msgid "malformed field name: %.*s"
+-msgstr "Missgebildeter Objektname %s"
++msgstr "Fehlerhafter Feldname: %.*s"
+=20
+ #: ref-filter.c:270
+-#, fuzzy, c-format
++#, c-format
+ msgid "unknown field name: %.*s"
+-msgstr "unbekanntes Argument f=C3=BCr Option --mirror: %s"
++msgstr "Unbekannter Feldname: %.*s"
+=20
+ #: ref-filter.c:372
+ #, c-format
+@@ -1215,33 +1215,33 @@ msgid "format: %%(end) atom used without corres=
+ponding atom"
+ msgstr "Format: %%(end) Atom ohne zugeh=C3=B6riges Atom verwendet"
+=20
+ #: ref-filter.c:424
+-#, fuzzy, c-format
++#, c-format
+ msgid "malformed format string %s"
+-msgstr "Fehlerhafter Ident-String: '%s'"
++msgstr "Fehlerhafter Formatierungsstring %s"
+=20
+ #: ref-filter.c:878
+ msgid ":strip=3D requires a positive integer argument"
+-msgstr ""
++msgstr ":strip=3D erfordert eine positive Ganzzahl als Argument"
+=20
+ #: ref-filter.c:883
+-#, fuzzy, c-format
++#, c-format
+ msgid "ref '%s' does not have %ld components to :strip"
+-msgstr "Pfad '%s' hat nicht alle notwendigen Versionen."
++msgstr "Referenz '%s' hat keine %ld Komponenten f=C3=BCr :strip"
+=20
+ #: ref-filter.c:1046
+-#, fuzzy, c-format
++#, c-format
+ msgid "unknown %.*s format %s"
+-msgstr "Unbekannter Commit %s"
++msgstr "Unbekanntes %.*s Format %s"
+=20
+ #: ref-filter.c:1066 ref-filter.c:1097
+-#, fuzzy, c-format
++#, c-format
+ msgid "missing object %s for %s"
+-msgstr "fehlende Objekte erlauben"
++msgstr "Objekt %s fehlt f=C3=BCr %s"
+=20
+ #: ref-filter.c:1069 ref-filter.c:1100
+ #, c-format
+ msgid "parse_object_buffer failed on %s for %s"
+-msgstr ""
++msgstr "parse_object_buffer bei %s f=C3=BCr %s fehlgeschlagen"
+=20
+ #: ref-filter.c:1311
+ #, c-format
+@@ -1249,14 +1249,14 @@ msgid "malformed object at '%s'"
+ msgstr "fehlerhaftes Objekt bei '%s'"
+=20
+ #: ref-filter.c:1373
+-#, fuzzy, c-format
++#, c-format
+ msgid "ignoring ref with broken name %s"
+-msgstr "ignoriere Vorlage %s"
++msgstr "Ignoriere Referenz mit fehlerhaftem Namen %s"
+=20
+ #: ref-filter.c:1378
+-#, fuzzy, c-format
++#, c-format
+ msgid "ignoring broken ref %s"
+-msgstr "ignoriere Vorlage %s"
++msgstr "Ignoriere fehlerhafte Referenz %s"
+=20
+ #: ref-filter.c:1651
+ #, c-format
+@@ -1680,17 +1680,17 @@ msgstr "Fehler beim Lesen von %s"
+=20
+ #: sha1_file.c:1080
+ msgid "offset before end of packfile (broken .idx?)"
+-msgstr ""
++msgstr "Offset vor Ende der Packdatei (fehlerhafte Indexdatei?)"
+=20
+ #: sha1_file.c:2459
+ #, c-format
+ msgid "offset before start of pack index for %s (corrupt index?)"
+-msgstr ""
++msgstr "Offset vor Beginn des Pack-Index f=C3=BCr %s (besch=C3=A4digte=
+r Index?)"
+=20
+ #: sha1_file.c:2463
+ #, c-format
+ msgid "offset beyond end of pack index for %s (truncated index?)"
+-msgstr ""
++msgstr "Offset hinter Ende des Pack-Index f=C3=BCr %s (abgeschnittener=
+ Index?)"
+=20
+ #: sha1_name.c:462
+ msgid ""
+@@ -1743,9 +1743,9 @@ msgid "staging updated .gitmodules failed"
+ msgstr "Konnte aktualisierte .gitmodules-Datei nicht zum Commit vormer=
+ken"
+=20
+ #: trailer.c:237
+-#, fuzzy, c-format
++#, c-format
+ msgid "running trailer command '%s' failed"
+-msgstr "Zusammenf=C3=BChren der \"Tree\"-Objekte %s und %s fehlgeschla=
+gen"
++msgstr "Ausf=C3=BChren des Anhang-Befehls '%s' fehlgeschlagen"
+=20
+ #: trailer.c:492 trailer.c:496 trailer.c:500 trailer.c:554 trailer.c:5=
+58
+ #: trailer.c:562
+@@ -4324,9 +4324,8 @@ msgid "HEAD is now at"
+ msgstr "HEAD ist jetzt bei"
+=20
+ #: builtin/checkout.c:665 builtin/clone.c:659
+-#, fuzzy
+ msgid "unable to update HEAD"
+-msgstr "Konnte HEAD nicht aufl=C3=B6sen."
++msgstr "Konnte HEAD nicht aktualisieren."
+=20
+ #: builtin/checkout.c:669
+ #, c-format
+@@ -4864,6 +4863,8 @@ msgid ""
+ "No directory name could be guessed.\n"
+ "Please specify a directory on the command line"
+ msgstr ""
++"Konnte keinen Verzeichnisnamen erraten.\n"
++"Bitte geben Sie ein Verzeichnis auf der Befehlszeile an."
+=20
+ #: builtin/clone.c:305
+ #, c-format
+@@ -4945,9 +4946,9 @@ msgid "remote did not send all necessary objects"
+ msgstr "Remote-Repository hat nicht alle erforderlichen Objekte gesend=
+et."
+=20
+ #: builtin/clone.c:647
+-#, fuzzy, c-format
++#, c-format
+ msgid "unable to update %s"
+-msgstr "kann %s nicht =C3=B6ffnen"
++msgstr "kann %s nicht aktualisieren"
+=20
+ #: builtin/clone.c:696
+ msgid "remote HEAD refers to nonexistent ref, unable to checkout.\n"
+@@ -4960,9 +4961,8 @@ msgid "unable to checkout working tree"
+ msgstr "Arbeitsverzeichnis konnte nicht ausgecheckt werden"
+=20
+ #: builtin/clone.c:753
+-#, fuzzy
+ msgid "unable to write parameters to config file"
+-msgstr "konnte Tag-Datei nicht schreiben"
++msgstr "konnte Parameter nicht in Konfigurationsdatei schreiben"
+=20
+ #: builtin/clone.c:816
+ msgid "cannot repack to clean up"
+@@ -11674,7 +11674,7 @@ msgstr "Remote-Referenzen mitsamt den verbunden=
+en Objekten aktualisieren"
+=20
+ #: common-cmds.h:32
+ msgid "Reapply commits on top of another base tip"
+-msgstr ""
++msgstr "Wiederholtes Anwenden von Commits auf anderem Basis-Commit"
+=20
+ #: common-cmds.h:33
+ msgid "Reset current HEAD to the specified state"
+--=20
+2.8.0.rc2.181.g7f8255e
