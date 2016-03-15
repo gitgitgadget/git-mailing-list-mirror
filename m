@@ -1,113 +1,83 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v1] git-p4: fix AsciiDoc formatting
-Date: Tue, 15 Mar 2016 10:09:24 +0100
-Message-ID: <6B365D58-9788-4B2F-88B0-4F8AC10321DB@gmail.com>
-References: <1456830320-40411-1-git-send-email-larsxschneider@gmail.com> <F0F4FA8A-EB42-4990-A90E-6C9245E0A9DE@gmail.com> <xmqq1t7dafa3.fsf@gitster.mtv.corp.google.com> <CAE5ih79btHY33vrmSt70kkttMdFRzG-tHBZ9K3fEC_OdAZygKg@mail.gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 9.2 \(3112\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 0/1] Introduce a way to create a branch and worktree at
+ the same time
+Date: Tue, 15 Mar 2016 17:34:37 +0700
+Message-ID: <CACsJy8B+c8=Y0Lb-TxjGF4689xP2Vyqjp4Q6CuffTLDWDMh3gg@mail.gmail.com>
+References: <cover.1457609615.git.johannes.schindelin@gmx.de>
+ <CACsJy8BA7-ev9wTt6K45TgiNxOaBUXbN1P03U4EUAzAPy=7Faw@mail.gmail.com>
+ <alpine.DEB.2.20.1603101417590.4690@virtualbox> <CACsJy8AuBsF_rhuo_a_nqaVH1ApT3iAyozt1w2vkmvHmK17hZA@mail.gmail.com>
+ <xmqqmvq5bjlc.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1603150746490.4690@virtualbox>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Users <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Tue Mar 15 10:09:49 2016
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 15 11:35:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afkz2-00048d-4c
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 10:09:44 +0100
+	id 1afmJm-0008Vy-V0
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 11:35:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964833AbcCOJJ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2016 05:09:29 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:36272 "EHLO
-	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934232AbcCOJJ0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Mar 2016 05:09:26 -0400
-Received: by mail-wm0-f42.google.com with SMTP id l124so2181846wmf.1
-        for <git@vger.kernel.org>; Tue, 15 Mar 2016 02:09:26 -0700 (PDT)
+	id S934628AbcCOKfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2016 06:35:10 -0400
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:33359 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932440AbcCOKfI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 06:35:08 -0400
+Received: by mail-lb0-f180.google.com with SMTP id oe12so16588021lbc.0
+        for <git@vger.kernel.org>; Tue, 15 Mar 2016 03:35:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=/eey8i6Gm3ZRpbQVDmvoe07ww8OIaYtY3m0buyATDSU=;
-        b=JrM6kMvboO5jdgGbpquOnpdM25/sciBJxti8MvXZZXlMTuj5fNtpaa9YY/B1IqPQnQ
-         18L7E98R8R8m3Wm2+KIWSXNS1FwvYEcrHms4y5xtVsB9REX5y4WZpOiUWXURogMliKab
-         SGyEnCCb5qH7rNbcokixnDCSYEgXzf9SXpsOQIQylgwpENHKiUoFp8QYFEkhcWspitax
-         rhVt6w75jOXa+TWFncvc5VuvPB4HslpbZNIbTH1dEsT5hHmebjee/VRrjAX5R3sSM9Fo
-         SdsE2YlKwbRhOnjdU57diTDCGaCBiWZ8mMUYiVRU/svlb2Cc3FrgamIkdGpck76+tcLk
-         6fyw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=3EMIbyqOYJVfMx68R2jz/WHQD3XEhdGp/FIiQGUtTRs=;
+        b=Xa8NCO3CBLkZhwygH/ukOyCPKxGfO14oA9L+2tEFCdodtoeUi06g3KpRAk7M2ut2bF
+         I/bH0ZhqTqxrMDveNmN81owJY+JcYvHBhj//azRfuZ/jna079d192dqlekS4hUpvWZHd
+         Lce6fB5w79cQVHwxAGZVpaUH0CPPqj3Ky8T776PEqIm3B7slx2mVy0CXzSYWeKPHjqrd
+         FkDxi0q9gA3wv5iASvl7i9siylPfTgmN+iNyGVjSkjKwULKWv7Y1gSKYFifUsvYnKYVI
+         MhZoZALDs03hDJ5NkifKlkypEItqWe+sZp+uZ05ruXZUASnCpByxbZEduNrTCxVZ3ybz
+         ybxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=/eey8i6Gm3ZRpbQVDmvoe07ww8OIaYtY3m0buyATDSU=;
-        b=ZZtwVgPphob3uAgEa8kTaGqT0QrFoIxC1910v4q598d6H+YCouObUvNSjadR7d/AsI
-         LMQ6d5zBX/VvVvy51ga7y5RDnyU8tZ+GDTvLGnLKwdnU93eFGcLRk7v1v54U2f4UNcnQ
-         Sgk8UXW1LGCcUOhHYZBmOeWrLSllqeYpnijWCk9vzqJboqCD02lY+zgZzcoqGUH5ofeU
-         yh2fQKJOgj4RobAuNMRGyO4hHfMbBleDXS2jUcJfYaSf+MpUm6E3YVd6ul+xDjhv74s5
-         1spftoDYxAk44FoSfaAsJUIKwwhQqlQUPYXU8JaEjKHYcjgLYcKY3gFCkZjBOaWHiWMd
-         mFwQ==
-X-Gm-Message-State: AD7BkJLNuU3UEUL+ILnz9GtN44R2c1CGR9otuTxPGv2WH0RYJMunYjXAgbFvxXeUknWDFg==
-X-Received: by 10.28.0.148 with SMTP id 142mr21585875wma.72.1458032965314;
-        Tue, 15 Mar 2016 02:09:25 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id y62sm19878887wmg.12.2016.03.15.02.09.24
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 15 Mar 2016 02:09:24 -0700 (PDT)
-In-Reply-To: <CAE5ih79btHY33vrmSt70kkttMdFRzG-tHBZ9K3fEC_OdAZygKg@mail.gmail.com>
-X-Mailer: Apple Mail (2.3112)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=3EMIbyqOYJVfMx68R2jz/WHQD3XEhdGp/FIiQGUtTRs=;
+        b=dKmbkKt7L8LZumPyqsz6hkMgGa8bvYdDsQqebELQGUiGG/x3K/mqcaFin4H0ljGBwS
+         u5SF3h6sxBhFrixqd0T/lKe2QXcHLv7wPW7TNcwO+jV11Bxv5sdjbiIDzQHHwMiUfefS
+         qDK0gYKMK1V7mq6GYB7l/KmL5m8JOxDc0ie8xd6n/ahGJyNWdl6IoLU2JAc3F/9TKYvf
+         PojI4xDJWPrCrpKRx/G8W/OUrRYknKrzkU74fMr81NGUhb9/9sWuJMjPm09+2uHHcSbT
+         qXEB35DTW5C+meUllIY+q8X6mto9huRHq4bYX/wO65Y+x3omrFWgM9WX05pOjnyL+bhV
+         KIaQ==
+X-Gm-Message-State: AD7BkJKhyuf2HelfGsFUtGJ4W3WfMDgAJn0Jopjgz9S8ZKYXbErBg7hPnr14+xcwrI5FvR1NfjZ45UF2srQtFg==
+X-Received: by 10.25.212.213 with SMTP id l204mr9762603lfg.118.1458038106766;
+ Tue, 15 Mar 2016 03:35:06 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Tue, 15 Mar 2016 03:34:37 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1603150746490.4690@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288844>
 
+On Tue, Mar 15, 2016 at 1:53 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>> That approach to implement the UI that directly faces the end users
+>> via scripting would let your users choose layouts more flexibly.
+>> Some people may want a repository and its worktrees next to each
+>> other, some others may want the worktrees embedded inside the main
+>> repository, yet some others may want layouts other than those two.
+>
+> Having the worktree in a totally different location than the associated
+> repository is *very* confusing.
 
-> On 15 Mar 2016, at 09:38, Luke Diamand <luke@diamand.org> wrote:
-> 
-> On 14 March 2016 at 03:51, Junio C Hamano <gitster@pobox.com> wrote:
->> Lars Schneider <larsxschneider@gmail.com> writes:
->> 
->>>> diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
->>>> index 738cfde..140fc12 100644
->>>> --- a/Documentation/git-p4.txt
->>>> +++ b/Documentation/git-p4.txt
->>>> @@ -528,7 +528,7 @@ git-p4.largeFileSystem::
->>>> git config       git-p4.largeFileSystem GitLFS
->>>> -------------
->>>> +
->>>> -    [1] https://git-lfs.github.com/
->>>> +[1] https://git-lfs.github.com/
->>>> 
->>>> git-p4.largeFileExtensions::
->>>>     All files matching a file extension in the list will be processed
->>>> --
->>>> 2.5.1
->>>> 
->>> 
->>> Is there any chance to get this in? The formatting error is quite obvious here:
->>> https://git-scm.com/docs/git-p4
->>> 
->>> (while looking at this website I also noticed wrong double quotes around cp1252
->>> which I will fix with a subsequent patch)
->> 
->> I ignored this when I saw it first, primarily because I assumed that
->> anything related to git-p4 would get a review by somebody better
->> versed with git-p4 before I get to it; I forgot about the patch
->> after it was buried in the other messages without anything
->> happening.
->> 
->> Will take a look.
-> 
-> Comparing with the git-bisect-lk2009 page, it uses a slightly
-> different approach for external HTTP references. The references are
-> put at the end, as internal hyperlinks, and in a bulleted list. It
-> would make sense to try to be consistent with that, unless there's a
-> good reason not to.
-
-Right! Thanks for the hint! I will post a reroll soonish.
-
-Thanks,
-Lars
+I disagree (unless I misunderstood you). One of the use cases I have
+for multi worktree is move all repos to a central place. Remember the
+.git directory security bug? It would not happen if the repo is put
+away. And it would be easier to backup repo data too. Also, "git
+worktree list" is there to locate any worktree. I don't see why it's
+confusing.
+-- 
+Duy
