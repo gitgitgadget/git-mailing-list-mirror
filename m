@@ -1,56 +1,57 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v2 09/16] ref-filter: make "%(symref)" atom work with the ':short' modifier
-Date: Tue, 15 Mar 2016 22:17:09 +0530
-Message-ID: <1458060436-1215-10-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v2 08/16] ref-filter: add support for %(upstream:track,nobracket)
+Date: Tue, 15 Mar 2016 22:17:08 +0530
+Message-ID: <1458060436-1215-9-git-send-email-Karthik.188@gmail.com>
 References: <1458060436-1215-1-git-send-email-Karthik.188@gmail.com>
 Cc: gitster@pobox.com, jacob.keller@gmail.com,
-	Karthik Nayak <Karthik.188@gmail.com>
+	Karthik Nayak <Karthik.188@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 15 17:47:53 2016
+X-From: git-owner@vger.kernel.org Tue Mar 15 17:48:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afs8O-0000rQ-Du
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 17:47:52 +0100
+	id 1afs8Z-000108-8t
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 17:48:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965234AbcCOQrs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2016 12:47:48 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:36216 "EHLO
+	id S965248AbcCOQru (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2016 12:47:50 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:36170 "EHLO
 	mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965097AbcCOQrp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2016 12:47:45 -0400
-Received: by mail-pf0-f176.google.com with SMTP id u190so35746121pfb.3
-        for <git@vger.kernel.org>; Tue, 15 Mar 2016 09:47:44 -0700 (PDT)
+	with ESMTP id S965232AbcCOQrs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 12:47:48 -0400
+Received: by mail-pf0-f176.google.com with SMTP id u190so35744934pfb.3
+        for <git@vger.kernel.org>; Tue, 15 Mar 2016 09:47:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Wmn/bak3WjQ7qFnZHFwRwA0Z4/ltt2BtFVfcn/zYjTk=;
-        b=v8/a20SSPyHi0jRLaocXi3JvG+/EMJ5FUgIkZxiZ3yEiO6+0UQRczyepzRvgwFtEFT
-         X+I1l6Y6lLxQesYYK9e1uOfiR9/au3RqqHm2gaqRpzjHw5bgQwXtp+28o+npRqqVuA2F
-         xnXQQxMY0HQvGmHNGhljl2fM6jGY8ZcAd3csVrqio0UgUBbbwMKGnMzTnrO/SNXjFygF
-         xOmifxDXMPKni3vonOAyRzzDv/ono7f0BZhKnmShgc0OaQM3uie+CnEOu+nzOTOvDWKm
-         OZPGkpfPtpMGQVz9U7eaVQ969h7jGy8S4RviFyfrZQQzRTxffb6mS3DHXZipQfLNxuyp
-         +0PA==
+        bh=KfUvX63EdVYh++jfCcHCckhx4wgjEVNh8cB0jomBOhI=;
+        b=gL7VKDBnJT28F8mmD/jTMzbnhGoUkPgJmzR74aZOyAFH892LFdlio0NP9ncqGwnXb4
+         jLW9voeckYBl+rTEmQE8wcAcSK4eu0/S+VgMFxE5lihOR2W39+hXWAJS0qOBxkX7dVAk
+         92ipHFUANomtWi15Q7lU6jTlm0w1f1gYflpAmgOxFTRWQk0XtmejR8FDGJWHeDlLJ76W
+         /NPMGaWSOrTheCwdwVBfeaoIXRuabD1RgHDTe7/3bTVElkXQou4GMiIks4dD6KsRMJ8D
+         xbJGFlacw3rtDldZcwbUaqSTNpbrh1beTZo4FgUQPQgNdMiibAm6gBk6WabqGaBIEqag
+         q3EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Wmn/bak3WjQ7qFnZHFwRwA0Z4/ltt2BtFVfcn/zYjTk=;
-        b=aEUNqtkfk6fSknk9IPzFk2J32dUCqsiWNONLPHFjnfxWZnWPL2MAhoZfSjB0OWMNOs
-         kTWiNOZyqRnaZHfrTqw8Ce4tIhN0n4FB19c/kiCd+ZcsHnTl2+bDV1duJ8kBuY48J73R
-         f+NOrJwLXwNUiS3PScwzZ50kjHr6tSU/W/uJYGJ6sdpZOB65hHntWIhWj38AF+QlwuJZ
-         KDT2Nv9vUJOIZJVYkSQKfql866fRjmMDBsDg4v2KGNR9J5ZmcPyJ+SvtPTUXP7De8DLT
-         Gzn9FCY4yGV54Q+BEi+NN2Xl/DXMWYvrExstbeoFaXIy9v1ZTpYEDzd8GceQI4l9mAai
-         FK0w==
-X-Gm-Message-State: AD7BkJLIhUhR6EY4wA9FKEbGVQ0qVQWRkt8wx2f+ck3XOxS3HWOZ4VodJd5cFhb5Wzl+uA==
-X-Received: by 10.66.150.170 with SMTP id uj10mr47244834pab.91.1458060464550;
-        Tue, 15 Mar 2016 09:47:44 -0700 (PDT)
+        bh=KfUvX63EdVYh++jfCcHCckhx4wgjEVNh8cB0jomBOhI=;
+        b=g5r+3DYMy8Py2k+CKJPSpjdpMX9J7RZfK5s7NS/mLm4+hEO6G6uuV1gUgSLF9JU4Ay
+         5kxHkfQyjluWqSZ8Cx1NGX3KBsMrxQOlx4my+S7KKr1N4+qv5AfcuytCkg/Sq7l9V3Xp
+         lJtsJdxYhLNTvWWdGHeUDUJhYoYn5ZHZJXMnpSU7JQpO5RLmek+ZTbrIxFQxX8Zt5xTc
+         kyAbBsAwNbrKCvYq81SrWMCw8w9XfKXZql93Ac9sG+NpQ1I1w4pZ80btOUsNHKWEYtBY
+         Y6/lcMzYyUkn4rXnu52zmsnwq8UVEpdc8MRQaAI5NY0hOgZvAf1Zc0oRkjbjCVtqYBwt
+         smzQ==
+X-Gm-Message-State: AD7BkJJFK981EOViSOmygXFRwZq6csNhrJliRALqdtRc98nloCQtre0OFwp32hClxUDRGg==
+X-Received: by 10.66.248.168 with SMTP id yn8mr47650725pac.24.1458060462319;
+        Tue, 15 Mar 2016 09:47:42 -0700 (PDT)
 Received: from localhost.localdomain ([106.51.243.87])
-        by smtp.gmail.com with ESMTPSA id i1sm40874361pfj.17.2016.03.15.09.47.42
+        by smtp.gmail.com with ESMTPSA id i1sm40874361pfj.17.2016.03.15.09.47.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 15 Mar 2016 09:47:43 -0700 (PDT)
+        Tue, 15 Mar 2016 09:47:41 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.7.3
 In-Reply-To: <1458060436-1215-1-git-send-email-Karthik.188@gmail.com>
@@ -58,73 +59,151 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288871>
 
-The "%(symref)" atom doesn't work when used with the ':short' modifier
-because we strictly match only 'symref' for setting the 'need_symref'
-indicator. Fix this by using comparing with valid_atom rather than used_atom.
+Add support for %(upstream:track,nobracket) which will print the
+tracking information without the brackets (i.e. "ahead N, behind M").
+This is needed when we port branch.c to use ref-filter's printing APIs.
 
-Add tests for %(symref) and %(symref:short) while we're here.
+Add test and documentation for the same.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- ref-filter.c            |  2 +-
- t/t6300-for-each-ref.sh | 24 ++++++++++++++++++++++++
- 2 files changed, 25 insertions(+), 1 deletion(-)
+ Documentation/git-for-each-ref.txt |  5 ++-
+ ref-filter.c                       | 67 +++++++++++++++++++++++++-------------
+ t/t6300-for-each-ref.sh            |  2 ++
+ 3 files changed, 50 insertions(+), 24 deletions(-)
 
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index 6dbd7bd..4e41cee 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -116,7 +116,10 @@ upstream::
+ 	version: ">" (ahead), "<" (behind), "<>" (ahead and behind),
+ 	or "=" (in sync).  Has no effect if the ref does not have
+ 	tracking information associated with it. `:track` also prints
+-	"[gone]" whenever unknown upstream ref is encountered.
++	"[gone]" whenever unknown upstream ref is encountered. Append
++	`:track,nobracket` to show tracking information without
++	brackets (i.e "ahead N, behind M").  Has no effect if the ref
++	does not have tracking information associated with it.
+ 
+ push::
+ 	The name of a local ref which represents the `@{push}` location
 diff --git a/ref-filter.c b/ref-filter.c
-index 8c97cdb..5c59b17 100644
+index 4d7e0c0..8c97cdb 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -338,7 +338,7 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
- 		valid_atom[i].parser(&used_atom[at], arg);
- 	if (*atom == '*')
- 		need_tagged = 1;
--	if (!strcmp(used_atom[at].name, "symref"))
-+	if (!strcmp(valid_atom[i].name, "symref"))
- 		need_symref = 1;
- 	return at;
+@@ -46,8 +46,10 @@ static struct used_atom {
+ 	union {
+ 		char color[COLOR_MAXLEN];
+ 		struct align align;
+-		enum { RR_NORMAL, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT }
+-			remote_ref;
++		struct {
++			enum { RR_NORMAL, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT } option;
++			unsigned int nobracket: 1;
++		} remote_ref;
+ 		struct {
+ 			enum { C_BARE, C_BODY, C_BODY_DEP, C_LINES, C_SIG, C_SUB } option;
+ 			unsigned int nlines;
+@@ -75,16 +77,33 @@ static void color_atom_parser(struct used_atom *atom, const char *color_value)
+ 
+ static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
+ {
+-	if (!arg)
+-		atom->u.remote_ref = RR_NORMAL;
+-	else if (!strcmp(arg, "short"))
+-		atom->u.remote_ref = RR_SHORTEN;
+-	else if (!strcmp(arg, "track"))
+-		atom->u.remote_ref = RR_TRACK;
+-	else if (!strcmp(arg, "trackshort"))
+-		atom->u.remote_ref = RR_TRACKSHORT;
+-	else
+-		die(_("unrecognized format: %%(%s)"), atom->name);
++	struct string_list params = STRING_LIST_INIT_DUP;
++	int i;
++
++	if (!arg) {
++		atom->u.remote_ref.option = RR_NORMAL;
++		return;
++	}
++
++	atom->u.remote_ref.nobracket = 0;
++	string_list_split(&params, arg, ',', -1);
++
++	for (i = 0; i < params.nr; i++) {
++		const char *s = params.items[i].string;
++
++		if (!strcmp(s, "short"))
++			atom->u.remote_ref.option = RR_SHORTEN;
++		else if (!strcmp(s, "track"))
++			atom->u.remote_ref.option = RR_TRACK;
++		else if (!strcmp(s, "trackshort"))
++			atom->u.remote_ref.option = RR_TRACKSHORT;
++		else if (!strcmp(s, "nobracket"))
++			atom->u.remote_ref.nobracket = 1;
++		else
++			die(_("unrecognized format: %%(%s)"), atom->name);
++	}
++
++	string_list_clear(&params, 0);
  }
+ 
+ static void body_atom_parser(struct used_atom *atom, const char *arg)
+@@ -1045,25 +1064,27 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+ 				    struct branch *branch, const char **s)
+ {
+ 	int num_ours, num_theirs;
+-	if (atom->u.remote_ref == RR_SHORTEN)
++	if (atom->u.remote_ref.option == RR_SHORTEN)
+ 		*s = shorten_unambiguous_ref(refname, warn_ambiguous_refs);
+-	else if (atom->u.remote_ref == RR_TRACK) {
++	else if (atom->u.remote_ref.option == RR_TRACK) {
+ 		if (stat_tracking_info(branch, &num_ours,
+ 				       &num_theirs, NULL)) {
+-			*s = "[gone]";
+-			return;
+-		}
+-
+-		if (!num_ours && !num_theirs)
++			*s = xstrdup("gone");
++		} else if (!num_ours && !num_theirs)
+ 			*s = "";
+ 		else if (!num_ours)
+-			*s = xstrfmt("[behind %d]", num_theirs);
++			*s = xstrfmt("behind %d", num_theirs);
+ 		else if (!num_theirs)
+-			*s = xstrfmt("[ahead %d]", num_ours);
++			*s = xstrfmt("ahead %d", num_ours);
+ 		else
+-			*s = xstrfmt("[ahead %d, behind %d]",
++			*s = xstrfmt("ahead %d, behind %d",
+ 				     num_ours, num_theirs);
+-	} else if (atom->u.remote_ref == RR_TRACKSHORT) {
++		if (!atom->u.remote_ref.nobracket && *s[0]) {
++			const char *to_free = *s;
++			*s = xstrfmt("[%s]", *s);
++			free((void *)to_free);
++		}
++	} else if (atom->u.remote_ref.option == RR_TRACKSHORT) {
+ 		if (stat_tracking_info(branch, &num_ours,
+ 				       &num_theirs, NULL))
+ 			return;
 diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 2c5f177..b06ea1c 100755
+index a92b36f..2c5f177 100755
 --- a/t/t6300-for-each-ref.sh
 +++ b/t/t6300-for-each-ref.sh
-@@ -38,6 +38,7 @@ test_atom() {
- 	case "$1" in
- 		head) ref=refs/heads/master ;;
- 		 tag) ref=refs/tags/testtag ;;
-+		 sym) ref=refs/heads/sym ;;
- 		   *) ref=$1 ;;
- 	esac
- 	printf '%s\n' "$3" >expected
-@@ -565,4 +566,27 @@ test_expect_success 'Verify sort with multiple keys' '
- 		refs/tags/bogo refs/tags/master > actual &&
- 	test_cmp expected actual
- '
-+
-+test_expect_success 'Add symbolic ref for the following tests' '
-+	git symbolic-ref refs/heads/sym refs/heads/master
-+'
-+
-+cat >expected <<EOF
-+refs/heads/master
-+EOF
-+
-+test_expect_success 'Verify usage of %(symref) atom' '
-+	git for-each-ref --format="%(symref)" refs/heads/sym > actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<EOF
-+heads/master
-+EOF
-+
-+test_expect_success 'Verify usage of %(symref:short) atom' '
-+	git for-each-ref --format="%(symref:short)" refs/heads/sym > actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
+@@ -372,6 +372,8 @@ test_expect_success 'setup for upstream:track[short]' '
+ 
+ test_atom head upstream:track '[ahead 1]'
+ test_atom head upstream:trackshort '>'
++test_atom head upstream:track,nobracket 'ahead 1'
++test_atom head upstream:nobracket,track 'ahead 1'
+ test_atom head push:track '[ahead 1]'
+ test_atom head push:trackshort '>'
+ 
 -- 
 2.7.3
