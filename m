@@ -1,57 +1,56 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v2 08/16] ref-filter: add support for %(upstream:track,nobracket)
-Date: Tue, 15 Mar 2016 22:17:08 +0530
-Message-ID: <1458060436-1215-9-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v2 11/16] ref-filter: introduce refname_atom_parser()
+Date: Tue, 15 Mar 2016 22:17:11 +0530
+Message-ID: <1458060436-1215-12-git-send-email-Karthik.188@gmail.com>
 References: <1458060436-1215-1-git-send-email-Karthik.188@gmail.com>
 Cc: gitster@pobox.com, jacob.keller@gmail.com,
-	Karthik Nayak <Karthik.188@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
+	Karthik Nayak <Karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 15 17:48:04 2016
+X-From: git-owner@vger.kernel.org Tue Mar 15 17:48:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afs8Z-000108-8t
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 17:48:03 +0100
+	id 1afs8a-000108-Mn
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 17:48:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965248AbcCOQru (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S965287AbcCOQrx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2016 12:47:53 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:33579 "EHLO
+	mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965097AbcCOQru (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 15 Mar 2016 12:47:50 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:36170 "EHLO
-	mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965232AbcCOQrs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2016 12:47:48 -0400
-Received: by mail-pf0-f176.google.com with SMTP id u190so35744934pfb.3
-        for <git@vger.kernel.org>; Tue, 15 Mar 2016 09:47:47 -0700 (PDT)
+Received: by mail-pf0-f169.google.com with SMTP id 124so35898558pfg.0
+        for <git@vger.kernel.org>; Tue, 15 Mar 2016 09:47:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=KfUvX63EdVYh++jfCcHCckhx4wgjEVNh8cB0jomBOhI=;
-        b=gL7VKDBnJT28F8mmD/jTMzbnhGoUkPgJmzR74aZOyAFH892LFdlio0NP9ncqGwnXb4
-         jLW9voeckYBl+rTEmQE8wcAcSK4eu0/S+VgMFxE5lihOR2W39+hXWAJS0qOBxkX7dVAk
-         92ipHFUANomtWi15Q7lU6jTlm0w1f1gYflpAmgOxFTRWQk0XtmejR8FDGJWHeDlLJ76W
-         /NPMGaWSOrTheCwdwVBfeaoIXRuabD1RgHDTe7/3bTVElkXQou4GMiIks4dD6KsRMJ8D
-         xbJGFlacw3rtDldZcwbUaqSTNpbrh1beTZo4FgUQPQgNdMiibAm6gBk6WabqGaBIEqag
-         q3EQ==
+        bh=VsgUxtpVfjdoqI1GoIHdg/QJuJdr65ebk7wUV3knUDU=;
+        b=Owkr74cUh3DzKq048LJizlN3NCTheZuqH8q58gHwuqKImN1vQ1+/VpC59soYUEC7Sa
+         /fWl9eBlXF8ut/gaC5F59tOYebhERc4Of9Qa78SDw6sbMeHDbJkdVZTvFK/R+mkMl56b
+         XKlpKNVpzxbECceeL0v0+9aMEzWY7mF7mgW7Hh9k9sSge+4boefskfUAFsQ6onTRgWsF
+         fi16PuX5w3ZD3dvR/tRDc/fo3XKkQU2jW8Oefo9CX+FpfTuczTcoKTAHpiuv9hICJPEM
+         DfffEiwhR0n0Ui8JzBTq2uQ3WRKKlTnW4Hn+ZlSAKx+/OmPske9alwScInyB4/buTWfG
+         +W8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=KfUvX63EdVYh++jfCcHCckhx4wgjEVNh8cB0jomBOhI=;
-        b=g5r+3DYMy8Py2k+CKJPSpjdpMX9J7RZfK5s7NS/mLm4+hEO6G6uuV1gUgSLF9JU4Ay
-         5kxHkfQyjluWqSZ8Cx1NGX3KBsMrxQOlx4my+S7KKr1N4+qv5AfcuytCkg/Sq7l9V3Xp
-         lJtsJdxYhLNTvWWdGHeUDUJhYoYn5ZHZJXMnpSU7JQpO5RLmek+ZTbrIxFQxX8Zt5xTc
-         kyAbBsAwNbrKCvYq81SrWMCw8w9XfKXZql93Ac9sG+NpQ1I1w4pZ80btOUsNHKWEYtBY
-         Y6/lcMzYyUkn4rXnu52zmsnwq8UVEpdc8MRQaAI5NY0hOgZvAf1Zc0oRkjbjCVtqYBwt
-         smzQ==
-X-Gm-Message-State: AD7BkJJFK981EOViSOmygXFRwZq6csNhrJliRALqdtRc98nloCQtre0OFwp32hClxUDRGg==
-X-Received: by 10.66.248.168 with SMTP id yn8mr47650725pac.24.1458060462319;
-        Tue, 15 Mar 2016 09:47:42 -0700 (PDT)
+        bh=VsgUxtpVfjdoqI1GoIHdg/QJuJdr65ebk7wUV3knUDU=;
+        b=T9b7CDAmKPoHTYU/a3kXZ3auSt4KsDCpnvM9F00Mh9ugOZpeMmoEvaotOTQFTveRVk
+         3CghMCodwcBFaPN9zuz5OiOxmtMDSyBxIUMkmPZtfrRTpewQY8IaNM6Iwo5H+YTcJoS5
+         QaXKS/C5EHHYJ3PbrEXu+dUGCU8mQ6NDOI4wvt5jXm1w0k1bDe6U4eTID9J9DooGX7R7
+         AbPppFwPy4oL/asmuTPwQT6RJrAZVvXjGizFiApVWMtlZvVvmSjMAE16/lS0ORaYFk7y
+         xLrH9AYcwbQs0qS75FMVo6wdrLd19EocFVDzQDpObUws4KSsaQ8AbP8J8cdj6K4Cnm50
+         r65Q==
+X-Gm-Message-State: AD7BkJKq+Gw5nzvecuxGn4LqQZs8RBuA+IcK8PZkUdgryNnF42BB1PF0rvEQMYqvZ2zOBw==
+X-Received: by 10.98.75.10 with SMTP id y10mr40054501pfa.32.1458060469191;
+        Tue, 15 Mar 2016 09:47:49 -0700 (PDT)
 Received: from localhost.localdomain ([106.51.243.87])
-        by smtp.gmail.com with ESMTPSA id i1sm40874361pfj.17.2016.03.15.09.47.39
+        by smtp.gmail.com with ESMTPSA id i1sm40874361pfj.17.2016.03.15.09.47.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 15 Mar 2016 09:47:41 -0700 (PDT)
+        Tue, 15 Mar 2016 09:47:48 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.7.3
 In-Reply-To: <1458060436-1215-1-git-send-email-Karthik.188@gmail.com>
@@ -59,151 +58,150 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288872>
 
-Add support for %(upstream:track,nobracket) which will print the
-tracking information without the brackets (i.e. "ahead N, behind M").
-This is needed when we port branch.c to use ref-filter's printing APIs.
+Introduce refname_atom_parser() which will parse the '%(refname)' atom
+and store information into the 'used_atom' structure based on the
+modifiers used along with the atom.
 
-Add test and documentation for the same.
-
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 ---
- Documentation/git-for-each-ref.txt |  5 ++-
- ref-filter.c                       | 67 +++++++++++++++++++++++++-------------
- t/t6300-for-each-ref.sh            |  2 ++
- 3 files changed, 50 insertions(+), 24 deletions(-)
+ ref-filter.c | 70 +++++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 39 insertions(+), 31 deletions(-)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 6dbd7bd..4e41cee 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -116,7 +116,10 @@ upstream::
- 	version: ">" (ahead), "<" (behind), "<>" (ahead and behind),
- 	or "=" (in sync).  Has no effect if the ref does not have
- 	tracking information associated with it. `:track` also prints
--	"[gone]" whenever unknown upstream ref is encountered.
-+	"[gone]" whenever unknown upstream ref is encountered. Append
-+	`:track,nobracket` to show tracking information without
-+	brackets (i.e "ahead N, behind M").  Has no effect if the ref
-+	does not have tracking information associated with it.
- 
- push::
- 	The name of a local ref which represents the `@{push}` location
 diff --git a/ref-filter.c b/ref-filter.c
-index 4d7e0c0..8c97cdb 100644
+index 7b35e4f..dc1e404 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -46,8 +46,10 @@ static struct used_atom {
- 	union {
- 		char color[COLOR_MAXLEN];
- 		struct align align;
--		enum { RR_NORMAL, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT }
--			remote_ref;
+@@ -63,6 +63,10 @@ static struct used_atom {
+ 			unsigned int length;
+ 		} objectname;
+ 		enum { S_FULL, S_SHORT } symref;
 +		struct {
-+			enum { RR_NORMAL, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT } option;
-+			unsigned int nobracket: 1;
-+		} remote_ref;
- 		struct {
- 			enum { C_BARE, C_BODY, C_BODY_DEP, C_LINES, C_SIG, C_SUB } option;
- 			unsigned int nlines;
-@@ -75,16 +77,33 @@ static void color_atom_parser(struct used_atom *atom, const char *color_value)
- 
- static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
- {
--	if (!arg)
--		atom->u.remote_ref = RR_NORMAL;
--	else if (!strcmp(arg, "short"))
--		atom->u.remote_ref = RR_SHORTEN;
--	else if (!strcmp(arg, "track"))
--		atom->u.remote_ref = RR_TRACK;
--	else if (!strcmp(arg, "trackshort"))
--		atom->u.remote_ref = RR_TRACKSHORT;
--	else
--		die(_("unrecognized format: %%(%s)"), atom->name);
-+	struct string_list params = STRING_LIST_INIT_DUP;
-+	int i;
-+
-+	if (!arg) {
-+		atom->u.remote_ref.option = RR_NORMAL;
-+		return;
-+	}
-+
-+	atom->u.remote_ref.nobracket = 0;
-+	string_list_split(&params, arg, ',', -1);
-+
-+	for (i = 0; i < params.nr; i++) {
-+		const char *s = params.items[i].string;
-+
-+		if (!strcmp(s, "short"))
-+			atom->u.remote_ref.option = RR_SHORTEN;
-+		else if (!strcmp(s, "track"))
-+			atom->u.remote_ref.option = RR_TRACK;
-+		else if (!strcmp(s, "trackshort"))
-+			atom->u.remote_ref.option = RR_TRACKSHORT;
-+		else if (!strcmp(s, "nobracket"))
-+			atom->u.remote_ref.nobracket = 1;
-+		else
-+			die(_("unrecognized format: %%(%s)"), atom->name);
-+	}
-+
-+	string_list_clear(&params, 0);
++			enum { R_NORMAL, R_SHORT, R_STRIP } option;
++			unsigned int strip;
++		} refname;
+ 	} u;
+ } *used_atom;
+ static int used_atom_cnt, need_tagged, need_symref;
+@@ -228,12 +232,27 @@ static void symref_atom_parser(struct used_atom *atom, const char *arg)
+ 		die(_("unrecognized %%(symref) argument: %s"), arg);
  }
  
- static void body_atom_parser(struct used_atom *atom, const char *arg)
-@@ -1045,25 +1064,27 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
- 				    struct branch *branch, const char **s)
++static void refname_atom_parser(struct used_atom *atom, const char *arg)
++{
++	if (!arg)
++		atom->u.refname.option = R_NORMAL;
++	else if (!strcmp(arg, "short"))
++		atom->u.refname.option = R_SHORT;
++	else if (skip_prefix(arg, "strip=", &arg)) {
++		atom->u.contents.option = R_STRIP;
++		if (strtoul_ui(arg, 10, &atom->u.refname.strip) ||
++			atom->u.refname.strip <= 0)
++			die(_("positive value expected refname:strip=%s"), arg);
++	} else
++		die(_("unrecognized %%(refname) argument: %s"), arg);
++}
++
+ static struct {
+ 	const char *name;
+ 	cmp_type cmp_type;
+ 	void (*parser)(struct used_atom *atom, const char *arg);
+ } valid_atom[] = {
+-	{ "refname" },
++	{ "refname", FIELD_STR, refname_atom_parser },
+ 	{ "objecttype" },
+ 	{ "objectsize", FIELD_ULONG },
+ 	{ "objectname", FIELD_STR, objectname_atom_parser },
+@@ -1047,21 +1066,16 @@ static inline char *copy_advance(char *dst, const char *src)
+ 	return dst;
+ }
+ 
+-static const char *strip_ref_components(const char *refname, const char *nr_arg)
++static const char *strip_ref_components(const char *refname, unsigned int len)
  {
- 	int num_ours, num_theirs;
--	if (atom->u.remote_ref == RR_SHORTEN)
-+	if (atom->u.remote_ref.option == RR_SHORTEN)
- 		*s = shorten_unambiguous_ref(refname, warn_ambiguous_refs);
--	else if (atom->u.remote_ref == RR_TRACK) {
-+	else if (atom->u.remote_ref.option == RR_TRACK) {
- 		if (stat_tracking_info(branch, &num_ours,
- 				       &num_theirs, NULL)) {
--			*s = "[gone]";
--			return;
+-	char *end;
+-	long nr = strtol(nr_arg, &end, 10);
+-	long remaining = nr;
++	long remaining = len;
+ 	const char *start = refname;
+ 
+-	if (nr < 1 || *end != '\0')
+-		die(_(":strip= requires a positive integer argument"));
+-
+ 	while (remaining) {
+ 		switch (*start++) {
+ 		case '\0':
+-			die(_("ref '%s' does not have %ld components to :strip"),
+-			    refname, nr);
++			die("ref '%s' does not have %ud components to :strip",
++			    refname, len);
+ 		case '/':
+ 			remaining--;
+ 			break;
+@@ -1153,6 +1167,18 @@ static const char *get_symref(struct used_atom *atom, struct ref_array_item *ref
+ 		return ref->symref;
+ }
+ 
++static const char *get_refname(struct used_atom *atom, struct ref_array_item *ref)
++{
++	if (ref->kind & FILTER_REFS_DETACHED_HEAD)
++		return get_head_description();
++	if (atom->u.refname.option == R_SHORT)
++		return shorten_unambiguous_ref(ref->refname, warn_ambiguous_refs);
++	else if (atom->u.refname.option == R_STRIP)
++		return strip_ref_components(ref->refname, atom->u.refname.strip);
++	else
++		return ref->refname;
++}
++
+ /*
+  * Parse the object referred by ref, and grab needed value.
+  */
+@@ -1181,7 +1207,6 @@ static void populate_value(struct ref_array_item *ref)
+ 		struct atom_value *v = &ref->value[i];
+ 		int deref = 0;
+ 		const char *refname;
+-		const char *formatp;
+ 		struct branch *branch = NULL;
+ 
+ 		v->handler = append_atom;
+@@ -1192,11 +1217,9 @@ static void populate_value(struct ref_array_item *ref)
+ 			name++;
+ 		}
+ 
+-		if (starts_with(name, "refname")) {
+-			refname = ref->refname;
+-			if (ref->kind & FILTER_REFS_DETACHED_HEAD)
+-				refname = get_head_description();
+-		} else if (starts_with(name, "symref"))
++		if (starts_with(name, "refname"))
++			refname = get_refname(atom, ref);
++		else if (starts_with(name, "symref"))
+ 			refname = get_symref(atom, ref);
+ 		else if (starts_with(name, "upstream")) {
+ 			const char *branch_name;
+@@ -1273,21 +1296,6 @@ static void populate_value(struct ref_array_item *ref)
+ 		} else
+ 			continue;
+ 
+-		formatp = strchr(name, ':');
+-		if (formatp) {
+-			const char *arg;
+-
+-			formatp++;
+-			if (!strcmp(formatp, "short"))
+-				refname = shorten_unambiguous_ref(refname,
+-						      warn_ambiguous_refs);
+-			else if (skip_prefix(formatp, "strip=", &arg))
+-				refname = strip_ref_components(refname, arg);
+-			else
+-				die(_("unknown %.*s format %s"),
+-				    (int)(formatp - name), name, formatp);
 -		}
 -
--		if (!num_ours && !num_theirs)
-+			*s = xstrdup("gone");
-+		} else if (!num_ours && !num_theirs)
- 			*s = "";
- 		else if (!num_ours)
--			*s = xstrfmt("[behind %d]", num_theirs);
-+			*s = xstrfmt("behind %d", num_theirs);
- 		else if (!num_theirs)
--			*s = xstrfmt("[ahead %d]", num_ours);
-+			*s = xstrfmt("ahead %d", num_ours);
+ 		if (!deref)
+ 			v->s = refname;
  		else
--			*s = xstrfmt("[ahead %d, behind %d]",
-+			*s = xstrfmt("ahead %d, behind %d",
- 				     num_ours, num_theirs);
--	} else if (atom->u.remote_ref == RR_TRACKSHORT) {
-+		if (!atom->u.remote_ref.nobracket && *s[0]) {
-+			const char *to_free = *s;
-+			*s = xstrfmt("[%s]", *s);
-+			free((void *)to_free);
-+		}
-+	} else if (atom->u.remote_ref.option == RR_TRACKSHORT) {
- 		if (stat_tracking_info(branch, &num_ours,
- 				       &num_theirs, NULL))
- 			return;
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index a92b36f..2c5f177 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -372,6 +372,8 @@ test_expect_success 'setup for upstream:track[short]' '
- 
- test_atom head upstream:track '[ahead 1]'
- test_atom head upstream:trackshort '>'
-+test_atom head upstream:track,nobracket 'ahead 1'
-+test_atom head upstream:nobracket,track 'ahead 1'
- test_atom head push:track '[ahead 1]'
- test_atom head push:trackshort '>'
- 
 -- 
 2.7.3
