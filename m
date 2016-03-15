@@ -1,80 +1,110 @@
 From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: [PATCH 04/19] index-helper: new daemon for caching index and
  related stuff
-Date: Tue, 15 Mar 2016 18:52:30 +0700
-Message-ID: <CACsJy8BxDZg93ssBZGcC7Jsm_LpDgRtHUBfCm0agbvkPX9hUHw@mail.gmail.com>
-References: <1457548582-28302-1-git-send-email-dturner@twopensource.com> <1457548582-28302-5-git-send-email-dturner@twopensource.com>
+Date: Tue, 15 Mar 2016 18:56:55 +0700
+Message-ID: <CACsJy8Cgz0zTryCCXoPMh40Rq4yOCy1L8Nih-YbKaZLyV=Gi-w@mail.gmail.com>
+References: <1457548582-28302-1-git-send-email-dturner@twopensource.com>
+ <1457548582-28302-5-git-send-email-dturner@twopensource.com> <xmqqtwkffdus.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue Mar 15 12:53:10 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Turner <dturner@twopensource.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 15 12:57:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afnXB-0000Ec-Bd
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 12:53:09 +0100
+	id 1afnbP-000339-Ny
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 12:57:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934298AbcCOLxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2016 07:53:05 -0400
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:33411 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932378AbcCOLxB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2016 07:53:01 -0400
-Received: by mail-lb0-f170.google.com with SMTP id oe12so19172822lbc.0
-        for <git@vger.kernel.org>; Tue, 15 Mar 2016 04:53:01 -0700 (PDT)
+	id S934369AbcCOL52 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Mar 2016 07:57:28 -0400
+Received: from mail-lb0-f176.google.com ([209.85.217.176]:36202 "EHLO
+	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932706AbcCOL50 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Mar 2016 07:57:26 -0400
+Received: by mail-lb0-f176.google.com with SMTP id x1so19196933lbj.3
+        for <git@vger.kernel.org>; Tue, 15 Mar 2016 04:57:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=+RAoy9KSRxNXkuTL3TrWewbzVrnHP5ckBr6laFtdlJQ=;
-        b=ekLKP/zCATCn/19ep1GHe7D7+Rlj3k2aArPTyNROloSxXQfc8TRMvqA+mYoFIjskcW
-         PfWigxGuGwehG4RLg57bHwkENQ1PZwthQSG3mJb2PLPwzjiZGRDPx7UCIsXk0KQrFs1w
-         P37nyMxZyYaA2WYOtTmQ2huX8fGHQfV4kA6FTYVH5vk7mjPwBgB2hQZ5KBYIUNhThzA6
-         QvFITppkRnF6ouMbZ7FDMX7sFyioCr8UUoQpj2SdMbzazjY0pwV/5xlzVlgdoJl5fy9R
-         dyTAOvhjrqXIxWKTuz1eoSaLuUF0Ew3yLep5qKtfCrJNgUnLpWImtp32N5LfE7dUiEKu
-         w/ew==
+         :cc:content-transfer-encoding;
+        bh=AZTZWUzVyQEsVbdZ7E+OcOUpjTCDnNF7JsYp0XOXmtE=;
+        b=et68c8cWR1TcvhmoLtGXE6mXAh4LdUaG4SCeY7UXSy743vMiMWOgooe5FENKaCdm9p
+         5TuJlt2xfoneh9cw2niyaryH54jvYDK0WyVr3xoRBwMAMO8jEjsG5c0kC8Vmt1i9o95p
+         6pj1YgFamSw74wxt5D/1vscsHZqJSOyKYZwKccuq/dV+6krGGn2jVBaphIwsvLVTn3b+
+         kIXslOPwzH0jk/R7/7Pv5NDtacfmFKHxqm+SZ10/+FLZDVflp4SKDvj23rL6CGITYHJl
+         PHJbvGA8J4iiZSmLucBNXJgm4sM5e57NYqoNKHmalYSxPwTWbeXAWHZVrMdi6t/xSaqJ
+         aYKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=+RAoy9KSRxNXkuTL3TrWewbzVrnHP5ckBr6laFtdlJQ=;
-        b=PxmBBMQAF58v3SMHTmILMCTx9dNfYLRMrvyfqkGso2zi8JX8BWsVR8v7qrp0Gzqoi6
-         AaFxDCtqWGvsBfHNPfWmG9nbHqz/vNcY1wImr+wWk6PqV4GRwL5TexxwvYRyqwLNW7ik
-         VmYhm/BW2XxTumkIqUcdRO/VLUlFnZ3/wcyoWtJrmhKwEsljTAuejjZCclMAbmsV7EXs
-         xg0lZSW4HeSnGkyoaSlQfAyoymWk55OVLtGp0WdMYqcnqVSlNXk0qootrTEVgWpYKc9s
-         9Y4YlOuP4+Bn/mtx5l5zpDf26WnX9OjVBr6g/pb49/m9gGTpwYmgePKt0N9s1ganZQVN
-         6riA==
-X-Gm-Message-State: AD7BkJJyfMmJjuAiEh7W8LK3Ed++CGrvQ1pN3/4i/cmdCK3mGFjT7tUrz5ySf5mWswPdF0zbjPJdOJf5in/qNg==
-X-Received: by 10.25.159.68 with SMTP id i65mr9647471lfe.94.1458042780235;
- Tue, 15 Mar 2016 04:53:00 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Tue, 15 Mar 2016 04:52:30 -0700 (PDT)
-In-Reply-To: <1457548582-28302-5-git-send-email-dturner@twopensource.com>
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=AZTZWUzVyQEsVbdZ7E+OcOUpjTCDnNF7JsYp0XOXmtE=;
+        b=LZTV6cZGmuip/I56FZx851Qmu/5KlHVLBKtwpcvxRwzT2WvzcUbJJoRXGIrnUS2oj3
+         DJ5dYp+9f7iCkd56etC34L5zw4lerJMI1GYKofXpc/8TIAvry5yvy0RiRqgXbknlL8ao
+         Pm5K2UM+H9eOLI10O2tJnMV/GsgfI+W9fIcGknzdsRaeyrelv728CmaGi3yiWrHH3lUq
+         bt3SCDChKSQwbC6qViHDWF6EeSSGUN1/3u48GrAUKeZLMjBI2NHtSzjK9aXQ6p9zVB2j
+         DeUhZg7ThfXu5KNCvzyvcpMqPamw5NpY1Rrg7JIQQTpn37lWiSnLd2FnRModPpzjI6lG
+         4c9g==
+X-Gm-Message-State: AD7BkJJ4noLVHbqAmkxjCz8H6Yby0P5Y3A9YEfx3eoi8sMGZZSIFDtqC6UT2ThRSilmpqMzH/WWGDNFQSONrig==
+X-Received: by 10.112.54.132 with SMTP id j4mr2743103lbp.3.1458043044914; Tue,
+ 15 Mar 2016 04:57:24 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Tue, 15 Mar 2016 04:56:55 -0700 (PDT)
+In-Reply-To: <xmqqtwkffdus.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288850>
 
-On Thu, Mar 10, 2016 at 1:36 AM, David Turner <dturner@twopensource.com> wrote:
-> Git can poke the daemon to tell it to refresh the index cache, or to
-> keep it alive some more minutes via UNIX signals.
+On Thu, Mar 10, 2016 at 6:09 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> David Turner <dturner@twopensource.com> writes:
+>
+>> From: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+>>
+>> Instead of reading the index from disk and worrying about disk
+>> corruption, the index is cached in memory (memory bit-flips happen
+>> too, but hopefully less often). The result is faster read. Read time
+>> is reduced by 70%.
+>>
+>> The biggest gain is not having to verify the trailing SHA-1, which
+>> takes lots of time especially on large index files. But this also
+>> opens doors for further optimiztions:
+>>
+>>  - we could create an in-memory format that's essentially the memory
+>>    dump of the index to eliminate most of parsing/allocation
+>>    overhead. The mmap'd memory can be used straight away. Experiment
+>>    [1] shows we could reduce read time by 88%.
+>>
+>>  - we could cache non-index info such as name hash
+>>
+>> The shared memory's name folows the template "git-<object>-<SHA1>"
+>> where <SHA1> is the trailing SHA-1 of the index file. <object> is
+>> "index" for cached index files (and may be "name-hash" for name-hash
+>> cache). If such shared memory exists, it contains the same index
+>> content as on disk. The content is already validated by the daemon a=
+nd
+>> git won't validate it again (except comparing the trailing SHA-1s).
+>
+> This indeed is an interesting approach; what is not explained but
+> must be is when the on-disk index is updated to reflect the reality
+> (if I am reading the explanation and the code right, while the
+> daemon is running, its in-core cache becomes the source of truth by
+> forcing everybody's read-index-from() to go to the daemon).  The
+> explanation could be "this is only for read side, and updating the
+> index happens via the traditional 'write a new file and rename it to
+> the final place' codepath, at which time the daemon must be told to
+> re-read it."
 
-The reason I went with UNIX signals was because it made it possible to
-make a simple GetMessage loop, the only thing I can remember from my
-Windows time, on Windows later. It sounded clever, but because this is
-more like UDP (vs TCP) it's harder for communication. For example, we
-can't get a confirmation after a request... UNIX sockets would be more
-natural.
-
-Since this patch was written, watchman has gained Windows support. I
-just looked at the code, it uses named pipe on Windows. So maybe we
-can just go with that too (if only because it has been proven working
-in practice) and we can go back to UNIX sockets on the *nix side. Too
-bad we can't just copy some functions from watchman because of license
-incompatibility. But we can leave Windows support to gfw team now, I
-think.
--- 
+Another aspect that's not mentioned is, we keep this daemon's logic as
+thin as possible. The "brain" stays in git. So the daemon can read and
+validate stuff, but that's about all it's allowed to do. It's not
+supposed to add/create new contents. It's not even allowed to accept
+direct updates from git.
+--=20
 Duy
