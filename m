@@ -1,109 +1,155 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH v2] git-p4: map a P4 user to Git author name and email address
-Date: Tue, 15 Mar 2016 07:19:12 +0000
-Message-ID: <CAE5ih79aKHM5yim-U_sauZ7ChgWR82CAre4EC3j5HQ8CCG=w_Q@mail.gmail.com>
-References: <1456829396-38659-1-git-send-email-larsxschneider@gmail.com>
-	<CAPig+cRwEKjGaDA-jy8KJSAhTheJYDmxtPq8SdVs0LA2f9-9Yw@mail.gmail.com>
-	<CAE5ih7_EAjMtdNQ6ab2wrN4LMSBBZ=T7w-fPKLtdRqfvFUhzFQ@mail.gmail.com>
-	<61210CAD-D3D2-40AC-88F9-02169619F5F6@gmail.com>
-	<CB4CAAEA-0036-483A-9F2C-89B95E04037E@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH/RFC/GSoC 17/17] rebase-interactive: introduce interactive
+ backend for builtin rebase
+Date: Tue, 15 Mar 2016 08:57:55 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603150800420.4690@virtualbox>
+References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com> <1457779597-6918-18-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 15 08:19:19 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>, sam.halliday@gmail.com
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 15 08:58:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afjGA-0003cf-Mx
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 08:19:19 +0100
+	id 1afjrp-0000BC-Rt
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 08:58:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934037AbcCOHTP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2016 03:19:15 -0400
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:33366 "EHLO
-	mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932124AbcCOHTN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2016 03:19:13 -0400
-Received: by mail-oi0-f66.google.com with SMTP id c203so499525oia.0
-        for <git@vger.kernel.org>; Tue, 15 Mar 2016 00:19:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=jTew+2ktjlvsrl8tTecVxsE39D0qXtGC/eC+nbAEyVI=;
-        b=Ibwc+zlBW6l1q1xc6cndPPPvBQpPA3rpmuHQwvUQH0jz24Qc+MCdvCk5hgcLV0ExqE
-         lFgJUbw/hkrwlOE125PVFxk+CzBvYlNFxPyojOg78+ZWzD5YBiu2zwt8F+iCKXKgx9yk
-         HFEnn53usM0ge+8CcPYJBRhI5aWlpxFNH9Bwo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=jTew+2ktjlvsrl8tTecVxsE39D0qXtGC/eC+nbAEyVI=;
-        b=CTeOQF+nGli5lgVIH679ufceU6eyL4OWvPulZB4D8F3Ae0mbi+0JF2qE03os/22cew
-         5++Z5014ybgvF5HZwfYouU0P2XgGF+ZrYrIvqNMseZZKtGYPzpKQudFiF6ynrda3610B
-         eWBedg92EPDOgDspZTpg3+1TvNWUxwVjF3+0hYhZFFYu6DcHgYNyPDfshZzswfarAsgi
-         YK6WtHM8UnUkmuO2jWfQTFukg3psOHuUdTEUvqbnBzXurzQdlenLW0QUIaEzhcj01zri
-         pFCXNAw964uAGvU/agbrA4iuDE9Nz9sM0PNc2eYqvqLyhMoOxDc2fFOFCfUIfBBE3eXM
-         v5RA==
-X-Gm-Message-State: AD7BkJJMj5eDp9z3Gw2k37NjjHNyE4OuvPFqWHp6Mfww4hFQNA5WPJUlkUW0uJznH+f+R3gi6SvUO06EMiyDMw==
-X-Received: by 10.202.180.137 with SMTP id d131mr15654258oif.135.1458026352238;
- Tue, 15 Mar 2016 00:19:12 -0700 (PDT)
-Received: by 10.202.172.132 with HTTP; Tue, 15 Mar 2016 00:19:12 -0700 (PDT)
-In-Reply-To: <CB4CAAEA-0036-483A-9F2C-89B95E04037E@gmail.com>
+	id S1753472AbcCOH6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2016 03:58:09 -0400
+Received: from mout.gmx.net ([212.227.17.21]:55654 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751155AbcCOH6G (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 03:58:06 -0400
+Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MJFBe-1ahOpD0ZhK-002m9G; Tue, 15 Mar 2016 08:57:57
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <1457779597-6918-18-git-send-email-pyokagan@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:8vH52Jw6MRVWkTgoiU/vd9KjFfSSz25bEypYpmOBTOOUzf9qTfS
+ G6GC0b0WVEJJ3nkqqEtILm6cdBJrs/U8PbP1Fvoh5uvk8fWEln6ph0rb4JoAaEIl953o0cG
+ tJQfnlDzFONrWy1fYGW4WeQFWQvvHZOZo6mbVrZbaM2S0AUjQblilJliVNdECOv4QxDg1om
+ mw7PlljVmo59NhsLaYa8w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Mv+YNNsM4XI=:8D9z+mTF5uSsMWaftFjK+E
+ EHAnvGsbBD4JKl7b9lOnBCk7jiJSJ1s6uzrDid+IyjPpxTeddvHQ976aEh/VzHA/MchSbJ7Ob
+ krTuEgpL5GaXIBsR2bI9nI3HIgIapib9Cun/fXZQmQJVXa6BGLjqX6RwKsGJkp7XXAGqrcaGW
+ J5i/3a07e82hOvPXyhc6w1XY8OBCTnSZeJg1KFsSqWSeacH+JzY/SIdvWWFBilSADkd6ij05l
+ +h8SgcSNdDwQKb5niX4setV22Pzkxly0pMX9XcZXxmSrnXTApD6MhbXUhFnq3ffLX5yX+plFI
+ gK6X2oQ4DI3nxyoL7y+zObovJlEQ8ONekgQSaTpfvHboY+fDGAeXDPAUAbbnm+OPrBfXUUfMV
+ ES/Es0SmYp8RbsTDAvNX1F8eUxXiNLI+v9NYj/p+bpYnaU7YXosMgkF+VrKa1nrLi2T0r5VeX
+ 1tF18O/QEgZfkdPE0cm+V0QI2dOcgbtP3rEiVYyCQPSaga35DkQFM3leTnqB2vr4m5B8wia/o
+ w+bOtswcdlYqTMirz83qMcZm479h+jbI8SJQeDUbhpsMox9DAwo4vcg8UrSWbzFeJNj0fhiWD
+ Q7q9V8q2MZsih8RcuVuVsgTMmoS8goCYPIY3RykywJku6Bk+riClXb5FPMPpPuyj8UwOipyNM
+ vXnvNhoH7b//fRn25F5VZdsz9739Qhn8okWOCxU4IB6uAggCySnpwL7oQa6baHS2+NxEGCEjK
+ LHmkwSrW4dphjEQ+eoE85Te7KLVs7Y5b5e3B8zZzSvGE4ECLnYo3XN/R2eoK3mUiqq/DS+Wx 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288840>
 
-On 13 March 2016 at 17:41, Lars Schneider <larsxschneider@gmail.com> wrote:
->
-> On 02 Mar 2016, at 10:25, Lars Schneider <larsxschneider@gmail.com> wrote:
->
->>
->>> On 02 Mar 2016, at 06:06, Luke Diamand <luke@diamand.org> wrote:
->>>
->>> On 1 March 2016 at 19:15, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>>> On Tue, Mar 1, 2016 at 5:49 AM,  <larsxschneider@gmail.com> wrote:
->>>>> Map a P4 user to a specific name and email address in Git with the
->>>>> "git-p4.mapUser" config. The config value must be a string adhering
->>>>> to the format "p4user = First Lastname <email@address.com>".
->>>>>
->>>>> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
->>>>> ---
->>>>> diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
->>>>> +git-p4.mapUser::
->>>>> +       Map a P4 user to a name and email address in Git. Use a string
->>>>> +       with the following format to create a mapping:
->>>>> ++
->>>>> +-------------
->>>>> +git config --add git-p4.mapUser "p4user = First Last <mail@address.com>"
->>>>> +-------------
->>>>> ++
->>>>> +A mapping will override any user information from P4. Mappings for
->>>>> +multiple P4 user can be defined.
->>>>
->>>> Sorry for not paying closer attention the first time, but this needs
->>>> to be repeated for each P4 user you want to map, right? One can
->>>> imagine this quickly becoming painful if you have a lot of users to
->>>> map. Have you considered modeling this after git-svn where you can set
->>>> an "authors" file (and name the corresponding option --authors-file)?
->>>
->>> For most authors it should just use the existing Perforce user
->>> information. This is (I assume) just for the occasional exception
->>> where Perforce has the wrong email address.
->> I agree this is an occasional exception. I use it for users that have been deleted on the Perforce server.
->>
->> @Eric: If a user wants to they could create a custom gitconfig and then use the config "include" mechanism to achieve a "authors" file kind of approach.
->>
->
-> Is the patch uninteresting for git-p4 as it handles only an occasional
-> exception or did the patch get lost in the noise? :-)
+Hi Paul,
 
-I thought it was useful; I hadn't realised that it was needed for deleted users.
+On Sat, 12 Mar 2016, Paul Tan wrote:
 
-Luke
+> Since 1b1dce4 (Teach rebase an interactive mode, 2007-06-25), git-rebase
+> supports an interactive mode when passed the -i switch.
+> 
+> In interactive mode, git-rebase allows users to edit the list of patches
+> (using the user's GIT_SEQUENCE_EDITOR), so that the user can reorder,
+> edit and delete patches.
+> 
+> Re-implement a skeletal version of the above feature by introducing a
+> rebase-interactive backend for our builtin-rebase. This skeletal
+> implementation is only able to pick and re-order commits.
+> 
+> Signed-off-by: Paul Tan <pyokagan@gmail.com>
+
+It is a pity that both of us worked on overlapping projects in stealth
+mode. Inevitably, some of the work is now wasted :-(
+
+Not all is lost, though.
+
+Much of the code can be salvaged, although I really want to reiterate
+that an all-or-nothing conversion of the rebase command is not going to
+fly.
+
+For several reasons: it would be rather disruptive, huge and hard to
+review. It would not let anybody else work on that huge task. And you're
+prone to fall behind due to Git's source code being in constant flux
+(including the rebase bits).
+
+There is another, really important reason: if you package the conversion
+into small, neat bundles, it is much easier to avoid too narrow a focus
+that would tuck perfectly useful functions away in a location where it
+cannot be reused and where it is likely to be missed by other developers
+who need the same, or similar functionality (point in case:
+has_uncommitted_changes()). And we know that this happened in the past,
+and sometimes resulted in near-duplicated code, hence Karthik's Herculean,
+still ongoing work.
+
+Lastly, I need to point out that the conversion of rebase into a builtin
+is not the end game, it is the game's opening.
+
+I could imagine that other Git oldtimers are perfectly happy with the
+state of the rebase family of commands. I am not. The user interface is
+klunky, some parts are designed wrong (--preserve-merges, I am looking at
+you!), the *name* is completely unintuitive, for crying out loud! Just to
+name a *few* things, there is much more.
+
+I worked around the limitations of the --preserve-merges feature (yeah,
+blame me...) by inventing the "Garden Shears" [*1*] that can re-plant an
+entire thicket of topic branches on top of a moving upstream branch. It is
+similar in spirit to Junio's custom tools that recreate his 'pu' branch
+over and over again, but uses the interactive rebase as work horse.
+
+The shears can also be used to fix up commits in the middle of a thicket
+of branches, which is why I wrote the shears script in the first place.
+
+The fact that the interactive rebase does not do the job with which pretty
+much every project maintainer is faced points out two things: interactive
+rebase needs to learn new tricks, and we need plumbing to do interactive
+rebase's bidding (so that we/others can build better UIs, hopefully with
+much better names, too).
+
+I already know pretty well how I want to implement the shears as a new
+mode of the interactive rebase, once I finished teaching the sequencer how
+to process rebase -i's edit scripts (which somebody decided to name
+"instruction sheets" in the sequencer, to add confusion to poor naming).
+
+All of this let's me think that there is just too much to do for a single
+developer, and therefore whatever needs to be done must be done in a way
+that allows more than a single person to complete the whole shebang, or
+at least their part of it.
+
+So you see, there was a much larger master plan behind my recommendation
+to go the rebase--helper route.
+
+As to my current state: Junio put me into quite a fix (without knowing it)
+by releasing 2.7.3 just after I took off for an extended offline weekend,
+and now I am scrambling because a change in MSYS2's runtime (actually,
+probably more like: an update of the GCC that is used to compile the
+runtime, that now causes a regression) is keeping me away from my work on
+the interactive rebase. Even so, I am pretty far along; There are only
+three major things left to do: 1) fix fixups/squashes with fast-forwarding
+picks, 2) implement 'reword', 3) display the progress.  And of course 4)
+clean up the fallout. ;-)
+
+At this point, I'd rather finish this myself than falling prey to Brooks'
+Law.
+
+I also have to admit that I would love to give you a project over the
+summer whose logical children are exciting enough to dabble with even
+during the winter. And somehow I do not see that excitement in the boring
+conversion from shell to C (even if its outcome is well-needed).
+
+Ciao,
+Dscho
+
+Footnote *1*:
+https://github.com/git-for-windows/build-extra/blob/master/shears.sh
