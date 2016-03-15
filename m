@@ -1,67 +1,101 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC/GSoC 03/17] builtin-rebase: implement skeletal builtin
- rebase
-Date: Tue, 15 Mar 2016 09:01:46 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603150900440.4690@virtualbox>
-References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com> <1457779597-6918-4-git-send-email-pyokagan@gmail.com> <CAGZ79ka64xBABfsWtX6GmK+sdy=VziZeGBKz9A3V=jX9ZcyfyA@mail.gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH v1] git-p4: fix AsciiDoc formatting
+Date: Tue, 15 Mar 2016 08:38:36 +0000
+Message-ID: <CAE5ih79btHY33vrmSt70kkttMdFRzG-tHBZ9K3fEC_OdAZygKg@mail.gmail.com>
+References: <1456830320-40411-1-git-send-email-larsxschneider@gmail.com>
+	<F0F4FA8A-EB42-4990-A90E-6C9245E0A9DE@gmail.com>
+	<xmqq1t7dafa3.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Paul Tan <pyokagan@gmail.com>, Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Duy Nguyen <pclouds@gmail.com>, sam.halliday@gmail.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Mar 15 09:02:02 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Git Users <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 15 09:38:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afjvU-0002nz-Mj
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 09:02:01 +0100
+	id 1afkV3-0000xS-An
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 09:38:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753444AbcCOIB5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2016 04:01:57 -0400
-Received: from mout.gmx.net ([212.227.15.19]:64560 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751155AbcCOIBz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2016 04:01:55 -0400
-Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MYg42-1aJAxV3HYA-00VSO3; Tue, 15 Mar 2016 09:01:47
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CAGZ79ka64xBABfsWtX6GmK+sdy=VziZeGBKz9A3V=jX9ZcyfyA@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:7uBa8ln09/4Wf8V27xsNAiBOik/LkrtmAgPsa1MbjyGlfeQ+nXe
- Oksv6N4FTxTFQIP9ETWLcpbn2kDxqUJvUe8+H7eFyJv5YiMEk/jMsDi/SM0LhdF9ueSFgXO
- wZCcSZQjr3f93ETN0VFV2pCsc3WCmNYD9pSOBIewX5A1eZFNgd9rbN8BOwb/nAf7W/4IK5J
- s2z6ELq54sr9hJijeJTjg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:oOcQAK4ZKtk=:na+695USLMYbcfrXlqoct8
- cUGiR+lMfVz31LDZz6t+0bzcF9UNn0t+F99EYuzmgxvuT4o3t4akXVr4xK6AXDXoklQvParNR
- zrnWMoCle4vZ/hYU0seFHX790BFd6L9MLv3IUkGEFBLXI5WPAXm2/ZH9RK3LgZf5lJKHhr7DZ
- /NZQHJNzFYXtDdcABo8X92BClkwR3wHwY9QmM1mPQIfpZWeVf7rF1G7YTEpZrEW6sMIXdITuh
- kdCUslV7AOvWZRFTktRcwOSpNaJQFrmHErpELB7pvdKooxyeroAfgGHdTKm2NCZABEKXsByLT
- Sr501fqaSeqZZe3hTGPjGgBErnj0ke4O9NMT7MPcX/2ASs4L9IYxG/DpWJck0sVNeqk1fEVj6
- 2TRt8KeyVaeqib16F0M8aJJVMhZf9FtpvDOKH836ZKjWcK4xGawdF/W2DPxHAB29pLdjt9lMs
- zKMHt3VHJLBNRgx5LGKX5OWpewgpeT9KHbsAgexdqHM2lOrbECQKfcIEtX/zXE1iCPt98MZbo
- v497GCsVnAU0XUoDWagaakVsYsDYU7+m49gs0Y5TP+PWGxvj9n4m5JZ6IC8wnCq9Izu/kQGv5
- jnrw9zV/UmexLRnIYvWcPGaYFYxABCsMJcgRihEDz58Tai5+L1Fb36HbN/ktVDkaW8Hhg0H1r
- 4ldWz+5KQOHvV3gxmE+R8oPi7jrnWmswRf9x4cr4zouwDMJ/Qzea6FrzDZ7RF1T+yIzMUspVm
- MuQs84nEzvb6QXAhTzUbKuC3LazX4dgDFFHZl1ziJtBJBmH1jPVyTcIb9xoI40BwLxRhVPsz 
+	id S965037AbcCOIik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2016 04:38:40 -0400
+Received: from mail-ob0-f196.google.com ([209.85.214.196]:36059 "EHLO
+	mail-ob0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964956AbcCOIih (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 04:38:37 -0400
+Received: by mail-ob0-f196.google.com with SMTP id cf7so752424obc.3
+        for <git@vger.kernel.org>; Tue, 15 Mar 2016 01:38:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=zGvTegYtW96M80QfqWp2glFG9Sjfypt4/GPeePRPfI4=;
+        b=g4sA5gDBllnKwd6YfxU+z9XsvP1yEk1hDrhFGjtwVMbCeYIB7iPdpMk89zok4qpTJz
+         C13MQXUpmXscCVn2YNrUJ3nfT7OTKjhk20A5r/nr4wRNpEyk8kcGYUiulOmKg2P7F0BC
+         d+/PvAmpX9t2w8AlSby0I1KPt5pbuo0BStO7U=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=zGvTegYtW96M80QfqWp2glFG9Sjfypt4/GPeePRPfI4=;
+        b=I8F6tE0nXZhk9gmKQQPqc7r5//6rIlL35SfWuLKD9a7VMjS6hKIAS8kMP4+ptA4kWS
+         I9zzAqGi9nGcFXlSN+pAvtY0dVxbK8K8s8YixVFnztr2R7dwm3BcQIdfwZfV2nlPzrQE
+         OFIjNEI9LhSxw4o2uzwEVAuGqEMuOxJoFEEFb9+VKO/2MWzdFSxgj3wPDRHhEFHAeSJb
+         oPkkQU4Op4141lSBKS9+aCa6P6ltOZJRa0PEcy6VWyZlIxGFz3Y6GbPoD7AOaKPN6ldj
+         WMlyO/NPFBv3eauY3mNtZ/qZb59MWFf80Szlw850Pe4CmJ8JmqgWY6oEo3oHucjhM9uc
+         z/dQ==
+X-Gm-Message-State: AD7BkJJHoRytnIaar5H6exWnTLbF+ZVM3fnVXpGydNPRMBLftZDo30KDuabYAuRZrDZU09BXP7uGPBppEfux6w==
+X-Received: by 10.60.70.1 with SMTP id i1mr17370842oeu.13.1458031116354; Tue,
+ 15 Mar 2016 01:38:36 -0700 (PDT)
+Received: by 10.202.172.132 with HTTP; Tue, 15 Mar 2016 01:38:36 -0700 (PDT)
+In-Reply-To: <xmqq1t7dafa3.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288842>
 
-Hi Stefan,
+On 14 March 2016 at 03:51, Junio C Hamano <gitster@pobox.com> wrote:
+> Lars Schneider <larsxschneider@gmail.com> writes:
+>
+>>> diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+>>> index 738cfde..140fc12 100644
+>>> --- a/Documentation/git-p4.txt
+>>> +++ b/Documentation/git-p4.txt
+>>> @@ -528,7 +528,7 @@ git-p4.largeFileSystem::
+>>> git config       git-p4.largeFileSystem GitLFS
+>>> -------------
+>>> +
+>>> -    [1] https://git-lfs.github.com/
+>>> +[1] https://git-lfs.github.com/
+>>>
+>>> git-p4.largeFileExtensions::
+>>>      All files matching a file extension in the list will be processed
+>>> --
+>>> 2.5.1
+>>>
+>>
+>> Is there any chance to get this in? The formatting error is quite obvious here:
+>> https://git-scm.com/docs/git-p4
+>>
+>> (while looking at this website I also noticed wrong double quotes around cp1252
+>> which I will fix with a subsequent patch)
+>
+> I ignored this when I saw it first, primarily because I assumed that
+> anything related to git-p4 would get a review by somebody better
+> versed with git-p4 before I get to it; I forgot about the patch
+> after it was buried in the other messages without anything
+> happening.
+>
+> Will take a look.
 
-On Mon, 14 Mar 2016, Stefan Beller wrote:
+Comparing with the git-bisect-lk2009 page, it uses a slightly
+different approach for external HTTP references. The references are
+put at the end, as internal hyperlinks, and in a bulleted list. It
+would make sense to try to be consistent with that, unless there's a
+good reason not to.
 
-> #TIL you cannot run rebase in a bare repository(, yet). I would have
-> assumed you could.
-
-Every rebase bears the chance of merge conflicts. You need a working
-directory to resolve those.
-
-Ciao,
-Dscho
+Luke
