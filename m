@@ -1,109 +1,80 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v7] commit: add a commit.verbose config variable
-Date: Tue, 15 Mar 2016 15:24:29 -0400
-Message-ID: <CAPig+cTRWg9yB7eXhnbgbjjYfrJyn_A-_gQmbW8NL1DEbkLpkQ@mail.gmail.com>
-References: <010201537710be08-f31428b3-5df3-4694-8c4a-0e8f058131b3-000000@eu-west-1.amazonses.com>
-	<1458041486-7044-1-git-send-email-szeder@ira.uka.de>
-	<CAFZEwPNAVxT2HVQyj0Wajth_y-P6Af4AcSZDzJDJP=vLHztwiw@mail.gmail.com>
+Subject: Re: [PATCH v2] submodule-config: use hashmap_iter_first()
+Date: Tue, 15 Mar 2016 15:30:07 -0400
+Message-ID: <CAPig+cRJKsdkGEr-_Z7pxKW-t9X45+Z4ZLzgk=aprMHMdmLNqg@mail.gmail.com>
+References: <1458069195-20888-1-git-send-email-kuleshovmail@gmail.com>
+	<CAGZ79kZ_wbJ2MGs_E-P_0eLk3JX_0QhT1c_BxqWCS+vrg8+xwA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Git List <git@vger.kernel.org>
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 15 20:24:39 2016
+Cc: Alexander Kuleshov <kuleshovmail@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Mar 15 20:30:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afua3-00039m-2J
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 20:24:35 +0100
+	id 1afufW-000761-KL
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 20:30:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934901AbcCOTYb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Mar 2016 15:24:31 -0400
-Received: from mail-vk0-f41.google.com ([209.85.213.41]:35080 "EHLO
-	mail-vk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932665AbcCOTYa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Mar 2016 15:24:30 -0400
-Received: by mail-vk0-f41.google.com with SMTP id e6so34096768vkh.2
-        for <git@vger.kernel.org>; Tue, 15 Mar 2016 12:24:29 -0700 (PDT)
+	id S934905AbcCOTaL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2016 15:30:11 -0400
+Received: from mail-vk0-f43.google.com ([209.85.213.43]:33355 "EHLO
+	mail-vk0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932665AbcCOTaJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 15:30:09 -0400
+Received: by mail-vk0-f43.google.com with SMTP id k1so34386164vkb.0
+        for <git@vger.kernel.org>; Tue, 15 Mar 2016 12:30:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-transfer-encoding;
-        bh=90s9zmr9XtWmvWy0QWw1XLazqwpWfquS5ApUhpT893c=;
-        b=hz25tIdixeaBnH7fWmcNsrHK/bHZFsAa9y3BOcLHJ+4/HOzRdWZetC8zSCtBxU3+VD
-         TnGKUuA0CKzcnvcRhXTcktecKAomTX0qf1hkwtDXuHdwYEgkHdFTMomeI9E2QFIJJ2QE
-         qUz+vOo0KMQMVEYhZ9TDT8rC0vnKmn++PqdVKNWtqChpIjzVTCluM9RqPb72a5kI8oAN
-         y36g9UAAjEasaoT1xwI4j1697ViDnWzeHizpWpWSM0oVL/CllcVYHSP0/DkA85/jC/st
-         mALo9HnSn7CH4aCJ218DIGwkYawrqV32kqLp8XTa/pBsU11TsFK2cFwnRw2d3RJcEJQQ
-         pPZA==
+         :from:to:cc;
+        bh=pr9+xRPfE9C/rc6fMLR8T2D69Bzvjr8jG6HUhdPW5IE=;
+        b=xYsSTXaAbjoh6jfogjHcoIO5sxU+hOeIFmbE1vYTKa8fKOkzSltoAwtmWqTmNxYFcQ
+         NMU1v5uipKxtMTCto1cAF31PsbOJei/TtnMwSUr4OBo5NdzCe/1xgcScTLX+Cz9Dpx3W
+         BgMgJYncK0c3GbNJ5UiMqqPoj2vhOfHoUo2z1xYuMfZxQdsstJga9Yrqfnb2RtpeMoUO
+         sQDepCeTn/UtAYi7HghJOjOzGO5AmXGrZ1btBu9kGbyWhpvOvhds4TI7Q+4cf6eEAKHW
+         2D925vKW1AoNE58BWDCtyh8TH8iTgIstTpUQYy8izNZOjemhkfKA+pAA3A7ApXa4qTK5
+         31iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=90s9zmr9XtWmvWy0QWw1XLazqwpWfquS5ApUhpT893c=;
-        b=jkqISsRfPo18k8NYkT8xBB5Qi1aHClFeiFb7I0MwnUwwaBbMGZ2c2u91f+h7kZGxSk
-         lhuIlRkg46KB6Z0Kke77w5gyj5pIwN/avA+VMOB2PDPbXXHPAQ9XJXuejUoi2O4dBRso
-         x5KS1pIek4wLztmLsKjCxkjISGcreB2mreP9d2UYqs34z4kHBs4btIjYlglq0bSsL0mS
-         o8Ct5W2tJ/0Zuziqr9c2fTzpoT5TncmHnkgacUvLXEDyXasXyn1ClW3iSstOFOb0INho
-         1SYQyKTggta1yt0Ih/0teQsaYK3+fHoy9dGuMGK3V7QjwcV8vXJhodUTBpOx6uhIlnM8
-         Ha8g==
-X-Gm-Message-State: AD7BkJIpniFGDBDEqLsVyXqW8iCjMoRjlXHuEUop4AC6Xc6zDd+R+8jMjZ7r4KvKgrDGN1ESqnWmudQ2Zwi+UQ==
-X-Received: by 10.31.168.76 with SMTP id r73mr33347660vke.117.1458069869389;
- Tue, 15 Mar 2016 12:24:29 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Tue, 15 Mar 2016 12:24:29 -0700 (PDT)
-In-Reply-To: <CAFZEwPNAVxT2HVQyj0Wajth_y-P6Af4AcSZDzJDJP=vLHztwiw@mail.gmail.com>
-X-Google-Sender-Auth: QZkG902sV4n8oWqmpRaRbg64Ga4
+         :message-id:subject:from:to:cc;
+        bh=pr9+xRPfE9C/rc6fMLR8T2D69Bzvjr8jG6HUhdPW5IE=;
+        b=mW1jiYf52qBpb+oBVAXxyojYjdo4gtFTP9WVJHw094LpzcrBYIk+WEFPBUZuYmoKVO
+         KX9QisMuF6QTdjoFmVtAXsA9vKDck4pwHUatD4r24NzolUC3w+q4+DcUcsv3OHq73rNM
+         PQwev+y1LluiDekmP4xPU6s60qIwLpHxxBDSRQuFZ8q66k1qOkNtadtrNMLDnzDAwE6z
+         2FGs2MoS1aiYu3OuNpoNVW1FWDaK/s5PCtxuOvkqG4xzCRmdU7ivcPIu/BNRIM22mAPc
+         Nu8ulogmqkhJmeVmZMXcnlDc57i0nHxUIQrI7xlZDfEw7qEBAR+8qvgOTu+v228xnsAh
+         AUGQ==
+X-Gm-Message-State: AD7BkJIhvJkra2WDlxb0b5YAwhA6uPTZA6nuAWBFhBfDlD351Ye/66X81RHUtXHdvsX4GaE5+opHSDTzf7AOgQ==
+X-Received: by 10.31.182.143 with SMTP id g137mr33120302vkf.45.1458070208058;
+ Tue, 15 Mar 2016 12:30:08 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Tue, 15 Mar 2016 12:30:07 -0700 (PDT)
+In-Reply-To: <CAGZ79kZ_wbJ2MGs_E-P_0eLk3JX_0QhT1c_BxqWCS+vrg8+xwA@mail.gmail.com>
+X-Google-Sender-Auth: WoO0cYTLxzkICc9e1QL4VnQuh6c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288898>
 
-On Tue, Mar 15, 2016 at 3:00 PM, Pranit Bauva <pranit.bauva@gmail.com> =
-wrote:
-> On Tue, Mar 15, 2016 at 5:01 PM, SZEDER G=C3=A1bor <szeder@ira.uka.de=
-> wrote:
->> You made 'commit.verbose' a boolean, so either verbose or not, ...
->> ... but note these context lines telling us that --verbose can be
->> specified not just once but twice (and who knows what the future may
->> bring).  This raises some not entirely rhetorical questions:
->>
->>   - What does 'git config commit.verbose true && git commit --verbos=
-e'
->>     do?
+On Tue, Mar 15, 2016 at 3:21 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Tue, Mar 15, 2016 at 12:13 PM, Alexander Kuleshov
+> <kuleshovmail@gmail.com> wrote:
+>> from the <hashmap.h> for simplification.
 >
-> This is a nice thought which didn't strike me!
+> I think what Eric wanted to point out, was to not have a continuous sentence
+> from commit message header to body.
+
+Yes, thanks for clarifying that.
+
+> Either leave the body blank (as it is obvious) or write a whole sentence there:
 >
-> As Eric Sunshine mentioned ($gmane.org/288811), it would react
-> according to the multiple verbosity level and since its not currently
-> defined in `commit` it will react as it is reacting when verbosity
-> level is 1.
-
-I get the feeling that you missed SZEDER's point which was that
-git-commit already behaves differently when --verbose is specified
-multiple times. (I hadn't gotten around to reviewing that part of the
-code yet, so I'm glad that SZEDER saved me the effort.)
-
-The new config variable, which is boolean, doesn't mesh well with
-multiple verbosity levels. For instance, with a combination of
-commit.verbose=3Dtrue and a single --verbose, the code will think that
---verbose was given twice and use verbosity level 2, which is not at
-all intuitive and would be surprising for the user. So, SZEDER was
-asking how this impedance mismatch can be rectified.
-
-A possibly sane approach would be to make commit.verbose be a
-verbosity level rather than boolean, and behave as follows:
-
-1. if --verbose is used (one or more), completely ignore commit.verbose=
-=2E
-2. else, if commit.verbose is set, use it.
-3. else, default behavior.
-
-I'm not sure if this makes sense, but as a convenience, maybe also
-recognize "true" and "false" as aliases for 1 and 0, respectively, for
-values of commit.verbose.
-
-And, of course you'd want to test these behaviors.
+>   [PATCH v2] submodule-config: use hashmap_iter_first()
+>
+>   The hashmap API offers the `hashmap_iter_first` function as initializing and
+>   getting the first entry is a common pattern. Use that instead of
+> doing initialization
+>   by hand and then get the first entry.
