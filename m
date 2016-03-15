@@ -1,115 +1,79 @@
 From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 1/1] t9115: Skip pathnameencoding=cp932 under HFS
-Date: Tue, 15 Mar 2016 06:23:32 +0100
-Message-ID: <56E79C54.8000606@web.de>
-References: <20160208225806.GA3487@dcvr.yhbt.net>
- <1456597724-26497-1-git-send-email-tboegi@web.de>
- <20160228045945.GA14289@dcvr.yhbt.net> <56D333F1.9050905@web.de>
- <20160315015954.GB25295@dcvr.yhbt.net>
+Subject: Re: git diff does not precompose unicode file paths (OS X)
+Date: Tue, 15 Mar 2016 06:45:53 +0100
+Message-ID: <56E7A191.7070302@web.de>
+References: <0008C25D-C3F0-4A1F-8B50-4EF1E84CA04F@fournova.com>
+ <56D97C8C.1060205@web.de> <D9E0FEEC-1987-4045-AD0F-4C7C76DC067B@fournova.com>
+ <56D9D8C6.2060104@ramsayjones.plus.com>
+ <8C785DB2-CEDB-435B-945B-00E4D98DBF99@fournova.com> <56DD41D5.60100@web.de>
+ <5C6A30EF-ED0A-4D64-B971-CF873C64B46E@fournova.com> <56DEC5DD.2070407@web.de>
+ <A81BB0E5-4879-4A86-9019-BB76734BA9EF@fournova.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, k_satoda@f2.dion.ne.jp
-To: Eric Wong <normalperson@yhbt.net>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Mar 15 06:24:04 2016
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
+To: Alexander Rinass <alex@fournova.com>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershause?= =?UTF-8?Q?n?= 
+	<tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Mar 15 06:46:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afhSd-00050G-Ih
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 06:24:03 +0100
+	id 1afho1-000691-3q
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 06:46:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751222AbcCOFX7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2016 01:23:59 -0400
-Received: from mout.web.de ([212.227.17.12]:55196 "EHLO mout.web.de"
+	id S1752820AbcCOFqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2016 01:46:04 -0400
+Received: from mout.web.de ([212.227.15.14]:54621 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753154AbcCOFX5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2016 01:23:57 -0400
-Received: from [192.168.88.158] ([194.47.243.242]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0Marpe-1aPoSi3VzW-00KQEN; Tue, 15 Mar 2016 06:23:43
+	id S1752969AbcCOFqC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 01:46:02 -0400
+Received: from [192.168.88.158] ([194.47.243.242]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0LnjNH-1aB4kH2GpL-00hrx8; Tue, 15 Mar 2016 06:45:54
  +0100
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
  Gecko/20100101 Thunderbird/38.6.0
-In-Reply-To: <20160315015954.GB25295@dcvr.yhbt.net>
-X-Provags-ID: V03:K0:+Q1s0OmU+miW455bYSmhE6WCmXugxjxDUg4/voH3vHhqR/uW81Y
- aWlMLAqQ/gQOspVHMsMeTDhz5hGgyfSFh/wl5EaD0PWrxFDDAWgx2YKO6/nLr/xtPC1Xiod
- duGD1c/5KP/ksqKL50iH/rFFkrEN+Y40V6PXXGxOBXWiqysRMQmHzEIF295mN0VYDboeFGb
- jozkII6GNxXF7QmxN6GQA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:j+nZ4mRIKQc=:CEw3ZmtrlKCZGOmWd1Lawp
- BS8fEvo0tXX+k2UESL5RKpu12ckZT5nx1fhsKIMKaUGZifhM1o2ERfhFU8cr+pVP5yE2xONo6
- 1m4QNdgKQkB/7Mpd8dGVPoomzjLk+rEzC+mD2YrSAfAeOHWcWN4nKAQnD0L44uW2U0nyd2L4X
- os9Prb+1WbExzcsIOLh3EExvF3R1sDcj0gsqdXgHlyKK3CwSw+CSqzIb/FYeYyAaG3sHOvLRa
- iTMBejp4NyxKdrkoZaP/qt5XYaE4f+CzwDSPXDJxtHN92BrOBgkFJChCVNfFmINbzXNVEsxLA
- qgEUBWHZNkv5p3cP5/gBf1S9vLMkGZjqFHh42bTpZmt8J9vH/th+CUDRXerfrjEeyHra+pyjo
- Z1l5ZpAAVFtXhtWsa7izz8bSUR6v59WiB+8vYChudBgYTwrKEL+r2IyVOTM2H9BtfgAWcrHwE
- n2mfZ8yvb7Yt+YyPfC7jn3I/a5ROVTbV8fPIYshOUHp9IswaVmFkidTTt4T03iidMhKqmluuC
- VzFxB9r/6tkxJ8xepEBjzLb+8rRT9UZhh+isNub/TPE4FaVPupH96JbnKRgImHRn6DyPd74UC
- mhoFGDad7UdzgYPyES+9zpINdfYMeZ5tUOJkZiV+gqjJRwT8U0we9LjHv/uzo9qxTiGz36wsl
- cZmfL3hgixbMNcVjW5A+J61XQQyt+ugLdgfXuMN5I8x8PD/P65/UUKWPB59/PPDSHNxeNasOs
- sJLH4havB9ImmGjD3qwtfUHPJ1dm6XvgJZQaRa64X2+faShi9ScF3CFfDwbTM4cL8Uo52O0d 
+In-Reply-To: <A81BB0E5-4879-4A86-9019-BB76734BA9EF@fournova.com>
+X-Provags-ID: V03:K0:SN7YmzZnW27nKaiC98UXEeNP+e3DNL6sYDJDWaT+H2uV3EFPMQy
+ h69P7bhwH1ag70yDhbD/HqTYu7fiRzBmmh099UQozsQXCqvj6JlYQ6fV8BInnhcKnKRvxIE
+ g5xUeiAXqfyWbMhkIclTan7LHIiHmh8hd3ugzp4WI9hFx5MOvTUdCGFaY81fyUs8yDGrgy4
+ 4vGHElOigZiZJbNL5emBQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:NC1hsAFEQuY=:/feg0ocl2Xwkag7R4ZhH7o
+ Rq3LWWH+C87Ut2ZoQ+D8BzQF/0wbU4+0SdQcWNaYGd3XU0FdNnEPIyN60SoA01C5zRubkDBG9
+ aIPeA9zPEyKpsb7Z6z3CFrSPABRrEkfeoT1a9YSNXuNKGtIW9f6jZJqwzNxBieeYVV8dqvjKS
+ cq9BPKGHEZzj8z2tRdgbi9J3hxsS22etrk/b48r6mFfQZekcMrZczlsDSovFkYQ47wmk/PJ0g
+ s2acHqSOZjD52pHVCAruoH+XC/eaG3lI2L8+AnTe5NCNDm4n/ZxCZ6tjCthPiFtw+EWScvs/8
+ JYMGimn/AIObyu4ktd+r4S9sGg96/8fokY7kAAVT7frdhrFoZEjnjxHjb2SsC8Xv7JYIzk6Iz
+ LA9bVt0DnjkN8xIF/Us5Sh18GPZULnV3ZTl19pZ6rkDM1XDQFaMJuAMqCrnjB+ETraf3bFeWC
+ xyOopKBUNdVxrHn5bIi2PvTbuH/3ggs+ejENNLKmeZmM0nz7+lv45jw0H+uRefCmsWTIrTmG0
+ LAJEljy4wSurBLO98LxYH508f1WwD3FTNAaFHkECjeZYtqGSR8vQcRGUzgdhiGzAcVK2zAC/w
+ ZTJxcEmI/4FmiPmf27l9oZnMY/20GkozXy6bD3Um1PjvygcBYSPS90W6SI67uMVKxHKphCIHB
+ reHrStZOeH9RNfVW2yXres48fKolQG4vb0G1U8+JN8DthBRSFV87NRCJg5SXSeTDJxVu4hVNM
+ 6qd/b2KDJdTkPNcjLmj5uGm8ifhHsV2Kj9DwrmcgHTf98TsphzTdnEvuJ5utIBNJlPtW/t93 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288833>
 
-On 03/15/2016 02:59 AM, Eric Wong wrote:
-> []
-> I just edited locally and pushed those out to Junio:
->
-> http://mid.gmane.org/20160315015726.GA25295@dcvr.yhbt.net
->
+ >I created a test case but git diff exits with 0 if it does not recognize the 
+file >path so the test case always succeeds. Can you give me a hint or one 
+ >example test case?
 
-The new TC 11/12 don't pass under cygwin.
+The most clean (?) is to compare "git diff" NFC and git diff NFD, they should 
+give the same result:
+for "git diff" something like this would do:
++
++# This will test git diff
++test_expect_success "git diff f.Adiar" '
++       echo "Modified" >f.$Adiarnfd &&
++       git diff f.$Adiarnfd >expect &&
++       git diff f.$Adiarnfc >actual &&
++       git checkout f.$Adiarnfd &&
++       test_cmp expect actual
++'
 
-Do we need cp932 ?
-
-If not, we may use the paych from here:
-https://github.com/tboegi/git/commit/379c01bf52464f8a50065b11af516127e9144045
-
-Date:   Tue Mar 15 05:03:18 2016 +0100
-
-     t9115: Use funcky file names that work under unicode FS
-
-     Don't use funky file names, that can not be created under
-     HFS or NTFS.
-
-diff --git a/t/t9115-git-svn-dcommit-funky-renames.sh 
-b/t/t9115-git-svn-dcommit-funky-renames.sh
-index 0990f8d..d022f0d 100755
---- a/t/t9115-git-svn-dcommit-funky-renames.sh
-+++ b/t/t9115-git-svn-dcommit-funky-renames.sh
-@@ -93,11 +93,11 @@ test_expect_success 'git svn rebase works inside a 
-fresh-cloned repository' '
-  # > to special UNICODE characters in the range 0xf000 to 0xf0ff (the
-  # > "Private use area") when creating or accessing files.
-  prepare_a_utf8_locale
--test_expect_success UTF8 'svn.pathnameencoding=cp932 new file on dcommit' '
-+test_expect_success UTF8 'svn.pathnameencoding=ISO8859-1 new file on dcommit' '
-         LC_ALL=$a_utf8_locale &&
-         export LC_ALL &&
--       neq=$(printf "\201\202") &&
--       git config svn.pathnameencoding cp932 &&
-+       neq=$(printf "\303\244") &&
-+       git config svn.pathnameencoding ISO8859-1 &&
-         echo neq >"$neq" &&
-         git add "$neq" &&
-         git commit -m "neq" &&
-@@ -105,11 +105,11 @@ test_expect_success UTF8 'svn.pathnameencoding=cp932 new 
-file on dcommit' '
-  '
-
-  # See the comment on the above test for setting of LC_ALL.
--test_expect_success 'svn.pathnameencoding=cp932 rename on dcommit' '
-+test_expect_success 'svn.pathnameencoding=ISO8859-1 rename on dcommit' '
-         LC_ALL=$a_utf8_locale &&
-         export LC_ALL &&
--       inf=$(printf "\201\207") &&
--       git config svn.pathnameencoding cp932 &&
-+       inf=$(printf "\303\226") &&
-+       git config svn.pathnameencoding ISO8859-1 &&
-         echo inf >"$inf" &&
-         git add "$inf" &&
-         git commit -m "inf" &&
+HTH
+/Torsten
