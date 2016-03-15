@@ -1,94 +1,106 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.7.3
-Date: Tue, 15 Mar 2016 21:17:50 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603152117350.4690@virtualbox>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] Git for Windows 2.7.3
+Date: Tue, 15 Mar 2016 13:19:20 -0700
+Message-ID: <CAPc5daVDBcFr_ijEAj2-mZsP5Yj3O_Yynff3fDibsjBTEVwFGA@mail.gmail.com>
+References: <alpine.DEB.2.20.1603152117350.4690@virtualbox>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-895668171-1458073071=:4690"
-To: git-for-windows@googlegroups.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 15 21:18:01 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git-for-windows@googlegroups.com,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 15 21:19:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afvPk-0006c7-B6
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 21:18:00 +0100
+	id 1afvRS-0007r1-Gr
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 21:19:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755697AbcCOURz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2016 16:17:55 -0400
-Received: from mout.gmx.net ([212.227.17.22]:55326 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754481AbcCOURy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2016 16:17:54 -0400
-Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0LzGV3-1Zl3Mc1GmP-014Vmh; Tue, 15 Mar 2016 21:17:51
- +0100
-X-X-Sender: virtualbox@virtualbox
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:9ss7CEpAPgPOYYhsvkHj6KQ1SkLjfMKI2DffZdyfJ+PxIbCDPmO
- TmlIe5Simis4CBhaD2BZBLkk5UZSVlkN7L01u4vrgatzLyRUvyFqj9d9fw3vkAxSmWMfv0d
- YVWd3U+rs6dc3xY5k0rP8wjm5kOFfVY4BRA2CVnwgnEan3dv6JZ2SGkEEJabh5vcMHp6Gf1
- z9zysqigmtlHB0fdO0wjQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:7NMusskemaI=:UVRHwoz6DCXxByYZ1VHFYI
- g+aLkDrIxct1l4IWq8i7EH4/8s3iISBWHwS0pzSsWfbx3XActJc3nld9Q4o2nWHMctW8EFvVZ
- UpLCdNaJKRIB0wML8e/5C9EP2A+LUBI75ybce2boqUAtWnaVELm+mEGkYUe9+TStXA0q/xO5m
- OiCBioZTMQH/yU2py4/qqDzdJPqq7Z0JEtErC6fO7EJ/LZCSqm2ciPluMhBNbCKZJ4BfVxVoy
- wFAj5I1Xy9vicdRu44FLxQEgPqp1uhJ0ilaryEXeCCF6p/vmkfMTYqS1dkZSRM53HeRACx1kd
- eBulxnHYrOa4FHDausK+fYb0trZNdOUVJwJJrcACN9YHvtcnh5GCegAu7MN+OjvTcD0VHuBuW
- vpXTc4npiX9iSTGUC8afg0UMndNxEuxrUwEwqicmikMwXq4X6YAKMN531LeYA1RW+Wpfr0NF1
- Ae0Y3h/lb7WUKI1uDge5y5FyQ4Kx1SWpiTHcdMi8qI8/lct2gGOUHkq7FXIlZqSNQYMlN8Q6l
- FcuZ8VdtF8ZMFWT6n6EV4LMTuqVf0vxwsqypiM/QLEOqwMQkuI7cyCa3baiosjqhep+vHR/4k
- qUjucet7ncV07vLGdYPOzXvbv/ZDqNg4gZJzRbJXr/uFPXv5MM6+7QAxhNoIV3Vb5L7MOPNqJ
- sRXcaGOn2gxsXnFsORkZGT2sd7ntpk0qZjA/p4YnPaMAJFJ81FcfonbPgyVglfMoq31RspBkO
- rGYS6/eRx6DQrED/TsbrZkdsV4lOe+g5X5BtjwqHvqfNnXQ+bn1cfqOGK6rWt35t66d5xl+7 
+	id S934918AbcCOUTm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Mar 2016 16:19:42 -0400
+Received: from mail-yw0-f171.google.com ([209.85.161.171]:34494 "EHLO
+	mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933176AbcCOUTl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Mar 2016 16:19:41 -0400
+Received: by mail-yw0-f171.google.com with SMTP id h129so36065355ywb.1
+        for <git@vger.kernel.org>; Tue, 15 Mar 2016 13:19:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=cgAITZRLnjbCBmHK7Q1DjkcFq4yhO+HjAqRHUsc9w2M=;
+        b=GZDO966kD/sH+KvvDTXsJlf4LmRvvY3sw9ul6bv3ILi1FTki8YpubkLgKT5zMEm1q2
+         +Kh2Lpn1b9QkZDSJOSCNAFgj1kjti0u3eq/KIcXjPpaws6gSN2B2rwZJk9XEkyr+v2SP
+         9y9UWG+BzNGUXWSMvDFhhn4b5EUIT8bQPupbQQc7hOIEMAKGGowvZb4xOPoP93Rp6JCZ
+         2OMYU+2oKz/jn8Pz6wF835wxcezgRZUNeiVNtm4r5ODGjsUWhC3OEU/cA/Fdjntn3MS9
+         MkdyYDNucbw01iK94emr9KeTXMSdpe2i87pLcBEQV55slZNwxt2PdzrB4iTuBCNsWTYf
+         Af0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=cgAITZRLnjbCBmHK7Q1DjkcFq4yhO+HjAqRHUsc9w2M=;
+        b=hv8vJeyXLqa/wmtPdtYky0YehBB+MnvMlkL73kptZz7vUKBHDGLTojMXKC/KaRjcM7
+         hxO+VqlEtRqgLuM4RWyW8NYJa7V2WFiFMsRDyGVsvDL8bpLQD1Zyi4+QzHXvc0U529Dg
+         P4PnbPAcZc6AYzXtDMJLEXGMuDOuU5CBJK6Sxfbe7XCYEU/Pg/POnJ+NIB7HtMy80Ogv
+         mTmCEUiV59PCSqzh1Tug4NEpSAkF9p3mSihuUoyhxHwKanQqB4uafdxWJ/C+ze4dM4re
+         1yM4wR6tE8PpwlYJx6D/GlpqsgWj4vbBaQxfqpKdJAcLL4mrbBG3k3EZ714mVi7gBC37
+         qa+g==
+X-Gm-Message-State: AD7BkJJdhDoWgwQXSr7C3ZELD5mzb6wxW+IZby/1Ezn4MEmaPQXS9HQW0HWYE3eSvm576MhKYfebrOVR3gw5iw==
+X-Received: by 10.37.230.70 with SMTP id d67mr17156661ybh.123.1458073180350;
+ Tue, 15 Mar 2016 13:19:40 -0700 (PDT)
+Received: by 10.129.116.131 with HTTP; Tue, 15 Mar 2016 13:19:20 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1603152117350.4690@virtualbox>
+X-Google-Sender-Auth: vn_i15i9sIL62SGD7RL6Mfk_sD4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288908>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Thanks.
 
---8323329-895668171-1458073071=:4690
-Content-Type: text/plain; charset=X-UNKNOWN
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-
-Dear Git users,
-
-It is my pleasure to announce that Git for Windows 2.7.3 is available from:
-
-=09https://git-for-windows.github.io/
-
-Changes since Git for Windows v2.7.2 (February 23rd 2016)
-
-New Features
-
-  =E2=80=A2 Git for Windows now ships with the Git Credential Manager for
-    Windows.
-
-Bug Fixes
-
-  =E2=80=A2 We now handle UTF-8 merge and squash messages correctly in Git =
-GUI.
-  =E2=80=A2 When trying to modify a repository config outside of any Git
-    worktree, git config no longer creates a .git/ directory but prints
-    an appropriate error message instead.
-  =E2=80=A2 A new version of Git for Windows' SDK was released.
-  =E2=80=A2 We no longer show asterisks when reading the username for
-    credentials.
-
-Filename | SHA-256 -------- | ------- Git-2.7.3-64-bit.exe |
-382d30d38b5c88690864bb46be0a9c5f53b7046e7a6485dbcede602c41cae9a2
-Git-2.7.3-32-bit.exe |
-e38ddcc2c17390ffec0ca4d5c4fb948b5b4874ea0c522d5180cf2ee7e63f76bd
-PortableGit-2.7.3-64-bit.7z.exe |
-f5b39244869efcfac57c9a9f1d75119de0121bc8aa260d1824dfe5902f9a3f60
-PortableGit-2.7.3-32-bit.7z.exe |
-82df6b1e8ca8550d7267641e32c6b736f0687e35dc3b772b21914706f13cdea4
-Git-2.7.3-64-bit.tar.bz2 |
-dd81fe03c83e255382816a5db1427b284288fe21b4f89cbe3b1ff21af8d0ef1c
-Git-2.7.3-32-bit.tar.bz2 |
-3b845331cf91e2a1677ba959d07491c6b04b8bdfc7900236a201d0f8c9863197
-
---8323329-895668171-1458073071=:4690--
+On Tue, Mar 15, 2016 at 1:17 PM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> Dear Git users,
+>
+> It is my pleasure to announce that Git for Windows 2.7.3 is available=
+ from:
+>
+>         https://git-for-windows.github.io/
+>
+> Changes since Git for Windows v2.7.2 (February 23rd 2016)
+>
+> New Features
+>
+>   =E2=80=A2 Git for Windows now ships with the Git Credential Manager=
+ for
+>     Windows.
+>
+> Bug Fixes
+>
+>   =E2=80=A2 We now handle UTF-8 merge and squash messages correctly i=
+n Git GUI.
+>   =E2=80=A2 When trying to modify a repository config outside of any =
+Git
+>     worktree, git config no longer creates a .git/ directory but prin=
+ts
+>     an appropriate error message instead.
+>   =E2=80=A2 A new version of Git for Windows' SDK was released.
+>   =E2=80=A2 We no longer show asterisks when reading the username for
+>     credentials.
+>
+> Filename | SHA-256 -------- | ------- Git-2.7.3-64-bit.exe |
+> 382d30d38b5c88690864bb46be0a9c5f53b7046e7a6485dbcede602c41cae9a2
+> Git-2.7.3-32-bit.exe |
+> e38ddcc2c17390ffec0ca4d5c4fb948b5b4874ea0c522d5180cf2ee7e63f76bd
+> PortableGit-2.7.3-64-bit.7z.exe |
+> f5b39244869efcfac57c9a9f1d75119de0121bc8aa260d1824dfe5902f9a3f60
+> PortableGit-2.7.3-32-bit.7z.exe |
+> 82df6b1e8ca8550d7267641e32c6b736f0687e35dc3b772b21914706f13cdea4
+> Git-2.7.3-64-bit.tar.bz2 |
+> dd81fe03c83e255382816a5db1427b284288fe21b4f89cbe3b1ff21af8d0ef1c
+> Git-2.7.3-32-bit.tar.bz2 |
+> 3b845331cf91e2a1677ba959d07491c6b04b8bdfc7900236a201d0f8c9863197
