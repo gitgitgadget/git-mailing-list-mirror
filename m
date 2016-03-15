@@ -1,76 +1,129 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 04/19] index-helper: new daemon for caching index and related stuff
-Date: Tue, 15 Mar 2016 08:56:05 -0700
-Message-ID: <xmqqk2l391m2.fsf@gitster.mtv.corp.google.com>
-References: <1457548582-28302-1-git-send-email-dturner@twopensource.com>
-	<1457548582-28302-5-git-send-email-dturner@twopensource.com>
-	<xmqqtwkffdus.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8Cgz0zTryCCXoPMh40Rq4yOCy1L8Nih-YbKaZLyV=Gi-w@mail.gmail.com>
+From: Stephen Morton <stephen.c.morton@gmail.com>
+Subject: Re: git smudge filter fails
+Date: Tue, 15 Mar 2016 12:17:16 -0400
+Message-ID: <CAH8BJxHvg1cnzdsnVsHLYm2BAoqNxp8-mNyVxRy4CHqv0rgN6g@mail.gmail.com>
+References: <CAH8BJxHwxp2BtzGBqi6J24Kh0TTGEdCx=-Scu+bx5N-ZVpBZNQ@mail.gmail.com>
+	<20160310015939.GA12709@sigill.intra.peff.net>
+	<CAH8BJxFmAQtoF+1Q7Ub5qWnz5UewrPS4e8JQWms254hO_E05Hw@mail.gmail.com>
+	<20160310210544.GB30595@sigill.intra.peff.net>
+	<xmqqtwkec7lk.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: David Turner <dturner@twopensource.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 15 16:56:17 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 15 17:17:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afrKR-0005kG-Qq
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 16:56:16 +0100
+	id 1afres-00044s-QT
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 17:17:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756300AbcCOP4K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2016 11:56:10 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61533 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756288AbcCOP4J (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2016 11:56:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0410F4B5FB;
-	Tue, 15 Mar 2016 11:56:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JfIoMatFA37UESoT9Fi8co7HqlA=; b=NWTgp5
-	5+jZKzrp318jGG1Qg58wMdZ/KFQLi7MgHtsrDpGcKVhbolFKSInevkVKVCVotzZ9
-	hNtLUHG7TVc0JaslWDuzSXrSA5wC6wZN7LhsT1VeHQaYbSIy1ocxyjT0XTphaL91
-	kTTPQbsuEkgqCXOt0qRbWy6xoA6zoOiWeWOu8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xsiyzpMyaCiFO+2YLe4T71RQfb4PvmI6
-	icZ1roOlBQWHj1IsJuTkWja85Txe9mzk4zgtZtN0MhGGLySHsany3P4pdbjgLZ8T
-	zPZ40iDsivurS1qXIcWUPJdi3XEhrEeO8WlJNNmywrzapSRXPu4L0fzDb3Yw7kwQ
-	73Yiy6bL75M=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EFC254B5F8;
-	Tue, 15 Mar 2016 11:56:06 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 67BA04B5F7;
-	Tue, 15 Mar 2016 11:56:06 -0400 (EDT)
-In-Reply-To: <CACsJy8Cgz0zTryCCXoPMh40Rq4yOCy1L8Nih-YbKaZLyV=Gi-w@mail.gmail.com>
-	(Duy Nguyen's message of "Tue, 15 Mar 2016 18:56:55 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6D6421CE-EAC6-11E5-AD1B-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S934053AbcCOQRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2016 12:17:19 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:33653 "EHLO
+	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932129AbcCOQRS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 12:17:18 -0400
+Received: by mail-wm0-f50.google.com with SMTP id l68so152331545wml.0
+        for <git@vger.kernel.org>; Tue, 15 Mar 2016 09:17:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=KR7NpkBXofeslJdJj3YJYRSDFoDT25ccI00AAvw8rtc=;
+        b=ZJvuC82M2HVn21WbF7Jq3Iyx5fBpd/ZulSLbChH9GGLTmVOK13oklpLFAQcbGh2VCx
+         teTWYKpRn80zsMrGTEBl4nUsjmz27b8MVo53W5Fg/nrmxGl5UXJeIfZOTvVUSSx2H+7D
+         fXNH8O+vkZR+pz3NYA16AG0JJGrMbHY9UGj9M2SU141S2wjXI0qLaeiadwnyrav47MZb
+         XGKxznccbYPGXJEAp2tYDbCs6HJ9v+rf1CtSpTeYl2oTsnjoA+VECjWfwdDexcZNeG0A
+         NnLzKDnbwY9ia+gC6jJ7E0Bfc+hZI6xI0bg/Qx97HccjVnRaxIQ0Rb4lKjDt458qpVz8
+         /5TQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=KR7NpkBXofeslJdJj3YJYRSDFoDT25ccI00AAvw8rtc=;
+        b=XImNw0zsj5hBTKRrmeZraFRGAAZaXw/rRclC+Vxp1xm72Oxi+fykAkkZH5m/Zi0sLM
+         q3ztbmZG1uh5OlAb7sfT6Z59ePndqmANpIm+YFzDy6ewt0YyOcK0Tpu+L5cX6rgTQANr
+         F5MQfh527HwfPYsPX6WjRdSzXS/1TvB0pQGO4Idf568GyYFTlgVKHNnEDXP0swQyUyVP
+         kxPUOp/3aTAPQVNG8djj6tZ5RacN4aJa3V5P5mhQI0uKWIcvJSisA4jEsURjYsspvUmt
+         WPUSzMqDfI1JMjQT8i18Ztq/R7SeufEBnvWoXlSAejLYgfbs7mo5pgVQwa/o3EYBi50w
+         hH7A==
+X-Gm-Message-State: AD7BkJJKb1S6xeSrxRImFZYHk+JBADRRB8zhKmNTzSZyIIFFb4A1ueuULxwHCAHkB4qqJzSBS2JQnwxdWkkQHw==
+X-Received: by 10.28.18.85 with SMTP id 82mr26116727wms.5.1458058636780; Tue,
+ 15 Mar 2016 09:17:16 -0700 (PDT)
+Received: by 10.194.63.82 with HTTP; Tue, 15 Mar 2016 09:17:16 -0700 (PDT)
+In-Reply-To: <xmqqtwkec7lk.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288858>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Thu, Mar 10, 2016 at 5:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
+>
+>> On Thu, Mar 10, 2016 at 09:45:19AM -0500, Stephen Morton wrote:
+>>
+>>> I am a bit confused because this is basically the example used in
+>>> ProGit [1] and it is fundamentally broken. In fact, if I understand
+>>> correctly, this means that smudge filters cannot be relied upon to
+>>> provide any 'keyword expansion' type tasks because they will all by
+>>> nature have to query the file with 'git log'.
+>>
+>> Interesting. Perhaps I am missing something (I am far from an expert in
+>> clean/smudge filters, which I do not generally use myself), but the
+>> example in ProGit looks kind of bogus to me. I don't think it ever would
+>> have worked reliably, under any version of git.
+>>
+>>> (Note that although in my example I used 'git checkout', with an only
+>>> slightly more complicated example I can make it fail on 'git pull'
+>>> which is perhaps a much more realistic use case. That was probably
+>>> implied in your answer, I just wanted to mention it.)
+>>
+>> Yeah, I think the issue is basically the same for several commands which
+>> update the worktree and the HEAD. Most of them are going to do the
+>> worktree first.
+>
+> You can have a pair of branches A and B that have forked long time
+> ago, and have a path F that has been changed identically since they
+> forked, perhaps by cherry-picking the same change.  This happens all
+> the time.
+>
+> If there were some mechanism that modifies the checked out version
+> of F with information that depends on the history that leads to A
+> (e.g. "which commit that is an ancestor of A last modified F?")
+> when you check out branch A, it will become invalid when you do "git
+> checkout B", because the path F will not change because they are the
+> same between the branches.  In short, CVS $Id$-style substitutions
+> that depend on the history fundamentally does not work, unless you
+> are willing to always rewrite the whole working tree every time you
+> switch branches.
+>
+> The smudge and clean filters are given _only_ the blob contents and
+> nothing else, not "which commit (or tree) the blob is taken from",
+> not "which path this blob sits in that tree-ish", not "what branch
+> am I on" and this is a very much deliberate design decision made in
+> order to avoid leading people to a misguided attempt to mimick CVS
+> $Id$-style substitutions.
+>
 
-> Another aspect that's not mentioned is, we keep this daemon's logic as
-> thin as possible. The "brain" stays in git. So the daemon can read and
-> validate stuff, but that's about all it's allowed to do. It's not
-> supposed to add/create new contents. It's not even allowed to accept
-> direct updates from git.
 
-That explanation does make the intent clear. It is a kind of design
-decision that needs to be made early and that is hard to change
-later (I am not saying I see the need of changing, though), so it is
-worth stating explicitly to guide future readers and updaters of the
-code.
+I will raise an Issue with ProGit.
 
-Thanks.
+It's perhaps beyond the scope of my original question, but for
+situations where I need a "last change date" embedded in a file (e.g.
+because a protocol standard requires it), is there any recommended way
+to do so? We've the hard way that hardcoding makes
+merging/cherry-picking a bit of a nightmare and should be avoided. Is
+a post-checkout hook the way to go? I've actually found the smudge
+filter to be very slow for this application as each file is processed
+in series; a post-commit hook that could operate on files in parallel
+would likely be substantially faster.
+
+Stephen
+
+(Sorry about the earlier top-posting. I didn't realize what gmail was
+doing until after it had happened.)
