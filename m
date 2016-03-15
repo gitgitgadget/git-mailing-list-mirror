@@ -1,81 +1,142 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: git checkout --theirs fails
-Date: Tue, 15 Mar 2016 14:35:18 -0700
-Message-ID: <CAGZ79kbzrpHowSLfCjB6wVfeX_3MUXAjD0rQdcugryWPMrTazQ@mail.gmail.com>
-References: <56E845F0.9020609@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 2/2] pull --rebase: add --[no-]autostash flag
+Date: Tue, 15 Mar 2016 17:43:27 -0400
+Message-ID: <CAPig+cSnp+NsBAMib4pExKCLB5ocGsHWyO7qMU0E91WqE6a5_g@mail.gmail.com>
+References: <1456594902-21182-1-git-send-email-mehul.jain2029@gmail.com>
+	<1458061904-26516-1-git-send-email-mehul.jain2029@gmail.com>
+	<1458061904-26516-2-git-send-email-mehul.jain2029@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Phil Susi <phillsusi@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 15 22:35:29 2016
+Cc: Git List <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	Paul Tan <pyokagan@gmail.com>
+To: Mehul Jain <mehul.jain2029@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 15 22:43:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afwcg-0001NK-QM
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 22:35:27 +0100
+	id 1afwkX-0007BC-Ek
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 22:43:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932642AbcCOVfX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2016 17:35:23 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:34223 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932472AbcCOVfT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2016 17:35:19 -0400
-Received: by mail-ig0-f180.google.com with SMTP id av4so98645913igc.1
-        for <git@vger.kernel.org>; Tue, 15 Mar 2016 14:35:18 -0700 (PDT)
+	id S1752722AbcCOVn3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2016 17:43:29 -0400
+Received: from mail-vk0-f51.google.com ([209.85.213.51]:33972 "EHLO
+	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751968AbcCOVn2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 17:43:28 -0400
+Received: by mail-vk0-f51.google.com with SMTP id e185so38694039vkb.1
+        for <git@vger.kernel.org>; Tue, 15 Mar 2016 14:43:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=c2H1JyEMUy3Gp2PuWy7D+xno447XZYnsZWOEAyeHLFU=;
-        b=RKgW7Bpa1xdszwQcUAERdlx+kgO+s0ofAqVeBAOEm5fUwBMzAkD6aGZoDEZ3gxerw9
-         EKYnHAajtcD7obppTGWNGTkuu7aqlKMRf7G+1nsHKVLsX/vIMmawPWdHTdQT/0BypqXd
-         jDIxnJWdwDELr+2ghXJc3FWjoJOXTFwbvt+L2X0sK6rOEuweUVyj3zPQccTBD80ebhtn
-         XQQv0j7mgZjN5RtGsXKMbPpJUoM2op1wRXX/TIvb0LP+HOZoLIVzKNCbmNr83txxMMs3
-         ZhFSRR5gioMvPSP4d9eaj0VTBJrsd1LD1nYF68OGbbJ+rvTc58IpPZApfj4coEbK9jDZ
-         51Lw==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=4IB/sKZG4Mb0i36SwcfnMK4PfBJfo7VopeumIzNlS7o=;
+        b=xev8NhSCvdbjpjGt5Ojx2OglxdyxkY+yshTMG8EXjl9Ky4KOyzveI8JPiBYqpEa2jj
+         /NvFBbOHu8h9jDZDEDJrMP2EQNdMagsx6HhY1NbfMMd8d3jSesuwSB0BjPy/xZ7gmpzV
+         OICX+fBV9rpkWQoTxxfjeLLqBtqEpDgCYHMNrttAGwQPGpBxwfCjrrjO/hXMylgAtRLy
+         5b3+RHtrd64PJiDP6z/kFno8xpfvqjFdMZ8WJkn9/1yimV+oDPEsMQ+jqtjdh3h4TzzH
+         P0xao7BpVmDR++kFHeeewaV1seZ1192q6633OLL8gKaGZ1AbI5sYrxNYJZ5pImTVmEQ9
+         o8Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=c2H1JyEMUy3Gp2PuWy7D+xno447XZYnsZWOEAyeHLFU=;
-        b=QzDt+VyVc3kuy1M81HDhzWQGScqWL18nmLECWLMtPCS943P17EgiLinyomT4rr0676
-         P3QFcxsYBSLtEnpclG+h6mxnwYo7NL+uxiCKhYUmqhnscqlUIIS00KDA//PbHDYCl5M6
-         6hmrxDlQUkhql4LGnzyIb4MDli0pSI3LcD8Pc1i5NUzBzWkC3s5ofKlIECm3Tu6/8MFI
-         ccHzkrBW+E3YFG7k/42z0L0+0cKMW6tfEYsSIX3/n94rSMaRosmTqdxDKa58Bip1tMAD
-         VM7K6Jy0oe9njwepITRrfv9zFr7g1es8W3NtFU7mKd8t5BdGMcsoHWn/g7axTM9lgCzD
-         vhNw==
-X-Gm-Message-State: AD7BkJLJRmQIJD78lEeGQ9cz8ATaJ/X+FPuLhZvcfFGD9JJHf3PQdYKVF7FKMTAh6niRB6IgwDr+vDA7WETo5ckZ
-X-Received: by 10.50.43.226 with SMTP id z2mr990940igl.94.1458077718378; Tue,
- 15 Mar 2016 14:35:18 -0700 (PDT)
-Received: by 10.107.132.101 with HTTP; Tue, 15 Mar 2016 14:35:18 -0700 (PDT)
-In-Reply-To: <56E845F0.9020609@gmail.com>
+        bh=4IB/sKZG4Mb0i36SwcfnMK4PfBJfo7VopeumIzNlS7o=;
+        b=CsF6pgOKTrS5/llcQgQJKBKKkHXTq40aeQ9b6OQDT5FL1eeqoJOSjQ/HUPpm6AIAw/
+         CXcYrBsyA0wz1nc4iS23Gup3N/SztTWPlAEB9BhrFY0ZEVdnobA5cm9rSMGcEnAyeJsq
+         421h6e3vCNIaKI35fzD+3g5UVl+mcO6xQS/VCUhjj1n+w6qhySEo5KNudlPwwnv1G2Wa
+         s+ByY7EvcV0FAyy6Ea91r83DH57Nfrxak6KvLAjyOxk8K9NL+Nb1JU8FvL8OqevSESzm
+         YwLInP66+JSBsimrytEX93BLHsxceAE1PyEEsIyIMeqOba/JENEsej2KcKm/5AVsaRRF
+         aGow==
+X-Gm-Message-State: AD7BkJLVLosdsOLdxt98grVaNWcaJfl/ptLzD6jRPFdUsBAorNH4hNvlDz2UoLJFtXfGx2JHn/fcWndZhedvlA==
+X-Received: by 10.31.8.142 with SMTP id 136mr435797vki.14.1458078207439; Tue,
+ 15 Mar 2016 14:43:27 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Tue, 15 Mar 2016 14:43:27 -0700 (PDT)
+In-Reply-To: <1458061904-26516-2-git-send-email-mehul.jain2029@gmail.com>
+X-Google-Sender-Auth: n8qcgXQvqNNxyE9ulQwSrJQB5j0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288919>
 
-On Tue, Mar 15, 2016 at 10:27 AM, Phil Susi <phillsusi@gmail.com> wrote:
-> I'm doing a rebase and got some conflicts.  I just want to take their
-> version of all files, but git checkout --theirs complains:
+On Tue, Mar 15, 2016 at 1:11 PM, Mehul Jain <mehul.jain2029@gmail.com> wrote:
+> If rebase.autoStash configuration variable is set, there is no way to
+> override it for "git pull --rebase" from the command line.
 >
-> --ours/--theirs' cannot be used with switching branches
+> Teach "git pull --rebase" the --[no-]autostash command line flag which
+> overrides the current value of rebase.autoStash, if set. As "git rebase"
+> understands the --[no-]autostash option, it's just a matter of passing
+> the option to underlying "git rebase" when "git pull --rebase" is called.
+
+The below comments may or may not be worth a re-roll (you decide)...
+
+> Signed-off-by: Mehul Jain <mehul.jain2029@gmail.com>
+> ---
+> diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+> @@ -128,6 +128,15 @@ unless you have read linkgit:git-rebase[1] carefully.
+> +--autostash::
+> +--no-autostash::
+> +       Before starting rebase, stash local modifications away (see
+> +       linkgit:git-stash.txt[1]) if needed, and apply the stash when
+> +       done (this option is only valid when "--rebase" is used).
+> ++
+> +`--no-autostash` is useful to override the `rebase.autoStash`
+> +configuration variable (see linkgit:git-config[1]).
+
+The last couple sentences seem reversed. It feels odd to have the bit
+about --rebase dropped dead in the middle of the description of
+--autostash and --no-autostash. I'd have expected to see --autostash
+and --no-autostash discussed together, and then, as a follow-on,
+mention them being valid only with --rebase.
+
+> diff --git a/builtin/pull.c b/builtin/pull.c
+> @@ -851,12 +855,17 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+>                 if (is_null_sha1(orig_head) && !is_cache_unborn())
+>                         die(_("Updating an unborn branch with changes added to the index."));
 >
-> What gives?  I'm not *trying* to switch branches.  I just want to
-> resolve the conflict by taking their version.  If I try git checkout
-> --theirs ., then it complains that not every single file in the
-> directory has a "their" version.  So?  Take the ones that do.
+> -               if (config_autostash)
+> +               if (opt_autostash == -1)
 
-I think for checking out files you'd need to add the file names.
-In case of a collision between branch name and file name, even add
-a double dash:
+In patch 1/2, this changed from 'if (autostash)' to 'if
+(config_autostash)'; it's a bit sad that patch 2/2 then has to touch
+the same code to change it yet again, this time to 'if
+(opt_autostash)'. Have you tried just keeping the original 'autostash'
+variable and modifying its value based upon config_autostash and
+opt_autostash instead? (Not saying that this would be better, but
+interested in knowing if the result is as clean or cleaner or worse.)
 
-    git checkout --theirs -- file/name
-
+> +                       opt_autostash = config_autostash;
+> +
+> +               if (!opt_autostash)
+>                         die_on_unclean_work_tree(prefix);
 >
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>                 if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
+>                         hashclr(rebase_fork_point);
+> -       }
+> +       } else
+> +               if (opt_autostash != -1)
+> +                        die(_("--[no-]autostash option is only valid with --rebase."));
+
+How about formatting this as a normal 'else if'?
+
+    } else if (opt_autostash != -1)
+
+On the other hand, this error case hanging off the 'rebase'
+conditional is somewhat more difficult to reason about than perhaps it
+ought to be. It might be easier to see what's going on if you get the
+error case out of the way early, and then handle the normal case. That
+is, something like this:
+
+    if (!opt_rebase && opt_autostash != -1)
+        die(_("... is only valid with --rebase"));
+
+    if (opt_rebase) {
+        ...
+    }
+
+>         if (run_fetch(repo, refspecs))
+>                 return 1;
