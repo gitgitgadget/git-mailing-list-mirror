@@ -1,72 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC/GSoC 09/17] rebase-common: implement
- cache_has_unstaged_changes()
-Date: Tue, 15 Mar 2016 12:51:29 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603151249570.4690@virtualbox>
-References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com> <1457779597-6918-10-git-send-email-pyokagan@gmail.com> <alpine.DEB.2.20.1603142151230.4690@virtualbox> <xmqqoaag9177.fsf@gitster.mtv.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 04/19] index-helper: new daemon for caching index and
+ related stuff
+Date: Tue, 15 Mar 2016 18:52:30 +0700
+Message-ID: <CACsJy8BxDZg93ssBZGcC7Jsm_LpDgRtHUBfCm0agbvkPX9hUHw@mail.gmail.com>
+References: <1457548582-28302-1-git-send-email-dturner@twopensource.com> <1457548582-28302-5-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Paul Tan <pyokagan@gmail.com>, Git List <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>, sam.halliday@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 15 12:51:51 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Tue Mar 15 12:53:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afnVu-0007nV-Br
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 12:51:50 +0100
+	id 1afnXB-0000Ec-Bd
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 12:53:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933936AbcCOLvr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2016 07:51:47 -0400
-Received: from mout.gmx.net ([212.227.15.19]:53941 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932428AbcCOLvp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2016 07:51:45 -0400
-Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MC4R6-1aWxox0BCC-008qoJ; Tue, 15 Mar 2016 12:51:31
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqoaag9177.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:ifXzFH9Q7DyGAogNX4bnC/vgxJN2iwhvkD2eZMS4r/bxhRL2afZ
- 4dlDBMLFfUqg9nysZk3K6kYln0ZVwLFojFORsIGtn7HYiRSdTTRSQX4Oc3TYJs46w7Nt3SA
- 1jUtoOwFiaXBIEU6EkHdLnK6D1pOeUbW5ugrgtcfeeROYgpVOv917aB4ikKv/tuSd3J+bLN
- EpPIzjlutpcPHwEBGLabw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:uOcLdIy5JVI=:x5pVrX6Vst4mhlWb32e+qP
- c4IG/fV5f+H+ZFJyXc82nlBn13dsQJu36WhW+z7bIMhmFYxUxb8/STFHvSHz+Ph1EncuzVFyy
- WOd7X8wKaow+2Lzvz9RQ6DlMAoWe1Zf6Oa3RDeH2Wj0zJpUM+dCPZLKGWAGz+d20l4HsVk84w
- 6C43ecUxOLo6di0YtAyaj0lCqeGDfTCAkVmONMZkj86pZCUthzuyq4kcxB5PkRDjnwlTLijKG
- LVjC5PIvaP5HgfYFoG7x2NeFvX8xVo8lcRMFZHKgKPNmtrfYaVFRR6i/xE/hWMco1hMcK7+WL
- KgIajNCehFYypiFN34xqPxY7Ueb8/vn1bKofaxWbOUPu2WBm0xpgu51P/wJHa672zbTn2J6dP
- MHYjAy4bmZSXdyTEBL6vSej6wXr62MsPREqz22Fizga05fkXUyzqqTxJULKlhOtmIlNgxNb01
- pIm8aaP8ITeN9wVBwMWmXtDndFpTyBuWPrI6msi7UkjzgDCswVtvHQls92aymFhcXl4+nTW/d
- UZUXjgveO5qARM4NPmd2O3w05uT4XC/+Ed6nHCDk+qa+UEJTt/dDz5bkIcvm5sXxT7Dxgz/C8
- 1OeYK7vUrzAbeZovn+njt2nwDNzzvV4c9nPAIRwlCkEkn3xN5W7agVaM2/x97Y2pfOG33UtOd
- Fn+4O0+bHUAR4Q5moZ9gkUIF+luu7Zt6t6C0dEYIqQzNBoQOt39Ou+WmBmLwRvqq7LYjUwcfF
- FWzsnw4e7bZdwbaDre1PYMelTMCtASksKTJCPKTzDc1wNk8KacuCY3vn0ZYfYMXA5MMedyBl 
+	id S934298AbcCOLxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2016 07:53:05 -0400
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:33411 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932378AbcCOLxB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 07:53:01 -0400
+Received: by mail-lb0-f170.google.com with SMTP id oe12so19172822lbc.0
+        for <git@vger.kernel.org>; Tue, 15 Mar 2016 04:53:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=+RAoy9KSRxNXkuTL3TrWewbzVrnHP5ckBr6laFtdlJQ=;
+        b=ekLKP/zCATCn/19ep1GHe7D7+Rlj3k2aArPTyNROloSxXQfc8TRMvqA+mYoFIjskcW
+         PfWigxGuGwehG4RLg57bHwkENQ1PZwthQSG3mJb2PLPwzjiZGRDPx7UCIsXk0KQrFs1w
+         P37nyMxZyYaA2WYOtTmQ2huX8fGHQfV4kA6FTYVH5vk7mjPwBgB2hQZ5KBYIUNhThzA6
+         QvFITppkRnF6ouMbZ7FDMX7sFyioCr8UUoQpj2SdMbzazjY0pwV/5xlzVlgdoJl5fy9R
+         dyTAOvhjrqXIxWKTuz1eoSaLuUF0Ew3yLep5qKtfCrJNgUnLpWImtp32N5LfE7dUiEKu
+         w/ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=+RAoy9KSRxNXkuTL3TrWewbzVrnHP5ckBr6laFtdlJQ=;
+        b=PxmBBMQAF58v3SMHTmILMCTx9dNfYLRMrvyfqkGso2zi8JX8BWsVR8v7qrp0Gzqoi6
+         AaFxDCtqWGvsBfHNPfWmG9nbHqz/vNcY1wImr+wWk6PqV4GRwL5TexxwvYRyqwLNW7ik
+         VmYhm/BW2XxTumkIqUcdRO/VLUlFnZ3/wcyoWtJrmhKwEsljTAuejjZCclMAbmsV7EXs
+         xg0lZSW4HeSnGkyoaSlQfAyoymWk55OVLtGp0WdMYqcnqVSlNXk0qootrTEVgWpYKc9s
+         9Y4YlOuP4+Bn/mtx5l5zpDf26WnX9OjVBr6g/pb49/m9gGTpwYmgePKt0N9s1ganZQVN
+         6riA==
+X-Gm-Message-State: AD7BkJJyfMmJjuAiEh7W8LK3Ed++CGrvQ1pN3/4i/cmdCK3mGFjT7tUrz5ySf5mWswPdF0zbjPJdOJf5in/qNg==
+X-Received: by 10.25.159.68 with SMTP id i65mr9647471lfe.94.1458042780235;
+ Tue, 15 Mar 2016 04:53:00 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Tue, 15 Mar 2016 04:52:30 -0700 (PDT)
+In-Reply-To: <1457548582-28302-5-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288849>
 
-Hi Junio,
+On Thu, Mar 10, 2016 at 1:36 AM, David Turner <dturner@twopensource.com> wrote:
+> Git can poke the daemon to tell it to refresh the index cache, or to
+> keep it alive some more minutes via UNIX signals.
 
-On Mon, 14 Mar 2016, Junio C Hamano wrote:
+The reason I went with UNIX signals was because it made it possible to
+make a simple GetMessage loop, the only thing I can remember from my
+Windows time, on Windows later. It sounded clever, but because this is
+more like UDP (vs TCP) it's harder for communication. For example, we
+can't get a confirmation after a request... UNIX sockets would be more
+natural.
 
-> If the [has_uncommitted_changes()] function will be made a public helper
-> that may be called by anybody, a possible error reporting mechanism
-> would be to give a list of modified paths to the caller that asks them,
-> and have the caller apply its own "prefix" processing to make them
-> relative.
-
-But the point of the has_uncommitted_changes() is to figure out as fast as
-possible whether there are uncommitted changes, not the exact list. In
-fact, we want to return with a "yes" as soon as we encounter the first
-uncommitted change.
-
-Ciao,
-Dscho
+Since this patch was written, watchman has gained Windows support. I
+just looked at the code, it uses named pipe on Windows. So maybe we
+can just go with that too (if only because it has been proven working
+in practice) and we can go back to UNIX sockets on the *nix side. Too
+bad we can't just copy some functions from watchman because of license
+incompatibility. But we can leave Windows support to gfw team now, I
+think.
+-- 
+Duy
