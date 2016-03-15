@@ -1,107 +1,94 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH v7] commit: add a commit.verbose config variable
-Date: Wed, 16 Mar 2016 01:43:40 +0530
-Message-ID: <CAFZEwPP5AXHCmAg62wVNy_8FuOQxPdYofeb5b=m3g-ugiJkTyw@mail.gmail.com>
-References: <010201537710be08-f31428b3-5df3-4694-8c4a-0e8f058131b3-000000@eu-west-1.amazonses.com>
-	<1458041486-7044-1-git-send-email-szeder@ira.uka.de>
-	<CAFZEwPNAVxT2HVQyj0Wajth_y-P6Af4AcSZDzJDJP=vLHztwiw@mail.gmail.com>
-	<CAPig+cTRWg9yB7eXhnbgbjjYfrJyn_A-_gQmbW8NL1DEbkLpkQ@mail.gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.7.3
+Date: Tue, 15 Mar 2016 21:17:50 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603152117350.4690@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Mar 15 21:14:02 2016
+Content-Type: multipart/mixed; BOUNDARY="8323329-895668171-1458073071=:4690"
+To: git-for-windows@googlegroups.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 15 21:18:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afvLo-0003f1-K2
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 21:13:56 +0100
+	id 1afvPk-0006c7-B6
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 21:18:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755642AbcCOUNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2016 16:13:53 -0400
-Received: from mail-yw0-f173.google.com ([209.85.161.173]:35978 "EHLO
-	mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755524AbcCOUNv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2016 16:13:51 -0400
-Received: by mail-yw0-f173.google.com with SMTP id g3so35764258ywa.3
-        for <git@vger.kernel.org>; Tue, 15 Mar 2016 13:13:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=1zv/7W7dd69yHLGp5Dc3nEvFSSa3IWcUiZRCEdjiHjw=;
-        b=pRdXO8zxSatq/c1VU9BJm7unwoMc5gmi0ZKjkdUReYjLOV06KcS5cKgNsJogi+Xmlr
-         7agZXl2NBz6xBgAjr+pPERpu/vRD4vdWKc5YWw5flcawyK0s8mpvl2MWQd+GKDUpKG/K
-         gcwmmh6XKnQgOnoGu1UVuNXWK7Wm5VbdrD3lMpenDXnD5OZ6VVvRsj80HSHaNyIedii6
-         X9kIhhzEqvrUdwt5vdej/LVr1A+fft5SWDnr45YnsJvv7YvSyp24NxD+iCfXM0WbTFiX
-         h4SQqum+Ughnb22dfQPsBsOgL+89EYuEIXJNi5OJIfIr9N7IeYa93cYlu9lahC4LJpLn
-         +S3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=1zv/7W7dd69yHLGp5Dc3nEvFSSa3IWcUiZRCEdjiHjw=;
-        b=YmOxXm2urYGBtNYlSyVMNAxrG0PX0O97jhDAnAThCXM0pQnTpxxU8tDPOyHUklXwK/
-         v3CP+lcAHyzvIGlLNIIlP4H3ZEfKSzrzbJpA7kz27fiAKVT2NBXe/gTHcbTmefusBQwe
-         lKa36NZ0K2qVRSDJ5bPQM7oG5LxrK1Ck9TI+ix1JGo1MOXghQQundZrB7rSJHnrYsruG
-         Ysdb0Xk41SWfhPFfBg2prFoB8gAhF4ghMbKwv+avU0t6iyooQi2i+L2e8+CuVciVtH9p
-         yYlTiOUlcAbxT0oHS0dihEjXcAfaccBMU07T9YUKN1+QFNAC9QltZZ0glpKB2YPWIany
-         5O+g==
-X-Gm-Message-State: AD7BkJKMp15yN14AS4JCTf2H3uVfasA3kDvZtjNE5YyUFKItuiEzWbaav2rVZ/XTC/83MPgMC7bPbYrtzdVvGw==
-X-Received: by 10.129.37.3 with SMTP id l3mr16109802ywl.128.1458072821008;
- Tue, 15 Mar 2016 13:13:41 -0700 (PDT)
-Received: by 10.13.203.137 with HTTP; Tue, 15 Mar 2016 13:13:40 -0700 (PDT)
-In-Reply-To: <CAPig+cTRWg9yB7eXhnbgbjjYfrJyn_A-_gQmbW8NL1DEbkLpkQ@mail.gmail.com>
+	id S1755697AbcCOURz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2016 16:17:55 -0400
+Received: from mout.gmx.net ([212.227.17.22]:55326 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754481AbcCOURy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 16:17:54 -0400
+Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0LzGV3-1Zl3Mc1GmP-014Vmh; Tue, 15 Mar 2016 21:17:51
+ +0100
+X-X-Sender: virtualbox@virtualbox
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:9ss7CEpAPgPOYYhsvkHj6KQ1SkLjfMKI2DffZdyfJ+PxIbCDPmO
+ TmlIe5Simis4CBhaD2BZBLkk5UZSVlkN7L01u4vrgatzLyRUvyFqj9d9fw3vkAxSmWMfv0d
+ YVWd3U+rs6dc3xY5k0rP8wjm5kOFfVY4BRA2CVnwgnEan3dv6JZ2SGkEEJabh5vcMHp6Gf1
+ z9zysqigmtlHB0fdO0wjQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7NMusskemaI=:UVRHwoz6DCXxByYZ1VHFYI
+ g+aLkDrIxct1l4IWq8i7EH4/8s3iISBWHwS0pzSsWfbx3XActJc3nld9Q4o2nWHMctW8EFvVZ
+ UpLCdNaJKRIB0wML8e/5C9EP2A+LUBI75ybce2boqUAtWnaVELm+mEGkYUe9+TStXA0q/xO5m
+ OiCBioZTMQH/yU2py4/qqDzdJPqq7Z0JEtErC6fO7EJ/LZCSqm2ciPluMhBNbCKZJ4BfVxVoy
+ wFAj5I1Xy9vicdRu44FLxQEgPqp1uhJ0ilaryEXeCCF6p/vmkfMTYqS1dkZSRM53HeRACx1kd
+ eBulxnHYrOa4FHDausK+fYb0trZNdOUVJwJJrcACN9YHvtcnh5GCegAu7MN+OjvTcD0VHuBuW
+ vpXTc4npiX9iSTGUC8afg0UMndNxEuxrUwEwqicmikMwXq4X6YAKMN531LeYA1RW+Wpfr0NF1
+ Ae0Y3h/lb7WUKI1uDge5y5FyQ4Kx1SWpiTHcdMi8qI8/lct2gGOUHkq7FXIlZqSNQYMlN8Q6l
+ FcuZ8VdtF8ZMFWT6n6EV4LMTuqVf0vxwsqypiM/QLEOqwMQkuI7cyCa3baiosjqhep+vHR/4k
+ qUjucet7ncV07vLGdYPOzXvbv/ZDqNg4gZJzRbJXr/uFPXv5MM6+7QAxhNoIV3Vb5L7MOPNqJ
+ sRXcaGOn2gxsXnFsORkZGT2sd7ntpk0qZjA/p4YnPaMAJFJ81FcfonbPgyVglfMoq31RspBkO
+ rGYS6/eRx6DQrED/TsbrZkdsV4lOe+g5X5BtjwqHvqfNnXQ+bn1cfqOGK6rWt35t66d5xl+7 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288907>
 
-On Wed, Mar 16, 2016 at 12:54 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> As Eric Sunshine mentioned ($gmane.org/288811), it would react
->> according to the multiple verbosity level and since its not currently
->> defined in `commit` it will react as it is reacting when verbosity
->> level is 1.
->
-> I get the feeling that you missed SZEDER's point which was that
-> git-commit already behaves differently when --verbose is specified
-> multiple times. (I hadn't gotten around to reviewing that part of the
-> code yet, so I'm glad that SZEDER saved me the effort.)
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-My bad! I missed SZEDER's point.
+--8323329-895668171-1458073071=:4690
+Content-Type: text/plain; charset=X-UNKNOWN
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> The new config variable, which is boolean, doesn't mesh well with
-> multiple verbosity levels. For instance, with a combination of
-> commit.verbose=true and a single --verbose, the code will think that
-> --verbose was given twice and use verbosity level 2, which is not at
-> all intuitive and would be surprising for the user. So, SZEDER was
-> asking how this impedance mismatch can be rectified.
->
-> A possibly sane approach would be to make commit.verbose be a
-> verbosity level rather than boolean, and behave as follows:
->
-> 1. if --verbose is used (one or more), completely ignore commit.verbose.
-> 2. else, if commit.verbose is set, use it.
-> 3. else, default behavior.
->
-> I'm not sure if this makes sense, but as a convenience, maybe also
-> recognize "true" and "false" as aliases for 1 and 0, respectively, for
-> values of commit.verbose.
->
-> And, of course you'd want to test these behaviors.
+Dear Git users,
 
-This seems a good approach to me. I have two ideas of implementing it.
-First one to introduce a new variable `config_verbose` to store the
-value read by the config. Till then the value of verbose can be set
-through command line options. Depending on the situation as you
-described, it can then make the modification. Another approach would
-be to swap the places where the configuration file is read and where
-arguments are parsed. I personally think the first approach as more
-appropriate as in the latter one, there might be some parts of code
-which can break. As for the part of alias, I can use the method
-git_config_bool_or_int() which takes care about aliasing for me. I
-will also write tests for this behavior.
+It is my pleasure to announce that Git for Windows 2.7.3 is available from:
+
+=09https://git-for-windows.github.io/
+
+Changes since Git for Windows v2.7.2 (February 23rd 2016)
+
+New Features
+
+  =E2=80=A2 Git for Windows now ships with the Git Credential Manager for
+    Windows.
+
+Bug Fixes
+
+  =E2=80=A2 We now handle UTF-8 merge and squash messages correctly in Git =
+GUI.
+  =E2=80=A2 When trying to modify a repository config outside of any Git
+    worktree, git config no longer creates a .git/ directory but prints
+    an appropriate error message instead.
+  =E2=80=A2 A new version of Git for Windows' SDK was released.
+  =E2=80=A2 We no longer show asterisks when reading the username for
+    credentials.
+
+Filename | SHA-256 -------- | ------- Git-2.7.3-64-bit.exe |
+382d30d38b5c88690864bb46be0a9c5f53b7046e7a6485dbcede602c41cae9a2
+Git-2.7.3-32-bit.exe |
+e38ddcc2c17390ffec0ca4d5c4fb948b5b4874ea0c522d5180cf2ee7e63f76bd
+PortableGit-2.7.3-64-bit.7z.exe |
+f5b39244869efcfac57c9a9f1d75119de0121bc8aa260d1824dfe5902f9a3f60
+PortableGit-2.7.3-32-bit.7z.exe |
+82df6b1e8ca8550d7267641e32c6b736f0687e35dc3b772b21914706f13cdea4
+Git-2.7.3-64-bit.tar.bz2 |
+dd81fe03c83e255382816a5db1427b284288fe21b4f89cbe3b1ff21af8d0ef1c
+Git-2.7.3-32-bit.tar.bz2 |
+3b845331cf91e2a1677ba959d07491c6b04b8bdfc7900236a201d0f8c9863197
+
+--8323329-895668171-1458073071=:4690--
