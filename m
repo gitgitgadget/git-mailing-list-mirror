@@ -1,72 +1,94 @@
-From: Phil Susi <phillsusi@gmail.com>
-Subject: git checkout --theirs fails
-Date: Tue, 15 Mar 2016 13:27:12 -0400
-Message-ID: <56E845F0.9020609@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [Q] updates to gitk, git-gui and git-svn for 2.8?
+Date: Tue, 15 Mar 2016 10:33:44 -0700
+Message-ID: <xmqq7fh38x3b.fsf@gitster.mtv.corp.google.com>
+References: <xmqqd1qwaopd.fsf@gitster.mtv.corp.google.com>
+	<20160315015726.GA25295@dcvr.yhbt.net>
+	<20160315071839.GB24036@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 15 18:27:58 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Victor Leschuk <vleschuk@gmail.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	k_satoda Kazutoshi Satoda <k_satoda@f2.dion.ne.jp>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue Mar 15 18:33:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afslB-0005n8-A0
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 18:27:57 +0100
+	id 1afsqu-0001qM-D8
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 18:33:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934823AbcCOR1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2016 13:27:53 -0400
-Received: from mail-vk0-f47.google.com ([209.85.213.47]:34537 "EHLO
-	mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934777AbcCOR1w (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2016 13:27:52 -0400
-Received: by mail-vk0-f47.google.com with SMTP id e185so29797896vkb.1
-        for <git@vger.kernel.org>; Tue, 15 Mar 2016 10:27:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=NG+JCXonRzTo+MffOXAOoCKZoUSIBV5UmKtn3LQUQE8=;
-        b=PtBBHi/Szp0jl8SREGu6XzP3HDfSO4bTDUTqgoT3KxUHkGRvnUAC2kNumQNKG7BXWK
-         uZl5FPEUXm7l6eOc8hVN1UDZXxRCW10kNQI254ptiLlPpwZP0FXiKTGLJdTpF1SRgcAj
-         t0JR14ctPbE5HLJs3P8bwop6DMKRn8JfDllWf5IOW+fPD77vTPoM65ScEFMW3M5ia592
-         Z1rMoqfrn3sz3ErU6JXtNddDEYmyuc8j5zmodcgczn9hRHUxYBgXlKDjcHpJtW45Ng6q
-         pANN4B1Cdb9vZ8wHmPsIOApWpryYESa88vVH/vGmynKofxkuagHUAOT6HCsOAGgFtViT
-         /jkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=NG+JCXonRzTo+MffOXAOoCKZoUSIBV5UmKtn3LQUQE8=;
-        b=j3PqY2JJZ318y8/N4ET1jazijVz6uD2Wu8adtaGIxIEwssqH5BqL3rD+CCpOXQseew
-         8ht//w2PiW0p+5bGrL1ak9j8lyqmu11AAMOoSJNeV7N11VpcnA1cOVw5TEnHJOyHtNM/
-         FDtHURlzh6cf195MMzfQ/HAKIn5zo1y1T3Tdblk9+KKq1AN9ipsxnwX4nV7xuH+zW5a1
-         h+71LqwDIHdlbr9qe/MuZIEOxrUH/M64jId/y21Jo1jQUuyt4QqQINKduRkWascMHilF
-         3yzWI7jlGtRASptMyhee7Wl6KLH4y/baD6rIMObBXLtxisT7/in9poPE9r6ue04H3AlA
-         lSWw==
-X-Gm-Message-State: AD7BkJKv2blA0PV1ugGCnX7uCNsqM2LtQnbKO06Ro690CTmQ/PMR5HsyW9RiC+11a8CCig==
-X-Received: by 10.31.179.146 with SMTP id c140mr28217296vkf.50.1458062871301;
-        Tue, 15 Mar 2016 10:27:51 -0700 (PDT)
-Received: from [10.1.1.189] (fl-67-77-88-12.sta.embarqhsd.net. [67.77.88.12])
-        by smtp.googlemail.com with ESMTPSA id t72sm9816426vke.28.2016.03.15.10.27.50
-        for <git@vger.kernel.org>
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 15 Mar 2016 10:27:50 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
+	id S934829AbcCORdt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2016 13:33:49 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:51153 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S934833AbcCORdr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 13:33:47 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 22BA44D408;
+	Tue, 15 Mar 2016 13:33:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JOduQ921bkTrQPUj5MroOaCrKuw=; b=C4tC3t
+	8x7+cPFI5E8dNmFY0rdHMA+SW2nLFDCqzYJV896J1375uSH8xQ8vA2Bx8NMdRrcO
+	pNPrEUFhtjm67pQWbcQTGqzE+0f0HBwF5mpbLw9pIZiCMd9u6BTnl3uXUeLhnroG
+	uhSB74n4YdLhGlW7I9F1pZ6AlnSsv3BktY5k0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SkYoBhVbj3MwMiMaqpMXiBInid42JxxT
+	w3P3/8VPgRK4NUmoMrYFom05WGnj0/3bTw1LiTekBfTAAlF5q2hFJQaVnXDBpONI
+	KjMkqmhTevPy6TO6eXDTf3JlAeg52bqeDnpvLBgdezthNc39tpJaxv1KxOCOeDCQ
+	b7M8h83uXHw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1AB354D407;
+	Tue, 15 Mar 2016 13:33:46 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 839C74D406;
+	Tue, 15 Mar 2016 13:33:45 -0400 (EDT)
+In-Reply-To: <20160315071839.GB24036@dcvr.yhbt.net> (Eric Wong's message of
+	"Tue, 15 Mar 2016 07:18:39 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 11BC8C2C-EAD4-11E5-B362-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288887>
 
-I'm doing a rebase and got some conflicts.  I just want to take their
-version of all files, but git checkout --theirs complains:
+Eric Wong <normalperson@yhbt.net> writes:
 
---ours/--theirs' cannot be used with switching branches
+> Anyways, we'll let that cook a while and the other two patches
+> can be had at:
+>
+> The following changes since commit db6696f653b917509dac1ac13b922e12773a84ff:
+>
+>   Merge branch 'mg/wt-status-mismarked-i18n' (2016-03-14 10:46:17 -0700)
+>
+> are available in the git repository at:
+>
+>   git://bogomips.org/git-svn.git svn-glob
+>
+> for you to fetch changes up to 62335bbbc747c96636b5ce9917b156304c732eaf:
+>
+>   git-svn: shorten glob error message (2016-03-15 01:35:39 +0000)
+>
+> ----------------------------------------------------------------
+> Eric Wong (1):
+>       git-svn: shorten glob error message
+>
+> Victor Leschuk (1):
+>       git-svn: loosen config globs limitations
+>
+>  Documentation/git-svn.txt                  |  12 ++
+>  perl/Git/SVN/GlobSpec.pm                   |  18 ++-
+>  t/t9108-git-svn-glob.sh                    |   9 +-
+>  t/t9109-git-svn-multi-glob.sh              |   9 +-
+>  t/t9168-git-svn-partially-globbed-names.sh | 223 +++++++++++++++++++++++++++++
+>  5 files changed, 258 insertions(+), 13 deletions(-)
+>  create mode 100755 t/t9168-git-svn-partially-globbed-names.sh
 
-What gives?  I'm not *trying* to switch branches.  I just want to
-resolve the conflict by taking their version.  If I try git checkout
---theirs ., then it complains that not every single file in the
-directory has a "their" version.  So?  Take the ones that do.
+Thanks.  Pulled.
