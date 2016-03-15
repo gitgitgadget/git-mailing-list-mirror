@@ -1,276 +1,136 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] l10n: de.po: translate 22 new messages
-Date: Tue, 15 Mar 2016 18:12:00 +0100
-Message-ID: <1458061920-22666-1-git-send-email-ralf.thielow@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
-	phillip.szelat@gmail.com, matthias.ruester@gmail.com,
-	magnus.goerlitz@googlemail.com,
-	Ralf Thielow <ralf.thielow@gmail.com>
+From: Mehul Jain <mehul.jain2029@gmail.com>
+Subject: [PATCH 1/2] git-pull.c: introduce git_pull_config()
+Date: Tue, 15 Mar 2016 22:41:43 +0530
+Message-ID: <1458061904-26516-1-git-send-email-mehul.jain2029@gmail.com>
+References: <1456594902-21182-1-git-send-email-mehul.jain2029@gmail.com>
+Cc: Matthieu.Moy@grenoble-inp.fr, gitster@pobox.com,
+	pyokagan@gmail.com, sunshine@sunshineco.com,
+	Mehul Jain <mehul.jain2029@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 15 18:12:14 2016
+X-From: git-owner@vger.kernel.org Tue Mar 15 18:12:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afsVv-0002kP-4j
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 18:12:11 +0100
+	id 1afsWL-00036K-TQ
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 18:12:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934877AbcCORMH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Mar 2016 13:12:07 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:38227 "EHLO
-	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934827AbcCORME (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2016 13:12:04 -0400
-Received: by mail-wm0-f51.google.com with SMTP id l68so36365386wml.1
-        for <git@vger.kernel.org>; Tue, 15 Mar 2016 10:12:03 -0700 (PDT)
+	id S964950AbcCORMf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2016 13:12:35 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:33450 "EHLO
+	mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934816AbcCORMd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 13:12:33 -0400
+Received: by mail-pf0-f178.google.com with SMTP id 124so36716980pfg.0
+        for <git@vger.kernel.org>; Tue, 15 Mar 2016 10:12:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=RX7aroNR8M/t02AHm5JAQQL43FIQFkIgMr0ZKkgqQvM=;
-        b=NWXBqUQwMYKsZ0k7oFlXneslAulL7lv/I6ZeYQ1phPfy5j8RVbCax04DV5wMg6tXoC
-         gLvlsxgIR06d1e0egMKESTtRTJ15uY37hxSbvpOtkXDXWKzB4nB9jzEkDyi/K6q8VIEN
-         Ud/ZxvhlggcmXdcb4sBKY6XYjW+KIM+9BsPQMqhBFTGxA5NSrimu9A9y6u1kBpleIqJJ
-         Ke3CLJO9Un+7tZ0yJpYklNordSGTI2IlaQY1SLOJ7krFe+MSblWQWLGvRjGBvBduxqnh
-         FxDiqCCTXwh2s9j/lgeCQIHCYgNPBBbTiiVHoFW5Uo7l7ZrYBiwveAqj4qW/ZozO3H9N
-         MMbA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=10HDiFYoAAw7DZuxF1U/b0znYzulIPpjycCu2A3aq4w=;
+        b=RA5AgGmBpcL0cLFOJOZi5UbKAF4XUBhIVqGgJnBpD4k/diLl8sYEzWtPpFR6WjKmSs
+         lPuetRdDwomQ+Epq+CbczQx84gD1esre+0dgcqrE2a6cvV72anrMH+ibb3u1R0Ma1IIl
+         x+krNP2AnYZMBKvhTOHgen7uAwwZybYaTyI+3rHdrEZ4EZS92PvQC6DiFQ4s8lyOEaVQ
+         tB84z+M/MvaSqm3/AXEO6bHhVscJQhFEvBYWqFKE4eEll060Y3UxK/qu+AQq2kxaTxkb
+         c0fUC6kMk+kr8mWtLi30V8ecJzf+az9NX7a5EfO42MnEWG7ZjfFP+wEwDkMt5On9fUl3
+         2vtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=RX7aroNR8M/t02AHm5JAQQL43FIQFkIgMr0ZKkgqQvM=;
-        b=fzZrmF+cK57sX6QB+8j+7waKvOvct8m0UfbAhemhRoDJvAAAgdo9j/GO/Z5pNHbfMS
-         V9UsIXG9t9AsvWDNZ0wiGzgTTQMUTyKiAFn4nf4H1kllUPMsi8oi1tJzlareAmIBW5WR
-         P82+h3pRDf7doZcsiIX0CkdcOsnFI5QNt6pTuF4TZ6ArkSO4IV5lZwAFG9BV5OpVC9Lf
-         xSIrxW4NTQc8PTBwSTwRFsWcLPhuVTueV8GCG4denqhRL6vUVceNFs3puxfVENhjCU/f
-         lSc4yl8wkbddzozrlilWHf/yhN6MkJaZn/whqQhGzE8GJF9C/96c1HoYhvaITknoJBUp
-         zMWw==
-X-Gm-Message-State: AD7BkJJcgbrHZK7olNdHDog5mN2RGSgo60Tpy9aH/MWjMh2Q6Cfg8hx2pYwKoqwDlctymQ==
-X-Received: by 10.194.8.38 with SMTP id o6mr31611483wja.31.1458061922980;
-        Tue, 15 Mar 2016 10:12:02 -0700 (PDT)
-Received: from localhost (cable-86-56-55-109.cust.telecolumbus.net. [86.56.55.109])
-        by smtp.gmail.com with ESMTPSA id v188sm21621578wmv.3.2016.03.15.10.12.01
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 15 Mar 2016 10:12:02 -0700 (PDT)
-X-Mailer: git-send-email 2.8.0.rc2.181.g7f8255e
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=10HDiFYoAAw7DZuxF1U/b0znYzulIPpjycCu2A3aq4w=;
+        b=F2Gm5i6VsI7JgSnZ4Lr4XXSyYqUWoHwk1CG49+1yhvvVTyqsX0I9BoqDN/iQUPLFLF
+         Y7r4xyDFWvcd1I6CIf/KAJQcqFZeeV2vMMLnPDNRid98Kxg3bcXQly/pO0uCfF/KbRcT
+         8DO/CiX6lDKlDBzf0APTgDOMXTfd1dza2Q6v2SQ1V17syNEk68l2ChHfkfV1xl2uDtGy
+         wpLMtrjC/9iTHLyM2ukYdcM7AfeaWu4klUYQDnO0bGs1GW5A2LjxPOFsvz+rGSX8wQk2
+         Se8CjlbehoLGXnOvmp9PJ8RR7klr2juQctnik9Hgru+ZJ2Fo2GS9hUrnOOlslx7pdkMC
+         nGEg==
+X-Gm-Message-State: AD7BkJJOHb9md1pA7SbeH35X41BSPBMNHeLRrCKFvoMpZFkeNg9LBb5NRh2V0GmOLQGA3A==
+X-Received: by 10.66.65.137 with SMTP id x9mr47785325pas.137.1458061952525;
+        Tue, 15 Mar 2016 10:12:32 -0700 (PDT)
+Received: from localhost.localdomain ([1.39.36.65])
+        by smtp.gmail.com with ESMTPSA id 9sm40988137pfm.10.2016.03.15.10.12.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 15 Mar 2016 10:12:31 -0700 (PDT)
+X-Mailer: git-send-email 2.7.1.340.g69eb491.dirty
+In-Reply-To: <1456594902-21182-1-git-send-email-mehul.jain2029@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288884>
 
-Translate 22 new messages came from git.pot update in f1522b2
-(l10n: git.pot: v2.8.0 round 2 (21 new, 1 removed)) and a5a4168
-(l10n: git.pot: Add one new message for Git 2.8.0).
+git-pull makes a seperate call to git_config_get_bool() to read the value
+of "rebase.autostash", this can be reduced as a call to git_config() is
+already there in the code.
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+Introduce a callback function git_pull_config() to read "rebase.autostash"
+along with other variables.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Paul Tan <pyokagan@gmail.com>
+Signed-off-by: Mehul Jain <mehul.jain2029@gmail.com>
 ---
- po/de.po | 68 ++++++++++++++++++++++++++++++++------------------------=
---------
- 1 file changed, 34 insertions(+), 34 deletions(-)
+Previous patches: http://thread.gmane.org/gmane.comp.version-control.git/287709
 
-diff --git a/po/de.po b/po/de.po
-index edee6db..7093139 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -1150,14 +1150,14 @@ msgid "unrecognized format: %%(%s)"
- msgstr "nicht erkanntes Format: %%(%s)"
-=20
- #: ref-filter.c:77
--#, fuzzy, c-format
-+#, c-format
- msgid "%%(body) does not take arguments"
--msgstr "--worktrees akzeptiert keine weiteren Argumente"
-+msgstr "%%(body) akzeptiert keine Argumente"
-=20
- #: ref-filter.c:84
--#, fuzzy, c-format
-+#, c-format
- msgid "%%(subject) does not take arguments"
--msgstr "--worktrees akzeptiert keine weiteren Argumente"
-+msgstr "%%(subject) akzeptiert keine Argumente"
-=20
- #: ref-filter.c:101
- #, c-format
-@@ -1200,14 +1200,14 @@ msgid "positive width expected with the %%(alig=
-n) atom"
- msgstr "Positive Breitenangabe f=C3=BCr %%(align) erwartet"
-=20
- #: ref-filter.c:244
--#, fuzzy, c-format
-+#, c-format
- msgid "malformed field name: %.*s"
--msgstr "Missgebildeter Objektname %s"
-+msgstr "Fehlerhafter Feldname: %.*s"
-=20
- #: ref-filter.c:270
--#, fuzzy, c-format
-+#, c-format
- msgid "unknown field name: %.*s"
--msgstr "unbekanntes Argument f=C3=BCr Option --mirror: %s"
-+msgstr "Unbekannter Feldname: %.*s"
-=20
- #: ref-filter.c:372
- #, c-format
-@@ -1215,33 +1215,33 @@ msgid "format: %%(end) atom used without corres=
-ponding atom"
- msgstr "Format: %%(end) Atom ohne zugeh=C3=B6riges Atom verwendet"
-=20
- #: ref-filter.c:424
--#, fuzzy, c-format
-+#, c-format
- msgid "malformed format string %s"
--msgstr "Fehlerhafter Ident-String: '%s'"
-+msgstr "Fehlerhafter Formatierungsstring %s"
-=20
- #: ref-filter.c:878
- msgid ":strip=3D requires a positive integer argument"
--msgstr ""
-+msgstr ":strip=3D erfordert eine positive Ganzzahl als Argument"
-=20
- #: ref-filter.c:883
--#, fuzzy, c-format
-+#, c-format
- msgid "ref '%s' does not have %ld components to :strip"
--msgstr "Pfad '%s' hat nicht alle notwendigen Versionen."
-+msgstr "Referenz '%s' hat keine %ld Komponenten f=C3=BCr :strip"
-=20
- #: ref-filter.c:1046
--#, fuzzy, c-format
-+#, c-format
- msgid "unknown %.*s format %s"
--msgstr "Unbekannter Commit %s"
-+msgstr "Unbekanntes %.*s Format %s"
-=20
- #: ref-filter.c:1066 ref-filter.c:1097
--#, fuzzy, c-format
-+#, c-format
- msgid "missing object %s for %s"
--msgstr "fehlende Objekte erlauben"
-+msgstr "Objekt %s fehlt f=C3=BCr %s"
-=20
- #: ref-filter.c:1069 ref-filter.c:1100
- #, c-format
- msgid "parse_object_buffer failed on %s for %s"
--msgstr ""
-+msgstr "parse_object_buffer bei %s f=C3=BCr %s fehlgeschlagen"
-=20
- #: ref-filter.c:1311
- #, c-format
-@@ -1249,14 +1249,14 @@ msgid "malformed object at '%s'"
- msgstr "fehlerhaftes Objekt bei '%s'"
-=20
- #: ref-filter.c:1373
--#, fuzzy, c-format
-+#, c-format
- msgid "ignoring ref with broken name %s"
--msgstr "ignoriere Vorlage %s"
-+msgstr "Ignoriere Referenz mit fehlerhaftem Namen %s"
-=20
- #: ref-filter.c:1378
--#, fuzzy, c-format
-+#, c-format
- msgid "ignoring broken ref %s"
--msgstr "ignoriere Vorlage %s"
-+msgstr "Ignoriere fehlerhafte Referenz %s"
-=20
- #: ref-filter.c:1651
- #, c-format
-@@ -1680,17 +1680,17 @@ msgstr "Fehler beim Lesen von %s"
-=20
- #: sha1_file.c:1080
- msgid "offset before end of packfile (broken .idx?)"
--msgstr ""
-+msgstr "Offset vor Ende der Packdatei (fehlerhafte Indexdatei?)"
-=20
- #: sha1_file.c:2459
- #, c-format
- msgid "offset before start of pack index for %s (corrupt index?)"
--msgstr ""
-+msgstr "Offset vor Beginn des Pack-Index f=C3=BCr %s (besch=C3=A4digte=
-r Index?)"
-=20
- #: sha1_file.c:2463
- #, c-format
- msgid "offset beyond end of pack index for %s (truncated index?)"
--msgstr ""
-+msgstr "Offset hinter Ende des Pack-Index f=C3=BCr %s (abgeschnittener=
- Index?)"
-=20
- #: sha1_name.c:462
- msgid ""
-@@ -1743,9 +1743,9 @@ msgid "staging updated .gitmodules failed"
- msgstr "Konnte aktualisierte .gitmodules-Datei nicht zum Commit vormer=
-ken"
-=20
- #: trailer.c:237
--#, fuzzy, c-format
-+#, c-format
- msgid "running trailer command '%s' failed"
--msgstr "Zusammenf=C3=BChren der \"Tree\"-Objekte %s und %s fehlgeschla=
-gen"
-+msgstr "Ausf=C3=BChren des Anhang-Befehls '%s' fehlgeschlagen"
-=20
- #: trailer.c:492 trailer.c:496 trailer.c:500 trailer.c:554 trailer.c:5=
-58
- #: trailer.c:562
-@@ -4324,9 +4324,8 @@ msgid "HEAD is now at"
- msgstr "HEAD ist jetzt bei"
-=20
- #: builtin/checkout.c:665 builtin/clone.c:659
--#, fuzzy
- msgid "unable to update HEAD"
--msgstr "Konnte HEAD nicht aufl=C3=B6sen."
-+msgstr "Konnte HEAD nicht aktualisieren."
-=20
- #: builtin/checkout.c:669
- #, c-format
-@@ -4864,6 +4863,8 @@ msgid ""
- "No directory name could be guessed.\n"
- "Please specify a directory on the command line"
- msgstr ""
-+"Konnte keinen Verzeichnisnamen erraten.\n"
-+"Bitte geben Sie ein Verzeichnis auf der Befehlszeile an."
-=20
- #: builtin/clone.c:305
- #, c-format
-@@ -4945,9 +4946,9 @@ msgid "remote did not send all necessary objects"
- msgstr "Remote-Repository hat nicht alle erforderlichen Objekte gesend=
-et."
-=20
- #: builtin/clone.c:647
--#, fuzzy, c-format
-+#, c-format
- msgid "unable to update %s"
--msgstr "kann %s nicht =C3=B6ffnen"
-+msgstr "kann %s nicht aktualisieren"
-=20
- #: builtin/clone.c:696
- msgid "remote HEAD refers to nonexistent ref, unable to checkout.\n"
-@@ -4960,9 +4961,8 @@ msgid "unable to checkout working tree"
- msgstr "Arbeitsverzeichnis konnte nicht ausgecheckt werden"
-=20
- #: builtin/clone.c:753
--#, fuzzy
- msgid "unable to write parameters to config file"
--msgstr "konnte Tag-Datei nicht schreiben"
-+msgstr "konnte Parameter nicht in Konfigurationsdatei schreiben"
-=20
- #: builtin/clone.c:816
- msgid "cannot repack to clean up"
-@@ -11674,7 +11674,7 @@ msgstr "Remote-Referenzen mitsamt den verbunden=
-en Objekten aktualisieren"
-=20
- #: common-cmds.h:32
- msgid "Reapply commits on top of another base tip"
--msgstr ""
-+msgstr "Wiederholtes Anwenden von Commits auf anderem Basis-Commit"
-=20
- #: common-cmds.h:33
- msgid "Reset current HEAD to the specified state"
---=20
-2.8.0.rc2.181.g7f8255e
+Change: config_autostash initialized with 0 instead of -1
+
+ builtin/pull.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
+
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 10eff03..43353f9 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -86,6 +86,7 @@ static char *opt_commit;
+ static char *opt_edit;
+ static char *opt_ff;
+ static char *opt_verify_signatures;
++static int config_autostash;
+ static struct argv_array opt_strategies = ARGV_ARRAY_INIT;
+ static struct argv_array opt_strategy_opts = ARGV_ARRAY_INIT;
+ static char *opt_gpg_sign;
+@@ -304,6 +305,17 @@ static enum rebase_type config_get_rebase(void)
+ 
+ 	return REBASE_FALSE;
+ }
++/**
++ * Read config variables.
++ */
++static int git_pull_config(const char *var, const char *value, void *cb)
++{
++	if (!strcmp(var, "rebase.autostash")) {
++		config_autostash = git_config_bool(var, value);
++		return 0;
++	}
++	return git_default_config(var, value, cb);
++}
+ 
+ /**
+  * Returns 1 if there are unstaged changes, 0 otherwise.
+@@ -823,7 +835,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 	if (opt_rebase < 0)
+ 		opt_rebase = config_get_rebase();
+ 
+-	git_config(git_default_config, NULL);
++	git_config(git_pull_config, NULL);
+ 
+ 	if (read_cache_unmerged())
+ 		die_resolve_conflict("Pull");
+@@ -835,13 +847,11 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 		hashclr(orig_head);
+ 
+ 	if (opt_rebase) {
+-		int autostash = 0;
+ 
+ 		if (is_null_sha1(orig_head) && !is_cache_unborn())
+ 			die(_("Updating an unborn branch with changes added to the index."));
+ 
+-		git_config_get_bool("rebase.autostash", &autostash);
+-		if (!autostash)
++		if (config_autostash)
+ 			die_on_unclean_work_tree(prefix);
+ 
+ 		if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
+-- 
+2.7.1.340.g69eb491.dirty
