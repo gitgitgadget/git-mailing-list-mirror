@@ -1,92 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git checkout --theirs fails
-Date: Tue, 15 Mar 2016 14:47:40 -0700
-Message-ID: <xmqqd1qv76rn.fsf@gitster.mtv.corp.google.com>
-References: <56E845F0.9020609@gmail.com>
-	<CAGZ79kbzrpHowSLfCjB6wVfeX_3MUXAjD0rQdcugryWPMrTazQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] clone tests: rename t57* => t56*
+Date: Tue, 15 Mar 2016 17:51:22 -0400
+Message-ID: <20160315215121.GA30011@sigill.intra.peff.net>
+References: <1458077150-15564-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Phil Susi <phillsusi@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: gitster@pobox.com, git@vger.kernel.org
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Mar 15 22:47:49 2016
+X-From: git-owner@vger.kernel.org Tue Mar 15 22:51:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afwoe-0001ny-Pm
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 22:47:49 +0100
+	id 1afwsD-0004Mn-AH
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 22:51:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753783AbcCOVrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2016 17:47:46 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:58957 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753099AbcCOVro (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2016 17:47:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0F5654DC11;
-	Tue, 15 Mar 2016 17:47:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Sard+CcAy9Wuvtt8A01xrjkCJ9o=; b=JgPnYp
-	IY8GECjlx9xLJ3gd8ygacvnT5HXjQeeE9VR9ryr3+a4lo30u6POKPSRENhSVgVsz
-	c6FLASprFOSPUn+HP67JN0+CMRC5hjOgecEzdfcX1CL4QkZJgmUDvHkv3aKcv0yf
-	vztjkxMO5fyyEBXFD9cJoy7fkUqVzr40748YM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Kk1rS16uGS+Mhx4rKfwvOOEf389WXwUY
-	Z6ijlp/d4G66LnfTGqSI2W4dER4PtsV1dnIA902+1AMvvDbjd4hSDTEYl1r3ijfH
-	QHnteByVv1bSPYI7925cyankx8mnC/Zk2ROrooun3oj4hMlXQxglBKiJpg6VrxfL
-	f/YGNfm7UbA=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 06CCD4DC10;
-	Tue, 15 Mar 2016 17:47:43 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4F0764DC07;
-	Tue, 15 Mar 2016 17:47:42 -0400 (EDT)
-In-Reply-To: <CAGZ79kbzrpHowSLfCjB6wVfeX_3MUXAjD0rQdcugryWPMrTazQ@mail.gmail.com>
-	(Stefan Beller's message of "Tue, 15 Mar 2016 14:35:18 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8B86EFB6-EAF7-11E5-932B-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S932338AbcCOVv0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2016 17:51:26 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60159 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752958AbcCOVvZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 17:51:25 -0400
+Received: (qmail 13233 invoked by uid 102); 15 Mar 2016 21:51:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Mar 2016 17:51:24 -0400
+Received: (qmail 7135 invoked by uid 107); 15 Mar 2016 21:51:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Mar 2016 17:51:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Mar 2016 17:51:22 -0400
+Content-Disposition: inline
+In-Reply-To: <1458077150-15564-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288921>
 
-Stefan Beller <sbeller@google.com> writes:
+On Tue, Mar 15, 2016 at 02:25:50PM -0700, Stefan Beller wrote:
 
-> On Tue, Mar 15, 2016 at 10:27 AM, Phil Susi <phillsusi@gmail.com> wrote:
->> I'm doing a rebase and got some conflicts.  I just want to take their
->> version of all files, but git checkout --theirs complains:
->>
->> --ours/--theirs' cannot be used with switching branches
->>
->> What gives?  I'm not *trying* to switch branches.  I just want to
->> resolve the conflict by taking their version.  If I try git checkout
->> --theirs ., then it complains that not every single file in the
->> directory has a "their" version.  So?  Take the ones that do.
->
-> I think for checking out files you'd need to add the file names.
-> In case of a collision between branch name and file name, even add
-> a double dash:
->
->     git checkout --theirs -- file/name
+> When trying to find a good spot for testing clone with submodules, I
+> got confused where to add a new test file. There are both tests in t560*
+> as well as t57* both testing the clone command. t/README claims the
+> second digit is to indicate the command, which is inconsistent to the
+> current naming structure.
+> 
+> Rename all t57* tests to be in t56* to follow the pattern of the digits
+> as laid out in t/README.
+> 
+> It would have been less work to rename t56* => t57* because there are less
+> files, but the tests in t56* look more basic and I assumed the higher the
+> last digits the more complicated niche details are tested, so with the patch
+> now it looks more in order to me.
 
-That is true, but notice that the last example by Phil gives a dot
-as the pathspec to match all available files.
+This seems like a good change to me. There definitely is a general sense
+of "more complex things should come later" in the test suite[1], so
+preserving the existing ordering seems reasonable.
 
-Having said that,
+> If there is a reason to have 2 separate spaces for clone testing,
+> and I missed it, we should document that why it is important to keep
+> them separate.
 
-    $ git checkout --theirs -- file/name
+It looks like it was just carelessness from long ago. 5600 was added by
+5508a616 (Feb 2006), and then t5700 in cf9dc653 (May 2006). For the
+later ones, everybody probably just found or the other and built on top
+(some of us even found both at various times; looks like I added t5708
+in 2011 and t5603 last year).
 
-would fail when the path file/name is unmerged and does not have
-stage #3 entry, wouldn't it?  So with ".", unless all paths that
-match that pathspec (i.e. all available files) are either merged
-(i.e. without conflict) or have stage #3 entry, it is expected that
-the command would fail consistently to the case where a pathspec
-"file/name" that happens to match only one path is given, and that
-is the behaviour Phil saw, I would think.
+I checked whether there were any stragglers in topics in flight with:
+
+  git log --oneline --name-status --diff-filter=A origin..origin/pu t
+
+but I think we are good.
+
+-Peff
+
+[1] I actually don't think the test ordering matters all that much. I
+    guess if you run the tests directly from the Makefile, it will stop
+    at the most basic test that fails.
+
+    Personally, I run them in longest-to-shortest via "prove", which
+    helps parallelism, and gives you the full list of failed tests.
+    Which is often a good piece of knowledge by itself (is it just one
+    test, or did I horribly break some fundamental part of git?). And
+    then I pick one of the failures to study based on what seems simple
+    to debug, and/or the area I've been making changes in.
+
+    But I dunno. Maybe other people really do care about the order. It
+    doesn't hurt to roughly follow the "simplest comes first" ordering.
