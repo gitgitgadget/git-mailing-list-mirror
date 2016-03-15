@@ -1,108 +1,77 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2] submodule-config: use hashmap_iter_first()
-Date: Tue, 15 Mar 2016 12:21:36 -0700
-Message-ID: <CAGZ79kZ_wbJ2MGs_E-P_0eLk3JX_0QhT1c_BxqWCS+vrg8+xwA@mail.gmail.com>
-References: <1458069195-20888-1-git-send-email-kuleshovmail@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [GSOC] Microproject "Move ~/.git-credential-cache to
+ ~/.config/git"
+Date: Tue, 15 Mar 2016 15:21:54 -0400
+Message-ID: <20160315192154.GA30693@sigill.intra.peff.net>
+References: <CAKqreux4aYhXTE9kUHKoKCJ2-4KDWyi58ioCm-CWqXhUYCtEEw@mail.gmail.com>
+ <xmqqshztawwd.fsf@gitster.mtv.corp.google.com>
+ <CAKqreuwgxzVTAUdZPf9+ivXCdW8F2Ksafw7V0pbLAaRPwGX9Uw@mail.gmail.com>
+ <xmqqwpp494vd.fsf@gitster.mtv.corp.google.com>
+ <CAKqreuw0hafi-GwWD-UaGKwmG8xVK6ZJDcw2jpQXAAuK+XBZvQ@mail.gmail.com>
+ <20160315031259.GA20508@sigill.intra.peff.net>
+ <CAKqreuwv+RRziS-NcaLYZYUN0_KrfgZSe6wp0wGBza4q3_x8RA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
-To: Alexander Kuleshov <kuleshovmail@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 15 20:21:48 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?utf-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 15 20:22:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afuXL-0001I7-Fk
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 20:21:47 +0100
+	id 1afuXb-0001Tj-Lj
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 20:22:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934902AbcCOTVi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2016 15:21:38 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:34359 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934859AbcCOTVi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2016 15:21:38 -0400
-Received: by mail-ig0-f175.google.com with SMTP id av4so95872059igc.1
-        for <git@vger.kernel.org>; Tue, 15 Mar 2016 12:21:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=d3FmZCIIEpXKkyyjRpf5ppsvKtC2al1GJG6/o9qui5s=;
-        b=Kqg82mLlqvzVYeAdr+VhVOx5sI1HQbHHZKOIFuF78X34uf8pf2kQttGW9mhcLeb8U6
-         M1in1TPjedhzTgxNh/W+xh9ZXWMmr9gK0Altf9uqXO0Co/r6btLWBDtLqZMPr10n5X5t
-         3+/XadDkfwDMMF02WrJEBMAvtuMlutHqMtPx6MBWCVL+vY1L7FOiNLLr/aJ69n0uhTeY
-         AWMAEcMub5t1xYlGIxIU7k6fApiEDoh/QYFUt6hxpau6gpgVX+NuaWQGcMIkiN/mxjVy
-         2dR9DTjHoh4BWrUEzdz+ENZycORZMBB3lG9UUj1MDq0saKz3uSmLUOc5EaNiG6LyT41r
-         xUbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=d3FmZCIIEpXKkyyjRpf5ppsvKtC2al1GJG6/o9qui5s=;
-        b=AUuj14cxJb1qQUBJU1GQ+T4H3feQxtmtjwZG/FJdtPqUKot1iK2vub9phsCOqd/PX9
-         QcTq3pjyVdhemfgn/R619a3pwx39JSnQCJYbj/9rrNLAc2VPlLTzFwLzPSNpSD4QCPPX
-         9tM1YVrC6AjRbOSJB0BIHPgq+yfGZ79gyzYQS0dqBh3UYgohYEjxdoZaJOr/sKfdIT48
-         LChnjMNijh/ehe8bOGDceU3zFKroTtmWSn5V30BbJ2SpOFuGomFefXA/49s4obeUGSWb
-         on+RywBn8OMkCIpklkxfUXhm92qx+NuCZw1P9/c8yZ0M6JXie/RZxirKMY9VAKC8ksLV
-         YPqQ==
-X-Gm-Message-State: AD7BkJJT4v0Vhrg1dy3pVXkd7acxveJS+i9KGtPOBYU/oF62llMuQQhYMZQn8io8y59IVgw48h+jaFWCVv4g+iCv
-X-Received: by 10.50.1.48 with SMTP id 16mr2849607igj.93.1458069696864; Tue,
- 15 Mar 2016 12:21:36 -0700 (PDT)
-Received: by 10.107.132.101 with HTTP; Tue, 15 Mar 2016 12:21:36 -0700 (PDT)
-In-Reply-To: <1458069195-20888-1-git-send-email-kuleshovmail@gmail.com>
+	id S933103AbcCOTV7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Mar 2016 15:21:59 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60016 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932665AbcCOTV6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 15:21:58 -0400
+Received: (qmail 5791 invoked by uid 102); 15 Mar 2016 19:21:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Mar 2016 15:21:57 -0400
+Received: (qmail 5109 invoked by uid 107); 15 Mar 2016 19:22:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Mar 2016 15:22:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Mar 2016 15:21:54 -0400
+Content-Disposition: inline
+In-Reply-To: <CAKqreuwv+RRziS-NcaLYZYUN0_KrfgZSe6wp0wGBza4q3_x8RA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288896>
 
-On Tue, Mar 15, 2016 at 12:13 PM, Alexander Kuleshov
-<kuleshovmail@gmail.com> wrote:
-> from the <hashmap.h> for simplification.
+On Tue, Mar 15, 2016 at 05:48:18AM +0000, =E6=83=A0=E8=BD=B6=E7=BE=A4 w=
+rote:
 
-I think what Eric wanted to point out, was to not have a continuous sentence
-from commit message header to body.
+> On Tue, Mar 15, 2016, 11:13 AM Jeff King <peff@peff.net> wrote:
+> > The socket is inherently ephemeral, and designed to go
+> > away after a few minutes (and the program designed to run sanely wh=
+en it
+> > does not exist).
+>=20
+> I agree.
+>=20
+> > So yes, when you switch from older git to newer git, you might
+> > technically have a cache-daemon running that you _could_ contact, b=
+ut
+> > don't find it. But I don't think it's a big deal in practice, and n=
+ot
+> > worth designing around
+>=20
+> Yes, it's OK with git itself. What I worry about is that this change =
+break
+> some third-party tools. Does it matter?
 
-Either leave the body blank (as it is obvious) or write a whole sentence there:
+I don't think so. I suppose one could have a script that tests for the
+existence of the socket or something. But then, I don't think "use the
+old directory if it exists" really solves that. Such a script would wor=
+k
+on people who had already run the old version of credential-cache, and
+break on new ones.
 
-  [PATCH v2] submodule-config: use hashmap_iter_first()
-
-  The hashmap API offers the `hashmap_iter_first` function as initializing and
-  getting the first entry is a common pattern. Use that instead of
-doing initialization
-  by hand and then get the first entry.
-
-
-
->
-> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
-> Reviewed-by: Stefan Beller <sbeller@google.com>
-> ---
-> Changelog: added missed Signof-off-by and function name fixed
-> in the commit message.
->
->  submodule-config.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
->
-> diff --git a/submodule-config.c b/submodule-config.c
-> index b82d1fb..8ac5031 100644
-> --- a/submodule-config.c
-> +++ b/submodule-config.c
-> @@ -405,8 +405,7 @@ static const struct submodule *config_from(struct submodule_cache *cache,
->                 struct hashmap_iter iter;
->                 struct submodule_entry *entry;
->
-> -               hashmap_iter_init(&cache->for_name, &iter);
-> -               entry = hashmap_iter_next(&iter);
-> +               entry = hashmap_iter_first(&cache->for_name, &iter);
->                 if (!entry)
->                         return NULL;
->                 return entry->config;
-> --
-> 2.8.0.rc2.216.g1477fb2.dirty
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-Peff
