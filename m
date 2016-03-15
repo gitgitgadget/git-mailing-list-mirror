@@ -1,199 +1,177 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v2 16/16] branch: implement '--format' option
-Date: Tue, 15 Mar 2016 22:17:16 +0530
-Message-ID: <1458060436-1215-17-git-send-email-Karthik.188@gmail.com>
-References: <1458060436-1215-1-git-send-email-Karthik.188@gmail.com>
-Cc: gitster@pobox.com, jacob.keller@gmail.com,
-	Karthik Nayak <Karthik.188@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 15 17:48:18 2016
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH/RFC/GSoC 17/17] rebase-interactive: introduce interactive
+ backend for builtin rebase
+Date: Wed, 16 Mar 2016 00:48:27 +0800
+Message-ID: <CACRoPnRhhMM0e3S23KVnEANwNRDPq0P3hSqn5Zs1ksZxeaAoiA@mail.gmail.com>
+References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com>
+	<1457779597-6918-18-git-send-email-pyokagan@gmail.com>
+	<alpine.DEB.2.20.1603150800420.4690@virtualbox>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Sam Halliday <sam.halliday@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 15 17:48:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afs8k-0001AN-Tw
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 17:48:15 +0100
+	id 1afs94-0001Qx-GE
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 17:48:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965339AbcCOQsH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2016 12:48:07 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:36578 "EHLO
-	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965319AbcCOQsC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2016 12:48:02 -0400
-Received: by mail-pf0-f171.google.com with SMTP id u190so35755585pfb.3
-        for <git@vger.kernel.org>; Tue, 15 Mar 2016 09:48:02 -0700 (PDT)
+	id S965382AbcCOQsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2016 12:48:31 -0400
+Received: from mail-lf0-f48.google.com ([209.85.215.48]:36354 "EHLO
+	mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965214AbcCOQs3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 12:48:29 -0400
+Received: by mail-lf0-f48.google.com with SMTP id l83so34340lfd.3
+        for <git@vger.kernel.org>; Tue, 15 Mar 2016 09:48:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1K7ntdpaeOVSm311Ukxme85mH2M5d+ONqDetf0ypAYU=;
-        b=pBLw57MCan3R2x7HJVn1YV5BBwgA6UMGVgYjDWAnxq7wm1fEZfrEcST26dXqReSbyg
-         Kjm0E1jgBvTLoKuCgLtdd2ZiqfQSqAkhPIO2xmDVLBXXMAWQUTX44Z2BeRKVUEnWWQI1
-         HkmQ217dKgOkMbySMJGoDg49vZFBGK5nHHOzKgepPWQZWUo0e7sqBdCC+1wkeqt3EkzW
-         DjINpXbCZ+1Aam4bPrbzAT9igbY/M0wuoLPv2aVTPWpd3spIhqh9CXaXPygct3PrBk1P
-         mYPJENs6i3DkKSM2AURU+6y+cLslGmOMbThX5WDk6iClbnX+3AG8C52V7PpJe4a4Crmv
-         NXCA==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=5fFRYyzlTlMxUO4pwb0gUY7ngSGJK+RNrJECrY1oO24=;
+        b=w/3NW0bt5ZY/mSD/JC/cGU1nsrNZ0xXk/Tz3dQQtAvykMgtzAqQDZb1HhfYfH6rNXW
+         /mlZU0DftvYxEnd1Q358uO35iwgWxzzFzI4eA1uSy+33lbv8Q9nss/WnVAUtfTqv64sE
+         uwrsOSuK4TIcHNcYnQM2wV9uyX78cex82leHZKx69EeWlIeAkcdNB5X5T3+7lMoUzq42
+         twCFCoHdVclTvWPNPd20vep979UgTShvNbWNdU9f4vzqlFuL2uln8avXGaOjMVI2Fg83
+         r9NJaV1JhySrF1fxUpo6X0xRgobg3Xi1ddCMMKtjm2JAeOQfwJXyYlCwbzR99UyM3j/7
+         zpnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=1K7ntdpaeOVSm311Ukxme85mH2M5d+ONqDetf0ypAYU=;
-        b=WLB0DFpanF8Dz0MHhkcOf/DZciWhJReVt6uOhhA5BwUbpD0T3vSPA3/oMaOc2W6nX5
-         L2VI5FjZcEQOCglDGpIFvhGxl6vhJfwNlpMyjQqqVlxpQLws+Xh072Ny3wozkk7Jufiv
-         I2Xf1NRZObi+VkipGjGMsx7wyF36HWUtnTvzPXq7vjO2ZpxAFsvV6VbuYP478JPh0vRD
-         E+STAjqJGDvAhNK/OoSxU79aHyviTYD1EPDjmxKBJxrit+WJzWv91eJMKa98snLYOWfw
-         1irV/7q+sDeVpqf71ZzEkbw911+jkJQhaXGGo1LSHEe1e2XtC2r9MsWA+Q7aPP9ZLhZH
-         9wUA==
-X-Gm-Message-State: AD7BkJLH0Ql2YEVLJ2jj8jddyOaLsMbQo5LkNzo/KNx8sVDqUq5IkTgehAS0TP4Si7rkQg==
-X-Received: by 10.66.145.194 with SMTP id sw2mr47410255pab.69.1458060481627;
-        Tue, 15 Mar 2016 09:48:01 -0700 (PDT)
-Received: from localhost.localdomain ([106.51.243.87])
-        by smtp.gmail.com with ESMTPSA id i1sm40874361pfj.17.2016.03.15.09.47.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 15 Mar 2016 09:48:01 -0700 (PDT)
-X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
-X-Mailer: git-send-email 2.7.3
-In-Reply-To: <1458060436-1215-1-git-send-email-Karthik.188@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=5fFRYyzlTlMxUO4pwb0gUY7ngSGJK+RNrJECrY1oO24=;
+        b=kXzg8go2utZ+Dz60Pcf/v9/LOnzmm2ESdjoNuDHsm2CdjjlLGjCuhIV09cDGlMhgPC
+         T2yrl3+ru33Yk4aAsXw/tIjDfxvH5EaZjeOmZTFXaUhgpKmt57Tg/f5G/qxmlsL406b9
+         8ZgbY39Zn+ZiSp6umr5GXQZSmxd0NOr8oped3OkTJEebe2X52H0WbAz2BAKaH9lTU+xA
+         704m1rh+637YH0KZSRL8h1w3ZLM7S59Sh0SIGNC94efSN3VvVhClsE5R8v2ED81yaJAo
+         Y/Bswf3I3B5KLmsqZekV6tXHbMJGMgKAS37Yl3r1n7mMiPNXpmGlBC5esNQQmulcGPY/
+         HRIw==
+X-Gm-Message-State: AD7BkJJ2kktQm3WjkGoTwcxKI13Hf8kmOGYGRKNlhOG6trFUKyuNiUBWMtAJnDLm3xJG9Go0agVKO65wawc3xw==
+X-Received: by 10.25.79.16 with SMTP id d16mr8296107lfb.73.1458060507498; Tue,
+ 15 Mar 2016 09:48:27 -0700 (PDT)
+Received: by 10.112.207.74 with HTTP; Tue, 15 Mar 2016 09:48:27 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1603150800420.4690@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288879>
 
-Implement the '--format' option provided by 'ref-filter'. This lets the
-user list branches as per desired format similar to the implementation
-in 'git for-each-ref'.
+Hi Dscho,
 
-Add tests and documentation for the same.
+On Tue, Mar 15, 2016 at 3:57 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Sat, 12 Mar 2016, Paul Tan wrote:
+>
+>> Since 1b1dce4 (Teach rebase an interactive mode, 2007-06-25), git-rebase
+>> supports an interactive mode when passed the -i switch.
+>>
+>> In interactive mode, git-rebase allows users to edit the list of patches
+>> (using the user's GIT_SEQUENCE_EDITOR), so that the user can reorder,
+>> edit and delete patches.
+>>
+>> Re-implement a skeletal version of the above feature by introducing a
+>> rebase-interactive backend for our builtin-rebase. This skeletal
+>> implementation is only able to pick and re-order commits.
+>>
+>> Signed-off-by: Paul Tan <pyokagan@gmail.com>
+>
+> It is a pity that both of us worked on overlapping projects in stealth
+> mode. Inevitably, some of the work is now wasted :-(
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- Documentation/git-branch.txt |  7 ++++++-
- builtin/branch.c             | 14 +++++++++-----
- t/t3203-branch-output.sh     | 12 ++++++++++++
- 3 files changed, 27 insertions(+), 6 deletions(-)
+No worries, I did this series for my own interest, especially to get a
+gauge of the speedup between rebase in shell and C. GSoC applications
+have opened and will close in 10 days time, so I wanted to get some
+data before the deadline at least :-).
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 4a7037f..8af132f 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -12,7 +12,7 @@ SYNOPSIS
- 	[--list] [-v [--abbrev=<length> | --no-abbrev]]
- 	[--column[=<options>] | --no-column]
- 	[(--merged | --no-merged | --contains) [<commit>]] [--sort=<key>]
--	[--points-at <object>] [<pattern>...]
-+	[--points-at <object>] [--format=<format>] [<pattern>...]
- 'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branchname> [<start-point>]
- 'git branch' (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
- 'git branch' --unset-upstream [<branchname>]
-@@ -246,6 +246,11 @@ start-point is either a local or remote-tracking branch.
- --points-at <object>::
- 	Only list branches of the given object.
- 
-+--format <format>::
-+	A string that interpolates `%(fieldname)` from the object
-+	pointed at by a ref being shown.  The format is the same as
-+	that of linkgit:git-for-each-ref[1].
-+
- Examples
- --------
- 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 29cd206..fb05b39 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -27,6 +27,7 @@ static const char * const builtin_branch_usage[] = {
- 	N_("git branch [<options>] [-r] (-d | -D) <branch-name>..."),
- 	N_("git branch [<options>] (-m | -M) [<old-branch>] <new-branch>"),
- 	N_("git branch [<options>] [-r | -a] [--points-at]"),
-+	N_("git branch [<options>] [-r | -a] [--format]"),
- 	NULL
- };
- 
-@@ -331,14 +332,14 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
- 	return strbuf_detach(&fmt, NULL);
- }
- 
--static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sorting)
-+static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sorting, const char *format)
- {
- 	int i;
- 	struct ref_array array;
- 	int maxwidth = 0;
- 	const char *remote_prefix = "";
- 	struct strbuf out = STRBUF_INIT;
--	char *format;
-+	char *to_free = NULL;
- 
- 	/*
- 	 * If we are listing more than just remote branches,
-@@ -355,7 +356,8 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
- 	if (filter->verbose)
- 		maxwidth = calc_maxwidth(&array, strlen(remote_prefix));
- 
--	format = build_format(filter, maxwidth, remote_prefix);
-+	if (!format)
-+		format = to_free = build_format(filter, maxwidth, remote_prefix);
- 	verify_ref_format(format);
- 
- 	/*
-@@ -383,7 +385,7 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
- 	}
- 
- 	ref_array_clear(&array);
--	free(format);
-+	free(to_free);
- }
- 
- static void rename_branch(const char *oldname, const char *newname, int force)
-@@ -483,6 +485,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	enum branch_track track;
- 	struct ref_filter filter;
- 	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
-+	const char *format = NULL;
- 
- 	struct option options[] = {
- 		OPT_GROUP(N_("Generic options")),
-@@ -523,6 +526,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 			OPTION_CALLBACK, 0, "points-at", &filter.points_at, N_("object"),
- 			N_("print only branches of the object"), 0, parse_opt_object_name
- 		},
-+		OPT_STRING(  0 , "format", &format, N_("format"), N_("format to use for the output")),
- 		OPT_END(),
- 	};
- 
-@@ -583,7 +587,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		if ((filter.kind & FILTER_REFS_BRANCHES) && filter.detached)
- 			filter.kind |= FILTER_REFS_DETACHED_HEAD;
- 		filter.name_patterns = argv;
--		print_ref_list(&filter, sorting);
-+		print_ref_list(&filter, sorting, format);
- 		print_columns(&output, colopts, NULL);
- 		string_list_clear(&output, 0);
- 		return 0;
-diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index 4261403..c33a3f3 100755
---- a/t/t3203-branch-output.sh
-+++ b/t/t3203-branch-output.sh
-@@ -184,4 +184,16 @@ test_expect_success 'ambiguous branch/tag not marked' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'git branch --format option' '
-+	cat >expect <<-\EOF &&
-+	Refname is (HEAD detached from fromtag)
-+	Refname is refs/heads/ambiguous
-+	Refname is refs/heads/branch-one
-+	Refname is refs/heads/branch-two
-+	Refname is refs/heads/master
-+	EOF
-+	git branch --format="Refname is %(refname)" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.7.3
+> Not all is lost, though.
+>
+> Much of the code can be salvaged, although I really want to reiterate
+> that an all-or-nothing conversion of the rebase command is not going to
+> fly.
+
+Sure. I admit that I concentrated more on how the "final code" would
+look like, and not so much how the rewrite would be built upon in
+pieces.
+
+> For several reasons: it would be rather disruptive, huge and hard to
+> review. It would not let anybody else work on that huge task. And you're
+> prone to fall behind due to Git's source code being in constant flux
+> (including the rebase bits).
+>
+> There is another, really important reason: if you package the conversion
+> into small, neat bundles, it is much easier to avoid too narrow a focus
+> that would tuck perfectly useful functions away in a location where it
+> cannot be reused and where it is likely to be missed by other developers
+> who need the same, or similar functionality (point in case:
+> has_uncommitted_changes()). And we know that this happened in the past,
+> and sometimes resulted in near-duplicated code, hence Karthik's Herculean,
+> still ongoing work.
+>
+> Lastly, I need to point out that the conversion of rebase into a builtin
+> is not the end game, it is the game's opening.
+>
+> [...]
+>
+> So you see, there was a much larger master plan behind my recommendation
+> to go the rebase--helper route.
+
+Ah I see, thanks for publishing your branch and sharing your plans.
+
+Originally I was thinking smaller -- rewrite git-rebase first,
+following its shell script closely, and then doing the libification
+and optimization after that. However, I see now that you have grander
+plans than that :-).
+
+>
+> As to my current state: Junio put me into quite a fix (without knowing it)
+> by releasing 2.7.3 just after I took off for an extended offline weekend,
+> and now I am scrambling because a change in MSYS2's runtime (actually,
+> probably more like: an update of the GCC that is used to compile the
+> runtime, that now causes a regression) is keeping me away from my work on
+> the interactive rebase. Even so, I am pretty far along; There are only
+> three major things left to do: 1) fix fixups/squashes with fast-forwarding
+> picks, 2) implement 'reword', 3) display the progress.  And of course 4)
+> clean up the fallout. ;-)
+>
+> At this point, I'd rather finish this myself than falling prey to Brooks'
+> Law.
+
+Okay, I won't touch interactive rebase then.
+
+> I also have to admit that I would love to give you a project over the
+> summer whose logical children are exciting enough to dabble with even
+> during the winter. And somehow I do not see that excitement in the boring
+> conversion from shell to C (even if its outcome is well-needed).
+
+Well, that is subjective ;-).
+
+Even with interactive rebase out-of-bounds, I don't think it's a dead
+end though:
+
+1. git-rebase--am.sh, git-rebase--merge.sh and git-rebase.sh can be
+rewritten to C, and call git-rebase--interactive.sh externally, like
+what Duy demonstrated in his patch series. The timings show that am
+and merge rebase still benefit, and that way we will be closer to a
+git-rebase in full C.
+
+2. git-commit can be libified, so that we can access its functionality
+directly. (sequencer.c runs it once per commit, rebase-interactive
+uses it for squashes etc.)
+
+Or would that be stepping on your toes?
+
+> Ciao,
+> Dscho
+>
+> Footnote *1*:
+> https://github.com/git-for-windows/build-extra/blob/master/shears.sh
+
+Regards,
+Paul
