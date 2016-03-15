@@ -1,92 +1,78 @@
-From: Adam Dinwoodie <adam@dinwoodie.org>
-Subject: SVN clone on Cygwin drops a / and reports "not a complete URL"
-Date: Tue, 15 Mar 2016 16:23:44 +0000
-Message-ID: <20160315162344.GM29016@dinwoodie.org>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 15/15] branch: implement '--format' option
+Date: Tue, 15 Mar 2016 22:08:22 +0530
+Message-ID: <CAOLa=ZRk3Tjo1=EEt+9WkZpE1gPkujNrh2guHdYAd63Gk9bmyg@mail.gmail.com>
+References: <1457265902-7949-1-git-send-email-Karthik.188@gmail.com>
+ <1457265902-7949-16-git-send-email-Karthik.188@gmail.com> <CA+P7+xouB+C+pKMGhJavB+e0jadFUGEDcgcmWWot1AYTxKMY1Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 15 17:23:55 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git mailing list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 15 17:38:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afrlC-0000CH-0B
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 17:23:54 +0100
+	id 1afrzm-0002v0-1v
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 17:38:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965093AbcCOQXu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2016 12:23:50 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:37092 "EHLO
-	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932121AbcCOQXt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2016 12:23:49 -0400
-Received: by mail-wm0-f42.google.com with SMTP id p65so34438094wmp.0
-        for <git@vger.kernel.org>; Tue, 15 Mar 2016 09:23:48 -0700 (PDT)
+	id S934711AbcCOQiy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2016 12:38:54 -0400
+Received: from mail-vk0-f43.google.com ([209.85.213.43]:34509 "EHLO
+	mail-vk0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751048AbcCOQiw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 12:38:52 -0400
+Received: by mail-vk0-f43.google.com with SMTP id e185so27877550vkb.1
+        for <git@vger.kernel.org>; Tue, 15 Mar 2016 09:38:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=ZF1XtaMQUEzdvn5sqFkNIP1DwAGvg8Z+RZpfmOOH4jo=;
-        b=GRUdiDQa2WyXrtqh+r3l1iuo2WaJz2jAeGOBmyHCdhC/lW5xWSJKfdTIAJmWyGBE2t
-         OY1U8l5WmAH/CyVwKPhpnlnF0A99CXyLKWiafeNr5Bf8cBzNksqP9YorZDj/Jx+bxphP
-         PUhnOtvtFfm1UQ9MpOCzSp+mIT8pTKrtG4Dik=
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=mwLZaBQy5I06XpWtYSTcWoXLSBezxDlKQIutl/o72bE=;
+        b=P+HHR2vKv1yC+wDFGiZWaHK31N+kj1FFDOKwn/bs1xetO9zXsJpIQOnCsTTBbFbCm4
+         NyM10auFsA9buEF36U5JyFCIbzCF8l7FA5F0l8U14jTVmQ2wzAm2jR8AXPSMaInCO8zl
+         EFYXnjZvGC5dRWNbks9baJucSOHrWkEjIomO5rtuzepuzxKuRe16yImT8CWlVESL7yrV
+         /OE8R95uCMFl0FW04+iF3D++cThWJwpjA2rF27xblZCmP2IdskdpJMDmgARzNSKDq6k2
+         n7vn1GFiXAjaGNy5PWkpCM5fzBRiSG5YsGJHZotRkVapSZwxux6TQdPN61yDQWm5BB1Y
+         HC2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=ZF1XtaMQUEzdvn5sqFkNIP1DwAGvg8Z+RZpfmOOH4jo=;
-        b=GH6fCawX1eqJyv63A3pl+aqJtKvPa3GB7Jlkgoz8nk9C5BdA1cnJEe5DcUNZNa9GYj
-         ONlnr5D0ySfTPigGnroVwq3dXjQiXYkBDbdXunxUzd3c86Qx0zHMkOaZ3ZeOlkArEOya
-         wQYnlMhcnFb1rZ/bT6cRkokqx0LcbQyg5pFhCnbb2XbcDuXm3aXM/OafhNqH9LUEPPi5
-         /6+xFPuXzGSQiTC9mLGpUHQazqkFMVciVrpdYdV4cCvoZACP3wfzPSFWNqY4BdTu0erS
-         CtyU/mUTr8ezYLglsDIs8R4V1ouldpPFyLYQrcm4jbkbc6lpMg3zoDQr4IDS8pWlxw21
-         0Frw==
-X-Gm-Message-State: AD7BkJJaPAZZUAp/G2pT/ORbo8jXTXxerJla8w8oWCkptzZ0UxllwocXzUEkl43avnYTfw==
-X-Received: by 10.28.19.204 with SMTP id 195mr26401722wmt.1.1458059027197;
-        Tue, 15 Mar 2016 09:23:47 -0700 (PDT)
-Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
-        by smtp.gmail.com with ESMTPSA id ls5sm27653591wjb.33.2016.03.15.09.23.46
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 15 Mar 2016 09:23:46 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=mwLZaBQy5I06XpWtYSTcWoXLSBezxDlKQIutl/o72bE=;
+        b=PQUq1lwq/JEpwf15ePyyRTCpOXpvftw+HS7/zfxwbRfRuu/n5SrXy2art+6hKbE5lq
+         /sqNV0dQ48kRxXTWim6h0Vn9FuPwWR+M48CA/SlNe8u/kv3nOp3UVfjQx/p2DwL/lY03
+         HltIVHxH+ZoO2Hh+2Z7PpeEDuUGTr4SDWplVTcOcyXmZtP3l8TunYR22BKnxQRJz/9FC
+         Zn/OLl2qx593Cmrdtv+aYHLmcc+1EmKHTKIb8Vl1pGHpw0TDxhN+gcL2xOlN4DjNFrHM
+         navpNXEHJJ8mSfhi3nutNS29YT6vWfQWOxlwMJZEsR63z0z0Qs0VWAwGhjYj+7a7TCPo
+         od2g==
+X-Gm-Message-State: AD7BkJI2QpWm5/ma2QYtBEo5E3wlGSmkuirQp/EqPXqHaTiGG2P7Sy43EfiFyZC4KGSPNyb5MpUZHHt86DJoQw==
+X-Received: by 10.31.8.205 with SMTP id 196mr32406863vki.144.1458059931544;
+ Tue, 15 Mar 2016 09:38:51 -0700 (PDT)
+Received: by 10.103.112.68 with HTTP; Tue, 15 Mar 2016 09:38:22 -0700 (PDT)
+In-Reply-To: <CA+P7+xouB+C+pKMGhJavB+e0jadFUGEDcgcmWWot1AYTxKMY1Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288860>
 
-Hi all,
+On Tue, Mar 8, 2016 at 7:28 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
+> On Sun, Mar 6, 2016 at 4:05 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> Implement the '--format' option provided by 'ref-filter'.
+>> This lets the user list tags as per desired format similar
+>> to the implementation in 'git for-each-ref'.
+>>
+>
+> s/tags/branches/ maybe?
+>
+> Thanks,
+> Jake
 
-Currently, attempting to clone a Subversion repository using an svn://
-or https:// URI specified with -T fails on Cygwin:
+Copy-Paste error, will fix. Thank you.
 
-    $ git svn init -T svn://svn.code.sf.net/p/squirrelmail/code/trunk
-    Initialized empty Git repository in /home/add/tmp/.git/
-    E: 'svn:/svn.code.sf.net/p/squirrelmail/code/trunk' is not a complete URL  and a separate URL is not specified
-
-I don't think this is a problem in Git itself -- I see the same
-behaviour on clean builds of both v2.7.0 and v2.2.0, and I'm pretty sure
-this used to work, so that would imply there's something in the Cygwin
-environment that's changed.  Nonetheless I'm reporting here in the hope
-that somebody else will have seen a similar problem or have an idea what
-might be going wrong.
-
-Interestingly, the below _does_ work:
-
-    $ git svn init svn://svn.code.sf.net/p/squirrelmail/code
-    Initialized empty Git repository in /home/add/tmp/.git/
-
-    $ git config svn-remote.svn.fetch trunk:refs/remotes/origin/trunk
-
-    $ git svn fetch
-    r1 = 12dc820c417dc5f12723307a3fcfa4629ea972fb (refs/remotes/origin/trunk)
-            A       squirrelmail/ATHORS
-            A       squirrelmail/login.php3
-            A       squirrelmail/signout.php3
-    ...
-
-There are no obvious test case failures, either.
-
-Does anyone have any ideas about what might be going wrong?
+-- 
+Regards,
+Karthik Nayak
