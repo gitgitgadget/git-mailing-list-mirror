@@ -1,78 +1,80 @@
-From: =?UTF-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
-Subject: Re: [GSOC] Microproject "Move ~/.git-credential-cache to ~/.config/git"
-Date: Tue, 15 Mar 2016 09:32:21 +0800
-Message-ID: <CAKqreuw0hafi-GwWD-UaGKwmG8xVK6ZJDcw2jpQXAAuK+XBZvQ@mail.gmail.com>
-References: <CAKqreux4aYhXTE9kUHKoKCJ2-4KDWyi58ioCm-CWqXhUYCtEEw@mail.gmail.com>
-	<xmqqshztawwd.fsf@gitster.mtv.corp.google.com>
-	<CAKqreuwgxzVTAUdZPf9+ivXCdW8F2Ksafw7V0pbLAaRPwGX9Uw@mail.gmail.com>
-	<xmqqwpp494vd.fsf@gitster.mtv.corp.google.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [Q] updates to gitk, git-gui and git-svn for 2.8?
+Date: Tue, 15 Mar 2016 01:57:26 +0000
+Message-ID: <20160315015726.GA25295@dcvr.yhbt.net>
+References: <xmqqd1qwaopd.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Paul Mackerras <paulus@samba.org>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	git@vger.kernel.org, Victor Leschuk <vleschuk@gmail.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 15 02:32:32 2016
+X-From: git-owner@vger.kernel.org Tue Mar 15 02:57:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afdqa-0002ky-7D
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 02:32:32 +0100
+	id 1afeEo-0005Nd-EZ
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Mar 2016 02:57:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932982AbcCOBc2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Mar 2016 21:32:28 -0400
-Received: from mail-ob0-f178.google.com ([209.85.214.178]:36827 "EHLO
-	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752675AbcCOBc1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Mar 2016 21:32:27 -0400
-Received: by mail-ob0-f178.google.com with SMTP id m7so2517623obh.3
-        for <git@vger.kernel.org>; Mon, 14 Mar 2016 18:32:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=fmQwqHivS7ecglNoV75gjltaEdLlrHJ7gpwGPCMWOb0=;
-        b=db8dNBfovUAu8LpELfO0yvolT0YQkKRij9/lTLTWO2uklrhxIM9bV/tqqUOvJS2rOf
-         52B8B2o/V/RZUQ7JjzU6dwRAqF8ZWHjOtwQhQQShJdoPbclj3CfGSmdB7OI+kadvtI1O
-         L/cTIx+Bp5MdjaDv8XMluk5t69gVuOsFpt4pWy80XjPuGK2OmVyCX56geSGYlrqAj5i2
-         yEjNxb4krb+DzunjUMNW4m5GT0WXcDEhm0vDorRNAbsxPj+3qM8s9h2h2m+z/To/8aqc
-         oAD5HRvPFsL2taxWo0eNE8knRsdvtfzLiEBKJK38mlFmzE4NimLx6L5XVowz9fE914AB
-         9OFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=fmQwqHivS7ecglNoV75gjltaEdLlrHJ7gpwGPCMWOb0=;
-        b=DC9ldqJR7lYwgtLnzXrosN34nxFk8wktmAKWKsOU/D5Y1EcIzqwUFGhcXO8HVbHS8Q
-         4SQVaB5GfxqXniB8a7GFHg5/qc4bwxZj5uL83IGoHh4hHoNSRexpeWJ9tg7giMvE2u9X
-         cPNJsG0D6wSrA+p79ekYPhbzgR0AojQDIuS6Oy+/HvjvV8ptW5R5VEMpP3rKLJlyl8qp
-         PBCl8JuKg3O81QOfanX6x+//JEauC8WGfqPK8tW+XnOj572Vizys8vatQ11jH9TApQQ3
-         qnXODP2OKMfFLnIYQ8GlpmB2bfsHqz5hTsPgiOvDvqM9lZVB+tGKn7kNce4kRkWWJ9XH
-         XpgQ==
-X-Gm-Message-State: AD7BkJLOXZnIvwQtTHqGk4C3IcOzzM4gSLF/RLP2nv9/QdQI7dBQHfuAc2pDFBlsuennIKMsctTtnwghmA8mjA==
-X-Received: by 10.60.96.74 with SMTP id dq10mr16868713oeb.78.1458005541082;
- Mon, 14 Mar 2016 18:32:21 -0700 (PDT)
-Received: by 10.157.43.68 with HTTP; Mon, 14 Mar 2016 18:32:21 -0700 (PDT)
-In-Reply-To: <xmqqwpp494vd.fsf@gitster.mtv.corp.google.com>
+	id S933209AbcCOB52 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Mar 2016 21:57:28 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:59008 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932768AbcCOB52 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Mar 2016 21:57:28 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84237633808;
+	Tue, 15 Mar 2016 01:57:26 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <xmqqd1qwaopd.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288827>
 
-> You sound like you think it is better to check the location of the
-> existing socket,
+Junio C Hamano <gitster@pobox.com> wrote:
+> If there are pending updates for the upcoming release, please let me
+> know and tell me what to pull.
+>=20
+> Thanks.
 
-Yes, for the purpose of compatibility, it's the only choice, as I can see.
+The following changes since commit db6696f653b917509dac1ac13b922e12773a=
+84ff:
 
-To sum up, I'd like to implement:
+  Merge branch 'mg/wt-status-mismarked-i18n' (2016-03-14 10:46:17 -0700=
+)
 
-1. <path> is configured by --socket, then put it here.
-2. else if `~/.git-credential-cache` exists, put the socket under here.
-3. else, put the socket under
-`$XDG_RUNTIME_DIR/git/credential-cache.sock`,
-if $XDG_RUNTIME_DIR does not exist, default to
-`/tmp/git-$UID/credential-cache.sock`.
+are available in the git repository at:
 
-As a result, new user will use xdg-compatible path while old user will not
-be surprised.
+  git://bogomips.org/git-svn.git master
+
+for you to fetch changes up to d9868087879a8103ff1f174905ed358791065482=
+:
+
+  t9115: Skip pathnameencoding=3Dcp932 under HFS (2016-03-15 01:35:48 +=
+0000)
+
+----------------------------------------------------------------
+Eric Wong (1):
+      git-svn: shorten glob error message
+
+Torsten B=C3=B6gershausen (1):
+      t9115: Skip pathnameencoding=3Dcp932 under HFS
+
+Victor Leschuk (1):
+      git-svn: loosen config globs limitations
+
+ Documentation/git-svn.txt                  |  12 ++
+ perl/Git/SVN/GlobSpec.pm                   |  18 ++-
+ t/t9108-git-svn-glob.sh                    |   9 +-
+ t/t9109-git-svn-multi-glob.sh              |   9 +-
+ t/t9115-git-svn-dcommit-funky-renames.sh   |   6 +-
+ t/t9168-git-svn-partially-globbed-names.sh | 223 +++++++++++++++++++++=
+++++++++
+ 6 files changed, 262 insertions(+), 15 deletions(-)
+ create mode 100755 t/t9168-git-svn-partially-globbed-names.sh
