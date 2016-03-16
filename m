@@ -1,78 +1,110 @@
-From: Alexander Kuleshov <kuleshovmail@gmail.com>
-Subject: Re: [PATCH] help.c: strip suffix only if the STRIP_EXTENSION defined
-Date: Wed, 16 Mar 2016 23:36:49 +0600
-Message-ID: <CANCZXo6KGtuuiZ3aha=Tqkwj3d8qytmA_rvw7fPHfevzz9Qyfg@mail.gmail.com>
-References: <1458138449-26690-1-git-send-email-kuleshovmail@gmail.com> <20160316173127.GD4039@sigill.intra.peff.net>
+From: Kazutoshi Satoda <k_satoda@f2.dion.ne.jp>
+Subject: Re: [PATCH 1/1] t9115: Skip pathnameencoding=cp932 under HFS
+Date: Thu, 17 Mar 2016 02:37:07 +0900
+Message-ID: <56E999C3.4040802@f2.dion.ne.jp>
+References: <20160208225806.GA3487@dcvr.yhbt.net>
+ <1456597724-26497-1-git-send-email-tboegi@web.de>
+ <20160228045945.GA14289@dcvr.yhbt.net> <56D333F1.9050905@web.de>
+ <20160315015954.GB25295@dcvr.yhbt.net> <56E79C54.8000606@web.de>
+ <20160315070930.GA24036@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 16 18:37:43 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Mar 16 18:37:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agFOA-0000gb-S9
+	id 1agFOB-0000gb-F3
 	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 18:37:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934826AbcCPRhM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 13:37:12 -0400
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:33101 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753659AbcCPRhK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 13:37:10 -0400
-Received: by mail-lb0-f179.google.com with SMTP id oe12so52928569lbc.0
-        for <git@vger.kernel.org>; Wed, 16 Mar 2016 10:37:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=qaSzi6aORgsaAeiy2BmJaOaopsTkh8fLlHRkKWUq5GY=;
-        b=nk1eKYunX/5rHNQfwpLGWBfmORalZeKnJFUIBSV0hT0/AYVdbFQU5dqyEMyiLEacm8
-         Fmu6e2949ChMxLCXraRsOkBIJO3z3fk3KWjnH4bN6+FgBT0RUH1ZhimuspV/IinXwNCA
-         lNTH/vMaVbz51pHL2fPjyr7gMIVPViMj06xYj2/IgCMEWeYmwiO+Mzxk/nFD28vew/mN
-         NIsH47IMY/4z4gr4YyWLdTXZBtIjI0XKhCHICAE/SAfDFn3qebax3nD+uIQc5D5VRREc
-         LOWeXrCabi6TC2CMwy9j3dPM5htbZh87Q2U+OVbZtemirO2jmcVrtz8grWoAmCddhOSy
-         Ugpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=qaSzi6aORgsaAeiy2BmJaOaopsTkh8fLlHRkKWUq5GY=;
-        b=lg7RErxyjLgjRNYbsJNFSVY9a9f2KLY9if1y8J2O0j1xFb8JVRHZMF2L7Q8LVa1zde
-         Je0ns8hFo/YTpQc6NNZytEFOCSapqVuPVngMMfcQls+VLIHKlQ58FjEG8nakG8k/r/K0
-         XZdfgT5THqN6RmzdR2vKMUoT7hNOfThfWaXeeaMuBoNwTjGQkwgaDMtY6SnsJYTvag1u
-         sGmFB5ol35E+OdnRwWv7M1znOPvZw+qTUi5d8PT5TGjQ56YGt2230yZ707bf4glPvDEV
-         Bf66ax3Kw4QjIdQb8TVWyL0oUBD9AF6tQBrDfqfM6mb6pt1pvHBVpruwmlmtb3YV3zB2
-         Humw==
-X-Gm-Message-State: AD7BkJIgL2Zxd5z90sxgive5xRfBelAF+DefSYJPJGhDEmGk64Ip1uI8B/5YFWfmvDEIbv8ZEFin+yYfVp/NIg==
-X-Received: by 10.112.163.102 with SMTP id yh6mr1929572lbb.4.1458149828533;
- Wed, 16 Mar 2016 10:37:08 -0700 (PDT)
-Received: by 10.112.77.65 with HTTP; Wed, 16 Mar 2016 10:36:49 -0700 (PDT)
-In-Reply-To: <20160316173127.GD4039@sigill.intra.peff.net>
+	id S934867AbcCPRhW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2016 13:37:22 -0400
+Received: from mail-ae1-f7.auone-net.jp ([106.187.231.7]:41722 "EHLO
+	dmta02.auone-net.jp" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S934545AbcCPRhT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 13:37:19 -0400
+Received: from amlmta045.auone-net.jp (amlmta045-MM [10.188.23.24])
+	by dmta02.auone-net.jp (au one net mail) with ESMTP id BDE3F4009AD
+	for <git@vger.kernel.org>; Thu, 17 Mar 2016 02:37:16 +0900 (JST)
+Received: from [0.0.0.0] ([195.154.93.144])
+	by amlmta045.auone-net.jp id 56e999c7000e7df4000009af000037aa800008c6d120;
+	Thu, 17 Mar 2016 02:37:11 +0900
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.0
+In-Reply-To: <20160315070930.GA24036@dcvr.yhbt.net>
+X-MXM-DELIVERY-TYPE: 3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289004>
 
-Hello Jeff,
+On 2016/03/15 16:09 +0900, Eric Wong wrote:
+> Torsten B=C3=B6gershausen <tboegi@web.de> wrote:
+>> On 03/15/2016 02:59 AM, Eric Wong wrote:
+>> >[]
+>> >I just edited locally and pushed those out to Junio:
+>> >
+>> >http://mid.gmane.org/20160315015726.GA25295@dcvr.yhbt.net
+>> >
+>>=20
+>> The new TC 11/12 don't pass under cygwin.
+>>=20
+>> Do we need cp932 ?
+>=20
+> Not sure, both CP932 and ISO8859-1 work fine for me on
+> GNU/Linux.   Anyways I'm fine skipping this patch for 2.8
+> while we hash it out, too.
+>=20
+> Kazutoshi: can you answer?  Thanks.
 
-On Wed, Mar 16, 2016 at 11:31 PM, Jeff King <peff@peff.net> wrote:
-> This is billed as an optimization in the commit message, but these two
-> pieces of code are not the same. The original always strips ".exe",
-> whether or not STRIP_EXTENSION is defined, and whether or not it is
-> ".exe".
->
-> In practice it works out because people on Unix systems do not have
-> "git-foo.exe", and nobody sets STRIP_EXTENSION to other things.  But I
-> tend to think this is an improvement in robustness.
->
-> I also wonder if this should be sharing the strip_extension() helper
-> added in your 63ca1c0.
+I tried the patch. The test works (pass with my fixes, and fails
+without fixes) with ISO8859-1 for me on Cygnus. The change sounds
+good.
 
-Yes, I want to move strip_extension() (from 63ca1c0) to the git-compat-util.h
-and adapt/reuse it in the help.c. What do you think about this?
 
-Thank you.
+>> If not, we may use the paych from here:
+>> https://github.com/tboegi/git/commit/379c01bf52464f8a50065b11af51612=
+7e9144045
+>>=20
+>> Date:   Tue Mar 15 05:03:18 2016 +0100
+>>=20
+>>     t9115: Use funcky file names that work under unicode FS
+
+"funcky" looks a typo.
+
+>>     Don't use funky file names, that can not be created under
+>>     HFS or NTFS.
+
+The file can be created on my Cygnus environment, which is under FONTS.
+So it looks a bit inaccurate.
+
+I think a quote from the actual error message may be useful. It will
+likely tell what was wrong, accurately. And also, someone may search fo=
+r
+that message.
+
+>> -       neq=3D$(printf "\201\202") &&
+>> -       git config svn.pathnameencoding cp932 &&
+>> +       neq=3D$(printf "\303\244") &&
+>> +       git config svn.pathnameencoding ISO8859-1 &&
+
+The variable name "new" was for "NOT EQUAL TO" (0x8182 in cp932 =3D U+2=
+260).
+http://unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP932.TXT
+Then it should be changed, too. A more abstract one may be appropriate.
+
+>> -       inf=3D$(printf "\201\207") &&
+>> -       git config svn.pathnameencoding cp932 &&
+>> +       inf=3D$(printf "\303\226") &&
+>> +       git config svn.pathnameencoding ISO8859-1 &&
+
+Ditto. (0x8187 in cp932 =3D U+221E, INFINITY)
+
+--=20
+k_satoda
