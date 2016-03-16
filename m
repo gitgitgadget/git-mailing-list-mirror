@@ -1,60 +1,49 @@
-From: Levente <leventelist@gmail.com>
-Subject: Windows download broken?
-Date: Wed, 16 Mar 2016 15:06:41 +0100
-Message-ID: <CACwWb3Dm8CfhZKvfNz-4Pj=tytf3zroFxnbbTq9DM+xm4EPEig@mail.gmail.com>
+From: lcdaccessory@gmail.com
+Subject: git TV anti-blue & glare protector
+Date: Wed, 16 Mar 2016 20:56:16 +0800
+Message-ID: <416-220163316125616663@ericpc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=136
+Content-Transfer-Encoding: 8BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 16 15:06:56 2016
+X-From: git-owner@vger.kernel.org Wed Mar 16 15:12:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agC63-0002f6-Pl
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 15:06:48 +0100
+	id 1agCBI-0005u5-MF
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 15:12:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966157AbcCPOGn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 10:06:43 -0400
-Received: from mail-io0-f174.google.com ([209.85.223.174]:35418 "EHLO
-	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933008AbcCPOGm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 10:06:42 -0400
-Received: by mail-io0-f174.google.com with SMTP id g203so60338700iof.2
-        for <git@vger.kernel.org>; Wed, 16 Mar 2016 07:06:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=52N6fyX6K+rSS80QfDlfg2Ub99JKf+DvW4kkX0fYwgw=;
-        b=JVaJhGfLFVsRFgtlqZ/UUtUdTBj+CzUmIAQWoFMvBXXs14sN90FiDkedf0LlFLwdAc
-         k9ZEAP5t52VBU9YXWvOC1Q9xge/ZUtagZIfYJzLs57mgqR5+xuFo9uP29DJpni6k+2Aj
-         FQIfmjkw4JPSYgXGvZYVxO3s+hDtK7qdh44uwgU7nXpUIycfXklW+c5rypY9orHQ4h79
-         w8PuWDQxn5hVLBEmwRaZ2um8N1hghKtMlC8VJRpntUl1nvz46YBdCB2+31c591aYuO/X
-         oqAmq/+5I6GYIdPqYeM6R7z+/UyDj8hD5rpvqmX4qztQ6pXP4EbaTnErFptdMQ6LFdX5
-         siLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=52N6fyX6K+rSS80QfDlfg2Ub99JKf+DvW4kkX0fYwgw=;
-        b=Ofc9dMgBWke10vABXvzhDcXO9nvEjdlYvszmJ1LNQ7iJ/QZNvT/O9qKOYpwMfmtAC4
-         +7W3C5Kr6yXRo+lHUp4zTEByMYc5c4J7uK3bVITnBU1+me9t5g13XjT/RzLmnIrx9MCb
-         JmDUikQ3K7yKQsBLyYOtmRjLg7MHYzJCk1j0NeII44lW6GVxz9qvJxlCk7iIo0P3/NaO
-         MiWin9tt/QU+5UpopCMwWYiHMDInB0DDZK25wH4RamOcI6wCoFnXzQkd5vXIFQkrJCrY
-         pduz/OXXU16Ght+jgwesWvcO69txV9Sp3sHOBttC1MKjBuk2tdUqu/+oaPZF3kLG0wMj
-         uDMg==
-X-Gm-Message-State: AD7BkJItZKw8NC14fTLBHkYWwZQNH7vChEOiWPpV3pGzCUVpP7D4sYVN05sIj535OkJx/Aru00vabKUVrxt9fA==
-X-Received: by 10.107.185.6 with SMTP id j6mr4335164iof.77.1458137201712; Wed,
- 16 Mar 2016 07:06:41 -0700 (PDT)
-Received: by 10.36.133.195 with HTTP; Wed, 16 Mar 2016 07:06:41 -0700 (PDT)
+	id S966497AbcCPOMH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 10:12:07 -0400
+Received: from msr15.hinet.net ([168.95.4.115]:57593 "EHLO msr15.hinet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S966442AbcCPOMG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Mar 2016 10:12:06 -0400
+X-Greylist: delayed 4617 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Mar 2016 10:12:05 EDT
+Received: from ericpc (1-172-81-78.dynamic.hinet.net [1.172.81.78])
+	by msr15.hinet.net (8.14.9/8.14.9) with ESMTP id u2GCsxt8020418
+	for <git@vger.kernel.org>; Wed, 16 Mar 2016 20:55:05 +0800 (CST)
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrHrMTGxcK4JtBPd1X4yzCDtifCFl1XupkcGD0+b5ILYIxizcxLyq9I
+	YM3ovXeQtWAec0X3qc1MDYxvGLsYOTmEBMIldl65DmRzcPAKaEtMe1UCEmYTkJH4dOoAWImI
+	gLjE2+Mz2UFsYQEdif0NR1hAbBYBVYnfU2czgdi8AoISJ2c+YQEZwwwU//RfHyTMDDRx2cLX
+	zBMYOWchqZqFUDULSdUCRuZVjCK5xRW6xbnFhromehmZeaklekC8iRHoxRXx7Hw7GM+eNDzE
+	yMTBeYhRgINRiYd30vaCMCHWxLLiylyQOPchRkkOJiVR3r8aL8OE+JLyUyozEosz4otKc1KL
+	DzFKcPAoifCGhQHleIsLEnOLM9NhUjIcHEoSvBYgKcGi1PTUirTMnJLUIoj0KUZjjhVTr69l
+	4ljw4/ZaJiGWvPy8VClx3txQoHIBkEkZpXlw1bAIucQoKyXMywQykqcgtSg3swRV/hWjONAP
+	wrwJYBWZeSVw57wCupQJ6FKdiGcgl5YkIqQANEYrDvMBAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288974>
 
-It seems that this link is broken:
+Dear git  MD,
 
-https://github.com/git-for-windows/git/releases/download/v2.7.3.windows.1/Git-2.7.3-64-bit.exe
+New LCD/LED TV defender blocker for year 2016.
+huge profits reserve for first distributor there, a lots request from end-users
+New and hottest model refer to  http://www.lcdaccessory.com 
 
-Regards,
-Levente
+inquire email to Eric from eMetal Technology
+info@emetal.tw 
