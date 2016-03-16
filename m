@@ -1,115 +1,103 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC/GSoC 12/17] rebase-todo: introduce rebase_todo_item
-Date: Wed, 16 Mar 2016 16:55:01 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603161647560.4690@virtualbox>
-References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com> <1457779597-6918-13-git-send-email-pyokagan@gmail.com> <CAP8UFD0Fw1ZOQzPfF=bbEsCOhkoHfV5B5ayprxR6kWr6vApT5Q@mail.gmail.com>
- <CACRoPnRH1D=8k5uuUahh1MJOAXsWkhY0fWev2AQhJm5+WWk5rQ@mail.gmail.com>
+Subject: Re: [PATCH/RFC/GSoC 01/17] perf: introduce performance tests for
+ git-rebase
+Date: Wed, 16 Mar 2016 16:59:09 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603161656130.4690@virtualbox>
+References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com> <1457779597-6918-2-git-send-email-pyokagan@gmail.com> <alpine.DEB.2.20.1603160855390.4690@virtualbox> <CACRoPnS=qg=a3xYKHyk-7E2HN5HhTimGirZcwL8hMa0xLY6KdA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Duy Nguyen <pclouds@gmail.com>,
 	Stefan Beller <sbeller@google.com>,
 	Sam Halliday <sam.halliday@gmail.com>
 To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 16:55:27 2016
+X-From: git-owner@vger.kernel.org Wed Mar 16 16:59:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agDnD-0007DD-9l
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 16:55:27 +0100
+	id 1agDr4-0001p9-7z
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 16:59:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753090AbcCPPzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 11:55:23 -0400
-Received: from mout.gmx.net ([212.227.15.18]:61947 "EHLO mout.gmx.net"
+	id S1751852AbcCPP7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 11:59:21 -0400
+Received: from mout.gmx.net ([212.227.17.22]:63002 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750839AbcCPPzW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 11:55:22 -0400
-Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0Lm34j-1a6bqx1zu5-00Zd9M; Wed, 16 Mar 2016 16:55:02
+	id S1751101AbcCPP7U (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 11:59:20 -0400
+Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0Me8ws-1aSZNo3wy6-00PvvD; Wed, 16 Mar 2016 16:59:11
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CACRoPnRH1D=8k5uuUahh1MJOAXsWkhY0fWev2AQhJm5+WWk5rQ@mail.gmail.com>
+In-Reply-To: <CACRoPnS=qg=a3xYKHyk-7E2HN5HhTimGirZcwL8hMa0xLY6KdA@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:HjjQmNdOCX4as1YdRpcSUS0rGr2vtOjIO+KALf37sWBQW9jnzVo
- XwKq8AZ9JPCZAy/uF3iqT5AxBxCYIDi0tZeN+x+FMK2mr9+lqw07SU1D5qvBBMBAK0CWv7R
- dS3q83mYWKFtQFQa1JkKVs3ICalVT8PgjTg/KVNy51+XJHnIYiwvFlV0p9PyIeqTCp/20vL
- QWmNoEOkClF3lML62GaJQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YSIIYh9U/Q4=:EjaqJJMksEyrnYsW2gwZMI
- +ZV1zO7OHxaz3lQpiD1/oCrkCajkpqbGmVPjB8P2V2CMzMgfEztZJ2yRZpIWilhf39yfQVSdB
- EVN5xO84I83RrgihIovqKTxtg1EzKkXYNn5bsuBoVmAJH6S1nv31/mk8FQCrVhPjli4kcUfmf
- uc1vAZCh3fdfCLw4GU6hBUqjn9ujdZ44/SsflMbzEWjAF+pisLYRERJOt2gd/hxa7o2LNa5kT
- ReF1/qoFPkGwK6MGPB9F2Yuo7sh7szFRyXbIhj+iu8+UNdB0CQjBUIrBGGd3ppoBdTf2GAXoA
- eavzAsTLV3WwF0fPEAZBtfWXyO8DgECL/LA1ObPWk8j64FUFlrpgctqWEjlS+P6SLRR6s1lnz
- egGtJPGLh+tL9KB2VDvk7d2/2ocLanlUJ8iib9EpNI1rqlQ2xlrEXhTHiv0uNhR7a0f04rfW+
- lx/Ar65q220PNQG7xnBocT9dF3c9PAl4rt65UDtyx4iH81YG5SOwNOHZ5z9sYi4pxSyOKiS9v
- V8fm3pgrH9FnrcL0tjeaIm635QqfIaCxiUA5/x86cZNfNQoFSIFAMtmi9/Xm+OZYSR05sGeeo
- SpuxCLB8prmjqDELzwI6S7SfyBlysxRoTL31VUW9tTHxFk1+H3CFxrBj1cF8DfNrJ9u2Nvp8p
- WYaFRtN8VEsCmo4k/T/YRT6RpJC6TRHBZ+y07wYUMNbBVcbXDJoAUXzq2edGvHBh0KwLbwRFF
- xNKmUGEeu7kKwT0UpAh+xuqyKxzTEmqws/ojXIgVMBsW4WAHEeJPb2mnWWgjEVFwH5PDNLxE 
+X-Provags-ID: V03:K0:MIzEokNTnV0XpiWLgCppj+icmzLLvyNbCWayI7+7Bie923V/1qd
+ L9NJyABxPn+RXOsJ0UIcD+qprMPsij72uZPNc6UH/t04DKluyjMJiP+/F8xvXGLnFlejhms
+ LsbZHWe1NKtwMLG4bot61w0FWELXaFFuVehZ8SdlIHUPyNKlEj8jJPUTtN4bg6y/nrfQQNv
+ 2w3op+m5DUMtS2eKs8k7g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6lxBJMdJzw8=:4/7G0P3t7R7JpA+qf4UC4U
+ 6cpO283dzbH3SL6eYrhV0rP0RHw47pJW7dBNzGOJeCVC5THI0i0J6E6AjP+cwlik4QPHszfwo
+ eGAkkasjE4kdrWb/frtQ5WvHQ7dBlk2wLYpPPT9aMIIXzVD/eClOptIjGs2S5eoh4f16P4YUN
+ QdtUubaw7zXZT1SldgsrR57xkKH7PuVFVej2S8o9xqeF5S66Hj+aOzBHx4SX2YNyD8pLscLA5
+ GoMbEce0Lrxip73RdGG5MbZO6Mlt3r45UHNBQabFbFd7S4rj3rwkkPPrKBz9yU1NBa+Di6Z7C
+ vdayNjrOv9apg2aQi5YpghuBZan+K9nD/EINsP3eJW5ml2aFURZqFxeF4ho9jQaFxQUVCwaGu
+ 2wmjsu/XkXMj372f5hfFRwQiDBtbZ0yNJiAO/spqRew+yndY6wI1E1cNidpOvJSV1zbuExKCO
+ d9HeeMEgAROGlbfEN8KFmZWoZpoK0glVAeG+PCfYoYpgziyF3iWEUmAMtG1UviGBdHgr2yYNP
+ Y01AE8uOcnK+R8pxjsDazuJ67GqCdU5QZXsg825fzaEYNr403FKBpi/d4oEkTtXAiH3byBriT
+ V7zSFIqlOHp0sG4Xvl8WpYUE52l2Rr3ki8Ni0w+ps/8KMVA4yC8sdpZ1xtZZylC92acGN1AZb
+ rYNB6pwrNy3EDDoQiZx8I28e5XVRtOHQyu20LrdvlkIZOm0x41pbG4f7p/ZS+v5ZlyPpLdTrO
+ n1NQQsb6jzgyCs61ZhuQLUCwbuy9xmXvmYkpRSmmvyyzZaRgZ97piKSMlgKZtCZUc3BciLG7 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288983>
 
 Hi Paul,
 
 On Wed, 16 Mar 2016, Paul Tan wrote:
 
-> On Mon, Mar 14, 2016 at 9:43 PM, Christian Couder
-> <christian.couder@gmail.com> wrote:
-> > On Sat, Mar 12, 2016 at 11:46 AM, Paul Tan <pyokagan@gmail.com> wrote:
-> >> In an interactive rebase, commands are read and executed from a todo
-> >> list (.git/rebase-merge/git-rebase-todo) to perform the rebase.
-> >>
-> >> In the upcoming re-implementation of git-rebase -i in C, it is useful
-> >> to be able to parse each command into a data structure which can then
-> >> be operated on. Implement rebase_todo_item for this.
+> On Wed, Mar 16, 2016 at 3:58 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
 > >
-> > sequencer.{c,h} already has some code to parse and create todo lists
-> > for cherry-picking or reverting multiple commits, so I am wondering if
-> > it would be possible to share some code?
+> > On Sat, 12 Mar 2016, Paul Tan wrote:
+> >
+> >> diff --git a/t/perf/p3404-rebase-interactive.sh b/t/perf/p3404-rebase-interactive.sh
+> >> new file mode 100755
+> >> index 0000000..aaca105
+> >> --- /dev/null
+> >> +++ b/t/perf/p3404-rebase-interactive.sh
+> >> @@ -0,0 +1,26 @@
+> >>
+> >> [...]
+> >>
+> >> +test_perf 'rebase -i --onto master^' '
+> >> +     git checkout perf-topic-branch &&
+> >> +     git reset --hard perf-topic-branch-initial &&
+> >> +     GIT_SEQUENCE_EDITOR=: git rebase -i --onto master^ master
+> >> +'
+> >
+> > This measures the performance of checkout && reset && rebase -i. Maybe we
+> > should only test rebase -i?
 > 
-> AFAIK, sequencer.c as it is in master parses the todo list
-> destructively and does not keep the associated action for each commit
-> and the "rest" string.
+> test_perf runs the same script multiple times, so we need to reset
+> --hard at least to undo the changes of the rebase.
+> 
+> I think we can remove the reset if we use rebase -f and rebase onto
+> the same base, but -f was not implemented in this patch series.
 
-This is a *serious* mistake in the implementation of the sequencer, I
-agree.
+Hrm. rebase -f just makes the reset an implicit part of the rebase, so it
+seems we cannot perf *just* the rebase. We are stuck with perf'ing also
+the reset. Sad.
 
-Therefore it is a good idea to fix that mistake instead of leaving it in
-place.
+> > Also, I would strongly recommend an extra test_commit after reset;
+> > Otherwise you would only test the logic that verifies that it can simply
+> > fast-forward instead of cherry-picking.
+> 
+> Or, we could use the -f flag, I think.
 
-And that is exactly what I did:
-
-	https://github.com/dscho/git/commit/b9b5b7351
-
-Please note that the commit is marked as a "TODO" because it has to
-reintroduce a stupidly strict behavior (the sequencer expects the commands
-in the todo script to agree with the overall action, i.e. if the action is
-REPLAY_REVERT, the todo script can only contain "revert" commands, if the
-action is REPLAY_PICK, the todo list can only contain "pick" commands). Of
-course this restriction is totally arbitrary and even unwanted, so I will
-lift it after this commit. Or maybe I'll just lift it before this commit.
-Yeah, I'll do that instead.
-
-> As I said in another thread, originally I wanted to keep the scope
-> simple, and just do the rewrite of rebase from C to shell, and let any
-> further libifications and optimizations come after, so I didn't want
-> to touch sequencer for now.
-
-We know, however, how leaving technical debt for later will just make sure
-that technical debt accumulates...
-
-And while I have a *tremendous* respect for what Karthik did (and
-continues to do, even long after his GSoC project ended!), I do not want
-to ask any future GSoC student to clean up the mess that we produce right
-now... So let's just not add more technical debt than we absolutely have
-to.
+Yeah, we can do that, too.
 
 Ciao,
 Dscho
