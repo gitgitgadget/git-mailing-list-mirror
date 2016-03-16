@@ -1,78 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] pretty-print: de-tabify indented logs to make things line up properly
-Date: Wed, 16 Mar 2016 14:37:59 -0700
-Message-ID: <xmqqk2l23xzc.fsf@gitster.mtv.corp.google.com>
-References: <alpine.LFD.2.20.1603160926060.13030@i7>
-	<xmqq7fh25mkc.fsf@gitster.mtv.corp.google.com>
-	<CA+55aFxV5PWdSn9Gj=zV464TtJo=QvciZrhc5Pwe+Qfyqt8sXw@mail.gmail.com>
-	<xmqqwpp243sb.fsf@gitster.mtv.corp.google.com>
-	<xmqqoaae4340.fsf@gitster.mtv.corp.google.com>
-	<CA+55aFwbNXJnwEYrKE5dDRk_6eZeGT6Z11uSQS8RmCSq43PkdA@mail.gmail.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: parse-options does not recognize "unspecified" behavior
+Date: Thu, 17 Mar 2016 03:11:43 +0530
+Message-ID: <CAFZEwPMGBKCfEoo2ofCak25jDMRwWwq=1HmgqSyPEpJWhOL_6g@mail.gmail.com>
+References: <CAFZEwPPd2wFqFq2LFEzN2CzhTV6C420SLPcXi1SWE=z2epOYLw@mail.gmail.com>
+	<20160316204912.GA1890@sigill.intra.peff.net>
+	<CAFZEwPMa3GZS6pvFwr8PLVDqKm5xmMd307nbjhpZSC_ndpw8vw@mail.gmail.com>
+	<20160316212308.GA4538@sigill.intra.peff.net>
+	<CAPig+cRKyaUefz0qj6unkaiPg25=Xi2WorQE4Fm46CCf00UbHQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Mar 16 22:38:29 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 22:42:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agJ99-0007PO-Gc
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 22:38:27 +0100
+	id 1agJCa-0001fi-VI
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 22:42:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965394AbcCPViW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 17:38:22 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:64471 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755734AbcCPViE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 17:38:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 92D2B4DB82;
-	Wed, 16 Mar 2016 17:38:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PlUBt33Co929N+Qk3vrzHA/uCa4=; b=Z7NfwG
-	p6Wnb4xp+x0cVooUzNCZm87QtiWDX0p5aG4xB6n16GIs13I+LlFXQjJESzB6b2Ad
-	E39t6/BpDxri8qA6hrAL/w8+z0z6mC4LeITjdaDn212gpoNEL3El2A5JXe7DnP5d
-	xBE/sWFzZfrcU//6aBT3LR4dKMSRymoV5oY6E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VYcQBdCnlbpVsQcQFrNJlq8hhIZCNzpj
-	MfMFU+yU61WNMTN11pmWcsCF7hVv6k9Ap+QfTiorTRH7bredtcMPMjLhC9jYI68K
-	VtD1S7gItLcJX/3QSjz2BpWhMJ3m2XMs6+mYoHMNVqeYwr9n3x+FyZTkQSSamehd
-	V/5w2wrsYfE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 898AA4DB81;
-	Wed, 16 Mar 2016 17:38:02 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AF1A94DB7B;
-	Wed, 16 Mar 2016 17:38:01 -0400 (EDT)
-In-Reply-To: <CA+55aFwbNXJnwEYrKE5dDRk_6eZeGT6Z11uSQS8RmCSq43PkdA@mail.gmail.com>
-	(Linus Torvalds's message of "Wed, 16 Mar 2016 12:59:34 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5BE247F6-EBBF-11E5-9B5A-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S965169AbcCPVl5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 17:41:57 -0400
+Received: from mail-yw0-f175.google.com ([209.85.161.175]:36042 "EHLO
+	mail-yw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965007AbcCPVl4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 17:41:56 -0400
+Received: by mail-yw0-f175.google.com with SMTP id g3so78442880ywa.3
+        for <git@vger.kernel.org>; Wed, 16 Mar 2016 14:41:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=gGNsMSA8jYooDc8dUsKwzzUViW//M7LnKgyy/pv1TTU=;
+        b=Ip+7WO4vHox/8cgpqEYGNUZx2qttXWfhGltqsIVbwQCGsgEzSNnoqFLKGPOSy0uj5Z
+         rBZB1RBi7S7f/HXusPE79Z4MxWM8iV/cOUL/0Td7objPP9Nk3mVVQom6Y/BnsQLWuSPA
+         Qitc988mRalVHQpcDF2X42kAI3lkTTq4pi/hEy9rRzR8O0OBi1Df77Qg7l1Bh/bn6v3d
+         iurL77TiVMuRr5tWc9oUivFy9VU2iU7kl3f4eORF0LRF4ZcSkjHc7wAIkegdxp7Xx/YY
+         o0OuQeV6SElFpJjZr8OP/qS08wLZSTEJTNnxiJY5/8h0AK2R7ru5174VgbHwdoHHfgHX
+         O+9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=gGNsMSA8jYooDc8dUsKwzzUViW//M7LnKgyy/pv1TTU=;
+        b=YzyhfOF67jcO8iI8Mn7NxrX6TiBCJcSjW43ed5Z7Lm3PC5QENADUqLZklsVOrWBGpP
+         JIF4iwvbog07bNorXvC77XZvB0sYjzCCs6eOw50Hm5tmF/c9KZhqUoofQxmPOTvlmxS7
+         7VNtdi+wGpQ9yz5dG1WHyRaoAs9Bv3q6bxyxmzp4LyU9wxPKx8+qw7b9pfYEpbnqDpFH
+         zBzed++j9+HrskL9mmO1w8R3DX3GGgLVtZkblP3wXk6TftJCz5b3Kyg0ol9yShTef/dO
+         A9h6+RlQnb/gRAItPyO4DtAn+CLXRXSuENQ9G+Purwh3ao7rhsnP1O/JblhevzUVP91R
+         XlgA==
+X-Gm-Message-State: AD7BkJIK+cmDSG7WXqZ7Sn10IoZQG+2Xdkr+rOK60NyeDpo49ZS+pDHh2hjk3THcKNoU7nUAoXpVg62fPZS3iw==
+X-Received: by 10.13.252.67 with SMTP id m64mr3079098ywf.67.1458164503165;
+ Wed, 16 Mar 2016 14:41:43 -0700 (PDT)
+Received: by 10.13.203.137 with HTTP; Wed, 16 Mar 2016 14:41:43 -0700 (PDT)
+In-Reply-To: <CAPig+cRKyaUefz0qj6unkaiPg25=Xi2WorQE4Fm46CCf00UbHQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289047>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Thu, Mar 17, 2016 at 3:07 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
 
-> On Wed, Mar 16, 2016 at 12:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Strangely running t4201 with your patch (without any squashing)
->> seems to show a breakage in shortlog.  I won't be able to come back
->> to this topic for at least a few hours, so this is just a single bit
->> "breaks" report, without "how and why" analysis, sorry.
+> The goal comes from his GSoC microproject. Specifically, Pranit wants
+> an "unspecified" value. The reason is that he is adding a
+> commit.verbose=<level> config variable to back the existing git-commit
+> --verbose option. Any use of --verbose (one or more times) or
+> --no-verbose should override the config.verbose value altogether, so
+> he wants a way to know if --verbose or --no-verbose was used; hence
+> the "unspecified" value. And, really, this issue isn't necessarily
+> specific to git-commit. It could apply to any command that understands
+> verbosity levels and wants to be able to get them from both a config
+> variable and a command-line option.
 >
-> It's because those things have tabs in their first line, so the output
-> now differs from the expected one exactly because of the tab-vs-space
-> expansion.
+> A much easier solution would be to update OPT_VERBOSE() to understand
+> that negative values are "unspecified", and then --verbose would
+> (pseudocode):
+>
+>     if (value < 0)
+>         value = 0
+>     value++;
+>
+> and --no-verbose would:
+>
+>     value = 0
+>
+> That should be compatible with existing clients of OPT__VERBOSE()
+> which initialize the value to 0, and should satisfy Pranit's case; he
+> can initialize it to -1, and if it is still -1 when option parsing is
+> done, then he knows that neither --verbose nor --no-verbose was seen.
 
-What surprised me was that this new expand logic triggered for
-shortlog, actually.  I somehow assumed the caller that called
-de-tabify helper was only called for --pretty=medium.
+This is a much easier solution. I didn't think of this. This type of
+problem can only arise with only verbose, so it would be better to
+specifically change that part of code.
