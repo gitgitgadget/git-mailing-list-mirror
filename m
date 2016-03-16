@@ -1,72 +1,73 @@
-From: "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: RE: Tabs in commit messages - de-tabify option in strbuf_stripspace()?
-Date: Tue, 15 Mar 2016 20:34:41 -0400
-Message-ID: <009801d17f1b$a4c3e080$ee4ba180$@nexbridge.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Tabs in commit messages - de-tabify option in strbuf_stripspace()?
+Date: Tue, 15 Mar 2016 17:45:21 -0700
+Message-ID: <xmqq4mc76yji.fsf@gitster.mtv.corp.google.com>
 References: <CA+55aFzHMp4hiCp7+2Yxy=KNQ_rBru3RM-pghXUPtoxr_L+w2w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-Cc: "'Git Mailing List'" <git@vger.kernel.org>
-To: "'Linus Torvalds'" <torvalds@linux-foundation.org>,
-	"'Junio C Hamano'" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 01:35:02 2016
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Mar 16 01:45:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afzQT-0000OF-G8
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 01:35:01 +0100
+	id 1afzab-0006xF-Vd
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 01:45:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965005AbcCPAe6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2016 20:34:58 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:62465 "EHLO
-	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933921AbcCPAe4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Mar 2016 20:34:56 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [174.112.90.66])
-	(authenticated bits=0)
-	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id u2G0YmVE018129
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Tue, 15 Mar 2016 20:34:48 -0400 (EDT)
-	(envelope-from rsbecker@nexbridge.com)
+	id S934041AbcCPAp0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2016 20:45:26 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:62096 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932337AbcCPApY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 20:45:24 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 589634D4CD;
+	Tue, 15 Mar 2016 20:45:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=d8RiU69gAuUxJ9E0hJP5xW6fK2A=; b=YXtWnh
+	PwUCGSsEbwfA37XCgtLmemigJpG0/0+1kVsfY39M8OdIJbL/KchYdhEVGVSW12c+
+	oBO9e3pGau7p0O0sEmKagKNX1Z3+mVUWCtXAOm3xDHhDtRHZHo7VzKYKxEnoMR+z
+	E9X48Yp9pMfiwgohlFReO5jtaHaad7VChhzzQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BejT8h11bhqXlXf1IiAR+pmsEWjAFi9e
+	41F/U9ZEOrAAb+x9Ski9NbkoPA5QW3smIxsUIFr9cXxHYYnA1A5bZJqXJsNKmuS6
+	SAjoh1zSuGvnn2aGtZF+EReuY9f6w16GYmsNS+HxsEMmnzhMQVphUjtF5DGjEJ4I
+	PT/mdNUvDZI=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4E6D14D4CC;
+	Tue, 15 Mar 2016 20:45:23 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C32A44D4CB;
+	Tue, 15 Mar 2016 20:45:22 -0400 (EDT)
 In-Reply-To: <CA+55aFzHMp4hiCp7+2Yxy=KNQ_rBru3RM-pghXUPtoxr_L+w2w@mail.gmail.com>
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQEs+An5WFUYdH5ZCUuqYRGCghFGSaCkQ6Gg
-Content-Language: en-ca
+	(Linus Torvalds's message of "Tue, 15 Mar 2016 17:16:57 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 5DAAAE98-EB10-11E5-AA83-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288932>
 
-On March 15, 2016 8:17 PM Linus Torvalds wrote:
-> So I end up doing this manually when I notice, but I was wondering ig maybe
-> git could just have an option to "git am" and friends to de-tabify the commit
-> message.
-> 
-> It's particularly noticeable when people line things up using tabs (for the
-> kernel, it's often things like "cpu1 does X, cpu2 does Y"), and then when you
-> do "git log" it looks like a unholy mess, because the 4-char indentation of the
-> log message ends up causing those things to not line up at all after all.
-> 
-> The natural thing to do would be to pass in a "tab size" parameter to
-> strbuf_stripspace(), and default it to 0 (for no change), but have some way to
-> let people say "expand tabs to spaces at 8-character tab-stops" or similar
-> (but let people use different tab-stops if they want).
-> 
-> Do people hate that idea? I may not get around to it for a while (it's the
-> kernel merge window right now), but I can write the patch eventually - I just
-> wanted to do an RFC first.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Speaking partly as a consumer of the comments and partly as someone who generates the commits through APIs, I would ask that the commit tab handling semantic be more formalized than just tab size to strbuf_stripspace(). While it might seem a bit unfair to have to worry about non-git git clients, the detabbing can impact the other commit implementers (e.g., SourceTree, EGit, JGit, and the raft of process automation bits out there using JGit for cool stuff). Personally, I would prefer to have a normalized behaviour so that any bit of automation building a commit message would have a specific definition to go to (and hopefully comply with) in order to properly format the message for posterity and across all consumers. It might also be useful to have some ability to be presentation-compatible 
- with legacy commits (done after this type of enhancement) so that a reasonable presentation can be done for those 8 year old commits that still have embedded tabs. Personally, I don't encourage tabs in commits myself and do see the value of this, but is this really restricted just to git am?
+> Do people hate that idea? I may not get around to it for a while (it's
+> the kernel merge window right now), but I can write the patch
+> eventually - I just wanted to do an RFC first.
 
-Just my $0.02,
+Wouldn't it be nicer to do this kind of thing at the output side?  A
+stupid way would be to have an option to indent the log text with a
+tab instead of 4-spaces, but a more sensible way would be to keep
+the visual 4-space-indent and do the expand-tab for each line of
+text.
 
-Randall
-
--- Brief whoami: NonStop&UNIX developer since approximately UNIX(421664400)/NonStop(211288444200000000)
--- In my real life, I talk too much.
+That way, your viewing of existing commits that use 8-space HT to
+align (and worse yet, mixture of 8-space HT and 8 spaces and assume
+the end result would align in the output) would become more pleasant
+without you having to run filter-branch ;-)
