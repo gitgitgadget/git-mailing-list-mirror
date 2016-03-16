@@ -1,82 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC/GSoC 3/3] t0301: test credential-cache support of XDG_RUNTIME_DIR
-Date: Wed, 16 Mar 2016 09:17:45 -0700
-Message-ID: <xmqqr3fa5rdi.fsf@gitster.mtv.corp.google.com>
-References: <CAKqreux4aYhXTE9kUHKoKCJ2-4KDWyi58ioCm-CWqXhUYCtEEw@mail.gmail.com>
-	<1458122865-29447-1-git-send-email-huiyiqun@gmail.com>
-	<1458122865-29447-3-git-send-email-huiyiqun@gmail.com>
+From: Alexander Kuleshov <kuleshovmail@gmail.com>
+Subject: Re: [PATCH] help.c: strip suffix only if the STRIP_EXTENSION defined
+Date: Wed, 16 Mar 2016 22:20:04 +0600
+Message-ID: <CANCZXo5m-SF5qHxEgEUSPMaNEkcrZD07qbyfcmMurLVmBDRw+g@mail.gmail.com>
+References: <1458138449-26690-1-git-send-email-kuleshovmail@gmail.com> <CACsJy8ARrpu=7JJ0=viuNN0pN7wae8FWRN96EqtiH9bOF_vypw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, pickfire@riseup.net, peff@peff.net
-To: Hui Yiqun <huiyiqun@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 17:18:05 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 17:20:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agE95-0007CI-U9
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 17:18:04 +0100
+	id 1agEBR-0000eZ-Sg
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 17:20:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754561AbcCPQRu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 12:17:50 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:61276 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752119AbcCPQRs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 12:17:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2C2DA4BD43;
-	Wed, 16 Mar 2016 12:17:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lwl58Vznjt6PBV/nIR+/XVMXplE=; b=CaQQKg
-	ruhnGyyvgTRmlLIt2p6ZXky1TqNMBpYwf8y+POOJaE2q6sS8j4SxCFZOiawxdwHx
-	RLB9PMHVFBFJwgSXVjryoDRStN8QaE7Nh84XOmhvmRh2JhiXGiXfYVX728uWWwat
-	kqb5/k8Sn7DYw/6miSxQ+/6nIFn9MRmUOweBA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=B0C+vwn9rI/sda+zBvmSJy9WOnVCELAp
-	z9KRnM7IRvUsjqvz8cWe6tRceDM12b45PLgxoJ3uLOQeIpkQGoMd5mSAlAZ6wBvu
-	BVqRqqKMK1xQ5E/x+4BKHDwWvDGP3WdlmM8iy9Ivp+F2XXXoa2LiZ1Ze+dQhWH9T
-	IGRutxjsVlg=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 19D5F4BD42;
-	Wed, 16 Mar 2016 12:17:47 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8DD434BD40;
-	Wed, 16 Mar 2016 12:17:46 -0400 (EDT)
-In-Reply-To: <1458122865-29447-3-git-send-email-huiyiqun@gmail.com> (Hui
-	Yiqun's message of "Wed, 16 Mar 2016 18:07:45 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9EC1F896-EB92-11E5-B7C7-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S932076AbcCPQU0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 12:20:26 -0400
+Received: from mail-lf0-f50.google.com ([209.85.215.50]:32806 "EHLO
+	mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753939AbcCPQUZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 12:20:25 -0400
+Received: by mail-lf0-f50.google.com with SMTP id h198so23080332lfh.0
+        for <git@vger.kernel.org>; Wed, 16 Mar 2016 09:20:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=3p0CsJt+UL/QdfEE58cz6gzZWsGJn+rm42rDskoS8Vg=;
+        b=xR/hja9AsBop1HwBSe2mcukntX8cz6aU2qs4DsLHbmOfrelUvB7tDekLQtYdEIjpnC
+         mjbtSrPhF/vAa1uMRbEsM4smkWmBzKl9ZArAPLbeMgC1mZ9q9iURvxuBiUga2/mc6F+F
+         gixYqMp+vy1NOt369rEvjzRhCD8x2P+Xv+gL0q4QOAWwaOXS3gPtUuXWR0ZI6NulqiuR
+         V5O2CEms/W6z+ki0mBxNU/TZ5rvW9wHIIPAcIhFDWRhfiYESG7rWNAfiZEKvcVqPGKNL
+         z2FvX+grZDG23GC9YUjjEl+U9Qh4M9sqoE2cYvZHU+7jszxGKYCwrmv9ZloIyn435si9
+         RE9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=3p0CsJt+UL/QdfEE58cz6gzZWsGJn+rm42rDskoS8Vg=;
+        b=PlQwQgJOCnzp9U/PYwJ2nBOYzApSs+vShhOIBSMykSchX0gNNJjBFRLhKtjpGsAGTq
+         HyJx/SZjO5gWl2bBFBHRMm84cjA04nqMxaD3NTDMAwv3FYZcI5vwLhdHojVBfAxbWB5Q
+         BZ3PbWWT76zbiHuzFghvVe5O2kkK7WCJtalhSa5vFtHtCy7rY3HSDSQtCo0TAAW2hr2z
+         lOQrXn2qQwSwrvx29WMVGSvT32rEOmg4Mkifz99bQ3kS5cK3sDqYYuebJd+qHzEvwCSM
+         ryV6b9UVzswa/4B3qm7hlR1KL+/CX5//4BtqdI1NE8rLPkUFuTXiIq0ccbMLZwqMnsMX
+         IFsg==
+X-Gm-Message-State: AD7BkJLtMI8anXrPzl6gbhZkTBETGoVRUTdw59YqM0ShMbiOfquN/mJSvgs4RzOdP4v7j2ZYMsfMVKJ/pTJFGQ==
+X-Received: by 10.25.209.83 with SMTP id i80mr1895697lfg.74.1458145223412;
+ Wed, 16 Mar 2016 09:20:23 -0700 (PDT)
+Received: by 10.112.77.65 with HTTP; Wed, 16 Mar 2016 09:20:03 -0700 (PDT)
+In-Reply-To: <CACsJy8ARrpu=7JJ0=viuNN0pN7wae8FWRN96EqtiH9bOF_vypw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288986>
 
-Hui Yiqun <huiyiqun@gmail.com> writes:
-
-> t0301 now tests git-credential-cache support for XDG user-specific
-> runtime file $XDG_RUNTIME_DIR/git/credential.sock. Specifically:
+On Wed, Mar 16, 2016 at 8:47 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Wed, Mar 16, 2016 at 9:27 PM, Alexander Kuleshov
+> <kuleshovmail@gmail.com> wrote:
+>> We stripping extension in the list_commands_in_dir() to get
+>> commands without '.exe' suffix. Let's do it only if STRIP_EXTENSION
+>> is defined to not spend time for unnecessary strip_suffix() call in
+>> this case.
 >
-> * if $XDG_RUNTIME_DIR exists, use socket at
->   `$XDG_RUNTIME_DIR/git/credential-cache.sock`.
->
-> * otherwise, `/tmp/git-$uid/credential-cache.sock` is taken.
+> Unless the time saving is significant, I'm against this change. It
+> makes it harder to spot compile bugs in #ifdef'd code that's only
+> active on Windows (imagine somebody renames "ent" or change its type).
+> If you can do something like strip_extension() in git.c, it's better.
+> Or maybe just refactor that function a bit and share it with help.c
 
-Is it better to have the fallback in /tmp, and not in
-~/.git-credential-cache/, and why?
-
-Is it because the wish is to always use /tmp/git-$uid/ as a fallback
-for $XDG_RUNTIME_DIR (as opposed to ~/.git-credential-cache/, which
-is specific to the credential-cache and would look strange if we
-used it for other "runtime" things)?
-
-Just being curious, and wanting to see the reasoning behind the
-design decision the patch series makes in the log message of one of
-these patches.
-
-Thanks.
+Yes, agree. Will think about this.
