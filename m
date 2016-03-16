@@ -1,81 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] t/lib-httpd: pass through GIT_CONFIG_NOSYSTEM env
-Date: Tue, 15 Mar 2016 20:56:52 -0400
-Message-ID: <20160316005651.GA29541@sigill.intra.peff.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: Tabs in commit messages - de-tabify option in strbuf_stripspace()?
+Date: Tue, 15 Mar 2016 18:00:17 -0700
+Message-ID: <CAGZ79kZihaftwwmY23mZ_i4H6vv2Z9r=LC68M0MMD1o2h2Z4Sw@mail.gmail.com>
+References: <CA+55aFzHMp4hiCp7+2Yxy=KNQ_rBru3RM-pghXUPtoxr_L+w2w@mail.gmail.com>
+	<xmqq4mc76yji.fsf@gitster.mtv.corp.google.com>
+	<CA+55aFyXXHNrJW56A_DKkmrmGpWxeUd6row_ja3bzqhs_yswhw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 16 01:57:00 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Mar 16 02:00:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1afzlj-0005yH-PD
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 01:57:00 +0100
+	id 1afzp1-0008JJ-GE
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 02:00:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754285AbcCPA44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Mar 2016 20:56:56 -0400
-Received: from cloud.peff.net ([50.56.180.127]:60278 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752517AbcCPA4z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Mar 2016 20:56:55 -0400
-Received: (qmail 22327 invoked by uid 102); 16 Mar 2016 00:56:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Mar 2016 20:56:54 -0400
-Received: (qmail 9435 invoked by uid 107); 16 Mar 2016 00:57:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Mar 2016 20:57:11 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Mar 2016 20:56:52 -0400
-Content-Disposition: inline
+	id S965022AbcCPBAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Mar 2016 21:00:20 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:35629 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754038AbcCPBAS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Mar 2016 21:00:18 -0400
+Received: by mail-ig0-f180.google.com with SMTP id vf5so102100261igb.0
+        for <git@vger.kernel.org>; Tue, 15 Mar 2016 18:00:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=Ad9OmAf1rgUBr/VT17QjdV/UZiwgMTM+Ox4JXZuU1iA=;
+        b=ToBCeIHPx81TlceR3hSCXC2IAy1uHBDKsvHmP1dCNEJPiGyNyROHBSokO3EQ74xLhC
+         ZnEVu2HC5I/e/fC5bZ0Styin6ZFCox94dNIlWB0fOt/eXS4kBDRkWZC+9pnubIwChCmM
+         ++2EPPO6WomHYbkLP+7b94WcWnHz5HnMbTMpoteeyuZnlXLHXw+yuCOxFNL6b8IK37he
+         RTvQqIU4RrOxMQ64tqbb5//Qhyz6x7U3ugD838UUsXm/5Ucyqj00lDW7dDGPqBCNTzD+
+         MlUsmdXkVUPKTnULjblxYbRgoMKVQ3f315+hSpHotdAYKVe2tvRtRMGsrdm0VNA0T8/K
+         xDNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=Ad9OmAf1rgUBr/VT17QjdV/UZiwgMTM+Ox4JXZuU1iA=;
+        b=lp8VEiyd00TZazLMaA2xIaRy4eM7wNhlUo03+fXk7Ol7duwX2AKlI7/2Sm5pInNzXz
+         ets86eyEYG7hX+XlwOk91LSDZJkMBgzFR4ecvUfUnY5eyQdhwZkZF9onN9bN6yZYDK7u
+         4CmYugX5QXCC99Ij+gx2UjeOnDqNlhg+PsjK36ZAYidp65PTvkN6Soqops/5iiaavl0x
+         HyDNcSn2gonN4le/UaeV2DgNIkYW8UUev2QN8xKhteyFwFj9n+6eL9/4iQkvlGzyYSH4
+         sMwbsp2v/k6fJRz3ztTLlHFWNSd/OnPtnAhawDXIsYGm/0AtNbT2F1ONvdRriku/VwZ+
+         GL2w==
+X-Gm-Message-State: AD7BkJIOI5/usfQXGAP8Z0ekEEvmGPUXyowHGu/d95oK6GBc+aFVzmbndi6WNCqY7olxAQ8CGR6nQim1jqOUDuFl
+X-Received: by 10.50.43.226 with SMTP id z2mr1742279igl.94.1458090017332; Tue,
+ 15 Mar 2016 18:00:17 -0700 (PDT)
+Received: by 10.107.132.101 with HTTP; Tue, 15 Mar 2016 18:00:17 -0700 (PDT)
+In-Reply-To: <CA+55aFyXXHNrJW56A_DKkmrmGpWxeUd6row_ja3bzqhs_yswhw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288936>
 
-We set GIT_CONFIG_NOSYSTEM in our test scripts so that we do
-not accidentally read /etc/gitconfig and have it influence
-the outcome of the tests. But when running smart-http tests,
-Apache will clean the environment, including this variable,
-and the "server" side of our http operations will read it.
+On Tue, Mar 15, 2016 at 5:48 PM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+> On Tue, Mar 15, 2016 at 5:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Wouldn't it be nicer to do this kind of thing at the output side?  A
+>> stupid way would be to have an option to indent the log text with a
+>> tab instead of 4-spaces, but a more sensible way would be to keep
+>> the visual 4-space-indent and do the expand-tab for each line of
+>> text.
+>
+> Yes, that would certainly work for me too. It's just the "ascii boxes
+> don't line up" that is problematic..
 
-You can see this breakage by doing something like:
+I would also rather side to correct the display side rather than the
+applying side. [I still want to send and apply patches with git written in
+the white space language ;]
 
-  make
-  ./git config --system http.getanyfile false
-  make test
+Instead of converting to whitespaces in Git, we could make use of the
+set_tabs capability for ttys and setup the terminal for having tabs align
+to 12,+8,+8,+8... such that it looks like an indented terminal.
+That way we would also preserve the tabs in case you'd want to
+copy the message as is.
 
-which will cause t5561 to fail when it tests the
-fallback-to-dumb operation.
+Thanks,
+Stefan
 
-We can fix this by instructing Apache to pass through the
-variable. Unlike with other variables (e.g., 89c57ab3's
-GIT_TRACE), we don't need to set a dummy value to prevent
-warnings from Apache. test-lib.sh already makes sure that
-GIT_CONFIG_NOSYSTEM is set and exported.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-Obviously trivial enough for "maint", but not at all urgent; it has
-been this way for ages. I only noticed because I happened to recently
-munge my system config to replicate a particular server config which
-disables http.getanyfile.
-
- t/lib-httpd/apache.conf | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-index f667e7c..9317ba0 100644
---- a/t/lib-httpd/apache.conf
-+++ b/t/lib-httpd/apache.conf
-@@ -74,6 +74,7 @@ PassEnv GIT_VALGRIND_OPTIONS
- PassEnv GNUPGHOME
- PassEnv ASAN_OPTIONS
- PassEnv GIT_TRACE
-+PassEnv GIT_CONFIG_NOSYSTEM
- 
- Alias /dumb/ www/
- Alias /auth/dumb/ www/auth/dumb/
--- 
-2.8.0.rc2.331.ga574393
+>
+> (Also people including example source code etc, where the first tab
+> looks wildly different from the second one)
+>
+>             Linus
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
