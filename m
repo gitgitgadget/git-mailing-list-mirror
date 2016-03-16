@@ -1,83 +1,102 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC/GSoC 01/17] perf: introduce performance tests for
- git-rebase
-Date: Wed, 16 Mar 2016 08:58:28 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603160855390.4690@virtualbox>
-References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com> <1457779597-6918-2-git-send-email-pyokagan@gmail.com>
+Subject: Re: [PATCH/RFC/GSoC 05/17] rebase-options: implement rebase_options_load()
+ and rebase_options_save()
+Date: Wed, 16 Mar 2016 09:04:21 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603160901520.4690@virtualbox>
+References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com> <1457779597-6918-6-git-send-email-pyokagan@gmail.com> <CAGZ79kYeYzi=J=dY27FqXp72BRe-Vmm4MR5Q6dFTMUP9CxYZcg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+Cc: Paul Tan <pyokagan@gmail.com>, Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
 	Duy Nguyen <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>, sam.halliday@gmail.com
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 08:58:42 2016
+	Sam Halliday <sam.halliday@gmail.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 09:04:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ag6Lp-00042y-8Q
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 08:58:41 +0100
+	id 1ag6Rb-0007rv-Or
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 09:04:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933970AbcCPH6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 03:58:37 -0400
-Received: from mout.gmx.net ([212.227.17.22]:64475 "EHLO mout.gmx.net"
+	id S933774AbcCPIEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 04:04:35 -0400
+Received: from mout.gmx.net ([212.227.15.19]:63864 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933203AbcCPH6g (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 03:58:36 -0400
-Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0M3i8r-1ZpEoO3LlZ-00rITe; Wed, 16 Mar 2016 08:58:29
+	id S933246AbcCPIEa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 04:04:30 -0400
+Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0Md3Eg-1aP7YK2qxu-00IEZd; Wed, 16 Mar 2016 09:04:22
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <1457779597-6918-2-git-send-email-pyokagan@gmail.com>
+In-Reply-To: <CAGZ79kYeYzi=J=dY27FqXp72BRe-Vmm4MR5Q6dFTMUP9CxYZcg@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:pd0UsDGu9rYFOb6v9DXunq5GTRWnoSbM+xk+mmmAfzw9aRbpTiT
- fgXa3Lt0rUHAEd6Ngzt4nzJGeVDUg7yjJxn/glreE7u1ONIXe3YBJNx977nHBIojVeDqBAh
- GPX+rBLcBXZbJzlCtSe03gWXxKFQxM8lz6tMnmD6Po3oarXU83N/h7q1IK3ri04YiF/l7Zs
- gHfto1pzmSKdf4TvspZRQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:osxFbdsqitc=:/rGqhKrrTW0b7L8Ge66Q5V
- /02YfTVOfgjEZza9P4k7O4TJlRx6O8aMlhKBQjIVxBq6Nf7i3UEHgnE69gtiQ+0CJ4DpXnATK
- jqv1tQ2xxSPF+CPwrvoedmwZRZMNpiPsxhG/iQCzCRhZyF7Ra3Q2H4g80p3nKx1+qCi6KMvUQ
- 97PUOsNaRz65JGd1ti8E3SeFMkGIsxJcLAYbGjp/6Hf5Uu5ABAPf2nRB+rzu9u/Pm+ADPrjoF
- HCAIYVMARlIjbcowchHcqxoCgUr1efM0iJC6XQGpwF6yqjmpVJxmC+id3CXfsHdqLkjT8+upa
- dLL65SbVSA+Ob7QmMQXSQq4yEarRO+4W/q8wSa4vIMpS15i/D229pun/HeqeaMh8/JlTDv0nw
- XzsoLc5SJj4pB0Qoz6axlGxbfP+oGSqba3EdZ0ASQ8udSnK1fVnb4A1btEVO3qnJ6/J+9l/F2
- /ZGpSeE3cqs7ZYuERrnYZZ/fNfbIqc1zEHeEiXWZC47L9Gzo9kCeuj1AzsDQGygw76li2OsiA
- ZpWxzDZLnUI/h1B63slHlRtfB5LC9i2KvlLDE4doardmSY5fDry8hVRumO2m56Uywez693G4h
- cNwp7Mqo8sWjLIQiAdXPQ39nnYQ7tJaU0qnOiHXeAprqNeT2bZnAOiGfqyylN1O4qq64s5ScY
- rYd1zf8VPDamUbAuOpUTCxynb+tsxSPHpQN9OFcGCGh/+EtZnKws8ybyimakfYMRMtCJKr0XZ
- 1ETP0mrSdd+hCA6mQpZdsZW5eIlyMBDaQArZFgRalTrxM5GMCXVLzGM55ONPD0ngDsqA7iSR 
+X-Provags-ID: V03:K0:LpxSfERLQhtT7bDlmPC57KAwJAgJ13b0PVBhXBMaM2u+PKiLEYv
+ EUt7C+5Ni7Vte79SOqwQtDsF6xjTmpc0s40NnF5QicF9hhd05pZozPAtoeiv8JVZou2xN7v
+ iX5d7iOstlHoPyu8Z7QEpcoH6mbJuYbXUmMm3A8NSa1WFBhT4atUs7CdecYnLyzOfR0vdAW
+ yWSxQQwuljvXh72S+UigA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:q0dSspW0GBs=:Un8pwVck9sFk8u0rdcHW5h
+ PbeblwjUwLJvcKQ3o6rTOvrcLhaxyGyTSeu0qMsf59Qs/ZylEMGTBAwEN3hIwj/AMs7BLhir6
+ xUGuq3V6ykZxbt05IW5qSQnkR5ct6SP/kzDCNmFuhV7eh3Lcq0eMJ2QMxmxl61pP+WXNI7tDl
+ lba1ifE2oJ3lmYshJeC/FmiIBIadYQEkCGduWTBRYYetyU+8bchRHbXPOPIqliCNJl/2uQ+J8
+ NVYMXD6OEjtXJxJBL35xHl3Mr/m7+RUZL0eubAkrwwkbCkglYClb2i6RHEizqb+wvVaJnv2pT
+ cq0ZnItiTv3RYGUP2OM+IWPq/FhD0ZsVqHCju6a9suExPowbcC3NHoaY4U6OLDjfaJ9D09dAr
+ yy08HF0b80OwFTzJRmyGRMh7GowIo9eGeF4XEAahG0LUcX5tmIlUbSDJfWku0OiVrexhDb5gz
+ Q7Pk78dLTWyb5GkoGZHoa0flz3RbTUWkMFsAzvJXLfwDj/vGChsGZmFSlsSW2uFQ5wb6IIVHk
+ GVUBzWnFRHa8yy3+s/p3d9oQfYyPwwGCEwyhZDHtu8W/kYOJB2Cm+BrPhbteixVlzP8xOGEek
+ Jxwakv7bv+cxrSh2R3NIlioYVNsdNQBJnOoyJHBDXgtOjkQcnxJH7tfSGVzEHTBMj+aRouLHn
+ nH/Iz3FBKMwXf11g1LT95O0dg4v8yohHrMXMGx7VBhM+g0Bc0vmLxUzzLqnUaT8HLMMzrHC/0
+ tejZ9a8KiMTMrUeCZr4+4xNGZZV+JKApdDJDTTD1tUmPFyi3o0YHl9j1NI+4A2ZjIzGJbkjG 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288951>
 
 Hi Paul,
 
-On Sat, 12 Mar 2016, Paul Tan wrote:
+On Mon, 14 Mar 2016, Stefan Beller wrote:
 
-> diff --git a/t/perf/p3404-rebase-interactive.sh b/t/perf/p3404-rebase-interactive.sh
-> new file mode 100755
-> index 0000000..aaca105
-> --- /dev/null
-> +++ b/t/perf/p3404-rebase-interactive.sh
-> @@ -0,0 +1,26 @@
->
-> [...]
->
-> +test_perf 'rebase -i --onto master^' '
-> +	git checkout perf-topic-branch &&
-> +	git reset --hard perf-topic-branch-initial &&
-> +	GIT_SEQUENCE_EDITOR=: git rebase -i --onto master^ master
-> +'
+> On Sat, Mar 12, 2016 at 2:46 AM, Paul Tan <pyokagan@gmail.com> wrote:
+> > These functions can be used for loading and saving common rebase options
+> > into a state directory.
+> >
+> > Signed-off-by: Paul Tan <pyokagan@gmail.com>
+> > ---
+> >  rebase-common.c | 69 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+> >  rebase-common.h |  4 ++++
+> >  2 files changed, 73 insertions(+)
+> >
+> > diff --git a/rebase-common.c b/rebase-common.c
+> > index 5a49ac4..1835f08 100644
+> > --- a/rebase-common.c
+> > +++ b/rebase-common.c
+> > @@ -26,3 +26,72 @@ void rebase_options_swap(struct rebase_options *dst, struct rebase_options *src)
+> >         *dst = *src;
+> >         *src = tmp;
+> >  }
+> > +
+> > +static int state_file_exists(const char *dir, const char *file)
+> > +{
+> > +       return file_exists(mkpath("%s/%s", dir, file));
+> > +}
+> 
+> How is this specific to the state file? All it does is create the
+> leading directory
+> if it doesn't exist? (So I'd expect file_exists(concat(dir, file)) to
+> have the same
+> result without actually creating the directory if it doesn't exist as
+> a side effect?
+> 
+> If the dir doesn't exist it can be created in rebase_options_load explicitly?
 
-This measures the performance of checkout && reset && rebase -i. Maybe we
-should only test rebase -i?
+In addition I want to point out that sequencer's replay_opts seem to be at
+least related, but the patch shares none of its code with the sequencer.
+Let's avoid that.
 
-Also, I would strongly recommend an extra test_commit after reset;
-Otherwise you would only test the logic that verifies that it can simply
-fast-forward instead of cherry-picking.
+In other words, let's try to add as little code as possible when we can
+enhance existing code.
 
 Ciao,
 Dscho
