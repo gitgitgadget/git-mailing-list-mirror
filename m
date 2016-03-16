@@ -1,88 +1,120 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC/GSoC 16/17] editor: implement git_sequence_editor()
- and launch_sequence_editor()
-Date: Wed, 16 Mar 2016 19:21:23 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603161918410.4690@virtualbox>
-References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com> <1457779597-6918-17-git-send-email-pyokagan@gmail.com> <alpine.DEB.2.20.1603150755450.4690@virtualbox> <CACRoPnRMOp38vfkQZjmkUqr+urN8NYcNN_oNzHtJqfyTorr1ug@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] pretty-print: de-tabify indented logs to make things line
+ up properly
+Date: Wed, 16 Mar 2016 11:21:48 -0700
+Message-ID: <CA+55aFxV5PWdSn9Gj=zV464TtJo=QvciZrhc5Pwe+Qfyqt8sXw@mail.gmail.com>
+References: <alpine.LFD.2.20.1603160926060.13030@i7>
+	<xmqq7fh25mkc.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Sam Halliday <sam.halliday@gmail.com>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 19:21:39 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 19:22:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agG4f-0000QS-Me
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 19:21:38 +0100
+	id 1agG5D-0000mY-C7
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 19:22:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935096AbcCPSVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 14:21:33 -0400
-Received: from mout.gmx.net ([212.227.17.21]:65165 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933388AbcCPSVc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 14:21:32 -0400
-Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0Lg6op-1a0arP1Sot-00pbVX; Wed, 16 Mar 2016 19:21:24
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CACRoPnRMOp38vfkQZjmkUqr+urN8NYcNN_oNzHtJqfyTorr1ug@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:K+dpvFo2sf/rsbjmPTAlYrpWFjtEl3dmOqPNehxH8r644DPaHqp
- 1xuJyqDIOWuEf6P7QOw4ooKvb7fSFsUs/QT/fwcUkAYtAHkLipmbJCEWgnsp2RIpazm99O/
- 4Oitd/0ozSgAASuZaiOyhuJXmnNj3Dh/H5VtNXLobU8VAwGQi5FkYYDliIf9q8rdx40HBmS
- vHXldtDgVTxxsofJnt7MA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/7t9zp5+58s=:IGjTqlixFtSU6GL0jCqEDf
- eHKX+RHQhfLLLhyXkdYocEFbyOdOGumycSh3mO3FVpJIAa37I8x+eY+x2k2jmcR5H5uVWxg0g
- LhFS43R3ko2+c9IQM0PqtZLqCJV6S8VBNUeZ+2/Qmqt4WhNC0oGmGGvz9percIF5RPq9oPGqx
- oOiWXYrXYDEz0pcNZjezlnyG3fGsC/JE5f08l5wN42UaAJZxiyuvBftzIBq3MG03Fj/WYi/o4
- SJfmlyOZ+j0bGwcwa8jmMg56a5bIthnvgyf9pt2wOLSw66YsO1Onh69hsbo1W3U5GmJ6zFIr5
- Mm5Shg7e3J6LUoteoUyqVbeqYRf52oYAda2muZdW845OzbpRxKYYNXMtPcvKA9iHcdRMQl9EA
- Ssc5MkP6fIus/Mss+ZJYTPqjDrCe24pBuhNPhlPV1qehpo6gD1kf4FaDgPtMATd81MBrQr6Nh
- OKLPEjeB3ZrbvkvZdXzXXDOXVr2LfB6GImVL4h2Wy+/p3f01zZNPNtVMP26P5jIdpNhsLRP+9
- kFPxwAU2YHrvcGVj2OcjO3W/4fFxjdTi02DXh7Af7h+kZwetUjRFoeSAfxrPDNmAdHLGsBWqZ
- Xik4fkq0qZoSiU/eXqf/0Dr5SusivZi6paTCXIdsWk+xOjzpq8FGnyG3nXuFVbIZTNULz0Tie
- a3337pT0djq7af/8kehj7Tff2DcEf4YYobadRGrUpV0/lb+yuX3MWIX5Ia0U32567HuIzNJXS
- CG34L8GQn2zXvDuY1EXweBJJHJK50tD8mNR1AVNuwliBamB7/jfDhjoDaExRGbnYnEw5Q6C2 
+	id S935216AbcCPSVw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 14:21:52 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:36407 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934911AbcCPSVt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 14:21:49 -0400
+Received: by mail-ig0-f170.google.com with SMTP id nk17so102108171igb.1
+        for <git@vger.kernel.org>; Wed, 16 Mar 2016 11:21:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=+qwt5rouzMdbu0jciu94CyDvKbF9KJg+/BlDrFkDOzg=;
+        b=n2x3hi/3UrlpVx2ngv7mLutdiGolMASWroCFRDThUoyKZYVFJOxnO+1QE82Bgw/ovF
+         Ac9ICTpmMEdtDr4sI84v9zFphjbfas/VtYOuTOU2D5NqyP/AezjvN/H+on8cOVNftv5T
+         KgVAyFuWJaQkapiGnfihP3n8txYAiGKSt7mo7PsvFc6DkP/IgGlFu+gDEf+R5i8rrI/Y
+         pdlsc8rZFxT5vuq21INrp3oS/AW7ovlPigTi+RjgJrtIOJ6jG7XLv1NDvqFfYfWIpeaS
+         UqExQ5vH/mCuYWckr8LLIXgZKFzzqxxHvCgC+nFZy2YCzYSh05l/bQv/DehEcgnWYjV6
+         J5DA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=+qwt5rouzMdbu0jciu94CyDvKbF9KJg+/BlDrFkDOzg=;
+        b=NPWKIoCTfAMTn+Zi5F+fJ02fd4N4pGBEe/6ZXRMFsDW+Mafg2MrOuUpCId6clVdMj1
+         C/68NEWsYxbu5pSeL5KYAYh/9aEbZzU2+3CAUYYm8GKv4Olw99SQlk8Ih5N8ruLK7Ama
+         LUtT/6JlVEDKkDYk/jCaNoEPHhpMjOrw0Z7xM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=+qwt5rouzMdbu0jciu94CyDvKbF9KJg+/BlDrFkDOzg=;
+        b=GWZUKTRyxw+bnLTwsjeaLTX8QpOB5XEaghVyQk43Wxn0tDN1jwUbpSQlZ2QoQWIPT1
+         8oz0oUs8EwKiydSXthkVpD3IA9Q4fdAWJRDfz6320LBqEhHbGGltDa3Q6iuhRGc1ddwA
+         FikhKmPTJtOCbO4mr2r0NR91ZGz/D7eGvJjZmEVQ/t9UPMVFuMBkOKWlYOTasov25kgI
+         TdteXW1+hxeWEmReK6MC8R/qUIFnArxfQf5ztGslL2ezaeZ8mXoxyDZR3zw1erFyczKe
+         PEPJJQw1GGTaiKoCdCXW4srM4Qgz8aw7/4C9WfHoGNxKkB8Egaa1rfHTlZR5qfLDbmK0
+         Uz0w==
+X-Gm-Message-State: AD7BkJKfJPDu3hwV/hSMs3Z/6gBK6ORs91BnciiXp/WxsiFdsSgOBHF1RSeGxJvcQdH5aE1lraJQYZGISN/ICA==
+X-Received: by 10.50.112.10 with SMTP id im10mr2897652igb.93.1458152508682;
+ Wed, 16 Mar 2016 11:21:48 -0700 (PDT)
+Received: by 10.36.93.202 with HTTP; Wed, 16 Mar 2016 11:21:48 -0700 (PDT)
+In-Reply-To: <xmqq7fh25mkc.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: 5xFDznJWWHHFcGwW83j-QOf9ZcU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289013>
 
-Hi Paul,
+On Wed, Mar 16, 2016 at 11:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>  (1) if turning your "preparation; do { ... } while()" into
+>      "while () { }" would make the result a bit easier to read;
 
-On Wed, 16 Mar 2016, Paul Tan wrote:
+So it's probably partly taste, but I will also disagree with your
+"easier to read", because of the way the code is logically structured.
 
-> Hi Dscho,
-> 
-> On Tue, Mar 15, 2016 at 3:00 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > On Sat, 12 Mar 2016, Paul Tan wrote:
-> >> ---
-> >>  cache.h  |  1 +
-> >
-> > No need to clutter cache.h with a function that is only to be used by the
-> > sequencer. IOW let's make this static in sequencer.c.
-> 
-> The function needs to be implemented in editor.c
+In particular, the "no TAB" case is actually *fundamentally* different
+from the "no TAB at the end" case. The return value is different, and
+the caller does very different things - the code tries to make it very
+clear that that "no TAB" situation is very different from "we found a
+TAB".
 
-No, *another* function needs to be implemented in editor.c: one that
-accepts the editor itself as parameter. You did that, but then you wrapped
-it as git_sequencer_editor() and left the *really* useful function *still*
-static to editor.c.
+So it's not "preparation + do-while".
 
-Or maybe the best solution would be to simply extend git_editor() to
-accept the editor as an additional, first parameter, falling back to the
-current behavior if NULL is passed (and then change all callers to pass
-NULL).
+It's "preparation + handle the no-TAB case differently", and then the
+"do-while" is very natural because by the time we get to the "ok, we
+are now going to need to do something about the line" stage, we
+already know we have a tab.
 
-I guess my preference would be with the latter, that would make for the
-most elegant, minimally invasive and most reusable solution.
+But the code *could* be made to just always do the whole
+"strbuf_add()", and not return a return value at all, and the no-tab
+case wouldn't be explicitly written to be different.
 
-Ciao,
-Dscho
+Let me know if you'd prefer that variant, and I'll send a new version.
+
+>  (2) if we can somehow eliminate duplication of "tab + 1" (spelled
+>      differently on the previous line as "1+tab"), the end result
+>      may get easier to follow.
+
+Yeah, I considered that. Either by just doing "tab++" before (so the
++1" would come from that in both cases), or by introducing a new
+variable like
+
+    ptrdiff_t bytes_used;
+    ...
+    bytes_used = 1 + tab - line;
+
+and then just doing
+
+    line += bytes_used;
+    linelen -= bytes_used;
+
+and the code I wrote just didn't do any of those temporary updates,
+and instead just did the "+1" by hand in both cases.
+
+Again, I can redo the patch, just tell me which model you prefer.
+
+                 Linus
