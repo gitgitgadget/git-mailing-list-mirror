@@ -1,91 +1,82 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Tabs in commit messages - de-tabify option in strbuf_stripspace()?
-Date: Wed, 16 Mar 2016 09:15:39 -0700
-Message-ID: <CA+55aFwFsBKZZeqhBDf_YXG6vrSrvfFVCsRc0mkFUiDS9Rd+QA@mail.gmail.com>
-References: <CA+55aFzHMp4hiCp7+2Yxy=KNQ_rBru3RM-pghXUPtoxr_L+w2w@mail.gmail.com>
-	<xmqq4mc76yji.fsf@gitster.mtv.corp.google.com>
-	<CA+55aFyXXHNrJW56A_DKkmrmGpWxeUd6row_ja3bzqhs_yswhw@mail.gmail.com>
-	<CAGZ79kZihaftwwmY23mZ_i4H6vv2Z9r=LC68M0MMD1o2h2Z4Sw@mail.gmail.com>
-	<CAGZ79kZtAm1M=9CGDGxPdecXEuNEQcbpQb3FNj9=Py0VE2UrKQ@mail.gmail.com>
-	<56E96D61.6060007@xiplink.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC/GSoC 3/3] t0301: test credential-cache support of XDG_RUNTIME_DIR
+Date: Wed, 16 Mar 2016 09:17:45 -0700
+Message-ID: <xmqqr3fa5rdi.fsf@gitster.mtv.corp.google.com>
+References: <CAKqreux4aYhXTE9kUHKoKCJ2-4KDWyi58ioCm-CWqXhUYCtEEw@mail.gmail.com>
+	<1458122865-29447-1-git-send-email-huiyiqun@gmail.com>
+	<1458122865-29447-3-git-send-email-huiyiqun@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 17:15:46 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, pickfire@riseup.net, peff@peff.net
+To: Hui Yiqun <huiyiqun@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 17:18:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agE6s-0005Um-32
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 17:15:46 +0100
+	id 1agE95-0007CI-U9
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 17:18:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753388AbcCPQPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 12:15:41 -0400
-Received: from mail-io0-f177.google.com ([209.85.223.177]:35582 "EHLO
-	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751951AbcCPQPk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 12:15:40 -0400
-Received: by mail-io0-f177.google.com with SMTP id g203so65249446iof.2
-        for <git@vger.kernel.org>; Wed, 16 Mar 2016 09:15:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=MqsBz7Dko/wTKfH0ClYx2woqgROINhTwUAwBo7lE70Y=;
-        b=c4ILtRxhJISb1LsIJUH1YaznIlHsO31w6gMOQVMgLp24kTDp8zXopspJl4q6LXTUXo
-         6WYu5b4aYLYm5pcSbH8f5y6fjTH4PWF0W46ybG31k/Fs6rW8o9zP52KDD2OP6ywSn2Xs
-         YdwLs4UQhr0cTIrX+aZT4eB3oRBJw+vKBVZEVs089ApLIm8trMc9Y/lQwQMpI84GFiL6
-         XwTYN7NBbULNwFYjUqmBszGL4wquQkCN1VHjXz38pkJCO/fBi2U6UzB99bQXuIsD74K0
-         VA+knRU3jnbSYso4zUHvBnaQtmtMmoBS0gpm2zHkg2+nm1LzcU26bWfHr8/L4nuWyg4Z
-         FLfA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=MqsBz7Dko/wTKfH0ClYx2woqgROINhTwUAwBo7lE70Y=;
-        b=dqSQxqXf0DN7NVE2eTW0Arf1ixg0fjcMpKRbIiaW/5sAzW2856MYug2kVVWm1gu3lO
-         7xT/krvV26r503xfxUPpJ2+Z9yLQBmgDzHJEt9NQ8CvSUdNCC2lq8m8v7klanvU8jlFX
-         yd13EgJ7lMhtauG/FDan6/n/r3RlhqRlZvuqE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=MqsBz7Dko/wTKfH0ClYx2woqgROINhTwUAwBo7lE70Y=;
-        b=ZYsjzGRozpGl5cAnZgNbmtqqAM22W65EdSwy/aVameMyNhYwyQMNx5Ow67x9QWjbmW
-         UEWMUQRQk1SvZOKxsAVrQ/lanICL4j7//FRxdUavPEv1MgkHQLFUEkezkGpG8mi3dDyK
-         mwmIbt3nf9UfgIT8FrSbWFu0hSnEXSVN6iRm3qSA6sUMsZjDXp/jTpE2sl7kbAFd/wmS
-         DkicGvTMJVnXVi8GjuliZP4tnsAy3T1RhRNE5FUSJ3x+MluF1uJUdwe+fUhiUqfdpgPD
-         z/yR1h/OPjmQLezSPLwojWxCvQgkxREGEwBkTUOlOF2vPQxwk2VUf/MIRX9nHWdRg4BQ
-         /ptA==
-X-Gm-Message-State: AD7BkJI9ZWSRgFM7gr09QS10X7Bi991BxVEsgm1Ui6+e32LcixzFHhYQ3cObf7g/e6Q/XhtH6akpzqlkEjxkng==
-X-Received: by 10.107.6.224 with SMTP id f93mr5138088ioi.137.1458144939977;
- Wed, 16 Mar 2016 09:15:39 -0700 (PDT)
-Received: by 10.36.93.202 with HTTP; Wed, 16 Mar 2016 09:15:39 -0700 (PDT)
-In-Reply-To: <56E96D61.6060007@xiplink.com>
-X-Google-Sender-Auth: SAThpVtkwV1-kbsbuiwajGOaFns
+	id S1754561AbcCPQRu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 12:17:50 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:61276 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752119AbcCPQRs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 12:17:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2C2DA4BD43;
+	Wed, 16 Mar 2016 12:17:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lwl58Vznjt6PBV/nIR+/XVMXplE=; b=CaQQKg
+	ruhnGyyvgTRmlLIt2p6ZXky1TqNMBpYwf8y+POOJaE2q6sS8j4SxCFZOiawxdwHx
+	RLB9PMHVFBFJwgSXVjryoDRStN8QaE7Nh84XOmhvmRh2JhiXGiXfYVX728uWWwat
+	kqb5/k8Sn7DYw/6miSxQ+/6nIFn9MRmUOweBA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=B0C+vwn9rI/sda+zBvmSJy9WOnVCELAp
+	z9KRnM7IRvUsjqvz8cWe6tRceDM12b45PLgxoJ3uLOQeIpkQGoMd5mSAlAZ6wBvu
+	BVqRqqKMK1xQ5E/x+4BKHDwWvDGP3WdlmM8iy9Ivp+F2XXXoa2LiZ1Ze+dQhWH9T
+	IGRutxjsVlg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 19D5F4BD42;
+	Wed, 16 Mar 2016 12:17:47 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8DD434BD40;
+	Wed, 16 Mar 2016 12:17:46 -0400 (EDT)
+In-Reply-To: <1458122865-29447-3-git-send-email-huiyiqun@gmail.com> (Hui
+	Yiqun's message of "Wed, 16 Mar 2016 18:07:45 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 9EC1F896-EB92-11E5-B7C7-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288985>
 
-On Wed, Mar 16, 2016 at 7:27 AM, Marc Branchaud <marcnarc@xiplink.com> wrote:
+Hui Yiqun <huiyiqun@gmail.com> writes:
+
+> t0301 now tests git-credential-cache support for XDG user-specific
+> runtime file $XDG_RUNTIME_DIR/git/credential.sock. Specifically:
 >
-> Could this also help with diff output, where the leading + or - mars the
-> indentation in a similar way?
+> * if $XDG_RUNTIME_DIR exists, use socket at
+>   `$XDG_RUNTIME_DIR/git/credential-cache.sock`.
+>
+> * otherwise, `/tmp/git-$uid/credential-cache.sock` is taken.
 
-I don't think that's a good idea at least by default, since then it
-will break things like running diff in emacs capture mode.
+Is it better to have the fallback in /tmp, and not in
+~/.git-credential-cache/, and why?
 
-So even if you're in a terminal, you can't assume that you can munge
-the output too much.
+Is it because the wish is to always use /tmp/git-$uid/ as a fallback
+for $XDG_RUNTIME_DIR (as opposed to ~/.git-credential-cache/, which
+is specific to the credential-cache and would look strange if we
+used it for other "runtime" things)?
 
-Of course, if colorization is on, you might as well pretty-print the
-diff by indenting things properly too, since the end result isn't
-going to be used as a _diff_.
+Just being curious, and wanting to see the reasoning behind the
+design decision the patch series makes in the log message of one of
+these patches.
 
-              Linus
+Thanks.
