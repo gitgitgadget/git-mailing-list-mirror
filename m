@@ -1,103 +1,115 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [ANNOUNCE] Git v2.8.0-rc2
-Date: Wed, 16 Mar 2016 16:32:56 +0100
-Message-ID: <56E97CA8.8070400@drmicha.warpmail.net>
-References: <xmqqr3fiaq9f.fsf@gitster.mtv.corp.google.com>
- <56E6D8C4.2010205@drmicha.warpmail.net>
- <xmqqoaahaw99.fsf@gitster.mtv.corp.google.com>
- <xmqqziu19cjz.fsf@gitster.mtv.corp.google.com>
- <56E96096.4020108@drmicha.warpmail.net>
- <CACsJy8CyLGtYpPnwdhS-AD4d2pcU7RVv=OxPEePcHYhFpDh4pg@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH/RFC/GSoC 12/17] rebase-todo: introduce rebase_todo_item
+Date: Wed, 16 Mar 2016 16:55:01 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603161647560.4690@virtualbox>
+References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com> <1457779597-6918-13-git-send-email-pyokagan@gmail.com> <CAP8UFD0Fw1ZOQzPfF=bbEsCOhkoHfV5B5ayprxR6kWr6vApT5Q@mail.gmail.com>
+ <CACRoPnRH1D=8k5uuUahh1MJOAXsWkhY0fWev2AQhJm5+WWk5rQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 16:33:06 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Sam Halliday <sam.halliday@gmail.com>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 16:55:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agDRZ-0006f2-MY
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 16:33:06 +0100
+	id 1agDnD-0007DD-9l
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 16:55:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935146AbcCPPdA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 11:33:00 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:35606 "EHLO
-	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S935092AbcCPPc7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Mar 2016 11:32:59 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 1FC7620FC8
-	for <git@vger.kernel.org>; Wed, 16 Mar 2016 11:32:58 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute4.internal (MEProxy); Wed, 16 Mar 2016 11:32:58 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=vmtEYy6p5fnetVZk8rHGqHEUxb4=; b=pDuRAj
-	kum8l3vMYBTVoUWzvb/wvJZOfkt0FhbuVIwsK0a+WrUENTvqQyiCC8nyqUK4ZPfn
-	3KiL19G/oi9AWcW6nUD9yP0fvoHXRmkF2sLYoaRUfYdRZWozMIO0v/zswOqfbclh
-	ks/bLWlifx7Mj9KJjrsb0lqWEX5ODIgFSI7Sc=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=vmtEYy6p5fnetVZ
-	k8rHGqHEUxb4=; b=hzTzsyM5BBHZqAxx6a7zZA5HF5SVUkui2p6ZB3VgqDeYrDM
-	vXd4sApz+1qqNMCLMXBSQsyyGMyqidFWK+5gKQE2vEVMbGHnrX8FUNiapRMxxRKC
-	hcVYp5flX/bu0ROwrKBQseRlM5BgwYtu1oPHjaaU7pngbM1a+3Fh2aA6EkwA=
-X-Sasl-enc: c01nBnjDQTjGQ9NzYFozCe5fY9+NyjuISc4uO1hiyGMK 1458142377
-Received: from UltraSam.fritz.box (dslb-092-076-189-025.092.076.pools.vodafone-ip.de [92.76.189.25])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 4C4E7C0001A;
-	Wed, 16 Mar 2016 11:32:57 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
-In-Reply-To: <CACsJy8CyLGtYpPnwdhS-AD4d2pcU7RVv=OxPEePcHYhFpDh4pg@mail.gmail.com>
+	id S1753090AbcCPPzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 11:55:23 -0400
+Received: from mout.gmx.net ([212.227.15.18]:61947 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750839AbcCPPzW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 11:55:22 -0400
+Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0Lm34j-1a6bqx1zu5-00Zd9M; Wed, 16 Mar 2016 16:55:02
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <CACRoPnRH1D=8k5uuUahh1MJOAXsWkhY0fWev2AQhJm5+WWk5rQ@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:HjjQmNdOCX4as1YdRpcSUS0rGr2vtOjIO+KALf37sWBQW9jnzVo
+ XwKq8AZ9JPCZAy/uF3iqT5AxBxCYIDi0tZeN+x+FMK2mr9+lqw07SU1D5qvBBMBAK0CWv7R
+ dS3q83mYWKFtQFQa1JkKVs3ICalVT8PgjTg/KVNy51+XJHnIYiwvFlV0p9PyIeqTCp/20vL
+ QWmNoEOkClF3lML62GaJQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YSIIYh9U/Q4=:EjaqJJMksEyrnYsW2gwZMI
+ +ZV1zO7OHxaz3lQpiD1/oCrkCajkpqbGmVPjB8P2V2CMzMgfEztZJ2yRZpIWilhf39yfQVSdB
+ EVN5xO84I83RrgihIovqKTxtg1EzKkXYNn5bsuBoVmAJH6S1nv31/mk8FQCrVhPjli4kcUfmf
+ uc1vAZCh3fdfCLw4GU6hBUqjn9ujdZ44/SsflMbzEWjAF+pisLYRERJOt2gd/hxa7o2LNa5kT
+ ReF1/qoFPkGwK6MGPB9F2Yuo7sh7szFRyXbIhj+iu8+UNdB0CQjBUIrBGGd3ppoBdTf2GAXoA
+ eavzAsTLV3WwF0fPEAZBtfWXyO8DgECL/LA1ObPWk8j64FUFlrpgctqWEjlS+P6SLRR6s1lnz
+ egGtJPGLh+tL9KB2VDvk7d2/2ocLanlUJ8iib9EpNI1rqlQ2xlrEXhTHiv0uNhR7a0f04rfW+
+ lx/Ar65q220PNQG7xnBocT9dF3c9PAl4rt65UDtyx4iH81YG5SOwNOHZ5z9sYi4pxSyOKiS9v
+ V8fm3pgrH9FnrcL0tjeaIm635QqfIaCxiUA5/x86cZNfNQoFSIFAMtmi9/Xm+OZYSR05sGeeo
+ SpuxCLB8prmjqDELzwI6S7SfyBlysxRoTL31VUW9tTHxFk1+H3CFxrBj1cF8DfNrJ9u2Nvp8p
+ WYaFRtN8VEsCmo4k/T/YRT6RpJC6TRHBZ+y07wYUMNbBVcbXDJoAUXzq2edGvHBh0KwLbwRFF
+ xNKmUGEeu7kKwT0UpAh+xuqyKxzTEmqws/ojXIgVMBsW4WAHEeJPb2mnWWgjEVFwH5PDNLxE 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288982>
 
-Duy Nguyen venit, vidit, dixit 16.03.2016 14:40:
-> On Wed, Mar 16, 2016 at 8:33 PM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> In hindsight, what happened must have been like this:
->>
->> "ahead " was marked properly for l10n and translated in the past.
->>
->> 7a76c28 (status: disable translation when --porcelain is used,
->> 2014-03-20) introduced those extra parentheses. Matthieu probably didn't
->> rerun "make pot" and "msgmerge" so that he didn't notice the consequences.
+Hi Paul,
+
+On Wed, 16 Mar 2016, Paul Tan wrote:
+
+> On Mon, Mar 14, 2016 at 9:43 PM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+> > On Sat, Mar 12, 2016 at 11:46 AM, Paul Tan <pyokagan@gmail.com> wrote:
+> >> In an interactive rebase, commands are read and executed from a todo
+> >> list (.git/rebase-merge/git-rebase-todo) to perform the rebase.
+> >>
+> >> In the upcoming re-implementation of git-rebase -i in C, it is useful
+> >> to be able to parse each command into a data structure which can then
+> >> be operated on. Implement rebase_todo_item for this.
+> >
+> > sequencer.{c,h} already has some code to parse and create todo lists
+> > for cherry-picking or reverting multiple commits, so I am wondering if
+> > it would be possible to share some code?
 > 
-> .po(t) files are _very_ noisy because they record line numbers and
-> that pretty much guarantees huge diffs. Even I as a former translator
-> do not want to "make pot" and see the differences. If only msgmerge
-> supports an output without line numbers...
-> 
+> AFAIK, sequencer.c as it is in master parses the todo list
+> destructively and does not keep the associated action for each commit
+> and the "rest" string.
 
-echo '*.po diff=po' >>.gitattributes
-echo '*.pot diff=po' >>.gitattributes
-git config diff.po.textconv "msgcat --indent --no-location"
+This is a *serious* mistake in the implementation of the sequencer, I
+agree.
 
-With or without the indent, that gives a pretty clean diff. [It's
-unfortunate that one half of that config is in-tree, one-half is not.]
+Therefore it is a good idea to fix that mistake instead of leaving it in
+place.
 
-The way it currently is, "non-l10n" coders don't even notice when their
-changes affect the set of marked strings. But I guess ususally that's
-not a problem.
+And that is exactly what I did:
 
-For our l10n coordinator it is impossible to decide whether a "git.pot"
-diff between two runs looks the way it is supposed to look - he would
-have to be aware of all code changes that intentionally change the
-marked strings. (Likewise, for the translators.)
+	https://github.com/dscho/git/commit/b9b5b7351
 
-So, really, the "actual coders" know best whether their changes should
-affect l10n or not, so they should be made more aware of it. Forcing
-"make pot" (and maybe more) on everyone sounds a bit harsh, but what
-else can we do?
+Please note that the commit is marked as a "TODO" because it has to
+reintroduce a stupidly strict behavior (the sequencer expects the commands
+in the todo script to agree with the overall action, i.e. if the action is
+REPLAY_REVERT, the todo script can only contain "revert" commands, if the
+action is REPLAY_PICK, the todo list can only contain "pick" commands). Of
+course this restriction is totally arbitrary and even unwanted, so I will
+lift it after this commit. Or maybe I'll just lift it before this commit.
+Yeah, I'll do that instead.
 
-Michael
+> As I said in another thread, originally I wanted to keep the scope
+> simple, and just do the rewrite of rebase from C to shell, and let any
+> further libifications and optimizations come after, so I didn't want
+> to touch sequencer for now.
+
+We know, however, how leaving technical debt for later will just make sure
+that technical debt accumulates...
+
+And while I have a *tremendous* respect for what Karthik did (and
+continues to do, even long after his GSoC project ended!), I do not want
+to ask any future GSoC student to clean up the mess that we produce right
+now... So let's just not add more technical debt than we absolutely have
+to.
+
+Ciao,
+Dscho
