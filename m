@@ -1,106 +1,101 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: [PATCH/RFC] parse-options.c: make OPTION__COUNTUP consider negative
- values
-Date: Wed, 16 Mar 2016 23:16:58 +0000
-Message-ID: <0102015381b7c7b5-5b57a780-369b-478b-94d2-7094f0befdad-000000@eu-west-1.amazonses.com>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [RFC PATCH] hashmap API: introduce for_each_hashmap_entry() helper
+ macro
+Date: Thu, 17 Mar 2016 00:47:52 +0100
+Message-ID: <56E9F0A8.5080308@gmail.com>
+References: <1458146346-27959-1-git-send-email-kuleshovmail@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 17 00:37:52 2016
+Cc: Git <git@vger.kernel.org>
+To: Alexander Kuleshov <kuleshovmail@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 17 00:48:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agL0g-0005lm-Lz
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 00:37:51 +0100
+	id 1agLAa-00059y-Rq
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 00:48:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755591AbcCPXhq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 19:37:46 -0400
-Received: from a6-243.smtp-out.eu-west-1.amazonses.com ([54.240.6.243]:46842
-	"EHLO a6-243.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752552AbcCPXhp (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Mar 2016 19:37:45 -0400
-X-Greylist: delayed 1245 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Mar 2016 19:37:45 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1458170218;
-	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=1M3M9g5uQwqOnoyQ0dLhBM3S1r3GoxHhvstqtwLFEBM=;
-	b=FsI0ZC47iOKSQf/F4DYMD7nHRrkCh6+LrKviSZFP6Ofda6ZoBjZMhV6+bGOlJro2
-	FT2Wnl1EeSN3jz85Z8qKHXslbG7Taj4lGEuTGek3mFcJWqVywjecwUIYX9AMZopfdKC
-	Rvw1Uk1Ndo+qn0fYMw6PFOft+pDyBpjzeyQzI3dY=
-X-SES-Outgoing: 2016.03.16-54.240.6.243
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+	id S932641AbcCPXr7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 19:47:59 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:38489 "EHLO
+	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752710AbcCPXr6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 19:47:58 -0400
+Received: by mail-wm0-f52.google.com with SMTP id l68so94296386wml.1
+        for <git@vger.kernel.org>; Wed, 16 Mar 2016 16:47:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-transfer-encoding;
+        bh=PI6zGhE2gsx3+8mpUPNVt50Wa+pk9b4/pBBXLrkLymw=;
+        b=ZT9Fc8r0gg5046YQGiJq66slBMlh4jVkC19OJTgEWjGN0+9gKYjuapDaQU+WrewQEz
+         h8SiVrbeY1lOOpBhlRij+9IzIYxmuox3EQok4oR0G7aNK37BTgC8QIKOO4qh1xSWbWd+
+         jttn6/JtdLnYEk8WqeGBrYP0Ze7+4fg/hSgxu3kv5mFVtGpW+quWflb164rfq6h6zVrg
+         AFgbJWAVPwr8vmhAwsaSwg+K2m2/0QNt2soqgUyIMbVjNXtMLD5KPZqS7nOfJo8U/Lct
+         LK9G7OyUTyi7Db9CiZjyv1Fl3QaiKXcdhSaiRItcrui45M4nNCPP7M4gO6Lr2WOh/mTK
+         Z7ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-transfer-encoding;
+        bh=PI6zGhE2gsx3+8mpUPNVt50Wa+pk9b4/pBBXLrkLymw=;
+        b=T02HFAKJqp16PBXvZ50e62peAmYd4+rXxgZIJ+i8l/HQsu/J6LpqOESfliKgM1y0wd
+         u8n/gxnm41XlN09T8qY70+BWnvCh3Inhk3Z5Y/i+NiJO+tT0bgJItZRpx+0hUFn4mrmv
+         JO4fC3N5MkLNUJhicALPqBJV0szj9F/ikNUc8bUPIo3k/LBhBSB1bl9rcByoVDo1CB0O
+         sAxEAoVpQistl01KXDz499UCP/3etznd2BeaNnwf5dIFIQF9lhn+geyLZHmEW8A0E6z8
+         VNo67aCQ/yw/muoRstj3LL0iPUkY7DKCdn5U+sxdSGZCjyNYaUJYO8BP6gy/p9rFdG+s
+         hbig==
+X-Gm-Message-State: AD7BkJLH23/TbK+9X5sbyxo3IeRwzsAtBTy8RELs2UKfijkjbkbe+//Y7Ws29eOPZbDjlQ==
+X-Received: by 10.28.45.209 with SMTP id t200mr32637517wmt.71.1458172076794;
+        Wed, 16 Mar 2016 16:47:56 -0700 (PDT)
+Received: from [10.1.116.51] (ns.dcon.de. [77.244.111.149])
+        by smtp.googlemail.com with ESMTPSA id ux5sm5094242wjc.17.2016.03.16.16.47.55
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 16 Mar 2016 16:47:55 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+In-Reply-To: <1458146346-27959-1-git-send-email-kuleshovmail@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289062>
 
-The reason to make it consider negative values or more specifically
-"unspecified" values is to differentiate between the option passed
-once, multiple times or with --no-option. This makes the receiver
-know what actually happened with the arguments which is particularly
-required with option have multiple levels of that option.
+Am 16.03.2016 um 17:39 schrieb Alexander Kuleshov:
 
-Eg. :
-initialize verbose = -1
-`git commit` => verbose = -1
-`git commit -v` => verbose = 1
-`git commit -v -v` => verbose = 1
-`git commit --no-verbose` => verbose = 0
+> There is common pattern to traverse a hashmap in git source code:
+> 
+>         hashmap_iter_init(map, &iter);
+>         while ((entry = hashmap_iter_next(&iter)))
+>              // do something with entry
+> 
 
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+The hashmap_iter_first() function allows you to do this instead:
 
----
-The discussion on the mailing list[1] suggested this approach.
-I plan to include this with my previous patch regarding "configuration
-for commonly used command `git commit -v`" as this is a requirement for
-latter.
+	for (entry = hashmap_iter_first(map, &iter); entry; entry = hashmap_iter_next(&iter))
+		doSomething(entry);
 
-[1] : http://thread.gmane.org/gmane.comp.version-control.git/289027
----
- Documentation/technical/api-parse-options.txt | 6 ++++--
- parse-options.c                               | 8 +++++++-
- 2 files changed, 11 insertions(+), 3 deletions(-)
+With an appropriate macro definition, this could be simplified to:
 
-diff --git a/Documentation/technical/api-parse-options.txt b/Documentation/technical/api-parse-options.txt
-index 5f0757d..a908d8a 100644
---- a/Documentation/technical/api-parse-options.txt
-+++ b/Documentation/technical/api-parse-options.txt
-@@ -144,8 +144,10 @@ There are some macros to easily define options:
- 
- `OPT_COUNTUP(short, long, &int_var, description)`::
- 	Introduce a count-up option.
--	`int_var` is incremented on each use of `--option`, and
--	reset to zero with `--no-option`.
-+	If the `int_var` is negative and `--option` is absent,
-+	then it will retain its value. Otherwise it will first set
-+	`int_var` to 0 and then increment it on each use of `--option`,
-+	and reset to zero with `--no-option`.
- 
- `OPT_BIT(short, long, &int_var, description, mask)`::
- 	Introduce a boolean option.
-diff --git a/parse-options.c b/parse-options.c
-index 47a9192..86d30bd 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -110,7 +110,13 @@ static int get_value(struct parse_opt_ctx_t *p,
- 		return 0;
- 
- 	case OPTION_COUNTUP:
--		*(int *)opt->value = unset ? 0 : *(int *)opt->value + 1;
-+		if (unset)
-+			*(int *)opt->value = 0;
-+		else {
-+			if (*(int *)opt->value < 0)
-+				*(int *)opt->value = 0;
-+			*(int *)opt->value += 1;
-+		}
- 		return 0;
- 
- 	case OPTION_SET_INT:
+	#define hashmap_for_each(map, iter, entry) for (entry = hashmap_iter_first(map, iter); entry; entry = hashmap_iter_next(iter))
+	...
+	hashmap_for_each(map, &iter, entry)
+		doSomething(entry);
 
---
-https://github.com/git/git/pull/212
+You would still need to declare the 'iter' and 'entry' variables, but
+there is no danger of decl-after-statement or variable shadowing
+mentioned by Junio. That is, you can do this:
+
+	hashmap_for_each(map, &iter, entry)
+		if (checkCondition(entry))
+			break;
+	// work with found entry
+
+Or even this:
+
+	hashmap_for_each(map, &iter1, entry1)
+		hashmap_for_each(map, &iter2, entry2)
+			doSomething(entry1, entry2);
