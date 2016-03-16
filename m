@@ -1,80 +1,96 @@
-From: Phil Susi <phillsusi@gmail.com>
-Subject: Re: git checkout --theirs fails
-Date: Wed, 16 Mar 2016 08:45:57 -0400
-Message-ID: <56E95585.30409@gmail.com>
-References: <56E845F0.9020609@gmail.com>
- <CAGZ79kbzrpHowSLfCjB6wVfeX_3MUXAjD0rQdcugryWPMrTazQ@mail.gmail.com>
- <xmqqd1qv76rn.fsf@gitster.mtv.corp.google.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH/RFC/GSoC 12/17] rebase-todo: introduce rebase_todo_item
+Date: Wed, 16 Mar 2016 20:54:55 +0800
+Message-ID: <CACRoPnRH1D=8k5uuUahh1MJOAXsWkhY0fWev2AQhJm5+WWk5rQ@mail.gmail.com>
+References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com>
+	<1457779597-6918-13-git-send-email-pyokagan@gmail.com>
+	<CAP8UFD0Fw1ZOQzPfF=bbEsCOhkoHfV5B5ayprxR6kWr6vApT5Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 13:46:51 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Sam Halliday <sam.halliday@gmail.com>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 13:55:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agAqd-0003DB-Ks
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 13:46:48 +0100
+	id 1agAyb-00084M-AB
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 13:55:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755222AbcCPMqo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 08:46:44 -0400
-Received: from mail-vk0-f47.google.com ([209.85.213.47]:36784 "EHLO
-	mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752696AbcCPMqn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 08:46:43 -0400
-Received: by mail-vk0-f47.google.com with SMTP id c3so59780224vkb.3
-        for <git@vger.kernel.org>; Wed, 16 Mar 2016 05:46:43 -0700 (PDT)
+	id S1755253AbcCPMy5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 08:54:57 -0400
+Received: from mail-lf0-f50.google.com ([209.85.215.50]:36498 "EHLO
+	mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754543AbcCPMy4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 08:54:56 -0400
+Received: by mail-lf0-f50.google.com with SMTP id l83so18494944lfd.3
+        for <git@vger.kernel.org>; Wed, 16 Mar 2016 05:54:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=4dS7oG8vn0h7yrzGlA/j0BFgD6GcLzuTXJNlq4KmmAk=;
-        b=jsyCh0GpcR4ZYHOmeDZLoEgIw/DrbwVxnLZAYhw3PozRetZiBQCoqNzz/cgMYQgmWz
-         TV9k3podHm9WMA3W7DiPsuS6+hzmMvEbfmSLZgNAV5RqbX84JYnsaFD+YzwOGJvjpTLu
-         AVXe0HUKQnE5uDgZE3hw/TiMSsSXA9ayTWrCSciRzn2lMynXBNJ4megmuleLSQOn0lIx
-         JjLv/W9dVbb9IJeyQ4pb0Qww1FgSDeLmdyewcb1o0Dxt91G2zKQIOZsmwQyheiShXiED
-         sgaH2EtgHk0c41y1/5OJ+V4OywFwmp/tMdkWIJQEmblZOA4okVRV+g9uaKRJD0zJn23k
-         j4MA==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=cyNh3+5unUasMcgf9Y4G17dVsVx02G4kJzS4LDOm+pY=;
+        b=YwN1iyOK6WC2JWZWb/m1d92n1V61Z8soQXv3Feqf/W++1APXMiJ9O7pyGoVANGc8HZ
+         ShM9PHODee6A6/forpmMiOFQ+Q0gfy0E/ZL/fslcUgk0RoA2kTrLEOwls+I6fRH3ip4M
+         BSx9ZxEvBjmXRIqgpupciGMUlc7s9xBuVBMhZzGzDmGdlHV1A2J+Tw5lYfS/EE7zNy6q
+         S//IGa7AEwO8cvU8VPAOvMwgo562ve31Edqz1A2QBnmGs3u+q4rY/h4X55fbREo4C1Sh
+         RB/zDQSlNrL2k1B/KtyRUkxymWMRGAz31+v54meZaZftMmrhvedTCE9I0FskC9Answ2E
+         G6Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=4dS7oG8vn0h7yrzGlA/j0BFgD6GcLzuTXJNlq4KmmAk=;
-        b=cwwh3v/Ar5Fgxol0oWkfKUbBAHMO9G2DXv7LCY94nG3dR/dDb0Gaercf+QgB8iNfuv
-         mpTTSe4Yp+pjKP+v2PGqNDBxj+0IOcd9mkuP1s7ykGorEguHAl2uJqW9P0U3WqhS+cPE
-         omidw1rulvw+3VYMzEgXKCkNP50QXVgjoIPOP1URixLhHVevxEbE7RSbMK0GoGMQAv0s
-         3ksSGdFoG93LGkp1g4EUWOxhnAWiF38pOiiQSiWK1eM/j1jTzZ1UG9jHE+J0DxHWXzt5
-         rTptBfobv2C48xMqzUIeccLWVbONU92bJFGPS/ECsJT1eY+2dl/K7QQGnL+SXxFXFI36
-         Cb8w==
-X-Gm-Message-State: AD7BkJITAQ1SdKckZzUxUU/Fd6Pv3/zAJUGwfF6XRgSXJ9ZLMr60ZbpXYuHOnpH2bRS8hQ==
-X-Received: by 10.31.149.3 with SMTP id x3mr4235428vkd.46.1458132402412;
-        Wed, 16 Mar 2016 05:46:42 -0700 (PDT)
-Received: from [10.1.1.189] (fl-67-77-88-12.sta.embarqhsd.net. [67.77.88.12])
-        by smtp.googlemail.com with ESMTPSA id v69sm984956vkv.18.2016.03.16.05.46.41
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 16 Mar 2016 05:46:41 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
-In-Reply-To: <xmqqd1qv76rn.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=cyNh3+5unUasMcgf9Y4G17dVsVx02G4kJzS4LDOm+pY=;
+        b=KiL8819hSLWIb9TWXIaAdD3GkDaDXTdWcNyZwzziuayK279UJS0eoIlk5o8ADELl6H
+         qNrHooZxGgHeFCzyQ7jKU04bCGh1aaWkvVsuLTUAzf8AayQlT+sErMofWTKfVL7GSHeP
+         8+/gHkk/YaULZ+n3L1LFBb9QGdNFno8yWWgFHKSaUzFUm1Y+/tElBIcNkBwB38JeD0Z3
+         CSQDhRtB1auZ0cvotUKd8eevOKOA4Nb17I5h1Ny+uQU8xScTsrIafBO9bBSU5fHsJZts
+         G26kchYUXN5XEQWxX8ol6gd1UE7u99R0JmyIq+o3Twq+YDHmNUBFzStKQHiYuGxKO5hK
+         F3+g==
+X-Gm-Message-State: AD7BkJKr4jxvtAo+6AYWPqTgowpXKB82Rw4xJRTRrO2vGb0xhHzPAc7JSmkFONYmpEITzu994JL0oxYXzVte/A==
+X-Received: by 10.25.156.133 with SMTP id f127mr1387328lfe.102.1458132895073;
+ Wed, 16 Mar 2016 05:54:55 -0700 (PDT)
+Received: by 10.112.207.74 with HTTP; Wed, 16 Mar 2016 05:54:55 -0700 (PDT)
+In-Reply-To: <CAP8UFD0Fw1ZOQzPfF=bbEsCOhkoHfV5B5ayprxR6kWr6vApT5Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288967>
 
-On 3/15/2016 5:47 PM, Junio C Hamano wrote:
-> would fail when the path file/name is unmerged and does not have
-> stage #3 entry, wouldn't it?  So with ".", unless all paths that
-> match that pathspec (i.e. all available files) are either merged
-> (i.e. without conflict) or have stage #3 entry, it is expected that
-> the command would fail consistently to the case where a pathspec
-> "file/name" that happens to match only one path is given, and that
-> is the behaviour Phil saw, I would think.
+Hi Christian,
 
-Right... why is this though?  Why doesn't it just check out those files
-that *do* have a #3 entry?  And also why the nonsense about switching
-branches when you don't specify any path or branch?
+On Mon, Mar 14, 2016 at 9:43 PM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> On Sat, Mar 12, 2016 at 11:46 AM, Paul Tan <pyokagan@gmail.com> wrote:
+>> In an interactive rebase, commands are read and executed from a todo
+>> list (.git/rebase-merge/git-rebase-todo) to perform the rebase.
+>>
+>> In the upcoming re-implementation of git-rebase -i in C, it is useful to
+>> be able to parse each command into a data structure which can then be
+>> operated on. Implement rebase_todo_item for this.
+>
+> sequencer.{c,h} already has some code to parse and create todo lists
+> for cherry-picking or reverting multiple commits, so I am wondering if
+> it would be possible to share some code?
+
+AFAIK, sequencer.c as it is in master parses the todo list
+destructively and does not keep the associated action for each commit
+and the "rest" string. interactive rebase does keep those, so I needed
+a different data structure rather than the one currently being used in
+sequencer.c.
+
+As I said in another thread, originally I wanted to keep the scope
+simple, and just do the rewrite of rebase from C to shell, and let any
+further libifications and optimizations come after, so I didn't want
+to touch sequencer for now. However, it turns out that Dscho has grand
+plans for the unification of sequencer and interactive rebase, so I'll
+go with that :-)
+
+Regards,
+Paul
