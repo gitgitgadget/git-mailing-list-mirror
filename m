@@ -1,88 +1,83 @@
-From: Alexander Kuleshov <kuleshovmail@gmail.com>
-Subject: [PATCH v3] submodule-config: use hashmap_iter_first()
-Date: Wed, 16 Mar 2016 13:46:31 +0600
-Message-ID: <1458114391-2235-1-git-send-email-kuleshovmail@gmail.com>
-Cc: Git <git@vger.kernel.org>,
-	Alexander Kuleshov <kuleshovmail@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 08:46:57 2016
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH/RFC/GSoC 01/17] perf: introduce performance tests for
+ git-rebase
+Date: Wed, 16 Mar 2016 08:58:28 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603160855390.4690@virtualbox>
+References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com> <1457779597-6918-2-git-send-email-pyokagan@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>, sam.halliday@gmail.com
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 08:58:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ag6AS-00042z-Eh
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 08:46:57 +0100
+	id 1ag6Lp-00042y-8Q
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 08:58:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933877AbcCPHqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 03:46:52 -0400
-Received: from mail-lb0-f177.google.com ([209.85.217.177]:35868 "EHLO
-	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932395AbcCPHqv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 03:46:51 -0400
-Received: by mail-lb0-f177.google.com with SMTP id x1so42278738lbj.3
-        for <git@vger.kernel.org>; Wed, 16 Mar 2016 00:46:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=S4CmeC4TwUE3dkCA5RjJx2QLOrnuO9Tj1Y3XzuTtE4s=;
-        b=Ka7eO0exPNeKIX3gjQcncA3i5FSnqdbRJ7ixPHHf+zdNPkLGlPTFaDfa9eC/TteiZ9
-         pwUxxqtNVDuzdh0bhv/zlRnU3iCHQ6N9FPywncHWtqtfFVuTg6hYI/Clg0xTYYGLWQTL
-         TzzjMF7q2wJkPMK7vWI+wRr1vvU2pD1BE0ul0Kq3zMi4c5t8xObSJNFGxHOTe6Kx7umL
-         XffJcOpdpJHQeuSH5pCIi6EUz/ivqHCNQA+3g6b2G8uEsYEmsaww9NQK5L4XLShHIUGQ
-         xaKyy1mMz+dlhOLFIlg2dK+09LA65LlGuiMmh5OLT0KYWSYn+KEEHEF3/gHnV05SHmDv
-         ebRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=S4CmeC4TwUE3dkCA5RjJx2QLOrnuO9Tj1Y3XzuTtE4s=;
-        b=MoLeeX2xLkocg/8fRfskrGHqzx2ZOuW18tBBMDQn2DD7rOueBg478EXW8XocFoctL/
-         h7YakkRtXaaGulT88tSwJ4uIJqiaCnxKR+n0KI5zbOtB/uDTofPy35pW603ioVFIxRbW
-         sYaRcYluNWfpGlo4ul9a+yWnU/tzwHxXioi/2bf0WpoDnUL5lSZkYRk3nTf1DIeLwiHo
-         q/pKKA8MEG2NqUea/XUiI1pHMtktvIUY1eDp+YADka6KAlBz6C+8MlCBciifajsfSLC6
-         DSmyks+YyxiE5s/PdwkUJVdbwm1WXc/Oa0FRETs1OQhmPJ2gAhNs0DSSA9J+a58+yIFu
-         xeHw==
-X-Gm-Message-State: AD7BkJLxICemdFzGvRsr7t56y5pGZtNL6WV/x63DNe4Umxse21b94STU+3yC+NYhotATwg==
-X-Received: by 10.112.171.70 with SMTP id as6mr817830lbc.85.1458114409295;
-        Wed, 16 Mar 2016 00:46:49 -0700 (PDT)
-Received: from localhost.localhost ([37.150.78.168])
-        by smtp.gmail.com with ESMTPSA id rx1sm299875lbb.22.2016.03.16.00.46.47
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 16 Mar 2016 00:46:48 -0700 (PDT)
-X-Mailer: git-send-email 2.8.0.rc2.216.g1477fb2.dirty
+	id S933970AbcCPH6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 03:58:37 -0400
+Received: from mout.gmx.net ([212.227.17.22]:64475 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933203AbcCPH6g (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 03:58:36 -0400
+Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0M3i8r-1ZpEoO3LlZ-00rITe; Wed, 16 Mar 2016 08:58:29
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <1457779597-6918-2-git-send-email-pyokagan@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:pd0UsDGu9rYFOb6v9DXunq5GTRWnoSbM+xk+mmmAfzw9aRbpTiT
+ fgXa3Lt0rUHAEd6Ngzt4nzJGeVDUg7yjJxn/glreE7u1ONIXe3YBJNx977nHBIojVeDqBAh
+ GPX+rBLcBXZbJzlCtSe03gWXxKFQxM8lz6tMnmD6Po3oarXU83N/h7q1IK3ri04YiF/l7Zs
+ gHfto1pzmSKdf4TvspZRQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:osxFbdsqitc=:/rGqhKrrTW0b7L8Ge66Q5V
+ /02YfTVOfgjEZza9P4k7O4TJlRx6O8aMlhKBQjIVxBq6Nf7i3UEHgnE69gtiQ+0CJ4DpXnATK
+ jqv1tQ2xxSPF+CPwrvoedmwZRZMNpiPsxhG/iQCzCRhZyF7Ra3Q2H4g80p3nKx1+qCi6KMvUQ
+ 97PUOsNaRz65JGd1ti8E3SeFMkGIsxJcLAYbGjp/6Hf5Uu5ABAPf2nRB+rzu9u/Pm+ADPrjoF
+ HCAIYVMARlIjbcowchHcqxoCgUr1efM0iJC6XQGpwF6yqjmpVJxmC+id3CXfsHdqLkjT8+upa
+ dLL65SbVSA+Ob7QmMQXSQq4yEarRO+4W/q8wSa4vIMpS15i/D229pun/HeqeaMh8/JlTDv0nw
+ XzsoLc5SJj4pB0Qoz6axlGxbfP+oGSqba3EdZ0ASQ8udSnK1fVnb4A1btEVO3qnJ6/J+9l/F2
+ /ZGpSeE3cqs7ZYuERrnYZZ/fNfbIqc1zEHeEiXWZC47L9Gzo9kCeuj1AzsDQGygw76li2OsiA
+ ZpWxzDZLnUI/h1B63slHlRtfB5LC9i2KvlLDE4doardmSY5fDry8hVRumO2m56Uywez693G4h
+ cNwp7Mqo8sWjLIQiAdXPQ39nnYQ7tJaU0qnOiHXeAprqNeT2bZnAOiGfqyylN1O4qq64s5ScY
+ rYd1zf8VPDamUbAuOpUTCxynb+tsxSPHpQN9OFcGCGh/+EtZnKws8ybyimakfYMRMtCJKr0XZ
+ 1ETP0mrSdd+hCA6mQpZdsZW5eIlyMBDaQArZFgRalTrxM5GMCXVLzGM55ONPD0ngDsqA7iSR 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288950>
 
-The hashmap API provides hashmap_iter_first() helper for initialion
-and getting the first entry of a hashmap. Let's use it instead of
-doing initialization manually and then get the first entry.
+Hi Paul,
 
-There are no functional changes, just cleanup.
+On Sat, 12 Mar 2016, Paul Tan wrote:
 
-Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
-Reviewed-by: Stefan Beller <sbeller@google.com>
----
-Changelog v3: commit message edited.
+> diff --git a/t/perf/p3404-rebase-interactive.sh b/t/perf/p3404-rebase-interactive.sh
+> new file mode 100755
+> index 0000000..aaca105
+> --- /dev/null
+> +++ b/t/perf/p3404-rebase-interactive.sh
+> @@ -0,0 +1,26 @@
+>
+> [...]
+>
+> +test_perf 'rebase -i --onto master^' '
+> +	git checkout perf-topic-branch &&
+> +	git reset --hard perf-topic-branch-initial &&
+> +	GIT_SEQUENCE_EDITOR=: git rebase -i --onto master^ master
+> +'
 
- submodule-config.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+This measures the performance of checkout && reset && rebase -i. Maybe we
+should only test rebase -i?
 
-diff --git a/submodule-config.c b/submodule-config.c
-index b82d1fb..8ac5031 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -405,8 +405,7 @@ static const struct submodule *config_from(struct submodule_cache *cache,
- 		struct hashmap_iter iter;
- 		struct submodule_entry *entry;
- 
--		hashmap_iter_init(&cache->for_name, &iter);
--		entry = hashmap_iter_next(&iter);
-+		entry = hashmap_iter_first(&cache->for_name, &iter);
- 		if (!entry)
- 			return NULL;
- 		return entry->config;
--- 
-2.8.0.rc2.216.g1477fb2.dirty
+Also, I would strongly recommend an extra test_commit after reset;
+Otherwise you would only test the logic that verifies that it can simply
+fast-forward instead of cherry-picking.
+
+Ciao,
+Dscho
