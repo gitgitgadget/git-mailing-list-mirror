@@ -1,92 +1,106 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] pretty-print: de-tabify indented logs to make things line
- up properly
-Date: Wed, 16 Mar 2016 12:59:34 -0700
-Message-ID: <CA+55aFwbNXJnwEYrKE5dDRk_6eZeGT6Z11uSQS8RmCSq43PkdA@mail.gmail.com>
-References: <alpine.LFD.2.20.1603160926060.13030@i7>
-	<xmqq7fh25mkc.fsf@gitster.mtv.corp.google.com>
-	<CA+55aFxV5PWdSn9Gj=zV464TtJo=QvciZrhc5Pwe+Qfyqt8sXw@mail.gmail.com>
-	<xmqqwpp243sb.fsf@gitster.mtv.corp.google.com>
-	<xmqqoaae4340.fsf@gitster.mtv.corp.google.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH 2/1] git-svn: fix URL canonicalization during init w/ SVN 1.7+
+Date: Wed, 16 Mar 2016 20:14:08 +0000
+Message-ID: <20160316201408.GA22261@dcvr.yhbt.net>
+References: <20160316190954.GR29016@dinwoodie.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 20:59:42 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Michael G. Schwern" <schwern@pobox.com>
+To: Adam Dinwoodie <adam@dinwoodie.org>
+X-From: git-owner@vger.kernel.org Wed Mar 16 21:14:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agHbZ-0007dF-06
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 20:59:41 +0100
+	id 1agHpf-0001wu-60
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 21:14:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755590AbcCPT7g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 15:59:36 -0400
-Received: from mail-io0-f179.google.com ([209.85.223.179]:35597 "EHLO
-	mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752162AbcCPT7f (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 15:59:35 -0400
-Received: by mail-io0-f179.google.com with SMTP id g203so72989507iof.2
-        for <git@vger.kernel.org>; Wed, 16 Mar 2016 12:59:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=fnoNiwsPt1d2HDl5HcKdjk0i6A7IHsNbylfNJpQ7+/o=;
-        b=VLc53rpiVQpzv/gqG+0oq4nJyh9unaXq/dwH1WIt7FQmIIxGSNviwNR1jQFRLcVYUn
-         WF9C2c68zxhQY08/BRGC9Qt2vVTbrkPCLjY8IKl6SS7OR/QOR1vX21BmlSHKvT6dOm36
-         eMftRSxQ4lNIPdL+YXPtEg8CPIr3vmKdQnDu+zFUvZyShcXFezRSDpqtNDI/q0zNxLjB
-         LGXyKTLsasn6D9tPA2TM3oXgEVR5mgKpTTda584XxEHNw0DEOLB/wfyUorvjSQLGyBuA
-         pBspIaDhgrF/AiY9B4WcFpJbCaASCVMFHNCGGkxlZP/CAQTOdJY2m3ULg7A4Uq86me+H
-         TWoQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=fnoNiwsPt1d2HDl5HcKdjk0i6A7IHsNbylfNJpQ7+/o=;
-        b=e6NKvY/CubqgQh+SjQJM5H2V6WpL7+levdTUXheQ7ZmgyfxEy2XRNV5mFOySz4OkL0
-         bBsdLTT83WXwt/016/443dXJhAVTmW0nvei9HB235HavialWTI4cQqibfOL7krGf2JzS
-         OGYE9FrvJ8J1xCEaPbSOIeQQSO9ooxdTr9Sv4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=fnoNiwsPt1d2HDl5HcKdjk0i6A7IHsNbylfNJpQ7+/o=;
-        b=mFj3y/x9GxYsJA81KP0571gIQy5eudWb0zLjpMCjxqA891gTjGe1xEM7/eIKRC4mYS
-         9+9NOBI2JnXCDEmGqTkGrN6nWqP/1ps0Z3gk3ILZhngX/VzjR8USCCcylPqROlfX9GbF
-         slw9xnU3L/QBjpumDG/Um92A32JdiCJCyqw5bzIUCw51wfFFgUcxV37R/wn0M+J9QrTo
-         yENIrf6GoOw46BNsRCrkuh48lq/M4XUcu4QtDfAeDcdz1LXrnnvpIendFrrT2LD/E3uL
-         hUSBtslt0YuZXwTxFVsbqwfi6Ew0ii2qjTr6NNEXXqQEbY5ey0p7oTmzkHGUkXi/SGlE
-         ixYg==
-X-Gm-Message-State: AD7BkJKM+TS1eP5EP76sTM6367Y/p239bCtlHE9mQ2Lq9aNKpUJURawj71RJHBxpMId88PM8Gtu8YYwuaxXkSA==
-X-Received: by 10.107.13.65 with SMTP id 62mr5849877ion.186.1458158374734;
- Wed, 16 Mar 2016 12:59:34 -0700 (PDT)
-Received: by 10.36.93.202 with HTTP; Wed, 16 Mar 2016 12:59:34 -0700 (PDT)
-In-Reply-To: <xmqqoaae4340.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: TzRzDioXbzp52BtIeoNwe6dTJfo
+	id S967146AbcCPUOI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 16:14:08 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:36887 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965623AbcCPUOH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 16:14:07 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id F28AE633805;
+	Wed, 16 Mar 2016 20:14:06 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20160316190954.GR29016@dinwoodie.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289029>
 
-On Wed, Mar 16, 2016 at 12:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Strangely running t4201 with your patch (without any squashing)
-> seems to show a breakage in shortlog.  I won't be able to come back
-> to this topic for at least a few hours, so this is just a single bit
-> "breaks" report, without "how and why" analysis, sorry.
+URL canonicalization when full URLs are passed became broken
+when using SVN::_Core::svn_dirent_canonicalize under SVN 1.7.
 
-It's because those things have tabs in their first line, so the output
-now differs from the expected one exactly because of the tab-vs-space
-expansion.
+Ensure we canonicalize paths and URLs with appropriate functions
+for each type from now on as the path/URL-agnostic
+SVN::_Core::svn_path_canonicalize function is deprecated in SVN.
 
-The wrapping logic is then also different, because the .wrapping code
-does the tabs as "align to 8 chars" while the new code does tabs as
-"align to 8 chars modulo the indent offset".
+Tested with the following commands:
 
-I only looked at the first case, but I assume the others are just more
-of the same. We'd just adjust the expected output, I assume.
+  git svn init -T svn://svn.code.sf.net/p/squirrelmail/code/trunk
+  git svn init -b svn://svn.code.sf.net/p/squirrelmail/code/branches
 
-               Linus
+Reported-by: Adam Dinwoodie <adam@dinwoodie.org>
+  http://mid.gmane.org/20160315162344.GM29016@dinwoodie.org
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-svn.perl                  | 14 ++++++++------
+ t/t9117-git-svn-init-clone.sh |  2 +-
+ 2 files changed, 9 insertions(+), 7 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index fa5f253..05eced0 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1745,11 +1745,12 @@ sub post_fetch_checkout {
+ 
+ sub complete_svn_url {
+ 	my ($url, $path) = @_;
+-	$path = canonicalize_path($path);
+ 
+-	# If the path is not a URL...
+-	if ($path !~ m#^[a-z\+]+://#) {
+-		if (!defined $url || $url !~ m#^[a-z\+]+://#) {
++	if ($path =~ m#^[a-z\+]+://#i) { # path is a URL
++		$path = canonicalize_url($path);
++	} else {
++		$path = canonicalize_path($path);
++		if (!defined $url || $url !~ m#^[a-z\+]+://#i) {
+ 			fatal("E: '$path' is not a complete URL ",
+ 			      "and a separate URL is not specified");
+ 		}
+@@ -1764,11 +1765,12 @@ sub complete_url_ls_init {
+ 		print STDERR "W: $switch not specified\n";
+ 		return;
+ 	}
+-	$repo_path = canonicalize_path($repo_path);
+-	if ($repo_path =~ m#^[a-z\+]+://#) {
++	if ($repo_path =~ m#^[a-z\+]+://#i) {
++		$repo_path = canonicalize_url($repo_path);
+ 		$ra = Git::SVN::Ra->new($repo_path);
+ 		$repo_path = '';
+ 	} else {
++		$repo_path = canonicalize_path($repo_path);
+ 		$repo_path =~ s#^/+##;
+ 		unless ($ra) {
+ 			fatal("E: '$repo_path' is not a complete URL ",
+diff --git a/t/t9117-git-svn-init-clone.sh b/t/t9117-git-svn-init-clone.sh
+index 2ba003d..69a6750 100755
+--- a/t/t9117-git-svn-init-clone.sh
++++ b/t/t9117-git-svn-init-clone.sh
+@@ -119,7 +119,7 @@ test_expect_success 'clone with -s/-T/-b/-t and --prefix "" still works' '
+ 	rm -f warning
+ 	'
+ 
+-test_expect_failure 'init with -T as a full url works' '
++test_expect_success 'init with -T as a full url works' '
+ 	test ! -d project &&
+ 	git svn init -T "$svnrepo"/project/trunk project &&
+ 	rm -rf project
+-- 
+EW
