@@ -1,85 +1,89 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] t9117: test specifying full url to git svn init -T
-Date: Wed, 16 Mar 2016 19:34:07 +0000
-Message-ID: <20160316193407.GA3781@dcvr.yhbt.net>
-References: <20160316190954.GR29016@dinwoodie.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Michael G. Schwern" <schwern@pobox.com>
-To: Adam Dinwoodie <adam@dinwoodie.org>
-X-From: git-owner@vger.kernel.org Wed Mar 16 20:34:16 2016
+From: Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH] builtin/apply: free patch when parse_chunk() fails
+Date: Wed, 16 Mar 2016 20:35:11 +0100
+Message-ID: <1458156911-26649-1-git-send-email-chriscool@tuxfamily.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 16 20:38:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agHCx-00054Z-4Y
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 20:34:15 +0100
+	id 1agHHM-00009c-5O
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 20:38:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932595AbcCPTeK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 15:34:10 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:36524 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752537AbcCPTeI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 15:34:08 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8F6E633808;
-	Wed, 16 Mar 2016 19:34:07 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20160316190954.GR29016@dinwoodie.org>
+	id S1755581AbcCPTio (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 15:38:44 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:37938 "EHLO
+	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753515AbcCPTin (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 15:38:43 -0400
+Received: by mail-wm0-f46.google.com with SMTP id l68so87484632wml.1
+        for <git@vger.kernel.org>; Wed, 16 Mar 2016 12:38:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=0SM4Ruvx0bMtyodK+qfa9Xj8c9jOpTMBVZYwz8nzoVc=;
+        b=Jl+3aVcEssgIQKVElsIxt1Dm0qc0DPgAv+LdDcDcsko0YgPcLUJMU+bwscwCrUd0E7
+         hZ5YdiOTv6xRWqFJe2UOJC6KEXLYK/yJANm3vZLXnvLqgB/cbB7yuBOM12GPfdAODBwM
+         WSz/Ocul2hhd/NafllI9ETcOwARuzFnECQum/maDy4rZRJRPPsREOHmbKOqgCjATcH3M
+         /BpDCqzd3jPv7SE67vNfbxZbf+RvX4z1umBv8Lg8EfxhyfrNmIdaYx2ruPckcvpDgaEe
+         P60F++oT05+oU4BsApsxvOisunh4nP/bJY1JuNbJmsPheXhnJKgwlztgSnawMD7JQ7Fy
+         R9og==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=0SM4Ruvx0bMtyodK+qfa9Xj8c9jOpTMBVZYwz8nzoVc=;
+        b=NT4TD3lUbFIVT+fVQmVqZIHesiEQPSCKeXelKbIn2zNRcCCpgRSvJRNbFlG9Jghrjm
+         amIuC6nQPqwp+M0bVS48oKO+4HL7BruyasGZ4wUMXpNMSL78qVeyMNKsvAssc1M6tgRb
+         f2f+GF4YYF/jQqyay0r9xcG7wwWA6N4TFrqlzTXlQjiUdi5cHnvBrRQpeNvBUHK1npIN
+         deSHg2D9xYYDYgnI8AuxWeGD027+eSg/Ft8/uOIznhf1Pu6lDOIGKY1lGtYcSo4CcDK0
+         KP5IlDe+VH3bByT9E7YvriaGwPfXIxzGjFDVRoyZ7Zp8tIOEDItQZoCRTySo3KxpsyTJ
+         fWLg==
+X-Gm-Message-State: AD7BkJJL8s1ygytpmoC3YhE7GmNP3g5l5HN4ZMiOjCgEESZDUPPTPlxOPvzLA6tl9Qukfg==
+X-Received: by 10.28.184.18 with SMTP id i18mr30446522wmf.96.1458157121826;
+        Wed, 16 Mar 2016 12:38:41 -0700 (PDT)
+Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
+        by smtp.gmail.com with ESMTPSA id x203sm4847984wmg.23.2016.03.16.12.38.40
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 16 Mar 2016 12:38:41 -0700 (PDT)
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.8.0.rc2.54.g810e8ee
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289023>
 
-Adam Dinwoodie <adam@dinwoodie.org> wrote:
-> According to the documentation, full URLs can be specified in the `-T`
-> argument to `git svn init`.  However, the canonicalization of such
-> arguments squashes together consecutive "/"s, which unsurprisingly
-> breaks http://, svn://, etc URLs.  Add a failing test case to provide
-> evidence of that.
-> 
-> On systems where Subversion provides svn_path_canonicalize but not
-> svn_dirent_canonicalize (Subversion 1.6 and earlier?), this test passes,
-> as svn_path_canonicalize doesn't mangle the consecutive "/"s.
-> 
-> Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
+When parse_chunk() fails it can return -1, for example
+when find_header() doesn't find a patch header.
 
-Thanks, I was just working on a patch to fix this problem
-when I got this patch :)
+In this case it's better in apply_patch() to free the
+"struct patch" that we just allocated instead of
+leaking it.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin/apply.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-> ---
-> 
-> I think the bug here is in using perl/Git/SVN/Utils.pm's
-> `canonicalize_path` on the `-T` argument.  If it's available, that
-> function calls Subversion's `svn_dirent_canonicalize`.  The Subversion
-> code[0] makes it clear that this function is fine for relative and
-> absolute local paths, and for UNC paths on Windows, but it isn't
-> suitable for use on URLs.
-> 
-> [0]: https://svn.apache.org/repos/asf/subversion/trunk/subversion/include/svn_dirent_uri.h
-
-Yep, we should be using canonicalize_url for URLs.  I was able
-to reproduce this on Debian jessie (GNU/Linux), too.
-
-> It occurs to me that the correct "fix" here may simply be to stop
-> claiming support for specifying URLs as arguments to -T, and mandate
-> users use the `git svn init $url -T $dirent` syntax instead,
-
-Nope, we should never stop supporting existing behavior without
-very good reason and adequate deprecation warnings.
-
-> --- a/t/t9117-git-svn-init-clone.sh
-> +++ b/t/t9117-git-svn-init-clone.sh
-> @@ -119,4 +119,10 @@ test_expect_success 'clone with -s/-T/-b/-t and --prefix "" still works' '
->         rm -f warning
->         '
-
-For future reference, your mail editor is expanding tabs to
-spaces and munging your patches.  mutt won't do that itself
-(at least not with my config), so I guess it's your editor.
-
-Manually fixing up the whitespaces damage on my end.
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 42c610e..bf78282 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -4373,8 +4373,10 @@ static int apply_patch(int fd, const char *filename, int options)
+ 		patch->inaccurate_eof = !!(options & INACCURATE_EOF);
+ 		patch->recount =  !!(options & RECOUNT);
+ 		nr = parse_chunk(buf.buf + offset, buf.len - offset, patch);
+-		if (nr < 0)
++		if (nr < 0) {
++			free_patch(patch);
+ 			break;
++		}
+ 		if (apply_in_reverse)
+ 			reverse_patches(patch);
+ 		if (use_patch(patch)) {
+-- 
+2.8.0.rc2.54.g810e8ee
