@@ -1,120 +1,83 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] pretty-print: de-tabify indented logs to make things line
- up properly
-Date: Wed, 16 Mar 2016 11:21:48 -0700
-Message-ID: <CA+55aFxV5PWdSn9Gj=zV464TtJo=QvciZrhc5Pwe+Qfyqt8sXw@mail.gmail.com>
-References: <alpine.LFD.2.20.1603160926060.13030@i7>
-	<xmqq7fh25mkc.fsf@gitster.mtv.corp.google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 18/19] index-helper: autorun
+Date: Wed, 16 Mar 2016 19:27:56 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603161923380.4690@virtualbox>
+References: <1457548582-28302-1-git-send-email-dturner@twopensource.com>  <1457548582-28302-19-git-send-email-dturner@twopensource.com>  <CACsJy8CaWFhCzrH3imz+BRMTESSmyUB4jeAaYUDNk+Tmpj-VrQ@mail.gmail.com>  <alpine.DEB.2.20.1603151517590.4690@virtualbox>
+ <1458151880.9385.1.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 19:22:12 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 19:28:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agG5D-0000mY-C7
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 19:22:11 +0100
+	id 1agGB3-0005dG-51
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 19:28:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935216AbcCPSVw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 14:21:52 -0400
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:36407 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934911AbcCPSVt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 14:21:49 -0400
-Received: by mail-ig0-f170.google.com with SMTP id nk17so102108171igb.1
-        for <git@vger.kernel.org>; Wed, 16 Mar 2016 11:21:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=+qwt5rouzMdbu0jciu94CyDvKbF9KJg+/BlDrFkDOzg=;
-        b=n2x3hi/3UrlpVx2ngv7mLutdiGolMASWroCFRDThUoyKZYVFJOxnO+1QE82Bgw/ovF
-         Ac9ICTpmMEdtDr4sI84v9zFphjbfas/VtYOuTOU2D5NqyP/AezjvN/H+on8cOVNftv5T
-         KgVAyFuWJaQkapiGnfihP3n8txYAiGKSt7mo7PsvFc6DkP/IgGlFu+gDEf+R5i8rrI/Y
-         pdlsc8rZFxT5vuq21INrp3oS/AW7ovlPigTi+RjgJrtIOJ6jG7XLv1NDvqFfYfWIpeaS
-         UqExQ5vH/mCuYWckr8LLIXgZKFzzqxxHvCgC+nFZy2YCzYSh05l/bQv/DehEcgnWYjV6
-         J5DA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=+qwt5rouzMdbu0jciu94CyDvKbF9KJg+/BlDrFkDOzg=;
-        b=NPWKIoCTfAMTn+Zi5F+fJ02fd4N4pGBEe/6ZXRMFsDW+Mafg2MrOuUpCId6clVdMj1
-         C/68NEWsYxbu5pSeL5KYAYh/9aEbZzU2+3CAUYYm8GKv4Olw99SQlk8Ih5N8ruLK7Ama
-         LUtT/6JlVEDKkDYk/jCaNoEPHhpMjOrw0Z7xM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=+qwt5rouzMdbu0jciu94CyDvKbF9KJg+/BlDrFkDOzg=;
-        b=GWZUKTRyxw+bnLTwsjeaLTX8QpOB5XEaghVyQk43Wxn0tDN1jwUbpSQlZ2QoQWIPT1
-         8oz0oUs8EwKiydSXthkVpD3IA9Q4fdAWJRDfz6320LBqEhHbGGltDa3Q6iuhRGc1ddwA
-         FikhKmPTJtOCbO4mr2r0NR91ZGz/D7eGvJjZmEVQ/t9UPMVFuMBkOKWlYOTasov25kgI
-         TdteXW1+hxeWEmReK6MC8R/qUIFnArxfQf5ztGslL2ezaeZ8mXoxyDZR3zw1erFyczKe
-         PEPJJQw1GGTaiKoCdCXW4srM4Qgz8aw7/4C9WfHoGNxKkB8Egaa1rfHTlZR5qfLDbmK0
-         Uz0w==
-X-Gm-Message-State: AD7BkJKfJPDu3hwV/hSMs3Z/6gBK6ORs91BnciiXp/WxsiFdsSgOBHF1RSeGxJvcQdH5aE1lraJQYZGISN/ICA==
-X-Received: by 10.50.112.10 with SMTP id im10mr2897652igb.93.1458152508682;
- Wed, 16 Mar 2016 11:21:48 -0700 (PDT)
-Received: by 10.36.93.202 with HTTP; Wed, 16 Mar 2016 11:21:48 -0700 (PDT)
-In-Reply-To: <xmqq7fh25mkc.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: 5xFDznJWWHHFcGwW83j-QOf9ZcU
+	id S935368AbcCPS2C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 14:28:02 -0400
+Received: from mout.gmx.net ([212.227.17.22]:63707 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932618AbcCPS2A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 14:28:00 -0400
+Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MXUmw-1aLxd4436M-00WYZr; Wed, 16 Mar 2016 19:27:57
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <1458151880.9385.1.camel@twopensource.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:W0JQOMZXtB7mPQ5qG3otoA/v3Tw8vO7G8OMxT35EZ26yL0ROmGN
+ zfGJfxdB72Cajn6YtGWHGfSow1NXykh1ztP5iE4OP6vhtz6SpzGruZZpf1zHRd0hI3vw7oE
+ hGlwhA6qoXBafU45W0m3JGQ5aJBidk6FbHmGbmKd9nUBjA0TURQfJGADVkXFrkK2O0rPejy
+ rjUTPcnzwKAgRAeoWjllw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:AACS90dZE7c=:KpQMz6fpSefPGGL/3IR50T
+ YZ2Uy3n1xPeCXsY2bLJgTFyou6ZJd5r1O/TMva8sCvIAl4rUzMBKaRcyovg7zSpxLZIb6dV0N
+ z60Q0II1KuHg/eWTq/djByFUrI5fo2j9YSrT94/LvgGTUMEhD6QrOj44LFeQZwoEb0ZVmIG4N
+ P40CXfTpYKweXvOfxpQT2e2MQ8BHgV7pdlcoqWi0ieYKdLCCPyBifolTaY1FcvYiI4f4pafYG
+ /sLSgDjkZEgogb+tFaIomL4Id4fiY55/HfaSQvgll86AaOPZKzK30F2D+5KxrI1b0+HP/JnIw
+ k/DmjhPbfDrp4SjH73ZH0qSb1FW7U4vc/CeRZ/A8faXP+ASJH4IyWpee4V//SvUpU5Ai2UAcm
+ k/VJr6cF6ayR2Dl5NPvmblMD+3l628MuAv3OjGit+aKqlqEVqWM4pRV4qmTdxK+4AkpTJrtJA
+ 5PO33Dq1/6XDrU3g4A7mxG+I0ML9UvJa0+U3cai2eQ5vn6LYvGIcLb1kVXpLr6iqjz4+WFSJv
+ zvifI1RnyY4xQ0s8pzylseHN884xFCQ0UEKgpac2VgiQK+CGUNRFC+NsAxMxILQWeb3U65Ax5
+ PtyDH91HZfnDzAp/Q0jsF0bXYUm0qg/Ok+16jbd60kU/TPT1Vk1ymjGgci/+YKBAA5jXwCp10
+ 1xPD1XpO21kKzmYyL5h5MRWsgBnU4lOJOblGN2tdn0uIdUCjqvaTcYNhCLJMcB5HxDUEYVN5W
+ rOoxhiL4GN/I5cUCDg7qX+DN/RpGIZIYAtDM9wRgAT7qtdFhX6KPVGh902cljRYe5MUKOKHe 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289014>
 
-On Wed, Mar 16, 2016 at 11:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
->  (1) if turning your "preparation; do { ... } while()" into
->      "while () { }" would make the result a bit easier to read;
+Hi David,
 
-So it's probably partly taste, but I will also disagree with your
-"easier to read", because of the way the code is logically structured.
+On Wed, 16 Mar 2016, David Turner wrote:
 
-In particular, the "no TAB" case is actually *fundamentally* different
-from the "no TAB at the end" case. The return value is different, and
-the caller does very different things - the code tries to make it very
-clear that that "no TAB" situation is very different from "we found a
-TAB".
+> I don't understand what a "detached process" is on Windows (I have never
+> done any real Windows programming). Does that mean "call daemonize() and
+> it'll take care of it?"  Or something else?  Or should I just not worry
+> about it and let you take care of it?
 
-So it's not "preparation + do-while".
+Every process is detached by default, when created via CreateProcess().
+There is no fork() followed by a daemonize(). If you want to wait for a
+process to finish, you have to wait for it explicitly.
 
-It's "preparation + handle the no-TAB case differently", and then the
-"do-while" is very natural because by the time we get to the "ok, we
-are now going to need to do something about the line" stage, we
-already know we have a tab.
+But yeah, why don't you let me worry about this?
 
-But the code *could* be made to just always do the whole
-"strbuf_add()", and not return a return value at all, and the no-tab
-case wouldn't be explicitly written to be different.
+I am much more concerned about concurrent accesses and the communication
+between the Git processes and the index-helper. Writing to the .pid file
+sounds very fragile to me, in particular when multiple processes can poke
+the index-helper in succession and some readers are unaware that the index
+is being refreshed.
 
-Let me know if you'd prefer that variant, and I'll send a new version.
+This is just a quick note, and I should go into more detail, also about
+the topic branch my colleague Jeff Hostetler and I are working on, that is
+similar in spirit but wants to use a home-rolled alternative to watchman.
+I will go into more detail, but that will have to wait for tomorrow, as I
+need to log off for the day.
 
->  (2) if we can somehow eliminate duplication of "tab + 1" (spelled
->      differently on the previous line as "1+tab"), the end result
->      may get easier to follow.
-
-Yeah, I considered that. Either by just doing "tab++" before (so the
-+1" would come from that in both cases), or by introducing a new
-variable like
-
-    ptrdiff_t bytes_used;
-    ...
-    bytes_used = 1 + tab - line;
-
-and then just doing
-
-    line += bytes_used;
-    linelen -= bytes_used;
-
-and the code I wrote just didn't do any of those temporary updates,
-and instead just did the "+1" by hand in both cases.
-
-Again, I can redo the patch, just tell me which model you prefer.
-
-                 Linus
+Ciao,
+Dscho
