@@ -1,107 +1,87 @@
-From: =?UTF-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
-Subject: Re: [PATCH/RFC/GSoC 3/3] t0301: test credential-cache support of XDG_RUNTIME_DIR
-Date: Thu, 17 Mar 2016 00:40:59 +0800
-Message-ID: <CAKqreuwRpS3uP6=afm-0pBkPW0-bqoJconnKO5q3qTgZwdU_xQ@mail.gmail.com>
-References: <CAKqreux4aYhXTE9kUHKoKCJ2-4KDWyi58ioCm-CWqXhUYCtEEw@mail.gmail.com>
-	<1458122865-29447-1-git-send-email-huiyiqun@gmail.com>
-	<1458122865-29447-3-git-send-email-huiyiqun@gmail.com>
-	<xmqqr3fa5rdi.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Tabs in commit messages - de-tabify option in strbuf_stripspace()?
+Date: Wed, 16 Mar 2016 09:47:56 -0700
+Message-ID: <xmqqfuvq5pz7.fsf@gitster.mtv.corp.google.com>
+References: <CA+55aFzHMp4hiCp7+2Yxy=KNQ_rBru3RM-pghXUPtoxr_L+w2w@mail.gmail.com>
+	<xmqq4mc76yji.fsf@gitster.mtv.corp.google.com>
+	<CA+55aFyXXHNrJW56A_DKkmrmGpWxeUd6row_ja3bzqhs_yswhw@mail.gmail.com>
+	<CAGZ79kZihaftwwmY23mZ_i4H6vv2Z9r=LC68M0MMD1o2h2Z4Sw@mail.gmail.com>
+	<CAGZ79kZtAm1M=9CGDGxPdecXEuNEQcbpQb3FNj9=Py0VE2UrKQ@mail.gmail.com>
+	<56E96D61.6060007@xiplink.com>
+	<CA+55aFwFsBKZZeqhBDf_YXG6vrSrvfFVCsRc0mkFUiDS9Rd+QA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Your friend <pickfire@riseup.net>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 17:41:51 2016
+Content-Type: text/plain
+Cc: Marc Branchaud <marcnarc@xiplink.com>,
+	Stefan Beller <sbeller@google.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Mar 16 17:48:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agEW6-0000FJ-31
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 17:41:50 +0100
+	id 1agEcA-0005VO-Nl
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 17:48:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932575AbcCPQlP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 12:41:15 -0400
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:36211 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932223AbcCPQlN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 12:41:13 -0400
-Received: by mail-ob0-f177.google.com with SMTP id m7so56530896obh.3
-        for <git@vger.kernel.org>; Wed, 16 Mar 2016 09:41:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=zeRMSZ8iKRMk24ZJzJEjrAKTL3VGXnnG9kwLZYAWgRc=;
-        b=fnlrmqnKz0+6VczUI3MLmhH81TWI1pEKcGoxkmSK2m/Lz3eiZ3zDxhfLAdoql3IIII
-         lKWXe33oUPb04Ix5fflroTPziTNNFcQ10tE/TP/Ptqu0Rkcli8sj4crutAVV6YY+tGww
-         17hckAEYBgfUg55BIjREhOCwtwUnEoniYZtqJl0irhRE2y2tHUiwH4gRn8/1756cLSTj
-         wRKWHqQLfdKgdhS+XRBi/8peHbRY10W1ctjGmrnK7GvJuZueTbbQhn9T0Ibfh6NM6OyT
-         1xAcZUMOaskv4ZwXc6fzae5oywcWkrHZo61A7fJMlbTdHLV/O7D0y2MwvTp6eCgHROkY
-         7yAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=zeRMSZ8iKRMk24ZJzJEjrAKTL3VGXnnG9kwLZYAWgRc=;
-        b=dIFGyg/B5aaFE/5x+qYiufgUT1qQ8EEEX4SKNZO200GQNDWsaLu6yiXloep+ar6fhS
-         lgemsZh0S929V5asO5sLY/A94C2tV5kgriTo7cVkpW6i09mH/oZ4uiNEfK6oEgfFKXS7
-         I7gi7+lDS0Z2CS5wKpO5L3Gc2bl9jrOG97e+JmgENCdI5/linZkybkVtyOGpZ46XtZLR
-         NEqmumFph5LcjMm8D26QJeYEaUFwcC/S6aNPvCi6V0SSetGYNbXnZltu35m2kkmVZHHT
-         CVO7WhhsVmheTdxlwvmIw8T297z4PuYk1PjZMtt/4RcqBSU29j0BJIrfK+R42HZuM3Go
-         JuFg==
-X-Gm-Message-State: AD7BkJJ43tcFb4hRDzHtVaDotWi4H3H9iI6zz/ddjbT2hivcIQunKfqqvQPfBSHEK2m29sgKEiPibruqS9WnAg==
-X-Received: by 10.60.147.228 with SMTP id tn4mr3007642oeb.33.1458146459689;
- Wed, 16 Mar 2016 09:40:59 -0700 (PDT)
-Received: by 10.157.43.68 with HTTP; Wed, 16 Mar 2016 09:40:59 -0700 (PDT)
-In-Reply-To: <xmqqr3fa5rdi.fsf@gitster.mtv.corp.google.com>
+	id S932126AbcCPQsB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 12:48:01 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:63543 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752119AbcCPQsA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 12:48:00 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E9F4D4C5B7;
+	Wed, 16 Mar 2016 12:47:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2RbTnwUj4YAwl408q9V+cc52VPk=; b=B7yM1N
+	N2m5Mg8+uKDNz7VFAF0ZcqRR10cAB/NAI0zxqvc0rNtq0bdFf8cC2pqBYyAHmQ2R
+	z1q9vBnJGsCTv1AdFjPK5Au0tKy3U4YrKfLBWi6zoPKESKo06YDM/XoBSPYINka7
+	qw35u1Ugu9yMga3AjRBZwVLcX/WM1ONraJ4/c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=r4J63HZEbtUwYyjfuuuMhlfM/xV/hnJI
+	Oimev8XJnm171eWPQnaCB3hHkDN13cQA4q3qy57FVOwbCxidurRq40IpryS8qQcc
+	j8Xx+9w/EDkyZKX7FQwPGi/cYfKoaCIy52Nh/FzFPmLviPJ63KxFRxePzFFsJnEz
+	aPoS6JbwMYk=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E0C574C5B5;
+	Wed, 16 Mar 2016 12:47:58 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3615F4C5B4;
+	Wed, 16 Mar 2016 12:47:58 -0400 (EDT)
+In-Reply-To: <CA+55aFwFsBKZZeqhBDf_YXG6vrSrvfFVCsRc0mkFUiDS9Rd+QA@mail.gmail.com>
+	(Linus Torvalds's message of "Wed, 16 Mar 2016 09:15:39 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D694D122-EB96-11E5-A9E2-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288991>
 
-2016-03-17 0:17 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
-> Hui Yiqun <huiyiqun@gmail.com> writes:
->
->> t0301 now tests git-credential-cache support for XDG user-specific
->> runtime file $XDG_RUNTIME_DIR/git/credential.sock. Specifically:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
+
+> On Wed, Mar 16, 2016 at 7:27 AM, Marc Branchaud <marcnarc@xiplink.com> wrote:
 >>
->> * if $XDG_RUNTIME_DIR exists, use socket at
->>   `$XDG_RUNTIME_DIR/git/credential-cache.sock`.
->>
->> * otherwise, `/tmp/git-$uid/credential-cache.sock` is taken.
+>> Could this also help with diff output, where the leading + or - mars the
+>> indentation in a similar way?
 >
-> Is it better to have the fallback in /tmp, and not in
-> ~/.git-credential-cache/, and why?
+> I don't think that's a good idea at least by default, since then it
+> will break things like running diff in emacs capture mode.
 >
-> Is it because the wish is to always use /tmp/git-$uid/ as a fallback
-> for $XDG_RUNTIME_DIR (as opposed to ~/.git-credential-cache/, which
-> is specific to the credential-cache and would look strange if we
-> used it for other "runtime" things)?
-
-Yes, I mean to use it as a general fallback for git.
-
-xdg base dir spec does not specify where to fallback when
-$XDG_RUNTIME_DIR is not defined. It just says:
-
-If $XDG_RUNTIME_DIR is not set applications should fall back to
-a replacement directory with similar capabilities and print a warning
-message. Applications should use this directory for communication
-and synchronization purposes and should not place larger files in it,
-since it might reside in runtime memory and cannot necessarily be
-swapped out to disk.
-
-tmpfs is just like what it describes. And many other applications
-put socket under which, such as tmux.
-
-On the other hand, I think, falling back to $HOME/.git-credential-cache/socket
-doesn't make any sense for back-compability cannot be ensured.
-
+> So even if you're in a terminal, you can't assume that you can munge
+> the output too much.
 >
-> Just being curious, and wanting to see the reasoning behind the
-> design decision the patch series makes in the log message of one of
-> these patches.
->
-> Thanks.
->
+> Of course, if colorization is on, you might as well pretty-print the
+> diff by indenting things properly too, since the end result isn't
+> going to be used as a _diff_.
+
+I agree that I will never use such an end result as a diff, but I
+may still be tempted to cut-and-paste individual lines after '^+'
+when resurrecting a WIP topic that does not rebase very well, so I
+agree with you that the output shouldn't be munged by default even
+though I think it is OK to have an option..
