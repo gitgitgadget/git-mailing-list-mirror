@@ -1,86 +1,69 @@
-From: Alexander Kuleshov <kuleshovmail@gmail.com>
-Subject: [PATCH] help.c: strip suffix only if the STRIP_EXTENSION defined
-Date: Wed, 16 Mar 2016 20:27:29 +0600
-Message-ID: <1458138449-26690-1-git-send-email-kuleshovmail@gmail.com>
-Cc: Git <git@vger.kernel.org>,
-	Alexander Kuleshov <kuleshovmail@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 15:27:54 2016
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: Tabs in commit messages - de-tabify option in
+ strbuf_stripspace()?
+Date: Wed, 16 Mar 2016 10:27:45 -0400
+Message-ID: <56E96D61.6060007@xiplink.com>
+References: <CA+55aFzHMp4hiCp7+2Yxy=KNQ_rBru3RM-pghXUPtoxr_L+w2w@mail.gmail.com>
+ <xmqq4mc76yji.fsf@gitster.mtv.corp.google.com>
+ <CA+55aFyXXHNrJW56A_DKkmrmGpWxeUd6row_ja3bzqhs_yswhw@mail.gmail.com>
+ <CAGZ79kZihaftwwmY23mZ_i4H6vv2Z9r=LC68M0MMD1o2h2Z4Sw@mail.gmail.com>
+ <CAGZ79kZtAm1M=9CGDGxPdecXEuNEQcbpQb3FNj9=Py0VE2UrKQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Mar 16 15:32:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agCQS-00076N-65
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 15:27:53 +0100
+	id 1agCV8-0001XL-Id
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 15:32:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935050AbcCPO1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 10:27:44 -0400
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:33865 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934994AbcCPO1m (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 10:27:42 -0400
-Received: by mail-lb0-f169.google.com with SMTP id k12so49015760lbb.1
-        for <git@vger.kernel.org>; Wed, 16 Mar 2016 07:27:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=1pvqWUnVhtYnZ0aTZKfXExnJRY6HPU8vS+INGuvUy+o=;
-        b=0E7SGeCk94C6J4NLDvOLnLLV9DHu8fJXxxOHts07l9jsAy/Oq3p3rtyjsuTMj+0HtN
-         L5ere2z8zToOTQEuIFeCX6bj7egsQ0LzxyqBsLC1ZpMAUCv4dQjXbNWvIoOFMjUO574a
-         fxADAwREcFxamQOsjfPi0d1yR3Gh2dqScgQffqzJvzKv1SqUXNkXvvHA+ynF81JFaD8N
-         RcSAZyUtjC0IdkMnoGXrkNvXeqV6oczDDSWjRgt+SeUhHqRM5TAV67dBFVVmNxZF2r9j
-         BjbEneOZKPdixxPYuHLKWa5dmMSjXa7ywzbXBseRHekqNe+U+JRGx9IqwfbJtnIBJgJV
-         4s9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=1pvqWUnVhtYnZ0aTZKfXExnJRY6HPU8vS+INGuvUy+o=;
-        b=YS4TL1yFJYXKTUN5q8TXHKyLdOLmUOio8O8oJxJ9cbyEV88LwSoM1wRok5kJIZP//6
-         sgA696Hxv21VsJ3vo8P+7384QqqH5/xh6VgMCLtwghkjdIWdbs4rtpyWNoBzADLs7cY7
-         VMy6SNuECd+Qigd5CIqMj7XEBhvvsKrRZqwfswT70eheU2EsfJPbuKlVLJN5097AVR/4
-         /aiSAMkaZyLntl3CVFTWvg4fiQzmteBJKgm6LPVuMBaMPgyFOwzjOQ9fS4VM2RAKE90L
-         /Igkj9kJDPkhrFvWAmnDpPVxk0CGShxkIeF69XiiV/ZUTYkCwYMFImRjzFUDPpifb9gL
-         eZag==
-X-Gm-Message-State: AD7BkJLUN2bNTPEojAMXDKqFtI4E517qb+qmwNJwoElyalQIu7Y6QGJEPSUOAzYU6iA4Ag==
-X-Received: by 10.112.16.230 with SMTP id j6mr1541349lbd.27.1458138455695;
-        Wed, 16 Mar 2016 07:27:35 -0700 (PDT)
-Received: from localhost.localhost ([37.150.78.168])
-        by smtp.gmail.com with ESMTPSA id h8sm581602lfg.10.2016.03.16.07.27.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 16 Mar 2016 07:27:34 -0700 (PDT)
-X-Mailer: git-send-email 2.8.0.rc2.216.g1477fb2.dirty
+	id S935074AbcCPOcX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 10:32:23 -0400
+Received: from smtp114.iad3a.emailsrvr.com ([173.203.187.114]:41167 "EHLO
+	smtp114.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933471AbcCPOcX (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Mar 2016 10:32:23 -0400
+X-Greylist: delayed 321 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Mar 2016 10:32:23 EDT
+Received: from smtp23.relay.iad3a.emailsrvr.com (localhost.localdomain [127.0.0.1])
+	by smtp23.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id 5B18228074A;
+	Wed, 16 Mar 2016 10:27:00 -0400 (EDT)
+X-Auth-ID: mbranchaud@xiplink.com
+Received: by smtp23.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id D44D92802EB;
+	Wed, 16 Mar 2016 10:26:59 -0400 (EDT)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+	by 0.0.0.0:465 (trex/5.5.4);
+	Wed, 16 Mar 2016 10:27:00 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <CAGZ79kZtAm1M=9CGDGxPdecXEuNEQcbpQb3FNj9=Py0VE2UrKQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288976>
 
-We stripping extension in the list_commands_in_dir() to get
-commands without '.exe' suffix. Let's do it only if STRIP_EXTENSION
-is defined to not spend time for unnecessary strip_suffix() call in
-this case.
+On 16-03-15 09:02 PM, Stefan Beller wrote:
+> On Tue, Mar 15, 2016 at 6:00 PM, Stefan Beller <sbeller@google.com> wrote:
+>>
+>> Instead of converting to whitespaces in Git, we could make use of the
+>> set_tabs capability for ttys and setup the terminal for having tabs align
+>> to 12,+8,+8,+8...
+> 
+> Or rather read in the existing tabs configuration and shift it by a constant.
 
-Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
----
- help.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Could this also help with diff output, where the leading + or - mars the
+indentation in a similar way?
 
-diff --git a/help.c b/help.c
-index 19328ea..c865991 100644
---- a/help.c
-+++ b/help.c
-@@ -153,8 +153,9 @@ static void list_commands_in_dir(struct cmdnames *cmds,
- 			continue;
- 
- 		entlen = strlen(ent);
--		strip_suffix(ent, ".exe", &entlen);
--
-+#ifdef STRIP_EXTENSION
-+		strip_suffix(ent, STRIP_EXTENSION, &entlen);
-+#endif
- 		add_cmdname(cmds, ent, entlen);
- 	}
- 	closedir(dir);
--- 
-2.8.0.rc2.216.g1477fb2.dirty
+That opens a bit of a deeper problem, because not all the files in a single
+repo necessarily use the same tab size.
+
+		M.
