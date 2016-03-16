@@ -1,83 +1,135 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] hashmap API: introduce for_each_hashmap_entry() helper macro
-Date: Wed, 16 Mar 2016 11:09:30 -0700
-Message-ID: <xmqq37rq5m79.fsf@gitster.mtv.corp.google.com>
-References: <1458146346-27959-1-git-send-email-kuleshovmail@gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH 18/19] index-helper: autorun
+Date: Wed, 16 Mar 2016 14:11:20 -0400
+Organization: Twitter
+Message-ID: <1458151880.9385.1.camel@twopensource.com>
+References: <1457548582-28302-1-git-send-email-dturner@twopensource.com>
+	 <1457548582-28302-19-git-send-email-dturner@twopensource.com>
+	 <CACsJy8CaWFhCzrH3imz+BRMTESSmyUB4jeAaYUDNk+Tmpj-VrQ@mail.gmail.com>
+	 <alpine.DEB.2.20.1603151517590.4690@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git <git@vger.kernel.org>
-To: Alexander Kuleshov <kuleshovmail@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 19:09:43 2016
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 19:11:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agFt4-0008Ry-Ib
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 19:09:38 +0100
+	id 1agFuq-0001Ni-CX
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 19:11:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935161AbcCPSJe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 14:09:34 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:63588 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933388AbcCPSJd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 14:09:33 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 91B5E4BE71;
-	Wed, 16 Mar 2016 14:09:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tpY+AfjBDX8vzdl1ZtBn020W/ks=; b=HPpbFl
-	BExmLzRg422AcGwK6Vf2P1gzFE2kaauKqllHqTJsjLXD7AcGPFe9AQHzWLhOM4ZB
-	IZQB7BcSuJIV67qlGL4nXb4kfpKWzR3r24D4SX/5kaU/rpmtgSd3ME9RA6/N+L5e
-	wBZNry/JlSY4vr1Pb5PQbcCPal/Y8GUAILSho=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fT2A2vXnEIEjBJMrmseiLug0X3nJ9g5+
-	TuibqgOjieIXVG9bVjmfna4qG5EljjnrkOXZCVJTm+uV25OtJ+pcxRADxAu/OzFS
-	ltHsNuQ4ERt2q3PcYL/mQCfj0U91kYLAtKXCgtsG+nB284nDNRpAukkw4iWCJrV7
-	2j+VepyP8kw=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 89D2D4BE70;
-	Wed, 16 Mar 2016 14:09:32 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0CFA14BE6F;
-	Wed, 16 Mar 2016 14:09:31 -0400 (EDT)
-In-Reply-To: <1458146346-27959-1-git-send-email-kuleshovmail@gmail.com>
-	(Alexander Kuleshov's message of "Wed, 16 Mar 2016 22:39:06 +0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3B87F392-EBA2-11E5-B4D3-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S934084AbcCPSLY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 14:11:24 -0400
+Received: from mail-qg0-f45.google.com ([209.85.192.45]:36597 "EHLO
+	mail-qg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752229AbcCPSLX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 14:11:23 -0400
+Received: by mail-qg0-f45.google.com with SMTP id u110so50227957qge.3
+        for <git@vger.kernel.org>; Wed, 16 Mar 2016 11:11:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:mime-version:content-transfer-encoding;
+        bh=8Bt38S0cnspdW7iXWeaLSUB64WxGCBnbJEjORRTcvvc=;
+        b=gH1l5l5us7WsgsnEuVmCgc9+jxRl3XEDEiZ8KuAjkDTxAHcwR0VcNYgRV380sF1rPp
+         e2uixvjy2fNGvJOCCfengopBzuXCMCm8PKL7DgWUJIX1WRrT01iqfGXbeH+Ab5GzXsol
+         hzBkiEnAG/aupE/B3qY4dgqyZA6LmOMvZNbMVCnIciSJduRIZZ+kviHHTLbQikwTejN8
+         0LDc8p20nN2AAiskP21zFd0UeJ9LbDDFR86LuWTmWXar5W9fkjcZ7cmgIt19FcYosU/V
+         lJFqAifu8zUiYXIJvqamcyfAwpJuDKZKHc0tgjxdwtX8JuACnbkL6++yfW6O1mYSl3k4
+         rfMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:mime-version:content-transfer-encoding;
+        bh=8Bt38S0cnspdW7iXWeaLSUB64WxGCBnbJEjORRTcvvc=;
+        b=GQ/efBm6ygXzNa0PlryMx4XSYhZq8MiZ9aTf/PQheFBC2nOtMa8tD9zkyEu+eQe8OR
+         jTebJ/iqroxwMBnful+6UuHFveo2lA7eDaHBU4j8s2c6o23pBSUEkqf6PiB/Tp7/dCoH
+         1a0dQRJLyqPii+WehiYjbWKXAost7jSv/Zb4lM76/lgC9VhOleZk8XPCrYN8JIAaI/UC
+         EOsdTVpWDKt9r5XjtQH+aL+UH50hJI04tpOXnSb17b35Rux/OLocCxfj/lfbxbnk0wtS
+         HkNjgrsJuNnYRNksJlLfOMNOJA8a+QbLBAAIVQstN5CYsFVXZXNrSagplPb7MOQom7DW
+         b0SA==
+X-Gm-Message-State: AD7BkJI/dnfe8FRArlrK1pCGYCIWQigttHl5GmvVsqQR/XHjTPuf/C8tyrfqsF4h9Ujunw==
+X-Received: by 10.140.148.134 with SMTP id 128mr7879836qhu.98.1458151882446;
+        Wed, 16 Mar 2016 11:11:22 -0700 (PDT)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id 5sm2003450qky.21.2016.03.16.11.11.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 16 Mar 2016 11:11:21 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1603151517590.4690@virtualbox>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289011>
 
-Alexander Kuleshov <kuleshovmail@gmail.com> writes:
+On Tue, 2016-03-15 at 15:26 +0100, Johannes Schindelin wrote:
+> Hi Duy,
+> 
+> On Tue, 15 Mar 2016, Duy Nguyen wrote:
+> 
+> > On Thu, Mar 10, 2016 at 1:36 AM, David Turner <
+> > dturner@twopensource.com> wrote:
+> > > Introduce a new config option, indexhelper.autorun, to
+> > > automatically
+> > > run git index-helper before starting up a builtin git command. 
+> > >  This
+> > > enables users to keep index-helper running without manual
+> > > intervention.
+> > 
+> > This could be a problem on Windows because "index-helper --detach"
+> > does not work there. I have no idea how "daemons" are managed on
+> > Windows and not sure if our design is still good when such a
+> > "daemon"
+> > is added on Windows. So I'm pulling Johannes in for his opinions.
+> > 
+> > Background for Johannes. We're adding "git index-helper" daemon
+> > (one
+> > per repo) to cache the index in memory to speed up index load time
+> > (and in future probably name-hash too, I think it's also more often
+> > used on Windows because of case-insensitive fs). It also enables
+> > watchman (on Windows) for faster refresh. This patch allows to
+> > start
+> > the daemon automatically if it's not running. But I don't know it
+> > will
+> > work ok on Windows.
+> > 
+> > Assuming that "index-helper" service has to be installed and
+> > started
+> > from system, there can only be one service running right? This
+> > clashes
+> > with the per-repo daemon design... I think it can stilf work, if
+> > the
+> > main service just spawns new process, one for each repo. But again
+> > I'm
+> > not sure.
+> 
+> If we want to run the process as a Windows service, you are correct,
+> there
+> really can only be one. Worse: it runs with admin privileges.
+> 
+> But why not just keep it running as a detached process? We can run
+> those
+> on Windows, and if we're opening a named pipe whose name reveals the
+> one-to-one mapping with the index in question, I think we are fine
+> (read:
+> we can detect whether the process is running already).
+> 
+> We can even tell those processes to have a timeout, or to react to
+> other
+> system events.
+> 
+> Please note that I am *very* interested in this feature (speeding up
+> index
+> operations).
 
-> diff --git a/hashmap.h b/hashmap.h
-> index ab7958a..b8b158c 100644
-> --- a/hashmap.h
-> +++ b/hashmap.h
-> @@ -95,4 +95,11 @@ static inline const char *strintern(const char *string)
->  	return memintern(string, strlen(string));
->  }
->  
-> +#define for_each_hashmap_entry(map, type)		\
-> +	struct type *entry;				\
-> +	struct hashmap_iter iter;			\
-> +							\
-> +	hashmap_iter_init(map, &iter);			\
-> +	while ((entry = hashmap_iter_next(&iter)))
-> +
+I don't understand what a "detached process" is on Windows (I have
+never done any real Windows programming). Does that mean "call
+daemonize() and it'll take care of it?"  Or something else?  Or should
+I just not worry about it and let you take care of it?
 
-This is an easy way to introduce decl-after-statement, i.e. needs an
-extra pair of {} around the thing.  It also forbids the callers from
-defining "entry" and "iter" as their own identifier outside the
-scope of this macro and use them inside the block that is iterated
-over by shadowing these two variables.
-
-Other than that, it looks like a good concept.  The syntax however
-needs more thought because of the above two issues, I think.
+Also, I'll figure out how to switch to named pipes. 
