@@ -1,100 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: An idea for the "Leftover Bits": rebase -x to imply -i
-Date: Wed, 16 Mar 2016 15:51:09 -0700
-Message-ID: <xmqqlh5i2g0y.fsf@gitster.mtv.corp.google.com>
-References: <CAGZ79kZg3QkfjB1hwZKRS9Hqg-1H=kQwuwByX_rAMzveXtnp7Q@mail.gmail.com>
-	<xmqqy49i2hhe.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: parse-options does not recognize "unspecified" behavior
+Date: Wed, 16 Mar 2016 19:16:26 -0400
+Message-ID: <20160316231626.GA11808@sigill.intra.peff.net>
+References: <CAFZEwPPd2wFqFq2LFEzN2CzhTV6C420SLPcXi1SWE=z2epOYLw@mail.gmail.com>
+ <20160316204912.GA1890@sigill.intra.peff.net>
+ <CAFZEwPMa3GZS6pvFwr8PLVDqKm5xmMd307nbjhpZSC_ndpw8vw@mail.gmail.com>
+ <20160316212308.GA4538@sigill.intra.peff.net>
+ <CAPig+cRKyaUefz0qj6unkaiPg25=Xi2WorQE4Fm46CCf00UbHQ@mail.gmail.com>
+ <20160316214442.GC4441@sigill.intra.peff.net>
+ <CAGZ79kbbAv=PukD+sftmoO8u3GX=S1YCYGV8zcNMxrZ+E41-UA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Pranit Bauva <pranit.bauva@gmail.com>,
+	Git List <git@vger.kernel.org>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 23:51:20 2016
+X-From: git-owner@vger.kernel.org Thu Mar 17 00:16:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agKHc-0003sS-QQ
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 23:51:17 +0100
+	id 1agKg6-00066c-Mg
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 00:16:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935047AbcCPWvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 18:51:14 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:65308 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933308AbcCPWvM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 18:51:12 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F02714EBE4;
-	Wed, 16 Mar 2016 18:51:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7UOJ9rX+RUbDUXpo17XHfMm5Seg=; b=F74TPT
-	Tmjui8R4aQ9ifhrp5qkIc/Yx+pM7TYWJIbSRPAA9GVUDshyPe3HvJgQGKY/EUZ/n
-	BPQqXMRWfNT1b+0E2bKxAgumuhhEzNPwps2MUuBLPsUMJJ0sTT3OQos7Ujxpbp/n
-	vtxC603exkyL7S+5FNNXwUCBN1yPLbQX5CLWA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SVnKjLJmwTNJv+GIsDDVHDc19e5qiiUo
-	U8tnJQgsdfi+kNSiuF2VzQG9jKCdhjs6McXCIttlvohdiutlPNDhf88CjsjRN5s6
-	vggZ7YbXabRIM0BaBLWW2EN+YD3AaHpGi8GYktuIvg6QNPE25OVRAEjiPcog9DUI
-	WVUi2tyfDoQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E779A4EBE3;
-	Wed, 16 Mar 2016 18:51:10 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6F3794EBE2;
-	Wed, 16 Mar 2016 18:51:10 -0400 (EDT)
-In-Reply-To: <xmqqy49i2hhe.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 16 Mar 2016 15:19:41 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 93C3A6E2-EBC9-11E5-916B-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S932788AbcCPXQa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 19:16:30 -0400
+Received: from cloud.peff.net ([50.56.180.127]:32931 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752454AbcCPXQ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 19:16:29 -0400
+Received: (qmail 31475 invoked by uid 102); 16 Mar 2016 23:16:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Mar 2016 19:16:28 -0400
+Received: (qmail 21861 invoked by uid 107); 16 Mar 2016 23:16:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Mar 2016 19:16:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Mar 2016 19:16:26 -0400
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kbbAv=PukD+sftmoO8u3GX=S1YCYGV8zcNMxrZ+E41-UA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289058>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Mar 16, 2016 at 02:53:17PM -0700, Stefan Beller wrote:
 
-> The list is my personal collection of "leftover" things, i.e. topics
-> that were raised on the list, perhaps already discussed or perhaps
-> nobody thought them interesting, that I found when re-reading the
-> past list traffic that did not reach a useful conclusion to result
-> in a patch (or resolution, a shared understanding, that it is not a
-> good idea).  Getting added to the list should not be a goal.
->
-> Your message is perhaps the least effective way to add an item to
-> the list.  It hasn't been discussed here, nobody seems to have felt
-> it is a good idea, and I didn't think it is particularly interesting
-> myself (at least not yet).
+> On Wed, Mar 16, 2016 at 2:44 PM, Jeff King <peff@peff.net> wrote:
+> > On Wed, Mar 16, 2016 at 05:37:03PM -0400, Eric Sunshine wrote:
+> >
+> >> A much easier solution would be to update OPT_VERBOSE() to understand
+> >> that negative values are "unspecified", and then --verbose would
+> >> (pseudocode):
+> >>
+> >>     if (value < 0)
+> >>         value = 0
+> >>     value++;
+> >>
+> >> and --no-verbose would:
+> >>
+> >>     value = 0
+> >>
+> >> That should be compatible with existing clients of OPT__VERBOSE()
+> >> which initialize the value to 0, and should satisfy Pranit's case; he
+> >> can initialize it to -1, and if it is still -1 when option parsing is
+> >> done, then he knows that neither --verbose nor --no-verbose was seen.
+> >
+> > Yes, that makes much more sense to me. Thanks for the back-story.
+> 
+> Is there any command which needs more than one --no-verbose?
+> (as an abuse to stacking --quiet multiple times)?
 
-Having said that, I could use help in maintaining the collection.
+I'm not sure I understand. "--no-verbose" is just about resetting the
+value. So you might get it multiple times in:
 
-A few "characteristics" of that list, that cannot be updated by
-anybody but me (because it is just my personal collection after all)
-are:
+   git commit -v --no-verbose -v --no-verbose
 
- * I do not have to worry about useless new entries that do not
-   align the overall system design getting added by clueless people.
+but the caller would not care. Which makes me think I'm misunderstanding
+your question.
 
- * Adding new entry after scanning past list traffic and finding a
-   still unresolved topic that "died down" is relatively easy.
+You also mention "--quiet", but that is not handled by OPT__VERBOSE, but
+rather by OPT__QUIET. And there I do not think the "-1 is undefined"
+trick works as well there, because presumably "-1" is the same as one
+"--quiet".
 
- * Removing existing entries because the topic was revived on the
-   list and completed is _hard_, as that is merely an administrative
-   overhead to me.
-
-Moving it to a public wiki would lose the first point, which is a
-benefit.
-
-Merely making it public does not guarantee that the third point
-(i.e. clean-up) would happen more easily unless we have volunteers.
-It is likely that the "leftover bits" list would go stale just like
-other people's wikis or bug trackers.
-
-On the other hand, if we do have volunteers who are scanning for
-"stale" items in the "leftover bits" list to tell me "that item was
-done with commit c0ffee1eaf" and that would help me quite a bit
-without being it a public wiki/bug tracker.
+-Peff
