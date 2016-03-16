@@ -1,84 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC/GSoC 3/3] t0301: test credential-cache support of
- XDG_RUNTIME_DIR
-Date: Wed, 16 Mar 2016 13:15:36 -0400
-Message-ID: <20160316171535.GC4039@sigill.intra.peff.net>
-References: <CAKqreux4aYhXTE9kUHKoKCJ2-4KDWyi58ioCm-CWqXhUYCtEEw@mail.gmail.com>
- <1458122865-29447-1-git-send-email-huiyiqun@gmail.com>
- <1458122865-29447-3-git-send-email-huiyiqun@gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: Windows download broken?
+Date: Wed, 16 Mar 2016 10:23:24 -0700
+Message-ID: <CAGZ79kaz2xPUO+zUK9LSqwWPK0aYPirwjgwzKmZgGbscxq6anw@mail.gmail.com>
+References: <CACwWb3Dm8CfhZKvfNz-4Pj=tytf3zroFxnbbTq9DM+xm4EPEig@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com, pickfire@riseup.net
-To: Hui Yiqun <huiyiqun@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 18:15:44 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Levente <leventelist@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 18:23:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agF2t-0000k9-Ed
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 18:15:43 +0100
+	id 1agFAR-0006cq-DO
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 18:23:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753389AbcCPRPj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 13:15:39 -0400
-Received: from cloud.peff.net ([50.56.180.127]:60691 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751498AbcCPRPi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 13:15:38 -0400
-Received: (qmail 7870 invoked by uid 102); 16 Mar 2016 17:15:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Mar 2016 13:15:38 -0400
-Received: (qmail 15739 invoked by uid 107); 16 Mar 2016 17:15:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Mar 2016 13:15:55 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Mar 2016 13:15:36 -0400
-Content-Disposition: inline
-In-Reply-To: <1458122865-29447-3-git-send-email-huiyiqun@gmail.com>
+	id S1755060AbcCPRX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 13:23:27 -0400
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:37971 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752229AbcCPRX0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 13:23:26 -0400
+Received: by mail-ig0-f175.google.com with SMTP id ig19so50046426igb.1
+        for <git@vger.kernel.org>; Wed, 16 Mar 2016 10:23:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=avhZ42r7j1R/Kd8Zyr9WMIGDvlmkXgVtsYVuqNLuQ9U=;
+        b=dCpNSJHrYPeqaDlXLGT2Ba3EjJLsCc375DuWg5W9PF7KADH7epluBmc6znmNkxddjF
+         KOPyhvV4f8Lw5lmBGawPNT7+lMGuhA786llSFnCdnlNrjD7Se7Ae3np4jVba/TqPkZaR
+         8C5eOdjV1a8nCmfL91HviSWJZgRalP7aMcdDQAxvBp629aQQ9/UgMgLeTISMmjsUMuUg
+         d3A33ECUbegRvxSZjThNtMfkoRgSqUUIg1ccrJ4GXSj4wjbAdLcoOsijUaASDGz8BAeE
+         LhJmd5/+cq6OaIMuSPnk63CkYyu3HlbDBDf3ACZrNPcEnj1gWtTBTjK3j1kKggu8UgRd
+         5xXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=avhZ42r7j1R/Kd8Zyr9WMIGDvlmkXgVtsYVuqNLuQ9U=;
+        b=P2698irnXPtFY+ayNpwBiI07jvN1O2GMq437luhTkzebrPfMWiR9W3zFu1hZByx2lQ
+         kke6TqhEudMpDqQnx7D2bTvPD1jtpHHtBk8AT+Un9c7nFSDx+LiUj9R71p+WNMnt05Xz
+         ALHPv+C/WxtEGMnUFYt11ezVMsyjx57GCAHczUvzgvlGdyDqnrD+xHUyrGAZf3U2GZel
+         3Q9mFLBzLCPXaad8c1kwdru4MWV3+m8dQRNO8gcr65QwpCo3QgCOGSlnuiKLegK1gwPK
+         5rJD7kPmoVFo/2414wJ6yTxy5BPegvYfmf558CHAeA7fTX6MFUfXZH2w407JESsd7ftx
+         K92Q==
+X-Gm-Message-State: AD7BkJKBrZQgFbEBb/8ln0w1xgO8UWKBIzA1K6ta4sAVfEPeJlBlGPpvaxJni7P7DDAw9XfkpEluopMnDva41a8A
+X-Received: by 10.50.117.33 with SMTP id kb1mr2219804igb.93.1458149004989;
+ Wed, 16 Mar 2016 10:23:24 -0700 (PDT)
+Received: by 10.107.132.101 with HTTP; Wed, 16 Mar 2016 10:23:24 -0700 (PDT)
+In-Reply-To: <CACwWb3Dm8CfhZKvfNz-4Pj=tytf3zroFxnbbTq9DM+xm4EPEig@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288999>
 
-On Wed, Mar 16, 2016 at 06:07:45PM +0800, Hui Yiqun wrote:
+On Wed, Mar 16, 2016 at 7:06 AM, Levente <leventelist@gmail.com> wrote:
+> It seems that this link is broken:
+>
+> https://github.com/git-for-windows/git/releases/download/v2.7.3.windows.1/Git-2.7.3-64-bit.exe
+>
+> Regards,
+> Levente
 
-> diff --git a/t/t0301-credential-cache.sh b/t/t0301-credential-cache.sh
-> index 82c8411..0718bb0 100755
-> --- a/t/t0301-credential-cache.sh
-> +++ b/t/t0301-credential-cache.sh
-> @@ -12,7 +12,32 @@ test -z "$NO_UNIX_SOCKETS" || {
->  # don't leave a stale daemon running
->  trap 'code=$?; git credential-cache exit; (exit $code); die' EXIT
->  
-> +test_expect_success 'set $XDG_RUNTIME_DIR' '
-> +	XDG_RUNTIME_DIR=$HOME/xdg_runtime/
-> +'
+I think Git for Windows is discussed mostly in the GitHub issues.
+Anywhere, cc'ing Johannes, who does Windows releases.
 
-Doesn't this need to export the variable so that credential-cache can
-see it?
+Thanks,
+Stefan
 
-> +
-> +helper_test cache
-> +
-
-This runs the full suite of tests twice (once here, and once for the
-original helper_test invocation you left below). Shouldn't we just do it
-once (making sure that $XDG_RUNTIME_DIR is respected)?
-
-> +test_expect_success 'force git-credential-cache to exit so that socket disappear' '
-> +	git credential-cache exit &&
-> +	test_path_is_missing "$XDG_RUNTIME_DIR/git/credential-cache.sock" &&
-> +	unset XDG_RUNTIME_DIR
-> +'
-
-I wondered if this might be racy. credential-cache tells the daemon
-"exit", then waits for a response or EOF. The daemon sees "exit" and
-calls exit(0) immediately. We clean up the socket in an atexit()
-handler. So I think we are OK (the pipe will get closed when the process
-exits, and the atexit handler must have run by then).
-
-But that definitely was not designed, and is just how it happens to
-work. I'm not sure if it's worth commenting on that (here, or perhaps in
-the daemon code).
-
--Peff
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
