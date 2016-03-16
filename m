@@ -1,85 +1,78 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: parse-options does not recognize "unspecified" behavior
-Date: Thu, 17 Mar 2016 03:07:36 +0530
-Message-ID: <CAFZEwPOySiVwLJOw0seRu+c-NTK_vnsdi3Gsvv_tpJt6KY=Chg@mail.gmail.com>
-References: <CAFZEwPPd2wFqFq2LFEzN2CzhTV6C420SLPcXi1SWE=z2epOYLw@mail.gmail.com>
-	<20160316204912.GA1890@sigill.intra.peff.net>
-	<CAFZEwPMa3GZS6pvFwr8PLVDqKm5xmMd307nbjhpZSC_ndpw8vw@mail.gmail.com>
-	<20160316212308.GA4538@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] pretty-print: de-tabify indented logs to make things line up properly
+Date: Wed, 16 Mar 2016 14:37:59 -0700
+Message-ID: <xmqqk2l23xzc.fsf@gitster.mtv.corp.google.com>
+References: <alpine.LFD.2.20.1603160926060.13030@i7>
+	<xmqq7fh25mkc.fsf@gitster.mtv.corp.google.com>
+	<CA+55aFxV5PWdSn9Gj=zV464TtJo=QvciZrhc5Pwe+Qfyqt8sXw@mail.gmail.com>
+	<xmqqwpp243sb.fsf@gitster.mtv.corp.google.com>
+	<xmqqoaae4340.fsf@gitster.mtv.corp.google.com>
+	<CA+55aFwbNXJnwEYrKE5dDRk_6eZeGT6Z11uSQS8RmCSq43PkdA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 16 22:37:43 2016
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Mar 16 22:38:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agJ8P-0006nk-Qq
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 22:37:42 +0100
+	id 1agJ99-0007PO-Gc
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 22:38:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935127AbcCPVhh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 17:37:37 -0400
-Received: from mail-yw0-f182.google.com ([209.85.161.182]:36130 "EHLO
-	mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932669AbcCPVhh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 17:37:37 -0400
-Received: by mail-yw0-f182.google.com with SMTP id g3so78336236ywa.3
-        for <git@vger.kernel.org>; Wed, 16 Mar 2016 14:37:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=8OOsikSxKf8s03S5ZTjkuMQV+hiKsUpjda5Ciit2kkI=;
-        b=ARpPNxe3Vw49oQrTsitTdZ+UuwOwdiycApH9uUUoMq3q9jx42OJrkybFIJrAu0AcRz
-         pagHwlnfu+/8akbWdsaUkOJbVCSSuvUNJcv/9w/c2hf/CEvUoLxnQ2VyEyYkkJWHtpy6
-         9zAgHhkVWbtm1h2RoeIDGu2kjhu+ryK2+6trcBSjaud/LGYFrO15LETBy1escLlb1TsM
-         aTG695kEpbp2RCZNgYdzKkVj22lLZmTjca6S1qkN1EhtfJlTc5BSG4yMsyPGortR816X
-         q3FCpwk/SOY4cnVSMyYPlAiuZ6ghhSg0a2b9E53wAcniUd0x0DF9a6x49JZjpgcpl+Si
-         109Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=8OOsikSxKf8s03S5ZTjkuMQV+hiKsUpjda5Ciit2kkI=;
-        b=Wjz7V1wOvaU8Bp00FhAbLuwg+ahmz/tpAhLYt/UKLNlGDwUyUNDVRh0/APwVEv0Tf0
-         0uTzN6PsW283TXytATMRittKUJoAnzjVUIQsU//RMO6iasoBqFU+/GIYJnZDEhvZVYbY
-         25mGIX7U21GrJOmw1IukkX5ROTuzxBUoYUHh7O4NhJjWhixNy5F3XzR0fjcGtjArS1xn
-         02jbvM9Rj+67cxnuCoTYJTWgeNQKh4m7Ao2AieDyusGn76jBHsqhIZeK9tOSPgH7dIMA
-         cYAGJ9yfD6U/456gFownSnz1tpxlTUAxdBS+gEPh5iqf5U8OJQ2gqkvadYc3fvlZLzlV
-         qEvg==
-X-Gm-Message-State: AD7BkJL4EbpL/z+NwJQ5BzBoKJLCCcVZgq8VhMD3jS9+lL3WU014J2MRwsg7lXEdKq4rd8s9Yui7cg6DPkvcKQ==
-X-Received: by 10.13.252.67 with SMTP id m64mr3075953ywf.67.1458164256304;
- Wed, 16 Mar 2016 14:37:36 -0700 (PDT)
-Received: by 10.13.203.137 with HTTP; Wed, 16 Mar 2016 14:37:36 -0700 (PDT)
-In-Reply-To: <20160316212308.GA4538@sigill.intra.peff.net>
+	id S965394AbcCPViW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 17:38:22 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:64471 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755734AbcCPViE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 17:38:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 92D2B4DB82;
+	Wed, 16 Mar 2016 17:38:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PlUBt33Co929N+Qk3vrzHA/uCa4=; b=Z7NfwG
+	p6Wnb4xp+x0cVooUzNCZm87QtiWDX0p5aG4xB6n16GIs13I+LlFXQjJESzB6b2Ad
+	E39t6/BpDxri8qA6hrAL/w8+z0z6mC4LeITjdaDn212gpoNEL3El2A5JXe7DnP5d
+	xBE/sWFzZfrcU//6aBT3LR4dKMSRymoV5oY6E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VYcQBdCnlbpVsQcQFrNJlq8hhIZCNzpj
+	MfMFU+yU61WNMTN11pmWcsCF7hVv6k9Ap+QfTiorTRH7bredtcMPMjLhC9jYI68K
+	VtD1S7gItLcJX/3QSjz2BpWhMJ3m2XMs6+mYoHMNVqeYwr9n3x+FyZTkQSSamehd
+	V/5w2wrsYfE=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 898AA4DB81;
+	Wed, 16 Mar 2016 17:38:02 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AF1A94DB7B;
+	Wed, 16 Mar 2016 17:38:01 -0400 (EDT)
+In-Reply-To: <CA+55aFwbNXJnwEYrKE5dDRk_6eZeGT6Z11uSQS8RmCSq43PkdA@mail.gmail.com>
+	(Linus Torvalds's message of "Wed, 16 Mar 2016 12:59:34 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 5BE247F6-EBBF-11E5-9B5A-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289046>
 
-On Thu, Mar 17, 2016 at 2:53 AM, Jeff King <peff@peff.net> wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> I don't think that would produce the wrong behavior, but it seems like a
-> very complicated solution to a problem that can easily be solved by just
-> following the usual conventions (that verbose starts at 0, options make
-> it go up or down, and "--no-" resets it to zero).
+> On Wed, Mar 16, 2016 at 12:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Strangely running t4201 with your patch (without any squashing)
+>> seems to show a breakage in shortlog.  I won't be able to come back
+>> to this topic for at least a few hours, so this is just a single bit
+>> "breaks" report, without "how and why" analysis, sorry.
 >
-> Perhaps it would make more sense if I understood what your goal was in
-> setting verbose to -1 in the first place.
->
-> -Peff
+> It's because those things have tabs in their first line, so the output
+> now differs from the expected one exactly because of the tab-vs-space
+> expansion.
 
-I am working on the micro project "configuration for commonly used
-command line options like "git commit -v".
-I sent out a final patch without considering the multiple verbosity
-behavior of `git commit`. To take consideration for that behavior,
-Junio suggested this approach [1]. I was trying to write code for this
-when I noticed this behavior. I did a `git grep " unspecified " just
-to find that using -1 is not that common. I think this problem can
-also arise in future if some more options are included. The question
-still remains whether its worth all this effort?
-
-[1] : http://thread.gmane.org/gmane.comp.version-control.git/288820/focus=288909
+What surprised me was that this new expand logic triggered for
+shortlog, actually.  I somehow assumed the caller that called
+de-tabify helper was only called for --pretty=medium.
