@@ -1,78 +1,90 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Windows download broken?
-Date: Wed, 16 Mar 2016 10:23:24 -0700
-Message-ID: <CAGZ79kaz2xPUO+zUK9LSqwWPK0aYPirwjgwzKmZgGbscxq6anw@mail.gmail.com>
-References: <CACwWb3Dm8CfhZKvfNz-4Pj=tytf3zroFxnbbTq9DM+xm4EPEig@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC/GSoC 3/3] t0301: test credential-cache support of XDG_RUNTIME_DIR
+Date: Wed, 16 Mar 2016 10:24:44 -0700
+Message-ID: <xmqqbn6e5o9v.fsf@gitster.mtv.corp.google.com>
+References: <CAKqreux4aYhXTE9kUHKoKCJ2-4KDWyi58ioCm-CWqXhUYCtEEw@mail.gmail.com>
+	<1458122865-29447-1-git-send-email-huiyiqun@gmail.com>
+	<1458122865-29447-3-git-send-email-huiyiqun@gmail.com>
+	<xmqqr3fa5rdi.fsf@gitster.mtv.corp.google.com>
+	<CAKqreuwRpS3uP6=afm-0pBkPW0-bqoJconnKO5q3qTgZwdU_xQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Levente <leventelist@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 18:23:32 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Your friend <pickfire@riseup.net>,
+	Jeff King <peff@peff.net>
+To: =?utf-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 18:24:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agFAR-0006cq-DO
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 18:23:31 +0100
+	id 1agFBl-0007bo-3C
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 18:24:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755060AbcCPRX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 13:23:27 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:37971 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752229AbcCPRX0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 13:23:26 -0400
-Received: by mail-ig0-f175.google.com with SMTP id ig19so50046426igb.1
-        for <git@vger.kernel.org>; Wed, 16 Mar 2016 10:23:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=avhZ42r7j1R/Kd8Zyr9WMIGDvlmkXgVtsYVuqNLuQ9U=;
-        b=dCpNSJHrYPeqaDlXLGT2Ba3EjJLsCc375DuWg5W9PF7KADH7epluBmc6znmNkxddjF
-         KOPyhvV4f8Lw5lmBGawPNT7+lMGuhA786llSFnCdnlNrjD7Se7Ae3np4jVba/TqPkZaR
-         8C5eOdjV1a8nCmfL91HviSWJZgRalP7aMcdDQAxvBp629aQQ9/UgMgLeTISMmjsUMuUg
-         d3A33ECUbegRvxSZjThNtMfkoRgSqUUIg1ccrJ4GXSj4wjbAdLcoOsijUaASDGz8BAeE
-         LhJmd5/+cq6OaIMuSPnk63CkYyu3HlbDBDf3ACZrNPcEnj1gWtTBTjK3j1kKggu8UgRd
-         5xXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=avhZ42r7j1R/Kd8Zyr9WMIGDvlmkXgVtsYVuqNLuQ9U=;
-        b=P2698irnXPtFY+ayNpwBiI07jvN1O2GMq437luhTkzebrPfMWiR9W3zFu1hZByx2lQ
-         kke6TqhEudMpDqQnx7D2bTvPD1jtpHHtBk8AT+Un9c7nFSDx+LiUj9R71p+WNMnt05Xz
-         ALHPv+C/WxtEGMnUFYt11ezVMsyjx57GCAHczUvzgvlGdyDqnrD+xHUyrGAZf3U2GZel
-         3Q9mFLBzLCPXaad8c1kwdru4MWV3+m8dQRNO8gcr65QwpCo3QgCOGSlnuiKLegK1gwPK
-         5rJD7kPmoVFo/2414wJ6yTxy5BPegvYfmf558CHAeA7fTX6MFUfXZH2w407JESsd7ftx
-         K92Q==
-X-Gm-Message-State: AD7BkJKBrZQgFbEBb/8ln0w1xgO8UWKBIzA1K6ta4sAVfEPeJlBlGPpvaxJni7P7DDAw9XfkpEluopMnDva41a8A
-X-Received: by 10.50.117.33 with SMTP id kb1mr2219804igb.93.1458149004989;
- Wed, 16 Mar 2016 10:23:24 -0700 (PDT)
-Received: by 10.107.132.101 with HTTP; Wed, 16 Mar 2016 10:23:24 -0700 (PDT)
-In-Reply-To: <CACwWb3Dm8CfhZKvfNz-4Pj=tytf3zroFxnbbTq9DM+xm4EPEig@mail.gmail.com>
+	id S932487AbcCPRYs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2016 13:24:48 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:57586 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932275AbcCPRYs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Mar 2016 13:24:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 991A74B043;
+	Wed, 16 Mar 2016 13:24:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=AwdW3O3xOehU
+	UlHZVTHYt1Bf7hw=; b=cWRXURMXJuw0EUXPbOEknXxEl6gRHaWpsNbW5ePs6nkL
+	IPqcxEFGlc/RnODKOiNXBpPo15bK9Nuw9R7Q8FVU3wNpTEBdmcQ0oj1xxkeljwoB
+	YaDN5F/UEws+NxIAxlCHrLxB3hmmhmB1jxqfoFSTG/v5lM3DvveBU3XHToi7TVU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ThllD/
+	vNeLJEiudySJN+9vlYNyTPdlwg3zkEzoY18OZ2HiwO78WtA1bqz9F5CJ5/9lQNO/
+	S+gQ3ZnyZK5UJapMqfUJWwtTcWmuG25OHAtXpBJ6OzsFW0PBdv+Tx4yCRVMfKuvm
+	WSUmyFYN8Iez3M9JQDP+AYT6GZ6EjaTAnyuc4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8DDA64B042;
+	Wed, 16 Mar 2016 13:24:46 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0C6944B041;
+	Wed, 16 Mar 2016 13:24:45 -0400 (EDT)
+In-Reply-To: <CAKqreuwRpS3uP6=afm-0pBkPW0-bqoJconnKO5q3qTgZwdU_xQ@mail.gmail.com>
+	(=?utf-8?B?IuaDoOi9tue+pCIncw==?= message of "Thu, 17 Mar 2016 00:40:59
+ +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: FA8CA78A-EB9B-11E5-B03A-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289000>
 
-On Wed, Mar 16, 2016 at 7:06 AM, Levente <leventelist@gmail.com> wrote:
-> It seems that this link is broken:
+=E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqun@gmail.com> writes:
+
+>> Is it because the wish is to always use /tmp/git-$uid/ as a fallback
+>> for $XDG_RUNTIME_DIR (as opposed to ~/.git-credential-cache/, which
+>> is specific to the credential-cache and would look strange if we
+>> used it for other "runtime" things)?
 >
-> https://github.com/git-for-windows/git/releases/download/v2.7.3.windows.1/Git-2.7.3-64-bit.exe
->
-> Regards,
-> Levente
+> Yes, I mean to use it as a general fallback for git.
 
-I think Git for Windows is discussed mostly in the GitHub issues.
-Anywhere, cc'ing Johannes, who does Windows releases.
+If that is the case the code probably needs to be a bit more careful
+before deciding to use /tmp/git-$uid/ directory (is it really $uid's?
+can anybody else write to it to race with the real user? etc.)
 
-Thanks,
-Stefan
+> On the other hand, I think, falling back to $HOME/.git-credential-cac=
+he/socket
+> doesn't make any sense for back-compability cannot be ensured.
 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+What do you mean by that?
+
+Using ~/.git-credential-cache/credential-cache.sock would not help
+at all for existing users, but ~/.git-credential-cache/socket would
+interoperate well with users with existing versions of Git, no?
+
+>> Just being curious, and wanting to see the reasoning behind the
+>> design decision the patch series makes in the log message of one of
+>> these patches.
