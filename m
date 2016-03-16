@@ -1,106 +1,85 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH] builtin/apply: exit when parse_binary() fails
-Date: Wed, 16 Mar 2016 20:31:15 +0100
-Message-ID: <1458156675-26109-1-git-send-email-chriscool@tuxfamily.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 16 20:33:38 2016
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] t9117: test specifying full url to git svn init -T
+Date: Wed, 16 Mar 2016 19:34:07 +0000
+Message-ID: <20160316193407.GA3781@dcvr.yhbt.net>
+References: <20160316190954.GR29016@dinwoodie.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Michael G. Schwern" <schwern@pobox.com>
+To: Adam Dinwoodie <adam@dinwoodie.org>
+X-From: git-owner@vger.kernel.org Wed Mar 16 20:34:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agHCK-0004ZI-0C
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 20:33:36 +0100
+	id 1agHCx-00054Z-4Y
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 20:34:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932532AbcCPTdc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 15:33:32 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:36690 "EHLO
-	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751621AbcCPTdb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 15:33:31 -0400
-Received: by mail-wm0-f48.google.com with SMTP id l124so60884989wmf.1
-        for <git@vger.kernel.org>; Wed, 16 Mar 2016 12:33:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=Mj+LMFUcMRafTAtxuNEYobACqYEGFYYSdYgLX4aET0w=;
-        b=qw5SQAAbpR6D6ffkB3UBY4wHveuwh1M4ckFFVCZOTqmRoxOjKtyfFi7sQpIyoUxpRE
-         ctXgTT/k+RGnEOMM9RSGgNhqvmHunKZxlSYGV21jU93Ie6B1ExIG+D9x9fJUVkZitQkz
-         j5OvRbkwLnh4TqbvhN4VscCff9jO2DbPVxSsdbnJaSSSp9wmmaljO523fnuZsE+/m0Ks
-         fLmZcMBL08x1H8tCL2PoysDvGqLpay4kJ9JsEL2xN/zFPe9xn1hhA7TzKMGMQK0wMa1b
-         kElOGgdHgQ54jLyVC6sh9ZpJCcqADjjManbyMhhXHVOy3FnH27ek/ZD9K8ZR2jgecyMz
-         HCkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=Mj+LMFUcMRafTAtxuNEYobACqYEGFYYSdYgLX4aET0w=;
-        b=h7ikiYoDbnBt7NrxVC8VBV2VAetfQfm/MDrl1lZnYUuA3N+PndU9Clu7A5ecErisez
-         cxFOruxrOIkKi4JOim5QwUVR8zF9frvFFrXXlnDtmEp02IC9NqUp0r1UccW88ZJhukAS
-         55IMyRVOEDvItf4/iHvCe50xqso94fRuQSlGHHWRdM+I10g6vODfemmzDHPQ+e9ilXRs
-         yMfh/hdWaCMTigq9bBTKA+9QXveVeDDHtLl5kwD4YDjwx1MZO4nRWITcfe7mlIff18I/
-         hCXOVjx6NstDs5f952/7w1VQXf4JZYA3D7x261Emu5e/hL+BqbV9bNH0HjAAYsCG44+N
-         Tkyg==
-X-Gm-Message-State: AD7BkJLMQSlXqrbO1f78AmREc2RJV8qESTKXmW02nhUx260zrWnvOI/ykTQExaSca2C1Dg==
-X-Received: by 10.28.46.5 with SMTP id u5mr6525713wmu.75.1458156810087;
-        Wed, 16 Mar 2016 12:33:30 -0700 (PDT)
-Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id i2sm4414995wje.22.2016.03.16.12.33.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 16 Mar 2016 12:33:29 -0700 (PDT)
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.8.0.rc2.54.g810e8ee
+	id S932595AbcCPTeK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 15:34:10 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:36524 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752537AbcCPTeI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 15:34:08 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8F6E633808;
+	Wed, 16 Mar 2016 19:34:07 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20160316190954.GR29016@dinwoodie.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289022>
 
-In parse_binary() there is:
+Adam Dinwoodie <adam@dinwoodie.org> wrote:
+> According to the documentation, full URLs can be specified in the `-T`
+> argument to `git svn init`.  However, the canonicalization of such
+> arguments squashes together consecutive "/"s, which unsurprisingly
+> breaks http://, svn://, etc URLs.  Add a failing test case to provide
+> evidence of that.
+> 
+> On systems where Subversion provides svn_path_canonicalize but not
+> svn_dirent_canonicalize (Subversion 1.6 and earlier?), this test passes,
+> as svn_path_canonicalize doesn't mangle the consecutive "/"s.
+> 
+> Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
 
-	forward = parse_binary_hunk(&buffer, &size, &status, &used);
-	if (!forward && !status)
-		/* there has to be one hunk (forward hunk) */
-		return error(_("unrecognized binary patch at line %d"), linenr-1);
+Thanks, I was just working on a patch to fix this problem
+when I got this patch :)
 
-so parse_binary() can return -1, because that's what error() returns.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
-Also parse_binary_hunk() sets "status" to -1 in case of error and
-parse_binary() does "if (status) return status;".
+> ---
+> 
+> I think the bug here is in using perl/Git/SVN/Utils.pm's
+> `canonicalize_path` on the `-T` argument.  If it's available, that
+> function calls Subversion's `svn_dirent_canonicalize`.  The Subversion
+> code[0] makes it clear that this function is fine for relative and
+> absolute local paths, and for UNC paths on Windows, but it isn't
+> suitable for use on URLs.
+> 
+> [0]: https://svn.apache.org/repos/asf/subversion/trunk/subversion/include/svn_dirent_uri.h
 
-In this case parse_chunk() should just exit, rather than add -1 to the
-patchsize it computes.
+Yep, we should be using canonicalize_url for URLs.  I was able
+to reproduce this on Debian jessie (GNU/Linux), too.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- builtin/apply.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+> It occurs to me that the correct "fix" here may simply be to stop
+> claiming support for specifying URLs as arguments to -T, and mandate
+> users use the `git svn init $url -T $dirent` syntax instead,
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 42c610e..18dec0f 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -1872,6 +1872,11 @@ static struct fragment *parse_binary_hunk(char **buf_p,
- 	return NULL;
- }
- 
-+/*
-+ * Returns:
-+ *   -1 in case of error,
-+ *   the length of the parsed binary patch otherwise
-+ */
- static int parse_binary(char *buffer, unsigned long size, struct patch *patch)
- {
- 	/*
-@@ -2017,6 +2022,8 @@ static int parse_chunk(char *buffer, unsigned long size, struct patch *patch)
- 			linenr++;
- 			used = parse_binary(buffer + hd + llen,
- 					    size - hd - llen, patch);
-+			if (used < 0)
-+				exit(1);
- 			if (used)
- 				patchsize = used + llen;
- 			else
--- 
-2.8.0.rc2.54.g810e8ee
+Nope, we should never stop supporting existing behavior without
+very good reason and adequate deprecation warnings.
+
+> --- a/t/t9117-git-svn-init-clone.sh
+> +++ b/t/t9117-git-svn-init-clone.sh
+> @@ -119,4 +119,10 @@ test_expect_success 'clone with -s/-T/-b/-t and --prefix "" still works' '
+>         rm -f warning
+>         '
+
+For future reference, your mail editor is expanding tabs to
+spaces and munging your patches.  mutt won't do that itself
+(at least not with my config), so I guess it's your editor.
+
+Manually fixing up the whitespaces damage on my end.
