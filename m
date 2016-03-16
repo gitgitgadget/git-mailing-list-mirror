@@ -1,92 +1,146 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: parse-options does not recognize "unspecified" behavior
-Date: Wed, 16 Mar 2016 14:53:17 -0700
-Message-ID: <CAGZ79kbbAv=PukD+sftmoO8u3GX=S1YCYGV8zcNMxrZ+E41-UA@mail.gmail.com>
-References: <CAFZEwPPd2wFqFq2LFEzN2CzhTV6C420SLPcXi1SWE=z2epOYLw@mail.gmail.com>
-	<20160316204912.GA1890@sigill.intra.peff.net>
-	<CAFZEwPMa3GZS6pvFwr8PLVDqKm5xmMd307nbjhpZSC_ndpw8vw@mail.gmail.com>
-	<20160316212308.GA4538@sigill.intra.peff.net>
-	<CAPig+cRKyaUefz0qj6unkaiPg25=Xi2WorQE4Fm46CCf00UbHQ@mail.gmail.com>
-	<20160316214442.GC4441@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] pretty-print: de-tabify indented logs to make things line up properly
+Date: Wed, 16 Mar 2016 14:55:42 -0700
+Message-ID: <xmqq37rq3x5t.fsf@gitster.mtv.corp.google.com>
+References: <alpine.LFD.2.20.1603160926060.13030@i7>
+	<xmqq7fh25mkc.fsf@gitster.mtv.corp.google.com>
+	<CA+55aFxV5PWdSn9Gj=zV464TtJo=QvciZrhc5Pwe+Qfyqt8sXw@mail.gmail.com>
+	<xmqqwpp243sb.fsf@gitster.mtv.corp.google.com>
+	<CA+55aFxLyMaur8Kd_uyewEeehPeuZXu=Hn11SSbTYd9O6FdDBA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Pranit Bauva <pranit.bauva@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 16 22:53:24 2016
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Mar 16 22:55:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agJNb-0001ri-C6
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 22:53:24 +0100
+	id 1agJPy-0003mT-Rq
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 22:55:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755186AbcCPVxT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 17:53:19 -0400
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:37474 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752521AbcCPVxS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 17:53:18 -0400
-Received: by mail-ig0-f181.google.com with SMTP id mh10so55528079igb.0
-        for <git@vger.kernel.org>; Wed, 16 Mar 2016 14:53:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=jFBmHg/vjdk4XQ8hL53tKv66lKlxP4j1g5aJRch8qPU=;
-        b=pCGGEu5LiDw/10r/Oe0ghkPTEOdjuZpz26gIwHCpqWhC1G3U74nk4qZI5Ji/ZA9Flo
-         iylumfQBdINrdmGA4/5QDLvsvusiKw0LFqtWfcQGkuph+r87rseiLid6WwVGVFvua4sG
-         1dNRBJVwa+MsGgZoLHXyJz4dSfXtYy4iMnDjbgTpCO/MAPfqSVb2WjhF7SyALhaq8Fmr
-         6mwiBguVlg5jBZDfeliAMeBUgwb0Q55N0+gTGzCH6+CrA9sx4+RTW7vVO1XIFOeRZBec
-         qsyUYu3saMgsD8y62XLIyGinRVuJX7qnWCZ0Tr5R5EyoHkL0gCoTCDekYjSRr3iCPW+3
-         veuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=jFBmHg/vjdk4XQ8hL53tKv66lKlxP4j1g5aJRch8qPU=;
-        b=GZVxF3BryjbxQ1B9rl15Br3AXOtwh07CVeUYTNDcMQq7g5WiNAjsUyzHQzRzG+03jr
-         GnHBeQKuq2MFBwQowqoAZbQWEBBzW215hQIq7cI09CQvymbAwaJqU+bLyBwheORoARr3
-         zK/Inl5nQsvNK/AuwCQJoVbD5cqhTMgPn50NHf+PHUGtWcKZz9l81qrawQ6DFXmk4toT
-         q/GFbxzoaMnnaxtTIw8qrs530GaKyHZDCS70wT5VbgvxHKFwdmI/HsFY3cH9xwpE+iy+
-         6r7zpM/bJjMbthBEA+RPRzx4qYOqy2bHim2pM90SByN628IDV0gspHoXhwENKqDaS1D6
-         YRqA==
-X-Gm-Message-State: AD7BkJJbERY236Lv6YnBy4LgBVpnXqTPT9hIbPGmIH23QO32RYxcH0E7pNBw68lo93GFZtg9qFQYbY4zaJtnowTO
-X-Received: by 10.50.23.43 with SMTP id j11mr20388320igf.94.1458165197286;
- Wed, 16 Mar 2016 14:53:17 -0700 (PDT)
-Received: by 10.107.132.101 with HTTP; Wed, 16 Mar 2016 14:53:17 -0700 (PDT)
-In-Reply-To: <20160316214442.GC4441@sigill.intra.peff.net>
+	id S1755624AbcCPVzp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 17:55:45 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:53063 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750953AbcCPVzo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 17:55:44 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BE3494E08A;
+	Wed, 16 Mar 2016 17:55:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=y/hcyApI0lbpWDHGPHaQMtqlip8=; b=W4kWrr
+	gG1J45qDnlK61RGuTuQ2ElTF4t8NuWYIrG1gQ4Ze0ssSZc8hByZ1nK5OGpfoIkXT
+	rGXayWZHWTxYgHKhgXR56gx3osjPNwAXCz/wIyh4ZaSZI6XEeYJkFA+JrR8oEjAc
+	qbnu/X94i7szD8pmK+e4e3x3oxqcioUeVOs4g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sNbxFU3CKpmghAeKC9rnpcUqNq/w8K+b
+	+JdpNnh5flBgkJyCSDCpJwJ+UOrKAzjzFAf/4lYtqlNGHKArgl4F0WcrLKcUp3K2
+	iDPt29Gwl3lYlyzenhiUFxj0cGNCijEurxv5qy0PGmrZfgEz0JEBqbcMP5VU8ayl
+	akc57JaGTG8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B57324E089;
+	Wed, 16 Mar 2016 17:55:43 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 37B374E088;
+	Wed, 16 Mar 2016 17:55:43 -0400 (EDT)
+In-Reply-To: <CA+55aFxLyMaur8Kd_uyewEeehPeuZXu=Hn11SSbTYd9O6FdDBA@mail.gmail.com>
+	(Linus Torvalds's message of "Wed, 16 Mar 2016 12:50:20 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D494BC5E-EBC1-11E5-A2D8-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289051>
 
-On Wed, Mar 16, 2016 at 2:44 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Mar 16, 2016 at 05:37:03PM -0400, Eric Sunshine wrote:
->
->> A much easier solution would be to update OPT_VERBOSE() to understand
->> that negative values are "unspecified", and then --verbose would
->> (pseudocode):
->>
->>     if (value < 0)
->>         value = 0
->>     value++;
->>
->> and --no-verbose would:
->>
->>     value = 0
->>
->> That should be compatible with existing clients of OPT__VERBOSE()
->> which initialize the value to 0, and should satisfy Pranit's case; he
->> can initialize it to -1, and if it is still -1 when option parsing is
->> done, then he knows that neither --verbose nor --no-verbose was seen.
->
-> Yes, that makes much more sense to me. Thanks for the back-story.
->
-> -Peff
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Is there any command which needs more than one --no-verbose?
-(as an abuse to stacking --quiet multiple times)?
+> Here's an incremental patch that could be just smushed into my
+> previous one. It doesn't change the behavior of "pp_handle_indent()",
+> but I think it clarifies the code and makes future changes much easier
+> (partly because now nobody has to worry about the continue case and
+> the newline at the end of the line, so you can just print whatever you
+> want and then return).
+>
+> What do you think?
+
+I actually was hoping that strbuf_tabexpand_add() would be an
+independently useful addition to strbuf_add*() family that does not
+have to know the indentation and pretty-print-context, so burying
+that new logic deep in the callchain like the patch below, while
+letting it still be aware of "indent" value (and adding the leading
+indent) does not look like a good abstraction from that point of
+view.
+
+The change to pp_remainder() looks like a nice cleanup for people
+who read that function.  I still think pp_add_line() should add the
+indentation to sb in "if (indent)" block itself, and the called
+helper should be a "I know how to tab-expand a string and add the
+result to a strbuf" that we can eventually move to strbuf.[ch].
+
+Things like adding CMIT_FMT_EXPAND_TABS can still then be done with
+something like this:
+
+	strbuf_grow();
+	if (indent) {
+		strbuf_addchars(sb, ' ', indent);
+-        	strbuf_tabexpand_add();
++		if (pp->format == EXPAND_TABS)
++	        	strbuf_tabexpand_add();
++		else
++	        	strbuf_add();
+	} else {
+        	strbuf_add();
+	}
+
+in pp_add_line(), so there is no difference between the ease of
+future changes, I'd think.
+
+>                  Linus
+>
+>  pretty.c | 19 +++++++++++++------
+>  1 file changed, 13 insertions(+), 6 deletions(-)
+>
+> diff --git a/pretty.c b/pretty.c
+> index 0b40457f99f0..b9374a1708d1 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -1699,6 +1699,18 @@ static int pp_handle_indent(struct strbuf *sb, int indent,
+>  	return 1;
+>  }
+>  
+> +static void pp_add_line(struct pretty_print_context *pp,
+> +			struct strbuf *sb, int indent,
+> +			const char *line, int linelen)
+> +{
+> +	strbuf_grow(sb, linelen + indent + 20);
+> +	if (indent) {
+> +		if (pp_handle_indent(sb, indent, line, linelen))
+> +			return;
+> +	}
+> +	strbuf_add(sb, line, linelen);
+> +}
+> +
+>  void pp_remainder(struct pretty_print_context *pp,
+>  		  const char **msg_p,
+>  		  struct strbuf *sb,
+> @@ -1721,12 +1733,7 @@ void pp_remainder(struct pretty_print_context *pp,
+>  		}
+>  		first = 0;
+>  
+> -		strbuf_grow(sb, linelen + indent + 20);
+> -		if (indent) {
+> -			if (pp_handle_indent(sb, indent, line, linelen))
+> -				linelen = 0;
+> -		}
+> -		strbuf_add(sb, line, linelen);
+> +		pp_add_line(pp, sb, indent, line, linelen);
+>  		strbuf_addch(sb, '\n');
+>  	}
+>  }
