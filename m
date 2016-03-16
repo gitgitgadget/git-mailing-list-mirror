@@ -1,72 +1,103 @@
-From: Anton Wuerfel <anton.wuerfel@fau.de>
-Subject: [PATCH 1/1] http: Fix crash when passing malformed URL
-Date: Wed, 16 Mar 2016 11:54:07 +0100
-Message-ID: <1458125647-32707-2-git-send-email-anton.wuerfel@fau.de>
-References: <1458125647-32707-1-git-send-email-anton.wuerfel@fau.de>
-Cc: Anton Wuerfel <anton.wuerfel@fau.de>,
-	Phillip@i4.informatik.uni-erlangen.de,
-	"Raffeck <phillip.raffeck"@fau.de, i4passt@cs.fau.de,
-	git@vger.kernel.org
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Can't git stash after using git add -N
+Date: Wed, 16 Mar 2016 18:09:56 +0700
+Message-ID: <CACsJy8CtPAdJavKPLo3B-s-x5QVzAjNRqOM+MgbjpRbCOSGkXQ@mail.gmail.com>
+References: <20160315230754.GA12058@cloud> <xmqq8u1j7193.fsf@gitster.mtv.corp.google.com>
+ <20160316020000.GB12130@cloud> <xmqqvb4n58ko.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Josh Triplett <josh@joshtriplett.org>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 11:54:29 2016
+X-From: git-owner@vger.kernel.org Wed Mar 16 12:11:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ag95u-0000Od-Cw
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 11:54:26 +0100
+	id 1ag9MN-0002oX-CX
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 12:11:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754084AbcCPKyX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 06:54:23 -0400
-Received: from faui40.informatik.uni-erlangen.de ([131.188.34.40]:55249 "EHLO
-	faui40.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753825AbcCPKyV (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Mar 2016 06:54:21 -0400
-Received: from faui49man2 (faui49man2.informatik.uni-erlangen.de [131.188.42.190])
-	by faui40.informatik.uni-erlangen.de (Postfix) with SMTP id F3E0858C4CE;
-	Wed, 16 Mar 2016 11:54:18 +0100 (CET)
-Received: by faui49man2 (sSMTP sendmail emulation); Wed, 16 Mar 2016 11:54:18 +0100
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1458125647-32707-1-git-send-email-anton.wuerfel@fau.de>
+	id S966584AbcCPLLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 07:11:00 -0400
+Received: from mail-lf0-f44.google.com ([209.85.215.44]:32781 "EHLO
+	mail-lf0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965967AbcCPLK1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 07:10:27 -0400
+Received: by mail-lf0-f44.google.com with SMTP id h198so16434138lfh.0
+        for <git@vger.kernel.org>; Wed, 16 Mar 2016 04:10:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=/M4gVvz6ZYpyxtJC8JhW5GcTP1UIfbLO7XB8N5HPERI=;
+        b=nA9BhrsP7ke3Nj1HUICq/OPqJux3/Ho1hXNiUjbOIfJ+gtZ5CzpyOdz4FcChK/GInU
+         6Vxforlw8vFYvqNvLOhq9seKN5qYMh4/ynCI9s4E9fRGn3D3ma/y5BuCKyOMKkFL4PQ7
+         fKPq3QleNf1mGy+iU97/47rTXsIUym6oRKOW9kfn9UjQvYR3bk1Kz01WcBbrWfX0cw4v
+         PDDhfjJxXhsZDs7ufjjKL5HNvxKnfh5XWzfBqFzoEVAQ/zsRQ1VNr0BN/VZQWEg8MGvN
+         SBUKGqKnjh6peCxSf/H31sDqTGi1Hxw0d7DcQDsJ3dfP4u1qLkj0KxTk9wmfEFrRD4Py
+         tUuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=/M4gVvz6ZYpyxtJC8JhW5GcTP1UIfbLO7XB8N5HPERI=;
+        b=Af6BxNETPh/dvPqoi97eopOgxyS19Ff4yXAtdK19GZRGuZntOUi3R03caDLBWcV7cZ
+         po3T+BTUigPfds8QjzUuYfAQovG+on6WZv7mUCd4a1xPOzWbBYgRfoFoPW73agfinbpF
+         do9t7pxIct8kO601uIQpOe23QGrYaRr8ukOT4iCqNE/MUV+FjMmBDiVpoyWAeKapPDtx
+         O1wlxYwfAoYD+H3U96eiOdan9XGV6rR0uTWZeKbiaziOF89ZqdORB2y9Tr115l0Srl2r
+         NCZT4CpsGH6fVdvly8/edw4DBkRUOe7unjwNYHGmrCGX05WwJu4vma+bBYKHCrX9Gat9
+         6m4w==
+X-Gm-Message-State: AD7BkJKiq5yPMKOaA3oALXOQHPpFF2vuX7NjfAYY2nj5sy3F3M76Sr96/FBfP8qcHyuv3eOPaf8+5qhNqjic0g==
+X-Received: by 10.25.23.94 with SMTP id n91mr924229lfi.3.1458126626145; Wed,
+ 16 Mar 2016 04:10:26 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Wed, 16 Mar 2016 04:09:56 -0700 (PDT)
+In-Reply-To: <xmqqvb4n58ko.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288958>
 
-When passing a malformed URL to http_init() in http.c, git dies from a null
-pointer dereference. An example for a malformed URL is http:/git-scm.com (note
-the single slash after the protocol).
-This patch adds simple error handling as git notices the malformed URL already,
-but never checks the error value.
+On Wed, Mar 16, 2016 at 11:51 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Josh Triplett <josh@joshtriplett.org> writes:
+>
+>> As far as I can tell, if I run "git add -N" on a file, and then commit
+>> without adding the file contents, it gets committed as an empty file.
+>
+> Is that true?  Git once worked like that in earlier days, but I
+> think write-tree (hence commit) would simply ignore intent-to-add
+> entries from its resulting tree.
 
-When passing a malformed URL, credential_from_url(struct credential *c, const char *url)
-initializes *c with null values. When the existence of `://` in url is checked,
-the function returns without further change of *c.
-The null pointer dereference occurs in get_curl_handle () at http.c:593, when
-the `protocol` field of struct credential is strcmp'ed:
+We have at least one problem, probably because of the confusion in
+diff code (I haven't checked further), which may be fixed once i
+re-fix d95d728 (diff-lib.c: adjust position of i-t-a entries in diff -
+2015-03-16)
 
-Program received signal SIGSEGV, Segmentation fault.
-0x0000000000405efd in get_curl_handle () at http.c:593
-593                     if (!strcmp(http_auth.protocol, "https")) {
----
- http.c | 3 +++
- 1 file changed, 3 insertions(+)
+> /tmp $ git init a
+Initialized empty Git repository in /tmp/a/.git/
+> /tmp $ cd a
+> /tmp/a $ git ci --allow-empty -m 1
+[master (root-commit) 4d8aed4] 1
+> /tmp/a $ git add -N new
+fatal: pathspec 'new' did not match any files
 
-diff --git a/http.c b/http.c
-index 69da445..80cf752 100644
---- a/http.c
-+++ b/http.c
-@@ -660,6 +660,9 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
- 
- 	http_is_verbose = 0;
- 	normalized_url = url_normalize(url, &config.url);
-+	
-+	if (config.url.err)
-+		die(_("libcurl: %s, URL: %s"), config.url.err, url);
- 
- 	git_config(urlmatch_config_entry, &config);
- 	free(normalized_url);
+So far so good..
+
+> /tmp/a $ touch new
+> /tmp/a $ git add -N new
+
+OK let's delete "new" and trigger this problem
+
+> /tmp/a $ rm new
+> /tmp/a $ git ci -m NOOOO
+[master ce2e4bb] NOOOO
+> /tmp/a $ git cat-file commit HEAD|grep ^tree
+tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+> /tmp/a $ git cat-file commit HEAD^|grep ^tree
+tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+
+The second commit should not be created. git-commit is somehow fooled
+that there's changes to commit.
 -- 
-2.8.0.rc1.108.g7827469
+Duy
