@@ -1,90 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC/GSoC 3/3] t0301: test credential-cache support of XDG_RUNTIME_DIR
-Date: Wed, 16 Mar 2016 10:24:44 -0700
-Message-ID: <xmqqbn6e5o9v.fsf@gitster.mtv.corp.google.com>
-References: <CAKqreux4aYhXTE9kUHKoKCJ2-4KDWyi58ioCm-CWqXhUYCtEEw@mail.gmail.com>
-	<1458122865-29447-1-git-send-email-huiyiqun@gmail.com>
-	<1458122865-29447-3-git-send-email-huiyiqun@gmail.com>
-	<xmqqr3fa5rdi.fsf@gitster.mtv.corp.google.com>
-	<CAKqreuwRpS3uP6=afm-0pBkPW0-bqoJconnKO5q3qTgZwdU_xQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] help.c: strip suffix only if the STRIP_EXTENSION defined
+Date: Wed, 16 Mar 2016 13:31:28 -0400
+Message-ID: <20160316173127.GD4039@sigill.intra.peff.net>
+References: <1458138449-26690-1-git-send-email-kuleshovmail@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Your friend <pickfire@riseup.net>,
-	Jeff King <peff@peff.net>
-To: =?utf-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 16 18:24:55 2016
+Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
+To: Alexander Kuleshov <kuleshovmail@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 16 18:31:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agFBl-0007bo-3C
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 18:24:53 +0100
+	id 1agFIG-0004Et-09
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Mar 2016 18:31:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932487AbcCPRYs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2016 13:24:48 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:57586 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932275AbcCPRYs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Mar 2016 13:24:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 991A74B043;
-	Wed, 16 Mar 2016 13:24:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=AwdW3O3xOehU
-	UlHZVTHYt1Bf7hw=; b=cWRXURMXJuw0EUXPbOEknXxEl6gRHaWpsNbW5ePs6nkL
-	IPqcxEFGlc/RnODKOiNXBpPo15bK9Nuw9R7Q8FVU3wNpTEBdmcQ0oj1xxkeljwoB
-	YaDN5F/UEws+NxIAxlCHrLxB3hmmhmB1jxqfoFSTG/v5lM3DvveBU3XHToi7TVU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ThllD/
-	vNeLJEiudySJN+9vlYNyTPdlwg3zkEzoY18OZ2HiwO78WtA1bqz9F5CJ5/9lQNO/
-	S+gQ3ZnyZK5UJapMqfUJWwtTcWmuG25OHAtXpBJ6OzsFW0PBdv+Tx4yCRVMfKuvm
-	WSUmyFYN8Iez3M9JQDP+AYT6GZ6EjaTAnyuc4=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8DDA64B042;
-	Wed, 16 Mar 2016 13:24:46 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0C6944B041;
-	Wed, 16 Mar 2016 13:24:45 -0400 (EDT)
-In-Reply-To: <CAKqreuwRpS3uP6=afm-0pBkPW0-bqoJconnKO5q3qTgZwdU_xQ@mail.gmail.com>
-	(=?utf-8?B?IuaDoOi9tue+pCIncw==?= message of "Thu, 17 Mar 2016 00:40:59
- +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: FA8CA78A-EB9B-11E5-B03A-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S933654AbcCPRbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 13:31:31 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60712 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933096AbcCPRbb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 13:31:31 -0400
+Received: (qmail 8584 invoked by uid 102); 16 Mar 2016 17:31:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Mar 2016 13:31:30 -0400
+Received: (qmail 15972 invoked by uid 107); 16 Mar 2016 17:31:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Mar 2016 13:31:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Mar 2016 13:31:28 -0400
+Content-Disposition: inline
+In-Reply-To: <1458138449-26690-1-git-send-email-kuleshovmail@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289001>
 
-=E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqun@gmail.com> writes:
+On Wed, Mar 16, 2016 at 08:27:29PM +0600, Alexander Kuleshov wrote:
 
->> Is it because the wish is to always use /tmp/git-$uid/ as a fallback
->> for $XDG_RUNTIME_DIR (as opposed to ~/.git-credential-cache/, which
->> is specific to the credential-cache and would look strange if we
->> used it for other "runtime" things)?
->
-> Yes, I mean to use it as a general fallback for git.
+> We stripping extension in the list_commands_in_dir() to get
+> commands without '.exe' suffix. Let's do it only if STRIP_EXTENSION
+> is defined to not spend time for unnecessary strip_suffix() call in
+> this case.
+> 
+> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
+> ---
+>  help.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/help.c b/help.c
+> index 19328ea..c865991 100644
+> --- a/help.c
+> +++ b/help.c
+> @@ -153,8 +153,9 @@ static void list_commands_in_dir(struct cmdnames *cmds,
+>  			continue;
+>  
+>  		entlen = strlen(ent);
+> -		strip_suffix(ent, ".exe", &entlen);
+> -
+> +#ifdef STRIP_EXTENSION
+> +		strip_suffix(ent, STRIP_EXTENSION, &entlen);
+> +#endif
 
-If that is the case the code probably needs to be a bit more careful
-before deciding to use /tmp/git-$uid/ directory (is it really $uid's?
-can anybody else write to it to race with the real user? etc.)
+This is billed as an optimization in the commit message, but these two
+pieces of code are not the same. The original always strips ".exe",
+whether or not STRIP_EXTENSION is defined, and whether or not it is
+".exe".
 
-> On the other hand, I think, falling back to $HOME/.git-credential-cac=
-he/socket
-> doesn't make any sense for back-compability cannot be ensured.
+In practice it works out because people on Unix systems do not have
+"git-foo.exe", and nobody sets STRIP_EXTENSION to other things.  But I
+tend to think this is an improvement in robustness.
 
-What do you mean by that?
+I also wonder if this should be sharing the strip_extension() helper
+added in your 63ca1c0.
 
-Using ~/.git-credential-cache/credential-cache.sock would not help
-at all for existing users, but ~/.git-credential-cache/socket would
-interoperate well with users with existing versions of Git, no?
-
->> Just being curious, and wanting to see the reasoning behind the
->> design decision the patch series makes in the log message of one of
->> these patches.
+-Peff
