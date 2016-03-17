@@ -1,99 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: An idea for the "Leftover Bits": rebase -x to imply -i
-Date: Thu, 17 Mar 2016 00:31:34 -0700
-Message-ID: <xmqqbn6d36i1.fsf@gitster.mtv.corp.google.com>
-References: <CAGZ79kZg3QkfjB1hwZKRS9Hqg-1H=kQwuwByX_rAMzveXtnp7Q@mail.gmail.com>
-	<xmqqy49i2hhe.fsf@gitster.mtv.corp.google.com>
-	<xmqqlh5i2g0y.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZC0AAz=cm59ys1L_Axj1_HLvcTqrMrfNrOHoA3Ef7a5A@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 0/4] make t6302 usable even without GPG installed
+Date: Thu, 17 Mar 2016 03:31:53 -0400
+Message-ID: <CAPig+cR-sPbPy0Y6W5e3O8ocNLuDir2z1+QssagynWieYdG13A@mail.gmail.com>
+References: <1457309427-30124-1-git-send-email-sunshine@sunshineco.com>
+	<alpine.DEB.2.20.1603152038110.4690@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 08:31:43 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Mar 17 08:32:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agSPG-0000cc-Te
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 08:31:43 +0100
+	id 1agSPX-0000nH-4V
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 08:31:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932078AbcCQHbj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 03:31:39 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:53172 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752954AbcCQHbi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 03:31:38 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D003C4414C;
-	Thu, 17 Mar 2016 03:31:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rPGTePq4YlU4sMdWGr2hzLXn2rc=; b=MG25Q2
-	oMG+Yqpo2Cvx9pbtkykzQ6U9YnDo8L0Fhnp4xyZ+xPnupgbjyOolxm0Oz75YrJ0a
-	5XdDpjGwRrHv4lhqmVv2UlHICaEikobW+PkmySMYc2dWgO7smsArLaXa1sz/CpDL
-	MW7PR/WBgOFBHtIBIla6vXjcEXy9oJ/EsiZro=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=m/anyQOPSPBG4nuRAOZDUfBDrMwhVdUR
-	MyHpPnG+mO9sJwOkLIJ2HWd5y08ck1PPcry4/T8K1QuE+/9RNZsP9ciTbp6Q3WsE
-	XBGJqTArqgIPFT1JEVS65MG3zRTuyfjD8lEYkXLHzxc1XT+wUmdyCeqzeSa7nrIj
-	lEQugszZ6kY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C79B04414A;
-	Thu, 17 Mar 2016 03:31:36 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4E7FE44146;
-	Thu, 17 Mar 2016 03:31:36 -0400 (EDT)
-In-Reply-To: <CAGZ79kZC0AAz=cm59ys1L_Axj1_HLvcTqrMrfNrOHoA3Ef7a5A@mail.gmail.com>
-	(Stefan Beller's message of "Wed, 16 Mar 2016 16:18:10 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 47D49F9A-EC12-11E5-B5E4-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S932200AbcCQHb4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2016 03:31:56 -0400
+Received: from mail-vk0-f65.google.com ([209.85.213.65]:34605 "EHLO
+	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752954AbcCQHby (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 03:31:54 -0400
+Received: by mail-vk0-f65.google.com with SMTP id e6so5652084vkh.1
+        for <git@vger.kernel.org>; Thu, 17 Mar 2016 00:31:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=A/nbscticipg0rjc6zAAwGi6NhvEogOPBxQLHud5Lkw=;
+        b=aS6oWEpYaST1mPZntkTY0ivHDeqf6NyItN8PIOcaM+OoWwGe/J+6UO7cCRKjrtChB7
+         xNaqT7QW3SKeUohjlKdv6zOrsKWhm2JPx0uaB/yCAiom3NDnMnzNrCbBA86weRFzHV5x
+         KfITHDIND+jnGrzHcq3AF4RZB9z1989yioI6XuUEBCgpg3yX6UOBpXfyHnRWjbII4qNx
+         1TyhRMVnthaSBmCQicUQ5KAoXy3RwnfUIzdrgZyU51heFS2R3rdA7GxRQQu3eMTtZBai
+         vAgiQuTTdyd2ryPPlsZ1aZPRE8Z5BFQGi886eFEhI5mYJcWb8U4ttPtx69gO2VXvvpRa
+         cLKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=A/nbscticipg0rjc6zAAwGi6NhvEogOPBxQLHud5Lkw=;
+        b=EqaSe3WvvTqw71tCMZ5a1zPluN6VeifZ4PVZxeFIZRo8n+8hi7K6wryMC5DGn1QAdY
+         /uA3bEzRJoxGjDhQBRfEUzgup58BdB61JsDPj2sIMGEzkO5TADMO18cRhuc2rchYofC/
+         xO7Pmthz670qEIk54fygngne6hl90b7cxbeZiGbL/jSXIXntrwWVGKdqqrrxMBMhw0eC
+         2ndfDFB1nHC3pXRxDSP8L+DN4stJnVNnaeAW1JoS5aT+Hs+oco65vPYUerVHokRIdyJB
+         DNd7cwB36KWOLWupeP5IFGvD5YSX5orlFRWioiGrky/zQNFfqxhPk7kpq6luKABZuwub
+         SGLg==
+X-Gm-Message-State: AD7BkJIPJhVHR2Gp5wfOTDQTh3FX9crMArex8IFMvdAVd22lwwYVxAJGHd3DcYmVST2CvK+gxXXoBkzf+f94mA==
+X-Received: by 10.31.146.5 with SMTP id u5mr4489154vkd.19.1458199914000; Thu,
+ 17 Mar 2016 00:31:54 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Thu, 17 Mar 2016 00:31:53 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1603152038110.4690@virtualbox>
+X-Google-Sender-Auth: d754B9ZxZjCjfraCuSMHa5YGJLQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289083>
 
-Stefan Beller <sbeller@google.com> writes:
-
-> On Wed, Mar 16, 2016 at 3:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, Mar 15, 2016 at 3:38 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Sun, 6 Mar 2016, Eric Sunshine wrote:
+>> This is a re-roll of [1] which aims to allow t6302 to be run even
+>> without GPG installed.
 >
->> A few "characteristics" of that list, that cannot be updated by
->> anybody but me (because it is just my personal collection after all)
->> are:
->>
->>  * I do not have to worry about useless new entries that do not
->>    align the overall system design getting added by clueless people.
->
-> As it is your personall collection and you're the maintainer, I thought
-> of this as a collection with maintainers blessing, i.e. if the code&tests
-> are not too shoddy a patch will get accepted (read as: On that list there
-> are no bullet points with fundamental design issues). Why would you
-> add things to that list if you'd not agree with them?
+> What a beautiful story this patch series tells. Truly a pleasure to
+> review.
 
-If it was not clear, I didn't mean these three are all bad things.
-In fact, this first of the three "characteristics" is a good thing.
-Random people are not allowed to throw random things into it.
-
->>  * Adding new entry after scanning past list traffic and finding a
->>    still unresolved topic that "died down" is relatively easy.
->
-> As the notes in Documentation/howto/maintain-git.txt indicate, you're
-> scanning the list anyway, so offering help in this point may be moot.
-
-The scanning of the list for new topics (to further discuss and pick
-patches to queue) and the scanning of the list for "died down"
-threads are two completely separate activities.  If somebody with
-good taste can do the latter when I am too busy elsewhere by
-pointing out "what happened to this thread?  It seems that nobody is
-interested enough to pursue it right now, so perhaps it is a good
-time to add it to 'leftover bits' list?", that would be helpful.
-
-And as you agreed, pointing out "done" items to remove would also be
-helpful.
-
-Thanks.
+Thank you for the kind words; I appreciate it.
