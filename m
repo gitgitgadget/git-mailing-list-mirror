@@ -1,100 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase -x: do not die without -i
-Date: Thu, 17 Mar 2016 11:10:22 -0700
-Message-ID: <xmqq37rp0ycx.fsf@gitster.mtv.corp.google.com>
-References: <1458177584-11378-1-git-send-email-sbeller@google.com>
-	<xmqq4mc535n2.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1603171406080.4690@virtualbox>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2/GSoC 2/4] path.c: implement xdg_runtime_dir()
+Date: Thu, 17 Mar 2016 14:13:11 -0400
+Message-ID: <20160317181311.GB23669@sigill.intra.peff.net>
+References: <1458233326-7735-1-git-send-email-huiyiqun@gmail.com>
+ <1458233326-7735-2-git-send-email-huiyiqun@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-	Matthieu.Moy@grenoble-inp.fr, j6t@kdbg.org,
-	Lucien.Kong@ensimag.imag.fr
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Mar 17 19:10:32 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com, pickfire@riseup.net
+To: Hui Yiqun <huiyiqun@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 17 19:13:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agcNT-0004kS-En
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 19:10:31 +0100
+	id 1agcQA-0006oN-Jj
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 19:13:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936327AbcCQSK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 14:10:27 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:58455 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932933AbcCQSKZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 14:10:25 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 21A014B54C;
-	Thu, 17 Mar 2016 14:10:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WN0oHAE+XCkyce7XgBf6LVq45w4=; b=TM3ZkM
-	c8et69g5u447m+SASmvaffACgDEWIQs4bK42SWthI2c7CMy3iLq4iphLw5ZdMpvc
-	+zwiOoW1J74IFzR8hQ9Q0wzsfI+GyYeeaWzKmiVFg/EEhU9g9IVKJZdP79hq5xI4
-	hjSRJh1udO9QogmDKkP3ZNbOFd/byRCL/7JFg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KBWOamZfDCEtVRT1oNyZ8f20nQKS7ek1
-	jT5b1WiW1Uab5yro/lmdU+0wvsbf+Ssjcd0kxFEGn8JUj90wGJkNmi/tg6l/sJoO
-	SlgS9HXRI/7a3Fit39I/xrVymMREMbQeBbTyTwK/W8E0ixWi/DtoEb1UNKZj0tup
-	2p2XN2KRjxE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 184924B54B;
-	Thu, 17 Mar 2016 14:10:24 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8AAB84B54A;
-	Thu, 17 Mar 2016 14:10:23 -0400 (EDT)
-In-Reply-To: <alpine.DEB.2.20.1603171406080.4690@virtualbox> (Johannes
-	Schindelin's message of "Thu, 17 Mar 2016 14:11:01 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 84B0827C-EC6B-11E5-B955-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S936359AbcCQSNP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2016 14:13:15 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33531 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932875AbcCQSNO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 14:13:14 -0400
+Received: (qmail 17012 invoked by uid 102); 17 Mar 2016 18:13:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 17 Mar 2016 14:13:13 -0400
+Received: (qmail 2892 invoked by uid 107); 17 Mar 2016 18:13:31 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 17 Mar 2016 14:13:31 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Mar 2016 14:13:11 -0400
+Content-Disposition: inline
+In-Reply-To: <1458233326-7735-2-git-send-email-huiyiqun@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289137>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Fri, Mar 18, 2016 at 12:48:44AM +0800, Hui Yiqun wrote:
 
-> And that is very, very much the purpose of the interactive rebase.
->
->>     $ git for-each-rev -x "$command" old..new
->> 
->> where you can write "sh -c 'git checkout $1 && make test' -" as
->> your $command.
->
-> You meant
->
-> 	git rev-list old...new |
-> 	while read rev
-> 	do
-> 		$command || break
-> 	done
->
-> ?
+> this function does the following:
+> 
+> 1. if $XDG_RUNTIME_DIR is non-empty, `$XDG_RUNTIME_DIR/git` is used in next
+> step, otherwise `/tmp/git-$uid` is taken.
+> 2. ensure that above directory does exist. what's more, it must has correct
+> permission and ownership.
+> 3. a newly allocated string consisting of the path of above directory and
+> $filename is returned.
+> 
+> Under following situation, NULL will be returned:
+> + the directory mentioned in step 1 exists but have wrong permission or
+> ownership.
+> + the directory or its parent cannot be created.
+> 
+> Notice:
+> 
+> + the caller is responsible for deallocating the returned string.
 
-Yeah, if I actually felt the lack of "for-each-ref -x" a problem (I
-don't), that is what I would have used instead (but with just two
-dots ;-).
+I see a lot of "what" in your commit message (and in the other ones in
+this series), but not a lot of "why".
 
-But you are correct to point out that I didn't consider that
-"... and I want to fix right there if it breaks" is a part of the
-use case, mainly because the log message said this:
+We can see the "what" from the diff already (though it is certainly OK
+to point out tricky parts). But you probably want to explain the
+motivation for things, alternatives considered, etc, like:
 
-    In the later steps of preparing a patch series I do not want to
-    edit the patches any more, but just make sure the test suite
-    passes after each patch.
+  - why is using $XDG_RUNTIME_DIR a good thing?
 
-and partly I lack imagination.
+  - why did you choose to fall back to /tmp (as opposed to, say,
+    returning NULL and letting the caller handle it)
 
-If you throw in that extra "I want to fix right there if it breaks"
-requirement, it makes perfect sense to make use of the sequencing
-machinery we implement for "rebase -i", as the while loop above does
-not give you the same sequencing without extra work.
+  - what is the purpose of the ownership/permission rules? You link to
+    the XDG spec in an in-code comment, but IMHO that kind of motivation
+    probably makes more sense in the commit message.
 
-So perhaps the idea of the patch is good with a better explanation.
+-Peff
