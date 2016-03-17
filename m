@@ -1,146 +1,94 @@
 From: =?UTF-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
-Subject: Re: [PATCH/RFC/GSoC 1/3] path.c: implement xdg_runtime_dir()
-Date: Thu, 17 Mar 2016 18:20:14 +0800
-Message-ID: <CAKqreuxBtu3hXVxY27_u-9ZxSP_AfSqeoB=d_UJdUsSTphgf=g@mail.gmail.com>
+Subject: Re: [PATCH/RFC/GSoC 2/3] git-credential-cache: put socket to
+ xdg-compatible path
+Date: Thu, 17 Mar 2016 18:26:00 +0800
+Message-ID: <CAKqreuyOpNOGmWCwLnKY7_ax7szfsFX8R8gpYRym9BYe+3zdDA@mail.gmail.com>
 References: <CAKqreux4aYhXTE9kUHKoKCJ2-4KDWyi58ioCm-CWqXhUYCtEEw@mail.gmail.com>
 	<1458122865-29447-1-git-send-email-huiyiqun@gmail.com>
-	<20160316170623.GB4039@sigill.intra.peff.net>
+	<1458122865-29447-2-git-send-email-huiyiqun@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Your friend <pickfire@riseup.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 17 11:20:28 2016
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Your friend <pickfire@riseup.net>, Jeff King <peff@peff.net>,
+	Hui Yiqun <huiyiqun@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 17 11:26:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agV2Y-0005XZ-Nw
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 11:20:27 +0100
+	id 1agV83-00017n-RE
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 11:26:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965896AbcCQKUS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 06:20:18 -0400
-Received: from mail-oi0-f47.google.com ([209.85.218.47]:32956 "EHLO
-	mail-oi0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935295AbcCQKUQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 06:20:16 -0400
-Received: by mail-oi0-f47.google.com with SMTP id d205so59549330oia.0
-        for <git@vger.kernel.org>; Thu, 17 Mar 2016 03:20:15 -0700 (PDT)
+	id S935504AbcCQK0D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2016 06:26:03 -0400
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:33064 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933565AbcCQK0B (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 06:26:01 -0400
+Received: by mail-ob0-f177.google.com with SMTP id fz5so79276376obc.0
+        for <git@vger.kernel.org>; Thu, 17 Mar 2016 03:26:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=UNbyUzUPcdV7S+Oqq4y5PI/U2FyrCsqsNz7nUl953Q4=;
-        b=mbN8I1U6f9mEDWGAxfEGb1bbYz3thpeXqGm601lUreCX4U58pYrCMjFeF6dc7gxGyl
-         Bz0FjUYSlfHZBrM9qxoS4Be11Ug0z6ToiS+jARUkYHg/AhWpQSJQCoVEmVk2KQ2yGRW3
-         vHdwbB1O6dpLJF/k9LXvSjE9gx5gCIYeAQUiOWWiW0XM9R9weeXPJ6ci+tbAsUig10o6
-         pbwPrIjqiCujB5CSv7OqasJv9ku7sWmYk5QV19VBaC/prxRWw+IbsR2cyUm1ynEzTgMF
-         TsdRDKOKDxioW1BbfGn/NHYIugCk+eL3Lj43haybiaUexuBaqjVh4c44OFN706wK1Lck
-         6kAA==
+        bh=rxY1qAhA1QtyngRzZ5lNclFW7/U5EDDaNMFDa/62aI4=;
+        b=inF0k5l4ZVh0cZnkFZRL21+sSxV1Z2VbHr80Oc99Su8L82/zZoBro8bNmMpyGroNYt
+         nCAo7TQx5r+/yU6ZrSPfONdh9JJR734fw0xbb2QTuS4k7bwuCjH0aLYWr/a2fopiZ1a1
+         3gtfH/j492BSvJ8Rj/ghqmDHIh70ZTFSnnI8Ib6cV6PbR6MmpthF1OXGA4c4Z+aSVPv6
+         wmheSZXSgLFUkG5ofDTD0TPt6m9mJgl3k2PbbkFRuTE8LGIZ7Zm7G+MdGwHkl4xhHaqc
+         UOLtO7jRBKZll47BUzUguDjPEfUzqe3bukkxvYbMiR46+5SDcWIDb0nv8wAn0XjSrd4Z
+         iMZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=UNbyUzUPcdV7S+Oqq4y5PI/U2FyrCsqsNz7nUl953Q4=;
-        b=acyR/6CO7N/I0yz0aygYZ3v93/DkaOJfKJ80RNZkHNTSlwSi8GRE9zrunNbUJ/E0TJ
-         uQm/oKdoFPLU6QmH0034iOEVGObifPegUG59dzm2TvRF2uGEwbjI4BWf3q0gjLJPBVud
-         38ghb0r7v3eqsDA+3SpoNS3dYPGDuWo+lNYpufeaayhglvC4nObQPSGhqjbjld4yqrWM
-         dJG9o9gsynMNKpGWTKXM8c1FSoif6LDmmmHgKEEsvuY23xNR0j/5hHBDQcVwkJ+K9WpI
-         LTxpJTcJ9jp7gQa545Eyjb/mtluEJS2ZvILSzO5MnSp1HusuHOOUYnC3zUzJb6lWhVzv
-         yOUQ==
-X-Gm-Message-State: AD7BkJIbRuIy2P5FSgHpIj4kpnyRkEzZSIICdrM2Nv/cOOlXIHLCCOOVtLHQ0Wch8R7yR9Lg/qytBsrv+2HePw==
-X-Received: by 10.202.66.5 with SMTP id p5mr5315215oia.65.1458210014919; Thu,
- 17 Mar 2016 03:20:14 -0700 (PDT)
-Received: by 10.157.43.68 with HTTP; Thu, 17 Mar 2016 03:20:14 -0700 (PDT)
-In-Reply-To: <20160316170623.GB4039@sigill.intra.peff.net>
+        bh=rxY1qAhA1QtyngRzZ5lNclFW7/U5EDDaNMFDa/62aI4=;
+        b=PLJQ7wVD9DjylWQsZkFFaCEJwghb0CbKGgpKQYuJbxk4atzcFYD7D2B40HqXvvWa0/
+         KCnsjsY4XyGilKpMD+VgrrwVu3HXWkbcBRZOQUfGxkgH3PGsISpGZYObCPT2YHv5NwIs
+         cm9NB95SQTFQXRn0i1TUPa/6BpSbBHBdjxev+CJG1WB9VvYEUv9/ca9dNY1nbse/uWEB
+         1JC7SZ8Yet5R1IKNfViVSTxCjRd47BhFq6TGUazDwC64XFT4Stq+D9aYx+TtVScompx+
+         QInxUK7crms6+geZ8ydzYm0zWAfmyX5++nNSKWCph0sXkCVOmm+XzYgcaeRgaLlWropP
+         DZ0w==
+X-Gm-Message-State: AD7BkJJo0YG52YPDjyOvBZ04OouJrSLttIL+O8IxGZ6zO53etNtrqfzp9js2d7tI3cS0eQMVkmHZmCEc+bnLpQ==
+X-Received: by 10.60.93.162 with SMTP id cv2mr5508302oeb.28.1458210360479;
+ Thu, 17 Mar 2016 03:26:00 -0700 (PDT)
+Received: by 10.157.43.68 with HTTP; Thu, 17 Mar 2016 03:26:00 -0700 (PDT)
+In-Reply-To: <1458122865-29447-2-git-send-email-huiyiqun@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289096>
 
-2016-03-17 1:06 GMT+08:00 Jeff King <peff@peff.net>:
-> On Wed, Mar 16, 2016 at 06:07:43PM +0800, Hui Yiqun wrote:
+2016-03-16 18:07 GMT+08:00 Hui Yiqun <huiyiqun@gmail.com>:
+> move .git-credential-cache/socket to xdg_runtime_dir("credential-cache.sock")
 >
->> +     if (runtime_dir && *runtime_dir)
->> +             git_runtime_dir = mkpathdup("%s/git/", runtime_dir);
->> +     else
->> +             git_runtime_dir = mkpathdup("/tmp/git-%d", uid);
+> Signed-off-by: Hui Yiqun <huiyiqun@gmail.com>
+> ---
+>  credential-cache.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> Here we allocate the string, but later we may return NULL on error,
-> leaking the allocated memory.
+> diff --git a/credential-cache.c b/credential-cache.c
+> index f4afdc6..40d838b 100644
+> --- a/credential-cache.c
+> +++ b/credential-cache.c
+> @@ -105,7 +105,7 @@ int main(int argc, const char **argv)
+>         op = argv[0];
+>
+>         if (!socket_path)
+> -               socket_path = expand_user_path("~/.git-credential-cache/socket");
+> +               socket_path = xdg_runtime_dir("credential-cache.sock");
+>         if (!socket_path)
+>                 die("unable to find a suitable socket path; use --socket");
+>
+> --
+> 2.7.2
+>
+I'm sure but if user set up git-credential-cache with following command:
 
-Yes, do you think goto is a good solution for clearup?
+    git config --global credential.helper "cache --socket
+~/.git-credential-cache/socket"
 
->
->> +     if (!lstat(git_runtime_dir, &st)) {
->> +             /*
->> +              * As described in XDG base dir spec[1], the subdirectory
->> +              * under $XDG_RUNTIME_DIR or its fallback MUST be owned by
->> +              * the user, and its unix access mode MUST be 0700.
->> +              *
->> +              * Calling chmod or chown silently may cause security
->> +              * problem if somebody chdir to it, sleep, and then, try
->> +              * to open our protected runtime cache or socket.
->> +              * So we just put warning and left it to user to solve.
->> +              *
->> +              * [1]https://specifications.freedesktop.org/basedir-spec/
->> +              * basedir-spec-latest.html
->> +              */
->
-> OK. I think these checks should be sufficient to deal with the /tmp race
-> I mentioned elsewhere in the thread (assuming that an attacker cannot
-> flip the uid back and forth in the same way, but that should be true on
-> Unix systems).
->
->> +             if ((st.st_mode & 0777) != S_IRWXU) {
->> +                     fprintf(stderr,
->> +                                     "permission of runtime directory '%s' "
->> +                                     "MUST be 0700 instead of 0%o\n",
->> +                                     git_runtime_dir, (st.st_mode & 0777));
->> +                     return NULL;
->> +             } else if (st.st_uid != uid) {
->> +                     fprintf(stderr,
->> +                                     "owner of runtime directory '%s' "
->> +                                     "MUST be %d instead of %d\n",
->> +                                     git_runtime_dir, uid, st.st_uid);
->> +                     return NULL;
->> +             }
->
-> Should these be using warning(), rather than a raw fprintf?
-
-Well, I will replace it.
-
-During the greping. I found that I should also wrap my warning strings
-with _() for i18n.
-
->
->> +     } else {
->> +             if (safe_create_leading_directories_const(git_runtime_dir) < 0) {
->> +                     fprintf(stderr,
->> +                                     "unable to create directories for '%s'\n",
->> +                                     git_runtime_dir);
->> +                     return NULL;
->> +             }
->> +             if (mkdir(git_runtime_dir, 0700) < 0) {
->> +                     fprintf(stderr,
->> +                                     "unable to mkdir '%s'\n", git_runtime_dir);
->> +                     return NULL;
->> +             }
->> +     }
->
-> And this retains the un-racy mkdir(). Good.
->
->> +     free(git_runtime_dir);
->> +     return mkpathdup("%s/%s", git_runtime_dir, filename);
->
-> This mkpathdup accesses the string we just freed?
->
-> It might be easier to just use a strbuf here, and then you can append to
-> it at the end.
-
-I think so. Thanks.
-
->
-> -Peff
+will the ~ be expanded?
