@@ -1,90 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: One whitespace breaks sending mail (using mailrc aliases wit
- send-emal)
-Date: Wed, 16 Mar 2016 22:00:15 -0400
-Message-ID: <20160317020015.GC12830@sigill.intra.peff.net>
-References: <CAGZ79kbRdPMkbs_-BGhCQ44hOsccG3aX16RJpE3ZHcBmDz40zQ@mail.gmail.com>
+From: =?UTF-8?Q?=E8=B0=AD=E4=BF=8A=E6=B5=A9?= <pickfire@riseup.net>
+Subject: Re: [PATCH/RFC/GSoC 3/3] t0301: test credential-cache support of
+ XDG_RUNTIME_DIR
+Date: Thu, 17 Mar 2016 11:59:14 +0800
+Message-ID: <729c6af810e3000e789f4afd537b77a8@riseup.net>
+References: <CAKqreux4aYhXTE9kUHKoKCJ2-4KDWyi58ioCm-CWqXhUYCtEEw@mail.gmail.com>
+ <1458122865-29447-1-git-send-email-huiyiqun@gmail.com>
+ <1458122865-29447-3-git-send-email-huiyiqun@gmail.com>
+ <xmqqr3fa5rdi.fsf@gitster.mtv.corp.google.com>
+ <CAKqreuwRpS3uP6=afm-0pBkPW0-bqoJconnKO5q3qTgZwdU_xQ@mail.gmail.com>
+ <xmqqbn6e5o9v.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 03:00:25 2016
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 17 04:59:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agNEe-0006YJ-9Z
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 03:00:24 +0100
+	id 1agP5l-0006DG-RG
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 04:59:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753002AbcCQCAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 22:00:20 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33034 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751745AbcCQCAS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 22:00:18 -0400
-Received: (qmail 6043 invoked by uid 102); 17 Mar 2016 02:00:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Mar 2016 22:00:18 -0400
-Received: (qmail 23192 invoked by uid 107); 17 Mar 2016 02:00:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Mar 2016 22:00:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Mar 2016 22:00:15 -0400
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kbRdPMkbs_-BGhCQ44hOsccG3aX16RJpE3ZHcBmDz40zQ@mail.gmail.com>
+	id S1755406AbcCQD7R convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Mar 2016 23:59:17 -0400
+Received: from mx1.riseup.net ([198.252.153.129]:39616 "EHLO mx1.riseup.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754858AbcCQD7Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 23:59:16 -0400
+Received: from piha.riseup.net (unknown [10.0.1.163])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "*.riseup.net", Issuer "COMODO RSA Domain Validation Secure Server CA" (verified OK))
+	by mx1.riseup.net (Postfix) with ESMTPS id 58E381A2F5D
+	for <git@vger.kernel.org>; Thu, 17 Mar 2016 03:59:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
+	t=1458187154; bh=I1lo0/DTN1AVshwJP9Q4tQWob1I+g/rGO2pNts8UQSw=;
+	h=Date:From:To:Subject:In-Reply-To:References:From;
+	b=Wmx4oDJd7iRkBU4hLIfH6i6fLuI7/d46mkL2AY4BoNnfoH3DdxJEhGTgU8hi6APOQ
+	 LuBG6oroEPEr3v/8Dx32PEsA/OXehpuBhceCiS0nSG5mMfq7heDTTIMpppo7JDZLMH
+	 KAu6SwEA99xJEh3ft933XCK+Xd8II14ljVpcaocE=
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	(Authenticated sender: pickfire)
+	with ESMTPSA id 2FFB11C022C
+In-Reply-To: <xmqqbn6e5o9v.fsf@gitster.mtv.corp.google.com>
+X-Virus-Scanned: clamav-milter 0.99 at mx1.riseup.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289072>
 
-On Wed, Mar 16, 2016 at 06:28:59PM -0700, Stefan Beller wrote:
+On 17/03/2016 01:24, Junio C Hamano wrote:
+> =E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqun@gmail.com> writes:
+>=20
+>>> Is it because the wish is to always use /tmp/git-$uid/ as a fallbac=
+k
+>>> for $XDG_RUNTIME_DIR (as opposed to ~/.git-credential-cache/, which
+>>> is specific to the credential-cache and would look strange if we
+>>> used it for other "runtime" things)?
+>>=20
+>> Yes, I mean to use it as a general fallback for git.
+>=20
+> If that is the case the code probably needs to be a bit more careful
+> before deciding to use /tmp/git-$uid/ directory (is it really $uid's?
+> can anybody else write to it to race with the real user? etc.)
+>=20
+>> On the other hand, I think, falling back to=20
+>> $HOME/.git-credential-cache/socket
+>> doesn't make any sense for back-compability cannot be ensured.
+>=20
+> What do you mean by that?
+>=20
+> Using ~/.git-credential-cache/credential-cache.sock would not help
+> at all for existing users, but ~/.git-credential-cache/socket would
+> interoperate well with users with existing versions of Git, no?
+>=20
+>>> Just being curious, and wanting to see the reasoning behind the
+>>> design decision the patch series makes in the log message of one of
+>>> these patches.
 
-> To reproduce:
-> 
-> $ git config sendemail.aliasesfile ~/.mailrc
-> $ git config sendemail.aliasfiletype mailrc
-> $ echo "alias zzz_wrong_entry jon@do.e "
-> # notice the white space at the end of the alias
-> 
-> $ git send-email 0001-rebase-x-do-not-die-without-i.patch --cc=zzz_wrong_entry
-> Use of uninitialized value $alias in hash element at
-> /usr/local/google/home/sbeller/libexec/git-core/git-send-email line
-> 847.
-> [...]
-> The stack trace doesn't even show the wrong address, so debugging that was hard.
-> Not sure I am asking for help, as I found the problem and could fix
-> it, but maybe we can
-> improve the error message (I have no knowledge about perl, so I may
-> not be super helpful there)
-
-I don't think so. The problem is that we return `undef` for one of the
-aliases, and then later when we look at that, perl obviously is unhappy.
-It's sort of the equivalent of a C program dereferencing NULL, but the
-bug is assigning NULL in the first place much earlier.
-
-You _can_ tell perl not to bother warning about accessing undef like
-this, but it's usually a good idea to have such warnings on, as they are
-helpful for finding real bugs.
-
-I imagine your problem is by:
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index d356901..c45b22a 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -533,7 +533,7 @@ my %parse_alias = (
- 			$aliases{$alias} = \@addr
- 		}}},
- 	mailrc => sub { my $fh = shift; while (<$fh>) {
--		if (/^alias\s+(\S+)\s+(.*)$/) {
-+		if (/^alias\s+(\S+)\s+(.*?)\s*$/) {
- 			# spaces delimit multiple addresses
- 			$aliases{$1} = [ quotewords('\s+', 0, $2) ];
- 		}}},
-
-to suppress the extra whitespace at the end (alternatively, there may be
-a way to tell quotewords() to throw out a trailing delimiter, but I
-don't know the Text::ParseWords module well enough to say offhand).
-
--Peff
+I guess it is better to use /tmp or such instead of $HOME/.* so that
+the users home directory won't be flooded by sockets.
