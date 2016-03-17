@@ -1,70 +1,98 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2] builtin/apply: exit when parse_binary() fails
-Date: Thu, 17 Mar 2016 10:34:25 +0100
-Message-ID: <CAP8UFD2NgSfVVZrshimM+=7dFmhjqGmUVsTymgoQOXvhegr_1g@mail.gmail.com>
-References: <1458206614-2898-1-git-send-email-chriscool@tuxfamily.org>
+From: =?UTF-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
+Subject: Re: [PATCH/RFC/GSoC 3/3] t0301: test credential-cache support of XDG_RUNTIME_DIR
+Date: Thu, 17 Mar 2016 17:45:05 +0800
+Message-ID: <CAKqreux4Z4a6qXGewEWLxDZFE+PCXFx3d4d_jrrLvQqX9HKy-Q@mail.gmail.com>
+References: <CAKqreux4aYhXTE9kUHKoKCJ2-4KDWyi58ioCm-CWqXhUYCtEEw@mail.gmail.com>
+	<1458122865-29447-1-git-send-email-huiyiqun@gmail.com>
+	<1458122865-29447-3-git-send-email-huiyiqun@gmail.com>
+	<xmqqr3fa5rdi.fsf@gitster.mtv.corp.google.com>
+	<CAKqreuwRpS3uP6=afm-0pBkPW0-bqoJconnKO5q3qTgZwdU_xQ@mail.gmail.com>
+	<xmqqbn6e5o9v.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 17 10:34:38 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Your friend <pickfire@riseup.net>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 17 10:45:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agUK7-0008Hb-Vc
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 10:34:32 +0100
+	id 1agUUS-00071Y-GQ
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 10:45:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935223AbcCQJe1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 05:34:27 -0400
-Received: from mail-lb0-f178.google.com ([209.85.217.178]:33770 "EHLO
-	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932763AbcCQJe0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 05:34:26 -0400
-Received: by mail-lb0-f178.google.com with SMTP id oe12so64696189lbc.0
-        for <git@vger.kernel.org>; Thu, 17 Mar 2016 02:34:26 -0700 (PDT)
+	id S935175AbcCQJpJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Mar 2016 05:45:09 -0400
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:35846 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933396AbcCQJpG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Mar 2016 05:45:06 -0400
+Received: by mail-ob0-f180.google.com with SMTP id m7so77746623obh.3
+        for <git@vger.kernel.org>; Thu, 17 Mar 2016 02:45:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=ICJoEwOiQTEje5SST1Q9eWLCDnCjtbVDI8j5kCY/8SQ=;
-        b=v8ZIYmn9ZqKIXn1Ul5vTyp8RbsRcSFhOm+zmNIw1XmCDKG7ggbb1hE6npHg1g6+9dh
-         qvhhmCz5bROMRvmAEkl60H/85XePWqq+JHnX0M8HF/J2PQSZVqhjLU8Bj2JOHMP6NNgw
-         WFVJHJZn3WNSyDdBQeCsfkBFqp8P2BLEhSWotoyPBF5Zmz9CDjn/6+N0GtDYq6xWmY+m
-         c6vB9oY5Qkvtz9Il3RbLuuKxECMZZ64QzZS3uverSOrBFH4KMpeXyYCeBmM6KGVRFSqP
-         L5JOAjHHy9WzLFlbZQxCpaNwHMydDvHfq2Mb8DVHycTnfYbHwAbrjBlm7HnCWaj9vaBd
-         +eng==
+         :cc:content-transfer-encoding;
+        bh=KrHp+ZNZZsJzCVnxNgCz7NdcWAY9sDeLezSz7a1Ctcw=;
+        b=Ad8KKKPBp3RmfURqaUEc7lzz2SKu9qnZ8hiEhZkbRKi5dfGqw0QsFp0sDYLQ3Kf8Vt
+         QrnGGNQcyMF5aMRnYNJRgWajeihBh3T/SMCmIGZOUPvUoV4GQk2Vu5C48hW8xMKGGCt5
+         YueS9QbnUKssrpXXZHoqJMCqRmxH7/quQzAKBAJ1fJ/mjubwfH4XzQPYxQFeN9EQmVfg
+         3KOje7s315YkmFzGTG/mqUT9tAN0iiIZxUPkJ/3zH7LzmNsqwY/2dSnEVQEXcZuLotf+
+         shMJ7K8UxOptR0F4zV3co4gi8eagGfS5hr5yq0Eqd+g0uH8vA1XmQfsoQBLiHi5Ips9r
+         5m8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=ICJoEwOiQTEje5SST1Q9eWLCDnCjtbVDI8j5kCY/8SQ=;
-        b=RgYTicmEkgyV2UCXQw8TmHcUS3JRU9c1wlGD2Fv5L2xZ+kaJX63G8Rk9sYT9+reXbb
-         jQ67Q7rtlavlk293KjcrxeXKuCdlxN7CWS7+QCV10fB6xkVynkOhPrpEoUy9Hx7oNzr+
-         0fvS8IhasVrn0Mj8+olC8jIrjXoAHKkMC4Z8SCK5SZwAYqWIZgzDu5MvRINJCJ4IvOWG
-         APGx1WsBcJaiLi8TjZNh6E49TWoIphIdWeT4rSxI8sHMPppWgAy0svF30xYYfCtKXQ1L
-         jwmIdvSxNx50czkD+RAGgE0vwExs3b3QqoTDhzejB9NRF08TsGIOjpUPOWR17tro5XCw
-         k3eg==
-X-Gm-Message-State: AD7BkJK/v43yMT5IYU+G7aT4gwG5yWk7SFmz8J5bVMPkthxo/ug3+3r8NXq8PkFwt+65UDLWxYz+ysSDrunGkg==
-X-Received: by 10.112.97.162 with SMTP id eb2mr3166316lbb.132.1458207265186;
- Thu, 17 Mar 2016 02:34:25 -0700 (PDT)
-Received: by 10.25.137.130 with HTTP; Thu, 17 Mar 2016 02:34:25 -0700 (PDT)
-In-Reply-To: <1458206614-2898-1-git-send-email-chriscool@tuxfamily.org>
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=KrHp+ZNZZsJzCVnxNgCz7NdcWAY9sDeLezSz7a1Ctcw=;
+        b=UAZSXBMoCrQEQUvMHEue8rjpFMK2qKTTGNgwwLJYcZMXRdGV2cwSXyOfsjzlnG/ZeI
+         IPpawQkE+elvF0RhKICNgngf7zl9OeP6gALpwhyTKIj2QpUPk4CzhZBLP7Qry50NuCJv
+         B/kLNC0n3yt7iolOeK2b3P6oaJyrDiBunuQRR28Hx+SRGqFuO7T8RGeUbUgM4C42Fze5
+         t+zjei9N4qyq56arRLPdz6/ZWYso+XXrb/14my49lIX/cIfn24ooU5H6zCFUi2Us3Kzz
+         L6C9S5gYptchevatFZ37yxJwwThMsQCgxzNqlH06UhoMTGeBQlegKwdVJ1olc8nU5KSa
+         S8Iw==
+X-Gm-Message-State: AD7BkJKPGW8n+F+/W7bU15YgrbkuOC9yQOddsz5saoe8BlUDsSk/DJZNkg9eWoOGXo0EQrATRJPr3HJJBF5ikg==
+X-Received: by 10.60.141.227 with SMTP id rr3mr5249105oeb.57.1458207905788;
+ Thu, 17 Mar 2016 02:45:05 -0700 (PDT)
+Received: by 10.157.43.68 with HTTP; Thu, 17 Mar 2016 02:45:05 -0700 (PDT)
+In-Reply-To: <xmqqbn6e5o9v.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289092>
 
-On Thu, Mar 17, 2016 at 10:23 AM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> In parse_binary() there is:
-...
+2016-03-17 1:24 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
+> =E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqun@gmail.com> writes:
+>
+>>> Is it because the wish is to always use /tmp/git-$uid/ as a fallbac=
+k
+>>> for $XDG_RUNTIME_DIR (as opposed to ~/.git-credential-cache/, which
+>>> is specific to the credential-cache and would look strange if we
+>>> used it for other "runtime" things)?
+>>
+>> Yes, I mean to use it as a general fallback for git.
+>
+> If that is the case the code probably needs to be a bit more careful
+> before deciding to use /tmp/git-$uid/ directory (is it really $uid's?
+> can anybody else write to it to race with the real user? etc.)
+>
+>> On the other hand, I think, falling back to $HOME/.git-credential-ca=
+che/socket
+>> doesn't make any sense for back-compability cannot be ensured.
+>
+> What do you mean by that?
+>
+> Using ~/.git-credential-cache/credential-cache.sock would not help
+> at all for existing users, but ~/.git-credential-cache/socket would
+> interoperate well with users with existing versions of Git, no?
+>
 
-Of course just after sending this I realized that I should probably
-change the title of the patch to something like "builtin/apply: handle
-parse_binary() failure".
+I meant that FALLBACK instead of DEFAULT is useless for back-compatibil=
+ity.
 
-I will resend a v3 with the above change later...
+Most users with existing versions of Git will be broken even if there i=
+s a
+fallback.
