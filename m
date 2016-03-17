@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 Subject: [PATCH 2/2] dir.c: correct "stuck" logging logic
-Date: Thu, 17 Mar 2016 19:45:43 +0700
-Message-ID: <1458218744-15810-3-git-send-email-pclouds@gmail.com>
+Date: Thu, 17 Mar 2016 19:45:44 +0700
+Message-ID: <1458218744-15810-4-git-send-email-pclouds@gmail.com>
 References: <56E9F5B3.6030903@fb.com>
  <1458218744-15810-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,60 +13,60 @@ Cc: durham@fb.com, mitrandir@fb.com,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 17 13:47:14 2016
+X-From: git-owner@vger.kernel.org Thu Mar 17 13:47:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agXKV-0004EQ-Kc
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 13:47:07 +0100
+	id 1agXKf-0004H9-Sx
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 13:47:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935221AbcCQMrD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Mar 2016 08:47:03 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:33960 "EHLO
+	id S1030270AbcCQMrH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Mar 2016 08:47:07 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:35145 "EHLO
 	mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752669AbcCQMrC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 08:47:02 -0400
-Received: by mail-pf0-f176.google.com with SMTP id x3so119769528pfb.1
-        for <git@vger.kernel.org>; Thu, 17 Mar 2016 05:47:01 -0700 (PDT)
+	with ESMTP id S1030207AbcCQMrG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 08:47:06 -0400
+Received: by mail-pf0-f176.google.com with SMTP id n5so119835853pfn.2
+        for <git@vger.kernel.org>; Thu, 17 Mar 2016 05:47:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6kmdUE2pavLUT8FSmPWpKvaqIjY4Qpouyt85UowW7Xs=;
-        b=adutnvWmtWiyyTWjTRWMkppIaJ8cZouampcOyQEJIc7x10KryBDBtwH8QKhndETljF
-         aMaDLnSKJi15B7fIFLDsxjkZ1WVuId2HqGSP1D76okvB9mXtkRI3WO8ZG2SLkOEaXKpq
-         BPbxu2wgV1Nt5sI+1XE6ZCcOaHqQsAiOsGQjogGLT7I1sKESw8L4DPPvv0Mo2bpAjBGq
-         8hUiEpIB1+1UqGcEKxfp/An/QS2N72mXUbaDPXgWYx7vQdaIBQ0DiU0dwi+mlz62SrZk
-         Xt10uzKVFbSYpSpXOMI5QHYC7ZPIksPtbwbZWRe50JYVe/Y/FRfEaUbZ8y/eXOoUrHf3
-         nftQ==
+        bh=FUEpqT5+vLRiOSAbc2Oye38nXOcCTzQq2ZJ/7xiIEhU=;
+        b=HPWdlqFXsqLcBV3DJUPG1PMrZAdpT3mrPKxNd+Ishp6oDDGpnR4AuY+q25qQDEPYKm
+         UbiMAGPTQdV1fW2JD3CcK+VdbvBdTKuUeY1bUmiKPUyQeiv2QA/NPKFbtu4pYxsUYve3
+         B64DjvPfkRsWBjKcH5p8GkDLLcnClJwMowkE/i6sZba7Jh+QRuY7EZ3KL4YOLYvdF3PO
+         mHxYYUvg7umtnWGEFpWtbQGcuP+WrWbBSw5mGO2AZtHGHwaKiyks2aQUafME4pX/xPto
+         tgNJCAAzRRZFXUdOm2tYjl4thW/eaL7LsU/ODHNNxvbObcehj/BFUj2RQigjCo103TnL
+         k+zQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6kmdUE2pavLUT8FSmPWpKvaqIjY4Qpouyt85UowW7Xs=;
-        b=DiJlGiqT1A/faGLWMI/9fqddSMGGbbAx8sEdr3blZgjhcsmZqc6uU5d5LMxwdYm/kb
-         wheZBVbyxJvJkRk293KE3v7v2IzU9oOPZ1sx++vW6xsMjBklvjyW9TI8CFIMndEPZ5RL
-         wBcYwzZzEYMH+f4cHEuR8ADTVH1EnmqEiZg2kHKtkQwCV0tBtnM1Ik0Tc4Xkk6IdPNTQ
-         Jxrqj7PsEumUlOqGnG2QZ/f8TTty8OfZONrUfYUz7B37ZnlVBhAZqjRsHBbnjzBGlaNZ
-         dDVt9gZuBAa01BcDgOdqhotTMFpYrIDrXq/qh5OYzjVrgyWkgDul70ol1pOA1EQR9jXY
-         rCIw==
-X-Gm-Message-State: AD7BkJKtG5BdLAdXuEAQP2RA7p2wzs8tinW59/gjctbxFe59USxNPMfuwCuW/oBrlGW3vw==
-X-Received: by 10.66.119.237 with SMTP id kx13mr14323904pab.111.1458218808772;
-        Thu, 17 Mar 2016 05:46:48 -0700 (PDT)
+        bh=FUEpqT5+vLRiOSAbc2Oye38nXOcCTzQq2ZJ/7xiIEhU=;
+        b=ATXINpvr7TRr3P4ffHQGrS19s8Y04XcGqywiccp3XjIPavTaY2GBsvwY1dRJIQewoJ
+         22IZ18mU3FCOxYQvs+cJBUlLZsuGvGycgHV2mGtjQ7RahgqTY584rHgwA5oOSIXmd10M
+         aR086NmMhuLZ7GbwN24yfpoTKl3mzSTmeQDzifFBzxzwi271WO63JHoVHNY7K7/UWjg/
+         7ZUdD+FEkI2+3mvSwoRdB+FwbpPePluLkstx203MkP90jYYxp9v44NXbHEq4M8hsd0PX
+         T7yQsHU1m81JVud8K7ELrJzDjHQpkBIqtqGTO+oqMHW1cdtqu5J1NLWwY/po4oHLGMGM
+         inqQ==
+X-Gm-Message-State: AD7BkJIRcKmAV+zqybtQDsbYqxCeBHiLW4EWkuXEgzQLLcqiK/X+gt+tLfkw5H5djujCTg==
+X-Received: by 10.66.171.169 with SMTP id av9mr14697609pac.36.1458218814885;
+        Thu, 17 Mar 2016 05:46:54 -0700 (PDT)
 Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id q72sm13271985pfa.70.2016.03.17.05.46.44
+        by smtp.gmail.com with ESMTPSA id q85sm13270658pfq.81.2016.03.17.05.46.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Mar 2016 05:46:47 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Thu, 17 Mar 2016 19:46:49 +0700
+        Thu, 17 Mar 2016 05:46:53 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Thu, 17 Mar 2016 19:47:00 +0700
 X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
 In-Reply-To: <1458218744-15810-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289104>
 
 Before the last patch, the loop in last_exclude_matching_from_list()
 looks like this (greatly simplified of course)
@@ -75,7 +75,7 @@ looks like this (greatly simplified of course)
    for (...) {
       if (sticky_paths.nr) {
          if (matched) {
-            exc =3D non-NULL;
+            exc =3D something;
             break;
          }
          continue;
