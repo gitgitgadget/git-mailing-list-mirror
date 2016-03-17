@@ -1,71 +1,82 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 0/4] make t6302 usable even without GPG installed
-Date: Thu, 17 Mar 2016 03:31:53 -0400
-Message-ID: <CAPig+cR-sPbPy0Y6W5e3O8ocNLuDir2z1+QssagynWieYdG13A@mail.gmail.com>
-References: <1457309427-30124-1-git-send-email-sunshine@sunshineco.com>
-	<alpine.DEB.2.20.1603152038110.4690@virtualbox>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rebase -x: do not die without -i
+Date: Thu, 17 Mar 2016 00:50:09 -0700
+Message-ID: <xmqq4mc535n2.fsf@gitster.mtv.corp.google.com>
+References: <1458177584-11378-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Mar 17 08:32:00 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Matthieu.Moy@grenoble-inp.fr, j6t@kdbg.org,
+	johannes.schindelin@gmail.com, Lucien.Kong@ensimag.imag.fr
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Mar 17 08:50:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agSPX-0000nH-4V
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 08:31:59 +0100
+	id 1agShG-0006Yk-Aa
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 08:50:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932200AbcCQHb4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 03:31:56 -0400
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:34605 "EHLO
-	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752954AbcCQHby (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 03:31:54 -0400
-Received: by mail-vk0-f65.google.com with SMTP id e6so5652084vkh.1
-        for <git@vger.kernel.org>; Thu, 17 Mar 2016 00:31:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=A/nbscticipg0rjc6zAAwGi6NhvEogOPBxQLHud5Lkw=;
-        b=aS6oWEpYaST1mPZntkTY0ivHDeqf6NyItN8PIOcaM+OoWwGe/J+6UO7cCRKjrtChB7
-         xNaqT7QW3SKeUohjlKdv6zOrsKWhm2JPx0uaB/yCAiom3NDnMnzNrCbBA86weRFzHV5x
-         KfITHDIND+jnGrzHcq3AF4RZB9z1989yioI6XuUEBCgpg3yX6UOBpXfyHnRWjbII4qNx
-         1TyhRMVnthaSBmCQicUQ5KAoXy3RwnfUIzdrgZyU51heFS2R3rdA7GxRQQu3eMTtZBai
-         vAgiQuTTdyd2ryPPlsZ1aZPRE8Z5BFQGi886eFEhI5mYJcWb8U4ttPtx69gO2VXvvpRa
-         cLKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=A/nbscticipg0rjc6zAAwGi6NhvEogOPBxQLHud5Lkw=;
-        b=EqaSe3WvvTqw71tCMZ5a1zPluN6VeifZ4PVZxeFIZRo8n+8hi7K6wryMC5DGn1QAdY
-         /uA3bEzRJoxGjDhQBRfEUzgup58BdB61JsDPj2sIMGEzkO5TADMO18cRhuc2rchYofC/
-         xO7Pmthz670qEIk54fygngne6hl90b7cxbeZiGbL/jSXIXntrwWVGKdqqrrxMBMhw0eC
-         2ndfDFB1nHC3pXRxDSP8L+DN4stJnVNnaeAW1JoS5aT+Hs+oco65vPYUerVHokRIdyJB
-         DNd7cwB36KWOLWupeP5IFGvD5YSX5orlFRWioiGrky/zQNFfqxhPk7kpq6luKABZuwub
-         SGLg==
-X-Gm-Message-State: AD7BkJIPJhVHR2Gp5wfOTDQTh3FX9crMArex8IFMvdAVd22lwwYVxAJGHd3DcYmVST2CvK+gxXXoBkzf+f94mA==
-X-Received: by 10.31.146.5 with SMTP id u5mr4489154vkd.19.1458199914000; Thu,
- 17 Mar 2016 00:31:54 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Thu, 17 Mar 2016 00:31:53 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1603152038110.4690@virtualbox>
-X-Google-Sender-Auth: d754B9ZxZjCjfraCuSMHa5YGJLQ
+	id S1753414AbcCQHuO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2016 03:50:14 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:60196 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752002AbcCQHuM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 03:50:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 14A57443FA;
+	Thu, 17 Mar 2016 03:50:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MDJ/P9lq0AFzvl47c30ScHI9RGg=; b=GS/IfT
+	XPKgI8knt7Bme/lhHejM3VShSIU211DG0RhKo7dmbAQqxT5/dSMrOSv33OCjx+uG
+	g2RUJMoJqFARoEdaeZ7pIFkrGGwose5oBYFjBoHX4fK7K/Vj8amVFPJ8VSCb1bdY
+	xCa/bNw+VEbii7nRgqXaYfzcquq0MdujJFXRI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AjxlUNhlEn+mvmQDk/FXLvmmY+cKN3O9
+	ZeJbZlP2bQLCf1VUduMZilecli051qRy1SWcdAzYKMKgCvU/4b3nq8JYDuuflWTq
+	r2qpQgh9x1jVdAsrEoGZ81f6l2TvxEm97xXlc3Pw6N1wMdCxm61AhD9JUgJM/uOc
+	gBsYdToNH6g=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0CAD6443F9;
+	Thu, 17 Mar 2016 03:50:11 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8B685443F7;
+	Thu, 17 Mar 2016 03:50:10 -0400 (EDT)
+In-Reply-To: <1458177584-11378-1-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Wed, 16 Mar 2016 18:19:44 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E003B948-EC14-11E5-8C55-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289084>
 
-On Tue, Mar 15, 2016 at 3:38 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> On Sun, 6 Mar 2016, Eric Sunshine wrote:
->> This is a re-roll of [1] which aims to allow t6302 to be run even
->> without GPG installed.
+Stefan Beller <sbeller@google.com> writes:
+
+> In the later steps of preparing a patch series I do not want to edit the
+> patches any more, but just make sure the test suite passes after each
+> patch. Currently I would run
 >
-> What a beautiful story this patch series tells. Truly a pleasure to
-> review.
+>   EDITOR=true git rebase -i <anchor> -x "make test"
 
-Thank you for the kind words; I appreciate it.
+Hmm, I guess that may "work" but it sounds like quite a roundabout
+way to "test all commits".  "rebase" is about replaying history to
+end up with a set of newly minted commits, and being able to poke at
+the state each commit records in the working tree is a side effect.
+"rebase -i" may use the same commit object if you didn't actually
+make new commit as an optimization, but otherwise, it is like going
+through pages of a book, tearing each page to examine it, and
+replacing each page with a photocopy of it before going to examine
+the next page.  Which makes me feel somewhat dirty X-<.
+
+In other words, that looks like a workaround for not having
+
+    $ git for-each-rev -x "$command" old..new
+
+where you can write "sh -c 'git checkout $1 && make test' -" as
+your $command.
