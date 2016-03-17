@@ -1,142 +1,102 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH 19/19] hack: watchman/untracked cache mashup
-Date: Wed, 16 Mar 2016 20:56:05 -0400
-Organization: Twitter
-Message-ID: <1458176165.9385.9.camel@twopensource.com>
-References: <1457548582-28302-1-git-send-email-dturner@twopensource.com>
-	 <1457548582-28302-20-git-send-email-dturner@twopensource.com>
-	 <CACsJy8DGEQJmhxZpX3Zd=tGk_9T0n+ZhcaaEahaqFuh6NRvgSQ@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: bug: sparse config interpretation incorrectness in 2.8.0-rc2
+Date: Thu, 17 Mar 2016 07:56:32 +0700
+Message-ID: <20160317005632.GA17778@duynguyen-vnpc.dek-tpc.internal>
+References: <56E9F5B3.6030903@fb.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 01:56:28 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Mateusz Kwapich <mitrandir@fb.com>
+To: Durham Goode <durham@fb.com>
+X-From: git-owner@vger.kernel.org Thu Mar 17 01:56:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agMEk-0006rl-QT
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 01:56:27 +0100
+	id 1agMF4-000773-3U
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 01:56:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935306AbcCQA4J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 20:56:09 -0400
-Received: from mail-qg0-f44.google.com ([209.85.192.44]:34360 "EHLO
-	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932684AbcCQA4H (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 20:56:07 -0400
-Received: by mail-qg0-f44.google.com with SMTP id w104so59312368qge.1
-        for <git@vger.kernel.org>; Wed, 16 Mar 2016 17:56:07 -0700 (PDT)
+	id S966957AbcCQA4l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 20:56:41 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:33396 "EHLO
+	mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932684AbcCQA4k (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 20:56:40 -0400
+Received: by mail-pf0-f176.google.com with SMTP id 124so96510124pfg.0
+        for <git@vger.kernel.org>; Wed, 16 Mar 2016 17:56:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:mime-version:content-transfer-encoding;
-        bh=w6DdPL9M45pClpCXqLHL+5x4ecStzHL/yPBmRUvtafM=;
-        b=e8MPoFzWq4BkkKY3/Iai0yC39O1E8NKmhU/7OyMg3QH9kcUeVHjGpDskEJZSIZsrf9
-         qUf29NN/FqjnzkFgpe9DHfZbxHTgFRbHW8KddqQVAfO99bZ+TM/AWw4UfoDtIuTYRrL4
-         SHkM/T+pGNZyXevn1R+tLRIoIIv/gpElfelNgql1e8i7H9qYnnuGpsSmO+7fz3Q2+lfv
-         D0CoMHK6N+ySHmZRisnyjL6bZrnKA7UXT+CXOKlbUKRhJrzm47JTpqYtjbfgT5z6PqKT
-         SsDvNWsvSXu5BCFgs9E6Fnx5EbGCOU5Dx/Dxr9H8pidBRKqjgBZLRHCyr3uDj75YY/8i
-         WBYA==
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=gmkhl+aG3UhFcFmWvrgUlHyRl4MfPPLc48CiV+7OP7I=;
+        b=HHkuaXL+4eG+iJShaD2GbwXW/C8Mru8kSvkza/A1sqXsU2BR86gxlxrhUR/rBGT+Iw
+         STc/QbXiE2q7vaG/SlaFDBpekF4wWvrZaE3XQzbU3utW5hGHq0vMBxcStyMgMQYk9YzU
+         UymkJDzi+/TEnehGLmpyaQ/X6uLUQTfZKY5hTQxenGaRHZhByi2HxAxtpiMcM3doEPYS
+         5GwOlwiWeYJ1D0Io0kS8mJey8IFnmTRCl9rjAHJDY0XvldY6W0uYBwVrTAl8WSV4hnK2
+         52oV2w0w/uZQOmzbtSPfyxoZ1VVbGDlPo1TCNgoiR/rSyTVsXt3PXau39vB276Ryunkn
+         6urw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=w6DdPL9M45pClpCXqLHL+5x4ecStzHL/yPBmRUvtafM=;
-        b=nMjwivw2d1xwVfMggZwgbLrt2iXeVDTsdAqrj2nIboniGhss759vTd7TGlClaE1Hbx
-         awR+zgoFzEpKHqMrRLDmWvjT6YI5ew4M54riHYDUC7un1oL+xojyagkQ9XqLG7TLK3yi
-         XcxIxfFNvIaDeh0DQwVzjjfYFfptyff8HvKXvNB9EMns0sYc7AWit6GNsEHuBQlgk+ye
-         5t39mUJZ9UseeyisWZCfiWnRJcLaS2zj41H0YNg8JCJg5japWPW2Y1sYGGR7LHwycJ8I
-         qqKMxeOB0vE1PifRo3CQ4krR9syH/IpMZb9dTrWfbmXgCPJI8nSSepqU9HeqAMUhnHGf
-         OVPw==
-X-Gm-Message-State: AD7BkJKUi1X1Ihe4z4d6r5appmslEiC8TKsolPsBQhcS4rb576FCDu0E8CdiYcxw31JlXg==
-X-Received: by 10.140.28.135 with SMTP id 7mr808369qgz.72.1458176166560;
-        Wed, 16 Mar 2016 17:56:06 -0700 (PDT)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id 103sm2703543qgm.42.2016.03.16.17.56.05
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 16 Mar 2016 17:56:05 -0700 (PDT)
-In-Reply-To: <CACsJy8DGEQJmhxZpX3Zd=tGk_9T0n+ZhcaaEahaqFuh6NRvgSQ@mail.gmail.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=gmkhl+aG3UhFcFmWvrgUlHyRl4MfPPLc48CiV+7OP7I=;
+        b=AETzpQ+Lc/GL0wvhNZl5HQORb2WHtVP3Ow11w4u9IzSGM6p1f3uHgvnE69+nPjQ1gY
+         wxjGAeX8GujVkIn8Yvo3Q4kYhO+DG+uek5gFsKxPIhkfr7NewGfJddnoYnnDYeeht7/m
+         EufxyDO4N2+JMkvOY6ecG7bPJS4WYbDtL1Tzoe3+aALkS0aEvDj6bqbHW4s4kxZQF+JY
+         /5sga1jlfKfYInyp3b9xGTBg/AX6lraufQkovXU1OYhcg+3/gHM8RlAYfMBl48sE7KhD
+         fv8HAcgNVfyTu+RvbtY93bAJPVQ9jGVlcPt/5Zi0kiie20iWNckDGsfCeEuPZuDkRW29
+         n7YQ==
+X-Gm-Message-State: AD7BkJIGOzQJ6t8TtJy4lkMDV/mNIt1DFjtCbMWQNh+nN8Syc+QMWMyvb5f2zJ476zZGOA==
+X-Received: by 10.66.190.40 with SMTP id gn8mr10502569pac.64.1458176199334;
+        Wed, 16 Mar 2016 17:56:39 -0700 (PDT)
+Received: from duynguyen-vnpc.dek-tpc.internal ([14.161.14.188])
+        by smtp.gmail.com with ESMTPSA id l88sm8443922pfj.7.2016.03.16.17.56.36
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 16 Mar 2016 17:56:37 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <56E9F5B3.6030903@fb.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289066>
 
-On Tue, 2016-03-15 at 19:31 +0700, Duy Nguyen wrote:
-> On Thu, Mar 10, 2016 at 1:36 AM, David Turner <
-> dturner@twopensource.com> wrote:
-> >  static struct watchman_query *make_query(const char *last_update)
-> > @@ -60,8 +61,24 @@ static void update_index(struct index_state
-> > *istate,
-> >                         continue;
-> > 
-> >                 pos = index_name_pos(istate, wm->name, strlen(wm
-> > ->name));
-> > -               if (pos < 0)
-> > +               if (pos < 0) {
-> > +                       if (istate->untracked) {
-> > +                               char *name = xstrdup(wm->name);
-> > +                               char *dname = dirname(name);
-> > +
-> > +                               /*
-> > +                                * dirname() returns '.' for the
-> > root,
-> > +                                * but we call it ''.
-> > +                                */
-> > +                               if (dname[0] == '.' && dname[1] ==
-> > 0)
-> > +                                       string_list_append(&istate
-> > ->untracked->invalid_untracked, "");
-> > +                               else
-> > +                                       string_list_append(&istate
-> > ->untracked->invalid_untracked,
-> > +                                                          dname);
-> > +                               free(name);
-> > +                       }
-> >                         continue;
-> > +               }
+On Wed, Mar 16, 2016 at 05:09:23PM -0700, Durham Goode wrote:
+> Using git 2.8.0-rc2, given a repo with the following files:
 > 
-> So if we detect an updated file that's not in the index, we are
-> prepared to invalidate that path, correct? We may invalidate more
-> than
-> necessary if that's true. Imagine a.o is already ignored. If it's
-> rebuilt, we should not need to update untracked cache.
-
-Yes, that's true.  But it would be true with the mtime system too. This
-is no worse, even if it's no better.  In-tree builds are a hard case to
-support, and I'm totally OK with a system that encourages out-of-tree
-builds.
-
-We could check if it's ignored, but then if someone changes their
-gitignore, we could be wrong.
-
-Or we could suggest that people make their watchmanignore match their
-gitignore.
-
-
-> What I had in mind (and argued with watchman devs a bit [1]) was
-> maintain the file list of each clock and compare the file list of
-> different clocks to figure out what files are added or deleted. Then
-> we can generate invalidation list more accurately. We need to keep at
-> least one file list corresponds to  the clock saved in the index.
-> When
-> we get the refresh request, we get a new file list (with new clock),
-> do a diff then save the invalidation list as an extension. Once we
-> notice that new clock is written back in index, we can discard older
-> file lists. In theory we should not need to keep too many file lists,
-> so even if one list is big, it should not be a big problem.
+> - one/hideme
+> - one/donthide
+> - two/foo
 > 
-> I have a note with me about race conditions with this approach, but I
-> haven't remembered exactly why or how yet.. My recent thoughts about
-> it though, are race conditions when you do "git status" is probably
-> tolerable. After all if you're doing some I/O when you do git-status,
-> you're guaranteed to miss some updates.
+> A sparse config of:
 > 
-> [1] https://github.com/facebook/watchman/issues/65
+> cat > .git/info/sparse-checkout <<EOF
+> /*
+> !one/hideme
+> EOF
+> 
+> Results in a repository that only has `one/donthide` in it.  I would
+> expect `two/foo`to be present as well.  This worked in 2.6, and
+> bisecting it points to d589a67eceacd1cc171bbe94906ca7c9a0edd8c5
+> "dir.c: don't exclude whole dir prematurely" (author cc'd).
 
-I think it would be possible to just check the UNTR extension and only
-add a dir to it if that dir doesn't already contain (untracked) the
-file that's being modified.  Or is that also racy?
+Thank you. This should fix it. I think I understand why it goes
+wrong. I'm going to run some more tests and post a proper patch later.
+
+-- 8< --
+diff --git a/dir.c b/dir.c
+index 69e0be6..77f38a5 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1027,7 +1027,6 @@ static struct exclude *last_exclude_matching_from_list(const char *pathname,
+ 				exc = x;
+ 				break;
+ 			}
+-			continue;
+ 		}
+ 
+ 		if (x->flags & EXC_FLAG_MUSTBEDIR) {
+-- 8< --
+--
+Duy
