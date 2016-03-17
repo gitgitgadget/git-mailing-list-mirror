@@ -1,144 +1,146 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: bug: sparse config interpretation incorrectness in 2.8.0-rc2
-Date: Thu, 17 Mar 2016 17:17:43 +0700
-Message-ID: <CACsJy8A2D8CqeWZ6CFdTVXzXiWdonBE=3tWFPpe7-ZmDtNGYNw@mail.gmail.com>
-References: <56E9F5B3.6030903@fb.com> <20160317005632.GA17778@duynguyen-vnpc.dek-tpc.internal>
- <xmqq37rp35k1.fsf@gitster.mtv.corp.google.com>
+From: =?UTF-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
+Subject: Re: [PATCH/RFC/GSoC 1/3] path.c: implement xdg_runtime_dir()
+Date: Thu, 17 Mar 2016 18:20:14 +0800
+Message-ID: <CAKqreuxBtu3hXVxY27_u-9ZxSP_AfSqeoB=d_UJdUsSTphgf=g@mail.gmail.com>
+References: <CAKqreux4aYhXTE9kUHKoKCJ2-4KDWyi58ioCm-CWqXhUYCtEEw@mail.gmail.com>
+	<1458122865-29447-1-git-send-email-huiyiqun@gmail.com>
+	<20160316170623.GB4039@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Durham Goode <durham@fb.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Mateusz Kwapich <mitrandir@fb.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 11:18:21 2016
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Your friend <pickfire@riseup.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 17 11:20:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agV0W-0004Ar-6D
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 11:18:20 +0100
+	id 1agV2Y-0005XZ-Nw
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 11:20:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935433AbcCQKSR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 06:18:17 -0400
-Received: from mail-lb0-f172.google.com ([209.85.217.172]:34063 "EHLO
-	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932827AbcCQKSP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 06:18:15 -0400
-Received: by mail-lb0-f172.google.com with SMTP id k12so65153380lbb.1
-        for <git@vger.kernel.org>; Thu, 17 Mar 2016 03:18:14 -0700 (PDT)
+	id S965896AbcCQKUS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2016 06:20:18 -0400
+Received: from mail-oi0-f47.google.com ([209.85.218.47]:32956 "EHLO
+	mail-oi0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935295AbcCQKUQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 06:20:16 -0400
+Received: by mail-oi0-f47.google.com with SMTP id d205so59549330oia.0
+        for <git@vger.kernel.org>; Thu, 17 Mar 2016 03:20:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=18dRpL59FScDQ+hxyjPmhJ5N1UTT9B3+sjMA7ds0L4k=;
-        b=IuPckC1yGAEyyTxktsLt1iZ1VqEPeHZgEkzP6vreXSJXxTaJTVghSegFehvRPup99b
-         HOupWMvInla+mRVKw4C4eDtYfRcA2ZxsBa8Hu6TGeB0b5u17nHxdxmtpIz6kKFlqahr1
-         C338o5jJ+kKrho/ypQ80ATzHoVrsAvzTuDbohutOpKGBj8URZYmfvLR7a+MqmM1fJ07Y
-         TpmGxBYtQa3XY+sWJeps6p3nRjPO0ACh6XDXDv3zFINmAwaMJrmCDLYmFLviZvAtQ+1I
-         QuZMlpnbWwa3MApB8MMQ4XnSQRwp32iXFFYTd1a2tUMsI/clqRGB75sIx4QozIvbHVDW
-         XL7A==
+        bh=UNbyUzUPcdV7S+Oqq4y5PI/U2FyrCsqsNz7nUl953Q4=;
+        b=mbN8I1U6f9mEDWGAxfEGb1bbYz3thpeXqGm601lUreCX4U58pYrCMjFeF6dc7gxGyl
+         Bz0FjUYSlfHZBrM9qxoS4Be11Ug0z6ToiS+jARUkYHg/AhWpQSJQCoVEmVk2KQ2yGRW3
+         vHdwbB1O6dpLJF/k9LXvSjE9gx5gCIYeAQUiOWWiW0XM9R9weeXPJ6ci+tbAsUig10o6
+         pbwPrIjqiCujB5CSv7OqasJv9ku7sWmYk5QV19VBaC/prxRWw+IbsR2cyUm1ynEzTgMF
+         TsdRDKOKDxioW1BbfGn/NHYIugCk+eL3Lj43haybiaUexuBaqjVh4c44OFN706wK1Lck
+         6kAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=18dRpL59FScDQ+hxyjPmhJ5N1UTT9B3+sjMA7ds0L4k=;
-        b=LUm9N4ec11MJHo5+VHp4dk9SNIIq2PQdd8yfvuTN5BZj8HbpkbB58DiubwpjOxoDYa
-         O/QuopCv76TU6dzLY+Y0gcbW0A2RlhM+SnQkCaPG5EmebDSs99pn2NDYLZKGaIWCpLrN
-         5HYHt78EoMUZJgNHpGEuvQEtwtiGAi3Hf1917msEM+dZlJ3j7cxzgJfhQiuBkDWtHE8f
-         X6V+PmG3Y1EETAM1YveubjhBUt4eCXXN5O1roT4W4Zfa9BIufTT5k7cR2uIIbOluSyek
-         dLi16cCkmoEaKnhF8DRvfkrczYWgZB/HcNYTHqQJCyOvOxRGKesQN/oaH86UX/p4oE5b
-         TC1A==
-X-Gm-Message-State: AD7BkJJQumSv/kVE5BwyMqsXHHhjoas91DdSV4ABprIWHV9a5k8pTS6dBoY6aYaC4pZe5UZksARBv8pyZwpElQ==
-X-Received: by 10.112.130.41 with SMTP id ob9mr3184485lbb.81.1458209893500;
- Thu, 17 Mar 2016 03:18:13 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Thu, 17 Mar 2016 03:17:43 -0700 (PDT)
-In-Reply-To: <xmqq37rp35k1.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=UNbyUzUPcdV7S+Oqq4y5PI/U2FyrCsqsNz7nUl953Q4=;
+        b=acyR/6CO7N/I0yz0aygYZ3v93/DkaOJfKJ80RNZkHNTSlwSi8GRE9zrunNbUJ/E0TJ
+         uQm/oKdoFPLU6QmH0034iOEVGObifPegUG59dzm2TvRF2uGEwbjI4BWf3q0gjLJPBVud
+         38ghb0r7v3eqsDA+3SpoNS3dYPGDuWo+lNYpufeaayhglvC4nObQPSGhqjbjld4yqrWM
+         dJG9o9gsynMNKpGWTKXM8c1FSoif6LDmmmHgKEEsvuY23xNR0j/5hHBDQcVwkJ+K9WpI
+         LTxpJTcJ9jp7gQa545Eyjb/mtluEJS2ZvILSzO5MnSp1HusuHOOUYnC3zUzJb6lWhVzv
+         yOUQ==
+X-Gm-Message-State: AD7BkJIbRuIy2P5FSgHpIj4kpnyRkEzZSIICdrM2Nv/cOOlXIHLCCOOVtLHQ0Wch8R7yR9Lg/qytBsrv+2HePw==
+X-Received: by 10.202.66.5 with SMTP id p5mr5315215oia.65.1458210014919; Thu,
+ 17 Mar 2016 03:20:14 -0700 (PDT)
+Received: by 10.157.43.68 with HTTP; Thu, 17 Mar 2016 03:20:14 -0700 (PDT)
+In-Reply-To: <20160316170623.GB4039@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289095>
 
-On Thu, Mar 17, 2016 at 2:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
+2016-03-17 1:06 GMT+08:00 Jeff King <peff@peff.net>:
+> On Wed, Mar 16, 2016 at 06:07:43PM +0800, Hui Yiqun wrote:
 >
->> On Wed, Mar 16, 2016 at 05:09:23PM -0700, Durham Goode wrote:
->>> Using git 2.8.0-rc2, given a repo with the following files:
->>>
->>> - one/hideme
->>> - one/donthide
->>> - two/foo
->>>
->>> A sparse config of:
->>>
->>> cat > .git/info/sparse-checkout <<EOF
->>> /*
->>> !one/hideme
->>> EOF
->>>
->>> Results in a repository that only has `one/donthide` in it.  I would
->>> expect `two/foo`to be present as well.  This worked in 2.6, and
->>> bisecting it points to d589a67eceacd1cc171bbe94906ca7c9a0edd8c5
->>> "dir.c: don't exclude whole dir prematurely" (author cc'd).
->>
->> Thank you. This should fix it. I think I understand why it goes
->> wrong. I'm going to run some more tests and post a proper patch later.
+>> +     if (runtime_dir && *runtime_dir)
+>> +             git_runtime_dir = mkpathdup("%s/git/", runtime_dir);
+>> +     else
+>> +             git_runtime_dir = mkpathdup("/tmp/git-%d", uid);
 >
-> I admit that I've always considered "sparse checkout" was an
-> uninteresting experimental feature that I do not want to pay too
-> much attention to, and the only review I did carefully myself was to
-> make sure that patches around that area would not change the
-> behaviour of the original code in repositories that do not use that
-> feature, so please do not laugh too loudly at me if I ask the
-> obvious ;-)
+> Here we allocate the string, but later we may return NULL on error,
+> leaking the allocated memory.
 
-Good news for you is there's "sparse checkout v2" in the work, that
-would not rely on exclude engine and should be both faster and more
-elegant. That should reduce "sparse checkout v1" usage to really small
-cases.
+Yes, do you think goto is a good solution for clearup?
 
-> So the pattern list in that info/sparse-checkout file
-> shares the same logic with the gitignore mechanism, and the paths
-> that would have been "ignored" if the pattern list were in the
-> .gitignore file are the ones that would be included in the checkout?
 >
-> If so, among the three paths Durham lists:
+>> +     if (!lstat(git_runtime_dir, &st)) {
+>> +             /*
+>> +              * As described in XDG base dir spec[1], the subdirectory
+>> +              * under $XDG_RUNTIME_DIR or its fallback MUST be owned by
+>> +              * the user, and its unix access mode MUST be 0700.
+>> +              *
+>> +              * Calling chmod or chown silently may cause security
+>> +              * problem if somebody chdir to it, sleep, and then, try
+>> +              * to open our protected runtime cache or socket.
+>> +              * So we just put warning and left it to user to solve.
+>> +              *
+>> +              * [1]https://specifications.freedesktop.org/basedir-spec/
+>> +              * basedir-spec-latest.html
+>> +              */
 >
->  * one/hideme matches !one/hideme the last, i.e. it would not be
->    ignored if the pattern appeared in .gitignore, hence it should not
->    be in the checkout;
+> OK. I think these checks should be sufficient to deal with the /tmp race
+> I mentioned elsewhere in the thread (assuming that an attacker cannot
+> flip the uid back and forth in the same way, but that should be true on
+> Unix systems).
 >
->  * one/donthide matches * the last, i.e. would be ignored, hence it
->    should be in the checkout;
+>> +             if ((st.st_mode & 0777) != S_IRWXU) {
+>> +                     fprintf(stderr,
+>> +                                     "permission of runtime directory '%s' "
+>> +                                     "MUST be 0700 instead of 0%o\n",
+>> +                                     git_runtime_dir, (st.st_mode & 0777));
+>> +                     return NULL;
+>> +             } else if (st.st_uid != uid) {
+>> +                     fprintf(stderr,
+>> +                                     "owner of runtime directory '%s' "
+>> +                                     "MUST be %d instead of %d\n",
+>> +                                     git_runtime_dir, uid, st.st_uid);
+>> +                     return NULL;
+>> +             }
 >
->  * two/foo (or really anything) matches * the last, i.e. would be
->    ignored, hence it should be in the checkout.
+> Should these be using warning(), rather than a raw fprintf?
+
+Well, I will replace it.
+
+During the greping. I found that I should also wrap my warning strings
+with _() for i18n.
+
 >
-> Am I reading the bug correctly?
+>> +     } else {
+>> +             if (safe_create_leading_directories_const(git_runtime_dir) < 0) {
+>> +                     fprintf(stderr,
+>> +                                     "unable to create directories for '%s'\n",
+>> +                                     git_runtime_dir);
+>> +                     return NULL;
+>> +             }
+>> +             if (mkdir(git_runtime_dir, 0700) < 0) {
+>> +                     fprintf(stderr,
+>> +                                     "unable to mkdir '%s'\n", git_runtime_dir);
+>> +                     return NULL;
+>> +             }
+>> +     }
+>
+> And this retains the un-racy mkdir(). Good.
+>
+>> +     free(git_runtime_dir);
+>> +     return mkpathdup("%s/%s", git_runtime_dir, filename);
+>
+> This mkpathdup accesses the string we just freed?
+>
+> It might be easier to just use a strbuf here, and then you can append to
+> it at the end.
 
-Yes that's how I read it too. The patterns basically say "include
-everything (/*) except one/hideme (!one/hideme)" so two/foo should be
-included.
+I think so. Thanks.
 
->> -- 8< --
->> diff --git a/dir.c b/dir.c
->> index 69e0be6..77f38a5 100644
->> --- a/dir.c
->> +++ b/dir.c
->> @@ -1027,7 +1027,6 @@ static struct exclude *last_exclude_matching_from_list(const char *pathname,
->>                               exc = x;
->>                               break;
->>                       }
->> -                     continue;
->>               }
->>
->>               if (x->flags & EXC_FLAG_MUSTBEDIR) {
->> -- 8< --
->> --
->> Duy
-
-
-
--- 
-Duy
+>
+> -Peff
