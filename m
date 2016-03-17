@@ -1,81 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: parse-options does not recognize "unspecified" behavior
-Date: Thu, 17 Mar 2016 01:40:47 -0400
-Message-ID: <20160317054047.GA3457@sigill.intra.peff.net>
-References: <20160316204912.GA1890@sigill.intra.peff.net>
- <CAFZEwPMa3GZS6pvFwr8PLVDqKm5xmMd307nbjhpZSC_ndpw8vw@mail.gmail.com>
- <20160316212308.GA4538@sigill.intra.peff.net>
- <CAPig+cRKyaUefz0qj6unkaiPg25=Xi2WorQE4Fm46CCf00UbHQ@mail.gmail.com>
- <20160316214442.GC4441@sigill.intra.peff.net>
- <CAGZ79kbbAv=PukD+sftmoO8u3GX=S1YCYGV8zcNMxrZ+E41-UA@mail.gmail.com>
- <20160316231626.GA11808@sigill.intra.peff.net>
- <CAGZ79kYVT0cq8XgruZ+i_gGuSDySE+s3POU95PXyra9DwVGLkQ@mail.gmail.com>
- <20160317014310.GA12830@sigill.intra.peff.net>
- <CAPig+cSmQpt3u+1PPFD6CP9TF58R6NR=KCgC1dik9U=deaeCkA@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] rebase -x: do not die without -i
+Date: Thu, 17 Mar 2016 07:20:49 +0100
+Message-ID: <56EA4CC1.9060602@kdbg.org>
+References: <1458177584-11378-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Pranit Bauva <pranit.bauva@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 06:40:58 2016
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org,
+	Matthieu.Moy@grenoble-inp.fr, johannes.schindelin@gmail.com,
+	Lucien.Kong@ensimag.imag.fr
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Mar 17 07:20:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agQg4-00008R-47
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 06:40:56 +0100
+	id 1agRIn-0005er-J1
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 07:20:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932193AbcCQFkw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 01:40:52 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33105 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751564AbcCQFkv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 01:40:51 -0400
-Received: (qmail 16070 invoked by uid 102); 17 Mar 2016 05:40:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 17 Mar 2016 01:40:51 -0400
-Received: (qmail 24979 invoked by uid 107); 17 Mar 2016 05:41:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 17 Mar 2016 01:41:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Mar 2016 01:40:47 -0400
-Content-Disposition: inline
-In-Reply-To: <CAPig+cSmQpt3u+1PPFD6CP9TF58R6NR=KCgC1dik9U=deaeCkA@mail.gmail.com>
+	id S1754808AbcCQGUx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2016 02:20:53 -0400
+Received: from bsmtp8.bon.at ([213.33.87.20]:26529 "EHLO bsmtp8.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753153AbcCQGUx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 02:20:53 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3qQdX24ZDVz5tlL;
+	Thu, 17 Mar 2016 07:20:50 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 00F6653B6;
+	Thu, 17 Mar 2016 07:20:49 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <1458177584-11378-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289077>
 
-On Thu, Mar 17, 2016 at 01:32:41AM -0400, Eric Sunshine wrote:
+Am 17.03.2016 um 02:19 schrieb Stefan Beller:
+> -test_expect_success 'rebase --exec without -i shows error message' '
+> +test_expect_success 'rebase --exec works without -i ' '
+>   	git reset --hard execute &&
+> -	set_fake_editor &&
+> -	test_must_fail git rebase --exec "git show HEAD" HEAD~2 2>actual &&
+> -	echo "The --exec option must be used with the --interactive option" >expected &&
+> -	test_i18ncmp expected actual
+> +	git rebase --exec true HEAD~2 2>actual2 >actual1 &&
+> +	echo "Successfully rebased and updated refs/heads/autosquash_expected." >expected &&
+> +	test_i18ncmp expected actual2 &&
+> +	test_line_count = 2 actual1
 
-> On Wed, Mar 16, 2016 at 9:43 PM, Jeff King <peff@peff.net> wrote:
-> > Arguably cmd_commit() should be using OPT_BOOL instead of OPT__VERBOSE,
-> > as there is no such thing as "verbose > 1" here. But I don't think there
-> > is any real user-facing consequence of that (however, given Eric's
-> > suggestion, I suspect it would make Pranit's problem just go away, as it
-> > assigns rather than increments; IOW, it does the thing Eric was
-> > suggestion OPT__VERBOSE to do).
-> 
-> Actually, Pranit's previous version of the patch did treat verbosity
-> as a boolean, but then SZEDER pointed out this bit from
-> git-commit.txt:
-> 
->     --verbose::
->         ...
->         If specified twice, show in addition the unified diff between
->         what would be committed and the worktree files, i.e. the unstaged
->         changes to tracked files.
-> 
-> which is what led us to the current discussion about wanting an
-> "unspecified" value for OPT__VERBOSE.
+We don't have an explicit guideline, but please do not check stderr 
+output using test_cmp or test_i18ncmp. The reason is that some shells 
+write trace output to stderr when run under 'set -x'. That is, when you 
+run this test as
 
-Ah, thanks. I looked for something like that in builtin/commit.c and
-didn't see us using verbose as anything but a boolean. But we pass it
-into wt_status, which does look at "s->verbose > 1".
+      ./t3404-rebase-interactive.sh -x -v
 
-Sorry for the noise (and probably I should stop participating in this
-discussion without having read all of the backstory!).
+it will fail because there is now more text in actual2 than expected. We 
+have a number of cases like this elsewhere, but we should not stack new 
+cases on the pile.
 
--Peff
+Please use test_i18ngrep:
+
+	test_i18ngrep "Successfully rebased and updated" actual2 &&
+	test_line_count = 2 actual1
+
+-- Hannes
