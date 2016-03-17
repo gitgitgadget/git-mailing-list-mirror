@@ -1,9 +1,10 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 Subject: [PATCH 1/2] dir.c: fix bug in 'nd/exclusion-regression-fix' topic
-Date: Thu, 17 Mar 2016 19:45:41 +0700
-Message-ID: <1458218744-15810-1-git-send-email-pclouds@gmail.com>
+Date: Thu, 17 Mar 2016 19:45:42 +0700
+Message-ID: <1458218744-15810-2-git-send-email-pclouds@gmail.com>
 References: <56E9F5B3.6030903@fb.com>
+ <1458218744-15810-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -12,60 +13,60 @@ Cc: durham@fb.com, mitrandir@fb.com,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 17 13:46:45 2016
+X-From: git-owner@vger.kernel.org Thu Mar 17 13:47:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agXK8-0003z6-Of
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 13:46:45 +0100
+	id 1agXKP-00047L-Jn
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 13:47:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755970AbcCQMql convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Mar 2016 08:46:41 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:34193 "EHLO
-	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752669AbcCQMqj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 08:46:39 -0400
-Received: by mail-pf0-f171.google.com with SMTP id x3so119751584pfb.1
-        for <git@vger.kernel.org>; Thu, 17 Mar 2016 05:46:39 -0700 (PDT)
+	id S1756094AbcCQMqx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Mar 2016 08:46:53 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:33043 "EHLO
+	mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752669AbcCQMqw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 08:46:52 -0400
+Received: by mail-pf0-f173.google.com with SMTP id 124so120248351pfg.0
+        for <git@vger.kernel.org>; Thu, 17 Mar 2016 05:46:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=oCzDGzb1b6YTzzJRABl2NdB5XdXy26XcpG4JkcsEPnk=;
-        b=xbhcfu/ISqUISGDhjo4xrPEzUYABKCa9mWS+bm06besE9lRsSssG34Cl3OMNdljUX/
-         BvyWcKRheMiSDaA5wtYtPd0CpAbi9EEELvEn+YLC987ICE7LamXFJh/hZzChvhYXIzcJ
-         nYw7txMdkUZlYh+zx/+QCVGP0UCtH2KfyplRV/bNvJFJxSbiwiWVl/MR8IaEuC/2I6AA
-         j/vrqeELFBfUvzYAbXhylnJoXRNwuvgSZdhqLb4iz6kH7OqlxPBXflJTo8ID0dbOyzYG
-         qHUzs2sMZ+nKhLMVHyzSNI8o1eWIp7MRn5AIlEu1HYPzSZJ8NOIfA+CwDcLw1yfy66GF
-         FyNA==
+        bh=ugAYmmPD5R/NSk+oPvOYR9INj7MuBPRYDvPtJPOo7zw=;
+        b=Ueos3NIhSlrjwYQAUsIuOiStsMViaINKyb30jVtdfUCSC7DDDbVok5qvtStdM2yYnL
+         tZlR7uzoLB4h91Yo4ZziGOnz74buz+e4hOP2oyz8ttu5sTBMzlpqx54fSyFRXcAWH8QT
+         sf3sXG23nr2/JopqRuQxRJiyW7efuIjDqH/gu90XpVCY8/oc83gLzU9DFvpTCcMcu7Tz
+         fn6gOwGOUnqvXqgVlVTxEw0+9iYE/g3N17+DCDa7VOkHLs5xRsA8Wzvpv+3NyUXwFLmV
+         tPtN+hq3hX1AX2bTL0SB2iz97FhCcvia9Gct0cftQwZ+IQUENit9n8nMQTDn5AAW1LbS
+         r19Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=oCzDGzb1b6YTzzJRABl2NdB5XdXy26XcpG4JkcsEPnk=;
-        b=FnaQNgQNlLuwz5zT6AVXO7qJXf79tOq/CiIg4NMovQC7ffwiKwJEX0Goj8W2CveWmD
-         Mc1ZOuGJgwjOYpGwyqWlqJF+Ru34zqf38mx8HYU5ut4oI35PrImpW04vEzub+itxVU61
-         SwiUeoEHq/Owmoj3m6LQUs6/ga2Gh80ET5vlapNyZntEbXJPJJ+sMV4RuVYqdGfRZB0N
-         zA0qqjdZynMtt/Sq3mIp2wOQTdCShuzDv+dz+2WKcoIugXlICmB6oTfzXbkeFJCiSau+
-         0rjNZITYIW5JLE5+qj0bI0S7bQzMvTP0yXYsLuPmCjg5bLzCqM8fWKqm6wK6V41DXtTa
-         rT+w==
-X-Gm-Message-State: AD7BkJJlPSVullYTr9NFoZKpXxx+0iY8DS12K8HUap4neFyabNfohDcDl7OfnjyM23DHPQ==
-X-Received: by 10.66.144.4 with SMTP id si4mr14743310pab.0.1458218783965;
-        Thu, 17 Mar 2016 05:46:23 -0700 (PDT)
+        bh=ugAYmmPD5R/NSk+oPvOYR9INj7MuBPRYDvPtJPOo7zw=;
+        b=d6RV2Hs7yfjFRfBqeENK3oPj22gLL/ZMnRdoZzv3rr7bRhuFqGdAKumjc65f8OINwg
+         LpezMMSrn6CxX7T3ezQgpHAlfk6ozLNpf0kmHsRf4vVbVHSzG5JBUW+kGogmY+PQNuwl
+         QaNVuI3bNTzyDsWti5NiJuQPZP+ov4EnhYpbWg5bDa41teCKgz5GY9j3AuO2IbY4Cmux
+         ZzXT9EisbufWfjCn52MqV5Pd9Ltt3NP0OsDqlXrmV3+VE9bs2WyEl9FLk31RvezLf2as
+         1wxmsee5f/+VcF+5fvgYZWdIYt5mX2OY5MiiqjKxw8Qg7YVvTQbl037vB6GpAnXS+hEI
+         H9ng==
+X-Gm-Message-State: AD7BkJIpWgDM5mNtum6QJO11aeTLzxja4bTYXKUllI0ZLsBtM9TT/3VCkbZwRbUMYlUC9g==
+X-Received: by 10.98.72.15 with SMTP id v15mr12743722pfa.23.1458218797791;
+        Thu, 17 Mar 2016 05:46:37 -0700 (PDT)
 Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id p26sm13251680pfi.84.2016.03.17.05.45.41
+        by smtp.gmail.com with ESMTPSA id y21sm13256113pfa.85.2016.03.17.05.46.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Mar 2016 05:46:22 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Thu, 17 Mar 2016 19:45:47 +0700
+        Thu, 17 Mar 2016 05:46:36 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Thu, 17 Mar 2016 19:46:35 +0700
 X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
-In-Reply-To: <56E9F5B3.6030903@fb.com>
+In-Reply-To: <1458218744-15810-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289102>
 
 The topic in question introduces "sticky" path list for this purpose:
 given a path 'abc/def', if 'abc' already matches a pattern X, it's adde=
@@ -74,9 +75,10 @@ to X's sticky path list. When we need to check if 'abc/def' matches
 pattern X and see that 'abc' is already in the list, we conclude right
 away that 'abc/def' also matches X.
 
-The short reason (*) for sticky path list is to workaround limitations
-of matching code that will return "not match" when we compare
-'abc/def' and pattern X.
+The short reason for sticky path list is to workaround limitations of
+matching code (*) that will return "not match" when we compare 'abc/def=
+'
+and pattern X.
 
 The bug is in this code. Not only it does "when we need to check if
 'abc/def' matches...", it does an extra thing: if 'foo/bar' is _not_ in
@@ -132,9 +134,9 @@ t
 for sparse checkout, even though the same above steps happen to
 =2Egitignore.
 
-(*) The problem is known and will be fixed later and described in
-detail then. For this commit, it's sufficient to see the following
-link because the long reason is really long:
+(*) which will be fixed later and described in detail then. For this
+commit, it's sufficient to see the following link because the
+explanation is long:
 
 http://article.gmane.org/gmane.comp.version-control.git/288479
 
