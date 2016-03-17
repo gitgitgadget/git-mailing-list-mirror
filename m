@@ -1,114 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: [RFC] Code reorgnization
-Date: Thu, 17 Mar 2016 14:32:39 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603171431000.4690@virtualbox>
-References: <20160317111136.GA21745@lanh>
+Date: Thu, 17 Mar 2016 20:35:53 +0700
+Message-ID: <CACsJy8BFdk6jtRqSKE0ThtcZi39hHC_QbDx6oka0qWk7eiD4wQ@mail.gmail.com>
+References: <20160317111136.GA21745@lanh> <alpine.DEB.2.20.1603171431000.4690@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 14:32:50 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Mar 17 14:36:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agY2j-0000zK-I3
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 14:32:49 +0100
+	id 1agY6J-0003MV-Sj
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 14:36:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030622AbcCQNcp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 09:32:45 -0400
-Received: from mout.gmx.net ([212.227.17.21]:51843 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030618AbcCQNco (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 09:32:44 -0400
-Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MEKZg-1aZuBk2I48-00FSPA; Thu, 17 Mar 2016 14:32:40
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160317111136.GA21745@lanh>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:CwJ3Ugledq1y/HHChjASmbJalMHkrSLdySb9rC8MgpdZ7tJphUC
- BovQqkXYUmyAz6elGyez/adpzNFh3PgSf6qsN7N0xDR+cKhz8KoUoTMfOJ7cO9JpqiZcaaM
- slljPvErNF8d0f6NlkcnsmagXIMQQ5X1HsMMmO9wy+cfV2SuGePIUK4zcuOLFZNSZpC1UNP
- 4L76sPuR5hcboGt3rXfzQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MnU4Mhi6BLE=:uh/JII35WkWWwxbXkeE4z3
- 5cDDYhyZEjeqrSDY/75EgIpCl6/Fe1w+wyjrI2YMf32RfhwwgKTaAIeyaq87xfBKqCQOPbCYj
- wOku3WqCFJm4USXq3Umfod5nru7DsSfAchOH1fxYwS5MSzHhx1vqeLfHMNecRMv+u857Ix7RA
- WnUbyas/fc5DiWJwl9FemfRgzbY8mgN6DA84Qzma1nZsEtAIvtXFcXt9jyZGw6YOAuIeDMOmI
- 4jLUKTIJIapSY8VT7Kyx7RtXmccjsQyVf2alGElJHMHbi4FU4LuPSvdR2voTnQZibIYfy7DfI
- 8SnIFgSxz+ZK3JUvDOxALFayN/DuqQjkog3kUYVHa2t8JdRDDtk4IQvSIp3TXLoX+UBqeQrDw
- 2UyVoRzSFP1PV4JzGfEFqROpypQFThEUuZAsq8lCC+0DwMumrzBCTE/+W+ROL27LkjE0DZIMi
- cRWgGAwVjVwxi6ATDtbcqRr1vGPcQO13IrBeg9E8HPepVgSMN88ejT/STzk22Exapj3BTljgB
- tXobf55AMqzVWqqD6uzQLImuUE9BVdgI0ZhqLR6tbKhWm+QS9pLSLfbhcCRPKH+ink2UBheR+
- prsxNk1cPOEzKWdJS4X0PqIBKxoqNGK+Vq4Jp9cqJjnSd33pAe+I7Kras3D6xUXRBLFnRhIxY
- x2gl3tTiot/TGsrD5/0ZQ3lEOGP1Jddtkq/56YxcfgPvAANZUw2UaS+ec/2PuBZqyNF6Xb3RF
- Q3qX3NskogqLKUS7JW1x4sb+r66dLdHYOYeOWbRSdq2a2UOHGbjF3XpP5JsQXW7u0GNzpJeD 
+	id S1030735AbcCQNg1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2016 09:36:27 -0400
+Received: from mail-lb0-f172.google.com ([209.85.217.172]:35680 "EHLO
+	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030677AbcCQNgY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 09:36:24 -0400
+Received: by mail-lb0-f172.google.com with SMTP id bc4so68687656lbc.2
+        for <git@vger.kernel.org>; Thu, 17 Mar 2016 06:36:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=2OkctKQyX86pZJ3zwc/i22Fp3fMP5U0Xe59BLKPNC4U=;
+        b=oZSWt54Q31Uon/A4HGBBeMdnZHePyKADUu+dgpy6ERYN3J52fBP8epv33Fw+m97uAP
+         2G7/+DEp/ib3pslKz3X8LLrHbrYdmpbdADVjDkNZbOh4R4h6elzewj3YuMOQ2QDjo4/H
+         22116Ywk3cFYzWWq4qX5dctKoCL6IS8n9Lr8ps6EPtIb97EjvQnsX32M1ARcpW05+wbM
+         KWdbuBtPAtY1TiLIH0ClRg4bRt2Xs4mQPt9GxnYAa+6Ybfl5KMeDlKN0vXXLxjetKILX
+         c0Ak1r5k/BgnjD0bqUEjjNz9NqD7iNFXgw6xw1C1A/p6M0n6bPK30RI+1ltqv1Ybkl62
+         FhwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=2OkctKQyX86pZJ3zwc/i22Fp3fMP5U0Xe59BLKPNC4U=;
+        b=d/4IwHql7ZhT6c133ZLswc7b6fbpVWowyP/aoaEoCyF4VxixgLIOF3KllYO7m02mam
+         0gQXbU949frm4O+V9Ba/M9lOy6Ev7ji+OFf4Jid5YaU4Q0opnO1+Xw6AsCvnQKbQmLqb
+         1etSi4WUV6Gi7HJF6VJ3Di0sqHaTRz7JyhcGK296YdTmnmU3qW1Py/k5Q6Up7bgAtF6d
+         ZBU4jrq5nAn9cZ1hxGHIwTdJMfNxVWSK0zldj3P++EpTdDsM9zywa23THrtsDu6eTiQd
+         OdW6Jsx1hdC/6/nGWwWsPEeJIhpabTdAjF3/cmTmmAwvyd4pfamoX2FjYoHKGPGxFrnz
+         PefA==
+X-Gm-Message-State: AD7BkJLy2JFn/wkp3+ZJbsa6pyw6Gpx0RxYkf0L2HQ2qBt4RRoIZEGyrMC9ost082W1yfeQVN9xSxwVhEvjCJw==
+X-Received: by 10.112.130.41 with SMTP id ob9mr3560105lbb.81.1458221783240;
+ Thu, 17 Mar 2016 06:36:23 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Thu, 17 Mar 2016 06:35:53 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1603171431000.4690@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289114>
 
-Hi Duy,
+On Thu, Mar 17, 2016 at 8:32 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>> Good? Bad? Ugly?
+>
+> Disruptive. Probably a change for 3.0?
 
-On Thu, 17 Mar 2016, Duy Nguyen wrote:
-
-> Git's top directory is crowded and I think it's agreed that moving
-> test-* to t/helper is a good move. I just wanted to check if we could
-> take this opportunity (after v2.8.0) to move some other files too. I
-> propose the following new subdirs
-> 
-> lib
-> ---
-> This contains files that are about data structures or algorithms. Very
-> general purpose. This directory includes
-> 
-> argv-array.[ch] base85.c column.[ch] delta.h diff-delta.c hashmap.[ch]
-> hex.c khash.h kwset.[ch] levenshtein.[ch] mergesort.[ch] patch-delta.c
-> prio-queue.[ch] sha1-array.[ch] sha1-lookup.[ch] strbuf.[ch]
-> string-list.[ch] url.[ch] urlmatch.[ch] utf8.[ch] varint.[ch]
-> versioncmp.c wildmatch.[ch]
-
-The name "lib" makes it sound as if this contains the source code of
-libgit.a. Maybe "generic" or "common" or "util" would be better (my
-favorite would be "util").
-
-> odb
-> ---
-> The grouping of object database files is to easily make connections
-> between them. Unlike, for example, diff-related files which either
-> start with "diff" or has that word in the file name to make
-> connections.
-> 
-> alloc.c blob.[ch] bulk-checkin.[ch] commit-slab.h commit.[ch]
-> object.[ch] pack.h pack-revindex.[ch] replace_object.c sha1_file.c
-> streaming.[ch] tag.[ch] tree.[ch]
-> 
-> index
-> -----
-> For the same reason of odb subdir. This directory contains
-> 
-> cache-tree.[ch] name-hash.c preload-index.c read-cache.c
-> split-index.[ch] unpack-trees.[ch]
-> 
-> sys (or maybe util or support)
-> ------------------------------
-> These are still general purpose but is usually system-related. They
-> are still far away from git's core logic. I want to separate them to
-> make it easier to spot "important" files at top dir.
-> 
-> abspath.c color.[ch] copy.c csum-file.[ch] ctype.c date.c editor.c
-> exec_cmd.[ch] gettext.[ch] gettext.h gpg-interface.[ch] ident.c
-> lockfile.[ch] mailinfo.[ch] mailmap.[ch] pager.c parse-options-cb.c
-> parse-options.[ch] pathspec.[ch] pkt-line.[ch] progress.[ch]
-> prompt.[ch] quote.[ch] run-command.[ch] sideband.[ch] sigchain.[ch]
-> symlinks.c tar.h tempfile.[ch] thread-utils.[ch] trace.[ch]
-> unix-socket.[ch] usage.c userdiff.[ch] wrapper.c write_or_die.c zlib.c
-> 
-> Good? Bad? Ugly?
-
-Disruptive. Probably a change for 3.0?
-
-Ciao,
-Dscho
+We tested it with the builtin rename a long time ago, so it's probably
+not bad. By the principle of "dogfooding", we should try it soon and
+make sure it's not disruptive, or prepare ourselves for such a change
+(I think git-am can't track renames, for example, without us giving it
+a clue somehow)
+-- 
+Duy
