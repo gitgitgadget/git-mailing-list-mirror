@@ -1,74 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 09/19] index-helper: add Windows support
-Date: Thu, 17 Mar 2016 13:18:36 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603171309301.4690@virtualbox>
-References: <1457548582-28302-1-git-send-email-dturner@twopensource.com> <1457548582-28302-10-git-send-email-dturner@twopensource.com> <CACsJy8DSORe6chXkufJB8ZYxi0kG6dUUbW_Spb=60bcxETasLQ@mail.gmail.com>
+From: Gregor Jasny <gjasny@googlemail.com>
+Subject: Re: Git subtree stumbles over annotated tags
+Date: Thu, 17 Mar 2016 13:41:00 +0100
+Message-ID: <56EAA5DC.1040801@googlemail.com>
+References: <56E19809.5040305@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: David Turner <dturner@twopensource.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 13:18:48 2016
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 17 13:41:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agWt4-0001wu-Rp
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 13:18:47 +0100
+	id 1agXEt-0000Ha-Lv
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 13:41:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030516AbcCQMSn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 08:18:43 -0400
-Received: from mout.gmx.net ([212.227.17.21]:58000 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030285AbcCQMSl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 08:18:41 -0400
-Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MgXCF-1aUFUQ2u2B-00NzvX; Thu, 17 Mar 2016 13:18:37
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CACsJy8DSORe6chXkufJB8ZYxi0kG6dUUbW_Spb=60bcxETasLQ@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:nqzm8aVJCwDJxbh1Sq73Yp+ZYmjv5X/a7tk/MbhRsCM0CgJD0NM
- k57ZSrvAcbY7t6yQwX4BVw+JKpYuCLsHabZAuTk4ChKsKRK1hBykKseHkrj3xKGOp8frqIj
- 07Z179+jfHArivZUZ2aBqbi8sNsH4QjxIYhqyBsZKiW24QUHm9Mc2SK9Ixn+PKr//1b3mW6
- VLwt2z8+DIwoEWrP+AiYA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:QUedxlvSwXg=:1nxKjK9Ua86TzAgERAQXIH
- kqzfJJ9EF+PVWvgapYOEOT+MxT9/HnIeiy7IqDmDBWpcSvzet5RjBYNjVPz5l7g71i6mU+azC
- 8kowmEDobdg4QTFzNHJ2N/UVKqUjsoMk489dF27060O2f6E4UMZxui94dLH705klixIXbCiAe
- MuMMSN6pVtnLX/ggfwAHngy7fN8BMn1GF3I5cWAggZzEDSBqQiAWsUUWDxIPC5FBv7d53ZkjS
- 8PKeanX0/IsSNn0un84qNUkoNGdma7dM2O9RQyiFj+g0fXT0dHdrzadQOJj0EAZKv19WAY1hi
- eiKD43r9jwSBuxuDfohJXT5XuPhYaqyJjPOyeeTPZyp0a3fHPdpcWqgZl66yq3yWWvX8aMeu7
- 6nKavUEUtKyibdZI5oWcJjFPo+xeBP21iKX/iI/e0eyxFXfUjPPSEBd/oSkD7e+mXmNnp8sVU
- ENXQCvZX29ansRwowNA368ub4Gx0rOQZ0to7UN4uk/mrjXPgfk6jkwLAr42alpNgGPrLpsMhT
- oTxvoClACUPDpU0k8vpVJPLX9phLBMrJa2ouSSbaDgFZ6vuqzDyYMQxR24uaDW8ELOkVQOqhS
- hf6Dlmrx578zA2UrmPhw3kdjPzh6zvUExkv+VDyWCj2J1tubz+fiSo3fjpNXGL0HWqFqmFkDG
- S5AydKZrpW7ry4UTlDKaG6RidRLwwqeFqvzGvpxJqCRBLM3SqHH6aILqKwdWnrXML13Vnp2ip
- BqTkk2ByZavToYZXrsc6E8pIsp4J3VlIu1BvIhFejZAuLVo1ZCqvc70VePlp9JgQ0MaD+Ch3 
+	id S1030684AbcCQMlK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2016 08:41:10 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:33129 "EHLO
+	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030288AbcCQMlI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 08:41:08 -0400
+Received: by mail-wm0-f52.google.com with SMTP id l68so24289493wml.0
+        for <git@vger.kernel.org>; Thu, 17 Mar 2016 05:41:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding;
+        bh=s07q5s4M4xA07T+1TBQqwfArYASpYzTL7kS2w00G/Mw=;
+        b=VZQkbXhYxrs9Aa/GGSvIb8AQ7FmRjoXhK8JnufHsJ3F2ZPp/GLBtaTq3nudysRrLnw
+         nmi0KaLZY8pNrzwgk6kvOpxlFj+WduYoWyg/nGLboShNc55SVGY2nuwFSyIwmC38qTf2
+         wBF20Gj5N/tQHulwqIrXt2AgfsAxVTJ5J2zLeXWtwMQd4oUObQrdBGoZSXwApLkUAKuC
+         QIEiK1DLsN0hiTxaUZik78HBEaGHts2qJk3VSqzJTwVlzE7LA8+cNWH7veQ5ooSobWmS
+         T2pYeaDF8Kz9tqu8Eq2wHcIxD/h4unspL74u23UyG551ungC22AKlug7XRFIEAXCM9lx
+         N5Ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=s07q5s4M4xA07T+1TBQqwfArYASpYzTL7kS2w00G/Mw=;
+        b=GihNnHCnevfbotvlXDTLybX06Lf9wN3XFiMwSWrukUZkqWczaYE+6b4N4wHl1mN01a
+         EscgP/IEJMiV0B+ZkMT0hEjV6Qjzv5exYmkyOSBb9tKv1BZDrfWd7+wdrASVf3tBiNoy
+         H5t5Yhdqp/gqeo16io29rbeR4kJ9uL4Oep01ej9Gyw/sdoVTnXvIDwVpdkzSf2UiAkvB
+         yZHlutGNucw45vXJxJ/Wb3Q/oP1BJHSQ+DBn1RxbLFRG0d/f4abNQ8KTVXK5xzmDNGPA
+         hKguEoZrZl60bULPhp2Cw9uqIlERk/ExikjDYhusNXRS10SQL3Zo/co4z5KAhxnv+I7s
+         7cmQ==
+X-Gm-Message-State: AD7BkJI8R+QFnMeM3xv/MWoojbeQ8aR5Mfmr34tV/2+a2nVC1QASMbm4xgSGym10wAxnzg==
+X-Received: by 10.28.147.72 with SMTP id v69mr34012904wmd.79.1458218462066;
+        Thu, 17 Mar 2016 05:41:02 -0700 (PDT)
+Received: from drswgregorj02.drs.expertcity.com (ent-nat3.drs.expertcity.com. [78.108.113.8])
+        by smtp.googlemail.com with ESMTPSA id 3sm8004554wmp.14.2016.03.17.05.41.00
+        for <git@vger.kernel.org>
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 17 Mar 2016 05:41:00 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:38.0)
+ Gecko/20100101 Thunderbird/38.6.0
+In-Reply-To: <56E19809.5040305@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289100>
 
-Hi Duy,
+Hello,
 
-On Wed, 16 Mar 2016, Duy Nguyen wrote:
+On 10/03/16 16:51, Gregor Jasny wrote:
+> today I discovered that it's a bad idea to "git subtree pull" from an
+> annotated tag. This issue got discussed in those two threads:
+>
+> http://comments.gmane.org/gmane.comp.version-control.git/247503
+> http://comments.gmane.org/gmane.comp.version-control.git/248395
+>
+> I was under the impression that it is fixed in recent versions of git
+> but my homebrew 2.7.0 still behaves badly. If I run the attached script
+> to reproduce the issue I get the following error message:
 
-> I think it's safe to drop this patch now. It's mostly to prove that it
-> could work on Windows. But I don't think it's tested a lot (even I
-> only occasionally test it under wine).
+For the record: this bug was already fixed in November:
+https://github.com/git/git/commit/5d65fe312e22594b7fec7349945fb0072987716b#diff-59f70cbe935ec223e3df413b94cab740
 
-I agree that it is more important to get the basics right (such as:
-concurrent access, elegant interface to watchman, pluggable backends
-different than watchman, support for *other* Git clients modifying the
-index under index-helper's feet, etc).
+Would it make sense to cherry-pick it into 2.7.x?
 
-We will try to keep the Windows end going at the same time.
-
-Please note that there is one very important difference between Windows vs
-Linux when it comes to shared memory: on Windows, the memory is released
-as soon as the last user goes away.
-
-Ciao,
-Dscho
+Thanks,
+Gregor
