@@ -1,7 +1,7 @@
 From: Anton Wuerfel <anton.wuerfel@fau.de>
-Subject: [PATCH 06/10] Add basic RFC3161 functionality
-Date: Thu, 17 Mar 2016 19:46:57 +0100
-Message-ID: <1458240421-3593-7-git-send-email-anton.wuerfel@fau.de>
+Subject: [PATCH 10/10] Add time-stamping functionality to git tag
+Date: Thu, 17 Mar 2016 19:47:01 +0100
+Message-ID: <1458240421-3593-11-git-send-email-anton.wuerfel@fau.de>
 References: <1458240421-3593-1-git-send-email-anton.wuerfel@fau.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,319 +10,190 @@ Cc: git@vger.kernel.org, i4passt@cs.fau.de,
 	Phillip Raffeck <phillip.raffeck@fau.de>,
 	Anton Wuerfel <anton.wuerfel@fau.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 19:47:53 2016
+X-From: git-owner@vger.kernel.org Thu Mar 17 19:47:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agcxa-0007X0-7Y
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 19:47:50 +0100
+	id 1agcxh-0007em-VZ
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 19:47:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936606AbcCQSrq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Mar 2016 14:47:46 -0400
-Received: from faui40.informatik.uni-erlangen.de ([131.188.34.40]:43333 "EHLO
+	id S1031495AbcCQSrw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Mar 2016 14:47:52 -0400
+Received: from faui40.informatik.uni-erlangen.de ([131.188.34.40]:43319 "EHLO
 	faui40.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S935230AbcCQSrk (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Mar 2016 14:47:40 -0400
+	by vger.kernel.org with ESMTP id S936594AbcCQSro (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Mar 2016 14:47:44 -0400
 Received: from faui49man2 (faui49man2.informatik.uni-erlangen.de [131.188.42.190])
-	by faui40.informatik.uni-erlangen.de (Postfix) with SMTP id E6A8258C4CE;
-	Thu, 17 Mar 2016 19:47:37 +0100 (CET)
-Received: by faui49man2 (sSMTP sendmail emulation); Thu, 17 Mar 2016 19:47:37 +0100
+	by faui40.informatik.uni-erlangen.de (Postfix) with SMTP id 5DF4F58C4CE;
+	Thu, 17 Mar 2016 19:47:42 +0100 (CET)
+Received: by faui49man2 (sSMTP sendmail emulation); Thu, 17 Mar 2016 19:47:42 +0100
 X-Mailer: git-send-email 1.9.1
 In-Reply-To: <1458240421-3593-1-git-send-email-anton.wuerfel@fau.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289146>
 
-This commit adds basic RFC3161 functionality, which is linked to the ma=
-in git
-binary. It is used for interaction with git objects by parsing data fro=
-m and
-writing data to it. Moreover, it is responsible for passing data to the=
- external
-helper tool `git-timestamp-util`, which does the actual work of creatin=
-g and
-verifying trusted time-stamps.
+This commit introduces command line options for git tag to allow adding=
+ trusted
+time-stamps from a Time Stamping Authority according to RFC3161.
+
+The SHA-1 has used for a time-stamp signature is generated from the hea=
+der data
+and the tag message, if present. After obtaining the time-stamp signatu=
+re, it is
+inserted into the object header under the `timesig`-key in a custom PEM=
+-like
+format. If the tag is also GPG-signed, the GPG signature includes the t=
+ime-stamp
+signature to prevent attackers from altering the time-stamp signature o=
+r
+replacing it.
+
+However, it is still possible to create tags with only a GPG signature =
+or only a
+time-stamp, although it is recommended to additionally GPG-sign time-st=
+amp
+signatures for the reasons stated above.
+
+In contrast to the GPG signature, the time-stamp signatures are part of
+the header, emulating the way GPG signatures of signed commits are stor=
+ed. This
+facilitates implementing RFC3161 time-stamps for commits eventually.
 
 Signed-off-by: Anton W=C3=BCrfel <anton.wuerfel@fau.de>
 Signed-off-by: Phillip Raffeck <phillip.raffeck@fau.de>
 ---
- Makefile  |   1 +
- rfc3161.c | 219 ++++++++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- rfc3161.h |  12 ++++
- 3 files changed, 232 insertions(+)
- create mode 100644 rfc3161.c
- create mode 100644 rfc3161.h
+ builtin/tag.c | 55 +++++++++++++++++++++++++++++++++++++++++++++++++++=
++---
+ 1 file changed, 52 insertions(+), 3 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 24bef8d..432c3de 100644
---- a/Makefile
-+++ b/Makefile
-@@ -792,6 +792,7 @@ LIB_OBJS +=3D replace_object.o
- LIB_OBJS +=3D rerere.o
- LIB_OBJS +=3D resolve-undo.o
- LIB_OBJS +=3D revision.o
-+LIB_OBJS +=3D rfc3161.o
- LIB_OBJS +=3D run-command.o
- LIB_OBJS +=3D send-pack.o
- LIB_OBJS +=3D sequencer.o
-diff --git a/rfc3161.c b/rfc3161.c
-new file mode 100644
-index 0000000..21a386f
---- /dev/null
-+++ b/rfc3161.c
-@@ -0,0 +1,219 @@
-+#include "cache.h"
-+#include "commit.h"
-+#include "run-command.h"
-+#include "strbuf.h"
-+#include "gpg-interface.h"
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 1705c94..9b3d2a1 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -18,9 +18,10 @@
+ #include "sha1-array.h"
+ #include "column.h"
+ #include "ref-filter.h"
 +#include "rfc3161.h"
-+
-+static const char *timeutil_cmd =3D "timestamp-util";
-+static const char *ts_signature_begin =3D "-----BEGIN RFC3161-----";
-+static const char *ts_signature_end =3D "-----END RFC3161-----";
-+
-+static void sha1_from_strbuf(struct strbuf *buf, unsigned char sha1[20=
-]);
-+static void sha1_in_hex(struct strbuf *buf, char sha1_hex[40]);
-+
-+static int verify_tsr(char *sha1, struct strbuf *base64);
-+
-+/*
-+ * To create a time-stamp signature, get the SHA1 hash of buffer and p=
-ass it to
-+ * git-timestamp-util. This helper program returns a minimalized TSR w=
-hich is
-+ * appended with some metadata and stored to the git object.
-+ */
-+int create_time_signature(struct strbuf *buffer, struct strbuf *sig)
+=20
+ static const char * const git_tag_usage[] =3D {
+-	N_("git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] <tagn=
+ame> [<head>]"),
++	N_("git tag [-a | -s | -u <key-id> | -t] [-f] [-m <msg> | -F <file>] =
+<tagname> [<head>]"),
+ 	N_("git tag -d <tagname>..."),
+ 	N_("git tag -l [-n[<num>]] [--contains <commit>] [--points-at <object=
+>]"
+ 		"\n\t\t[--format=3D<format>] [--[no-]merged [<commit>]] [<pattern>..=
+=2E]"),
+@@ -118,6 +119,39 @@ static int do_sign(struct strbuf *buffer)
+ 	return sign_buffer(buffer, buffer, get_signing_key());
+ }
+=20
++static int do_timesig(struct strbuf *buffer)
 +{
-+	ssize_t len;
-+	char sha1_hex[40];
-+	struct strbuf tsr =3D STRBUF_INIT;
-+	struct child_process timeutil =3D CHILD_PROCESS_INIT;
-+	const char *args[] =3D {
-+		timeutil_cmd,
-+		"-c",
-+		sha1_hex,
-+		NULL
-+	};
++	struct strbuf sig =3D STRBUF_INIT;
++	int inspos, copypos;
 +
-+	timeutil.argv =3D args;
-+	timeutil.in =3D 0;
-+	timeutil.out =3D -1;
-+	timeutil.git_cmd =3D 1;
++	/* find the end of the header */
++	inspos =3D strstr(buffer->buf, "\n\n") - buffer->buf + 1;
 +
-+	sha1_in_hex(buffer, sha1_hex);
-+
-+	if (start_command(&timeutil))
-+		return error(_("could not run git-%s"), timeutil_cmd);
-+
-+	len =3D strbuf_read(&tsr, timeutil.out, 1024);
-+	close(timeutil.out);
-+
-+	if (finish_command(&timeutil) || len <=3D 0)
-+		return 1;
-+
-+	strbuf_addf(sig, "%s\n", ts_signature_begin);
-+	strbuf_addf(sig, "Version: 1\n\n");
-+	strbuf_addbuf(sig, &tsr);
-+	strbuf_addf(sig, "%s\n", ts_signature_end);
-+
-+	strbuf_release(&tsr);
-+	return 0;
-+}
-+
-+/*
-+ * To verify a time-stamp signature, extract the time-stamp from a git=
- object,
-+ * extract the object id and pass the prepared data to git-timestamp-u=
-til, which
-+ * will do the verification for us.
-+ */
-+int verify_time_signature(const char *buf, unsigned long size)
-+{
-+	char sha1_hex[40];
-+	struct strbuf timesig_base64 =3D STRBUF_INIT;
-+	struct strbuf payload =3D STRBUF_INIT;
-+	int ret =3D 1;
-+
-+	printf("\n");
-+
-+	if (!parse_timestamp(buf, size, &timesig_base64, &payload)) {
-+		printf("time-stamp: no signature found\n");
-+		return 1;
++	if (create_time_signature(buffer, &sig)) {
++		strbuf_release(&sig);
++		return -1;
 +	}
 +
-+	/*
-+	 * Remove possible inline GPG signature from git object. Note that gi=
-t
-+	 * tags do not use inline signatures for historical reasons, so check=
-ing
-+	 * the return value of remove_signature would be useless.
-+	 * Any tag-like signatures outside of the object header are already
-+	 * removed by parse_timestamp.
-+	 */
-+	remove_signature(&payload);
-+	sha1_in_hex(&payload, sha1_hex);
++	for (copypos =3D 0; sig.buf[copypos]; ) {
++		const char *bol =3D sig.buf + copypos;
++		const char *eol =3D strchrnul(bol, '\n');
++		int len =3D (eol - bol) + !!*eol;
 +
-+	if (verify_tsr(sha1_hex, &timesig_base64))
-+		goto err;
-+
-+	ret =3D 0;
-+err:
-+	strbuf_release(&timesig_base64);
-+	strbuf_release(&payload);
-+	return ret;
-+}
-+
-+int parse_timestamp(const char *buffer, size_t size, struct strbuf *ti=
-mestamp,
-+		    struct strbuf *payload)
-+{
-+	int saw_timestamp =3D -1;
-+	const char *line, *tail, *next;
-+
-+	line =3D buffer;
-+	tail =3D buffer + size;
-+	saw_timestamp =3D 0;
-+
-+	/* Search for beginning of time-stamp. */
-+	while (line < tail) {
-+		next =3D memchr(line, '\n', tail - line);
-+
-+		next =3D next ? next + 1 : tail;
-+		if (starts_with(line, time_sig_header) &&
-+		    line[time_sig_header_len] =3D=3D ' ')
-+			break;
-+
-+		strbuf_add(payload, line, next - line);
-+		line =3D next;
-+	}
-+
-+	if (line >=3D tail)
-+		return saw_timestamp;
-+
-+	/*
-+	 * Found beginning of time-stamp.  Do not add -----BEGIN RFC3161-----=
-,
-+	 * version information and the separating newline to the buffer.
-+	 */
-+	line =3D memchr(line, '\n', tail - line) + 1;
-+	line =3D memchr(line, '\n', tail - line) + 1;
-+	line =3D memchr(line, '\n', tail - line) + 1;
-+	saw_timestamp =3D 1;
-+
-+	/* Read in time-stamp data. */
-+	while (line < tail) {
-+		next =3D memchr(line, '\n', tail - line);
-+
-+		next =3D next ? next + 1 : tail;
-+		if (line[0] =3D=3D ' ')
-+			line =3D line + 1;
-+		else
-+			break;
-+
-+		/* do not add -----END RFC3161----- to buffer */
-+		if (starts_with(line, ts_signature_end)) {
-+			line =3D next;
-+			break;
++		if (!copypos) {
++			strbuf_insert(buffer, inspos, time_sig_header,
++				      time_sig_header_len);
++			inspos +=3D time_sig_header_len;
 +		}
-+
-+		strbuf_add(timestamp, line, next - line);
-+		line =3D next;
++		strbuf_insert(buffer, inspos++, " ", 1);
++		strbuf_insert(buffer, inspos, bol, len);
++		inspos +=3D len;
++		copypos +=3D len;
 +	}
-+
-+	while (line < tail) {
-+		next =3D memchr(line, '\n', tail - line);
-+		next =3D next ? next + 1 : tail;
-+
-+		if (starts_with(line, PGP_SIGNATURE))
-+			break;
-+
-+		strbuf_add(payload, line, next - line);
-+		line =3D next;
-+	}
-+
-+	return saw_timestamp;
-+}
-+
-+/* Pass the prepared data to git-timestamp-util */
-+static int verify_tsr(char *sha1, struct strbuf *base64)
-+{
-+	struct child_process timeutil =3D CHILD_PROCESS_INIT;
-+	const char *args[] =3D {
-+		timeutil_cmd,
-+		"-v",
-+		sha1,
-+		NULL
-+	};
-+
-+	timeutil.argv =3D args;
-+	timeutil.in =3D -1;
-+	timeutil.out =3D 0;
-+	timeutil.git_cmd =3D 1;
-+
-+	if (start_command(&timeutil))
-+		return error(_("could not run git-%s"), timeutil_cmd);
-+
-+	if (write_in_full(timeutil.in, base64->buf, base64->len)
-+			  !=3D base64->len) {
-+		close(timeutil.in);
-+		finish_command(&timeutil);
-+		return 1;
-+	}
-+	close(timeutil.in);
-+
-+	if (finish_command(&timeutil))
-+		return 1;
++	strbuf_release(&sig);
 +
 +	return 0;
 +}
 +
-+static void sha1_from_strbuf(struct strbuf *buf, unsigned char sha1[20=
-])
-+{
-+	git_SHA_CTX c;
+ static const char tag_template[] =3D
+ 	N_("\nWrite a message for tag:\n  %s\n"
+ 	"Lines starting with '%c' will be ignored.\n");
+@@ -193,8 +227,11 @@ static void write_tag_body(int fd, const unsigned =
+char *sha1)
+ 	free(buf);
+ }
+=20
+-static int build_tag_object(struct strbuf *buf, int sign, unsigned cha=
+r *result)
++static int build_tag_object(struct strbuf *buf, int sign, int timesig,
++			    unsigned char *result)
+ {
++	if (timesig && do_timesig(buf) < 0)
++		return error(_("unable to generate time-stamp signature"));
+ 	if (sign && do_sign(buf) < 0)
+ 		return error(_("unable to sign the tag"));
+ 	if (write_sha1_file(buf->buf, buf->len, tag_type, result) < 0)
+@@ -205,6 +242,7 @@ static int build_tag_object(struct strbuf *buf, int=
+ sign, unsigned char *result)
+ struct create_tag_options {
+ 	unsigned int message_given:1;
+ 	unsigned int sign;
++	unsigned int timesig;
+ 	enum {
+ 		CLEANUP_NONE,
+ 		CLEANUP_SPACE,
+@@ -276,7 +314,7 @@ static void create_tag(const unsigned char *object,=
+ const char *tag,
+=20
+ 	strbuf_insert(buf, 0, header_buf, header_len);
+=20
+-	if (build_tag_object(buf, opt->sign, result) < 0) {
++	if (build_tag_object(buf, opt->sign, opt->timesig, result) < 0) {
+ 		if (path)
+ 			fprintf(stderr, _("The tag message has been left in %s\n"),
+ 				path);
+@@ -350,6 +388,7 @@ int cmd_tag(int argc, const char **argv, const char=
+ *prefix)
+ 			     N_("tag message"), parse_msg_arg),
+ 		OPT_FILENAME('F', "file", &msgfile, N_("read message from file")),
+ 		OPT_BOOL('s', "sign", &opt.sign, N_("annotated and GPG-signed tag"))=
+,
++		OPT_BOOL('t', "timestamp", &opt.timesig, N_("add trusted RFC3161 tim=
+e-stamp")),
+ 		OPT_STRING(0, "cleanup", &cleanup_arg, N_("mode"),
+ 			N_("how to strip spaces and #comments from message")),
+ 		OPT_STRING('u', "local-user", &keyid, N_("key-id"),
+@@ -387,6 +426,16 @@ int cmd_tag(int argc, const char **argv, const cha=
+r *prefix)
+ 	}
+ 	if (opt.sign)
+ 		annotate =3D 1;
 +
-+	git_SHA1_Init(&c);
-+	git_SHA1_Update(&c, buf->buf, buf->len);
-+	git_SHA1_Final(sha1, &c);
-+}
-+
-+static void sha1_in_hex(struct strbuf *buf, char sha1_hex[40])
-+{
-+	char *tmp;
-+	unsigned char sha1[20];
-+
-+	sha1_from_strbuf(buf, sha1);
-+	tmp =3D sha1_to_hex(sha1);
-+	strcpy(sha1_hex, tmp);
-+}
-+
-diff --git a/rfc3161.h b/rfc3161.h
-new file mode 100644
-index 0000000..eac91ae
---- /dev/null
-+++ b/rfc3161.h
-@@ -0,0 +1,12 @@
-+#ifndef RFC3161_H
-+#define RFC3161_H
-+
-+#define time_sig_header "timesig"
-+#define time_sig_header_len (sizeof(time_sig_header) - 1)
-+
-+int create_time_signature(struct strbuf *buffer, struct strbuf *sig);
-+int verify_time_signature(const char *buf, unsigned long size);
-+int parse_timestamp(const char *buffer, size_t size, struct strbuf *ti=
-mestamp,
-+		    struct strbuf *payload);
-+
++#if defined(NO_CURL) || defined(NO_OPENSSL)
++	if (opt.timesig)
++		return error("git has been compiled without RFC3161 time-stamp suppo=
+rt. "
++			     "NO_CURL and NO_OPENSSL must not be defined");
++#else
++	if (opt.timesig)
++		annotate =3D 1;
 +#endif
++
+ 	if (argc =3D=3D 0 && !cmdmode)
+ 		cmdmode =3D 'l';
+=20
 --=20
 2.8.0.rc0.62.gfc8aefa.dirty
