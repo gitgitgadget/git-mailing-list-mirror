@@ -1,143 +1,99 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH/RFC] parse-options.c: make OPTION__COUNTUP consider
- negative values
-Date: Thu, 17 Mar 2016 03:28:58 -0400
-Message-ID: <CAPig+cRkAE4BzbgniP=peHE-pBfKt1i2C4MqJcJ36sMfsSh3KQ@mail.gmail.com>
-References: <0102015381b7c7b5-5b57a780-369b-478b-94d2-7094f0befdad-000000@eu-west-1.amazonses.com>
-	<20160317015044.GB12830@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: An idea for the "Leftover Bits": rebase -x to imply -i
+Date: Thu, 17 Mar 2016 00:31:34 -0700
+Message-ID: <xmqqbn6d36i1.fsf@gitster.mtv.corp.google.com>
+References: <CAGZ79kZg3QkfjB1hwZKRS9Hqg-1H=kQwuwByX_rAMzveXtnp7Q@mail.gmail.com>
+	<xmqqy49i2hhe.fsf@gitster.mtv.corp.google.com>
+	<xmqqlh5i2g0y.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kZC0AAz=cm59ys1L_Axj1_HLvcTqrMrfNrOHoA3Ef7a5A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Pranit Bauva <pranit.bauva@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 17 08:29:05 2016
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Mar 17 08:31:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agSMi-00075n-KF
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 08:29:04 +0100
+	id 1agSPG-0000cc-Te
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 08:31:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932174AbcCQH3A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 03:29:00 -0400
-Received: from mail-vk0-f43.google.com ([209.85.213.43]:36627 "EHLO
-	mail-vk0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752954AbcCQH27 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 03:28:59 -0400
-Received: by mail-vk0-f43.google.com with SMTP id q138so87250vkb.3
-        for <git@vger.kernel.org>; Thu, 17 Mar 2016 00:28:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=0J7DsU7La7wY2L+whOmFJ3Xl5FyUd6D7jMF+QY0sOzY=;
-        b=q0gVztLUKdOz6J6GhnI+bJFFQ8r6zNwK+8w9KGXdeEcGsJAiu84/aZ4hxg0i2ww894
-         p+qrGBBNZk0O1SNAtB0kbGcH0EPGrFcGGkjbNYq9RCpdHRHPrEId/pAdUv2puc2ogeY8
-         VNyQVkoJYbv6fjIn3zN/ys526yaeIEe9/RJlaLhSYxrKlc9Sy0WvR+SCJYegFhZbiNFO
-         vw/sqOlFu5q99TuPeV9dCuwrMR+G1JtvdCRfs3RNHHMSEwXv/yaeUYuM3Oo9O/mfVhMe
-         RqhCp/pRC17eipJHcRqcPz0clBSrS39thK579u1RenZBLW1QxqQvAtDnVOqHVJ8yNsi2
-         cKWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=0J7DsU7La7wY2L+whOmFJ3Xl5FyUd6D7jMF+QY0sOzY=;
-        b=GJMEHtN6mKkcb024NWaVVm55e6wqRbJxZ7Z3rYR16WgZiH0/acl1jw0W2aKh42KMua
-         znMC9Xxrrj2ROVk5B9vvM2i4dQeipq6A/mIObNivOembECWKheJTFNc1XpL4T4uSdd47
-         P7AcNclgQ9VOK3PbjIsX6tXoa38CEaKuebuah6OLgK67+YWMjpGpO6N7+p4uRpT4BAJB
-         ooFb5rDR2FMp/VjSB7RjANvnVL/F1v088PtdtNxc7N2V1ZJBjrZsQBioIcLBlhwQFsm+
-         dOfLWQNrv41CELLIVKF1OfTpubsIFoy6ggsPnQaOf3RBtCMLgt6OyYF0I/SGh1/Tsk1P
-         aVDg==
-X-Gm-Message-State: AD7BkJI5cBIMN6eeO0iTLqEsA28/w2dSvFaQltLRUC435KlRupTYqFjO/S6iWRiIe6mDfaHS2xuFfFOdUe8syw==
-X-Received: by 10.31.8.142 with SMTP id 136mr10167904vki.14.1458199738375;
- Thu, 17 Mar 2016 00:28:58 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Thu, 17 Mar 2016 00:28:58 -0700 (PDT)
-In-Reply-To: <20160317015044.GB12830@sigill.intra.peff.net>
-X-Google-Sender-Auth: 3ZqQChmbseI3wApl1B76X2J2RZI
+	id S932078AbcCQHbj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2016 03:31:39 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:53172 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752954AbcCQHbi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 03:31:38 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D003C4414C;
+	Thu, 17 Mar 2016 03:31:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rPGTePq4YlU4sMdWGr2hzLXn2rc=; b=MG25Q2
+	oMG+Yqpo2Cvx9pbtkykzQ6U9YnDo8L0Fhnp4xyZ+xPnupgbjyOolxm0Oz75YrJ0a
+	5XdDpjGwRrHv4lhqmVv2UlHICaEikobW+PkmySMYc2dWgO7smsArLaXa1sz/CpDL
+	MW7PR/WBgOFBHtIBIla6vXjcEXy9oJ/EsiZro=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=m/anyQOPSPBG4nuRAOZDUfBDrMwhVdUR
+	MyHpPnG+mO9sJwOkLIJ2HWd5y08ck1PPcry4/T8K1QuE+/9RNZsP9ciTbp6Q3WsE
+	XBGJqTArqgIPFT1JEVS65MG3zRTuyfjD8lEYkXLHzxc1XT+wUmdyCeqzeSa7nrIj
+	lEQugszZ6kY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C79B04414A;
+	Thu, 17 Mar 2016 03:31:36 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4E7FE44146;
+	Thu, 17 Mar 2016 03:31:36 -0400 (EDT)
+In-Reply-To: <CAGZ79kZC0AAz=cm59ys1L_Axj1_HLvcTqrMrfNrOHoA3Ef7a5A@mail.gmail.com>
+	(Stefan Beller's message of "Wed, 16 Mar 2016 16:18:10 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 47D49F9A-EC12-11E5-B5E4-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289082>
 
-On Wed, Mar 16, 2016 at 9:50 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Mar 16, 2016 at 11:16:58PM +0000, Pranit Bauva wrote:
->> The reason to make it consider negative values or more specifically
->> "unspecified" values is to differentiate between the option passed
->> once, multiple times or with --no-option. This makes the receiver
+Stefan Beller <sbeller@google.com> writes:
 
-This is inaccurate and rather confusing. It's not that an
-"unspecified" value gives you the ability to "differentiate between
-once, multiple time or with --no-option", but rather that it allows
-you to determine wether --option or --no-option was encountered at
-all.
-
->> know what actually happened with the arguments which is particularly
->> required with option have multiple levels of that option.
+> On Wed, Mar 16, 2016 at 3:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> A few "characteristics" of that list, that cannot be updated by
+>> anybody but me (because it is just my personal collection after all)
+>> are:
 >>
->> Eg. :
->> initialize verbose = -1
->> `git commit` => verbose = -1
->> `git commit -v` => verbose = 1
->> `git commit -v -v` => verbose = 1
->> `git commit --no-verbose` => verbose = 0
+>>  * I do not have to worry about useless new entries that do not
+>>    align the overall system design getting added by clueless people.
 >
-> This second to last example would be 2, right?
+> As it is your personall collection and you're the maintainer, I thought
+> of this as a collection with maintainers blessing, i.e. if the code&tests
+> are not too shoddy a patch will get accepted (read as: On that list there
+> are no bullet points with fundamental design issues). Why would you
+> add things to that list if you'd not agree with them?
 
-Right.
+If it was not clear, I didn't mean these three are all bad things.
+In fact, this first of the three "characteristics" is a good thing.
+Random people are not allowed to throw random things into it.
 
-I'm not sure that this example block is helpful, though. A clearer
-commit message which does a better job of explaining the reason for
-the change would likely eliminate the need for an example.
-
-> That aside, this patch does mean that one can no longer use
-> OPT_COUNTUP() for negative values (i.e., the caller must start it at
-> either 0 or 1, and it must always go up from there).
+>>  * Adding new entry after scanning past list traffic and finding a
+>>    still unresolved topic that "died down" is relatively easy.
 >
-> And we would need to verify that all of the existing callers are OK with
-> this. Did you check that that (not rhetorical; I suspect they are all
-> OK, but somebody needs to check)?
->
-> We are also changing semantics without changing the interface, which
-> means any topics in flight (that you _cannot_ review, because you have
-> not seen them yet) may be subtly broken. To me that is not an absolute
-> deal-breaker, but something to weigh against the utility of the change.
+> As the notes in Documentation/howto/maintain-git.txt indicate, you're
+> scanning the list anyway, so offering help in this point may be moot.
 
-Indeed, I was envisioning a more conservative approach of having
-OPT__VERBOSE use a custom callback or perhaps introducing a new
-'flags' value or even (probably too ugly) abusing the 'defval' field
-to specially indicate that it wants the "negative means unspecified"
-behavior; the other consumers of OPT_COUNTUP would not request this
-special behavior. But, as you say, changing the behavior of
-OPT_COUNTUP unconditionally may not be a deal-breaker.
+The scanning of the list for new topics (to further discuss and pick
+patches to queue) and the scanning of the list for "died down"
+threads are two completely separate activities.  If somebody with
+good taste can do the latter when I am too busy elsewhere by
+pointing out "what happened to this thread?  It seems that nobody is
+interested enough to pursue it right now, so perhaps it is a good
+time to add it to 'leftover bits' list?", that would be helpful.
 
-I also realized that Pranit can achieve the desired behavior without
-modifying OPT__VERBOSE at all. Specifically, rather than initializing
-his opt_verbose variable to -1, he can instead initialize it to 1.
-Then:
+And as you agreed, pointing out "done" items to remove would also be
+helpful.
 
-* if --verbose is seen (one or more times), opt_verbose will be >=2,
-and the real verbosity level will be (opt_verbose - 1)
-
-* if --no-verbose is seen, opt_verbose will be 0
-
-* if neither is seen, then opt_verbose will remain 1
-
-However, I think this approach is far too ugly and non-obvious to
-seriously suggest using it, whereas the change to OPT__VERBOSE is
-easily understood and could prove useful in the future for other
-commands with multiple verbosity levels.
-
-> When looking more carefully at builtin/commit.c for the other thread, it
-> occurred to me that OPT_BOOL might be a better fit for commit's "-v". It
-> really is a boolean "show the diff or not" and thus unlike the other
-> "make me more verbose". And OPT_BOOL already has the behavior you want,
-> I think.
-
-For completeness (for readers of this thread), it was pointed out in
-the other thread[1] that git-commit does indeed recognize multiple
-verbosity levels, so changing it to use OPT_BOOL would be undesirable
-(wrong).
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/289027/focus=289074
+Thanks.
