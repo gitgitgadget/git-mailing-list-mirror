@@ -1,97 +1,100 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH 19/19] hack: watchman/untracked cache mashup
-Date: Thu, 17 Mar 2016 14:08:39 -0400
-Organization: Twitter
-Message-ID: <1458238119.9385.15.camel@twopensource.com>
-References: <1457548582-28302-1-git-send-email-dturner@twopensource.com>
-	 <1457548582-28302-20-git-send-email-dturner@twopensource.com>
-	 <CACsJy8DGEQJmhxZpX3Zd=tGk_9T0n+ZhcaaEahaqFuh6NRvgSQ@mail.gmail.com>
-	 <1458176165.9385.9.camel@twopensource.com>
-	 <CACsJy8Cx7LnPC1+17qov_pJK9OMpYtdOzS_uTBh5Fnr=A8z_OQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rebase -x: do not die without -i
+Date: Thu, 17 Mar 2016 11:10:22 -0700
+Message-ID: <xmqq37rp0ycx.fsf@gitster.mtv.corp.google.com>
+References: <1458177584-11378-1-git-send-email-sbeller@google.com>
+	<xmqq4mc535n2.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1603171406080.4690@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 19:08:48 2016
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+	Matthieu.Moy@grenoble-inp.fr, j6t@kdbg.org,
+	Lucien.Kong@ensimag.imag.fr
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Mar 17 19:10:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agcLm-0003Xr-Hj
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 19:08:46 +0100
+	id 1agcNT-0004kS-En
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 19:10:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936297AbcCQSIo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 14:08:44 -0400
-Received: from mail-qg0-f41.google.com ([209.85.192.41]:33000 "EHLO
-	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933880AbcCQSIm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 14:08:42 -0400
-Received: by mail-qg0-f41.google.com with SMTP id a36so47362233qge.0
-        for <git@vger.kernel.org>; Thu, 17 Mar 2016 11:08:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:mime-version:content-transfer-encoding;
-        bh=lKbj0zCCjeeIHSn1CkTuQh/enq4ra5utko6JDcwWS2I=;
-        b=zeLDHGRW1U+YQsZ7ui2AnSRDbFUb8Ij0hq8Mhs6EhP7OjEqNf4tSpNcfe6dJcNv1U8
-         a+QGGKxngBPLu0FwDzJ9te49OBy1vygnYL92gWIwYzcW+p3WuyRH2cTK9uRc9S9FPcf1
-         d7HXbTmNJmSpU2pS0Liqm5+j6bET4lQGCi27IyUjhBQkbxGO84t8sRoeEuO92hDA3Huw
-         1IMhw5g76zD53QsxGFalocRCrG5sYtnACO/G0+dc+V1IiZxMzIu4t5qXMsgeVuJzrSDE
-         Q1sWYgnfc1TBM2DxA0lSZnECdzUBW8cqg9Px8MUvOcl0bq0h/y8NJwMXN/V1e/cmwKvw
-         csYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=lKbj0zCCjeeIHSn1CkTuQh/enq4ra5utko6JDcwWS2I=;
-        b=Lq2GmwC+T+Qfua+J5unt/aAKqmV4t2SrEPXQP2NqAFDkTI26SSETuwqdgb8qTRA+MU
-         +voapFC3Wql9J7OaaTerbMtBTtGA2pvsfYt2dWStgL6mh7v6ZxMzjuY5jVcxzbbva8fQ
-         iuCH6VQ35BqNzA9wQfMjDsj9K567MLh7x3QhkJsvJV8JEroh/i1G4/ZVUr9zadpAolKo
-         wiQq/P1sK99PuQa+t2IxzaNOweRfCHc1x/2vU+8gxMF5drofnVs6ylKYlRjmoCt4XxRG
-         EORHGlo68x9HXt8NxrPiI3UJHzV0E0a1HxTjxLftE67DZDRZS4n50EUuKOKPo8xHOjaW
-         Uu+Q==
-X-Gm-Message-State: AD7BkJLBppQ9vZs/Wm0LXFlpujZWCsrp7Pb4ce3FPzzlDhqvfkUgzy8OTBMzmRtyEboP1Q==
-X-Received: by 10.140.133.133 with SMTP id 127mr17253438qhf.42.1458238121193;
-        Thu, 17 Mar 2016 11:08:41 -0700 (PDT)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id y187sm250387qhy.49.2016.03.17.11.08.40
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 17 Mar 2016 11:08:40 -0700 (PDT)
-In-Reply-To: <CACsJy8Cx7LnPC1+17qov_pJK9OMpYtdOzS_uTBh5Fnr=A8z_OQ@mail.gmail.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S936327AbcCQSK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2016 14:10:27 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:58455 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932933AbcCQSKZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 14:10:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 21A014B54C;
+	Thu, 17 Mar 2016 14:10:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WN0oHAE+XCkyce7XgBf6LVq45w4=; b=TM3ZkM
+	c8et69g5u447m+SASmvaffACgDEWIQs4bK42SWthI2c7CMy3iLq4iphLw5ZdMpvc
+	+zwiOoW1J74IFzR8hQ9Q0wzsfI+GyYeeaWzKmiVFg/EEhU9g9IVKJZdP79hq5xI4
+	hjSRJh1udO9QogmDKkP3ZNbOFd/byRCL/7JFg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KBWOamZfDCEtVRT1oNyZ8f20nQKS7ek1
+	jT5b1WiW1Uab5yro/lmdU+0wvsbf+Ssjcd0kxFEGn8JUj90wGJkNmi/tg6l/sJoO
+	SlgS9HXRI/7a3Fit39I/xrVymMREMbQeBbTyTwK/W8E0ixWi/DtoEb1UNKZj0tup
+	2p2XN2KRjxE=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 184924B54B;
+	Thu, 17 Mar 2016 14:10:24 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8AAB84B54A;
+	Thu, 17 Mar 2016 14:10:23 -0400 (EDT)
+In-Reply-To: <alpine.DEB.2.20.1603171406080.4690@virtualbox> (Johannes
+	Schindelin's message of "Thu, 17 Mar 2016 14:11:01 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 84B0827C-EC6B-11E5-B955-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289136>
 
-On Thu, 2016-03-17 at 20:06 +0700, Duy Nguyen wrote:
-> On Thu, Mar 17, 2016 at 7:56 AM, David Turner <
-> dturner@twopensource.com> wrote:
-> > > So if we detect an updated file that's not in the index, we are
-> > > prepared to invalidate that path, correct? We may invalidate more
-> > > than
-> > > necessary if that's true. Imagine a.o is already ignored. If it's
-> > > rebuilt, we should not need to update untracked cache.
-> > 
-> > Yes, that's true.  But it would be true with the mtime system too.
-> > This
-> > is no worse, even if it's no better.  In-tree builds are a hard
-> > case to
-> > support, and I'm totally OK with a system that encourages out-of
-> > -tree
-> > builds.
-> > 
-> > We could check if it's ignored, but then if someone changes their
-> > gitignore, we could be wrong.
-> > 
-> > Or we could suggest that people make their watchmanignore match
-> > their
-> > gitignore.
-> 
-> So your purpose is to reduce stat() on those "quiet" directories?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Yes.  Twitter's repo is perhaps somewhat unusual in that it has a very
-"bushy" directory structure -- tens of thousands of directories.
+> And that is very, very much the purpose of the interactive rebase.
+>
+>>     $ git for-each-rev -x "$command" old..new
+>> 
+>> where you can write "sh -c 'git checkout $1 && make test' -" as
+>> your $command.
+>
+> You meant
+>
+> 	git rev-list old...new |
+> 	while read rev
+> 	do
+> 		$command || break
+> 	done
+>
+> ?
+
+Yeah, if I actually felt the lack of "for-each-ref -x" a problem (I
+don't), that is what I would have used instead (but with just two
+dots ;-).
+
+But you are correct to point out that I didn't consider that
+"... and I want to fix right there if it breaks" is a part of the
+use case, mainly because the log message said this:
+
+    In the later steps of preparing a patch series I do not want to
+    edit the patches any more, but just make sure the test suite
+    passes after each patch.
+
+and partly I lack imagination.
+
+If you throw in that extra "I want to fix right there if it breaks"
+requirement, it makes perfect sense to make use of the sequencing
+machinery we implement for "rebase -i", as the while loop above does
+not give you the same sequencing without extra work.
+
+So perhaps the idea of the patch is good with a better explanation.
