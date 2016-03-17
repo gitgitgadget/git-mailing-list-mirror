@@ -1,81 +1,120 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [RFC] Code reorgnization
-Date: Thu, 17 Mar 2016 21:43:55 +0000
-Message-ID: <20160317214355.GA32317@serenity.lan>
-References: <20160317111136.GA21745@lanh>
- <CAGZ79kbcwFcPSJ9xwE6xi4gQ871m3brtfAut2TChGNzL-foxdQ@mail.gmail.com>
- <xmqqy49gzzrf.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Beller <sbeller@google.com>, Duy Nguyen <pclouds@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 22:44:24 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCHV2 2/2] t3404: cleanup double empty lines between tests
+Date: Thu, 17 Mar 2016 14:44:20 -0700
+Message-ID: <1458251060-311-3-git-send-email-sbeller@google.com>
+References: <1458251060-311-1-git-send-email-sbeller@google.com>
+Cc: j6t@kdbg.org, johannes.schindelin@gmail.com, gitster@pobox.com,
+	Matthieu.Moy@grenoble-inp.fr, Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 17 22:44:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agfiQ-0000ye-Vb
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 22:44:23 +0100
+	id 1agfie-00017F-Gz
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 22:44:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936206AbcCQVoP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 17:44:15 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:39921 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935552AbcCQVoN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 17:44:13 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 77A4ECDA548;
-	Thu, 17 Mar 2016 21:44:12 +0000 (GMT)
-X-Quarantine-ID: <NWgAPe6xoCSv>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.2
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=5
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id NWgAPe6xoCSv; Thu, 17 Mar 2016 21:44:11 +0000 (GMT)
-Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id A0E0BCDA48A;
-	Thu, 17 Mar 2016 21:44:01 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <xmqqy49gzzrf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1031182AbcCQVoc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2016 17:44:32 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:35625 "EHLO
+	mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031069AbcCQVo1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 17:44:27 -0400
+Received: by mail-pf0-f182.google.com with SMTP id n5so137332377pfn.2
+        for <git@vger.kernel.org>; Thu, 17 Mar 2016 14:44:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=TZ6azhBcSymouASMt2j5UrnufakM4oNNX2TSvPCE5Zw=;
+        b=QQeqvqvntNiDymIeM7LJmvplm4QKrX7y5u5ZpQrxbDtkvPojpJWfv0NKZjq77OQOiN
+         HgdZbNujLg/c82hjhH5Ru4qVIq9yMlpcIn6VB/ixo7VtIs3wQnPkQzeBl0nZg0JbQ310
+         K5hyA+AjXJmJmjQbPpTOz97ZB25cH+WTrdv58rHavpx/BOy8qoZbUaxJG74oYODzE82P
+         5Bw84AKu0eKpzREzNq6GeURHDyDORHD5cBuo+3563gdJp+TN6JoSnNJdX2NW/GYLBkmq
+         Tm/zJpCOjXLI6M4qozJXXUkyhxgDW+fsntn3jeY125aG1ogw5PLDonqGLVWSs7yY7n68
+         IhXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=TZ6azhBcSymouASMt2j5UrnufakM4oNNX2TSvPCE5Zw=;
+        b=cJqcuQk+QHIJb8lFQss7eLY+xi+/+D5cD7imL20LUqohSAyKhhSXLqDlsVQdiq1qsB
+         90eCbSu1nALOfkPFpKFjgoZpVVCMjpff04/tqqNYK820hq3pffnnjbZqtLajMoO1Ktdz
+         nEaREhaOICZHaFwnsj/qhDnCLhWyJJcoNy52CfjsySivft5tg6ZAXMIeWASIGyo4ejX9
+         gzmUtnAGk+JNJGchh28kfPmY22AbuFUL1vws7hC0HZOkPyV02C+LA2zng/pG5LUS5iah
+         O9uhhN2fBKe0se2VNrqqyikHIWhhYSxv1r2CDYVF9LkUGB5vqfWF1JO/7xR9rtVzoI9N
+         BD5A==
+X-Gm-Message-State: AD7BkJLxE5RD4nfawMFrp7d/YsHouoF2ATJx4nlc3H8B+WPpXxjJ8CV5WKgKFd3tYhkvbafR
+X-Received: by 10.66.220.66 with SMTP id pu2mr18391138pac.115.1458251067103;
+        Thu, 17 Mar 2016 14:44:27 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:d62:319:527b:e183])
+        by smtp.gmail.com with ESMTPSA id qy7sm15615582pab.34.2016.03.17.14.44.26
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 17 Mar 2016 14:44:26 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0.rc3.2.ga804a9e
+In-Reply-To: <1458251060-311-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289158>
 
-On Thu, Mar 17, 2016 at 12:10:44PM -0700, Junio C Hamano wrote:
-> Stefan Beller <sbeller@google.com> writes:
-> 
-> > For now I would just go with 3 directories:
-> >
-> > non-git/ (or util, helpers, or anything that could be ripped out and be useful
-> >     e.g. strbufs, argv-array run-command, lockfile
-> > git/ (maybe called lib? All stuff that is pure Git and is used for libgit
-> >
-> > builtin/ (as we have it today + all that stuff that doesn't go into
-> > git/ very well?)
-> 
-> It is unclear where you want to have standalone programs in the
-> above.  I'd say lib/ and src/ for the first two, where lib/ is for
-> things that could be lifted without any Git dependencies and src/
-> for everything else.
-> 
-> Aren't there some folks who link directly with our codebase (I am
-> thinking about cgit, but hjemli.net/git/cgit does not seem to be
-> responding anymore)?
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ t/t3404-rebase-interactive.sh | 6 ------
+ 1 file changed, 6 deletions(-)
 
-CGit lives at https://git.zx2c4.com/cgit/ these days.
-
-The organisation of the git code shouldn't make a difference since CGit
-just links with libgit.a, even if it does CGit pulls in git.git as a
-submodule so it can just fix any problems in the same commit that
-updates the submodule reference.
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index c8cc03d..f932639 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -771,7 +771,6 @@ test_expect_success 'rebase-i history with funny messages' '
+ 	test_cmp expect actual
+ '
+ 
+-
+ test_expect_success 'prepare for rebase -i --exec' '
+ 	git checkout master &&
+ 	git checkout -b execute &&
+@@ -780,7 +779,6 @@ test_expect_success 'prepare for rebase -i --exec' '
+ 	test_commit three_exec main.txt three_exec
+ '
+ 
+-
+ test_expect_success 'running "git rebase -i --exec git show HEAD"' '
+ 	set_fake_editor &&
+ 	git rebase -i --exec "git show HEAD" HEAD~2 >actual &&
+@@ -793,7 +791,6 @@ test_expect_success 'running "git rebase -i --exec git show HEAD"' '
+ 	test_cmp expected actual
+ '
+ 
+-
+ test_expect_success 'running "git rebase --exec git show HEAD -i"' '
+ 	git reset --hard execute &&
+ 	set_fake_editor &&
+@@ -807,7 +804,6 @@ test_expect_success 'running "git rebase --exec git show HEAD -i"' '
+ 	test_cmp expected actual
+ '
+ 
+-
+ test_expect_success 'running "git rebase -ix git show HEAD"' '
+ 	git reset --hard execute &&
+ 	set_fake_editor &&
+@@ -835,7 +831,6 @@ test_expect_success 'rebase -ix with several <CMD>' '
+ 	test_cmp expected actual
+ '
+ 
+-
+ test_expect_success 'rebase -ix with several instances of --exec' '
+ 	git reset --hard execute &&
+ 	set_fake_editor &&
+@@ -850,7 +845,6 @@ test_expect_success 'rebase -ix with several instances of --exec' '
+ 	test_cmp expected actual
+ '
+ 
+-
+ test_expect_success 'rebase -ix with --autosquash' '
+ 	git reset --hard execute &&
+ 	git checkout -b autosquash &&
+-- 
+2.8.0.rc3.2.ga804a9e
