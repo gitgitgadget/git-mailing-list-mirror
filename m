@@ -1,99 +1,96 @@
-From: Durham Goode <durham@fb.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: bug: sparse config interpretation incorrectness in 2.8.0-rc2
-Date: Wed, 16 Mar 2016 23:49:28 -0700
-Message-ID: <56EA5378.4070001@fb.com>
+Date: Thu, 17 Mar 2016 00:22:41 -0700
+Message-ID: <xmqqfuvp36wu.fsf@gitster.mtv.corp.google.com>
 References: <56E9F5B3.6030903@fb.com>
- <20160317005632.GA17778@duynguyen-vnpc.dek-tpc.internal>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="windows-1252"; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, Mateusz Kwapich <mitrandir@fb.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 07:49:45 2016
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, <pclouds@gmail.com>,
+	Mateusz Kwapich <mitrandir@fb.com>
+To: Durham Goode <durham@fb.com>
+X-From: git-owner@vger.kernel.org Thu Mar 17 08:22:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agRke-0002FL-Bv
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 07:49:44 +0100
+	id 1agSGn-0002Fo-IV
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 08:22:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753221AbcCQGtg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 02:49:36 -0400
-Received: from mx0b-00082601.pphosted.com ([67.231.153.30]:26178 "EHLO
-	mx0b-00082601.pphosted.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752728AbcCQGte (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Mar 2016 02:49:34 -0400
-Received: from pps.filterd (m0001303.ppops.net [127.0.0.1])
-	by m0001303.ppops.net (8.16.0.11/8.16.0.11) with SMTP id u2H6mo8Q022711;
-	Wed, 16 Mar 2016 23:49:32 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=subject : to : references
- : cc : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=facebook;
- bh=GyAp/Z1c5C4CUiQsGdrQuLYW1XeI/tlM+2JDDqpEFig=;
- b=ZaKjRUq8zFBee2SgSZunGzRVoDVibaxduhoq0B7bsoLuu32kCEWRagvKXnGY+xneHTcJ
- ysViNPNWW2pBsQdND3AR0dQBYtoz+jEfeSFkmt6wpp0u4jSIGU2lImJ2dZiuFDVfMwIJ
- ss0/pyM/2uDIzJzNrgVfdAzcnN/zx08oeFc= 
-Received: from mail.thefacebook.com ([199.201.64.23])
-	by m0001303.ppops.net with ESMTP id 21puy7f6jt-1
-	(version=TLSv1 cipher=AES128-SHA bits=128 verify=NOT);
-	Wed, 16 Mar 2016 23:49:32 -0700
-Received: from durham-mbp1.local (192.168.52.123) by mail.thefacebook.com
- (192.168.16.21) with Microsoft SMTP Server (TLS) id 14.3.248.2; Wed, 16 Mar
- 2016 23:49:30 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:38.0)
- Gecko/20100101 Thunderbird/38.6.0
-In-Reply-To: <20160317005632.GA17778@duynguyen-vnpc.dek-tpc.internal>
-X-Originating-IP: [192.168.52.123]
-X-Proofpoint-Spam-Reason: safe
-X-FB-Internal: Safe
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2016-03-17_02:,,
- signatures=0
+	id S1754213AbcCQHWq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2016 03:22:46 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:57924 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753153AbcCQHWp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 03:22:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C54B841FD5;
+	Thu, 17 Mar 2016 03:22:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eLzsVJhcpFJkm7gV6rS1158u8Ps=; b=dLf67o
+	8r8o01mv1RwGpEPfE9De/kgQYp0s5Y8Qf4iBoZ4/rqmhwtyWk09kViS+NpoFHtQk
+	6Y++cjZdhZTN3t09X/2xYozvUKx9tFgmwOi1OkzGZuOnhg698i5IJjRFlIEMipKg
+	mfNTROZSGOgMLPYCHQyt6/xTf6QQ3EDcRp6RM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JVsOKGc/U3vsUu916zaj0TV2ZrqOE6g/
+	fmrN8BrUGYuMQEKqLGGqllUhG2482cNgpKvwaFpQu4sYIkExpYvBKR4hEtdewgWn
+	3zZqg0h7keEjFUJPlh1s/QAvkvJFn5qfla6nsw3zvm6Cf/KHgsI63KfiBoN0YPzy
+	MRJdfFiv2gY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BC5F541FD3;
+	Thu, 17 Mar 2016 03:22:43 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3FEEF41FD2;
+	Thu, 17 Mar 2016 03:22:43 -0400 (EDT)
+In-Reply-To: <56E9F5B3.6030903@fb.com> (Durham Goode's message of "Wed, 16 Mar
+	2016 17:09:23 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 0A1A0402-EC11-11E5-AFE1-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289080>
 
-On 3/16/16 5:56 PM, Duy Nguyen wrote:
-> On Wed, Mar 16, 2016 at 05:09:23PM -0700, Durham Goode wrote:
->> Using git 2.8.0-rc2, given a repo with the following files:
->>
->> - one/hideme
->> - one/donthide
->> - two/foo
->>
->> A sparse config of:
->>
->> cat > .git/info/sparse-checkout <<EOF
->> /*
->> !one/hideme
->> EOF
->>
->> Results in a repository that only has `one/donthide` in it.  I would
->> expect `two/foo`to be present as well.  This worked in 2.6, and
->> bisecting it points to d589a67eceacd1cc171bbe94906ca7c9a0edd8c5
->> "dir.c: don't exclude whole dir prematurely" (author cc'd).
-> Thank you. This should fix it. I think I understand why it goes
-> wrong. I'm going to run some more tests and post a proper patch later.
+Durham Goode <durham@fb.com> writes:
+
+> Using git 2.8.0-rc2, given a repo with the following files:
 >
-> -- 8< --
-> diff --git a/dir.c b/dir.c
-> index 69e0be6..77f38a5 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1027,7 +1027,6 @@ static struct exclude *last_exclude_matching_from_list(const char *pathname,
->   				exc = x;
->   				break;
->   			}
-> -			continue;
->   		}
->   
->   		if (x->flags & EXC_FLAG_MUSTBEDIR) {
-> -- 8< --
-> --
-> Duy
-To provide some perspective on the severity of this bug: all of our 
-users who were using sparse checkouts had their working copy mostly 
-deleted when they did a checkout after we upgraded to 2.8.0-rc2.  So I'd 
-think this is a fix that should get in to 2.8.
+> - one/hideme
+> - one/donthide
+> - two/foo
+>
+> A sparse config of:
+>
+> cat > .git/info/sparse-checkout <<EOF
+> /*
+> !one/hideme
+> EOF
+>
+> Results in a repository that only has `one/donthide` in it.  I would
+> expect `two/foo`to be present as well.  This worked in 2.6,...
+
+2.6 is a tad too old as a reference, as the "!reinclusion" has been
+in flux in recent releases.  Can you test these?
+
+ - 2.7.0
+ - 2.7.1
+ - e79112d
+
+I suspect that v2.7.0 would be broken, v2.7.1 is OK and e79112d
+would also be OK (I am guessing this from [1]).  e79112d is the last
+version on the 'master' branch without the topic that contains the
+commit you bisected down to, but between 2.7.0 and 2.7.1 there was a
+reversion of a commit that introduced the original issue.
+
+The commit you bisected down to that is on 'master', IIUC, was a
+(faulty) attempt to fix the breakage in a different way.
+
+
+[Reference]
+
+*1* http://thread.gmane.org/gmane.comp.version-control.git/288228/focus=288273
