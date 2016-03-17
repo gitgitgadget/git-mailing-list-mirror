@@ -1,96 +1,138 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] l10n: de.po: add missing newlines
-Date: Thu, 17 Mar 2016 19:39:09 +0100
-Message-ID: <1458239949-6767-1-git-send-email-ralf.thielow@gmail.com>
+From: Anton Wuerfel <anton.wuerfel@fau.de>
+Subject: [PATCH 01/10] Add Testcases for time-stamping functionality
+Date: Thu, 17 Mar 2016 19:46:52 +0100
+Message-ID: <1458240421-3593-2-git-send-email-anton.wuerfel@fau.de>
+References: <1458240421-3593-1-git-send-email-anton.wuerfel@fau.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
-	phillip.szelat@gmail.com, matthias.ruester@gmail.com,
-	magnus.goerlitz@googlemail.com, worldhello.net@gmail.com,
-	Ralf Thielow <ralf.thielow@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 17 19:39:20 2016
+Cc: git@vger.kernel.org, i4passt@cs.fau.de,
+	Phillip Raffeck <phillip.raffeck@fau.de>,
+	Anton Wuerfel <anton.wuerfel@fau.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 17 19:47:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agcpK-00010Y-C5
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 19:39:18 +0100
+	id 1agcxR-0007QH-Fy
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 19:47:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030351AbcCQSjP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Mar 2016 14:39:15 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:38008 "EHLO
-	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932508AbcCQSjN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 14:39:13 -0400
-Received: by mail-wm0-f51.google.com with SMTP id l68so6551536wml.1
-        for <git@vger.kernel.org>; Thu, 17 Mar 2016 11:39:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+2ZeboedYWqUh5exoLLxoE9FA82rFIwugDlM10aWS7c=;
-        b=P+BIQIqh6Xg+I+xMfEr+f3dNS3d7fjIRxUBIAg5D4B+XLq8Z0h4W9KV0Zcj6W4qeXr
-         omLYVVNkjpJfq6zhKvQqQxfV7H2AM1OU3cFslvRNR7mDUnNsYHyrKHSZ7gBG1nHTaXN0
-         FsaTYkf7gvRg7DPX8AXKipeyvKZn7kH89UYgH5Xyu5P0tU8gbK0iYJyIUnjMUW2MJGNE
-         /Hkcu+07phREHRZh/4dLnuFkLOr762SXyTy84Z6aUpOtuLlUpIwn54/VyaRsemvYTDnG
-         hAPYZkXcgIGzMkcajN7nyacGUrLue1v1OTXhETG7Up7claUHFC9/Erm5DUcl/zYkMnRX
-         O4Qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+2ZeboedYWqUh5exoLLxoE9FA82rFIwugDlM10aWS7c=;
-        b=gkOutJIAVd9DdFyRkVggAkWOJ1Wag17lGH5TWdQzDfl9hopw3PUfBCzETemwJYS5Ji
-         b/QJVPjp1nI/bQvylRinakhdaBTrfFgWCAd6UGO8aP6BkAKALAg8bO67goeWi7ztyA6E
-         c4KuVNnXn1TIqjK4TuItFngxlWZeIaNQRZ+u0ci6uYpE3zED96y9kr54xEXCLrRqFu+z
-         r3FwLVj9QvXJPnCJyxNxYZsEdvxk3ND0DRLY17JPaRVtuuvwvGQqNxrFin3wkw6bYj5h
-         vcSxDqWVB9bwAKNwtzpv7aleIH8wdSPotgY82bs+b42r4FY11CYj5DQdPBkCIMNgN+VX
-         7IPg==
-X-Gm-Message-State: AD7BkJKOyDdYNjyfA8cNhwAQZ4TgY2OwWdnR8MHL5IGz6w+smoB5Qtyr1KwuKJexFcJKRg==
-X-Received: by 10.28.218.145 with SMTP id r139mr40302895wmg.52.1458239952012;
-        Thu, 17 Mar 2016 11:39:12 -0700 (PDT)
-Received: from localhost (cable-82-119-9-251.cust.telecolumbus.net. [82.119.9.251])
-        by smtp.gmail.com with ESMTPSA id gb9sm8858949wjb.26.2016.03.17.11.39.11
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 17 Mar 2016 11:39:11 -0700 (PDT)
-X-Mailer: git-send-email 2.8.0.rc2.181.g7f8255e
+	id S935927AbcCQSrh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Mar 2016 14:47:37 -0400
+Received: from faui40.informatik.uni-erlangen.de ([131.188.34.40]:43304 "EHLO
+	faui40.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933303AbcCQSrf (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Mar 2016 14:47:35 -0400
+Received: from faui49man2 (faui49man2.informatik.uni-erlangen.de [131.188.42.190])
+	by faui40.informatik.uni-erlangen.de (Postfix) with SMTP id E5DB358C4CC;
+	Thu, 17 Mar 2016 19:47:31 +0100 (CET)
+Received: by faui49man2 (sSMTP sendmail emulation); Thu, 17 Mar 2016 19:47:31 +0100
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1458240421-3593-1-git-send-email-anton.wuerfel@fau.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289141>
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+This commit adds testcases for the new time-stamping functionality. To =
+trigger
+these testcases, the environment variables $GIT_TEST_TSA_URL and
+$GIT_TEST_TSA_CAPATH have to be set. They do not default to any value t=
+o avoid
+spamming a pre-defined Time Stamping Authority (TSA).
+As testing the RFC3161 functionality without a trusted time-stamp signa=
+ture is
+not possible, all tests are disabled by default.
+
+Signed-off-by: Anton W=C3=BCrfel <anton.wuerfel@fau.de>
+Signed-off-by: Phillip Raffeck <phillip.raffeck@fau.de>
 ---
-This hotfix is already part of the pull request I sent
-to git-po repository.
+ t/t7031-verify-tag.sh | 69 +++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ 1 file changed, 69 insertions(+)
+ create mode 100755 t/t7031-verify-tag.sh
 
- po/de.po | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/po/de.po b/po/de.po
-index 7093139..0eadf34 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -151,12 +151,13 @@ msgid ""
- "the remote tracking information by invoking\n"
- "\"git branch --set-upstream-to=3D%s%s%s\"."
- msgstr ""
- "\n"
- "Nachdem Sie die Fehlerursache behoben haben, k=C3=B6nnen Sie\n"
--"die Tracking-Informationen mit\"git branch --set-upstream-to=3D%s%s%s=
-\"erneut "
--"setzen."
-+"die Tracking-Informationen mit\n"
-+"\"git branch --set-upstream-to=3D%s%s%s\"\n"
-+"erneut setzen."
-=20
- #: branch.c:67
- #, c-format
- msgid "Not setting branch %s as its own upstream."
- msgstr "Branch %s kann nicht sein eigener Upstream-Branch sein."
+diff --git a/t/t7031-verify-tag.sh b/t/t7031-verify-tag.sh
+new file mode 100755
+index 0000000..bc7953b
+--- /dev/null
++++ b/t/t7031-verify-tag.sh
+@@ -0,0 +1,69 @@
++#!/bin/sh
++
++test_description=3D'signed time-stamped tag tests'
++. ./test-lib.sh
++. "$TEST_DIRECTORY/lib-gpg.sh"
++
++# Tests for RFC3161 implementation
++
++if test -n "$NO_OPENSSL"
++then
++	skip_all=3D'skipping test, git built without openssl support'
++	test_done
++fi
++
++# Disable remote tests by default to avoid spamming of TSAs and to be =
+able to
++# test without internet connection
++
++if test -z "$GIT_TEST_TSA_URL"
++then
++	skip_all=3D'Remote TSA testing disabled (set GIT_TEST_TSA_URL to enab=
+le)'
++	test_done
++fi
++
++if test -z "$GIT_TEST_TSA_CAPATH"
++then
++	skip_all=3D'Remote TSA testing disabled (set GIT_TEST_TSA_CAPATH to e=
+nable)'
++	test_done
++fi
++
++test_expect_success 'create a tag with a timestamp signature' '
++	git config ts.tsaurl $GIT_TEST_TSA_URL &&
++	git config ts.capath $GIT_TEST_TSA_CAPATH &&
++	git config ts.failonverify 1 &&
++	test_tick &&
++	echo foo > foo &&
++	git add foo &&
++	git commit -m foo &&
++	git tag -t -m onlytime tsa_onlytime
++'
++
++test_expect_success GPG 'create a tag with gpg and timestamp signature=
+s' '
++	echo foobar > bar &&
++	git add bar &&
++	git commit -m test123 &&
++	git tag -s -t -m tsa_both tsa_both
++'
++
++test_expect_success 'verify tag with gpg and timestamp signature' '
++	git verify-tag tsa_both
++'
++
++test_expect_success 'verify tag with timestamp signature' '
++	test_must_fail git verify-tag tsa_onlytime
++'
++
++test_expect_success 'verify tag with timestamp signature with -t' '
++	git verify-tag -t tsa_onlytime
++'
++
++test_expect_success 'verify fudged timestamp' '
++	git cat-file tag tsa_onlytime >raw &&
++	sed -e "s/onlytime/morethantime/" raw >forged1 &&
++	git hash-object -w -t tag forged1 >forged1.tag &&
++	test_must_fail git verify-tag $(cat forged1.tag) >actual1 2>&1 &&
++	grep "BAD time-stamp signature" actual1 &&
++	! grep "Verified timestamp" actual1
++'
++
++test_done
 --=20
-2.8.0.rc2.181.g7f8255e
+2.8.0.rc0.62.gfc8aefa.dirty
