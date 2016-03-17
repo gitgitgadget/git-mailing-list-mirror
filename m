@@ -1,104 +1,148 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Subject: [PATCH for submodule ideas wiki] `git commit` to warn
- about broken submodule states configuration
-Date: Thu, 17 Mar 2016 20:57:01 +0100
-Message-ID: <56EB0C0D.3080609@web.de>
-References: <1458162423-13768-1-git-send-email-sbeller@google.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH/RFC] parse-options.c: make OPTION__COUNTUP consider
+ negative values
+Date: Fri, 18 Mar 2016 01:52:13 +0530
+Message-ID: <CAFZEwPPJ37+Yc1ANoOEcniOTpocKVUsXkh1fKoJr50-=ZcCp+Q@mail.gmail.com>
+References: <0102015381b7c7b5-5b57a780-369b-478b-94d2-7094f0befdad-000000@eu-west-1.amazonses.com>
+	<20160317015044.GB12830@sigill.intra.peff.net>
+	<CAPig+cRkAE4BzbgniP=peHE-pBfKt1i2C4MqJcJ36sMfsSh3KQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 20:57:12 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Mar 17 21:22:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1age2h-0006oP-QT
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 20:57:12 +0100
+	id 1ageR4-0008VS-6M
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 21:22:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935276AbcCQT5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 15:57:07 -0400
-Received: from mout.web.de ([212.227.17.12]:56683 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933516AbcCQT5F (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 15:57:05 -0400
-Received: from [192.168.178.41] ([79.211.107.106]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0MIvPJ-1aeA8C42bh-002V80; Thu, 17 Mar 2016 20:57:02
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.0
-In-Reply-To: <1458162423-13768-1-git-send-email-sbeller@google.com>
-X-Provags-ID: V03:K0:GJfJdUob+aHOLUBjM7zW/hYxZaiwlyb9BhLrwk4HNnoqtg2fVpr
- lVw0JCEolR91i7/tqbWJ16oTo3fx97eBYyjyRZnbsq+HZX3rfQJSbJzsHa0pLPRgDQCvR8p
- plQBvq7GXfwdZ6SWdF/CuTbncO56dYGg6oYpHROr77TkvMD+wf1fbEJuCxISGKk5jPvxUDj
- BcEz/SEiIpqs5Dh7Ay1Gg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:N01zBLE8hj0=:OYNDxf7FQlZL2dbzu8tK22
- IeNQLHw7g5jZoK/RKuLvCsQ0JQlO1rT/VyQwA9b9C/f8IF2/ER9lDXyqYxjfC9gPNBDtFWu3G
- SmbPe+aPS1QDcbvXwt4wLjXslZ13ko2B/HbKCzu5XMb1EZDfIIM/EJUKrrIbis6YA8/gDO0fu
- fcMQWersTXUDb8ezYG6PFKP+UDTjymVv6tOJqTZCfE+M2v1mHE+dNdjD58JGa/lE1lN/xfPcw
- KUL8xa3Zofkfl4J8Ga0k7CgkK5hvV66XrNx7H3AXg3POpad4+aJmB1tl3UhVAxtmzpU0qurdO
- ME5tQTEea7kWDEXcNc8NiWPvO59KlOSpQPF14fmK8k5DlvTNoJwP+I90WyZygHqFEzC6sh+gd
- RYsd9UW8QTfGVP/Ze1Erj3GLn1snjp/ENVQfsk/oAa7gK9PUhMgnMPiaQZSIQfchSqri2C1Ai
- 5ulvijKhg9ffrikXP0HY5OodG5JWJLwXR55su7ZbjnIsDS2IwVecSaO+nx4/BvQ90gRQ8fUpV
- DCAigA2g9nmVfkWs82QjkzXMzjOHTT239STOnINevEUl6gQ02h6gktqw0+WYWmjw1fathZdzj
- 1kzhsNXjm1YFICrJjLjtODKHKJQJ9p/4R0iSycvC4f42ympi2Siw1RWglaV6F2vEtVbT6cDMm
- PqUV0zg1cZZcsSoXlBTf6aG7LebkzMsZ5qD4LBrt8M+gwF2AT/vTDRQA9WfRTZuqp8w71cear
- EMfI7O3C/+manhII/IgQrRf7AVtBqrcorC16rIQy7xA6V4gliOi5f8HYfgUH6PerKdCO+i+v 
+	id S935781AbcCQUWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2016 16:22:16 -0400
+Received: from mail-yw0-f169.google.com ([209.85.161.169]:33336 "EHLO
+	mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932595AbcCQUWO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 16:22:14 -0400
+Received: by mail-yw0-f169.google.com with SMTP id m126so90696252ywd.0
+        for <git@vger.kernel.org>; Thu, 17 Mar 2016 13:22:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=8R2kZj5chqTtM2kgxcF15wmfpA0WThIqDMRZi+lzW8E=;
+        b=lbUlg23IVDkZTEI/HJP1G+BmoVRBGSsGWi+SJ6yVdvi/kx0T2j+8WdQIDwGI5eflqS
+         9dL0wJmeWkVFC3gEFU2egHtKAaTugG+x6erW4k0CEe9VVAoR5FUyBHcwYgVldv8/g6QP
+         OOFF9NFt5Dt8ibUyTyEJFrhoe40981RUfElKC6YbPD/VjesDVFVj4yisR+8YKPp5cqh2
+         G2QUtoFFsv0DjwWSKflN8lMmHSF8jz4uzadsf8Trg9GqaiGqfj/ICAr+NMdyFL/Dlrcs
+         aAG7vbnq7wImpB8+sbbHUINq19iCGEKDzWU3mo5tFENDqpx7yNtC0zZZ3F6fwPBDaxy1
+         C3ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=8R2kZj5chqTtM2kgxcF15wmfpA0WThIqDMRZi+lzW8E=;
+        b=M0AYp1fhar9299LQsLVqsCxk3HuzNn4Y301Qdspd1Cx74WLsEtkQsUA03F1gdrg0y5
+         LHx0M0ZT2G6IX+qyTQJ6p8rbJ3VSfrUZVB5/PA1XLekzlaM4ul+E+aV3QnJdsFLPMKzb
+         EV+Dj2+5XRwbjtQ9qD52u4hHkFUMgTjKjEnmb/StNPYzo2gFFHv+urE642mpMHpRg7XZ
+         6CgfqnRp7VRXOHq+VQqTKwKaR69k7IfOqj+vfxC7ab02uQqFwJEIs0PWba6xMC3BkMrY
+         /SzSglWByRnXi7YGOm9KXdIcChJ7/5IkgAh+88v/cuH6Mn/p8kfhBBuM579MRYZePEVX
+         KXEw==
+X-Gm-Message-State: AD7BkJJnGgJt7ZqUyIaupFZIROgl3EgL8/lJUBtBmy8JxGCp14sxTKbtJT/349B7hSEnnxeFWNvrTDDtWp6yZg==
+X-Received: by 10.13.252.67 with SMTP id m64mr5527978ywf.67.1458246133201;
+ Thu, 17 Mar 2016 13:22:13 -0700 (PDT)
+Received: by 10.13.203.137 with HTTP; Thu, 17 Mar 2016 13:22:13 -0700 (PDT)
+In-Reply-To: <CAPig+cRkAE4BzbgniP=peHE-pBfKt1i2C4MqJcJ36sMfsSh3KQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289154>
 
-Am 16.03.2016 um 22:07 schrieb Stefan Beller:
-> ---
+On Thu, Mar 17, 2016 at 12:58 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Wed, Mar 16, 2016 at 9:50 PM, Jeff King <peff@peff.net> wrote:
+>> On Wed, Mar 16, 2016 at 11:16:58PM +0000, Pranit Bauva wrote:
+>>> The reason to make it consider negative values or more specifically
+>>> "unspecified" values is to differentiate between the option passed
+>>> once, multiple times or with --no-option. This makes the receiver
 >
->    Hi Jens,
->
->    I cannot find the edit button in the wiki[1] any more.
+> This is inaccurate and rather confusing. It's not that an
+> "unspecified" value gives you the ability to "differentiate between
+> once, multiple time or with --no-option", but rather that it allows
+> you to determine wether --option or --no-option was encountered at
+> all.
 
-Oops. After you mentioned recently that every GitHub user had write
-permissions to the Wiki I restricted it to be writable for known
-collaborators and also added you to this list. But it looks like I
-added the other Stefan Beller registered on GitHub instead. That
-should be fixed know, please let me know when the edit button still
-does not show up for you.
+I guess the language wasn't very clear. I will change this.
 
->    Please apply this patch documenting another idea.
+>>> know what actually happened with the arguments which is particularly
+>>> required with option have multiple levels of that option.
+>>>
+>>> Eg. :
+>>> initialize verbose = -1
+>>> `git commit` => verbose = -1
+>>> `git commit -v` => verbose = 1
+>>> `git commit -v -v` => verbose = 1
+>>> `git commit --no-verbose` => verbose = 0
+>>
+>> This second to last example would be 2, right?
+>
+> Right.
 
-Sure, thanks for the patch! Applied and pushed.
+My bad, it should be 2.
 
->    Thanks,
->    Stefan
 >
->    [1] https://github.com/jlehmann/git-submod-enhancements/wiki
+> I'm not sure that this example block is helpful, though. A clearer
+> commit message which does a better job of explaining the reason for
+> the change would likely eliminate the need for an example.
 >
->   Home.textile | 11 +++++++++++
->   1 file changed, 11 insertions(+)
+>> That aside, this patch does mean that one can no longer use
+>> OPT_COUNTUP() for negative values (i.e., the caller must start it at
+>> either 0 or 1, and it must always go up from there).
+>>
+>> And we would need to verify that all of the existing callers are OK with
+>> this. Did you check that that (not rhetorical; I suspect they are all
+>> OK, but somebody needs to check)?
+>>
+>> We are also changing semantics without changing the interface, which
+>> means any topics in flight (that you _cannot_ review, because you have
+>> not seen them yet) may be subtly broken. To me that is not an absolute
+>> deal-breaker, but something to weigh against the utility of the change.
 >
-> diff --git a/Home.textile b/Home.textile
-> index 152ad04..3b00496 100644
-> --- a/Home.textile
-> +++ b/Home.textile
-> @@ -47,6 +47,17 @@ h2. Submodule related bugs to fix
->   * E.g. @git log <submodule>/@ and @git diff <rev> <submodule>/@ do not produce any output while dropping the '/' at the end makes them work as expected.
->   * @git add@ does not honour the submodule.&lt;name&gt;.ignore settings
->   * @git submodule add@ messes up paths from nested submodules, see ("thread on mailing list":http://thread.gmane.org/gmane.comp.version-control.git/288130)
-> +* @git commit@ can be cautious about submodule related commits. That is if a commit contains a change to the .gitmodules file, make sure that the corresponding gitlink is present (either already in the tree or newly added). IIUC Jonathan correctly a submodule which is configured in .gitmodules, but not present as a gitlink is considered broken, which we may want to avoid in the first place. When implementing this, we need to take care of historical mistakes being handled correctly as well as a flag to commit, which overwrites the potential warning. The gitmodules file unlike other in-tree configuration files (.gitignore, .gitattributes, .mailmap) have a 1:1 mapping so the existence of the gitlink is strongly expected. (Counter example with .gitignore: Ignoring *.exe doesn't expect any .
- exe file to be there). I imagine this to roughly work as:
-> +
-> +bc.     $ git add .gitmodules
-> +    $ git commit -m "add submodule to .gitmodules, but not as gitlink"
-> +      Warning: Not committing as this would break submodule consistency. Use
-> +      --force-submodules to commit the broken submodule state.
-> +    $ echo $?
-> +      1 # fail
-> +    $ git commit --force-submodules -m "add submodule to .gitmodules, but not as gitlink"
-> +    $ echo $?
-> +      0 # Success
+> Indeed, I was envisioning a more conservative approach of having
+> OPT__VERBOSE use a custom callback or perhaps introducing a new
+> 'flags' value or even (probably too ugly) abusing the 'defval' field
+> to specially indicate that it wants the "negative means unspecified"
+> behavior; the other consumers of OPT_COUNTUP would not request this
+> special behavior. But, as you say, changing the behavior of
+> OPT_COUNTUP unconditionally may not be a deal-breaker.
 >
->   *[[Ideas]]*
+> I also realized that Pranit can achieve the desired behavior without
+> modifying OPT__VERBOSE at all. Specifically, rather than initializing
+> his opt_verbose variable to -1, he can instead initialize it to 1.
+> Then:
 >
+> * if --verbose is seen (one or more times), opt_verbose will be >=2,
+> and the real verbosity level will be (opt_verbose - 1)
 >
+> * if --no-verbose is seen, opt_verbose will be 0
+>
+> * if neither is seen, then opt_verbose will remain 1
+>
+> However, I think this approach is far too ugly and non-obvious to
+> seriously suggest using it, whereas the change to OPT__VERBOSE is
+> easily understood and could prove useful in the future for other
+> commands with multiple verbosity levels.
+>
+>> When looking more carefully at builtin/commit.c for the other thread, it
+>> occurred to me that OPT_BOOL might be a better fit for commit's "-v". It
+>> really is a boolean "show the diff or not" and thus unlike the other
+>> "make me more verbose". And OPT_BOOL already has the behavior you want,
+>> I think.
+>
+> For completeness (for readers of this thread), it was pointed out in
+> the other thread[1] that git-commit does indeed recognize multiple
+> verbosity levels, so changing it to use OPT_BOOL would be undesirable
+> (wrong).
+>
+> [1]: http://thread.gmane.org/gmane.comp.version-control.git/289027/focus=289074
