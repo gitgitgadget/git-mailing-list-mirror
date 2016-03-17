@@ -1,85 +1,194 @@
-From: Gregor Jasny <gjasny@googlemail.com>
-Subject: Re: Git subtree stumbles over annotated tags
-Date: Thu, 17 Mar 2016 13:41:00 +0100
-Message-ID: <56EAA5DC.1040801@googlemail.com>
-References: <56E19809.5040305@googlemail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 1/2] dir.c: fix bug in 'nd/exclusion-regression-fix' topic
+Date: Thu, 17 Mar 2016 19:45:41 +0700
+Message-ID: <1458218744-15810-1-git-send-email-pclouds@gmail.com>
+References: <56E9F5B3.6030903@fb.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: durham@fb.com, mitrandir@fb.com,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 17 13:41:20 2016
+X-From: git-owner@vger.kernel.org Thu Mar 17 13:46:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agXEt-0000Ha-Lv
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 13:41:20 +0100
+	id 1agXK8-0003z6-Of
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 13:46:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030684AbcCQMlK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 08:41:10 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:33129 "EHLO
-	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030288AbcCQMlI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 08:41:08 -0400
-Received: by mail-wm0-f52.google.com with SMTP id l68so24289493wml.0
-        for <git@vger.kernel.org>; Thu, 17 Mar 2016 05:41:07 -0700 (PDT)
+	id S1755970AbcCQMql convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Mar 2016 08:46:41 -0400
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:34193 "EHLO
+	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752669AbcCQMqj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 08:46:39 -0400
+Received: by mail-pf0-f171.google.com with SMTP id x3so119751584pfb.1
+        for <git@vger.kernel.org>; Thu, 17 Mar 2016 05:46:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding;
-        bh=s07q5s4M4xA07T+1TBQqwfArYASpYzTL7kS2w00G/Mw=;
-        b=VZQkbXhYxrs9Aa/GGSvIb8AQ7FmRjoXhK8JnufHsJ3F2ZPp/GLBtaTq3nudysRrLnw
-         nmi0KaLZY8pNrzwgk6kvOpxlFj+WduYoWyg/nGLboShNc55SVGY2nuwFSyIwmC38qTf2
-         wBF20Gj5N/tQHulwqIrXt2AgfsAxVTJ5J2zLeXWtwMQd4oUObQrdBGoZSXwApLkUAKuC
-         QIEiK1DLsN0hiTxaUZik78HBEaGHts2qJk3VSqzJTwVlzE7LA8+cNWH7veQ5ooSobWmS
-         T2pYeaDF8Kz9tqu8Eq2wHcIxD/h4unspL74u23UyG551ungC22AKlug7XRFIEAXCM9lx
-         N5Ew==
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=oCzDGzb1b6YTzzJRABl2NdB5XdXy26XcpG4JkcsEPnk=;
+        b=xbhcfu/ISqUISGDhjo4xrPEzUYABKCa9mWS+bm06besE9lRsSssG34Cl3OMNdljUX/
+         BvyWcKRheMiSDaA5wtYtPd0CpAbi9EEELvEn+YLC987ICE7LamXFJh/hZzChvhYXIzcJ
+         nYw7txMdkUZlYh+zx/+QCVGP0UCtH2KfyplRV/bNvJFJxSbiwiWVl/MR8IaEuC/2I6AA
+         j/vrqeELFBfUvzYAbXhylnJoXRNwuvgSZdhqLb4iz6kH7OqlxPBXflJTo8ID0dbOyzYG
+         qHUzs2sMZ+nKhLMVHyzSNI8o1eWIp7MRn5AIlEu1HYPzSZJ8NOIfA+CwDcLw1yfy66GF
+         FyNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=s07q5s4M4xA07T+1TBQqwfArYASpYzTL7kS2w00G/Mw=;
-        b=GihNnHCnevfbotvlXDTLybX06Lf9wN3XFiMwSWrukUZkqWczaYE+6b4N4wHl1mN01a
-         EscgP/IEJMiV0B+ZkMT0hEjV6Qjzv5exYmkyOSBb9tKv1BZDrfWd7+wdrASVf3tBiNoy
-         H5t5Yhdqp/gqeo16io29rbeR4kJ9uL4Oep01ej9Gyw/sdoVTnXvIDwVpdkzSf2UiAkvB
-         yZHlutGNucw45vXJxJ/Wb3Q/oP1BJHSQ+DBn1RxbLFRG0d/f4abNQ8KTVXK5xzmDNGPA
-         hKguEoZrZl60bULPhp2Cw9uqIlERk/ExikjDYhusNXRS10SQL3Zo/co4z5KAhxnv+I7s
-         7cmQ==
-X-Gm-Message-State: AD7BkJI8R+QFnMeM3xv/MWoojbeQ8aR5Mfmr34tV/2+a2nVC1QASMbm4xgSGym10wAxnzg==
-X-Received: by 10.28.147.72 with SMTP id v69mr34012904wmd.79.1458218462066;
-        Thu, 17 Mar 2016 05:41:02 -0700 (PDT)
-Received: from drswgregorj02.drs.expertcity.com (ent-nat3.drs.expertcity.com. [78.108.113.8])
-        by smtp.googlemail.com with ESMTPSA id 3sm8004554wmp.14.2016.03.17.05.41.00
-        for <git@vger.kernel.org>
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 17 Mar 2016 05:41:00 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:38.0)
- Gecko/20100101 Thunderbird/38.6.0
-In-Reply-To: <56E19809.5040305@googlemail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=oCzDGzb1b6YTzzJRABl2NdB5XdXy26XcpG4JkcsEPnk=;
+        b=FnaQNgQNlLuwz5zT6AVXO7qJXf79tOq/CiIg4NMovQC7ffwiKwJEX0Goj8W2CveWmD
+         Mc1ZOuGJgwjOYpGwyqWlqJF+Ru34zqf38mx8HYU5ut4oI35PrImpW04vEzub+itxVU61
+         SwiUeoEHq/Owmoj3m6LQUs6/ga2Gh80ET5vlapNyZntEbXJPJJ+sMV4RuVYqdGfRZB0N
+         zA0qqjdZynMtt/Sq3mIp2wOQTdCShuzDv+dz+2WKcoIugXlICmB6oTfzXbkeFJCiSau+
+         0rjNZITYIW5JLE5+qj0bI0S7bQzMvTP0yXYsLuPmCjg5bLzCqM8fWKqm6wK6V41DXtTa
+         rT+w==
+X-Gm-Message-State: AD7BkJJlPSVullYTr9NFoZKpXxx+0iY8DS12K8HUap4neFyabNfohDcDl7OfnjyM23DHPQ==
+X-Received: by 10.66.144.4 with SMTP id si4mr14743310pab.0.1458218783965;
+        Thu, 17 Mar 2016 05:46:23 -0700 (PDT)
+Received: from lanh ([115.76.228.161])
+        by smtp.gmail.com with ESMTPSA id p26sm13251680pfi.84.2016.03.17.05.45.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 17 Mar 2016 05:46:22 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Thu, 17 Mar 2016 19:45:47 +0700
+X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
+In-Reply-To: <56E9F5B3.6030903@fb.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289101>
 
-Hello,
+The topic in question introduces "sticky" path list for this purpose:
+given a path 'abc/def', if 'abc' already matches a pattern X, it's adde=
+d
+to X's sticky path list. When we need to check if 'abc/def' matches
+pattern X and see that 'abc' is already in the list, we conclude right
+away that 'abc/def' also matches X.
 
-On 10/03/16 16:51, Gregor Jasny wrote:
-> today I discovered that it's a bad idea to "git subtree pull" from an
-> annotated tag. This issue got discussed in those two threads:
->
-> http://comments.gmane.org/gmane.comp.version-control.git/247503
-> http://comments.gmane.org/gmane.comp.version-control.git/248395
->
-> I was under the impression that it is fixed in recent versions of git
-> but my homebrew 2.7.0 still behaves badly. If I run the attached script
-> to reproduce the issue I get the following error message:
+The short reason (*) for sticky path list is to workaround limitations
+of matching code that will return "not match" when we compare
+'abc/def' and pattern X.
 
-For the record: this bug was already fixed in November:
-https://github.com/git/git/commit/5d65fe312e22594b7fec7349945fb0072987716b#diff-59f70cbe935ec223e3df413b94cab740
+The bug is in this code. Not only it does "when we need to check if
+'abc/def' matches...", it does an extra thing: if 'foo/bar' is _not_ in
+the list, return 'not matched' by bypassing all matching code with the
+"continue;" statement. It should let the remaining code decide match
+status instead.
 
-Would it make sense to cherry-pick it into 2.7.x?
+This bug affects both .gitignore and sparse checkout, but it's reported
+as a sparse checkout bug, so let's examine how it happens. The
+sparse-checkout pattern has two rules
 
-Thanks,
-Gregor
+    /*
+    !one/hideme
+
+and the worktree has three tracked files, one/hideme, one/showme and
+two/showme. What happens is this
+
+* check "one", it matches the first pattern -> positive -> keep
+  examining.
+
+*1* "thanks" to 'nd/exclusion-regression-fix' we detect this pair of
+  patterns, so we put "one" in the sticky list of pattern "/*"
+
+* enter "one", check "one/hideme", it matches the second pattern
+  first (we search from bottom up) -> negative -> excluded
+
+* check "one/showme", it does not match the second pattern.
+
+*2* We then check it against the first pattern and notice the sticky li=
+st
+  that includes "one", so we decide right away that "one/showme" is
+  included.
+
+* leave "one", check "two" which does not match the second pattern.
+
+*3* then we check "two" against the first pattern and notice that this
+   pattern has a non-empty sticky list, which contains "one", not "two"=
+=2E
+   This bug kicks in and bypasses the true matching logic for pattern
+   "/*". As a result, we exclude "two/showme".
+
+One may notice that the order of these steps matter. If *3* occurs
+before *1*, then the sticky list at that moment is empty and the bug
+does not kick in. Sparse checkout always examines entries in
+alphabetical order, so "abc/showme" would be examined before "one" and
+not hit this bug!
+
+The last remark is important when we move to .gitignore. We receive the
+list of entries with readdir() and cannot control the order of
+entries. Which means we can't write a test for .gitignore that will
+reliably fail without this fix. Which is why this patch only adds a tes=
+t
+for sparse checkout, even though the same above steps happen to
+=2Egitignore.
+
+(*) The problem is known and will be fixed later and described in
+detail then. For this commit, it's sufficient to see the following
+link because the long reason is really long:
+
+http://article.gmane.org/gmane.comp.version-control.git/288479
+
+Reported-by: Durham Goode <durham@fb.com>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ dir.c                                |  1 -
+ t/t1011-read-tree-sparse-checkout.sh | 20 ++++++++++++++++++++
+ 2 files changed, 20 insertions(+), 1 deletion(-)
+
+diff --git a/dir.c b/dir.c
+index 69e0be6..77f38a5 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1027,7 +1027,6 @@ static struct exclude *last_exclude_matching_from=
+_list(const char *pathname,
+ 				exc =3D x;
+ 				break;
+ 			}
+-			continue;
+ 		}
+=20
+ 		if (x->flags & EXC_FLAG_MUSTBEDIR) {
+diff --git a/t/t1011-read-tree-sparse-checkout.sh b/t/t1011-read-tree-s=
+parse-checkout.sh
+index 0c74bee..ecc5e93 100755
+--- a/t/t1011-read-tree-sparse-checkout.sh
++++ b/t/t1011-read-tree-sparse-checkout.sh
+@@ -274,4 +274,24 @@ test_expect_success 'checkout with --ignore-skip-w=
+orktree-bits' '
+ 	git diff --exit-code HEAD
+ '
+=20
++test_expect_success 'sparse checkout and dir.c sticky bits' '
++	git init sticky &&
++	(
++		cd sticky &&
++		mkdir one two &&
++		touch one/hideme one/showme two/showme &&
++		git add . &&
++		git commit -m initial &&
++		cat >.git/info/sparse-checkout <<-\EOF &&
++		/*
++		!one/hideme
++		EOF
++		git config core.sparsecheckout true &&
++		git checkout &&
++		test_path_is_missing one/hideme &&
++		test_path_is_file    one/showme &&
++		test_path_is_file    two/showme
++	)
++'
++
+ test_done
+--=20
+2.8.0.rc0.210.gd302cd2
