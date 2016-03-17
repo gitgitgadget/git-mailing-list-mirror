@@ -1,78 +1,70 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 18/19] index-helper: autorun
-Date: Thu, 17 Mar 2016 20:02:55 +0700
-Message-ID: <CACsJy8AsJKmsPm8Y1LRZdmyH60n3OT5X=42RGK5GXNBDfn8j8g@mail.gmail.com>
-References: <1457548582-28302-1-git-send-email-dturner@twopensource.com>
- <1457548582-28302-19-git-send-email-dturner@twopensource.com>
- <CACsJy8CaWFhCzrH3imz+BRMTESSmyUB4jeAaYUDNk+Tmpj-VrQ@mail.gmail.com>
- <alpine.DEB.2.20.1603151517590.4690@virtualbox> <1458151880.9385.1.camel@twopensource.com>
- <alpine.DEB.2.20.1603161923380.4690@virtualbox>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: bug: sparse config interpretation incorrectness in 2.8.0-rc2
+Date: Thu, 17 Mar 2016 14:04:51 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603171402330.4690@virtualbox>
+References: <56E9F5B3.6030903@fb.com> <20160317005632.GA17778@duynguyen-vnpc.dek-tpc.internal> <xmqq37rp35k1.fsf@gitster.mtv.corp.google.com> <CACsJy8A2D8CqeWZ6CFdTVXzXiWdonBE=3tWFPpe7-ZmDtNGYNw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: David Turner <dturner@twopensource.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Mar 17 14:03:37 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, Durham Goode <durham@fb.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Mateusz Kwapich <mitrandir@fb.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 17 14:05:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agXaO-0006ht-FT
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 14:03:32 +0100
+	id 1agXby-0007m5-Vh
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 14:05:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935662AbcCQND2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 09:03:28 -0400
-Received: from mail-lb0-f180.google.com ([209.85.217.180]:33503 "EHLO
-	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935604AbcCQND0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 09:03:26 -0400
-Received: by mail-lb0-f180.google.com with SMTP id oe12so68152029lbc.0
-        for <git@vger.kernel.org>; Thu, 17 Mar 2016 06:03:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=o2BmBQ/vGZ/Ho3xm0oOm6A5DtMtXPdtVcmh+Rfz+otc=;
-        b=pYn+KoSOZOMa7Ig3tzsIzAaCWvMj2iKvEjn5VJMmu2BL/aqOe6J9GweY+izlJ2pin0
-         GhRhbFnPvcQxI3PfjhnhrqiCPoeShV+62zkIW64hCNwgWI0RdOOQyCuVvxkNBtNXewuj
-         BjJOHvUdf0bFaye7VsF5X6j9QX/V0sS+wbQSXZdryVaZVUzqiLQhYNRUlyfye4/y0bl2
-         MIuA+xKs/NLtWM1V6Dstoal8RI0ayEMZ3dI+zhGi955nIyUucHFzWS6JAmhzDZkewbWs
-         dpaebEv5sO5cNVX4CcneRje+J3DnxnQJUw6vVhGT9KKqAHYn1h9SL/h/j+/avw3FiMSj
-         uaGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=o2BmBQ/vGZ/Ho3xm0oOm6A5DtMtXPdtVcmh+Rfz+otc=;
-        b=S1PSfOMazX2aedJwO/uJjKdR3yLMWTto9fj2GIrlUI3RGFE3eQPYbNQxuYxLq1Sn1n
-         Zdi+oWuC/mR8jMkvyfK37OLq6OB0hzfnbd8m8VP/tIN1AbodlRUHWecvoFEnl1jxxSwi
-         aMmh7xyp+7S5kyWbt74DkIenPVwmByeLmJ24sZcAyRXu2TJChiwiJeIH/JeqLvmuIlS0
-         +6guyiybXN2X0Xjl7aaYxeoQDJbpTqLsCKBDocDd4ZOo9UGGI5/BBsf8t8kqt1Ou90e/
-         VyMOXVvxT2+3VPxhhRvWAkxmURxIjHocYjpWHa+JYL5yzUGoFSeFBFSP3911TXJ9qCG5
-         k5pQ==
-X-Gm-Message-State: AD7BkJJWVtJaoUGm6wcXmxK1Te6rAKkg39sidWFykth8D4G2E77wJvcLr0r4rkX/6qURva9O3HF/EFMLwyOTog==
-X-Received: by 10.112.171.163 with SMTP id av3mr3572859lbc.145.1458219804772;
- Thu, 17 Mar 2016 06:03:24 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Thu, 17 Mar 2016 06:02:55 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1603161923380.4690@virtualbox>
+	id S935967AbcCQNFH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2016 09:05:07 -0400
+Received: from mout.gmx.net ([212.227.17.20]:62621 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S936076AbcCQNFF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 09:05:05 -0400
+Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0LgNGi-1a3tSL32W4-00nftC; Thu, 17 Mar 2016 14:04:53
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <CACsJy8A2D8CqeWZ6CFdTVXzXiWdonBE=3tWFPpe7-ZmDtNGYNw@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:FZGXYQ/NY3udeg6qVt/Z+PtXe/jZ95BeUGMSh09EfFGNcpX3TCC
+ ytWLdRbHgBKPDVELsaMg3S/u0DJOrEyn4V5HksiLIdS2FpTIhIq0icvzPFXK5cP1Uj6Fv1E
+ IU3tDLwEXJrWL96B9sTWFGGY8XD6Sq4oeRvsMi3bzHTDYQQAWIOdCIFedmMYGrPDo2GJBP9
+ x6HP8gdM21rGZzoi+wJsw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:5ay9DQgicDU=:rudSahaDQi0oKtblw69GbY
+ CUh/LwHszCcimbEKYpXXyTdql3jfZsRWVphIGtk2eSvE7WtCgDSsTCuJAyL6cvlpWBTbssEbu
+ Z/CRb4CjDoemPWeYRMQkQLvEVAVNEu3RyeTG31Oje1aabKmyTtqQeQroGJxFVNB8z/Odgangb
+ jvv//zy3oJIgCA70Ah0ePU4WEtXJrrsmIrLJyq/QaoBcVS2onIw7HGfeBW2wL4bYRKemz/bkd
+ 6MaFoNC0ySVcAao9G6NkRSABLpbW4j6HRzYZGlMUtA5WdSaLmxTl/tUophHPc8NJ2Pf2boymY
+ 2T5N3GsqG8odhhynfv383ppkgCiEld5E1LB3AElFHXC2u63Pduxo6HFe/sQnoZ5QY+JEChoAO
+ D0QZxtLhdfDgY6/AKRdftuLlYS+z1RR37mb1g7q/c3j4iXbwcfgspBNuEcZq8zJMdEU0/BSnE
+ JtcbyN1lXrn8QhCWBdCsyfjE/nvv1bVjNn3DqUwmhGvr1AFaYfvOja6Myj4DiLMZfXkpvzFti
+ i5Pv64V23oGafgUAGMJ47AuBah05EQBeQFK0Huf1NFHh4/dOb5FtwBDHXHYsNtWQyUkrQ4D1G
+ NdhH14XipsQXBvBGiZbpBibm4zg/ACkaDTAJw5e+QoZ/oamclH1JWmnAfiaHSdOsIfJfzVzbp
+ jQVE3YXqYDMgiar0icxmFV1TqGj5G6QxGHr9eKxP72DmJY/PhM2mMzmgd+Zyh0dZE46i/3SDU
+ WYc0OjJDwmiZHV9MyNelsMT37rVU7H+YWEaPBNkUnVy3Wfdp2NhBqb5I71FtZJG3L4yVwqH6 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289109>
 
-On Thu, Mar 17, 2016 at 1:27 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> I am much more concerned about concurrent accesses and the communication
-> between the Git processes and the index-helper. Writing to the .pid file
-> sounds very fragile to me, in particular when multiple processes can poke
-> the index-helper in succession and some readers are unaware that the index
-> is being refreshed.
+Hi Duy,
 
-It's not that bad. We should have protection in place to deal with
-this and fall back to reading directly from file when things get
-suspicious. But I agree that sending UNIX signals (or PostMessage) is
-not really good communication.
--- 
-Duy
+On Thu, 17 Mar 2016, Duy Nguyen wrote:
+
+> Good news for you is there's "sparse checkout v2" in the work, that
+> would not rely on exclude engine and should be both faster and more
+> elegant. That should reduce "sparse checkout v1" usage to really small
+> cases.
+
+I dabbled myself with speeding up the entire exclude engine (essentially,
+I use a hash map of the non-wildcard prefixes to the corresponding line
+number). So I am interested to see what your approach is. Could you point
+me to it (I did not see any obvious branch in your GitHub space)?
+
+Thanks,
+Dscho
