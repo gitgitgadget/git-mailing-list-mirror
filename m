@@ -1,124 +1,96 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: bug: sparse config interpretation incorrectness in 2.8.0-rc2
-Date: Thu, 17 Mar 2016 00:51:58 -0700
-Message-ID: <xmqq37rp35k1.fsf@gitster.mtv.corp.google.com>
-References: <56E9F5B3.6030903@fb.com>
-	<20160317005632.GA17778@duynguyen-vnpc.dek-tpc.internal>
+Subject: Re: [PATCH/RFC/GSoC 3/3] t0301: test credential-cache support of XDG_RUNTIME_DIR
+Date: Thu, 17 Mar 2016 01:12:02 -0700
+Message-ID: <xmqqmvpx1q25.fsf@gitster.mtv.corp.google.com>
+References: <CAKqreux4aYhXTE9kUHKoKCJ2-4KDWyi58ioCm-CWqXhUYCtEEw@mail.gmail.com>
+	<1458122865-29447-1-git-send-email-huiyiqun@gmail.com>
+	<1458122865-29447-3-git-send-email-huiyiqun@gmail.com>
+	<xmqqr3fa5rdi.fsf@gitster.mtv.corp.google.com>
+	<CAKqreuwRpS3uP6=afm-0pBkPW0-bqoJconnKO5q3qTgZwdU_xQ@mail.gmail.com>
+	<xmqqbn6e5o9v.fsf@gitster.mtv.corp.google.com>
+	<729c6af810e3000e789f4afd537b77a8@riseup.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Durham Goode <durham@fb.com>, git@vger.kernel.org,
-	Mateusz Kwapich <mitrandir@fb.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 08:52:06 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?6LCt5L+K5rWp?= <pickfire@riseup.net>
+X-From: git-owner@vger.kernel.org Thu Mar 17 09:12:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agSj0-0007vo-BP
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 08:52:06 +0100
+	id 1agT2b-0004fG-CH
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 09:12:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753664AbcCQHwC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 03:52:02 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:61204 "EHLO
+	id S1755691AbcCQIMN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Mar 2016 04:12:13 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:62349 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752002AbcCQHwB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 03:52:01 -0400
+	with ESMTP id S1752721AbcCQIMF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Mar 2016 04:12:05 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DDC1544461;
-	Thu, 17 Mar 2016 03:51:59 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 453B3447A3;
+	Thu, 17 Mar 2016 04:12:04 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=doYHFgaG2yOkHccNhd50EuWCtag=; b=As4fTj
-	qDN8FNzbcCUQcTl9husiiSuC7zMnfwKQBK3/ur5P1DnzUqBukzhG5NTiWqo1XEUv
-	hQFN8e1Rtnm1rgJcaepsuFth3EG8NeYNH/zy7tqcNqjbaIlXf2cr9utl8IIYmQXM
-	ZtpUkNj11Aa3YcHIk2D/q5oeBIgzwi9prDViU=
+	:content-type:content-transfer-encoding; s=sasl; bh=P7LT8KAJ8sH5
+	6r8FXc2KhmeNYJw=; b=ske7dGsldJo4MoUFJDN9x5iYSRNoYzrCn7E8FNHPkOlk
+	Epy0XjJ7RWER68VWu4WAzGMPBWLi82MSG4O4XOzxkopRJTkNP5ZLiUPnW2QOO+MQ
+	WUxmhL+Jo8tkKJoywMAfb9ycTjWPPIkdWzWjhsS/MfWeIa+tPIYMMP+6kxFCifY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RTa6tW7X5lvZpkXgIF1SdCKzInVjDJVo
-	ehGo+Nnw5ryuepY7D2/yZS2O0wbyx8V9QeLIbCwkSKLjD798lUyKm5RxOJtDzc/n
-	6JPCEiowAmtY9X9sDXgVZZtFj2kSQZKn075q5v9VpjGsMbIMUFLHWu30DqYI9bkK
-	vq0L3FYsXfY=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Dx+7jG
+	EcTDwrMQun6V36z5SihPTClPp9hCIYeDJT5HeFzyUI0oTj4TabE2dGDfXMRQmsCv
+	OYS3vFtPKpAgia5pLNQSA6ZZ183TYPPsYtKfpAgfY3ppp90MZVa7iNZYpARHLsmm
+	VdG5IIj3MrTGs4/IiGOSE/DatRmOQxyTx1TwM=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D5F4C4445E;
-	Thu, 17 Mar 2016 03:51:59 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3D4C3447A2;
+	Thu, 17 Mar 2016 04:12:04 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5BEDF4445D;
-	Thu, 17 Mar 2016 03:51:59 -0400 (EDT)
-In-Reply-To: <20160317005632.GA17778@duynguyen-vnpc.dek-tpc.internal> (Duy
-	Nguyen's message of "Thu, 17 Mar 2016 07:56:32 +0700")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B98854479E;
+	Thu, 17 Mar 2016 04:12:03 -0400 (EDT)
+In-Reply-To: <729c6af810e3000e789f4afd537b77a8@riseup.net> (=?utf-8?B?Ig==?=
+ =?utf-8?B?6LCt5L+K5rWpIidz?= message
+	of "Thu, 17 Mar 2016 11:59:14 +0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 20D3E4CA-EC15-11E5-BBF2-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: EEB2659A-EC17-11E5-9631-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289086>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+=E8=B0=AD=E4=BF=8A=E6=B5=A9 <pickfire@riseup.net> writes:
 
-> On Wed, Mar 16, 2016 at 05:09:23PM -0700, Durham Goode wrote:
->> Using git 2.8.0-rc2, given a repo with the following files:
->> 
->> - one/hideme
->> - one/donthide
->> - two/foo
->> 
->> A sparse config of:
->> 
->> cat > .git/info/sparse-checkout <<EOF
->> /*
->> !one/hideme
->> EOF
->> 
->> Results in a repository that only has `one/donthide` in it.  I would
->> expect `two/foo`to be present as well.  This worked in 2.6, and
->> bisecting it points to d589a67eceacd1cc171bbe94906ca7c9a0edd8c5
->> "dir.c: don't exclude whole dir prematurely" (author cc'd).
+> On 17/03/2016 01:24, Junio C Hamano wrote:
 >
-> Thank you. This should fix it. I think I understand why it goes
-> wrong. I'm going to run some more tests and post a proper patch later.
+>> Using ~/.git-credential-cache/credential-cache.sock would not help
+>> at all for existing users, but ~/.git-credential-cache/socket would
+>> interoperate well with users with existing versions of Git, no?
+>>
+>>>> Just being curious, and wanting to see the reasoning behind the
+>>>> design decision the patch series makes in the log message of one o=
+f
+>>>> these patches.
+>
+> I guess it is better to use /tmp or such instead of $HOME/.* so that
+> the users home directory won't be flooded by sockets.
 
-I admit that I've always considered "sparse checkout" was an
-uninteresting experimental feature that I do not want to pay too
-much attention to, and the only review I did carefully myself was to
-make sure that patches around that area would not change the
-behaviour of the original code in repositories that do not use that
-feature, so please do not laugh too loudly at me if I ask the
-obvious ;-) So the pattern list in that info/sparse-checkout file
-shares the same logic with the gitignore mechanism, and the paths
-that would have been "ignored" if the pattern list were in the
-.gitignore file are the ones that would be included in the checkout?
+The "fallback" being discussed is to see if $XDG can be used (and
+use it if so), otherwise see if ~/.git-credential-cache/socket can
+be used (and use it if so), otherwise die with a message (see
+credential-cache.c).  The order of the falling back may want to be
+the other way around, but in either case, the definition of "can be
+used" includes "is there already a directory in which we can create
+a socket?".
 
-If so, among the three paths Durham lists:
+The existing versions have used ~/.git-credential-cache/socket as
+the default socket path, so it is reasonable to expect that users
+that are already using the feature already have the directory there.
 
- * one/hideme matches !one/hideme the last, i.e. it would not be
-   ignored if the pattern appeared in .gitignore, hence it should not
-   be in the checkout;
-
- * one/donthide matches * the last, i.e. would be ignored, hence it
-   should be in the checkout;
-
- * two/foo (or really anything) matches * the last, i.e. would be
-   ignored, hence it should be in the checkout.
-
-Am I reading the bug correctly?
-
-> -- 8< --
-> diff --git a/dir.c b/dir.c
-> index 69e0be6..77f38a5 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1027,7 +1027,6 @@ static struct exclude *last_exclude_matching_from_list(const char *pathname,
->  				exc = x;
->  				break;
->  			}
-> -			continue;
->  		}
->  
->  		if (x->flags & EXC_FLAG_MUSTBEDIR) {
-> -- 8< --
-> --
-> Duy
+So I do not think there is any "flooded" involved; if the directory
+is already there, we can use it to create and use a single socket.
+It's not like we'd be creating many random new directories in ~/.
