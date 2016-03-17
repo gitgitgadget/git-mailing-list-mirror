@@ -1,88 +1,98 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: bug: sparse config interpretation incorrectness in 2.8.0-rc2
-Date: Thu, 17 Mar 2016 21:00:38 +0700
-Message-ID: <CACsJy8D1e5zd-b6CsszHGcNjMPedyZSrZpqdWeCUGdMD5UP7qQ@mail.gmail.com>
-References: <56E9F5B3.6030903@fb.com> <20160317005632.GA17778@duynguyen-vnpc.dek-tpc.internal>
- <xmqq37rp35k1.fsf@gitster.mtv.corp.google.com> <CACsJy8A2D8CqeWZ6CFdTVXzXiWdonBE=3tWFPpe7-ZmDtNGYNw@mail.gmail.com>
- <alpine.DEB.2.20.1603171402330.4690@virtualbox> <CACsJy8DH297aV2pYL7xGNZ5X24rR5PxvrpJQ+15YxpDNvqgS5Q@mail.gmail.com>
- <alpine.DEB.2.20.1603171444210.4690@virtualbox>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 18/19] index-helper: autorun
+Date: Thu, 17 Mar 2016 15:43:34 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603171536420.4690@virtualbox>
+References: <1457548582-28302-1-git-send-email-dturner@twopensource.com> <1457548582-28302-19-git-send-email-dturner@twopensource.com> <CACsJy8CaWFhCzrH3imz+BRMTESSmyUB4jeAaYUDNk+Tmpj-VrQ@mail.gmail.com> <alpine.DEB.2.20.1603151517590.4690@virtualbox>
+ <1458151880.9385.1.camel@twopensource.com> <alpine.DEB.2.20.1603161923380.4690@virtualbox> <CACsJy8AsJKmsPm8Y1LRZdmyH60n3OT5X=42RGK5GXNBDfn8j8g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Durham Goode <durham@fb.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Mateusz Kwapich <mitrandir@fb.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Mar 17 15:01:21 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: David Turner <dturner@twopensource.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 17 15:43:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agYUG-00037h-Ch
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 15:01:16 +0100
+	id 1agZ9O-0006xq-6d
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 15:43:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030883AbcCQOBL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 10:01:11 -0400
-Received: from mail-lf0-f45.google.com ([209.85.215.45]:34329 "EHLO
-	mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966264AbcCQOBJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 10:01:09 -0400
-Received: by mail-lf0-f45.google.com with SMTP id e138so41945515lfe.1
-        for <git@vger.kernel.org>; Thu, 17 Mar 2016 07:01:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ccZLKAE6+WesMyBgTMQEI1yvNVwRNKmvnrEFKdWAVTU=;
-        b=Tr9iqRAFylqJuWu7n5CQC3HdCKvXeQr4ZQbAGvFFMi6qTmCYfR37FtBniSxraa+OxA
-         jcRB/93QHQES0ArV7L3CkW72j2NxDl6vIsQjsLUmLmP7IrL6LhlZDtiA3r6q0Glcpy02
-         KPRmHcrb7OthC7X9c7nfbxNVMT8IyVZ7XTtMMrd9g4jfVruaqsmfW2QFCbnN1SrtpN1p
-         D24c5QkmhhDI2uBFXsFvYpeBM/IvJOt7T8jvzhblmm52RDI+UqMx5ZZTbeXhqfi16n9z
-         uolz36SWxdc8qLbPkj31dleQQxCg8fsGK+lHSsniu4hSfccD+KkIc1F16I1nJFROpAyu
-         ++MA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ccZLKAE6+WesMyBgTMQEI1yvNVwRNKmvnrEFKdWAVTU=;
-        b=l0iw5yevvZOh453RmCbcWaC6a2xcIKFrotIngXUr1tF6tAJKFdAySt9RExRYhSAEe9
-         yZuQLrfvHsWX13w2WtDVysP4DxUxXjfIAJNSW9dqSqCbumD2N3guKF3wZhDR6xKepPET
-         bsPG1CaQa6ZncUXexUPJHP/3ee/l2Av+ybpLhKfRp53HDBH0bC8iHjZx4+fC8pTMoY/b
-         bdD4DWUSPc9oPNRXlpv9MP8qnPZmWQeBPLxOQ09WMJIvRnoHsOilLUHImevlohq9YWiT
-         arF2tdDM4cF1IkRfLH0TG3+altRvbcTRAOrMDXpx2P0FBjUrMtMIMWFr7kWSGcv7LQvy
-         x2jg==
-X-Gm-Message-State: AD7BkJKctu9WXYOeChkfnhgUwX6mVJV92H3/qalkxz5ooirXXJJd0M8aN6W7k2OVaMvG9lI8uLJq+IMI9Gympg==
-X-Received: by 10.25.24.100 with SMTP id o97mr3953697lfi.112.1458223267763;
- Thu, 17 Mar 2016 07:01:07 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Thu, 17 Mar 2016 07:00:38 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1603171444210.4690@virtualbox>
+	id S966315AbcCQOnl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2016 10:43:41 -0400
+Received: from mout.gmx.net ([212.227.17.21]:63684 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932781AbcCQOnj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 10:43:39 -0400
+Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MKu9E-1agZ9D2Wps-0001D5; Thu, 17 Mar 2016 15:43:35
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <CACsJy8AsJKmsPm8Y1LRZdmyH60n3OT5X=42RGK5GXNBDfn8j8g@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:UkVl8FN7PT2l+0uGZ6/WnFaan/gdysq2DO1T0yGhgLGVLC1IAWr
+ qXkIQiMP1Ev1VVqZ/f8zeV2LYfQoxpDwyGM7xh/qyuzPfmUzZwzpLNBnx/gRBk48J8VQ9qB
+ DgC4Km6GjjwPgKBvBxJT5/Fz+itsOPVALHt/W97eLCTH5h4epVwVW1/kmhFtCBWUfU5eOd+
+ RfgNzF2xQocAe0tX+U+ig==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:N9617JHnPZo=:GFKCKkcjtNzn/+SFLtucUG
+ aul1eOAf9Bz/2dVbWlAXFTjgxgi3HBff5IMqoq6MOlbz/AUDOTkprwrtVofwIC3xZ/q0uNGNO
+ 39dwlG/c1Fod721xUh9SSQXYUXQcCXW7+YKw1fEUJcIAFS2Gzhg+hKOIMPFLAAHYKLkCuGCP5
+ OpzOlKtw9M683gmf/Te2AmqrEdgW8WeAXjuxbWn2D9ICMRmUhz76uIWwRElHS9mp3a6Mzh9gk
+ 9hNUBhoaZPG37ekZOdD2/h8ZBtiKYM//02V4cExX7Fygdy5SZiq8zlULycqGJmbY3qGg/0YAH
+ mu3GwPjCr0u5mzNGI/FPV6FllDhK7zHF734KYjEs7cqGkTW2SalHfAHzg9SgzQRUP7TEciNLv
+ qofDSgy+9UU1D/4ZzampYptJSx7MefQwqC+BsdvGGxynotwbxrecdAsX5EBkDSoBrwYydYrja
+ LajehVQWsYwa1xbUGa6TkH7Kpxy1gaPo8JZlpNwvlCLaCHYUvf3Uvb3ovJBzymbfx5OLvsfhS
+ G3IufKRTb93/ZSVmlleW2LxaaF1jK5R7X97aCzhzifYRjvbdFqwhYC6oV6rcMQSsDR0fle4Mp
+ 3e+YzuIlkUDUOMdr7MsHEOfsrg3bTDM2JiMzWP5jZ7pMipM2jnMn7SyqzqQKur+ndjQ7DoGfF
+ M06qDijhNJDgNdh/aCTBaRa5BbnZFTh05nVsWg9npD1jFXKhSFgt2gNyiu90fhguaTUV2yGvV
+ VBxwikdrgswPxwu5LZ0LxJjou1HXLI3YujrETRNc5W12WvVbwIkSsnBVIMx7fxVu1T1eo7Zv 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289117>
 
-On Thu, Mar 17, 2016 at 8:46 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Unfortunately, this does not help me at all. In the use case I am trying
-> to get to work fast, we have tons and tons of directories and need *one*
-> file in pretty much *all* of those directories, and exclude most of the
-> other files.
->
-> To make matters even worse, the list of excluded (or included) files is
-> constantly changing.
+Hi Duy,
 
-OK very weird use case to me :) There's something you might try. [1]
-can help trimming unrelated patterns, fewer patterns to match for a
-dir, faster matching.
+On Thu, 17 Mar 2016, Duy Nguyen wrote:
 
-I knew it might help speed up sparse checkout (because we can't spread
-sparse patterns over many .gitignore files,  we only have one place
-for all patterns). I did try at some point. I just don't remember if I
-gave up because I didn't think it's worth the effort or I found out
-something wrong with it for sparse checkout case. It may or may help
-your case, depending on the patterns, of course.
+> On Thu, Mar 17, 2016 at 1:27 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > I am much more concerned about concurrent accesses and the communication
+> > between the Git processes and the index-helper. Writing to the .pid file
+> > sounds very fragile to me, in particular when multiple processes can poke
+> > the index-helper in succession and some readers are unaware that the index
+> > is being refreshed.
+> 
+> It's not that bad.
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/217958
--- 
-Duy
+Well, the way I read the code it is possible that:
+
+1. Git process 1 starts, reading the index
+2. Git process 2 starts, poking the index-helper
+3. The index-helper updates the .pid file (why not set a bit in the shared
+   memory?) with a prefix "W"
+4. Git process 2 reads the .pid file and waits for the "W" to go away
+   (what if index-helper is not fast enough to write the "W"?)
+5. Git process 1 access the index, happily oblivious that it is being
+   updated and the data is in an inconsistent state
+
+> We should have protection in place to deal with this and fall back to
+> reading directly from file when things get suspicious.
+
+I really want to prevent that. I know of use cases where the index weighs
+300MB, and falling back to reading it directly *really* hurts.
+
+> But I agree that sending UNIX signals (or PostMessage) is not really
+> good communication.
+
+Yeah, I really would like two-way communication instead. Named pipes?
+They'd have the advantage that you could use the full path to the index as
+identifier.
+
+The way I read the current code, we would actually create a different
+shared memory every time the index changes because its checksum is part of
+the shared memory's "path"...
+
+Ciao,
+Dscho
