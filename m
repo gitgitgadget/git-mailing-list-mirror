@@ -1,105 +1,113 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: One whitespace breaks sending mail (using mailrc aliases wit send-emal)
-Date: Wed, 16 Mar 2016 18:28:59 -0700
-Message-ID: <CAGZ79kbRdPMkbs_-BGhCQ44hOsccG3aX16RJpE3ZHcBmDz40zQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: parse-options does not recognize "unspecified" behavior
+Date: Wed, 16 Mar 2016 21:43:10 -0400
+Message-ID: <20160317014310.GA12830@sigill.intra.peff.net>
+References: <CAFZEwPPd2wFqFq2LFEzN2CzhTV6C420SLPcXi1SWE=z2epOYLw@mail.gmail.com>
+ <20160316204912.GA1890@sigill.intra.peff.net>
+ <CAFZEwPMa3GZS6pvFwr8PLVDqKm5xmMd307nbjhpZSC_ndpw8vw@mail.gmail.com>
+ <20160316212308.GA4538@sigill.intra.peff.net>
+ <CAPig+cRKyaUefz0qj6unkaiPg25=Xi2WorQE4Fm46CCf00UbHQ@mail.gmail.com>
+ <20160316214442.GC4441@sigill.intra.peff.net>
+ <CAGZ79kbbAv=PukD+sftmoO8u3GX=S1YCYGV8zcNMxrZ+E41-UA@mail.gmail.com>
+ <20160316231626.GA11808@sigill.intra.peff.net>
+ <CAGZ79kYVT0cq8XgruZ+i_gGuSDySE+s3POU95PXyra9DwVGLkQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 17 02:29:08 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Pranit Bauva <pranit.bauva@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Mar 17 02:43:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agMkM-0007Fq-I4
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 02:29:06 +0100
+	id 1agMyI-0000YX-R3
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 02:43:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756118AbcCQB3B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 21:29:01 -0400
-Received: from mail-io0-f180.google.com ([209.85.223.180]:34626 "EHLO
-	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751148AbcCQB3A (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 21:29:00 -0400
-Received: by mail-io0-f180.google.com with SMTP id m184so81486055iof.1
-        for <git@vger.kernel.org>; Wed, 16 Mar 2016 18:29:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=b/d0cGuxkY4CPZ6gX+xg4SaRghfLwkw/IBluJMj3qG4=;
-        b=Xt6fStfH97j+gDOVb8RxisB0sOE4CVJdBgNfNJaK+P3AVx6MMmizaqQIkdTCOs/3O6
-         FwdHd887NSV/2MiTtnDTCYDnglUAWwHC/Ndw7aklE1bI0oFeEAWSrRduyqLARgrwTf9G
-         Oy6jYQxgynm24xNfyMMfb8L7xsRWJ7LYupQ/cq9PZ66TvPIrIUUAL1OIW7O2GH/sHVNq
-         SWPv1EGnI8UTNw618L62PE7E3r1qVsbkZOggjmngT8OTIFY0PlCTLgL5Z9TomJbcK/oH
-         vD/lhVuB2YEAu420S8oUxNQthNWgMpZUzIv0ToTyJ8+9wCWuC6OTZIcEizx2/Un4m9OG
-         Wo1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=b/d0cGuxkY4CPZ6gX+xg4SaRghfLwkw/IBluJMj3qG4=;
-        b=RZqo4pPCQk4u1kHGdSw9BCoEKUQML25HelSHkzyTHmi9OIfqwlBs36xQNJmWzaqNIQ
-         7USOWU86z+9fooBC6oK5xpTKUt7XohF7crjVLrw8kcUIQaR8DtI19M1sfBzn2JFzUd6L
-         shYg7KaaUlT7Men68Fm/V0ZteEwUcWFHJ86rovbbabKBbhTJfZ0ge58+S2BjSS/smo80
-         FUYMpaUtTOxVmTYBxdFmuNz/Pc43uRR7J+kp71UIbTC9r3x8UiMV3524lprCVfkyHPUo
-         TytjAsbzdIXVAqIL6qkI50uSPmcd7NGH9Nnfck5nqTn7wslpgDdDf1uY4cKRXvmoLnxB
-         hBnA==
-X-Gm-Message-State: AD7BkJJhUodqMBxZ31bRLeVJouVwilrIxpjEwmfWoHhIXx2Wb1vos91k8+KJl9p8XqSHpeSOrBxzuOY77WbwkE88
-X-Received: by 10.107.135.96 with SMTP id j93mr6840422iod.96.1458178139724;
- Wed, 16 Mar 2016 18:28:59 -0700 (PDT)
-Received: by 10.107.132.101 with HTTP; Wed, 16 Mar 2016 18:28:59 -0700 (PDT)
+	id S967101AbcCQBnY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 21:43:24 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33009 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756464AbcCQBnN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Mar 2016 21:43:13 -0400
+Received: (qmail 5311 invoked by uid 102); 17 Mar 2016 01:43:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Mar 2016 21:43:13 -0400
+Received: (qmail 22964 invoked by uid 107); 17 Mar 2016 01:43:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Mar 2016 21:43:30 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Mar 2016 21:43:10 -0400
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kYVT0cq8XgruZ+i_gGuSDySE+s3POU95PXyra9DwVGLkQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289069>
 
-To reproduce:
+On Wed, Mar 16, 2016 at 04:33:03PM -0700, Stefan Beller wrote:
 
-$ git config sendemail.aliasesfile ~/.mailrc
-$ git config sendemail.aliasfiletype mailrc
-$ echo "alias zzz_wrong_entry jon@do.e "
-# notice the white space at the end of the alias
+> The way I understand verbosity is this:
+> * You can instruct a command to be more verbose if it is supported by
+> adding more -v
+> * --no-verbose tells the command to be not verbose, i.e. no additional output.
+> 
+> So my question was, if there is any command, which is verbose by
+> default, and --no-verbose would make it "more quiet"? Such a case
+> would be a UX bug, as a user would rather expect --quiet instead of
+> --no-verbose IMO. Would such a case ever happen, that we'd want to
+> give --no-verbose to decrease the amount said by the command?
 
-$ git send-email 0001-rebase-x-do-not-die-without-i.patch --cc=zzz_wrong_entry
-Use of uninitialized value $alias in hash element at
-/usr/local/google/home/sbeller/libexec/git-core/git-send-email line
-847.
-Use of uninitialized value $alias in hash element at
-/usr/local/google/home/sbeller/libexec/git-core/git-send-email line
-850.
-Use of uninitialized value $alias in hash element at
-/usr/local/google/home/sbeller/libexec/git-core/git-send-email line
-850.
-Use of uninitialized value $alias in hash element at
-/usr/local/google/home/sbeller/libexec/git-core/git-send-email line
-850.
-Use of uninitialized value $alias in hash element at
-/usr/local/google/home/sbeller/libexec/git-core/git-send-email line
-851.
-Use of uninitialized value $recipient in substitution (s///) at
-/usr/local/google/home/sbeller/libexec/git-core/git-send-email line
-1036.
-Use of uninitialized value $recipient in pattern match (m//) at
-/usr/local/google/home/sbeller/libexec/git-core/git-send-email line
-1038.
-Use of uninitialized value $address in pattern match (m//) at
-/usr/local/google/home/sbeller/libexec/git-core/git-send-email line
-894.
-Use of uninitialized value $address in substitution (s///) at
-/usr/local/google/home/sbeller/libexec/git-core/git-send-email line
-896.
-Use of uninitialized value $params[0] in pattern match (m//) at
-/usr/share/perl5/Email/Valid.pm line 79.
-Use of uninitialized value $address in concatenation (.) or string at
-/usr/local/google/home/sbeller/libexec/git-core/git-send-email line
-918.
-error: unable to extract a valid address from:
-What to do with this address? ([q]uit|[d]rop|[e]dit):
+Ah, I see. I agree that would be a bug, because --no-verbose is not
+"more quiet". It is "cancel all previous -v". The right way to spell
+that is "--quiet" (usually, see below).
 
-The stack trace doesn't even show the wrong address, so debugging that was hard.
-Not sure I am asking for help, as I found the problem and could fix
-it, but maybe we can
-improve the error message (I have no knowledge about perl, so I may
-not be super helpful there)
+> IIRC some commands use one integer variable to determine
+> the amount of output, i.e. --verbose increases that variable, --quiet
+> decreases it.
+> What happens for example with
+> 
+>   git commit -v --no-verbose -v -q -q --no-quiet
+> 
+> In case of commit, the quietness and verbosity is done in 2 variables,
+> so these are orthogonal to each other, there are even no internal checks for
+> (verbosity > 0 && quietness > 0) at the same time, so it seems to be a valid
+> command.
 
-Thanks,
-Stefan
+Yes, I think in general, "-v" and "-q" should work as opposites. But
+that is not the case with commit, where "-v" and "-q" operate on totally
+separate messages. I think that is a UX mistake, and we would not do
+it that way if designing from scratch. But we're stuck with it for
+historical reasons (I'd probably name "--verbose" as "--show-diff" or
+something if writing it today).
+
+Arguably cmd_commit() should be using OPT_BOOL instead of OPT__VERBOSE,
+as there is no such thing as "verbose > 1" here. But I don't think there
+is any real user-facing consequence of that (however, given Eric's
+suggestion, I suspect it would make Pranit's problem just go away, as it
+assigns rather than increments; IOW, it does the thing Eric was
+suggestion OPT__VERBOSE to do).
+
+> In case of a command where this is tracked in one variable,
+> 
+>   git <foo> -v --no-verbose -v -q -q --no-quiet
+> 
+> you'd expect:
+> 
+>   verbosity++ // because of first -v
+>   verbosity = 0 // because of the reset with --no-verbose
+>   verbosity++ // because of second -v
+>   verbosity-- // because of first -q
+>   verbosity-- // because of second -q
+>   verbosity = 0 // because of the reset with --no-quiet
+> 
+> Having typed that, I think my comment was not adding value to
+> the discussion, as --no-{verbose/quiet} would just reset it to 0 no matter
+> if you track verbosity/quietness in one or two variables internally.
+
+Right, in a command using OPT_VERBOSITY(), that is how it should (and
+does) work. I think "commit" is just funny for historical reasons.
+
+-Peff
