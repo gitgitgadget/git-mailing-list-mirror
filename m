@@ -1,101 +1,112 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [RFC PATCH] hashmap API: introduce for_each_hashmap_entry() helper
- macro
-Date: Thu, 17 Mar 2016 00:47:52 +0100
-Message-ID: <56E9F0A8.5080308@gmail.com>
-References: <1458146346-27959-1-git-send-email-kuleshovmail@gmail.com>
+From: Durham Goode <durham@fb.com>
+Subject: bug: sparse config interpretation incorrectness in 2.8.0-rc2
+Date: Wed, 16 Mar 2016 17:09:23 -0700
+Message-ID: <56E9F5B3.6030903@fb.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
+Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git <git@vger.kernel.org>
-To: Alexander Kuleshov <kuleshovmail@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 17 00:48:07 2016
+Cc: <pclouds@gmail.com>, Mateusz Kwapich <mitrandir@fb.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 17 01:09:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agLAa-00059y-Rq
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 00:48:05 +0100
+	id 1agLVi-0005GN-WE
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 01:09:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932641AbcCPXr7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Mar 2016 19:47:59 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:38489 "EHLO
-	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752710AbcCPXr6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Mar 2016 19:47:58 -0400
-Received: by mail-wm0-f52.google.com with SMTP id l68so94296386wml.1
-        for <git@vger.kernel.org>; Wed, 16 Mar 2016 16:47:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-transfer-encoding;
-        bh=PI6zGhE2gsx3+8mpUPNVt50Wa+pk9b4/pBBXLrkLymw=;
-        b=ZT9Fc8r0gg5046YQGiJq66slBMlh4jVkC19OJTgEWjGN0+9gKYjuapDaQU+WrewQEz
-         h8SiVrbeY1lOOpBhlRij+9IzIYxmuox3EQok4oR0G7aNK37BTgC8QIKOO4qh1xSWbWd+
-         jttn6/JtdLnYEk8WqeGBrYP0Ze7+4fg/hSgxu3kv5mFVtGpW+quWflb164rfq6h6zVrg
-         AFgbJWAVPwr8vmhAwsaSwg+K2m2/0QNt2soqgUyIMbVjNXtMLD5KPZqS7nOfJo8U/Lct
-         LK9G7OyUTyi7Db9CiZjyv1Fl3QaiKXcdhSaiRItcrui45M4nNCPP7M4gO6Lr2WOh/mTK
-         Z7ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-transfer-encoding;
-        bh=PI6zGhE2gsx3+8mpUPNVt50Wa+pk9b4/pBBXLrkLymw=;
-        b=T02HFAKJqp16PBXvZ50e62peAmYd4+rXxgZIJ+i8l/HQsu/J6LpqOESfliKgM1y0wd
-         u8n/gxnm41XlN09T8qY70+BWnvCh3Inhk3Z5Y/i+NiJO+tT0bgJItZRpx+0hUFn4mrmv
-         JO4fC3N5MkLNUJhicALPqBJV0szj9F/ikNUc8bUPIo3k/LBhBSB1bl9rcByoVDo1CB0O
-         sAxEAoVpQistl01KXDz499UCP/3etznd2BeaNnwf5dIFIQF9lhn+geyLZHmEW8A0E6z8
-         VNo67aCQ/yw/muoRstj3LL0iPUkY7DKCdn5U+sxdSGZCjyNYaUJYO8BP6gy/p9rFdG+s
-         hbig==
-X-Gm-Message-State: AD7BkJLH23/TbK+9X5sbyxo3IeRwzsAtBTy8RELs2UKfijkjbkbe+//Y7Ws29eOPZbDjlQ==
-X-Received: by 10.28.45.209 with SMTP id t200mr32637517wmt.71.1458172076794;
-        Wed, 16 Mar 2016 16:47:56 -0700 (PDT)
-Received: from [10.1.116.51] (ns.dcon.de. [77.244.111.149])
-        by smtp.googlemail.com with ESMTPSA id ux5sm5094242wjc.17.2016.03.16.16.47.55
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 16 Mar 2016 16:47:55 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <1458146346-27959-1-git-send-email-kuleshovmail@gmail.com>
+	id S965232AbcCQAJe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Mar 2016 20:09:34 -0400
+Received: from mx0b-00082601.pphosted.com ([67.231.153.30]:32801 "EHLO
+	mx0b-00082601.pphosted.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756024AbcCQAJ2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Mar 2016 20:09:28 -0400
+Received: from pps.filterd (m0001255.ppops.net [127.0.0.1])
+	by mx0b-00082601.pphosted.com (8.16.0.11/8.16.0.11) with SMTP id u2H09Kkw030287;
+	Wed, 16 Mar 2016 17:09:26 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=to : from : subject : cc :
+ message-id : date : mime-version : content-type :
+ content-transfer-encoding; s=facebook;
+ bh=W+YSPnlXWKOPNPw4C5IyRxHpw/OHin+Uiy1rYHFH3nY=;
+ b=TEe/9hre8btJxq3gzEV41zUvhqfoN0/ExtQXnzLY5ckDqG+sBKdMWgn99yo983P/cSgB
+ Fhnm0UERG+KGd0oFLH6hY2FNZMxDj18jACneJ9MzMGph8cyTd5NXek6wVZDWJbf5FWi6
+ ctiC/OVq04c8XwQZihtkmJeYE1zFkqd/buw= 
+Received: from mail.thefacebook.com ([199.201.64.23])
+	by mx0b-00082601.pphosted.com with ESMTP id 21qbmnhhqw-1
+	(version=TLSv1 cipher=AES128-SHA bits=128 verify=NOT);
+	Wed, 16 Mar 2016 17:09:25 -0700
+Received: from durham-mbp1.dhcp.thefacebook.com (192.168.52.123) by
+ mail.thefacebook.com (192.168.16.12) with Microsoft SMTP Server (TLS) id
+ 14.3.248.2; Wed, 16 Mar 2016 17:09:24 -0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:38.0)
+ Gecko/20100101 Thunderbird/38.6.0
+X-Originating-IP: [192.168.52.123]
+X-Proofpoint-Spam-Reason: safe
+X-FB-Internal: Safe
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2016-03-16_05:,,
+ signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289063>
 
-Am 16.03.2016 um 17:39 schrieb Alexander Kuleshov:
+Using git 2.8.0-rc2, given a repo with the following files:
 
-> There is common pattern to traverse a hashmap in git source code:
-> 
->         hashmap_iter_init(map, &iter);
->         while ((entry = hashmap_iter_next(&iter)))
->              // do something with entry
-> 
+- one/hideme
+- one/donthide
+- two/foo
 
-The hashmap_iter_first() function allows you to do this instead:
+A sparse config of:
 
-	for (entry = hashmap_iter_first(map, &iter); entry; entry = hashmap_iter_next(&iter))
-		doSomething(entry);
+cat > .git/info/sparse-checkout <<EOF
+/*
+!one/hideme
+EOF
 
-With an appropriate macro definition, this could be simplified to:
+Results in a repository that only has `one/donthide` in it.  I would 
+expect `two/foo`to be present as well.  This worked in 2.6, and 
+bisecting it points to d589a67eceacd1cc171bbe94906ca7c9a0edd8c5 "dir.c: 
+don't exclude whole dir prematurely" (author cc'd).
 
-	#define hashmap_for_each(map, iter, entry) for (entry = hashmap_iter_first(map, iter); entry; entry = hashmap_iter_next(iter))
-	...
-	hashmap_for_each(map, &iter, entry)
-		doSomething(entry);
+The script I used to repro and for bisecting is pasted below:
 
-You would still need to declare the 'iter' and 'entry' variables, but
-there is no danger of decl-after-statement or variable shadowing
-mentioned by Junio. That is, you can do this:
 
-	hashmap_for_each(map, &iter, entry)
-		if (checkCondition(entry))
-			break;
-	// work with found entry
 
-Or even this:
 
-	hashmap_for_each(map, &iter1, entry1)
-		hashmap_for_each(map, &iter2, entry2)
-			doSomething(entry1, entry2);
+
+#!/bin/bash
+
+set -x
+rm -rf sparse-test
+GIT=git
+
+$GIT init sparse-test
+cd sparse-test
+$GIT config --add core.sparsecheckout true
+
+mkdir one two
+touch one/hideme
+touch one/donthide
+touch two/foo
+
+$GIT add .
+$GIT commit -m "initial commit"
+$GIT read-tree --reset -u HEAD
+
+mkdir .git/info
+cat > .git/info/sparse-checkout <<EOF
+/*
+!one/hideme
+EOF
+$GIT read-tree --reset -u HEAD
+
+ls -R one two
+set +x
+echo
+echo expected: see one/donthide and two/foo
+echo actual: see only one/donthide
+
+[ -d two ] && exit 0
+exit 1
