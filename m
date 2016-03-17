@@ -1,107 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git v2.7.4 (and updates to older maintenance tracks)
-Date: Thu, 17 Mar 2016 14:07:51 -0700
-Message-ID: <xmqqlh5gzuc8.fsf@gitster.mtv.corp.google.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [RFC] Code reorgnization
+Date: Thu, 17 Mar 2016 21:43:55 +0000
+Message-ID: <20160317214355.GA32317@serenity.lan>
+References: <20160317111136.GA21745@lanh>
+ <CAGZ79kbcwFcPSJ9xwE6xi4gQ871m3brtfAut2TChGNzL-foxdQ@mail.gmail.com>
+ <xmqqy49gzzrf.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
-To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Thu Mar 17 22:08:14 2016
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Beller <sbeller@google.com>, Duy Nguyen <pclouds@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 17 22:44:24 2016
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1agf9P-0008HN-JE
-	for glk-linux-kernel-3@plane.gmane.org; Thu, 17 Mar 2016 22:08:11 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1agfiQ-0000ye-Vb
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 22:44:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031023AbcCQVH6 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Thu, 17 Mar 2016 17:07:58 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:62539 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S936881AbcCQVH4 (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 17 Mar 2016 17:07:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9C88F4CA26;
-	Thu, 17 Mar 2016 17:07:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=5
-	Ph4AKBH0xJqyXtRvLwAjA9tKlo=; b=lLEq7LczERy6lwDMTfv9UIpkJL0m+o/DM
-	Jl36BB/o/XlKcGu+hnhA3XruqfA3IX8G1C8zn4hsqYznjebL4eoBmIhX4lYKCDj4
-	cOgM7MhU5JNWG40Zrs776A0m6fjeuYiHWzEXqUuevUrxDiRrwNB3s2VNzHrBK7bz
-	SxeL5/B+wI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; q=dns; s=
-	sasl; b=Fe+uWAw+ZXYDWcggOIiHaK0/5qkIhrmTmQnm9U6Curx5XyssNUeBk6ht
-	Mca5vgsVX1S78SFBHsy+DU5ObUdIzLuoTzEKL5i55NkLB2JmA9QP5R9yY5g3UsYD
-	62dHih/PO1+bwEa4IRPy4XoYlflJMBOU1td8sfcwc+RBHPxV8H8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9366D4CA25;
-	Thu, 17 Mar 2016 17:07:54 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S936206AbcCQVoP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2016 17:44:15 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:39921 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935552AbcCQVoN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 17:44:13 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 77A4ECDA548;
+	Thu, 17 Mar 2016 21:44:12 +0000 (GMT)
+X-Quarantine-ID: <NWgAPe6xoCSv>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=5
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id NWgAPe6xoCSv; Thu, 17 Mar 2016 21:44:11 +0000 (GMT)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1F1644CA24;
-	Thu, 17 Mar 2016 17:07:53 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5047F7CC-EC84-11E5-A967-79226BB36C07-77302942!pb-smtp0.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	by jackal.aluminati.org (Postfix) with ESMTPSA id A0E0BCDA48A;
+	Thu, 17 Mar 2016 21:44:01 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <xmqqy49gzzrf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289156>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289157>
 
-The latest maintenance release Git v2.7.4 is now available at the
-usual places.  The same set of bugfix patches from the current
-'master' have been backported to older maintenance tracks and are
-available as v2.4.11, v2.5.5 and v2.6.6.  These are to fix a heap
-corruption / buffer overflow bug and users are strongly encouraged
-to upgrade.  The fix has already been in the release candidate
-v2.8.0-rc3 as well.
+On Thu, Mar 17, 2016 at 12:10:44PM -0700, Junio C Hamano wrote:
+> Stefan Beller <sbeller@google.com> writes:
+> 
+> > For now I would just go with 3 directories:
+> >
+> > non-git/ (or util, helpers, or anything that could be ripped out and be useful
+> >     e.g. strbufs, argv-array run-command, lockfile
+> > git/ (maybe called lib? All stuff that is pure Git and is used for libgit
+> >
+> > builtin/ (as we have it today + all that stuff that doesn't go into
+> > git/ very well?)
+> 
+> It is unclear where you want to have standalone programs in the
+> above.  I'd say lib/ and src/ for the first two, where lib/ is for
+> things that could be lifted without any Git dependencies and src/
+> for everything else.
+> 
+> Aren't there some folks who link directly with our codebase (I am
+> thinking about cgit, but hjemli.net/git/cgit does not seem to be
+> responding anymore)?
 
-The tarballs are found at:
+CGit lives at https://git.zx2c4.com/cgit/ these days.
 
-    https://www.kernel.org/pub/software/scm/git/
-
-The following public repositories all have a copy of the 'v2.7.4'
-tag and the 'maint' branch that the tag points at:
-
-  url = https://kernel.googlesource.com/pub/scm/git/git
-  url = git://repo.or.cz/alt-git.git
-  url = git://git.sourceforge.jp/gitroot/git-core/git.git
-  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url = https://github.com/gitster/git
-
-----------------------------------------------------------------
-
-Git v2.7.4 Release Notes
-========================
-
-Fixes since v2.7.3
-------------------
-
- * Bugfix patches were backported from the 'master' front to plug heap
-   corruption holes, to catch integer overflow in the computation of
-   pathname lengths, and to get rid of the name_path API.  Both of
-   these would have resulted in writing over an under-allocated buffer
-   when formulating pathnames while tree traversal.
-
-----------------------------------------------------------------
-
-Changes since v2.7.3 are as follows:
-
-Jeff King (7):
-      add helpers for detecting size_t overflow
-      tree-diff: catch integer overflow in combine_diff_path allocation
-      http-push: stop using name_path
-      show_object_with_name: simplify by using path_name()
-      list-objects: convert name_path to a strbuf
-      list-objects: drop name_path entirely
-      list-objects: pass full pathname to callbacks
-
-Junio C Hamano (4):
-      Git 2.4.11
-      Git 2.5.5
-      Git 2.6.6
-      Git 2.7.4
+The organisation of the git code shouldn't make a difference since CGit
+just links with libgit.a, even if it does CGit pulls in git.git as a
+submodule so it can just fix any problems in the same commit that
+updates the submodule reference.
