@@ -1,94 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Code reorgnization
-Date: Thu, 17 Mar 2016 10:48:54 -0700
-Message-ID: <xmqq7fh10zcp.fsf@gitster.mtv.corp.google.com>
-References: <20160317111136.GA21745@lanh>
-	<CA+39Oz6jNwcyCQFiakh=Ech6p8UYRW9pn95e6cTGXf8nFcwwWQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>, git list <git@vger.kernel.org>
-To: Thomas Adam <thomas@xteddy.org>
-X-From: git-owner@vger.kernel.org Thu Mar 17 18:49:04 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH] That works
+Date: Thu, 17 Mar 2016 10:47:50 -0700
+Message-ID: <1458236870-23464-1-git-send-email-sbeller@google.com>
+References: <20160317020015.GC12830@sigill.intra.peff.net>
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To: peff@peff.net
+X-From: git-owner@vger.kernel.org Thu Mar 17 18:50:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agc2i-0004mj-0s
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 18:49:04 +0100
+	id 1agc3w-0005j4-Sd
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Mar 2016 18:50:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933440AbcCQRtA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 13:49:00 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:63073 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933182AbcCQRs6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 13:48:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 210CE4CF45;
-	Thu, 17 Mar 2016 13:48:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GxOnm41zSqh5uYD18Adzc6l1OkU=; b=Jzq/k/
-	h5ECWNFq3BfD6SMYDQBBFsZYsoDVYUzzXI+zZgQ6u9lSphpmjT9/6HiV1nGce84K
-	Robr+fYoaFVwv4shlVqXT6Vf0lCOAettz91cgDRZJlQiuu2hD01xABM6r1qR55l8
-	AEccvFMUS5x5R783LaEfm6w5oduwSZNdf0AMI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XacgPayKbQgAgBwAdfItjdc9Pfj8pBJA
-	pIEYQkgYQ2EXbNSUkxJnXx1ftSp9/4i2NK9Q9Bqx6ODsLoCdjG9IqoT3jFnjOkTh
-	D7ewGsImoPFehKpN7YzUmt4mtyogCGAIu1g/qDU2a1B1TSFvyUcJS99qGmNGWvHw
-	NCiOzfFdpJI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 176584CF44;
-	Thu, 17 Mar 2016 13:48:57 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8FCEB4CF43;
-	Thu, 17 Mar 2016 13:48:56 -0400 (EDT)
-In-Reply-To: <CA+39Oz6jNwcyCQFiakh=Ech6p8UYRW9pn95e6cTGXf8nFcwwWQ@mail.gmail.com>
-	(Thomas Adam's message of "Thu, 17 Mar 2016 17:00:03 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 858C9D64-EC68-11E5-B548-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1031067AbcCQRuQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2016 13:50:16 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:33331 "EHLO
+	mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932983AbcCQRuP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 13:50:15 -0400
+Received: by mail-pf0-f178.google.com with SMTP id 124so130472987pfg.0
+        for <git@vger.kernel.org>; Thu, 17 Mar 2016 10:50:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=HDdk38pZZJJ86r+A39D8WY6pYazZzYtvDZIlDgu2V4k=;
+        b=HWTsSywvB+0rlMS3mwaJSnnoQEFr7+FUvZrllC9PSbjbQyyPLWgKrFIbS8G+SYVhbV
+         5s8vSp/1f6oOZLoPNSP+e/G88RIDPJEmhZZPKrgKaHOOIyvOm6q7pjtJcNrC4O4p2Tmt
+         UDA7dCnjRT2/txu9APuPKVtUVb/121kLDQGGi8damhx9b9Upkf8mpkj4Wb/RBgTNDEQk
+         Jq9jMX0JaDDocYZAQIg8a5zMxEWQskCXcCw/GZJv+hbBaXGEFHrxt5cGt1JIO+aJIU8m
+         PvqAJGF0Pm9APeKLjvLiIyCQ77g1ENaMJz2KKMvsPS7m8lXL+lgR2IvR7ifGnHmt9sMz
+         ix7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=HDdk38pZZJJ86r+A39D8WY6pYazZzYtvDZIlDgu2V4k=;
+        b=b7i90tIdlV+4OXr5WhzcPbFFDJf7zULTKGe1xO4qqXwhLckotQ5rMVE83Cz67cMFT3
+         1NZIr4tJoaF3hrUbQOMS9KqKeO+3ulhvh/jFnaBLQ0ekt9XHWF6BIbeX9incn5B3yMCA
+         TLfJNFBzul4DgXOJcaxUfizASnp/ZkkEVaobNWIjba5kJ1h4hUG4pCtlX63CThzbhf1O
+         ZHrE8t3Ean6hmNfo6qZpgkk14PRq88c1Z2FDNj2E5km8BqnoE/lxqwr1x535+MPsts5+
+         C7//B9Z5j9/J+FSTgCiyw7v7o0U6e1j4cEtiRFpQMdUVj/xigtNitwoXof8sILWZAngP
+         +Nxw==
+X-Gm-Message-State: AD7BkJJnJxuvVvfZ3Xx9IcRzOEhXcr+u6jlyaNcJUmi+ZSZWF3ySgm6ns5XZiBzM+HKcBCtl
+X-Received: by 10.66.102.104 with SMTP id fn8mr16879654pab.129.1458237014616;
+        Thu, 17 Mar 2016 10:50:14 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:d62:319:527b:e183])
+        by smtp.gmail.com with ESMTPSA id g70sm14881441pfj.13.2016.03.17.10.50.13
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 17 Mar 2016 10:50:13 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0.rc3.1.g4c756e4.dirty
+In-Reply-To: <20160317020015.GC12830@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289131>
 
-Thomas Adam <thomas@xteddy.org> writes:
+sent from git-send-email with a corrupt .mailrc file.
 
-> On 17 March 2016 at 11:11, Duy Nguyen <pclouds@gmail.com> wrote:
->> Git's top directory is crowded and I think it's agreed that moving
->> test-* to t/helper is a good move. I just wanted to check if we could
->> take this opportunity (after v2.8.0) to move some other files too. I
->> propose the following new subdirs
->
-> I wonder whether previous discussions on this still count?  See:
->
-> http://marc.info/?l=git&m=129650572621523&w=1
-
-If you refer to ancient discussion, especially to a large thread
-like that one, please spend a bit more time to summarize it.  It
-is between one person spends a bit more time, and all others
-independently go there and read.
-
-The essense of the proposal [1] back then was to move all the source
-file to src/, rename t/ to testsuite.  And I think [2] is a pretty
-good summary of the common feeling back then that explains why the
-proposal died out:
-
-    Moving everything into src/ and calling it "organized" doesn't
-    actually accomplish much other than perhaps making the README
-    file more visible to newbs; things are _still_ a mess, just a
-    mess with four more letters...
-
-This round is slightly more organized, so many points the old thread
-raised would not apply, I suspect.
+Thanks,
+Stefan
 
 
-[References]
-
-*1* http://thread.gmane.org/gmane.comp.version-control.git/165720/focus=165748
-
-*2* http://thread.gmane.org/gmane.comp.version-control.git/165720/focus=166019
+diff --git a/git-send-email.perl b/git-send-email.perl
+index d356901..c45b22a 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -533,7 +533,7 @@ my %parse_alias = (
+ 			$aliases{$alias} = \@addr
+ 		}}},
+ 	mailrc => sub { my $fh = shift; while (<$fh>) {
+-		if (/^alias\s+(\S+)\s+(.*)$/) {
++		if (/^alias\s+(\S+)\s+(.*?)\s*$/) {
+ 			# spaces delimit multiple addresses
+ 			$aliases{$1} = [ quotewords('\s+', 0, $2) ];
+ 		}}},
