@@ -1,127 +1,143 @@
-From: Durham Goode <durham@fb.com>
-Subject: Re: [PATCH 3/2] dir.c: fix dir re-inclusion rules with "NODIR" and
- "MUSTBEDIR"
-Date: Thu, 17 Mar 2016 21:51:45 -0700
-Message-ID: <56EB8961.70302@fb.com>
-References: <1458218744-15810-2-git-send-email-pclouds@gmail.com>
- <1458219254-16343-1-git-send-email-pclouds@gmail.com>
- <xmqqfuvoy89q.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC/GSoC 3/3] t0301: test credential-cache support of
+ XDG_RUNTIME_DIR
+Date: Fri, 18 Mar 2016 01:00:18 -0400
+Message-ID: <20160318050017.GA22327@sigill.intra.peff.net>
+References: <CAKqreux4aYhXTE9kUHKoKCJ2-4KDWyi58ioCm-CWqXhUYCtEEw@mail.gmail.com>
+ <1458122865-29447-1-git-send-email-huiyiqun@gmail.com>
+ <1458122865-29447-3-git-send-email-huiyiqun@gmail.com>
+ <20160316171535.GC4039@sigill.intra.peff.net>
+ <CAKqreuw7Am_wZQjYYjvsxx0Ccr4OOwoF=EnLvMTK9jxeBUFv5Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="windows-1252"; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, <mitrandir@fb.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 05:51:59 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Your friend <pickfire@riseup.net>, git@vger.kernel.org
+To: =?utf-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 18 06:00:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agmOD-0008Jx-W8
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 05:51:58 +0100
+	id 1agmWd-0005aA-Uc
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 06:00:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752688AbcCREvy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2016 00:51:54 -0400
-Received: from mx0a-00082601.pphosted.com ([67.231.145.42]:35567 "EHLO
-	mx0a-00082601.pphosted.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752691AbcCREvw (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Mar 2016 00:51:52 -0400
-Received: from pps.filterd (m0044012.ppops.net [127.0.0.1])
-	by mx0a-00082601.pphosted.com (8.16.0.11/8.16.0.11) with SMTP id u2I4pXZw004690;
-	Thu, 17 Mar 2016 21:51:48 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=subject : to : references
- : cc : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=facebook;
- bh=lEhS26ODtRV6DveHK72NfU5pjYRrddTP5q6tOkl/vmo=;
- b=k2kTnCvsFQu3TqyXvQLTOzFA2khmfaouv2f0VXuEP3Fczw6wOX3Ina5yiMTkebGRVaEe
- RDfF03GjWgPgdubXz+x3iqiQuVekr/y0vvbFPLhMSU84DVD1PfGnKlfVrc5TsbQThTs0
- kw5dk97QeGS8+EQOxQI21/hGdZ3C+hpnF7Y= 
-Received: from mail.thefacebook.com ([199.201.64.23])
-	by mx0a-00082601.pphosted.com with ESMTP id 21r68j0vvx-1
-	(version=TLSv1 cipher=AES128-SHA bits=128 verify=NOT);
-	Thu, 17 Mar 2016 21:51:48 -0700
-Received: from durham-mbp1.local (192.168.52.123) by mail.thefacebook.com
- (192.168.16.15) with Microsoft SMTP Server (TLS) id 14.3.248.2; Thu, 17 Mar
- 2016 21:51:46 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:38.0)
- Gecko/20100101 Thunderbird/38.6.0
-In-Reply-To: <xmqqfuvoy89q.fsf@gitster.mtv.corp.google.com>
-X-Originating-IP: [192.168.52.123]
-X-Proofpoint-Spam-Reason: safe
-X-FB-Internal: Safe
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2016-03-18_03:,,
- signatures=0
+	id S1752775AbcCRFAV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Mar 2016 01:00:21 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33861 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752691AbcCRFAV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2016 01:00:21 -0400
+Received: (qmail 14012 invoked by uid 102); 18 Mar 2016 05:00:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 18 Mar 2016 01:00:20 -0400
+Received: (qmail 8468 invoked by uid 107); 18 Mar 2016 05:00:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 18 Mar 2016 01:00:38 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 Mar 2016 01:00:18 -0400
+Content-Disposition: inline
+In-Reply-To: <CAKqreuw7Am_wZQjYYjvsxx0Ccr4OOwoF=EnLvMTK9jxeBUFv5Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289186>
 
-On 3/17/16 4:49 PM, Junio C Hamano wrote:
-> Thanks for these 5 patches, two of which need to be discarded ;-).
-> I think you can pick either one of 1/2, pick the one that says
-> "non-NULL" (as opposed to "something") in the log message for 2/2.
->
-> Durham, does it fix your issues if you apply the 1/2 and 2/2 (but
-> not 3/2) on top of 2.8-rc?
->
-> Duy, how comfortable are you with the idea of including this two in
-> 2.8 final?  We have long passed the final -rc, and while it is
-> probably OK to prolong the cycle and do another -rc, we cannot keep
-> going like "oops, there is another thing discovered by somebod new"
-> forever.
->
-> Thanks.
-Patches 1+2 fix the repro steps in the report, yes.  But I've found 
-another case that produces different results in 2.8 than in 2.7:
+On Fri, Mar 18, 2016 at 12:34:04PM +0800, =E6=83=A0=E8=BD=B6=E7=BE=A4 w=
+rote:
 
-Given a repo with files:
+> >> +test_expect_success 'set $XDG_RUNTIME_DIR' '
+> >> +     XDG_RUNTIME_DIR=3D$HOME/xdg_runtime/
+> >> +'
+> >
+> > Doesn't this need to export the variable so that credential-cache c=
+an
+> > see it?
+>=20
+> I'm not sure, but it seems that a little clean up code added before
+> send-email
+> make the test fail. At that time, I run test without building. I've s=
+end
+> PATCH v2
+> which runs well on my computer. However, $XDG_RUNTIME_DIR is still no=
+t
+> exported, but that just works.
+>=20
+> I will try to dig deeper into the bash script to see why.
 
-dir1/dir2/show/file
-dir1/dir2/hide/file
+I suspect it is because you have $XDG_RUNTIME_DIR defined in your
+environment, which causes the shell to automatically export it. I don't=
+,
+so an explicit "export" is required to for the variable to make it to
+its children.
 
-and a sparse-checkout of
+I think we should actually be unsetting it in test-lib.sh for all tests=
+,
+as we do for XDG_CONFIG_HOME. That makes sure the tests are running wit=
+h
+a known state.
 
-/*
-/dir1/dir2/show
-!/dir1/dir2/
+=46or the non-XDG_RUNTIME_DIR tests, does this mean we are creating the
+socket in /tmp? I'm not entirely happy with that, as we usually try to
+have the test suite avoid touching anything outside of its trash
+directories.
 
-the working copy still contains dir1/dir2/hide/file when run from 
-2.8.0-rc2. In git 2.6 and 2.7.3 it does not show up (which is the 
-expected behavior, from what I understand of the docs).  Repro script is 
-below.  Notice, the 'dir2/' part of the paths is important.  If I drop 
-that directory, the issue doesn't repro.
+> > This runs the full suite of tests twice (once here, and once for th=
+e
+> > original helper_test invocation you left below). Shouldn't we just =
+do it
+> > once (making sure that $XDG_RUNTIME_DIR is respected)?
+>=20
+> I'd like to test the behavior of git-credential-cache when $XDG_RUNTI=
+ME_DIR
+> is unset.
+>=20
+> In `t/t0302-credential-store.sh`, helper_test is also run multiple ti=
+mes.
+> That's why I do so.
 
+OK. My main concern was just that the tests would take too long, but th=
+e
+slow one is the cache test at the end, which is not repeated. So I thin=
+k
+this is fine.
 
-#!/bin/bash
+> > I wondered if this might be racy. credential-cache tells the daemon
+> > "exit", then waits for a response or EOF. The daemon sees "exit" an=
+d
+> > calls exit(0) immediately. We clean up the socket in an atexit()
+> > handler. So I think we are OK (the pipe will get closed when the pr=
+ocess
+> > exits, and the atexit handler must have run by then).
+> >
+> > But that definitely was not designed, and is just how it happens to
+> > work. I'm not sure if it's worth commenting on that (here, or perha=
+ps in
+> > the daemon code).
+>=20
+> I'm still confused.
+>=20
+> What do you mean by "pipe"? should it be "socket" instead?
 
-set -x
-rm -rf sparse-test
-GIT=git
-$GIT init sparse-test
-cd sparse-test
-$GIT config --add core.sparsecheckout true
+Sorry, yes, I used "pipe" and "socket" interchangeably there.
 
-mkdir -p dir1/dir2/show dir1/dir2/hide
-touch dir1/dir2/show/file1
-touch dir1/dir2/hide/file2
+> What is not designed? cleanup being done, my tests passing or the
+> synchronization?
 
-$GIT add .
-$GIT commit -m "initial commit"
-$GIT read-tree --reset -u HEAD
+The synchronization. If the daemon were implemented as:
 
-mkdir .git/info
-cat > .git/info/sparse-checkout <<EOF
-/*
-/dir1/dir2/show
-!/dir1/dir2/
-EOF
-$GIT read-tree --reset -u HEAD
+  if (!strcmp(action.buf, "exit")) {
+	/* acknowledge that we got command */
+	fclose(out);
+	exit(0);
+  }
 
-ls -R dir1/dir2
-set +x
-echo
-echo expected: see only "dir1/dir2/show/file"
-echo actual: see "dir1/dir2/hide/file" as well
+for example, then the client would exit at the same that the daemon is
+cleaning up the socket, and we may or may not call test_path_is_missing
+before the cleanup is done.
+
+I think it's OK to rely on that, but we may want to put a comment to
+that effect in the daemon code so that it doesn't get changed.
+
+-Peff
