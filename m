@@ -1,95 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] send-email: ignore trailing whitespace in mailrc alias
- file
-Date: Thu, 17 Mar 2016 19:58:22 -0400
-Message-ID: <20160317235822.GA10612@sigill.intra.peff.net>
-References: <1458252496-4118-1-git-send-email-sbeller@google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 3/2] dir.c: fix dir re-inclusion rules with "NODIR" and "MUSTBEDIR"
+Date: Fri, 18 Mar 2016 07:15:48 +0700
+Message-ID: <CACsJy8Dm3_w6TT6FP-my9fsRJ8F+StK8dBPid9zxQv4OzoZfcw@mail.gmail.com>
+References: <1458218744-15810-2-git-send-email-pclouds@gmail.com>
+ <1458219254-16343-1-git-send-email-pclouds@gmail.com> <xmqqfuvoy89q.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 00:58:48 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Durham Goode <durham@fb.com>,
+	Mateusz Kwapich <mitrandir@fb.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 18 01:16:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aghoU-0008BT-Vd
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 00:58:47 +0100
+	id 1agi5Y-0004E1-F5
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 01:16:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752896AbcCQX61 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 19:58:27 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33792 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750937AbcCQX60 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 19:58:26 -0400
-Received: (qmail 445 invoked by uid 102); 17 Mar 2016 23:58:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 17 Mar 2016 19:58:25 -0400
-Received: (qmail 6887 invoked by uid 107); 17 Mar 2016 23:58:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 17 Mar 2016 19:58:42 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Mar 2016 19:58:22 -0400
-Content-Disposition: inline
-In-Reply-To: <1458252496-4118-1-git-send-email-sbeller@google.com>
+	id S967344AbcCRAQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2016 20:16:21 -0400
+Received: from mail-lb0-f178.google.com ([209.85.217.178]:34586 "EHLO
+	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752540AbcCRAQT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 20:16:19 -0400
+Received: by mail-lb0-f178.google.com with SMTP id k12so78483817lbb.1
+        for <git@vger.kernel.org>; Thu, 17 Mar 2016 17:16:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=B1YRMYv5kYW3W75AIuPy34K/eJTiNvFFQeE/oLeZF4A=;
+        b=LO7HmQG3QKhigz6hIS9VgMd8bhac/sflHVjBA2L444VD5WCb7B44biFDaoDSrTDU+x
+         RJZsrEELKLG3XsAJx0mewoyyBiPK/xYqQPP7ChzxKZKtmgixJThV1qeNfzeFvLeUJrD7
+         t7qFSVDw3p5VgOee+gWu2M0DuIwWnjI8R7pq35CsfCGG15DTnldWRJsCHYMPqCy8Cq42
+         PiwJp8acG/kMoAOsIdKLD3xhGIFr6Dj9kjEEJ7JNr3U6ytW19XxbFYybq1JIcJQdCBNB
+         VPdUfV90T7vCQYj6LZKRdHnZdUA1Qd7wKIk5EG3LZDOlOjocba8FU8A3FOIgsXGZ/UIj
+         OUcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=B1YRMYv5kYW3W75AIuPy34K/eJTiNvFFQeE/oLeZF4A=;
+        b=dJtuh9C4tjG1eNGhqOcBxbL5rD/ZUhDt6PDlDsyALH1IGG90VGmPT1cEf6+6TlTPP5
+         UqoESXySSobLHTTCA0GzSdlKdn4kbefysBNgtH4NyHToEgAq7TdB0F76WBMmdF29nRal
+         0+vsFqAY8ylp7DZLC/KrQWkfmbVYbctqHYRiin11osr3eP+tFyOi6IuWPY7ZTaOFlIN2
+         OwDKb1z3HVcZvhxUJnnFGcaHYuSpPapUVnUFJD+3z64/a3QzUOiID6DqYYy1/DlqObDB
+         YpvU9EqWHxSHp/qHc5IHOazoU4FrUAvWaIRloqWmNtOduvOSjnyEtcLznvarqIN+uosb
+         rkmA==
+X-Gm-Message-State: AD7BkJLfsIshU8oCXUqMPwlJ5tx5MblDHMzAXU4jVp4qiyad35GgXCWmw6Xew/AFp+pDK4Kpvu9sltHZ8zlkJA==
+X-Received: by 10.112.140.129 with SMTP id rg1mr4962282lbb.80.1458260178244;
+ Thu, 17 Mar 2016 17:16:18 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Thu, 17 Mar 2016 17:15:48 -0700 (PDT)
+In-Reply-To: <xmqqfuvoy89q.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289174>
 
-On Thu, Mar 17, 2016 at 03:08:16PM -0700, Stefan Beller wrote:
+On Fri, Mar 18, 2016 at 6:49 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Thanks for these 5 patches, two of which need to be discarded ;-).
+> I think you can pick either one of 1/2, pick the one that says
+> "non-NULL" (as opposed to "something") in the log message for 2/2.
 
-> I just wrote the commit message as I would do, but offer you to claim
-> authorship for that perl stuff. So in case you'd want to reword that,
-> I'd ask you to that.  Also asking for your signoff. (But apart from
-> that I consider this patch final.)
+Sorry, I did "git send-email ... 00*" and it picked up *.patch~ as
+well. non-NULL is the non-backup version.
 
-Yeah, I am happy to take the credit/blame when somebody inevitably shows
-a case where this does the wrong thing (I say inevitable because I
-assume that is the fate of all regexes -- to one day be proven to miss a
-corner case).
+> Durham, does it fix your issues if you apply the 1/2 and 2/2 (but
+> not 3/2) on top of 2.8-rc?
+>
+> Duy, how comfortable are you with the idea of including this two in
+> 2.8 final?  We have long passed the final -rc, and while it is
+> probably OK to prolong the cycle and do another -rc, we cannot keep
+> going like "oops, there is another thing discovered by somebody new"
+> forever.
 
-But surely you know that my commit messages are more verbose than that.
-:)
-
-Here's what I would have written:
-
--- >8 --
-Subject: [PATCH] send-email: ignore trailing whitespace in mailrc alias file
-
-The regex for parsing mailrc considers everything after the
-second whitespace to be the email address, up to the end of
-the line. We have to include whitespace there, because you
-may have multiple space-separated addresses, each with their
-own internal quoting.
-
-But if there is trailing whitespace, we include that, too.
-This confuses quotewords() when we try to split the
-individual addresses, and we end up storing "undef" in our
-alias list. Later parts of the code then access that,
-generating perl warnings.
-
-Let's tweak our regex to throw away any trailing whitespace
-on each line.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- git-send-email.perl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index d356901..c45b22a 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -533,7 +533,7 @@ my %parse_alias = (
- 			$aliases{$alias} = \@addr
- 		}}},
- 	mailrc => sub { my $fh = shift; while (<$fh>) {
--		if (/^alias\s+(\S+)\s+(.*)$/) {
-+		if (/^alias\s+(\S+)\s+(.*?)\s*$/) {
- 			# spaces delimit multiple addresses
- 			$aliases{$1} = [ quotewords('\s+', 0, $2) ];
- 		}}},
+The fix is well understood. I did feel unsure about that "continue;"
+when I first wrote it and should have given it more thought. No other
+"unsure" feelings, so we're probably good from now on.
 -- 
-2.8.0.rc3.378.gf2f7872
+Duy
