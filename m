@@ -1,106 +1,95 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: 2.8.0 gitignore enhancement not working as expected
-Date: Fri, 18 Mar 2016 18:19:25 +0700
-Message-ID: <CACsJy8Bjv=fF0CSNF_QNTCYCqQjy=j0ZEyjYOBFscz0HEYATig@mail.gmail.com>
-References: <4a4980485c234280bce91be87d213216@XCH-RCD-003.cisco.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH/RFC] parse-options.c: make OPTION__COUNTUP consider
+ negative values
+Date: Fri, 18 Mar 2016 16:53:34 +0530
+Message-ID: <CAFZEwPOib-3JJQ+ufAbmNf1HYb5003LJw_paF2s9L8OK59N0PQ@mail.gmail.com>
+References: <0102015381b7c7b5-5b57a780-369b-478b-94d2-7094f0befdad-000000@eu-west-1.amazonses.com>
+	<20160317015044.GB12830@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "Richard Furness -X (rfurness - ENSOFT LIMITED at Cisco)" 
-	<rfurness@cisco.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 12:20:02 2016
+Cc: Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 18 12:23:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agsRk-0003Eu-M6
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 12:20:01 +0100
+	id 1agsVR-00050J-QE
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 12:23:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756398AbcCRLT6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2016 07:19:58 -0400
-Received: from mail-lf0-f46.google.com ([209.85.215.46]:35172 "EHLO
-	mail-lf0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751447AbcCRLT4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2016 07:19:56 -0400
-Received: by mail-lf0-f46.google.com with SMTP id v130so35416349lfd.2
-        for <git@vger.kernel.org>; Fri, 18 Mar 2016 04:19:55 -0700 (PDT)
+	id S1754930AbcCRLXi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2016 07:23:38 -0400
+Received: from mail-yw0-f173.google.com ([209.85.161.173]:33709 "EHLO
+	mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750786AbcCRLXf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2016 07:23:35 -0400
+Received: by mail-yw0-f173.google.com with SMTP id m126so110683147ywd.0
+        for <git@vger.kernel.org>; Fri, 18 Mar 2016 04:23:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=gwtNGigUSTKZsPpofCJOjbkj0XIWoRmx0xPoZ5B19rY=;
-        b=w74J8HjihT3f2WHOnIEtDZbG1xehfPjPaAXDGXWwKiAc1sT7CMHKXYgBeeZ/3Ew6Ov
-         uHcP5VjqytFnxamWzMkgPXLRbADLkLDsTKWZjqkeXNi9GHvE5t74++FO7Y6XUADZ8nnu
-         N6Vv9QPEDSixM47DlukOdSd3fLlh9XoERbEZQLEhTNLcQLNXM7nK+NzdvrZfwxZ1Xrwx
-         YvVyhNcsLh2Mkc4T8csondz8HBrXOiGZvTZHrk/3/Uj4d6xSnAL2A+3mf+WdrY7oN9Zb
-         ZlyZIHi2TWHj7rV0IMP0LkyI+g4yn/9Z5PJ4t9UTNt9eE46sY1ZFvvFq5KNAujDdGcqq
-         85Yw==
+        bh=Gmbk+tapjQCt8aBMRmeqJJjK86PgujqKhkTS4oqO6aw=;
+        b=YKoMjc+8u3/QOyWjIl5s/Z/9N0x4+8W0ovRMbjoxUqv+x0nMxwoxb9dHkTmYvDUAT3
+         U8ebfteQ3cBJBJZZA2/0Pq3hlu4qIWVLIL4oZG5h0VIiO2kL9hBgZANXMgl6dBuppUfk
+         Mmv4GF2JPWGxcyJJzMZzOmjOAlX/j2V54iAcqtMczdXowtDlNe50VUG/08pY2OSoxYzW
+         MzO8PWTuwLZOFX30OiyYly+sv4akzAXE5+ZjAji1IV+dXjfeCg2PWI3kcj0bHG9sYYuv
+         OekFbWk+Ne8Lt2AMqxvbOqco6HAKM1RYoZ9kQJsK0vjiMB9vfTB5PshQMyj9CYdDarv/
+         5c2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=gwtNGigUSTKZsPpofCJOjbkj0XIWoRmx0xPoZ5B19rY=;
-        b=jkpa/Sllbi8s5/UxQhB3G1czZrEj3I4glC6VomIZRZJg1ylQvet4vKOAqXwLMrhCwU
-         nOpGDlw5DJR8uY2ezveIoSDchig/nF1p8iFJonH0ffDNLQ2bfCLCeWQFdh606k8DZbAy
-         QtYQ1oTerUM1J+8Rha/hB5V0ZrsJZ+Bbhv9ak3con3UOiT0USVMa20vWpw/NiLaX0E/G
-         wRPIDlZkEJLqyG7lGtTDHzC2tNGnch1XICNNkqPONxzDL+KgXoGFlwZsQlSl5QoGiNWW
-         aBenvmMK1dBboEwk+heF3VTQs4sno3b/imrM4uMuC2dsK5aNr97nBTRbHecaXH6OhDRk
-         6UOA==
-X-Gm-Message-State: AD7BkJIOkxgGCa8Tyj5ryF//iQujfCGGCzjwaSbCKa63xMGdJ0QboPkUz2ldnHdN9210tUBX1DrXoQ3eK0cbOQ==
-X-Received: by 10.25.24.100 with SMTP id o97mr5925669lfi.112.1458299994671;
- Fri, 18 Mar 2016 04:19:54 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Fri, 18 Mar 2016 04:19:25 -0700 (PDT)
-In-Reply-To: <4a4980485c234280bce91be87d213216@XCH-RCD-003.cisco.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=Gmbk+tapjQCt8aBMRmeqJJjK86PgujqKhkTS4oqO6aw=;
+        b=IqfyU7wy6GY/zKA0Cy0VsggvOXfJzii1dvYEd106srG319+JSFNwCp3LpA2YPbL7ol
+         oVfwPrRENnsxe7DhjAmgPGbPEjsmLve1gBKyVV5p41k6g/BSZPQ7rPtAPYaO5WHisJ/b
+         MS3h+nprQ5WzA0XLNFfprFwzMjvunnO16+nqpV/sZmMupA0QqlcHAn4AS5tRyq4gto9O
+         Besyc/qsUtXhoeYgN3GzpKASkYSX7DSsCeGcKNdw5KVh4BZSNAkSq7NPeHSnz1BewAoD
+         dx+sCmAVRXncCsVXnRvisQwoRyqvC/pQ5zznWhV3U4+mLxDdoCoisWk/jR3Pnzz8O+jF
+         gobQ==
+X-Gm-Message-State: AD7BkJI37pVv+59lfjGswELlqbKiCTxJZ/LlCEO8ejNu3cfpv2ADhMoiXSm9Ewbze0fLuCoIHPGOJTrxNK4IKw==
+X-Received: by 10.129.94.7 with SMTP id s7mr7029838ywb.93.1458300214352; Fri,
+ 18 Mar 2016 04:23:34 -0700 (PDT)
+Received: by 10.13.203.137 with HTTP; Fri, 18 Mar 2016 04:23:34 -0700 (PDT)
+In-Reply-To: <20160317015044.GB12830@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289216>
 
-On Fri, Mar 18, 2016 at 4:31 PM, Richard Furness -X (rfurness - ENSOFT
-LIMITED at Cisco) <rfurness@cisco.com> wrote:
-> Hi,
+Sorry for a little late reply. I was under the impression that I had
+replied before.
+
+On Thu, Mar 17, 2016 at 7:20 AM, Jeff King <peff@peff.net> wrote:
+
+> That aside, this patch does mean that one can no longer use
+> OPT_COUNTUP() for negative values (i.e., the caller must start it at
+> either 0 or 1, and it must always go up from there).
 >
-> I've been testing out git 2.8.0 rc3 due to having a particular interest in this enhancement from the changelog:
-> " Another try to improve the ignore mechanism that lets you say "this
->    is excluded" and then later say "oh, no, this part (that is a
->    subset of the previous part) is not excluded".  This has still a
->    known limitation, though."
 >
-> Currently, in order to include ONLY the files under a/b/c I have the following in .gitignore:
-> /*             - Ignore everything
-> !/a             - Except directory "a"
-> /a/*            - Ignore all sub-directories of "a/"
-> !/a/b           - Except "a/b"
-> /a/b/*          - Ignore all sub-directories of "a/b/"
-> !/a/b/c         - Except "a/b/c"
+> And we would need to verify that all of the existing callers are OK with
+> this. Did you check that that (not rhetorical; I suspect they are all
+> OK, but somebody needs to check)?
+
+I did a grep on parse-options.h and saw that only "verbose", "quiet"
+and "force" use OPT_COUNTUP().
+I then did a git grep for "verbose = -1", "quiet = -1"
+But with "force = -1" showed that "builtin/clean.c" uses it. On a bit
+careful examination, this patch would not make difference to it.
+
+> We are also changing semantics without changing the interface, which
+> means any topics in flight (that you _cannot_ review, because you have
+> not seen them yet) may be subtly broken. To me that is not an absolute
+> deal-breaker, but something to weigh against the utility of the change.
+
+As I am new here, I don't really know how to go about with this. Could
+you describe in a little detail so that I can work on it?
+> When looking more carefully at builtin/commit.c for the other thread, it
+> occurred to me that OPT_BOOL might be a better fit for commit's "-v". It
+> really is a boolean "show the diff or not" and thus unlike the other
+> "make me more verbose". And OPT_BOOL already has the behavior you want,
+> I think.
 >
-> My hope was that with this enhancement I could massively simplify this to:
-> /*             - Ignore everything
-> !a/b/c      - Except "a/b/c"
->
-> However this doesn't seem to work - instead I find that NOTHING is ignored (i.e. it's as if the 2nd line completely cancels the first).
-
-Interesting. It seems to be working for me. This is my test setup
-
-> /tmp/abc $ find * -type f
-1
-a/1
-a/b/1
-a/b/c
-> /tmp/abc $ cat .gitignore
-/*
-!a/b/c
-
-and the results
-
-> /tmp/abc $ ~/w/git/temp/git --version
-git version 2.8.0.rc3
-> /tmp/abc $ ~/w/git/temp/git ls-files -o --exclude-standard
-a/b/c
-
-Can you do "GIT_TRACE_EXCLUDE=1 git ls-files -o --exclude-standard"
-and post the output?
--- 
-Duy
+> -Peff
