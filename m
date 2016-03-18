@@ -1,92 +1,154 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 00/16] port branch.c to use ref-filter's printing options
-Date: Sat, 19 Mar 2016 00:13:21 +0530
-Message-ID: <CAOLa=ZS7nwqnjciN2MkaRcuhf2NwOrDDgtqKDsDUJURuP8R1=A@mail.gmail.com>
-References: <1458060436-1215-1-git-send-email-Karthik.188@gmail.com> <CA+P7+xoHy0oBGdYqhCmA3h=fv-YhDSyZV=kJyizwNnNcm37jBA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git mailing list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 19:43:58 2016
+From: Michael Rappazzo <rappazzo@gmail.com>
+Subject: [PATCH v2 1/2] gitk: alter the ordering for the "Tags and heads" view
+Date: Fri, 18 Mar 2016 14:51:36 -0400
+Message-ID: <1458327097-92126-2-git-send-email-rappazzo@gmail.com>
+References: <1458327097-92126-1-git-send-email-rappazzo@gmail.com>
+Cc: git@vger.kernel.org, Michael Rappazzo <rappazzo@gmail.com>
+To: paulus@samba.org
+X-From: git-owner@vger.kernel.org Fri Mar 18 19:51:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agzNM-0005Um-WC
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 19:43:57 +0100
+	id 1agzUy-0001lE-3s
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 19:51:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755845AbcCRSnx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2016 14:43:53 -0400
-Received: from mail-vk0-f52.google.com ([209.85.213.52]:35769 "EHLO
-	mail-vk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750994AbcCRSnv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2016 14:43:51 -0400
-Received: by mail-vk0-f52.google.com with SMTP id e6so152399557vkh.2
-        for <git@vger.kernel.org>; Fri, 18 Mar 2016 11:43:51 -0700 (PDT)
+	id S1756933AbcCRSvp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2016 14:51:45 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:34184 "EHLO
+	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751669AbcCRSvn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2016 14:51:43 -0400
+Received: by mail-yw0-f194.google.com with SMTP id f6so10958654ywa.1
+        for <git@vger.kernel.org>; Fri, 18 Mar 2016 11:51:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=VVIx9RkjA2GITMMOMz9vgFNCkwkjUPbP65xmRLFkmMQ=;
-        b=uOADv0blDJa/jHG8jy8ZDcXXXCEFV3WCcz/+wIJdzaKx0/4zAZGTEBHYat7RF98tDP
-         zU8QYdOhtju437PLqX/U3jRcBap/0qojjeaDO0s8pPe73W+jq3h8BA2VCuDaTjINsMLh
-         sRxu1hp9lW2vSisMy42O5bzhu0WPk+jdBNv9nJ9FEG8LqXCA1mGd0Jp/TxKOQJJ5elUL
-         /aL1XVK8zMOJ/toXoo3/krGPpngKR0kMy9Kli5H8dYMCkkoVXFxUc221levyTxsbCq4I
-         gkd6D9nRNpH9+znOROWayluKLkithsdt2hQj0Zpj+sB/e1RGsSwoe4UZlS6rUmqiuxyp
-         GkHQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Yy4kZ24sJ4ZI8LnWNMhuemhY6xjylt4cTTc061HOL4Y=;
+        b=b6P1Q/sll+M3A77zlFwMIq/dF8wrpBxwFiiOd9X3/ZAThZvWgo3GZPrSD7M4N4bc6Y
+         Lh0VYFsThd7/4dSmvOhWzRptBDIrkH0DNxb930jwpZct/oqxsNbq6ZCi2wdBid1/O2Xv
+         A8EVCvxX4TqkNfgt4JvJ1stgHT1cN/2bWLcV+Q3nufotwkPIvYD4EZyHK9n8TywYJ4lU
+         o0Q71oyzLq9Lh4/ikfRGjDA00eLlzYtmw183YGl3/gzeKcuah+FaO0ohAoayMogPk1cX
+         JfJe/JxFwVHVjsks2/2ZGqsnAg+vm6J0jWvvLV2yCKx7YZcmp2xQivPx6CH4PKAPp5Gq
+         1tVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=VVIx9RkjA2GITMMOMz9vgFNCkwkjUPbP65xmRLFkmMQ=;
-        b=GC18QMTb/Mre86HCFAMlN9r4RovQ6CCC4A6rLUSpPofrLIjy2Yz28CZ+P5BJWM90QV
-         PFa9nOUGsfvVf+WftuR3QnYJD5Hhip++RvkPGC1xcqz60NKcnDkkfmDFWfTN523VF3SA
-         LmzfB26lt+u/wdnmcRephRuXtEgyl5k+Ay3FTV+1+FNiZpUaS1FTpaeFZsR/1mXMFFd2
-         NQHvgiD0GYn1GMfAI4ZIzqqbaB4HAKEG/EGZTZizCAxCzUR3azyR6EosPvfvY6Awct7W
-         mi/QvsrAvNsGziQcAoKk/UwFoejwn7gUYhMufAW//Tc/M4pndg+XaIE4oZaxYhu6/Ror
-         SySQ==
-X-Gm-Message-State: AD7BkJLvhG4AUljEUF8iFCJN+BrGymnZO0RAIKlN34oRQdXU+3qWelBlvINeD+7slJ6gCAV/+ci69BBQDW+ttw==
-X-Received: by 10.31.54.75 with SMTP id d72mr18356443vka.30.1458326630909;
- Fri, 18 Mar 2016 11:43:50 -0700 (PDT)
-Received: by 10.103.112.68 with HTTP; Fri, 18 Mar 2016 11:43:21 -0700 (PDT)
-In-Reply-To: <CA+P7+xoHy0oBGdYqhCmA3h=fv-YhDSyZV=kJyizwNnNcm37jBA@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Yy4kZ24sJ4ZI8LnWNMhuemhY6xjylt4cTTc061HOL4Y=;
+        b=c2JijZg82lp9/g01MZxSN7cji3mRG3+bMtVHJ+viPpSKundylbUS66pFJ0Tq2bTVwC
+         SaN7IqJC+ZTYKajGbNyoNW/i7/fKLFsYoU+vmFH9fguQfB0x3cp7F6IDKVtkgBY89k6A
+         /TU9UYgNcJRuq8h4pFcn24F5nzMLp/XuiH1Le3zvjUH5t1E9kgTGTInybBf6Aw6tantB
+         4COy+xGFfJe7NYog/qwZ5nVT4mnuwddfXk6lwjiue1Fw0+HUP1vCyV26jYuhrEuF+3SR
+         uxLTsGn//jGENhe3xjz0a7gno6cYoYyz+OiCpUz29dzJw3/xrWqsfktgjFsqEPHpk6Fh
+         bfJQ==
+X-Gm-Message-State: AD7BkJL7H4RqIaX1SkbQAk92w4+m3JeBjtq5FsOUBEc3rY3PKTmbgSE73jRXIcS58NlxBg==
+X-Received: by 10.129.21.213 with SMTP id 204mr7593381ywv.70.1458327102194;
+        Fri, 18 Mar 2016 11:51:42 -0700 (PDT)
+Received: from MRappazzo-8.local.com (pool-100-35-125-216.nwrknj.fios.verizon.net. [100.35.125.216])
+        by smtp.gmail.com with ESMTPSA id t123sm9204599ywe.4.2016.03.18.11.51.41
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Fri, 18 Mar 2016 11:51:41 -0700 (PDT)
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1458327097-92126-1-git-send-email-rappazzo@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289243>
 
-Hello,
+In the "Tags and heads" view, the list of refs is globally sorted.
+Because of this, the list of local refs (heads) can be interrupted by the
+list of remote refs.  This change re-orders the view to be: local refs,
+remote refs tracked by local refs, remote refs, tags, and then other refs.
 
-On Wed, Mar 16, 2016 at 3:30 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> On Tue, Mar 15, 2016 at 9:47 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
->> index 193e99e..578bbd1 100644
->> --- a/Documentation/git-for-each-ref.txt
->> +++ b/Documentation/git-for-each-ref.txt
->> @@ -116,10 +116,12 @@ upstream::
->>         `refname` above.  Additionally respects `:track` to show
->>         "[ahead N, behind M]" and `:trackshort` to show the terse
->>         version: ">" (ahead), "<" (behind), "<>" (ahead and behind),
->> -       or "=" (in sync).  Append `:track,nobracket` to show tracking
->> -       information without brackets (i.e "ahead N, behind M").  Has
->> -       no effect if the ref does not have tracking information
->> -       associated with it.
->> +       or "=" (in sync).  Has no effect if the ref does not have
->> +       tracking information associated with it. `:track` also prints
->> +       "[gone]" whenever unknown upstream ref is encountered. Append
->> +       `:track,nobracket` to show tracking information without
->> +       brackets (i.e "ahead N, behind M").  Has no effect if the ref
->> +       does not have tracking information associated with it.
->>
->
-> It looks like you duplicated "Has no effect if the ref does not have
-> tracking information associated with it"
+Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+---
+ gitk | 48 ++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 42 insertions(+), 6 deletions(-)
 
-Will fix that, thanks.
-
+diff --git a/gitk b/gitk
+index 5f1255c..d6d3136 100755
+--- a/gitk
++++ b/gitk
+@@ -9933,35 +9933,71 @@ proc refill_reflist {} {
+     global curview
+ 
+     if {![info exists showrefstop] || ![winfo exists $showrefstop]} return
+-    set refs {}
++    set localrefs {}
++    set remoterefs {}
++    set locally_tracked_remote_refs {}
++    set tagrefs {}
++    set otherrefs {}
+     foreach n [array names headids] {
+-	if {[string match $reflistfilter $n]} {
++	if {![string match "remotes/*" $n] && [string match $reflistfilter $n]} {
+ 	    if {[commitinview $headids($n) $curview]} {
+-		lappend refs [list $n H]
++		lappend localrefs [list $n H]
++		catch {set remote_name [exec git config --get branch.$n.remote]}
++		if {$remote_name ne ""} {
++		    catch {set remote_ref [exec git config --get branch.$n.merge]}
++		    set remote_ref [string map {"refs/heads/" ""} $remote_ref]
++		    set locally_tracked_remote_ref "remotes/$remote_name/$remote_ref"
++		    set upstream_exists ""
++		    catch {set upstream_exists [exec git rev-parse --verify $locally_tracked_remote_ref]}
++		    if {$upstream_exists ne ""} {
++			if {[lsearch $locally_tracked_remote_refs [list $locally_tracked_remote_ref H]] < 0} {
++			    lappend locally_tracked_remote_refs [list $locally_tracked_remote_ref H]
++			}
++		    }
++		}
+ 	    } else {
+ 		interestedin $headids($n) {run refill_reflist}
+ 	    }
+ 	}
+     }
++    set locally_tracked_remote_refs [lsort -index 0 $locally_tracked_remote_refs]
++    set localrefs [lsort -index 0 $localrefs]
++
++    foreach n [array names headids] {
++	if {[string match "remotes/*" $n] && [string match $reflistfilter $n]} {
++	    if {[commitinview $headids($n) $curview]} {
++		if {[lsearch $locally_tracked_remote_refs [list $n H]] < 0} {
++		    lappend remoterefs [list $n H]
++		}
++	    } else {
++		interestedin $headids($n) {run refill_reflist}
++	    }
++	}
++    }
++    set remoterefs [lsort -index 0 $remoterefs]
++
+     foreach n [array names tagids] {
+ 	if {[string match $reflistfilter $n]} {
+ 	    if {[commitinview $tagids($n) $curview]} {
+-		lappend refs [list $n T]
++		lappend tagrefs [list $n T]
+ 	    } else {
+ 		interestedin $tagids($n) {run refill_reflist}
+ 	    }
+ 	}
+     }
++    set tagrefs [lsort -index 0 $tagrefs]
++
+     foreach n [array names otherrefids] {
+ 	if {[string match $reflistfilter $n]} {
+ 	    if {[commitinview $otherrefids($n) $curview]} {
+-		lappend refs [list $n o]
++		lappend otherrefs [list "$n" o]
+ 	    } else {
+ 		interestedin $otherrefids($n) {run refill_reflist}
+ 	    }
+ 	}
+     }
+-    set refs [lsort -index 0 $refs]
++    set otherrefs [lsort -index 0 $otherrefs]
++    lappend refs {*}$localrefs {*}$locally_tracked_remote_refs {*}$remoterefs {*}$tagrefs {*}$otherrefs
+     if {$refs eq $reflist} return
+ 
+     # Update the contents of $showrefstop.list according to the
 -- 
-Regards,
-Karthik Nayak
+2.7.4
