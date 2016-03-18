@@ -1,72 +1,78 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH][Outreachy] branch: allow - as abbreviation of '@{-1}'
-Date: Fri, 18 Mar 2016 14:15:45 -0400
-Message-ID: <CAPig+cQ7pf2S_bB6tgbe2BazLNv9JpN=35XYGopYViNr3YqgmQ@mail.gmail.com>
-References: <1458305231-2333-1-git-send-email-elena.petrashen@gmail.com>
-	<xmqqvb4jrcle.fsf@gitster.mtv.corp.google.com>
-	<20160318170255.GA9846@glandium.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Extending this cycle by a week and reverting !reinclusion topic
+Date: Fri, 18 Mar 2016 11:37:23 -0700
+Message-ID: <xmqq60wjr5ss.fsf_-_@gitster.mtv.corp.google.com>
+References: <1458218744-15810-2-git-send-email-pclouds@gmail.com>
+	<1458219254-16343-1-git-send-email-pclouds@gmail.com>
+	<xmqqfuvoy89q.fsf@gitster.mtv.corp.google.com> <56EB8961.70302@fb.com>
+	<CACsJy8A2FKn-8nWtK4QPMHDCDYvTZBrQs1RVMApnuejXQis19g@mail.gmail.com>
+	<xmqqa8lvr7ix.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Fri Mar 18 19:15:53 2016
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Mar 18 19:37:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agywB-0005Pr-Nv
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 19:15:52 +0100
+	id 1agzH9-0001hK-Ao
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 19:37:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752740AbcCRSPs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2016 14:15:48 -0400
-Received: from mail-vk0-f49.google.com ([209.85.213.49]:34069 "EHLO
-	mail-vk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750811AbcCRSPr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2016 14:15:47 -0400
-Received: by mail-vk0-f49.google.com with SMTP id e185so151328399vkb.1
-        for <git@vger.kernel.org>; Fri, 18 Mar 2016 11:15:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=PUFW2Z5qC4Wrcap+H1QXFB854FScWCsOezpYBZFc9Pc=;
-        b=nh/m+S1GffZVEqt37HuxjDoMI756XtCbItekcM2zu3KjaAtCbuD/UjnkVlNvUN00CW
-         CM/aMeRX0afRQMHMQhFijjQA4ajJPC3qPFgNutKSOQYgZBB2YOM0+bDieSXxpZ0mJ7aP
-         qS/5uxsPT88jHgwtS01LI2bgH9IPkHP70dK+CxlHVBuwrE7sFaiv/nVC5cJ/0blsT6FN
-         Z/+jRyL+hdcrf2l5Al3M3kmXziG2JfoBIo8nVQQJ/banghRfKPOv7sqz+cb4wsyHHlk6
-         oZiuVtQtdis60nDVwaDJhJgLWew5rnAGM+bXq/XyxMUANbUgs6c1E95/dLdpNRgtO8KP
-         FPYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=PUFW2Z5qC4Wrcap+H1QXFB854FScWCsOezpYBZFc9Pc=;
-        b=HR08jfikhKt6IsKd8J97jEfd1wBuAmaRgqgW0hVejxN5/nNY3lPP5GMesKQUFHmMz/
-         SReRsWe0HkogCq2uzVGpwoqgjX3+XOUjpmY1cXB+dKu6aFPuTuFC1/BKvfihTa+PuM2u
-         7OGsEuPE3NbLlh049miilaxcaHi6m21ySwiwMLzdZglo/nNKSdXA63nYOEwn7VlW0IV9
-         Ik/yfZ9ZFySJE8korCvNeoyz5V8BfoBQcAVWGazdMmjt6x/sPCs9dpRrRzR4plWT+a9w
-         iKxdXVl8kZrKbYrw4dWP8wH0W8xi/5ZvP3naN0/fwC0E9+TtliwxWskSva7FnnNonZG9
-         2u7g==
-X-Gm-Message-State: AD7BkJKRIlRm09/d0WeAM3VHT7kkolTcjCVtSpmoLTatOo5Nc+JE7kKZ/Z6T39evy1HiuK0BNlqjXN8VcoVbxw==
-X-Received: by 10.31.150.76 with SMTP id y73mr18751442vkd.84.1458324946022;
- Fri, 18 Mar 2016 11:15:46 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Fri, 18 Mar 2016 11:15:45 -0700 (PDT)
-In-Reply-To: <20160318170255.GA9846@glandium.org>
-X-Google-Sender-Auth: TGOYYBTpSDTo3ZWL5_WumkrjouY
+	id S1752957AbcCRSh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2016 14:37:28 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:59178 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754136AbcCRSh0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2016 14:37:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F3E9E4DA37;
+	Fri, 18 Mar 2016 14:37:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=e3yRFomrfNL0Q1XPtyPJA3K3QwY=; b=MFUY8X
+	iu33yfhA08CRj8Hu5U9UEsaBIb+ROI8Y7FJkvGojs8pWciU4p/Ye0xn9InGNKfwo
+	teWn/Ix6lbjjsku53bSKToHKCBJ8Tufu5jRwwR65iM6FN8CQ2N/Obk8dut1G6cQ/
+	9Mugs6I2MrCxOKOVqQJK5ptqRL58QWX+oM6b4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vSiTOevk3Ph41KbQ5TIEQcw4/NsrVLQd
+	D48tpHO9lv3klEVaiLC/FMUQXMSuVDBIUs0y+V9z/7SDaShI4QXs92W+XpsXjums
+	HgMAqzCwgHCIB36TG9R0wABCUXGGMKz5sHpyy73BrGARcFkgzHsmuBWsCbzcDWjd
+	NfHzHOsrjmM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EB4D34DA34;
+	Fri, 18 Mar 2016 14:37:24 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6B7D44DA30;
+	Fri, 18 Mar 2016 14:37:24 -0400 (EDT)
+In-Reply-To: <xmqqa8lvr7ix.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 18 Mar 2016 11:00:06 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 752D6E78-ED38-11E5-8C74-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289240>
 
-On Fri, Mar 18, 2016 at 1:02 PM, Mike Hommey <mh@glandium.org> wrote:
-> On Fri, Mar 18, 2016 at 09:10:37AM -0700, Junio C Hamano wrote:
->>  * We forbid declaration-after-statement in our codebase.
->
-> By the way, why not enforce it with -Werror=declaration-after-statement?
-> If people patching git get an error when they do it, they won't submit
-> a patch with it, and you won't have to tell them about it :)
+It seems that people are still finding regressions in the topic for
+this item in the 2.8-rc3:
 
-See 658df95 (add DEVELOPER makefile knob to check for acknowledged
-warnings, 2016-02-25), which is already in 'master'.
+ * Another try to improve the ignore mechanism that lets you say
+   "this is excluded" and then later say "oh, no, this part (that is
+   a subset of the previous part) is not excluded".  This has still
+   a known limitation, though.
+
+Known limitations in a new feature are somewhat OK, but I am getting
+an impression that this is not nearly complete yet and it needs more
+time to be tested before it inflicts pain to the general public.
+
+I've reverted the offending changes from 'master' and will be
+tagging an extra -rc (2.8-rc4) early next week, as reverting a topic
+this late in the cycle is something I feel uncomfortable with.
+
+Thanks.
