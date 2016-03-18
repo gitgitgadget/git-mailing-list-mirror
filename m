@@ -1,75 +1,69 @@
-From: David Turner <dturner@twopensource.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] merge: refuse to create too cool a merge by default
-Date: Fri, 18 Mar 2016 18:23:56 -0400
-Organization: Twitter
-Message-ID: <1458339836.9385.29.camel@twopensource.com>
+Date: Fri, 18 Mar 2016 15:45:07 -0700
+Message-ID: <xmqq8u1fpfrg.fsf@gitster.mtv.corp.google.com>
 References: <xmqqshznpmfe.fsf@gitster.mtv.corp.google.com>
+	<1458339836.9385.29.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
+Content-Type: text/plain
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Mar 18 23:24:16 2016
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Fri Mar 18 23:45:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ah2oV-0002vR-P2
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 23:24:12 +0100
+	id 1ah38s-0006Pp-NK
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 23:45:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753463AbcCRWYC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2016 18:24:02 -0400
-Received: from mail-qg0-f51.google.com ([209.85.192.51]:36508 "EHLO
-	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753424AbcCRWX7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2016 18:23:59 -0400
-Received: by mail-qg0-f51.google.com with SMTP id u110so112360273qge.3
-        for <git@vger.kernel.org>; Fri, 18 Mar 2016 15:23:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:mime-version:content-transfer-encoding;
-        bh=KGQoiOI75fVi/HapdRunvMCBe9PzB6cbzI2pssyN6tU=;
-        b=NKH1Kqoe+JPdKDWFnTP5tWyYbyOUvloWRzSmtiEoWCmepxMdr17cFKY/9JJWRszw3g
-         RANV85iLQu0Ly1XcRrRpobjFigKZyN7/xIqrflwy0N9bgP7EtQTb1zpGi2nXXErFiv5P
-         qaTsa+BsYF6XOqguYKvbcCztn/FRFNWusZFSzoqkZ6cfHXAH+lqb/t+0Us1rEqReC+wj
-         dt4mmZ9n3TnP+io3V5w4ix/d814YuyfzC+uCOprfMcdT5PFCRzMptjHu0zJGCwtbKYi1
-         Es7h1fLcU7elWZbG04vbmwaSKok/uZkflXCP24l66RT/UX/ALmwjmAANrwyw1uSMO8Q+
-         LsCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=KGQoiOI75fVi/HapdRunvMCBe9PzB6cbzI2pssyN6tU=;
-        b=U2rbMwNUPK5g9ZpAdwqNOuMJlEsccEDlWySnqSo9z6K25qXwrFLzM9dgx1vZ4y2NVd
-         lwiCtETiEksLlyqGb6WgfUDKQfzFab64KGPb1pdaZthUjbPo1b6BC+nxNbu2Cfb+UyRr
-         jG2Mjvd6o3rOUIbrFDdTWTkfKtDphcqbeIsB2i1rtfIb8JgQd4GPVPPnUpAWiQnIsXYw
-         +u1WBQ1BvG63k1VIIKTAZH8XS0WDDkQkXqRyoYGOcGAWBlm/ISH2WYmPc0EWzJP9pAYx
-         NZc8HS3kobXBvS5ckFyFYtAyMzDQxm7tlB09FiL/iWnqAgpqp7ytb2Q4NRzNDOWf6nDy
-         vA+A==
-X-Gm-Message-State: AD7BkJLUlkXCP4oG1soA7xJJcNaijEDZgQ6X+NYhlCnLRthydYVsr6dqKOMLhOsL+BhyzQ==
-X-Received: by 10.141.2.11 with SMTP id e11mr27146834qhd.69.1458339838440;
-        Fri, 18 Mar 2016 15:23:58 -0700 (PDT)
-Received: from ubuntu ([8.25.196.26])
-        by smtp.gmail.com with ESMTPSA id e11sm6933688qkb.39.2016.03.18.15.23.57
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 18 Mar 2016 15:23:57 -0700 (PDT)
-In-Reply-To: <xmqqshznpmfe.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S1753808AbcCRWpM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2016 18:45:12 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:61860 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752883AbcCRWpK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2016 18:45:10 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DA3C24D912;
+	Fri, 18 Mar 2016 18:45:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iYiiKInd7ffYkHBjHLlMAAA7Zu8=; b=ZbVULv
+	dAEnE9wC7Iw34LFhGyFFdunX3ZWdPcHjM0KzVBKj8m7jkXnYwTFPK6iTZg+agz6/
+	ELYVkSg3JfZA0iAGyk/qz6MInrooqH9G32muepXfmdUh0tzjdzxTl+SLoS0AGaxU
+	i0AUhXMIt5za0yh2yLCLg0GlQkN+cbGh46cZQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qfAZ3VtXOsBhgcKTHwpBIOWNX36KgpI5
+	sVfvLtMEX1sX4QoRgKS1mU25Knv1EYxWbTRPr9qhPpIU9Mf6HzsB61KJI4JTno6l
+	SVnxidjbe9JCHo+m4z5yMd5egZp5aXokAi03UdGzbL98Ywf43Rex4IweeZrs2zZX
+	MMRPGUb5n3c=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D18574D911;
+	Fri, 18 Mar 2016 18:45:08 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4DAB74D910;
+	Fri, 18 Mar 2016 18:45:08 -0400 (EDT)
+In-Reply-To: <1458339836.9385.29.camel@twopensource.com> (David Turner's
+	message of "Fri, 18 Mar 2016 18:23:56 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 10BD3144-ED5B-11E5-A967-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289263>
 
-On Fri, 2016-03-18 at 13:21 -0700, Junio C Hamano wrote:
->  Many tests that are updated by this patch does the
-> pass-through manually by turning:
+David Turner <dturner@twopensource.com> writes:
 
-Nit: Should be many tests ... do
+> Also, I didn't notice a test that shows that "cool" merges without
+> allow-unrelated-histories are forbidden.
 
-Also, I didn't notice a test that shows that "cool" merges without
-allow-unrelated-histories are forbidden.
+Yeah, because I didn't write one in the version that was sent out,
+which has been corrected in the one that will be on 'pu'.
+
+Thanks.
