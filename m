@@ -1,86 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] Code reorgnization
-Date: Fri, 18 Mar 2016 01:24:47 -0400
-Message-ID: <20160318052447.GD22327@sigill.intra.peff.net>
-References: <20160317111136.GA21745@lanh>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 4/4] pretty-print: add --pretty=noexpand
+Date: Thu, 17 Mar 2016 22:36:16 -0700
+Message-ID: <CA+55aFw=obdDSTS98GQi6ER3RgAxD61xDmXYVeEX=a3GKM6SOg@mail.gmail.com>
+References: <alpine.LFD.2.20.1603160926060.13030@i7>
+	<xmqq7fh25mkc.fsf@gitster.mtv.corp.google.com>
+	<CA+55aFxV5PWdSn9Gj=zV464TtJo=QvciZrhc5Pwe+Qfyqt8sXw@mail.gmail.com>
+	<xmqqwpp243sb.fsf@gitster.mtv.corp.google.com>
+	<xmqqoaae4340.fsf@gitster.mtv.corp.google.com>
+	<CA+55aFwbNXJnwEYrKE5dDRk_6eZeGT6Z11uSQS8RmCSq43PkdA@mail.gmail.com>
+	<xmqqk2l23xzc.fsf@gitster.mtv.corp.google.com>
+	<CA+55aFwbev52kTV1wNMTsxR3kWvhXxTkjVy-KQOEO_2jX3RrAQ@mail.gmail.com>
+	<xmqq37rozoic.fsf_-_@gitster.mtv.corp.google.com>
+	<xmqqoaacy9tm.fsf_-_@gitster.mtv.corp.google.com>
+	<20160318050807.GC22327@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 06:24:55 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 18 06:36:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agmu6-0005Hg-Fs
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 06:24:54 +0100
+	id 1agn5D-0004iC-3t
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 06:36:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751460AbcCRFYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2016 01:24:51 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33886 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750895AbcCRFYu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2016 01:24:50 -0400
-Received: (qmail 15041 invoked by uid 102); 18 Mar 2016 05:24:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 18 Mar 2016 01:24:50 -0400
-Received: (qmail 8676 invoked by uid 107); 18 Mar 2016 05:25:08 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 18 Mar 2016 01:25:08 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 Mar 2016 01:24:47 -0400
-Content-Disposition: inline
-In-Reply-To: <20160317111136.GA21745@lanh>
+	id S1753233AbcCRFgS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2016 01:36:18 -0400
+Received: from mail-ig0-f194.google.com ([209.85.213.194]:34344 "EHLO
+	mail-ig0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753228AbcCRFgR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2016 01:36:17 -0400
+Received: by mail-ig0-f194.google.com with SMTP id av4so2140031igc.1
+        for <git@vger.kernel.org>; Thu, 17 Mar 2016 22:36:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=vM3gZ4Ql2BQfmdRo0N5qJ6N8WK9DLUEt1jRmO0w0zrQ=;
+        b=0bCqXPkzGVwgeC+JXdpTGfoRUWLwKbLhSxZIvvV6i7wJ5hgyXYq04z54pfGKnYHOJo
+         qfeOM9Oj8wM0R3FtSDWnmZ8yVohqSqRQ2FcXjV3HH0mBAspU5xv8xoVcbc3UmpY7rM2a
+         N3gal39DTfoyA5x9iidl9CfJME8Xw/RKJUS6QBP+pbJ6yKivEmX7IRFnTfci5L8MEv4x
+         NIhIlJMRz+7av33m0mvqoElmdmNpbnahJUX8QqhqSY4ZnlXO3Se8DW+ec6bAuFW/JdpH
+         QL4U1tzwPjW6fbZV38jPZFEBqc7udU/TJuzYGEjQ2gTgp4Z5mCry1tbDFkbeuX6AxNYU
+         VSKQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=vM3gZ4Ql2BQfmdRo0N5qJ6N8WK9DLUEt1jRmO0w0zrQ=;
+        b=AKsQlmsxigLSnkhC55GxtVfPk4uwkNjG+V3Rh4EW+F6+5IABDfjOssZzNGMp79LDF8
+         eYezlc+w2FYGx6/JKctYupDQCArjjE+0U7u2DFet+4j6WMz2ujNH3fzLRZLYjZeLrwCo
+         d/3lK7kyA1jpiVS1rbdCZ+Ph2bc4cymqvaDMY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=vM3gZ4Ql2BQfmdRo0N5qJ6N8WK9DLUEt1jRmO0w0zrQ=;
+        b=LtD6wQf8El6O6+8ZQUeYDJZa9+ynwzkAIlQjMCqxUnPDQTQcaJJzIY2dAhpmjHA9eL
+         zAFTxCenM2reOfhu7m4S4tCg5Se+4AeqFxpFtvgKncwp/zoqazHnUAqMELIPPZZDDMny
+         0noPz5k/UENTcskd8TcHloQULK19pNCc9i2zi08vBOsWlxy6Z4plAtSv/itC3pQ3b/9H
+         h/FF/TAF0RTkBa8IvwCDNiFrjoGdU9h/bZPJ13abo+McyIS9cYbLDOLHCqPev/C6dPRB
+         /rcPfyrxsdwRxbsV55qHqXg538Tj8ssiNXNBisCTO0gbnnvt+cnRTPL6OYw+vhTNpQTL
+         C9Sg==
+X-Gm-Message-State: AD7BkJJPgcaclMmspLuLXkd3mkWn2VAQq75Wh5UEPhbVS6vlGn+uGehdYpfpLSnZKqZ+zl/4KfgObBKkCHiEwg==
+X-Received: by 10.51.17.38 with SMTP id gb6mr15500852igd.45.1458279376473;
+ Thu, 17 Mar 2016 22:36:16 -0700 (PDT)
+Received: by 10.36.93.202 with HTTP; Thu, 17 Mar 2016 22:36:16 -0700 (PDT)
+In-Reply-To: <20160318050807.GC22327@sigill.intra.peff.net>
+X-Google-Sender-Auth: WLIVza5OAsfmEmXZso-CGnaf62g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289192>
 
-On Thu, Mar 17, 2016 at 06:11:36PM +0700, Duy Nguyen wrote:
+On Thu, Mar 17, 2016 at 10:08 PM, Jeff King <peff@peff.net> wrote:
+>
+> Hmm. Isn't "expand tabs" orthogonal to the rest of the pretty format?
+> That is, couldn't one want "--pretty=fuller, but with tabs expanded"?
 
-> Git's top directory is crowded and I think it's agreed that moving
-> test-* to t/helper is a good move. I just wanted to check if we could
-> take this opportunity (after v2.8.0) to move some other files too. I
-> propose the following new subdirs
+Yeah, you are right, one easily could. And in fact I end up doing
+"fuller" myself occasionally, because I check peoples commit
+timestamps (some people have a nasty habit of rebasing when they
+shouldn't).
 
-I guess I don't really see the "crowded" problem, but perhaps that is
-because I am more or less familiar with where things are in git's code
-base. I suppose if you were looking for a "utility" function, you might
-look in "util" and therefore have a smaller set of files to check.
+So it's not just the medium format that would want detab by default,
+it's "full" and "fuller" too (but probably not "raw": that indents the
+message too, but the only real reason to use "raw" is for scripting).
 
-But I think we also run into the opposite problem: I am looking for some
-particular function, but I can't find it, because I am looking in "util"
-and it is in some other directory. And when files move around, it makes
-history harder to follow (maybe that is because git sucks and we need to
-make it better, but certainly I run into mild annoyances with the
-builtin/ rename when digging in history).
+So it would probably be better to make it a separate flag, and not tie
+it to a particular log format (and just make the log format set the
+default).
 
-And you have a similar problem when creating new files. Which slot do
-they go in? What if they could feasibly go into two slots?
-
-So there can be friction either way. In practice I find I just use ctags
-to jump to the functions I am interested in, and I don't care that much
-about filenames.
-
-The reorganization that _would_ be more interesting to me is not files
-in directories, but rather functions in files. I wish everything were
-designed more as modules with a pair of matching ".c" and ".h" files,
-with a public interface defined in the ".h", and messier, private stuff
-in the ".c". But we have some real dumping grounds:
-
-  1. cache.h has the declarations for at least a dozen different
-     modules; besides being hard to navigate, it causes more frequent
-     recompilation than necessary.
-
-  2. a few of the .c files could probably be split (e.g., dir.c is where
-     all of the pathspec code lives, even though that is used for much
-     more than filesystem access these days).
-
-Splitting those up would _also_ introduce friction (and actually worse
-than whole-file renames, because finding code movement between files is
-an even harder / more expensive problem). But I feel like it would buy a
-lot more in terms of code clarity, and in reducing the scope of code
-which has access to private, static interfaces.
-
--Peff
+               Linus
