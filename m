@@ -1,90 +1,109 @@
-From: "Richard Furness -X (rfurness - ENSOFT LIMITED at Cisco)" 
-	<rfurness@cisco.com>
-Subject: RE: 2.8.0 gitignore enhancement not working as expected
-Date: Fri, 18 Mar 2016 15:33:26 +0000
-Message-ID: <20118f38fdbb48af99292e69648fd7e9@XCH-RCD-003.cisco.com>
-References: <4a4980485c234280bce91be87d213216@XCH-RCD-003.cisco.com>
- <CACsJy8Bjv=fF0CSNF_QNTCYCqQjy=j0ZEyjYOBFscz0HEYATig@mail.gmail.com>
- <551499517627471db2c8434077eb16db@XCH-RCD-003.cisco.com>
- <CACsJy8BfySC0extNWmKHgF1QOoEzGtg5RxgpfsNxjp8HJ_rdXQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [GIT PULL] GPIO bulk changes for kernel v4.6
+Date: Fri, 18 Mar 2016 08:43:30 -0700
+Message-ID: <xmqqzitvrdul.fsf@gitster.mtv.corp.google.com>
+References: <CACRpkdbGkfJ9bW1db64msMeQjue+=y+op5EmSx62FWOWDOJwWg@mail.gmail.com>
+	<CA+55aFwV4Cq=4zJc6Fw0yAGrTmci_DFAjJKxkk05pjJJf3iYbA@mail.gmail.com>
+	<56EB9B0C.4050507@nvidia.com>
+	<CA+55aFy=-UAbVo+Xx08tBA7eTPk2B+G3=SbarVxThS57LdakPA@mail.gmail.com>
+	<alpine.DEB.2.20.1603181532040.4690@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 16:33:34 2016
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Laxman Dewangan <ldewangan@nvidia.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	"linux-kernel\@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"linux-gpio\@vger.kernel.org" <linux-gpio@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: linux-gpio-owner@vger.kernel.org Fri Mar 18 16:43:37 2016
+Return-path: <linux-gpio-owner@vger.kernel.org>
+Envelope-to: glg-linux-gpio@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agwP8-0003Oi-3t
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 16:33:34 +0100
+	(envelope-from <linux-gpio-owner@vger.kernel.org>)
+	id 1agwYq-0000jt-TL
+	for glg-linux-gpio@plane.gmane.org; Fri, 18 Mar 2016 16:43:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932277AbcCRPda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2016 11:33:30 -0400
-Received: from rcdn-iport-9.cisco.com ([173.37.86.80]:18497 "EHLO
-	rcdn-iport-9.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751410AbcCRPd2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2016 11:33:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=1224; q=dns/txt; s=iport;
-  t=1458315208; x=1459524808;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=YQz2ELC3HXYnIX5GWlvZIGJ+zq+XS1edN2TooeDWDcE=;
-  b=Q+FWrkiKw7OE+0tRRSGKijRpX3OLhj1xX38rNUkiynoLzkriGc1nutd0
-   0S9AFGh4JZEoyYF1Pc0saeuDTCG+ApXWtqLgraMLVhEj2xIVFjS+PbqkK
-   op+recfcSlrSu2Nl7SZhI3ISuyW2+UfNKa8M7iRpfgYrT00x/8en62pWl
-   8=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: =?us-ascii?q?A0AFAgDQHuxW/4MNJK1eg0VTcgauSYtNA?=
- =?us-ascii?q?Q2BbyGFbAIcgRI4FAEBAQEBAQFkJ4RBAQEBBCMRRQwEAgEIDgMEAQEBAgIjAwI?=
- =?us-ascii?q?CAh0CERQBCAgBAQQOBQiICgMSDrEainkNhFYBAQEBAQEBAQEBAQEBAQEBAQEBA?=
- =?us-ascii?q?QEVfIlmgj6BWIMmglYFkwSEIjEBFoVahh6BboI3jFeHMYdUAR4BAUKDZWoBAQG?=
- =?us-ascii?q?JJT1+AQEB?=
-X-IronPort-AV: E=Sophos;i="5.24,355,1454976000"; 
-   d="scan'208";a="82136313"
-Received: from alln-core-1.cisco.com ([173.36.13.131])
-  by rcdn-iport-9.cisco.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 18 Mar 2016 15:33:27 +0000
-Received: from XCH-ALN-004.cisco.com (xch-aln-004.cisco.com [173.36.7.14])
-	by alln-core-1.cisco.com (8.14.5/8.14.5) with ESMTP id u2IFXR6I026752
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=FAIL);
-	Fri, 18 Mar 2016 15:33:27 GMT
-Received: from xch-rcd-003.cisco.com (173.37.102.13) by XCH-ALN-004.cisco.com
- (173.36.7.14) with Microsoft SMTP Server (TLS) id 15.0.1104.5; Fri, 18 Mar
- 2016 10:33:26 -0500
-Received: from xch-rcd-003.cisco.com ([173.37.102.13]) by
- XCH-RCD-003.cisco.com ([173.37.102.13]) with mapi id 15.00.1104.009; Fri, 18
- Mar 2016 10:33:26 -0500
-Thread-Topic: 2.8.0 gitignore enhancement not working as expected
-Thread-Index: AdGA+Oope1o05p+SRVOEuS4waIVawgAOQXSAAAQGuNAAA2twgAAJGyVw
-In-Reply-To: <CACsJy8BfySC0extNWmKHgF1QOoEzGtg5RxgpfsNxjp8HJ_rdXQ@mail.gmail.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.63.23.173]
-Sender: git-owner@vger.kernel.org
+	id S1757443AbcCRPnf (ORCPT <rfc822;glg-linux-gpio@m.gmane.org>);
+	Fri, 18 Mar 2016 11:43:35 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:54221 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752558AbcCRPne (ORCPT
+	<rfc822;linux-gpio@vger.kernel.org>); Fri, 18 Mar 2016 11:43:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 881914C886;
+	Fri, 18 Mar 2016 11:43:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=udCq2Ru5iXnUYGZT/xGhuk7L6FQ=; b=FYDwSm
+	CVv56WPUuvEuIm54rGwuGkSXqcfyyfBST04xPmVsqe4LQWZWcjmgKT7zPsLM4Cza
+	hB09bgIBKjlMHqlASduwTif6pRqwQxJ4nWB9RQp8MZCpTMYMmQOxxz6ZFFu+wnBx
+	jQ7C5wjMHm2IjvKoIsz98K7WwM4iNdQ15cXsQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mau8PgTKUzapVBAecMK9/VXiM/Q/G/1x
+	CLpSC1YZ6HfBpMyX5y/ltWwszB6GmJhx1GNLvoiHOaHxwb83DUG25rHvvBwMzBxe
+	Ap3R7tt8tPh6txFSjG0c9egU2GSRa7iyONma+el6WzHOSfwvghvznjOr0hRe5OZV
+	WGTQ61ExrPc=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7F0C84C885;
+	Fri, 18 Mar 2016 11:43:32 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F03584C884;
+	Fri, 18 Mar 2016 11:43:31 -0400 (EDT)
+In-Reply-To: <alpine.DEB.2.20.1603181532040.4690@virtualbox> (Johannes
+	Schindelin's message of "Fri, 18 Mar 2016 15:32:54 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 2AFE1EB4-ED20-11E5-981F-79226BB36C07-77302942!pb-smtp0.pobox.com
+Sender: linux-gpio-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289224>
+List-ID: <linux-gpio.vger.kernel.org>
+X-Mailing-List: linux-gpio@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289225>
 
-SGkgRHV5LA0KDQpUaGF0IHNlZW1zIHRvIGhhdmUgZml4ZWQgaXQgOi0pDQoNClRoYW5rcyBmb3Ig
-eW91ciBoZWxwIQ0KDQpSaWNoYXJkDQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4g
-RnJvbTogRHV5IE5ndXllbiBbbWFpbHRvOnBjbG91ZHNAZ21haWwuY29tXQ0KPiBTZW50OiAxOCBN
-YXJjaCAyMDE2IDE0OjUzDQo+IFRvOiBSaWNoYXJkIEZ1cm5lc3MgLVggKHJmdXJuZXNzIC0gRU5T
-T0ZUIExJTUlURUQgYXQgQ2lzY28pDQo+IDxyZnVybmVzc0BjaXNjby5jb20+DQo+IENjOiBnaXRA
-dmdlci5rZXJuZWwub3JnDQo+IFN1YmplY3Q6IFJlOiAyLjguMCBnaXRpZ25vcmUgZW5oYW5jZW1l
-bnQgbm90IHdvcmtpbmcgYXMgZXhwZWN0ZWQNCj4gDQo+IE9uIEZyaSwgTWFyIDE4LCAyMDE2IGF0
-IDk6MzIgUE0sIFJpY2hhcmQgRnVybmVzcyAtWCAocmZ1cm5lc3MgLSBFTlNPRlQNCj4gTElNSVRF
-RCBhdCBDaXNjbykgPHJmdXJuZXNzQGNpc2NvLmNvbT4gd3JvdGU6DQo+ID4gSGkgRHV5LA0KPiA+
-DQo+ID4gSSB0cmllZCB5b3VyIGV4YWN0IGV4YW1wbGUgYW5kIGl0IHdvcmtlZCBjb3JyZWN0bHku
-IEJ1dCB0aGVuIEkgdHJpZWQgYWRkaW5nDQo+IHNvbWUgbW9yZSBmaWxlcy9kaXJzIGF0IHRoZSB0
-b3AgbGV2ZWwgYW5kIEkgc3RpbGwgc2VlIGFuIGlzc3VlOg0KPiANCj4gVGhhbmsgeW91LiBQaGV3
-Li4gSSBiZXQgeW91IGhpdCB0aGUgc2FtZSBidWcgd2UgZm91bmQgeWVzdGVyZGF5ICh5b3VyDQo+
-IHRyYWNlIHN1Z2dlc3RzIHNvKS4gQ2FuIHlvdSB0cnkgdGhpcyBwYXRjaCBbMV0ganVzdCB0byBj
-b25maXJtPw0KPiANCj4gWzFdIGh0dHA6Ly9hcnRpY2xlLmdtYW5lLm9yZy9nbWFuZS5jb21wLnZl
-cnNpb24tY29udHJvbC5naXQvMjg5MTAxDQo+IC0tDQo+IER1eQ0K
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> Hi Linus,
+>
+> On Fri, 18 Mar 2016, Linus Torvalds wrote:
+>
+>> I thought git didn't merge two branches that have no common base by
+>> default, but it seems it will happily do so.
+>
+> What happened to "The coolest merge EVER!"?
+>
+> 	http://thread.gmane.org/gmane.comp.version-control.git/5126/
+>
+> Ciao,
+> Dscho
+
+An obvious response to the above, "What about it?", is something you
+would have already anticipated when you wrote the above, and I wish
+I saw that in the message I am responding to, but I didn't, so here
+is my attempt ;-)
+
+The old article shows two interesting things.  One is that there are
+cases where it makes perfect sense to bind two unrelated histories
+when the two roots are totally unrelated.
+
+I am not Linus, but I think the proposal is to make it harder to do
+this unusual merge by mistake, while keeping it possible to do so
+when the user really wants to.  And the "deliberately whitespace
+damaged patch" in the message you are responding to was primarily to
+point out where the "making it harder" logic should go by showing
+how to make it impossible, leaving it to readers to adjust it to
+"harder but still possible".
+
+Now, the second thing that the old article you pointed shows is that
+it is possible to create such a merge without using "git merge" even
+though it is more involved and takes conscious effort by the user.
+In that sense, you could argue that, with the "make it impossible"
+change in Linus's message to "git merge", there is no more change
+needed (I do not know if that is what you meant to imply, though).
+
+I think it makes sense to teach "git merge" to error out like Linus
+did unless the user explicitly says "I know what I am doing" with an
+explicit option (e.g. --force or --merge-unrelated-histories).
