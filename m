@@ -1,86 +1,158 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 18/19] index-helper: autorun
-Date: Fri, 18 Mar 2016 08:14:51 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603180752540.4690@virtualbox>
-References: <1457548582-28302-1-git-send-email-dturner@twopensource.com> <1457548582-28302-19-git-send-email-dturner@twopensource.com> <CACsJy8CaWFhCzrH3imz+BRMTESSmyUB4jeAaYUDNk+Tmpj-VrQ@mail.gmail.com> <alpine.DEB.2.20.1603151517590.4690@virtualbox>
- <1458151880.9385.1.camel@twopensource.com> <alpine.DEB.2.20.1603161923380.4690@virtualbox> <CACsJy8AsJKmsPm8Y1LRZdmyH60n3OT5X=42RGK5GXNBDfn8j8g@mail.gmail.com> <alpine.DEB.2.20.1603171536420.4690@virtualbox>
- <CACsJy8Dx4=igm3YVYkTDdRSxevDo2xRij9P5m7VPxkVrq3oq8Q@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [GIT PULL] GPIO bulk changes for kernel v4.6
+Date: Fri, 18 Mar 2016 00:15:25 -0700
+Message-ID: <CA+55aFy=-UAbVo+Xx08tBA7eTPk2B+G3=SbarVxThS57LdakPA@mail.gmail.com>
+References: <CACRpkdbGkfJ9bW1db64msMeQjue+=y+op5EmSx62FWOWDOJwWg@mail.gmail.com>
+	<CA+55aFwV4Cq=4zJc6Fw0yAGrTmci_DFAjJKxkk05pjJJf3iYbA@mail.gmail.com>
+	<56EB9B0C.4050507@nvidia.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: David Turner <dturner@twopensource.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Linus Walleij <linus.walleij@linaro.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>,
 	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 08:15:01 2016
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+To: Laxman Dewangan <ldewangan@nvidia.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: linux-gpio-owner@vger.kernel.org Fri Mar 18 08:15:31 2016
+Return-path: <linux-gpio-owner@vger.kernel.org>
+Envelope-to: glg-linux-gpio@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agocf-0007mG-1t
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 08:15:01 +0100
+	(envelope-from <linux-gpio-owner@vger.kernel.org>)
+	id 1agod7-00086d-QG
+	for glg-linux-gpio@plane.gmane.org; Fri, 18 Mar 2016 08:15:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751565AbcCRHO5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2016 03:14:57 -0400
-Received: from mout.gmx.net ([212.227.15.19]:62160 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751015AbcCRHO4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2016 03:14:56 -0400
-Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0Lrek1-1Zfjle3gxJ-013Phi; Fri, 18 Mar 2016 08:14:51
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CACsJy8Dx4=igm3YVYkTDdRSxevDo2xRij9P5m7VPxkVrq3oq8Q@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:fN2aUq1HUxVoz2sEJlc1j/TWX24+J609v59pT+8/Dmh2GMOohkL
- v63Mw4SvT0KM9EtE6PG/irVLDUhOt+UrpNrTclHaN4bUNLmKNVukNrzJPCGAlFBLSmyFcmw
- Yv3n7KOlgzfLRT0Ik+NGXz6iY6drBHNLvtukipZDLeMV+o4KQiLM96Pw7V4kUS8D7GjYCkw
- XDSV4cBJ5lCT3PEv9RxQQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MCZUvjwvj5I=:wW0TYk/9Kp3exXigoWK8oU
- 5DaciG9M2Ue3hTtzO/a5BzDma5//2N+Z7ofvvpohbqaZKB/oShFEuyCYYBPMzyTQZo8Yq1pOW
- rdmY/aHoV1mX7GXgi35PkuD94HNW7yH3lnMgKqis8YLAK+PHMfizWuN5oIdYGvG0Dlouz0ng5
- qlSUJdah7jW2/QDTGZP+aEG2z3Z7bIcZqk24ZZeGQkDurV4M6CwodC+OrS56p7oVBRUqlIupm
- Qz0FJf6X5GZiCnpcP+FDUIlS5znduiG6Rx75FJzlEqPPuhAPJIRCstdiqCxff0rZr+SxnMBVO
- bh+iG43gO7aLrjBf0N3b6Rs00rU+SaYEYOCL/9MZyLBj0MofzRrpew5fo19ez870LRbftZIh/
- P0/zEKWqBh6MD3JgS7BXdE+9lAvFl5pmibBjEkWsVCgD2EbYEI/17UjicGmCUpPc0i+FnEUmJ
- +t6z/vWIAnLPt/skEAHOHZ9lkSuF6cKHvY+bJXCPn5iiJnVD/qv8dX051HGFjD62i0i27Tu0o
- CN8SUxKMkVQtFpk6goR50OJXfciR4r7Neyw1fEbriv96ZRmUH5jodRyWQhHyi9/6LNg35XKZ/
- JjbtnfOrDFFnlbkuaV7nH9FhbO7Kin/4mxxpPrsmPSzhi6BdxEucOz71maMoFOWmHkzLDwbwN
- wHWXa3nIC19Eaq1COX4kiKfeEa/ZxhUev6CrGAXx3tDzwj7VA2CiJ2vImst2/R7bai9eM+X3n
- 8Z1aSkuqCh83hzYkwlNWlGoMo0JVMo2b4oIxHS4ToXXTTmcvmhZxDQw+zNtfupbkCi3JCyOt 
-Sender: git-owner@vger.kernel.org
+	id S1751614AbcCRHP1 (ORCPT <rfc822;glg-linux-gpio@m.gmane.org>);
+	Fri, 18 Mar 2016 03:15:27 -0400
+Received: from mail-ig0-f178.google.com ([209.85.213.178]:37983 "EHLO
+	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751188AbcCRHP0 (ORCPT
+	<rfc822;linux-gpio@vger.kernel.org>); Fri, 18 Mar 2016 03:15:26 -0400
+Received: by mail-ig0-f178.google.com with SMTP id ig19so15122689igb.1;
+        Fri, 18 Mar 2016 00:15:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=39sZ5pzEdjuzYCJfhp0kdt495hR/GUVVCpBcEXu5g30=;
+        b=A9bXfB67DvjD0NtrnCbEY407mFuimpGZOWkIs628O/xLbKM5JwGHGH88cmgCmrMrcC
+         niJS6tdIMynk9N6chekya/OOhL51ED5tV/boZMLWFktybcZb1LADo0wx1o/Bn8KdaMDH
+         Y8RKHQH5BBsXHdNDZZJi9Yj6fzn2tybqDnu4PUwn+4LEIDnidSNDgTziDbdSpfDH9knG
+         TdaAnzBu0I7MutKMwDW0mr+TWMm1TsZnweTHGZ8lxmhoi3vl0AEAv4Nc5RwbpePPFGG4
+         PM+IcCgpZ/KzTpia8Y2fF8w9MVpvCyCHotgplv98Pt4SIUZ/7q6Nt/PLJnYoaIfR+V8+
+         0lNQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=39sZ5pzEdjuzYCJfhp0kdt495hR/GUVVCpBcEXu5g30=;
+        b=USVWgQsrdZaF9GeYRewV8lDmrEEN1C3p2IxwCRPAqrNthibjlTlVvEK/lF5M4tx5fc
+         OWY+jJts3aKoVtODQk4cx3qcUZmqN68ANzKP/LCc21St4oACnAui2iP5pjo4GytEYtNd
+         GujrAVP2eEE2u8BAktX1mBsfqh1gzlcwsKGcA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=39sZ5pzEdjuzYCJfhp0kdt495hR/GUVVCpBcEXu5g30=;
+        b=jnErFO12sDy1Pw8uDH/SAr2ACxAd7u2rB1hVT2RL8drbPG2vs/I02/SZ0+nl3tA3U1
+         QonbXYvmwDAfNCBKSnXTBl9zDHItRSOFLec7TfHKNA7v49KNrVbGl0WicZifP/Q1Q6YL
+         ivT7Z3tg+hvD7600KW/nahj7BJDFRouscNzrxCFXtTH/tvWGK3GX1OUh9RbvVLeP03V4
+         CZLhPpsyZeLVIkgII9vg5bWbZoGlY0ZFGihwGpxdgiSaQAwYtzD93LIjXNX9GWDOkhuy
+         O5ygB4VVfzbj5KgvhEl9UU4hqHNaqblG8xT3ZMw8pLpJ8yU/HHSdM+4ON1lxneHteh1h
+         Z2sw==
+X-Gm-Message-State: AD7BkJJqkFYBuE4nQibyp2iCSz/ONlyyW72ll10HN8Zo9Y5ykXMD5KalnBf9rTIh8vN1SaOn6H5wfJNvpgRtoA==
+X-Received: by 10.51.17.38 with SMTP id gb6mr15805352igd.45.1458285325241;
+ Fri, 18 Mar 2016 00:15:25 -0700 (PDT)
+Received: by 10.36.93.202 with HTTP; Fri, 18 Mar 2016 00:15:25 -0700 (PDT)
+In-Reply-To: <56EB9B0C.4050507@nvidia.com>
+X-Google-Sender-Auth: zEoByBlAHF9jeOIaKP_g1g2_w48
+Sender: linux-gpio-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289206>
+List-ID: <linux-gpio.vger.kernel.org>
+X-Mailing-List: linux-gpio@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289207>
 
-Hi Duy,
-
-On Fri, 18 Mar 2016, Duy Nguyen wrote:
-
-> On Thu, Mar 17, 2016 at 9:43 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
+On Thu, Mar 17, 2016 at 11:07 PM, Laxman Dewangan <ldewangan@nvidia.com> wrote:
 >
-> > I know of use cases where the index weighs 300MB, and falling back to
-> > reading it directly *really* hurts.
-> 
-> For crying out loud, what do you store in that repo? What I have in
-> mind for all these works are indexes in 10MB range, or maybe 50MB max.
+> For creating the repo and branch, I just followed the instruction from wiki
+> https://help.github.com/articles/create-a-repo/
 
-Welcome to the real world.
+So you shouldn't have created a new repo at all, you should just have
+cloned an existing one (that gets you a repo, of course).
 
-> Very unscientifically, git.git index is about 274kb and contains ~3000
-> entries, so 94 bytes per entry on average.
+You basically ended up starting a new project.
 
-In terms of software projects' size, git.git is but a toy. Most developers
-deal with vastly larger (and often messier) repositories. This is
-especially true outside Open Source. Even the Linux kernel's repository is
-*tiny* compared to real-world repositories.
+But I guess the github connection explains why there was a crazy
+README.md file there, and I can see why that documentation would make
+you think it's the right thing to do.
 
-I am sure that David could tell many a tale about repository/working
-directory size, too.
+Oh well.
 
-So yeah, this is the challenge: to make Git work at real-world scale
-(didn't we hear a lot about this at the latest Git Merge?)
+Just a "git init" wouldn't have done that kind of damage, the github
+documentation is just misleading in this respect.
 
-Ciao,
-Dscho
+We may have to make it really really really clear for the kernel that
+people should not use github in any way except purely for hosting..
+
+> I jut use git (git version 2.1.4) for pushing the changes in github repo.
+>
+> There is no other tools used.
+
+I thought git didn't merge two branches that have no common base by
+default, but it seems it will happily do so.
+
+So once you made the mistake of starting a new project, git merge
+ended up "helpfully" allowing you to merge the remote tracking branch
+into that new project, and we ended up with a silly new root.
+
+"git pull-request" will complain about not having a commit in common,
+but "git merge" apparently does not even warn.
+
+Adding Junio and the git list. This seems like much too easy a way to screw up.
+
+Junio (and git people), the problem is that github seems to have
+caused Laxman to think he should start a new project, and then git
+happily merged the new root just because nobody knew better. And
+sadly, I didn't notice the history screw-up until too late, so now we
+in the kernel have a third root commit (the first two are
+intentional): commit a101ad945113 was merged by commit e5451c8f8330.
+
+So how about a patch something like this:
+
+  --- a/builtin/merge.c
+  +++ b/builtin/merge.c
+  @@ -1398,7 +1398,7 @@ int cmd_merge(int argc, const char **argv,
+const char *prefix)
+                     NULL, 0, UPDATE_REFS_DIE_ON_ERR);
+
+          if (remoteheads && !common)
+  -               ; /* No common ancestors found. We need a real merge. */
+  +               die(_("No common ancestor - not merging"));
+          else if (!remoteheads ||
+                   (!remoteheads->next && !common->next &&
+                    common->item == remoteheads->item)) {
+
+(the above is explicitly whitespace-damaged on purpose - it's not
+meant as a serious patch, because we do want the *ability* to merge
+different projects across different roots, and there are even git
+tests for it, it's just that I think it's too easy to make this
+mistake and not even realize).
+
+So the real thing having a special option required to merge
+non-related projects? Or at least a humongous warning?
+
+You can recreate (for testing only!) this by doing this in a kernel repo:
+
+  git checkout a101ad945113
+  git merge 3cf42efc3479
+
+and you'll see how it happily ends up creating a merge commit with no
+common ancestors and no warning that anything might be wrong. It will
+take a while - walking all the way up to the root to not find the
+common object - but it will happily merge those two totally unrelated
+branches without complaining at all.
+
+Now I'm starting to wonder just how many github projects have lots of
+separate root commits..
+
+            Linus
