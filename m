@@ -1,81 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [GIT PULL] GPIO bulk changes for kernel v4.6
-Date: Fri, 18 Mar 2016 10:16:55 -0700
-Message-ID: <xmqqk2kzr9iw.fsf@gitster.mtv.corp.google.com>
-References: <CACRpkdbGkfJ9bW1db64msMeQjue+=y+op5EmSx62FWOWDOJwWg@mail.gmail.com>
-	<CA+55aFwV4Cq=4zJc6Fw0yAGrTmci_DFAjJKxkk05pjJJf3iYbA@mail.gmail.com>
-	<56EB9B0C.4050507@nvidia.com>
-	<CA+55aFy=-UAbVo+Xx08tBA7eTPk2B+G3=SbarVxThS57LdakPA@mail.gmail.com>
-	<alpine.DEB.2.20.1603181532040.4690@virtualbox>
-	<CA+55aFwbRVG-5AW+NnMOFZ_hU5i+i7f3FxgEt9Qm7B6pEd7x0g@mail.gmail.com>
-	<xmqqr3f7rbck.fsf@gitster.mtv.corp.google.com>
-	<CA+55aFzVqPzEg6zq7sRweE7OCVKMJzM1eZRHXddMG+BabEDeCA@mail.gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH 18/19] index-helper: autorun
+Date: Fri, 18 Mar 2016 13:22:14 -0400
+Organization: Twitter
+Message-ID: <1458321734.9385.26.camel@twopensource.com>
+References: <1457548582-28302-1-git-send-email-dturner@twopensource.com>
+	 <1457548582-28302-19-git-send-email-dturner@twopensource.com>
+	 <CACsJy8CaWFhCzrH3imz+BRMTESSmyUB4jeAaYUDNk+Tmpj-VrQ@mail.gmail.com>
+	 <alpine.DEB.2.20.1603151517590.4690@virtualbox>
+	 <1458151880.9385.1.camel@twopensource.com>
+	 <alpine.DEB.2.20.1603161923380.4690@virtualbox>
+	 <CACsJy8AsJKmsPm8Y1LRZdmyH60n3OT5X=42RGK5GXNBDfn8j8g@mail.gmail.com>
+	 <alpine.DEB.2.20.1603171536420.4690@virtualbox>
+	 <CACsJy8Dx4=igm3YVYkTDdRSxevDo2xRij9P5m7VPxkVrq3oq8Q@mail.gmail.com>
+	 <alpine.DEB.2.20.1603180752540.4690@virtualbox>
+	 <CACsJy8Amdr-2WqwYjYjyaag0jR_pq=h36QFKMk3BYQmE_A-DOw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Laxman Dewangan <ldewangan@nvidia.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	"linux-kernel\@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-gpio\@vger.kernel.org" <linux-gpio@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: linux-gpio-owner@vger.kernel.org Fri Mar 18 18:17:01 2016
-Return-path: <linux-gpio-owner@vger.kernel.org>
-Envelope-to: glg-linux-gpio@plane.gmane.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 18 18:22:25 2016
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-gpio-owner@vger.kernel.org>)
-	id 1agy1D-0004DW-Vx
-	for glg-linux-gpio@plane.gmane.org; Fri, 18 Mar 2016 18:17:00 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1agy6Q-0007PU-0i
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 18:22:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755500AbcCRRQ7 (ORCPT <rfc822;glg-linux-gpio@m.gmane.org>);
-	Fri, 18 Mar 2016 13:16:59 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:60990 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755089AbcCRRQ6 (ORCPT
-	<rfc822;linux-gpio@vger.kernel.org>); Fri, 18 Mar 2016 13:16:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EF4934D392;
-	Fri, 18 Mar 2016 13:16:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3qtouYfsc9TxrwIEdlZ8w/Qj36s=; b=bmCYIP
-	xQRzcWaqzUSMgMQfc57vslqXDYIodV3k3SOSL0PTieyp0/ijTf/WFnHLEAsB+fRO
-	XfWZGyXtO7mLjjBznhPD6izrDU+NFm7rQkjtZssU6M8lFUanUgJVKoV3dto2PWua
-	StN3p9bRgp5EwjZsgNAgMPEeJTjKk4XcYpu20=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uA3qAmrIAF7iDj+mk/Su0kjPJ3uvWlrt
-	s4pIQqaIumLe8AbY8UaJWD2Rc4gYfbZBBetcAgZyKkgdJci3OFAS5J7FQFUvLBGd
-	4/WAPIyRE7VhvJLfpfz7NDom0Wc5gHn7fIsynlDmmW3o/hhPbFlVMA66ESuwSZ1p
-	1P4thq+brFY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E62514D391;
-	Fri, 18 Mar 2016 13:16:56 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5C19C4D390;
-	Fri, 18 Mar 2016 13:16:56 -0400 (EDT)
-In-Reply-To: <CA+55aFzVqPzEg6zq7sRweE7OCVKMJzM1eZRHXddMG+BabEDeCA@mail.gmail.com>
-	(Linus Torvalds's message of "Fri, 18 Mar 2016 10:01:25 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 377893F6-ED2D-11E5-89C3-79226BB36C07-77302942!pb-smtp0.pobox.com
-Sender: linux-gpio-owner@vger.kernel.org
+	id S1755193AbcCRRWS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2016 13:22:18 -0400
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:33544 "EHLO
+	mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753304AbcCRRWQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2016 13:22:16 -0400
+Received: by mail-qk0-f178.google.com with SMTP id s5so51874986qkd.0
+        for <git@vger.kernel.org>; Fri, 18 Mar 2016 10:22:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:mime-version:content-transfer-encoding;
+        bh=dpOeQXc55oGsMKicKnuUTn0LBowCohnqRX7B3ukTGyY=;
+        b=MAI0sulsZ6cwQSu+pPFaT/fUbd7NS0+uf+RyKqy8IvgZGuQEHfJyiULpu4CWjPNUnE
+         soRkgd6RVZgKEHwLsxg0KM8PMFyDybfIx3U4wP9HP5wGEV70J+Xp+k8J7YL4DdzQK67i
+         /SEc0etX3YEZnb0BON1456p73ba5t7xdP3/5UpQAoCCA9qwWbA5+8oJMPARyTPv2qbI/
+         fj/Kl6BFDbh+gJPPZqAiZoc7LwWOsqLhiOsB6Q0U0ZHookdjSdqfiROzmhVZwMZV1WgU
+         jhQzWwN32obvE5uSepBk4I8MOE+eup/wTbnh1guaT7TwlA43nYAHmSQZCx89yaVmPG/r
+         21vQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:mime-version:content-transfer-encoding;
+        bh=dpOeQXc55oGsMKicKnuUTn0LBowCohnqRX7B3ukTGyY=;
+        b=kUxpNcbl+qdZKKn1hid4BA7b1sh7cA8+kI9HmqP6O09sW3W2iTzUJko32RIo9iLB6p
+         elir0DZ4D4L4pMdBkEytbvgCt7X+FXoSP/efrRv7ZcrTs4BjZO0ZIvg6lxf3evb1lzKl
+         JQtRw4YHpTe4VDFNMUKRWtElMCCYRzxg5IVrf3RN8QmTAzuDv7OXX9jNDBPhlDQVQVRA
+         PmbT+jmG+57qPml7ptJEDLh70Mc+VSlv0ViVE4ZaRw6J/YL3QLITo67dJLumARiS8E9d
+         RljCGQbEBE1JlRZ5pSJ/kx1SS/O5a9HaG8Cr6j9B0sT1JS+fmPXgpmWhH26x7gucDkzp
+         HzvA==
+X-Gm-Message-State: AD7BkJKjvGYx/Otmk3gW90s8Ro1tSYDAcQurfXduUzq5SZkCORk6GLO9bTvWaNu/BivRyw==
+X-Received: by 10.55.80.131 with SMTP id e125mr23787663qkb.62.1458321735782;
+        Fri, 18 Mar 2016 10:22:15 -0700 (PDT)
+Received: from ubuntu (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
+        by smtp.gmail.com with ESMTPSA id o9sm6414973qkh.32.2016.03.18.10.22.14
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 18 Mar 2016 10:22:15 -0700 (PDT)
+In-Reply-To: <CACsJy8Amdr-2WqwYjYjyaag0jR_pq=h36QFKMk3BYQmE_A-DOw@mail.gmail.com>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-gpio.vger.kernel.org>
-X-Mailing-List: linux-gpio@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289233>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289234>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Fri, 2016-03-18 at 14:44 +0700, Duy Nguyen wrote:
+> > So yeah, this is the challenge: to make Git work at real-world
+> > scale
+> > (didn't we hear a lot about this at the latest Git Merge?)
+> 
+> I'm all for making Junio cry by using Git for what it is (or was) not
+> intended for, but this seems too much. A repo about 500k files or
+> less, I think I can deal with,  not those in million range.
 
-> The code in the recursive merge that allows this to happen is this:
-> ...
-> And I do think that's right, and I think it's clever, and it goes back to 2006:
->
->   934d9a24078e merge-recur: if there is no common ancestor, fake empty one
->
-> but I think there should be an option there.
-
-Oh, I think everybody understands that and agrees by now.
-
+Sad news: Facebook's repo was already getting towards that size three
+years ago:
+http://comments.gmane.org/gmane.comp.version-control.git/189776
