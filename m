@@ -1,72 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [GIT PULL] GPIO bulk changes for kernel v4.6
-Date: Fri, 18 Mar 2016 08:43:30 -0700
-Message-ID: <xmqqzitvrdul.fsf@gitster.mtv.corp.google.com>
+Date: Fri, 18 Mar 2016 08:47:02 -0700
+Message-ID: <CA+55aFwbRVG-5AW+NnMOFZ_hU5i+i7f3FxgEt9Qm7B6pEd7x0g@mail.gmail.com>
 References: <CACRpkdbGkfJ9bW1db64msMeQjue+=y+op5EmSx62FWOWDOJwWg@mail.gmail.com>
 	<CA+55aFwV4Cq=4zJc6Fw0yAGrTmci_DFAjJKxkk05pjJJf3iYbA@mail.gmail.com>
 	<56EB9B0C.4050507@nvidia.com>
 	<CA+55aFy=-UAbVo+Xx08tBA7eTPk2B+G3=SbarVxThS57LdakPA@mail.gmail.com>
 	<alpine.DEB.2.20.1603181532040.4690@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Laxman Dewangan <ldewangan@nvidia.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Laxman Dewangan <ldewangan@nvidia.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	Linus Walleij <linus.walleij@linaro.org>,
-	"linux-kernel\@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-gpio\@vger.kernel.org" <linux-gpio@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>,
 	Git Mailing List <git@vger.kernel.org>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: linux-gpio-owner@vger.kernel.org Fri Mar 18 16:43:37 2016
+X-From: linux-gpio-owner@vger.kernel.org Fri Mar 18 16:47:12 2016
 Return-path: <linux-gpio-owner@vger.kernel.org>
 Envelope-to: glg-linux-gpio@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <linux-gpio-owner@vger.kernel.org>)
-	id 1agwYq-0000jt-TL
-	for glg-linux-gpio@plane.gmane.org; Fri, 18 Mar 2016 16:43:37 +0100
+	id 1agwcF-0002je-14
+	for glg-linux-gpio@plane.gmane.org; Fri, 18 Mar 2016 16:47:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757443AbcCRPnf (ORCPT <rfc822;glg-linux-gpio@m.gmane.org>);
-	Fri, 18 Mar 2016 11:43:35 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:54221 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752558AbcCRPne (ORCPT
-	<rfc822;linux-gpio@vger.kernel.org>); Fri, 18 Mar 2016 11:43:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 881914C886;
-	Fri, 18 Mar 2016 11:43:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=udCq2Ru5iXnUYGZT/xGhuk7L6FQ=; b=FYDwSm
-	CVv56WPUuvEuIm54rGwuGkSXqcfyyfBST04xPmVsqe4LQWZWcjmgKT7zPsLM4Cza
-	hB09bgIBKjlMHqlASduwTif6pRqwQxJ4nWB9RQp8MZCpTMYMmQOxxz6ZFFu+wnBx
-	jQ7C5wjMHm2IjvKoIsz98K7WwM4iNdQ15cXsQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mau8PgTKUzapVBAecMK9/VXiM/Q/G/1x
-	CLpSC1YZ6HfBpMyX5y/ltWwszB6GmJhx1GNLvoiHOaHxwb83DUG25rHvvBwMzBxe
-	Ap3R7tt8tPh6txFSjG0c9egU2GSRa7iyONma+el6WzHOSfwvghvznjOr0hRe5OZV
-	WGTQ61ExrPc=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7F0C84C885;
-	Fri, 18 Mar 2016 11:43:32 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F03584C884;
-	Fri, 18 Mar 2016 11:43:31 -0400 (EDT)
-In-Reply-To: <alpine.DEB.2.20.1603181532040.4690@virtualbox> (Johannes
-	Schindelin's message of "Fri, 18 Mar 2016 15:32:54 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2AFE1EB4-ED20-11E5-981F-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1756155AbcCRPrF (ORCPT <rfc822;glg-linux-gpio@m.gmane.org>);
+	Fri, 18 Mar 2016 11:47:05 -0400
+Received: from mail-io0-f177.google.com ([209.85.223.177]:36470 "EHLO
+	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751410AbcCRPrE (ORCPT
+	<rfc822;linux-gpio@vger.kernel.org>); Fri, 18 Mar 2016 11:47:04 -0400
+Received: by mail-io0-f177.google.com with SMTP id g184so85018686ioa.3;
+        Fri, 18 Mar 2016 08:47:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=911rCvbYkefQCbPdQGFMzHoNDJnErdhBYz3WY07YfNg=;
+        b=xg6IBjn7RGr17vE9ezJw7FwiMljRgdIlY1n0f26tT2vJA9CraZYgC/dNGp7mudybrE
+         x6cVBP/n6fjQvIkElPXIAmcSNUSSE4Zhgc7bDrjmqE74RXDkhNXnQi9jCKyB/YBfNyDn
+         j4358fWS8lDfFhy7RnUR7a5Ln47aCqjj21yXze3fzb/Ho/JOdtez6RGfMtOb27o6YxPd
+         zuAkNIabeLh3MqTKu9lvr9nEzy7vIQ1qZQ8pnQghyuLszFgoxh0zDyHu5Z5Mp8Bl4VMV
+         0DcVQOCbsHGA83zvwCvBlHDo+s9OZkqlOoXUY05ky0QwuqYg9naNuNX1TbfvEcRxsWe2
+         N6rA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=911rCvbYkefQCbPdQGFMzHoNDJnErdhBYz3WY07YfNg=;
+        b=FAD3nAKjK28z05gNXPgdHt0Bfxwt427yU68afemc9L/w0Mm/T2RFF+aOaQL/cu84DZ
+         SzDgtabdis2QpdR5xEJYpRavQLgQ7XNNNKyJREAjsjHu+h6wdv7yexQDO0okzCmBowC+
+         GGZIett9FHZDnD32YBjDL8yZTFCRj6sMUshR8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=911rCvbYkefQCbPdQGFMzHoNDJnErdhBYz3WY07YfNg=;
+        b=E626GLVpATOX/J1wq1uJ8flbV2QJaF2cVhymOX5RJQAIbg1N06klg9Eok4sfYVpm1y
+         dhOj60T8ZrTNrt11wu9m+kHDM7AIyGLkWQcrN8kirX0QJRPEiZ8vj3e1pXFAPYy8NXva
+         cZBsf6WHGHAfn8ch+iXpJh/RXmtwGdDhVjt0kx+Ju2D7aFm2sdmmHBjP8nWAYwPwogV+
+         sSofMFDMNDPsgGB00yyO3Us+//FJnrkgJTlqQPSp7/eDbFPZ3zOT//IKEuuV/k+a5xXQ
+         ZSM2Jpy7ZzC5E/h3C+6f3jDOb+1So9vHqp2hPAoYUdiPVE50tgnB+WxwocPHqv4FYfqs
+         uncA==
+X-Gm-Message-State: AD7BkJJxKUXx+2Eh53molJ4nBI420bvBu4AQgzw5wfYqjYyS7BHshhqPxk4PcWCQTqUFXgIP0NjXSdjw0BoEmw==
+X-Received: by 10.107.13.65 with SMTP id 62mr16919856ion.186.1458316022529;
+ Fri, 18 Mar 2016 08:47:02 -0700 (PDT)
+Received: by 10.36.93.202 with HTTP; Fri, 18 Mar 2016 08:47:02 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1603181532040.4690@virtualbox>
+X-Google-Sender-Auth: T6q1Jt0bn3GtYrvyEhpw9USwQtg
 Sender: linux-gpio-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-gpio.vger.kernel.org>
 X-Mailing-List: linux-gpio@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289226>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> Hi Linus,
+On Fri, Mar 18, 2016 at 7:32 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
 > On Fri, 18 Mar 2016, Linus Torvalds wrote:
 >
@@ -75,35 +85,28 @@ Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
 > What happened to "The coolest merge EVER!"?
 >
-> 	http://thread.gmane.org/gmane.comp.version-control.git/5126/
->
-> Ciao,
-> Dscho
+>         http://thread.gmane.org/gmane.comp.version-control.git/5126/
 
-An obvious response to the above, "What about it?", is something you
-would have already anticipated when you wrote the above, and I wish
-I saw that in the message I am responding to, but I didn't, so here
-is my attempt ;-)
+I'm not complaining about multi-root capability in general - it's
+still cool. In the kernel, we have aef8755711a2 ("Merge Btrfs into
+fs/btrfs") that does something slightly similar.
 
-The old article shows two interesting things.  One is that there are
-cases where it makes perfect sense to bind two unrelated histories
-when the two roots are totally unrelated.
+It's literally just the fact that "git merge" does it with no extra
+flags or checks. I'd like people to have to be aware of what they are
+doing when they merge two different projects, not do it by mistake.
 
-I am not Linus, but I think the proposal is to make it harder to do
-this unusual merge by mistake, while keeping it possible to do so
-when the user really wants to.  And the "deliberately whitespace
-damaged patch" in the message you are responding to was primarily to
-point out where the "making it harder" logic should go by showing
-how to make it impossible, leaving it to readers to adjust it to
-"harder but still possible".
+So making it conditional on a flag like "--no-common-root" is what I'd look for.
 
-Now, the second thing that the old article you pointed shows is that
-it is possible to create such a merge without using "git merge" even
-though it is more involved and takes conscious effort by the user.
-In that sense, you could argue that, with the "make it impossible"
-change in Linus's message to "git merge", there is no more change
-needed (I do not know if that is what you meant to imply, though).
+Or just make it about the merge stategy. For example, "subtree" makes
+sense exactly for merging one project into a subdirectory of another.
+But the default merge shouldn't do it.
 
-I think it makes sense to teach "git merge" to error out like Linus
-did unless the user explicitly says "I know what I am doing" with an
-explicit option (e.g. --force or --merge-unrelated-histories).
+I don't think the original "resolve" did it, for example. You can't do
+a three-way merge without a base.
+
+Note how that above "coolest merge" definitely wasn't done by just
+"git merge gitk". I had to play around with the git internals. Now, it
+shouldn't be _that_ hard, but at the same time it really shouldn't be
+as easy as "I didn't know, so I merged two independent projects".
+
+                       Linus
