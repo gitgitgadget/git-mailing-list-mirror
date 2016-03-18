@@ -1,84 +1,80 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 3/2] dir.c: fix dir re-inclusion rules with "NODIR" and "MUSTBEDIR"
-Date: Fri, 18 Mar 2016 07:15:48 +0700
-Message-ID: <CACsJy8Dm3_w6TT6FP-my9fsRJ8F+StK8dBPid9zxQv4OzoZfcw@mail.gmail.com>
-References: <1458218744-15810-2-git-send-email-pclouds@gmail.com>
- <1458219254-16343-1-git-send-email-pclouds@gmail.com> <xmqqfuvoy89q.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [RFC] Code reorgnization
+Date: Fri, 18 Mar 2016 07:28:22 +0700
+Message-ID: <CACsJy8Bt211aSusEZ0xTDS96ZQgCjrMi-sDmZXkz_jCuUnkcTA@mail.gmail.com>
+References: <20160317111136.GA21745@lanh> <CAGZ79kbcwFcPSJ9xwE6xi4gQ871m3brtfAut2TChGNzL-foxdQ@mail.gmail.com>
+ <xmqqy49gzzrf.fsf@gitster.mtv.corp.google.com> <20160317214355.GA32317@serenity.lan>
+ <xmqqh9g4zsf8.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Durham Goode <durham@fb.com>,
-	Mateusz Kwapich <mitrandir@fb.com>
+Cc: John Keeping <john@keeping.me.uk>,
+	Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 01:16:25 2016
+X-From: git-owner@vger.kernel.org Fri Mar 18 01:29:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agi5Y-0004E1-F5
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 01:16:24 +0100
+	id 1agiHj-0004f7-Ss
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 01:29:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967344AbcCRAQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Mar 2016 20:16:21 -0400
-Received: from mail-lb0-f178.google.com ([209.85.217.178]:34586 "EHLO
-	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752540AbcCRAQT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Mar 2016 20:16:19 -0400
-Received: by mail-lb0-f178.google.com with SMTP id k12so78483817lbb.1
-        for <git@vger.kernel.org>; Thu, 17 Mar 2016 17:16:19 -0700 (PDT)
+	id S1752728AbcCRA24 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Mar 2016 20:28:56 -0400
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:32903 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751076AbcCRA2y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Mar 2016 20:28:54 -0400
+Received: by mail-lb0-f181.google.com with SMTP id oe12so78884861lbc.0
+        for <git@vger.kernel.org>; Thu, 17 Mar 2016 17:28:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=B1YRMYv5kYW3W75AIuPy34K/eJTiNvFFQeE/oLeZF4A=;
-        b=LO7HmQG3QKhigz6hIS9VgMd8bhac/sflHVjBA2L444VD5WCb7B44biFDaoDSrTDU+x
-         RJZsrEELKLG3XsAJx0mewoyyBiPK/xYqQPP7ChzxKZKtmgixJThV1qeNfzeFvLeUJrD7
-         t7qFSVDw3p5VgOee+gWu2M0DuIwWnjI8R7pq35CsfCGG15DTnldWRJsCHYMPqCy8Cq42
-         PiwJp8acG/kMoAOsIdKLD3xhGIFr6Dj9kjEEJ7JNr3U6ytW19XxbFYybq1JIcJQdCBNB
-         VPdUfV90T7vCQYj6LZKRdHnZdUA1Qd7wKIk5EG3LZDOlOjocba8FU8A3FOIgsXGZ/UIj
-         OUcQ==
+        bh=qpb84SyL/o4zwgnKkaD4/0+18Zx3t5wN+x/HYSwjOnU=;
+        b=BU8lSHTcv6e8RM7OnZfYEZ735wvzGzsETAXTpQuIkVlkswHmDs4gGMvNvoZUPS/6VP
+         cSgbp+bmXmK6U7CBYN92ce5IEW2IAEtiMlnBIRgCZ4bw6LlGMFZgPU7bQXxdp+5DwfNZ
+         B5uvOqA7IkNVPUvwMz8jLRlTHr3nmr9ow4xjLpYdPwAzTrvMnFs/u4athzChlgZlHCNw
+         MsP/MuBSGVWG51LP8TnN3T79N4e1BJyKHRpsRIhliLlGps2PwLRXG/9Jh9Spt8MGDf3P
+         ROmpPRAj39RZ5zs+qgm6Dr5qJKVbZBNir2pb0Mi7TKd9wZgEhzA86ufvrdnjV5+kYeG3
+         t7Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=B1YRMYv5kYW3W75AIuPy34K/eJTiNvFFQeE/oLeZF4A=;
-        b=dJtuh9C4tjG1eNGhqOcBxbL5rD/ZUhDt6PDlDsyALH1IGG90VGmPT1cEf6+6TlTPP5
-         UqoESXySSobLHTTCA0GzSdlKdn4kbefysBNgtH4NyHToEgAq7TdB0F76WBMmdF29nRal
-         0+vsFqAY8ylp7DZLC/KrQWkfmbVYbctqHYRiin11osr3eP+tFyOi6IuWPY7ZTaOFlIN2
-         OwDKb1z3HVcZvhxUJnnFGcaHYuSpPapUVnUFJD+3z64/a3QzUOiID6DqYYy1/DlqObDB
-         YpvU9EqWHxSHp/qHc5IHOazoU4FrUAvWaIRloqWmNtOduvOSjnyEtcLznvarqIN+uosb
-         rkmA==
-X-Gm-Message-State: AD7BkJLfsIshU8oCXUqMPwlJ5tx5MblDHMzAXU4jVp4qiyad35GgXCWmw6Xew/AFp+pDK4Kpvu9sltHZ8zlkJA==
-X-Received: by 10.112.140.129 with SMTP id rg1mr4962282lbb.80.1458260178244;
- Thu, 17 Mar 2016 17:16:18 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Thu, 17 Mar 2016 17:15:48 -0700 (PDT)
-In-Reply-To: <xmqqfuvoy89q.fsf@gitster.mtv.corp.google.com>
+        bh=qpb84SyL/o4zwgnKkaD4/0+18Zx3t5wN+x/HYSwjOnU=;
+        b=W9W5XPiE/uPdCyUGEaauTtTfs2qRc30b5yPdMYGuyuKalaRhNhdRad6bfjHWPoY2gy
+         vPROQiUlrAVBxgUy0K0/BHdXDwHLNgPwfG81wXfKO2GHASu4tt1tW4Frx3EB6qo7nQvU
+         zP/3n2J19uaxkJXtAZlJOhnOiz53dECNfwcA15Ujql323e6qpT37KKO1oLiEXLCdLh4t
+         iafSoTIsOXVHIIuC2iWNLTgGAMwKbGSUTRJGchOD/K8t64TPRDqV9dkkIks7fhoWBqLF
+         ohKzN5NxRvQFP4rEOwr43FV/AjTK2GrkQvsTaIRepGhYkRdC/d60+6jwtlb27eJWpYx9
+         AddA==
+X-Gm-Message-State: AD7BkJJWVX2V+rryVv30F6trdGtaw2iXJw1F7WauPxHdTg6CJrR5vjr6ZVHmvBuNNiaV5tTxOkDf266H/+UtpA==
+X-Received: by 10.112.150.133 with SMTP id ui5mr4611090lbb.12.1458260932035;
+ Thu, 17 Mar 2016 17:28:52 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Thu, 17 Mar 2016 17:28:22 -0700 (PDT)
+In-Reply-To: <xmqqh9g4zsf8.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289175>
 
-On Fri, Mar 18, 2016 at 6:49 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Thanks for these 5 patches, two of which need to be discarded ;-).
-> I think you can pick either one of 1/2, pick the one that says
-> "non-NULL" (as opposed to "something") in the log message for 2/2.
-
-Sorry, I did "git send-email ... 00*" and it picked up *.patch~ as
-well. non-NULL is the non-backup version.
-
-> Durham, does it fix your issues if you apply the 1/2 and 2/2 (but
-> not 3/2) on top of 2.8-rc?
+On Fri, Mar 18, 2016 at 4:49 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> John Keeping <john@keeping.me.uk> writes:
 >
-> Duy, how comfortable are you with the idea of including this two in
-> 2.8 final?  We have long passed the final -rc, and while it is
-> probably OK to prolong the cycle and do another -rc, we cannot keep
-> going like "oops, there is another thing discovered by somebody new"
-> forever.
+>> The organisation of the git code shouldn't make a difference since CGit
+>> just links with libgit.a, even if it does CGit pulls in git.git as a
+>> submodule so it can just fix any problems in the same commit that
+>> updates the submodule reference.
+>
+> I was mostly worried about where Duy and Stefan want to place *.h
 
-The fix is well understood. I did feel unsure about that "continue;"
-when I first wrote it and should have given it more thought. No other
-"unsure" feelings, so we're probably good from now on.
+*.h stay with their *.c. CFLAGS has two more -Isrc and -Ilib. I don't
+expect any #include line changes. Maybe we can start moving stuff to
+"lib" soon. Many of them rarely receive changes these days. The
+creation of "src" could be more disruptive and can wait until
+$(topdir) is once again unbearable.
 -- 
 Duy
