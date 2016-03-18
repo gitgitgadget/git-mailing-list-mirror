@@ -1,70 +1,194 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [GIT PULL] GPIO bulk changes for kernel v4.6
-Date: Fri, 18 Mar 2016 15:32:54 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603181532040.4690@virtualbox>
-References: <CACRpkdbGkfJ9bW1db64msMeQjue+=y+op5EmSx62FWOWDOJwWg@mail.gmail.com> <CA+55aFwV4Cq=4zJc6Fw0yAGrTmci_DFAjJKxkk05pjJJf3iYbA@mail.gmail.com> <56EB9B0C.4050507@nvidia.com> <CA+55aFy=-UAbVo+Xx08tBA7eTPk2B+G3=SbarVxThS57LdakPA@mail.gmail.com>
+From: "Richard Furness -X (rfurness - ENSOFT LIMITED at Cisco)" 
+	<rfurness@cisco.com>
+Subject: RE: 2.8.0 gitignore enhancement not working as expected
+Date: Fri, 18 Mar 2016 14:32:27 +0000
+Message-ID: <551499517627471db2c8434077eb16db@XCH-RCD-003.cisco.com>
+References: <4a4980485c234280bce91be87d213216@XCH-RCD-003.cisco.com>
+ <CACsJy8Bjv=fF0CSNF_QNTCYCqQjy=j0ZEyjYOBFscz0HEYATig@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Laxman Dewangan <ldewangan@nvidia.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Mar 18 15:34:46 2016
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 18 15:42:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agvUC-000709-Dw
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 15:34:44 +0100
+	id 1agvbU-0002XX-BD
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 15:42:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933389AbcCROeg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2016 10:34:36 -0400
-Received: from mout.gmx.net ([212.227.17.20]:50872 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752564AbcCROeY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2016 10:34:24 -0400
-Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0LwF9u-1ZjDZG3jl0-0186NL; Fri, 18 Mar 2016 15:32:57
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CA+55aFy=-UAbVo+Xx08tBA7eTPk2B+G3=SbarVxThS57LdakPA@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:zfPP+bXGBDjq0lfSBgEl5LkcCWeUssCn+BLPmLe+KRUDsHosyTN
- UNIQgJyVf5UcbPNUp8ZPRDcUwfk9FolAevH+T/Sc7tHY5WhzLCwT6d6CgedJi/XkSj6rDbp
- hY3nuIJ+BzaRpKHAm096uLmPq1xaxuO866l3m0P0VwcZdCBwAAFrG/nwOVrnDDP85nmS/4P
- +BWfb6B6NIa4aHM0//mfA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:r2oc4Dchd5E=:+Io6j0+NHPzyt8tgjfsgFG
- bo7ddg8Tcn+swVcwr7B9CwSMjZo8JVHRNXjBBL0dsHYEBkryXentHdWwXonFqEMzjZ8HOPtrf
- HmD+xwYdPdEm0lHs2RF3ZCD9WKg0jZDR3Ru+mKj9jQ3vj/GEcLY+b3pGXlik3aW/qfSCebwjj
- Egg3OsyjWfOjBWCCvxUlTVO/yjKi6otkG4z80WYGDFxE7+EdgvQvVrR70H46MzNpkwglBZUjw
- LYy+ho1QoaCePrIXlyxEJSjv8T/FUYwniArCLPoOyppM/gbBv1az0zBNR/C+ksFxtjuEt+tUw
- VSqviIHZs2vcIEAzE5Sk5rlp6OYcwBH4E75lv+cL6K2S2d7JSxQLeYpWivVsZZlRNnAKxwHoW
- dKHLkalDZ3SaGtfv3WIG99ENR2vXoSSTei6xMhG98Dj69/x/BYo/x4d4878keKjFlDNi79Rtv
- bMmtvg2f5jSehHsfSdDm4mckHNUILIg+olzFXL6Y2wu+4vH24m8kJn9bKhUb+MxZnpnQWGXuv
- uCgJ28Uv/0bmzrl2TfBuJvU/nsVtaEyZ2sAYRPGb4mcFnHFl8vgdBWbWqt/N9J2srFFKrOBxf
- nnB+lC5Z+h0dEZPHghsLapt/s4MFXBVYZho1PlTAUJWQCcc2NHKusAIfOCnvHjOoebD/RcKSg
- v5uJOPeJsoatIBTin9sgZRFnB5FrhSgcC0MJiYCH6CJjKFugD3kwMNQ27bwXohL6t1lxcB4QE
- 8a931HfUFRahktJNld3+qXh9HJ0VVMinev+HMR5UU8IliUaf2BlFvjcnZ7W/mQig4kILUbPy 
+	id S1753645AbcCROmL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2016 10:42:11 -0400
+Received: from rcdn-iport-4.cisco.com ([173.37.86.75]:3534 "EHLO
+	rcdn-iport-4.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751410AbcCROmK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2016 10:42:10 -0400
+X-Greylist: delayed 578 seconds by postgrey-1.27 at vger.kernel.org; Fri, 18 Mar 2016 10:42:09 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=9488; q=dns/txt; s=iport;
+  t=1458312129; x=1459521729;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=gGQr6J/Khb+rBs7ynll3FZyXx/gc7giq+JvQWh2MnCs=;
+  b=h47aFu8eDnDuCmeUsfT+Xz2/8vOBQVEK6owakSidoXBmu4XjfX++brCD
+   LtZkGQAgH3Hd0N2zng4HT9xFxwdaKs3sy+UuAUPWHUlSf397O/ZfOp4dL
+   tbH6xP5T4vIIHcx6360EJHJchwFjBWI61/OV+84mqpkQfSku5pN05fGQF
+   w=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: =?us-ascii?q?A0AFAgCkEOxW/4cNJK1eg0WBRQauSYtNA?=
+ =?us-ascii?q?Q2Bb4YNAhyBETgUAQEBAQEBAWQnhEEBAQEEIxFFDAQCAQgOAwQBAQECAiMDAgI?=
+ =?us-ascii?q?CHQIRFAEICAEBBA4FCIgKAxKxUop9DYRWAQEBAQEBAQEBAQEBAQEBAQEBAQEBF?=
+ =?us-ascii?q?XyJZoI+gVg8gmqCVgWXJjEBFohMgyyBbo8OhzGHVAEeAQFCg2VqiSgEOX4BAQE?=
+X-IronPort-AV: E=Sophos;i="5.24,355,1454976000"; 
+   d="scan'208";a="84226629"
+Received: from alln-core-2.cisco.com ([173.36.13.135])
+  by rcdn-iport-4.cisco.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 18 Mar 2016 14:32:28 +0000
+Received: from XCH-RCD-004.cisco.com (xch-rcd-004.cisco.com [173.37.102.14])
+	by alln-core-2.cisco.com (8.14.5/8.14.5) with ESMTP id u2IEWSJB027905
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=FAIL);
+	Fri, 18 Mar 2016 14:32:28 GMT
+Received: from xch-rcd-003.cisco.com (173.37.102.13) by XCH-RCD-004.cisco.com
+ (173.37.102.14) with Microsoft SMTP Server (TLS) id 15.0.1104.5; Fri, 18 Mar
+ 2016 09:32:27 -0500
+Received: from xch-rcd-003.cisco.com ([173.37.102.13]) by
+ XCH-RCD-003.cisco.com ([173.37.102.13]) with mapi id 15.00.1104.009; Fri, 18
+ Mar 2016 09:32:27 -0500
+Thread-Topic: 2.8.0 gitignore enhancement not working as expected
+Thread-Index: AdGA+Oope1o05p+SRVOEuS4waIVawgAOQXSAAAQGuNA=
+In-Reply-To: <CACsJy8Bjv=fF0CSNF_QNTCYCqQjy=j0ZEyjYOBFscz0HEYATig@mail.gmail.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.63.23.173]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289220>
 
-Hi Linus,
-
-On Fri, 18 Mar 2016, Linus Torvalds wrote:
-
-> I thought git didn't merge two branches that have no common base by
-> default, but it seems it will happily do so.
-
-What happened to "The coolest merge EVER!"?
-
-	http://thread.gmane.org/gmane.comp.version-control.git/5126/
-
-Ciao,
-Dscho
+SGkgRHV5LA0KDQpJIHRyaWVkIHlvdXIgZXhhY3QgZXhhbXBsZSBhbmQgaXQgd29ya2VkIGNvcnJl
+Y3RseS4gQnV0IHRoZW4gSSB0cmllZCBhZGRpbmcgc29tZSBtb3JlIGZpbGVzL2RpcnMgYXQgdGhl
+IHRvcCBsZXZlbCBhbmQgSSBzdGlsbCBzZWUgYW4gaXNzdWU6DQoNCmNhdCAuZ2l0aWdub3JlDQov
+Kg0KIWEvYi9jDQoNCmZpbmQgKiAtdHlwZSBmDQoxDQoyDQozDQphLzENCmEvYi8xDQphL2IvYy8x
+DQpkLzENCg0KZ2l0IGxzLWZpbGVzIC1vIC0tZXhjbHVkZS1zdGFuZGFyZA0KLmdpdGlnbm9yZQ0K
+Mg0KMw0KYS9iL2MvMQ0KZC8xDQoNClRyYWNlIG91dHB1dCBiZWxvdy4uLg0KDQpUaGFua3MsDQoN
+ClJpY2hhcmQNCg0KDQpHSVRfVFJBQ0VfRVhDTFVERT0xIGdpdCBscy1maWxlcyAtbyAtLWV4Y2x1
+ZGUtc3RhbmRhcmQNCjA3OjI2OjEzLjMxMTc5MyBkaXIuYzoxODQ4ICAgICAgICAgICAgICBleGNs
+dWRlOiBbMF0gZW50ZXIgJycNCjA3OjI2OjEzLjMxMjYzMiBkaXIuYzoxMDEyICAgICAgICAgICAg
+ICBleGNsdWRlOiBmcm9tIC5naXRpZ25vcmUNCjA3OjI2OjEzLjMxMjY2OCBkaXIuYzoxMDk3ICAg
+ICAgICAgICAgICBleGNsdWRlOiAxIHZzIC8qIGF0IGxpbmUgMSA9PiB5ZXMNCjA3OjI2OjEzLjMx
+MjY3MyBkaXIuYzoxMDEyICAgICAgICAgICAgICBleGNsdWRlOiBmcm9tIC5naXRpZ25vcmUNCjA3
+OjI2OjEzLjMxMjY3NyBkaXIuYzoxMDg5ICAgICAgICAgICAgICBleGNsdWRlOiBhIHZzIC8qIGF0
+IGxpbmUgMSA9PiB5ZXMsIGZvcmNlZCBvcGVuIGJ5IGEvYi9jIGF0IGxpbmUgMiA9PiBuL2ENCjA3
+OjI2OjEzLjMxMjY4MSBkaXIuYzoxMDEyICAgICAgICAgICAgICBleGNsdWRlOiBmcm9tIC91c2Vy
+cy9yZnVybmVzcy8uZ2l0aWdub3JlX2dsb2JhbA0KMDc6MjY6MTMuMzEyNjg0IGRpci5jOjEwNjIg
+ICAgICAgICAgICAgIGV4Y2x1ZGU6IGEgPT4gbi9hDQowNzoyNjoxMy4zMTI2OTkgZGlyLmM6MTg0
+OCAgICAgICAgICAgICAgZXhjbHVkZTogWzFdIGVudGVyICdhLycNCjA3OjI2OjEzLjMxMjk2NCBk
+aXIuYzoxMDEyICAgICAgICAgICAgICBleGNsdWRlOiBmcm9tIC5naXRpZ25vcmUNCjA3OjI2OjEz
+LjMxMjk3OCBkaXIuYzoxMDg5ICAgICAgICAgICAgICBleGNsdWRlOiBhIHZzIC8qIGF0IGxpbmUg
+MSA9PiB5ZXMsIGZvcmNlZCBvcGVuIGJ5IGEvYi9jIGF0IGxpbmUgMiA9PiBuL2ENCjA3OjI2OjEz
+LjMxMjk4MSBkaXIuYzoxMDEyICAgICAgICAgICAgICBleGNsdWRlOiBmcm9tIC91c2Vycy9yZnVy
+bmVzcy8uZ2l0aWdub3JlX2dsb2JhbA0KMDc6MjY6MTMuMzEyOTg1IGRpci5jOjEwNjIgICAgICAg
+ICAgICAgIGV4Y2x1ZGU6IGEgPT4gbi9hDQowNzoyNjoxMy4zMTI5OTEgZGlyLmM6MTAxMiAgICAg
+ICAgICAgICAgZXhjbHVkZTogZnJvbSAuZ2l0aWdub3JlDQowNzoyNjoxMy4zMTI5OTUgZGlyLmM6
+MTA5NyAgICAgICAgICAgICAgZXhjbHVkZTogYS8xIHZzIC8qIGF0IGxpbmUgMSA9PiB5ZXMgKHN0
+dWNrKQ0KMDc6MjY6MTMuMzEyOTk5IGRpci5jOjEwMTIgICAgICAgICAgICAgIGV4Y2x1ZGU6IGZy
+b20gLmdpdGlnbm9yZQ0KMDc6MjY6MTMuMzEzMDAyIGRpci5jOjEwODkgICAgICAgICAgICAgIGV4
+Y2x1ZGU6IGEvYiB2cyAvKiBhdCBsaW5lIDEgPT4geWVzLCBmb3JjZWQgb3BlbiBieSBhL2IvYyBh
+dCBsaW5lIDIgPT4gbi9hDQowNzoyNjoxMy4zMTMwMDYgZGlyLmM6MTAxMiAgICAgICAgICAgICAg
+ZXhjbHVkZTogZnJvbSAvdXNlcnMvcmZ1cm5lc3MvLmdpdGlnbm9yZV9nbG9iYWwNCjA3OjI2OjEz
+LjMxMzAwOSBkaXIuYzoxMDYyICAgICAgICAgICAgICBleGNsdWRlOiBhL2IgPT4gbi9hDQowNzoy
+NjoxMy4zMTMwMTYgZGlyLmM6MTg0OCAgICAgICAgICAgICAgZXhjbHVkZTogWzJdIGVudGVyICdh
+L2IvJw0KMDc6MjY6MTMuMzEzMjU5IGRpci5jOjEwMTIgICAgICAgICAgICAgIGV4Y2x1ZGU6IGZy
+b20gLmdpdGlnbm9yZQ0KMDc6MjY6MTMuMzEzMjcyIGRpci5jOjEwODkgICAgICAgICAgICAgIGV4
+Y2x1ZGU6IGEvYiB2cyAvKiBhdCBsaW5lIDEgPT4geWVzLCBmb3JjZWQgb3BlbiBieSBhL2IvYyBh
+dCBsaW5lIDIgPT4gbi9hDQowNzoyNjoxMy4zMTMyNzUgZGlyLmM6MTAxMiAgICAgICAgICAgICAg
+ZXhjbHVkZTogZnJvbSAvdXNlcnMvcmZ1cm5lc3MvLmdpdGlnbm9yZV9nbG9iYWwNCjA3OjI2OjEz
+LjMxMzI3OSBkaXIuYzoxMDYyICAgICAgICAgICAgICBleGNsdWRlOiBhL2IgPT4gbi9hDQowNzoy
+NjoxMy4zMTMyODUgZGlyLmM6MTAxMiAgICAgICAgICAgICAgZXhjbHVkZTogZnJvbSAuZ2l0aWdu
+b3JlDQowNzoyNjoxMy4zMTMyODggZGlyLmM6MTA5NyAgICAgICAgICAgICAgZXhjbHVkZTogYS9i
+LzEgdnMgLyogYXQgbGluZSAxID0+IHllcyAoc3R1Y2spDQowNzoyNjoxMy4zMTMyOTIgZGlyLmM6
+MTAxMiAgICAgICAgICAgICAgZXhjbHVkZTogZnJvbSAuZ2l0aWdub3JlDQowNzoyNjoxMy4zMTMy
+OTUgZGlyLmM6MTA5NyAgICAgICAgICAgICAgZXhjbHVkZTogYS9iL2MgdnMgYS9iL2MgYXQgbGlu
+ZSAyID0+IG5vDQowNzoyNjoxMy4zMTMzMDMgZGlyLmM6MTg0OCAgICAgICAgICAgICAgZXhjbHVk
+ZTogWzNdIGVudGVyICdhL2IvYy8nDQowNzoyNjoxMy4zMTM2MDEgZGlyLmM6MTAxMiAgICAgICAg
+ICAgICAgZXhjbHVkZTogZnJvbSAuZ2l0aWdub3JlDQowNzoyNjoxMy4zMTM2MTUgZGlyLmM6MTA5
+NyAgICAgICAgICAgICAgZXhjbHVkZTogYS9iL2MgdnMgYS9iL2MgYXQgbGluZSAyID0+IG5vDQow
+NzoyNjoxMy4zMTM2MzIgZGlyLmM6MTAxMiAgICAgICAgICAgICAgZXhjbHVkZTogZnJvbSAuZ2l0
+aWdub3JlDQowNzoyNjoxMy4zMTM2MzYgZGlyLmM6MTA5NyAgICAgICAgICAgICAgZXhjbHVkZTog
+YS9iL2MvMSB2cyBhL2IvYyBhdCBsaW5lIDIgPT4gbm8NCjA3OjI2OjEzLjMxMzY0NSBkaXIuYzox
+OTE0ICAgICAgICAgICAgICBleGNsdWRlOiBbM10gbGVhdmUgJ2EvYi9jLycNCjA3OjI2OjEzLjMx
+MzY1MCBkaXIuYzoxOTE0ICAgICAgICAgICAgICBleGNsdWRlOiBbMl0gbGVhdmUgJ2EvYi8nDQow
+NzoyNjoxMy4zMTM2NTUgZGlyLmM6MTkxNCAgICAgICAgICAgICAgZXhjbHVkZTogWzFdIGxlYXZl
+ICdhLycNCjA3OjI2OjEzLjMxMzcxNiBkaXIuYzoxMDEyICAgICAgICAgICAgICBleGNsdWRlOiBm
+cm9tIC5naXRpZ25vcmUNCjA3OjI2OjEzLjMxMzcyMCBkaXIuYzoxMDYyICAgICAgICAgICAgICBl
+eGNsdWRlOiAuZ2l0aWdub3JlID0+IG4vYQ0KMDc6MjY6MTMuMzEzNzI0IGRpci5jOjEwMTIgICAg
+ICAgICAgICAgIGV4Y2x1ZGU6IGZyb20gL3VzZXJzL3JmdXJuZXNzLy5naXRpZ25vcmVfZ2xvYmFs
+DQowNzoyNjoxMy4zMTM3MjcgZGlyLmM6MTA2MiAgICAgICAgICAgICAgZXhjbHVkZTogLmdpdGln
+bm9yZSA9PiBuL2ENCjA3OjI2OjEzLjMxMzc0MiBkaXIuYzoxMDEyICAgICAgICAgICAgICBleGNs
+dWRlOiBmcm9tIC5naXRpZ25vcmUNCjA3OjI2OjEzLjMxMzc0NiBkaXIuYzoxMDYyICAgICAgICAg
+ICAgICBleGNsdWRlOiAyID0+IG4vYQ0KMDc6MjY6MTMuMzEzNzQ4IGRpci5jOjEwMTIgICAgICAg
+ICAgICAgIGV4Y2x1ZGU6IGZyb20gL3VzZXJzL3JmdXJuZXNzLy5naXRpZ25vcmVfZ2xvYmFsDQow
+NzoyNjoxMy4zMTM3NTIgZGlyLmM6MTA2MiAgICAgICAgICAgICAgZXhjbHVkZTogMiA9PiBuL2EN
+CjA3OjI2OjEzLjMxMzc4OSBkaXIuYzoxMDEyICAgICAgICAgICAgICBleGNsdWRlOiBmcm9tIC5n
+aXRpZ25vcmUNCjA3OjI2OjEzLjMxMzc5MyBkaXIuYzoxMDYyICAgICAgICAgICAgICBleGNsdWRl
+OiAzID0+IG4vYQ0KMDc6MjY6MTMuMzEzODQ2IGRpci5jOjEwMTIgICAgICAgICAgICAgIGV4Y2x1
+ZGU6IGZyb20gL3VzZXJzL3JmdXJuZXNzLy5naXRpZ25vcmVfZ2xvYmFsDQowNzoyNjoxMy4zMTM4
+NDggZGlyLmM6MTA2MiAgICAgICAgICAgICAgZXhjbHVkZTogMyA9PiBuL2ENCjA3OjI2OjEzLjMx
+Mzg1MiBkaXIuYzoxMDEyICAgICAgICAgICAgICBleGNsdWRlOiBmcm9tIC5naXRpZ25vcmUNCjA3
+OjI2OjEzLjMxMzg1NSBkaXIuYzoxMDYyICAgICAgICAgICAgICBleGNsdWRlOiBkID0+IG4vYQ0K
+MDc6MjY6MTMuMzEzODU3IGRpci5jOjEwMTIgICAgICAgICAgICAgIGV4Y2x1ZGU6IGZyb20gL3Vz
+ZXJzL3JmdXJuZXNzLy5naXRpZ25vcmVfZ2xvYmFsDQowNzoyNjoxMy4zMTM4NjAgZGlyLmM6MTA2
+MiAgICAgICAgICAgICAgZXhjbHVkZTogZCA9PiBuL2ENCjA3OjI2OjEzLjMxNDE0NSBkaXIuYzox
+ODQ4ICAgICAgICAgICAgICBleGNsdWRlOiBbMV0gZW50ZXIgJ2QvJw0KMDc6MjY6MTMuMzE0Mzk1
+IGRpci5jOjEwMTIgICAgICAgICAgICAgIGV4Y2x1ZGU6IGZyb20gLmdpdGlnbm9yZQ0KMDc6MjY6
+MTMuMzE0NDI1IGRpci5jOjEwNjIgICAgICAgICAgICAgIGV4Y2x1ZGU6IGQgPT4gbi9hDQowNzoy
+NjoxMy4zMTQ0MzAgZGlyLmM6MTAxMiAgICAgICAgICAgICAgZXhjbHVkZTogZnJvbSAvdXNlcnMv
+cmZ1cm5lc3MvLmdpdGlnbm9yZV9nbG9iYWwNCjA3OjI2OjEzLjMxNDQzNSBkaXIuYzoxMDYyICAg
+ICAgICAgICAgICBleGNsdWRlOiBkID0+IG4vYQ0KMDc6MjY6MTMuMzE0NDU1IGRpci5jOjEwMTIg
+ICAgICAgICAgICAgIGV4Y2x1ZGU6IGZyb20gLmdpdGlnbm9yZQ0KMDc6MjY6MTMuMzE0NDU5IGRp
+ci5jOjEwNjIgICAgICAgICAgICAgIGV4Y2x1ZGU6IGQvMSA9PiBuL2ENCjA3OjI2OjEzLjMxNDQ2
+MiBkaXIuYzoxMDEyICAgICAgICAgICAgICBleGNsdWRlOiBmcm9tIC91c2Vycy9yZnVybmVzcy8u
+Z2l0aWdub3JlX2dsb2JhbA0KMDc6MjY6MTMuMzE0NDY1IGRpci5jOjEwNjIgICAgICAgICAgICAg
+IGV4Y2x1ZGU6IGQvMSA9PiBuL2ENCjA3OjI2OjEzLjMxNDQ3MSBkaXIuYzoxOTE0ICAgICAgICAg
+ICAgICBleGNsdWRlOiBbMV0gbGVhdmUgJ2QvJw0KMDc6MjY6MTMuMzE0NDc1IGRpci5jOjE5MTQg
+ICAgICAgICAgICAgIGV4Y2x1ZGU6IFswXSBsZWF2ZSAnJw0KLmdpdGlnbm9yZQ0KMg0KMw0KYS9i
+L2MvMQ0KZC8xDQoNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBEdXkg
+Tmd1eWVuIFttYWlsdG86cGNsb3Vkc0BnbWFpbC5jb21dDQo+IFNlbnQ6IDE4IE1hcmNoIDIwMTYg
+MTE6MTkNCj4gVG86IFJpY2hhcmQgRnVybmVzcyAtWCAocmZ1cm5lc3MgLSBFTlNPRlQgTElNSVRF
+RCBhdCBDaXNjbykNCj4gPHJmdXJuZXNzQGNpc2NvLmNvbT4NCj4gQ2M6IGdpdEB2Z2VyLmtlcm5l
+bC5vcmcNCj4gU3ViamVjdDogUmU6IDIuOC4wIGdpdGlnbm9yZSBlbmhhbmNlbWVudCBub3Qgd29y
+a2luZyBhcyBleHBlY3RlZA0KPiANCj4gT24gRnJpLCBNYXIgMTgsIDIwMTYgYXQgNDozMSBQTSwg
+UmljaGFyZCBGdXJuZXNzIC1YIChyZnVybmVzcyAtIEVOU09GVA0KPiBMSU1JVEVEIGF0IENpc2Nv
+KSA8cmZ1cm5lc3NAY2lzY28uY29tPiB3cm90ZToNCj4gPiBIaSwNCj4gPg0KPiA+IEkndmUgYmVl
+biB0ZXN0aW5nIG91dCBnaXQgMi44LjAgcmMzIGR1ZSB0byBoYXZpbmcgYSBwYXJ0aWN1bGFyIGlu
+dGVyZXN0IGluIHRoaXMNCj4gZW5oYW5jZW1lbnQgZnJvbSB0aGUgY2hhbmdlbG9nOg0KPiA+ICIg
+QW5vdGhlciB0cnkgdG8gaW1wcm92ZSB0aGUgaWdub3JlIG1lY2hhbmlzbSB0aGF0IGxldHMgeW91
+IHNheSAidGhpcw0KPiA+ICAgIGlzIGV4Y2x1ZGVkIiBhbmQgdGhlbiBsYXRlciBzYXkgIm9oLCBu
+bywgdGhpcyBwYXJ0ICh0aGF0IGlzIGENCj4gPiAgICBzdWJzZXQgb2YgdGhlIHByZXZpb3VzIHBh
+cnQpIGlzIG5vdCBleGNsdWRlZCIuICBUaGlzIGhhcyBzdGlsbCBhDQo+ID4gICAga25vd24gbGlt
+aXRhdGlvbiwgdGhvdWdoLiINCj4gPg0KPiA+IEN1cnJlbnRseSwgaW4gb3JkZXIgdG8gaW5jbHVk
+ZSBPTkxZIHRoZSBmaWxlcyB1bmRlciBhL2IvYyBJIGhhdmUgdGhlDQo+IGZvbGxvd2luZyBpbiAu
+Z2l0aWdub3JlOg0KPiA+IC8qICAgICAgICAgICAgIC0gSWdub3JlIGV2ZXJ5dGhpbmcNCj4gPiAh
+L2EgICAgICAgICAgICAgLSBFeGNlcHQgZGlyZWN0b3J5ICJhIg0KPiA+IC9hLyogICAgICAgICAg
+ICAtIElnbm9yZSBhbGwgc3ViLWRpcmVjdG9yaWVzIG9mICJhLyINCj4gPiAhL2EvYiAgICAgICAg
+ICAgLSBFeGNlcHQgImEvYiINCj4gPiAvYS9iLyogICAgICAgICAgLSBJZ25vcmUgYWxsIHN1Yi1k
+aXJlY3RvcmllcyBvZiAiYS9iLyINCj4gPiAhL2EvYi9jICAgICAgICAgLSBFeGNlcHQgImEvYi9j
+Ig0KPiA+DQo+ID4gTXkgaG9wZSB3YXMgdGhhdCB3aXRoIHRoaXMgZW5oYW5jZW1lbnQgSSBjb3Vs
+ZCBtYXNzaXZlbHkgc2ltcGxpZnkgdGhpcyB0bzoNCj4gPiAvKiAgICAgICAgICAgICAtIElnbm9y
+ZSBldmVyeXRoaW5nDQo+ID4gIWEvYi9jICAgICAgLSBFeGNlcHQgImEvYi9jIg0KPiA+DQo+ID4g
+SG93ZXZlciB0aGlzIGRvZXNuJ3Qgc2VlbSB0byB3b3JrIC0gaW5zdGVhZCBJIGZpbmQgdGhhdCBO
+T1RISU5HIGlzDQo+IGlnbm9yZWQgKGkuZS4gaXQncyBhcyBpZiB0aGUgMm5kIGxpbmUgY29tcGxl
+dGVseSBjYW5jZWxzIHRoZSBmaXJzdCkuDQo+IA0KPiBJbnRlcmVzdGluZy4gSXQgc2VlbXMgdG8g
+YmUgd29ya2luZyBmb3IgbWUuIFRoaXMgaXMgbXkgdGVzdCBzZXR1cA0KPiANCj4gPiAvdG1wL2Fi
+YyAkIGZpbmQgKiAtdHlwZSBmDQo+IDENCj4gYS8xDQo+IGEvYi8xDQo+IGEvYi9jDQo+ID4gL3Rt
+cC9hYmMgJCBjYXQgLmdpdGlnbm9yZQ0KPiAvKg0KPiAhYS9iL2MNCj4gDQo+IGFuZCB0aGUgcmVz
+dWx0cw0KPiANCj4gPiAvdG1wL2FiYyAkIH4vdy9naXQvdGVtcC9naXQgLS12ZXJzaW9uDQo+IGdp
+dCB2ZXJzaW9uIDIuOC4wLnJjMw0KPiA+IC90bXAvYWJjICQgfi93L2dpdC90ZW1wL2dpdCBscy1m
+aWxlcyAtbyAtLWV4Y2x1ZGUtc3RhbmRhcmQNCj4gYS9iL2MNCj4gDQo+IENhbiB5b3UgZG8gIkdJ
+VF9UUkFDRV9FWENMVURFPTEgZ2l0IGxzLWZpbGVzIC1vIC0tZXhjbHVkZS1zdGFuZGFyZCINCj4g
+YW5kIHBvc3QgdGhlIG91dHB1dD8NCj4gLS0NCj4gRHV5DQo=
