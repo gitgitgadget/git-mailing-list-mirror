@@ -1,135 +1,122 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 3/2] dir.c: fix dir re-inclusion rules with "NODIR" and "MUSTBEDIR"
-Date: Fri, 18 Mar 2016 01:58:15 -0400
-Message-ID: <CAPig+cRp3ghX8VUvR8Tfb6rsnbOM4eQiQ8Hw1hs4=BvXORREYA@mail.gmail.com>
-References: <1458218744-15810-2-git-send-email-pclouds@gmail.com>
-	<1458219254-16343-1-git-send-email-pclouds@gmail.com>
-	<xmqqfuvoy89q.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8Dm3_w6TT6FP-my9fsRJ8F+StK8dBPid9zxQv4OzoZfcw@mail.gmail.com>
-	<xmqqbn6cs5sa.fsf@gitster.mtv.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [RFC] Code reorgnization
+Date: Fri, 18 Mar 2016 12:59:25 +0700
+Message-ID: <CACsJy8AmrdVeB95RUbVPamM7DMxFKRJ9REd0SN_oq_4HEb6E9g@mail.gmail.com>
+References: <20160317111136.GA21745@lanh> <20160318052447.GD22327@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Durham Goode <durham@fb.com>,
-	Mateusz Kwapich <mitrandir@fb.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 07:00:08 2016
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 18 07:02:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agnS1-00035p-Mu
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 06:59:58 +0100
+	id 1agnU8-00035p-SX
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 07:02:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756051AbcCRF6T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2016 01:58:19 -0400
-Received: from mail-vk0-f68.google.com ([209.85.213.68]:34689 "EHLO
-	mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754233AbcCRF6Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2016 01:58:16 -0400
-Received: by mail-vk0-f68.google.com with SMTP id e6so8733757vkh.1
-        for <git@vger.kernel.org>; Thu, 17 Mar 2016 22:58:16 -0700 (PDT)
+	id S1756587AbcCRGAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2016 02:00:00 -0400
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:32879 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756576AbcCRF75 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2016 01:59:57 -0400
+Received: by mail-lb0-f179.google.com with SMTP id oe12so82010750lbc.0
+        for <git@vger.kernel.org>; Thu, 17 Mar 2016 22:59:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=FE0ojNrHVYx/wOic0PJ4wIpNNW4mvcyzsLf7yY1fbD4=;
-        b=LWIMgWrQuLTSaplxDTT1hZ3RmtJFKzBUCRJwAIIwYZXw6U4d5Kf6vavUU62mSaGmue
-         qoi2rr0vttgfGAgsSiiO1BIv85LtwpPNanI2RW7c+FjLDViAeBmIracKzhtx7KSXS2QJ
-         /JzqtSz/5eECNqsF8249DRQSGbwn0sncdv/Ugc0VfwhcE+poPZlM8P1JR0+/Q5G1RBRo
-         uGuWwu5MUJk54l9h8FwoLI1162CYcaas26/+t+vH2volBQWsNNjmK0t5dy3rrim80uBS
-         iSPoFV2P3l2A+jSRlCZjvPHJkhcPSUo3GbIeVZzVFB7j9l+LiC/NgdZtVFUW9VYO5ZFK
-         mZ6A==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ExgholPwAwxXd2BMyOemc3CzErzEQwfP9d3Z6BneCuI=;
+        b=Nge799zNCqyFHPLTqXBjBNS01FPTCC0/w41HAkOndL9e6SmVULf4Memxi0o9PhKFo9
+         smzE9JuTO2qsAM8OuJiVNoPrysvWmk6T2WKWgHqHs8UCzaUr+azjzDra/kD/M9cknd+o
+         IazJXfkGbPXJvj8PHdsQIrHimxWLMZgbOGr4JVy3AVn9OOKpVdwdO4v41jQX5GtSA+0C
+         rIp+z/UMLFazpM8yDbnL3Khu7kXqA0xdXYs/TCocPzJ4537xWKNyZUwsA1Ert9h3R+Pd
+         YgWmyCT8blsvseAGEPlWDUI7swCSpQRug4Ets5hOhls8adti5HPZjo3nM5fGylb6om+O
+         a5yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=FE0ojNrHVYx/wOic0PJ4wIpNNW4mvcyzsLf7yY1fbD4=;
-        b=AUTlSyXiFvDHVRa/skL8W06hnbra5uChHm33EbaH9KBIHXkBYLtATYkZY7hWlcnGE5
-         ne6I9cWvZ4bBJEw5/YpMwNAo7EmWxdyMfTmTgX66vG4pOEaZdAzTf6cw3AnMwqo0t/0O
-         DdHnO9S1btfTj1Cu/LVgI3og6TALeHaoJt3SY7XXPugWiBPLVdbg0gX4UekvlXTSN4D8
-         Pfhk+3b9mzQM8QFXd/OuoXS8KCAEyhAZm0QYrvfjdKudVkyTc6noSGuREKP1V7DiV8G4
-         zJXIrfWGfcUkQfPwa5hwUlvza32VjFIqXjHa8WbbaYBQDtllZp/ryNEJ1T2PaDCMU6ij
-         m+mw==
-X-Gm-Message-State: AD7BkJKwCWllNOr/KVnu2Qux5cCcUYVF1R7hfX/BFe4yufBE+QKPRw8voHIZQtQTfh2Tdq+erGe76T+JC8xLmw==
-X-Received: by 10.31.146.5 with SMTP id u5mr9217206vkd.19.1458280695508; Thu,
- 17 Mar 2016 22:58:15 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Thu, 17 Mar 2016 22:58:15 -0700 (PDT)
-In-Reply-To: <xmqqbn6cs5sa.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: RGePShjOYKtkebP0fuo4-Pjz3Us
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ExgholPwAwxXd2BMyOemc3CzErzEQwfP9d3Z6BneCuI=;
+        b=mErOenZP9EbFOhf2FKextOZRFsp3DglgcU5q8jjnnA0bXuGnButYLDzpMVxtQypr0e
+         pl7v8uMVCNttcSLoG1O5g9UtGNRdMWQ8e3m93JdPB7g/irlJihyGRUiStpitvFB26+Df
+         dlbBW/FrKp1ydxU8i817yc83P09SNWWEGBWVXWx6rSQw01j3OFbxEafMb1qs4QgsESf8
+         /ny4AL76exVllJRXT85kBEefAtyK1E1hKYF755PePmXQCYAFbuNv3Vol4hYaDoUk3tyn
+         c7oSUKMmVjpbX6wgkBVre6QsrxZAGDig05XpfGy232GmS32Nn3n8ILk5O18G0C093iTb
+         hmbA==
+X-Gm-Message-State: AD7BkJL5Kh1JurmBduGnMtZuzU+bxpj7dQ54KjfITyPef3r35hGoEMvU911kjxmPEo6/o5uYoK3KCFQuibR7qQ==
+X-Received: by 10.112.171.163 with SMTP id av3mr5047468lbc.145.1458280795274;
+ Thu, 17 Mar 2016 22:59:55 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Thu, 17 Mar 2016 22:59:25 -0700 (PDT)
+In-Reply-To: <20160318052447.GD22327@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289198>
 
-On Fri, Mar 18, 2016 at 1:40 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> send-email: detect and offer to skip backup files
+On Fri, Mar 18, 2016 at 12:24 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Mar 17, 2016 at 06:11:36PM +0700, Duy Nguyen wrote:
 >
-> Diligent people save output from format-patch to files, proofread
-> and edit them and then finally send the result out.  If the
-> resulting files are sent out with "git send-email 0*", this ends up
-> sending backup files (e.g. 0001-X.patch.backup or 0001-X.patch~)
-> left by their editors next to the final version.  Sending them with
-> "git send-email 0*.patch" (if format-patch was run with the standard
-> suffix) would avoid such an embarrassment, but not everybody is
-> careful.
+>> Git's top directory is crowded and I think it's agreed that moving
+>> test-* to t/helper is a good move. I just wanted to check if we could
+>> take this opportunity (after v2.8.0) to move some other files too. I
+>> propose the following new subdirs
 >
-> After collecting files to be sent (and sorting them if read from a
-> directory), notice when the file being sent out has the same name as
-> the previous file, plus some suffix (e.g. 0001-X.patch was sent, and
-> we are looking at 0001-X.patch.backup or 0001-X.patch~), and the
-> suffix begins with a non-alnum (e.g. ".backup" or "~") and ask if
-> the user really wants to send it out.  Once the user skips sending
-> such a "backup" file, remember the suffix and stop asking the same
-> question (e.g. after skipping 0001-X.patch~, skip 0002-Y.patch~
-> without asking).
+> I guess I don't really see the "crowded" problem, but perhaps that is
+> because I am more or less familiar with where things are in git's code
+> base. I suppose if you were looking for a "utility" function, you might
+> look in "util" and therefore have a smaller set of files to check.
 >
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> @@ -1726,6 +1728,44 @@ sub validate_patch {
-> +sub handle_backup {
-> +       my ($last, $lastlen, $file, $known_suffix) = @_;
+> But I think we also run into the opposite problem: I am looking for some
+> particular function, but I can't find it, because I am looking in "util"
+> and it is in some other directory. And when files move around, it makes
+> history harder to follow (maybe that is because git sucks and we need to
+> make it better, but certainly I run into mild annoyances with the
+> builtin/ rename when digging in history).
 
-Is $lastlen a micro-optimization or does it have some other purpose
-I'm overlooking?
+Yeah, for finding a particular function, I just "git grep" (or rgrep
+from emacs) if I fail to locate it after the first guess. We have this
+problem nowadays anyway. Besides builtin, we also have ewah, refs and
+some more subdirs.
 
-> +       my ($suffix, $skip);
-> +
-> +       $skip = 0;
-> +       if (defined $last &&
-> +           ($lastlen < length($file)) &&
-> +           (substr($file, 0, $lastlen) eq $last) &&
-> +           ($suffix = substr($file, $lastlen)) !~ /^[a-z0-9]/i) {
-> +               if (defined $known_suffix && $suffix eq $known_suffix) {
-> +                       print "Skipping $file with backup suffix '$known_suffix'.\n";
-> +                       $skip = 1;
-> +               } else {
-> +                       my $answer = ask("Do you really want to send $file? (y|N): ",
-> +                                        valid_re => qr/^(?:y|n)/i,
-> +                                        default => 'y');
+> And you have a similar problem when creating new files. Which slot do
+> they go in? What if they could feasibly go into two slots?
 
-Is this 'default' correct or am I reading the code incorrectly?
+Everything goes to topdir (or later on "src") by default and only goes
+to "lib" when it's _obvious_ that it's disconnected from git (i'm
+talking about the "lib/src" layout).
 
-> +                       $skip = ($answer ne 'y');
-> +                       if ($skip) {
-> +                               $known_suffix = $suffix;
-> +                       }
-> +               }
-> +       }
-> +       return ($skip, $known_suffix);
-> +}
-> +
-> +sub handle_backup_files {
-> +       my @file = @_;
-> +       my ($last, $lastlen, $known_suffix, $skip, @result);
-> +       for my $file (@file) {
-> +               ($skip, $known_suffix) = handle_backup($last, $lastlen,
-> +                                                      $file, $known_suffix);
-> +               push @result, $file unless $skip;
-> +               $last = $file;
-> +               $lastlen = length($file);
-> +       }
-> +       return @result;
-> +}
+> So there can be friction either way. In practice I find I just use ctags
+> to jump to the functions I am interested in, and I don't care that much
+> about filenames.
+>
+> The reorganization that _would_ be more interesting to me is not files
+> in directories, but rather functions in files. I wish everything were
+> designed more as modules with a pair of matching ".c" and ".h" files,
+> with a public interface defined in the ".h", and messier, private stuff
+> in the ".c". But we have some real dumping grounds:
+>
+>   1. cache.h has the declarations for at least a dozen different
+>      modules; besides being hard to navigate, it causes more frequent
+>      recompilation than necessary.
+>
+>   2. a few of the .c files could probably be split (e.g., dir.c is where
+>      all of the pathspec code lives, even though that is used for much
+>      more than filesystem access these days).
+
+Heh.. that's what I wanted to do (or at least discuss) after files are moved :)
+
+> Splitting those up would _also_ introduce friction (and actually worse
+> than whole-file renames, because finding code movement between files is
+> an even harder / more expensive problem).
+
+.. and this is why I did not raise it in the first mail.
+
+> But I feel like it would buy a
+> lot more in terms of code clarity, and in reducing the scope of code
+> which has access to private, static interfaces.
+-- 
+Duy
