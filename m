@@ -1,129 +1,84 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 3/2] dir.c: fix dir re-inclusion rules with "NODIR" and "MUSTBEDIR"
-Date: Fri, 18 Mar 2016 12:40:09 +0700
-Message-ID: <CACsJy8A2FKn-8nWtK4QPMHDCDYvTZBrQs1RVMApnuejXQis19g@mail.gmail.com>
-References: <1458218744-15810-2-git-send-email-pclouds@gmail.com>
- <1458219254-16343-1-git-send-email-pclouds@gmail.com> <xmqqfuvoy89q.fsf@gitster.mtv.corp.google.com>
- <56EB8961.70302@fb.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/4] pretty-print: add --pretty=noexpand
+Date: Thu, 17 Mar 2016 22:44:20 -0700
+Message-ID: <xmqq7fh0s5l7.fsf@gitster.mtv.corp.google.com>
+References: <alpine.LFD.2.20.1603160926060.13030@i7>
+	<xmqq7fh25mkc.fsf@gitster.mtv.corp.google.com>
+	<CA+55aFxV5PWdSn9Gj=zV464TtJo=QvciZrhc5Pwe+Qfyqt8sXw@mail.gmail.com>
+	<xmqqwpp243sb.fsf@gitster.mtv.corp.google.com>
+	<xmqqoaae4340.fsf@gitster.mtv.corp.google.com>
+	<CA+55aFwbNXJnwEYrKE5dDRk_6eZeGT6Z11uSQS8RmCSq43PkdA@mail.gmail.com>
+	<xmqqk2l23xzc.fsf@gitster.mtv.corp.google.com>
+	<CA+55aFwbev52kTV1wNMTsxR3kWvhXxTkjVy-KQOEO_2jX3RrAQ@mail.gmail.com>
+	<xmqq37rozoic.fsf_-_@gitster.mtv.corp.google.com>
+	<xmqqoaacy9tm.fsf_-_@gitster.mtv.corp.google.com>
+	<20160318050807.GC22327@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Mateusz Jakub Kwapich <mitrandir@fb.com>
-To: Durham Goode <durham@fb.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 06:41:10 2016
+Content-Type: text/plain
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 18 06:44:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agn9p-0007wr-4n
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 06:41:09 +0100
+	id 1agnDJ-0001pi-Fm
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 06:44:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753367AbcCRFlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2016 01:41:05 -0400
-Received: from mail-lf0-f48.google.com ([209.85.215.48]:36074 "EHLO
-	mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753305AbcCRFkl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2016 01:40:41 -0400
-Received: by mail-lf0-f48.google.com with SMTP id d82so11180803lfe.3
-        for <git@vger.kernel.org>; Thu, 17 Mar 2016 22:40:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=RCQ2PUsn8ONy9YMShZlBrzWJ7KYoB6+x+GoX7MSr5Zg=;
-        b=WjzStrLoBhWP4VY+Cg+LLJPS6sdmOLI2iNSYByOnN35kjvDqWG9GCUhmO5zOR8TX6p
-         nBSJ4vggRSB04lh3W9EGhRGacvQROTvnSd7f7GaAP8xXAA92lYlG7uUPBLXxAQ34sFhe
-         dOydX9QGhMt5NOgQAO9rTQie8s6ByfQwMkvUQHkx06OKijgwkK4HS5fSgrZlohdeVVvT
-         EDQmdoQHSNrgvsQipATNbLbXSUzA9YfI1ogog7AndYhvadsIo1AOgkMbfyuO5RacdasF
-         Vw537dW1/O1/WKtI9Sc2d1ASUnmRTMpP/Q/KTBtKAR26sl06MWBdEpFXIzCdNn3lSVlx
-         eWaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=RCQ2PUsn8ONy9YMShZlBrzWJ7KYoB6+x+GoX7MSr5Zg=;
-        b=dEdE/rJ/jzXhXPAy/n/a4bfTQw/Zzo7jmr405O59fAreLL6xZYhkMhOximatb5tK6l
-         FMzVPgwSXFAGPHmTPv6O7Lr3YBbsfTIQejqrRutLHzcO92ipPZwZ/g+5ICb6psjpGCps
-         /n0UWfBlGGqx+xITyWzFjhNZJyvehLk73BWYjt5DRkrNsuVo9AHJhRzRx5aXwn9FbLGI
-         oiF17Hfc0QVIijjkUHPrZ9oF75jBwx8AwfeeArTLLXVJCEoEg501CXZKvzxHqN5RKXi2
-         IvwGHazeOQypfp2d2Z18z8HjacGCp6x/fuBXrdoafCfSaLjx632rZuGpcri2nL/xb835
-         Qlqg==
-X-Gm-Message-State: AD7BkJJjMt3z0TuCN+5mV2Tov+xybhp+tf1oOAecO0OsU1W2mOI4bnpwpnb0D4cFS27KftKqjUtGUPDX9GFnWw==
-X-Received: by 10.25.147.202 with SMTP id v193mr5114434lfd.162.1458279639296;
- Thu, 17 Mar 2016 22:40:39 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Thu, 17 Mar 2016 22:40:09 -0700 (PDT)
-In-Reply-To: <56EB8961.70302@fb.com>
+	id S1753958AbcCRFoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2016 01:44:34 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:60991 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752087AbcCRFoX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2016 01:44:23 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 552F143D7A;
+	Fri, 18 Mar 2016 01:44:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cefsYgYt61WEm12v3M1YUi2DA/I=; b=JKhI6e
+	M5rcKS3JjmnTqAvawFGBbhTm0Fn3yYjq7Ha5jhtlzsQC6tKfybBzA1+R03cJ2RnZ
+	PFjggcHckyHd69mrsdTxDxizVVhhINxPDaoM7Km7+iHXaO+8a/jBBoNjB0wdvzPf
+	vUmsb1AEh4Q5DV2x2bLslKSs5a/x66JvzNjlo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FlzZmkve47q/RZHcLRABphtn41A8nvVM
+	weaGLN5Nu28/5vC5bpbuh6Ahsc0ycuTUDHNeIJ03RtODwuWjb8Ru1p10lkjBEqYs
+	YxFQd1NlGND+qJW91sYBSVsMH0PG379v+KJCatrL7SW89JSEmnpe55RWwMAydqwt
+	NMb5TIBNOmo=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4CB1243D79;
+	Fri, 18 Mar 2016 01:44:22 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C15E943D78;
+	Fri, 18 Mar 2016 01:44:21 -0400 (EDT)
+In-Reply-To: <20160318050807.GC22327@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 18 Mar 2016 01:08:07 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 76F6ED18-ECCC-11E5-821F-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289195>
 
-On Fri, Mar 18, 2016 at 11:51 AM, Durham Goode <durham@fb.com> wrote:
-> On 3/17/16 4:49 PM, Junio C Hamano wrote:
->>
->> Thanks for these 5 patches, two of which need to be discarded ;-).
->> I think you can pick either one of 1/2, pick the one that says
->> "non-NULL" (as opposed to "something") in the log message for 2/2.
->>
->> Durham, does it fix your issues if you apply the 1/2 and 2/2 (but
->> not 3/2) on top of 2.8-rc?
->>
->> Duy, how comfortable are you with the idea of including this two in
->> 2.8 final?  We have long passed the final -rc, and while it is
->> probably OK to prolong the cycle and do another -rc, we cannot keep
->> going like "oops, there is another thing discovered by somebod new"
->> forever.
->>
->> Thanks.
+Jeff King <peff@peff.net> writes:
+
+> E.g., start with:
 >
-> Patches 1+2 fix the repro steps in the report, yes.  But I've found another
-> case that produces different results in 2.8 than in 2.7:
+>   - only CMIT_FMT_MEDIUM expands tabs (and does so by default)
 >
-> Given a repo with files:
+>   - passing --no-expand-tabs suppresses this behavior
 >
-> dir1/dir2/show/file
-> dir1/dir2/hide/file
->
-> and a sparse-checkout of
->
-> /*
-> /dir1/dir2/show
-> !/dir1/dir2/
+>   - passing --expand-tabs is an error for now; if people care later,
+>     they can add support for other formats (naively this is trivial, but
+>     I suspect there are some corner cases around things like
+>     --pretty=raw, so unless somebody wants to work on it now, I don't
+>     think we need to).
 
-I would say this is "undefined behavior" patterns. The intention of
-"!" pattern is to revert a subset of a matched pattern, e.g.
-!/dir1/dir2/show/something. Combining lines 2 and 3 together,
-"!dir1/dir2/" is not only supposed to revert dir1/dir2/show entirely,
-but extend the reversion outside of it. At least to me that's not
-intended.
-
-Skipping that tricky pair, the pairs "/*" and "!/dir1/dir2/" means
-"exclude everything except dir1/dir2" (in .gitignore sense) or
-"include everything except dir1/dir2" in sparse checkout sense. Which
-results in empty worktree. 1+2 trips when the trailing slash in the
-last rule exists and includes both files in show/hide. Patch 3/2 fixes
-the tripping and exclude both. If the last rule is "!/dir1/dir2" then
-1+2 results in empty worktree as well.
-
-If I swap the last two rules, then it behaves the way we expect,
-dir1/dir2/show stays, dir1/dir2/hide is gone (again, the trailing "/"
-in !dir1/dir2/ requires patch 3/2).
-
-v2.7.3 differs in the way "!" is handled. It does extend reversion
-outside dir1/dir2/show, back to dir1/dir2. While 2.8+1+2 recognizes
-and follows the "/*" and "!dir1/dir2/" pair.
-
-The way I interpreted the rules above, though, may be because I'm just
-trying to defend the current code. Junio, your call on whether to
-revert this whole patch series.
-
-> the working copy still contains dir1/dir2/hide/file when run from 2.8.0-rc2.
-> In git 2.6 and 2.7.3 it does not show up (which is the expected behavior,
-> from what I understand of the docs).  Repro script is below.  Notice, the
-> 'dir2/' part of the paths is important.  If I drop that directory, the issue
-> doesn't repro.
--- 
-Duy
+Yup, I like that better, but it is now past my work hours, so I
+won't be looking at it right now.
