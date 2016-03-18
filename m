@@ -1,108 +1,104 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v3] builtin/apply: handle parse_binary() failure
-Date: Fri, 18 Mar 2016 13:30:41 +0100
-Message-ID: <1458304241-537-1-git-send-email-chriscool@tuxfamily.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
+From: Elena Petrashen <elena.petrashen@gmail.com>
+Subject: [PATCH][Outreachy] branch: allow - as abbreviation of '@{-1}'
+Date: Fri, 18 Mar 2016 15:47:11 +0300
+Message-ID: <1458305231-2333-1-git-send-email-elena.petrashen@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=y
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Elena Petrashen <elena.petrashen@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 18 13:33:11 2016
+X-From: git-owner@vger.kernel.org Fri Mar 18 13:47:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agtaV-0005Jq-1c
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 13:33:07 +0100
+	id 1agtoK-0003q3-V7
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 13:47:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932363AbcCRMdD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2016 08:33:03 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:34818 "EHLO
-	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932359AbcCRMdC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2016 08:33:02 -0400
-Received: by mail-wm0-f45.google.com with SMTP id l68so29452551wml.0
-        for <git@vger.kernel.org>; Fri, 18 Mar 2016 05:33:01 -0700 (PDT)
+	id S1756098AbcCRMrT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Mar 2016 08:47:19 -0400
+Received: from mail-lf0-f46.google.com ([209.85.215.46]:34905 "EHLO
+	mail-lf0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755638AbcCRMrS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2016 08:47:18 -0400
+Received: by mail-lf0-f46.google.com with SMTP id v130so37115400lfd.2
+        for <git@vger.kernel.org>; Fri, 18 Mar 2016 05:47:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=/CKRnIjhxI6oNPYUNqjqD+HPgoaGhYqriKCqbkw3gyk=;
-        b=etb7RcIulgJaRiyzprjsRRDycchDBBWcYcOL3Hj6E+RxXKG9lwZlEva1NqkiJifvPs
-         f/1lEA1cFpqgrfFONm83D0JQNPKMkONI/nJ6YTO8NAnqksswOCa4N6bmZJHXcFOTP5WW
-         bHjkAv1YvfbJjloqVlTDgVbu1kW0FKuvhuiqAVZ9w/I0T1KopywE0n/Yz4PUUqhJBRY6
-         p+YmovHBd7Edgds6NjFGbtN2O2YQ8pbmuZZA8ECqAQClMO1+kSCIfBdOtsvTWZP0u2f2
-         MF+lP0YOWxDzNQQeWMLKFVP2K+HBxYNElRJRq8Hyn0+qbnP/iefC1Fln9TwBJRquiVAx
-         fnfQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=OOSpIYwkL2ENRXZU3YaBPmovImN6XIDs9VPGeURO5MA=;
+        b=ajWmMmv8y9FtIqFQigexoEJkZVZ2Dx5bwj62+/dOFk1ZmeKrhfxFP7i3ZBGuxOGOg2
+         mwFnyn843J1ELLLKFb/T1ojIrnLIQ2zhrQThKjFFX3GY6dzeZzs9BioHYJWXofMDi4Zr
+         A03TBoSuWhz/GLdhHLvHSC92Ljgiu4H912UFekSeU4UofOHLV2eMO1/XHfWw3G2hofje
+         ipQ0snncRjPlKwZvuu1DrQwjDbfWRzw9iZzPmqAiunoez0U9feF43YubQNGjXJovlfPM
+         fzSAb9pMlLgSoKah5vkByImZi7+DRaRIm5KgRmo3y+FFvUjLxF6dCN6JfvBKmyYFrmO0
+         ZZMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=/CKRnIjhxI6oNPYUNqjqD+HPgoaGhYqriKCqbkw3gyk=;
-        b=FelxNBYTM//g05b5W5qTtgTS8hBuTyPBynuTEVaaIkXpp9bVWV25+Yf62ZJ4DcVkUq
-         rWJeP2c+NL4DuzTKL4lpf/0dWkE/gfOFmPl+ChpIod9x/P8bSUFVRRThSBOsxIlR49sL
-         okUE3o1Nb4ZrB98/gQxnMSwFVjNkKqLpkaGdTBk2np2goIczkt0RqItczBBlY5E/JIwq
-         xLgO1gVw3acND6Dc5zXftOrbO7gMLP1NizEBZDEHbAmTUpRRo3H/Ochv6xztLv+qPUnE
-         hTBSGHMDf+M8aquB3woR8nV8Oj82EedHfKHiod5bpYFPOYBeHbBbRcb8B08lI59JEzoN
-         jv/Q==
-X-Gm-Message-State: AD7BkJL9Sx0g4OTyXlmz/N4m1V5mIhsHi5U4NxxuvjDCPnNkPflejUeJm7Xcv2EGwdeihg==
-X-Received: by 10.194.121.194 with SMTP id lm2mr15763677wjb.71.1458304380498;
-        Fri, 18 Mar 2016 05:33:00 -0700 (PDT)
-Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id i1sm12014268wjs.45.2016.03.18.05.32.59
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=OOSpIYwkL2ENRXZU3YaBPmovImN6XIDs9VPGeURO5MA=;
+        b=cb14Ih/BkXDTS+G/4NAHFWqv9qK5rkkKx0kknQLMrWcfZ55CaramSzHKdNw4WD7Rzk
+         36qKqYDB+ZQ1gwKcxRLuD/Nm+O7W8ONGHszcGnMvIfEiir59C+8J1Z/VYXlwtTrkVpWo
+         FNJBbQShOPQkKPCdgMHv0IFDOt4MzU970MN/N1ijtDPIZwmIseLvgLOwkE0egRo0MHFl
+         MAq1Yjc01J5gQ4hsj+jSQaUaNwgdzwymSbEG1bZd63DhQpYmzfWdzrRIU+QDeSIWwEel
+         cAYgPaViTfV2BZntHgA8FuDpUW8OWycxkiWOPaXP53Hok3DLI01uw7f6ac2Ca6zCoMnJ
+         m1Eg==
+X-Gm-Message-State: AD7BkJI3JJGQJernQkynvrbpRhqMAtFvHk3k2svpV1LuY/jIfJvLqPnYh9Le9YqgAcCj5A==
+X-Received: by 10.25.168.67 with SMTP id r64mr4729892lfe.104.1458305236443;
+        Fri, 18 Mar 2016 05:47:16 -0700 (PDT)
+Received: from localhost.localdomain ([37.153.43.108])
+        by smtp.gmail.com with ESMTPSA id td7sm2141790lbb.6.2016.03.18.05.47.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 18 Mar 2016 05:32:59 -0700 (PDT)
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.8.0.rc2.56.gc9044db
+        Fri, 18 Mar 2016 05:47:15 -0700 (PDT)
+X-Mailer: git-send-email 1.9.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289218>
 
-In parse_binary() there is:
-
-	forward = parse_binary_hunk(&buffer, &size, &status, &used);
-	if (!forward && !status)
-		/* there has to be one hunk (forward hunk) */
-		return error(_("unrecognized binary patch at line %d"), linenr-1);
-
-so parse_binary() can return -1, because that's what error() returns.
-
-Also parse_binary_hunk() sets "status" to -1 in case of error and
-parse_binary() does "if (status) return status;".
-
-In this case parse_chunk() should not add -1 to the patchsize it computes.
-It is better for future libification efforts to make it just return -1.
-
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Elena Petrashen <elena.petrashen@gmail.com>
 ---
-Only the title of the patch changed in this version compared to v2.
 
- builtin/apply.c | 7 +++++++
+Hi everyone,
+
+As my first Outreachy submission micropoject I=E2=80=99ve chosen to try=
+ to approach  =E2=80=9CAllow =E2=80=9C-=E2=80=9C as a short-hand for =E2=
+=80=9C@{-1}=E2=80=9D in more places.=E2=80=9D (http://git.github.io/SoC=
+-2016-Microprojects/ (Cf. $gmane/230828))
+My goal was to teach git branch to accept - shortcut and interpret it a=
+s =E2=80=9Cprevious working branch=E2=80=9D, i.e $git branch -D -
+Really looking forward to hear what do you think, so please let me know=
+ if something is done incorrectly, etc.
+Thank you,
+Elena
+
+ builtin/branch.c | 7 +++++++
  1 file changed, 7 insertions(+)
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 42c610e..c399c97 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -1872,6 +1872,11 @@ static struct fragment *parse_binary_hunk(char **buf_p,
- 	return NULL;
- }
- 
-+/*
-+ * Returns:
-+ *   -1 in case of error,
-+ *   the length of the parsed binary patch otherwise
-+ */
- static int parse_binary(char *buffer, unsigned long size, struct patch *patch)
- {
- 	/*
-@@ -2017,6 +2022,8 @@ static int parse_chunk(char *buffer, unsigned long size, struct patch *patch)
- 			linenr++;
- 			used = parse_binary(buffer + hd + llen,
- 					    size - hd - llen, patch);
-+			if (used < 0)
-+				return -1;
- 			if (used)
- 				patchsize = used + llen;
- 			else
--- 
-2.8.0.rc2.56.gc9044db
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 7b45b6b..9d0f8a7 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -675,6 +675,13 @@ int cmd_branch(int argc, const char **argv, const =
+char *prefix)
+ 	argc =3D parse_options(argc, argv, prefix, options, builtin_branch_us=
+age,
+ 			     0);
+=20
++	int i;
++	for (i =3D 0; i < argc; i++) {
++		if (!strcmp(argv[i], "-")) {
++			argv[i] =3D "@{-1}";
++		}
++	}
++
+ 	if (!delete && !rename && !edit_description && !new_upstream && !unse=
+t_upstream && argc =3D=3D 0)
+ 		list =3D 1;
+=20
+--=20
+1.9.1
