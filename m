@@ -1,194 +1,73 @@
-From: "Richard Furness -X (rfurness - ENSOFT LIMITED at Cisco)" 
-	<rfurness@cisco.com>
-Subject: RE: 2.8.0 gitignore enhancement not working as expected
-Date: Fri, 18 Mar 2016 14:32:27 +0000
-Message-ID: <551499517627471db2c8434077eb16db@XCH-RCD-003.cisco.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: 2.8.0 gitignore enhancement not working as expected
+Date: Fri, 18 Mar 2016 21:52:37 +0700
+Message-ID: <CACsJy8BfySC0extNWmKHgF1QOoEzGtg5RxgpfsNxjp8HJ_rdXQ@mail.gmail.com>
 References: <4a4980485c234280bce91be87d213216@XCH-RCD-003.cisco.com>
- <CACsJy8Bjv=fF0CSNF_QNTCYCqQjy=j0ZEyjYOBFscz0HEYATig@mail.gmail.com>
+ <CACsJy8Bjv=fF0CSNF_QNTCYCqQjy=j0ZEyjYOBFscz0HEYATig@mail.gmail.com> <551499517627471db2c8434077eb16db@XCH-RCD-003.cisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 15:42:17 2016
+To: "Richard Furness -X (rfurness - ENSOFT LIMITED at Cisco)" 
+	<rfurness@cisco.com>
+X-From: git-owner@vger.kernel.org Fri Mar 18 15:53:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agvbU-0002XX-BD
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 15:42:17 +0100
+	id 1agvm6-0008Hc-G3
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 15:53:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753645AbcCROmL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2016 10:42:11 -0400
-Received: from rcdn-iport-4.cisco.com ([173.37.86.75]:3534 "EHLO
-	rcdn-iport-4.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751410AbcCROmK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2016 10:42:10 -0400
-X-Greylist: delayed 578 seconds by postgrey-1.27 at vger.kernel.org; Fri, 18 Mar 2016 10:42:09 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=9488; q=dns/txt; s=iport;
-  t=1458312129; x=1459521729;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=gGQr6J/Khb+rBs7ynll3FZyXx/gc7giq+JvQWh2MnCs=;
-  b=h47aFu8eDnDuCmeUsfT+Xz2/8vOBQVEK6owakSidoXBmu4XjfX++brCD
-   LtZkGQAgH3Hd0N2zng4HT9xFxwdaKs3sy+UuAUPWHUlSf397O/ZfOp4dL
-   tbH6xP5T4vIIHcx6360EJHJchwFjBWI61/OV+84mqpkQfSku5pN05fGQF
-   w=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: =?us-ascii?q?A0AFAgCkEOxW/4cNJK1eg0WBRQauSYtNA?=
- =?us-ascii?q?Q2Bb4YNAhyBETgUAQEBAQEBAWQnhEEBAQEEIxFFDAQCAQgOAwQBAQECAiMDAgI?=
- =?us-ascii?q?CHQIRFAEICAEBBA4FCIgKAxKxUop9DYRWAQEBAQEBAQEBAQEBAQEBAQEBAQEBF?=
- =?us-ascii?q?XyJZoI+gVg8gmqCVgWXJjEBFohMgyyBbo8OhzGHVAEeAQFCg2VqiSgEOX4BAQE?=
-X-IronPort-AV: E=Sophos;i="5.24,355,1454976000"; 
-   d="scan'208";a="84226629"
-Received: from alln-core-2.cisco.com ([173.36.13.135])
-  by rcdn-iport-4.cisco.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 18 Mar 2016 14:32:28 +0000
-Received: from XCH-RCD-004.cisco.com (xch-rcd-004.cisco.com [173.37.102.14])
-	by alln-core-2.cisco.com (8.14.5/8.14.5) with ESMTP id u2IEWSJB027905
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=FAIL);
-	Fri, 18 Mar 2016 14:32:28 GMT
-Received: from xch-rcd-003.cisco.com (173.37.102.13) by XCH-RCD-004.cisco.com
- (173.37.102.14) with Microsoft SMTP Server (TLS) id 15.0.1104.5; Fri, 18 Mar
- 2016 09:32:27 -0500
-Received: from xch-rcd-003.cisco.com ([173.37.102.13]) by
- XCH-RCD-003.cisco.com ([173.37.102.13]) with mapi id 15.00.1104.009; Fri, 18
- Mar 2016 09:32:27 -0500
-Thread-Topic: 2.8.0 gitignore enhancement not working as expected
-Thread-Index: AdGA+Oope1o05p+SRVOEuS4waIVawgAOQXSAAAQGuNA=
-In-Reply-To: <CACsJy8Bjv=fF0CSNF_QNTCYCqQjy=j0ZEyjYOBFscz0HEYATig@mail.gmail.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.63.23.173]
+	id S1752866AbcCROxK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2016 10:53:10 -0400
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:36265 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751838AbcCROxJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2016 10:53:09 -0400
+Received: by mail-lb0-f170.google.com with SMTP id qe11so35825482lbc.3
+        for <git@vger.kernel.org>; Fri, 18 Mar 2016 07:53:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ys2isdffIOZx4YwMBSdZEHIMm4Y6SfxdQ69rORwHyP8=;
+        b=HB5vDhtvgIoR3HzA60vOmjv9Q/+EjiBSP6r8xRX6i2Dxhz/Wvo+OmJ/POZomQgUvKg
+         XqYlvcbi8GzlUwoOOcWq2Wi40KmpBsSlFyx1SnHsBdtvTIMCbLghelUUeqmZvEPHHxHh
+         FVK6zUcV+u9Gn8FEZAoduJfrR4GqdxwI6yf9b2l2U9lTM5YAMdK/cBrwUlSsxKTbIqfO
+         ZtVKrRF6ZKflzKC7IEg3KGZgN+5CEFRF7rR248T83zPVBcgGw/BPjSc7MxVmlomeL9Uw
+         886s8YCaIaNBMb4eqQiUKgtYS6EucHgO8fdhmimKRVUjw3FSyfpHsZDuDD2uieesuUg7
+         /NBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ys2isdffIOZx4YwMBSdZEHIMm4Y6SfxdQ69rORwHyP8=;
+        b=gMO2Zt1Vga57xUd6buzpRnRw6nspu71HBlxQQ6xpWSFH8/prYFW0iDkpuxMIVVDyTN
+         SMEF+X9RHZJEdhdn1SKArML5UWSOKTAq1LtsR/R0kmD7riK5lF2aMIdhpHza1mo2E3/t
+         QjzFbq4McU0WCM24A0n2RCsZ1P7Nlfy/F0yGOk1l3YMjOkAFJSNltUX55gRvtrm7q90m
+         pI9E0LCoUBLNKE1JEFbWJmraLYwDZAQI5QduTurwWk10ivV7nmuAzIUN7yQwqqLaDcaO
+         EBZfauGCCnLg5le1sXrDpdUeHBiuo7gDFfFuSulYlreUMpQ+1mQSJV/NpzYKK75QJ/Gc
+         dv/g==
+X-Gm-Message-State: AD7BkJKZjCYHXTs1i0mZTWi5itGsIIyApx65n3sb/rPVpywIuafyVkIab/p2MdEtEOHPL/avNv04AfoS4RlUOw==
+X-Received: by 10.112.130.41 with SMTP id ob9mr5864688lbb.81.1458312787010;
+ Fri, 18 Mar 2016 07:53:07 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Fri, 18 Mar 2016 07:52:37 -0700 (PDT)
+In-Reply-To: <551499517627471db2c8434077eb16db@XCH-RCD-003.cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289221>
 
-SGkgRHV5LA0KDQpJIHRyaWVkIHlvdXIgZXhhY3QgZXhhbXBsZSBhbmQgaXQgd29ya2VkIGNvcnJl
-Y3RseS4gQnV0IHRoZW4gSSB0cmllZCBhZGRpbmcgc29tZSBtb3JlIGZpbGVzL2RpcnMgYXQgdGhl
-IHRvcCBsZXZlbCBhbmQgSSBzdGlsbCBzZWUgYW4gaXNzdWU6DQoNCmNhdCAuZ2l0aWdub3JlDQov
-Kg0KIWEvYi9jDQoNCmZpbmQgKiAtdHlwZSBmDQoxDQoyDQozDQphLzENCmEvYi8xDQphL2IvYy8x
-DQpkLzENCg0KZ2l0IGxzLWZpbGVzIC1vIC0tZXhjbHVkZS1zdGFuZGFyZA0KLmdpdGlnbm9yZQ0K
-Mg0KMw0KYS9iL2MvMQ0KZC8xDQoNClRyYWNlIG91dHB1dCBiZWxvdy4uLg0KDQpUaGFua3MsDQoN
-ClJpY2hhcmQNCg0KDQpHSVRfVFJBQ0VfRVhDTFVERT0xIGdpdCBscy1maWxlcyAtbyAtLWV4Y2x1
-ZGUtc3RhbmRhcmQNCjA3OjI2OjEzLjMxMTc5MyBkaXIuYzoxODQ4ICAgICAgICAgICAgICBleGNs
-dWRlOiBbMF0gZW50ZXIgJycNCjA3OjI2OjEzLjMxMjYzMiBkaXIuYzoxMDEyICAgICAgICAgICAg
-ICBleGNsdWRlOiBmcm9tIC5naXRpZ25vcmUNCjA3OjI2OjEzLjMxMjY2OCBkaXIuYzoxMDk3ICAg
-ICAgICAgICAgICBleGNsdWRlOiAxIHZzIC8qIGF0IGxpbmUgMSA9PiB5ZXMNCjA3OjI2OjEzLjMx
-MjY3MyBkaXIuYzoxMDEyICAgICAgICAgICAgICBleGNsdWRlOiBmcm9tIC5naXRpZ25vcmUNCjA3
-OjI2OjEzLjMxMjY3NyBkaXIuYzoxMDg5ICAgICAgICAgICAgICBleGNsdWRlOiBhIHZzIC8qIGF0
-IGxpbmUgMSA9PiB5ZXMsIGZvcmNlZCBvcGVuIGJ5IGEvYi9jIGF0IGxpbmUgMiA9PiBuL2ENCjA3
-OjI2OjEzLjMxMjY4MSBkaXIuYzoxMDEyICAgICAgICAgICAgICBleGNsdWRlOiBmcm9tIC91c2Vy
-cy9yZnVybmVzcy8uZ2l0aWdub3JlX2dsb2JhbA0KMDc6MjY6MTMuMzEyNjg0IGRpci5jOjEwNjIg
-ICAgICAgICAgICAgIGV4Y2x1ZGU6IGEgPT4gbi9hDQowNzoyNjoxMy4zMTI2OTkgZGlyLmM6MTg0
-OCAgICAgICAgICAgICAgZXhjbHVkZTogWzFdIGVudGVyICdhLycNCjA3OjI2OjEzLjMxMjk2NCBk
-aXIuYzoxMDEyICAgICAgICAgICAgICBleGNsdWRlOiBmcm9tIC5naXRpZ25vcmUNCjA3OjI2OjEz
-LjMxMjk3OCBkaXIuYzoxMDg5ICAgICAgICAgICAgICBleGNsdWRlOiBhIHZzIC8qIGF0IGxpbmUg
-MSA9PiB5ZXMsIGZvcmNlZCBvcGVuIGJ5IGEvYi9jIGF0IGxpbmUgMiA9PiBuL2ENCjA3OjI2OjEz
-LjMxMjk4MSBkaXIuYzoxMDEyICAgICAgICAgICAgICBleGNsdWRlOiBmcm9tIC91c2Vycy9yZnVy
-bmVzcy8uZ2l0aWdub3JlX2dsb2JhbA0KMDc6MjY6MTMuMzEyOTg1IGRpci5jOjEwNjIgICAgICAg
-ICAgICAgIGV4Y2x1ZGU6IGEgPT4gbi9hDQowNzoyNjoxMy4zMTI5OTEgZGlyLmM6MTAxMiAgICAg
-ICAgICAgICAgZXhjbHVkZTogZnJvbSAuZ2l0aWdub3JlDQowNzoyNjoxMy4zMTI5OTUgZGlyLmM6
-MTA5NyAgICAgICAgICAgICAgZXhjbHVkZTogYS8xIHZzIC8qIGF0IGxpbmUgMSA9PiB5ZXMgKHN0
-dWNrKQ0KMDc6MjY6MTMuMzEyOTk5IGRpci5jOjEwMTIgICAgICAgICAgICAgIGV4Y2x1ZGU6IGZy
-b20gLmdpdGlnbm9yZQ0KMDc6MjY6MTMuMzEzMDAyIGRpci5jOjEwODkgICAgICAgICAgICAgIGV4
-Y2x1ZGU6IGEvYiB2cyAvKiBhdCBsaW5lIDEgPT4geWVzLCBmb3JjZWQgb3BlbiBieSBhL2IvYyBh
-dCBsaW5lIDIgPT4gbi9hDQowNzoyNjoxMy4zMTMwMDYgZGlyLmM6MTAxMiAgICAgICAgICAgICAg
-ZXhjbHVkZTogZnJvbSAvdXNlcnMvcmZ1cm5lc3MvLmdpdGlnbm9yZV9nbG9iYWwNCjA3OjI2OjEz
-LjMxMzAwOSBkaXIuYzoxMDYyICAgICAgICAgICAgICBleGNsdWRlOiBhL2IgPT4gbi9hDQowNzoy
-NjoxMy4zMTMwMTYgZGlyLmM6MTg0OCAgICAgICAgICAgICAgZXhjbHVkZTogWzJdIGVudGVyICdh
-L2IvJw0KMDc6MjY6MTMuMzEzMjU5IGRpci5jOjEwMTIgICAgICAgICAgICAgIGV4Y2x1ZGU6IGZy
-b20gLmdpdGlnbm9yZQ0KMDc6MjY6MTMuMzEzMjcyIGRpci5jOjEwODkgICAgICAgICAgICAgIGV4
-Y2x1ZGU6IGEvYiB2cyAvKiBhdCBsaW5lIDEgPT4geWVzLCBmb3JjZWQgb3BlbiBieSBhL2IvYyBh
-dCBsaW5lIDIgPT4gbi9hDQowNzoyNjoxMy4zMTMyNzUgZGlyLmM6MTAxMiAgICAgICAgICAgICAg
-ZXhjbHVkZTogZnJvbSAvdXNlcnMvcmZ1cm5lc3MvLmdpdGlnbm9yZV9nbG9iYWwNCjA3OjI2OjEz
-LjMxMzI3OSBkaXIuYzoxMDYyICAgICAgICAgICAgICBleGNsdWRlOiBhL2IgPT4gbi9hDQowNzoy
-NjoxMy4zMTMyODUgZGlyLmM6MTAxMiAgICAgICAgICAgICAgZXhjbHVkZTogZnJvbSAuZ2l0aWdu
-b3JlDQowNzoyNjoxMy4zMTMyODggZGlyLmM6MTA5NyAgICAgICAgICAgICAgZXhjbHVkZTogYS9i
-LzEgdnMgLyogYXQgbGluZSAxID0+IHllcyAoc3R1Y2spDQowNzoyNjoxMy4zMTMyOTIgZGlyLmM6
-MTAxMiAgICAgICAgICAgICAgZXhjbHVkZTogZnJvbSAuZ2l0aWdub3JlDQowNzoyNjoxMy4zMTMy
-OTUgZGlyLmM6MTA5NyAgICAgICAgICAgICAgZXhjbHVkZTogYS9iL2MgdnMgYS9iL2MgYXQgbGlu
-ZSAyID0+IG5vDQowNzoyNjoxMy4zMTMzMDMgZGlyLmM6MTg0OCAgICAgICAgICAgICAgZXhjbHVk
-ZTogWzNdIGVudGVyICdhL2IvYy8nDQowNzoyNjoxMy4zMTM2MDEgZGlyLmM6MTAxMiAgICAgICAg
-ICAgICAgZXhjbHVkZTogZnJvbSAuZ2l0aWdub3JlDQowNzoyNjoxMy4zMTM2MTUgZGlyLmM6MTA5
-NyAgICAgICAgICAgICAgZXhjbHVkZTogYS9iL2MgdnMgYS9iL2MgYXQgbGluZSAyID0+IG5vDQow
-NzoyNjoxMy4zMTM2MzIgZGlyLmM6MTAxMiAgICAgICAgICAgICAgZXhjbHVkZTogZnJvbSAuZ2l0
-aWdub3JlDQowNzoyNjoxMy4zMTM2MzYgZGlyLmM6MTA5NyAgICAgICAgICAgICAgZXhjbHVkZTog
-YS9iL2MvMSB2cyBhL2IvYyBhdCBsaW5lIDIgPT4gbm8NCjA3OjI2OjEzLjMxMzY0NSBkaXIuYzox
-OTE0ICAgICAgICAgICAgICBleGNsdWRlOiBbM10gbGVhdmUgJ2EvYi9jLycNCjA3OjI2OjEzLjMx
-MzY1MCBkaXIuYzoxOTE0ICAgICAgICAgICAgICBleGNsdWRlOiBbMl0gbGVhdmUgJ2EvYi8nDQow
-NzoyNjoxMy4zMTM2NTUgZGlyLmM6MTkxNCAgICAgICAgICAgICAgZXhjbHVkZTogWzFdIGxlYXZl
-ICdhLycNCjA3OjI2OjEzLjMxMzcxNiBkaXIuYzoxMDEyICAgICAgICAgICAgICBleGNsdWRlOiBm
-cm9tIC5naXRpZ25vcmUNCjA3OjI2OjEzLjMxMzcyMCBkaXIuYzoxMDYyICAgICAgICAgICAgICBl
-eGNsdWRlOiAuZ2l0aWdub3JlID0+IG4vYQ0KMDc6MjY6MTMuMzEzNzI0IGRpci5jOjEwMTIgICAg
-ICAgICAgICAgIGV4Y2x1ZGU6IGZyb20gL3VzZXJzL3JmdXJuZXNzLy5naXRpZ25vcmVfZ2xvYmFs
-DQowNzoyNjoxMy4zMTM3MjcgZGlyLmM6MTA2MiAgICAgICAgICAgICAgZXhjbHVkZTogLmdpdGln
-bm9yZSA9PiBuL2ENCjA3OjI2OjEzLjMxMzc0MiBkaXIuYzoxMDEyICAgICAgICAgICAgICBleGNs
-dWRlOiBmcm9tIC5naXRpZ25vcmUNCjA3OjI2OjEzLjMxMzc0NiBkaXIuYzoxMDYyICAgICAgICAg
-ICAgICBleGNsdWRlOiAyID0+IG4vYQ0KMDc6MjY6MTMuMzEzNzQ4IGRpci5jOjEwMTIgICAgICAg
-ICAgICAgIGV4Y2x1ZGU6IGZyb20gL3VzZXJzL3JmdXJuZXNzLy5naXRpZ25vcmVfZ2xvYmFsDQow
-NzoyNjoxMy4zMTM3NTIgZGlyLmM6MTA2MiAgICAgICAgICAgICAgZXhjbHVkZTogMiA9PiBuL2EN
-CjA3OjI2OjEzLjMxMzc4OSBkaXIuYzoxMDEyICAgICAgICAgICAgICBleGNsdWRlOiBmcm9tIC5n
-aXRpZ25vcmUNCjA3OjI2OjEzLjMxMzc5MyBkaXIuYzoxMDYyICAgICAgICAgICAgICBleGNsdWRl
-OiAzID0+IG4vYQ0KMDc6MjY6MTMuMzEzODQ2IGRpci5jOjEwMTIgICAgICAgICAgICAgIGV4Y2x1
-ZGU6IGZyb20gL3VzZXJzL3JmdXJuZXNzLy5naXRpZ25vcmVfZ2xvYmFsDQowNzoyNjoxMy4zMTM4
-NDggZGlyLmM6MTA2MiAgICAgICAgICAgICAgZXhjbHVkZTogMyA9PiBuL2ENCjA3OjI2OjEzLjMx
-Mzg1MiBkaXIuYzoxMDEyICAgICAgICAgICAgICBleGNsdWRlOiBmcm9tIC5naXRpZ25vcmUNCjA3
-OjI2OjEzLjMxMzg1NSBkaXIuYzoxMDYyICAgICAgICAgICAgICBleGNsdWRlOiBkID0+IG4vYQ0K
-MDc6MjY6MTMuMzEzODU3IGRpci5jOjEwMTIgICAgICAgICAgICAgIGV4Y2x1ZGU6IGZyb20gL3Vz
-ZXJzL3JmdXJuZXNzLy5naXRpZ25vcmVfZ2xvYmFsDQowNzoyNjoxMy4zMTM4NjAgZGlyLmM6MTA2
-MiAgICAgICAgICAgICAgZXhjbHVkZTogZCA9PiBuL2ENCjA3OjI2OjEzLjMxNDE0NSBkaXIuYzox
-ODQ4ICAgICAgICAgICAgICBleGNsdWRlOiBbMV0gZW50ZXIgJ2QvJw0KMDc6MjY6MTMuMzE0Mzk1
-IGRpci5jOjEwMTIgICAgICAgICAgICAgIGV4Y2x1ZGU6IGZyb20gLmdpdGlnbm9yZQ0KMDc6MjY6
-MTMuMzE0NDI1IGRpci5jOjEwNjIgICAgICAgICAgICAgIGV4Y2x1ZGU6IGQgPT4gbi9hDQowNzoy
-NjoxMy4zMTQ0MzAgZGlyLmM6MTAxMiAgICAgICAgICAgICAgZXhjbHVkZTogZnJvbSAvdXNlcnMv
-cmZ1cm5lc3MvLmdpdGlnbm9yZV9nbG9iYWwNCjA3OjI2OjEzLjMxNDQzNSBkaXIuYzoxMDYyICAg
-ICAgICAgICAgICBleGNsdWRlOiBkID0+IG4vYQ0KMDc6MjY6MTMuMzE0NDU1IGRpci5jOjEwMTIg
-ICAgICAgICAgICAgIGV4Y2x1ZGU6IGZyb20gLmdpdGlnbm9yZQ0KMDc6MjY6MTMuMzE0NDU5IGRp
-ci5jOjEwNjIgICAgICAgICAgICAgIGV4Y2x1ZGU6IGQvMSA9PiBuL2ENCjA3OjI2OjEzLjMxNDQ2
-MiBkaXIuYzoxMDEyICAgICAgICAgICAgICBleGNsdWRlOiBmcm9tIC91c2Vycy9yZnVybmVzcy8u
-Z2l0aWdub3JlX2dsb2JhbA0KMDc6MjY6MTMuMzE0NDY1IGRpci5jOjEwNjIgICAgICAgICAgICAg
-IGV4Y2x1ZGU6IGQvMSA9PiBuL2ENCjA3OjI2OjEzLjMxNDQ3MSBkaXIuYzoxOTE0ICAgICAgICAg
-ICAgICBleGNsdWRlOiBbMV0gbGVhdmUgJ2QvJw0KMDc6MjY6MTMuMzE0NDc1IGRpci5jOjE5MTQg
-ICAgICAgICAgICAgIGV4Y2x1ZGU6IFswXSBsZWF2ZSAnJw0KLmdpdGlnbm9yZQ0KMg0KMw0KYS9i
-L2MvMQ0KZC8xDQoNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBEdXkg
-Tmd1eWVuIFttYWlsdG86cGNsb3Vkc0BnbWFpbC5jb21dDQo+IFNlbnQ6IDE4IE1hcmNoIDIwMTYg
-MTE6MTkNCj4gVG86IFJpY2hhcmQgRnVybmVzcyAtWCAocmZ1cm5lc3MgLSBFTlNPRlQgTElNSVRF
-RCBhdCBDaXNjbykNCj4gPHJmdXJuZXNzQGNpc2NvLmNvbT4NCj4gQ2M6IGdpdEB2Z2VyLmtlcm5l
-bC5vcmcNCj4gU3ViamVjdDogUmU6IDIuOC4wIGdpdGlnbm9yZSBlbmhhbmNlbWVudCBub3Qgd29y
-a2luZyBhcyBleHBlY3RlZA0KPiANCj4gT24gRnJpLCBNYXIgMTgsIDIwMTYgYXQgNDozMSBQTSwg
-UmljaGFyZCBGdXJuZXNzIC1YIChyZnVybmVzcyAtIEVOU09GVA0KPiBMSU1JVEVEIGF0IENpc2Nv
-KSA8cmZ1cm5lc3NAY2lzY28uY29tPiB3cm90ZToNCj4gPiBIaSwNCj4gPg0KPiA+IEkndmUgYmVl
-biB0ZXN0aW5nIG91dCBnaXQgMi44LjAgcmMzIGR1ZSB0byBoYXZpbmcgYSBwYXJ0aWN1bGFyIGlu
-dGVyZXN0IGluIHRoaXMNCj4gZW5oYW5jZW1lbnQgZnJvbSB0aGUgY2hhbmdlbG9nOg0KPiA+ICIg
-QW5vdGhlciB0cnkgdG8gaW1wcm92ZSB0aGUgaWdub3JlIG1lY2hhbmlzbSB0aGF0IGxldHMgeW91
-IHNheSAidGhpcw0KPiA+ICAgIGlzIGV4Y2x1ZGVkIiBhbmQgdGhlbiBsYXRlciBzYXkgIm9oLCBu
-bywgdGhpcyBwYXJ0ICh0aGF0IGlzIGENCj4gPiAgICBzdWJzZXQgb2YgdGhlIHByZXZpb3VzIHBh
-cnQpIGlzIG5vdCBleGNsdWRlZCIuICBUaGlzIGhhcyBzdGlsbCBhDQo+ID4gICAga25vd24gbGlt
-aXRhdGlvbiwgdGhvdWdoLiINCj4gPg0KPiA+IEN1cnJlbnRseSwgaW4gb3JkZXIgdG8gaW5jbHVk
-ZSBPTkxZIHRoZSBmaWxlcyB1bmRlciBhL2IvYyBJIGhhdmUgdGhlDQo+IGZvbGxvd2luZyBpbiAu
-Z2l0aWdub3JlOg0KPiA+IC8qICAgICAgICAgICAgIC0gSWdub3JlIGV2ZXJ5dGhpbmcNCj4gPiAh
-L2EgICAgICAgICAgICAgLSBFeGNlcHQgZGlyZWN0b3J5ICJhIg0KPiA+IC9hLyogICAgICAgICAg
-ICAtIElnbm9yZSBhbGwgc3ViLWRpcmVjdG9yaWVzIG9mICJhLyINCj4gPiAhL2EvYiAgICAgICAg
-ICAgLSBFeGNlcHQgImEvYiINCj4gPiAvYS9iLyogICAgICAgICAgLSBJZ25vcmUgYWxsIHN1Yi1k
-aXJlY3RvcmllcyBvZiAiYS9iLyINCj4gPiAhL2EvYi9jICAgICAgICAgLSBFeGNlcHQgImEvYi9j
-Ig0KPiA+DQo+ID4gTXkgaG9wZSB3YXMgdGhhdCB3aXRoIHRoaXMgZW5oYW5jZW1lbnQgSSBjb3Vs
-ZCBtYXNzaXZlbHkgc2ltcGxpZnkgdGhpcyB0bzoNCj4gPiAvKiAgICAgICAgICAgICAtIElnbm9y
-ZSBldmVyeXRoaW5nDQo+ID4gIWEvYi9jICAgICAgLSBFeGNlcHQgImEvYi9jIg0KPiA+DQo+ID4g
-SG93ZXZlciB0aGlzIGRvZXNuJ3Qgc2VlbSB0byB3b3JrIC0gaW5zdGVhZCBJIGZpbmQgdGhhdCBO
-T1RISU5HIGlzDQo+IGlnbm9yZWQgKGkuZS4gaXQncyBhcyBpZiB0aGUgMm5kIGxpbmUgY29tcGxl
-dGVseSBjYW5jZWxzIHRoZSBmaXJzdCkuDQo+IA0KPiBJbnRlcmVzdGluZy4gSXQgc2VlbXMgdG8g
-YmUgd29ya2luZyBmb3IgbWUuIFRoaXMgaXMgbXkgdGVzdCBzZXR1cA0KPiANCj4gPiAvdG1wL2Fi
-YyAkIGZpbmQgKiAtdHlwZSBmDQo+IDENCj4gYS8xDQo+IGEvYi8xDQo+IGEvYi9jDQo+ID4gL3Rt
-cC9hYmMgJCBjYXQgLmdpdGlnbm9yZQ0KPiAvKg0KPiAhYS9iL2MNCj4gDQo+IGFuZCB0aGUgcmVz
-dWx0cw0KPiANCj4gPiAvdG1wL2FiYyAkIH4vdy9naXQvdGVtcC9naXQgLS12ZXJzaW9uDQo+IGdp
-dCB2ZXJzaW9uIDIuOC4wLnJjMw0KPiA+IC90bXAvYWJjICQgfi93L2dpdC90ZW1wL2dpdCBscy1m
-aWxlcyAtbyAtLWV4Y2x1ZGUtc3RhbmRhcmQNCj4gYS9iL2MNCj4gDQo+IENhbiB5b3UgZG8gIkdJ
-VF9UUkFDRV9FWENMVURFPTEgZ2l0IGxzLWZpbGVzIC1vIC0tZXhjbHVkZS1zdGFuZGFyZCINCj4g
-YW5kIHBvc3QgdGhlIG91dHB1dD8NCj4gLS0NCj4gRHV5DQo=
+On Fri, Mar 18, 2016 at 9:32 PM, Richard Furness -X (rfurness - ENSOFT
+LIMITED at Cisco) <rfurness@cisco.com> wrote:
+> Hi Duy,
+>
+> I tried your exact example and it worked correctly. But then I tried adding some more files/dirs at the top level and I still see an issue:
+
+Thank you. Phew.. I bet you hit the same bug we found yesterday (your
+trace suggests so). Can you try this patch [1] just to confirm?
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/289101
+-- 
+Duy
