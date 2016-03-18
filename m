@@ -1,183 +1,90 @@
-From: Mehul Jain <mehul.jain2029@gmail.com>
-Subject: Re: [PATCH v9 2/2] pull --rebase: add --[no-]autostash flag
-Date: Fri, 18 Mar 2016 20:47:42 +0530
-Message-ID: <CA+DCAeTnvEZjcGaS=Ed95bGYHRqV-svtTY-hX8gEbXstbkYe5A@mail.gmail.com>
-References: <1458233370-8343-1-git-send-email-mehul.jain2029@gmail.com>
-	<1458233370-8343-2-git-send-email-mehul.jain2029@gmail.com>
-	<CAPig+cQHbGAB=XCVWtC1MuubWUFc0tT-+ZGD+hW18whJP_U0_Q@mail.gmail.com>
-	<CAPig+cQg2gYbr26X6PPQ6bobkxbufSSNtA1T94kdyEKQwHZXBw@mail.gmail.com>
+From: "Richard Furness -X (rfurness - ENSOFT LIMITED at Cisco)" 
+	<rfurness@cisco.com>
+Subject: RE: 2.8.0 gitignore enhancement not working as expected
+Date: Fri, 18 Mar 2016 15:33:26 +0000
+Message-ID: <20118f38fdbb48af99292e69648fd7e9@XCH-RCD-003.cisco.com>
+References: <4a4980485c234280bce91be87d213216@XCH-RCD-003.cisco.com>
+ <CACsJy8Bjv=fF0CSNF_QNTCYCqQjy=j0ZEyjYOBFscz0HEYATig@mail.gmail.com>
+ <551499517627471db2c8434077eb16db@XCH-RCD-003.cisco.com>
+ <CACsJy8BfySC0extNWmKHgF1QOoEzGtg5RxgpfsNxjp8HJ_rdXQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Paul Tan <pyokagan@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 16:17:49 2016
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 18 16:33:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agw9r-0003VY-JQ
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 16:17:47 +0100
+	id 1agwP8-0003Oi-3t
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 16:33:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753018AbcCRPRp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2016 11:17:45 -0400
-Received: from mail-qg0-f66.google.com ([209.85.192.66]:36722 "EHLO
-	mail-qg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756125AbcCRPRn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2016 11:17:43 -0400
-Received: by mail-qg0-f66.google.com with SMTP id 14so7575408qgg.3
-        for <git@vger.kernel.org>; Fri, 18 Mar 2016 08:17:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=fAG6UxEcdMB3YhWshxJCgS299dUfNV2EEwalQKFdh38=;
-        b=M3grwIrKrxEwRv/UJIfLo0NzG70iTjmMhxLuAwSy364nnxVRtG9JbhRLZr4NZci0KI
-         WET7Cq2bB+SrdGbUZwx9gnIDLpxMeQwvHniVG4gqWDUVEd2Ag3ziL2eeFMTMOxMf3/AX
-         GIu3pB9zvNaf5FMnDX9k1bkhGnFp33WnC8ZuTK13iAEJyEBlIQ3wl1IzzbcUfTXN0Llx
-         yEJxOXs7RPLBklgKEJCqj138T/a/MAydtlv6P3MEUgRvg/Ewta9OozWg3FY/fWuTAqvh
-         5m3eUxp64dv0FnOZcwNF+g3RzRniqYOxc4PRcDg2n+w00nGyPKkj58LdjeYU9UPwSyHr
-         vaqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=fAG6UxEcdMB3YhWshxJCgS299dUfNV2EEwalQKFdh38=;
-        b=ejKnEdpl2UvgGDEgkqdOtrDJKV9pqcjZG8StTIMjqokQ9B3m2/m8ojinKlBxH6kFiH
-         jbVpel1IGEu1zpwzO5spg1UOekusl5jdowXlZCD6K1D5J7CYfyKi3gR7qbDuJqudO+21
-         /YUMQYKZR9OFIGN1sfB7In3E+gG0YmoHDHPY4YfMOK0/ZNFaRaniQVuiAUZP4D6W0pPn
-         D6z2b3LhjV60qCZYszXNMvkXrVXyCyKksReUyoCfH55l7SgrcwXHQg1qqstN5RWcI5bl
-         g/hwUzgKdJfBkgXkG7Zlxq7kPEqbCJfkzruSPhPzpSu/xhG8E6CtdIQDtMWDm7F3s5lp
-         /CXQ==
-X-Gm-Message-State: AD7BkJLpuYR9tBqz9zc554jod5qtVlOAh5uLdUwwBlYzkPKvBtBEJ6/aKjDYGRTuyb0XIgvCZml/5eP3gkfHsw==
-X-Received: by 10.140.41.164 with SMTP id z33mr23041543qgz.78.1458314262234;
- Fri, 18 Mar 2016 08:17:42 -0700 (PDT)
-Received: by 10.55.188.7 with HTTP; Fri, 18 Mar 2016 08:17:42 -0700 (PDT)
-In-Reply-To: <CAPig+cQg2gYbr26X6PPQ6bobkxbufSSNtA1T94kdyEKQwHZXBw@mail.gmail.com>
+	id S932277AbcCRPda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2016 11:33:30 -0400
+Received: from rcdn-iport-9.cisco.com ([173.37.86.80]:18497 "EHLO
+	rcdn-iport-9.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751410AbcCRPd2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2016 11:33:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=1224; q=dns/txt; s=iport;
+  t=1458315208; x=1459524808;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=YQz2ELC3HXYnIX5GWlvZIGJ+zq+XS1edN2TooeDWDcE=;
+  b=Q+FWrkiKw7OE+0tRRSGKijRpX3OLhj1xX38rNUkiynoLzkriGc1nutd0
+   0S9AFGh4JZEoyYF1Pc0saeuDTCG+ApXWtqLgraMLVhEj2xIVFjS+PbqkK
+   op+recfcSlrSu2Nl7SZhI3ISuyW2+UfNKa8M7iRpfgYrT00x/8en62pWl
+   8=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: =?us-ascii?q?A0AFAgDQHuxW/4MNJK1eg0VTcgauSYtNA?=
+ =?us-ascii?q?Q2BbyGFbAIcgRI4FAEBAQEBAQFkJ4RBAQEBBCMRRQwEAgEIDgMEAQEBAgIjAwI?=
+ =?us-ascii?q?CAh0CERQBCAgBAQQOBQiICgMSDrEainkNhFYBAQEBAQEBAQEBAQEBAQEBAQEBA?=
+ =?us-ascii?q?QEVfIlmgj6BWIMmglYFkwSEIjEBFoVahh6BboI3jFeHMYdUAR4BAUKDZWoBAQG?=
+ =?us-ascii?q?JJT1+AQEB?=
+X-IronPort-AV: E=Sophos;i="5.24,355,1454976000"; 
+   d="scan'208";a="82136313"
+Received: from alln-core-1.cisco.com ([173.36.13.131])
+  by rcdn-iport-9.cisco.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 18 Mar 2016 15:33:27 +0000
+Received: from XCH-ALN-004.cisco.com (xch-aln-004.cisco.com [173.36.7.14])
+	by alln-core-1.cisco.com (8.14.5/8.14.5) with ESMTP id u2IFXR6I026752
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=FAIL);
+	Fri, 18 Mar 2016 15:33:27 GMT
+Received: from xch-rcd-003.cisco.com (173.37.102.13) by XCH-ALN-004.cisco.com
+ (173.36.7.14) with Microsoft SMTP Server (TLS) id 15.0.1104.5; Fri, 18 Mar
+ 2016 10:33:26 -0500
+Received: from xch-rcd-003.cisco.com ([173.37.102.13]) by
+ XCH-RCD-003.cisco.com ([173.37.102.13]) with mapi id 15.00.1104.009; Fri, 18
+ Mar 2016 10:33:26 -0500
+Thread-Topic: 2.8.0 gitignore enhancement not working as expected
+Thread-Index: AdGA+Oope1o05p+SRVOEuS4waIVawgAOQXSAAAQGuNAAA2twgAAJGyVw
+In-Reply-To: <CACsJy8BfySC0extNWmKHgF1QOoEzGtg5RxgpfsNxjp8HJ_rdXQ@mail.gmail.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.63.23.173]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289224>
 
-On Fri, Mar 18, 2016 at 10:09 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Fri, Mar 18, 2016 at 12:24 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Thu, Mar 17, 2016 at 12:49 PM, Mehul Jain <mehul.jain2029@gmail.com> wrote:
->>> @@ -801,6 +804,7 @@ static int run_rebase(const unsigned char *curr_head,
->>>         argv_array_pushv(&args, opt_strategy_opts.argv);
->>>         if (opt_gpg_sign)
->>>                 argv_array_push(&args, opt_gpg_sign);
->>> +       argv_array_push(&args, opt_autostash ? "--autostash" : "--no-autostash");
->>
->> At this point, we know that opt_autostash can't be -1 (thus
->> incorrectly triggering use of --autostash) because the conditional in
->> cmd_pull() set it to the value of config_autostash (either 0 or 1) if
->> the user did not specify it on the command-line. Okay. Makes sense.
->
-> Actually, this is going to pass --autostash or --no-autostash to
-> git-rebase unconditionally won't it? This seems kind of undesirable
-> due to the unnecessarily tight coupling it creates between the two
-> commands. I wasn't paying close attention to the earlier discussion,
-> but wasn't the idea that you should pass one of these two options
-> along to git-rebase only if the user explicitly asked to do by saying
-> so on the command line?
-
-This is interesting. I checked out git-rebase.sh and found that it reads
-rebase.autoStash if nothing is specified by user. So if user is not
-specifying anything about stashing then it is the job of git-rebase
-to decide whether or not to do stashing by reading rebase.autoStash.
-
-Similarly if user doesn't specify the --[no-]autostash option to git-pull
-then neither of --autostash and --no-autstash should be passed to the
-git-rebase as it will decide on his own about what needs to be done.
-Agreed. I made a unnecessary tight coupling between git-pull and
-git-rebase. Instead of that the following changes can be done to
-remove it.
-
-...
-        if (opt_gpg_sign)
-                argv_array_push(&args, opt_gpg_sign);
--       argv_array_push(&args, opt_autostash ? "--autostash" :
-"--no-autostash");
-+       if (opt_autostash == 0)
-+               argv_array_push(&args, "--no-autostash");
-+       else if (opt_autostash == 1)
-+               argv_array_push(&args, "--autostash");
-
-...
-
-...
-        if (opt_rebase) {
-+               int autostash = config_autostash;
-                if (is_null_sha1(orig_head) && !is_cache_unborn())
-                        die(_("... with changes added to the index."));
-
--               if (opt_autostash == -1)
--                       opt_autostash = config_autostash;
-+               if (opt_autostash != -1)
-+                       autostash = opt_autostash;
-
--               if (!opt_autostash)
-+               if (!autostash)
-                        die_on_unclean_work_tree(prefix);
-
-                if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
-                        hashclr(rebase_fork_point);
-        }
-...
-
-Note that the above changes are suggest with respect to my patch, not
-the current
-code base.
-
-This way there's no need to remove "autostash" from the current code
-base and instead use it to write a much cleaner patch.  Something like
-this (this is w.r.t. current code base)
-
-...
-        if (opt_gpg_sign)
-                argv_array_push(&args, opt_gpg_sign);
-+        if (opt_autostash == 0)
-+               argv_array_push(&args, "--no-autostash");
-+       else if (opt_autostash == 1)
-+               argv_array_push(&args, "--autostash");
-
-...
-
-...
-
-if (opt_rebase) {
-                 int autostash = config_autostash;
-+               if (opt_autostash != -1)
-+                       autostash = opt_autostash;
-
-                if (is_null_sha1(orig_head) && !is_cache_unborn())
-                        die(_("... with changes added to the index."));
-
-                if (!autostash)
-                        die_on_unclean_work_tree(prefix);
-
-                if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
-                        hashclr(rebase_fork_point);
-        }
-...
-
-
-What are your views on this? Also this way I will not touch changes
-introduced in patch 1/2.
-
-> In other words:
->
-> * invoke "git-rebase --autostash" only if the user typed "git pull
-> --rebase --autostash"
->
-> * invoke "git-rebase --no-autostash" only if the user typed "git pull
-> --rebase --no-autostash"
->
-> * invoke "git rebase" if the user typed bare "git pull --rebase"
-
-
-Thanks,
-Mehul
+SGkgRHV5LA0KDQpUaGF0IHNlZW1zIHRvIGhhdmUgZml4ZWQgaXQgOi0pDQoNClRoYW5rcyBmb3Ig
+eW91ciBoZWxwIQ0KDQpSaWNoYXJkDQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4g
+RnJvbTogRHV5IE5ndXllbiBbbWFpbHRvOnBjbG91ZHNAZ21haWwuY29tXQ0KPiBTZW50OiAxOCBN
+YXJjaCAyMDE2IDE0OjUzDQo+IFRvOiBSaWNoYXJkIEZ1cm5lc3MgLVggKHJmdXJuZXNzIC0gRU5T
+T0ZUIExJTUlURUQgYXQgQ2lzY28pDQo+IDxyZnVybmVzc0BjaXNjby5jb20+DQo+IENjOiBnaXRA
+dmdlci5rZXJuZWwub3JnDQo+IFN1YmplY3Q6IFJlOiAyLjguMCBnaXRpZ25vcmUgZW5oYW5jZW1l
+bnQgbm90IHdvcmtpbmcgYXMgZXhwZWN0ZWQNCj4gDQo+IE9uIEZyaSwgTWFyIDE4LCAyMDE2IGF0
+IDk6MzIgUE0sIFJpY2hhcmQgRnVybmVzcyAtWCAocmZ1cm5lc3MgLSBFTlNPRlQNCj4gTElNSVRF
+RCBhdCBDaXNjbykgPHJmdXJuZXNzQGNpc2NvLmNvbT4gd3JvdGU6DQo+ID4gSGkgRHV5LA0KPiA+
+DQo+ID4gSSB0cmllZCB5b3VyIGV4YWN0IGV4YW1wbGUgYW5kIGl0IHdvcmtlZCBjb3JyZWN0bHku
+IEJ1dCB0aGVuIEkgdHJpZWQgYWRkaW5nDQo+IHNvbWUgbW9yZSBmaWxlcy9kaXJzIGF0IHRoZSB0
+b3AgbGV2ZWwgYW5kIEkgc3RpbGwgc2VlIGFuIGlzc3VlOg0KPiANCj4gVGhhbmsgeW91LiBQaGV3
+Li4gSSBiZXQgeW91IGhpdCB0aGUgc2FtZSBidWcgd2UgZm91bmQgeWVzdGVyZGF5ICh5b3VyDQo+
+IHRyYWNlIHN1Z2dlc3RzIHNvKS4gQ2FuIHlvdSB0cnkgdGhpcyBwYXRjaCBbMV0ganVzdCB0byBj
+b25maXJtPw0KPiANCj4gWzFdIGh0dHA6Ly9hcnRpY2xlLmdtYW5lLm9yZy9nbWFuZS5jb21wLnZl
+cnNpb24tY29udHJvbC5naXQvMjg5MTAxDQo+IC0tDQo+IER1eQ0K
