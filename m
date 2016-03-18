@@ -1,81 +1,77 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv3 1/2] rebase: decouple --exec from --interactive
-Date: Fri, 18 Mar 2016 14:46:19 -0700
-Message-ID: <CAGZ79kb7_z4q+Q7TXG12Os5Pn-_5CYHx7ajdv3Ct8iQ59qAE=A@mail.gmail.com>
-References: <xmqqd1qszs03.fsf@gitster.mtv.corp.google.com>
-	<1458336377-28296-1-git-send-email-sbeller@google.com>
-	<xmqqh9g3pj3e.fsf@gitster.mtv.corp.google.com>
+From: Henning Moll <newsScott@gmx.de>
+Subject: [RFC] git-log should use the same diff-options as git-show
+Date: Fri, 18 Mar 2016 21:47:03 +0000 (UTC)
+Message-ID: <loom.20160318T222303-528@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 22:46:25 2016
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 18 22:50:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ah2Dx-00079A-1J
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 22:46:25 +0100
+	id 1ah2Hd-0000lk-4m
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 22:50:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932544AbcCRVqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2016 17:46:22 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:38309 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932156AbcCRVqU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2016 17:46:20 -0400
-Received: by mail-ig0-f175.google.com with SMTP id ig19so31418432igb.1
-        for <git@vger.kernel.org>; Fri, 18 Mar 2016 14:46:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=kFSyIy67jf/EF9DL3yBtKp3juIiO0IkaNnpWZj65FzU=;
-        b=C7hoEVNKMQKXRCKDbxSbozs0Ib0Rleh7PK5HbPSW6Bp3SgD3pi5bV0kskGKdiEfw04
-         PNTqJIFoEE4y0b3s4hBtQn5efzlgJAJk/TXgVcEHylYklpKSauiQVZ93XEzxo8vyyhzp
-         mQSHzav/DmxlO7Lms2GlZnJrkBVc3T29WOBWfRpaSZpLm6t7a2ZdhZyZfTEH0qKmIzPZ
-         g9UBvIU02fcHgLj4f2DlEnuD5VyGZiCZTXTN2pV84JX8XCzBgP6l4r8H320/6gSaD+Xz
-         uYYtWLEDNUXSWqc2dp3sSKvwobAJUShGXLH1WM/cYVWmiPPhOOnmsTywDNCmmc1/wEN0
-         NHbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=kFSyIy67jf/EF9DL3yBtKp3juIiO0IkaNnpWZj65FzU=;
-        b=TgGmysTs6GBA8FRRPosvuoL+IUztI5ucZRUF2eWTl7bfSbAgdkN8v/ZcsMrHzG0Ml+
-         wK4utjmXKyitqwAUY6YPl/FOg0EQ9u9RSfZBunSKXuvw7rf7yze5IejveqTsbiYOSIp3
-         jiU53abhbSAjiPjLRbYPHZti7N8j2VCP9xvklRDxK1zJ2wZCdImBkkJNBjINDrGqhTdl
-         0/bSJ5EW2v0j4QmdODHC7xNppFggxNrMvGugOIEu9oBP+HByRZZ5ksHGsKRRUrj/CMov
-         NvQDdHn0g5V/0BW5FYKenc9kP1NbxJW7IJJbIEypFlZ4CtkGwqBf1idRUs422w+t2BuM
-         j9JA==
-X-Gm-Message-State: AD7BkJJTqxnBhIridVhbS0H6rPfJ58VIPEbJAVdmfIPA2Fw4vgvux+/NQmVg4SEyn2oA8c0WMgmW08LOmoRlSxsw
-X-Received: by 10.50.13.37 with SMTP id e5mr1579769igc.85.1458337579800; Fri,
- 18 Mar 2016 14:46:19 -0700 (PDT)
-Received: by 10.107.132.101 with HTTP; Fri, 18 Mar 2016 14:46:19 -0700 (PDT)
-In-Reply-To: <xmqqh9g3pj3e.fsf@gitster.mtv.corp.google.com>
+	id S1757642AbcCRVuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2016 17:50:08 -0400
+Received: from plane.gmane.org ([80.91.229.3]:40038 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753706AbcCRVuH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2016 17:50:07 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1ah2HU-0000gp-A5
+	for git@vger.kernel.org; Fri, 18 Mar 2016 22:50:04 +0100
+Received: from host-188-174-216-138.customer.m-online.net ([188.174.216.138])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 18 Mar 2016 22:50:04 +0100
+Received: from newsScott by host-188-174-216-138.customer.m-online.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 18 Mar 2016 22:50:04 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 188.174.216.138 (Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289258>
 
-On Fri, Mar 18, 2016 at 2:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>  * Diff to v2 in t3404:
->>         test_expect_success 'rebase --exec works without -i ' '
->>                 git reset --hard execute &&
->>                 rm -rf exec_output &&
->>         -     git rebase --exec "echo a line >>exec_output"  HEAD~2 2>actual &&
->>         +     EDITOR="echo >invoked_editor" git rebase --exec "echo a line >>exec_output"  HEAD~2 2>actual &&
->
-> Hmph.  If you add "-i" to the command line, do you see the
-> 'invoked_editor' file created?
+Hi
 
-just tested that by adding
+Recently i stumbled upon an old stash entry. It was clear to me that the
+stash only contained non-indexed worktree changes. So i assumed to get
+insight by doing
 
-    EDITOR="echo >invoked_editor" git rebase -i ...
-    test_path_is_file invoked_editor
+    $ git log -1 -p stash@{0}
 
-and it works. I have a patch here with s/EDITOR/EDITOR/,
-which I can send out...... and your follow up email came in,
-so I stop bothering about this patch until further reviews, ok?
+But surprisingly the result was "no patch" (The problem which i was not
+aware at that time was the fact that a stash commit is a merge). So i asked
+a question on stackoverflow (1) an learned that there are different default
+options used depending on the git command used:
+
+    $ git show stash@{0}
+    $ git diff stash@{0}^..stash@{0}
+
+work with default, but for git-log i need to 
+
+    $ git log -1 -p --cc stash@{0}
+
+to make it behave the same. This does not seem reasonable to me, though i
+read about commit 1aec791 (2) in git's own repository. What do you think?
+
+Maybe - as a compromise - just show any kind of hint instead of nothing?
+
+Best regards
+Henning
+
+(1) -
+http://stackoverflow.com/questions/36089674/git-log-1-p-stash0-shows-empty-patch
+(2) -
+https://git.kaarsemaker.net/git/commit/1aec7917dc52901c6df301ddc8fea70f5ce0db09/
