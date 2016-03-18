@@ -1,112 +1,83 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [GIT PULL] GPIO bulk changes for kernel v4.6
-Date: Fri, 18 Mar 2016 08:47:02 -0700
-Message-ID: <CA+55aFwbRVG-5AW+NnMOFZ_hU5i+i7f3FxgEt9Qm7B6pEd7x0g@mail.gmail.com>
-References: <CACRpkdbGkfJ9bW1db64msMeQjue+=y+op5EmSx62FWOWDOJwWg@mail.gmail.com>
-	<CA+55aFwV4Cq=4zJc6Fw0yAGrTmci_DFAjJKxkk05pjJJf3iYbA@mail.gmail.com>
-	<56EB9B0C.4050507@nvidia.com>
-	<CA+55aFy=-UAbVo+Xx08tBA7eTPk2B+G3=SbarVxThS57LdakPA@mail.gmail.com>
-	<alpine.DEB.2.20.1603181532040.4690@virtualbox>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: bug: sparse config interpretation incorrectness in 2.8.0-rc2
+Date: Fri, 18 Mar 2016 16:49:03 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603181647160.4690@virtualbox>
+References: <56E9F5B3.6030903@fb.com> <20160317005632.GA17778@duynguyen-vnpc.dek-tpc.internal> <xmqq37rp35k1.fsf@gitster.mtv.corp.google.com> <CACsJy8A2D8CqeWZ6CFdTVXzXiWdonBE=3tWFPpe7-ZmDtNGYNw@mail.gmail.com> <alpine.DEB.2.20.1603171402330.4690@virtualbox>
+ <CACsJy8DH297aV2pYL7xGNZ5X24rR5PxvrpJQ+15YxpDNvqgS5Q@mail.gmail.com> <alpine.DEB.2.20.1603171444210.4690@virtualbox> <CACsJy8D1e5zd-b6CsszHGcNjMPedyZSrZpqdWeCUGdMD5UP7qQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Laxman Dewangan <ldewangan@nvidia.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: linux-gpio-owner@vger.kernel.org Fri Mar 18 16:47:12 2016
-Return-path: <linux-gpio-owner@vger.kernel.org>
-Envelope-to: glg-linux-gpio@plane.gmane.org
+Content-Type: text/plain; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, Durham Goode <durham@fb.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Mateusz Kwapich <mitrandir@fb.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 18 16:50:30 2016
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-gpio-owner@vger.kernel.org>)
-	id 1agwcF-0002je-14
-	for glg-linux-gpio@plane.gmane.org; Fri, 18 Mar 2016 16:47:07 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1agwfQ-0004XS-SW
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 16:50:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756155AbcCRPrF (ORCPT <rfc822;glg-linux-gpio@m.gmane.org>);
-	Fri, 18 Mar 2016 11:47:05 -0400
-Received: from mail-io0-f177.google.com ([209.85.223.177]:36470 "EHLO
-	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751410AbcCRPrE (ORCPT
-	<rfc822;linux-gpio@vger.kernel.org>); Fri, 18 Mar 2016 11:47:04 -0400
-Received: by mail-io0-f177.google.com with SMTP id g184so85018686ioa.3;
-        Fri, 18 Mar 2016 08:47:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=911rCvbYkefQCbPdQGFMzHoNDJnErdhBYz3WY07YfNg=;
-        b=xg6IBjn7RGr17vE9ezJw7FwiMljRgdIlY1n0f26tT2vJA9CraZYgC/dNGp7mudybrE
-         x6cVBP/n6fjQvIkElPXIAmcSNUSSE4Zhgc7bDrjmqE74RXDkhNXnQi9jCKyB/YBfNyDn
-         j4358fWS8lDfFhy7RnUR7a5Ln47aCqjj21yXze3fzb/Ho/JOdtez6RGfMtOb27o6YxPd
-         zuAkNIabeLh3MqTKu9lvr9nEzy7vIQ1qZQ8pnQghyuLszFgoxh0zDyHu5Z5Mp8Bl4VMV
-         0DcVQOCbsHGA83zvwCvBlHDo+s9OZkqlOoXUY05ky0QwuqYg9naNuNX1TbfvEcRxsWe2
-         N6rA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=911rCvbYkefQCbPdQGFMzHoNDJnErdhBYz3WY07YfNg=;
-        b=FAD3nAKjK28z05gNXPgdHt0Bfxwt427yU68afemc9L/w0Mm/T2RFF+aOaQL/cu84DZ
-         SzDgtabdis2QpdR5xEJYpRavQLgQ7XNNNKyJREAjsjHu+h6wdv7yexQDO0okzCmBowC+
-         GGZIett9FHZDnD32YBjDL8yZTFCRj6sMUshR8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=911rCvbYkefQCbPdQGFMzHoNDJnErdhBYz3WY07YfNg=;
-        b=E626GLVpATOX/J1wq1uJ8flbV2QJaF2cVhymOX5RJQAIbg1N06klg9Eok4sfYVpm1y
-         dhOj60T8ZrTNrt11wu9m+kHDM7AIyGLkWQcrN8kirX0QJRPEiZ8vj3e1pXFAPYy8NXva
-         cZBsf6WHGHAfn8ch+iXpJh/RXmtwGdDhVjt0kx+Ju2D7aFm2sdmmHBjP8nWAYwPwogV+
-         sSofMFDMNDPsgGB00yyO3Us+//FJnrkgJTlqQPSp7/eDbFPZ3zOT//IKEuuV/k+a5xXQ
-         ZSM2Jpy7ZzC5E/h3C+6f3jDOb+1So9vHqp2hPAoYUdiPVE50tgnB+WxwocPHqv4FYfqs
-         uncA==
-X-Gm-Message-State: AD7BkJJxKUXx+2Eh53molJ4nBI420bvBu4AQgzw5wfYqjYyS7BHshhqPxk4PcWCQTqUFXgIP0NjXSdjw0BoEmw==
-X-Received: by 10.107.13.65 with SMTP id 62mr16919856ion.186.1458316022529;
- Fri, 18 Mar 2016 08:47:02 -0700 (PDT)
-Received: by 10.36.93.202 with HTTP; Fri, 18 Mar 2016 08:47:02 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1603181532040.4690@virtualbox>
-X-Google-Sender-Auth: T6q1Jt0bn3GtYrvyEhpw9USwQtg
-Sender: linux-gpio-owner@vger.kernel.org
+	id S1757541AbcCRPuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2016 11:50:13 -0400
+Received: from mout.gmx.net ([212.227.15.15]:56227 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757514AbcCRPuL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2016 11:50:11 -0400
+Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0LzLJR-1ZmDBI0moL-014Vkj; Fri, 18 Mar 2016 16:49:05
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <CACsJy8D1e5zd-b6CsszHGcNjMPedyZSrZpqdWeCUGdMD5UP7qQ@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:M4gpctWpz5BA326ZwMC0Ox3cYyq5CcxAW6ycKwNvY/EY7n1vSNV
+ JtvMgefa5KD6AKmqkafhgen5tA0TVyKMQ4kxg8Z8AModZdpHQGNkESJ5rE8JsR6nc4P2+Q3
+ 3E5sGZQaQVCQ0kpDt2qVBDk46oTm57sJayWhNY1YYPOB7w1+r+nH7o7BHsidjrw/Z9obAF8
+ 4AudxScqLjj5xV3PnCbMQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:wjOTCYjYlqs=:FnZ0RVRNvp5+dw5/hHGKlm
+ pUkngPBcX4A6c1laxx4J8L+svipC4gkj2zi6NhmEaowGBtt2OkWBzOe0hPk1GMre0yh8IQrZ4
+ uce9lk24+MTZsPKNPon7JULx7Z21mXz5ICJWdvOVgvdMwzhJwn8EwU8/hvYXvqURjeEuD1FiC
+ X+8NflsGHp4Hd1rXaV8ltjtoXFXmUlPDlTdu56DQWjv6w4X0aYXOkyvfCWkJ0Q21QKBQfbqhv
+ msmbtlXTVCFGTu8mCvNHPh6ELL73b+nz1Vz5SmOVsoCUEjIUAVmyXocDp/1e+Akl9d1SQIeSE
+ 3vJApQSQQy+oGb/mDdfU+9tETs2WHGEXE34DgdwjbyXfAFSnyGVH44aNglOFQSSJcKzFiuumt
+ RnfMBKhwSih2WTrw9t+9O+A6UXNFkc8CtmASaNPFzrUFU7H0VYKsC1hhdg+Q2rk1uN6ASzWmD
+ kxVaqWtzCm8LXkozqlj6boC5YQkyMHg+9eAzMwk36HduFHSSSRlGjQYWGKXn0PpFoDx/tvrBz
+ LDiaFSmYDzU/61eo+B6kmyOLKomJbUaEBLi2eFoFhbwMeXBNgoxrKX3ZO+oEG3a4n3M5GO29p
+ 4iUXsudYlwonA/y107mUxu3G7+u6SUx5C5zSDxjkNE+3sbQygjtT+FMBxuyvovH/tklC8KINK
+ jP2eO5vMNCx1wxqA0Qc1aRGw+jMYImQKDxmRRjaj8aXxsz9hYQIYl86JpjQLDlR8xRbseWXyV
+ LTdSdDNkEP4Ndtddv5kxpn1O6Cv++8xnNM2qryRPpPxHcLK1dhjFi/FOCQi5Hg/bZZszwLMt 
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-gpio.vger.kernel.org>
-X-Mailing-List: linux-gpio@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289226>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289227>
 
-On Fri, Mar 18, 2016 at 7:32 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> On Fri, 18 Mar 2016, Linus Torvalds wrote:
->
->> I thought git didn't merge two branches that have no common base by
->> default, but it seems it will happily do so.
->
-> What happened to "The coolest merge EVER!"?
->
->         http://thread.gmane.org/gmane.comp.version-control.git/5126/
+Hi Duy,
 
-I'm not complaining about multi-root capability in general - it's
-still cool. In the kernel, we have aef8755711a2 ("Merge Btrfs into
-fs/btrfs") that does something slightly similar.
+On Thu, 17 Mar 2016, Duy Nguyen wrote:
 
-It's literally just the fact that "git merge" does it with no extra
-flags or checks. I'd like people to have to be aware of what they are
-doing when they merge two different projects, not do it by mistake.
+> On Thu, Mar 17, 2016 at 8:46 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > Unfortunately, this does not help me at all. In the use case I am trying
+> > to get to work fast, we have tons and tons of directories and need *one*
+> > file in pretty much *all* of those directories, and exclude most of the
+> > other files.
+> >
+> > To make matters even worse, the list of excluded (or included) files is
+> > constantly changing.
+> 
+> OK very weird use case to me :) There's something you might try. [1]
+> can help trimming unrelated patterns, fewer patterns to match for a
+> dir, faster matching.
 
-So making it conditional on a flag like "--no-common-root" is what I'd look for.
+Sadly, [1] (exclude: filter out patterns not applicable to the current
+directory) would not help at all, because the regular use case really
+would use the top-level directory as current one.
 
-Or just make it about the merge stategy. For example, "subtree" makes
-sense exactly for merging one project into a subdirectory of another.
-But the default merge shouldn't do it.
+So I really need to speed up the sparse machinery from O(m*n) (where m is
+the number of entries in the sparse-checkout file and n is the number of
+files in the index).
 
-I don't think the original "resolve" did it, for example. You can't do
-a three-way merge without a base.
-
-Note how that above "coolest merge" definitely wasn't done by just
-"git merge gitk". I had to play around with the git internals. Now, it
-shouldn't be _that_ hard, but at the same time it really shouldn't be
-as easy as "I didn't know, so I merged two independent projects".
-
-                       Linus
+Ciao,
+Dscho
