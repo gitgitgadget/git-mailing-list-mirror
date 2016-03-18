@@ -1,67 +1,71 @@
-From: Duy Nguyen <pclouds@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
 Subject: Re: [PATCH 3/2] dir.c: fix dir re-inclusion rules with "NODIR" and "MUSTBEDIR"
-Date: Fri, 18 Mar 2016 12:51:35 +0700
-Message-ID: <CACsJy8BHVJPHv-Tap8DYUYGn0NH9s2rXPfxV7FUiMyVGQMU4yQ@mail.gmail.com>
+Date: Fri, 18 Mar 2016 01:58:15 -0400
+Message-ID: <CAPig+cRp3ghX8VUvR8Tfb6rsnbOM4eQiQ8Hw1hs4=BvXORREYA@mail.gmail.com>
 References: <1458218744-15810-2-git-send-email-pclouds@gmail.com>
- <1458219254-16343-1-git-send-email-pclouds@gmail.com> <xmqqfuvoy89q.fsf@gitster.mtv.corp.google.com>
- <CACsJy8Dm3_w6TT6FP-my9fsRJ8F+StK8dBPid9zxQv4OzoZfcw@mail.gmail.com> <xmqqbn6cs5sa.fsf@gitster.mtv.corp.google.com>
+	<1458219254-16343-1-git-send-email-pclouds@gmail.com>
+	<xmqqfuvoy89q.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8Dm3_w6TT6FP-my9fsRJ8F+StK8dBPid9zxQv4OzoZfcw@mail.gmail.com>
+	<xmqqbn6cs5sa.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
 	Durham Goode <durham@fb.com>,
 	Mateusz Kwapich <mitrandir@fb.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 18 06:52:36 2016
+X-From: git-owner@vger.kernel.org Fri Mar 18 07:00:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1agnKn-0001pi-QJ
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 06:52:30 +0100
+	id 1agnS1-00035p-Mu
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Mar 2016 06:59:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752088AbcCRFwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2016 01:52:09 -0400
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:35761 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751280AbcCRFwH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2016 01:52:07 -0400
-Received: by mail-lb0-f171.google.com with SMTP id bc4so81924371lbc.2
-        for <git@vger.kernel.org>; Thu, 17 Mar 2016 22:52:06 -0700 (PDT)
+	id S1756051AbcCRF6T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2016 01:58:19 -0400
+Received: from mail-vk0-f68.google.com ([209.85.213.68]:34689 "EHLO
+	mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754233AbcCRF6Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2016 01:58:16 -0400
+Received: by mail-vk0-f68.google.com with SMTP id e6so8733757vkh.1
+        for <git@vger.kernel.org>; Thu, 17 Mar 2016 22:58:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=FzYp6XzxHhfoQu9vuQXPpzA2/lStCuu9RrMefYaZFcI=;
-        b=F5J3YY5ZKW1E0+bljMh+wDg4j4lidZrLoQ2/f7zUsTIxA6uAd8Nbq80gI/KTxXxuvW
-         hhXKHTMh7WU386uxqd5MYRxrJlInneJyiOcWEw2SN7QpxhqL+ZtAmrMmNy0Fa8uaF6nd
-         dcl8NpnNA/2ML7BSN0b5h539Na4ktj5xqruvF7NliZ2GyWL+LzTWt+YuoafrOE/kaQnQ
-         Gj5NcpHwUv4fwAIliEK9BHkodOhzgx2dwwtO60YjntD7BfVvgnC2TKoBtc512iHGgTDM
-         f3SrAnj3pBvbQU4h6UQZNIL19LupumEoArRazpt1jY2hCIMjZBSMlrhzaNORBbtAkWUQ
-         CoDg==
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=FE0ojNrHVYx/wOic0PJ4wIpNNW4mvcyzsLf7yY1fbD4=;
+        b=LWIMgWrQuLTSaplxDTT1hZ3RmtJFKzBUCRJwAIIwYZXw6U4d5Kf6vavUU62mSaGmue
+         qoi2rr0vttgfGAgsSiiO1BIv85LtwpPNanI2RW7c+FjLDViAeBmIracKzhtx7KSXS2QJ
+         /JzqtSz/5eECNqsF8249DRQSGbwn0sncdv/Ugc0VfwhcE+poPZlM8P1JR0+/Q5G1RBRo
+         uGuWwu5MUJk54l9h8FwoLI1162CYcaas26/+t+vH2volBQWsNNjmK0t5dy3rrim80uBS
+         iSPoFV2P3l2A+jSRlCZjvPHJkhcPSUo3GbIeVZzVFB7j9l+LiC/NgdZtVFUW9VYO5ZFK
+         mZ6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=FzYp6XzxHhfoQu9vuQXPpzA2/lStCuu9RrMefYaZFcI=;
-        b=duCW4xo11z1afjP32bvsmzROLoKg+27VRwmsMjX5HyGn1cwVTCGPg4D42SvUM6aY8+
-         yQ/s/FKOufXPzB9gcrG/ON/6XAgBQBLpwZndNj84VGdRVJw7DGo5266EpA7mYjpjPWFN
-         5fk+wtVFmXHe0zwsc1uzxBbofvFbdM8O/qUZqAk6vUalPHbqHIPXRsOFPb/ISycmjZa5
-         oEUHDcoFvXb5AYorNgO3U7K6v1dPA0pP5LO+ZGy2iXtRfOa9YwETrEebOznOrwOVmLLO
-         6z+HmN0+zZLt3kUY59PU8xxBKU5xUY7eGMP4b+OGwqvrZSMuhOROBkzLX0iJQNMTvhPj
-         aF2w==
-X-Gm-Message-State: AD7BkJKOVlnhbSlpGK5UNZIz1l7T67iAyUiOGo+oEl9zZoQJoloofdsWHyGXBSpupGXxbK2If/CewGVJqlZbQQ==
-X-Received: by 10.112.157.105 with SMTP id wl9mr5097076lbb.137.1458280324874;
- Thu, 17 Mar 2016 22:52:04 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Thu, 17 Mar 2016 22:51:35 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=FE0ojNrHVYx/wOic0PJ4wIpNNW4mvcyzsLf7yY1fbD4=;
+        b=AUTlSyXiFvDHVRa/skL8W06hnbra5uChHm33EbaH9KBIHXkBYLtATYkZY7hWlcnGE5
+         ne6I9cWvZ4bBJEw5/YpMwNAo7EmWxdyMfTmTgX66vG4pOEaZdAzTf6cw3AnMwqo0t/0O
+         DdHnO9S1btfTj1Cu/LVgI3og6TALeHaoJt3SY7XXPugWiBPLVdbg0gX4UekvlXTSN4D8
+         Pfhk+3b9mzQM8QFXd/OuoXS8KCAEyhAZm0QYrvfjdKudVkyTc6noSGuREKP1V7DiV8G4
+         zJXIrfWGfcUkQfPwa5hwUlvza32VjFIqXjHa8WbbaYBQDtllZp/ryNEJ1T2PaDCMU6ij
+         m+mw==
+X-Gm-Message-State: AD7BkJKwCWllNOr/KVnu2Qux5cCcUYVF1R7hfX/BFe4yufBE+QKPRw8voHIZQtQTfh2Tdq+erGe76T+JC8xLmw==
+X-Received: by 10.31.146.5 with SMTP id u5mr9217206vkd.19.1458280695508; Thu,
+ 17 Mar 2016 22:58:15 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Thu, 17 Mar 2016 22:58:15 -0700 (PDT)
 In-Reply-To: <xmqqbn6cs5sa.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: RGePShjOYKtkebP0fuo4-Pjz3Us
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289197>
 
-On Fri, Mar 18, 2016 at 12:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Fri, Mar 18, 2016 at 1:40 AM, Junio C Hamano <gitster@pobox.com> wrote:
 > send-email: detect and offer to skip backup files
 >
 > Diligent people save output from format-patch to files, proofread
@@ -82,39 +86,15 @@ On Fri, Mar 18, 2016 at 12:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > such a "backup" file, remember the suffix and stop asking the same
 > question (e.g. after skipping 0001-X.patch~, skip 0002-Y.patch~
 > without asking).
-
-The problem I see is it's hard to review the to-send list.
-git-send-email does list it, but the the dashes in file names make
-them really hard to split out words. Maybe highlighting can help, or
-maybe we can show subject lines instead of file names.
-
-Back to the patch, another case you can catch is when people have some
-leftover patches in current dir, then 0*.patch may include unrelated
-patches too. A check on patch numbering (contiguous and no duplicates)
-might help.
-
->  git-send-email.perl | 40 ++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 40 insertions(+)
 >
 > diff --git a/git-send-email.perl b/git-send-email.perl
-> index d356901..74ed01a 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -621,6 +621,8 @@ sub is_format_patch_arg {
->         push @files, $repo->command('format-patch', '-o', tempdir(CLEANUP => 1), @rev_list_opts);
->  }
->
-> +@files = handle_backup_files(@files);
-> +
->  if ($validate) {
->         foreach my $f (@files) {
->                 unless (-p $f) {
 > @@ -1726,6 +1728,44 @@ sub validate_patch {
->         return;
->  }
->
 > +sub handle_backup {
 > +       my ($last, $lastlen, $file, $known_suffix) = @_;
+
+Is $lastlen a micro-optimization or does it have some other purpose
+I'm overlooking?
+
 > +       my ($suffix, $skip);
 > +
 > +       $skip = 0;
@@ -129,6 +109,9 @@ might help.
 > +                       my $answer = ask("Do you really want to send $file? (y|N): ",
 > +                                        valid_re => qr/^(?:y|n)/i,
 > +                                        default => 'y');
+
+Is this 'default' correct or am I reading the code incorrectly?
+
 > +                       $skip = ($answer ne 'y');
 > +                       if ($skip) {
 > +                               $known_suffix = $suffix;
@@ -150,9 +133,3 @@ might help.
 > +       }
 > +       return @result;
 > +}
-> +
->  sub file_has_nonascii {
->         my $fn = shift;
->         open(my $fh, '<', $fn)
--- 
-Duy
