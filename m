@@ -1,112 +1,73 @@
-From: Chirayu Desai <chirayudesai1@gmail.com>
-Subject: Re: [PATCH/GSoC] pull: implement --[no-]autostash for usage when rebasing
-Date: Sat, 19 Mar 2016 20:01:38 +0530
-Message-ID: <CAJj6+1F6eAyhs8xxtukKw+sCE63ASq=K+hxtH8VC95FEuNKGBQ@mail.gmail.com>
-References: <1458395862-5113-1-git-send-email-chirayudesai1@gmail.com>
-	<CAJj6+1ECzKw9jnO1wGZqSyrJ0V=G3TzzE5YKhSKzVO1kqXpXPw@mail.gmail.com>
-	<56ED60FD.1030005@gmail.com>
+From: admin@school-site.kiev.ua
+Subject: =?UTF-8?B?V2l0aCBiZXN0IHJlZ2FyZHMhIERlYXIgU2lyIG9yIE1hZGFtISAgLSBwbGVhc2UgaGVscCBvdXIgc2Nob29sIHNpdGUgLSDQv9C+0LbQsNC70YPQudGB0YLQsCwg0L/QvtC80L7Qs9C40YLQtSDQvdCw0YjQtdC80YMg0YHQsNC50YLRgyAtINCx0YPQtNGMINC70LDRgdC60LAsINC00L7Qv9C+0LzQvtC20ZbRgtGMINC90LDRiNC+0LzRgyDRgdCw0LnRgtGDIGh0dHA6Ly9zY2hvb2wtc2l0ZS5raWV2LnVhLw==?=
+Date: Sat, 19 Mar 2016 18:01:08 +0200 (EET)
+Message-ID: <20160319160108.6FEF59BE5@server18.shkola.pp.ua>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Sidhant Sharma <tigerkid001@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 19 15:31:45 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 19 17:14:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahHuq-0003FZ-OL
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Mar 2016 15:31:45 +0100
+	id 1ahJW8-0006N2-DX
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Mar 2016 17:14:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754522AbcCSObk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2016 10:31:40 -0400
-Received: from mail-io0-f172.google.com ([209.85.223.172]:36747 "EHLO
-	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751967AbcCSObj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Mar 2016 10:31:39 -0400
-Received: by mail-io0-f172.google.com with SMTP id 124so15483928iov.3
-        for <git@vger.kernel.org>; Sat, 19 Mar 2016 07:31:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=BFDsXCsgG3a9xkko6ypeo4cbK8uahvpOnbOspPOow4s=;
-        b=B8JdzO53nuXmoDJxrHj/tFqzkS3eKI65VnMlEy4QcoRPPIniZv7RZc2u0SMeNCnxPJ
-         DMu7wCQrG98CbpTY+VkZJa87TrDq3LJWUdWk5kNjycshFHvHFe6xwjPccFqzdzEH0phv
-         HE4i+xzuhIb4IWXs0O+PDuNrHzxZWxbXFV6dnzOiaqYdIcipjdtqi+bk2gdVDJwlHcG2
-         S23VO+fE732kdx4jDF3Kw0QydtTCkmNzqLNIiabogIqfYhP9fwqYhkINrMeaQ+u7yeOy
-         2vdinyA1miSoUu3byhqYhgtFAetdMEoCoq/jezRh5x0PtAoHU4D6QR8xqxoCckrNTJ22
-         fwjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=BFDsXCsgG3a9xkko6ypeo4cbK8uahvpOnbOspPOow4s=;
-        b=DLXDD2t00nNZHTbO7xp8noU4Z0F8Sj8FZnflc+TxE3/Uw0r9DYWcEz4YXx0M4pJjv+
-         GhSFvqa//MBFURDtaBCh0AZW/DIoNj88MNJ992BsBRAjOXJjpOF8FoG5zGagVqmJubRj
-         pDsGMSo9Fp3AuYIenEFhgpGDxE69U4OFFOupC1Z486aVoGuqUqfs5crbBv10j1cK6LiP
-         MK9mbsIz6K8gfJuExUVPXiUdXtljCxA42MFLZkk6bM/OcGac3a1CxDXZnapCdbf3TLBF
-         7YcQ74+q/ScemV7MVie4hQ/LkNoG1DgwAyemc/1E7HMUOjFDM0j3Q3VN/H0aghloAVuB
-         v1RQ==
-X-Gm-Message-State: AD7BkJIk5qyBKb6wplvX57abWbBSH52do/qfKIoI/NQmRBcQ7+zX0J/HTR6n5QRNTfYGK7z6BgawGTUnw72KIA==
-X-Received: by 10.107.134.94 with SMTP id i91mr21278444iod.95.1458397898556;
- Sat, 19 Mar 2016 07:31:38 -0700 (PDT)
-Received: by 10.79.31.7 with HTTP; Sat, 19 Mar 2016 07:31:38 -0700 (PDT)
-In-Reply-To: <56ED60FD.1030005@gmail.com>
+	id S1754635AbcCSQKq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Mar 2016 12:10:46 -0400
+Received: from 193.169.189.73.hostpro.com.ua ([193.169.189.73]:49087 "EHLO
+	server18.shkola.pp.ua" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754167AbcCSQKp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Mar 2016 12:10:45 -0400
+X-Greylist: delayed 487 seconds by postgrey-1.27 at vger.kernel.org; Sat, 19 Mar 2016 12:10:45 EDT
+Received: by server18.shkola.pp.ua (Postfix, from userid 500)
+	id 6FEF59BE5; Sat, 19 Mar 2016 18:01:08 +0200 (EET)
+X-Bitrix-Posting: 79
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289310>
 
-Apologies, I did not see the patch, I looked for threads with GSoC in
-their titles but missed looking for "rebase" / this microproject. I'll
-go through the list and make sure it hasn't been picked yet.
+With best regards! Dear Sir or Madam!=20
+please at the top of any page of site click once on the advertising ban=
+ner,
+so that we could pay for hosting our school site,
+Thank you
 
-As for the GSoC project idea, I was thinking of "Git remote
-whitelist/blacklist", and writing another e-mail to this list for
-discussion, however I felt that it might be a little less to do as a
-whole for GSoC, so I was trying to pick something else to do alongwith
-this.
+admin@school-site.kiev.ua
+http://school-site.kiev.ua/
 
-I'll make sure I check the existing applications and threads.
+=D0=B4=D0=BE=D0=B1=D1=80=D0=B8=D0=B9 =D0=B4=D0=B5=D0=BD=D1=8C,
+=D0=BF=D1=80=D0=BE=D1=81=D0=B8=D0=BC=D0=BE =D0=BD=D0=B0 =D0=B1=D1=83=D0=
+=B4=D1=8C-=D1=8F=D0=BA=D1=96=D0=B9 =D1=81=D1=82=D0=BE=D1=80=D1=96=D0=BD=
+=D1=86=D1=96 =D0=B2=D0=B3=D0=BE=D1=80=D1=96 =D0=BE=D0=B4=D0=B8=D0=BD =D1=
+=80=D0=B0=D0=B7 =D0=BD=D0=B0=D1=82=D0=B8=D1=81=D0=BD=D1=83=D1=82=D0=B8 =
+=D0=BD=D0=B0 =D1=80=D0=B5=D0=BA=D0=BB=D0=B0=D0=BC=D0=BD=D0=B8=D0=B9 =D0=
+=B1=D0=B0=D0=BD=D0=B5=D1=80,
+=D1=89=D0=BE=D0=B1 =D0=BC=D0=B8 =D0=B7=D0=BC=D0=BE=D0=B3=D0=BB=D0=B8 =D0=
+=BE=D0=BF=D0=BB=D0=B0=D1=82=D0=B8=D1=82=D0=B8 =D1=85=D0=BE=D1=81=D1=82=D0=
+=B8=D0=BD=D0=B3 =D0=BD=D0=B0=D1=88=D0=BE=D0=B3=D0=BE =D1=81=D0=B0=D0=B9=
+=D1=82=D1=83,
+=D0=94=D1=8F=D0=BA=D1=83=D1=94=D0=BC=D0=BE
 
-Thanks,
-Chirayu Desai
+=D0=B4=D0=BE=D0=B1=D1=80=D1=8B=D0=B9 =D0=B4=D0=B5=D0=BD=D1=8C,=20
+=D0=BF=D1=80=D0=BE=D1=81=D0=B8=D0=BC =D0=BD=D0=B0 =D0=BB=D1=8E=D0=B1=D0=
+=BE=D0=B9 =D1=81=D1=82=D1=80=D0=B0=D0=BD=D0=B8=D1=86=D0=B5 =D0=B2=D0=B2=
+=D0=B5=D1=80=D1=85=D1=83 =D0=BE=D0=B4=D0=B8=D0=BD =D1=80=D0=B0=D0=B7 =D0=
+=BD=D0=B0=D0=B6=D0=B0=D1=82=D1=8C =D0=BD=D0=B0 =D1=80=D0=B5=D0=BA=D0=BB=
+=D0=B0=D0=BC=D0=BD=D1=8B=D0=B9 =D0=B1=D0=B0=D0=BD=D0=BD=D0=B5=D1=80,
+=D1=87=D1=82=D0=BE=D0=B1=D1=8B =D0=BC=D1=8B =D1=81=D0=BC=D0=BE=D0=B3=D0=
+=BB=D0=B8 =D0=BE=D0=BF=D0=BB=D0=B0=D1=82=D0=B8=D1=82=D1=8C =D1=85=D0=BE=
+=D1=81=D1=82=D0=B8=D0=BD=D0=B3 =D0=BD=D0=B0=D1=88=D0=B5=D0=B3=D0=BE =D1=
+=81=D0=B0=D0=B9=D1=82=D0=B0,
+=D1=81=D0=BF=D0=B0=D1=81=D0=B8=D0=B1=D0=BE
 
-On Sat, Mar 19, 2016 at 7:53 PM, Sidhant Sharma <tigerkid001@gmail.com> wrote:
->
-> On Saturday 19 March 2016 07:38 PM, Chirayu Desai wrote:
->> Hello everyone,
->>
->> I want to participate in GSoC, and this is my microproject to get familiar
->> with git development.
->>
->> I am a first year student, enrolled in the Computer Engineering program at
->> Silver Oak College of Engineering and Technology, Ahmedabad, India.
->> I have worked on open source software in the past, and have used git quite
->> a bit during that time. I'll include more details in my proposal, which
->> I'll send here when done.
->> I understand that this might be a bit late to get started, and I'll try my
->> best to get this patch in a good state and get the proposal ready ASAP.
->>
->> As for the change, I spent a lot more time trying to get the test right
->> than doing the actual change, most of it trying to get familiar with the
->> test framework and figuring out what to use. It didn't take much time
->> though, overall.
->>
->> I'm adding a few inline comments as I have a few questions.
-> Hi,
->
-> Thanks for the patch. I believe there already is work in progress on this (See
-> [1] and [2]). You may want to try another microproject. It may also be a good
-> idea to mention which GSoC project idea you would like to work on, as there
-> already may be other proposals on their way.
->
->
-> Thanks and regards,
-> Sidhant Sharma
->
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/287568/focus=287569
-> [2] http://thread.gmane.org/gmane.comp.version-control.git/289127/focus=289222
->
+Sorry if this letter has caused you inconvenience. Your address is take=
+n from public sources.
+To unsubscribe, please send us a message to our email address.
+
+admin@school-site.kiev.ua
+http://school-site.kiev.ua/
