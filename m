@@ -1,105 +1,138 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v2 14/17] index-helper: don't run if already running
-Date: Fri, 18 Mar 2016 21:04:47 -0400
-Message-ID: <1458349490-1704-15-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v2 17/17] read-cache: config for waiting for index-helper
+Date: Fri, 18 Mar 2016 21:04:50 -0400
+Message-ID: <1458349490-1704-18-git-send-email-dturner@twopensource.com>
 References: <1458349490-1704-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, pclouds@gmail.com,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Mar 19 02:08:34 2016
+X-From: git-owner@vger.kernel.org Sat Mar 19 02:08:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ah5Na-00012F-0Q
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Mar 2016 02:08:34 +0100
+	id 1ah5Ni-00018v-RN
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Mar 2016 02:08:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754302AbcCSBIb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2016 21:08:31 -0400
-Received: from mail-qg0-f43.google.com ([209.85.192.43]:35473 "EHLO
-	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751538AbcCSBIY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2016 21:08:24 -0400
-Received: by mail-qg0-f43.google.com with SMTP id y89so115401194qge.2
-        for <git@vger.kernel.org>; Fri, 18 Mar 2016 18:08:24 -0700 (PDT)
+	id S1754376AbcCSBIi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2016 21:08:38 -0400
+Received: from mail-qg0-f46.google.com ([209.85.192.46]:33019 "EHLO
+	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754283AbcCSBI3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2016 21:08:29 -0400
+Received: by mail-qg0-f46.google.com with SMTP id a36so83023466qge.0
+        for <git@vger.kernel.org>; Fri, 18 Mar 2016 18:08:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=y/P4lsT/dM/1EbzIgu4hdvnvp0HWiLJWZhmi4V2+XnQ=;
-        b=aPHNiUCN9P0LVadOMKVAwMFcb4FpqYVgkBNpyiK6f53ZSfTumH55/GXMzl2xcQyfj5
-         vXzhSd4golyjALfVWEhQkjezsSepZ4arv2nTlizq1HyqL7OzDFvc0NlyXaYRCaJlNzqY
-         JJDGTMjnGihrHjvEbuVKNOVBLrSJf+Wh4VxN4m3p/Q0GeNtcBhrqbMc+WdzqzqeyW0+E
-         SRfO5RHQQrCAmImbeZomhO+I9kw2NCo/7furaTAC5C4MjTJhUwB684hr8TasVRcXeeRW
-         ke5hDeEEnwG4mrS7KEW1/H35xwv4TjTAWcUv2vWYX0JyT2dILNTxFtiCIBlbWpBkmu1c
-         j9Rg==
+        bh=PNuDyUcpgM+YUySMqHn9nh5LTZ/VhCOcq9+mATEBJfU=;
+        b=qnyrHKslZgnLOEyafjExJrCVefuT6Lnb646J2JTanVb89RZaiT7J2ZEQ4Z2wltPofq
+         x/oK2ZBSAe1DZBcIHq0tnbNQwarGdZKWBqETl0jd9ZlL3t6fRd0SavDZlNqBZFMsGK6N
+         ckJCRzgFWAkAgTSF5GYKO/dpGQ/8XtumFMt5Z3IOPZeGvCwPpJ8CemO4enhHbWfzVmQG
+         7efnjYGVP75hrTSdbf7+2ccRaRGl5Ek3Eej0Z0VjQzGnYjqnI2rdspvdpzvXoleHrm9X
+         HrwQguD5uk9MPzs4azAywXClIkaDJyKnv90AzeHFUJXsHjRVGM5PoIGLYr6oVZCxl3uF
+         Bgaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=y/P4lsT/dM/1EbzIgu4hdvnvp0HWiLJWZhmi4V2+XnQ=;
-        b=Jxr1JR0dZP/WPIRkf/Chv2p7B7LRnoLhQkSe81ikpqwbHTLmr05+lcS1Vx8WwX7uuT
-         k4W3e/nHOJia/MZfzSRdCkKL3f41YJn0E68e9aZ+bRYq+G7flAwbIPg4QdiZHlxURrAs
-         AQLAE0EbBebksOfS1r40bezOTq77EMj3DHhhTuXBZq7X2CKRK+4T1/QGAmxtlz9CLAWd
-         sS2bQY04MbF9/PsBfAVd+ya5mntXElOcMNwCI+HPxbBK13juyO6TPsQ6bwj/dlx4eU92
-         Pz9ROgUsOdk4/lwwz7xc+b3xFa4JfBiSVP158hjMdw0JOYhRxZ6rdkhQ7FDhRAzmFXfW
-         hD8A==
-X-Gm-Message-State: AD7BkJJrQzCBekjdtNWFVI04ND5F+Vqe4BUIgXB6qvXqTOYDv1KVuEk6MFKDiSprH4krjg==
-X-Received: by 10.140.141.6 with SMTP id 6mr27191935qhn.82.1458349704009;
-        Fri, 18 Mar 2016 18:08:24 -0700 (PDT)
+        bh=PNuDyUcpgM+YUySMqHn9nh5LTZ/VhCOcq9+mATEBJfU=;
+        b=D8XyHIDT2IwrZzPv9x918Zyt2jwxv23EJ7hd6GOSQEYpc5QVSIcL+EeBWy4+kDeQgp
+         /WdmM8BLaCKCPbMmh7yhLoAM2XFlgenrT4seFFJxixOF0VwUQ3my6GyCKGh5bsJc3jDX
+         MuisUYpLQh32GQbqtwVyodujibBO0cvYnCSuNaSfoJefeYJakfS43zpL0vcx7e0x0ox6
+         6FBWqMATV2NvdLr92Nn/C3AQ6gQrQsavk2OYiDnyJL+SRiMBP1c0/Jtf5ivCqvmv8K9s
+         On8geeOgokJnTpzhFnr31h1VgoOZ9ztDy9O2FoddCDRW+zxwQRlDe8+CIvQpGbt8Skta
+         3P4w==
+X-Gm-Message-State: AD7BkJIa0VlHD8Ibo9A6QyU+foG7EWQmip3TOCL/WQgJaOPj6kaIMLoljvA/d8tBUDrIzg==
+X-Received: by 10.140.177.17 with SMTP id x17mr27905608qhx.39.1458349708087;
+        Fri, 18 Mar 2016 18:08:28 -0700 (PDT)
 Received: from ubuntu.twitter.corp? ([8.25.196.26])
-        by smtp.gmail.com with ESMTPSA id 139sm7186154qho.2.2016.03.18.18.08.22
+        by smtp.gmail.com with ESMTPSA id 139sm7186154qho.2.2016.03.18.18.08.26
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 18 Mar 2016 18:08:23 -0700 (PDT)
+        Fri, 18 Mar 2016 18:08:27 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1458349490-1704-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289282>
+
+When we poke index-helper, and index-helper is using watchman, we want
+to wait for a response (showing that the watchman extension shm has
+been prepared).  If it's not using watchman, we don't.
+
+So add a new config, core.waitforindexhelper, with sensible defaults, to
+configure this behavior.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- index-helper.c          | 7 +++++++
- t/t7900-index-helper.sh | 9 +++++++++
- 2 files changed, 16 insertions(+)
+ cache.h       | 1 +
+ config.c      | 5 +++++
+ environment.c | 5 +++++
+ read-cache.c  | 5 ++++-
+ 4 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/index-helper.c b/index-helper.c
-index ffa3c2a..7362abb 100644
---- a/index-helper.c
-+++ b/index-helper.c
-@@ -400,6 +400,13 @@ int main(int argc, char **argv)
+diff --git a/cache.h b/cache.h
+index 4ae7dd0..f8b8dbf 100644
+--- a/cache.h
++++ b/cache.h
+@@ -692,6 +692,7 @@ extern char *git_replace_ref_base;
+ extern int fsync_object_files;
+ extern int core_preload_index;
+ extern int core_watchman_sync_timeout;
++extern int wait_for_index_helper;
+ extern int core_apply_sparse_checkout;
+ extern int precomposed_unicode;
+ extern int protect_hfs;
+diff --git a/config.c b/config.c
+index e6dc141..5f1b8bd 100644
+--- a/config.c
++++ b/config.c
+@@ -887,6 +887,11 @@ static int git_default_core_config(const char *var, const char *value)
  		return 0;
  	}
  
-+	/* check that no other copy is running */
-+	fd = open(pipe_path.buf, O_RDONLY | O_NONBLOCK);
-+	if (fd > 0)
-+		die(_("Already running"));
-+	if (errno != ENXIO && errno != ENOENT)
-+		die_errno(_("Unexpected error checking pipe"));
++	if (!strcmp(var, "core.waitforindexhelper")) {
++		wait_for_index_helper = git_config_bool(var, value);
++		return 0;
++	}
 +
- 	atexit(cleanup);
- 	sigchain_push_common(cleanup_on_signal);
+ 	if (!strcmp(var, "core.createobject")) {
+ 		if (!strcmp(value, "rename"))
+ 			object_creation_mode = OBJECT_CREATION_USES_RENAMES;
+diff --git a/environment.c b/environment.c
+index 35e03c7..c7fb0a9 100644
+--- a/environment.c
++++ b/environment.c
+@@ -95,6 +95,11 @@ int core_preload_index = 1;
+ int ignore_untracked_cache_config;
  
-diff --git a/t/t7900-index-helper.sh b/t/t7900-index-helper.sh
-index 14b5a6c..ce0cc27 100755
---- a/t/t7900-index-helper.sh
-+++ b/t/t7900-index-helper.sh
-@@ -24,4 +24,13 @@ test_expect_success 'index-helper creates usable pipe file and can be killed' '
- 	test_path_is_missing .git/index-helper.pipe
- '
+ int core_watchman_sync_timeout = 300;
++#ifdef USE_WATCHMAN
++int wait_for_index_helper = 1;
++#else
++int wait_for_index_helper = 0;
++#endif
  
-+test_expect_success 'index-helper will not start if already running' '
-+	test_when_finished "git index-helper --kill" &&
-+	git index-helper --detach &&
-+	test -p .git/index-helper.pipe &&
-+	test_must_fail git index-helper 2>err &&
-+	test -p .git/index-helper.pipe &&
-+	grep "Already running" err
-+'
-+
- test_done
+ 
+ /* This is set by setup_git_dir_gently() and/or git_default_config() */
+diff --git a/read-cache.c b/read-cache.c
+index c141fec..7fd9b2c 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1821,7 +1821,10 @@ static int poke_daemon(struct index_state *istate,
+ 	if (refresh_cache) {
+ 		ret = write_in_full(fd, "refresh", 8) == 8;
+ 	} else {
+-		ret = poke_and_wait_for_reply(fd);
++		if (wait_for_index_helper)
++			ret = poke_and_wait_for_reply(fd);
++		else
++			ret = write_in_full(fd, "poke", 5) == 5;
+ 	}
+ 
+ 	close(fd);
 -- 
 2.4.2.767.g62658d5-twtrsrc
