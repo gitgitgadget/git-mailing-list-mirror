@@ -1,107 +1,107 @@
 From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: parse-options does not recognize "unspecified" behavior
-Date: Sat, 19 Mar 2016 22:25:35 +0530
-Message-ID: <CAFZEwPNK+XTjXzjn-Pv3iP4XiajXrdhUHWLz-8c0Ssy_Edkd7A@mail.gmail.com>
-References: <20160317014310.GA12830@sigill.intra.peff.net>
-	<1458386735-8038-1-git-send-email-szeder@ira.uka.de>
+Subject: Re: "git tag --contains <id>" is too chatty, if <id> is invalid
+Date: Sat, 19 Mar 2016 22:34:58 +0530
+Message-ID: <CAFZEwPP1GwH6a1kLTCn6ETov6YeK-t9PFJ_-wWP2P6v7CObiGQ@mail.gmail.com>
+References: <CAJj6+1Fcp+Fjx9N6Mon1A5uP-_npnPL1Acu5-cR_bHVfs3EMWA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Sat Mar 19 17:55:42 2016
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Chirayu Desai <chirayudesai1@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 19 18:05:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahKA9-0005G9-MZ
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Mar 2016 17:55:42 +0100
+	id 1ahKJE-0002R0-Vv
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Mar 2016 18:05:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754891AbcCSQzi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Mar 2016 12:55:38 -0400
-Received: from mail-yw0-f176.google.com ([209.85.161.176]:36802 "EHLO
-	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754625AbcCSQzg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Mar 2016 12:55:36 -0400
-Received: by mail-yw0-f176.google.com with SMTP id g3so173603205ywa.3
-        for <git@vger.kernel.org>; Sat, 19 Mar 2016 09:55:36 -0700 (PDT)
+	id S932144AbcCSRFA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Mar 2016 13:05:00 -0400
+Received: from mail-yw0-f169.google.com ([209.85.161.169]:33090 "EHLO
+	mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932094AbcCSRE7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Mar 2016 13:04:59 -0400
+Received: by mail-yw0-f169.google.com with SMTP id h65so30854491ywe.0
+        for <git@vger.kernel.org>; Sat, 19 Mar 2016 10:04:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-transfer-encoding;
-        bh=MS4Ws2ZLbtqgO0siMeOdxE6BpbU5j6ELZPTPPUrhPQA=;
-        b=uxH/Xg9NWnMOrfqg7RZUY02sih2R3d6WLT3E06XisHDBN20jOiDteqqmaiASAhPBf2
-         I9YEPo3foF5ED8tZ2GwLILaW0J10Diclo3FY7PGAO1UY5Z9fcxQM4LMzgCCJ9a8zghA+
-         OM2vHVso/iuB+vF+MFfIOgGPNRpN67p3NwWB1pK5RLkCKt4GRUiXRbs9Rr44kY5wUd+e
-         g+Io/no86SDH7Vyak5cT4PP0acezsX9OcmVzD8q0uFETpegpTz5cW/wf4Ngpjg+g10xA
-         0ameVXIdlP1gEaJrcgUMJoFnIYb3PNNmS/DdZtBOPzu1ri5bs+ieWQ+1VxtHo0WcHhPw
-         EMDQ==
+        bh=q/T+zXdeo4EMauPi7PC9yUhXqTCnrBIOYcC/4e4qhjg=;
+        b=gyjvuxuS+ft6HSJR03K52CMMs8EpZL0yxjiwoxWyYTehS0VqTMwOjLScCKReg/7APN
+         yUoMu6c6GLpxNCdDXPQdPk1/ZmvkW8IqR1uo3o77h1IxH+3VwauoJoERlzvR35e/mxy1
+         cO9RukWjOK7/axmvpH/5HL9jiea99+hFqeh+uZ6FdF9LB+BHP4tyH3i+HmIegXwUobtZ
+         QU1+UdD07yWF99Cf7J+6Fe5CgClEyIMEV7+Sg0vcyMHn16bM5cBeWgdhBHxuoPFMnxVX
+         dDNAQx004Kg4EYKY4A6y+Jh8Qxtyrcs/1js0KHG/t2rcMH408ieoQcpb3KA3fWOxdUVG
+         JnNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=MS4Ws2ZLbtqgO0siMeOdxE6BpbU5j6ELZPTPPUrhPQA=;
-        b=XmLpZeHOnOgdmUVlx6M11AX08N+/UvgUXwidAP4l3Ip+qAPLVDTTcNJc5YwRx4NhUB
-         Vi4YbAB+WTbAV9w5lMzGZMoF0+RFbAJ+cgGTjoaIUesRm7A2MDU4BJW9dhowoj75Tf8G
-         HDST+aT4j4ZYFqkY9BEvQ9/v0M6U4cERfkVMChvivmJ1asy7Bp45zYMEy9Ug+hnIU1nk
-         vFuUfvMtEjW+2a7yeEeT2pZQtnLcIOukF4pb5z5UAJQuuRU5qX2+P9lN3cc1Yp696tuZ
-         jKNBccPBR3ul6RM75GaX7/nwKEuskACvDIKDKzxN6FieaECOeRPpTGSfLFsfK0XZjLPQ
-         ikeQ==
-X-Gm-Message-State: AD7BkJLEDUU+dxx/3QJ1WUU5i0duOQSNGHITe1FrxTtCGb07HgZ2foXJG/dXBF+FK1+g9k+cDY8Pw1JmSXVQPQ==
-X-Received: by 10.129.45.194 with SMTP id t185mr9450767ywt.243.1458406536037;
- Sat, 19 Mar 2016 09:55:36 -0700 (PDT)
-Received: by 10.13.203.137 with HTTP; Sat, 19 Mar 2016 09:55:35 -0700 (PDT)
-In-Reply-To: <1458386735-8038-1-git-send-email-szeder@ira.uka.de>
+        bh=q/T+zXdeo4EMauPi7PC9yUhXqTCnrBIOYcC/4e4qhjg=;
+        b=Gc0UMbCTWYsKE/etDkjlpPCOjP+ztSiKV1DwH0QPGqqiO5o8Ole+ClzF54iiqTNGvh
+         aAdxLIYurWq5YwyHuv0QVfVEJBe5IT3wP6rG5cj8SThqbwyk9TMjd0Woo2hhtriSggx2
+         7w2LnFqoYbManBjpm5Go6wVMgHKqz85ePQjgoi+zChdVbZDdp1IW7xZzoVXkEo9D8+hY
+         Ai3miAIxdPj7lYawXGNmWQZt/JWjARqeahCunY8WAAGBfy1wy23c3GJ4EUOb1pRECzYl
+         S7Cq4weCDg/M5rNyQa2TW44MuPaQM8MxZlofKKKEuawKLhDPWxFuMevWBkJfLIufnS5F
+         ALJA==
+X-Gm-Message-State: AD7BkJIAW69DQ8CMXFQXyu+VsytD/4BoEmWbkhnmrpTYwpuOGkKK31+6oQsGBta2IABdG6nuUbPGQibYCjm8BQ==
+X-Received: by 10.129.9.214 with SMTP id 205mr9458003ywj.53.1458407098400;
+ Sat, 19 Mar 2016 10:04:58 -0700 (PDT)
+Received: by 10.13.203.137 with HTTP; Sat, 19 Mar 2016 10:04:58 -0700 (PDT)
+In-Reply-To: <CAJj6+1Fcp+Fjx9N6Mon1A5uP-_npnPL1Acu5-cR_bHVfs3EMWA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289315>
 
-On Sat, Mar 19, 2016 at 4:55 PM, SZEDER G=C3=A1bor <szeder@ira.uka.de> =
-wrote:
->> Yes, I think in general, "-v" and "-q" should work as opposites. But
->> that is not the case with commit, where "-v" and "-q" operate on tot=
-ally
->> separate messages. I think that is a UX mistake, and we would not do
->> it that way if designing from scratch. But we're stuck with it for
->> historical reasons (I'd probably name "--verbose" as "--show-diff" o=
-r
->> something if writing it today).
+On Sat, Mar 19, 2016 at 10:19 PM, Chirayu Desai <chirayudesai1@gmail.co=
+m> wrote:
+> Hi, I want to work on this as my GSoC micro project.
 >
-> Yeah, as a long-time 'git commit -v' user I never really thought abou=
-t
-> the name of the option, but when I pointed out the multiple verbose
-> levels it struck me as a rather unfortunate name for this feature,
-> too.  Oh, well, we are stuck with it indeed.
+>> On Mon, Jan 18, 2016 at 10:24:31PM +0100, Toralf F=C3=B6rster wrote:
+>> > very first line is "error: malformed object name <id>" which tells=
+ all, or ?
+>> Yeah, I agree that showing the "-h" help is a bit much.
+>> This is a side effect of looking up in the commit in the parse-optio=
+ns
+>> callback. It has to signal an error to the option parser, and then t=
+he
+>> option parser always shows the help on an error.
+>> I think we'd need to do one of:
+>> 1. call die() in the option-parsing callback (this is probably a bad
+>> precedent, as the callbacks might be reused from a place that wants
+>> to behave differently)
+> I assume you mean parse-options-cb.c:parse_opt_commits() by the callb=
+ack.
+> I see that it is currently used only by commands which have a "--with=
+"
+> or "--contains" option,
+> and all of them behave the same way, printing the full usage, so a on=
+e
+> line change in that function would fix it for all of those.
+>> 2. have the callback just store the argument string, and then resolv=
+e
+>> the commit later (and die or whatever if it doesn't exist). This
+>> pushes more work onto the caller, but in this case it's all done by
+>> the ref-filter code, so it could presumably happen during another
+>> part of the ref-filter setup.
+> I'm not quire sure how exactly to do that.
+>> 3. teach parse-options to accept some specific non-zero return code
+>> that means "return an error, but don't show the usage"
+> This sounds good, but also the most intrusive of 3.
+>> I think any one of those would be a good project for somebody lookin=
+g to
+>> get their feet wet in working on git. I think (2) is the cleanest.
+>> -Peff
 >
-> However, that doesn't mean that we have to spread this badly chosen
-> name from options to config variables, does it?  I think that if we
-> are going to define a new config variable today, then it should be
-> named properly, and it's better not to call it 'commit.verbose', but
-> 'commit.showDiff' or something.  Perhaps we could even define two new
-> config variables: 'commit.showDiff' for the diff of the changes to be
-> committed (=3D '-v'), and 'commit.showUnstagedDiff' for the - wait fo=
-r
-> it! - unstaged changes (=3D '-v -v').  Not sure about the variable
-> names, though, because "plain" 'git diff' shows unstaged changes,
-> while 'git diff --cached' shows staged changes.
+> What would be the best way to proceed with this?
 
-This seems a better way to go about.
-
->
-> Furthermore, it doesn't mean that we can't add properly named command
-> line option(s) and state that '-v|--verbose' is a synonym to
-> '--show-diff' (maybe even deprecate '--verbose'), but I don't want to
-> squeeze even more into a GSOC micro project.
-
-Its perfectly fine. It hardly a half an hour job. Though I like the
-idea that we should use both "-v|--verbose" and "--show-diff" instead
-of deprecating it. Plus, this edit would not be required. What are
-your suggestions?
-
-Regards,
-Pranit Bauva
+The extract that you posted isn't very clear.
+I guess posting a link with the previous discussion would be quite
+helpful as some people don't have the previous emails in the inbox.
+The archives can be found at
+http://dir.gmane.org/gmane.comp.version-control.git .
