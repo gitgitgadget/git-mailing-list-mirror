@@ -1,90 +1,95 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 18/19] index-helper: autorun
-Date: Sat, 19 Mar 2016 06:09:43 +0700
-Message-ID: <CACsJy8BiXLXuU1CNJ3sdo1JVDGYN7fQXu4G1effN+NwGAKCq_g@mail.gmail.com>
-References: <1457548582-28302-1-git-send-email-dturner@twopensource.com>
- <1457548582-28302-19-git-send-email-dturner@twopensource.com>
- <CACsJy8CaWFhCzrH3imz+BRMTESSmyUB4jeAaYUDNk+Tmpj-VrQ@mail.gmail.com>
- <alpine.DEB.2.20.1603151517590.4690@virtualbox> <1458151880.9385.1.camel@twopensource.com>
- <alpine.DEB.2.20.1603161923380.4690@virtualbox> <CACsJy8AsJKmsPm8Y1LRZdmyH60n3OT5X=42RGK5GXNBDfn8j8g@mail.gmail.com>
- <alpine.DEB.2.20.1603171536420.4690@virtualbox> <CACsJy8Dx4=igm3YVYkTDdRSxevDo2xRij9P5m7VPxkVrq3oq8Q@mail.gmail.com>
- <alpine.DEB.2.20.1603180752540.4690@virtualbox> <CACsJy8Amdr-2WqwYjYjyaag0jR_pq=h36QFKMk3BYQmE_A-DOw@mail.gmail.com>
- <1458321734.9385.26.camel@twopensource.com>
+Subject: Re: [PATCH 3/2] dir.c: fix dir re-inclusion rules with "NODIR" and "MUSTBEDIR"
+Date: Sat, 19 Mar 2016 08:03:46 +0700
+Message-ID: <CACsJy8BBwiH9YtDUZRYwHm4t2ou84B6Ltx37ruXkM-vDoSGG9A@mail.gmail.com>
+References: <1458218744-15810-2-git-send-email-pclouds@gmail.com>
+ <1458219254-16343-1-git-send-email-pclouds@gmail.com> <xmqqfuvoy89q.fsf@gitster.mtv.corp.google.com>
+ <56EB8961.70302@fb.com> <CACsJy8A2FKn-8nWtK4QPMHDCDYvTZBrQs1RVMApnuejXQis19g@mail.gmail.com>
+ <xmqqa8lvr7ix.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Sat Mar 19 00:10:42 2016
+Cc: Durham Goode <durham@fb.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Mateusz Jakub Kwapich <mitrandir@fb.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 19 02:04:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ah3XQ-0003gN-SC
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Mar 2016 00:10:37 +0100
+	id 1ah5JW-0007FP-A6
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Mar 2016 02:04:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753736AbcCRXKR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Mar 2016 19:10:17 -0400
-Received: from mail-lf0-f51.google.com ([209.85.215.51]:35906 "EHLO
-	mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753709AbcCRXKO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Mar 2016 19:10:14 -0400
-Received: by mail-lf0-f51.google.com with SMTP id d82so28815352lfe.3
-        for <git@vger.kernel.org>; Fri, 18 Mar 2016 16:10:13 -0700 (PDT)
+	id S1754072AbcCSBET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Mar 2016 21:04:19 -0400
+Received: from mail-lb0-f193.google.com ([209.85.217.193]:35377 "EHLO
+	mail-lb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752902AbcCSBER (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Mar 2016 21:04:17 -0400
+Received: by mail-lb0-f193.google.com with SMTP id wn5so7673862lbb.2
+        for <git@vger.kernel.org>; Fri, 18 Mar 2016 18:04:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=fuOdxz3mB9X7e2iOqQQHuymxzMJl4pIeQ3lmhryT8Ik=;
-        b=UZL15nF9Ww1DoONL0QhFfFSkUTXV502d3Ck39R9c5KPTyq24CEmaCzG+INhVEXD0iA
-         1zqiS5wgqosRKEIoPWI6pMqr4WjdSWdYRW+mGsnbljuPCDIS0dORhcgcTKnkvwPEJnQr
-         Iu5RoR+Tinzq1zEhtkvsp6rSySskfhqmYz2LnD0E6EZyF2M/lsQONFTe+gfD61NwadCE
-         esBgfDtgs+RY2mW0y4qRfZq9Bd+2rWz9Qgn3ZFFFHFfJhd2lUO82NAGp5uZzOLPRKRtB
-         eA3YatKU8FEliT3nytzJovQhljk980R3YYXtsLuWyUZQeBd+CM/tW4y72FJctb36Wo0P
-         D0fw==
+        bh=IuheRX/rM5kIesJvgawh8x47UVi0JzU/kT6+31K96/g=;
+        b=QeUxFXEdoKmXNnYjT5fxETPMKVL0iRwJsGwsAa1mZNsSceMFX/lHWaTLEf7gZ3HlvG
+         nUwmvt1R2urWmNbSVZwqlW7Crnk7siihIpitwSQFYzZNgITEwutFra++Utx7bvCkBwm6
+         ZBkIISDNlZ5VT/4bfW4HFYlR/kg9R7Y1/WRWV0Xhv9ZwmprM+nxWyNCJk5rY/dElvmc6
+         Txkx+kQABxA44qvMXhGTCG88eRN/Ke4jYmeg9eb2h6z/0oYQJUfMLEPgFUaQHReI3Gh7
+         R8Ji2LCdKEXY0pUUS8FqJ/5wyio5QqccvuT2lqu7bdBvJrAVwRsK7LADTRSp+/H8vYgW
+         VXuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=fuOdxz3mB9X7e2iOqQQHuymxzMJl4pIeQ3lmhryT8Ik=;
-        b=j9yO6m4Sk82H2MXauzAGOHSO2UT7IsPQzgXRveXYw3fTmxTicdIm74TeL22vNIZaiQ
-         6/AkNHbwM6wm82E1qzE+1YwIrQTmk/ofhJIZUsDP8L7NY3iZ5ZxTYbBifb+FJHZOL66v
-         6rlTjEjaYBmya6zIMei9r6G2ZzfmlxkYMOXJy82W96jBvF0wsEHvxXcxf4NLwUNvJITW
-         sGs6BmPlC37WHDL7RpxP0dAcpWutJt7ttbAAeyL0tGgD0pJZBBo8VCnS4VC7d+Np40tQ
-         MVwjciCO4ioKdz8AwcgXo6BdQj9KtxtnEiOaSWRMC2BjPqS7+bjyClia0hE+wW+MA7f0
-         iB4A==
-X-Gm-Message-State: AD7BkJK+7+ua1/8w0Rk5Zhkh2vBUbdrkFEOCZLUvwjxUFjCM4zda5163mvy8VPVfZLe2lOuQKm1Vms3RjaJ+aw==
-X-Received: by 10.25.211.75 with SMTP id k72mr6765605lfg.45.1458342612721;
- Fri, 18 Mar 2016 16:10:12 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Fri, 18 Mar 2016 16:09:43 -0700 (PDT)
-In-Reply-To: <1458321734.9385.26.camel@twopensource.com>
+        bh=IuheRX/rM5kIesJvgawh8x47UVi0JzU/kT6+31K96/g=;
+        b=MHZFPRVc88thAtI8SKemS+Whs45yKBjbsWXcWnDU9X/dXWJKw4rLlk9yHsx8yG71FP
+         GsHalwjKM+GeM5tRQtoLBPxImStHQ4gSLENrV6+Ocrq35F/0jlFET2O2LDPYX3qxgQY7
+         FCz33eD7iChUZKFwIP2ArtVO0mD48HFGPPqLBAcPk8cfofZ0yfSdFBwcYtjbn7kyxKRV
+         fSTPv8oGtpi/E73aTo5r6feK4xbbYF9GqSHdW0cyv3f4sVTCA9M6PRVd52LM0HdvJGyE
+         5X/JnwI4EaPL7fXUPAKVmGZN/gfygO0LRb0xQHm3a8EJirHVScZXTp1rz8s057Gvzkkr
+         hpWw==
+X-Gm-Message-State: AD7BkJI884aDRiNYZsh8RgeHVpDYSqU6VOA/1FClLWZrnOxAoAA8LiLHriuWywnTMcbHkdqUohmF987BZIZEYA==
+X-Received: by 10.112.209.99 with SMTP id ml3mr6692239lbc.26.1458349456167;
+ Fri, 18 Mar 2016 18:04:16 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Fri, 18 Mar 2016 18:03:46 -0700 (PDT)
+In-Reply-To: <xmqqa8lvr7ix.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289266>
 
-On Sat, Mar 19, 2016 at 12:22 AM, David Turner <dturner@twopensource.com> wrote:
-> On Fri, 2016-03-18 at 14:44 +0700, Duy Nguyen wrote:
->> > So yeah, this is the challenge: to make Git work at real-world
->> > scale
->> > (didn't we hear a lot about this at the latest Git Merge?)
->>
->> I'm all for making Junio cry by using Git for what it is (or was) not
->> intended for, but this seems too much. A repo about 500k files or
->> less, I think I can deal with,  not those in million range.
+On Sat, Mar 19, 2016 at 1:00 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> What is the ultimate goal of nd/exclusion-regression-fix topic over
+> the behaviour before 2.7.0 and after 2.7.1 (there was a regression
+> in 2.7.0 that was reverted in 2.7.1)?  From the cover letter of the
+> series:
 >
-> Sad news: Facebook's repo was already getting towards that size three
-> years ago:
-> http://comments.gmane.org/gmane.comp.version-control.git/189776
+>     Take one was bad and reverted in commit 8c72236. Take two provides a
+>     more complete solution to the pair of rules
+>
+>       exclude/this
+>       !exclude/this/except/this
+>
+>     3/4 should do a better job at stopping regressions in take 1. 4/4
+>     provides the solution. I think I have tested (and wrote tests) for all
+>     the cases I can imagine.
+>
+> "solution to the pair of rules" hints there are some problem in the
+> pair of rules, without stating what it is trying to solve.
+>
+> Isn't the root cause of the issue that treat_one_path() when
+> deciding if it is worth descending into a directory check if the
+> directory itself is excluded and returns path_excluded, even if some
+> paths inside it may have a countermanding ! entries that would match
+> them?  What if we change that part smarter and allow it to descend?
 
-I've been doing this for too long I forgot about numbers in that mail.
-The good news is I also forgot that I tried an artificial index of 200
-MB nearly two years ago [1]. 100ms read time from that test is not
-bad. But Johannes' point stands, it will hurt if index-helper is
-bypassed at this size.
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/248771
+That's the easy part, detecting a pair and continue descending. The
+problem is after you descend, exclude engine may return contradicting
+results on old patterns. It's the same thing that 3/2 describes (after
+you change patterns from "!dir\ndir/file2" to "dir\n!dir/file2").
 -- 
 Duy
