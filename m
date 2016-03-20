@@ -1,115 +1,103 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: Creates unreadable pack files on platforms with sizeof(unsigned long)
- != sizeof(uintmax_t)
-Date: Sun, 20 Mar 2016 22:20:02 +0100
-Message-ID: <56EF1402.4050708@virtuell-zuhause.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: "git tag --contains <id>" is too chatty, if <id> is invalid
+Date: Sun, 20 Mar 2016 15:25:04 -0700
+Message-ID: <xmqqoaa8okhr.fsf@gitster.mtv.corp.google.com>
+References: <CAJj6+1Fcp+Fjx9N6Mon1A5uP-_npnPL1Acu5-cR_bHVfs3EMWA@mail.gmail.com>
+	<20160319175705.GA6989@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: git-for-windows@googlegroups.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 20 22:41:41 2016
+Content-Type: text/plain
+Cc: Chirayu Desai <chirayudesai1@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Mar 20 23:25:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahl6R-0000iM-Oo
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 22:41:40 +0100
+	id 1ahlmc-0004DJ-1d
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 23:25:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750871AbcCTVju (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Mar 2016 17:39:50 -0400
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:39465 "EHLO
-	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750760AbcCTVjt (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Mar 2016 17:39:49 -0400
-X-Greylist: delayed 1183 seconds by postgrey-1.27 at vger.kernel.org; Sun, 20 Mar 2016 17:39:48 EDT
-Received: from p3e9bcb68.dip0.t-ipconnect.de ([62.155.203.104] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1ahklX-0005Kf-Ir; Sun, 20 Mar 2016 22:20:03 +0100
-X-Priority: Normal
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.0
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1458509989;896bdcd3;
+	id S1751614AbcCTWZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Mar 2016 18:25:09 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:56152 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751530AbcCTWZI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Mar 2016 18:25:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2F1C04D206;
+	Sun, 20 Mar 2016 18:25:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Iv5AZEsFBbelGaZk5/COu/2GJg8=; b=ocQlHq
+	HzBGJSUnzdbP6jMCwOGIrbLcXHh7R1Crf9OundFJr3OZfGKr6INu3tSDfp+1Ynlb
+	csmy1CCB6bqT+PC7Q/XuYZ3G5ci8GqOa0UhmW8D1QPMG0KmmJq8lLzsUCUtTldqN
+	wS7CGTqR/U2+b+fhQTxIFJr2BcclIA0SJFp3M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iB1j7F0VMDIruFiVdb60S3AiYcFqeoYI
+	gBD/wTne9CZ91SQEg8PplD5N1rtrYxj8cBvwAxvZrGS8g+E88wAKLoTirDIqeHay
+	CE0/ZQNfV3lw1ZW47H22zrxRjXRS4v5KviMaG/xkw24+jdHxq6pF7fWYtTvzhODl
+	lDMrLdRNLyU=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 275144D204;
+	Sun, 20 Mar 2016 18:25:06 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 907B04D203;
+	Sun, 20 Mar 2016 18:25:05 -0400 (EDT)
+In-Reply-To: <20160319175705.GA6989@sigill.intra.peff.net> (Jeff King's
+	message of "Sat, 19 Mar 2016 13:57:05 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 98AF2414-EEEA-11E5-8DAF-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289387>
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-while playing around with some git settings I encountered some problems on Windows x64
-using the 64bit build of git.
-And it is not restricted to that platform.
+> On Sat, Mar 19, 2016 at 10:19:02PM +0530, Chirayu Desai wrote:
+>
+>> > Yeah, I agree that showing the "-h" help is a bit much.
+>> > This is a side effect of looking up in the commit in the parse-options
+>> > callback. It has to signal an error to the option parser, and then the
+>> > option parser always shows the help on an error.
+>> > I think we'd need to do one of:
+>> > 1. call die() in the option-parsing callback (this is probably a bad
+>> > precedent, as the callbacks might be reused from a place that wants
+>> > to behave differently)
+>> I assume you mean parse-options-cb.c:parse_opt_commits() by the callback.
+>> I see that it is currently used only by commands which have a "--with"
+>> or "--contains" option,
+>> and all of them behave the same way, printing the full usage, so a one
+>> line change in that function would fix it for all of those.
+>
+> Yes, that is the right callback.
+>
+>> > 2. have the callback just store the argument string, and then resolve
+>> > the commit later (and die or whatever if it doesn't exist). This
+>> > pushes more work onto the caller, but in this case it's all done by
+>> > the ref-filter code, so it could presumably happen during another
+>> > part of the ref-filter setup.
+>> I'm not quire sure how exactly to do that.
+>
+> You'd teach parse_opt_commits() to store the string _name_ of the
+> argument (e.g., using a string_list rather than a commit_list), and then
+> later resolve those names into commits.
+>
+>> > 3. teach parse-options to accept some specific non-zero return code
+>> > that means "return an error, but don't show the usage"
+>> This sounds good, but also the most intrusive of 3.
+>
+> Yeah. Reading the options again, I kind of like this one. The only trick
+> is that you would need to make sure no other callbacks are returning the
+> value you choose for the "don't show the usage" flag. That is probably
+> not too bad, though. There aren't that many callbacks, and they are not
+> likely to be using values besides "-1" and "0".
 
-Recipe to break:
-mkdir test &&
-cd test &&
-truncate -s 5g largefile.bin &&
-git init &&
-git add . &&
-git commit -m "changes" &&
-git fsck
+My knee-jerk preference among the three is 2., but I think I'll know
+when I see a patch ;-)
 
-Result:
-Initialized empty Git repository in E:/ttest/.git/
-[master (root-commit) d19adaf] changes
- 1 file changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 largefile.bin
-Checking object directories: 100% (256/256), done.
-error: bad object header
-error: unknown object type -1 at offset 12 in
-.git/objects/pack/pack-25250ce5c176078ba51a42fee177c2f03f8845ca.pack
-error: cannot unpack 0be2be10a4c8764f32c4bf372a98edc731a4b204 from
-.git/objects/pack/pack-25250ce5c176078ba51a42fee177c2f03f8845ca.pack at offset
-12
-Checking objects: 100% (1/1), done.
-
-So I've created a repository which I can now not use.
-
-The die() call is from unpack_object_header_buffer() in sha1_file.c. On windows x64
-bitsizeof(long) returns 32 and equals shift at some point.
-unpack_object_header_buffer() returns the size in an unsigned long (32bit). [1, 2, 3]
-
-The questions why this has not been detected on creating the pack leads to
-encode_in_pack_object_header()
-which uses uintmax_t (64 bit wide) for storing the size.
-
-unsigned long is used in more places for file sizes e.g. in struct object_entry
-in pack-objects.h.
-
-The proper solution now would be, I guess, to convert file sizes from unsigned long to something
-which is wider on windows x64 and in the best case the same size on linux. My git code base foo is rather
-low and it looks much more involved than a simple s//.
-
-A first intermediate solution could be to die on pack creation e.g. in 
-
-diff --git a/pack-write.c b/pack-write.c
-index 33293ce..ebb8b0a 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -313,6 +313,9 @@ int encode_in_pack_object_header(enum object_type type, uintmax_t size, unsigned
-        if (type < OBJ_COMMIT || type > OBJ_REF_DELTA)
-                die("bad type %d", type);
-
-+       if (bitsizeof(unsigned long) != bitsizeof(uintmax_t) && size > (unsigned long) size)
-+               die("Cannot handle files this big");
-+
-        c = (type << 4) | (size & 15);
-        size >>= 4;
-        while (size) {
-
-With that patch I get
-
-$ ../git add .
-fatal: Cannot handle files this big
-
-I know that usually people don't add big binary files to git. But I do, so I care ;)
-If this direction sounds reasonable I can provide a proper patch.
-
-Thanks,
-Thomas
-
-[1]: https://msdn.microsoft.com/en-us/library/323b6b3k.aspx
-[2]: https://msdn.microsoft.com/en-us/library/s3f49ktz.aspx
-[3]: http://stackoverflow.com/questions/7607502/sizeoflong-in-64-bit-c
+Thanks for helping the candidates.
