@@ -1,79 +1,78 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: GSoC Project | Improvise git bisect
-Date: Sun, 20 Mar 2016 19:08:15 +0100
-Message-ID: <vpqoaa9c99s.fsf@anie.imag.fr>
-References: <CAFZEwPN-oUDNnc_PBeP2Q4msJAHenkiLtE+Oo75R+uTTwUKpYQ@mail.gmail.com>
-	<vpqoaaahbvi.fsf@anie.imag.fr>
-	<CAP8UFD2fudNtGpUHTYjZKXCErocuRS65E=5tH_+_tsNFbmHCBA@mail.gmail.com>
-	<CAFZEwPMeejJEMjYbx1sJsH0UNygDEdtNazceOePo81Abi0dHHQ@mail.gmail.com>
-	<CAFZEwPP2OLOQanazPXxK1u5GVHzFWqx8GuRad7tLUyHrWR_+Tw@mail.gmail.com>
-	<alpine.DEB.2.20.1603201628590.4690@virtualbox>
-	<CAFZEwPMEDnzv3mLpULOY=7CQZgULx5QsAb_4Pz40iJWzt9HRGg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian Couder <christian.couder@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Stefan Beller <sbeller@google.com>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Jeff King <peff@peff.net>, Troy Moure <troy.moure@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Kevin Daudt <me@ikke.info>,
-	Philip Oakley <philipoakley@iee.org>
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 20 19:11:50 2016
+From: larsxschneider@gmail.com
+Subject: [PATCH v2 0/2] git-p4: fix AsciiDoc formatting
+Date: Sun, 20 Mar 2016 19:39:19 +0100
+Message-ID: <1458499161-61642-1-git-send-email-larsxschneider@gmail.com>
+Cc: sunshine@sunshineco.com, gitster@pobox.com,
+	Lars Schneider <larsxschneider@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 20 19:39:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahhpL-0001Oz-RJ
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 19:11:48 +0100
+	id 1ahiGA-0005gP-JI
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 19:39:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751331AbcCTSLo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Mar 2016 14:11:44 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:47858 "EHLO mx2.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750826AbcCTSLn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2016 14:11:43 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u2KI8Dn8020605
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Sun, 20 Mar 2016 19:08:13 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u2KI8FxP015804;
-	Sun, 20 Mar 2016 19:08:15 +0100
-In-Reply-To: <CAFZEwPMEDnzv3mLpULOY=7CQZgULx5QsAb_4Pz40iJWzt9HRGg@mail.gmail.com>
-	(Pranit Bauva's message of "Sun, 20 Mar 2016 21:56:54 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Sun, 20 Mar 2016 19:08:13 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u2KI8Dn8020605
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1459102094.42435@lU0nwunxnztWW+bL65A00Q
+	id S1751650AbcCTSjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Mar 2016 14:39:25 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34062 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751205AbcCTSjY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Mar 2016 14:39:24 -0400
+Received: by mail-wm0-f67.google.com with SMTP id p65so17726716wmp.1
+        for <git@vger.kernel.org>; Sun, 20 Mar 2016 11:39:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=9sT3zdL+8QUn1oL82f9bUT7Q94OAoAd6soc8FF1Ru+g=;
+        b=Z0hrqE15a2HwjUkikotGZct9TsoyQ0cJeK9FceEUbNWJ9mZLpZtM0HBFJ6D01p+7hk
+         RfGWEMEXB+HnF5Aw7Uf97/QXZMg00b0IEeNnuPLldAYBl/k+TJ96irIpa7Z4obOnTjrE
+         z33s7HdQxyYDnXSOeSaAyQYfr3y5moEnH6SWbbwMT7YiIsWqIinDLeAj/EmJcCNCDUkO
+         nIj8ZbIGj0V3KSO/h8hWqQmH+MK5WM5DBbqe8DamVSxLAxJhSCZczZxN0wketoLz9qmL
+         vTjhPQ2AdXJjOGCn8Q3UEy2peDh49+us4Xb8M0jLwD8zoBq80QyStY9tK9bmqq4t+6jb
+         vEEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=9sT3zdL+8QUn1oL82f9bUT7Q94OAoAd6soc8FF1Ru+g=;
+        b=I6fw3mLl419Lcy0sKhBjdKnASWClhh0W2XH1puwLSfwCpWA9png6eA6LT2ztQyFDeA
+         5iC2AQKNMmzpDknRwZcSaNh8xkM0xyCB73VZj/OT0cwMQFlwj8RBM9oaccJWBrMFAHPS
+         TL37oAnRycKaQwl6qBm9/Q5NXNCo7EgyiMMnbjSUWoRxJeFip8VgjPd0fhkdN5nuQYy2
+         r+Q1sXCqqXYyilwmMC3N1ZlqRrWsXYnCAD87a46ZrJ4qx+wonP32y/UTJIwwgUV+Ti0c
+         2cczXHcr7qa2udpey15wfpindQOYoefotaVzd5Azn9cSmWBfqNj7fpI6r2HFRDHpD0Mk
+         mBFQ==
+X-Gm-Message-State: AD7BkJLDwSmcS3mdhxKkKH8oR4jlHmgA/P+hnb3p+3trHDhgOlIIY19kBva4GPKvtzha/w==
+X-Received: by 10.28.101.5 with SMTP id z5mr9173993wmb.59.1458499163131;
+        Sun, 20 Mar 2016 11:39:23 -0700 (PDT)
+Received: from slxBook3.fritz.box (p5DDB416B.dip0.t-ipconnect.de. [93.219.65.107])
+        by smtp.gmail.com with ESMTPSA id et11sm21829064wjc.30.2016.03.20.11.39.22
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sun, 20 Mar 2016 11:39:22 -0700 (PDT)
+X-Mailer: git-send-email 2.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289374>
 
-Pranit Bauva <pranit.bauva@gmail.com> writes:
+From: Lars Schneider <larsxschneider@gmail.com>
 
-> When I am writing
-> functions, I am thinking to make some tests which will be copied
-> contents of t/t6030-bisect-porcelain.sh with s/bisect/bisect--helper/g
-> uncommenting tests as I implement more functions.
+diff to v1:
+* reference external pages similar to git-bisect-lk2009 (thanks Luke)
+* fix quotation marks (you can see the error here:
+  https://git-scm.com/docs/git-p4/2.7.4 ... search for cp1252 )
 
-I don't think you need that. When you write a new function, you are
-removing pieces of shell and adding pieces of C as replacement. If the
-testsuite is complete, it covers the shell implementation today and will
-cover the C implementation when it replaces the shell.
+Thanks,
+Lars
 
-The existing tests should be usable without modification.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Lars Schneider (2):
+  Documentation: fix git-p4 AsciiDoc formatting
+  Documentation: use ASCII quotation marks in git-p4
+
+ Documentation/git-p4.txt | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+--
+2.5.1
