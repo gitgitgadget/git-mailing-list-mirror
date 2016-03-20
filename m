@@ -1,135 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Properties of trees referencing commit objects (mode 160000)?
-Date: Sun, 20 Mar 2016 16:07:25 -0400
-Message-ID: <20160320200724.GC6288@sigill.intra.peff.net>
-References: <20160319221348.GA5247@x>
- <20160320041803.GC18312@sigill.intra.peff.net>
- <20160320184524.GA16064@x>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/GSoC] Introduction
+Date: Sun, 20 Mar 2016 21:17:59 +0100
+Message-ID: <vpqwpow9a4o.fsf@anie.imag.fr>
+References: <56E3BE3E.9070105@gmail.com>
+	<1924FEBB-46F2-46EE-B190-5289588D4BED@gmail.com>
+	<xmqqk2l58s2a.fsf@gitster.mtv.corp.google.com>
+	<FB2E0900-A77E-4AE2-A580-9192746A8ABA@gmail.com>
+	<56E6DF17.2040106@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Josh Triplett <josh@joshtriplett.org>
-X-From: git-owner@vger.kernel.org Sun Mar 20 21:07:35 2016
+Content-Type: text/plain
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Sidhant Sharma <tigerkid001@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 20 21:18:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahjdN-0000PM-7I
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 21:07:33 +0100
+	id 1ahjnq-00053l-RH
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 21:18:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751058AbcCTUH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Mar 2016 16:07:29 -0400
-Received: from cloud.peff.net ([50.56.180.127]:34985 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750834AbcCTUH2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2016 16:07:28 -0400
-Received: (qmail 4276 invoked by uid 102); 20 Mar 2016 20:07:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 20 Mar 2016 16:07:27 -0400
-Received: (qmail 30392 invoked by uid 107); 20 Mar 2016 20:07:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 20 Mar 2016 16:07:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 20 Mar 2016 16:07:25 -0400
-Content-Disposition: inline
-In-Reply-To: <20160320184524.GA16064@x>
+	id S1751143AbcCTUSL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Mar 2016 16:18:11 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:38616 "EHLO mx1.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751017AbcCTUSJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Mar 2016 16:18:09 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u2KKHvgJ016632
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Sun, 20 Mar 2016 21:17:58 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u2KKHxXK017042;
+	Sun, 20 Mar 2016 21:17:59 +0100
+In-Reply-To: <56E6DF17.2040106@gmail.com> (Sidhant Sharma's message of "Mon,
+	14 Mar 2016 21:26:07 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Sun, 20 Mar 2016 21:17:58 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u2KKHvgJ016632
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1459109883.40205@02mFtBw7IcnS5jnoQl2fjg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289383>
 
-On Sun, Mar 20, 2016 at 11:45:24AM -0700, Josh Triplett wrote:
+Sidhant Sharma <tigerkid001@gmail.com> writes:
 
-> Will git clone/checkout/etc handle it properly in that case, in the
-> absence of a .gitmodules file?  Or would it only work with custom tools?
+> On Monday 14 March 2016 01:46 PM, Lars Schneider wrote:
+>
+>> I also thought about (2). The obvious advantage of having something like 
+>> "ggit" as part of Git core is that it would be shipped with the standard
+>> Git distribution. That would especially help beginners.
 
-I think checkout just creates an empty tree for any gitlinks, and waits
-for the submodule code to fill it in.  So you'd need a custom tool. It's
-easy enough to test, though:
+Yes. And that would allow any tutorial to start with something like
+"Since you're a beginner, use the command ggit instead of git. When
+you're confident enough, just drop the first 'g' and continue hacking."
 
-    git init repo &&
-    cd repo &&
-    echo content >file && git add file && git commit -m base &&
-    printf '160000 commit %s\t%s' "$(git rev-parse HEAD)" linked >tree &&
-    tree=$(git mktree <tree) &&
-    commit=$(echo foo | git commit-tree $tree) &&
-    git checkout $commit
+Asking a beginner to install a separate tool before starting is a show
+stopper to me. Or at least, it should be _very_ easy to install.
 
-> > No, we do not follow "gitlinks" like this for reachability. Neither for
-> > pruning, nor for object transfer via push/fetch. So you'd need to have a
-> > separate reference to it (or history containing it).
-> 
-> Argh.  If I have a pile of disconnected commits, is there anything git
-> *would* follow to see them, other than a pile of refs?
+> I understand that this endeavour may or may not be merged into
+> the official Git distribution (though I'd really like it to :)), but
+> I still wish to attempt this. I'm also eager to continue work on this
+> even after GSoC is over, so maintenance shouldn't be an issue ;)
 
-I don't think so. We follow refs, tag "object" fields, and commit
-"parent" fields to get to commits, but never tree entries.
+My usual advice on this point (both for mentors and students): hope that
+you will continue contributing after the end of the project, but plan as
+if you won't. You don't want the survival of your code to depend only on
+you.
 
-And I don't think it works to just tweak the mode to 100644 for the
-commit entry; the checkout code will complain that it was expecting a
-blob and got a commit.
+I have experience similar to GSoC where I offer CS students to
+contribute to open-source software as part of a school project. Almost
+all of them told me that they would continue after and essentially none
+of them did. I think at least most of them were sincere when they said
+they would continue, but then they realize that days have only 24 hours
+and life is short ;-).
 
-> I suppose I could artificially generate a stack of merge commits with
-> those otherwise disconnect commits as parents, which would let me
-> reference them all from a single ref.  Still unsatisfying, though.
-
-Yes, though you can do it all in one single merge commit. The tree of
-that merge commit wouldn't matter, it could literally just be a pointer
-to all of the parents (we used to have some limits on the number of
-parents, but I don't think we do anymore?).
-
-If you just threw away that stacked merge and made a new one any time it
-was updated, I think it wouldn't end up very efficient for fetching. The
-client would say "I have giant-merge-commit X", and the server would say
-"well, I need to send you giant-merge-commit Y", but if it does not any
-longer have X, it cannot realize that Y includes 99% of what is in X.
-
-So I guess you'd want a history chain of those merges. I'm not quite
-sure what your application is, so I don't know if that would be a pain
-or not.
-
-> (I'd also be tempted to ask whether a patch to teach git to follow
-> gitlinks for reachability and/or object transfer would be acceptable.)
-
-As always, I reserve all judgement on patches until I see them. :)
-
-But I tend to think it would end up rather complex. Off the top of my
-head, these are the three gotchas I can think of:
-
-  1. The reachability rules must be agreed upon between both sides of
-     the transfer. So you would need a protocol extension for "please
-     consider gitlinks reachable" so that the sender knows to include
-     them, and that when the client advertises commit X that can reach
-     Y via gitlink, it can assume that the client does not need Y.
-
-  2. There may be some issues with efficiently finding shared history
-     during a transfer.  That process usually just looks at the commits,
-     and then we hand the set of have/want commits to the pack
-     generation code to figure out the full set of required objects (and
-     in particular, we do not comb through all of the "have" commits for
-     objects that might have become re-referenced; it's too expensive
-     for too little gain).
-
-     But with the flag from (1), we'd have commits buried inside trees.
-     The packing code would figure out which objects to send, but I
-     suspect you'd end up with some inefficiencies where an internal
-     gitlink bumped from commit X to Y, and we _could_ know that the
-     client already has X, but digging it up doesn't happen with the
-     current code.
-
-     I didn't think it through too hard, though, so perhaps it would all
-     just work.
-
-  3. The reachability is usually an invariant in the repository, but
-     presumably this would be enabled through a config variable (it
-     _can't_ be on all the time, because then true external submodules
-     wouldn't work, and it can't just be "eh, reachable if you got it",
-     because then transfers cannot assume the other side has it and
-     would resend every time).
-
-     So flipping that switch in an existing repository with gitlinks
-     would probably put it in a broken state until it fetches all of the
-     gitlinks.
-
--Peff
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
