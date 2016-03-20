@@ -1,134 +1,218 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH 00/16] git bisect improvements
-Date: Mon, 21 Mar 2016 00:20:38 +0530
-Message-ID: <CAFZEwPPon1q_iW_xNfmVxiQhyaQh_pZpk2jzoyzi3RjJd998pg@mail.gmail.com>
-References: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [GSOC/RFC] GSoC Proposal Draft | Git Beginner
+Date: Sun, 20 Mar 2016 19:52:53 +0100
+Message-ID: <vpq4mc1asmy.fsf@anie.imag.fr>
+References: <56EED10B.4010604@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Sun Mar 20 19:51:06 2016
+Content-Type: text/plain
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>, philipoakley@iee.org,
+	Kevin Daudt <me@ikke.info>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Elijah Newren <newren@gmail.com>
+To: Sidhant Sharma <tigerkid001@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 20 19:56:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahiRM-0002TR-Vb
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 19:51:05 +0100
+	id 1ahiWg-0004lC-7M
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 19:56:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756131AbcCTSur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Mar 2016 14:50:47 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:34983 "EHLO
-	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756107AbcCTSuk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2016 14:50:40 -0400
-Received: by mail-yw0-f196.google.com with SMTP id d21so5037097ywe.2
-        for <git@vger.kernel.org>; Sun, 20 Mar 2016 11:50:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=dgPw8z8/ma50smklq0PdyK1X9RQIvNK3EfTKiZUYQ8M=;
-        b=xn3QkG2/5Xk+Cj6T3Chkxbt7HZ8erEmd2h5SQyElJpsDl9mTNxKS+u7uHzVXHCM3Iw
-         5vXGJ/eqd7KR9PK9/3gkOtfMkPO7bKqak7GBxylfZpdD4iwX6e0ewgT6xkpe9wgwHBbo
-         jwIygNEUWK0qi/f0rvcQckXRH45DZRnugNS9oD/Vqpy+V2bJ42n+J8+oqoBx+tdB/czL
-         NiNoflxP7mIL6lavKvd+unUZISOzRuuYPai8DPJHICyzzruWHUyLnuMgCrj92aI5n6pR
-         1u5G+IxlbpPhEoj/tiIjKI8s49cmKiWMWQTHjDYz0RI7Ft4LS+Iiva8RFkvFo7bPRu9f
-         0S9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=dgPw8z8/ma50smklq0PdyK1X9RQIvNK3EfTKiZUYQ8M=;
-        b=EskHPWEY5B3q9RaYujkjKRQ4UMMkPNtwlaZ0CULotGGOgrthB2HOaaXa5KALPab76G
-         kB5xPZzgZaKWyYDTLZ2N2oJo1pGbJTGPjlHuYcStT3Ie3Cp2FSrSoAH+AJSCd4+oTevU
-         uNobFEHTAHeCqgY/LohN/fQsB25EMUtiON9y4MlMTd0vTQUFFaklNUDduEe/bpLGYeY0
-         kZ4om73lMVrWmLEsUMNwMxRoxac5IyWEM1g6WZ1Q/RR/hDzNh6k7gSFCHJtJfo9CK1CC
-         jOd0y+de5qp5WfLrk1+chs2A43yZDmSl43AzdVrPlxO5/5FKUlfB8Mb85sevzp3l+IIX
-         6x3Q==
-X-Gm-Message-State: AD7BkJIoD9C8YzMoJyelHx/6jSwKtH1TxhQpoQUg822GmEuL/yz3Q0KAKYjY/NmsBtNgP7avSE4ATLrpg4wczQ==
-X-Received: by 10.37.12.195 with SMTP id 186mr12332897ybm.154.1458499839092;
- Sun, 20 Mar 2016 11:50:39 -0700 (PDT)
-Received: by 10.13.203.137 with HTTP; Sun, 20 Mar 2016 11:50:38 -0700 (PDT)
-In-Reply-To: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
+	id S1756362AbcCTS42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Mar 2016 14:56:28 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:37564 "EHLO mx1.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753389AbcCTS4M (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Mar 2016 14:56:12 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u2KIqqvd009642
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Sun, 20 Mar 2016 19:52:52 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u2KIqre1016385;
+	Sun, 20 Mar 2016 19:52:53 +0100
+In-Reply-To: <56EED10B.4010604@gmail.com> (Sidhant Sharma's message of "Sun,
+	20 Mar 2016 22:04:19 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Sun, 20 Mar 2016 19:52:53 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u2KIqqvd009642
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1459104773.76929@Ek4n6Yna8WoygLHMF4A/WQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289379>
 
-I have been recently following this series of patches and it seems a
-bit stale. These patches haven't been followed up with improvement
-patches. If it is okay with you then can I work more upon these
-patches in my GSoC project. These really seem interesting and Git
-could really benefit from this.
+Sidhant Sharma <tigerkid001@gmail.com> writes:
 
-Regards,
-Pranit Bauva
+> Implement a beginner mode for Git.
+> 
+> Abstract
+> 
+> Git is a very powerful version control system, with an array of features
+> that lend the user with great capabilities. But it often so happens that some
+> beginners are overwhelmed by its complexity and are unable to fully understand
+> and thus, utilize Git. Moreover, often beginners do not fully understand
+> the command they are using and end up making destructive (and occasionally,
+> irreversible) changes to the repository.
+> 
+> The beginner mode will assist such  users in using Git by warning them
+> before making possibly destructive changes. It will also display tips and
+> short snippets of documentation for better understanding the Git model.
+[...]
 
-On Fri, Feb 26, 2016 at 7:34 AM, Stephan Beyer <s-beyer@gmx.net> wrote:
-> Hi,
+(Google summer of code Idea suggested here:
+http://git.github.io/SoC-2016-Ideas/#git-beginner )
+
+> A wrapper is to be implemented around (currently called 'ggit'), which will
+> provide the following user interface:
+> `ggit <git-command> <options>`
+
+There's actually already a tool doing this:
+
+  https://people.gnome.org/~newren/eg/
+
+I'm Cc-ing the author.
+
+I heard good feedback about the tool in the early days of Git, when git
+itself was rather clearly not ready for bare mortals. The tool seems
+abandonned since 2013 (last release), my guess is that git became usable
+enough and eg is not needed as much as it was. For example, eg defaulted
+to push.default=tracking before we did the change to push.default=simple
+in git.
+
+I think the "wrapper" approach is sound. It avoids touching git itself
+and breaking things that depend on git (for example, adding
+core.denyHardReset to let "git reset --hard" error out would be
+unacceptable because it would mean that any script using "git reset
+--hard" would break when a user has the option set in ~/.gitconfig).
+
+Note that it implies writting an almost full-blown option parser to
+recognize commands like
+
+ggit --work-tree git --namespace reset --git-dir --hard git log
+
+(just looking for "git", "reset" and "--hard" in the command-line would
+not work here).
+
+Another option would be to have a C implementation of ggit that would
+reuse the whole git source code, but set a flag "beginner_mode" to true
+before starting, and then introduce "if (beginner_mode)" within Git's
+source code. I think the wrapper approach is better since it avoids
+"polluting" Git's source code itself.
+
+> The wrapper will assess the arguments passed to it, and if they are detected to
+> be safe, it will simply pass them through to 'git'.
 >
-> this set of patches provides improvements for git bisect.
+> Warning for potentially destructive commands
 >
-> Quick summary of changes
->  - relevant for users:
->    - `git bisect next` is documented and motivated
->    - git bisect implementation becomes much faster
->      (or: is now working) for big repositories**
->  - relevant for developers:
->    - a test for the git bisect algorithm is added
->    - fix: bisect.c compiles also if DEBUG_BISECT is set
+> For every command that is entered, the wrapper will assess the subcommand and
+> its options. In that, it will first check if the subcommand (eg. add,
+> commit, rebase) is present in a list of predefined 'potentially destructive'
+> commands. This can be done by searching through a radix tree for the subcommand.
+> If found, then the arguments to the subcommand will be checked for specific
+> flags. The graylisted flags for the destructive commands will be stored as an
+> array of regular expressions, and the current command's arguments will be
+> checked against them. If matches are found, a warning is displayed. 'ggit'
+> for the warning would be
+> "You are about to do X, which will permanently destroy Y. Are you sure you wish
+> to continue? [Y/n] "
+> If the user enters Y[es], the command will be executed as is (by passing it
+> unaltered to git). In the case of Y[es], 'ggit' will also give tips for undoing
+> the changes made by this command (by referring the user to correct commands and
+> reflog),  if the command can be undone. In case the command cannot be undone,
+> 'ggit' will display an additional line in the warning like
+> "The changes made by this command cannot be undone. Please proceed cautiously".
+> In the case of n[o], 'ggit' will exit without executing the command.
+> Usage tips and documentation
 >
-> The ** marked change is the most interesting one.
-> To be more accurate: the use case is when you want to bisect in a
-> repository with a huge amount of merge commits (and having these
-> merge commits relevant for the actual bisect process).
-> For example, a bisect in the whole git master branch took
-> ~50 seconds, now it takes ~4 seconds.
+> The wrapper will also be responsible for showing a short description of every
+> command that is entered through 'ggit'. This shall be done for every command
+> unconditionally.
+
+I'm not 100% convinced that this is a good idea: it'd be tempting for
+the user to run a command just to know what it does. Perhaps it's better
+to let the user run "git <command> -h" instead. But it could indeed help
+for commands doing very different things depending on the options, like
+
+$ git checkout foo
+Checks-out branch foo
+$ git checkout -b bar
+Creating a new branch bar and checking it out
+$ git checkout HEAD -- .
+Reverting directory . to its last commited state
+
+...
+
+(I think a list of examples would be an important addition to your
+proposal to clarify the plans)
+
+> The description will be derived from the actual documentation, but
+> will primarily aim to help the beginner understand the Git workflow
+> and the Git model.
+>
+> Timeline
+>
+> Community Bonding Period
+>
+> Week 1 : Discuss the flow of course with the mentor. Discuss adequate data
+> structures and search techniques to be used.
+>
+> Week 2-3 : Discuss over an extensive list of commands that should be classified
+> as destructive. Discuss appropriate short descriptions for commands.
+>
+> Week 4 : Discuss code structure, tests, optimization for least overhead and
+> other details.
+>
+> Coding Starts
+>
+> Week 1-2 : Submit code for a basic wrapper that will warn for a subset of the
+> potentially destructive command, and continue if the command is safe.
+> and this is stored as per to provide backward compatibility.
+
+I think you can submit an RFC even earlier. Writting and discussing an
+extensive list of commands before seeing any code might end up being
+boring...
+
+> Week 3-6 : Extend the wrapper to warn for all commands in the list, along with
+> proper instructions for undoing them.
+>
+> Mid Term Evaluation
+>
+> Week 7-10 : Add beginner-friendly documentation snippets to various git commands.
+>
+> Week 10-12 : Write tests, evaluate performance.
+
+You don't want to write tests at the end.
+
+> Week 13 : Final cleanup, final touches suggested by mentors and community.
+>
+> Pens Down Date
+> Submission of Code to GSOC
 >
 >
-> Note that the patches have finer granularity (especially the performance
-> improvements are splitted into several preparing commits).
-> For some patches, there is some more patch-related story as
-> "cover letter material" in these patches.
->
-> Btw: I also wondered about the internationalizaton: no string in bisect.c
-> is marked for translation. Intentionally?
->
-> Cheers
->
-> Stephan Beyer (16):
->   bisect: write about `bisect next` in documentation
->   bisect: add test for the bisect algorithm
->   bisect: make bisect compile if DEBUG_BISECT is set
->   bisect: make algorithm behavior independent of DEBUG_BISECT
->   bisect: get rid of recursion in count_distance()
->   bisect: use struct node_data array instead of int array
->   bisect: replace clear_distance() by unique markers
->   bisect: use commit instead of commit list as arguments when
->     appropriate
->   bisect: extract get_distance() function from code duplication
->   bisect: introduce distance_direction()
->   bisect: make total number of commits global
->   bisect: rename count_distance() to compute_weight()
->   bisect: prepare for different algorithms based on find_all
->   bisect: use a modified breadth-first search to find relevant weights
->   bisect: compute best bisection in compute_relevant_weights()
->   bisect: get back halfway shortcut
->
->  Documentation/git-bisect.txt |  25 +++
->  bisect.c                     | 473 ++++++++++++++++++++++++++++---------------
->  git-bisect.sh                |  15 +-
->  t/t8010-bisect-algorithm.sh  | 162 +++++++++++++++
->  4 files changed, 502 insertions(+), 173 deletions(-)
->  create mode 100755 t/t8010-bisect-algorithm.sh
->
-> --
-> 2.7.1.354.gd492730.dirty
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Post GSoC 2016
+> After GSoC 2016 is over, I believe there will stilll be further work required
+> for improving and perfecting the 'ggit' interface before it can be merged with
+> the main distribution.
+
+I think having the wrapper merged in the main distribution before the
+end of the GSoC must be a goal of the project. Sure, it can be improved
+later, but code not merged at the end of a GSoC usually rests for months
+or years, and is often lost forever.
+
+> I would like to continue my work on this project and contribute to Git
+> in general as well.
+
+Cheers,
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
