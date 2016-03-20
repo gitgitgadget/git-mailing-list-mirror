@@ -1,182 +1,112 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH v8 2/2] commit: add a commit.verbose config variable
-Date: Sun, 20 Mar 2016 16:35:31 +0530
-Message-ID: <CAFZEwPMZk9jDpi4F9WiYhv4aTqFqn3127i1AUKtNJXwG-11tyw@mail.gmail.com>
-References: <010201538b98a7e5-ee604368-5a27-4884-b01e-027fa02bf1c6-000000@eu-west-1.amazonses.com>
-	<010201538b98aaa4-ad08c159-4935-48f1-acdb-7c376da2c368-000000@eu-west-1.amazonses.com>
-	<CAPig+cShT2aPkoRK0pXPzbRbQqCU+O5uEqEr4oMkZ8LTwREaAA@mail.gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [GIT PULL] l10n updates for 2.8.0 round 3
+Date: Sun, 20 Mar 2016 19:08:15 +0800
+Message-ID: <CANYiYbGCLE5xrNYPjvTfp9cho8ccb3xuNv0kMaFVt8jkmHfd_A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun Mar 20 12:05:52 2016
+Cc: Git List <git@vger.kernel.org>, Changwoo Ryu <cwryu@debian.org>,
+	Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>,
+	Jean-Noel Avila <jn.avila@free.fr>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 20 12:08:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahbB8-0005lu-Sm
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 12:05:51 +0100
+	id 1ahbDZ-000718-NS
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 12:08:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755373AbcCTLFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Mar 2016 07:05:34 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:36307 "EHLO
-	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753871AbcCTLFc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2016 07:05:32 -0400
-Received: by mail-yw0-f195.google.com with SMTP id p65so14424122ywb.3
-        for <git@vger.kernel.org>; Sun, 20 Mar 2016 04:05:32 -0700 (PDT)
+	id S1755212AbcCTLIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Mar 2016 07:08:18 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:35570 "EHLO
+	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753871AbcCTLIQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Mar 2016 07:08:16 -0400
+Received: by mail-wm0-f41.google.com with SMTP id l68so77817716wml.0
+        for <git@vger.kernel.org>; Sun, 20 Mar 2016 04:08:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=r6HoSGjENjFPuva7g6EqtWSL+lbEyeF3vxUVeVifUjc=;
-        b=cWTwJ1cbh14hMoYUDZ8a7WlDXVJlctCjT635I4wzJiY5vNJuRovPLhKADQ9ephmJGI
-         SNLQrMRmz/p+8fXdJfY4g72Nuu6/bff87qR+/nlR6uEdZydlhN5G7unzDkK05r2aTYo6
-         BptS15zjrKP1sIn4VJ1RQ1RHRtbQsxuVygUAZrF/L9s8qz2cLKopt3g9EwCM9u4V2Hov
-         wYA/ATfx9A2n1wJ98CXM2RvXGtDx6xXoPVrUo24RVFjKcVjvYY9aYVZHhGTcdK6mE3MH
-         gqOB7imTifLkyQUBE8MkDh/jHlEmJmFaTI1+C3AoH8cysc0i/c+2ESkJiFbxE1HIElYc
-         AIYQ==
+        h=mime-version:date:message-id:subject:from:to:cc;
+        bh=mkFl2FWaM81AGrvjEsblL6+ulbCYcBtz4qx3r1ohUN4=;
+        b=evMHiJmQdhugyL+STNLkayq3ZrfLYzf3lOhE99srP6u/s2JupZIcpYPLpA2M+9YSac
+         /FdRTnfgEPKAQO+5nno9HvJFeqiOMf2PT4ekCGvKZcCTuXito/Rc9pkGvcY8aikFe9Zm
+         x3wVxue/IIISh3b18Wzv7GLxQBtrvl/lorVSItnEf82OuZ6RRmnREaNrUllHeEB0+Tfz
+         JktRXQTpU1zZLAkK1h8HBOnf7XlDb6AJ4+U4YQEylm04It0eKx7lpI+tOp1THARTq0IV
+         Zpp4beLtQg76SBo+d9De0+Tcq65PrpgapjsPuwcPjcRtMt0D7xkIWlt7ETMt/sTkaU0I
+         htpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=r6HoSGjENjFPuva7g6EqtWSL+lbEyeF3vxUVeVifUjc=;
-        b=RelHUGa1GnVfmA01l2W029GQzBljews0PnW1IQfRctUkah5wrubGlLjhfLe3s9S3LM
-         n3lj0GVrBlCeAPdT/ljMzdzLT/iqGZbTTrw8hsH1+ehmzFKxB0vVnT8J1nkxlrvwd5Fj
-         mbUYPInNRazlW9pbKFYERC7MS9aB396NYl94h/UAiYWvI9SwX2cGoa+8e6XM1VE5+gN+
-         somji6xeuqNT2KFgU9u65g2V2uMhaE0QwECB3HK0AhIUNptRHLfg2aEGvZ+gwKGXOeyE
-         TLeKoJTlguoOpC8t0eO0SxmQMjnoRfiJte9dViMNjYCYKSNvH83WwEPT2Q/eqTOUG7Ql
-         zUkQ==
-X-Gm-Message-State: AD7BkJLJGkuv5uXASSjfZij3vX1MtZ12dPppC+CPsrf2JQl9W6JjMAKmZXipaHeqpsK2K7Z/rQIEO4AYAclUKQ==
-X-Received: by 10.37.22.134 with SMTP id 128mr11826018ybw.7.1458471931661;
- Sun, 20 Mar 2016 04:05:31 -0700 (PDT)
-Received: by 10.13.203.137 with HTTP; Sun, 20 Mar 2016 04:05:31 -0700 (PDT)
-In-Reply-To: <CAPig+cShT2aPkoRK0pXPzbRbQqCU+O5uEqEr4oMkZ8LTwREaAA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
+        bh=mkFl2FWaM81AGrvjEsblL6+ulbCYcBtz4qx3r1ohUN4=;
+        b=WdjX00Xi8BAQijctCXtsWUkPrLxIYd/KRc22pRH0IKmxEouM7ALhtAxe+4HunkTBV1
+         M6ParYzoslD/IhOkIZwvP5bpPo/Spz1wbUSHSVdJWId+jKC6GPTNHubvzhY9gfJZFUZP
+         xBnQ2hY6G/hRUZlTQZxyCBYzp/RzFx6byaX51Zwv/qtCb7adK8XbcxP2nr4PsnQbK/kA
+         GpA/EDjNSCPtvgmFxHIRdvYxju03YS8EOWF79zqiUqfp63LCISKrlGfiVyF6C34T5nLP
+         9jgfpa+QnphmZkDdunNGW7BDjRS+pS5dMIToiURFyPzr1ao/piqQEHzLZcFiAg6Ev8f9
+         1VFw==
+X-Gm-Message-State: AD7BkJKREgJWgQYOU7k9DZ1Iv0tuqRHNHJeYB4vK3XlJlcUDLNhyQeZpNiA/TkMmR1WmeiPpwztkMW/IWZcMsw==
+X-Received: by 10.194.103.227 with SMTP id fz3mr21200280wjb.43.1458472095192;
+ Sun, 20 Mar 2016 04:08:15 -0700 (PDT)
+Received: by 10.194.54.8 with HTTP; Sun, 20 Mar 2016 04:08:15 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289346>
 
-On Sun, Mar 20, 2016 at 9:26 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Fri, Mar 18, 2016 at 5:19 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->> Add commit.verbose configuration variable as a convenience for those
->> who always prefer --verbose.
->>
->> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
->> ---
->> diff --git a/builtin/commit.c b/builtin/commit.c
->> @@ -1654,6 +1661,14 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->> +       if (verbose < 0) {
->> +               if (config_verbose > -1)
->> +                       verbose = config_verbose;
->> +               else
->> +                       verbose = 0;
->> +       }
->
-> I think it's more common in this codebase to compare against -1
-> directly rather than <0, so:
->
->     if (verbose == -1) {
->         if (config_verbose != -1)
->             verbose = config_verbose;
->         else
->             verbose = 0;
->     }
->
-> Or, this might be easier to read:
->
->     if (verbose == -1)
->         verbose = config_verbose;
->
->     if (verbose == -1)
->         verbose = 0;
->
-> But, this likely isn't better:
->
->     if (verbose == -1)
->         verbose = config_verbose == -1 ? 0 : config_verbose;
->
-> Anyhow, probably not worth a re-roll.
+Hi Junio,
 
-I will note this for future patches.
+The following changes since commit 5c0c220c53823e2a9ebe8e566e649ca30cd7e8e0:
 
->
->> diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
->> @@ -96,4 +96,59 @@ test_expect_success 'verbose diff is stripped out with set core.commentChar' '
->> +test_expect_success 'commit.verbose true and --verbose' '
->> +       (
->> +               GIT_EDITOR=cat &&
->> +               export GIT_EDITOR &&
->> +               git -c commit.verbose=true commit --amend --verbose
->
-> Easier would be to write this as:
->
->     GIT_EDITOR=cat git -c commit.verbose=true commit --amend --verbose
->
-> and then you wouldn't need the subhsell.
+  l10n: zh_CN: for git v2.8.0 l10n round 3 (2016-03-16 00:27:40 +0800)
 
-True. I will update this.
+are available in the git repository at:
 
-> However, more intuitive would probably be to create another "editor"
-> similar to the 'check-for-diff' editor this script already uses. (The
-> 'check-for-diff' editor is an obvious example about how to go about
-> such an undertaking.) You would need to invoke 'test_set_editor' in a
-> subshell for this particular test in order to avoid clobbering the
-> global editor used by this script. Or, have a preparatory patch which
-> ditches the global setting of the editor and has each test invoke
-> 'test_set_editor' as needed (and only if needed).
+  git://github.com/git-l10n/git-po tags/l10n-2.8.0-rnd3
 
-I guess it would complicate things as sometimes I need to check
-whether it has 1 line and sometimes 2 lines.
+for you to fetch changes up to 26e4cbec4558ea21cd572bfc915a462f63c1ebb4:
 
-> Same comments apply to the other new tests which use a custom "editor".
->
->> +       ) &&
->> +       grep "^diff --git" .git/COMMIT_EDITMSG >out &&
->> +       wc -l out | grep "1"
->> +'
->> +
->> +test_expect_success 'commit.verbose true and -v -v' '
->> +       (
->> +               GIT_EDITOR=cat &&
->> +               export GIT_EDITOR &&
->> +               git -c commit.verbose=true commit --amend -v -v
->> +       ) &&
->> +       grep "# Changes not staged for commit" .git/COMMIT_EDITMSG >out &&
->> +       wc -l out | grep "2"
->> +'
->> +
->> +test_expect_success 'commit.verbose true and --no-verbose' '
->> +       test_must_fail git -c commit.verbose=true commit --amend --no-verbose
->> +'
->> +
->> +test_expect_success 'commit.verbose false and --verbose' '
->> +       git -c commit.verbose=false commit --amend --verbose
->> +'
->> +
->> +test_expect_success 'commit.verbose false and -v -v' '
->> +       (
->> +               GIT_EDITOR=cat &&
->> +               export GIT_EDITOR &&
->> +               git -c commit.verbose=false commit --amend -v -v
->> +       ) &&
->> +       grep "# Changes not staged for commit" .git/COMMIT_EDITMSG >out &&
->> +       wc -l out | grep "2"
->> +'
->> +
->> +test_expect_success 'commit.verbose false and --verbose omitted' '
->> +       test_must_fail git -c commit.verbose=false commit --amend
->> +'
->> +
->> +test_expect_success 'commit.verbose false and --no-verbose' '
->> +       test_must_fail git -c commit.verbose=false commit --amend --no-verbose
->> +'
->> +
->> +test_expect_success 'status ignores commit.verbose=true' '
->> +       git -c commit.verbose=true status >actual &&
->> +       ! grep "^diff --git" actual
->> +'
->> +
->>  test_done
+  l10n: zh_CN: review for git v2.8.0 l10n round 2 (2016-03-20 18:46:02 +0800)
+
+----------------------------------------------------------------
+l10n-2.8.0-rnd3
+
+----------------------------------------------------------------
+Changwoo Ryu (1):
+      l10n: ko.po: Update Korean translation
+
+Dimitriy Ryazantcev (1):
+      l10n: ru.po: update Russian translation
+
+Jean-Noel Avila (1):
+      l10n: fr.po v2.8.0 round 3
+
+Jiang Xin (3):
+      Merge branch 'master' of git://github.com/nafmo/git-l10n-sv
+      Merge branch 'ko/merge-l10n' of https://github.com/changwoo/git-l10n-ko
+      Merge branch 'fr_v2.8.0_r3' of git://github.com/jnavila/git
+
+Peter Krefting (1):
+      l10n: sv.po: Update Swedish translation (2530t0f0u)
+
+Ralf Thielow (2):
+      l10n: de.po: translate 22 new messages
+      l10n: de.po: add missing newlines
+
+Ray Chen (1):
+      l10n: zh_CN: review for git v2.8.0 l10n round 2
+
+ po/de.po    | 172 +++++++++++++++++++++++++++++++++++++++++++++++-------------
+ po/fr.po    |  12 +++--
+ po/ko.po    |  10 ++--
+ po/ru.po    |   8 ++-
+ po/sv.po    | 153 ++++++++++++++++++++++++++++++++++++++++++-----------
+ po/zh_CN.po |  10 ++--
+ 6 files changed, 283 insertions(+), 82 deletions(-)
+
+--
+Jiang Xin
