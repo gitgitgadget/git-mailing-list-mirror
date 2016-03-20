@@ -1,77 +1,120 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Tabs in commit messages - de-tabify option in strbuf_stripspace()?
-Date: Sun, 20 Mar 2016 14:29:48 +0100
-Message-ID: <vpqwpoxcm5v.fsf@anie.imag.fr>
-References: <CA+55aFzHMp4hiCp7+2Yxy=KNQ_rBru3RM-pghXUPtoxr_L+w2w@mail.gmail.com>
-	<xmqq4mc76yji.fsf@gitster.mtv.corp.google.com>
-	<CA+55aFyXXHNrJW56A_DKkmrmGpWxeUd6row_ja3bzqhs_yswhw@mail.gmail.com>
-	<CAGZ79kZihaftwwmY23mZ_i4H6vv2Z9r=LC68M0MMD1o2h2Z4Sw@mail.gmail.com>
-	<CAGZ79kZtAm1M=9CGDGxPdecXEuNEQcbpQb3FNj9=Py0VE2UrKQ@mail.gmail.com>
-	<56E96D61.6060007@xiplink.com>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH/RFC/GSoC 01/17] perf: introduce performance tests for
+ git-rebase
+Date: Sun, 20 Mar 2016 15:00:02 +0100
+Message-ID: <20160320140000.GB32027@hank>
+References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com>
+ <1457779597-6918-2-git-send-email-pyokagan@gmail.com>
+ <alpine.DEB.2.20.1603160855390.4690@virtualbox>
+ <CACRoPnS=qg=a3xYKHyk-7E2HN5HhTimGirZcwL8hMa0xLY6KdA@mail.gmail.com>
+ <alpine.DEB.2.20.1603161656130.4690@virtualbox>
+ <20160318110134.GA16750@hank>
+ <alpine.DEB.2.20.1603181659200.4690@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Paul Tan <pyokagan@gmail.com>, Git List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Sun Mar 20 14:30:11 2016
+	Duy Nguyen <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Sam Halliday <sam.halliday@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Mar 20 14:59:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahdQn-0007T6-SQ
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 14:30:10 +0100
+	id 1ahdtV-00044P-JL
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 14:59:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755458AbcCTNaG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Mar 2016 09:30:06 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:43123 "EHLO mx2.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755446AbcCTNaE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2016 09:30:04 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u2KDTlXI026642
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Sun, 20 Mar 2016 14:29:47 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u2KDTm0T012328;
-	Sun, 20 Mar 2016 14:29:48 +0100
-In-Reply-To: <56E96D61.6060007@xiplink.com> (Marc Branchaud's message of "Wed,
-	16 Mar 2016 10:27:45 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Sun, 20 Mar 2016 14:29:47 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u2KDTlXI026642
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1459085389.58989@6/krf9F0q6GPy0OF7P2AfQ
+	id S1755971AbcCTN7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Mar 2016 09:59:40 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:37285 "EHLO
+	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755665AbcCTN7d (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Mar 2016 09:59:33 -0400
+Received: by mail-wm0-f45.google.com with SMTP id p65so92967155wmp.0
+        for <git@vger.kernel.org>; Sun, 20 Mar 2016 06:59:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=xpteqwro7nhMGnuYAAAuxeEHB1/K+tNhhf5PgmObiAo=;
+        b=LOHClLFlIkMofyGno2VCH4Ljgu2exR2OvbBovaSrh/2EAA3iURuzS8j5O9Bw3laZKY
+         acJjFE99TumGZdLePQGErX6Mtwk7LRtfzSnj05Mria0UKOHxub80fczNkEFSzx4U0zxi
+         +irS3fHGPeors2aDmPfmIwnLRovd1BaSHGYuYMFhCGMtv1l0Cwni2JmRD53CIIt02/RJ
+         QdkXuFkXXwSeYb10RfcMzWFa1I0xiFVojbeipgqM6mmHdkvPyxXfEsf7BpawdzZSEQfv
+         TNpicrApznL2oDPYyeMq8co0R2PHnF6FjVLtSq9ZmCtGhscZDVqkuTMc+pWVEjB6v6R+
+         CKYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=xpteqwro7nhMGnuYAAAuxeEHB1/K+tNhhf5PgmObiAo=;
+        b=J5F6ApsST6q2UahhNHrekWyYHuCQXXEizuzNN8bMAcznsx/8nyJs9dhOwtlNiqayTg
+         wK43cUb4U2Q7NGebvd+9qC5H5nwc7Qc86ygvUmL4rfF6TZoXG2seB5AfcqHUsBndWl6g
+         emkorkjHZFFtgb8ApZPG6kgM3YP5uidzCx6YJjCxjpqR6kGsTl3yhGXdPGlzhA9phcRI
+         m5utloC1Ukr79QlhDJxYNuPsefUDezZSaxkno0vtBZtRNaaLtMzB4tn8Y0Z8P3QuxKyX
+         /HranB6wpozAxMSkMIxvNMKwd12eCVjRo1Ol1/sMZ3Dd2AcHm7cVVAonUNEjxJJWyQyT
+         4QtA==
+X-Gm-Message-State: AD7BkJIVAifrW/Ppdi1GWmpSEaTDp5jVZTBuLd3wMowAaWD2wjZ3Qb+oQ1ezY1JglwYLMw==
+X-Received: by 10.28.177.132 with SMTP id a126mr8385737wmf.86.1458482371146;
+        Sun, 20 Mar 2016 06:59:31 -0700 (PDT)
+Received: from localhost (host86-185-232-204.range86-185.btcentralplus.com. [86.185.232.204])
+        by smtp.gmail.com with ESMTPSA id o128sm7902256wmb.19.2016.03.20.06.59.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 20 Mar 2016 06:59:29 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1603181659200.4690@virtualbox>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289354>
 
-Marc Branchaud <marcnarc@xiplink.com> writes:
+On 03/18, Johannes Schindelin wrote:
+> Hi Thomas,
+> 
+> On Fri, 18 Mar 2016, Thomas Gummerer wrote:
+> 
+> > On 03/16, Johannes Schindelin wrote:
+> > > Hrm. rebase -f just makes the reset an implicit part of the rebase, so it
+> > > seems we cannot perf *just* the rebase. We are stuck with perf'ing also
+> > > the reset. Sad.
+> > 
+> > I had the same problem back when I was working on index-v5 and posted
+> > a patch series.  The discussion about it is at [1].  Maybe it could be
+> > worth resurrecting?
+> > 
+> > [1] http://thread.gmane.org/gmane.comp.version-control.git/1379419842-32627-1-git-send-email-t.gummerer@gmail.com
+> 
+> Yes, I agree that something like that is needed. The proposed commit
+> message suggests that things get simpler, though, while I would contend
+> that timings get more accurate.
+> 
+> And I think you could simply move the test_start command, but that's just
+> from a *very* cursory reading of the patch.
 
-> On 16-03-15 09:02 PM, Stefan Beller wrote:
->> On Tue, Mar 15, 2016 at 6:00 PM, Stefan Beller <sbeller@google.com> wrote:
->>>
->>> Instead of converting to whitespaces in Git, we could make use of the
->>> set_tabs capability for ttys and setup the terminal for having tabs align
->>> to 12,+8,+8,+8...
->> 
->> Or rather read in the existing tabs configuration and shift it by a constant.
->
-> Could this also help with diff output, where the leading + or - mars the
-> indentation in a similar way?
+Is it possible that you might have missed patch 2/2 [1]?  The first
+patch there is only the preparation for making the timings more
+acurate when some cleanup is involved.  Just moving the test_start
+command wouldn't do anything for the timings to get more acurate, as
+the timings are measured in the test_run_perf_ function (it's outside
+of the diff in the patch series).
 
-Hardly: the same pager would be used to display the commit message (with
-a 4-space prefix) and the diff (with a 1-char +/- prefix). So the
-offsets in these two places would need to be different, and I don't
-think we can change that on the fly.
+I'm also not sure whether the test_perf_cleanup or if the other series
+in the thread that came out of a suggestion by Junio makes more sense
+[2]. (That is minus patch 3/3 in that series, which was added so we
+could have a user of the new series, but if it's going to be used here
+that's unnecessary).
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/234874/focus=234875
+[2] http://thread.gmane.org/gmane.comp.version-control.git/234874/focus=235241
+
+
+> Ciao,
+> Dscho
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thomas
