@@ -1,173 +1,147 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [ANNOUNCE] Git v2.8.0-rc2
-Date: Sun, 20 Mar 2016 16:11:31 +0100
-Message-ID: <CAA19uiSUV0C=WQAhgum9MM8r8NixMF8O0XOFxzywSJtBEcGNmQ@mail.gmail.com>
-References: <xmqqr3fiaq9f.fsf@gitster.mtv.corp.google.com>
-	<56E6D8C4.2010205@drmicha.warpmail.net>
-	<xmqqoaahaw99.fsf@gitster.mtv.corp.google.com>
-	<xmqqziu19cjz.fsf@gitster.mtv.corp.google.com>
-	<56E96096.4020108@drmicha.warpmail.net>
-	<CANYiYbFa5i-E0dYYj2dm4pHmQwLJfj3UBc3OspQz93HTP3C3Ng@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Renato Botelho <garga@FreeBSD.org>
+Subject: Re: [ANNOUNCE] Git v2.7.4 (and updates to older maintenance tracks)
+Date: Sun, 20 Mar 2016 12:32:51 -0300
+Message-ID: <680C4CDE-233E-4603-B3F1-D68EB126620F@FreeBSD.org>
+References: <xmqqlh5gzuc8.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 9.2 \(3112\))
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Ralf Thielow <ralf.thielow@googlemail.com>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 20 16:11:56 2016
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 20 16:33:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahf1H-0002pK-QD
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 16:11:56 +0100
+	id 1ahfLp-0003pv-OT
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 16:33:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755841AbcCTPLf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Mar 2016 11:11:35 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:35288 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755523AbcCTPLe convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2016 11:11:34 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id BD6AF21AD3
-	for <git@vger.kernel.org>; Sun, 20 Mar 2016 11:11:32 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute6.internal (MEProxy); Sun, 20 Mar 2016 11:11:32 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=3kcUzfw68yAsBhYhz312ICIejGA=; b=kM9iqj
-	sshSIQeOIeDgFvkIyC+JReRKBX2+0cjo9h+M9a7zUBYtMBRhHgyfMzS6YyNPHmLp
-	4uun7Yc2anrEywZiiLK0YDVEflWOJaNhIGFeM4G7wvndf9z4SMlqLdHJ/V32LUsz
-	sVyrcxwEVRzGjZr9pO34fuAdyfFI+yqQVlprc=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=3kcUzfw68yAsBhY
-	hz312ICIejGA=; b=qACRfVSF/jDHSTp8w1ZDZB5auwexmxGxJEAxtwPSR/5gnlZ
-	5DYQ8feFfY6DIMiCfQSbG+fmcL/lk2g0eYlmoQDHAcJmwzaHJx/NqbFjmwfVx6rB
-	HzyNGVAhYvL0U32GvrFHxMw/D6lM86I5h8IuW43/uXPrJmM4TKIe5myGLXB0=
-X-Sasl-enc: 9N8aQTpq+gBkJo/UjGovVKgoNoJKkadB1otztbJUvJ3k 1458486692
-Received: from mail-lf0-f45.google.com (mail-lf0-f45.google.com [209.85.215.45])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 441E6680134
-	for <git@vger.kernel.org>; Sun, 20 Mar 2016 11:11:32 -0400 (EDT)
-Received: by mail-lf0-f45.google.com with SMTP id v130so66546847lfd.2
-        for <git@vger.kernel.org>; Sun, 20 Mar 2016 08:11:32 -0700 (PDT)
-X-Gm-Message-State: AD7BkJLu/jcIEo6JPmnRjEf9tEZ9F1FrKQ4b4GHV089CozaquMQtk0JBlvduokKH4Feh3lTs++Qb5i6XV+oI7g==
-X-Received: by 10.25.21.22 with SMTP id l22mr9520982lfi.38.1458486691214; Sun,
- 20 Mar 2016 08:11:31 -0700 (PDT)
-Received: by 10.114.184.172 with HTTP; Sun, 20 Mar 2016 08:11:31 -0700 (PDT)
-In-Reply-To: <CANYiYbFa5i-E0dYYj2dm4pHmQwLJfj3UBc3OspQz93HTP3C3Ng@mail.gmail.com>
-X-Gmail-Original-Message-ID: <CAA19uiSUV0C=WQAhgum9MM8r8NixMF8O0XOFxzywSJtBEcGNmQ@mail.gmail.com>
+	id S1755862AbcCTPc6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Mar 2016 11:32:58 -0400
+Received: from mail-qg0-f68.google.com ([209.85.192.68]:35586 "EHLO
+	mail-qg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755600AbcCTPc4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Mar 2016 11:32:56 -0400
+Received: by mail-qg0-f68.google.com with SMTP id 51so4949749qgy.2
+        for <git@vger.kernel.org>; Sun, 20 Mar 2016 08:32:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=ALx77R5d4LwJoqlzHNTwNzCSJh4pM/a63gpUN2xx9/Q=;
+        b=h7JSy4AROSxYHEcw1vs9iysJ/2qJsndS/b4TjwfpjZwd2wUvTcMrhya/ECGjX/hzlV
+         18GsD7XWmzEhvY+Xe6D9T29xVXs7UP8qk7Xj7q3N/zMUlZfE+YhvkSJn29ycv0X13zbb
+         xRaxL/Knar2xfAW/sYbpk78cQ4jmtwFvgvFRmRE71PVrUy0E+LycveYEA9MTSkRtpafj
+         OFWdR1vxFBPNLJZUmZ7auibGbyUpwthh9eTwvb3yIjOirwePxyEq++nSefo+pYXy+CCq
+         RxJwYTKK4Ef2DVHPFFBrlaFAJDI4d7RweUqB8lHdb+KQx4TEIavl3auLHT7nSmlv+3SH
+         ukxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:mime-version:subject:from:in-reply-to
+         :date:cc:content-transfer-encoding:message-id:references:to;
+        bh=ALx77R5d4LwJoqlzHNTwNzCSJh4pM/a63gpUN2xx9/Q=;
+        b=Ckt3gpXURih9VexFQOeJ+uza7ZuDdOUiqLRceWFidsyhWljKnvg8KYnvdF1agc3bqR
+         SD0BL2fx60OIHKDHRnEM3S6kb+qIP9gNgmXN4y0SYnTtjYlq9qReSZX/Q3ZBJdIui5QV
+         kk0rCq5DBEhH0Zd6EZkQdRuL8XGePzEAT4pMPJQfKKOVQrLfQp782GfYbalivVpSgkcV
+         Qq03iO94e4Prfj0tULoV0eb0zxIzLGmTM8TEESTv9jab/dd+auHf76EKYXjOwystaqwD
+         zkYxBvqgA+ucVk0DTKUEmapW28pgTwRFQFB0cxHaFkTykpSQvHqfzzGmntARD0xipfkf
+         ftiw==
+X-Gm-Message-State: AD7BkJIQbaXY28JC9LQKbGDpUgKW/a749AqkTZiBuohb+wfHLhKnrlmNqeOY1zj6sMPUpg==
+X-Received: by 10.140.254.9 with SMTP id z9mr36944468qhc.5.1458487975454;
+        Sun, 20 Mar 2016 08:32:55 -0700 (PDT)
+Received: from mbp.home (179-125-143-18.desktop.com.br. [179.125.143.18])
+        by smtp.gmail.com with ESMTPSA id q94sm10342437qgq.14.2016.03.20.08.32.53
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 20 Mar 2016 08:32:54 -0700 (PDT)
+In-Reply-To: <xmqqlh5gzuc8.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Apple Mail (2.3112)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289357>
 
-2016-03-20 10:45 GMT+01:00 Jiang Xin <worldhello.net@gmail.com>:
-> 2016-03-16 21:33 GMT+08:00 Michael J Gruber <git@drmicha.warpmail.net=
->:
->> Junio C Hamano venit, vidit, dixit 14.03.2016 18:47:
->>> Junio C Hamano <gitster@pobox.com> writes:
->>>
->>>> But if it makes it easier for translations teams and the i18n
->>>> coordinator to work together if I also pulled the git.pot update
->>>> myself, I'll do so.  I just didn't know (and still don't know) if
->>>> that makes things easier for you guys, or if that risks making
->>>> things more confusing, having to or being able to pull from two
->>>> trees that are not necessarily in sync down to the minute.
->>>
->>> So, please just tell me to pull it myself too, if it makes the life
->>> of i18n team and the coordinator easier.
->>>
->>> Thanks.
->>>
->>
->> I don't know about the workflow in general. I'll write up what trigg=
-ered
->> my question: I was looking at the FAQ "how do I display the current
->> branch in git" and into ways to provide some ui (think "git status -=
-sb",
->> the "+"-line in "git branch"), when I found the problematic output. =
-The
->> multiple parentheses looked suspicious to me, but given the many lev=
-els
->> of macro expansion I wasn't sure, and simply patching the parenthese=
-s
->> didn't help either. It needed a combination of "make pot" and "msgme=
-rge
->> ...", and the fact that the last merge of git.pot was from 2.7.0-rc
->> triggered my request to merge what we have.
->>
->> In hindsight, what happened must have been like this:
->>
->> "ahead " was marked properly for l10n and translated in the past.
->>
->> 7a76c28 (status: disable translation when --porcelain is used,
->> 2014-03-20) introduced those extra parentheses. Matthieu probably di=
-dn't
->> rerun "make pot" and "msgmerge" so that he didn't notice the consequ=
-ences.
->>
->> When Jian ran "make pot" the "ahead "-entry got removed from git.pot=
-:
->> 5e078fc (l10n: git.pot: v2.0.0 round 1 (45 new, 28 removed), 2014-04=
--19)
->>
->> When translators ran "msgmerge" with the new git.pot the existing "a=
-head
->> "-entry got commented out, for example here for de.po:
->> 74c17bb (l10n: de.po: translate 45 new messages, 2014-04-01)
->>
->> I'm actually wondering why I didn't notice this much earlier. I don'=
-t
->> know which workflow would have prevented this either. Maybe, since w=
-e
->> have "make pot", we should also have "make l10n" or something to mak=
-e it
->> (even) easier for non-l10n-experts to check whether they introduced =
-any
->> problems.
->>
->> Strictly speaking, every source file with i18n markup should trigger=
- a
->> "make pot" (and make l10n) when changed, but there's probably a good
->> reason why we don't do that.
->
-> How about this?  We can make a website (host on github) to show i18n
-> changes. Homepage is just a markdown page, list no-merge commits
-> which introduced i18n changes. So we don't have to change the workflo=
-w.
->
-> 1. A local git clone, keep update with upstream.
-> 2. Give a starting point, and generate a no-merge commit list.
-> 3. Scan through local git clone and generate a pot file for each
->     commit and its parent commit, and save them in cache (by hard
->     link to save disk space).
-> 4. Generate diffs for each commit.
-> 5. Generate the MarkDown web page through a template.
-> 6. Commit the changes of the markdown page, and push to github.
->
-> --
-> Jiang Xin
+> On Mar 17, 2016, at 18:07, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> The latest maintenance release Git v2.7.4 is now available at the
+> usual places.  The same set of bugfix patches from the current
+> 'master' have been backported to older maintenance tracks and are
+> available as v2.4.11, v2.5.5 and v2.6.6.  These are to fix a heap
+> corruption / buffer overflow bug and users are strongly encouraged
+> to upgrade.  The fix has already been in the release candidate
+> v2.8.0-rc3 as well.
+>=20
+> The tarballs are found at:
+>=20
+>    https://www.kernel.org/pub/software/scm/git/
+>=20
+> The following public repositories all have a copy of the 'v2.7.4'
+> tag and the 'maint' branch that the tag points at:
+>=20
+>  url =3D https://kernel.googlesource.com/pub/scm/git/git
+>  url =3D git://repo.or.cz/alt-git.git
+>  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
+>  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+>  url =3D https://github.com/gitster/git
+>=20
+> ----------------------------------------------------------------
+>=20
+> Git v2.7.4 Release Notes
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D
+>=20
+> Fixes since v2.7.3
+> ------------------
+>=20
+> * Bugfix patches were backported from the 'master' front to plug heap
+>   corruption holes, to catch integer overflow in the computation of
+>   pathname lengths, and to get rid of the name_path API.  Both of
+>   these would have resulted in writing over an under-allocated buffer
+>   when formulating pathnames while tree traversal.
+>=20
+> ----------------------------------------------------------------
+>=20
+> Changes since v2.7.3 are as follows:
+>=20
+> Jeff King (7):
+>      add helpers for detecting size_t overflow
+>      tree-diff: catch integer overflow in combine_diff_path allocatio=
+n
+>      http-push: stop using name_path
+>      show_object_with_name: simplify by using path_name()
+>      list-objects: convert name_path to a strbuf
+>      list-objects: drop name_path entirely
+>      list-objects: pass full pathname to callbacks
+>=20
+> Junio C Hamano (4):
+>      Git 2.4.11
+>      Git 2.5.5
+>      Git 2.6.6
+>      Git 2.7.4
 
-I think this is a general question about how to track build products.
-The proper place may be in a tree that is referenced from a note or
-so.
-Maybe I shouldn't consider git.pot a build product - I don't know, as
-I honestly don't know why we treat it the way we do.
-I could understand if we don't track it all, or if we regnerate it
-from "make all" and track the result. We do track it but let it go
-stale. There must be a good reason for that, it's just that I don't
-know it.
+=46YI,
 
-Maybe the problem that I'm trying to solve appears rare enough to not
-warrant a solution...
+2.7.4 fails to build on FreeBSD 9.x, that uses by default gcc 4.2.1. I=E2=
+=80=99ve fixed it adding an extra dependency to make force it to requir=
+e gcc 4.8+. Here is the output:
 
-The question of how to track build products (such as pdf compiled from
-LaTeX) properly may be a more general one, more deserving a solution.
-=EF=BF=BC
-Michael
+cc -o combine-diff.o -c -MF ./.depend/combine-diff.o.d -MQ combine-diff=
+=2Eo -MMD -MP -isystem/usr/local/include -O2 -pipe -fstack-protector -f=
+no-strict-aliasing -I. -I/usr/local/include -I/usr/local/include -DUSE_=
+CURL_FOR_IMAP_SEND -I/usr/include -DUSE_ST_TIMESPEC -pthread -DHAVE_PAT=
+HS_H -DHAVE_STRINGS_H -DGMTIME_UNRELIABLE_ERRORS -DHAVE_CLOCK_GETTIME -=
+DHAVE_CLOCK_MONOTONIC -DHAVE_BSD_SYSCTL -DHAVE_GETDELIM -DSHA1_HEADER=3D=
+'<openssl/sha.h>'  -DDIR_HAS_BSD_GROUP_SEMANTICS -DSHELL_PATH=3D'"/bin/=
+sh"'  combine-diff.c
+combine-diff.c: In function 'diff_tree_combined':
+combine-diff.c:1391: internal compiler error: Segmentation fault: 11
+Please submit a full bug report,
+with preprocessed source if appropriate.
+See <URL:http://gcc.gnu.org/bugs.html> for instructions.
+Makefile:1924: recipe for target 'combine-diff.o' failed
+gmake: *** [combine-diff.o] Error 1
+*** [do-build] Error code 1
+
+--
+Renato Botelho
