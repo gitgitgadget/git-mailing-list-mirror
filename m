@@ -1,162 +1,127 @@
-From: Chirayu Desai <chirayudesai1@gmail.com>
-Subject: Re: [PATCH/GSoC] parse-options: Add a new nousage opt
-Date: Sun, 20 Mar 2016 12:22:18 +0530
-Message-ID: <CAJj6+1ExK2wftTvtWEW4=RAvrYeKynSmyviqWfk1jrF-UpqmCw@mail.gmail.com>
-References: <1458456405-3519-1-git-send-email-chirayudesai1@gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: Update *.po with git.pot?
+Date: Sun, 20 Mar 2016 15:29:44 +0800
+Message-ID: <CANYiYbFYrMiPWrAA0Fj4Gor4q_vTnCZqufm92dYCGpEJeNTTUA@mail.gmail.com>
+References: <CAN0XMO+8PQNXPRgROd9oVqHzTsgLo_k1yP-MLpqK5N44+1ShDQ@mail.gmail.com>
+	<alpine.DEB.2.11.1603190750550.16189@perkele.intern.softwolves.pp.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Chirayu Desai <chirayudesai1@gmail.com>
-To: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Mar 20 07:52:25 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ralf Thielow <ralf.thielow@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?VHLCpW4gTmfDt2MgUXXDom4=?= <vnwildman@gmail.com>,
+	Dimitriy Ryazantcev <DJm00n@mail.ru>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	Changwoo Ryu <cwryu@debian.org>,
+	Marco Paolone <marcopaolone@gmail.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+	Alex Henrie <alexhenrie24@gmail.com>,
+	Alexander Shopov <ash@kambanaria.org>,
+	git <git@vger.kernel.org>
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Sun Mar 20 08:30:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahXDs-0008Fg-1J
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 07:52:24 +0100
+	id 1ahXoF-0002WY-AJ
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 08:29:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751725AbcCTGwU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Mar 2016 02:52:20 -0400
-Received: from mail-io0-f180.google.com ([209.85.223.180]:32923 "EHLO
-	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751624AbcCTGwT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2016 02:52:19 -0400
-Received: by mail-io0-f180.google.com with SMTP id c63so809042iof.0
-        for <git@vger.kernel.org>; Sat, 19 Mar 2016 23:52:18 -0700 (PDT)
+	id S1753016AbcCTH3q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Mar 2016 03:29:46 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35236 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751997AbcCTH3p convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Mar 2016 03:29:45 -0400
+Received: by mail-wm0-f66.google.com with SMTP id r129so2977287wmr.2
+        for <git@vger.kernel.org>; Sun, 20 Mar 2016 00:29:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=AqzlKK6sh+M3orxHYId0XHisNxFCcXeuyIykH0qXIU0=;
-        b=i6GaWiRFE09UlF9o12ws1wdAk9DeD+9hLa7tCkryt9O1KyaYv03rdrDjD7aA9Grund
-         YX5y+vdmb2wMJrOLMuFtDJsWPK49MiSATUyDUgsloalMIksABMYZ3jWFVIAuSWqBQwwn
-         uNbF8ykflADiO1FbgjCErfp9hT+GKbOU/sVSKlIuA50c/fkrOP1KUP3goOSJKgJgnRGy
-         k8v4EYebVfPdsn12Ip/TD5q0HCAJMMhnMbO7f0xXLCsf4qzwqse4KJOQjWcvmcq4ieRd
-         G+ZpLOmHaEfstE0FMY36WLipVd36ClID5YXOqnNgyR+KZ244tgnJO3kOHXSuCENZ/Ieg
-         y5QA==
+         :cc:content-transfer-encoding;
+        bh=zjkcSTWcdmYxcj6K+iVVxKzYKq50yFF2Mz1ulBJwlPI=;
+        b=KjCjyYxP7L5pG6nHlxG1RX7R4fpCeZFEY4A+reQ8aEWYRwbocv+fQr8VM6F1d/tbn3
+         LrrV21OSAnAq4GLc+CQpxiSKUMRIJWihHCpct42HOzRGGPIYf2FV6fscGSkqO2aWA81s
+         ouA/HjKOoiaU1IG7kf7HpcjeY95IWDQEFHHdiwK+s6JyJ1iTWJ43jwCmDRC8coHpzABo
+         IZ3bpcXO8tRpda0ajmNYb/AG2BnNoGVD0ilMUQX+Vv9k1oiFGCjH0dbb93Ukd0NG1GB+
+         ivFkf8qeofSIeQ1CiCy+T791oeWbTgDjyFJ82PPJJplSlMAQimTUp7iC8MtfRdpA48yc
+         ri4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=AqzlKK6sh+M3orxHYId0XHisNxFCcXeuyIykH0qXIU0=;
-        b=mJ/c7ckMfELdMgIUzcSKIh6Yy7MrGiG8TWJKuuIu785yKHBtPv4zpoLDOOuWlP21Yh
-         bIYdBltOOsgcE2eRDbAyxkoctNTgeOO0qp9fEUVFdYa/GitYYnJCxZEOZaduk7aeEKZD
-         wnnBruL/0Hj2dxOVccquSC42XW1wYc+68BisOqIjwN248EZb4Q0uK0uM7xURJ+Pfjrfd
-         fewoYyXgy8ZDa7lCd4h7B2dtZ48J6nq6Y+haTcyq21/iWhObkdz9eBnvVUuVHeSLqxz+
-         bHxk4mkA7VA6GBshFdoRDTk8pvoim6alvty5T0OEQWkoFlOqqO8Mj1j1RaxYhHnKR8iG
-         Ciaw==
-X-Gm-Message-State: AD7BkJKGZqgp2Xee3b94JnwK2Fl/DPGDDz4p3CVsJTuywdP8Hpp7OgRAddCGDjWm5wWgllGT+gj8VOPIT2V0JA==
-X-Received: by 10.107.2.148 with SMTP id 142mr19055151ioc.128.1458456738245;
- Sat, 19 Mar 2016 23:52:18 -0700 (PDT)
-Received: by 10.79.31.7 with HTTP; Sat, 19 Mar 2016 23:52:18 -0700 (PDT)
-In-Reply-To: <1458456405-3519-1-git-send-email-chirayudesai1@gmail.com>
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=zjkcSTWcdmYxcj6K+iVVxKzYKq50yFF2Mz1ulBJwlPI=;
+        b=MBWbvaWk2VKOTrASBCytjDssMj12NfYphyB1jqbiJCo7WJYVZO+uqsDKe4v7LImJzk
+         ckykB8RsF9XtueiwwONd29MF5lGC+15FzZoAVPQE68i4RwZm4oOdtSJSYqLcfw/4+IO9
+         tKZ+3DXslbvnYJmf+HXE1XJveOKhYYavAxKpt6flyQPH21Iq9uXwAjYGg4+moC5SFQjp
+         EVvEzX4s0GHQX/zUrT7Eg7gjPuszC0mDvh/14qwC5imZ4miqeFcgV5Y6dNElWmJ1J4BA
+         pSjKW/l5IwrKp/b03MQzf5/h+GHQdt9g++6jYQChTiCrqmRWPhqjBLXL8Ia3asTTnH2z
+         QddA==
+X-Gm-Message-State: AD7BkJJ5g9zADAxLwB/RHZo7bcIJr4Go4LJHfBvyKc4Y31laJ0nC93NIs+/y3xf9v7KixF09eSwTaVm2f5vlJg==
+X-Received: by 10.194.227.1 with SMTP id rw1mr23382577wjc.62.1458458984081;
+ Sun, 20 Mar 2016 00:29:44 -0700 (PDT)
+Received: by 10.194.54.8 with HTTP; Sun, 20 Mar 2016 00:29:44 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.11.1603190750550.16189@perkele.intern.softwolves.pp.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289338>
 
-This is being discussed in the "Re: "git tag --contains <id>" is too
-chatty, if <id> is invalid" thread.
-$gmane/289312
+2016-03-19 14:53 GMT+08:00 Peter Krefting <peter@softwolves.pp.se>:
+> Ralf Thielow:
+>
+>> Since translations are made in one commit, this commit is messed up =
+with
+>> the msgmerge update so when you look at the commit later, you'll hav=
+e a hard
+>> time to find out what the actual changes in translations were.
+>
+>
+> You can always use something like podiff
+> <http://man.gnu.org.ua/manpage/?1+podiff> to find the actual changes =
+in each
+> update.
 
-On Sun, Mar 20, 2016 at 12:16 PM, Chirayu Desai <chirayudesai1@gmail.com> wrote:
-> * To show only error text on an error instead of the full usage
-> * Currently used only by commands with options "--with" or "--contains",
->   such as 'tag', 'branch', 'for-each-ref'.
+In my worktree, I have defined some attributes and a diff driver, which=
+ can
+make a clear diff on po/pot files.
+
+=46irst, add these two lines in .git/info/attributes:
+
+        *.po diff=3Dgettext-uniq
+        *.pot diff=3Dgettext-uniq
+
+Then, define diff driver named "gettext-uniq":
+
+        git config --global diff.gettext-uniq.textconv  "msguniq -i
+--no-location --strict -s"
+        git config --global diff.gettext-uniq.cachetextconv   true
+
+And the settings above will make clean output for `git diff`, `git
+show` commands.
+
+>> It will make the history of *.po-files much more readable.
 >
-> It now prints only
->   $ git tag --contains qq
->   error: malformed object name qq
-> instead of the full usage text after the error text.
+> Unfortunately, it also makes merging changes more difficult. I someti=
+mes
+> queue up bugfixes between translation runs, and having the po file be
+> reformatted in commits I do not control means I would have to manuall=
+y
+> re-add those as there is no good merge driver than can handle that
+> reformatting.
 >
-> TODO: Add tests
-> ---
->  parse-options-cb.c | 12 ++++++++----
->  parse-options.c    |  5 +++++
->  parse-options.h    |  6 ++++--
->  3 files changed, 17 insertions(+), 6 deletions(-)
->
-> diff --git a/parse-options-cb.c b/parse-options-cb.c
-> index 239898d946..ac2ea4d674 100644
-> --- a/parse-options-cb.c
-> +++ b/parse-options-cb.c
-> @@ -85,11 +85,15 @@ int parse_opt_commits(const struct option *opt, const char *arg, int unset)
->
->         if (!arg)
->                 return -1;
-> -       if (get_sha1(arg, sha1))
-> -               return error("malformed object name %s", arg);
-> +       if (get_sha1(arg, sha1)) {
-> +               error("malformed object name %s", arg);
-> +               return -3;
-> +       }
->         commit = lookup_commit_reference(sha1);
-> -       if (!commit)
-> -               return error("no such commit %s", arg);
-> +       if (!commit) {
-> +               error("no such commit %s", arg);
-> +               return -3;
-> +       }
->         commit_list_insert(commit, opt->value);
->         return 0;
->  }
-> diff --git a/parse-options.c b/parse-options.c
-> index 47a9192060..d136c1afd0 100644
-> --- a/parse-options.c
-> +++ b/parse-options.c
-> @@ -158,6 +158,9 @@ static int get_value(struct parse_opt_ctx_t *p,
->                         return (*opt->callback)(opt, NULL, 0) ? (-1) : 0;
->                 if (get_arg(p, opt, flags, &arg))
->                         return -1;
-> +               if (opt->flags & PARSE_OPT_NOUSAGE) {
-> +                       return (*opt->callback)(opt, arg, 0);
-> +               }
->                 return (*opt->callback)(opt, arg, 0) ? (-1) : 0;
->
->         case OPTION_INTEGER:
-> @@ -504,6 +507,8 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
->                         goto show_usage_error;
->                 case -2:
->                         goto unknown;
-> +               case -3:
-> +                       return PARSE_OPT_DONE;
->                 }
->                 continue;
->  unknown:
-> diff --git a/parse-options.h b/parse-options.h
-> index ea4af92a51..628e34c5af 100644
-> --- a/parse-options.h
-> +++ b/parse-options.h
-> @@ -38,7 +38,8 @@ enum parse_opt_option_flags {
->         PARSE_OPT_LASTARG_DEFAULT = 16,
->         PARSE_OPT_NODASH = 32,
->         PARSE_OPT_LITERAL_ARGHELP = 64,
-> -       PARSE_OPT_SHELL_EVAL = 256
-> +       PARSE_OPT_SHELL_EVAL = 256,
-> +       PARSE_OPT_NOUSAGE = 512
-Perhaps a _ON_ERR should be appended at the end to make it clearer?
->  };
->
->  struct option;
-> @@ -89,6 +90,7 @@ typedef int parse_opt_ll_cb(struct parse_opt_ctx_t *ctx,
->   *   PARSE_OPT_LITERAL_ARGHELP: says that argh shouldn't be enclosed in brackets
->   *                             (i.e. '<argh>') in the help message.
->   *                             Useful for options with multiple parameters.
-> + *   PARSE_OPT_NOUSAGE: do not print usage / help on error.
->   *
->   * `callback`::
->   *   pointer to the callback to use for OPTION_CALLBACK or
-> @@ -254,7 +256,7 @@ extern int parse_opt_passthru_argv(const struct option *, const char *, int);
->         { OPTION_CALLBACK, (s), (l), (v), (a), (h), (f), parse_opt_passthru_argv }
->  #define _OPT_CONTAINS_OR_WITH(name, variable, help, flag) \
->         { OPTION_CALLBACK, 0, name, (variable), N_("commit"), (help), \
-> -         PARSE_OPT_LASTARG_DEFAULT | flag, \
-> +         PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NOUSAGE | flag, \
->           parse_opt_commits, (intptr_t) "HEAD" \
->         }
->  #define OPT_CONTAINS(v, h) _OPT_CONTAINS_OR_WITH("contains", v, h, 0)
-> --
-> 2.7.4
->
+
+If we update "po" files with "pot=E2=80=9D file in one commit, l10n guy=
+s
+can not merge directly, but have to use msgmerge instead of
+using "po-helper.sh update XX.po".
+
+And some translations could not been updated, e.g. "is.po"
+is used for testing, and "it.po" and "pt_PT.po" have stopped
+maintenance for years.
+
+--=20
+Jiang Xin
