@@ -1,76 +1,103 @@
-From: Rogier Goossens <goossens.rogier@gmail.com>
-Subject: [PATCH v2 0/2] gitk: Two improvements to the branch context menu
-Date: Sat, 19 Mar 2016 19:31:32 +0100
-Message-ID: <10662590.KWXHt2RUKZ@wiske>
-References: <51900395.pKIx87RN0F@wiske>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH/RFC] parse-options.c: make OPTION__COUNTUP consider
+ negative values
+Date: Sun, 20 Mar 2016 14:37:01 +0530
+Message-ID: <CAFZEwPM2XZzGuVBRoQt1e8uVvfd3_b9h2-j+vCe3XymW6kjRsg@mail.gmail.com>
+References: <0102015381b7c7b5-5b57a780-369b-478b-94d2-7094f0befdad-000000@eu-west-1.amazonses.com>
+	<20160317015044.GB12830@sigill.intra.peff.net>
+	<CAFZEwPOib-3JJQ+ufAbmNf1HYb5003LJw_paF2s9L8OK59N0PQ@mail.gmail.com>
+	<20160320041009.GA18312@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sun Mar 20 09:15:08 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Mar 20 10:07:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahYVv-0000nk-8n
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 09:15:07 +0100
+	id 1ahZKN-0003HN-Un
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 10:07:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755245AbcCTIPC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Mar 2016 04:15:02 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36300 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752317AbcCTIOt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2016 04:14:49 -0400
-Received: by mail-wm0-f68.google.com with SMTP id l68so14980716wml.3
-        for <git@vger.kernel.org>; Sun, 20 Mar 2016 01:14:48 -0700 (PDT)
+	id S1754412AbcCTJHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Mar 2016 05:07:05 -0400
+Received: from mail-yw0-f179.google.com ([209.85.161.179]:35355 "EHLO
+	mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751550AbcCTJHC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Mar 2016 05:07:02 -0400
+Received: by mail-yw0-f179.google.com with SMTP id g127so185708703ywf.2
+        for <git@vger.kernel.org>; Sun, 20 Mar 2016 02:07:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=SishWvZSZbmos1E28J0bKyAQCYZPNfau8NL+jwvqnCc=;
-        b=H/95oU2fFTzZZXxOJp8/SPAVJ5EeNnx4f1dVlDMVhBkD2/qarpAxyapdGai7t83pUd
-         UwFWngaEuaQ9cF5S4so1sSIgwa9unNLERsqldARu/9LpAT+64GKAVCIFVBm1dshzhHVr
-         q9Q6C0lAVGhpVOBcGVvWXCTA6Bbgc6M6ssgq1Qm15+bvlolw9GhuZ/WtJajSXzv0c7Ci
-         f+LWHltspwGZeVKzk4P35dee62TM/AuXmh8XrwMG+t5ToY1N0ZMvKwublhxfBifFHpcd
-         l+e7hzyoDivHfRIiebJNM1FhOnFrJhczFuUPtSu9zgd/1gGMek9KqBcR2KbQVEI/WXwb
-         G+Wg==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=FZpGYJLXMrRolOjaF27UF+WG2NwWsoeexSRhWQJFQ/I=;
+        b=bEnAlqNDQbfH4bReRZWuSTKFaqu1awRcNONdZGGGmAm+M3eyj2q3uGkcsLBWPZDykT
+         SBJ8bjPhHwB7Qk37+mqWZpZZ4NWxZXMk+3ZBnQGp1HsXTyhllkUAv+baRzuCxZe3oxBr
+         Bwd0bQEcUAaYrVVIq4GU+SHwy1+HY9nemgGdaFDQOQ8gSb98tjn8/zgp22CIGNfd/2RM
+         5f6442ToEd4fjNNOuag5zMm8klNYjtF+SGXhvy9ZuzGPOV78tu6tXyfVSoZNGJYOdLBz
+         t4Gp3+gEareGyfNPbwY2eSgrfzJn9pnC4BZ447rqiswYHHPH2jXzp6Nw1YEsxranJT4H
+         yzMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:user-agent
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=SishWvZSZbmos1E28J0bKyAQCYZPNfau8NL+jwvqnCc=;
-        b=EfyS5I0umbfzfQ4KThgph6J8sXxBdDy5IzHMmAjqKiNnbFrtNpxXgp5WOYlMCIZkCy
-         Xpobx+vuZmYS+UjGSHM4C5N2jiXCORdNTxEbrKZHn8AiOAYjCVUgqqmh0h+M2+JZv0Em
-         B7575nUDZIpLsxxc9f4N7Gtl+/yU/eHcejzNJdUPs72iU3dfpOrDdGNScFu/LRoOJrls
-         Xr1w1bag3h0kxtFR3gPmBygZPNtf+sRtdCaOQnMQBIHDhHOmQEowq8/TnKVzVLG+jyre
-         eINKuRh7Dxd4BQd5JGIvrWm7r6egfiY2B6Xnnsh8sN67+Pr2pJqPuNPhBLqvtTRAN0BV
-         uqTQ==
-X-Gm-Message-State: AD7BkJLOQZTvfLrdw9n0cdvAitA8y4BVz/BDIKksz1jYwB9FfvfIv9Of04rYe9COB1mjwA==
-X-Received: by 10.28.136.211 with SMTP id k202mr8100894wmd.93.1458461688075;
-        Sun, 20 Mar 2016 01:14:48 -0700 (PDT)
-Received: from wiske.localnet ([86.81.114.242])
-        by smtp.gmail.com with ESMTPSA id hx10sm19692564wjb.25.2016.03.20.01.14.47
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 20 Mar 2016 01:14:47 -0700 (PDT)
-User-Agent: KMail/4.14.1 (Linux/3.16.0-4-amd64; KDE/4.14.2; x86_64; ; )
-In-Reply-To: <51900395.pKIx87RN0F@wiske>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=FZpGYJLXMrRolOjaF27UF+WG2NwWsoeexSRhWQJFQ/I=;
+        b=YtCX+tkopwrslXKwaPokqN+N4H81bxCQwKSzrVaycvIy3yky+LOYkbRiK9uQJMAK60
+         QU5QO+g8sq4SRe3tLDwC4ayfdq5o7/XXcOuGf782PjPP/qjudm1PZo+NHsb/Zz7Hj03v
+         3Bh3gyyS1WiSQHaUkBCxrknsqxyZKx1LEpODi+6+VXasMn4S9nknCh+8HLVE0lH4n2H4
+         YaHQP/OdaSLgwcQgXk3QvnJZLaDiSWuAKhLKUxV5reW75KDwcX5bUSRUBJVOQ6tMfuJe
+         mPim/LFBhctIXGamsTuvCP3P3e7D3W9ZkWJ2TnT0iUWao/j9P63QECbc8dWmB+gJp9VF
+         O7SQ==
+X-Gm-Message-State: AD7BkJKThNOAiON+Yx2JVNICTkFRqDe9g0Bww9z80S/UH9kYvpIstNem6yxpENrzGQTpOYFCGZT4uxqbiTPJpA==
+X-Received: by 10.129.94.7 with SMTP id s7mr11911593ywb.93.1458464821246; Sun,
+ 20 Mar 2016 02:07:01 -0700 (PDT)
+Received: by 10.13.203.137 with HTTP; Sun, 20 Mar 2016 02:07:01 -0700 (PDT)
+In-Reply-To: <20160320041009.GA18312@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289343>
 
-Hi,
+On Sun, Mar 20, 2016 at 9:40 AM, Jeff King <peff@peff.net> wrote:
+>> > We are also changing semantics without changing the interface, which
+>> > means any topics in flight (that you _cannot_ review, because you have
+>> > not seen them yet) may be subtly broken. To me that is not an absolute
+>> > deal-breaker, but something to weigh against the utility of the change.
+>>
+>> As I am new here, I don't really know how to go about with this. Could
+>> you describe in a little detail so that I can work on it?
+>
+> A more canonical example is changing a function return value. Imagine I
+> have a function which returns "1" for success and "0" for error, and I
+> want to change it to return "0" for success and "-1" for error. If I do
+> so and update each caller, then merging with a branch that has a new
+> caller will not result in any conflicts (there is no textual link
+> between the callers and the function), but the result will be subtly
+> broken (the new caller will get the error-check wrong).
+>
+> So we generally try to find some way that the compiler will notice the
+> breakage. E.g., if the function changes name when the return value
+> semantics change, or if it gains a new argument at the same time, then
+> the compiler will notice and complain. We still have to fix it up during
+> the merge, of course, but it's easy to spot.
+>
+> Likewise here. If you change the semantics of OPT_COUNTUP(), then any
+> branch which introduces a new use of "int foo = -1" and expects the old
+> semantics will be subtly broken.
+>
+> The obvious fix would be to switch the name (to OPT_COUNTUP_DEFAULT() or
+> something). But that's a bit painful, as almost nobody uses COUNTUP
+> directly, so we'd need OPT__VERBOSE_DEFAULT().
 
-Hereby the revised patches.
+This is quite new to me. It took me some time to digest it.
 
-Changes since v1:
-- Rebased on latest master
-- Made the changes you suggested
-- Moved 'rename branch' menu option above 'delete branch'
-- Cleaned up some code duplication that the previous patches 
-introduced.
+> Which in the end is the same as ignoring the problem in the first place,
+> but there is a big difference between not thinking about the problem,
+> and thinking about it and deciding it's not a problem. :)
+True That! ;)
 
-Rogier.
+Regards,
+Pranit Bauva
