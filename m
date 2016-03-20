@@ -1,108 +1,86 @@
-From: Jacob Nisnevich <jacob.nisnevich@gmail.com>
-Subject: [PATCH] mergetools: created new mergetool file for ExamDiff
-Date: Sat, 19 Mar 2016 21:58:52 -0700
-Message-ID: <1458449932-24342-1-git-send-email-jacob.nisnevich@gmail.com>
-Cc: Jacob Nisnevich <jacob.nisnevich@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 20 05:59:20 2016
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v7 04/33] files-backend: break out ref reading
+Date: Sun, 20 Mar 2016 06:03:09 +0100
+Message-ID: <56EE2F0D.5030709@alum.mit.edu>
+References: <1456793586-22082-1-git-send-email-dturner@twopensource.com>
+ <1456793586-22082-5-git-send-email-dturner@twopensource.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
+	peff@peff.net, pclouds@gmail.com
+X-From: git-owner@vger.kernel.org Sun Mar 20 06:17:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahVSS-0005h5-5j
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 05:59:20 +0100
+	id 1ahVjy-0007Tb-Hi
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 06:17:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750844AbcCTE7A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Mar 2016 00:59:00 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:33655 "EHLO
-	mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750745AbcCTE67 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2016 00:58:59 -0400
-Received: by mail-pf0-f172.google.com with SMTP id 4so92035465pfd.0
-        for <git@vger.kernel.org>; Sat, 19 Mar 2016 21:58:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=qndYojHSK+QEuPHyxBuccf6VCHmRmrPj9t+08zkuEEY=;
-        b=iy4iklxm3A0vrw+OXtkdHHnav0+hjH/Xi24HdBnFPMoQPPLyXrjETbDDOBJ4P9HVOj
-         YpLqYfJAH1BQkNBaNXQPyoGQ5sNk+O1br2CFERGGgz5Y5Wx/Wn5Pn30Iq9j3xiLO5tbn
-         03z+/CHoib6rgR4pmjtoMkvp3HmRqm2djlsnnTvBvYX41qIJMMjAtGgzfIAJIOsO0T1R
-         UDqgH1AQCtbo5cEGB5vy7bMqOpBxycX5CT4RvXPQ6sSMiCYwo675khltIyxJSZvWVUOR
-         oeAOTe4mDx1RWdohw9FIQWdYWLJHfo1hMDfgKTmfA5tUSiEc7ha4VGuwNAkeQtDY0On/
-         QfVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=qndYojHSK+QEuPHyxBuccf6VCHmRmrPj9t+08zkuEEY=;
-        b=IJxieWWq6Zglaqtil+cyQ8LmxfQ7JZzV62sDDQRs/KMSIxZRYUvLr1FR/D63eZVoDK
-         3VcBKU4qGPsxeXXpiYl+qhShL4k+Qt32nQnyw4yKkH02MozqUQdw+8CBJqAXOFTQHSYK
-         sxs8UGYOwttrV3e8BKEZ2+Vq3+0e9TU3wlJuZE0qbRGf3LkvkbG2Qtdhi3fH58UAnOAq
-         S/9PTkpIQRo2Bl/Msu7ifDcEUzV6ahOW24AxeDQ1jfYFwUFyr1x/b4EmdhpYd0lAXEeu
-         gZoLF+6MNFmLtP92ARpHv6OEljUCvIA1n1aNNsICPV5eXN23H7feMtJq97aG45ovo+tm
-         2Dkg==
-X-Gm-Message-State: AD7BkJKl6UzoZBhRddbD4GhMEkkp8OpIAULuTKfpKlcXZgXTJuM5n54IdwMBLyChb4cuFg==
-X-Received: by 10.98.12.153 with SMTP id 25mr35323920pfm.27.1458449939091;
-        Sat, 19 Mar 2016 21:58:59 -0700 (PDT)
-Received: from localhost.localdomain (cpe-108-185-180-179.socal.res.rr.com. [108.185.180.179])
-        by smtp.gmail.com with ESMTPSA id 17sm31252629pfp.96.2016.03.19.21.58.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 19 Mar 2016 21:58:58 -0700 (PDT)
-X-Mailer: git-send-email 1.9.1
+	id S1750995AbcCTFKf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Mar 2016 01:10:35 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:49676 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750809AbcCTFKd (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Mar 2016 01:10:33 -0400
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Sun, 20 Mar 2016 01:10:33 EDT
+X-AuditID: 12074411-fd3ff700000071cf-50-56ee2f112717
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id C4.56.29135.11F2EE65; Sun, 20 Mar 2016 01:03:13 -0400 (EDT)
+Received: from [192.168.69.130] (p508EA724.dip0.t-ipconnect.de [80.142.167.36])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u2K53AI9005284
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Sun, 20 Mar 2016 01:03:11 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.5.0
+In-Reply-To: <1456793586-22082-5-git-send-email-dturner@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNKsWRmVeSWpSXmKPExsUixO6iqCuk/y7M4HYTh8X8TScYLbqudDNZ
+	NPReYbbonvKW0eJHSw+zA6vHzll32T2e9e5h9Lh4SdljwfP77B6fN8kFsEZx2yQllpQFZ6bn
+	6dslcGesWHKCteAme0Xj/RtMDYwtbF2MnBwSAiYS7+5vZ+9i5OIQEtjKKDHlx2so5zyTxI+n
+	N1hBqoQFnCRm/53IDmKLCGRLzPl0jhWiqJ1RonPNP2aQBLOAmkT7pilgDWwCuhKLepqZQGxe
+	AW2Jv78PMHYxcnCwCKhK3L+sDxIWFQiReP/1OStEiaDEyZlPWEBsTgFPiSdrPrJDjNST2HH9
+	FyuELS+x/e0c5gmM/LOQtMxCUjYLSdkCRuZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbqmermZ
+	JXqpKaWbGCHBLLiDccZJuUOMAhyMSjy8CR/fhgmxJpYVV+YeYpTkYFIS5X3HABTiS8pPqcxI
+	LM6ILyrNSS0+xCjBwawkwivL8S5MiDclsbIqtSgfJiXNwaIkzsu3RN1PSCA9sSQ1OzW1ILUI
+	JivDwaEkwfteF6hRsCg1PbUiLTOnBCHNxMEJMpxLSqQ4NS8ltSixtCQjHhST8cXAqARJ8QDt
+	5dQD2VtckJgLFIVoPcVozLHgx+21TBxH9t9byyTEkpeflyolztsGskkApDSjNA9uESyNvWIU
+	B/pbmFceZCAPMAXCzXsFtIoJaNWxuFcgq0oSEVJSDYyVn5JDpq9QW3FCLWDfZ7Zi/TlJSf5X
+	/8xT/mzjHZIr/p+fcWeY1BP9ZVIiezdc3N8S8cjE8U+DeFnezbrdnxfIR0+S2uRS 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289334>
 
----
- mergetools/examdiff | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
- create mode 100644 mergetools/examdiff
+On 03/01/2016 01:52 AM, David Turner wrote:
+> Refactor resolve_ref_1 in terms of a new function read_raw_ref, which
+> is responsible for reading ref data from the ref storage.
+> 
+> Later, we will make read_raw_ref a pluggable backend function, and make
+> resolve_ref_unsafe common.
+> 
+> Testing done: Hacked in code to run both old and new version of
+> resolve_ref_1 and compare all outputs, failing dramatically if outputs
+> differed.  Ran test suite.
 
-diff --git a/mergetools/examdiff b/mergetools/examdiff
-new file mode 100644
-index 0000000..474fffe
---- /dev/null
-+++ b/mergetools/examdiff
-@@ -0,0 +1,37 @@
-+diff_cmd () {
-+	"$merge_tool_path" "$LOCAL" "$REMOTE" -nh
-+}
-+
-+merge_cmd () {
-+	touch "$BACKUP"
-+	if $base_present
-+	then
-+		"$merge_tool_path" -merge "$LOCAL" "$BASE" "$REMOTE" -o:"$MERGED" -nh
-+	else
-+		"$merge_tool_path" -merge "$LOCAL" "$REMOTE" -o:"$MERGED" -nh
-+	fi
-+	check_unchanged
-+}
-+
-+translate_merge_tool_path() {
-+	# Use ExamDiff.com if it exists in $PATH
-+	if type -p ExamDiff.com >/dev/null 2>&1
-+	then
-+		printf ExamDiff.com
-+		return
-+	fi
-+
-+	# Look for ExamDiff.com in the typical locations
-+	examdiff="ExamDiff Pro/ExamDiff.com"
-+	for directory in $(env | grep -Ei '^PROGRAM(FILES(\(X86\))?|W6432)=' |
-+		cut -d '=' -f 2- | sort -u)
-+	do
-+		if test -n "$directory" && test -x "$directory/$examdiff"
-+		then
-+			printf '%s' "$directory/$examdiff"
-+			return
-+		fi
-+	done
-+
-+	printf ExamDiff.com
-+}
-\ No newline at end of file
--- 
-1.9.1
+I like that you are splitting up resolve_ref_1(), which was too
+complicated and convoluted before.
+
+This is a textually large change and I'm still auditing it, but
+meanwhile I have a question...
+
+> [...]
+> -		if (--depth < 0) {
+> -			errno = ELOOP;
+> -			return NULL;
+> -		}
+
+The old version set errno to ELOOP if there were too many layers of
+symrefs. The new version doesn't seem to set errno at all in that case.
+I think that is a regression, though I might be misunderstanding something.
+
+Michael
