@@ -1,86 +1,153 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v7 04/33] files-backend: break out ref reading
-Date: Sun, 20 Mar 2016 06:03:09 +0100
-Message-ID: <56EE2F0D.5030709@alum.mit.edu>
-References: <1456793586-22082-1-git-send-email-dturner@twopensource.com>
- <1456793586-22082-5-git-send-email-dturner@twopensource.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
-	peff@peff.net, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Sun Mar 20 06:17:28 2016
+From: Chirayu Desai <chirayudesai1@gmail.com>
+Subject: [PATCH/GSoC] parse-options: Add a new nousage opt
+Date: Sun, 20 Mar 2016 12:16:45 +0530
+Message-ID: <1458456405-3519-1-git-send-email-chirayudesai1@gmail.com>
+Cc: Chirayu Desai <chirayudesai1@gmail.com>
+To: git@vger.kernel.org, peff@peff.net
+X-From: git-owner@vger.kernel.org Sun Mar 20 07:48:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahVjy-0007Tb-Hi
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 06:17:26 +0100
+	id 1ahXAT-0006Px-IR
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 07:48:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750995AbcCTFKf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Mar 2016 01:10:35 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:49676 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750809AbcCTFKd (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Mar 2016 01:10:33 -0400
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Sun, 20 Mar 2016 01:10:33 EDT
-X-AuditID: 12074411-fd3ff700000071cf-50-56ee2f112717
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id C4.56.29135.11F2EE65; Sun, 20 Mar 2016 01:03:13 -0400 (EDT)
-Received: from [192.168.69.130] (p508EA724.dip0.t-ipconnect.de [80.142.167.36])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u2K53AI9005284
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sun, 20 Mar 2016 01:03:11 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.5.0
-In-Reply-To: <1456793586-22082-5-git-send-email-dturner@twopensource.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNKsWRmVeSWpSXmKPExsUixO6iqCuk/y7M4HYTh8X8TScYLbqudDNZ
-	NPReYbbonvKW0eJHSw+zA6vHzll32T2e9e5h9Lh4SdljwfP77B6fN8kFsEZx2yQllpQFZ6bn
-	6dslcGesWHKCteAme0Xj/RtMDYwtbF2MnBwSAiYS7+5vZ+9i5OIQEtjKKDHlx2so5zyTxI+n
-	N1hBqoQFnCRm/53IDmKLCGRLzPl0jhWiqJ1RonPNP2aQBLOAmkT7pilgDWwCuhKLepqZQGxe
-	AW2Jv78PMHYxcnCwCKhK3L+sDxIWFQiReP/1OStEiaDEyZlPWEBsTgFPiSdrPrJDjNST2HH9
-	FyuELS+x/e0c5gmM/LOQtMxCUjYLSdkCRuZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbqmermZ
-	JXqpKaWbGCHBLLiDccZJuUOMAhyMSjy8CR/fhgmxJpYVV+YeYpTkYFIS5X3HABTiS8pPqcxI
-	LM6ILyrNSS0+xCjBwawkwivL8S5MiDclsbIqtSgfJiXNwaIkzsu3RN1PSCA9sSQ1OzW1ILUI
-	JivDwaEkwfteF6hRsCg1PbUiLTOnBCHNxMEJMpxLSqQ4NS8ltSixtCQjHhST8cXAqARJ8QDt
-	5dQD2VtckJgLFIVoPcVozLHgx+21TBxH9t9byyTEkpeflyolztsGskkApDSjNA9uESyNvWIU
-	B/pbmFceZCAPMAXCzXsFtIoJaNWxuFcgq0oSEVJSDYyVn5JDpq9QW3FCLWDfZ7Zi/TlJSf5X
-	/8xT/mzjHZIr/p+fcWeY1BP9ZVIiezdc3N8S8cjE8U+DeFnezbrdnxfIR0+S2uRS 
+	id S1751830AbcCTGss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Mar 2016 02:48:48 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:33799 "EHLO
+	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751642AbcCTGsq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Mar 2016 02:48:46 -0400
+Received: by mail-pf0-f194.google.com with SMTP id n5so24332121pfn.1
+        for <git@vger.kernel.org>; Sat, 19 Mar 2016 23:48:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=A2m1KxGyr+3S8Dr4IlyOD5K1u+AEJ05PO2fzo36gy5A=;
+        b=tOjvNGfqI4iwA0VwZA9w9DkBiPHF7/BKKbBjneuH23gDp0iCohVMeFQZFzt9zyfqEN
+         uIlMIUelLpfl+i+gxmWpfGeEbzliowxuS/Pn0m4mu/dCOvRsfszG6ifY70ZUV30IptLg
+         bP6kbgtWV4VNsd6YFKE8X/HeBrQDqjSI7+GLyCPw5YmDj3KADS0ZrYe9KxJiv+9BwUpH
+         eoM6lkBT9rhREaM3uMO4EOijfCFnTp13T1OH0R/x2tsmJTfueht/r2Ued1mqUj0i1fR8
+         uMM+MVQJAsQQEkzVO4CgkEGyI9NtxEvRHlk9mTGY83T++ZLQq3Rz3GarPEhd0tw/yEjD
+         fmdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=A2m1KxGyr+3S8Dr4IlyOD5K1u+AEJ05PO2fzo36gy5A=;
+        b=CxIUqt35dOg+CZ/Nyu0fRkT7tbIPwA9wRc95EVqvcyY4G1oATVbLPotb1TjvYLfj3x
+         d/anzPf4wsi4kx/pnQxfLxzvi3Akb2px6elLSpaSPkZ3iOvoowrNs+MwhssQ5+TcIEGa
+         vilzf5rVEsvYDoQqsRdhwGjdXbpuFqcacgt6ra98mrklOBStQUZaSyrntgqLQJNsHKRA
+         nOa9ysHw3s+NqQSydDvnN9gSixPHyuUgk1tjQu1UkuHY2uzRqIYUg8/Khf2+DW6UU0jf
+         HhTSFT3hlk/+xHvYB6liHglBR7EjSZc0kLtcNWhcrVV39Tquy/Qqap5xwOkSUX5a90Zi
+         mapw==
+X-Gm-Message-State: AD7BkJJ3pYKiDyhI+w3zZkxdpOH493f1db0SswUuV68aj/p1XKScqZoTJtQJR0DOWhgsmw==
+X-Received: by 10.66.139.137 with SMTP id qy9mr36122506pab.57.1458456526062;
+        Sat, 19 Mar 2016 23:48:46 -0700 (PDT)
+Received: from localhost.localdomain ([182.70.63.202])
+        by smtp.gmail.com with ESMTPSA id fn3sm31829705pab.20.2016.03.19.23.48.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 19 Mar 2016 23:48:45 -0700 (PDT)
+X-Mailer: git-send-email 2.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289335>
 
-On 03/01/2016 01:52 AM, David Turner wrote:
-> Refactor resolve_ref_1 in terms of a new function read_raw_ref, which
-> is responsible for reading ref data from the ref storage.
-> 
-> Later, we will make read_raw_ref a pluggable backend function, and make
-> resolve_ref_unsafe common.
-> 
-> Testing done: Hacked in code to run both old and new version of
-> resolve_ref_1 and compare all outputs, failing dramatically if outputs
-> differed.  Ran test suite.
+* To show only error text on an error instead of the full usage
+* Currently used only by commands with options "--with" or "--contains",
+  such as 'tag', 'branch', 'for-each-ref'.
 
-I like that you are splitting up resolve_ref_1(), which was too
-complicated and convoluted before.
+It now prints only
+  $ git tag --contains qq
+  error: malformed object name qq
+instead of the full usage text after the error text.
 
-This is a textually large change and I'm still auditing it, but
-meanwhile I have a question...
+TODO: Add tests
+---
+ parse-options-cb.c | 12 ++++++++----
+ parse-options.c    |  5 +++++
+ parse-options.h    |  6 ++++--
+ 3 files changed, 17 insertions(+), 6 deletions(-)
 
-> [...]
-> -		if (--depth < 0) {
-> -			errno = ELOOP;
-> -			return NULL;
-> -		}
-
-The old version set errno to ELOOP if there were too many layers of
-symrefs. The new version doesn't seem to set errno at all in that case.
-I think that is a regression, though I might be misunderstanding something.
-
-Michael
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index 239898d946..ac2ea4d674 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -85,11 +85,15 @@ int parse_opt_commits(const struct option *opt, const char *arg, int unset)
+ 
+ 	if (!arg)
+ 		return -1;
+-	if (get_sha1(arg, sha1))
+-		return error("malformed object name %s", arg);
++	if (get_sha1(arg, sha1)) {
++		error("malformed object name %s", arg);
++		return -3;
++	}
+ 	commit = lookup_commit_reference(sha1);
+-	if (!commit)
+-		return error("no such commit %s", arg);
++	if (!commit) {
++		error("no such commit %s", arg);
++		return -3;
++	}
+ 	commit_list_insert(commit, opt->value);
+ 	return 0;
+ }
+diff --git a/parse-options.c b/parse-options.c
+index 47a9192060..d136c1afd0 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -158,6 +158,9 @@ static int get_value(struct parse_opt_ctx_t *p,
+ 			return (*opt->callback)(opt, NULL, 0) ? (-1) : 0;
+ 		if (get_arg(p, opt, flags, &arg))
+ 			return -1;
++		if (opt->flags & PARSE_OPT_NOUSAGE) {
++			return (*opt->callback)(opt, arg, 0);
++		}
+ 		return (*opt->callback)(opt, arg, 0) ? (-1) : 0;
+ 
+ 	case OPTION_INTEGER:
+@@ -504,6 +507,8 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 			goto show_usage_error;
+ 		case -2:
+ 			goto unknown;
++		case -3:
++			return PARSE_OPT_DONE;
+ 		}
+ 		continue;
+ unknown:
+diff --git a/parse-options.h b/parse-options.h
+index ea4af92a51..628e34c5af 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -38,7 +38,8 @@ enum parse_opt_option_flags {
+ 	PARSE_OPT_LASTARG_DEFAULT = 16,
+ 	PARSE_OPT_NODASH = 32,
+ 	PARSE_OPT_LITERAL_ARGHELP = 64,
+-	PARSE_OPT_SHELL_EVAL = 256
++	PARSE_OPT_SHELL_EVAL = 256,
++	PARSE_OPT_NOUSAGE = 512
+ };
+ 
+ struct option;
+@@ -89,6 +90,7 @@ typedef int parse_opt_ll_cb(struct parse_opt_ctx_t *ctx,
+  *   PARSE_OPT_LITERAL_ARGHELP: says that argh shouldn't be enclosed in brackets
+  *				(i.e. '<argh>') in the help message.
+  *				Useful for options with multiple parameters.
++ *   PARSE_OPT_NOUSAGE: do not print usage / help on error.
+  *
+  * `callback`::
+  *   pointer to the callback to use for OPTION_CALLBACK or
+@@ -254,7 +256,7 @@ extern int parse_opt_passthru_argv(const struct option *, const char *, int);
+ 	{ OPTION_CALLBACK, (s), (l), (v), (a), (h), (f), parse_opt_passthru_argv }
+ #define _OPT_CONTAINS_OR_WITH(name, variable, help, flag) \
+ 	{ OPTION_CALLBACK, 0, name, (variable), N_("commit"), (help), \
+-	  PARSE_OPT_LASTARG_DEFAULT | flag, \
++	  PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NOUSAGE | flag, \
+ 	  parse_opt_commits, (intptr_t) "HEAD" \
+ 	}
+ #define OPT_CONTAINS(v, h) _OPT_CONTAINS_OR_WITH("contains", v, h, 0)
+-- 
+2.7.4
