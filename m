@@ -1,107 +1,130 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] Fixing segmentation fault when merging FETCH_HEAD
-Date: Sat, 19 Mar 2016 21:23:43 -0400
-Message-ID: <CAPig+cRVtzLjKTW7FZ-h8thEXkTqBJtbSwpKJs3+wdRHYV1qrQ@mail.gmail.com>
-References: <1458411460-26146-1-git-send-email-joseivan@lavid.ufpb.br>
+Subject: Re: [PATCH v9 2/2] pull --rebase: add --[no-]autostash flag
+Date: Sat, 19 Mar 2016 22:01:31 -0400
+Message-ID: <CAPig+cQOHAWLnDi0LmfJH2vb7mv9CABcx=dyU8DezDunZbfpVQ@mail.gmail.com>
+References: <1458233370-8343-1-git-send-email-mehul.jain2029@gmail.com>
+	<1458233370-8343-2-git-send-email-mehul.jain2029@gmail.com>
+	<CAPig+cQHbGAB=XCVWtC1MuubWUFc0tT-+ZGD+hW18whJP_U0_Q@mail.gmail.com>
+	<CA+DCAeRe4ak1Ni7CADpJdd-=+dvKTTepHY6dYNfQV3ADpz5f6Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: "Jose Ivan B. Vilarouca Filho" <joseivan@lavid.ufpb.br>
-X-From: git-owner@vger.kernel.org Sun Mar 20 02:23:51 2016
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Paul Tan <pyokagan@gmail.com>
+To: Mehul Jain <mehul.jain2029@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 20 03:01:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahS5t-0002nH-Tc
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 02:23:50 +0100
+	id 1ahSgT-0007Bk-Ja
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Mar 2016 03:01:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932693AbcCTBXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2016 21:23:44 -0400
-Received: from mail-vk0-f48.google.com ([209.85.213.48]:34551 "EHLO
-	mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932622AbcCTBXo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Mar 2016 21:23:44 -0400
-Received: by mail-vk0-f48.google.com with SMTP id e185so181385474vkb.1
-        for <git@vger.kernel.org>; Sat, 19 Mar 2016 18:23:43 -0700 (PDT)
+	id S932881AbcCTCBe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Mar 2016 22:01:34 -0400
+Received: from mail-vk0-f65.google.com ([209.85.213.65]:35841 "EHLO
+	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932829AbcCTCBc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Mar 2016 22:01:32 -0400
+Received: by mail-vk0-f65.google.com with SMTP id z68so120620vkg.3
+        for <git@vger.kernel.org>; Sat, 19 Mar 2016 19:01:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc;
-        bh=o6fVMGdiov81Y1mrne8bVVigtpc86RS6EoWIFYnQnfA=;
-        b=oWYv6rAPhWkU40o/di+Vr7u7mveF+2rEL6Lh8P5zEq1uiaN2U53/huH/kJ+PqB6BQl
-         DMmpob1Fu/S0+dEfELasxFN5i25pYOHILgXMMzhzWWkY4e8LMD0XkcqbkLu9MH8XOiu1
-         MLPPzT57K1eI9CMJ5Q6QLAj8PzPolQ+noogowIFBgSyCwcWBjCHF76FOTjdj7q5PWcTX
-         TIUF/wf74sLqO7sKdyqTc2qEYdmh0i0GPLpg+mOmm+FVGheX6NeWZbOanH5Bja2zEktE
-         i7FszeoVWELqPb9jYOFJYooiN5c513Mc8wA1kZX35BRBBr656pTmdAxXPlZK9lG0UW0s
-         R+BQ==
+        bh=q/qxDmW/GtBjxY3uBUQbfcAzrpHIpc2Rv+BqSVhkgKE=;
+        b=cO6jYdQ5CHV8PJdxp2WW4RfRS1l1bP0iDqXv3TuQ11DcraiUwk72LtWygxeMMC9ZU2
+         MFNLwnHihocw3iWAcgHTZ/zzVOSHdrzd/kcI4N/TDHGKoNsYl+F/hpDxGKQv5O5t0Dgz
+         xp50MfKaFTckdx9kDwIscx/cPuXu66HXXXnDObobOnCOffOvGIp64ovm1yyEyro5NAzF
+         1FzEgJCWBTUMPZtJJXz/0kaj1jEVOtUaPG5A73+AUEH+Ei7+HRt/BIC5ydslRJaGt54Q
+         dfhpfnpvPQs4Uhkhn6KeuZudbQm6QObJ18ODi3/4IrTaL/d3a+LC71JodaidRdimACqx
+         9Fyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=o6fVMGdiov81Y1mrne8bVVigtpc86RS6EoWIFYnQnfA=;
-        b=EF8Wm4GOo6Ggk+Bp2JNplzYw/27b6OjLZL9LSofNgMuE3fjyzokINTzKqL2Aqnm7F3
-         zaWqEEcVG1p02/wVL21GsWZVHLDdeRXruUBwr8GLcO7pHwpVzBcUzPShCiUlI0kLOSmS
-         vMuZBNsOnwZKjHoiVWTKZNjMp/9o8bxSsdgwLHUUvtf/65K7uZQytwQtYZM4h+FRpO2Q
-         fXm4WF7gFE77cFQ82oqKK0BP18xBPsVZq0aVkniaSLGDnUk0JsOkm4QJ4DUruV0Sqd1Q
-         zjN85kyEnuulIL8LsIWz0sgxQWH6jcdjjAdVQ7d4nDChHqC4fYAT6P7tSpjQBBnijWfl
-         8DPg==
-X-Gm-Message-State: AD7BkJJrWa/ZmDGkBtVEbi4VKEaO0sYNpC+mOBJIaBkTtq50JSghhNYvnnGSXU8WJL+6jXGWMDf5oe2E/oUiEw==
-X-Received: by 10.176.2.238 with SMTP id 101mr850093uah.139.1458437023192;
- Sat, 19 Mar 2016 18:23:43 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Sat, 19 Mar 2016 18:23:43 -0700 (PDT)
-In-Reply-To: <1458411460-26146-1-git-send-email-joseivan@lavid.ufpb.br>
-X-Google-Sender-Auth: 2wCAx-CEOn_0bji3VnjpbeU8MqM
+        bh=q/qxDmW/GtBjxY3uBUQbfcAzrpHIpc2Rv+BqSVhkgKE=;
+        b=Ra1aGe+rUf/WkK8VwmF+brlBSbqTQXXY2RvGFaccGFw/E7vIiiY72aC1jrnEKvbJaG
+         bsCDULCECpcGkK/+YhPEC+yfM30csB9K/8soGkIpew23BiW7kKWCH3IX8VNPcL4v/Lda
+         JVKhIk+uRSDZjgSQ9Cxlm+hYw9T787bp9/+A3G+ZHRlZTyNciV3z9atkUiGtj6cPFNoG
+         1NIwD9fPfauQIF/v89WtQ01DzMCtRXNsp4XY20TfWxsC5fnbgPrNgXzZf4CcaGlHDXVc
+         g+xqwOARUJCcRQukbKLZmdAAOVKXFxRmJvkZHieKpqlHzAKnJxZoE2l5B1hdJsYzwfoU
+         Ywuw==
+X-Gm-Message-State: AD7BkJIdDL1PZFj5+hiz0ixGsfPBcNWcx/vDkP1J04IIYniikcxC/nFhK+k0uqcK4IQlF19Jo8xPOrl0nZeFlQ==
+X-Received: by 10.31.21.4 with SMTP id 4mr25481405vkv.151.1458439291816; Sat,
+ 19 Mar 2016 19:01:31 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Sat, 19 Mar 2016 19:01:31 -0700 (PDT)
+In-Reply-To: <CA+DCAeRe4ak1Ni7CADpJdd-=+dvKTTepHY6dYNfQV3ADpz5f6Q@mail.gmail.com>
+X-Google-Sender-Auth: 8egKoQutAuMEXmTDv2V24KOx0ck
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289327>
 
-On Sat, Mar 19, 2016 at 2:17 PM, Jose Ivan B. Vilarouca Filho
-<joseivan@lavid.ufpb.br> wrote:
-> From: "Jose Ivan B. Vilarouca Filho" <joseivan@lavid.ufpb.br>
-
-You can drop this line since it is the same as the From: line in the
-email envelope.
-
-> Fixing segmentation fault when merging FETCH_HEAD
-
-Alternate:
-
-    merge: don't dereference NULL pointer
-
-> A segmentaion fault is raised when trying to merge FETCH_HEAD
-> formed only by "not-for-merge" refs.
+On Fri, Mar 18, 2016 at 11:17 AM, Mehul Jain <mehul.jain2029@gmail.com> wrote:
+> On Fri, Mar 18, 2016 at 9:54 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>> +test_expect_success 'pull --rebase: --autostash overrides rebase.autostash' '
+>>
+>> Why do titles of some of the new test titles have a ":" after "rebase"
+>> while other don't?
+>>
+>> Also, how about normalizing the titles so that the reader knows in
+>> which tests rebase.autostash is 'true' and in which it is 'false'?
+>> Presently, it's difficult to decipher what's being tested based only
+>> on the titles.
 >
-> Ex:
->     git init .
->     git remote add origin ...
->     git fetch origin
->     git merge FETCH_HEAD
+> If it's so then how about the tests titles to be the following:
+>
+> * pull --rebase: --autostash works with rebase.autoStash set true
+>
+> * pull --rebase: --autostash works with rebase.autoStash set false
+>
+> * pull --rebase: --no-autostash works with rebase.autoStash set true
+>
+> * pull --rebase: --no-autostash works with rebase.autoStash set false
+>
+> Earlier I tried to keep it as less verbose as possible (and probably
+> made it hard to decipher). Does the above titles seems short and
+> informative to you? If so then I will use them instead of earlier ones.
 
-Can you add a test to ensure that some future change doesn't regress
-this fix? The above recipe would make a good basis for the new test.
+Those are better. If I was doing it, I'd probably drop the unnecessary
+":", "works with", and "set", so:
 
-> Signed-off-by: Jose Ivan B. Vilarouca Filho <joseivan@lavid.ufpb.br>
-> ---
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> @@ -1270,9 +1270,9 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
->                             "an empty head"));
->                 remoteheads = collect_parents(head_commit, &head_subsumed,
->                                               argc, argv, NULL);
-> -               remote_head = remoteheads->item;
-> -               if (!remote_head)
-> +               if ((!remoteheads) || (!remoteheads->item))
+    pull --rebase --autostash & rebase.autoStash=true
+    pull --rebase --autostash & rebase.autoStash=false
+    pull --rebase --no-autostash & rebase.autoStash=true
+    pull --rebase --no-autostash & rebase.autoStash=false
 
-Style: drop unnecessary parantheses
+or something, but that's a very minor point.
 
-    if (!remoteheads || !remoteheads->item)
+>> Finally, shouldn't you also be testing --autostash and --no-autostash
+>> when rebase.autostash is not set?
+>
+> If rebase.autoStash is not set then config.autostash will remain zero
+> through out the process. What I want to point out is that rebase.autoStash
+> , if not set, is equivalent to being set false. So adding tests regarding
+> "--[no-]autostash with rebase.autoStash unset" seems equivalent to tests
+> " pull --rebase: --autostash works with rebase.autoStash set false" and
+> "pull --rebase: --no-autostash works with rebase.autoStash set false".
 
->                         die(_("%s - not something we can merge"), argv[0]);
-> +               remote_head = remoteheads->item;
->                 if (remoteheads->next)
->                         die(_("Can merge only exactly one commit into empty head"));
->                 read_empty(remote_head->object.oid.hash, 0);
-> --
-> 1.7.10.4
+Yes, but what you've described is how the current *implementation*
+works, whereas the tests should be checking expected *behavior*. So,
+while we both know that under the current implementation, checking:
+
+    pull --rebase --autostash & rebase.autoStash unset
+
+is the same as checking:
+
+    pull --rebase--autostash & rebase.autoStash=false
+
+some future change to the implementation could (accidentally) break
+this equivalence, and we want to protect against such breakage by
+checking behavior, not implementation.
+
+
+Also, I forgot to mention a couple other missing tests you should add:
+
+    * pull --autostash (without --rebase) should error out
+    * pull --no-autostash (without --rebase) should error out
