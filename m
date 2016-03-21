@@ -1,226 +1,133 @@
 From: Mehul Jain <mehul.jain2029@gmail.com>
-Subject: [PATCH v10 0/2] introduce --[no-]autostash command line flag
-Date: Mon, 21 Mar 2016 23:48:01 +0530
-Message-ID: <1458584283-23816-1-git-send-email-mehul.jain2029@gmail.com>
+Subject: [PATCH v10 1/2] git-pull.c: introduce git_pull_config()
+Date: Mon, 21 Mar 2016 23:48:02 +0530
+Message-ID: <1458584283-23816-2-git-send-email-mehul.jain2029@gmail.com>
+References: <1458584283-23816-1-git-send-email-mehul.jain2029@gmail.com>
 Cc: gitster@pobox.com, Matthieu.Moy@grenoble-inp.fr,
 	pyokagan@gmail.com, sunshine@sunshineco.com,
 	Mehul Jain <mehul.jain2029@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 21 19:18:48 2016
+X-From: git-owner@vger.kernel.org Mon Mar 21 19:19:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ai4Pd-0006H5-OT
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 19:18:46 +0100
+	id 1ai4Pr-0006QX-VS
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 19:19:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757732AbcCUSSk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2016 14:18:40 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:33919 "EHLO
-	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757629AbcCUSSj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2016 14:18:39 -0400
-Received: by mail-pf0-f196.google.com with SMTP id n5so31354451pfn.1
-        for <git@vger.kernel.org>; Mon, 21 Mar 2016 11:18:39 -0700 (PDT)
+	id S1757268AbcCUSSz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2016 14:18:55 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:35669 "EHLO
+	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756434AbcCUSSy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2016 14:18:54 -0400
+Received: by mail-pf0-f194.google.com with SMTP id u190so31462630pfb.2
+        for <git@vger.kernel.org>; Mon, 21 Mar 2016 11:18:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=h4VH/N6NX9THmeYsrUwlog8YnUtMqumyzL/kMzFxn64=;
-        b=TQ3hzGMO9USF/K+skMBkppaVuGVr4XVEdBCQPRkXmcYDNTCMcctM/fAz52v7UUAly/
-         H6KG+0TG+WHySbeK6mLzGTv/GqHyD0KkovBqM+uPrTOmc+7dAXHN9uLomMMoMQmcofSh
-         3+PkdLjR40d+mJdT7F3xrBlM7SQbt0Q598Qf9ZZ6nkOUNBsPvAGeBAe5LOJFb9brLUtG
-         /pvoRJmKihGW5OSldZHozYnSekZjGiaAomt3ZNocxE48LRXEtWHg2/Hk2BOHznH1ybsy
-         qzwdMWY5hrmu3U8LRAx/Jdd9L2FSlOmT9ywVqs5gfeqCiywAVhisGN1gfgE5k24shWv/
-         XGXg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=IOzhp7z27V2oPUvwpROMiOwhCRKX4ZQWYu99ryG5VHs=;
+        b=hsWC45e9CY7uhMbZZRw90+62Q8FJE6wpqnoumau+AKD5FZS3QkmuFTZMWDFO+Ah9GR
+         iOwtI5uvDpy0VDWdSr5Lwk8kNRxjEhujSCrp5lxDS5W1yw5gxQkkD9G6mnZ+ug5UX11F
+         OjigcfKKXRwC4DXiO0qVQ76rZlkv9cW8OcFLjcHFUAJbBroEbWi892Aoo173Rhk3yq2G
+         gZX3JZE4EB3VTb9gpt53GeOXzh3XySyb4ppwLb8b9Sow550Cn6XQTFwlNWCrdZgvKuev
+         cQUQUgLXMDz1VWGjxG5A4j5X2VAy2td9XJyLye9dl0gfWkBW0G0upexk+1EPvcXsvaBu
+         J34A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=h4VH/N6NX9THmeYsrUwlog8YnUtMqumyzL/kMzFxn64=;
-        b=FKgQkRYP6NiqBoUmWvUasezFm0bc2JXHbgDIvcDo4q6mJDWvxMB4vtp5XEcDA4qy/T
-         /KOl8ne8lzPI+opqoKvkvPkvyqEUiSeEzXjzQr/ahScPflykU56sd8DBjGsfuptRqJGe
-         jc7hgQx51Yx3R5qjocSJyln7nZry390qma+H6KdlR6Osrq1so4ka2DezVifGO/7CMuRB
-         ugWOVKB7meIUB+I32mF5u//J9yukYE+8IeUyaeA1BKwgp7AoLcbNgIxkdrIu/njI2wvx
-         jrnKcZCmhogv4Yu43hZrG/RHCbtCzBdzT5qYYgNym8MFRtdjqwOkp7npTWhztPvt7F4s
-         AxAA==
-X-Gm-Message-State: AD7BkJKaKo6t/2rjseQa2UyVhGSTrKD2Z3hBZP1ij19i4Qsgv/ELBJQZoElp+N8tXZx7yQ==
-X-Received: by 10.98.73.88 with SMTP id w85mr48068310pfa.82.1458584318810;
-        Mon, 21 Mar 2016 11:18:38 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=IOzhp7z27V2oPUvwpROMiOwhCRKX4ZQWYu99ryG5VHs=;
+        b=eOmpjhpNGgQ5pQZFH13wG4zDOQxv4PvO9MimNaSLNKREHLdpnD9/KXycICG3v3pgYJ
+         sqn4yalufxt8xz2IzNsldt1NterbU3dPBcma2qhiFSS4nuzmVN0PSud03Hx0nAeMVQsH
+         TECrbi710i5EZ/NhqkWRr4G9gnRYdgz4uVISzeNAf7kpzvZ4CdwntMk5AMe6u54cIg0r
+         3CI33JIdG+mfH6tQuGCfBXbzQ/Sxhn3UrmLiyh8l0dlUEZ/9pqazvhM9bDNXIIYPhoUK
+         jL9N9N6Ym1ZYzdXIzMVyaSpkMXrqvbgYFbYr8axMDXX3IlnxAcImru/DG1OCGVVVodCm
+         edMQ==
+X-Gm-Message-State: AD7BkJJ0y+wGVUdlkCW0FS4+nNm5AgzD+fVsFAMPf4qAeZTTP4l3T+E6OYasqdsucV6awQ==
+X-Received: by 10.98.64.132 with SMTP id f4mr33872988pfd.146.1458584334069;
+        Mon, 21 Mar 2016 11:18:54 -0700 (PDT)
 Received: from localhost.localdomain ([1.39.36.202])
-        by smtp.gmail.com with ESMTPSA id ud8sm42378768pac.11.2016.03.21.11.18.27
+        by smtp.gmail.com with ESMTPSA id ud8sm42378768pac.11.2016.03.21.11.18.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 21 Mar 2016 11:18:37 -0700 (PDT)
+        Mon, 21 Mar 2016 11:18:53 -0700 (PDT)
 X-Mailer: git-send-email 2.7.1.340.g69eb491.dirty
+In-Reply-To: <1458584283-23816-1-git-send-email-mehul.jain2029@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289435>
 
-Following series of patches introduce --[no-]autostash command line flag
-for "git pull --rebase".
+git-pull makes a seperate call to git_config_get_bool() to read the value
+of "rebase.autostash". This can be reduced as a call to git_config() is
+already there in the code.
 
-[PATCH v10 1/2] git-pull.c: introduce git_pull_config()
-It's a clean-up patch for changes introduced in [PATCH v10 2/2].
+Introduce a callback function git_pull_config() to read "rebase.autostash"
+along with other variables.
 
-[PATCH v10 2/2] pull --rebase: add --[no-]autostash flag
-Changes introduced w.r.t. previous patch:
-
-* Unnecessary tight coupling between git-rebase and git-pull introduced
-  in previous patch has been removed by passing "--[no-]autostash" option
-  to git-rebase only when user explicitly tell via command line.
-
-* Patch looks more clearer than before as "autostash" variable is used for
-  implementation of logic (thanks to Eric).
-
-* Test titles are modified for better understanding of tests.
-
-* Two new tests are added to cover all the combinations of
-  "--[no-]autostash" and rebase.autoStash.
-
-* Two more tests are added to checkout for error when "git pull
-  --[no-]autostash" is called. Here I'm forced to use "test_i18ncmp"
-  instead of "test_i18ngrep" to compare the expected error message with
-  the actual because grep was, unfortunately, reading "--[no-]autostash"
-  as an option and thus leading to test failure.
-
-Previous patch: http://thread.gmane.org/gmane.comp.version-control.git/289127
-
-Here's the interdiff between previous patch and current patch.
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Paul Tan <pyokagan@gmail.com>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Mehul Jain <mehul.jain2029@gmail.com>
+---
+ builtin/pull.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/pull.c b/builtin/pull.c
-index 671179b..d98f481 100644
+index 10eff03..c21897d 100644
 --- a/builtin/pull.c
 +++ b/builtin/pull.c
-@@ -308,6 +308,7 @@ static enum rebase_type config_get_rebase(void)
- 
- 	return REBASE_FALSE;
+@@ -86,6 +86,7 @@ static char *opt_commit;
+ static char *opt_edit;
+ static char *opt_ff;
+ static char *opt_verify_signatures;
++static int config_autostash;
+ static struct argv_array opt_strategies = ARGV_ARRAY_INIT;
+ static struct argv_array opt_strategy_opts = ARGV_ARRAY_INIT;
+ static char *opt_gpg_sign;
+@@ -306,6 +307,18 @@ static enum rebase_type config_get_rebase(void)
  }
-+
- /**
-  * Read config variables.
-  */
-@@ -804,7 +805,10 @@ static int run_rebase(const unsigned char *curr_head,
- 	argv_array_pushv(&args, opt_strategy_opts.argv);
- 	if (opt_gpg_sign)
- 		argv_array_push(&args, opt_gpg_sign);
--	argv_array_push(&args, opt_autostash ? "--autostash" : "--no-autostash");
-+	if (opt_autostash == 0)
-+		argv_array_push(&args, "--no-autostash");
-+	else if (opt_autostash == 1)
-+		argv_array_push(&args, "--autostash");
  
- 	argv_array_push(&args, "--onto");
- 	argv_array_push(&args, sha1_to_hex(merge_head));
-@@ -854,13 +858,14 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 		die(_("--[no-]autostash option is only valid with --rebase."));
+ /**
++ * Read config variables.
++ */
++static int git_pull_config(const char *var, const char *value, void *cb)
++{
++	if (!strcmp(var, "rebase.autostash")) {
++		config_autostash = git_config_bool(var, value);
++		return 0;
++	}
++	return git_default_config(var, value, cb);
++}
++
++/**
+  * Returns 1 if there are unstaged changes, 0 otherwise.
+  */
+ static int has_unstaged_changes(const char *prefix)
+@@ -823,7 +836,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 	if (opt_rebase < 0)
+ 		opt_rebase = config_get_rebase();
+ 
+-	git_config(git_default_config, NULL);
++	git_config(git_pull_config, NULL);
+ 
+ 	if (read_cache_unmerged())
+ 		die_resolve_conflict("Pull");
+@@ -835,12 +848,11 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 		hashclr(orig_head);
  
  	if (opt_rebase) {
+-		int autostash = 0;
 +		int autostash = config_autostash;
-+		if (opt_autostash != -1)
-+			autostash = opt_autostash;
-+
+ 
  		if (is_null_sha1(orig_head) && !is_cache_unborn())
  			die(_("Updating an unborn branch with changes added to the index."));
  
--		if (opt_autostash == -1)
--			opt_autostash = config_autostash;
--
--		if (!opt_autostash)
-+		if (!autostash)
+-		git_config_get_bool("rebase.autostash", &autostash);
+ 		if (!autostash)
  			die_on_unclean_work_tree(prefix);
  
- 		if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 85d9bea..745e59e 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -255,7 +255,19 @@ test_expect_success 'pull --rebase succeeds with dirty working directory and reb
- 	test "$(cat new_file)" = dirty &&
- 	test "$(cat file)" = "modified again"
- '
--test_expect_success 'pull --rebase: --autostash overrides rebase.autostash' '
-+
-+test_expect_success 'pull --rebase --autostash & rebase.autostash=true' '
-+	test_config rebase.autostash true &&
-+	git reset --hard before-rebase &&
-+	echo dirty >new_file &&
-+	git add new_file &&
-+	git pull --rebase --autostash . copy &&
-+	test_cmp_rev HEAD^ copy &&
-+	test "$(cat new_file)" = dirty &&
-+	test "$(cat file)" = "modified again"
-+'
-+
-+test_expect_success 'pull --rebase --autostash & rebase.autoStash=false' '
- 	test_config rebase.autostash false &&
- 	git reset --hard before-rebase &&
- 	echo dirty >new_file &&
-@@ -266,8 +278,7 @@ test_expect_success 'pull --rebase: --autostash overrides rebase.autostash' '
- 	test "$(cat file)" = "modified again"
- '
- 
--test_expect_success 'pull --rebase --autostash works with rebase.autostash set true' '
--	test_config rebase.autostash true &&
-+test_expect_success 'pull --rebase: --autostash & rebase.autoStash unset' '
- 	git reset --hard before-rebase &&
- 	echo dirty >new_file &&
- 	git add new_file &&
-@@ -277,7 +288,7 @@ test_expect_success 'pull --rebase --autostash works with rebase.autostash set t
- 	test "$(cat file)" = "modified again"
- '
- 
--test_expect_success 'pull --rebase: --no-autostash overrides rebase.autostash' '
-+test_expect_success 'pull --rebase --no-autostash & rebase.autostash=true' '
- 	test_config rebase.autostash true &&
- 	git reset --hard before-rebase &&
- 	echo dirty >new_file &&
-@@ -286,7 +297,7 @@ test_expect_success 'pull --rebase: --no-autostash overrides rebase.autostash' '
- 	test_i18ngrep "Cannot pull with rebase: Your index contains uncommitted changes." err
- '
- 
--test_expect_success 'pull --rebase --no-autostash works with rebase.autostash set false' '
-+test_expect_success 'pull --rebase --no-autostash & rebase.autostash=false' '
- 	test_config rebase.autostash false &&
- 	git reset --hard before-rebase &&
- 	echo dirty >new_file &&
-@@ -295,6 +306,26 @@ test_expect_success 'pull --rebase --no-autostash works with rebase.autostash se
- 	test_i18ngrep "Cannot pull with rebase: Your index contains uncommitted changes." err
- '
- 
-+test_expect_success 'pull --rebase --no-autostash & rebase.autostash unset' '
-+	git reset --hard before-rebase &&
-+	echo dirty >new_file &&
-+	git add new_file &&
-+	test_must_fail git pull --rebase --no-autostash . copy 2>err &&
-+	test_i18ngrep "Cannot pull with rebase: Your index contains uncommitted changes." err
-+'
-+
-+test_expect_success 'pull --autostash (without --rebase) should error out' '
-+	test_must_fail git pull --autostash . copy 2>actual &&
-+	echo "fatal: --[no-]autostash option is only valid with --rebase." >expect &&
-+	test_i18ncmp actual expect
-+'
-+
-+test_expect_success 'pull --no-autostash (without --rebase) should error out' '
-+	test_must_fail git pull --no-autostash . copy 2>actual &&
-+	echo "fatal: --[no-]autostash option is only valid with --rebase." >expect &&
-+	test_i18ncmp actual expect
-+'
-+
- test_expect_success 'pull.rebase' '
- 	git reset --hard before-rebase &&
- 	test_config pull.rebase true &&
-
-
-Mehul Jain (2):
-  git-pull.c: introduce git_pull_config()
-  pull --rebase: add --[no-]autostash flag
-
- Documentation/git-pull.txt |  9 ++++++
- builtin/pull.c             | 30 ++++++++++++++++++--
- t/t5520-pull.sh            | 70 ++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 106 insertions(+), 3 deletions(-)
-
 -- 
 2.7.1.340.g69eb491.dirty
