@@ -1,98 +1,170 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v6 4/4] config: add '--show-origin' option to print the origin of a config value
-Date: Mon, 21 Mar 2016 09:53:15 +0100
-Message-ID: <E8903192-701B-4EE9-B804-B612EAAF7A45@gmail.com>
-References: <1455873362-66998-1-git-send-email-larsxschneider@gmail.com> <1455873362-66998-5-git-send-email-larsxschneider@gmail.com> <56D723F0.7020106@kdbg.org>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org, peff@peff.net, ramsay@ramsayjones.plus.com,
-	gitster@pobox.com, Johannes.Schindelin@gmx.de
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Mon Mar 21 09:53:26 2016
+From: Daniel Stenberg <daniel@haxx.se>
+Subject: git master describe segfault
+Date: Mon, 21 Mar 2016 10:35:05 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603211025330.20859@tvnag.unkk.fr>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; BOUNDARY="1129329158-203895681-1458552906=:20859"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 21 10:46:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahvaX-0002xa-Uq
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 09:53:26 +0100
+	id 1ahwPY-0005Ae-0a
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 10:46:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752013AbcCUIxW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2016 04:53:22 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33309 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751371AbcCUIxV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Mar 2016 04:53:21 -0400
-Received: by mail-wm0-f65.google.com with SMTP id x188so20286524wmg.0
-        for <git@vger.kernel.org>; Mon, 21 Mar 2016 01:53:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=EF080uuJe1g2TGOOZ0NU8jNe/tL67gwSZuhdCpLnx/8=;
-        b=Cc6nEhpPpzQJc+o+hZZL/kPrs/upo0qBsvUP8HljjxAY1Vbap55AegB8U5nQZ8BLUi
-         Qw5vLAwqf9oHUWtR3mlL2Pgtzsa2xf7BHlmFnEjhwcT/FiqnQk+h6ZRHWngmYNqm+mcQ
-         /bT5+l1ylrfxGqhOUuynRlQc+bRou8jEfs5cN98MuHDn+8rahBEajUzqhGucCFLE1AAq
-         fsaA3J1s3u2CSXkg/x5ZD7YtBfyVeiHRRgLUzg97B+OGinm1Nn1mMMEW2g2JB79XchD6
-         aFAtKaLSZ7QIhdfSomNVkTa2R0t/cvbAgmLcCVhVAk0MrPBtJ428tsoPraZIlcjwC+K0
-         ub6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=EF080uuJe1g2TGOOZ0NU8jNe/tL67gwSZuhdCpLnx/8=;
-        b=cZDGyhiKSnqXsVeZXszd6WQv7y+k952xH+DaApgNpnsxEKAIT9luTzgd487FVc1QQ/
-         owpuaXcT4IkhYQBX7RiKgmWpTtV9/sPYD0bdIBDC98QoppLNEb9w8LsuFPTeh8jFNOj+
-         +fMQoFc98Q/rVJRUGgWpsXA0f9cqPp5IKT8ApvAfqsLaKlO0LziduWC+w/qrMGIHHR99
-         fPf7PJg75W/KnmP7BVwLRnRKXT3aXjMUwOBp9n0GtklU34KTg479yX20coPJcJYTgvFK
-         uEwAnEbLNSvsbkZcKhxjco6YbLtJpRzX2N3YBS7V2ljKWWb59YAB/wDJdiyYGqn9K0nU
-         fGyQ==
-X-Gm-Message-State: AD7BkJJ6kzETPa1NPZappeaMPUuvgX9s1qmpX6BO3NkA5OiJAY7wJlimzThiKsIzMHC9ew==
-X-Received: by 10.28.177.134 with SMTP id a128mr13342127wmf.55.1458550399514;
-        Mon, 21 Mar 2016 01:53:19 -0700 (PDT)
-Received: from slxbook3.fritz.box (p508BA303.dip0.t-ipconnect.de. [80.139.163.3])
-        by smtp.gmail.com with ESMTPSA id ei9sm24194751wjd.40.2016.03.21.01.53.17
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 21 Mar 2016 01:53:18 -0700 (PDT)
-In-Reply-To: <56D723F0.7020106@kdbg.org>
-X-Mailer: Apple Mail (2.1878.6)
+	id S1753223AbcCUJqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2016 05:46:04 -0400
+Received: from giant.haxx.se ([80.67.6.50]:45416 "EHLO giant.haxx.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751842AbcCUJqB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2016 05:46:01 -0400
+X-Greylist: delayed 650 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Mar 2016 05:46:00 EDT
+Received: from giant.haxx.se (dast@localhost.localdomain [127.0.0.1])
+	by giant.haxx.se (8.15.2/8.15.2/Debian-3) with ESMTPS id u2L9Z6qQ002601
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Mon, 21 Mar 2016 10:35:06 +0100
+Received: from localhost (dast@localhost)
+	by giant.haxx.se (8.15.2/8.15.2/Submit) with ESMTP id u2L9Z5M3002563
+	for <git@vger.kernel.org>; Mon, 21 Mar 2016 10:35:06 +0100
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+X-X-Sender: dast@giant.haxx.se
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289412>
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--1129329158-203895681-1458552906=:20859
+Content-Type: text/plain; format=flowed; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+
+Hello good peeps!
+
+I just ran head-first into a segfault that is fully reproducable for me but 
+I'm not at all fluent in these internals so I'm not the suitable person to 
+offer a fix. Let me instead offer you some fine details:
+
+0. I'm on a Linux box: a reasonably updated Debian unstable.
+
+1. I'm up to date with the latest git master branch of gecko-dev: 
+https://github.com/mozilla/gecko-dev (counting a little over 467K commits)
+
+2. I built the current git off the master branch (v2.8.0-rc3-12-g047057b)
+
+3. In the gecko-dev dir, I run 'git describe --contains f495d0cc2'
+
+The outcome is what looks like a fine stack smash due to very very extensive 
+recursion:
+
+$ gdb --args ../git/git describe --contains f495d0cc2
+(gdb) run
+Program received signal SIGSEGV, Segmentation fault.
+0x00007ffff7bccf73 in ?? () from /lib/x86_64-linux-gnu/libz.so.1
+#0  0x00007ffff7bccf73 in ?? () from /lib/x86_64-linux-gnu/libz.so.1
+#1  0x00007ffff7bcc233 in inflate () from /lib/x86_64-linux-gnu/libz.so.1
+#2  0x00000000005935d6 in git_inflate (strm=0x7fffff7ff1d0, flush=4) at 
+zlib.c:118
+#3  0x000000000055d2fd in unpack_compressed_entry (p=0x886b00, 
+w_curs=0x7fffff7ff8e8, curpos=83902121, size=242) at sha1_file.c:2087
+#4  0x000000000055dcbb in unpack_entry (p=0x886b00, obj_offset=83902119, 
+final_type=0x7fffff7ffb50, final_size=0x7fffff7ffb48) at sha1_file.c:2341
+#5  0x000000000055d533 in cache_or_unpack_entry (p=0x886b00, 
+base_offset=83902119, base_size=0x7fffff7ffb48, type=0x7fffff7ffb50, 
+keep_cache=1) at sha1_file.c:2165
+#6  0x000000000055ed88 in read_packed_sha1 (sha1=0x170df24 
+"w\367\026,ũD\362\b4\001{\216\b[\255\261", <incomplete sequence \335>, 
+type=0x7fffff7ffb50, size=0x7fffff7ffb48) at sha1_file.c:2789
+#7  0x000000000055f01b in read_object (sha1=0x170df24 
+"w\367\026,ũD\362\b4\001{\216\b[\255\261", <incomplete sequence \335>, 
+type=0x7fffff7ffb50, size=0x7fffff7ffb48) at sha1_file.c:2837
+#8  0x000000000055f0f3 in read_sha1_file_extended (sha1=0x170df24 
+"w\367\026,ũD\362\b4\001{\216\b[\255\261", <incomplete sequence \335>, 
+type=0x7fffff7ffb50, size=0x7fffff7ffb48, flag=1) at sha1_file.c:2865
+#9  0x00000000004b1e2b in read_sha1_file (sha1=0x170df24 
+"w\367\026,ũD\362\b4\001{\216\b[\255\261", <incomplete sequence \335>, 
+type=0x7fffff7ffb50, size=0x7fffff7ffb48) at cache.h:1008
+#10 0x00000000004b2fc9 in parse_commit_gently (item=0x170df20, 
+quiet_on_missing=0) at commit.c:383
+#11 0x0000000000464627 in parse_commit (item=0x170df20) at ./commit.h:65
+#12 0x0000000000464662 in name_rev (commit=0x170df20, tip_name=0x8e9170 
+"B2G_1_0_0_20130115070201", generation=87254, distance=87254, deref=0) at 
+builtin/name-rev.c:30
+#13 0x00000000004647de in name_rev (commit=0x170dee0, tip_name=0x8e9170 
+"B2G_1_0_0_20130115070201", generation=87253, distance=87253, deref=0) at 
+builtin/name-rev.c:72
+#14 0x00000000004647de in name_rev (commit=0x170dea0, tip_name=0x8e9170 
+"B2G_1_0_0_20130115070201", generation=87252, distance=87252, deref=0) at 
+builtin/name-rev.c:72
+#15 0x00000000004647de in name_rev (commit=0x170de60, tip_name=0x8e9170 
+"B2G_1_0_0_20130115070201", generation=87251, distance=87251, deref=0) at 
+builtin/name-rev.c:72
+#16 0x00000000004647de in name_rev (commit=0x170de20, tip_name=0x8e9170 
+"B2G_1_0_0_20130115070201", generation=87250, distance=87250, deref=0) at 
+builtin/name-rev.c:72
+#17 0x00000000004647de in name_rev (commit=0x170dde0, tip_name=0x8e9170 
+"B2G_1_0_0_20130115070201", generation=87249, distance=87249, deref=0) at 
+builtin/name-rev.c:72
+
+...
+
+#35070 0x00000000004647de in name_rev (commit=0x1172250, tip_name=0x8e9170 
+"B2G_1_0_0_20130115070201", generation=52196, distance=52196, deref=0) at 
+builtin/name-rev.c:72
+#35071 0x00000000004647de in name_rev (commit=0x1172210, tip_name=0x8e9170 
+"B2G_1_0_0_20130115070201", generation=52195, distance=52195, deref=0) at 
+builtin/name-rev.c:72
+#35072 0x00000000004647de in name_rev (commit=0x11721d0, tip_name=0x8e9170 
+"B2G_1_0_0_20130115070201", generation=52194, distance=52194, deref=0) at 
+builtin/name-rev.c:72
+
+...
+
+and so on, I actually didn't bother to find the end of this but logically I'd 
+guess there was about 52194 more stack frames to go!
+
+(gdb) fr 2
+#2  0x00000000005935d6 in git_inflate (strm=0x7fffff7ff1d0, flush=4) at 
+zlib.c:118
+118                     status = inflate(&strm->z,
+(gdb) list
+113             int status;
+114
+115             for (;;) {
+116                     zlib_pre_call(strm);
+117                     /* Never say Z_FINISH unless we are feeding everything 
+*/
+118                     status = inflate(&strm->z,
+119                                      (strm->z.avail_in != strm->avail_in)
+120                                      ? 0 : flush);
+121                     if (status == Z_MEM_ERROR)
+122                             die("inflate: out of memory");
+
+... and the 'strm' struct looks fine to a layman like me:
+
+(gdb) p *strm
+$2 = {z = {
+     next_in = 0x7fffb234bea9 "x\234\245\216\273\n\003!\020E{\277\302&U 
+8\263\352(\204\374\213\343\003\267\330U\304@>?n\237.\267<\\\016g\216\234%\030\353-%\364D\314X\210\302\226\031t\214\316C\304d\035\004\255\vZ\321\303\310\347\224T\b\301\220\211\224La&}\235\213\"`\334,+\214X\034{mDx\317چ\254}\204T\303y\253m\366\326\037\261\035\362\371\003\276$(G\236\064lV\336՚X\364\330\347\314\177ID\331?\362\062\255x\361\005\272qJ\206\225\022x\234\245\214\061n\304 
+\020", avail_in = 989839703, total_in = 0, next_out = 0x15d1920 
+"x+3\367\377\177", avail_out = 243, total_out = 0, msg = 0x0, state = 
+0x1728cd0, zalloc = 0x7ffff7bd0000, zfree = 0x7ffff7bd0010,
+     opaque = 0x0, data_type = 0, adler = 1, reserved = 0}, avail_in = 
+989839703, avail_out = 243, total_in = 0, total_out = 0,
+   next_in = 0x7fffb234bea9 "x\234\245\216\273\n\003!\020E{\277\302&U 
+8\263\352(\204\374\213\343\003\267\330U\304@>?n\237.\267<\\\016g\216\234%\030\353-%\364D\314X\210\302\226\031t\214\316C\304d\035\004\255\vZ\321\303\310\347\224T\b\301\220\211\224La&}\235\213\"`\334,+\214X\034{mDx\317چ\254}\204T\303y\253m\366\326\037\261\035\362\371\003\276$(G\236\064lV\336՚X\364\330\347\314\177ID\331?\362\062\255x\361\005\272qJ\206\225\022x\234\245\214\061n\304 
+\020", next_out = 0x15d1920 "x+3\367\377\177"}
 
 
-On 02 Mar 2016, at 18:33, Johannes Sixt <j6t@kdbg.org> wrote:
+Let me know what else I can do to help anyone figure this out!
 
-> Am 19.02.2016 um 10:16 schrieb larsxschneider@gmail.com:
->> +test_expect_success '--show-origin with --list' '
->> +	cat >expect <<-EOF &&
->> +		file:$HOME/.gitconfig	user.global=true
->> +		file:$HOME/.gitconfig	user.override=global
->> +		file:$HOME/.gitconfig	include.path=$INCLUDE_DIR/absolute.include
-> 
-> On Windows, this injects POSIX-style paths in the expected output, but git.exe produces mangled paths (with a drive letter). The pattern I use to fix this is:
-> 
-> 		file:$(pwd)/.gitconfig	user.override=global
+-- 
 
-I tried that. But then I get this (notice the quotation marks):
-
--file:C:/git-sdk-64/usr/src/git/t/trash directory.t1300-repo-config/.gitconfig  user.global=true
-+file:"C:\\git-sdk-64\\usr\\src\\git\\t\\trash directory.t1300-repo-config/.gitconfig"  user.global=true
-
-I am struggling to find a solution that works on all platforms. I see the following options:
-
-(1) I detect MINGW in the test run and check for another string
-(2) I detect MINGW in the test run and change the output of 'git config --show-origin' with a regex (e.g. replace \\ with / and remote quotation marks)
-(3) I change the implementation of 'git config --show-origin' similar to [1]
-
-If I get your comment ($gmane/288203) correctly then (3) wouldn't be a good idea.
-I think (1) would be the cleanest way. Do you have some pointers for me how
-Git for Windows solved these kind of problems in the past?
-
-Thanks,
-Lars
-
-[1] https://groups.google.com/forum/#!topic/git-for-windows/zTv60HhfnYk
+  / daniel.haxx.se
+--1129329158-203895681-1458552906=:20859--
