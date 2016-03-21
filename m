@@ -1,100 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/2] git-p4: fix AsciiDoc formatting
-Date: Mon, 21 Mar 2016 10:53:42 -0700
-Message-ID: <xmqqpounn2e1.fsf@gitster.mtv.corp.google.com>
-References: <1458499161-61642-1-git-send-email-larsxschneider@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH][Outreachy] branch -D: allow - as abbreviation of @{-1}
+Date: Mon, 21 Mar 2016 13:56:10 -0400
+Message-ID: <CAPig+cQNBeBaLb-znNgxOanUz++pQLae=c8vUtFXjqxOns4d-g@mail.gmail.com>
+References: <1458573317-15532-1-git-send-email-elena.petrashen@gmail.com>
+	<vpqfuvju4km.fsf@anie.imag.fr>
+	<xmqqtwjzn2nu.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, sunshine@sunshineco.com
-To: larsxschneider@gmail.com
-X-From: git-owner@vger.kernel.org Mon Mar 21 18:53:54 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Elena Petrashen <elena.petrashen@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 21 18:56:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ai41Z-0007yP-Il
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 18:53:53 +0100
+	id 1ai43s-00015U-Au
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 18:56:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757605AbcCURxq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2016 13:53:46 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:60296 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757550AbcCURxp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2016 13:53:45 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 807EA4E213;
-	Mon, 21 Mar 2016 13:53:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=v3s7sIPkoC3R3L3I4rn1nfD3FOo=; b=EPzZAe
-	sskseYiSH86MSJwwNguX7RAIK0xPG3Yk1p0gEB2Pj67d6GgWsslk9ecPVaZskugJ
-	MBm8TwKAr1xsSeCNwkImwR70YhqxkwbOX4i2urmg2yfi+tW7JJugpr98hG1373ec
-	s4YU4VkwDA82USH/g2xTVESTj3aFo6dD+gpq8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AoPu5h57SESco4fZxLsMlN1DQgeCrzq5
-	eTial1EsraTDuXR26qhPimlhK3r8uBU7L849LXOXpvwa5KOSpVGD5+d97awep5al
-	9MLpD1/LfutCv0OGZZm1O8dASxp2hBGmkcHP8JAW55fw9yvtmidF7L6Mv+SRZ8hm
-	/KWPTbPr04E=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 780CA4E211;
-	Mon, 21 Mar 2016 13:53:44 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F2F544E20C;
-	Mon, 21 Mar 2016 13:53:43 -0400 (EDT)
-In-Reply-To: <1458499161-61642-1-git-send-email-larsxschneider@gmail.com>
-	(larsxschneider@gmail.com's message of "Sun, 20 Mar 2016 19:39:19
-	+0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DA828338-EF8D-11E5-AA5D-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1757552AbcCUR4M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2016 13:56:12 -0400
+Received: from mail-vk0-f52.google.com ([209.85.213.52]:36157 "EHLO
+	mail-vk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757376AbcCUR4L (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2016 13:56:11 -0400
+Received: by mail-vk0-f52.google.com with SMTP id q138so131951919vkb.3
+        for <git@vger.kernel.org>; Mon, 21 Mar 2016 10:56:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=B2JRlWpwqvulu/3cRhCQLaynclgkF83P90JjfoESCyo=;
+        b=twx7ZURhGAIfcNLZObbuMe/iM5dO5koHAknM0CTzfZ0DfJLX4G9NdD6du5JcGhSO/5
+         onuiklwOR8XN3gvkUJs8FidUhOYv9w3yQ+neG8HG/17zr2cAbi+2Lvsu8w6rjdkHxGUK
+         m0nHU8Y7nt4SA8SYhXLtz/003UsS3gqBeV16Tceya4zmAHaOh6203nE9DKrxgWeZs4Hq
+         gNMNeaNiiLtqXib8tvEiHtVkOPPfkEBE9/QcRlmy/CtHOgBc08ED3DYo4NM+XKNbyhkI
+         s0xxDMy8ftXx1A2W2+a+ruAe+plsr5D3c6kyeXTpnpFHdPp3w7V99/eKTIYTWMLMnl6A
+         JgSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=B2JRlWpwqvulu/3cRhCQLaynclgkF83P90JjfoESCyo=;
+        b=c3NU7H84gUBkmLq82pkkwDAZUnWfYin+wVcKmgzn1xEGkmT2n7xonnlfcsCUb1Ai99
+         jPLUOG2ReDh0+Qs44iTSMxXwJeqXF9wlij2PwMLqL/zHayb5EiVj3VcsteL8r7JjdHfl
+         ubsmZAr4OjPXMud4F90Gm/HL5Db2lFmyNYe+ZbNEJMHoWVyFduP4q6J6TjFsygHP/LWx
+         cAirssV4OQ8c3Nnn4NDCvLmLnppxu1u5uStyFZcCdwBHsB2SfnJHo9dE9LBpurp0yNfA
+         QG/ykKS1ZTzKLrgUzahkGtwvbeF1EcHGIUtxRtSIEYdTnjU5h6GeGtaAWyRt5zBap9Ml
+         WXNg==
+X-Gm-Message-State: AD7BkJJQk+0rnBjI8u7Fc04y744ZJ0ZKZEGceLz9fVzy5QBO5kVA1TO5+qsC5vGH/pB0z2G4jdcxisyxRhCQZA==
+X-Received: by 10.176.3.48 with SMTP id 45mr2223628uat.123.1458582970135; Mon,
+ 21 Mar 2016 10:56:10 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Mon, 21 Mar 2016 10:56:10 -0700 (PDT)
+In-Reply-To: <xmqqtwjzn2nu.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: 6bLrkjpYMJkP5XeQlc1RYgQBC_U
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289431>
 
-larsxschneider@gmail.com writes:
-
-> From: Lars Schneider <larsxschneider@gmail.com>
+On Mon, Mar 21, 2016 at 1:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>> But I'm not sure how often people want to delete (force-delete according
+>> to your message) the branch they just come from.
 >
-> diff to v1:
-> * reference external pages similar to git-bisect-lk2009 (thanks Luke)
-> * fix quotation marks (you can see the error here:
->   https://git-scm.com/docs/git-p4/2.7.4 ... search for cp1252 )
+> One that I heard was this sequence:
 >
-> Thanks,
-> Lars
+>     $ git checkout -b work master
+>     $ work work work ...
+>     $ git checkout master
+>     $ git merge work
+>     $ git branch -d work
 >
->
-> Lars Schneider (2):
->   Documentation: fix git-p4 AsciiDoc formatting
->   Documentation: use ASCII quotation marks in git-p4
->
->  Documentation/git-p4.txt | 11 +++++++----
->  1 file changed, 7 insertions(+), 4 deletions(-)
+> where their argument was that they are done with the work branch,
+> and it no longer is needed.
 
-Hmph, this seems to break my build.
+I frequently use throwaway branches when messing around with some idea
+or when reviewing patches submitted to the mailing list, and the
+workflow ends up being similar to the above:
 
-xmlto: /home/gitster/w/git.git/Documentation/git-p4.xml does not validate (status 3)
-xmlto: Fix document syntax or use --skip-validation option
-/home/gitster/w/git.git/Documentation/git-p4.xml:812: element xref: validity error : Syntax of value for attribute linkend of xref is not valid
-/home/gitster/w/git.git/Documentation/git-p4.xml:1077: element anchor: validity error : Syntax of value for attribute id of anchor is not valid
-Document /home/gitster/w/git.git/Documentation/git-p4.xml does not validate
+    $ git checkout -b throwaway master
+    $ ...work work work...
+    $ git checkout master
+    $ git branch -D throwaway
 
-
-On line #812 of the generated file I see this:
-
-        Only Git LFS <xref linkend="1"/> is implemented right now. Download
-
-And line #1077 I see this:
-
-<anchor id="1" xreflabel="[1]"/>[1] <ulink url="https://git-lfs.github.com/">Git LFS - An open source Git extension for versioning large files</ulink>
-
-It could be that mimicking git-bisect-lk2009 that never is formatted
-as manpage is a bad idea to begin with?
-
-$ xmlto --version
-xmlto version 0.0.25
+So, I can see how having "git branch -D" (force-delete) recognize "-"
+could be a convenience.
