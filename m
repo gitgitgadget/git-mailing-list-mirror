@@ -1,114 +1,102 @@
-From: Laurent Arnoud <laurent@spkdev.net>
-Subject: Re: [PATCH v2] Add the tag.gpgsign option to sign all created tags
-Date: Mon, 21 Mar 2016 20:29:04 +0100
-Message-ID: <20160321192904.GC20083@spk-laptop>
-References: <20160319182310.GA23124@spk-laptop>
- <20160320042912.GD18312@sigill.intra.peff.net>
- <20160320150703.GB5139@spk-laptop>
- <xmqq7fgwnzuv.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git master describe segfault
+Date: Mon, 21 Mar 2016 12:31:16 -0700
+Message-ID: <xmqqzitrljaz.fsf@gitster.mtv.corp.google.com>
+References: <alpine.DEB.2.20.1603211025330.20859@tvnag.unkk.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 20:29:18 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Daniel Stenberg <daniel@haxx.se>
+X-From: git-owner@vger.kernel.org Mon Mar 21 20:31:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ai5Vt-0007cn-11
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 20:29:17 +0100
+	id 1ai5Y5-0000cX-Ec
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 20:31:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756407AbcCUT3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2016 15:29:12 -0400
-Received: from ns3268618.ip-5-39-81.eu ([5.39.81.144]:33997 "EHLO
-	mail.spkdev.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755699AbcCUT3L (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2016 15:29:11 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	id S932415AbcCUTbW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2016 15:31:22 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:50468 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932559AbcCUTbT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2016 15:31:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 207044E369;
+	Mon, 21 Mar 2016 15:31:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EGDWTuB4s8jmCueXEbBLWqF5f5g=; b=bMtyPx
+	bGM1ubi/T0j5s/M2HOJ91O7Et0Pa/HGGP+8sgXa5Ri5AFtTsiQgBna+OSHWUtnMu
+	ErS0zs/tVwZ8hKTNx27WGeNVu0kaOulvRyk+nYM9lXYV7MVudnYmlcwbrfju7uEy
+	/cGP64lzO/+dyubcpHlnrhlYwVORvjQRST7uQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nHeo+6beGaq4CvpcdRgi8QvTbX8DjPDA
+	hnUH8B+NNns0hoty+Z3LwQMrpuHWiEAsBuUTMrWzZjnNtQm4hknvs+68RNqB7fEE
+	1GAvUZvh6OnYX+VcqShMzdqIYWefPvx/J3BEENilwLcTYTYMqVzlJGornx8fjiFs
+	uwCyEZQFGYM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 16D1B4E368;
+	Mon, 21 Mar 2016 15:31:18 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by mail.spkdev.net (Postfix) with ESMTPSA id 77D04FF016;
-	Mon, 21 Mar 2016 19:29:06 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <xmqq7fgwnzuv.fsf@gitster.mtv.corp.google.com>
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 813354E367;
+	Mon, 21 Mar 2016 15:31:17 -0400 (EDT)
+In-Reply-To: <alpine.DEB.2.20.1603211025330.20859@tvnag.unkk.fr> (Daniel
+	Stenberg's message of "Mon, 21 Mar 2016 10:35:05 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 7B7D607A-EF9B-11E5-857D-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289442>
 
-On Sun, Mar 20, 2016 at 10:50:48PM -0700, Junio C Hamano wrote:
-> > The `tag.gpgsign` config option allows to sign all
-> > commits automatically.
-> 
-> I presume that you meant "all annotated tags" here.  But I am not
-> sure it this is sensible.
+Daniel Stenberg <daniel@haxx.se> writes:
 
-Yes its a mistake.
+> 0. I'm on a Linux box: a reasonably updated Debian unstable.
+>
+> 1. I'm up to date with the latest git master branch of gecko-dev:
+> https://github.com/mozilla/gecko-dev (counting a little over 467K
+> commits)
+>
+> 2. I built the current git off the master branch (v2.8.0-rc3-12-g047057b)
+>
+> 3. In the gecko-dev dir, I run 'git describe --contains f495d0cc2'
+>
+> The outcome is what looks like a fine stack smash due to very very
+> extensive recursion:
+>
+> $ gdb --args ../git/git describe --contains f495d0cc2
+> (gdb) run
+> Program received signal SIGSEGV, Segmentation fault.
+> 0x00007ffff7bccf73 in ?? () from /lib/x86_64-linux-gnu/libz.so.1
+> ...
+> #12 0x0000000000464662 in name_rev (commit=0x170df20,
+> tip_name=0x8e9170 "B2G_1_0_0_20130115070201", generation=87254,
+> distance=87254, deref=0) at builtin/name-rev.c:30
+> #13 0x00000000004647de in name_rev (commit=0x170dee0,
+> tip_name=0x8e9170 "B2G_1_0_0_20130115070201", generation=87253,
+> distance=87253, deref=0) at builtin/name-rev.c:72
+> #14 0x00000000004647de in name_rev (commit=0x170dea0,
+> tip_name=0x8e9170 "B2G_1_0_0_20130115070201", generation=87252,
+> distance=87252, deref=0) at builtin/name-rev.c:72
+> #15 0x00000000004647de in name_rev (commit=0x170de60,
+> tip_name=0x8e9170 "B2G_1_0_0_20130115070201", generation=87251,
+> distance=87251, deref=0) at builtin/name-rev.c:72
+> #16 0x00000000004647de in name_rev (commit=0x170de20,
+> tip_name=0x8e9170 "B2G_1_0_0_20130115070201", generation=87250,
+> distance=87250, deref=0) at builtin/name-rev.c:72
+> #17 0x00000000004647de in name_rev (commit=0x170dde0,
+> tip_name=0x8e9170 "B2G_1_0_0_20130115070201", generation=87249,
+> distance=87249, deref=0) at builtin/name-rev.c:72
 
-> > Support `--no-sign` option to countermand configuration `tag.gpgsign`.
-> So I do not see why you need a new --no-sign option at all.  If
-> you have the configuration and you do want to create an unsigned
-> annotated tag one-shot, all you need is to explicitly ask for "-a"
-> i.e.
-> 
->     $ git tag -a -m "my message" v1.0
-> 
-> isn't it?
-
-You know that when you have sign configuration enabled globally annotate is
-implicite, so its difficult to join both world. I use same idea as in your
-patch `55ca3f99ae4895605a348322dd2fc50f2065f508`.
-
-> If you are forcing users to always leave a message and then further
-> forcing users to always sign with the single new configuration, i.e.
-> 
->     $ git tag v1.0
->     ... opens the editor to ask for a message ...
->     ... then makes the user sign with GPG ...
-
-I'm not forcing this type of user to enable global configuration, that will be
-annoying for them of course.
-I tried to fix a need I have currently and this is a good compromise for me.
-
-> then I would first have to say that is a bad idea.
-> 
-> I can sort-of understand (but do not necessarily agree that it is a
-> good idea) adding new two configurations, i.e.
-> 
->  - "even without -a/-s, force the user to annotate the tag" is one
->    configuration, and
-> 
->  - "even when the user did not say -s, force the user to sign an
->    annotated tag" is the other.
-> 
-> And with such a system, I can see why you would need an option
-> "--lightweight" to force creation of a light-weight tag (i.e. to
-> countermand the first one).  You can view this new option as
-> something that sits next to existing -a/-s.  The current system lets
-> user choose among the three variants (lightweight, annotated and
-> signed) by not giving any, giving -a, and giving -s option
-> respectively, but with the "--lightweight" option, the user can ask
-> for one of the three explicitly, as opposed to using "lack of either
-> -a/-s" as a signal to create lightweight one.
-> 
-> And in the context of such a system, "--no-sign" may make sense to
-> override the second configuration (i.e. "force the user to sign an
-> annotated tag").
-> 
-> But otherwise, adding only "--no-sign" does not make much sense to
-> me, as it implies "not signing always means annotated", which is not
-> true.  It is unclear between lightweight and annotated which one the
-> user who says "--no-sign" really wants.
-
-As I said it's difficult to easily join both world, as you know with
-configuration and command line options. This is an override and if its really a
-no go for this patch without refactoring this I will stop my work on it.
-
-Just let me know I will send a patch v3 updated with tests after this.
-
-Cheers,
-
--- 
-Laurent
+It does look bad.  name_rev() naively recurses quite a lot and
+easily runs out of stack space, it seems (rewriting the recursion
+to iterative implementation may help).  I haven't looked at this
+code carefully for quite a while, but I suspect piece of memory
+pointed at by new_name variable may also be leaking.
+ 
