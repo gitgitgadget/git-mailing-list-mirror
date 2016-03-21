@@ -1,88 +1,145 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH] read-cache: increase write buffer size
-Date: Mon, 21 Mar 2016 12:22:45 -0400
-Organization: Twitter
-Message-ID: <1458577365.9385.31.camel@twopensource.com>
-References: <1458350341-12276-1-git-send-email-dturner@twopensource.com>
-	 <CACsJy8ABvs822-vtELCm2wvvpxRV6wtEEr5Ge1qxH_zOcqdwSA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH][Outreachy] branch -D: allow - as abbreviation of @{-1}
+Date: Mon, 21 Mar 2016 18:24:41 +0100
+Message-ID: <vpqfuvju4km.fsf@anie.imag.fr>
+References: <1458573317-15532-1-git-send-email-elena.petrashen@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 17:22:54 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com
+To: Elena Petrashen <elena.petrashen@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 21 18:26:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ai2bV-0003qz-Kz
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 17:22:53 +0100
+	id 1ai3ag-0006zU-MN
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 18:26:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756566AbcCUQWt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2016 12:22:49 -0400
-Received: from mail-qg0-f48.google.com ([209.85.192.48]:34580 "EHLO
-	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756064AbcCUQWt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2016 12:22:49 -0400
-Received: by mail-qg0-f48.google.com with SMTP id w104so156154688qge.1
-        for <git@vger.kernel.org>; Mon, 21 Mar 2016 09:22:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:mime-version:content-transfer-encoding;
-        bh=LCl/c3osn8qCj6ovnX+AERLn7pv3jB0tyHRoXcVYyI8=;
-        b=UDqJH+sCxs0P/cFvNLlxJ7bdVtbVMdZENxIQ0i1vDAQOYIb/TVvVA39IBAyFN8jrsi
-         7NOy7LuE5IfdB3PBJxo3PZhcNywcskoopr4XlgNV4PgkzEC4Z3vSNYMPfX1lBrYgJBIh
-         p6E6PufKF0hPMdPI8XYaiu8nuZAXSEKuTzWEHFsa50z/V3yoMdQa9tMOh7LbaSdDjJPo
-         lOvcjjEZAlksMD6hMV662ZbRTRm6d/nFQdIKbNi1TS7WNfwlrTQgByH2LHBuFTh1gu1M
-         vbuEoeYuswiIc6qan0NRRtLCHW2LmPC1gcSNgatXn0Kc0PIOELZ52yqvakw6K4vwncuy
-         5CjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=LCl/c3osn8qCj6ovnX+AERLn7pv3jB0tyHRoXcVYyI8=;
-        b=BgSwhVxgwmQIkbb9kqx+/gJB2s0W6Ge1Vbs0HzAY5GH3/jBTsdrHepovWx5chnpar4
-         bBmwmoSF548BRAmFnLqjASnoeEUk4yeoVbuuYujbxZbjnil7/jMpO15lZ025T0FfqvZV
-         X7u4kiS3wu2eYaga6d4pFYwaoB5CZPVOagmEdPtcNZl8C541R96wPbIz89h5IOyN06f0
-         HWtDBmXS20BczIiGTFJGD5RTxkbJQwE/g2NiBb4vLkF5a+EV2hrhrjF/Du6z6v37uGjW
-         jVK9Ut0lIa9XVGjeayzhi7IcCDMaEIWr2RrMXmD1XYILhbKJic6uFzLH1cABJrrYIrUs
-         TgeA==
-X-Gm-Message-State: AD7BkJJfsNMpVngaSf9uom8SXYXZaqNjLQ1xfLsALoUH0w0qwuNbg/ibiabNA5mSJaE4Jw==
-X-Received: by 10.140.91.106 with SMTP id y97mr41251607qgd.20.1458577367535;
-        Mon, 21 Mar 2016 09:22:47 -0700 (PDT)
-Received: from ubuntu (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id s104sm12520978qgs.22.2016.03.21.09.22.46
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 21 Mar 2016 09:22:46 -0700 (PDT)
-In-Reply-To: <CACsJy8ABvs822-vtELCm2wvvpxRV6wtEEr5Ge1qxH_zOcqdwSA@mail.gmail.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S1756745AbcCUR0B convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Mar 2016 13:26:01 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:48658 "EHLO mx2.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756638AbcCUR0A (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2016 13:26:00 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u2LHOdNZ004841
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 21 Mar 2016 18:24:40 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u2LHOfMH007750;
+	Mon, 21 Mar 2016 18:24:41 +0100
+In-Reply-To: <1458573317-15532-1-git-send-email-elena.petrashen@gmail.com>
+	(Elena Petrashen's message of "Mon, 21 Mar 2016 18:15:17 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Mon, 21 Mar 2016 18:24:40 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u2LHOdNZ004841
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1459185885.24904@kct1ZJhjlcaTZ+k9MAfmbg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289425>
 
-On Sat, 2016-03-19 at 18:18 +0700, Duy Nguyen wrote:
-> On Sat, Mar 19, 2016 at 8:19 AM, David Turner <
-> dturner@twopensource.com> wrote:
-> > Each write() has syscall overhead, and writing a large index
-> > entails
-> > many such calls.  A larger write buffer reduces the overhead,
-> > leading to increased performance.
-> > 
-> > On my repo, which has an index size of 30m, this saves about 10ms
-> > of
-> > time writing the index.
-> 
-> I wonder if split-index does not work as intended. Because if it
-> does,
-> you should rarely need to write that such big index files (or is this
-> 30mb the small part and the base index is even bigger?).
-> 
-> But I agree with Torsten that we should make this configurable,
-> preferably via config file, if not we can still move this define back
-> in Makefile, overridable using config.mak
+Hi, and welcome!
 
-Oh, right, split index.  Yeah, I should just turn that on.  Nevermind.
+Elena Petrashen <elena.petrashen@gmail.com> writes:
+
+> Signed-off-by: Elena Petrashen <elena.petrashen@gmail.com>
+>
+> ---
+> This micro-patch is meant to allow =E2=80=9C-=E2=80=9C as a short-han=
+d for
+> =E2=80=9C@{-1} for branch -D (Cf. $gmane/230828):
+
+Is it a good thing to do?
+
+I find "git checkout -" to be a very nice shortcut, because users very
+often want to get back to the branch they used to be before.
+
+But I'm not sure how often people want to delete (force-delete accordin=
+g
+to your message) the branch they just come from. It might be less
+dangerous to give incentive to the user to spell the branch name
+completely to avoid mistake. As analogy, my shell knows "cd -" but I
+can't "rm -fr -" and I'm happy about it.
+
+Not a strong objection, but I think you can motivate the change better
+in the commit message, or give it up if I convinced you that it wasn't =
+a
+good idea.
+
+> * git branch (-d | -D) is not supposed to accept any other
+> arguments except for branch name so it makes sense to replace
+> the argv[i] with @{-1}. We will not lose the opportunity to
+> use it for something different for other git branch uses if
+> we will decide it=E2=80=99s required.
+
+This could go inside the commit message, not below the ---.
+
+> +As a special case, the "@{-N}" syntax for the N-th last branch
+> +deletes the specified branch.=20
+
+It's not really a special case. The @{-N} syntax works everywhere,
+doesn't it?
+
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -169,6 +169,8 @@ static int check_branch_commit(const char *branch=
+name, const char *refname,
+>  	return 0;
+>  }
+> =20
+> +
+> +
+
+Don't include useless changes in your patches. Using "git add -p" and
+"git commit" without -a helps. Review your patch carefully and eliminat=
+e
+such artefacts before sending: they only distract reviewers.
+
+> +static void allow_dash_as_prev_branch_alias(const char **argv, int d=
+ash_position)
+
+The function name looks overly verbose and I'm not sure it describes
+exactly what it does: it does not really "allow", but it "expands" it.
+I'd call it expand_dash_shortcut().
+
+>  		if (!target) {
+> -			error(remote_branch
+> -			      ? _("remote-tracking branch '%s' not found.")
+> -			      : _("branch '%s' not found."), bname.buf);
+> +			error(!strcmp(bname.buf, "@{-1}")
+> +				? _("There is no previous branch that could be referred to at th=
+e moment.")
+
+This is not directly related to your change: the user could already
+write "@{-1}" and may already have wanted a better error message. I
+think this could/should be split into a separate patch.
+
+> --- a/t/t3200-branch.sh
+> +++ b/t/t3200-branch.sh
+> @@ -403,6 +403,16 @@ test_expect_success 'test deleting branch withou=
+t config' '
+>  	test_i18ncmp expect actual
+>  '
+> =20
+> +test_expect_success 'test deleting "-" deletes previous branch' '
+> +	git checkout -b prev &&
+> +	test_commit prev &&
+> +	git checkout master &&
+> +	git branch -D - >actual &&
+> +	sha1=3D$(git rev-parse prev | cut -c 1-7) &&
+
+git rev-parse --short avoids this "cut".
+
+Regards,
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
