@@ -1,100 +1,133 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/2] git-compat-util: st_add4: work around gcc 4.2.x
- compiler crash
-Date: Mon, 21 Mar 2016 01:38:37 -0400
-Message-ID: <CAPig+cR2rBJ4Tn9h7d4pp_Uxrfgc-BgHMLOhxKhWtYbm2wnARA@mail.gmail.com>
-References: <1458534958-6956-1-git-send-email-sunshine@sunshineco.com>
-	<1458534958-6956-2-git-send-email-sunshine@sunshineco.com>
-	<CAP8UFD0Kp55bpwdNrXY3KhpDiHVDReWKpuNJz7_Q537DXeUXHA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Add the tag.gpgsign option to sign all created tags
+Date: Sun, 20 Mar 2016 22:50:48 -0700
+Message-ID: <xmqq7fgwnzuv.fsf@gitster.mtv.corp.google.com>
+References: <20160319182310.GA23124@spk-laptop>
+	<20160320042912.GD18312@sigill.intra.peff.net>
+	<20160320150703.GB5139@spk-laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Renato Botelho <garga@freebsd.org>
-To: Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Laurent Arnoud <laurent@spkdev.net>
 X-From: git-owner@vger.kernel.org Mon Mar 21 06:51:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahsk1-0006Xb-Ps
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 06:51:02 +0100
+	id 1ahsk2-0006Xb-VF
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 06:51:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751307AbcCUFij (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2016 01:38:39 -0400
-Received: from mail-vk0-f68.google.com ([209.85.213.68]:33388 "EHLO
-	mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750797AbcCUFii (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2016 01:38:38 -0400
-Received: by mail-vk0-f68.google.com with SMTP id q138so9951906vkb.0
-        for <git@vger.kernel.org>; Sun, 20 Mar 2016 22:38:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=bDdVvGD0/NxjMqtoDwUsxcNXAMcMAKE9OrLC+Yhk4hA=;
-        b=UZEpFqvsrhTQldHCr8A0RjVMgkyiXrNtEFZQdUhCfcy15YY7J91lFCMC5ItDhG1nb/
-         AMEFUOQvdmVyukGrUAgETDax0gFZA9GzGe7jjQ4rgZNC/ItVcH+Hl6LaQ8J33jxVa4Iy
-         NEKhnBfqWhtaRO/0gvk/JbaJA4cjxEDPPWCgX3SOJuuAjdQACBInnQJoTjk8eV5TikRj
-         C5hZDfez9CIevRmlCYKFv3sUj2lAu9kY7/iTS8p22pFyh5sKk4nAdbK0DUBPX7zDu57Z
-         oHSlkjJsDXmfTNWDt18cmOgSjQKehMgx+GrOd8QT71Qbb5Tg+l5A2GZp+41rqys1vimS
-         pKTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=bDdVvGD0/NxjMqtoDwUsxcNXAMcMAKE9OrLC+Yhk4hA=;
-        b=VpH4F6f6RtfvyvlcYhYWlk1khnsExey8WOerhYaJHUZKtU8PKuz+nd6GXdgYYTzUop
-         QM0H9aSb0kqkzPh6OU0nMVgxz3QcotxKAi0b4AoKr21LoVmfnX8+Ts5bH6ZVFpVh3eUP
-         pRnV0OvSk+QcjK7vos8BfZa8qbf/w9K4QhTAUUvRdFQFFm8PjuNo7/V3PeCFy+fFfLji
-         2TsceNMHPI/sv1gIsKhnO/t9XXbatpsxKe6nVXAvI0awdB5WDb2evAYscs/10ZkMFw2q
-         CXwXNjzjlapta79I2MNzUM5DQeLKN3TFBX6zBUPRYEFINoJfIbfPT+5rq6lMjMrka9s9
-         m67Q==
-X-Gm-Message-State: AD7BkJLPTfpQUisD2+mPfXJHlFrWx8ZSar/VzqkgZcre3nnxuZwn4Hx5tM9YMLfgmDENzoa8xqwSVkplN6mNvg==
-X-Received: by 10.31.150.76 with SMTP id y73mr30256754vkd.84.1458538717858;
- Sun, 20 Mar 2016 22:38:37 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Sun, 20 Mar 2016 22:38:37 -0700 (PDT)
-In-Reply-To: <CAP8UFD0Kp55bpwdNrXY3KhpDiHVDReWKpuNJz7_Q537DXeUXHA@mail.gmail.com>
-X-Google-Sender-Auth: yomiB3QGqZyBuMGL8Jyz5teHcU8
+	id S1751676AbcCUFuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2016 01:50:54 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:53621 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751623AbcCUFuw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2016 01:50:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 94CCF46432;
+	Mon, 21 Mar 2016 01:50:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NZC2kVjMwjHu1MP8s4hX4sTVHN0=; b=cx8cWC
+	Nz2tGDss1/0n9ZNJGEwaqEUD6grrBHDt2RLXIPhisl7f2YojoLq9itCUDJWHct45
+	dk6dmTMiEVxeSWXVSJrPSHwNOzlCJL5IosKlCdtfn/nDh4/AIRHpR+DJrNfTHDZi
+	Flb6vygG9IjEHVjsdNtTsqzUnM7VQdpcTA1PU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iIR/owGOOm0KFHYPtfGZX/0D8ZzR2alu
+	yvgNoZPN1EIvwERdapQDa6KarOIvjyXQNGOkCU+aBW6i10vLqMh4QWbVVrIWjwvq
+	B6eq2m6Z46QzIQA90nDZluJLBGiw6j+xFr/DQ7eAVN7FeiWzXM8fsgGRjP3F6CLz
+	/YrRttv09JA=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8213146431;
+	Mon, 21 Mar 2016 01:50:50 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id ECF8046430;
+	Mon, 21 Mar 2016 01:50:49 -0400 (EDT)
+In-Reply-To: <20160320150703.GB5139@spk-laptop> (Laurent Arnoud's message of
+	"Sun, 20 Mar 2016 16:07:03 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: DD938208-EF28-11E5-A55F-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289403>
 
-On Mon, Mar 21, 2016 at 12:56 AM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> On Mon, Mar 21, 2016 at 5:35 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>
->> diff --git a/git-compat-util.h b/git-compat-util.h
->> index c07e0c1..4743954 100644
->> --- a/git-compat-util.h
->> +++ b/git-compat-util.h
->> @@ -715,8 +715,8 @@ static inline size_t st_add(size_t a, size_t b)
->>                     (uintmax_t)a, (uintmax_t)b);
->>         return a + b;
->>  }
->> -#define st_add3(a,b,c)   st_add((a),st_add((b),(c)))
->> -#define st_add4(a,b,c,d) st_add((a),st_add3((b),(c),(d)))
->> +#define st_add3(a,b,c)   st_add(st_add((a),(b)),(c))
->> +#define st_add4(a,b,c,d) st_add(st_add3((a),(b),(c)),(d))
->
-> Nit: maybe a comment around those lines would make sure that people do
-> not inadvertently change them back later.
+Laurent Arnoud <laurent@spkdev.net> writes:
 
-Maybe, maybe not. I'm hesitant for the following reason.
+> The `tag.gpgsign` config option allows to sign all
+> commits automatically.
 
-Unless we determine the exact compiler bug and patch which fixed it,
-we don't really have a good handle on what triggers this crash.
-Consequently, even with a comment saying "don't change the code in
-such and such a way", if someone ever does need to modify st_add4() in
-some fashion, it's entirely possible that the modification will
-trigger the crash again, even if the current evaluation order is kept
-or only modified slightly. We just don't know.
+I presume that you meant "all annotated tags" here.  But I am not
+sure it this is sensible.
 
-So, such a comment doesn't strike me as having a lot of value, and
-whatever value it does have wanes as this old compiler (gcc 4.2.1) and
-these old platforms (Mac OS X 10.6 and FreeBSD 9.x) become less and
-less relevant over time.
+> Support `--no-sign` option to countermand configuration `tag.gpgsign`.
+
+That sound quite counter-intuitive.
+
+    $ git tag -s -m "my message" v1.0
+
+is an explicit request to create a signed tag, as opposed to
+
+
+    $ git tag -a -m "my message" v1.0
+
+is an explicit request to create an unsigned annotated tag.  So 
+
+I think a short-hand
+
+    $ git tag -m "my message" v1.0
+
+falls back to annotated and not signed tag, and I can understand
+if the patch is about allowing the user to tweak this fallback to
+create signed tag instead.
+
+So I do not see why you need a new --no-sign option at all.  If
+you have the configuration and you do want to create an unsigned
+annotated tag one-shot, all you need is to explicitly ask for "-a"
+i.e.
+
+    $ git tag -a -m "my message" v1.0
+
+isn't it?
+
+If you are forcing users to always leave a message and then further
+forcing users to always sign with the single new configuration, i.e.
+
+    $ git tag v1.0
+    ... opens the editor to ask for a message ...
+    ... then makes the user sign with GPG ...
+
+then I would first have to say that is a bad idea.
+
+I can sort-of understand (but do not necessarily agree that it is a
+good idea) adding new two configurations, i.e.
+
+ - "even without -a/-s, force the user to annotate the tag" is one
+   configuration, and
+
+ - "even when the user did not say -s, force the user to sign an
+   annotated tag" is the other.
+
+And with such a system, I can see why you would need an option
+"--lightweight" to force creation of a light-weight tag (i.e. to
+countermand the first one).  You can view this new option as
+something that sits next to existing -a/-s.  The current system lets
+user choose among the three variants (lightweight, annotated and
+signed) by not giving any, giving -a, and giving -s option
+respectively, but with the "--lightweight" option, the user can ask
+for one of the three explicitly, as opposed to using "lack of either
+-a/-s" as a signal to create lightweight one.
+
+And in the context of such a system, "--no-sign" may make sense to
+override the second configuration (i.e. "force the user to sign an
+annotated tag").
+
+But otherwise, adding only "--no-sign" does not make much sense to
+me, as it implies "not signing always means annotated", which is not
+true.  It is unclear between lightweight and annotated which one the
+user who says "--no-sign" really wants.
