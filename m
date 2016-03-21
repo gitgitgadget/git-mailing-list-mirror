@@ -1,68 +1,86 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 1/2] git-compat-util: st_add4: work around gcc 4.2.x
- compiler crash
-Date: Mon, 21 Mar 2016 18:46:22 +0100
-Message-ID: <56F0336E.6000103@web.de>
-References: <1458534958-6956-1-git-send-email-sunshine@sunshineco.com>
- <1458534958-6956-2-git-send-email-sunshine@sunshineco.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH][Outreachy] branch -D: allow - as abbreviation of @{-1}
+Date: Mon, 21 Mar 2016 10:47:49 -0700
+Message-ID: <xmqqtwjzn2nu.fsf@gitster.mtv.corp.google.com>
+References: <1458573317-15532-1-git-send-email-elena.petrashen@gmail.com>
+	<vpqfuvju4km.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	Renato Botelho <garga@freebsd.org>
-To: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 21 18:47:04 2016
+Content-Type: text/plain
+Cc: Elena Petrashen <elena.petrashen@gmail.com>, git@vger.kernel.org,
+	sunshine@sunshineco.com
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Mar 21 18:47:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ai3ux-0003iL-LT
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 18:47:04 +0100
+	id 1ai3vp-0004H5-He
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 18:47:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757306AbcCURqy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2016 13:46:54 -0400
-Received: from mout.web.de ([212.227.15.4]:53762 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756851AbcCURqx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2016 13:46:53 -0400
-Received: from macce.local ([93.222.57.173]) by smtp.web.de (mrweb003) with
- ESMTPSA (Nemesis) id 0MVLY6-1aH8ou0sdq-00YlOi; Mon, 21 Mar 2016 18:46:26
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.6.0
-In-Reply-To: <1458534958-6956-2-git-send-email-sunshine@sunshineco.com>
-X-Provags-ID: V03:K0:rFKFchKD4faKsu3juFxEJTnUh6rFntqnD4MbElwBX56uKYWpGY3
- E7U/rfaobS2Yddl+vnnWroSJu3UQeNuazTLkTnbutWfOVDLmW8oXRNfr017WYC+blIzRPuo
- ynBJikXlR/jOQOexqpQITh8pUVK5ltSi+CMBARSo2vvbdBm1guY+TPzjCFB6ONOaf8p/nqN
- VhxQ9HeCvJs639vn6gVhQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:PN8WqZFI6Dk=:ciJB8M/2Ft/+p/F/BUC8kh
- QiBVbuVZUh1Zj5tIbf/dE0mXFMEP0eZTK1hPSkRCADZ4HAsmvOOAojP9HKRpI012S6jFYiwo4
- QMx/IAz8YjIneBMYFXKjhT4i3gXwRqYGSlwpQxoef6QDePdQayeo4oDu2z2wFqh4znsQortj/
- kaiWtrYl6znMdRw+obDQx+WssztD2b2IB5oZ4LGlk/pZv8dKc3bUOODqUgvbMhx12ixiY532h
- x9FzWLCDo4PwDCDaxEaClhVriAAahvgDAq9GzZgP6JWz0bzKN0aqtE0NC9ViUnyWBxznwmi10
- GNIdlZK2Pf4kk4RhwPjgRdVK1W1ZY3vkcu9daE6BlIK1/g7gw+tp7SivfqwQDXtnIRyPDI7VO
- kj7+hFFxdGPfw8pzyH+cm+OchF10VXs3H0Bus4CJab060R2+t7+doobjP5IttEoiSWQc8VDfZ
- yuf6BV7/48NPk7El9U31NLZfDu1GWraqeDW2YcMShV9+/UtjBwp5pH+GfhKq4cHIb5GOqS1DL
- ThUEYmNePltVLRwTQ7a4yqxARY1z7kbBCpi16ljZDOyBFGwFKpcGUAZdG1IJCBG/dFGMKd8Ef
- dJp+9oSgkKXSNPwGaoCWGTd0N9qBDAfDtW4v9oTnQnSZEMRNDgW3BcLVlkHoLc4n6FlFulfuY
- WE0S515f1axzpby5sr8+bkK20SmUbtECw7W1C/xaM3wOk6mgAv5xxxJFxI6T9hJrPSFULerfD
- zYKb5k3dl5//Ewi+PeXMLbfFSJ9lIRp56XImvJ19GbB5zPOiF7QG1DX9NlqfnxdcQZcXgtQr 
+	id S1757367AbcCURrx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2016 13:47:53 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:56874 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757127AbcCURrw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2016 13:47:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 59D274E059;
+	Mon, 21 Mar 2016 13:47:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+H1eN9JvOvY4fhT3rOz1okXiJ9I=; b=M0Ce6u
+	p2JEVqOuY6se2BZJdyx011GI4kO4WQG/TD88UwBRp7vmjOsprFjjkI/cl1CwOzMJ
+	HDJeeYNFHE+1HPiJzenAZIFMT/I4ddXdE/dqEeWb8SegEbXBOwE6Ra8n8STudOEf
+	CMr0jZVlhSZTTrn0CDaml1Hwz9ZnTn6GVBDxY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cQ4GhXfq+2PWRLQmervRZ+BtG854+r6/
+	lznWfx6jxdq+H9WbfXhhIEkgCOIxrAaJ/EzZny/Px34gwXyXfh67lDwZAiEJN33n
+	sGdYJ1g+3XJTUc+U14bARk74opM8T47I0Nlt14Jeov2tsQMxRBY27uAxM00hFtCQ
+	TaTZDjcZ9oU=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 525904E058;
+	Mon, 21 Mar 2016 13:47:51 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B5F8F4E055;
+	Mon, 21 Mar 2016 13:47:50 -0400 (EDT)
+In-Reply-To: <vpqfuvju4km.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
+	21 Mar 2016 18:24:41 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 07FF864A-EF8D-11E5-AF05-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289428>
 
-On 2016-03-21 05.35, Eric Sunshine wrote:
->  }
-> -#define st_add3(a,b,c)   st_add((a),st_add((b),(c)))
-> -#define st_add4(a,b,c,d) st_add((a),st_add3((b),(c),(d)))
-> +#define st_add3(a,b,c)   st_add(st_add((a),(b)),(c))
-> +#define st_add4(a,b,c,d) st_add(st_add3((a),(b),(c)),(d))
->  
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-That fix compiles on my test machine,
-and passes the test suite.
-thanks for digging.
+> But I'm not sure how often people want to delete (force-delete according
+> to your message) the branch they just come from.
+
+One that I heard was this sequence:
+
+    $ git checkout -b work master
+    $ work work work ...
+    $ git checkout master
+    $ git merge work
+    $ git branch -d work
+
+where their argument was that they are done with the work branch,
+and it no longer is needed.
+
+As you may be able to guess, I don't personally subscribe to that
+workflow (I'd keep the topic a lot longer, until the result of the
+merge is proven to be good in the field), but probably these people
+are more perfect developers than I am ;-)
+
+> It might be less
+> dangerous to give incentive to the user to spell the branch name
+> completely to avoid mistake. As analogy, my shell knows "cd -" but I
+> can't "rm -fr -" and I'm happy about it.
+
+That is indeed an interesting analogy.
