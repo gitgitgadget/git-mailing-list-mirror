@@ -1,102 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH][Outreachy] branch -D: allow - as abbreviation of @{-1}
-Date: Mon, 21 Mar 2016 11:12:40 -0700
-Message-ID: <xmqqegb3n1if.fsf@gitster.mtv.corp.google.com>
-References: <1458573317-15532-1-git-send-email-elena.petrashen@gmail.com>
-	<vpqfuvju4km.fsf@anie.imag.fr>
-	<xmqqtwjzn2nu.fsf@gitster.mtv.corp.google.com>
-	<CAPig+cQNBeBaLb-znNgxOanUz++pQLae=c8vUtFXjqxOns4d-g@mail.gmail.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: GSoC Project | Improvise git bisect
+Date: Mon, 21 Mar 2016 23:43:46 +0530
+Message-ID: <CAFZEwPO-cw2LOBh50uRbjRe-44XVC59Www=qygx5ABQG8f4N-A@mail.gmail.com>
+References: <CAFZEwPN-oUDNnc_PBeP2Q4msJAHenkiLtE+Oo75R+uTTwUKpYQ@mail.gmail.com>
+	<vpqoaaahbvi.fsf@anie.imag.fr>
+	<CAP8UFD2fudNtGpUHTYjZKXCErocuRS65E=5tH_+_tsNFbmHCBA@mail.gmail.com>
+	<CAFZEwPMeejJEMjYbx1sJsH0UNygDEdtNazceOePo81Abi0dHHQ@mail.gmail.com>
+	<CAFZEwPP2OLOQanazPXxK1u5GVHzFWqx8GuRad7tLUyHrWR_+Tw@mail.gmail.com>
+	<alpine.DEB.2.20.1603201628590.4690@virtualbox>
+	<CAFZEwPMEDnzv3mLpULOY=7CQZgULx5QsAb_4Pz40iJWzt9HRGg@mail.gmail.com>
+	<alpine.DEB.2.20.1603210814410.4690@virtualbox>
+	<CAFZEwPNd3X9JocrrJa-d4mV-U_MZdMEq=gMxByZ9iQd6Tz4w2Q@mail.gmail.com>
+	<CAP8UFD1_mxej3YE_vU7DaXEsDpu-VA1YZtG5zkhLE2NXHpfL+Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Elena Petrashen <elena.petrashen@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 19:12:56 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Jeff King <peff@peff.net>, Troy Moure <troy.moure@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Kevin Daudt <me@ikke.info>,
+	Philip Oakley <philipoakley@iee.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 21 19:14:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ai4Jy-0002iK-Ee
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 19:12:54 +0100
+	id 1ai4L3-0003Ov-6Y
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 19:14:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756851AbcCUSMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2016 14:12:44 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:63272 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756223AbcCUSMn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2016 14:12:43 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6D4DB4E91C;
-	Mon, 21 Mar 2016 14:12:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=Gxg82JZ6GHOHP0VS/utQVJkfrrk=; b=ZSxnMarwSN4ESKELaDY4
-	oUAQUvUDJby+6D2KJVWDDW4wBkEgZNBzkeCYoK9Fgpo5Om6Ap/fb1cRGstRZCQp6
-	9ccPAZhBVZ7zsFwma5l3BRdWhDjsr8ANXImFa4za+RH1xlO2Yc9T2WNq2NgXtWQn
-	fdJ/orgzlmbUTbe2wi9OVDE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=qo1kOuiZQbg90U7l+dP84hW7rsqG3hOudc6qJqlQyMGXZs
-	iCIz5Pc+Tz27BRFrPNC77Ocu/yC1EHZg9yHAFFpVP0xdsH7mms7LWc1UtE4P44x/
-	+XNVPcSiSFawMZA7Mn4+nSwvdMQLVHkrtb2PFrFYaKYo9Vl3mJqCrEUAxrCiE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 63FAA4E91B;
-	Mon, 21 Mar 2016 14:12:42 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A6BF94E918;
-	Mon, 21 Mar 2016 14:12:41 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 80A02A2A-EF90-11E5-A8F9-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1757638AbcCUSNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2016 14:13:53 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:35738 "EHLO
+	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757631AbcCUSNw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2016 14:13:52 -0400
+Received: by mail-yw0-f196.google.com with SMTP id d21so8416662ywe.2
+        for <git@vger.kernel.org>; Mon, 21 Mar 2016 11:13:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=KVcJPACVm9E50omyml0law35f/P/sU54+ymndaHlx44=;
+        b=i+wwiHZ0GdkYUFF+0Rg/CtLC71ffCVmT9f+qLHawJdi60hqC2De5j7h+wOL3Po2vA7
+         uJBvyWIi9WSlf3VTFDtHOuXNrYZV3GbtMWKcEp9F9N8eyfNvkq3XRpjaFPu7hy+qGdEh
+         f2RS204y748QPTwXRAgPtqEC17E/Ov+pF0xp5DSpU/q8XVTtYwoUmoYghRR7WlmJoQ+3
+         tPnl/8XmtYiUCl0xHQ/R8gcCUgRkC/NnC7uzgy4n+ORbi0oQTmQDfkiAIVtrrS6Wf91V
+         8mR5yPDN1UfJWnzKlJ136BzB51xH2kIUtJWZ8johdn2lF/G4PU7R9nE5zKjA0bh2Kdnl
+         xwTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=KVcJPACVm9E50omyml0law35f/P/sU54+ymndaHlx44=;
+        b=l7ClAtLGzqiRvkK1FeHVJo4beeXd2HKuP8JXIUzKRWAcBijugBNW28BcFYaJqEUwfA
+         WBCERjcC16e2GKn0DFSvp2kejFq31HoZr4t2XXmL9gHHV7dI19Ouvq7450H4AbP8LKdw
+         Ha7tCwQchtirdU4eX9JewmM1X6S8Pqnsw5ugaMQgD1bN/cy8MmFZWP3b/IX5t5VdF25f
+         b7ifBiVM132Eq3P1+DspFEC1k8bp9ouUwOKznsZgCGWPTuzf9fGFM7t/i77oZVRG7ckw
+         BHI4KpwUbMkfVWsUPoVcJTVpGpiLQWDerdvXq7JwnYWaO9qdrKupc08dR5Oo6okm9zR1
+         G9+w==
+X-Gm-Message-State: AD7BkJLO8MalN1F+3KOFLUjU3IntLxVhqmDSWh6P1J0SoG+kGLFpgebOtNDyCrAKlEAgnpnqW5qtXmqepjKu+g==
+X-Received: by 10.37.12.195 with SMTP id 186mr15049665ybm.154.1458584026221;
+ Mon, 21 Mar 2016 11:13:46 -0700 (PDT)
+Received: by 10.13.203.137 with HTTP; Mon, 21 Mar 2016 11:13:46 -0700 (PDT)
+In-Reply-To: <CAP8UFD1_mxej3YE_vU7DaXEsDpu-VA1YZtG5zkhLE2NXHpfL+Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289433>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
-> On Mon, Mar 21, 2016 at 1:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->>> But I'm not sure how often people want to delete (force-delete according
->>> to your message) the branch they just come from.
->>
->> One that I heard was this sequence:
->>
->>     $ git checkout -b work master
->>     $ work work work ...
->>     $ git checkout master
->>     $ git merge work
->>     $ git branch -d work
->>
->> where their argument was that they are done with the work branch,
->> and it no longer is needed.
+On Mon, Mar 21, 2016 at 11:23 PM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> Hi Pranit,
 >
-> I frequently use throwaway branches when messing around with some idea
-> or when reviewing patches submitted to the mailing list, and the
-> workflow ends up being similar to the above:
+> On Mon, Mar 21, 2016 at 8:29 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>> On Mon, Mar 21, 2016 at 12:48 PM, Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
+>>> Hi Pranit,
+>>>
+>>> On Sun, 20 Mar 2016, Pranit Bauva wrote:
+>>>
+>>>> I could first move individual functions to bisect--helper.c.
+>>>
+>>> My suggestion would be to give it a try already with some functionality
+>>> you deem small enough to move to the bisect--helper within a day or so. It
+>>> is always good to test the waters like that, and to include this early
+>>> work in the proposal, also to assess (and to let the reviewers assess) how
+>>> feasible the project is.
+>>
+>> Sure! I will start with check_term_format().
+>>
+>> Also, I think implementing a new algorithm for bisect along with this
+>> would be too big for a GSoC project
 >
->     $ git checkout -b throwaway master
->     $ ...work work work...
->     $ git checkout master
->     $ git branch -D throwaway
+> Yeah, I also think so.
 >
-> So, I can see how having "git branch -D" (force-delete) recognize "-"
-> could be a convenience.
+>> and I am no algorithm expert. I
+>> will stick to --first-parent along with incremental rewrite.
+>
+> My opinion is that an incremental rewrite by itself is big enough for
+> a GSoC. And it might be difficult to do something else that is bisect
+> related at the same time. So if you want to do the rewrite, just focus
+> on it. If you ever have some time left we will easily find other
+> interesting bisect related improvements.
 
-I guess that it would make some sense in ancient world, but there is
-detached HEAD for that workflow, so it is unlikely that I'd find it
-useful myself (in my worldview, throw-away work is discardable by
-default, which is why I start from detached HEAD, until I find that
-the result is more interesting than I originally thought and decide
-to save it to a more permanent branch with "checkout -b" from
-there).
+I just realised it after I finished rewriting a simple function. I
+will send that patch. It would be much better on doing one thing
+properly.
 
-But of course people are different.
-
-In any case, we found two plausible explanation why people may want
-to do this.  I however tend to agree with Matthieu that it may be
-safer not to give a short-hand access to destructive operations.
+> If you really want to do "--first-parent" then you should probably add
+> "Improve git bisect terms" to it in your proposal.
