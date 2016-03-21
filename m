@@ -1,78 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Thomas Adam <thomas.adam22@gmail.com>
 Subject: Re: When does git check for branch-X being uptodate with origin/branch-X?
-Date: Mon, 21 Mar 2016 13:52:16 -0700
-Message-ID: <xmqqfuvjlfjz.fsf@gitster.mtv.corp.google.com>
+Date: Mon, 21 Mar 2016 21:12:18 +0000
+Message-ID: <CA+39Oz51SaKAWsJ027fzhR3CRDfqmy1Dp7qcpx-k9-HrzGKcwg@mail.gmail.com>
 References: <CA+39Oz4izkhtxbUH8cQoD5-DLKAtv9KnC9OkG_ZhFw6Ysg0+gw@mail.gmail.com>
-	<20160321202810.GD32071@sigill.intra.peff.net>
+ <20160321202810.GD32071@sigill.intra.peff.net> <CA+39Oz4Atuv3N0QNj8o1SYgHzMUyES1QHUsWh-MdNiNr-xPM_w@mail.gmail.com>
+ <20160321205043.GA436@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Thomas Adam <thomas.adam22@gmail.com>,
-	git list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Cc: git list <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Mar 21 21:52:29 2016
+X-From: git-owner@vger.kernel.org Mon Mar 21 22:14:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ai6oK-0000yt-5l
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 21:52:24 +0100
+	id 1ai7A1-0002cb-Cd
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 22:14:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754557AbcCUUwU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2016 16:52:20 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:57936 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751100AbcCUUwT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2016 16:52:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 67EE84DDCA;
-	Mon, 21 Mar 2016 16:52:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=S+3o96y7DtNeOLNU7XESNdyidGA=; b=iu6NMQ
-	Py0HsEAegj01GCrLzrp5S8nUFhGE641tWRGSPdFUFAUlI1b7GyTarEuUw8h5ruya
-	Fyls1YEJjT4XWLjDwNUhzSHbxu28QWacjnwrSk8vnKk1vAi8rTaIaSL5wgN1zGMe
-	dUbgUk74zYQGqteunARk1vHKBbMP+g8TUO4lU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cK0/SJN4TRvDuCCxml4FHyfdJCqdVYha
-	yqX9oCE81dx3WgSsInQ+dtOL+gauHpDlVq0S+m6Bqkh6IQ/e++TeylfGwK4R9ep0
-	9Zi/PYbq6kf0O4S9dfonHypI4Zq29D6q/ZlTFx6+c1EetrAV9AQ/a6HZKaJRNO7c
-	KiOS2i3cbjg=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5FE294DDC9;
-	Mon, 21 Mar 2016 16:52:18 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C720C4DDC8;
-	Mon, 21 Mar 2016 16:52:17 -0400 (EDT)
-In-Reply-To: <20160321202810.GD32071@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 21 Mar 2016 16:28:10 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: CC718AA0-EFA6-11E5-B485-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S932625AbcCUVMl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2016 17:12:41 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:36073 "EHLO
+	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933518AbcCUVMe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2016 17:12:34 -0400
+Received: by mail-wm0-f54.google.com with SMTP id r129so67366194wmr.1
+        for <git@vger.kernel.org>; Mon, 21 Mar 2016 14:12:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=UFDgbdUqifymi9+3uyw1/4ncBlnjaAQbxC5wz9v0Ies=;
+        b=Da/FnaMT7u1KFW6G0+rqNutKFkc6QaQ7Dj5E57nMlhnFnNyrBRs8U9eXzuw+YvUtKP
+         Sei8ib6p++2RSqFhqzFIbMzrUSHThZYCYvyLfzSa/PdaJAqsuaKRBx59qiGmBx+1vjUq
+         bQk4PN7U/TrfynVum8C5xUg7hP9Cb+urq18hRspCftUmipCNXJ39IiamtYPmIWpxfBxs
+         u+elUuaLp+yeSbdDGV5lgSEbj8049bxM3l2I6QNoB++0pc2ML3mcdTx2yMcNgxxtkpGC
+         Lov/pv9zMTJwSC9+e6akkA5HLjKCbdiha5LkopZvmUW7/jGhDG3XhmqATa4XBUMQbPbL
+         PsPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=UFDgbdUqifymi9+3uyw1/4ncBlnjaAQbxC5wz9v0Ies=;
+        b=Wsb5t5M7Vwv77bjpE6sl65tROi0IEf0OlizE4Z4/ISPCeHsXaa8I2AFxMp0mARnMEk
+         b85Cp7B9DFJ81QM6sLDGYSRMfvsiOrv6piv1tV9exW3vNj605iL9sPiVA8vkmmXYPxJT
+         DZN0C4PXxIVAkwKkdmqIU73UHJwZRYkDkR0sfD3hml6F5z2tYBO5dcg1eokgNor7+IbW
+         2bniQLL3C3DPo7dT1fPuWgyU7Ew/qoJiyBApsOOPQ/ThE4R9KG9cdxOeEUmsJjNtLhGL
+         8tieHGag1yrn0d/NQESrgjuxHzNQL7fDH5Cd+BldQpr8TXJrSbUr18eIIxGFV8W5cMhm
+         yvgw==
+X-Gm-Message-State: AD7BkJJg6AIwWu9WQAtiCK8YC3VJuRWdCjdWa39T71cG6yqW5ciMgn+4Bb82duiWrcC5NlFb2uv6CWt/ltQkuw==
+X-Received: by 10.28.6.139 with SMTP id 133mr16602554wmg.84.1458594752673;
+ Mon, 21 Mar 2016 14:12:32 -0700 (PDT)
+Received: by 10.194.110.168 with HTTP; Mon, 21 Mar 2016 14:12:18 -0700 (PDT)
+In-Reply-To: <20160321205043.GA436@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289462>
 
-Jeff King <peff@peff.net> writes:
+On 21 March 2016 at 20:50, Jeff King <peff@peff.net> wrote:
+> But that's just my opinion. Did you have some specific change you're
+> interested in? I don't think removing that message is productive; it
+> _is_ useful information. Perhaps it could be more clear that we are
+> talking about the tracking branch?
 
-> The message from checking is looking only at your local
-> refs/remotes/fvwmorg/master branch, which is essentially a cache of what
-> is in the actual remote repository.
+I don't have a specific change in mind per-se, rather than to discuss
+how we might be able to improve the error message, or document
+somewhere that it's referring to the tracking branch.  Maybe that's
+the point--is it worth mentioning the time/date of when the cache was
+last updated?  That is:
 
-Saying "cache of what is ..." would further confuse people, I am
-afraid.  We just keep a record of what we last observed and we do
-not actively go out and update the remote tracking branch without
-being told by the end user.  "cache of what we saw there when we
-contacted them the last time" is OK ;-).
+"branch-X is uptodate with origin/branch-X (as of DD-MM-YY HH:MM:SS)"
 
->
-> We never contact other repositories unless explicitly asked to by
-> fetch, pull, push, etc. If you want to have the most up-to-date value
-> without merging, you can just "git fetch" to update the tracking
-> branches.
->
-> -Peff
+No one's suggesting that this message is removed, I'm not sure where
+you got that from?
+
+-- Thomas Adam
