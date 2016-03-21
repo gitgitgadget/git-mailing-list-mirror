@@ -1,104 +1,99 @@
-From: Jeff King <peff@peff.net>
+From: Laurent Arnoud <laurent@spkdev.net>
 Subject: Re: [PATCH v2] Add the tag.gpgsign option to sign all created tags
-Date: Mon, 21 Mar 2016 15:53:48 -0400
-Message-ID: <20160321195348.GA31650@sigill.intra.peff.net>
+Date: Mon, 21 Mar 2016 21:01:01 +0100
+Message-ID: <20160321200101.GE20083@spk-laptop>
 References: <20160319182310.GA23124@spk-laptop>
  <20160320042912.GD18312@sigill.intra.peff.net>
  <20160320150703.GB5139@spk-laptop>
  <xmqq7fgwnzuv.fsf@gitster.mtv.corp.google.com>
+ <20160321192904.GC20083@spk-laptop>
+ <xmqqvb4fliq6.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Laurent Arnoud <laurent@spkdev.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 20:53:59 2016
+X-From: git-owner@vger.kernel.org Mon Mar 21 21:01:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ai5tl-0006fn-U2
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 20:53:58 +0100
+	id 1ai60k-0002oO-QN
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 21:01:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756606AbcCUTxw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2016 15:53:52 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35488 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756517AbcCUTxv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2016 15:53:51 -0400
-Received: (qmail 4479 invoked by uid 102); 21 Mar 2016 19:53:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 21 Mar 2016 15:53:50 -0400
-Received: (qmail 8733 invoked by uid 107); 21 Mar 2016 19:54:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 21 Mar 2016 15:54:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Mar 2016 15:53:48 -0400
+	id S932419AbcCUUBG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2016 16:01:06 -0400
+Received: from ns3268618.ip-5-39-81.eu ([5.39.81.144]:34223 "EHLO
+	mail.spkdev.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932407AbcCUUBF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2016 16:01:05 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by mail.spkdev.net (Postfix) with ESMTPSA id 42DB7FF016;
+	Mon, 21 Mar 2016 20:01:03 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <xmqq7fgwnzuv.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqvb4fliq6.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289450>
 
-On Sun, Mar 20, 2016 at 10:50:48PM -0700, Junio C Hamano wrote:
-
-> > Support `--no-sign` option to countermand configuration `tag.gpgsign`.
+On Mon, Mar 21, 2016 at 12:43:45PM -0700, Junio C Hamano wrote:
+> > You know that when you have sign configuration enabled globally annotate is
+> > implicite, so its difficult to join both world.
 > 
-> That sound quite counter-intuitive.
-> [...]
+> Sorry, I am not sure what you mean by that.  It is unclear what two
+> worlds you are referring to.
 
-I was the one who suggested --no-sign, as we usually like to have a way
-to countermand the config. But having read your message, I agree that is
-probably not the right mental model.
+Command line options and configuration, but forget about it.
 
-In particular, this:
-
-> I can sort-of understand (but do not necessarily agree that it is a
-> good idea) adding new two configurations, i.e.
 > 
->  - "even without -a/-s, force the user to annotate the tag" is one
->    configuration, and
+> > I use same idea as in your patch
+> > `55ca3f99ae4895605a348322dd2fc50f2065f508`.
 > 
->  - "even when the user did not say -s, force the user to sign an
->    annotated tag" is the other.
+> That is not a good comparison.  55ca3f99 (commit-tree: add and
+> document --no-gpg-sign, 2013-12-13) is about signed commit, and over
+> there there are only two choices, i.e. a commit that corresponds to
+> an annotated tag, and a signed commit that corresponds to a signed
+> tag.  There is no "lightweight-tag" equivalent.
 > 
-> And with such a system, I can see why you would need an option
-> "--lightweight" to force creation of a light-weight tag (i.e. to
-> countermand the first one).  You can view this new option as
-> something that sits next to existing -a/-s.  The current system lets
-> user choose among the three variants (lightweight, annotated and
-> signed) by not giving any, giving -a, and giving -s option
-> respectively, but with the "--lightweight" option, the user can ask
-> for one of the three explicitly, as opposed to using "lack of either
-> -a/-s" as a signal to create lightweight one.
+> >> If you are forcing users to always leave a message and then further
+> >> forcing users to always sign with the single new configuration, i.e.
+> >> 
+> >>     $ git tag v1.0
+> >>     ... opens the editor to ask for a message ...
+> >>     ... then makes the user sign with GPG ...
+> >
+> > I'm not forcing this type of user to enable global configuration, that will be
+> > annoying for them of course.
+> 
+> Good.
+> 
+> If so, then the configuration is "when the user gives us a message
+> to create a tag without explicitly saying -a/-s, we create an
+> annotated tag by default, but create a signed tag instead in such a
+> case", I would think.  That is:
+> 
+>     $ git tag -m 'foo' $tagname
+> 
+> would create signed tag under such a configuration option, and I
+> think such an option may make sense.  And the way to override it
+> would be
+> 
+>     $ git tag -a -m 'foo' $tagname
+> 
+> So there is no need for --no-sign option.  When the user explicitly
+> asks to create an annotated tag with
+> 
+>     $ git tag -a -m 'foo' $tagname
+> 
+> it is unreasonable to override that explicit wish with a
+> configuration setting.
+> 
 
-makes sense to me (though like you, I do not necessarily think it is a
-good idea and would not use it myself).
+Ah, I think I understand now, I think this will not take to much effort to fix.
 
-Another similar approach would be to collapse this down to a single
-variable that selects from the options. IOW:
-
-  1. Add --lightweight for explicitly adding a lightweight tag.
-
-  2. When we are creating a tag and none of "-a", "-s", or
-     "--lightweight" is given, use the default given in
-     tag.defaultTagType (or whatever we call it), which can
-     be "lightweight", "annotated", or "signed".
-
-  3. tag.defaultTagType defaults to "lightweight".
-
-That is conceptually simpler to me, with the main differences being:
-
-  - in yours, the second config would mean that an explicit "-a" implies
-    "-s" (unless the user says --no-sign).
-
-  - in mine, there is no way to kick in the signing _only_ when we are
-    annotating. If you configure "signed", then you have to explicitly
-    say "--lightweight" for lightweight tags.
-
-I dunno. It sounds like Laurent would set it to "signed", and that would
-do what he wants. But like I said, I would not plan to use the feature
-myself, and I could see it ending up a little bit annoying when you _do_
-want a lightweight tag.
-
--Peff
+-- 
+Laurent
