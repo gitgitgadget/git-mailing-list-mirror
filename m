@@ -1,11 +1,17 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Pranit Bauva <pranit.bauva@gmail.com>
 Subject: Re: GSoC Project | Improvise git bisect
-Date: Mon, 21 Mar 2016 08:18:29 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603210814410.4690@virtualbox>
-References: <CAFZEwPN-oUDNnc_PBeP2Q4msJAHenkiLtE+Oo75R+uTTwUKpYQ@mail.gmail.com> <vpqoaaahbvi.fsf@anie.imag.fr> <CAP8UFD2fudNtGpUHTYjZKXCErocuRS65E=5tH_+_tsNFbmHCBA@mail.gmail.com> <CAFZEwPMeejJEMjYbx1sJsH0UNygDEdtNazceOePo81Abi0dHHQ@mail.gmail.com>
- <CAFZEwPP2OLOQanazPXxK1u5GVHzFWqx8GuRad7tLUyHrWR_+Tw@mail.gmail.com> <alpine.DEB.2.20.1603201628590.4690@virtualbox> <CAFZEwPMEDnzv3mLpULOY=7CQZgULx5QsAb_4Pz40iJWzt9HRGg@mail.gmail.com>
+Date: Mon, 21 Mar 2016 12:59:07 +0530
+Message-ID: <CAFZEwPNd3X9JocrrJa-d4mV-U_MZdMEq=gMxByZ9iQd6Tz4w2Q@mail.gmail.com>
+References: <CAFZEwPN-oUDNnc_PBeP2Q4msJAHenkiLtE+Oo75R+uTTwUKpYQ@mail.gmail.com>
+	<vpqoaaahbvi.fsf@anie.imag.fr>
+	<CAP8UFD2fudNtGpUHTYjZKXCErocuRS65E=5tH_+_tsNFbmHCBA@mail.gmail.com>
+	<CAFZEwPMeejJEMjYbx1sJsH0UNygDEdtNazceOePo81Abi0dHHQ@mail.gmail.com>
+	<CAFZEwPP2OLOQanazPXxK1u5GVHzFWqx8GuRad7tLUyHrWR_+Tw@mail.gmail.com>
+	<alpine.DEB.2.20.1603201628590.4690@virtualbox>
+	<CAFZEwPMEDnzv3mLpULOY=7CQZgULx5QsAb_4Pz40iJWzt9HRGg@mail.gmail.com>
+	<alpine.DEB.2.20.1603210814410.4690@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8
 Cc: Christian Couder <christian.couder@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Git List <git@vger.kernel.org>,
@@ -16,61 +22,73 @@ Cc: Christian Couder <christian.couder@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Kevin Daudt <me@ikke.info>,
 	Philip Oakley <philipoakley@iee.org>
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 08:19:08 2016
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 21 08:29:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahu7H-0007fG-Gh
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 08:19:07 +0100
+	id 1ahuH4-0004WW-Jt
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 08:29:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752521AbcCUHTE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2016 03:19:04 -0400
-Received: from mout.gmx.net ([212.227.17.20]:50637 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751602AbcCUHTB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2016 03:19:01 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MHXd2-1aecJp0Vhc-003KWz; Mon, 21 Mar 2016 08:18:33
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CAFZEwPMEDnzv3mLpULOY=7CQZgULx5QsAb_4Pz40iJWzt9HRGg@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:f4KB13fKGYL8eQGHgQ6305P/H/mqT+cGzslnIx8gKRCZ/U2T4s3
- 0P1n9qe0Z1zxTZHOKFiubuhvuxjVX/Tdn+M47ZIdjW/THm1RmWntLjKo2nonk1Zx9VdmsPp
- QEU+jMCiIbhVMzSxRpbNO90/vljm9TGZjyYDzkUc379wtuZJXcKbk+fHSFHgJzyKf50WziY
- cFzruQTwk7lkz9pX2+veA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:T0eyjIp7Hsc=:1nwa0JpwI/10IurOaGtSnz
- Ca+yw6rhv9tdN2oxXUsRzdAauXbHIIE7PPaDa2y50G0fk8JPFCQQLYgqxwergpY+Udf8yT/xp
- x9vbmPdDj/+jkdoy4o7z4VZVBRTEndb6AB1YB0ZcZUavWB40XtpCID115UeXHTg1gIeoCQ4WC
- 9fmTTd7M64xlNoNPHU3L1k5fzVHRyDnwk6fhFBI7o87dCoVe0pnJkn28pDboBvJC+dsZzx/65
- +yakXRE7lgI6Nu46cTZMTIwHIIsnoKfLUY6cvjzwIwnUY9+dDXfDcNhSctN1ZHXNwfGONJuxp
- DSC48sJNitzEXysmnbAuioT1GUvBm1PbXNNxvVydBs9EneFxxZtjlHqnr3tkrNkej5z9lX7yR
- kK06eq9I39JCjVvdgU6884SvkrvZzNMQ/vFJBsVBqPnk15vAl5rB90hNvNNIl+qtzCcUGOiOP
- ufC4eURG4w+BgHdj2nmogQmc7LnW299vY7u1VgeJS1eR7VnZcyhXvUBtZjYjrFAFIXXteKehn
- Ej2XPHn7aRefzE2XIlPJUHGSXVROKxZt5ZW53ZLlkk8PbXJHoFMO3Dnz3FGguzWntO+c4l8pI
- Mx6y5LN+39WOeMuhB6OWNtJ+FsSvvUh71UodO1KkiRjy4NTJZ8Oh0qQC7fWirxNWShQp86YHO
- 1nK3aPjl0LYEg+GBlx29GtqLr2GUgEKcxpL+SAEtxWwuOMmpidchvs+aKaD9UuLttgcZd7nLU
- joVO8wi+n+Eu2On0bsu6h8jueGBujLOGiuiCpdqH8wnp5mXSy1Nv9jbWXNJ+ti547TuKEyDf 
+	id S1752569AbcCUH3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2016 03:29:11 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:34316 "EHLO
+	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751349AbcCUH3I (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2016 03:29:08 -0400
+Received: by mail-yw0-f193.google.com with SMTP id f6so16790535ywa.1
+        for <git@vger.kernel.org>; Mon, 21 Mar 2016 00:29:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=zT39hnC/cKOmqg+kjIJDW492FTIOXTaeUJ7vZ/LQYBw=;
+        b=SmlROFyD9OyE+Lv/2PBzn/T73w05woPRHIrNTlUc3WMFZZ3QjZu3dhiwXfNcR7vCSQ
+         9l6E+sJnz0m2owav7hNd2ZRqBH/qGyRlDViHIPO4PAmOMzx+e2tsztE11d2aXYh9Mp9o
+         8yjTdUHdTK17vgWj6cdHbahik+qB6rQeRCdLdXEeweY1zo5Ay8+iTnbejyijtCS9MVEr
+         MLou+c5Y2DMJ9r1DOlfk8uzsitjnWz6tcJYQ3FO4rgepUQjxV/UWWPosK0xVHlxLVHL4
+         AgTI8LDILilXAdW94Khc4cWAnEZoYTgRahiFbPmvA5ukv6qGi8Yi+seWwTvdhylkdQfX
+         mqlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=zT39hnC/cKOmqg+kjIJDW492FTIOXTaeUJ7vZ/LQYBw=;
+        b=eVMWUVIAMvXXP9F8sBzO7+XrzKjqQAz5O0uwMhdI+3t1PLNBShUXoH8wjgZFHjwSvs
+         ZDg4ZjWcHfotJkgrnrtvcd1snvG6BXwukJm/Hhg2EbqcRx8Rgbpo/gMCaxnB3Mt1zYqY
+         4/SVfEvhbhuBRlPdfOdOZK2VIsdRm8/kWc2vM2Q1f2ryCuF09Ev/o7MkzaT5InSIzlMn
+         8ev1oqGRgRS631/PUMy95f8NWn5rq/uslcHinXtzcqrT+cil2TPcLPH8HPFQh5d846f9
+         UjgwjgDp9uFWZTotDUuLHu+j1NZ7dukPnXyQd9qws2aEe2GDN10a8RaGgYGd9i1gmE8T
+         uE1A==
+X-Gm-Message-State: AD7BkJJdMDk9Jk5yKLw0t/snoYyqRDxFySiKY+dWwkSvf82LGsnIbAKckzHzs6Tz/t7x1TvDHOrkPFqIpFBGFQ==
+X-Received: by 10.129.9.214 with SMTP id 205mr12297026ywj.53.1458545347362;
+ Mon, 21 Mar 2016 00:29:07 -0700 (PDT)
+Received: by 10.13.203.137 with HTTP; Mon, 21 Mar 2016 00:29:07 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1603210814410.4690@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289407>
 
-Hi Pranit,
+On Mon, Mar 21, 2016 at 12:48 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Pranit,
+>
+> On Sun, 20 Mar 2016, Pranit Bauva wrote:
+>
+>> I could first move individual functions to bisect--helper.c.
+>
+> My suggestion would be to give it a try already with some functionality
+> you deem small enough to move to the bisect--helper within a day or so. It
+> is always good to test the waters like that, and to include this early
+> work in the proposal, also to assess (and to let the reviewers assess) how
+> feasible the project is.
 
-On Sun, 20 Mar 2016, Pranit Bauva wrote:
+Sure! I will start with check_term_format().
 
-> I could first move individual functions to bisect--helper.c.
-
-My suggestion would be to give it a try already with some functionality
-you deem small enough to move to the bisect--helper within a day or so. It
-is always good to test the waters like that, and to include this early
-work in the proposal, also to assess (and to let the reviewers assess) how
-feasible the project is.
-
-Ciao,
-Johannes
+Also, I think implementing a new algorithm for bisect along with this
+would be too big for a GSoC project and I am no algorithm expert. I
+will stick to --first-parent along with incremental rewrite.
