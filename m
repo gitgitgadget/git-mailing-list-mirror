@@ -1,81 +1,112 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC/GSoC 01/17] perf: introduce performance tests for
- git-rebase
-Date: Mon, 21 Mar 2016 08:54:35 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603210853570.4690@virtualbox>
-References: <1457779597-6918-1-git-send-email-pyokagan@gmail.com> <1457779597-6918-2-git-send-email-pyokagan@gmail.com> <alpine.DEB.2.20.1603160855390.4690@virtualbox> <CACRoPnS=qg=a3xYKHyk-7E2HN5HhTimGirZcwL8hMa0xLY6KdA@mail.gmail.com>
- <alpine.DEB.2.20.1603161656130.4690@virtualbox> <20160318110134.GA16750@hank> <alpine.DEB.2.20.1603181659200.4690@virtualbox> <20160320140000.GB32027@hank>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [GSOC/RFC] GSoC Proposal Draft | Git Beginner
+Date: Mon, 21 Mar 2016 09:29:01 +0100
+Message-ID: <vpqd1qo5j5e.fsf@anie.imag.fr>
+References: <56EED10B.4010604@gmail.com> <vpq4mc1asmy.fsf@anie.imag.fr>
+	<56EFA558.5020301@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Paul Tan <pyokagan@gmail.com>, Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Sam Halliday <sam.halliday@gmail.com>
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 08:54:56 2016
+Content-Type: text/plain
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>, philipoakley@iee.org,
+	Kevin Daudt <me@ikke.info>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Elijah Newren <newren@gmail.com>
+To: Sidhant Sharma <tigerkid001@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 21 09:32:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahufu-0001D5-0a
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 08:54:54 +0100
+	id 1ahvGM-0001rF-9W
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 09:32:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752221AbcCUHyv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2016 03:54:51 -0400
-Received: from mout.gmx.net ([212.227.15.18]:61493 "EHLO mout.gmx.net"
+	id S1751167AbcCUIcb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2016 04:32:31 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:32904 "EHLO mx2.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751730AbcCUHyt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2016 03:54:49 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MfVU3-1aRln5335n-00P7Dj; Mon, 21 Mar 2016 08:54:36
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160320140000.GB32027@hank>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:5UOwCVGu3w4cX2NN+ZGLYO4Z9xuc3RUzzTI3qPoMdDXtnj05+aB
- zGYjJ2PaaAZ0bKMZdVdn8WpKc0KIyumb88YYLoKQYnBGCMOl0TZpJ7MtUxhtDL3CG5NyQrA
- Vb0UXxz74S+ECbmAwGZX5+BMpmKijTpQiUicY8Wpmtkfn133ueAe4Oy99Jvy9q/CfNGLa5F
- JbrYrE39DKfQVRjQLPLNA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YRJG/rwamvs=:IUu0rYsAHE1Q0zqumqexeT
- LAlEnmPnFTfyDVSMBDlSIdFVmE3bCe+Ltixxe0kfqksY46MlMHV+ZH1Q3bOfY0B2u/rfbD4gE
- 6LLympb1qk/PDmiBwp4lEeWk2ZsB9L2/IcnBf2v5+aRdjL9p5ZXDoXvnTeA90RVwlik5je8t+
- 4e4Cf8knFjSew8Be8PW13iyCFSxmKK3XYGqkRM8QCkoYtppvADlI0KFAg3Fvy1aVlbS2owI4W
- YoKbnbwPw+Mgo3TLKOpUZ2QL/DvyQV4s5iuZXhbtMIRF46m7NwLEQXtVC2+RvTuvGMydD2xRg
- 849bCb42DTi0gYALs7ij9YHAoAaJOrUesgfktuWd/gzKKbG1G1hxlDQnSXRkLGlR8p6PXRM7y
- owzDVyoObFeSxjolFQ28TFRvul4mFuJ1Nez0oQl2NCqQJpf4h27C3oleNcH2VAfXM/x51wJPN
- UrRVegSvU/5T5kW0q44hrt87zE3MsaltNZGyqztqwYOs7o7aT67KQUfd2K7eNxAnWuC3tBpcI
- Qh2pJBpIBHEKl33PtUVVZCWOiKWqQMqBniaxctAUexvYABLkfP6lbWqGZ0SUtCJYIeNkW0nG5
- z7bem8ttgf40BsgZVUMZnswxnHXjI3uGz41zDidnVEMsdaGJdZpQLiC4qPGaeJ+VkIkLBBPC0
- taWPLAxaBFaWsvegAgqo3G3BI3gtEEwXYcjUMkOhi4Mkp2NWbEES98lviZf01oVIFsDmJUDl7
- aScMKCoU+TAI4qmQn7DQ7L+TbUtf7ifGE119bG+appFTvphpDf8aTYXxb5XlS22zhVgmh5Y/ 
+	id S1750826AbcCUIc2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2016 04:32:28 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u2L8T38G021249
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 21 Mar 2016 09:29:04 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u2L8T1qp025554;
+	Mon, 21 Mar 2016 09:29:01 +0100
+In-Reply-To: <56EFA558.5020301@gmail.com> (Sidhant Sharma's message of "Mon,
+	21 Mar 2016 13:10:08 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Mon, 21 Mar 2016 09:29:05 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u2L8T38G021249
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1459153748.26207@LKjo6xVdXYUfqzPzlV5j/A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289410>
 
-Hi Thomas,
+Sidhant Sharma <tigerkid001@gmail.com> writes:
 
-On Sun, 20 Mar 2016, Thomas Gummerer wrote:
+> On Monday 21 March 2016 12:22 AM, Matthieu Moy wrote:
+>
+>> Note that it implies writting an almost full-blown option parser to
+>> recognize commands like
+>>
+>> ggit --work-tree git --namespace reset --git-dir --hard git log
+>>
+>> (just looking for "git", "reset" and "--hard" in the command-line would
+>> not work here).
+>
+> Could you please elaborate on the above command, I'm unable to
+> understand its syntax. I thought all git commands follow the
+> `git command <arguments>` syntax, so using simple string
+> manipulations and regexes would work. Am I missing something?
 
-> On 03/18, Johannes Schindelin wrote:
-> > 
-> > On Fri, 18 Mar 2016, Thomas Gummerer wrote:
-> > 
-> > > [1] http://thread.gmane.org/gmane.comp.version-control.git/1379419842-32627-1-git-send-email-t.gummerer@gmail.com
-> > 
-> > Yes, I agree that something like that is needed. The proposed commit
-> > message suggests that things get simpler, though, while I would
-> > contend that timings get more accurate.
-> > 
-> > And I think you could simply move the test_start command, but that's
-> > just from a *very* cursory reading of the patch.
-> 
-> Is it possible that you might have missed patch 2/2 [1]?
+The full syntax is
 
-Yes, I did not read that patch. Sorry for the noise.
+git [global options] <command> [options and arguments for a command]
 
-Ciao,
-Dscho
+For example:
+
+git -p log => -p is the option for "git" itself, which means "paginate"
+git log -p => -p is the option for "git log", which means "patch"
+
+Options can have stuck or non-stuck form, for example
+
+git --work-tree=foo <=> git --work-tree foo
+
+git --work-tree git --namespace reset --git-dir --hard git log
+<=>
+git --work-tree=git --namespace=reset --git-dir=--hard git log
+
+(This is probably a stupid command to type, but it's legal)
+
+The later is source of issues for a parser since you can't just iterate
+through argv[] and search for problematic commands/options, since you
+have to distinguish options themselves (--work-tree above) and option
+arguments (foo above).
+
+In my example above, I played with global options (before "git" in the
+command-line), but I could also have done that with per-command options
+taking arguments, like
+
+git push --repo --force
+
+Here, --force is the name of the repo (again, probably a stupid name,
+but why not), not the --force option.
+
+> I wasn't sure if we are allowed to code before the actual coding period begins
+> so I kept it that way. I'll update it now.
+
+You're not "forced" to, but you can write code whenever you like. We've
+already seen code written before the application!
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
