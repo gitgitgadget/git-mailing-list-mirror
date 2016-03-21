@@ -1,114 +1,114 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH][Outreachy] branch -D: allow - as abbreviation of @{-1}
-Date: Mon, 21 Mar 2016 12:27:12 -0700
-Message-ID: <CAGZ79kbmMAyd3rDokCD6RSLuoJDKfPG0m2+HszUuRYG_eHdC6A@mail.gmail.com>
-References: <1458573317-15532-1-git-send-email-elena.petrashen@gmail.com>
-	<vpqfuvju4km.fsf@anie.imag.fr>
-	<xmqqtwjzn2nu.fsf@gitster.mtv.corp.google.com>
-	<CAPig+cQNBeBaLb-znNgxOanUz++pQLae=c8vUtFXjqxOns4d-g@mail.gmail.com>
-	<xmqqegb3n1if.fsf@gitster.mtv.corp.google.com>
-	<CAJPOeMediYQMwvgqhOquVh+KT61gdpUew9ernjuOYuf8By=hZQ@mail.gmail.com>
-	<CAPig+cQ-kmHeQsMMKdj0joSHWEnGfirSM1WbC-6G2BiMLnoUGg@mail.gmail.com>
+From: Laurent Arnoud <laurent@spkdev.net>
+Subject: Re: [PATCH v2] Add the tag.gpgsign option to sign all created tags
+Date: Mon, 21 Mar 2016 20:29:04 +0100
+Message-ID: <20160321192904.GC20083@spk-laptop>
+References: <20160319182310.GA23124@spk-laptop>
+ <20160320042912.GD18312@sigill.intra.peff.net>
+ <20160320150703.GB5139@spk-laptop>
+ <xmqq7fgwnzuv.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: elena petrashen <elena.petrashen@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 20:27:25 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 21 20:29:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ai5U4-0006Ht-Nf
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 20:27:25 +0100
+	id 1ai5Vt-0007cn-11
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 20:29:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932271AbcCUT1S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2016 15:27:18 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:36353 "EHLO
-	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932254AbcCUT1O (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2016 15:27:14 -0400
-Received: by mail-io0-f178.google.com with SMTP id 124so69097619iov.3
-        for <git@vger.kernel.org>; Mon, 21 Mar 2016 12:27:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=ZfUipQvRzaNpNAj27AatyWy7G5LBqF8ptRvA+xnyu90=;
-        b=A+Rf1Q1sfNxCoN2hNAfwWbZ5cNnc1AVCg4ZUzuvjQ/YZLbJwibhSjRrBadreDWPsLW
-         35T9adrLVO/WRp2/DfNAFCyRPlmWgC0QnSlFD9wfD55YH12AioPHGM+qewaQIloAB5Ow
-         Ex6IRRjuRJUY9NyN/gteV9mZCWpcWnuGA0mI9PfTjrtmFj1DYrVzwc2Vuc1SPEgeX90N
-         4ZvdjV9iJCSij5DwhUtK4iRw9hAzPIISwbuieputjp2UejKZD7IEyR6mUb+x9PNoWmCa
-         Sm5HyLmCpq5CsDfTHhUDrYA2/6xj39paRS5zE1A22x9iUhUhp5NdSbslRZQi96C+bU0W
-         B/XQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=ZfUipQvRzaNpNAj27AatyWy7G5LBqF8ptRvA+xnyu90=;
-        b=iNxOdHrMrnES8fikApRKtf1eoASIusMrcywqZ/8uX9rXoGQF0pcCyzqaoPXR1OXrk5
-         1zDz6ouUMsc8D4H2Fjx1E/dbbL0rkRCiAgBkZfe6pi0k1CJ2kkpZGLGvzKi3P+wE8lzW
-         9bfNhfug7GyeA4v5k4YW4iSmBDmLHVpuobHqTt33mnanCI+PhHjudnjN1vVe/prNgY7O
-         wBrltC//Ci0jeeNViwgzwOlOU1BwuWqnLZHTIy/QEb6UKVJd6qYKQhvQVlr56wPE/8TY
-         vAihJeOPBI3MQ764GuoagBOEryih0Z4icZjNCaNWZoF97+BpH90/h9m8g/zrS6bMicmz
-         q5tA==
-X-Gm-Message-State: AD7BkJIf4YoVztEMH863XWIj4nFRrWBcb4U5i+i0/d4nXE5ooxOGOtWO5D5nWQHVEeORL5/PqnkM16Ny1128D/UF
-X-Received: by 10.107.158.138 with SMTP id h132mr29171876ioe.174.1458588433036;
- Mon, 21 Mar 2016 12:27:13 -0700 (PDT)
-Received: by 10.107.132.101 with HTTP; Mon, 21 Mar 2016 12:27:12 -0700 (PDT)
-In-Reply-To: <CAPig+cQ-kmHeQsMMKdj0joSHWEnGfirSM1WbC-6G2BiMLnoUGg@mail.gmail.com>
+	id S1756407AbcCUT3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2016 15:29:12 -0400
+Received: from ns3268618.ip-5-39-81.eu ([5.39.81.144]:33997 "EHLO
+	mail.spkdev.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755699AbcCUT3L (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2016 15:29:11 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by mail.spkdev.net (Postfix) with ESMTPSA id 77D04FF016;
+	Mon, 21 Mar 2016 19:29:06 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <xmqq7fgwnzuv.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289441>
 
-On Mon, Mar 21, 2016 at 12:14 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> [please don't top-post; respond inline instead]
->
-> On Mon, Mar 21, 2016 at 2:53 PM, elena petrashen
-> <elena.petrashen@gmail.com> wrote:
->> Thank you for the feedback!
->> The safety concert is indeed a good point. Would it maybe make
->> sense to request user to confirm this operation? I.e:
->> $git delete -D -
->> You've requested to delete "foo" branch. Proceed with deleting? y/n
->
-> Rather than requiring the user to stop and answer a question, an
-> alternative would be to perform the deletion as requested but then
-> give advice about how to recover if the wrong branch was deleted by
-> mistake, much in the way advice is given when switching to a detached
-> head. (And, the advice could be suppressed by an "advice"
-> configuration variable similar to how other advice messages can be
-> suppressed.)
+On Sun, Mar 20, 2016 at 10:50:48PM -0700, Junio C Hamano wrote:
+> > The `tag.gpgsign` config option allows to sign all
+> > commits automatically.
+> 
+> I presume that you meant "all annotated tags" here.  But I am not
+> sure it this is sensible.
 
-There is some advice, but it is not spelled out for beginners IMO
+Yes its a mistake.
 
-    Deleted branch test_branch (was c62f9fe).
+> > Support `--no-sign` option to countermand configuration `tag.gpgsign`.
+> So I do not see why you need a new --no-sign option at all.  If
+> you have the configuration and you do want to create an unsigned
+> annotated tag one-shot, all you need is to explicitly ask for "-a"
+> i.e.
+> 
+>     $ git tag -a -m "my message" v1.0
+> 
+> isn't it?
 
-I would assume intermediate Git users would know c62f9fe to be a sha1 which
-can be used to retrieve the content of the deleted branch. It is a good
-idea nevertheless to add
+You know that when you have sign configuration enabled globally annotate is
+implicite, so its difficult to join both world. I use same idea as in your
+patch `55ca3f99ae4895605a348322dd2fc50f2065f508`.
 
-    To recover the branch: "git branch test_branch c62f9fe
+> If you are forcing users to always leave a message and then further
+> forcing users to always sign with the single new configuration, i.e.
+> 
+>     $ git tag v1.0
+>     ... opens the editor to ask for a message ...
+>     ... then makes the user sign with GPG ...
 
-I would not even make it configurable to suppress it as it is just 2 more
-lines.
+I'm not forcing this type of user to enable global configuration, that will be
+annoying for them of course.
+I tried to fix a need I have currently and this is a good compromise for me.
 
-Thanks,
-Stefan
+> then I would first have to say that is a bad idea.
+> 
+> I can sort-of understand (but do not necessarily agree that it is a
+> good idea) adding new two configurations, i.e.
+> 
+>  - "even without -a/-s, force the user to annotate the tag" is one
+>    configuration, and
+> 
+>  - "even when the user did not say -s, force the user to sign an
+>    annotated tag" is the other.
+> 
+> And with such a system, I can see why you would need an option
+> "--lightweight" to force creation of a light-weight tag (i.e. to
+> countermand the first one).  You can view this new option as
+> something that sits next to existing -a/-s.  The current system lets
+> user choose among the three variants (lightweight, annotated and
+> signed) by not giving any, giving -a, and giving -s option
+> respectively, but with the "--lightweight" option, the user can ask
+> for one of the three explicitly, as opposed to using "lack of either
+> -a/-s" as a signal to create lightweight one.
+> 
+> And in the context of such a system, "--no-sign" may make sense to
+> override the second configuration (i.e. "force the user to sign an
+> annotated tag").
+> 
+> But otherwise, adding only "--no-sign" does not make much sense to
+> me, as it implies "not signing always means annotated", which is not
+> true.  It is unclear between lightweight and annotated which one the
+> user who says "--no-sign" really wants.
 
->
->> Also, do you think - shortcut is justifiable for $git branch -m when
->> referring to the "old branch"?
->
-> It comes up once in a while that I've switched away from a branch and
-> then decide I want to rename it, but it's infrequent enough that it's
-> difficult to say if it would be generally useful.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+As I said it's difficult to easily join both world, as you know with
+configuration and command line options. This is an override and if its really a
+no go for this patch without refactoring this I will stop my work on it.
+
+Just let me know I will send a patch v3 updated with tests after this.
+
+Cheers,
+
+-- 
+Laurent
