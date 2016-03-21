@@ -1,230 +1,137 @@
-From: Mehul Jain <mehul.jain2029@gmail.com>
-Subject: [PATCH v10 2/2] pull --rebase: add --[no-]autostash flag
-Date: Mon, 21 Mar 2016 23:48:03 +0530
-Message-ID: <1458584283-23816-3-git-send-email-mehul.jain2029@gmail.com>
-References: <1458584283-23816-1-git-send-email-mehul.jain2029@gmail.com>
-Cc: gitster@pobox.com, Matthieu.Moy@grenoble-inp.fr,
-	pyokagan@gmail.com, sunshine@sunshineco.com,
-	Mehul Jain <mehul.jain2029@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 21 19:19:22 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: merge: fix NULL pointer dereference when merging nothing into void
+Date: Mon, 21 Mar 2016 12:01:43 -0700
+Message-ID: <xmqq7fgvmz8o.fsf_-_@gitster.mtv.corp.google.com>
+References: <CAPig+cRVtzLjKTW7FZ-h8thEXkTqBJtbSwpKJs3+wdRHYV1qrQ@mail.gmail.com>
+	<1458519102-32621-1-git-send-email-joseivan@lavid.ufpb.br>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: sunshine@sunshineco.com, git@vger.kernel.org
+To: "Jose Ivan B. Vilarouca Filho" <joseivan@lavid.ufpb.br>
+X-From: git-owner@vger.kernel.org Mon Mar 21 20:19:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ai4Q9-0006d6-TS
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 19:19:18 +0100
+	id 1ai5MA-0001CY-0I
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 20:19:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757064AbcCUSTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2016 14:19:13 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:34690 "EHLO
-	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754735AbcCUSTM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2016 14:19:12 -0400
-Received: by mail-pf0-f194.google.com with SMTP id n5so31358146pfn.1
-        for <git@vger.kernel.org>; Mon, 21 Mar 2016 11:19:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+gJX6PBkdFw0O78IO0o6hcY0gqyJm9WhBU8hr39lwZY=;
-        b=mLRLui9SPl4FfVYNnygvT+XuEcEG/dSpP/lTOHz/jYPb6RqI0OME97CAykZYkR81Pu
-         88IE+flbcOsnM4OKxrwGKdTHC6piHBPorQEgxE0EARLMMMhXUiMolmLsFmwbN8/7/SON
-         W4Vi8ogDJwIAQaRj1xw+/InusIeZ+O7y5PB10l8h8z5sCjCy7qou0aFz68KZPx+JKRGd
-         eiJMaVZTPr66cyN0WvtA23gSrsj037y080p2o2Fjzn900cjRVQ+t6F4T6sAQ/lwtPGnw
-         y37E/+Wrn+PFGCHsDP4q8Knz/TutNQqa4WbUVUUxJHKeiKzAMGxtqF0+bp/1YKo34Vw0
-         WnCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=+gJX6PBkdFw0O78IO0o6hcY0gqyJm9WhBU8hr39lwZY=;
-        b=hIpIoRaGZpXGTUYFJqZ1lIGDxoe/MfvB/EXwvNrxdiNHDvpdjf2BJpL/eCAUZCHgNS
-         8tiEVKl65/5D2BeAlDfD0ZEnErNODoBcofWQlMMzwHQyxHC1n+uBIJZOxElp7OX18WEk
-         g2n2IH4Dm9kskhyL2c5yF/UPcVEGdFTYqoKKD3wVwuJNvJJPYNR/qUHn6OrCN4ksRe+z
-         gbX4OrOn40nNFf29IOMsbjyTRZZdKzLEs+veoO1u6CLmB4fMAy6N0H7EX9UEUXuoim8s
-         +cpalK8Fn9QKh4GVJxCHx+ocrq6A/Dhs9AI9K2LrslYrzvUI/+XgeLoglczTzKA1J5Aq
-         W5Xg==
-X-Gm-Message-State: AD7BkJKqnDcHfGhWFMK7jI30TSSLD96pkWg0weVp6XFLQH5gqHwBo6raZ6bDz4XI2oV5XA==
-X-Received: by 10.98.71.86 with SMTP id u83mr15209350pfa.156.1458584352246;
-        Mon, 21 Mar 2016 11:19:12 -0700 (PDT)
-Received: from localhost.localdomain ([1.39.36.202])
-        by smtp.gmail.com with ESMTPSA id ud8sm42378768pac.11.2016.03.21.11.19.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 21 Mar 2016 11:19:11 -0700 (PDT)
-X-Mailer: git-send-email 2.7.1.340.g69eb491.dirty
-In-Reply-To: <1458584283-23816-1-git-send-email-mehul.jain2029@gmail.com>
+	id S1757613AbcCUTSx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2016 15:18:53 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:60848 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757562AbcCUTSt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2016 15:18:49 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0396A4D986;
+	Mon, 21 Mar 2016 15:01:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=u5AZJ8Y6iwvTuflNBCF3hYwCzjQ=; b=SIHjj5
+	BXqhk+f7wDmudeTxZSLyrFj+EDzRHMVxIBar/3EpWWREMbuq5Mzs8KqHsXgqbR0e
+	KeQUarTzTqADTbtoBzLsRh7trM459XTDtGL56CwVlNSozoFbqNqZJY98NmI/dsy9
+	IKNxZ64vFyn13CvapNyd7Lpy8nfetiHjzTRM4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CywllASZ57v/JS5gJmoIm4RsegJgmQ4Z
+	9rLsS3EaN8t26GklwVRb+d6in+UXlLpobKiioFKI62AlEAbJmt86kL62s53ssTmz
+	PBddoL4N6rEfoCv+EDGwSAACvK+W4cYMr2sA3LhlVcHtDjaLZHQVzNfpBxh3AkF8
+	/LgyeU6qsPU=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EE1214D985;
+	Mon, 21 Mar 2016 15:01:45 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5ABE64D982;
+	Mon, 21 Mar 2016 15:01:45 -0400 (EDT)
+In-Reply-To: <1458519102-32621-1-git-send-email-joseivan@lavid.ufpb.br> (Jose
+	Ivan B. Vilarouca Filho's message of "Sun, 20 Mar 2016 20:11:42
+	-0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 5B33A242-EF97-11E5-8A70-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289437>
 
-If rebase.autoStash configuration variable is set, there is no way to
-override it for "git pull --rebase" from the command line.
+When we are on an unborn branch and merging only one foreign parent,
+we allow "git merge" to fast-forward to that foreign parent commit.
 
-Teach "git pull --rebase" the --[no-]autostash command line flag which
-overrides the current value of rebase.autoStash, if set. As "git rebase"
-understands the --[no-]autostash option, it's just a matter of passing
-the option to underlying "git rebase" when "git pull --rebase" is called.
+This codepath incorrectly attempted to dereference the list of
+parents that the merge is going to record even when the list is
+empty.  It must refuse to operate instead when there is no parent.
 
-Helped-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Paul Tan <pyokagan@gmail.com>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Mehul Jain <mehul.jain2029@gmail.com>
+All other codepaths make sure the list is not empty before they
+dereference it, and are safe.
+
+Reported by Jose Ivan B. Vilarouca Filho
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-pull.txt |  9 ++++++
- builtin/pull.c             | 12 ++++++++
- t/t5520-pull.sh            | 70 ++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 91 insertions(+)
 
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index a62a2a6..3914507 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -128,6 +128,15 @@ unless you have read linkgit:git-rebase[1] carefully.
- --no-rebase::
- 	Override earlier --rebase.
+ * So here is what I came up with as a suggestion.  The original
+   check to see if remote_head is empty is simply bogus (an empty
+   list would to have a single element whose item is NULL), so I
+   rewrote it to clarify what is going on in this codepath.
+
+ builtin/merge.c  | 10 +++++-----
+ t/t7600-merge.sh | 10 ++++++++++
+ 2 files changed, 15 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 101ffef..bf2f261 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1257,12 +1257,12 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			builtin_merge_options);
  
-+--autostash::
-+--no-autostash::
-+	Before starting rebase, stash local modifications away (see
-+	linkgit:git-stash.txt[1]) if needed, and apply the stash when
-+	done. `--no-autostash` is useful to override the `rebase.autoStash`
-+	configuration variable (see linkgit:git-config[1]).
-++
-+This option is only valid when "--rebase" is used.
-+
- Options related to fetching
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index c21897d..d98f481 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -86,6 +86,7 @@ static char *opt_commit;
- static char *opt_edit;
- static char *opt_ff;
- static char *opt_verify_signatures;
-+static int opt_autostash = -1;
- static int config_autostash;
- static struct argv_array opt_strategies = ARGV_ARRAY_INIT;
- static struct argv_array opt_strategy_opts = ARGV_ARRAY_INIT;
-@@ -150,6 +151,8 @@ static struct option pull_options[] = {
- 	OPT_PASSTHRU(0, "verify-signatures", &opt_verify_signatures, NULL,
- 		N_("verify that the named commit has a valid GPG signature"),
- 		PARSE_OPT_NOARG),
-+	OPT_BOOL(0, "autostash", &opt_autostash,
-+		N_("automatically stash/stash pop before and after rebase")),
- 	OPT_PASSTHRU_ARGV('s', "strategy", &opt_strategies, N_("strategy"),
- 		N_("merge strategy to use"),
- 		0),
-@@ -802,6 +805,10 @@ static int run_rebase(const unsigned char *curr_head,
- 	argv_array_pushv(&args, opt_strategy_opts.argv);
- 	if (opt_gpg_sign)
- 		argv_array_push(&args, opt_gpg_sign);
-+	if (opt_autostash == 0)
-+		argv_array_push(&args, "--no-autostash");
-+	else if (opt_autostash == 1)
-+		argv_array_push(&args, "--autostash");
- 
- 	argv_array_push(&args, "--onto");
- 	argv_array_push(&args, sha1_to_hex(merge_head));
-@@ -847,8 +854,13 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 	if (get_sha1("HEAD", orig_head))
- 		hashclr(orig_head);
- 
-+	if (!opt_rebase && opt_autostash != -1)
-+		die(_("--[no-]autostash option is only valid with --rebase."));
-+
- 	if (opt_rebase) {
- 		int autostash = config_autostash;
-+		if (opt_autostash != -1)
-+			autostash = opt_autostash;
- 
- 		if (is_null_sha1(orig_head) && !is_cache_unborn())
- 			die(_("Updating an unborn branch with changes added to the index."));
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index c952d5e..745e59e 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -256,6 +256,76 @@ test_expect_success 'pull --rebase succeeds with dirty working directory and reb
- 	test "$(cat file)" = "modified again"
+ 	if (!head_commit) {
+-		struct commit *remote_head;
+ 		/*
+ 		 * If the merged head is a valid one there is no reason
+ 		 * to forbid "git merge" into a branch yet to be born.
+ 		 * We do the same for "git pull".
+ 		 */
++		unsigned char *remote_head_sha1;
+ 		if (squash)
+ 			die(_("Squash commit into empty head not supported yet"));
+ 		if (fast_forward == FF_NO)
+@@ -1270,13 +1270,13 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			    "an empty head"));
+ 		remoteheads = collect_parents(head_commit, &head_subsumed,
+ 					      argc, argv, NULL);
+-		remote_head = remoteheads->item;
+-		if (!remote_head)
++		if (!remoteheads)
+ 			die(_("%s - not something we can merge"), argv[0]);
+ 		if (remoteheads->next)
+ 			die(_("Can merge only exactly one commit into empty head"));
+-		read_empty(remote_head->object.oid.hash, 0);
+-		update_ref("initial pull", "HEAD", remote_head->object.oid.hash,
++		remote_head_sha1 = remoteheads->item->object.oid.hash;
++		read_empty(remote_head_sha1, 0);
++		update_ref("initial pull", "HEAD", remote_head_sha1,
+ 			   NULL, 0, UPDATE_REFS_DIE_ON_ERR);
+ 		goto done;
+ 	}
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 302e238..9d7952f 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -725,4 +725,14 @@ test_expect_success 'merge detects mod-256 conflicts (resolve)' '
+ 	test_must_fail git merge -s resolve master
  '
  
-+test_expect_success 'pull --rebase --autostash & rebase.autostash=true' '
-+	test_config rebase.autostash true &&
-+	git reset --hard before-rebase &&
-+	echo dirty >new_file &&
-+	git add new_file &&
-+	git pull --rebase --autostash . copy &&
-+	test_cmp_rev HEAD^ copy &&
-+	test "$(cat new_file)" = dirty &&
-+	test "$(cat file)" = "modified again"
++test_expect_success 'merge nothing into void' '
++	git init void &&
++	(
++		cd void &&
++		git remote add up .. &&
++		git fetch up &&
++		test_must_fail git merge FETCH_HEAD
++	)
 +'
 +
-+test_expect_success 'pull --rebase --autostash & rebase.autoStash=false' '
-+	test_config rebase.autostash false &&
-+	git reset --hard before-rebase &&
-+	echo dirty >new_file &&
-+	git add new_file &&
-+	git pull --rebase --autostash . copy &&
-+	test_cmp_rev HEAD^ copy &&
-+	test "$(cat new_file)" = dirty &&
-+	test "$(cat file)" = "modified again"
-+'
-+
-+test_expect_success 'pull --rebase: --autostash & rebase.autoStash unset' '
-+	git reset --hard before-rebase &&
-+	echo dirty >new_file &&
-+	git add new_file &&
-+	git pull --rebase --autostash . copy &&
-+	test_cmp_rev HEAD^ copy &&
-+	test "$(cat new_file)" = dirty &&
-+	test "$(cat file)" = "modified again"
-+'
-+
-+test_expect_success 'pull --rebase --no-autostash & rebase.autostash=true' '
-+	test_config rebase.autostash true &&
-+	git reset --hard before-rebase &&
-+	echo dirty >new_file &&
-+	git add new_file &&
-+	test_must_fail git pull --rebase --no-autostash . copy 2>err &&
-+	test_i18ngrep "Cannot pull with rebase: Your index contains uncommitted changes." err
-+'
-+
-+test_expect_success 'pull --rebase --no-autostash & rebase.autostash=false' '
-+	test_config rebase.autostash false &&
-+	git reset --hard before-rebase &&
-+	echo dirty >new_file &&
-+	git add new_file &&
-+	test_must_fail git pull --rebase --no-autostash . copy 2>err &&
-+	test_i18ngrep "Cannot pull with rebase: Your index contains uncommitted changes." err
-+'
-+
-+test_expect_success 'pull --rebase --no-autostash & rebase.autostash unset' '
-+	git reset --hard before-rebase &&
-+	echo dirty >new_file &&
-+	git add new_file &&
-+	test_must_fail git pull --rebase --no-autostash . copy 2>err &&
-+	test_i18ngrep "Cannot pull with rebase: Your index contains uncommitted changes." err
-+'
-+
-+test_expect_success 'pull --autostash (without --rebase) should error out' '
-+	test_must_fail git pull --autostash . copy 2>actual &&
-+	echo "fatal: --[no-]autostash option is only valid with --rebase." >expect &&
-+	test_i18ncmp actual expect
-+'
-+
-+test_expect_success 'pull --no-autostash (without --rebase) should error out' '
-+	test_must_fail git pull --no-autostash . copy 2>actual &&
-+	echo "fatal: --[no-]autostash option is only valid with --rebase." >expect &&
-+	test_i18ncmp actual expect
-+'
-+
- test_expect_success 'pull.rebase' '
- 	git reset --hard before-rebase &&
- 	test_config pull.rebase true &&
--- 
-2.7.1.340.g69eb491.dirty
+ test_done
