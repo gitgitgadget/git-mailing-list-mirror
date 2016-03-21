@@ -1,102 +1,220 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git master describe segfault
-Date: Mon, 21 Mar 2016 12:31:16 -0700
-Message-ID: <xmqqzitrljaz.fsf@gitster.mtv.corp.google.com>
-References: <alpine.DEB.2.20.1603211025330.20859@tvnag.unkk.fr>
+From: Laurent Arnoud <laurent@spkdev.net>
+Subject: [PATCH v3] Add the tag.gpgsign option to sign annotated tags
+Date: Mon, 21 Mar 2016 20:32:07 +0100
+Message-ID: <20160321193207.GD20083@spk-laptop>
+References: <20160319182310.GA23124@spk-laptop>
+ <20160320042912.GD18312@sigill.intra.peff.net>
+ <20160320150703.GB5139@spk-laptop>
+ <xmqq7fgwnzuv.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Daniel Stenberg <daniel@haxx.se>
-X-From: git-owner@vger.kernel.org Mon Mar 21 20:31:35 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 21 20:32:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ai5Y5-0000cX-Ec
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 20:31:33 +0100
+	id 1ai5Z5-0001NJ-9W
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 20:32:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932415AbcCUTbW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2016 15:31:22 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:50468 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932559AbcCUTbT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2016 15:31:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 207044E369;
-	Mon, 21 Mar 2016 15:31:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EGDWTuB4s8jmCueXEbBLWqF5f5g=; b=bMtyPx
-	bGM1ubi/T0j5s/M2HOJ91O7Et0Pa/HGGP+8sgXa5Ri5AFtTsiQgBna+OSHWUtnMu
-	ErS0zs/tVwZ8hKTNx27WGeNVu0kaOulvRyk+nYM9lXYV7MVudnYmlcwbrfju7uEy
-	/cGP64lzO/+dyubcpHlnrhlYwVORvjQRST7uQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nHeo+6beGaq4CvpcdRgi8QvTbX8DjPDA
-	hnUH8B+NNns0hoty+Z3LwQMrpuHWiEAsBuUTMrWzZjnNtQm4hknvs+68RNqB7fEE
-	1GAvUZvh6OnYX+VcqShMzdqIYWefPvx/J3BEENilwLcTYTYMqVzlJGornx8fjiFs
-	uwCyEZQFGYM=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 16D1B4E368;
-	Mon, 21 Mar 2016 15:31:18 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1757509AbcCUTc3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2016 15:32:29 -0400
+Received: from ns3268618.ip-5-39-81.eu ([5.39.81.144]:34043 "EHLO
+	mail.spkdev.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756526AbcCUTcL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2016 15:32:11 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 813354E367;
-	Mon, 21 Mar 2016 15:31:17 -0400 (EDT)
-In-Reply-To: <alpine.DEB.2.20.1603211025330.20859@tvnag.unkk.fr> (Daniel
-	Stenberg's message of "Mon, 21 Mar 2016 10:35:05 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7B7D607A-EF9B-11E5-857D-79226BB36C07-77302942!pb-smtp0.pobox.com
+	by mail.spkdev.net (Postfix) with ESMTPSA id 9E660FF016;
+	Mon, 21 Mar 2016 19:32:08 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <xmqq7fgwnzuv.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289443>
 
-Daniel Stenberg <daniel@haxx.se> writes:
+The `tag.gpgsign` config option allows to sign all
+annotated tags automatically.
 
-> 0. I'm on a Linux box: a reasonably updated Debian unstable.
->
-> 1. I'm up to date with the latest git master branch of gecko-dev:
-> https://github.com/mozilla/gecko-dev (counting a little over 467K
-> commits)
->
-> 2. I built the current git off the master branch (v2.8.0-rc3-12-g047057b)
->
-> 3. In the gecko-dev dir, I run 'git describe --contains f495d0cc2'
->
-> The outcome is what looks like a fine stack smash due to very very
-> extensive recursion:
->
-> $ gdb --args ../git/git describe --contains f495d0cc2
-> (gdb) run
-> Program received signal SIGSEGV, Segmentation fault.
-> 0x00007ffff7bccf73 in ?? () from /lib/x86_64-linux-gnu/libz.so.1
-> ...
-> #12 0x0000000000464662 in name_rev (commit=0x170df20,
-> tip_name=0x8e9170 "B2G_1_0_0_20130115070201", generation=87254,
-> distance=87254, deref=0) at builtin/name-rev.c:30
-> #13 0x00000000004647de in name_rev (commit=0x170dee0,
-> tip_name=0x8e9170 "B2G_1_0_0_20130115070201", generation=87253,
-> distance=87253, deref=0) at builtin/name-rev.c:72
-> #14 0x00000000004647de in name_rev (commit=0x170dea0,
-> tip_name=0x8e9170 "B2G_1_0_0_20130115070201", generation=87252,
-> distance=87252, deref=0) at builtin/name-rev.c:72
-> #15 0x00000000004647de in name_rev (commit=0x170de60,
-> tip_name=0x8e9170 "B2G_1_0_0_20130115070201", generation=87251,
-> distance=87251, deref=0) at builtin/name-rev.c:72
-> #16 0x00000000004647de in name_rev (commit=0x170de20,
-> tip_name=0x8e9170 "B2G_1_0_0_20130115070201", generation=87250,
-> distance=87250, deref=0) at builtin/name-rev.c:72
-> #17 0x00000000004647de in name_rev (commit=0x170dde0,
-> tip_name=0x8e9170 "B2G_1_0_0_20130115070201", generation=87249,
-> distance=87249, deref=0) at builtin/name-rev.c:72
+Support `--no-sign` option to countermand configuration `tag.gpgsign`.
 
-It does look bad.  name_rev() naively recurses quite a lot and
-easily runs out of stack space, it seems (rewriting the recursion
-to iterative implementation may help).  I haven't looked at this
-code carefully for quite a while, but I suspect piece of memory
-pointed at by new_name variable may also be leaking.
+Signed-off-by: Laurent Arnoud <laurent@spkdev.net>
+Reviewed-by: Jeff King <peff@peff.net>
+---
+ Documentation/config.txt  |  5 +++++
+ Documentation/git-tag.txt |  6 +++++-
+ builtin/tag.c             | 21 ++++++++++++++++-----
+ t/t7004-tag.sh            | 45 +++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 71 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 2cd6bdd..ba9d4da 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2729,6 +2729,11 @@ submodule.<name>.ignore::
+ 	"--ignore-submodules" option. The 'git submodule' commands are not
+ 	affected by this setting.
  
++tag.gpgSign::
++	A boolean to specify whether annotated tags created should be GPG signed.
++	If `--no-sign` is specified on the command line, it takes
++	precedence over this option.
++
+ tag.sort::
+ 	This variable controls the sort ordering of tags when displayed by
+ 	linkgit:git-tag[1]. Without the "--sort=<value>" option provided, the
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index abab481..180edd2 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -9,7 +9,7 @@ git-tag - Create, list, delete or verify a tag object signed with GPG
+ SYNOPSIS
+ --------
+ [verse]
+-'git tag' [-a | -s | -u <keyid>] [-f] [-m <msg> | -F <file>]
++'git tag' [-a | -s | --no-sign | -u <keyid>] [-f] [-m <msg> | -F <file>]
+ 	<tagname> [<commit> | <object>]
+ 'git tag' -d <tagname>...
+ 'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
+@@ -64,6 +64,10 @@ OPTIONS
+ --sign::
+ 	Make a GPG-signed tag, using the default e-mail address's key.
+ 
++--no-sign::
++	Countermand `tag.gpgSign` configuration variable that is
++	set to force annoted tags to be signed.
++
+ -u <keyid>::
+ --local-user=<keyid>::
+ 	Make a GPG-signed tag, using the given key.
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 1705c94..2a7b2f2 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -29,6 +29,7 @@ static const char * const git_tag_usage[] = {
+ };
+ 
+ static unsigned int colopts;
++static unsigned int sign_tag_config;
+ 
+ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting, const char *format)
+ {
+@@ -166,6 +167,11 @@ static int git_tag_config(const char *var, const char *value, void *cb)
+ 	status = git_gpg_config(var, value, cb);
+ 	if (status)
+ 		return status;
++	if (!strcmp(var, "tag.gpgsign")) {
++		sign_tag_config = git_config_bool(var, value) ? 1 : 0;
++		return 0;
++	}
++
+ 	if (starts_with(var, "column."))
+ 		return git_column_config(var, value, "tag", &colopts);
+ 	return git_default_config(var, value, cb);
+@@ -195,7 +201,7 @@ static void write_tag_body(int fd, const unsigned char *sha1)
+ 
+ static int build_tag_object(struct strbuf *buf, int sign, unsigned char *result)
+ {
+-	if (sign && do_sign(buf) < 0)
++	if (sign > 0 && do_sign(buf) < 0)
+ 		return error(_("unable to sign the tag"));
+ 	if (write_sha1_file(buf->buf, buf->len, tag_type, result) < 0)
+ 		return error(_("unable to write tag file"));
+@@ -204,7 +210,7 @@ static int build_tag_object(struct strbuf *buf, int sign, unsigned char *result)
+ 
+ struct create_tag_options {
+ 	unsigned int message_given:1;
+-	unsigned int sign;
++	int sign;
+ 	enum {
+ 		CLEANUP_NONE,
+ 		CLEANUP_SPACE,
+@@ -378,17 +384,22 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	memset(&opt, 0, sizeof(opt));
+ 	memset(&filter, 0, sizeof(filter));
+ 	filter.lines = -1;
++	opt.sign = -1;
+ 
+ 	argc = parse_options(argc, argv, prefix, options, git_tag_usage, 0);
+ 
++	if (argc == 0 && !cmdmode)
++		cmdmode = 'l';
++
++	if (!cmdmode && sign_tag_config && opt.sign != 0)
++		opt.sign = 1;
++
+ 	if (keyid) {
+ 		opt.sign = 1;
+ 		set_signing_key(keyid);
+ 	}
+-	if (opt.sign)
++	if (opt.sign > 0)
+ 		annotate = 1;
+-	if (argc == 0 && !cmdmode)
+-		cmdmode = 'l';
+ 
+ 	if ((annotate || msg.given || msgfile || force) && (cmdmode != 0))
+ 		usage_with_options(git_tag_usage, options);
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index cf3469b..4e45361 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -775,6 +775,51 @@ test_expect_success GPG '-s implies annotated tag' '
+ 	test_cmp expect actual
+ '
+ 
++get_tag_header config-implied-annotate $commit commit $time >expect
++./fakeeditor >>expect
++echo '-----BEGIN PGP SIGNATURE-----' >>expect
++git config tag.gpgsign true
++test_expect_success GPG \
++	'git tag -s implied if configured with tag.gpgsign' \
++	'GIT_EDITOR=./fakeeditor git tag config-implied-annotate &&
++	get_tag_msg config-implied-annotate >actual &&
++	test_cmp expect actual
++'
++git config --unset tag.gpgsign
++
++get_tag_header config-implied-annotate-disabled $commit commit $time >expect
++echo "A message" >>expect
++git config tag.gpgsign true
++test_expect_success GPG \
++	'git tag --no-sign disable configured tag.gpgsign' \
++	'git tag --no-sign -m "A message" config-implied-annotate-disabled &&
++	get_tag_msg config-implied-annotate-disabled >actual &&
++	test_cmp expect actual &&
++	test_must_fail git tag -v config-implied-annotate-disabled
++'
++git config --unset tag.gpgsign
++
++get_tag_header config-disabled-gpgsign $commit commit $time >expect
++echo "A message" >>expect
++echo '-----BEGIN PGP SIGNATURE-----' >>expect
++git config tag.gpgsign false
++test_expect_success GPG \
++	'git tag --sign enable GPG sign' \
++	'git tag --sign -m "A message" config-disabled-gpgsign &&
++	get_tag_msg config-disabled-gpgsign >actual &&
++	test_cmp expect actual
++'
++git config --unset tag.gpgsign
++
++git config tag.gpgsign true
++test_expect_success GPG \
++	'git tag --no-sign disable configured tag.gpgsign and annotate' \
++	'git tag --no-sign config-non-annotated-tag &&
++	tag_exists config-non-annotated-tag &&
++	test_must_fail git tag -v config-non-annotated-tag
++'
++git config --unset tag.gpgsign
++
+ test_expect_success GPG \
+ 	'trying to create a signed tag with non-existing -F file should fail' '
+ 	! test -f nonexistingfile &&
+-- 
+2.7.0
