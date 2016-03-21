@@ -1,119 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [GIT PULL] l10n updates for 2.8.0 round 3
-Date: Sun, 20 Mar 2016 20:33:34 -0700
-Message-ID: <CAPc5daWam3xJCMJwmwGLtGbOHvWgH6sU0go+3Vg9zi2_acWTXA@mail.gmail.com>
-References: <CANYiYbGCLE5xrNYPjvTfp9cho8ccb3xuNv0kMaFVt8jkmHfd_A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Changwoo Ryu <cwryu@debian.org>,
-	Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>,
-	Jean-Noel Avila <jn.avila@free.fr>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Ralf Thielow <ralf.thielow@gmail.com>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 04:34:04 2016
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH 1/2] git-compat-util: st_add4: work around gcc 4.2.x compiler crash
+Date: Mon, 21 Mar 2016 00:35:57 -0400
+Message-ID: <1458534958-6956-2-git-send-email-sunshine@sunshineco.com>
+References: <1458534958-6956-1-git-send-email-sunshine@sunshineco.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
+	Renato Botelho <garga@freebsd.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 21 05:36:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahqbR-0002Gp-Om
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 04:34:02 +0100
+	id 1ahra4-0004oe-SM
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 05:36:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751713AbcCUDd4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Mar 2016 23:33:56 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:35960 "EHLO
-	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751490AbcCUDdz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Mar 2016 23:33:55 -0400
-Received: by mail-yw0-f196.google.com with SMTP id p65so16317280ywb.3
-        for <git@vger.kernel.org>; Sun, 20 Mar 2016 20:33:55 -0700 (PDT)
+	id S1751846AbcCUEgi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2016 00:36:38 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:34135 "EHLO
+	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751572AbcCUEgf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2016 00:36:35 -0400
+Received: by mail-io0-f193.google.com with SMTP id o5so13081572iod.1
+        for <git@vger.kernel.org>; Sun, 20 Mar 2016 21:36:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=y4EUmmrw1StpLBd00XglimZwW/y+Nmg50g6XIztwko0=;
-        b=Ax/f7K01vKfRV2OmnqB4xgmdLRkahTeqAslvS5gZBb7e/L00tUmM7ubwWOFlN9jgqZ
-         tWUqrLvxy7QDlsTT3fyDbv8pcfZ+Z1A1RL2obl85E1SaR7XOAywJSmICPMSjrtlDnhiE
-         fKsV2fu898mBLWXqIIgigMZN4fBVQNgQoB9i3ean7qlw/axRGCoDNzoAURJvDH9cFjBe
-         JUAxzKnU+L01z267esBPpW10zB2f8qWeop+S3Nj0OWKMfNT7C7jQLMK07GiJdVLDz396
-         8X2MlXRXK5xgKkpd2ByRged2vjj+FseoPQ0uHxL6akeqIRV9EIvqwNEvNA0WFPXNa4wf
-         MnRQ==
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Ews6RjNvorAYFy7po/zGWb6AuIC3k03kpyj57zcaUII=;
+        b=PI4+fFv3UhR8AxiZ9qyHYXUKJ18VkRESAmIX5IA64xsywKyWuq5PVl6iAI8hz3z9b4
+         Wc3ODS3hYXygpKw9Uj7r3OLgE7RcG53ImALaMny2FP7K2P7ALCy0n4hdvrmS++cfIOqb
+         2tbhICSpiShlZps0EY4CqBINxqRC9evp/tINq34CQBIxyqqoCCKO8qYkR6FuXVFfHWhy
+         6pdoUODI4Rn1I82uaImH+KpQ7w+mKSkZXoW9RX8pv0EGhohZ9qTGewxYtBzrEH4hlq8x
+         8oxOAQ9964gTwLuDpZxXdmdgGYnSIEcAqNh9Tr0vuHDql0R36RtrW6BfMlAiE1Tgkh3R
+         7Jzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=y4EUmmrw1StpLBd00XglimZwW/y+Nmg50g6XIztwko0=;
-        b=PRacG3rSo4+tF7szX817US/7IG8toynW0dXgMq840aOdmR7dZFJRJ+XiJi8PhlI5Ia
-         UYcEc1bN1BC4TYpT6HAakJ6TZqez8caaQGxM8JFg1EeikLPK/3TXRia16ogk33ILNKvQ
-         PPPchRBFkrlJkNgaYSpUjDE30gnHVkyxASZbWSX1gZ6B5g6K09Plr8Yzlc2MgobBnAKJ
-         G8IGTnYAUnvFUD/gy8UruMuDussVyXnkp9SmRrZNo6yCRs/+CVI/6YwJYXQyeeBPNzfP
-         q/EkKW4TM+0YnkKrNFItntd4iyickBcwSEpfWRvZtjSVd3l+rYRzTs4wNJB1WJ8bNEZd
-         idJw==
-X-Gm-Message-State: AD7BkJKOH3xPMNwVCZhWzaPmm3C1w0W980tQJoqV6MciI3o/3deVOCx4XaB+HigCO+QyyY3S8BMbkiLvPo+ODg==
-X-Received: by 10.13.245.135 with SMTP id e129mr14421187ywf.106.1458531234358;
- Sun, 20 Mar 2016 20:33:54 -0700 (PDT)
-Received: by 10.13.219.14 with HTTP; Sun, 20 Mar 2016 20:33:34 -0700 (PDT)
-In-Reply-To: <CANYiYbGCLE5xrNYPjvTfp9cho8ccb3xuNv0kMaFVt8jkmHfd_A@mail.gmail.com>
-X-Google-Sender-Auth: wTnNsUktxpwMgJlK9YNbWdohLvY
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :in-reply-to:references;
+        bh=Ews6RjNvorAYFy7po/zGWb6AuIC3k03kpyj57zcaUII=;
+        b=NyuKhb/tsp7DK/jDTRiSMsI2O3HEw7XjevCLp2hgSgZEEmgXVYDkgtj48Clo0Zwumo
+         +rnQRyjI1Hogd9N+PfhESPeLj8AtdzhVqqmiYqU/DbUc0GDrevsbX5YXLElzqJLTRE7h
+         pSIIWvu2u2DWvqiupceK5jMNooJ1++NTQCp5RiHfeB6QDSnnNnGcapolI+xXcb1QwPkX
+         lpiwSs3v+dk5bxyQaaTv/QTI71B1C0usGLQZVUytg17m3KU7I/FRO0F7sNOEVrrQ/uYI
+         2tnznj70ZJOxry0xfKX6fAIPoiZy+onzAKLnHvtx9KFPmrO11aTBXxwVTsvpjPBqNDJU
+         zPGA==
+X-Gm-Message-State: AD7BkJKmbiuryH516aDSi+c7jGJhOVdBK7hYecc+XYfvrWwHcsSpJPjP2WsHuDjaHvY62g==
+X-Received: by 10.107.3.34 with SMTP id 34mr29629048iod.159.1458534994719;
+        Sun, 20 Mar 2016 21:36:34 -0700 (PDT)
+Received: from localhost.localdomain (user-12l3c5v.cable.mindspring.com. [69.81.176.191])
+        by smtp.gmail.com with ESMTPSA id i187sm10725620ioi.33.2016.03.20.21.36.33
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sun, 20 Mar 2016 21:36:34 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0.rc3.240.g104e649
+In-Reply-To: <1458534958-6956-1-git-send-email-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289396>
 
-Thanks.
+Although changes by 5b442c4 (tree-diff: catch integer overflow in
+combine_diff_path allocation, 2016-02-19) are perfectly valid, they
+unfortunately trigger an internal compiler error in gcc 4.2.x:
 
-On Sun, Mar 20, 2016 at 4:08 AM, Jiang Xin <worldhello.net@gmail.com> wrote:
-> Hi Junio,
->
-> The following changes since commit 5c0c220c53823e2a9ebe8e566e649ca30cd7e8e0:
->
->   l10n: zh_CN: for git v2.8.0 l10n round 3 (2016-03-16 00:27:40 +0800)
->
-> are available in the git repository at:
->
->   git://github.com/git-l10n/git-po tags/l10n-2.8.0-rnd3
->
-> for you to fetch changes up to 26e4cbec4558ea21cd572bfc915a462f63c1ebb4:
->
->   l10n: zh_CN: review for git v2.8.0 l10n round 2 (2016-03-20 18:46:02 +0800)
->
-> ----------------------------------------------------------------
-> l10n-2.8.0-rnd3
->
-> ----------------------------------------------------------------
-> Changwoo Ryu (1):
->       l10n: ko.po: Update Korean translation
->
-> Dimitriy Ryazantcev (1):
->       l10n: ru.po: update Russian translation
->
-> Jean-Noel Avila (1):
->       l10n: fr.po v2.8.0 round 3
->
-> Jiang Xin (3):
->       Merge branch 'master' of git://github.com/nafmo/git-l10n-sv
->       Merge branch 'ko/merge-l10n' of https://github.com/changwoo/git-l10n-ko
->       Merge branch 'fr_v2.8.0_r3' of git://github.com/jnavila/git
->
-> Peter Krefting (1):
->       l10n: sv.po: Update Swedish translation (2530t0f0u)
->
-> Ralf Thielow (2):
->       l10n: de.po: translate 22 new messages
->       l10n: de.po: add missing newlines
->
-> Ray Chen (1):
->       l10n: zh_CN: review for git v2.8.0 l10n round 2
->
->  po/de.po    | 172 +++++++++++++++++++++++++++++++++++++++++++++++-------------
->  po/fr.po    |  12 +++--
->  po/ko.po    |  10 ++--
->  po/ru.po    |   8 ++-
->  po/sv.po    | 153 ++++++++++++++++++++++++++++++++++++++++++-----------
->  po/zh_CN.po |  10 ++--
->  6 files changed, 283 insertions(+), 82 deletions(-)
->
-> --
-> Jiang Xin
+    combine-diff.c: In function 'diff_tree_combined':
+    combine-diff.c:1391: internal compiler error: Segmentation fault: 11
+
+Experimentation reveals that changing st_add4()'s argument evaluation
+order is sufficient to sidestep this problem.
+
+Although st_add3() does not trigger the compiler bug, for style
+consistency, change its argument evaluation order to match.
+
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
+ git-compat-util.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index c07e0c1..4743954 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -715,8 +715,8 @@ static inline size_t st_add(size_t a, size_t b)
+ 		    (uintmax_t)a, (uintmax_t)b);
+ 	return a + b;
+ }
+-#define st_add3(a,b,c)   st_add((a),st_add((b),(c)))
+-#define st_add4(a,b,c,d) st_add((a),st_add3((b),(c),(d)))
++#define st_add3(a,b,c)   st_add(st_add((a),(b)),(c))
++#define st_add4(a,b,c,d) st_add(st_add3((a),(b),(c)),(d))
+ 
+ static inline size_t st_mult(size_t a, size_t b)
+ {
+-- 
+2.8.0.rc3.240.g104e649
