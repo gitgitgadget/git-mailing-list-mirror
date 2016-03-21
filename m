@@ -1,112 +1,98 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [GSOC/RFC] GSoC Proposal Draft | Git Beginner
-Date: Mon, 21 Mar 2016 09:29:01 +0100
-Message-ID: <vpqd1qo5j5e.fsf@anie.imag.fr>
-References: <56EED10B.4010604@gmail.com> <vpq4mc1asmy.fsf@anie.imag.fr>
-	<56EFA558.5020301@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>, philipoakley@iee.org,
-	Kevin Daudt <me@ikke.info>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Elijah Newren <newren@gmail.com>
-To: Sidhant Sharma <tigerkid001@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 21 09:32:35 2016
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v6 4/4] config: add '--show-origin' option to print the origin of a config value
+Date: Mon, 21 Mar 2016 09:53:15 +0100
+Message-ID: <E8903192-701B-4EE9-B804-B612EAAF7A45@gmail.com>
+References: <1455873362-66998-1-git-send-email-larsxschneider@gmail.com> <1455873362-66998-5-git-send-email-larsxschneider@gmail.com> <56D723F0.7020106@kdbg.org>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org, peff@peff.net, ramsay@ramsayjones.plus.com,
+	gitster@pobox.com, Johannes.Schindelin@gmx.de
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Mar 21 09:53:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahvGM-0001rF-9W
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 09:32:34 +0100
+	id 1ahvaX-0002xa-Uq
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 09:53:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751167AbcCUIcb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2016 04:32:31 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:32904 "EHLO mx2.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750826AbcCUIc2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2016 04:32:28 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u2L8T38G021249
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 21 Mar 2016 09:29:04 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u2L8T1qp025554;
-	Mon, 21 Mar 2016 09:29:01 +0100
-In-Reply-To: <56EFA558.5020301@gmail.com> (Sidhant Sharma's message of "Mon,
-	21 Mar 2016 13:10:08 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Mon, 21 Mar 2016 09:29:05 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u2L8T38G021249
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1459153748.26207@LKjo6xVdXYUfqzPzlV5j/A
+	id S1752013AbcCUIxW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2016 04:53:22 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33309 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751371AbcCUIxV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Mar 2016 04:53:21 -0400
+Received: by mail-wm0-f65.google.com with SMTP id x188so20286524wmg.0
+        for <git@vger.kernel.org>; Mon, 21 Mar 2016 01:53:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=EF080uuJe1g2TGOOZ0NU8jNe/tL67gwSZuhdCpLnx/8=;
+        b=Cc6nEhpPpzQJc+o+hZZL/kPrs/upo0qBsvUP8HljjxAY1Vbap55AegB8U5nQZ8BLUi
+         Qw5vLAwqf9oHUWtR3mlL2Pgtzsa2xf7BHlmFnEjhwcT/FiqnQk+h6ZRHWngmYNqm+mcQ
+         /bT5+l1ylrfxGqhOUuynRlQc+bRou8jEfs5cN98MuHDn+8rahBEajUzqhGucCFLE1AAq
+         fsaA3J1s3u2CSXkg/x5ZD7YtBfyVeiHRRgLUzg97B+OGinm1Nn1mMMEW2g2JB79XchD6
+         aFAtKaLSZ7QIhdfSomNVkTa2R0t/cvbAgmLcCVhVAk0MrPBtJ428tsoPraZIlcjwC+K0
+         ub6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=EF080uuJe1g2TGOOZ0NU8jNe/tL67gwSZuhdCpLnx/8=;
+        b=cZDGyhiKSnqXsVeZXszd6WQv7y+k952xH+DaApgNpnsxEKAIT9luTzgd487FVc1QQ/
+         owpuaXcT4IkhYQBX7RiKgmWpTtV9/sPYD0bdIBDC98QoppLNEb9w8LsuFPTeh8jFNOj+
+         +fMQoFc98Q/rVJRUGgWpsXA0f9cqPp5IKT8ApvAfqsLaKlO0LziduWC+w/qrMGIHHR99
+         fPf7PJg75W/KnmP7BVwLRnRKXT3aXjMUwOBp9n0GtklU34KTg479yX20coPJcJYTgvFK
+         uEwAnEbLNSvsbkZcKhxjco6YbLtJpRzX2N3YBS7V2ljKWWb59YAB/wDJdiyYGqn9K0nU
+         fGyQ==
+X-Gm-Message-State: AD7BkJJ6kzETPa1NPZappeaMPUuvgX9s1qmpX6BO3NkA5OiJAY7wJlimzThiKsIzMHC9ew==
+X-Received: by 10.28.177.134 with SMTP id a128mr13342127wmf.55.1458550399514;
+        Mon, 21 Mar 2016 01:53:19 -0700 (PDT)
+Received: from slxbook3.fritz.box (p508BA303.dip0.t-ipconnect.de. [80.139.163.3])
+        by smtp.gmail.com with ESMTPSA id ei9sm24194751wjd.40.2016.03.21.01.53.17
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 21 Mar 2016 01:53:18 -0700 (PDT)
+In-Reply-To: <56D723F0.7020106@kdbg.org>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289411>
 
-Sidhant Sharma <tigerkid001@gmail.com> writes:
 
-> On Monday 21 March 2016 12:22 AM, Matthieu Moy wrote:
->
->> Note that it implies writting an almost full-blown option parser to
->> recognize commands like
->>
->> ggit --work-tree git --namespace reset --git-dir --hard git log
->>
->> (just looking for "git", "reset" and "--hard" in the command-line would
->> not work here).
->
-> Could you please elaborate on the above command, I'm unable to
-> understand its syntax. I thought all git commands follow the
-> `git command <arguments>` syntax, so using simple string
-> manipulations and regexes would work. Am I missing something?
+On 02 Mar 2016, at 18:33, Johannes Sixt <j6t@kdbg.org> wrote:
 
-The full syntax is
+> Am 19.02.2016 um 10:16 schrieb larsxschneider@gmail.com:
+>> +test_expect_success '--show-origin with --list' '
+>> +	cat >expect <<-EOF &&
+>> +		file:$HOME/.gitconfig	user.global=true
+>> +		file:$HOME/.gitconfig	user.override=global
+>> +		file:$HOME/.gitconfig	include.path=$INCLUDE_DIR/absolute.include
+> 
+> On Windows, this injects POSIX-style paths in the expected output, but git.exe produces mangled paths (with a drive letter). The pattern I use to fix this is:
+> 
+> 		file:$(pwd)/.gitconfig	user.override=global
 
-git [global options] <command> [options and arguments for a command]
+I tried that. But then I get this (notice the quotation marks):
 
-For example:
+-file:C:/git-sdk-64/usr/src/git/t/trash directory.t1300-repo-config/.gitconfig  user.global=true
++file:"C:\\git-sdk-64\\usr\\src\\git\\t\\trash directory.t1300-repo-config/.gitconfig"  user.global=true
 
-git -p log => -p is the option for "git" itself, which means "paginate"
-git log -p => -p is the option for "git log", which means "patch"
+I am struggling to find a solution that works on all platforms. I see the following options:
 
-Options can have stuck or non-stuck form, for example
+(1) I detect MINGW in the test run and check for another string
+(2) I detect MINGW in the test run and change the output of 'git config --show-origin' with a regex (e.g. replace \\ with / and remote quotation marks)
+(3) I change the implementation of 'git config --show-origin' similar to [1]
 
-git --work-tree=foo <=> git --work-tree foo
+If I get your comment ($gmane/288203) correctly then (3) wouldn't be a good idea.
+I think (1) would be the cleanest way. Do you have some pointers for me how
+Git for Windows solved these kind of problems in the past?
 
-git --work-tree git --namespace reset --git-dir --hard git log
-<=>
-git --work-tree=git --namespace=reset --git-dir=--hard git log
+Thanks,
+Lars
 
-(This is probably a stupid command to type, but it's legal)
-
-The later is source of issues for a parser since you can't just iterate
-through argv[] and search for problematic commands/options, since you
-have to distinguish options themselves (--work-tree above) and option
-arguments (foo above).
-
-In my example above, I played with global options (before "git" in the
-command-line), but I could also have done that with per-command options
-taking arguments, like
-
-git push --repo --force
-
-Here, --force is the name of the repo (again, probably a stupid name,
-but why not), not the --force option.
-
-> I wasn't sure if we are allowed to code before the actual coding period begins
-> so I kept it that way. I'll update it now.
-
-You're not "forced" to, but you can write code whenever you like. We've
-already seen code written before the application!
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+[1] https://groups.google.com/forum/#!topic/git-for-windows/zTv60HhfnYk
