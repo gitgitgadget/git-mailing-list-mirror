@@ -1,124 +1,120 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3] Add the tag.gpgsign option to sign annotated tags
-Date: Mon, 21 Mar 2016 15:42:38 -0400
-Message-ID: <20160321194237.GA28301@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Add the tag.gpgsign option to sign all created tags
+Date: Mon, 21 Mar 2016 12:43:45 -0700
+Message-ID: <xmqqvb4fliq6.fsf@gitster.mtv.corp.google.com>
 References: <20160319182310.GA23124@spk-laptop>
- <20160320042912.GD18312@sigill.intra.peff.net>
- <20160320150703.GB5139@spk-laptop>
- <xmqq7fgwnzuv.fsf@gitster.mtv.corp.google.com>
- <20160321193207.GD20083@spk-laptop>
+	<20160320042912.GD18312@sigill.intra.peff.net>
+	<20160320150703.GB5139@spk-laptop>
+	<xmqq7fgwnzuv.fsf@gitster.mtv.corp.google.com>
+	<20160321192904.GC20083@spk-laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
 To: Laurent Arnoud <laurent@spkdev.net>
-X-From: git-owner@vger.kernel.org Mon Mar 21 20:42:46 2016
+X-From: git-owner@vger.kernel.org Mon Mar 21 20:43:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ai5iv-00081N-Oo
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 20:42:46 +0100
+	id 1ai5k3-0000Lc-38
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 20:43:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756437AbcCUTmm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2016 15:42:42 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35472 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754735AbcCUTml (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2016 15:42:41 -0400
-Received: (qmail 3776 invoked by uid 102); 21 Mar 2016 19:42:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 21 Mar 2016 15:42:40 -0400
-Received: (qmail 8595 invoked by uid 107); 21 Mar 2016 19:42:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 21 Mar 2016 15:42:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Mar 2016 15:42:38 -0400
-Content-Disposition: inline
-In-Reply-To: <20160321193207.GD20083@spk-laptop>
+	id S1757783AbcCUTnt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2016 15:43:49 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:56466 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757772AbcCUTns (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2016 15:43:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C91604E74C;
+	Mon, 21 Mar 2016 15:43:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nQY73r6M982KkPojauJ2rFWDEP8=; b=KGeAf8
+	0fncQAwutNdXEoBcERjR/lhe237Nj/qSwehJPxnXO4MHFDJtV1ZCa462/+sHXp6Z
+	vlGyE2M3pD6UhtzgmM8aRVMQNspFFxS8+IPebPE5/Z9EK9xscN4A6SXZ4mwiT9Tr
+	zdcS7NF5ADJUjTAkwQeQB7lO8sYTWbcZGNrq8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KrPmnUXYbt+gHc2zGzXemlBVEE944k+v
+	sjCccAlMUlQimPi5P7iXrGe0NmpwAJSyeJV/o+ruoRmp/eFx4GejnqlxrRrkqpyn
+	731ZVs1+lihKunt9aXkZ7ExFWM6IvCbOK6tqIAMcO3ACGwxPv9aSxSrwJjmE1DXs
+	jBgQ3B/ZnBI=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C004C4E74B;
+	Mon, 21 Mar 2016 15:43:46 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 405C94E748;
+	Mon, 21 Mar 2016 15:43:46 -0400 (EDT)
+In-Reply-To: <20160321192904.GC20083@spk-laptop> (Laurent Arnoud's message of
+	"Mon, 21 Mar 2016 20:29:04 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 39C5113A-EF9D-11E5-A276-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289448>
 
-On Mon, Mar 21, 2016 at 08:32:07PM +0100, Laurent Arnoud wrote:
+Laurent Arnoud <laurent@spkdev.net> writes:
 
-> The `tag.gpgsign` config option allows to sign all
-> annotated tags automatically.
-> 
-> Support `--no-sign` option to countermand configuration `tag.gpgsign`.
-> 
-> Signed-off-by: Laurent Arnoud <laurent@spkdev.net>
-> Reviewed-by: Jeff King <peff@peff.net>
+>> > Support `--no-sign` option to countermand configuration `tag.gpgsign`.
+>> So I do not see why you need a new --no-sign option at all.  If
+>> you have the configuration and you do want to create an unsigned
+>> annotated tag one-shot, all you need is to explicitly ask for "-a"
+>> i.e.
+>> 
+>>     $ git tag -a -m "my message" v1.0
+>> 
+>> isn't it?
+>
+> You know that when you have sign configuration enabled globally annotate is
+> implicite, so its difficult to join both world.
 
-The meaning of "Reviewed-by" in this project is generally that the
-mentioned person has read and approved of the change. But in this case,
-I have not seen v3 at all yet, and I am also not sure that the ones I
-_did_ review are ready for merging.
+Sorry, I am not sure what you mean by that.  It is unclear what two
+worlds you are referring to.
 
-So you should probably drop that.
+> I use same idea as in your patch
+> `55ca3f99ae4895605a348322dd2fc50f2065f508`.
 
-> +tag.gpgSign::
-> +	A boolean to specify whether annotated tags created should be GPG signed.
-> +	If `--no-sign` is specified on the command line, it takes
-> +	precedence over this option.
+That is not a good comparison.  55ca3f99 (commit-tree: add and
+document --no-gpg-sign, 2013-12-13) is about signed commit, and over
+there there are only two choices, i.e. a commit that corresponds to
+an annotated tag, and a signed commit that corresponds to a signed
+tag.  There is no "lightweight-tag" equivalent.
 
-I take this to mean that we _only_ kick in signing if the created tag
-would otherwise be annotated (and I thought that's what you meant in
-your other mail, too). But that's not what happens with this patch, and
-your tests check for the opposite:
+>> If you are forcing users to always leave a message and then further
+>> forcing users to always sign with the single new configuration, i.e.
+>> 
+>>     $ git tag v1.0
+>>     ... opens the editor to ask for a message ...
+>>     ... then makes the user sign with GPG ...
+>
+> I'm not forcing this type of user to enable global configuration, that will be
+> annoying for them of course.
 
-> +get_tag_header config-implied-annotate $commit commit $time >expect
-> +./fakeeditor >>expect
-> +echo '-----BEGIN PGP SIGNATURE-----' >>expect
-> +git config tag.gpgsign true
-> +test_expect_success GPG \
-> +	'git tag -s implied if configured with tag.gpgsign' \
-> +	'GIT_EDITOR=./fakeeditor git tag config-implied-annotate &&
-> +	get_tag_msg config-implied-annotate >actual &&
-> +	test_cmp expect actual
-> +'
-> +git config --unset tag.gpgsign
+Good.
 
-That's a lightweight tag that becomes an annotated one due to the config
-variable.
+If so, then the configuration is "when the user gives us a message
+to create a tag without explicitly saying -a/-s, we create an
+annotated tag by default, but create a signed tag instead in such a
+case", I would think.  That is:
 
-So I think there may be some design-level issues to work out here, but
-I'll comment on a few more code-specific things, in case that code does
-get carried through:
+    $ git tag -m 'foo' $tagname
 
-> +	if (!strcmp(var, "tag.gpgsign")) {
-> +		sign_tag_config = git_config_bool(var, value) ? 1 : 0;
-> +		return 0;
-> +	}
+would create signed tag under such a configuration option, and I
+think such an option may make sense.  And the way to override it
+would be
 
-git_config_bool() already converts to 0/1, you can just say:
+    $ git tag -a -m 'foo' $tagname
 
-  sign_tag_config = git_config_bool(var, value);
+So there is no need for --no-sign option.  When the user explicitly
+asks to create an annotated tag with
 
-> +get_tag_header config-implied-annotate-disabled $commit commit $time >expect
-> +echo "A message" >>expect
-> +git config tag.gpgsign true
-> +test_expect_success GPG \
-> +	'git tag --no-sign disable configured tag.gpgsign' \
-> +	'git tag --no-sign -m "A message" config-implied-annotate-disabled &&
-> +	get_tag_msg config-implied-annotate-disabled >actual &&
-> +	test_cmp expect actual &&
-> +	test_must_fail git tag -v config-implied-annotate-disabled
-> +'
-> +git config --unset tag.gpgsign
+    $ git tag -a -m 'foo' $tagname
 
-Here (and in the other tests), you can use:
-
-  test_config tag.gpgsign true &&
-  ...
-
-inside the test_expect_success block. That has two advantages:
-
-  1. If setting the config fails for some reason, we'll notice and the
-     test will fail.
-
-  2. At the end of the test block, it will automatically clean up the
-     variable for us.
-
--Peff
+it is unreasonable to override that explicit wish with a
+configuration setting.
