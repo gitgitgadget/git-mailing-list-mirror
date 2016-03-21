@@ -1,133 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Add the tag.gpgsign option to sign all created tags
-Date: Sun, 20 Mar 2016 22:50:48 -0700
-Message-ID: <xmqq7fgwnzuv.fsf@gitster.mtv.corp.google.com>
-References: <20160319182310.GA23124@spk-laptop>
-	<20160320042912.GD18312@sigill.intra.peff.net>
-	<20160320150703.GB5139@spk-laptop>
+From: Jeff King <peff@peff.net>
+Subject: Re: Properties of trees referencing commit objects (mode 160000)?
+Date: Mon, 21 Mar 2016 01:57:13 -0400
+Message-ID: <20160321055712.GA21568@sigill.intra.peff.net>
+References: <20160319221348.GA5247@x>
+ <20160320041803.GC18312@sigill.intra.peff.net>
+ <20160320184524.GA16064@x>
+ <20160320200724.GC6288@sigill.intra.peff.net>
+ <20160320232202.GB20803@x>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Laurent Arnoud <laurent@spkdev.net>
-X-From: git-owner@vger.kernel.org Mon Mar 21 06:51:04 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Josh Triplett <josh@joshtriplett.org>
+X-From: git-owner@vger.kernel.org Mon Mar 21 06:57:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ahsk2-0006Xb-VF
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 06:51:03 +0100
+	id 1ahsqL-00025e-F8
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 06:57:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751676AbcCUFuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2016 01:50:54 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:53621 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751623AbcCUFuw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2016 01:50:52 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 94CCF46432;
-	Mon, 21 Mar 2016 01:50:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NZC2kVjMwjHu1MP8s4hX4sTVHN0=; b=cx8cWC
-	Nz2tGDss1/0n9ZNJGEwaqEUD6grrBHDt2RLXIPhisl7f2YojoLq9itCUDJWHct45
-	dk6dmTMiEVxeSWXVSJrPSHwNOzlCJL5IosKlCdtfn/nDh4/AIRHpR+DJrNfTHDZi
-	Flb6vygG9IjEHVjsdNtTsqzUnM7VQdpcTA1PU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iIR/owGOOm0KFHYPtfGZX/0D8ZzR2alu
-	yvgNoZPN1EIvwERdapQDa6KarOIvjyXQNGOkCU+aBW6i10vLqMh4QWbVVrIWjwvq
-	B6eq2m6Z46QzIQA90nDZluJLBGiw6j+xFr/DQ7eAVN7FeiWzXM8fsgGRjP3F6CLz
-	/YrRttv09JA=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8213146431;
-	Mon, 21 Mar 2016 01:50:50 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id ECF8046430;
-	Mon, 21 Mar 2016 01:50:49 -0400 (EDT)
-In-Reply-To: <20160320150703.GB5139@spk-laptop> (Laurent Arnoud's message of
-	"Sun, 20 Mar 2016 16:07:03 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DD938208-EF28-11E5-A55F-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751411AbcCUF5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2016 01:57:16 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35123 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750965AbcCUF5Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2016 01:57:16 -0400
+Received: (qmail 30539 invoked by uid 102); 21 Mar 2016 05:57:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 21 Mar 2016 01:57:15 -0400
+Received: (qmail 2702 invoked by uid 107); 21 Mar 2016 05:57:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 21 Mar 2016 01:57:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Mar 2016 01:57:13 -0400
+Content-Disposition: inline
+In-Reply-To: <20160320232202.GB20803@x>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289404>
 
-Laurent Arnoud <laurent@spkdev.net> writes:
+On Sun, Mar 20, 2016 at 04:22:02PM -0700, Josh Triplett wrote:
 
-> The `tag.gpgsign` config option allows to sign all
-> commits automatically.
+> I want to track the evolution of a patch series or other commit history,
+> through non-fast-forwarding actions like rebase, rebase -i, or commit
+> --amend.  Similar in spirit to reflog, but with intentional commits and
+> commit messages, and most importantly with the ability to share and
+> collaborate on it.  For each version of the patch series, I plan to
+> track the commit at the end of the series, and optionally the commit at
+> the base of the patch series (to simplify tracking of rebasing); I'll
+> use the tree object associated with the commit to track the cover
+> letter, and perhaps meta-changelog entries associated with v2/v3/vN of
+> the series.
+> 
+> Patch series almost always need to evolve through non-fast-forwarding
+> history.  And I've seen that done in two ways: either pull the patch
+> series out of git, put it in quilt or similar, and track the quilt
+> series with git; or pull the versioning of the patch series out of git
+> and track it with branch names like feature-v2, feature-2016-03-20,
+> feature-rebased, and feature-rebased-4.4-fixed-foo-fixed-bar.  That last
+> one closely matches a real-world example I've recently seen.  And that
+> starts to look a lot like the naming of files and documents in
+> organizations that haven't yet discovered the wonders of version
+> control.
+> 
+> I'd like to have the best of both worlds: handle the patch series in
+> git, *and* handle the versioning of the patch series in git.
 
-I presume that you meant "all annotated tags" here.  But I am not
-sure it this is sensible.
+It seems like you could represent this in git by storing a merge commit
+for each revision of the patch series, with one parent as the current
+real tip of the series, and the other as the merge-commit for the
+previous revision of the series. The tree would be the same as current
+tip commit's tree. You could store metadata about the series in the
+merge commits (presumably including some marker to say "I'm a special
+series-revision commit, not a regular merge").
 
-> Support `--no-sign` option to countermand configuration `tag.gpgsign`.
+That's roughly the same as having "feature-v1", "feature-v2", etc, in a
+tree, except that you have to walk down the parent pointers to discover
+each entry, rather than walking the tree.
 
-That sound quite counter-intuitive.
+The resulting history would be viewable with naive "git log", but you
+would probably want to use "--first-parent" to see just the revisions,
+or some to-be-invented option to see just the most recent commits (e.g.,
+something like: if the commit subject is "magic-token: my-series", then
+skip this commit, show the second parent, and then walk down the first
+parent chain, skipping commits until we hit a commit that doesn't have
+"magic-token: my-series" in it).
 
-    $ git tag -s -m "my message" v1.0
+And it would just work for transferring revisions. You'd probably have
+one ref per patch series (pointing to the marker commit of the most
+recent version), and the "real" clean history of the project would never
+include any of the revision markers at all (though it could if you
+really wanted to).
 
-is an explicit request to create a signed tag, as opposed to
+But I will be the first to admit that I haven't thought too hard on
+this. It may even be that I just unconsciously regurgitated somebody
+else's storage scheme. Once upon a time I was interesting in "topgit",
+"guilt", and other tools, but I haven't looked at them in years.
 
+So it may well be that somebody tried something like this, and already
+discovered its downsides. :)
 
-    $ git tag -a -m "my message" v1.0
-
-is an explicit request to create an unsigned annotated tag.  So 
-
-I think a short-hand
-
-    $ git tag -m "my message" v1.0
-
-falls back to annotated and not signed tag, and I can understand
-if the patch is about allowing the user to tweak this fallback to
-create signed tag instead.
-
-So I do not see why you need a new --no-sign option at all.  If
-you have the configuration and you do want to create an unsigned
-annotated tag one-shot, all you need is to explicitly ask for "-a"
-i.e.
-
-    $ git tag -a -m "my message" v1.0
-
-isn't it?
-
-If you are forcing users to always leave a message and then further
-forcing users to always sign with the single new configuration, i.e.
-
-    $ git tag v1.0
-    ... opens the editor to ask for a message ...
-    ... then makes the user sign with GPG ...
-
-then I would first have to say that is a bad idea.
-
-I can sort-of understand (but do not necessarily agree that it is a
-good idea) adding new two configurations, i.e.
-
- - "even without -a/-s, force the user to annotate the tag" is one
-   configuration, and
-
- - "even when the user did not say -s, force the user to sign an
-   annotated tag" is the other.
-
-And with such a system, I can see why you would need an option
-"--lightweight" to force creation of a light-weight tag (i.e. to
-countermand the first one).  You can view this new option as
-something that sits next to existing -a/-s.  The current system lets
-user choose among the three variants (lightweight, annotated and
-signed) by not giving any, giving -a, and giving -s option
-respectively, but with the "--lightweight" option, the user can ask
-for one of the three explicitly, as opposed to using "lack of either
--a/-s" as a signal to create lightweight one.
-
-And in the context of such a system, "--no-sign" may make sense to
-override the second configuration (i.e. "force the user to sign an
-annotated tag").
-
-But otherwise, adding only "--no-sign" does not make much sense to
-me, as it implies "not signing always means annotated", which is not
-true.  It is unclear between lightweight and annotated which one the
-user who says "--no-sign" really wants.
+-Peff
