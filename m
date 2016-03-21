@@ -1,198 +1,153 @@
-From: Elena Petrashen <elena.petrashen@gmail.com>
-Subject: [PATCH][Outreachy] branch -D: allow - as abbreviation of @{-1}
-Date: Mon, 21 Mar 2016 18:15:17 +0300
-Message-ID: <1458573317-15532-1-git-send-email-elena.petrashen@gmail.com>
+From: Josh Triplett <josh@joshtriplett.org>
+Subject: Re: Properties of trees referencing commit objects (mode 160000)?
+Date: Mon, 21 Mar 2016 08:36:27 -0700
+Message-ID: <20160321153626.GA2180@jtriplet-mobl2.jf.intel.com>
+References: <20160319221348.GA5247@x>
+ <20160320041803.GC18312@sigill.intra.peff.net>
+ <20160320184524.GA16064@x>
+ <20160320200724.GC6288@sigill.intra.peff.net>
+ <20160320232202.GB20803@x>
+ <20160321055712.GA21568@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, sunshine@sunshineco.com,
-	Elena Petrashen <elena.petrashen@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 21 16:15:33 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 21 16:37:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ai1YH-000836-To
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 16:15:30 +0100
+	id 1ai1tP-0002uA-Lk
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Mar 2016 16:37:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756021AbcCUPP0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Mar 2016 11:15:26 -0400
-Received: from mail-lb0-f177.google.com ([209.85.217.177]:32819 "EHLO
-	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755934AbcCUPPZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2016 11:15:25 -0400
-Received: by mail-lb0-f177.google.com with SMTP id oe12so128540410lbc.0
-        for <git@vger.kernel.org>; Mon, 21 Mar 2016 08:15:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=3DtVu1kA9WoGYfFj/8v7lI2Lmlt/quNF44SxBn50BkI=;
-        b=ILLQiq1eSZxh2iCFQlISdyQ9z3ymxOqLgOtV79hUGCcjQLB6Oe16HRG4Lx8jjTZxo6
-         rAhqBO4UXkf5uSp3+7Yp3E1bQtOhYG4Y2aLTjWjN+iHvfWeewfkznmu74HdipYd0z7d+
-         qpHC7YAN+om0HEOutpyVXeFrNNH48gxhurTMhZAgwk1gF9fogM9Om2bKAG+2XPI6MEem
-         z4VJAyR8CHbPuXjGbuT0J81hOqu+MgVUTdU8GwbkMTaqV2DOBpYnU+YSxASE0AwTgs6x
-         iik+Tn9xmFFCGcC2xY5Lz1vRLGYFL9qQF591I6buUrnMMWQxbjP7wl2VdX3m4+C1uYdo
-         s+Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=3DtVu1kA9WoGYfFj/8v7lI2Lmlt/quNF44SxBn50BkI=;
-        b=WUHXqEKLOoW/6cdZnBAydaaumYMcR3iRLVtQnTpjzeQzxHVMzWrvc0IMsJLIxchVO0
-         hAOOO2OP/AlLHlaAYu/9cjrw8RZQzxvt0li7jZoM11oP4WKT7YmTiEC458aWNKUFw9hV
-         P10OquTFYfp01jPKyKPJxrBjfhsWpraI3dZNz7clFFEI2ijYmEL4tnT3quiM84LBBIeC
-         bD0wj65svPWFDTNgmfxoN3og0sg+Xq4b/JFmjz5VramF3ZRbGXM7Wh2wrgOAwP/GO5FX
-         fF7zW+uen1AEDSUoNnXq4q9iNDnUyd4LhRTO6BL12JCXrrfi054rULG92FTrGJwRxkAO
-         fsDg==
-X-Gm-Message-State: AD7BkJLPZbOphQmxjnUP3GOzyNJ2NaUaQcTOE3xiUmHvX0xrLy1WhpbiCcdYwKv5CrmpjA==
-X-Received: by 10.112.27.202 with SMTP id v10mr10936475lbg.34.1458573323729;
-        Mon, 21 Mar 2016 08:15:23 -0700 (PDT)
-Received: from localhost.localdomain ([37.153.43.108])
-        by smtp.gmail.com with ESMTPSA id w6sm4479431lbo.31.2016.03.21.08.15.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 21 Mar 2016 08:15:23 -0700 (PDT)
-X-Mailer: git-send-email 2.8.0.rc3.12.g047057b.dirty
+	id S1756711AbcCUPhI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Mar 2016 11:37:08 -0400
+Received: from relay3-d.mail.gandi.net ([217.70.183.195]:37510 "EHLO
+	relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755999AbcCUPhF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Mar 2016 11:37:05 -0400
+Received: from mfilter35-d.gandi.net (mfilter35-d.gandi.net [217.70.178.166])
+	by relay3-d.mail.gandi.net (Postfix) with ESMTP id 57BBAA80F5;
+	Mon, 21 Mar 2016 16:36:58 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mfilter35-d.gandi.net
+Received: from relay3-d.mail.gandi.net ([IPv6:::ffff:217.70.183.195])
+	by mfilter35-d.gandi.net (mfilter35-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
+	with ESMTP id Wg3zVb2ah_b8; Mon, 21 Mar 2016 16:36:56 +0100 (CET)
+X-Originating-IP: 50.39.163.18
+Received: from jtriplet-mobl2.jf.intel.com (50-39-163-18.bvtn.or.frontiernet.net [50.39.163.18])
+	(Authenticated sender: josh@joshtriplett.org)
+	by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 932E1A80DC;
+	Mon, 21 Mar 2016 16:36:29 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20160321055712.GA21568@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289421>
 
-Signed-off-by: Elena Petrashen <elena.petrashen@gmail.com>
+On Mon, Mar 21, 2016 at 01:57:13AM -0400, Jeff King wrote:
+> On Sun, Mar 20, 2016 at 04:22:02PM -0700, Josh Triplett wrote:
+> 
+> > I want to track the evolution of a patch series or other commit history,
+> > through non-fast-forwarding actions like rebase, rebase -i, or commit
+> > --amend.  Similar in spirit to reflog, but with intentional commits and
+> > commit messages, and most importantly with the ability to share and
+> > collaborate on it.  For each version of the patch series, I plan to
+> > track the commit at the end of the series, and optionally the commit at
+> > the base of the patch series (to simplify tracking of rebasing); I'll
+> > use the tree object associated with the commit to track the cover
+> > letter, and perhaps meta-changelog entries associated with v2/v3/vN of
+> > the series.
+> > 
+> > Patch series almost always need to evolve through non-fast-forwarding
+> > history.  And I've seen that done in two ways: either pull the patch
+> > series out of git, put it in quilt or similar, and track the quilt
+> > series with git; or pull the versioning of the patch series out of git
+> > and track it with branch names like feature-v2, feature-2016-03-20,
+> > feature-rebased, and feature-rebased-4.4-fixed-foo-fixed-bar.  That last
+> > one closely matches a real-world example I've recently seen.  And that
+> > starts to look a lot like the naming of files and documents in
+> > organizations that haven't yet discovered the wonders of version
+> > control.
+> > 
+> > I'd like to have the best of both worlds: handle the patch series in
+> > git, *and* handle the versioning of the patch series in git.
+> 
+> It seems like you could represent this in git by storing a merge commit
+> for each revision of the patch series, with one parent as the current
+> real tip of the series, and the other as the merge-commit for the
+> previous revision of the series. The tree would be the same as current
+> tip commit's tree. You could store metadata about the series in the
+> merge commits (presumably including some marker to say "I'm a special
+> series-revision commit, not a regular merge").
 
----
-This micro-patch is meant to allow =E2=80=9C-=E2=80=9C as a short-hand =
-for
-=E2=80=9C@{-1} for branch -D (Cf. $gmane/230828):
+That's exactly what I'm planning to do now, ever since your initial
+response said submodules wouldn't work.
 
-* git branch (-d | -D) is not supposed to accept any other
-arguments except for branch name so it makes sense to replace
-the argv[i] with @{-1}. We will not lose the opportunity to
-use it for something different for other git branch uses if
-we will decide it=E2=80=99s required.
+> That's roughly the same as having "feature-v1", "feature-v2", etc, in a
+> tree, except that you have to walk down the parent pointers to discover
+> each entry, rather than walking the tree.
+> 
+> The resulting history would be viewable with naive "git log", but you
+> would probably want to use "--first-parent" to see just the revisions,
+> or some to-be-invented option to see just the most recent commits (e.g.,
+> something like: if the commit subject is "magic-token: my-series", then
+> skip this commit, show the second parent, and then walk down the first
+> parent chain, skipping commits until we hit a commit that doesn't have
+> "magic-token: my-series" in it).
 
-* the small allow_dash_as_prev_branch_alias function can be
-reused to teach git branch -m to allow =E2=80=9C-=E2=80=9C as a short-h=
-and for
-=E2=80=9C@{-1}  as well and possibly makes it easy to understand what=E2=
-=80=99s
-going on in the code
+Rather than relying on the numeric index of the commit parents for
+semantic value, I planned to use the tree object.  I can still use
+gitlinks for named references to commits from within the series, as long
+as the commits linked from those trees have references via parents to
+keep them alive.  For instance, /series within the commit can refer to
+the commit object at the top of the series, /base (if present) can refer
+to the base of the series (e.g. v4.4), and /cover (a blob) can contain
+the cover letter.  Then "git series format" automatically knows the base
+to start from, and "git series log" or "git series diff" will know the
+difference between "reordered patches" and "rebased on a new base".
 
-* if there=E2=80=99s no previous branch in the repository yet, a
-specific warning message is given
+The working copy and .git/HEAD will point to the last commit in the
+current version of the patch series, so that tools like "git rebase -i"
+and similar can Just Work; "git series" will manage the separate ref
+independently.
 
-Thank you! Looking forward to any feedback.
+I'll need to provide a variety of additional tools here for showing what
+has changed in a patch series; I'd eventually like to support a sensible
+"git series diff" that can show things like "rebased on this base,
+reordered three patches, dropped one, edited another, and changed the
+cover letter".
 
- Documentation/git-branch.txt |  5 ++++-
- builtin/branch.c             | 18 +++++++++++++++---
- t/t3200-branch.sh            | 10 ++++++++++
- 3 files changed, 29 insertions(+), 4 deletions(-)
+> And it would just work for transferring revisions. You'd probably have
+> one ref per patch series (pointing to the marker commit of the most
+> recent version), and the "real" clean history of the project would never
+> include any of the revision markers at all (though it could if you
+> really wanted to).
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.tx=
-t
-index 4a7037f..9f43665 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -64,7 +64,10 @@ to happen.
-=20
- With a `-d` or `-D` option, `<branchname>` will be deleted.  You may
- specify more than one branch for deletion.  If the branch currently
--has a reflog then the reflog will also be deleted.
-+has a reflog then the reflog will also be deleted.=20
-+As a special case, the "@{-N}" syntax for the N-th last branch
-+deletes the specified branch.  You may also specify - which is synonym=
-ous
-+with "@{-1}".
-=20
- Use `-r` together with `-d` to delete remote-tracking branches. Note, =
-that it
- only makes sense to delete remote-tracking branches if they no longer =
-exist
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 7b45b6b..9614d18 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -169,6 +169,8 @@ static int check_branch_commit(const char *branchna=
-me, const char *refname,
- 	return 0;
- }
-=20
-+
-+
- static void delete_branch_config(const char *branchname)
- {
- 	struct strbuf buf =3D STRBUF_INIT;
-@@ -178,6 +180,12 @@ static void delete_branch_config(const char *branc=
-hname)
- 	strbuf_release(&buf);
- }
-=20
-+static void allow_dash_as_prev_branch_alias(const char **argv, int das=
-h_position)
-+{
-+	if (!strcmp(argv[dash_position], "-"))
-+		argv[dash_position] =3D "@{-1}";
-+}
-+
- static int delete_branches(int argc, const char **argv, int force, int=
- kinds,
- 			   int quiet)
- {
-@@ -210,10 +218,12 @@ static int delete_branches(int argc, const char *=
-*argv, int force, int kinds,
- 		if (!head_rev)
- 			die(_("Couldn't look up commit object for HEAD"));
- 	}
-+
- 	for (i =3D 0; i < argc; i++, strbuf_release(&bname)) {
- 		const char *target;
- 		int flags =3D 0;
-=20
-+		allow_dash_as_prev_branch_alias(argv, i);
- 		strbuf_branchname(&bname, argv[i]);
- 		if (kinds =3D=3D FILTER_REFS_BRANCHES && !strcmp(head, bname.buf)) {
- 			error(_("Cannot delete the branch '%s' "
-@@ -231,9 +241,11 @@ static int delete_branches(int argc, const char **=
-argv, int force, int kinds,
- 					    | RESOLVE_REF_ALLOW_BAD_NAME,
- 					    sha1, &flags);
- 		if (!target) {
--			error(remote_branch
--			      ? _("remote-tracking branch '%s' not found.")
--			      : _("branch '%s' not found."), bname.buf);
-+			error(!strcmp(bname.buf, "@{-1}")
-+				? _("There is no previous branch that could be referred to at the =
-moment.")
-+				: remote_branch
-+					? _("remote-tracking branch '%s' not found.")
-+					: _("branch '%s' not found."), bname.buf);
- 			ret =3D 1;
- 			continue;
- 		}
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index a897248..d21369f 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -403,6 +403,16 @@ test_expect_success 'test deleting branch without =
-config' '
- 	test_i18ncmp expect actual
- '
-=20
-+test_expect_success 'test deleting "-" deletes previous branch' '
-+	git checkout -b prev &&
-+	test_commit prev &&
-+	git checkout master &&
-+	git branch -D - >actual &&
-+	sha1=3D$(git rev-parse prev | cut -c 1-7) &&
-+	echo "Deleted branch prev (was $sha1)." >expect &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'test --track without .fetch entries' '
- 	git branch --track my8 &&
- 	test "$(git config branch.my8.remote)" &&
---=20
-2.8.0.rc3.12.g047057b.dirty
+Exactly the plan.  And you won't ever actually check out those refs into
+your working copy; you'll check out the patch series commits they
+reference instead.
+
+> But I will be the first to admit that I haven't thought too hard on
+> this. It may even be that I just unconsciously regurgitated somebody
+> else's storage scheme. Once upon a time I was interesting in "topgit",
+> "guilt", and other tools, but I haven't looked at them in years.
+> 
+> So it may well be that somebody tried something like this, and already
+> discovered its downsides. :)
+
+One major downside is that creating such a tool doesn't automatically
+make things like a three-way merge of patch series easy.  It makes
+recognizing the situation *possible* (unlike before when you couldn't
+easily exchange records of non-fast-forwarding history with others), but
+if your remote and you have both changed the patch series independently,
+merging the two will still prove challenging.
+
+One step at a time, though: first I want to make it possible to track
+as a first-class concept, and then we can make better tooling on top
+of that.
+
+- Josh Triplett
