@@ -1,135 +1,108 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH] submodule helper: accept '.' for repositories with no submodules
-Date: Tue, 22 Mar 2016 10:59:39 -0700
-Message-ID: <1458669579-32160-1-git-send-email-sbeller@google.com>
-Cc: Jens.Lehmann@web.de, git@vger.kernel.org,
-	Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com, cederp@opera.com
-X-From: git-owner@vger.kernel.org Tue Mar 22 19:00:08 2016
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/4] Make t1300-repo-config resilient to being run via
+ 'sh -x'
+Date: Tue, 22 Mar 2016 10:59:48 -0700
+Message-ID: <20160322175948.GG28749@google.com>
+References: <cover.1458668543.git.johannes.schindelin@gmx.de>
+ <b4df45088aa68d8410895f66a814dd6780e2e451.1458668543.git.johannes.schindelin@gmx.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>,
+	Eric Wong <normalperson@yhbt.net>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 22 19:00:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiQav-0007VH-Ca
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 18:59:53 +0100
+	id 1aiQbJ-0007p7-F3
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 19:00:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932238AbcCVR7s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2016 13:59:48 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:36212 "EHLO
-	mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757109AbcCVR7p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 13:59:45 -0400
-Received: by mail-pf0-f181.google.com with SMTP id u190so321990803pfb.3
-        for <git@vger.kernel.org>; Tue, 22 Mar 2016 10:59:44 -0700 (PDT)
+	id S932704AbcCVR7z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 13:59:55 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:36101 "EHLO
+	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932508AbcCVR7x (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 13:59:53 -0400
+Received: by mail-pf0-f196.google.com with SMTP id q129so37929930pfb.3
+        for <git@vger.kernel.org>; Tue, 22 Mar 2016 10:59:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=XACaKXlTdaIdxxmscD/i6m+yb736xc2M3DssQlrpvSY=;
-        b=IcBigJTNew/QrBrXlS6VV8bQKL0jJjXTsgt5P3BR3d7LNNPL77pwUD2WkuEA4xPcfR
-         zbUzG49IPWsU2pQdyrKVNmHYbrGllzxDSuyxWW4wt3e4GyEmnPIHAsK9Pz8AnjwDW0Vl
-         7irOcO3h2+w1QdapxGWoNEDBTkQKKu87wxhQu9UYtl58QYNh9VmHQcDHZJjPp4pzbf9v
-         bSnrBdudgPM+NSj+aj22YjL+H03sFBneHHC1I40ghVYHBqdpZhr7VwA99x7ICg4v/k7m
-         UV5kTf2Cit6EOIjuEAXDAETeEVu5wW5YMEDWQnQiK/DL09DNkr/ixwM9yS/RVdDAhOaK
-         0+1A==
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Eqkh/IlmxSi1qhY4Of6+mNRshn0VvIkVwUjmJ5JjXA4=;
+        b=PY2bq1UvsemOjAQ3GccNKrgalgedncF5KwbN+yaBWZr44e2+npeY5BMbfEoI/Ew36c
+         ur6Ix+WpoTN1TCocWTZqzhadNa3BZIKLQ/vdvjgF+e9N6z/5bdkiWj1uS0642Tgu2NjX
+         bbTpjBRJ/GrQCf0XaleTfPBZMSwWejTKharqUq4+l+L5vxh0gBmh99/2Ounj2lnjBwcA
+         DQSvxTXWB8IZmYbeUJWMl/u7jpNImYPGlKDwNwCsjkip4OI4R3Wq+dIptVckEJ/uf+86
+         WKFbcVjDLymEiTzUFwnMsoyFC5szi5AXCjmCOkeGsE6OKPYQvNkr5+TDK/HTEgP7TEoc
+         vDMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=XACaKXlTdaIdxxmscD/i6m+yb736xc2M3DssQlrpvSY=;
-        b=KJzFoezKv15vwKMhT0m7O6XgFQgXwkXQeqR+FWiu0l3Xg6Gz7eRQVXdnjkkZhtznvF
-         W7P1cLSL2oIolH0/88CJD4Bx5FrouziVs1Yj+OPwzhR7qrkuBrDgt+C5kZONxXCmLhCE
-         4lIc5YwC5tWZwIgKB+HAyaP/5+W1DKjTlorvIG2zwT1Y0dR0irMdXjV8VWsX22K3qWxw
-         aOf2SOkFVVsixeQpP6o2qh41pYuGUDb/QKq55SRLMxm3ha9mc43EX78IhaD+lgeqr7WS
-         njIf8Qb835n5XoqTZnRKqoL2I3Inm8pD5eWiyMkDT+Zcp0bjxcsSs6Mc5YPJ8iW5wtDw
-         hFmA==
-X-Gm-Message-State: AD7BkJJxWlBGCC39RogPs/yNssRkGWKjgpZnlEUiZrxtl3CCDpCdxsEsdPt1OSOISOiI0I+L
-X-Received: by 10.98.34.18 with SMTP id i18mr56082292pfi.26.1458669583879;
-        Tue, 22 Mar 2016 10:59:43 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:f1b0:8994:3428:87f7])
-        by smtp.gmail.com with ESMTPSA id l4sm34801104pfi.73.2016.03.22.10.59.42
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 22 Mar 2016 10:59:43 -0700 (PDT)
-X-Mailer: git-send-email 2.7.4.1.g33fcf9d
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Eqkh/IlmxSi1qhY4Of6+mNRshn0VvIkVwUjmJ5JjXA4=;
+        b=HVJkWkR7xPf1TgjtcLmj/F1EDq8UhPQbQQEEvaACphrvawy0Z2KSnqzPiftWeMCwTh
+         6ZBw4VupTFOySERGwDToSHltAicjTxzg7txpbloyHzBEF+4xWb8BRTNvHV7Dk5yYlaMv
+         tUq7dKS5rB9qXF8eiAOrG8/7VSPxeCspkIKW4IiIOjDWt2mPrkg1QZnjN07+1YjXZ8zV
+         JTYFRAWi4QZLOW7EiW5Wzbzr8NhtB6oRYP68Tm0VoBODNSQwUy+FEw0bhEns0zohKxzD
+         klii1HeF204oVJPaqymUXII7r0GeHpeSslYuGmD/KuSZzOf/osLq04CY5/LPafJb5Ewi
+         XrfA==
+X-Gm-Message-State: AD7BkJIVAayFNzpjKElHfNFblmgbK83G2pcv1Q7NEiEZfGzu+58zjAPItf4mTA+FX4enMg==
+X-Received: by 10.66.243.35 with SMTP id wv3mr56003553pac.93.1458669591451;
+        Tue, 22 Mar 2016 10:59:51 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:694a:ddce:573a:2ea8])
+        by smtp.gmail.com with ESMTPSA id ah10sm49865244pad.23.2016.03.22.10.59.50
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 22 Mar 2016 10:59:50 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <b4df45088aa68d8410895f66a814dd6780e2e451.1458668543.git.johannes.schindelin@gmx.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289536>
 
-In 74703a1e4d (2015-09-02, submodule: rewrite `module_list` shell
-function in C), "submodule deinit ." was broken.
+Johannes Schindelin wrote:
 
-The original module_list accepted '.' as a pathspec just fine, as it
-was using
+> --- a/t/t1300-repo-config.sh
+> +++ b/t/t1300-repo-config.sh
+> @@ -699,17 +699,13 @@ test_expect_success 'invalid unit' '
+>  	echo 1auto >expect &&
+>  	git config aninvalid.unit >actual &&
+>  	test_cmp expect actual &&
+> -	cat >expect <<-\EOF &&
+> -	fatal: bad numeric config value '\''1auto'\'' for '\''aninvalid.unit'\'' in file .git/config: invalid unit
+> -	EOF
+>  	test_must_fail git config --int --get aninvalid.unit 2>actual &&
+> -	test_i18ncmp expect actual
+> +	grep "^fatal: bad numeric config value .1auto. for .aninvalid.unit. in file .git/config: invalid unit$" actual
 
-  git ls-files -z --error-unmatch --stage -- "$@" || { custom filtering}
+Would test_i18ngrep work?
 
-and git ls-files doesn't make a difference between "." and no arguments
-there. When using the parse_pathspec function in C, this is a difference
-however, when no path matches.
+>  '
+>  
+>  test_expect_success 'invalid stdin config' '
+> -	echo "fatal: bad config line 1 in standard input " >expect &&
+>  	echo "[broken" | test_must_fail git config --list --file - >output 2>&1 &&
+> -	test_cmp expect output
+> +	grep "^fatal: bad config line 1 in standard input $" output
 
-'submodule deinit' asks users to explicitely to give '.' instead of
-empty arguments to specify all submodules (as a safety measure?),
-so we have to support that as well.
+This test is very strange.  Why do we care that it starts with
+"fatal:" as opposed to error?  Why are we testing for an extra space at
+the end of the line?
 
-Add a test case to prevent this error coming up again and fix this
-by special casing '.' in the new module_list to reduce the difference
-between the old and new module_list.
+I would expect something like
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+	test_i18ngrep 'line 1 in standard input' output
 
- This applies on v2.7.4
- 
- I looked at alternatives of how to fix it, e.g.
- later in module_list to make an exception for calling
-        if (ps_matched && report_path_error(ps_matched, pathspec, prefix))
-             result = -1;
- but that is similarly ugly.
+to be more useful for testing the useful part of the error message while
+remaining resilient against error message changes.
 
- builtin/submodule--helper.c |  8 ++++++++
- t/t7400-submodule-basic.sh  | 10 ++++++++++
- 2 files changed, 18 insertions(+)
-
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index ed764c9..47e6839 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -23,6 +23,14 @@ static int module_list_compute(int argc, const char **argv,
- {
- 	int i, result = 0;
- 	char *ps_matched = NULL;
-+
-+	/*
-+	 * We need to treat a path spec of '.' the same as an empty
-+	 * path spec, because "submodule deinit" wants to be given '.'
-+	 * instead of an empty list.
-+	 */
-+	if (argc == 1 && !strcmp(".", argv[0]))
-+		argv[0] = NULL;
- 	parse_pathspec(pathspec, 0,
- 		       PATHSPEC_PREFER_FULL |
- 		       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index be82a75..fdf7105 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -849,6 +849,16 @@ test_expect_success 'set up a second submodule' '
- 	git commit -m "submodule example2 added"
- '
- 
-+test_expect_success 'submodule deinit -f . works on empty repository' '
-+	test_when_finished "rm -rf newdirectory" &&
-+	mkdir newdirectory &&
-+	(
-+		cd newdirectory &&
-+		git init &&
-+		git submodule deinit .
-+	)
-+'
-+
- test_expect_success 'submodule deinit should remove the whole submodule section from .git/config' '
- 	git config submodule.example.foo bar &&
- 	git config submodule.example2.frotz nitfol &&
--- 
-2.7.4.1.g33fcf9d
+Thanks,
+Jonathan
