@@ -1,110 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] mingw: skip some tests in t9115 due to file name issues
-Date: Tue, 22 Mar 2016 13:44:11 -0700
-Message-ID: <xmqqbn66gs4k.fsf@gitster.mtv.corp.google.com>
-References: <cover.1458668543.git.johannes.schindelin@gmx.de>
-	<7b4eca83305ec05af6434ff80269ba563f2d581d.1458668543.git.johannes.schindelin@gmx.de>
-	<56F18F5E.9090301@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>,
-	Eric Wong <normalperson@yhbt.net>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Mar 22 21:44:20 2016
+From: Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH 0/3] builtin/apply: simplify some gitdiff_* functions
+Date: Tue, 22 Mar 2016 21:58:39 +0100
+Message-ID: <1458680322-17681-1-git-send-email-chriscool@tuxfamily.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 22 22:06:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiTA3-00014X-My
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 21:44:20 +0100
+	id 1aiTVj-0000ve-4K
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 22:06:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751036AbcCVUoP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Mar 2016 16:44:15 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:53344 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750696AbcCVUoO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Mar 2016 16:44:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 678724ED3B;
-	Tue, 22 Mar 2016 16:44:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=piVkymif87lY
-	tmmLX6T2Z+Ag5Vo=; b=DWQVlpHNZHXmR30peOfRln8cpOg9YNks9YVmhOj83sBa
-	K32ftCWVldrguPFsMfq915yC+ZpI04eZQjSlVV458hVsm38iGks4Q9N1rG2vJt1P
-	mAfo8HaPn5aKgtMPk6KKS3FoqpE1YJytiUxmtS51iK88/ldyGIbOs8quWgx7u8M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=jPNwRy
-	3/u3MNk+hdHj3l8GJdAzo2Voq5f/xGJj5/pTaHzp36/m6AUxLA0QX2mnOPHbQC55
-	2yLCpndQ4Tq/YOfCpyDjfgiFi0j7C1OZ3aBmUkrJDlJNChBPr6pbYPam1cfn/Sau
-	XpHbvqSprcpJ5LFw50gUJNVuT1oEUHsR4+T9U=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5EC024ED3A;
-	Tue, 22 Mar 2016 16:44:13 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BDC264ED38;
-	Tue, 22 Mar 2016 16:44:12 -0400 (EDT)
-In-Reply-To: <56F18F5E.9090301@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Tue, 22 Mar 2016 19:30:54 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D5CB27A0-F06E-11E5-B8A5-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753364AbcCVVGi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 17:06:38 -0400
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:38160 "EHLO
+	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752709AbcCVVGd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 17:06:33 -0400
+Received: by mail-wm0-f47.google.com with SMTP id l68so180735401wml.1
+        for <git@vger.kernel.org>; Tue, 22 Mar 2016 14:06:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=75x5TQG8adq5zSsXVOMZL5dwFiTRtsCpJJXZp7S4HOQ=;
+        b=Sr37BSMAwMf6H3skXA3SJv2yiD9T9IYf8hFdn9EV91lat7DpJUt/hHD8qVKev8WeEh
+         dhXf3mN0kF9l03M47DLHHNqfg6Ynbht2tQRYdAamUpHgEE7w7Rzm8ox2UfWP8upIkLh2
+         QtvoJgaUPGmr91Udikbs/XABZHuyXbCvmpxKxM/MxigZmed+6+IFwEtWxTooOpSMmbNt
+         RCY4zR/Itsf7GHZ32R+f/hbZ1xC7rdCtQxVkJ9Aswi5fcqKvc49wyC/cWtxBGq+Sd9nf
+         ZaY1rSLzWLS4xARLWE/jUwtCBaaYVY4quDIUlJyh2HlVJ5hWNbODKOUft2RaakpUAZda
+         6Eog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=75x5TQG8adq5zSsXVOMZL5dwFiTRtsCpJJXZp7S4HOQ=;
+        b=UFg8HnF6vpkjCdYSYGsnq9+AlPpIr343p7uPLajLn2821rmhnxX0LjDEhDXzxt6awX
+         0Iha4vXEnTj8U48XcVwHxhoZe2PaETr0llbHLr7QKuzQizlGVwJlh1Ag5ilsZCh4pGEs
+         8mi326iqfn25FqSx7phsOW9nyoCBQQxu7Xz3iOkp6X7AVgQDZaOmqpmCkj1Uk7Ftz9aB
+         KFZn7EYCGmvWfdHntmN1TjY1pIEUx2vD/miGkJmDxmPMAeMwXefMe4fsz8YYsZMfWCXU
+         UOWBeG+h+k6kft5ynNmQ/LN2zU8s7fv5IA3Sm7Tx4BTGDjJtlnf86PNgMLyxVClwm9uq
+         Vbrg==
+X-Gm-Message-State: AD7BkJKAgdwyr9yy/uOeYepK5/ZPJzhiBKZMZ4aciSQekg5KjzE4RPbAsslerr0LdeIVmQ==
+X-Received: by 10.194.23.7 with SMTP id i7mr38507625wjf.9.1458680792386;
+        Tue, 22 Mar 2016 14:06:32 -0700 (PDT)
+Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
+        by smtp.gmail.com with ESMTPSA id i5sm31920087wjx.15.2016.03.22.14.06.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 22 Mar 2016 14:06:30 -0700 (PDT)
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.8.0.rc4.59.g21809a1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289559>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+While working on libifying "git apply" it appeared that some gitdiff_*
+functions are unnecessarily complex.
 
-> On 2016-03-22 18.43, Johannes Schindelin wrote:
->> These two tests wanted to write file names which are incompatible wi=
-th
->> Windows' file naming rules.
->>=20
->> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Is there a chance to squeeze in a precondition for HFS under Mac OS ?
+Christian Couder (3):
+  builtin/apply: get rid of useless 'name' variable
+  builtin/apply: make gitdiff_verify_name() return void
+  builtin/apply: simplify gitdiff_{old,new}name()
 
-So you want this squashed into it?
+ builtin/apply.c | 39 +++++++++++++++------------------------
+ 1 file changed, 15 insertions(+), 24 deletions(-)
 
- t/t9115-git-svn-dcommit-funky-renames.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/t/t9115-git-svn-dcommit-funky-renames.sh b/t/t9115-git-svn=
--dcommit-funky-renames.sh
-index 864395e..a87d3d3 100755
---- a/t/t9115-git-svn-dcommit-funky-renames.sh
-+++ b/t/t9115-git-svn-dcommit-funky-renames.sh
-@@ -93,7 +93,7 @@ test_expect_success 'git svn rebase works inside a fr=
-esh-cloned repository' '
- # > to special UNICODE characters in the range 0xf000 to 0xf0ff (the
- # > "Private use area") when creating or accessing files.
- prepare_a_utf8_locale
--test_expect_success UTF8,!MINGW 'svn.pathnameencoding=3Dcp932 new file=
- on dcommit' '
-+test_expect_success UTF8,!MINGW,!UTF8_NFD_TO_NFC 'svn.pathnameencoding=
-=3Dcp932 new file on dcommit' '
- 	LC_ALL=3D$a_utf8_locale &&
- 	export LC_ALL &&
- 	neq=3D$(printf "\201\202") &&
-@@ -105,7 +105,7 @@ test_expect_success UTF8,!MINGW 'svn.pathnameencodi=
-ng=3Dcp932 new file on dcommit'
- '
-=20
- # See the comment on the above test for setting of LC_ALL.
--test_expect_success !MINGW 'svn.pathnameencoding=3Dcp932 rename on dco=
-mmit' '
-+test_expect_success !MINGW,!UTF8_NFD_TO_NFC 'svn.pathnameencoding=3Dcp=
-932 rename on dcommit' '
- 	LC_ALL=3D$a_utf8_locale &&
- 	export LC_ALL &&
- 	inf=3D$(printf "\201\207") &&
+-- 
+2.8.0.rc4.1.g302de0d.dirty
