@@ -1,138 +1,138 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH 2/3] builtin/apply: make gitdiff_verify_name() return void
-Date: Tue, 22 Mar 2016 21:58:41 +0100
-Message-ID: <1458680322-17681-3-git-send-email-chriscool@tuxfamily.org>
-References: <1458680322-17681-1-git-send-email-chriscool@tuxfamily.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 22 22:06:54 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] submodule helper: accept '.' for repositories with no submodules
+Date: Tue, 22 Mar 2016 14:16:40 -0700
+Message-ID: <CAGZ79ka=EJ-L+Zaqh0kWUdjmyUva3fEcbwJn18uxshe3R5ABBQ@mail.gmail.com>
+References: <1458669579-32160-1-git-send-email-sbeller@google.com>
+	<xmqqy49agx98.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kaMa3CyJ-Y9Xn9QShzTUGythos+pmKZXQ7m-2c0bF0u9A@mail.gmail.com>
+	<xmqqoaa6gtuu.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Per Cederqvist <cederp@opera.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 22:16:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiTVt-00013t-5M
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 22:06:53 +0100
+	id 1aiTfS-00008z-Nh
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 22:16:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753373AbcCVVGo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2016 17:06:44 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:35240 "EHLO
-	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752768AbcCVVGm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 17:06:42 -0400
-Received: by mail-wm0-f47.google.com with SMTP id l68so170583650wml.0
-        for <git@vger.kernel.org>; Tue, 22 Mar 2016 14:06:41 -0700 (PDT)
+	id S1752411AbcCVVQn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 17:16:43 -0400
+Received: from mail-yw0-f178.google.com ([209.85.161.178]:36753 "EHLO
+	mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752385AbcCVVQl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 17:16:41 -0400
+Received: by mail-yw0-f178.google.com with SMTP id g3so271261447ywa.3
+        for <git@vger.kernel.org>; Tue, 22 Mar 2016 14:16:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fURLhFClonk31BMCrlmtSN+CDIJk2+R/RlUKF8iSXMA=;
-        b=LnEJJDzyP2uRVGC0l+VSdSEDoNS9I4YgQ3HJ/tEyhCEuYO37x+mxe47UjFMi4Z2ZpD
-         K95En2kW8NJ+PB1P65HeSW9EG+r64ueA6lieRvazeA6QCmxOhILpRWL9XEY8nFL1mbwT
-         D/6ZWzzKDvd3NgTPM8pA10Wiva/iEXyrZ2SRKprdnWqO2k63XrG5hgtLVd/JP4EHeEGx
-         5C6QAHsNgHYGmslm70hqco+S3MnV/fAws3/VLnwV/eMCkiiwBEh+TWJAuBrx9sya4ZfX
-         EnHMHkcoSc4sfwBtHOZPnRm/sEyvoGsErv+qThOWuOkMjMwPIe5HZl92NHhUJJDx86HL
-         LzbQ==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=Q1IyyIN5GkDCh2tV0Czgn3HXYKG+/6pt8BsoYaRX41A=;
+        b=YLtDg/h87Xs6neN25PCxSuKX0vLplf85Xtkt5UeahdqMOZYZ5oaEe1LZ3ATrQ0SpTf
+         K4HjWx2HxduK8cZLgz9mg7ahsiuxQFFBSWGnzZ1YwxLy0VcfYPrFb0bAknQEtsiM0YYi
+         11q4YjXI5f8cWhWYNwQlNGbcTZ7JesR3H6GfTzwwIqZ83VGOhmh38KzVt1cExYmXBFRe
+         5+/I6ouOE4O5d7cd0fQ2puyMIRx7lR3ziqqLBEeC2pSXlzwMr1jSm02Z1YsguHrfrDe5
+         gvUlDKVYsBKyYe37srqHMtKQE4RajoRsDYgJdKLEqLOf6nd1fAn7OvzgnYz9SOvTTb2u
+         RGiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=fURLhFClonk31BMCrlmtSN+CDIJk2+R/RlUKF8iSXMA=;
-        b=YmTlTSfuRhD5wt2M8YDGtrbppSNgOV8hsFPLfE4ej6/Vxc1nxG3415Os6aIm4U7Pph
-         QnLmyscJ8km4b7fmTZ5NPO0FLOYGhKjY5I88wnjakxiIoBjvbJBatmM1FBFAEsaZCavp
-         rN1JmEhJtlTZOV6Aucn8P1asqWt1eIspm2BrcF90wTWCRxBynKaKkVrJODNi9/FUSz4/
-         mOcf44kAgXK9nWw1sULVNoOrfJcTkwDRhby0WaYozaI7PCmaeLvqGVXmbIKgz7mfzfiY
-         RQrTfoLArKju8Mmid014ZvbnlxlRn8gDWe0jJCBSWitpVXlsytgGgjV7aYvkTaZWg444
-         TlwQ==
-X-Gm-Message-State: AD7BkJKBTfFoAtQXLQmzX6jMO9gLKEEtRqbcrdHP3PNuS1wQaQNc80OlF5lJm9hE/7/BfQ==
-X-Received: by 10.28.46.132 with SMTP id u126mr23369228wmu.67.1458680800842;
-        Tue, 22 Mar 2016 14:06:40 -0700 (PDT)
-Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id i5sm31920087wjx.15.2016.03.22.14.06.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 22 Mar 2016 14:06:39 -0700 (PDT)
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.8.0.rc4.59.g21809a1
-In-Reply-To: <1458680322-17681-1-git-send-email-chriscool@tuxfamily.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=Q1IyyIN5GkDCh2tV0Czgn3HXYKG+/6pt8BsoYaRX41A=;
+        b=Ld8h8FjIfGcT8FdEbcmc7OgVrsg2WYfW2rHMGKj/sbe7XAVv/fLNQK6p1HW5kgqhJF
+         CLp6g4PVpcRGpv6nFDSqC7snYN5XetakVTOyoaqqOe8zRKv4nvAKMdm2xelYINyoA+qD
+         WEikm70aRRnvUHBCflFUJfthYfvUbjPE+ID5kFEqGZzTlfUQT8YNJmpkSmm2KZZGYlVf
+         3RIs4Qauh04fcWgpDvKAB4SmxXX+tzq1qjIciAWIJLhr16Y9qTt9eG+MPTp8PZYyqdkb
+         JhdPFVSdQuCr3OHH22Sw63gLXC4oofUqe7PIFtdJwgobeycXI0O8j1CThmSM0KML11hd
+         MgLw==
+X-Gm-Message-State: AD7BkJLYYW3NHAh6Wg1n6Ai2Il8SwNAuGEGJqdXNP1Bm4Fa8JHTdH7xCb3vWTepeDYO2li9HmRr8iP0fV0Zk86dO
+X-Received: by 10.129.108.145 with SMTP id h139mr19255820ywc.320.1458681400865;
+ Tue, 22 Mar 2016 14:16:40 -0700 (PDT)
+Received: by 10.37.51.137 with HTTP; Tue, 22 Mar 2016 14:16:40 -0700 (PDT)
+In-Reply-To: <xmqqoaa6gtuu.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289563>
 
-As the value returned by gitdiff_verify_name() is put into the
-same variable that is passed as a parameter to this function,
-it is simpler to pass the address of the variable and have
-gitdiff_verify_name() change the variable itself.
+On Tue, Mar 22, 2016 at 1:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> Maybe we can also special case the "force" argument only here for
+>> Cedars use case.  ("git submodule deinit ." complains because
+>> there are no further submodules, but -f solves the complaint?)
+>
+> I think that would have been the most sensible thing to do when
+> we were adding "git submodule deinit", and it would be the most
+> sensible behaviour in the longer term.
+>
+>
+>> So I have 2 goals in mind:
+>
+>> * Git suggested to use '.' explicitly, so it should just work
+>> --even for a completely empty repository (see the test for it)
+>
+> I actually view this as either a low-prio goal or even a
+> non-goal, as long as we have a sensible migration plan to stop
+> suggesting '.'.
+>
+>> * Eventually -- not in this patch, but a later patch targeted
+>> at master -- we want to remove the recommendation to use '.',
+>> and allow no arguments or a different argument for "all
+>> submodules".
+>
+>> git add uses '.' for it though, so '.' seems right and valid.
+>> git add '*' is also valid.
+>
+> Perhaps I am misunderstanding what you want.  Do you want a
+> regular file that happens to match pathspec to prevent
+> module_list from noticing "pathspec did not match" situation and
+> giving the user an error?  That would be the "match-pathspec first
+> and then mode-check" behaviour, that is the same as v2.6.x
+> series [*1*].
+>
+>> Maybe combine the second idea with a slight refactoring of
+>> parse_pathspec, such that you can pass a callback function to
+>> parse_pathspec which can decided on each file if it is a file
+>> to inspect. (i.e. for our usecase we'd check for ce_mode to be
+>> GITLINK, another hypothetical use case would be using
+>> parse_pathspec for finding all files with a certain property,
+>> e.g. finding all files ending in .c or files written in all
+>> capital letters or such)
+>>
+>> Then you could do a conditional parse_pathspec over the partial
+>> repository which matched
+>> the additional filtering function.
+>>
+>
+> I do not think that buys us much.  You have already shown how to
+> implement "filter first and then pathspec match" if a caller
+> wants to (which turned out to be a regression in this case, but
+> that is besides the point).
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- builtin/apply.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+And by including this filtering into the pathspec machine we can pass
+a flag DONT_BREAK_ON_NO_FILTER_RESULTS_WHEN_HAVING_OTHER_MATCHES
+(name for illustration purpose only ;) which is how I understand this
+regression?
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 465f954..4cafdaf 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -925,37 +925,37 @@ static int gitdiff_hdrend(const char *line, struct patch *patch)
- #define DIFF_OLD_NAME 0
- #define DIFF_NEW_NAME 1
- 
--static char *gitdiff_verify_name(const char *line, int isnull, char *orig_name, int side)
-+static void gitdiff_verify_name(const char *line, int isnull, char **name, int side)
- {
--	if (!orig_name && !isnull)
--		return find_name(line, NULL, p_value, TERM_TAB);
-+	if (!*name && !isnull) {
-+		*name = find_name(line, NULL, p_value, TERM_TAB);
-+		return;
-+	}
- 
--	if (orig_name) {
--		int len = strlen(orig_name);
-+	if (*name) {
-+		int len = strlen(*name);
- 		char *another;
- 		if (isnull)
- 			die(_("git apply: bad git-diff - expected /dev/null, got %s on line %d"),
--			    orig_name, linenr);
-+			    *name, linenr);
- 		another = find_name(line, NULL, p_value, TERM_TAB);
--		if (!another || memcmp(another, orig_name, len + 1))
-+		if (!another || memcmp(another, *name, len + 1))
- 			die((side == DIFF_NEW_NAME) ?
- 			    _("git apply: bad git-diff - inconsistent new filename on line %d") :
- 			    _("git apply: bad git-diff - inconsistent old filename on line %d"), linenr);
- 		free(another);
--		return orig_name;
- 	} else {
- 		/* expect "/dev/null" */
- 		if (memcmp("/dev/null", line, 9) || line[9] != '\n')
- 			die(_("git apply: bad git-diff - expected /dev/null on line %d"), linenr);
--		return NULL;
- 	}
- }
- 
- static int gitdiff_oldname(const char *line, struct patch *patch)
- {
- 	char *orig = patch->old_name;
--	patch->old_name = gitdiff_verify_name(line, patch->is_new, patch->old_name,
--					      DIFF_OLD_NAME);
-+	gitdiff_verify_name(line, patch->is_new, &patch->old_name,
-+			    DIFF_OLD_NAME);
- 	if (orig != patch->old_name)
- 		free(orig);
- 	return 0;
-@@ -964,8 +964,8 @@ static int gitdiff_oldname(const char *line, struct patch *patch)
- static int gitdiff_newname(const char *line, struct patch *patch)
- {
- 	char *orig = patch->new_name;
--	patch->new_name = gitdiff_verify_name(line, patch->is_delete, patch->new_name,
--					      DIFF_NEW_NAME);
-+	gitdiff_verify_name(line, patch->is_delete, &patch->new_name,
-+			    DIFF_NEW_NAME);
- 	if (orig != patch->new_name)
- 		free(orig);
- 	return 0;
--- 
-2.8.0.rc4.1.g302de0d.dirty
+>
+>
+>
+> [Footnote]
+>
+> *1* If not, then similaritly with "git add" does not have much
+>     to do with what module_list() should do.  "git add $pathspec"
+>     fails if there is nothing that matches the pathspec, but
+>     "module_list" wants to complain if $pathspec does not match
+>     any submodule.  And it is an accident that "git add ." in
+>     an empty directory does not complain (indeed "git add '*'"
+>     does complain because it sidesteps the accident).
+>
+>
