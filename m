@@ -1,111 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] builtin/apply: simplify gitdiff_{old,new}name()
-Date: Tue, 22 Mar 2016 14:35:31 -0700
-Message-ID: <xmqqy49afb6k.fsf@gitster.mtv.corp.google.com>
-References: <1458680322-17681-1-git-send-email-chriscool@tuxfamily.org>
-	<1458680322-17681-4-git-send-email-chriscool@tuxfamily.org>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: git fails updating submodule only if --quiet is specified
+Date: Tue, 22 Mar 2016 14:38:34 -0700
+Message-ID: <CAGZ79kb0izRAZoQaDxTjKNz0VFEBqbkCSmro2pHm_kmLpJk0mw@mail.gmail.com>
+References: <3E1D841C-7665-43DB-A0F8-99999C59C28D@googlemail.com>
+	<219B1DC5-8379-4FD5-8739-D99890362769@googlemail.com>
+	<CAGZ79kZaV3w5TM+FPORcFOdeCY8idCYV_yB4Vt5eSNVrNomp2w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 22 22:35:45 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Marcus T <maddimax@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 22:38:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiTxo-00055B-IY
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 22:35:44 +0100
+	id 1aiU0l-0007DI-Cq
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 22:38:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752495AbcCVVfg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2016 17:35:36 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:58710 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752473AbcCVVfe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 17:35:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 43F2E4FBF3;
-	Tue, 22 Mar 2016 17:35:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Np4xJu+m2p+bR555c3lRwJHT2iw=; b=la/lf2
-	w2sOxO1xmC2lw3Lt4EgHXYm3k13AbbnUpyyn0KhAyxWOOirfSdWLVGl7rpZEBtit
-	Q9Y7D3EcVk5XM0+VHu4blgJ3QQjph7H5tNIu0IOuD9SM81vZtLpoJsbFecBLbfwZ
-	YoymGzY4mXm11AitqtTXROp8D5TQAC16HJ0Sg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JDcGzkyV+dp1lNXYIyw22QHpScDkg5JR
-	g09bszHI5fRHCEt/uS6ksVJlfY9vtH2NJ9lRD2taIHzmW8oC++PT9v9hsA1it0Rp
-	2O/XIxyolWiyKcviiIPNEyaeleHZkIo8LSnnHJyeaXlAyrsfWOwh3lMRx3IDY5N5
-	78G013qANtY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3C88C4FBF2;
-	Tue, 22 Mar 2016 17:35:33 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B660F4FBF1;
-	Tue, 22 Mar 2016 17:35:32 -0400 (EDT)
-In-Reply-To: <1458680322-17681-4-git-send-email-chriscool@tuxfamily.org>
-	(Christian Couder's message of "Tue, 22 Mar 2016 21:58:42 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 018E4384-F076-11E5-9647-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1752489AbcCVVim (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 17:38:42 -0400
+Received: from mail-yw0-f177.google.com ([209.85.161.177]:36838 "EHLO
+	mail-yw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752387AbcCVVik (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 17:38:40 -0400
+Received: by mail-yw0-f177.google.com with SMTP id g3so271874069ywa.3
+        for <git@vger.kernel.org>; Tue, 22 Mar 2016 14:38:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=mKi3ZazTBSH87m5OB5NnTqmU+afcCVphsoKJWeodm94=;
+        b=L3e4TP8tpQYn9oKLuP1FMJXcTrpJAkVcrVEoJY/eQbuYbmrMwMt76oWo3V5SRsFGYH
+         zTYG8MsFaD3DnNxQ40bOOzAsUFPV/5+eMY6nEHqVK207AmU3KMBlIcNLzUXCwGii3jzf
+         jZr1RQe0Utte1Id2TYAFZLUy9yInzNPEgiEmBueAzPw8IWTePowGWg7Db9smfODBWiIh
+         UUtBFXcZcMMxRpgWueKGO4j0dCD/T8Ok8ljlWyajI9GPvmIr5LAe8oXEfZh1szm8XOE6
+         sE8CXUEGxJdpXz/kQKZ5ECWJ/Dv0q8fYi+BFP4/mpC2CFqH5JIoUJ2Fyru5UcwmPXNbz
+         frmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=mKi3ZazTBSH87m5OB5NnTqmU+afcCVphsoKJWeodm94=;
+        b=JMLv2Iv1odfUQxL8lyG1lirwH9Wx3+IKce/YtRPLl5jeFX6L+U2g9vDr1wvBGxsURO
+         808VIoS9DmHXcjVdbMxCRE7U019ZaYrU8IxS702AY0H7n8Eam0c0mQgU9et+Ct54k6t4
+         aLND23h6qX/m2ta4UsTobobdXFn83X0L94iF0QQiH2cc6WlznxN9fw71f71Tb93hYfcq
+         Xc3y+JLpd0idK6UMgqUpPXMM6fN2i0H3Xf2JmeS3FQOq2Bsrbk3P/QBcrEuEPS1t/9e7
+         1E06/sZ75ruB71ri4hpBkUgOjyCjE9KstfFR+GaD1UheG5fYxHdYpTClzM1/2UlTHPck
+         sb+Q==
+X-Gm-Message-State: AD7BkJIK+A4/IOyZ1aZLfRQkJyvPCnTbO3+QbvaijfuLUxiS5Btmpfdcm1sSmcaMlRL1Owux2GXl/cg4eV29oh72
+X-Received: by 10.129.49.200 with SMTP id x191mr17591361ywx.176.1458682714725;
+ Tue, 22 Mar 2016 14:38:34 -0700 (PDT)
+Received: by 10.37.51.137 with HTTP; Tue, 22 Mar 2016 14:38:34 -0700 (PDT)
+In-Reply-To: <CAGZ79kZaV3w5TM+FPORcFOdeCY8idCYV_yB4Vt5eSNVrNomp2w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289568>
 
-Christian Couder <christian.couder@gmail.com> writes:
+On Tue, Mar 22, 2016 at 11:22 AM, Stefan Beller <sbeller@google.com> wrote:
+> However lookingat your logs, I would suspect it is an error in git
+> clone instead, as that is the
+> last command which has the --quiet flag passed through the stack.
 
-> After the previous simplifications, it is easy to see that
-> there is no need to free the original string passed to
-> gitdiff_verify_name(), because this string can be changed
-> only when it is NULL.
->
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
-
-I do not think you need either 1/3 or 2/3 to see that (I actually
-think it is easier to see this without 2/3).  The caller passes
-patch->old_name and
-
- - if that is NULL, then we will either get NULL or a new string
-   from find_name(); either way, we do not have to worry about
-   calling free() on the original NULL;
-
- - if that is not NULL, then the only possible value returned from
-   the function is itself (otherwise it will die()), so we won't be
-   calling free() in this code.
-
-so I agree with the conclusion, i.e. the conditional free() can go
-from these places.
-
->  builtin/apply.c | 6 ------
->  1 file changed, 6 deletions(-)
->
-> diff --git a/builtin/apply.c b/builtin/apply.c
-> index 4cafdaf..9cfa9f4 100644
-> --- a/builtin/apply.c
-> +++ b/builtin/apply.c
-> @@ -953,21 +953,15 @@ static void gitdiff_verify_name(const char *line, int isnull, char **name, int s
->  
->  static int gitdiff_oldname(const char *line, struct patch *patch)
->  {
-> -	char *orig = patch->old_name;
->  	gitdiff_verify_name(line, patch->is_new, &patch->old_name,
->  			    DIFF_OLD_NAME);
-> -	if (orig != patch->old_name)
-> -		free(orig);
->  	return 0;
->  }
->  
->  static int gitdiff_newname(const char *line, struct patch *patch)
->  {
-> -	char *orig = patch->new_name;
->  	gitdiff_verify_name(line, patch->is_delete, &patch->new_name,
->  			    DIFF_NEW_NAME);
-> -	if (orig != patch->new_name)
-> -		free(orig);
->  	return 0;
->  }
+git clone --no-checkout --quiet --separate-git-dir tmp_gitdir
+git://git.busybox.net/buildroot tmp_workdir
+fails as a standalone program as well, so let's debug that.
