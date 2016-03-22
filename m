@@ -1,199 +1,110 @@
-From: Laurent Arnoud <laurent@spkdev.net>
-Subject: [PATCH v6] Add the option to force sign annotated tags
-Date: Tue, 22 Mar 2016 21:41:26 +0100
-Message-ID: <20160322204126.GI20083@spk-laptop>
-References: <20160319182310.GA23124@spk-laptop>
- <20160320042912.GD18312@sigill.intra.peff.net>
- <20160320150703.GB5139@spk-laptop>
- <xmqq7fgwnzuv.fsf@gitster.mtv.corp.google.com>
- <20160321192904.GC20083@spk-laptop>
- <xmqqvb4fliq6.fsf@gitster.mtv.corp.google.com>
- <20160321205015.GF20083@spk-laptop>
- <xmqqa8lrldz4.fsf@gitster.mtv.corp.google.com>
- <20160322193617.GG20083@spk-laptop>
- <xmqqshziguot.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/4] mingw: skip some tests in t9115 due to file name issues
+Date: Tue, 22 Mar 2016 13:44:11 -0700
+Message-ID: <xmqqbn66gs4k.fsf@gitster.mtv.corp.google.com>
+References: <cover.1458668543.git.johannes.schindelin@gmx.de>
+	<7b4eca83305ec05af6434ff80269ba563f2d581d.1458668543.git.johannes.schindelin@gmx.de>
+	<56F18F5E.9090301@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 22 21:41:37 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>,
+	Eric Wong <normalperson@yhbt.net>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Mar 22 21:44:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiT7Q-0007OH-1S
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 21:41:36 +0100
+	id 1aiTA3-00014X-My
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 21:44:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750986AbcCVUlc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2016 16:41:32 -0400
-Received: from ns3268618.ip-5-39-81.eu ([5.39.81.144]:40118 "EHLO
-	mail.spkdev.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750782AbcCVUlb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 16:41:31 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	id S1751036AbcCVUoP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Mar 2016 16:44:15 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:53344 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750696AbcCVUoO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Mar 2016 16:44:14 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 678724ED3B;
+	Tue, 22 Mar 2016 16:44:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=piVkymif87lY
+	tmmLX6T2Z+Ag5Vo=; b=DWQVlpHNZHXmR30peOfRln8cpOg9YNks9YVmhOj83sBa
+	K32ftCWVldrguPFsMfq915yC+ZpI04eZQjSlVV458hVsm38iGks4Q9N1rG2vJt1P
+	mAfo8HaPn5aKgtMPk6KKS3FoqpE1YJytiUxmtS51iK88/ldyGIbOs8quWgx7u8M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=jPNwRy
+	3/u3MNk+hdHj3l8GJdAzo2Voq5f/xGJj5/pTaHzp36/m6AUxLA0QX2mnOPHbQC55
+	2yLCpndQ4Tq/YOfCpyDjfgiFi0j7C1OZ3aBmUkrJDlJNChBPr6pbYPam1cfn/Sau
+	XpHbvqSprcpJ5LFw50gUJNVuT1oEUHsR4+T9U=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5EC024ED3A;
+	Tue, 22 Mar 2016 16:44:13 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by mail.spkdev.net (Postfix) with ESMTPSA id C102DFF232;
-	Tue, 22 Mar 2016 20:41:27 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <xmqqshziguot.fsf@gitster.mtv.corp.google.com>
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BDC264ED38;
+	Tue, 22 Mar 2016 16:44:12 -0400 (EDT)
+In-Reply-To: <56F18F5E.9090301@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Tue, 22 Mar 2016 19:30:54 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D5CB27A0-F06E-11E5-B8A5-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289558>
 
-The `tag.forcesignannotated` config option allows to sign annotated tags
-automatically.
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-`--annotate` command line option disable configuration
-`tag.forcesignannotated`.
+> On 2016-03-22 18.43, Johannes Schindelin wrote:
+>> These two tests wanted to write file names which are incompatible wi=
+th
+>> Windows' file naming rules.
+>>=20
+>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> Is there a chance to squeeze in a precondition for HFS under Mac OS ?
 
-Signed-off-by: Laurent Arnoud <laurent@spkdev.net>
----
- Documentation/config.txt |  5 +++++
- builtin/tag.c            | 20 ++++++++++++++------
- t/t7004-tag.sh           | 41 +++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 60 insertions(+), 6 deletions(-)
+So you want this squashed into it?
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 2cd6bdd..95d5c9d 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2729,6 +2729,11 @@ submodule.<name>.ignore::
- 	"--ignore-submodules" option. The 'git submodule' commands are not
- 	affected by this setting.
- 
-+tag.forceSignAnnotated::
-+	A boolean to specify whether annotated tags created should be GPG signed.
-+	If `--annotate` is specified on the command line, it takes
-+	precedence over this option.
-+
- tag.sort::
- 	This variable controls the sort ordering of tags when displayed by
- 	linkgit:git-tag[1]. Without the "--sort=<value>" option provided, the
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 1705c94..528a1ba 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -29,6 +29,7 @@ static const char * const git_tag_usage[] = {
- };
- 
- static unsigned int colopts;
-+static int force_sign_annotate;
- 
- static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting, const char *format)
- {
-@@ -166,6 +167,11 @@ static int git_tag_config(const char *var, const char *value, void *cb)
- 	status = git_gpg_config(var, value, cb);
- 	if (status)
- 		return status;
-+	if (!strcmp(var, "tag.forcesignannotated")) {
-+		force_sign_annotate = git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	if (starts_with(var, "column."))
- 		return git_column_config(var, value, "tag", &colopts);
- 	return git_default_config(var, value, cb);
-@@ -327,7 +333,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	char *cleanup_arg = NULL;
- 	int create_reflog = 0;
- 	int annotate = 0, force = 0;
--	int cmdmode = 0;
-+	int cmdmode = 0, create_tag_object = 0;
- 	const char *msgfile = NULL, *keyid = NULL;
- 	struct msg_arg msg = { 0, STRBUF_INIT };
- 	struct ref_transaction *transaction;
-@@ -385,12 +391,12 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		opt.sign = 1;
- 		set_signing_key(keyid);
- 	}
--	if (opt.sign)
--		annotate = 1;
-+	create_tag_object = (opt.sign || annotate || msg.given || msgfile);
-+
- 	if (argc == 0 && !cmdmode)
- 		cmdmode = 'l';
- 
--	if ((annotate || msg.given || msgfile || force) && (cmdmode != 0))
-+	if ((create_tag_object || force) && (cmdmode != 0))
- 		usage_with_options(git_tag_usage, options);
- 
- 	finalize_colopts(&colopts, -1);
-@@ -431,7 +437,6 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	if (msg.given || msgfile) {
- 		if (msg.given && msgfile)
- 			die(_("only one -F or -m option is allowed."));
--		annotate = 1;
- 		if (msg.given)
- 			strbuf_addbuf(&buf, &(msg.buf));
- 		else {
-@@ -474,8 +479,11 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	else
- 		die(_("Invalid cleanup mode %s"), cleanup_arg);
- 
--	if (annotate)
-+	if (create_tag_object) {
-+		if (force_sign_annotate && !annotate)
-+			opt.sign = 1;
- 		create_tag(object, tag, &buf, &opt, prev, object);
-+	}
- 
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index cf3469b..f9b7d79 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -775,6 +775,47 @@ test_expect_success GPG '-s implies annotated tag' '
- 	test_cmp expect actual
+ t/t9115-git-svn-dcommit-funky-renames.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/t9115-git-svn-dcommit-funky-renames.sh b/t/t9115-git-svn=
+-dcommit-funky-renames.sh
+index 864395e..a87d3d3 100755
+--- a/t/t9115-git-svn-dcommit-funky-renames.sh
++++ b/t/t9115-git-svn-dcommit-funky-renames.sh
+@@ -93,7 +93,7 @@ test_expect_success 'git svn rebase works inside a fr=
+esh-cloned repository' '
+ # > to special UNICODE characters in the range 0xf000 to 0xf0ff (the
+ # > "Private use area") when creating or accessing files.
+ prepare_a_utf8_locale
+-test_expect_success UTF8,!MINGW 'svn.pathnameencoding=3Dcp932 new file=
+ on dcommit' '
++test_expect_success UTF8,!MINGW,!UTF8_NFD_TO_NFC 'svn.pathnameencoding=
+=3Dcp932 new file on dcommit' '
+ 	LC_ALL=3D$a_utf8_locale &&
+ 	export LC_ALL &&
+ 	neq=3D$(printf "\201\202") &&
+@@ -105,7 +105,7 @@ test_expect_success UTF8,!MINGW 'svn.pathnameencodi=
+ng=3Dcp932 new file on dcommit'
  '
- 
-+get_tag_header forcesignannotated-implied-sign $commit commit $time >expect
-+echo "A message" >>expect
-+echo '-----BEGIN PGP SIGNATURE-----' >>expect
-+test_expect_success GPG \
-+	'git tag -s implied if configured with tag.forcesignannotated' \
-+	'test_config tag.forcesignannotated true &&
-+	git tag -m "A message" forcesignannotated-implied-sign &&
-+	get_tag_msg forcesignannotated-implied-sign >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success GPG \
-+	'lightweight with no message when configured with tag.forcesignannotated' \
-+	'test_config tag.forcesignannotated true &&
-+	git tag forcesignannotated-lightweight &&
-+	tag_exists forcesignannotated-lightweight &&
-+	test_must_fail git tag -v forcesignannotated-no-message
-+'
-+
-+get_tag_header forcesignannotated-annotate $commit commit $time >expect
-+echo "A message" >>expect
-+test_expect_success GPG \
-+	'git tag -a disable configured tag.forcesignannotated' \
-+	'test_config tag.forcesignannotated true &&
-+	git tag -a -m "A message" forcesignannotated-annotate &&
-+	get_tag_msg forcesignannotated-annotate >actual &&
-+	test_cmp expect actual &&
-+	test_must_fail git tag -v forcesignannotated-annotate
-+'
-+
-+get_tag_header forcesignannotated-disabled $commit commit $time >expect
-+echo "A message" >>expect
-+echo '-----BEGIN PGP SIGNATURE-----' >>expect
-+test_expect_success GPG \
-+	'git tag --sign enable GPG sign' \
-+	'test_config tag.forcesignannotated false &&
-+	git tag --sign -m "A message" forcesignannotated-disabled &&
-+	get_tag_msg forcesignannotated-disabled >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success GPG \
- 	'trying to create a signed tag with non-existing -F file should fail' '
- 	! test -f nonexistingfile &&
--- 
-2.7.0
+=20
+ # See the comment on the above test for setting of LC_ALL.
+-test_expect_success !MINGW 'svn.pathnameencoding=3Dcp932 rename on dco=
+mmit' '
++test_expect_success !MINGW,!UTF8_NFD_TO_NFC 'svn.pathnameencoding=3Dcp=
+932 rename on dcommit' '
+ 	LC_ALL=3D$a_utf8_locale &&
+ 	export LC_ALL &&
+ 	inf=3D$(printf "\201\207") &&
