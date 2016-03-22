@@ -1,98 +1,126 @@
-From: Emily Graff <egraff@aimdigitalpros.com>
-Subject: Condominium Owners List
-Date: Tue, 22 Mar 2016 15:36:26 -0400
-Message-ID: <56F19EBA.9090907@aimdigitalpros.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] submodule helper: accept '.' for repositories with no submodules
+Date: Tue, 22 Mar 2016 13:06:49 -0700
+Message-ID: <xmqqoaa6gtuu.fsf@gitster.mtv.corp.google.com>
+References: <1458669579-32160-1-git-send-email-sbeller@google.com>
+	<xmqqy49agx98.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kaMa3CyJ-Y9Xn9QShzTUGythos+pmKZXQ7m-2c0bF0u9A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 22 20:55:30 2016
+Content-Type: text/plain
+Cc: Per Cederqvist <cederp@opera.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 21:07:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiSOl-00081P-U4
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 20:55:28 +0100
+	id 1aiSZu-0007gj-Jc
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 21:06:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752271AbcCVTzT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Mar 2016 15:55:19 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:34443 "EHLO
-	mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751915AbcCVTzR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 15:55:17 -0400
-Received: by mail-pf0-f172.google.com with SMTP id x3so324154900pfb.1
-        for <git@vger.kernel.org>; Tue, 22 Mar 2016 12:55:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=aimdigitalpros-com.20150623.gappssmtp.com; s=20150623;
-        h=to:subject:from:message-id:disposition-notification-to:date
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=kUAhnBLhpLwYkluX82A8NY+X5YjtfJTbpg3wmafPMj0=;
-        b=FrRPsgv7Psfa7ksIkSKcVmFZgcSgoC1+K12eZ1bIWwA+S99occODpHREUCrB5qIQEa
-         s5KO5EwIJn8e21yZZK9HYPp7rhy2ahkh9dUMsiD4Fau5FMmS7pLaxhv907sSp1LooGPF
-         k02eojFtDYTZ2mQFqy1SCs8LxRDrEnd1XOhA3gjWD+wZE65bsIJA7N/AZB6ugX6kuQhr
-         7Gp9zu+0IM6J+2S0qOUgLb6TMQM7GwXzUk3PDHD7Fdc/l50XcjvP5k7vcMlSBFQNQZGE
-         yxMPj1KEjNoY+SwHRhgh0+BNfREtuHSoTdEPuAJy8OOpGj9YW3wDkA7g1rk5/tVnIVLz
-         +aKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:to:subject:from:message-id
-         :disposition-notification-to:date:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=kUAhnBLhpLwYkluX82A8NY+X5YjtfJTbpg3wmafPMj0=;
-        b=aYZJaiAqvGLVQ3gAWooiw6Rel0JEPLs4CWgOCx7LlAABYO+BAkfvQN7k8w8df6XfPF
-         tHW/Zzh0apftFGv/r7gj9OqH09SuvnXVvToCrTbXAVAF5L6Xmxd5PUPsovo0fZNL/YzM
-         DS9lnsLZVgpGDhUcylV8SAUj1ayKQqdeGWLhjv9MXBUD394/J+JpZn9JnkjDyE6HDQH6
-         Y/aj4hLbTVfIK7TNls8Z32cbUShKRBpuOFmKGz5SBbYwa0e44Nu1q1ZElcgOBNYiAk4P
-         L8p1UIPhbIWA1/put29NBzxXuaYV0TMyzKQGKM7C7e8bcBETSHSb5cQH3C93mHaIg/w2
-         fxJw==
-X-Gm-Message-State: AD7BkJLes9t4AXTvYwT9LsymJFI4jdvnr0WL/dF9+8DDgP0LCTaN3NtgDh7HBeIs8rtbjg==
-X-Received: by 10.98.13.216 with SMTP id 85mr56162444pfn.143.1458676516513;
-        Tue, 22 Mar 2016 12:55:16 -0700 (PDT)
-Received: from [127.0.0.1] ([103.6.157.159])
-        by smtp.gmail.com with ESMTPSA id h19sm50184679pfh.43.2016.03.22.12.55.14
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Mar 2016 12:55:15 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.3; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
-X-Antivirus: avast! (VPS 160322-0, 03/22/2016), Outbound message
-X-Antivirus-Status: Clean
+	id S1751328AbcCVUGy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 16:06:54 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:58889 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751286AbcCVUGx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 16:06:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E2E0B4E2AD;
+	Tue, 22 Mar 2016 16:06:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AU4eR0uOxtSPgNstHa5BvRdvTzU=; b=krIhCl
+	eS+5l/Mjmijrs+N3fi9CpSKze/wZOWDCEogkVjtBOD+D6g+5ntLGNv+2ISPL+cE/
+	T+lTJH0SnXsT1hDZPJ+/9XzAsI4V9ot9b9YhZ6nr/USw1yQxvbLvfRq50yrYq5Y0
+	rOMR+EeTDvM/ERdSxBvJpZVB4w4Di7ZWDUUAA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YxDNW9b6n18k5BaSlMITgCCTmyFgGNCX
+	2jfF36QwMyOB5XX90im3I90wI+vPzf9SWeJTe0ctT2t87J21RqkZeDc3AQ9CXbX4
+	aH92vaa+MI93RNxnGxnhE8vXWiSSB/jVLBi7WH0GZFp0+EivZ623KlWrbcdx+pLN
+	yFRXvFyY4kQ=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D8A414E2AC;
+	Tue, 22 Mar 2016 16:06:51 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3EB404E2AB;
+	Tue, 22 Mar 2016 16:06:51 -0400 (EDT)
+In-Reply-To: <CAGZ79kaMa3CyJ-Y9Xn9QShzTUGythos+pmKZXQ7m-2c0bF0u9A@mail.gmail.com>
+	(Stefan Beller's message of "Tue, 22 Mar 2016 12:30:13 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 9DB3F59A-F069-11E5-8937-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289553>
+
+Stefan Beller <sbeller@google.com> writes:
+
+> Maybe we can also special case the "force" argument only here for
+> Cedars use case.  ("git submodule deinit ." complains because
+> there are no further submodules, but -f solves the complaint?)
+
+I think that would have been the most sensible thing to do when
+we were adding "git submodule deinit", and it would be the most
+sensible behaviour in the longer term.
 
 
-Hi,
+> So I have 2 goals in mind:
 
-I'm Emily
+> * Git suggested to use '.' explicitly, so it should just work
+> --even for a completely empty repository (see the test for it)
 
-Would you be interested in reaching out to "Condominium Owners Email Li=
-st" with opt-in and licensed to be sold?
+I actually view this as either a low-prio goal or even a
+non-goal, as long as we have a sensible migration plan to stop
+suggesting '.'.
 
-We also have data for Building Investors, Home Owners, Mortgage, Estate=
- Planners and many more=E2=80=A6
+> * Eventually -- not in this patch, but a later patch targeted
+> at master -- we want to remove the recommendation to use '.',
+> and allow no arguments or a different argument for "all
+> submodules".
 
-Each record in the list contains Contact Name( First, Middle, Last Name=
-), Direct Mailing Address ( Address, City, State, Zip Code), List Type,=
- Source, IP Address, Gender, Age, Marital Status, Income and Email Addr=
-ess.
+> git add uses '.' for it though, so '.' seems right and valid.
+> git add '*' is also valid.
 
-Please let me know your thoughts towards procuring or using our Condomi=
-nium Owners Email List.
+Perhaps I am misunderstanding what you want.  Do you want a
+regular file that happens to match pathspec to prevent
+module_list from noticing "pathspec did not match" situation and
+giving the user an error?  That would be the "match-pathspec first
+and then mode-check" behaviour, that is the same as v2.6.x
+series [*1*].
 
-Best Regards,
-Emily Graff
+> Maybe combine the second idea with a slight refactoring of
+> parse_pathspec, such that you can pass a callback function to
+> parse_pathspec which can decided on each file if it is a file
+> to inspect. (i.e. for our usecase we'd check for ce_mode to be
+> GITLINK, another hypothetical use case would be using
+> parse_pathspec for finding all files with a certain property,
+> e.g. finding all files ending in .c or files written in all
+> capital letters or such)
+>
+> Then you could do a conditional parse_pathspec over the partial
+> repository which matched
+> the additional filtering function.
+>
 
-If this message is not relevant to you please forward to decision maker=
-=2EWe respect your privacy, if you do not wish to receive any further e=
-mails from our end, please reply with a subject =E2=80=9CLeave Out=E2=80=
-=9D.
+I do not think that buys us much.  You have already shown how to
+implement "filter first and then pathspec match" if a caller
+wants to (which turned out to be a regression in this case, but
+that is besides the point).
 
 
----
-This email has been checked for viruses by Avast antivirus software.
-https://www.avast.com/antivirus
+
+[Footnote]
+
+*1* If not, then similaritly with "git add" does not have much
+    to do with what module_list() should do.  "git add $pathspec"
+    fails if there is nothing that matches the pathspec, but
+    "module_list" wants to complain if $pathspec does not match
+    any submodule.  And it is an accident that "git add ." in
+    an empty directory does not complain (indeed "git add '*'"
+    does complain because it sidesteps the accident).
