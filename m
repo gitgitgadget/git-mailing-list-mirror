@@ -1,174 +1,164 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5] Add the option to force sign annotated tags
-Date: Tue, 22 Mar 2016 12:48:50 -0700
-Message-ID: <xmqqshziguot.fsf@gitster.mtv.corp.google.com>
-References: <20160319182310.GA23124@spk-laptop>
-	<20160320042912.GD18312@sigill.intra.peff.net>
-	<20160320150703.GB5139@spk-laptop>
-	<xmqq7fgwnzuv.fsf@gitster.mtv.corp.google.com>
-	<20160321192904.GC20083@spk-laptop>
-	<xmqqvb4fliq6.fsf@gitster.mtv.corp.google.com>
-	<20160321205015.GF20083@spk-laptop>
-	<xmqqa8lrldz4.fsf@gitster.mtv.corp.google.com>
-	<20160322193617.GG20083@spk-laptop>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] git_config_push_parameter: handle empty GIT_CONFIG_PARAMETERS
+Date: Tue, 22 Mar 2016 15:50:51 -0400
+Message-ID: <20160322195051.GA20563@sigill.intra.peff.net>
+References: <1456786715-24256-1-git-send-email-jacob.e.keller@intel.com>
+ <1456786715-24256-8-git-send-email-jacob.e.keller@intel.com>
+ <20160322185628.GA19993@google.com>
+ <20160322192309.GA9782@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Laurent Arnoud <laurent@spkdev.net>
-X-From: git-owner@vger.kernel.org Tue Mar 22 20:49:01 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org,
+	Mark Strapetz <marc.strapetz@syntevo.com>,
+	Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 20:51:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiSIU-0003kc-9f
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 20:48:58 +0100
+	id 1aiSKd-0005Gi-VB
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 20:51:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751927AbcCVTsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2016 15:48:55 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:58153 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751723AbcCVTsx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 15:48:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 08BF84DC6A;
-	Tue, 22 Mar 2016 15:48:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=44/takzKDLgKeThnLP8zadiTbow=; b=oixktv
-	3rbYzt+fyAsbzlYeUULiNI8XolcLMmzIwJseHNQFELH3TNsHiwHYbrPUSWGVw4v4
-	J1Tweod8lVgn/J+beFLPEaHdzEKJ2rj0SgLPnCb4eRu8BKMTVjw+Qm4Kz3kDwAUv
-	DJaaNy/kFlbIeJcTZVDERjeD/TXvPe+s9j/3Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YJ7A/HzZs3Sp72iH83uyOz/RVw817dWu
-	b9EDqsvmtgbrVvER/nidY+obmyoUndtNyDo07DH/LgPaROYMyGb33MPbi3ViU7bf
-	LVPSLf73yoYag3UpbUROBvNscrH9jIYrKVHab937HEw2LEFgQlMf2cIjfMB+v/E4
-	IzRnJ113N5U=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 007204DC69;
-	Tue, 22 Mar 2016 15:48:52 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 718ED4DC68;
-	Tue, 22 Mar 2016 15:48:51 -0400 (EDT)
-In-Reply-To: <20160322193617.GG20083@spk-laptop> (Laurent Arnoud's message of
-	"Tue, 22 Mar 2016 20:36:17 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1A18D4E6-F067-11E5-96F9-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1752263AbcCVTu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 15:50:56 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36097 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752247AbcCVTuy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 15:50:54 -0400
+Received: (qmail 15483 invoked by uid 102); 22 Mar 2016 19:50:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 22 Mar 2016 15:50:53 -0400
+Received: (qmail 17364 invoked by uid 107); 22 Mar 2016 19:51:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 22 Mar 2016 15:51:13 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Mar 2016 15:50:51 -0400
+Content-Disposition: inline
+In-Reply-To: <20160322192309.GA9782@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289551>
 
-Laurent Arnoud <laurent@spkdev.net> writes:
+On Tue, Mar 22, 2016 at 03:23:09PM -0400, Jeff King wrote:
 
-> The `tag.forcesignannotated` config option allows to sign
-> annotated tags automatically.
+> On Tue, Mar 22, 2016 at 11:56:28AM -0700, Jonathan Nieder wrote:
+> 
+> > This is failing for me when I use "git submodule add" with a remote
+> > helper I whitelisted with GIT_ALLOW_PROTOCOL, with current "next":
+> > 
+> >  $ bin-wrappers/git submodule add persistent-https://kernel.googlesource.com/pub/scm/git/git sm
+> >  Cloning into 'sm'...
+> >  error: bogus format in GIT_CONFIG_PARAMETERS
+> >  fatal: unable to parse command-line config
+> >  fatal: clone of 'persistent-https://kernel.googlesource.com/pub/scm/git/git' into submodule path 'sm' failed
+> > 
+> > sq_dequote_to_argv doesn't like the space at the beginning of
+> > $GIT_CONFIG_PARAMETERS.  Reverting 14111fc4 fixes it.  Known
+> > problem?
+> 
+> It's known that the parsing end is excessively picky, but not this
+> particular bug. I found the problem; I'll have a patch out in a few
+> minute after I write a test.
 
-It looks like it does a lot more than that to me, though.
+Here it is.
 
-> @@ -327,7 +333,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
->  	char *cleanup_arg = NULL;
->  	int create_reflog = 0;
->  	int annotate = 0, force = 0;
-> -	int cmdmode = 0;
-> +	int cmdmode = 0, create_tag_object = 0;
->  	const char *msgfile = NULL, *keyid = NULL;
->  	struct msg_arg msg = { 0, STRBUF_INIT };
->  	struct ref_transaction *transaction;
-> @@ -385,12 +391,13 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
->  		opt.sign = 1;
->  		set_signing_key(keyid);
->  	}
-> -	if (opt.sign)
-> -		annotate = 1;
-> +	if (opt.sign || annotate || force_sign_annotate)
-> +		create_tag_object = 1;
+Obviously another option would be to make the parsing side more liberal
+(which has the added effect that if anybody _else_ ever wants to
+generate $GIT_CONFIG_PARAMETERS, they will not get annoyed). But I took
+this route for now because it's the simplest way to fix the regression.
+And even if we do later make the parser more liberal, it's still a good
+idea to keep the output from the generating side as clean as possible.
 
-This means that create_tag_object is always on if the configuration
-is set and there is no way to override that from the command line,
-doesn't it?  I cannot see how a user would create a lightweight tag
-if this configuration variable is set with this change.
+-- >8 --
+Subject: git_config_push_parameter: handle empty GIT_CONFIG_PARAMETERS
 
-I think it makes sense to have this here instead of these two lines:
+The "git -c var=value" option stuffs the config value into
+$GIT_CONFIG_PARAMETERS, so that sub-processes can see it.
+When the config is later read via git_config() or similar,
+we parse it back out of that variable.  The parsing end is a
+little bit picky; it assumes that each entry was generated
+with sq_quote_buf(), and that there is no extraneous
+whitespace.
 
-	create_tag_object = (opt.sign || annotate || msg.given || msgfile);
+On the generating end, we are careful to append to an
+existing $GIT_CONFIG_PARAMETERS variable if it exists.
+However, our test for "should we add a space separator" is
+too liberal: it will add one even if the environment
+variable exists but is empty. As a result, you might end up
+with:
 
->  	if (argc == 0 && !cmdmode)
->  		cmdmode = 'l';
->  
-> -	if ((annotate || msg.given || msgfile || force) && (cmdmode != 0))
-> +	if ((create_tag_object || msg.given || msgfile || force) && (cmdmode != 0))
+   GIT_CONFIG_PARAMETERS=" 'core.foo=bar'"
 
-and then simplify this to
+which the parser will choke on.
 
-	if ((create_tag_object || force) && (cmdmode != 0))
+This was hard to trigger in older versions of git, since we
+only set the variable when we had something to put into it
+(though you could certainly trigger it manually). But since
+14111fc (git: submodule honor -c credential.* from command
+line, 2016-02-29), the submodule code will unconditionally
+put the $GIT_CONFIG_PARAMETERS variable into the environment
+of any operation in the submodule, whether it is empty or
+not. So any of those operations which themselves use "git
+-c" will generate the unparseable value and fail.
 
-perhaps?  Then ...
+We can easily fix it by catching this case on the generating
+side. While we're adding a test, let's also check that
+multiple layers of "git -c" work, which was previously not
+tested at all.
 
->  		usage_with_options(git_tag_usage, options);
->  
->  	finalize_colopts(&colopts, -1);
-> @@ -431,7 +438,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
->  	if (msg.given || msgfile) {
->  		if (msg.given && msgfile)
->  			die(_("only one -F or -m option is allowed."));
-> -		annotate = 1;
-> +		create_tag_object = 1;
+Reported-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I just did this on master, and it is standalone. But for the reasons
+above I think it would also be fine to stick on the tip of the
+jk/submodule-c-credential topic.
 
-... this line can just go, as we are taking the presense of various
-ways to say "I'll give this message to the resulting tag" as the
-sign that the user wants to create a tag object much earlier.
+ config.c               |  2 +-
+ t/t1300-repo-config.sh | 14 ++++++++++++++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
->  		if (msg.given)
->  			strbuf_addbuf(&buf, &(msg.buf));
->  		else {
-> @@ -474,8 +481,11 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
->  	else
->  		die(_("Invalid cleanup mode %s"), cleanup_arg);
->  
-> -	if (annotate)
-> +	if (create_tag_object) {
-> +		if (force_sign_annotate && !annotate)
-> +			opt.sign = 1;
->  		create_tag(object, tag, &buf, &opt, prev, object);
-> +    }
-
-And this hunk is OK.
-
-> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-> index cf3469b..be95318 100755
-> --- a/t/t7004-tag.sh
-> +++ b/t/t7004-tag.sh
-> @@ -775,6 +775,39 @@ test_expect_success GPG '-s implies annotated tag' '
->  	test_cmp expect actual
->  '
->  
-> +get_tag_header config-implied-annotate $commit commit $time >expect
-> +./fakeeditor >>expect
-> +echo '-----BEGIN PGP SIGNATURE-----' >>expect
-> +test_expect_success GPG \
-> +	'git tag -s implied if configured with tag.forcesignannotated' \
-> +	'test_config tag.forcesignannotated true &&
-> +	GIT_EDITOR=./fakeeditor git tag config-implied-annotate &&
-
-This contradicts with what you said earlier in your
-<20160321192904.GC20083@spk-laptop> aka
-http://thread.gmane.org/gmane.comp.version-control.git/289322/focus=289441
-
-    > If you are forcing users to always leave a message and then further
-    > forcing users to always sign with the single new configuration, i.e.
-    > 
-    >     $ git tag v1.0
-    >     ... opens the editor to ask for a message ...
-    >     ... then makes the user sign with GPG ...
-
-    I'm not forcing this type of user to enable global
-    configuration, that will be annoying for them of course.
-
-But this test expects that this invocation of "git tag $tagname"
-forces the user to give a message with editor and sign it, instead
-of creating a lightweight tag.
+diff --git a/config.c b/config.c
+index 9ba40bc..8f66519 100644
+--- a/config.c
++++ b/config.c
+@@ -162,7 +162,7 @@ void git_config_push_parameter(const char *text)
+ {
+ 	struct strbuf env = STRBUF_INIT;
+ 	const char *old = getenv(CONFIG_DATA_ENVIRONMENT);
+-	if (old) {
++	if (old && *old) {
+ 		strbuf_addstr(&env, old);
+ 		strbuf_addch(&env, ' ');
+ 	}
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index 8867ce1..2b58312 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -1091,6 +1091,20 @@ test_expect_success 'git -c complains about empty key and value' '
+ 	test_must_fail git -c "" rev-parse
+ '
+ 
++test_expect_success 'multiple git -c appends config' '
++	test_config alias.x "!git -c x.two=2 config --get-regexp ^x\.*" &&
++	cat >expect <<-\EOF &&
++	x.one 1
++	x.two 2
++	EOF
++	git -c x.one=1 x >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git -c is not confused by empty environment' '
++	GIT_CONFIG_PARAMETERS="" git -c x.one=1 config --list
++'
++
+ test_expect_success 'git config --edit works' '
+ 	git config -f tmp test.value no &&
+ 	echo test.value=yes >expect &&
+-- 
+2.8.0.rc4.388.gdee5eca
