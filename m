@@ -1,81 +1,140 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] Git for Windows fixes in preparation for 2.8.0
-Date: Tue, 22 Mar 2016 10:50:43 -0700
-Message-ID: <xmqqfuviieq4.fsf@gitster.mtv.corp.google.com>
-References: <cover.1458668543.git.johannes.schindelin@gmx.de>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH v2] bisect--helper: convert a function in shell to C
+Date: Tue, 22 Mar 2016 23:22:13 +0530
+Message-ID: <CAFZEwPOMdozVafJzRYJmhhAAAAVfLJ74dSGVbsHreFFKD1Vobg@mail.gmail.com>
+References: <010201539a8d2b8a-9f168d7a-d4c6-4c23-a61f-1ef6ee22f774-000000@eu-west-1.amazonses.com>
+	<010201539d57ae98-ce4860a6-f7b6-4e06-b556-3c1340cd7749-000000@eu-west-1.amazonses.com>
+	<alpine.DEB.2.20.1603221552100.4690@virtualbox>
+	<xmqqh9fyjy9w.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>,
-	Eric Wong <normalperson@yhbt.net>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 22 18:50:52 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 18:52:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiQSA-0000Vf-0i
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 18:50:50 +0100
+	id 1aiQTa-0001cm-5V
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 18:52:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755585AbcCVRur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2016 13:50:47 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:54827 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753479AbcCVRuq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 13:50:46 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DE9C14EC1F;
-	Tue, 22 Mar 2016 13:50:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PoZGvWHVkjbQLYUvjTURxeiVszk=; b=C4GfZV
-	csl/Fq33/VUetdITatbCgxknCFZznRqNLZwztCJazrPKjEAM3kbEHK/epPekcVNo
-	DuiaSuMxuDDrstLqeOZPBvuqNbvQM7PFPi9RiBIzys4OnkkC4+2PlIv6rXatb5yx
-	qggnN51wRkpYMy+EZzPsahlEioDh+Cp/w+Hq4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ybS5myTT4lGMALIreggCu3cWduWuqubD
-	LmbnI+INV0hWihvOs/ipy0WPp//uq+rvZdy1NvR0JhzXwKm1NlppgdjKb2wfjnZb
-	kA9bBpZP4gNSCcQUAlGL2YePHBXFFyn4zyAwb8QqXTlLAt8RH3HNLjh8idYisAfP
-	RjRRbwCNbDA=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D60214EC1E;
-	Tue, 22 Mar 2016 13:50:44 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3EFA44EC1C;
-	Tue, 22 Mar 2016 13:50:44 -0400 (EDT)
-In-Reply-To: <cover.1458668543.git.johannes.schindelin@gmx.de> (Johannes
-	Schindelin's message of "Tue, 22 Mar 2016 18:42:34 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 99D656BA-F056-11E5-B4D8-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1752329AbcCVRwP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 13:52:15 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:35215 "EHLO
+	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750721AbcCVRwO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 13:52:14 -0400
+Received: by mail-yw0-f193.google.com with SMTP id c11so2482194ywb.2
+        for <git@vger.kernel.org>; Tue, 22 Mar 2016 10:52:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=e7Mv2xYbS6RujWZ48Qjxmf8pWFcd7sHn3oxwNwBeV3Q=;
+        b=AuPBVbinAy0wJy5cDEOkEAjnDDXFoqiOKHiI4iMFAp2Sl8l6QGep1IdK2QtaH+Iu8i
+         rt5x3d9iVXkYcLsjWCF3pUNCuLPw16NpZBKDfw6G8uhDuXKhDdHrWuZFJcgHgkq2/HXL
+         8n80ZcE3Y3Cx7EDCq/PzstS+XhNGz1ih/iwKvHFoEJsg7fnLjXzlyvK9H2/XReL7Mxew
+         FzbkpsgTTQ0n/nPISYi9NUOlczLRlCpG+ODPtIob/uouMiu6IzzFHX0OzCiPzsbdGHi6
+         3rmWyS0qMXedCxMgdTyqiOMJslgqhJNTh2c8HhMtEUIexIhpvZnRs2JPiTXeHGeGBAmC
+         3d7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=e7Mv2xYbS6RujWZ48Qjxmf8pWFcd7sHn3oxwNwBeV3Q=;
+        b=NWeSupqYaBbPoM2B5JN+l4W9p10obfjVkeOIBRhyqpdS186ultL2OIecUlzh6fAqpP
+         duf8bZUOi8WFE7bzDg+Ox4VmqHsaSsRb4DYLhXKqMAvMSl7LoY1h70E8v6eoGQ4vSBZs
+         HwuxtKUhbIEOXMpZr+SVQlEKJnyK/r7AB9JhUqynCIqXdrYXGQ2pjl0Kd2KS4du2GUip
+         hUJ+vLVuOa5CawoHbLPoXn8itNnSUvsrul0kKvdQ/cVpJF1wuWeCkI3bnblVAE7PeksX
+         A7Ps5qGckKx4+h/N+FgEokEFA/vxWl0FV728pVFpBBj8Mbrx2UkuJbhiRw3N5+4Nr3dJ
+         sLLQ==
+X-Gm-Message-State: AD7BkJKkiVTBYJBaw91fh8Ub7vRl543alMfuJzPUuNEWibAkFUioKYnrhqFJOW0IZE6w7Xy9rZNgz5t7ZMi5ew==
+X-Received: by 10.129.9.214 with SMTP id 205mr16928575ywj.53.1458669133313;
+ Tue, 22 Mar 2016 10:52:13 -0700 (PDT)
+Received: by 10.13.203.137 with HTTP; Tue, 22 Mar 2016 10:52:13 -0700 (PDT)
+In-Reply-To: <xmqqh9fyjy9w.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289532>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-
-> The t1300 and t9115 tests regressed on Windows. These patches fix that.
-
-Thanks, it might be probably too late for 2.8.0 final to do
-back-and-forth reviews, but lets see how it goes.
-
-
+On Tue, Mar 22, 2016 at 9:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
+>> static int one_of(const char *term, ...)
+>> {
+>>       va_list matches;
+>>       const char *match;
+>>
+>>       va_start(matches, term);
+>>       while ((match = va_arg(matches, const char *)))
+>>               if (!strcmp(term, match))
+>>                       return 1;
+>>       va_end(matches);
+>>
+>>       return 0;
+>> }
 >
-> Johannes Schindelin (4):
->   config --show-origin: report paths with forward slashes
->   Make t1300-repo-config resilient to being run via 'sh -x'
->   t1300: fix the new --show-origin tests on Windows
->   mingw: skip some tests in t9115 due to file name issues
+> This is a very good suggestion.  We tend to avoid explicit
+> comparison to NULL and zero, but we avoid assignment in condition
+> part of if/while statements even more, so
 >
->  compat/mingw.h                           |  6 ++++++
->  path.c                                   |  3 +++
->  t/t1300-repo-config.sh                   | 23 ++++++++++++++---------
->  t/t9115-git-svn-dcommit-funky-renames.sh |  4 ++--
->  4 files changed, 25 insertions(+), 11 deletions(-)
+>         while ((match = va_arg(matches, const char *)) != NULL)
+>
+> would be the best compromise to make it clear and readable.
+>
+>>> +    if (!strcmp(term, "help") || !strcmp(term, "start") ||
+>>> +            !strcmp(term, "skip") || !strcmp(term, "next") ||
+>>> +            !strcmp(term, "reset") || !strcmp(term, "visualize") ||
+>>> +            !strcmp(term, "replay") || !strcmp(term, "log") ||
+>>> +            !strcmp(term, "run"))
+>>> +            die("can't use the builtin command '%s' as a term", term);
+>>
+>> This would look so much nicer using the one_of() function above.
+>>
+>> Please also note that our coding convention (as can be seen from the
+>> existing code in builtin/*.c) is to indent the condition differently than
+>> the block, either using an extra tab, or by using 4 spaces instead of the
+>> tab.
+>
+> In general, "or by using 4 spaces" is better spelled as "or by
+> indenting so that the line aligns with the beginning of the inside
+> of the opening parenthesis on the above line"; "if (" happens to
+> take 4 display spaces and that is where "4" comes from and it would
+> be different for "while (" condition ;-).
+
+I will definitely keep this in mind henceforth.
+>
+> But with one_of(...) this part would change a lot, I imagine.
+>>>      struct option options[] = {
+>>>              OPT_BOOL(0, "next-all", &next_all,
+>>>                       N_("perform 'git bisect next'")),
+>>>              OPT_BOOL(0, "no-checkout", &no_checkout,
+>>>                       N_("update BISECT_HEAD instead of checking out the current commit")),
+>>> +            OPT_STRING(0, "check-term-format", &term, N_("term"),
+>>> +                     N_("check the format of the ref")),
+>>
+>> Hmm. The existing code suggests to use OPT_BOOL instead.
+>> ...
+>> The existing convention is to make the first argument *not* a value of the
+>> "option", i.e. `--check-term-format "$TERM_BAD"` without an equal sign.
+>
+> I think it is preferrable to keep using OPT_BOOL() for this new one
+> if we are incrementally building on top of existing code.
+>
+> But if the convention is that the option is to specify what opration
+> is invoked, using OPT_CMDMODE() to implement all of them would be a
+> worthwhile cleanup to consider at some point.
+
+OPT_CMDMODE() is actually a better option. I also noticed that it
+isn't mentioned in Documentation/technical/api-parse-options.txt .
+Should I send a patch to include it there just to make it easier for
+someone who is new and isn't aware of the changes ?
+
+> I agree with all the points you raised in your review.  Just wanted
+> to add some clarification myself.
+>
+> Thanks.
