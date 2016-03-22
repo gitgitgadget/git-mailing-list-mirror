@@ -1,72 +1,135 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2] bisect--helper: convert a function in shell to C
-Date: Tue, 22 Mar 2016 10:59:10 -0700
-Message-ID: <CAGZ79kZvi+qJKPkgzHP5LgoyTJd2btJZ6zCc4hkSKAhjoOiYFg@mail.gmail.com>
-References: <010201539a8d2b8a-9f168d7a-d4c6-4c23-a61f-1ef6ee22f774-000000@eu-west-1.amazonses.com>
-	<010201539d57ae98-ce4860a6-f7b6-4e06-b556-3c1340cd7749-000000@eu-west-1.amazonses.com>
-	<alpine.DEB.2.20.1603221552100.4690@virtualbox>
-	<xmqqh9fyjy9w.fsf@gitster.mtv.corp.google.com>
-	<CAFZEwPOMdozVafJzRYJmhhAAAAVfLJ74dSGVbsHreFFKD1Vobg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git List <git@vger.kernel.org>
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 22 18:59:39 2016
+Subject: [PATCH] submodule helper: accept '.' for repositories with no submodules
+Date: Tue, 22 Mar 2016 10:59:39 -0700
+Message-ID: <1458669579-32160-1-git-send-email-sbeller@google.com>
+Cc: Jens.Lehmann@web.de, git@vger.kernel.org,
+	Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com, cederp@opera.com
+X-From: git-owner@vger.kernel.org Tue Mar 22 19:00:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiQaU-000765-B7
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 18:59:26 +0100
+	id 1aiQav-0007VH-Ca
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 18:59:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759660AbcCVR7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2016 13:59:13 -0400
-Received: from mail-yw0-f177.google.com ([209.85.161.177]:33557 "EHLO
-	mail-yw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759657AbcCVR7L (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 13:59:11 -0400
-Received: by mail-yw0-f177.google.com with SMTP id h65so121620484ywe.0
-        for <git@vger.kernel.org>; Tue, 22 Mar 2016 10:59:11 -0700 (PDT)
+	id S932238AbcCVR7s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 13:59:48 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:36212 "EHLO
+	mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757109AbcCVR7p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 13:59:45 -0400
+Received: by mail-pf0-f181.google.com with SMTP id u190so321990803pfb.3
+        for <git@vger.kernel.org>; Tue, 22 Mar 2016 10:59:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=BBjPAUzoc1NhCTQ9xumJDQ7j0FQ8X35wcP4gfgcGMi8=;
-        b=Db6JvHCCha2bVKfanNQ68PCqm0u5Zu53P2YsGfBpso2MlcZa7fbwasq9+XVkCu7TEm
-         GVzhJxwbp/0Mhv7JbcUmgd85E+Gr7eFd95Rt1fQ70pDo60jceNwMEClC9BedygZEQUZ4
-         RjK0o+fE+nYryrMbcSnxoBtb1/dorQjMExIfSbBQ8FQ40T2VUGS5xdKaamYVsVvd6iDU
-         NzBV1NCrLO7BtzFVg4VU+xJ1uUURX0WFQiyyrZ2oPVe8THTTZ3749/DjJO5HFrfGnYSs
-         aSrFfQhcunMgsFPdT4v31/ONCLm7QaaupnX2nu5zRmav9DzlCp4AiCVfym4gOkWuYUXm
-         Ue1A==
+        h=from:to:cc:subject:date:message-id;
+        bh=XACaKXlTdaIdxxmscD/i6m+yb736xc2M3DssQlrpvSY=;
+        b=IcBigJTNew/QrBrXlS6VV8bQKL0jJjXTsgt5P3BR3d7LNNPL77pwUD2WkuEA4xPcfR
+         zbUzG49IPWsU2pQdyrKVNmHYbrGllzxDSuyxWW4wt3e4GyEmnPIHAsK9Pz8AnjwDW0Vl
+         7irOcO3h2+w1QdapxGWoNEDBTkQKKu87wxhQu9UYtl58QYNh9VmHQcDHZJjPp4pzbf9v
+         bSnrBdudgPM+NSj+aj22YjL+H03sFBneHHC1I40ghVYHBqdpZhr7VwA99x7ICg4v/k7m
+         UV5kTf2Cit6EOIjuEAXDAETeEVu5wW5YMEDWQnQiK/DL09DNkr/ixwM9yS/RVdDAhOaK
+         0+1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=BBjPAUzoc1NhCTQ9xumJDQ7j0FQ8X35wcP4gfgcGMi8=;
-        b=RhVSskvGURZVZr39z2Vr86glkYxlRJl/45yx8dlVW6Ajt7zjte6inTUyNTmxSibVHH
-         YAZJmN9iquvmk4a2NdsEPxIbD6ICUw60MCfFNSyAEGx1wB5SL87pJeZAlaxXAUwcmk8I
-         Cre5ywzhpE+7D2/lNvG5Se37clMAhXwj1ulmL89l2k8zOH8g0qktboSPAAyB7T6iSXl/
-         EubaSSGpDPfZUOiODyQYA0uaV8xfHtRXmATyerX37Z0KWL4T4TS2pn4IQ1Vsu+YbgFRX
-         cgUKSERkw7zyIByHg0zW1FppOkHmVMsTPVdQVbHTftSs1dRS7TCE8U4ZljVwBLYjCidK
-         iMpw==
-X-Gm-Message-State: AD7BkJJm2LODltiEF35RggobQqTpseCeEa1ARCOa6yomQQj/1jAzjTz0Y19DQk9hBkXTXdLxn9K4lKo+sJm7eh74
-X-Received: by 10.37.38.8 with SMTP id m8mr18390763ybm.92.1458669550588; Tue,
- 22 Mar 2016 10:59:10 -0700 (PDT)
-Received: by 10.37.51.137 with HTTP; Tue, 22 Mar 2016 10:59:10 -0700 (PDT)
-In-Reply-To: <CAFZEwPOMdozVafJzRYJmhhAAAAVfLJ74dSGVbsHreFFKD1Vobg@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=XACaKXlTdaIdxxmscD/i6m+yb736xc2M3DssQlrpvSY=;
+        b=KJzFoezKv15vwKMhT0m7O6XgFQgXwkXQeqR+FWiu0l3Xg6Gz7eRQVXdnjkkZhtznvF
+         W7P1cLSL2oIolH0/88CJD4Bx5FrouziVs1Yj+OPwzhR7qrkuBrDgt+C5kZONxXCmLhCE
+         4lIc5YwC5tWZwIgKB+HAyaP/5+W1DKjTlorvIG2zwT1Y0dR0irMdXjV8VWsX22K3qWxw
+         aOf2SOkFVVsixeQpP6o2qh41pYuGUDb/QKq55SRLMxm3ha9mc43EX78IhaD+lgeqr7WS
+         njIf8Qb835n5XoqTZnRKqoL2I3Inm8pD5eWiyMkDT+Zcp0bjxcsSs6Mc5YPJ8iW5wtDw
+         hFmA==
+X-Gm-Message-State: AD7BkJJxWlBGCC39RogPs/yNssRkGWKjgpZnlEUiZrxtl3CCDpCdxsEsdPt1OSOISOiI0I+L
+X-Received: by 10.98.34.18 with SMTP id i18mr56082292pfi.26.1458669583879;
+        Tue, 22 Mar 2016 10:59:43 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:f1b0:8994:3428:87f7])
+        by smtp.gmail.com with ESMTPSA id l4sm34801104pfi.73.2016.03.22.10.59.42
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 22 Mar 2016 10:59:43 -0700 (PDT)
+X-Mailer: git-send-email 2.7.4.1.g33fcf9d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289535>
 
-On Tue, Mar 22, 2016 at 10:52 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> OPT_CMDMODE() is actually a better option. I also noticed that it
-> isn't mentioned in Documentation/technical/api-parse-options.txt .
-> Should I send a patch to include it there just to make it easier for
-> someone who is new and isn't aware of the changes ?
+In 74703a1e4d (2015-09-02, submodule: rewrite `module_list` shell
+function in C), "submodule deinit ." was broken.
 
-Patches to outdated documentation are most awesome. ;)
+The original module_list accepted '.' as a pathspec just fine, as it
+was using
+
+  git ls-files -z --error-unmatch --stage -- "$@" || { custom filtering}
+
+and git ls-files doesn't make a difference between "." and no arguments
+there. When using the parse_pathspec function in C, this is a difference
+however, when no path matches.
+
+'submodule deinit' asks users to explicitely to give '.' instead of
+empty arguments to specify all submodules (as a safety measure?),
+so we have to support that as well.
+
+Add a test case to prevent this error coming up again and fix this
+by special casing '.' in the new module_list to reduce the difference
+between the old and new module_list.
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+
+ This applies on v2.7.4
+ 
+ I looked at alternatives of how to fix it, e.g.
+ later in module_list to make an exception for calling
+        if (ps_matched && report_path_error(ps_matched, pathspec, prefix))
+             result = -1;
+ but that is similarly ugly.
+
+ builtin/submodule--helper.c |  8 ++++++++
+ t/t7400-submodule-basic.sh  | 10 ++++++++++
+ 2 files changed, 18 insertions(+)
+
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index ed764c9..47e6839 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -23,6 +23,14 @@ static int module_list_compute(int argc, const char **argv,
+ {
+ 	int i, result = 0;
+ 	char *ps_matched = NULL;
++
++	/*
++	 * We need to treat a path spec of '.' the same as an empty
++	 * path spec, because "submodule deinit" wants to be given '.'
++	 * instead of an empty list.
++	 */
++	if (argc == 1 && !strcmp(".", argv[0]))
++		argv[0] = NULL;
+ 	parse_pathspec(pathspec, 0,
+ 		       PATHSPEC_PREFER_FULL |
+ 		       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index be82a75..fdf7105 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -849,6 +849,16 @@ test_expect_success 'set up a second submodule' '
+ 	git commit -m "submodule example2 added"
+ '
+ 
++test_expect_success 'submodule deinit -f . works on empty repository' '
++	test_when_finished "rm -rf newdirectory" &&
++	mkdir newdirectory &&
++	(
++		cd newdirectory &&
++		git init &&
++		git submodule deinit .
++	)
++'
++
+ test_expect_success 'submodule deinit should remove the whole submodule section from .git/config' '
+ 	git config submodule.example.foo bar &&
+ 	git config submodule.example2.frotz nitfol &&
+-- 
+2.7.4.1.g33fcf9d
