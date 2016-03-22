@@ -1,245 +1,214 @@
-From: Marcus T <maddimax@googlemail.com>
-Subject: git fails updating submodule only if --quiet is specified
-Date: Tue, 22 Mar 2016 16:02:24 +0100
-Message-ID: <3E1D841C-7665-43DB-A0F8-99999C59C28D@googlemail.com>
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
-Content-Type: multipart/signed; boundary="Apple-Mail=_1C8D9ADC-9C20-4075-9D76-BDE0CDE165D7"; protocol="application/pgp-signature"; micalg=pgp-sha512
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 22 16:02:37 2016
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] bisect--helper: convert a function in shell to C
+Date: Tue, 22 Mar 2016 16:09:56 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603221552100.4690@virtualbox>
+References: <010201539a8d2b8a-9f168d7a-d4c6-4c23-a61f-1ef6ee22f774-000000@eu-west-1.amazonses.com> <010201539d57ae98-ce4860a6-f7b6-4e06-b556-3c1340cd7749-000000@eu-west-1.amazonses.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 16:10:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiNpM-0005ws-MU
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 16:02:37 +0100
+	id 1aiNwe-00020N-Nr
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 16:10:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751593AbcCVPCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2016 11:02:32 -0400
-Received: from mail-qg0-f43.google.com ([209.85.192.43]:33217 "EHLO
-	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751303AbcCVPCa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 11:02:30 -0400
-Received: by mail-qg0-f43.google.com with SMTP id 51so14945398qgy.0
-        for <git@vger.kernel.org>; Tue, 22 Mar 2016 08:02:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=from:subject:date:message-id:to:mime-version;
-        bh=KxJMNl6mzKUqhCGZYiYKJGDuH4OnbPNdtDPrsUEDJ5E=;
-        b=jxeNFLey57mS6yfn92hy5hs5+YZTiuQqUedPo4Z9VRW4sWSNyzpX0/W57Un5UtIk5X
-         MrDrzCd7+GljcJvKV8d4D+A+3e3DV3FtDTPSf/S5N7zPYhF+bXyC2FsMjUQ3QHHTnd4q
-         P5Y2AQ28Zd89UFqD+gbpI5VrsqJaaTguXgb/XKW3b/0DC6YTOzn/2Hgt4PtkujI8FDUU
-         6cL4mV+aS4ZfUrsLGQKaVq4S+QuJngrNCeIfRFEi43+4wCG9lmpyb4aroqwdjkZbpxBC
-         k5rfUuqOU0fdHwkVbF7VV1JG2xcVy2ag7QTHAMg723R5NwZhb2NIo3s8JqNNwXRtBH3K
-         yS7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:subject:date:message-id:to:mime-version;
-        bh=KxJMNl6mzKUqhCGZYiYKJGDuH4OnbPNdtDPrsUEDJ5E=;
-        b=hzLy0eQ8XmMo1fXYToj93JU3KAsXM7sYjpyoPlBjFFZ7Wz4CedMNpBUR3TvgB15SzF
-         YToo1Jn2kvkmyTrB6rc3qJsShLVdlT1ztbvoGLKJxytD05SLNV02DtATTnNFvrLyRwis
-         q38arU5OKZJMvYF7mNB/9cTdUiTHKyR7btSnQvA48KXDR2qxxLlPKerEyYZXlHDcW1d3
-         /5SMlce7dFNBv5xetIWAAOlhl3+gtzQh5hn5CYJZZEVtyNsaAXQYPYyKazuWhCKuniD+
-         G9BcFhMAP9NaFEMhmHYcSVpBqHWZiAW8yBrUoSZKJP2l7ZBCQrjlClT101TUg9usSnkc
-         F4tg==
-X-Gm-Message-State: AD7BkJIPGJljGKPMlMyynJsMJccqjFIyREKf5K50E918OMyo4tpuEn7/VW4yInHi/Oa9MA==
-X-Received: by 10.140.104.234 with SMTP id a97mr47599017qgf.57.1458658949366;
-        Tue, 22 Mar 2016 08:02:29 -0700 (PDT)
-Received: from [10.15.0.148] (82-198-216-115.briteline.de. [82.198.216.115])
-        by smtp.googlemail.com with ESMTPSA id w1sm14734123qha.3.2016.03.22.08.02.27
-        for <git@vger.kernel.org>
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 22 Mar 2016 08:02:28 -0700 (PDT)
-X-Pgp-Agent: GPGMail 2.5.2
-X-Mailer: Apple Mail (2.2104)
+	id S1758155AbcCVPKD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 11:10:03 -0400
+Received: from mout.gmx.net ([212.227.15.19]:62783 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756376AbcCVPKB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 11:10:01 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MDhba-1aZ29z1ju2-00H6Ia; Tue, 22 Mar 2016 16:09:57
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <010201539d57ae98-ce4860a6-f7b6-4e06-b556-3c1340cd7749-000000@eu-west-1.amazonses.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:g+gl0uaLoy7JwJHmS7okvLQX4nR1SiBdKCeAD0MXgl+3MwdI+gf
+ VYlC8zQcqYMk647NlduB0vy9ed1cFYAfP71oJJsZKVnndD5b4BDlJAnS/sM3hrWQCnaNltT
+ P0KegUUWScp7AETRODdotTNoJw+/OV9M5u/Z0LB5J1/z+Gz3fVCV1K1rvevex1PaFOvVARl
+ UG7c9MkIgYK9+CkXVc9Fg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:sYmFlJZb8cE=:NkyK+PID9PqFlRbSSFXkF4
+ AbOO3n9GVJTWvw+Yc0IYb6jLFXzVhkxGATb3O0U66JE/Sw1RvwWBolD0Zk0484PvE5T7HI8kg
+ 0F4Vj105sryYalqdHHcoBbiR+sO7zmv6LK8seKu4SYWJgoVN8UFlTLWjIBcobI2lTblVeN+PS
+ mvpaeV4iI+zjlfMI9WQgupaMWiUUCF9qbQFQiTvltXbUoHAkMGQRK4+Kb1wFqw3B9F2un5xYy
+ NJGV8yh9u4IBcsaShELLi0QcNTx7CMj/GU/BSNIzbv1n69pjxmqYaPmUh5A91GlGTUAkNLCje
+ 57pgXN77u2ADWrTJCmizWZKwP7w/T5vurp2N86FgtpA4kSnP1rz4SYiF+dMopskujo7Cz3GBr
+ LgLb27EXHk5GzondsR9mhadoGBkXGDIlCqu/QtVHmV883bJvm4st5PWzp8XeQUMeerkt+nHWw
+ z7EdBllM7xOBqiPG+rTrkYCtE2efqp2rqylzd9BKOoaTrfQQUCDANPB24j9+GU6eOD2bD2316
+ vUSO/iK5nOHFOSWbkurMqpuIGFZsnpQZ6rOKbFwJriNtP15NvP/E03kXqwE3kq4bddUCLvNHc
+ QCFJwtsdT9j4BHYvMHiyOFATDSszQpKBgacxqKe0LpUEKGGus7cGAXhxHuODr89Z8wE/Gyc7X
+ EPbSA5d7FOlVNYGCBMsY0SEAP2wiqP7TFzHU1uQCNJg3zZjuXVG3650lH2fStQQ+TTcz9x4Gd
+ WJQozwk4KsO3LSjCOU2Gw6H/JcSFXeEwHAbhaCoFX6OcOF3PyJduaJD2Y/ETCO6NqamKop82 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289507>
 
+Hi,
 
---Apple-Mail=_1C8D9ADC-9C20-4075-9D76-BDE0CDE165D7
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+On Tue, 22 Mar 2016, Pranit Bauva wrote:
 
-Hello,
+> Convert the code literally without changing its design even though it
+> seems that its obscure as to the use of comparing revision to different
 
-I=E2=80=99m running into a nasty issue where =E2=80=9Cgit submodule =
-update =E2=80=94init=E2=80=9D fails if I add =E2=80=9C=E2=80=94quiet=E2=80=
-=9D
+s/its/it is/
 
-Following you can find the output with GIT_TRACE=3D1:
+> bisect arguments which seems like a problem in shell because of the way
+> function arguments are handled.
 
-WITHOUT --quiet:
+I agree that it is obscure. That is why I would suggest to fix it during
+the conversion. Using 'new_term' and 'orig_term' (or something similar)
+would make much more sense.
 
-GIT_TRACE=3D1 git submodule update --init --recursive
-15:51:48.248945 git.c:561               trace: exec: 'git-submodule' =
-'update' '--init' '--recursive'
-15:51:48.249023 run-command.c:334       trace: run_command: =
-'git-submodule' 'update' '--init' '--recursive'
-15:51:48.256626 git.c:344               trace: built-in: git 'rev-parse' =
-'--git-dir'
-15:51:48.258494 git.c:344               trace: built-in: git 'rev-parse' =
-'--git-path' 'objects'
-15:51:48.260406 git.c:344               trace: built-in: git 'rev-parse' =
-'-q' '--git-dir'
-15:51:48.262940 git.c:344               trace: built-in: git 'rev-parse' =
-'--show-prefix'
-15:51:48.264156 git.c:344               trace: built-in: git 'rev-parse' =
-'--show-toplevel'
-15:51:48.266637 git.c:344               trace: built-in: git =
-'submodule--helper' 'list' '--prefix' ''
-15:51:48.268074 git.c:344               trace: built-in: git =
-'submodule--helper' 'name' 'buildroot'
-15:51:48.269913 git.c:344               trace: built-in: git 'config' =
-'submodule.buildroot.url'
-15:51:48.271168 git.c:344               trace: built-in: git 'config' =
-'-f' '.gitmodules' 'submodule.buildroot.update'
-15:51:48.272422 git.c:344               trace: built-in: git =
-'submodule--helper' 'name' 'dl'
-15:51:48.274179 git.c:344               trace: built-in: git 'config' =
-'submodule.dl.url'
-15:51:48.275445 git.c:344               trace: built-in: git 'config' =
-'-f' '.gitmodules' 'submodule.dl.update'
-15:51:48.276779 git.c:344               trace: built-in: git =
-'submodule--helper' 'list' '--prefix' ''
-15:51:48.278362 git.c:344               trace: built-in: git =
-'submodule--helper' 'name' 'buildroot'
-15:51:48.279819 git.c:344               trace: built-in: git 'config' =
-'submodule.buildroot.url'
-15:51:48.281192 git.c:344               trace: built-in: git 'config' =
-'submodule.buildroot.branch'
-15:51:48.282473 git.c:344               trace: built-in: git 'config' =
-'-f' '.gitmodules' 'submodule.buildroot.branch'
-15:51:48.283788 git.c:344               trace: built-in: git 'config' =
-'submodule.buildroot.update'
-15:51:48.285269 git.c:344               trace: built-in: git =
-'submodule--helper' 'clone' '--prefix' '' '--path' 'buildroot' '--name' =
-'buildroot' '--url' 'git://git.busybox.net/buildroot' '' ''
-15:51:48.285337 run-command.c:334       trace: run_command: 'clone' =
-'--no-checkout' '--separate-git-dir' '.git/modules/buildroot' =
-'git://git.busybox.net/buildroot' 'buildroot'
-15:51:48.285687 exec_cmd.c:120          trace: exec: 'git' 'clone' =
-'--no-checkout' '--separate-git-dir' '.git/modules/buildroot' =
-'git://git.busybox.net/buildroot' 'buildroot'
-15:51:48.286453 git.c:344               trace: built-in: git 'clone' =
-'--no-checkout' '--separate-git-dir' '.git/modules/buildroot' =
-'git://git.busybox.net/buildroot' 'buildroot'
-Cloning into 'buildroot'...
-15:51:49.177856 run-command.c:334       trace: run_command: 'index-pack' =
-'--stdin' '-v' '--fix-thin' '--keep=3Dfetch-pack 15895 on =
-bre-build-linux' '--check-self-contained-and-connected'
-15:51:49.178244 exec_cmd.c:120          trace: exec: 'git' 'index-pack' =
-'--stdin' '-v' '--fix-thin' '--keep=3Dfetch-pack 15895 on =
-bre-build-linux' '--check-self-contained-and-connected'
-15:51:49.179806 git.c:344               trace: built-in: git =
-'index-pack' '--stdin' '-v' '--fix-thin' '--keep=3Dfetch-pack 15895 on =
-bre-build-linux' '--check-self-contained-and-connected'
-remote: Counting objects: 200277, done.
-remote: Compressing objects: 100% (62420/62420), done.
-...
+Another good idea would be to include the shell code, or at least to
+provide a link such as:
 
-WITH --quite:
+	https://github.com/git/git/blob/v2.8.0-rc4/git-bisect.sh#L572-L597
 
-GIT_TRACE=3D1 git submodule update --init --recursive --quiet
-15:52:26.900568 git.c:561               trace: exec: 'git-submodule' =
-'update' '--init' '--recursive' '--quiet'
-15:52:26.900652 run-command.c:334       trace: run_command: =
-'git-submodule' 'update' '--init' '--recursive' '--quiet'
-15:52:26.907761 git.c:344               trace: built-in: git 'rev-parse' =
-'--git-dir'
-15:52:26.909877 git.c:344               trace: built-in: git 'rev-parse' =
-'--git-path' 'objects'
-15:52:26.911766 git.c:344               trace: built-in: git 'rev-parse' =
-'-q' '--git-dir'
-15:52:26.914279 git.c:344               trace: built-in: git 'rev-parse' =
-'--show-prefix'
-15:52:26.915488 git.c:344               trace: built-in: git 'rev-parse' =
-'--show-toplevel'
-15:52:26.917983 git.c:344               trace: built-in: git =
-'submodule--helper' 'list' '--prefix' ''
-15:52:26.919504 git.c:344               trace: built-in: git =
-'submodule--helper' 'name' 'buildroot'
-15:52:26.921244 git.c:344               trace: built-in: git 'config' =
-'submodule.buildroot.url'
-15:52:26.922619 git.c:344               trace: built-in: git 'config' =
-'-f' '.gitmodules' 'submodule.buildroot.update'
-15:52:26.923888 git.c:344               trace: built-in: git =
-'submodule--helper' 'name' 'dl'
-15:52:26.925650 git.c:344               trace: built-in: git 'config' =
-'submodule.dl.url'
-15:52:26.926892 git.c:344               trace: built-in: git 'config' =
-'-f' '.gitmodules' 'submodule.dl.update'
-15:52:26.928230 git.c:344               trace: built-in: git =
-'submodule--helper' 'list' '--prefix' ''
-15:52:26.929709 git.c:344               trace: built-in: git =
-'submodule--helper' 'name' 'buildroot'
-15:52:26.931220 git.c:344               trace: built-in: git 'config' =
-'submodule.buildroot.url'
-15:52:26.932597 git.c:344               trace: built-in: git 'config' =
-'submodule.buildroot.branch'
-15:52:26.933867 git.c:344               trace: built-in: git 'config' =
-'-f' '.gitmodules' 'submodule.buildroot.branch'
-15:52:26.935170 git.c:344               trace: built-in: git 'config' =
-'submodule.buildroot.update'
-15:52:26.936660 git.c:344               trace: built-in: git =
-'submodule--helper' 'clone' '--quiet' '--prefix' '' '--path' 'buildroot' =
-'--name' 'buildroot' '--url' 'git://git.busybox.net/buildroot' '' ''
-15:52:26.936732 run-command.c:334       trace: run_command: 'clone' =
-'--no-checkout' '--quiet' '--separate-git-dir' '.git/modules/buildroot' =
-'git://git.busybox.net/buildroot' 'buildroot'
-15:52:26.936965 exec_cmd.c:120          trace: exec: 'git' 'clone' =
-'--no-checkout' '--quiet' '--separate-git-dir' '.git/modules/buildroot' =
-'git://git.busybox.net/buildroot' 'buildroot'
-15:52:26.937803 git.c:344               trace: built-in: git 'clone' =
-'--no-checkout' '--quiet' '--separate-git-dir' '.git/modules/buildroot' =
-'git://git.busybox.net/buildroot' 'buildroot'
-15:52:27.958503 run-command.c:334       trace: run_command: 'index-pack' =
-'--stdin' '--fix-thin' '--keep=3Dfetch-pack 15936 on bre-build-linux' =
-'--check-self-contained-and-connected'
-15:52:27.958870 exec_cmd.c:120          trace: exec: 'git' 'index-pack' =
-'--stdin' '--fix-thin' '--keep=3Dfetch-pack 15936 on bre-build-linux' =
-'--check-self-contained-and-connected'
-15:52:27.960447 git.c:344               trace: built-in: git =
-'index-pack' '--stdin' '--fix-thin' '--keep=3Dfetch-pack 15936 on =
-bre-build-linux' '--check-self-contained-and-connected'
-fatal: The remote end hung up unexpectedly
-fatal: early EOF
-fatal: index-pack failed
-fatal: clone of 'git://git.busybox.net/buildroot' into submodule path =
-'buildroot' failed
+> The argument handling is kind of hard coded right now because it is not
+> really be meant to be used like this and this is just for testing
+> purposes whether this new method is as functional as its counter part.
+> The shell counter part of the method has been retained for historical
+> purposes.
 
----------
-git --version
-git version 2.7.4
+Still, it would make more sense (both in terms of readability and in terms
+of code safety) to introduce and use a function like
 
-Any help in tracking down the reason for this would be greatly =
-appreciated.
+static int one_of(const char *term, ...)
+{
+	va_list matches;
+	const char *match;
 
-Thanks,
-Marcus
+	va_start(matches, term);
+	while ((match = va_arg(matches, const char *)))
+		if (!strcmp(term, match))
+			return 1;
+	va_end(matches);
 
+	return 0;
+}
 
---Apple-Mail=_1C8D9ADC-9C20-4075-9D76-BDE0CDE165D7
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
+> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> index 3324229..6cdae82 100644
+> --- a/builtin/bisect--helper.c
+> +++ b/builtin/bisect--helper.c
+> @@ -2,27 +2,64 @@
+>  #include "cache.h"
+>  #include "parse-options.h"
+>  #include "bisect.h"
+> +#include "refs.h"
+>  
+>  static const char * const git_bisect_helper_usage[] = {
+>  	N_("git bisect--helper --next-all [--no-checkout]"),
+> +	N_("git bisect--helper --check-term-format <term> <revision>"),
 
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
+Good. This imitates the existing code.
 
-iQEcBAEBCgAGBQJW8V6BAAoJEK5MaPYXd0Y0D5MIAM0iBjZ8161AJ/Y+ORGSLet0
-tnkbb1yIYj36evxE+Vbwh1GGPVCbonsinEsODsgqRbKLkFuPP0RiS3u7X40Z9F3u
-W5GfyVazzmd66LVI/MZVDiMRIMY3VmVDrOZc5dLpNWqutc5+eThF3AOE8t4AQkmw
-TOYmwgnx6PgeUhtBZgjjEiEOEe8s/Gqmvb7XkLvsyWRmzHKFQhopjkuTb530ffcx
-blBm/WGRQrSjgZoAAPJ7AN6/68nHSaGRW3uDOJUoCOYvx3cpJS0+e4B61VRCKYis
-L9DYBEkQIooArmDsnaFYjiLvRYClFipoUiiPuYGGLixqR6tS3k/rexbvchWoOaM=
-=x8eG
------END PGP SIGNATURE-----
+>  	NULL
+>  };
+>  
+> +static int check_term_format(const char *term, const char *revision, int flags);
+> +
+> +static int check_term_format(const char *term, const char *revision, int flag) {
 
---Apple-Mail=_1C8D9ADC-9C20-4075-9D76-BDE0CDE165D7--
+Since you define the check_term_format() function here, the declaration
+above is unnecessary. Let's just delete it.
+
+> +	if (check_refname_format(term, flag))
+> +		die("'%s' is not a valid term", term);
+> +
+> +	if (!strcmp(term, "help") || !strcmp(term, "start") ||
+> +		!strcmp(term, "skip") || !strcmp(term, "next") ||
+> +		!strcmp(term, "reset") || !strcmp(term, "visualize") ||
+> +		!strcmp(term, "replay") || !strcmp(term, "log") ||
+> +		!strcmp(term, "run"))
+> +		die("can't use the builtin command '%s' as a term", term);
+
+This would look so much nicer using the one_of() function above.
+
+Please also note that our coding convention (as can be seen from the
+existing code in builtin/*.c) is to indent the condition differently than
+the block, either using an extra tab, or by using 4 spaces instead of the
+tab.
+
+> +	if (!strcmp(term, "bad") || !strcmp(term, "new"))
+> +		if(strcmp(revision, "bad"))
+> +			die("can't change the meaning of term '%s'", term);
+> +
+> +	if (!strcmp(term, "good") || !strcmp(term, "old"))
+> +		if (strcmp(revision, "good"))
+> +			die("can't change the meaning of term '%s'", term);
+
+These two can be combined. Actually, these *four* can easily be combined:
+
+	if ((one_of(term, "bad", "new", NULL) && strcmp(orig, "bad")) ||
+	    (one_of(term, "good", "old", NULL) && strcmp(orig, "good")))
+		die("can't change the meaning of term '%s'", term);
+
+>  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+>  {
+>  	int next_all = 0;
+>  	int no_checkout = 0;
+> +	const char *term;
+
+Better use the existing convention:
+
+	int check_term_format = 0;
+
+>  	struct option options[] = {
+>  		OPT_BOOL(0, "next-all", &next_all,
+>  			 N_("perform 'git bisect next'")),
+>  		OPT_BOOL(0, "no-checkout", &no_checkout,
+>  			 N_("update BISECT_HEAD instead of checking out the current commit")),
+> +		OPT_STRING(0, "check-term-format", &term, N_("term"),
+> +			 N_("check the format of the ref")),
+
+Hmm. The existing code suggests to use OPT_BOOL instead.
+
+>  		OPT_END()
+>  	};
+>  
+>  	argc = parse_options(argc, argv, prefix, options,
+>  			     git_bisect_helper_usage, 0);
+>  
+> +
+> +	if (term != NULL) {
+> +		if (argc > 0)
+
+Here you need to test for a precise argc, not for a range.
+
+> +			return check_term_format(term, argv[0], 0);
+> +		else
+> +			die("no revision provided with check_for_term");
+> +	}
+> +
+>  	if (!next_all)
+>  		usage_with_options(git_bisect_helper_usage, options);
+>  
+> diff --git a/git-bisect.sh b/git-bisect.sh
+> index 5d1cb00..ea237be 100755
+> --- a/git-bisect.sh
+> +++ b/git-bisect.sh
+> @@ -564,8 +564,8 @@ write_terms () {
+>  	then
+>  		die "$(gettext "please use two different terms")"
+>  	fi
+> -	check_term_format "$TERM_BAD" bad
+> -	check_term_format "$TERM_GOOD" good
+> +	git bisect--helper --check-term-format="$TERM_BAD" bad
+> +	git bisect--helper --check-term-format="$TERM_GOOD" good
+
+The existing convention is to make the first argument *not* a value of the
+"option", i.e. `--check-term-format "$TERM_BAD"` without an equal sign.
+
+Did you also run the test suite after compiling, to verify that the
+documented expectations are still met after the conversion?
+
+Ciao,
+Johannes
