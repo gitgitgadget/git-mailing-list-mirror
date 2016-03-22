@@ -1,139 +1,137 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: git fails updating submodule only if --quiet is specified
-Date: Tue, 22 Mar 2016 14:43:42 -0700
-Message-ID: <CAGZ79kZAMwZz3w-shT_Z3itbKQWzhW2fmUzh=-gRg0Db7gRV6Q@mail.gmail.com>
-References: <3E1D841C-7665-43DB-A0F8-99999C59C28D@googlemail.com>
-	<219B1DC5-8379-4FD5-8739-D99890362769@googlemail.com>
-	<CAGZ79kZaV3w5TM+FPORcFOdeCY8idCYV_yB4Vt5eSNVrNomp2w@mail.gmail.com>
-	<CAGZ79kb0izRAZoQaDxTjKNz0VFEBqbkCSmro2pHm_kmLpJk0mw@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] git_config_push_parameter: handle empty
+ GIT_CONFIG_PARAMETERS
+Date: Tue, 22 Mar 2016 14:43:55 -0700
+Message-ID: <20160322214355.GI28749@google.com>
+References: <1456786715-24256-1-git-send-email-jacob.e.keller@intel.com>
+ <1456786715-24256-8-git-send-email-jacob.e.keller@intel.com>
+ <20160322185628.GA19993@google.com>
+ <20160322192309.GA9782@sigill.intra.peff.net>
+ <20160322195051.GA20563@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Marcus T <maddimax@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 22 22:43:50 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org,
+	Mark Strapetz <marc.strapetz@syntevo.com>,
+	Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Shin Fan <shinfan@google.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 22 22:44:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiU5b-00026x-KX
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 22:43:47 +0100
+	id 1aiU5r-0002Gh-Dj
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 22:44:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751867AbcCVVno (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2016 17:43:44 -0400
-Received: from mail-yw0-f171.google.com ([209.85.161.171]:35917 "EHLO
-	mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750813AbcCVVnn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 17:43:43 -0400
-Received: by mail-yw0-f171.google.com with SMTP id g3so272013553ywa.3
-        for <git@vger.kernel.org>; Tue, 22 Mar 2016 14:43:43 -0700 (PDT)
+	id S1752004AbcCVVoA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 17:44:00 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:33938 "EHLO
+	mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750813AbcCVVn6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 17:43:58 -0400
+Received: by mail-pf0-f193.google.com with SMTP id n5so38049603pfn.1
+        for <git@vger.kernel.org>; Tue, 22 Mar 2016 14:43:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=EXx/7wPVGyizjPa92g6p7FjspoIzFwxajF5VSgarebk=;
-        b=S3GL6M8kupJS1j1cjhFalnd7ZFBQhA2n/gvAoSlYD2/NzE936JL8w7BbtlpQmShX9Y
-         mCp92UJSZRgbBb+Drj8B+NfcRVcRl9NmPEU1AC9uIZzjA/8YDWjc6dOKyT/QRRspj1Bw
-         NVJI/bniNzZEs0oWCgPwtFNNJOz8naMZiGndLv5vtfVHBG1dPpDLxaXuK4nT4uEg/dEQ
-         4gNHUc2bOEhZnAqsj4O0RJfWrTXNRSuKQc91FrxV7giUlkbYS6IPSXIXNL4dkRXppPiM
-         wJiNLro8AxHdXpOYTX5sQlektASXFdGdvZkPQP+SRE3UD/rurBsurCRyFDDuNYxD3Sc6
-         KkVA==
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=yKttuSMsDTNE1wK2mi8D9iq8oxnCvsN4gLA+czX+rSI=;
+        b=R2PmLdBrN9O2ZNUE6hIFGdWVvc8XnEF/OZ9aMBbqnFaXV/mISNV/tu8Pm6a/P7D4vZ
+         UqSSy92IulU9gStFOtIc5Njv7Yfq96DvmRF5RePE6WBrOoqLheUSS3iwk9y+kracMyFJ
+         24l+numsFPQKBfDcEZBy4FcSt/HSMVmzsnGrYceaFkjugcTnGKI/mmpG7Kh+GNrkh0co
+         P63qIDqKUj5K/oBVnm/UoHEX1oy+VJvPB0G50CAfLhEQOaIWEGetqSNu6+87neRVCPJm
+         f3bAkmJaoM+PdJKjkzHYVWCKbI6j/TkiRf1jMeQcinHOTPOE0+luTzZ5vGDLjNPyZXHS
+         U6cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=EXx/7wPVGyizjPa92g6p7FjspoIzFwxajF5VSgarebk=;
-        b=LirvzFvaHK8OVdvMTBlB6u8T9LmCMLWPWrJhWLlZsy7kKoBho9pBxtEeXivUOkcRjD
-         er6ESaGc8cEp80dwIB1Pw5IujdOCLk/8PJLLBqAOQofqrtgVfZfT63U8nVR2huG67TvF
-         GAHOXVlKcaBNCfjxENHjuzdApBsfAYkKzhehyeO01zt87m2qxDgMx+hKYJvuVv/f8WVP
-         l/0TmJcgz+yI6K+0uJTMDuh1AO0QkeTdCWySpYL6hFgBPnRkkWmxVQsJrQGahdetsJnt
-         UtSvfIQKG7K2/oMgBwghgikxagKn686NSZ9L7XT98ysx3mByGHEC9Ch/V8goxzMKklFC
-         Xmqg==
-X-Gm-Message-State: AD7BkJKXTOnnMfIZHcjh5zUwQHGPsAXkYJ46xqHuB0EHAaebhslXYLO1sS1gNdDM4z/sUdhwz3C4EQEbjNQidlnx
-X-Received: by 10.37.19.66 with SMTP id 63mr19193947ybt.75.1458683022166; Tue,
- 22 Mar 2016 14:43:42 -0700 (PDT)
-Received: by 10.37.51.137 with HTTP; Tue, 22 Mar 2016 14:43:42 -0700 (PDT)
-In-Reply-To: <CAGZ79kb0izRAZoQaDxTjKNz0VFEBqbkCSmro2pHm_kmLpJk0mw@mail.gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=yKttuSMsDTNE1wK2mi8D9iq8oxnCvsN4gLA+czX+rSI=;
+        b=jnz6SVcv15bwtwwzEwl0LKQBxmKQD6IPeUYn7dtYQI8ocE4GpFjAWP3PEK/8DJnFf4
+         tSRfAi2AO++ebFAGEsfPcB+/SoamWcHl66NaYkiEWN80k5nUqa5K402maZHWSMYsDWo7
+         8vmzgoGSPRlGNNYA0JO/EtHPLZVfrBQLdLhfhdeuCUpXHmVkKqTJ7dne58xXO9NwFBxw
+         RIm2DIx3Ueezjii7xx7psY4oPyB6230nswyOxLD67Gg3uJnRjEq3sNh7zKZL3J+BvHZ6
+         B1XxwPjdT2d3PjgsinUmnI60KgeGGIMZ7BQEAVkL46s7k60O95vyb5az7l5uFbuMsVTp
+         ncFQ==
+X-Gm-Message-State: AD7BkJLMiLsVpPnyjEWRfBrYzXA+vX6NziwVnDsR6YXxunaqwHsLGGH8CZDBmbWZWYLhzA==
+X-Received: by 10.66.65.137 with SMTP id x9mr57335901pas.137.1458683038146;
+        Tue, 22 Mar 2016 14:43:58 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:694a:ddce:573a:2ea8])
+        by smtp.gmail.com with ESMTPSA id g6sm50533149pfg.15.2016.03.22.14.43.57
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 22 Mar 2016 14:43:57 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20160322195051.GA20563@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289571>
 
-On Tue, Mar 22, 2016 at 2:38 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Tue, Mar 22, 2016 at 11:22 AM, Stefan Beller <sbeller@google.com> wrote:
->> However lookingat your logs, I would suspect it is an error in git
->> clone instead, as that is the
->> last command which has the --quiet flag passed through the stack.
+Jeff King wrote[1]:
+
+> Subject: git_config_push_parameter: handle empty GIT_CONFIG_PARAMETERS
 >
-> git clone --no-checkout --quiet --separate-git-dir tmp_gitdir
-> git://git.busybox.net/buildroot tmp_workdir
-> fails as a standalone program as well, so let's debug that.
+> The "git -c var=value" option stuffs the config value into
+> $GIT_CONFIG_PARAMETERS, so that sub-processes can see it.
+> When the config is later read via git_config() or similar,
+> we parse it back out of that variable.  The parsing end is a
+> little bit picky; it assumes that each entry was generated
+> with sq_quote_buf(), and that there is no extraneous
+> whitespace.
+>
+> On the generating end, we are careful to append to an
+> existing $GIT_CONFIG_PARAMETERS variable if it exists.
+> However, our test for "should we add a space separator" is
+> too liberal: it will add one even if the environment
+> variable exists but is empty. As a result, you might end up
+> with:
+>
+>    GIT_CONFIG_PARAMETERS=" 'core.foo=bar'"
+>
+> which the parser will choke on.
+>
+> This was hard to trigger in older versions of git, since we
+> only set the variable when we had something to put into it
+> (though you could certainly trigger it manually). But since
+> 14111fc (git: submodule honor -c credential.* from command
+> line, 2016-02-29), the submodule code will unconditionally
+> put the $GIT_CONFIG_PARAMETERS variable into the environment
+> of any operation in the submodule, whether it is empty or
+> not. So any of those operations which themselves use "git
+> -c" will generate the unparseable value and fail.
+>
+> We can easily fix it by catching this case on the generating
+> side. While we're adding a test, let's also check that
+> multiple layers of "git -c" work, which was previously not
+> tested at all.
+>
+> Reported-by: Jonathan Nieder <jrnieder@gmail.com>
 
-GIT_TRACE_PACKET=2 git clone --quiet --no-checkout --separate-git-dir
-tmp_gitdir git://git.busybox.net/buildroot tmp_workdir
+I should have mentioned this is
 
-14:40:17.369362 pkt-line.c:80           packet:        clone>
-git-upload-pack /buildroot\0host=git.busybox.net\0
-14:40:17.405792 pkt-line.c:80           packet:        clone<
-7e4dab488594021b012b1ef3b49772eece97b760 HEAD\0multi_ack thin-pack
-side-band side-band-64k ofs-delta shallow no-progress include-tag
-multi_ack_detailed symref=HEAD:refs/heads/master agent=git/2.7.3
-14:40:17.406765 pkt-line.c:80           packet:        clone<
-1264adda0ec0ec5edaff5e372b97972cee6ae33c refs/heads/2012.11.x
-14:40:17.406799 pkt-line.c:80           packet:        clone<
-8ab57bf9338f3a47683294aed6425f39828cbf80 refs/heads/2013.08.x
-14:40:17.406813 pkt-line.c:80           packet:        clone<
-e009e7d8615eec10d2c0c2676ef5a276f0a6a5e2 refs/heads/2015.08.x
-14:40:17.406826 pkt-line.c:80           packet:        clone<
-9f0610c188007ee481508d453b062d77614c153d refs/heads/2015.11.x
-14:40:17.406838 pkt-line.c:80           packet:        clone<
-7e4dab488594021b012b1ef3b49772eece97b760 refs/heads/master
-14:40:17.406851 pkt-line.c:80           packet:        clone<
-2dfabd10d1e484d84c0e6b5a58ab43d131ca3230 refs/heads/next
-14:40:17.406863 pkt-line.c:80           packet:        clone<
-72169f4a90a86b613a0d2be6217ccda5abf0b956 refs/tags/0_0
-14:40:17.406876 pkt-line.c:80           packet:        clone<
-ffde94bd2ca21542ae0b4518348f8e986b9d92e0 refs/tags/0_0^{}
-... lots of ref advertisement...
-14:40:17.432352 pkt-line.c:80           packet:        clone<
-ac0194b3d63f07bd7379f1f7ddfc2bbc69ab3272 refs/tags/2016.02-rc3
-14:40:17.432356 pkt-line.c:80           packet:        clone<
-100ba0f6d6b8020dd4d3ea8ffbfc7f1f3219a650 refs/tags/2016.02-rc3^{}
-14:40:17.432360 pkt-line.c:80           packet:        clone<
-09d8764e8ce7d00c3f2028e65187f5ff31155583 refs/tags/gcc3_legacy
-14:40:17.432365 pkt-line.c:80           packet:        clone<
-961229caf56a6a3e3bc9fd58805d8e83dd6a84ae refs/tags/gcc3_legacy^{}
-14:40:17.432369 pkt-line.c:80           packet:        clone< 0000
-14:40:17.436239 pkt-line.c:80           packet:        clone> want
-7e4dab488594021b012b1ef3b49772eece97b760 multi_ack_detailed
-side-band-64k thin-pack no-progress ofs-delta
-agent=git/2.7.4.1.g33fcf9d
-14:40:17.436258 pkt-line.c:80           packet:        clone> want
-1264adda0ec0ec5edaff5e372b97972cee6ae33c
-14:40:17.436268 pkt-line.c:80           packet:        clone> want
-8ab57bf9338f3a47683294aed6425f39828cbf80
-14:40:17.436277 pkt-line.c:80           packet:        clone> want
-e009e7d8615eec10d2c0c2676ef5a276f0a6a5e2
-...lots of wants...
-14:40:17.437114 pkt-line.c:80           packet:        clone> want
-4a5e4d74cbd91a4d9a166d38a90b5c444722cc92
-14:40:17.437121 pkt-line.c:80           packet:        clone> want
-2977653121ad046e8a229f22552d3ce547bfb511
-14:40:17.437128 pkt-line.c:80           packet:        clone> want
-834f73774a296a178b1ee550752abaa5dfcde29a
-14:40:17.437135 pkt-line.c:80           packet:        clone> want
-44eca8025060071a410e18df6eba446821ad9a5a
-14:40:17.437143 pkt-line.c:80           packet:        clone> want
-ac0194b3d63f07bd7379f1f7ddfc2bbc69ab3272
-14:40:17.437150 pkt-line.c:80           packet:        clone> want
-09d8764e8ce7d00c3f2028e65187f5ff31155583
-14:40:17.437156 pkt-line.c:80           packet:        clone> 0000
-14:40:17.437387 pkt-line.c:80           packet:        clone> done
-14:40:17.488562 pkt-line.c:80           packet:        clone< NAK
-fatal: The remote end hung up unexpectedly
-fatal: early EOF
-fatal: index-pack failed
+Reported-by: Shin Fan <shinfan@google.com>
 
-When not giving --quiet, you'll see the client ask not for no-progress
-capability in the first want line.
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> I just did this on master, and it is standalone. But for the reasons
+> above I think it would also be fine to stick on the tip of the
+> jk/submodule-c-credential topic.
+>
+>  config.c               |  2 +-
+>  t/t1300-repo-config.sh | 14 ++++++++++++++
+>  2 files changed, 15 insertions(+), 1 deletion(-)
+
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Tested-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks for the quick fix.
+
+Sincerely,
+Jonathan
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/287928/focus=289551
