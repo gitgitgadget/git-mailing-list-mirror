@@ -1,139 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4] config --show-origin: report paths with forward slashes
-Date: Tue, 22 Mar 2016 10:58:18 -0700
-Message-ID: <xmqqbn66iedh.fsf@gitster.mtv.corp.google.com>
-References: <cover.1458668543.git.johannes.schindelin@gmx.de>
-	<8beb1c208e33e1de8f272caa22fb7a0b662ca4cc.1458668543.git.johannes.schindelin@gmx.de>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2] bisect--helper: convert a function in shell to C
+Date: Tue, 22 Mar 2016 10:59:10 -0700
+Message-ID: <CAGZ79kZvi+qJKPkgzHP5LgoyTJd2btJZ6zCc4hkSKAhjoOiYFg@mail.gmail.com>
+References: <010201539a8d2b8a-9f168d7a-d4c6-4c23-a61f-1ef6ee22f774-000000@eu-west-1.amazonses.com>
+	<010201539d57ae98-ce4860a6-f7b6-4e06-b556-3c1340cd7749-000000@eu-west-1.amazonses.com>
+	<alpine.DEB.2.20.1603221552100.4690@virtualbox>
+	<xmqqh9fyjy9w.fsf@gitster.mtv.corp.google.com>
+	<CAFZEwPOMdozVafJzRYJmhhAAAAVfLJ74dSGVbsHreFFKD1Vobg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>,
-	Eric Wong <normalperson@yhbt.net>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 22 18:58:26 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git List <git@vger.kernel.org>
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 18:59:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiQZV-0006N5-JC
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 18:58:25 +0100
+	id 1aiQaU-000765-B7
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 18:59:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759467AbcCVR6W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2016 13:58:22 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:60134 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751212AbcCVR6U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 13:58:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D64A14EDCA;
-	Tue, 22 Mar 2016 13:58:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jpxLroyUPCOxKf4mV/QNMwSjfyk=; b=HGp8g4
-	3u4ENSFG567Z2kjOVVXYZX0Lwo+nYUJh/X85ZoO9LKX4GnYKJVWuDlg+woWIPCK7
-	bZ5Y/XTNdsQtlAfGCmb1GRrTynUfB5d8pj2N3jHyds6fSERrCDWlnXBxsaPwaYfQ
-	q1+MxOjwwQOEkyfLSFdlVO6QbKkQvZNMpP4WA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Jk9qmGC0/7WBoabFjA1zIfj41b5nuXRS
-	ySvajPYjieCGmEK99bnwG+BQ8ZKFg6Cd9DpUvr2XINuyRscIvKvGuArumCDMY53t
-	TBy6y0tdhY3YzugbyuBmrrS+5P4Vp7+jncdHWiWOYlbCen51ereIfeOqUWVfDP/X
-	A7EBnH/SbA4=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CDF244EDC9;
-	Tue, 22 Mar 2016 13:58:19 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4E0774EDC2;
-	Tue, 22 Mar 2016 13:58:19 -0400 (EDT)
-In-Reply-To: <8beb1c208e33e1de8f272caa22fb7a0b662ca4cc.1458668543.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Tue, 22 Mar 2016 18:42:40 +0100
-	(CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A907AA16-F057-11E5-8BFB-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1759660AbcCVR7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 13:59:13 -0400
+Received: from mail-yw0-f177.google.com ([209.85.161.177]:33557 "EHLO
+	mail-yw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759657AbcCVR7L (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 13:59:11 -0400
+Received: by mail-yw0-f177.google.com with SMTP id h65so121620484ywe.0
+        for <git@vger.kernel.org>; Tue, 22 Mar 2016 10:59:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=BBjPAUzoc1NhCTQ9xumJDQ7j0FQ8X35wcP4gfgcGMi8=;
+        b=Db6JvHCCha2bVKfanNQ68PCqm0u5Zu53P2YsGfBpso2MlcZa7fbwasq9+XVkCu7TEm
+         GVzhJxwbp/0Mhv7JbcUmgd85E+Gr7eFd95Rt1fQ70pDo60jceNwMEClC9BedygZEQUZ4
+         RjK0o+fE+nYryrMbcSnxoBtb1/dorQjMExIfSbBQ8FQ40T2VUGS5xdKaamYVsVvd6iDU
+         NzBV1NCrLO7BtzFVg4VU+xJ1uUURX0WFQiyyrZ2oPVe8THTTZ3749/DjJO5HFrfGnYSs
+         aSrFfQhcunMgsFPdT4v31/ONCLm7QaaupnX2nu5zRmav9DzlCp4AiCVfym4gOkWuYUXm
+         Ue1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=BBjPAUzoc1NhCTQ9xumJDQ7j0FQ8X35wcP4gfgcGMi8=;
+        b=RhVSskvGURZVZr39z2Vr86glkYxlRJl/45yx8dlVW6Ajt7zjte6inTUyNTmxSibVHH
+         YAZJmN9iquvmk4a2NdsEPxIbD6ICUw60MCfFNSyAEGx1wB5SL87pJeZAlaxXAUwcmk8I
+         Cre5ywzhpE+7D2/lNvG5Se37clMAhXwj1ulmL89l2k8zOH8g0qktboSPAAyB7T6iSXl/
+         EubaSSGpDPfZUOiODyQYA0uaV8xfHtRXmATyerX37Z0KWL4T4TS2pn4IQ1Vsu+YbgFRX
+         cgUKSERkw7zyIByHg0zW1FppOkHmVMsTPVdQVbHTftSs1dRS7TCE8U4ZljVwBLYjCidK
+         iMpw==
+X-Gm-Message-State: AD7BkJJm2LODltiEF35RggobQqTpseCeEa1ARCOa6yomQQj/1jAzjTz0Y19DQk9hBkXTXdLxn9K4lKo+sJm7eh74
+X-Received: by 10.37.38.8 with SMTP id m8mr18390763ybm.92.1458669550588; Tue,
+ 22 Mar 2016 10:59:10 -0700 (PDT)
+Received: by 10.37.51.137 with HTTP; Tue, 22 Mar 2016 10:59:10 -0700 (PDT)
+In-Reply-To: <CAFZEwPOMdozVafJzRYJmhhAAAAVfLJ74dSGVbsHreFFKD1Vobg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289534>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Tue, Mar 22, 2016 at 10:52 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+> OPT_CMDMODE() is actually a better option. I also noticed that it
+> isn't mentioned in Documentation/technical/api-parse-options.txt .
+> Should I send a patch to include it there just to make it easier for
+> someone who is new and isn't aware of the changes ?
 
-> On Windows, the backslash is the native directory separator, but
-> all supported Windows versions also accept the forward slash in
-> most circumstances.
->
-> Our tests expect forward slashes.
->
-> Relative paths are generated by Git using forward slashes.
-
-... and the paths tracked by Git (in the index) use slashes.
-
-> So let's try to be consistent and use forward slashes in the $HOME
-> part of the paths reported by `git config --show-origin`, too.
-
-OK, sounds sensible.
-
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  compat/mingw.h | 6 ++++++
->  path.c         | 3 +++
->  2 files changed, 9 insertions(+)
->
-> diff --git a/compat/mingw.h b/compat/mingw.h
-> index 8c5bf50..c008694 100644
-> --- a/compat/mingw.h
-> +++ b/compat/mingw.h
-> @@ -396,6 +396,12 @@ static inline char *mingw_find_last_dir_sep(const char *path)
->  			ret = (char *)path;
->  	return ret;
->  }
-> +static inline void convert_slashes(char *path)
-> +{
-> +	for (; *path; path++)
-> +		if (*path == '\\')
-> +			*path = '/';
-> +}
->  #define find_last_dir_sep mingw_find_last_dir_sep
->  int mingw_offset_1st_component(const char *path);
->  #define offset_1st_component mingw_offset_1st_component
-> diff --git a/path.c b/path.c
-> index 8b7e168..969b494 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -584,6 +584,9 @@ char *expand_user_path(const char *path)
->  			if (!home)
->  				goto return_null;
->  			strbuf_addstr(&user_path, home);
-> +#ifdef GIT_WINDOWS_NATIVE
-> +			convert_slashes(user_path.buf);
-> +#endif
-
-Hmm, I wonder if we want to do this at a bit lower level, e.g.
-
-    1. have a fallback for other platforms in git-compat-util.h
-
-    #ifndef get_HOME
-    #define get_HOME() getenv("HOME")
-    #endif
-
-    2. have the one that does convert-slashes for mingw
-
-    static inline const char *mingw_getenv_HOME(void) {
-    	... do convert-slashes on the result of getenv("HOME");
-    }
-    #define get_HOME() mingw_getenv_HOME()
-
-    3. Instead of the above patch to path.c, change the line before
-       the precontext with s/getenv("HOME")/get_HOME()/
-
-Or even lower, inside mingw_getenv() and catch variables that deal
-with paths (not just HOME but PATH, TMP, TMPDIR, etc.)
-
->  		} else {
->  			struct passwd *pw = getpw_str(username, username_len);
->  			if (!pw)
+Patches to outdated documentation are most awesome. ;)
