@@ -1,121 +1,111 @@
-From: jadehtd@gmail.com
-Subject: Increase Income by Wrapping Your Car
-Date: Tue, 22 Mar 2016 14:26:29 -0700
-Message-ID: <A485CAEC8DC50D398609653BAD4DB673C30C2D78@SERVER>
-Reply-To: gloriyabundy@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] builtin/apply: simplify gitdiff_{old,new}name()
+Date: Tue, 22 Mar 2016 14:35:31 -0700
+Message-ID: <xmqqy49afb6k.fsf@gitster.mtv.corp.google.com>
+References: <1458680322-17681-1-git-send-email-chriscool@tuxfamily.org>
+	<1458680322-17681-4-git-send-email-chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 22 22:27:32 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 22:35:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiTpr-0007o4-Iq
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 22:27:31 +0100
+	id 1aiTxo-00055B-IY
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 22:35:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751388AbcCVV12 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Mar 2016 17:27:28 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:33031 "EHLO
-	mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751286AbcCVV11 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Mar 2016 17:27:27 -0400
-Received: by mail-pf0-f177.google.com with SMTP id 4so195859303pfd.0
-        for <git@vger.kernel.org>; Tue, 22 Mar 2016 14:27:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:from:to:reply-to:content-transfer-encoding
-         :subject:message-id;
-        bh=SqaQIzs324tQvU4XrXPxIVHgQ2E4F8+astJlfSDrZmM=;
-        b=OMfOHaYUZdCytWVPRVmLsGM3PLXdLW9pYbmEGhobf8ZV6KDF/cfIQnPwPxQdKBumnJ
-         MQ8ULE+Z+hfeRIQP2Q214Hkly3Md9hRtbJvHg31GoaA7duNyPKkgUfbaGkLBRzXH43it
-         D9zGtZewKEJxye52HB6BgxijBlHJourr7khiLYSJeZ29ZePlvJJu6nF0UvFe/BBhSJLN
-         fbKFFBxzNrFFWc/aRxjH9p7sov7Gh8iooOG7GmK5Z8rbiW+ZyEdEKwmlBNj9CcbqPMUZ
-         ZbWDi7G6SfJypk7nloXS56cssuvm/BiYChT5xa6gByv06K7n8DzxtmZocJmtl4mz42oI
-         o6Iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:from:to:reply-to
-         :content-transfer-encoding:subject:message-id;
-        bh=SqaQIzs324tQvU4XrXPxIVHgQ2E4F8+astJlfSDrZmM=;
-        b=SAIhkUKEYsadRazeJma6I2VQCljvZcEsJPb9jbm1zOhvS01Ue2OvaTRiCSgBYWxYDm
-         +Ksl3PTQYqnyxzibp64XpV/NeF+NpdrpHyAj5Y2BLl8Wb08cbtKjPUqg41jnug1J2yGo
-         6hEH+poAUoveYVcK4PycTLm9JRtA24OeY7/SRIf3AtJHgTAji6Hig5xxcX2NlGq+Goel
-         CgE0WFOQAsYG9TMnE5uPQNWHzf52cxgqM9bkpFI9vgGeQaV5NRZrM+zUwXo1yi0g2TcU
-         07F3pM1FH0/wLFQRU35Yi6eyviz/JbofmYVnEPGDqxK3YUTKZiSCc7GjORV8iDaY61xx
-         SizA==
-X-Gm-Message-State: AD7BkJKRoDUPROoKpO+H9MJiguX50TAfqAAhasS2B8Up94ZIBPSq75tXSq/BfSjAjGv2tg==
-X-Received: by 10.98.71.86 with SMTP id u83mr25144397pfa.156.1458682046393;
-        Tue, 22 Mar 2016 14:27:26 -0700 (PDT)
-Received: from SERVER (wsip-68-14-225-100.ph.ph.cox.net. [68.14.225.100])
-        by smtp.gmail.com with ESMTPSA id f65sm50491266pfd.47.2016.03.22.14.27.25
-        for <git@vger.kernel.org>
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 22 Mar 2016 14:27:25 -0700 (PDT)
-X-Priority: 3 (Normal)
+	id S1752495AbcCVVfg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 17:35:36 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:58710 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752473AbcCVVfe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 17:35:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 43F2E4FBF3;
+	Tue, 22 Mar 2016 17:35:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Np4xJu+m2p+bR555c3lRwJHT2iw=; b=la/lf2
+	w2sOxO1xmC2lw3Lt4EgHXYm3k13AbbnUpyyn0KhAyxWOOirfSdWLVGl7rpZEBtit
+	Q9Y7D3EcVk5XM0+VHu4blgJ3QQjph7H5tNIu0IOuD9SM81vZtLpoJsbFecBLbfwZ
+	YoymGzY4mXm11AitqtTXROp8D5TQAC16HJ0Sg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JDcGzkyV+dp1lNXYIyw22QHpScDkg5JR
+	g09bszHI5fRHCEt/uS6ksVJlfY9vtH2NJ9lRD2taIHzmW8oC++PT9v9hsA1it0Rp
+	2O/XIxyolWiyKcviiIPNEyaeleHZkIo8LSnnHJyeaXlAyrsfWOwh3lMRx3IDY5N5
+	78G013qANtY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3C88C4FBF2;
+	Tue, 22 Mar 2016 17:35:33 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B660F4FBF1;
+	Tue, 22 Mar 2016 17:35:32 -0400 (EDT)
+In-Reply-To: <1458680322-17681-4-git-send-email-chriscool@tuxfamily.org>
+	(Christian Couder's message of "Tue, 22 Mar 2016 21:58:42 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 018E4384-F076-11E5-9647-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289567>
 
-Hello,
-We are currently seeking to employ individual=E2=80=99s world wide. How=
- would you like to make money by simply driving your car advertising fo=
-r PEPSI.
+Christian Couder <christian.couder@gmail.com> writes:
 
-How it works?
+> After the previous simplifications, it is easy to see that
+> there is no need to free the original string passed to
+> gitdiff_verify_name(), because this string can be changed
+> only when it is NULL.
+>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
 
-Here=E2=80=99s the basic premise of the "paid to drive" concept: PEPSI =
-seeks people -- regular citizens,professional drivers to go about their=
- normal routine as they usually do, only with a big advert for new " DI=
-ET PEPSI " plastered on your car or truck. The ads are typically vinyl =
-decals, also known as "auto wraps,"that almost seem to be painted on th=
-e vehicle, and which will cover any portion of your car's exterior surf=
-ace.
+I do not think you need either 1/3 or 2/3 to see that (I actually
+think it is easier to see this without 2/3).  The caller passes
+patch->old_name and
 
-=20
+ - if that is NULL, then we will either get NULL or a new string
+   from find_name(); either way, we do not have to worry about
+   calling free() on the original NULL;
 
-What does the company get out of this type of ad strategy? Lots of expo=
-sure and awareness. The auto wraps tend to be colorful, eye-catching an=
-d attract lots of attention. Plus, it's a form of advertising with a ca=
-ptive audience,meaning people who are stuck in traffic can't avoid seei=
-ng the wrapped car alongside them. This program will last for 3 months =
-and the minimum you can participate is 7 weeks.
+ - if that is not NULL, then the only possible value returned from
+   the function is itself (otherwise it will die()), so we won't be
+   calling free() in this code.
 
-=20
+so I agree with the conclusion, i.e. the conditional free() can go
+from these places.
 
-You will be compensated with $500 per week which is essentially a "rent=
-al"payment for letting PEPSI use the space no fee is required from you =
-PEPSI shall provide experts that would handle the advert placing on you=
-r car/truck.
-
-=20
-
-It is very easy and simple , no application fees required contact email=
- along with the following if you are interested in these offer.
-
-=20
-
-=46ull Name:
-Address:
-City:
-State:
-Zip code:=20
-Age:
-Occupation:
-Make of car/truck year:
-Exterior Color of car/truck:
-Telephone numbers:
-Email:
-
-Email us at  ( gloriyabundy@gmail.com )
-
-We will contact you immediately we receive this information.
-
-Kind Regards!
-
-=C2=A9 2016 THE PEPSI COMPANY
-www.pepsiusa.com
+>  builtin/apply.c | 6 ------
+>  1 file changed, 6 deletions(-)
+>
+> diff --git a/builtin/apply.c b/builtin/apply.c
+> index 4cafdaf..9cfa9f4 100644
+> --- a/builtin/apply.c
+> +++ b/builtin/apply.c
+> @@ -953,21 +953,15 @@ static void gitdiff_verify_name(const char *line, int isnull, char **name, int s
+>  
+>  static int gitdiff_oldname(const char *line, struct patch *patch)
+>  {
+> -	char *orig = patch->old_name;
+>  	gitdiff_verify_name(line, patch->is_new, &patch->old_name,
+>  			    DIFF_OLD_NAME);
+> -	if (orig != patch->old_name)
+> -		free(orig);
+>  	return 0;
+>  }
+>  
+>  static int gitdiff_newname(const char *line, struct patch *patch)
+>  {
+> -	char *orig = patch->new_name;
+>  	gitdiff_verify_name(line, patch->is_delete, &patch->new_name,
+>  			    DIFF_NEW_NAME);
+> -	if (orig != patch->new_name)
+> -		free(orig);
+>  	return 0;
+>  }
