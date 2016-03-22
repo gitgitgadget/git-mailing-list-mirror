@@ -1,73 +1,132 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] branch -D: allow - as abbreviation of '@{-1}'
-Date: Tue, 22 Mar 2016 10:12:00 -0700
-Message-ID: <xmqqwpouigin.fsf@gitster.mtv.corp.google.com>
-References: <1458635056-26633-1-git-send-email-elena.petrashen@gmail.com>
-	<xmqq1t72jvac.fsf@gitster.mtv.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: "git submodule deinit -f ." no longer works when there are no submodules
+Date: Tue, 22 Mar 2016 10:13:27 -0700
+Message-ID: <CAGZ79kYVLaZg6APM0rfQkZjQRrh7bKBiZb39boucTAqH47eR1A@mail.gmail.com>
+References: <CAP=KgsRjJ9JNKe07GRpcNP3eQK8+zYDvUpXkp-9WgiQUq0bgcA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, sunshine@sunshineco.com,
-	Matthieu.Moy@grenoble-inp.fr, sbeller@google.com
-To: Elena Petrashen <elena.petrashen@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 22 18:12:13 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Per Cederqvist <cederp@opera.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 18:13:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiPqk-0005vl-Go
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 18:12:10 +0100
+	id 1aiPs5-0006v2-8U
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 18:13:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751633AbcCVRMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2016 13:12:06 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:57377 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750860AbcCVRME (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 13:12:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 22C7F4E0DD;
-	Tue, 22 Mar 2016 13:12:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=N5g53xptW3l9x6TB5Aic35SK9uc=; b=u7bryp
-	Cfg6aw+6/eYEvSUmzOrgS6FKETQZ1ubNMFDZAUUVZxsrTa6mfvjcEjj3mZGtd/kI
-	T4gOpzfN+jCx7pfxNoULBxkL/D6qZxWWp0tIZ+tpYiYWciDMsrHPJWDYDn9LuC/v
-	zUOl0jWRXsFDICN8qmp0HE7kGZ+V7UTnBeVkk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QNhC2zCWUQy3h3cHxBv9D5veCce9Vq2h
-	lJEpZR3jJNsK4WWKbbv/WpQ7iEnohkEKO8BzzocKQKBz6kMuE61TGBrJEwCdlZZ9
-	sJ5WNHS9MKY3MwPf5Lptch3+xD63SbJM1HDXKUK24D9+xHe8BmB2fzl9s8UcbXl2
-	0wprnB4AVNA=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1A7764E0DC;
-	Tue, 22 Mar 2016 13:12:03 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 061FD4E0DA;
-	Tue, 22 Mar 2016 13:12:01 -0400 (EDT)
-In-Reply-To: <xmqq1t72jvac.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 22 Mar 2016 10:07:39 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 31A27BE6-F051-11E5-8A68-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751454AbcCVRNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 13:13:30 -0400
+Received: from mail-yw0-f172.google.com ([209.85.161.172]:36715 "EHLO
+	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751068AbcCVRN3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 13:13:29 -0400
+Received: by mail-yw0-f172.google.com with SMTP id g3so262983313ywa.3
+        for <git@vger.kernel.org>; Tue, 22 Mar 2016 10:13:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=GtO8hPIpmRwqRc1WlvRzYKtFxfbiRDVvD8+urClXbwg=;
+        b=VrIaj61VlEz84W4xmCAIs+rD6F7C2Bv2rVBxTQ16bNeSqoILrJQkKoRVtQi02f+uMC
+         jc/q60yL/YP1DHGh/DVIlhGJwRGZqDj6TQKAgdeAKLD9Bnn5TeXbwkd9qQOaYsq0SMHb
+         uXlIszSdN/X0aEAQGolt5l8N/eRZbLtjtnC7cCm34cueUpVCLMSd6c2yrqhLjeTjAO1s
+         pjLnERdHOX0MZU7Bz2uQ+bxnTW6o0U0HD3R8b2fIvi6MIEOI5KiKCEFWWMYJ8WE+2YnS
+         wMCUi2w4xER+UBlAeEIJ1lvHVsx/xpcSibXSjtfktVx4uGm2+B0X7pmRNIylZNFOXL96
+         KcDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=GtO8hPIpmRwqRc1WlvRzYKtFxfbiRDVvD8+urClXbwg=;
+        b=hnHAv7rK8KoJR/eFpRxmAcOGDU8xVWF4KWjqnpwATxy0agh7BqDj1uQ2J8P1DMYzgW
+         wT++oNKUlE6P0x6anm4IiQdGs2YdbqgGiUD2GhoBglYQsNLhfDkZZI9hFSDXojeb3W/R
+         S9Gg+w7EhpiiQQdJE79usWU9CbcyjGHV+3QrnD7tHcG87i/gUoyNXhtoycio/SBWTUDZ
+         AsLyJZq/8IwLKGwAbDKiUTzXxPAcc5pZsWlk+2w8IS/Gg8uAExMqgj6Bg2MYWwImUXOV
+         y6Y6UA39y/9t0mohtYyNmVrYljN1oifYns+IghbC6FkPP2oKCg58DSXbKpS8xx33dzjd
+         LqNA==
+X-Gm-Message-State: AD7BkJLQJEcuGtXRT+gXeUmx/zQM6y2er4NeKgkf/5H7Q3JFxDHiWSOBgxP1v/7rqrvU4dTSuIIb+c/6FvtCSVry
+X-Received: by 10.129.108.145 with SMTP id h139mr18476336ywc.320.1458666807828;
+ Tue, 22 Mar 2016 10:13:27 -0700 (PDT)
+Received: by 10.37.51.137 with HTTP; Tue, 22 Mar 2016 10:13:27 -0700 (PDT)
+In-Reply-To: <CAP=KgsRjJ9JNKe07GRpcNP3eQK8+zYDvUpXkp-9WgiQUq0bgcA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289520>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Mar 22, 2016 at 2:25 AM, Per Cederqvist <cederp@opera.com> wrote:
+> It used to be possible to run
+>
+>     git submodule deinit -f .
+>
+> to remove any submodules, no matter how many submodules you had.  That
+> is no longer possible in projects that don't have any submodules at
+> all.  The command will fail with:
+>
+>     error: pathspec '.' did not match any file(s) known to git.
+>
+> But if I run "git submodule deinit" (without the ".") git tells me:
+>
+>     Use '.' if you really want to deinitialize all submodules
+>
+> This is a regression introduced in Git 2.7.0 (and v2.7.0-rv0).  "git
+> bisect" points to this commit:
+>
+>     commit 74703a1e4dfc5affcb8944e78b53f0817b492246 (refs/bisect/bad)
+>     Author: Stefan Beller <sbeller@google.com>
+>     Date:   2015-09-02 14:42:24 -0700
+>
+>         submodule: rewrite `module_list` shell function in C
+>
+> One could argue that it makes no sense to run "git submodule deinit -f
+> ." in a repository with no submodules.  I've written a continuous
+> integration system for a project where some branches have submodules
+> and other don't, and I found it convenient to don't have to treat
+> those branches differently.
+>
+> The following shellscript demonstrates the issue.  It passes on git
+> version before 2.7.0, and fails on later versions.
 
-> I _think_ strbuf_branchname() leaves "@{-<N>}" when you do not have
-> enough branch switches in the reflog, so perhaps ...
+Thanks for the bug report, I'll fix it.
+Stefan
 
-This is a tangent, but the value returned from strbuf_branchname()
-is not well documented, and nobody looks at it.  It might not be a
-bad idea to change the return value from the function in such a way
-that it can signal "I saw @{-<N>} syntax but there weren't enough
-branch switches" and also "I saw branch@{upstream} syntax but that
-branch does not have an upstream configured for it" to its callers.
-
-That way, the suggested "perhaps like this..." patch does not have
-to do an ugly hack: if (starts_with(bname.buf, "@{-")).
+>
+> --- cut here ---
+> #!/bin/sh
+> #
+> # This script demonstrates the "git submodule deinit ." bug.
+> #
+>
+> if ! mkdir subdeinit
+> then
+>     echo 'Covardly refusing to alter the "subdeinit" directory.' >&2
+>     echo 'Please remove it, or run this script inside an empty directory.' >&2
+>     exit 1
+> fi
+>
+> cd subdeinit
+> mkdir repo
+> cd repo
+> git init
+> echo test > test
+> git add test
+> git commit -m"Create an initial commit."
+> if git submodule deinit -f .
+> then
+>     echo PASS: git submodule deinit -f . is allowed.
+>     exit 0
+> else
+>     echo FAIL: git submodule deinit -f . is not allowed.
+>     exit 1
+> fi
+> --- cut here ---
+>
+> Yours,
+>     /ceder
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
