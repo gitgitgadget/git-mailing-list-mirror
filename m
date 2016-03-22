@@ -1,109 +1,83 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 4/4] mingw: skip some tests in t9115 due to file name
- issues
-Date: Tue, 22 Mar 2016 23:44:26 +0100
-Message-ID: <56F1CACA.5040709@web.de>
-References: <cover.1458668543.git.johannes.schindelin@gmx.de>
- <7b4eca83305ec05af6434ff80269ba563f2d581d.1458668543.git.johannes.schindelin@gmx.de>
- <56F18F5E.9090301@web.de> <xmqqbn66gs4k.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] submodule helper: accept '.' for repositories with no submodules
+Date: Tue, 22 Mar 2016 15:50:46 -0700
+Message-ID: <xmqqy49adt4p.fsf@gitster.mtv.corp.google.com>
+References: <1458669579-32160-1-git-send-email-sbeller@google.com>
+	<xmqqy49agx98.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kaMa3CyJ-Y9Xn9QShzTUGythos+pmKZXQ7m-2c0bF0u9A@mail.gmail.com>
+	<xmqqoaa6gtuu.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79ka=EJ-L+Zaqh0kWUdjmyUva3fEcbwJn18uxshe3R5ABBQ@mail.gmail.com>
+	<xmqqtwjyfb0s.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kYNQ46Yett8xwtPL8Mi1TkitB1kuWbQDsR6bg-5dxckNA@mail.gmail.com>
+	<xmqqpoumf9uy.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kYhK1dDQsxjRwhArXMi-0Gbd8ciYwdFnerT4fjvpthWCg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>,
-	Eric Wong <normalperson@yhbt.net>
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Mar 22 23:45:00 2016
+Content-Type: text/plain
+Cc: Per Cederqvist <cederp@opera.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 23:50:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiV2q-0001rb-1O
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 23:45:00 +0100
+	id 1aiV8X-0005sJ-Se
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 23:50:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752767AbcCVWoy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Mar 2016 18:44:54 -0400
-Received: from mout.web.de ([212.227.17.12]:61500 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752249AbcCVWox (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 18:44:53 -0400
-Received: from macce.local ([87.146.133.242]) by smtp.web.de (mrweb101) with
- ESMTPSA (Nemesis) id 0M3SxQ-1ZrUoI1IMi-00r1RF; Tue, 22 Mar 2016 23:44:30
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.7.0
-In-Reply-To: <xmqqbn66gs4k.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:hRx4OdCmbSlDJHNkMAKLh4X2JMFJ5l5ZEopOOzHqEOKE6Npb1N6
- IfeeLWM5N+y7XvT8/LLMsIc/kGn9hVbhlkKik4EUV6nDsdv2Tt1THCcEPZY0c0dDS4xQb5a
- a/KDYO7rLWTpRZ0+Hsdwxqs8gd6tKDXixXcJblBeDKga283IlyQQMZ95aOwNiq4NTSdW8IC
- UMQiOedMrT5YprWhAo6cg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:pWKtON2crDg=:Msu32wr5Uhw5WuZcWfg82F
- jCxmxnGp+OBKSyD4bOcj7+3iP0ZPPV0OAiRuRRaVa2GeSJSZveHc+YdXQn5iAikHceHL2ujUc
- gUXYtnBp997VFjTCL0MPgtwJfcvGlTJ1drEKhA5g7hBsZ6Cfk/fgDGHdNmIaR0wzJ/8lu9w9P
- RLIjyavT8AoMiOkRtomx2l+vN75RqldljAZ9PLTBXJyv6Fghzo6RYHJ29rhmNYysTVTzjsipq
- LrZQGlgaMNFAL7aiCS1KaU7XY5HeXKbmJs+1ofXDz2gNPpyC9KszAbaahGM5M/TWmulFYbFCT
- /prSVsd6VdOqQkDjEFS0L9pdIsvJzAENbalqdKJvhvwNWS2Ck5WkSTgwu3lFL8EEzjcCKY42n
- SvaFwjTzsrc/bWCgNT51Dna1Bqpe5SoLxBP/6BuD0LAH8+B17n0R9EMWnHQ/0rBjuwUuVRtlv
- AlKwib//dNLqBtFzxlB2yDd4bS7xpyzRoMJbh/7DAR/cnrAoKrXu4FWDsFTiyecj6OeS5NNo0
- iHUyPKfHjTTzvykcMfluGlMTeBaqFKCbQW5cPp1NgmJz7oqQMhMJ5D5uKyitF0+IM46hs50tF
- YN8w9N3lauzCIueIhEBPTdFlP4MYTKObSrsi9ajqHWM3pS9gWpbfBsKtLboP6vLU1aTNfOm6X
- 1+zE+K8zLwDsN7IhgKAf+fcamInRQCB1xcDVS6imZRPplgP+ZWpyysoscBxbTmmeEQk9OB/Iq
- IWfaQDXVeDDxqG5DBoGrgyvOef32IjxeaZy7EDIBJ7i4Vgm0s7GjCtrhndpTH2e2PzF6gTDQ 
+	id S1752810AbcCVWuu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 18:50:50 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:57937 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752670AbcCVWut (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 18:50:49 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D21B84EEC4;
+	Tue, 22 Mar 2016 18:50:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VY3RmOQm6TA8MeYgmj2bQP86tV8=; b=g5S9gB
+	LSVXCXK14hRdc0hmuZuKSuemPJDHvUwaXkzCQRoSYl9An06I3emsbyLXUoiTeFDj
+	YBl88KTic64vq8NB6HQVZSprl6AZK2Mhg2ziZ5PmPmLa4cqe/7q8EqlGFzaO/DtD
+	/tyv+BNqdVbFb5YmWQE1hZRYA9Qrn5U3NhBV8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Emse1T9dapcvtyyhFcqt7sqAPSLanjTU
+	kjhCO+a56oibJdZ7osOZiQjNxnmLcmo6K5h6NJDIZw9UZFSfOzfhpDADvJPjN84P
+	LorIcICpeVfZ+ZTPHU78k7FUL77e1sCs5XIOVXGnZqmM0i6/v3EZHVAm1bBEbFte
+	GX+K2lS6wBw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BFD384EEC3;
+	Tue, 22 Mar 2016 18:50:47 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 321FB4EEC2;
+	Tue, 22 Mar 2016 18:50:47 -0400 (EDT)
+In-Reply-To: <CAGZ79kYhK1dDQsxjRwhArXMi-0Gbd8ciYwdFnerT4fjvpthWCg@mail.gmail.com>
+	(Stefan Beller's message of "Tue, 22 Mar 2016 15:10:25 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8462516A-F080-11E5-BB7B-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289585>
 
-On 2016-03-22 21.44, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->=20
->> On 2016-03-22 18.43, Johannes Schindelin wrote:
->>> These two tests wanted to write file names which are incompatible w=
-ith
->>> Windows' file naming rules.
->>>
->>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->>
->> Is there a chance to squeeze in a precondition for HFS under Mac OS =
-?
->=20
-> So you want this squashed into it?
-Yes, please.
->=20
->  t/t9115-git-svn-dcommit-funky-renames.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->=20
-> diff --git a/t/t9115-git-svn-dcommit-funky-renames.sh b/t/t9115-git-s=
-vn-dcommit-funky-renames.sh
-> index 864395e..a87d3d3 100755
-> --- a/t/t9115-git-svn-dcommit-funky-renames.sh
-> +++ b/t/t9115-git-svn-dcommit-funky-renames.sh
-> @@ -93,7 +93,7 @@ test_expect_success 'git svn rebase works inside a =
-fresh-cloned repository' '
->  # > to special UNICODE characters in the range 0xf000 to 0xf0ff (the
->  # > "Private use area") when creating or accessing files.
->  prepare_a_utf8_locale
-> -test_expect_success UTF8,!MINGW 'svn.pathnameencoding=3Dcp932 new fi=
-le on dcommit' '
-> +test_expect_success UTF8,!MINGW,!UTF8_NFD_TO_NFC 'svn.pathnameencodi=
-ng=3Dcp932 new file on dcommit' '
->  	LC_ALL=3D$a_utf8_locale &&
->  	export LC_ALL &&
->  	neq=3D$(printf "\201\202") &&
-> @@ -105,7 +105,7 @@ test_expect_success UTF8,!MINGW 'svn.pathnameenco=
-ding=3Dcp932 new file on dcommit'
->  '
-> =20
->  # See the comment on the above test for setting of LC_ALL.
-> -test_expect_success !MINGW 'svn.pathnameencoding=3Dcp932 rename on d=
-commit' '
-> +test_expect_success !MINGW,!UTF8_NFD_TO_NFC 'svn.pathnameencoding=3D=
-cp932 rename on dcommit' '
->  	LC_ALL=3D$a_utf8_locale &&
->  	export LC_ALL &&
->  	inf=3D$(printf "\201\207") &&
+Stefan Beller <sbeller@google.com> writes:
+
+> So for now I would send the performance regressing flip of
+> IS_GITLINK and match_pathspec targeting 2.7 and then add a
+> --unmatch-ok switch for 2.8 and later?
+
+"git submodule $subcommand -- COPYIN\*" that detects that there is
+no submodule that match the pathspec and errors out, which is what
+the C rewrite does, is a new feature that was done by accident when
+we should have been doing a faithful translation.
+
+I'd say bug-to-bug-compatible regression fix is appropriate for 2.8
+and below; the "check ce-mode first and then pathspec match" should
+be done as a new feature after 2.8 final, and if --unmatch-ok is
+necessary to make the feature work better, that, too, should come in
+the same timeframe.
