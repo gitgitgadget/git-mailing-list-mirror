@@ -1,147 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] submodule helper: accept '.' for repositories with no submodules
-Date: Tue, 22 Mar 2016 11:53:23 -0700
-Message-ID: <xmqqy49agx98.fsf@gitster.mtv.corp.google.com>
-References: <1458669579-32160-1-git-send-email-sbeller@google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v6 7/7] git: submodule honor -c credential.* from command
+ line
+Date: Tue, 22 Mar 2016 11:56:28 -0700
+Message-ID: <20160322185628.GA19993@google.com>
+References: <1456786715-24256-1-git-send-email-jacob.e.keller@intel.com>
+ <1456786715-24256-8-git-send-email-jacob.e.keller@intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: cederp@opera.com, Jens.Lehmann@web.de, git@vger.kernel.org
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Mar 22 19:53:33 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Mark Strapetz <marc.strapetz@syntevo.com>,
+	Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 19:57:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiRQp-00052E-UA
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 19:53:32 +0100
+	id 1aiRUG-0007ci-Sp
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 19:57:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750926AbcCVSx2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2016 14:53:28 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:52863 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750735AbcCVSx1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 14:53:27 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id ACB774FC65;
-	Tue, 22 Mar 2016 14:53:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1keB0dtXWVhx8a9e977NZ/DhQcI=; b=yiyi69
-	jaGICf6lBQl9ckhCvfud8NcdprPr19ihpcY9hNLG/GqxrHxOIINEPWOywJM5RgPr
-	LIJdgqKgoC7XftOEbO2MjoE5VXLjInWKpyn/dk8f4Clu55VgF+C5WiYx+UewoMDN
-	uJa1llQ9OMfRULQQ6uHnxxhLT6WRtmdq5fN+A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FmhZ5rN9Y1iAzsM5hMhHzxoXusdH1mDH
-	oYAQB+DbfyAySd3zngVFO1jmyevCr/g0PYHpYxs4V2oIK9EwasARGukHDqOht3P+
-	EaraTSxKU++qicOmPptVI4sN3gdUBDfDLIXiWmM9cnHI754iztwL67rvQ2CkA7dU
-	cjGReYdOO6c=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A1F824FC64;
-	Tue, 22 Mar 2016 14:53:25 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2376A4FC63;
-	Tue, 22 Mar 2016 14:53:25 -0400 (EDT)
-In-Reply-To: <1458669579-32160-1-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Tue, 22 Mar 2016 10:59:39 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5B747DD0-F05F-11E5-940C-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751209AbcCVS5A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 14:57:00 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:36428 "EHLO
+	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751041AbcCVS47 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 14:56:59 -0400
+Received: by mail-pf0-f195.google.com with SMTP id q129so38146814pfb.3
+        for <git@vger.kernel.org>; Tue, 22 Mar 2016 11:56:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=HZjguVihdrKWZSks5+URI3Sx0cyJlwp8HRlOaNwXBMk=;
+        b=ZWfZ+kjUx32FJJkSL4PzFUhSbdQySqMaNYjT7z5j7QD10vJyfZ5D7LWt0fEpL/tvi/
+         88BITXxwM2PuGY7fKUkqddrYIRP8g1xapdZFG5sPyzX81vo+P79K2zRBK8lFHGaLanjQ
+         297xu40HVLrrOrYtic/TAY8JyZ954O48NPY0mnkf911BGFyflAu7uiW5yOgfQ8qpT8GU
+         d/tPEh6zTfc2aUA4EyiXqXv82C4CpaygB91PEL4zsOJBALmuMqSRRpP3s3p+IBl5xewJ
+         yth3+8lbI43sEv1MTzP7Vlw9vSoowJQd2r1a3YxA07b/Fmn4iLX7vkCvCVnvwMuVOjTj
+         QrEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HZjguVihdrKWZSks5+URI3Sx0cyJlwp8HRlOaNwXBMk=;
+        b=d7bxYjqZKy68j5dyvlJGE4pjxsq/TukpNJTiDwELGmMM8lKbMXgNdgq1V5O7D/zytK
+         ht5OnwlbbNueJh1lhljoJxWKHNavxo7fBtDsiOknCZei+SCKX6SW96UxxWU53ZKHejxX
+         PAt/94gMvJ3imbhcW7Oyyg3YLDNTGV2wcYZKVyhj8VCTkCNojzywFEwNIhkw5PhBKeDe
+         9jRoMniYAKu9LutQkFZTm9IPzrri/lmv2i+GUSla28Sietejw3inKBcEOejpz0FBlSMB
+         WqrHJmQTQfuSpBW9yAvgQwrYo4payf8joSHak2qTfTwuHc6KcyyckJukSizYGF4OYW+x
+         75+Q==
+X-Gm-Message-State: AD7BkJIEFj82xxP7JQaZhKOM+3ooozbo+3fqUIAKnULciFpoUtCw6EiIhJ0PDFnWm+FdaA==
+X-Received: by 10.98.31.21 with SMTP id f21mr55122401pff.134.1458673018512;
+        Tue, 22 Mar 2016 11:56:58 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:694a:ddce:573a:2ea8])
+        by smtp.gmail.com with ESMTPSA id g28sm50061920pfd.25.2016.03.22.11.56.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 22 Mar 2016 11:56:57 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1456786715-24256-8-git-send-email-jacob.e.keller@intel.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289543>
 
-Stefan Beller <sbeller@google.com> writes:
+Hi,
 
-> In 74703a1e4d (2015-09-02, submodule: rewrite `module_list` shell
-> function in C), "submodule deinit ." was broken.
+Jacob Keller wrote:
+
+> Due to the way that the git-submodule code works, it clears all local
+> git environment variables before entering submodules. This is normally
+> a good thing since we want to clear settings such as GIT_WORKTREE and
+> other variables which would affect the operation of submodule commands.
+> However, GIT_CONFIG_PARAMETERS is special, and we actually do want to
+> preserve these settings. However, we do not want to preserve all
+> configuration as many things should be left specific to the parent
+> project.
 >
-> The original module_list accepted '.' as a pathspec just fine, as it
-> was using
+> Add a git submodule--helper function, sanitize-config, which shall be
+> used to sanitize GIT_CONFIG_PARAMETERS, removing all key/value pairs
+> except a small subset that are known to be safe and necessary.
 >
->   git ls-files -z --error-unmatch --stage -- "$@" || { custom filtering}
->
-> and git ls-files doesn't make a difference between "." and no arguments
-> there. When using the parse_pathspec function in C, this is a difference
-> however, when no path matches.
+> Replace all the calls to clear_local_git_env with a wrapped function
+> that filters GIT_CONFIG_PARAMETERS using the new helper and then
+> restores it to the filtered subset after clearing the rest of the
+> environment.
 
-Is that an accurate description of the issue?
+This is failing for me when I use "git submodule add" with a remote
+helper I whitelisted with GIT_ALLOW_PROTOCOL, with current "next":
 
-The original (above) errors out if there is a pathspec that does not
-match any path in the index.  The C rewrite however instead does
-this:
+ $ bin-wrappers/git submodule add persistent-https://kernel.googlesource.com/pub/scm/git/git sm
+ Cloning into 'sm'...
+ error: bogus format in GIT_CONFIG_PARAMETERS
+ fatal: unable to parse command-line config
+ fatal: clone of 'persistent-https://kernel.googlesource.com/pub/scm/git/git' into submodule path 'sm' failed
 
-		if (!S_ISGITLINK(ce->ce_mode) ||
-		    !match_pathspec(pathspec, ce->name, ce_namelen(ce),
-				    0, ps_matched, 1))
-			continue;
+sq_dequote_to_argv doesn't like the space at the beginning of
+$GIT_CONFIG_PARAMETERS.  Reverting 14111fc4 fixes it.  Known
+problem?
 
-to error out if there is a pathspec that does not match any
-submodule path.  That is the root cause of the difference in
-behaviour.
-
-So if we were to aim for a faithful rewrite, perhaps swapping the
-order of the check, i.e.
-
-		if (!match_pathspec(pathspec, ce->name, ce_namelen(ce),
-				    0, ps_matched, 1) ||
-		    !S_ISGITLINK(ce->ce_mode))
-			continue;
-
-Now, arguably, the behaviour of C rewrite makes more sense in that
-it would diagnose a pathspec that does not match a submodule as an
-error, e.g.
-
-	$ git submodule--helper list 'COPYIN*'
-	error: pathspec 'COPYIN*' did not match any file(s) known to git.
-	#unmatched
-
-The error message _is_ wrong, but the end result is more helpful to
-the user---the user thought there was a submodule that would match
-that pathspec, and there isn't, so we suspect there was a typo and
-cautiously error out.
-
-"submodule deinit ." may have "worked" in the sense that you would
-have at least one path in your tree and avoided this "nothing
-matches" most of the time.  It would have still failed with the
-exactly same error if run in an empty repository, i.e.
-
-	$ E=/var/tmp/x/empty && rm -fr "$E" && mkdir -p "$E" && cd "$E"
-        $ git init
-        $ rungit v2.6.6 submodule deinit .
-        error: pathspec '.' did not match any file(s) known to git.
-	Did you forget to 'git add'?
-	$ >file && git add file
-        $ rungit v2.6.6 submodule deinit .
-	$ echo $?
-	0
-
-In other words, "Use '.' if you really want to" is a faulty
-suggestion.  There is no guarantee that it would match anything in
-the old world order, and certainly there is no guarantee that it
-would match any submodule in the new world order.
-
-When another person who is not Per Cederqvist realizes that the
-logic that issues the faulty suggestion is because the command wants
-some pathspec, she may try
-
-    $ git submodule deinit '*'
-
-and complain that it used to work but it no longer, even with the
-band-aid patch under discussion that special cases '.'.
-
-So I dunno.  This is not only "deinit", but also the post rewrite
-version catches
-
-	$ git submodule init -- 'COPYIN*'
-
-as an error, which we probably would want to keep, so I am reluctant
-to suggest swapping the order of the check to do pathspec first and
-then gitlink-ness (it has performance implications but correctness
-is a more important issue), but if we want to keep the backward
-compatibility, that would be the best bug-to-bug compatible fix in
-the shorter term.
+Thanks,
+Jonathan
