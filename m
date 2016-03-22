@@ -1,8 +1,7 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 4/4] mingw: skip some tests in t9115 due to file name
- issues
-Date: Tue, 22 Mar 2016 18:43:00 +0100 (CET)
-Message-ID: <7b4eca83305ec05af6434ff80269ba563f2d581d.1458668543.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 3/4] t1300: fix the new --show-origin tests on Windows
+Date: Tue, 22 Mar 2016 18:42:55 +0100 (CET)
+Message-ID: <a43d6d1f46a90eea9083f329ad0dfb17915c38a1.1458668543.git.johannes.schindelin@gmx.de>
 References: <cover.1458668543.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -11,78 +10,114 @@ Cc: git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
 	Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>,
 	Eric Wong <normalperson@yhbt.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 22 18:43:24 2016
+X-From: git-owner@vger.kernel.org Tue Mar 22 18:43:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiQKq-0003KE-Vj
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 18:43:17 +0100
+	id 1aiQKw-0003NH-1d
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 18:43:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756479AbcCVRnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2016 13:43:11 -0400
-Received: from mout.gmx.net ([212.227.17.22]:59653 "EHLO mout.gmx.net"
+	id S1756561AbcCVRnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 13:43:16 -0400
+Received: from mout.gmx.net ([212.227.17.20]:55356 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756401AbcCVRnK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 13:43:10 -0400
+	id S1756494AbcCVRnP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 13:43:15 -0400
 Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MfjJY-1aNbhB0Uaa-00NAi6; Tue, 22 Mar 2016 18:43:01
+ ESMTPSA (Nemesis) id 0LgeFd-1ZwlN71UDV-00nwon; Tue, 22 Mar 2016 18:42:56
  +0100
 X-X-Sender: virtualbox@virtualbox
 In-Reply-To: <cover.1458668543.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:LelPSPMzWJxKq/47rqAa4I9ZpWUZz0hMwi4W22SNggboIWI+YN9
- BnE5LIx8N9MnHiHftbVid7j3VkLx+pjhPmJwl3lQS816NKsieLt/q0dn7X5cx/hSDZr24Dz
- /1EUzdU6yxj9xoCMiR1mJU//BrC2dksVfxqNShubrQYTKmLc/UnZG6cg/LNJqVOrhG0EXCD
- o2R9sMv+TK6U75wFGACEw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:gNAD3MG6Ui4=:Uo3ohj69ejw/biW7YKHHoE
- C2XN9WZMG3t56xXmX531uML+3sWLurPhfwpNIlB+U++E3oUAvgLgnYHGqmZkpjFq8lesVM+1H
- cEHqA0+CugTwX/XAalv8IJs93iPLOL3wJv3YLHWvSyKxFB01+0I5mrJqqDWZZWw9VHa+e8N52
- /Cds5MOHl8ZWPPVuLdHgQT86F+XL57CB0cFRNF9VRb9nEtNfPHLkKcSRVDpVHNuSpe+9mytjP
- /oG9jA8cyY/BfVJS4G5FRqGvRRqBBzREckI2U+867fL9kwAG37eW4slB4f6NywEGvrds7Gi08
- /DzD1KQMuAZxo796VGjDATVeUrmTwaA0IhJh2G1SDKv/cijB2IsIb0s+s8Q8Es7SlcjIA7bb8
- tfP/vzC+dzJvNdl1iM1s3g3kg4Tja1HNRJfhP2z30+jDyWz3shdwJl7Z944z9b/eFZTa5Atr5
- nQjUwJRjJdGBaCsCXJKRnfxGxxeCdMSYTDiqU5lHQFHEYLSXo7EF3Qz9ZdsTlr5E3Jal/Reeg
- Wx2JvcW0idpb01zbwMkJlISt9dM6bt5yKKvufqrOrzHWACvuQ4bgM0wNHZvDOmImbcSVbag4a
- n3f2xzO6F5PmmLWWy5vaR93sWy08vJX/eKzXzZwPrT6cObdGT2/4oqZcwXnEjH+b1i5X6cqLh
- RIr5m8Wz8+95GZJ+WAsNOC1ANOQkIFTG3BTKZaysxqk7wED9+YAieeQ7aZEczTXeKjBB/PpxL
- Ve/gOObChTQ9LoFMnhCPpoL8asNaSY7DTmYCnc8mpJ3QjQ4J00UKNfSq/UR9KMVtdGYGX9ln 
+X-Provags-ID: V03:K0:klWhtnWFY4KJG50/wIHMDa+Mls063ERnMiqDiDaU7F4H1Os2jBs
+ 3Ptmp4DZQ2hHg1K8BGxtwNUc6zVd2vWgIxvt1GWpuDM9pk0Ac2WM4j2YMU4qFjnXwNPhMqk
+ f/FK1b6WLuy7mE3eeH+LkF2rcPRB7kc6mm8fkDAkvho9UjHSN9M6PlRfdJw7Cxu+Vy5X7rL
+ d1uentk4L157Qi26Ff4JA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jIOahvxedCg=:5r+mS8wBirXtDtslGm+ZA1
+ n6KeIlaytOvym5YoGRrl51VBT5j7n52x+DEDS60eSAHf1wvVmTvh+sSJhs5HEc9Gb/EGukdEv
+ hKQST6Npel1HcQ5P6QnMiBWkoSZcK6Ys2It9pUgIZY8uCyehhGXv+V1qq5Q1UjkJNKC049yaX
+ 0k0aVXMivJOnKEjhw3+1KBGYaBPaIzcJh+CDt9WNiNrqctHeKM0dJY3y73mESuA+wzvMh9qXR
+ h6S6Wy8NRJPS3P/oDKdgwerXH9KLsF7EQEienr9bIMt+WrCCBWAejZo7RqZ+gC062JplWFpN7
+ 7BjYQMz2/Sv518+yX9Xi1sHCks8cpNrN+Wy27czwYJBahyXIU/Zoo173/FiE0EGnv/YwL+Ls6
+ 2bB5/aK0TmyVTmZ/jATNAg45a12p2O1B6e3tg5/SG3EnmioE7oQrzhYAgwjTZVCmuAajJk5zS
+ cPauD/BgiuavlpoL2kkolriV/t9EVOHQCjdhbhFBvCEoRdsMWRHUFgj2fRdokabhkkG4SMX5n
+ CVAoHSKCSYT27fOldOHtGfEjcj9BaWj15Q2piwuXwWs6+W9TpJA4VsWQmevyppIqwBEyvNS1a
+ k5DoitMYFdOVFI+q7cAyxnGVA0hHBKJc4nBwRQVkwQTRkD6f8qud+phwDAjpetkOQZzl0MG3q
+ bHguVyvbrVQ3AvPgIbUpmL+1dPlBx+vrcqu/uZ0F/qVsgInfLmPonEU1U+K4B3TZLn8SvZ68j
+ FB9q49LYtB/6LAS1DAgXUKwb4MwS22nQ5bmSQqnqtNu8xysaz6UwXscAgV1fPpls9zief9ls 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289526>
 
-These two tests wanted to write file names which are incompatible with
-Windows' file naming rules.
+On Windows, we have that funny situation where the test script can refer
+to POSIX paths because it runs in a shell that uses a POSIX emulation
+layer ("MSYS2 runtime"). Yet, git.exe does *not* understand POSIX paths
+at all but only pure Windows paths.
+
+So let's just convert the POSIX paths to Windows paths before passing
+them on to Git, using `pwd` (which is already modified on Windows to
+output Windows paths).
+
+While fixing the new tests on Windows, we also have to exclude the tests
+that want to write a file with a name that is illegal on Windows
+(unfortunately, there is more than one test trying to make use of that
+file).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t9115-git-svn-dcommit-funky-renames.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t1300-repo-config.sh | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/t/t9115-git-svn-dcommit-funky-renames.sh b/t/t9115-git-svn-dcommit-funky-renames.sh
-index 0990f8d..864395e 100755
---- a/t/t9115-git-svn-dcommit-funky-renames.sh
-+++ b/t/t9115-git-svn-dcommit-funky-renames.sh
-@@ -93,7 +93,7 @@ test_expect_success 'git svn rebase works inside a fresh-cloned repository' '
- # > to special UNICODE characters in the range 0xf000 to 0xf0ff (the
- # > "Private use area") when creating or accessing files.
- prepare_a_utf8_locale
--test_expect_success UTF8 'svn.pathnameencoding=cp932 new file on dcommit' '
-+test_expect_success UTF8,!MINGW 'svn.pathnameencoding=cp932 new file on dcommit' '
- 	LC_ALL=$a_utf8_locale &&
- 	export LC_ALL &&
- 	neq=$(printf "\201\202") &&
-@@ -105,7 +105,7 @@ test_expect_success UTF8 'svn.pathnameencoding=cp932 new file on dcommit' '
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index 0236fe2..18eb769 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -1232,6 +1232,15 @@ test_expect_success 'set up --show-origin tests' '
+ 	EOF
  '
  
- # See the comment on the above test for setting of LC_ALL.
--test_expect_success 'svn.pathnameencoding=cp932 rename on dcommit' '
-+test_expect_success !MINGW 'svn.pathnameencoding=cp932 rename on dcommit' '
- 	LC_ALL=$a_utf8_locale &&
- 	export LC_ALL &&
- 	inf=$(printf "\201\207") &&
++if test_have_prereq MINGW
++then
++	# convert to Windows paths
++	HOME="$(pwd)"
++	INCLUDE_DIR="$HOME/include"
++	export HOME INCLUDE_DIR
++	git config -f .gitconfig include.path "$INCLUDE_DIR/absolute.include"
++fi
++
+ test_expect_success '--show-origin with --list' '
+ 	cat >expect <<-EOF &&
+ 		file:$HOME/.gitconfig	user.global=true
+@@ -1304,7 +1313,7 @@ test_expect_success 'set up custom config file' '
+ 	EOF
+ '
+ 
+-test_expect_success '--show-origin escape special file name characters' '
++test_expect_success !MINGW '--show-origin escape special file name characters' '
+ 	cat >expect <<-\EOF &&
+ 		file:"file\" (dq) and spaces.conf"	user.custom=true
+ 	EOF
+@@ -1333,7 +1342,7 @@ test_expect_success '--show-origin stdin with file include' '
+ 	test_cmp expect output
+ '
+ 
+-test_expect_success '--show-origin blob' '
++test_expect_success !MINGW '--show-origin blob' '
+ 	cat >expect <<-\EOF &&
+ 		blob:a9d9f9e555b5c6f07cbe09d3f06fe3df11e09c08	user.custom=true
+ 	EOF
+@@ -1342,7 +1351,7 @@ test_expect_success '--show-origin blob' '
+ 	test_cmp expect output
+ '
+ 
+-test_expect_success '--show-origin blob ref' '
++test_expect_success !MINGW '--show-origin blob ref' '
+ 	cat >expect <<-\EOF &&
+ 		blob:"master:file\" (dq) and spaces.conf"	user.custom=true
+ 	EOF
 -- 
 2.7.4.windows.1
