@@ -1,104 +1,84 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC_PATCHv4 4/7] submodule init: redirect stdout to stderr
-Date: Tue, 22 Mar 2016 09:47:15 -0700
-Message-ID: <CAGZ79kaASKUGs3y9YHUp=QeD=91by4DhJh+tVfj6aNOJSH-3jg@mail.gmail.com>
-References: <1458612372-10966-1-git-send-email-sbeller@google.com>
-	<1458612372-10966-5-git-send-email-sbeller@google.com>
-	<CAHGBnuMs4D0LeMvdcS0yzKoQgmE+UTb+QFfOkSy7T20PbH86UQ@mail.gmail.com>
-	<xmqqd1qmjxrl.fsf@gitster.mtv.corp.google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] bisect--helper: convert a function in shell to C
+Date: Tue, 22 Mar 2016 17:49:18 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603221748360.4690@virtualbox>
+References: <010201539a8d2b8a-9f168d7a-d4c6-4c23-a61f-1ef6ee22f774-000000@eu-west-1.amazonses.com> <010201539d57ae98-ce4860a6-f7b6-4e06-b556-3c1340cd7749-000000@eu-west-1.amazonses.com> <alpine.DEB.2.20.1603221552100.4690@virtualbox>
+ <xmqqh9fyjy9w.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Sebastian Schuberth <sschuberth@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=US-ASCII
+Cc: Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 22 17:47:22 2016
+X-From: git-owner@vger.kernel.org Tue Mar 22 17:49:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiPSj-00052v-SX
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 17:47:22 +0100
+	id 1aiPUr-0006Vi-VC
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 17:49:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751245AbcCVQrR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2016 12:47:17 -0400
-Received: from mail-yw0-f181.google.com ([209.85.161.181]:35236 "EHLO
-	mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750822AbcCVQrQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 12:47:16 -0400
-Received: by mail-yw0-f181.google.com with SMTP id g127so261802198ywf.2
-        for <git@vger.kernel.org>; Tue, 22 Mar 2016 09:47:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=60gG8TGa5fT4ZCR8MCwa8sN7zBeIrYPbQ9c22SLUR4c=;
-        b=a/Q2Y4tVE1DomxoOX//qHLSXyVSM1EIsGLeEvRR/lUgl+LviQlxA7SSaNH9B7S2Zr8
-         yVo2Exjk5D2O23fq0Yqud69yRbJMAaTPi6h6YZht2d1GSdP38EXQRNwU4oYKb98NVusB
-         o5IVSiAm0vP9UyKlLs5+zlng/JGvkEGiLU4+GyilnpYWWMN2qytOIbQIXxR2OmLcQG55
-         yk9SzJKVmO3Mh2lMluAXONPQ8/4pc8N/89TxShqiUPuxuEjmA/wm2sy0NVDpfwHNZKiK
-         ASMUmaCJvctQFLSo/cEPSmFRYXAGeL8epTCcY6KhvCX8HBxjg4LWTRIJdnYuY01wbrnq
-         ga9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=60gG8TGa5fT4ZCR8MCwa8sN7zBeIrYPbQ9c22SLUR4c=;
-        b=FUVlT3psHm4RC8l+Juj5q5cw1GrJ+yIYpQW67eWQQPPaJm8QsIwmH+F+wjb90t1+6V
-         rGqEAyduyg2y0y08W8xDf/rAmtjVuNFUNj0dFAvJ2VvWBucmLbL+SchQNuID0HG6WmKd
-         qGEYzbtPu2i3mW9Vsd1SbMDtd11s0S6qBcRvsCOgX8sofnZ/bjMYW6/BSFAw7hoOp5vj
-         BXCBppHFssd4lGImFEgRSVqFVb21+BnBaBgW34uKwmedY5P0xieurw0fuTCiBt61i1KJ
-         +xCLncSvYVLKSuW4Vbdnmhze06DvhmCzOvpEHqIwRFOd6LwTLX1qu6WoFUS/JNf4Sth4
-         DkjA==
-X-Gm-Message-State: AD7BkJK0XHihkAv3g0yk1MawqcC0OefmR9zfkPVcg+5xKBwi7JSElFD/jwOoQ3AFjyC7pjpaf18gchhvZ9M2hm8b
-X-Received: by 10.129.4.83 with SMTP id 80mr17250779ywe.44.1458665235771; Tue,
- 22 Mar 2016 09:47:15 -0700 (PDT)
-Received: by 10.37.51.137 with HTTP; Tue, 22 Mar 2016 09:47:15 -0700 (PDT)
-In-Reply-To: <xmqqd1qmjxrl.fsf@gitster.mtv.corp.google.com>
+	id S1754849AbcCVQt3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 12:49:29 -0400
+Received: from mout.gmx.net ([212.227.17.20]:53514 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751454AbcCVQt3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 12:49:29 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MGip3-1aUsq117TN-00DVkx; Tue, 22 Mar 2016 17:49:20
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqqh9fyjy9w.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:Fd4pb1udEImhYFU0l2IDdxyx53QbxyDrEe4vhN8uqj0icdt1Zwe
+ jVlnkAWY70lxuNtSGgLUrl2Dkd/8SZ42AAn/4WtHbys0Uqv0Ne/XjtfXTOcTc2AUDa5TTZz
+ b2kqfUpA2My4xeOaykREUXnQ/4TwyrCmLHZGcK+9rYwGOK2M4Hbh5rP9ji4hKTR5MLV4sny
+ W+ExAdmAtM2+FF2UG8l8Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fd5gZixCfek=:AAWDpo3YcUV2r4bijjKqN6
+ +MeGpTwT1vttqU6U/guWPQIAvEDwYrGRxQo3ZgTxM8lBbPqtJjWMSTO2z+gt+L6bxSggChaIA
+ 8oleYWAhXCnJthiAQ14BliWb1LSo7i1vyP7SIQNLWWbuF2x5diBWdA5cC7ZAYelSeb4s6WF96
+ pmT8FgYk4nC2ZYy87qf4ooTYU/4e1HhCTDhbWuid5OOHPhgAWyJs1OnB5tV9+b6QMIH8/KJLr
+ Dk93Q+Ef2LvCZU8Ggifq5EqrSZe3INV39wXxtT802REk2TlL/eaenbS+fql64FMVA5sdzqfJa
+ Qrm92q9mmAxaWXZaxuU2CIx9+IIBFrZsyrzoaLA2dvrnRX2hqmOXwEgRilGwFBPnlRhcSTzMM
+ k1R7bocdKAXUf5ndITgSb9dwjJ59VEVLwT39LP/sKBSNLVK+Q28qRpc7tYBgMt2eBLkzklrkd
+ oYPTaOScSzi5ViiLkbYkMHs/g7klo1tIdz8KyJqYnfS8awOVvRs4w1mZPpOevF6Z/bB038nRO
+ a4a1qhrGGHGekt9reucM0iZQo4BeEwoHCTiZmDwxCMfAbWrzk7lL2GnB9Z74jp11HvCwYS4XT
+ //b173NB4b3bl7RmtIMQZTZ43Xumn68Tl75ZTL+J4LsMyu2fZrA9sb9iku19u0dahBQ8gVX6B
+ iRMqMVaBMRDInxICj5B4IEBjTTc0k5Iaw7X68iFJAbyKmcvhptyZkxyABwwRSVQDvnOyXqzE0
+ jc18DzN4ccoDn2TTolIpxcKiqXv+vOVV7HTKfV3OBURxA0GwOxjxLawkovoD4kcRjOQH2/5H 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289515>
 
-On Tue, Mar 22, 2016 at 9:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Sebastian Schuberth <sschuberth@gmail.com> writes:
+Hi Junio,
 
-My commit message is bad, and I should feel bad. ;)
-Quoting from 68b939b2f097b6675 (2013-09-18, clone: send diagnostic
-messages to stderr, by Jeff who writes the best commit messages):
-    Putting messages like "Cloning into.." and "done" on stdout
-    is un-Unix and uselessly clutters the stdout channel. Send
-    them to stderr.
-    ...
-    This should not regress any scripts that try to parse the
-    current output, as the output is already internationalized
-    and therefore unstable.
+On Tue, 22 Mar 2016, Junio C Hamano wrote:
 
-Quoting another fbf71645d12d302 (Tue Dec 15 16:04:06 2015,
-submodule.c: write "Fetching submodule <foo>" to stderr, by Jonathan)
-    The "Pushing submodule <foo>" progress output correctly goes to
-    stderr, but "Fetching submodule <foo>" is going to stdout by
-    mistake.  Fix it to write to stderr.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >>  	struct option options[] = {
+> >>  		OPT_BOOL(0, "next-all", &next_all,
+> >>  			 N_("perform 'git bisect next'")),
+> >>  		OPT_BOOL(0, "no-checkout", &no_checkout,
+> >>  			 N_("update BISECT_HEAD instead of checking out the current commit")),
+> >> +		OPT_STRING(0, "check-term-format", &term, N_("term"),
+> >> +			 N_("check the format of the ref")),
+> >
+> > Hmm. The existing code suggests to use OPT_BOOL instead.
+> > ...
+> > The existing convention is to make the first argument *not* a value of the
+> > "option", i.e. `--check-term-format "$TERM_BAD"` without an equal sign.
+> 
+> I think it is preferrable to keep using OPT_BOOL() for this new one
+> if we are incrementally building on top of existing code.
+> 
+> But if the convention is that the option is to specify what opration
+> is invoked, using OPT_CMDMODE() to implement all of them would be a
+> worthwhile cleanup to consider at some point.
 
->> Just wondering, what's Git's policy on this? This message is neither
->> an error nor a warning, but just purely informational. As such it
->> semantically does not belong to stderr, or?
+Good point, I keep forgetting that OPT_CMDMODE() was introduced
+specifically for subcommands.
 
-I think the stance of Git is to write only machine readable stuff to stdout,
-and essentially all _(translated) stuff (i.e. human readable) goes to stderr as
-some sort of help or progress indication.
-
->
-
->
-> Some people believe that a clean execution should not give anything
-> to stderr (Tcl is one example, IIRC), but I think the core part of
-> Git takes the opposite stance (probably unix tradition?).  Anything
-> that is not the primary output of the program should go to stdout.
->
-> We may not have been very strict in code reviews to enfore it, and
-> especially on the fringes of the system it may be easy to find
-> violators, though.
->
+Ciao,
+Dscho
