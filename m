@@ -1,78 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC_PATCHv4 1/7] git submodule: teach `add` to label submodules
-Date: Tue, 22 Mar 2016 15:34:13 -0700
-Message-ID: <xmqq7fguf8gq.fsf@gitster.mtv.corp.google.com>
-References: <1458612372-10966-1-git-send-email-sbeller@google.com>
-	<1458612372-10966-2-git-send-email-sbeller@google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git fails updating submodule only if --quiet is specified
+Date: Tue, 22 Mar 2016 18:35:38 -0400
+Message-ID: <20160322223538.GA1158@sigill.intra.peff.net>
+References: <3E1D841C-7665-43DB-A0F8-99999C59C28D@googlemail.com>
+ <219B1DC5-8379-4FD5-8739-D99890362769@googlemail.com>
+ <CAGZ79kZaV3w5TM+FPORcFOdeCY8idCYV_yB4Vt5eSNVrNomp2w@mail.gmail.com>
+ <CAGZ79kb0izRAZoQaDxTjKNz0VFEBqbkCSmro2pHm_kmLpJk0mw@mail.gmail.com>
+ <20160322222501.GA29577@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jens.Lehmann@web.de, sschuberth@gmail.com, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Marcus T <maddimax@googlemail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Mar 22 23:34:25 2016
+X-From: git-owner@vger.kernel.org Tue Mar 22 23:35:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiUsZ-000307-Vg
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 23:34:24 +0100
+	id 1aiUtt-0003vj-Na
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 23:35:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752994AbcCVWeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2016 18:34:18 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:56503 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752981AbcCVWeQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 18:34:16 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3B35A4EA3F;
-	Tue, 22 Mar 2016 18:34:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cIlgjnSpV9OsAMavLjiE77mixa4=; b=QHXmPM
-	cvi39zSgtGFj2Euy0mj577vskUUOS1WR1SdU+aV9a0wVLAuQe7Wzra4m8ceLT0B1
-	g8Dfrt0DXLhVbv1u0HgaLtSoE36Etjt7dI/x0WE3MgGYyBAFg1MufaVHf2a7Zs5N
-	LJFGhi7EgAHVtAZl/pyp39EPE1FPazHauhDaw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=p0O3oWOG2ZLxk0GUH4A9gK58s0PXGrK4
-	UPGjjDpjxQ3Hu/UCy57CGGq2kB/rB9+XfIubt8YtaXRV6TcBcfPmA68Q62Ynz/Lr
-	xF3XSasoyCUwq3/PZExu3xyD/Ufsh9MNeGsePegSMamgb3qSeiI4nwfPTn+SoHWR
-	zwrgOsJBRw4=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 332814EA3E;
-	Tue, 22 Mar 2016 18:34:15 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 987084EA3C;
-	Tue, 22 Mar 2016 18:34:14 -0400 (EDT)
-In-Reply-To: <1458612372-10966-2-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Mon, 21 Mar 2016 19:06:06 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 34C302DC-F07E-11E5-BF07-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1752559AbcCVWfm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 18:35:42 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36276 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752466AbcCVWfl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 18:35:41 -0400
+Received: (qmail 24189 invoked by uid 102); 22 Mar 2016 22:35:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 22 Mar 2016 18:35:40 -0400
+Received: (qmail 19375 invoked by uid 107); 22 Mar 2016 22:36:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 22 Mar 2016 18:36:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Mar 2016 18:35:38 -0400
+Content-Disposition: inline
+In-Reply-To: <20160322222501.GA29577@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289582>
 
-Stefan Beller <sbeller@google.com> writes:
+On Tue, Mar 22, 2016 at 06:25:01PM -0400, Jeff King wrote:
 
-> When adding new submodules, you can specify the
-> label(s) the submodule belongs to by giving one or more
-> --label arguments. This will record each label in the
-> .gitmodules file as a value of the key
-> "submodule.$NAME.label".
+> I think you can simplify this quite a bit to just:
+> 
+>   git clone --quiet git://git.busybox.net/buildroot
+> 
+> That breaks, but works without --quiet. Presumably the problem is on the
+> server side, as we see the remote end hang up (and using different
+> versions of git on the client does not seem to help).
+> 
+> It seems to fail consistently for me around 2.4s, which makes me think
+> we're hitting some kind of timeout. I'd suspect a bug in the keep-alive
+> code in upload-pack, but that shouldn't have kicked in by then.
+> 
+> I guess the next step is to try to reproduce with a local client/server,
+> and then bisect the server version.
 
-Having an ability to add a label when adding a brand new submodule
-would be a "nice-to-have" convenience feature, but I think it is
-better to start a series to add a new concept by "need-to-have"
-infrastructure that is lower-level.  E.g. "git submodule label"
-command that allows you to things like:
+That server advertises that it's running v2.7.3. So I pulled down the
+repo and tried reproducing with a local v2.7.3 run, but I can't get it
+to fail.
 
- - query the labels on a given submodule
- - add a label to a given submodule (or to a set of submodules)
- - remove a label to a given submodule (or to a set of submodules)
+I also tried tweaking uploadpack.keepalive down to 1 second to see if
+that triggered anything, but again, nothing interesting.
 
-And with that, the user can start using the feature without having
-"git submodule add --label".
+So I'm not sure what the trick is to stimulating the failure. Is there
+any special config set up on that server or in that repository? Is it
+possible to get a tarball of the server repository, in case something in
+the packing is relevant? I guess both of those would require contact
+with the busybox.net admins.
+
+-Peff
