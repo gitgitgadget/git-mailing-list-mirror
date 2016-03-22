@@ -1,318 +1,245 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v6 4/4] config: add '--show-origin' option to print the
- origin of a config value
-Date: Tue, 22 Mar 2016 15:44:00 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603221247470.4690@virtualbox>
-References: <1455873362-66998-1-git-send-email-larsxschneider@gmail.com> <1455873362-66998-5-git-send-email-larsxschneider@gmail.com> <56D723F0.7020106@kdbg.org> <07435444-0C35-4615-A403-9E124AFC9427@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Johannes Sixt <j6t@kdbg.org>, Git List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 22 15:44:37 2016
+From: Marcus T <maddimax@googlemail.com>
+Subject: git fails updating submodule only if --quiet is specified
+Date: Tue, 22 Mar 2016 16:02:24 +0100
+Message-ID: <3E1D841C-7665-43DB-A0F8-99999C59C28D@googlemail.com>
+Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
+Content-Type: multipart/signed; boundary="Apple-Mail=_1C8D9ADC-9C20-4075-9D76-BDE0CDE165D7"; protocol="application/pgp-signature"; micalg=pgp-sha512
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 22 16:02:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiNXw-0004FK-JH
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 15:44:37 +0100
+	id 1aiNpM-0005ws-MU
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 16:02:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752283AbcCVOoc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2016 10:44:32 -0400
-Received: from mout.gmx.net ([212.227.15.18]:65483 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751864AbcCVOoa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 10:44:30 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0Lb5nF-1a2TGs0abZ-00kfZY; Tue, 22 Mar 2016 15:44:03
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <07435444-0C35-4615-A403-9E124AFC9427@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:toJYwem7A1DhpIpDyGGoIKvwbhUBHPqaf7MgEfv034wq7Nuh2Ta
- NqL0LdysS0tt8A00AyoiOuflvePyJHq4xdcQRLMi0oSSXVveWN3hDBzy1sI6wFf+Lz11Dms
- XKMNxoOSVW5MIwRws5z6rko53ICMTIORDbw55rPZcSDBgLcDmv1MidmxifCmlOJpDWlRglC
- dRNino/8QX0KFawJTCKBQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OYXIIT4kR6c=:n6upw3o9vBpCELg+8uiYAZ
- DUYuqvlB5w3F+PUMtBzkQNJEyZF3f9M3WbqbXJyMk+14O+cpmYimWnT3KTbIMt1IJLuEZkbSj
- B9IFQ435wgEePkATNWF3FECvxw7BIYCs0NSbGurFa0bE5UqXTDZn47N3T48hH+XDCbO6fo2gr
- we4vYuP0JDfaHTRYUbCCPn7v+glYHbcmu+8lEuJ4w1ZY7xot1O0dL/D71U6aUgLN6YtaGJXLU
- t+HO0QTen5K0p4dSYurBHCmZzeIM36aUU0V/A4nbbZDwSMJIrKjIj3cBsLo9jTDQQlUe1D6wo
- 9CMmJ5/i3znCC1EwSm8OgkYDg7c95EfoJBgKVKluLxbPh4rp3kC18AT6u6STUYnJmPzfK7vAd
- OYiFClFxwnU4yQiXDoDiDPLTZiioRU3eA8azPHWeqAnN4G+ZOFIx0NoLV5bzoQTTN/qr+Dno0
- fLpge072e2r47k+16j6QQMVNSKdWt+qIeZYpBR/T2oX2vgPnrbDP/qrhPhrJwRTVjFZ5spQ0W
- J4sJXFMw9B6yfV9BY+qxIP3HMPri8OZhsXGZiSY0p5HQW+5pnYxvCX45ohCWzrU4maoSyxed6
- qgBFP8wNVbLfRxLOq0UEq9Dc+qVwOEqUMvOlt8jfb7qVLygwdN3m5h8UHHCg1HWFFCP8n3jV5
- UGzlcfjA5jq4UKtalIPvZLgdtXg8ClsU7FDm4CtCV0ehWyYHLtVUfbAWfcBmln9Um7HbZaQ2z
- 3p3SwEv7UYG9yx58DEccsOlrDFae82FnjbXieA0ZwnuUAAH7IhfG4a8QcyrBKdtPfhERlmCL 
+	id S1751593AbcCVPCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 11:02:32 -0400
+Received: from mail-qg0-f43.google.com ([209.85.192.43]:33217 "EHLO
+	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751303AbcCVPCa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 11:02:30 -0400
+Received: by mail-qg0-f43.google.com with SMTP id 51so14945398qgy.0
+        for <git@vger.kernel.org>; Tue, 22 Mar 2016 08:02:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=from:subject:date:message-id:to:mime-version;
+        bh=KxJMNl6mzKUqhCGZYiYKJGDuH4OnbPNdtDPrsUEDJ5E=;
+        b=jxeNFLey57mS6yfn92hy5hs5+YZTiuQqUedPo4Z9VRW4sWSNyzpX0/W57Un5UtIk5X
+         MrDrzCd7+GljcJvKV8d4D+A+3e3DV3FtDTPSf/S5N7zPYhF+bXyC2FsMjUQ3QHHTnd4q
+         P5Y2AQ28Zd89UFqD+gbpI5VrsqJaaTguXgb/XKW3b/0DC6YTOzn/2Hgt4PtkujI8FDUU
+         6cL4mV+aS4ZfUrsLGQKaVq4S+QuJngrNCeIfRFEi43+4wCG9lmpyb4aroqwdjkZbpxBC
+         k5rfUuqOU0fdHwkVbF7VV1JG2xcVy2ag7QTHAMg723R5NwZhb2NIo3s8JqNNwXRtBH3K
+         yS7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:subject:date:message-id:to:mime-version;
+        bh=KxJMNl6mzKUqhCGZYiYKJGDuH4OnbPNdtDPrsUEDJ5E=;
+        b=hzLy0eQ8XmMo1fXYToj93JU3KAsXM7sYjpyoPlBjFFZ7Wz4CedMNpBUR3TvgB15SzF
+         YToo1Jn2kvkmyTrB6rc3qJsShLVdlT1ztbvoGLKJxytD05SLNV02DtATTnNFvrLyRwis
+         q38arU5OKZJMvYF7mNB/9cTdUiTHKyR7btSnQvA48KXDR2qxxLlPKerEyYZXlHDcW1d3
+         /5SMlce7dFNBv5xetIWAAOlhl3+gtzQh5hn5CYJZZEVtyNsaAXQYPYyKazuWhCKuniD+
+         G9BcFhMAP9NaFEMhmHYcSVpBqHWZiAW8yBrUoSZKJP2l7ZBCQrjlClT101TUg9usSnkc
+         F4tg==
+X-Gm-Message-State: AD7BkJIPGJljGKPMlMyynJsMJccqjFIyREKf5K50E918OMyo4tpuEn7/VW4yInHi/Oa9MA==
+X-Received: by 10.140.104.234 with SMTP id a97mr47599017qgf.57.1458658949366;
+        Tue, 22 Mar 2016 08:02:29 -0700 (PDT)
+Received: from [10.15.0.148] (82-198-216-115.briteline.de. [82.198.216.115])
+        by smtp.googlemail.com with ESMTPSA id w1sm14734123qha.3.2016.03.22.08.02.27
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 22 Mar 2016 08:02:28 -0700 (PDT)
+X-Pgp-Agent: GPGMail 2.5.2
+X-Mailer: Apple Mail (2.2104)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289506>
 
-Hi Lars,
 
-On Thu, 3 Mar 2016, Lars Schneider wrote:
+--Apple-Mail=_1C8D9ADC-9C20-4075-9D76-BDE0CDE165D7
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-> > On 02 Mar 2016, at 18:33, Johannes Sixt <j6t@kdbg.org> wrote:
-> > 
-> > Am 19.02.2016 um 10:16 schrieb larsxschneider@gmail.com:
-> >> +test_expect_success '--show-origin with --list' '
-> >> +	cat >expect <<-EOF &&
-> >> +		file:$HOME/.gitconfig	user.global=true
-> >> +		file:$HOME/.gitconfig	user.override=global
-> >> +		file:$HOME/.gitconfig	include.path=$INCLUDE_DIR/absolute.include
-> > 
-> > On Windows, this injects POSIX-style paths in the expected output, but
-> > git.exe produces mangled paths (with a drive letter). The pattern I
-> > use to fix this is:
-> > 
-> > 		file:$(pwd)/.gitconfig	user.override=global
->
-> OK, I try to fix it that way.
+Hello,
 
-I am trying to make the upgrade of Git for Windows to 2.8.0 less painful
-by rebasing already to -rc4 (and hopefully catching most, if not all,
-problems early). In the course, I encountered this problem and see that it
-is still there.
+I=E2=80=99m running into a nasty issue where =E2=80=9Cgit submodule =
+update =E2=80=94init=E2=80=9D fails if I add =E2=80=9C=E2=80=94quiet=E2=80=
+=9D
 
-However, I also see that the `file:$(pwd)` trick does not work: for some
-reason, my Git's output has quotes around the path, probably because the
-path contains *back*slashes.
+Following you can find the output with GIT_TRACE=3D1:
 
-BTW this points to a larger problem with this test: it will fail if
-anybody is cloning git.git into a directory whose path somehow requires
-quoting.
+WITHOUT --quiet:
 
-So I worked around this with two ugly patches, one that makes sure that
-the backslashes in the values of the environment variables HOME and
-PROGRAMDATA are converted to forward slashes before being used by the
-config machinery, and the other patch being this:
+GIT_TRACE=3D1 git submodule update --init --recursive
+15:51:48.248945 git.c:561               trace: exec: 'git-submodule' =
+'update' '--init' '--recursive'
+15:51:48.249023 run-command.c:334       trace: run_command: =
+'git-submodule' 'update' '--init' '--recursive'
+15:51:48.256626 git.c:344               trace: built-in: git 'rev-parse' =
+'--git-dir'
+15:51:48.258494 git.c:344               trace: built-in: git 'rev-parse' =
+'--git-path' 'objects'
+15:51:48.260406 git.c:344               trace: built-in: git 'rev-parse' =
+'-q' '--git-dir'
+15:51:48.262940 git.c:344               trace: built-in: git 'rev-parse' =
+'--show-prefix'
+15:51:48.264156 git.c:344               trace: built-in: git 'rev-parse' =
+'--show-toplevel'
+15:51:48.266637 git.c:344               trace: built-in: git =
+'submodule--helper' 'list' '--prefix' ''
+15:51:48.268074 git.c:344               trace: built-in: git =
+'submodule--helper' 'name' 'buildroot'
+15:51:48.269913 git.c:344               trace: built-in: git 'config' =
+'submodule.buildroot.url'
+15:51:48.271168 git.c:344               trace: built-in: git 'config' =
+'-f' '.gitmodules' 'submodule.buildroot.update'
+15:51:48.272422 git.c:344               trace: built-in: git =
+'submodule--helper' 'name' 'dl'
+15:51:48.274179 git.c:344               trace: built-in: git 'config' =
+'submodule.dl.url'
+15:51:48.275445 git.c:344               trace: built-in: git 'config' =
+'-f' '.gitmodules' 'submodule.dl.update'
+15:51:48.276779 git.c:344               trace: built-in: git =
+'submodule--helper' 'list' '--prefix' ''
+15:51:48.278362 git.c:344               trace: built-in: git =
+'submodule--helper' 'name' 'buildroot'
+15:51:48.279819 git.c:344               trace: built-in: git 'config' =
+'submodule.buildroot.url'
+15:51:48.281192 git.c:344               trace: built-in: git 'config' =
+'submodule.buildroot.branch'
+15:51:48.282473 git.c:344               trace: built-in: git 'config' =
+'-f' '.gitmodules' 'submodule.buildroot.branch'
+15:51:48.283788 git.c:344               trace: built-in: git 'config' =
+'submodule.buildroot.update'
+15:51:48.285269 git.c:344               trace: built-in: git =
+'submodule--helper' 'clone' '--prefix' '' '--path' 'buildroot' '--name' =
+'buildroot' '--url' 'git://git.busybox.net/buildroot' '' ''
+15:51:48.285337 run-command.c:334       trace: run_command: 'clone' =
+'--no-checkout' '--separate-git-dir' '.git/modules/buildroot' =
+'git://git.busybox.net/buildroot' 'buildroot'
+15:51:48.285687 exec_cmd.c:120          trace: exec: 'git' 'clone' =
+'--no-checkout' '--separate-git-dir' '.git/modules/buildroot' =
+'git://git.busybox.net/buildroot' 'buildroot'
+15:51:48.286453 git.c:344               trace: built-in: git 'clone' =
+'--no-checkout' '--separate-git-dir' '.git/modules/buildroot' =
+'git://git.busybox.net/buildroot' 'buildroot'
+Cloning into 'buildroot'...
+15:51:49.177856 run-command.c:334       trace: run_command: 'index-pack' =
+'--stdin' '-v' '--fix-thin' '--keep=3Dfetch-pack 15895 on =
+bre-build-linux' '--check-self-contained-and-connected'
+15:51:49.178244 exec_cmd.c:120          trace: exec: 'git' 'index-pack' =
+'--stdin' '-v' '--fix-thin' '--keep=3Dfetch-pack 15895 on =
+bre-build-linux' '--check-self-contained-and-connected'
+15:51:49.179806 git.c:344               trace: built-in: git =
+'index-pack' '--stdin' '-v' '--fix-thin' '--keep=3Dfetch-pack 15895 on =
+bre-build-linux' '--check-self-contained-and-connected'
+remote: Counting objects: 200277, done.
+remote: Compressing objects: 100% (62420/62420), done.
+...
 
--- snip --
-[PATCH] t1300: fix the new --show-origin tests on Windows
+WITH --quite:
 
-On Windows, we have that funny situation where the test script can refer
-to POSIX paths because it runs in a shell that uses a POSIX emulation
-layer ("MSYS2 runtime"). Yet, git.exe does *not* understand POSIX paths
-at all but only pure Windows paths.
+GIT_TRACE=3D1 git submodule update --init --recursive --quiet
+15:52:26.900568 git.c:561               trace: exec: 'git-submodule' =
+'update' '--init' '--recursive' '--quiet'
+15:52:26.900652 run-command.c:334       trace: run_command: =
+'git-submodule' 'update' '--init' '--recursive' '--quiet'
+15:52:26.907761 git.c:344               trace: built-in: git 'rev-parse' =
+'--git-dir'
+15:52:26.909877 git.c:344               trace: built-in: git 'rev-parse' =
+'--git-path' 'objects'
+15:52:26.911766 git.c:344               trace: built-in: git 'rev-parse' =
+'-q' '--git-dir'
+15:52:26.914279 git.c:344               trace: built-in: git 'rev-parse' =
+'--show-prefix'
+15:52:26.915488 git.c:344               trace: built-in: git 'rev-parse' =
+'--show-toplevel'
+15:52:26.917983 git.c:344               trace: built-in: git =
+'submodule--helper' 'list' '--prefix' ''
+15:52:26.919504 git.c:344               trace: built-in: git =
+'submodule--helper' 'name' 'buildroot'
+15:52:26.921244 git.c:344               trace: built-in: git 'config' =
+'submodule.buildroot.url'
+15:52:26.922619 git.c:344               trace: built-in: git 'config' =
+'-f' '.gitmodules' 'submodule.buildroot.update'
+15:52:26.923888 git.c:344               trace: built-in: git =
+'submodule--helper' 'name' 'dl'
+15:52:26.925650 git.c:344               trace: built-in: git 'config' =
+'submodule.dl.url'
+15:52:26.926892 git.c:344               trace: built-in: git 'config' =
+'-f' '.gitmodules' 'submodule.dl.update'
+15:52:26.928230 git.c:344               trace: built-in: git =
+'submodule--helper' 'list' '--prefix' ''
+15:52:26.929709 git.c:344               trace: built-in: git =
+'submodule--helper' 'name' 'buildroot'
+15:52:26.931220 git.c:344               trace: built-in: git 'config' =
+'submodule.buildroot.url'
+15:52:26.932597 git.c:344               trace: built-in: git 'config' =
+'submodule.buildroot.branch'
+15:52:26.933867 git.c:344               trace: built-in: git 'config' =
+'-f' '.gitmodules' 'submodule.buildroot.branch'
+15:52:26.935170 git.c:344               trace: built-in: git 'config' =
+'submodule.buildroot.update'
+15:52:26.936660 git.c:344               trace: built-in: git =
+'submodule--helper' 'clone' '--quiet' '--prefix' '' '--path' 'buildroot' =
+'--name' 'buildroot' '--url' 'git://git.busybox.net/buildroot' '' ''
+15:52:26.936732 run-command.c:334       trace: run_command: 'clone' =
+'--no-checkout' '--quiet' '--separate-git-dir' '.git/modules/buildroot' =
+'git://git.busybox.net/buildroot' 'buildroot'
+15:52:26.936965 exec_cmd.c:120          trace: exec: 'git' 'clone' =
+'--no-checkout' '--quiet' '--separate-git-dir' '.git/modules/buildroot' =
+'git://git.busybox.net/buildroot' 'buildroot'
+15:52:26.937803 git.c:344               trace: built-in: git 'clone' =
+'--no-checkout' '--quiet' '--separate-git-dir' '.git/modules/buildroot' =
+'git://git.busybox.net/buildroot' 'buildroot'
+15:52:27.958503 run-command.c:334       trace: run_command: 'index-pack' =
+'--stdin' '--fix-thin' '--keep=3Dfetch-pack 15936 on bre-build-linux' =
+'--check-self-contained-and-connected'
+15:52:27.958870 exec_cmd.c:120          trace: exec: 'git' 'index-pack' =
+'--stdin' '--fix-thin' '--keep=3Dfetch-pack 15936 on bre-build-linux' =
+'--check-self-contained-and-connected'
+15:52:27.960447 git.c:344               trace: built-in: git =
+'index-pack' '--stdin' '--fix-thin' '--keep=3Dfetch-pack 15936 on =
+bre-build-linux' '--check-self-contained-and-connected'
+fatal: The remote end hung up unexpectedly
+fatal: early EOF
+fatal: index-pack failed
+fatal: clone of 'git://git.busybox.net/buildroot' into submodule path =
+'buildroot' failed
 
-So let's just convert the POSIX paths to Windows paths before passing
-them on to Git, using MSYS2's `cygpath` utility.
+---------
+git --version
+git version 2.7.4
 
-While fixing the new tests on Windows, we also have to exclude the tests
-that want to write a file with a name that is illegal on Windows
-(unfortunately, there is more than one test trying to make use of that
-file).
+Any help in tracking down the reason for this would be greatly =
+appreciated.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t1300-repo-config.sh | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+Thanks,
+Marcus
 
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 73afbf7..93f9065 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -1232,6 +1232,14 @@ test_expect_success 'set up --show-origin tests' '
- 	EOF
- '
- 
-+if test_have_prereq MINGW
-+then
-+	HOME="$(cygpath -m "$HOME")"
-+	INCLUDE_DIR="$(cygpath -m "$INCLUDE_DIR")"
-+	export HOME INCLUDE_DIR
-+	git config -f .gitconfig include.path
-"$INCLUDE_DIR/absolute.include"
-+fi
-+
- test_expect_success '--show-origin with --list' '
- 	cat >expect <<-EOF &&
- 		file:$HOME/.gitconfig	user.global=true
-@@ -1304,7 +1312,7 @@ test_expect_success 'set up custom config file' '
- 	EOF
- '
- 
--test_expect_success '--show-origin escape special file name characters' '
-+test_expect_success !MINGW '--show-origin escape special file name
-characters' '
- 	cat >expect <<-\EOF &&
- 		file:"file\" (dq) and spaces.conf"	user.custom=true
- 	EOF
-@@ -1333,7 +1341,7 @@ test_expect_success '--show-origin stdin with file
-include' '
- 	test_cmp expect output
- '
- 
--test_expect_success '--show-origin blob' '
-+test_expect_success !MINGW '--show-origin blob' '
- 	cat >expect <<-\EOF &&
- 		blob:a9d9f9e555b5c6f07cbe09d3f06fe3df11e09c08
-user.custom=true
- 	EOF
-@@ -1342,7 +1350,7 @@ test_expect_success '--show-origin blob' '
- 	test_cmp expect output
- '
- 
--test_expect_success '--show-origin blob ref' '
-+test_expect_success !MINGW '--show-origin blob ref' '
- 	cat >expect <<-\EOF &&
- 		blob:"master:file\" (dq) and spaces.conf"
-user.custom=true
- 	EOF
--- 
-2.7.4.windows.1
--- snap --
 
-> Thanks for making me aware of the Windows problems. I can reproduce them
-> with the Git for Windows SDK (super easy to setup, great work Dscho!)
-> and I will try to fix them.
+--Apple-Mail=_1C8D9ADC-9C20-4075-9D76-BDE0CDE165D7
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
 
-Good that you find it easy to set up the SDK. I poured quite the effort
-into making it easy.
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - https://gpgtools.org
 
-I fixed them here and will push the changes out shortly. I imagine that
-Hannes will scream murder when he finds out that I used the `cygpath`
-utility that his MSys environment lacks. Maybe I can prod him into fixing
-my patch in a way that is compatible with that environment.
+iQEcBAEBCgAGBQJW8V6BAAoJEK5MaPYXd0Y0D5MIAM0iBjZ8161AJ/Y+ORGSLet0
+tnkbb1yIYj36evxE+Vbwh1GGPVCbonsinEsODsgqRbKLkFuPP0RiS3u7X40Z9F3u
+W5GfyVazzmd66LVI/MZVDiMRIMY3VmVDrOZc5dLpNWqutc5+eThF3AOE8t4AQkmw
+TOYmwgnx6PgeUhtBZgjjEiEOEe8s/Gqmvb7XkLvsyWRmzHKFQhopjkuTb530ffcx
+blBm/WGRQrSjgZoAAPJ7AN6/68nHSaGRW3uDOJUoCOYvx3cpJS0+e4B61VRCKYis
+L9DYBEkQIooArmDsnaFYjiLvRYClFipoUiiPuYGGLixqR6tS3k/rexbvchWoOaM=
+=x8eG
+-----END PGP SIGNATURE-----
 
-> I am fairly new to the Git for Windows SDK (+ an inexperienced Windows
-> user) and therefore I wonder if you can help me with the following
-> questions:
-> 
-> (1) If I have a Git core branch with a some changes that builds and
-> tests clean on Linux and OSX. How do I apply all the necessary Git for
-> Windows specific changes to this branch?
-
-Happily, my patch series that introduce support for building Git in the
-Git for Windows SDK (or for that matter, building MINGW Git with MSYS2)
-made it into 2.8.0-rc0. So there is not really any need any longer to
-apply any patches to make the test suite pass.
-
-> (2) During my testing with Windows I noticed that the git config paths
-> look funny by adding  ("\\" and "/"). I mentioned the problem in the Git
-> for Windows forum:
-> https://groups.google.com/forum/#!topic/git-for-windows/zTv60HhfnYk
-> Duy suggested a solution in that thread. Is this the default way to deal
-> with the paths? Would the list accept this solution?
-
-The proposed solution looks very klunky to me. I went with a much less
-intrusive version (the first patch I mentioned above):
-
--- snip --
-[PATCH] config --show-origin: report paths with forward slashes
-
-On Windows, the backslash is the native directory separator, but all
-supported Windows versions also accept the forward slash in most
-circumstances.
-
-Our tests expect forward slashes.
-
-Relative paths are generated by Git using forward slashes.
-
-So let's try to be consistent and use forward slashes in the $HOME and
-the $PROGRAMDATA part of the paths reported by `git config
---show-origin`, too.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- compat/mingw.c | 4 +++-
- compat/mingw.h | 6 ++++++
- path.c         | 3 +++
- 3 files changed, 12 insertions(+), 1 deletion(-)
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index d64f41c..74f7c99 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2808,8 +2808,10 @@ const char *program_data_config(void)
- 			env = mingw_getenv("ALLUSERSPROFILE");
- 			extra = "/Application Data";
- 		}
--		if (env)
-+		if (env) {
- 			strbuf_addf(&path, "%s%s/Git/config", env, extra);
-+			convert_slashes(path.buf);
-+		}
- 		initialized = 1;
- 	}
- 	return *path.buf ? path.buf : NULL;
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 7e33b83..aa989e3 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -433,6 +433,12 @@ static inline char *mingw_find_last_dir_sep(const
-char *path)
- 			ret = (char *)path;
- 	return ret;
- }
-+static inline void convert_slashes(char *path)
-+{
-+	for (; *path; path++)
-+		if (*path == '\\')
-+			*path = '/';
-+}
- #define find_last_dir_sep mingw_find_last_dir_sep
- int mingw_offset_1st_component(const char *path);
- #define offset_1st_component mingw_offset_1st_component
-diff --git a/path.c b/path.c
-index c4d8d21..a1ce940 100644
---- a/path.c
-+++ b/path.c
-@@ -589,6 +589,9 @@ char *expand_user_path(const char *path)
- 			if (!home)
- 				goto return_null;
- 			strbuf_addstr(&user_path, home);
-+#ifdef GIT_WINDOWS_NATIVE
-+			convert_slashes(user_path.buf);
-+#endif
- 		} else {
- 			struct passwd *pw = getpw_str(username,
-username_len);
- 			if (!pw)
--- 
-2.7.4.windows.1
--- snap --
-
-> (3) The tests on Windows seemed very slow to me. Are there tricks to
-> speed them up? Did you try a RAM disk? If yes, how do you do it?
-
-The tests *do* run very slowly on Windows. The reason is that the test
-suite makes extensive use of POSIX tools, and they all have to run through
-the POSIX emulation layer.
-
-To make it utterly clear how much of a difference this makes: on my work
-machine, the test suite requires about 45 minutes to run in up to 15
-parallel processes on Windows. On the same machine, in a Linux VM, with
-only up to 5 parallel processes, the same Git version's test suite passes
-in less than 4 minutes.
-
-So yes, running the test suite on Windows is unbearably slow.
-
-What can you do to speed them up?
-
-Hannes mentioned a couple of tricks.
-
-Another trick is: avoid running the tests you do not even need. For
-example, if you comment out all tests in t1300 from the second one until
-the one before the one that sets up the show-origin tests, you can run the
-relevant tests much, much faster.
-
-Also, testing with GIT_TEST_INSTALLED is faster because it avoids one
-(POSIX emulation layer incurring) redirection.
-
-I still want to find time to make Git for Windows work with dash instead
-of Bash (if I am not mistaken, dash has a much more native way to execute
-programs, avoiding the POSIX emulation layer altogether).
-
-And of course all of the work to convert the scripts into truly portable C
-code also will help.
-
-Ciao,
-Dscho
+--Apple-Mail=_1C8D9ADC-9C20-4075-9D76-BDE0CDE165D7--
