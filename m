@@ -1,8 +1,8 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 2/4] Make t1300-repo-config resilient to being run via 'sh
- -x'
-Date: Tue, 22 Mar 2016 18:42:49 +0100 (CET)
-Message-ID: <b4df45088aa68d8410895f66a814dd6780e2e451.1458668543.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 4/4] mingw: skip some tests in t9115 due to file name
+ issues
+Date: Tue, 22 Mar 2016 18:43:00 +0100 (CET)
+Message-ID: <7b4eca83305ec05af6434ff80269ba563f2d581d.1458668543.git.johannes.schindelin@gmx.de>
 References: <cover.1458668543.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -11,88 +11,78 @@ Cc: git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
 	Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>,
 	Eric Wong <normalperson@yhbt.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 22 18:43:11 2016
+X-From: git-owner@vger.kernel.org Tue Mar 22 18:43:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiQKj-0003FW-8d
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 18:43:09 +0100
+	id 1aiQKq-0003KE-Vj
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 18:43:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756107AbcCVRnF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2016 13:43:05 -0400
-Received: from mout.gmx.net ([212.227.17.22]:56760 "EHLO mout.gmx.net"
+	id S1756479AbcCVRnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 13:43:11 -0400
+Received: from mout.gmx.net ([212.227.17.22]:59653 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753146AbcCVRnD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 13:43:03 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MHokD-1alSCM3XVV-003bXH; Tue, 22 Mar 2016 18:42:51
+	id S1756401AbcCVRnK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 13:43:10 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MfjJY-1aNbhB0Uaa-00NAi6; Tue, 22 Mar 2016 18:43:01
  +0100
 X-X-Sender: virtualbox@virtualbox
 In-Reply-To: <cover.1458668543.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:TyYhwOiCNhpyelGq5m/uglPfdhfwgZ1w/f/hOj862QANRgv6597
- XGfhUsUlV+XiQXAO7qVCcA5IskaF5Zq8F6zD7DPIRGn1wqQKqygEuYqSTAfyWnwQU0fEA6p
- YdQRw0grZWqI6VQzWyHU5ShcMp1CrB0r6OIoTQ7xl5PlVJ3xkFdEHALmmFSwE5n82/L8FqF
- In2sp/0Mz8Bmcv+kEK6fw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:DWTaLT/+L4U=:60M1HCaYbV7UHxaR1vtuZl
- 2FuD4pXSH57l4UMdAGyERCjz/sgmgSuKhsy6M3fgpZr5u68tldAnVT47bu5JnUzJL1pP7GjWn
- dod3e+S5iiJqrBrraN4OyPnSvCtTS0ezFotBn6zxOAvo6kfaawnC3NC9ijadioS6S+tdZX8zl
- I44ielCgMg8Nyj+WfoVWbJ5jaunFNLSRh8MBEI660c9WfFHSpZnNlKTqoxnFdDNpKMKB8xR4B
- NHvX8YMutBvPz0YSGjhSx6nz/1Js7r52iRqEoW1EgPRYK1rDEt9jy5y6PKGSiswSWjRlPUkBB
- 34EakTuRCiEUJi/iwsBtUQ6rn6PaA10sVn7CQbfUkE5zU3C2JrmJ+wga9NcDtsm2tMGUtON//
- SV6V4aanql/g8S4YXMIvOtrzA1dC8uFiysG3ANJiM/iP/OnlGAG8hZ3TLzTfnYny9cN81fshk
- y1i7syMPVioIezmttYE9VSKbdD0gNyyLW7IpLBbwFysISxDd+53CXZ+BNEB6rNsUnpf4+YFSa
- Y7CY2n8lMBc7ZckM0+FhPzdTnV2UpqRX1pAOTMlTKdp4d48xbi6fJycZJCvuuJJFrSsmqsd8E
- AUiK7DCuc+VXSrBVk2CySPuMHkduLWMNSnsLigX47Z8OLbMJ+bjCXEqdjprQeqZIV8yGHFGwq
- 5o9A69MprYS3Nv0SA7ibM1PFJG8vSQaODVPbcuCV7PC6/dEETb5051NK7FmGmMrTonQFNl1UG
- XGct7khsA6zuwGpR4mJaaR1tshUGwhgAKKgfsw0PiVf/EAbobKOeDWr/4TI02PO0s+F6Q7tp 
+X-Provags-ID: V03:K0:LelPSPMzWJxKq/47rqAa4I9ZpWUZz0hMwi4W22SNggboIWI+YN9
+ BnE5LIx8N9MnHiHftbVid7j3VkLx+pjhPmJwl3lQS816NKsieLt/q0dn7X5cx/hSDZr24Dz
+ /1EUzdU6yxj9xoCMiR1mJU//BrC2dksVfxqNShubrQYTKmLc/UnZG6cg/LNJqVOrhG0EXCD
+ o2R9sMv+TK6U75wFGACEw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:gNAD3MG6Ui4=:Uo3ohj69ejw/biW7YKHHoE
+ C2XN9WZMG3t56xXmX531uML+3sWLurPhfwpNIlB+U++E3oUAvgLgnYHGqmZkpjFq8lesVM+1H
+ cEHqA0+CugTwX/XAalv8IJs93iPLOL3wJv3YLHWvSyKxFB01+0I5mrJqqDWZZWw9VHa+e8N52
+ /Cds5MOHl8ZWPPVuLdHgQT86F+XL57CB0cFRNF9VRb9nEtNfPHLkKcSRVDpVHNuSpe+9mytjP
+ /oG9jA8cyY/BfVJS4G5FRqGvRRqBBzREckI2U+867fL9kwAG37eW4slB4f6NywEGvrds7Gi08
+ /DzD1KQMuAZxo796VGjDATVeUrmTwaA0IhJh2G1SDKv/cijB2IsIb0s+s8Q8Es7SlcjIA7bb8
+ tfP/vzC+dzJvNdl1iM1s3g3kg4Tja1HNRJfhP2z30+jDyWz3shdwJl7Z944z9b/eFZTa5Atr5
+ nQjUwJRjJdGBaCsCXJKRnfxGxxeCdMSYTDiqU5lHQFHEYLSXo7EF3Qz9ZdsTlr5E3Jal/Reeg
+ Wx2JvcW0idpb01zbwMkJlISt9dM6bt5yKKvufqrOrzHWACvuQ4bgM0wNHZvDOmImbcSVbag4a
+ n3f2xzO6F5PmmLWWy5vaR93sWy08vJX/eKzXzZwPrT6cObdGT2/4oqZcwXnEjH+b1i5X6cqLh
+ RIr5m8Wz8+95GZJ+WAsNOC1ANOQkIFTG3BTKZaysxqk7wED9+YAieeQ7aZEczTXeKjBB/PpxL
+ Ve/gOObChTQ9LoFMnhCPpoL8asNaSY7DTmYCnc8mpJ3QjQ4J00UKNfSq/UR9KMVtdGYGX9ln 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289525>
 
-One of this developer's primary tools to diagnose broken regression
-tests is to run the test script using 'sh -x t... -i -v' to find out
-*which* call *actually* demonstrates the symptom.
-
-Hence it is pretty counterproductive if the test script behaves
-differently when being run via 'sh -x', in particular when using
-test_cmp or test_i18ncmp on redirected stderr.
-
-So let's use grep instead of test_cmp/test_i18ncmp to verify that stderr
-looks as expected.
+These two tests wanted to write file names which are incompatible with
+Windows' file naming rules.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t1300-repo-config.sh | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ t/t9115-git-svn-dcommit-funky-renames.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 8867ce1..0236fe2 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -699,17 +699,13 @@ test_expect_success 'invalid unit' '
- 	echo 1auto >expect &&
- 	git config aninvalid.unit >actual &&
- 	test_cmp expect actual &&
--	cat >expect <<-\EOF &&
--	fatal: bad numeric config value '\''1auto'\'' for '\''aninvalid.unit'\'' in file .git/config: invalid unit
--	EOF
- 	test_must_fail git config --int --get aninvalid.unit 2>actual &&
--	test_i18ncmp expect actual
-+	grep "^fatal: bad numeric config value .1auto. for .aninvalid.unit. in file .git/config: invalid unit$" actual
+diff --git a/t/t9115-git-svn-dcommit-funky-renames.sh b/t/t9115-git-svn-dcommit-funky-renames.sh
+index 0990f8d..864395e 100755
+--- a/t/t9115-git-svn-dcommit-funky-renames.sh
++++ b/t/t9115-git-svn-dcommit-funky-renames.sh
+@@ -93,7 +93,7 @@ test_expect_success 'git svn rebase works inside a fresh-cloned repository' '
+ # > to special UNICODE characters in the range 0xf000 to 0xf0ff (the
+ # > "Private use area") when creating or accessing files.
+ prepare_a_utf8_locale
+-test_expect_success UTF8 'svn.pathnameencoding=cp932 new file on dcommit' '
++test_expect_success UTF8,!MINGW 'svn.pathnameencoding=cp932 new file on dcommit' '
+ 	LC_ALL=$a_utf8_locale &&
+ 	export LC_ALL &&
+ 	neq=$(printf "\201\202") &&
+@@ -105,7 +105,7 @@ test_expect_success UTF8 'svn.pathnameencoding=cp932 new file on dcommit' '
  '
  
- test_expect_success 'invalid stdin config' '
--	echo "fatal: bad config line 1 in standard input " >expect &&
- 	echo "[broken" | test_must_fail git config --list --file - >output 2>&1 &&
--	test_cmp expect output
-+	grep "^fatal: bad config line 1 in standard input $" output
- '
- 
- cat > expect << EOF
+ # See the comment on the above test for setting of LC_ALL.
+-test_expect_success 'svn.pathnameencoding=cp932 rename on dcommit' '
++test_expect_success !MINGW 'svn.pathnameencoding=cp932 rename on dcommit' '
+ 	LC_ALL=$a_utf8_locale &&
+ 	export LC_ALL &&
+ 	inf=$(printf "\201\207") &&
 -- 
 2.7.4.windows.1
