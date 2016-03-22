@@ -1,138 +1,84 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [RFC_PATCHv4 7/7] WIP status/diff: respect submodule.actionOnLabel
-Date: Mon, 21 Mar 2016 19:06:12 -0700
-Message-ID: <1458612372-10966-8-git-send-email-sbeller@google.com>
-References: <1458612372-10966-1-git-send-email-sbeller@google.com>
-Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-To: Jens.Lehmann@web.de, sschuberth@gmail.com
-X-From: git-owner@vger.kernel.org Tue Mar 22 03:06:46 2016
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] bisect--helper: convert a function in shell to C
+Date: Tue, 22 Mar 2016 07:10:37 +0100
+Message-ID: <CAP8UFD0tSffjJJ-kDdN6aWC6bTP3LJWjtAAFP-1s0qVH_wVx1g@mail.gmail.com>
+References: <010201539a8d2b8a-9f168d7a-d4c6-4c23-a61f-1ef6ee22f774-000000@eu-west-1.amazonses.com>
+	<CAGZ79kZveu07h_vERFpJekp4ayJwytwoNVG0LbhiaCnt4u-jRw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Pranit Bauva <pranit.bauva@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 07:10:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiBiX-0000nu-Oq
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 03:06:46 +0100
+	id 1aiFWh-0007x2-KG
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 07:10:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758229AbcCVCGi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Mar 2016 22:06:38 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:34381 "EHLO
-	mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753978AbcCVCGe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Mar 2016 22:06:34 -0400
-Received: by mail-pf0-f174.google.com with SMTP id x3so287823277pfb.1
-        for <git@vger.kernel.org>; Mon, 21 Mar 2016 19:06:34 -0700 (PDT)
+	id S1751174AbcCVGKk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 02:10:40 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:35593 "EHLO
+	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751111AbcCVGKj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 02:10:39 -0400
+Received: by mail-wm0-f52.google.com with SMTP id l68so137147800wml.0
+        for <git@vger.kernel.org>; Mon, 21 Mar 2016 23:10:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=W8HA/MK2PdPUPhVRJpX5Dw04Un2QyKFRyiAnwgLFQuo=;
-        b=PiXI8LnuLuL5oksGmVtm9cU9tJPvcVwZuZff0RGvXch6g15iiGu0vLo6k4appJ4n9Q
-         5nx4yPuko+WW3FV78sPYOPCr0cp6dplM7lYjZrzRpzb+GK6Y/vmjk/fx0BLSoAZ8kAOD
-         i1OZCvyGRegG7QeyVNERK6QZBLvQoj1hlySUHEZaPoVL/4AyLPfn2LXu5GKVl+yPqFyv
-         MNiHmenFwfv5qFRRpqzJtLXVTbczfEWMhv3/riQjCWHeg3F03AhWNnx6qnO/2HldsxO5
-         f0F0t8U3EFkGJSNRI1+sOVnPU3uXNtx9yVfr4lazkyZ55NRlPjZRElEkK0RYJdaGn53p
-         IV5Q==
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=kHCeDPg2AB0D4+3dZxCuIXiw5BDReODHG3X91RyE9Ds=;
+        b=M+Qq2oKpUfKRdGXF/giR1A2AINS4hNVDIl1dVuVdjYlo7mHBA2QcntDup3jAn2Q6ql
+         yP8OKn6ZBZOmRR+hcAz7xTx3tjDTh9Mt1sPkG8vb0BvGYQGGQ7Ad+u69UofM0lE8og1Q
+         lmrKQ5KJ38XuXXjs4MhkFyy+wMMkAIPQ2ADuYXyj6BYiLbtGSPgvLL6rTcADI++/8LJ3
+         nNXEvV8aNQ7UAXPrYDgIUyuEd+lxLv9SxuH2eCFG7G75Fq235hvy61btVlXl6Z3mcUBv
+         QqgfMhqg9JukmwGmjh7r7wWxuZW1S1Qtqg1WxqYYr+0wTBB0n975k7BdL6rChhAgS7Q6
+         gHNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=W8HA/MK2PdPUPhVRJpX5Dw04Un2QyKFRyiAnwgLFQuo=;
-        b=lfRjAgIZiTBHe6zH/I9Jw0H2kzUY5gQ06k2iah3osziVBROh2EfaAK0Tm2eE+JH3g8
-         3hNI6KKJ/tQ+TXKU7KHg1rMieDRMeoC9o+VLOZX0Mq6s44DhkwZGWSijDvQ/iLDDpawG
-         qd4/FyLV2NnwRtLkFcyJ4GzwDoGn8pk+WpvHNhnjAgTjfhlKFEXQWFhQsgSQW4QnfqXa
-         u7O4qydg8OLF5jwADfRXP7SbjV0H95UghRRlwhzBXU9j2YxMXa7uCWC29q+lM0PJqm5m
-         f2oHZ1pr+YKO8GIUYUJHR+qr5I5F4pV/vCJr6SpXV27zwZlIS1mMaBUFZtHHMGcIwFrh
-         PAyA==
-X-Gm-Message-State: AD7BkJJZ1KF0h2Lcp8O6vMB7EVQ6WgavoXB0UlFYXJ6QB4NjoW0IqZfT2KIRgw59YQSaMSeh
-X-Received: by 10.98.10.136 with SMTP id 8mr50481588pfk.67.1458612393609;
-        Mon, 21 Mar 2016 19:06:33 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:f1b0:8994:3428:87f7])
-        by smtp.gmail.com with ESMTPSA id ql1sm43667996pac.24.2016.03.21.19.06.32
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 21 Mar 2016 19:06:32 -0700 (PDT)
-X-Mailer: git-send-email 2.7.0.rc0.45.g6b4c145
-In-Reply-To: <1458612372-10966-1-git-send-email-sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=kHCeDPg2AB0D4+3dZxCuIXiw5BDReODHG3X91RyE9Ds=;
+        b=ajnYBclDSilWRZXhKcWZku5kjWdMdCUwcFQMb2oXl683c7+MZEFxCWWQmKKzeyrH7z
+         3iIW9mhL09vhjBoOfYLPoISfu6AV5KfYOnjvL4fZBB+qA7sQSJlKxIRocOFlmyFLfviL
+         tqfvvPtXIQWNmINbcKl6y4M7tPsrCVaWf+GKtReK0HWHmnjtjc4GvYaUo7o3S94TIgvI
+         RzdFZk5ZuLImi7MEIIjonMnzgx3f64O8N8W5fstfWr7CgQnTrmSTyvAb2b9J4uaNdlku
+         1tijIT7qSuGC4BYVcBFw6ga/VL51j5F2pY4TvFEIIfmJazSp4lOJy3y5HmkKDhPH3dKp
+         hwOg==
+X-Gm-Message-State: AD7BkJLZaDRokgO/H9avPNXM8/q/gCO8eJdhTGuKeb0rhO/Na3Ufy1a2cpsW1/wN6hIq2uMR5uf/yI40b/pGmg==
+X-Received: by 10.28.180.9 with SMTP id d9mr18897628wmf.62.1458627037670; Mon,
+ 21 Mar 2016 23:10:37 -0700 (PDT)
+Received: by 10.194.151.131 with HTTP; Mon, 21 Mar 2016 23:10:37 -0700 (PDT)
+In-Reply-To: <CAGZ79kZveu07h_vERFpJekp4ayJwytwoNVG0LbhiaCnt4u-jRw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289487>
 
-When 'submodule.actionOnLabel' is set, submodules which are selected by
-a label will be inspected in status and diff. If a submodule is not
-selected, it is ignored.
+On Tue, Mar 22, 2016 at 1:28 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Mon, Mar 21, 2016 at 12:00 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>> Convert the code literally without changing its design even though it
+>> seems that its obscure as to the use of comparing revision to different bisect
+>> arguments which seems like a problem in shell because of the way
+>> function arguments are handled.
+>
+> How would I use the C version instead of the shell version now?
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- submodule.c                | 15 +++++++++++++++
- t/t7400-submodule-basic.sh | 13 +++++++++++++
- 2 files changed, 28 insertions(+)
+Hint: one can look at how other functions in builtin/bisect--helper.c are used.
 
-diff --git a/submodule.c b/submodule.c
-index 458189c..86c0a49 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -20,6 +20,8 @@ static struct string_list changed_submodule_paths;
- static int initialized_fetch_ref_tips;
- static struct sha1_array ref_tips_before_fetch;
- static struct sha1_array ref_tips_after_fetch;
-+static struct string_list action_labels = STRING_LIST_INIT_DUP;
-+static int use_action_labels;
- 
- /*
-  * The following flag is set if the .gitmodules file is unmerged. We then
-@@ -161,10 +163,20 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
- {
- 	const struct submodule *submodule = submodule_from_path(null_sha1, path);
- 	if (submodule) {
-+		char *ignoreMode;
- 		if (submodule->ignore)
- 			handle_ignore_submodules_arg(diffopt, submodule->ignore);
- 		else if (gitmodules_is_unmerged)
- 			DIFF_OPT_SET(diffopt, IGNORE_SUBMODULES);
-+
-+		if (!use_action_labels)
-+			return;
-+
-+		if (submodule_applicable_by_labels(&action_labels, submodule))
-+			ignoreMode = "none";
-+		else
-+			ignoreMode = "all";
-+		handle_ignore_submodules_arg(diffopt, ignoreMode);
- 	}
- }
- 
-@@ -175,6 +187,9 @@ int submodule_config(const char *var, const char *value, void *cb)
- 		if (parallel_jobs < 0)
- 			die(_("negative values not allowed for submodule.fetchJobs"));
- 		return 0;
-+	} else if (!strcmp(var, "submodule.actiononlabel")) {
-+		use_action_labels = 1;
-+		string_list_append(&action_labels, value);
- 	} else if (starts_with(var, "submodule."))
- 		return parse_submodule_config_option(var, value);
- 	else if (!strcmp(var, "fetch.recursesubmodules")) {
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 58da5c4..52ea3c6 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -1281,4 +1281,17 @@ test_expect_success 'clone and subsequent updates correctly auto-initialize subm
- 	test_cmp actual expected2
- '
- 
-+test_expect_success 'status ignores unlabeled submodules' '
-+	# Add submodules with and without label
-+	# perform a change on disk
-+	# observe the change indicated by git status
-+	# the submodule not in the label system is ignored.
-+	true && true
-+'
-+
-+test_expect_success 'diff applies to action-on-label selection' '
-+	# similar to status
-+	true && true
-+'
-+
- test_done
--- 
-2.7.0.rc0.45.g6b4c145
+> I'd imagine you'd want to change calls in git-bisect.sh from
+>     check_term_format <term> <bad/new>
+> to be:
+>     git bisect--helper check_term_format <term> <bad/new>
+
+Hint: to get a good idea of how the call should be, one can look at
+the way "git-bisect.sh" already calls "git bisect--helper".
+
+> and "git bisect--helper" would then call the new static method?
+> Once you have the C version working (do we need additional tests
+> or can we rely on the test suite being enough for now?),
+> you can also delete the shell version.
