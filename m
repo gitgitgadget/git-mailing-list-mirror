@@ -1,154 +1,139 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [ANNOUNCE] Git v2.8.0-rc2
-Date: Tue, 22 Mar 2016 11:00:39 +0100
-Message-ID: <56F117C7.2030900@drmicha.warpmail.net>
-References: <xmqqr3fiaq9f.fsf@gitster.mtv.corp.google.com>
- <56E6D8C4.2010205@drmicha.warpmail.net>
- <xmqqoaahaw99.fsf@gitster.mtv.corp.google.com>
- <xmqqziu19cjz.fsf@gitster.mtv.corp.google.com>
- <56E96096.4020108@drmicha.warpmail.net>
- <CANYiYbFa5i-E0dYYj2dm4pHmQwLJfj3UBc3OspQz93HTP3C3Ng@mail.gmail.com>
- <CAA19uiSUV0C=WQAhgum9MM8r8NixMF8O0XOFxzywSJtBEcGNmQ@mail.gmail.com>
- <xmqqr3f3lhvw.fsf@gitster.mtv.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2] branch -D: allow - as abbreviation of '@{-1}'
+Date: Tue, 22 Mar 2016 11:00:40 +0100
+Message-ID: <vpqegb2omrb.fsf@anie.imag.fr>
+References: <1458635056-26633-1-git-send-email-elena.petrashen@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Ralf Thielow <ralf.thielow@googlemail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 22 11:00:47 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
+	sbeller@google.com
+To: Elena Petrashen <elena.petrashen@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 11:00:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiJ7H-0001HU-0M
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 11:00:47 +0100
+	id 1aiJ7N-0001Ke-CR
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 11:00:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758357AbcCVKAo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2016 06:00:44 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:37972 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758463AbcCVKAl (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Mar 2016 06:00:41 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id BB5BD20BA8
-	for <git@vger.kernel.org>; Tue, 22 Mar 2016 06:00:40 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute6.internal (MEProxy); Tue, 22 Mar 2016 06:00:40 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=L/0x0L9rAbJoxdgnxtcxH1gWP6M=; b=njqBwS
-	zbHodSknIzqPFEp1vOdXZYqkqMKLp5Yhj97//EO6RR0zgjAjNqORZ9uo5KO/Vh+B
-	NKg6yeRfpu6+ZGuscHaNvfDb7Z6IozzWVHDRNeEpk4ZfRf5JnApoZ22kAksnM+q7
-	EjhP/7XPaVNKg9oemGowbxxLw6ZUm95VyDR9U=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=L/0x0L9rAbJoxdg
-	nxtcxH1gWP6M=; b=DhRHPM8qnkDTXPmKmVoK+r9OdZHEUlp+LSVhJNmvVZGNUGs
-	+3xmYvh8e0YD6Zv6uhuMehB3XXULcTPqhU2o28trmQtiDgolcHeq8NVxvOR2hOcM
-	TkmJ7fad+pZ9W/qIEVgc2ykgX4QQK6kW8T1JozUKdbFGKIhIJP1Xkaypk4Do=
-X-Sasl-enc: 60Kf8+8T7bXWLDFdvJZeZQnx3DGqsSpv/7qzHi5qyBwl 1458640840
-Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 1B094C0001C;
-	Tue, 22 Mar 2016 06:00:40 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
-In-Reply-To: <xmqqr3f3lhvw.fsf@gitster.mtv.corp.google.com>
+	id S1758456AbcCVKAt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Mar 2016 06:00:49 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:37395 "EHLO mx2.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758368AbcCVKAr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 06:00:47 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u2MA0d9Z013766
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Tue, 22 Mar 2016 11:00:39 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u2MA0ec6021223;
+	Tue, 22 Mar 2016 11:00:40 +0100
+In-Reply-To: <1458635056-26633-1-git-send-email-elena.petrashen@gmail.com>
+	(Elena Petrashen's message of "Tue, 22 Mar 2016 11:24:16 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Tue, 22 Mar 2016 11:00:39 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u2MA0d9Z013766
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1459245640.35493@cA29tbrV6aCINEyNPdxTDg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289502>
 
-Junio C Hamano venit, vidit, dixit 21.03.2016 21:01:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> I think this is a general question about how to track build
->> products.  The proper place may be in a tree that is referenced
->> from a note or so.
-> 
->> Maybe I shouldn't consider git.pot a build product - I don't know,
->> as I honestly don't know why we treat it the way we do.
-> 
-> I think your LaTeX output analogy is interesting.  When working with
-> other people editing a single document, each person may update the
-> build product (.dvi or .pdf or whatever) in his branch and when you
-> merge other people's work, this would create an unresolvable mess
-> but that is perfectly fine, because you wouldn't even attempt to
-> merge the build product.  Instead, you would merge the source
-> material, run the formatter, and pretend as if its output is the
-> result of the merging of .dvi or .pdf or whatever.
+Hi, and thanks for the quick reroll.
 
-I have to confess that that is actually my main use of git outside of
-git.git, and that my "solution" is tracking .pdf etc. and using a
-pre-commit (and pre-merge) hook that prevents me from commiting a state
-where "make -q" is not successful. Still not perfect, partly due to the
-fact that make is timestamp based, not checksum based. ("Use scons", I
-know...)
+A small advice: don't hesitate to reply to reviewers in the thread for
+v1. As a reviewer, I appreciate a quick reply like "OK, will do in v2",
+or even "I disagree, I think my version is better because: ..." (I'm no=
+t
+_always_ right ;-) ).
 
-> But then we need to step back and consider the reason why we keep
-> the build product in the first place.  Presumably that is to help
-> those who want to consume the build product without having the
-> toolchain to build from the source. 
+Elena Petrashen <elena.petrashen@gmail.com> writes:
 
-That is certainly a good use case - see, e.g., our documentation. On the
-other hand, "make pot" has very light toolchain requirements compared to
-"make doc".
+> Signed-off-by: Elena Petrashen <elena.petrashen@gmail.com>
+> ---
+> This micro-patch is meant to allow =E2=80=9C-=E2=80=9C as a short-han=
+d for
+> =E2=80=9C@{-1} for branch -D (Cf. $gmane/230828):
+>
+> * based on the discussion on the previous version of the patch,
+> added the advice on how to restore the deleted branch using
+> git branch deleted_name sha1 - to ensure safety and=20
+> newbie-friendliness
+>
+> * git branch (-d | -D) is not supposed to accept any other
+> arguments except for branch name so it makes sense to replace
+> the argv[i] with @{-1}. We will not lose the opportunity to
+> use it for something different for other git branch uses if
+> we will decide it=E2=80=99s required.
 
-Another use case is a "poor man's release accountability" - a build
-result depends on the actual toolchain version also, not just the
-source, and tracking a build stores a copy of a build result that you
-handed out in class, deployed somewhere, ...
+As much as possible, try to distinguish new things in this version and
+general remarks on your patch. Here, the first point is new and could
+appear below "Changes since v1". The second is not new, I think you can
+either consider that it is a followup to previous discussion (as Eric
+interpreted it in v1) and remove the comment from v2, or consider it as
+a justification of why your patch is sensible and include it in the
+commit message (what I suggested in v1, but Eric more or less convinced
+me that I was wrong).
 
-> If that is the case, perhaps it
-> is also a valid workflow for these collaborating authors of a single
-> document not to update the build product, if they know that nobody
-> cares about how the final output looks like on their individual
-> fork, until their work is merged to some "mainline".
+> * if there=E2=80=99s no previous branch in the repository yet, a
+> specific warning message is given
 
-Wouldn't that reasoning imply that there's no point in tracking at all?
-That is, in tracking in the main tree.
+As I said in v1, I think this is a separate topic and should be moved t=
+o
+a separate patch. As I said above, you are free to disagree (and it's
+not terribly important), but avoid leaving discussions open.
 
-> The primary consumers of git.pot build product are the l10n teams,
-> and I do not think that they want to (or it is practical to ask them
-> to) work on translating new messages on individual topics code-side
-> people work on.  So perhaps it is a valid workflow to leave git.pot
-> behind until i18n coordinator declares "it is time to catch up" and
-> regenerates it at some "snapshot" time in the development cycle.
+One point in favor of splitting the patch is that it's a good exercice
+for a newcommer ;-).
+> +	if (!strcmp(argv[dash_position], "-")){
 
-Yes, I just think that "git.pot" in the main tree sends a wrong signal
-because it is out of sync in the sense that it is not "make pot"-clean.
-The main tree is the place for snapshots (especially not non-rolling
-ones). Possible alternatives:
+Style: space between ) and {.
 
-- Do not track git.pot at all.
-It can be recreated easily, and (unless I'm horribly mistaken) only l10n
-people need it ; everyone else needs the .po files, or rather .mo.
+> @@ -213,7 +223,8 @@ static int delete_branches(int argc, const char *=
+*argv, int force, int kinds,
+>  	for (i =3D 0; i < argc; i++, strbuf_release(&bname)) {
+>  		const char *target;
+>  		int flags =3D 0;
+> -
+> +		if (expand_dash_shortcut (argv, i))
+> +			dash_shortcut =3D 1;
 
-- Make po/ a submodule.
-Submodules are exactly our way of stating "this depends on a tree with a
-separate history and/or different release cycle; commit bar in the super
-project is 'based' on commit foo in the submodule (but not the other way
-round!)
+Nit: the blank line removal is not needed.
 
-- Do it like the extra prebuild doc-branches.
+> +			if (dash_shortcut =3D=3D 1)
+> +			       printf( _("\nIf that happened by mistake, you may want to =
+restore"
 
-- Snapshot with tags (similar to github releases).
+Style: no space after (.
 
-With current master at 047057b, the contained git.pot is actually not
-(guaranteed to be) the one containing the translatable strings from that
-tree. If you want to find out which one, you'd have to "git log -1
-po/git.pot" and rely on the fact that Jiang's tree actually does keep
-git.pot in-sync.
+> +				" it with:\n\ngit branch %s %s\n"), bname.buf,
+> +				find_unique_abbrev(sha1, DEFAULT_ABBREV));
 
-Somehow, submodules seem to best represent that one-way dependency. (I'm
-not a submodule user at all.)
+I think the message is overly long (4 '\n', and I think "If that
+happened by mistake" is not needed, just "to restore the branch,
+run ..." would be enough).
 
-Michael
+A rule that is usually applied for messages with Git:
 
-P.S.: git.pot is both a build product as well as a build/install
-requirement, so my tex/pdf analogy does not apply fully.
+* If the message is triggered by a user-error, then it's OK to have a
+  long and possibly scary message: advanced users are not supposed to
+  see it.
+
+* If the message is seen by normal users in daily usage, then
+
+  - we try to keep it as short as possible.
+
+  - if it's not short enough, we allow disabling it with an advice.*
+    configuration variable.
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
