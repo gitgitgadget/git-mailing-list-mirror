@@ -1,84 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] bisect--helper: convert a function in shell to C
-Date: Tue, 22 Mar 2016 17:49:18 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603221748360.4690@virtualbox>
-References: <010201539a8d2b8a-9f168d7a-d4c6-4c23-a61f-1ef6ee22f774-000000@eu-west-1.amazonses.com> <010201539d57ae98-ce4860a6-f7b6-4e06-b556-3c1340cd7749-000000@eu-west-1.amazonses.com> <alpine.DEB.2.20.1603221552100.4690@virtualbox>
- <xmqqh9fyjy9w.fsf@gitster.mtv.corp.google.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [RFC_PATCHv4 4/7] submodule init: redirect stdout to stderr
+Date: Tue, 22 Mar 2016 17:56:38 +0100
+Message-ID: <CAHGBnuMJdW=s5nX3c8xFk_Q2cwMb8EZjOpRim+4mULkDAvd11A@mail.gmail.com>
+References: <1458612372-10966-1-git-send-email-sbeller@google.com>
+	<1458612372-10966-5-git-send-email-sbeller@google.com>
+	<CAHGBnuMs4D0LeMvdcS0yzKoQgmE+UTb+QFfOkSy7T20PbH86UQ@mail.gmail.com>
+	<xmqqd1qmjxrl.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kaASKUGs3y9YHUp=QeD=91by4DhJh+tVfj6aNOJSH-3jg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 22 17:49:34 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Mar 22 17:56:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiPUr-0006Vi-VC
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 17:49:34 +0100
+	id 1aiPbo-00035S-GJ
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Mar 2016 17:56:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754849AbcCVQt3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2016 12:49:29 -0400
-Received: from mout.gmx.net ([212.227.17.20]:53514 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751454AbcCVQt3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 12:49:29 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MGip3-1aUsq117TN-00DVkx; Tue, 22 Mar 2016 17:49:20
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqh9fyjy9w.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:Fd4pb1udEImhYFU0l2IDdxyx53QbxyDrEe4vhN8uqj0icdt1Zwe
- jVlnkAWY70lxuNtSGgLUrl2Dkd/8SZ42AAn/4WtHbys0Uqv0Ne/XjtfXTOcTc2AUDa5TTZz
- b2kqfUpA2My4xeOaykREUXnQ/4TwyrCmLHZGcK+9rYwGOK2M4Hbh5rP9ji4hKTR5MLV4sny
- W+ExAdmAtM2+FF2UG8l8Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fd5gZixCfek=:AAWDpo3YcUV2r4bijjKqN6
- +MeGpTwT1vttqU6U/guWPQIAvEDwYrGRxQo3ZgTxM8lBbPqtJjWMSTO2z+gt+L6bxSggChaIA
- 8oleYWAhXCnJthiAQ14BliWb1LSo7i1vyP7SIQNLWWbuF2x5diBWdA5cC7ZAYelSeb4s6WF96
- pmT8FgYk4nC2ZYy87qf4ooTYU/4e1HhCTDhbWuid5OOHPhgAWyJs1OnB5tV9+b6QMIH8/KJLr
- Dk93Q+Ef2LvCZU8Ggifq5EqrSZe3INV39wXxtT802REk2TlL/eaenbS+fql64FMVA5sdzqfJa
- Qrm92q9mmAxaWXZaxuU2CIx9+IIBFrZsyrzoaLA2dvrnRX2hqmOXwEgRilGwFBPnlRhcSTzMM
- k1R7bocdKAXUf5ndITgSb9dwjJ59VEVLwT39LP/sKBSNLVK+Q28qRpc7tYBgMt2eBLkzklrkd
- oYPTaOScSzi5ViiLkbYkMHs/g7klo1tIdz8KyJqYnfS8awOVvRs4w1mZPpOevF6Z/bB038nRO
- a4a1qhrGGHGekt9reucM0iZQo4BeEwoHCTiZmDwxCMfAbWrzk7lL2GnB9Z74jp11HvCwYS4XT
- //b173NB4b3bl7RmtIMQZTZ43Xumn68Tl75ZTL+J4LsMyu2fZrA9sb9iku19u0dahBQ8gVX6B
- iRMqMVaBMRDInxICj5B4IEBjTTc0k5Iaw7X68iFJAbyKmcvhptyZkxyABwwRSVQDvnOyXqzE0
- jc18DzN4ccoDn2TTolIpxcKiqXv+vOVV7HTKfV3OBURxA0GwOxjxLawkovoD4kcRjOQH2/5H 
+	id S1756055AbcCVQ4l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 12:56:41 -0400
+Received: from mail-vk0-f43.google.com ([209.85.213.43]:33848 "EHLO
+	mail-vk0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751834AbcCVQ4j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 12:56:39 -0400
+Received: by mail-vk0-f43.google.com with SMTP id e185so262133775vkb.1
+        for <git@vger.kernel.org>; Tue, 22 Mar 2016 09:56:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=/a0PZd8dgk/BXJVxlvS1sSp+PWxWgQRRIFUMj0SeEro=;
+        b=Ktnp84s0O9oKb89ngumnmxZnVI59HciEt0Ic9oMjlxPWYKyanZIUh8UnjS36TK/PEm
+         Qc101M7l/WGWvGRbOGQtgZqwb2RfnRDUzrL3Tv8HpqKUXMnIgJzJvZZEhfiLsvXvkrDG
+         FgWzo5fopPslyHJl5B602HFyjAwDua0j+HH7t2f71W/pLvr+iaI98fLnaPkQjAuDN5F/
+         acV132eTo1171iSfn+F+cKVDYaYXeVAkF713NC8Ie9JZEMIUcXlqwVW1FVojSzc25+vL
+         eXR0aYIJjfiVf3iNk9tNbieM9pbNgcffq5A9p7fyPAE4y7aG5GIhRAMGFKwTkYyaIdmY
+         5R5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=/a0PZd8dgk/BXJVxlvS1sSp+PWxWgQRRIFUMj0SeEro=;
+        b=mWzqC3iEFUf8jjA0YmICy6jbXtClzaUWk8kK1OS1k/KgTcF960nC9Mon2JxMEMxXFX
+         b6CRYfiHqU6pS52M8X/CsugwyvIs9PIIOjuuA9W0KgWlm4NDHXgycdP/xgIpX8/HJKZs
+         PbkRdNWHjF5Hjp2NGEV7q3R7AfYIWhxDUzHTh2otKYXQrm9ck7Ade6+JzvjN8AFtWqk0
+         tykizZRahHZAuYzPs1pRxJXqhDYvwH6a+IoKpD8qxZ7rle6W6nGG1HCla44oVhqtY8MY
+         6JNLMTsH/SGhBnBbcxFqTJmyx0gumkQH2lnmEaCJo1K+8P7ltMU2gRBgbTNUYnVT4tzg
+         xjUw==
+X-Gm-Message-State: AD7BkJKERIwdyv9sBQI38HaK043gizI8KoZx2JJe8JQg71G2PeAW/Uv/8P9yKbw51frba0Wzv2yBkD77LiI7qg==
+X-Received: by 10.31.160.6 with SMTP id j6mr37615894vke.87.1458665798393; Tue,
+ 22 Mar 2016 09:56:38 -0700 (PDT)
+Received: by 10.176.68.6 with HTTP; Tue, 22 Mar 2016 09:56:38 -0700 (PDT)
+In-Reply-To: <CAGZ79kaASKUGs3y9YHUp=QeD=91by4DhJh+tVfj6aNOJSH-3jg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289516>
 
-Hi Junio,
+On Tue, Mar 22, 2016 at 5:47 PM, Stefan Beller <sbeller@google.com> wrote:
 
-On Tue, 22 Mar 2016, Junio C Hamano wrote:
+> I think the stance of Git is to write only machine readable stuff to stdout,
+> and essentially all _(translated) stuff (i.e. human readable) goes to stderr as
+> some sort of help or progress indication.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >>  	struct option options[] = {
-> >>  		OPT_BOOL(0, "next-all", &next_all,
-> >>  			 N_("perform 'git bisect next'")),
-> >>  		OPT_BOOL(0, "no-checkout", &no_checkout,
-> >>  			 N_("update BISECT_HEAD instead of checking out the current commit")),
-> >> +		OPT_STRING(0, "check-term-format", &term, N_("term"),
-> >> +			 N_("check the format of the ref")),
-> >
-> > Hmm. The existing code suggests to use OPT_BOOL instead.
-> > ...
-> > The existing convention is to make the first argument *not* a value of the
-> > "option", i.e. `--check-term-format "$TERM_BAD"` without an equal sign.
-> 
-> I think it is preferrable to keep using OPT_BOOL() for this new one
-> if we are incrementally building on top of existing code.
-> 
-> But if the convention is that the option is to specify what opration
-> is invoked, using OPT_CMDMODE() to implement all of them would be a
-> worthwhile cleanup to consider at some point.
+Thanks for the clarification.
 
-Good point, I keep forgetting that OPT_CMDMODE() was introduced
-specifically for subcommands.
-
-Ciao,
-Dscho
+-- 
+Sebastian Schuberth
