@@ -1,129 +1,100 @@
-From: Stanislav Kolotinskiy <stanislav@assembla.com>
-Subject: [PATCH] git-send-pack: Fix --all option when used with directory
-Date: Wed, 23 Mar 2016 18:24:22 +0200
-Message-ID: <1458750262-25765-1-git-send-email-stanislav@assembla.com>
-Cc: Stanislav Kolotinskiy <stanislav@assembla.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 23 17:24:48 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] bisect--helper: convert a function in shell to C
+Date: Wed, 23 Mar 2016 09:24:56 -0700
+Message-ID: <xmqqtwjxcgbr.fsf@gitster.mtv.corp.google.com>
+References: <010201539d57ae98-ce4860a6-f7b6-4e06-b556-3c1340cd7749-000000@eu-west-1.amazonses.com>
+	<01020153a254974b-68f7d16a-66d7-4dc1-805d-2185ff1b3ebf-000000@eu-west-1.amazonses.com>
+	<alpine.DEB.2.20.1603231238180.4690@virtualbox>
+	<CAFZEwPPDhK1biRLuXtYeBX5fsQGw==fUOLxSOXVaZPghbJQYGg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git List <git@vger.kernel.org>
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 23 17:25:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ailaR-0004fW-Vh
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 17:24:48 +0100
+	id 1ailai-0004sL-VZ
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 17:25:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750884AbcCWQYo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 12:24:44 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:33944 "EHLO
-	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750714AbcCWQYn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 12:24:43 -0400
-Received: by mail-wm0-f45.google.com with SMTP id p65so240828655wmp.1
-        for <git@vger.kernel.org>; Wed, 23 Mar 2016 09:24:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=assembla-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id;
-        bh=EIQIVEuN4YpfhER8o5V5zOcK1UIOCXbzmdXZqth/0vM=;
-        b=NxCKa3jBZvWR0CmZaNjwI9MkAa/ZLiNa3aL0xjnyINzhntFqI6jR0QYgGGHErlLCm+
-         QcwZSHFvAQwCyATjxSAPWB/qzyj1AvbqN/12RQD3OsGel6Nv3WZiKgmcWD2kbdgEW4ny
-         OTm+TGinvQ0bgkdE+TkDmgthAJcFnP/SfRL97ZedUJ37kxgyZXiiZ3e+8XAvlt1zkJfS
-         mTBkgNL6IATiqHpEu2n0pPUAwdUt8QXdBfFThLuC7v/BJc+0zrpqfVAP1OM00zFYfRNj
-         xsw48SALa3gvmGzY5GmxplRXsuU4om90UuR5NVSsvSVGr3oelKUc+KeSlEN6vRDOOQbK
-         V1YQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=EIQIVEuN4YpfhER8o5V5zOcK1UIOCXbzmdXZqth/0vM=;
-        b=SGWhMW/1e9Q0oYHsmIPKS1wyYA2kJoyVHSQV/1LezL/1BggJO8aAbfhR068K7GFZa8
-         2WCS7EVz/vQEKwvEWbfLklHZ1hZpSJthqiwUBKS6xdbMiFNgyRL+dvMnbBZOewQ2Hah1
-         lWCnnEdsSA1d7WX/3OMahaROcU4z3UHiSvKbv2NOgZj9FnDjrtfzaL1GsnAMm+tV1bPR
-         aDBlljUpNBRsDksvQwD9G3ud8qczujbJemSppudARiqCJ3o6bXSzG9Byff+FN5LLwJwm
-         z9PVx41F8tG0wUshRPgJgxkgX0wpnTpad7+wLA1Ad3sfQpuk+aWDhQm98wZG/TA0pQVB
-         eXZg==
-X-Gm-Message-State: AD7BkJKtivQEfJ8r5JnmwFLKDSThb+nIUTvh3dsyegagISp67rQ6K6KpCAl1h3PsRCuk2g==
-X-Received: by 10.194.184.234 with SMTP id ex10mr4207528wjc.8.1458750281905;
-        Wed, 23 Mar 2016 09:24:41 -0700 (PDT)
-Received: from localhost.localdomain ([217.26.172.139])
-        by smtp.gmail.com with ESMTPSA id t82sm3668615wmt.17.2016.03.23.09.24.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 23 Mar 2016 09:24:40 -0700 (PDT)
-X-Mailer: git-send-email 2.7.4
+	id S1751462AbcCWQZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 12:25:00 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:60672 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751088AbcCWQY7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2016 12:24:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0AB334DE8C;
+	Wed, 23 Mar 2016 12:24:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hrzSehBCuUmj36XSvhFCkpJM/Mc=; b=MAkq4J
+	O670SedQqPQXIzJyL5/oIQNkfrahYRDe1HXPPFJ9Cvtp4X1xGAjmJZRid/XLY57q
+	5xUnumml81xFQoWuC0+dPlUtL5ZZ7QoG6UNfOo9qOJ6trQNbFhVOxqcfS8jXtkf2
+	1WwZnf6rzEosQtyQq+HDijz/fBlG6n3oB2nX4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MvJyb8pc4G8CTlZ/FiK0B1202zALwh74
+	ivfSIfJzE8kfPKfnaJlAM9sFB+Ze9eKUcNpUSDkyBagd2zG8Jr8LB/5e/7R0mChw
+	8v8tin8UwOhULKvBHDkLfZM64Qvbys4JJy3fWIBYhFHorlqTcd2KwiaQoHczTZGt
+	pR3GmAvMahg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 004E14DE8A;
+	Wed, 23 Mar 2016 12:24:58 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6F3034DE89;
+	Wed, 23 Mar 2016 12:24:57 -0400 (EDT)
+In-Reply-To: <CAFZEwPPDhK1biRLuXtYeBX5fsQGw==fUOLxSOXVaZPghbJQYGg@mail.gmail.com>
+	(Pranit Bauva's message of "Wed, 23 Mar 2016 18:46:37 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C8790392-F113-11E5-8B12-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289666>
 
-When using git send-pack with --all option
-and a target directory, usage message is being
-displayed instead of performing the actual transmission.
+Pranit Bauva <pranit.bauva@gmail.com> writes:
 
-The reason for this issue is that refspecs variable is being
-calculated in a different way comparing to previous versions,
-and even though the number of refspecs (nr_refspecs) is 0,
-refspecs contain all the arguments and switches passed to send-pack.
+> On Wed, Mar 23, 2016 at 5:27 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+>> Hi Pranit,
+>>
+>> On Wed, 23 Mar 2016, Pranit Bauva wrote:
+>>
+>>> Convert the code literally without changing its design even though it
+>>> seems that it is obscure as to the use of comparing revision to different
+>>> bisect arguments which seems like a problem in shell because of the way
+>>> function arguments are handled.
 
-This ensures that send-pack will stop execution only when --all
-or --mirror switch is used in conjunction with any refs passed.
+Are you talking about the need to do one_of("help", "start", ...)?
 
-Signed-off-by: Stanislav Kolotinskiy <stanislav@assembla.com>
----
- builtin/send-pack.c      |  2 +-
- t/t9904-send-pack-all.sh | 32 ++++++++++++++++++++++++++++++++
- 2 files changed, 33 insertions(+), 1 deletion(-)
- create mode 100755 t/t9904-send-pack-all.sh
+I do not see how that is "problem in shell" or "they way function
+arguments are handled".
 
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index f6e5d64..19f0577 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -225,7 +225,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 	 * --all and --mirror are incompatible; neither makes sense
- 	 * with any refspecs.
- 	 */
--	if ((refspecs && (send_all || args.send_mirror)) ||
-+	if ((nr_refspecs > 0 && (send_all || args.send_mirror)) ||
- 	    (send_all && args.send_mirror))
- 		usage_with_options(send_pack_usage, options);
- 
-diff --git a/t/t9904-send-pack-all.sh b/t/t9904-send-pack-all.sh
-new file mode 100755
-index 0000000..f68d004
---- /dev/null
-+++ b/t/t9904-send-pack-all.sh
-@@ -0,0 +1,32 @@
-+#!/bin/sh
-+
-+test_description='Make sure that send-pack --all copies all refs'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+
-+	git init --bare bare_repo && git init repo && (
-+		cd repo &&
-+
-+		git remote add origin ../bare_repo &&
-+		date >file1 && git add file1 && test_tick &&
-+		git commit -m Initial &&
-+		git push origin master &&
-+
-+		git checkout -b other && date >file2 &&
-+		git add file2 && test_tick &&
-+		git commit -m Other &&
-+		git push origin other
-+	) && git init another && (
-+		cd another &&
-+
-+		git config receive.denyCurrentBranch ignore
-+	)
-+'
-+
-+test_expect_success 'send-pack --all should copy all refs' '
-+	cd bare_repo && git send-pack --all ../another
-+'
-+
-+test_done
--- 
-2.7.4
+    git bisect bad
+    git bisect good
+
+are the ways how you mark the current commit as bad or good, and
+recent change that introduced the "term" thingy allows you to
+replace these "bad" and "good" with your own words, but
+
+    git bisect start
+    git bisect help
+
+etc. have their own meaning, so you cannot say "I call bad state
+'start' and good state 'help'" without confusing yourself.  You'd
+never be able to start or get help if you did so, and that does not
+have anything to do with "shell" or "function argument" which are
+implementation detail.
+
+You cannot fundamentally allow replacing bad/good with these
+blacklisted words unless you are going to adopt different command
+line syntax (e.g. instead of accepting "git bisect $bad" with a word
+chosen by the end user, use "git bisect mark $bad", and $bad can be
+any word including "start", "visualize", etc.).
