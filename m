@@ -1,94 +1,71 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH v2] bisect--helper: convert a function in shell to C
-Date: Wed, 23 Mar 2016 12:23:38 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603231223090.4690@virtualbox>
+Date: Wed, 23 Mar 2016 12:24:05 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603231223520.4690@virtualbox>
 References: <010201539a8d2b8a-9f168d7a-d4c6-4c23-a61f-1ef6ee22f774-000000@eu-west-1.amazonses.com> <010201539d57ae98-ce4860a6-f7b6-4e06-b556-3c1340cd7749-000000@eu-west-1.amazonses.com> <alpine.DEB.2.20.1603221552100.4690@virtualbox>
- <alpine.DEB.2.20.1603221610370.4690@virtualbox> <CAFZEwPOV1oE=5uyyooM1kYKxbuY0Jn=ccxYwsc5sxi0e9cgS6A@mail.gmail.com>
+ <xmqqh9fyjy9w.fsf@gitster.mtv.corp.google.com> <CAFZEwPOMdozVafJzRYJmhhAAAAVfLJ74dSGVbsHreFFKD1Vobg@mail.gmail.com> <CAGZ79kZvi+qJKPkgzHP5LgoyTJd2btJZ6zCc4hkSKAhjoOiYFg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Git List <git@vger.kernel.org>
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 12:24:05 2016
+Cc: Pranit Bauva <pranit.bauva@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Mar 23 12:24:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aigtO-0000t4-B9
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 12:24:02 +0100
+	id 1aigtd-00016r-Uj
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 12:24:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754924AbcCWLXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 07:23:47 -0400
-Received: from mout.gmx.net ([212.227.15.18]:58381 "EHLO mout.gmx.net"
+	id S1751067AbcCWLYP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 07:24:15 -0400
+Received: from mout.gmx.net ([212.227.15.19]:62675 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754899AbcCWLXn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 07:23:43 -0400
+	id S1751852AbcCWLYN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2016 07:24:13 -0400
 Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LZhsq-1a45CR1UoW-00lTIF; Wed, 23 Mar 2016 12:23:39
+ ESMTPSA (Nemesis) id 0Lz3rc-1ZeiAw3NNQ-014GgW; Wed, 23 Mar 2016 12:24:06
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CAFZEwPOV1oE=5uyyooM1kYKxbuY0Jn=ccxYwsc5sxi0e9cgS6A@mail.gmail.com>
+In-Reply-To: <CAGZ79kZvi+qJKPkgzHP5LgoyTJd2btJZ6zCc4hkSKAhjoOiYFg@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:HLHdYhfz9T9omQjFshZDhwXEaSpf0YDUgp6lYRZug1Sj+zV/FHv
- JpWO+s5xEmKP1oUaEATa2ChPFtTGp0R7VDhH3YXkpk+McmdUHtNuCqT7kIdmNTkn81Ir8s1
- 8JTJ2uSkq/zc8vCGlSzl3OH8Ay7TDCUeEQ2Ourav9/klSN16Qx/A8q02N9JQryvz/E6j5iN
- yUgzvnBtQxlXSmyCOMxMA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:xrczLz0Ki+I=:0dDYVcMpc5WYHl1KSAz5e6
- PG9lzbaK2e6z9FqK7hNa6qn1NP4o8ssYlQVgjAetcg+FZMjOn8CK4+aQhIZrvJ6JGa2tga1XK
- pmrJTWUKkob9e9JVW9qLLdkEEW2SHN3932tu6DKBdtNOCcJnPRJpWSWB5cW5q6rby3IGGn1AR
- U8rUvqhZMtk5qPlrtCepc5q3jDAXDVd4tvpzjCl6bDJ5608pxGd1JhdJ9qYg9XZURjqsAgSU4
- bXeEs+Ibde/jGavlTllFD62XsaqUaGx8OqIqnDM5x+7wTVVJYzBU4unVocioHHlnErve0D0ek
- CGMJRQkDI+35VgElM1rn7QdNzJGHPrNSv8dP04SG2Yi1rsjMKwgOaTPeQJ7CpmuCtP8IxyQk/
- 7cEkQnlADxEe6cenaRCrzHXcrRSqDSCBxou6F3657VE107Lj4fJ/JjofpMvUX+Ap48d752DQK
- AYjkogUW5aO35sOzXEkOWtGJywslmhscvE/o3YssKTg7W9L3YpKRhKyAEi789Vr2AnQEmSXbv
- pFLBBBU9huS4YELAprfQvq3E6RYoYPEJn+HQOx0uQbZ6Hpcze1TqAtKtg1K25FmpqI13pYqkE
- FnpHoq2+4XCOaWLNROK+aqc3nnct1yBaVXE33G7ntAR4FO6C7L1k7/tXMoT2RRHesil4ZZQVv
- DKtFq5PyTFBTn4plL2kXM1fr0nx5wt+iz69N5n3C8jVh8GeiQ0DuLos4eFsCD6xQXEZQQb54F
- Z+Bd7H3GGBk4vsfSFVqY+dFbzRr9LChJGFJSN7wr3TDo6K7F/mLddXgHBwQTKmsl59MliA6Y 
+X-Provags-ID: V03:K0:y+WSpldWUhcqK/MBb1tLe8tyZO0LX7LDVvd2S+oDaRRJYdGkPX2
+ KOW0IlcAbIZKu9YqGeFwTvBWsszCo6iaexiUQ7jLH8LIRGbUesHNifroDupxlZ+KfxusgbQ
+ M+fansQDWKjuI0C8wSN+XKfZS/kOZ3wd8MUNNkgsTXAicAQSR49oczGLh93rF1g7Yf/5ag+
+ muYMSFiu4qAa4AC84T0Mw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Ph5I9QBdFcQ=:wAAQxPficowuEesihuDrbW
+ ccibggUkvSoZ80CwS9bjvYdXdfQdrFzjBQejfFkhAC7rbhwgdNoCC9A31UjhSiFWPRScZFmkt
+ K2F7yl/2nkuhmQfaqYRDYbxwO6jPEfLRRWdHCEbb4YEXVHluNm6FxvNxjutAQPynFUNvV40wN
+ YdYoDCpA/B4SfhoMZqGxch7ZdZaAcYeWf09knkowzpbcoMErmT8MzsvdQLhRWJQv8PNhH1Hll
+ Az/nh5L82ldG8jw+jyXwDMM8lxpn4J1uFKyic0/IbH4un2D30k7T0Uqk2bevsmgf7aby0r3Mx
+ HKvN0N8f5Mi/+0iHi4nfxIt/IedVC5dY3tN1+q/gocLH7UQobIWB0xIx6bRbvafO9BF70vfa1
+ wewYOzxKu7p+Y0EtwPDSIom+WixcnOxnpaebIiHebrX7v2/ubVX7BKHwFSrTz1tiOGFcgSLvw
+ rMI/tVCSfqExG/gsW1e184YtLZlTuBrKawlQ/Uvbc37xGPl75Hq/MGYldHJsfLgZaGB7/8y1x
+ tbUK4T2CCDqR/Hvyry6uHBW6LaWRIQWpYjDZZFLxI1EywT7qUL/cujdrlPovUM7jDIVCB50Mb
+ LpLRBhyto1vjxKatS4IGXriJnYvzOw3rTylI9CKExbbCbFxUFm2n2BtrD89ugcjeT8Z+RZzhM
+ WBFggGLuAv7O05ypczFLPsbDtMKmR4dfq0FnusXMEe9RwT3Kc4D0YdDcl7/T+igh5fZkpHG07
+ 8+yBl/gFSwfy5Kb3M0REL7ZennfSFpl7V6UJnJVVnvp4TlR5qiTd3ucjWOAA7dnPogO4bn0C 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289652>
 
-Hi Pranit,
+Hi,
 
-On Tue, 22 Mar 2016, Pranit Bauva wrote:
+On Tue, 22 Mar 2016, Stefan Beller wrote:
 
-> On Tue, Mar 22, 2016 at 8:41 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Tue, 22 Mar 2016, Johannes Schindelin wrote:
-> >
-> >> On Tue, 22 Mar 2016, Pranit Bauva wrote:
-> >>
-> >> > +   if (!strcmp(term, "bad") || !strcmp(term, "new"))
-> >> > +           if(strcmp(revision, "bad"))
-> >> > +                   die("can't change the meaning of term '%s'", term);
-> >> > +
-> >> > +   if (!strcmp(term, "good") || !strcmp(term, "old"))
-> >> > +           if (strcmp(revision, "good"))
-> >> > +                   die("can't change the meaning of term '%s'", term);
-> >>
-> >> These two can be combined. Actually, these *four* can easily be combined:
-> >>
-> >>       if ((one_of(term, "bad", "new", NULL) && strcmp(orig, "bad")) ||
-> >>           (one_of(term, "good", "old", NULL) && strcmp(orig, "good")))
-> >>               die("can't change the meaning of term '%s'", term);
-> >
-> > Completely forgot to mention: This conversion skipped the comment
-> >
-> >         # In theory, nothing prevents swapping
-> >         # completely good and bad, but this situation
-> >         # could be confusing and hasn't been tested
-> >         # enough. Forbid it for now.
-> >
-> > Let's port that comment over, too?
+> On Tue, Mar 22, 2016 at 10:52 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+> > OPT_CMDMODE() is actually a better option. I also noticed that it
+> > isn't mentioned in Documentation/technical/api-parse-options.txt .
+> > Should I send a patch to include it there just to make it easier for
+> > someone who is new and isn't aware of the changes ?
 > 
-> Sure! Adding a comment won't harm anyone. We can remove it when its
-> thoroughly tested.
+> Patches to outdated documentation are most awesome. ;)
 
-I am actually not so eager to remove the comment...
+Yes!
 
-Ciao,
+Thanks,
 Johannes
