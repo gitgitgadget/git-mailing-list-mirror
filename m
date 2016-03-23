@@ -1,117 +1,160 @@
-From: Hui Yiqun <huiyiqun@gmail.com>
-Subject: [PATCH v3/GSoC 5/5] t0301: test credential-cache support of XDG_RUNTIME_DIR
-Date: Wed, 23 Mar 2016 18:13:25 +0800
-Message-ID: <1458728005-22555-5-git-send-email-huiyiqun@gmail.com>
-References: <1458728005-22555-1-git-send-email-huiyiqun@gmail.com>
-Cc: peff@peff.net, pickfire@riseup.net, Hui Yiqun <huiyiqun@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 23 11:16:30 2016
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 08/21] resolve_ref_unsafe(): ensure flags is always set
+Date: Wed, 23 Mar 2016 11:04:25 +0100
+Message-ID: <5e6741bb89307d74231c70079c6fbf1efa1af1be.1458723959.git.mhagger@alum.mit.edu>
+References: <cover.1458723959.git.mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, peff@peff.net, pclouds@gmail.com,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 23 11:16:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aifnW-000210-LE
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 11:13:55 +0100
+	id 1aifmj-0001Ah-C2
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 11:13:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754755AbcCWKNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 06:13:46 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34288 "EHLO
-	mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754606AbcCWKNl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 06:13:41 -0400
-Received: by mail-pf0-f193.google.com with SMTP id n5so2391109pfn.1
-        for <git@vger.kernel.org>; Wed, 23 Mar 2016 03:13:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=6OhrLu2otmCiAG47P4BTviWF+mon6v2sWA136UjD/6Y=;
-        b=xfLzz1DyfoS8JDsAV0KmGDcO8LVUXs46EOpC7X0rxZZxphsoyt+KLnq2A7JPPn0+uo
-         nCyDvppH77XOIvIjOBVIzIRUo0Da1k/IIhwBSCkDDuRNPl8qp/OxG4kI2nkJ7iaN4Kla
-         MC0P9PYvdXmBH1FbEAbV1KSzJ69rf3JRW6FyYMC3XUBhZZKgn0qB1La2tVMbCup1S+W5
-         Lr6y9M/eupXMmEg/4//ohCmROWufYHhgE9pqTLDpMgia834Hwa3Nd9p+3eZGBbzKzyTE
-         WD5cLRAVj91xyqnn5l0lTTZ3LJ6Lm0Yhi+Kyif6bnFo+2Zrk63uSZ5vCbgz9yDw/MU77
-         +qMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=6OhrLu2otmCiAG47P4BTviWF+mon6v2sWA136UjD/6Y=;
-        b=XObehouCZ2lMWjhuKrctcvIH3ZS3HyXTbb0bMPgBlSGq8YakoOhazflZfFKSnvA6VC
-         3nT1qL0cPtNYoVb29hhiqRce6HvgQ6P2HhGg5mX6iXzfuW6wHrftBW5XN8mo7EN68cAS
-         vyLBfA4w5sOffYIoL/OrREwcVOMnYtjJ0CEA5iVgMm2o/LkNyoESNqblrAPrg0EOhQGs
-         KASLGN1JEyGziJktSyEbWZ9zCPJLWBbKHQlZcrqCDVsQEKlZBcS/kwkeq7IAoPD2PMIP
-         HzbBs332ARirHFuQcugAJyaKT5rgxqmdqQxjxMHbe4GIkcsp8theqh8lXNCj7Mb3a1m9
-         Afww==
-X-Gm-Message-State: AD7BkJIuolRHytiJnTxUQ+iDvYd+p4L/KNOgBkFOFBlzlNC5/OdxB6xmC6GWU1i+Wein/A==
-X-Received: by 10.98.14.147 with SMTP id 19mr2826335pfo.79.1458728021087;
-        Wed, 23 Mar 2016 03:13:41 -0700 (PDT)
-Received: from localhost.localdomain ([2402:f000:1:4414:ae9e:17ff:fe87:5adb])
-        by smtp.gmail.com with ESMTPSA id x18sm3232325pfi.42.2016.03.23.03.13.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 23 Mar 2016 03:13:40 -0700 (PDT)
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1458728005-22555-1-git-send-email-huiyiqun@gmail.com>
+	id S1754737AbcCWKM6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 06:12:58 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:49321 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754709AbcCWKMm (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2016 06:12:42 -0400
+X-AuditID: 12074411-fe7ff700000071cf-e3-56f26a4bee65
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id 4D.17.29135.B4A62F65; Wed, 23 Mar 2016 06:04:59 -0400 (EDT)
+Received: from michael.fritz.box (p548D66C6.dip0.t-ipconnect.de [84.141.102.198])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u2NA4g1D018017
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Wed, 23 Mar 2016 06:04:58 -0400
+X-Mailer: git-send-email 2.8.0.rc3
+In-Reply-To: <cover.1458723959.git.mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrNIsWRmVeSWpSXmKPExsUixO6iqOuf9SnMYPpJHYuuK91MFg29V5gt
+	bq+Yz2zRPeUto8WPlh5mi5lXrR3YPP6+/8DksXPWXXaPZ717GD0uXlL22L90G5vH501yAWxR
+	3DZJiSVlwZnpefp2CdwZvbMOshQ8kqxY9eEvewPjR+EuRk4OCQETiXdbFjB3MXJxCAlsZZRY
+	ePkEI4Rzkkli/bwPrCBVbAK6Eot6mplAbBEBNYmJbYdYQIqYBRYwSmxcvJgZJCEs4C4xec11
+	FhCbRUBV4vPp34wgNq9AlMTVrkVsEOuUJDY8uAA2iFPAQuLkyaVgNUIC5hLbH6xlmsDIs4CR
+	YRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRrqlebmaJXmpK6SZGSEAJ7mCccVLuEKMAB6MSD2/h
+	uY9hQqyJZcWVuYcYJTmYlER5zwd9ChPiS8pPqcxILM6ILyrNSS0+xCjBwawkwhuSAZTjTUms
+	rEotyodJSXOwKInz8i1R9xMSSE8sSc1OTS1ILYLJynBwKEnwXksHahQsSk1PrUjLzClBSDNx
+	cIIM55ISKU7NS0ktSiwtyYgHRUF8MTAOQFI8QHsjwfYWFyTmAkUhWk8xKkqJ82qAJARAEhml
+	eXBjYWniFaM40JfCvPUgVTzAFAPX/QpoMBPQ4IU+YINLEhFSUg2MKtzx896yxb6blL8yX3N/
+	utt7ufwn61x38Uv9lp60vTSxw6V5yhIzz9n37puHvdw0TyxM5HOYD+ML6Rtxi++KZq37tJNv
+	ygy1W127TVTW8mq+CHcOX9zuceOf+PdlmlKz2tn83jMV8k4/qJAuUPH58flAoXMP 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289635>
 
-t0301 now tests git-credential-cache support for XDG user-specific
-runtime path. Specifically:
+If the caller passes flags==NULL, then set it to point at a local
+scratch variable. This removes the need for a lot of "if (flags)" guards
+in resolve_ref_1() and resolve_missing_loose_ref().
 
-* if $XDG_RUNTIME_DIR exists, use socket at
-  `$XDG_RUNTIME_DIR/git/credential-cache.sock`.
-
-* otherwise, `/tmp/git-$uid/credential-cache.sock` is taken.
-
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Hui Yiqun <huiyiqun@gmail.com>
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- t/t0301-credential-cache.sh | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ refs/files-backend.c | 31 +++++++++++++------------------
+ 1 file changed, 13 insertions(+), 18 deletions(-)
 
-diff --git a/t/t0301-credential-cache.sh b/t/t0301-credential-cache.sh
-index 82c8411..264c394 100755
---- a/t/t0301-credential-cache.sh
-+++ b/t/t0301-credential-cache.sh
-@@ -12,7 +12,36 @@ test -z "$NO_UNIX_SOCKETS" || {
- # don't leave a stale daemon running
- trap 'code=$?; git credential-cache exit; (exit $code); die' EXIT
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 101abba..067ce1c 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1383,8 +1383,7 @@ static int resolve_missing_loose_ref(const char *refname,
+ 	entry = get_packed_ref(refname);
+ 	if (entry) {
+ 		hashcpy(sha1, entry->u.value.oid.hash);
+-		if (flags)
+-			*flags |= REF_ISPACKED;
++		*flags |= REF_ISPACKED;
+ 		return 0;
+ 	}
+ 	/* refname is not a packed reference. */
+@@ -1403,12 +1402,10 @@ static const char *resolve_ref_1(const char *refname,
+ 	int bad_name = 0;
+ 	int symref_count;
  
-+test_expect_success 'set $XDG_RUNTIME_DIR' '
-+	XDG_RUNTIME_DIR=$HOME/xdg_runtime/ &&
-+	export XDG_RUNTIME_DIR
-+'
-+
-+helper_test cache
-+
-+test_expect_success 'when $XDG_RUNTIME_DIR is set, `$XDG_RUNTIME_DIR/git` are used' '
-+	test_path_is_missing "/tmp/git-$(id -u)/credential-cache.sock" &&
-+	test -S "$HOME/xdg_runtime/git/credential-cache.sock"
-+'
-+
-+test_expect_success 'force git-credential-cache to exit so that socket disappear' '
-+	git credential-cache exit &&
-+	test_path_is_missing "$HOME/xdg_runtime/git/credential-cache.sock" &&
-+	unset XDG_RUNTIME_DIR
-+'
-+
- helper_test cache
-+
-+test_expect_success 'when $XDG_RUNTIME_DIR is not set, `/tmp/git-$(id -u) is used' '
-+	test_path_is_missing "$HOME/xdg_runtime/git/credential-cache.sock" &&
-+	test -S "/tmp/git-$(id -u)/credential-cache.sock"
-+'
-+
-+# TODO: if $XDG_RUNTIME_DIR/git/ exists, but has wrong permission and ownership,
-+# `helper_test cache` must fail.
-+
-+# TODO: check whether `--socket` works
-+
- helper_test_timeout cache --timeout=1
+-	if (flags)
+-		*flags = 0;
++	*flags = 0;
  
- # we can't rely on our "trap" above working after test_done,
+ 	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
+-		if (flags)
+-			*flags |= REF_BAD_NAME;
++		*flags |= REF_BAD_NAME;
+ 
+ 		if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
+ 		    !refname_is_safe(refname)) {
+@@ -1458,8 +1455,7 @@ static const char *resolve_ref_1(const char *refname,
+ 			}
+ 			if (bad_name) {
+ 				hashclr(sha1);
+-				if (flags)
+-					*flags |= REF_ISBROKEN;
++				*flags |= REF_ISBROKEN;
+ 			}
+ 			return refname;
+ 		}
+@@ -1478,8 +1474,7 @@ static const char *resolve_ref_1(const char *refname,
+ 			    !check_refname_format(sb_contents->buf, 0)) {
+ 				strbuf_swap(sb_refname, sb_contents);
+ 				refname = sb_refname->buf;
+-				if (flags)
+-					*flags |= REF_ISSYMREF;
++				*flags |= REF_ISSYMREF;
+ 				if (resolve_flags & RESOLVE_REF_NO_RECURSE) {
+ 					hashclr(sha1);
+ 					return refname;
+@@ -1526,20 +1521,17 @@ static const char *resolve_ref_1(const char *refname,
+ 			 */
+ 			if (get_sha1_hex(sb_contents->buf, sha1) ||
+ 			    (sb_contents->buf[40] != '\0' && !isspace(sb_contents->buf[40]))) {
+-				if (flags)
+-					*flags |= REF_ISBROKEN;
++				*flags |= REF_ISBROKEN;
+ 				errno = EINVAL;
+ 				return NULL;
+ 			}
+ 			if (bad_name) {
+ 				hashclr(sha1);
+-				if (flags)
+-					*flags |= REF_ISBROKEN;
++				*flags |= REF_ISBROKEN;
+ 			}
+ 			return refname;
+ 		}
+-		if (flags)
+-			*flags |= REF_ISSYMREF;
++		*flags |= REF_ISSYMREF;
+ 		buf = sb_contents->buf + 4;
+ 		while (isspace(*buf))
+ 			buf++;
+@@ -1551,8 +1543,7 @@ static const char *resolve_ref_1(const char *refname,
+ 			return refname;
+ 		}
+ 		if (check_refname_format(buf, REFNAME_ALLOW_ONELEVEL)) {
+-			if (flags)
+-				*flags |= REF_ISBROKEN;
++			*flags |= REF_ISBROKEN;
+ 
+ 			if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
+ 			    !refname_is_safe(buf)) {
+@@ -1573,8 +1564,12 @@ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
+ 	static struct strbuf sb_refname = STRBUF_INIT;
+ 	struct strbuf sb_contents = STRBUF_INIT;
+ 	struct strbuf sb_path = STRBUF_INIT;
++	int unused_flags;
+ 	const char *ret;
+ 
++	if (!flags)
++		flags = &unused_flags;
++
+ 	ret = resolve_ref_1(refname, resolve_flags, sha1, flags,
+ 			    &sb_refname, &sb_path, &sb_contents);
+ 	strbuf_release(&sb_path);
 -- 
-2.7.4
+2.8.0.rc3
