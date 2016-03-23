@@ -1,71 +1,78 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 4/4] mingw: skip some tests in t9115 due to file name
- issues
-Date: Wed, 23 Mar 2016 20:08:38 +0100
-Message-ID: <56F2E9B6.9070904@web.de>
-References: <cover.1458668543.git.johannes.schindelin@gmx.de>
- <7b4eca83305ec05af6434ff80269ba563f2d581d.1458668543.git.johannes.schindelin@gmx.de>
- <56F18F5E.9090301@web.de> <xmqqbn66gs4k.fsf@gitster.mtv.corp.google.com>
- <56F1CACA.5040709@web.de> <xmqqtwjydsub.fsf@gitster.mtv.corp.google.com>
- <56F22F85.3010507@web.de> <alpine.DEB.2.20.1603231148510.4690@virtualbox>
- <xmqq37rhdw77.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v8 2/2] commit: add a commit.verbose config variable
+Date: Wed, 23 Mar 2016 12:19:41 -0700
+Message-ID: <xmqq7fgtc88i.fsf@gitster.mtv.corp.google.com>
+References: <010201538b98a7e5-ee604368-5a27-4884-b01e-027fa02bf1c6-000000@eu-west-1.amazonses.com>
+	<010201538b98aaa4-ad08c159-4935-48f1-acdb-7c376da2c368-000000@eu-west-1.amazonses.com>
+	<CAPig+cShT2aPkoRK0pXPzbRbQqCU+O5uEqEr4oMkZ8LTwREaAA@mail.gmail.com>
+	<CAFZEwPMZk9jDpi4F9WiYhv4aTqFqn3127i1AUKtNJXwG-11tyw@mail.gmail.com>
+	<CAPig+cSCrdxYb=0WOiAARrrPK07PeyTKsopPfwDOLAO4m3scnQ@mail.gmail.com>
+	<CAFZEwPNKozf+owtJtaE27MqQb3koL0L=HDnErVoWrTnQpieGgw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>,
-	Eric Wong <normalperson@yhbt.net>
-To: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 23 20:09:17 2016
+Content-Type: text/plain
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 23 20:19:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aio9c-0000g7-DC
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 20:09:16 +0100
+	id 1aioJp-0007tc-U5
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 20:19:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755235AbcCWTJL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 15:09:11 -0400
-Received: from mout.web.de ([212.227.15.14]:58585 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753771AbcCWTJK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 15:09:10 -0400
-Received: from macce.local ([87.146.133.242]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0M24vT-1ZtipI12aJ-00u3Rd; Wed, 23 Mar 2016 20:08:47
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.7.0
-In-Reply-To: <xmqq37rhdw77.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:IA/8moIn5kLcMiJAUN1cG8O7ENuJUWw9Dc079eLND+dxilDbT0c
- 8mr62Un+aMhm3eYb2e3L5he6erJqB7KyMSnc/rUJcCSwosG6hr1NeSIQXL4qn0KkH1GbIJ2
- hdDpsen35qhir3qbKmF00MOpLHVVqm9TeKiUqQ9ox3GQk+dnUzziSKcAhZu5yPV9XJAaAOi
- YP3+2lTPPd76D5vEXUEEA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:cPfK0ONzsSg=:oNxI3uyJsowxHDcyknkBA5
- SOS8ZpdfPFA6XA/eCmlC8ddzfDf0e/AS6ND6fW5CUR+af0As2jn6Fy8M8wjFojfWlLqWXHpuW
- R1+qLXptXEiLxB3QaVL2d3z2ODPouo6gVhjJvI4nb165xxDriGm5HZx9I3kLZ3ITSBjlyPmvw
- dmNSntmVzAVSuSN2yw+DssCYsAbZYzyTUR2cePSNdWaBNgokYIp+jrb5ZUH0A6zAD9D+cptQ+
- 1YVyZ2j7i2HOjx3/gpERjgV01ikm/otXuxuk1Gu4W3AtMbztPqdypzrApsuMp2RhIOMhwphWW
- HYs9u2tXns2Av0Wqw7bMaQp2z4kWs//7DQGaukgsCDoPj+VkLC5tmLeANJMQgJzV7t991GDjD
- RDkExfmaHa7V6fskFokHxm0Ol3LTJNowkBRWrB1Khact0fGmRR2UbwsQuDHQpjz7gXGrNMdp/
- iW5Sjs8OseVNZRdg2NT5IvbJ5s6uGA8C+TQC4t1yMXWYT8Dmj1a0AlsrZxHv7mb/8jjAmr0Cs
- uHl6Ayu7YVSiLvgH/OYrgg6GavSqU64Y4EbM44TY+hn5kRhFdtsbXfPWipKJ0ff0w9PPGoovr
- P2/9dpndHHLDNcDFRkecOF93FwGlaTzRE3pHVzEQY/VPaJFKeb42NPCrgfwnHj2J7L2EzEdQP
- tjGXKhi/wOnjjtNps4vCFZ8u8Ugqi6mJMt1ORf1OEF/QECf0lXslXC0PUyMdnqREFqCa0sxU5
- 2FN/SFbrFPllNiMssnlayLpte147XU70yGBpbEIwsASi97gGceAD3qSVPvibTUHBPdH9dL46 
+	id S1753941AbcCWTTp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 15:19:45 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:63077 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753534AbcCWTTo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2016 15:19:44 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6256C4F0BB;
+	Wed, 23 Mar 2016 15:19:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wnPUR0rdstAW0Keqavh/USrbZnE=; b=SGcm84
+	7ihPVrS8L68+w5iL0xF8aYDXryc8ScI9ZJc9Yy24BzzJssbsEcx/G5iYlnIekpmE
+	D6VQL4hnHnjge21XhZtL689+LTD3h2dwhTuga/We2c8f0vejZYHcpf/RE4foMdXy
+	DgFJfr0Rh9LmHQI6EHHRaPiFOJNm6bva5M9n4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sKF0q2KViicpz0Jp9Yeo1J03ti2fe0eQ
+	VY6nVyEfBzW9/BYDu1Q3yK79i4MhQFno9a7Xi6BRHTsJ+iBLMA5m6OUNGLgys8na
+	v7Zgfr0n9AqKUUknCRLDAlHvGZyQ/gFmJ5OATjacyJtuO2CfYV+YZkBBz4hitZ6y
+	7DTHIeabkV4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 594CB4F0B9;
+	Wed, 23 Mar 2016 15:19:43 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B674B4F0B8;
+	Wed, 23 Mar 2016 15:19:42 -0400 (EDT)
+In-Reply-To: <CAFZEwPNKozf+owtJtaE27MqQb3koL0L=HDnErVoWrTnQpieGgw@mail.gmail.com>
+	(Pranit Bauva's message of "Sun, 20 Mar 2016 23:32:11 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 32327602-F12C-11E5-B475-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289677>
 
-On 2016-03-23 16.56, Junio C Hamano wrote:
+Pranit Bauva <pranit.bauva@gmail.com> writes:
 
->> Thanks, I used a slightly different version, as I had crafted it before
->> reading this mail already.
-> 
-> Thanks; Torsten, sorry but could you do another round of check, please?
-Sure :-)
+> On Sun, Mar 20, 2016 at 11:04 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> ...
+>> Alternatively, combine #1 and #2 into a single patch which drops the
+>> global test_set_editor() and, as an aside, also does "while here,
+>> let's use write_script() to create 'check-for'diff' rather than doing
+>> so manually".
+>
+> These changes seem nice. I will update and send the patch.
+
+So, has anything happened to this topic or has it been abandoned?
+
+I am not in a hurry, just wanted to see if I need to keep the old
+one in my tree as a reminder to myself.
