@@ -1,141 +1,86 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] sha1_name.c: add an option to abort on ambiguous refs
-Date: Wed, 23 Mar 2016 20:30:40 +0700
-Message-ID: <1458739840-15855-1-git-send-email-pclouds@gmail.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH v2] bisect--helper: convert a function in shell to C
+Date: Wed, 23 Mar 2016 19:23:03 +0530
+Message-ID: <CAFZEwPM1Ye34GJOfck89TX78BHKoiAVf-e=_TZasDV9u60VXGQ@mail.gmail.com>
+References: <010201539a8d2b8a-9f168d7a-d4c6-4c23-a61f-1ef6ee22f774-000000@eu-west-1.amazonses.com>
+	<010201539d57ae98-ce4860a6-f7b6-4e06-b556-3c1340cd7749-000000@eu-west-1.amazonses.com>
+	<alpine.DEB.2.20.1603221552100.4690@virtualbox>
+	<CAFZEwPNg8-X5dsBbMfg5ni1XpOVekRd13y-zgwYJpX0fCwg3Ug@mail.gmail.com>
+	<alpine.DEB.2.20.1603231220560.4690@virtualbox>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 23 14:31:36 2016
+Cc: Git List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Mar 23 14:53:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiism-0006T9-Al
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 14:31:32 +0100
+	id 1aijDj-00063t-6y
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 14:53:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754988AbcCWNb3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Mar 2016 09:31:29 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:33417 "EHLO
-	mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753074AbcCWNb1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 09:31:27 -0400
-Received: by mail-pf0-f174.google.com with SMTP id 4so28344259pfd.0
-        for <git@vger.kernel.org>; Wed, 23 Mar 2016 06:31:27 -0700 (PDT)
+	id S1755312AbcCWNxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 09:53:05 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:33064 "EHLO
+	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755209AbcCWNxE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2016 09:53:04 -0400
+Received: by mail-yw0-f194.google.com with SMTP id a140so1829376ywe.0
+        for <git@vger.kernel.org>; Wed, 23 Mar 2016 06:53:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=eZqEe/M/1HnVIriESkbCujM2MhR1HG5LqqnhKRUjNr8=;
-        b=ufuz2bIYqGkp4/zGoXyoszcxJKf/jVNwgtCBNJZhJRGU4btzdUqK3DOHglKqxaqxW/
-         X5Uaile+roxJIVrbdqR6dJD1jhnf5pro8kuFhGgovv9qACPpnz8dzqtPFOMhAdn6YFiv
-         wtVEuEhgcZ5nSHy/RllAgOVWwu8mxJ0Hb/SfEqeHg1A/UUju+dHtAkHL4kMgRT1O+rSw
-         ZTgMjkIa3/St/HRicuKZzeBZTJuswTzCmpUIJGSnDLF33VGexNpO/i+Ix4vpnrAOwmVl
-         vM93Iltou8jVXezk+jJO32JxzpTdcx/lfnRO9VSrnNX7H8CbkDtobljxSdM/Q3Zzvd0X
-         t6ew==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=Nc25L+/CjOA73nok5agxLOBau7h4sgiDrYv2yj6vNew=;
+        b=MYVnwozeh7RwLIS43NBroIY6ZCvmJ2hVnWMZNVNdcZKOa+gahEDuGO7mTGSx0jB3J+
+         mo4N+mhKaf/dZFbEGrnQAJvnoHweEERAq7+yUImRm7wealtgxavFSGQtxes6RYIJ5Yp+
+         jbah+8wDc6TPp7rhryuXOtwEEqZlmJgDNzwBrPjez3X0/YOfi11algHFMI076HwdgPXh
+         IZ3yr9tyMEhBpCkdI3P8zdxtv0xZdQH0IjFfKWQQqhe11OPLrvqcye+ZdxlVgYZnmMk+
+         qalDnbNHqqbwlDXA4bdv/TBgtqls8u6ogNEmnCZXHY920ZVlW9bvoQ2JFZGjpUQaq8Fp
+         VBBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=eZqEe/M/1HnVIriESkbCujM2MhR1HG5LqqnhKRUjNr8=;
-        b=JksozoVWuIX2JiCTT9fo9M8DIEblhMJMIoGJDFpt4qxzojE2XGc/9rRAsZVkdn3at7
-         dsnUGoIYpx7occsS856Z000ghF5+p/e3NNbeJ1XGjf7oiPXmdAOO7XFJpd3BbAyIR5Em
-         lnCfDOOQ15EcbrTsWMKKIR4iH3afpAOdFobgR1uFgNl6XsrJM5YA+eSfxevAf4i/OZNI
-         7l352Zu5G12yNoh4PwQn3H5HUsVS7F1+NwWiOHtYU8xlrzi74BiKdCKWWrdAblrHfFcG
-         WEDlNlBGN2XSa+FHDoAN23nu0zrMtaJ8oX/su7fYVXyt9heWDSuHDmIJfPeHXJJYiecS
-         rKIw==
-X-Gm-Message-State: AD7BkJJs6faez/gpg6b29veZG3kOj5w22Ip4nOed1OkKofZPQg4im9wwbFtmrwx5kiBjKw==
-X-Received: by 10.98.9.83 with SMTP id e80mr4366067pfd.34.1458739841861;
-        Wed, 23 Mar 2016 06:30:41 -0700 (PDT)
-Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id i9sm4442220pfi.95.2016.03.23.06.30.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Mar 2016 06:30:40 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 23 Mar 2016 20:30:53 +0700
-X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=Nc25L+/CjOA73nok5agxLOBau7h4sgiDrYv2yj6vNew=;
+        b=BftodDgrR+yPbOA8kdxMwbueEwBigzUuZQC6qpjLnXjOp1iH+iivelgIomqCYpUZnF
+         V4bzhL72jxU8tzrowjqVSwYZ0KDt9Mta5GJcgELJ2MUtSR5CLAGJ49gwwNB4SNr8pvZ4
+         prYDeDl702r7wMQPURUhenLGyh85JfzazkbkfBWZiFVjVDRWc6K8MQcLodt/43GFFbxX
+         s/zEsOsYqhGSSAUzr6rNNjVHsIWiiyjY1y6AKVGuHqn4kDxuTW9aIBiv+bDRhvKMXIK1
+         kSVZht2/b5STpy26lpAhpUORz5SQuUQINjZHnHZFWul5OBmmiQDG/X1qDW5AB70z9K3q
+         ql1A==
+X-Gm-Message-State: AD7BkJLjdq+hWyGicbcA4D3DbW8cziKwa8BXnHSVtFXBG8hgyCa1SDvD5z4JD9awDf6MEkSmxV6xMv6KlGUA9Q==
+X-Received: by 10.37.22.134 with SMTP id 128mr1482406ybw.7.1458741183936; Wed,
+ 23 Mar 2016 06:53:03 -0700 (PDT)
+Received: by 10.13.203.137 with HTTP; Wed, 23 Mar 2016 06:53:03 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1603231220560.4690@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289656>
 
-There are cases when a warning on ambiguous refs may go unnoticed
-(e.g. git-log filling up the whole screen). There are also cases when
-people want to catch ambiguity early (e.g. it happens deep in some
-script). In either case, aborting the program would accomplish it.
+On Wed, Mar 23, 2016 at 4:52 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Pranit,
+>
+> On Tue, 22 Mar 2016, Pranit Bauva wrote:
+>
+>> I did run the tests. They produce the same results as they did before.
+>> To ease review I will next time include these the output of the tests
+>> in the commented section.
+>>
+>> t6002-rev-list-bisect.sh : http://paste.ubuntu.com/15473728/
+>> t6030-bisect-porcelain.sh : http://paste.ubuntu.com/15473734/
+>> t6041-bisect-submodule.sh : http://paste.ubuntu.com/15473743/
+>>
+>> Is there any other test I would need to run?
+>
+> Oh, I just meant to point out that you need to make sure that the entire
+> test suite passes after your patch series (and ideally, after every patch,
+> that is at least what I frequently test before sending out patch series).
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/config.txt |  3 ++-
- config.c                 |  5 ++++-
- sha1_name.c              | 10 ++++++++--
- 3 files changed, 14 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 2cd6bdd..4172f59 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -522,7 +522,8 @@ core.sharedRepository::
-=20
- core.warnAmbiguousRefs::
- 	If true, Git will warn you if the ref name you passed it is ambiguous
--	and might match multiple refs in the repository. True by default.
-+	and might match multiple refs in the repository. If set to "fatal",
-+	the program will abort on ambiguous refs. True by default.
-=20
- core.compression::
- 	An integer -1..9, indicating a default compression level.
-diff --git a/config.c b/config.c
-index 9ba40bc..79f1ea5 100644
---- a/config.c
-+++ b/config.c
-@@ -738,7 +738,10 @@ static int git_default_core_config(const char *var=
-, const char *value)
- 	}
-=20
- 	if (!strcmp(var, "core.warnambiguousrefs")) {
--		warn_ambiguous_refs =3D git_config_bool(var, value);
-+		if (!strcasecmp(value, "fatal"))
-+			warn_ambiguous_refs =3D 2;
-+		else
-+			warn_ambiguous_refs =3D git_config_bool(var, value);
- 		return 0;
- 	}
-=20
-diff --git a/sha1_name.c b/sha1_name.c
-index 3acf221..a0f0ab9 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -480,6 +480,8 @@ static int get_sha1_basic(const char *str, int len,=
- unsigned char *sha1,
- 				warning(warn_msg, len, str);
- 				if (advice_object_name_warning)
- 					fprintf(stderr, "%s\n", _(object_name_msg));
-+				if (warn_ambiguous_refs > 1)
-+					die(_("cannot continue with ambiguous refs"));
- 			}
- 			free(real_ref);
- 		}
-@@ -537,8 +539,12 @@ static int get_sha1_basic(const char *str, int len=
-, unsigned char *sha1,
-=20
- 	if (warn_ambiguous_refs && !(flags & GET_SHA1_QUIETLY) &&
- 	    (refs_found > 1 ||
--	     !get_short_sha1(str, len, tmp_sha1, GET_SHA1_QUIETLY)))
--		warning(warn_msg, len, str);
-+	     !get_short_sha1(str, len, tmp_sha1, GET_SHA1_QUIETLY))) {
-+		if (warn_ambiguous_refs > 1)
-+			die(warn_msg, len, str);
-+		else
-+			warning(warn_msg, len, str);
-+	}
-=20
- 	if (reflog_len) {
- 		int nth, i;
---=20
-2.8.0.rc0.210.gd302cd2
+Up to now, I used to only run the tests of the concerned area of the
+patch. Though from next time, I will take care to run the complete
+test suite.
