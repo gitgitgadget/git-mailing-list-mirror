@@ -1,92 +1,77 @@
-From: "Boettger, Heiko" <Heiko.Boettger@karlstorz.com>
-Subject: AW: AW: git and concurrent access to local repository
-Date: Wed, 23 Mar 2016 07:08:22 +0000
-Message-ID: <8C0042D8869AEA4AA334B49AFBBCEF82B53CF604@TUT-EX02-PV.KSTG.corp>
-References: <8C0042D8869AEA4AA334B49AFBBCEF82B53CF505@TUT-EX02-PV.KSTG.corp>
- <56F11467.3010004@web.de>
- <8C0042D8869AEA4AA334B49AFBBCEF82B53CF564@TUT-EX02-PV.KSTG.corp>
- <56F14E7F.3010801@web.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/4] Make t1300-repo-config resilient to being run via
+ 'sh -x'
+Date: Wed, 23 Mar 2016 08:21:29 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603230820140.4690@virtualbox>
+References: <cover.1458668543.git.johannes.schindelin@gmx.de> <b4df45088aa68d8410895f66a814dd6780e2e451.1458668543.git.johannes.schindelin@gmx.de> <20160322175948.GG28749@google.com> <xmqqfuvigsl6.fsf@gitster.mtv.corp.google.com>
+ <20160322234524.GJ28749@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 23 08:08:31 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>,
+	Eric Wong <normalperson@yhbt.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 23 08:21:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aicu6-0007xQ-VA
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 08:08:31 +0100
+	id 1aid74-0008Iv-UW
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 08:21:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753478AbcCWHI0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Mar 2016 03:08:26 -0400
-Received: from mx0.karlstorz.com ([62.134.46.134]:11172 "EHLO
-	mx0.karlstorz.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752518AbcCWHIZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2016 03:08:25 -0400
-X-IronPort-AV: E=Sophos;i="5.24,381,1454972400"; 
-   d="scan'208";a="24470464"
-Received: from tut-ex03-pv.kstg.corp ([10.0.10.233])
-  by mx0.karlstorz.com with ESMTP; 23 Mar 2016 08:08:22 +0100
-Received: from TUT-EX02-PV.KSTG.corp ([169.254.2.132]) by
- TUT-EX03-PV.KSTG.corp ([10.0.10.233]) with mapi id 14.03.0266.001; Wed, 23
- Mar 2016 08:08:23 +0100
-Thread-Topic: AW: git and concurrent access to local repository
-Thread-Index: AdGEEMCWaucNZLm3Qs67LnHJXT7YGAABoqKAAAIdBtAABosUgAAmE0VQ
-In-Reply-To: <56F14E7F.3010801@web.de>
-Accept-Language: de-CH, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.3.60.52]
-x-kse-serverinfo: TUT-EX03-PV.KSTG.corp, 9
-x-kse-antivirus-interceptor-info: scan successful
-x-kse-antivirus-info: Clean, bases: 3/23/2016 4:35:00 AM
-x-kse-attachment-filter-scan-result: Clean
+	id S1753929AbcCWHVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 03:21:50 -0400
+Received: from mout.gmx.net ([212.227.17.21]:61013 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751105AbcCWHVs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2016 03:21:48 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MgXCF-1aNPBr4Ax5-00O19g; Wed, 23 Mar 2016 08:21:33
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <20160322234524.GJ28749@google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:XM8S+sBsMudypJq+tY+1sqhUXaF23yRiylZzv5lZWqzEvfQN0hi
+ dwS2pApcwa939akXuIhlZ3RVBAWdFO7Hq9EZBTi3hFgOy+dJP+5WZlR2Vv2D2IsZl+NcooP
+ ZxPqHGhFDMs45jpNi3OzR4N5przOqcNdW118K+KgFU/iu02FRxgeMyaaTzh2ck7czXWt7WB
+ xVIbtOP3fK+obnv60u/SA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:zgOjNGUdz2E=:9RuqJhqoKVRumTG4qznE2Y
+ TtVc02d5y1PyDtX6HCEt/b8M3x4STZZbZSUIm2w1crgLTs57tvU5V85Ld8EUTtyaNcMFqIE5b
+ ctp8jIraXsP5R0RaKPJn2QV4g0/ZEN2Ox+wMdwRIoWneQOqiCwFNwKy3AqT5thlRxkE6pKAz/
+ SSgpIkSi8UDwz7qWI3mY8meje8r8S930tq3M8FWQJlhhBto9glJrsGeBrFQq4F7OT5vErUCjP
+ kVDxl1a8Hzo0O8bUotoWITuJyHawsanTZs+yzn9dx3GEFSpShCTqQT/3YpuoVASIlyOQu1okv
+ /IPeVYy+JY/KCP7g7lTqoxr34CSvyRt7uMk4Y/uxoRmejF5NNAjcqUoDm/O8qDpzfl/XF5dJE
+ kGlx0KVZFwdB5wWehFxlRmjngrl5yXPSUHSHE7n/to16NFl8FO5RYZ8Von7FARtli9ehetc9/
+ oZ5wjP+Hz4FbvThv1G/ysSKA3SV7qjBJ9daofci+Oy5ZkkA9Feqmcl3K8JG+QbtgrH7DhFWYk
+ 3yvbX/sAj2i77fQVQOKl1zZjAJaPPfHxx5IUUcw5QJFEsPF68SEctUgRwm/j/bej9UXZvrauP
+ 83sZ6vosiTBV/pp9aTobFfjmVZWK67oEHs9z0poqmbci8evhZm3qfsCJlAbu/c+/6a39JTpJe
+ To+Ox6CzrUoHDKTVPgAEuk1jl+PbdrkNE/mnBT6oUhRpQCUQe+55iBFF1WZWFdJq8wDSFedhO
+ Yo+ZpasneDFzda+C81gijEIxDLC8K8t+u50tVzAoIzE+HFw7TZXF2pvshPnzD9dFdn7Tflq/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289597>
 
-Hi Torsten,
+Hi,
 
-yes, indeed I accidently pressed the wrong reply button.
+On Tue, 22 Mar 2016, Jonathan Nieder wrote:
 
-The solution I'm using is the following:
+> Junio C Hamano wrote:
+> 
+> > Both sounds sensible.  Should we squash this in, then?
+> >
+> >  t/t1300-repo-config.sh | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-pushd workingcopy > /dev/null
-	(
-		flock -x 200
-		git reset --hard
-		git clean -xfd
-		git pull --rebase
-	) 200>.git/gitrebase.lock
-popd > /dev/null
+Sure, makes sense. That late in the 2.8.0 game I tried to err on the more
+faithful side, hence I kept testing for "fatal:" but if you two are fine
+with dropping it...
 
-Best Regards
-Heiko
-
------Urspr=FCngliche Nachricht-----
-Von: Torsten B=F6gershausen [mailto:tboegi@web.de]=20
-Gesendet: Dienstag, 22. M=E4rz 2016 14:54
-An: Boettger, Heiko
-Betreff: Re: AW: git and concurrent access to local repository
-
-Thanks for the reply,
-you may want to send it to all, including the git mailing list.
-These kindof problems arise from time to time, and it may be nice to sh=
-are your knowledge as well, including work-arounds
-
-
-On 2016-03-22 10.54, Boettger, Heiko wrote:
-> Thanks Torsten,
->
-> for sharing your knowledge. That exactly what I thought. As a solutio=
-n, I'm guarding the calls with "flock -x", which perfectly works since =
-I know exactly where the repos are used.=20
->
-> Regards
-> Heiko
+Ciao,
+Dscho
