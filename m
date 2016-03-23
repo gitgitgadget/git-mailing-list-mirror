@@ -1,83 +1,115 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-send-pack: Fix --all option when used with directory
-Date: Wed, 23 Mar 2016 17:30:34 -0400
-Message-ID: <20160323213034.GB19920@sigill.intra.peff.net>
-References: <1458750262-25765-1-git-send-email-stanislav@assembla.com>
- <20160323212213.GA19920@sigill.intra.peff.net>
+Subject: Re: [PATCH/GSoC] parse-options: Add a new nousage opt
+Date: Wed, 23 Mar 2016 18:31:57 -0400
+Message-ID: <20160323223157.GA12531@sigill.intra.peff.net>
+References: <1458456405-3519-1-git-send-email-chirayudesai1@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Dave Borowitz <dborowitz@google.com>, git@vger.kernel.org
-To: Stanislav Kolotinskiy <stanislav@assembla.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 22:30:47 2016
+Cc: git@vger.kernel.org
+To: Chirayu Desai <chirayudesai1@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 23 23:32:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiqMV-0005ke-0S
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 22:30:43 +0100
+	id 1airJu-00052i-Uh
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 23:32:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751350AbcCWVai (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 17:30:38 -0400
-Received: from cloud.peff.net ([50.56.180.127]:36999 "HELO cloud.peff.net"
+	id S1751074AbcCWWcB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 18:32:01 -0400
+Received: from cloud.peff.net ([50.56.180.127]:37032 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750984AbcCWVah (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 17:30:37 -0400
-Received: (qmail 2791 invoked by uid 102); 23 Mar 2016 21:30:37 -0000
+	id S1750834AbcCWWcA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2016 18:32:00 -0400
+Received: (qmail 6007 invoked by uid 102); 23 Mar 2016 22:31:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Mar 2016 17:30:37 -0400
-Received: (qmail 3639 invoked by uid 107); 23 Mar 2016 21:30:57 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Mar 2016 18:31:59 -0400
+Received: (qmail 4368 invoked by uid 107); 23 Mar 2016 22:32:19 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Mar 2016 17:30:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Mar 2016 17:30:34 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Mar 2016 18:32:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Mar 2016 18:31:57 -0400
 Content-Disposition: inline
-In-Reply-To: <20160323212213.GA19920@sigill.intra.peff.net>
+In-Reply-To: <1458456405-3519-1-git-send-email-chirayudesai1@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289687>
 
-On Wed, Mar 23, 2016 at 05:22:13PM -0400, Jeff King wrote:
+On Sun, Mar 20, 2016 at 12:16:45PM +0530, Chirayu Desai wrote:
 
-> > diff --git a/t/t9904-send-pack-all.sh b/t/t9904-send-pack-all.sh
-> 
-> The tests are roughly grouped by functionality. send-pack tests are in
-> the t540x range, and this should probably go there. Though I also
-> suspect it could easily be added to the end of an existing test script,
-> which is preferable.
-> 
-> > +test_expect_success setup '
-> 
-> This setup seems a bit more complicated than it needs to be. It's nice
-> to keep tests as simple as possible, so a reader can understand exactly
-> what is being tested.
-> 
-> Here are a few things I think we can simplify:
-> [...]
+> diff --git a/parse-options-cb.c b/parse-options-cb.c
+> index 239898d946..ac2ea4d674 100644
+> --- a/parse-options-cb.c
+> +++ b/parse-options-cb.c
+> @@ -85,11 +85,15 @@ int parse_opt_commits(const struct option *opt, const char *arg, int unset)
+>  
+>  	if (!arg)
+>  		return -1;
+> -	if (get_sha1(arg, sha1))
+> -		return error("malformed object name %s", arg);
+> +	if (get_sha1(arg, sha1)) {
+> +		error("malformed object name %s", arg);
+> +		return -3;
+> +	}
 
-So I think we could replace your t9904 with something like this:
+Now that we have a few meaningful return values, should we have some
+enum that gives them human-readable names?
 
-diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
-index 04cea97..305ca7a 100755
---- a/t/t5400-send-pack.sh
-+++ b/t/t5400-send-pack.sh
-@@ -128,6 +128,18 @@ test_expect_success 'denyNonFastforwards trumps --force' '
- 	test "$victim_orig" = "$victim_head"
- '
- 
-+test_expect_success 'send-pack --all sends all branches' '
-+	# make sure we have at least 2 branches with different
-+	# values, just to be thorough
-+	git branch other-branch HEAD^ &&
-+
-+	git init --bare all.git &&
-+	git send-pack --all all.git &&
-+	git for-each-ref refs/heads >expect &&
-+	git -C all.git for-each-ref refs/heads >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'push --all excludes remote-tracking hierarchy' '
- 	mkdir parent &&
- 	(
+E.g., why don't we allow "-2" here? I think it is because
+parse_options_step internally uses it for "I don't know about that
+option". But maybe we should have something like:
+
+  enum PARSE_OPT_ERROR {
+          PARSE_OPT_ERR_USAGE = -1,
+	  PARSE_OPT_ERR_UNKNOWN_OPTION = -2,
+	  PARSE_OPT_ERR_FAIL_QUIETLY = -3,
+  }
+
+(I don't quite like the final name, but I couldn't think of anything
+better).
+
+> diff --git a/parse-options.c b/parse-options.c
+> index 47a9192060..d136c1afd0 100644
+> --- a/parse-options.c
+> +++ b/parse-options.c
+> @@ -158,6 +158,9 @@ static int get_value(struct parse_opt_ctx_t *p,
+>  			return (*opt->callback)(opt, NULL, 0) ? (-1) : 0;
+>  		if (get_arg(p, opt, flags, &arg))
+>  			return -1;
+> +		if (opt->flags & PARSE_OPT_NOUSAGE) {
+> +			return (*opt->callback)(opt, arg, 0);
+> +		}
+>  		return (*opt->callback)(opt, arg, 0) ? (-1) : 0;
+
+Here you use PARSE_OPT_NOUSAGE to pass the callback's value directly
+back to the rest of the option-parsing code. But can't we just intercept
+"-3" always? It's possible that another callback is using it to
+generically return an error, but it seems like a rather low risk, and
+the resulting code is much simpler.
+
+Or we could go the opposite direction. If a callback is annotated with
+PARSE_OPT_NOUSAGE, why do we even need to care about its return value?
+The callback could continue to return -1, and we would simply suppress
+the usage message.
+
+>  	case OPTION_INTEGER:
+> @@ -504,6 +507,8 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+>  			goto show_usage_error;
+>  		case -2:
+>  			goto unknown;
+> +		case -3:
+> +			return PARSE_OPT_DONE;
+>  		}
+>  		continue;
+>  unknown:
+
+If I understand correctly, this is now getting the value from the
+callback directly. What happens if a callback returns "-4" or "4"?
+
+Also, this covers the parse_long_opt() call, but there are two
+parse_short_opt() calls earlier. Wouldn't they need to learn the same
+logic?
+
+-Peff
