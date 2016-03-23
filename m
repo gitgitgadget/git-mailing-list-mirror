@@ -1,87 +1,103 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 04/21] t1430: test for-each-ref in the presence of badly-named refs
-Date: Wed, 23 Mar 2016 11:04:21 +0100
-Message-ID: <ec680e35e10657ba1ba17e561ae06f1851b10a0b.1458723959.git.mhagger@alum.mit.edu>
+Subject: [PATCH 09/21] resolve_ref_1(): eliminate local variable
+Date: Wed, 23 Mar 2016 11:04:26 +0100
+Message-ID: <e9008ce41529e6692cb01825c3127a12eb959def.1458723959.git.mhagger@alum.mit.edu>
 References: <cover.1458723959.git.mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, peff@peff.net, pclouds@gmail.com,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 11:15:45 2016
+X-From: git-owner@vger.kernel.org Wed Mar 23 11:15:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiflj-0000Ak-DC
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 11:12:03 +0100
+	id 1aifmf-0001Ah-4q
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 11:13:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754300AbcCWKMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 06:12:00 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:55483 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751741AbcCWKL7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2016 06:11:59 -0400
-X-AuditID: 12074412-b07ff70000006da4-d9-56f26a45cef9
+	id S1754718AbcCWKMn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 06:12:43 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:49379 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754688AbcCWKMi (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2016 06:12:38 -0400
+X-AuditID: 1207440c-99fff700000008b4-cb-56f26a4d749e
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 91.0C.28068.54A62F65; Wed, 23 Mar 2016 06:04:53 -0400 (EDT)
+	by  (Symantec Messaging Gateway) with SMTP id 6B.D9.02228.D4A62F65; Wed, 23 Mar 2016 06:05:01 -0400 (EDT)
 Received: from michael.fritz.box (p548D66C6.dip0.t-ipconnect.de [84.141.102.198])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u2NA4g19018017
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u2NA4g1E018017
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Wed, 23 Mar 2016 06:04:52 -0400
+	Wed, 23 Mar 2016 06:04:59 -0400
 X-Mailer: git-send-email 2.8.0.rc3
 In-Reply-To: <cover.1458723959.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrFIsWRmVeSWpSXmKPExsUixO6iqOua9SnMYPdjJYuuK91MFg29V5gt
-	bq+Yz2zRPeUto8WPlh5mi5lXrR3YPP6+/8DksXPWXXaPZ717GD0uXlL22L90G5vH501yAWxR
-	3DZJiSVlwZnpefp2CdwZM77MZCuYxVPxbtomlgbGg1xdjJwcEgImEuenHmfsYuTiEBLYyihx
-	/+JKZgjnJJPEmhkfGUGq2AR0JRb1NDOB2CICahIT2w6xgBQxCyxglNi4eDEzSEJYIFjixOXf
-	rCA2i4CqxIVjG4FsDg5egSiJt5dsILYpSWx4cAFsDqeAhcTJk0vB5gsJmEtsf7CWaQIjzwJG
-	hlWMcok5pbm6uYmZOcWpybrFyYl5ealFumZ6uZkleqkppZsYIeEktINx/Um5Q4wCHIxKPLwS
-	Zz6GCbEmlhVX5h5ilORgUhLlPR/0KUyILyk/pTIjsTgjvqg0J7X4EKMEB7OSCC9nJlCONyWx
-	siq1KB8mJc3BoiTO+3Oxup+QQHpiSWp2ampBahFMVoaDQ0mCVwCkUbAoNT21Ii0zpwQhzcTB
-	CTKcS0qkODUvJbUosbQkIx4UA/HFwCgASfEA7eUF21tckJgLFIVoPcWoKCXOq5EBlBAASWSU
-	5sGNhSWJV4ziQF8K8+4AqeIBJhi47ldAg5mABi/0ARtckoiQkmpglIzOr/k8afP9GNnXbxc5
-	ndiYcI7NYtqCRwWLXrhtsnF2sZi10qHOJ272np2X3xz9Iz8rYZbBy2kT3l3PzjL/JMnrKxL6
-	8N7e/hLRfu6HV5bdWagwt/Cqev//1/mN20Xnxr+dN7HkSYgtR/FWW94vM2Ibbj+Y 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrJIsWRmVeSWpSXmKPExsUixO6iqOub9SnMoOMIh0XXlW4mi4beK8wW
+	t1fMZ7bonvKW0eJHSw+zxcyr1g5sHn/ff2Dy2DnrLrvHs949jB4XLyl77F+6jc3j8ya5ALYo
+	bpukxJKy4Mz0PH27BO6MtV/3sBV85q6Y/OwyawPjNs4uRk4OCQETiY331rJ0MXJxCAlsZZQ4
+	+HQWO0hCSOAkk8TstbogNpuArsSinmYmEFtEQE1iYtshsAZmgQWMEhsXL2YGSQgLOEg8aLjM
+	2sXIwcEioCrR3BQPEuYViJL42PubCWKZksSGBxfAbE4BC4mTJ5cyQuwyl9j+YC3TBEaeBYwM
+	qxjlEnNKc3VzEzNzilOTdYuTE/PyUot0DfVyM0v0UlNKNzFCgolnB+O3dTKHGAU4GJV4eCXO
+	fAwTYk0sK67MPcQoycGkJMp7PuhTmBBfUn5KZUZicUZ8UWlOavEhRgkOZiUR3uZMoBxvSmJl
+	VWpRPkxKmoNFSZxXdYm6n5BAemJJanZqakFqEUxWhoNDSYK3HaRRsCg1PbUiLTOnBCHNxMEJ
+	MpxLSqQ4NS8ltSixtCQjHhQB8cXAGABJ8QDtbQXbW1yQmAsUhWg9xagoJc7rDZIQAElklObB
+	jYWliFeM4kBfCvOuBKniAaYXuO5XQIOZgAYv9AEbXJKIkJJqYMyo3OnQckRWdIOJlYa//H3z
+	H9lXLBdksmV8kvJ5dngdE7/O3IzGw4tN3/6MYjwuU/9ew0bgsEbAFM57aRs9TEQaDI+726/a
+	UfNS70x8aEJXmko/X79onqvp9amCWRcrd/RMq/zNeGPLxDnW964JRCrtNtU9aLdu 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289626>
+
+In place of `buf`, use `refname`, which is anyway a better description
+of what is being pointed at.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- t/t1430-bad-ref-name.sh | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ refs/files-backend.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/t/t1430-bad-ref-name.sh b/t/t1430-bad-ref-name.sh
-index a963951..612cc32 100755
---- a/t/t1430-bad-ref-name.sh
-+++ b/t/t1430-bad-ref-name.sh
-@@ -155,6 +155,22 @@ test_expect_success 'rev-parse skips symref pointing to broken name' '
- 	test_i18ngrep "ignoring dangling symref refs/tags/shadow" err
- '
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 067ce1c..69ec903 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1426,7 +1426,6 @@ static const char *resolve_ref_1(const char *refname,
+ 	for (symref_count = 0; symref_count < MAXDEPTH; symref_count++) {
+ 		const char *path;
+ 		struct stat st;
+-		char *buf;
+ 		int fd;
  
-+test_expect_success 'for-each-ref emits warnings for broken names' '
-+	cp .git/refs/heads/master .git/refs/heads/broken...ref &&
-+	test_when_finished "rm -f .git/refs/heads/broken...ref" &&
-+	printf "ref: refs/heads/broken...ref\n" >.git/refs/heads/badname &&
-+	test_when_finished "rm -f .git/refs/heads/badname" &&
-+	printf "ref: refs/heads/master\n" >.git/refs/heads/broken...symref &&
-+	test_when_finished "rm -f .git/refs/heads/broken...symref" &&
-+	git for-each-ref >output 2>error &&
-+	! grep -e "broken\.\.\.ref" output &&
-+	! grep -e "badname" output &&
-+	! grep -e "broken\.\.\.symref" output &&
-+	test_i18ngrep "ignoring ref with broken name refs/heads/broken\.\.\.ref" error &&
-+	test_i18ngrep "ignoring broken ref refs/heads/badname" error &&
-+	test_i18ngrep "ignoring ref with broken name refs/heads/broken\.\.\.symref" error
-+'
-+
- test_expect_success 'update-ref --no-deref -d can delete reference to broken name' '
- 	printf "ref: refs/heads/broken...ref\n" >.git/refs/heads/badname &&
- 	test_when_finished "rm -f .git/refs/heads/badname" &&
+ 		strbuf_reset(sb_path);
+@@ -1532,21 +1531,21 @@ static const char *resolve_ref_1(const char *refname,
+ 			return refname;
+ 		}
+ 		*flags |= REF_ISSYMREF;
+-		buf = sb_contents->buf + 4;
+-		while (isspace(*buf))
+-			buf++;
++		refname = sb_contents->buf + 4;
++		while (isspace(*refname))
++			refname++;
+ 		strbuf_reset(sb_refname);
+-		strbuf_addstr(sb_refname, buf);
++		strbuf_addstr(sb_refname, refname);
+ 		refname = sb_refname->buf;
+ 		if (resolve_flags & RESOLVE_REF_NO_RECURSE) {
+ 			hashclr(sha1);
+ 			return refname;
+ 		}
+-		if (check_refname_format(buf, REFNAME_ALLOW_ONELEVEL)) {
++		if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
+ 			*flags |= REF_ISBROKEN;
+ 
+ 			if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
+-			    !refname_is_safe(buf)) {
++			    !refname_is_safe(refname)) {
+ 				errno = EINVAL;
+ 				return NULL;
+ 			}
 -- 
 2.8.0.rc3
