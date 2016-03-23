@@ -1,88 +1,107 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/4] Make t1300-repo-config resilient to being run via
- 'sh -x'
-Date: Wed, 23 Mar 2016 09:22:32 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603230921160.4690@virtualbox>
-References: <cover.1458668543.git.johannes.schindelin@gmx.de> <b4df45088aa68d8410895f66a814dd6780e2e451.1458668543.git.johannes.schindelin@gmx.de> <xmqq7fguie7t.fsf@gitster.mtv.corp.google.com>
+From: Jared Davison <jared@medical-objects.com.au>
+Subject: Issue with git submodule update --init --depth=1 submodA
+Date: Wed, 23 Mar 2016 18:28:02 +1000
+Message-ID: <CAECUmHo8Q=N_rTP7NnYaQJ24g9SVrgCmpq1NHVXe1icD6xn7vw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>,
-	Eric Wong <normalperson@yhbt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 09:22:59 2016
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 23 09:28:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aie49-0005IP-A3
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 09:22:57 +0100
+	id 1aie9U-0008Ig-Pv
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 09:28:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753865AbcCWIWx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 04:22:53 -0400
-Received: from mout.gmx.net ([212.227.17.21]:50186 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753557AbcCWIWv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 04:22:51 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MVZuV-1aGpeN2Nwd-00Z2ee; Wed, 23 Mar 2016 09:22:36
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqq7fguie7t.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:MUf8TIqcqWJIVNqQNYN1k5RMzLtTYuJURVjtBZJHWszFrLsVyw3
- 4nh2GOnvdR7wwwdRVoU099hdytSUZk8LtMscyw/Ft5HRenGZQcV6Ku6hMK8CN6uBSjkHCOA
- C4NTb3++in2oEb0aav4pKLh/OQtlJ40xYEtIzzOd+XsAswKaXCe+xtbi6mBJSWN7HIx7HR8
- 6rPNBiuJGjNqXMU5xsV5A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:74Jv8CvwlWk=:hPMp1FHSSSApxZra4BGMew
- T41cVqTspB8scjincDUpu/AGoVB1wRZwdLkvSYhPYPB16IkGEOL/D5kncuEWmF4GDvixWkgQ0
- I0b1UM3RXoQndTTC8wZsUaOT841t4wvTRnKqS+kQF0QuAR7/+z3CmMsOjD/vqhmXrf0r72+Vq
- kDYJRYdSaLYggTdE0Y3xNNNIP8G+RbYXXxRkmqF9PRGfbWFrCahD1ibS7DAazfgw9hlJZZU9t
- tp7a4D+I/MF850uCBZNJRVIYOJlOjV4IrOSucb6x67rUdgEFvD2JGvfQaGsAnfp9GFyzJXqR3
- F1r6SREYMT9h/fVkFOXh8Yn6UjKtATpIwLGPxLKW+mAOS/TCV+MNc6qPyIef4vn9TNpt2cIj9
- cHhfV+xRReFUBFCNjCxh0cLoeHqt6n5MT4FRj6xQ67ZXDYGSSeDI8BNptTt8foGcx3XJlstBF
- rxr5TkqhC0dCmJcbLVHgvdWyRoKnPFhMdIjRJ565BQQ1bWmKVAZKdWRrHeUK59Z1XPOuBy3Q0
- s0YfckpYKjtQEtQb8KuIHWrWvw83z/payejfVIvabHtx5LMFMV7dh57PVSRNDhTkWi/VR/Thl
- Tq0xvZ3C5deH5ME/JS7sV9HR386DD1c3ibQgTA961arBo504rR7y+DjRFKpxOTBTrMQk3FXa+
- iTN1JFPuXmXUt/ZWsCQQOa1nWaVvOUxZLFi4LV8b7T736ud8Jbz61TtVFgu0mn7W4EQdKuyxT
- rjcucKb4VKWqtQLZRBQOSyBuOpIB4cV16MzDeLDfwGBMVSffT+tZjuDpwxRuDqvAbzgvdCvq 
+	id S1754307AbcCWI2Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 04:28:25 -0400
+Received: from mail-vk0-f51.google.com ([209.85.213.51]:35683 "EHLO
+	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753537AbcCWI2W (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2016 04:28:22 -0400
+Received: by mail-vk0-f51.google.com with SMTP id e6so9908267vkh.2
+        for <git@vger.kernel.org>; Wed, 23 Mar 2016 01:28:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=momail-medical-objects-com-au.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=GQsjoIuKx8B8oH+CeugJK8sM/RFuaFd/mZeBJwLLt/8=;
+        b=PnDECfLRwnULQjLxxP5Mwf7HieP/jpOonQQ5nSlITcHA7YfYSZ8Bayx83Kq7zZuATO
+         VUbFO0r5U+PO0sdBjiqZdauZVG+G2bDhFQtXnxwOiDQL+JgCL+gp540T5WmhTZIijP+E
+         k5crAtn9MuNYjiN6HdMlF1o7soQYDmE4e5VrmrYjBUOEj/UCz6GeWQvdz9nmZoxGvVnf
+         igV8k0+eCDsjkI5TJIRqYgICsFRCF6uyeWXBfb7ZndeM6g7IBtXXXhhm7N8TyDYlQAxB
+         RrFAZcBbBXDmR8IDWV/ySrnpA0fKuB59Uw8UThKglFpcgapuhtXfIsIYzXiVhpWxRaTf
+         A5nQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=GQsjoIuKx8B8oH+CeugJK8sM/RFuaFd/mZeBJwLLt/8=;
+        b=RIbOLdK7lYGz9aLvwiWTJ+ZbGLRlt44q7Lw3DWbYb7IS0fjRGmKfbEYV+/jkO5Dcx/
+         1s7P03I2g3iqX9nJpGYEHU4dynRyormPdvQ6oK4Gp5DN4DyytjuewHCabWjA+sUMuHbt
+         +DYGdadpcYASqjg1MeYAiDBkgpK86jmS9Taq8hu/8UL3TqFWD4nkoSiD728RqEYbpTB8
+         UcmNI1DFZCu7+JzhWh0h3XdTXhLKvciLEjDjqJm5+RD1VaNaJj+G0W+qwE9s0A9peeq1
+         lfSy2tapuZBGliY+nZ+85ZzyZlKaS3YkItkBWCzy19MfF7dwikyN2kw/K2zAZo6gE2mf
+         IVIw==
+X-Gm-Message-State: AD7BkJId1DEUUhFS2Dqzt96Nodjks00OuwjOKfh+7T3CDIg7uC0s3Ipy1I5pFyGDneesPhSrq1O2CGcjVsWnmw==
+X-Received: by 10.176.2.231 with SMTP id 94mr665504uah.106.1458721701598; Wed,
+ 23 Mar 2016 01:28:21 -0700 (PDT)
+Received: by 10.31.96.19 with HTTP; Wed, 23 Mar 2016 01:28:02 -0700 (PDT)
+X-Google-Sender-Auth: UvA-QxoOdyhQZKZjYC4612Z8Hf4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289602>
 
-Hi Junio,
+Hello all,
 
-On Tue, 22 Mar 2016, Junio C Hamano wrote:
+I have encountered a problem with using submodules.
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > One of this developer's primary tools to diagnose broken regression
-> > tests is to run the test script using 'sh -x t... -i -v' to find out
-> > *which* call *actually* demonstrates the symptom.
-> >
-> > Hence it is pretty counterproductive if the test script behaves
-> > differently when being run via 'sh -x', in particular when using
-> > test_cmp or test_i18ncmp on redirected stderr.
-> >
-> > So let's use grep instead of test_cmp/test_i18ncmp to verify that stderr
-> > looks as expected.
-> 
-> In the modern world, I would probably described the problem as
-> "tXXXX -i -v -x", though, not "sh -x tXXXX", but they both exhibit
-> the same symptom.
+The problem occurs when using
 
-Thanks for pointing me to -i -v -x. The introduction of the RHS -x somehow
-slipped by me.
+repo-parent$ git submodule update --init --depth=1 submodA
 
-> I wonder if "tXXXX -i -v -x" can be made not to contaminate the
-> standard error stream of the test, but that would be a larger change
-> we probably would not have time for 2.8 final anyway.
+Submodule 'submoduleA' (.../submoduleA.git) registered for path 'submoduleA'
+Cloning into 'submoduleA'...
+Fetched in submodule path 'submoduleA', but it did not contain
+8a1c22151b510160d7b41a019d7642ab2cd5e085. Direct fetching of that
+commit failed.
 
-Agree, both on "we want to have this" and "after 2.8".
+Note the --depth=1 argument.
 
-Ciao,
-Dscho
+This all works fine if the head of the submodA master branch is the
+revision required by the repo-parent as shown in "git submodule list"
+
+However, if submodA's history has progressed by one commit, then
+--depth=2 is required and this works fine. --depth=1 will no longer
+work and gives the error as above.
+
+Does depth always have to be counted from the head or most recent
+commit in the submodule branch?
+
+Could depth be counted from the required commit reference by the
+parent repo instead of the most recent? If so then --depth=1 could
+work I think.
+
+The reason I would like to do this is that the history actually
+contains some fairly large files and I wish to clone only the history
+for the current version of the files in that most recent commit. This
+all works great until someone pushes a commit into the submodule. I am
+using this as part of a continuous integration process which will
+build branches that reference submodules where the referenced commit
+may go back a long way back in history.
+
+Trying to determine the correct depth parameter value to use is
+impossible as with time it will be a growing amount as commits are
+added to the submodule branch.
+
+Another user found the same issue:  http://stackoverflow.com/a/25875273
+
+I have just compiled the git from "next" branch source, "git version
+2.8.0.rc4.233.g1aaf96d" and have confirmed this is still the
+behaviour.
+
+Thanks for reading my enquiry and for your thoughts on this topic.
+
+Jared
