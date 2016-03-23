@@ -1,115 +1,83 @@
-From: Laison@seymour.toledo.br, Computech@seymour.toledo.br,
-	"Inc <support"@ensuretech.com
-Subject: CISCO IP PHONES AND CPU's
-Date: Thu, 24 Mar 2016 02:11:53 +0700
-Message-ID: <20160323203551.E924BA7A52@seymour.toledo.br>
-Reply-To: sales@laisoncomputertech.us
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-send-pack: Fix --all option when used with directory
+Date: Wed, 23 Mar 2016 17:30:34 -0400
+Message-ID: <20160323213034.GB19920@sigill.intra.peff.net>
+References: <1458750262-25765-1-git-send-email-stanislav@assembla.com>
+ <20160323212213.GA19920@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: Recipients <support@ensuretech.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 22:24:39 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Dave Borowitz <dborowitz@google.com>, git@vger.kernel.org
+To: Stanislav Kolotinskiy <stanislav@assembla.com>
+X-From: git-owner@vger.kernel.org Wed Mar 23 22:30:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiqGc-0001OD-Gj
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 22:24:38 +0100
+	id 1aiqMV-0005ke-0S
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 22:30:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756930AbcCWVYc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 17:24:32 -0400
-Received: from seymour.toledo.br ([200.148.142.55]:47043 "EHLO
-	seymour.toledo.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755460AbcCWVYa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2016 17:24:30 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by seymour.toledo.br (Postfix) with ESMTP id 6B753A7B53;
-	Wed, 23 Mar 2016 17:36:00 -0300 (BRT)
-Received: from seymour.toledo.br ([127.0.0.1])
-	by localhost (seymour.toledo.br [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id UPFsZYzvuDRz; Wed, 23 Mar 2016 17:36:00 -0300 (BRT)
-Received: from localhost (localhost [127.0.0.1])
-	by seymour.toledo.br (Postfix) with ESMTP id EE35AA74E7;
-	Wed, 23 Mar 2016 17:35:59 -0300 (BRT)
-X-Virus-Scanned: amavisd-new at seymour.toledo.br
-Received: from seymour.toledo.br ([127.0.0.1])
-	by localhost (seymour.toledo.br [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id lEwzFGFjlsJP; Wed, 23 Mar 2016 17:35:59 -0300 (BRT)
-Received: from [180.250.80.61] (unknown [180.250.80.61])
-	by seymour.toledo.br (Postfix) with ESMTPSA id E924BA7A52;
-	Wed, 23 Mar 2016 17:35:51 -0300 (BRT)
-Content-Description: Mail message body
+	id S1751350AbcCWVai (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 17:30:38 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36999 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750984AbcCWVah (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2016 17:30:37 -0400
+Received: (qmail 2791 invoked by uid 102); 23 Mar 2016 21:30:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Mar 2016 17:30:37 -0400
+Received: (qmail 3639 invoked by uid 107); 23 Mar 2016 21:30:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Mar 2016 17:30:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Mar 2016 17:30:34 -0400
+Content-Disposition: inline
+In-Reply-To: <20160323212213.GA19920@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289686>
 
-Hi,
+On Wed, Mar 23, 2016 at 05:22:13PM -0400, Jeff King wrote:
 
-Our Stock list.
+> > diff --git a/t/t9904-send-pack-all.sh b/t/t9904-send-pack-all.sh
+> 
+> The tests are roughly grouped by functionality. send-pack tests are in
+> the t540x range, and this should probably go there. Though I also
+> suspect it could easily be added to the end of an existing test script,
+> which is preferable.
+> 
+> > +test_expect_success setup '
+> 
+> This setup seems a bit more complicated than it needs to be. It's nice
+> to keep tests as simple as possible, so a reader can understand exactly
+> what is being tested.
+> 
+> Here are a few things I think we can simplify:
+> [...]
 
-Brand NEW
-96 x Cisco 7900 IP Phone
-87 x Unified IP Phone 6900
-12 x Unified IP Phone 8900
-76 x Unified IP Phone 9900
-55 x Unified IP Phone 8800
-67 x Cisco 1921
-67 x Cisco 1941
-56 x Cisco CP-7961G 7961G
-34 x Cisco CP-7971G-GE 7971G
-19 x Cisco Unified IP Conference Station 7937G Model: 7937 CP-7937G
-20 x Cisco CP-7975G 7975G
+So I think we could replace your t9904 with something like this:
 
-Brand New Sealed :
-
-23 x  CISCO1921-SEC/K9
-Conditions: Brand New Sealed
-Description: CISCO 1921 Security Bundle w/SEC license PAK
-
-45 x CISCO1921/K9
-Conditions: Brand New Sealed
-Description: CISCO 1921 Modular Router, 2 GE, 2 EHWIC slots, 512DRAM, IP Base
-
-(1)  WS-C4500X-16SFP+
-Serial number:  JAE183501L3
-US&#36;2600
-
-(1)  WS-C3850-48PW-S
-Serial number:  FCW1823C0EW
-US&#36;2650
-
-(1)  WS-X6908-10G-2T
-Serial number:  SAL1620CKUB
-US&#36;3650
-
-(1)  ASR1000-ESP10
-Serial number:  JAE181306C3
-US&#36;3800
-
-(1)  AIR-CT5508-250-K9   (this is new but box is open!)
-Serial number:  FCW1521L038
-US&#36;4000
-
-CPUs part number below
-
-89 x  X5650
-
-975 x  X5660
-
-150 x  X5680
-
-265 x  X5690
-
-Kindly make your price offers.
-
-Sincerely
-Barbara Johnson
-Laison Computech
-210 N Scoring Ave,
-Rialto California, 92376
-Tel: +1-657-232-7047
-Fax: +1-347-214-0478
-Email: sales@laisoncomputertech.us
+diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
+index 04cea97..305ca7a 100755
+--- a/t/t5400-send-pack.sh
++++ b/t/t5400-send-pack.sh
+@@ -128,6 +128,18 @@ test_expect_success 'denyNonFastforwards trumps --force' '
+ 	test "$victim_orig" = "$victim_head"
+ '
+ 
++test_expect_success 'send-pack --all sends all branches' '
++	# make sure we have at least 2 branches with different
++	# values, just to be thorough
++	git branch other-branch HEAD^ &&
++
++	git init --bare all.git &&
++	git send-pack --all all.git &&
++	git for-each-ref refs/heads >expect &&
++	git -C all.git for-each-ref refs/heads >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'push --all excludes remote-tracking hierarchy' '
+ 	mkdir parent &&
+ 	(
