@@ -1,96 +1,130 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 15/21] read_raw_ref(): change flags parameter to unsigned int
-Date: Wed, 23 Mar 2016 11:04:32 +0100
-Message-ID: <317cccf286a11f2e4ac92fecacd206494b1bc30f.1458723959.git.mhagger@alum.mit.edu>
-References: <cover.1458723959.git.mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, peff@peff.net, pclouds@gmail.com,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 11:16:12 2016
+From: Hui Yiqun <huiyiqun@gmail.com>
+Subject: [PATCH v3/GSoC 1/5] path.c: implement strbuf_mkpath()
+Date: Wed, 23 Mar 2016 18:13:21 +0800
+Message-ID: <1458728005-22555-1-git-send-email-huiyiqun@gmail.com>
+Cc: peff@peff.net, pickfire@riseup.net, Hui Yiqun <huiyiqun@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 23 11:16:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aifmI-0000gX-31
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 11:12:38 +0100
+	id 1aifnH-0001wb-0h
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 11:13:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754687AbcCWKMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 06:12:34 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:58900 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752037AbcCWKM0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2016 06:12:26 -0400
-X-AuditID: 1207440e-c03ff70000000398-cd-56f26a564bed
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 38.BC.00920.65A62F65; Wed, 23 Mar 2016 06:05:10 -0400 (EDT)
-Received: from michael.fritz.box (p548D66C6.dip0.t-ipconnect.de [84.141.102.198])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u2NA4g1K018017
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Wed, 23 Mar 2016 06:05:09 -0400
-X-Mailer: git-send-email 2.8.0.rc3
-In-Reply-To: <cover.1458723959.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrNIsWRmVeSWpSXmKPExsUixO6iqBue9SnMoGeehEXXlW4mi4beK8wW
-	t1fMZ7bonvKW0eJHSw+zxcyr1g5sHn/ff2Dy2DnrLrvHs949jB4XLyl77F+6jc3j8ya5ALYo
-	bpukxJKy4Mz0PH27BO6Mmb2P2QsW8lRc3nCVsYHxCWcXIyeHhICJxMHFLexdjFwcQgJbGSVO
-	LZvMBuGcZJLoOv+JGaSKTUBXYlFPMxOILSKgJjGx7RALSBGzwAJGiY2LF4MVCQv4Sqxs2MsK
-	YrMIqEocufgAzOYViJL4+H8DC8Q6JYkNDy6ADeIUsJA4eXIpI4gtJGAusf3BWqYJjDwLGBlW
-	Mcol5pTm6uYmZuYUpybrFicn5uWlFuka6+VmluilppRuYoQEFN8Oxvb1MocYBTgYlXh4Jc98
-	DBNiTSwrrsw9xCjJwaQkyns+6FOYEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRFezXSgHG9KYmVV
-	alE+TEqag0VJnFdtibqfkEB6YklqdmpqQWoRTFaGg0NJgndeGlCjYFFqempFWmZOCUKaiYMT
-	ZDiXlEhxal5KalFiaUlGPCgK4ouBcQCS4gHauxRsb3FBYi5QFKL1FKOilDjvB5C5AiCJjNI8
-	uLGwNPGKURzoS2FeEZB2HmCKget+BTSYCWjwQh+wwSWJCCmpBsZ5N85GO6ctKS1TXz2xefpX
-	v3VnJz+1+nomhr3ElGfx1n+vtjo+33lATbl13qsVTJM3FJQ97Zj8arV4HkdPhVLyr5mPXVx5
-	r/t1WhQc+75ySyAX66EVV3s1edIlNdhu1CVdWeNY8WTtneXnrZ903HncnN/+KIDf 
+	id S1754616AbcCWKNf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 06:13:35 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:34217 "EHLO
+	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754160AbcCWKNd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2016 06:13:33 -0400
+Received: by mail-pf0-f195.google.com with SMTP id n5so2390051pfn.1
+        for <git@vger.kernel.org>; Wed, 23 Mar 2016 03:13:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=NOWDTdGAGEkWX18APZG6nUF5LtPQjuzU26grqjNTeu0=;
+        b=yYBYbdzCV6t54xbZQhUgtRqDlQG11iuYweNtUIyb9JzTvB2JsqVgYkB19aGN8n7MEm
+         y22LoWToLC0jsXrUA/tNHGaUAu36lT+yhr0Ze6qV7xuBMV47r+qoJRs0FJrlvylZbcXL
+         f5MgfMH7w/t/tJBkIEdNAeq3W3dYkdXZawL8JCv1ScarDbjgS+dSABzl/alotbdVwD8c
+         mtQq5lL46a0mCNiy0ZhR0Dxh6Jg0vpm9TPGBJsjOie2oVerNngD4/DI9MElyYvnV5MXy
+         t0ElKoO4z90tlAVmsLJBtmY+aXOhMndO90QoH4ewoLdm7RMusoUPi6RwhQQJmwMx2zQ2
+         KflQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=NOWDTdGAGEkWX18APZG6nUF5LtPQjuzU26grqjNTeu0=;
+        b=hS1iQhcjZyZwqNwYW367LrLcKGnCV1Yza1qHU4reiuhT4LlHp+bMsxBmDLNyozBEMK
+         L3GWtDJ2kZ19ELtxjuPT/SkiQ/W9pZgtFGF7RsMrp+91JD8r+WNWEhWBeJFsmwIv9z54
+         6aLVP6097OlQ/U9WFHADWCY4aAzMfAwHCGYr8EXffD8BFtpQ/whCd7BjhEkPIwP/K0CB
+         VLyU8EzFEYMDD+mBsJCEYn3gphl71eeJP+2iuUyCHJQwkvmxrhd9CJi5/siDRzltjTKT
+         MgvpN+IP7w4K7GBRkkxUPj/0lbAiUeNTRY7bQwSs5mu9dfCbhSKZLQnwPf9kr6uxDhWn
+         qnlQ==
+X-Gm-Message-State: AD7BkJKFmu3gU9ECeHg1lBnS7F9yNzRWQey/xyND/2X+Gv2KTLLZu8BeLLAt1hJhNqnyLQ==
+X-Received: by 10.98.71.210 with SMTP id p79mr2894703pfi.4.1458728012909;
+        Wed, 23 Mar 2016 03:13:32 -0700 (PDT)
+Received: from localhost.localdomain ([2402:f000:1:4414:ae9e:17ff:fe87:5adb])
+        by smtp.gmail.com with ESMTPSA id x18sm3232325pfi.42.2016.03.23.03.13.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 23 Mar 2016 03:13:32 -0700 (PDT)
+X-Mailer: git-send-email 2.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289631>
 
-read_raw_ref() is going to be part of the vtable for reference backends,
-so clean up its interface to use "unsigned int flags" rather than "int
-flags". Its caller still uses signed int for its flags arguments. But
-changing that would touch a lot of code, so leave it for now.
+There were already `mkpath`, `mkpathdup` and `mksnpath` for build
+filename, but lacked a version of `strbuf_` just like `strbuf_git_path`.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+It is convenient to build a path and manipulate the result later with
+strbuf.
+
+Signed-off-by: Hui Yiqun <huiyiqun@gmail.com>
 ---
- refs/files-backend.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ cache.h |  2 ++
+ path.c  | 21 +++++++++++++++++----
+ 2 files changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 120b2dd..a15986c 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1372,7 +1372,7 @@ static struct ref_entry *get_packed_ref(const char *refname)
-  */
- static int resolve_missing_loose_ref(const char *refname,
- 				     unsigned char *sha1,
--				     int *flags)
-+				     unsigned int *flags)
+diff --git a/cache.h b/cache.h
+index b829410..ef843c1 100644
+--- a/cache.h
++++ b/cache.h
+@@ -781,6 +781,8 @@ extern char *git_pathdup(const char *fmt, ...)
+ 	__attribute__((format (printf, 1, 2)));
+ extern char *mkpathdup(const char *fmt, ...)
+ 	__attribute__((format (printf, 1, 2)));
++extern void strbuf_mkpath(struct strbuf *sb, const char *fmt, ...)
++	__attribute__((format (printf, 2, 3)));
+ extern char *git_pathdup_submodule(const char *path, const char *fmt, ...)
+ 	__attribute__((format (printf, 2, 3)));
+ 
+diff --git a/path.c b/path.c
+index 8b7e168..699af68 100644
+--- a/path.c
++++ b/path.c
+@@ -433,14 +433,19 @@ char *git_pathdup(const char *fmt, ...)
+ 	return strbuf_detach(&path, NULL);
+ }
+ 
++static void do_mkpath(struct strbuf *buf, const char *fmt, va_list args)
++{
++	strbuf_vaddf(buf, fmt, args);
++	strbuf_cleanup_path(buf);
++}
++
+ char *mkpathdup(const char *fmt, ...)
  {
- 	struct ref_entry *entry;
+ 	struct strbuf sb = STRBUF_INIT;
+ 	va_list args;
+ 	va_start(args, fmt);
+-	strbuf_vaddf(&sb, fmt, args);
++	do_mkpath(&sb, fmt, args);
+ 	va_end(args);
+-	strbuf_cleanup_path(&sb);
+ 	return strbuf_detach(&sb, NULL);
+ }
  
-@@ -1421,7 +1421,7 @@ static int resolve_missing_loose_ref(const char *refname,
-  *   refname will still be valid and unchanged.
-  */
- static int read_raw_ref(const char *refname, unsigned char *sha1,
--			struct strbuf *symref, int *flags)
-+			struct strbuf *symref, unsigned int *flags)
- {
- 	struct strbuf sb_contents = STRBUF_INIT;
- 	struct strbuf sb_path = STRBUF_INIT;
-@@ -1570,7 +1570,7 @@ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
- 	}
+@@ -449,9 +454,17 @@ const char *mkpath(const char *fmt, ...)
+ 	va_list args;
+ 	struct strbuf *pathname = get_pathname();
+ 	va_start(args, fmt);
+-	strbuf_vaddf(pathname, fmt, args);
++	do_mkpath(pathname, fmt, args);
++	va_end(args);
++	return pathname->buf;
++}
++
++void strbuf_mkpath(struct strbuf *buf, const char *fmt, ...)
++{
++	va_list args;
++	va_start(args, fmt);
++	do_mkpath(buf, fmt, args);
+ 	va_end(args);
+-	return cleanup_path(pathname->buf);
+ }
  
- 	for (symref_count = 0; symref_count < MAXDEPTH; symref_count++) {
--		int read_flags = 0;
-+		unsigned int read_flags = 0;
- 
- 		if (read_raw_ref(refname, sha1, &sb_refname, &read_flags)) {
- 			*flags |= read_flags;
+ static void do_submodule_path(struct strbuf *buf, const char *path,
 -- 
-2.8.0.rc3
+2.7.4
