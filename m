@@ -1,137 +1,114 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] git_config_push_parameter: handle empty GIT_CONFIG_PARAMETERS
-Date: Tue, 22 Mar 2016 17:14:24 -0700
-Message-ID: <CA+P7+xoPe7=1ugLJ11iV-76ChiVzMA+WjGYT9KHnnSy9Z8_48g@mail.gmail.com>
-References: <1456786715-24256-1-git-send-email-jacob.e.keller@intel.com>
- <1456786715-24256-8-git-send-email-jacob.e.keller@intel.com>
- <20160322185628.GA19993@google.com> <20160322192309.GA9782@sigill.intra.peff.net>
- <20160322195051.GA20563@sigill.intra.peff.net> <20160322214355.GI28749@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Jacob Keller <jacob.e.keller@intel.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Mark Strapetz <marc.strapetz@syntevo.com>,
-	Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Shin Fan <shinfan@google.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 01:14:52 2016
+From: Jacob Nisnevich <jacob.nisnevich@gmail.com>
+Subject: [PATCH 1/2] mergetools: created new mergetool file for ExamDiff
+Date: Tue, 22 Mar 2016 17:43:13 -0700
+Message-ID: <1458693794-9124-2-git-send-email-jacob.nisnevich@gmail.com>
+References: <20160321033201.GA2004@gmail.com>
+ <1458693794-9124-1-git-send-email-jacob.nisnevich@gmail.com>
+Cc: gitster@pobox.com, git@vger.kernel.org,
+	Jacob Nisnevich <jacob.nisnevich@gmail.com>
+To: davvid@gmail.com
+X-From: git-owner@vger.kernel.org Wed Mar 23 01:45:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiWRl-0004tN-5s
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 01:14:49 +0100
+	id 1aiWvU-0001qQ-5h
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 01:45:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752249AbcCWAOp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Mar 2016 20:14:45 -0400
-Received: from mail-io0-f177.google.com ([209.85.223.177]:35210 "EHLO
-	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750988AbcCWAOo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Mar 2016 20:14:44 -0400
-Received: by mail-io0-f177.google.com with SMTP id o5so5746206iod.2
-        for <git@vger.kernel.org>; Tue, 22 Mar 2016 17:14:44 -0700 (PDT)
+	id S1752638AbcCWAp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Mar 2016 20:45:29 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:33444 "EHLO
+	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751520AbcCWAp2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Mar 2016 20:45:28 -0400
+Received: by mail-pf0-f196.google.com with SMTP id x3so101958pfb.0
+        for <git@vger.kernel.org>; Tue, 22 Mar 2016 17:45:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=LlPLJNu6dXyqoPBAIVVciw2BxfO8YkgLtIKOCETwDCM=;
-        b=VDjmzduV/3K6jPGhm0YFow+gqVy1xb8AhtTf1XkxKgGo5VMUFj2zs7tVWWgTKcQUbg
-         pBHj8E2adqzCRTDaXMg2amVd0S5C4bCGhOu0OnCzj1Rrg1KmLzcp0eXKKg6l6CkswZpo
-         Uj3OLjXQ8jXeJMJC4Yg9cgCD/NjdOFox6vckttf4zWHJblvDksZ9kH1Wc/AkZNijFLdZ
-         3950TN3mOdtXz6LVHD6gFmyx7pGWTJ/o+N3q9RZVs6Ll6Voci2VAHMBJwFw3YONwmfRn
-         n1loBvnywajyt9+As6UlV8Sx+VFFrg6jYQzxEn8hGv4n2glOwnVEEJ/VWblWj0UYe4t3
-         pg0A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=2yN28BVxPRDqjER520wznW8w105HzzyYJIEzLLob/3A=;
+        b=kOrGeOG7N5/GGqvz5xvDP/ei4MsVYSnOgFYfUzxv7Ni7/IE+lDUvgQ5CUkspVO5lKc
+         kBrUyj/AjQ7TZnkglGHKoKriQa4kS9qrFCoDjSOkZCHaPjV+MHUBgPLpocecgKb1pOc0
+         jW0lyWr5qSywPsT3CRLaY3FOrp6wXUrAW9lWA9th34nvE+/f12DyfcGw/iLhh/NYt1VS
+         /ckznBcp82PlqzGQylPUUeRK5kqINwzPneges3wvD8qrv3Tnyv9AZX0pj6hWpldhkx94
+         z50IIYBmA1H/t6BwRilDqVVOfuJ3fUlWXlSkWRdEP79CFcO3ivGrwhrf4v6kdQZ7LVFN
+         EG5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=LlPLJNu6dXyqoPBAIVVciw2BxfO8YkgLtIKOCETwDCM=;
-        b=dMyYimV+omeDSr+Hv5q81Yww2sOD38VPV0HF3oy2GwVuV+dzLV6aAH3hdrznbdUwkA
-         vkNbAUsNq8l31JsxmKvbFe6UNOB/Q3cv037M38KTdd4GKIM9W0HbxFrtUbh7L5FCN1Yt
-         bs52ukueG2Z3CuwXN2+58ijiSH/AZa10I7ncRz44e/FFJLX3zmpsdJQvCr9b5JIEC8QT
-         f1xXyC55lRfdLssVsfW+AcJQ+cYuJ7yNuBvRXfktjMrdgqa5ZzWENyLM14m3FrK7ZrFT
-         1unsfkgBdADJUjFYDrx4qKlZA1bspjEorjeWTYn8QL3+BEJKkbQopNuTV52Pgk5I/33s
-         fYVg==
-X-Gm-Message-State: AD7BkJIbwlc6lnoOc4lplQqn4A8b5+Jid1g7/t8m7CK8u50tnGFfUnYtQUWXq21eFA92wvBuLftyQonKbYfiKA==
-X-Received: by 10.107.170.80 with SMTP id t77mr467890ioe.71.1458692083566;
- Tue, 22 Mar 2016 17:14:43 -0700 (PDT)
-Received: by 10.107.10.202 with HTTP; Tue, 22 Mar 2016 17:14:24 -0700 (PDT)
-In-Reply-To: <20160322214355.GI28749@google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=2yN28BVxPRDqjER520wznW8w105HzzyYJIEzLLob/3A=;
+        b=QOHSi/XmfTb1h8GMF6b0+jL8mPLI7Hz0SjRe2uO1BXatMKYOiFQ/TPhzlv/Ltg1xMM
+         9LvpgtcfQXaIaycC1svoNoxMO+Cer4FImclqKfO14flIZXpxS6gARMBrVIJuY5SIOBc9
+         ZW9GQVxwNlLm0ckrKywtfib3CxTNJQhocK2mEsQUwxM5AjcyLtQTWBS0CeOx6ZR1GRDq
+         WbtUV+EDtxGNEx4rPNzwUqRU5B7rNGiJW9owml0cCv1ho3W8Sd+i5IGpgoLXpYpPg93W
+         GVL4c5L1rHpbgEd5Z14SJcxRzAGEqD/tOAbkf49cl4b9hur98/Rg0AuxREtJSyY4Qi2b
+         shRg==
+X-Gm-Message-State: AD7BkJLeiENbYmmyTS8QjTVn0suhufEuE4jAkOqk5KL/PKEr8wpLgvsSl1WSyT57TSVB+w==
+X-Received: by 10.66.139.199 with SMTP id ra7mr123318pab.74.1458693927150;
+        Tue, 22 Mar 2016 17:45:27 -0700 (PDT)
+Received: from localhost.localdomain (cpe-108-185-180-179.socal.res.rr.com. [108.185.180.179])
+        by smtp.gmail.com with ESMTPSA id l4sm35924725pfi.73.2016.03.22.17.45.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 22 Mar 2016 17:45:26 -0700 (PDT)
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1458693794-9124-1-git-send-email-jacob.nisnevich@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289590>
 
-On Tue, Mar 22, 2016 at 2:43 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Jeff King wrote[1]:
->
->> Subject: git_config_push_parameter: handle empty GIT_CONFIG_PARAMETERS
->>
->> The "git -c var=value" option stuffs the config value into
->> $GIT_CONFIG_PARAMETERS, so that sub-processes can see it.
->> When the config is later read via git_config() or similar,
->> we parse it back out of that variable.  The parsing end is a
->> little bit picky; it assumes that each entry was generated
->> with sq_quote_buf(), and that there is no extraneous
->> whitespace.
->>
->> On the generating end, we are careful to append to an
->> existing $GIT_CONFIG_PARAMETERS variable if it exists.
->> However, our test for "should we add a space separator" is
->> too liberal: it will add one even if the environment
->> variable exists but is empty. As a result, you might end up
->> with:
->>
->>    GIT_CONFIG_PARAMETERS=" 'core.foo=bar'"
->>
->> which the parser will choke on.
->>
->> This was hard to trigger in older versions of git, since we
->> only set the variable when we had something to put into it
->> (though you could certainly trigger it manually). But since
->> 14111fc (git: submodule honor -c credential.* from command
->> line, 2016-02-29), the submodule code will unconditionally
->> put the $GIT_CONFIG_PARAMETERS variable into the environment
->> of any operation in the submodule, whether it is empty or
->> not. So any of those operations which themselves use "git
->> -c" will generate the unparseable value and fail.
->>
->> We can easily fix it by catching this case on the generating
->> side. While we're adding a test, let's also check that
->> multiple layers of "git -c" work, which was previously not
->> tested at all.
->>
->> Reported-by: Jonathan Nieder <jrnieder@gmail.com>
->
-> I should have mentioned this is
->
-> Reported-by: Shin Fan <shinfan@google.com>
->
->> Signed-off-by: Jeff King <peff@peff.net>
->> ---
->> I just did this on master, and it is standalone. But for the reasons
->> above I think it would also be fine to stick on the tip of the
->> jk/submodule-c-credential topic.
->>
->>  config.c               |  2 +-
->>  t/t1300-repo-config.sh | 14 ++++++++++++++
->>  2 files changed, 15 insertions(+), 1 deletion(-)
->
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-> Tested-by: Jonathan Nieder <jrnieder@gmail.com>
->
-> Thanks for the quick fix.
->
-> Sincerely,
-> Jonathan
->
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/287928/focus=289551
+Signed-off-by: Jacob Nisnevich <jacob.nisnevich@gmail.com>
+---
+ mergetools/examdiff | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
+ create mode 100644 mergetools/examdiff
 
-
-Yep, thanks Jeff. This looked fine to me.
-
-Regards,
-Jake
+diff --git a/mergetools/examdiff b/mergetools/examdiff
+new file mode 100644
+index 0000000..474fffe
+--- /dev/null
++++ b/mergetools/examdiff
+@@ -0,0 +1,37 @@
++diff_cmd () {
++	"$merge_tool_path" "$LOCAL" "$REMOTE" -nh
++}
++
++merge_cmd () {
++	touch "$BACKUP"
++	if $base_present
++	then
++		"$merge_tool_path" -merge "$LOCAL" "$BASE" "$REMOTE" -o:"$MERGED" -nh
++	else
++		"$merge_tool_path" -merge "$LOCAL" "$REMOTE" -o:"$MERGED" -nh
++	fi
++	check_unchanged
++}
++
++translate_merge_tool_path() {
++	# Use ExamDiff.com if it exists in $PATH
++	if type -p ExamDiff.com >/dev/null 2>&1
++	then
++		printf ExamDiff.com
++		return
++	fi
++
++	# Look for ExamDiff.com in the typical locations
++	examdiff="ExamDiff Pro/ExamDiff.com"
++	for directory in $(env | grep -Ei '^PROGRAM(FILES(\(X86\))?|W6432)=' |
++		cut -d '=' -f 2- | sort -u)
++	do
++		if test -n "$directory" && test -x "$directory/$examdiff"
++		then
++			printf '%s' "$directory/$examdiff"
++			return
++		fi
++	done
++
++	printf ExamDiff.com
++}
+\ No newline at end of file
+-- 
+1.9.1
