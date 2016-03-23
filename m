@@ -1,105 +1,110 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] mingw: skip some tests in t9115 due to file name issues
-Date: Wed, 23 Mar 2016 08:56:44 -0700
-Message-ID: <xmqq37rhdw77.fsf@gitster.mtv.corp.google.com>
-References: <cover.1458668543.git.johannes.schindelin@gmx.de>
-	<7b4eca83305ec05af6434ff80269ba563f2d581d.1458668543.git.johannes.schindelin@gmx.de>
-	<56F18F5E.9090301@web.de>
-	<xmqqbn66gs4k.fsf@gitster.mtv.corp.google.com>
-	<56F1CACA.5040709@web.de>
-	<xmqqtwjydsub.fsf@gitster.mtv.corp.google.com>
-	<56F22F85.3010507@web.de>
-	<alpine.DEB.2.20.1603231148510.4690@virtualbox>
+Subject: Re: [PATCH v3] bisect--helper: convert a function in shell to C
+Date: Wed, 23 Mar 2016 09:15:36 -0700
+Message-ID: <xmqqy499cgrb.fsf@gitster.mtv.corp.google.com>
+References: <010201539d57ae98-ce4860a6-f7b6-4e06-b556-3c1340cd7749-000000@eu-west-1.amazonses.com>
+	<01020153a254974b-68f7d16a-66d7-4dc1-805d-2185ff1b3ebf-000000@eu-west-1.amazonses.com>
+	<alpine.DEB.2.20.1603231238180.4690@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>,
-	Eric Wong <normalperson@yhbt.net>
+Content-Type: text/plain
+Cc: Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 23 16:56:52 2016
+X-From: git-owner@vger.kernel.org Wed Mar 23 17:15:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ail9P-0002C5-QK
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 16:56:52 +0100
+	id 1ailRf-0006gs-Vj
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 17:15:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755774AbcCWP4s convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Mar 2016 11:56:48 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:59337 "EHLO
+	id S1755339AbcCWQPk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 12:15:40 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:54291 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752620AbcCWP4r convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2016 11:56:47 -0400
+	with ESMTP id S1753493AbcCWQPj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2016 12:15:39 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 036964D648;
-	Wed, 23 Mar 2016 11:56:46 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AB4124DC0C;
+	Wed, 23 Mar 2016 12:15:38 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=iNbA8GXistRt
-	xqoCuce9C0VNznM=; b=DdeeowpDjU/FJM0g0+WqTe46N/jhkRciKzAOkdrtRAjM
-	CB/xmOB18ed2zp4pSQ2GskFsdBXlHXGC9KohUk7G29Fpj5XuhfzejdCzlItTjFo7
-	ts4AnhWIdb0O7v4iiBeXb3wuAOA1tDXBveFDUzVz3WUQ80eA2Jnm7TF0l0yh/BM=
+	:content-type; s=sasl; bh=A3oh9JLn93+bWM9s+l0c9m35oVU=; b=IziWxI
+	L2SF3sfyh5Y+poVNgfdjv8Nke+qH6DVetq+UTyheFMEoDwPtR5eKAbJYMrbamMvw
+	V35RwBaDxpbVWy4DwOdINa8QqX1RLDXuSz4Y7HkXxpF++0nxtXVdsk1Kz/j8jMHE
+	I1BLnROR7kJuG5DYjQCdLztUmor6O9icWiFXg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=p+beBI
-	2ParTI6hIUasftsKitvtSYKmf+QBLiURA1xFIDXtsR/UyN4h4QaOYSs9CxJFNsLC
-	MWJhjMiQwUXDLnO7bZYruo8/FApO3KrtZtAvXau9JzlvH6H3v+lPpiNPwUnLT9df
-	os/TgxG8b3fYYM4J1VQqsag5S0y0OQNkL/CNo=
+	:content-type; q=dns; s=sasl; b=g/3zGZEb4baPNGGhLgfkmJ/2uPFkvEbM
+	jxwFsAe0N1l+VrDNk1BNTLttb82QUnDqfA1W5NlumPUVOL1XCULfCCczNYhqSIkJ
+	ufSpAtECl2RC4GSnr41GOHqh6xtuDxkDDHOKjiH4HL5M78EORGPTICdu6iHFLlWP
+	lmhgAo8bI8o=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EE6C74D647;
-	Wed, 23 Mar 2016 11:56:45 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A2C4F4DC0B;
+	Wed, 23 Mar 2016 12:15:38 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 741EB4D646;
-	Wed, 23 Mar 2016 11:56:45 -0400 (EDT)
-In-Reply-To: <alpine.DEB.2.20.1603231148510.4690@virtualbox> (Johannes
-	Schindelin's message of "Wed, 23 Mar 2016 11:49:49 +0100 (CET)")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 253774DC09;
+	Wed, 23 Mar 2016 12:15:38 -0400 (EDT)
+In-Reply-To: <alpine.DEB.2.20.1603231238180.4690@virtualbox> (Johannes
+	Schindelin's message of "Wed, 23 Mar 2016 12:57:17 +0100 (CET)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D7F995E2-F10F-11E5-950A-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 7B19B7A0-F112-11E5-ADF4-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289664>
 
 Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Hi Junio & Torsten,
+>> +	if (one_of(term, "help", "start", "skip", "next", "reset", "visualize",
+>> +	    "replay", "log", "run", NULL))
 >
-> On Wed, 23 Mar 2016, Torsten B=C3=B6gershausen wrote:
+> If I understood Junio correctly, he meant to line up the second line with
+> the corresponding level. In this case, as "replay" is a parameter of the
+> one_of() function, the indentation would look like this instead:
 >
->> On 2016-03-22 23.57, Junio C Hamano wrote:
->> > Dscho, I queued two out of these four, with a proposed fix-up patc=
-h
->> > for each of them, on 'pu'; but I won't squash them together myself
->> > without hearing from you as I do not test mingw or macosx.
->
-> The suggested changes will be squashed into v2.
->
->> Beside that, do we want to amend the commit message like this:
->>=20
->> Author: Johannes Schindelin <johannes.schindelin@gmx.de>
->> Date:   Tue Mar 22 18:43:00 2016 +0100
->>=20
->>     skip some tests in t9115 due to file name issues
->>=20
->>     These two tests wanted to write file names which work under Linu=
-x or
->>     CYGWIN, but are incompatible with file naming rules under mingw =
-or HFS.
->>=20
->>     Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->>     Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
->>     Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
->>     Signed-off-by: Junio C Hamano <gitster@pobox.com>
->
-> Thanks, I used a slightly different version, as I had crafted it befo=
-re
-> reading this mail already.
+> 	if (one_of(term, "help", "start", "skip", "next", "reset", "visualize",
+> 		   "replay", "log", "run", NULL))
 
-Thanks; Torsten, sorry but could you do another round of check, please?
+Thanks for clarification.  It may also make sense to wrap the first
+line one word earlier.
+
+>> +		die("can't use the builtin command '%s' as a term", term);
+>> +
+>> +	/* In theory, nothing prevents swapping
+>> +	 * completely good and bad, but this situation
+>> +	 * could be confusing and hasn't been tested
+>> +	 * enough. Forbid it for now.
+>> +	 */
+>
+> I see quite a few comments that put the closing "*/" on its own line, but
+> do not award the same pleasure to the opening "/*". Personally, I much
+> prefer the opening "/*" to have an entire line to itself, too, but I guess
+> that there is enough precendence in Git's source code to accept both
+> forms.
+
+We do want to see "/*" and "*/" on their own lines, and new code
+should definitely do so.
+
+>> +	if (!strcmp(term, "bad") || !strcmp(term, "new"))
+>> +		if (strcmp(revision, "bad"))
+>> +			die("can't change the meaning of term '%s'", term);
+>> +
+>> +	if(!strcmp(term, "good") || !strcmp(term, "old"))
+>> +		if (strcmp(revision, "good"))
+>> +			die("can't change the meaning of term '%s'", term);
+>
+> I am still convinced that
+>
+> 	if ((one_of(term, "bad", "new", NULL) && strcmp(orig_term, "bad")) ||
+> 	    (one_of(term, "good", "old", NULL) && strcmp(orig_term, "good")))
+> 		die("can't change the meaning of term '%s'", term);
+>
+> looks so much nicer.
+
+... and more importantly, easier to understand what is going on.
+
+Thanks.
