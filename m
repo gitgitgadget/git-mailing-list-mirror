@@ -1,86 +1,101 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH v2] bisect--helper: convert a function in shell to C
-Date: Wed, 23 Mar 2016 19:23:03 +0530
-Message-ID: <CAFZEwPM1Ye34GJOfck89TX78BHKoiAVf-e=_TZasDV9u60VXGQ@mail.gmail.com>
-References: <010201539a8d2b8a-9f168d7a-d4c6-4c23-a61f-1ef6ee22f774-000000@eu-west-1.amazonses.com>
-	<010201539d57ae98-ce4860a6-f7b6-4e06-b556-3c1340cd7749-000000@eu-west-1.amazonses.com>
-	<alpine.DEB.2.20.1603221552100.4690@virtualbox>
-	<CAFZEwPNg8-X5dsBbMfg5ni1XpOVekRd13y-zgwYJpX0fCwg3Ug@mail.gmail.com>
-	<alpine.DEB.2.20.1603231220560.4690@virtualbox>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [GIT PULL] l10n updates for 2.8.0 round 3#2
+Date: Wed, 23 Mar 2016 23:17:31 +0800
+Message-ID: <CANYiYbH8FZdtq5rAUgo84WgApVfxEAUK7OeyeWw7u3rrxNtHjg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 23 14:53:12 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
+	Alex Henrie <alexhenrie24@gmail.com>,
+	Tran Ngoc Quan <vnwildman@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 23 16:17:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aijDj-00063t-6y
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 14:53:11 +0100
+	id 1aikXR-0007vt-Ji
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 16:17:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755312AbcCWNxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 09:53:05 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:33064 "EHLO
-	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755209AbcCWNxE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 09:53:04 -0400
-Received: by mail-yw0-f194.google.com with SMTP id a140so1829376ywe.0
-        for <git@vger.kernel.org>; Wed, 23 Mar 2016 06:53:04 -0700 (PDT)
+	id S1754544AbcCWPRe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Mar 2016 11:17:34 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:34648 "EHLO
+	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752415AbcCWPRd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2016 11:17:33 -0400
+Received: by mail-wm0-f52.google.com with SMTP id p65so238284233wmp.1
+        for <git@vger.kernel.org>; Wed, 23 Mar 2016 08:17:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=Nc25L+/CjOA73nok5agxLOBau7h4sgiDrYv2yj6vNew=;
-        b=MYVnwozeh7RwLIS43NBroIY6ZCvmJ2hVnWMZNVNdcZKOa+gahEDuGO7mTGSx0jB3J+
-         mo4N+mhKaf/dZFbEGrnQAJvnoHweEERAq7+yUImRm7wealtgxavFSGQtxes6RYIJ5Yp+
-         jbah+8wDc6TPp7rhryuXOtwEEqZlmJgDNzwBrPjez3X0/YOfi11algHFMI076HwdgPXh
-         IZ3yr9tyMEhBpCkdI3P8zdxtv0xZdQH0IjFfKWQQqhe11OPLrvqcye+ZdxlVgYZnmMk+
-         qalDnbNHqqbwlDXA4bdv/TBgtqls8u6ogNEmnCZXHY920ZVlW9bvoQ2JFZGjpUQaq8Fp
-         VBBQ==
+        h=mime-version:date:message-id:subject:from:to:cc
+         :content-transfer-encoding;
+        bh=h1IKlyR2mI09YBOPyrKXqpzKM/8jCbMyytwJ9YczZeU=;
+        b=CqKIwvYZpW7nb8UJ4wd/h52s5vC+Il5xhN+pjDV+aqUnz3q1Dpa9HF+uoiywrr6n7r
+         Cayd9kykSGVThtt31kvfLN2vRee/tnuMMI3V4HCaexJsEOco6ziJfhfNYA0GhCPKtzuj
+         Rzv/8NTnsT6DPPLo+yNvrWcJsZn/NsadOdymRGgEd4jnBuLZtTVtOLvWi7Y9bEcjSAZS
+         XCx7NHW2e4mtuNCgvhI9GQTwWeC/2hxB+ycY7DVPhBZ5LwBqD7uJLCbbEJ7VdXIv+d82
+         mkcajhZDkPi2IMMDijI1+cslSXrMkmJJ6mk6i3B+gh3odvo17pntzEY167nNivXYVK7R
+         usIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=Nc25L+/CjOA73nok5agxLOBau7h4sgiDrYv2yj6vNew=;
-        b=BftodDgrR+yPbOA8kdxMwbueEwBigzUuZQC6qpjLnXjOp1iH+iivelgIomqCYpUZnF
-         V4bzhL72jxU8tzrowjqVSwYZ0KDt9Mta5GJcgELJ2MUtSR5CLAGJ49gwwNB4SNr8pvZ4
-         prYDeDl702r7wMQPURUhenLGyh85JfzazkbkfBWZiFVjVDRWc6K8MQcLodt/43GFFbxX
-         s/zEsOsYqhGSSAUzr6rNNjVHsIWiiyjY1y6AKVGuHqn4kDxuTW9aIBiv+bDRhvKMXIK1
-         kSVZht2/b5STpy26lpAhpUORz5SQuUQINjZHnHZFWul5OBmmiQDG/X1qDW5AB70z9K3q
-         ql1A==
-X-Gm-Message-State: AD7BkJLjdq+hWyGicbcA4D3DbW8cziKwa8BXnHSVtFXBG8hgyCa1SDvD5z4JD9awDf6MEkSmxV6xMv6KlGUA9Q==
-X-Received: by 10.37.22.134 with SMTP id 128mr1482406ybw.7.1458741183936; Wed,
- 23 Mar 2016 06:53:03 -0700 (PDT)
-Received: by 10.13.203.137 with HTTP; Wed, 23 Mar 2016 06:53:03 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1603231220560.4690@virtualbox>
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
+         :content-transfer-encoding;
+        bh=h1IKlyR2mI09YBOPyrKXqpzKM/8jCbMyytwJ9YczZeU=;
+        b=X4mzpHpWjshfJ01+MEKexjBLVMNEGf1cWPzC82eSX1oGe3tfPT+a3MUPe69MlSPSLa
+         QwbA9FjYO1Z6LECv9N9zuomvLfz8Y5ViVibbaWdaDQ0Dkh+YyzfxO8sRCquX4tQfxR4I
+         PCQ1OKsMmWgw0LJnv3m/dKILkbBKeK+6keGVweLDr2T4G+umfpPzVnhtS/uG6wqhnwiz
+         XvJ1k2BM9t2dzuQIf6GIrC2NmUFXepCSDDRiAxVfNtrIrbb8LaSP+zHaqfQEl8wePvOz
+         HzTBaIG/igAMtSwET9Del+HFhmoX/TC0Dsfze+lb6f7bT1dtUn0uCY0+9Qlb8faKSfol
+         v9fw==
+X-Gm-Message-State: AD7BkJL+dhALCvYi+dMzpc3nRAL48JG6o9EB6G1agSUTCBDPAa5CLsYR6QFxg8wm63uaF4AHjYPNITARcGdSgQ==
+X-Received: by 10.194.227.1 with SMTP id rw1mr3987247wjc.62.1458746251878;
+ Wed, 23 Mar 2016 08:17:31 -0700 (PDT)
+Received: by 10.194.54.8 with HTTP; Wed, 23 Mar 2016 08:17:31 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289657>
 
-On Wed, Mar 23, 2016 at 4:52 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Pranit,
->
-> On Tue, 22 Mar 2016, Pranit Bauva wrote:
->
->> I did run the tests. They produce the same results as they did before.
->> To ease review I will next time include these the output of the tests
->> in the commented section.
->>
->> t6002-rev-list-bisect.sh : http://paste.ubuntu.com/15473728/
->> t6030-bisect-porcelain.sh : http://paste.ubuntu.com/15473734/
->> t6041-bisect-submodule.sh : http://paste.ubuntu.com/15473743/
->>
->> Is there any other test I would need to run?
->
-> Oh, I just meant to point out that you need to make sure that the entire
-> test suite passes after your patch series (and ideally, after every patch,
-> that is at least what I frequently test before sending out patch series).
+Hi Junio,
 
-Up to now, I used to only run the tests of the concerned area of the
-patch. Though from next time, I will take care to run the complete
-test suite.
+The following changes since commit 26e4cbec4558ea21cd572bfc915a462f63c1=
+ebb4:
+
+  l10n: zh_CN: review for git v2.8.0 l10n round 2 (2016-03-20 18:46:02 =
++0800)
+
+are available in the git repository at:
+
+  git://github.com/git-l10n/git-po master
+
+for you to fetch changes up to 103ee5c21ea4d63e78b7b984d9611eacd0a06099=
+:
+
+  Merge branch 'master' of https://github.com/vnwildman/git
+(2016-03-23 23:01:51 +0800)
+
+----------------------------------------------------------------
+Alex Henrie (1):
+      l10n: ca.po: update translation
+
+Jiang Xin (2):
+      Merge branch 'master' of git://github.com/alexhenrie/git-po
+      Merge branch 'master' of https://github.com/vnwildman/git
+
+Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n (1):
+      l10n: vi.po (2530t): Update translation
+
+Vasco Almeida (1):
+      l10n: pt_PT: Update and add new translations
+
+ po/ca.po    |  2946 ++++++------
+ po/pt_PT.po | 14113 ++++++++++++++++++++++++++++++++++++++++++++------=
+--------
+ po/vi.po    |   155 +-
+ 3 files changed, 12493 insertions(+), 4721 deletions(-)
+
+--
+Jiang Xin
