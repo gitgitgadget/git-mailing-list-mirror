@@ -1,135 +1,137 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 5/5] pretty-print: teach "--no-expand-tabs" option to "git log"
-Date: Wed, 23 Mar 2016 16:23:46 -0700
-Message-ID: <1458775426-2215-6-git-send-email-gitster@pobox.com>
+Subject: [PATCH v3 2/5] pretty-print: simplify the interaction between pp_handle_indent() and its caller
+Date: Wed, 23 Mar 2016 16:23:43 -0700
+Message-ID: <1458775426-2215-3-git-send-email-gitster@pobox.com>
 References: <xmqq7fh0s5l7.fsf@gitster.mtv.corp.google.com>
  <1458775426-2215-1-git-send-email-gitster@pobox.com>
 Cc: Jeff King <peff@peff.net>,
 	Linus Torvalds <torvalds@linux-foundation.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 24 00:24:04 2016
+X-From: git-owner@vger.kernel.org Thu Mar 24 00:24:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ais8A-00083p-Kv
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 00:24:02 +0100
+	id 1ais8H-00088C-9h
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 00:24:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753595AbcCWXX6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 19:23:58 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:50324 "EHLO
+	id S1753279AbcCWXXy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 19:23:54 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:52208 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753575AbcCWXX5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 19:23:57 -0400
+	with ESMTP id S1751092AbcCWXXw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2016 19:23:52 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D4DDD50C20;
-	Wed, 23 Mar 2016 19:23:56 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DDABD50C14;
+	Wed, 23 Mar 2016 19:23:51 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=uABK
-	wiREpLXEdUDH7hLMZkOysLw=; b=Q9xwsLlfcpmGVo/ce4tFUtf7YeinKAbgQkeZ
-	CgCIfJs2xI8LOGtohNh0+wVrqJeCcrPUVhTIXimJiYV7wUYMj2urDRpy0mtArCUY
-	3LDp3Zdix7rO9wfJ9ajH8I2UbFo4OaWbkMfAkEsvXXenOeJDUZfkZxGVZyQNYQut
-	kwh39O4=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=tzwG
+	Us52/6whRKf//ioiTYgMxes=; b=aVpUiGMJIQprVL4dwI68CgbA7VBj5aC8fQwv
+	636BJJEJNX8KJtBAMAELjCNoXATp4OoYp/Z7NjDkam3fZMPi8XGsaX2iddjE+E9Q
+	YSmbLd2f3Emk9Rgc8rE7IQ5pyB+aCqoWhMsL28DGocnF4YbQ3UwEl71zU+9KG2U5
+	2v8uA6M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	YfaTVAzSc3STOlqa0OyBlfYVQTBs4nNWHDfYGiN+cICucY/0/aY4GZGDbPMI6QYa
-	YlX3fwxfK1VzfJq5gZTtzjFvbMK3Q7YmiURWs1sPF/AILtZ7TWf1tkfK2y7vZTsF
-	YgUPZplJWMWyUG6MMfJkaUR6LALlnfxWWTjrB+qlVZU=
+	TsgKFtJWhvyXpoDz/IpszDn9FVlZoZwSSg017m8eCvAXU6UDkDrEXd/rfcmdOq4l
+	74QJ33rVxsCbHK5ahyQ5AhTkI9SCTx6Bj7CHIdbqH051RpXHFNTSdyUMDYi7IflE
+	hF8Q9omU5xRZmC7BoPmVlbbnB/Rv0XF0ejr4eEnVHbk=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CD8EE50C1F;
-	Wed, 23 Mar 2016 19:23:56 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D3F0050C13;
+	Wed, 23 Mar 2016 19:23:51 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 43CF750C1E;
-	Wed, 23 Mar 2016 19:23:56 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 58C0D50C12;
+	Wed, 23 Mar 2016 19:23:51 -0400 (EDT)
 X-Mailer: git-send-email 2.8.0-rc4-198-g3f6b64c
 In-Reply-To: <1458775426-2215-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 5060BAAE-F14E-11E5-A340-EB7E6AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 4D72C184-F14E-11E5-B2F3-EB7E6AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289699>
 
-The output formats of "git log" that indent the log message by 4
-spaces have been updated to expand tabs by default in previous
-steps, without a way to restore the original behaviour.
-
-Introduce a new "--no-expand-tabs" option to allow this.
-
-As the effect of options is cumulative,
-
-    $ git log [--pretty=medium] --no-expand-tabs
-
-would not expand, while this invocation
-
-    $ git log --no-expand-tabs --pretty[=medium]
-
-by virtue of having --pretty later on the command line, expands tabs
-again.
-
-We _could_ introduce --expand-tabs option as well, to allow
-
-    $ git log --pretty=email --expand-tabs
-
-but we don't bother, as the output format that do not expand tabs by
-default are mostly meant to transfer the contents as literally as
-possible.
+Instead	of sometimes handling the output itself and some other times
+forcing the caller handle the output, make the helper function
+pp_handle_indent() responsible for the output for all cases.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
----
- Documentation/pretty-options.txt | 6 ++++++
- revision.c                       | 2 ++
- t/t4201-shortlog.sh              | 4 ++--
- 3 files changed, 10 insertions(+), 2 deletions(-)
+ pretty.c | 32 +++++++++-----------------------
+ 1 file changed, 9 insertions(+), 23 deletions(-)
 
-diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
-index 4b659ac..069b927 100644
---- a/Documentation/pretty-options.txt
-+++ b/Documentation/pretty-options.txt
-@@ -42,6 +42,12 @@ people using 80-column terminals.
- 	verbatim; this means that invalid sequences in the original
- 	commit may be copied to the output.
+diff --git a/pretty.c b/pretty.c
+index 0b40457..6d657fc 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1645,26 +1645,17 @@ static int pp_utf8_width(const char *start, const char *end)
  
-+--no-expand-tabs::
-+	The formats that indent the log message by 4 spaces
-+	(i.e. 'medium', 'full', and 'fuller') by default show tabs
-+	in the log message expanded.  This option disables the
-+	expansion.
-+
- ifndef::git-rev-list[]
- --notes[=<ref>]::
- 	Show the notes (see linkgit:git-notes[1]) that annotate the
-diff --git a/revision.c b/revision.c
-index 8827d9f..b0d2a36 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1916,6 +1916,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->verbose_header = 1;
- 		revs->pretty_given = 1;
- 		get_commit_format(arg+9, revs);
-+	} else if (!strcmp(arg, "--no-expand-tabs")) {
-+		revs->expand_tabs_in_log = 0;
- 	} else if (!strcmp(arg, "--show-notes") || !strcmp(arg, "--notes")) {
- 		revs->show_notes = 1;
- 		revs->show_notes_given = 1;
-diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
-index d1e8259..2fec948 100755
---- a/t/t4201-shortlog.sh
-+++ b/t/t4201-shortlog.sh
-@@ -114,8 +114,8 @@ EOF
- 	test_cmp expect out
- '
+ /*
+  * pp_handle_indent() prints out the intendation, and
+- * perhaps the whole line (without the final newline)
+- *
+- * Why "perhaps"? If there are tabs in the indented line
+- * it will print it out in order to de-tabify the line.
+- *
+- * But if there are no tabs, we just fall back on the
+- * normal "print the whole line".
++ * the whole line (without the final newline), after
++ * de-tabifying.
+  */
+-static int pp_handle_indent(struct strbuf *sb, int indent,
++static void pp_handle_indent(struct strbuf *sb, int indent,
+ 			     const char *line, int linelen)
+ {
+ 	const char *tab;
  
--test_expect_failure !MINGW 'shortlog from non-git directory' '
--	git log HEAD >log &&
-+test_expect_success !MINGW 'shortlog from non-git directory' '
-+	git log --no-expand-tabs HEAD >log &&
- 	GIT_DIR=non-existing git shortlog -w <log >out &&
- 	test_cmp expect out
- '
+ 	strbuf_addchars(sb, ' ', indent);
+ 
+-	tab = memchr(line, '\t', linelen);
+-	if (!tab)
+-		return 0;
+-
+-	do {
++	while ((tab = memchr(line, '\t', linelen)) != NULL) {
+ 		int width = pp_utf8_width(line, tab);
+ 
+ 		/*
+@@ -1685,10 +1676,7 @@ static int pp_handle_indent(struct strbuf *sb, int indent,
+ 		/* Skip over the printed part .. */
+ 		linelen -= 1+tab-line;
+ 		line = tab + 1;
+-
+-		/* .. and look for the next tab */
+-		tab = memchr(line, '\t', linelen);
+-	} while (tab);
++	}
+ 
+ 	/*
+ 	 * Print out everything after the last tab without
+@@ -1696,7 +1684,6 @@ static int pp_handle_indent(struct strbuf *sb, int indent,
+ 	 * align.
+ 	 */
+ 	strbuf_add(sb, line, linelen);
+-	return 1;
+ }
+ 
+ void pp_remainder(struct pretty_print_context *pp,
+@@ -1722,11 +1709,10 @@ void pp_remainder(struct pretty_print_context *pp,
+ 		first = 0;
+ 
+ 		strbuf_grow(sb, linelen + indent + 20);
+-		if (indent) {
+-			if (pp_handle_indent(sb, indent, line, linelen))
+-				linelen = 0;
+-		}
+-		strbuf_add(sb, line, linelen);
++		if (indent)
++			pp_handle_indent(sb, indent, line, linelen);
++		else
++			strbuf_add(sb, line, linelen);
+ 		strbuf_addch(sb, '\n');
+ 	}
+ }
 -- 
 2.8.0-rc4-198-g3f6b64c
