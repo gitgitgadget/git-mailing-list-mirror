@@ -1,8 +1,8 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v2 0/4] Git for Windows fixes in preparation for 2.8.0
-Date: Wed, 23 Mar 2016 11:54:53 +0100 (CET)
-Message-ID: <cover.1458730457.git.johannes.schindelin@gmx.de>
-References: <cover.1458668543.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v2 3/4] t1300: fix the new --show-origin tests on Windows
+Date: Wed, 23 Mar 2016 11:55:13 +0100 (CET)
+Message-ID: <86f6c23e500867f403c33c2716826dc0c5db0cdb.1458730457.git.johannes.schindelin@gmx.de>
+References: <cover.1458668543.git.johannes.schindelin@gmx.de> <cover.1458730457.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
@@ -12,132 +12,116 @@ Cc: git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 11:55:21 2016
+X-From: git-owner@vger.kernel.org Wed Mar 23 11:55:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aigRb-00069W-Gw
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 11:55:19 +0100
+	id 1aigS7-0006Vd-B6
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 11:55:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752899AbcCWKzP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 06:55:15 -0400
-Received: from mout.gmx.net ([212.227.15.15]:51175 "EHLO mout.gmx.net"
+	id S1754703AbcCWKzc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 06:55:32 -0400
+Received: from mout.gmx.net ([212.227.17.21]:61389 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751925AbcCWKzN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 06:55:13 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LhfZR-1ZweJs1z7J-00msOk; Wed, 23 Mar 2016 11:54:57
+	id S1751925AbcCWKz0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2016 06:55:26 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MVNWU-1aGW9V3RLK-00YlYn; Wed, 23 Mar 2016 11:55:15
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <cover.1458668543.git.johannes.schindelin@gmx.de>
+In-Reply-To: <cover.1458730457.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:Di39Pl5SRMuEysjaR0q/YlP/BIO2ssqH50sGRVaJ+9/lY9VcMGm
- CIpJyO0NEQ6F2NpUsJ1W6ATCOylI3jMohcrz4Hr/z4JdcFQbgQb969ytp7viqScKUFFtgXB
- vy7GxFLageEuVmcBcjXhe7gDHpzYtLbewePKsWpSx220yRs4S+j22+v/qA9u31hra+zTIeS
- d1redSlIouksIpZZr/ZyQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mT8D0zlEMi4=:XM1BZyAyk/+1cTwSlfWDpX
- xEtRc7YjH+N4JuFZuotDgi1NMwG9XRJyriaw3zcOpD3WXyiA3sBeZQmg6T1WNB5i0i+S4M4bF
- NHyHpD/uvaZ9u4dcBt79rtndLywri1yBYPRydfcTwRoAW+s/tspIRf5Ru43G/0Aog0LvIWBHe
- OGliiPNyijKwPzXH1MJHoONlviqHu1yhkqzaRR6N0k8VJHwub2rMbnX+fkSOzXdnhOHMsFogS
- nphp1mexax4GF318tTKUaRQV+D0KpVVP0hhhmSdVyu9Ut9Ym4V6dU+Ajzcr8Hd4hIR+SPlXyE
- GxcQRpR2BMw75ENPmm8kTwq9FbglcA14+UomziyyRucI9/gxCJ0BtAamlTIyMyQ+LPKNFaPRQ
- DBtaiWOfhbzYIxN/HP+JfPVxnb3OOO+pgTAY04S0mBw6hGLpGofJtbEdBZUo45vIQnlbGAEFe
- QgeAhZkZFNEzHftw+Pu2ERgZvdU777XVIznLrUko/M11AwtE0jDKgPFlA5nIygMCXctq2RUGn
- pvHLTcIi5PDE4RNM6DHGLIqKnqNI7DI199xhcoWpdRsV/9wvW0ClTMHQ+oMxkumFKZQ+z4APp
- dgg2t+6SzB4kkUv6H22NDIX5WhehfvE6akUOi9mtNSbjOaSRueIVrK8W7SUNl/Hw7AmU0yStW
- vVC+6882Y13LRVBa/s0XHusqsqs7ze5lgHhzFvH5AAdh3XgKywawV9mFqzAaBqBvABfNZBU1O
- ltxAFUG3A7ukT1ocI59p4OgIHveR6cPozUZ3/i/2roxxo7IGgjg52Aqzhx8stNhHLoWuxXtE 
+X-Provags-ID: V03:K0:NreZN0xpYC2fsMd94b1z94grD7LRIXh9n1JEV83WbQ/bxHwpGDO
+ SEzggfgp8nFz1kGOOkngZmJejaGkbJ956hbnVww0jYoylUSoXZTeQx9P7clhjm7H16vVcoG
+ e1mft5RwVmsp2mKrh81bPyioBwuTG2gyeGzrRdl+VDk8irXv1NEQkrfTp/9V0PYu8yVs3uc
+ 1TJeGRq7vQFzB0jQyZuag==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:EgcbYEhiyD0=:UUh/G5i1SLKFAt1IjtCyyR
+ x13sLMoq43PKq22eLnZYq3P73S31V3XfaHt7rz3j+xk4UX7eFfm35qrimXoO98W9R8waq+Yz3
+ fUFBUkSHx5QQW7B50s68JOuSCr+ipQZQ7S4JgIYg6rGwUck1XPSpW3kXerJ1tiet3lk847Ank
+ eRF6xYMSFsmS9MD/7mjOiykQRKVxh4akVKRLwgFLQbduNxIOy3eu28dpWq5hmSItqdu9GL4EH
+ OLE4XGFQwSIAbFTaQPQ+uqEJ+fjC4UTFxkP94g4ZihJSAwbsmdk8KE/xx3B2hLjaL+AaBIADh
+ cKIGMMyUSb6hr1hLUv8UlwXl/f1HG0NaPFqbwMe3IhGnp+7ukpO1BfnhHpQX4rF3S+0Ln+Eiy
+ j9DOwZN9szUJCXwf0TTpOjMqw9Pg2021kPwT1FtlA6KUYr+rR92y3CtGZa8LlYWbSu+Kb0VUS
+ 6eMoelz8bi/2onjDNQW2+uVKOnvzJHXsl5Am/Vh6M1kCmDMr7TYIOadzq4QGGX+UJF9gCntYz
+ lKP6kOtrKtzqMxD3FgYALqA0SsVxjVJj0Jw97FSip9QisaEnGg0nAjHmPrsJIgctaIkf/NyJT
+ M7bzyR3EqwSTI9BKFVkAPpkY5vasUK2eIObs5kNev3Hz2gTMcD8Z20a6Ua8DQLp+KZxy7RQRi
+ 5RBiFtG4iDtddF4pLL8Ls267hNoJvPLxZJa8LWWoSOoCIgfeolLZWV0B/KHzAricyksdm3as6
+ Y5kX017/hIhHuC0Kg3xwR3vjHP4QfzSLnNLOCiUgAqQmy6szR8zG0MtWm9xsinnR1xkG11Be 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289641>
 
-The t1300 and t9115 tests regressed on Windows. These patches fix that.
+On Windows, we have that funny situation where the test script can refer
+to POSIX paths because it runs in a shell that uses a POSIX emulation
+layer ("MSYS2 runtime"). Yet, git.exe does *not* understand POSIX paths
+at all but only pure Windows paths.
 
+So let's just convert the POSIX paths to Windows paths before passing
+them on to Git, using `pwd` (which is already modified on Windows to
+output Windows paths).
 
-Johannes Schindelin (4):
-  config --show-origin: report paths with forward slashes
-  Make t1300-repo-config resilient to being run via 'sh -x'
-  t1300: fix the new --show-origin tests on Windows
-  mingw: skip some tests in t9115 due to file name issues
+While fixing the new tests on Windows, we also have to exclude the tests
+that want to write a file with a name that is illegal on Windows
+(unfortunately, there is more than one test trying to make use of that
+file).
 
- compat/mingw.h                           |  6 ++++++
- path.c                                   |  3 +++
- t/t1300-repo-config.sh                   | 18 +++++++++---------
- t/t9115-git-svn-dcommit-funky-renames.sh |  4 ++--
- 4 files changed, 20 insertions(+), 11 deletions(-)
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t1300-repo-config.sh | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-Interdiff vs v1:
-
- diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
- index 18eb769..a37ebb2 100755
- --- a/t/t1300-repo-config.sh
- +++ b/t/t1300-repo-config.sh
- @@ -700,12 +700,12 @@ test_expect_success 'invalid unit' '
-  	git config aninvalid.unit >actual &&
-  	test_cmp expect actual &&
-  	test_must_fail git config --int --get aninvalid.unit 2>actual &&
- -	grep "^fatal: bad numeric config value .1auto. for .aninvalid.unit. in file .git/config: invalid unit$" actual
- +	test_i18ngrep "bad numeric config value .1auto. for .aninvalid.unit. in file .git/config: invalid unit" actual
-  '
-  
-  test_expect_success 'invalid stdin config' '
-  	echo "[broken" | test_must_fail git config --list --file - >output 2>&1 &&
- -	grep "^fatal: bad config line 1 in standard input $" output
- +	test_i18ngrep "bad config line 1 in standard input" output
-  '
-  
-  cat > expect << EOF
- @@ -1205,6 +1205,9 @@ test_expect_success POSIXPERM,PERL 'preserves existing permissions' '
-  	  "die q(badrename) if ((stat(q(.git/config)))[2] & 07777) != 0600"
-  '
-  
- +! test_have_prereq MINGW ||
- +HOME="$(pwd)" # convert to Windows path
- +
-  test_expect_success 'set up --show-origin tests' '
-  	INCLUDE_DIR="$HOME/include" &&
-  	mkdir -p "$INCLUDE_DIR" &&
- @@ -1232,14 +1235,6 @@ test_expect_success 'set up --show-origin tests' '
-  	EOF
-  '
-  
- -if test_have_prereq MINGW
- -then
- -	# convert to Windows paths
- -	HOME="$(pwd)"
- -	INCLUDE_DIR="$HOME/include"
- -	export HOME INCLUDE_DIR
- -	git config -f .gitconfig include.path "$INCLUDE_DIR/absolute.include"
- -fi
-  
-  test_expect_success '--show-origin with --list' '
-  	cat >expect <<-EOF &&
- diff --git a/t/t9115-git-svn-dcommit-funky-renames.sh b/t/t9115-git-svn-dcommit-funky-renames.sh
- index 864395e..a87d3d3 100755
- --- a/t/t9115-git-svn-dcommit-funky-renames.sh
- +++ b/t/t9115-git-svn-dcommit-funky-renames.sh
- @@ -93,7 +93,7 @@ test_expect_success 'git svn rebase works inside a fresh-cloned repository' '
-  # > to special UNICODE characters in the range 0xf000 to 0xf0ff (the
-  # > "Private use area") when creating or accessing files.
-  prepare_a_utf8_locale
- -test_expect_success UTF8,!MINGW 'svn.pathnameencoding=cp932 new file on dcommit' '
- +test_expect_success UTF8,!MINGW,!UTF8_NFD_TO_NFC 'svn.pathnameencoding=cp932 new file on dcommit' '
-  	LC_ALL=$a_utf8_locale &&
-  	export LC_ALL &&
-  	neq=$(printf "\201\202") &&
- @@ -105,7 +105,7 @@ test_expect_success UTF8,!MINGW 'svn.pathnameencoding=cp932 new file on dcommit'
-  '
-  
-  # See the comment on the above test for setting of LC_ALL.
- -test_expect_success !MINGW 'svn.pathnameencoding=cp932 rename on dcommit' '
- +test_expect_success !MINGW,!UTF8_NFD_TO_NFC 'svn.pathnameencoding=cp932 rename on dcommit' '
-  	LC_ALL=$a_utf8_locale &&
-  	export LC_ALL &&
-  	inf=$(printf "\201\207") &&
-
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index dca27a3..a37ebb2 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -1205,6 +1205,9 @@ test_expect_success POSIXPERM,PERL 'preserves existing permissions' '
+ 	  "die q(badrename) if ((stat(q(.git/config)))[2] & 07777) != 0600"
+ '
+ 
++! test_have_prereq MINGW ||
++HOME="$(pwd)" # convert to Windows path
++
+ test_expect_success 'set up --show-origin tests' '
+ 	INCLUDE_DIR="$HOME/include" &&
+ 	mkdir -p "$INCLUDE_DIR" &&
+@@ -1232,6 +1235,7 @@ test_expect_success 'set up --show-origin tests' '
+ 	EOF
+ '
+ 
++
+ test_expect_success '--show-origin with --list' '
+ 	cat >expect <<-EOF &&
+ 		file:$HOME/.gitconfig	user.global=true
+@@ -1304,7 +1308,7 @@ test_expect_success 'set up custom config file' '
+ 	EOF
+ '
+ 
+-test_expect_success '--show-origin escape special file name characters' '
++test_expect_success !MINGW '--show-origin escape special file name characters' '
+ 	cat >expect <<-\EOF &&
+ 		file:"file\" (dq) and spaces.conf"	user.custom=true
+ 	EOF
+@@ -1333,7 +1337,7 @@ test_expect_success '--show-origin stdin with file include' '
+ 	test_cmp expect output
+ '
+ 
+-test_expect_success '--show-origin blob' '
++test_expect_success !MINGW '--show-origin blob' '
+ 	cat >expect <<-\EOF &&
+ 		blob:a9d9f9e555b5c6f07cbe09d3f06fe3df11e09c08	user.custom=true
+ 	EOF
+@@ -1342,7 +1346,7 @@ test_expect_success '--show-origin blob' '
+ 	test_cmp expect output
+ '
+ 
+-test_expect_success '--show-origin blob ref' '
++test_expect_success !MINGW '--show-origin blob ref' '
+ 	cat >expect <<-\EOF &&
+ 		blob:"master:file\" (dq) and spaces.conf"	user.custom=true
+ 	EOF
 -- 
 2.7.4.windows.1
