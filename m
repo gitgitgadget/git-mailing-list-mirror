@@ -1,78 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-apply does not work in a sub-directory of a Git repository
-Date: Wed, 23 Mar 2016 08:21:42 -0700
-Message-ID: <xmqqbn65dxtl.fsf@gitster.mtv.corp.google.com>
-References: <CA+DCAeQQQH59Lb43Y4Bi1xktPNoODV11KkUBbKNG1OZ7mDb-UQ@mail.gmail.com>
-	<CAGZ79kYmoKX1w5X8jE5_yGb3VKricHEwxAianTyt4VUd71qH-A@mail.gmail.com>
-	<CACsJy8DCk5YintK3PoO1BWdNmsiSLpAcGL4pU7QgNEG6S41CsQ@mail.gmail.com>
+From: Ray Zhang <zhanglei002@gmail.com>
+Subject: [PATCH] add option -n (--no-checkout) to git-worktree add
+Date: Wed, 23 Mar 2016 15:08:59 +0000
+Message-ID: <01020153a40588f3-5401ea3e-ece8-435c-a046-a5c1c1f92cd6-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	Mehul Jain <mehul.jain2029@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 16:21:51 2016
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 23 16:27:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aikbW-0002Un-Co
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 16:21:50 +0100
+	id 1aikgg-0006IB-Nd
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 16:27:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755101AbcCWPVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 11:21:46 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:54288 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753113AbcCWPVq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 11:21:46 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 73E934CBB0;
-	Wed, 23 Mar 2016 11:21:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WWTx8/xzeRbEKObdoiH94Oo2jFM=; b=GtLJnh
-	1sU83ljTlrQJUdUAuAdUCeemne7+DS6/yDeOFAcgqglfgmr6CnYDkanhSaeteSCP
-	s+M1rHkiqRKtL550/z6dph4u9oyGs6LWTX0GVz5vApwwda4I1ngAt4wTpuUt7/oR
-	Qi684jH54SJILtrdmAH9NaNhtzjTgNICfY6Zo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dTaoMyqv6eXWgXgH9YpP9RGIijWcjAWO
-	OYeT5/VDofavv/5zZDew+sBO0MZvgBVNKgFI12a61MqamFNSRTR3FMufQ0aJnLnF
-	Q3YkctluIxEkUjktE0a25Me2Xf8GAvjyOhUGkgBN6L08lwYAksVY8Mpq49ebKo6j
-	jKOX+K0iq1o=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 69CC54CBAE;
-	Wed, 23 Mar 2016 11:21:44 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DFD6C4CBAD;
-	Wed, 23 Mar 2016 11:21:43 -0400 (EDT)
-In-Reply-To: <CACsJy8DCk5YintK3PoO1BWdNmsiSLpAcGL4pU7QgNEG6S41CsQ@mail.gmail.com>
-	(Duy Nguyen's message of "Wed, 23 Mar 2016 17:15:28 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F35938BA-F10A-11E5-9A64-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1755981AbcCWP1G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 11:27:06 -0400
+Received: from a6-246.smtp-out.eu-west-1.amazonses.com ([54.240.6.246]:55445
+	"EHLO a6-246.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755721AbcCWP1E (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2016 11:27:04 -0400
+X-Greylist: delayed 1082 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Mar 2016 11:27:04 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1458745739;
+	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=YGnkBJiK81zjUqlsA+xIId5Ovh+Ng00kG/JreTJELyw=;
+	b=D41Y2/cHmHD8susJ2n4bIxXP/77rUq9fk+6Gmo+cXnvEbq5081Wqk2IdjDHgV92V
+	WrD5EetugGeAbeA49Gn9Dh046BY24aAivKlTQoGpOo2EIQWjS3zagN5VPtFcyPeIuq/
+	JS8ODMC9TQhwQuO5Rkpb8zyfAq+JPlRXsOWo38OI=
+X-SES-Outgoing: 2016.03.23-54.240.6.246
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289659>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+By adding option -n, we can make some customizations before checkout, like sparse checkout, etc.
 
-> 1) add --no-index to force git-apply ignore .git, --git (or some other
-> name) to apply patches as if running from topdir, add a config key to
-> choose default behavior
+Signed-off-by: Ray Zhang <zhanglei002@gmail.com>
+---
+ builtin/worktree.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-I think we do have --no-index (which is why I am largely ignoring
-the rest of your message as uninformed speculation for now).
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 38b5609..14ca3d9 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -21,6 +21,7 @@ static const char * const worktree_usage[] = {
+ struct add_opts {
+ 	int force;
+ 	int detach;
++	int no_checkout;
+ 	const char *new_branch;
+ 	int force_new_branch;
+ };
+@@ -284,11 +285,13 @@ static int add_worktree(const char *path, const char *refname,
+ 	if (ret)
+ 		goto done;
+ 
+-	cp.argv = NULL;
+-	argv_array_clear(&cp.args);
+-	argv_array_pushl(&cp.args, "reset", "--hard", NULL);
+-	cp.env = child_env.argv;
+-	ret = run_command(&cp);
++	if (!opts->no_checkout) {
++		cp.argv = NULL;
++		argv_array_clear(&cp.args);
++		argv_array_pushl(&cp.args, "reset", "--hard", NULL);
++		cp.env = child_env.argv;
++		ret = run_command(&cp);
++	}
+ 	if (!ret) {
+ 		is_junk = 0;
+ 		free(junk_work_tree);
+@@ -320,6 +323,7 @@ static int add(int ac, const char **av, const char *prefix)
+ 		OPT_STRING('B', NULL, &new_branch_force, N_("branch"),
+ 			   N_("create or reset a branch")),
+ 		OPT_BOOL(0, "detach", &opts.detach, N_("detach HEAD at named commit")),
++		OPT_BOOL('n', "no-checkout", &opts.no_checkout, N_("don't create a checkout")),
+ 		OPT_END()
+ 	};
+ 
 
-See
-
-  http://thread.gmane.org/gmane.comp.version-control.git/288316/focus=288321
-
-I agree it is bad that it silently ignores the path outside the
-directory.  When run with --verbose, we should say "Skipped X that
-is outside the directory." or something like that, just like we
-issue notices when we applied with offset, etc.
+--
+https://github.com/git/git/pull/217
