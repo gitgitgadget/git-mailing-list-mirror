@@ -1,93 +1,92 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 4/4] mingw: skip some tests in t9115 due to file name
- issues
-Date: Wed, 23 Mar 2016 06:54:13 +0100
-Message-ID: <56F22F85.3010507@web.de>
-References: <cover.1458668543.git.johannes.schindelin@gmx.de>
- <7b4eca83305ec05af6434ff80269ba563f2d581d.1458668543.git.johannes.schindelin@gmx.de>
- <56F18F5E.9090301@web.de> <xmqqbn66gs4k.fsf@gitster.mtv.corp.google.com>
- <56F1CACA.5040709@web.de> <xmqqtwjydsub.fsf@gitster.mtv.corp.google.com>
+From: "Boettger, Heiko" <Heiko.Boettger@karlstorz.com>
+Subject: AW: AW: git and concurrent access to local repository
+Date: Wed, 23 Mar 2016 07:08:22 +0000
+Message-ID: <8C0042D8869AEA4AA334B49AFBBCEF82B53CF604@TUT-EX02-PV.KSTG.corp>
+References: <8C0042D8869AEA4AA334B49AFBBCEF82B53CF505@TUT-EX02-PV.KSTG.corp>
+ <56F11467.3010004@web.de>
+ <8C0042D8869AEA4AA334B49AFBBCEF82B53CF564@TUT-EX02-PV.KSTG.corp>
+ <56F14E7F.3010801@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>,
-	Eric Wong <normalperson@yhbt.net>
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed Mar 23 06:54:45 2016
+To: =?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Mar 23 08:08:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aibki-0001e4-1g
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 06:54:44 +0100
+	id 1aicu6-0007xQ-VA
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 08:08:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753367AbcCWFyj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Mar 2016 01:54:39 -0400
-Received: from mout.web.de ([212.227.17.11]:49739 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750804AbcCWFyi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 01:54:38 -0400
-Received: from macce.local ([87.146.133.242]) by smtp.web.de (mrweb101) with
- ESMTPSA (Nemesis) id 0MX0Q4-1aExQN3vqG-00W0SD; Wed, 23 Mar 2016 06:54:20
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.7.0
-In-Reply-To: <xmqqtwjydsub.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:rIlka5mi22MXkSOih4cEr6czslRYRR8OB1gewyF+0uj8mfVqtOI
- 9nFKC1Y+FzKNHSgvu7tniw+LiGaI/C+jZiW3kAMiGdEsD/9xvmtbZrr+g+LngLqgpTPGu1Q
- ylyVytWyD7IhMpS6dMj1iIGNcChNGJ67bqU0DUN9QAOme9oebHxbaKYQhwEvqNfGOZY0bRB
- 1oOeAyCjQvxe/hoPoTZeg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+IJBIF8tkbo=:LF/hJRZDd1gFIprZWyLAl9
- sL0pO6MTNKYW/2j1p0mu/j3NEWy3pE7eCr9qYyDXjCk1BkNytUglGvkp6t2s2N9HF5yFNGQvF
- CmXdUdxxF7D4Q9vzjy//1KJrCtKDuHK8D1jiiUJKh1c1wxhlpJRfnQv0QLaS7hZpcr5RtadQi
- 5Wq4BtqHA2MH9uVEr25TVNtIk2QjAI0n5+ZHM+cAXyvOGr10xYSh7qEkGLkFgihfuUbfGI+sr
- ytW7IK6wrHCLvYtfZWvT7E4X2qkzbrKeMARS83TGIE4K4gfKGm+m9VmuC2feOO7qqVdruQb6f
- MwaaG9/dXBYpz2wSh6lM0LH2foXUkWcpHnwjIt+6bNGdJcyDx4nHtajyh92m/QRrKX6tzr0tg
- U2f5bdopayyMK1RPMJip8CONW1r86VDZW5y9K9j7RCHZHO+es2SFqkS5+DyXAXoW/a+ftcT6T
- 2RPmoSOof1GKNKVZTYQQ5rDfpnBQnkXy06b9j4lkL6Ng11rNWWgvt127P/IOZK/+6e0X0jj9y
- 0EgIs6755kp59G8t6lllJ4NIPHCEiuLTyKrRv5K3s4dhXHdgcs7Ot2isACEOOOJDMY5tTfspB
- EoOxfVXDjnPnbjVgTFDZqq7JOiGu47PxCiklfQplrq+oUwsQRVYgxMXrMnIlYJ53ABcrlb9Qh
- OHBPnMhc5dix7SEBiXGJZhAtRqzq6rg1x/PJZIPhuI3SWLRjpzy6kgm7aXTcagNE3k0g6jpSO
- uzhR2zaEfAcR6zD4bMmdZvSfV6wYoXwgG+o60FB1hhXQDtyiCe8+YeoiTEfsXMlPgj9H5q+W 
+	id S1753478AbcCWHI0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Mar 2016 03:08:26 -0400
+Received: from mx0.karlstorz.com ([62.134.46.134]:11172 "EHLO
+	mx0.karlstorz.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752518AbcCWHIZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2016 03:08:25 -0400
+X-IronPort-AV: E=Sophos;i="5.24,381,1454972400"; 
+   d="scan'208";a="24470464"
+Received: from tut-ex03-pv.kstg.corp ([10.0.10.233])
+  by mx0.karlstorz.com with ESMTP; 23 Mar 2016 08:08:22 +0100
+Received: from TUT-EX02-PV.KSTG.corp ([169.254.2.132]) by
+ TUT-EX03-PV.KSTG.corp ([10.0.10.233]) with mapi id 14.03.0266.001; Wed, 23
+ Mar 2016 08:08:23 +0100
+Thread-Topic: AW: git and concurrent access to local repository
+Thread-Index: AdGEEMCWaucNZLm3Qs67LnHJXT7YGAABoqKAAAIdBtAABosUgAAmE0VQ
+In-Reply-To: <56F14E7F.3010801@web.de>
+Accept-Language: de-CH, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.3.60.52]
+x-kse-serverinfo: TUT-EX03-PV.KSTG.corp, 9
+x-kse-antivirus-interceptor-info: scan successful
+x-kse-antivirus-info: Clean, bases: 3/23/2016 4:35:00 AM
+x-kse-attachment-filter-scan-result: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289596>
 
-On 2016-03-22 23.57, Junio C Hamano wrote:
-> Dscho, I queued two out of these four, with a proposed fix-up patch
-> for each of them, on 'pu'; but I won't squash them together myself
-> without hearing from you as I do not test mingw or macosx.
->=20
-> Thanks.
+Hi Torsten,
 
-the queued t9115 passes under Mac OS X (#11 and #12 are skipped as expe=
-cted)
+yes, indeed I accidently pressed the wrong reply button.
 
-----------------
-Beside that, do we want to amend the commit message like this:
+The solution I'm using is the following:
 
-Author: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date:   Tue Mar 22 18:43:00 2016 +0100
+pushd workingcopy > /dev/null
+	(
+		flock -x 200
+		git reset --hard
+		git clean -xfd
+		git pull --rebase
+	) 200>.git/gitrebase.lock
+popd > /dev/null
 
-    skip some tests in t9115 due to file name issues
+Best Regards
+Heiko
 
-    These two tests wanted to write file names which work under Linux o=
-r
-    CYGWIN, but are incompatible with file naming rules under mingw or =
-HFS.
+-----Urspr=FCngliche Nachricht-----
+Von: Torsten B=F6gershausen [mailto:tboegi@web.de]=20
+Gesendet: Dienstag, 22. M=E4rz 2016 14:54
+An: Boettger, Heiko
+Betreff: Re: AW: git and concurrent access to local repository
 
-    Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-    Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-    Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-----------------
+Thanks for the reply,
+you may want to send it to all, including the git mailing list.
+These kindof problems arise from time to time, and it may be nice to sh=
+are your knowledge as well, including work-arounds
 
-http://thread.gmane.org/gmane.comp.version-control.git/285776/focus=3D2=
-87717
+
+On 2016-03-22 10.54, Boettger, Heiko wrote:
+> Thanks Torsten,
+>
+> for sharing your knowledge. That exactly what I thought. As a solutio=
+n, I'm guarding the calls with "flock -x", which perfectly works since =
+I know exactly where the repos are used.=20
+>
+> Regards
+> Heiko
