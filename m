@@ -1,205 +1,183 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: [PATCH v3] bisect--helper: convert a function in shell to C
-Date: Wed, 23 Mar 2016 07:16:06 +0000
-Message-ID: <01020153a254974b-68f7d16a-66d7-4dc1-805d-2185ff1b3ebf-000000@eu-west-1.amazonses.com>
-References: <010201539d57ae98-ce4860a6-f7b6-4e06-b556-3c1340cd7749-000000@eu-west-1.amazonses.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/4] config --show-origin: report paths with forward
+ slashes
+Date: Wed, 23 Mar 2016 09:20:27 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603230821420.4690@virtualbox>
+References: <cover.1458668543.git.johannes.schindelin@gmx.de> <8beb1c208e33e1de8f272caa22fb7a0b662ca4cc.1458668543.git.johannes.schindelin@gmx.de> <xmqqbn66iedh.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 23 08:24:16 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>,
+	Eric Wong <normalperson@yhbt.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 23 09:20:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aid9M-0001fN-1p
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 08:24:16 +0100
+	id 1aie2B-0004AC-D7
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 09:20:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752992AbcCWHYN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 03:24:13 -0400
-Received: from a6-246.smtp-out.eu-west-1.amazonses.com ([54.240.6.246]:39524
-	"EHLO a6-246.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751105AbcCWHYL (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2016 03:24:11 -0400
-X-Greylist: delayed 484 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Mar 2016 03:24:11 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1458717366;
-	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=Su4W+Bq9/+4IvkSByHcNxUxAP9pUHp3SDGd2364xg6E=;
-	b=RqWemgYVUb47bDAn8JlyZft+m7CHjhyTolfAMRvahWDyG2clfHuvMsx6HRQBb/S9
-	awKyt1My5hmWRcpFBLD1l+aWlZKcultIhSCx67z37RD8WHAaNHBJO/pMzTPg4XOBhba
-	gwhVbRLnYYPV/OhE/bPU+IRveVrTsKTlVvGdcXxM=
-In-Reply-To: <010201539d57ae98-ce4860a6-f7b6-4e06-b556-3c1340cd7749-000000@eu-west-1.amazonses.com>
-X-SES-Outgoing: 2016.03.23-54.240.6.246
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+	id S1753820AbcCWIUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 04:20:52 -0400
+Received: from mout.gmx.net ([212.227.15.15]:59110 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753557AbcCWIUs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2016 04:20:48 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MDQI1-1aZ37i329V-00Gp6Z; Wed, 23 Mar 2016 09:20:31
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqqbn66iedh.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:kxWiBkyRPgFOs5MxhJFkn7qS00UJbhetBWiYawY/PBKD9LKj0Rb
+ ELIa1m1Aypyg9VLeGYsC0l6pwXzEQNx9DVFpqmLa95So6ZLS9cjt++dUs1jWanafSginy5z
+ LjsxqIeN0E5HNn+QtCmfWhphHIsvH2TVIAsazHkxHIn3Tb+kpq4yd3Uc0hjqZZ5eYGs+/mx
+ Bc1J0Cj6LvGX0/w0gKUxg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ERvWVK1T+j0=:ATbDsQjuuuxmmhwUF4CUsB
+ 2sRfEa4E1P/Tk1Qs2h0K3TxWe/7m6o/DWBSV1XNP8xLgXOCdqo7r3dx08o2aHs5RTja3yS/TK
+ nowdxP2b5tbX7YGmWJ/bAYb9zi/q1ZK2TX1N1YvdQskNcjtQCyOM0J6VonshZyO1Xvdq6Wf9b
+ /YcIkiK2QiYRNKp7te+3H+De0nObrQ2ChIq03aVy1e+KvDWb6o03K6onlHzS5xhM8lGjErXde
+ s1L9NwNnAml+2/gIaw4Au2wr5Yp9wOMesUfWWQIpLmdZetH8A7fim/k0/VMXQV8AJfSDtXl44
+ PVY/5+MUfMzfaXujGkhVoHnHDYjTnNOnG0Z892oMkCbIpOuN9f2V3Wvvj3ROFMA66OgHZLwVW
+ LOHdSFrVZjFyF7RkDh1sObn2r0/PmIqjxWbEMg/tNNOLeiCEwsdFkXVvL2kxjloLgF5HJjDIT
+ J2km+KfLEkRCDGJzzBBxOtCJBlphDsVHgcrPMxdD2eB+KFZvf3s3iMDo+cAYFag7CuUz2HVlH
+ 0hXKhpKSrbTbG7MqvtU7FEvlklwpqyn0XC+47yD32au0jDvhQ0qyOrFkQweVueBt9a9/fJjil
+ SayHuCEA7At5CDkGU/wI1jd433qBNHUeJXtU9lv7Fxk+zGL+3+WDAFJFylLxaBAPA6qtzAwIx
+ 97MmBxwfBCpIyePqek4T1/kw3Lk3PJeD9Mgf5H8MPmIxZXsUpYY7y0LA0Je2NWRgijGq1AcN9
+ e2w2lU1FBWzznvBa17G9H6/GVjrGuw/0CmUfOlKTSLMgLLtz19xN0ULnvi9J9YALYQY710IU 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289600>
 
-Convert the code literally without changing its design even though it
-seems that it is obscure as to the use of comparing revision to different
-bisect arguments which seems like a problem in shell because of the way
-function arguments are handled.
+Hi Junio,
 
-The argument handling is kind of hard coded right now because it is not
-really be meant to be used like this and this is just for testing
-purposes whether this new method is as functional as its counter part.
-The shell counter part of the method has been retained for historical
-purposes.
+On Tue, 22 Mar 2016, Junio C Hamano wrote:
 
-Also using OPT_CMDMODE() to handle check-term-format and next-all
-because these sub commands are independent and error should be shown if used
-together and should be handled independently.
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > On Windows, the backslash is the native directory separator, but
+> > all supported Windows versions also accept the forward slash in
+> > most circumstances.
+> >
+> > Our tests expect forward slashes.
+> >
+> > Relative paths are generated by Git using forward slashes.
+> 
+> ... and the paths tracked by Git (in the index) use slashes.
+> 
+> > So let's try to be consistent and use forward slashes in the $HOME
+> > part of the paths reported by `git config --show-origin`, too.
+> 
+> OK, sounds sensible.
+> 
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  compat/mingw.h | 6 ++++++
+> >  path.c         | 3 +++
+> >  2 files changed, 9 insertions(+)
+> >
+> > diff --git a/compat/mingw.h b/compat/mingw.h
+> > index 8c5bf50..c008694 100644
+> > --- a/compat/mingw.h
+> > +++ b/compat/mingw.h
+> > @@ -396,6 +396,12 @@ static inline char *mingw_find_last_dir_sep(const char *path)
+> >  			ret = (char *)path;
+> >  	return ret;
+> >  }
+> > +static inline void convert_slashes(char *path)
+> > +{
+> > +	for (; *path; path++)
+> > +		if (*path == '\\')
+> > +			*path = '/';
+> > +}
+> >  #define find_last_dir_sep mingw_find_last_dir_sep
+> >  int mingw_offset_1st_component(const char *path);
+> >  #define offset_1st_component mingw_offset_1st_component
+> > diff --git a/path.c b/path.c
+> > index 8b7e168..969b494 100644
+> > --- a/path.c
+> > +++ b/path.c
+> > @@ -584,6 +584,9 @@ char *expand_user_path(const char *path)
+> >  			if (!home)
+> >  				goto return_null;
+> >  			strbuf_addstr(&user_path, home);
+> > +#ifdef GIT_WINDOWS_NATIVE
+> > +			convert_slashes(user_path.buf);
+> > +#endif
+> 
+> Hmm, I wonder if we want to do this at a bit lower level,
 
-This commit reduces the number of failed tests in
-t6030-bisect-porcelain.sh and t6041-bisect-submodule.sh
+Well, I tried to be careful. There *are* circumstamces when backslashes
+are required (CreateProcess() comes to mind), so I wanted to have this
+conversion as much only in the user-visible output as possible.
 
-The corresponding shell function is :
-https://github.com/git/git/blob/v2.8.0-rc4/git-bisect.sh#L572-L597
+> e.g.
+> 
+>     1. have a fallback for other platforms in git-compat-util.h
+> 
+>     #ifndef get_HOME
+>     #define get_HOME() getenv("HOME")
+>     #endif
 
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+Once upon a time, I had something like that (without the ugly uppercase,
+to account for the fact that Windows has no single HOME setting):
 
----
-Changes wrt v1:
- - Remove the function declaration
- - Introduce another method one_of() to reduce the clutter in if
- - Add the documentation as to which part should remain untouched
- - Use OPT_CMDMODE() for --check-term-format and --next-all
- - Remove the '=' in git-bisect.sh
- - Respect the coding convention to indent when a line is spread across
-   many lines
- - s/its/it is/g
- - Output of tests:
-   - t6002 : http://paste.ubuntu.com/15477883/
-   - t6030 : http://paste.ubuntu.com/15477887/
-   - t6041 : http://paste.ubuntu.com/15477897/
- - Add the comment that a part shouldn't be touched
----
- builtin/bisect--helper.c | 73 ++++++++++++++++++++++++++++++++++++++++++++----
- git-bisect.sh            |  4 +--
- 2 files changed, 70 insertions(+), 7 deletions(-)
+	http://thread.gmane.org/gmane.comp.version-control.msysgit/20339
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 3324229..ab3891c 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -2,30 +2,93 @@
- #include "cache.h"
- #include "parse-options.h"
- #include "bisect.h"
-+#include "refs.h"
+>     2. have the one that does convert-slashes for mingw
+> 
+>     static inline const char *mingw_getenv_HOME(void) {
+>     	... do convert-slashes on the result of getenv("HOME");
+>     }
+>     #define get_HOME() mingw_getenv_HOME()
+
+We could do that much easier now:
+
+-- snip --
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 54c82ec..96022b7 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -2117,6 +2117,12 @@ static void setup_windows_environment()
+ 				*tmp = '/';
+ 	}
  
- static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --next-all [--no-checkout]"),
-+	N_("git bisect--helper --check-term-format <term> <revision>"),
- 	NULL
- };
- 
-+static int one_of(const char *term, ...) {
-+	va_list matches;
-+	const char *match;
++	tmp = getenv("HOME");
++	if (tmp)
++		for (; *tmp; tmp++)
++			if (*tmp == '\\')
++				*tmp = '/';
 +
-+	va_start(matches, term);
-+	while ((match = va_arg(matches, const char *)) != NULL)
-+		if (!strcmp(term, match))
-+			return 1;
-+
-+	va_end(matches);
-+
-+	return 0;
-+}
-+
-+static int check_term_format(const char *term, const char *revision, int flag) {
-+	if (check_refname_format(term, flag))
-+		die("'%s' is not a valid term", term);
-+
-+	if (one_of(term, "help", "start", "skip", "next", "reset", "visualize",
-+	    "replay", "log", "run", NULL))
-+		die("can't use the builtin command '%s' as a term", term);
-+
-+	/* In theory, nothing prevents swapping
-+	 * completely good and bad, but this situation
-+	 * could be confusing and hasn't been tested
-+	 * enough. Forbid it for now.
-+	 */
-+
-+	if (!strcmp(term, "bad") || !strcmp(term, "new"))
-+		if (strcmp(revision, "bad"))
-+			die("can't change the meaning of term '%s'", term);
-+
-+	if(!strcmp(term, "good") || !strcmp(term, "old"))
-+		if (strcmp(revision, "good"))
-+			die("can't change the meaning of term '%s'", term);
-+
-+	return 0;
-+}
-+
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
--	int next_all = 0;
-+	int sub_command = 0;
- 	int no_checkout = 0;
-+
-+	enum sub_commands {
-+		NEXT_ALL,
-+		CHECK_TERM_FMT
-+	};
-+
- 	struct option options[] = {
--		OPT_BOOL(0, "next-all", &next_all,
--			 N_("perform 'git bisect next'")),
-+		OPT_CMDMODE(0, "next-all", &sub_command,
-+			 N_("perform 'git bisect next'"), NEXT_ALL),
- 		OPT_BOOL(0, "no-checkout", &no_checkout,
- 			 N_("update BISECT_HEAD instead of checking out the current commit")),
-+		OPT_CMDMODE(0, "check-term-format", &sub_command,
-+			 N_("check the format of the ref"), CHECK_TERM_FMT),
- 		OPT_END()
- 	};
- 
- 	argc = parse_options(argc, argv, prefix, options,
- 			     git_bisect_helper_usage, 0);
- 
--	if (!next_all)
-+	if (sub_command == CHECK_TERM_FMT) {
-+		if (argc == 2) {
-+			if (argv[0] != NULL && argv[1] != NULL)
-+				return check_term_format(argv[0], argv[1], 0);
-+			else
-+				die("no revision or term provided with check_for_term");
-+		}
-+		else
-+			die("--check-term-format expects 2 arguments");
-+	}
-+
-+	if (sub_command != NEXT_ALL && sub_command != CHECK_TERM_FMT)
- 		usage_with_options(git_bisect_helper_usage, options);
- 
- 	/* next-all */
--	return bisect_next_all(prefix, no_checkout);
-+	if (sub_command == NEXT_ALL)
-+		return bisect_next_all(prefix, no_checkout);
-+
-+	return 1;
- }
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 5d1cb00..f63b83e 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -564,8 +564,8 @@ write_terms () {
- 	then
- 		die "$(gettext "please use two different terms")"
- 	fi
--	check_term_format "$TERM_BAD" bad
--	check_term_format "$TERM_GOOD" good
-+	git bisect--helper --check-term-format "$TERM_BAD" bad
-+	git bisect--helper --check-term-format "$TERM_GOOD" good
- 	printf '%s\n%s\n' "$TERM_BAD" "$TERM_GOOD" >"$GIT_DIR/BISECT_TERMS"
- }
- 
+ 	/* simulate TERM to enable auto-color (see color.c) */
+ 	if (!getenv("TERM"))
+ 		setenv("TERM", "cygwin", 1);
+-- snap --
 
---
-https://github.com/git/git/pull/216
+But again, I am uncomfortable to do this wholesale without having the time
+to do anything quickly about unintended side effects.
+
+
+>     3. Instead of the above patch to path.c, change the line before
+>        the precontext with s/getenv("HOME")/get_HOME()/
+> 
+> Or even lower, inside mingw_getenv() and catch variables that deal
+> with paths (not just HOME but PATH, TMP, TMPDIR, etc.)
+
+That outright scares me. Don't do that.
+
+:-)
+
+Again, just to make sure my point is heard: there *are* circumstances when
+the Win32 API expects backslashes and cannot handle forward ones. I would
+not dare to claim to be an expert in that matter, so I would rather want
+to err on the side of converting backslashes to forward slashes *only*
+when really needed.
+
+Ciao,
+Dscho
