@@ -1,84 +1,104 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 20/21] check_aliased_update(): check that dst_name is non-NULL
-Date: Wed, 23 Mar 2016 11:04:37 +0100
-Message-ID: <3260ac9599bc9efa6d7355b79d01e1a3e80bcb73.1458723959.git.mhagger@alum.mit.edu>
-References: <cover.1458723959.git.mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, peff@peff.net, pclouds@gmail.com,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 11:15:05 2016
+From: Hui Yiqun <huiyiqun@gmail.com>
+Subject: [PATCH v3/GSoC 4/5] test-lib.sh: unset all environment variables defined in xdg base dir spec[1]
+Date: Wed, 23 Mar 2016 18:13:24 +0800
+Message-ID: <1458728005-22555-4-git-send-email-huiyiqun@gmail.com>
+References: <1458728005-22555-1-git-send-email-huiyiqun@gmail.com>
+Cc: peff@peff.net, pickfire@riseup.net, Hui Yiqun <huiyiqun@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 23 11:15:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aifmh-0001Ah-Fk
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 11:13:03 +0100
+	id 1aifnW-000210-2s
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 11:13:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754481AbcCWKMt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 06:12:49 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:54349 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754698AbcCWKMk (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2016 06:12:40 -0400
-X-Greylist: delayed 456 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Mar 2016 06:12:38 EDT
-X-AuditID: 12074413-f03ff7000000516b-25-56f26a5ea84c
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 64.AE.20843.E5A62F65; Wed, 23 Mar 2016 06:05:18 -0400 (EDT)
-Received: from michael.fritz.box (p548D66C6.dip0.t-ipconnect.de [84.141.102.198])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u2NA4g1P018017
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Wed, 23 Mar 2016 06:05:17 -0400
-X-Mailer: git-send-email 2.8.0.rc3
-In-Reply-To: <cover.1458723959.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrOIsWRmVeSWpSXmKPExsUixO6iqBuX9SnM4PtBJYuuK91MFg29V5gt
-	bq+Yz2zRPeUto8WPlh5mi5lXrR3YPP6+/8DksXPWXXaPZ717GD0uXlL22L90G5vH501yAWxR
-	3DZJiSVlwZnpefp2CdwZ16+dZiy4z14x4ckKxgbG9WxdjJwcEgImEncfdQLZXBxCAlsZJeZ8
-	XsoK4Zxkknj3/R5YFZuArsSinmYmEFtEQE1iYtshFpAiZoEFjBIbFy9mBkkIC/hJ3J6yhBHE
-	ZhFQlbjdsYUdxOYViJLYdW4FO8Q6JYkNDy6ADeIUsJA4eXIpWL2QgLnE9gdrmSYw8ixgZFjF
-	KJeYU5qrm5uYmVOcmqxbnJyYl5dapGuul5tZopeaUrqJERJQwjsYd52UO8QowMGoxMNbeO5j
-	mBBrYllxZe4hRkkOJiVR3vNBn8KE+JLyUyozEosz4otKc1KLDzFKcDArifByZgLleFMSK6tS
-	i/JhUtIcLErivGpL1P2EBNITS1KzU1MLUotgsjIcHEoSvNsygBoFi1LTUyvSMnNKENJMHJwg
-	w7mkRIpT81JSixJLSzLiQVEQXwyMA5AUD9BeXrC9xQWJuUBRiNZTjLocC37cXsskxJKXn5cq
-	Jc6rAbJDAKQoozQPbgUsfbxiFAf6WBjiBR5g6oGb9ApoCRPQkoU+YEtKEhFSUg2MM+pnHs++
-	WLI8bLZC3ItQedk4qS0sT+wk93Irqh7J//OUwa6u19cupsOPa8XcHPsuV67bx5Z0Op9KFjN4
-	cd6i3sHPyUpE3/Xzy1kdqoHuPtVyk4r+PvkfcPHe0soFqzS+s82S7M34ahPTtHU5 
+	id S1754751AbcCWKNo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 06:13:44 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34269 "EHLO
+	mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754709AbcCWKNj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2016 06:13:39 -0400
+Received: by mail-pf0-f193.google.com with SMTP id n5so2390826pfn.1
+        for <git@vger.kernel.org>; Wed, 23 Mar 2016 03:13:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=KTGwhJPnnQE4iM+j5k7RTPcuomvIH1txLGdUcSy7Rbo=;
+        b=LeGtuVG0YNsFcuaPZaplNxejtYiu33LsG9wIaaEApkaiMB+mhBxdgoK9HuRWDtBQnv
+         YE/ah4dx0AurL7j7dc7Kb4DIbo1lOzShGtxq8i8h4mu9hv29BLhxzcGlyXcqa5HgJ4pJ
+         Cuvr+L7Md60yy4Z7zNJ421MyeQvrv89TkbueKPpijunoxKkgS+CfHXvq37WwwDq4k7fb
+         EKkEX9ObwlULSdEqQTvMPhEhFM0mtFoqJf2UvHS68loRTumx/C+lQo2UNmsybyne7KI4
+         e/p07KtLbc/EWNx/284C9kxxSZY7k+4DV/TNS/WqyIkxounOQLCw/zIhU62GEGTFLZPd
+         rYSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=KTGwhJPnnQE4iM+j5k7RTPcuomvIH1txLGdUcSy7Rbo=;
+        b=dlcioyC6XYjLaKJmOyLYTitBcQch1IBrfuaCjdnsBTu34Q7Gw5TeleyWDEU6fR+d7Q
+         1awrJL7Fge6B77MCE4S01srsYFUxCnIeWOHA6MmTDeLBi7YcGbyefUTFJhQVqCkTRRkn
+         T6W1WppUSr35ICrkhkrhUJTuJBp4yO55Xz/5DRFKGbu/adnpV7+uqk561Ulc0Y0k+5W/
+         tDRzUL5Wphw9tg/MdV/zeXG20NFe0oJwgsr3eNNMmOhAHogoTxk85yyVoX8zlZnNfDhp
+         yZvmDhMxvH4mBsrWFXX5IcMf5kvCDx8l++tJFJPnnN8yCuMHTKc0YUfZUfJ4zO4qmqhk
+         yizQ==
+X-Gm-Message-State: AD7BkJIuVl3TL+WHCXBjM51c7ynYll9NkrPFHA1bzriDLYVcTvl1CqTk8x7rq+EMHD4m3A==
+X-Received: by 10.66.193.161 with SMTP id hp1mr2860852pac.9.1458728018898;
+        Wed, 23 Mar 2016 03:13:38 -0700 (PDT)
+Received: from localhost.localdomain ([2402:f000:1:4414:ae9e:17ff:fe87:5adb])
+        by smtp.gmail.com with ESMTPSA id x18sm3232325pfi.42.2016.03.23.03.13.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 23 Mar 2016 03:13:38 -0700 (PDT)
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1458728005-22555-1-git-send-email-huiyiqun@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289621>
 
-If there is an error in resolve_ref_unsafe(), it returns NULL. We check
-for this case, but not until after calling strip_namespace(). Instead,
-call strip_namespace() *after* the NULL check.
+Otherwise, on environments where these variables and set, an assignment
+to one of these variables will cause the variable being implicitly exported.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+For example:
+
+    $ XDG_RUNTIME_DIR=/run/user/2000 bash
+    $ XDG_RUNTIME_DIR=/tmp/whatever # it should not be exported!
+    $ bash
+    $ echo $XDG_RUNTIME_DIR
+    /tmp/whatever # instead of empty
+
+[1] https://specifications.freedesktop.org/basedir-spec
+    /basedir-spec-latest.html
+
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Hui Yiqun <huiyiqun@gmail.com>
 ---
- builtin/receive-pack.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/test-lib.sh | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index c8e32b2..49cc88d 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1081,13 +1081,13 @@ static void check_aliased_update(struct command *cmd, struct string_list *list)
- 	if (!(flag & REF_ISSYMREF))
- 		return;
- 
--	dst_name = strip_namespace(dst_name);
- 	if (!dst_name) {
- 		rp_error("refusing update to broken symref '%s'", cmd->ref_name);
- 		cmd->skip_update = 1;
- 		cmd->error_string = "broken symref";
- 		return;
- 	}
-+	dst_name = strip_namespace(dst_name);
- 
- 	if ((item = string_list_lookup(list, dst_name)) == NULL)
- 		return;
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 0b47eb6..60a837a 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -93,7 +93,17 @@ unset VISUAL EMAIL LANGUAGE COLUMNS $("$PERL_PATH" -e '
+ 	my @vars = grep(/^GIT_/ && !/^GIT_($ok)/o, @env);
+ 	print join("\n", @vars);
+ ')
++# Unset all environment variables defined in xdg base dir spec[1]
++# to make sure that the test are running with a known state.
++#
++# [1] https://specifications.freedesktop.org/basedir-spec
++#     /basedir-spec-latest.html
++unset XDG_DATA_HOME
+ unset XDG_CONFIG_HOME
++unset XDG_DATA_DIRS
++unset XDG_CONFIG_DIRS
++unset XDG_CACHE_HOME
++unset XDG_RUNTIME_DIR
+ unset GITPERLLIB
+ GIT_AUTHOR_EMAIL=author@example.com
+ GIT_AUTHOR_NAME='A U Thor'
 -- 
-2.8.0.rc3
+2.7.4
