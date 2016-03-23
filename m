@@ -1,77 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/4] Make t1300-repo-config resilient to being run via
- 'sh -x'
-Date: Wed, 23 Mar 2016 08:21:29 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603230820140.4690@virtualbox>
-References: <cover.1458668543.git.johannes.schindelin@gmx.de> <b4df45088aa68d8410895f66a814dd6780e2e451.1458668543.git.johannes.schindelin@gmx.de> <20160322175948.GG28749@google.com> <xmqqfuvigsl6.fsf@gitster.mtv.corp.google.com>
- <20160322234524.GJ28749@google.com>
+From: Moritz Neeb <lists@moritzneeb.de>
+Subject: Re: GSoC 2016: application period ongoing, a few advices
+Date: Wed, 23 Mar 2016 08:23:13 +0100
+Message-ID: <56F24461.4080109@moritzneeb.de>
+References: <vpqfuvmirgq.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>,
-	Eric Wong <normalperson@yhbt.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 08:21:55 2016
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+	larsxschneider <larsxschneider@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	"Junio C. Hamano" <gitster@pobox.com>,
+	Edward Thomson <ethomson@github.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	saurabhsuniljain@gmail.com, pranit.bauva@gmail.com,
+	mehul.jain2029@gmail.com, tigerkid001@gmail.com,
+	huiyiqun@gmail.com, senorsen.zhang@gmail.com, dpdineshp2@gmail.com,
+	sauravsachidanand@gmail.com
+X-From: git-owner@vger.kernel.org Wed Mar 23 08:23:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aid74-0008Iv-UW
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 08:21:55 +0100
+	id 1aid8T-0000yc-Qo
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 08:23:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753929AbcCWHVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 03:21:50 -0400
-Received: from mout.gmx.net ([212.227.17.21]:61013 "EHLO mout.gmx.net"
+	id S1754047AbcCWHXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 03:23:18 -0400
+Received: from moritzneeb.de ([78.47.1.106]:53305 "EHLO moritzneeb.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751105AbcCWHVs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 03:21:48 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MgXCF-1aNPBr4Ax5-00O19g; Wed, 23 Mar 2016 08:21:33
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160322234524.GJ28749@google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:XM8S+sBsMudypJq+tY+1sqhUXaF23yRiylZzv5lZWqzEvfQN0hi
- dwS2pApcwa939akXuIhlZ3RVBAWdFO7Hq9EZBTi3hFgOy+dJP+5WZlR2Vv2D2IsZl+NcooP
- ZxPqHGhFDMs45jpNi3OzR4N5przOqcNdW118K+KgFU/iu02FRxgeMyaaTzh2ck7czXWt7WB
- xVIbtOP3fK+obnv60u/SA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zgOjNGUdz2E=:9RuqJhqoKVRumTG4qznE2Y
- TtVc02d5y1PyDtX6HCEt/b8M3x4STZZbZSUIm2w1crgLTs57tvU5V85Ld8EUTtyaNcMFqIE5b
- ctp8jIraXsP5R0RaKPJn2QV4g0/ZEN2Ox+wMdwRIoWneQOqiCwFNwKy3AqT5thlRxkE6pKAz/
- SSgpIkSi8UDwz7qWI3mY8meje8r8S930tq3M8FWQJlhhBto9glJrsGeBrFQq4F7OT5vErUCjP
- kVDxl1a8Hzo0O8bUotoWITuJyHawsanTZs+yzn9dx3GEFSpShCTqQT/3YpuoVASIlyOQu1okv
- /IPeVYy+JY/KCP7g7lTqoxr34CSvyRt7uMk4Y/uxoRmejF5NNAjcqUoDm/O8qDpzfl/XF5dJE
- kGlx0KVZFwdB5wWehFxlRmjngrl5yXPSUHSHE7n/to16NFl8FO5RYZ8Von7FARtli9ehetc9/
- oZ5wjP+Hz4FbvThv1G/ysSKA3SV7qjBJ9daofci+Oy5ZkkA9Feqmcl3K8JG+QbtgrH7DhFWYk
- 3yvbX/sAj2i77fQVQOKl1zZjAJaPPfHxx5IUUcw5QJFEsPF68SEctUgRwm/j/bej9UXZvrauP
- 83sZ6vosiTBV/pp9aTobFfjmVZWK67oEHs9z0poqmbci8evhZm3qfsCJlAbu/c+/6a39JTpJe
- To+Ox6CzrUoHDKTVPgAEuk1jl+PbdrkNE/mnBT6oUhRpQCUQe+55iBFF1WZWFdJq8wDSFedhO
- Yo+ZpasneDFzda+C81gijEIxDLC8K8t+u50tVzAoIzE+HFw7TZXF2pvshPnzD9dFdn7Tflq/ 
+	id S1753835AbcCWHXR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2016 03:23:17 -0400
+Received: from [192.168.1.4] (x55b4faab.dyn.telefonica.de [85.180.250.171])
+	by moritzneeb.de (Postfix) with ESMTPSA id 480441C050;
+	Wed, 23 Mar 2016 08:23:14 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=moritzneeb.de;
+	s=mail; t=1458717795;
+	bh=tsf6m/gY4LZdLMPoWsTnLhRbNIjO9Q3prqXYOS7sMg4=;
+	h=Subject:To:References:Cc:From:Date:In-Reply-To:From;
+	b=fnm+Kck4wEXFqDs7OUgI/0GMtNWDJ6Q8yK5JPV9g79PbUAGTIZzC03RCpzXAkd0zB
+	 Ns9cBhL76b72oIfesWz0sIzYOxP8Qd//uKfyLTb1XC1xZRrVRcp7FNlRDd90Z4WzLR
+	 wf2caUcUB+OvPxYnvnOz7/QkW5YiL9rcMDBHBgMU=
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
+In-Reply-To: <vpqfuvmirgq.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289598>
 
-Hi,
+Hi
 
-On Tue, 22 Mar 2016, Jonathan Nieder wrote:
+On 03/19/2016 01:26 PM, Matthieu Moy wrote:
+> As a reminder, the GSoC students application period has started (since
+> March 14, deadline = March 25th = soon).
 
-> Junio C Hamano wrote:
-> 
-> > Both sounds sensible.  Should we squash this in, then?
-> >
-> >  t/t1300-repo-config.sh | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Thanks for the reminder. Because you might be expecting a proposal from
+me, I just wanted to let you know, that I was too busy lately to prepare
+one and probably also will be too busy during the coding period, such
+that I decided against submitting a proposal.
 
-Sure, makes sense. That late in the 2.8.0 game I tried to err on the more
-faithful side, hence I kept testing for "fatal:" but if you two are fine
-with dropping it...
+Good news for my co-applicants ;-) I wish all the best to those applying.
 
-Ciao,
-Dscho
+However I'd be happy to contribute to git in the future - see you there.
+
+Best,
+Moritz
