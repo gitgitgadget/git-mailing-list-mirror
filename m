@@ -1,115 +1,86 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/GSoC] parse-options: Add a new nousage opt
-Date: Wed, 23 Mar 2016 18:31:57 -0400
-Message-ID: <20160323223157.GA12531@sigill.intra.peff.net>
-References: <1458456405-3519-1-git-send-email-chirayudesai1@gmail.com>
+Subject: Re: "git tag --contains <id>" is too chatty, if <id> is invalid
+Date: Wed, 23 Mar 2016 18:41:13 -0400
+Message-ID: <20160323224113.GB12531@sigill.intra.peff.net>
+References: <CAJj6+1Fcp+Fjx9N6Mon1A5uP-_npnPL1Acu5-cR_bHVfs3EMWA@mail.gmail.com>
+ <20160319175705.GA6989@sigill.intra.peff.net>
+ <CAJj6+1HaVnRcmDHOTDdx=o8a+aXvSi8+LykWzrfx7knE-_3ocg@mail.gmail.com>
+ <20160319181228.GA9115@sigill.intra.peff.net>
+ <CAJj6+1H6L=LxnDRzuC6OzXgVvzXsngGJ5X=E5Fi6Fg7JXkEJaQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Cc: Git List <git@vger.kernel.org>
 To: Chirayu Desai <chirayudesai1@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 23:32:07 2016
+X-From: git-owner@vger.kernel.org Wed Mar 23 23:41:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1airJu-00052i-Uh
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 23:32:07 +0100
+	id 1airSr-000341-Bs
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 23:41:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751074AbcCWWcB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 18:32:01 -0400
-Received: from cloud.peff.net ([50.56.180.127]:37032 "HELO cloud.peff.net"
+	id S1754131AbcCWWlQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 18:41:16 -0400
+Received: from cloud.peff.net ([50.56.180.127]:37039 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750834AbcCWWcA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 18:32:00 -0400
-Received: (qmail 6007 invoked by uid 102); 23 Mar 2016 22:31:59 -0000
+	id S1752806AbcCWWlQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2016 18:41:16 -0400
+Received: (qmail 6401 invoked by uid 102); 23 Mar 2016 22:41:15 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Mar 2016 18:31:59 -0400
-Received: (qmail 4368 invoked by uid 107); 23 Mar 2016 22:32:19 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Mar 2016 18:41:15 -0400
+Received: (qmail 4487 invoked by uid 107); 23 Mar 2016 22:41:35 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Mar 2016 18:32:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Mar 2016 18:31:57 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Mar 2016 18:41:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Mar 2016 18:41:13 -0400
 Content-Disposition: inline
-In-Reply-To: <1458456405-3519-1-git-send-email-chirayudesai1@gmail.com>
+In-Reply-To: <CAJj6+1H6L=LxnDRzuC6OzXgVvzXsngGJ5X=E5Fi6Fg7JXkEJaQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289688>
 
-On Sun, Mar 20, 2016 at 12:16:45PM +0530, Chirayu Desai wrote:
+On Sun, Mar 20, 2016 at 12:19:46PM +0530, Chirayu Desai wrote:
 
-> diff --git a/parse-options-cb.c b/parse-options-cb.c
-> index 239898d946..ac2ea4d674 100644
-> --- a/parse-options-cb.c
-> +++ b/parse-options-cb.c
-> @@ -85,11 +85,15 @@ int parse_opt_commits(const struct option *opt, const char *arg, int unset)
->  
->  	if (!arg)
->  		return -1;
-> -	if (get_sha1(arg, sha1))
-> -		return error("malformed object name %s", arg);
-> +	if (get_sha1(arg, sha1)) {
-> +		error("malformed object name %s", arg);
-> +		return -3;
-> +	}
+> I went for 3, and have sent a patch for that here - [PATCH/GSoC]
+> parse-options: Add a new nousage opt
+> However, it currently has one bug
+> Running 'git tag --contains qq' twice will first show an error, then
+> print qq, meaning that the first command creates the tag qq.
+> Running 'git tag -l --contains qq' works fine.
+> My first question is if 'git tag --contains' (without '-l') supposed to work?
+> If not, then I would fix that bug, otherwise fix the bug my code
+> introduced, and add tests for it.
 
-Now that we have a few meaningful return values, should we have some
-enum that gives them human-readable names?
+Yes, "--contains" should imply "-l", and we should complain if there is
+an attempt to create a tag.
 
-E.g., why don't we allow "-2" here? I think it is because
-parse_options_step internally uses it for "I don't know about that
-option". But maybe we should have something like:
+This seems to work with the tip of "master":
 
-  enum PARSE_OPT_ERROR {
-          PARSE_OPT_ERR_USAGE = -1,
-	  PARSE_OPT_ERR_UNKNOWN_OPTION = -2,
-	  PARSE_OPT_ERR_FAIL_QUIETLY = -3,
-  }
+  $ git tag --contains v2.8.0-rc3
+  v2.8.0-rc3
+  v2.8.0-rc4
 
-(I don't quite like the final name, but I couldn't think of anything
-better).
+  $ git tag --contains qq
+  error: malformed object name qq
+  [...and then the usage...]
 
-> diff --git a/parse-options.c b/parse-options.c
-> index 47a9192060..d136c1afd0 100644
-> --- a/parse-options.c
-> +++ b/parse-options.c
-> @@ -158,6 +158,9 @@ static int get_value(struct parse_opt_ctx_t *p,
->  			return (*opt->callback)(opt, NULL, 0) ? (-1) : 0;
->  		if (get_arg(p, opt, flags, &arg))
->  			return -1;
-> +		if (opt->flags & PARSE_OPT_NOUSAGE) {
-> +			return (*opt->callback)(opt, arg, 0);
-> +		}
->  		return (*opt->callback)(opt, arg, 0) ? (-1) : 0;
+  $ git tag --contains HEAD qq
+  fatal: --contains option is only allowed with -l.
 
-Here you use PARSE_OPT_NOUSAGE to pass the callback's value directly
-back to the rest of the option-parsing code. But can't we just intercept
-"-3" always? It's possible that another callback is using it to
-generically return an error, but it seems like a rather low risk, and
-the resulting code is much simpler.
+  $ git rev-parse --verify qq
+  fatal: Needed a single revision
 
-Or we could go the opposite direction. If a callback is annotated with
-PARSE_OPT_NOUSAGE, why do we even need to care about its return value?
-The callback could continue to return -1, and we would simply suppress
-the usage message.
+but with your patch:
 
->  	case OPTION_INTEGER:
-> @@ -504,6 +507,8 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
->  			goto show_usage_error;
->  		case -2:
->  			goto unknown;
-> +		case -3:
-> +			return PARSE_OPT_DONE;
->  		}
->  		continue;
->  unknown:
+  $ git tag --contains qq
+  error: malformed object name qq
 
-If I understand correctly, this is now getting the value from the
-callback directly. What happens if a callback returns "-4" or "4"?
+  $ git rev-parse --verify qq
+  e9cacb7f8231dd6616671f9bcdd0945043483064
 
-Also, this covers the parse_long_opt() call, but there are two
-parse_short_opt() calls earlier. Wouldn't they need to learn the same
-logic?
+So presumably we're not aborting the program when the options fail to
+parse, and it continues to process the "qq" as a tag to be created.
 
 -Peff
