@@ -1,244 +1,141 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH v3] bisect--helper: convert a function in shell to C
-Date: Wed, 23 Mar 2016 18:46:37 +0530
-Message-ID: <CAFZEwPPDhK1biRLuXtYeBX5fsQGw==fUOLxSOXVaZPghbJQYGg@mail.gmail.com>
-References: <010201539d57ae98-ce4860a6-f7b6-4e06-b556-3c1340cd7749-000000@eu-west-1.amazonses.com>
-	<01020153a254974b-68f7d16a-66d7-4dc1-805d-2185ff1b3ebf-000000@eu-west-1.amazonses.com>
-	<alpine.DEB.2.20.1603231238180.4690@virtualbox>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] sha1_name.c: add an option to abort on ambiguous refs
+Date: Wed, 23 Mar 2016 20:30:40 +0700
+Message-ID: <1458739840-15855-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 23 14:17:24 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 23 14:31:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiies-0008RN-65
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 14:17:10 +0100
+	id 1aiism-0006T9-Al
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 14:31:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755846AbcCWNQk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 09:16:40 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:35319 "EHLO
-	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755600AbcCWNQi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 09:16:38 -0400
-Received: by mail-yw0-f195.google.com with SMTP id w6so1574352ywd.2
-        for <git@vger.kernel.org>; Wed, 23 Mar 2016 06:16:38 -0700 (PDT)
+	id S1754988AbcCWNb3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Mar 2016 09:31:29 -0400
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:33417 "EHLO
+	mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753074AbcCWNb1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2016 09:31:27 -0400
+Received: by mail-pf0-f174.google.com with SMTP id 4so28344259pfd.0
+        for <git@vger.kernel.org>; Wed, 23 Mar 2016 06:31:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=u0DGOXpulAgSAhmKvBg+nVqZCxRTAMV37GKGDWXZzac=;
-        b=yeQzV3Kusuf3BJi0hW3E+8QEAEu5dc7fImki44KT8lj8wkjVZd5axsKUu4lwW0gV6C
-         Naqjf1Sam8CtZLRhqrhNmxjnmjb339A14G4Aa2eAFeGU3qAVtS3FeZldGMG7CZMCVV26
-         H0/4GU/g6oIW+vpI9P2lfLYgMw/EJhMmg3IpUnPqPIDCiuMa5YeuvcPmVd7Oky5ue9cX
-         WEcoVyuATvGnYcWN8x1PoW0ATb+V0sWVDdw4H4UVC63svMs9a2pkSj7WAEpKRWEiqTbY
-         B3KW3pWnd94PKsckcXfgysWF/yGVh5GwDF8RkS4V5llbXozoq9dZapwbG68CsqGoqt+J
-         oQHA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eZqEe/M/1HnVIriESkbCujM2MhR1HG5LqqnhKRUjNr8=;
+        b=ufuz2bIYqGkp4/zGoXyoszcxJKf/jVNwgtCBNJZhJRGU4btzdUqK3DOHglKqxaqxW/
+         X5Uaile+roxJIVrbdqR6dJD1jhnf5pro8kuFhGgovv9qACPpnz8dzqtPFOMhAdn6YFiv
+         wtVEuEhgcZ5nSHy/RllAgOVWwu8mxJ0Hb/SfEqeHg1A/UUju+dHtAkHL4kMgRT1O+rSw
+         ZTgMjkIa3/St/HRicuKZzeBZTJuswTzCmpUIJGSnDLF33VGexNpO/i+Ix4vpnrAOwmVl
+         vM93Iltou8jVXezk+jJO32JxzpTdcx/lfnRO9VSrnNX7H8CbkDtobljxSdM/Q3Zzvd0X
+         t6ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=u0DGOXpulAgSAhmKvBg+nVqZCxRTAMV37GKGDWXZzac=;
-        b=FAv3vPlJDKGOA+4P8MKjhqo9/RAfCOFMBJCaHkXGNdmS8UdS140vz93XEjKSZ7GH6f
-         N16/xZrTgcsNDTvjQCx6oqc7E7upfvfSI0kyrIP0xteC2wI+TcogA6aixel2FUUB1FtE
-         mkmpDg4rwJizur5J+bpF/LMBNMMbfle0865BRRCXtbpseHeQNdc+CJsDewKdT+AO5rAT
-         a8pZbv0d+xB0ebopPeVEoJjcbmqeWXx7zcluX219NeDtrZ1A58flTvsHqBLh06NsjyFu
-         +FyqQPEWCebRMt/fITkTc1UFDAJjO2cZWhXEUMGG0olF6GceAI1LMg3PM5Jb7YLUXXBA
-         2w/A==
-X-Gm-Message-State: AD7BkJLigxF6PWFrCq6a9STCjm852c0GMDcvGWJHlnV1OYiuUrruPs7XpLY7qh0Msn+ib+VA9/XwMn+ZoHWtYQ==
-X-Received: by 10.129.91.6 with SMTP id p6mr1273160ywb.325.1458738997606; Wed,
- 23 Mar 2016 06:16:37 -0700 (PDT)
-Received: by 10.13.203.137 with HTTP; Wed, 23 Mar 2016 06:16:37 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1603231238180.4690@virtualbox>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eZqEe/M/1HnVIriESkbCujM2MhR1HG5LqqnhKRUjNr8=;
+        b=JksozoVWuIX2JiCTT9fo9M8DIEblhMJMIoGJDFpt4qxzojE2XGc/9rRAsZVkdn3at7
+         dsnUGoIYpx7occsS856Z000ghF5+p/e3NNbeJ1XGjf7oiPXmdAOO7XFJpd3BbAyIR5Em
+         lnCfDOOQ15EcbrTsWMKKIR4iH3afpAOdFobgR1uFgNl6XsrJM5YA+eSfxevAf4i/OZNI
+         7l352Zu5G12yNoh4PwQn3H5HUsVS7F1+NwWiOHtYU8xlrzi74BiKdCKWWrdAblrHfFcG
+         WEDlNlBGN2XSa+FHDoAN23nu0zrMtaJ8oX/su7fYVXyt9heWDSuHDmIJfPeHXJJYiecS
+         rKIw==
+X-Gm-Message-State: AD7BkJJs6faez/gpg6b29veZG3kOj5w22Ip4nOed1OkKofZPQg4im9wwbFtmrwx5kiBjKw==
+X-Received: by 10.98.9.83 with SMTP id e80mr4366067pfd.34.1458739841861;
+        Wed, 23 Mar 2016 06:30:41 -0700 (PDT)
+Received: from lanh ([115.76.228.161])
+        by smtp.gmail.com with ESMTPSA id i9sm4442220pfi.95.2016.03.23.06.30.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 Mar 2016 06:30:40 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Wed, 23 Mar 2016 20:30:53 +0700
+X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289655>
 
-On Wed, Mar 23, 2016 at 5:27 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Pranit,
->
-> On Wed, 23 Mar 2016, Pranit Bauva wrote:
->
->> Convert the code literally without changing its design even though it
->> seems that it is obscure as to the use of comparing revision to different
->> bisect arguments which seems like a problem in shell because of the way
->> function arguments are handled.
->
-> I still believe that it would make for an improvement to replace
-> "revision" by "orig_term".
+There are cases when a warning on ambiguous refs may go unnoticed
+(e.g. git-log filling up the whole screen). There are also cases when
+people want to catch ambiguity early (e.g. it happens deep in some
+script). In either case, aborting the program would accomplish it.
 
-I missed this. Will do it.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Documentation/config.txt |  3 ++-
+ config.c                 |  5 ++++-
+ sha1_name.c              | 10 ++++++++--
+ 3 files changed, 14 insertions(+), 4 deletions(-)
 
->> The argument handling is kind of hard coded right now because it is not
->> really be meant to be used like this and this is just for testing
->> purposes whether this new method is as functional as its counter part.
->> The shell counter part of the method has been retained for historical
->> purposes.
->
-> Well, maybe the argument handling is really meant to be used like this in
-> the end? Just skip that paragraph.
-
-Sure.
-
->> Also using OPT_CMDMODE() to handle check-term-format and next-all
->> because these sub commands are independent and error should be shown if
->> used together and should be handled independently.
->
-> As is often the case, after some discussion a single patch becomes more
-> than just one change. This is what we see here, too: OPT_CMDMODE() is a
-> change that needs preparation of the existing code in
-> builtin/bisect--helper.c, and I would highly suggest to split that change
-> out into its own patch. It makes for a nicer story, and it is *much*
-> easier to review.
->
->> This commit reduces the number of failed tests in
->> t6030-bisect-porcelain.sh and t6041-bisect-submodule.sh
->
-> Oh? Which tests are supposed to fail? I do not see any failing tests
-> here...
-
-What I meant by this is that before there were 55 out of 70 tests
-which failed. After this patch, there are 3 tests out of 70 which
-failed.
-
->> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
->> index 3324229..ab3891c 100644
->> --- a/builtin/bisect--helper.c
->> +++ b/builtin/bisect--helper.c
->> [...]
->> +static int check_term_format(const char *term, const char *revision, int flag) {
->> +     if (check_refname_format(term, flag))
->> +             die("'%s' is not a valid term", term);
->> +
->> +     if (one_of(term, "help", "start", "skip", "next", "reset", "visualize",
->> +         "replay", "log", "run", NULL))
->
-> If I understood Junio correctly, he meant to line up the second line with
-> the corresponding level. In this case, as "replay" is a parameter of the
-> one_of() function, the indentation would look like this instead:
-
-I misunderstood his point.
-
->         if (one_of(term, "help", "start", "skip", "next", "reset", "visualize",
->                    "replay", "log", "run", NULL))
->
->> +             die("can't use the builtin command '%s' as a term", term);
->> +
->> +     /* In theory, nothing prevents swapping
->> +      * completely good and bad, but this situation
->> +      * could be confusing and hasn't been tested
->> +      * enough. Forbid it for now.
->> +      */
->
-> I see quite a few comments that put the closing "*/" on its own line, but
-> do not award the same pleasure to the opening "/*". Personally, I much
-> prefer the opening "/*" to have an entire line to itself, too, but I guess
-> that there is enough precendence in Git's source code to accept both
-> forms.
->
->> +     if (!strcmp(term, "bad") || !strcmp(term, "new"))
->> +             if (strcmp(revision, "bad"))
->> +                     die("can't change the meaning of term '%s'", term);
->> +
->> +     if(!strcmp(term, "good") || !strcmp(term, "old"))
->> +             if (strcmp(revision, "good"))
->> +                     die("can't change the meaning of term '%s'", term);
->
-> I am still convinced that
->
->         if ((one_of(term, "bad", "new", NULL) && strcmp(orig_term, "bad")) ||
->             (one_of(term, "good", "old", NULL) && strcmp(orig_term, "good")))
->                 die("can't change the meaning of term '%s'", term);
->
-> looks so much nicer.
-
-True. I missed this point.
-
->>  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
->>  {
->> -     int next_all = 0;
->> +     int sub_command = 0;
->>       int no_checkout = 0;
->> +
->> +     enum sub_commands {
->> +             NEXT_ALL,
->> +             CHECK_TERM_FMT
->> +     };
->
-> Interesting. I did not think that Git's source code declares enums inside
-> functions, but builtin/remote.c's config_read_branches() does, so this
-> code is fine.
-
-I didn't notice this before. Since git has the convention of declaring
-enums outside function, it will be better to follow the trend rather
-than allowing another trend to spread.
-
-> Still, the patch would be easier to review (corollary: bugs would have a
-> harder time to hide) if the change from OPT_BOOL to OPT_CMDMODE was done
-> in a separate, preparatory patch.
-
-I was confused about this. Now that u mention it, I will make the change.
-
->>       argc = parse_options(argc, argv, prefix, options,
->>                            git_bisect_helper_usage, 0);
->>
->> -     if (!next_all)
->> +     if (sub_command == CHECK_TERM_FMT) {
->> +             if (argc == 2) {
->> +                     if (argv[0] != NULL && argv[1] != NULL)
->> +                             return check_term_format(argv[0], argv[1], 0);
->> +                     else
->> +                             die("no revision or term provided with check_for_term");
->> +             }
->> +             else
->> +                     die("--check-term-format expects 2 arguments");
->> +     }
->> +
->> +     if (sub_command != NEXT_ALL && sub_command != CHECK_TERM_FMT)
->>               usage_with_options(git_bisect_helper_usage, options);
->
-> Personally, I would prefer
->
-> - the usage_with_options() code to come before any sub_command processing,
->
-> - the sub_command enum to be initialized with -1, or alternatively
->   hardcoding NEXT_ALL to 1,
-
-Oh! I now understand that initializing with 0 can be problematic.
-
-> - to avoid else clauses after an if () clause whose block returns or
->   die()s,
-
-Sure
-
-> - to order the clauses of an if/else in ascending size, i.e.
->
->         if (argc != 2)
->                 die(...);
->         if ...
->
-> - to avoid checking argv[i] for NULL when i < argc (it is the contract
->   that argv[0..argc-1] are all non-NULL, so checking for it is unnecessary
->   churn),
-
-I wasn't aware of this.
-
-> - use a switch() on sub_command instead of unrolled if () statements, and
-I just browsed through some other parts and found that subcommands are
-put in switch case
-
-> - wrap the code at 80 columns/row (interpreting tabs as "up to 8 spaces").
-
-
-> The rest of the patch looks good.
->
-> Ciao,
-> Johannes
-
-Thanks!
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 2cd6bdd..4172f59 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -522,7 +522,8 @@ core.sharedRepository::
+=20
+ core.warnAmbiguousRefs::
+ 	If true, Git will warn you if the ref name you passed it is ambiguous
+-	and might match multiple refs in the repository. True by default.
++	and might match multiple refs in the repository. If set to "fatal",
++	the program will abort on ambiguous refs. True by default.
+=20
+ core.compression::
+ 	An integer -1..9, indicating a default compression level.
+diff --git a/config.c b/config.c
+index 9ba40bc..79f1ea5 100644
+--- a/config.c
++++ b/config.c
+@@ -738,7 +738,10 @@ static int git_default_core_config(const char *var=
+, const char *value)
+ 	}
+=20
+ 	if (!strcmp(var, "core.warnambiguousrefs")) {
+-		warn_ambiguous_refs =3D git_config_bool(var, value);
++		if (!strcasecmp(value, "fatal"))
++			warn_ambiguous_refs =3D 2;
++		else
++			warn_ambiguous_refs =3D git_config_bool(var, value);
+ 		return 0;
+ 	}
+=20
+diff --git a/sha1_name.c b/sha1_name.c
+index 3acf221..a0f0ab9 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -480,6 +480,8 @@ static int get_sha1_basic(const char *str, int len,=
+ unsigned char *sha1,
+ 				warning(warn_msg, len, str);
+ 				if (advice_object_name_warning)
+ 					fprintf(stderr, "%s\n", _(object_name_msg));
++				if (warn_ambiguous_refs > 1)
++					die(_("cannot continue with ambiguous refs"));
+ 			}
+ 			free(real_ref);
+ 		}
+@@ -537,8 +539,12 @@ static int get_sha1_basic(const char *str, int len=
+, unsigned char *sha1,
+=20
+ 	if (warn_ambiguous_refs && !(flags & GET_SHA1_QUIETLY) &&
+ 	    (refs_found > 1 ||
+-	     !get_short_sha1(str, len, tmp_sha1, GET_SHA1_QUIETLY)))
+-		warning(warn_msg, len, str);
++	     !get_short_sha1(str, len, tmp_sha1, GET_SHA1_QUIETLY))) {
++		if (warn_ambiguous_refs > 1)
++			die(warn_msg, len, str);
++		else
++			warning(warn_msg, len, str);
++	}
+=20
+ 	if (reflog_len) {
+ 		int nth, i;
+--=20
+2.8.0.rc0.210.gd302cd2
