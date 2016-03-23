@@ -1,87 +1,116 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH v8 2/2] commit: add a commit.verbose config variable
-Date: Thu, 24 Mar 2016 00:53:19 +0530
-Message-ID: <CAFZEwPM1tukRCewKCgvYMQNDRMWh4MXcrXAbdn4S3Hg8c1R+hA@mail.gmail.com>
-References: <010201538b98a7e5-ee604368-5a27-4884-b01e-027fa02bf1c6-000000@eu-west-1.amazonses.com>
-	<010201538b98aaa4-ad08c159-4935-48f1-acdb-7c376da2c368-000000@eu-west-1.amazonses.com>
-	<CAPig+cShT2aPkoRK0pXPzbRbQqCU+O5uEqEr4oMkZ8LTwREaAA@mail.gmail.com>
-	<CAFZEwPMZk9jDpi4F9WiYhv4aTqFqn3127i1AUKtNJXwG-11tyw@mail.gmail.com>
-	<CAPig+cSCrdxYb=0WOiAARrrPK07PeyTKsopPfwDOLAO4m3scnQ@mail.gmail.com>
-	<CAFZEwPNKozf+owtJtaE27MqQb3koL0L=HDnErVoWrTnQpieGgw@mail.gmail.com>
-	<xmqq7fgtc88i.fsf@gitster.mtv.corp.google.com>
+From: Laison@seymour.toledo.br, Computech@seymour.toledo.br,
+	"Inc <support"@ensuretech.com
+Subject: CISCO IP PHONES AND CPU's
+Date: Thu, 24 Mar 2016 01:45:04 +0700
+Message-ID: <20160323200904.02B09A68B1@seymour.toledo.br>
+Reply-To: sales@laisoncomputertech.us
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 20:23:26 2016
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: Recipients <support@ensuretech.com>
+X-From: git-owner@vger.kernel.org Wed Mar 23 21:39:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aioNJ-0001sT-19
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 20:23:25 +0100
+	id 1aipYJ-0003Fk-B9
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 21:38:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751818AbcCWTXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 15:23:21 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:33256 "EHLO
-	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751644AbcCWTXU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 15:23:20 -0400
-Received: by mail-yw0-f196.google.com with SMTP id a140so2874932ywe.0
-        for <git@vger.kernel.org>; Wed, 23 Mar 2016 12:23:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=lnUEUaSXlrXEd8hhr8zpTdMe63aPIrW9VGr/CwVY2j4=;
-        b=cr0KvN3nb28CQU0Xjv/0SW3uFOygqcX59I4PJF5qe1eyGPwcF/W59+sRaWGyFff2BO
-         /phyNeLaPqd9ngZtQCd4M4IrqWuafhOL1Hw5HqmgKsOyKS1m0Oy03FkFp9ATv5ubeHW0
-         vfHDStwDHB8WKn+kMD7nI74npZ8RtFs+J8kmE38adpD+CLmBuJcunh3Lh/O4As79B9gj
-         gVYHxiZvIlLuSzxyc+IaR2xBIvPOMB3C/0reln/Me50MAtrglapK8qCNNLf/5Lx+r5Tj
-         BaNWmW+PNui4AxhVjjcuoTLXUgSXfXsNMXd6Byvic3PsBx0UovZLqrmtPfFNiCOrYa4W
-         +kyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=lnUEUaSXlrXEd8hhr8zpTdMe63aPIrW9VGr/CwVY2j4=;
-        b=bsy96enXqYAOGLqPhQBGEjpPlSPk7i56PSxd5Y3/ZMndriqxip7/1LcH5c/5OXiOya
-         ueC7t6jQTjI6/5jb8yaLNTuT6jUozvZxRGwJqHRgkexBUgR9U+9JGvdZuHcaby4+rAwG
-         gJvz0rCo9yS0mO0WKsMRRN9XaOxre4mzMOJ/SBWYCF0HFMQL+x0URDGR1PCoXt7XPNul
-         zzy8m6DdOsYPsKNXMDCS2czYgKL1Sfz+iP8jbhUrWZNyuGaCWxRGXwOQQIY1JvVj3m8j
-         UJeOthMuLTkSzGaXM8Ukc+Y4z8FzPLXdxGbeuPvPVjZuL2mCBSz0cRn9YH0uBw14HwjA
-         +jbw==
-X-Gm-Message-State: AD7BkJJHbk78rFRhjdI5Pcvvwtj3g/0uBtJaws9wRaX95jmjDS6Lap4iLVdAmsDazBP+gEZUBSW7a4U8y8Fomg==
-X-Received: by 10.129.155.81 with SMTP id s78mr2244556ywg.24.1458760999867;
- Wed, 23 Mar 2016 12:23:19 -0700 (PDT)
-Received: by 10.13.203.137 with HTTP; Wed, 23 Mar 2016 12:23:19 -0700 (PDT)
-In-Reply-To: <xmqq7fgtc88i.fsf@gitster.mtv.corp.google.com>
+	id S1756776AbcCWUiq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 16:38:46 -0400
+Received: from seymour.toledo.br ([200.148.142.55]:33915 "EHLO
+	seymour.toledo.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756772AbcCWUiq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2016 16:38:46 -0400
+X-Greylist: delayed 1651 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Mar 2016 16:38:45 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by seymour.toledo.br (Postfix) with ESMTP id A62FEA68BC;
+	Wed, 23 Mar 2016 17:09:12 -0300 (BRT)
+Received: from seymour.toledo.br ([127.0.0.1])
+	by localhost (seymour.toledo.br [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id JxwCmKpf2s2p; Wed, 23 Mar 2016 17:09:12 -0300 (BRT)
+Received: from localhost (localhost [127.0.0.1])
+	by seymour.toledo.br (Postfix) with ESMTP id 445E0A682E;
+	Wed, 23 Mar 2016 17:09:12 -0300 (BRT)
+X-Virus-Scanned: amavisd-new at seymour.toledo.br
+Received: from seymour.toledo.br ([127.0.0.1])
+	by localhost (seymour.toledo.br [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 4hcoL9HdZImr; Wed, 23 Mar 2016 17:09:12 -0300 (BRT)
+Received: from [180.250.80.61] (unknown [180.250.80.61])
+	by seymour.toledo.br (Postfix) with ESMTPSA id 02B09A68B1;
+	Wed, 23 Mar 2016 17:09:03 -0300 (BRT)
+Content-Description: Mail message body
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289679>
 
-On Thu, Mar 24, 2016 at 12:49 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Pranit Bauva <pranit.bauva@gmail.com> writes:
->
->> On Sun, Mar 20, 2016 at 11:04 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> ...
->>> Alternatively, combine #1 and #2 into a single patch which drops the
->>> global test_set_editor() and, as an aside, also does "while here,
->>> let's use write_script() to create 'check-for'diff' rather than doing
->>> so manually".
->>
->> These changes seem nice. I will update and send the patch.
->
-> So, has anything happened to this topic or has it been abandoned?
->
-> I am not in a hurry, just wanted to see if I need to keep the old
-> one in my tree as a reminder to myself.
+Hi,
 
-Sorry for that! Actually I am bit caught up with writing my proposal
-for GSoC 2016. I would be able to complete that in around an hour.
-Then will work on this. Then on the shell function -> C function
-porting patch. Please bear with me for a little while.
+Our Stock list.
+
+Brand NEW
+96 x Cisco 7900 IP Phone
+87 x Unified IP Phone 6900
+12 x Unified IP Phone 8900
+76 x Unified IP Phone 9900
+55 x Unified IP Phone 8800
+67 x Cisco 1921
+67 x Cisco 1941
+56 x Cisco CP-7961G 7961G
+34 x Cisco CP-7971G-GE 7971G
+19 x Cisco Unified IP Conference Station 7937G Model: 7937 CP-7937G
+20 x Cisco CP-7975G 7975G
+
+Brand New Sealed :
+
+23 x  CISCO1921-SEC/K9
+Conditions: Brand New Sealed
+Description: CISCO 1921 Security Bundle w/SEC license PAK
+
+45 x CISCO1921/K9
+Conditions: Brand New Sealed
+Description: CISCO 1921 Modular Router, 2 GE, 2 EHWIC slots, 512DRAM, IP Base
+
+(1)  WS-C4500X-16SFP+
+Serial number:  JAE183501L3
+US&#36;2600
+
+(1)  WS-C3850-48PW-S
+Serial number:  FCW1823C0EW
+US&#36;2650
+
+(1)  WS-X6908-10G-2T
+Serial number:  SAL1620CKUB
+US&#36;3650
+
+(1)  ASR1000-ESP10
+Serial number:  JAE181306C3
+US&#36;3800
+
+(1)  AIR-CT5508-250-K9   (this is new but box is open!)
+Serial number:  FCW1521L038
+US&#36;4000
+
+CPUs part number below
+
+89 x  X5650
+
+975 x  X5660
+
+150 x  X5680
+
+265 x  X5690
+
+Kindly make your price offers.
+
+Sincerely
+Barbara Johnson
+Laison Computech
+210 N Scoring Ave,
+Rialto California, 92376
+Tel: +1-657-232-7047
+Fax: +1-347-214-0478
+Email: sales@laisoncomputertech.us
