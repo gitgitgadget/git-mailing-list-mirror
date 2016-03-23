@@ -1,82 +1,107 @@
-From: Hui Yiqun <huiyiqun@gmail.com>
-Subject: [PATCH v3/GSoC 3/5] git-credential-cache: put socket to xdg-compatible path
-Date: Wed, 23 Mar 2016 18:13:23 +0800
-Message-ID: <1458728005-22555-3-git-send-email-huiyiqun@gmail.com>
-References: <1458728005-22555-1-git-send-email-huiyiqun@gmail.com>
-Cc: peff@peff.net, pickfire@riseup.net, Hui Yiqun <huiyiqun@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 23 11:15:35 2016
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 07/21] resolve_ref_unsafe(): use for loop to count up to MAXDEPTH
+Date: Wed, 23 Mar 2016 11:04:24 +0100
+Message-ID: <418fbb7db3d1804dd1a4d6abc723dd59bb95ea2f.1458723959.git.mhagger@alum.mit.edu>
+References: <cover.1458723959.git.mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, peff@peff.net, pclouds@gmail.com,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 23 11:15:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aifnV-000210-3R
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 11:13:53 +0100
+	id 1aiflu-0000NM-6A
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 11:12:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754632AbcCWKNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 06:13:41 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:36776 "EHLO
-	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754606AbcCWKNh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 06:13:37 -0400
-Received: by mail-pf0-f196.google.com with SMTP id q129so2423212pfb.3
-        for <git@vger.kernel.org>; Wed, 23 Mar 2016 03:13:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=QrUqux1xveIuQYZvv4Sv4cwGqEsr/GMNnbU524uK2iY=;
-        b=fIx94+a4Ybcw6lwBwXWMddtVErv4daNIAYsq4Zub0j7ZNgADaEmA7YD/+Xi/9nsoaV
-         IajmWQ+ZV+x4vuh7fu/gLKdW3XjXPKhz8UWjmTZE4x0ew+p1mnIM7mM1ARHDqpIb4BRO
-         Lrc9xlOqiqGX6zZGwzJn8d0t2csQzHi3leemNTPJ4J0vV+vhXzOPC5zUmbGUBCvJul8e
-         AZTjWsmIbIbYoS8pGBG0GZ4Ci50PAj6ISlMsYuL8hRe2fsnqst+6inGHtLgjq3exfWao
-         +sTG0tNqyiTwb8ipHWe2l4++h0RnVYleyID44DweqdJATNILUmwetdRfwa0hUWTazB1/
-         KIJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=QrUqux1xveIuQYZvv4Sv4cwGqEsr/GMNnbU524uK2iY=;
-        b=Ul71kztLKdZeSSGbSi6ELMo3VauPMtp8avyLKb9cs4FdjuHiOe/XRMmIXQqtGZCOk4
-         KIs05ZsjAX6p5uXoY/XuNLZI4R29yLa2klKvoYw0hLwsCe38oYN0Sk0kHmvnGHN06MrZ
-         zih6j6kCj7Z/lCIRWII75FcP8dNOJsontCmeNhT6FtFpMHGciieN6z35VGBSidMCu20t
-         GwFjy6xFuvXqt4ps7q8VgiBtNJzJeni1bInj0VQlxbSDSOaxYV3W5zUqgukB7BEJejSX
-         4HvHzuNj9N62vtWrDtx/e7nyNKS312rzx+T7FfRxD/BUjiCfCrJkD4sHlI5i3f9P8CRC
-         C0wg==
-X-Gm-Message-State: AD7BkJJ0IXVdV+QAHAvGqLO2Lh6rsMnhxQcrLZ5/uYaCsR+DdwaJWjee/Vj/XAotxYGqFw==
-X-Received: by 10.98.75.157 with SMTP id d29mr2847669pfj.33.1458728016933;
-        Wed, 23 Mar 2016 03:13:36 -0700 (PDT)
-Received: from localhost.localdomain ([2402:f000:1:4414:ae9e:17ff:fe87:5adb])
-        by smtp.gmail.com with ESMTPSA id x18sm3232325pfi.42.2016.03.23.03.13.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 23 Mar 2016 03:13:36 -0700 (PDT)
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1458728005-22555-1-git-send-email-huiyiqun@gmail.com>
+	id S1754419AbcCWKMK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 06:12:10 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:54345 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752037AbcCWKMI (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2016 06:12:08 -0400
+X-Greylist: delayed 424 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Mar 2016 06:12:08 EDT
+X-AuditID: 12074413-f03ff7000000516b-e6-56f26a4a4465
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id 1F.9E.20843.A4A62F65; Wed, 23 Mar 2016 06:04:58 -0400 (EDT)
+Received: from michael.fritz.box (p548D66C6.dip0.t-ipconnect.de [84.141.102.198])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u2NA4g1C018017
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Wed, 23 Mar 2016 06:04:56 -0400
+X-Mailer: git-send-email 2.8.0.rc3
+In-Reply-To: <cover.1458723959.git.mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrNIsWRmVeSWpSXmKPExsUixO6iqOuV9SnMYE0zn0XXlW4mi4beK8wW
+	t1fMZ7bonvKW0eJHSw+zxcyr1g5sHn/ff2Dy2DnrLrvHs949jB4XLyl77F+6jc3j8ya5ALYo
+	bpukxJKy4Mz0PH27BO6MPTN2MxX85azY+WAKYwPjRfYuRk4OCQETiXnbj7J0MXJxCAlsZZTY
+	dXUpK4Rzkkli+c3VbCBVbAK6Eot6mplAbBEBNYmJbYfAOpgFFjBKbFy8mBkkISwQKNFwpwus
+	gUVAVeLIijtgDbwCURLf29ZArVOS2PDgAlicU8BC4uTJpYwgtpCAucT2B2uZJjDyLGBkWMUo
+	l5hTmqubm5iZU5yarFucnJiXl1qka66Xm1mil5pSuokRElDCOxh3nZQ7xCjAwajEw1t47mOY
+	EGtiWXFl7iFGSQ4mJVHe80GfwoT4kvJTKjMSizPii0pzUosPMUpwMCuJ8HJmAuV4UxIrq1KL
+	8mFS0hwsSuK8akvU/YQE0hNLUrNTUwtSi2CyMhwcShK82zKAGgWLUtNTK9Iyc0oQ0kwcnCDD
+	uaREilPzUlKLEktLMuJBURBfDIwDkBQP0F5esL3FBYm5QFGI1lOMilLivBogcwVAEhmleXBj
+	YWniFaM40JfCEGfzAFMMXPcroMFMQIMX+oANLklESEk1MDpP3N/7rsXg1OyFvz7dLzXW2FNT
+	LRD3dXHBbL/GmLsnN3/MmHBF/kTPhne2Uq7zrnhlbFeYYP7MtkzHddqWwvsTZ81OFnv7MvWV
+	XPIN60VnVyzpn35QIrPO/+mF+/e9N+n7LrTcnubItP2517w/K7e5Czznzfqs7tT5 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289623>
 
-move .git-credential-cache/socket to xdg_runtime_dir("credential-cache.sock")
+The loop's there anyway; we might as well use it.
 
-Signed-off-by: Hui Yiqun <huiyiqun@gmail.com>
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- credential-cache.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ refs/files-backend.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/credential-cache.c b/credential-cache.c
-index f4afdc6..40d838b 100644
---- a/credential-cache.c
-+++ b/credential-cache.c
-@@ -105,7 +105,7 @@ int main(int argc, const char **argv)
- 	op = argv[0];
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index c0cf6fd..101abba 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1400,8 +1400,8 @@ static const char *resolve_ref_1(const char *refname,
+ 				 struct strbuf *sb_path,
+ 				 struct strbuf *sb_contents)
+ {
+-	int depth = MAXDEPTH;
+ 	int bad_name = 0;
++	int symref_count;
  
- 	if (!socket_path)
--		socket_path = expand_user_path("~/.git-credential-cache/socket");
-+		socket_path = xdg_runtime_dir("credential-cache.sock");
- 	if (!socket_path)
- 		die("unable to find a suitable socket path; use --socket");
+ 	if (flags)
+ 		*flags = 0;
+@@ -1425,17 +1425,13 @@ static const char *resolve_ref_1(const char *refname,
+ 		 */
+ 		bad_name = 1;
+ 	}
+-	for (;;) {
++
++	for (symref_count = 0; symref_count < MAXDEPTH; symref_count++) {
+ 		const char *path;
+ 		struct stat st;
+ 		char *buf;
+ 		int fd;
  
+-		if (--depth < 0) {
+-			errno = ELOOP;
+-			return NULL;
+-		}
+-
+ 		strbuf_reset(sb_path);
+ 		strbuf_git_path(sb_path, "%s", refname);
+ 		path = sb_path->buf;
+@@ -1566,6 +1562,9 @@ static const char *resolve_ref_1(const char *refname,
+ 			bad_name = 1;
+ 		}
+ 	}
++
++	errno = ELOOP;
++	return NULL;
+ }
+ 
+ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
 -- 
-2.7.4
+2.8.0.rc3
