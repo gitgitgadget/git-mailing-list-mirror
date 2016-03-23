@@ -1,82 +1,96 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 16/21] fsck_head_link(): remove unneeded flag variable
-Date: Wed, 23 Mar 2016 11:04:33 +0100
-Message-ID: <f569b2b9aa9a2ce2a4422ba55b0ac06753d42915.1458723959.git.mhagger@alum.mit.edu>
+Subject: [PATCH 15/21] read_raw_ref(): change flags parameter to unsigned int
+Date: Wed, 23 Mar 2016 11:04:32 +0100
+Message-ID: <317cccf286a11f2e4ac92fecacd206494b1bc30f.1458723959.git.mhagger@alum.mit.edu>
 References: <cover.1458723959.git.mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, peff@peff.net, pclouds@gmail.com,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 11:16:05 2016
+X-From: git-owner@vger.kernel.org Wed Mar 23 11:16:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aifmp-0001Ah-GC
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 11:13:11 +0100
+	id 1aifmI-0000gX-31
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 11:12:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754743AbcCWKNG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 06:13:06 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:49321 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754721AbcCWKMr (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2016 06:12:47 -0400
-X-Greylist: delayed 454 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Mar 2016 06:12:47 EDT
-X-AuditID: 12074411-fd3ff700000071cf-0f-56f26a58d094
+	id S1754687AbcCWKMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 06:12:34 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:58900 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752037AbcCWKM0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2016 06:12:26 -0400
+X-AuditID: 1207440e-c03ff70000000398-cd-56f26a564bed
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id A1.27.29135.85A62F65; Wed, 23 Mar 2016 06:05:12 -0400 (EDT)
+	by  (Symantec Messaging Gateway) with SMTP id 38.BC.00920.65A62F65; Wed, 23 Mar 2016 06:05:10 -0400 (EDT)
 Received: from michael.fritz.box (p548D66C6.dip0.t-ipconnect.de [84.141.102.198])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u2NA4g1L018017
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u2NA4g1K018017
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Wed, 23 Mar 2016 06:05:11 -0400
+	Wed, 23 Mar 2016 06:05:09 -0400
 X-Mailer: git-send-email 2.8.0.rc3
 In-Reply-To: <cover.1458723959.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrGIsWRmVeSWpSXmKPExsUixO6iqBuR9SnMYMMFBYuuK91MFg29V5gt
-	bq+Yz2zRPeUto8WPlh5mi5lXrR3YPP6+/8DksXPWXXaPZ717GD0uXlL22L90G5vH501yAWxR
-	3DZJiSVlwZnpefp2CdwZnbtnMRbMZquY8kW6gbGDtYuRk0NCwETi2pEfTF2MXBxCAlsZJZZP
-	+w/lnGSSuLr7MwtIFZuArsSinmYmEFtEQE1iYtshFpAiZoEFjBIbFy9mBkkIC7hJTJkwAayB
-	RUBVYubERYwgNq9AlMTnf0eZINYpSWx4cAHM5hSwkDh5cilYjZCAucT2B2uZJjDyLGBkWMUo
-	l5hTmqubm5iZU5yarFucnJiXl1qka6qXm1mil5pSuokREk6COxhnnJQ7xCjAwajEw1t47mOY
-	EGtiWXFl7iFGSQ4mJVHe80GfwoT4kvJTKjMSizPii0pzUosPMUpwMCuJ8IZkAOV4UxIrq1KL
-	8mFS0hwsSuK8fEvU/YQE0hNLUrNTUwtSi2CyMhwcShK819KBGgWLUtNTK9Iyc0oQ0kwcnCDD
-	uaREilPzUlKLEktLMuJBMRBfDIwCkBQP0N5IsL3FBYm5QFGI1lOMuhwLftxeyyTEkpeflyol
-	zqsBUiQAUpRRmge3ApY8XjGKA30szFsPUsUDTDxwk14BLWECWrLQB2xJSSJCSqqB0XeN2KcZ
-	XzVyA12vWhsmH1L3nhj4aWpwcoYhH7vaomfZ98TzFNjyPZTvqKsU9DGIdgqpW3ktLyxKevC8
-	t2+peBezQ6GWhtzFSTIrC3h4vyl7TnoxwVht4u7+FgnzHXMjv0Qevp7ZL31/0489 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrNIsWRmVeSWpSXmKPExsUixO6iqBue9SnMoGeehEXXlW4mi4beK8wW
+	t1fMZ7bonvKW0eJHSw+zxcyr1g5sHn/ff2Dy2DnrLrvHs949jB4XLyl77F+6jc3j8ya5ALYo
+	bpukxJKy4Mz0PH27BO6Mmb2P2QsW8lRc3nCVsYHxCWcXIyeHhICJxMHFLexdjFwcQgJbGSVO
+	LZvMBuGcZJLoOv+JGaSKTUBXYlFPMxOILSKgJjGx7RALSBGzwAJGiY2LF4MVCQv4Sqxs2MsK
+	YrMIqEocufgAzOYViJL4+H8DC8Q6JYkNDy6ADeIUsJA4eXIpI4gtJGAusf3BWqYJjDwLGBlW
+	Mcol5pTm6uYmZuYUpybrFicn5uWlFuka6+VmluilppRuYoQEFN8Oxvb1MocYBTgYlXh4Jc98
+	DBNiTSwrrsw9xCjJwaQkyns+6FOYEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRFezXSgHG9KYmVV
+	alE+TEqag0VJnFdtibqfkEB6YklqdmpqQWoRTFaGg0NJgndeGlCjYFFqempFWmZOCUKaiYMT
+	ZDiXlEhxal5KalFiaUlGPCgK4ouBcQCS4gHauxRsb3FBYi5QFKL1FKOilDjvB5C5AiCJjNI8
+	uLGwNPGKURzoS2FeEZB2HmCKget+BTSYCWjwQh+wwSWJCCmpBsZ5N85GO6ctKS1TXz2xefpX
+	v3VnJz+1+nomhr3ElGfx1n+vtjo+33lATbl13qsVTJM3FJQ97Zj8arV4HkdPhVLyr5mPXVx5
+	r/t1WhQc+75ySyAX66EVV3s1edIlNdhu1CVdWeNY8WTtneXnrZ903HncnN/+KIDf 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289630>
 
-It is never read, so we can pass NULL to resolve_ref_unsafe().
+read_raw_ref() is going to be part of the vtable for reference backends,
+so clean up its interface to use "unsigned int flags" rather than "int
+flags". Its caller still uses signed int for its flags arguments. But
+changing that would touch a lot of code, so leave it for now.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- builtin/fsck.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ refs/files-backend.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 55eac75..3f27456 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -493,13 +493,12 @@ static void fsck_object_dir(const char *path)
- 
- static int fsck_head_link(void)
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 120b2dd..a15986c 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1372,7 +1372,7 @@ static struct ref_entry *get_packed_ref(const char *refname)
+  */
+ static int resolve_missing_loose_ref(const char *refname,
+ 				     unsigned char *sha1,
+-				     int *flags)
++				     unsigned int *flags)
  {
--	int flag;
- 	int null_is_error = 0;
+ 	struct ref_entry *entry;
  
- 	if (verbose)
- 		fprintf(stderr, "Checking HEAD link\n");
+@@ -1421,7 +1421,7 @@ static int resolve_missing_loose_ref(const char *refname,
+  *   refname will still be valid and unchanged.
+  */
+ static int read_raw_ref(const char *refname, unsigned char *sha1,
+-			struct strbuf *symref, int *flags)
++			struct strbuf *symref, unsigned int *flags)
+ {
+ 	struct strbuf sb_contents = STRBUF_INIT;
+ 	struct strbuf sb_path = STRBUF_INIT;
+@@ -1570,7 +1570,7 @@ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
+ 	}
  
--	head_points_at = resolve_ref_unsafe("HEAD", 0, head_oid.hash, &flag);
-+	head_points_at = resolve_ref_unsafe("HEAD", 0, head_oid.hash, NULL);
- 	if (!head_points_at) {
- 		errors_found |= ERROR_REFS;
- 		return error("Invalid HEAD");
+ 	for (symref_count = 0; symref_count < MAXDEPTH; symref_count++) {
+-		int read_flags = 0;
++		unsigned int read_flags = 0;
+ 
+ 		if (read_raw_ref(refname, sha1, &sb_refname, &read_flags)) {
+ 			*flags |= read_flags;
 -- 
 2.8.0.rc3
