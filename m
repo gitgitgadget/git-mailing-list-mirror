@@ -1,354 +1,292 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC_PATCHv4 5/7] submodule update: respect submodule.actionOnLabel
-Date: Wed, 23 Mar 2016 16:21:48 -0700
-Message-ID: <CAGZ79kaEmDFDf+1BZV1C5ETswbXmAUYk_OMsZf_ka6tJ=pfwcQ@mail.gmail.com>
-References: <1458612372-10966-1-git-send-email-sbeller@google.com>
-	<1458612372-10966-6-git-send-email-sbeller@google.com>
-	<xmqq37rif870.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 0/5] Expanding tabs in "git log" output
+Date: Wed, 23 Mar 2016 16:23:41 -0700
+Message-ID: <1458775426-2215-1-git-send-email-gitster@pobox.com>
+References: <xmqq7fh0s5l7.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 24 00:21:55 2016
+Content-Transfer-Encoding: 8BIT
+Cc: Jeff King <peff@peff.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 24 00:23:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ais66-0006bh-A5
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 00:21:54 +0100
+	id 1ais82-0007yT-HB
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 00:23:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751083AbcCWXVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 19:21:50 -0400
-Received: from mail-io0-f173.google.com ([209.85.223.173]:35835 "EHLO
-	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750838AbcCWXVt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 19:21:49 -0400
-Received: by mail-io0-f173.google.com with SMTP id v187so39338231ioe.2
-        for <git@vger.kernel.org>; Wed, 23 Mar 2016 16:21:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=ycCfPjf4HO5BK90bJ1jVS44Pggdnls5RROsRD4g4tKk=;
-        b=oXjIRR0JzKEyww/NAXwxDW7xjMi9swPEJKHPockFl2k1tY/y8cIZJ5cs1B4w/yHT5L
-         5ujBVoqzunuPs+mylzbNcUJ5hVIR+aMYTT9QsVRHlCKy3CXdWjQb2Iy+sELNJo0I0prJ
-         OqyJpMc+KQAnoE7h3m4BxXhcJV3k9Tk9b0etnkGQaS4VrFcfgPe2seJNkgANBi45BDt9
-         9ooVqXc9B5UG3lhnlHyOkaDOJZHfOENoyhEkmomFjk0y6ZStN7UJOqLipHW0GdhKl5ds
-         ehSyREfmhHz3Pl/FWvMF0jHkuRdhSjeM8p9IQTHO3pnsTHTd4xfgDD9akWzniqZjK+F3
-         lnZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=ycCfPjf4HO5BK90bJ1jVS44Pggdnls5RROsRD4g4tKk=;
-        b=OH5bR9g4d57OXSq6g9y4wuqSbCf0SQ2ewA1uciGM26mNOsP1JBkzVgVNiZqZaYxSB2
-         GcJT4ZGYO5W9ReGOq0kFtDG2yMDTt/xOuUVsyoKYpSP5pZe2R2ffWW6MqdMAVLSIYm0X
-         5Qla6eUFaqCsN08L0zHcLl1jZ895BR/0IRDEbnQp2CvM6Hws2XKLADfvc3hAngzlCcHK
-         NsGGJ20jU7kCOCdKqkzgw2KIrN6qSrENrHhAnVXZawO5N1aTCt7J/CuHUrTUea4JTkni
-         +Xk49zZiWq83DVQMAT8P7Th/DEMidkcuTnlragrT2RwvSEiWQTXQJPUB12JbK7QA9Kmr
-         XPRw==
-X-Gm-Message-State: AD7BkJKHLftDojyR3dz2NxRIQNR/VY+ntjIYnemvRJ+pAyDdNjolc5c9V4fBRiQW/ssL84W/uXbQvO3TeQiWQgrG
-X-Received: by 10.107.131.163 with SMTP id n35mr6813488ioi.110.1458775308284;
- Wed, 23 Mar 2016 16:21:48 -0700 (PDT)
-Received: by 10.107.132.101 with HTTP; Wed, 23 Mar 2016 16:21:48 -0700 (PDT)
-In-Reply-To: <xmqq37rif870.fsf@gitster.mtv.corp.google.com>
+	id S1752937AbcCWXXu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 19:23:50 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:54377 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750984AbcCWXXt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Mar 2016 19:23:49 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6BCC750C0A;
+	Wed, 23 Mar 2016 19:23:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=gwkqHH/7pprH
+	TbsDvqTM4jwPKwI=; b=dHEvQtame6ymx/H2sibvB/RyyqODXZCIVcpZZ689Y7rH
+	d1s3W1VV4IlgYAoyjCuWXAr3mLtN6MYDFl4YlvqDkQvdHHiDhDGyU4mUU2mFFBXq
+	BVQYTSnuCwU+pZKRjPW4MThLuBn12Ag9HT+I8C4xltM2SNvZ73HWAkiqh0cJZfE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=d7tazW
+	rOik0lQr/O88GyPz8ie3G3MEs6JOHGxX2IytfXAVqACLy7G529g5w4a5fT+hhlCV
+	WNDpKMtr5s4qCaNP8cN9lukdJzzZp8HGCeDpDL7biAFCIHgEwMnLeXRoGd33THf5
+	WVcOFiayzeLO3cgUefGX7YDJxOSrgmAuRK4+g=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6344550C08;
+	Wed, 23 Mar 2016 19:23:48 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B6C7750C07;
+	Wed, 23 Mar 2016 19:23:47 -0400 (EDT)
+X-Mailer: git-send-email 2.8.0-rc4-198-g3f6b64c
+In-Reply-To: <xmqq7fh0s5l7.fsf@gitster.mtv.corp.google.com>
+X-Pobox-Relay-ID: 4B4B8012-F14E-11E5-9C64-EB7E6AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289694>
 
-On Tue, Mar 22, 2016 at 3:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> This change introduces the 'submodule.actionOnLabel' variable
->> in a repository configuration. Generally speaking 'submodule.actionOnLabel'
->> restricts the action of a command when no submodules are selected via the
->> command line explicitely to those submodules, which are selected by
->> 'submodule.actionOnLabel'. It can occur multiple times and can specify
->> the path, the name or one of the labels of a submodule to select that
->> submodule.
->>
->> The introduction of 'submodule.actionOnLabel' starts with
->> 'git submodule update' in this patch and other commands will follow
->> in later patches.
->>
->> 'submodule.actionOnLabel' implies '--init' in 'git submodule update'.
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->>
->> TODO: generic documentation for submodule.actionOnLabel
->> TODO: documentation for submodule update
->
-> TODO: a name that matches the concept better.
+So here is the third try (previous round is found at $gmane/289166
+and the very first one is at $gmane/288987).
 
-This is one of the hardest parts of the series so far. The last reviews
-were mostly bike shedding about the name of the concept and I thought
-we were settled to actionOnLabel as that fits best to what we want to do.
+The first three patches are essentially the same as v2.  The last
+two updates how the tab-expansion is internally controlled:
 
-So let's revisit that. My current understanding of the design:
+ [4/5] adds a bit to pretty-commit-context that tells if tabs should
+       be expanded.  Unlike v2 that tied this to pretty print format,
+       this bit is orthogonal to the format, and theoretically it is
+       possible to expand tabs even with --format=email.  Also,
+       unlike v2, tabs are expanded not just in `medium` format, but
+       also in `full` and `fuller` formats.
 
-Generic properties in the data model:
- * Each submodule has a set of "things" attached to it. (A submodule
-   can have none, one or many)
- * A "thing" can be attached to many submodules (That's why
-   it was called groups in v1, and labels now)
- * The attachments of "things" to submodules can be viewed as a bipartite
-   graph.
- * The attachment needs to work in a way, such that upstream
-   can influence and redefine these attachments (e.g. .gitmodules file
-   as part of the repo; another approach would be to have yet another file
-   .gitlabels or such where you'd have a list of submodules belonging to a
-   "thing")
- * If this feature is enabled, the user can select a set of submodules by
-   selecting a set of "things" and all submodules connected to these things
-   in the bipartite graph are selected. The expectation for a graph is to
-   select a lot fewer "things" than submodules. By having this indirection
-   via the graph, the selection of a subset of submodules is expected to
-   be easier.
+ [5/5] adds a new option --no-expand-tabs that controls the bit 4/5
+       introduces, so that "git log [--pretty] --no-expand-tabs"
+       would show the log message indented by 4 spaces, without tab
+       expansion.
 
-Properties I derived from discussion and the data model:
- * The user does not need to have a way of overwriting the bipartite graph,
-   because they can specify submodules by these "things", by path or by name.
-   (It would be convenient to do be able to overwrite these, but it is
-not a strict
-   requirement as the you can get any specification via a set of paths)
+By the way, I have to say that I hate how pretty formatting and
+revision machinery interact with each other.
 
- * The user needs to make the explicit choice to use the new feature
-   or not, as it has implications on the default behavior of submodule
-   commands.
+pretty.c::commit_formats ought to be the authoritative source of how
+each named format should work, but there are quite a many codepaths
+that just assign CMIT_FMT_SOMETHING to revs->commit_format without
+bothering with other fields in the cmt_fmt_map like is_tformat, and
+I am not sure if they are working correctly even before this patch.
 
- * To make change of selection easy (which happens e.g. when switching
-   branches or pulling in upstream changes), all submodules are initialized
-   by default.
+Junio C Hamano (4):
+  pretty-print: simplify the interaction between pp_handle_indent() and its caller
+  pretty-print: further abstract out pp_handle_indent()
+  pretty-print: limit expand-tabs to selected --pretty formats
+  pretty-print: teach "--no-expand-tabs" option to "git log"
 
- * Once this feature is enabled a command doesn't apply to all initialized
-   submodules by default any more, but the
-   default set of submodules will be the selected set via the
-   bipartite graph of "things".
+Linus Torvalds (1):
+  pretty-print: de-tabify indented logs to make things line up properly
 
-(Originally I typed out some implementation specific thoughts, but they are
-loaded with even more assumptions, so maybe we'd want to stay on this
-high level first)
+ Documentation/pretty-options.txt |  6 +++
+ commit.h                         |  1 +
+ log-tree.c                       |  1 +
+ pretty.c                         | 88 ++++++++++++++++++++++++++++++++++++----
+ revision.c                       |  3 ++
+ revision.h                       |  1 +
+ t/t4201-shortlog.sh              |  2 +-
+ 7 files changed, 92 insertions(+), 10 deletions(-)
 
-So any other naming proposals?
+[References]
 
-Thanks,
-Stefan
+http://thread.gmane.org/gmane.comp.version-control.git/288987/focus=289166
 
->
-> So in general
->
->         $ git submodule $subcmd .
->
-> may be the way to say "do $subcmd to all submodules", and
->
->         $ git submodule $subcmd
->
-> may have been "operate on nothing" (or may have been "operate on
-> everything"), but with this feature,
->
->         $ git submodule $subcmd
->
-> will by default operate on submodules that match the criteria the
-> new configuration variable specifies?
->
-> I suspect that copying this from .gitmodules to .git/config will
-> have security implications and will not be done?  What is the
-> expected way for projects to suggest which set of submodules are the
-> good ones to work on by default using this mechanism?
->
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>  builtin/submodule--helper.c |  22 ++++++++-
->>  t/t7400-submodule-basic.sh  | 115 ++++++++++++++++++++++++++++++++++++++++++++
->>  2 files changed, 136 insertions(+), 1 deletion(-)
->>
->> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
->> index a69b1f4..93760ec 100644
->> --- a/builtin/submodule--helper.c
->> +++ b/builtin/submodule--helper.c
->> @@ -573,6 +573,8 @@ struct submodule_update_clone {
->>       int current;
->>       struct module_list list;
->>       unsigned warn_if_uninitialized : 1;
->> +     /* patterns to initialize */
->> +     struct string_list *initialize;
->>
->>       /* update parameter passed via commandline */
->>       struct submodule_update_strategy update;
->> @@ -590,7 +592,7 @@ struct submodule_update_clone {
->>       /* If we want to stop as fast as possible and return an error */
->>       unsigned quickstop : 1;
->>  };
->> -#define SUBMODULE_UPDATE_CLONE_INIT {0, MODULE_LIST_INIT, 0, \
->> +#define SUBMODULE_UPDATE_CLONE_INIT {0, MODULE_LIST_INIT, 0, NULL, \
->>       SUBMODULE_UPDATE_STRATEGY_INIT, 0, NULL, NULL, NULL, NULL, \
->>       STRING_LIST_INIT_DUP, 0}
->>
->> @@ -644,6 +646,15 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
->>       strbuf_reset(&sb);
->>       strbuf_addf(&sb, "submodule.%s.url", sub->name);
->>       git_config_get_string(sb.buf, &url);
->> +     if (suc->initialize) {
->> +             if (!url) {
->> +                     init_submodule(sub->path, suc->prefix, suc->quiet);
->> +                     url = xstrdup(sub->url);
->> +             }
->> +             if (!submodule_applicable_by_labels(suc->initialize, sub)
->> +                 && !suc->warn_if_uninitialized)
->> +                     goto cleanup;
->> +     }
->>       if (!url) {
->>               /*
->>                * Only mention uninitialized submodules when their
->> @@ -745,6 +756,7 @@ static int update_clone(int argc, const char **argv, const char *prefix)
->>       const char *update = NULL;
->>       int max_jobs = -1;
->>       struct string_list_item *item;
->> +     const struct string_list *list;
->>       struct pathspec pathspec;
->>       struct submodule_update_clone suc = SUBMODULE_UPDATE_CLONE_INIT;
->>
->> @@ -793,6 +805,14 @@ static int update_clone(int argc, const char **argv, const char *prefix)
->>       gitmodules_config();
->>       git_config(submodule_config, NULL);
->>
->> +     list = git_config_get_value_multi("submodule.actionOnLabel");
->> +     if (list) {
->> +             suc.initialize = xmalloc(sizeof(*suc.initialize));
->> +             string_list_init(suc.initialize, 1);
->> +             for_each_string_list_item(item, list)
->> +                     string_list_insert(suc.initialize, item->string);
->> +     }
->> +
->>       if (max_jobs < 0)
->>               max_jobs = parallel_submodules();
->>
->> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
->> index fc948fd..dc45551 100755
->> --- a/t/t7400-submodule-basic.sh
->> +++ b/t/t7400-submodule-basic.sh
->> @@ -1032,4 +1032,119 @@ test_expect_success 'submodule add records multiple labels' '
->>       test_cmp expected actual
->>  '
->>
->> +cat <<EOF > expected
->> +submodule
->> +-submodule2
->> +EOF
->> +
->> +test_expect_success 'update initializes all modules when action-on-label configured' '
->> +     test_when_finished "rm -rf super super_clone" &&
->> +     mkdir super &&
->> +     pwd=$(pwd) &&
->> +     (
->> +             cd super &&
->> +             git init &&
->> +             git submodule add --label labelA file://"$pwd"/example2 submodule &&
->> +             git submodule add file://"$pwd"/example2 submodule2 &&
->> +             git commit -a -m "add two modules, one is labled"
->> +     ) &&
->> +     git clone super super_clone &&
->> +     (
->> +             cd super_clone &&
->> +             git config submodule.actionOnLabel \*labelA &&
->> +             git submodule update &&
->> +             git submodule status |cut -c1,42-52 | tr -d " " >../actual
->> +     ) &&
->> +     test_cmp actual expected
->> +'
->> +
->> +test_expect_success 'submodule update applies to action-on-label selection' '
->> +     test_when_finished "rm -rf super super_clone" &&
->> +     mkdir super &&
->> +     oldSubmoduleHead=$(cd example2 && git rev-parse HEAD) &&
->> +     pwd=$(pwd) &&
->> +     (
->> +             cd super &&
->> +             git init &&
->> +             git submodule add --label labelA file://"$pwd"/example2 submodule1 &&
->> +             git submodule add --label labelA file://"$pwd"/example2 submodule2 &&
->> +             git submodule add --label labelA file://"$pwd"/example2 submodule3 &&
->> +             git commit -a -m "add two modules, both are labled"
->> +     ) &&
->> +     git clone super super_clone &&
->> +     (
->> +             cd super_clone &&
->> +             git config submodule.actionOnLabel \*labelA &&
->> +             git submodule update
->> +     ) &&
->> +     (
->> +             cd example2 &&
->> +             touch anotherfile &&
->> +             git add anotherfile &&
->> +             git commit -m "advance example2" &&
->> +             git checkout -b branchName
->> +     ) &&
->> +     newSubmoduleHead=$(cd example2 && git rev-parse HEAD) &&
->> +     (
->> +             cd super &&
->> +             git submodule add --label labelA file://"$pwd"/example2 submodule4 &&
->> +             git commit -a -m "add another labeled module" &&
->> +             git config -f .gitmodules submodule.submodule2.label labelB &&
->> +             git config -f .gitmodules --unset submodule.submodule3.label &&
->> +             git commit -a -m "unlabel 2 and 3 upstream" &&
->> +             git submodule foreach git pull origin branchName &&
->> +             git commit -a -m "update all submodules" &&
->> +             git submodule status |cut -c1-52 >../actual
->> +     ) &&
->> +     cat <<EOF >expected &&
->> + $newSubmoduleHead submodule1
->> + $newSubmoduleHead submodule2
->> + $newSubmoduleHead submodule3
->> + $newSubmoduleHead submodule4
->> +EOF
->> +     test_cmp actual expected &&
->> +     (
->> +             cd super_clone &&
->> +             git pull &&
->> +             git submodule update &&
->> +             git submodule status |cut -c1-52 >../actual
->> +     ) &&
->> +     cat <<EOF >expected &&
->> + $newSubmoduleHead submodule1
->> ++$oldSubmoduleHead submodule2
->> ++$oldSubmoduleHead submodule3
->> + $newSubmoduleHead submodule4
->> +EOF
->> +     test_cmp actual expected
->> +'
->> +
->> +cat <<EOF > expected
->> +submodule1
->> +submodule2
->> +-submodule3
->> +EOF
->> +
->> +test_expect_success 'Change labels in .git/config' '
->> +     test_when_finished "rm -rf super super_clone" &&
->> +     mkdir super &&
->> +     pwd=$(pwd) &&
->> +     (
->> +             cd super &&
->> +             git init &&
->> +             git submodule add --label labelA file://"$pwd"/example2 submodule1 &&
->> +             git submodule add file://"$pwd"/example2 submodule2 &&
->> +             git submodule add file://"$pwd"/example2 submodule3 &&
->> +             git commit -a -m "add two modules, one is labled"
->> +     ) &&
->> +     git clone super super_clone &&
->> +     (
->> +             cd super_clone &&
->> +             git config submodule.actionOnLabel \*labelA &&
->> +             git config submodule.submodule2.label labelA
->> +             git submodule update &&
->> +             git submodule status |cut -c1,42-52 | tr -d " " >../actual
->> +     ) &&
->> +     test_cmp actual expected
->> +'
->> +
->>  test_done
+
+Interdiff since v2 is shown below.
+
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 173b932..671cebd 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -39,16 +39,6 @@ This is designed to be as compact as possible.
+ 
+ 	      <title line>
+ 
+-	      <full commit message, tab-expanded>
+-
+-* 'noexpand'
+-
+-	  commit <sha1>
+-	  Author: <author>
+-	  Date:   <author date>
+-
+-	      <title line>
+-
+ 	      <full commit message>
+ 
+ * 'full'
+diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
+index 7032b1a..069b927 100644
+--- a/Documentation/pretty-options.txt
++++ b/Documentation/pretty-options.txt
+@@ -3,7 +3,7 @@
+ 
+ 	Pretty-print the contents of the commit logs in a given format,
+ 	where '<format>' can be one of 'oneline', 'short', 'medium',
+-	'full', 'fuller', 'email', 'raw', 'noexpand', 'format:<string>'
++	'full', 'fuller', 'email', 'raw', 'format:<string>'
+ 	and 'tformat:<string>'.  When '<format>' is none of the above,
+ 	and has '%placeholder' in it, it acts as if
+ 	'--pretty=tformat:<format>' were given.
+@@ -42,6 +42,12 @@ people using 80-column terminals.
+ 	verbatim; this means that invalid sequences in the original
+ 	commit may be copied to the output.
+ 
++--no-expand-tabs::
++	The formats that indent the log message by 4 spaces
++	(i.e. 'medium', 'full', and 'fuller') by default show tabs
++	in the log message expanded.  This option disables the
++	expansion.
++
+ ifndef::git-rev-list[]
+ --notes[=<ref>]::
+ 	Show the notes (see linkgit:git-notes[1]) that annotate the
+diff --git a/commit.h b/commit.h
+index d511c61..a7ef682 100644
+--- a/commit.h
++++ b/commit.h
+@@ -126,7 +126,6 @@ enum cmit_fmt {
+ 	CMIT_FMT_RAW,
+ 	CMIT_FMT_MEDIUM,
+ 	CMIT_FMT_DEFAULT = CMIT_FMT_MEDIUM,
+-	CMIT_FMT_NOEXPAND,
+ 	CMIT_FMT_SHORT,
+ 	CMIT_FMT_FULL,
+ 	CMIT_FMT_FULLER,
+@@ -148,6 +147,7 @@ struct pretty_print_context {
+ 	int preserve_subject;
+ 	struct date_mode date_mode;
+ 	unsigned date_mode_explicit:1;
++	unsigned expand_tabs_in_log:1;
+ 	int need_8bit_cte;
+ 	char *notes_message;
+ 	struct reflog_walk_info *reflog_info;
+diff --git a/log-tree.c b/log-tree.c
+index 60f9839..78a5381 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -683,6 +683,7 @@ void show_log(struct rev_info *opt)
+ 	ctx.fmt = opt->commit_format;
+ 	ctx.mailmap = opt->mailmap;
+ 	ctx.color = opt->diffopt.use_color;
++	ctx.expand_tabs_in_log = opt->expand_tabs_in_log;
+ 	ctx.output_encoding = get_log_output_encoding();
+ 	if (opt->from_ident.mail_begin && opt->from_ident.name_begin)
+ 		ctx.from_ident = &opt->from_ident;
+diff --git a/pretty.c b/pretty.c
+index 8b533dc..5a33b7e 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -16,6 +16,7 @@ static struct cmt_fmt_map {
+ 	const char *name;
+ 	enum cmit_fmt format;
+ 	int is_tformat;
++	int expand_tabs_in_log;
+ 	int is_alias;
+ 	const char *user_format;
+ } *commit_formats;
+@@ -87,14 +88,13 @@ static int git_pretty_formats_config(const char *var, const char *value, void *c
+ static void setup_commit_formats(void)
+ {
+ 	struct cmt_fmt_map builtin_formats[] = {
+-		{ "raw",	CMIT_FMT_RAW,		0 },
+-		{ "medium",	CMIT_FMT_MEDIUM,	0 },
+-		{ "noexpand",	CMIT_FMT_NOEXPAND,	0 },
+-		{ "short",	CMIT_FMT_SHORT,		0 },
+-		{ "email",	CMIT_FMT_EMAIL,		0 },
+-		{ "fuller",	CMIT_FMT_FULLER,	0 },
+-		{ "full",	CMIT_FMT_FULL,		0 },
+-		{ "oneline",	CMIT_FMT_ONELINE,	1 }
++		{ "raw",	CMIT_FMT_RAW,		0,	0 },
++		{ "medium",	CMIT_FMT_MEDIUM,	0,	1 },
++		{ "short",	CMIT_FMT_SHORT,		0,	0 },
++		{ "email",	CMIT_FMT_EMAIL,		0,	0 },
++		{ "fuller",	CMIT_FMT_FULLER,	0,	1 },
++		{ "full",	CMIT_FMT_FULL,		0,	1 },
++		{ "oneline",	CMIT_FMT_ONELINE,	1,	0 }
+ 	};
+ 	commit_formats_len = ARRAY_SIZE(builtin_formats);
+ 	builtin_formats_len = commit_formats_len;
+@@ -173,6 +173,7 @@ void get_commit_format(const char *arg, struct rev_info *rev)
+ 
+ 	rev->commit_format = commit_format->format;
+ 	rev->use_terminator = commit_format->is_tformat;
++	rev->expand_tabs_in_log = commit_format->expand_tabs_in_log;
+ 	if (commit_format->format == CMIT_FMT_USERFORMAT) {
+ 		save_user_format(rev, commit_format->user_format,
+ 				 commit_format->is_tformat);
+@@ -1687,12 +1688,11 @@ static void strbuf_add_tabexpand(struct strbuf *sb,
+  * de-tabifying.
+  */
+ static void pp_handle_indent(struct pretty_print_context *pp,
+-			     struct strbuf *sb,
+-			     int indent,
++			     struct strbuf *sb, int indent,
+ 			     const char *line, int linelen)
+ {
+ 	strbuf_addchars(sb, ' ', indent);
+-	if (pp->fmt == CMIT_FMT_MEDIUM)
++	if (pp->expand_tabs_in_log)
+ 		strbuf_add_tabexpand(sb, line, linelen);
+ 	else
+ 		strbuf_add(sb, line, linelen);
+diff --git a/revision.c b/revision.c
+index df56fce..b0d2a36 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1412,6 +1412,7 @@ void init_revisions(struct rev_info *revs, const char *prefix)
+ 	revs->skip_count = -1;
+ 	revs->max_count = -1;
+ 	revs->max_parents = -1;
++	revs->expand_tabs_in_log = 1;
+ 
+ 	revs->commit_format = CMIT_FMT_DEFAULT;
+ 
+@@ -1915,6 +1916,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->verbose_header = 1;
+ 		revs->pretty_given = 1;
+ 		get_commit_format(arg+9, revs);
++	} else if (!strcmp(arg, "--no-expand-tabs")) {
++		revs->expand_tabs_in_log = 0;
+ 	} else if (!strcmp(arg, "--show-notes") || !strcmp(arg, "--notes")) {
+ 		revs->show_notes = 1;
+ 		revs->show_notes_given = 1;
+diff --git a/revision.h b/revision.h
+index 23857c0..0bbfe0e 100644
+--- a/revision.h
++++ b/revision.h
+@@ -137,6 +137,7 @@ struct rev_info {
+ 			abbrev_commit_given:1,
+ 			zero_commit:1,
+ 			use_terminator:1,
++			expand_tabs_in_log:1,
+ 			missing_newline:1,
+ 			date_mode_explicit:1,
+ 			preserve_subject:1;
+diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
+index 34a9fed..2fec948 100755
+--- a/t/t4201-shortlog.sh
++++ b/t/t4201-shortlog.sh
+@@ -115,7 +115,7 @@ EOF
+ '
+ 
+ test_expect_success !MINGW 'shortlog from non-git directory' '
+-	git log --pretty=noexpand HEAD >log &&
++	git log --no-expand-tabs HEAD >log &&
+ 	GIT_DIR=non-existing git shortlog -w <log >out &&
+ 	test_cmp expect out
+ '
