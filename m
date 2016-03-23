@@ -1,119 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/4] format-patch: introduce --base=auto option
-Date: Wed, 23 Mar 2016 11:25:41 -0700
-Message-ID: <xmqqbn65caqi.fsf@gitster.mtv.corp.google.com>
-References: <1458723147-7335-1-git-send-email-xiaolong.ye@intel.com>
-	<1458723147-7335-4-git-send-email-xiaolong.ye@intel.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH v3] bisect--helper: convert a function in shell to C
+Date: Thu, 24 Mar 2016 00:08:12 +0530
+Message-ID: <CAFZEwPMEFJ=hPj_P_=f4KYBtit0cA9kfACToF1QrE6ZCNTU+3w@mail.gmail.com>
+References: <010201539d57ae98-ce4860a6-f7b6-4e06-b556-3c1340cd7749-000000@eu-west-1.amazonses.com>
+	<01020153a254974b-68f7d16a-66d7-4dc1-805d-2185ff1b3ebf-000000@eu-west-1.amazonses.com>
+	<alpine.DEB.2.20.1603231238180.4690@virtualbox>
+	<CAFZEwPPDhK1biRLuXtYeBX5fsQGw==fUOLxSOXVaZPghbJQYGg@mail.gmail.com>
+	<xmqqtwjxcgbr.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, fengguang.wu@intel.com, ying.huang@intel.com,
-	philip.li@intel.com, julie.du@intel.com
-To: Xiaolong Ye <xiaolong.ye@intel.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 19:25:50 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 23 19:38:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ainTZ-0004f9-Cj
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 19:25:49 +0100
+	id 1ainfn-0004lU-4C
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 19:38:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932505AbcCWSZp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 14:25:45 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:63466 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755945AbcCWSZo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 14:25:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 627244E112;
-	Wed, 23 Mar 2016 14:25:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=g2VIR0+GyWlT17oM1wHB0V0FyvI=; b=EXnYr3
-	Z/LXSuxGSfgzrUHJobxhZ4Eh/ydWBXwSmeH2y+RshiTYMCFEA6mtkS50g9lLYzYJ
-	KyE6v9Bl09hOC/PGeCm7jkqXn834mzMrWrs4+P9ghT6ft5MuwfoHh89dLrsahkxQ
-	nA+psGLMLkOPCex/DAz30WjmDgbY0CFUyxn4M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZB2+qJiduyvXqwu0CE8xtgAfvwv3zFMq
-	dethjOwlKl+AOX4iZG8K/T6ZTzO1j2GTUVTtJ9279Z+eSyOH18vqaIscHzu2fQwT
-	O8idrdLPJGIoABke6+Zdcd9/yVQ58ZRy1Kt1JL1682Te7nVWYGHMp5HepuLmhSta
-	Oj5LDeupnYs=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 59D574E111;
-	Wed, 23 Mar 2016 14:25:43 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D03554E110;
-	Wed, 23 Mar 2016 14:25:42 -0400 (EDT)
-In-Reply-To: <1458723147-7335-4-git-send-email-xiaolong.ye@intel.com>
-	(Xiaolong Ye's message of "Wed, 23 Mar 2016 16:52:26 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A7108804-F124-11E5-B32C-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1756546AbcCWSiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 14:38:14 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:36084 "EHLO
+	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753908AbcCWSiN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2016 14:38:13 -0400
+Received: by mail-yw0-f195.google.com with SMTP id p65so2713455ywb.3
+        for <git@vger.kernel.org>; Wed, 23 Mar 2016 11:38:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=JqoX8mfn25w4/N6Xh2k+TcDrPtVMTgocNgozNFKLup4=;
+        b=qQ5bihgdQDBMixTt2JqLT5XumWeU+MOJJx/sBjyHIXnkC/az+X7KyNiLhueGwYX7wk
+         YYsi/TW/2g43XzWs2zH+5eMh1Ph+kTxoGaMp/N9BZzjIdK78qOVR/VnklC7pXLalhvfY
+         qjVn6fHUFYLhkvSB9cYGdvmLLT6iUykkHtrfGet3igxecwxCJo8sPx1SLFF3WFg/FUpl
+         B0ahvBqJ67dLrabC0W5IjyLCpAKAcZknmrXaktW+xAWpo4xKm0l+URW4LHvTPu4HjRu2
+         EWid+2bfJocCzldn7+WS0hBVj5JmQ6iftgNDgIu54HhGYQq3WHoPTH8Bt76u3a1JwbBG
+         dOcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=JqoX8mfn25w4/N6Xh2k+TcDrPtVMTgocNgozNFKLup4=;
+        b=muTRZm1QGat6GmYUP9bx8FPC5TaL5LRo/xbQEBUkmvPWPU15yM8EO65i2ySuzSoHxx
+         RyYDd9DHdsIJ3VXhzNFS4rlrVUIg6kfB9SPQDcClk1m7Xr66ahvvsXCDN+s3N0m483Ky
+         xGy9U5VgE7ns7TWLIv0F2nC27b6FKDCXRtXI2Ucof0xXG2PSOnA5Oluh0hKu6wgtweXS
+         XdcND69LHb2dxNezya23eW9nCepT1loemn9xldz5G1+blKh44/WXOpEEdTIlINKSehO6
+         wvzexAJRJ2WoKs0m1GRiJb+OoiEgbHqesH2ReJEpoeHkjiCJoUCz+HwnQHHqkBX3aj95
+         K2jQ==
+X-Gm-Message-State: AD7BkJI0df9s/rlimHrm0uGFRZ6TG0hJidZTUVnE1RvTf1rZNl9/qf2wbF3npGRwBGvbFqw1xDR7EEQlbK8WUw==
+X-Received: by 10.37.1.196 with SMTP id 187mr2247283ybb.53.1458758292306; Wed,
+ 23 Mar 2016 11:38:12 -0700 (PDT)
+Received: by 10.13.203.137 with HTTP; Wed, 23 Mar 2016 11:38:12 -0700 (PDT)
+In-Reply-To: <xmqqtwjxcgbr.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289674>
 
-Xiaolong Ye <xiaolong.ye@intel.com> writes:
+On Wed, Mar 23, 2016 at 9:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Pranit Bauva <pranit.bauva@gmail.com> writes:
+>
+>> On Wed, Mar 23, 2016 at 5:27 PM, Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
+>>> Hi Pranit,
+>>>
+>>> On Wed, 23 Mar 2016, Pranit Bauva wrote:
+>>>
+>>>> Convert the code literally without changing its design even though it
+>>>> seems that it is obscure as to the use of comparing revision to different
+>>>> bisect arguments which seems like a problem in shell because of the way
+>>>> function arguments are handled.
+>
+> Are you talking about the need to do one_of("help", "start", ...)?
+>
+> I do not see how that is "problem in shell" or "they way function
+> arguments are handled".
+>
+>     git bisect bad
+>     git bisect good
+>
+> are the ways how you mark the current commit as bad or good, and
+> recent change that introduced the "term" thingy allows you to
+> replace these "bad" and "good" with your own words, but
+>
+>     git bisect start
+>     git bisect help
+>
+> etc. have their own meaning, so you cannot say "I call bad state
+> 'start' and good state 'help'" without confusing yourself.  You'd
+> never be able to start or get help if you did so, and that does not
+> have anything to do with "shell" or "function argument" which are
+> implementation detail.
+>
+> You cannot fundamentally allow replacing bad/good with these
+> blacklisted words unless you are going to adopt different command
+> line syntax (e.g. instead of accepting "git bisect $bad" with a word
+> chosen by the end user, use "git bisect mark $bad", and $bad can be
+> any word including "start", "visualize", etc.).
 
-> +
-> +	diff_setup(&diffopt);
-> +	DIFF_OPT_SET(&diffopt, RECURSIVE);
-> +	diff_setup_done(&diffopt);
-
-It is annoying that you moved "diff" stuff here (if it can be
-initialized once at the beginning and then reused over and over,
-it should have been done here from the beginning at PATCH 2/4).
-
-> +	if (!strcmp(base_commit, "auto")) {
-> +		curr_branch = branch_get(NULL);
-> +		upstream = branch_get_upstream(curr_branch, NULL);
-> +		if (upstream) {
-> +			if (get_sha1(upstream, sha1))
-> +				die(_("Failed to resolve '%s' as a valid ref."), upstream);
-> +			base = lookup_commit_or_die(sha1, "upstream base");
-> +			oidcpy(&bases->base_commit, &base->object.oid);
-> +		} else {
-> +			commit_patch_id(prerequisite_head, &diffopt, sha1);
-> +			oidcpy(&bases->parent_commit, &prerequisite_head->object.oid);
-> +			hashcpy(bases->parent_patch_id.hash, sha1);
-> +			return;
-
-What happens if you did this sequence?
-
-	$ git fetch origin
-        $ git checkout -b fork origin/master
-        $ git fetch origin
-        $ git format-patch --base=auto origin..
-
-You grab the updated origin/master as base and use it here, no?
-At that point the topology would look like:
-
-          1---2---3 updated upstream
-         /
-	0---X---Y---Z---A---B---C
-        ^
-        old upstream
-
-so you are basing your worn on "0" (old upstream) but setting base
-to "3"
-
-Wouldn't that trigger "base must be an ancestor of Z" check you had
-in [PATCH 2/4]?
-
-I also do not see the point of showing "parent id" which as far as I
-can see is just a random commit object name and show different
-output that is not even described what it is.  It would be better to
-
- * find the upstream (i.e. 3 in the picture) and then with our range
-   (i.e. A B and C) compute the merge base (i.e. you would find 0)
-   and use it as base;
-
- * if there is no upstream, error out and tell the user that there
-   is no upstream.  The user is intelligent enough and knows what
-   commit the base should be.
-
-I suspect, but I didn't think things through.
+Seems like I got confused. Thanks for the clarification. :)
