@@ -1,128 +1,76 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: error: src refspec refs/heads/master matches more than one.
-Date: Wed, 23 Mar 2016 18:17:05 +0700
-Message-ID: <CACsJy8BR-f0qLV9VC1YPMhdBu3hFMZqqrNq-6RPBmTu1iQ+7hg@mail.gmail.com>
-References: <20140214113136.GA17817@raven.inka.de> <87a9dt981o.fsf@igel.home>
- <CACsJy8BevKQaRLYMMv7bTjf_ZAOnkrimws519OyhGZz6_Vr_-A@mail.gmail.com>
- <xmqqy51dirjs.fsf@gitster.dls.corp.google.com> <20140215085355.GA15461@lanh> <xmqqha7wfdld.fsf@gitster.dls.corp.google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] bisect--helper: convert a function in shell to C
+Date: Wed, 23 Mar 2016 12:22:21 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603231220560.4690@virtualbox>
+References: <010201539a8d2b8a-9f168d7a-d4c6-4c23-a61f-1ef6ee22f774-000000@eu-west-1.amazonses.com> <010201539d57ae98-ce4860a6-f7b6-4e06-b556-3c1340cd7749-000000@eu-west-1.amazonses.com> <alpine.DEB.2.20.1603221552100.4690@virtualbox>
+ <CAFZEwPNg8-X5dsBbMfg5ni1XpOVekRd13y-zgwYJpX0fCwg3Ug@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Andreas Schwab <schwab@linux-m68k.org>,
-	Josef Wolf <jw@raven.inka.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	John Keeping <john@keeping.me.uk>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 23 12:17:44 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Git List <git@vger.kernel.org>
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 23 12:22:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aignF-0004de-TI
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 12:17:42 +0100
+	id 1aigry-0008Cs-Ii
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Mar 2016 12:22:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754221AbcCWLRi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 07:17:38 -0400
-Received: from mail-lf0-f42.google.com ([209.85.215.42]:33954 "EHLO
-	mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752573AbcCWLRg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 07:17:36 -0400
-Received: by mail-lf0-f42.google.com with SMTP id c62so5403878lfc.1
-        for <git@vger.kernel.org>; Wed, 23 Mar 2016 04:17:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=nekrLf9Kdp9AlPsfB5E99JM6VSMSNxnNViT9L2rGgEI=;
-        b=PghYRX3uFuXQvXbNJVeoCyY+0/+NlR3K21KYhq6ZckBUsFHyvWI400N0qCjcRh6aWx
-         0OPeQnLtmsGOKZWaprlm89TGe8hDkQt5jV8izLAdLWhyHO5QMrhrVcvZ9Iyg1aA6e+kS
-         kAi+o5Wsbeo0SkcqwsPKZQFAFyW17BMRBNjgHrGBc8J9d0SgDZ7vMDhz/4Z8nUAyjUWX
-         OirV/JDbxOj1u9oNABnDfX+GtznQkOCSPP6DZTZVj7+EIpbAa2ssvqx4gQ5FJ/fDE1Bq
-         BLP3mnFGv1oks3q+eL7SzT3q4DC3Kyf+a+kqTXCGzL8wxLtHBjKgZGSAq0NIyMomD7oL
-         fbLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=nekrLf9Kdp9AlPsfB5E99JM6VSMSNxnNViT9L2rGgEI=;
-        b=hOK4zEocSFXdna4EubOnWIyse9t+/379T+NFCMG8ZcxnB5lA5/cK7i710DuhSDY80r
-         zc1HHd+XPSztPD7oa2bv0ji62kngVEB2DD58fj8VNVU1V3Iorb1rejFFOnX6UyuU1Q7f
-         2MB3PG5dQgo+WTb1L07YUFzQmZe0g2tutVz/hyGZ2mbFme5pz2I73cjlWGjTk7S3fY9c
-         954BKNhCSmFZFUCAFEIoaOzPgnMf6wkdBcx0931zHIWccn8qzCDcjRZYOKpu2Px7cnTP
-         NDc+dt8xowHebb0STqxo6tYOkoyCvUEiPFjiG5AE1sJZ3dw1rKCaApOJ1smJm2scU1+8
-         I9Vw==
-X-Gm-Message-State: AD7BkJKd3oH+HRPyMYpioQHWM63msc7R9OloFcY710zThLYwatUkxd1q3/rsHRF1qHfRLi7hSZpopsvujthuhg==
-X-Received: by 10.25.211.75 with SMTP id k72mr931716lfg.45.1458731854857; Wed,
- 23 Mar 2016 04:17:34 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Wed, 23 Mar 2016 04:17:05 -0700 (PDT)
-In-Reply-To: <xmqqha7wfdld.fsf@gitster.dls.corp.google.com>
+	id S932068AbcCWLW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 07:22:28 -0400
+Received: from mout.gmx.net ([212.227.17.20]:64450 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751067AbcCWLW0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2016 07:22:26 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LtZfc-1ZkDyk44rU-010xWV; Wed, 23 Mar 2016 12:22:23
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <CAFZEwPNg8-X5dsBbMfg5ni1XpOVekRd13y-zgwYJpX0fCwg3Ug@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:mjJCE+n7evPeP7BGXRsedfvidW4bUktr/knHA5ofVb/pxplcmyl
+ +Q4iisW2NskKhHdFNUz09aCb3heprZygJOKmsiHjkTeU6a5ll0Gg/YntdhUhwfd0Oaqbn/v
+ 8s/0lGWFf1FqaN1vN4vEsj/Y78/o58JTbKDelNMskrLV5fRP9Nsr6G3ptSH+4sWTg5OPyrL
+ eLyztP7PF5eKgRVnrje7g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/K9LC5HRyfc=:AI/DkGjoeZvs0lxeM7tVUH
+ /f/tpkO++1JsEx97ZSRmkYc4+ZNNM06T2p/h6KBKBLxZdGBzV1kj2tr0Q6F5b9Lg7ESI1tAgw
+ nHRWkYd5jya5qXwSXNN9xWF7ITsA+Vdr1yJwIvT9X1xYRL7oyWxMkW9CFLJnjCjJ3eOVLfXiq
+ gGFyHJx6mv8zS9Fcs6PDctGkdrWzr1T5PktIPkokNGBa55m5nVim+KSYMDc2rYEEwp++imAzP
+ MDYNQOrx05+TlR4Y5KE19OQ8F3fb1lLYSCUFPpiGdY4PbTq3B8VsXpkpPMSF6oyMNPAT8L8hc
+ UEW+6c06UCWZxEbtrmawzakGAEXmhmgX0Kr9FzHZLlURfd8sJxB/fHIpE/m7g8HBsAS5GMJbo
+ azfhotSg2FDsWI2gJjYQWPUe34JFyK/tFb8kxnmzMZybBumxu+VSSTyg7tQaHLRBcmhBD0OLc
+ 0c87xAlekRkp1o0k0K/QnFINETgTW3P6f7hE++SB8dkDCZpF4C69V0UxbcL6BrCmMBrP3CAgb
+ 68RQbYAHAWJIdm0TSWOd2WcSWAk8at28p9YOz9JNQ7h9x/Jjmila+8B4agdC43s/YxpwwA4KO
+ F+KkpojKAs3zVhvV8qwDe3XRjI8mqS7N2VETyB6P2xbmEKcHy/neJAZqFRxAkVNd6LwS1LPwW
+ blYqXVb94BaM3zZMA2ZyRTRp2AeGBUk/IF7KYxF3yeToHprRHyxFTI1edeFkbcVCsk0DchazK
+ 6o1PW6bIlEonAqO7af54IlwMIne53+Hlk2zJW46c/8PdE+rKE9lp/ATg58s1DmjCmUbVqzYg 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289650>
 
-I'm digging this topic up from the ground because if it was fixed, I
-would not have spent many confusing (and a little bit panicking)
-minutes wondering how the hell I managed to push to "origin/master"
-which I did not have push access to begin with, which turned out to be
-the local branch, refs/heads/origin/master, not the remote branch
-refs/remotes/origin/master.
+Hi Pranit,
 
-Summary until this point in the old thread, you can accidentally do
-"git branch refs/heads/next", which happily creates
-refs/heads/refs/heads/next. If you also have refs/heads/next, things
-can get confusing for commands that accepts both branch and non-branch
-refs. There were some more discussion about unambiguously specifying
-full ref in git-branch but it was getting nowhere.
+On Tue, 22 Mar 2016, Pranit Bauva wrote:
 
-On Wed, Feb 19, 2014 at 2:03 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> Prevent is a strong word. I meant we only do it if they force
->> it. Something like this..
->>
->> -- 8< --
->> diff --git a/branch.c b/branch.c
->> index 723a36b..3f0540f 100644
->> --- a/branch.c
->> +++ b/branch.c
->> @@ -251,6 +251,11 @@ void create_branch(const char *head,
->>                       forcing = 1;
->>       }
->>
->> +     if (!force && dwim_ref(name, strlen(name), sha1, &real_ref))
->> +             die(_("creating ref refs/heads/%s makes %s ambiguous.\n"
->> +                   "Use -f to create it anyway."),
->> +                 name, name);
->
-> Does this check still allow you to create a branch "refs/heads/next"
-> and then later create a branch "next"?  The latter will introduce an
-> ambiguity without any prevention, even though the prevention would
-> trigger if the order in which these two branches are created is
-> swapped--- the end result has ambiguity but the safety covers only
-> one avenue to the confusing situation.
+> I did run the tests. They produce the same results as they did before.
+> To ease review I will next time include these the output of the tests
+> in the commented section.
+> 
+> t6002-rev-list-bisect.sh : http://paste.ubuntu.com/15473728/
+> t6030-bisect-porcelain.sh : http://paste.ubuntu.com/15473734/
+> t6041-bisect-submodule.sh : http://paste.ubuntu.com/15473743/
+> 
+> Is there any other test I would need to run?
 
-It could be fixed by checking all existing refs if any of them becomes
-ambiguous after refs/heads/next comes to life. We can filter and check
-only branch that shares the same base name (or starts with "refs/",
-"heads/", "tags/" or "remotes/"), so it's still expensive but not as
-much as checking all refs.
+Oh, I just meant to point out that you need to make sure that the entire
+test suite passes after your patch series (and ideally, after every patch,
+that is at least what I frequently test before sending out patch series).
 
-Even with covering only one avenue, it would definitely help my case
-(refs/remotes/origin/master exists and refs/heads/origin/master asked
-to be created).
+There is not really a need to mention that you ran the test suite. There
+is only a need to run it ;-)
 
-Also in my case, if refs/heads/origin/master already exists then I
-think I should reject creating refs/remotes/origin/master, or warn
-loudly.
-
-Sounds promising enough to start making patches?
-
-> And the only way I can think of to avoid that kind of confusion is
-> to forbid creation of a subset of possible names by reserving a set
-> of known (but arbitrary) prefixes---which I am not sure is a good
-> way to go.  At least not yet.
--- 
-Duy
+Ciao,
+Johannes
