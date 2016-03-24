@@ -1,74 +1,82 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: GSoC 2016: application period ongoing, deadline = tomorrow
-Date: Thu, 24 Mar 2016 13:32:16 +0100
-Message-ID: <vpqoaa46oq7.fsf@anie.imag.fr>
-References: <vpqfuvmirgq.fsf@anie.imag.fr>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: "git svn fetch" error: [main] perl 9296 child_info_fork::abort:
+ unable to map
+Date: Thu, 24 Mar 2016 13:49:55 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603241348220.4690@virtualbox>
+References: <B1FF2E9001CE9041BD10B825821D5BC5548BEBDC@shsmsx102.ccr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-	larsxschneider <larsxschneider@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	"Junio C. Hamano" <gitster@pobox.com>,
-	Edward Thomson <ethomson@github.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	saurabhsuniljain@gmail.com, pranit.bauva@gmail.com,
-	mehul.jain2029@gmail.com, tigerkid001@gmail.com,
-	huiyiqun@gmail.com, senorsen.zhang@gmail.com, dpdineshp2@gmail.com,
-	sauravsachidanand@gmail.com, Paul Tan <pyokagan@gmail.com>,
-	git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 24 13:32:53 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Fu, Siyuan" <siyuan.fu@intel.com>
+X-From: git-owner@vger.kernel.org Thu Mar 24 13:50:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aj4RX-0002Nt-63
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 13:32:51 +0100
+	id 1aj4iT-0007NN-BR
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 13:50:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757125AbcCXMcg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 08:32:36 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:52502 "EHLO mx1.imag.fr"
+	id S1756056AbcCXMuS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 08:50:18 -0400
+Received: from mout.gmx.net ([212.227.17.21]:54109 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756938AbcCXMce (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 08:32:34 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u2OCWFVB024777
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 24 Mar 2016 13:32:15 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u2OCWG1n005338;
-	Thu, 24 Mar 2016 13:32:16 +0100
-In-Reply-To: <vpqfuvmirgq.fsf@anie.imag.fr> (Matthieu Moy's message of "Sat,
-	19 Mar 2016 13:26:29 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Thu, 24 Mar 2016 13:32:16 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u2OCWFVB024777
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1459427538.28875@8YftN3iAnOfzAoUqD0oFlQ
+	id S1752274AbcCXMuE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 08:50:04 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MQ6oB-1adrm90wbr-005FpY; Thu, 24 Mar 2016 13:49:58
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <B1FF2E9001CE9041BD10B825821D5BC5548BEBDC@shsmsx102.ccr.corp.intel.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:X1SEQIB9ayt0jqXIMLmk+xW2VhUhkC3xDNmxsNNQlS7kyB97d4e
+ q3IdCx4gEshazR56Ob8+vyZSBcT833YKzeKwYC4eChXSYk/Z9eqiDmMoCc04fb04FKmzrPn
+ 5iP46o2iMuzIP152YH/XiBDw5qd3L4rD/+9gPUJYQXQMCe6sCjiPMUhA1Hyb5/5qn5gQEhe
+ s5iHuqtA5Rv9GmqDQ6Bpg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+rQt6PpYxzY=:37Kf1yCRUHfRJ2rlttu+t3
+ X+OkZPWW3nIW3gEPsUczAUO2jbBm9B34htwYUflHu7oQGUetSyGHF44nThvcdWz2fS8jBXpBo
+ 6c+QTisCD4PhRHNCtRLTZEPLPhGqN7bRhpkkn967kZ85WgwbnIpJHvuTnrdmjiJy1c73Y4jXz
+ AbfTGYpZbEDs609l7N8GjwDywrt91Cay5e0qCEc78ufMHlgwJGhNlR56V5ek1EUfC+8nsafwl
+ X6IXjp68Za58beZ65dBJvcHiK8Pfwb4hUhWYSkpTlDdo3EeMIUrrZFY/hiwbiguLyxskyiE5K
+ Z2Qai9Bd/6oZIX72PYc6ddr4UBfHY8kly1f0yXBUNeLY0tUTKpzqrv1sv38I1sQvamvIjOu0N
+ FLuMIiRlLTTkWvpk20i+UWoQey3/hfxPeGbvp/8aREJSHPSHoYHjJkhd0mdaCMmeDwMTYoq9D
+ AGIcftciR2YafQeQ2UvfbTa7MXzrsRBQcS3RUnvtbT4Ja/Ddpt8OB/4z6hvcnvBwUAbRSxhor
+ sF4a8Fb/9qA6aG2Rdg8U2nIGAaW0voUh7JU8jTCvfo/hez8yMjpp1dFmUGIEIgeZ/2jo9GRia
+ aY+1fzI0B0kSjiUijef7pgJoucow7oY6AZyhqbK9JRK2ZebFnEF5T5OaN4lNf8ww2XsORQNMv
+ YUntCRN2hF4M4x2Gzlsxy66RM0xyOH+YJYUdAh/runzYC0abMeuxL4sgSwfnkBVX/BxNu0bFg
+ /RDvd8gQ5UMQlpG0JAO9rIoS2i8Efjgfk4KVFZc92y3oYQCxhcI7xyRFfxZ1VKDEfUnv9xJb 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289743>
 
-Hi,
+Hi Siyuan,
 
-The GSoC deadline is approaching. A few reminders for students:
+On Thu, 24 Mar 2016, Fu, Siyuan wrote:
 
-* You need to submit a final application before the (strict) deadline.
-  Your draft won't be turned into a final version automatically.
+> I meet below error when using the "git svn" related command, and I tried
+> to reinstall the GIT but the issue is still there. Has anybody ever meet
+> this and know how to solve it? 
+> 
+> GIT version: git version 2.7.4.windows.1
+> OS: Windows 8 64bit
+> 
+> $ git svn fetch
+>       4 [main] perl 9296 child_info_fork::abort: unable to map C:\Program Files\Git\usr\bin\msys-svn_subr-1-0.dll, Win32 error 1114
+>       4 [main] perl 4480 child_info_fork::abort: unable to map C:\Program Files\Git\usr\bin\msys-svn_subr-1-0.dll, Win32 error 1114
+>      12 [main] perl 8572 child_info_fork::abort: unable to map C:\Program Files\Git\usr\bin\msys-svn_subr-1-0.dll, Win32 error 1114
 
-* You may submit your "final application" multiple times. We (admins &
-  mentors) don't see it before the deadline, but you can re-submit until
-  then. If I were you, I'd submit a PDF right now (actually, I'd have
-  done that a few days ago ;-) ). You don't want to miss a GSoC just
-  because your internet connection or your computer is down tomorrow ...
+The problem has been reported to Git for Windows' bug tracker (twice,
+actually):
 
-Cheers,
+	https://github.com/git-for-windows/git/issues/650
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+The problem is that it seems to be impossible to reproduce this error
+except with *some* setups.
+
+If you can help me to reproduce it, we are a big step closer to resolving
+the problem.
+
+Ciao,
+Johannes
