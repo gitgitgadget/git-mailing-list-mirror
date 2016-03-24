@@ -1,94 +1,81 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH] api-parse-options.txt: document OPT_CMDMODE()
-Date: Thu, 24 Mar 2016 23:34:32 +0530
-Message-ID: <CAFZEwPN=Vo7qR+6zwYhz+rB7Q0a28LRd_zEK-stF_Y4ThYq_4w@mail.gmail.com>
-References: <01020153a7e08100-cf66fc9f-7293-4d8c-98c6-f322721c741f-000000@eu-west-1.amazonses.com>
-	<xmqqtwjvamhe.fsf@gitster.mtv.corp.google.com>
-	<CAFZEwPPhq0HNpJt3mt=AWZw7S3ikEL2XX-SOM8CcRkFie=9vcQ@mail.gmail.com>
-	<xmqqy49794pc.fsf@gitster.mtv.corp.google.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v7 14/33] refs: add methods to init refs db
+Date: Thu, 24 Mar 2016 14:04:55 -0400
+Organization: Twitter
+Message-ID: <1458842695.28595.11.camel@twopensource.com>
+References: <1456793586-22082-1-git-send-email-dturner@twopensource.com>
+	 <1456793586-22082-15-git-send-email-dturner@twopensource.com>
+	 <56F3972C.7020901@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 24 19:04:39 2016
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	peff@peff.net, pclouds@gmail.com
+X-From: git-owner@vger.kernel.org Thu Mar 24 19:05:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aj9cc-0000bd-0y
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 19:04:38 +0100
+	id 1aj9d1-0000x9-VS
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 19:05:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751247AbcCXSEe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 14:04:34 -0400
-Received: from mail-yw0-f175.google.com ([209.85.161.175]:34069 "EHLO
-	mail-yw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750865AbcCXSEd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 14:04:33 -0400
-Received: by mail-yw0-f175.google.com with SMTP id h129so69472570ywb.1
-        for <git@vger.kernel.org>; Thu, 24 Mar 2016 11:04:33 -0700 (PDT)
+	id S1751283AbcCXSE7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 14:04:59 -0400
+Received: from mail-qg0-f45.google.com ([209.85.192.45]:33455 "EHLO
+	mail-qg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750865AbcCXSE6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 14:04:58 -0400
+Received: by mail-qg0-f45.google.com with SMTP id j35so44777903qge.0
+        for <git@vger.kernel.org>; Thu, 24 Mar 2016 11:04:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=KNJxlwfCY37GF3WWfk+kKNUBfgmoOk75vHrjy6J4UBY=;
-        b=wqyGjAbXMugjq4yLTKOy4tezPW5JAiU9XcWnF96FrCWbaKkFa31RicDF6CMGsDURaS
-         1CM8N47EZX45KTn/Xvfmf9i2hJYlX77yHxYN4Ke2AQ+iYfMFT6mZTadNp5YhuiZh2XI7
-         1HCMS+59R7kHvQFuB8+L5HCuSmVfyRAbkxs087AqbDMhfIzjMN3GwMgapb5Av9OUmKf7
-         rQoXDUHj+27YH5RFc4AcaxtJ1z/OXLlOVHwwfCpOZHZkA6QWMgJh7rVF7yx2BfxaGCPj
-         Z5I0Gb+p1GcdKiAZGBqWTkxUhrxJfPAVgmvk4RdZhM8HZBlTFskbP7swhPsh8k0+2FuV
-         17Vg==
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:mime-version:content-transfer-encoding;
+        bh=qDHKt78cfvd4vUZVRewIQ1rpJXGtQZA2W1W6NpdioFk=;
+        b=NdoiZHJXfkzdoFZE1Wx5b8AvQey02/WzNGcUf8FyT4dGC5tqqNlHaGMQcW9gdJAS9l
+         dBgXOAnZ6PH9r1KN8Xjy7IUin/2aOETmEZLc7U5zuRgUMlV9GNqF729YJJexoSUMNkuf
+         j7O/ge2P1dMLhtw2o7eQH2bZaWeU4B9HlnxH2arFdFZUU3QUBZdD4ZWkTeB4t04jowIp
+         Y8PtoafqKm/rYC+7c0J2L/tg88VRFAebhZsCuH7F9Pwv1o7TQqWAZi2t1frmEAL3Rb54
+         hnxzTqLe/gD7ZCsI8OALcUGwclVm93/MmXgLs0awiH2NNsnCTY3QQ6/pu5aHWlKq08Cf
+         Ps4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=KNJxlwfCY37GF3WWfk+kKNUBfgmoOk75vHrjy6J4UBY=;
-        b=SCKgsdgJmqB08+/dgrirbsKTBIB2MsU/ZHOeC4zUyeQ53haLfiqQDnpP07YD8bUKXp
-         nBoWjCDOgazoFBGhS6PXqhvAeTofgPvcgsQsEmBZX6Gt6t1i8OovKqXJuZsN+dnzRJGW
-         97qT/cvmXN2TsM9dYudiDujMIlBDXkerV6vGv8rdg+ZcJ8XgoaOY1tFAeRUO5520LJ0P
-         sxHBvaR7Q5R0hbtR0ss85Q0SWpKsxIRzaYvL8oDh9/hgPI/p1Lo5UShQkLB+cHpuA+Fh
-         O2Lr1cAwkonF/lmcLPBtgptt6StPmj1n1Kh/h4N3Sd5+lpqevyZ6FULxcnW7HirY2XCv
-         U4rg==
-X-Gm-Message-State: AD7BkJLldAJmGXQnuRDKrLHEnmt4gfOET49KrG5czwQbR8c5kMyLa7RJvz1jpRyNxFpOw8NZzEqqpMS0cEkv4A==
-X-Received: by 10.13.252.67 with SMTP id m64mr5588368ywf.67.1458842672269;
- Thu, 24 Mar 2016 11:04:32 -0700 (PDT)
-Received: by 10.13.203.137 with HTTP; Thu, 24 Mar 2016 11:04:32 -0700 (PDT)
-In-Reply-To: <xmqqy49794pc.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:mime-version:content-transfer-encoding;
+        bh=qDHKt78cfvd4vUZVRewIQ1rpJXGtQZA2W1W6NpdioFk=;
+        b=l4bT9uji4b7T13LTcpHNcq8wmaPWbtCZsDSNOCY0fttdsQK5buG54QRn+wkUGcSmus
+         RDxuU93veoS/aAYgJ4ckOUuFLFIJCnpJjMky3UhhkiAMVN3ycC8pBXlAtfN+uCgRLkyR
+         go8x+ahrrZKQBMOe+Gc586K83LBk6CjpEf5myrIqHzZmjZB2ld2b2HxXGnT0kvdAJHyl
+         GKMj2f7Edn01tnISBnQCQ05Oiq6jg6fJxB8rBerPX9NLl8vsYUjnfCnZG7yewTH0sHZc
+         Y7eD3rHWLbHuSfg1o0H+3jzZDzcaxE01biKUtegihMC3Fp6gZ+1/rfDYca5GAqbHRueG
+         AxYw==
+X-Gm-Message-State: AD7BkJLFDAPpNrPyWqxRPjylSOFwpBwS47MkqzZjgd0KxOh6E3ykIOHrGDyrGlYXn1UH4A==
+X-Received: by 10.140.95.117 with SMTP id h108mr12162272qge.65.1458842697181;
+        Thu, 24 Mar 2016 11:04:57 -0700 (PDT)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id f78sm3745920qge.8.2016.03.24.11.04.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 24 Mar 2016 11:04:56 -0700 (PDT)
+In-Reply-To: <56F3972C.7020901@alum.mit.edu>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289778>
 
-On Thu, Mar 24, 2016 at 10:46 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Pranit Bauva <pranit.bauva@gmail.com> writes:
->
->>>> +`OPT_CMDMODE(short, long, &int_var, description, enum_val)`::
->>>> +     Introduce an option for subcommands. It is useful when you want to use
->>>> +     the command with a particular sub command only and ignore other sub
->>>> +     commands it has. It will set `int_var` to enum_val if the argument is
->>>> +     invoked.
->>>> +
->>>
->>> Sorry, but I do not get what "when you want to... ignore other sub
->>> command it has" wants to say.
->>
->> What I meant by this statement is that (your example), let's say we
->> have "add", "remove" and "edit" sub commands. Now the user has to pick
->> between the three. He cannot choose more than 1 from these.
->
-> Then I find the word "ignore others" misleading.  Quite the
-> contrary, the user has to be aware of the others and not to give
-> them.
->
->         Define an "operating mode" option, only one of which in the
->         same group of "operating mode" options that share the same
->         `int_var` can be given by the user.  `enum_val` is set to
->         `int_var` when the option is used, but an error is reported
->         if other "operating mode" option has already set its value
->         to the same `int_var`.
->
-> or something?
+On Thu, 2016-03-24 at 08:28 +0100, Michael Haggerty wrote:
+> >  	if (shared_repository) {
+> >  		adjust_shared_perm(get_git_dir());
+> > -		adjust_shared_perm(git_path_buf(&buf, "refs"));
+> 
+> Given that this function is creating the "refs" directory, it seems
+> like
+> adjust_shared_perm() should be called for it here, too (rather than
+> in
+> the backend-specific code).
 
-Seems a crystal clear explanation to me. Thanks. I was unaware that it
-throws an error.
+
+Good point.
