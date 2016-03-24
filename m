@@ -1,66 +1,114 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v7 17/33] refs: make lock generic
-Date: Thu, 24 Mar 2016 20:45:01 +0100
-Message-ID: <56F443BD.1030100@alum.mit.edu>
-References: <1456793586-22082-1-git-send-email-dturner@twopensource.com>
- <1456793586-22082-18-git-send-email-dturner@twopensource.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 1/2] Modified flag field type in rev_list_info struct in
+ bisect.h. There is no need for flag field to be signed, as it is not supposed
+ to be used as decimal.
+Date: Thu, 24 Mar 2016 12:51:24 -0700
+Message-ID: <CAGZ79kZmzo+f9YF1K1oC2GfOrzdaojmrca7bUm3cBRoDreeA-g@mail.gmail.com>
+References: <1458848469-12663-1-git-send-email-motroniii@gmail.com>
+	<1458848469-12663-2-git-send-email-motroniii@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
-	peff@peff.net, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Thu Mar 24 20:45:14 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Motroni Igor <motroniii@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 24 20:51:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajBBw-0007eI-GK
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 20:45:12 +0100
+	id 1ajBI2-0002yy-DP
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 20:51:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751035AbcCXTpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 15:45:08 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:43748 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750870AbcCXTpG (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2016 15:45:06 -0400
-X-AuditID: 1207440e-c03ff70000000398-26-56f443c086cb
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 9D.EF.00920.0C344F65; Thu, 24 Mar 2016 15:45:04 -0400 (EDT)
-Received: from [192.168.69.130] (p548D66F7.dip0.t-ipconnect.de [84.141.102.247])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u2OJj1rp012917
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 24 Mar 2016 15:45:03 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.7.0
-In-Reply-To: <1456793586-22082-18-git-send-email-dturner@twopensource.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKKsWRmVeSWpSXmKPExsUixO6iqHvA+UuYweuPchbzN51gtOi60s1k
-	0dB7hdmie8pbRosfLT3MDqweO2fdZfd41ruH0ePiJWWPBc/vs3t83iQXwBrFbZOUWFIWnJme
-	p2+XwJ1xdv5KpoJPTBUdu/8zNjCuYupi5OSQEDCRWHJ6OVsXIxeHkMBWRonlj9sYQRJCAheY
-	JC6tSASxhQVMJa79+cwCYosIZEvM+XSOFaKhg1Fiwp9LrCAJZgE1ifZNU8BsNgFdiUU9zWAb
-	eAW0JU6+nwUWZxFQlfh2aSXYIFGBEIlt676xQtQISpyc+QQszingJdH4ooUZYqaexI7rv6Dm
-	y0tsfzuHeQIj/ywkLbOQlM1CUraAkXkVo1xiTmmubm5iZk5xarJucXJiXl5qka6xXm5miV5q
-	SukmRkgw8+1gbF8vc4hRgINRiYe3keNzmBBrYllxZe4hRkkOJiVR3iNWX8KE+JLyUyozEosz
-	4otKc1KLDzFKcDArifBuUwfK8aYkVlalFuXDpKQ5WJTEedWWqPsJCaQnlqRmp6YWpBbBZGU4
-	OJQkeJdbAjUKFqWmp1akZeaUIKSZODhBhnNJiRSn5qWkFiWWlmTEg2IyvhgYlSApHqC9s+1A
-	9hYXJOYCRSFaTzHqciz4cXstkxBLXn5eqpQ473wLoCIBkKKM0jy4FbDU9YpRHOhjYV5ea6Aq
-	HmDag5v0CmgJE9CShT6fQJaUJCKkpBoY19zKvBA9n7VfRzL534VVoV/+8Wfftl/6O5x51apl
-	AZfefeQ57SsYtEn399prP7nvFnEviFv+/XNF2uSSp269Oxbd+WY1IXCmlOW+MIXb 
+	id S1750901AbcCXTv0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 15:51:26 -0400
+Received: from mail-yw0-f181.google.com ([209.85.161.181]:35075 "EHLO
+	mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750775AbcCXTvZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 15:51:25 -0400
+Received: by mail-yw0-f181.google.com with SMTP id g127so72385023ywf.2
+        for <git@vger.kernel.org>; Thu, 24 Mar 2016 12:51:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=xUQe/DDPc8Giijm/iISAAdVOFC2oWw5niJ8YymN9A1w=;
+        b=ot8aLxiWhtSWKpQi87mpRfcNuOGwj8sCFur8zMhA3ZCzraGT7GZxhXr/wX+rY+RqeG
+         OtRE7W9qZ6AGIG08elWlcex9n9BJDJ+iFLBAcehmodgPrr/5zTpwde7ERJhECLGETRSS
+         aoNRtrWNNUZhWjTDGb/p0goMIz8QjI9KjY28dIdNeQ9d4O6o7a8ohWs9Ex8qNhRzsIav
+         KOvUckdwt/ICTHr4d5hDJLp0G61aTBpRn33L2dIBqdlVVqXyQLhyvEhoMpvAmId1g35b
+         JY4I7IVVxVuOd5C/vo9IqpB1nW95eWpr7bMl/Lz+CfzpggC3HtSem0T9i+Ysw6ZbQPQB
+         B2PA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=xUQe/DDPc8Giijm/iISAAdVOFC2oWw5niJ8YymN9A1w=;
+        b=jEPhmWNJVVOeiIf4GvBL7vvLhTZOfzBDTp0HA38qxD5QwPdXAIjMlz5FBccXZYTl5R
+         jSGckFF4m0NOD63KSyatmmCaqylsLmer/r3XrGsEn1LHPiM9I0O1E7TpJPHv3QYRbI29
+         81Mhs4x4DBfzyW+R1VQqUAmwRvitS/zXfK91mR0OIsfGHxvDtdHiJOmtOg1ch3Ls48Qh
+         0W191n0xSHBXrgK1RaMKCS2yFN5B+izvBfk/X8PETj5frYkCijV2Fh+qKN9ug5vJ2a8S
+         wi1QvGCIQzGekjHU6qTqkwJZVe5l/jCqMtRKYMoUrWbrUuednS5cUFbt8yg4dxbvipL/
+         pTwQ==
+X-Gm-Message-State: AD7BkJIN5uNWxxx1WrAn/Ccbha/ciCBsrqYlb3Z0e03CvWqQs+Ya/WE9kdq8isJw6yKwchGF+TwO2Z3shfwgEoin
+X-Received: by 10.37.19.66 with SMTP id 63mr5737429ybt.75.1458849084619; Thu,
+ 24 Mar 2016 12:51:24 -0700 (PDT)
+Received: by 10.37.51.137 with HTTP; Thu, 24 Mar 2016 12:51:24 -0700 (PDT)
+In-Reply-To: <1458848469-12663-2-git-send-email-motroniii@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289789>
 
-On 03/01/2016 01:52 AM, David Turner wrote:
-> Instead of using a files-backend-specific struct ref_lock, the generic
-> ref_transaction struct should provide a void pointer that backends can use
-> for their own lock data.
+On Thu, Mar 24, 2016 at 12:41 PM, Motroni Igor <motroniii@gmail.com> wrote:
+> From: Pontifik <motroniii@gmail.com>
 
-Aside from the comments I've already mentioned, I've checked the patches
-up to and including this one and they look fine to me.
+Here is a good place to put reasoning for why this is a good idea.
+I see you have a long subject, so maybe we can shorten the first line
+(down to less than ~ 80 characters) and put the longer explanation
+here.
 
-Michael
+How about:
+
+  bisect: use unsigned for flag field
+
+  The flags are usually used as a unsigned variable, because it makes
+  bit operations easier to follow.
+
+
+
+>
+> Signed-off-by: Pontifik <motroniii@gmail.com>
+
+>From Documentation/SubmittingPatches:
+> Also notice that a real name is used in the Signed-off-by: line. Please
+> don't hide your real name.
+
+> ---
+>  bisect.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/bisect.h b/bisect.h
+> index acd12ef..a979a7f 100644
+> --- a/bisect.h
+> +++ b/bisect.h
+> @@ -16,7 +16,7 @@ extern struct commit_list *filter_skipped(struct commit_list *list,
+>
+>  struct rev_list_info {
+>         struct rev_info *revs;
+> -       int flags;
+> +       unsigned int flags;
+
+You can also drop the int here and make it just
+unsigned.
+
+>         int show_timestamp;
+>         int hdr_termination;
+>         const char *header_prefix;
+> --
+> 2.5.0
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
