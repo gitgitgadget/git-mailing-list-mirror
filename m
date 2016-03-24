@@ -1,92 +1,74 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 4/4] apply: report patch skipping in verbose mode
-Date: Thu, 24 Mar 2016 18:56:19 +0700
-Message-ID: <1458820579-31621-5-git-send-email-pclouds@gmail.com>
-References: <CACsJy8CTix-ZwN04MwYTB+JEtDCV27QVf7_0vWmhUSVCwU29Jg@mail.gmail.com>
- <1458820579-31621-1-git-send-email-pclouds@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: GSoC 2016: application period ongoing, deadline = tomorrow
+Date: Thu, 24 Mar 2016 13:32:16 +0100
+Message-ID: <vpqoaa46oq7.fsf@anie.imag.fr>
+References: <vpqfuvmirgq.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, sbeller@google.com,
-	mehul.jain2029@gmail.com, sandals@crustytoothpaste.net,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 24 12:57:58 2016
+Content-Type: text/plain
+To: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+	larsxschneider <larsxschneider@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	"Junio C. Hamano" <gitster@pobox.com>,
+	Edward Thomson <ethomson@github.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	saurabhsuniljain@gmail.com, pranit.bauva@gmail.com,
+	mehul.jain2029@gmail.com, tigerkid001@gmail.com,
+	huiyiqun@gmail.com, senorsen.zhang@gmail.com, dpdineshp2@gmail.com,
+	sauravsachidanand@gmail.com, Paul Tan <pyokagan@gmail.com>,
+	git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 24 13:32:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aj3tk-0001R2-Eo
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 12:57:56 +0100
+	id 1aj4RX-0002Nt-63
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 13:32:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755462AbcCXL5q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Mar 2016 07:57:46 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:34915 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751694AbcCXL5o (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 07:57:44 -0400
-Received: by mail-pa0-f47.google.com with SMTP id td3so19907174pab.2
-        for <git@vger.kernel.org>; Thu, 24 Mar 2016 04:57:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=MsrI/atS8WNoZTs7bY/xNHFI7qLogV2iYBZJUaS+Vlg=;
-        b=eXCy+zpXtlW8wrLrOKi3pZn1i+VZxPFRoQM9hT/WagMPqM95/8eKiEDqDGrP01c/qN
-         u4UA/rRJK/RMLRTSgCRk92hc7TzinoTsYtvThqTlqqaDSTK+mTJEPZNnGB+naKSX0SAD
-         FpX+S7c+0ZlRGML9kgVk4L0TnSabE130GP9vDTaac3NRcHbSJaxhGQVKFcUSy7bLWTkD
-         uLrCYAl3ExiLbY0RCyvLUU9GKCUvRJ9pTGcFc4WdDVH+SbQbM1t2A5lmFEqP0ZtcDDTM
-         K9ga3q4coBlxUNOHdUzvg2ZzvifNaBChNWwEoHDb439/lTwwlayug5WI2d4K929XRkRS
-         Enzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=MsrI/atS8WNoZTs7bY/xNHFI7qLogV2iYBZJUaS+Vlg=;
-        b=AO8H35URpX9ZOXI9GE5iPaVaNXRLD25Iv3MzWMgjqxOECTfKboWidUcCd7ZfM5ncr2
-         ikryPOo0pUn+RG+OHls2C4iuhlkgLuXNPKXntUWPylk4ife7txUa2OMbtJGr42xgmhqt
-         L93MKItEnYQ0uErF0w+8AtnbHRLzjfpx/u55UJRSDbr3Ta50uSk9bqvz42F7msQ5A9IR
-         RWOE34iro3MjVWZ7SXnOSsCSMws6pqUspUA/5EXMc6xi69dvtB/B1ECBg0pYb30DN1Jp
-         GSR3df0P3tQT3u1CFbJyeabeveK98uy8GxCMLiDlkm5REqqgWKHzAN1GpKPFFzIFwqBw
-         6O3A==
-X-Gm-Message-State: AD7BkJIS5w91cQg7T6R4VQb1FK342ZCzJuQmdh21NORCcIdcwlNXqEUZorHw4MEW422fLQ==
-X-Received: by 10.66.248.168 with SMTP id yn8mr12064953pac.24.1458820658758;
-        Thu, 24 Mar 2016 04:57:38 -0700 (PDT)
-Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id f12sm9968747pfd.87.2016.03.24.04.57.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 24 Mar 2016 04:57:37 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Thu, 24 Mar 2016 18:57:52 +0700
-X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
-In-Reply-To: <1458820579-31621-1-git-send-email-pclouds@gmail.com>
+	id S1757125AbcCXMcg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 08:32:36 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:52502 "EHLO mx1.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756938AbcCXMce (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 08:32:34 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u2OCWFVB024777
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 24 Mar 2016 13:32:15 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u2OCWG1n005338;
+	Thu, 24 Mar 2016 13:32:16 +0100
+In-Reply-To: <vpqfuvmirgq.fsf@anie.imag.fr> (Matthieu Moy's message of "Sat,
+	19 Mar 2016 13:26:29 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Thu, 24 Mar 2016 13:32:16 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u2OCWFVB024777
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1459427538.28875@8YftN3iAnOfzAoUqD0oFlQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289742>
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- builtin/apply.c | 2 ++
- 1 file changed, 2 insertions(+)
+Hi,
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 01e1d5e..9cbb186 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -4384,6 +4384,8 @@ static int apply_patch(int fd, const char *filena=
-me, int options)
- 			listp =3D &patch->next;
- 		}
- 		else {
-+			if (apply_verbosely)
-+				say_patch_name(stderr, _("Skipped patch '%s'."), patch);
- 			free_patch(patch);
- 			skipped_patch++;
- 		}
---=20
-2.8.0.rc0.210.gd302cd2
+The GSoC deadline is approaching. A few reminders for students:
+
+* You need to submit a final application before the (strict) deadline.
+  Your draft won't be turned into a final version automatically.
+
+* You may submit your "final application" multiple times. We (admins &
+  mentors) don't see it before the deadline, but you can re-submit until
+  then. If I were you, I'd submit a PDF right now (actually, I'd have
+  done that a few days ago ;-) ). You don't want to miss a GSoC just
+  because your internet connection or your computer is down tomorrow ...
+
+Cheers,
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
