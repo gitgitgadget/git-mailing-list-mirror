@@ -1,101 +1,65 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Resumable git clone?
-Date: Thu, 24 Mar 2016 21:08:53 -0000
-Organization: OPDS
-Message-ID: <211C0A1532414ED79933D75741AB26A0@PhilipOakley>
-References: <20160302012922.GA17114@jtriplet-mobl2.jf.intel.com><xmqqziuh46hb.fsf@gitster.mtv.corp.google.com><C59B0CDA60BC402B900305A9D62D815B@PhilipOakley> <xmqqy497an4a.fsf@gitster.mtv.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Josh Triplett" <josh@joshtriplett.org>,
-	"Konstantin Ryabitsev" <konstantin@linuxfoundation.org>,
-	"Git List" <git@vger.kernel.org>, <sarah@thesharps.us>,
-	<viro@zeniv.linux.org.uk>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 24 22:09:05 2016
+From: XZS <d.f.fischer@web.de>
+Subject: [GSoC] Proposal
+Date: Thu, 24 Mar 2016 22:09:46 +0100
+Message-ID: <1458853787-29807-1-git-send-email-d.f.fischer@web.de>
+Cc: XZS <d.f.fischer@web.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 24 22:10:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajCV2-0006jm-VW
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 22:09:01 +0100
+	id 1ajCWE-0007Uz-Ae
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 22:10:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751299AbcCXVI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 17:08:57 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:4864 "EHLO
-	smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751038AbcCXVI4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 17:08:56 -0400
-Received: from PhilipOakley ([92.22.6.252])
-	by smtp.talktalk.net with SMTP
-	id jCUtabcMcCrtejCUta9mYX; Thu, 24 Mar 2016 21:08:53 +0000
-X-Originating-IP: [92.22.6.252]
-X-Spam: 0
-X-OAuthority: v=2.1 cv=L/e9O7n8 c=1 sm=1 tr=0 a=L1JPMP/96Cd0ZXeOJ41CKA==:117
- a=L1JPMP/96Cd0ZXeOJ41CKA==:17 a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10
- a=s5jvgZ67dGcA:10 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8 a=xtxXYLxNAAAA:8
- a=zBK5yZjOAAAA:8 a=hKWDOzQ4MoXv2wer9D4A:9 a=wPNLvfGTeEIA:10
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfDh5G2tmghVLpmDc8Hc2MztYxdMr33lj4Mp9OJeYijfIEcw2NBau84VcHXyrZdlXsrnUYT4dTEPXvD4Xfwwi9pk42c3KVPYslSFfXEJ/+UxgrSMNQ6F/
- QQx5KpQFU+XNAgMKENYF+J85lKb/T3LrCQiH5AduFUPuboqKJtiuPXyFYQiOdV7s3iHgRr4soM2ArkOwJkyvLeJNu4R4Xb+f99Rn7ZHGcCajBBFUo4KhzxsZ
- A4VlRvLhUZusDPQ4ocFAoRk7j79+DqBlIVMEedrYXl/bEHXwL+3x5i9o4B9qFtPcN89KjAy0YVs9dlJMqbH+rj58IsCCg02BSBLzPDcTEko=
+	id S1751325AbcCXVKJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 17:10:09 -0400
+Received: from mout.web.de ([212.227.17.12]:51819 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751038AbcCXVKI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 17:10:08 -0400
+Received: from storm.fritz.box ([95.116.247.71]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0MWS3S-1aH6k332hW-00Xf2G; Thu, 24 Mar 2016 22:10:05
+ +0100
+X-Mailer: git-send-email 2.7.4
+X-Provags-ID: V03:K0:RddOT9+5GCgVZGsZNTl300qBA0z+Y4HvYKQIIeKBJoNx+4BzCDW
+ om2IaQ4/4R2PrNe/TCTNQwnYX75yssRMeyEPH7moa/fRJx7NWBmjSFQtQvdwACWSnO02gxp
+ dzGuUOSQcxoPOPfv52P7iD7BbNcUZsKuxUh4OFbfOu9VmDyzKc3SsDP40FZytxqLPVe1pVK
+ uVGJy6n5WncdPNfKu6ouQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:DxuBhSgbHuA=:V+ZklJX9CAKKZzo+ZsSZQ3
+ CbZGCrwnmgsdrc/vbo4/5bawvbDm44hQQuA/JdHRICfzwl/oYbZncsLlqsUWopUrfKOKF2ol4
+ WTfqurFGbmASLTzilYneHdz/uLBKBpRCo0LphC635BxSnKavKN4Uo/+JsCknXKpcAbDrJ1FzN
+ g2knWqINTl4DDpJ8fQI9E48cSW1VL+PxcS+DIkYrydrb3lPv6IqLvrX91hZqifN7vAET9VHlV
+ lskMLxER+CnxhH3eFcnT2Ky+jjADwAPx5572k3Q3wAlM/DfqB5wjziEPXfQ/GkxqeuTggdLa1
+ n2dBqx6jalH3tvltq5YZN9sBkOlHsSeaE3ADhcFS5W2AgQ4u5/0yvUe3PH8QuTj8wNNb6OkIr
+ maxGrhrG1ENU/3HtcBndZVBybG9SowTUX9OEMuN4fDRbVCn8uVHCWlfh/n9YYEF3PSiVj7yc1
+ utnFZLvLrzn6JwVuUesAH7J7agewdOJX2BDTTBs7dR4in8oqPkwU/u65V94JBmlfc1MZzzVPz
+ 943zs+tjnQFiSli72GpwTI6s/7hgqCBk+8Y3+vUmiBCp9GOrLAulEq94LhjwOosoioG8ChfyV
+ nf+kZl+5DYu36CUExPSkW97FXmc8s56T3KwMzrA2/NIbpsn7fThqEI7fdN77ycKKzlIZlDn8z
+ 4qepHDrcWIPSQfqZ3o6bYXL3B/jclJDW1EJYMUK1Zkn6YVsuUwX2OUN+uTcvd+HcjHWVXNdSK
+ y1/TW/40KURLxGVeTS7YQ+vjHhFKo4C6QYU2PhLsdDrTOYpLZALK8nwJaNw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289799>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> "Philip Oakley" <philipoakley@iee.org> writes:
->
->> From: "Junio C Hamano" <gitster@pobox.com>
->>>
->>>> If you clone a repository, and the connection drops, the next attempt
->>>> will have to start from scratch.  This can add significant time and
->>>> expense if you're on a low-bandwidth or metered connection trying to
->>>> clone something like Linux.
->>>
->>> For this particular issue, your friendly k.org administrator already
->>> has a solution.  Torvalds/linux.git is made into a bundle weekly
->>> with
->>>
->>>    $ git bundle create clone.bundle --all
->>>
->>> and the result placed on k.org CDN.  So low-bandwidth cloners can
->>> grab it over resumable http, clone from the bundle, and then fill
->>> the most recent part by fetching from k.org already.
->>
->> Isn't this use of '--all' a bit of oversharing?
->
-> Not for the exact use case mentioned; k.org administrator knows what
-> is in Linus's repository and is aware that there is no remote-tracking
-> branches or secret branches that may make the resulting bundle unsuitable
-> for priming a clone.
+Greetings,
 
-OK
->
->> " I also think "--all" is a bad advice for another reason.
->
-> I do not think it is a good advice for everybody, but the thing is,
-> what you are responding is not an advice.  It is just a statement of
-> a fact, what is already done, one of the existing practices that an
-> approach to "resumable clone" may want to help.
->
-I was picking up on the need, for others who maybe generating clone bundles, 
-that '--all' may not be the right thing for them, and that somewhere we 
-should record whatever is deemed the equivalent of the current clone 
-command. This would get away from the web examples which show '--all' as a 
-quick solution for bundling (I'm one of the offenders there).
+I hope it is not yet too late to jump on the Summer of Code bandwagon.
 
-If I understand the clone code, the  rev-list-args would be 
-"HEAD --branches". But I could well be wrong.
---
-Philip 
+I would appreciate comments on my application [1] and my microproject
+contribution, which will follow this mail as a reply.
+
+My proposal mostly stems from what was noted under "convert scripts to
+builtins" and "git rebase improvements" in the ideas page. Both list no mentor,
+so please let me know if you know anyone who should be mentioned in CC.
+
+Regards,
+XZS.
+
+
+[1]: https://docs.google.com/document/d/1-BV-s5VUGTvBlcVDeo6tVqQO5D1hqeQDqaf37iYuIfU/edit?usp=sharing
+-- 
+2.7.4
