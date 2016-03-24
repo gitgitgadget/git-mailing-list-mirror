@@ -1,71 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] completion: add 'revisions' and 'everyday' to 'git help'
-Date: Thu, 24 Mar 2016 14:45:32 -0700
-Message-ID: <xmqqmvpn7doj.fsf@gitster.mtv.corp.google.com>
-References: <1458844034-12855-1-git-send-email-ralf.thielow@gmail.com>
-	<1458844034-12855-3-git-send-email-ralf.thielow@gmail.com>
-	<xmqq7fgr8wqc.fsf@gitster.mtv.corp.google.com>
-	<B40A8BBB3787424787785220EA6BFCFE@PhilipOakley>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: What's cooking in git.git (Mar 2016, #04; Wed, 23)
+Date: Thu, 24 Mar 2016 21:47:20 -0000
+Organization: OPDS
+Message-ID: <171B6E119FCF4E5CBF2831F6A7A004EA@PhilipOakley>
+References: <xmqqpoukc30t.fsf@gitster.mtv.corp.google.com><54B6C1E1FE6A4BAEA07E97B7BA81EB01@PhilipOakley> <xmqqlh57am55.fsf@gitster.mtv.corp.google.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "Ralf Thielow" <ralf.thielow@gmail.com>, <git@vger.kernel.org>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Thu Mar 24 22:45:45 2016
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 24 22:47:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajD4W-0002rD-IN
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 22:45:40 +0100
+	id 1ajD6D-0003tA-As
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 22:47:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750831AbcCXVpg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 17:45:36 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:64643 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750752AbcCXVpf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 17:45:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2A6A34D0C4;
-	Thu, 24 Mar 2016 17:45:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xq1+LBvkzBsYdYC+OHO0mcTpWGs=; b=uRyRgV
-	a0tr9kun1wVMu6lQwHf8hcOraiyIMwtVuOFbjO8ACKBLL03XrYAvSqY3avkLcLab
-	zLNEu42l2hmTSQMxHXUzTJ7ceIPOZ7w0te67FwhghdE6lUTIrYzLPmlNj/qOPh24
-	9w4/5H1ADc1fuwyrNvyqZbE1nCT90ggIx/nMU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YXnC4yzm4hiAt1Sj7YiNBuJbu/GR0BCb
-	hPtBGZs+e/qbqqJE+D3vb2CHuJ67JTaf9Ye+sDcci1qfo38P9zVxBc4M2MnYPgav
-	2cvLIxt9/uR1xQEq1Q1NB4b7Gkzlsi9di6kWfCmSfR8Sz6cKN8bR/p61GOMJJafX
-	8BcSV+kBj5I=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 227044D0C3;
-	Thu, 24 Mar 2016 17:45:34 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9B5444D0C2;
-	Thu, 24 Mar 2016 17:45:33 -0400 (EDT)
-In-Reply-To: <B40A8BBB3787424787785220EA6BFCFE@PhilipOakley> (Philip Oakley's
-	message of "Thu, 24 Mar 2016 20:51:04 -0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BC8AC4CA-F209-11E5-84F0-EB7E6AB36C07-77302942!pb-smtp0.pobox.com
+	id S1750885AbcCXVrW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 17:47:22 -0400
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:56617 "EHLO
+	smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750794AbcCXVrU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 17:47:20 -0400
+Received: from PhilipOakley ([92.22.6.252])
+	by smtp.talktalk.net with SMTP
+	id jD66abhRlCrtejD66a9oTZ; Thu, 24 Mar 2016 21:47:18 +0000
+X-Originating-IP: [92.22.6.252]
+X-Spam: 0
+X-OAuthority: v=2.1 cv=L/e9O7n8 c=1 sm=1 tr=0 a=L1JPMP/96Cd0ZXeOJ41CKA==:117
+ a=L1JPMP/96Cd0ZXeOJ41CKA==:17 a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10
+ a=s5jvgZ67dGcA:10 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8 a=xtxXYLxNAAAA:8
+ a=9Hgr8xzUwl2K_1I22iQA:9 a=wPNLvfGTeEIA:10
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfKjRlvbM4oYoxpiJXw5TM4rWGVFj3IujR3nPHuFo4Gd3mj7lJYCTCoZ8dAp0PveRKL5IWSCWNBRzCB7xz3TbOcvKTOV75XpR8rbyDP9xx/E8Wu+PiQ6f
+ /SjW0Ixs8HWHwoXft9xh6M47crzPASGPW9/AOUliy2kdAKHLJC5mkZLeCejOxb8L9W29Ut+nJW8/tg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289806>
 
-"Philip Oakley" <philipoakley@iee.org> writes:
-
->> The first step may be to teach a new subcommand to "git help"
->> to show a list of these words, and then _git_help can use it to
->> lazily compute the list just like __git_commands does.
+From: "Junio C Hamano" <gitster@pobox.com>
+> "Philip Oakley" <philipoakley@iee.org> writes:
 >
-> 'git help -a' (or --all) already determines the list of commands
-> available, but then formats it prettily for user consumption. Maybe an
-> alternate --list option?
+>>>
+>>> The beginning of "split bundle", which could be one of the
+>>> ingredients to allow "git clone" traffic off of the core server
+>>> network to CDN.
+>>>
+>> ...
+>> Hi Junio,
+>>
+>> I think there may be a concept clash between the ideals of a
+>> sneakernet bundle' and the 'resumable clone'.
+>
+> Notice the "could" above ;-)
+>
+> Read the original thread and notice that the inclination is for the
+> first one the primary "clone priming" mechanism would likely to be a
+> packfile, not a bundle, even though use of "bundle" is not ruled out.
+>
+I'd seen the thread ($gmane/288380), and that it had developed toward a bare 
+pack-file.
 
-Yes, that is exactly what I meant.
+This was just clarifying that if a variant of the bundle format (# V3?) was 
+used, that it must, if the name was retained(*), still work as a sneakernet 
+transfer option. In that case the user would need to be told, or be able to 
+find out via (e.g.) the 'verify' sub-command, where the other half of the 
+split bundle (the pack) was located so that both halves could be copied for 
+sneakernet transfer.
+
+Then on reaching the destination, the user would need to appreciate where 
+the two halves are to go (side by side?), and the code would need a way of 
+knowing that it should use the local copy of the split pack, rather seeking 
+to transfer a fresh copy (which obviously fails in an air-gapped scenario).
+
+(*) Changing the user facing names for the new resumable transfers to avoid 
+the potential user confusion is a simple solution, which could just be a 
+tweak to the final patch 4/4 c34c9a9db65 "bundle v3: the beginning". Perhaps 
+explicitly use "split-bundle", though choosing a good alternative isn't easy 
+;-)
+
+As you say that all could become academic if the independent pack transfer 
+works as a better resumable clone.
+
+--
+
+Philip
