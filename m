@@ -1,145 +1,84 @@
-From: XZS <d.f.fischer@web.de>
-Subject: [PATCH/GSoC] add a add.patch config variable
-Date: Thu, 24 Mar 2016 22:09:47 +0100
-Message-ID: <1458853787-29807-2-git-send-email-d.f.fischer@web.de>
-References: <1458853787-29807-1-git-send-email-d.f.fischer@web.de>
-Cc: XZS <d.f.fischer@web.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 24 22:10:15 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC_PATCHv4 5/7] submodule update: respect submodule.actionOnLabel
+Date: Thu, 24 Mar 2016 14:14:12 -0700
+Message-ID: <xmqq37rf8tp7.fsf@gitster.mtv.corp.google.com>
+References: <1458612372-10966-1-git-send-email-sbeller@google.com>
+	<1458612372-10966-6-git-send-email-sbeller@google.com>
+	<xmqq37rif870.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kaEmDFDf+1BZV1C5ETswbXmAUYk_OMsZf_ka6tJ=pfwcQ@mail.gmail.com>
+	<xmqqlh58bun7.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kZCHv6z6zT2Q2MzMNXfGWcqk9uxsqQ-uEjAPw3h+cSjsQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Mar 24 22:14:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajCWE-0007Uz-SX
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 22:10:15 +0100
+	id 1ajCaD-0001To-9Z
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 22:14:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751338AbcCXVKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 17:10:12 -0400
-Received: from mout.web.de ([212.227.17.12]:51549 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751132AbcCXVKI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 17:10:08 -0400
-Received: from storm.fritz.box ([95.116.247.71]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0LlniO-1aA8kP3xdw-00ZLu6; Thu, 24 Mar 2016 22:10:06
- +0100
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1458853787-29807-1-git-send-email-d.f.fischer@web.de>
-X-Provags-ID: V03:K0:JjQGJH23t2YSFnqMqKNEmWeEboBukta3CRCBXOY40hUWOnvnlRc
- KrhS7BezyZ4GsLvLA15/qvdyVNv2ZfD+3kTUGGMo7ra9BmRoJWGKhZ7PLufSa99CL/43Rxx
- fuJ65RPiB2m1JqL+yQXqt66XtS3D6VXstSa9P2ugT5XHgwZpRJenHo8yWCg07Za7M1Tmx6p
- gTMiC8bPB9M5fv7DGaY2Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:EogrM90F4wI=:E/ksiRF7Pjcec7kkIgcu2m
- NtAZNDeB1ofnVruAbECRZL0rse6vDoTLxXibCtp7PJhYw18POrqRh6tHYwdjlueFAC3HcEIs4
- BMtHW/LfrZodEyFdwPEsjWD+dYusqVq4ismMTLxiVbhx6eCaNs8SJUtbfsNX0vXY1o74okZig
- Us2FAt9OJIcbwvGa5btOvt44KSPmRR37eBjtVdy8mYJYzSi2UKv2CBetzF46utMokG/q0O+Oj
- +e6rg2ZedIDURzyzCi41u8BzcwxgZvlDqsxLHrMDrGZmlesSwMqmUY48u4JJNzT1po15zormH
- /h0CWcpohVd98htCLQnTbXyHYJgUXl55vhQmMymMtYb26IkiWkP8FdEiPbu0S4Ul4G0obPBlj
- wT4LtvghPIwDgjl1kcS/bCJWmjdC1lTkwSMXGoIdY8NtucoRRKMBtIJQyf1ypiL0ssiMbfAU9
- I7PXK513y1Gdip+213bd59q/9TaabboxG+aRKpIaivTuNd5UFlv3GayOrA6em/KNuiycsVsmm
- P7x+/KFyApZjJ3LusMXoUBuqwcSAbu1rOo0nFm6TfduFuOwLE8emufOQpuGprBHsNYvcGXpmm
- qHXkQ6kGPZ2C/BYb8MiFm+PUcU+eWvLNygoWDqkNs9H3MhksJXKC/4TSISatbwCoC7wrnUl1s
- JcrsxBVVgF8uN+4ROQ+pFpujd4dnq4xPTaKsvASETVLbzykIKNLECfPnprQZADvdwK4CSWIFF
- /XruLz8jDZCuvO12+03iQ6MQQJbXu6H2Ss9bScYhmjIJVrjY88Lx2iDmuiA=
+	id S1751252AbcCXVOR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 17:14:17 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:62724 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751038AbcCXVOQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 17:14:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id CA16F4E895;
+	Thu, 24 Mar 2016 17:14:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gBe56fwn5c+jg/ROZTAhYNIdn0I=; b=iTfItS
+	NlWu7RQ0H01DAzDJ5UpGf39YLZQpRlAKQp4onMqmjDDd89vEDrx1GtyB3VuPRfNb
+	YDZN5pLOTq0BdFbpFOfRe3epTQOTLqA9aDp1pEzQf7OSkIQRWgOugv/6kM/kv+qV
+	FCHTnwkeoN+e1QKFhKvH3UCqnjNWk+ZPnCqeQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xC2Lz2QuuVbiiGJnUCndff5hywidmzg+
+	Qk3YUoWMYxbKkhD7cMX/ruE8a3ySuC7TjbRcvQ0A0sNwmmXc7sb4vUnSexPpvRWF
+	TbiMSWNvsDPtChwgIZp0bsFXaR3pXdzQmEawJCgDK55ajBV3RCe9YNljSfxsu2Q7
+	unPE98M0dEw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C1B334E894;
+	Thu, 24 Mar 2016 17:14:14 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 492E24E893;
+	Thu, 24 Mar 2016 17:14:14 -0400 (EDT)
+In-Reply-To: <CAGZ79kZCHv6z6zT2Q2MzMNXfGWcqk9uxsqQ-uEjAPw3h+cSjsQ@mail.gmail.com>
+	(Stefan Beller's message of "Thu, 24 Mar 2016 12:54:05 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 5C5E9B0C-F205-11E5-8C9C-EB7E6AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289801>
 
-Users may like to review their changes when staging by default. It is
-also a convenient safety feature for beginners nudging them to have a
-second look at their changes when composing a commit.
+Stefan Beller <sbeller@google.com> writes:
 
-To this end, the config variable allows to have git-add to always act
-like -p was passed.
+> Maybe we can revive the term "group" and call it submodule.defaultGroup.
+> The defaultGroup is defined by selection of names, paths and labels.
 
-Signed-off-by: XZS <d.f.fischer@web.de>
----
-The list of microproject suggestions for the Summer of Code 2016 proposed to
-"add configuration options for some commonly used command-line options", so I
-added a configuraion variable for an option I use all the time.
+There are many ways to specify one or more of submodules:
 
- Documentation/config.txt               | 5 +++++
- Documentation/git-add.txt              | 3 +++
- builtin/add.c                          | 3 +++
- contrib/completion/git-completion.bash | 1 +
- t/t3701-add-interactive.sh             | 9 +++++++++
- 5 files changed, 21 insertions(+)
+ - By giving "pathspecs", you would choose submodules whose paths
+   match them;
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 2cd6bdd..614c599 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -752,6 +752,11 @@ add.ignore-errors (deprecated)::
- 	as it does not follow the usual naming convention for configuration
- 	variables.
- 
-+add.patch::
-+	Configures 'git add' to always interactively choose hunks, hinting the
-+	user to review changes before staging.  This is equivalent to adding the
-+	'--patch' option to linkgit:git-add[1].
-+
- alias.*::
- 	Command aliases for the linkgit:git[1] command wrapper - e.g.
- 	after defining "alias.last = cat-file commit HEAD", the invocation
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index 6a96a66..cdb6663 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -92,6 +92,9 @@ OPTIONS
- This effectively runs `add --interactive`, but bypasses the
- initial command menu and directly jumps to the `patch` subcommand.
- See ``Interactive mode'' for details.
-++
-+The configuration variable `add.patch` can be set to true to make
-+this the default behaviour.
- 
- -e::
- --edit::
-diff --git a/builtin/add.c b/builtin/add.c
-index 145f06e..04f8b5e 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -272,6 +272,9 @@ static int add_config(const char *var, const char *value, void *cb)
- 	    !strcmp(var, "add.ignore-errors")) {
- 		ignore_add_errors = git_config_bool(var, value);
- 		return 0;
-+	} else if (!strcmp(var, "add.patch")) {
-+		patch_interactive = git_config_bool(var, value);
-+		return 0;
- 	}
- 	return git_default_config(var, value, cb);
- }
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index e3918c8..597d20f 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1969,6 +1969,7 @@ _git_config ()
- 	esac
- 	__gitcomp "
- 		add.ignoreErrors
-+		add.patch
- 		advice.commitBeforeMerge
- 		advice.detachedHead
- 		advice.implicitIdentity
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index deae948..25e4b2e 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -380,4 +380,13 @@ test_expect_success 'patch mode ignores unmerged entries' '
- 	test_cmp expected diff
- '
- 
-+test_expect_success 'patch mode can be activated per option' '
-+  git config add.patch true &&
-+  git reset --hard &&
-+  echo change >test &&
-+  echo y | git add -p > output &&
-+  cat output &&
-+  grep "Stage this hunk \[y,n,q,a,d,/,e,?\]?" output
-+'
-+
- test_done
--- 
-2.7.4
+ - By giving one or more "names", you would choose the submodule
+   with one of these names; or
+
+ - By giving one or more "labels", you would choose submodules that
+   have one of these labels.
+
+It is perfectly fine to call the chosen set of submodules "group of
+submodules".  It does not have any connotation on what is to be done
+about the group, so that is probably the best word suggested so far
+in the thread.
