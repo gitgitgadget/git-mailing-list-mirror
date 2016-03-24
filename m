@@ -1,70 +1,66 @@
-From: Motroni Igor <motroniii@gmail.com>
-Subject: [PATCH 0/2] GSoC student
-Date: Thu, 24 Mar 2016 22:41:07 +0300
-Message-ID: <1458848469-12663-1-git-send-email-motroniii@gmail.com>
-Cc: Motroni Igor <motroniii@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 24 20:41:30 2016
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v7 17/33] refs: make lock generic
+Date: Thu, 24 Mar 2016 20:45:01 +0100
+Message-ID: <56F443BD.1030100@alum.mit.edu>
+References: <1456793586-22082-1-git-send-email-dturner@twopensource.com>
+ <1456793586-22082-18-git-send-email-dturner@twopensource.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
+	peff@peff.net, pclouds@gmail.com
+X-From: git-owner@vger.kernel.org Thu Mar 24 20:45:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajB8E-0005OT-2W
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 20:41:22 +0100
+	id 1ajBBw-0007eI-GK
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 20:45:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751399AbcCXTlR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 15:41:17 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:33575 "EHLO
-	mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751136AbcCXTlQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 15:41:16 -0400
-Received: by mail-lf0-f66.google.com with SMTP id w7so4633025lfd.0
-        for <git@vger.kernel.org>; Thu, 24 Mar 2016 12:41:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=v7u+19FeNiAJap28SLRLQOdu7MfRdyeeVvlX7GcvF14=;
-        b=k9VY4R837bo74y/dNSvZJuamkOF7fHsjwP/eIMy63rHWXh5FjMX10RYpdIL0DadJTH
-         sq1Vn1SU9ppICjx3Q7CBbjH+GYbwFs+EtuaxYpn6jO///DGmHEf694joQMY+/oSOnXtz
-         3fbSB1uEw25K3ioVHC5o62GzcXAiQTj6PHHmlZqvzOJUIWpIs6w0oh5xrZ/+mAyHQlwR
-         KoTiadzrpU3GP1mW+1T+EfrwvbqvVFXwQpSXUbQYtaWU0KTSabYS4XsK1+OnrCcaSP3Q
-         PAXFAYmrZfORwZAv2VqPiFW6yzrwjMUM2TfupBNv/CA+0X1pvO1/OBt+6JMzM59+62q7
-         N+Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=v7u+19FeNiAJap28SLRLQOdu7MfRdyeeVvlX7GcvF14=;
-        b=GfJ5ttcH4T092Xi+enfOc0/mslLeFW7hHn9NBy6z8LgNsCT5EokEXnNn6v63+DVm+b
-         RD7OK78RQocWEA5Nq+sbNKgEw4NTDyLlY9M3muy8r3Asp0nYdv5wpBZlCHcQbQCjkiTl
-         VWbxaLbDe3p3+bAWzvn3dxMXhYAAoABb8ijxdgszAf8mAfg72cZGPkdg03ElopYjgBvU
-         sf0cy0lwC28zy7Edq9MqWbLO0WN4dVM6KHs+AslAC3sK1pEiE1EMDALfU6I/4fnQn4Rz
-         rqsDF0QCxllS91ykqKD+Oa1Ym/mXIjPIS0O6h5nsg47oTBk97H7nY/CbTKtmnHkSRSe2
-         M+YQ==
-X-Gm-Message-State: AD7BkJJQVuJpWpGq+JE3Eg9bBtNRZzJqq4pzWmyLtrGgvYCHHfMuEaOTLv0xYeBYR8/ACA==
-X-Received: by 10.25.16.90 with SMTP id f87mr3669091lfi.18.1458848474419;
-        Thu, 24 Mar 2016 12:41:14 -0700 (PDT)
-Received: from localhost.localdomain (ppp91-76-147-218.pppoe.mtu-net.ru. [91.76.147.218])
-        by smtp.gmail.com with ESMTPSA id i8sm1390220lbj.30.2016.03.24.12.41.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 24 Mar 2016 12:41:13 -0700 (PDT)
-X-Mailer: git-send-email 2.5.0
+	id S1751035AbcCXTpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 15:45:08 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:43748 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750870AbcCXTpG (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2016 15:45:06 -0400
+X-AuditID: 1207440e-c03ff70000000398-26-56f443c086cb
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id 9D.EF.00920.0C344F65; Thu, 24 Mar 2016 15:45:04 -0400 (EDT)
+Received: from [192.168.69.130] (p548D66F7.dip0.t-ipconnect.de [84.141.102.247])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u2OJj1rp012917
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 24 Mar 2016 15:45:03 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.7.0
+In-Reply-To: <1456793586-22082-18-git-send-email-dturner@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKKsWRmVeSWpSXmKPExsUixO6iqHvA+UuYweuPchbzN51gtOi60s1k
+	0dB7hdmie8pbRosfLT3MDqweO2fdZfd41ruH0ePiJWWPBc/vs3t83iQXwBrFbZOUWFIWnJme
+	p2+XwJ1xdv5KpoJPTBUdu/8zNjCuYupi5OSQEDCRWHJ6OVsXIxeHkMBWRonlj9sYQRJCAheY
+	JC6tSASxhQVMJa79+cwCYosIZEvM+XSOFaKhg1Fiwp9LrCAJZgE1ifZNU8BsNgFdiUU9zWAb
+	eAW0JU6+nwUWZxFQlfh2aSXYIFGBEIlt676xQtQISpyc+QQszingJdH4ooUZYqaexI7rv6Dm
+	y0tsfzuHeQIj/ywkLbOQlM1CUraAkXkVo1xiTmmubm5iZk5xarJucXJiXl5qka6xXm5miV5q
+	SukmRkgw8+1gbF8vc4hRgINRiYe3keNzmBBrYllxZe4hRkkOJiVR3iNWX8KE+JLyUyozEosz
+	4otKc1KLDzFKcDArifBuUwfK8aYkVlalFuXDpKQ5WJTEedWWqPsJCaQnlqRmp6YWpBbBZGU4
+	OJQkeJdbAjUKFqWmp1akZeaUIKSZODhBhnNJiRSn5qWkFiWWlmTEg2IyvhgYlSApHqC9s+1A
+	9hYXJOYCRSFaTzHqciz4cXstkxBLXn5eqpQ473wLoCIBkKKM0jy4FbDU9YpRHOhjYV5ea6Aq
+	HmDag5v0CmgJE9CShT6fQJaUJCKkpBoY19zKvBA9n7VfRzL534VVoV/+8Wfftl/6O5x51apl
+	AZfefeQ57SsYtEn399prP7nvFnEviFv+/XNF2uSSp269Oxbd+WY1IXCmlOW+MIXb 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289788>
 
- Hi! My name is Motroni Igor and I'm a Russian student who wants to apply for the GSoC developing some cool stuff for Git. As a microproject, I've made two little changes in my Git fork.
+On 03/01/2016 01:52 AM, David Turner wrote:
+> Instead of using a files-backend-specific struct ref_lock, the generic
+> ref_transaction struct should provide a void pointer that backends can use
+> for their own lock data.
 
-  Modified flag field type in rev_list_info struct in bisect.h. There is
-    no need for flag field to be signed, as it is not supposed to be
-    used as decimal.
-  Just a minor commit to trigger Travis Ci build
+Aside from the comments I've already mentioned, I've checked the patches
+up to and including this one and they look fine to me.
 
- bisect.h | 2 +-
- notes.c  | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
-
--- 
-2.5.0
+Michael
