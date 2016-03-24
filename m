@@ -1,81 +1,74 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v7 14/33] refs: add methods to init refs db
-Date: Thu, 24 Mar 2016 14:04:55 -0400
-Organization: Twitter
-Message-ID: <1458842695.28595.11.camel@twopensource.com>
-References: <1456793586-22082-1-git-send-email-dturner@twopensource.com>
-	 <1456793586-22082-15-git-send-email-dturner@twopensource.com>
-	 <56F3972C.7020901@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/5] Expanding tabs in "git log" output
+Date: Thu, 24 Mar 2016 11:22:05 -0700
+Message-ID: <xmqqmvpn91o2.fsf@gitster.mtv.corp.google.com>
+References: <xmqq7fh0s5l7.fsf@gitster.mtv.corp.google.com>
+	<1458775426-2215-1-git-send-email-gitster@pobox.com>
+	<56F391A4.6090603@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	peff@peff.net, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Thu Mar 24 19:05:04 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Mar 24 19:22:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aj9d1-0000x9-VS
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 19:05:04 +0100
+	id 1aj9tm-00069W-BE
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 19:22:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751283AbcCXSE7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 14:04:59 -0400
-Received: from mail-qg0-f45.google.com ([209.85.192.45]:33455 "EHLO
-	mail-qg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750865AbcCXSE6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 14:04:58 -0400
-Received: by mail-qg0-f45.google.com with SMTP id j35so44777903qge.0
-        for <git@vger.kernel.org>; Thu, 24 Mar 2016 11:04:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:mime-version:content-transfer-encoding;
-        bh=qDHKt78cfvd4vUZVRewIQ1rpJXGtQZA2W1W6NpdioFk=;
-        b=NdoiZHJXfkzdoFZE1Wx5b8AvQey02/WzNGcUf8FyT4dGC5tqqNlHaGMQcW9gdJAS9l
-         dBgXOAnZ6PH9r1KN8Xjy7IUin/2aOETmEZLc7U5zuRgUMlV9GNqF729YJJexoSUMNkuf
-         j7O/ge2P1dMLhtw2o7eQH2bZaWeU4B9HlnxH2arFdFZUU3QUBZdD4ZWkTeB4t04jowIp
-         Y8PtoafqKm/rYC+7c0J2L/tg88VRFAebhZsCuH7F9Pwv1o7TQqWAZi2t1frmEAL3Rb54
-         hnxzTqLe/gD7ZCsI8OALcUGwclVm93/MmXgLs0awiH2NNsnCTY3QQ6/pu5aHWlKq08Cf
-         Ps4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=qDHKt78cfvd4vUZVRewIQ1rpJXGtQZA2W1W6NpdioFk=;
-        b=l4bT9uji4b7T13LTcpHNcq8wmaPWbtCZsDSNOCY0fttdsQK5buG54QRn+wkUGcSmus
-         RDxuU93veoS/aAYgJ4ckOUuFLFIJCnpJjMky3UhhkiAMVN3ycC8pBXlAtfN+uCgRLkyR
-         go8x+ahrrZKQBMOe+Gc586K83LBk6CjpEf5myrIqHzZmjZB2ld2b2HxXGnT0kvdAJHyl
-         GKMj2f7Edn01tnISBnQCQ05Oiq6jg6fJxB8rBerPX9NLl8vsYUjnfCnZG7yewTH0sHZc
-         Y7eD3rHWLbHuSfg1o0H+3jzZDzcaxE01biKUtegihMC3Fp6gZ+1/rfDYca5GAqbHRueG
-         AxYw==
-X-Gm-Message-State: AD7BkJLFDAPpNrPyWqxRPjylSOFwpBwS47MkqzZjgd0KxOh6E3ykIOHrGDyrGlYXn1UH4A==
-X-Received: by 10.140.95.117 with SMTP id h108mr12162272qge.65.1458842697181;
-        Thu, 24 Mar 2016 11:04:57 -0700 (PDT)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id f78sm3745920qge.8.2016.03.24.11.04.56
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 24 Mar 2016 11:04:56 -0700 (PDT)
-In-Reply-To: <56F3972C.7020901@alum.mit.edu>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S1752466AbcCXSWP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Mar 2016 14:22:15 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:57559 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752365AbcCXSWM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2016 14:22:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BC1234B8B1;
+	Thu, 24 Mar 2016 14:22:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=a6lE7j76gy3z
+	Pi5xRtS2LCop7ns=; b=mZyf4RB5l+c2Y1upKuWEfRLDV1GIGBFWQu+ZoZizYd0l
+	OjjEY20ZCcnITMC+b/Sz6f88zTWs8Do51iymBNj8Jtm7ZPopC3eNtI5fsK52UIXe
+	jRMzOnaD9k1a6tGpObhG3uyNTsNeqvQL97e7sRE49aLwD2Ij5HPwnSbuSGqMTrY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=UIO60p
+	p1fH4KuAmYuKSzC2TiSS56ILc9oyigyw2HsDZauAbjB376azKi+VI9TfWEJmPhFv
+	wv03n+zJG9vWW9bklTP/AtGbiXtSNiBEebDMV4Hu5wC0QFa48MeO0/vrDCrsNpim
+	oQU+ZyIbA9tRjDfT73Sj8cJVKESZNZ7yRubkU=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A5CD34B8AF;
+	Thu, 24 Mar 2016 14:22:09 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 685A64B874;
+	Thu, 24 Mar 2016 14:22:07 -0400 (EDT)
+In-Reply-To: <56F391A4.6090603@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Thu, 24 Mar 2016 08:05:09 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 511EB546-F1ED-11E5-94A8-EB7E6AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289779>
 
-On Thu, 2016-03-24 at 08:28 +0100, Michael Haggerty wrote:
-> >  	if (shared_repository) {
-> >  		adjust_shared_perm(get_git_dir());
-> > -		adjust_shared_perm(git_path_buf(&buf, "refs"));
-> 
-> Given that this function is creating the "refs" directory, it seems
-> like
-> adjust_shared_perm() should be called for it here, too (rather than
-> in
-> the backend-specific code).
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
+> Would it make sense to have
+> git log --tab-size=3D8
+> (or similar)
+>
+> and add a config variable like
+> git config ui.logtabsize
+> which is 0 by default to get the old handling and 8 for the new one ?
 
-Good point.
+That may be a good approach (I agree with you that --tab-size is not
+the best name).  Want to try it as a replacement?
