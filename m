@@ -1,191 +1,91 @@
-From: elena petrashen <elena.petrashen@gmail.com>
-Subject: Re: [PATCH v2] branch -D: allow - as abbreviation of '@{-1}'
-Date: Thu, 24 Mar 2016 16:00:04 +0300
-Message-ID: <CAJPOeMdB+3fKa93cbcJRRA6CHg1C4reEZt_sVwv=2qCWfoHATw@mail.gmail.com>
-References: <1458635056-26633-1-git-send-email-elena.petrashen@gmail.com> <xmqq1t72jvac.fsf@gitster.mtv.corp.google.com>
+From: Stanislav Kolotinskiy <stanislav@assembla.com>
+Subject: Re: [PATCH] git-send-pack: Fix --all option when used with directory
+Date: Thu, 24 Mar 2016 15:57:59 +0200
+Message-ID: <56F3F267.30900@assembla.com>
+References: <1458750262-25765-1-git-send-email-stanislav@assembla.com>
+ <20160323212213.GA19920@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, sunshine@sunshineco.com,
-	Matthieu.Moy@grenoble-inp.fr, sbeller@google.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 24 14:01:21 2016
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Dave Borowitz <dborowitz@google.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 24 14:58:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aj4t1-0007Sn-Vb
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 14:01:16 +0100
+	id 1aj5mN-0000gk-4X
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 14:58:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757568AbcCXNAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 09:00:49 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:35106 "EHLO
-	mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757547AbcCXNAk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 09:00:40 -0400
-Received: by mail-qk0-f195.google.com with SMTP id s5so1969177qkd.2
-        for <git@vger.kernel.org>; Thu, 24 Mar 2016 06:00:34 -0700 (PDT)
+	id S1751928AbcCXN6W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 09:58:22 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:32979 "EHLO
+	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750778AbcCXN6W (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 09:58:22 -0400
+Received: by mail-wm0-f46.google.com with SMTP id l68so275804860wml.0
+        for <git@vger.kernel.org>; Thu, 24 Mar 2016 06:58:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=GjKJz/RZ1cySOUlO2qE58O+EQ8ugwjdhmfZe611pHug=;
-        b=od/MxPkv25TwA+CAx1qq0hUv/mg92rE/ZRVDdbzbLWYzNVr753lv93Zg6fql/0vdJf
-         lG6aOih+Sy0Oto0PLiFY8WhDuCg7ptaCYIwNR4XxDb+8ZzFelSVm2dQ4zUilqh4nFSYS
-         vf9+Sgo84DN2HgszDu2TMq0eWwjemMOY7nRBZOXj3iEF/GWX7CKfT8gemtMaYPGFYReY
-         biu0rUGQsy0u938DEonjQjjXADkc4KL1AszAVf6MaPb+a8rQEbN9DcX2vMI4zSUPoNjB
-         UjncfWgxcxLTvam74uGmeFZBKrgKxExvLj7iaxtba3SE49cq4R0+wDS0NAi88xN8d7ib
-         twJQ==
+        d=assembla-com.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=9R1f4uiKQ57vdXCRyNewTdc+41VaikOQU8x111tTidA=;
+        b=FFr9DEYKgclqXaHhJjHDRGs1ZJ2nAbVvmIerK2D1XnmTYSNb8rR/5UxoBoB+22aj42
+         Ay5oi5znxGj7LJxIPTxFwsTUkT3OKwfJvMu0UkulbxN65D5Kl9vUmZgXjvOhZSopHoeT
+         PYv/xzEw12YUc11gjyzN13D6dqZvpMSw8O1Uc36ZTZ2Al01gsP95JyAywNM3muJebWLJ
+         F+Q2bb2o1V3faugaZ25pMs4Iz7cqdMuGJtjepQ7TJ9pqiVqU6/DBnNC7UPkkFbUauLhh
+         bmVs8GywFnGnIYtpAkrrIG01TtwPDDgr/ujRvS8tEE5qehpWeer9t1aKjdTutfcxkqC2
+         chIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=GjKJz/RZ1cySOUlO2qE58O+EQ8ugwjdhmfZe611pHug=;
-        b=ImHV7UMCBgtzA2zFutr5MPBoKh/SpMiGjQreX3mjol2LufopWEwCF0J8WH/TiuFK0C
-         DRzPpi754D2H+dm2BMlMRL2Oq7Luk5OEn80EcT4sXOAxx0jXmUo7pFsmsLUfzh9GF+MR
-         e9sGZOh9wmAPU9q1DvRyORHttq14rjv2eh5uGH9TAGz51oGmRYuiCLE623PnS2cB/bJ+
-         J+lZJmY0VZ2qFNejsUUfeqO1rY6QNVsmoMBiGc8zLJKVRcBUEOAcwZQpz/wktjcRjOGH
-         yZCPp8UIPFM++dy4lGjqfoUYWCbzSxA/q+PPKArCchReNR/LLzkjyuGFH8jfWlsLuHjr
-         mw4g==
-X-Gm-Message-State: AD7BkJIeHSLEFzjupMdVxIa4pgGR+J3PIhZcyOAizFs3GAIZMKf4h5oJw2+r2LA5ZDARWqXixWq7jILXLSYMIQ==
-X-Received: by 10.55.73.6 with SMTP id w6mr10174495qka.82.1458824433678; Thu,
- 24 Mar 2016 06:00:33 -0700 (PDT)
-Received: by 10.233.223.4 with HTTP; Thu, 24 Mar 2016 06:00:04 -0700 (PDT)
-In-Reply-To: <xmqq1t72jvac.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=9R1f4uiKQ57vdXCRyNewTdc+41VaikOQU8x111tTidA=;
+        b=NcCeuWvUPRf4A1H8Ug4FX6G7rNnGsfN7/vt9e7x3bw9x+ujH8cJPeMLDnVoxhkvFwU
+         Jmma0C/kzZS0C91tjwJHog1z8G852XmkttcY1LIejsSr59W46Am9yxT58vF63vrAYiqT
+         outZ+qt8voYrTc80ZTZWwippkDImxqgWk1g04DZm0XDGeLcI/QfMiKwuLY+JzdsiGu+v
+         g48Mx/hWlTwcrs0D8/gDIGALtILIY5+9xM6NunBGBPW1JSTf372pV6XXhYc2NljfdRj1
+         uWAiA9DlxZQ1i6fNwO2BsXc1O/zckTISFrtnlnLr58GOcQ7x64Rt/aP8kQWKeiLZ4q3a
+         42mg==
+X-Gm-Message-State: AD7BkJI8wLO5xHloyTke82McvpWPO2k34l8w/cTv9rzr/hj5BPSXajcgKqy0sQKXfzTxOw==
+X-Received: by 10.28.55.74 with SMTP id e71mr34592014wma.26.1458827881456;
+        Thu, 24 Mar 2016 06:58:01 -0700 (PDT)
+Received: from [192.168.88.127] ([217.26.172.139])
+        by smtp.googlemail.com with ESMTPSA id t8sm7490502wjy.41.2016.03.24.06.57.59
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 24 Mar 2016 06:58:00 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <20160323212213.GA19920@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289745>
 
-On Tue, Mar 22, 2016 at 8:07 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Elena Petrashen <elena.petrashen@gmail.com> writes:
->
->> +static int expand_dash_shortcut(const char **argv, int dash_position)
->> +{
->> +     if (!strcmp(argv[dash_position], "-")){
->> +             argv[dash_position] = "@{-1}";
->> +             return 1;
->> +     }
->> +     return 0;
->> +}
->>       int i;
->>       int ret = 0;
->> +     int dash_shortcut = 0;
->>       int remote_branch = 0;
->>       struct strbuf bname = STRBUF_INIT;
->>
->> @@ -213,7 +223,8 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->>       for (i = 0; i < argc; i++, strbuf_release(&bname)) {
->>               const char *target;
->>               int flags = 0;
->> -
->> +             if (expand_dash_shortcut (argv, i))
->> +                     dash_shortcut = 1;
->>               strbuf_branchname(&bname, argv[i]);
->
-> I think this code special cases "-" too much.  Have you considered
-> doing this without "dash_shortcut" variable?  With that variable,
-> your code says "there is no previous" when the user says "-", but
-> isn't that message also appropriate when she says "@{-1}" on the
-> command line?  Furthermore, wouldn't the same apply to the case in
-> which she said "@{-4}"?
->
-> I suspect that you can check that condition immediately after
-> calling expand-dash-shortcut and then strbuf-branchname, in other
-> words, right here.  And if there is not enough branch switches, you
-> can say something like "you gave me @{-4} but you haven't made that
-> many branch switches" and continue the loop.
->
-> I _think_ strbuf_branchname() leaves "@{-<N>}" when you do not have
-> enough branch switches in the reflog, so perhaps
->
->         strbuf_branchname(&bname, (!strcmp(argv[i], "-") ? "@{-1}" : argv[i]));
->         if (starts_with(bname.buf, "@{-")) {
->                 ... say "you do not have enough branch switches" here.
->                 ... when adjusting the message to end-user input,
->                 ... you can look at argv[i] to notice that the original
->                 ... input was "-".
->                 error(...);
->                 continue;
->         }
->
-> or something?
->
-> That way, there is no change necessary below this line, i.e. from
-> here...
->
->>               if (kinds == FILTER_REFS_BRANCHES && !strcmp(head, bname.buf)) {
->>                       error(_("Cannot delete the branch '%s' "
->> @@ -231,9 +242,12 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->>                                           | RESOLVE_REF_ALLOW_BAD_NAME,
->>                                           sha1, &flags);
->>               if (!target) {
->> -                     error(remote_branch
->> -                           ? _("remote-tracking branch '%s' not found.")
->> -                           : _("branch '%s' not found."), bname.buf);
->> +                     error(dash_shortcut
->> +                             ? _("There is no previous branch that could be"
->> +                                     " referred to at the moment.")
->> +                             : remote_branch
->> +                                     ? _("remote-tracking branch '%s' not found.")
->> +                                     : _("branch '%s' not found."), bname.buf);
->>                       ret = 1;
->>                       continue;
->>               }
->> @@ -262,6 +276,10 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->>                              (flags & REF_ISBROKEN) ? "broken"
->>                              : (flags & REF_ISSYMREF) ? target
->>                              : find_unique_abbrev(sha1, DEFAULT_ABBREV));
+On 23/03/16 23:22, Jeff King wrote:
+> Not that it matters for this bug, but for my own curiosity, what do you
+> use "send-pack --all" for? I've generally assumed that nobody directly
+> calls send-pack themselves these days, but of course we have no data to
+> support that either way. So I am always interested to hear about unusual
+> use cases.
+Well, here at Assembla we're using send-pack --all for creating forks
+from repos in a quick and efficient way.
+> The tests are roughly grouped by functionality. send-pack tests are in
+> the t540x range, and this should probably go there. Though I also
+> suspect it could easily be added to the end of an existing test script,
+> which is preferable.
+I'm not really comfortable (yet) with git tests, so thanks for pointing 
+to that.
+I did see t5400, but thought that bug fixes should bring their own, 
+separate,
+test files. Also, thanks for all the explanations and for the adaptation 
+of my
+test to a way better version!
 
-Right, thank you for the idea and the detailed explanation! I will try
-to implement the "not enough switches" message for the v3 version
-of the patch the, along with the necessary style corrections that
-Matthieu pointed out above.
+I'm going to update the patch and will send another version. Thanks again!
 
->
-> ... to here.
->
->
->> +                     if (dash_shortcut == 1)
->> +                            printf( _("\nIf that happened by mistake, you may want to restore"
->> +                             " it with:\n\ngit branch %s %s\n"), bname.buf,
->> +                             find_unique_abbrev(sha1, DEFAULT_ABBREV));
->
-> This change can be justified only if we believe that people who say
->
->     $ git branch -D -
->
-> by mistake are much less clueful than those who say
->
->     $ git branch -D @{-1}
->     $ git branch -D a-misspelled-branch-name
->
-> by mistake and need extra help recovering.  Is there an evidence to
-> support such an assumption?
-
-I'd think it's a little bit more likely to be the "I thought the
-previous branch is "foo" but turns out it's "bar" which I didn't
-mean to delete" case for -/@{-1}. case, then just misspelling.
-The idea of the warning message was brought up because of
-this I think? If we allow deleting via - or even @{-1}, which is
-currently possible, it might make sense to additionally enable
-the user to recover if she deleted the wrong branch instead of
-the required one.
-
->
-> I would actually understand it if this were more like
->
->         if (advice_mistaken_branch_deletion)
->                 printf(_("If you deleted the branch by mistake, you can..."));
->
-> so that everybody who ran "git branch -D" on a (wrong) branch by
-> mistake can get the extra help.
-
-Would you think this is actually a welcome addition - a (suppressable)
-warning for every type of deletion, regardless of whether the shortcuts
-are used? There seems to be quite a lot of topics in google where people
-are asking how to restore a branch they accidentally deleted. Or that
-would be not really consistent with the other situations when people can
-delete something (like reset a commit), and they are not immediately
-told how can they remedy a situation if that was a mistake?
+--
+Regards,
+Stanislav
