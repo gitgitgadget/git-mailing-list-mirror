@@ -1,142 +1,184 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH] api-parse-options.txt: document OPT_CMDMODE()
-Date: Thu, 24 Mar 2016 22:25:29 +0530
-Message-ID: <CAFZEwPPhq0HNpJt3mt=AWZw7S3ikEL2XX-SOM8CcRkFie=9vcQ@mail.gmail.com>
-References: <01020153a7e08100-cf66fc9f-7293-4d8c-98c6-f322721c741f-000000@eu-west-1.amazonses.com>
-	<xmqqtwjvamhe.fsf@gitster.mtv.corp.google.com>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@dwim.me>
+Subject: Re: [PATCH] Disown ssh+git and git+ssh
+Date: Thu, 24 Mar 2016 17:56:07 +0100
+Message-ID: <1458838567.179868.6.camel@dwim.me>
+References: <xmqq7fi8s4dx.fsf@gitster.mtv.corp.google.com>
+	 <1455546546-65710-1-git-send-email-cmn@dwim.me>
+	 <CAPig+cQ6JC65QkH=8nJ9Qwghr6cwv0BsB5TRDeg=gZmDpcdcHg@mail.gmail.com>
+	 <xmqqbn6ngvs8.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 24 17:55:42 2016
+To: Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Mar 24 17:56:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aj8Xt-00056m-48
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 17:55:41 +0100
+	id 1aj8YT-0005Yo-F6
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 17:56:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757683AbcCXQzg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 12:55:36 -0400
-Received: from mail-yw0-f169.google.com ([209.85.161.169]:33084 "EHLO
-	mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756152AbcCXQza (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 12:55:30 -0400
-Received: by mail-yw0-f169.google.com with SMTP id h65so67079386ywe.0
-        for <git@vger.kernel.org>; Thu, 24 Mar 2016 09:55:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=RInsAbEYWd7iVHy4ovoCgOtOUL4CIH0/mzPrY8zzuZ4=;
-        b=al1I2k0dVaiuWZ0CN6rGvF82SrwuqQoI4+85xB/z9XrojzfDZl819PEp2QILrUp0Nv
-         ap/ORKBWDgesO/7eBs0PeZ15cwrALXqidnDQRWBoPpzuBiTNqKgF9bz1Zw88P/Znzgus
-         RT5wma1PR83mMuL131MdnKXxs3d4Vv3B5xIq408V9KXmP8tq13k9gcFnkp6hs+75qkzR
-         oAhm8HuQl7FCzGS3bsIUyJIPUha6ka6Yp8BvN6t3/JR9T5eMgXTlAnVYcbzlXPezLnlv
-         WYRV52ZUJEhPdyMAhCPgwi9LVN3oSUIqBiR7XHobFpX46qI1xwG1go4bY71lVdvf1s/2
-         KveA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=RInsAbEYWd7iVHy4ovoCgOtOUL4CIH0/mzPrY8zzuZ4=;
-        b=fksyusTxFSwgVJrCXGhDBTCrNRITZZmu3p051gwYSwszXQ64r7R8rLw1EAngG1gmes
-         goxWzoQlBvzCToo/wzvoNLviihiKfY6KA2zvz1mO+V8DicfF/kzQe7vICqDODGaLI9c9
-         Rqq4MYwTtLHZTKx7X4ixJbwmpRVkNUyXa1C355NFnkI1jf2OatkiBs0EiwLPXoSIonkf
-         XW1itaFDgVdoOqnFCfdL3je8YaDePcQVuJwSw6MI3s4XzeNNl6FAet3/AEH/T+7WRJIW
-         bvNlJrzTUR3WQRqIOm+4+Pcv8tr/LQlysGZi6Q1Aseu0HilrPiCOOeGoJ7oh16AKB4j4
-         wvjA==
-X-Gm-Message-State: AD7BkJLkxusADPY0ArcXqtCIu64dfnW9vwuwHEYx8SErCqHTvJtI0rcsmuomQhdt+JxbSWi4uFaSu7uTM03n1Q==
-X-Received: by 10.129.94.7 with SMTP id s7mr5387684ywb.93.1458838529581; Thu,
- 24 Mar 2016 09:55:29 -0700 (PDT)
-Received: by 10.13.203.137 with HTTP; Thu, 24 Mar 2016 09:55:29 -0700 (PDT)
-In-Reply-To: <xmqqtwjvamhe.fsf@gitster.mtv.corp.google.com>
+	id S1757698AbcCXQ4N convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Mar 2016 12:56:13 -0400
+Received: from new2-smtp.messagingengine.com ([66.111.4.224]:45887 "EHLO
+	new2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755849AbcCXQ4M (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2016 12:56:12 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+	by mailnew.nyi.internal (Postfix) with ESMTP id 1965FA86
+	for <git@vger.kernel.org>; Thu, 24 Mar 2016 12:56:10 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute6.internal (MEProxy); Thu, 24 Mar 2016 12:56:10 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=dwim.me; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=4ldHq1tGeglVT4NLrKRkjo1sYNs=; b=r4TMKP
+	XH+DVppvTCoNWlVQqvlp+Of8eURXZej8Ny7l6XxVlhoQ6lLqv5BoGq/4sqGFuIhD
+	oh34BURiuKoQJvNXXKGwxZVhX0eAmbIO19POg4/RUNTcZ4s0OMls4KlrmKSKqIJG
+	Z471hLKWHeJZf2JkM7opVtRAIMmknhtaYM31M=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=4ldHq1tGeglVT4N
+	LrKRkjo1sYNs=; b=jmWSwzGnJ6m18pO4GQy/tNXVeAcQQlQVYXS1icl/EKBO7N2
+	Qke1wojdmzoWCapl8GgRu53QhCrXYxc9evMKOkOLtUaCb9JPEAmc2m9eBXBqWHpg
+	FTfDBoQhEGS5oT3f9w0A11ITM9b3I+pIE8t3B4pE4XpJrbtBVY9eQ8XOYCFQ=
+X-Sasl-enc: vRfSQVoCbT0mV3pFxywuaWgQqbPQjqHxx4l7Ap8GcXb8 1458838569
+Received: from ip5b40609c.dynamic.kabel-deutschland.de (ip5b40609c.dynamic.kabel-deutschland.de [91.64.96.156])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 0AFB1680101;
+	Thu, 24 Mar 2016 12:56:08 -0400 (EDT)
+In-Reply-To: <xmqqbn6ngvs8.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Evolution 3.18.5.1-1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289762>
 
-On Thu, Mar 24, 2016 at 9:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Pranit Bauva <pranit.bauva@gmail.com> writes:
->
->> OPT_CMDMODE() was introduced in the release of 1.8.5 which makes the use
->> of subcommands in the form of arguments a lot cleaner and easier.
->> ---
->
-> Sign-off?
+On Wed, 2016-03-09 at 13:56 -0800, Junio C Hamano wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>=20
+> >=20
+> > It might be helpful to cite some reference to support the claim
+> > that
+> > they are "silly" since it's not necessarily obvious to readers who
+> > did
+> > not following the discussion.
+> > ...
+> > >=20
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0|| starts_with(url, "ssh://")
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0/*
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0* These ways to spell the ssh transport r=
+emain
+> > > supported for
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0* compat but are undocumented and their u=
+se is
+> > > discouraged
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0*/
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0|| starts_with(url, "git+ssh://")
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0|| starts_with(url, "ssh+git://")) {
+> > A little "comment" bikeshedding: Aside from undesirably
+> > interrupting
+> > the code flow, these large comment blocks draw far too much
+> > attention
+> > from the reader than these deprecated spellings of "ssh" deserve,
+> > thus
+> > making them seem overly important.
+> I've been waiting for an update for it but got tired of it.
+> Instead of discarding the topic, let's amend it like so:
 
-Will include this.
+Sorry, I missed the call for the rewording. The below looks good to me.
+Thanks.
 
->>  Documentation/technical/api-parse-options.txt | 6 ++++++
->>  1 file changed, 6 insertions(+)
->>
->> diff --git a/Documentation/technical/api-parse-options.txt b/Documentation/technical/api-parse-options.txt
->> index 5f0757d..8130d26 100644
->> --- a/Documentation/technical/api-parse-options.txt
->> +++ b/Documentation/technical/api-parse-options.txt
->> @@ -231,6 +231,12 @@ There are some macros to easily define options:
->>       pass the command-line option, which can be specified multiple times,
->>       to another command.
->>
->> +`OPT_CMDMODE(short, long, &int_var, description, enum_val)`::
->> +     Introduce an option for subcommands. It is useful when you want to use
->> +     the command with a particular sub command only and ignore other sub
->> +     commands it has. It will set `int_var` to enum_val if the argument is
->> +     invoked.
->> +
->
-> Sorry, but I do not get what "when you want to... ignore other sub
-> command it has" wants to say.
-
-What I meant by this statement is that (your example), let's say we
-have "add", "remove" and "edit" sub commands. Now the user has to pick
-between the three. He cannot choose more than 1 from these.
-
-> CMDMODE is a mechanism to actively notice when multiple "operation
-> mode" options that specify mutually incompatible operation modes are
-> given and error out without the user of parse_options() to implement
-> that mutual exclusion herself.  That is, if you have 'add', 'remove'
-> and 'edit' operation modes, with OPT_BOOL(), you would have to say:
->
->         options[] = {
->                 OPT_BOOL('a', "add", &add, ...),
->                 OPT_BOOL('r', "remove", &remove, ...),
->                 OPT_BOOL('e', "edit", &edit, ...),
->                 ...
->         };
->         parse_options(ac, av, prefix, options, ...);
->
->         if (!!add + !!remove + !!edit > 1)
->                 die("at most one add/remove/edit can be used at a time");
->
->         if (add)
->                 do_add();
->         if (remove)
->                 do_remove();
->         if (edit)
->                 do_edit();
->
-> but with CMDMODE, you can do:
->
->         options[] = {
->                 OPT_BOOL('a', "add", &mode, ...),
->                 OPT_BOOL('r', "remove", &mode, ...),
->                 OPT_BOOL('e', "edit", &mode, ...),
->                 ...
->         };
->         parse_options(ac, av, prefix, options, ...);
->
->         switch (mode) {
->         case 'a': do_add(); break;
->         case 'r': do_remove(); break;
->         case 'e': do_edit(); break;
->                 ...
->         }
->
-> and parse_options notices that "mode" is shared across these three
-> options, and implements the mutual-exclusion itself.
-
-Thanks for taking time to explain all the details behind it. I can
-include these bits in the documentation. :)
+>=20
+> -- >8 --
+> From: Carlos Mart=C3=ADn Nieto <cmn@dwim.me>
+> Date: Mon, 15 Feb 2016 15:29:06 +0100
+> Subject: [PATCH] Disown ssh+git and git+ssh
+>=20
+> Some people argue that these were silly from the beginning (see
+> http://thread.gmane.org/gmane.comp.version-control.git/285590/focus=3D=
+2
+> 85601
+> for example), but we have to support them for compatibility.
+>=20
+> That doesn't mean we have to show them in the documentation.=C2=A0=C2=
+=A0These
+> were already left out of the main list, but a reference in the main
+> manpage was left, so remove that.
+>=20
+> Also add a note to discourage their use if anybody goes looking for
+> them
+> in the source code.
+>=20
+> Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@dwim.me>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> =C2=A0Documentation/git.txt | 2 +-
+> =C2=A0connect.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0| 4 ++--
+> =C2=A0transport.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0| 5 +++--
+> =C2=A03 files changed, 6 insertions(+), 5 deletions(-)
+>=20
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index d987ad2..2f90635 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -1122,7 +1122,7 @@ of clones and fetches.
+> =C2=A0	=C2=A0=C2=A0=C2=A0=C2=A0connection (or proxy, if configured)
+> =C2=A0
+> =C2=A0	=C2=A0=C2=A0- `ssh`: git over ssh (including `host:path` synta=
+x,
+> -	=C2=A0=C2=A0=C2=A0=C2=A0`git+ssh://`, etc).
+> +	=C2=A0=C2=A0=C2=A0=C2=A0`ssh://`, etc).
+> =C2=A0
+> =C2=A0	=C2=A0=C2=A0- `rsync`: git over rsync
+> =C2=A0
+> diff --git a/connect.c b/connect.c
+> index fd7ffe1..3babb81 100644
+> --- a/connect.c
+> +++ b/connect.c
+> @@ -267,9 +267,9 @@ static enum protocol get_protocol(const char
+> *name)
+> =C2=A0		return PROTO_SSH;
+> =C2=A0	if (!strcmp(name, "git"))
+> =C2=A0		return PROTO_GIT;
+> -	if (!strcmp(name, "git+ssh"))
+> +	if (!strcmp(name, "git+ssh")) /* deprecated - do not use */
+> =C2=A0		return PROTO_SSH;
+> -	if (!strcmp(name, "ssh+git"))
+> +	if (!strcmp(name, "ssh+git")) /* deprecated - do not use */
+> =C2=A0		return PROTO_SSH;
+> =C2=A0	if (!strcmp(name, "file"))
+> =C2=A0		return PROTO_FILE;
+> diff --git a/transport.c b/transport.c
+> index 67f3666..908e08b 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -1001,8 +1001,9 @@ struct transport *transport_get(struct remote
+> *remote, const char *url)
+> =C2=A0		|| starts_with(url, "file://")
+> =C2=A0		|| starts_with(url, "git://")
+> =C2=A0		|| starts_with(url, "ssh://")
+> -		|| starts_with(url, "git+ssh://")
+> -		|| starts_with(url, "ssh+git://")) {
+> +		|| starts_with(url, "git+ssh://") /* deprecated - do
+> not use */
+> +		|| starts_with(url, "ssh+git://") /* deprecated - do
+> not use */
+> +		) {
+> =C2=A0		/*
+> =C2=A0		=C2=A0* These are builtin smart transports; "allowed"
+> transports
+> =C2=A0		=C2=A0* will be checked individually in git_connect.
