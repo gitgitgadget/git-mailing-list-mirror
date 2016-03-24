@@ -1,78 +1,102 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] rebase-i: print abbreviated hash when stop for editing
-Date: Thu, 24 Mar 2016 19:31:21 +0100
-Message-ID: <1458844281-13107-1-git-send-email-ralf.thielow@gmail.com>
-Cc: Ralf Thielow <ralf.thielow@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 24 19:31:34 2016
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v7 09/33] refs: reduce the visibility of
+ do_for_each_ref()
+Date: Thu, 24 Mar 2016 14:56:15 -0400
+Organization: Twitter
+Message-ID: <1458845775.2976.1.camel@twopensource.com>
+References: <1456793586-22082-1-git-send-email-dturner@twopensource.com>
+	 <1456793586-22082-10-git-send-email-dturner@twopensource.com>
+	 <56F3924C.3040408@alum.mit.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	peff@peff.net, pclouds@gmail.com
+X-From: git-owner@vger.kernel.org Thu Mar 24 19:56:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajA2d-0005Ic-Dk
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 19:31:31 +0100
+	id 1ajAQi-000805-0E
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 19:56:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751765AbcCXSb1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 14:31:27 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:34814 "EHLO
-	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751108AbcCXSb0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 14:31:26 -0400
-Received: by mail-wm0-f49.google.com with SMTP id p65so486077wmp.1
-        for <git@vger.kernel.org>; Thu, 24 Mar 2016 11:31:25 -0700 (PDT)
+	id S1751288AbcCXS4U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 14:56:20 -0400
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:35285 "EHLO
+	mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750884AbcCXS4S (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 14:56:18 -0400
+Received: by mail-qk0-f178.google.com with SMTP id o6so23692966qkc.2
+        for <git@vger.kernel.org>; Thu, 24 Mar 2016 11:56:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=HEaUxXh16JE2vzPzS7Z3ARooH2dRTdwvlCKRbvUEpjs=;
-        b=A1aCdLOQ5lucLo/mSPOxGjX7NG1yrZ56E7P0SqBZ3KHJ3F/tz/CdsEIw6gJW/CLUH8
-         rai82Dh9kVgu/AoYKRf4ODHuN8UCGoZI2ohGrv6Evnl+971jzBFIlHUc6n4jJuC76cQZ
-         yGXK0ZqtzW5ROkbRnT/V1RdrNCVjnoWtQ0eTFVwvEcu4k4tR3j/DLTpZI7tmid55nLgb
-         bUulgJZA/ImM9nLuE9FAcUsegwSHi08Tn9+sbVBdtS+1iouXoFEoHMX3RSTo9fo3z/wf
-         PumazwuuBiyP2/1WICbvTbZcAvoportuLBZCNKhvNmpYKDPk/mBVh86e6FddKu/N4ElJ
-         PEwg==
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:mime-version:content-transfer-encoding;
+        bh=rds08s0HuRgTkEm4qCheAUj9YMp1D+YmYtX5PY/EQFc=;
+        b=uhbDGmzzQecpOAOC3YYGdejQIh3hLOPSLwamWLKhoYl6GFS6vBEhz9XqXtPPFgt+JD
+         9/SK9SpfDzsq+3nMn7K5EIC2M/41xM/6EDNKaspRngXKyE3InGaK8KHfC9mXB29U7x2t
+         2KrgN4YmgwJRnRiluM93kxO8Q7Zx/mtygEJI3Vx/yOrHhq+oJP+toSQe2ZXD/+A9OEV5
+         c1hvXdf2y0tRofuFWwLG+jzNYrlwapgm/hGWPWGi/4sZCylLIoXrvL1EqC/fmUh7qXLx
+         aulf3DsQTBM7cyrOeOnFiwXwZYJbLAQyC/7L+RiOSVdtyjRWqC4mJiZQUfC9heEUpR3t
+         RxJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=HEaUxXh16JE2vzPzS7Z3ARooH2dRTdwvlCKRbvUEpjs=;
-        b=gM2f+7HMvKpAll/ZX69O3y3znbllRJPcpWdg/1PEx4CJTyGNn5UTEss3MK5iqsbMJk
-         eyCEOu5ZBKh/YkEn0w+6mN29CauCH2FccW9fOmWmbXTtvEIpnEjCrkc/rvs1lMXD5ZXR
-         zDlPeAvWNXy+jdxSlUKI3OEaZ3K2ZbAqlKeWEO7LTzFpx91COqlahUZRh7LB7MNpD1hF
-         K5AGCEK0dIkTq1huStA/3sP0cuWXHqc5nzjj0rNzeF6BIabn/zH/KeKqIRKH88WrafQh
-         2dsZgttknsEqSOCp0auzDprcHU5oZM0MJF8An8KoIahjssEVoMhLYvrdMTLCR5JyL4Rh
-         C0LA==
-X-Gm-Message-State: AD7BkJLCEVNgt/kccFQZZiqYn+cMOwOTEQu9Phcf6+M6xGp0RsUnG/86pDAQZTQpzv312w==
-X-Received: by 10.28.223.70 with SMTP id w67mr11519361wmg.92.1458844284897;
-        Thu, 24 Mar 2016 11:31:24 -0700 (PDT)
-Received: from localhost (cable-82-119-18-125.cust.telecolumbus.net. [82.119.18.125])
-        by smtp.gmail.com with ESMTPSA id et11sm8559803wjc.30.2016.03.24.11.31.24
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 24 Mar 2016 11:31:24 -0700 (PDT)
-X-Mailer: git-send-email 2.8.0.rc4.7.g35d7ca9.dirty
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:mime-version:content-transfer-encoding;
+        bh=rds08s0HuRgTkEm4qCheAUj9YMp1D+YmYtX5PY/EQFc=;
+        b=LueGSvyOZTtThoXebEqP13DI0Tm27s+W77I6foeraSt8DnvDic+tAG69esnaI2oSHl
+         ejXzxStOMXnT99Yr+09igJIr+81ebq4/SZrS1BKotBMzkf5zFhIlUMWFQNzdOWQ85KcT
+         lh6IlPXwnZ7dCxAB5HKAhxFmcCkpbvfZf0dtSqhgSHjF7uoLqHTEsZyPgZx/eZ/gc2fc
+         RCHlhOIVJgRPVYKsNF+T1Ynui/9PBZc0vPx0fC+9RxuHJfwlGWAxnlfXcD1tZFYks9Rb
+         9ywCk+KCHW2xtLNfjZP+9/z+AaORAvcDEdFR/QHNUg/20MzfRpUHCKhf1NtYfHrFJOfO
+         QUiQ==
+X-Gm-Message-State: AD7BkJL1ETFksJh2BIRISeVfezoJfEqVJBhWX/LEZWVW1Cq/GWUq7S6k+5E54xwROW2vuQ==
+X-Received: by 10.55.27.234 with SMTP id m103mr12758485qkh.109.1458845777417;
+        Thu, 24 Mar 2016 11:56:17 -0700 (PDT)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id x64sm3768575qhx.47.2016.03.24.11.56.15
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 24 Mar 2016 11:56:16 -0700 (PDT)
+In-Reply-To: <56F3924C.3040408@alum.mit.edu>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289784>
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
- git-rebase--interactive.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+On Thu, 2016-03-24 at 08:07 +0100, Michael Haggerty wrote:
+> > +/*
+> > + * The common backend for the for_each_*ref* functions
+> > + */
+> > +static int do_for_each_ref(const char *submodule, const char
+> > *base,
+> > +		    each_ref_fn fn, int trim, int flags,
+> > +		    void *cb_data)
+> 
+> The two lines above are indented incorrectly.
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 4cde685..9ea3075 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -548,7 +548,8 @@ do_next () {
- 
- 		mark_action_done
- 		do_pick $sha1 "$rest"
--		warn "Stopped at $sha1... $rest"
-+		sha1_abbrev=$(git rev-parse --short $sha1)
-+		warn "Stopped at $sha1_abbrev... $rest"
- 		exit_with_patch $sha1 0
- 		;;
- 	squash|s|fixup|f)
--- 
-2.8.0.rc4.7.g35d7ca9.dirty
+Fixed, thanks.
+
+> > -
+> > -int do_for_each_ref(const char *submodule, const char *base,
+> > -		    each_ref_fn fn, int trim, int flags,
+> > -		    void *cb_data)
+> > -{
+> > -	return the_refs_backend->do_for_each_ref(submodule, base,
+> > fn, trim,
+> > -						 flags, cb_data);
+> > -}
+> 
+> Nit: in the previous patch, please put the function where you want it
+> so
+> that you don't have to move it in this patch.
+> 
+> > [...]
+> 
+> Michael
+
+Ok.
