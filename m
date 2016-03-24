@@ -1,126 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC_PATCHv4 5/7] submodule update: respect submodule.actionOnLabel
-Date: Wed, 23 Mar 2016 17:13:16 -0700
-Message-ID: <xmqqlh58bun7.fsf@gitster.mtv.corp.google.com>
-References: <1458612372-10966-1-git-send-email-sbeller@google.com>
-	<1458612372-10966-6-git-send-email-sbeller@google.com>
-	<xmqq37rif870.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kaEmDFDf+1BZV1C5ETswbXmAUYk_OMsZf_ka6tJ=pfwcQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 0/5] Expanding tabs in "git log" output
+Date: Wed, 23 Mar 2016 20:58:50 -0400
+Message-ID: <20160324005849.GA8167@sigill.intra.peff.net>
+References: <xmqq7fh0s5l7.fsf@gitster.mtv.corp.google.com>
+ <1458775426-2215-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Mar 24 01:13:26 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 24 01:58:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aistx-0008Ar-40
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 01:13:25 +0100
+	id 1aitc1-0005cX-VU
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 01:58:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753011AbcCXANU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Mar 2016 20:13:20 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:57094 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751830AbcCXANT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Mar 2016 20:13:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 26CAA506B6;
-	Wed, 23 Mar 2016 20:13:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=I9472myvcIlthdQbvmeNjQuGG8k=; b=UDpxHt
-	4si9IdF5cmltqp/QmONZeox7e4+UTF0lgd1JX2HiCJLHoOYzoK39Hav1M9Me2UtW
-	9BkCaoNUrV7Ce8DXmsfIipVmmnT2wNBK3VFpC2+Du/wJrf4VnFsobDAYeegR/FHc
-	ZRYD9oqwBRhP7MpJRnEMfgiii6aS5KQvEDmSM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ppxKD3Ct/I0rokXyg/265LqCxEMepvjy
-	uqpcDE7Jxc5ZNs80uBgn9HzGFDcobNpl+tYDZGg0bMrEYRXRTx4vfZHT1+lbv3o7
-	T0d0yI2j28i5h8SuQaeRJwUw642eV330IGp5fKTovuEzLBSyQDINmDdzhuvu0Ykp
-	zLxF7y0EqdE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1E69A506B5;
-	Wed, 23 Mar 2016 20:13:18 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 900FA506B4;
-	Wed, 23 Mar 2016 20:13:17 -0400 (EDT)
-In-Reply-To: <CAGZ79kaEmDFDf+1BZV1C5ETswbXmAUYk_OMsZf_ka6tJ=pfwcQ@mail.gmail.com>
-	(Stefan Beller's message of "Wed, 23 Mar 2016 16:21:48 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3574F410-F155-11E5-9E2A-EB7E6AB36C07-77302942!pb-smtp0.pobox.com
+	id S1751627AbcCXA6y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Mar 2016 20:58:54 -0400
+Received: from cloud.peff.net ([50.56.180.127]:37158 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751157AbcCXA6x (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Mar 2016 20:58:53 -0400
+Received: (qmail 13586 invoked by uid 102); 24 Mar 2016 00:58:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Mar 2016 20:58:52 -0400
+Received: (qmail 6986 invoked by uid 107); 24 Mar 2016 00:59:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Mar 2016 20:59:12 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Mar 2016 20:58:50 -0400
+Content-Disposition: inline
+In-Reply-To: <1458775426-2215-1-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289703>
 
-Stefan Beller <sbeller@google.com> writes:
+On Wed, Mar 23, 2016 at 04:23:41PM -0700, Junio C Hamano wrote:
 
-> On Tue, Mar 22, 2016 at 3:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Stefan Beller <sbeller@google.com> writes:
->>
->>> This change introduces the 'submodule.actionOnLabel' variable
->>> in a repository configuration. Generally speaking 'submodule.actionOnLabel'
->>> restricts the action of a command when no submodules are selected via the
->>> command line explicitely to those submodules, which are selected by
->>> 'submodule.actionOnLabel'. It can occur multiple times and can specify
->>> the path, the name or one of the labels of a submodule to select that
->>> submodule.
->>>
->>> The introduction of 'submodule.actionOnLabel' starts with
->>> 'git submodule update' in this patch and other commands will follow
->>> in later patches.
->>>
->>> 'submodule.actionOnLabel' implies '--init' in 'git submodule update'.
->>>
->>> Signed-off-by: Stefan Beller <sbeller@google.com>
->>>
->>> TODO: generic documentation for submodule.actionOnLabel
->>> TODO: documentation for submodule update
->>
->> TODO: a name that matches the concept better.
->
-> This is one of the hardest parts of the series so far. The last reviews
-> were mostly bike shedding about the name of the concept and I thought
-> we were settled to actionOnLabel as that fits best to what we want to do.
->
-> So let's revisit that. My current understanding of the design:
+> So here is the third try (previous round is found at $gmane/289166
+> and the very first one is at $gmane/288987).
 
-I am not questioning the name "label" to call the facility that
-allows projects to group submodules together, and that serves as one
-of the ways to choose what subset of submodules are worked on by
-default.  There is no need to revisit that part.
+Is the plan to merge these as-is? The ordering is a bit funny (introduce
+breakage, then repair it), and I think the first patch still breaks
+t4201.8 (which is then repaired in the fourth one).
 
-What I am questioning is
+I think it would be a lot easier to review as:
 
-	action On Label
+  1. Factor out pp_handle_indent(), and any other preparation.
 
-because
+  2. Add --expand-tabs / --no-expand-tabs, with the logic going into
+     pp_handle_indent().
 
- (1) it sounds as if that configuration were a way to choose what
-     action is done to the chosen subset of submodules;
+  3. Flip the default for some formats to expand-tabs.
 
- (2) it sounds as if the only way to choose a subset of submodules
-     to be operated on by default is via the "label" mechanism.
+Other than that, the end result seems OK to me (I think adding
+--expand-tabs would be nice, but I suspect it may need to be marked as
+incompatible with some formats; do all formats end up in this same
+writing code path?).
 
-And from your writing (omitted), I think we agree that we definitely
-want to avoid the misunderstanding that is (1).  This variable does
-not specify what is done--this specifies what subset of submodules
-are to be operated on.  Having "action" in the name of the variable
-is wrong.
+> By the way, I have to say that I hate how pretty formatting and
+> revision machinery interact with each other.
+> 
+> pretty.c::commit_formats ought to be the authoritative source of how
+> each named format should work, but there are quite a many codepaths
+> that just assign CMIT_FMT_SOMETHING to revs->commit_format without
+> bothering with other fields in the cmt_fmt_map like is_tformat, and
+> I am not sure if they are working correctly even before this patch.
 
-And from the proposed log message, it is clear that "label" is not
-the only way to specify the subset of submodules to be worked on,
-i.e. "... can specify the path, name or the labels".   Having
-"label" in the variable name is wrong.
+I don't disagree with any of that. I suspect some of the logic may be
+complicated for sticking in a table, though. Perhaps we need a:
 
-I am tempted to suggest submodule.defaultOperand and I am fairly
-sure "default" part of that name gets the concept much better than
-"actionOnLabel", but there probably are much better words than
-Operand.
+  void set_pp_format(struct pretty_print_context *ctx, enum cmit_fmt fmt);
+
+that sets up the whole struct based on the given format, and then the
+logic can live in C code. I haven't looked closely at that code in a
+while, though, so maybe that is overkill.
+
+-Peff
