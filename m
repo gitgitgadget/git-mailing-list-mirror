@@ -1,200 +1,107 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v7 14/33] refs: add methods to init refs db
-Date: Thu, 24 Mar 2016 08:28:44 +0100
-Message-ID: <56F3972C.7020901@alum.mit.edu>
-References: <1456793586-22082-1-git-send-email-dturner@twopensource.com>
- <1456793586-22082-15-git-send-email-dturner@twopensource.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: What's cooking in git.git (Mar 2016, #04; Wed, 23)
+Date: Thu, 24 Mar 2016 07:42:07 -0000
+Organization: OPDS
+Message-ID: <54B6C1E1FE6A4BAEA07E97B7BA81EB01@PhilipOakley>
+References: <xmqqpoukc30t.fsf@gitster.mtv.corp.google.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
-	peff@peff.net, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Thu Mar 24 08:36:13 2016
+To: "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 24 08:42:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aizoR-0008Hr-Kj
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 08:36:11 +0100
+	id 1aizuI-0004Sq-DI
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 08:42:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754603AbcCXHgH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 03:36:07 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:61221 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751454AbcCXHgE (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2016 03:36:04 -0400
-X-Greylist: delayed 433 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Mar 2016 03:36:04 EDT
-X-AuditID: 12074413-eefff7000000516b-54-56f3972e397f
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 3F.A2.20843.E2793F65; Thu, 24 Mar 2016 03:28:46 -0400 (EDT)
-Received: from [192.168.69.130] (p548D66F7.dip0.t-ipconnect.de [84.141.102.247])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u2O7SiBM012185
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 24 Mar 2016 03:28:45 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.7.0
-In-Reply-To: <1456793586-22082-15-git-send-email-dturner@twopensource.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqKs3/XOYwZa5GhbzN51gtOi60s1k
-	0dB7hdmie8pbRosfLT3MDqweO2fdZfd41ruH0ePiJWWPBc/vs3t83iQXwBrFbZOUWFIWnJme
-	p2+XwJ3x5+k/toIO1YrDkzvYGhivyHYxcnJICJhIdP2/xNzFyMUhJLCVUeL9u+uMEM4FJolv
-	i5rYQaqEBewlLu78xQxiiwhkS8z5dI4VoqiDUWLGlQeMIAlmATWJ9k1TWEFsNgFdiUU9zUwg
-	Nq+AtsTRfd/ABrEIqEpc/NcBNkhUIERi27pvrBA1ghInZz5hAbE5Bbwkju27ywIxU09ix/Vf
-	rBC2vMT2t3OYJzDyz0LSMgtJ2SwkZQsYmVcxyiXmlObq5iZm5hSnJusWJyfm5aUW6Zrr5WaW
-	6KWmlG5ihISz8A7GXSflDjEKcDAq8fA2cHwOE2JNLCuuzD3EKMnBpCTK+7ESKMSXlJ9SmZFY
-	nBFfVJqTWnyIUYKDWUmEl68OKMebklhZlVqUD5OS5mBREudVW6LuJySQnliSmp2aWpBaBJOV
-	4eBQkuCtnwbUKFiUmp5akZaZU4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+KyvhiYFyCpHiA9u4G
-	aectLkjMBYpCtJ5iVJQS5/UBSQiAJDJK8+DGwpLUK0ZxoC+Fef9MBariASY4uO5XQIOZgAYv
-	9PkEMrgkESEl1cCYm7azOsDllayQWUiRmHfc/Ad7fWKuztmg1ctpY+X1Jl5j4eZn/231mm+G
-	njp3ImqCLtMGzlK7xmCtxVpGh3xetalbcddrZBz9teBb3jr71KUGBzVKJ9vF+FhN 
+	id S932421AbcCXHmK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 03:42:10 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:25508 "EHLO
+	smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932252AbcCXHmI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 03:42:08 -0400
+Received: from PhilipOakley ([92.22.21.19])
+	by smtp.talktalk.net with SMTP
+	id izu9aWRizEnBtizu9aKnhH; Thu, 24 Mar 2016 07:42:06 +0000
+X-Originating-IP: [92.22.21.19]
+X-Spam: 0
+X-OAuthority: v=2.1 cv=YNU/sUyx c=1 sm=1 tr=0 a=I7bjfyOo2Kke1IIJyMFemw==:117
+ a=I7bjfyOo2Kke1IIJyMFemw==:17 a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10
+ a=s5jvgZ67dGcA:10 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8 a=LmBk-rk3AAAA:8
+ a=G-sI35Mni8sQ33JZkVUA:9 a=wPNLvfGTeEIA:10 a=IdEGqN_9JTMA:10
+ a=gA6IeH5FQcgA:10 a=NWVoK91CQyQA:10
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfN2xfs4PPFOZhQNN4t/R02ErBnM/khLHIATMuwwAT7wswU+tScq0N3OYwisbRgvOiYLjwEJAvDsjet/9ZS5ApaayCPc4sGET7EmrMxfmH+9rIIu7WYfs
+ GVo0n49HS7kQ2BdVzWFqOGbYs9zrR91HaGE8B/im12ARP13DmGv/xZA+cXSZ9Vteec6v/iKA54z78w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289720>
 
-On 03/01/2016 01:52 AM, David Turner wrote:
-> Alternate refs backends might not need the refs/heads directory and so
-> on, so we make ref db initialization part of the backend.
-> 
-> Signed-off-by: David Turner <dturner@twopensource.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  builtin/init-db.c    | 20 ++++++++++----------
->  refs.c               |  5 +++++
->  refs.h               |  2 ++
->  refs/files-backend.c | 16 ++++++++++++++++
->  refs/refs-internal.h |  2 ++
->  5 files changed, 35 insertions(+), 10 deletions(-)
-> 
-> diff --git a/builtin/init-db.c b/builtin/init-db.c
-> index 6223b7d..e6d4e86 100644
-> --- a/builtin/init-db.c
-> +++ b/builtin/init-db.c
-> @@ -177,13 +177,7 @@ static int create_default_files(const char *template_path)
->  	char junk[2];
->  	int reinit;
->  	int filemode;
-> -
-> -	/*
-> -	 * Create .git/refs/{heads,tags}
-> -	 */
-> -	safe_create_dir(git_path_buf(&buf, "refs"), 1);
-> -	safe_create_dir(git_path_buf(&buf, "refs/heads"), 1);
-> -	safe_create_dir(git_path_buf(&buf, "refs/tags"), 1);
-> +	struct strbuf err = STRBUF_INIT;
->  
->  	/* Just look for `init.templatedir` */
->  	git_config(git_init_db_config, NULL);
-> @@ -207,12 +201,18 @@ static int create_default_files(const char *template_path)
->  	 */
->  	if (shared_repository) {
->  		adjust_shared_perm(get_git_dir());
-> -		adjust_shared_perm(git_path_buf(&buf, "refs"));
 
-Given that this function is creating the "refs" directory, it seems like
-adjust_shared_perm() should be called for it here, too (rather than in
-the backend-specific code).
+----- Original Message ----- 
+From: "Junio C Hamano" <gitster@pobox.com>
 
-> -		adjust_shared_perm(git_path_buf(&buf, "refs/heads"));
-> -		adjust_shared_perm(git_path_buf(&buf, "refs/tags"));
->  	}
->  
->  	/*
-> +	 * We need to create a "refs" dir in any case so that older
-> +	 * versions of git can tell that this is a repository.
-> +	 */
-> +	safe_create_dir(git_path("refs"), 1);
-> +
-> +	if (refs_init_db(shared_repository, &err))
-> +		die("failed to set up refs db: %s", err.buf);
-> +
-> +	/*
->  	 * Create the default symlink from ".git/HEAD" to the "master"
->  	 * branch, if it does not exist yet.
->  	 */
-> diff --git a/refs.c b/refs.c
-> index d25eee2..b2697f6 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1319,6 +1319,11 @@ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
->  }
->  
->  /* backend functions */
-> +int refs_init_db(int shared, struct strbuf *err)
-> +{
-> +	return the_refs_backend->init_db(shared, err);
-> +}
-> +
->  int ref_transaction_commit(struct ref_transaction *transaction,
->  			   struct strbuf *err)
->  {
-> diff --git a/refs.h b/refs.h
-> index 3405842..13ce2a0 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -66,6 +66,8 @@ extern int ref_exists(const char *refname);
->  
->  extern int is_branch(const char *refname);
->  
-> +extern int refs_init_db(int shared, struct strbuf *err);
-> +
->  /*
->   * If refname is a non-symbolic reference that refers to a tag object,
->   * and the tag can be (recursively) dereferenced to a non-tag object,
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 35328d2..acb4401 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -3415,9 +3415,25 @@ static int files_reflog_expire(const char *refname, const unsigned char *sha1,
->  	return -1;
->  }
->  
-> +static int files_init_db(int shared, struct strbuf *err)
-> +{
-> +	/*
-> +	 * Create .git/refs/{heads,tags}
-> +	 */
-> +	safe_create_dir(git_path("refs/heads"), 1);
-> +	safe_create_dir(git_path("refs/tags"), 1);
-> +	if (shared) {
-> +		adjust_shared_perm(git_path("refs"));
-> +		adjust_shared_perm(git_path("refs/heads"));
-> +		adjust_shared_perm(git_path("refs/tags"));
-> +	}
-> +	return 0;
-> +}
-> +
->  struct ref_storage_be refs_be_files = {
->  	NULL,
->  	"files",
-> +	files_init_db,
->  	files_transaction_commit,
->  	files_initial_transaction_commit,
->  
-> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-> index beef457..dfd0326 100644
-> --- a/refs/refs-internal.h
-> +++ b/refs/refs-internal.h
-> @@ -211,6 +211,7 @@ int do_for_each_per_worktree_ref(const char *submodule, const char *base,
->  				 void *cb_data);
->  
->  /* refs backends */
-> +typedef int ref_init_db_fn(int shared, struct strbuf *err);
->  typedef int ref_transaction_commit_fn(struct ref_transaction *transaction,
->  				      struct strbuf *err);
->  
-> @@ -255,6 +256,7 @@ typedef int do_for_each_ref_fn(const char *submodule, const char *base,
->  struct ref_storage_be {
->  	struct ref_storage_be *next;
->  	const char *name;
-> +	ref_init_db_fn *init_db;
->  	ref_transaction_commit_fn *transaction_commit;
->  	ref_transaction_commit_fn *initial_transaction_commit;
->  
-> 
 
-Michael
+> Here are the topics that have been cooking.  Commits prefixed with
+> '-' are only in 'pu' (proposed updates) while commits prefixed with
+> '+' are in 'next'.  The ones marked with '.' do not appear in any of
+> the integration branches, but I am still holding onto them.
+>
+> Three more minor fix-up topics are to be merged by 2.8 final, but we
+> are almost there.
+>
+> You can find the changes described here in the integration branches
+> of the repositories listed at
+>
+>    http://git-blame.blogspot.com/p/git-public-repositories.html
+>
+> --------------------------------------------------
+...
+> [Cooking]
+>
+> * jc/bundle (2016-03-03) 6 commits
+> - index-pack: --clone-bundle option
+> - Merge branch 'jc/index-pack' into jc/bundle
+> - bundle v3: the beginning
+> - bundle: keep a copy of bundle file name in the in-core bundle header
+> - bundle: plug resource leak
+> - bundle doc: 'verify' is not about verifying the bundle
+> (this branch uses jc/index-pack and jc/maint-index-pack-keep; is tangled 
+> with jc/index-pack-clone-bundle.)
+>
+> The beginning of "split bundle", which could be one of the
+> ingredients to allow "git clone" traffic off of the core server
+> network to CDN.
+>
+...
+Hi Junio,
+
+I think there may be a concept clash between the ideals of a 'sneakernet 
+bundle' and the 'resumable clone'.
+
+The bundle capability still needs to work easily in sneakernet mode, and my 
+reading of the proposed code for V3 (split-bundle) left the impression that 
+it would be very hard for the user to do the manual transport of the files 
+and place the split bundle in the right places such that a local clone from 
+the bundle would still work.
+
+Part of the issue is getting the naming right so so that there is no 
+confusion between the two opposing capabilities (on-line vs off-line 
+transfer).
+
+There were a few other lesser point that I'll address when I have the right 
+moment to reply to their respective messages.
+--
+Philip
