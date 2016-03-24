@@ -1,184 +1,97 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@dwim.me>
-Subject: Re: [PATCH] Disown ssh+git and git+ssh
-Date: Thu, 24 Mar 2016 17:56:07 +0100
-Message-ID: <1458838567.179868.6.camel@dwim.me>
-References: <xmqq7fi8s4dx.fsf@gitster.mtv.corp.google.com>
-	 <1455546546-65710-1-git-send-email-cmn@dwim.me>
-	 <CAPig+cQ6JC65QkH=8nJ9Qwghr6cwv0BsB5TRDeg=gZmDpcdcHg@mail.gmail.com>
-	 <xmqqbn6ngvs8.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/4] format-patch: introduce --base=auto option
+Date: Thu, 24 Mar 2016 10:01:58 -0700
+Message-ID: <xmqq37rfajy1.fsf@gitster.mtv.corp.google.com>
+References: <1458723147-7335-1-git-send-email-xiaolong.ye@intel.com>
+	<1458723147-7335-4-git-send-email-xiaolong.ye@intel.com>
+	<xmqqbn65caqi.fsf@gitster.mtv.corp.google.com>
+	<20160324041925.GB26582@yexl-desktop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Mar 24 17:56:22 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, fengguang.wu@intel.com, ying.huang@intel.com,
+	philip.li@intel.com, julie.du@intel.com
+To: Ye Xiaolong <xiaolong.ye@intel.com>
+X-From: git-owner@vger.kernel.org Thu Mar 24 18:02:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aj8YT-0005Yo-F6
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 17:56:17 +0100
+	id 1aj8eB-0001LA-MB
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 18:02:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757698AbcCXQ4N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Mar 2016 12:56:13 -0400
-Received: from new2-smtp.messagingengine.com ([66.111.4.224]:45887 "EHLO
-	new2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755849AbcCXQ4M (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2016 12:56:12 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailnew.nyi.internal (Postfix) with ESMTP id 1965FA86
-	for <git@vger.kernel.org>; Thu, 24 Mar 2016 12:56:10 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute6.internal (MEProxy); Thu, 24 Mar 2016 12:56:10 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=dwim.me; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=4ldHq1tGeglVT4NLrKRkjo1sYNs=; b=r4TMKP
-	XH+DVppvTCoNWlVQqvlp+Of8eURXZej8Ny7l6XxVlhoQ6lLqv5BoGq/4sqGFuIhD
-	oh34BURiuKoQJvNXXKGwxZVhX0eAmbIO19POg4/RUNTcZ4s0OMls4KlrmKSKqIJG
-	Z471hLKWHeJZf2JkM7opVtRAIMmknhtaYM31M=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=4ldHq1tGeglVT4N
-	LrKRkjo1sYNs=; b=jmWSwzGnJ6m18pO4GQy/tNXVeAcQQlQVYXS1icl/EKBO7N2
-	Qke1wojdmzoWCapl8GgRu53QhCrXYxc9evMKOkOLtUaCb9JPEAmc2m9eBXBqWHpg
-	FTfDBoQhEGS5oT3f9w0A11ITM9b3I+pIE8t3B4pE4XpJrbtBVY9eQ8XOYCFQ=
-X-Sasl-enc: vRfSQVoCbT0mV3pFxywuaWgQqbPQjqHxx4l7Ap8GcXb8 1458838569
-Received: from ip5b40609c.dynamic.kabel-deutschland.de (ip5b40609c.dynamic.kabel-deutschland.de [91.64.96.156])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 0AFB1680101;
-	Thu, 24 Mar 2016 12:56:08 -0400 (EDT)
-In-Reply-To: <xmqqbn6ngvs8.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Evolution 3.18.5.1-1 
+	id S1752313AbcCXRCH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 13:02:07 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:54624 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751034AbcCXRCD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 13:02:03 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5E0F54BF2D;
+	Thu, 24 Mar 2016 13:02:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lJvuwhi0Rd8pLfDGd3Hl7uk+X5A=; b=B3tpqD
+	ylydnzwEgcJ99LER4aO/rkkrZnNZX/Vzhi6aZqllU03iEeOP/5uB5zJ+Lp+x7WOD
+	TlMd50GXxM7sW3Urt73X1G6L5GPj5ee1ca7sMcHZ7mJKXwehk7+dUGe13pnv9aHn
+	PZUqQVbONbGEwV7Hgb+kX9jaeMbQcMMXQ96SM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KlUzvqGTfgMSBwaeeW2LPbnHyJHTjsb/
+	Cmhx+/1CykeNh+Uy+bpbBdlhVn1KC7k6nTQL34QmvjP3kKO3DFTHd8xStUzWBjwx
+	lpN8gE3CfjuRJe5ZnQYEaIkkFNcvZItbsCNi9kg8YsQX0xMAAcHthfuB4EBApYRc
+	+SjU2r0z4hg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1EC474BF2C;
+	Thu, 24 Mar 2016 13:02:01 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D7F124BF29;
+	Thu, 24 Mar 2016 13:01:59 -0400 (EDT)
+In-Reply-To: <20160324041925.GB26582@yexl-desktop> (Ye Xiaolong's message of
+	"Thu, 24 Mar 2016 12:19:25 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1F8EC36E-F1E2-11E5-A8AF-EB7E6AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289763>
 
-On Wed, 2016-03-09 at 13:56 -0800, Junio C Hamano wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->=20
-> >=20
-> > It might be helpful to cite some reference to support the claim
-> > that
-> > they are "silly" since it's not necessarily obvious to readers who
-> > did
-> > not following the discussion.
-> > ...
-> > >=20
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0|| starts_with(url, "ssh://")
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0/*
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0* These ways to spell the ssh transport r=
-emain
-> > > supported for
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0* compat but are undocumented and their u=
-se is
-> > > discouraged
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0*/
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0|| starts_with(url, "git+ssh://")
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0|| starts_with(url, "ssh+git://")) {
-> > A little "comment" bikeshedding: Aside from undesirably
-> > interrupting
-> > the code flow, these large comment blocks draw far too much
-> > attention
-> > from the reader than these deprecated spellings of "ssh" deserve,
-> > thus
-> > making them seem overly important.
-> I've been waiting for an update for it but got tired of it.
-> Instead of discarding the topic, let's amend it like so:
+Ye Xiaolong <xiaolong.ye@intel.com> writes:
 
-Sorry, I missed the call for the rewording. The below looks good to me.
-Thanks.
+> On Wed, Mar 23, 2016 at 11:25:41AM -0700, Junio C Hamano wrote:
+>>I also do not see the point of showing "parent id" which as far as I
+>>can see is just a random commit object name and show different
+>>output that is not even described what it is.  It would be better to
+>
+> Here is our consideration:
+> There is high chance that branch_get_upstream will retrun NULL(thus we
+> are not able to get exact base commit), since developers may checkout
+> branch from a local branch or a commit and haven't set "--set-upstream-to"
+> to track a remote branch, in this case, we want to provide likely useful
+> info(here is parent commit id and patch id)
 
->=20
-> -- >8 --
-> From: Carlos Mart=C3=ADn Nieto <cmn@dwim.me>
-> Date: Mon, 15 Feb 2016 15:29:06 +0100
-> Subject: [PATCH] Disown ssh+git and git+ssh
->=20
-> Some people argue that these were silly from the beginning (see
-> http://thread.gmane.org/gmane.comp.version-control.git/285590/focus=3D=
-2
-> 85601
-> for example), but we have to support them for compatibility.
->=20
-> That doesn't mean we have to show them in the documentation.=C2=A0=C2=
-=A0These
-> were already left out of the main list, but a reference in the main
-> manpage was left, so remove that.
->=20
-> Also add a note to discourage their use if anybody goes looking for
-> them
-> in the source code.
->=20
-> Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@dwim.me>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> =C2=A0Documentation/git.txt | 2 +-
-> =C2=A0connect.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0| 4 ++--
-> =C2=A0transport.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0| 5 +++--
-> =C2=A03 files changed, 6 insertions(+), 5 deletions(-)
->=20
-> diff --git a/Documentation/git.txt b/Documentation/git.txt
-> index d987ad2..2f90635 100644
-> --- a/Documentation/git.txt
-> +++ b/Documentation/git.txt
-> @@ -1122,7 +1122,7 @@ of clones and fetches.
-> =C2=A0	=C2=A0=C2=A0=C2=A0=C2=A0connection (or proxy, if configured)
-> =C2=A0
-> =C2=A0	=C2=A0=C2=A0- `ssh`: git over ssh (including `host:path` synta=
-x,
-> -	=C2=A0=C2=A0=C2=A0=C2=A0`git+ssh://`, etc).
-> +	=C2=A0=C2=A0=C2=A0=C2=A0`ssh://`, etc).
-> =C2=A0
-> =C2=A0	=C2=A0=C2=A0- `rsync`: git over rsync
-> =C2=A0
-> diff --git a/connect.c b/connect.c
-> index fd7ffe1..3babb81 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -267,9 +267,9 @@ static enum protocol get_protocol(const char
-> *name)
-> =C2=A0		return PROTO_SSH;
-> =C2=A0	if (!strcmp(name, "git"))
-> =C2=A0		return PROTO_GIT;
-> -	if (!strcmp(name, "git+ssh"))
-> +	if (!strcmp(name, "git+ssh")) /* deprecated - do not use */
-> =C2=A0		return PROTO_SSH;
-> -	if (!strcmp(name, "ssh+git"))
-> +	if (!strcmp(name, "ssh+git")) /* deprecated - do not use */
-> =C2=A0		return PROTO_SSH;
-> =C2=A0	if (!strcmp(name, "file"))
-> =C2=A0		return PROTO_FILE;
-> diff --git a/transport.c b/transport.c
-> index 67f3666..908e08b 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -1001,8 +1001,9 @@ struct transport *transport_get(struct remote
-> *remote, const char *url)
-> =C2=A0		|| starts_with(url, "file://")
-> =C2=A0		|| starts_with(url, "git://")
-> =C2=A0		|| starts_with(url, "ssh://")
-> -		|| starts_with(url, "git+ssh://")
-> -		|| starts_with(url, "ssh+git://")) {
-> +		|| starts_with(url, "git+ssh://") /* deprecated - do
-> not use */
-> +		|| starts_with(url, "ssh+git://") /* deprecated - do
-> not use */
-> +		) {
-> =C2=A0		/*
-> =C2=A0		=C2=A0* These are builtin smart transports; "allowed"
-> transports
-> =C2=A0		=C2=A0* will be checked individually in git_connect.
+I do not agree with that reasoning at all, primarily because your
+"likely useful" is not justfied.
+
+Could you explain what makes you think that it is "likely" that the
+commit that matches "parent commit id" is available to the recipient
+of the patch?
+
+Whatever the reason is, if it _is_ likely, then I do not see a point
+in spending cycle to do get-upstream and merge-base, or giving an
+option to the user to explicitly specify the base.  Given that this
+series does these things, I'd have to conclude your "likely useful"
+is "might possibly turn out to be useful in some cases if you are
+lucky but is no way reliable" at best.
+
+Rather than throwing an unreliable information in the output and
+blindly proceeding, I'd think you would want to error out and tell
+the user to explicitly give the base without producing the patch
+output.  That way, you will not get patches with unreliable
+information.
+
+Suggesting to use set-upstream-to when you give that error message
+may also be helpful.
