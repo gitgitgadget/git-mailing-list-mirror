@@ -1,72 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Mar 2016, #04; Wed, 23)
-Date: Thu, 24 Mar 2016 14:51:02 -0700
-Message-ID: <xmqqfuvf7dfd.fsf@gitster.mtv.corp.google.com>
-References: <xmqqpoukc30t.fsf@gitster.mtv.corp.google.com>
-	<54B6C1E1FE6A4BAEA07E97B7BA81EB01@PhilipOakley>
-	<xmqqlh57am55.fsf@gitster.mtv.corp.google.com>
-	<171B6E119FCF4E5CBF2831F6A7A004EA@PhilipOakley>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [RFD] minor frustration in 'git add' pathname completion
+Date: Thu, 24 Mar 2016 14:56:14 -0700
+Message-ID: <CAGZ79kaUPf=kBCuH__8BahjM3WjSGaijiQr05pMKe+TNdg3W9w@mail.gmail.com>
+References: <xmqqr3ez7dqw.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Thu Mar 24 22:51:18 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 24 22:56:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajD9t-0006AJ-H1
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 22:51:13 +0100
+	id 1ajDEr-0000bq-LZ
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 22:56:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750901AbcCXVvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 17:51:08 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:55726 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750755AbcCXVvG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 17:51:06 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EFEAC4D1D2;
-	Thu, 24 Mar 2016 17:51:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5QAm/8rvMHNYkt+OXRZU9Y67eM4=; b=ratn24
-	fTQpmQDDxns3NwXWlDdcCCiCKSBM5+U23WlkKABiwrbbNj9EPuqmII7m01e/VsCt
-	ofh/jvEWaXp11LjQc67VSZ7dabJRWxzX6sQKcLG0wkDo/RJmYbm6dHs9Rr0p9fiJ
-	gSXcOCOw0A3sx+WoZk1N3j+seQMxHngnzzrnQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DJ1qqwP7rkrsKwBvCelPQ7sWKkSKPTgU
-	/sZ0FjoI2TOWGNujGWOBs+qkpOIB7P+xPaBaooDKy5QSpncgsD/6BGOYEMk7JFmR
-	HOb4ODJurZvXJyyLaz2fB2Fy70/GNytlihW3aZ8aDVcD+59PyaQXbTotDC1Orq0y
-	278qrLfbKPQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E62C74D1CF;
-	Thu, 24 Mar 2016 17:51:04 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6E8B44D1CE;
-	Thu, 24 Mar 2016 17:51:04 -0400 (EDT)
-In-Reply-To: <171B6E119FCF4E5CBF2831F6A7A004EA@PhilipOakley> (Philip Oakley's
-	message of "Thu, 24 Mar 2016 21:47:20 -0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 81B9615C-F20A-11E5-AF0F-EB7E6AB36C07-77302942!pb-smtp0.pobox.com
+	id S1750994AbcCXV4R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 17:56:17 -0400
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:38421 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750772AbcCXV4P (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 17:56:15 -0400
+Received: by mail-ig0-f179.google.com with SMTP id ig19so1972120igb.1
+        for <git@vger.kernel.org>; Thu, 24 Mar 2016 14:56:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=2RoS9hgg60wp0GUR9WkW/AlgrhPa+5kLAWNAuWAgquU=;
+        b=CQf9RsjVqrUpM2J/S2RDSS2rNVYxIEj712NJiKcVJAO+Q9uBXwgRGbAkC5VmkcLTDp
+         PP+D3Lxy78i1/JcazsAJjJVzx2cJ6iLSunr9lII0tbtbgneahDkOqLDhzpc+d43oEdd2
+         y83JcuEFaJ7ozzMQgEFyyhpe63KR5yVVufM7bgfGesXpqg9ZNbbbON12nNuGD3cMsbRk
+         R56ln3f8g1NaYFFljvvv7dQKk6heIqHaICXzQB/rTXMUEQe167Ne/M0z1j/hhXLofeUt
+         oqnUIZiGPrnwfe8WtVpYsUgigzAc9vBWbCdC6qyq8dYozsbVCaC///m0JqSKT6t2WacJ
+         uSnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=2RoS9hgg60wp0GUR9WkW/AlgrhPa+5kLAWNAuWAgquU=;
+        b=jTWfkxiSaw8MLV3M+3pcqTLgh/v0GJ/4qDm9gPK1Q1NsyF+6ZO4omZK3upGvMfmESj
+         1ePO34PQQ+ktgmA0axldUjIc/OUnN1hVwGL7LIye5D32B8FMhgCyyUVpbxjx722jGY6v
+         qI6Fmcr3I/uHLPlP9qtfeGaeglGqXymnDDyFE58mbyf89CY3D6Ub1o70h5Zqsls7ET8j
+         GSJ31s92AZfDqYbsCp6Cl760nWwjrt+p93aqEVQNBWSgNCKEa6e1rdk2zrfY+7O65DH3
+         F7Neo3SXwL+wcGVXoqRa2O7cRxh4RrGC9nd2RtUuw06604nIeFAuEy//ncpa9vk9IjxF
+         mh4w==
+X-Gm-Message-State: AD7BkJL+vDwh0q22Rm60HgtpcBAO2kd8Rs429IntiCoG8mCVRYgVUpenSU4vj5iL/fxQa7wVdlu314Dczn0qcTYB
+X-Received: by 10.50.13.34 with SMTP id e2mr25951111igc.85.1458856574673; Thu,
+ 24 Mar 2016 14:56:14 -0700 (PDT)
+Received: by 10.107.132.101 with HTTP; Thu, 24 Mar 2016 14:56:14 -0700 (PDT)
+In-Reply-To: <xmqqr3ez7dqw.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289809>
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+On Thu, Mar 24, 2016 at 2:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Discuss.
 
-> This was just clarifying that if a variant of the bundle format (#
-> V3?) was used, that it must, if the name was retained(*), still work
-> as a sneakernet transfer option. In that case the user would need to
-> be told, or be able to find out via (e.g.) the 'verify' sub-command,
-> where the other half of the split bundle (the pack) was located so
-> that both halves could be copied for sneakernet transfer.
+> For example, I keep
+> a backup version of whats-cooking.txt in the working tree that I use
+> to manage the 'todo' branch as whats-cooking.txt+, and this is not
+> explicitly "ignored".
 
-I was sort-of expecting that users are intelligent enough to not
-even imagine to use split-bundle for sneakernetting, as it would be
-obvious that there is no upside for doing so.
+Completely side tracking thought: Have you considered ignoring
+whats-cooking.txt+ locally?
+
+WC+ is a local thing to your repo, so you'd want to prefer
+$GIT_DIR/info/exclude over .gitignore.
+
+You wish to ignore WC+ by git, so make it be ignored,
+instead of changing the git add rules. Your proposal
+feels like fixing the symptoms instead of the root cause.
+
+I can see (3) being useful as it narrows down the list
+by a lot, I would imagine.
+
+As I rarely use git add, but prefer git-gui, I have no experience though
+for git-add completion, but if you had one conflict after a bad merge
+you can just do git add <TAB> to get that file(?), so I guess people use it.
+
+Stefan
+
+
+>
+> Thanks.
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
