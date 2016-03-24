@@ -1,61 +1,74 @@
 From: Stanislav Kolotinskiy <stanislav@assembla.com>
-Subject: [PATCH v2] git-send-pack: Fix --all option when used with directory
-Date: Thu, 24 Mar 2016 16:14:18 +0200
-Message-ID: <1458828858-3577-1-git-send-email-stanislav@assembla.com>
+Subject: [PATCH v3] git-send-pack: Fix --all option when used with directory
+Date: Thu, 24 Mar 2016 16:16:29 +0200
+Message-ID: <1458828989-3799-1-git-send-email-stanislav@assembla.com>
 Cc: peff@peff.net, dborowitz@google.com,
 	Stanislav Kolotinskiy <stanislav@assembla.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 24 15:14:54 2016
+X-From: git-owner@vger.kernel.org Thu Mar 24 15:17:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aj62F-0005G2-U6
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 15:14:52 +0100
+	id 1aj64K-0006pG-Aj
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 15:17:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751862AbcCXOOs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 10:14:48 -0400
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:35783 "EHLO
-	mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750818AbcCXOOr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 10:14:47 -0400
-Received: by mail-wm0-f53.google.com with SMTP id l68so238286503wml.0
-        for <git@vger.kernel.org>; Thu, 24 Mar 2016 07:14:46 -0700 (PDT)
+	id S1755882AbcCXOQx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 10:16:53 -0400
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:37250 "EHLO
+	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750818AbcCXOQv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 10:16:51 -0400
+Received: by mail-wm0-f42.google.com with SMTP id p65so67858150wmp.0
+        for <git@vger.kernel.org>; Thu, 24 Mar 2016 07:16:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=assembla-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id;
-        bh=jdFxOXCQoWU5TtG0+guT8Mn38HpQgtsOJlT0P7RuCkQ=;
-        b=clQLbOVEJiP4LNhJ7nvldJP5y5WO7A8Nqzo1ZzmcOee3pVli8QJ5bh69mmXFDWbBbw
-         j2wJwbd33Jsh22Q3lLVsnORUk3+sjshz6QRqpxBO9szqn/nIhdijlAMTvRAH+h94D/gY
-         E7MAiFCGwS9+Qak4ZNOufe1FHJbh1kCl9wnx39MCMlGMA+YGrOemjUsZ6mVxDHVESKNK
-         YDegvyk6uvSz0f8BDutA4w6x2RYxoiVObBH0I0oM6jed7nle5W02SYacc2LcuvoAH3VT
-         rqE3yMluQ4rfGOBRDQk149FDTCi+9dMx+BRUZdSCSoMoVlzA7BcykRKXXMhRJQkbvtWq
-         Xh7Q==
+        bh=hjJ0mOwWe7fGYr3WmtEeMnHdtjnYbnSdiuX7/C6nC2w=;
+        b=eshCtpMuBGXJJM/Qgx5ZbFMlJ1QIOYUgD+urpfNSzjaAhwuziCrU75A/GKhlc3kmer
+         bIEodskuWsy57628jDBqXQ9xgW8WKrwJvdoWmYsch6E4hqov/0882tmKtcCs4q2Vy/rW
+         tyqG5O8ikoVP4vOdkFz08bjpXGm12z+q+QIr+n35CQ5CedZQ5gfdPBcRYlxufczFhlJW
+         oXnTk4jpbD/siBX4EAtxINCHJ1ro5YFtfJ6JghngGZUTRu4iGD73opmdloclpdwuSKaZ
+         ecLVIZjdCqLMS3D2HpjKsjFgII2viRkAMgBfD1jT6fMZ4CUkaS+Rtsd/E7VzfP0Lpd99
+         Lebg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=jdFxOXCQoWU5TtG0+guT8Mn38HpQgtsOJlT0P7RuCkQ=;
-        b=IhKDEmGuYLwSwti2S1qaqZtZbYgNuTV5h+5loGrnCTBDBE15PbZcNyxhMZ27ESrv1x
-         rvj8UW/KdCTXX5ymEXVl2z30+B/tAy4HtuKN4qw63FhD9bzlcfD+YgUjXvnBrt6eOm77
-         rhO3rqAxCIa8JSFc+xwkT2QttLwpyIwgc+MRTVpQffJcw91PJputEKLJv186t4uhZLyB
-         gw5iAqucxKpxLt+tNMi4LokqicYrI5pnJnSJZXbTWJDgNn6GFvSaOTXgjbQRp+OC6uxL
-         KT9JCoqTff1Ckn6wD/cPsVEJoA7E2H9uUw8GsSousS+KwxNLP4mJOE+qm3nKPrtSdyI5
-         8rBQ==
-X-Gm-Message-State: AD7BkJI2p8Bt3CLDUboVTKVQcUdUEAYeQCDwlllU5zlb+L3ZacPNazPoJbomrk8Slw6Wfw==
-X-Received: by 10.28.95.131 with SMTP id t125mr34404722wmb.80.1458828885549;
-        Thu, 24 Mar 2016 07:14:45 -0700 (PDT)
+        bh=hjJ0mOwWe7fGYr3WmtEeMnHdtjnYbnSdiuX7/C6nC2w=;
+        b=Ncys2qpHvrfuiy0FkilGEUtumwe9AioBTXvoGQvKscPs25BZoVa+xVG/wNy4ICBQ09
+         HE5gEHpPk8723f4iCuyl8zHExHwzgz2+iLdTm74YYWwvoEuVC4B50bJ1NMnAdyWKzmn9
+         EosF1xKggSqOBMDyX2yIOBSnmc+cMXtdtor0wTCzSZpElBAOydC+joDe5WquwDNKQCeW
+         NC8lU0XkIonPfZer49XvFZTLYMc3n1ZiHB6e99mQDylE6DJnA7xWTrkQkYv3fEQGZt/j
+         Nk1vPhp3oeXQ6b//vD6uhDo3M6HIyvOcVyAmROarPTyvocRi6kQzcNj6jXbdOUVmOLjf
+         tnPg==
+X-Gm-Message-State: AD7BkJJQbNEXP5VufR54C9//jziWBaXmQX3MkzzAD5h/FpnSfhm8OTdl0AgDPLfKGRh8Nw==
+X-Received: by 10.28.0.148 with SMTP id 142mr10394463wma.72.1458829008789;
+        Thu, 24 Mar 2016 07:16:48 -0700 (PDT)
 Received: from localhost.localdomain ([217.26.172.139])
-        by smtp.gmail.com with ESMTPSA id xx3sm7586407wjc.32.2016.03.24.07.14.43
+        by smtp.gmail.com with ESMTPSA id fv6sm7625537wjc.12.2016.03.24.07.16.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 24 Mar 2016 07:14:44 -0700 (PDT)
+        Thu, 24 Mar 2016 07:16:47 -0700 (PDT)
 X-Mailer: git-send-email 2.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289747>
 
+When using git send-pack with --all option
+and a target directory, usage message is being
+displayed instead of performing the actual transmission.
+
+The reason for this issue is that refspecs variable is being
+calculated in a different way comparing to previous versions,
+and even though the number of refspecs (nr_refspecs) is 0,
+refspecs contain all the arguments and switches passed to send-pack.
+
+This ensures that send-pack will stop execution only when --all
+or --mirror switch is used in conjunction with any refs passed.
+
+Signed-off-by: Stanislav Kolotinskiy <stanislav@assembla.com>
 ---
  builtin/send-pack.c  |  2 +-
  t/t5400-send-pack.sh | 12 ++++++++++++
