@@ -1,114 +1,138 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 1/2] Modified flag field type in rev_list_info struct in
- bisect.h. There is no need for flag field to be signed, as it is not supposed
- to be used as decimal.
-Date: Thu, 24 Mar 2016 12:51:24 -0700
-Message-ID: <CAGZ79kZmzo+f9YF1K1oC2GfOrzdaojmrca7bUm3cBRoDreeA-g@mail.gmail.com>
-References: <1458848469-12663-1-git-send-email-motroniii@gmail.com>
-	<1458848469-12663-2-git-send-email-motroniii@gmail.com>
+Subject: Re: [RFC_PATCHv4 5/7] submodule update: respect submodule.actionOnLabel
+Date: Thu, 24 Mar 2016 12:54:05 -0700
+Message-ID: <CAGZ79kZCHv6z6zT2Q2MzMNXfGWcqk9uxsqQ-uEjAPw3h+cSjsQ@mail.gmail.com>
+References: <1458612372-10966-1-git-send-email-sbeller@google.com>
+	<1458612372-10966-6-git-send-email-sbeller@google.com>
+	<xmqq37rif870.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kaEmDFDf+1BZV1C5ETswbXmAUYk_OMsZf_ka6tJ=pfwcQ@mail.gmail.com>
+	<xmqqlh58bun7.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Motroni Igor <motroniii@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 24 20:51:31 2016
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 24 20:54:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajBI2-0002yy-DP
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 20:51:30 +0100
+	id 1ajBKg-0004bp-UH
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 20:54:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750901AbcCXTv0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 15:51:26 -0400
-Received: from mail-yw0-f181.google.com ([209.85.161.181]:35075 "EHLO
-	mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750775AbcCXTvZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 15:51:25 -0400
-Received: by mail-yw0-f181.google.com with SMTP id g127so72385023ywf.2
-        for <git@vger.kernel.org>; Thu, 24 Mar 2016 12:51:25 -0700 (PDT)
+	id S1751402AbcCXTyK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 15:54:10 -0400
+Received: from mail-yw0-f170.google.com ([209.85.161.170]:35966 "EHLO
+	mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751383AbcCXTyG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 15:54:06 -0400
+Received: by mail-yw0-f170.google.com with SMTP id g3so72743783ywa.3
+        for <git@vger.kernel.org>; Thu, 24 Mar 2016 12:54:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=xUQe/DDPc8Giijm/iISAAdVOFC2oWw5niJ8YymN9A1w=;
-        b=ot8aLxiWhtSWKpQi87mpRfcNuOGwj8sCFur8zMhA3ZCzraGT7GZxhXr/wX+rY+RqeG
-         OtRE7W9qZ6AGIG08elWlcex9n9BJDJ+iFLBAcehmodgPrr/5zTpwde7ERJhECLGETRSS
-         aoNRtrWNNUZhWjTDGb/p0goMIz8QjI9KjY28dIdNeQ9d4O6o7a8ohWs9Ex8qNhRzsIav
-         KOvUckdwt/ICTHr4d5hDJLp0G61aTBpRn33L2dIBqdlVVqXyQLhyvEhoMpvAmId1g35b
-         JY4I7IVVxVuOd5C/vo9IqpB1nW95eWpr7bMl/Lz+CfzpggC3HtSem0T9i+Ysw6ZbQPQB
-         B2PA==
+        bh=HUa6CpWcXrWlRI96mjuT1vM/m/nBg1KGE8ikKo1tCfU=;
+        b=N+Dztanb6Whvv4FT1p4gQaNB6hfOT8/oLsYBCPHe/Q22BB0YDQHuZcwtg/MqS60Z8f
+         ATe7pXZLeHb3gztXd0nJZLjeQC2UgLyzR2jdu5A7KOOjGh9EW8k5fmqmCiv8Fx11M9aJ
+         zzWjZ3DMwk6k3ufDRiV8uYl5ciCiN1343zuE+E0o1G/JGe5HmtJAhqMM9eaekDf/bS5P
+         0I0lnC6toT6w66yiAesKMrl+gZpnHrhwCHo9bIjChCNLR+fcsmey/TswsMI2hDvKC/cb
+         6ehG6ZgLZepFkzcqE+o0KLYdQ3xHF1IjzqRVVxxrK70He2d3JIACbhV1qF+5EbZY9jMU
+         W+GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=xUQe/DDPc8Giijm/iISAAdVOFC2oWw5niJ8YymN9A1w=;
-        b=jEPhmWNJVVOeiIf4GvBL7vvLhTZOfzBDTp0HA38qxD5QwPdXAIjMlz5FBccXZYTl5R
-         jSGckFF4m0NOD63KSyatmmCaqylsLmer/r3XrGsEn1LHPiM9I0O1E7TpJPHv3QYRbI29
-         81Mhs4x4DBfzyW+R1VQqUAmwRvitS/zXfK91mR0OIsfGHxvDtdHiJOmtOg1ch3Ls48Qh
-         0W191n0xSHBXrgK1RaMKCS2yFN5B+izvBfk/X8PETj5frYkCijV2Fh+qKN9ug5vJ2a8S
-         wi1QvGCIQzGekjHU6qTqkwJZVe5l/jCqMtRKYMoUrWbrUuednS5cUFbt8yg4dxbvipL/
-         pTwQ==
-X-Gm-Message-State: AD7BkJIN5uNWxxx1WrAn/Ccbha/ciCBsrqYlb3Z0e03CvWqQs+Ya/WE9kdq8isJw6yKwchGF+TwO2Z3shfwgEoin
-X-Received: by 10.37.19.66 with SMTP id 63mr5737429ybt.75.1458849084619; Thu,
- 24 Mar 2016 12:51:24 -0700 (PDT)
-Received: by 10.37.51.137 with HTTP; Thu, 24 Mar 2016 12:51:24 -0700 (PDT)
-In-Reply-To: <1458848469-12663-2-git-send-email-motroniii@gmail.com>
+        bh=HUa6CpWcXrWlRI96mjuT1vM/m/nBg1KGE8ikKo1tCfU=;
+        b=Ow9zeGSCksncRz/dMGbYiSvNE25WW9+KwHVUvdPPXpvarWgW/cZVhkH8hEgElVmIFE
+         ESVFVWH5nhqn6Yc2IJ++C08m+www1Ut0q8uzuwv6shX6l8LR2D2kmFvwUoRzRX9VQxsz
+         8OBEHivXhRhUADysagt8oq4Jkee0ZOpPFXoUymLlVuDGL/nBNfzLtQfDNen7gS1dCOT1
+         VhHwHE8He4McX1ZDaFvKgdp+yxuDjSoqMCEwjbIuvApeU8+HWX1jFDMCM3isMjdiZj9t
+         FxIEx+Ntgn7LeBK7CzM2r88WEacnieJQWGepqAv7V3zTlFJTSYG7GwD0JzdZGBNgTl+k
+         PQJw==
+X-Gm-Message-State: AD7BkJJhdYvf8L4O+EduQkjO5oJZZbxL+wzGJyEljGz3j8e6STyijf6Jv5syl9pTy5OxES8z07eYrS/ZUaVTfeHL
+X-Received: by 10.129.134.133 with SMTP id w127mr5314990ywf.252.1458849245371;
+ Thu, 24 Mar 2016 12:54:05 -0700 (PDT)
+Received: by 10.37.51.137 with HTTP; Thu, 24 Mar 2016 12:54:05 -0700 (PDT)
+In-Reply-To: <xmqqlh58bun7.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289790>
 
-On Thu, Mar 24, 2016 at 12:41 PM, Motroni Igor <motroniii@gmail.com> wrote:
-> From: Pontifik <motroniii@gmail.com>
-
-Here is a good place to put reasoning for why this is a good idea.
-I see you have a long subject, so maybe we can shorten the first line
-(down to less than ~ 80 characters) and put the longer explanation
-here.
-
-How about:
-
-  bisect: use unsigned for flag field
-
-  The flags are usually used as a unsigned variable, because it makes
-  bit operations easier to follow.
-
-
-
+On Wed, Mar 23, 2016 at 5:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> Signed-off-by: Pontifik <motroniii@gmail.com>
-
->From Documentation/SubmittingPatches:
-> Also notice that a real name is used in the Signed-off-by: line. Please
-> don't hide your real name.
-
-> ---
->  bisect.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>> On Tue, Mar 22, 2016 at 3:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Stefan Beller <sbeller@google.com> writes:
+>>>
+>>>> This change introduces the 'submodule.actionOnLabel' variable
+>>>> in a repository configuration. Generally speaking 'submodule.actionOnLabel'
+>>>> restricts the action of a command when no submodules are selected via the
+>>>> command line explicitely to those submodules, which are selected by
+>>>> 'submodule.actionOnLabel'. It can occur multiple times and can specify
+>>>> the path, the name or one of the labels of a submodule to select that
+>>>> submodule.
+>>>>
+>>>> The introduction of 'submodule.actionOnLabel' starts with
+>>>> 'git submodule update' in this patch and other commands will follow
+>>>> in later patches.
+>>>>
+>>>> 'submodule.actionOnLabel' implies '--init' in 'git submodule update'.
+>>>>
+>>>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>>>>
+>>>> TODO: generic documentation for submodule.actionOnLabel
+>>>> TODO: documentation for submodule update
+>>>
+>>> TODO: a name that matches the concept better.
+>>
+>> This is one of the hardest parts of the series so far. The last reviews
+>> were mostly bike shedding about the name of the concept and I thought
+>> we were settled to actionOnLabel as that fits best to what we want to do.
+>>
+>> So let's revisit that. My current understanding of the design:
 >
-> diff --git a/bisect.h b/bisect.h
-> index acd12ef..a979a7f 100644
-> --- a/bisect.h
-> +++ b/bisect.h
-> @@ -16,7 +16,7 @@ extern struct commit_list *filter_skipped(struct commit_list *list,
+> I am not questioning the name "label" to call the facility that
+> allows projects to group submodules together, and that serves as one
+> of the ways to choose what subset of submodules are worked on by
+> default.  There is no need to revisit that part.
 >
->  struct rev_list_info {
->         struct rev_info *revs;
-> -       int flags;
-> +       unsigned int flags;
-
-You can also drop the int here and make it just
-unsigned.
-
->         int show_timestamp;
->         int hdr_termination;
->         const char *header_prefix;
-> --
-> 2.5.0
+> What I am questioning is
 >
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>         action On Label
+>
+> because
+>
+>  (1) it sounds as if that configuration were a way to choose what
+>      action is done to the chosen subset of submodules;
+>
+>  (2) it sounds as if the only way to choose a subset of submodules
+>      to be operated on by default is via the "label" mechanism.
+>
+> And from your writing (omitted), I think we agree that we definitely
+> want to avoid the misunderstanding that is (1).  This variable does
+> not specify what is done--this specifies what subset of submodules
+> are to be operated on.  Having "action" in the name of the variable
+> is wrong.
+>
+> And from the proposed log message, it is clear that "label" is not
+> the only way to specify the subset of submodules to be worked on,
+> i.e. "... can specify the path, name or the labels".   Having
+> "label" in the variable name is wrong.
+>
+> I am tempted to suggest submodule.defaultOperand and I am fairly
+> sure "default" part of that name gets the concept much better than
+> "actionOnLabel", but there probably are much better words than
+> Operand.
+
+I immediately thought of defaultActionset, because "default", as well as the
+"actionset" conveys the concept of choosing a subset of submodules to operate
+on. However You may mistake it as defaultActionSet, i.e. what action is set
+by default.
+
+Maybe we can revive the term "group" and call it submodule.defaultGroup.
+The defaultGroup is defined by selection of names, paths and labels.
