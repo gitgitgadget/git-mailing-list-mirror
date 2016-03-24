@@ -1,98 +1,107 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Resumable git clone?
-Date: Thu, 24 Mar 2016 08:00:08 -0000
-Organization: OPDS
-Message-ID: <C59B0CDA60BC402B900305A9D62D815B@PhilipOakley>
-References: <20160302012922.GA17114@jtriplet-mobl2.jf.intel.com> <xmqqziuh46hb.fsf@gitster.mtv.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: [PATCH v9 2/3] t7507-commit-verbose: make test suite use
+ write_script
+Date: Thu, 24 Mar 2016 08:25:18 +0000
+Message-ID: <01020153a7ba4eae-9b88e119-0505-418f-a137-595250edaa9d-000000@eu-west-1.amazonses.com>
+References: <01020153a7ba4e07-f326395b-63df-4f8a-b378-8f387b02d0bd-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: "Git List" <git@vger.kernel.org>, <sarah@thesharps.us>,
-	<viro@zeniv.linux.org.uk>
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"Josh Triplett" <josh@joshtriplett.org>,
-	"Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-X-From: git-owner@vger.kernel.org Thu Mar 24 09:00:16 2016
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 24 09:38:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aj0Bk-0001DX-6X
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 09:00:16 +0100
+	id 1aj0mU-0004a5-Co
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 09:38:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752580AbcCXIAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 04:00:13 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:64779 "EHLO
-	smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751448AbcCXIAL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 04:00:11 -0400
-Received: from PhilipOakley ([92.22.21.19])
-	by smtp.talktalk.net with SMTP
-	id j0BaaWTokEnBtj0BaaKoA9; Thu, 24 Mar 2016 08:00:08 +0000
-X-Originating-IP: [92.22.21.19]
-X-Spam: 0
-X-OAuthority: v=2.1 cv=YNU/sUyx c=1 sm=1 tr=0 a=I7bjfyOo2Kke1IIJyMFemw==:117
- a=I7bjfyOo2Kke1IIJyMFemw==:17 a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10
- a=s5jvgZ67dGcA:10 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8 a=UPm3pfgAAAAA:8
- a=zBK5yZjOAAAA:8 a=VwQbUJbxAAAA:8 a=KOwJaKI2jVH_R5H-zDcA:9 a=wPNLvfGTeEIA:10
- a=x8gzFH9gYPwA:10
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfHJfZhRq9/b5CYQCmQ8OZiqmdzSTdGouyDVS1hz0qkjFXedW0chzqBrNNsoxN7Wq0YePOZJjFDfmuxfacmJ7tOjAliaUkdkrhnIVm6CUp8WnyFeX2tY4
- symxrfbcmadrQeGe8UmPT8ckCuv53i4+kIPBhZ73TGlr1bsF4fjak/3WXzlMFD0aySBwSx7wCzVxNQkusfGLyB7oR5cbMDOFhCrP44D1755vfNlACsvr2vb0
- NtsqJALnWHoRfXLJmqnCOZaYc8G3NygQrf8rNCQICB6zldPiaMqZGXcY1yZKkhRTjW5dtUtne9QzErJf8FVO0fN8XRw/7HMmunEfgOVFX6Q=
+	id S1756812AbcCXIiF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 04:38:05 -0400
+Received: from a6-243.smtp-out.eu-west-1.amazonses.com ([54.240.6.243]:38803
+	"EHLO a6-243.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752144AbcCXIiE (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2016 04:38:04 -0400
+X-Greylist: delayed 763 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Mar 2016 04:38:04 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1458807918;
+	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=6QtluxLQS6yFAifUURSa+P2MZa/ZXJkWNHdzZuOl/Ig=;
+	b=JNiJ9ulhXNz0jcvPlj4jIiFtN4jymKFPYBDWwfSQc3RUR66RjbWsSYD435YPjqxn
+	DChwLrZMWp4fYAg27gXowRxUwKmICMn79UdnBzGerQ7/jjoaf5olcpYWGp8am7yAR0V
+	hBg43TFzvuXCHObEwo+tqRjaTSIM7wU1C8SJ6Ktw=
+In-Reply-To: <01020153a7ba4e07-f326395b-63df-4f8a-b378-8f387b02d0bd-000000@eu-west-1.amazonses.com>
+X-SES-Outgoing: 2016.03.24-54.240.6.243
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289723>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-Sent: Wednesday, March 02, 2016 8:41 AM
-> Josh Triplett <josh@joshtriplett.org> writes:
->
->> If you clone a repository, and the connection drops, the next attempt
->> will have to start from scratch.  This can add significant time and
->> expense if you're on a low-bandwidth or metered connection trying to
->> clone something like Linux.
->
-> For this particular issue, your friendly k.org administrator already
-> has a solution.  Torvalds/linux.git is made into a bundle weekly
-> with
->
->    $ git bundle create clone.bundle --all
->
+Also remove test_set_editor from global scope and use it in whichever
+test it is required.
+---
+ t/t7507-commit-verbose.sh | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-Isn't this use of '--all' a bit of oversharing? I had proposed a doc patch
-to the bundle manpage way back (see $gmane/205897) to give the
-user that example, but it wasn't accepted as it was thought wrong.
+diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
+index 2ddf28c..cf95efb 100755
+--- a/t/t7507-commit-verbose.sh
++++ b/t/t7507-commit-verbose.sh
+@@ -3,12 +3,11 @@
+ test_description='verbose commit template'
+ . ./test-lib.sh
+ 
+-cat >check-for-diff <<EOF
+-#!$SHELL_PATH
+-exec grep '^diff --git' "\$1"
++write_script "check-for-diff" <<-\EOF &&
++grep '^diff --git' "$1" >out &&
++test $(wc -l <out) = 1
+ EOF
+ chmod +x check-for-diff
+-test_set_editor "$PWD/check-for-diff"
+ 
+ cat >message <<'EOF'
+ subject
+@@ -23,6 +22,7 @@ test_expect_success 'setup' '
+ '
+ 
+ test_expect_success 'initial commit shows verbose diff' '
++	test_set_editor "$PWD/check-for-diff" &&
+ 	git commit --amend -v
+ '
+ 
+@@ -38,11 +38,13 @@ check_message() {
+ }
+ 
+ test_expect_success 'verbose diff is stripped out' '
++	test_set_editor "$PWD/check-for-diff" &&
+ 	git commit --amend -v &&
+ 	check_message message
+ '
+ 
+ test_expect_success 'verbose diff is stripped out (mnemonicprefix)' '
++	test_set_editor "$PWD/check-for-diff" &&
+ 	git config diff.mnemonicprefix true &&
+ 	git commit --amend -v &&
+ 	check_message message
+@@ -66,11 +68,13 @@ test_expect_success 'diff in message is retained without -v' '
+ '
+ 
+ test_expect_success 'diff in message is retained with -v' '
++	test_set_editor "$PWD/check-for-diff" &&
+ 	git commit --amend -F diff -v &&
+ 	check_message diff
+ '
+ 
+ test_expect_success 'submodule log is stripped out too with -v' '
++	test_set_editor "$PWD/check-for-diff" &&
+ 	git config diff.submodule log &&
+ 	git submodule add ./. sub &&
+ 	git commit -m "sub added" &&
 
-" I also think "--all" is a bad advice for another reason.  Doesn't it
-shove refs from refs/remotes/* hierarchy in the resulting bundle?
-It is fine for archiving purposes, but it does not seem to be a good
-advice to create a bundle to clone from."
-
-Perhaps the '--clone-bundle' (or maybe'--bundle-clone') option from 
-$gmane/288222  [PATCH] index-pack: --clone-bundle option 2016-03-03 maybe a 
-suitable new <rev-list-arg> to get just the right content?
-
-> and the result placed on k.org CDN.  So low-bandwidth cloners can
-> grab it over resumable http, clone from the bundle, and then fill
-> the most recent part by fetching from k.org already.
->
-> The tooling to allow this kind of "bundle" (and possibly other forms
-> of "CDN offload" material) transparently used by "git clone" was the
-> proposal by Shawn Pearce mentioned elsewhere in this thread.
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+--
+https://github.com/git/git/pull/218
