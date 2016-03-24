@@ -1,91 +1,101 @@
 From: Stanislav Kolotinskiy <stanislav@assembla.com>
-Subject: Re: [PATCH] git-send-pack: Fix --all option when used with directory
-Date: Thu, 24 Mar 2016 15:57:59 +0200
-Message-ID: <56F3F267.30900@assembla.com>
-References: <1458750262-25765-1-git-send-email-stanislav@assembla.com>
- <20160323212213.GA19920@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Dave Borowitz <dborowitz@google.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 24 14:58:27 2016
+Subject: [PATCH v2] git-send-pack: Fix --all option when used with directory
+Date: Thu, 24 Mar 2016 16:14:18 +0200
+Message-ID: <1458828858-3577-1-git-send-email-stanislav@assembla.com>
+Cc: peff@peff.net, dborowitz@google.com,
+	Stanislav Kolotinskiy <stanislav@assembla.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 24 15:14:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aj5mN-0000gk-4X
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 14:58:27 +0100
+	id 1aj62F-0005G2-U6
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 15:14:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751928AbcCXN6W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 09:58:22 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:32979 "EHLO
-	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750778AbcCXN6W (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 09:58:22 -0400
-Received: by mail-wm0-f46.google.com with SMTP id l68so275804860wml.0
-        for <git@vger.kernel.org>; Thu, 24 Mar 2016 06:58:21 -0700 (PDT)
+	id S1751862AbcCXOOs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 10:14:48 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:35783 "EHLO
+	mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750818AbcCXOOr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 10:14:47 -0400
+Received: by mail-wm0-f53.google.com with SMTP id l68so238286503wml.0
+        for <git@vger.kernel.org>; Thu, 24 Mar 2016 07:14:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=assembla-com.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=9R1f4uiKQ57vdXCRyNewTdc+41VaikOQU8x111tTidA=;
-        b=FFr9DEYKgclqXaHhJjHDRGs1ZJ2nAbVvmIerK2D1XnmTYSNb8rR/5UxoBoB+22aj42
-         Ay5oi5znxGj7LJxIPTxFwsTUkT3OKwfJvMu0UkulbxN65D5Kl9vUmZgXjvOhZSopHoeT
-         PYv/xzEw12YUc11gjyzN13D6dqZvpMSw8O1Uc36ZTZ2Al01gsP95JyAywNM3muJebWLJ
-         F+Q2bb2o1V3faugaZ25pMs4Iz7cqdMuGJtjepQ7TJ9pqiVqU6/DBnNC7UPkkFbUauLhh
-         bmVs8GywFnGnIYtpAkrrIG01TtwPDDgr/ujRvS8tEE5qehpWeer9t1aKjdTutfcxkqC2
-         chIA==
+        h=from:to:cc:subject:date:message-id;
+        bh=jdFxOXCQoWU5TtG0+guT8Mn38HpQgtsOJlT0P7RuCkQ=;
+        b=clQLbOVEJiP4LNhJ7nvldJP5y5WO7A8Nqzo1ZzmcOee3pVli8QJ5bh69mmXFDWbBbw
+         j2wJwbd33Jsh22Q3lLVsnORUk3+sjshz6QRqpxBO9szqn/nIhdijlAMTvRAH+h94D/gY
+         E7MAiFCGwS9+Qak4ZNOufe1FHJbh1kCl9wnx39MCMlGMA+YGrOemjUsZ6mVxDHVESKNK
+         YDegvyk6uvSz0f8BDutA4w6x2RYxoiVObBH0I0oM6jed7nle5W02SYacc2LcuvoAH3VT
+         rqE3yMluQ4rfGOBRDQk149FDTCi+9dMx+BRUZdSCSoMoVlzA7BcykRKXXMhRJQkbvtWq
+         Xh7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=9R1f4uiKQ57vdXCRyNewTdc+41VaikOQU8x111tTidA=;
-        b=NcCeuWvUPRf4A1H8Ug4FX6G7rNnGsfN7/vt9e7x3bw9x+ujH8cJPeMLDnVoxhkvFwU
-         Jmma0C/kzZS0C91tjwJHog1z8G852XmkttcY1LIejsSr59W46Am9yxT58vF63vrAYiqT
-         outZ+qt8voYrTc80ZTZWwippkDImxqgWk1g04DZm0XDGeLcI/QfMiKwuLY+JzdsiGu+v
-         g48Mx/hWlTwcrs0D8/gDIGALtILIY5+9xM6NunBGBPW1JSTf372pV6XXhYc2NljfdRj1
-         uWAiA9DlxZQ1i6fNwO2BsXc1O/zckTISFrtnlnLr58GOcQ7x64Rt/aP8kQWKeiLZ4q3a
-         42mg==
-X-Gm-Message-State: AD7BkJI8wLO5xHloyTke82McvpWPO2k34l8w/cTv9rzr/hj5BPSXajcgKqy0sQKXfzTxOw==
-X-Received: by 10.28.55.74 with SMTP id e71mr34592014wma.26.1458827881456;
-        Thu, 24 Mar 2016 06:58:01 -0700 (PDT)
-Received: from [192.168.88.127] ([217.26.172.139])
-        by smtp.googlemail.com with ESMTPSA id t8sm7490502wjy.41.2016.03.24.06.57.59
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 24 Mar 2016 06:58:00 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
-In-Reply-To: <20160323212213.GA19920@sigill.intra.peff.net>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=jdFxOXCQoWU5TtG0+guT8Mn38HpQgtsOJlT0P7RuCkQ=;
+        b=IhKDEmGuYLwSwti2S1qaqZtZbYgNuTV5h+5loGrnCTBDBE15PbZcNyxhMZ27ESrv1x
+         rvj8UW/KdCTXX5ymEXVl2z30+B/tAy4HtuKN4qw63FhD9bzlcfD+YgUjXvnBrt6eOm77
+         rhO3rqAxCIa8JSFc+xwkT2QttLwpyIwgc+MRTVpQffJcw91PJputEKLJv186t4uhZLyB
+         gw5iAqucxKpxLt+tNMi4LokqicYrI5pnJnSJZXbTWJDgNn6GFvSaOTXgjbQRp+OC6uxL
+         KT9JCoqTff1Ckn6wD/cPsVEJoA7E2H9uUw8GsSousS+KwxNLP4mJOE+qm3nKPrtSdyI5
+         8rBQ==
+X-Gm-Message-State: AD7BkJI2p8Bt3CLDUboVTKVQcUdUEAYeQCDwlllU5zlb+L3ZacPNazPoJbomrk8Slw6Wfw==
+X-Received: by 10.28.95.131 with SMTP id t125mr34404722wmb.80.1458828885549;
+        Thu, 24 Mar 2016 07:14:45 -0700 (PDT)
+Received: from localhost.localdomain ([217.26.172.139])
+        by smtp.gmail.com with ESMTPSA id xx3sm7586407wjc.32.2016.03.24.07.14.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 24 Mar 2016 07:14:44 -0700 (PDT)
+X-Mailer: git-send-email 2.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289746>
 
-On 23/03/16 23:22, Jeff King wrote:
-> Not that it matters for this bug, but for my own curiosity, what do you
-> use "send-pack --all" for? I've generally assumed that nobody directly
-> calls send-pack themselves these days, but of course we have no data to
-> support that either way. So I am always interested to hear about unusual
-> use cases.
-Well, here at Assembla we're using send-pack --all for creating forks
-from repos in a quick and efficient way.
-> The tests are roughly grouped by functionality. send-pack tests are in
-> the t540x range, and this should probably go there. Though I also
-> suspect it could easily be added to the end of an existing test script,
-> which is preferable.
-I'm not really comfortable (yet) with git tests, so thanks for pointing 
-to that.
-I did see t5400, but thought that bug fixes should bring their own, 
-separate,
-test files. Also, thanks for all the explanations and for the adaptation 
-of my
-test to a way better version!
+---
+ builtin/send-pack.c  |  2 +-
+ t/t5400-send-pack.sh | 12 ++++++++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-I'm going to update the patch and will send another version. Thanks again!
-
---
-Regards,
-Stanislav
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index f6e5d64..19f0577 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -225,7 +225,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+ 	 * --all and --mirror are incompatible; neither makes sense
+ 	 * with any refspecs.
+ 	 */
+-	if ((refspecs && (send_all || args.send_mirror)) ||
++	if ((nr_refspecs > 0 && (send_all || args.send_mirror)) ||
+ 	    (send_all && args.send_mirror))
+ 		usage_with_options(send_pack_usage, options);
+ 
+diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
+index 04cea97..305ca7a 100755
+--- a/t/t5400-send-pack.sh
++++ b/t/t5400-send-pack.sh
+@@ -128,6 +128,18 @@ test_expect_success 'denyNonFastforwards trumps --force' '
+ 	test "$victim_orig" = "$victim_head"
+ '
+ 
++test_expect_success 'send-pack --all sends all branches' '
++	# make sure we have at least 2 branches with different
++	# values, just to be thorough
++	git branch other-branch HEAD^ &&
++
++	git init --bare all.git &&
++	git send-pack --all all.git &&
++	git for-each-ref refs/heads >expect &&
++	git -C all.git for-each-ref refs/heads >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'push --all excludes remote-tracking hierarchy' '
+ 	mkdir parent &&
+ 	(
+-- 
+2.7.4
