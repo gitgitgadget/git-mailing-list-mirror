@@ -1,122 +1,135 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH v9 2/3] t7507-commit-verbose: make test suite use write_script
-Date: Thu, 24 Mar 2016 12:00:59 +0100
-Message-ID: <1458817259-11675-1-git-send-email-szeder@ira.uka.de>
-References: <01020153a7ba4eae-9b88e119-0505-418f-a137-595250edaa9d-000000@eu-west-1.amazonses.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: Re: git-apply does not work in a sub-directory of a Git repository
+Date: Thu, 24 Mar 2016 18:56:15 +0700
+Message-ID: <1458820579-31621-1-git-send-email-pclouds@gmail.com>
+References: <CACsJy8CTix-ZwN04MwYTB+JEtDCV27QVf7_0vWmhUSVCwU29Jg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-	git@vger.kernel.org
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 24 12:01:38 2016
+Cc: Junio C Hamano <gitster@pobox.com>, sbeller@google.com,
+	mehul.jain2029@gmail.com, sandals@crustytoothpaste.net,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 24 12:57:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aj317-0003i0-W0
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 12:01:30 +0100
+	id 1aj3tA-0000zI-KY
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 12:57:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756850AbcCXLBY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 07:01:24 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:53955 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755246AbcCXLBX (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2016 07:01:23 -0400
-Received: from x4db26f6f.dyn.telefonica.de ([77.178.111.111] helo=localhost.localdomain)
-	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
-	iface 141.3.10.81 id 1aj30t-0001aZ-11; Thu, 24 Mar 2016 12:01:20 +0100
-X-Mailer: git-send-email 2.8.0.rc3.58.gc805582
-In-Reply-To: <01020153a7ba4eae-9b88e119-0505-418f-a137-595250edaa9d-000000@eu-west-1.amazonses.com>
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1458817280.
+	id S1751262AbcCXL5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 07:57:16 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:32997 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750735AbcCXL5O (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 07:57:14 -0400
+Received: by mail-pa0-f46.google.com with SMTP id fl4so19929339pad.0
+        for <git@vger.kernel.org>; Thu, 24 Mar 2016 04:57:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=NDG/ANNv0toLrHsCMfyL/tjVI0Ph3Iy6OJdrt6E6X1Q=;
+        b=QU6s3xh/3UZRRtmF2JyFcX0wzxKS2YKRNe9srkRq9mhPLglaPD6TzXlSGX9vTOmzHY
+         rla14vZUaHxDzEBA8+AAukvHVySKaclq2Ih2lCCzC3bfJchms/gg05EwvDd8TAsKdC1b
+         eHQH32Fxw+7tMQOc9kxLz4JPd2wlcYD56qdxb7fpOehdGEMgJ45SRnROikzXsTXRSuxc
+         f3zBWUBmTPCzFFIkYXO5FrmCv+egEMOz30Jl5p74SleWM3WT2xsf0O6kBmK2sLzy0ROq
+         nX1vu+YdS1WGj5FDOYpdO9gNSOdGDJAl4ovbnoWmcOfzSlwWDgRIKSyhvaOSIHz0evB3
+         iSRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=NDG/ANNv0toLrHsCMfyL/tjVI0Ph3Iy6OJdrt6E6X1Q=;
+        b=iUZ4Dyy64ogpnCOBcvYm2+NSv+so4kjvKTQmdIo1pElX7DEfpQSWicDM4tsc4y6Web
+         aJqof4ECHVyz3UqpkcjEJg/t1vTf/DhNE0SkPKiznS2vZrHTWaa9XBmGbSaWqxSY33pW
+         x8aaDhEltpC2+mYGr8r3XXjosx+5rOBwlMO9TQNl8rsg+G2VY1BUo8zMbEAL75WVCOkS
+         OWbzJSwm+/arBpvXEmk5OmTkqyPFyiVKSgMGirsiVfQvB4ExtwHYFOR6eVDvPVxaUSfA
+         V+OnooYJtMzPmwky0dN16fZnpl4yxUGYRyjgrYbdHhQzDnymGMBY2wA10BT34opQKEbc
+         ld7A==
+X-Gm-Message-State: AD7BkJLT6Ifw9EKRj5BFpXthdN0KrYgKe39aF9iZDc0yoofACGfSeJo+WjoxI3YtQk6jMA==
+X-Received: by 10.67.24.104 with SMTP id ih8mr12125606pad.124.1458820634148;
+        Thu, 24 Mar 2016 04:57:14 -0700 (PDT)
+Received: from lanh ([115.76.228.161])
+        by smtp.gmail.com with ESMTPSA id q2sm9960880pfq.88.2016.03.24.04.57.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 24 Mar 2016 04:57:12 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Thu, 24 Mar 2016 18:57:27 +0700
+X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
+In-Reply-To: <CACsJy8CTix-ZwN04MwYTB+JEtDCV27QVf7_0vWmhUSVCwU29Jg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289737>
 
-> Also remove test_set_editor from global scope and use it in whichever
-> test it is required.
++Brian who also had issues with git-apply.
 
-Why?
+On Thu, Mar 24, 2016 at 5:49 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Wed, Mar 23, 2016 at 11:55 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> See
+>>>
+>>>   http://thread.gmane.org/gmane.comp.version-control.git/288316/focus=288321
+>>>
+>>> I agree it is bad that it silently ignores the path outside the
+>>> directory.  When run with --verbose, we should say "Skipped X that
+>>> is outside the directory." or something like that, just like we
+>>> issue notices when we applied with offset, etc.
 
-test_set_editor sets and exports shell variables.  Since you don't
-invoke test_set_editor in a subshell, after the first invocation the
-editor will be part of the global scope anyway.
+Implemented in [04/04] apply: report patch skipping in verbose mode.
 
-Also missing signoff.
+>> Another thing we may want to do is to loosen (or redo) the logic
+>> in builtin/apply.c::use_patch()
+>>
+>>         static int use_patch(struct patch *p)
+>>         {
+>>                 const char *pathname = p->new_name ? p->new_name : p->old_name;
+>>                 int i;
+>>
+>>                 /* Paths outside are not touched regardless of "--include" */
+>>                 if (0 < prefix_length) {
+>>                         int pathlen = strlen(pathname);
+>>                         if (pathlen <= prefix_length ||
+>>                             memcmp(prefix, pathname, prefix_length))
+>>                                 return 0;
+>>                 }
+>>
+>> The include/exclude mechanism does use wildmatch() but does not use
+>> the pathspec mechanism (it predates the pathspec machinery that was
+>> made reusable in places like this).  We should be able to
+>>
+>>     $ cd d/e/e/p/d/i/r
+>>     $ git apply --include=:/ ../../../../../../../patch
+>>
+>> to lift this limitation.  IOW, we can think of the use_patch() to
+>> include only the paths in the subdirectory we are in by default, but
+>> we can make it allow --include/--exclude command line option to
+>> override that default.
 
-> ---
->  t/t7507-commit-verbose.sh | 12 ++++++++----
->  1 file changed, 8 insertions(+), 4 deletions(-)
-> 
-> diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
-> index 2ddf28c..cf95efb 100755
-> --- a/t/t7507-commit-verbose.sh
-> +++ b/t/t7507-commit-verbose.sh
-> @@ -3,12 +3,11 @@
->  test_description='verbose commit template'
->  . ./test-lib.sh
->  
-> -cat >check-for-diff <<EOF
-> -#!$SHELL_PATH
-> -exec grep '^diff --git' "\$1"
-> +write_script "check-for-diff" <<-\EOF &&
-> +grep '^diff --git' "$1" >out &&
-> +test $(wc -l <out) = 1
+I went with a new option instead of changing --include. Making it
+pathspec can still bite people. And pathspec is not exactly compatible
+with wildmatch either. This is in
 
-Our test lib offers the test_line_count helper function, which
-outputs a helpful error message in case the number of lines do not
-match.
+  [03/04] apply: add --whole to apply git patch without prefix filtering
 
-The original didn't check the number of lines.  This change is not
-mentioned at all in the commit message.
+> git-apply.txt should
+> probably mention about this because (at least to me) it sounds more
+> naturally that if I give a patch, git-apply should apply the whole
+> patch.
 
->  EOF
->  chmod +x check-for-diff
-> -test_set_editor "$PWD/check-for-diff"
->  
->  cat >message <<'EOF'
->  subject
-> @@ -23,6 +22,7 @@ test_expect_success 'setup' '
->  '
->  
->  test_expect_success 'initial commit shows verbose diff' '
-> +	test_set_editor "$PWD/check-for-diff" &&
->  	git commit --amend -v
->  '
->  
-> @@ -38,11 +38,13 @@ check_message() {
->  }
->  
->  test_expect_success 'verbose diff is stripped out' '
-> +	test_set_editor "$PWD/check-for-diff" &&
->  	git commit --amend -v &&
->  	check_message message
->  '
->  
->  test_expect_success 'verbose diff is stripped out (mnemonicprefix)' '
-> +	test_set_editor "$PWD/check-for-diff" &&
->  	git config diff.mnemonicprefix true &&
->  	git commit --amend -v &&
->  	check_message message
-> @@ -66,11 +68,13 @@ test_expect_success 'diff in message is retained without -v' '
->  '
->  
->  test_expect_success 'diff in message is retained with -v' '
-> +	test_set_editor "$PWD/check-for-diff" &&
->  	git commit --amend -F diff -v &&
->  	check_message diff
->  '
->  
->  test_expect_success 'submodule log is stripped out too with -v' '
-> +	test_set_editor "$PWD/check-for-diff" &&
->  	git config diff.submodule log &&
->  	git submodule add ./. sub &&
->  	git commit -m "sub added" &&
-> 
-> --
-> https://github.com/git/git/pull/218
-> 
+  [02/04] git-apply.txt: mention the behavior inside a subdir
+
+> We probably should show a warning if everything file is filtered out
+> too because silence usually means "good" from a typical unix command.
+> It could be guarded with advice config key, and should only show if it
+> looks like there are matching paths on worktree, but filtered out.
+
+I'm holding this back. Too much heuristics.
+--
+Duy
