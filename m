@@ -1,82 +1,83 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Gitk "External diff" broken when using worktree
-Date: Thu, 24 Mar 2016 16:22:12 +0700
-Message-ID: <CACsJy8D84e4iQ6Pz_zyqsXuV6c2ier6s_W99+1hKszd0gHiUaQ@mail.gmail.com>
-References: <CAC4jX8FWs30v-Vh7XyPP9_ba3HKd4hAhRBrwfMpBPZd5ku8rUA@mail.gmail.com>
+From: Zhang Lei <zhanglei002@gmail.com>
+Subject: Re: [PATCH v2] worktree: add: introduce --checkout option
+Date: Thu, 24 Mar 2016 17:52:58 +0800
+Message-ID: <CABEEbiBM-CTJdmOukLjfrmnmsSTwNzx+ELfO=BtgApT__QZu-g@mail.gmail.com>
+References: <01020153a40588f3-5401ea3e-ece8-435c-a046-a5c1c1f92cd6-000000@eu-west-1.amazonses.com>
+	<01020153a73bbb70-11a8482f-1a90-49e4-a56c-b311e12a85a2-000000@eu-west-1.amazonses.com>
+	<CACsJy8DxcqYKrRi7_ERS3xLWfbbq3bNx-u2NWiXYoNw4yD+0dg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Daryl Van Den Brink <daryl.vandenbrink@maptek.com.au>
-X-From: git-owner@vger.kernel.org Thu Mar 24 10:22:50 2016
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 24 10:53:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aj1Td-0004VW-O9
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 10:22:50 +0100
+	id 1aj1wv-0002DZ-Sr
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 10:53:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755203AbcCXJWq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 05:22:46 -0400
-Received: from mail-lb0-f175.google.com ([209.85.217.175]:34220 "EHLO
-	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752314AbcCXJWo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 05:22:44 -0400
-Received: by mail-lb0-f175.google.com with SMTP id k12so26378099lbb.1
-        for <git@vger.kernel.org>; Thu, 24 Mar 2016 02:22:43 -0700 (PDT)
+	id S1755233AbcCXJxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 05:53:00 -0400
+Received: from mail-ob0-f196.google.com ([209.85.214.196]:35945 "EHLO
+	mail-ob0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755180AbcCXJw7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 05:52:59 -0400
+Received: by mail-ob0-f196.google.com with SMTP id cf7so2971157obc.3
+        for <git@vger.kernel.org>; Thu, 24 Mar 2016 02:52:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=5paP46DMJtM8M5NZ4BiBrwQEXJgGYDbouUvtwBuKV7M=;
-        b=H7AosH7s7WIuPQFkeJOILbJfM33PDsViqhEN+IwuBgx48oJZV9JHGZCAJhFmwXcI4W
-         TvoWJHN5q96m+ngTWi92rRNjJ+dNDlP9EJoHT1Hkg+q47RbU3qMN+7GcrZezn2AS45Vu
-         GbcFJpellaFvD+JsYe+PDjvXfMMgtAvib8ZRXftgqEyGuw5PPkrwyjqLj3tATsJESFLD
-         YNhp9LzUMAFTiGxXQIe5rz0VMFKhGHPOBA+49kNhfP2uquHNDJ58wIfX8arJ0y+vq13r
-         tmw+4xE+UA+l1SMbWDt0psjRyQcAe5zG9hA8H/HoX5MNgS7cikrcNCtszwveu2wMLPN4
-         enXQ==
+        bh=8k2MeyxMKX9C2qMKs9HwUUnhtHqMzl2O+AZ+Ehe9ElY=;
+        b=AY5K49UAzbTxJ/kSersCxEYHtkwmjZ/2M1atsw/8d64kHapKCMwc/l2jAKBQKEE0Gc
+         Ht+pZtd0Omg4vp0Ht4gm2WsXuCpYU0f4KZrAyuA7UUoedUPQkngUjZRlNXUsqUSR2Fb/
+         IFYVN+iT1zsuFu8l98N32G8j227N7i2WqgkDw44PhCGznh+4mi77QeTKalSPXDRUBZee
+         Y18kEZiaUXgIqIcxpbTVhK33Xd61sVo5n7XDVxSKCtHx5fhdeTn9J/9cNg/3mXQQi82f
+         u/KAZRYwAbtSAr4EGpmbjQCOT0cTHxwQLlVoZIyV4UZiDscVYUVKhPdFFWbt5A3zXI7+
+         kkjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=5paP46DMJtM8M5NZ4BiBrwQEXJgGYDbouUvtwBuKV7M=;
-        b=OlyocMmVH+EH+OKOsIIcRXrlbWBySSyVBJ3D8jc0YF7F5xByMuY/FZu6POBP6I4u+i
-         F2nwWdkLonP4Yzf1kpntreggHOqQxFASimdEmuanUesQhZj3EeP+QOFuMqw3Mf/wR95K
-         6X5Ufp/nK3ehsTS2tHqKbMdZor7YgOSbHc1g4Qu+/S+3M1/B5Wu/pUL/FeMUmMPgapsX
-         0cZSF/HvdawbGzqHWYSQy/D0StnxJGyA2IzBiTWZXowBvi3GT7Cov7Hn/mWIBZpqBf2q
-         IoZ7aAQVChLU0+3a5CsULLWwE6xSgmOBkvaPN1ep4o7m91tXjvHCbUic+JtQsMh1aNc6
-         7tkg==
-X-Gm-Message-State: AD7BkJLwNd2OHit+jg0N6gyR+N27dmg6YLl728ITtNGBRVjgsQvsM7IOtePR+6SLQI+Ne/WQOW+nte96WbGahA==
-X-Received: by 10.112.130.41 with SMTP id ob9mr2906029lbb.81.1458811362564;
- Thu, 24 Mar 2016 02:22:42 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Thu, 24 Mar 2016 02:22:12 -0700 (PDT)
-In-Reply-To: <CAC4jX8FWs30v-Vh7XyPP9_ba3HKd4hAhRBrwfMpBPZd5ku8rUA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=8k2MeyxMKX9C2qMKs9HwUUnhtHqMzl2O+AZ+Ehe9ElY=;
+        b=aD0v/D2XjPGrxee9t3umi/p0z/kJI/wkfvOKteLFbPZsssZ1xvWGfOrUreXMt8n17T
+         x8XoP4Tqm8OxUA2Ib1QQa9efI5xGImef1xKTmYISzZ22k/+ov/OlhD9UBog2GQJGbsoh
+         Yx5BPRMGY5xRRT4TY1q3VvqkHGNPpEhR+uZZ4j3QE2Jvw5/mtkQ/u5598dXRzNcP6dj3
+         o+ZLUXyt7A/biPLsSdBpRrVTqs5OBikNw6xnFd3C1WZOPws08rR2kbmY0Ca28Nfn7dsC
+         BOSH0Zd46bkY2RJWvM3Qk52VF/oQIgUIjc7EB5ZdOl4bpz1hg9N9Ti/M9h6VFvPasDUb
+         XBcw==
+X-Gm-Message-State: AD7BkJLPJJekukU44OH0UZVer4mv/x88T497xq9n3z498r2fQheAroPcndRwtW5lPHC8EcVdtJFtPwmROLyiUA==
+X-Received: by 10.182.85.132 with SMTP id h4mr3679142obz.51.1458813178752;
+ Thu, 24 Mar 2016 02:52:58 -0700 (PDT)
+Received: by 10.182.38.170 with HTTP; Thu, 24 Mar 2016 02:52:58 -0700 (PDT)
+In-Reply-To: <CACsJy8DxcqYKrRi7_ERS3xLWfbbq3bNx-u2NWiXYoNw4yD+0dg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289729>
 
-On Thu, Mar 24, 2016 at 9:55 AM, Daryl Van Den Brink
-<daryl.vandenbrink@maptek.com.au> wrote:
-> Hi,
->
-> I'm using git 2.7.3 on cygwin, and have been taking advantage of the
-> new "git worktree" feature. I noticed that when I launch gitk from one
-> of the attached working directories, its "external diff" feature
-> doesn't seem to work. Nothing shows up in the diff tool at all.
-> However, it works if you launch gitk from the main repository.
->
-> To reproduce:
-> 1. Create a new working tree with "git worktree add"
-> 2. From that new worktree, launch gitk.
-> 3. Right-click in a file in the bottom right pane and click "External diff"
-> 4. No useful diff appears.
+hi Duy,
+My PATCH v1 did follow git-clone -n, however, Junio C Hamano and Eric Sunshine
+suggested that we should avoid doing so , as --no-no-checkout could be
+confusing.
 
-Works for me (on linux with 'master' branch). Maybe gitk selected
-invalid tempdir on cygwin. You can try replace your external diff
-program with a script or something that prints the whole command line.
-That should reveal if gitk given paths are correct or not (or if gitk
-fails even before that)
--- 
-Duy
+Yes, core.sparsecheckout is the global switch for all worktrees, but
+every worktree
+can have its own info/sparse-checkout.
+
+2016-03-24 17:16 GMT+08:00 Duy Nguyen <pclouds@gmail.com>:
+>
+> On Thu, Mar 24, 2016 at 1:07 PM, Ray Zhang <zhanglei002@gmail.com> wrote:
+> > By adding this option which defaults to true, we can use the
+> > corresponding --no-checkout to make some customizations before
+> > the checkout, like sparse checkout, etc.
+>
+> I think we can follow git-clone and use '-n' for this. But if it's
+> sparse checkout that's you're after, be warned that it's not fully
+> supported (you either enable sparse chekcuot for all worktrees, or
+> none).
+> --
+> Duy
