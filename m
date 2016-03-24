@@ -1,131 +1,104 @@
-From: Ye Xiaolong <xiaolong.ye@intel.com>
-Subject: Re: [PATCH v2 3/4] format-patch: introduce --base=auto option
-Date: Thu, 24 Mar 2016 12:19:25 +0800
-Message-ID: <20160324041925.GB26582@yexl-desktop>
-References: <1458723147-7335-1-git-send-email-xiaolong.ye@intel.com>
- <1458723147-7335-4-git-send-email-xiaolong.ye@intel.com>
- <xmqqbn65caqi.fsf@gitster.mtv.corp.google.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH/GSoC 3/3] Nousage message in error
+Date: Thu, 24 Mar 2016 10:44:08 +0530
+Message-ID: <CAFZEwPN2vp+zOMdGY51LwNpgNcYxsGD4GBXHNOA8_qJ8vtE5OQ@mail.gmail.com>
+References: <1458785018-29232-1-git-send-email-dj.dij123@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, fengguang.wu@intel.com, ying.huang@intel.com,
-	philip.li@intel.com, julie.du@intel.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 24 05:20:15 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Diwas Joshi <dj.dij123@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 24 06:14:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aiwkp-0005Hv-4D
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 05:20:15 +0100
+	id 1aixb5-0006it-Jb
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 06:14:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751026AbcCXEUD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 00:20:03 -0400
-Received: from mga11.intel.com ([192.55.52.93]:38006 "EHLO mga11.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750890AbcCXEUC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 00:20:02 -0400
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga102.fm.intel.com with ESMTP; 23 Mar 2016 21:20:01 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.24,383,1455004800"; 
-   d="scan'208";a="940415598"
-Received: from yexl-desktop.sh.intel.com (HELO localhost) ([10.239.159.26])
-  by orsmga002.jf.intel.com with ESMTP; 23 Mar 2016 21:19:59 -0700
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	fengguang.wu@intel.com, ying.huang@intel.com, philip.li@intel.com,
-	julie.du@intel.com
-Content-Disposition: inline
-In-Reply-To: <xmqqbn65caqi.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S932353AbcCXFOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 01:14:10 -0400
+Received: from mail-yw0-f175.google.com ([209.85.161.175]:34315 "EHLO
+	mail-yw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751025AbcCXFOJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 01:14:09 -0400
+Received: by mail-yw0-f175.google.com with SMTP id h129so46511430ywb.1
+        for <git@vger.kernel.org>; Wed, 23 Mar 2016 22:14:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=aZM9Qm2VCohLs6VzgTZv5tZ+QmlsNl0WryglXrakLb8=;
+        b=ezHueTloFR2cLHoChlj7GrZWB/wGUkXFIsiD50rC/B7i5dI3PykcWhG8FC4wlufrgC
+         r2kEIWmZFvXzZoaEsuQpAGh1qcmBjey4eLXARzimPLPS4mVqV6g6p0MEL9yCBtDrstge
+         yEDcxZ4Yyi5QQ8ZgAXS+fYP8s9pQgrIhjs5FGhrTBPSjQGU7OWyPvImUeAQNG/M26PL/
+         XVgjvxCNHLvcJ7Lxp8BDjA0IaElfKAoCC+Z0WfXXEuAfX4Jl0/Yzi+wRQI8gAKn1FEYA
+         1BBf4sIry+IWKXZUzeHZ6MrZ7F4AjziyM7umLzJvUlHYIrr8JvPGWJPqBuEnjbNLwjEa
+         VjDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=aZM9Qm2VCohLs6VzgTZv5tZ+QmlsNl0WryglXrakLb8=;
+        b=Fp5MU4IhMgWiYkhXvWAwjP7+1Sjam0SPNWWMZbTao7Gyj3hYVSEJ4KvqDlJiQKUq4f
+         mAQQdGoaPpO7JtMVq6/0s7QZkTn7kQyAWq2m6oIxW3NRQ3TF+IL3JmpZDNm/2lFUyWxY
+         mF7Nw4WU88z35727CyGwOtPHHV7AXcqTynADivwpO2d8EvwBL42c8tOTI9O7CyyBbMc7
+         BRu83iSa1oYDtI56Y4I2ze9Vw3hYS5Ln85YjXuVU2YQ039vxrElfKToxsCYC22JggirN
+         Vt8PJiMY6BcAMM9UJdFexEU6M94OIkXdQB/04hoeU1ixardoS0AWrcGLMACqMnQ2qmhR
+         +uWA==
+X-Gm-Message-State: AD7BkJJk4kP0k6GhkGk3Owri8vhHBKSswMEJuT7pIBpvA6mYLqrfrYUWWMA8oJP1MCoaywNB9FAHekdJpxN1kA==
+X-Received: by 10.129.37.3 with SMTP id l3mr3196318ywl.128.1458796448350; Wed,
+ 23 Mar 2016 22:14:08 -0700 (PDT)
+Received: by 10.13.203.137 with HTTP; Wed, 23 Mar 2016 22:14:08 -0700 (PDT)
+In-Reply-To: <1458785018-29232-1-git-send-email-dj.dij123@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289709>
 
-On Wed, Mar 23, 2016 at 11:25:41AM -0700, Junio C Hamano wrote:
->Xiaolong Ye <xiaolong.ye@intel.com> writes:
->
->> +
->> +	diff_setup(&diffopt);
->> +	DIFF_OPT_SET(&diffopt, RECURSIVE);
->> +	diff_setup_done(&diffopt);
->
->It is annoying that you moved "diff" stuff here (if it can be
->initialized once at the beginning and then reused over and over,
->it should have been done here from the beginning at PATCH 2/4).
+This is my first review. It can contain some mistakes.
 
-My bad, I will put "diff" stuff at the beginning at PATCH 2/4.
->
->> +	if (!strcmp(base_commit, "auto")) {
->> +		curr_branch = branch_get(NULL);
->> +		upstream = branch_get_upstream(curr_branch, NULL);
->> +		if (upstream) {
->> +			if (get_sha1(upstream, sha1))
->> +				die(_("Failed to resolve '%s' as a valid ref."), upstream);
->> +			base = lookup_commit_or_die(sha1, "upstream base");
->> +			oidcpy(&bases->base_commit, &base->object.oid);
->> +		} else {
->> +			commit_patch_id(prerequisite_head, &diffopt, sha1);
->> +			oidcpy(&bases->parent_commit, &prerequisite_head->object.oid);
->> +			hashcpy(bases->parent_patch_id.hash, sha1);
->> +			return;
->
->What happens if you did this sequence?
->
->	$ git fetch origin
->        $ git checkout -b fork origin/master
->        $ git fetch origin
->        $ git format-patch --base=auto origin..
->
->You grab the updated origin/master as base and use it here, no?
->At that point the topology would look like:
->
->          1---2---3 updated upstream
->         /
->	0---X---Y---Z---A---B---C
->        ^
->        old upstream
->
->so you are basing your worn on "0" (old upstream) but setting base
->to "3"
->
->Wouldn't that trigger "base must be an ancestor of Z" check you had
->in [PATCH 2/4]?
+On Thu, Mar 24, 2016 at 7:33 AM, Diwas Joshi <dj.dij123@gmail.com> wrote:
+> Subject : [PATCH/GSoC 3/3] Nousage message in error
 
-Yes, this is flawed, I will follow your below suggestion to compute
-the merge base as the base commit through upstream and specified range.
+Mention about GSoC in the notes section (the one followed by the 3
+dashes ie. "---") rather than in the subject.
 
->
->I also do not see the point of showing "parent id" which as far as I
->can see is just a random commit object name and show different
->output that is not even described what it is.  It would be better to
+> - To show only error text instead of full usage message
+> - Adds exits to callback function in parse-options-cb.c instead of returning -1 which results in display of usage message.
 
-Here is our consideration:
-There is high chance that branch_get_upstream will retrun NULL(thus we
-are not able to get exact base commit), since developers may checkout
-branch from a local branch or a commit and haven't set "--set-upstream-to"
-to track a remote branch, in this case, we want to provide likely useful
-info(here is parent commit id and patch id), based on it, 0day robot still
-have good chance to find the suitable base.
-Otherwise, I'm afraid this annotation system won't work effectively in long run.
+A general convention followed by git users it to write the commit
+message as "What he did to the code?" rather than "What problem was
+there in the code?" And of course after writing what you did to the
+code, you can definitely mention what problem in the code made you do
+this change.
 
-Thanks,
-Xiaolong.
+>  parse-options-cb.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 >
-> * find the upstream (i.e. 3 in the picture) and then with our range
->   (i.e. A B and C) compute the merge base (i.e. you would find 0)
->   and use it as base;
+> diff --git a/parse-options-cb.c b/parse-options-cb.c
+> index 239898d..b7321d1 100644
+> --- a/parse-options-cb.c
+> +++ b/parse-options-cb.c
+> @@ -85,8 +85,10 @@ int parse_opt_commits(const struct option *opt, const char *arg, int unset)
 >
-> * if there is no upstream, error out and tell the user that there
->   is no upstream.  The user is intelligent enough and knows what
->   commit the base should be.
->
->I suspect, but I didn't think things through.
->
->
->--
->To unsubscribe from this list: send the line "unsubscribe git" in
->the body of a message to majordomo@vger.kernel.org
->More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>         if (!arg)
+>                 return -1;
+> -       if (get_sha1(arg, sha1))
+> -               return error("malformed object name %s", arg);
+> +       if (get_sha1(arg, sha1)) {
+> +               error("malformed object name %s", arg);
+> +               exit(129);
+> +       }
+>         commit = lookup_commit_reference(sha1);
+>         if (!commit)
+>                 return error("no such commit %s", arg);
+
+Maybe you could describe a little more on why this change is required?
+Why would the user want to know "How to use the command?" when the
+actual problem is that SHA-1 checksum has been compromised? And I
+don't see any consumers of this method which *directly* interact with
+the UI.
+
+It seems that PATCH 1/3 and PATCH 2/3 are missing.
