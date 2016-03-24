@@ -1,98 +1,161 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: What's cooking in git.git (Mar 2016, #04; Wed, 23)
-Date: Thu, 24 Mar 2016 21:47:20 -0000
-Organization: OPDS
-Message-ID: <171B6E119FCF4E5CBF2831F6A7A004EA@PhilipOakley>
-References: <xmqqpoukc30t.fsf@gitster.mtv.corp.google.com><54B6C1E1FE6A4BAEA07E97B7BA81EB01@PhilipOakley> <xmqqlh57am55.fsf@gitster.mtv.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Santiago Torres <santiago@nyu.edu>
+Subject: Re: [PATCH/RFC] builtin/tag.c: move PGP verification inside builtin.
+Date: Thu, 24 Mar 2016 17:51:05 -0400
+Message-ID: <20160324215104.GC8830@LykOS>
+References: <1458855560-28519-1-git-send-email-santiago@nyu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 24 22:47:25 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 24 22:51:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajD6D-0003tA-As
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 22:47:25 +0100
+	id 1ajD9u-0006AJ-SX
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 22:51:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750885AbcCXVrW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 17:47:22 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:56617 "EHLO
-	smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750794AbcCXVrU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 17:47:20 -0400
-Received: from PhilipOakley ([92.22.6.252])
-	by smtp.talktalk.net with SMTP
-	id jD66abhRlCrtejD66a9oTZ; Thu, 24 Mar 2016 21:47:18 +0000
-X-Originating-IP: [92.22.6.252]
-X-Spam: 0
-X-OAuthority: v=2.1 cv=L/e9O7n8 c=1 sm=1 tr=0 a=L1JPMP/96Cd0ZXeOJ41CKA==:117
- a=L1JPMP/96Cd0ZXeOJ41CKA==:17 a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10
- a=s5jvgZ67dGcA:10 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8 a=xtxXYLxNAAAA:8
- a=9Hgr8xzUwl2K_1I22iQA:9 a=wPNLvfGTeEIA:10
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfKjRlvbM4oYoxpiJXw5TM4rWGVFj3IujR3nPHuFo4Gd3mj7lJYCTCoZ8dAp0PveRKL5IWSCWNBRzCB7xz3TbOcvKTOV75XpR8rbyDP9xx/E8Wu+PiQ6f
- /SjW0Ixs8HWHwoXft9xh6M47crzPASGPW9/AOUliy2kdAKHLJC5mkZLeCejOxb8L9W29Ut+nJW8/tg==
+	id S1751122AbcCXVvK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 17:51:10 -0400
+Received: from mail-qg0-f50.google.com ([209.85.192.50]:36565 "EHLO
+	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750870AbcCXVvI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 17:51:08 -0400
+Received: by mail-qg0-f50.google.com with SMTP id u110so49429798qge.3
+        for <git@vger.kernel.org>; Thu, 24 Mar 2016 14:51:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=IImC0AE6i+DwRkvX5jdb+zHHLXZTIJOUmdhfjp10dbA=;
+        b=VDiB3hc/umcOozvZCYOcCaiQ9/MZobFPSFIrr3ovZbOB/dKbCo/Bfs9Pih383txtrV
+         gQ24713NCbkXnxnbxCk+McPfb0ayYw8p3mt5Zbk6O8amUPzzFOwChcHPJ2yuGyN4Ngta
+         YzDSbpxWq6EkPlSjwjbSs+eZeeWh/bHkoKEfJ1N03m1oCUC6sCABl2DiTtJxjnQyE8zC
+         zDQZ59KClbbHin0AkzKU9pbic2HEuXc7EZB2xG/vBqq1wWcoklH2Xi2TVlGNuQUENOaC
+         NgVoLq9xDwChQ0rHB0S6b5p8pljU4pcnIBd6FJ3Dz2ah1ootQVJ8EX4HXOi+D1lomfIj
+         3F9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=IImC0AE6i+DwRkvX5jdb+zHHLXZTIJOUmdhfjp10dbA=;
+        b=a/PWtti1RdCiwdB5zxA/YT5ptYJBL1yzqWPTZRkD7kCAfZOlyPWeCqaGdAhx/Vxvo6
+         XCOcIG00h+Iv0Fo2OOT6xXPgMA6xJy1j80aBNAFICLrdNZX1JcOhJc0+iZExZAX5yG8P
+         MgkfLHK77NCyFT6s51CP8wLcDmfBQ+bXfTJAmDCyltDAzs5X812PX/0v8GnL41ZVghY9
+         qI/TRWKpvv2Hr4AKalySch65IV49pcvYN9Idj+tSTD/m1c33WAqs6z294IcHKXwboceG
+         zVvOxsPlChx9nwfLKRibYu94sUo4YFBNeMbuUa0FinQmEjtO57jUoBRmjPLwZBlPvk4O
+         YJ1A==
+X-Gm-Message-State: AD7BkJJHeJuk1fur5bV1HowOPAAgsxXXY0XRNZHYh+y6nbZqA2uR9nf/01F2Hmb9Ucqg8jDM
+X-Received: by 10.140.18.163 with SMTP id 32mr13398960qgf.11.1458856267257;
+        Thu, 24 Mar 2016 14:51:07 -0700 (PDT)
+Received: from LykOS (NYUFWA-WLESSAUTHCLIENTS-11.NATPOOL.NYU.EDU. [216.165.95.0])
+        by smtp.gmail.com with ESMTPSA id h64sm4063700qgh.39.2016.03.24.14.51.06
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 24 Mar 2016 14:51:06 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1458855560-28519-1-git-send-email-santiago@nyu.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289807>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> "Philip Oakley" <philipoakley@iee.org> writes:
->
->>>
->>> The beginning of "split bundle", which could be one of the
->>> ingredients to allow "git clone" traffic off of the core server
->>> network to CDN.
->>>
->> ...
->> Hi Junio,
->>
->> I think there may be a concept clash between the ideals of a
->> sneakernet bundle' and the 'resumable clone'.
->
-> Notice the "could" above ;-)
->
-> Read the original thread and notice that the inclination is for the
-> first one the primary "clone priming" mechanism would likely to be a
-> packfile, not a bundle, even though use of "bundle" is not ruled out.
->
-I'd seen the thread ($gmane/288380), and that it had developed toward a bare 
-pack-file.
+Hi Jeff.
 
-This was just clarifying that if a variant of the bundle format (# V3?) was 
-used, that it must, if the name was retained(*), still work as a sneakernet 
-transfer option. In that case the user would need to be told, or be able to 
-find out via (e.g.) the 'verify' sub-command, where the other half of the 
-split bundle (the pack) was located so that both halves could be copied for 
-sneakernet transfer.
+Sorry for the delay with this, I got caught up with coursework.
 
-Then on reaching the destination, the user would need to appreciate where 
-the two halves are to go (side by side?), and the code would need a way of 
-knowing that it should use the local copy of the split pack, rather seeking 
-to transfer a fresh copy (which obviously fails in an air-gapped scenario).
+This is my first stab at this, in the dumbest/simplest way imaginable. I
+don't like that there is no code reuse (the run_gpg_verify function is
+repeated here and in the plumbing command). I would appreciate pointers
+on what would be the best way to avoid this.
 
-(*) Changing the user facing names for the new resumable transfers to avoid 
-the potential user confusion is a simple solution, which could just be a 
-tweak to the final patch 4/4 c34c9a9db65 "bundle v3: the beginning". Perhaps 
-explicitly use "split-bundle", though choosing a good alternative isn't easy 
-;-)
+I also spent quite some time figuring out what you meant with
 
-As you say that all could become academic if the independent pack transfer 
-works as a better resumable clone.
+> Do note the trickery with SIGPIPE in verify-tag, though. We probably
+> need to do the same here (in fact, I wonder if that should be pushed
+> down into the code that calls gpg).
+I don't see any explicit SIGPIPE trickery here. Any pointers?
 
---
+Thanks!
+-Santiago.
 
-Philip
+
+On Thu, Mar 24, 2016 at 05:39:20PM -0400, santiago@nyu.edu wrote:
+> From: Santiago Torres <torresariass@gmail.com>
+> 
+> The verify tag function is just a thin wrapper around the verify-tag
+> command. We can avoid one fork call by doing the verification instide
+> the tag builtin instead.
+> 
+> Signed-off-by: Santiago Torres <santiago@nyu.edu>
+> ---
+>  builtin/tag.c | 44 ++++++++++++++++++++++++++++++++++++++------
+>  1 file changed, 38 insertions(+), 6 deletions(-)
+> 
+> diff --git a/builtin/tag.c b/builtin/tag.c
+> index 1705c94..be5d7c7 100644
+> --- a/builtin/tag.c
+> +++ b/builtin/tag.c
+> @@ -30,6 +30,27 @@ static const char * const git_tag_usage[] = {
+>  
+>  static unsigned int colopts;
+>  
+> +static int run_gpg_verify(const char *buf, unsigned long size, unsigned flags)
+> +{
+> +	struct signature_check sigc;
+> +	int len;
+> +	int ret;
+> +
+> +	memset(&sigc, 0, sizeof(sigc));
+> +
+> +	len = parse_signature(buf, size);
+> +
+> +	if (size == len) {
+> +		write_in_full(1, buf, len);
+> +	}
+> +
+> +	ret = check_signature(buf, len, buf + len, size - len, &sigc);
+> +	print_signature_buffer(&sigc, flags);
+> +
+> +	signature_check_clear(&sigc);
+> +	return ret;
+> +}
+> +
+>  static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting, const char *format)
+>  {
+>  	struct ref_array array;
+> @@ -104,13 +125,24 @@ static int delete_tag(const char *name, const char *ref,
+>  static int verify_tag(const char *name, const char *ref,
+>  				const unsigned char *sha1)
+>  {
+> -	const char *argv_verify_tag[] = {"verify-tag",
+> -					"-v", "SHA1_HEX", NULL};
+> -	argv_verify_tag[2] = sha1_to_hex(sha1);
+>  
+> -	if (run_command_v_opt(argv_verify_tag, RUN_GIT_CMD))
+> -		return error(_("could not verify the tag '%s'"), name);
+> -	return 0;
+> +	enum object_type type;
+> +	unsigned long size;
+> +	const char* buf;
+> +	int ret;
+> +
+> +	type = sha1_object_info(sha1, NULL);
+> +	if (type != OBJ_TAG)
+> +		return error("%s: cannot verify a non-tag object of type %s.",
+> +				name, typename(type));
+> +
+> +	buf = read_sha1_file(sha1, &type, &size);
+> +	if (!buf)
+> +		return error("%s: unable to read file.", name);
+> +
+> +	ret = run_gpg_verify(buf, size, 0);
+> +
+> +	return ret;
+>  }
+>  
+>  static int do_sign(struct strbuf *buffer)
+> -- 
+> 2.7.3
+> 
