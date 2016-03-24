@@ -1,101 +1,93 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH 2/2] completion: add 'revisions' and 'everyday' to 'git help'
-Date: Thu, 24 Mar 2016 20:51:04 -0000
-Organization: OPDS
-Message-ID: <B40A8BBB3787424787785220EA6BFCFE@PhilipOakley>
-References: <1458844034-12855-1-git-send-email-ralf.thielow@gmail.com><1458844034-12855-3-git-send-email-ralf.thielow@gmail.com> <xmqq7fgr8wqc.fsf@gitster.mtv.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: [PATCH] rebase-i: print abbreviated hash when stop for editing
+Date: Thu, 24 Mar 2016 22:06:37 +0100
+Message-ID: <CAN0XMOJKq7nvyVu57g=Fi3195oG4pDbL7mw3urL33iJDb4Y0cA@mail.gmail.com>
+References: <1458844281-13107-1-git-send-email-ralf.thielow@gmail.com>
+	<xmqqfuvf8xav.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"Ralf Thielow" <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 24 21:51:18 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 24 22:06:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajCDt-0004Rb-Dk
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 21:51:17 +0100
+	id 1ajCSq-0005JW-MG
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 22:06:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751223AbcCXUvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 16:51:07 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:53294 "EHLO
-	smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750823AbcCXUvG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 16:51:06 -0400
-Received: from PhilipOakley ([92.22.6.252])
-	by smtp.talktalk.net with SMTP
-	id jCDdabZl8CrtejCDea9lcl; Thu, 24 Mar 2016 20:51:03 +0000
-X-Originating-IP: [92.22.6.252]
-X-Spam: 0
-X-OAuthority: v=2.1 cv=L/e9O7n8 c=1 sm=1 tr=0 a=L1JPMP/96Cd0ZXeOJ41CKA==:117
- a=L1JPMP/96Cd0ZXeOJ41CKA==:17 a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10
- a=s5jvgZ67dGcA:10 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8 a=pGLkceISAAAA:8
- a=VwQbUJbxAAAA:8 a=sgMr-s8sPSwgmRqELakA:9 a=wPNLvfGTeEIA:10 a=x8gzFH9gYPwA:10
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfDE+Kgw2p4/bOqHiq9wuU14uSc5lVn1zMj8oBXltsvFpSiyH4zvSF1yKhdLFVoq0rL9uES3QsYRp1PGsSJCz2f5L+n8dfwbxuJZDP9dCe6XlviYw9sj5
- dBHgRUCGC1cAG2Nv79XC1GN51SS1USnYw8aJkNYntXrNhTPkkHoqt9d1Vi0ZoYi/dxWLMce9JUVAje07ibdRsJxTUlojKEvhVIJ7M2euqY6C/xnSX3i5aT4r
+	id S1751458AbcCXVGj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 17:06:39 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:34764 "EHLO
+	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751305AbcCXVGj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 17:06:39 -0400
+Received: by mail-wm0-f49.google.com with SMTP id p65so5060275wmp.1
+        for <git@vger.kernel.org>; Thu, 24 Mar 2016 14:06:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=rRl81a4Aa2UaN1jsQndpY7GIbtCQOCd4DkuyG9UDHMU=;
+        b=ihsqA95c9jWe13B1SXcA4ltL8e0p0DLufvx3jhRwbwQSqvtX/ApVtggEVn5ObrTw92
+         h86uX8G32osF7lFTVpLkKcOkjkCoD59z3+GqOX4N4FaBJcWIBLq5PlGghvu19TFFq92T
+         xBmOgExPuFkWx4/VbsqVdbK77yorJfOV2GciykWk/HWca9J9L5ZAexREsKtgyo1dF3za
+         jzar2wyLXGRBmvw1cgnrOJsYjJ2KpdlWBJVk5AJXVK7mn6+b98hZ4pnFUWwM2EdbVWwV
+         wWLPpjxvW+8X02Wp1TVtr174tSozdDQwd3Cm2ieSRVYlCtPX3mWwM9O77S/hmmnYbBTX
+         EeKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=rRl81a4Aa2UaN1jsQndpY7GIbtCQOCd4DkuyG9UDHMU=;
+        b=HkZpyzsyAtSkIAEpUjUWe5xLO9AX526/bqLUXe5DBWztWggjGE6dgRVlTbNJgTPo07
+         KzjqjQ0jyYe0+GHUg26mhHATL8vY4lKmCzO0/q5p3kxAcJES0/UcaR5Wjww65rdjgGwp
+         20H2Ze5xb3EdG3Rnmp3+Kpf+YBzb6r+rKD3eREU6MCgG5+HzLOYuZJjXBfY2jeKCyMiz
+         1xQ+YslZbvmSgeq9mEaAvSSUIvZdyPoehJuJrg5BE7oc74fIHP4eH2ew+8mFa7bJp4vl
+         JLYb+PFw+fb0t/75Q/m4UKYf57i1QoX7leG+IkyRXWnaHcI8/CXi6HT9WJK6KSXYGb+m
+         KqjA==
+X-Gm-Message-State: AD7BkJIh9e13wrmuzOjj6oOspQHhryDLD57l7mX/dNi4x9p41wynX2RRArstno2TjiM0Zowo7wC1+0qXjmlz5g==
+X-Received: by 10.28.34.69 with SMTP id i66mr35757636wmi.91.1458853597345;
+ Thu, 24 Mar 2016 14:06:37 -0700 (PDT)
+Received: by 10.28.23.10 with HTTP; Thu, 24 Mar 2016 14:06:37 -0700 (PDT)
+In-Reply-To: <xmqqfuvf8xav.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289797>
 
-From: "Junio C Hamano" <gitster@pobox.com>
+2016-03-24 20:56 GMT+01:00 Junio C Hamano <gitster@pobox.com>:
 > Ralf Thielow <ralf.thielow@gmail.com> writes:
 >
 >> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
 >> ---
->>  contrib/completion/git-completion.bash | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> It is somewhat silly that we have to maintain this list to be in
-> sync with the set of documents we offer.  Wouldn't it make more
-> sense to go in the direction of _removing_ this list of hardcoded
-> words here?
+> Hmph, the reason why this is a good thing to do is because an
+> overlong $sha1 would push $rest too far to the right (possibly
+> making it overflow to the next line)?
 >
-> The first step may be to teach a new subcommand to "git help"
-> to show a list of these words, and then _git_help can use it to
-> lazily compute the list just like __git_commands does.
 
-'git help -a' (or --all) already determines the list of commands available, 
-but then formats it prettily for user consumption. Maybe an alternate --list 
-option?
+Yes.  Another solution would have been to remove the "..." at the
+end, but I prefer to see a shorter message rather than having
+the full sha1 for whatever reason.
 
 >
-> But this change itself is not wrong per-se; will queue to see where
-> follow-up discussion will lead us to.
->
-> Thanks.
->
->
->> diff --git a/contrib/completion/git-completion.bash 
->> b/contrib/completion/git-completion.bash
->> index 70f4171..ffe6004 100644
->> --- a/contrib/completion/git-completion.bash
->> +++ b/contrib/completion/git-completion.bash
->> @@ -1346,8 +1346,8 @@ _git_help ()
->>  __git_compute_all_commands
->>  __gitcomp "$__git_all_commands $(__git_aliases)
->>  attributes cli core-tutorial cvs-migration
->> - diffcore gitk glossary hooks ignore modules
->> - namespaces repository-layout tutorial tutorial-2
->> + diffcore everyday gitk glossary hooks ignore modules
->> + namespaces repository-layout revisions tutorial tutorial-2
->>  workflows
->>  "
->>  }
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+>>  git-rebase--interactive.sh | 3 ++-
+>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+>> index 4cde685..9ea3075 100644
+>> --- a/git-rebase--interactive.sh
+>> +++ b/git-rebase--interactive.sh
+>> @@ -548,7 +548,8 @@ do_next () {
+>>
+>>               mark_action_done
+>>               do_pick $sha1 "$rest"
+>> -             warn "Stopped at $sha1... $rest"
+>> +             sha1_abbrev=$(git rev-parse --short $sha1)
+>> +             warn "Stopped at $sha1_abbrev... $rest"
+>>               exit_with_patch $sha1 0
+>>               ;;
+>>       squash|s|fixup|f)
