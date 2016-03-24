@@ -1,78 +1,82 @@
-From: Stanislav Kolotinskiy <stanislav@assembla.com>
-Subject: Re: [PATCH] git-send-pack: Fix --all option when used with directory
-Date: Thu, 24 Mar 2016 19:49:13 +0200
-Message-ID: <56F42899.9090909@assembla.com>
-References: <1458750262-25765-1-git-send-email-stanislav@assembla.com>
- <20160323212213.GA19920@sigill.intra.peff.net> <56F3F267.30900@assembla.com>
- <20160324173731.GD6341@sigill.intra.peff.net>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v2 09/17] Add watchman support to reduce index refresh
+ cost
+Date: Thu, 24 Mar 2016 13:58:55 -0400
+Organization: Twitter
+Message-ID: <1458842335.28595.10.camel@twopensource.com>
+References: <1458349490-1704-1-git-send-email-dturner@twopensource.com>
+	 <1458349490-1704-10-git-send-email-dturner@twopensource.com>
+	 <56F3EFF4.30500@jeffhostetler.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: Dave Borowitz <dborowitz@google.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 24 18:49:25 2016
+To: Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
+	pclouds@gmail.com, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Mar 24 18:59:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aj9Nr-0005Eu-M1
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 18:49:24 +0100
+	id 1aj9XD-0004hz-5G
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 18:59:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752264AbcCXRtT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 13:49:19 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:34297 "EHLO
-	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751823AbcCXRtR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 13:49:17 -0400
-Received: by mail-wm0-f45.google.com with SMTP id p65so284999315wmp.1
-        for <git@vger.kernel.org>; Thu, 24 Mar 2016 10:49:17 -0700 (PDT)
+	id S1752087AbcCXR7A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 13:59:00 -0400
+Received: from mail-qg0-f48.google.com ([209.85.192.48]:34708 "EHLO
+	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751253AbcCXR66 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 13:58:58 -0400
+Received: by mail-qg0-f48.google.com with SMTP id c67so10816931qgc.1
+        for <git@vger.kernel.org>; Thu, 24 Mar 2016 10:58:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=assembla-com.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=kKBvjxARVtiyBKowHNnFy3WuqZ8zsU5ZJE1p8HIikRs=;
-        b=YlsQlpunefcrvaL+n29V32ndyjiY73JwQv+ZWyea2JQJW+2GspLQvZhIb2ZYr6SvZY
-         QnQ7bloTCanrEEpuaetpkjdePhhGPD/l/9TmZoYCV4SQcMQ97JcjiwbsG9TFpQeXpNAn
-         GvwJpfH9Ehlp5SXR6p5cCb4rTbqgkqgABRxuukZBfmVnV1P/LmjFPHeThQfNBPhn7vnK
-         9Dyfp4sFh78INf/xL2CwP0yH3KhSRk5bo+bGPX0YqFEhrjZF1nPR4CZNC+eKtQXVTDnS
-         QcaJxItk5IXhqyM9tuYMZXPTwhTqpUSTC5Gc4Hon/bfK5GWBOIgGrJO3LpB5U9Awx2Gd
-         0bKw==
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:date:in-reply-to:references:organization
+         :mime-version:content-transfer-encoding;
+        bh=EmiGtlUUUcUHoat8lTYhdv4c2BlgZrmFFKbJaim4Crk=;
+        b=JbVLyHC5Rs8o5aLbWEB6VFPKlpIJcQE/Pu+UaHeuurQFKdXG1i9yXS7K9mDu1tQYdD
+         1h72tpmrfdtjrbCp+/xy1pJUjzUKdlM5lSpkS56QuAFYMJL/EvI/OsYyif1YVaw3RyR7
+         EYov4LmHkssP1b/tkK+sQBooOJaNhaWaGk1+3qz0UwwcdMG1fhRco16rYgZzqMdp1t5y
+         9jgMSXwvD1sp/pP3A9nyPrs6Wq4Sl6c+yuR6J2tBffvplK3DmHVxEToKwF8iH2my1C3J
+         us4ceewetjyFRTxdNJcG2ngExCDIONLbe4FDIaW69ighCLuo3gM9DtbQKrAtj6WS3Uoc
+         40aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=kKBvjxARVtiyBKowHNnFy3WuqZ8zsU5ZJE1p8HIikRs=;
-        b=ZoJyKJ+oiiUO7gx5MbVHgrZj3ed1K7ipDkCb/crps+dBN47n5rUvmBr2fjXLKWVDnV
-         bsajvJEoErSi2GX6SiYvxZlRz9VEJkTjXkTGQ9sIgHzQhxQ+gjWKFpIvay8yGpYOSG4Z
-         3O7CmYYGXEnlhcmLgwjXq5KV1q/kFDiGaTV2lkulPn+P+6PWEUJey3letRpUp9SxzYt4
-         RdIPUJgbtOMmK7+Z1DY1tYppbGig46Ci9fzvFtBBfgRKO1nM5zCzb1zvGEVJldfhRxNJ
-         3E3TeptdjsWsCXJgDtKozZPklCGxDDEDcopIUT66ZM0gorJELF4pzeVYEB6/4WhDYAsZ
-         BCUA==
-X-Gm-Message-State: AD7BkJKlL+PGZCB00QLgPsvoPd9A5Q/4YURJiWL6WDLVGRIS93jJCGsLsorObu9C+hD6jA==
-X-Received: by 10.194.189.231 with SMTP id gl7mr11153595wjc.162.1458841756115;
-        Thu, 24 Mar 2016 10:49:16 -0700 (PDT)
-Received: from [192.168.1.104] (host-static-92-115-177-146.moldtelecom.md. [92.115.177.146])
-        by smtp.googlemail.com with ESMTPSA id r8sm8365588wjz.34.2016.03.24.10.49.14
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:organization:mime-version:content-transfer-encoding;
+        bh=EmiGtlUUUcUHoat8lTYhdv4c2BlgZrmFFKbJaim4Crk=;
+        b=kcWF9NVOGqd++xUqj6LCy6MTUmczB2PatDmPPBMgjUX3rytenJy2DrIlGMXcEpDAe1
+         adyu4SvwbZ5VSZCUSd9HbxNmDEeBQjS0hnpC4a5JX4X5mDCtbBkccjZXflCekp9E9SCP
+         fx0MUIj05lm+kWheMDxR8NzTreXXNZ1nbn6B+Y5PS6bpGvZypEadz2L0W1DHzREicNGQ
+         qYAIlNUkkAH4M9JVhmBTsJorvQaFVIZ+/chUMu+xcabJkotX990y9A2OyjXdbZ8tIrrq
+         ssYfFudIr+ZKxxq7Z+XQ9MBm0cVXdmpfvUaJQQBh+U9lQP9o2X9tkFNvGpqS4VCDxe3c
+         EFeg==
+X-Gm-Message-State: AD7BkJKyITZUwcirLeNXcvQJJaYyMCGh9l6K7BLFxbwWC4Dq9EQYkhwF5yZm0CuNtMXV8w==
+X-Received: by 10.140.176.206 with SMTP id w197mr13021207qhw.76.1458842337353;
+        Thu, 24 Mar 2016 10:58:57 -0700 (PDT)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id e11sm3704480qkb.39.2016.03.24.10.58.56
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 24 Mar 2016 10:49:14 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
-In-Reply-To: <20160324173731.GD6341@sigill.intra.peff.net>
+        Thu, 24 Mar 2016 10:58:56 -0700 (PDT)
+In-Reply-To: <56F3EFF4.30500@jeffhostetler.com>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289774>
 
-On 24/03/16 19:37, Jeff King wrote:
-> I guess a follow-up to my question is: what does "git send-pack" do that
-> "git push" does not? Again, this is just for my curiosity (the answer
-> may be "nothing, we just happened to build our scripts around
-> send-pack", and that is perfectly fine).
-Well, this is some really old code (eight years old), and git version 
-used at the moment was around 1.6. So I'm pretty much sure that it just 
-happened to be the decision of the developer that wrote this piece of code.
+On Thu, 2016-03-24 at 09:47 -0400, Jeff Hostetler wrote:
+> I'm seeing wm->name have value ".git" rather than ".git/" on Linux.
+> 
+> 
+> On 03/18/2016 09:04 PM, David Turner wrote:
+> > +		if (!strncmp(wm->name, ".git/", 5) ||
+> > +		    strstr(wm->name, "/.git/"))
+> > +			continue;
+> 
 
---
-Stanislav
+Thanks.  I don't think I considered the case of .git itself being
+modified, although clearly files are occasionally created/deleted in
+there.  I'm going to fix this by ignoring all directories, since we'll
+capture untracked-cache changes via files in those dirs.
