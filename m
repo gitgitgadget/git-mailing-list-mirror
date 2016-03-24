@@ -1,70 +1,101 @@
-From: work <motroniii@gmail.com>
-Subject: GSoC proposal
-Date: Thu, 24 Mar 2016 23:15:53 +0300
-Message-ID: <56F44AF9.2020406@gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 2/2] completion: add 'revisions' and 'everyday' to 'git help'
+Date: Thu, 24 Mar 2016 20:51:04 -0000
+Organization: OPDS
+Message-ID: <B40A8BBB3787424787785220EA6BFCFE@PhilipOakley>
+References: <1458844034-12855-1-git-send-email-ralf.thielow@gmail.com><1458844034-12855-3-git-send-email-ralf.thielow@gmail.com> <xmqq7fgr8wqc.fsf@gitster.mtv.corp.google.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-Cc: larsxschneider@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 24 21:17:01 2016
+Cc: <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>,
+	"Ralf Thielow" <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 24 21:51:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajBgf-00018z-7K
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 21:16:57 +0100
+	id 1ajCDt-0004Rb-Dk
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Mar 2016 21:51:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751105AbcCXUP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 16:15:58 -0400
-Received: from mail-lf0-f48.google.com ([209.85.215.48]:34335 "EHLO
-	mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750870AbcCXUP5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 16:15:57 -0400
-Received: by mail-lf0-f48.google.com with SMTP id c62so40115577lfc.1
-        for <git@vger.kernel.org>; Thu, 24 Mar 2016 13:15:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=to:cc:from:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=QaHM5He3tNHXPdcv/RzS9DrXFhLSOrDno1iKXF37XsU=;
-        b=iApA+aLKLzrJRoMe6ho4QonhI4fut3qDZljet9VCV+DQZ3QdzYzSZfdC41DeF0hSkZ
-         G2oEQaOnE8U8J63rV8UogqVBszbwi3gMVGd8ubs3elUG3FX6L32lFt2TMf0uOUmB8bWH
-         ZifOiDcFko4tuVYqIxGy2iv7mgQq4zjz7kv4PyB+bmV5l8nkuLabl+CG8me4XrawzfOq
-         +MdxmFHdHtNXvRF0X5rnwGWoj4fUOW/mjZh9I7QKeP/xTmlTg3sR5wOd7bFE99x1zbBc
-         Y+Xz7ldrDqoACm4M7KfjaU4pFutUT7ZOiO93Q55SS0VveB+XWG3wZyb0l9xQUpEemaKl
-         g+GQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:to:cc:from:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=QaHM5He3tNHXPdcv/RzS9DrXFhLSOrDno1iKXF37XsU=;
-        b=UybZV8fZkaotZasDqfIND6zROaAgPpKZZvDevWyS/UWjmfBrXaezD4R2Y+o6fCQEoX
-         gSLvsLVMjwy4wHmIU1Qs2mtn9Rjv8SMA5TevDO0waoAlpwqsyX7HD7n2+eX2Ckmdteb9
-         /BPtk5sLI46snSxoSvCMgSSvngZD8iZEuW6LSLMqrseaYYTgnGL5SFRcKAJACdtgTh5p
-         Ot1kZ6JNpgLzGhAnPK+MKIOgJQrDC7DLNuCxM5zIbZo4e8TgoYTKRFkZZ2bn4X/Umb9y
-         33neo7Li2oHm1WfsqsKTDh2tJbPC+bU3c59ak5Mki798spQ6R92qixzrh0jza0Ntut2M
-         8jvw==
-X-Gm-Message-State: AD7BkJJVXXKfAfEZ2VWl7p5VYk2HzHY8y5H4czm1t4VC6Hbbd+iGNFENj2rUHvbclMikDA==
-X-Received: by 10.25.160.79 with SMTP id j76mr4355942lfe.83.1458850555402;
-        Thu, 24 Mar 2016 13:15:55 -0700 (PDT)
-Received: from [172.16.163.135] (ppp91-76-147-218.pppoe.mtu-net.ru. [91.76.147.218])
-        by smtp.gmail.com with ESMTPSA id um4sm1392471lbb.1.2016.03.24.13.15.54
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 24 Mar 2016 13:15:54 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
+	id S1751223AbcCXUvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 16:51:07 -0400
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:53294 "EHLO
+	smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750823AbcCXUvG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 16:51:06 -0400
+Received: from PhilipOakley ([92.22.6.252])
+	by smtp.talktalk.net with SMTP
+	id jCDdabZl8CrtejCDea9lcl; Thu, 24 Mar 2016 20:51:03 +0000
+X-Originating-IP: [92.22.6.252]
+X-Spam: 0
+X-OAuthority: v=2.1 cv=L/e9O7n8 c=1 sm=1 tr=0 a=L1JPMP/96Cd0ZXeOJ41CKA==:117
+ a=L1JPMP/96Cd0ZXeOJ41CKA==:17 a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10
+ a=s5jvgZ67dGcA:10 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8 a=pGLkceISAAAA:8
+ a=VwQbUJbxAAAA:8 a=sgMr-s8sPSwgmRqELakA:9 a=wPNLvfGTeEIA:10 a=x8gzFH9gYPwA:10
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfDE+Kgw2p4/bOqHiq9wuU14uSc5lVn1zMj8oBXltsvFpSiyH4zvSF1yKhdLFVoq0rL9uES3QsYRp1PGsSJCz2f5L+n8dfwbxuJZDP9dCe6XlviYw9sj5
+ dBHgRUCGC1cAG2Nv79XC1GN51SS1USnYw8aJkNYntXrNhTPkkHoqt9d1Vi0ZoYi/dxWLMce9JUVAje07ibdRsJxTUlojKEvhVIJ7M2euqY6C/xnSX3i5aT4r
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289796>
 
-As I was strongly encouraged to submit my GSoC proposal, I'll post it 
-here and CC to my possible mentor.
-Please, provide with your feedback about my draft. You can also comment 
-it right in the Google doc. Thanks in advance
+From: "Junio C Hamano" <gitster@pobox.com>
+> Ralf Thielow <ralf.thielow@gmail.com> writes:
+>
+>> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+>> ---
+>>  contrib/completion/git-completion.bash | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> It is somewhat silly that we have to maintain this list to be in
+> sync with the set of documents we offer.  Wouldn't it make more
+> sense to go in the direction of _removing_ this list of hardcoded
+> words here?
+>
+> The first step may be to teach a new subcommand to "git help"
+> to show a list of these words, and then _git_help can use it to
+> lazily compute the list just like __git_commands does.
 
-Proposal: 
-https://docs.google.com/document/d/1Hpu9FfD3wb7qgWgTiKtIAie41OXK3ufgnhnNuRaEH4E
+'git help -a' (or --all) already determines the list of commands available, 
+but then formats it prettily for user consumption. Maybe an alternate --list 
+option?
+
+>
+> But this change itself is not wrong per-se; will queue to see where
+> follow-up discussion will lead us to.
+>
+> Thanks.
+>
+>
+>> diff --git a/contrib/completion/git-completion.bash 
+>> b/contrib/completion/git-completion.bash
+>> index 70f4171..ffe6004 100644
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -1346,8 +1346,8 @@ _git_help ()
+>>  __git_compute_all_commands
+>>  __gitcomp "$__git_all_commands $(__git_aliases)
+>>  attributes cli core-tutorial cvs-migration
+>> - diffcore gitk glossary hooks ignore modules
+>> - namespaces repository-layout tutorial tutorial-2
+>> + diffcore everyday gitk glossary hooks ignore modules
+>> + namespaces repository-layout revisions tutorial tutorial-2
+>>  workflows
+>>  "
+>>  }
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
