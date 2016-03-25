@@ -1,87 +1,85 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [RFC/GSOC] Git Beginner | Warnings for potentially destructive commands
-Date: Fri, 25 Mar 2016 12:20:48 -0700
-Message-ID: <CA+P7+xqkqfccQtWeKbURZt21i+gw=b7f0YHHuqeNzM7TH2m+6g@mail.gmail.com>
-References: <56F51089.2050703@gmail.com> <xmqqd1qi4fvi.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 5/5] submodule--helper clone: lose the extra prefix option
+Date: Fri, 25 Mar 2016 12:41:56 -0700
+Message-ID: <xmqqfuve2vln.fsf@gitster.mtv.corp.google.com>
+References: <1458931156-29125-1-git-send-email-sbeller@google.com>
+	<1458931156-29125-6-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Sidhant Sharma <tigerkid001@gmail.com>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Philip Oakley <philipoakley@iee.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 20:28:51 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, pclouds@gmail.com, Jens.Lehmann@web.de,
+	jacob.keller@gmail.com, sunshine@sunshineco.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 20:42:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajXPe-000507-NW
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 20:28:51 +0100
+	id 1ajXcT-0003XB-FF
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 20:42:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753934AbcCYT2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 15:28:46 -0400
-Received: from mail-ig0-f176.google.com ([209.85.213.176]:36945 "EHLO
-	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752859AbcCYT2p (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 15:28:45 -0400
-Received: by mail-ig0-f176.google.com with SMTP id l20so19160051igf.0
-        for <git@vger.kernel.org>; Fri, 25 Mar 2016 12:28:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=tphYlzC8OxOX0Va61dJbhK3iguY+PLAY+/Gj4Wz876M=;
-        b=s9rmntxruKPdUye3Shei/rS5JWJBlH/xmLM8Y7r2RUY7W7AxwZUjKwocqw58a/gv4P
-         fKYcC1uhPo8WlqsS/aA6Rf5gV33gWvlBHLQK33VXO1pB0XS7j9t5K/I24uP/kafSLKgC
-         OdtTRiXRbOzllxH+LuUY1H/YeepltdU7OLOIl4/gXeq/CNHsXBOFDwd5UrfkRyHkGo+0
-         C4qVMev6a2QJyM9ZBHsgy6ZiK1Jcn09ysTT69qeWIn7aD+R1pg0kFfDFviYeQh5I2eNl
-         icZRhnXxq7V3e3T2DwcfLixdTK1clzrAM4uxIYjtpGwkMfIFnAeIJWNvp2Kwm2epPCgT
-         ZogA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=tphYlzC8OxOX0Va61dJbhK3iguY+PLAY+/Gj4Wz876M=;
-        b=ipbqpXlh+hRuilNJIlv96KoFwDbU0D54P0C+wyK/rrcCNx7r87lpxh0fMBs2Y9CxBl
-         auSK8t8QyCunsZo7PH1B7kQypROJbcnGIh0B/Pk0FohpVTr7TVB9YRC8DIOaJ5+e4MHu
-         ZHd34dLAcjUF62u0Xf4kqo2NcN6Az3wmvq1NG9N9VMg+Mw9uvOYEI4tmdoxVAV+RpABN
-         nGJNpHYbi+fYgLMmut0ePyjbfTBNxrR1AgXPKrwwKmgKPQ8jZpZk9Nghba2duT1ny1lh
-         18UV/nGEpPj/K7WTeSxdUFbu0dGelATJJgCCSlPYhXCcvhfTluVx7KxtuwDKHv7p2/ub
-         6EHw==
-X-Gm-Message-State: AD7BkJJEszmT9y9Nb9zsAfMUvhMZTjqtxoQjLp6om2RTaU1oDAjD4GjZrdhSTqlkIT1nqTYwu8S+7F1C0Awx+Q==
-X-Received: by 10.50.143.105 with SMTP id sd9mr96116igb.73.1458933667817; Fri,
- 25 Mar 2016 12:21:07 -0700 (PDT)
-Received: by 10.107.10.202 with HTTP; Fri, 25 Mar 2016 12:20:48 -0700 (PDT)
-In-Reply-To: <xmqqd1qi4fvi.fsf@gitster.mtv.corp.google.com>
+	id S1754258AbcCYTmA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2016 15:42:00 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:60485 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753962AbcCYTmA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 15:42:00 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BE3AA4F87A;
+	Fri, 25 Mar 2016 15:41:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NrM5B11nL12UFiApr/yd/OObLx0=; b=XRf0tP
+	eUGrSSjeBGGP/ksQkv9XiwJRd0d+J4t/IYP+f8iyZCveLITyIuQqEGQArLfoTZbk
+	rvfBYXvzuBoZ3++D+LyihVN83OCb+GlYDfszfQlBmCViUPPb7FiKMyNpmLsrNj/+
+	Bw27LyDJ72QmenlYyTIIMqha2Rj1oJMPnTM28=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xgeo0s7vhmOpKN5x2Mz4rDxcnXcj14mi
+	VO+OyssW9nxDjkeqDfFYkKiIAnZRNuy3n0OpwuInBffK+piTT5dxKmaBwxK6YX9W
+	kxsr/TDECir18wjOIEA5xYUPoZQnSIcZzpI1qJnte8pspD9X4+R8+7bPvD7T1xUM
+	WAcug0oA7fY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AB0964F879;
+	Fri, 25 Mar 2016 15:41:58 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2C4DB4F877;
+	Fri, 25 Mar 2016 15:41:58 -0400 (EDT)
+In-Reply-To: <1458931156-29125-6-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Fri, 25 Mar 2016 11:39:16 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A2FFBC46-F2C1-11E5-B1CF-E95C6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289949>
 
-On Fri, Mar 25, 2016 at 10:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> The above two examples make me wonder if these should be static
-> text.  "ggit rebase" and "ggit reset" have full information of the
-> concrete branch names, commit object names and the actual topology
-> of the history, so it should be able to give a description more
-> tailored to the user's situation.  Instead of giving a fictional
-> drawing with "For instance, Current state:", it should be able to
-> draw the actual before-and-after picture based on where the end-user
-> actually is.  I see _some_ attempts (e.g. with "<n>", mention of
-> "(master)" and $BASE_BRANCH, you may have meant that they will be
-> replaced with actual values), but I suspect that telling some truth
-> (i.e. use of the real branch names) while showing pictures that do
-> not match the reality (i.e. if the topology and the description are
-> done as fixed text) would only confuse the users.
+Stefan Beller <sbeller@google.com> writes:
 
-If possible, I would suggest aiming for generating the actual topology
-that the user is seeing, customized so that it gives relevenat
-information, rather than static examples. It may be that it is not
-possible or the effort is too large for such a project. If the latter
-is the case, then using only static text is better than trying to use
-some but not all the available information, as Junio points out above.
+> In the rewrite from shell to C (ee8838d157761, 2015-09-08, submodule:
+> rewrite `module_clone` shell function in C), we never made use of the
+> prefix. Probably it sneaked in as module_list which was converted in the
+> same series had the prefix as well.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
 
-Regards,
-Jake
+Hmph.
+
+This helper is called from the root level of the superproject's
+working tree (after cd_to_toplevel is done), and has options like
+--url.  If the user named --url with a relative pathname to a local
+repository directory (or a bundle file), shouldn't it be adjusted,
+and wouldn't prefix the only clue what that given path is relative
+to?  Same for --reference repository's path.
+
+I am not sure removing "--prefix=$wt_prefix" without doing "git -C
+$wt_prefix" on the calling side is the right thing to do.  Even
+though the options list used by this function does not seem to use
+OPTION_FILENAME, parse-options API takes prefix exactly because
+relative pathnames need to be adjusted, and it smells like that the
+breakage brought in by this change is merely hidden by existing bugs
+in the code that does not use prefix to adjust relative paths.
