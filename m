@@ -1,88 +1,81 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: GSoC 2016 | Proposal | Incremental Rewrite of git bisect
-Date: Fri, 25 Mar 2016 17:13:58 +0530
-Message-ID: <CAFZEwPPKE1kODzSD4ZqZOehSB2SUUAC5JF-j7__kA2obpV92Tw@mail.gmail.com>
-References: <CAFZEwPNXKo5YN9OPPCkO90bSPD3ittU+y8eDxh-JLxnihBznuw@mail.gmail.com>
-	<CAP8UFD0muBUEp9XknmcTWqg==ChzWP3m-p-v6vXyC09OC88U7w@mail.gmail.com>
-	<CAFZEwPM=+U8gC0JRL1Zi6yJboenuSw6hBKJeLNzf_=NYQTCSGA@mail.gmail.com>
-	<CAP8UFD0vm1Sn07ickfPz5segbM-M7+HR43CMMGsB9WTqj5s-yw@mail.gmail.com>
+From: Kevin Brodsky <corax26@gmail.com>
+Subject: Duplicate -s entry in git-format-patch(1)
+Date: Fri, 25 Mar 2016 11:45:56 +0000
+Message-ID: <56F524F4.3000409@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Jeff King <peff@peff.net>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Stefan Beller <stefanbeller@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Eric Sunshine <ericsunshine@gmail.com>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 12:44:04 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 25 12:46:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajQ9s-0000s5-El
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 12:44:04 +0100
+	id 1ajQBo-0000s5-8k
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 12:46:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751950AbcCYLn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 07:43:59 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:33884 "EHLO
-	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751252AbcCYLn7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 07:43:59 -0400
-Received: by mail-yw0-f195.google.com with SMTP id f6so8548840ywa.1
-        for <git@vger.kernel.org>; Fri, 25 Mar 2016 04:43:58 -0700 (PDT)
+	id S1751989AbcCYLqB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2016 07:46:01 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:32977 "EHLO
+	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751399AbcCYLqA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 07:46:00 -0400
+Received: by mail-wm0-f45.google.com with SMTP id l68so23073222wml.0
+        for <git@vger.kernel.org>; Fri, 25 Mar 2016 04:45:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=iwQbr8XoJZ/XnZbREoHAfwhSJXWglNUrgtqCXftjyBU=;
-        b=KDnDUDDOBPVaLSaZ1qVAPlH/cTJLIiviGeMYKD0hVUrPpvo0JS1LgW0gkQgc2aTF6p
-         pahYmeGOsTP6pKB+G8H4vFhxvDRBwm5DkUrSxsmpf64YffYSe2lggPD6NuUxlaUiUItx
-         0EIPE3QQjnW+fPqDamoolnLYpt6j3gDRuMu+6v/ooIqBqpaZSbuCU8nREvybxiiBh1Q/
-         8CAD3IlXUJMXQTPo+f2+5NB7z32fXOKUFJAzhicM5kMLkQj02vXGhAf+CIu8yisGt/WV
-         Nh52/7xClPZjr0sgd8h63Ui4J3cbnf4MN/YO9Sxd9fk/RZb+XjGsBL5Za5K2zGeKUfyV
-         FZww==
+        h=from:to:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=ZPRjiPJ0gyVnzgym/i7MN3HXmc9ZD7XHGjF5/5eIy5o=;
+        b=VqcBg6Pc3JSdu244DVUgXm7ZM8ZHrFXTiL5Ib1ZKrsbGWyGrgEUK1mrgO65yuEpoez
+         PYwM23tsoCOP85blqMqEYKRfQF4oQO9agb1P/AeIA1HH39VC9mlz5Tc08XdjtkMGe1JA
+         XhyWWxIIyBwtb/q2PoCNl050RKEJfegjEvldOmmVNvNtEayhQ9lzk7nWTlYfktysYnnX
+         /0ugsvmueA55KRXxBi9DptAeaP4KoEBlbXn6B/9JCYUkuMgQtBiMShp/E0Tg4ydJ+9vW
+         YcfTYVi5dC/0QLRtHgMiDkTFKZfbpoONHU0y1bTVhNkrxkpcEARO8FMDluYk38LzT8sw
+         igTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=iwQbr8XoJZ/XnZbREoHAfwhSJXWglNUrgtqCXftjyBU=;
-        b=BFcQtohqjUaj2iDtgMQs5t1TnlHcOStDaZBP7cZZW5c74/FHK3p5zKIizfFuT4r3WE
-         GZusP1iuNjzegzrFG+/GPQaqWlPAtQRuFqPFaD9oepejxQ1in/7hPuWIR1p+aNwTOSnT
-         JaKniAo2ZSehvZEXgSRI0M/gTGZNJqsmWBxmdfgMHWliL+AXcV/FxzVeYuMENZRrZn/+
-         g8t/gQQkX7iLY6HErybEZZiFjJgRQJO1Of5bH5Jc0gRp8XDerREbUnpoMKkywPaRyZs1
-         KIALOp1Pro9O+cxmwqONysTeR1ohRPsvVMbxyO/UKeO7pjkizNE37ymIbmANYJ4xKysE
-         a+9Q==
-X-Gm-Message-State: AD7BkJIxDhDW9UTvKQNd6/s6vKgHDBIo6x/lhre/y02YU9t7CjX8lZvYoi4k/TWM3sOaA7GOHGDqDRTOAj50ew==
-X-Received: by 10.37.230.200 with SMTP id d191mr7548790ybh.131.1458906238177;
- Fri, 25 Mar 2016 04:43:58 -0700 (PDT)
-Received: by 10.13.203.137 with HTTP; Fri, 25 Mar 2016 04:43:58 -0700 (PDT)
-In-Reply-To: <CAP8UFD0vm1Sn07ickfPz5segbM-M7+HR43CMMGsB9WTqj5s-yw@mail.gmail.com>
+        h=x-gm-message-state:from:to:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=ZPRjiPJ0gyVnzgym/i7MN3HXmc9ZD7XHGjF5/5eIy5o=;
+        b=XAtdBgUL8pvEh9iHL+lOs4bJp3Q7db2uDg0Oi2WoTRlosFn7eO7sMkFm5eNirmzuZD
+         d+alOtlv5AdK00JE4rhQht0qWik2hvNvpf0ocdOYwEXLGSpC2RF+cjFBg9EZx4RPjVLt
+         uZtMRu04ohYPEv3UIq4CiX+Vur2Ejqe7jjki3lf+Znv0uXEAE1PV9QX+7ylD3E05sqxn
+         ts7DhrutO6qC4KU1KVi+Td/XD0CedMWmDEJR75QsevHWFZVt2xVW9rbm3tGU9Nf5g4u7
+         a8P95xSQeQDL5EP5sgIzMgDd2534FdovAGeBQinPREAcV0oEP5sKEIwpWOQpiYFlhHqY
+         zL7Q==
+X-Gm-Message-State: AD7BkJI61RVfVXf9YlHy/fMxiMMgUiCcUIRTwySOD4w3H6CIYI3Y3eLf62XKpu7PZWQCYw==
+X-Received: by 10.194.121.194 with SMTP id lm2mr14531704wjb.71.1458906358296;
+        Fri, 25 Mar 2016 04:45:58 -0700 (PDT)
+Received: from [192.168.0.10] (61.42.99.195.dyn.plus.net. [195.99.42.61])
+        by smtp.googlemail.com with ESMTPSA id fv6sm11654402wjc.12.2016.03.25.04.45.57
+        for <git@vger.kernel.org>
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 25 Mar 2016 04:45:57 -0700 (PDT)
+X-Google-Original-From: Kevin Brodsky <corax.2.6@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289881>
 
-On Fri, Mar 25, 2016 at 5:10 PM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> On Fri, Mar 25, 2016 at 11:15 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->>> - you will add an option to "git bisect--helper" to perform what the
->>> git-bisect.sh function did, and
->>> - you will create a test script for "git bisect--helper" in which you
->>> will test each option?
->>
->> I had very initially planned to do this. But Matthieu pointed out that
->> it would be much better to use the existing test suite rather than
->> creating one which can lead to less coverage.
->
-> Ok, then perhaps:
->
-> - you will add tests to existing test scripts, so that each "git
-> bisect--helper" option is (indirectly) tested.
-Yes. I will mention this in the proposal also. Thanks for reminding.
+Hi all,
+
+I've noticed for some time now that the man page for git-format-patch is
+quite confusing because it includes two entries for the -s option:
+- "-s, --no-patch", which is pulled by "include::diff-options.txt[]"in
+Documentation/git-format-patch.txt
+- "-s, --signoff", which is directly part of git-format-patch.txt.
+
+The first entry is apparently wrong, format-patch never interprets it
+this way, as far as I can tell. This is particularly problematic since
+it's the first one listed in the man page...
+
+I don't know how to fix this issue without duplicating diff-options.txt,
+hopefully someone will be more inspired than me ;)
+
+Thanks,
+Kevin
