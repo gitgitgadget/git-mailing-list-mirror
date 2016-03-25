@@ -1,138 +1,111 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 1/4] submodule: fix recursive path printing from non root directory
-Date: Fri, 25 Mar 2016 09:54:11 -0700
-Message-ID: <CAGZ79kYmVH_6=7y894woObaD4de44d8iUQtcCq6r3grGrMiaxQ@mail.gmail.com>
-References: <1458862468-12460-1-git-send-email-sbeller@google.com>
-	<1458862468-12460-2-git-send-email-sbeller@google.com>
-	<xmqqy4964if7.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3/GSoC 2/5] path.c: implement xdg_runtime_dir()
+Date: Fri, 25 Mar 2016 09:55:59 -0700
+Message-ID: <xmqqpoui4huo.fsf@gitster.mtv.corp.google.com>
+References: <1458728005-22555-1-git-send-email-huiyiqun@gmail.com>
+	<1458728005-22555-2-git-send-email-huiyiqun@gmail.com>
+	<20160325095923.GB8880@sigill.intra.peff.net>
+	<CAKqreux8FHdJoKDishjQkbi9g1oUc265EUK4nOJ_sgeFivGSNA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Jacob Keller <jacob.keller@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 17:54:16 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+	Your friend <pickfire@riseup.net>
+To: =?utf-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 17:56:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajV03-00084E-Vd
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 17:54:16 +0100
+	id 1ajV1t-0000bM-Ta
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 17:56:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753858AbcCYQyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 12:54:13 -0400
-Received: from mail-io0-f181.google.com ([209.85.223.181]:35489 "EHLO
-	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753472AbcCYQyM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 12:54:12 -0400
-Received: by mail-io0-f181.google.com with SMTP id v187so88717722ioe.2
-        for <git@vger.kernel.org>; Fri, 25 Mar 2016 09:54:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=Pb9nA3Vx7hwbbwLp4xVXZ33E+T+/6UxQThxT6NnhCu4=;
-        b=o2Ix/jHhB5s1W3LWQ5Lg2erjDBIYZB2G4W8nKrXyw5EWK+G88kTrz8zh6Ls+PZOCW9
-         7Mvi2JncSw/AN0kaFgQHZhd3zn1tjurou2TRmMvuxeDRoYR4pNCSRFUl6JU1NFzzQnZS
-         OhqjXSIsAD6hdVRYhiq3lzBQp3vG1GAkSisUs4oKMjfyLkrK/ecDZjxBV5FL7qutIsZz
-         RkTgu3Q6RNL2yKCNAOJPM/M2StZ1MyqmmiPwIvMULvuLXDf1gfWJ7j+aiS1lzkY8kqYc
-         Fo003jlZKQiB5uqs+0kzeA8y+DkGcCluBXvRTLxZny6BLM/MrcYeD2vvoGaGArKFr6mP
-         jHsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=Pb9nA3Vx7hwbbwLp4xVXZ33E+T+/6UxQThxT6NnhCu4=;
-        b=ctv0CqkQI5gWWMxV83pyKIIOySx9ciG1MXmLDPKSflQ2m6ss/r4HhXYxkIwCiOAGPi
-         LgZe2JhoBGNSvRBywu64S6XW5NJyf46jLvamv+76Zz7i66V/sz1UClbTKr8YQreFe3I+
-         c+BJsQMivHGr8eLpfimMszB4ZHsRINstt1SpVFo3rhU38T/SGbnOkUxCKTm/k8DOPgms
-         7/0HBK1mKcAZriA1U05yPUTx/cDT4Fui29wbIPrnodJ/gPhyu+hBrNvfcqH03FViM5G1
-         APCi7PWR9SQe2DNfUkLZ8E8i3aVnELZrH92oPjcKroPHhiCYdphzschIbRU4mdqZ+fdk
-         YpWw==
-X-Gm-Message-State: AD7BkJLYJ7N/kkTfCijpRNbIi3P93OAcgNqQjdRJ5WEW+DZvrz/kMQ6+4dAIOCcqnBjZykGeSSkVKBy44OjKxdEE
-X-Received: by 10.107.131.163 with SMTP id n35mr16819094ioi.110.1458924851353;
- Fri, 25 Mar 2016 09:54:11 -0700 (PDT)
-Received: by 10.107.132.101 with HTTP; Fri, 25 Mar 2016 09:54:11 -0700 (PDT)
-In-Reply-To: <xmqqy4964if7.fsf@gitster.mtv.corp.google.com>
+	id S1753887AbcCYQ4F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Mar 2016 12:56:05 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:56693 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753472AbcCYQ4D convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Mar 2016 12:56:03 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8078B4DDAB;
+	Fri, 25 Mar 2016 12:56:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=hly531DAaTyn
+	eOinO3oqJrL+z2U=; b=e9fyl5zuZNOPl5YjNzPHw2Qym0+buj/zX9OdRoXlfsni
+	1JqfsNsll21931Vc+R1XWCseyJO+q6w5BxuycYWiu5gaeaSnC4zNvV9bCzFWIhyY
+	y9EMqU2VbJ1XMmDyVGrLugaAsGMepTj0kxtn0JaKBeKRV3ebCZl3g8jwnc+vZk0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ww+cIy
+	jGJ6bxTZvH1qrj1FyjHflSjEWFQAq5JVuJDmgEuFPRmjm5BUTX27yvd79rOp2HVQ
+	bC0l88yis7WcHMZuYFQXxtZXeIag3tPQ2DZdI/G1iA5TG3pGG4kgvnc8uytAkn3F
+	Nq61mnIAZKJLxFBrMCmG0hkyVuAwpPj7J+uYo=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 668764DDA9;
+	Fri, 25 Mar 2016 12:56:02 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8DDB44DDA1;
+	Fri, 25 Mar 2016 12:56:00 -0400 (EDT)
+In-Reply-To: <CAKqreux8FHdJoKDishjQkbi9g1oUc265EUK4nOJ_sgeFivGSNA@mail.gmail.com>
+	(=?utf-8?B?IuaDoOi9tue+pCIncw==?= message of "Fri, 25 Mar 2016 22:21:48
+ +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 73CF3256-F2AA-11E5-8B08-E95C6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289906>
 
-On Fri, Mar 25, 2016 at 9:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+=E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqun@gmail.com> writes:
+
+>> There's a lot of "what" here that the caller doesn't really care abo=
+ut,
+>> and which may go stale with respect to the implementation over time.=
+ Can
+>> we make something more succinct like:
+>>
+>>   /*
+>>    * Return a path suitable for writing run-time files related to gi=
+t,
+>>    * or NULL if no such path can be established. The resulting strin=
+g
+>>    * should be freed by the caller.
+>>    */
+>>
+>> ?
 >
->> Recursing into submodules currently works by just calling
->> (cd $submodule && eval <command>) for update, sync and status
->> command.
->>
->> Say you have the following setup
->>
->> repo/ # a superproject repository
->> repo/untracked/ # an untracked dir in repo/
->> repo/sub/ # a submodule
->> repo/sub/subsub # a submodule of a submodule
->>
->> When being in repo/untracked/ and invoking "git submodule status"
->> you would expect output like:
->>
->>     repo/untracked/$ git submodule status --recursive
->>      <sha1> ../sub (version)
->>      <sha1> ../sub/subsub (<version>)
->>
->> We need to take into account that we are in the untracked/ dir,
->> so we need to prepend ../ to the paths. By using relative_path
->> to compute the prefix, we'll have that output.
+> That's clearer, but if I were the caller, I would worry about the
+> security of the path.
+> How about adding:
 >
-> tests to demonstrate existing breakage and protect the fix from
-> future breakages would be needed, no?
+> The security of the path is ensured by file permission.
 
-I realize this is worded slightly wrong. The bugs described in patch
-1&2 would only occur if we'd apply patch 3 without them.
-So currently there is no bug.
+Is "by file permission" descriptive enough?
 
-We currently do have tests for that, e.g. t7403,
- '"git submodule sync" should update submodule URLs - subdirectory'
+To protect /a/b/c/socket, what filesystem entities have the right
+permission bits set?  If the parent directory is writable by an
+attacker, the permission bits on 'socket' itself may not matter as
+the attacker can rename it away and create new one herself, for
+example.
 
-In patch 4 I added tests for "git submodule update" and enhanced tests for
-the sync command.
-
-
+> I will deal with it.
 >
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>  git-submodule.sh | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/git-submodule.sh b/git-submodule.sh
->> index 43c68de..536ba68 100755
->> --- a/git-submodule.sh
->> +++ b/git-submodule.sh
->> @@ -825,7 +825,7 @@ Maybe you want to use 'update --init'?")"
->>               if test -n "$recursive"
->>               then
->>                       (
->> -                             prefix="$prefix$sm_path/"
->> +                             prefix="$(relative_path $prefix$sm_path)/"
->>                               clear_local_git_env
->>                               cd "$sm_path" &&
->>                               eval cmd_update
->> @@ -1233,13 +1233,13 @@ cmd_sync()
->>                       then
->>                       (
->>                               clear_local_git_env
->> +                             prefix=$(relative_path "$prefix$sm_path/")
->>                               cd "$sm_path"
->>                               remote=$(get_default_remote)
->>                               git config remote."$remote".url "$sub_origin_url"
->>
->>                               if test -n "$recursive"
->>                               then
->> -                                     prefix="$prefix$sm_path/"
->>                                       eval cmd_sync
->>                               fi
->>                       )
+> I find there are some similar leakage in this file. I'll fix them in
+> another patch.
+>
+> Do you think we need some additional comments for the release of strb=
+uf?
+
+As Documentation/technical/api-strbuf.txt has this, I think we are
+already OK.
+
+`strbuf_release`::
+
+	Release a string buffer and the memory it used. You should not use the
+	string buffer after using this function, unless you initialize it agai=
+n.
