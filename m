@@ -1,139 +1,98 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 3/4] submodule--helper list: lose the extra prefix option
-Date: Fri, 25 Mar 2016 10:31:32 -0700
-Message-ID: <CAGZ79kY96cx9iED=xbheByO7kzNFT2VkO6VpRX6nVJ6rov+6uw@mail.gmail.com>
-References: <1458862468-12460-1-git-send-email-sbeller@google.com>
-	<1458862468-12460-4-git-send-email-sbeller@google.com>
-	<xmqqmvpn5awo.fsf@gitster.mtv.corp.google.com>
-	<xmqqegay5yw0.fsf@gitster.mtv.corp.google.com>
-	<xmqqh9fu4gi7.fsf@gitster.mtv.corp.google.com>
+From: Chhatoi Pritam Baral <chhatoipritam@gmail.com>
+Subject: [PATCH] t7012: Implement test for git-checkout
+Date: Fri, 25 Mar 2016 23:06:20 +0530
+Message-ID: <56F57714.4050708@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Jacob Keller <jacob.keller@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 18:31:38 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 25 18:37:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajVaD-00036Y-Dl
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 18:31:37 +0100
+	id 1ajVg8-0006Hv-8V
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 18:37:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754094AbcCYRbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 13:31:33 -0400
-Received: from mail-io0-f182.google.com ([209.85.223.182]:35742 "EHLO
-	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753933AbcCYRbd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 13:31:33 -0400
-Received: by mail-io0-f182.google.com with SMTP id v187so89562409ioe.2
-        for <git@vger.kernel.org>; Fri, 25 Mar 2016 10:31:32 -0700 (PDT)
+	id S1753962AbcCYRhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2016 13:37:32 -0400
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:34755 "EHLO
+	mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753925AbcCYRhb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 13:37:31 -0400
+Received: by mail-pf0-f172.google.com with SMTP id x3so86853376pfb.1
+        for <git@vger.kernel.org>; Fri, 25 Mar 2016 10:37:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=xdqUc1B5QIMqeAR9mNLGJ3I3Vr7Cq0/WFJn8Usii5Og=;
-        b=OcozwwSsrHluSDnQz9DJuPvmuR/qZoo4lzfDD2ndYLcn0qm1sN8WW1GD3fKFLXcbnb
-         8z2uSgyDxWm5L8AyWlLiR6hsvXmCKBOvhCSwSxeiOLGC9NYo7/0bgPYfNYSk+aArlg75
-         kUMQd1kh+vJw59OZTtB2BwxgjXE5HboyhiEu49JSVy5J4A9Ec/YkQL8Y73GCIdG7Op1U
-         obuDWQJGEMZYFwlP+3H7zXWYBcY07TtrsLpiuVYjXRAyWxe23rG/smS2+QeWkkX6UafN
-         nFOx3Ks91aioxJO2eYx8KAROIOets5/6lprbiLwFGGSABI9QP1B2WnUQBAekHOmErDT1
-         3IFw==
+        d=gmail.com; s=20120113;
+        h=from:subject:to:message-id:date:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=cjon/LX1JU0JdP5hXPZh7bKetPH+IpJpJMTWWz4zrfA=;
+        b=neioRoXhg9IbJO8SUG7tvxrV2tbP1mIYIKIh5Gwju3uRfOJ/JrCWwUQr1/31ShIpLd
+         JnfAPPubplLrC9fKkL4cQBhnvE8NSF7Ym4px8XEkCp6+6MMs9pVaAQC4vwxdkBJYu8jr
+         rK2cANFmwSpbqDRBTdjyaOayDs7+WMveClB+nUsqlNnQGv28+OYl5GEmiNU5shBvhQ0N
+         udSDpItx4XPKO7VMWTxEhYApDqXg6qb6IZSf8dKpoEnpg5px4t/949h1rA4BpYchZ/m0
+         XjhGUD7j56tC8mPwyfA3BhV+I9+cvmLjH8JrKGHv6PoYE75XvpsSBfcJIaStGwcxmV4O
+         9ADw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=xdqUc1B5QIMqeAR9mNLGJ3I3Vr7Cq0/WFJn8Usii5Og=;
-        b=RRLIhUrovidKvrPtE68qdOnslKaxy8Oxa+uCJ1oTAjPxCClp3ktqWzHyDxjMYyYi36
-         c7JP7ahNGJwJAB7zS8Ao4NiqMgQlJCyHRj7ETJd0WZQPp6mWNFrRM+gXodzz2ovHEEA9
-         loDArc6Oqtx1JkkTONZNGeaEMC+wS0K5xuRTrp6RdVR9dytTnn/mRMq5H2xfWxaPpfgv
-         8WBgRdH6CQpO+58abec713WU4tqAMYL3NXsV0qIXlAiU29ZEM/omMGCsLT7jvz2/+yjf
-         loH6N1qHYkMA8Jxv7hNvUdMnmmBID2z3AQcI8/EhGptlraS7h7RzYCbsKMDcnpLnXchB
-         hQ6Q==
-X-Gm-Message-State: AD7BkJLjrqUFucDv4NW9Mqj43gfpMBH6voimHQdwAt3l7CQjPIVBRlfqsQgCTn1dKPNSTyuOlBbTvaZffqKVpHKz
-X-Received: by 10.107.158.138 with SMTP id h132mr14612009ioe.174.1458927092191;
- Fri, 25 Mar 2016 10:31:32 -0700 (PDT)
-Received: by 10.107.132.101 with HTTP; Fri, 25 Mar 2016 10:31:32 -0700 (PDT)
-In-Reply-To: <xmqqh9fu4gi7.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:from:subject:to:message-id:date:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=cjon/LX1JU0JdP5hXPZh7bKetPH+IpJpJMTWWz4zrfA=;
+        b=RXwfqSj4FDJ0U3yAyrHE7hgUNlEmFFrzjz3KbYuT28VrWJGCa2nNmrG+7WFvVyzDjD
+         yeBkDpoeOf4xm4+lhlSzjHW/S4T4rMTxM5+3sF7HEKzscS/rtbJtBv59vG0bPmk/9eTL
+         1W2yV5zivBNFWVQXGVm3PGLGpjxvajWZ9swB+wlKYBI7/koOojjwYmfm0iKMf6Uw3o+H
+         0a7Ws9ykWOajTKDg5OONZ0JSAMEiRteH0DttcHZBrVnjWJDmvfqJnUahyVSIbLt5U9cG
+         RrthI+US+CjhwELs1yMe/1q+4IvEZskNM4XbV2euoMxdKQn39ABwahoAQKdEtd/SUCWL
+         5p/w==
+X-Gm-Message-State: AD7BkJJPm8Kiu1oUNRrd4NhBki4/zli4Z7nPhnxkZs/a3A/CnRNpoqnnCbve00Ynp4gUJw==
+X-Received: by 10.98.34.200 with SMTP id p69mr22584306pfj.114.1458927450746;
+        Fri, 25 Mar 2016 10:37:30 -0700 (PDT)
+Received: from [0.0.0.0] ([128.199.85.127])
+        by smtp.gmail.com with ESMTPSA id f66sm17762761pff.8.2016.03.25.10.37.29
+        for <git@vger.kernel.org>
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 25 Mar 2016 10:37:30 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289913>
 
-On Fri, Mar 25, 2016 at 10:25 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> The way all the subcommand written in C works is
->>
->>  - The start-up sequence does the repository discovery, which
->>    involves crawling up to the top-level of the working tree, and
->>    compute "prefix", where the end-user was when the command was
->>    invoked;
->>
->>  - The subcommand implementation is called with this "prefix";
->>
->>  - When the subcommand implementation interprets the command line
->>    arguments and option arguments, it prefixes the "prefix" as
->>    needed.  If, for example, "git grep -f patterns" is invoked
->>    inside "sub/" subdirectory, when the command line and option
->>    arguments are processed, the process is already at the top level
->>    of the working tree, so it needs to read the patterns from
->>    "sub/patterns" file.  "git ls-files 'Makefil*'" invoked inside
->>    "sub/" subdirectory needs to limit the output to those that match
->>    not "Makefile", but "sub/Makefil*".
->>
->> The hope of doing an incremental rewrite of the whole thing by
->> enriching submodule--helper is that the bulk of the code there will
->> be reusable when the entirety of "git submodule" is rewritten in C,
->> so they need to take the "prefix" the same way, whether the caller
->> is calling from "git-submodule.sh" script via submodule--helper, or
->> the eventual C implementation of "git submodule" is making direct
->> calls to them.  As long as the correct "prefix" is passed to the
->> routines that are driven via submodule--helper, it does not matter
->> and I do not care how it is done.
->>
->> The current code of "git submodule" whose higher parts are still in
->> shell would would:
->>
->>  - The start-up sequence in shell does the cd_to_toplevel and finds
->>    the prefix;
->>
->>  - "git submodule--helper list --prefix=$prefix $other_args" is
->>    called; as this is called from the top-level of the working tree,
->>    internally its "prefix" is empty, but $other_args must be
->>    interpreted relative to the $prefix passed with --prefix option.
->>
->> If we instead call "git -C "$prefix" submodule--helper list $other_args",
->> then
->>
->>  - This command first does another chdir(2) back to $prefix;
->>
->>  - The start-up sequence of "submodule--helper" does the usual
->>    repository discovery again, which involves crawling up to the
->>    top-level of the working tree, and compute "prefix".  This
->>    happens to match what -C "$prefix" gave the command.
->>
->> Making calls to submodule--helper via "git -C" feels a little bit
->> roundabout because of this "caller tells to chdir, and then it has
->> to again chdir back up" only to rediscover the same information.
->
-> Just to make sure that the discussion is complete.
->
-> Another way a script can use the "prefix" information is to use the
-> "prefix" as such.  Knowing that the cd_to_toplevel() took you to the
-> root level of the working tree, instead of "git -C $prefix" or
-> "--prefix $prefix", it could do "git $cmd $prefix$filename".
->
-> One consideration when choosing among the approaches is how the
-> $filename is reported back to the user (e.g. as part of an error
-> message).  "git $cmd $prefix$filename" invocation would complain
-> about the full "$prefix$filename" path, but what the user gave it
-> may only be $filename part.
+Previously a TODO, this patch adds a test for git-checkout skipping a
+file with the
+skip-worktree bit set.
 
-Right. Using either "git -C $prefix" or "git --prefix $prefix" would report
-the $filename only, because both cases assume $prefix was cut
-using cd_to_toplevel and the user expects $filename only.
+I'm doing this as a microproject for my GSoC '16 application.
+
+Signed-off-by: Chhatoi Pritam Baral <chhatoipritam@gmail.com>
+---
+ t/t7012-skip-worktree-writing.sh | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/t/t7012-skip-worktree-writing.sh
+b/t/t7012-skip-worktree-writing.sh
+index 9ceaa40..d5b42d6 100755
+--- a/t/t7012-skip-worktree-writing.sh
++++ b/t/t7012-skip-worktree-writing.sh
+@@ -141,6 +141,16 @@ test_expect_success 'git-clean, dirty case' '
+ #TODO test_expect_failure 'git-apply removes file' false
+ #TODO test_expect_failure 'git-mv to skip-worktree' false
+ #TODO test_expect_failure 'git-mv from skip-worktree' false
+-#TODO test_expect_failure 'git-checkout' false
++
++test_expect_success 'git-checkout ignores skip-worktree file' '
++	echo > 1 &&
++	git commit -m "Add files" &&
++	echo dirty > 1 &&
++	echo dirty > 2 &&
++	git update-index --skip-worktree 1 &&
++	git checkout -- . &&
++	grep -q dirty 1 &&
++	test_must_fail grep -q dirty 2
++'
+  test_done
+-- 
+2.7.4
