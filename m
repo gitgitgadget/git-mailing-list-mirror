@@ -1,88 +1,180 @@
-From: Mike Rappazzo <rappazzo@gmail.com>
-Subject: Re: [PATCH v2] worktree: add: introduce --checkout option
-Date: Fri, 25 Mar 2016 09:02:11 -0400
-Message-ID: <CANoM8SXF2=+tObJaSAziGa_9W2CcwLMTW_mWoueq7Chm-yRqqw@mail.gmail.com>
-References: <01020153a40588f3-5401ea3e-ece8-435c-a046-a5c1c1f92cd6-000000@eu-west-1.amazonses.com>
- <01020153a73bbb70-11a8482f-1a90-49e4-a56c-b311e12a85a2-000000@eu-west-1.amazonses.com>
- <CACsJy8DxcqYKrRi7_ERS3xLWfbbq3bNx-u2NWiXYoNw4yD+0dg@mail.gmail.com>
- <CABEEbiBM-CTJdmOukLjfrmnmsSTwNzx+ELfO=BtgApT__QZu-g@mail.gmail.com>
- <CAPig+cTtRgMz_6oEXmBN2MHG65arq51JsoBL9QeWBFNLgFnCmw@mail.gmail.com>
- <CAPig+cS2qMZyUkf9Nekp+QaVkjc1oHXb4QF3wFDnBdF3WMU3iQ@mail.gmail.com>
- <CACsJy8Bs0WFJxGnVOBUnzipZYty-K4D9NkAQdODYqPUw2VAAiw@mail.gmail.com>
- <CABEEbiDRPsL6XJrnyFv43u26hXNbBVmMhbJeZmp+zjS+-jNZ=w@mail.gmail.com> <CACsJy8AyMUn_AAF-DNGvjS8D+qdFLNuVBYvAjide6wA-ZnHJ5w@mail.gmail.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v3 0/5] Expanding tabs in "git log" output
+Date: Fri, 25 Mar 2016 15:13:19 +0100
+Message-ID: <56F5477F.6090600@web.de>
+References: <xmqq7fh0s5l7.fsf@gitster.mtv.corp.google.com>
+ <1458775426-2215-1-git-send-email-gitster@pobox.com>
+ <56F391A4.6090603@web.de> <xmqqmvpn91o2.fsf@gitster.mtv.corp.google.com>
+ <56F50608.10606@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Zhang Lei <zhanglei002@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 14:02:40 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 15:25:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajRNt-0000bR-LN
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 14:02:38 +0100
+	id 1ajSUj-0007Y2-LC
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 15:13:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752364AbcCYNCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 09:02:32 -0400
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:36143 "EHLO
-	mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751696AbcCYNCb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 09:02:31 -0400
-Received: by mail-oi0-f66.google.com with SMTP id k128so112536oig.3
-        for <git@vger.kernel.org>; Fri, 25 Mar 2016 06:02:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ZCcb9BNslDL/UCbxee2nJHV5aBxCLgvyyEQzIAudHec=;
-        b=fE6M08F/lRcqVdH97bo00F/xZk8aDjdfLCbZrN8pNiAoyceJkzMjIcvNKL6WhzXVeK
-         8strRJX+m8yD0Zy2GBTjwV3KuZwImMFjAVyLYq6DE9mvwzT0I01GIFrzrYEL0QRjwKgK
-         aiqlqf7bJEhSW5/QojpLt6n1JiOwql8ZKhsOEEZP7RNSc3MkwaG2z5sfx+1KmzmTqB7T
-         i6XDHGPICNFFOKOdfsiz5FLdjDur6+W5iLoj401892YBZenhUqxxY5XHgSBcYP9BMY4O
-         w+UenJ6LnTXoFKR6DbAtWNzs9Qyx/cok5iSCwtmWZJaT17nBHPmTtT4Rk/2yUEf7ToiK
-         /8UQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ZCcb9BNslDL/UCbxee2nJHV5aBxCLgvyyEQzIAudHec=;
-        b=ABFvZX+mkLgil7UEmAysO7CJoktR3p5SXGsodx9rXod/44q79NFNl68gw+UydS5INK
-         7B3kkRplwqzEE5vs968PSsBmsPHu4JzpLhA4OuOqc6WFFgul0qMrhDauxIVvmvaPX3ca
-         R8YRKBc9rc4ZjLY/WeJLFD4xcONbtvCLm4M0xwKYxcODEU0Y28isgn1nIgOUODTTryvf
-         ER24s5IhzZXA2bZc6hR67QB2n6Eh3o3UztWNJSYmUKgVC+cQvKPAvU1PKfJK9/QD245i
-         PidTbz9QCOApuZ6Tw8cHMjZDLCDTGySbkvZFUzHXS4CaYpAvXBI+O5dMLITPadlEDf8I
-         rOcw==
-X-Gm-Message-State: AD7BkJJ1iJRwr0lpx/wfYe0ZWJHxpUPnw+Vn6PzWjUN47wzGvrKoS/hb6Q8nL0htMmeKlRIXQEfaEFDNiH8fTA==
-X-Received: by 10.202.206.205 with SMTP id e196mr6481888oig.88.1458910950753;
- Fri, 25 Mar 2016 06:02:30 -0700 (PDT)
-Received: by 10.76.87.163 with HTTP; Fri, 25 Mar 2016 06:02:11 -0700 (PDT)
-In-Reply-To: <CACsJy8AyMUn_AAF-DNGvjS8D+qdFLNuVBYvAjide6wA-ZnHJ5w@mail.gmail.com>
+	id S1753231AbcCYONk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2016 10:13:40 -0400
+Received: from mout.web.de ([212.227.17.11]:53252 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753055AbcCYONk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 10:13:40 -0400
+Received: from macce.local ([79.223.101.215]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0MC1nQ-1aah3y2u9Y-008qkT; Fri, 25 Mar 2016 15:13:23
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.7.0
+In-Reply-To: <56F50608.10606@web.de>
+X-Provags-ID: V03:K0:7zip8pEZ2t2OLunZ/oXalBukraVgzwlxEcuf7wJqlepukNItoz3
+ NJxDGOMvombJwYjc/xg2c+rRiqXDM1ZWR4uwGYXnp5pI/kjZoLhmNrXwh5YNu8HE7wIhmOu
+ CUkyMhz8U/EJytfinpuZDFZp9JJHgfMxipq8ER32OIw3FOixqUHecNAaSlwnwBQzcM18XIW
+ +5d7zrTFI77Ht3sFhmOfw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:v+BT7WYYBFQ=:XBN5YonOv/5qCyCPf9PR4f
+ zZWn23vSSH98saoyrNIqJELrpZDrj/lTtjjxCE+p0grG3JkHWRtkqjWCAxLMUqiIYPLgLS77i
+ tVqDtn4MpM/km1BNfY1lHc0xb8pYMj9syKgeT6m6A/EdZXGoEAitG5pkkLERicCMQN3S3qLI+
+ cej0vvs8GPEWd/I95q5oy4heCGFRnXmTU4GpBoyIW2NgNCj6BpB/W4sB+/WDM1dnWoD7d5oES
+ 2CZyOMjUvV251I74Nt7528BVCuVyzmKTzpq2sCqfQ6Mh+EabROTZ/2K46AHeRO9kbepQXA053
+ Cv3icjkvE6bEPgmGRW9/ivm9kt2TWsSpWUxyGJC2qK7IUEkN8VIe+toytSI3DXL+TBxWGQ6N2
+ WPntiY0xo8z5/eqG2FEBf6AFoRExAUig3MygZtTDmoTtAR8LDnqGNaJRmLPZQ0xvCAZZTA+6L
+ I84sfDkDZTm+/PjF1EJzH+yi7je07Nevxzha6zmkpokV3RhilBZ1wAWoPKCWdAfCFjEqRt++u
+ T/aSaC9TPUeEYQEQbzBmZIJhy1ih/rOJ/djMB+jtLawQbTs1Qe9pYb3Ynu0xHip9hVhf1kxOy
+ L9x1GrSy2tjMi7CdsFeB52CLApQcCxHS5YlC4L5HkBX6LVIC9R4LBo5IfE8r6zm1AgEKDmnpw
+ lPVKyd3vWjQb38oHTcnMcw0NHm0GPXL2AVMTBAHr81j7m0eUFl2Tw+GGbag1Ct6a15u+IjnIE
+ 4NlNZayVaLKLqhaWmR6wMBtk1DqJeggU2+7Ao6qfdpDFD0RVl1+mYhW650ilLB9LHQUNWN+c 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289887>
 
-On Fri, Mar 25, 2016 at 7:41 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Fri, Mar 25, 2016 at 6:31 PM, Zhang Lei <zhanglei002@gmail.com> wrote:
->> By the way, Duy, another unrelated question: why worktree name under
->> .git/worktrees is being named
->> after the working tree path basename? I think branch name is more
->> reasonable since we don't allow checking out
->> the same branch twice.
->
-> Because branch name is not always available (e.g. detached HEAD) and
-> checkout branch can be switched later on. And normally you'll get
-> branch name there anyway with "git worktree add something" because the
-> branch "something" is automatically created. I've been wondering if
-> it's worth supporting "git worktree -b abc ./" where we create
-> worktree "./abc" based on branch name too.
+This is copy-paste replacement for the last commit.
+(Most probably it is white space damaged)
+I'm not sure, is it's worth it ?
+If yes, I can send a proper patch later.
 
-You can switch to any other branch in a worktree.  Consider that you
-could switch branches in
-worktrees such that you could eventually end up having the branches
-swapped from original
-worktree setup.
+git show HEAD
+
+commit 3ac551127d51cd59b24f49729d9ce4dd011a09a1
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Wed Mar 23 15:57:42 2016 -0700
+
+    pretty-print: Add the config variable log.tabwidth
+
+    The output formats of "git log" that indent the log message by 4
+    spaces have been updated to expand tabs by default in previous
+    steps, without a way to restore the original behaviour.
+
+    Introduce a config variable log.tabwidth to allow this.
+
+        $ git -c log.tabwidth=0 log [--pretty=medium]
+
+    would not expand.
+
+    The non-expansion can be made permanent:
+        $ git config log.tabwidth 0
+
+    Or the TAB width can be changed like this:
+        $ git config log.tabwidth 4
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 2cd6bdd..611f5e4 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1915,6 +1915,10 @@ log.showRoot::
+ 	Tools like linkgit:git-log[1] or linkgit:git-whatchanged[1], which
+ 	normally hide the root commit will now show it. True by default.
+
++log.tabWidth::
++	Sets the width of a TAB.  If 0, no TAB expansion is done.
++	8 by default.
++
+ log.mailmap::
+ 	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
+ 	linkgit:git-whatchanged[1] assume `--use-mailmap`.
+diff --git a/cache.h b/cache.h
+index b829410..fd115d2 100644
+--- a/cache.h
++++ b/cache.h
+@@ -649,6 +649,7 @@ extern int ignore_case;
+ extern int assume_unchanged;
+ extern int prefer_symlink_refs;
+ extern int log_all_ref_updates;
++extern unsigned log_tab_width;
+ extern int warn_ambiguous_refs;
+ extern int warn_on_object_refname_ambiguity;
+ extern int shared_repository;
+diff --git a/config.c b/config.c
+index 9ba40bc..e6aadfe 100644
+--- a/config.c
++++ b/config.c
+@@ -1030,6 +1030,11 @@ int git_default_config(const char *var, const char
+*value, void *dummy)
+ 		pack_size_limit_cfg = git_config_ulong(var, value);
+ 		return 0;
+ 	}
++
++	if (!strcmp(var, "log.tabwidth")) {
++		log_tab_width = (unsigned)git_config_ulong(var, value);
++		return 0;
++	}
+ 	/* Add other config variables here and to Documentation/config.txt. */
+ 	return 0;
+ }
+diff --git a/environment.c b/environment.c
+index 6dec9d0..3c72b44 100644
+--- a/environment.c
++++ b/environment.c
+@@ -21,6 +21,7 @@ int ignore_case;
+ int assume_unchanged;
+ int prefer_symlink_refs;
+ int is_bare_repository_cfg = -1; /* unspecified */
++unsigned log_tab_width = 8;
+ int log_all_ref_updates = -1; /* unspecified */
+ int warn_ambiguous_refs = 1;
+ int warn_on_object_refname_ambiguity = 1;
+diff --git a/pretty.c b/pretty.c
+index 5a33b7e..1d92c55 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1667,7 +1667,7 @@ static void strbuf_add_tabexpand(struct strbuf *sb,
+ 		strbuf_add(sb, line, tab - line);
+
+ 		/* .. and the de-tabified tab */
+-		strbuf_addchars(sb, ' ', 8-(width & 7));
++		strbuf_addchars(sb, ' ', log_tab_width - (width % log_tab_width));
+
+ 		/* Skip over the printed part .. */
+ 		linelen -= 1+tab-line;
+@@ -1692,7 +1692,7 @@ static void pp_handle_indent(struct pretty_print_context *pp,
+ 			     const char *line, int linelen)
+ {
+ 	strbuf_addchars(sb, ' ', indent);
+-	if (pp->expand_tabs_in_log)
++	if (pp->expand_tabs_in_log && log_tab_width)
+ 		strbuf_add_tabexpand(sb, line, linelen);
+ 	else
+ 		strbuf_add(sb, line, linelen);
+diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
+index 96233ca..9235a2e 100755
+--- a/t/t4201-shortlog.sh
++++ b/t/t4201-shortlog.sh
+@@ -114,8 +114,8 @@ EOF
+ 	test_cmp expect out
+ '
+
+-test_expect_failure !MINGW 'shortlog from non-git directory' '
+-	git log HEAD >log &&
++test_expect_success !MINGW 'shortlog from non-git directory' '
++	git -c log.tabwidth=0 log HEAD >log &&
+ 	GIT_DIR=non-existing git shortlog -w <log >out &&
+ 	test_cmp expect out
+ '
