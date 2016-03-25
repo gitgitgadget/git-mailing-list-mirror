@@ -1,133 +1,94 @@
 From: Jacob Nisnevich <jacob.nisnevich@gmail.com>
-Subject: [PATCH 1/2] mergetools: create mergetool_find_win32_cmd() helper function for winmerge
-Date: Fri, 25 Mar 2016 16:17:56 -0700
-Message-ID: <1458947877-31764-2-git-send-email-jacob.nisnevich@gmail.com>
+Subject: [PATCH 2/2] mergetools: add support for ExamDiff
+Date: Fri, 25 Mar 2016 16:17:57 -0700
+Message-ID: <1458947877-31764-3-git-send-email-jacob.nisnevich@gmail.com>
 References: <xmqqio0a17ux.fsf@gitster.mtv.corp.google.com>
  <1458947877-31764-1-git-send-email-jacob.nisnevich@gmail.com>
 Cc: gitster@pobox.com, git@vger.kernel.org,
 	Jacob Nisnevich <jacob.nisnevich@gmail.com>
 To: davvid@gmail.com
-X-From: git-owner@vger.kernel.org Sat Mar 26 00:18:30 2016
+X-From: git-owner@vger.kernel.org Sat Mar 26 00:18:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajazu-0006KG-BW
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Mar 2016 00:18:30 +0100
+	id 1ajb00-0006Ms-5W
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Mar 2016 00:18:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752679AbcCYXSY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 19:18:24 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:33299 "EHLO
-	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751403AbcCYXSX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 19:18:23 -0400
-Received: by mail-pf0-f195.google.com with SMTP id x3so12899262pfb.0
-        for <git@vger.kernel.org>; Fri, 25 Mar 2016 16:18:23 -0700 (PDT)
+	id S1752739AbcCYXSb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2016 19:18:31 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:35715 "EHLO
+	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751403AbcCYXSa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 19:18:30 -0400
+Received: by mail-pf0-f196.google.com with SMTP id u190so12902754pfb.2
+        for <git@vger.kernel.org>; Fri, 25 Mar 2016 16:18:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=LypBmNk3sYFWHgMmv50S4aJfpF3HnDQaERBypy4RYzs=;
-        b=eCiZs+rRtE2rRXJOlZMq9ufD3GCx+HySItkzI/VhCro4+njE9MJ7tiRLnlIK1Vg/sy
-         HfvE4xxIkT+bp1qspkclEZ6dHxkXuF+f8SOTmdZEcN3+IUdzSbzs8lgv0DyML8fxwmNp
-         CU60zZC1FJIXxTicczuCtleYH9xQFyH41qdvQK0X8iNNmZTmX07P6+K6ZqsXl/In7BFX
-         dk9/beHidjImz/Tg56VYOPSVJsXxsqwvBug4M+CLDJNs0Tzy9I2bYcmKM1COwSqnGZ/b
-         5IV5vfN6SG+WEpe7esViPnDk6wXG5S56W2tTCVlm+VTi7Z1yNldcRAPAflId5zJZrEs4
-         Gnyw==
+        bh=Fm4NLybR47XVUPjnJ+NpB/32zU3RuxQjSAQ9eEQA1hw=;
+        b=aSAv2m6w4WLXNsFrj+dCAPyydU+9ua+2dUxbcvlrAAjbTtsBCfHLEnCczFXipBD+9H
+         Wks2400/+xV31AuLBTsdIrjer3F2sMzLWqOB01SL5MNZLvhPPVw8mYuo+VV6IInoe1M5
+         1NeO6YsKfFfnev/YInP1/r+60kqIRaI442EnGLZPX6+RSGuN/Fd/IbViQTUFvleLPUdm
+         LYd74m6VaNRxn9TA15/IL+O9+ehCN3aDXNf9BQUExNeplBwkgZHIDVGVWkrrv+mfmOSq
+         8ctxkU7dSJQUOtE96sLKc2tYpTZqOXFdymS7HyGpIzcTRx+0YmoYROJVF6SNOMx1yZU7
+         /buw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=LypBmNk3sYFWHgMmv50S4aJfpF3HnDQaERBypy4RYzs=;
-        b=DGicngRMBtx7TcSi6LXRTh27d31pdC4ZLmrUPl2LffKR9gmMIYzrdMvOwKu+V1Uo6B
-         WYdIsctTUF8hslZRs8Z02cBYwevbFedZCbg9+t9hfg8MQsBgLunntbCU1qsoT50g6rD1
-         mIB57ilesbkX5neUgpNeGPtHVJK2sga7pSsJ0+DTUabpDxBi37PVt57nTmmdoPWWLvGc
-         Ytt2PKZ6TQWV8OzC1qC/HemXYVvXxs05GXiWbqDJkuK39JEEpoirZC5OfocfsHzZuD3O
-         VVq6gOlUmcVz03qoBr49Ooc+0qO2QWqeyTZ4a1V9Ut8ZOA7+dkRCINGdSD15eyVOE+s9
-         4C0w==
-X-Gm-Message-State: AD7BkJJ8fxDP3ziu1N3YXHy9SlrFNpbHhj4yahVNIawaoChyWYBt1BAt0G4JneOvvmCdxw==
-X-Received: by 10.98.31.21 with SMTP id f21mr24019108pff.134.1458947902716;
-        Fri, 25 Mar 2016 16:18:22 -0700 (PDT)
+        bh=Fm4NLybR47XVUPjnJ+NpB/32zU3RuxQjSAQ9eEQA1hw=;
+        b=iOOZDKjEsk0A1L9/zyvcnhiks3oQfGC/kXjaIsUCg9JX2es78hoCz3/Jh8ETXFBF+G
+         kiezrh1ToKWoOqhIujPAB8UQpP0+RD2yuvivlCdPhXbq3dETANuvh3WRx7p9o5kVruzn
+         Kl2UdXyLvm/KO0llLahCDS43ngc7tDs96GNPkfkL0t7RsQXgMrCmkMm7tyV09gFaThp0
+         GB8uT7ZVLk5lkIwBocuBtf+mY/xe+hcEjzUyX7UaNLdWQX96Cyl19K9TjeTrv++I12fV
+         9+F2phRRaPm0whzv7fxSKPVwFhvWOEmQrx3PzJto5vTUoAKdljO/76OQYo0nY+4bV/MI
+         rYAw==
+X-Gm-Message-State: AD7BkJK8ioBbt6jb+iMgDblI2uYUztSz5omUNaoAnpxqefILo7CEbRsPjs1kQUv8F3KCBA==
+X-Received: by 10.98.72.218 with SMTP id q87mr24664644pfi.117.1458947904579;
+        Fri, 25 Mar 2016 16:18:24 -0700 (PDT)
 Received: from localhost.localdomain (cpe-108-185-180-179.socal.res.rr.com. [108.185.180.179])
-        by smtp.gmail.com with ESMTPSA id y23sm18674072pfi.22.2016.03.25.16.18.21
+        by smtp.gmail.com with ESMTPSA id y23sm18674072pfi.22.2016.03.25.16.18.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 25 Mar 2016 16:18:22 -0700 (PDT)
+        Fri, 25 Mar 2016 16:18:24 -0700 (PDT)
 X-Mailer: git-send-email 1.9.1
 In-Reply-To: <1458947877-31764-1-git-send-email-jacob.nisnevich@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289969>
 
 Signed-off-by: Jacob Nisnevich <jacob.nisnevich@gmail.com>
 ---
- git-mergetool--lib.sh | 25 +++++++++++++++++++++++++
- mergetools/winmerge   | 21 +--------------------
- 2 files changed, 26 insertions(+), 20 deletions(-)
+ mergetools/examdiff | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+ create mode 100644 mergetools/examdiff
 
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index 54ac8e4..302c56d 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -372,3 +372,28 @@ get_merge_tool () {
- 	fi
- 	echo "$merge_tool"
- }
-+
-+mergetool_find_win32_cmd () {
-+	executable=$1
-+	sub_directory=$2
-+
-+	# Use $executable if it exists in $PATH
-+	if type -p "$executable" >/dev/null 2>&1
-+	then
-+		printf '%s' "$executable"
-+		return
-+	fi
-+
-+	# Look for executable in the typical locations
-+	for directory in $(env | grep -Ei '^PROGRAM(FILES(\(X86\))?|W6432)=' |
-+		cut -d '=' -f 2- | sort -u)
-+	do
-+		if test -n "$directory" && test -x "$directory/$sub_directory/$executable"
-+		then
-+			printf '%s' "$directory/$sub_directory/$executable"
-+			return
-+		fi
-+	done
-+
-+	printf '%s' "$executable"
+diff --git a/mergetools/examdiff b/mergetools/examdiff
+new file mode 100644
+index 0000000..7b524d4
+--- /dev/null
++++ b/mergetools/examdiff
+@@ -0,0 +1,18 @@
++diff_cmd () {
++	"$merge_tool_path" "$LOCAL" "$REMOTE" -nh
 +}
-diff --git a/mergetools/winmerge b/mergetools/winmerge
-index 74a66d4..f3819d3 100644
---- a/mergetools/winmerge
-+++ b/mergetools/winmerge
-@@ -13,24 +13,5 @@ merge_cmd () {
- }
- 
- translate_merge_tool_path() {
--	# Use WinMergeU.exe if it exists in $PATH
--	if type -p WinMergeU.exe >/dev/null 2>&1
--	then
--		printf WinMergeU.exe
--		return
--	fi
--
--	# Look for WinMergeU.exe in the typical locations
--	winmerge_exe="WinMerge/WinMergeU.exe"
--	for directory in $(env | grep -Ei '^PROGRAM(FILES(\(X86\))?|W6432)=' |
--		cut -d '=' -f 2- | sort -u)
--	do
--		if test -n "$directory" && test -x "$directory/$winmerge_exe"
--		then
--			printf '%s' "$directory/$winmerge_exe"
--			return
--		fi
--	done
--
--	printf WinMergeU.exe
-+	mergetool_find_win32_cmd "WinMergeU.exe" "WinMerge"
- }
++
++merge_cmd () {
++	touch "$BACKUP"
++	if $base_present
++	then
++		"$merge_tool_path" -merge "$LOCAL" "$BASE" "$REMOTE" -o:"$MERGED" -nh
++	else
++		"$merge_tool_path" -merge "$LOCAL" "$REMOTE" -o:"$MERGED" -nh
++	fi
++	check_unchanged
++}
++
++translate_merge_tool_path() {
++	mergetool_find_win32_cmd "ExamDiff.com" "ExamDiff Pro"
++}
 -- 
 1.9.1
