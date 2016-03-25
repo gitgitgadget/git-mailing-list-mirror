@@ -1,93 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to use @{-1} with push?
-Date: Fri, 25 Mar 2016 11:58:15 -0700
-Message-ID: <xmqqoaa22xmg.fsf@gitster.mtv.corp.google.com>
-References: <CAHd499AM-OzqiB1hOF=0BTesFxrxNj=+jr1wH6vpQXfgoXd8Ug@mail.gmail.com>
-	<xmqq8u164fjv.fsf@gitster.mtv.corp.google.com>
-	<CAHd499B3Z58hj--Pa0uM36A2H3Xpmayrb+RiLeOBkmnu70yW1A@mail.gmail.com>
-	<CAHd499BCciG5Udd_sj550jPKg_ahZmWOi-zUOU-cr_wYmri=Rg@mail.gmail.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: [PATCH v2] api-parse-options.txt: document OPT_CMDMODE()
+Date: Fri, 25 Mar 2016 18:58:58 +0000
+Message-ID: <01020153af24cfbc-a145ad2b-0cc2-4378-bce9-6b1f68251ce8-000000@eu-west-1.amazonses.com>
+References: <01020153a7e08100-cf66fc9f-7293-4d8c-98c6-f322721c741f-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git <git@vger.kernel.org>
-To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 19:58:29 2016
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 25 19:59:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajWwG-0006ee-5y
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 19:58:28 +0100
+	id 1ajWww-0006xP-3a
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 19:59:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753273AbcCYS6T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 14:58:19 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:51115 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752608AbcCYS6S (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 14:58:18 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 81E8A4E78E;
-	Fri, 25 Mar 2016 14:58:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HxRwy+ehFdm2cnpP/Q6/dAej93g=; b=P/ayO7
-	jDDLSiYPlM8Nfxe1SeshXCEBcdtgZfP50epZBRD/70+E1mcNw4uFg+ZQoJpoUPLC
-	D90Lzsh/HnXTMu6AJQQoiXdKoV0rw+vqpKnlsVWSkRtEchZWVJOffuRNx7BvETAU
-	DgGSHkqOS85WTJHf5xtU82+qjhHCkdk6jhbD8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pzcIXIKGYmXX+VOw0LFKaMvuMN92rY+S
-	amsUf081uv+j81WqMu40NnX2gyKDMgX8/ecSDh13scyp6m1zH/sjyDQDQoPylPgL
-	sUV4ueJJD8hBL7+MUN1ceo4crvQQg/irw52O2FherQ+ZSFObmdlSgLEZUxZv3Wku
-	mgoUa+RiT5s=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 74F8B4E78C;
-	Fri, 25 Mar 2016 14:58:17 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E93B94E78B;
-	Fri, 25 Mar 2016 14:58:16 -0400 (EDT)
-In-Reply-To: <CAHd499BCciG5Udd_sj550jPKg_ahZmWOi-zUOU-cr_wYmri=Rg@mail.gmail.com>
-	(Robert Dailey's message of "Fri, 25 Mar 2016 13:11:36 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 88A02D46-F2BB-11E5-A439-E95C6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753839AbcCYS7C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2016 14:59:02 -0400
+Received: from a6-243.smtp-out.eu-west-1.amazonses.com ([54.240.6.243]:34455
+	"EHLO a6-243.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753793AbcCYS7B (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Mar 2016 14:59:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1458932338;
+	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=MEvxPToFbFlpRVED/YzL2HmDnhAhF8VfHWy2nCikqcI=;
+	b=MzYVNud5PTDqZjvCiSFk2/+Mqdwyz4amqrfD+mHTX2oc6M2fxoogITdGrPPZXJYJ
+	hCV9E2tBY1P5vbFQ1xdTScII34RWSPTI1ih4qQNiwLQ0EU0j+0L2zNXeGo0dmlPdD0X
+	BOO3ZscJied8geRIhEPe7SDz7JIMkOejZ9FMNLRM=
+In-Reply-To: <01020153a7e08100-cf66fc9f-7293-4d8c-98c6-f322721c741f-000000@eu-west-1.amazonses.com>
+X-SES-Outgoing: 2016.03.25-54.240.6.243
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289944>
 
-Robert Dailey <rcdailey.lists@gmail.com> writes:
+OPT_CMDMODE mechanism was introduced in the release of 1.8.5 to actively
+notice when multiple "operation mode" options that specify mutually
+incompatible operation modes are given.
 
-> So the push works with the fully-qualified ref, but not git branch:
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+---
+ Documentation/technical/api-parse-options.txt | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-I thought these are clear from their documentation.  "push" works on
-refnames, "branch" works on branch names.  "push" takes an branch
-name as a short-hand and adds refs/heads/ when it makes sense, but
-because it does not make any sense for "git branch" to create a
-"branch" in a random place in refs/ (e.g. "refs/tags/foo" is not a
-branch), it takes "foo" (i.e. the name of the branch, whose
-underlying ref is "refs/heads/foo").
+diff --git a/Documentation/technical/api-parse-options.txt b/Documentation/technical/api-parse-options.txt
+index 5f0757d..695bd4b 100644
+--- a/Documentation/technical/api-parse-options.txt
++++ b/Documentation/technical/api-parse-options.txt
+@@ -231,6 +231,13 @@ There are some macros to easily define options:
+ 	pass the command-line option, which can be specified multiple times,
+ 	to another command.
+ 
++`OPT_CMDMODE(short, long, &int_var, description, enum_val)`::
++	Define an "operation mode" option, only one of which in the same
++	group of "operating mode" options that share the same `int_var`
++	can be given by the user. `enum_val` is set to `int_var` when the
++	option is used, but an error is reported if other "operating mode"
++	option has already set its value to the same `int_var`.
++
+ 
+ The last element of the array must be `OPT_END()`.
+ 
 
-So
-
-	ref=$(git rev-parse --symbolic-full-name "$2") &&
-        case "$ref" in
-        '') echo >&2 "No such thing $2"; exit 1 ;;
-        refs/heads/*) ref=${ref#refs/heads/} ;;
-        *) echo >&2 "That's not a branch $2"; exit 2 ;;
-	esac &&
-	git push "$1" "refs/heads/$ref" &&
-        git branch -D "$ref"
-
-or something?
-
->
-> $ git rev-parse --symbolic-full-name foo
-> refs/heads/foo
->
-> $ git branch -d refs/heads/foo
-> error: branch 'refs/heads/foo' not found.
->
-> Any reason for this? I'm using git 2.7.4 on windows
+--
+https://github.com/git/git/pull/219
