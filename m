@@ -1,104 +1,136 @@
-From: "Fu, Siyuan" <siyuan.fu@intel.com>
-Subject: RE: "git svn fetch" error: [main] perl 9296 child_info_fork::abort:
- unable to map
-Date: Fri, 25 Mar 2016 00:53:48 +0000
-Message-ID: <B1FF2E9001CE9041BD10B825821D5BC5548BF876@shsmsx102.ccr.corp.intel.com>
-References: <B1FF2E9001CE9041BD10B825821D5BC5548BEBDC@shsmsx102.ccr.corp.intel.com>
- <alpine.DEB.2.20.1603241348220.4690@virtualbox>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] worktree: add: introduce --checkout option
+Date: Thu, 24 Mar 2016 21:18:41 -0400
+Message-ID: <CAPig+cQGTcX+1nKM-zzGrJXgKsa6aaZxAHwD=z1M8-s+ugJRFg@mail.gmail.com>
+References: <01020153a40588f3-5401ea3e-ece8-435c-a046-a5c1c1f92cd6-000000@eu-west-1.amazonses.com>
+	<01020153a73bbb70-11a8482f-1a90-49e4-a56c-b311e12a85a2-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Mar 25 01:54:10 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Ray Zhang <zhanglei002@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 02:18:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajG0w-0007Os-9S
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 01:54:10 +0100
+	id 1ajGOq-0003qF-AS
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 02:18:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750888AbcCYAyB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 20:54:01 -0400
-Received: from mga09.intel.com ([134.134.136.24]:10384 "EHLO mga09.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750801AbcCYAyA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2016 20:54:00 -0400
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga102.jf.intel.com with ESMTP; 24 Mar 2016 17:53:51 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.24,388,1455004800"; 
-   d="scan'208";a="771016033"
-Received: from fmsmsx106.amr.corp.intel.com ([10.18.124.204])
-  by orsmga003.jf.intel.com with ESMTP; 24 Mar 2016 17:53:51 -0700
-Received: from shsmsx152.ccr.corp.intel.com (10.239.6.52) by
- FMSMSX106.amr.corp.intel.com (10.18.124.204) with Microsoft SMTP Server (TLS)
- id 14.3.248.2; Thu, 24 Mar 2016 17:53:51 -0700
-Received: from shsmsx102.ccr.corp.intel.com ([169.254.2.232]) by
- SHSMSX152.ccr.corp.intel.com ([169.254.6.42]) with mapi id 14.03.0248.002;
- Fri, 25 Mar 2016 08:53:49 +0800
-Thread-Topic: "git svn fetch" error: [main] perl 9296
- child_info_fork::abort: unable to map
-Thread-Index: AdGFcd3RujtHNm7eRDuQ82IH0ELsoQAFr4yAACoB92A=
-In-Reply-To: <alpine.DEB.2.20.1603241348220.4690@virtualbox>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ctpclassification: CTP_IC
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiOTE1M2Y5ZjAtMGVkOS00MDI1LWEwZTUtMzQzOGJkOTBhZjg2IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX0lDIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE1LjkuNi42IiwiVHJ1c3RlZExhYmVsSGFzaCI6Ing4Z0VsVzFYVGFCWlliY1BOenR3c01SSW9tbktOMkl3N1JXVk8xbm1sNFE9In0=
-x-originating-ip: [10.239.127.40]
+	id S1751239AbcCYBSo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 21:18:44 -0400
+Received: from mail-vk0-f65.google.com ([209.85.213.65]:33000 "EHLO
+	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750886AbcCYBSm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 21:18:42 -0400
+Received: by mail-vk0-f65.google.com with SMTP id a62so6246650vkh.0
+        for <git@vger.kernel.org>; Thu, 24 Mar 2016 18:18:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=/wsLO+cVUKzq0kq30XWC8ShuKcBSWxUkbb7LssMbOxc=;
+        b=mTFoP3nHiWJTWTbv/NiJxtnMJzdRYgwCZTw8GPa9WSr0g1tu24dQzmjO0zjmyqgQ8d
+         0FMxFIKUrCO9EibKuS58DUoSGaG2NRHvPf9hinN4nlSEfDuBlvMKX8X4LInYZ1lRBceR
+         fbrd3jt1le9eMkIq8lNzOy1OhixbYeqOQPRo/YCzowkyS0iZZy9h3Em8pvzp+yWpwm+p
+         nYDvA9+oc72WXYyUXJiLrmHJib5m2/K9YJ+XHWTyz6SsXe2SKJZBnLB5xiUY9f8JmllH
+         Kn/xkAf/CYnJp9tE23QQjH1VSInmpo7BoMAnzdfQAWk3sRipDtoeZH0IZPWNlLUPDERv
+         fTmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=/wsLO+cVUKzq0kq30XWC8ShuKcBSWxUkbb7LssMbOxc=;
+        b=igbszltVoFGwgAyGR1wK9PeE35HCfV3FhWzmQ467c6YgEh/xUIffi79IhrgXYuxWBK
+         asTT61O4XwTtDztiGSsxoC6pkYTwfqAd999c4fiRu8ZIOh0BuGVXNwkltISB2bh6q1jm
+         JUY2uc7KjHsA82DS9NW5Az6uVPa7QiBQRKl69T2nENOLJzuGgbIkcTAQWZ6YwXko4mDd
+         j4othPGSV5kacxXdnT/Y6dpNqCBrbO9UC8N4v2jsfyreedhV/E7GLF0nVQMgnSf7oVbQ
+         FvVaDioc/LwgwTfrxLydYRa8SBxUvnCGQKCPjNdsq2qEeQS/PH9iRwDvO1PhFGuhNSoN
+         2tuw==
+X-Gm-Message-State: AD7BkJJaDMXEh6/wuuoHZTZ8iE1jzi0SSj6EEv8+cXvPuc3ciMbzRpnphBoYf80Z5AN8RITavuY3alYcfONMkA==
+X-Received: by 10.31.8.142 with SMTP id 136mr6343352vki.14.1458868721407; Thu,
+ 24 Mar 2016 18:18:41 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Thu, 24 Mar 2016 18:18:41 -0700 (PDT)
+In-Reply-To: <01020153a73bbb70-11a8482f-1a90-49e4-a56c-b311e12a85a2-000000@eu-west-1.amazonses.com>
+X-Google-Sender-Auth: GzChSTRCjkdbh1jShP4VOmzILzA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289840>
 
-Johannes,
+On Thu, Mar 24, 2016 at 2:07 AM, Ray Zhang <zhanglei002@gmail.com> wrote:
+> By adding this option which defaults to true, we can use the
+> corresponding --no-checkout to make some customizations before
+> the checkout, like sparse checkout, etc.
 
-I don't have detail steps for the reproduce, but I could share some information.
+This version of the patch looks better. Thanks. A few comments below...
 
-Yesterday one of my colleagues told me he also met this error after he updated GIT to latest 2.7.4, same with me. Then we uninstall the 64bit GIT and install a 32bit GIT on our 64bit Windows 8 machines, and the new installed 32bit GIT works well.
+> Signed-off-by: Ray Zhang <zhanglei002@gmail.com>
+> ---
 
-We are using the TortoiseGit with GIT, beside this I think there are no more special different settings.
+Here, below the "---" line is a good place to explain to reviewers
+what changed since the previous version of the patch. It's also
+helpful to provide a link to the previous version, like this[1].
 
-Thanks
-Siyuan
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/289659
 
-> From: Johannes Schindelin [mailto:Johannes.Schindelin@gmx.de] 
-> Sent: Thursday, March 24, 2016 8:50 PM
-> To: Fu, Siyuan <siyuan.fu@intel.com>
-> Cc: git@vger.kernel.org
-> Subject: Re: "git svn fetch" error: [main] perl 9296 child_info_fork::abort: unable to map
-> 
-> Hi Siyuan,
-> 
-> On Thu, 24 Mar 2016, Fu, Siyuan wrote:
-> 
-> > I meet below error when using the "git svn" related command, and I tried
-> > to reinstall the GIT but the issue is still there. Has anybody ever meet
-> > this and know how to solve it? 
-> > 
-> > GIT version: git version 2.7.4.windows.1
-> > OS: Windows 8 64bit
-> > 
-> > $ git svn fetch
-> >       4 [main] perl 9296 child_info_fork::abort: unable to map C:\Program Files\Git\usr\bin\msys-svn_subr-1-0.dll, Win32 error 1114
-> >       4 [main] perl 4480 child_info_fork::abort: unable to map C:\Program Files\Git\usr\bin\msys-svn_subr-1-0.dll, Win32 error 1114
-> >      12 [main] perl 8572 child_info_fork::abort: unable to map C:\Program Files\Git\usr\bin\msys-svn_subr-1-0.dll, Win32 error 1114
-> 
-> The problem has been reported to Git for Windows' bug tracker (twice,
-> actually):
-> 
->   https://github.com/git-for-windows/git/issues/650
-> 
-> The problem is that it seems to be impossible to reproduce this error
-> except with *some* setups.
-> 
-> If you can help me to reproduce it, we are a big step closer to resolving
-> the problem.
-> 
-> Ciao,
-> Johannes
+> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+> @@ -87,6 +87,10 @@ OPTIONS
+>         With `add`, detach HEAD in the new working tree. See "DETACHED HEAD"
+>         in linkgit:git-checkout[1].
 >
+> +--checkout::
+
+We can make it more clear that this is a boolean option by formatting
+it either like this:
+
+    --[no-]checkout::
+
+or this:
+
+    --checkout::
+    --no-checkout::
+
+I don't have a strong preference, and existing documentation uses either form.
+
+> +       Default option with `add`, populate the new working tree. Use
+> +       `--no-checkout` to skip the checkout.
+
+It's subjective, but "Default option with `add`" doesn't quite convey
+to me that this is the default behavior of "add". Also, readers would
+likely benefit from some explanation of why they might ever want to
+use this option. Perhaps it could be rewritten something like this:
+
+    By default, `add` checks out HEAD, however, `--no-checkout` can
+    be used to suppress checkout in order to make customizations,
+    such as configuring sparse-checkout (see ...).
+
+> diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
+> @@ -213,4 +213,9 @@ test_expect_success 'local clone from linked checkout' '
+>         ( cd here-clone && git fsck )
+>  '
+>
+> +test_expect_success '"add" worktree without a checkout' '
+> +       git worktree add --no-checkout -b swamp swamp &&
+> +       ( cd swamp && git reset --hard && git fsck)
+
+To match the style of the test immediately above this one, you'd want
+a space before the closing ')'.
+
+However, I'm not convinced that reset+fsck is is really telling you
+much, as fsck is about checking the object database (which was already
+the subject of earlier tests in the script) and doesn't say anything
+about the working directory which is the point of --no-checkout. Much
+more interesting would be to verify that no files were checked out.
+There are many ways to do so; here's one:
+
+    git worktree add --no-checkout -b swamp swamp &&
+    ls swamp >actual &&
+    test_line_count = 0 actual
+
+> +'
+
+Finally, it wouldn't hurt to also add a test to verify that --checkout
+works as expected (because the tests should check expected *behavior*,
+not *implementation*).
