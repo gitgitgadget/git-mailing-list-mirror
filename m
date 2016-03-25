@@ -1,81 +1,95 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH v9 2/3] t7507-commit-verbose: make test suite use write_script
-Date: Fri, 25 Mar 2016 23:45:28 +0530
-Message-ID: <CAFZEwPPRYBjdDabLJHsXTtzD2y=vqSZM4OiY4G=BtEF485JP_A@mail.gmail.com>
-References: <01020153a7ba4eae-9b88e119-0505-418f-a137-595250edaa9d-000000@eu-west-1.amazonses.com>
-	<1458817259-11675-1-git-send-email-szeder@ira.uka.de>
-	<CAPig+cQJ1yK8WhXE0sxSmDenMt1DMZCoJypTu_wkDsDyuBsAWg@mail.gmail.com>
-	<20160325154638.Horde.LzlsD6cZcQfmt894cll_0Tl@webmail.informatik.kit.edu>
-	<CAPig+cQLOwAimmHeUmi5+KScgOP0hr9-MiX8gyGcEk6Zj0U_jQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [GSoC] A late proposal: a modern send-email
+Date: Fri, 25 Mar 2016 11:16:12 -0700
+Message-ID: <xmqqzitm2zkj.fsf@gitster.mtv.corp.google.com>
+References: <CAKqreuyC8p9m_dgVpXCiT_hf=8qBA_5kZ5NABQGx0QDOiCBbww@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 19:15:35 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: =?utf-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 19:16:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajWGk-0000nf-1I
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 19:15:34 +0100
+	id 1ajWHf-0001JT-QE
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 19:16:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753207AbcCYSPa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 14:15:30 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:34970 "EHLO
-	mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752190AbcCYSP3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 14:15:29 -0400
-Received: by mail-qk0-f195.google.com with SMTP id s5so3715933qkd.2
-        for <git@vger.kernel.org>; Fri, 25 Mar 2016 11:15:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=iTPAcRY/Xx2hBOPQITseMG1Ar1mr/6rct6/QpQlW0f4=;
-        b=F1B5c3klIDnEJpuKgaqkuSA26BRNJpSoXR3knMTYp8wEgFF/BmCIRbFwoDhTefZUXN
-         FE61KG4B6TzS3vm32nPMFuH6p3knSpAVufu0VQg/5Zj5f2Jc86PBinrOsHQumlpSUqB2
-         cG2r+chbOVFKiiRyh5oCjkEgCLDEB0uw8fxiXWG0osMvpJHLnXet2cGhci4iT6oKlwLE
-         Ob4CxOH5DUFiTxeuHyx/WOVsdbc21pNYZsOTEwNWBTW49TYfQbqLvjysqML3hWYJ9i2s
-         J0g2od+WP6TkeGaoeWJVcYmGib8lSL7VPAazrBf6hyI3Ak8uCzX8E5FEIVVEPJthi/3R
-         b1dA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=iTPAcRY/Xx2hBOPQITseMG1Ar1mr/6rct6/QpQlW0f4=;
-        b=VjF1LCdOy60sM+vvpy+vj68YMvL9dgQLmw3RdYklfRiNMR9G2UHIDKYqejC1Y8AeOy
-         rRbKF3Gjutj/AWuawohyFvmo2+FGwcnwiMeRj1z+aHAGcPMs9x4PhVvrIOlGgr78FeFu
-         ttz9fzVSN2WZXVPtJMRprj6kZW2AinaUG8cjRFJ/Ro2WXs2Tf+OlaZmeGzIs1arwQtVe
-         nr+JL1wyBegrK7Iv4igcCy+1huZkZykDG5Uxae8KqOXYEfmxz2Qe3XQQra1zt3xVSP3p
-         I1cilU5ADh8gUVFQ5KF3oa1uyuHLIpEWfyvarZDsoAL56oBzCeR56xAET7g5THJvaiKF
-         roOw==
-X-Gm-Message-State: AD7BkJKSQo6KPEo8wFup2BLw+d21NzKhskJYxmP5BTtFrJr9CXNvNLjDhyn1Oq9Dh8WLVpQnqGvpqr1NO2tSkA==
-X-Received: by 10.129.77.135 with SMTP id a129mr7805653ywb.243.1458929728551;
- Fri, 25 Mar 2016 11:15:28 -0700 (PDT)
-Received: by 10.13.203.137 with HTTP; Fri, 25 Mar 2016 11:15:28 -0700 (PDT)
-In-Reply-To: <CAPig+cQLOwAimmHeUmi5+KScgOP0hr9-MiX8gyGcEk6Zj0U_jQ@mail.gmail.com>
+	id S1753934AbcCYSQS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Mar 2016 14:16:18 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:59328 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752190AbcCYSQQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Mar 2016 14:16:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2F2EB4F37C;
+	Fri, 25 Mar 2016 14:16:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Q4APojNcvQ/2
+	W1yl+SWIfIuoaXM=; b=aeQUuRpYm/2TT+mjwKSPewjdrGYnE661FvUETotYBhxQ
+	Gf9zJrJEexUAanwoBhx2pDGrrIggFlIRQ9BTcuunCnLZkaEuikaXG/mHgRNxckbi
+	6cnR9cZsNPpyl2b/j7/1oJfhXfWKXzu2iRLLrL3uFhL4KAbosWRyM5TI+3Q3MLM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=rHhBrD
+	xtbpmGoa+TeXvzNSXmcgpg0G11LGyeX5bybT5QeYCJaDFDdNXN4AP51/vb8gd12W
+	Px/CeHyq8TM6FCdqWbfaIJP1aLJmIkiEz+p1mz8sAUNrmUjShUJcLjSBHIoEZXB7
+	+bCE48KnNNv3refpXNk4ZS/zFnyuAFYYLjF68=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 274D04F37B;
+	Fri, 25 Mar 2016 14:16:15 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 137B64F37A;
+	Fri, 25 Mar 2016 14:16:14 -0400 (EDT)
+In-Reply-To: <CAKqreuyC8p9m_dgVpXCiT_hf=8qBA_5kZ5NABQGx0QDOiCBbww@mail.gmail.com>
+	(=?utf-8?B?IuaDoOi9tue+pCIncw==?= message of "Sat, 26 Mar 2016 01:59:08
+ +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A8DFEB7E-F2B5-11E5-BBD4-E95C6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289928>
 
-On Fri, Mar 25, 2016 at 10:34 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+=E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqun@gmail.com> writes:
 
-> That works too, simplifying the overall implementation, and
-> eliminating the need for the introductory patch which moves
-> 'test_set_editor' into each test.
+> # Purpose
+> The current implementation of send-email is based on perl and has onl=
+y
+> a tui, it has two problems:
+> - user must install a ton of dependencies before submit a single patc=
+h.
+> - tui and parameter are both not quite friendly to new users.
 
-Wouldn't it be cleaner if the introductory patch contain:
-1. using write_script()
-2. grep the output to a file
-3. test for no of lines=1 in required tests
-?
+Is "a ton of dependencies" true?  "apt-cache show git-email"
+suggests otherwise.  Is "a ton of dependencies" truly a problem?
+"apt-get install" would resolve the dependencies for you.
 
-Then the patch 3/3
->> And if you insist on doing the line counting in the editor script, then
->> why redirecting grep's output and 'wc -l' separately, why not 'grep -c'?
->
-> Ugh, I utterly forgot about -c.
+> # Plan
+> So I propose to implement following:
+> - Allow user to send mail via a [`mailto`
+> link](https://en.wikipedia.org/wiki/Mailto). so that users could
+> complete the mail in their favorite email clients such as gmail, mutt=
+,
+> alpine and even gmail for android through
+
+IIRC, GMail on Android is incapable of sending a "text/plain", so
+that part may not fly well.
+
+> - Build a simple email client (maybe a web components based web app o=
+r
+> wxwidgets based GUI client, they are both cross-platform) which is
+> easy to use for sending patch without disrupting the mailbox format.
+
+I suspect it would yield a better result if the plan were to update
+a popular email client and make it possible to tell it to read an
+existing text file (i.e. mbox) without corrupting its contents.
+People do not have to learn a new mail client if done that way.
+
+That may not be a "Git" project, but GSoC is not limited to Git ;-)
