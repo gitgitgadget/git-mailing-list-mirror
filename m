@@ -1,106 +1,99 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v10 2/2] pull --rebase: add --[no-]autostash flag
-Date: Fri, 25 Mar 2016 19:37:06 +0100
-Message-ID: <vpq7fgql7zh.fsf@anie.imag.fr>
-References: <1458584283-23816-1-git-send-email-mehul.jain2029@gmail.com>
-	<1458591170-28079-1-git-send-email-mehul.jain2029@gmail.com>
-	<vpqshzfuduv.fsf@anie.imag.fr>
-	<CA+DCAeTNv-2RkbGo+ciKP_bfCvThKjGAsJEr=xuBYBFgrTvGtg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Paul Tan <pyokagan@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Mehul Jain <mehul.jain2029@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 19:37:28 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCHv3 3/5] submodule update: add test for recursive from non root dir
+Date: Fri, 25 Mar 2016 11:39:14 -0700
+Message-ID: <1458931156-29125-4-git-send-email-sbeller@google.com>
+References: <1458931156-29125-1-git-send-email-sbeller@google.com>
+Cc: pclouds@gmail.com, Jens.Lehmann@web.de, jacob.keller@gmail.com,
+	sunshine@sunshineco.com, Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Mar 25 19:39:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajWbu-0004Eo-B8
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 19:37:26 +0100
+	id 1ajWdw-0005K8-LE
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 19:39:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753968AbcCYShQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 14:37:16 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:51587 "EHLO mx2.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753207AbcCYShM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 14:37:12 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u2PIb4Ta016030
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Fri, 25 Mar 2016 19:37:04 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u2PIb6Ni003867;
-	Fri, 25 Mar 2016 19:37:06 +0100
-In-Reply-To: <CA+DCAeTNv-2RkbGo+ciKP_bfCvThKjGAsJEr=xuBYBFgrTvGtg@mail.gmail.com>
-	(Mehul Jain's message of "Fri, 25 Mar 2016 23:40:04 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Fri, 25 Mar 2016 19:37:04 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u2PIb4Ta016030
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1459535824.87811@eUv3A3L/otvVd8FyZGqN6w
+	id S1753982AbcCYSj1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2016 14:39:27 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:35338 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753628AbcCYSjY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 14:39:24 -0400
+Received: by mail-pa0-f47.google.com with SMTP id td3so50990339pab.2
+        for <git@vger.kernel.org>; Fri, 25 Mar 2016 11:39:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=9fP1FDh9IwtI3eG3swd565xLAatX8YqpNTJw3b9VEIg=;
+        b=NoNttZ8EpHaRPlBNbdA6ZPfXil4rdadUJ5hvhsNPvvbCYhJtnS2e7kAt4Qa/3vKyas
+         xbB7MDpuog7bE8ALpeHkvIbWEhUfZiNbaNn0TWhxClmJ0bDh1ajFZ9LiFQ3Ulk/3+6Fk
+         KwaOYIc3zbK1QDt1PFv+yqORjQgmUGeXNW+2mqQXpjkn+z/pkJaLmYIyHg7+Iqk0wY5l
+         VWmAHg5f4j0G+qfRO3IP/VPWTaqio5DUzqRDVqmZQlEUeTwwJGw+rgeNISugpYXnvTlv
+         r8Z8j9svFva51ovHKaz4X6Y+lK1TpbaBzmYGoGbJGpxnVE9PEOgA3MZSWGFe1HE4d618
+         e8BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=9fP1FDh9IwtI3eG3swd565xLAatX8YqpNTJw3b9VEIg=;
+        b=V2gRmsMKAVWkSedfxZeY0VLtMx5vK+s/OePH84vNoilyRXgDGFFQMQb/Oa2ypyHjcK
+         RzFzN+HnK871x47ZwVgAch584bjFALXiaTNbb3f9srq0cSXXDysTCuZCp3P8+TrWICPt
+         BZEQyEZ2TxZDtO7hF/oc+LYd3yiqZUrM8tLFBNXxGBxBJ0TDSLRNwS+VRC/M4eTe9fbD
+         jbt1RtSEwvplc1A7yHtkLt9DCssxBbslLtK8Ldprxb6xYqUTC+zMuGSbEAjpnpT5ynDO
+         5u3wpn+JH75/Sixh3I+LWK5wHFvc5zuwoJhT1+QzWeYwZgtHCE0Kf2gyYZIkzTMrGGEQ
+         6yYA==
+X-Gm-Message-State: AD7BkJKnF/d5pf0iFjltt+6DcvsFT2zutdoY0xBTXlvJh4+pq6QyRTZJTVymrQ/TjGc4nFTe
+X-Received: by 10.66.100.228 with SMTP id fb4mr22814030pab.84.1458931163165;
+        Fri, 25 Mar 2016 11:39:23 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:e4a5:c9cf:82bb:5195])
+        by smtp.gmail.com with ESMTPSA id p75sm17955435pfi.29.2016.03.25.11.39.22
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 25 Mar 2016 11:39:22 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0.rc4.10.g52f3f33.dirty
+In-Reply-To: <1458931156-29125-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289937>
 
-Mehul Jain <mehul.jain2029@gmail.com> writes:
+Test "submodule update --recursive" being invoked from a
+sub directory as this is currently not covered by the test
+suite.
 
-> On Fri, Mar 25, 2016 at 2:35 PM, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
->> Mehul Jain <mehul.jain2029@gmail.com> writes:
->>
->>> +--autostash::
->>> +--no-autostash::
->>> +     Before starting rebase, stash local modifications away (see
->>> +     linkgit:git-stash[1]) if needed, and apply the stash when
->>> +     done. `--no-autostash` is useful to override the `rebase.autoStash`
->>> +     configuration variable (see linkgit:git-config[1]).
->>> ++
->>> +This option is only valid when "--rebase" is used.
->>
->> This does not have to be added to this series (I don't want to break
->> everything at v10 ...), but I think it would be nice to allow "git pull
->> --autostash" even without --rebase if pull.rebase=true.
->
-> This is a nice observation. As current patch allow "git pull --autostash"
-> to be run without --rebase if pull.rebase=true,
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ t/t7406-submodule-update.sh | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-OK, I misread the patch assuming that opt_rebase was only reflecting the
-options, but it is also set by the config:
-
-	if (opt_rebase < 0)
-		opt_rebase = config_get_rebase();
-
-> hence correct documentation should be something like this
->
->     This option is only valid when "--rebase" is used or pull.rebase=true.
-
-... or just "when pull is used in rebase mode", which is shorter and
-still technically accurate. I don't think you need to be exhaustive in
-this kind of documentation, the user will notice anyway if he tries to
-use --autostash in a forbidden situation.
-
-> But OTOH users who knows about pull.rebase understands that
-> pull.rebase=true means "git pull --rebase ..." will be executed whenever
-> "git pull ..." is called, thus for those users it might be easy to deduce that
-> need of "--rebase" for validity of "--autostash" is not necessary if
-> pull.rebase=true.
-
-I'd rather have something technically correct.
-
-I think you should also change one of the tests to use pull.resbase=true
-so that this behavior is properly tested.
-
-Thanks,
-
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 68ea31d..19d8552 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -767,11 +767,19 @@ test_expect_success 'submodule update clone shallow submodule' '
+ 
+ test_expect_success 'submodule update --recursive drops module name before recursing' '
+ 	(cd super2 &&
+-	 (cd deeper/submodule/subsubmodule &&
+-	  git checkout HEAD^
+-	 ) &&
++	 git -C deeper/submodule/subsubmodule checkout HEAD^
+ 	 git submodule update --recursive deeper/submodule >actual &&
+ 	 test_i18ngrep "Submodule path .deeper/submodule/subsubmodule.: checked out" actual
+ 	)
+ '
++
++test_expect_success 'submodule update --recursive works from subdirectory' '
++	(cd super2 &&
++	 git -C deeper/submodule/subsubmodule checkout HEAD^
++	 mkdir untracked &&
++	 cd untracked &&
++	 git submodule update --recursive >actual &&
++	 test_i18ngrep "Submodule path .../deeper/submodule/subsubmodule.: checked out" actual
++	)
++'
+ test_done
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.8.0.rc4.10.g52f3f33.dirty
