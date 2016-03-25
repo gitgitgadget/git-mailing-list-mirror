@@ -1,81 +1,88 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2] worktree: add: introduce --checkout option
-Date: Fri, 25 Mar 2016 18:41:42 +0700
-Message-ID: <CACsJy8AyMUn_AAF-DNGvjS8D+qdFLNuVBYvAjide6wA-ZnHJ5w@mail.gmail.com>
-References: <01020153a40588f3-5401ea3e-ece8-435c-a046-a5c1c1f92cd6-000000@eu-west-1.amazonses.com>
- <01020153a73bbb70-11a8482f-1a90-49e4-a56c-b311e12a85a2-000000@eu-west-1.amazonses.com>
- <CACsJy8DxcqYKrRi7_ERS3xLWfbbq3bNx-u2NWiXYoNw4yD+0dg@mail.gmail.com>
- <CABEEbiBM-CTJdmOukLjfrmnmsSTwNzx+ELfO=BtgApT__QZu-g@mail.gmail.com>
- <CAPig+cTtRgMz_6oEXmBN2MHG65arq51JsoBL9QeWBFNLgFnCmw@mail.gmail.com>
- <CAPig+cS2qMZyUkf9Nekp+QaVkjc1oHXb4QF3wFDnBdF3WMU3iQ@mail.gmail.com>
- <CACsJy8Bs0WFJxGnVOBUnzipZYty-K4D9NkAQdODYqPUw2VAAiw@mail.gmail.com> <CABEEbiDRPsL6XJrnyFv43u26hXNbBVmMhbJeZmp+zjS+-jNZ=w@mail.gmail.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: GSoC 2016 | Proposal | Incremental Rewrite of git bisect
+Date: Fri, 25 Mar 2016 17:13:58 +0530
+Message-ID: <CAFZEwPPKE1kODzSD4ZqZOehSB2SUUAC5JF-j7__kA2obpV92Tw@mail.gmail.com>
+References: <CAFZEwPNXKo5YN9OPPCkO90bSPD3ittU+y8eDxh-JLxnihBznuw@mail.gmail.com>
+	<CAP8UFD0muBUEp9XknmcTWqg==ChzWP3m-p-v6vXyC09OC88U7w@mail.gmail.com>
+	<CAFZEwPM=+U8gC0JRL1Zi6yJboenuSw6hBKJeLNzf_=NYQTCSGA@mail.gmail.com>
+	<CAP8UFD0vm1Sn07ickfPz5segbM-M7+HR43CMMGsB9WTqj5s-yw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Zhang Lei <zhanglei002@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 12:42:20 2016
+Cc: Git List <git@vger.kernel.org>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Jeff King <peff@peff.net>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Stefan Beller <stefanbeller@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Eric Sunshine <ericsunshine@gmail.com>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 12:44:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajQ8A-0008Nn-Ee
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 12:42:18 +0100
+	id 1ajQ9s-0000s5-El
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 12:44:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751683AbcCYLmO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 07:42:14 -0400
-Received: from mail-lf0-f50.google.com ([209.85.215.50]:33027 "EHLO
-	mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751247AbcCYLmN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 07:42:13 -0400
-Received: by mail-lf0-f50.google.com with SMTP id o73so53707145lfe.0
-        for <git@vger.kernel.org>; Fri, 25 Mar 2016 04:42:13 -0700 (PDT)
+	id S1751950AbcCYLn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2016 07:43:59 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:33884 "EHLO
+	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751252AbcCYLn7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 07:43:59 -0400
+Received: by mail-yw0-f195.google.com with SMTP id f6so8548840ywa.1
+        for <git@vger.kernel.org>; Fri, 25 Mar 2016 04:43:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=5N5nUfDX7HOK24TnVz8t+Ax57kQdzb1y0nq6lTcmJZQ=;
-        b=tUGJXpTZmC4Bh7ypo9jdhOl3rBHc/WhTdH+eIiMx5kIHAcShCQvh+XPM4GkvWmy332
-         dlvhOzQdSWv/NjNZ73sRUnDNDRy0ZKyJoIBpwtwCKrXRfqot3f7et4f2dNyHv13jSDrY
-         HhjBzqp7ODBa4cxMihByRgGSsgwTz0CqVDdihzL+ly20guba/wypwrdqT4CiN1jA4vV5
-         8NYhDJ6E92XOEqbsr1SQvN3rqlUzWlSMdtrn6k1EWE/XsEzLEvVfjXmejfaDk8QbISfl
-         Y5sTKycQ2aLPTZSUY0hsBnuLD9cIZ7TqNRxgHLeuGddHYYYkaitm7W/o0YErqe0YRXxb
-         pLDw==
+        bh=iwQbr8XoJZ/XnZbREoHAfwhSJXWglNUrgtqCXftjyBU=;
+        b=KDnDUDDOBPVaLSaZ1qVAPlH/cTJLIiviGeMYKD0hVUrPpvo0JS1LgW0gkQgc2aTF6p
+         pahYmeGOsTP6pKB+G8H4vFhxvDRBwm5DkUrSxsmpf64YffYSe2lggPD6NuUxlaUiUItx
+         0EIPE3QQjnW+fPqDamoolnLYpt6j3gDRuMu+6v/ooIqBqpaZSbuCU8nREvybxiiBh1Q/
+         8CAD3IlXUJMXQTPo+f2+5NB7z32fXOKUFJAzhicM5kMLkQj02vXGhAf+CIu8yisGt/WV
+         Nh52/7xClPZjr0sgd8h63Ui4J3cbnf4MN/YO9Sxd9fk/RZb+XjGsBL5Za5K2zGeKUfyV
+         FZww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=5N5nUfDX7HOK24TnVz8t+Ax57kQdzb1y0nq6lTcmJZQ=;
-        b=H3H7eqkQVczcfpM8Tb0TT+VkCdlkKuIc6eT5APh7RxHr0E66G9pdHKEpSde+4ANuYf
-         uCWaiWn3HLqwV02uKKjzsjk7SqehtosygG9b/h1aGE6Wwcpq0UfhY17/tr23iOHmH+R/
-         +u62L77Am3xK9jRVpYvr1wLgSDiPwvLT2qZ2u9LlvTdaYPsyylm99ke5a+YAjG7EATub
-         A2qRMzYM2X/zDMk1S18+JFjkNHqNUGxAV93xyJN8r2rh/xY1HxfsYKw6w+UuYsv4voZ2
-         qcBsM1Khl/7N8yJlHL2J/xjtUFmkc5nqiSFdkOdnfPCufB6x5bE84IQ4uG8v12xFulm5
-         J5Lg==
-X-Gm-Message-State: AD7BkJJYN9wbbSy+vBt0YLGd6U5N+RrSZASxFp/aCnyv2MG06b/3ocK1Msfg5doIKb5apoLA0gLoCNtTujPVBA==
-X-Received: by 10.25.212.213 with SMTP id l204mr5584231lfg.118.1458906132047;
- Fri, 25 Mar 2016 04:42:12 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Fri, 25 Mar 2016 04:41:42 -0700 (PDT)
-In-Reply-To: <CABEEbiDRPsL6XJrnyFv43u26hXNbBVmMhbJeZmp+zjS+-jNZ=w@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=iwQbr8XoJZ/XnZbREoHAfwhSJXWglNUrgtqCXftjyBU=;
+        b=BFcQtohqjUaj2iDtgMQs5t1TnlHcOStDaZBP7cZZW5c74/FHK3p5zKIizfFuT4r3WE
+         GZusP1iuNjzegzrFG+/GPQaqWlPAtQRuFqPFaD9oepejxQ1in/7hPuWIR1p+aNwTOSnT
+         JaKniAo2ZSehvZEXgSRI0M/gTGZNJqsmWBxmdfgMHWliL+AXcV/FxzVeYuMENZRrZn/+
+         g8t/gQQkX7iLY6HErybEZZiFjJgRQJO1Of5bH5Jc0gRp8XDerREbUnpoMKkywPaRyZs1
+         KIALOp1Pro9O+cxmwqONysTeR1ohRPsvVMbxyO/UKeO7pjkizNE37ymIbmANYJ4xKysE
+         a+9Q==
+X-Gm-Message-State: AD7BkJIxDhDW9UTvKQNd6/s6vKgHDBIo6x/lhre/y02YU9t7CjX8lZvYoi4k/TWM3sOaA7GOHGDqDRTOAj50ew==
+X-Received: by 10.37.230.200 with SMTP id d191mr7548790ybh.131.1458906238177;
+ Fri, 25 Mar 2016 04:43:58 -0700 (PDT)
+Received: by 10.13.203.137 with HTTP; Fri, 25 Mar 2016 04:43:58 -0700 (PDT)
+In-Reply-To: <CAP8UFD0vm1Sn07ickfPz5segbM-M7+HR43CMMGsB9WTqj5s-yw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289880>
 
-On Fri, Mar 25, 2016 at 6:31 PM, Zhang Lei <zhanglei002@gmail.com> wrote:
-> By the way, Duy, another unrelated question: why worktree name under
-> .git/worktrees is being named
-> after the working tree path basename? I think branch name is more
-> reasonable since we don't allow checking out
-> the same branch twice.
-
-Because branch name is not always available (e.g. detached HEAD) and
-checkout branch can be switched later on. And normally you'll get
-branch name there anyway with "git worktree add something" because the
-branch "something" is automatically created. I've been wondering if
-it's worth supporting "git worktree -b abc ./" where we create
-worktree "./abc" based on branch name too.
--- 
-Duy
+On Fri, Mar 25, 2016 at 5:10 PM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> On Fri, Mar 25, 2016 at 11:15 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>>> - you will add an option to "git bisect--helper" to perform what the
+>>> git-bisect.sh function did, and
+>>> - you will create a test script for "git bisect--helper" in which you
+>>> will test each option?
+>>
+>> I had very initially planned to do this. But Matthieu pointed out that
+>> it would be much better to use the existing test suite rather than
+>> creating one which can lead to less coverage.
+>
+> Ok, then perhaps:
+>
+> - you will add tests to existing test scripts, so that each "git
+> bisect--helper" option is (indirectly) tested.
+Yes. I will mention this in the proposal also. Thanks for reminding.
