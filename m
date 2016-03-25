@@ -1,137 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 1/5] submodule: prepare recursive path from non root directory
-Date: Fri, 25 Mar 2016 12:21:00 -0700
-Message-ID: <xmqqk2kq2wkj.fsf@gitster.mtv.corp.google.com>
-References: <1458931156-29125-1-git-send-email-sbeller@google.com>
-	<1458931156-29125-2-git-send-email-sbeller@google.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [RFC/GSOC] Git Beginner | Warnings for potentially destructive commands
+Date: Fri, 25 Mar 2016 12:20:48 -0700
+Message-ID: <CA+P7+xqkqfccQtWeKbURZt21i+gw=b7f0YHHuqeNzM7TH2m+6g@mail.gmail.com>
+References: <56F51089.2050703@gmail.com> <xmqqd1qi4fvi.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, pclouds@gmail.com, Jens.Lehmann@web.de,
-	jacob.keller@gmail.com, sunshine@sunshineco.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 20:21:12 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Sidhant Sharma <tigerkid001@gmail.com>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Philip Oakley <philipoakley@iee.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 20:28:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajXIF-0001Av-Ss
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 20:21:12 +0100
+	id 1ajXPe-000507-NW
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 20:28:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753849AbcCYTVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 15:21:06 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:59051 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753420AbcCYTVE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 15:21:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2E1174F453;
-	Fri, 25 Mar 2016 15:21:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PRqsve7jyjQknqaL3bo3Di/hENo=; b=Cb9Hi7
-	yfipVZvMUmL7hHlzftC/T+aIrxP5Qc1L6khrGH+ADFDhtBox7X7Kdg/tVV0QQwm/
-	0AYD+ncVpFJl+NmV+lUQCm2aKykhEWlePyr8k00Kh8EJ8ev2iQ23zWglY7TLTdH9
-	lbGqAXcVcnqzQ0ZxYM0y/Yyh1pr5adHMeSYSQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CRsJihUUV4LusI/ynUe1MiyU7gX1165M
-	mEP0iH3wCuus0TpPFsK5USaZF88887RtwVyrmTC4Kdzrl8wGO8p1ISHlDFPV2fef
-	b3CVD643n1+ggiviAYq73UDODWvBJcmH7ChWHgQU/fcJruW2p/Mchf81/EBMRof/
-	0H3AyGnnCN8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1EFBD4F452;
-	Fri, 25 Mar 2016 15:21:03 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6EE004F44D;
-	Fri, 25 Mar 2016 15:21:02 -0400 (EDT)
-In-Reply-To: <1458931156-29125-2-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Fri, 25 Mar 2016 11:39:12 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B6878C6A-F2BE-11E5-AEFF-E95C6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753934AbcCYT2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2016 15:28:46 -0400
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:36945 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752859AbcCYT2p (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 15:28:45 -0400
+Received: by mail-ig0-f176.google.com with SMTP id l20so19160051igf.0
+        for <git@vger.kernel.org>; Fri, 25 Mar 2016 12:28:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=tphYlzC8OxOX0Va61dJbhK3iguY+PLAY+/Gj4Wz876M=;
+        b=s9rmntxruKPdUye3Shei/rS5JWJBlH/xmLM8Y7r2RUY7W7AxwZUjKwocqw58a/gv4P
+         fKYcC1uhPo8WlqsS/aA6Rf5gV33gWvlBHLQK33VXO1pB0XS7j9t5K/I24uP/kafSLKgC
+         OdtTRiXRbOzllxH+LuUY1H/YeepltdU7OLOIl4/gXeq/CNHsXBOFDwd5UrfkRyHkGo+0
+         C4qVMev6a2QJyM9ZBHsgy6ZiK1Jcn09ysTT69qeWIn7aD+R1pg0kFfDFviYeQh5I2eNl
+         icZRhnXxq7V3e3T2DwcfLixdTK1clzrAM4uxIYjtpGwkMfIFnAeIJWNvp2Kwm2epPCgT
+         ZogA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=tphYlzC8OxOX0Va61dJbhK3iguY+PLAY+/Gj4Wz876M=;
+        b=ipbqpXlh+hRuilNJIlv96KoFwDbU0D54P0C+wyK/rrcCNx7r87lpxh0fMBs2Y9CxBl
+         auSK8t8QyCunsZo7PH1B7kQypROJbcnGIh0B/Pk0FohpVTr7TVB9YRC8DIOaJ5+e4MHu
+         ZHd34dLAcjUF62u0Xf4kqo2NcN6Az3wmvq1NG9N9VMg+Mw9uvOYEI4tmdoxVAV+RpABN
+         nGJNpHYbi+fYgLMmut0ePyjbfTBNxrR1AgXPKrwwKmgKPQ8jZpZk9Nghba2duT1ny1lh
+         18UV/nGEpPj/K7WTeSxdUFbu0dGelATJJgCCSlPYhXCcvhfTluVx7KxtuwDKHv7p2/ub
+         6EHw==
+X-Gm-Message-State: AD7BkJJEszmT9y9Nb9zsAfMUvhMZTjqtxoQjLp6om2RTaU1oDAjD4GjZrdhSTqlkIT1nqTYwu8S+7F1C0Awx+Q==
+X-Received: by 10.50.143.105 with SMTP id sd9mr96116igb.73.1458933667817; Fri,
+ 25 Mar 2016 12:21:07 -0700 (PDT)
+Received: by 10.107.10.202 with HTTP; Fri, 25 Mar 2016 12:20:48 -0700 (PDT)
+In-Reply-To: <xmqqd1qi4fvi.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289948>
 
-Stefan Beller <sbeller@google.com> writes:
+On Fri, Mar 25, 2016 at 10:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> The above two examples make me wonder if these should be static
+> text.  "ggit rebase" and "ggit reset" have full information of the
+> concrete branch names, commit object names and the actual topology
+> of the history, so it should be able to give a description more
+> tailored to the user's situation.  Instead of giving a fictional
+> drawing with "For instance, Current state:", it should be able to
+> draw the actual before-and-after picture based on where the end-user
+> actually is.  I see _some_ attempts (e.g. with "<n>", mention of
+> "(master)" and $BASE_BRANCH, you may have meant that they will be
+> replaced with actual values), but I suspect that telling some truth
+> (i.e. use of the real branch names) while showing pictures that do
+> not match the reality (i.e. if the topology and the description are
+> done as fixed text) would only confuse the users.
 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 43c68de..d83608c 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -825,8 +825,9 @@ Maybe you want to use 'update --init'?")"
->  		if test -n "$recursive"
->  		then
->  			(
-> -				prefix="$prefix$sm_path/"
-> +				prefix="$(relative_path $prefix$sm_path)/"
+If possible, I would suggest aiming for generating the actual topology
+that the user is seeing, customized so that it gives relevenat
+information, rather than static examples. It may be that it is not
+possible or the effort is too large for such a project. If the latter
+is the case, then using only static text is better than trying to use
+some but not all the available information, as Junio points out above.
 
-Don't you need to protect yourself from IFS chars in $prefix and
-$sm_path here (the other invocation of relative_path in this patch
-does not have this issue, I would think).
-
-As I think about it more, I am more inclined to say "-C $prefix" is
-going in a wrong direction, so justifying this change solely on that
-move is somewhat sad.
-
- - Making things relative should not hurt.
-
- - Clearing wt_prefix feels like the right thing, because we are
-   moving to the root of the working tree of a different repository
-   and wt_prefix that tells us where the user originally was in the
-   superproject is not useful in the context of the submodule, which
-   after all is a separate project.  The user however cannot refer
-   to things on the filesystem (including use of pathspecs), as they
-   are taken relative to the root level of each submodule by
-   clearing wt_prefix, though.  i.e.
-
-       $ git submodule $cmd --read-from-this-file=../m/file
-
-   that is started from t/ subdirectory of the superproject that
-   recurses into the submodule at m/ (sitting next to t/) should be
-   able to read from "file" sitting at the root level of the working
-   tree of submodule m/ by stripping ../m/ (and relative-path should
-   be able to help with that), but that may become impossible
-   because the fact that the user named ../m/file relative to t/
-   subdirectory is lost by clearing wt_prefix that used to hold t/
-   here.
-
-is the closest justification I can come to, which is weak ("should
-not hurt" does not justify, and "users cannot ever do this without
-undoing this change" does not, either).
-
-I think the worst part of this change is that the log message does
-not make it clear why it is OK not to clear wt_prefix and not to use
-relative_path if you use --prefix, while the "-C $prefix" approach
-has problems without these changes.  Without that explanation, these
-symptoms, i.e. the fact that you need the changes in this patch,
-only smells like an indication that "-C $prefix" approach is somehow
-flawed.  I cannot quite pinpoint what that "somehow" is, though.
-
->  				clear_local_git_env
-> +				wt_prefix=
->  				cd "$sm_path" &&
->  				eval cmd_update
->  			)
-> @@ -1159,6 +1160,7 @@ cmd_status()
->  			(
->  				prefix="$displaypath/"
->  				clear_local_git_env
-> +				wt_prefix=
->  				cd "$sm_path" &&
->  				eval cmd_status
->  			) ||
-> @@ -1239,7 +1241,8 @@ cmd_sync()
->  
->  				if test -n "$recursive"
->  				then
-> -					prefix="$prefix$sm_path/"
-> +					prefix=$(relative_path "$prefix$sm_path/")
-> +					wt_prefix=
->  					eval cmd_sync
->  				fi
->  			)
+Regards,
+Jake
