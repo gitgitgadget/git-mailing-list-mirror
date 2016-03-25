@@ -1,108 +1,82 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [RFD] minor frustration in 'git add' pathname completion
-Date: Thu, 24 Mar 2016 17:38:10 -0700
-Message-ID: <CA+P7+xo1vKNwLt9JazAGZR1=Wu4qe8OsuxTVUYV_TgbUkRBHVA@mail.gmail.com>
-References: <xmqqr3ez7dqw.fsf@gitster.mtv.corp.google.com> <CAGZ79kaUPf=kBCuH__8BahjM3WjSGaijiQr05pMKe+TNdg3W9w@mail.gmail.com>
- <xmqqbn637cpe.fsf@gitster.mtv.corp.google.com> <CAGZ79kYDWJDDJ+doy3NcZH_dqbbFE8U2UHZjnYYTo5R9GTsghQ@mail.gmail.com>
- <xmqqy4975vv7.fsf@gitster.mtv.corp.google.com>
+From: Dominik Fischer <d.f.fischer@web.de>
+Subject: Re: [PATCH/GSoC] add a add.patch config variable
+Date: Fri, 25 Mar 2016 01:43:47 +0100
+Message-ID: <56F489C3.9050400@web.de>
+References: <1458853787-29807-1-git-send-email-d.f.fischer@web.de>
+ <1458853787-29807-2-git-send-email-d.f.fischer@web.de>
+ <xmqqvb4b7eu9.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 01:38:38 2016
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 25 01:43:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajFls-0007PW-Fj
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 01:38:36 +0100
+	id 1ajFr3-0001r3-O1
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 01:43:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751067AbcCYAic (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 20:38:32 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:35767 "EHLO
-	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750797AbcCYAia (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 20:38:30 -0400
-Received: by mail-io0-f178.google.com with SMTP id v187so70480814ioe.2
-        for <git@vger.kernel.org>; Thu, 24 Mar 2016 17:38:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=dPKEXDejAZJilywFi8+6Wd90pR7G5ijEr8E9tUfs1iI=;
-        b=qk7B8v+85pLIcLe6BmWGj5mv5dqMBCtQ5i30+Nr9UlQrNjwJX5PtHKgRDjuDhHW/Yx
-         +qso+Ds6wjXKQcIoHK3o8QfQugOF23fgHR9Re1YEEOL0t5C279viz0mVC1AnAwN+dlfy
-         /SAhobmWVYV3cCykrd5vmX4pI2kOrCOggeYZp8hbklLYIJxS9JqiaCVKhH97IcbiKaYS
-         YsQyAHbv3t6vg3mod5iRWpazB01Mz+aQAWWyswdu3HuA9GqjHhD1w1ErvrI2vgyxZw/f
-         OzMXm+2WCMJD6M8o+bwvGHiqSEhD0Fu4TzhBiPee/Hebths0m+5RpghQo1xC7twcsfVJ
-         XspA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=dPKEXDejAZJilywFi8+6Wd90pR7G5ijEr8E9tUfs1iI=;
-        b=Fv7ywbRiIa+H0/t+lRZWECiBsxQDM3AGHYyL7GmcTuLjzxuHY+7GmUa/C1u93yYD2X
-         psW5vqx2Ij87+3Zmh6PXV/cOeKI4qURsr1rvs9778mhrP3JxBtGHgG/aexNBKZ2ahkrV
-         wQ8jK/RVIjKnaWs8NUgnEJKAaUcPG0nSWpCiheVk13HFvf1U61OCGQa83iRrgdPk6Pxs
-         r4uYlibF0elqb9+rrCvo8+7BSTpMwC7rXAzAqJUhMoTAi2FEXAEWy97y8vEDdvq/EOIh
-         h4svyapJYCGtV6O6/LRN7G9OwpHSzMf1bCQBbXpHH8v6pov8mT48SNJ0+YcjFxqeOFGN
-         iSQg==
-X-Gm-Message-State: AD7BkJLm1KX5N3VA/EfePbrtwVlYodyOT1vZEB/w9beo0pQdCtIJwkSkPmJYa+H1H6NqHWsa8nQDHxlFQBKpHA==
-X-Received: by 10.107.136.77 with SMTP id k74mr12937624iod.0.1458866309683;
- Thu, 24 Mar 2016 17:38:29 -0700 (PDT)
-Received: by 10.107.10.202 with HTTP; Thu, 24 Mar 2016 17:38:10 -0700 (PDT)
-In-Reply-To: <xmqqy4975vv7.fsf@gitster.mtv.corp.google.com>
+	id S1751096AbcCYAnx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Mar 2016 20:43:53 -0400
+Received: from mout.web.de ([212.227.17.11]:64945 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750949AbcCYAnw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Mar 2016 20:43:52 -0400
+Received: from [192.168.178.38] ([95.116.247.71]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0Lcy1k-1a19bo2m80-00iBi2 for <git@vger.kernel.org>;
+ Fri, 25 Mar 2016 01:43:48 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.0
+In-Reply-To: <xmqqvb4b7eu9.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:uNYxNhSSUBflEgaBXNvWYfpKz4WmfmYcW6hbrTJ7+ea/RGWmr6h
+ QFR26Qp5i0OGGGHv0Hf8f0llTB5nzaWeOFmG2E7AnYS3VrkYivM3fzQso64g9TVfIHiVgtj
+ N4TkxiSeHXRNT8vGs/9MUUiwZ+62+vkLexgEhxERbgc7AVElPvGC14MTkF9QQRWNNB0b7dc
+ 7WnwcZbj1TAwviTM/CrUw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:5nDkm7dREoc=:/UFmZt4RcLMXe701yogVdz
+ As6TROkEUKodTAckVJYsQ29NWDQZfkdaZsSbWRjOQrfHjzWcUbG2JMrJB128ZA9LmJzbX8tly
+ bWpmDG4VEWdSXrK0vyi0N8mCPNpW/yAgJkPbn+A/f6gjVKDF+6OqbpH+5Wd3eBlVYA1ZvOUxX
+ wsJ51wiPCjb2mxMjmfyt6JRxzQImIOqwyoMZMhO2QVl3wtYd7HT6T/QtZBRWGvOLRoye/TKpG
+ xmFs1c0obin1yGHnwmLMfC/6xeKYsVQIDX4FT86FVuZv43nWOzts/0QP6DXrMvlxcyrUrFAhb
+ an7QYmqYcaI8tlQhz2sNVL5/oYV0dMwCviuKs4j2xRd01DlCn8DPQMRL5A9SqpEoO4/TnIwFs
+ 2kUkC251sDtc/VP9dMVkxlo5jIFG5KWdhy+QNRuKurntZYndoE+NLfgnW6bgF7k1EvHfTimOZ
+ GHQD4pbRboL2kPq2B6R8uykOk8Jy6uBS47MwlFSwC12X3hvOTzWvrjtQJqrIzasj776PkIKH/
+ +FCj1XbGy4fxq4z0pOeCyoNcIHbMxO9S3BZtLyze3ZLq+SJXEOMlV3axFIIAsTcHz/yo+R+sj
+ daceks0Qk5xjVURVvIcEuKsHDV8xz/xZAxoDnNmBqKdy/44MjHxoid9OSjtV2FZIvkyIt7rVn
+ 9JlZE+Y4LxUZgB5RP1/Cg72BrEYZKLArgXzfJSDqByHa3+AAt5QpLtKJkIsEa2Cal0GK/mmPk
+ wkqD5j0ncMCpkN0IYXnV8Ci7ejiAwU8FuqrjFX0Nfu0nFt+FNzdn7TI1RoxLZKC3sZS8XT4+ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289838>
 
-On Thu, Mar 24, 2016 at 3:55 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->>> If I were to explicitly ignore that file, then even though I know
->>> whats-cooking.txt is not ignored,
->>>
->>>    $ git add whats-coo<HT>
->>>
->>> would not offer anything.  I'd be left scratching my head, wondering
->>> if I mistyped the early part of the filename (e.g. "wahts-coo<HT>"?).
+Am 24.03.2016 um 22:20 schrieb Junio C Hamano:
+> XZS <d.f.fischer@web.de> writes:
+>> Users may like to review their changes when staging by default. It is
+>> also a convenient safety feature for beginners nudging them to have a
+>> second look at their changes when composing a commit.
 >>
->> Well, git add cannot do anything with either of the files, so why would
->> it offer to complete to one of them?
->>
->> In an ideal world it would tell you whats-cooking.txt doesn't need
->> adding and whats-cooking.txt+ is ignored locally so excluded from
->> being added.
+>> To this end, the config variable allows to have git-add to always act
+>> like -p was passed.
 >
-> Exactly my point that you omitted from your quoting ;-)
->
-> Because the completion cannot give such an explanation, the
-> behaviour gives an unnecessary confusion to the user.  If it offered
-> whats-cooking.txt as a candidate, at least the behaviour would make
-> sense to the user.  "Doesn't need adding" is quite different from
-> "must not be added". In other words, "git add A && git add A" does
-> not hurt, but "git add A~" would because the latter would only makes
-> you see unnecessary error message ("You need -f if you really mean
-> it").
->
->
+> Now with such a configuration in her ~/.gitconfig, how would she
+> ever run the normal "git add", which perhaps is invoked by one of
+> the scripts she regularly uses?  E.g. "git mergetool"?
 
-I use this feature every day such that I can just do:
+As the configuration variable can be overwritten by a command line 
+option, I am tempted to amend this by replacing all occurrences of "git 
+add" in other scripts with "git add --no-patch" to ensure the expected 
+behavior.
 
-git add <tab>
+But this would introduce changes into a vast number of points in the 
+code. Apart from that, I suspect other options may have the same reason 
+not to be available as config variables. It would be much better if 
+git-add could ignore the variable when called internally, only taking it 
+into account when used as an entrypoint.
 
-and it cycles through all the available files which differ (thus could
-be added). If it didn't do (3) then this would tab complete to every
-file, every time, which is not what I expect it to do. It is
-definitely something one has to get used to, but I know I prefer it
-the way that it is.
-
-For your case, I think local ignore is the right solution. Narrowing
-the list is really a useful feature of add's tab completion.
-
-Thanks,
-Jake
+Is there already a mechanism in place to determine if git was called by 
+git? If not, I could implement one through an environment variable that 
+counts up on each git invocation, essentially providing a git recursion 
+counter.
