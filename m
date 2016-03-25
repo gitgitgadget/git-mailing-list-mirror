@@ -1,110 +1,92 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v9 2/3] t7507-commit-verbose: make test suite use write_script
-Date: Fri, 25 Mar 2016 13:04:41 -0400
-Message-ID: <CAPig+cQLOwAimmHeUmi5+KScgOP0hr9-MiX8gyGcEk6Zj0U_jQ@mail.gmail.com>
-References: <01020153a7ba4eae-9b88e119-0505-418f-a137-595250edaa9d-000000@eu-west-1.amazonses.com>
-	<1458817259-11675-1-git-send-email-szeder@ira.uka.de>
-	<CAPig+cQJ1yK8WhXE0sxSmDenMt1DMZCoJypTu_wkDsDyuBsAWg@mail.gmail.com>
-	<20160325154638.Horde.LzlsD6cZcQfmt894cll_0Tl@webmail.informatik.kit.edu>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 3/4] submodule--helper list: lose the extra prefix option
+Date: Fri, 25 Mar 2016 10:05:55 -0700
+Message-ID: <CAGZ79kZ=de7jh7b2OnTuEoTUSJKhoNkjb+Mw41JP7w9SVWH3iA@mail.gmail.com>
+References: <1458862468-12460-1-git-send-email-sbeller@google.com>
+	<1458862468-12460-4-git-send-email-sbeller@google.com>
+	<xmqqmvpn5awo.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kZ684W46df9zPQATr3zWKt+e1BhGY6DZ84psfXWH4tGNw@mail.gmail.com>
+	<xmqqlh564hm3.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pranit Bauva <pranit.bauva@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri Mar 25 18:04:48 2016
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 18:06:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajVAF-00058E-IK
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 18:04:47 +0100
+	id 1ajVBQ-0005kC-LY
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 18:06:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754028AbcCYREn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Mar 2016 13:04:43 -0400
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:34509 "EHLO
-	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753851AbcCYREm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Mar 2016 13:04:42 -0400
-Received: by mail-vk0-f65.google.com with SMTP id e6so8352707vkh.1
-        for <git@vger.kernel.org>; Fri, 25 Mar 2016 10:04:42 -0700 (PDT)
+	id S1753872AbcCYRF5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2016 13:05:57 -0400
+Received: from mail-ig0-f177.google.com ([209.85.213.177]:34833 "EHLO
+	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753338AbcCYRF4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 13:05:56 -0400
+Received: by mail-ig0-f177.google.com with SMTP id cl4so15825037igb.0
+        for <git@vger.kernel.org>; Fri, 25 Mar 2016 10:05:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-transfer-encoding;
-        bh=IEPbmrEKrs0zcg0JMcJbhXIZDesPrPLASCncIFtDoig=;
-        b=06JB3EPMzyc0VRRCddDOuDO2F/VWWKHFoIbpr1YHfi0rxQpOmZknRrVRM0QrGx8Ryc
-         8rAwSuB0LlL/7jlWooMy5Dt80DToBBfrJLm2aXuXkw46ESVyusRz/oFHA48sVTwDWv7F
-         C7i61yboattULhd6ZaGk5DkoVho9eO0siaEkZwyTgpIPJArueA3BHt2d8/ED+ioW1gxp
-         wxZh3eIwZIIcYGcl7zotDzDfSrqYczfF9n8z+G9qaBpkyzYOi5G54bEyomAgw5bJmenO
-         +yfAxcea9+qTySPy9xXYgtqSpHTbr1BVhAMQvcj4EFuyNJUQdwQxsAfyizlssVlrC2ql
-         gVpg==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=XacAkbrrz2ajEcIK9bieDejnwByW5snAzrg9XI9pyo0=;
+        b=dUJe+C/dJRR4E8hd9zIqPX9a/t3l4hOs9kC+HDsXEWplMaYG6CYHTyac8MmiDqMAE4
+         0e2zdulU1Gb8Rb3Dkj0clwQXztutmG6rZBIgqqHasA3Jka7i6LbfLY7eCZueXboCog58
+         Uwfi4qTOyIpALyw3tgcqxXsTd9f3jI5Z6ZmreqZZapwJKUvUl7usRUheI8uRam5/ZylV
+         QPu8FudtYeTjSZGBXOgb6jKBC5Fky1TwvIL5y8q/ovpDZi4dYbo6iV9L2k95Xwst8Mws
+         fF58Q5I1GpX6kbuQAzhgbejgTRlT8ROBt8+wsgKs/+Wf8DBxUNHFVxliJeUlMvJTTv8e
+         Iv2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=IEPbmrEKrs0zcg0JMcJbhXIZDesPrPLASCncIFtDoig=;
-        b=D7vKKbUC9ubxOpVpNVpgdLP2Ch3bQkqHGhyIH5kzm3qO9SPzVllBANw5VuclCOQyx/
-         YfGLLaFFXvF5gRQZV/WeqyjNYP3Z95NUCEHzaZZzQ0s1kq6Lyjl/MheGMbVir/X10UHI
-         vwBXN8NKR0S5w9oDjfvyd0UZvJqpaaHdeWC1PtGa9BaGsEJ1ujeHpewdNNXGYctkAw5R
-         spCJqfqidobA/76rodquKzChjiHNVpx49N+0Qf6pBOUKTcMTL1En4wA2lUz7Y/V3JfTr
-         9HfAd2wNmYZtuTRKMWm5wOl7FRvHHp6dw0JBq5SgzPxMg/dxKcGPuk7139Vibx2DqElW
-         XYnA==
-X-Gm-Message-State: AD7BkJI297KJZiCS3Luk5atfOOANxphekkxHOD/IkV1QxjPLQQM892aBYhkZ1ZpHUlKPa4fWKLUFlF47JuWqMQ==
-X-Received: by 10.176.2.238 with SMTP id 101mr7121675uah.139.1458925481704;
- Fri, 25 Mar 2016 10:04:41 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Fri, 25 Mar 2016 10:04:41 -0700 (PDT)
-In-Reply-To: <20160325154638.Horde.LzlsD6cZcQfmt894cll_0Tl@webmail.informatik.kit.edu>
-X-Google-Sender-Auth: PcU3YaJEggPYeXWvm-G4BdWwBR4
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=XacAkbrrz2ajEcIK9bieDejnwByW5snAzrg9XI9pyo0=;
+        b=XsfW6byFR0OJhSAVnqHRHitKBrzC1MsYG7MfVGd6o/VjxVQABMM1eV8GsdIM84Swgy
+         4Somjm/mesGtN0WoXSVY5HL6ofcaj4ZHDogkcleBlNU+QWp4MyYzy1LDpC5a3iDS1DWT
+         wbUxq1hhGQqeRDfs5B7PLwUbdk12AQ8TNVqOuV5EQNxBk7CviRHhjM69CMmG51mXxzVJ
+         qdDj9FUnV8qpZ3uJBDdusGYSuZUvaVUcJCQftUZ2mlO3W0yl+N5+aFBCFnIa+je18nmJ
+         E05fGAgITvW/9q/whqraRhQ22ntwVOJ3VXtKxFBVfxF/Y8gHjBARWlYmm5xxbhxPYHT6
+         1P2A==
+X-Gm-Message-State: AD7BkJIuRvH3bEiG06jFnEbgvY3l/ygCRU/o0FVVpmNLmihaNCs0WS6vGpt98zays6DOzmt7os6QnR7gk2QO4LBP
+X-Received: by 10.50.13.36 with SMTP id e4mr2673823igc.85.1458925555420; Fri,
+ 25 Mar 2016 10:05:55 -0700 (PDT)
+Received: by 10.107.132.101 with HTTP; Fri, 25 Mar 2016 10:05:55 -0700 (PDT)
+In-Reply-To: <xmqqlh564hm3.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289909>
 
-On Fri, Mar 25, 2016 at 10:46 AM, SZEDER G=C3=A1bor <szeder@ira.uka.de>=
- wrote:
-> Quoting Eric Sunshine <sunshine@sunshineco.com>:
->> On Thu, Mar 24, 2016 at 7:00 AM, SZEDER G=C3=A1bor <szeder@ira.uka.d=
-e> wrote:
->>>> -cat >check-for-diff <<EOF
->>>> -#!$SHELL_PATH
->>>> -exec grep '^diff --git' "\$1"
->>>> +write_script "check-for-diff" <<-\EOF &&
->>>> +grep '^diff --git' "$1" >out &&
->>>> +test $(wc -l <out) =3D 1
->>>
->>> Our test lib offers the test_line_count helper function, which
->>> outputs a helpful error message in case the number of lines do not
->>> match.
+On Fri, Mar 25, 2016 at 10:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> The other reason you gave below is also convincing: By having it in the prefix,
+>> the C code is more likely correct and future proof.
 >>
->> test_line_count() was mentioned in [2], however, this line counting =
-is
->> done in the fake "editor" script, not in the test script proper, so
->> the spelled-out form $(wc ...) was proposed[2].
+>> On rewriting the whole submodule command in C (probably
+>> reiterating): It is not my endgoal to rewrite every submodule
+>> related part in C. It would be nice if it would happen eventually,
+>> but for now I only rewrite parts that I need in C.
 >
-> Ah, yes, of course.
->
-> But then the question is: why is the line counting in the editor scri=
-pt
-> in the first place?
->
-> By redirecting grep's output to a file in the editor script, like thi=
-s
-> patch wanted to, we can count the lines in the test script itself aft=
-er
-> 'git commit' finished.  This way we could use test_line_count, with
-> all its error reporting benefits, and we could use the same editor
-> script for all tests.
+> Well, what you personally would want to do yourself is irrelevant.
+> Doing submodule--helper in such a way that it is sufficient in a
+> half-way conversion but cannot be reused in future full rewrite is
+> something we would want to avoid, whether you would be doing the
+> full rewrite in the future.  In fact, if you are not inclined to do
+> so yourself, that is one more reason to make sure that the C pieces
+> in submodule--helper are reusable (i.e. your "correct and future
+> proof" above); otherwise you'd be making it _more_ difficult for
+> other people who would want to pick it up where you left.
 
-That works too, simplifying the overall implementation, and
-eliminating the need for the introductory patch which moves
-'test_set_editor' into each test.
+Exactly, sorry for not writing my chain of thoughts down completely.
 
-> And if you insist on doing the line counting in the editor script, th=
-en
-> why redirecting grep's output and 'wc -l' separately, why not 'grep -=
-c'?
-
-Ugh, I utterly forgot about -c.
+To make them reusable, I'd assume we want them to be easy to
+understand, and by using a well known way in git it is easier to
+understand.
