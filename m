@@ -1,70 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/GSoC] add a add.patch config variable
-Date: Thu, 24 Mar 2016 23:30:54 -0700
-Message-ID: <xmqqio0b5ash.fsf@gitster.mtv.corp.google.com>
-References: <1458853787-29807-1-git-send-email-d.f.fischer@web.de>
-	<1458853787-29807-2-git-send-email-d.f.fischer@web.de>
-	<xmqqvb4b7eu9.fsf@gitster.mtv.corp.google.com>
-	<56F489C3.9050400@web.de>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH v9 2/3] t7507-commit-verbose: make test suite use write_script
+Date: Fri, 25 Mar 2016 12:25:04 +0530
+Message-ID: <CAFZEwPPXPL=d2S+Htc+uFyrUfrWLZRk=7YFDevHNpuEB5ofVDQ@mail.gmail.com>
+References: <01020153a7ba4eae-9b88e119-0505-418f-a137-595250edaa9d-000000@eu-west-1.amazonses.com>
+	<1458817259-11675-1-git-send-email-szeder@ira.uka.de>
+	<CAPig+cQJ1yK8WhXE0sxSmDenMt1DMZCoJypTu_wkDsDyuBsAWg@mail.gmail.com>
+	<CAFZEwPNMB2Ti2d=qdZKyoYzneHxUPATiFWd_fSPxktZuF3Q+pw@mail.gmail.com>
+	<CAPig+cRY8P2WtqR4y0zW+netCHa3=9Wnb8LmcB35SqP4OGC6Vg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Dominik Fischer <d.f.fischer@web.de>
-X-From: git-owner@vger.kernel.org Fri Mar 25 07:31:03 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 07:55:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajLGw-0003lu-T9
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 07:31:03 +0100
+	id 1ajLeK-00084Y-Ts
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 07:55:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752101AbcCYGa6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 02:30:58 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:63046 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751809AbcCYGa6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 02:30:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B270A49552;
-	Fri, 25 Mar 2016 02:30:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6K+q7WWp42vs+sDMDF0N1Hz7Rz4=; b=fP+mOH
-	5oKgmRSRoBmtHw32AEMEOuF5GNloX397v8T2o1/1MixE4rHSOyqKuWFFN01pajb0
-	uEbIyM22yY1j3tWal/DyHk+iPw/QkbU1iAvukFpCy4EK/96Iwqk7t5sKPZDFCUzn
-	72K1V+lOkQCfSEih1Hqrq4yjjjUxWTqrUv7+8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iQGfC0zSdLrf/lrhLI2b9XUyvQ9S5nUB
-	15hXc2P2r0BKo0RZbGoEREE7gIqrEGMxkdiWPdbbKMUOyoWWidA9JVe2XfcLoc2o
-	ejEfG/rIwdlOzZl17j3EB3Do7MO7r7tioUzVUQptC2fyVLy7Qs8UomcFQNKcozeG
-	CegwQReqOVg=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AB38D49551;
-	Fri, 25 Mar 2016 02:30:56 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2DA8B49550;
-	Fri, 25 Mar 2016 02:30:56 -0400 (EDT)
-In-Reply-To: <56F489C3.9050400@web.de> (Dominik Fischer's message of "Fri, 25
-	Mar 2016 01:43:47 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 21720C38-F253-11E5-B706-E95C6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1752074AbcCYGzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2016 02:55:08 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:36494 "EHLO
+	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751875AbcCYGzG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 02:55:06 -0400
+Received: by mail-yw0-f196.google.com with SMTP id p65so8040316ywb.3
+        for <git@vger.kernel.org>; Thu, 24 Mar 2016 23:55:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=TdWZyYtpUxtgORU+L9ZZPi1TslB2LM8ToGsQAOxve8Y=;
+        b=uKmg+rCnFqmlC4mMgASq69DVdzpO5dFIKK6JsWgC32SWO3QTxqbqnJeOYg4/pl7g8+
+         cWTjUP11Ovw8FsTvuVZHgaB+GCmWUXz7nx+jE2Tk73eWrAx1bcH6q75+dSrtrCeobMM8
+         3Hl5j6acR9rcqgByPnhyvvVLQ081k7J3GyYrFgCrKVbzkCUU9jZxw59HAkLYMvM2l1GY
+         aDCIOFvzeo7I5XgI2PKIVXbJlA+EJw6NOxbiFElQqlHvm5Ew0yLPFzCIW8yFx/cILgig
+         Uov+X2Jn2okSrp//HkafdvGNZKW7v0QJQ30AsiqiWB0ypOBgwCYAmCS8816jxWgaRgBH
+         JmLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=TdWZyYtpUxtgORU+L9ZZPi1TslB2LM8ToGsQAOxve8Y=;
+        b=GmM1YJ8jqf83pSjyOLI/8sd17Z2HG0LCN13fs6Pe3e/oHw0rkfXSDq/SY7BLq2JMcF
+         tKLEaE7xwrTgjRU8xOKPD9Mk9io4IV3VQvm+h74cL7tPWc2qJuUSY3xbKApf/MuolcEO
+         a1Q2UWacwsTwLEEFqAlQZVxc7YE0OwTuWzdoMJrByaUimxsFueEEqLI19PQejyxW+RbB
+         W1CG+zlammGjB1ck0F91pSae7OsYVEjfHGhGYYoMgr1VH/gKFl1TH3VR3U3fKRMt4xfJ
+         LIGSzvWQpTuwDu9O2cFYiHQNMZww/q95swhcPHzprtQu7i70uyIcSqWelUWkgjzIYebp
+         hWlQ==
+X-Gm-Message-State: AD7BkJK3ikCDW1jFeY/H6yYE8Wl8aRRioPj+yLlurIRpN+BWiy+tfSMFbMkxkIWR5+XpkGxkBbNxeL3duuS1fQ==
+X-Received: by 10.129.9.214 with SMTP id 205mr6382292ywj.53.1458888904945;
+ Thu, 24 Mar 2016 23:55:04 -0700 (PDT)
+Received: by 10.13.203.137 with HTTP; Thu, 24 Mar 2016 23:55:04 -0700 (PDT)
+In-Reply-To: <CAPig+cRY8P2WtqR4y0zW+netCHa3=9Wnb8LmcB35SqP4OGC6Vg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289855>
 
-Dominik Fischer <d.f.fischer@web.de> writes:
+On Fri, Mar 25, 2016 at 11:54 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Fri, Mar 25, 2016 at 2:06 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>> On Fri, Mar 25, 2016 at 5:27 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>> Agreed that this needs proper justification in the commit message.
+>>> And, the justification is to make each test more self-contained,
+>>> particularly because a subsequent patch will introduce a second fake
+>>> "editor", and by making tests responsible for setting the editor they
+>>> need, they don't have to worry about bad interactions from "editors"
+>>> set by earlier tests[1][2].
+>>
+>> This shou  cadve  mbe ave be ave be ave be ave be ave be ave be ave
+>
+> Hmm, yes, what you say makes perfect sense... er, wait...
 
-> As the configuration variable can be overwritten by a command line
-> option, I am tempted to amend this by replacing all occurrences of
-> "git add" in other scripts with "git add --no-patch" to ensure the
-> expected behavior.
+haha :) Sorry for this. My browser crashed and it sent out some crap
+(don't know how). I mean to say, "This should have been mentioned in
+the commit message that scope of editor is reduced so as to not worry
+about bad interactions from other "editors" which may be used after
+wards."
+>
+>>>>> -cat >check-for-diff <<EOF
+>>>>> -#!$SHELL_PATH
+>>>>> -exec grep '^diff --git' "\$1"
+>>>>> +write_script "check-for-diff" <<-\EOF &&
+>>>>> +grep '^diff --git' "$1" >out &&
+>>>>> +test $(wc -l <out) = 1
+>>>>
+>>>> Our test lib offers the test_line_count helper function, which
+>>>> outputs a helpful error message in case the number of lines do not
+>>>> match.
+>>>
+>>> test_line_count() was mentioned in [2], however, this line counting is
+>>> done in the fake "editor" script, not in the test script proper, so
+>>> the spelled-out form $(wc ...) was proposed[2].
+>>
+>> I have a slight doubt regarding this. Can the functions from test-lib
+>> work in such scripts flawlessly? If yes, then its probably better to
+>> use them.
+>
+> Probably not easily, and it's not worth complicating the "editor"
+> script by trying to import the test_line_count() function.
 
-Don't even think about it--you won't know all scripts you have to
-fix like that, as a lot more invocations of "git add" appear in end
-user's scripts that we have never seen.
+Sure!
+
+>>>>>  chmod +x check-for-diff
+>>>
+>>> Drop the 'chmod' line; write_script() does this for you.
+>>
+>> I was unaware about this. I will drop it off.
+>
+> I thought I had mentioned it in the review in which I had suggested
+> using write_script() or one of the follow-up emails, but upon looking
+> back at those messages, I saw it was not so. It turns out that I was
+> probably thinking about a different patch review in which I had
+> mentioned dropping 'chmod'[1].
+>
+> [1]: http://article.gmane.org/gmane.comp.version-control.git/288085/
+Oh! I hadn't tested by removing chmod. I will try it for fun.
