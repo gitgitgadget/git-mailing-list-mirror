@@ -1,90 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3/GSoC 2/5] path.c: implement xdg_runtime_dir()
-Date: Fri, 25 Mar 2016 11:00:13 -0700
-Message-ID: <xmqq4mbu4evm.fsf@gitster.mtv.corp.google.com>
+From: =?UTF-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
+Subject: Re: [PATCH v3/GSoC 3/5] git-credential-cache: put socket to
+ xdg-compatible path
+Date: Sat, 26 Mar 2016 02:00:30 +0800
+Message-ID: <CAKqreuyOGk=iZes_bgiBpnO5Ht+9VzZG3_j5H33i6qtBx1R5nQ@mail.gmail.com>
 References: <1458728005-22555-1-git-send-email-huiyiqun@gmail.com>
-	<1458728005-22555-2-git-send-email-huiyiqun@gmail.com>
-	<20160325095923.GB8880@sigill.intra.peff.net>
-	<CAKqreux8FHdJoKDishjQkbi9g1oUc265EUK4nOJ_sgeFivGSNA@mail.gmail.com>
-	<xmqqpoui4huo.fsf@gitster.mtv.corp.google.com>
-	<20160325175510.GA10563@sigill.intra.peff.net>
+	<1458728005-22555-3-git-send-email-huiyiqun@gmail.com>
+	<20160325100041.GC8880@sigill.intra.peff.net>
+	<CAKqreuzwa+ztwsF3CRb++J-iqW=_evfBQ7Q7veyYU2ydJXnpcg@mail.gmail.com>
+	<20160325175635.GB10563@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: =?utf-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Your friend <pickfire@riseup.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Your friend <pickfire@riseup.net>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 25 19:00:24 2016
+X-From: git-owner@vger.kernel.org Fri Mar 25 19:00:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajW22-0001Dx-TQ
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 19:00:23 +0100
+	id 1ajW2G-0001Ko-Lc
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 19:00:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754039AbcCYSAR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 14:00:17 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:50162 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753793AbcCYSAQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 14:00:16 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1C8384F08E;
-	Fri, 25 Mar 2016 14:00:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uCB9wKw7Ls9dIHqCLjWjJDxVSTQ=; b=F3JiTo
-	fowsqWtSm/yXOj03h5+Dh5wglbEl2HKw0PiY5/tT6L4UNAW6vJObMn98U+iR8AG1
-	h6qfERd5ht6ZO2tx9cbGMLIvQ4zHQyM68OIiqELnUA2K/c0JML68X4MkXM+URLQf
-	UBLtY2f7OOCXy+hyesmLcsaEWh9vFb6NpOCOQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Lx95ltZc0ZANw3W5n3u0kIpf+4RFCtAM
-	0rgtWOP+LyWxCCD8QUaszU7a9gykVNfV4LdjWkFgtSLmMBdoXDo8ei6MdAyKPcYV
-	72CsO3MOUAQF+3kUakBM3ZablxAJwEHSQHk1pz86lMerI6Hil2fK5X6ccuLQzI3k
-	h955c2DF7mM=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 145F44F085;
-	Fri, 25 Mar 2016 14:00:15 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 87B694F083;
-	Fri, 25 Mar 2016 14:00:14 -0400 (EDT)
-In-Reply-To: <20160325175510.GA10563@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 25 Mar 2016 13:55:10 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6CF4839C-F2B3-11E5-A51E-E95C6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753610AbcCYSAc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Mar 2016 14:00:32 -0400
+Received: from mail-oi0-f67.google.com ([209.85.218.67]:36030 "EHLO
+	mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752883AbcCYSAc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Mar 2016 14:00:32 -0400
+Received: by mail-oi0-f67.google.com with SMTP id k128so1135685oig.3
+        for <git@vger.kernel.org>; Fri, 25 Mar 2016 11:00:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=+Pyk65v/YIxHLi6CpmRKHzG5NrGV2wBTRjxrgDEc2Js=;
+        b=YXJOfGsyNyzGU7olrmG3//CBE7sWv3y60qZOroar522zYm++1uUgNXglMIH1v9C3NV
+         AP4h3OYU+PCziH05yEioqMlCA7I1jd+qu92joxcCKrJEPSuDsEZ8DMtmlxFUMtNMRdFK
+         C+uOyVa+XCeUYFNXXRRPLY8FbjSNZkO6ix+z/MjyI3nhM76Y+Br13anWx6qX8aIaq/M7
+         nyKWyj++J8ROazvshzARFFpHRoJ55Q6bchGEzmvS/xY844scyREkL4famWXlZ8gGk53q
+         VcJQfEww2wsbaxPKNkRRXKZl7VGzTWh/kp9g7VTvY8H6aQbydPnXzq47nxUAvcuC+cZS
+         7APw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=+Pyk65v/YIxHLi6CpmRKHzG5NrGV2wBTRjxrgDEc2Js=;
+        b=XfgsMBdUn9wdX3xiCH3rRAzNCzHyHLsi0nr2KW3t2q9XhGQ9LrRPX/lGbk5LRdugJP
+         miadZDEcbVlrMvWaauuWvIas90aiBiaSd4RQIzaVc8V2z3K8EunjiuLCIHA6rct8EOvQ
+         1qs3kqDVUfds3Iuyk1MRKiwnH4VgBl4px8pruq9IE0r/AyuEXStaY+Yj+zNj4C1bGJox
+         h7zN41c5N3h4QOxBy64jTPpLnfb4+74H15g+t3I9b7avQ5Bznzcbmf8oS6S4JUjFVK9Y
+         Eb+o9siWYbZwG4PlIDwpOpilcWdffXxNQ+fOtnrlxln+UeWUnje7Ajy7Kwn+JeD+35Jw
+         VCFw==
+X-Gm-Message-State: AD7BkJKGXer7d3ZKo6NJ3sweN2M4ZOH3/dnSwCgRPgAZPAwHEIYuptC05jqhqX2oxrZt76lM/VXHOlRBMWuwzg==
+X-Received: by 10.157.49.116 with SMTP id v49mr7525714otd.97.1458928830738;
+ Fri, 25 Mar 2016 11:00:30 -0700 (PDT)
+Received: by 10.157.27.250 with HTTP; Fri, 25 Mar 2016 11:00:30 -0700 (PDT)
+In-Reply-To: <20160325175635.GB10563@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289921>
 
-Jeff King <peff@peff.net> writes:
-
->> > That's clearer, but if I were the caller, I would worry about the
->> > security of the path.
->> > How about adding:
->> >
->> > The security of the path is ensured by file permission.
->> 
->> Is "by file permission" descriptive enough?
->> 
->> To protect /a/b/c/socket, what filesystem entities have the right
->> permission bits set?  If the parent directory is writable by an
->> attacker, the permission bits on 'socket' itself may not matter as
->> the attacker can rename it away and create new one herself, for
->> example.
+2016-03-26 1:56 GMT+08:00 Jeff King <peff@peff.net>:
+> On Fri, Mar 25, 2016 at 10:28:55PM +0800, =E6=83=A0=E8=BD=B6=E7=BE=A4=
+ wrote:
 >
-> I think that is discussed elsewhere, and referring to the xdg document
-> is enough. My main point is that the docstring about a function should
-> tell a potential caller what they need to know to use it, but if it gets
-> overly long, that information is lost in the noise.
+>> >> diff --git a/credential-cache.c b/credential-cache.c
+>> >> index f4afdc6..40d838b 100644
+>> >> --- a/credential-cache.c
+>> >> +++ b/credential-cache.c
+>> >> @@ -105,7 +105,7 @@ int main(int argc, const char **argv)
+>> >>       op =3D argv[0];
+>> >>
+>> >>       if (!socket_path)
+>> >> -             socket_path =3D expand_user_path("~/.git-credential=
+-cache/socket");
+>> >> +             socket_path =3D xdg_runtime_dir("credential-cache.s=
+ock");
+>> >>       if (!socket_path)
+>> >>               die("unable to find a suitable socket path; use --s=
+ocket");
+>> >
+>> > We do our own mkdir and chmod in credential-cache; this should be
+>> > redundant with what xdg_runtime_dir() does, and can be removed, ri=
+ght?
+>>
+>> But user may specify another path via --socket <path>, this path may=
+ have
+>> wrong permission. I'm considering how to handle this situation.
+>
+> Good point, we do need to cover that case.
+>
+> Perhaps the work done by xdg_runtime_dir() needs to be split into two
+> fucntions: one to just provide the path, and the second to securely
+> create a given path.
 
-I agree with your main point, and I was wondering if "by file
-permission" is merely adding yet another noise if there is
-discussion elsewhere already, and/or if it does not refer to an
-external document that has a fuller discussion, because it lacks any
-useful information by itself.
+Good, I will implement it like that.
+
+>
+> -Peff
