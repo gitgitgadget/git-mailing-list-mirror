@@ -1,80 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to use @{-1} with push?
-Date: Fri, 25 Mar 2016 10:45:40 -0700
-Message-ID: <xmqq8u164fjv.fsf@gitster.mtv.corp.google.com>
-References: <CAHd499AM-OzqiB1hOF=0BTesFxrxNj=+jr1wH6vpQXfgoXd8Ug@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3/GSoC 2/5] path.c: implement xdg_runtime_dir()
+Date: Fri, 25 Mar 2016 13:55:10 -0400
+Message-ID: <20160325175510.GA10563@sigill.intra.peff.net>
+References: <1458728005-22555-1-git-send-email-huiyiqun@gmail.com>
+ <1458728005-22555-2-git-send-email-huiyiqun@gmail.com>
+ <20160325095923.GB8880@sigill.intra.peff.net>
+ <CAKqreux8FHdJoKDishjQkbi9g1oUc265EUK4nOJ_sgeFivGSNA@mail.gmail.com>
+ <xmqqpoui4huo.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git <git@vger.kernel.org>
-To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 18:45:50 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Your friend <pickfire@riseup.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 18:55:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajVnx-000299-LS
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 18:45:50 +0100
+	id 1ajVxC-00075D-00
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 18:55:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753834AbcCYRpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 13:45:45 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:52897 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753321AbcCYRpo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 13:45:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B92A84ED0F;
-	Fri, 25 Mar 2016 13:45:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OlR2+zcJh/EBzMS/yVQzCHYS7oE=; b=srbiU1
-	abHqhI0IeRh0hLfRYklUDlwLeXuXwWPQ7ciWKRWy+csyqUSfx+1/LPKjeNbtK0Cy
-	ph1p+Q94ZLjTbYaqvA1X+D8WIj5UdAbBI4iHnL3o5mxozlkzmOZgpVcsezRSiIp3
-	QcxmK5xxX7pzGuU0ps4AWaGVc+aNE2ALR0z6I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rZaw9agj6OpWgympJ+kyfqKOc+wuP7O3
-	DTkZf79/BpFk5DJdYrFKqZY4IH7UzgJ1ewlEILoxBnYyGdtxVJY3PJuF+25qbKHx
-	cOJOtIB+Y66EVU3wookQqFUoTnsGBBVAjCEqIwna6fv1DclBacmZV3Ln0jwKO/aI
-	3KgVH1wC8gI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B17354ED0C;
-	Fri, 25 Mar 2016 13:45:43 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3BDAC4ED02;
-	Fri, 25 Mar 2016 13:45:42 -0400 (EDT)
-In-Reply-To: <CAHd499AM-OzqiB1hOF=0BTesFxrxNj=+jr1wH6vpQXfgoXd8Ug@mail.gmail.com>
-	(Robert Dailey's message of "Fri, 25 Mar 2016 09:40:40 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6504A074-F2B1-11E5-B61E-E95C6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1754087AbcCYRzO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Mar 2016 13:55:14 -0400
+Received: from cloud.peff.net ([50.56.180.127]:38413 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753313AbcCYRzN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 13:55:13 -0400
+Received: (qmail 4251 invoked by uid 102); 25 Mar 2016 17:55:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 25 Mar 2016 13:55:12 -0400
+Received: (qmail 26094 invoked by uid 107); 25 Mar 2016 17:55:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 25 Mar 2016 13:55:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Mar 2016 13:55:10 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqpoui4huo.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289916>
 
-Robert Dailey <rcdailey.lists@gmail.com> writes:
+On Fri, Mar 25, 2016 at 09:55:59AM -0700, Junio C Hamano wrote:
 
-> Both should refer to the last branch, but I know that these can't be
-> used verbatim in a push command because it doesn't read it as a branch
-> name normally like `git checkout` would.
+> =E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqun@gmail.com> writes:
+>=20
+> >> There's a lot of "what" here that the caller doesn't really care a=
+bout,
+> >> and which may go stale with respect to the implementation over tim=
+e. Can
+> >> we make something more succinct like:
+> >>
+> >>   /*
+> >>    * Return a path suitable for writing run-time files related to =
+git,
+> >>    * or NULL if no such path can be established. The resulting str=
+ing
+> >>    * should be freed by the caller.
+> >>    */
+> >>
+> >> ?
+> >
+> > That's clearer, but if I were the caller, I would worry about the
+> > security of the path.
+> > How about adding:
+> >
+> > The security of the path is ensured by file permission.
+>=20
+> Is "by file permission" descriptive enough?
+>=20
+> To protect /a/b/c/socket, what filesystem entities have the right
+> permission bits set?  If the parent directory is writable by an
+> attacker, the permission bits on 'socket' itself may not matter as
+> the attacker can rename it away and create new one herself, for
+> example.
 
-You can ask rev-parse to give you --symbolic-full-name, error out if
-it is empty (i.e. detached HEAD), and otherwise use the result, no?
+I think that is discussed elsewhere, and referring to the xdg document
+is enough. My main point is that the docstring about a function should
+tell a potential caller what they need to know to use it, but if it get=
+s
+overly long, that information is lost in the noise.
 
-    $ git checkout next
-    $ git checkout master
-    $ git rev-parse --symbolic-full-name @{-1}
-    refs/heads/master
-    $ git checkout HEAD^0
-    $ git checkout master
-    $ git rev-parse --symbolic-full-name @{-1}
-    $ exit
-
-And
-
-    $ git push origin :refs/heads/master
-
-would be the fully-spelled out way to remove that branch.
+-Peff
