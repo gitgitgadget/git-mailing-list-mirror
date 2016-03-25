@@ -1,93 +1,95 @@
-From: Santiago Torres <santiago@nyu.edu>
-Subject: Re: [PATCH] tag.c: move PGP verification code from plumbing
-Date: Fri, 25 Mar 2016 10:45:10 -0400
-Message-ID: <20160325144509.GA20375@LykOS>
-References: <1458866017-15490-1-git-send-email-santiago@nyu.edu>
- <CAPig+cQe5bwHXq4_qegBCM8Kqoqiz7K2ZtVk0FGMSEUPWQHyYA@mail.gmail.com>
+From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
+Subject: Re: [PATCH v9 2/3] t7507-commit-verbose: make test suite use
+ write_script
+Date: Fri, 25 Mar 2016 15:46:38 +0100
+Message-ID: <20160325154638.Horde.LzlsD6cZcQfmt894cll_0Tl@webmail.informatik.kit.edu>
+References: <01020153a7ba4eae-9b88e119-0505-418f-a137-595250edaa9d-000000@eu-west-1.amazonses.com>
+ <1458817259-11675-1-git-send-email-szeder@ira.uka.de>
+ <CAPig+cQJ1yK8WhXE0sxSmDenMt1DMZCoJypTu_wkDsDyuBsAWg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=utf-8;
+	format=flowed	DelSp=Yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pranit Bauva <pranit.bauva@gmail.com>,
+	Git List <git@vger.kernel.org>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 15:45:24 2016
+X-From: git-owner@vger.kernel.org Fri Mar 25 15:47:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajSzK-0001Sq-Gx
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 15:45:22 +0100
+	id 1ajT0n-0002iP-Nt
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 15:46:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753155AbcCYOpQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 10:45:16 -0400
-Received: from mail-qg0-f49.google.com ([209.85.192.49]:36508 "EHLO
-	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751989AbcCYOpN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 10:45:13 -0400
-Received: by mail-qg0-f49.google.com with SMTP id u110so62567888qge.3
-        for <git@vger.kernel.org>; Fri, 25 Mar 2016 07:45:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=/qrPC0uifLCPXQlK+y5ecZj7ylgL5kUnVVObnnHqp9M=;
-        b=PsTW5gmw1ruOsauZTmx18ftvy67AucCRyWtBnFKYp/kOqEXlVS618ULzkz8txj34eF
-         t3RNxZU3VRzW62iNaSdRxfLJCkoaaHGWF8zkrkDxsY3Xw1V9PHfkkcHmBIJWejw73sgV
-         /92o/xc+G1rawcWqGR7yMDHFrcJpEUZedV26DJfVk38tWOYnPCCL1v7CYHe+QFrca9GA
-         Fgb57qgSMHU7mGPu/AtGPPOMthz3tcTrVynb1qhUCxlKgArDarHKn/NasxnLPBR38mwh
-         4zIuVtMm+vmY25LRUybMDtmRt/wRI/JtZN/4U65JRR3pCf8yEFFwX7VDiWIhd7ZevglF
-         KzuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/qrPC0uifLCPXQlK+y5ecZj7ylgL5kUnVVObnnHqp9M=;
-        b=WQVSOUUtQYdGDBBh+C0s+6Q9hOSxD9LeKZQefNUFpIMvUfHDSoaeeB6Sq+PYM6SWql
-         LnW83JuJZv+w6u0UBjpDAuK2eb3oA3GOXlfbzcN81cYjZmpraxykDP/18PPTeeuCEdR7
-         sAOepFd3IbOE0Rg0W++Bk6ODcsYIyDSmUaflb5AxwfQ+mhO3TsWWaIdM6A7lm6XEblQT
-         8AAjm4ojl/uAj1uPsuyEhaWVcRTMbEeu5CEUvt485Ql2Ra4W4LY6xqWwb1FaydMPh/aM
-         TELuo2JRUvXsNf3kcw1MYRjwAmgGzxOwvd1L87lUbXSdgSdSZhCyFBbQD7mMn31u88TJ
-         ZBag==
-X-Gm-Message-State: AD7BkJJ+xXKo5wlrUjIf0brZd+jvinhpCWBB9790LVsqUczeVrD29FWvxlwSEDkh0zjOwyHt
-X-Received: by 10.140.101.147 with SMTP id u19mr18294952qge.71.1458917112266;
-        Fri, 25 Mar 2016 07:45:12 -0700 (PDT)
-Received: from LykOS ([2604:2000:8183:da00:b6b6:76ff:fe46:8151])
-        by smtp.gmail.com with ESMTPSA id y206sm5444422qhc.0.2016.03.25.07.45.11
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 25 Mar 2016 07:45:11 -0700 (PDT)
+	id S1753402AbcCYOqo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Mar 2016 10:46:44 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:59063 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751884AbcCYOqn convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 10:46:43 -0400
+Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	iface 141.3.10.81 id 1ajT0Z-00052b-Nq; Fri, 25 Mar 2016 15:46:39 +0100
+Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
+	(envelope-from <szeder@ira.uka.de>)
+	id 1ajT0Y-0001At-VO; Fri, 25 Mar 2016 15:46:38 +0100
+Received: from x590e51bb.dyn.telefonica.de (x590e51bb.dyn.telefonica.de
+ [89.14.81.187]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
+ Fri, 25 Mar 2016 15:46:38 +0100
+In-Reply-To: <CAPig+cQJ1yK8WhXE0sxSmDenMt1DMZCoJypTu_wkDsDyuBsAWg@mail.gmail.com>
+User-Agent: Horde Application Framework 5
 Content-Disposition: inline
-In-Reply-To: <CAPig+cQe5bwHXq4_qegBCM8Kqoqiz7K2ZtVk0FGMSEUPWQHyYA@mail.gmail.com>
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1458917199.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289893>
 
-> > -       signal(SIGPIPE, SIG_IGN);
-> >         while (i < argc)
-> > -               if (verify_tag(argv[i++], flags))
-> > +               name = argv[i++];
-> > +               if (get_sha1(name, sha1))
-> > +                       return error("tag '%s' not found.", name);
-> > +
-> > +               if (pgp_verify_tag(NULL, NULL, sha1, flags))
-> >                         had_error = 1;
-> 
-> Meh, this isn't Python. Due to the missing braces, the only thing
-> inside the while() loop is the assignment to 'name'; all the other
-> indented code is outside the while().
-> 
-> Did you run the test suite following this change? Did it all pass? If
-> so, perhaps an additional test or two to catch this sort of error
-> would be warranted.
 
-Wow, you're right! I just re-ran the tests again to make sure I didn't
-miss anything. All the tests pass for me, so I'll write an extra case to
-avoid this. Just to be sure, I should include it in t7030-verify-tag.sh
-right?
+Quoting Eric Sunshine <sunshine@sunshineco.com>:
 
-All your other comments seem straightforward and on point. I'll apply
-them right away :)
+> On Thu, Mar 24, 2016 at 7:00 AM, SZEDER G=C3=A1bor <szeder@ira.uka.de=
+> wrote:
 
-Thanks!
--Santiago.
+>>> diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
+>>> index 2ddf28c..cf95efb 100755
+>>> --- a/t/t7507-commit-verbose.sh
+>>> +++ b/t/t7507-commit-verbose.sh
+>>> @@ -3,12 +3,11 @@
+>>>  test_description=3D'verbose commit template'
+>>>  . ./test-lib.sh
+>>>
+>>> -cat >check-for-diff <<EOF
+>>> -#!$SHELL_PATH
+>>> -exec grep '^diff --git' "\$1"
+>>> +write_script "check-for-diff" <<-\EOF &&
+>>> +grep '^diff --git' "$1" >out &&
+>>> +test $(wc -l <out) =3D 1
+>>
+>> Our test lib offers the test_line_count helper function, which
+>> outputs a helpful error message in case the number of lines do not
+>> match.
+>
+> test_line_count() was mentioned in [2], however, this line counting i=
+s
+> done in the fake "editor" script, not in the test script proper, so
+> the spelled-out form $(wc ...) was proposed[2].
+
+Ah, yes, of course.
+
+But then the question is: why is the line counting in the editor script
+in the first place?
+
+By redirecting grep's output to a file in the editor script, like this
+patch wanted to, we can count the lines in the test script itself after
+'git commit' finished.  This way we could use test_line_count, with
+all its error reporting benefits, and we could use the same editor
+script for all tests.
+
+And if you insist on doing the line counting in the editor script, then
+why redirecting grep's output and 'wc -l' separately, why not 'grep -c'=
+?
