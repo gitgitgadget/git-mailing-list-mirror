@@ -1,70 +1,75 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: [PATCH v2] api-parse-options.txt: document OPT_CMDMODE()
-Date: Fri, 25 Mar 2016 18:58:58 +0000
-Message-ID: <01020153af24cfbc-a145ad2b-0cc2-4378-bce9-6b1f68251ce8-000000@eu-west-1.amazonses.com>
-References: <01020153a7e08100-cf66fc9f-7293-4d8c-98c6-f322721c741f-000000@eu-west-1.amazonses.com>
+From: Mehul Jain <mehul.jain2029@gmail.com>
+Subject: Re: [PATCH v10 2/2] pull --rebase: add --[no-]autostash flag
+Date: Sat, 26 Mar 2016 00:37:15 +0530
+Message-ID: <CA+DCAeQZjH+vhGYc3PSSt+mgtVi=nJbjbpMBBbTuX-eL9diE9w@mail.gmail.com>
+References: <1458584283-23816-1-git-send-email-mehul.jain2029@gmail.com>
+	<1458591170-28079-1-git-send-email-mehul.jain2029@gmail.com>
+	<vpqshzfuduv.fsf@anie.imag.fr>
+	<CA+DCAeTNv-2RkbGo+ciKP_bfCvThKjGAsJEr=xuBYBFgrTvGtg@mail.gmail.com>
+	<vpq7fgql7zh.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 25 19:59:10 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Paul Tan <pyokagan@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Mar 25 20:07:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajWww-0006xP-3a
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 19:59:10 +0100
+	id 1ajX4u-0002n9-1Y
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 20:07:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753839AbcCYS7C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 14:59:02 -0400
-Received: from a6-243.smtp-out.eu-west-1.amazonses.com ([54.240.6.243]:34455
-	"EHLO a6-243.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753793AbcCYS7B (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Mar 2016 14:59:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1458932338;
-	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=MEvxPToFbFlpRVED/YzL2HmDnhAhF8VfHWy2nCikqcI=;
-	b=MzYVNud5PTDqZjvCiSFk2/+Mqdwyz4amqrfD+mHTX2oc6M2fxoogITdGrPPZXJYJ
-	hCV9E2tBY1P5vbFQ1xdTScII34RWSPTI1ih4qQNiwLQ0EU0j+0L2zNXeGo0dmlPdD0X
-	BOO3ZscJied8geRIhEPe7SDz7JIMkOejZ9FMNLRM=
-In-Reply-To: <01020153a7e08100-cf66fc9f-7293-4d8c-98c6-f322721c741f-000000@eu-west-1.amazonses.com>
-X-SES-Outgoing: 2016.03.25-54.240.6.243
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+	id S1753853AbcCYTHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2016 15:07:17 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:35658 "EHLO
+	mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753254AbcCYTHQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 15:07:16 -0400
+Received: by mail-qk0-f173.google.com with SMTP id o6so37474260qkc.2
+        for <git@vger.kernel.org>; Fri, 25 Mar 2016 12:07:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=ZtddFV99DYOv8Z5avW/x5oksaiCJV/6IKZEDY8Lbpec=;
+        b=Yx0kPcezEIG/DDa/LBT63t3kN7gkbKDUJY/EascxNbvWQDwVOPc3FUD/XGCL38mybp
+         m0+ix7wr56dV8bLU9niwIah77+kFU4mGaEAeyKqVPE4+bgcBmbjHh+mjSoV3Cf2j/uLp
+         PSimesp+mumcCdghhI/8CDtG39x59/RDB8QUPLgh98+A6XZ6zBbW5J53Mvirt1nTjRj4
+         NBOLJ3wVcBL3kiyqduYpLvS2JKgVWY8hXSqf4Bm2jHWW2AS0qB2+3nAIrlmX5dH9IHQv
+         lsuUmAIly3ol5Wwf/8txpWy2JkMWUUx3+nVSzkX6tpjZ0dYVbFgqg93EDYTe80sEcX8v
+         /Y0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=ZtddFV99DYOv8Z5avW/x5oksaiCJV/6IKZEDY8Lbpec=;
+        b=PS6tzhfyu9jVvTt7QCS1bBFMvpYcY8Iuw88coZMXFrjOvbqV6dm5buWblshdcW+YD2
+         SWrtM8Ebj4Pwq8uR3UgzrU7R//YJIK0ndwQrNcQpm5ESl6HvvYfKxfYc957So20YLoAG
+         S+DMHPBwt4JFQ7OSJ5XEkhb7f/gd2NqJxY+CvCX/mSxZj4XHFYbZkNKZhfoepcT2HS5I
+         5jMrEsjnkHo+wZxzA7E+PHO1WrRucsUOMVafMzNgEx+FFds3KngqHEHrb2GqbTq51Oc2
+         Y7An4Uiygmfrn3PCcrD8e2C2tLrUVzAplOjSZdeayYXGFhML95ndOfFzV1FKojnfaxov
+         k7rw==
+X-Gm-Message-State: AD7BkJIT3Ag4klmfyXrETQg00OJcLDsxCdRQ3mLsRHWSoXR1rfIYJi1bf06U3myAMkujuV6/FbJzOSxU/je9jA==
+X-Received: by 10.55.215.208 with SMTP id t77mr19157325qkt.23.1458932835267;
+ Fri, 25 Mar 2016 12:07:15 -0700 (PDT)
+Received: by 10.55.188.7 with HTTP; Fri, 25 Mar 2016 12:07:15 -0700 (PDT)
+In-Reply-To: <vpq7fgql7zh.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289945>
 
-OPT_CMDMODE mechanism was introduced in the release of 1.8.5 to actively
-notice when multiple "operation mode" options that specify mutually
-incompatible operation modes are given.
+On Sat, Mar 26, 2016 at 12:07 AM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> I think you should also change one of the tests to use pull.resbase=true
+> so that this behavior is properly tested.
 
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
----
- Documentation/technical/api-parse-options.txt | 7 +++++++
- 1 file changed, 7 insertions(+)
+Sure. I will add this test in the re-roll.
 
-diff --git a/Documentation/technical/api-parse-options.txt b/Documentation/technical/api-parse-options.txt
-index 5f0757d..695bd4b 100644
---- a/Documentation/technical/api-parse-options.txt
-+++ b/Documentation/technical/api-parse-options.txt
-@@ -231,6 +231,13 @@ There are some macros to easily define options:
- 	pass the command-line option, which can be specified multiple times,
- 	to another command.
- 
-+`OPT_CMDMODE(short, long, &int_var, description, enum_val)`::
-+	Define an "operation mode" option, only one of which in the same
-+	group of "operating mode" options that share the same `int_var`
-+	can be given by the user. `enum_val` is set to `int_var` when the
-+	option is used, but an error is reported if other "operating mode"
-+	option has already set its value to the same `int_var`.
-+
- 
- The last element of the array must be `OPT_END()`.
- 
-
---
-https://github.com/git/git/pull/219
+Thanks,
+Mehul
