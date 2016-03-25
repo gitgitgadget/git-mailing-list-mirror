@@ -1,89 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/5] Expanding tabs in "git log" output
-Date: Fri, 25 Mar 2016 09:25:04 -0700
-Message-ID: <xmqqa8lm5xun.fsf@gitster.mtv.corp.google.com>
-References: <xmqq7fh0s5l7.fsf@gitster.mtv.corp.google.com>
-	<1458775426-2215-1-git-send-email-gitster@pobox.com>
-	<56F391A4.6090603@web.de>
-	<xmqqmvpn91o2.fsf@gitster.mtv.corp.google.com> <56F50608.10606@web.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v10 2/2] pull --rebase: add --[no-]autostash flag
+Date: Fri, 25 Mar 2016 12:37:27 -0400
+Message-ID: <CAPig+cTzV5FT=BBFW6kTUqPG8=ZWXf+78Y-HG=pb2x_8h8he1g@mail.gmail.com>
+References: <1458584283-23816-1-git-send-email-mehul.jain2029@gmail.com>
+	<1458591170-28079-1-git-send-email-mehul.jain2029@gmail.com>
+	<CAPig+cSdegoGNCMBMcHyEYiE+LUzixvdk-qu0Q-zbFvatX2=KA@mail.gmail.com>
+	<CAPig+cTH-3PqZFyP_R1FyTPKhRhbbLRDeYfv2TcVq=gq=ZpRcQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Fri Mar 25 17:25:18 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Paul Tan <pyokagan@gmail.com>
+To: Mehul Jain <mehul.jain2029@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 17:37:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajUY1-0001GR-Ar
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 17:25:17 +0100
+	id 1ajUjt-0007fT-7z
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 17:37:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753861AbcCYQZJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Mar 2016 12:25:09 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:60880 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753716AbcCYQZI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Mar 2016 12:25:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C24C34D48C;
-	Fri, 25 Mar 2016 12:25:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=FuFGZI0pN02O
-	zeoCRrnYNjXJvo4=; b=CykiC8AIdca6LQkTWpVnual2eiZo0uayexpXMDpL4ri0
-	L95uU2xlPnyGXCubxMDEwDSKh+wZoQuB0uGE0Cfy3ICBUTQKwa+7P9F6YOkhyNzR
-	Uoqu/n+jliPn8oc4pbY+8rBcbnzGQ9a+8fmT8I3y7izgNCLQ7DbdHOJOIULANaw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=gXh/zb
-	DDgwlliSOwN9hw0dViMRFlM0gyviOn4wNhEzCtpCjCHQXHAXyRZ0z0rMRA8z8O0F
-	dDnwS3bTKae5hDiEC0WR/HrFBd/Pakw2I9YwwUylw83YbrS0SbXml0Z8KgnCq8d9
-	QL8MICtNI4ycAWOx4n4AuPwViHZP4osCLbNYs=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BAA354D48B;
-	Fri, 25 Mar 2016 12:25:06 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EF8BC4D486;
-	Fri, 25 Mar 2016 12:25:05 -0400 (EDT)
-In-Reply-To: <56F50608.10606@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershausen?=
- =?utf-8?Q?=22's?= message of
-	"Fri, 25 Mar 2016 10:34:00 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 22614C46-F2A6-11E5-BD3E-E95C6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753751AbcCYQh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2016 12:37:29 -0400
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:36548 "EHLO
+	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753313AbcCYQh2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 12:37:28 -0400
+Received: by mail-vk0-f66.google.com with SMTP id z68so8296282vkg.3
+        for <git@vger.kernel.org>; Fri, 25 Mar 2016 09:37:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=podr0NrHhmWE3MkzboIk7xyuX1i2ld6Py11j0+VtPnI=;
+        b=a5ZeAz4C8JB1UrkBTgHLC03c0yTWH9c5o/Ve/UorySCY4PWTiI/VoLyflZS31+E2nz
+         2GKtmA8gDqQtkj1tzurNRcdPELw7I/vAoNR/Lqjntt2W+Z6OxsrgXehJus5IMYaxwwVG
+         imV0CpV4iPs62+stjBZVhLwISSfVsBd9Cj7cV25KhLSlbNmNJ/MWKJ+5/3REub3ukPVo
+         xiAleuLaJ2GgmcMqq8PTO4aofzoqLPqGJJDDQ2Kpz2UAMoJVeejSfSRjsalW8gml76zU
+         93LpkD+B44d8wAytujYn5VNXb6j4aaLkaj4fcL9xPQOl1PoOB/6fE0hnBEOCVrWDVtFe
+         +BWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=podr0NrHhmWE3MkzboIk7xyuX1i2ld6Py11j0+VtPnI=;
+        b=bZP2hyVB0YX+j2SVHcZ/q0VilOZewOoAuOo5Ed1oRN6BJTN4bdO4Uxll/YMBSJg+pe
+         gjehAODimg9VHBdZinpOLXm2PxYVtyEsTCCNfDz/EUgjEiuxoE165vd0LvQNX3xl5Q0Q
+         jOJX6MUHR3ImWSwREUHeW8XP9fiBtp+fMQUvNWWqMIx22VKugT8Cf7ttdx8Gu4G9O8iK
+         tBGdKtueYDksVdLHV5gBqdbC5+W+lJwHZG5W5uhKzo++dOf8WEnUK1Q7HWGIAPk04qr8
+         NGlK7JeKHwXfVcfpxQaU8KVfuuWRMKpHMOot0l96bRx8UOcj3ZbfOyUHDq3+8sxZeP/X
+         20EA==
+X-Gm-Message-State: AD7BkJJ933r6euhQUcp0dtO+PougTPGrpa1LM6mH30F3iYXE3YTYLZhlK1TlPrECKot2dzA9AC/W6U6mOsFeLg==
+X-Received: by 10.176.2.143 with SMTP id 15mr7909436uah.113.1458923847718;
+ Fri, 25 Mar 2016 09:37:27 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Fri, 25 Mar 2016 09:37:27 -0700 (PDT)
+In-Reply-To: <CAPig+cTH-3PqZFyP_R1FyTPKhRhbbLRDeYfv2TcVq=gq=ZpRcQ@mail.gmail.com>
+X-Google-Sender-Auth: AInrMGftHzyJ9ej2Y10YnEFDX5s
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289899>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
-
-> On 2016-03-24 19.22, Junio C Hamano wrote:
->> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->>=20
->>> Would it make sense to have
->>> git log --tab-size=3D8
->>> (or similar)
->>>
->>> and add a config variable like
->>> git config ui.logtabsize
->>> which is 0 by default to get the old handling and 8 for the new one=
- ?
->>=20
->> That may be a good approach (I agree with you that --tab-size is not
->> the best name).  Want to try it as a replacement?
+On Fri, Mar 25, 2016 at 4:44 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Fri, Mar 25, 2016 at 4:31 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>     for i in --autostash --no-autostash
+>>     do
+>>         test_expect_success "pull $i (without --rebase) is illegal" "
+>>            test_must_fail git pull $i . copy 2>actual &&
+>>            test_i18ngrep 'only valid with --rebase' actual
+>>         "
+>>     done
+>>
+>> Take special note of how use of double (") and single (') quotes
+>> differ in this case from other tests since $i needs to be interpolated
+>> into the test body.
 >
-> May be log.tabwidth ?
+> That's not accurate. Since $i will be visible when the test body is
+> actually evaluated, it will work correctly even with the body
+> single-quoted as usual (like all other tests), so swapping the quotes
+> around like this is unnecessary (and Junio would prefer[1] they not be
+> swapped).
 
-The reason why I thought "--tab-size=3D4" is not the best name is
-because it only states that the user prefers a non-standard tab
-stops that are every 4 display spaces, and does not say what we
-with do that information, i.e. it does not hint "We expand tabs
-to spaces according to this setting" in its name.
-
-I think log.tabwidth shares the same characteristics.
+Junio pointed out to me privately that I forgot to mention explicitly
+that you would need to use double quotes for the test title to ensure
+that $i is interpolated, but the test body can continue using single
+quotes, as explained above.
