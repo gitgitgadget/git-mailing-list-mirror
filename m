@@ -1,97 +1,96 @@
-From: Mehul Jain <mehul.jain2029@gmail.com>
-Subject: Re: [PATCH v10 2/2] pull --rebase: add --[no-]autostash flag
-Date: Fri, 25 Mar 2016 23:40:04 +0530
-Message-ID: <CA+DCAeTNv-2RkbGo+ciKP_bfCvThKjGAsJEr=xuBYBFgrTvGtg@mail.gmail.com>
-References: <1458584283-23816-1-git-send-email-mehul.jain2029@gmail.com>
-	<1458591170-28079-1-git-send-email-mehul.jain2029@gmail.com>
-	<vpqshzfuduv.fsf@anie.imag.fr>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Re: How to use @{-1} with push?
+Date: Fri, 25 Mar 2016 13:11:36 -0500
+Message-ID: <CAHd499BCciG5Udd_sj550jPKg_ahZmWOi-zUOU-cr_wYmri=Rg@mail.gmail.com>
+References: <CAHd499AM-OzqiB1hOF=0BTesFxrxNj=+jr1wH6vpQXfgoXd8Ug@mail.gmail.com>
+	<xmqq8u164fjv.fsf@gitster.mtv.corp.google.com>
+	<CAHd499B3Z58hj--Pa0uM36A2H3Xpmayrb+RiLeOBkmnu70yW1A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Paul Tan <pyokagan@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Mar 25 19:10:15 2016
+Cc: Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 19:11:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajWBa-0006QU-It
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 19:10:14 +0100
+	id 1ajWCz-0007Eq-UI
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 19:11:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752859AbcCYSKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 14:10:08 -0400
-Received: from mail-qg0-f49.google.com ([209.85.192.49]:36257 "EHLO
-	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751521AbcCYSKG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 14:10:06 -0400
-Received: by mail-qg0-f49.google.com with SMTP id u110so65972069qge.3
-        for <git@vger.kernel.org>; Fri, 25 Mar 2016 11:10:05 -0700 (PDT)
+	id S1753298AbcCYSLi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2016 14:11:38 -0400
+Received: from mail-vk0-f46.google.com ([209.85.213.46]:36334 "EHLO
+	mail-vk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752190AbcCYSLh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 14:11:37 -0400
+Received: by mail-vk0-f46.google.com with SMTP id z68so98520624vkg.3
+        for <git@vger.kernel.org>; Fri, 25 Mar 2016 11:11:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=DN04HkBCJMjwBtgBhl4s5owN6JmxkEKJ3HWGPDW/u7w=;
-        b=KUso1FubljRgijw7ZVqTaObz85ALDWzddUSLnH4PYpoI79r5te6bI3OcffKOT5S0OR
-         V026/IqYIJpl6w9zlwPPvh8Jjx8v6QZc1NiEQ2FS9P7kj1tC2SsVgd70s8SrLTV2dkFp
-         5UQ6VyKRCtkNd/d8AoU6+GQh1aHPQreEHjyiTVSJf6n50OvD/EOyZeVZ7Qz/F/tPSf5F
-         Ype59SXvL0QkJt96Sx2msL9a6ZKtcF1zxSPlYOO7NgGEE+R/tqPRNC9KL4zeSuRzgT6i
-         21PhrcxT2t0LvsXw7ecfhqNi77Iu1boa0OSX5en26f5u2qcFPJQNWKZyO4pFC0abB3WI
-         W0SQ==
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=fJMkMBZOhEdPnzVhVQU24BVfMuKNi0ruXjmvbzeJo0Q=;
+        b=BdlFJ7M1iPZEvN9/YjRsHekE9PEUwhS0rK6aJH5d1IARDI2TfgPdltuc8z5eVb/dJT
+         Wqud8wd5BSf5PSOM/KroJ3i8Yds6knspAXQrYaW/prRAyUKb34UDmouhfCHdaGuC7r2M
+         CA7pzAvOkP4MuqOSRpIz2eCQFWwuXczuPME69Traa7cBTkIeUPUWVk8wBLEkqdoE5DZi
+         cCc/7xftyKXjMsKMJZHTWOnhj0rWskibLFYhG61JTZxWHLa/AJVLE6PA5NrqgU8Eh94R
+         7v2y6aKRHXeiVMPOHWx7v7IANb2do5BIu90K85UPGwnUZ2evH4zaXg3+RKpuDXE0aGIa
+         q8Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=DN04HkBCJMjwBtgBhl4s5owN6JmxkEKJ3HWGPDW/u7w=;
-        b=lQM8kF7AqriANox2B0O6BKzf4UOFbCGjqVC0J+pMD/QlDoKn7O/Bpzoe8GijVVtZzY
-         /t1hLcpSTKu8+GSZIMdEnXrV15bUwP+deG47TC45UN3FQjJ6b4ZhxfIrCkytsJcmVUmD
-         f/C21DsMBB2paepjKwW6EVMn5PNjE1lmJu8Kj2AVeW8Uty41rQs3JkxoqwCBtMMn6pZU
-         sPafvbsbVttYqMGQGkYC85ZJj8GtHnuHBu6xNAcLUy88Mv4Uv2nUO4Rgd/D0S4kkKKXR
-         2wHOHR0L5E6koJBpwSXUHjV8g8HfmdJwn/qpog1+IbIQRYc8tzGXYpLkspIPlzlDKTvq
-         BWjg==
-X-Gm-Message-State: AD7BkJIwothYWRRupFeGMbzCD7exjDzWXBqDhZb6mm1nEpfnkj41GUnPM/HBuQa1WWVHnBcLxhSIxS0RbT0iwA==
-X-Received: by 10.140.248.197 with SMTP id t188mr19998200qhc.50.1458929404935;
- Fri, 25 Mar 2016 11:10:04 -0700 (PDT)
-Received: by 10.55.188.7 with HTTP; Fri, 25 Mar 2016 11:10:04 -0700 (PDT)
-In-Reply-To: <vpqshzfuduv.fsf@anie.imag.fr>
+        bh=fJMkMBZOhEdPnzVhVQU24BVfMuKNi0ruXjmvbzeJo0Q=;
+        b=WuxtefO5v4MUudkgspRhy3tNH4YUaTWEhDw/6fg2qIyRHu3iib9YIqd1xpIqeVkTij
+         bjLbjiKZcb72ueH5RRRNrr3kKU2RLM4/zHuaBrpfph+kraIdzA7TL8pY5dIOLwPJW54F
+         zYdvS1r0Ma2+ikID1J/Lhf8eE61j9YzvaKsGfdL4JlONQWq/6g68NV+P7lNhdKMnxYS8
+         RF+Aw9Ha1bcmbEe9ejC9hGJMnfvxk+tTW5K4f7wB3HXLe35LpLvjIRyMxheqXR1B2FlV
+         Oba+aVEXjppXXpw1tp7n3vETMt5BpYinlHpL+UDvO8Zbz3dPthKnz2VPjKhMj3rTXOi4
+         lMRA==
+X-Gm-Message-State: AD7BkJJ+Aq6ICtsIUX/7sHDzlRX92ksfHX36WFn99YetlfPgdOVB054j+n+x1t8tY9AlY1i+0ojq8mpYSEvf0w==
+X-Received: by 10.31.160.150 with SMTP id j144mr8258655vke.59.1458929496641;
+ Fri, 25 Mar 2016 11:11:36 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.176.66.68 with HTTP; Fri, 25 Mar 2016 11:11:36 -0700 (PDT)
+In-Reply-To: <CAHd499B3Z58hj--Pa0uM36A2H3Xpmayrb+RiLeOBkmnu70yW1A@mail.gmail.com>
+X-Google-Sender-Auth: 8WLvSlmhMb85KYS2uKW-zTFSROM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289926>
 
-On Fri, Mar 25, 2016 at 2:35 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Mehul Jain <mehul.jain2029@gmail.com> writes:
+On Fri, Mar 25, 2016 at 1:02 PM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
+> On Fri, Mar 25, 2016 at 12:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> You can ask rev-parse to give you --symbolic-full-name, error out if
+>> it is empty (i.e. detached HEAD), and otherwise use the result, no?
+>>
+>>     $ git checkout next
+>>     $ git checkout master
+>>     $ git rev-parse --symbolic-full-name @{-1}
+>>     refs/heads/master
+>>     $ git checkout HEAD^0
+>>     $ git checkout master
+>>     $ git rev-parse --symbolic-full-name @{-1}
+>>     $ exit
+>>
+>> And
+>>
+>>     $ git push origin :refs/heads/master
+>>
+>> would be the fully-spelled out way to remove that branch.
 >
->> +--autostash::
->> +--no-autostash::
->> +     Before starting rebase, stash local modifications away (see
->> +     linkgit:git-stash[1]) if needed, and apply the stash when
->> +     done. `--no-autostash` is useful to override the `rebase.autoStash`
->> +     configuration variable (see linkgit:git-config[1]).
->> ++
->> +This option is only valid when "--rebase" is used.
->
-> This does not have to be added to this series (I don't want to break
-> everything at v10 ...), but I think it would be nice to allow "git pull
-> --autostash" even without --rebase if pull.rebase=true.
+> Thanks Junio, I figured there was a command to do that. I tried to do
+> this using '-' shorthand, but that didn't work. I guess because that's
+> not really a revision, but a special function of git checkout only.
 
-This is a nice observation. As current patch allow "git pull --autostash"
-to be run without --rebase if pull.rebase=true, hence correct
-documentation should be something like this
+So the push works with the fully-qualified ref, but not git branch:
 
-    This option is only valid when "--rebase" is used or pull.rebase=true.
+$ git rev-parse --symbolic-full-name foo
+refs/heads/foo
 
-But OTOH users who knows about pull.rebase understands that
-pull.rebase=true means "git pull --rebase ..." will be executed whenever
-"git pull ..." is called, thus for those users it might be easy to deduce that
-need of "--rebase" for validity of "--autostash" is not necessary if
-pull.rebase=true.
+$ git branch -d refs/heads/foo
+error: branch 'refs/heads/foo' not found.
 
-I will correct it in the re-roll.
-
-Thanks,
-Mehul
+Any reason for this? I'm using git 2.7.4 on windows
