@@ -1,89 +1,77 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2] worktree: add: introduce --checkout option
-Date: Fri, 25 Mar 2016 08:49:29 +0700
-Message-ID: <CACsJy8Bs0WFJxGnVOBUnzipZYty-K4D9NkAQdODYqPUw2VAAiw@mail.gmail.com>
-References: <01020153a40588f3-5401ea3e-ece8-435c-a046-a5c1c1f92cd6-000000@eu-west-1.amazonses.com>
- <01020153a73bbb70-11a8482f-1a90-49e4-a56c-b311e12a85a2-000000@eu-west-1.amazonses.com>
- <CACsJy8DxcqYKrRi7_ERS3xLWfbbq3bNx-u2NWiXYoNw4yD+0dg@mail.gmail.com>
- <CABEEbiBM-CTJdmOukLjfrmnmsSTwNzx+ELfO=BtgApT__QZu-g@mail.gmail.com>
- <CAPig+cTtRgMz_6oEXmBN2MHG65arq51JsoBL9QeWBFNLgFnCmw@mail.gmail.com> <CAPig+cS2qMZyUkf9Nekp+QaVkjc1oHXb4QF3wFDnBdF3WMU3iQ@mail.gmail.com>
+From: =?UTF-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
+Subject: [GSoC] Proposal
+Date: Fri, 25 Mar 2016 11:45:24 +0800
+Message-ID: <CAKqreuwbGC1=42V2ZnTj53z76sgGcqfzjjrD7SP2AeuHJo9etQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Zhang Lei <zhanglei002@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 02:50:07 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 25 04:45:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajGt4-0004QG-8M
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 02:50:06 +0100
+	id 1ajIgl-0001QH-Jc
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 04:45:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751403AbcCYBuC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Mar 2016 21:50:02 -0400
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:35415 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751247AbcCYBuA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Mar 2016 21:50:00 -0400
-Received: by mail-lb0-f182.google.com with SMTP id bc4so41420340lbc.2
-        for <git@vger.kernel.org>; Thu, 24 Mar 2016 18:49:59 -0700 (PDT)
+	id S1751337AbcCYDpZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Mar 2016 23:45:25 -0400
+Received: from mail-ob0-f169.google.com ([209.85.214.169]:36552 "EHLO
+	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750797AbcCYDpZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Mar 2016 23:45:25 -0400
+Received: by mail-ob0-f169.google.com with SMTP id m7so51583263obh.3
+        for <git@vger.kernel.org>; Thu, 24 Mar 2016 20:45:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=dQFX3F1dVNGqumN2jVEepOmZ53GoNKEbBcBQiXDxwIc=;
-        b=e6A7KK06olkNdAcwsxEh9A/R4NlPN7IEly6XoqCjrHLTlpa3W6CiGda9Dlz4eZjArV
-         gEhMvoT5aaHuG6bYjzpEOnzapxeL5oilSo2SZNFaRUQxXFM3yIsf2oLp2/PCLrAQGW0P
-         bZNUQCYJa4rkYw3cYq+rMbtQoYrjniVXRbfaqb9DyJTuY/iit8vUcokIUPylRmwzgd5z
-         SuENxAh2j0Vl0osilKYpNmk19mJfAry7wCSD5/iNxmCSTZpr8PbcQVlTByXhyjSyYmTt
-         TEzaTKP6P9lZIOycAGLWP6MA1ycgOSY15EzftcgrivmwLGkXsSIXTeYthy41c7YL3z9Y
-         AJqw==
+        h=mime-version:date:message-id:subject:from:to
+         :content-transfer-encoding;
+        bh=/TcvLpjLWQ2iF+TA+bCDN0qeHNieLddWAnHz1+kexPA=;
+        b=EBbnxqS3pKAcPfJMsKAemQJ0zEM+6wyRetMTEEy4dUwlp3BwphIDrIaV5pemsFNtQ7
+         x450OKbprA2Yrp0+Onzbw+7uxq1TgDwtKyojBYPDLdWjGf0MAo020hnvoMSs0czFU6mD
+         cWsNP8wWquKLF9NkJK4ZfxJNgPFMV0SAjGGX3Oa41E8dzyECKu9AI1Z3hqRMlXlDHpKi
+         VoKl6MLEQkIi4r+Im/D5gQMKhEqMPSz3XP0lfrnzzcG+DxvL+SOWTUkrbJHBjshu3EGk
+         iovomufI7bgbsPodVZrFDJrDiFRjtsp20Yhd6lnGN874LfnPP0+GPRgDtJfLuG0kyvCz
+         AlJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=dQFX3F1dVNGqumN2jVEepOmZ53GoNKEbBcBQiXDxwIc=;
-        b=JUf1Nf5iVVetHrJ4maVsmLW9xrj/iOKX5Q3iKDi5opnww/Oy7UCl49vpaK0gBOOpd4
-         uLJpuvtVt+yARpTDGIeBlx2boVpOwrEWX9FwsllYF+1+bQ9e1XFjpbYqdJOcRom87PmD
-         FmdGNTN0ds/xAUYJHyj0I49Ux2Z8o5rzIBlyGZE6zz2SrmSWrrld6cV29l7pCyssqRZY
-         v+kwKuBueeIO0i73Z0M9iRY14/gWTLpRwUVbg6b2wh6THJK9Y77dTkeZNebheEF1xGg8
-         sGwvLnfQD+GzCz+NHk/baB4B9BNwzG0o6DRQxPmnYVwhf1FfCkcOk4KoCQt9fZx4TiiX
-         u+aQ==
-X-Gm-Message-State: AD7BkJKhFH35IbsFfph5H1un9Y0O/e9HyRXRHI6g2JoHQrq1BgWThbYiJE44rLu70W2Mz+2Tj5/yPDfXJ2JJqA==
-X-Received: by 10.112.209.99 with SMTP id ml3mr4522853lbc.26.1458870598783;
- Thu, 24 Mar 2016 18:49:58 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Thu, 24 Mar 2016 18:49:29 -0700 (PDT)
-In-Reply-To: <CAPig+cS2qMZyUkf9Nekp+QaVkjc1oHXb4QF3wFDnBdF3WMU3iQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-transfer-encoding;
+        bh=/TcvLpjLWQ2iF+TA+bCDN0qeHNieLddWAnHz1+kexPA=;
+        b=dIzzZ0qtqlSUTUStEPhY3ieagkFeFbCB49sVWDLH7JfvY1U3E3E7f6USWrO9JoL4uS
+         AnIdaex7ZBRV8vaA2NVZmYPMs0Fefm6zD4vyI42XbTxO4mKoYuDKGB71M2CbIZfFc/b3
+         odlJxZYfAv2bdpo53cHgeRbkmIbL83sSa/WrgsfRFj2jc1hY8d7TS/pnVv5sA2Fa3Hyx
+         cnkJ7rkSaV/zSWNup2Aq3vxVqdMCj/WvSo+fIxUWrirkAht2WDC5OIvnTlc2hIvewPec
+         /zma4eXuShDPGAjTpYMVDuMLu9q7NdZRklxXabNW33M8umH3rfCm4R5LwcYvycIlrGXS
+         DogA==
+X-Gm-Message-State: AD7BkJIFAAElEKJ20AxXvsKFqrTqY6KvAe+8GYLuX2aOZuSXb9FutBOV6oMo0pnMGO2+clZceTwIERVb9RIXbw==
+X-Received: by 10.60.150.163 with SMTP id uj3mr5971712oeb.67.1458877524399;
+ Thu, 24 Mar 2016 20:45:24 -0700 (PDT)
+Received: by 10.157.27.250 with HTTP; Thu, 24 Mar 2016 20:45:24 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289844>
 
-On Fri, Mar 25, 2016 at 8:29 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Thu, Mar 24, 2016 at 9:22 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Thu, Mar 24, 2016 at 5:52 AM, Zhang Lei <zhanglei002@gmail.com> wrote:
->>> 2016-03-24 17:16 GMT+08:00 Duy Nguyen <pclouds@gmail.com>:
->>>> I think we can follow git-clone and use '-n' for this. [...]
->>>
->>> My PATCH v1 did follow git-clone -n, however, Junio C Hamano and Eric Sunshine
->>> suggested that we should avoid doing so , as --no-no-checkout could be
->>> confusing.
->>
->> My impression was that Duy was suggesting only that -n be recognized
->> as shorthand for --no-checkout, however, git-worktree already
->> recognizes -n as shorthand for --dry-run (as a consequence of using
->> OPT__DRY_RUN), so -n as shorthand for --no-checkout is a no-go.
->
-> Ignore this. It's only 'prune' which recognizes -n, so it's possible
-> that 'add' could recognize it for an alternate meaning (though the
-> documentation would want to make this very clear).
+Hi,
 
-To make it clear, I don't feel strongly about '-n'. Yes muscle memory
-may count. But if '-n' may become a new confusion source in
-git-worktree then perhaps we should avoid it and go with
---[no-]checkout
--- 
-Duy
+I'm proposing to take part in GSoC as a developer of git.
+
+Here is my [Draft](https://docs.google.com/document/d/1zqOVb_cnYcaix48e=
+p1KNPeLpRHvNKA26kNXc78yjhMg/edit?usp=3Dsharing).
+
+I'm planning to refactor some part of git. Following is what I'm intere=
+sted in:
+
+- port parts of =E2=80=9Cgit rebase=E2=80=9D to a C helper
+- =E2=80=9Cgit status=E2=80=9D during non-interactive rebase
+- etc interesting during the development
+
+If time allow, I'd like to also improve git-bisect, for example:
+
+- convert =E2=80=9Cgit-bisect.sh=E2=80=9D to a builtin
+- etc
+
+Sorry for toooo late. I was so busy these days. sorry again.
