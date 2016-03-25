@@ -1,89 +1,88 @@
-From: work <motroniii@gmail.com>
-Subject: Re: [PATCH 1/2] Modified flag field type in rev_list_info struct in
- bisect.h. There is no need for flag field to be signed, as it is not supposed
- to be used as decimal.
-Date: Fri, 25 Mar 2016 15:53:36 +0300
-Message-ID: <56F534D0.7050104@gmail.com>
-References: <1458848469-12663-1-git-send-email-motroniii@gmail.com>
- <1458848469-12663-2-git-send-email-motroniii@gmail.com>
- <CAGZ79kZmzo+f9YF1K1oC2GfOrzdaojmrca7bUm3cBRoDreeA-g@mail.gmail.com>
- <56F44788.2050509@gmail.com>
- <CAPig+cQcviTXYAGBTATgYXoaPtvxxeOUtCGYkLyW5oTFvLjEUA@mail.gmail.com>
- <CAGZ79kaF42yCFWdvqqDSAZbWmUo0UVJGbXCci1LF=ne+cixZ0A@mail.gmail.com>
- <xmqqr3ez5bcf.fsf@gitster.mtv.corp.google.com>
+From: Mike Rappazzo <rappazzo@gmail.com>
+Subject: Re: [PATCH v2] worktree: add: introduce --checkout option
+Date: Fri, 25 Mar 2016 09:02:11 -0400
+Message-ID: <CANoM8SXF2=+tObJaSAziGa_9W2CcwLMTW_mWoueq7Chm-yRqqw@mail.gmail.com>
+References: <01020153a40588f3-5401ea3e-ece8-435c-a046-a5c1c1f92cd6-000000@eu-west-1.amazonses.com>
+ <01020153a73bbb70-11a8482f-1a90-49e4-a56c-b311e12a85a2-000000@eu-west-1.amazonses.com>
+ <CACsJy8DxcqYKrRi7_ERS3xLWfbbq3bNx-u2NWiXYoNw4yD+0dg@mail.gmail.com>
+ <CABEEbiBM-CTJdmOukLjfrmnmsSTwNzx+ELfO=BtgApT__QZu-g@mail.gmail.com>
+ <CAPig+cTtRgMz_6oEXmBN2MHG65arq51JsoBL9QeWBFNLgFnCmw@mail.gmail.com>
+ <CAPig+cS2qMZyUkf9Nekp+QaVkjc1oHXb4QF3wFDnBdF3WMU3iQ@mail.gmail.com>
+ <CACsJy8Bs0WFJxGnVOBUnzipZYty-K4D9NkAQdODYqPUw2VAAiw@mail.gmail.com>
+ <CABEEbiDRPsL6XJrnyFv43u26hXNbBVmMhbJeZmp+zjS+-jNZ=w@mail.gmail.com> <CACsJy8AyMUn_AAF-DNGvjS8D+qdFLNuVBYvAjide6wA-ZnHJ5w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-	sunshine@sunshineco.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 13:53:47 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Zhang Lei <zhanglei002@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 14:02:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajRFK-0003Gp-Hs
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 13:53:46 +0100
+	id 1ajRNt-0000bR-LN
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 14:02:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752374AbcCYMxl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 08:53:41 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:33328 "EHLO
-	mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751696AbcCYMxk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 08:53:40 -0400
-Received: by mail-lf0-f67.google.com with SMTP id w7so5914308lfd.0
-        for <git@vger.kernel.org>; Fri, 25 Mar 2016 05:53:40 -0700 (PDT)
+	id S1752364AbcCYNCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2016 09:02:32 -0400
+Received: from mail-oi0-f66.google.com ([209.85.218.66]:36143 "EHLO
+	mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751696AbcCYNCb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 09:02:31 -0400
+Received: by mail-oi0-f66.google.com with SMTP id k128so112536oig.3
+        for <git@vger.kernel.org>; Fri, 25 Mar 2016 06:02:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:from:cc:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=gSO1Vmjrz09SrqFfuu2jfa+fWgICr7hqvFlDU2iGI8Q=;
-        b=uj7ChxuX24cMyb7q/FiC6aF9d9Ac3rBBDm3J/quz5/AaKhBP1nRfTfyVfyD2rPAy4s
-         tC3XZ+Cf9Jf6XxXm2H9O8/5jaAuojdCuvr9ut5Tk6HFKDprjEBsj05HafMvvjiPUV98S
-         1H0skPGOniB26dxVLHFm+8W9dnywTFX7nhu3rd504YmEWp8tQKjdiUeVqSdO5S66bCJy
-         Q4OxfpaokLrIIH8mAYWbFOBdgGH85h+MOJhB0RAmD6lvCnK1g75zsr+AgEv2WIlypfqr
-         So0ecYMcJJKY9nrStYIL/ecnE4KR58bUNyn4jVSr+bPiH8ZLXN98CokGyw6ODnm+MoU3
-         2PEw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ZCcb9BNslDL/UCbxee2nJHV5aBxCLgvyyEQzIAudHec=;
+        b=fE6M08F/lRcqVdH97bo00F/xZk8aDjdfLCbZrN8pNiAoyceJkzMjIcvNKL6WhzXVeK
+         8strRJX+m8yD0Zy2GBTjwV3KuZwImMFjAVyLYq6DE9mvwzT0I01GIFrzrYEL0QRjwKgK
+         aiqlqf7bJEhSW5/QojpLt6n1JiOwql8ZKhsOEEZP7RNSc3MkwaG2z5sfx+1KmzmTqB7T
+         i6XDHGPICNFFOKOdfsiz5FLdjDur6+W5iLoj401892YBZenhUqxxY5XHgSBcYP9BMY4O
+         w+UenJ6LnTXoFKR6DbAtWNzs9Qyx/cok5iSCwtmWZJaT17nBHPmTtT4Rk/2yUEf7ToiK
+         /8UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:from:cc:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=gSO1Vmjrz09SrqFfuu2jfa+fWgICr7hqvFlDU2iGI8Q=;
-        b=A7pAFCARRd0DK5kG5OOwf7XXQTm61PBzPYqZGQG63U8lLHJeotlskkUlv3q/hGHJzn
-         MdfcMD0qyF0qTZ3MJYxCyfRUGdcouoHDAR6H1zgZboEXw05U5V9kkd0LA3U6jUNqD4Yp
-         B6b+UqdajAf4Wxh6xsn0vJAOrUZrwKpLIaxV8XET/4ACV+iY1K6FJdSoDRf5kjDCG2Sf
-         UOMxtM/+hOV1USinIMCUmVUjVsqmebDvPppU1qHAk8D3Df0XlXiyQD1tY+PB1rS3kWjV
-         jjTWUP2OdvrMdBEONjnoyJRbdU7e417fx83alqcCosPs9aJYZT6qB+fyRXGMxiPJ6ds7
-         AhxQ==
-X-Gm-Message-State: AD7BkJJ2tkesXVcK52ENv7t+Ql0ZQe/sByBxgx/zIpv5kxTsIDtINETBbd14p+qfSmLaSg==
-X-Received: by 10.25.90.3 with SMTP id o3mr5557624lfb.147.1458910419282;
-        Fri, 25 Mar 2016 05:53:39 -0700 (PDT)
-Received: from [172.16.163.135] ([109.188.125.28])
-        by smtp.gmail.com with ESMTPSA id wj2sm1857154lbb.5.2016.03.25.05.53.37
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 25 Mar 2016 05:53:38 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
-In-Reply-To: <xmqqr3ez5bcf.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ZCcb9BNslDL/UCbxee2nJHV5aBxCLgvyyEQzIAudHec=;
+        b=ABFvZX+mkLgil7UEmAysO7CJoktR3p5SXGsodx9rXod/44q79NFNl68gw+UydS5INK
+         7B3kkRplwqzEE5vs968PSsBmsPHu4JzpLhA4OuOqc6WFFgul0qMrhDauxIVvmvaPX3ca
+         R8YRKBc9rc4ZjLY/WeJLFD4xcONbtvCLm4M0xwKYxcODEU0Y28isgn1nIgOUODTTryvf
+         ER24s5IhzZXA2bZc6hR67QB2n6Eh3o3UztWNJSYmUKgVC+cQvKPAvU1PKfJK9/QD245i
+         PidTbz9QCOApuZ6Tw8cHMjZDLCDTGySbkvZFUzHXS4CaYpAvXBI+O5dMLITPadlEDf8I
+         rOcw==
+X-Gm-Message-State: AD7BkJJ1iJRwr0lpx/wfYe0ZWJHxpUPnw+Vn6PzWjUN47wzGvrKoS/hb6Q8nL0htMmeKlRIXQEfaEFDNiH8fTA==
+X-Received: by 10.202.206.205 with SMTP id e196mr6481888oig.88.1458910950753;
+ Fri, 25 Mar 2016 06:02:30 -0700 (PDT)
+Received: by 10.76.87.163 with HTTP; Fri, 25 Mar 2016 06:02:11 -0700 (PDT)
+In-Reply-To: <CACsJy8AyMUn_AAF-DNGvjS8D+qdFLNuVBYvAjide6wA-ZnHJ5w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289886>
 
-Yep. Thanks for your remarks. I have made a bit more research about 
-using old rev_list_info struct (with signed int flag) and realized, that 
-it doesn't appear in expressions, where using signed integer will differ 
-from unsigned one.
-I'll take using 'unsigned' instead of 'unsigned int' in account, so if 
-needed, I can remake the patch in order to get it accepted.
+On Fri, Mar 25, 2016 at 7:41 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Fri, Mar 25, 2016 at 6:31 PM, Zhang Lei <zhanglei002@gmail.com> wrote:
+>> By the way, Duy, another unrelated question: why worktree name under
+>> .git/worktrees is being named
+>> after the working tree path basename? I think branch name is more
+>> reasonable since we don't allow checking out
+>> the same branch twice.
+>
+> Because branch name is not always available (e.g. detached HEAD) and
+> checkout branch can be switched later on. And normally you'll get
+> branch name there anyway with "git worktree add something" because the
+> branch "something" is automatically created. I've been wondering if
+> it's worth supporting "git worktree -b abc ./" where we create
+> worktree "./abc" based on branch name too.
 
-On 03/25/2016 09:18 AM, Junio C Hamano wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> Maybe my exposure to the code was accidentally in a way such that
->> I ever only saw the version without int.
-> The older part of the code tends to spell flag words with "unsigned"
-> without "int", which is primarily historical fault of mine.
->
+You can switch to any other branch in a worktree.  Consider that you
+could switch branches in
+worktrees such that you could eventually end up having the branches
+swapped from original
+worktree setup.
