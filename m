@@ -1,171 +1,92 @@
-From: Kazuki Yamaguchi <k@rhe.jp>
-Subject: [PATCH v2 4/5] branch -m: update all per-worktree HEADs
-Date: Sat, 26 Mar 2016 03:28:22 +0900
-Message-ID: <30620c02662c2eac34e50027326f190940b51fb8.1458927521.git.k@rhe.jp>
-References: <cover.1458927521.git.k@rhe.jp>
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Duy Nguyen <pclouds@gmail.com>, Kazuki Yamaguchi <k@rhe.jp>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 25 19:29:31 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] submodule--helper list: lose the extra prefix option
+Date: Fri, 25 Mar 2016 11:32:46 -0700
+Message-ID: <xmqqshze2ysx.fsf@gitster.mtv.corp.google.com>
+References: <1458862468-12460-1-git-send-email-sbeller@google.com>
+	<1458862468-12460-4-git-send-email-sbeller@google.com>
+	<xmqqmvpn5awo.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kZ684W46df9zPQATr3zWKt+e1BhGY6DZ84psfXWH4tGNw@mail.gmail.com>
+	<xmqqlh564hm3.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kZ=de7jh7b2OnTuEoTUSJKhoNkjb+Mw41JP7w9SVWH3iA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 19:32:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajWUE-0008G9-0U
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 19:29:30 +0100
+	id 1ajWXX-0001nm-3b
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 19:32:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753643AbcCYS3W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 14:29:22 -0400
-Received: from 116.58.164.79.static.zoot.jp ([116.58.164.79]:51604 "EHLO
-	walnut.rhe.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752596AbcCYS3V (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 14:29:21 -0400
-Received: from chikuwa.rhe.jp (unknown [10.0.1.1])
-	by walnut.rhe.jp (Postfix) with ESMTPSA id ACBF35AFFF;
-	Fri, 25 Mar 2016 18:29:18 +0000 (UTC)
-X-Mailer: git-send-email 2.8.0.rc4.21.g05df949
-In-Reply-To: <cover.1458927521.git.k@rhe.jp>
-In-Reply-To: <cover.1458927521.git.k@rhe.jp>
-References: <1458553816-29091-1-git-send-email-k@rhe.jp> <cover.1458927521.git.k@rhe.jp>
+	id S1753855AbcCYScu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2016 14:32:50 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:58172 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753207AbcCYScu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 14:32:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AD5C04F84E;
+	Fri, 25 Mar 2016 14:32:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zVvM0REJXVQ3d6Lpo9+7qkUm05I=; b=h1KkA1
+	/88W/KJY43aoh4EFMuQqNmMgSWb/ATa54RtyPdqWFLPNoNKHXq2UnNW/DNsqYVxD
+	e8SbxP7s1sCksEm5jxdFd3iGs7wY97Z8Qi+zMXD0ptgqdb28qoO8kHm+1VHLhnAE
+	kkYgNAqYrahOW+6HMoI5o7fsVI8LpYKH/UJEA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gEluovTeE9uV3fmrSy+pDxcx984TbQpC
+	PKqQI/Xnku8UHodnQGFsmFdeYMg4diIyvzh6SLJc2Hcdjdq+NJJa5wbQvPS46qus
+	rCy/SZcwe5p6tCtFr6tv8hrpGbS0h/E7SMZ9lcnhx+eo9h6Bi1BPBLr+9VZbxAbf
+	Wk/gAxyWHgg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A2FA84F84D;
+	Fri, 25 Mar 2016 14:32:48 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 18DCB4F849;
+	Fri, 25 Mar 2016 14:32:48 -0400 (EDT)
+In-Reply-To: <CAGZ79kZ=de7jh7b2OnTuEoTUSJKhoNkjb+Mw41JP7w9SVWH3iA@mail.gmail.com>
+	(Stefan Beller's message of "Fri, 25 Mar 2016 10:05:55 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F95BEECA-F2B7-11E5-911F-E95C6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289935>
 
-When renaming a branch, the current code only updates the current
-working tree's HEAD, but it should update .git/HEAD of all checked out
-working trees.
+Stefan Beller <sbeller@google.com> writes:
 
-This is the current behavior, /path/to/wt's HEAD is not updated:
+> Exactly, sorry for not writing my chain of thoughts down completely.
+>
+> To make them reusable, I'd assume we want them to be easy to
+> understand, and by using a well known way in git it is easier to
+> understand.
 
-  % git worktree list
-  /path/to     2c3c5f2 [master]
-  /path/to/wt  2c3c5f2 [oldname]
-  % git branch -m master master2
-  % git worktree list
-  /path/to     2c3c5f2 [master2]
-  /path/to/wt  2c3c5f2 [oldname]
-  % git branch -m oldname newname
-  % git worktree list
-  /path/to     2c3c5f2 [master2]
-  /path/to/wt  0000000 [oldname]
+I already said I do not care too deeply either way, but I have to
+point out that "git -C $prefix" would put extra cognitive burden on
+those who will be picking it up where you left off.  When they start
+by first literally translating shell to C, "git -C" would mislead
+them to think if they have to chdir(2) to the directory first, which
+is not the case at all.  "git -C $prefix submodule--helper" in the
+code after [3/4] is there only because submodule--helper code no
+longer is told what the caller already knows (i.e. what is the
+prefix) and is forced to find it out by itself.  Contrasting to
+that, with an explicit --prefix option, the reader would know there
+is no need to chdir(2) anywhere at that point, but the paths that
+are held in variables it uses from the surrounding code are not
+relative to the current working directory when the code is called
+and $prefix is there to help adjusting it.
 
-This patch fixes this issue by updating all relevant worktree HEADs
-when renaming a branch.
-
-Signed-off-by: Kazuki Yamaguchi <k@rhe.jp>
----
- branch.c          | 32 ++++++++++++++++++++++++++++++++
- branch.h          |  7 +++++++
- builtin/branch.c  |  3 +--
- t/t3200-branch.sh | 23 ++++++++++++++++++++++-
- 4 files changed, 62 insertions(+), 3 deletions(-)
-
-diff --git a/branch.c b/branch.c
-index c50ea42172ce..df0928e32a70 100644
---- a/branch.c
-+++ b/branch.c
-@@ -344,3 +344,35 @@ void die_if_checked_out(const char *branch)
- 		die(_("'%s' is already checked out at '%s'"), branch, existing);
- 	}
- }
-+
-+int update_worktrees_head_symref(const char *oldref, const char *newref)
-+{
-+	int ret = 0;
-+	struct strbuf symref = STRBUF_INIT;
-+	struct worktree **worktrees = get_worktrees();
-+	int i;
-+	int common_prefix_len = strlen(absolute_path(get_git_common_dir())) + 1;
-+
-+	for (i = 0; worktrees[i]; i++) {
-+		if (worktrees[i]->is_detached)
-+			continue;
-+
-+		if (strcmp(oldref, worktrees[i]->head_ref))
-+			continue;
-+
-+		strbuf_reset(&symref);
-+		strbuf_addf(&symref, "%s/HEAD", worktrees[i]->git_dir);
-+		strbuf_remove(&symref, 0, common_prefix_len);
-+
-+		if (create_symref_common_dir(symref.buf, newref, NULL)) {
-+			ret = -1;
-+			error(_("HEAD of working tree %s is not updated."),
-+			      worktrees[i]->path);
-+		}
-+	}
-+
-+	strbuf_release(&symref);
-+	free_worktrees(worktrees);
-+
-+	return ret;
-+}
-diff --git a/branch.h b/branch.h
-index 78ad4387cd32..3f5ae4b8866e 100644
---- a/branch.h
-+++ b/branch.h
-@@ -60,4 +60,11 @@ extern int read_branch_desc(struct strbuf *, const char *branch_name);
-  */
- extern void die_if_checked_out(const char *branch);
- 
-+/*
-+ * Update all per-worktree HEADs pointing the old ref to point the new ref.
-+ * This will be used when renaming a branch. Returns 0 if successful,
-+ * non-zero otherwise.
-+ */
-+extern int update_worktrees_head_symref(const char *, const char *);
-+
- #endif
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 7b45b6bd6b80..31eb473d3e6a 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -552,8 +552,7 @@ static void rename_branch(const char *oldname, const char *newname, int force)
- 	if (recovery)
- 		warning(_("Renamed a misnamed branch '%s' away"), oldref.buf + 11);
- 
--	/* no need to pass logmsg here as HEAD didn't really move */
--	if (!strcmp(oldname, head) && create_symref("HEAD", newref.buf, NULL))
-+	if (update_worktrees_head_symref(oldref.buf, newref.buf))
- 		die(_("Branch renamed to %s, but HEAD is not updated!"), newname);
- 
- 	strbuf_addf(&oldsection, "branch.%s", oldref.buf + 11);
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index a89724849065..f7d438bd7d1d 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -126,7 +126,28 @@ test_expect_success 'git branch -M foo bar should fail when bar is checked out'
- test_expect_success 'git branch -M baz bam should succeed when baz is checked out' '
- 	git checkout -b baz &&
- 	git branch bam &&
--	git branch -M baz bam
-+	git branch -M baz bam &&
-+	test $(git rev-parse --abbrev-ref HEAD) = bam
-+'
-+
-+test_expect_success 'git branch -M baz bam should succeed when baz is checked out as linked working tree' '
-+	git checkout master &&
-+	git worktree add -b baz bazdir &&
-+	git worktree add -f bazdir2 baz &&
-+	git branch -M baz bam &&
-+	test $(git -C bazdir rev-parse --abbrev-ref HEAD) = bam &&
-+	test $(git -C bazdir2 rev-parse --abbrev-ref HEAD) = bam
-+'
-+
-+test_expect_success 'git branch -M baz bam should succeed within a worktree in which baz is checked out' '
-+	git checkout -b baz &&
-+	git worktree add -f bazdir3 baz &&
-+	(
-+		cd bazdir3 &&
-+		git branch -M baz bam &&
-+		test $(git rev-parse --abbrev-ref HEAD) = bam
-+	) &&
-+	test $(git rev-parse --abbrev-ref HEAD) = bam
- '
- 
- test_expect_success 'git branch -M master should work when master is checked out' '
--- 
-2.8.0.rc4.21.g05df949
+The reason I do not care too deeply was that I thought people who
+will be taking over after you are done (well, after all that might
+include you; plans would change) are clueful, but there is no need
+for us to make their life more difficult than necessary.
