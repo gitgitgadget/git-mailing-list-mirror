@@ -1,81 +1,89 @@
-From: Kevin Brodsky <corax26@gmail.com>
-Subject: Duplicate -s entry in git-format-patch(1)
-Date: Fri, 25 Mar 2016 11:45:56 +0000
-Message-ID: <56F524F4.3000409@gmail.com>
+From: Kazuki Yamaguchi <k@rhe.jp>
+Subject: Re: [PATCH] branch: update all per-worktree HEADs when renaming a
+ branch
+Date: Fri, 25 Mar 2016 20:56:14 +0900
+Message-ID: <20160325115614.GA21341@chikuwa.rhe.jp>
+References: <1458553816-29091-1-git-send-email-k@rhe.jp>
+ <CAPig+cRQj4td82DuqL0tD=3znLAmT4nBrfOjK3phqM7iomQseA@mail.gmail.com>
+ <CACsJy8BKBiYTsp5wv9ynr++p2TE-dzS9J+DkOPEKumCL-reLVw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 25 12:46:05 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 12:56:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajQBo-0000s5-8k
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 12:46:04 +0100
+	id 1ajQLm-0006sr-QH
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 12:56:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751989AbcCYLqB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 07:46:01 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:32977 "EHLO
-	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751399AbcCYLqA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 07:46:00 -0400
-Received: by mail-wm0-f45.google.com with SMTP id l68so23073222wml.0
-        for <git@vger.kernel.org>; Fri, 25 Mar 2016 04:45:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=ZPRjiPJ0gyVnzgym/i7MN3HXmc9ZD7XHGjF5/5eIy5o=;
-        b=VqcBg6Pc3JSdu244DVUgXm7ZM8ZHrFXTiL5Ib1ZKrsbGWyGrgEUK1mrgO65yuEpoez
-         PYwM23tsoCOP85blqMqEYKRfQF4oQO9agb1P/AeIA1HH39VC9mlz5Tc08XdjtkMGe1JA
-         XhyWWxIIyBwtb/q2PoCNl050RKEJfegjEvldOmmVNvNtEayhQ9lzk7nWTlYfktysYnnX
-         /0ugsvmueA55KRXxBi9DptAeaP4KoEBlbXn6B/9JCYUkuMgQtBiMShp/E0Tg4ydJ+9vW
-         YcfTYVi5dC/0QLRtHgMiDkTFKZfbpoONHU0y1bTVhNkrxkpcEARO8FMDluYk38LzT8sw
-         igTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=ZPRjiPJ0gyVnzgym/i7MN3HXmc9ZD7XHGjF5/5eIy5o=;
-        b=XAtdBgUL8pvEh9iHL+lOs4bJp3Q7db2uDg0Oi2WoTRlosFn7eO7sMkFm5eNirmzuZD
-         d+alOtlv5AdK00JE4rhQht0qWik2hvNvpf0ocdOYwEXLGSpC2RF+cjFBg9EZx4RPjVLt
-         uZtMRu04ohYPEv3UIq4CiX+Vur2Ejqe7jjki3lf+Znv0uXEAE1PV9QX+7ylD3E05sqxn
-         ts7DhrutO6qC4KU1KVi+Td/XD0CedMWmDEJR75QsevHWFZVt2xVW9rbm3tGU9Nf5g4u7
-         a8P95xSQeQDL5EP5sgIzMgDd2534FdovAGeBQinPREAcV0oEP5sKEIwpWOQpiYFlhHqY
-         zL7Q==
-X-Gm-Message-State: AD7BkJI61RVfVXf9YlHy/fMxiMMgUiCcUIRTwySOD4w3H6CIYI3Y3eLf62XKpu7PZWQCYw==
-X-Received: by 10.194.121.194 with SMTP id lm2mr14531704wjb.71.1458906358296;
-        Fri, 25 Mar 2016 04:45:58 -0700 (PDT)
-Received: from [192.168.0.10] (61.42.99.195.dyn.plus.net. [195.99.42.61])
-        by smtp.googlemail.com with ESMTPSA id fv6sm11654402wjc.12.2016.03.25.04.45.57
-        for <git@vger.kernel.org>
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 25 Mar 2016 04:45:57 -0700 (PDT)
-X-Google-Original-From: Kevin Brodsky <corax.2.6@gmail.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
+	id S1752171AbcCYL4S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2016 07:56:18 -0400
+Received: from 116.58.164.79.static.zoot.jp ([116.58.164.79]:52756 "EHLO
+	walnut.rhe.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751399AbcCYL4S (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 07:56:18 -0400
+Received: from chikuwa.rhe.jp (unknown [10.0.1.1])
+	by walnut.rhe.jp (Postfix) with ESMTPSA id 946B45AACF;
+	Fri, 25 Mar 2016 11:56:15 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <CACsJy8BKBiYTsp5wv9ynr++p2TE-dzS9J+DkOPEKumCL-reLVw@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289882>
 
-Hi all,
+On Tue, Mar 22, 2016 at 07:49:00AM +0700, Duy Nguyen wrote:
+> On Tue, Mar 22, 2016 at 12:41 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> >> diff --git a/worktree.c b/worktree.c
+> >> @@ -217,3 +217,41 @@ char *find_shared_symref(const char *symref, const char *target)
+> >> +int update_worktrees_head_symref(const char *oldref, const char *newref)
+> >> +{
+> >> +       int error = 0;
+> >> +       struct strbuf path = STRBUF_INIT;
+> >> +       struct strbuf origref = STRBUF_INIT;
+> >> +       int i;
+> >> +       struct worktree **worktrees = get_worktrees();
+> >> +
+> >> +       for (i = 0; worktrees[i]; i++) {
+> >> +               if (worktrees[i]->is_detached)
+> >> +                       continue;
+> >> +
+> >> +               strbuf_reset(&path);
+> >> +               strbuf_reset(&origref);
+> >> +               strbuf_addf(&path, "%s/HEAD", worktrees[i]->git_dir);
+> >> +
+> >> +               if (parse_ref(path.buf, &origref, NULL))
+> >> +                       continue;
+> >> +
+> >> +               if (!strcmp(origref.buf, oldref)) {
+> >> +                       int prefix_len = strlen(absolute_path(get_git_common_dir())) + 1;
+> >> +                       const char *symref = path.buf + prefix_len;
+> >> +
+> >> +                       /* no need to pass logmsg here as HEAD didn't really move */
+> >> +                       if (create_symref(symref, newref, NULL)) {
+> >> +                               error = -1;
+> >> +                               break;
+> >
+> > Is aborting upon the first error desired behavior? (Genuine question.)
+> > Would it make more sense to continue attempting the rename for the
+> > remaining worktrees (and remember that an error was encountered)?
+> 
+> Since all these HEADs stay at the same (or close) location, if one
+> fails, I think the rest will fail too. Which leads to a series of
+> warnings if we continue anyway. A more interesting approach is update
+> HEADs in a transaction, so we successfully update all or we update
+> none. But I do not know if ref transactions can be used for HEAD,
+> especially worktree HEADs. I'm ok with either abort here or continue
+> anyway, though.
+> -- 
+> Duy
 
-I've noticed for some time now that the man page for git-format-patch is
-quite confusing because it includes two entries for the -s option:
-- "-s, --no-patch", which is pulled by "include::diff-options.txt[]"in
-Documentation/git-format-patch.txt
-- "-s, --signoff", which is directly part of git-format-patch.txt.
-
-The first entry is apparently wrong, format-patch never interprets it
-this way, as far as I can tell. This is particularly problematic since
-it's the first one listed in the man page...
-
-I don't know how to fix this issue without duplicating diff-options.txt,
-hopefully someone will be more inspired than me ;)
-
-Thanks,
-Kevin
+Thanks for suggestion, but it looks like ref_transaction can be used
+only for updating non-symbolic references. Extending it only for this
+purpose seems too much...
