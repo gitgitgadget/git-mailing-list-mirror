@@ -1,112 +1,84 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v9 2/3] t7507-commit-verbose: make test suite use write_script
-Date: Fri, 25 Mar 2016 02:24:31 -0400
-Message-ID: <CAPig+cRY8P2WtqR4y0zW+netCHa3=9Wnb8LmcB35SqP4OGC6Vg@mail.gmail.com>
-References: <01020153a7ba4eae-9b88e119-0505-418f-a137-595250edaa9d-000000@eu-west-1.amazonses.com>
-	<1458817259-11675-1-git-send-email-szeder@ira.uka.de>
-	<CAPig+cQJ1yK8WhXE0sxSmDenMt1DMZCoJypTu_wkDsDyuBsAWg@mail.gmail.com>
-	<CAFZEwPNMB2Ti2d=qdZKyoYzneHxUPATiFWd_fSPxktZuF3Q+pw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] submodule--helper list: lose the extra prefix option
+Date: Thu, 24 Mar 2016 23:28:23 -0700
+Message-ID: <xmqqmvpn5awo.fsf@gitster.mtv.corp.google.com>
+References: <1458862468-12460-1-git-send-email-sbeller@google.com>
+	<1458862468-12460-4-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Git List <git@vger.kernel.org>
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 07:24:39 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, pclouds@gmail.com, Jens.Lehmann@web.de,
+	jacob.keller@gmail.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 07:28:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajLAj-0000VX-4S
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 07:24:37 +0100
+	id 1ajLEW-0002SR-DQ
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 07:28:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751933AbcCYGYd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 02:24:33 -0400
-Received: from mail-vk0-f67.google.com ([209.85.213.67]:33904 "EHLO
-	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751809AbcCYGYc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 02:24:32 -0400
-Received: by mail-vk0-f67.google.com with SMTP id e6so7138152vkh.1
-        for <git@vger.kernel.org>; Thu, 24 Mar 2016 23:24:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=/IbXHUDlbHlTkwz/AU91jV3MrrsIVjpk7NbDwz+4Vvc=;
-        b=BkYzjiVlXJEcj7RyvD6LpsPVoE9oQ9bzUBo7ATtDjaOGjkgs4zoI0r3F3SUbe7zpaB
-         B/RCFQJhK8vg6XXkzONTICkliinjP4iNrJ1eU0BVe/M+Nh10BFLl6AZB6UY4Kp0vEXoa
-         JhFzUACsVXxI+C1+M7uZpYIx5YE+fD2WAKlLrpyHckesgYh5X7RK4QjwiERpNtFpaOg1
-         wv4s1bczivSrDVEJdGCxBVIWfXvtbm+nGkw3FdB+D2WlzpOvMuVuzP6sJk/acJtak7D1
-         EldDVwcv5D+fTcpWY0TlLFZ9FI0mac+VhMUkuOFmjIrshtnGENVdhFqcOvdQtS8PA1qE
-         nqXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=/IbXHUDlbHlTkwz/AU91jV3MrrsIVjpk7NbDwz+4Vvc=;
-        b=SqIhejIPn1BYHOXUSsrnld9spHCGr1M3huCLhIoLvVv2pTPX23voSb9+FaYtsmFidv
-         Ms0KMKkPA1+HPB4K3BI7FmongG9cvg1mTzgHISCtINoNzmoLwpny4N8/zLjwNH21Bwl1
-         Ki86KtHxhoLoi2Q35PlBSVMksdxY7KecLPJn1ljGukZFpBp6kmwsqbLC/qOSxsVJztFj
-         N7QoJNP/0gDok6y0Y/9AYZS+2JozFAMFNQtFVS1sok57iSZKuXFelwxZJky0+5PfmEQN
-         e3NXZvBoe3HffgmD4PMxrGv5DmYN6C5kmE+If7qL+xHq7cfpva2rQAWwl6eIkD8G6xFl
-         RaTg==
-X-Gm-Message-State: AD7BkJLKSBETgqu+WlCFfnQLWQu00ACs2Kv/URA8FFInZOIuKKXkDxmAYXwdJqhQT5azrif0Bn1rk61YulpIvw==
-X-Received: by 10.31.130.74 with SMTP id e71mr6393093vkd.117.1458887071145;
- Thu, 24 Mar 2016 23:24:31 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Thu, 24 Mar 2016 23:24:31 -0700 (PDT)
-In-Reply-To: <CAFZEwPNMB2Ti2d=qdZKyoYzneHxUPATiFWd_fSPxktZuF3Q+pw@mail.gmail.com>
-X-Google-Sender-Auth: 5rhrWMBOUPry1TCqOxmY4ezGbvw
+	id S1751950AbcCYG21 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2016 02:28:27 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:54051 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751809AbcCYG21 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 02:28:27 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 98D46494E7;
+	Fri, 25 Mar 2016 02:28:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=N4J1JfJi8i43OsNN3dVIwnA7dYQ=; b=eOcDB7
+	hDq4RGm3dq3ncsmZbKjxfeWpt8OBMimqiuoQy9YVvoHykfEt+VwKeZ65GYWv+dtS
+	U+E3C8n/eOCYKZsPgJyOphwgQA7lb70kZia+SOZe9DApqP+mu+hACPqwWPm5LjyX
+	OiCPmW85amC9o0Lj1tepV+mDNIlNNqyQhyXoI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RrYEnCrJy2JESllDxDbpXiqB9xcxx33S
+	8+F2g8vpa02t3k8kKODXafaoI0+979xiGs5f/qzMXi1TtL0n4/pWTI988Dk1OPXh
+	ItNjWfeHNh2GED6QEN9U0IW6sJaaUPrqWB7yISZW5FayZs2ZfLb9I3JPCtOXIAKL
+	hthLb9/MmrI=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8FDD8494E5;
+	Fri, 25 Mar 2016 02:28:25 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0E3EF494E3;
+	Fri, 25 Mar 2016 02:28:24 -0400 (EDT)
+In-Reply-To: <1458862468-12460-4-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Thu, 24 Mar 2016 16:34:27 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C75DB558-F252-11E5-A4D6-E95C6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289853>
 
-On Fri, Mar 25, 2016 at 2:06 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> On Fri, Mar 25, 2016 at 5:27 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> Agreed that this needs proper justification in the commit message.
->> And, the justification is to make each test more self-contained,
->> particularly because a subsequent patch will introduce a second fake
->> "editor", and by making tests responsible for setting the editor they
->> need, they don't have to worry about bad interactions from "editors"
->> set by earlier tests[1][2].
+Stefan Beller <sbeller@google.com> writes:
+
+> The usual early machinery of Git is to change the directory to
+> the top level of the working tree and pass the actual path inside
+> the working tree as `prefix` to the command being run.
 >
-> This shou  cadve  mbe ave be ave be ave be ave be ave be ave be ave
-
-Hmm, yes, what you say makes perfect sense... er, wait...
-
->>>> -cat >check-for-diff <<EOF
->>>> -#!$SHELL_PATH
->>>> -exec grep '^diff --git' "\$1"
->>>> +write_script "check-for-diff" <<-\EOF &&
->>>> +grep '^diff --git' "$1" >out &&
->>>> +test $(wc -l <out) = 1
->>>
->>> Our test lib offers the test_line_count helper function, which
->>> outputs a helpful error message in case the number of lines do not
->>> match.
->>
->> test_line_count() was mentioned in [2], however, this line counting is
->> done in the fake "editor" script, not in the test script proper, so
->> the spelled-out form $(wc ...) was proposed[2].
+> This is the case both for commands written in C (where the
+> prefix is passed into the command in a function parameter) as
+> well as in git-submodule.sh where the setup code runs...
 >
-> I have a slight doubt regarding this. Can the functions from test-lib
-> work in such scripts flawlessly? If yes, then its probably better to
-> use them.
+> Adhere to Gits standard of passing the relative path inside the
+> working tree by passing it via -C.
 
-Probably not easily, and it's not worth complicating the "editor"
-script by trying to import the test_line_count() function.
+While -C _also_ works, I do not think it is "standard" in any sense.
+What made you think so?  -C is a way to tell Git to chdir there
+before doing anything else, without even adjusting the command line
+arguments that might be paths, and "chdir there to go to top" may
+(or may not--I haven't thought things thru) have the same effect as
+passing the prefix into functions, that is merely true as a side
+effect, I would think.
 
->>>>  chmod +x check-for-diff
->>
->> Drop the 'chmod' line; write_script() does this for you.
->
-> I was unaware about this. I will drop it off.
-
-I thought I had mentioned it in the review in which I had suggested
-using write_script() or one of the follow-up emails, but upon looking
-back at those messages, I saw it was not so. It turns out that I was
-probably thinking about a different patch review in which I had
-mentioned dropping 'chmod'[1].
-
-[1]: http://article.gmane.org/gmane.comp.version-control.git/288085/
+So this change may not be wrong per-se, but if the lossage of prefix
+is the final goal (as opposed to an approach to gain other benefits,
+e.g. "now we do not have to use prefix, we can simplify these other
+things"), I do not know if it is worth it.
