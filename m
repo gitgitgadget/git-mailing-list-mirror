@@ -1,99 +1,140 @@
-From: Zhang Lei <zhanglei002@gmail.com>
-Subject: Re: [PATCH v2] worktree: add: introduce --checkout option
-Date: Fri, 25 Mar 2016 19:31:02 +0800
-Message-ID: <CABEEbiDRPsL6XJrnyFv43u26hXNbBVmMhbJeZmp+zjS+-jNZ=w@mail.gmail.com>
-References: <01020153a40588f3-5401ea3e-ece8-435c-a046-a5c1c1f92cd6-000000@eu-west-1.amazonses.com>
-	<01020153a73bbb70-11a8482f-1a90-49e4-a56c-b311e12a85a2-000000@eu-west-1.amazonses.com>
-	<CACsJy8DxcqYKrRi7_ERS3xLWfbbq3bNx-u2NWiXYoNw4yD+0dg@mail.gmail.com>
-	<CABEEbiBM-CTJdmOukLjfrmnmsSTwNzx+ELfO=BtgApT__QZu-g@mail.gmail.com>
-	<CAPig+cTtRgMz_6oEXmBN2MHG65arq51JsoBL9QeWBFNLgFnCmw@mail.gmail.com>
-	<CAPig+cS2qMZyUkf9Nekp+QaVkjc1oHXb4QF3wFDnBdF3WMU3iQ@mail.gmail.com>
-	<CACsJy8Bs0WFJxGnVOBUnzipZYty-K4D9NkAQdODYqPUw2VAAiw@mail.gmail.com>
+From: Kazuki Yamaguchi <k@rhe.jp>
+Subject: Re: [PATCH] branch: update all per-worktree HEADs when renaming a
+ branch
+Date: Fri, 25 Mar 2016 20:33:51 +0900
+Message-ID: <20160325113351.GC24729@chikuwa.rhe.jp>
+References: <CAPig+cRQj4td82DuqL0tD=3znLAmT4nBrfOjK3phqM7iomQseA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 25 12:31:13 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 12:34:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajPxR-0002tY-CV
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 12:31:13 +0100
+	id 1ajQ0D-0004Im-UZ
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 12:34:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751337AbcCYLbJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Mar 2016 07:31:09 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:34164 "EHLO
-	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751247AbcCYLbG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Mar 2016 07:31:06 -0400
-Received: by mail-io0-f196.google.com with SMTP id p21so9407167ioe.1
-        for <git@vger.kernel.org>; Fri, 25 Mar 2016 04:31:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=v01AIl+Ns027VnelcnvZdnZHEmDeNvS4e+qNOL1Epzk=;
-        b=K8VLcQK/NbSNM9I4+Ixt8rD0yqwY6LPLFbHtiOfx3Vy1N2ZoVQwSMXcX9/IWx4cY7v
-         UFV8O/Ow5QeuDlefG5X5iqqjRPEAxDM1SrlQyVVdb4riJtyH+/uxZhrl0UKIEjblUVTv
-         3b+p8CUTk7M5eHlmPHusc4ubN67WuKPuSsx7wHXYQt+99+iQc/O9ht4dHJ6n7AuSG1be
-         1oYDaCr1379DiEgUvlM5IbffyP6af+ZvUUJZq4yEbcvQXdtzjv03kyyjt42i4y9RxmtS
-         1QC7z+ha1byA22ge1bl0AeRK6oL3BprNStRfWPwstEkeP1NSFlIEdtpuQi17rv1SkHdo
-         9OeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=v01AIl+Ns027VnelcnvZdnZHEmDeNvS4e+qNOL1Epzk=;
-        b=l14chWHHtKUkGuDp/1iqJzs/CNu7UmE0CI2G9EKplg+2eACYYj8ZcwFSfRVNet855E
-         cdcR3XCS+yRmUUycJOEGpMXP4opDRkAl9PxWkIBBJQ+QJrRc/2A/IDjbA6+BRX17069L
-         RpFh9W7rNz7eO3yXVwLwSwEdb3qrPS+0WARKnTqgMMULiDTXbSkklCjPJLxs5xpSwKXb
-         0R8S7hu8f8slwzTkGoL5LK3t3xhT3DEAUNQLt5D+MT9DCrqTUbeIdHTeNZ4I+zj+nvtY
-         4mnV0X2TOCP8Yx/f65mvlNSXsUvvv98fsshazJ4fafEZB6Q8eLo5kOE+XnfdNMEYvy59
-         erRw==
-X-Gm-Message-State: AD7BkJKrnrcjWttG6MqNDPdmGzj0c2lI8E2D5UQm0WmIEXn/OwCUQFUo/8z4q7olKSXt2tC3v93ZHEfyMmX5Tg==
-X-Received: by 10.107.47.41 with SMTP id j41mr12718806ioo.168.1458905462372;
- Fri, 25 Mar 2016 04:31:02 -0700 (PDT)
-Received: by 10.107.1.72 with HTTP; Fri, 25 Mar 2016 04:31:02 -0700 (PDT)
-In-Reply-To: <CACsJy8Bs0WFJxGnVOBUnzipZYty-K4D9NkAQdODYqPUw2VAAiw@mail.gmail.com>
+	id S1752101AbcCYLd4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2016 07:33:56 -0400
+Received: from 116.58.164.79.static.zoot.jp ([116.58.164.79]:51558 "EHLO
+	walnut.rhe.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751247AbcCYLdz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 07:33:55 -0400
+Received: from chikuwa.rhe.jp (unknown [10.0.1.1])
+	by walnut.rhe.jp (Postfix) with ESMTPSA id 9708F5AA50;
+	Fri, 25 Mar 2016 11:33:52 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <CAPig+cRQj4td82DuqL0tD=3znLAmT4nBrfOjK3phqM7iomQseA@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289876>
 
-Thanks for the clarification.
-By the way, Duy, another unrelated question: why worktree name under
-.git/worktrees is being named
-after the working tree path basename? I think branch name is more
-reasonable since we don't allow checking out
-the same branch twice.
+Hello,
 
-2016-03-25 9:49 GMT+08:00 Duy Nguyen <pclouds@gmail.com>:
-> On Fri, Mar 25, 2016 at 8:29 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Thu, Mar 24, 2016 at 9:22 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>> On Thu, Mar 24, 2016 at 5:52 AM, Zhang Lei <zhanglei002@gmail.com> wrote:
->>>> 2016-03-24 17:16 GMT+08:00 Duy Nguyen <pclouds@gmail.com>:
->>>>> I think we can follow git-clone and use '-n' for this. [...]
->>>>
->>>> My PATCH v1 did follow git-clone -n, however, Junio C Hamano and Eric Sunshine
->>>> suggested that we should avoid doing so , as --no-no-checkout could be
->>>> confusing.
->>>
->>> My impression was that Duy was suggesting only that -n be recognized
->>> as shorthand for --no-checkout, however, git-worktree already
->>> recognizes -n as shorthand for --dry-run (as a consequence of using
->>> OPT__DRY_RUN), so -n as shorthand for --no-checkout is a no-go.
->>
->> Ignore this. It's only 'prune' which recognizes -n, so it's possible
->> that 'add' could recognize it for an alternate meaning (though the
->> documentation would want to make this very clear).
->
-> To make it clear, I don't feel strongly about '-n'. Yes muscle memory
-> may count. But if '-n' may become a new confusion source in
-> git-worktree then perhaps we should avoid it and go with
-> --[no-]checkout
-> --
-> Duy
+On 03/22/2016 03:41 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+>> @@ -126,7 +126,19 @@ test_expect_success 'git branch -M foo bar should fail when bar is checked out'
+>>  test_expect_success 'git branch -M baz bam should succeed when baz is checked out' '
+>> +test_expect_success 'git branch -M baz bam should succeed when baz is checked out as linked working tree' '
+>> +       git checkout master &&
+>> +       git branch &&
+>> +       git worktree add -b baz bazdir &&
+>> +       git branch -M baz bam &&
+>> +       (
+>> +               cd bazdir &&
+>> +               test $(git rev-parse --abbrev-ref HEAD) = bam
+>> +       )
+>>  '
+> 
+> This can be done more easily without the subshell:
+> 
+>     test $(git -C bazdir rev-parse ...) = bam
+
+Thank you for reviewing. And sorry for late response.
+I didn't know -C option, thanks.
+
+> 
+> Can you also expand the test so that it verifies that the rename works
+> as expected when the branch is checked out in multiple worktrees,
+> rather than just one. Likewise, it would be nice to check branch
+> rename from within a worktree in which the branch is checked out (in
+> addition to the test above which does the rename from outside such a
+> worktree).
+> 
+
+I'll add them.
+And I noticed my patch is broken in the latter case (rename in a linked
+working tree).
+Since create_symref() calls resolve_ref_unsafe() and it uses $GIT_DIR
+for worktree-specific refs thus my patch fails to update main tree's
+HEAD when we are in a linked working tree.
+I'm thinking about adding new flag to resolve_ref_unsafe(), to force
+using $GIT_COMMON_DIR. This will at the same time allows to remove
+parse_ref() in worktree.c.
+
+> 
+>> diff --git a/worktree.c b/worktree.c
+>> @@ -217,3 +217,41 @@ char *find_shared_symref(const char *symref, const char *target)
+>> +int update_worktrees_head_symref(const char *oldref, const char *newref)
+>> +{
+>> +       int error = 0;
+>> +       struct strbuf path = STRBUF_INIT;
+>> +       struct strbuf origref = STRBUF_INIT;
+>> +       int i;
+>> +       struct worktree **worktrees = get_worktrees();
+>> +
+>> +       for (i = 0; worktrees[i]; i++) {
+>> +               if (worktrees[i]->is_detached)
+>> +                       continue;
+>> +
+>> +               strbuf_reset(&path);
+>> +               strbuf_reset(&origref);
+>> +               strbuf_addf(&path, "%s/HEAD", worktrees[i]->git_dir);
+>> +
+>> +               if (parse_ref(path.buf, &origref, NULL))
+>> +                       continue;
+>> +
+>> +               if (!strcmp(origref.buf, oldref)) {
+>> +                       int prefix_len = strlen(absolute_path(get_git_common_dir())) + 1;
+>> +                       const char *symref = path.buf + prefix_len;
+>> +
+>> +                       /* no need to pass logmsg here as HEAD didn't really move */
+>> +                       if (create_symref(symref, newref, NULL)) {
+>> +                               error = -1;
+>> +                               break;
+> 
+> Is aborting upon the first error desired behavior? (Genuine question.)
+> Would it make more sense to continue attempting the rename for the
+> remaining worktrees (and remember that an error was encountered)?
+> Related: Since you're now dealing with multiple worktrees, you can do
+> a better job of letting the user know in which worktree something went
+> wrong rather than merely emitting the relatively generic "Branch
+> renamed to %s, but HEAD is not updated!".
+
+I think both is ok.
+But continuing shouldn't be harm, so continuing might be better in terms
+of that it can tell the user what files need to be fixed manually.
+I'll try it.
+
+>> +}
+>> diff --git a/worktree.h b/worktree.h
+>> @@ -35,4 +35,11 @@ extern void free_worktrees(struct worktree **);
+>> +/*
+>> + * Update all per-worktree HEADs pointing the old ref to point the new ref.
+>> + * This will be used when renaming a branch. Returns 0 if successful,
+>> + * non-zero otherwise.
+>> + */
+>> +extern int update_worktrees_head_symref(const char *, const char *);
+> 
+> I guess I can understand the desire to libify this functionality,
+> however, it feels as if it is a feature of "branch" rather than
+> "worktree", hence perhaps it should reside in top-level branch.[hc]?
+
+I agree, I'll move it.
+I chose worktree.c just because it has parse_ref().
