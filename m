@@ -1,103 +1,90 @@
-From: =?UTF-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
-Subject: Re: [PATCH v3/GSoC 3/5] git-credential-cache: put socket to
- xdg-compatible path
-Date: Sat, 26 Mar 2016 02:00:30 +0800
-Message-ID: <CAKqreuyOGk=iZes_bgiBpnO5Ht+9VzZG3_j5H33i6qtBx1R5nQ@mail.gmail.com>
-References: <1458728005-22555-1-git-send-email-huiyiqun@gmail.com>
-	<1458728005-22555-3-git-send-email-huiyiqun@gmail.com>
-	<20160325100041.GC8880@sigill.intra.peff.net>
-	<CAKqreuzwa+ztwsF3CRb++J-iqW=_evfBQ7Q7veyYU2ydJXnpcg@mail.gmail.com>
-	<20160325175635.GB10563@sigill.intra.peff.net>
+From: Mehul Jain <mehul.jain2029@gmail.com>
+Subject: Re: [PATCH v10 0/2] introduce --[no-]autostash command line flag
+Date: Fri, 25 Mar 2016 23:31:39 +0530
+Message-ID: <CA+DCAeT0PW6oCjO5QxcL+nJYneLUGgvieki9_44HQJK4bDHaUQ@mail.gmail.com>
+References: <1458584283-23816-1-git-send-email-mehul.jain2029@gmail.com>
+	<CAPig+cTqnev_YpamaSi1tkvWydZHRadBzo_zLnF1Pd6FyWKiTQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Your friend <pickfire@riseup.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 25 19:00:37 2016
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Paul Tan <pyokagan@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Mar 25 19:01:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajW2G-0001Ko-Lc
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 19:00:37 +0100
+	id 1ajW3P-00020V-9t
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Mar 2016 19:01:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753610AbcCYSAc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Mar 2016 14:00:32 -0400
-Received: from mail-oi0-f67.google.com ([209.85.218.67]:36030 "EHLO
-	mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752883AbcCYSAc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Mar 2016 14:00:32 -0400
-Received: by mail-oi0-f67.google.com with SMTP id k128so1135685oig.3
-        for <git@vger.kernel.org>; Fri, 25 Mar 2016 11:00:31 -0700 (PDT)
+	id S1753793AbcCYSBn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Mar 2016 14:01:43 -0400
+Received: from mail-qk0-f171.google.com ([209.85.220.171]:36482 "EHLO
+	mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753313AbcCYSBm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Mar 2016 14:01:42 -0400
+Received: by mail-qk0-f171.google.com with SMTP id s68so35593806qkh.3
+        for <git@vger.kernel.org>; Fri, 25 Mar 2016 11:01:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=+Pyk65v/YIxHLi6CpmRKHzG5NrGV2wBTRjxrgDEc2Js=;
-        b=YXJOfGsyNyzGU7olrmG3//CBE7sWv3y60qZOroar522zYm++1uUgNXglMIH1v9C3NV
-         AP4h3OYU+PCziH05yEioqMlCA7I1jd+qu92joxcCKrJEPSuDsEZ8DMtmlxFUMtNMRdFK
-         C+uOyVa+XCeUYFNXXRRPLY8FbjSNZkO6ix+z/MjyI3nhM76Y+Br13anWx6qX8aIaq/M7
-         nyKWyj++J8ROazvshzARFFpHRoJ55Q6bchGEzmvS/xY844scyREkL4famWXlZ8gGk53q
-         VcJQfEww2wsbaxPKNkRRXKZl7VGzTWh/kp9g7VTvY8H6aQbydPnXzq47nxUAvcuC+cZS
-         7APw==
+         :cc;
+        bh=I/wfiwXZZj+4k1jcCNUlmm0Oo4/RsAM/fBqsvVAs2jc=;
+        b=URP/NNbbTRsF3UfZpAessfRdkwMaMY+TS+hQPX2OE4syEwyyuzYgK0pslvbUBUdlXl
+         5uoozxqzs2FeKcPsnPyFf7tWJ6ggJYkmefnS4UAXrUAf0aBIW1CEguvedZUqBVOw6Wd6
+         QUEHS4yjOq5PI4AmDJzvinuN0ofDzDwkziJ2XQsEMGAZEQJKdRWUx2wETAn+vDeXJIh8
+         zRJYCs5TyXixExhvcQjVRd4TKFfi7rSYFLSbHLL374Qd/GYQSUVz1fk48eH+d52h+/+b
+         YOCmPGyWqpx9RWAAhixFHLGapqnVKX1kB1qUrpBjAGmUioPOY/iRNe9WXVtn93dXmpxg
+         u1og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=+Pyk65v/YIxHLi6CpmRKHzG5NrGV2wBTRjxrgDEc2Js=;
-        b=XfgsMBdUn9wdX3xiCH3rRAzNCzHyHLsi0nr2KW3t2q9XhGQ9LrRPX/lGbk5LRdugJP
-         miadZDEcbVlrMvWaauuWvIas90aiBiaSd4RQIzaVc8V2z3K8EunjiuLCIHA6rct8EOvQ
-         1qs3kqDVUfds3Iuyk1MRKiwnH4VgBl4px8pruq9IE0r/AyuEXStaY+Yj+zNj4C1bGJox
-         h7zN41c5N3h4QOxBy64jTPpLnfb4+74H15g+t3I9b7avQ5Bznzcbmf8oS6S4JUjFVK9Y
-         Eb+o9siWYbZwG4PlIDwpOpilcWdffXxNQ+fOtnrlxln+UeWUnje7Ajy7Kwn+JeD+35Jw
-         VCFw==
-X-Gm-Message-State: AD7BkJKGXer7d3ZKo6NJ3sweN2M4ZOH3/dnSwCgRPgAZPAwHEIYuptC05jqhqX2oxrZt76lM/VXHOlRBMWuwzg==
-X-Received: by 10.157.49.116 with SMTP id v49mr7525714otd.97.1458928830738;
- Fri, 25 Mar 2016 11:00:30 -0700 (PDT)
-Received: by 10.157.27.250 with HTTP; Fri, 25 Mar 2016 11:00:30 -0700 (PDT)
-In-Reply-To: <20160325175635.GB10563@sigill.intra.peff.net>
+         :message-id:subject:from:to:cc;
+        bh=I/wfiwXZZj+4k1jcCNUlmm0Oo4/RsAM/fBqsvVAs2jc=;
+        b=VJXKr4qab4dPqcHjgJSwTFAr87h2cGTOFe/Yu0ICRJRtNfG6E2Et9ay2MH3uVvh4JJ
+         X7G8dMw93GJl7Gajas6XenyV6nd205tKdzDD+Fo929y4tgrdvLORWmP5ffzQNINB9p65
+         Xky3RrrEWo17UOYZLkVt24aPfkOHe/gYSDh0gcFwbo2qIW0D98Hk6AD05it1EGl1hlA6
+         wnvZi/mSv0J6sAsd/A36VWe73aUE5NpqvPlvVZJwuCzjVxbkGVPVjhY7yeGxgpXjLnvo
+         PKOZzp/cigEAsjXdQ/F0VUd2rvxmNNhAard5IMXCxI9VE2yboCRxUy4Jv8Ojfh/ayaBV
+         AvgA==
+X-Gm-Message-State: AD7BkJICCpwertLlMaGm4JA+Gb//lFlbnOgc8N83ReW/4PnnmIklonHgLilVxQjyevhTrdYf/SyBHywyx60Vbw==
+X-Received: by 10.55.76.208 with SMTP id z199mr18626104qka.88.1458928899246;
+ Fri, 25 Mar 2016 11:01:39 -0700 (PDT)
+Received: by 10.55.188.7 with HTTP; Fri, 25 Mar 2016 11:01:39 -0700 (PDT)
+In-Reply-To: <CAPig+cTqnev_YpamaSi1tkvWydZHRadBzo_zLnF1Pd6FyWKiTQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289922>
 
-2016-03-26 1:56 GMT+08:00 Jeff King <peff@peff.net>:
-> On Fri, Mar 25, 2016 at 10:28:55PM +0800, =E6=83=A0=E8=BD=B6=E7=BE=A4=
- wrote:
+On Fri, Mar 25, 2016 at 12:53 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Mon, Mar 21, 2016 at 2:18 PM, Mehul Jain <mehul.jain2029@gmail.com> wrote:
+>> Changes introduced w.r.t. previous patch:
+>> [...]
+>> * Two more tests are added to checkout for error when "git pull
+>>   --[no-]autostash" is called. Here I'm forced to use "test_i18ncmp"
+>>   instead of "test_i18ngrep" to compare the expected error message with
+>>   the actual because grep was, unfortunately, reading "--[no-]autostash"
+>>   as an option and thus leading to test failure.
 >
->> >> diff --git a/credential-cache.c b/credential-cache.c
->> >> index f4afdc6..40d838b 100644
->> >> --- a/credential-cache.c
->> >> +++ b/credential-cache.c
->> >> @@ -105,7 +105,7 @@ int main(int argc, const char **argv)
->> >>       op =3D argv[0];
->> >>
->> >>       if (!socket_path)
->> >> -             socket_path =3D expand_user_path("~/.git-credential=
--cache/socket");
->> >> +             socket_path =3D xdg_runtime_dir("credential-cache.s=
-ock");
->> >>       if (!socket_path)
->> >>               die("unable to find a suitable socket path; use --s=
-ocket");
->> >
->> > We do our own mkdir and chmod in credential-cache; this should be
->> > redundant with what xdg_runtime_dir() does, and can be removed, ri=
-ght?
->>
->> But user may specify another path via --socket <path>, this path may=
- have
->> wrong permission. I'm considering how to handle this situation.
+> Pass -e to grep to treat the next argument as an expression (even if
+> it happens to look like an option):
 >
-> Good point, we do need to cover that case.
+>     test_i18ngrep -e "--[no-]-autostash ..."
 >
-> Perhaps the work done by xdg_runtime_dir() needs to be split into two
-> fucntions: one to just provide the path, and the second to securely
-> create a given path.
+> You may also need to escape the [ and ] with backslash (\) to force
+> grep to treat them as literal characters rather than as the character
+> set "[no-]". Alternately, rather than escaping, also pass the -F flag
+> to make it treat all characters as literals.
 
-Good, I will implement it like that.
+Thanks for this. I tried it out
 
->
-> -Peff
+    test_i18ngrep -F -e "--[no-]autostash ..." err
+
+and worked fine.
+
+Thanks,
+Mehul
