@@ -1,125 +1,151 @@
-From: Ciprian Dorin Craciun <ciprian.craciun@gmail.com>
-Subject: Issue: `git apply` doesn't respect `--work-tree`
-Date: Sat, 26 Mar 2016 10:21:45 +0200
-Message-ID: <CA+Tk8fwhjwj9qjgWiiDsJnCupAQT1JJTfYYgDykQhfBnXE09SQ@mail.gmail.com>
+From: =?UTF-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
+Subject: Re: [GSoC] A late proposal: a modern send-email
+Date: Sat, 26 Mar 2016 17:52:29 +0800
+Message-ID: <CAKqreuyN--AjjhTcTx1+Baec=j-6TJPj8Rwoxre86TJp2UMGDg@mail.gmail.com>
+References: <CAKqreuyC8p9m_dgVpXCiT_hf=8qBA_5kZ5NABQGx0QDOiCBbww@mail.gmail.com>
+	<xmqqzitm2zkj.fsf@gitster.mtv.corp.google.com>
+	<CAKqreux1S2ioEEjPPCkyz1NJnXJ1RyiWdM5thZD607PkL0HKuQ@mail.gmail.com>
+	<CAFZEwPOa3i9XTF-5ZWZXvXfAzpyFojz57JBy4_WahF0Y4Q9DWQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 26 09:22:39 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 26 10:52:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajjUV-0001MK-B9
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Mar 2016 09:22:39 +0100
+	id 1ajktd-0000wj-K3
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Mar 2016 10:52:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751662AbcCZIW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Mar 2016 04:22:28 -0400
-Received: from mail-ob0-f169.google.com ([209.85.214.169]:34941 "EHLO
-	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751502AbcCZIW0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Mar 2016 04:22:26 -0400
-Received: by mail-ob0-f169.google.com with SMTP id fp4so70405374obb.2
-        for <git@vger.kernel.org>; Sat, 26 Mar 2016 01:22:26 -0700 (PDT)
+	id S1752253AbcCZJwb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Mar 2016 05:52:31 -0400
+Received: from mail-ob0-f172.google.com ([209.85.214.172]:34559 "EHLO
+	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751712AbcCZJwa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Mar 2016 05:52:30 -0400
+Received: by mail-ob0-f172.google.com with SMTP id kf9so65792701obc.1
+        for <git@vger.kernel.org>; Sat, 26 Mar 2016 02:52:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Hup0FQeFyXflu2En4fgObLWncxfSVYzpoVzPp59Sdhs=;
-        b=UJZe57wFcIaqVcoUXym8skWcn4ag/NfNm4kRWliiuhgWOx0SITK6QEOCW+RmE+JOtY
-         QRAhQRN1X7Z7VNadVOqioJvzOFp4tVbQQt2u6gt3CDxZ1YvUz9cFg5suzxcG1m0ijBrx
-         vxGN7mYqlcrPJJ2rIfiExgX1BXejRb59JBzPW2dbhCMY8u5K2ORKsKBXSNhoa0Ovh7Cv
-         MBaKXQrJfdbZzj+9WtiELKDgj8aUNPjmhorUx1qgYd7fvh7fFvywBL/ohDWp4iW67tkg
-         wF7N842egBMyx7JD1k8lCyJyX/IS33L2lyGtRDyQEcVXh9btvbD5qdVaFeLxvY5qy4YE
-         qlbg==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=/wcn1xkUI0y97+y00hVABOx0KAr4fGqKWrHiGaw8Ey0=;
+        b=q8pizqTFbBfA3lMDVJLo0/3gd34RrIDUQxaxO1+UkUFw3xnLwNIkHboqyygDz/LdFY
+         34TFGe9034dzTy7f0vVOmqQgDnwcYYbG9nS1LMdNxizlala4VOBAIyBK8XDlb2PkefiC
+         f0HliZ58kInJtqX2kfU9Bewe+cG9BUd5Z4Tn8736bpTAhcuayw4zrf9iIsKYFruCXVm/
+         Q2asWX9lD22zEtj+j/MSYYfIHsAREHmKvlzf6wL9N1CtGtMMB5GRZMVlYlDCkpQooXsP
+         e9yHvWkjv+N2XXo4ZT2JRLGox51rNQvbD0qgVhxK7x68V1GPXYrEChXbPAC1KuBPRyzu
+         eWKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Hup0FQeFyXflu2En4fgObLWncxfSVYzpoVzPp59Sdhs=;
-        b=fyOoZvN/M26Q0wznOalAlx1AHl6Dee/SwiowoU3I2L8I/e1/V7cVBm2tkCtp2+Ejoc
-         cFgq74tfbMM04UhoI09Km7V3k78mABcQi9ydWJ8enEi/6lmlSv4q9hLBsasxJMbJ0iho
-         FxQ2Dvc6B/TRXNjesWZTLO4acef0rGB7KY+UNP8+QuwmbW8aE1rj0xc+jzjjaRQKK6ls
-         orc6IC6Yr9fPNsv8On2BSs7FiLIz0mfFBwzvaOeuB5tK8YV9em6ifqSqoZTBbPE4Bjc6
-         xBRQrjoJvkg4rivPVyHQQ8IPAput+1V4fuHnK8AQ5C1ZEgn1GT3Wr3a1kIh+h+QvPz1/
-         EAaw==
-X-Gm-Message-State: AD7BkJLF091i27sWz5FRpn9Fzs2hijBM5RTuV2cKNBIm00KqFEXvbqTAJq0+dp7mT+bcnJ3SQwxGaa/MoFaq0A==
-X-Received: by 10.182.27.199 with SMTP id v7mr8160709obg.16.1458980545572;
- Sat, 26 Mar 2016 01:22:25 -0700 (PDT)
-Received: by 10.202.59.139 with HTTP; Sat, 26 Mar 2016 01:21:45 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=/wcn1xkUI0y97+y00hVABOx0KAr4fGqKWrHiGaw8Ey0=;
+        b=dZOC0/VcvtFH+0c+cKW/lvXoK9WefBkoqFHtSNDhj9ujp7zgx7KNsYwmxt/v/tgGP6
+         dG84+7xvWGidFrHw0NjMrW63Ii1gS8f2ufAj29yQhn8ZE8waNDXVvxNXHRTSG7PL51nv
+         OdINH4EswFmG7Fkcy+FLI4vfYel9yLChDK5Fhs2mAb90vGPtUFvt6qd2fyRvssG0jYnu
+         kKhhfsji0N8nKR7m0pbTyvxRcEJa063m7EZGJqSBtFoqrlj2uqBpPNZd3g1E1OfSBCXx
+         Ib0n+2HtGUjGuIZlwxf0vviJfvUX0LjPK5HPkJ9nH/nALtelPSzyLHFRCE5AVkBMLNql
+         cXCw==
+X-Gm-Message-State: AD7BkJI82we041IDUFs1Dgi/ZGNzv08I9swguQuqSuKgYhnltoi3owLl3FBsAv+imRILFOsf1pPDx8G1yhjdnQ==
+X-Received: by 10.60.147.228 with SMTP id tn4mr8172848oeb.33.1458985949645;
+ Sat, 26 Mar 2016 02:52:29 -0700 (PDT)
+Received: by 10.157.27.250 with HTTP; Sat, 26 Mar 2016 02:52:29 -0700 (PDT)
+In-Reply-To: <CAFZEwPOa3i9XTF-5ZWZXvXfAzpyFojz57JBy4_WahF0Y4Q9DWQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289979>
 
-[I've quickly looked at the mailing list archive and didn't see this
-issue reported.  However I might be wrong.]
+2016-03-26 14:18 GMT+08:00 Pranit Bauva <pranit.bauva@gmail.com>:
+> On Sat, Mar 26, 2016 at 7:43 AM, =E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqu=
+n@gmail.com> wrote:
+>> 2016-03-26 2:16 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
+>>> =E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqun@gmail.com> writes:
+>>>
+>>>> # Purpose
+>>>> The current implementation of send-email is based on perl and has =
+only
+>>>> a tui, it has two problems:
+>>>> - user must install a ton of dependencies before submit a single p=
+atch.
+>>>> - tui and parameter are both not quite friendly to new users.
+>>>
+>>> Is "a ton of dependencies" true?  "apt-cache show git-email"
+>>> suggests otherwise.  Is "a ton of dependencies" truly a problem?
+>>> "apt-get install" would resolve the dependencies for you.
+>>
+>> There are three perl packages needed to send patch through gmail:
+>> - perl-mime-tools
+>> - perl-net-smtp-ssl
+>> - perl-authen-sasl
+>>
+>> Yes, not too many, but is it better none of them?
+>
+> Are you sure using a GUI does not have any dependencies?
+>
+>> What's more, when I try to send mails, I was first disrupted by
+>> "no perl-mime-tools" then by "no perl-net-smtp-ssl or perl-authen-sa=
+sl".
+>> Then I think, why not just a mailto link?
+>>
+>>>> # Plan
+>>>> So I propose to implement following:
+>>>> - Allow user to send mail via a [`mailto`
+>>>> link](https://en.wikipedia.org/wiki/Mailto). so that users could
+>>>> complete the mail in their favorite email clients such as gmail, m=
+utt,
+>>>> alpine and even gmail for android through
+>>>
+>>> IIRC, GMail on Android is incapable of sending a "text/plain", so
+>>> that part may not fly well.
+>>
+>> Really? As much as I known, GMail on Android is capable of sending
+>> a "text/plain" while Inbox is not.
+>
+> How do you plan in integrating GMail on Android so that it can send
+> patches which exists on your computer?
 
+No, if you could have termux a try, you will find that it's suitable fo=
+r simple
+development. it has a apt, so you could have clang, neovim, tmux, cmake
+and so on.
 
-The issue is simple:  `git apply` does not respect the `--work-tree`
-argument when called outside the repository.
+In fact, I recently use my nexus 7 with termux as a portable
+development environment.
+A bluetooth keyboard is needed, of course.
 
-The version of Git I used is OpenSUSE's official 2.1.4 but also 2.7.4
-from their repositories.
+>>>> - Build a simple email client (maybe a web components based web ap=
+p or
+>>>> wxwidgets based GUI client, they are both cross-platform) which is
+>>>> easy to use for sending patch without disrupting the mailbox forma=
+t.
+>
+> I think introducing a GUI may lead to much more dependencies. Many gi=
+t
+> developers already have perl packages in their system but they don't
+> have wxwidgets.
 
-The command I used is:
-  git --work-tree /.../some-repo --git-dir /.../some-repo/.git apply
-/.../some-patch
+wxwidgets seems not a good choice. But if I build the GUI via web app,
+I could import required js and css from Internet directly, so the users=
+ do
+not need the dependencies on their computer.
 
-The current working directory is completely unrelated with the
-targeted work-tree (i.e. it is not a subdirectory of the work-tree).
-
-
-I confirmed the above by using `strace -f -e file -- git ...`, and
-although Git picks the correct path for the target work-tree and
-switches there, it then switches back to the initial working directory
-(the one being invoked from).  See bellow the (redacted) output of
-`strace`:
-
-~~~~
-getcwd("{current-working-dir}", 129) = 79
-stat("{target-working-dir}/.git", {st_mode=S_IFDIR|0700, st_size=300, ...}) = 0
-lstat("{target-working-dir}/.git/HEAD", {st_mode=S_IFREG|0600,
-st_size=23, ...}) = 0
-open("{target-working-dir}/.git/HEAD", O_RDONLY)  = 3
-lstat("{target-working-dir}/.git/commondir", 0x7ffe0231eb90) = -1
-ENOENT (No such file or directory)
-access("{target-working-dir}/.git/objects", X_OK) = 0
-access("{target-working-dir}/.git/refs", X_OK)    = 0
-lstat("{target-working-dir}/.git/commondir", 0x7ffe0231eb80) = -1
-ENOENT (No such file or directory)
-access("{home}/.config/git/config", R_OK) = -1 ENOENT (No such file or
-directory)
-access("{home}/.gitconfig", R_OK) = 0
-open("{home}/.gitconfig", O_RDONLY) = 3
-access("{target-working-dir}/.git/config", R_OK)  = 0
-open("{target-working-dir}/.git/config", O_RDONLY) = 3
-stat("{target-working-dir}", {st_mode=S_IFDIR|0700, st_size=880, ...}) = 0
-getcwd("{current-working-dir}", 129) = 79
-chdir("{target-working-dir}")                     = 0
-getcwd("{target-working-dir}", 139)               = 11
-lstat("{target-working-dir}", {st_mode=S_IFDIR|0700, st_size=880, ...}) = 0
-chdir("{current-working-dir}") = 0
-stat("{target-working-dir}/.git", {st_mode=S_IFDIR|0700, st_size=300, ...}) = 0
-lstat("{target-working-dir}/.git/commondir", 0x7ffe0231eb40) = -1
-ENOENT (No such file or directory)
-access("{home}/.config/git/config", R_OK) = -1 ENOENT (No such file or
-directory)
-access("{home}/.gitconfig", R_OK) = 0
-open("{home}/.gitconfig", O_RDONLY) = 3
-access("{target-working-dir}/.git/config", R_OK)  = 0
-open("{target-working-dir}/.git/config", O_RDONLY) = 3
-open("{target-diff}", O_RDONLY)           = 3
-open("{home}/.config/git/attributes", O_RDONLY) = -1 ENOENT (No such
-file or directory)
-open(".gitattributes", O_RDONLY)        = -1 ENOENT (No such file or directory)
-open("{target-working-dir}/.git/info/attributes", O_RDONLY) = -1
-ENOENT (No such file or directory)
-lstat("{file-to-be-patched}", 0x7ffe0231e1f0)       = -1 ENOENT (No
-such file or directory)
-error: {file-to-be-patched}: No such file or directory
-+++ exited with 1 +++
-
-
-Hope it helps,
-Ciprian.
+>>> I suspect it would yield a better result if the plan were to update
+>>> a popular email client and make it possible to tell it to read an
+>>> existing text file (i.e. mbox) without corrupting its contents.
+>>> People do not have to learn a new mail client if done that way.
+>>
+>> Maybe a plugin? I'm not sure.
+>
+> You could make a plugin. That would simply things.
+>
+>> If above `mail-to` is implemented, user could just using any mail
+>> client, but a mail client adaptive for patch would be better:
+>> - Do not allow user to edit the diff part
+>> - always 'plan/text'
+>> - visual
