@@ -1,103 +1,125 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] tag.c: move PGP verification code from plumbing
-Date: Sat, 26 Mar 2016 02:33:28 -0400
-Message-ID: <CAPig+cSQ2+yc6UCM08zMUDXKFgRBj5FUUEe+wFLxGkykE2yKxA@mail.gmail.com>
-References: <1458866017-15490-1-git-send-email-santiago@nyu.edu>
-	<CAPig+cQe5bwHXq4_qegBCM8Kqoqiz7K2ZtVk0FGMSEUPWQHyYA@mail.gmail.com>
-	<20160325144509.GA20375@LykOS>
+From: Ciprian Dorin Craciun <ciprian.craciun@gmail.com>
+Subject: Issue: `git apply` doesn't respect `--work-tree`
+Date: Sat, 26 Mar 2016 10:21:45 +0200
+Message-ID: <CA+Tk8fwhjwj9qjgWiiDsJnCupAQT1JJTfYYgDykQhfBnXE09SQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: Santiago Torres <santiago@nyu.edu>
-X-From: git-owner@vger.kernel.org Sat Mar 26 07:33:41 2016
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 26 09:22:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajhn1-0001l5-Vl
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Mar 2016 07:33:40 +0100
+	id 1ajjUV-0001MK-B9
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Mar 2016 09:22:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751712AbcCZGdb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Mar 2016 02:33:31 -0400
-Received: from mail-vk0-f49.google.com ([209.85.213.49]:34002 "EHLO
-	mail-vk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750871AbcCZGd3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Mar 2016 02:33:29 -0400
-Received: by mail-vk0-f49.google.com with SMTP id e185so109244028vkb.1
-        for <git@vger.kernel.org>; Fri, 25 Mar 2016 23:33:29 -0700 (PDT)
+	id S1751662AbcCZIW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Mar 2016 04:22:28 -0400
+Received: from mail-ob0-f169.google.com ([209.85.214.169]:34941 "EHLO
+	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751502AbcCZIW0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Mar 2016 04:22:26 -0400
+Received: by mail-ob0-f169.google.com with SMTP id fp4so70405374obb.2
+        for <git@vger.kernel.org>; Sat, 26 Mar 2016 01:22:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=Idd9TAoixaBx/q1fAB6MhfWtG1wCDBpK+OAbTwkyGlE=;
-        b=Hdhbqi2j2YxfpH2V4f4EuvC4IiT7PttjG7YziXqyhECB1a8AROFIogC6CmZhn2abQJ
-         BVYthM8tru3YHEN3+Aa6adTaD1iO/ItKhxXx3+2cGEM18Rqqbew/MDtTfrkKhaVBU8eo
-         bHIGNFj17dCJX+C/6RyqUYZtLLAlnP5n2eErRq6MEoqZjWvraRiAEIonn8AucJ907Tan
-         f8H9B5bDZHtrv64epNhHHGdbCBik1nja++aLEsoeJxmUfhr4baDtTBG+TDkZZabdJQOZ
-         ny4Hrcu+/k4fWTrwAPvLI6s1lb530JPzBtzijkYzBEikENZgTXUfQtrUoPPSR+BdAfQr
-         mZUg==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Hup0FQeFyXflu2En4fgObLWncxfSVYzpoVzPp59Sdhs=;
+        b=UJZe57wFcIaqVcoUXym8skWcn4ag/NfNm4kRWliiuhgWOx0SITK6QEOCW+RmE+JOtY
+         QRAhQRN1X7Z7VNadVOqioJvzOFp4tVbQQt2u6gt3CDxZ1YvUz9cFg5suzxcG1m0ijBrx
+         vxGN7mYqlcrPJJ2rIfiExgX1BXejRb59JBzPW2dbhCMY8u5K2ORKsKBXSNhoa0Ovh7Cv
+         MBaKXQrJfdbZzj+9WtiELKDgj8aUNPjmhorUx1qgYd7fvh7fFvywBL/ohDWp4iW67tkg
+         wF7N842egBMyx7JD1k8lCyJyX/IS33L2lyGtRDyQEcVXh9btvbD5qdVaFeLxvY5qy4YE
+         qlbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=Idd9TAoixaBx/q1fAB6MhfWtG1wCDBpK+OAbTwkyGlE=;
-        b=D/eAR3SyA7LIt0ZT2bwUtsblmHY2OdAMihQ/NhWiuvvqRI6D32Ltfj/O2x6TzuM0hF
-         ZsABwpCloDkt8MUD7ydiFEfd0k0T4V3g44wbMcgrl7HIBcU1Zibdfhceg8pOqrY1d+11
-         yPEd+F1AmpvNHFAr7NxkTL54+MGGkxt4A/b5avgpZxH7FQuQLZill2MsgVmEt8VAMAK/
-         sQO/TCSNncv/UjvkSXULw1pcuSW/IqY9WeSgGi1sro9GWE0OPR3cSAG68XBKDh5tTJuB
-         Y3ZVDhF6LaB4r7A1lM1PLQlKLXogCEvLpUSCOSH3Xkrsi2gQFV3JlxMYrkoaNF3x+uyW
-         Wqzw==
-X-Gm-Message-State: AD7BkJK7v4fTqMtU2ACin+NFajkjhLZrG8PdmTf/BWHdRx/Vb+i0SmGleaCQwK/luz/A3bO7u44bdVZPk28eLA==
-X-Received: by 10.159.33.206 with SMTP id 72mr2588527uac.14.1458974008414;
- Fri, 25 Mar 2016 23:33:28 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Fri, 25 Mar 2016 23:33:28 -0700 (PDT)
-In-Reply-To: <20160325144509.GA20375@LykOS>
-X-Google-Sender-Auth: 8p747WGg9Os8xsRK3KStdPVqE4I
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Hup0FQeFyXflu2En4fgObLWncxfSVYzpoVzPp59Sdhs=;
+        b=fyOoZvN/M26Q0wznOalAlx1AHl6Dee/SwiowoU3I2L8I/e1/V7cVBm2tkCtp2+Ejoc
+         cFgq74tfbMM04UhoI09Km7V3k78mABcQi9ydWJ8enEi/6lmlSv4q9hLBsasxJMbJ0iho
+         FxQ2Dvc6B/TRXNjesWZTLO4acef0rGB7KY+UNP8+QuwmbW8aE1rj0xc+jzjjaRQKK6ls
+         orc6IC6Yr9fPNsv8On2BSs7FiLIz0mfFBwzvaOeuB5tK8YV9em6ifqSqoZTBbPE4Bjc6
+         xBRQrjoJvkg4rivPVyHQQ8IPAput+1V4fuHnK8AQ5C1ZEgn1GT3Wr3a1kIh+h+QvPz1/
+         EAaw==
+X-Gm-Message-State: AD7BkJLF091i27sWz5FRpn9Fzs2hijBM5RTuV2cKNBIm00KqFEXvbqTAJq0+dp7mT+bcnJ3SQwxGaa/MoFaq0A==
+X-Received: by 10.182.27.199 with SMTP id v7mr8160709obg.16.1458980545572;
+ Sat, 26 Mar 2016 01:22:25 -0700 (PDT)
+Received: by 10.202.59.139 with HTTP; Sat, 26 Mar 2016 01:21:45 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289978>
 
-On Fri, Mar 25, 2016 at 10:45 AM, Santiago Torres <santiago@nyu.edu> wrote:
->> >         while (i < argc)
->> > -               if (verify_tag(argv[i++], flags))
->> > +               name = argv[i++];
->> > +               if (get_sha1(name, sha1))
->> > +                       return error("tag '%s' not found.", name);
->> > +
->> > +               if (pgp_verify_tag(NULL, NULL, sha1, flags))
->> >                         had_error = 1;
->>
->> Meh, this isn't Python. Due to the missing braces, the only thing
->> inside the while() loop is the assignment to 'name'; all the other
->> indented code is outside the while().
->>
->> Did you run the test suite following this change? Did it all pass? If
->> so, perhaps an additional test or two to catch this sort of error
->> would be warranted.
->
-> Wow, you're right! I just re-ran the tests again to make sure I didn't
-> miss anything. All the tests pass for me, so I'll write an extra case to
-> avoid this. Just to be sure, I should include it in t7030-verify-tag.sh
-> right?
+[I've quickly looked at the mailing list archive and didn't see this
+issue reported.  However I might be wrong.]
 
-Generally speaking, it is desirable to have test coverage for all
-functionality you're refactoring to ensure that the refactoring
-doesn't break that functionality.
 
-t7030-verify-tag.sh indeed seems like a good place to add a new test
-for catching this sort of regression.
+The issue is simple:  `git apply` does not respect the `--work-tree`
+argument when called outside the repository.
 
-t7004-tag.sh is also of interest since, in an earlier version of this
-patch, if I recall correctly, Peff caught a regression where "git tag
--v" failed to pass the GPG_VERIFY_VERBOSE flag, and I don't think
-t7004-tag.sh would have caught that problem either, so a new test for
-that would be good, as well.
+The version of Git I used is OpenSUSE's official 2.1.4 but also 2.7.4
+from their repositories.
 
-Speaking of GPG_VERIFY_VERBOSE, now that I'm examining the changes
-more closely, it appears that this version of the patch no longer
-respects GPG_VERIFY_VERBOSE at all but is instead hard-coded to be
-verbose. Is that desirable or intentional?
+The command I used is:
+  git --work-tree /.../some-repo --git-dir /.../some-repo/.git apply
+/.../some-patch
+
+The current working directory is completely unrelated with the
+targeted work-tree (i.e. it is not a subdirectory of the work-tree).
+
+
+I confirmed the above by using `strace -f -e file -- git ...`, and
+although Git picks the correct path for the target work-tree and
+switches there, it then switches back to the initial working directory
+(the one being invoked from).  See bellow the (redacted) output of
+`strace`:
+
+~~~~
+getcwd("{current-working-dir}", 129) = 79
+stat("{target-working-dir}/.git", {st_mode=S_IFDIR|0700, st_size=300, ...}) = 0
+lstat("{target-working-dir}/.git/HEAD", {st_mode=S_IFREG|0600,
+st_size=23, ...}) = 0
+open("{target-working-dir}/.git/HEAD", O_RDONLY)  = 3
+lstat("{target-working-dir}/.git/commondir", 0x7ffe0231eb90) = -1
+ENOENT (No such file or directory)
+access("{target-working-dir}/.git/objects", X_OK) = 0
+access("{target-working-dir}/.git/refs", X_OK)    = 0
+lstat("{target-working-dir}/.git/commondir", 0x7ffe0231eb80) = -1
+ENOENT (No such file or directory)
+access("{home}/.config/git/config", R_OK) = -1 ENOENT (No such file or
+directory)
+access("{home}/.gitconfig", R_OK) = 0
+open("{home}/.gitconfig", O_RDONLY) = 3
+access("{target-working-dir}/.git/config", R_OK)  = 0
+open("{target-working-dir}/.git/config", O_RDONLY) = 3
+stat("{target-working-dir}", {st_mode=S_IFDIR|0700, st_size=880, ...}) = 0
+getcwd("{current-working-dir}", 129) = 79
+chdir("{target-working-dir}")                     = 0
+getcwd("{target-working-dir}", 139)               = 11
+lstat("{target-working-dir}", {st_mode=S_IFDIR|0700, st_size=880, ...}) = 0
+chdir("{current-working-dir}") = 0
+stat("{target-working-dir}/.git", {st_mode=S_IFDIR|0700, st_size=300, ...}) = 0
+lstat("{target-working-dir}/.git/commondir", 0x7ffe0231eb40) = -1
+ENOENT (No such file or directory)
+access("{home}/.config/git/config", R_OK) = -1 ENOENT (No such file or
+directory)
+access("{home}/.gitconfig", R_OK) = 0
+open("{home}/.gitconfig", O_RDONLY) = 3
+access("{target-working-dir}/.git/config", R_OK)  = 0
+open("{target-working-dir}/.git/config", O_RDONLY) = 3
+open("{target-diff}", O_RDONLY)           = 3
+open("{home}/.config/git/attributes", O_RDONLY) = -1 ENOENT (No such
+file or directory)
+open(".gitattributes", O_RDONLY)        = -1 ENOENT (No such file or directory)
+open("{target-working-dir}/.git/info/attributes", O_RDONLY) = -1
+ENOENT (No such file or directory)
+lstat("{file-to-be-patched}", 0x7ffe0231e1f0)       = -1 ENOENT (No
+such file or directory)
+error: {file-to-be-patched}: No such file or directory
++++ exited with 1 +++
+
+
+Hope it helps,
+Ciprian.
