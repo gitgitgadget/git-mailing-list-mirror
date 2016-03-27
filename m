@@ -1,108 +1,100 @@
-From: Rogier Goossens <goossens.rogier@gmail.com>
-Subject: [PATCH v2a 3/3] gitk: Include commit title in branch dialog
-Date: Sun, 27 Mar 2016 09:21:01 +0200
-Message-ID: <9310641.nkQBije1VN@wiske>
-References: <51900395.pKIx87RN0F@wiske> <10662590.KWXHt2RUKZ@wiske>
+From: Kazuki Yamaguchi <k@rhe.jp>
+Subject: Re: [PATCH v2 0/5] branch: fix branch operations with multiple
+ working trees
+Date: Sun, 27 Mar 2016 16:29:42 +0900
+Message-ID: <20160327072942.GA13750@chikuwa.rhe.jp>
+References: <1458553816-29091-1-git-send-email-k@rhe.jp>
+ <cover.1458927521.git.k@rhe.jp>
+ <xmqqzitm1ct8.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sun Mar 27 09:21:18 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 27 09:29:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ak50f-0002ta-FB
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Mar 2016 09:21:17 +0200
+	id 1ak58x-00073Z-71
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Mar 2016 09:29:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753020AbcC0HVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Mar 2016 03:21:14 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:36857 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752338AbcC0HVM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Mar 2016 03:21:12 -0400
-Received: by mail-wm0-f67.google.com with SMTP id l68so13618936wml.3
-        for <git@vger.kernel.org>; Sun, 27 Mar 2016 00:21:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=RNvZktBEiUpZtYVRqY8CJfybltGt3AgrKuBSblOzb9s=;
-        b=RwD4naAXkod7Gs2DuAnJIruWxn2/FmsM6ry3F/sDP6rU5Rc+vabtXc5HgTy+uaWZsp
-         HIK2R1O7X8MPqsPt0I5Zh2oHaPM/BvRD6tw6cGYfbv1n/kasagFSw/uMIQerTs12y0cS
-         ORP+wsZHTCI/+uF8XaWzend8/UkpGtMzc5IR74Z692ycqhBClyNQFE7qNZh/WHMh5ORg
-         jjHE1zMRzZVrO9HpPmJN/vfLn30Fo9zwabwHKKiUeLpWzP57Ej1liLkb4jJnOPEzqAeL
-         klHboosoj6lMAJP7iP+0vczEwVjPT9VLtg72zuG+DYSJw4Nd7dZHG3IG8zv8KJfpiql2
-         sNNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:user-agent
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=RNvZktBEiUpZtYVRqY8CJfybltGt3AgrKuBSblOzb9s=;
-        b=jXjw82W2vZEhkiW1RotCYRUEAa/7HoHuigm0itIMniaKcblhk8kyRjbThwLIghDvXu
-         YaDYvgatIZ+7uWjIkUWC0uo4aM/yrjV1+f7CKVNNEAai6KEIPRuptt/2iMaIt6YiJgw/
-         nuP+GN3nd9MHg8+QKTw/uKSlSztf0ElUgXyFrXB4b4w1HvMqrcPqqc8L/+5t2SztsrL2
-         YEmXMiyz086E6PYujhHhEPUOo4UFlTAahz0rNeTiLO67Wt8qVJzsfa56/SzTyUFmAlWf
-         eg1bXtK3eAsPTClrGxnrg6KWH8oxAO5JFCEi80Ninaf545fOVgu3pvsYhNHcHHLjdWPc
-         t2rA==
-X-Gm-Message-State: AD7BkJIJzbTiwG6XVnPfzRbJ6QwEAa2SiZRVfYbKjkBUp52LONRncmbRe4jY0C4SfkF3ZA==
-X-Received: by 10.28.133.14 with SMTP id h14mr5084095wmd.100.1459063270997;
-        Sun, 27 Mar 2016 00:21:10 -0700 (PDT)
-Received: from wiske.localnet ([86.81.114.242])
-        by smtp.gmail.com with ESMTPSA id u202sm4559687wmd.24.2016.03.27.00.21.10
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 27 Mar 2016 00:21:10 -0700 (PDT)
-User-Agent: KMail/4.14.1 (Linux/3.16.0-4-amd64; KDE/4.14.2; x86_64; ; )
-In-Reply-To: <10662590.KWXHt2RUKZ@wiske>
+	id S1752624AbcC0H3r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Mar 2016 03:29:47 -0400
+Received: from 116.58.164.79.static.zoot.jp ([116.58.164.79]:54706 "EHLO
+	walnut.rhe.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751806AbcC0H3q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Mar 2016 03:29:46 -0400
+Received: from chikuwa.rhe.jp (unknown [10.0.1.1])
+	by walnut.rhe.jp (Postfix) with ESMTPSA id B943D5B737;
+	Sun, 27 Mar 2016 07:29:43 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <xmqqzitm1ct8.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289998>
 
-Hi,
+On Fri, Mar 25, 2016 at 02:13:07PM -0700, Junio C Hamano wrote:
+> Kazuki Yamaguchi <k@rhe.jp> writes:
+> 
+> > [1/5]
+> > Adds RESOLVE_REF_COMMON_DIR to resolve_ref_unsafe(). The second - fourth
+> > patch depend on this. At the same time, this allows us to remove
+> > reimplementation of resolve_ref_unsafe() in worktree.c: parse_ref().
+> >
+> > [2/5]
+> > Adds REF_COMMON_DIR flag to lock_ref_sha1_basic().
+> 
+> While the code reduction in 1/5 is a very good and welcome change,
+> these new flags make me wonder if they can be easily misused in a
+> way that contradicts with what other parts of the system (e.g.
+> path.c::common_list[]) tell us.  Am I worried too much without a
+> good reason?
+> 
 
-I made another branch dialog related change, included in this message.
-It applies on top of my other two patches.
+Umm...
+Certainly I can't come up with other use cases of there flags,
+especially the latter one.
+I'll reconsider.
 
-Rogier.
+> > [3/5]
+> > Adds create_symref_common_dir(). Same as create_symref() except it
+> > doesn't consider $GIT_DIR. create_symref_common_dir("HEAD", some) always
+> > updates .git/HEAD. The next patch uses this.
+> 
+> Similarly, would this allow updating "refs/remotes/origin/HEAD"
+> (which is also a symbolic ref) to different values for different
+> worktrees?  In other words, I am wondering if this new function
+> should be narrower in scope--e.g. used only to update "HEAD" and
+> no other symbolic refs.  Or will the additional flexibility be
+> useful?
+> 
 
-------- 8< ------------------- 8< --------------
+For non-per-worktree ref names, create_symref_common_dir() and
+create_symref() should work in the same way.
+But yes, as far as I know, there is no other chance to update other
+worktree's per-worktree symrefs.
 
-Only the SHA1 was included. It's convenient to have the title
-mentioned as well.
+How about like this (will update per-worktree-gitdir/HEAD):
+set_worktree_head_symref("per-worktree-gitdir", "refs/heads/master")
 
-Signed-off-by: Rogier Goossens <goossens.rogier@gmail.com>
----
- gitk | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+Thanks, 
 
-diff --git a/gitk b/gitk
-index dc75c97..413711e 100755
---- a/gitk
-+++ b/gitk
-@@ -9484,7 +9484,7 @@ proc mvbranch {} {
- }
- 
- proc branchdia {top valvar uivar} {
--    global NS
-+    global NS commitinfo
-     upvar $valvar val $uivar ui
- 
-     catch {destroy $top}
-@@ -9497,6 +9497,11 @@ proc branchdia {top valvar uivar} {
-     $top.sha1 insert 0 $val(id)
-     $top.sha1 conf -state readonly
-     grid $top.id $top.sha1 -sticky w
-+    ${NS}::entry $top.head -width 60
-+    $top.head insert 0 [lindex $commitinfo($val(id)) 0]
-+    $top.head conf -state readonly
-+    grid x $top.head -sticky ew
-+    grid columnconfigure $top 1 -weight 1
-     ${NS}::label $top.nlab -text [mc "Name:"]
-     ${NS}::entry $top.name -width 40
-     $top.name insert 0 $val(name)
--- 
-2.1.4
+> > [4/5]
+> > Fixes the issue of git branch -m.
+> > The behavior when one failed has changed from v1: print an error and
+> > continue.
+> >
+> >   % git branch -m oldname newname
+> >   error: Unable to create '/path/to/.git/worktrees/wt/HEAD.lock': Permission denied
+> >   error: HEAD of working tree /path/to/wt is not updated.
+> >   error: Unable to create '/path/to/.git/worktrees/wt2/HEAD.lock': Permission denied
+> >   error: HEAD of working tree /path/to/wt2 is not updated.
+> >   fatal: Branch renamed to newname, but HEAD is not updated!
+> 
+> Sounds like a good goal.
