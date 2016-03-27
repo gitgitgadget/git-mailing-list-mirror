@@ -1,103 +1,203 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 00/21] replacement for dt/refs-backend-lmdb v7 patch 04/33
-Date: Sun, 27 Mar 2016 07:22:52 +0200
-Message-ID: <56F76E2C.5030700@alum.mit.edu>
-References: <cover.1458723959.git.mhagger@alum.mit.edu>
- <1458802034.28595.8.camel@twopensource.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH v10 1/3] parse-options.c: make OPTION__COUNTUP understand
+ "unspecified" values
+Date: Sun, 27 Mar 2016 11:40:49 +0530
+Message-ID: <CAFZEwPNGVihCctwq+HGnEsAitn7J6jwm7mm7bOQEuhrENKzuuw@mail.gmail.com>
+References: <01020153a7ba4e07-f326395b-63df-4f8a-b378-8f387b02d0bd-000000@eu-west-1.amazonses.com>
+	<01020153b478cf07-758c7f14-33a1-4a67-9bc9-4688de3d6742-000000@eu-west-1.amazonses.com>
+	<CAPig+cTB+xZmwALTY2Oy2_dVXknSEjaBiQ8NNr-qOVOZKjHvXw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, peff@peff.net, pclouds@gmail.com,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: David Turner <dturner@twopensource.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 27 07:27:43 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Mar 27 08:10:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ak3Ek-0005l2-JL
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Mar 2016 07:27:42 +0200
+	id 1ak3ua-0001hP-K4
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Mar 2016 08:10:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751777AbcC0FXM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Mar 2016 01:23:12 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:54275 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751451AbcC0FXM (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Mar 2016 01:23:12 -0400
-X-AuditID: 1207440f-d9fff70000007e44-11-56f76e318d69
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 9D.54.32324.13E67F65; Sun, 27 Mar 2016 01:22:57 -0400 (EDT)
-Received: from [192.168.69.130] (p548D6C6C.dip0.t-ipconnect.de [84.141.108.108])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u2R5MrLv029848
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sun, 27 Mar 2016 01:22:55 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.7.0
-In-Reply-To: <1458802034.28595.8.camel@twopensource.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrEKsWRmVeSWpSXmKPExsUixO6iqGuc9z3M4PsOc4v5m04wWnRd6Way
-	aOi9wmzRPeUto8WPlh5mi5lXrR3YPHbOusvu8ax3D6PHxUvKHvuXbmPzWPD8PrvH501yAWxR
-	3DZJiSVlwZnpefp2CdwZizbtZC2YxV9xY/VutgbGWTxdjJwcEgImEhvW3GHqYuTiEBLYyiix
-	qvU0I4RzgUlif08zK0iVsICfxPP3z5lBbBGBCIklk/eBxYUEUiX6tm4Ds5kF8iQ+LV0MVsMm
-	oCuxqKeZCcTmFdCW6LqwmxHEZhFQlTg6+Rw7iC0qECKxbd03VogaQYmTM5+wgNicAhYS+xes
-	Z4eYqS7xZ94lZghbXmL72znMExj5ZyFpmYWkbBaSsgWMzKsY5RJzSnN1cxMzc4pTk3WLkxPz
-	8lKLdE30cjNL9FJTSjcxQsKbfwdj13qZQ4wCHIxKPLwMf7+FCbEmlhVX5h5ilORgUhLl7cgH
-	CvEl5adUZiQWZ8QXleakFh9ilOBgVhLh7c74HibEm5JYWZValA+TkuZgURLnVV+i7ickkJ5Y
-	kpqdmlqQWgSTleHgUJLgZcsFahQsSk1PrUjLzClBSDNxcIIM55ISKU7NS0ktSiwtyYgHxWR8
-	MTAqQVI8QHv35YDsLS5IzAWKQrSeYlSUEufdD5IQAElklObBjYUlrVeM4kBfCvMuAaniASY8
-	uO5XQIOZgAZLWX0DGVySiJCSamCcmJklrhDuUbZ98uLS+0XXetfwWFdZS/GZHbw8bZnRCefa
-	R62/P+t9qGU49F3a0+FVln/7H8kd2y32NMzt/P5A8P2Tb7/OPwur3eK1vYHXnv1U 
+	id S1752376AbcC0GKv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Mar 2016 02:10:51 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:36785 "EHLO
+	mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752246AbcC0GKu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Mar 2016 02:10:50 -0400
+Received: by mail-qk0-f196.google.com with SMTP id e124so8739975qkc.3
+        for <git@vger.kernel.org>; Sat, 26 Mar 2016 23:10:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=sCSl53s+3Yrj9vi7YR2b1TVDDXm8bU6wdx6/f3FhbCM=;
+        b=D99O5xx7J5OlAKbCRf92w8ystJTBHktxOAstG8BS3uVvOfi6ZEzzpAe0jfEsvyfUhV
+         TeEIBTYa3pko97lXBtfAKudxLDos8CaVYmd09p350mxUGLwIKoaxvkLl9YuL+J2Gh3Mb
+         Nhy1xEfhTm0dD41vMmyN6r9zJZ62AMbx1XeQKYMj/RFxw8fSouuITJa3HbtJFI8ZwNC4
+         uwsMFwadWzqisDHyxre+EIi8O48bEBVAWAZe1QkDrdctQ0/brhttA5PIS1GtgE9tytyY
+         msQgqVP1tmOscSVq42rCcmAQUovATO6NnbTORAUrfT9qR/RjrRRvqt6tsWl6BZSeyINE
+         RXyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=sCSl53s+3Yrj9vi7YR2b1TVDDXm8bU6wdx6/f3FhbCM=;
+        b=WDwU0sOjt4pfFHOhi+mZSXJw2LcEt29/vWAU5xNSuWPCoJF450CmvZTtALvv3HFHBb
+         Bocw3y5ieERj4PuLrj9DMsJr4740OeXK1yWaV+zAJZtMbbXnrviyBGxkfM/ZfrBko5tZ
+         UTKCj0K35XKEsCuASY/riiDaAngleOKYvKORTVc9KfDjiMIG7H8Vmb9NALPIiMsV3Dfk
+         LC5lzWXvjAGRR1ppuZvONODji01U0ntpRmzE2b5oY2rIeVtTnkPkoTIFkTc8wHHev7iA
+         xRPw1DTVvMxpVw0QTmMty2+0Xv/hS1LXe+xI1+1vy9PlR8WwKdXPedzH/LYkYnN2Sf1Z
+         SIBw==
+X-Gm-Message-State: AD7BkJKl9gipN+fNo2ntStjhGQM21g03xZW13kQEGDOM6bim+6lKKn50blAlz+Zu2zYo/Vvk+k2Kpv+gz9xvng==
+X-Received: by 10.129.9.214 with SMTP id 205mr10366731ywj.53.1459059049091;
+ Sat, 26 Mar 2016 23:10:49 -0700 (PDT)
+Received: by 10.13.203.137 with HTTP; Sat, 26 Mar 2016 23:10:49 -0700 (PDT)
+In-Reply-To: <CAPig+cTB+xZmwALTY2Oy2_dVXknSEjaBiQ8NNr-qOVOZKjHvXw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289995>
 
-On 03/24/2016 07:47 AM, David Turner wrote:
-> [...]
-> I incorporated your changes into the lmdb backend.  To make merging
-> later more convenient, I rebased on top of pu -- I think this mainly
-> depends on jk/check-repository-format, but I also included some fixes
-> for a couple of tests that had been changed by other patches.
+On Sun, Mar 27, 2016 at 8:15 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Sat, Mar 26, 2016 at 3:48 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>> parse-options.c: make OPTION__COUNTUP understand "unspecified" values
+>
+> A bit clearer: s/understand/respect/
+> Also: s/__/_/
 
-I think rebasing changes on top of pu is counterproductive. I believe
-that Junio had extra work rebasing your earlier series onto a merge of
-the minimum number of topics that it really depended on. There is no way
-that he could merge the branch in this form because it would imply
-merging all of pu.
+Sure.
 
-See the zeroth section of SubmittingPatches [1] for the guidelines.
+>> The reason to make it understand negative values or more specifically
+>> "unspecified" values is to give the ability to differentiate whether
+>> `--option` or `--no-option` was specified at all.
+>
+> The word "negative" shows up far too early in this paragraph, even
+> before "unspecified". It also fails utterly to explain what
+> "unspecified" means and how to use it. It does vaguely explain why
+> respecting "unspecified" is desirable (to know if --[no-]option was
+> seen), but otherwise leaves the reader quite clueless.
+>
+>> Many uses of COUNTUP have now been replaced with BOOL and what remains
+>> are verbose/quiet/force. This change will not affect existing users of
+>> COUNTUP at all, as long as they use the initial value of 0 (or more), as
+>> there is no mechanism to decrement. The only thing the command line can
+>> do is to reset it to zero with "--no-foo".
+>
+> Copying this paragraph verbatim from Junio's email[1] isn't
+> necessarily the best way to compose a commit message. Junio was
+> "thinking out loud" while justifying the change to himself as being
+> safe, but you ought to reframe this reasoning into a more concise form
+> which flows with the rest of the commit message, keeping the important
+> bits and dropping others.
 
-> The current version can be found here:
-> 
-> https://github.com/dturner-tw/git/tree/dturner/pluggable-backends
-> 
-> I won't resend the full patchset to the list until I hear back on the
-> rest of the review.
-> 
-> It seems like maybe we should now split this into two patchsets:
-> everything up to and including "refs: move resolve_ref_unsafe into
-> common code" does not depend on the backend structure and could go in
-> earlier.  If you agree, we could send that first series and get it in,
-> hopefully reducing later merge conflicts.  
+I will drop off some initial parts.
 
-That sounds like a good idea. It's always a relief to get work merged
-and not have to keep porting it along.
+>> Verbose or quiet don't use negative values before this commit but force
+>> uses it in a different way to handle its config and then munges the "-1"
+>> into 0 before we get to parse_options.
+>
+> Presumably, you're talking about a very specific instance of -1 in
+> conjunction with OPT__FORCE in builtin/clean.c, but that information
+> is entirely missing from this paragraph, thus this explanation serves
+> only to confuse rather than clarify. It is a good idea to cite this
+> specific unusual case when justifying that this change is safe, but it
+> must be accompanied by sufficient context for the reader to understand
+> what is being said.
 
-There are three patches later in the series that (I think) also don't
-have specifically to do with pluggable backends. These could potentially
-also be considered for earlier merge to reduce the size of what remains:
+I will mention about OPT__FORCE in builtin/clean.c clearly.
 
-* refs: don't dereference on rename
-* refs: on symref reflog expire, lock symref not referrent
-* refs: resolve symbolic refs first
+>> There are uses of COUNTUP in cmd_hash_object() and test-parse-options.c
+>> and they are both fine.
+>
+> What does "fine" mean? I know from reading the code that "fine" means
+> that these clients initialize the values to 0, thus should see no
+> behavioral difference. But why are these two cases called out
+> specially when they are already covered by the above "as long as they
+> use initial value of 0" explanation? As a reader, having these two
+> cases mentioned specially makes me wonder if I'm missing something
+> non-obvious about them.
 
-But note that I haven't audited those patches yet, so I'm not saying
-that they are necessarily ready to be merged.
+Its good to drop off this paragraph
 
-Michael
+> It would probably be better to avoid mentioning cmd_hash_object() and
+> test-parse-options.c at all, and instead explain generally that, with
+> one exception (builtin/clean.c), all current clients of OPTION_COUNTUP
+> use an initial value of zero, thus are not impacted by this change.
+> And, then go on to explain builtin/clean.c's special case and why it
+> is safe, as well.
+>
+>
+> Sorry for seeming to be very picky, but if I hadn't already been
+> following this topic (and hadn't in fact suggested this particular
+> change), as a reader, I think I would find this commit message utterly
+> baffling, and wouldn't have a clue what this change is about or why it
+> is desirable.
+>
+> Perhaps it would be a good idea to re-read "(2) Describe your changes
+> well" in Documentation/SubmittingPatches for hints about writing a
+> good commit message, as well as Junio's recent re-stating[2] of those
+> hints.
 
-[1] https://github.com/git/git/blob/master/Documentation/SubmittingPatches
+I don't disagree to your point and it is a bit difficult for me to
+explain stuff to other people especially when I know what's going on
+but other might not.
+
+> Try to write the commit message as if you were speaking to someone who
+> wasn't already familiar with the issue you're trying to solve.
+> Specifically, explain the problem ("no way to distinguish between
+> --[no-]option being seen or not"); explain the solution ("introduce an
+> 'unspecified' value"); the implementation of the "unspecified" value
+> ("any negative number" plus an example of how to make use of it);
+> justify that the change is safe ("existing clients of OPTION_COUNTUP
+> are not impacted because ...").
+
+I will try and do this in the commit message.
+
+>> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+>> ---
+>> The discussion about this patch:
+>> [1] : http://thread.gmane.org/gmane.comp.version-control.git/289027
+>>
+>> Previous version of the patch:
+>> [v1] : http://thread.gmane.org/gmane.comp.version-control.git/289061
+>
+> Unless I'm mistaken, the previous version was v9[3], not v1.
+>
+>> Changes introduced:
+>> Use a different language in commit message to make the change and its
+>> utility more clear. Also added some points as to where this patch could
+>> break but it doesn't.
+>
+> This version forgets to add the new tests to t0040-parse-options.sh
+> which SZEDER requested[4] to ensure that the new behavior works as
+> expected.
+>
+>> ---
+>> diff --git a/Documentation/technical/api-parse-options.txt b/Documentation/technical/api-parse-options.txt
+>> @@ -144,8 +144,12 @@ There are some macros to easily define options:
+>>
+>>  `OPT_COUNTUP(short, long, &int_var, description)`::
+>>         Introduce a count-up option.
+>> -       `int_var` is incremented on each use of `--option`, and
+>> -       reset to zero with `--no-option`.
+>> +       Each use of `--option` increments `int_var`, starting from zero
+>> +       (even if initially negative), and `--no-option` resets it to
+>> +       zero. To determine if `--option` or `--no-option` was set at
+>> +       all, set `int_var` to a negative value, and if it is still
+>
+> I realize that you copied this text verbatim from the example I
+> gave[5], but in retrospect, I think s/set/initialize/ would be a bit
+> more clear:
+>
+>     all, initialize `int_var` to a negative value, ...
+>
+>> +       negative after parse_options(), then neither `--option` nor
+>> +       `--no-option` was seen.
+>
+> [1]: http://article.gmane.org/gmane.comp.version-control.git/289264/
+> [2]: http://article.gmane.org/gmane.comp.version-control.git/289757/
+> [3]: http://thread.gmane.org/gmane.comp.version-control.git/288820/focus=289724
+> [4]: http://article.gmane.org/gmane.comp.version-control.git/289733
+> [5]: http://article.gmane.org/gmane.comp.version-control.git/289822
