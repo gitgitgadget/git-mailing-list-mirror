@@ -1,138 +1,183 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v10 2/3] t7507-commit-verbose: store output of grep in a file
-Date: Sat, 26 Mar 2016 23:07:18 -0400
-Message-ID: <CAPig+cRQ5hOLi3539Emq=YexHRXqdesf+Yo2cY+NkiPO_9Vhyg@mail.gmail.com>
+Subject: Re: [PATCH v10 3/3] commit: add a commit.verbose config variable
+Date: Sat, 26 Mar 2016 23:34:49 -0400
+Message-ID: <CAPig+cTBxH7BAs2M+PBwTHfVJvH0ADL1OSEKdHQY59L-WiYosA@mail.gmail.com>
 References: <01020153b478cf07-758c7f14-33a1-4a67-9bc9-4688de3d6742-000000@eu-west-1.amazonses.com>
-	<01020153b478cf9b-1417ac08-005c-4d72-91f1-0b07f00a24d5-000000@eu-west-1.amazonses.com>
+	<01020153b478cfab-5309f834-7617-4a7f-a3e9-93f0dcf4a6be-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>
 To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 27 05:07:25 2016
+X-From: git-owner@vger.kernel.org Sun Mar 27 05:35:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ak12y-000361-Sb
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Mar 2016 05:07:25 +0200
+	id 1ak1Th-0008Ag-Lq
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Mar 2016 05:35:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754781AbcC0DHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Mar 2016 23:07:21 -0400
-Received: from mail-vk0-f67.google.com ([209.85.213.67]:36191 "EHLO
+	id S1754839AbcC0Dew (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Mar 2016 23:34:52 -0400
+Received: from mail-vk0-f67.google.com ([209.85.213.67]:36244 "EHLO
 	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754526AbcC0DHU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Mar 2016 23:07:20 -0400
-Received: by mail-vk0-f67.google.com with SMTP id z68so11508753vkg.3
-        for <git@vger.kernel.org>; Sat, 26 Mar 2016 20:07:19 -0700 (PDT)
+	with ESMTP id S1754645AbcC0Deu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Mar 2016 23:34:50 -0400
+Received: by mail-vk0-f67.google.com with SMTP id z68so11538321vkg.3
+        for <git@vger.kernel.org>; Sat, 26 Mar 2016 20:34:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc;
-        bh=5YG1vqcdvM61Cr3LqF4k8xP5MibFBDW2GKJ0kUjN6e4=;
-        b=DFyaOnztGch2Bp8D6SuDlrPUIalSXySgeNiADTbqg5PRanE6DaY/CHn06Ej7Axq4CI
-         HRdyhb0DHaLZappeFZJeg3aFvpZfkszOueQRBAJPOFQE5Eyd5jsQCq3dqsAQjb3P9Ppz
-         u0Qx6lGkYiD12p0VHyJGJHCEiIsu2eFuy/JhwICHK8vPA3tqpyLZVk49CFsH5EcN2NCn
-         nMdXMe/ZvRKqmGBycSP6zstzhkfMxxTO3DmtCjE0mGHpp5BP8JuN+q7I5catuytvvr5j
-         A83x/xIPptxtuy4eEmI+JPn3FCY+sUtvRaT2ZQQ+i/40rryRWE6BN2H3mlOUc/nfBrkv
-         8rcA==
+        bh=wVSTRM68mgfQsE8GU4wF6wRo2McZ9qODbwqzBYWu/RE=;
+        b=X7Xn7hDcuA111Wm4ZZr6wYQUz9gPPVPh2rhf2PsyyylwlXneTyf6AofRJqz8nw9OUE
+         BYMHE2PiY+ZZCzwAXkNiIWTr6osME+bX7/sea5VNGDEiX7GWjgn6t0ZNMv9ICfHf0KK9
+         EfZoqW8hLf6yLj56OLeMEQmqebCU4HGtuQgxU7ivcuDvHchP97q3tH10DL99+vap6BlV
+         Ds/2KNTuxWD0rNqZK4YT4H41lxYnvoWeULMiXIiGBZeLQBt2L7ukbITHOA6gTvl5KqBE
+         ZS0k7XFkLksnDy47PKowwEsYXQv8Rz9yTu5bGBIzoxDatJggWQW8EsEjjBAffqJc8qPZ
+         CKYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=5YG1vqcdvM61Cr3LqF4k8xP5MibFBDW2GKJ0kUjN6e4=;
-        b=jGFWx1nBvE3bfStUNv9XC2BSSjG/MFNHQXalhic0a9cpMSDXLiIHgk8+5JSygh7FnR
-         SwGcsKBL6VBp4GxvXkBof5/KCtWZUtvSowuoUJXskVJhR+osNpttJ4IMQWBzvwV/wnOY
-         K5CNuaVLqBQWSzmvm31gaV9zpHhcGzjoFwlGuESlRfnVhrp1v001aK1SEs1Rqn0i+f1s
-         5kwMrVXP91BsG1WCMC16VWowSuxozEvUhkKwoIHBtdISv1oP7wZeiZVgdBLES7AnHBx4
-         IURNKgKUU3TRq2/rzU06neGo+uoCk3lhD7yHj1zf03S7ch057oTrJGv4/Bc3CnW/Cy5c
-         41/A==
-X-Gm-Message-State: AD7BkJJhfyeCJ/XOy4yJgtBfGzkxZoi4wMn4is7qNtWuveTV3oUduV6bXHkruDGCGAID3QEZcr8kyL3dN1C/rg==
-X-Received: by 10.159.37.101 with SMTP id 92mr10918644uaz.66.1459048038889;
- Sat, 26 Mar 2016 20:07:18 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Sat, 26 Mar 2016 20:07:18 -0700 (PDT)
-In-Reply-To: <01020153b478cf9b-1417ac08-005c-4d72-91f1-0b07f00a24d5-000000@eu-west-1.amazonses.com>
-X-Google-Sender-Auth: 0y7ls_bmowYdA5imd7IJWbymDFs
+        bh=wVSTRM68mgfQsE8GU4wF6wRo2McZ9qODbwqzBYWu/RE=;
+        b=hfViiIjMt9kQh5t2Ie0UaHY8QzbOo+9SmEGRCPvsB4kbGS0loWXQCJMpczq3mis+df
+         QEr8kmNDlqhn4rYPoUTi6IX7Fcv2fWrIjlmWKd5fGcf+/lYWDvSgZUibjCidkmnywjOE
+         W47KShWvtDdjmVyzLPpkZKIy8rrCTuoKVAi3nsVHP4x2/lo7UVcO5GhB3/kwaRJGIuCS
+         wHLPymdakkI2qp4w2u+06slz+h2O+EmVMOXpZB2hBtuQ2OAlT4EHZ4j8cpcHl0yAGraU
+         zZ5fh+aU4B0Dfp4mlPiq0NS4paDv8HJktmezNoqbZ+KOKOVDIwTObW5Ho4VpCDh0AdwY
+         cfhA==
+X-Gm-Message-State: AD7BkJLrJxQQvQ/24/t5U7q9OtMcqGxllfu1KWVrOoORK1WNzVxwKbvVPVXVbB7tK8xU7vVj4EUGhoIfOTBaFQ==
+X-Received: by 10.159.33.206 with SMTP id 72mr4152102uac.14.1459049689826;
+ Sat, 26 Mar 2016 20:34:49 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Sat, 26 Mar 2016 20:34:49 -0700 (PDT)
+In-Reply-To: <01020153b478cfab-5309f834-7617-4a7f-a3e9-93f0dcf4a6be-000000@eu-west-1.amazonses.com>
+X-Google-Sender-Auth: ILQeM4fXX2VllOaknXa6Hi_Saig
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289993>
 
 On Sat, Mar 26, 2016 at 3:48 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> So that we can see how many diffs were contained in the message and use
-> them in individual tests where ever it is required. Also use
-> write_script() to create the fake "editor".
+> Add commit.verbose configuration variable as a convenience for those
+> who always prefer --verbose taking care of multiple levels of verbosity.
 
-It is important to explain *why* you want to be able to count how many
-diffs were in the editor message. In particular, you will be adding
-new tests in a subsequent patch which will expect a specific number of
-diffs (rather than any number of diffs)
-
-Also, you need to explain why you're changing the existing tests to
-count the number of diffs. Is it simply "because you can" or is it
-because you suspect that a change you're making in a subsequent patch
-might accidentally cause too many diffs to show up in the existing
-test cases?
+What does "taking care of multiple levels of verbosity" mean? I
+suppose you mean that commit.verbose specifies a verbosity level
+(rather than being merely boolean), but that phrase is difficult to
+decipher. And, since it's obvious from the patch itself that verbosity
+is not a mere boolean, there isn't really a need to mention it here.
+The commit message would be perfectly fine without that bit, so
+perhaps just drop it.
 
 > Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+>
 > ---
+> Changes with respect to the previous patch:
+>  - Fixed a status related bug pointed out by SZEDER
+>  - Change some tests
+
+Please help reviewers out by being a bit more verbose when describing
+the changes. For instance, what bug did you fix pointed out by SZEDER?
+And, "change some tests" says nothing useful. What did you change in
+the tests?
+
+> ---
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> @@ -1355,6 +1357,9 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+>         finalize_colopts(&s.colopts, -1);
+>         finalize_deferred_config(&s);
+>
+> +       if (verbose == -1)
+> +               verbose = 0;
+> +
+
+Nit: It might be good to drop the blank line above this new
+conditional to make it clear that it is part of the
+init_config/parse_options processing (the tail of which is visible in
+the context above).
+
+>         handle_untracked_files_arg(&s);
+>         if (show_ignored_in_status)
+>                 s.show_ignored_files = 1;
+> @@ -1654,6 +1664,10 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+>         argc = parse_and_validate_options(argc, argv, builtin_commit_options,
+>                                           builtin_commit_usage,
+>                                           prefix, current_head, &s);
+> +
+> +       if (verbose == -1)
+> +               verbose = (config_verbose == -1) ? 0 : config_verbose;
+> +
+
+Nit: For consistency, dropping the blank line above this new
+conditional wouldn't hurt either.
+
+>         if (dry_run)
+>                 return dry_run_commit(argc, argv, prefix, current_head, &s);
+>         index_file = prepare_index(argc, argv, prefix, current_head, 0);
 > diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
-> @@ -3,9 +3,11 @@
-> -cat >check-for-diff <<EOF
-> -#!$SHELL_PATH
-> -exec grep '^diff --git' "\$1"
-> +write_script "check-for-diff" <<'EOF' &&
-
-The 'EOF' is more commonly written as \EOF in Git test scripts.
-
-> +! test -s out ||
-> +rm out &&
-
-Why not just "rm -f out"? But, more importantly, why do you need to
-remove the file at all? The '>' redirection operator (used below) will
-overwrite the file, so no need to remove it beforehand.
-
-> +! grep '^diff --git' "$1" ||
-> +grep '^diff --git' "$1" >out
-
-Um, what? Why two greps? I would have expected you to simply re-use
-the existing grep (minus the backslash) while adding the redirection:
-
-    -exec grep '^diff --git' "\$1"
-    +exec grep '^diff --git' "$1" >out
-
-Am I missing something obvious?
-
->  EOF
->  chmod +x check-for-diff
-
-Mentioned previously[1]: Drop the 'chmod' since write_script() does it for you.
-
-[1]: http://article.gmane.org/gmane.comp.version-control.git/289832
-
->  test_set_editor "$PWD/check-for-diff"
-> @@ -23,7 +25,8 @@ test_expect_success 'setup' '
->  test_expect_success 'initial commit shows verbose diff' '
-> -       git commit --amend -v
-> +       git commit --amend -v &&
+> @@ -101,4 +101,52 @@ test_expect_success 'verbose diff is stripped out with set core.commentChar' '
+> +test_expect_success 'commit.verbose true and --verbose omitted' '
+> +       echo content >file2 &&
+> +       echo content >>file &&
+> +       git add file2 &&
+> +       git -c commit.verbose=true commit -F message &&
 > +       test_line_count = 1 out
->  '
->
->  test_expect_success 'second commit' '
-> @@ -39,13 +42,15 @@ check_message() {
->
->  test_expect_success 'verbose diff is stripped out' '
->         git commit --amend -v &&
-> -       check_message message
-> +       check_message message &&
+> +'
+
+Why is this test so utterly different than it was in v9 (even though
+the title is the same), and why is it so different from other tests
+below?
+
+More below...
+
+> +test_expect_success 'commit.verbose true and --verbose' '
+> +       git -c commit.verbose=true commit --amend --verbose &&
 > +       test_line_count = 1 out
->  '
->
->  test_expect_success 'verbose diff is stripped out (mnemonicprefix)' '
->         git config diff.mnemonicprefix true &&
->         git commit --amend -v &&
-> -       check_message message
-> +       check_message message &&
+> +'
+> +
+> +test_expect_success 'commit.verbose true and -v -v' '
+> +       git -c commit.verbose=true commit --amend -v -v &&
+> +       test_line_count = 2 out
+> +'
+> +
+> +test_expect_success 'commit.verbose true and --no-verbose' '
+> +       git -c commit.verbose=true commit --amend --no-verbose &&
+> +       ! test -s out
+> +'
+> +
+> +test_expect_success 'commit.verbose false and --verbose' '
+> +       git -c commit.verbose=false commit --amend --verbose &&
 > +       test_line_count = 1 out
->  '
+> +'
+> +
+> +test_expect_success 'commit.verbose false and -v -v' '
+> +       git -c commit.verbose=false commit --amend -v -v &&
+> +       test_line_count = 2 out
+> +'
+> +
+> +test_expect_success 'commit.verbose false and --verbose omitted' '
+> +       git -c commit.verbose=false commit --amend &&
+> +       ! test -s out
+> +'
+> +
+> +test_expect_success 'commit.verbose false and --no-verbose' '
+> +       git -c commit.verbose=false commit --amend --no-verbose &&
+> +       ! test -s out
+> +'
+> +
+> +test_expect_success 'status ignores commit.verbose=true' '
+> +       git -c commit.verbose=true status >actual &&
+> +       ! grep "^diff --git" actual
+> +'
+
+The fact that v9 broke a number of tests in other scripts which use
+git-status (as SZEDER pointed out[1]), due to initializing 'verbose'
+to -1 in builtin/commit.c, suggests that you probably ought to add
+another test here to protect against that sort of breakage, as well.
+Specifically, git-status should remain non-verbose when neither
+commit.verbose nor --verbose is specified.
+
+> +
+>  test_done
