@@ -1,78 +1,155 @@
 From: Michael Rappazzo <rappazzo@gmail.com>
-Subject: [PATCH v3 0/2] gitk: changes for the "Tags and heads" view
-Date: Sun, 27 Mar 2016 11:06:06 -0400
-Message-ID: <1459091168-46908-1-git-send-email-rappazzo@gmail.com>
+Subject: [PATCH v3 2/2] gitk: add an option to enable sorting the "Tags and heads" view by ref type
+Date: Sun, 27 Mar 2016 11:06:08 -0400
+Message-ID: <1459091168-46908-3-git-send-email-rappazzo@gmail.com>
+References: <1459091168-46908-1-git-send-email-rappazzo@gmail.com>
 Cc: git@vger.kernel.org, Michael Rappazzo <rappazzo@gmail.com>
 To: paulus@samba.org
-X-From: git-owner@vger.kernel.org Sun Mar 27 17:06:30 2016
+X-From: git-owner@vger.kernel.org Sun Mar 27 17:06:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akCGs-0005sV-6Q
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Mar 2016 17:06:30 +0200
+	id 1akCGt-0005sV-Lz
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Mar 2016 17:06:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752219AbcC0PGW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Mar 2016 11:06:22 -0400
-Received: from mail-qg0-f67.google.com ([209.85.192.67]:34058 "EHLO
-	mail-qg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752096AbcC0PGV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Mar 2016 11:06:21 -0400
-Received: by mail-qg0-f67.google.com with SMTP id j35so7057228qge.1
-        for <git@vger.kernel.org>; Sun, 27 Mar 2016 08:06:21 -0700 (PDT)
+	id S1752292AbcC0PGZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Mar 2016 11:06:25 -0400
+Received: from mail-qg0-f66.google.com ([209.85.192.66]:34066 "EHLO
+	mail-qg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752096AbcC0PGX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Mar 2016 11:06:23 -0400
+Received: by mail-qg0-f66.google.com with SMTP id j35so7057317qge.1
+        for <git@vger.kernel.org>; Sun, 27 Mar 2016 08:06:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=TsjuO5M9E6Eqt44C997/B0kJQw9wacVCMHeJ+d/JW24=;
-        b=O9PpaaLHSVcp8S7TTQqwstQWsEZ1KqCtesyQkgfmhxXuO3wL27inij/rWHIultekT1
-         H+SPG3VQc/wa6Me4rGLYc+RMWqU6RX4VFRcmk3GVT54KexLOPgRvLYBMuHIv9tAVXa2b
-         ZlafH22ct4agmbC1zlNZpKFHId2CBdfzMwzbZu7MXg2OEv/6Tu8GYbbg4jczkj1QUUqD
-         p8jm4lODwA3j8psfLIRFwNladTrC3caE2GkdUSdCixkXHm/GiG6GT+RY1HRXNxlKmyjV
-         bU/nG7HVMe9WNV2LP1LR0TxcrnDfWMeyIlz8WZKy8qhT09wkkWY5VGKm8uEQiP/IBSJW
-         eiJA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Bw0nYO1KRkhwGi87ai2rhJsTT8bkOFCWtv+iHGrk9RE=;
+        b=QODGK+tMageOumqi3M6xn+VpYSkc25uqUJsPyALiZUpElTxZbiSwWHyCDhNJCg2uGG
+         kP7lQks8SczmHwf5okwNue6RDynBTinFwPRNVIpqet+sl97cJ6yLvIOsrjUS7eLTIly3
+         0aZZVqhQSvPHganNVuB3LxLNgK5OAZQhdGm1OsAMFo9VG+295HzbOaW3hIQovHQeQPZk
+         lMzxhAl8sKv2fr19sKmd9cDdz9xllT38D57qBIYtHs/t5heJxbdL8o2jRZnHM+XUEa7p
+         Gtvqwje7mSkQs8nHVJdTfCh2hlujctc5QtLW7Es1VPJnV7LFub8ncDvi4cmZGT8C0a5I
+         Ej/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=TsjuO5M9E6Eqt44C997/B0kJQw9wacVCMHeJ+d/JW24=;
-        b=QeCj4ea5ZD7cXJ80Zb6hEbBSRSOo5QI+eSPVpqjuEyYfAxmH/+/XMWxpTWQAoKdM2y
-         UmIqqV5zAeISwkGq/MRVF8vgCmaAMByHZrD/ekj12LkXSSDdeJkk1P+YZo85BUaprXtW
-         7pPjM/KcMKVL+kKovwtQzWnHjgqfLcdzjv/fgx1auS7B+MlxBbK0GyR1Vgfw6obWbkTk
-         Ly4TF3ogQEW3uT3LxSPqf55S+F+HNAEHv4duBghpcSI4YPZPPW4QH+6Moo7vjyWqv3vN
-         A70TjBgz5XtK0aUlOK72tZZtJQ6QsHnpj2cnIa9FsW6ORvPsaBIk9sMFxRgX803bonPX
-         D9uQ==
-X-Gm-Message-State: AD7BkJLBV45QpUqJ3EhrunMxzngVyiBVSKNw55zxl4OSKQ8vokmfUo5jEnYZ4pD6ASJkVw==
-X-Received: by 10.140.25.206 with SMTP id 72mr29817237qgt.49.1459091180321;
-        Sun, 27 Mar 2016 08:06:20 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Bw0nYO1KRkhwGi87ai2rhJsTT8bkOFCWtv+iHGrk9RE=;
+        b=KGW+tecmp6kKJohxBI/3dJakHNMNH0wcpyevliIaMDG8cVXi+fORV35n3Q1n2eR1TY
+         MAx16rfgrUAf4AvSk8INBeM+YhFgFigoGzhDXzGmos746wdUltpWIeaXi52VHSz66a8v
+         rBid13LI4Hm9okORLsNpG5fzCy+fnTj9OgIj1iWg+tdVoLv+n2YZ0Gj2+uV34iLLRDtt
+         lqQo/491cZVPwisT6LfhgHwYchW1NNt5FaF/6DJ3LP4Id3AU6kNCFZewU2Bm+LM3sPAu
+         BgRXOn370l1eTzo6R0eDAJQkkTAPzoxNVNSAZUbsMPgXTAm6lbsuTGf9TWRSXxD8XCbP
+         vkMA==
+X-Gm-Message-State: AD7BkJKOil6yfUYCcQWrKJgRo3EybdtE2N0g0gi54XwKwsY+MaJhJbP4B4WctJApkooWLg==
+X-Received: by 10.140.38.104 with SMTP id s95mr29347274qgs.7.1459091182378;
+        Sun, 27 Mar 2016 08:06:22 -0700 (PDT)
 Received: from MRappazzo-8.nycap.info (cpe-74-70-59-36.nycap.res.rr.com. [74.70.59.36])
-        by smtp.gmail.com with ESMTPSA id 78sm2312230qhr.4.2016.03.27.08.06.18
+        by smtp.gmail.com with ESMTPSA id 78sm2312230qhr.4.2016.03.27.08.06.21
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sun, 27 Mar 2016 08:06:19 -0700 (PDT)
+        Sun, 27 Mar 2016 08:06:21 -0700 (PDT)
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1459091168-46908-1-git-send-email-rappazzo@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290013>
 
-Changes since v2[1]:
- - Instead of getting the remote info for each local branch individually,
-   grab it all at once and store the result
- - Instead of a command line option to enable the new sorting option,
-   enable it with a preference which is stored in the config.
+Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+---
+ gitk | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-v1 can be found here[2].
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/289244
-[2] http://thread.gmane.org/gmane.comp.version-control.git/288544
-
-Michael Rappazzo (2):
-  gitk: alter the ordering for the "Tags and heads" view
-  gitk: add an option to enable sorting the "Tags and heads" view by ref
-    type
-
- gitk | 79 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 66 insertions(+), 13 deletions(-)
-
+diff --git a/gitk b/gitk
+index 3686370..29ef36c 100755
+--- a/gitk
++++ b/gitk
+@@ -9944,7 +9944,7 @@ proc reflistfilter_change {n1 n2 op} {
+ }
+ 
+ proc refill_reflist {} {
+-    global reflist reflistfilter showrefstop headids tagids otherrefids localrefs_tracking_remotes
++    global reflist reflistfilter showrefstop headids tagids otherrefids localrefs_tracking_remotes sortrefsbytype
+     global curview
+ 
+     if {![info exists showrefstop] || ![winfo exists $showrefstop]} return
+@@ -10004,6 +10004,10 @@ proc refill_reflist {} {
+     }
+     set otherrefs [lsort -index 0 $otherrefs]
+     lappend refs {*}$localrefs {*}$locally_tracked_remote_refs {*}$remoterefs {*}$tagrefs {*}$otherrefs
++    if {$sortrefsbytype ne 1} {
++       set refs [lsort -index 0 $refs]
++    }
++
+     if {$refs eq $reflist} return
+ 
+     # Update the contents of $showrefstop.list according to the
+@@ -11416,7 +11420,7 @@ proc create_prefs_page {w} {
+ proc prefspage_general {notebook} {
+     global NS maxwidth maxgraphpct showneartags showlocalchanges
+     global tabstop limitdiffs autoselect autosellen extdifftool perfile_attrs
+-    global hideremotes want_ttk have_ttk maxrefs
++    global hideremotes want_ttk have_ttk maxrefs sortrefsbytype
+ 
+     set page [create_prefs_page $notebook.general]
+ 
+@@ -11440,6 +11444,9 @@ proc prefspage_general {notebook} {
+     ${NS}::checkbutton $page.hideremotes -text [mc "Hide remote refs"] \
+ 	-variable hideremotes
+     grid x $page.hideremotes -sticky w
++    ${NS}::checkbutton $page.sortrefsbytype -text [mc "Sort refs by type"] \
++	-variable sortrefsbytype
++    grid x $page.sortrefsbytype -sticky w
+ 
+     ${NS}::label $page.ddisp -text [mc "Diff display options"]
+     grid $page.ddisp - -sticky w -pady 10
+@@ -11544,7 +11551,7 @@ proc doprefs {} {
+     global oldprefs prefstop showneartags showlocalchanges
+     global uicolor bgcolor fgcolor ctext diffcolors selectbgcolor markbgcolor
+     global tabstop limitdiffs autoselect autosellen extdifftool perfile_attrs
+-    global hideremotes want_ttk have_ttk
++    global hideremotes want_ttk have_ttk sortrefsbytype
+ 
+     set top .gitkprefs
+     set prefstop $top
+@@ -11553,7 +11560,8 @@ proc doprefs {} {
+ 	return
+     }
+     foreach v {maxwidth maxgraphpct showneartags showlocalchanges \
+-		   limitdiffs tabstop perfile_attrs hideremotes want_ttk} {
++		   limitdiffs tabstop perfile_attrs hideremotes want_ttk \
++		   sortrefsbytype} {
+ 	set oldprefs($v) [set $v]
+     }
+     ttk_toplevel $top
+@@ -11679,7 +11687,8 @@ proc prefscan {} {
+     global oldprefs prefstop
+ 
+     foreach v {maxwidth maxgraphpct showneartags showlocalchanges \
+-		   limitdiffs tabstop perfile_attrs hideremotes want_ttk} {
++		   limitdiffs tabstop perfile_attrs hideremotes want_ttk \
++		   sortrefsbytype} {
+ 	global $v
+ 	set $v $oldprefs($v)
+     }
+@@ -12215,6 +12224,7 @@ set showneartags 1
+ set hideremotes 0
+ set maxrefs 20
+ set visiblerefs {"master"}
++set sortrefsbytype 0
+ set maxlinelen 200
+ set showlocalchanges 1
+ set limitdiffs 1
+@@ -12318,6 +12328,7 @@ set config_variables {
+     filesepbgcolor filesepfgcolor linehoverbgcolor linehoverfgcolor
+     linehoveroutlinecolor mainheadcirclecolor workingfilescirclecolor
+     indexcirclecolor circlecolors linkfgcolor circleoutlinecolor
++    sortrefsbytype
+ }
+ foreach var $config_variables {
+     config_init_trace $var
 -- 
 2.7.4
