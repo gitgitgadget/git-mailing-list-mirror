@@ -1,81 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3/GSoC 2/5] path.c: implement xdg_runtime_dir()
-Date: Mon, 28 Mar 2016 07:50:30 -0700
-Message-ID: <xmqq60w61wsp.fsf@gitster.mtv.corp.google.com>
-References: <1458728005-22555-1-git-send-email-huiyiqun@gmail.com>
-	<1458728005-22555-2-git-send-email-huiyiqun@gmail.com>
-	<20160325095923.GB8880@sigill.intra.peff.net>
-	<CAKqreux8FHdJoKDishjQkbi9g1oUc265EUK4nOJ_sgeFivGSNA@mail.gmail.com>
-	<20160325175947.GC10563@sigill.intra.peff.net>
-	<CAKqreuzNeY7HryZvMgLKpPAbXOQ_qLfX63YOj57Wo+KrHJbtMA@mail.gmail.com>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Re: How to use @{-1} with push?
+Date: Mon, 28 Mar 2016 09:53:15 -0500
+Message-ID: <CAHd499A-8iajchG7hUMKNnCN9riarU4G3S-HZxXusOdewwaVCg@mail.gmail.com>
+References: <CAHd499AM-OzqiB1hOF=0BTesFxrxNj=+jr1wH6vpQXfgoXd8Ug@mail.gmail.com>
+	<xmqq8u164fjv.fsf@gitster.mtv.corp.google.com>
+	<CAHd499B3Z58hj--Pa0uM36A2H3Xpmayrb+RiLeOBkmnu70yW1A@mail.gmail.com>
+	<CAHd499BCciG5Udd_sj550jPKg_ahZmWOi-zUOU-cr_wYmri=Rg@mail.gmail.com>
+	<xmqqoaa22xmg.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Your friend <pickfire@riseup.net>
-To: =?utf-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 28 16:50:39 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 28 16:53:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akYV4-0002RS-O9
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Mar 2016 16:50:39 +0200
+	id 1akYXj-0003lR-Gi
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Mar 2016 16:53:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753712AbcC1Oue convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Mar 2016 10:50:34 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:53906 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752386AbcC1Oud convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Mar 2016 10:50:33 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 505914F369;
-	Mon, 28 Mar 2016 10:50:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=pEejFqM9pMlO
-	yDFQwGyvEdrfDQA=; b=TIWUVXAP3CeX/hb/4rBgGZ3Dsyp2RBWwLay3GDNMSUpH
-	Q65czWlqvmMOLon/XmOAgjjBN73q2IJkl4F1dmFlMioSuD1M+tRoC7gMsC2HkwvT
-	6oHey5T2hwVsefTnO+2ZQxli9D0WEhu6s3Hvp2/Cy9UUQfjWMD3aq4j3Jg3Ur2Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=lyHJbT
-	5NQbczYl31toElVcOwS4TCw38+bgPVg2zOvUQXgqgPYPRHVuwNLvpQwGC5nq3VKu
-	LbGLdc6guyd0pFzHUuW7F7gcYdY7byXtATUtmvsXa0oBVnxUWL8mNvjsgt0R0KE1
-	IEcH/XVO5DyMYXiFv9hXBztfd+KjFtm0W+QEA=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 468D94F368;
-	Mon, 28 Mar 2016 10:50:32 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A83B54F367;
-	Mon, 28 Mar 2016 10:50:31 -0400 (EDT)
-In-Reply-To: <CAKqreuzNeY7HryZvMgLKpPAbXOQ_qLfX63YOj57Wo+KrHJbtMA@mail.gmail.com>
-	(=?utf-8?B?IuaDoOi9tue+pCIncw==?= message of "Mon, 28 Mar 2016 22:12:09
- +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6B7AABF2-F4F4-11E5-8900-E95C6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753093AbcC1OxT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2016 10:53:19 -0400
+Received: from mail-vk0-f51.google.com ([209.85.213.51]:36692 "EHLO
+	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752386AbcC1OxR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2016 10:53:17 -0400
+Received: by mail-vk0-f51.google.com with SMTP id z68so158341803vkg.3
+        for <git@vger.kernel.org>; Mon, 28 Mar 2016 07:53:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=E4uic8zKmnD/2JJYhVrBB/V94mOseh/twQ2Rp19eRhE=;
+        b=fHwo/mqeuvKLLk+EqmE2BwgWtw8KQDK0wnGa8zJr4ZSEafqpBPlFFtzEf/vH6Tqp/x
+         qCBpKUePrNSElERTxNrCCytIQROB5n44aaj9frKZueI9alENyVXAZqNdBrag3pYZtKHb
+         96gmY/qiLOWYz9nN9UOQXUS9kP1ygK3PLsK/p+F8Q1wtmOArhPou8bJvpw7OrqqIq/rK
+         L1Oij4GmaWxFRgh+YeLSaBDOxLsZa2uyMo41pQG00OtbsoqCQkRr7B1nlQi6sYdp1NI9
+         vTG1OmSkBdtEvGn3yOwMogmLOrrPE60NSrCX+zsoB0AFKmKfn8wl5JatVZAO8aaYbCqu
+         BxqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=E4uic8zKmnD/2JJYhVrBB/V94mOseh/twQ2Rp19eRhE=;
+        b=j1UenA/GnSFVIVAsMjStvl6295deg4Dh1ToFtEnqBg/d6nohKu71avqBcfdyRiZgBv
+         C1ZGz7QHUnlm/6Lo3rp62ey73f5575iOUwW5AAdpBH7LU8t/sC3C6gBDjq/w6IykxhKq
+         6k/AY6riPz25O/id0gDV9E1n2UxuIkCa9WUyG+G8oQwHA8x0JnEbisWKqDNuhW7WrC8H
+         EZ50w3sbb+y/6izkzJJLpwG9a62LhAsk8jXteNpAWE4CowDYFlw1j/aeOxfgXxJ5rERv
+         XIBtDjxPHKwAlDTQiM1HhZ5BhvX1npABQKQ/r/nq90mk9s3wto8X18SuKXAhyzPn/Rc+
+         QVGA==
+X-Gm-Message-State: AD7BkJIhpfm+idvjH+zkWMlyH0oFke8rT183W2A1mKYL1lkH36B+FXddSfyvozO5PELIxuM5yj/oapxPtg60VA==
+X-Received: by 10.176.1.16 with SMTP id 16mr12857835uak.56.1459176796100; Mon,
+ 28 Mar 2016 07:53:16 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.176.66.68 with HTTP; Mon, 28 Mar 2016 07:53:15 -0700 (PDT)
+In-Reply-To: <xmqqoaa22xmg.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: XajtrLgbBqDMoo2RqTr-BDUMrXo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290038>
 
-=E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqun@gmail.com> writes:
+On Fri, Mar 25, 2016 at 1:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> I thought these are clear from their documentation.  "push" works on
+> refnames, "branch" works on branch names.  "push" takes an branch
+> name as a short-hand and adds refs/heads/ when it makes sense, but
+> because it does not make any sense for "git branch" to create a
+> "branch" in a random place in refs/ (e.g. "refs/tags/foo" is not a
+> branch), it takes "foo" (i.e. the name of the branch, whose
+> underlying ref is "refs/heads/foo").
+>
+> So
+>
+>         ref=$(git rev-parse --symbolic-full-name "$2") &&
+>         case "$ref" in
+>         '') echo >&2 "No such thing $2"; exit 1 ;;
+>         refs/heads/*) ref=${ref#refs/heads/} ;;
+>         *) echo >&2 "That's not a branch $2"; exit 2 ;;
+>         esac &&
+>         git push "$1" "refs/heads/$ref" &&
+>         git branch -D "$ref"
+>
+> or something?
 
-> After read the source code of strbuf more carefully, I get the conclu=
-sion
-> that if a strbuf is initialized with STRBUF_INIT but is not used, the=
-re is
-> no need to release it. Is it true?
+Reading the git documentation feels a lot like reading the C++
+standard. Not the best place to go to learn something. Some of the
+terminology is very detail-oriented. For example, until you explained
+the differences between push & branch, I always thought "ref" and
+"branch" were interchangeable. But now it's clear to me that a branch
+is just a type of ref, but refs are not branches. Also as a Windows
+developer, I am not as well-versed in bash scripting as I'd like to
+be.
 
-If it is initialized with STRBUF_INIT and never used, there is no
-reason for the variable to exist ;-)
-
-Leaving the variable in the code, and not calling release on it at
-the end, would be OK (i.e. there is no leak) today, but may invite
-future bugs (e.g. people may use the variable to tentatively build
-their string before the function returns to leave the scope of the
-variable without adding _release() themselves).
+So thanks for your explanation, it is clear now.
