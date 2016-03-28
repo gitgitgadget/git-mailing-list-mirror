@@ -1,101 +1,138 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [GSoC] A late proposal: a modern send-email
-Date: Mon, 28 Mar 2016 18:49:27 +0200
-Message-ID: <CACBZZX6q87dw6UW9z+2bAvvWu0WZcYCMD8gxW8MchHwd8Rv3kw@mail.gmail.com>
-References: <CAKqreuyC8p9m_dgVpXCiT_hf=8qBA_5kZ5NABQGx0QDOiCBbww@mail.gmail.com>
- <xmqqzitm2zkj.fsf@gitster.mtv.corp.google.com> <CAKqreux1S2ioEEjPPCkyz1NJnXJ1RyiWdM5thZD607PkL0HKuQ@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] branch -d: refuse deleting a branch which is currently
+ checked out
+Date: Mon, 28 Mar 2016 12:51:21 -0400
+Message-ID: <CAPig+cSzTwup6ojboVkP8nMR91-ZUU9FCbAK5NcrcohfFh2taQ@mail.gmail.com>
+References: <CAPig+cSCC+OzotkTx89iS+t4DRd3F+QoHP4n-v_+rxXU2R+2LA@mail.gmail.com>
+	<cbc5116e5069f20545d66e12e082e0e17f4ecced.1458927521.git.k@rhe.jp>
+	<1459149771-14790-1-git-send-email-k@rhe.jp>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: =?UTF-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 28 18:49:54 2016
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Kazuki Yamaguchi <k@rhe.jp>
+X-From: git-owner@vger.kernel.org Mon Mar 28 18:51:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akaMT-00083A-Hu
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Mar 2016 18:49:53 +0200
+	id 1akaO3-0000Kq-EH
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Mar 2016 18:51:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754771AbcC1Qtt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Mar 2016 12:49:49 -0400
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:33551 "EHLO
-	mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753524AbcC1Qts convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Mar 2016 12:49:48 -0400
-Received: by mail-qk0-f177.google.com with SMTP id s5so119515084qkd.0
-        for <git@vger.kernel.org>; Mon, 28 Mar 2016 09:49:48 -0700 (PDT)
+	id S1755252AbcC1QvY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2016 12:51:24 -0400
+Received: from mail-vk0-f65.google.com ([209.85.213.65]:36824 "EHLO
+	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755185AbcC1QvW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2016 12:51:22 -0400
+Received: by mail-vk0-f65.google.com with SMTP id z68so15872818vkg.3
+        for <git@vger.kernel.org>; Mon, 28 Mar 2016 09:51:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Zohlwr9sr3tcQ1tS+08NaQRnxj559qLVAg0pYfLSmEU=;
-        b=TVIL51Yx4gcuPlSIe3Cw+pyk4yGKOHCQQbFVNyCMm0SnD5oOvijAtnAMrIdIQbvDcn
-         pRNbCon8tBjoT/ROzFcrvpGStPZGJYiMm+6LTqNkV+B1+i5Ussv8zDH0gcEOhWXi3FDX
-         7vLZtXvzfwHZ2fyxg2Tcc4nloBWNhpZ1/bdmKVKnJykA7otfDeMjKEFVDgJp8vcZ5k69
-         n8K2LtR941gZRyZvHkKytvhSx3/GcqLxbu1xtb5UGHN/TYNU7hlqJqG8QCP4S/++hDGv
-         KsA0gRUg9lBvBIh/tzcr84xgMS5+4AEoPBmZuluzkgvai+Smpj0W+VzPK/d+GOaqjSU7
-         2kIw==
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=pztErl7SOsj14hmYw+1TkOfz74M4XYGzjx+2YmmG+SQ=;
+        b=Zqfu9YDxjA4KwL5tZFSkXlG4ne+zRu/gfB26KPwSRDbj9UBiO85iAJWVYVDA2aYavj
+         lhhEcQSdVguKVxmSOm22QdJEwZicAKI5hzL76ZWiHNi5/xO9XmWxOkYIzZ0niCj6Bc9m
+         tIi6lM4f5djtJFjYswFx9R8z7f2AMas82ByZIdu41kQ52owe6Z07Cwhzeo+ToELZsDoI
+         sxqtdLVtqHTmzjyG0om85aLi0DE9k23orUyACBNHThoFnsf4yL+8wRnK4TzZwIia1Mel
+         Jx1CpGE1DTCpkaOKBckJpVNp/HF6D8qssDEkoRhgj4rfcMZLAEE7BZKbxohE9Rui1TP9
+         EaPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Zohlwr9sr3tcQ1tS+08NaQRnxj559qLVAg0pYfLSmEU=;
-        b=l4RBDR8H+PJpwUPW7dYKkxsCwhWvlDWRy9JOdBviLsBN6AyVo0zSWQ3Xga2yAMTOUt
-         GD3qX7Q32aomJOVaN3lTUtzrChjXSmiS8kHKy/MJjLVaC23cIUznEXPs2Xh5pH4gHTji
-         kflgwcla4QinoVLr18N3R5qF96m2Af6j1WuQwLLD0azgqxuf/NDJgLTcolXWUTZ+1wM6
-         k2QBDmE1Kb+Ah+Ss7T2RJqclll7VAa/XnmmVTdqj5UPbXmq5HI2rBV0WuPEZw7dQhf15
-         bXhHDEms0b/mIOmlOhFoMEalhZrbidrahQzRgWV/3sKWJG9CGCZa/qIWBBcJp9vSROxA
-         jvnw==
-X-Gm-Message-State: AD7BkJKHENRGuIAu+SZo6qCQUiaZyJyO3Jl3Th6BbeWe7yIlEZS4Jm+f7YcZvXRVWIlH6z16LtPV2f3XlxqSyQ==
-X-Received: by 10.55.74.75 with SMTP id x72mr37030705qka.100.1459183787579;
- Mon, 28 Mar 2016 09:49:47 -0700 (PDT)
-Received: by 10.55.77.82 with HTTP; Mon, 28 Mar 2016 09:49:27 -0700 (PDT)
-In-Reply-To: <CAKqreux1S2ioEEjPPCkyz1NJnXJ1RyiWdM5thZD607PkL0HKuQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=pztErl7SOsj14hmYw+1TkOfz74M4XYGzjx+2YmmG+SQ=;
+        b=mAAtiawodzSaR72Dm6/YNXvixGxWVyT7638LhLZ6KUsoXU2/GA/s08J0VQk0dSPoqR
+         v4AWCBsF4jUvkIZVko+EV0u5aMojq/XSt2UbyOL3BI8EX74sRBL+3RVc6cP5W+oemAcM
+         wKmjc+NvB9Yd4g3ghLDIb5e9m2PSC4UrE32sHBwxnHEzUHmNRXQkTi8c4SNqMkQwq/sw
+         lt+6N0vkGYcMI4Wr6+fpH2NbK2VFDzVnVa0o96O/QA2r1cSrRAO5XPIwyZ6LpoEjsyKw
+         Nsw+cTX3SWw8mS6tlA2EeXpnQmfJGXTAjFqC4fpkdWNBOlCKTeezxMtC/6el1zqVug+t
+         esQw==
+X-Gm-Message-State: AD7BkJKADOsgmCdoLy9kj8s9uBLjWFMTY71jndewAUE9pEp6d4CO43VAg4jf/8nHi8ylv0CoGVpYiWDiTWEH3Q==
+X-Received: by 10.176.6.193 with SMTP id g59mr13416074uag.67.1459183881128;
+ Mon, 28 Mar 2016 09:51:21 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Mon, 28 Mar 2016 09:51:21 -0700 (PDT)
+In-Reply-To: <1459149771-14790-1-git-send-email-k@rhe.jp>
+X-Google-Sender-Auth: rXPO_UXgdiDfqGVwRjI0Ld0Lhp8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290047>
 
-On Sat, Mar 26, 2016 at 3:13 AM, =E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqun@=
-gmail.com> wrote:
-> 2016-03-26 2:16 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
->> =E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqun@gmail.com> writes:
->>
->>> # Purpose
->>> The current implementation of send-email is based on perl and has o=
-nly
->>> a tui, it has two problems:
->>> - user must install a ton of dependencies before submit a single pa=
-tch.
->>> - tui and parameter are both not quite friendly to new users.
->>
->> Is "a ton of dependencies" true?  "apt-cache show git-email"
->> suggests otherwise.  Is "a ton of dependencies" truly a problem?
->> "apt-get install" would resolve the dependencies for you.
+On Mon, Mar 28, 2016 at 3:22 AM, Kazuki Yamaguchi <k@rhe.jp> wrote:
+> When a branch is checked out by current working tree, deleting the
+> branch is forbidden. However when the branch is checked out only by
+> other working trees, deleting is allowed.
+
+It's not quite clear from this description that it is bad for deletion
+to succeed in the second case. Perhaps:
+
+    s/deleting is allowed/deletion incorrectly succeeds/
+
+would make it more clear.
+
+> Use find_shared_symref() to check if the branch is in use, not just
+> comparing with the current working tree's HEAD.
+
+This version of the patch is nicer. Thanks. See a couple minor
+comments below which may or may not be worth a re-roll (you decide).
+
+> Signed-off-by: Kazuki Yamaguchi <k@rhe.jp>
+> ---
 >
-> There are three perl packages needed to send patch through gmail:
-> - perl-mime-tools
-> - perl-net-smtp-ssl
-> - perl-authen-sasl
+>   % git worktree list
+>   /path/to      2c3c5f2 [master]
+>   /path/to/wt   2c3c5f2 [branch-a]
+>   % git branch -d branch-a
+>   error: Cannot delete the branch 'branch-a' which is currently checked out at '/path/to/wt'
+
+Thanks for an example of the new behavior. It's also helpful to
+reviewers if you use this space to explain what changed since the
+previous version, and to provide a link to the previous attempt, like
+this[1].
+
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/289413/focus=289932
+
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> @@ -215,16 +216,21 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+>                 int flags = 0;
 >
-> Yes, not too many, but is it better none of them?
->
-> What's more, when I try to send mails, I was first disrupted by
-> "no perl-mime-tools" then by "no perl-net-smtp-ssl or perl-authen-sas=
-l".
-> Then I think, why not just a mailto link?
+>                 strbuf_branchname(&bname, argv[i]);
+> -               if (kinds == FILTER_REFS_BRANCHES && !strcmp(head, bname.buf)) {
+> -                       error(_("Cannot delete the branch '%s' "
+> -                             "which you are currently on."), bname.buf);
+> -                       ret = 1;
+> -                       continue;
+> -               }
+> -
+>                 free(name);
+> -
+>                 name = mkpathdup(fmt, bname.buf);
+> +
+> +               if (kinds == FILTER_REFS_BRANCHES) {
+> +                       char *worktree = find_shared_symref("HEAD", name);
+> +                       if (worktree) {
+> +                               error(_("Cannot delete the branch '%s' "
+> +                                       "which is currently checked out at '%s'"),
 
-I think your proposal should clarify a bit who these users are that
-find it too difficult to install these perl module dependencies. Users
-on OSX & Windows I would assume, because in the case of Linux distros
-getting these is the equivalent of an apt-get command away.
+This could be stated more concisely as:
 
-If installing these dependencies is hard for users perhaps a better
-thing to focus on is altering the binary builds on Git for platforms
-that don't have package systems to include these dependencies.
+    "Cannot delete branch '%s' checked out at '%s'"
 
-In this case it would mean shipping a statically linked OpenSSL since
-that's what these perl SSL packages eventually depend on.
+> +                                     bname.buf, worktree);
+> +                               free(worktree);
+
+Would it make sense to show all worktrees at which this branch is
+checked out, rather than only one, or is that not worth the effort and
+extra code ugliness?
+
+> +                               ret = 1;
+> +                               continue;
+> +                       }
+> +               }
+> +
+>                 target = resolve_ref_unsafe(name,
+>                                             RESOLVE_REF_READING
+>                                             | RESOLVE_REF_NO_RECURSE
