@@ -1,95 +1,157 @@
-From: Max Kirillov <max@max630.net>
-Subject: [ANNOUNCE] git-push-update, tool to push with "server-side" merge or
- rebase
-Date: Mon, 28 Mar 2016 11:08:41 +0300
-Message-ID: <20160328080841.GA12932@wheezy.local>
+From: Ray Zhang <zhanglei002@gmail.com>
+Subject: [PATCH v4] worktree: add: introduce --checkout option
+Date: Mon, 28 Mar 2016 10:52:21 +0000
+Message-ID: <01020153bcda5e6c-2bae9b68-6669-4f29-a512-136c42722001-000000@eu-west-1.amazonses.com>
+References: <01020153ad85c135-8ca8cff0-9e6f-48ea-89f3-4036814feeca-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 28 10:16:12 2016
+X-From: git-owner@vger.kernel.org Mon Mar 28 12:53:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akSLK-0004we-6N
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Mar 2016 10:16:10 +0200
+	id 1akUnr-0002Ld-B5
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Mar 2016 12:53:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753790AbcC1IQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2016 04:16:05 -0400
-Received: from p3plsmtpa06-03.prod.phx3.secureserver.net ([173.201.192.104]:35193
-	"EHLO p3plsmtpa06-03.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753416AbcC1IQB (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Mar 2016 04:16:01 -0400
-X-Greylist: delayed 430 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Mar 2016 04:16:01 EDT
-Received: from wheezy.local ([82.181.81.240])
-	by p3plsmtpa06-03.prod.phx3.secureserver.net with 
-	id bL8h1s0035B68XE01L8pPg; Mon, 28 Mar 2016 01:08:50 -0700
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753529AbcC1KwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2016 06:52:24 -0400
+Received: from a6-243.smtp-out.eu-west-1.amazonses.com ([54.240.6.243]:54258
+	"EHLO a6-243.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753141AbcC1KwX (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Mar 2016 06:52:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1459162341;
+	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=RaHeayF53uB2dtEtQF/nW2XUmtarxKWd9As9VyLfkc0=;
+	b=PIsIuVttp57LcWu9J2UnhY+38H/a+9gSFAqFAi2jBx6k/e5dapFr4IUqFr/MRf5/
+	t3Y+6bHUu6JdJaz0XvhWnMvLKqSAfdZgyYuyCvXJp08z80f20xCP4gzVf/+M66ZZ9Za
+	Hqq+ZPxl8NQCrHRHe9Nr3Gjth9/ZHwAxYeJfpDVU=
+In-Reply-To: <01020153ad85c135-8ca8cff0-9e6f-48ea-89f3-4036814feeca-000000@eu-west-1.amazonses.com>
+X-SES-Outgoing: 2016.03.28-54.240.6.243
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290030>
 
-Hello.
+By adding this option which defaults to true, we can use the
+corresponding --no-checkout to make some customizations before
+the checkout, like sparse checkout, etc.
 
-I would like to announce git-push-update, a tool which emulates
-server-side merge or rebase.
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Ray Zhang <zhanglei002@gmail.com>
+---
+Changes since last version of this patch[v3]:
+	Documentation/git-worktree.txt: HEAD --> `<branch>`
+	t/t2025-worktree-add.sh: fix style
 
-The link: https://github.com/max630/git-push-update
+[v3]: http://article.gmane.org/gmane.comp.version-control.git/289877
+[v2]: http://article.gmane.org/gmane.comp.version-control.git/289713
+[v1]: http://article.gmane.org/gmane.comp.version-control.git/289659
+---
+ Documentation/git-worktree.txt |  8 +++++++-
+ builtin/worktree.c             | 15 ++++++++++-----
+ t/t2025-worktree-add.sh        | 13 +++++++++++++
+ 3 files changed, 30 insertions(+), 6 deletions(-)
 
-It is a bash script which fetches latest remote branch, creates
-temporary clone, performs there merge or rebase, pushes results to
-server. If during the merge or rebase remote branch was updated, it
-fails cleanly, so you are not left with merge which did not go anywhere.
-Or it can even retry the whole task from the beginning, until it
-eventually succeeds.
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+index 62c76c1..c622345 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -9,7 +9,7 @@ git-worktree - Manage multiple working trees
+ SYNOPSIS
+ --------
+ [verse]
+-'git worktree add' [-f] [--detach] [-b <new-branch>] <path> [<branch>]
++'git worktree add' [-f] [--detach] [--checkout] [-b <new-branch>] <path> [<branch>]
+ 'git worktree prune' [-n] [-v] [--expire <expire>]
+ 'git worktree list' [--porcelain]
+ 
+@@ -87,6 +87,12 @@ OPTIONS
+ 	With `add`, detach HEAD in the new working tree. See "DETACHED HEAD"
+ 	in linkgit:git-checkout[1].
+ 
++--[no-]checkout::
++	By default, `add` checks out `<branch>`, however, `--no-checkout` can
++	be used to suppress checkout in order to make customizations,
++	such as configuring sparse-checkout. See "Sparse checkout"
++	in linkgit:git-read-tree[1].
++
+ -n::
+ --dry-run::
+ 	With `prune`, do not remove anything; just report what it would
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 38b5609..e677cd7 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -21,6 +21,7 @@ static const char * const worktree_usage[] = {
+ struct add_opts {
+ 	int force;
+ 	int detach;
++	int checkout;
+ 	const char *new_branch;
+ 	int force_new_branch;
+ };
+@@ -284,11 +285,13 @@ static int add_worktree(const char *path, const char *refname,
+ 	if (ret)
+ 		goto done;
+ 
+-	cp.argv = NULL;
+-	argv_array_clear(&cp.args);
+-	argv_array_pushl(&cp.args, "reset", "--hard", NULL);
+-	cp.env = child_env.argv;
+-	ret = run_command(&cp);
++	if (opts->checkout) {
++		cp.argv = NULL;
++		argv_array_clear(&cp.args);
++		argv_array_pushl(&cp.args, "reset", "--hard", NULL);
++		cp.env = child_env.argv;
++		ret = run_command(&cp);
++	}
+ 	if (!ret) {
+ 		is_junk = 0;
+ 		free(junk_work_tree);
+@@ -320,10 +323,12 @@ static int add(int ac, const char **av, const char *prefix)
+ 		OPT_STRING('B', NULL, &new_branch_force, N_("branch"),
+ 			   N_("create or reset a branch")),
+ 		OPT_BOOL(0, "detach", &opts.detach, N_("detach HEAD at named commit")),
++		OPT_BOOL(0, "checkout", &opts.checkout, N_("populate the new working tree")),
+ 		OPT_END()
+ 	};
+ 
+ 	memset(&opts, 0, sizeof(opts));
++	opts.checkout = 1;
+ 	ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
+ 	if (!!opts.detach + !!opts.new_branch + !!new_branch_force > 1)
+ 		die(_("-b, -B, and --detach are mutually exclusive"));
+diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
+index cbfa41e..472b811 100755
+--- a/t/t2025-worktree-add.sh
++++ b/t/t2025-worktree-add.sh
+@@ -213,4 +213,17 @@ test_expect_success 'local clone from linked checkout' '
+ 	( cd here-clone && git fsck )
+ '
+ 
++test_expect_success '"add" worktree with --no-checkout' '
++	git worktree add --no-checkout -b swamp swamp &&
++	ls swamp >actual &&
++	test_line_count = 0 actual &&
++	git -C swamp reset --hard &&
++	test_cmp init.t swamp/init.t
++'
++
++test_expect_success '"add" worktree with --checkout' '
++	git worktree add --checkout -b swmap2 swamp2 &&
++	test_cmp init.t swamp2/init.t
++'
++
+ test_done
 
-I tried to make it easy to use by unexperienced users by making as few
-options as possible and checking for some dangerous mistakes. It would
-be nice if somebody tried to really use it, so there would be some data
-does this direction worth exploring. Any other feedback is also welcome.
-
-A longer explanation:
-
-While topic branches/pullrequests/whatever-it-named workflow is
-obviously superior to push-to-trunk approach which is used with
-centralized VCSes, there can be cases to use the latter one. But doing
-it with Git is not easy:
-
-* when the trunk goes forward, user have to run merge or
-  rebase (further "update"), interrupting other work which
-  might be in progress.
-* while doing fetch, update and push back a concurrent push can happen,
-  making user to have to repeat it all over.
-* some scenarios allow user to make a mistake combining branches which
-  mean to be unrelated, for example merging or rebasing active
-  development branch into maintenance branch for older version.
-* for a merge case there is a problem of "evil pull"
-  (http://thread.gmane.org/gmane.comp.version-control.git/247237)
-  In short: the merges which are to go to remote branch should be "from
-  local to remote", and git-pull merges "from remote to local".
-
-This was discussed around some time ago, but I could not find anything
-done about it. It might seem like nobody really interested much. But I
-still can see discussions here and there. Also, some time ago extension
-"pushrebase" for mercurial appeared, which indicates that there is
-really a demand.
-
-Looks like current git remote protocol does not really allow server to
-tweak pushed commits: if it accepts reference, client will remember
-exactly the commit it was pushing, no modifications is possible. Also,
-if it is implemented as server-side feature, it might take years to
-appear at github or other big public hostings, if ever. Until that most
-users would not be able to try it.
-
-This leaves only one option: perform merge or rebase locally, pretending
-that it was done at server. It does not even have to be implemented in
-git itself, instead a wrapper script can do everything.
-
-So here is the script.
-
--- 
-Max
+--
+https://github.com/git/git/pull/217
