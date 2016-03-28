@@ -1,153 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/2] refs: add a new function set_worktree_head_symref
-Date: Mon, 28 Mar 2016 10:48:50 -0700
-Message-ID: <xmqq4mbqze65.fsf@gitster.mtv.corp.google.com>
-References: <cover.1459087958.git.k@rhe.jp>
-	<39bc3c1da6daf31f2a10e592dbb5d3daadc96199.1459087958.git.k@rhe.jp>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] path.c enter_repo(): fix unproper strbuf unwrapping
+ and memory leakage
+Date: Mon, 28 Mar 2016 13:55:28 -0400
+Message-ID: <20160328175528.GB20028@sigill.intra.peff.net>
+References: <20160325175947.GC10563@sigill.intra.peff.net>
+ <1459180570-5521-1-git-send-email-huiyiqun@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Kazuki Yamaguchi <k@rhe.jp>, git@vger.kernel.org,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Duy Nguyen <pclouds@gmail.com>
-To: David Turner <dturner@twopensource.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Mar 28 19:50:49 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com, pickfire@riseup.net
+To: Hui Yiqun <huiyiqun@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 28 19:55:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akbHe-0001Uy-TR
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Mar 2016 19:48:59 +0200
+	id 1akbO4-0005Wh-BU
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Mar 2016 19:55:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753951AbcC1Rsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2016 13:48:55 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:56861 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753067AbcC1Rsx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2016 13:48:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 618864D36E;
-	Mon, 28 Mar 2016 13:48:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AXZJ/daHCWmwyxC7UjAoXpLZ0XU=; b=G6VMov
-	Oe2SHGO8SxAhS0VJJBWmd0GOv04o4ZpV0QmQ7pQaDgGGGK8ar+/wwHVyiXMaXyKT
-	JrC/K4w85OdVjsPqJCgCrBnOFHLobhaHpc6Cn8BjqMRdIsGaTIWb3WNO005dnLBU
-	FHEjVOd7GoMrx8ZtUgErWHBa9ugLJ89R3cl3E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=O0enCggp6xM0ckmNStFeuZUKC1OOZd3F
-	eEkkvRo1xD1J+KUmJUWKg0TQYFANSoX0h+w3eDtzRbh6hEM9zTD2qyY73g/9paiI
-	dkmbu/KdUGrVZuojnsYydgEOTSFdikm2w9wbUpe9AVI6V/GW1Z64wMT40F6//6Ps
-	kFYP+ZX1bxw=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 57A674D36D;
-	Mon, 28 Mar 2016 13:48:52 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BC87C4D36C;
-	Mon, 28 Mar 2016 13:48:51 -0400 (EDT)
-In-Reply-To: <39bc3c1da6daf31f2a10e592dbb5d3daadc96199.1459087958.git.k@rhe.jp>
-	(Kazuki Yamaguchi's message of "Sun, 27 Mar 2016 23:37:13 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 554364E6-F50D-11E5-B6CA-E95C6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751203AbcC1Rzc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2016 13:55:32 -0400
+Received: from cloud.peff.net ([50.56.180.127]:39471 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751004AbcC1Rzb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2016 13:55:31 -0400
+Received: (qmail 17009 invoked by uid 102); 28 Mar 2016 17:55:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 28 Mar 2016 13:55:30 -0400
+Received: (qmail 14852 invoked by uid 107); 28 Mar 2016 17:55:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 28 Mar 2016 13:55:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Mar 2016 13:55:28 -0400
+Content-Disposition: inline
+In-Reply-To: <1459180570-5521-1-git-send-email-huiyiqun@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290052>
 
-Kazuki Yamaguchi <k@rhe.jp> writes:
+On Mon, Mar 28, 2016 at 11:56:10PM +0800, Hui Yiqun wrote:
 
-> Add a new function set_worktree_head_symref, to update HEAD symref for
-> the specified worktree.
->
-> To update HEAD of a linked working tree,
-> create_symref("worktrees/$work_tree/HEAD", "refs/heads/$branch", msg)
-> could be used. However when it comes to updating HEAD of the main
-> working tree, it is unusable because it uses $GIT_DIR for
-> worktree-specific symrefs (HEAD).
->
-> The new function takes git_dir (real directory) as an argument, and
-> updates HEAD of the working tree. This function will be used when
-> renaming a branch.
->
-> Signed-off-by: Kazuki Yamaguchi <k@rhe.jp>
-> ---
+> According to strbuf.h, strbuf_detach is the sole supported method
+> to unwrap a memory buffer from its strbuf shell.
+> 
+> So we should not return the pointer of strbuf.buf directly.
+> 
+> What's more, some memory leakages are solved.
 
-I suspect that this helper function should be in the common layer
-(refs.c) to be redirected to specific backend(s).
+There is something else going on here, which makes this case different
+than some others. Note that the function returns a const string:
 
-David & Michael, what do you think?
+> diff --git a/path.c b/path.c
+> index 969b494..b07e5a7 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -625,6 +625,7 @@ const char *enter_repo(const char *path, int strict)
 
->  refs.h               |  8 ++++++++
->  refs/files-backend.c | 35 +++++++++++++++++++++++++++++++++++
->  2 files changed, 43 insertions(+)
->
-> diff --git a/refs.h b/refs.h
-> index 2f3decb432cf..f11154cf5faf 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -306,6 +306,14 @@ extern int rename_ref(const char *oldref, const char *newref, const char *logmsg
->  
->  extern int create_symref(const char *refname, const char *target, const char *logmsg);
->  
-> +/*
-> + * Update HEAD of the specified gitdir.
-> + * Similar to create_symref("relative-git-dir/HEAD", target, NULL), but this is
-> + * able to update the main working tree's HEAD wherever $GIT_DIR points to.
-> + * Return 0 if successful, non-zero otherwise.
-> + * */
-> +extern int set_worktree_head_symref(const char *gitdir, const char *target);
-> +
->  enum action_on_err {
->  	UPDATE_REFS_MSG_ON_ERR,
->  	UPDATE_REFS_DIE_ON_ERR,
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 81f68f846b69..ec237efec35d 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -2894,6 +2894,41 @@ int create_symref(const char *refname, const char *target, const char *logmsg)
->  	return ret;
->  }
->  
-> +int set_worktree_head_symref(const char *gitdir, const char *target)
-> +{
-> +	static struct lock_file head_lock;
-> +	struct ref_lock *lock;
-> +	struct strbuf err = STRBUF_INIT;
-> +	struct strbuf head_path = STRBUF_INIT;
-> +	const char *head_rel;
-> +	int ret;
-> +
-> +	strbuf_addf(&head_path, "%s/HEAD", absolute_path(gitdir));
-> +	if (hold_lock_file_for_update(&head_lock, head_path.buf,
-> +				      LOCK_NO_DEREF) < 0) {
-> +		error("%s", err.buf);
-> +		strbuf_release(&err);
-> +		strbuf_release(&head_path);
-> +		return -1;
-> +	}
-> +
-> +	/* head_rel will be "HEAD" for the main tree, "worktrees/wt/HEAD" for
-> +	   linked trees */
-> +	head_rel = remove_leading_path(head_path.buf,
-> +				       absolute_path(get_git_common_dir()));
-> +	/* to make use of create_symref_locked(), initialize ref_lock */
-> +	lock = xcalloc(1, sizeof(struct ref_lock));
-> +	lock->lk = &head_lock;
-> +	lock->ref_name = xstrdup(head_rel);
-> +	lock->orig_ref_name = xstrdup(head_rel);
-> +
-> +	ret = create_symref_locked(lock, head_rel, target, NULL);
-> +
-> +	unlock_ref(lock); /* will free lock */
-> +	strbuf_release(&head_path);
-> +	return ret;
-> +}
-> +
->  int reflog_exists(const char *refname)
+By convention, that means that the result is not owned by the caller,
+and should not be freed. We implement that by:
+
 >  {
->  	struct stat st;
+>  	static struct strbuf validated_path = STRBUF_INIT;
+>  	static struct strbuf used_path = STRBUF_INIT;
+
+...using static variables which persist after the call returns. So this
+function retains ownership of the memory, and it remains valid until the
+next call to enter_repo().
+
+There's no leak when we return NULL, because the function retains
+control of the memory (though it will hold onto it until the end of the
+program if nobody calls enter_repo() again). And thus we shouldn't use
+strbuf_detach(), which loses that reference to the memory (and since the
+callers don't take ownership, it actually _creates_ a leak).
+
+We could release the memory when returning, but I don't think it's a big
+deal to do so.
+
+-Peff
