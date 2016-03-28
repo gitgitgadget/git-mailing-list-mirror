@@ -1,138 +1,86 @@
-From: =?UTF-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
-Subject: Re: [PATCH v3] path.c enter_repo(): fix unproper strbuf unwrapping
- and memory leakage
-Date: Mon, 28 Mar 2016 23:59:54 +0800
-Message-ID: <CAKqreuzoQmkUwyYiAt_GhoHyaCz=WoNshOkhH=D3orNZEG2ayQ@mail.gmail.com>
-References: <20160325175947.GC10563@sigill.intra.peff.net>
-	<1459180638-6034-1-git-send-email-huiyiqun@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Your friend <pickfire@riseup.net>, Jeff King <peff@peff.net>,
-	Hui Yiqun <huiyiqun@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 28 18:00:02 2016
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH v2] rebase-i: print an abbreviated hash when stop for editing
+Date: Mon, 28 Mar 2016 18:00:00 +0200
+Message-ID: <1459180800-5744-1-git-send-email-ralf.thielow@gmail.com>
+References: <1458844281-13107-1-git-send-email-ralf.thielow@gmail.com>
+Cc: gitster@pobox.com, Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 28 18:00:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akZaC-0002W8-UQ
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Mar 2016 18:00:01 +0200
+	id 1akZaa-0002hV-2v
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Mar 2016 18:00:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753782AbcC1P75 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2016 11:59:57 -0400
-Received: from mail-ob0-f195.google.com ([209.85.214.195]:34589 "EHLO
-	mail-ob0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752838AbcC1P7z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2016 11:59:55 -0400
-Received: by mail-ob0-f195.google.com with SMTP id c10so6274269obp.1
-        for <git@vger.kernel.org>; Mon, 28 Mar 2016 08:59:55 -0700 (PDT)
+	id S1754164AbcC1QAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2016 12:00:20 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35807 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754020AbcC1QAS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2016 12:00:18 -0400
+Received: by mail-wm0-f68.google.com with SMTP id 139so16275914wmn.2
+        for <git@vger.kernel.org>; Mon, 28 Mar 2016 09:00:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=Z21d5p2UomUwJfEW6crBPd7dVyK5OCJgKfnzWs6asbY=;
-        b=e3sRFbs4VvYUKVvOog9w30jweLmeQPGgmSLKd7kEAehZStBPOVQK9yeqcfAhN38U/l
-         R2lx+GBcOHym223wYjvmFnlVRQ4W9CRo4fRv+sJNK7GZntw1qqX1NB+wCw+P1MAuZJMn
-         LOehWZ3x9CxWZ9H52JxukpcVztOL0YdupqptOeNwfYuNbwsbDgnKvakSX1uJVwYXG/m5
-         Es92kGJF/FcnnvHUn/HWmdkOu6Qetdc+wx32ylIoNtkdE4uNSpipEke9Xy0sHsNUOKF2
-         1i1LgToxRLJ7K/+I4h0nTDTTuS/yOSRdxHAiuCcq27+Gqbxpde6r5HqDbQrMILWHBAoH
-         7ZnQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=iUHCd0WK6QlBBWyrQybU+H6HKMLrsSRmh3N1nUJo0i0=;
+        b=uS4FCbdhgD8J7LhtOT6OYs861q7U6rHdzIhSswXG5z3ZMFJYIqYbrEcuSWuS2x7IsA
+         yg29v1W7LtUr1AwLX/N+ReUnhIYZIrC8EyO7tiDRELV7rYR6dG+iytTzsKh0ZjlEH400
+         jEPGE/WaiBlcsgwvfzIJJj8r6XQmznPYZz+kV6GTf0Q0YLwMc+W3dTGGEY/wituX+Ws2
+         F5jXcchasAd3YE7LOaSqk44YWJ9tpoNy2OKvNNxsvqImpdZAQ7NsfC0IhRlgcKaOZl13
+         bKhLy4nnwNlRc6kW30OUDO5dM5PgcwRau3rDYQncuHMSmgr0eFDRscIBK81f3vH4chOq
+         Pwzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=Z21d5p2UomUwJfEW6crBPd7dVyK5OCJgKfnzWs6asbY=;
-        b=ZP5gmDXXSka/LPXgyBSC8gBaWGrCx/QOU1BWTEV9W09Mo+H9blzYoDE1X2+PUJ9EYg
-         mSE2Xwn+yKMjEOnL8g8KopDLdXZn7wfYoqwAMoGHSn6M+nNKxNRdJnXN9JUnX6fmS2Sx
-         MTjR9BMY5SYWftj+9lnxgNF81VKhZ+VKiJhR/a4tUuWdjemZ7raTpTJNEMbyMBJV9sut
-         WQoA078mTyBr9ScY8UGXZqYjOfctKDuM7yAtFuHpF9LAb0SuukgTP09diXwtx3x5sTzc
-         4BkQrODw0g2yMLU4mXsCmPqazwQ/DMySER9QVTaj3rw4jI/e7pvLmvsP73AFPi4BXkso
-         Y4ww==
-X-Gm-Message-State: AD7BkJLVdiZmFsoOWsl4c082i7UYZWm7tuWMk9aPO/jX1wnCcSwtxdag7Dx90MKGlN+Z7ylftJhQjOHbGDV1aA==
-X-Received: by 10.60.147.228 with SMTP id tn4mr12077451oeb.33.1459180794667;
- Mon, 28 Mar 2016 08:59:54 -0700 (PDT)
-Received: by 10.157.12.170 with HTTP; Mon, 28 Mar 2016 08:59:54 -0700 (PDT)
-In-Reply-To: <1459180638-6034-1-git-send-email-huiyiqun@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=iUHCd0WK6QlBBWyrQybU+H6HKMLrsSRmh3N1nUJo0i0=;
+        b=ME3pizVqXSPuotAgmN3i6iN7F1m6PD4ekDXtxGGxdcaeGXUZ82ZSu2j+1m67YMr916
+         EfbstMmZXPw8SFobocK73TSGOVH50cmEVgLOWENK1Lr7RIjTDOk6XlF3YLTAafP4Bkrl
+         tNZsrm3FNznCOEQZddMteraMm6JuvBd2PebiWHHLna+SjeruTX5/JX4RDCAppYQmII4A
+         sFPgPUfLddkNXnl36uxtcGXlzFtvHNA0oaNnlupHsz1ZF42uQuEVriAMlzoincMJ8L80
+         et0Lcc9vlFhE/NLb/obHt+9qM0TPXDWKgp6DC/ZdBjE362r89vEGSCOqypyWOK545EVJ
+         nOBA==
+X-Gm-Message-State: AD7BkJIFiT0rTn5LGQ1d3s0IrNkFfl5n+K5NR6Qdp01MHB15z6aX2H7ZCB9DhgBqWdL82g==
+X-Received: by 10.28.14.77 with SMTP id 74mr11015451wmo.15.1459180817219;
+        Mon, 28 Mar 2016 09:00:17 -0700 (PDT)
+Received: from localhost (cable-86-56-20-25.cust.telecolumbus.net. [86.56.20.25])
+        by smtp.gmail.com with ESMTPSA id v2sm10721627wmd.24.2016.03.28.09.00.16
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 28 Mar 2016 09:00:16 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0.rc4.285.gc3ac548
+In-Reply-To: <1458844281-13107-1-git-send-email-ralf.thielow@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290045>
 
-Sorry, I sent the patch repeatedly to fix a wrongly indent with space.
+The message that is shown when rebase-i stops for editing prints
+the full hash of the commit where it stopped which makes the message
+overflow to the next line on smaller terminal windows.  Print an
+abbreviated hash instead.
 
-2016-03-28 23:57 GMT+08:00 Hui Yiqun <huiyiqun@gmail.com>:
-> According to strbuf.h, strbuf_detach is the sole supported method
-> to unwrap a memory buffer from its strbuf shell.
->
-> So we should not return the pointer of strbuf.buf directly.
->
-> What's more, some memory leakages are solved.
-> ---
->  path.c | 15 ++++++++++-----
->  1 file changed, 10 insertions(+), 5 deletions(-)
->
-> diff --git a/path.c b/path.c
-> index 969b494..9801617 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -625,6 +625,7 @@ const char *enter_repo(const char *path, int strict)
->  {
->         static struct strbuf validated_path = STRBUF_INIT;
->         static struct strbuf used_path = STRBUF_INIT;
-> +       char * dbuf = NULL;
->
->         if (!path)
->                 return NULL;
-> @@ -654,7 +655,7 @@ const char *enter_repo(const char *path, int strict)
->                 if (used_path.buf[0] == '~') {
->                         char *newpath = expand_user_path(used_path.buf);
->                         if (!newpath)
-> -                               return NULL;
-> +                               goto return_null;
->                         strbuf_attach(&used_path, newpath, strlen(newpath),
->                                       strlen(newpath));
->                 }
-> @@ -671,22 +672,22 @@ const char *enter_repo(const char *path, int strict)
->                         strbuf_setlen(&used_path, baselen);
->                 }
->                 if (!suffix[i])
-> -                       return NULL;
-> +                       goto return_null;
->                 gitfile = read_gitfile(used_path.buf);
->                 if (gitfile) {
->                         strbuf_reset(&used_path);
->                         strbuf_addstr(&used_path, gitfile);
->                 }
->                 if (chdir(used_path.buf))
-> -                       return NULL;
-> -               path = validated_path.buf;
-> +                       goto return_null;
-> +               path = dbuf = strbuf_detach(&validated_path, NULL);
->         }
->         else {
->                 const char *gitfile = read_gitfile(path);
->                 if (gitfile)
->                         path = gitfile;
->                 if (chdir(path))
-> -                       return NULL;
-> +                       goto return_null;
->         }
->
->         if (is_git_directory(".")) {
-> @@ -695,6 +696,10 @@ const char *enter_repo(const char *path, int strict)
->                 return path;
->         }
->
-> +return_null:
-> +       free(dbuf);
-> +       strbuf_release(&used_path);
-> +       strbuf_release(&validated_path);
->         return NULL;
->  }
->
-> --
-> 2.7.4
->
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ git-rebase--interactive.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 4cde685..9ea3075 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -548,7 +548,8 @@ do_next () {
+ 
+ 		mark_action_done
+ 		do_pick $sha1 "$rest"
+-		warn "Stopped at $sha1... $rest"
++		sha1_abbrev=$(git rev-parse --short $sha1)
++		warn "Stopped at $sha1_abbrev... $rest"
+ 		exit_with_patch $sha1 0
+ 		;;
+ 	squash|s|fixup|f)
+-- 
+2.8.0.rc4.285.gc3ac548
