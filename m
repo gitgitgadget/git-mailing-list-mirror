@@ -1,106 +1,83 @@
-From: Stefan Tauner <stefan.tauner@alumni.tuwien.ac.at>
-Subject: Re: pre-push hook does not get input on non-fast-forward pushes
-Date: Tue, 29 Mar 2016 00:09:08 +0200
-Message-ID: <201603282209.u2SM98Zb010448@mail2.student.tuwien.ac.at>
-References: <201603282056.u2SKuqDf031459@mail2.student.tuwien.ac.at>
-	<xmqq1t6uxop7.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 00:09:23 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 00/11] saving and replaying multiple variants with rerere
+Date: Mon, 28 Mar 2016 15:42:11 -0700
+Message-ID: <1459204942-26601-1-git-send-email-gitster@pobox.com>
+References: <1442275050-30497-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 29 00:42:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akfLc-00018N-4M
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 00:09:20 +0200
+	id 1akfrp-0005Di-Uc
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 00:42:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755296AbcC1WJP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Mar 2016 18:09:15 -0400
-Received: from mail2.student.tuwien.ac.at ([193.170.74.22]:56011 "EHLO
-	mail2.student.tuwien.ac.at" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754750AbcC1WJO convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2016 18:09:14 -0400
-Received: from misery (chello080109083031.10.15.vie.surfer.at [80.109.83.31])
-	(authenticated bits=0)
-	by mail2.student.tuwien.ac.at (8.13.8/8.13.8) with ESMTP id u2SM98Zb010448
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 29 Mar 2016 00:09:08 +0200
-In-Reply-To: <xmqq1t6uxop7.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Claws Mail 3.8.0 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
+	id S1755481AbcC1Wma (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2016 18:42:30 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:54857 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755360AbcC1WmZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2016 18:42:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 044224FF96;
+	Mon, 28 Mar 2016 18:42:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=NZij
+	I9jtlawrvIe7T93kr+ioRPY=; b=BCkqmjxZD9iYtYzraRpzu/dkRU1WMmIxbNLk
+	2EdxiT/DBZnhq8ot7Fh1iSKZoExNOaHqqP/Jy2oAFC7V3PRUv4fbtD3qfeiQFILR
+	M8Bh0mGF5U6aiIUs2w5qtesiFLhnq6lXGjCPhKw7cqeZcsskaZgzUWptO7rZOD4l
+	XBU9m+E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=tTccoe
+	vXPyvx1omZdqBMmKy7EKP4E2LgmjgAUJkvR3z28U9qArzKgdmKlCFMB/+DFV32rt
+	Dp1o41HCALY3FLNLYWAvMOjNtTGk9Rloigh/Fs0EhuyL+vuRTPk2AI/xLe5HGsy9
+	S7kei4o0AX8imw1cKrfj9qtCzFWJ3YtG/Caxc=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EEC254FF95;
+	Mon, 28 Mar 2016 18:42:23 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 754604FF94;
+	Mon, 28 Mar 2016 18:42:23 -0400 (EDT)
+X-Mailer: git-send-email 2.8.0-215-g046a488
+In-Reply-To: <1442275050-30497-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 569E8B4E-F536-11E5-B232-E95C6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290068>
 
-On Mon, 28 Mar 2016 14:44:20 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
+Take two after several months.  That is what you get when you end up
+running a busy project, instead of staying to be an individual
+contributor ;-).
 
-> Stefan Tauner <stefan.tauner@alumni.tuwien.ac.at> writes:
->=20
-> The pre-push hook is not the only thing that may prevent you from
-> pushing a ref update.  As you noticed, non-fast-forward check may
-> trigger and decide that a ref is not going to be pushed, and that
-> may happen before we call the pre-push hook.
->=20
->     Information about what is to be pushed is provided on the hook's
->     standard input with lines of the form ...
->=20
-> So when the pre-push is called, the refs that will not fast-forward
-> may not be among the "what is to be pushed", hence not reported.
->=20
-> We _could_ add something like this to the documentation, but we do
-> not necessarily want to promise that the order of checks to stay
-> "internal checks like non-ff check first before pre-push hook", so
-> this update may not be an improvement.  The current text conveys
-> enough information without making such a promise, but you need to
-> read it carefully.
+The previous round starts at the message this is a response to and
+is found at http://thread.gmane.org/gmane.comp.version-control.git/277878
 
-I understand but that behavior is quite surprising and the wording not
-that clear (if one is not aware of the behavior already) IMHO. If the
-fast forward check is done beforehand and no refs remain, why is the
-script called at all? Or put otherwise, why isn't git aborting before
-that? That would seem way more logical... consistency is a good
-argument to call the hook with no refs anyway... but the abort/filter
-order is remarkable and should be documented in some way IMHO.
+The previous round completed the basic "record and replay", while
+leaving "gc" and "forget" as known-to-be-stale bits.  This round
+attempts to complete them. 
 
->=20
->  Documentation/githooks.txt | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->=20
-> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-> index 9ef2469..605ba4d 100644
-> --- a/Documentation/githooks.txt
-> +++ b/Documentation/githooks.txt
-> @@ -201,7 +201,9 @@ does not yet exist the `<remote SHA-1>` will be 4=
-0 `0`.  If a ref is to be
->  deleted, the `<local ref>` will be supplied as `(delete)` and the `<=
-local
->  SHA-1>` will be 40 `0`.  If the local commit was specified by someth=
-ing other
->  than a name which could be expanded (such as `HEAD~`, or a SHA-1) it=
- will be
-> -supplied as it was originally given.
-> +supplied as it was originally given.  A request to update remote ref=
- that has
-> +already been rejected for other reasons (e.g. failing to pass a fast=
--forward
-> +test) does not appear in the input.
-> =20
->  If this hook exits with a non-zero status, 'git push' will abort wit=
-hout
->  pushing anything.  Information about why the push is rejected may be=
- sent
+Junio C Hamano (11):
+  rerere: split conflict ID further
+  rerere: scan $GIT_DIR/rr-cache/$ID when instantiating a rerere_id
+  rerere: handle leftover rr-cache/$ID directory and postimage files
+  rerere: delay the recording of preimage
+  rerere: allow multiple variants to exist
+  t4200: rerere a merge with two identical conflicts
+  rerere: do use multiple variants
+  rerere: gc and clear
+  rerere: move code related to "forget" together
+  rerere: split code to call ll_merge() further
+  rerere: adjust 'forget' to multi-variant world order
 
-LGTM... if you don't want to promise anything then maybe something like
-"may not appear" instead of "does not appear" is better. As long as the
-reason for no input is stated more explicitly than currently I am happy=
-=2E
+ rerere.c          | 626 +++++++++++++++++++++++++++++++++++++-----------------
+ rerere.h          |   4 +-
+ t/t4200-rerere.sh | 159 +++++++++++++-
+ 3 files changed, 593 insertions(+), 196 deletions(-)
 
---=20
-Kind regards/Mit freundlichen Gr=C3=BC=C3=9Fen, Stefan Tauner
+-- 
+2.8.0-215-g046a488
