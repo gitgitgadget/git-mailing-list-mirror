@@ -1,63 +1,63 @@
 From: Hui Yiqun <huiyiqun@gmail.com>
-Subject: [PATCH] path.c enter_repo(): fix unproper strbuf unwrapping and memory leakage
-Date: Mon, 28 Mar 2016 23:51:32 +0800
-Message-ID: <1459180292-3475-1-git-send-email-huiyiqun@gmail.com>
+Subject: [PATCH v2] path.c enter_repo(): fix unproper strbuf unwrapping and memory leakage
+Date: Mon, 28 Mar 2016 23:56:10 +0800
+Message-ID: <1459180570-5521-1-git-send-email-huiyiqun@gmail.com>
 References: <20160325175947.GC10563@sigill.intra.peff.net>
 Cc: gitster@pobox.com, pickfire@riseup.net, peff@peff.net,
 	Hui Yiqun <huiyiqun@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 28 17:53:15 2016
+X-From: git-owner@vger.kernel.org Mon Mar 28 17:56:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akZTe-00072y-IO
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Mar 2016 17:53:15 +0200
+	id 1akZWi-0000P4-V8
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Mar 2016 17:56:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753710AbcC1PxK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2016 11:53:10 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:36679 "EHLO
+	id S1753618AbcC1P4V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2016 11:56:21 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:32810 "EHLO
 	mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752620AbcC1PxI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2016 11:53:08 -0400
-Received: by mail-pf0-f193.google.com with SMTP id q129so21819855pfb.3
-        for <git@vger.kernel.org>; Mon, 28 Mar 2016 08:53:08 -0700 (PDT)
+	with ESMTP id S1752775AbcC1P4U (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2016 11:56:20 -0400
+Received: by mail-pf0-f193.google.com with SMTP id x3so21518418pfb.0
+        for <git@vger.kernel.org>; Mon, 28 Mar 2016 08:56:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
         bh=UK2KOG+cKqgqgBYHPQ6rlpoyGIAPKfe5BrRD0U6ThSY=;
-        b=ZFzi0dk5yfqwZm+h5P9FrmnFqsBY1gpunoYhOVwFqDxI6vO2x/XjiqWzobJxkt+4sf
-         9U9bMOG+bto9EaZYSo7/k6VsBF0UTk1CbbC5Ib9eb86cY8LnHKjdzd6ZRZ1M16XhIpKy
-         Mu+N4hchN24W+SOuwwEs7IjQD2At+ZMyM/37/VsRKK+qu/+8CScypa34G4dC7cywUtB/
-         U89j3SmmfBaTGisT7EMIHLVDlvCPfZsR45rrB5dNoGPKmK7k2xEzHY1FOCrmc5qeAGw7
-         xaBGTkvQNWfuSjz/+0iHT5FSJTuePYSYJ4+bcwQlSRMTyz3LtOPu2r1SyPYaOA/LOGkd
-         muJA==
+        b=uf5EhGsKYCIHXa5Zcrr09E0acsrm8KsX8I6I6krKXfzyeA1FOndSthYb7jPRCWl08j
+         oQ/OyVIRT93YeRm0fm7TfYRkyLf2UBpYTIud9gQpkEvxS2YgBN4GLLoO1Ytd/Kv9laSi
+         V63dZMBVPWzT7wXJuuJ/R3R25BCxQsVwwMDrjDBBRJEIDU1Oo86Jw0RyfiN77T45XXMd
+         MrsvHpqgwDHFX8sVOhD49bNuXB5VbkBFc3zgpnucPOaXC1+kCRmmMZYvuKwwUkWuIpwj
+         p0Z4kU7zrJh90bSTyE5GRkCS7BdQE3kHDd9LU3CU+RN8lyY0622wcx3KQIEr7QEkzdXh
+         YPcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
         bh=UK2KOG+cKqgqgBYHPQ6rlpoyGIAPKfe5BrRD0U6ThSY=;
-        b=aytSpBZSf8FI+HeOfMRiWRuz5/UykpnCVF6m978JLFVPZIIGTLwv6J4XwqeHoSXyfd
-         PQ/v6MCxNYH0FTKcMjWYgg6juJn2+XMmgEh7nUF9TExzoedrM64D/CWYMYpch0XL4Ob3
-         07pdR0CDntRHlEfCG6+AhTOPGwEO5+3PuBZpv2cJdCfSLqaAmj/qhdJ49yUf2d4B4pSR
-         fwQJjjuTQvTMk4Qjgjj9d68odsqWk+QMPBj25JInHyqtjAEOlpKhBo/6MyO1ZXS+XEox
-         HUbeRx7JS5AxyLHYSxUNgDZF7lDfLpDmS+um/w12f651N0LaAhMZUtBMxtJizjqk7fa0
-         FuJw==
-X-Gm-Message-State: AD7BkJLv8tmwtSxF0XuGxamsN0uGxcYYp5A4IuWQtXTdZUuzt22FPcANqAs2VGofNATTAw==
-X-Received: by 10.98.33.203 with SMTP id o72mr44014222pfj.96.1459180387658;
-        Mon, 28 Mar 2016 08:53:07 -0700 (PDT)
+        b=YbYYW5eOmtpBGINJvcCuw9W6cnY64fj9OfXXqeIpT2qW/0OlH4d0sfAIdp34DijCLt
+         tutd9Hu3JiU5919BRWDFcmWgXoqLM+pCSVHvKwAGpgkHZgkqHj/U/ObXYaxVoNjGMw//
+         3law79JcPy/SGq/jU9lwKg5lU6nh38Fs2KGoWloOSFDt1RTOcM/1ADyM+y63U5YJhqrb
+         sbbIibc6A1G97ih7swRaA9he1S8qfE/egKJWvhWPX+Z2sWf/GlubEjpqP6P9R/+sGwRf
+         8ywlnxCXyz5snkOZ+PQdyq2KrmR2NXDo5ngiBdnjmWh+rUNYNnPdFgMOvH9IZz2sways
+         DrlA==
+X-Gm-Message-State: AD7BkJJnU/hHQuva4ryfoPyPNnFvp6/BUN9G2iG/Xox/aPsxFCxQOJ5YVIHZH2kDpcDH+w==
+X-Received: by 10.98.86.146 with SMTP id h18mr44098074pfj.9.1459180579943;
+        Mon, 28 Mar 2016 08:56:19 -0700 (PDT)
 Received: from localhost.localdomain (hashi.inv.dotkrnl.com. [133.130.122.94])
-        by smtp.gmail.com with ESMTPSA id g28sm36692518pfd.25.2016.03.28.08.53.04
+        by smtp.gmail.com with ESMTPSA id wb7sm36790333pab.3.2016.03.28.08.56.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 28 Mar 2016 08:53:07 -0700 (PDT)
+        Mon, 28 Mar 2016 08:56:19 -0700 (PDT)
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <20160325175947.GC10563@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290042>
 
 According to strbuf.h, strbuf_detach is the sole supported method
 to unwrap a memory buffer from its strbuf shell.
