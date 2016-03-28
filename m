@@ -1,64 +1,99 @@
-From: ratheesh kannoth <ratheesh.ksz@gmail.com>
-Subject: git difftool help
-Date: Mon, 28 Mar 2016 19:37:03 +0530
-Message-ID: <CAGZFCEEYYwc=7z5+TRCxE=gR0od2X1oe1WgyhjvO6edb9yyM1A@mail.gmail.com>
+From: =?UTF-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
+Subject: Re: [PATCH v3/GSoC 2/5] path.c: implement xdg_runtime_dir()
+Date: Mon, 28 Mar 2016 22:12:09 +0800
+Message-ID: <CAKqreuzNeY7HryZvMgLKpPAbXOQ_qLfX63YOj57Wo+KrHJbtMA@mail.gmail.com>
+References: <1458728005-22555-1-git-send-email-huiyiqun@gmail.com>
+	<1458728005-22555-2-git-send-email-huiyiqun@gmail.com>
+	<20160325095923.GB8880@sigill.intra.peff.net>
+	<CAKqreux8FHdJoKDishjQkbi9g1oUc265EUK4nOJ_sgeFivGSNA@mail.gmail.com>
+	<20160325175947.GC10563@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 28 16:13:59 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Your friend <pickfire@riseup.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 28 16:18:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akXp7-0003tR-5k
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Mar 2016 16:07:17 +0200
+	id 1akXtv-0000li-P6
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Mar 2016 16:12:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751705AbcC1OHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2016 10:07:05 -0400
-Received: from mail-io0-f180.google.com ([209.85.223.180]:34563 "EHLO
-	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751212AbcC1OHE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2016 10:07:04 -0400
-Received: by mail-io0-f180.google.com with SMTP id e3so63836834ioa.1
-        for <git@vger.kernel.org>; Mon, 28 Mar 2016 07:07:03 -0700 (PDT)
+	id S1753444AbcC1OMM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Mar 2016 10:12:12 -0400
+Received: from mail-oi0-f67.google.com ([209.85.218.67]:34060 "EHLO
+	mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752468AbcC1OMK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Mar 2016 10:12:10 -0400
+Received: by mail-oi0-f67.google.com with SMTP id q133so7409304oib.1
+        for <git@vger.kernel.org>; Mon, 28 Mar 2016 07:12:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=egPzDbguEfsJgLfsSfYJpI+0ehQpNOdgg5fyNjOc8RQ=;
-        b=n/JrXctbR2smEK90LTxdNSAx7phM31NAipaYFh83POpOuo2K3usnsh7U5oxXp9RBrc
-         fbkb7/Ix1isfCBwFwtU0+rUqYmRvugeM0VC+sVzpLXZ987/rvixKKHuhFYVjFC4S7ll4
-         YgvV6fz8I+K0pb4gAz3ltz9jMRTU20wv5m1cU0xGtFGZtQtsXqEbYiWV9LEq9KjIYy53
-         dr+8ilwiSyJgG/VmCjLpZdfGVbaNG5/OeOi5HdO+o3sxnO9Ynfv7Xa3XdVuK0K/wE/gO
-         BhHvC9JD5IhwJxCRzjiOIrG0kzc/+pUCStEw5flL9F7V5rNxtWyoCcsLa3jWIUp0OoRo
-         p4pQ==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=WbP/TFkZtkEdM7JugxsW/aI8WlLwSgNLMeU6k7y/MLc=;
+        b=KmBtt28PbVXvZwmWhEOQgoXXK95JG91U1nErKJw8EB4oe4hSVCeqaj2EnKnhLmTwWP
+         r48PzfWwTmSyAUkGjljnIVYZW9Tg7teNJiu34wlWJFWtYAG0cVyuSNa/qgV9caJoGXRs
+         zsGFIhGCkClulPCKbNI8mF62plK++jQ2Y8i5YjIEYwSQuFI4dIm+LXsnqi09zJZyKvvR
+         a4liET4wED6/3EcvP8c+UybYcdgvi4sfMDkpd08IZ/jOU4fPO6RRhOLKn5FDFKnuw1NF
+         rzEILEaEDelIULAL2LZJ4C2hDaSO/V2HqvbKzbzcQHmmgtf+x4Q34+zSWahXR2vu4BEi
+         effQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=egPzDbguEfsJgLfsSfYJpI+0ehQpNOdgg5fyNjOc8RQ=;
-        b=H1wguzRzQlqKjzsbeCVyDrXvK2krAsFZ3gC1GYA/v5xGhFjbv/bD5pT9IDTAzaIFaW
-         9ZcIW/9Nvk6AtZjueN3awfP2b6LdlchEptpJ92tmABV4dHqEDtSp+w9SNvneAFnXFg2z
-         Hn0dyRU3ruCOGrYsPellvprmF/1khkrCaZide/pWhECa+RLmxAcsIP4m8V5gOMmeInoN
-         rC2JZUYjYncyiK+jxnMXYcy6G+/j29c+pK8tfmjOdtXH/Md5qDC+gHBgv8kfYTaxpmGr
-         Q2560bXsow0nQKouEzfNRczrRZT+I/IlrdsEKtecMRu5TYkVv2/U83X6vOjbCj4cK47Z
-         girw==
-X-Gm-Message-State: AD7BkJKt/Q8Rb/TZE8pubaz4yUP0KVWdGuaxw6zHx5ik4iRYeOiR40F2k90qcDqjfFlKhrl2gCBXBTempCJMQA==
-X-Received: by 10.107.18.70 with SMTP id a67mr30401983ioj.116.1459174023247;
- Mon, 28 Mar 2016 07:07:03 -0700 (PDT)
-Received: by 10.107.11.78 with HTTP; Mon, 28 Mar 2016 07:07:03 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=WbP/TFkZtkEdM7JugxsW/aI8WlLwSgNLMeU6k7y/MLc=;
+        b=GGqutwEe9+4LnVZ5bV3xF4kyiLVNpy/rhNGso5wGf9lMQ/j2DBarFb8B8IzHJNSKLt
+         PwLOO50r8t79xIxPQmViAO9pU3C8hsWtTuHH3Fd+gcIXJj5rb9Sl1QU6AzQqP54K3ARw
+         RRGxOWq/0eppdes9SDdm2a4j7QDRwXM/b5X+Xstsx4+60ZUnv6B5Pj2O81A4zrQglJFE
+         Q1sOnjNGnes9sA0QdlYTGye2ZTCpJ+N9gPt/0A5Z1dtuNlRHpsGDh4jpdzx8iV9DewfN
+         7uvsKzrktXLdGRAJ7RrW+zos8eSi7PkARsOe7BSXGNCudD+78J775RokzN1i+Zjc2jdh
+         nJAw==
+X-Gm-Message-State: AD7BkJLI91nf5kWz0pFdTrLdEAFe7a/4AEnXHNZqtQmdbAX5f8Yj+/afjVXbZlb02uu8fxDU8KelmHLw5uu/Dg==
+X-Received: by 10.157.17.72 with SMTP id p8mr13564302otp.162.1459174329625;
+ Mon, 28 Mar 2016 07:12:09 -0700 (PDT)
+Received: by 10.157.12.170 with HTTP; Mon, 28 Mar 2016 07:12:09 -0700 (PDT)
+In-Reply-To: <20160325175947.GC10563@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290035>
 
-'git diff 'is opening in meld. I could not create a patch using -  git
-diff > ./patch-01
-i did not make any change to pick meld, by  default it is picking meld.
+2016-03-26 1:59 GMT+08:00 Jeff King <peff@peff.net>:
+> On Fri, Mar 25, 2016 at 10:21:48PM +0800, =E6=83=A0=E8=BD=B6=E7=BE=A4=
+ wrote:
+>
+>> > There are some minor English problems here (and elsewhere). E.g., =
+you
+>> > probably want "So we just issue a warning and leave it to the user=
+ to
+>> > solve.".
+>>
+>> Sorry for my English.
+>
+> Thanks. And sorry if that sounded too harsh. I know that working in a
+> non-native language is tough. Usually in a review I'll try to provide
+> specific English fixes, but in this case, I think a lot of these
+> messages are still in flux, so I I didn't want to waste either of our
+> time going over specifics if the content is just going to change late=
+r.
+>
+>> > These ones leak, too.
+>>
+>> I will deal with it.
+>>
+>> I find there are some similar leakage in this file. I'll fix them in
+>> another patch.
+>
+> Great, thanks.
 
+After read the source code of strbuf more carefully, I get the conclusi=
+on
+that if a strbuf is initialized with STRBUF_INIT but is not used, there=
+ is
+no need to release it. Is it true?
 
-Which "git difftool" will help to create patch ? i do want to  use
-format patch as changes are not yet committed ?
-
-
--Ratheesh
+> -Peff
