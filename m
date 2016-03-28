@@ -1,103 +1,69 @@
-From: =?UTF-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
-Subject: Re: [PATCH v3/GSoC 2/5] path.c: implement xdg_runtime_dir()
-Date: Mon, 28 Mar 2016 23:00:53 +0800
-Message-ID: <CAKqreuxJ7Rz2G_hmnAOH7W4rBBKr=CX3pjbzJkkK1ZhN=3_o-w@mail.gmail.com>
-References: <1458728005-22555-1-git-send-email-huiyiqun@gmail.com>
-	<1458728005-22555-2-git-send-email-huiyiqun@gmail.com>
-	<20160325095923.GB8880@sigill.intra.peff.net>
-	<CAKqreux8FHdJoKDishjQkbi9g1oUc265EUK4nOJ_sgeFivGSNA@mail.gmail.com>
-	<20160325175947.GC10563@sigill.intra.peff.net>
-	<CAKqreuzNeY7HryZvMgLKpPAbXOQ_qLfX63YOj57Wo+KrHJbtMA@mail.gmail.com>
-	<xmqq60w61wsp.fsf@gitster.mtv.corp.google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/4] config --show-origin: report paths with forward
+ slashes
+Date: Mon, 28 Mar 2016 17:14:17 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1603281712470.4690@virtualbox>
+References: <cover.1458668543.git.johannes.schindelin@gmx.de> <8beb1c208e33e1de8f272caa22fb7a0b662ca4cc.1458668543.git.johannes.schindelin@gmx.de> <56F8E435.3020304@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Your friend <pickfire@riseup.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 28 17:01:05 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>,
+	Eric Wong <normalperson@yhbt.net>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Mar 28 17:14:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akYfA-0007E8-UO
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Mar 2016 17:01:05 +0200
+	id 1akYsO-0004nU-4x
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Mar 2016 17:14:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753450AbcC1PBA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Mar 2016 11:01:00 -0400
-Received: from mail-oi0-f67.google.com ([209.85.218.67]:34845 "EHLO
-	mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752386AbcC1PA7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Mar 2016 11:00:59 -0400
-Received: by mail-oi0-f67.google.com with SMTP id r187so19273377oih.2
-        for <git@vger.kernel.org>; Mon, 28 Mar 2016 08:00:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=qxhloqLx/hdFvEGNgV61vHzPF98rCh6tkHZksLaF6G8=;
-        b=Oha3kQf+wWEIhSfLvfyayN2AN3W6v7V0Ic6acbkgZSr3APQWl1o+awI2QvKJCrG8R8
-         YA0A3YcZ/7Q5e2mwoivcv3D89tj7A1JZT3B/DYfr8dixdXnpsZ4A9ykGaGn1H6zzUKr9
-         5gJDSN5GKv+XmDBIaYQOJ/bm/RVkSBCQ5xOOvWfsOHri8XEueQlHerMFTxUBaR84DCy2
-         ljh1t/8FSmeRZap/ujMGztUTwFNSntHoZmYxMHH76OnR19d1zjL1tCMY9K90lGYASDjn
-         ifzcZuOugafXy0qhLZhKl+iGQceWPHf/V2G7GU8r61Ekwq9D1K/kKaC11lfq53btJahb
-         xhhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=qxhloqLx/hdFvEGNgV61vHzPF98rCh6tkHZksLaF6G8=;
-        b=I8Ta0DiUm+bCRouZYEtzxBS/5GEzzFZi3pP22pl2ohu45b23AepXoCDyeP1hRnIQCv
-         3GpuAWIbRousvr8dE2OmPWZHAhqNQaGAuG8+XSsQFWU7bQMxIXhy45+YAdpGMQTWfpYL
-         4lHxjgpGQKLu+SK4glBihuCccNp6YvtzIRY9q4BJAV0/I9M3C8/9SfC37P7JCIydW65D
-         PELIbaxKB+8ptFg3KhGjTv1CLfsCsJnMj+HZQJqWrv6XL3oZCyhHDvBwq5lrHBEihiOl
-         fPgFvtaBbyE//IRPrivPB1aKgaQ/x/6uM/rgPZJEW1eSbFl4YzNwBEcMs49tcWOPpwds
-         am7g==
-X-Gm-Message-State: AD7BkJJg6CyUWQMydcDxwVtySwHY80JNwe/7Ny/3EAyOaeCfiRVuygKC6hmmHW7jW1eBgPwavdP+TDpQhU3y1w==
-X-Received: by 10.157.44.66 with SMTP id f60mr11091032otb.163.1459177253361;
- Mon, 28 Mar 2016 08:00:53 -0700 (PDT)
-Received: by 10.157.12.170 with HTTP; Mon, 28 Mar 2016 08:00:53 -0700 (PDT)
-In-Reply-To: <xmqq60w61wsp.fsf@gitster.mtv.corp.google.com>
+	id S1754215AbcC1POi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2016 11:14:38 -0400
+Received: from mout.gmx.net ([212.227.15.19]:62002 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752665AbcC1POf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2016 11:14:35 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0M9aX9-1aaxxk2X79-00CzL3; Mon, 28 Mar 2016 17:14:19
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <56F8E435.3020304@kdbg.org>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:0hMJzCq4URIjxDXO/lZNaP5GRz2R1LROe+qz3ySbhgx5MKZ4lya
+ ucVMAtX25upRiFhlV8TFtlgICunbzu+KTU+ag7BcU54r7MWqS7QGYS8s1ngwD5VreXvyjDV
+ u2HmBuJFptjyAVdgSD+2pU9yuQyxJ6sBQbXTHiG2flM8wyCU2ubel2nk4RblmG66rpwt/4P
+ 4T2jPGyIpNMtVYjEOCzAQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Zv5OVY4hzxg=:9nNexvv3vLvnMnZ8XDQ1v2
+ GfpWaTHOBWkPgtGLDctymrx1yg54Ahg1LCzm5j4PoiixGtoRWlVTPdTyCi9LTllVUaK07l+H4
+ 8vDD1sV9ugzZigDFF85l6U993X7zYalKIf+C1AoFfbE+7ybXnAflbQfVR/3KFRt9VQ/kgLCyE
+ sGZavL3WAfZ0ObMCltO5eAGKYKIIT+f1wlLymjQoa3qC/RtmIYf53lCgvMxZFl0iBCMDarudo
+ VoErnh9vEyOjJ156+zeqvh79cuJIwFhwPH/NOTCsIRQYv1RlZ7TNJ3T2uMaLpGu6/ZPp3D2lN
+ 3Yl/cHvye/ZMURaTG3hCaEj5buhOAhCrvvtwuwEqW8sacLL9bFRMARsv3X55V9XCQawQflZmr
+ Ri/5AZvq++tfUXmnGvzlxdokERJkHJ5wblN2l4qNeQHX5GOq50Or3dgjxs+B1TYUbmapgYK/M
+ FZYCpGUCZ6ZiUwYNIgz7cVtiUPIFrrpriO38G9+LIVmd0UBKkCMFRuoIDUC/FK8abHqh6MOPm
+ NV3nvEiAsN/EwZWAgmBNGjUEYTckAKAnlEiGNJPCVMMed0DjP297T1g0OdjaUoMIQLlTJkfaU
+ 8755JwtTgsq93xapq5f0itor9obfNMR5vdnb+Cct75QjwGDyBILZT9+M/4pgLVkBpwUjNdyK7
+ QLpU4gNJ1rWDy0W836SOH9hJtic/oZEUpAXIL6tF7XbIlPKGRiunJ3MFVMv2dGyrvs4xis5eH
+ 3mbiQRff98TYhnK6hSYiwJ+3gUxKolkSYNXf223wS0/KgiP+oyu0HGTo+ArfEUPNKjFtSbaY 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290040>
 
-2016-03-28 22:50 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
-> =E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqun@gmail.com> writes:
->
->> After read the source code of strbuf more carefully, I get the concl=
-usion
->> that if a strbuf is initialized with STRBUF_INIT but is not used, th=
-ere is
->> no need to release it. Is it true?
->
-> If it is initialized with STRBUF_INIT and never used, there is no
-> reason for the variable to exist ;-)
+Hi Hannes,
 
-I mean, if some developer return before the strbuf is used, there seems
-no need to release the strbuf according to the current implementation.
+On Mon, 28 Mar 2016, Johannes Sixt wrote:
 
-But I'm not sure whether this is suitable for the abstraction of strbuf=
-=2E
+> A change like this whould have been preferable:
+> [...]
 
-=46or example:
+The problem with your patch is that it does not account for backslashes in
+paths resulting in quoting. I am afraid that your patch will most likely
+*not* let the tests pass in Git for Windows SDK, while my patch does.
 
-    const char *enter_repo(const char *path, int strict)
-    {
-        static struct strbuf validated_path =3D STRBUF_INIT;
-        static struct strbuf used_path =3D STRBUF_INIT;
-
-        if (!path)
-            return NULL; // no need to release, right?
-        ...
-    }
-
-
-> Leaving the variable in the code, and not calling release on it at
-> the end, would be OK (i.e. there is no leak) today, but may invite
-> future bugs (e.g. people may use the variable to tentatively build
-> their string before the function returns to leave the scope of the
-> variable without adding _release() themselves).
+Ciao,
+Dscho
