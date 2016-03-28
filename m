@@ -1,69 +1,132 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/4] config --show-origin: report paths with forward
- slashes
-Date: Mon, 28 Mar 2016 17:14:17 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1603281712470.4690@virtualbox>
-References: <cover.1458668543.git.johannes.schindelin@gmx.de> <8beb1c208e33e1de8f272caa22fb7a0b662ca4cc.1458668543.git.johannes.schindelin@gmx.de> <56F8E435.3020304@kdbg.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>,
-	Eric Wong <normalperson@yhbt.net>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Mon Mar 28 17:14:48 2016
+From: Hui Yiqun <huiyiqun@gmail.com>
+Subject: [PATCH] path.c enter_repo(): fix unproper strbuf unwrapping and memory leakage
+Date: Mon, 28 Mar 2016 23:51:32 +0800
+Message-ID: <1459180292-3475-1-git-send-email-huiyiqun@gmail.com>
+References: <20160325175947.GC10563@sigill.intra.peff.net>
+Cc: gitster@pobox.com, pickfire@riseup.net, peff@peff.net,
+	Hui Yiqun <huiyiqun@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 28 17:53:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akYsO-0004nU-4x
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Mar 2016 17:14:44 +0200
+	id 1akZTe-00072y-IO
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Mar 2016 17:53:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754215AbcC1POi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2016 11:14:38 -0400
-Received: from mout.gmx.net ([212.227.15.19]:62002 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752665AbcC1POf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2016 11:14:35 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0M9aX9-1aaxxk2X79-00CzL3; Mon, 28 Mar 2016 17:14:19
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <56F8E435.3020304@kdbg.org>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:0hMJzCq4URIjxDXO/lZNaP5GRz2R1LROe+qz3ySbhgx5MKZ4lya
- ucVMAtX25upRiFhlV8TFtlgICunbzu+KTU+ag7BcU54r7MWqS7QGYS8s1ngwD5VreXvyjDV
- u2HmBuJFptjyAVdgSD+2pU9yuQyxJ6sBQbXTHiG2flM8wyCU2ubel2nk4RblmG66rpwt/4P
- 4T2jPGyIpNMtVYjEOCzAQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Zv5OVY4hzxg=:9nNexvv3vLvnMnZ8XDQ1v2
- GfpWaTHOBWkPgtGLDctymrx1yg54Ahg1LCzm5j4PoiixGtoRWlVTPdTyCi9LTllVUaK07l+H4
- 8vDD1sV9ugzZigDFF85l6U993X7zYalKIf+C1AoFfbE+7ybXnAflbQfVR/3KFRt9VQ/kgLCyE
- sGZavL3WAfZ0ObMCltO5eAGKYKIIT+f1wlLymjQoa3qC/RtmIYf53lCgvMxZFl0iBCMDarudo
- VoErnh9vEyOjJ156+zeqvh79cuJIwFhwPH/NOTCsIRQYv1RlZ7TNJ3T2uMaLpGu6/ZPp3D2lN
- 3Yl/cHvye/ZMURaTG3hCaEj5buhOAhCrvvtwuwEqW8sacLL9bFRMARsv3X55V9XCQawQflZmr
- Ri/5AZvq++tfUXmnGvzlxdokERJkHJ5wblN2l4qNeQHX5GOq50Or3dgjxs+B1TYUbmapgYK/M
- FZYCpGUCZ6ZiUwYNIgz7cVtiUPIFrrpriO38G9+LIVmd0UBKkCMFRuoIDUC/FK8abHqh6MOPm
- NV3nvEiAsN/EwZWAgmBNGjUEYTckAKAnlEiGNJPCVMMed0DjP297T1g0OdjaUoMIQLlTJkfaU
- 8755JwtTgsq93xapq5f0itor9obfNMR5vdnb+Cct75QjwGDyBILZT9+M/4pgLVkBpwUjNdyK7
- QLpU4gNJ1rWDy0W836SOH9hJtic/oZEUpAXIL6tF7XbIlPKGRiunJ3MFVMv2dGyrvs4xis5eH
- 3mbiQRff98TYhnK6hSYiwJ+3gUxKolkSYNXf223wS0/KgiP+oyu0HGTo+ArfEUPNKjFtSbaY 
+	id S1753710AbcC1PxK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2016 11:53:10 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:36679 "EHLO
+	mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752620AbcC1PxI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2016 11:53:08 -0400
+Received: by mail-pf0-f193.google.com with SMTP id q129so21819855pfb.3
+        for <git@vger.kernel.org>; Mon, 28 Mar 2016 08:53:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=UK2KOG+cKqgqgBYHPQ6rlpoyGIAPKfe5BrRD0U6ThSY=;
+        b=ZFzi0dk5yfqwZm+h5P9FrmnFqsBY1gpunoYhOVwFqDxI6vO2x/XjiqWzobJxkt+4sf
+         9U9bMOG+bto9EaZYSo7/k6VsBF0UTk1CbbC5Ib9eb86cY8LnHKjdzd6ZRZ1M16XhIpKy
+         Mu+N4hchN24W+SOuwwEs7IjQD2At+ZMyM/37/VsRKK+qu/+8CScypa34G4dC7cywUtB/
+         U89j3SmmfBaTGisT7EMIHLVDlvCPfZsR45rrB5dNoGPKmK7k2xEzHY1FOCrmc5qeAGw7
+         xaBGTkvQNWfuSjz/+0iHT5FSJTuePYSYJ4+bcwQlSRMTyz3LtOPu2r1SyPYaOA/LOGkd
+         muJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=UK2KOG+cKqgqgBYHPQ6rlpoyGIAPKfe5BrRD0U6ThSY=;
+        b=aytSpBZSf8FI+HeOfMRiWRuz5/UykpnCVF6m978JLFVPZIIGTLwv6J4XwqeHoSXyfd
+         PQ/v6MCxNYH0FTKcMjWYgg6juJn2+XMmgEh7nUF9TExzoedrM64D/CWYMYpch0XL4Ob3
+         07pdR0CDntRHlEfCG6+AhTOPGwEO5+3PuBZpv2cJdCfSLqaAmj/qhdJ49yUf2d4B4pSR
+         fwQJjjuTQvTMk4Qjgjj9d68odsqWk+QMPBj25JInHyqtjAEOlpKhBo/6MyO1ZXS+XEox
+         HUbeRx7JS5AxyLHYSxUNgDZF7lDfLpDmS+um/w12f651N0LaAhMZUtBMxtJizjqk7fa0
+         FuJw==
+X-Gm-Message-State: AD7BkJLv8tmwtSxF0XuGxamsN0uGxcYYp5A4IuWQtXTdZUuzt22FPcANqAs2VGofNATTAw==
+X-Received: by 10.98.33.203 with SMTP id o72mr44014222pfj.96.1459180387658;
+        Mon, 28 Mar 2016 08:53:07 -0700 (PDT)
+Received: from localhost.localdomain (hashi.inv.dotkrnl.com. [133.130.122.94])
+        by smtp.gmail.com with ESMTPSA id g28sm36692518pfd.25.2016.03.28.08.53.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 28 Mar 2016 08:53:07 -0700 (PDT)
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <20160325175947.GC10563@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290041>
 
-Hi Hannes,
+According to strbuf.h, strbuf_detach is the sole supported method
+to unwrap a memory buffer from its strbuf shell.
 
-On Mon, 28 Mar 2016, Johannes Sixt wrote:
+So we should not return the pointer of strbuf.buf directly.
 
-> A change like this whould have been preferable:
-> [...]
+What's more, some memory leakages are solved.
+---
+ path.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-The problem with your patch is that it does not account for backslashes in
-paths resulting in quoting. I am afraid that your patch will most likely
-*not* let the tests pass in Git for Windows SDK, while my patch does.
-
-Ciao,
-Dscho
+diff --git a/path.c b/path.c
+index 969b494..b07e5a7 100644
+--- a/path.c
++++ b/path.c
+@@ -625,6 +625,7 @@ const char *enter_repo(const char *path, int strict)
+ {
+ 	static struct strbuf validated_path = STRBUF_INIT;
+ 	static struct strbuf used_path = STRBUF_INIT;
++	char * dbuf = NULL;
+ 
+ 	if (!path)
+ 		return NULL;
+@@ -654,7 +655,7 @@ const char *enter_repo(const char *path, int strict)
+ 		if (used_path.buf[0] == '~') {
+ 			char *newpath = expand_user_path(used_path.buf);
+ 			if (!newpath)
+-				return NULL;
++				goto return_null;
+ 			strbuf_attach(&used_path, newpath, strlen(newpath),
+ 				      strlen(newpath));
+ 		}
+@@ -671,22 +672,22 @@ const char *enter_repo(const char *path, int strict)
+ 			strbuf_setlen(&used_path, baselen);
+ 		}
+ 		if (!suffix[i])
+-			return NULL;
++			goto return_null;
+ 		gitfile = read_gitfile(used_path.buf);
+ 		if (gitfile) {
+ 			strbuf_reset(&used_path);
+ 			strbuf_addstr(&used_path, gitfile);
+ 		}
+ 		if (chdir(used_path.buf))
+-			return NULL;
+-		path = validated_path.buf;
++			goto return_null;
++		path = dbuf = strbuf_detach(&validated_path, NULL);
+ 	}
+ 	else {
+ 		const char *gitfile = read_gitfile(path);
+ 		if (gitfile)
+ 			path = gitfile;
+ 		if (chdir(path))
+-			return NULL;
++			goto return_null;
+ 	}
+ 
+ 	if (is_git_directory(".")) {
+@@ -695,6 +696,10 @@ const char *enter_repo(const char *path, int strict)
+ 		return path;
+ 	}
+ 
++return_null:
++    free(dbuf);
++	strbuf_release(&used_path);
++	strbuf_release(&validated_path);
+ 	return NULL;
+ }
+ 
+-- 
+2.7.4
