@@ -1,99 +1,114 @@
-From: =?UTF-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v3/GSoC 2/5] path.c: implement xdg_runtime_dir()
-Date: Mon, 28 Mar 2016 22:12:09 +0800
-Message-ID: <CAKqreuzNeY7HryZvMgLKpPAbXOQ_qLfX63YOj57Wo+KrHJbtMA@mail.gmail.com>
+Date: Mon, 28 Mar 2016 07:35:59 -0700
+Message-ID: <xmqqa8li1xgw.fsf@gitster.mtv.corp.google.com>
 References: <1458728005-22555-1-git-send-email-huiyiqun@gmail.com>
 	<1458728005-22555-2-git-send-email-huiyiqun@gmail.com>
 	<20160325095923.GB8880@sigill.intra.peff.net>
 	<CAKqreux8FHdJoKDishjQkbi9g1oUc265EUK4nOJ_sgeFivGSNA@mail.gmail.com>
-	<20160325175947.GC10563@sigill.intra.peff.net>
+	<xmqqpoui4huo.fsf@gitster.mtv.corp.google.com>
+	<CAKqreuyrENgmB+a7eAHNx9fA4RsQu2PwjLV1wc2z7=kzNTseUw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Your friend <pickfire@riseup.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Mar 28 16:18:35 2016
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+	Your friend <pickfire@riseup.net>
+To: =?utf-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 28 16:36:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akXtv-0000li-P6
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Mar 2016 16:12:16 +0200
+	id 1akYHB-0007dE-3n
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Mar 2016 16:36:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753444AbcC1OMM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Mar 2016 10:12:12 -0400
-Received: from mail-oi0-f67.google.com ([209.85.218.67]:34060 "EHLO
-	mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752468AbcC1OMK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Mar 2016 10:12:10 -0400
-Received: by mail-oi0-f67.google.com with SMTP id q133so7409304oib.1
-        for <git@vger.kernel.org>; Mon, 28 Mar 2016 07:12:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=WbP/TFkZtkEdM7JugxsW/aI8WlLwSgNLMeU6k7y/MLc=;
-        b=KmBtt28PbVXvZwmWhEOQgoXXK95JG91U1nErKJw8EB4oe4hSVCeqaj2EnKnhLmTwWP
-         r48PzfWwTmSyAUkGjljnIVYZW9Tg7teNJiu34wlWJFWtYAG0cVyuSNa/qgV9caJoGXRs
-         zsGFIhGCkClulPCKbNI8mF62plK++jQ2Y8i5YjIEYwSQuFI4dIm+LXsnqi09zJZyKvvR
-         a4liET4wED6/3EcvP8c+UybYcdgvi4sfMDkpd08IZ/jOU4fPO6RRhOLKn5FDFKnuw1NF
-         rzEILEaEDelIULAL2LZJ4C2hDaSO/V2HqvbKzbzcQHmmgtf+x4Q34+zSWahXR2vu4BEi
-         effQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=WbP/TFkZtkEdM7JugxsW/aI8WlLwSgNLMeU6k7y/MLc=;
-        b=GGqutwEe9+4LnVZ5bV3xF4kyiLVNpy/rhNGso5wGf9lMQ/j2DBarFb8B8IzHJNSKLt
-         PwLOO50r8t79xIxPQmViAO9pU3C8hsWtTuHH3Fd+gcIXJj5rb9Sl1QU6AzQqP54K3ARw
-         RRGxOWq/0eppdes9SDdm2a4j7QDRwXM/b5X+Xstsx4+60ZUnv6B5Pj2O81A4zrQglJFE
-         Q1sOnjNGnes9sA0QdlYTGye2ZTCpJ+N9gPt/0A5Z1dtuNlRHpsGDh4jpdzx8iV9DewfN
-         7uvsKzrktXLdGRAJ7RrW+zos8eSi7PkARsOe7BSXGNCudD+78J775RokzN1i+Zjc2jdh
-         nJAw==
-X-Gm-Message-State: AD7BkJLI91nf5kWz0pFdTrLdEAFe7a/4AEnXHNZqtQmdbAX5f8Yj+/afjVXbZlb02uu8fxDU8KelmHLw5uu/Dg==
-X-Received: by 10.157.17.72 with SMTP id p8mr13564302otp.162.1459174329625;
- Mon, 28 Mar 2016 07:12:09 -0700 (PDT)
-Received: by 10.157.12.170 with HTTP; Mon, 28 Mar 2016 07:12:09 -0700 (PDT)
-In-Reply-To: <20160325175947.GC10563@sigill.intra.peff.net>
+	id S1753350AbcC1OgM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Mar 2016 10:36:12 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:53889 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751288AbcC1OgL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Mar 2016 10:36:11 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 188D34F069;
+	Mon, 28 Mar 2016 10:36:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=DQebdaruXTQh
+	Bqd3/5KWAXu2610=; b=N1yZvxUyZPiRGpu0rbVD1ntgHS7v3OuelC466DPHKK5/
+	+hwz+Ekb+OXeWrcg/dZkzKoVlfPihHNtkPgHQyFK64vw6m8F0N9klPFN9oXV9cqt
+	KyA8VNfsX54SmsHAz80PG9SYVzFjLvnSv0ZHR6xin27EHkmkCYCmZ7fYf/m8aWk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Vuswg1
+	v4pckPdVzcT/GAE9IO6kk9JJPdwR1CuNN+oPYvKEzfauBCGGMdug/uYSfFtIBN89
+	HQECrIJL/I8mtbj8oYmx82vzcx0fUABn4WfCfCw2hy6l5do3vNKOLa67n1TePxMI
+	ec3xIGFJkw2nUfIsD/5xpdIw4eOvtdoyRf2+4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0EE3E4F063;
+	Mon, 28 Mar 2016 10:36:09 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7FC4C4F062;
+	Mon, 28 Mar 2016 10:36:08 -0400 (EDT)
+In-Reply-To: <CAKqreuyrENgmB+a7eAHNx9fA4RsQu2PwjLV1wc2z7=kzNTseUw@mail.gmail.com>
+	(=?utf-8?B?IuaDoOi9tue+pCIncw==?= message of "Mon, 28 Mar 2016 21:37:55
+ +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 68FDEDC8-F4F2-11E5-BDA9-E95C6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290036>
 
-2016-03-26 1:59 GMT+08:00 Jeff King <peff@peff.net>:
-> On Fri, Mar 25, 2016 at 10:21:48PM +0800, =E6=83=A0=E8=BD=B6=E7=BE=A4=
- wrote:
->
->> > There are some minor English problems here (and elsewhere). E.g., =
-you
->> > probably want "So we just issue a warning and leave it to the user=
- to
->> > solve.".
->>
->> Sorry for my English.
->
-> Thanks. And sorry if that sounded too harsh. I know that working in a
-> non-native language is tough. Usually in a review I'll try to provide
-> specific English fixes, but in this case, I think a lot of these
-> messages are still in flux, so I I didn't want to waste either of our
-> time going over specifics if the content is just going to change late=
-r.
->
->> > These ones leak, too.
->>
->> I will deal with it.
->>
->> I find there are some similar leakage in this file. I'll fix them in
->> another patch.
->
-> Great, thanks.
+=E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqun@gmail.com> writes:
 
-After read the source code of strbuf more carefully, I get the conclusi=
-on
-that if a strbuf is initialized with STRBUF_INIT but is not used, there=
- is
-no need to release it. Is it true?
+> Excuse me, but I could not find
+> `Documentation/technical/api-strbuf.txt` in master branch. Do you
+> refer to the header of `strbuf.h`? In which, I learnt how to
+> initialize the strbuf and how to take use of it when I began to
+> use it.
 
-> -Peff
+Ah, yes, it was a relatively recent development that usage text from
+the former was moved to the latter.
+
+> If there is also a note about whether I should release it
+> and how do it, such as:
+>
+> For every strbuf that has been initialized and buffer of it has
+> not been detached with strbuf_detach, you should release the
+> resource by strbuf_release.
+>
+> It will save me (maybe others) much time to explore the entire method=
+ list.
+
+While it may not hurt, it sounds somewhat extreme and funny me, as
+it sounds as if you are saying "for every pointer variable that
+points at a piece of memory allocated with malloc(3) and friends,
+you must free(3) them after you are done".
+
+The way _release() refers to its internal resource usage could be
+improved, I guess.  "Release ... the memory it used" may not click
+as freeing the memory to some readers.
+
+ strbuf.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/strbuf.h b/strbuf.h
+index f72fd14..a783f09 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -82,7 +82,7 @@ extern char strbuf_slopbuf[];
+ extern void strbuf_init(struct strbuf *, size_t);
+=20
+ /**
+- * Release a string buffer and the memory it used. You should not use =
+the
++ * Release a string buffer and free the memory it used. You should not=
+ use the
+  * string buffer after using this function, unless you initialize it a=
+gain.
+  */
+ extern void strbuf_release(struct strbuf *);
