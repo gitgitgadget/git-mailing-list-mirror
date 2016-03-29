@@ -1,90 +1,90 @@
-From: Sven Strickroth <sven@cs-ware.de>
-Subject: [PATCH 2/2] MSVC: VS2013 comes with inttypes.h
-Date: Tue, 29 Mar 2016 18:27:00 +0200
-Message-ID: <56FAACD4.9080504@cs-ware.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] MSVC: vsnprintf in Visual Studio 2015 doesn't need SNPRINTF_SIZE_CORR any more
+Date: Tue, 29 Mar 2016 09:43:53 -0700
+Message-ID: <xmqqio05z12u.fsf@gitster.mtv.corp.google.com>
+References: <56FAAC78.2040304@cs-ware.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>,
 	Sebastian Schuberth <sschuberth@gmail.com>, blees@dcon.de
-X-From: git-owner@vger.kernel.org Tue Mar 29 18:27:23 2016
+To: Sven Strickroth <sven@cs-ware.de>
+X-From: git-owner@vger.kernel.org Tue Mar 29 18:44:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akwU5-0006kD-Tz
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 18:27:14 +0200
+	id 1akwkM-0006rY-9I
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 18:44:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757325AbcC2Q1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 12:27:09 -0400
-Received: from srv1.79p.de ([213.239.234.118]:50237 "EHLO srv1.79p.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752643AbcC2Q1I (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 12:27:08 -0400
-X-Virus-Scanned: Debian amavisd-new at srv1.79p.de
-Received: from [IPv6:2003:88:6f26:c00:d0ba:9b5:8751:68b6] (p200300886F260C00D0BA09B5875168B6.dip0.t-ipconnect.de [IPv6:2003:88:6f26:c00:d0ba:9b5:8751:68b6])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	id S932366AbcC2Qn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 12:43:57 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:60666 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932182AbcC2Qn5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 12:43:57 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9154249D92;
+	Tue, 29 Mar 2016 12:43:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Oy20bG98/dSMuAUfVIJVF+0gzJg=; b=deZV10
+	mC8drraq81F1fEC2JrwP/s6hOXzqtClU5w1qVrZ2uhGzDb9HcpNU0Vm2uw6LYefX
+	jJs63psp+pHdqVro+lxrnSopWiF/30GA8IMzyEF+GhCJSQ3/J3q13ItDBQnGop21
+	N/PJK1kIu0XS9kckdeZHZpcGYoEuH6sY4wyr8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GC3HTaUxnxKZXK26R5sAcLUvID4vVQWH
+	6GgYR+8CFlBIqgRqEi2zfVd7RvZao55j7CEuF9UMgw2EPt0iPGlft0wDFEeT/j+m
+	8CslbHy/1ZeNtNiX8vv1yzkeqHqQ389J+l6wLyO2BZ/uAmjQx4r3RVIM8q0HLaHr
+	ohQZE5ynFTo=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8078B49D91;
+	Tue, 29 Mar 2016 12:43:55 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	(Authenticated sender: sven@cs-ware.de)
-	by srv1.79p.de (Postfix) with ESMTPSA id A60E92249F2;
-	Tue, 29 Mar 2016 18:27:04 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=cs-ware.de;
-	s=mail2015b; t=1459268824;
-	bh=UVNKWzkwcoHIytlYgYgkXVGOis7oYmk9PmolZUHrbAI=;
-	h=From:Subject:To:Date;
-	b=jxzYYf5GBP1yh9B5Gm5R9qsZsCWBJq5pLnpNRdwFpDOfAa8blQwO2Z8B1gmsw26PG
-	 ttE1bHiY33DM7f7kclzq11lvhPg6TeInB+szbu7AScGZX6k0Zn/Cvtkj6dSQbVC3n/
-	 +Sb+rqGE/z8Pgb3iPrdXfxWg+7TnF+u+E3GTxK8xBNCn3ta/lgSCdTb4NFCjvybJnU
-	 G5fOoSrLLN1oRM+yeopJ0vEGG03u80PezuQKYA0jpdOpP4oFdGz7x6Qc26gMszuGoX
-	 Y+MtBahUfxrkM1hV5AjBzcV03bs0bc+vGUAMjLR5C033PQ1nEmqNx8y9C9Ma8ig5Ds
-	 SscV90GBNMdhA==
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C089949D90;
+	Tue, 29 Mar 2016 12:43:54 -0400 (EDT)
+In-Reply-To: <56FAAC78.2040304@cs-ware.de> (Sven Strickroth's message of "Tue,
+	29 Mar 2016 18:25:28 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 6CDACA52-F5CD-11E5-B94C-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290145>
 
-Reduce the number of defines which need to be managed within vanilal git.
+Sven Strickroth <sven@cs-ware.de> writes:
 
-Signed-off-by: Sven Strickroth <sven@cs-ware.de>
----
- compat/mingw.h                  | 2 +-
- compat/vcbuild/include/unistd.h | 2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+> In MSVC2015 the behavior of vsnprintf was changed.
+> W/o this fix there is one character missing at the end.
+>
+> Signed-off-by: Sven Strickroth <sven@cs-ware.de>
+> ---
 
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 6b6d695..5d7f0dd 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -415,7 +415,7 @@ int mingw_offset_1st_component(const char *path);
- extern void build_libgit_environment(void);
- extern const char *program_data_config(void);
- #define git_program_data_config program_data_config
--#ifndef __MINGW64_VERSION_MAJOR
-+#if !defined(__MINGW64_VERSION_MAJOR) || !defined(_MSC_VER) || _MSC_VER < 1800
- #define PRIuMAX "I64u"
- #define PRId64 "I64d"
- #else
-diff --git a/compat/vcbuild/include/unistd.h b/compat/vcbuild/include/unistd.h
-index c65c2cd..b4b7b7c 100644
---- a/compat/vcbuild/include/unistd.h
-+++ b/compat/vcbuild/include/unistd.h
-@@ -45,11 +45,13 @@ typedef unsigned long long uintmax_t;
- 
- typedef int64_t off64_t;
- 
-+#if !defined(_MSC_VER) || _MSC_VER < 1800
- #define INTMAX_MIN  _I64_MIN
- #define INTMAX_MAX  _I64_MAX
- #define UINTMAX_MAX _UI64_MAX
- 
- #define UINT32_MAX 0xffffffff  /* 4294967295U */
-+#endif
- 
- #define STDIN_FILENO  0
- #define STDOUT_FILENO 1
--- 
-2.7.4.windows.1
+Thanks.
+
+I am not qualified to judge the correctness of the assertion that
+MSVC at or more recent than version 1900 does not need the
+correction and will wait for Windows folks to Ack.
+
+Thanks.
+
+>  compat/snprintf.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/compat/snprintf.c b/compat/snprintf.c
+> index 42ea1ac..0b11688 100644
+> --- a/compat/snprintf.c
+> +++ b/compat/snprintf.c
+> @@ -9,7 +9,7 @@
+>   * always have room for a trailing NUL byte.
+>   */
+>  #ifndef SNPRINTF_SIZE_CORR
+> -#if defined(WIN32) && (!defined(__GNUC__) || __GNUC__ < 4)
+> +#if defined(WIN32) && (!defined(__GNUC__) || __GNUC__ < 4) && (!defined(_MSC_VER) || _MSC_VER < 1900)
+>  #define SNPRINTF_SIZE_CORR 1
+>  #else
+>  #define SNPRINTF_SIZE_CORR 0
