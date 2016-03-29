@@ -1,106 +1,90 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/5] t/t5520: change rebase.autoStash to rebase.autostash
-Date: Tue, 29 Mar 2016 16:06:09 -0400
-Message-ID: <CAPig+cRv98OSAt1RVUV9CuqQwJ75U+FF8+t7wxQ-ih=V5yi+jw@mail.gmail.com>
-References: <1459258200-32444-1-git-send-email-mehul.jain2029@gmail.com>
-	<1459258200-32444-2-git-send-email-mehul.jain2029@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] config --show-origin: report paths with forward slashes
+Date: Tue, 29 Mar 2016 13:05:06 -0700
+Message-ID: <xmqqwpolvyml.fsf@gitster.mtv.corp.google.com>
+References: <cover.1458668543.git.johannes.schindelin@gmx.de>
+	<8beb1c208e33e1de8f272caa22fb7a0b662ca4cc.1458668543.git.johannes.schindelin@gmx.de>
+	<56F8E435.3020304@kdbg.org>
+	<alpine.DEB.2.20.1603281712470.4690@virtualbox>
+	<56FAD506.4050701@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Mehul Jain <mehul.jain2029@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 22:10:29 2016
+Content-Type: text/plain
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
+	Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>,
+	Eric Wong <normalperson@yhbt.net>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue Mar 29 22:14:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akzuH-0008Mh-8c
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 22:06:29 +0200
+	id 1akzvl-0001IN-Uk
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 22:08:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932437AbcC2UGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 16:06:12 -0400
-Received: from mail-vk0-f68.google.com ([209.85.213.68]:36076 "EHLO
-	mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754172AbcC2UGK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 16:06:10 -0400
-Received: by mail-vk0-f68.google.com with SMTP id z68so3736897vkg.3
-        for <git@vger.kernel.org>; Tue, 29 Mar 2016 13:06:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=rZF4I5dTyHIYsIYDZLPyuBq5fsu6LXzzrhb9iML7c44=;
-        b=K/5JBbcXbrGoAIY9BQP0hYCoK7zJ3N5JyYVQ9/vig+5RxxL5gJUha20ZLiOQd/nevd
-         j29/MhZFNLpNZoWQOY1aC7AR6kWiThjKICGEG9imwxfSTW3+cJkJqRFJiJ71PGW+/CQQ
-         4UGR8Nuzguj3Y/XSTmXIot9WN5PaDkC/4uA84eJEKMdnenHPaX8+XQDXp85V5z18A0eq
-         NgMRciES/kIvw3RLRAD/5jWSRqndvt+AyEVhKHtvLPie7w7c1PsoX8ZbgLvefplPwvLM
-         aFeDKnmIXNE8578vZrlynq7JxB2ia5oNXI3R0QfyLS1NUVjmFTp0dP53VUsejI8tu2fk
-         ZKng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=rZF4I5dTyHIYsIYDZLPyuBq5fsu6LXzzrhb9iML7c44=;
-        b=O9PaV9uD7LL8zM/YifqAd7fc758dQUKUy0ET798WyhqlSwEQa4479W7j2KqZxt16My
-         aO2y3B3vy8gBpAE87gCG4N0YWIse0yBLz0OlZmFY+c8EVi6clSQDyYtYOPhwNIZDWlNz
-         2p4HtNZ3beok6OemfFDeYJmoOgRtAq4sCblYn8P5evMIgFQeN9ld1ab9kauP117eRw8j
-         DerzbfyO+RdLO3/jHMWb7Wxe5GGSjTzTr7LvUo2lgu6Vl8YSF/pM887hP0Uronh3sCSq
-         V55neNuE+7h1UN1FHwk92JK9SVzjru/rFQ+Y+BZWt/v9Nc3briqmYX489tQs35EgyadM
-         NMJg==
-X-Gm-Message-State: AD7BkJJN8OreP0ouyTRxFvt9kScb5MdtCCdm7czhuUK/Urjx6jITBgjtyw6dTSsrHU/1VlHTMqiqQT8ToO4qgw==
-X-Received: by 10.31.150.76 with SMTP id y73mr2661695vkd.84.1459281969197;
- Tue, 29 Mar 2016 13:06:09 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Tue, 29 Mar 2016 13:06:09 -0700 (PDT)
-In-Reply-To: <1459258200-32444-2-git-send-email-mehul.jain2029@gmail.com>
-X-Google-Sender-Auth: jqhB5MSPIXWYz_m69P4pl8248ZU
+	id S932442AbcC2UGr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 16:06:47 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:54518 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754085AbcC2UFK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 16:05:10 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E44C550D5C;
+	Tue, 29 Mar 2016 16:05:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KJ1guVH63n0NEpAFlTa1WoPMw40=; b=qknTC6
+	qDMMcVdHZ7uAJb0xKJ1AOm76cxD0aUm3OjQLK/rEukXo9NFg3PjctkmcG01UEdJr
+	h8DcY78wazYJER3+31797zl3vUyjL+llhqeQ9srMm1jlT6hG39stDjjz4OBu8Brf
+	K5SHX3clhKuUHVF3BMBjWUtJQICpm6fzJ9mvs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RgpH9ZLR/WXDQ0erYMtXTQhnifkmTEBB
+	ZlbrIjtOgvmOe8gXhIiyfn2wHA4lR/VI6y9rNm0uu3Wt4YGMnkz1zofvTJsgZwTz
+	7YxUeZUUqKGjdZfAaWQI72FaBtUxQZES/h+VUsABhgNONsOewNJvt/n4Ht9ZzlJ+
+	X7MRIes8wYA=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DAA1B50D5B;
+	Tue, 29 Mar 2016 16:05:08 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3A68250D57;
+	Tue, 29 Mar 2016 16:05:08 -0400 (EDT)
+In-Reply-To: <56FAD506.4050701@kdbg.org> (Johannes Sixt's message of "Tue, 29
+	Mar 2016 21:18:30 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8930C992-F5E9-11E5-9228-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290181>
 
-On Tue, Mar 29, 2016 at 9:29 AM, Mehul Jain <mehul.jain2029@gmail.com> wrote:
-> t/t5520: change rebase.autoStash to rebase.autostash
+Johannes Sixt <j6t@kdbg.org> writes:
 
-This subject is written at too low a level, talking about details of
-the patch rather than giving a high-level overview. A further
-shortcoming is that there's no explanation of *why* this change is
-desirable. Here's an attempt which addresses both problems.
-
-    t5520: use consistent capitalization in test titles
-
-(Note that I dropped the leading "t/" since it's implied.)
-
-The patch itself is fine.
-
-> Signed-off-by: Mehul Jain <mehul.jain2029@gmail.com>
-> ---
->  t/t5520-pull.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> This part of your 45bf3297 (t1300: fix the new --show-origin tests on
+> Windows)
 >
-> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-> index 745e59e..5be39df 100755
-> --- a/t/t5520-pull.sh
-> +++ b/t/t5520-pull.sh
-> @@ -267,7 +267,7 @@ test_expect_success 'pull --rebase --autostash & rebase.autostash=true' '
->         test "$(cat file)" = "modified again"
+> @@ -1205,6 +1205,9 @@ test_expect_success POSIXPERM,PERL 'preserves existing per
+>           "die q(badrename) if ((stat(q(.git/config)))[2] & 07777) != 0600"
 >  '
+>  
+> +! test_have_prereq MINGW ||
+> +HOME="$(pwd)" # convert to Windows path
+> +
+>  test_expect_success 'set up --show-origin tests' '
+>         INCLUDE_DIR="$HOME/include" &&
+>         mkdir -p "$INCLUDE_DIR" &&
 >
-> -test_expect_success 'pull --rebase --autostash & rebase.autoStash=false' '
-> +test_expect_success 'pull --rebase --autostash & rebase.autostash=false' '
->         test_config rebase.autostash false &&
->         git reset --hard before-rebase &&
->         echo dirty >new_file &&
-> @@ -278,7 +278,7 @@ test_expect_success 'pull --rebase --autostash & rebase.autoStash=false' '
->         test "$(cat file)" = "modified again"
->  '
->
-> -test_expect_success 'pull --rebase: --autostash & rebase.autoStash unset' '
-> +test_expect_success 'pull --rebase: --autostash & rebase.autostash unset' '
->         git reset --hard before-rebase &&
->         echo dirty >new_file &&
->         git add new_file &&
-> --
-> 2.7.1.340.g69eb491.dirty
+> is actually a much more concise version of my proposed patch,
+> although the result still misuses $HOME where it does not have
+> to. In fact, if I revert 5ca6b7bb (config --show-origin: report
+> paths with forward slashes), the tests still pass. But since it
+> does not make a difference save for a few microseconds more or
+> less during startup, it is not worth the churn at this point.
+
+Well, from the point of view of codebase cleanliness, if we can do
+without 5ca6b7bb4, we would be much better off in the longer term,
+so I would say it would be wonderful if we can safely revert it.
