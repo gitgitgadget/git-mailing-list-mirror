@@ -1,82 +1,93 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 1/4] config --show-origin: report paths with forward
- slashes
-Date: Tue, 29 Mar 2016 21:18:30 +0200
-Message-ID: <56FAD506.4050701@kdbg.org>
-References: <cover.1458668543.git.johannes.schindelin@gmx.de>
- <8beb1c208e33e1de8f272caa22fb7a0b662ca4cc.1458668543.git.johannes.schindelin@gmx.de>
- <56F8E435.3020304@kdbg.org> <alpine.DEB.2.20.1603281712470.4690@virtualbox>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH 1/2] MSVC: vsnprintf in Visual Studio 2015 doesn't need
+ SNPRINTF_SIZE_CORR any more
+Date: Tue, 29 Mar 2016 21:20:18 +0200
+Message-ID: <CAHGBnuNkuiyk1uvJqT1_1UWOhpVTg+TxJ2QvepuMBpvOD8AyFw@mail.gmail.com>
+References: <56FAAC78.2040304@cs-ware.de>
+	<CAHGBnuP1Y1F-CrQJx9zNKSv1KP7gH86WSKo7tbmcYT3Vf2cQ_g@mail.gmail.com>
+	<56FAD3DD.4060009@cs-ware.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>,
-	Eric Wong <normalperson@yhbt.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 29 21:18:42 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	blees@dcon.de
+To: Sven Strickroth <sven@cs-ware.de>
+X-From: git-owner@vger.kernel.org Tue Mar 29 21:20:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akz9y-0007HI-Nn
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 21:18:39 +0200
+	id 1akzBh-00085m-E5
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 21:20:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757434AbcC2TSe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 15:18:34 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:44441 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753674AbcC2TSd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 15:18:33 -0400
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 3qZLCq30mwz5tlC;
-	Tue, 29 Mar 2016 21:18:30 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 7DCE051D4;
-	Tue, 29 Mar 2016 21:18:30 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.0
-In-Reply-To: <alpine.DEB.2.20.1603281712470.4690@virtualbox>
+	id S1753733AbcC2TUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 15:20:20 -0400
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:35781 "EHLO
+	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752190AbcC2TUT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 15:20:19 -0400
+Received: by mail-vk0-f66.google.com with SMTP id e185so3552683vkb.2
+        for <git@vger.kernel.org>; Tue, 29 Mar 2016 12:20:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=AVZpP6ZK23fG4PT3Bf4Y0G2AKi02aEDqcL5Dmv1jngc=;
+        b=LvqD3rQnPQ4muePw6EqSuL6Gl91p4D9wiV7u0MT7p45ikp6itL66vh1bDTclN2OCIf
+         VLqh9EkPdImM6HhOGX8GW9TGs7Nk5gBqmGE0+zZwRXKGcHfjNv/nG2jenJoFr3PPeKM8
+         NWfa7SCPSPTgzJYCB0odLjQiTQMgTRI0h0OyPe6KXzadW9xNVAlE0KfOEtJ0xwB478lh
+         aZO0yG+Uhl0ZtneNF4g5GfXIAEWf/L6xGy8XPGAXvv7bNrVyoUlPkEb2hgun/00yz5ci
+         r0ysQCVc6f7onUmre+bvocC6+zudwDCUb7PFBUrOZINHILNbpstSExhpFX5W5rc5MV1A
+         LhtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=AVZpP6ZK23fG4PT3Bf4Y0G2AKi02aEDqcL5Dmv1jngc=;
+        b=TzrguQmV8qmgjcfhrOk2fBiC/4kM4L8F5jvd6uvgBJI1UilBCD9e6V6EOXEU4Dw4Fg
+         gTTRQzyoLTC6S0cJd2wix9SbRf3Zjn5vfz1gU7RickGh+Cf7U4b3Ymx2mB4UMnFCqWKa
+         8V5FRiJ+rm7n87zffkbGQTF7uDBcJgC++/gEOou840KoZvHn7MZRjKHULIQgEvyDhHuL
+         3awGGnnUiR8x6eDeuRlYm6ZNEBljXSO1VcZxUHand/lfP8nKDQ6BSTp52F1Ddp5G1aJ0
+         yCFT/Qe13Y8ZiLYdaoiM8eVNF7i+i6auwr8N4u7tDGH3jNcVuq8l/EC0dYwH2KpE1sCu
+         FiWg==
+X-Gm-Message-State: AD7BkJJdQiGfWlOwFyiwxbzbCjpKHVUAjzmcVkmRKVFiWrYFHXn2ingNlJ2097pGVMQniW7T4Bc7cwmF5K7FwQ==
+X-Received: by 10.159.36.39 with SMTP id 36mr2318414uaq.16.1459279218195; Tue,
+ 29 Mar 2016 12:20:18 -0700 (PDT)
+Received: by 10.176.68.6 with HTTP; Tue, 29 Mar 2016 12:20:18 -0700 (PDT)
+In-Reply-To: <56FAD3DD.4060009@cs-ware.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290166>
 
-Am 28.03.2016 um 17:14 schrieb Johannes Schindelin:
-> Hi Hannes,
-> 
-> On Mon, 28 Mar 2016, Johannes Sixt wrote:
-> 
->> A change like this whould have been preferable:
->> [...]
-> 
-> The problem with your patch is that it does not account for backslashes in
-> paths resulting in quoting. I am afraid that your patch will most likely
-> *not* let the tests pass in Git for Windows SDK, while my patch does.
+On Tue, Mar 29, 2016 at 9:13 PM, Sven Strickroth <sven@cs-ware.de> wrote:
 
-It does pass. The reason is that pwd -W generates forward slashes.
+> diff --git a/compat/snprintf.c b/compat/snprintf.c
+> index 42ea1ac..0b11688 100644
+> --- a/compat/snprintf.c
+> +++ b/compat/snprintf.c
+> @@ -9,7 +9,7 @@
+>   * always have room for a trailing NUL byte.
+>   */
+>  #ifndef SNPRINTF_SIZE_CORR
+> -#if defined(WIN32) && (!defined(__GNUC__) || __GNUC__ < 4)
+> +#if defined(WIN32) && (!defined(__GNUC__) || __GNUC__ < 4) && (!defined(_MSC_VER) || _MSC_VER < 1900)
+>  #define SNPRINTF_SIZE_CORR 1
+>  #else
+>  #define SNPRINTF_SIZE_CORR 0
 
-This part of your 45bf3297 (t1300: fix the new --show-origin tests on
-Windows)
+I wonder if the logic is (and was) sensible here. We assume that every
+non-__GNUC__ and non-_MSC_VER compiler on Windows requires the
+correction. Wouldn't it make sense to not assume requiring the
+correction unless we know the compiler has this bug? That is,
+shouldn't this better say
 
-@@ -1205,6 +1205,9 @@ test_expect_success POSIXPERM,PERL 'preserves existing per
-          "die q(badrename) if ((stat(q(.git/config)))[2] & 07777) != 0600"
- '
- 
-+! test_have_prereq MINGW ||
-+HOME="$(pwd)" # convert to Windows path
-+
- test_expect_success 'set up --show-origin tests' '
-        INCLUDE_DIR="$HOME/include" &&
-        mkdir -p "$INCLUDE_DIR" &&
+#if defined(WIN32) && (defined(__GNUC__) && __GNUC__ < 4) ||
+(defined(_MSC_VER) && _MSC_VER < 1900))
+#define SNPRINTF_SIZE_CORR 1
+#else
+#define SNPRINTF_SIZE_CORR 0
 
-is actually a much more concise version of my proposed patch,
-although the result still misuses $HOME where it does not have
-to. In fact, if I revert 5ca6b7bb (config --show-origin: report
-paths with forward slashes), the tests still pass. But since it
-does not make a difference save for a few microseconds more or
-less during startup, it is not worth the churn at this point.
-
--- Hannes
+-- 
+Sebastian Schuberth
