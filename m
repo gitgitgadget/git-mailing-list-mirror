@@ -1,102 +1,105 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 2/7] submodule foreach: correct path computation in
- recursive submodules
-Date: Tue, 29 Mar 2016 12:26:30 -0700
-Message-ID: <CAGZ79kbaSNt9UViQQ2ro48Dqhe3c-k+CDvfppjb3Y=nOmnJs4A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/7] t7407: make expectation as clear as possible
+Date: Tue, 29 Mar 2016 12:30:58 -0700
+Message-ID: <xmqqfuv9xerx.fsf@gitster.mtv.corp.google.com>
 References: <1459207703-1635-1-git-send-email-sbeller@google.com>
-	<1459207703-1635-3-git-send-email-sbeller@google.com>
-	<xmqq60w525yd.fsf@gitster.mtv.corp.google.com>
-	<xmqqk2klxg6b.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79ka5_C0HcWGyYThT7O2ts-B1dTkBWEt1MUsbEN-AciE15g@mail.gmail.com>
+	<1459207703-1635-6-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Jacob Keller <jacob.keller@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 21:26:44 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de, jacob.keller@gmail.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 21:31:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akzHn-0002Xm-ID
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 21:26:43 +0200
+	id 1akzM5-0004CJ-Sc
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 21:31:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753905AbcC2T0e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 15:26:34 -0400
-Received: from mail-io0-f181.google.com ([209.85.223.181]:35191 "EHLO
-	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757965AbcC2T0b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 15:26:31 -0400
-Received: by mail-io0-f181.google.com with SMTP id g185so37838265ioa.2
-        for <git@vger.kernel.org>; Tue, 29 Mar 2016 12:26:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=Mhk1xHF8TPyFg5BgnEBHQvCZ++ocwd9fJshziJfZ/M0=;
-        b=IZu5RqMzRp7PVV9cb14R1qpV9eIJ9qtH0AB4ovClV0iVdDENXdRzbzqYwRZ4ZXVwxE
-         rwx0UIHI+01yCakCpeOe2hB9HvvDLXjyISRqjRhGJZ/JtYymU6hr28bvbjdXU02D8P/2
-         aWvdlqa11lx8W3r/0SpiKIi6Sjars1KWdUAiOSO7weXDACa+LiS8szWyjRTpijtcguut
-         8t19HReYZe1uEpvBu5asc40QlEhVZor2V0imeRXHZbZh999YN1SBKnW6WY1c4wHj8NL6
-         RnBLzws5XMFNBfQtCkM4JmtT/r0WMkweFiXfL306GB37xSEkBXDq5c6wJQXUSL5yiMTT
-         eG+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=Mhk1xHF8TPyFg5BgnEBHQvCZ++ocwd9fJshziJfZ/M0=;
-        b=DUfTJ0Zkv9fsATxi3hBfZciq5xEThkCrL4pYNxhQpHGlmFCuv4ej13zdUunZy3xCdD
-         yvwoPCrqAhzbaQ5eaDSaqwnDcwYGMUD32C8yPehoYC1iHiSmotGP1R3iCUw+pL5NO2YZ
-         GUwt3dz2c+/NAR918RatBwsP0IQEynLWBeCfsaf3G1e7Yuxz3ZaeYiAULKYO02Ya/9fy
-         y1zeh8HzQtQydduRF8PD1XgnVB7JgSIwbs/LBt8kwWDBDGya60BSWaWnAFHiEE+nvRXv
-         Jeci43A/vGHjfhAKcJYR5KdrPD9cWHn/xAoFfM1M94V3jP7v92avSK/ADM4KYTU/x90Q
-         f9AQ==
-X-Gm-Message-State: AD7BkJK81fOntYhSLbh229wONGFs0a2CGy+3vwX0HXxZrukW9prcLCNZudauys3U5kBH/7Lo/FOZm0MU+MA6Vc56
-X-Received: by 10.107.161.68 with SMTP id k65mr5632629ioe.110.1459279590878;
- Tue, 29 Mar 2016 12:26:30 -0700 (PDT)
-Received: by 10.107.132.101 with HTTP; Tue, 29 Mar 2016 12:26:30 -0700 (PDT)
-In-Reply-To: <CAGZ79ka5_C0HcWGyYThT7O2ts-B1dTkBWEt1MUsbEN-AciE15g@mail.gmail.com>
+	id S1757750AbcC2TbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 15:31:05 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:57939 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754157AbcC2TbD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 15:31:03 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3702850497;
+	Tue, 29 Mar 2016 15:31:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uBPn9ba5SzfE8mR/5WrZauQErHc=; b=gUhAX6
+	Vaj6J5iSOvy/tt7JtuCkvh9+HKzjyVAnHKlXgJsSBZetWOBIaTdYwS+0+s0IQCJj
+	TX9vWQRSy7BLg8u9hMDhqGbSLqJTWkVsNzEBrDskeSw4TD0bLSwbRHE7+G2yclxA
+	kBf9d/7BH2Fk5B47JUi/O0sMXy8V5GO4TasH8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jEalqGqEQKEPEisb0cOjNpNaxSlxRVYM
+	tUh8Xm5n5VoF1Oh7tJ+8unCO2d3hKDsOk0iRYremWmVLIAI+mZdw9wfynp+v/SU3
+	A1t/0c43AiA8GAau+3X91u9HgpX628qmHb4S4EGOFTxsvu+gMR551BnGxKJiQV0J
+	wbH1Tllpskw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DDB7D50496;
+	Tue, 29 Mar 2016 15:31:00 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 19D7D50494;
+	Tue, 29 Mar 2016 15:31:00 -0400 (EDT)
+In-Reply-To: <1459207703-1635-6-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Mon, 28 Mar 2016 16:28:21 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C468D69E-F5E4-11E5-B7F7-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290171>
 
-On Tue, Mar 29, 2016 at 12:21 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Tue, Mar 29, 2016 at 12:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> Stefan Beller <sbeller@google.com> writes:
->>>
->>>> The test which is fixed by this patch would report
->>>>     Entering 'nested1/nested2/../nested3'
->>>> instead of the expected
->>>>     Entering '../nested1/nested2/nested3'
->>>>
->>>> because the prefix is put unconditionally in front and after that a
->>>> computed display path with is affected by `wt_prefix`. This is wrong as
->>>> any relative path computation would need to be at the front. By emptying
->>>> the `wt_prefix` in recursive submodules and adding the information of any
->>>> relative path into the `prefix` this is fixed.
->>>>
->>>> Signed-off-by: Stefan Beller <sbeller@google.com>
->>>> ---
->>>
->>> Nicely explained and executed.
->>
->> Interestingly, this breakage, as 1/7 shows, only affects the
->> "Entering $there" message--I somehow expected from reading the
->> description above that the command given to "foreach" is run
->> in a wrong submodule directory, but there is no such bug that
->> is fixed by this change, as far as "foreach" is concerned.
+Stefan Beller <sbeller@google.com> writes:
+
+> Not everyone (including me) grasps the sed expression in a split second as
+> they would grasp the 4 lines printed as is.
 >
-> foreach is a special beast as it is the only submodule command that
-> ignores the current directory, i.e.
->     cd repo/plugins && git submodule foreach ...
-> also affects submodules in repo/other-submodules.
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
 
-I missspoke.
+I agree that the overlong sed expression is not very readable.
+Spelling the expectation out like this patch does would make sense.
+A slight possible downside is that future changes in the test setup
+may require updating two places now instead of one, but I would say
+that would not make a very strong objection--after all, such future
+changes may affect the line that is munged by the sed script, in
+which case you'd need to change two places anyway (i.e. the previous
+"expect" and also the script), and updating two explicit expectation
+would be far easier than updating one explicit expectation and the
+overlong sed expression.
 
-It actually respects the sub directory, but no further path spec. :(
+Perhaps this wants to come much earlier in the series?  It felt a
+bit distracting while reading the series in sequence, derailing my
+train of thought.
+
+Thanks.
+
+>  t/t7407-submodule-foreach.sh | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+>
+> diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
+> index 776b349..808c6c6 100755
+> --- a/t/t7407-submodule-foreach.sh
+> +++ b/t/t7407-submodule-foreach.sh
+> @@ -262,8 +262,12 @@ test_expect_success 'test "status --recursive"' '
+>  	test_cmp expect actual
+>  '
+>  
+> -sed -e "/nested2 /s/.*/+$nested2sha1 nested1\/nested2 (file2~1)/;/sub[1-3]/d" < expect > expect2
+> -mv -f expect2 expect
+> +cat > expect <<EOF
+> + $nested1sha1 nested1 (heads/master)
+> ++$nested2sha1 nested1/nested2 (file2~1)
+> + $nested3sha1 nested1/nested2/nested3 (heads/master)
+> + $submodulesha1 nested1/nested2/nested3/submodule (heads/master)
+> +EOF
+>  
+>  test_expect_success 'ensure "status --cached --recursive" preserves the --cached flag' '
+>  	(
