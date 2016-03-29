@@ -1,71 +1,111 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 00/19] index-helper, watchman
-Date: Tue, 29 Mar 2016 19:09:06 +0200
-Message-ID: <56FAB6B2.5000200@web.de>
-References: <1457548582-28302-1-git-send-email-dturner@twopensource.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v1 6/7] correct blame for files commited with CRLF
+Date: Tue, 29 Mar 2016 10:21:45 -0700
+Message-ID: <xmqqa8lhyzbq.fsf@gitster.mtv.corp.google.com>
+References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
+	<1459257938-17389-1-git-send-email-tboegi@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
-	pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Tue Mar 29 19:09:26 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: tboegi@web.de
+X-From: git-owner@vger.kernel.org Tue Mar 29 19:22:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akx8t-0000kn-A1
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 19:09:23 +0200
+	id 1akxL7-0006sP-Qv
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 19:22:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757815AbcC2RJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 13:09:13 -0400
-Received: from mout.web.de ([212.227.17.11]:52590 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757626AbcC2RJM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 13:09:12 -0400
-Received: from macce.local ([195.252.60.88]) by smtp.web.de (mrweb102) with
- ESMTPSA (Nemesis) id 0LiCsx-1Zy5eJ02mB-00nQTD; Tue, 29 Mar 2016 19:09:08
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.7.0
-In-Reply-To: <1457548582-28302-1-git-send-email-dturner@twopensource.com>
-X-Provags-ID: V03:K0:mC7O311Yp4SWyRP7EVixgkLcrR22isafUocq3n9ZBVlviw92ZxK
- CfG8pIeAb82hzLmd6bHYXPd4RB3ezPMM38z9EC+n+5Zz3/Gr+Ttr5OlBaWlv78O2vtqDDvi
- xdMnhyjNaQAhKg6BWN7+EoG8k5b3rAFwh0t4yH+dznC68niOdNzdB3GnGpm9nPV9+uYowBz
- CAZ3kLJTiJK79JZl93kNg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6LJSiLzEqqc=:XX06Q/Z695eMH3BtlcxFnJ
- aEtXHLAMvEOfDBKNUEx44+TfFB25t8RgoXpxuQfNWAxy+GtI0LtAHTJ+P/TmSiFF68XH2LpyZ
- aSrqp931ALcSKu8AtOaavdELSz3lOHSD7+/hKcRa5ENzw0RC3obW3OVEahylJsrp2p1rlYFrp
- l7pLsArqwMidlsvV71G3tLCSRy2wDc9UVQ0+tOB4BYGeAfwFO2PQZ0OgXes4qKROLiGvpcZpe
- SL4B44ojFSiN/dN4PoUDecFkdv1EPw+pwiChoEHWwPat+f4hgt7VhUNbJjDJnPa+S1BkMkYmm
- EGvmBrEPJhsKPfsSKKmeLD0Ue366MWkkMAlRG9GV9Og3FD9tH0/mhvC9OnyWq0XfXJNy1bv6m
- 6T6TDLXMRW61N30JXg9SVXiF6nV0VfDbJ5DMx31VNa9pFlyaFe9YJDiPrlQalgyTCcNBg2hvS
- XR+xbV/Ysw82btdqm7HBXzlVp2z76I5u0Aiu0/Nd7wa+BZPaQRHmrmlOsYCpLZk1+nf5hFhSH
- qdtvKmPZ6aLAscJOy/CX7o5w1S6ap55ffPISWHRvayNpiPEm9cMtXQ748er5/n9F87Al7JDqU
- 7W853oxzEd/HyxqXZrR1S5+Y8a5ooFK8EsKwP9Ivwia1AO/S0ECwjzMkecyZhcrcNc4X695Pj
- 29HkHRfJcVI5JDi7LgKXKECla/3OqJsKwl22pJz1qBcckXlyrlwXTDcGtXGkpCnECGK//0xYT
- ZxJ84adHm9Wwv0m3Zp2EXTArtmHBbmTUVqJHth0+20FCUSSpLdIHSIMddFlLOlcAh0aBPUnx 
+	id S1757803AbcC2RVz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2016 13:21:55 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:62876 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757493AbcC2RVy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2016 13:21:54 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B6A404F873;
+	Tue, 29 Mar 2016 13:21:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=ZExWhbfcD7mC
+	NC6THL5F/FZuHEA=; b=uWcVy0v4KN4+MXK5+ppI8YwYYb3oSBjL9ltaDnc2l74U
+	YCZGpeu2JhM+uYhhAeWQk/EgimMKUPPaymjzTIa/QvkQR2cyduolgIoukTEEzVAQ
+	Z+/EBLzDhhhNnvCMrYqEDYsqN1yHnsOoo5TB9LoALd/uKLMXIs1HyJcQsbUBgsY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=oq3taa
+	DSsBHIKkfQTRhv1tnei/7UBY2T4tVqphRHtQvBjb8IPEyUg3G0NaLhw+mTgMSsFi
+	LJhNoR7ajUoD08xESakbaXAzJU15cgJqeMIwBhK2lSOH+EAy02n4Sya4PuW7WTGx
+	I8u2wyrkvqgCh53OBVxermLfnkFFH+n+/gLLs=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AD94C4F872;
+	Tue, 29 Mar 2016 13:21:47 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 23F014F86F;
+	Tue, 29 Mar 2016 13:21:47 -0400 (EDT)
+In-Reply-To: <1459257938-17389-1-git-send-email-tboegi@web.de>
+	(tboegi@web.de's message of "Tue, 29 Mar 2016 15:25:38 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B7488372-F5D2-11E5-BF16-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290148>
 
-On 2016-03-09 19.36, David Turner wrote:
-> This is a rebase and extension of Duy's work on git index-helper and
-> watchman support.
+tboegi@web.de writes:
+
+> From: Torsten B=C3=B6gershausen <tboegi@web.de>
 >
-Somewhere we need to tweak something:
-t7900 do all fail under Mac OS, because the index-helper is not build.
+> git blame reports lines as not "Not Committed Yet" when they have
+> CRLF in the index, CRLF in the worktree and e.g. core.autocrlf is tru=
+e.
+>
+> Since commit c48053 "new safer autocrlf handling", files that have CR=
+LF
+> in the index are not normalized at commit when e.g. core.autocrl is s=
+et.
+>
+> Whenever a CLRF conversion is needed (or any filter us set), load the
+> index temporally, before calling convert_to_git()
 
-The best would be to have a precondition when running the tests ?
+Sorry, but I do not understand what problem you are trying to
+address here.
 
-t7900-index-helper.sh   not ok 1 - index-helper smoke test
-t7900-index-helper.sh   not ok 2 - index-helper creates usable pipe file and can
-be killed
-t7900-index-helper.sh   not ok 3 - index-helper will not start if already running
-t7900-index-helper.sh   not ok 4 - index-helper is quiet with --autorun
-t7900-index-helper.sh   not ok 5 - index-helper autorun works
+Under the same condition described in the first paragraph, what
+would "git diff" and "git diff HEAD" say?  They should show that you
+would be making a commit that corrects the line ending of the blob
+recorded in the history.
 
+The "Not Committed Yet" output from "git blame" is the same thing.
+It is telling you that the commit you would be making by adding
+that path from the working tree in its current state will become
+the one that is responsible for the final state of the line.
 
-The other thing is to enable SHM on other platforms, but first things first.
+So it is absolutely the right thing that these lines are shown as
+"Not Commited Yet".  You will be making the line-ending correction
+for the entire blob, and you should be made aware of it.
+
+Now, it would be a very good idea for such a correction change to
+have no other change, and it would be a very good idea to give users
+a tool to see if there is any change other than the eol correction.
+There is "git blame -w" to ignore whitespace changes, and I think
+that would hide the CRLF/LF correction, but that hides all other kinds
+of whitespace changes, so it is too broad for the purpose.
+
+I do not think I'd be opposed to a new option to allow the command
+to ignore _only_ eol changes (this applies not just to "blame" but
+also to "diff", too).  That way:
+
+ * The users can more easily make sure that the set of changes being
+   prepared does not do anything other than correcting eol;
+
+ * "git blame" can be told to relieve a commit of the responsibility
+   for lines if the only change it did to them is to correct eol
+   when digging the history (i.e. this will not just help "Not
+   Committed Yet" changes in the working tree, but for digging
+   through historical events).
