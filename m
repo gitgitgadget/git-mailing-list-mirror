@@ -1,79 +1,81 @@
-From: Ori Avtalion <ori@avtalion.name>
-Subject: Re: Warning about conflict markers - undocumented 'diff --check'
- feature & suggestion
-Date: Tue, 29 Mar 2016 14:19:47 +0300
-Message-ID: <CALgdb5+E7_CT2e9WFBd9GhiFuc_B7+bpC9tjDfR+-QiTGeoP+A@mail.gmail.com>
-References: <CALgdb5JuoYpHAPxTY2cHdbkcPUjKtsWQ_DY5rBrw-YKCwj2yvw@mail.gmail.com>
-	<xmqqd1qe1a2i.fsf@gitster.mtv.corp.google.com>
+From: Harish K <harish2704@gmail.com>
+Subject: [PATCH] Feature: custom guitool commands can now have custom
+ keyboard shortcuts
+Date: Tue, 29 Mar 2016 11:38:10 +0000
+Message-ID: <01020153c22ab06b-e195b148-37cc-4f89-92f3-f4bed1915eb9-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 13:19:56 2016
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 29 13:38:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akrgg-0008I2-L1
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 13:19:55 +0200
+	id 1akryU-0005kd-Lk
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 13:38:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752261AbcC2LTv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 07:19:51 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:35236 "EHLO
-	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751717AbcC2LTt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 07:19:49 -0400
-Received: by mail-wm0-f41.google.com with SMTP id 191so46560701wmq.0
-        for <git@vger.kernel.org>; Tue, 29 Mar 2016 04:19:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=K8FuJM+/IJQ/+sokL2LsAeLP44UCCqNvpNpjbjDeYIc=;
-        b=ddHAmAU7XMzCS8rnle56F21Dk9ndKIhzQNkAhOp8VRxc5ajZsJlfMCcuQ7uaCC8258
-         4ubXtLAqK+vrVml/KkOhvtLy6hLBPYKk96gByz4T1FXkFJ3+mpn7U688e9bFUNL/Ch0Y
-         nvVZnHTrGNtUCP8Vkx94U8NbZuS7ccB7D/r2YF7DibRH0+QYQ4rzl0ovE+l23j7Cheha
-         kjO2TVVLAXDqjY+pNy5FIEUjajgR5Cm4kcWRmv4SNBcgsdONQEc76TOJTJNtnjIWVwp0
-         hNPD/NDlfTboHlCfJyW3bTVWSVhnf/9jhzYquAIPJszE44FOcX/ypiRuUav5ghH+RCae
-         kDBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=K8FuJM+/IJQ/+sokL2LsAeLP44UCCqNvpNpjbjDeYIc=;
-        b=Dz1teHEFnIwJ1HVmKdQot9qMF1eLbBeNb3juT6OtsHs2VVHLr5P2lYslx4abvPVSSM
-         OBfT3fIlXOOvaGL3Hmcaw1g0eiQHGj7LWFmIggjIPwqbE+DxYjTu+uMiZx6N5Y4Pgu7Q
-         DUk2o2zlHYYVZ226zZx3grWAAIbe5n85pWibajcpmVKGRtEhm7f/vVBHgQPihrwIEHbx
-         ugwzQc8YXwQnL/G3NE4ZQ/8l3u19/pkGtDZ9ApuJP0+A9ywPK0KahHE+jiVt8cxJFlvY
-         D8K+HBaruHtE4YXF03QpGVWaQKWdzz80V3jZHhhcLpz7UwPt/Fx5HNGRFMFytTbaZY7e
-         NpMg==
-X-Gm-Message-State: AD7BkJKIV//eSaSkbSj16aBK9qmPvpSJynAU1E7a7CIeA6ZcigyHo3RbwGMbYmsnOWM+3UV0P190mselFZylqg==
-X-Received: by 10.194.92.107 with SMTP id cl11mr2337401wjb.21.1459250388006;
- Tue, 29 Mar 2016 04:19:48 -0700 (PDT)
-Received: by 10.194.69.132 with HTTP; Tue, 29 Mar 2016 04:19:47 -0700 (PDT)
-In-Reply-To: <xmqqd1qe1a2i.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: Ny8B8aJiOW5HWLNDs_BWiqen5Ik
+	id S1756888AbcC2LiN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 07:38:13 -0400
+Received: from a6-243.smtp-out.eu-west-1.amazonses.com ([54.240.6.243]:52878
+	"EHLO a6-243.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751895AbcC2LiN (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2016 07:38:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1459251490;
+	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=6skXYhYuzERpMC9XFiV5NRPQBCBRHQ/G8gB67/jnxFI=;
+	b=YH18IPfmWRLcuMmHGuI9ZZQAN5aw0ETziCmmVbUSJQQ0tWkTfhK0wfvihf+3vZZG
+	rVapVmVn6gBx8F5HyOVMUpr2RCfDUsKEGNizTzD7jTqF7VLx+ej98SlTIvi00q5I6d1
+	AEwCBPpBKGjMcFqsH7CqVo0ApYCR6BBmtEch31YA=
+X-SES-Outgoing: 2016.03.29-54.240.6.243
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290118>
 
-On Tue, Mar 29, 2016 at 2:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ori Avtalion <ori@avtalion.name> writes:
->
-> Thanks for digging (even though I do not think the message you
-> quoted has much to do with this).
+---
+ git-gui/lib/tools.tcl | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-Oops, you are correct! I had several tabs open digging through the archives and
-picked the wrong one :)
+diff --git a/git-gui/lib/tools.tcl b/git-gui/lib/tools.tcl
+index 6ec9411..749bc67 100644
+--- a/git-gui/lib/tools.tcl
++++ b/git-gui/lib/tools.tcl
+@@ -38,7 +38,7 @@ proc tools_create_item {parent args} {
+ }
+ 
+ proc tools_populate_one {fullname} {
+-	global tools_menubar tools_menutbl tools_id
++	global tools_menubar tools_menutbl tools_id repo_config
+ 
+ 	if {![info exists tools_id]} {
+ 		set tools_id 0
+@@ -61,9 +61,19 @@ proc tools_populate_one {fullname} {
+ 		}
+ 	}
+ 
+-	tools_create_item $parent command \
++	if {[info exists repo_config(guitool.$fullname.accelerator)] && [info exists repo_config(guitool.$fullname.accelerator-label)]} {
++		set accele_key $repo_config(guitool.$fullname.accelerator)
++		set accel_label $repo_config(guitool.$fullname.accelerator-label)
++		tools_create_item $parent command \
+ 		-label [lindex $names end] \
+-		-command [list tools_exec $fullname]
++		-command [list tools_exec $fullname] \
++		-accelerator $accel_label
++		bind . $accele_key [list tools_exec $fullname]
++	} else {
++		tools_create_item $parent command \
++			-label [lindex $names end] \
++			-command [list tools_exec $fullname]
++	}
+ }
+ 
+ proc tools_exec {fullname} {
 
-> Care to try a patch?
-
-Yes. Will submit one soon.
-If my change introduces a few words that exceed asciidoc's ~72-char line width,
-should I reformat the entire paragraph? (thus making it had to identify what
-changed exactly)
-
-Any thoughts on adding similar functionality to "git add"?
+--
+https://github.com/git/git/pull/220
