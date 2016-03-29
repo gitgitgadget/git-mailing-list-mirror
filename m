@@ -1,96 +1,203 @@
 From: Mehul Jain <mehul.jain2029@gmail.com>
-Subject: [PATCH 3/5] t/t5520: use test_i18ngrep instead of test_cmp
-Date: Tue, 29 Mar 2016 18:59:58 +0530
-Message-ID: <1459258200-32444-4-git-send-email-mehul.jain2029@gmail.com>
+Subject: [PATCH 4/5] t/t5520: modify tests to reduce common code
+Date: Tue, 29 Mar 2016 18:59:59 +0530
+Message-ID: <1459258200-32444-5-git-send-email-mehul.jain2029@gmail.com>
 References: <1459258200-32444-1-git-send-email-mehul.jain2029@gmail.com>
 Cc: sunshine@sunshineco.com, Matthieu.Moy@grenoble-inp.fr,
 	gitster@pobox.com, Mehul Jain <mehul.jain2029@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 29 15:31:41 2016
+X-From: git-owner@vger.kernel.org Tue Mar 29 15:31:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aktk9-0005B1-9u
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 15:31:37 +0200
+	id 1aktkP-0005J5-Es
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 15:31:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756596AbcC2Nbe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 09:31:34 -0400
-Received: from mail-pa0-f65.google.com ([209.85.220.65]:33121 "EHLO
-	mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756560AbcC2Nbd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 09:31:33 -0400
-Received: by mail-pa0-f65.google.com with SMTP id q6so2154036pav.0
-        for <git@vger.kernel.org>; Tue, 29 Mar 2016 06:31:32 -0700 (PDT)
+	id S1756273AbcC2Nbu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 09:31:50 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34651 "EHLO
+	mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755423AbcC2Nbt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 09:31:49 -0400
+Received: by mail-pf0-f193.google.com with SMTP id n5so2337966pfn.1
+        for <git@vger.kernel.org>; Tue, 29 Mar 2016 06:31:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0VB7ltIVUyAPU/xMeflPyUkXEkwb2cONgNAbkIE+ALI=;
-        b=rPl/c+zrve5Ezpi2VzhyTkjDT7wFScYWpJwY6GtY2gKHVXyegGflmL6gS9tU8qy/3V
-         pnhdjKSmKUrpB5zvRKenXc9LIKSOXK/uvQuId6AgISz4Mvy2CHOTZPPvZ+8EKl7BCnLj
-         lmH1D7Wd4Ye7BQH7TTnq4XEWUSx38GbIT+6zUibXaUc8ZtKYJEwO9pUaZFlpBWZdwHhF
-         V3Jt2kmWnpAFJLOcVAvRGRCYCcTOFJ+CVgXEwThUchCn/Grb4sHEENdrCam/dzwZ7Eug
-         lYx7ftYgZXdL8aqxvkt9aAfF4PRTCakJ7gbYzy4jxyKZbJmdMVba0isItiYNwvXZwAHc
-         XEUA==
+        bh=ukRlYhO2+vVmpO1I/R21VzVu/9T0jIT/D3vdlUZqPMI=;
+        b=BQbJxji79WZ+XXhXWpa/xqLWgFogzYzMFzeyRkryR/ftcfnQ95tNd5W3VfqcviMYPM
+         qxlrfxxjiDHCjXhlvlYmT/c5iPQ6QZbl9rBgrR78S14MJMECDKAiXfWtTSIGCED9xk47
+         orxK2raBjBckTlZSg3r2XwwqPOunB2AAazW5xcStLh9+Wg97ARXLSKebP7Be7Y0tEF8L
+         7NN7N/PGa/7YRN59xWN0BFT05CxlJHqYfiBPyEih73VT07rHJ8qk0kWcEO/dg73CfteZ
+         jJZUaWQEPA8wx7tmNIpbq95v94yw9shY4EQZ511klm96+IJrrXusLptR7XWSdXxnlybB
+         wbUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=0VB7ltIVUyAPU/xMeflPyUkXEkwb2cONgNAbkIE+ALI=;
-        b=gDhvGuv192LBexFsSsgXwcF523Wqmo0KJN++yAixkjAbbajk5eBJsxPjqdRZKw8Ly7
-         UuN+ssifpGUS7rrxkEcHYJzYrBlqb8MEbCxthhRfFJavLQp3lm9/F9yrIoZkodRc1/8U
-         CxV8LJsKyPjZzW+WPsdxx04a4NFcLrCtSpWhMtQaQyo8PfXbKiWysg6yvVHwVwYNxX+r
-         D9dPdRCVZY4MsDOguNQS3uh55A/AkYi9zXMhFA7KizEpVt+0AtKF1XBXM879c1OpIZlX
-         wQmwD1eHsPSARxVxEyb3fHsrWlf4wOSr/z4ONweOceHQ2CFlfGHro8w4tOiHxzqPkp1r
-         oL3A==
-X-Gm-Message-State: AD7BkJJ3AucyO+Pp8P5KdN5jd5/ZcYRGRPiR+COlnzKkQWbuajWtr68HTXEGqVkUN4c2Ng==
-X-Received: by 10.66.246.165 with SMTP id xx5mr3470159pac.87.1459258292282;
-        Tue, 29 Mar 2016 06:31:32 -0700 (PDT)
+        bh=ukRlYhO2+vVmpO1I/R21VzVu/9T0jIT/D3vdlUZqPMI=;
+        b=OoV9Dlwi9fOoZulv5a8wxIDcDmT5zH8siHxqm8me1iX1HsbqehkSRjocUS0iykiZ9b
+         ZWeYvBbRraG3jeGbV9CUmFfEFq3Arnd6PUq0bjkfSs3VdbDB29/fcAirGL/khrgGwFYJ
+         /RWBVR9ke/n93vRZGjMibsBZ6M/nCWZw5l47Et6LwUcIrVk7Nr1P49S6tzt6a44Op+sB
+         DChIamb8ExRaFiE7ySN7pZumt3f5I+tBmnQ81ELFaSBOkQaUKG8BNk8eTqcejHAXoEKI
+         3zrrKgnqYImsrvHjb7iomcxDHD4ZyWrd1YYpbPavnYKmvJ6/9Tlgq6XfbsDA/kg2AXxn
+         kdBw==
+X-Gm-Message-State: AD7BkJJ0qCIrHxYJmUn0OwJbHfiziKd16taaSV/1cxUY17NzOIkxyqyURmYp8rXwYBnX0g==
+X-Received: by 10.98.68.209 with SMTP id m78mr3452829pfi.153.1459258308447;
+        Tue, 29 Mar 2016 06:31:48 -0700 (PDT)
 Received: from localhost.localdomain ([1.39.38.29])
-        by smtp.gmail.com with ESMTPSA id s66sm43430514pfi.3.2016.03.29.06.31.23
+        by smtp.gmail.com with ESMTPSA id s66sm43430514pfi.3.2016.03.29.06.31.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 29 Mar 2016 06:31:31 -0700 (PDT)
+        Tue, 29 Mar 2016 06:31:47 -0700 (PDT)
 X-Mailer: git-send-email 2.7.1.340.g69eb491.dirty
 In-Reply-To: <1459258200-32444-1-git-send-email-mehul.jain2029@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290139>
 
-test_cmp is used for error checking when test_i18ngrep could be used.
+There exist three groups of tests which have repetitive lines of code.
 
-Use test_i18ngrep to check for the valid error.
+Introduce two functions test_rebase_autostash() and
+test_rebase_no_autostash() to reduce the number of lines. Also introduce
+loops to futher reduce the current implementation.
 
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Mehul Jain <mehul.jain2029@gmail.com>
 ---
- t/t5520-pull.sh | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ t/t5520-pull.sh | 100 +++++++++++++++++++++++---------------------------------
+ 1 file changed, 41 insertions(+), 59 deletions(-)
 
 diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 9ee2218..d03cb84 100755
+index d03cb84..2611170 100755
 --- a/t/t5520-pull.sh
 +++ b/t/t5520-pull.sh
-@@ -317,15 +317,13 @@ test_expect_success 'pull --rebase --no-autostash & rebase.autostash unset' '
+@@ -9,6 +9,24 @@ modify () {
+ 	mv "$2.x" "$2"
+ }
+ 
++test_rebase_autostash () {
++	git reset --hard before-rebase &&
++	echo dirty >new_file &&
++	git add new_file &&
++	git pull --rebase --autostash . copy &&
++	test_cmp_rev HEAD^ copy &&
++	test "$(cat new_file)" = dirty &&
++	test "$(cat file)" = "modified again"
++}
++
++test_rebase_no_autostash () {
++	git reset --hard before-rebase &&
++	echo dirty >new_file &&
++	git add new_file &&
++	test_must_fail git pull --rebase --no-autostash . copy 2>err &&
++	test_i18ngrep "Cannot pull with rebase: Your index contains uncommitted changes." err
++}
++
+ test_expect_success setup '
+ 	echo file >file &&
+ 	git add file &&
+@@ -256,75 +274,39 @@ test_expect_success 'pull --rebase succeeds with dirty working directory and reb
+ 	test "$(cat file)" = "modified again"
  '
  
- test_expect_success 'pull --autostash (without --rebase) should error out' '
--	test_must_fail git pull --autostash . copy 2>actual &&
--	echo "fatal: --[no-]autostash option is only valid with --rebase." >expect &&
--	test_i18ncmp actual expect
-+	test_must_fail git pull --autostash . copy 2>err &&
-+	test_i18ngrep "only valid with --rebase" err
+-test_expect_success 'pull --rebase --autostash & rebase.autostash=true' '
+-	test_config rebase.autostash true &&
+-	git reset --hard before-rebase &&
+-	echo dirty >new_file &&
+-	git add new_file &&
+-	git pull --rebase --autostash . copy &&
+-	test_cmp_rev HEAD^ copy &&
+-	test "$(cat new_file)" = dirty &&
+-	test "$(cat file)" = "modified again"
+-'
+-
+-test_expect_success 'pull --rebase --autostash & rebase.autostash=false' '
+-	test_config rebase.autostash false &&
+-	git reset --hard before-rebase &&
+-	echo dirty >new_file &&
+-	git add new_file &&
+-	git pull --rebase --autostash . copy &&
+-	test_cmp_rev HEAD^ copy &&
+-	test "$(cat new_file)" = dirty &&
+-	test "$(cat file)" = "modified again"
+-'
++for i in true false
++	do
++		test_expect_success "pull --rebase --autostash & rebase.autostash=$i" '
++			test_config rebase.autostash $i &&
++			test_rebase_autostash
++		'
++	done
+ 
+ test_expect_success 'pull --rebase: --autostash & rebase.autostash unset' '
+ 	test_unconfig rebase.autostash &&
+-	git reset --hard before-rebase &&
+-	echo dirty >new_file &&
+-	git add new_file &&
+-	git pull --rebase --autostash . copy &&
+-	test_cmp_rev HEAD^ copy &&
+-	test "$(cat new_file)" = dirty &&
+-	test "$(cat file)" = "modified again"
++	test_rebase_autostash
  '
  
- test_expect_success 'pull --no-autostash (without --rebase) should error out' '
--	test_must_fail git pull --no-autostash . copy 2>actual &&
--	echo "fatal: --[no-]autostash option is only valid with --rebase." >expect &&
--	test_i18ncmp actual expect
-+	test_must_fail git pull --no-autostash . copy 2>err &&
-+	test_i18ngrep "only valid with --rebase" err
+-test_expect_success 'pull --rebase --no-autostash & rebase.autostash=true' '
+-	test_config rebase.autostash true &&
+-	git reset --hard before-rebase &&
+-	echo dirty >new_file &&
+-	git add new_file &&
+-	test_must_fail git pull --rebase --no-autostash . copy 2>err &&
+-	test_i18ngrep "Cannot pull with rebase: Your index contains uncommitted changes." err
+-'
+-
+-test_expect_success 'pull --rebase --no-autostash & rebase.autostash=false' '
+-	test_config rebase.autostash false &&
+-	git reset --hard before-rebase &&
+-	echo dirty >new_file &&
+-	git add new_file &&
+-	test_must_fail git pull --rebase --no-autostash . copy 2>err &&
+-	test_i18ngrep "Cannot pull with rebase: Your index contains uncommitted changes." err
+-'
++for i in true false
++	do
++		test_expect_success "pull --rebase --no-autostash & rebase.autostash=$i" '
++			test_config rebase.autostash $i &&
++			test_rebase_no_autostash
++		'
++	done
+ 
+ test_expect_success 'pull --rebase --no-autostash & rebase.autostash unset' '
+ 	test_unconfig rebase.autostash &&
+-	git reset --hard before-rebase &&
+-	echo dirty >new_file &&
+-	git add new_file &&
+-	test_must_fail git pull --rebase --no-autostash . copy 2>err &&
+-	test_i18ngrep "Cannot pull with rebase: Your index contains uncommitted changes." err
++	test_rebase_no_autostash
  '
+ 
+-test_expect_success 'pull --autostash (without --rebase) should error out' '
+-	test_must_fail git pull --autostash . copy 2>err &&
+-	test_i18ngrep "only valid with --rebase" err
+-'
+-
+-test_expect_success 'pull --no-autostash (without --rebase) should error out' '
+-	test_must_fail git pull --no-autostash . copy 2>err &&
+-	test_i18ngrep "only valid with --rebase" err
+-'
++for i in --autostash --no-autostash
++	do
++		test_expect_success "pull $i (without --rebase) is illegal" '
++			test_must_fail git pull $i . copy 2>actual &&
++			test_i18ngrep "only valid with --rebase" actual
++		'
++	done
  
  test_expect_success 'pull.rebase' '
+ 	git reset --hard before-rebase &&
 -- 
 2.7.1.340.g69eb491.dirty
