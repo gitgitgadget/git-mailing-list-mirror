@@ -1,82 +1,87 @@
-From: Harish K <harish2704@gmail.com>
-Subject: [PATCH] Feature: custom guitool commands can now have custom
- keyboard shortcuts
-Date: Tue, 29 Mar 2016 11:29:41 +0000
-Message-ID: <01020153c222ebc0-a691d562-ece3-4b35-908a-a0487e912879-000000@eu-west-1.amazonses.com>
+From: Elliott Cable <me@ell.io>
+Subject: Re: `git rev-parse --is-inside-work-tree` and $GIT_WORK_TREE
+Date: Tue, 29 Mar 2016 06:53:35 -0500
+Message-ID: <CAPZ477PD7SkRg7T_Y_n27Hjw5TeW6Sh0-vtoP6-4xUDraC7OiA@mail.gmail.com>
+References: <CAPZ477NxXVNNwDvzaFt7GoUGuJwnOuX3y1N+aPtVRFD3E8dQBA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 29 13:48:05 2016
+X-From: git-owner@vger.kernel.org Tue Mar 29 13:54:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aks7v-00016W-TM
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 13:48:04 +0200
+	id 1aksED-0003Ox-Hg
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 13:54:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757000AbcC2Lrx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 07:47:53 -0400
-Received: from a6-247.smtp-out.eu-west-1.amazonses.com ([54.240.6.247]:33597
-	"EHLO a6-247.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756967AbcC2Lrw (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2016 07:47:52 -0400
-X-Greylist: delayed 1089 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 Mar 2016 07:47:52 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1459250981;
-	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=6skXYhYuzERpMC9XFiV5NRPQBCBRHQ/G8gB67/jnxFI=;
-	b=GvuEvNApGYm3TTr7rMfCSY3tGcFp0VvHOMghXZ7QliuaTbWVQ92RdDQ6QJ3w7Ueg
-	Qnz6eldrWtFj4mSeD9x2ByfPbTOuflMYMAmIRBRTxSNFzJnkxV86Wwo986FHrIXU4gV
-	YBdYNNABGbcAWi/iN2OycaIVmK8ss4+WRUZGp5yM=
-X-SES-Outgoing: 2016.03.29-54.240.6.247
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+	id S1757136AbcC2LyF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2016 07:54:05 -0400
+Received: from mail-vk0-f51.google.com ([209.85.213.51]:33963 "EHLO
+	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757112AbcC2LyA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2016 07:54:00 -0400
+Received: by mail-vk0-f51.google.com with SMTP id e185so14816018vkb.1
+        for <git@vger.kernel.org>; Tue, 29 Mar 2016 04:53:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ell.io; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=36OgvZg/Xwg21ujDic/lSURWpxNB1abJhtVn2ONU45o=;
+        b=hOdiZJz9/6P2KEwTZIMHJlbrzl94Un7+wUOR6+gfZHg+xF8nk5/Rj4P0OejgtO5CwD
+         G+zyhL4Xedk6gL4EJBco/1/HUEoSsjxcB7sPWxrAay/zavobEXa/CETNgLV/xxzAo8W3
+         M2dYGFW0LLjqdGX2JUSShQRrxWcSilR3EvOYI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=36OgvZg/Xwg21ujDic/lSURWpxNB1abJhtVn2ONU45o=;
+        b=Nh3T4XKCjeAGjDIcPwyeHUwJrNWoL1w2IjaMk2+VckM8WksXcewl70zP+PKrYksk6s
+         BRvr+g8Es5pEsWS5YM3/IzsCx+LxcNDSuDpsVzDu20xGmTrz1vSfJS0QV5RJ2lByuOYn
+         cMALpEMXKimGqrt5RzdhwTOoOwFopXRHzG0AGXkkTUYwLuv/rH69kI85oed3KZvfUw+8
+         gPwb5hUW+VWv2MpC2i7vXOAE/KIhKcQh1CxOmS+mM31t5fX2fZWCEY6eFGti2IPB2saq
+         oXVQcPy6ew0jlRCGX4wxj3CBd9eg3eDzpw2Jg/s7XniyIgvAEYWevAbBDBMSQJ+7CtY2
+         Qcsg==
+X-Gm-Message-State: AD7BkJJKgiq4Ow1Zi7H1y1Q02aQHyGpzgzIAh24rjstsfjoL2aJ9juPP12SVSTB8jSjhAkdBlMn+N0CFEZkkhA==
+X-Received: by 10.31.151.11 with SMTP id z11mr873406vkd.131.1459252434549;
+ Tue, 29 Mar 2016 04:53:54 -0700 (PDT)
+Received: by 10.31.92.206 with HTTP; Tue, 29 Mar 2016 04:53:35 -0700 (PDT)
+X-Originating-IP: [204.14.154.168]
+In-Reply-To: <CAPZ477NxXVNNwDvzaFt7GoUGuJwnOuX3y1N+aPtVRFD3E8dQBA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290121>
 
----
- git-gui/lib/tools.tcl | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+On Tue, Mar 29, 2016 at 6:42 AM, Elliott Cable <me@ell.io> wrote:
+> So, I find this behaviour a little strange; I can't determine if it's
+> a subtle bug, or intentionally undefined/=E2=80=98fuzzy=E2=80=99 beha=
+viour ...
 
-diff --git a/git-gui/lib/tools.tcl b/git-gui/lib/tools.tcl
-index 6ec9411..749bc67 100644
---- a/git-gui/lib/tools.tcl
-+++ b/git-gui/lib/tools.tcl
-@@ -38,7 +38,7 @@ proc tools_create_item {parent args} {
- }
- 
- proc tools_populate_one {fullname} {
--	global tools_menubar tools_menutbl tools_id
-+	global tools_menubar tools_menutbl tools_id repo_config
- 
- 	if {![info exists tools_id]} {
- 		set tools_id 0
-@@ -61,9 +61,19 @@ proc tools_populate_one {fullname} {
- 		}
- 	}
- 
--	tools_create_item $parent command \
-+	if {[info exists repo_config(guitool.$fullname.accelerator)] && [info exists repo_config(guitool.$fullname.accelerator-label)]} {
-+		set accele_key $repo_config(guitool.$fullname.accelerator)
-+		set accel_label $repo_config(guitool.$fullname.accelerator-label)
-+		tools_create_item $parent command \
- 		-label [lindex $names end] \
--		-command [list tools_exec $fullname]
-+		-command [list tools_exec $fullname] \
-+		-accelerator $accel_label
-+		bind . $accele_key [list tools_exec $fullname]
-+	} else {
-+		tools_create_item $parent command \
-+			-label [lindex $names end] \
-+			-command [list tools_exec $fullname]
-+	}
- }
- 
- proc tools_exec {fullname} {
+Oh lord, it gets worse ...
 
---
-https://github.com/git/git/pull/220
+$ cd a-repo
+$ git rev-parse --is-inside-work-tree; git rev-parse --is-inside-git-di=
+r
+true
+false
+$ cd .git
+$ git rev-parse --is-inside-work-tree; git rev-parse --is-inside-git-di=
+r
+false
+true
+$ export GIT_WORK_TREE=3D"$(git rev-parse --show-toplevel)"   # !!!
+$ git rev-parse --is-inside-work-tree; git rev-parse --is-inside-git-di=
+r
+true
+false
+$ # !!?!?
+
+So, basically, if `$GIT_WORK_TREE` is set at all, it appears that the
+`rev-parse --is-inside...` flags don't function reliably at all.
+
+
+=E2=81=93=E2=80=89ELLIOTTCABLE=E2=80=84=E2=80=94=E2=80=84fly safe.
+=E2=80=83=E2=80=89http://ell.io/tt
