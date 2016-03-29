@@ -1,107 +1,79 @@
-From: Mehul Jain <mehul.jain2029@gmail.com>
-Subject: [PATCH 5/5] t/t5520: test --[no-]autostash with pull.rebase=true
-Date: Tue, 29 Mar 2016 19:00:00 +0530
-Message-ID: <1459258200-32444-6-git-send-email-mehul.jain2029@gmail.com>
-References: <1459258200-32444-1-git-send-email-mehul.jain2029@gmail.com>
-Cc: sunshine@sunshineco.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Mehul Jain <mehul.jain2029@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 29 15:32:27 2016
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v1 1/7] Make it possible to get sha1 for a path from the
+ index
+Date: Tue, 29 Mar 2016 17:05:19 +0200
+Message-ID: <56FA99AF.1040006@web.de>
+References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
+ <1459257930-17193-1-git-send-email-tboegi@web.de>
+ <CACsJy8A-nwv2B=6B4TqAz+i=DxC6Wu5yO924uaXWd5zLuXFRTQ@mail.gmail.com>
+ <CACsJy8DqN+s2inEeO++hcen1MH+9Op_DFG2x6n8D4xuVfgAu8w@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Mar 29 17:08:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aktkv-0005W7-Uc
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 15:32:26 +0200
+	id 1akvD9-0006iT-QS
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 17:05:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756732AbcC2NcV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 09:32:21 -0400
-Received: from mail-pa0-f68.google.com ([209.85.220.68]:34175 "EHLO
-	mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756068AbcC2NcK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 09:32:10 -0400
-Received: by mail-pa0-f68.google.com with SMTP id hj7so2086464pac.1
-        for <git@vger.kernel.org>; Tue, 29 Mar 2016 06:32:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=6pwTvpfPl4BAGlBfirW2fBppZ9sShUo2xlQXx0y7dvA=;
-        b=wf3CZTpbYo42Q0RATADbqrpmBN+z+zDMNjDqkR1GcE9YX30dKz54gszHE/DAs8sHxz
-         T6nFhaWUdG/tIt15BA1LC9Sp96jZMPCwEMBrv+RUA82MhuETaSj3a2pvDmXGB2Abf3AK
-         KI4DPVGMfOsHVGF3tM9anj2Vz7LiaPrKgbl4kOqgP0WknrLpbk8JsYxANPmBz0uiRPWn
-         lFn5D/hzGqS3LFeeJDBSW/cepvXf2DFq0jkGCtT3M2yqb/Ue5z+2dflp5QR9sUgRSYQS
-         UUt3UQrww+KGp2fPCuXUlaJGdknzIAUp+oIQIMd7o/whLuPblUEN/O5aBtQaAWlO7zjK
-         YfEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=6pwTvpfPl4BAGlBfirW2fBppZ9sShUo2xlQXx0y7dvA=;
-        b=HCEJ6fjAHab0q/xXkH1PK0CFc5poJe34dxepgaB/9VlB94At+1bAzh/+cZGftBamg4
-         z0yR0vjVybSPuMghEheTCcELRolcKSxMq8UdZ4mJMIpUuu8T6GX+37BW1StvhMR7Q7sP
-         quMjTGyPm3fzDdLA1levaiTPNS+QHq9WC/yy8zJCniH1/mGqDNSJtg5WcwC6D+Jl5OM2
-         lti0uO+bYGljqwSHZBAfrtxtQUNdEpR22a+l7Xg3MSwaOwjrWSK/yY81dcB2b3tzjxyo
-         fgWXjZQDEUf9ASsIt6Xxrf0JoqeKJDQCZIlkNKwioc2N5ligL8brKlcfIKdOrf6h2zSy
-         aZFA==
-X-Gm-Message-State: AD7BkJKux3Am0XqKlltKxSwNjUyiYtN4YBRAsc7+pag/COIk327Ig6dGaReTijOPCk3Kyw==
-X-Received: by 10.66.191.202 with SMTP id ha10mr3533526pac.8.1459258329324;
-        Tue, 29 Mar 2016 06:32:09 -0700 (PDT)
-Received: from localhost.localdomain ([1.39.38.29])
-        by smtp.gmail.com with ESMTPSA id s66sm43430514pfi.3.2016.03.29.06.31.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 29 Mar 2016 06:32:08 -0700 (PDT)
-X-Mailer: git-send-email 2.7.1.340.g69eb491.dirty
-In-Reply-To: <1459258200-32444-1-git-send-email-mehul.jain2029@gmail.com>
+	id S1757278AbcC2PFe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2016 11:05:34 -0400
+Received: from mout.web.de ([212.227.17.12]:60645 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757275AbcC2PFd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 11:05:33 -0400
+Received: from macce.local ([195.252.60.88]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0MDg9K-1aW5UL2sIQ-00H66b; Tue, 29 Mar 2016 17:05:23
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.7.0
+In-Reply-To: <CACsJy8DqN+s2inEeO++hcen1MH+9Op_DFG2x6n8D4xuVfgAu8w@mail.gmail.com>
+X-Provags-ID: V03:K0:0hUrRKJBroUnHfRNHlS86QJz919yns0sGYZ2LcTsP53nLZOillb
+ lrWb+zJxqxadOw0+jWH55stEIZMahv+MRT4GhzaNMWypRUQycMkOfwpVrN2VaLaEvkRFnhN
+ +ha7PX2sYHwUhqIbBWVJExrPfFBw5w/g9x/jOIILa+yKa6oe0QLVTYedo1Xu1gNcQL4isB8
+ hWvwZ1kYqPyoO2ejfA+pw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2AZOxdRqlmY=:hucFGkk3QT1s9UTy7JNrlW
+ 2OSutYTMyzRZCpDi8cPWlXkKIFsfw/5sXKkiyjHg9gYFbXfNvtnMVA6NC1cgmxldcQFYfFz0D
+ rO1ltm+soXy7/8vd/zegCxrSgVegip3NKoI+TYvYkuRtMdy5jOGw+O3lDaZNu6BA4zPNiSyBb
+ hj3RJ8tZBnYZyQAaZHmsV3c+YsjQTVaNNr2eevEkuA+CawwQfUkoBcLdRaNtUqUicr4s1vZsy
+ oOXoudSFW2YtEBiHRtDQ6F6wyfL5y3YmWgsrVwmgpJhBQ4N1t9v/Ohw+CRngrJ+QvJunxUSdg
+ nv5D6h5cPs9sqUu/AkhAHNaM49s5y4f4zku9JXIoXrmSY5BGf8SbTMKQFAgQy20BCLa4/G93G
+ ykaLMvtnJi1y8La79HxHlJhY2Kzc3gqfGPaT+MEzVT9XupEYI2ex9bFFFSSaYogbNhPgJPtDL
+ rDjnjPo3hcmjFp+XgugTXSdizdxDGnxkhYhYtoPB/tJB8d5h2jg1e0VCr8J795AxuJWQYxAYl
+ JY4jt8bhpKcWubvKPPiG2OZ0lzMgHcKyhK93HnTRml2LT++d4vBVeV/l/0jkJ0QEHgz3hBX5E
+ ZaNQqEI5GhLmgE1Xuk5WrCFzFTy3eV0gw08j5mBc3Q3gTdNONsBqiFZ45sOFJdCImqxuZaMJs
+ bpvYJgvkpH3uVHZDTvZWkSQtdswn6107TGI80DD1sSR93KCzRiWZI7uIHh2xjhSBVadjw0b2a
+ zaZUyq945RX/sq7Tc/Z97s5hgF2X/ldLFceeTvM1wFEwhIOtSZjH3EILesva+04hW3dNrgQM 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290141>
 
-"--[no-]autostash" option for git-pull is only valid in rebase mode.
-That is, either --rebase is used or pull.rebase=true. Existing tests
-already check the cases when --rebase is used but fails to check for
-pull.rebase=true case.
-
-Add two new tests to check that --[no-]autostash option works with
-pull.rebase=true.
-
-Signed-off-by: Mehul Jain <mehul.jain2029@gmail.com>
----
- t/t5520-pull.sh | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
-
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 2611170..4da9e52 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -316,6 +316,26 @@ test_expect_success 'pull.rebase' '
- 	test new = "$(git show HEAD:file2)"
- '
- 
-+test_expect_success 'pull --autostash & pull.rebase=true' '
-+	test_config pull.rebase true &&
-+	git reset --hard before-rebase &&
-+	echo dirty >new_file &&
-+	git add new_file &&
-+	git pull --autostash . copy &&
-+	test_cmp_rev HEAD^ copy &&
-+	test "$(cat new_file)" = dirty &&
-+	test "$(cat file)" = "modified again"
-+'
-+
-+test_expect_success 'pull --no-autostash & pull.rebase=true' '
-+	test_config pull.rebase true &&
-+	git reset --hard before-rebase &&
-+	echo dirty >new_file &&
-+	git add new_file &&
-+	test_must_fail git pull --no-autostash . copy 2>err &&
-+	test_i18ngrep "Cannot pull with rebase: Your index contains uncommitted changes." err
-+'
-+
- test_expect_success 'branch.to-rebase.rebase' '
- 	git reset --hard before-rebase &&
- 	test_config branch.to-rebase.rebase true &&
--- 
-2.7.1.340.g69eb491.dirty
+On 2016-03-29 15.31, Duy Nguyen wrote:
+> On Tue, Mar 29, 2016 at 8:28 PM, Duy Nguyen <pclouds@gmail.com> wrote=
+:
+>> On Tue, Mar 29, 2016 at 8:25 PM,  <tboegi@web.de> wrote:
+>>> From: Torsten B=C3=B6gershausen <tboegi@web.de>
+>>>
+>>> Factor out the retrival of the sha1 for a given path in
+>>> read_blob_data_from_index() into the function get_sha1_from_index()=
+=2E
+>>
+>> Getting _sha1_ from index is one function call and a memory
+>> dereference or two. I think you mean get sha1 _file_ (or data) from
+>> index. Maybe put either word in the function name.
+>=20
+> Oops, shouldn't have trusted that function name in the @@ line. No
+> what you write in the commit message matches the patch. Sorry for the
+> noise.
+>=20
+Thanks for the review.
+It feels that the naming isn't ideal, let's see if we can find a better
+function name.
