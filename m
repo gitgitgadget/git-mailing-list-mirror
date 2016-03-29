@@ -1,118 +1,117 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v1 5/7] CRLF: unify the "auto" handling
-Date: Tue, 29 Mar 2016 15:42:53 -0400
-Message-ID: <CAPig+cQiSaz-NdaenrR8H840S9-BVTqs-HARBvQVgcKpKSvw6A@mail.gmail.com>
-References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
-	<1459257937-17350-1-git-send-email-tboegi@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/7] submodule update --init: correct path handling in recursive submodules
+Date: Tue, 29 Mar 2016 12:46:26 -0700
+Message-ID: <xmqqbn5xxe25.fsf@gitster.mtv.corp.google.com>
+References: <1459207703-1635-1-git-send-email-sbeller@google.com>
+	<1459207703-1635-5-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Mar 29 21:43:01 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de, jacob.keller@gmail.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 21:46:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akzXX-0000jl-Vj
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 21:43:00 +0200
+	id 1akzb8-0002Bv-BQ
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 21:46:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758010AbcC2Tm4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2016 15:42:56 -0400
-Received: from mail-vk0-f66.google.com ([209.85.213.66]:33516 "EHLO
-	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757993AbcC2Tmz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2016 15:42:55 -0400
-Received: by mail-vk0-f66.google.com with SMTP id a62so3710336vkh.0
-        for <git@vger.kernel.org>; Tue, 29 Mar 2016 12:42:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-transfer-encoding;
-        bh=klbJ0w9F7iKLIJk9sxg55qbHHTD4HTEvx2Yb2AKGUFs=;
-        b=VwK/lGAOrbl96fvMrQ1IPNWoGKAiDwif8T757uPWuEChubzVktAuxgcaTRAOhdZHWo
-         m2R0qPWCvkxIOY075uFHUZpqQxeJgRWMHqI8lkm7NppvgyTSr3EUU6hJnn0qQXfiVUBk
-         vBsUBZfWYhH4q/rR6tT9eBq5FsdcjVMG57Qrm5tNR7kTPYj2JosBeCUGVUWsMtCAyCHB
-         7dqw70oxC9eXdx5Oj/ruiPKPMeMfi5TGuRpNTOLrqaKrbQiEmSKJp4CWnEusdHbg6qtN
-         GkNyCMI+M0gIDyIBxqaHnJzQs6qBfbGoYUIZYHXFSK5cd3iLPIF8k0qHGDUR2HnamkbG
-         6QuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=klbJ0w9F7iKLIJk9sxg55qbHHTD4HTEvx2Yb2AKGUFs=;
-        b=JuKjDfok7ZYpVfEpPuH9e8VNKpYK3KQSR0/7zIMktIx8YvxLAAnrrzqRXQRynLgQh3
-         7pPMbHUTgIvrbCcvjBaONQGPFVc5I/zIxmp/jTrHiN9pIspzN/J/xQB5mqkQA21VaKJO
-         wVO7NvYpfS8xmj4Lcz8m4z55JIKGZnKH55LzydFCL3gQQPSD1jTnnaSZPXf/IdNvy0TX
-         fXZGfbe+BoQ7s9xxNPrsJ5BXOvBfNmYCR3si7ZasbrR1mWSbvZ+xGE/pvktiZzN+J+Cp
-         NRueNR9rD73WgWk9WN+dPWcjQLHpxgwGGADCtlsfLroW4v5V2UzVoUI8jB/01GSxGxgz
-         FEig==
-X-Gm-Message-State: AD7BkJKgucdzS8lnVft5tuW1TA/YPx37mMtgEUjNPkwUC0IItoQtRR3j7z9+yDvKgPfznNkmLSvFozUHzkbvcA==
-X-Received: by 10.31.150.76 with SMTP id y73mr2593268vkd.84.1459280574050;
- Tue, 29 Mar 2016 12:42:54 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Tue, 29 Mar 2016 12:42:53 -0700 (PDT)
-In-Reply-To: <1459257937-17350-1-git-send-email-tboegi@web.de>
-X-Google-Sender-Auth: Z8KqILcTpkfAQJ7b2kKyMy07_SM
+	id S1757892AbcC2Tqb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 15:46:31 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:54173 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754110AbcC2Tqa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 15:46:30 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6A7AB507F2;
+	Tue, 29 Mar 2016 15:46:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Z5K9sRaSA9SQWlz1zJAvqlVj22Y=; b=B1HZ9w
+	fwCZRY9JY/arrlPWjZAki6qTah+FGZssSHWD6dQWC4uFtcz8nv14twZtq8mxbWMU
+	OBvW1bupH7etd5t4xj2O4npkETCfPwbKqA0dgR9akGRqFyJF1M2IH+oxNqHXCc0T
+	jeHg4QLZ2bWEooToVnXVA2Mw/yZkr3YU0HPBs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eqkNYfoNOGAU7PufoJLMCeicuQbEjXKd
+	U+/F7+njBQn+d9xKQ3cfG7B0nGqkd8FBq23dDCwAZYJ7QNoXcm2iEeg7kEZnaypL
+	J9dPtCmxz6zO4Knww2f+4Lw2vrySx8VawUfo9F/RpqFUubaq5jQgZC/wvFx2wlqo
+	v7WuyFT5ZH0=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6174C507F1;
+	Tue, 29 Mar 2016 15:46:28 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CA578507F0;
+	Tue, 29 Mar 2016 15:46:27 -0400 (EDT)
+In-Reply-To: <1459207703-1635-5-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Mon, 28 Mar 2016 16:28:20 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: ED605098-F5E6-11E5-9911-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290175>
 
-On Tue, Mar 29, 2016 at 9:25 AM,  <tboegi@web.de> wrote:
-> Make .gitattributes "* text=3Dauto eol=3Dcrlf" to do the same as
-> setting core.autocrlf=3Dtrue and "* text=3Dauto eol=3Dcrlf" the same
-> as core.autocrlf=3Dinput
+Stefan Beller <sbeller@google.com> writes:
+
+> This fixes the test introduced by the parent commit.
 >
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> @@ -389,14 +389,15 @@ file with mixed line endings would be reported =
-by the `core.safecrlf`
->  core.autocrlf::
-> -       Setting this variable to "true" is almost the same as setting
-> -       the `text` attribute to "auto" on all files except that text
-> -       files are not guaranteed to be normalized: files that contain
-> +       Setting this variable to "true" is the same as setting
-> +       the attributes to "auto eol=3Dcrlf" on all files.
-> +       Files are not guaranteed to be normalized: files that contain
->         `CRLF` in the repository will not be touched.  Use this
->         setting if you want to have `CRLF` line endings in your
-> -       working directory even though the repository does not have
-> -       normalized line endings.  This variable can be set to 'input'=
-,
-> +       working directory and he repository has normalized line endin=
-gs.
 
-s/he/the/
+The first hunk in this patch touches lines that goes away with
+d5bc3cd2 (submodule: port init from shell to C, 2016-03-14) on
+your sb/submodule-init topic and the whole block is replaced
+by a call to "submodule--helper init".
 
-> +       This variable can be set to 'input',
->         in which case no output conversion is performed.
-> +       Note: older versions of Git behave different.
+I'll drop the first hunk when merging this series to 'pu' for now;
+hopefully you did not inherit the bug when rewriting the part into
+"submodule--helper init".
 
-Would it make sense to spell out what "different" means since new
-readers won't know what the old behavior was?
+Thanks.
 
-> diff --git a/convert.c b/convert.c
-> @@ -370,12 +369,10 @@ static int crlf_to_worktree(const char *path, c=
-onst char *src, size_t len,
->         if (crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_A=
-UTO_INPUT || crlf_action =3D=3D CRLF_AUTO_CRLF) {
-> -               if (crlf_action =3D=3D CRLF_AUTO_INPUT || crlf_action=
- =3D=3D CRLF_AUTO_CRLF) {
-> -                       /* If we have any CR or CRLF line endings, we=
- do not touch it */
-> -                       /* This is the new safer autocrlf-handling */
-> -                       if (stats.lonecr || stats.crlf )
-> -                               return 0;
-> -               }
-> +               /* If we have any CR or CRLF line endings, we do not =
-touch it */
-> +               /* This is the new safer autocrlf-handling */
-
-The comment style violation could have been fixed while outdenting,
-but perhaps it's not worth the churn.
-
-> +               if (stats.lonecr || stats.crlf )
-> +                       return 0;
+>  git-submodule.sh            | 5 +++--
+>  t/t7406-submodule-update.sh | 2 +-
+>  2 files changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 2838069..a7c8599 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -474,7 +474,7 @@ cmd_init()
+>  		die_if_unmatched "$mode"
+>  		name=$(git submodule--helper name "$sm_path") || exit
+>  
+> -		displaypath=$(relative_path "$sm_path")
+> +		displaypath=$(relative_path "$prefix$sm_path")
+>  
+>  		# Copy url setting when it is not set yet
+>  		if test -z "$(git config "submodule.$name.url")"
+> @@ -826,8 +826,9 @@ Maybe you want to use 'update --init'?")"
+>  		if test -n "$recursive"
+>  		then
+>  			(
+> -				prefix="$prefix$sm_path/"
+> +				prefix="$(relative_path $prefix$sm_path)/"
+>  				clear_local_git_env
+> +				wt_prefix=
+>  				cd "$sm_path" &&
+>  				eval cmd_update
+>  			)
+> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+> index c1b9ffa..3bd1552 100755
+> --- a/t/t7406-submodule-update.sh
+> +++ b/t/t7406-submodule-update.sh
+> @@ -118,7 +118,7 @@ Submodule path '../super/rebasing': checked out '${rebasingsha1}'
+>  Submodule path '../super/submodule': checked out '${submodulesha1}'
+>  EOF
+>  
+> -test_expect_failure 'submodule update --init --recursive from subdirectory' '
+> +test_expect_success 'submodule update --init --recursive from subdirectory' '
+>  	git -C recursivesuper/super reset --hard HEAD^ &&
+>  	(cd recursivesuper &&
+>  	 mkdir tmp &&
