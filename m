@@ -1,104 +1,113 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: `git rev-parse --is-inside-work-tree` and $GIT_WORK_TREE
-Date: Tue, 29 Mar 2016 16:26:27 -0400
-Message-ID: <20160329202626.GC9527@sigill.intra.peff.net>
-References: <CAPZ477NxXVNNwDvzaFt7GoUGuJwnOuX3y1N+aPtVRFD3E8dQBA@mail.gmail.com>
- <CAPZ477PD7SkRg7T_Y_n27Hjw5TeW6Sh0-vtoP6-4xUDraC7OiA@mail.gmail.com>
- <20160329123306.GD1578@serenity.lan>
- <xmqqshz9z5hu.fsf@gitster.mtv.corp.google.com>
- <20160329194156.GA9527@sigill.intra.peff.net>
- <xmqq60w5xdl2.fsf@gitster.mtv.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 3/5] t/t5520: use test_i18ngrep instead of test_cmp
+Date: Tue, 29 Mar 2016 16:27:39 -0400
+Message-ID: <CAPig+cSLD2hKpckKU_tn=AhK8ZDgW13D2YMAf2p9Q-CpwOAM4g@mail.gmail.com>
+References: <1459258200-32444-1-git-send-email-mehul.jain2029@gmail.com>
+	<1459258200-32444-4-git-send-email-mehul.jain2029@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: John Keeping <john@keeping.me.uk>, Elliott Cable <me@ell.io>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 22:26:49 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Mehul Jain <mehul.jain2029@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 22:27:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1al0Du-0004KS-R9
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 22:26:47 +0200
+	id 1al0Es-0004kl-1a
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 22:27:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758096AbcC2U0b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 16:26:31 -0400
-Received: from cloud.peff.net ([50.56.180.127]:40163 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757979AbcC2U0a (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 16:26:30 -0400
-Received: (qmail 7618 invoked by uid 102); 29 Mar 2016 20:26:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Mar 2016 16:26:29 -0400
-Received: (qmail 26211 invoked by uid 107); 29 Mar 2016 20:26:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Mar 2016 16:26:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Mar 2016 16:26:27 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqq60w5xdl2.fsf@gitster.mtv.corp.google.com>
+	id S1757993AbcC2U1m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 16:27:42 -0400
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:33818 "EHLO
+	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754085AbcC2U1l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 16:27:41 -0400
+Received: by mail-vk0-f66.google.com with SMTP id e6so3813767vkh.1
+        for <git@vger.kernel.org>; Tue, 29 Mar 2016 13:27:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=D0K/OjSXSRw7LHZ9qNVPBt6BO/2VZWH6Ja0tQUucOEc=;
+        b=naDpxsw/CX8kuxIODVAwYp2GadzKc29khmvpg8TZfHFtSjJIS4WTgILEk25FwoD3gJ
+         hzukLWVylzpMJCw9PHI0HQk5IaH+iekERF2d7yQfSkDtVO8ORi3xWSpPV9vXdnO6S7Vd
+         uZ9djAawFoJbEV6K2eRpY2ZSr+YIjb7EukB4wwb8DaefJSEiEU6Kc/4G0jzwt20BPmOm
+         AvWnAlDrFE6gE6wHWGvm0qFbzYTqA+fRpbSLjNicJjmdODhI8K3YM7GGbwsM+GDMBtPs
+         jxI4FECFGzKKwvJy5YgjNswYTE2C5t2lH65I7VtE2a4b+VSw3igRr/Gaac1WYTd+l7Do
+         FVAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=D0K/OjSXSRw7LHZ9qNVPBt6BO/2VZWH6Ja0tQUucOEc=;
+        b=dvFS/xuv7tG7vZjnZfxabvaUe4xugELifov1VEoDJG6kfqWTOsCXWhFDjCF390nsep
+         XWiLJVrag1srXAeIOSfPvTurai+MhmdOC8fCFTxhbECYA3BO3MkWQEP418UA8mdfZlBW
+         lOnqwaJkUvnc+0G4Ip+d9/DBMsVauKzYO1nC7AeX/RbaNmpDsPj26m7qedyVQ0USsr3v
+         LniHZSdkv2Kbfn5+zg9kT1WkHEj/01hRWNn2wMPfGtrHH7OoZAv0OkvyXDT8QVHMNXLp
+         aKNznKDW1ZtCA3KsA0YonMGWLcf/hg/wq/i/zmwvqkFPhP7bfaN8dXdCKwPRHuWa6xCt
+         P1hw==
+X-Gm-Message-State: AD7BkJJlIFbJ/mTgJIK0rS5LaQv1578Pqrena84PDB0z0xxkLeRBYacA4seix/POoF2rW9uUb0+DVEyWRH9ZgQ==
+X-Received: by 10.31.150.76 with SMTP id y73mr2728063vkd.84.1459283260017;
+ Tue, 29 Mar 2016 13:27:40 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Tue, 29 Mar 2016 13:27:39 -0700 (PDT)
+In-Reply-To: <1459258200-32444-4-git-send-email-mehul.jain2029@gmail.com>
+X-Google-Sender-Auth: AogRwSOEhfSSabmEss5lo7GoED8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290189>
 
-On Tue, Mar 29, 2016 at 12:56:41PM -0700, Junio C Hamano wrote:
+On Tue, Mar 29, 2016 at 9:29 AM, Mehul Jain <mehul.jain2029@gmail.com> wrote:
+> t/t5520: use test_i18ngrep instead of test_cmp
 
-> >> So it is a misconfiguration if you only set GIT_WORK_TREE without
-> >> setting GIT_DIR.
-> >
-> > Hmm. I have frequently done this when my cwd is a git repository (e.g.,
-> > a bare one), and it works as you'd expect (find the git-dir in the
-> > current path, then the working tree via $GIT_WORK_TREE).
-> 
-> Hmm, does what is done by "git add HEAD" in such a situation match
-> what you'd expect?
-> 
->         git init work
->         cd work; date >HEAD; git commit -m initial
->         git push ../bare master:master
-> 	date >>HEAD
->         export GIT_WORK_TREE=$(pwd)
-> 	cd ..
-> 	git --bare init bare
-> 	cd bare
-> 	git add HEAD
+As mentioned for earlier patches, this is too low-level, whereas it
+should be giving a high-level overview.
 
-I had to tweak your commands a little, but I assume the part you are
-interested in is the end, when git-add finds HEAD in $GIT_WORK_TREE and
-not the bare repository.
+> test_cmp is used for error checking when test_i18ngrep could be used.
+>
+> Use test_i18ngrep to check for the valid error.
 
-And yes, that is exactly what I'd expect, and why it is useful (if you
-wanted to add arbitrary cruft from the bare repo, you'd set
-$GIT_WORK_TREE to point there).
+"could be used" is not sufficient justification to explain why this
+change is desirable. See [1] for a good explanation of why this change
+should be made.
 
-> I'd have to say that this invites unnecessary confusion, even though
-> I agree that "go to the GIT_WORK_TREE and take pathspecs relative to
-> that directory" is the only sensible thing for us to be doing.
-> 
-> But that is not an issue about "set only work-tree" (it is about
-> "run from outside the work-tree").
+The patch itself looks fine.
 
-Yeah, there are two things going on:
+[1]: http://article.gmane.org/gmane.comp.version-control.git/289077
 
-  1. Without $GIT_DIR but with $GIT_WORK_TREE, we find $GIT_DIR via the
-     usual discovery path.
-
-  2. When outside $GIT_WORK_TREE, any work-tree operations work as if
-     they were started from $GIT_WORK_TREE.
-
-And relying on (1) almost always relies on (2), unless your work-tree
-happens to be inside the discovery path for your $GIT_DIR. So you could
-do:
-
-  git init repo
-  mkdir repo/subdir
-  echo content >file
-  GIT_WORK_TREE=$(pwd) git add .
-
-which adds "file" at the top-level. And we used only rule (1), not rule
-(2). I don't know whether people actually do that or not (I guess it
-could be useful for tricky subtree things).
-
--Peff
+> Signed-off-by: Mehul Jain <mehul.jain2029@gmail.com>
+> ---
+>  t/t5520-pull.sh | 10 ++++------
+>  1 file changed, 4 insertions(+), 6 deletions(-)
+>
+> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+> index 9ee2218..d03cb84 100755
+> --- a/t/t5520-pull.sh
+> +++ b/t/t5520-pull.sh
+> @@ -317,15 +317,13 @@ test_expect_success 'pull --rebase --no-autostash & rebase.autostash unset' '
+>  '
+>
+>  test_expect_success 'pull --autostash (without --rebase) should error out' '
+> -       test_must_fail git pull --autostash . copy 2>actual &&
+> -       echo "fatal: --[no-]autostash option is only valid with --rebase." >expect &&
+> -       test_i18ncmp actual expect
+> +       test_must_fail git pull --autostash . copy 2>err &&
+> +       test_i18ngrep "only valid with --rebase" err
+>  '
+>
+>  test_expect_success 'pull --no-autostash (without --rebase) should error out' '
+> -       test_must_fail git pull --no-autostash . copy 2>actual &&
+> -       echo "fatal: --[no-]autostash option is only valid with --rebase." >expect &&
+> -       test_i18ncmp actual expect
+> +       test_must_fail git pull --no-autostash . copy 2>err &&
+> +       test_i18ngrep "only valid with --rebase" err
+>  '
+>
+>  test_expect_success 'pull.rebase' '
+> --
+> 2.7.1.340.g69eb491.dirty
