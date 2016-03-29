@@ -1,113 +1,151 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2 V2] MSVC: VS2013 comes with inttypes.h
-Date: Tue, 29 Mar 2016 10:35:20 -0700
-Message-ID: <xmqq4mbpyyp3.fsf@gitster.mtv.corp.google.com>
-References: <56FAACD4.9080504@cs-ware.de> <56FAB9FD.7080409@cs-ware.de>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: weird diff output?
+Date: Tue, 29 Mar 2016 10:37:38 -0700
+Message-ID: <CAGZ79ka4ad5dQMWANJUDx-0+kV3qR=HttOJni2XfhFzjMKfcPw@mail.gmail.com>
+References: <CA+P7+xoiFUiBwDU2Wo9nVukchBvJSknON2XN572b6rSHnOSWaQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>,
-	Sebastian Schuberth <sschuberth@gmail.com>, blees@dcon.de
-To: Sven Strickroth <sven@cs-ware.de>
-X-From: git-owner@vger.kernel.org Tue Mar 29 19:35:30 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git mailing list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 19:37:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akxY9-0004JI-In
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 19:35:29 +0200
+	id 1akxaP-0005MF-H8
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 19:37:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753344AbcC2RfZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 13:35:25 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:61296 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753188AbcC2RfY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 13:35:24 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0D2B04FC52;
-	Tue, 29 Mar 2016 13:35:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/VHJ97G1Pfrj/vndx60fhMPs8Q0=; b=ULxiRy
-	SCipjbystK2ccS0WeA624+q3xHcOoTuQwagiotO1assTn/ctXAZUheLL7i6i+Ka6
-	+h2mnaw20xT1fJujDOGlyEbrCY8gfTenf1Oo5orCHthjTUf8GTRqXdcXSG/fq9dj
-	iiXW00JOaiNQZD7Ckk/J860uvSgy2y/JziYq0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pWQojyOTaX3NS2SS6ktJR+W0FzMvtpjk
-	ChOIAe35Lg8NVKvsQBLjvt5RKKn97h3rmbFQ4DzAsUxwSKaONfvmAL/oWXTlp6Dq
-	v+lnfye8bER0UZzTSsX2QxKT3ies5OkqrER2uYMv3jfkJO+9LNkF9K3dkg+F3LU4
-	jWlWOm6zpes=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F39074FC51;
-	Tue, 29 Mar 2016 13:35:22 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5784C4FC50;
-	Tue, 29 Mar 2016 13:35:22 -0400 (EDT)
-In-Reply-To: <56FAB9FD.7080409@cs-ware.de> (Sven Strickroth's message of "Tue,
-	29 Mar 2016 19:23:09 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9D30F3AA-F5D4-11E5-836B-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1757871AbcC2Rhm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 13:37:42 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:37647 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757841AbcC2Rhj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 13:37:39 -0400
+Received: by mail-ig0-f172.google.com with SMTP id l20so20820160igf.0
+        for <git@vger.kernel.org>; Tue, 29 Mar 2016 10:37:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=NgDyCdBHwD/2LTspBqyDmm5UUZcAKiShvryRBTGfBo8=;
+        b=NOiTLRhZKu7cwOktFuiG6E3Qz3nLTMQnNIe8IE6aoDeRTgB4UcY1TW/iv8/0Lgiq8a
+         0zxbIRRbGUXoEPbFQ1IABbmJ363s2zur0u7/p8auQfHqfvmp7wxjqM6RpIOu/AOKA5yJ
+         OX3aGJb1ha3sxbqyfSB3SrePbPOh6nSy0MaSyahWTkstMRePAjgOphCNkj5SDL8FORNm
+         PTGO32si0wZgVJ7wprDFMxWbEpzR4+/WQ2up/rw6YyiHx4Chjae5Ou5LIAHgob44AuH6
+         b9mdGC4bH2Z9PQ/1h0vTTJ3ioUaRSj0+yosthnvrYjf+MJsqK0R/MX+LpSEDre+Fxv6Q
+         x0Mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=NgDyCdBHwD/2LTspBqyDmm5UUZcAKiShvryRBTGfBo8=;
+        b=NYwRtCd5YTqlUiDycCzzhVgvJeNWLcI5UPqpaRf7fZEK3EYQ1Ka8IgeBWZXeuZN2BH
+         oE2/Bx/rN2MsIP4ZtdonJZKYzc8QHO96XbRREc7VS6+Y9w2Ce/DpTmg+SaDTqzL0O9oR
+         jbT85uOquWPtMa5bORWR2V70KokBw0ig8AHg/QAoNUGaeSGF0yJqEEiBjRk14kI1OziI
+         XKaVDtsqNgsG2zZngpPvYpZuK2qnuULFIkG/ghFXqtnK+FjPBOGYUjd9AehH3taVEFWn
+         wjZsNH12plprydK33DYxkmZME5UIeabryh9UZFB44iT7Sc+8MY+SGP9aMVcf5soMZSQy
+         g0qA==
+X-Gm-Message-State: AD7BkJJXVUFDHzdGJzLVSHadOtljOqeABooa2LT0GNaoewHT4+lF6eJeSPVJi5krxdbnHhzwH05aombY6QBbQZz9
+X-Received: by 10.50.28.105 with SMTP id a9mr17881299igh.94.1459273058291;
+ Tue, 29 Mar 2016 10:37:38 -0700 (PDT)
+Received: by 10.107.132.101 with HTTP; Tue, 29 Mar 2016 10:37:38 -0700 (PDT)
+In-Reply-To: <CA+P7+xoiFUiBwDU2Wo9nVukchBvJSknON2XN572b6rSHnOSWaQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290151>
 
-Sven Strickroth <sven@cs-ware.de> writes:
-
-> Signed-off-by: Sven Strickroth <email@cs-ware.de>
-> ---
-
-Ah, I didn't finish the comment I started to write here for the
-first round.  My "Hmph" was meant to be followed by something like
-"Compared to 1/2 which clearly described what got changed, this does
-not say much to summarize what it did to help readers".
-
-Re-reading the patch text, I tend to agree with you that the title
-"comes with inttypes.h" may be sufficient for readers to reason
-about the change, and it would not be necessary to explain that we
-can lose fallback definitions by including it.
-
->  compat/mingw.h                  | 2 +-
->  compat/vcbuild/include/unistd.h | 4 ++++
->  2 files changed, 5 insertions(+), 1 deletion(-)
+On Mon, Mar 28, 2016 at 5:26 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+> On Mon, Mar 28, 2016 at 4:28 PM, Stefan Beller <sbeller@google.com> wrote:
+>>  cat > expect <<EOF
+>> +Entering '../nested1'
+>> +Entering '../nested1/nested2'
+>> +Entering '../nested1/nested2/nested3'
+>> +Entering '../nested1/nested2/nested3/submodule'
+>> +Entering '../sub1'
+>> +Entering '../sub2'
+>> +Entering '../sub3'
+>> +EOF
+>> +
+>> +test_expect_failure 'test messages from "foreach --recursive" from subdirectory' '
+>> +       (
+>> +               cd clone2 &&
+>> +               mkdir untracked &&
+>> +               cd untracked &&
+>> +               git submodule foreach --recursive >../../actual
+>> +       ) &&
+>> +       test_i18ncmp expect actual
+>> +'
+>> +
+>> +cat > expect <<EOF
+>>  nested1-nested1
+>>  nested2-nested2
+>>  nested3-nested3
 >
-> diff --git a/compat/mingw.h b/compat/mingw.h
-> index 6b6d695..137f42e 100644
-> --- a/compat/mingw.h
-> +++ b/compat/mingw.h
-> @@ -415,7 +415,7 @@ int mingw_offset_1st_component(const char *path);
->  extern void build_libgit_environment(void);
->  extern const char *program_data_config(void);
->  #define git_program_data_config program_data_config
-> -#ifndef __MINGW64_VERSION_MAJOR
-> +#if !defined(__MINGW64_VERSION_MAJOR) && (!defined(_MSC_VER) || _MSC_VER < 1800)
->  #define PRIuMAX "I64u"
->  #define PRId64 "I64d"
->  #else
-> diff --git a/compat/vcbuild/include/unistd.h b/compat/vcbuild/include/unistd.h
-> index c65c2cd..b7cc48c 100644
-> --- a/compat/vcbuild/include/unistd.h
-> +++ b/compat/vcbuild/include/unistd.h
-> @@ -45,11 +45,15 @@ typedef unsigned long long uintmax_t;
->  
->  typedef int64_t off64_t;
->  
-> +#if !defined(_MSC_VER) || _MSC_VER < 1800
->  #define INTMAX_MIN  _I64_MIN
->  #define INTMAX_MAX  _I64_MAX
->  #define UINTMAX_MAX _UI64_MAX
->  
->  #define UINT32_MAX 0xffffffff  /* 4294967295U */
-> +#else
-> +#include<inttypes.h>
+> Complete tangent here. The diff above looks like
+>
+> <old-line>
+> +
+> +
+> +
+> +
+> +<old-line>
+>
+> is it possible to get diff output that would look more like
+>
+> +<old-line>
+> +
+> +
+> +
+> +
+> +
+> <old-line>
+>
+> instead? This is one of those huge readability issues with diff
+> formatting that seems like both are completely correct, but the second
+> way is much easier in general to read what was added.
+>
+> I don't understand why diff algorithms result in the former instead of
+> the latter, and am curious if anyone knows whether this has ever been
+> thought about or solved by someone.
 
-Somebody lost a SP here, it seems.
+I thought this is an optimization for C code where you have a diff like:
 
-> +#endif
->  
->  #define STDIN_FILENO  0
->  #define STDOUT_FILENO 1
+    int existingStuff1(..) {
+    ...
+    }
+    +
+    + int foo(..) {
+    +...
+    +}
+
+    int existingStuff2(...) {
+    ...
+
+Note that the closing '}' could be taken from the method existingStuff1 instead
+of correctly closing foo. So the correct heuristic really depends on
+what kind of text
+we are diffing.
+
+Maybe we need the opposite of the 'patience' algorithm in format-patch?
+
+Another heuristic would be to check for empty lines and use that as a
+strong hint,
+whether to use the first or last line. (Rule: Try to use that last or
+first line such that
+the lines at the edges of the diff are empty lines, it needs to be
+formalized a bit more)
+
+>
+> I've tried using various diffing algorithms (histogram, etc) and they
+> always produce the same result above, and never what I would prefer.
+>
+> Regards,
+> Jake
+
+Thanks,
+Stefan
