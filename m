@@ -1,131 +1,171 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 4/7] submodule update --init: correct path handling in
- recursive submodules
-Date: Tue, 29 Mar 2016 12:49:50 -0700
-Message-ID: <CAGZ79kZZoxBsAfsTohrLqf2f01fmbjK2rrOG5vQ6ShT-zOjeJw@mail.gmail.com>
-References: <1459207703-1635-1-git-send-email-sbeller@google.com>
-	<1459207703-1635-5-git-send-email-sbeller@google.com>
-	<xmqqbn5xxe25.fsf@gitster.mtv.corp.google.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v1 6/7] correct blame for files commited with CRLF
+Date: Tue, 29 Mar 2016 21:51:07 +0200
+Message-ID: <56FADCAB.1010201@web.de>
+References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
+ <1459257938-17389-1-git-send-email-tboegi@web.de>
+ <xmqqa8lhyzbq.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Jacob Keller <jacob.keller@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 21:50:01 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>, tboegi@web.de
+X-From: git-owner@vger.kernel.org Tue Mar 29 21:53:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akzeG-0003hN-QO
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 21:49:57 +0200
+	id 1akzfs-0004y5-Ur
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 21:51:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754078AbcC2Ttw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 15:49:52 -0400
-Received: from mail-io0-f169.google.com ([209.85.223.169]:33166 "EHLO
-	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753994AbcC2Ttw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 15:49:52 -0400
-Received: by mail-io0-f169.google.com with SMTP id a129so36848263ioe.0
-        for <git@vger.kernel.org>; Tue, 29 Mar 2016 12:49:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=jiZFyAT9muaiACGeROD2XTy8B/WmYmA3GN+XPg7ExYE=;
-        b=chddDL3iwFM6XtX8msosJGig5CFK3U5nK+FYGwFPRCcwHVlPHifjUNw4XKkCeI2ATZ
-         axgOd9ktzHzESQUWLKCCHHhYAO+3A3TQWwvq5BJHxGXTg5gwnksNu3N0rVNPyc/4PH+F
-         6G/Qj8k618BTg5N5iEbkgKtzLTSmKWfJMR6vQfip1pXQR4itQtPhjiKNxNcp+W7B0Y6t
-         tk/fRAV6FnjijcS/G/3sX7JByK4cnDPM3uROYRXMc/9KQLJmHw3IZ5HAMKXoZGiexyaz
-         e0IMHEUZlB0uBCf0JykFvzgLNSXlwWXemU5anPf+/neaumSXDZxYWdpi7zBttvJyvRdG
-         y2+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=jiZFyAT9muaiACGeROD2XTy8B/WmYmA3GN+XPg7ExYE=;
-        b=YMjV0Xf2QjV3oPWxQA+3it87u8+/cK2to8smnboUlo0od5CnY1mGHO6ZFRC0CO3Sfc
-         kcm141BG9w5sIBuwmROdx9hoe3k8rTKzXUnyflhfd+SXbohfrmnEKiuaUw7TR5OZqZ5o
-         z7v+TNdN/dF/JJUA+VVgyp39ZsMhHpN4lHlT/A+cnShtaqlBIW4I37cSTWpVsNGEg02k
-         d0FCPr6C+1u4WMNXYA8kepnd0AgyoVrS1rqKbC1z8pcMCmrmcc1KGSlUlk6w8it4MR3n
-         KbzwgLaHD7Ebn+bQW2/NcktPgG7uNDApfneZRYmzT9vL9DUBUizbijD9wS/+ZNYs5+J5
-         8N5Q==
-X-Gm-Message-State: AD7BkJL+ISO+IlGruYcdMhv3tUkkiQk9NsbNMbw4e69ImaYIrLo0hOuLF06wMxir5ZRWUC0CmKOAG8SdBnxAHYHY
-X-Received: by 10.107.184.8 with SMTP id i8mr4903655iof.96.1459280990995; Tue,
- 29 Mar 2016 12:49:50 -0700 (PDT)
-Received: by 10.107.132.101 with HTTP; Tue, 29 Mar 2016 12:49:50 -0700 (PDT)
-In-Reply-To: <xmqqbn5xxe25.fsf@gitster.mtv.corp.google.com>
+	id S1754059AbcC2Tvc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2016 15:51:32 -0400
+Received: from mout.web.de ([212.227.15.4]:51617 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753251AbcC2Tvb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 15:51:31 -0400
+Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb002) with
+ ESMTPSA (Nemesis) id 0MGRMG-1aXoNL1N3Y-00DEhb; Tue, 29 Mar 2016 21:51:19
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
+ Gecko/20100101 Thunderbird/38.6.0
+In-Reply-To: <xmqqa8lhyzbq.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:qBfWcTyySGThh8wMFBp9R8vUQdbB5DUDR/f9QQkGyf9PUZUj8gP
+ ywZ+83AwzrKGGmX8Ffvee4k7IDxiQfqPr/i8ULqKrO9erq5f09SOJflZcE+VedlBvk5eJwf
+ dhp9ybnMIoIZ4+BmiCPFXVLmDXq5FrK/naYnbuXr7kAlqmgrwlT2r2GrIYwTrk/ij6veq36
+ WrkKF67PYw0ILTiTINi3w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:WH6CoW+UvZU=:q+JW9dbR5D4v+GrslYCmDR
+ SdW0atnFTVymYxvIETfJ27d7rff6c6UuxPt8Sah0LgVDUgu9Zj3FEzLqNEIKVEFg/Y2YDHEeJ
+ GPt9koJzyF5soGOvPTqizy4MgkSre0yvRwCsR9py7vKW7s0oP/R+hxA/Oslfx6iwB2JLm+eGN
+ 9Uaulk/Hg4qwOIdP9/pPBohF9B9KXV0nG8Smi+Ri+BcHxNl4yxzx+KBVRiChXfUlS0XFZ8dYp
+ XFhu907bjUU3790eseLjC+340bXxqSmAN/8WElwlxSFt0A1eu16EMhE0oCB0QAceYwfcWtvum
+ GfQdNfzCeyWj0FOFKr3qJLJvOqJ4QYY1oCpZsDIQOHib5FJO1k79FVwrf/6ZruOSYGn85ecOT
+ NmFqUNq/eBaizdcitfQhUjWcUp3Xe0uU1jd/OKslObC4mNyCcKkaX9b/GB4vwn5/dey8VA3g8
+ O8ruhDKX1l4b9LcBmY4Ts9QkPrO3GWs4ZV5UqZZlLqsXi8EF7SvJBUHF0lphvoP9AIJoYFUlb
+ DBjiuwlmeKWW9TT6C43l9s+MgQSigxukUByBwWLzIsRkT7DMfkxhRpHQNVcXNGCQLYn/evbio
+ LfAALhzSUNXRL+Gh9XkAY2gqeh46Ox58dLk+q3x9GN9t4jiis8JMtkFfL/3mywIWfe5jrNZh9
+ aRFSyvQusizTDQzRiPwWioyk/17WliQAAU9qkmm5WXGvTZ5TMkrHYFzWKJBN5q12djXq7govv
+ 5HqeB35HBtA3fczohz+3hbTFPLD8ZwIYEGAcFcZQVtjEAMOdiDLE1P9GEwCCwxvxx5m7jxwP 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290177>
 
-On Tue, Mar 29, 2016 at 12:46 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> This fixes the test introduced by the parent commit.
+On 29.03.16 19:21, Junio C Hamano wrote:
+> tboegi@web.de writes:
+>=20
+>> From: Torsten B=C3=B6gershausen <tboegi@web.de>
 >>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->
-> The first hunk in this patch touches lines that goes away with
-> d5bc3cd2 (submodule: port init from shell to C, 2016-03-14) on
-> your sb/submodule-init topic and the whole block is replaced
-> by a call to "submodule--helper init".
->
-> I'll drop the first hunk when merging this series to 'pu' for now;
-> hopefully you did not inherit the bug when rewriting the part into
-> "submodule--helper init".
+>> git blame reports lines as not "Not Committed Yet" when they have
+>> CRLF in the index, CRLF in the worktree and e.g. core.autocrlf is tr=
+ue.
+>>
+>> Since commit c48053 "new safer autocrlf handling", files that have C=
+RLF
+>> in the index are not normalized at commit when e.g. core.autocrl is =
+set.
+>>
+>> Whenever a CLRF conversion is needed (or any filter us set), load th=
+e
+>> index temporally, before calling convert_to_git()
+>=20
+> Sorry, but I do not understand what problem you are trying to
+> address here.
+>=20
+> Under the same condition described in the first paragraph, what
+> would "git diff" and "git diff HEAD" say?  They should show that you
+> would be making a commit that corrects the line ending of the blob
+> recorded in the history.
+>=20
+Let's make an experiment, Git v2.8.0
 
-After examining this patch more closely for a better commit message, the second
-hunk also goes away, i.e. only the test will remain.
 
-Maybe I can roll this series on top of origin/sb/submodule-init, to
-avoid confusion.
+$ printf "Line1\r\nLine2\r\n" >test_CRLF.txt
+$ git add test_CRLF.txt=20
+$ git commit -m "add test_CRLF.txt"
+ [detached HEAD 719c166] add test_CRLF.txt
+ 1 file changed, 2 insertions(+)
+ create mode 100644 test_CRLF.txt
 
->
-> Thanks.
->
->>  git-submodule.sh            | 5 +++--
->>  t/t7406-submodule-update.sh | 2 +-
->>  2 files changed, 4 insertions(+), 3 deletions(-)
->>
->> diff --git a/git-submodule.sh b/git-submodule.sh
->> index 2838069..a7c8599 100755
->> --- a/git-submodule.sh
->> +++ b/git-submodule.sh
->> @@ -474,7 +474,7 @@ cmd_init()
->>               die_if_unmatched "$mode"
->>               name=$(git submodule--helper name "$sm_path") || exit
->>
->> -             displaypath=$(relative_path "$sm_path")
->> +             displaypath=$(relative_path "$prefix$sm_path")
->>
->>               # Copy url setting when it is not set yet
->>               if test -z "$(git config "submodule.$name.url")"
->> @@ -826,8 +826,9 @@ Maybe you want to use 'update --init'?")"
->>               if test -n "$recursive"
->>               then
->>                       (
->> -                             prefix="$prefix$sm_path/"
->> +                             prefix="$(relative_path $prefix$sm_path)/"
->>                               clear_local_git_env
->> +                             wt_prefix=
->>                               cd "$sm_path" &&
->>                               eval cmd_update
->>                       )
->> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
->> index c1b9ffa..3bd1552 100755
->> --- a/t/t7406-submodule-update.sh
->> +++ b/t/t7406-submodule-update.sh
->> @@ -118,7 +118,7 @@ Submodule path '../super/rebasing': checked out '${rebasingsha1}'
->>  Submodule path '../super/submodule': checked out '${submodulesha1}'
->>  EOF
->>
->> -test_expect_failure 'submodule update --init --recursive from subdirectory' '
->> +test_expect_success 'submodule update --init --recursive from subdirectory' '
->>       git -C recursivesuper/super reset --hard HEAD^ &&
->>       (cd recursivesuper &&
->>        mkdir tmp &&
+$ git ls-files --eol test_CRLF.txt=20
+i/crlf  w/crlf  attr/                   test_CRLF.txt
+# So far, so good.
+
+git config core.autocrlf true
+
+# Now lets patch Git to debug the safer CRLF handling
+diff --git a/convert.c b/convert.c
+index f524b8d..fcf7653 100644
+--- a/convert.c
++++ b/convert.c
+@@ -260,8 +260,11 @@ static int crlf_to_git(const char *path, const cha=
+r *src, size_t len,
+                         * If the file in the index has any CR in it, d=
+o not convert.
+                         * This is the new safer autocrlf handling.
+                         */
+-                       if (has_cr_in_index(path))
++                       if (has_cr_in_index(path)) {
++                               fprintf(stderr, "%s/%s:%d has_cr_in_ind=
+ex(%s)\n",
++                                       __FILE__, __FUNCTION__, __LINE_=
+_, path);
+                                return 0;
++                       }
+
+# Of course, run make
+$ make
+#
+printf "Line3\r\n" >>test_CRLF.txt
+
+# Lets see what diff says:
+=2E/git diff test_CRLF.txt | od -c
+convert.c/crlf_to_git:265 has_cr_in_index(test_CRLF.txt)
+convert.c/crlf_to_git:265 has_cr_in_index(test_CRLF.txt)
+0000000    d   i   f   f       -   -   g   i   t       a   /   t   e   =
+s
+0000020    t   _   C   R   L   F   .   t   x   t       b   /   t   e   =
+s
+0000040    t   _   C   R   L   F   .   t   x   t  \n   i   n   d   e   =
+x
+0000060        4   a   a   5   5   1   d   .   .   d   0   f   a   f   =
+1
+0000100    d       1   0   0   6   4   4  \n   -   -   -       a   /   =
+t
+0000120    e   s   t   _   C   R   L   F   .   t   x   t  \n   +   +   =
++
+0000140        b   /   t   e   s   t   _   C   R   L   F   .   t   x   =
+t
+0000160   \n   @   @       -   1   ,   2       +   1   ,   3       @   =
+@
+0000200   \n       L   i   n   e   1  \r  \n       L   i   n   e   2  \=
+r
+0000220   \n   +   l   i   n   e   3  \r  \n                           =
+=20
+0000231
+# Here the lines are not going to be normalized at the next commit.
+# They stay CRLF.
+# But git blame doesn't know that, because has_cr_in_index doesn't work
+# without an index.
+
+$ ./git blame test_CRLF.txt=20
+00000000 (Not Committed Yet 2016-03-29 21:44:48 +0200 1) Line1
+00000000 (Not Committed Yet 2016-03-29 21:44:48 +0200 2) Line2
+00000000 (Not Committed Yet 2016-03-29 21:44:48 +0200 3) line3
+
+
+
+$ git commit -m "Add line3" test_CRLF.txt
+
+> The "Not Committed Yet" output from "git blame" is the same thing.
+> It is telling you that the commit you would be making by adding
+> that path from the working tree in its current state will become
+> the one that is responsible for the final state of the line.
+>=20
+> So it is absolutely the right thing that these lines are shown as
+> "Not Commited Yet".  You will be making the line-ending correction
+> for the entire blob, and you should be made aware of it.
+If we had made the CRLF -> LF conversion, yes. But we don't do that.
+crlf_to_git() returns without touching the line endings.
