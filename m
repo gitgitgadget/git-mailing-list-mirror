@@ -1,114 +1,115 @@
-From: Daryl Van Den Brink <daryl.vandenbrink@maptek.com.au>
-Subject: Re: Gitk "External diff" broken when using worktree
-Date: Tue, 29 Mar 2016 10:47:18 +1030
-Message-ID: <CAC4jX8E0URpxYmTU96xaFh-zEfT_q8RNfGy53DoNV5OFNjgxbQ@mail.gmail.com>
-References: <CAC4jX8FWs30v-Vh7XyPP9_ba3HKd4hAhRBrwfMpBPZd5ku8rUA@mail.gmail.com>
-	<CACsJy8D84e4iQ6Pz_zyqsXuV6c2ier6s_W99+1hKszd0gHiUaQ@mail.gmail.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: weird diff output?
+Date: Mon, 28 Mar 2016 17:26:35 -0700
+Message-ID: <CA+P7+xoiFUiBwDU2Wo9nVukchBvJSknON2XN572b6rSHnOSWaQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 02:17:27 2016
+Cc: Git mailing list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 02:27:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akhLa-0004Px-CP
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 02:17:26 +0200
+	id 1akhUp-0007eO-RR
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 02:27:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752889AbcC2ARV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2016 20:17:21 -0400
-Received: from mail-yw0-f175.google.com ([209.85.161.175]:36388 "EHLO
-	mail-yw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751049AbcC2ARU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2016 20:17:20 -0400
-Received: by mail-yw0-f175.google.com with SMTP id g3so80430ywa.3
-        for <git@vger.kernel.org>; Mon, 28 Mar 2016 17:17:19 -0700 (PDT)
+	id S1754019AbcC2A04 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Mar 2016 20:26:56 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:34743 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752107AbcC2A0z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Mar 2016 20:26:55 -0400
+Received: by mail-ig0-f171.google.com with SMTP id av4so65318805igc.1
+        for <git@vger.kernel.org>; Mon, 28 Mar 2016 17:26:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=maptek-com-au.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=/rsZ3Roq018cFE5KLU9ZdIIpBhuzuwQ3+alriKLUTCU=;
-        b=Bf05cWAiid48yqzXao9IZL5RjcxPQpWV1tn88D/9y2gtAL5B/ZHl9+TU9Hk95rndOl
-         xeDuXBiC5EMYvuMssGnmwcFDWK3v6PsaMaq8LtKTU70Dk/0C85ymGr6f5V6XGaIp36oD
-         J8LZrB4b0rOzRf+b4E0CBzNAPYrKR7MSHObfhNWUuifMweCgBudUyZRSvOKAnD4TF3ZT
-         vE2p30e8zFBZT0t/H0CQgwcVrZH56/EdDGUVt4dvVm0h8cYUCmSAJqcnDq9ug8W5AXuv
-         VZJcq/gOSRQM8q25yt3hathGf+4ZCYCPFgYz3Ufz6oQb77zrJNpYPVChx1kzXV3CJk3H
-         X+ZA==
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=Y3Oxzzj6ZjRmC1FoleUa9uEpVnoSb8qQDIDJuu/j+Ec=;
+        b=B9bPdu/moX52A+E3tLHxX7iIFB44QGQtd/7HA8emm5T2o4twHHenK7M033BVdwySz4
+         2ZWoJcetlFxTPRPYHUBgDxHOiqpE2+xlHYFtE6zvLx4HjERwigeZqWHc+A2U17FNQp0W
+         e6REVU5AjAKe10Xsf0KfSwN/vmmM7iEUwsafE6vUvx95TlXB7b/xrLC1t7kxqBV2A8lA
+         DSsK4xDa0gye/YgXlt2agyzy66QpCy3MGrSPDSUWfnlPlp6MHvbqnX/8Ut9CpY/1KFKy
+         xaf2ll9o9NlNQmlJVk/Fc4HYK1+2n/KRJf02uuOAO85FuYb85PCV6iiwQEdsRDWXo4Py
+         zEaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=/rsZ3Roq018cFE5KLU9ZdIIpBhuzuwQ3+alriKLUTCU=;
-        b=ZwTr+mB91ZRdApgRCbCNnmFh6Rd67ZbmKu3dA3ysOkE7Bx8fNcFHnbEnmDPKSicMIS
-         jR2W4pgtvJhY4ySItmKwvikJG05VGPeQ+zNfvAH+8jWunMIj2wGTNMLqHe7SKetoyIFO
-         yEJKRc28zVD/k0x1fQpLMFlrri9jWTDzPhPQzndnWkE99LkgKQLIH725v/7C3yIeKFPV
-         zBScpAE9s6blCFTIz5LRE2ticCsZ5unYQxpC3mJQKh1aJAipBY3yljwxfol6VPMyUUCv
-         Jn3FQp8SEneNJuslp1N5EHxKxbhOupHun6uQfkOccJ+9Rd8OJvvFYHRc4kbal313FwG5
-         Y/gA==
-X-Gm-Message-State: AD7BkJJUTgL+KKR3qJ3GEnrFRp+rpan6OkGh1DYB0pJ6v9I6HqOxU7OUHpsCZuFzkcXrMltNqwVdWdIMnO4B0djW
-X-Received: by 10.13.231.5 with SMTP id q5mr14289331ywe.33.1459210638571; Mon,
- 28 Mar 2016 17:17:18 -0700 (PDT)
-Received: by 10.37.202.200 with HTTP; Mon, 28 Mar 2016 17:17:18 -0700 (PDT)
-In-Reply-To: <CACsJy8D84e4iQ6Pz_zyqsXuV6c2ier6s_W99+1hKszd0gHiUaQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=Y3Oxzzj6ZjRmC1FoleUa9uEpVnoSb8qQDIDJuu/j+Ec=;
+        b=TWiYMVYKGtycXJCJLFMlrihp3ruzPc8JHqA+yzLsMfSIOlLTPC7zJdHpnxjLa60yrF
+         Muh1EPOH8kXO7WrUeWHZp/+iexpE/4CRCja18vNx35SdtAHn3sxhFFs9M3ObInDpSxCl
+         dzV1HLfMRiRIO1aLu7XPxEhHCTV4P/IpQqxij1yKTy2loEUlV73hnk2YIMv2jc1F9NKL
+         q6myXe0wiKzIGsAcSIFmhz+az7Ovx6SHnfVVpTXwQUCifF5sTmJgRLBOhoOyOqfI+d2f
+         yVJnO1DIUELYbM4fA+SXC6bolllvWRLmM9BN00Kur6tU5N1FewCgGZkNWOsNPJe3NC0V
+         zRTw==
+X-Gm-Message-State: AD7BkJJNa0aVY+K+pc0Gzz56XYiZdUbJb+suDIPKbwFSjEkulX1oLdikX03KP2uZYZTmUdKWxKNGOi+/mObu0w==
+X-Received: by 10.50.112.169 with SMTP id ir9mr12810875igb.92.1459211214397;
+ Mon, 28 Mar 2016 17:26:54 -0700 (PDT)
+Received: by 10.107.10.202 with HTTP; Mon, 28 Mar 2016 17:26:35 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290093>
 
-I've done that, and here are the two arguments that it gives to the diff tool:
+On Mon, Mar 28, 2016 at 4:28 PM, Stefan Beller <sbeller@google.com> wrote:
+>  cat > expect <<EOF
+> +Entering '../nested1'
+> +Entering '../nested1/nested2'
+> +Entering '../nested1/nested2/nested3'
+> +Entering '../nested1/nested2/nested3/submodule'
+> +Entering '../sub1'
+> +Entering '../sub2'
+> +Entering '../sub3'
+> +EOF
+> +
+> +test_expect_failure 'test messages from "foreach --recursive" from subdirectory' '
+> +       (
+> +               cd clone2 &&
+> +               mkdir untracked &&
+> +               cd untracked &&
+> +               git submodule foreach --recursive >../../actual
+> +       ) &&
+> +       test_i18ncmp expect actual
+> +'
+> +
+> +cat > expect <<EOF
+>  nested1-nested1
+>  nested2-nested2
+>  nested3-nested3
 
->From the main repository (in which case the it works):
+Complete tangent here. The diff above looks like
 
-.git/.gitk-tmp.CCxPmN/1/[1980e260494cbd225d482b5d962e77bdcdb2321c]
-RemoteTransaction.C
-.git/.gitk-tmp.CCxPmN/1/[2759bf6053e73cb5f7c11c646aee206242db2cd4]
-RemoteTransaction.C
+<old-line>
++
++
++
++
++<old-line>
 
->From the auxiliary worktree (when the diff doesn't work):
+is it possible to get diff output that would look more like
 
-/home/daryl.vandenbrink/git-work/mdf_products/.git/worktrees/mdf2/.gitk-tmp.ZEdGpi/1/[1980e260494cbd225d482b5d962e77bdcdb2321c]
-RemoteTransaction.C
-/home/daryl.vandenbrink/git-work/mdf_products/.git/worktrees/mdf2/.gitk-tmp.ZEdGpi/1/[2759bf6053e73cb5f7c11c646aee206242db2cd4]
-RemoteTransaction.C
++<old-line>
++
++
++
++
++
+<old-line>
 
-I hope that helps.
+instead? This is one of those huge readability issues with diff
+formatting that seems like both are completely correct, but the second
+way is much easier in general to read what was added.
 
+I don't understand why diff algorithms result in the former instead of
+the latter, and am curious if anyone knows whether this has ever been
+thought about or solved by someone.
 
-On 24 March 2016 at 19:52, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Thu, Mar 24, 2016 at 9:55 AM, Daryl Van Den Brink
-> <daryl.vandenbrink@maptek.com.au> wrote:
->> Hi,
->>
->> I'm using git 2.7.3 on cygwin, and have been taking advantage of the
->> new "git worktree" feature. I noticed that when I launch gitk from one
->> of the attached working directories, its "external diff" feature
->> doesn't seem to work. Nothing shows up in the diff tool at all.
->> However, it works if you launch gitk from the main repository.
->>
->> To reproduce:
->> 1. Create a new working tree with "git worktree add"
->> 2. From that new worktree, launch gitk.
->> 3. Right-click in a file in the bottom right pane and click "External diff"
->> 4. No useful diff appears.
->
-> Works for me (on linux with 'master' branch). Maybe gitk selected
-> invalid tempdir on cygwin. You can try replace your external diff
-> program with a script or something that prints the whole command line.
-> That should reveal if gitk given paths are correct or not (or if gitk
-> fails even before that)
-> --
-> Duy
+I've tried using various diffing algorithms (histogram, etc) and they
+always produce the same result above, and never what I would prefer.
 
-
-
--- 
-Daryl van den Brink
-Software Engineer
-Maptek | 31 Flemington Street, Glenside, SA 5065, Australia
-Tel: +61-8 8338 9222 | Dir: +61-8 8338 9222 | Fax: +61-8 8338 9229
-daryl.vandenbrink@maptek.com.au | www.maptek.com
-
-Keep up to date with Maptek in our Forge newsletter.
+Regards,
+Jake
