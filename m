@@ -1,135 +1,141 @@
-From: Kazuki Yamaguchi <k@rhe.jp>
-Subject: Re: [PATCH v2] branch -d: refuse deleting a branch which is
- currently checked out
-Date: Tue, 29 Mar 2016 18:28:02 +0900
-Message-ID: <20160329092802.GA17915@chikuwa.rhe.jp>
-References: <CAPig+cSCC+OzotkTx89iS+t4DRd3F+QoHP4n-v_+rxXU2R+2LA@mail.gmail.com>
- <cbc5116e5069f20545d66e12e082e0e17f4ecced.1458927521.git.k@rhe.jp>
- <1459149771-14790-1-git-send-email-k@rhe.jp>
- <CAPig+cSzTwup6ojboVkP8nMR91-ZUU9FCbAK5NcrcohfFh2taQ@mail.gmail.com>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: Problem with git-http-backend.exe as iis cgi
+Date: Tue, 29 Mar 2016 22:28:22 +1300
+Message-ID: <CAFOYHZB6VEcXK9QV7puDMTsGQGdd8bqAHCsSnSn1Z5WuWs49qg@mail.gmail.com>
+References: <F0F5A56A22F20D4CB4A03BB8D6658797E260E0E3@SERVER2011.CS-SOFTWARE.local>
+	<20160310155522.1dee53cf95fead8cfd4e178a@domain007.com>
+	<F0F5A56A22F20D4CB4A03BB8D6658797E261A10C@SERVER2011.CS-SOFTWARE.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 11:34:09 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Konstantin Khomoutov <kostix+git@007spb.ru>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Florian Manschwetus <manschwetus@cs-software-gmbh.de>
+X-From: git-owner@vger.kernel.org Tue Mar 29 11:36:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akpwq-0001QZ-Nc
+	id 1akpwr-0001QZ-BJ
 	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 11:28:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756548AbcC2J2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 05:28:08 -0400
-Received: from 116.58.164.79.static.zoot.jp ([116.58.164.79]:53172 "EHLO
-	walnut.rhe.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751580AbcC2J2G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 05:28:06 -0400
-Received: from chikuwa.rhe.jp (unknown [10.0.1.1])
-	by walnut.rhe.jp (Postfix) with ESMTPSA id D666F5C839;
-	Tue, 29 Mar 2016 09:28:03 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <CAPig+cSzTwup6ojboVkP8nMR91-ZUU9FCbAK5NcrcohfFh2taQ@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1756465AbcC2J20 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2016 05:28:26 -0400
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:36796 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756325AbcC2J2X convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2016 05:28:23 -0400
+Received: by mail-ig0-f181.google.com with SMTP id nk17so71645231igb.1
+        for <git@vger.kernel.org>; Tue, 29 Mar 2016 02:28:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=pxKWFDotfG4dPUxP5XPv1/duTqw77uYOnTEFpAvPmhY=;
+        b=FszxdzrPzwXzz4+7EG7T3f8mvHOmYnGvVnlfRVIe6kxHko+whoLnv1P9AD3upNvDYT
+         NwOLR/kw97NN9fwS0EfsFq2X2G32miYPJlcw92o0GfIIlj4/TunapEq5BedHUdwriWOM
+         PnkXS9ZnxPIjRRdCMJ0rdXWEnABeft7euooUkHB5HxApTRsDB4UTQS46Aoy83hPWD64d
+         gogRwmgXMfF7/qZFlU3IYyl9g2KkxCa/+EOau9QtQ/3a72lcJCtYqHNChFG8GSA75BGe
+         13avwCUls/pT6pV9jBlquJnW0chJoFo/9RRsptbK92V2vp+t4t7uG1HukmO4eBQIg35/
+         +k1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=pxKWFDotfG4dPUxP5XPv1/duTqw77uYOnTEFpAvPmhY=;
+        b=FSgpbDwFA5BphxC/ppvE3P1iLZ+6R4mCF6f75ciiDLPfPerxRIVgfY9l9n8DJlcKRD
+         2dTpjVPOaf/PumaI4jVwgVTEJbdKzaV7wjXqxITBL1XgsjszhAWqsFcTuquYd+uv/E9Q
+         H3a60tDVIg5m533JDELwv1vam6xoNk4w63KEyc8ZIYM5tEZr6mADQjqzH+0QjZZcFNUK
+         ZO3cg3AQyLorIR4TdFcc9+gybMmy+DOCDoOhthk9hABx1JNJgWN6zYoQMsbO9l0r37Ka
+         L4+iRlZgKbtIbSEwLk5hSmWzjj1KSqALzumzNo+xn8xJT/uuhuRsqjcKU1NdjwezF0My
+         UImQ==
+X-Gm-Message-State: AD7BkJISaXBWxpekd1kytoz0+IsqprAFAIcRlkH34gATGcLGq2qGq6XuMOwwEKK14Pf5FDn+agpYQV5nfj37dA==
+X-Received: by 10.50.4.73 with SMTP id i9mr1669856igi.24.1459243702157; Tue,
+ 29 Mar 2016 02:28:22 -0700 (PDT)
+Received: by 10.79.110.1 with HTTP; Tue, 29 Mar 2016 02:28:22 -0700 (PDT)
+In-Reply-To: <F0F5A56A22F20D4CB4A03BB8D6658797E261A10C@SERVER2011.CS-SOFTWARE.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290107>
 
-On Mon, Mar 28, 2016 at 12:51:21PM -0400, Eric Sunshine wrote:
-> On Mon, Mar 28, 2016 at 3:22 AM, Kazuki Yamaguchi <k@rhe.jp> wrote:
-> > When a branch is checked out by current working tree, deleting the
-> > branch is forbidden. However when the branch is checked out only by
-> > other working trees, deleting is allowed.
-> 
-> It's not quite clear from this description that it is bad for deletion
-> to succeed in the second case. Perhaps:
-> 
->     s/deleting is allowed/deletion incorrectly succeeds/
-> 
-> would make it more clear.
+Hi Florian
 
-Thanks.
+On Tue, Mar 29, 2016 at 7:01 PM, Florian Manschwetus
+<manschwetus@cs-software-gmbh.de> wrote:
+> Hi,
+> I put together a first patch for the issue.
+>
+> Mit freundlichen Gr=C3=BC=C3=9Fen / With kind regards
+> Florian Manschwetus
+>
+> E-Mail: manschwetus@cs-software-gmbh.de
+> Tel.: +49-(0)611-8908534
+>
+> CS Software Concepts and Solutions GmbH
+> Gesch=C3=A4ftsf=C3=BChrer / Managing director: Dr. Werner Alexi
+> Amtsgericht Wiesbaden HRB 10004 (Commercial registry)
+> Schiersteiner Stra=C3=9Fe 31
+> D-65187 Wiesbaden
+> Germany
+> Tel.: 0611/8908555
+>
+>
+> -----Urspr=C3=BCngliche Nachricht-----
+> Von: Konstantin Khomoutov [mailto:kostix+git@007spb.ru]
+> Gesendet: Donnerstag, 10. M=C3=A4rz 2016 13:55
+> An: Florian Manschwetus
+> Cc: git@vger.kernel.org
+> Betreff: Re: Problem with git-http-backend.exe as iis cgi
+>
+> On Thu, 10 Mar 2016 07:28:50 +0000
+> Florian Manschwetus <manschwetus@cs-software-gmbh.de> wrote:
+>
+>> I tried to setup git-http-backend with iis, as iis provides proper
+>> impersonation for cgi under windows, which leads to have the
+>> filesystem access performed with the logon user, therefore the
+>> webserver doesn't need generic access to the files. I stumbled acros=
+s
+>> a problem, ending up with post requests hanging forever. After some
+>> investigation I managed to get it work by wrapping the http-backend
+>> into a bash script, giving a lot of control about the environmental
+>> things, I was unable to solve within IIS configuration. The
+>> workaround, I use currently, is to use "/bin/head -c ${CONTENT_LENGT=
+H}
+>> | ./git-http-backend.exe", which directly shows the issue. Git
+>> http-backend should check if CONTENT_LENGTH is set to something
+>> reasonable (e.g. >0) and should in this case read only CONTENT_LENGT=
+H
+>> bytes from stdin, instead of reading till EOF what I suspect it is
+>> doing currently.
+>
+> The rfc [1] states in its section 4.2:
+>
+> | A request-body is supplied with the request if the CONTENT_LENGTH i=
+s
+> | not NULL.  The server MUST make at least that many bytes available =
+for
+> | the script to read.  The server MAY signal an end-of-file condition
+> | after CONTENT_LENGTH bytes have been read or it MAY supply extensio=
+n
+> | data.  Therefore, the script MUST NOT attempt to read more than
+> | CONTENT_LENGTH bytes, even if more data is available.  However, it =
+is
+> | not obliged to read any of the data.
+>
+> So yes, if Git currently reads until EOF, it's an error.
+> The correct way would be:
+>
+> 1) Check to see if the CONTENT_LENGTH variable is available in the
+>    environment.  If no, read nothing.
+>
+> 2) Otherwise read as many bytes it specifies, and no more.
+>
+> 1. https://www.ietf.org/rfc/rfc3875
 
-> 
-> > Use find_shared_symref() to check if the branch is in use, not just
-> > comparing with the current working tree's HEAD.
-> 
-> This version of the patch is nicer. Thanks. See a couple minor
-> comments below which may or may not be worth a re-roll (you decide).
-> 
-> > Signed-off-by: Kazuki Yamaguchi <k@rhe.jp>
-> > ---
-> >
-> >   % git worktree list
-> >   /path/to      2c3c5f2 [master]
-> >   /path/to/wt   2c3c5f2 [branch-a]
-> >   % git branch -d branch-a
-> >   error: Cannot delete the branch 'branch-a' which is currently checked out at '/path/to/wt'
-> 
-> Thanks for an example of the new behavior. It's also helpful to
-> reviewers if you use this space to explain what changed since the
-> previous version, and to provide a link to the previous attempt, like
-> this[1].
-> 
-> [1]: http://thread.gmane.org/gmane.comp.version-control.git/289413/focus=289932
-
-I'll do from next time.
-
-> 
-> > diff --git a/builtin/branch.c b/builtin/branch.c
-> > @@ -215,16 +216,21 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
-> >                 int flags = 0;
-> >
-> >                 strbuf_branchname(&bname, argv[i]);
-> > -               if (kinds == FILTER_REFS_BRANCHES && !strcmp(head, bname.buf)) {
-> > -                       error(_("Cannot delete the branch '%s' "
-> > -                             "which you are currently on."), bname.buf);
-> > -                       ret = 1;
-> > -                       continue;
-> > -               }
-> > -
-> >                 free(name);
-> > -
-> >                 name = mkpathdup(fmt, bname.buf);
-> > +
-> > +               if (kinds == FILTER_REFS_BRANCHES) {
-> > +                       char *worktree = find_shared_symref("HEAD", name);
-> > +                       if (worktree) {
-> > +                               error(_("Cannot delete the branch '%s' "
-> > +                                       "which is currently checked out at '%s'"),
-> 
-> This could be stated more concisely as:
-> 
->     "Cannot delete branch '%s' checked out at '%s'"
-
-I'll use it. Thanks.
-
-> 
-> > +                                     bname.buf, worktree);
-> > +                               free(worktree);
-> 
-> Would it make sense to show all worktrees at which this branch is
-> checked out, rather than only one, or is that not worth the effort and
-> extra code ugliness?
-
-I thought one is enough.
-I think the worktrees usually won't be more than one, considering
-"git worktree add" requires additional option to check out an already
-checked out branch. Also, since the branch is not actually deleted at
-that time, the user can safely retry after checking "git worktree list".
-
-
-Thanks,
-
-> 
-> > +                               ret = 1;
-> > +                               continue;
-> > +                       }
-> > +               }
-> > +
-> >                 target = resolve_ref_unsafe(name,
-> >                                             RESOLVE_REF_READING
-> >                                             | RESOLVE_REF_NO_RECURSE
+Your patch description seems well thought out but if you want someone
+to notice it you should have a read of
+https://git.kernel.org/cgit/git/git.git/tree/Documentation/SubmittingPa=
+tches
