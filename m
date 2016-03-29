@@ -1,82 +1,183 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5] worktree: add: introduce --checkout option
-Date: Tue, 29 Mar 2016 14:04:38 -0400
-Message-ID: <CAPig+cSUr1FK68qhHOf+M_tHqELW_ocJFU4-4kpjGVFV0R+F2g@mail.gmail.com>
-References: <01020153bcda5e6c-2bae9b68-6669-4f29-a512-136c42722001-000000@eu-west-1.amazonses.com>
-	<01020153c1dae323-b918e73f-f116-4760-9747-9aa8cafb2db5-000000@eu-west-1.amazonses.com>
-	<20160329105402.GB1578@serenity.lan>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: weird diff output?
+Date: Tue, 29 Mar 2016 11:16:57 -0700
+Message-ID: <CAGZ79kZiiOgxh6vMDnaJ_b+VVGrFBfGzZukTN6OEBxUV9-2vQw@mail.gmail.com>
+References: <CA+P7+xoiFUiBwDU2Wo9nVukchBvJSknON2XN572b6rSHnOSWaQ@mail.gmail.com>
+	<CAGZ79ka4ad5dQMWANJUDx-0+kV3qR=HttOJni2XfhFzjMKfcPw@mail.gmail.com>
+	<xmqqzithxj8l.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Ray Zhang <zhanglei002@gmail.com>, Git List <git@vger.kernel.org>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue Mar 29 20:05:00 2016
+Cc: Jacob Keller <jacob.keller@gmail.com>,
+	Git mailing list <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 20:17:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aky0g-0001Tz-AC
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 20:04:58 +0200
+	id 1akyCQ-0007c6-Ow
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 20:17:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757342AbcC2SEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 14:04:41 -0400
-Received: from mail-vk0-f67.google.com ([209.85.213.67]:32849 "EHLO
-	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757322AbcC2SEk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 14:04:40 -0400
-Received: by mail-vk0-f67.google.com with SMTP id a62so3351770vkh.0
-        for <git@vger.kernel.org>; Tue, 29 Mar 2016 11:04:39 -0700 (PDT)
+	id S1754028AbcC2SQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 14:16:59 -0400
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:37230 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753322AbcC2SQ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 14:16:59 -0400
+Received: by mail-ig0-f179.google.com with SMTP id l20so21884540igf.0
+        for <git@vger.kernel.org>; Tue, 29 Mar 2016 11:16:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=+x757InCG6j6vKyL1EmBsFIosg5OMjLmntZ+qTRJ/VM=;
-        b=lpywDLYaarpcwYCWTQj2pZdi0OaoLmmCWKWAL6H5f4pGGk96vHAEdew+rjX+C5W1b4
-         4q0IEr6uCWxnmieO2NOX/gsj6fWiffssYivpTyArSbLPqGBg1NlpUfa9WEaUlCOLYGVx
-         XfVW2BuWZiQCw2EYqATC1TpoJTL9CfJAdq3kTpaQYickmfHCkVrkayA6fqUqeCa5hTdk
-         peXNldfV7KaF//gIHgl/lMyNxyaZAKjoSmrgT+5FhnI1iYZK0VSYVzw6EK4BnWfW/579
-         eI/TxBV/NQYaIR1WdV6hLanJ/NWfq3mO4VVMJirJ50+BuGKipEiWJgtw2+wL+Twgp3wY
-         1VFA==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=Zdp5c7ZLncXocysO3ghMzxV9f6EhpSE6ro13IqLY+Zs=;
+        b=ZFqfuxB+Uz8OWiN08aLiPxrWxVPBXK9Og1iKeDnMnGN1wSW4gXnn6EbmgO4Dr6Aftf
+         BnxN3JiA4790LfW4oUpg5y3SaZ7HArWdJmTo2qV9KQ8TeweNmNGO7+4MUlY8CPNU7Ipn
+         6C4pw0Vc1p+3EwWqV00LnL7sgJ4MOv67UKQ8jhunnnBfFmE0CUl+AO5iR0NQBEDd68SD
+         5N/5T81aMY6VZJTIdISHfC+xGpOTAlbu05nwxDpJKduo4wSvRYX84BFH+b4a0hyN+hmp
+         lwmaag9BluGaINqbgskKVLHAT57MoGdGf5R8F859XG+V1yg6/au5bGy3GdgT+Kq/rXsc
+         2adQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=+x757InCG6j6vKyL1EmBsFIosg5OMjLmntZ+qTRJ/VM=;
-        b=d4ha53Wpg7R4vM4ZNgU6xv/Ognf6CKFzlmexTlW92ZPhabkq8Lfp3wSOERlUdVgJw0
-         5Ryt4ufOM84FeELgI2qEb0Z3ynfaBXfGiZtyCJSPVgoJEfZB4Kd+kHsZGmUkOjcqL6Bp
-         1T2dT6S6FWfDOMsxDQxjVA4VeuHx2iifuEneAJq4EJb2RugJq2Y1+0R/yQVfaj/JX3Zj
-         B+DB2HWu5T8FEi71mMZtcI7ROIHq74FNIFnT32sO3VPhbi801SzLAUKhhCi12brls+Ws
-         ulMTtiZuBjbCZX0SKeZk3V9nrqz/I2F/M1xsKRMg+f+YGUS2jfIMUYx35z4De74FVzXC
-         1x7g==
-X-Gm-Message-State: AD7BkJLYolXz7F+Lpzmjg2DSctH9c7KhCxMex29jEBdPNx/UbtP7i6I127zIDYB3QzLu7md3gcpKcnfjk9cm0Q==
-X-Received: by 10.31.150.76 with SMTP id y73mr2279530vkd.84.1459274678913;
- Tue, 29 Mar 2016 11:04:38 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Tue, 29 Mar 2016 11:04:38 -0700 (PDT)
-In-Reply-To: <20160329105402.GB1578@serenity.lan>
-X-Google-Sender-Auth: iOsGLOH9VNJvVIlWnGxM4RFkarE
+        bh=Zdp5c7ZLncXocysO3ghMzxV9f6EhpSE6ro13IqLY+Zs=;
+        b=lwpgU4CYbhPFsTISYxwnQTGueG7AIZi8iEcoulNaE/Y9EmNejhNOTeOmZPZSEhloHN
+         r6qUcEmJWPkkQLSKACbXj43CYqLDEqa6uTK6pyiZ2K1RR4mwjf8YCQfgaL0mSosl4VMx
+         F2emhC7rkUqxwnEnXHdoAzMh0As/ssMlKdTLKlNVD+SSuUesEbQZfOuEc+meJjC9wJZT
+         qPADyRdlFJge+Je61Sn5CwvcdnhWIqtuZLCDhp+bRwCPWJ9FaCqcSBF3KS78pd7cjlYO
+         AmNgrsZhUYTre4PfcFq890sploflwzxzD4O8Pr1K2gjUUwPNCR0XqpdbOKyRJ37yv3EN
+         ZsYg==
+X-Gm-Message-State: AD7BkJLaLRKQwzJXGuMBt1p3sP2SXdJjSPz6vuYHu72xtmGkLC0RxJIYeKEJcvmbbvfqOgvvUZta7sKg4J2rMs47
+X-Received: by 10.50.72.107 with SMTP id c11mr4667555igv.85.1459275417872;
+ Tue, 29 Mar 2016 11:16:57 -0700 (PDT)
+Received: by 10.107.132.101 with HTTP; Tue, 29 Mar 2016 11:16:57 -0700 (PDT)
+In-Reply-To: <xmqqzithxj8l.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290154>
 
-On Tue, Mar 29, 2016 at 6:54 AM, John Keeping <john@keeping.me.uk> wrote:
-> On Tue, Mar 29, 2016 at 10:11:01AM +0000, Ray Zhang wrote:
->>       With `add`, detach HEAD in the new working tree. See "DETACHED HEAD"
->>       in linkgit:git-checkout[1].
+On Tue, Mar 29, 2016 at 10:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> I thought this is an optimization for C code where you have a diff like:
 >>
->> +--[no-]checkout::
+>>     int existingStuff1(..) {
+>>     ...
+>>     }
+>>     +
+>>     + int foo(..) {
+>>     +...
+>>     +}
+>>
+>>     int existingStuff2(...) {
+>>     ...
+>>
+>> Note that the closing '}' could be taken from the method existingStuff1 instead
+>> of correctly closing foo.
 >
-> This should be:
+> That is a less optimal output.  Another possible output would be
+> like so:
 >
-> --checkout::
-> --no-checkout::
+>       int existingStuff1(..) {
+>       ...
+>       }
 >
-> (see for example --progress in Documentation/merge-options.txt).
+>      + int foo(..) {
+>      +...
+>      +}
+>      +
+>       int existingStuff2(...) {
+>
+> All three are valid output, and ...
+>
+>> So the correct heuristic really depends on what kind of text we
+>> are diffing.
+>
+> ... this realization is correct.
+>
+> I have a feeling that any heuristic would be correct half of the
+> time, including the ehuristic implemented in the current code.  The
+> readers of patches have inherent bias.  They do not notice when the
+> hunk is formed to match their expectation, but they will notice and
+> remember when they see something less optimal.
+>
 
-[1] suggested either form without stating a preference since existing
-Git documentation uses a mixture of the two. See, for instance,
-git-format-patch.txt. However, I see now that --[no-]-option is the
-minority.
+We have 3 possible diffs:
+1) closing brace and newline before the chunk
+2) newline before, closing brace after the chunk
+3) closing brace and newline after the chunk
 
-[1]: http://article.gmane.org/gmane.comp.version-control.git/289840
+For C code we may want to conclude that 3) is best. (appeals the bias of
+most people) 2 is slightly worse, whereas 1) is absolutely worst.
+
+Now looking at the code Jacob found strange:
+
+>  cat > expect <<EOF
+> + expected results ...
+> + EOF
+> +test_expect_failure  ... '
+> + ...
+> + '
+> +
+> +cat > expect <<EOF
+
+This can be written in two ways:
+
+1) "cat > expect <<EOF" before the diff chunk
+2) "cat > expect <<EOF" after the diff chunk
+
+We claim 1) is better than 2).
+This is different from the C code as now we want to have the
+same lines before not after.
+
+To find a heuristic, which appeals both the C code
+and the shell code, we could take the empty line
+as a strong hint for the divider:
+
+1) determine the amount of diff which is ambiguous, i.e. can
+   go before or after the chunk.
+2) Does the ambiguous part contain an empty line?
+3) If not, I have no offer for you, stop.
+4) divide the ambiguous chunk by the empty line,
+5) put the lines *after* the empty line in front of the chunk
+6) put the part before (including) the empty line after the
+   chunk
+7) Observe output:
+
+>       }
+>
+>      + int foo(..) {
+>      +...
+>      +}
+>      +
+>       int existingStuff2(...) {
+
+> test_expect_failure ... '
+> existing test ...
+> '
+>
+> + cat > expect <<EOF
+> + expected results ...
+> + EOF
+> +test_expect_failure  ... '
+> + ...
+> + '
+> +
+> cat > expect <<EOF
+
+This is what we want in both cases.
+And I would argue it would appease many other kinds of text as well, because
+an empty line is usually a strong indicator for any text that a
+different thing comes along.
+(Other programming languages, such as Java, C++ and any other C like
+language behaves
+that way; even when writing latex figures you'd rather want to break
+at new lines?)
+
+Thanks,
+Stefan
