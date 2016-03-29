@@ -1,77 +1,85 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v1 1/7] Make it possible to get sha1 for a path from the index
-Date: Tue, 29 Mar 2016 15:32:32 -0400
-Message-ID: <CAPig+cQ7GrANpqPxpRAZLyYzO5pNj8ZjF0HX99VkSoJ98TzH8Q@mail.gmail.com>
-References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
-	<1459257930-17193-1-git-send-email-tboegi@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: `git rev-parse --is-inside-work-tree` and $GIT_WORK_TREE
+Date: Tue, 29 Mar 2016 15:41:56 -0400
+Message-ID: <20160329194156.GA9527@sigill.intra.peff.net>
+References: <CAPZ477NxXVNNwDvzaFt7GoUGuJwnOuX3y1N+aPtVRFD3E8dQBA@mail.gmail.com>
+ <CAPZ477PD7SkRg7T_Y_n27Hjw5TeW6Sh0-vtoP6-4xUDraC7OiA@mail.gmail.com>
+ <20160329123306.GD1578@serenity.lan>
+ <xmqqshz9z5hu.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Mar 29 21:32:38 2016
+Content-Type: text/plain; charset=utf-8
+Cc: John Keeping <john@keeping.me.uk>, Elliott Cable <me@ell.io>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 21:42:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akzNV-0004WC-93
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 21:32:37 +0200
+	id 1akzWg-0000Nk-Io
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 21:42:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757955AbcC2Tcf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2016 15:32:35 -0400
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:36545 "EHLO
-	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757969AbcC2Tcd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2016 15:32:33 -0400
-Received: by mail-vk0-f65.google.com with SMTP id z68so3619808vkg.3
-        for <git@vger.kernel.org>; Tue, 29 Mar 2016 12:32:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-transfer-encoding;
-        bh=OeM0cssQlgsu1H1nHX8AD7oudnfAO9oQF6oK/OFvMKg=;
-        b=f7fwEf9RIF8V5unCtSdp9iLPoMa3Sj380jhYQUHY7s1MwVoDBXqAaMvHeOgb7Guzvk
-         3FUhpygU2r2p7f/SuvoKx1sulLwP2puz6ebgwpGaXl1FeXg8ioFATnOo0DXsEA+baEVP
-         vwzFhotv8XnSui7l5aZWMGene/izeQdIHmrIWt57eJHRZXfe94wymI5G/vaVISKtdjeN
-         jk6Nurr8+07ElhV9BxPMtgJnyo6YHDbzHM9k/xlQIsLUfHDv90elKXUgmuTwFqZtgOAT
-         xo0ScmJ8SZLzk5jhNYu86nCvR1T62w4BebYBBQJuxERSmL0AiNqerhEB1MUpYnlSfNQ7
-         qHzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=OeM0cssQlgsu1H1nHX8AD7oudnfAO9oQF6oK/OFvMKg=;
-        b=F114PCNJ4B5lwueXJH60TY+fvWem2Ti6TahT/tC9VHXOnpWs+FMjPhIa2LbT5dwdje
-         O+AeXEb8kBZ9NghQ6iyTxa+pCriHeJrtj8UPfWKccxyjiOeB5GQAsf01CSSJlbTm/EBz
-         C7Ax9bhN1V4RpO3UKGK4WYwHB0qewUo4c9kSd4qMHON5ectyIg/nHRGJRD77sVFWz6Sz
-         IWaEuhYk9PGTWLzD9qt1C83AThxNUV3mROYRueEsCb6Axon+lsgD5zEaNJdVVOgNU5QL
-         j1La+Z2LeE/VWlZpYPeQ/pgurJBSMBv7UfR0WGl/HGHrvBUdXTANbD8NT/o6h+BeI6tU
-         DJng==
-X-Gm-Message-State: AD7BkJJtBMieMRAzrxSYEovqqdACmImHZcTyPBbcJhSyvEOS5oXAhv+AwZPxZRGFpuYq9uHbBMr5xR0k3fQXCw==
-X-Received: by 10.31.150.76 with SMTP id y73mr2562388vkd.84.1459279952293;
- Tue, 29 Mar 2016 12:32:32 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Tue, 29 Mar 2016 12:32:32 -0700 (PDT)
-In-Reply-To: <1459257930-17193-1-git-send-email-tboegi@web.de>
-X-Google-Sender-Auth: BXP8rFYH9tLsMELcgGovS8CzyqU
+	id S1757531AbcC2TmB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 15:42:01 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40109 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753994AbcC2TmA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 15:42:00 -0400
+Received: (qmail 4922 invoked by uid 102); 29 Mar 2016 19:41:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Mar 2016 15:41:59 -0400
+Received: (qmail 25742 invoked by uid 107); 29 Mar 2016 19:41:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Mar 2016 15:41:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Mar 2016 15:41:56 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqshz9z5hu.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290173>
 
-On Tue, Mar 29, 2016 at 9:25 AM,  <tboegi@web.de> wrote:
-> Factor out the retrival of the sha1 for a given path in
+On Tue, Mar 29, 2016 at 08:08:29AM -0700, Junio C Hamano wrote:
 
-s/retrival/retrieval/
+> So it is a misconfiguration if you only set GIT_WORK_TREE without
+> setting GIT_DIR.
 
-> read_blob_data_from_index() into the function get_sha1_from_index().
->
-> This will be used in the next commit, when convert.c can do the analy=
-ze
-> for "text=3Dauto" without slurping the whole blob into memory at once=
-=2E
->
-> Add a wrapper definition get_sha1_from_cache().
->
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+Hmm. I have frequently done this when my cwd is a git repository (e.g.,
+a bare one), and it works as you'd expect (find the git-dir in the
+current path, then the working tree via $GIT_WORK_TREE).
+
+I always assumed that was the intended behavior, as it is the only one
+that makes sense. I suspect I am not alone in having relied on this.
+
+> Also, if you set both and run Git from outside $GIT_WORK_TREE, even
+> though Git may try to do its best to give you a reasonable behaviour
+> [*1*], it is working by accident not by design (see the statement
+> you are making by setting GIT_WORK_TREE in the third bullet above).
+> 
+> IOW, running from outside GIT_WORK_TREE is a misconfiguration.
+> 
+> [Footnote]
+> 
+> *1* Think what should happen when you are outside GIT_WORK_TREE and
+>     say this:
+> 
+> 	$ git grep foo
+> 
+>     As you are not even inside the working tree, the command would
+>     not know in which subdirectory you want to find the string foo;
+>     the "reasonable behaviour" is to work on the whole working tree
+>     in this case.
+
+Likewise, I always assumed this "reasonable behavior" was intended. When
+we setup_git_directory(), we end up in the root of the working tree as
+usual. The "prefix" must be empty, as we were not in the work tree at
+all, and we do a whole-tree operation.
+
+Those behaviors may not have been fully designed, but as they do the
+only reasonable thing (besides dying with an error), and people may have
+baked that assumption into their scripts, I think we should avoid
+changing them unless there is a compelling reason.
+
+-Peff
