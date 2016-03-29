@@ -1,86 +1,131 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 0/6] Fix path bugs in submodule commands executed from sub dir
-Date: Tue, 29 Mar 2016 15:23:42 -0700
-Message-ID: <1459290228-9069-1-git-send-email-sbeller@google.com>
+Subject: [PATCH 1/6] submodule foreach: correct path display in recursive submodules
+Date: Tue, 29 Mar 2016 15:23:43 -0700
+Message-ID: <1459290228-9069-2-git-send-email-sbeller@google.com>
+References: <1459290228-9069-1-git-send-email-sbeller@google.com>
 Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
 To: gitster@pobox.com, jacob.keller@gmail.com
-X-From: git-owner@vger.kernel.org Wed Mar 30 00:24:01 2016
+X-From: git-owner@vger.kernel.org Wed Mar 30 00:24:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1al23M-0002HL-Ug
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 00:24:01 +0200
+	id 1al23T-0002JJ-Gm
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 00:24:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755758AbcC2WX4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1756786AbcC2WX6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 18:23:58 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:33654 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755753AbcC2WX4 (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 29 Mar 2016 18:23:56 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:32901 "EHLO
-	mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754458AbcC2WXz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 18:23:55 -0400
-Received: by mail-pf0-f179.google.com with SMTP id 4so25545383pfd.0
-        for <git@vger.kernel.org>; Tue, 29 Mar 2016 15:23:55 -0700 (PDT)
+Received: by mail-pa0-f49.google.com with SMTP id zm5so24434275pac.0
+        for <git@vger.kernel.org>; Tue, 29 Mar 2016 15:23:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=96w2TyjplR+3Lw1ptuPai/UF4SdUxXDnUow14nw43DY=;
-        b=YhOgpv3a1l+yxU+TvLCzE30stndqMJci7sSKeG5Rs5iu2hfNa9toCZmFfSEN1r/DLV
-         c3nbrTDxrPShfeBQPftj45F3F3xWtpQ4i12WF0Kz0w52zEziru99aTyZf60iHMEu5Jo0
-         MxfVq1wzyFBZkwJ1sh/y36s6JCKi+YLmFmSEojuuloYePeVhIDorvtVWDYvyEx/3K/4G
-         pP9apF3GAv9/Un8M0q4k8+O2YOeFrVn4fhd3pE4fKqxg1sfl/CAmQJp1ies/tw0T9Yyg
-         cThXBg9qo8Y+LU+8pFLODMmD9BFhw5/SNgsOKPhapB5x5rOc+aAon2Pz3GClyRGItRnQ
-         UqJA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=HKYomCQzTY9cnAP/AEepTvm7sdUzTNrsBVSQrqTdWgU=;
+        b=YqFIms/KnzQuEj8VJzkwwB09APgQ2HDHVGMNh8OrO/9ZgCBuCiufpCaGcvuwa1sp6b
+         R7+WHKO4isHSkOO//Tk8D0wFGUGMZAqGGvIUxzu51x6y2JiObtcJyGC+uu7RK6zpLaUO
+         hJrqdluW1pkJu47sCiliVaRb/CVvBIw6ndaJ4FAcLoOYH8/I97TuPEzq+mK4Dqde8mcH
+         P+z1V+NYd0RN0sawXMJPiLcY7Z1bJtuadUu2BeAz057cf1WN+D48MPZU64rjVYGVUlnq
+         6yN35X+k5d/RNYFi5NQJY1VVzzDxgPk2K6BG+f6VpX0bSlpt9wW1aGoFu0SKiZkFoew3
+         IOPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=96w2TyjplR+3Lw1ptuPai/UF4SdUxXDnUow14nw43DY=;
-        b=MyCNVvCGaRBzUlFacwvKxPN8SLwz6MiwOIvrM1hBHQqALz7mzDpWsX6nNky6wPKc2j
-         F8h57NsxxZR9MB1v53m4CMwGr/mLdtTn88KFwqCK65DZsAIo9pqa3xq7mCgnnunizJjy
-         fHXB4GhBkM8+pHhPwCutqvjqW/dwF1TcIOWpdIAnUrXwsqSV6r/NL3RI9+ALZZVB9Qup
-         24LSay4NCsByimAS3nY0Nl8snSP+xKxznmFTTKZQJIzY3Al/1V4RfRT8QeQ8KAHmcWuC
-         7aFnaUei2rOydv2QoGeMRiHMgkfFy51JeVVofuHwp9wkruUGMDj+sqSM8gg3xry5b+Hn
-         5sPw==
-X-Gm-Message-State: AD7BkJL/t8TOZxgCE4k9ezeYPAGFOo6ZxWiC+NR6CAwtLNoGy+I35UILEgMs85bl+CbDvOEj
-X-Received: by 10.98.7.135 with SMTP id 7mr7295943pfh.124.1459290234612;
-        Tue, 29 Mar 2016 15:23:54 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=HKYomCQzTY9cnAP/AEepTvm7sdUzTNrsBVSQrqTdWgU=;
+        b=EH1ZqtHl1PI8qEj3anlfiaxcdSnXXlmHeit0aQSAlBN0X6tYVkjeO35a5JgJSljbrZ
+         OL9vYfoShjIl6fCO3XjqqHZv1RYzArJOkHi6pvT7RNTd9YG9xFhY+NnsByNSlka5mo5Y
+         Pr8nvSSzwD+PURCP5q0p4O7vtYtQHSkLhiYiIL3epg99s6KtbXQnr8UwC/rN74FJ9Kdt
+         v0IuDJINREoQvALNiTuxOyXPsDF3opQsKmHg9Y7lzkMQqOxBAF6qtv6DNwhT/KHwApcK
+         KsX3I4Ip4Og8mPJpePubKE3eVtZKQM3aA5id0lszXalUSfYUurRXmqpiICRBNBLMlbaP
+         ASFg==
+X-Gm-Message-State: AD7BkJJLdeoJe5ma8BTbKc3zROleh7F9M1Qlwp+9UzGDnLwt2jXdM3IkrEclJF8MN90U0Pgx
+X-Received: by 10.66.123.17 with SMTP id lw17mr7415528pab.108.1459290235737;
+        Tue, 29 Mar 2016 15:23:55 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:3dd0:2ad7:f302:a06])
-        by smtp.gmail.com with ESMTPSA id q2sm629770pfq.88.2016.03.29.15.23.53
+        by smtp.gmail.com with ESMTPSA id k88sm691947pfj.0.2016.03.29.15.23.55
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 29 Mar 2016 15:23:53 -0700 (PDT)
+        Tue, 29 Mar 2016 15:23:55 -0700 (PDT)
 X-Mailer: git-send-email 2.8.0.4.g5639dee.dirty
+In-Reply-To: <1459290228-9069-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290206>
 
-The first 3 commits are
-* Test and bugfix in one commit each
-* better explained than before
+The new test replicates the previous test with the difference of executing
+from a sub directory. By executing from a sub directory all we would
+expect all displayed paths to be prefixed by '../'.
 
-The expansion of an expected test result moved to the back of the series.
+Prior to this patch the test would report
+    Entering 'nested1/nested2/../nested3'
+instead of the expected
+    Entering '../nested1/nested2/nested3'
 
-There are two new commits
-* one being another bugfix of the display path for `submodule update`
-* another test for `submodule update` as I suspect it may break further on
-  refactoring and we currently have no tests for it.
+because the prefix is put unconditionally in front and after that a
+computed display path with is affected by `wt_prefix`. This is wrong as
+any relative path computation would need to be at the front. By emptying
+the `wt_prefix` in recursive submodules and adding the information of any
+relative path into the `prefix` this is fixed.
 
-Thanks,
-Stefan
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ git-submodule.sh             |  3 ++-
+ t/t7407-submodule-foreach.sh | 20 ++++++++++++++++++++
+ 2 files changed, 22 insertions(+), 1 deletion(-)
 
-Stefan Beller (6):
-  submodule foreach: correct path display in recursive submodules
-  submodule update --init: correct path handling in recursive submodules
-  submodule status: correct path handling in recursive submodules
-  t7407: make expectation as clear as possible
-  submodule update: align reporting path for custom command execution
-  submodule update: test recursive path reporting from subdirectory
-
- git-submodule.sh             | 10 +++---
- t/t7406-submodule-update.sh  | 83 ++++++++++++++++++++++++++++++++++++++++++--
- t/t7407-submodule-foreach.sh | 49 ++++++++++++++++++++++++--
- 3 files changed, 133 insertions(+), 9 deletions(-)
-
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 43c68de..2838069 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -417,10 +417,11 @@ cmd_foreach()
+ 			say "$(eval_gettext "Entering '\$prefix\$displaypath'")"
+ 			name=$(git submodule--helper name "$sm_path")
+ 			(
+-				prefix="$prefix$sm_path/"
++				prefix="$(relative_path $prefix$sm_path)/"
+ 				clear_local_git_env
+ 				cd "$sm_path" &&
+ 				sm_path=$(relative_path "$sm_path") &&
++				wt_prefix=
+ 				# we make $path available to scripts ...
+ 				path=$sm_path &&
+ 				if test $# -eq 1
+diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
+index 7ca10b8..776b349 100755
+--- a/t/t7407-submodule-foreach.sh
++++ b/t/t7407-submodule-foreach.sh
+@@ -178,6 +178,26 @@ test_expect_success 'test messages from "foreach --recursive"' '
+ '
+ 
+ cat > expect <<EOF
++Entering '../nested1'
++Entering '../nested1/nested2'
++Entering '../nested1/nested2/nested3'
++Entering '../nested1/nested2/nested3/submodule'
++Entering '../sub1'
++Entering '../sub2'
++Entering '../sub3'
++EOF
++
++test_expect_success 'test messages from "foreach --recursive" from subdirectory' '
++	(
++		cd clone2 &&
++		mkdir untracked &&
++		cd untracked &&
++		git submodule foreach --recursive >../../actual
++	) &&
++	test_i18ncmp expect actual
++'
++
++cat > expect <<EOF
+ nested1-nested1
+ nested2-nested2
+ nested3-nested3
 -- 
 2.8.0.4.g5639dee.dirty
