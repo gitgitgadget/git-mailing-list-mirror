@@ -1,105 +1,103 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 5/5] t/t5520: test --[no-]autostash with pull.rebase=true
-Date: Tue, 29 Mar 2016 17:16:06 -0400
-Message-ID: <CAPig+cQ93+dCqJMRcQYSRHLDuYtwkeK_aSrfv2=2=g7ZhO85TQ@mail.gmail.com>
-References: <1459258200-32444-1-git-send-email-mehul.jain2029@gmail.com>
-	<1459258200-32444-6-git-send-email-mehul.jain2029@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: `git rev-parse --is-inside-work-tree` and $GIT_WORK_TREE
+Date: Tue, 29 Mar 2016 17:21:43 -0400
+Message-ID: <20160329212143.GA30116@sigill.intra.peff.net>
+References: <CAPZ477NxXVNNwDvzaFt7GoUGuJwnOuX3y1N+aPtVRFD3E8dQBA@mail.gmail.com>
+ <20160329203425.GA24027@sigill.intra.peff.net>
+ <20160329205208.GF1578@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Mehul Jain <mehul.jain2029@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 23:16:14 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Elliott Cable <me@ell.io>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue Mar 29 23:21:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1al0zl-0007vj-IB
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 23:16:13 +0200
+	id 1al15E-0001t1-3h
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 23:21:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754401AbcC2VQI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 17:16:08 -0400
-Received: from mail-vk0-f66.google.com ([209.85.213.66]:36022 "EHLO
-	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753971AbcC2VQH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 17:16:07 -0400
-Received: by mail-vk0-f66.google.com with SMTP id z68so3969447vkg.3
-        for <git@vger.kernel.org>; Tue, 29 Mar 2016 14:16:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=jkOxLvl1MMUUb0rqp7kNlX1RDlN+q1Wkq7e6Lo6vaQY=;
-        b=xbVr7p5nm8Zmer41uRX6maiSgN3CMAQhtJt1XjM8rHu9HYz06FlWQl85KiBET3/N2H
-         1w+L+yv9FMXXB+nEeq846dAokIdC8QB2i4xhGdfc3roxi8Cjx/g/Yta56OalbaOnMa5F
-         8ziPNpfoQOls/JvaayCnnrs3hP634pdCr8DKiOAb2Tr1U2lRBAe7xFV/yQH4DHqTaTEK
-         UiDxqJOWndg413h+GttDQbSWHcQwxB4xVoLpccI+VP+BgpK6HjwP4fVpofoRxTcYhlce
-         qpWL2qnj4hijTdH8G3ezQFmvKtCufXAM5rR6Zuz0hM40ZzQNygVQatdKlTtIJeDRTGZw
-         clKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=jkOxLvl1MMUUb0rqp7kNlX1RDlN+q1Wkq7e6Lo6vaQY=;
-        b=OZFCNb8sVtfraFm4OREHWWUm7LZkr3OoivIz7hZDRTbjvaL9yujth6GjYLFyw69IU3
-         9GlAW/DE3W6A09X2JqYDAgVDtWNgUIDkZVKRr1g7ioMY3q8hlwu9pwP8u59qDI/Rk2g7
-         wgwtsdFzEz7A7hYcmT9bQCs9kUvQ4VgnbSootA7DiniEjhDo8XnJZI/RrGPM+L81E9i3
-         mEg/YYc8qYzkaY/vvU7mEnnCTtrKNN4iTs6LmXX5ZVcOTlg53HOTBTiIc2/dsB4UKWfq
-         P84K/dmrxuFILjyCEmGutoPZRXMFfJTIBcQEh4jS77R2elpHFHGs7OWhYYmX0TQV1xBp
-         CFYg==
-X-Gm-Message-State: AD7BkJIeONTgKeKXzcMpRcvzMvlC7RLIKLf4+2jnd7GSaOS1lm7UykuKRP7Y/+2sAq3mhGtKfJbw6/i2ZZmPDg==
-X-Received: by 10.159.36.172 with SMTP id 41mr2785095uar.123.1459286166646;
- Tue, 29 Mar 2016 14:16:06 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Tue, 29 Mar 2016 14:16:06 -0700 (PDT)
-In-Reply-To: <1459258200-32444-6-git-send-email-mehul.jain2029@gmail.com>
-X-Google-Sender-Auth: BDP9qe_hch8KgOkSJzJwkD-tn-8
+	id S1754571AbcC2VVs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 17:21:48 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40280 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754354AbcC2VVr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 17:21:47 -0400
+Received: (qmail 10613 invoked by uid 102); 29 Mar 2016 21:21:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Mar 2016 17:21:46 -0400
+Received: (qmail 27886 invoked by uid 107); 29 Mar 2016 21:21:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Mar 2016 17:21:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Mar 2016 17:21:43 -0400
+Content-Disposition: inline
+In-Reply-To: <20160329205208.GF1578@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290197>
 
-On Tue, Mar 29, 2016 at 9:30 AM, Mehul Jain <mehul.jain2029@gmail.com> wrote:
-> "--[no-]autostash" option for git-pull is only valid in rebase mode.
-> That is, either --rebase is used or pull.rebase=true. Existing tests
-> already check the cases when --rebase is used but fails to check for
-> pull.rebase=true case.
->
-> Add two new tests to check that --[no-]autostash option works with
-> pull.rebase=true.
->
-> Signed-off-by: Mehul Jain <mehul.jain2029@gmail.com>
-> ---
-> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-> @@ -316,6 +316,26 @@ test_expect_success 'pull.rebase' '
-> +test_expect_success 'pull --autostash & pull.rebase=true' '
-> +       test_config pull.rebase true &&
-> +       git reset --hard before-rebase &&
-> +       echo dirty >new_file &&
-> +       git add new_file &&
-> +       git pull --autostash . copy &&
-> +       test_cmp_rev HEAD^ copy &&
-> +       test "$(cat new_file)" = dirty &&
-> +       test "$(cat file)" = "modified again"
-> +'
+On Tue, Mar 29, 2016 at 09:52:08PM +0100, John Keeping wrote:
 
-With the exception of the missing --rebase argument, this is exactly
-the same code as in test_rebase_autostash(), right? Rather than
-repeating this code yet again, it might be nice to augment that
-function to accept a (possibly) optional argument controlling whether
---rebase is used.
+> > Yeah, I think this is a bug. Presumably what is happening is that we are
+> > too eager to "cd $GIT_WORK_TREE" inside git-rev-parse, and by the time
+> > we ask "are we in a work tree", the answer has become yes. But the
+> > caller really wants to know "am _I_ inside the work tree".
+> 
+> I don't think that's what's happening.  Try:
+> 
+> 	$ cd .git/
+> 	$ GIT_WORK_TREE=.. git rev-parse --is-inside-work-tree
+> 	true
+> 
+> so I think it's that we refuse to assume that the directory above a Git
+> directory is a working tree (something similar happens when the
+> "core.worktree" config variable is set).  I'm not convinced that's
+> unreasonable.
 
-> +
-> +test_expect_success 'pull --no-autostash & pull.rebase=true' '
-> +       test_config pull.rebase true &&
-> +       git reset --hard before-rebase &&
-> +       echo dirty >new_file &&
-> +       git add new_file &&
-> +       test_must_fail git pull --no-autostash . copy 2>err &&
-> +       test_i18ngrep "Cannot pull with rebase: Your index contains uncommitted changes." err
-> +'
+Yeah, you're right, but I'm not sure how your example shows that, (isn't
+it basically the same as Elliott's original, except using a relative
+path?). A more compelling counter-example to my hypothesis is:
 
-Ditto with regard to test_rebase_no_autostash() (or
-test_rebase_autostash_fail() as I suggested in my patch 4/5 review).
+  $ cd .git
+  $ GIT_WORK_TREE=/tmp git rev-parse --is-inside-work-tree
+  false
+
+So it is not that we chdir too early, but just that we blindly check "is
+$(pwd) inside $GIT_WORK_TREE". And it does not create a problem for the
+normal discovered-path cases, because either:
+
+  - we discovered .git by walking up the directory tree, which means we
+    must be in a work-tree
+
+  - we discovered that we are inside a .git directory, and therefore
+    take it to be bare (and thus there is no work tree, and we cannot be
+    inside it). This is what happens in Elliott's original example that
+    behaves differently than the $GIT_WORK_TREE case.
+
+I'd be tempted to say that "inside the work tree" is further clarified
+to "not inside the $GIT_DIR". But as you note:
+
+> However, the case above also gives:
+> 
+> 	$ GIT_WORK_TREE=.. git rev-parse --is-inside-git-dir
+> 	false
+> 	$ test $(pwd) = $(GIT_WORK_TREE=.. git rev-parse --git-dir); echo $?
+> 	0
+> 
+> so even though $PWD *is* the Git directory, we're not in the Git
+> directory!  Setting GIT_DIR=$(pwd) makes no different to that.
+
+We seem to get that wrong. I'm also not sure if it would make sense if
+you explicitly set the two to be equal, like:
+
+  # checking in your own refs?
+  GIT_WORK_TREE=$(pwd) GIT_DIR=$(pwd) git add refs packed-refs
+
+So the current behavior may just be weird-but-true.
+
+-Peff
