@@ -1,127 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Fix http-backend reading till EOF, ignoring
- CONTENT_LENGTH, violating rfc3875 -- WAS: Problem with git-http-backend.exe
- as iis cgi
-Date: Tue, 29 Mar 2016 16:13:49 -0400
-Message-ID: <20160329201349.GB9527@sigill.intra.peff.net>
-References: <F0F5A56A22F20D4CB4A03BB8D6658797E261A3D6@SERVER2011.CS-SOFTWARE.local>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH 00/21] replacement for dt/refs-backend-lmdb v7 patch
+ 04/33
+Date: Tue, 29 Mar 2016 16:12:50 -0400
+Organization: Twitter
+Message-ID: <1459282370.2976.7.camel@twopensource.com>
+References: <cover.1458723959.git.mhagger@alum.mit.edu>
+	 <1458802034.28595.8.camel@twopensource.com> <56F76E2C.5030700@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Chris Packham <judge.packham@gmail.com>,
-	Konstantin Khomoutov <kostix+git@007spb.ru>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Florian Manschwetus <manschwetus@cs-software-gmbh.de>
-X-From: git-owner@vger.kernel.org Tue Mar 29 22:20:40 2016
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, peff@peff.net, pclouds@gmail.com,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 22:21:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1al01g-0007mC-82
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 22:14:08 +0200
+	id 1al00m-0006bQ-T8
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 22:13:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758184AbcC2UN5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 16:13:57 -0400
-Received: from cloud.peff.net ([50.56.180.127]:40144 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758178AbcC2UNw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 16:13:52 -0400
-Received: (qmail 6841 invoked by uid 102); 29 Mar 2016 20:13:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Mar 2016 16:13:52 -0400
-Received: (qmail 26080 invoked by uid 107); 29 Mar 2016 20:13:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Mar 2016 16:13:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Mar 2016 16:13:49 -0400
-Content-Disposition: inline
-In-Reply-To: <F0F5A56A22F20D4CB4A03BB8D6658797E261A3D6@SERVER2011.CS-SOFTWARE.local>
+	id S932490AbcC2UNC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 16:13:02 -0400
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:33486 "EHLO
+	mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932448AbcC2UMx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 16:12:53 -0400
+Received: by mail-qk0-f176.google.com with SMTP id s5so11167953qkd.0
+        for <git@vger.kernel.org>; Tue, 29 Mar 2016 13:12:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:mime-version:content-transfer-encoding;
+        bh=nbGPcxn7VxUbINntwfZCxUL2bQalf+Bv0IVELmyTHnE=;
+        b=ZSZ0Jd+ugrzsRwZEHZUErOUi7HATx+JIHiKOe6qkdNpL6gz3s1ggpLNWZj2q873RD9
+         a4PNEl4W94w8nMa6t7o6+/SzOsBzYSi/O8vlxN97vcLX0ge/M/bMv299P483nEAG0YFF
+         LddAphKn4qqm9a3zXy8IrB5bp6kBPDzQ9rjz5oT/xh+tQeDIv41zK4fuWSnR56wJqCCC
+         e1gzBwmwidMAOCn5OJgImGc/0+Tmxyj153znRjkO6DC9KnKdYv+m6WCkY0CJrUo28V/M
+         4F+ErDJ0PnTVZHTjSHc//QdajKs47t9zVr4uZ6TiYVLoPFyujt1aR8o2K2N2jvxn4Tfq
+         TPIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:mime-version:content-transfer-encoding;
+        bh=nbGPcxn7VxUbINntwfZCxUL2bQalf+Bv0IVELmyTHnE=;
+        b=AzFqG8pWBYcr9suvIPwEaqWyGPujmM0l4gQ/kYBXKDct8eki2709mJiiBVoZ9HPoq8
+         0w/AzfEM5ggHg9BM9hRiAiUclAiFYwutyHRJmVjJ5ecvsq3CMt8B6R73KqYtKTrDeGkR
+         A0P2ee3X47g82i3d+qOW1+k8hZ0H8e/FJgKc25lWtQXOMwt5fH5vKdfI9YxjHLIWLSq+
+         39S2VqeCdaMVtgjDLF/IuNtlnOtYdaB16cng+jYnz0tm1pQlZ8UrYkS2ce41Q38Rwx6x
+         7NDrqaByRe6h6AbS5+LaS24clK3IGGxPGnRe2wU3aAnKJKyG49xCdShwFIwqP4TDh3xh
+         gBIQ==
+X-Gm-Message-State: AD7BkJLMlPvdZge0K9DJk0okMvKPtxfvU7014WJFICNKeOyqZ2QP9i+Yn++8F9q3EuGEow==
+X-Received: by 10.55.77.12 with SMTP id a12mr5307024qkb.44.1459282372582;
+        Tue, 29 Mar 2016 13:12:52 -0700 (PDT)
+Received: from ubuntu (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
+        by smtp.gmail.com with ESMTPSA id z65sm196405qhz.9.2016.03.29.13.12.50
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 29 Mar 2016 13:12:51 -0700 (PDT)
+In-Reply-To: <56F76E2C.5030700@alum.mit.edu>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290184>
 
-On Tue, Mar 29, 2016 at 10:38:23AM +0000, Florian Manschwetus wrote:
+On Sun, 2016-03-27 at 07:22 +0200, Michael Haggerty wrote:
+> On 03/24/2016 07:47 AM, David Turner wrote:
+> > [...]
+> > I incorporated your changes into the lmdb backend.  To make merging
+> > later more convenient, I rebased on top of pu -- I think this
+> > mainly
+> > depends on jk/check-repository-format, but I also included some
+> > fixes
+> > for a couple of tests that had been changed by other patches.
+> 
+> I think rebasing changes on top of pu is counterproductive. I believe
+> that Junio had extra work rebasing your earlier series onto a merge
+> of
+> the minimum number of topics that it really depended on. There is no
+> way
+> that he could merge the branch in this form because it would imply
+> merging all of pu.
+> 
+> See the zeroth section of SubmittingPatches [1] for the guidelines.
 
-> > | A request-body is supplied with the request if the CONTENT_LENGTH is 
-> > | not NULL.  The server MUST make at least that many bytes available 
-> > | for the script to read.  The server MAY signal an end-of-file 
-> > | condition after CONTENT_LENGTH bytes have been read or it MAY supply 
-> > | extension data.  Therefore, the script MUST NOT attempt to read more 
-> > | than CONTENT_LENGTH bytes, even if more data is available.  However, 
-> > | it is not obliged to read any of the data.
-> >
-> > So yes, if Git currently reads until EOF, it's an error.
-> > The correct way would be:
-> >
-> > 1) Check to see if the CONTENT_LENGTH variable is available in the
-> >    environment.  If no, read nothing.
-> >
-> > 2) Otherwise read as many bytes it specifies, and no more.
-> >
-> > 1. https://www.ietf.org/rfc/rfc3875
+I'm a bit confused because 
+[PATCH 18/21] get_default_remote(): remove unneeded flag variable
 
-I don't think the second part of (1) will work very well if the client
-sends a chunked transfer-encoding (which git will do if the input is large). In
-such a case the server would either have to buffer the entire input to
-find its length, or stream the data to the CGI without setting
-$CONTENT_LENGTH. At least some servers choose the latter (including
-Apache).
+doesn't do anything on master -- it depends on some patch in pu.  And
+we definitely want to pick up jk/check-repository-format (which doesn't
+include whatever 18/21 depends on).
 
-> diff --git a/http-backend.c b/http-backend.c
-> index 8870a26..94976df 100644
-> --- a/http-backend.c
-> +++ b/http-backend.c
-> @@ -277,16 +277,32 @@ static struct rpc_service *select_service(const char *name)
->   */
->  static ssize_t read_request(int fd, unsigned char **out)
->  {
-> -	size_t len = 0, alloc = 8192;
-> -	unsigned char *buf = xmalloc(alloc);
-> +	unsigned char *buf = null;
-> +	size_t len = 0;
-> +	/* get request size */
-> +	size_t req_len = git_env_ulong("CONTENT_LENGTH",
-> +					   0);
-> +
-> +	/* check request size */
-> +	if (max_request_buffer < req_len) {
-> +		die("request was larger than our maximum size (%lu);"
-> +			    " try setting GIT_HTTP_MAX_REQUEST_BUFFER",
-> +			    max_request_buffer);
-> +	}
-> +
-> +	if (req_len <= 0) {
-> +		*out = null;
-> +		return 0;
-> +	}
-
-git-am complained that your patch did not apply, but after writing
-something similar locally, I found that t5551.25 hangs indefinitely.
-Which is not surprising. Most tests are doing very limited ref
-negotiation, so the content that hits read_request() here is small, and
-we send it in a single write with a content-length header. But t5551.25
-uses a much bigger workload, which causes the client to use a chunked
-transfer-encoding, and this code to refuse to read anything (and then
-the protocol stalls, as we are waiting for the client to say something).
-
-So I think you'd want to take a missing CONTENT_LENGTH as a hint to read
-until EOF.
-
-That also raises another issue: what happens in the paths that don't hit
-read_request()? We may also process input via:
-
-  - inflate_request(), if the client gzipped it; for well-formed input,
-    I think we'll stop reading when the gzip stream tells us there is no
-    more data, but a malformed one would have us reading until EOF,
-    regardless of what $CONTENT_LENGTH says.
-
-  - for input which we expect to be large (like incoming packfiles for a
-    push), buffer_input will be unset, and we will pass the descriptor
-    directly to a sub-program like git-index-pack. Again, for
-    well-formed input it would read just the packfile, but it may
-    actually continue to EOF.
-
-So I don't think your patch is covering all cases.
-
--Peff
+So what do you think our base should be?
