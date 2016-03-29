@@ -1,136 +1,151 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/6] submodule update --init: correct path handling in recursive submodules
-Date: Tue, 29 Mar 2016 16:54:07 -0700
-Message-ID: <xmqqoa9wvo0w.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 3/6] submodule status: correct path handling in recursive submodules
+Date: Tue, 29 Mar 2016 16:55:48 -0700
+Message-ID: <xmqqk2kkvny3.fsf@gitster.mtv.corp.google.com>
 References: <1459292558-5840-1-git-send-email-sbeller@google.com>
-	<1459292558-5840-3-git-send-email-sbeller@google.com>
+	<1459292558-5840-4-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: jacob.keller@gmail.com, git@vger.kernel.org
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Mar 30 01:54:16 2016
+X-From: git-owner@vger.kernel.org Wed Mar 30 01:55:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1al3Si-0003rp-8s
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 01:54:16 +0200
+	id 1al3UK-0004Se-45
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 01:55:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756784AbcC2XyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 19:54:11 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:62565 "EHLO
+	id S1757471AbcC2Xzw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 19:55:52 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:63646 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753174AbcC2XyK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 19:54:10 -0400
+	with ESMTP id S1754461AbcC2Xzv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 19:55:51 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A3844516BC;
-	Tue, 29 Mar 2016 19:54:09 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 867195172A;
+	Tue, 29 Mar 2016 19:55:50 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p5JbcCC3myFwzfHyoMBsgxGXmRY=; b=sNl639
-	6GHCr7+BR4myj1X12dn6CjkL7RLUR0hK22ZD5VtejH8yZXsw6AOjyff89SvJXriu
-	JyGKOz2oECIRVQxEOfMgHGCJi2gjmk20NU0hCfZq/c1G1DJvOu/5984cOB+mkRUt
-	Hs9Ce1X8OeO6ucuILDvCkO7JO8lK0+aoCL9pw=
+	:content-type; s=sasl; bh=89K4Ml6pc8q+1rVJJPOXVruu3Js=; b=c0W7Pa
+	yLlaqtKfpIuPTOFU3w3p4aNiZuOVur1PibwD7m+E2F3vSC5JL+mNTT6pWY2ae/h2
+	/eK6di/U5KdI2Q23eR5MoLeV07mqxLrRGjwOVmeWlW/16NxQb2pO4cxMr5ALqhzf
+	f/9ygYgS1F0WGcHlBg2U83aOJgYwaYIapGG4M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nB2sxC3RHD8E5zIqjl8vtR2xfI2OpYwv
-	7r0W7QgXXKxMWxtt9PJv+PqDzuIby83RQmgsdrtzY5QywSKeQMMKlE4AbweOcb4d
-	r7mO0sPUEC1DzdZZ6wITiRxhEhAGh1Aq8RrKirr8u6WWQf6ZymfJYZ93RGudo2Kb
-	7G+20aTT0+c=
+	:content-type; q=dns; s=sasl; b=buQYZQR3nDOjqTsUpWymCYZ2AsXR281A
+	dxPcOgHgep8Zdlc4+Np/o4otC3hgPC3HXV3WW/mTGEJRxKO09jZN2Jm8zpFjGRE2
+	DhsTutIeuh1ODcEGIukGVpM7EjFTmuZnocciC+huueg831+Zgsperh5X6uzXNw+0
+	T0gwwanRaC8=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9BCB1516BB;
-	Tue, 29 Mar 2016 19:54:09 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 70C7C51728;
+	Tue, 29 Mar 2016 19:55:50 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 20F2E516BA;
-	Tue, 29 Mar 2016 19:54:09 -0400 (EDT)
-In-Reply-To: <1459292558-5840-3-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Tue, 29 Mar 2016 16:02:34 -0700")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DE3AC51725;
+	Tue, 29 Mar 2016 19:55:49 -0400 (EDT)
+In-Reply-To: <1459292558-5840-4-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Tue, 29 Mar 2016 16:02:35 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8766DC62-F609-11E5-A8CB-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: C377DC74-F609-11E5-A8D4-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290228>
 
 Stefan Beller <sbeller@google.com> writes:
 
-> The new test demonstrates a failure in the code prior to this patch.
-> Instead of getting the expected
->     Submodule 'submodule' (${pwd}/submodule) registered for path '../super/submodule'
-> the `super` directory is omitted and you get
->     Submodule 'submodule' (${pwd}/submodule) registered for path '../submodule'
-> instead.
-
-Same "is this about test?" comment applies here.
-
-> That happens because the prefix is ignored in `git submodule add`, probably
-> because that function itself cannot recurse;
-
-"probably"???
-
-> it may however called by
-
-Probably "be" needs to be somewhere on this line.
-
-> recursive instances of `git submodule update`, so we need to respect the
-> `prefix`.
+> The new test which is a replica of the previous test except
+> that it executes from a sub directory. Prior to this patch
+> the test failed by having too many '../' prefixed:
 >
+>   --- expect	2016-03-29 19:02:33.087336115 +0000
+>   +++ actual	2016-03-29 19:02:33.359343311 +0000
+>   @@ -1,7 +1,7 @@
+>     b23f134787d96fae589a6b76da41f4db112fc8db ../nested1 (heads/master)
+>   -+25d56d1ddfb35c3e91ff7d8f12331c2e53147dcc ../nested1/nested2 (file2)
+>   - 5ec83512b76a0b8170b899f8e643913c3e9b72d9 ../nested1/nested2/nested3 (heads/master)
+>   - 509f622a4f36a3e472affcf28fa959174f3dd5b5 ../nested1/nested2/nested3/submodule (heads/master)
+>   ++25d56d1ddfb35c3e91ff7d8f12331c2e53147dcc ../../nested1/nested2 (file2)
+>   + 5ec83512b76a0b8170b899f8e643913c3e9b72d9 ../../../nested1/nested2/nested3 (heads/master)
+>   + 509f622a4f36a3e472affcf28fa959174f3dd5b5 ../../../../nested1/nested2/nested3/submodule (heads/master)
+>     0c90624ab7f1aaa301d3bb79f60dcfed1ec4897f ../sub1 (0c90624)
+>     0c90624ab7f1aaa301d3bb79f60dcfed1ec4897f ../sub2 (0c90624)
+>     509f622a4f36a3e472affcf28fa959174f3dd5b5 ../sub3 (heads/master)
+>
+> The path code in question:
+>   displaypath=$(relative_path "$prefix$sm_path")
+>   prefix=$displaypath
+>   if recursive:
+>     eval cmd_status
+>
+> That way we change `prefix` each iteration to contain another
+> '../', because of the the relative_path computation is done
+> on an already computed relative path.
+>
+> We must call relative_path exactly once with `wt_prefix` non empty.
+> Further calls in recursive instances to to calculate the displaypath
+> already incorporate the correct prefix from before. Fix the issue by
+> clearing `wt_prefix` in recursive calls.
+
+OK, nicely analyzed and explained.
+
 > Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
->  git-submodule.sh            |  2 +-
->  t/t7406-submodule-update.sh | 33 +++++++++++++++++++++++++++++++++
->  2 files changed, 34 insertions(+), 1 deletion(-)
+>  git-submodule.sh             |  1 +
+>  t/t7407-submodule-foreach.sh | 21 +++++++++++++++++++++
+>  2 files changed, 22 insertions(+)
 >
 > diff --git a/git-submodule.sh b/git-submodule.sh
-> index 2838069..fdb5fbd 100755
+> index fdb5fbd..11ed32a 100755
 > --- a/git-submodule.sh
 > +++ b/git-submodule.sh
-> @@ -474,7 +474,7 @@ cmd_init()
->  		die_if_unmatched "$mode"
->  		name=$(git submodule--helper name "$sm_path") || exit
->  
-> -		displaypath=$(relative_path "$sm_path")
-> +		displaypath=$(relative_path "$prefix$sm_path")
->  
->  		# Copy url setting when it is not set yet
->  		if test -z "$(git config "submodule.$name.url")"
-> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-> index 68ea31d..9a4ba41 100755
-> --- a/t/t7406-submodule-update.sh
-> +++ b/t/t7406-submodule-update.sh
-> @@ -63,6 +63,10 @@ test_expect_success 'setup a submodule tree' '
->  	 git submodule add ../none none &&
->  	 test_tick &&
->  	 git commit -m "none"
-> +	) &&
-> +	git clone . recursivesuper &&
-> +	( cd recursivesuper
-> +	 git submodule add ../super super
->  	)
+> @@ -1160,6 +1160,7 @@ cmd_status()
+>  			(
+>  				prefix="$displaypath/"
+>  				clear_local_git_env
+> +				wt_prefix=
+>  				cd "$sm_path" &&
+>  				eval cmd_status
+>  			) ||
+
+Makes sense.
+
+Thanks.
+
+
+> diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
+> index 776b349..4b35e12 100755
+> --- a/t/t7407-submodule-foreach.sh
+> +++ b/t/t7407-submodule-foreach.sh
+> @@ -277,6 +277,27 @@ test_expect_success 'ensure "status --cached --recursive" preserves the --cached
+>  	test_cmp expect actual
 >  '
 >  
-> @@ -95,6 +99,35 @@ test_expect_success 'submodule update from subdirectory' '
->  	)
->  '
->  
-> +supersha1=$(cd super && git rev-parse HEAD)
-
-Perhaps "git -C super rev-parse HEAD"?
-
-> +test_expect_success 'submodule update --init --recursive from subdirectory' '
-> +	git -C recursivesuper/super reset --hard HEAD^ &&
-> +	(cd recursivesuper &&
-> +	 mkdir tmp &&
-> +	 cd tmp &&
-> +	 git submodule update --init --recursive ../super >../../actual
+> +nested2sha1=$(git -C clone3/nested1/nested2 rev-parse HEAD)
+> +
+> +cat > expect <<EOF
+> + $nested1sha1 ../nested1 (heads/master)
+> ++$nested2sha1 ../nested1/nested2 (file2)
+> + $nested3sha1 ../nested1/nested2/nested3 (heads/master)
+> + $submodulesha1 ../nested1/nested2/nested3/submodule (heads/master)
+> + $sub1sha1 ../sub1 ($sub1sha1_short)
+> + $sub2sha1 ../sub2 ($sub2sha1_short)
+> + $sub3sha1 ../sub3 (heads/master)
+> +EOF
+> +
+> +test_expect_success 'test "status --recursive" from sub directory' '
+> +	(
+> +		cd clone3 &&
+> +		mkdir tmp && cd tmp &&
+> +		git submodule status --recursive > ../../actual
 > +	) &&
 > +	test_cmp expect actual
 > +'
 > +
->  apos="'";
->  test_expect_success 'submodule update does not fetch already present commits' '
->  	(cd submodule &&
+>  test_expect_success 'use "git clone --recursive" to checkout all submodules' '
+>  	git clone --recursive super clone4 &&
+>  	(
