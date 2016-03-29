@@ -1,76 +1,83 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
+From: Sven Strickroth <sven@cs-ware.de>
 Subject: Re: [PATCH 1/2] MSVC: vsnprintf in Visual Studio 2015 doesn't need
  SNPRINTF_SIZE_CORR any more
-Date: Tue, 29 Mar 2016 21:09:19 +0200
-Message-ID: <CAHGBnuP1Y1F-CrQJx9zNKSv1KP7gH86WSKo7tbmcYT3Vf2cQ_g@mail.gmail.com>
+Date: Tue, 29 Mar 2016 21:13:33 +0200
+Message-ID: <56FAD3DD.4060009@cs-ware.de>
 References: <56FAAC78.2040304@cs-ware.de>
+ <CAHGBnuP1Y1F-CrQJx9zNKSv1KP7gH86WSKo7tbmcYT3Vf2cQ_g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	blees@dcon.de
-To: Sven Strickroth <sven@cs-ware.de>
-X-From: git-owner@vger.kernel.org Tue Mar 29 21:09:26 2016
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 21:13:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akz13-0003Lf-KN
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 21:09:26 +0200
+	id 1akz5J-0005Om-4t
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 21:13:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753762AbcC2TJV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 15:09:21 -0400
-Received: from mail-vk0-f67.google.com ([209.85.213.67]:34470 "EHLO
-	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753632AbcC2TJU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 15:09:20 -0400
-Received: by mail-vk0-f67.google.com with SMTP id e6so3545276vkh.1
-        for <git@vger.kernel.org>; Tue, 29 Mar 2016 12:09:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=Bj58BpZwHC3YoSq4u74ljQdERSJUMCSOB4UN44VtPeQ=;
-        b=YDMwuLm9jKg0BBF4XKXPW7ULEIO2m3Shf28CoheJRA/aHN0/eWQZMRomn7v0jKkBlK
-         tkOH7a0dEO8HZ1jum9NAO+I4GRdFyxsYHz1O/VljDT1DlFeBdX7sqq1srhyYNhvh5yRa
-         1oNVlRVwuurf2A35+GO9Lg8nojo6NRhd0rRTOgTvVtLWMOgghJ6EHDKGwg8mDPW0r9pW
-         pPM5/F9hWd9pVlGFaVzVvNvUQHHkEIrav9cLTM56qezElo7wponPmJon3a3uhUsXbEZF
-         VmQrrbhSQKrs5iZrFxGFjJ00/5DOylBoIX6WMMIuDHTDspoh7SHXHj5nwRWZ0gcgrblH
-         6T/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=Bj58BpZwHC3YoSq4u74ljQdERSJUMCSOB4UN44VtPeQ=;
-        b=GcxqZkx66m1jvCs9u0hFcSypde17JOhcWZ0k6h/tCKyHrl7mRp+bIkzDxmLa1f6b5S
-         QCJ2wELT9vY94RekFl0bZXlArM0CM5/J7PS5Nsx4kCtfTl2EuSEMBCqNsODd5lg6rtw3
-         iYzOLB0DZgBF315afT7WlqR+snNRkGI35DIMqNKomwnmoO6sQysWJLY+3SPlAo/KGFXk
-         ZoOZNeerMGlq0aeNMkmIT1Ac0y/NVc8kBeGhTGHwBv+B4czEw9NkqwE0Z1bylm9s5nnJ
-         eoCTvNhJTWrLhtUIwLShwpUJVeMORGFk0jdy8dSe/SAMhn3Dt8V3AMXaRG3yc0dJUOUo
-         Gd1A==
-X-Gm-Message-State: AD7BkJKh8LDg9JpWKjkZHHX2do64jo9kjM45NNc+0unrOqRLDg43RZgT3nXkgoNaoqThwLusUfC2+t9sHCtmrw==
-X-Received: by 10.159.36.39 with SMTP id 36mr2285059uaq.16.1459278559045; Tue,
- 29 Mar 2016 12:09:19 -0700 (PDT)
-Received: by 10.176.68.6 with HTTP; Tue, 29 Mar 2016 12:09:19 -0700 (PDT)
-In-Reply-To: <56FAAC78.2040304@cs-ware.de>
+	id S1753865AbcC2TNp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 15:13:45 -0400
+Received: from srv1.79p.de ([213.239.234.118]:53572 "EHLO srv1.79p.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753553AbcC2TNo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 15:13:44 -0400
+X-Virus-Scanned: Debian amavisd-new at srv1.79p.de
+Received: from [IPv6:2003:88:6f26:c00:d0ba:9b5:8751:68b6] (p200300886F260C00D0BA09B5875168B6.dip0.t-ipconnect.de [IPv6:2003:88:6f26:c00:d0ba:9b5:8751:68b6])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: sven@cs-ware.de)
+	by srv1.79p.de (Postfix) with ESMTPSA id E3DF8224474;
+	Tue, 29 Mar 2016 21:13:38 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=cs-ware.de;
+	s=mail2015b; t=1459278820;
+	bh=Pp1drHqLhsbFAKt866ueYNWiFEQH93Ax0n5UbnWCPRM=;
+	h=Subject:To:References:Cc:From:Date:In-Reply-To;
+	b=u8YnBhcrHOY1LEMomXQX/u0YlL+y2cTNLBkq5OxKvTEV3qB8xL7lbC1BJUZLOB+aH
+	 PxRlBXM0pWrK8LI+qrf3CxFo6iVhDLqKcEf+mwk6PhQSNd/PUMbFhO3OdWYMXUMPqy
+	 20uOgO1EMUfmAkzbn08+IeIj9zINMaGx/sgZkvqE23MoCh7HIupXWJvqS8iyeV2ZoF
+	 ZVUkk0FPeC2uWlCqW5IVenEThLoxe9+p9M2BJdHFVQZuC2UZIMlnzLOoTqnyz+mo2Z
+	 tvBRIKkW3thm8mazJXwjMXJakFN5TvTj73nESANaxcojQFyLNrhsaMKqzFu03d+bkK
+	 IpzeKj/UK51kA==
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <CAHGBnuP1Y1F-CrQJx9zNKSv1KP7gH86WSKo7tbmcYT3Vf2cQ_g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290164>
 
-On Tue, Mar 29, 2016 at 6:25 PM, Sven Strickroth <sven@cs-ware.de> wrote:
-
-> In MSVC2015 the behavior of vsnprintf was changed.
-> W/o this fix there is one character missing at the end.
-
-How about adding a link to [1] in the commit message and quoting the
-central "Beginning with the UCRT in Visual Studio 2015 and Windows 10,
+"Beginning with the UCRT in Visual Studio 2015 and Windows 10,
 vsnprintf is no longer identical to _vsnprintf. The vsnprintf function
 complies with the C99 standard; _vnsprintf is retained for backward
-compatibility" statement?
+compatibility" [1]
+
+W/o this fix there is one character missing at the end.
 
 [1] https://msdn.microsoft.com/en-us/library/1kt27hek.aspx
 
+Signed-off-by: Sven Strickroth <sven@cs-ware.de>
+---
+ compat/snprintf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/compat/snprintf.c b/compat/snprintf.c
+index 42ea1ac..0b11688 100644
+--- a/compat/snprintf.c
++++ b/compat/snprintf.c
+@@ -9,7 +9,7 @@
+  * always have room for a trailing NUL byte.
+  */
+ #ifndef SNPRINTF_SIZE_CORR
+-#if defined(WIN32) && (!defined(__GNUC__) || __GNUC__ < 4)
++#if defined(WIN32) && (!defined(__GNUC__) || __GNUC__ < 4) && (!defined(_MSC_VER) || _MSC_VER < 1900)
+ #define SNPRINTF_SIZE_CORR 1
+ #else
+ #define SNPRINTF_SIZE_CORR 0
 -- 
-Sebastian Schuberth
+2.7.4.windows.1
