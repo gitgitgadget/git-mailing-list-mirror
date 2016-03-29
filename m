@@ -1,206 +1,163 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 3/3] pretty: allow tweaking tabwidth in --expand-tabs
-Date: Tue, 29 Mar 2016 16:15:09 -0700
-Message-ID: <1459293309-25195-4-git-send-email-gitster@pobox.com>
-References: <1458775426-2215-1-git-send-email-gitster@pobox.com>
- <1459293309-25195-1-git-send-email-gitster@pobox.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 30 01:15:35 2016
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [GSoC] A late proposal: a modern send-email
+Date: Wed, 30 Mar 2016 01:47:41 +0200
+Message-ID: <CACBZZX4ezKtFqyC7bnNhtvcyEkXMr8_83u_p=zA0ZvqYipzNLQ@mail.gmail.com>
+References: <CAKqreuyC8p9m_dgVpXCiT_hf=8qBA_5kZ5NABQGx0QDOiCBbww@mail.gmail.com>
+ <xmqqzitm2zkj.fsf@gitster.mtv.corp.google.com> <CAKqreux1S2ioEEjPPCkyz1NJnXJ1RyiWdM5thZD607PkL0HKuQ@mail.gmail.com>
+ <CACBZZX6q87dw6UW9z+2bAvvWu0WZcYCMD8gxW8MchHwd8Rv3kw@mail.gmail.com> <CAKqreuy0RwgxqrRf7t1AU8dM2VtkvD9gd3VnzVRe-GEieVXDNA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: =?UTF-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 30 01:48:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1al2rG-0005Qn-Ip
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 01:15:34 +0200
+	id 1al3Mo-0001hy-6G
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 01:48:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758533AbcC2XPZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 19:15:25 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:60652 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758491AbcC2XPR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 19:15:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 76D2850FB7;
-	Tue, 29 Mar 2016 19:15:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=QLl8
-	TbmZ4kry54MheyQ9fNPppgE=; b=jfgakyDvUMJgY+eFi0NzxIGSqJ/f9iQB0+LR
-	NRFnty54bThm2sFt4Sb3fk+ArIqLiruWzFrYaBgVgcrhOuTVkAvSqoY+W/nX8vkJ
-	1vCqHWWR+74yAzQtxv1QMF2zSzHhtC50MfcJX/ZYBO0GlCINZa5LxmFbMbUO3dlq
-	pEYzXiU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	Gh2fRfD5UV0kPF8qwik4wos0rD7ff/OwIcGRsjezIBYJEvBfhSYM2CvGY8eIe77e
-	yB4YQInfqRW28UBjb+GawdcVaxXdYccE11qbHcX3k10iPWdYz9yTVShIfvWW1B9c
-	Rt5XxnDbECSjPLHxNBsrTzxL1uC6r99RZXMBZZNGJrM=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6F94850FB6;
-	Tue, 29 Mar 2016 19:15:16 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AD45B50FB4;
-	Tue, 29 Mar 2016 19:15:15 -0400 (EDT)
-X-Mailer: git-send-email 2.8.0-215-gd29a7d9
-In-Reply-To: <1459293309-25195-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 1892280A-F604-11E5-8461-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1754606AbcC2XsE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2016 19:48:04 -0400
+Received: from mail-qg0-f42.google.com ([209.85.192.42]:35475 "EHLO
+	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751905AbcC2XsD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2016 19:48:03 -0400
+Received: by mail-qg0-f42.google.com with SMTP id y89so26055221qge.2
+        for <git@vger.kernel.org>; Tue, 29 Mar 2016 16:48:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Rnn3NPCheQhmJRbms0KNhl1mFkgNKX5NCcSLYDq7YCg=;
+        b=QyYuM9AyHAxbAMl90QJ9J1Cp2IN02a46UpWbhYyb9tJ5YmEk10ckX66yzvxROKyGvB
+         eUHodcSU657PB9HAse+UN2lHoa76qgvs3xtSBEUrgBP/KEi8ffHvLll6/JVje64Zn8X8
+         t+4GnwlpSKJCygVf6YCfcngewP6ONgPt2zBF55BaZSDBg721I4aDIf9gpncPWAmD0UGG
+         ljPcxL7XIlAHL6WuvhknkcJjD4DxAu1K/GtuYqg9mD6G8+FzUkEwyL4RGbs6vIyD04kF
+         HO/aXHly0w79e0OfjoHEjKnuTU1YkHclKCcskEUctZWzSP+UDWj7o8jg83xVbTQpsMAx
+         ilLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Rnn3NPCheQhmJRbms0KNhl1mFkgNKX5NCcSLYDq7YCg=;
+        b=UN/IBly+wyAobx546Caj+TxKyqcgizMwDxNTKfjX19C2xBUGUVxwvtu/n9F4ONLIwy
+         i5d58ySmdwkXf4gSR+X4dN2Fm6pa7nqhwP+mILiT0uY0BKVx1Og8WeQkH033tGP1luvk
+         KslFmytTyH6Oa19/JkknEdcwV917qsOENXcrkr+KGRRkxkNooh3Rla7AfAt2pDmxnbO2
+         SxkgxUSS3IHFDYCQAP5+uqQ+pfHTYQnMobF/FAMTHDxIS5P4KFOMUJUF1yvkNK2tAcPw
+         coj4RHJDiEx9/bu7fBBYMo9+6+bZ1S+W2sUZMTHTBB4f2i4H7sbq/s7z7y2hhA3xQCvK
+         YWjw==
+X-Gm-Message-State: AD7BkJIZcpm72VXWTALgYc1UJjqMcW5gyjJTMuRGuZaDd7phS2tIDJC0HbFVFFCex1GPL0sCRR/QL9d1arbhTA==
+X-Received: by 10.140.106.228 with SMTP id e91mr6224430qgf.75.1459295281394;
+ Tue, 29 Mar 2016 16:48:01 -0700 (PDT)
+Received: by 10.55.77.82 with HTTP; Tue, 29 Mar 2016 16:47:41 -0700 (PDT)
+In-Reply-To: <CAKqreuy0RwgxqrRf7t1AU8dM2VtkvD9gd3VnzVRe-GEieVXDNA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290225>
 
-When the local convention of the project is to use tab width that is
-not 8, it may make sense to allow "git log --expand-tabs=<n>" to
-tweak the output to match it.
+On Tue, Mar 29, 2016 at 6:17 AM, =E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqun@=
+gmail.com> wrote:
+> 2016-03-29 0:49 GMT+08:00 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <ava=
+rab@gmail.com>:
+>> On Sat, Mar 26, 2016 at 3:13 AM, =E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiq=
+un@gmail.com> wrote:
+>>> 2016-03-26 2:16 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
+>>>> =E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqun@gmail.com> writes:
+>>>>
+>>>>> # Purpose
+>>>>> The current implementation of send-email is based on perl and has=
+ only
+>>>>> a tui, it has two problems:
+>>>>> - user must install a ton of dependencies before submit a single =
+patch.
+>>>>> - tui and parameter are both not quite friendly to new users.
+>>>>
+>>>> Is "a ton of dependencies" true?  "apt-cache show git-email"
+>>>> suggests otherwise.  Is "a ton of dependencies" truly a problem?
+>>>> "apt-get install" would resolve the dependencies for you.
+>>>
+>>> There are three perl packages needed to send patch through gmail:
+>>> - perl-mime-tools
+>>> - perl-net-smtp-ssl
+>>> - perl-authen-sasl
+>>>
+>>> Yes, not too many, but is it better none of them?
+>>>
+>>> What's more, when I try to send mails, I was first disrupted by
+>>> "no perl-mime-tools" then by "no perl-net-smtp-ssl or perl-authen-s=
+asl".
+>>> Then I think, why not just a mailto link?
+>>
+>> I think your proposal should clarify a bit who these users are that
+>> find it too difficult to install these perl module dependencies. Use=
+rs
+>> on OSX & Windows I would assume, because in the case of Linux distro=
+s
+>> getting these is the equivalent of an apt-get command away.
+>
+> In fact, I'm not familiar with the build for OSX or Windows.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/pretty-options.txt | 10 ++++++----
- commit.h                         |  2 +-
- pretty.c                         | 12 ++++++------
- revision.c                       |  9 +++++++--
- revision.h                       |  3 +--
- 5 files changed, 21 insertions(+), 15 deletions(-)
+The core of your proposal rests on the assumption that
+git-send-email's implementation is problematic because it has a "ton
+of dependencies", and that this must be dealt with by implementing an
+alternate E-Mail transport method.
 
-diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
-index 23967b6..8a944b1 100644
---- a/Documentation/pretty-options.txt
-+++ b/Documentation/pretty-options.txt
-@@ -42,17 +42,19 @@ people using 80-column terminals.
- 	verbatim; this means that invalid sequences in the original
- 	commit may be copied to the output.
- 
-+--expand-tabs=<n>::
- --expand-tabs::
- --no-expand-tabs::
- 	Perform a tab expansion (replace each tab with enough number
- 	of spaces to fill to the next display column that is
--	multiple of 8) in the log message before using the message
--	to show in the output.
-+	multiple of '<n>') in the log message before using the message
-+	to show in the output.  `--expand-tabs` is a short-hand for
-+	`--expand-tabs=8`, and `--no-expand-tabs` is a short-hand for
-+	`--expand-tabs=0`, which disables tab expansion.
- +
- By default, tabs are expanded in pretty formats that indent the log
- message by 4 spaces (i.e.  'medium', which is the default, 'full',
--and "fuller').  `--no-expand-tabs` option can be used to disable
--this.
-+and "fuller').
- 
- ifndef::git-rev-list[]
- --notes[=<ref>]::
-diff --git a/commit.h b/commit.h
-index a7ef682..2185c8d 100644
---- a/commit.h
-+++ b/commit.h
-@@ -147,7 +147,7 @@ struct pretty_print_context {
- 	int preserve_subject;
- 	struct date_mode date_mode;
- 	unsigned date_mode_explicit:1;
--	unsigned expand_tabs_in_log:1;
-+	unsigned expand_tabs_in_log;
- 	int need_8bit_cte;
- 	char *notes_message;
- 	struct reflog_walk_info *reflog_info;
-diff --git a/pretty.c b/pretty.c
-index de22a8c..b340ecd 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -89,11 +89,11 @@ static void setup_commit_formats(void)
- {
- 	struct cmt_fmt_map builtin_formats[] = {
- 		{ "raw",	CMIT_FMT_RAW,		0,	0 },
--		{ "medium",	CMIT_FMT_MEDIUM,	0,	1 },
-+		{ "medium",	CMIT_FMT_MEDIUM,	0,	8 },
- 		{ "short",	CMIT_FMT_SHORT,		0,	0 },
- 		{ "email",	CMIT_FMT_EMAIL,		0,	0 },
--		{ "fuller",	CMIT_FMT_FULLER,	0,	1 },
--		{ "full",	CMIT_FMT_FULL,		0,	1 },
-+		{ "fuller",	CMIT_FMT_FULLER,	0,	8 },
-+		{ "full",	CMIT_FMT_FULL,		0,	8 },
- 		{ "oneline",	CMIT_FMT_ONELINE,	1,	0 }
- 	};
- 	commit_formats_len = ARRAY_SIZE(builtin_formats);
-@@ -1645,7 +1645,7 @@ static int pp_utf8_width(const char *start, const char *end)
- 	return width;
- }
- 
--static void strbuf_add_tabexpand(struct strbuf *sb,
-+static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
- 				 const char *line, int linelen)
- {
- 	const char *tab;
-@@ -1666,7 +1666,7 @@ static void strbuf_add_tabexpand(struct strbuf *sb,
- 		strbuf_add(sb, line, tab - line);
- 
- 		/* .. and the de-tabified tab */
--		strbuf_addchars(sb, ' ', 8 - (width % 8));
-+		strbuf_addchars(sb, ' ', tabwidth - (width % tabwidth));
- 
- 		/* Skip over the printed part .. */
- 		linelen -= tab + 1 - line;
-@@ -1692,7 +1692,7 @@ static void pp_handle_indent(struct pretty_print_context *pp,
- {
- 	strbuf_addchars(sb, ' ', indent);
- 	if (pp->expand_tabs_in_log)
--		strbuf_add_tabexpand(sb, line, linelen);
-+		strbuf_add_tabexpand(sb, pp->expand_tabs_in_log, line, linelen);
- 	else
- 		strbuf_add(sb, line, linelen);
- }
-diff --git a/revision.c b/revision.c
-index b1d767a..4f9ecbe 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1412,7 +1412,7 @@ void init_revisions(struct rev_info *revs, const char *prefix)
- 	revs->skip_count = -1;
- 	revs->max_count = -1;
- 	revs->max_parents = -1;
--	revs->expand_tabs_in_log = 1;
-+	revs->expand_tabs_in_log = 8;
- 
- 	revs->commit_format = CMIT_FMT_DEFAULT;
- 
-@@ -1917,9 +1917,14 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->pretty_given = 1;
- 		get_commit_format(arg+9, revs);
- 	} else if (!strcmp(arg, "--expand-tabs")) {
--		revs->expand_tabs_in_log = 1;
-+		revs->expand_tabs_in_log = 8;
- 	} else if (!strcmp(arg, "--no-expand-tabs")) {
- 		revs->expand_tabs_in_log = 0;
-+	} else if (skip_prefix(arg, "--expand-tabs=", &arg)) {
-+		int val;
-+		if (strtol_i(arg, 10, &val) < 0 || val < 0)
-+			die("'%s': not a non-negative integer", arg);
-+		revs->expand_tabs_in_log = val;
- 	} else if (!strcmp(arg, "--show-notes") || !strcmp(arg, "--notes")) {
- 		revs->show_notes = 1;
- 		revs->show_notes_given = 1;
-diff --git a/revision.h b/revision.h
-index 4079753..cf6615a 100644
---- a/revision.h
-+++ b/revision.h
-@@ -133,7 +133,6 @@ struct rev_info {
- 			show_notes_given:1,
- 			show_signature:1,
- 			pretty_given:1,
--			expand_tabs_in_log:1,
- 			abbrev_commit:1,
- 			abbrev_commit_given:1,
- 			zero_commit:1,
-@@ -149,7 +148,7 @@ struct rev_info {
- 			linear:1;
- 
- 	struct date_mode date_mode;
--
-+	unsigned int	expand_tabs_in_log;
- 	unsigned int	abbrev;
- 	enum cmit_fmt	commit_format;
- 	struct log_info *loginfo;
--- 
-2.8.0-215-gd29a7d9
+But you don't go into how this is a practical issue for users exactly,
+which is the rest of the proposal. I.e. "make it friendly for users".
+Let's leave the question of creating an E-Mail GUI that's shipped with
+Git aside.
+
+Correct me if I'm wrong but don't we basically have 4 kinds of users
+using git-send-email:
+
+1) Those who get it from a binary Windows package (is it even packaged =
+there?)
+2) Also a binary package, but for for OSX
+3) Users installing it via their Linux distribution's package system
+4) Users building it from source on Windows/OSX/Linux.
+
+I'm in group #3 myself for the purposes of using git-send-email and
+have never had issues with its dependencies because my distro's
+package management takes care of it for me.
+
+I don't know what the status is of packaging it is on #1 and #2, but
+that's what I'm asking about in my question, if this becomes a
+non-issue for those two groups (if it isn't already) isn't this
+question of dependencies a non-issue?
+
+I.e. why does it matter if git-send-email has N dependencies if those
+N are either packaged with the common Windows/OSX packages that most
+users use, or installed as dependencies by their *nix distro?
+
+ Group #4 is small enough and likely to be a git.git contributor or
+distro package maintainer anyway that this issue doesn't matter for
+them.
+
+>> If installing these dependencies is hard for users perhaps a better
+>> thing to focus on is altering the binary builds on Git for platforms
+>> that don't have package systems to include these dependencies.
+>
+> Why `mailto` not a good choice? I'm confusing.
+
+I'm not saying having this mailto: method you're proposing isn't good
+in itself, I think it would be very useful to be able to magically
+open git-send-email output in your favorite E-Mail client for editing
+before sending it off like you usually send E-Mail.
+
+Although I must say I'd be seriously surprised if the likes of git
+formatted patches survive contact with popular E-Mail clients when the
+body is specified via the body=3D* parameter, given that we're sending
+pretty precisely formatted content and most mailers are very eager to
+wrap lines or otherwise munge input.
+
+I'm mainly trying to get to the bottom of this dependency issue you're
+trying to solve.
+
+>> In this case it would mean shipping a statically linked OpenSSL sinc=
+e
+>> that's what these perl SSL packages eventually depend on.
