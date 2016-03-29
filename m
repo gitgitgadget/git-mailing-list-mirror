@@ -1,125 +1,145 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 2/7] submodule foreach: correct path computation in
- recursive submodules
-Date: Tue, 29 Mar 2016 12:21:21 -0700
-Message-ID: <CAGZ79ka5_C0HcWGyYThT7O2ts-B1dTkBWEt1MUsbEN-AciE15g@mail.gmail.com>
-References: <1459207703-1635-1-git-send-email-sbeller@google.com>
-	<1459207703-1635-3-git-send-email-sbeller@google.com>
-	<xmqq60w525yd.fsf@gitster.mtv.corp.google.com>
-	<xmqqk2klxg6b.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Jacob Keller <jacob.keller@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 21:21:30 2016
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [Outreachy] Git remote whitelist/blacklist
+Date: Tue, 29 Mar 2016 21:24:41 +0200
+Message-ID: <BDAD45DF-8E1B-4BD7-AE5E-FC4788BC7634@gmail.com>
+References: <CAJPOeMdLHOJqgevGz8jirx-PnvNHbAUsHknBG_1hzZ5srBseEw@mail.gmail.com> <CAJPOeMe2p0eh6Lju2L3JB8zHFKcQozNAO673FUQtrc4q5fOfrA@mail.gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 9.2 \(3112\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: elena petrashen <elena.petrashen@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 21:24:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akzCi-00008m-6m
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 21:21:28 +0200
+	id 1akzFy-0001fd-OL
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 21:24:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754035AbcC2TVX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 15:21:23 -0400
-Received: from mail-ig0-f169.google.com ([209.85.213.169]:38106 "EHLO
-	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751990AbcC2TVW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 15:21:22 -0400
-Received: by mail-ig0-f169.google.com with SMTP id ui10so13924670igc.1
-        for <git@vger.kernel.org>; Tue, 29 Mar 2016 12:21:22 -0700 (PDT)
+	id S1754149AbcC2TYr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 15:24:47 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:34188 "EHLO
+	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754561AbcC2TYp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2016 15:24:45 -0400
+Received: by mail-wm0-f45.google.com with SMTP id p65so153964652wmp.1
+        for <git@vger.kernel.org>; Tue, 29 Mar 2016 12:24:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=WyErLIG4vKblT9BgbH91cWoPfIYpbmF4ydjK3qWF7sc=;
-        b=gK2NbJ82pPvWpFLJo9wR21zx9fisGRFQ/mG5UGIKGZcKh+wZHqo3fIG9/rfGtoeEF9
-         8c03rVGwI4SAKGO/c2ZBusZ8udAvZKOkclNJa8t1V4FdTXeUA5YGzTWprAPer711Z8Xz
-         yjG+ATIO50SyhOuUJjqAGP8aN9AOwl0VfWAJh+X+FiPfRZHcANXr7WxL3IQjpeNJp98M
-         se3hB1wvD5HVZqqenLahXA5QZwHrfead3J0Ygv1xTvxyqslxpud0TnOnvStcu1Q4FKcV
-         xa3ZQDOYbe+Tz15WSeIO/JOcnbAYaf7c5TqCwmvVUxsFelm3Z/JPswaoKc1evjDx57az
-         FjGg==
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=QmhmHwfi5NG7THAw1Rku1HFVHL3wV3WyeiUh9lMzIQc=;
+        b=Mlwjgf485yykRmWxKpdiw2ZzbZxk+6MBeCIzqXxqOHeU+54uRpOnrdhyZm2BHqpboh
+         JkV38Ky2IPnSs0JibNk0qjkpVdeG6i6e3DMlAgRLCbxqW4qDIXOdJJbToNJibAGFsVFN
+         hu1Aq8l4iceU55Ds0nKC3gAcKJq4uoYJv5JGO4z7R2zXZT6gc6m5KnkjB2p1xTSH2lv3
+         KlZlegd/Vse65hsuK6aTrFPSQavSpw99r+wNDO5r1cU0NJ8cMzXY7FJktT6SHdYOMbaX
+         aO0ea3cCU0l/FG6fIZn4PShfi5gVqVbpi1kUvNn9rQdCBrA8mAw1kQS8L6Wgvvl/cL68
+         w5zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=WyErLIG4vKblT9BgbH91cWoPfIYpbmF4ydjK3qWF7sc=;
-        b=Z6C85S5m+KXphn8B3gMrkmIPs1ozayawM3GgwyV1wc7jsE99SIVDOZiEEqSC0X9CEM
-         TgRHFZY3+4y8+NAo6xKjTH2jv+1Xg3uiLH+8DswFUChcFffbyErUyvEc7AvQhysLgq0K
-         esRVYEDvjvyAPZ6Yvk048x3vKLduu2KXLLGxKPTDTrFgfGx6aKUGHLBnqo2VjgcpsZO1
-         cyLY4Wbq1ra6FOriBSxvuZ+szDnLzrU4+LmdWA+izLKvaX6lJOIn1ySxbN7jegB5n7c1
-         vzMvr/in1yEEN4Im5/zkrqwOAxqPY6FzTFvBDUF0s99f8RwkqP6ouLwge2XYlUekhEaV
-         llmQ==
-X-Gm-Message-State: AD7BkJKFTlX517p39GLBA11kd2b4m1tkx4zhqT8uBJf6IfHAfPm+ZecRqjIxIipoxtA69UDrFYQ3lWqLyRDO/nql
-X-Received: by 10.50.43.226 with SMTP id z2mr5168031igl.94.1459279281488; Tue,
- 29 Mar 2016 12:21:21 -0700 (PDT)
-Received: by 10.107.132.101 with HTTP; Tue, 29 Mar 2016 12:21:21 -0700 (PDT)
-In-Reply-To: <xmqqk2klxg6b.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=QmhmHwfi5NG7THAw1Rku1HFVHL3wV3WyeiUh9lMzIQc=;
+        b=TekyQTYsLwuV4nlRSt6OqkaiqSToX1Vczsj5Q3G7s3MP+Vp4gkK5CWGXOhVACo3Q7Y
+         TwxKZCZjQE+SNIf6f99LvYW1KDAyZ+SEmx3VwLmfYC2A/Faa7d7zZvcX+B7EgYwnYene
+         892FgGm4dB2xNIDFXSwhkfU2Qf1Ghh+EgjYyuBkvKdqO2bu1Og0z+tUzHLSuMwTk6lJB
+         ZgU72WCedf1h+wVozrg+6zPqCfBGvz7t+BWON1D9+8m2E1NT3pWdIu076e7NpJs0v8aW
+         /Qvrua0Dl8ZkQ3PE6FJS/D6skdXebLovgPb76HzT4KHpuw0yWYG6u7MTBZgPMWCz2sEC
+         T64Q==
+X-Gm-Message-State: AD7BkJJTPnkUa0rl06JAPfte/xDgrxCmMoG53M/wzWkBBZgUAkCqjeQY7LZZss2rOZ+a2g==
+X-Received: by 10.194.83.42 with SMTP id n10mr4690387wjy.20.1459279483676;
+        Tue, 29 Mar 2016 12:24:43 -0700 (PDT)
+Received: from slxbook4.fritz.box (p508BA602.dip0.t-ipconnect.de. [80.139.166.2])
+        by smtp.gmail.com with ESMTPSA id fv6sm206224wjc.12.2016.03.29.12.24.42
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 29 Mar 2016 12:24:42 -0700 (PDT)
+In-Reply-To: <CAJPOeMe2p0eh6Lju2L3JB8zHFKcQozNAO673FUQtrc4q5fOfrA@mail.gmail.com>
+X-Mailer: Apple Mail (2.3112)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290169>
 
-On Tue, Mar 29, 2016 at 12:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Stefan Beller <sbeller@google.com> writes:
->>
->>> The test which is fixed by this patch would report
->>>     Entering 'nested1/nested2/../nested3'
->>> instead of the expected
->>>     Entering '../nested1/nested2/nested3'
->>>
->>> because the prefix is put unconditionally in front and after that a
->>> computed display path with is affected by `wt_prefix`. This is wrong as
->>> any relative path computation would need to be at the front. By emptying
->>> the `wt_prefix` in recursive submodules and adding the information of any
->>> relative path into the `prefix` this is fixed.
->>>
->>> Signed-off-by: Stefan Beller <sbeller@google.com>
->>> ---
->>
->> Nicely explained and executed.
->
-> Interestingly, this breakage, as 1/7 shows, only affects the
-> "Entering $there" message--I somehow expected from reading the
-> description above that the command given to "foreach" is run
-> in a wrong submodule directory, but there is no such bug that
-> is fixed by this change, as far as "foreach" is concerned.
+Hi Elena,
 
-foreach is a special beast as it is the only submodule command that
-ignores the current directory, i.e.
-    cd repo/plugins && git submodule foreach ...
-also affects submodules in repo/other-submodules.
-
-So yeah this is only about the displaypath being relative to
-the users cwd, internally we operate from the toplevel
-directory. :/
-
->
-> Which might be an indication that it wasn't so "Nicely explained"
-> after all X-<.  Are there codepaths that use the same incorrect
-> information (which was fixed by this patch) for things other than
-> the message and chdir to an incorrect place?  Then this change is
-> fixing more than "just a bug in foreach message".
-
-Each submodule command does its own chdir and computation
-of the prefix and displaypath. The common thing is the name and
-the meaning of the variables. Currently I am redoing the other patches
-to follow this patch. Apparently I still need to hone the commit message
-to actually transport the message that this only affects the display path.
-
->
-> The explanation does not make it clear what the extent of the fix
-> is, in other words.
->
-> Nevertheless, it is a good fix for "foreach message".  Thanks.  It
-> just needs to clarify if that is the only change, or if it fixes
-> other things.
->
+sorry for the late reply. I think it is great that you are interested in the Git remote whitelist/blacklist idea. Unfortunately I don't have any experience with Outreachy and I wonder what kind of feedback you are looking for.
 
 Thanks,
-Stefan
+Lars
+
+
+> On 26 Mar 2016, at 13:15, elena petrashen <elena.petrashen@gmail.com> wrote:
+> 
+> Hi everyone,
+> 
+> I think I will submit the application as it is now, but still
+> it would be great to get feedback on it, as I don't think
+> there was no reply because everything was perfect :(
+> 
+> Thank you! And have an awesome weekend.
+> 
+> On Thu, Mar 24, 2016 at 5:50 PM, elena petrashen
+> <elena.petrashen@gmail.com> wrote:
+>> Hi,
+>> 
+>> I'm thinking of applying to Outreachy program this round with Git
+>> and the project I'm really interested in is "Git remote whitelist/blacklist"
+>> project (http://git.github.io/SoC-2016-Ideas/).
+>> I have drafted the description/timeline for this project
+>> and it would be great to get feedback/suggestions.
+>> (I'm actually a bit confused about the scale of this. The
+>> Outreachy application doesn't ask for "proposal" in the way
+>> GSoC seems to, but merely requests "details and the timeline",
+>> so I'm not sure whether the shorter description of what's planned
+>> is expected or should I go deeper in detail. I apologize if I
+>> chose a wrong approach.)
+>> 
+>> Thank you!
+>> 
+>>>> What project(s) are you interested in (these can be in the
+>> same or different organizations)?
+>> My preferred project to work on is Git remote whitelist/blacklist
+>> project listed on http://git.github.io/SoC-2016-Ideas/. I'm really
+>> interested in doing this project as I think this kind of effort is
+>> really important: I recently started using git myself, and sometimes
+>> I was really scared to push something to the location I was not
+>> supposed to push to. I would really appreciate the opportunity in
+>> participating in making git a bit more newbie-friendly.
+>> 
+>>>> Who is a possible mentor for the project you are most interested in?
+>> Lars Schneider
+>> 
+>>>> Please describe the details and the timeline of the work you
+>> plan to accomplish on the project you are most interested in (discuss
+>> these first with the mentor of the project):
+>> The goal is to provide a safer environment for newcomers to Git to
+>> enabling the possibility to modify git config, adding there "allowed"
+>> and "denied" remotes for pushing. Code, tests, and documentation
+>> are to be created.
+>> 
+>> Timeline:
+>> 0. Analysis
+>>  Apr 22 - May 22 - studying the current code and drafting the
+>> implementation proposal
+>> 1. Design
+>> a. May 22-June 1 - discussion with the mentor regarding the task,
+>> presenting the approach and amending it per mentor's feedback
+>> b. June 1st-June 15th - communicating with the community
+>> regarding the suggested changes and agreeing on logic, scope
+>> and format of changes.
+>> 2. Development
+>> c. June 15th-July 1st - submitting code for the first basic version,
+>> amending it according to the feedback
+>> d. July 1st - July 15th - extending the code to cover all of the
+>> agreed scope
+>> e. July 15th - Aug 1st - finalizing full coverage with tests and
+>> documentation
+>> 3. Evaluation
+>> f. Aug 1st - Aug 23rd - adding nice-to-have features and other
+>> suggestion by the community
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
