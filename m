@@ -1,97 +1,122 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH 00/21] replacement for dt/refs-backend-lmdb v7 patch
- 04/33
-Date: Tue, 29 Mar 2016 16:12:50 -0400
-Organization: Twitter
-Message-ID: <1459282370.2976.7.camel@twopensource.com>
-References: <cover.1458723959.git.mhagger@alum.mit.edu>
-	 <1458802034.28595.8.camel@twopensource.com> <56F76E2C.5030700@alum.mit.edu>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 2/5] t/t5520: explicitly unset rebase.autostash
+Date: Tue, 29 Mar 2016 16:16:31 -0400
+Message-ID: <CAPig+cROGO0kSgTL7OpLGYN+cA7RKWHz0ES=h+FNDREcp65GJA@mail.gmail.com>
+References: <1459258200-32444-1-git-send-email-mehul.jain2029@gmail.com>
+	<1459258200-32444-3-git-send-email-mehul.jain2029@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, peff@peff.net, pclouds@gmail.com,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 22:21:08 2016
+To: Mehul Jain <mehul.jain2029@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 22:21:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1al00m-0006bQ-T8
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 22:13:13 +0200
+	id 1al047-0002oU-8G
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 22:16:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932490AbcC2UNC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 16:13:02 -0400
-Received: from mail-qk0-f176.google.com ([209.85.220.176]:33486 "EHLO
-	mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932448AbcC2UMx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 16:12:53 -0400
-Received: by mail-qk0-f176.google.com with SMTP id s5so11167953qkd.0
-        for <git@vger.kernel.org>; Tue, 29 Mar 2016 13:12:53 -0700 (PDT)
+	id S1758098AbcC2UQd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 16:16:33 -0400
+Received: from mail-vk0-f68.google.com ([209.85.213.68]:34948 "EHLO
+	mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758073AbcC2UQc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 16:16:32 -0400
+Received: by mail-vk0-f68.google.com with SMTP id e185so3744720vkb.2
+        for <git@vger.kernel.org>; Tue, 29 Mar 2016 13:16:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:mime-version:content-transfer-encoding;
-        bh=nbGPcxn7VxUbINntwfZCxUL2bQalf+Bv0IVELmyTHnE=;
-        b=ZSZ0Jd+ugrzsRwZEHZUErOUi7HATx+JIHiKOe6qkdNpL6gz3s1ggpLNWZj2q873RD9
-         a4PNEl4W94w8nMa6t7o6+/SzOsBzYSi/O8vlxN97vcLX0ge/M/bMv299P483nEAG0YFF
-         LddAphKn4qqm9a3zXy8IrB5bp6kBPDzQ9rjz5oT/xh+tQeDIv41zK4fuWSnR56wJqCCC
-         e1gzBwmwidMAOCn5OJgImGc/0+Tmxyj153znRjkO6DC9KnKdYv+m6WCkY0CJrUo28V/M
-         4F+ErDJ0PnTVZHTjSHc//QdajKs47t9zVr4uZ6TiYVLoPFyujt1aR8o2K2N2jvxn4Tfq
-         TPIw==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=+nyHLvIgRhZi9ZIMK91ORSbKEPS/kPb51jtOqSPCci8=;
+        b=jdzsr1GIRpLGrW4hCd1BRECpe5DSLIuSa5qi8wdnN5LVZpNYr9DrC6HxmF6mnBL2SR
+         CSClvY0+SNXzieAZUPfUiRqxMl1TNUiTtmHZy3bJAz/BB/FllgASY9kocT3eVTaUJntq
+         06pxdHRpIXTJ0BbtgmaGMqDAa2kycZFAniKxuJXbE3UK2Fn+4IidEfeBinZFfmtgMkYY
+         j02i+oC+iR6rAO+QRwPXXwLYJEw6LBoE/b4bU8OzKUAFY+wQ+2AlAm3GBZI+yUV88P2J
+         Z7wW0u1fdyHBA7yIS3M7KyBejwiaTGVv33nHqRKgdfTVL6vXPwDsgzVfhfx2qWHufj9B
+         TvBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=nbGPcxn7VxUbINntwfZCxUL2bQalf+Bv0IVELmyTHnE=;
-        b=AzFqG8pWBYcr9suvIPwEaqWyGPujmM0l4gQ/kYBXKDct8eki2709mJiiBVoZ9HPoq8
-         0w/AzfEM5ggHg9BM9hRiAiUclAiFYwutyHRJmVjJ5ecvsq3CMt8B6R73KqYtKTrDeGkR
-         A0P2ee3X47g82i3d+qOW1+k8hZ0H8e/FJgKc25lWtQXOMwt5fH5vKdfI9YxjHLIWLSq+
-         39S2VqeCdaMVtgjDLF/IuNtlnOtYdaB16cng+jYnz0tm1pQlZ8UrYkS2ce41Q38Rwx6x
-         7NDrqaByRe6h6AbS5+LaS24clK3IGGxPGnRe2wU3aAnKJKyG49xCdShwFIwqP4TDh3xh
-         gBIQ==
-X-Gm-Message-State: AD7BkJLMlPvdZge0K9DJk0okMvKPtxfvU7014WJFICNKeOyqZ2QP9i+Yn++8F9q3EuGEow==
-X-Received: by 10.55.77.12 with SMTP id a12mr5307024qkb.44.1459282372582;
-        Tue, 29 Mar 2016 13:12:52 -0700 (PDT)
-Received: from ubuntu (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id z65sm196405qhz.9.2016.03.29.13.12.50
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 29 Mar 2016 13:12:51 -0700 (PDT)
-In-Reply-To: <56F76E2C.5030700@alum.mit.edu>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=+nyHLvIgRhZi9ZIMK91ORSbKEPS/kPb51jtOqSPCci8=;
+        b=YgToe/yRft9t1NQgXmbBH65M/snjtjTGbXFZlHcidxRvjXHbAf9YSGLTtZJaymYN/4
+         uRNABLtnqAMIrTuLPhPiTBwiCqRutesngzb8J91xsSn8EnR/k8BOEAI3xxkiCrqOwkNa
+         RyiKvQRlOe92BeWv1+1r8TLkB//M2zGLxLBK97LV3bBcBe7agUhY2Y8H0NkqorSDi4Wr
+         zpoxK80cG6869BiEbwsSCHc5ZOGw9QVlqO78kFtOjmVwGcJQGcZyDjv22EWCFxnw7EaI
+         TBrrGmRVvPf6Wp9xu6JySXVzWU2Ygt/CZutw+x5+KU5EjLwUqs7B3uFJnDBf3MyxDCzb
+         jn5A==
+X-Gm-Message-State: AD7BkJLuv4dzeyWVRNkhaqi6u2mugsOPzAi+33M3BabHORHY9FaHSPVUjVkwNFRMckpr0+0IPAlTXapOHleXnw==
+X-Received: by 10.31.21.4 with SMTP id 4mr2638886vkv.151.1459282591220; Tue,
+ 29 Mar 2016 13:16:31 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Tue, 29 Mar 2016 13:16:31 -0700 (PDT)
+In-Reply-To: <1459258200-32444-3-git-send-email-mehul.jain2029@gmail.com>
+X-Google-Sender-Auth: bFmZYCgn7WdTI8Wdg8fjjkLmhsg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290185>
 
-On Sun, 2016-03-27 at 07:22 +0200, Michael Haggerty wrote:
-> On 03/24/2016 07:47 AM, David Turner wrote:
-> > [...]
-> > I incorporated your changes into the lmdb backend.  To make merging
-> > later more convenient, I rebased on top of pu -- I think this
-> > mainly
-> > depends on jk/check-repository-format, but I also included some
-> > fixes
-> > for a couple of tests that had been changed by other patches.
-> 
-> I think rebasing changes on top of pu is counterproductive. I believe
-> that Junio had extra work rebasing your earlier series onto a merge
-> of
-> the minimum number of topics that it really depended on. There is no
-> way
-> that he could merge the branch in this form because it would imply
-> merging all of pu.
-> 
-> See the zeroth section of SubmittingPatches [1] for the guidelines.
+On Tue, Mar 29, 2016 at 9:29 AM, Mehul Jain <mehul.jain2029@gmail.com> wrote:
+> t/t5520: explicitly unset rebase.autostash
 
-I'm a bit confused because 
-[PATCH 18/21] get_default_remote(): remove unneeded flag variable
+As with patch 1/5, this subject is written at too low a level, talking
+about details of the patch rather than giving a high-level overview.
+What the patch is really doing is ensuring consistent conditions
+within the test even if some future change pollutes the global
+configuration. Maybe:
 
-doesn't do anything on master -- it depends on some patch in pu.  And
-we definitely want to pick up jk/check-repository-format (which doesn't
-include whatever 18/21 depends on).
+    t5520: ensure consistent test conditions
 
-So what do you think our base should be?
+or:
+
+    t5520: make test expectations explicit
+
+or something.
+
+> Tests title suggest that tests are done with rebase.autostash unset,
+> but doesn not take any action to make sure that it is indeed unset.
+
+This is just paraphrasing my earlier review comment[1], however,
+"suggest" is a weak argument for why this change is desirable. State
+instead that this change ensures a consistent condition for tests in
+which rebase.autostash should not be set and protects against some
+future change polluting the global configuration.
+
+> Make sure that rebase.autostash is unset by explicitly setting it.
+
+The patch itself looks ok.
+
+[1]: http://article.gmane.org/gmane.comp.version-control.git/289860
+
+> Signed-off-by: Mehul Jain <mehul.jain2029@gmail.com>
+> ---
+>  t/t5520-pull.sh | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+> index 5be39df..9ee2218 100755
+> --- a/t/t5520-pull.sh
+> +++ b/t/t5520-pull.sh
+> @@ -279,6 +279,7 @@ test_expect_success 'pull --rebase --autostash & rebase.autostash=false' '
+>  '
+>
+>  test_expect_success 'pull --rebase: --autostash & rebase.autostash unset' '
+> +       test_unconfig rebase.autostash &&
+>         git reset --hard before-rebase &&
+>         echo dirty >new_file &&
+>         git add new_file &&
+> @@ -307,6 +308,7 @@ test_expect_success 'pull --rebase --no-autostash & rebase.autostash=false' '
+>  '
+>
+>  test_expect_success 'pull --rebase --no-autostash & rebase.autostash unset' '
+> +       test_unconfig rebase.autostash &&
+>         git reset --hard before-rebase &&
+>         echo dirty >new_file &&
+>         git add new_file &&
+> --
+> 2.7.1.340.g69eb491.dirty
