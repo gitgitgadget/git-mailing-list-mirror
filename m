@@ -1,171 +1,92 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v1 6/7] correct blame for files commited with CRLF
-Date: Tue, 29 Mar 2016 21:51:07 +0200
-Message-ID: <56FADCAB.1010201@web.de>
-References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
- <1459257938-17389-1-git-send-email-tboegi@web.de>
- <xmqqa8lhyzbq.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: `git rev-parse --is-inside-work-tree` and $GIT_WORK_TREE
+Date: Tue, 29 Mar 2016 12:56:41 -0700
+Message-ID: <xmqq60w5xdl2.fsf@gitster.mtv.corp.google.com>
+References: <CAPZ477NxXVNNwDvzaFt7GoUGuJwnOuX3y1N+aPtVRFD3E8dQBA@mail.gmail.com>
+	<CAPZ477PD7SkRg7T_Y_n27Hjw5TeW6Sh0-vtoP6-4xUDraC7OiA@mail.gmail.com>
+	<20160329123306.GD1578@serenity.lan>
+	<xmqqshz9z5hu.fsf@gitster.mtv.corp.google.com>
+	<20160329194156.GA9527@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>, tboegi@web.de
-X-From: git-owner@vger.kernel.org Tue Mar 29 21:53:13 2016
+Content-Type: text/plain
+Cc: John Keeping <john@keeping.me.uk>, Elliott Cable <me@ell.io>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 29 21:57:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akzfs-0004y5-Ur
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 21:51:37 +0200
+	id 1akzl0-0000eG-8f
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 21:56:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754059AbcC2Tvc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2016 15:51:32 -0400
-Received: from mout.web.de ([212.227.15.4]:51617 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753251AbcC2Tvb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 15:51:31 -0400
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb002) with
- ESMTPSA (Nemesis) id 0MGRMG-1aXoNL1N3Y-00DEhb; Tue, 29 Mar 2016 21:51:19
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
- Gecko/20100101 Thunderbird/38.6.0
-In-Reply-To: <xmqqa8lhyzbq.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:qBfWcTyySGThh8wMFBp9R8vUQdbB5DUDR/f9QQkGyf9PUZUj8gP
- ywZ+83AwzrKGGmX8Ffvee4k7IDxiQfqPr/i8ULqKrO9erq5f09SOJflZcE+VedlBvk5eJwf
- dhp9ybnMIoIZ4+BmiCPFXVLmDXq5FrK/naYnbuXr7kAlqmgrwlT2r2GrIYwTrk/ij6veq36
- WrkKF67PYw0ILTiTINi3w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:WH6CoW+UvZU=:q+JW9dbR5D4v+GrslYCmDR
- SdW0atnFTVymYxvIETfJ27d7rff6c6UuxPt8Sah0LgVDUgu9Zj3FEzLqNEIKVEFg/Y2YDHEeJ
- GPt9koJzyF5soGOvPTqizy4MgkSre0yvRwCsR9py7vKW7s0oP/R+hxA/Oslfx6iwB2JLm+eGN
- 9Uaulk/Hg4qwOIdP9/pPBohF9B9KXV0nG8Smi+Ri+BcHxNl4yxzx+KBVRiChXfUlS0XFZ8dYp
- XFhu907bjUU3790eseLjC+340bXxqSmAN/8WElwlxSFt0A1eu16EMhE0oCB0QAceYwfcWtvum
- GfQdNfzCeyWj0FOFKr3qJLJvOqJ4QYY1oCpZsDIQOHib5FJO1k79FVwrf/6ZruOSYGn85ecOT
- NmFqUNq/eBaizdcitfQhUjWcUp3Xe0uU1jd/OKslObC4mNyCcKkaX9b/GB4vwn5/dey8VA3g8
- O8ruhDKX1l4b9LcBmY4Ts9QkPrO3GWs4ZV5UqZZlLqsXi8EF7SvJBUHF0lphvoP9AIJoYFUlb
- DBjiuwlmeKWW9TT6C43l9s+MgQSigxukUByBwWLzIsRkT7DMfkxhRpHQNVcXNGCQLYn/evbio
- LfAALhzSUNXRL+Gh9XkAY2gqeh46Ox58dLk+q3x9GN9t4jiis8JMtkFfL/3mywIWfe5jrNZh9
- aRFSyvQusizTDQzRiPwWioyk/17WliQAAU9qkmm5WXGvTZ5TMkrHYFzWKJBN5q12djXq7govv
- 5HqeB35HBtA3fczohz+3hbTFPLD8ZwIYEGAcFcZQVtjEAMOdiDLE1P9GEwCCwxvxx5m7jxwP 
+	id S1753976AbcC2T4p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 15:56:45 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:60371 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753667AbcC2T4o (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 15:56:44 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 22BD650AE3;
+	Tue, 29 Mar 2016 15:56:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=F364BsMqwrC0nDe+/482VXsg5vo=; b=QhB48p
+	8YW1BZ3Wl/aADlGUYY5OHS7MAI2l+2f4d5OPnHo5Xt0M5aZ/WsvQ0q60+jdntDdT
+	v6QUaSxY/YvBiTqQkGP086icH4vh7RUlUKPPGQGe4cDy4HSmJ0myfup92XOkTbR+
+	C1zqM6NXjmfskEZhunNALR6i1t6DQZx1zUg+o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bP74sOxQvc1fqr/Cc/mgHT6Blb4k6BZz
+	D/vgV8GP3aJUvJkx5DGwgstncMxP14xtk4T6Pa0aYJMZ86IodN6gQtZt0/tlcwXe
+	pVxipfYKmlKXZwHJ+WS4iGCosPDd/uV1jp17KU10+f9Z9QWCKMcyl56fLCLYzc7W
+	QjXlJc9RhK0=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1B1E450AE2;
+	Tue, 29 Mar 2016 15:56:43 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 88E0850ADE;
+	Tue, 29 Mar 2016 15:56:42 -0400 (EDT)
+In-Reply-To: <20160329194156.GA9527@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 29 Mar 2016 15:41:56 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 5BC83932-F5E8-11E5-A808-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290178>
 
-On 29.03.16 19:21, Junio C Hamano wrote:
-> tboegi@web.de writes:
->=20
->> From: Torsten B=C3=B6gershausen <tboegi@web.de>
->>
->> git blame reports lines as not "Not Committed Yet" when they have
->> CRLF in the index, CRLF in the worktree and e.g. core.autocrlf is tr=
-ue.
->>
->> Since commit c48053 "new safer autocrlf handling", files that have C=
-RLF
->> in the index are not normalized at commit when e.g. core.autocrl is =
-set.
->>
->> Whenever a CLRF conversion is needed (or any filter us set), load th=
-e
->> index temporally, before calling convert_to_git()
->=20
-> Sorry, but I do not understand what problem you are trying to
-> address here.
->=20
-> Under the same condition described in the first paragraph, what
-> would "git diff" and "git diff HEAD" say?  They should show that you
-> would be making a commit that corrects the line ending of the blob
-> recorded in the history.
->=20
-Let's make an experiment, Git v2.8.0
+Jeff King <peff@peff.net> writes:
 
+> On Tue, Mar 29, 2016 at 08:08:29AM -0700, Junio C Hamano wrote:
+>
+>> So it is a misconfiguration if you only set GIT_WORK_TREE without
+>> setting GIT_DIR.
+>
+> Hmm. I have frequently done this when my cwd is a git repository (e.g.,
+> a bare one), and it works as you'd expect (find the git-dir in the
+> current path, then the working tree via $GIT_WORK_TREE).
 
-$ printf "Line1\r\nLine2\r\n" >test_CRLF.txt
-$ git add test_CRLF.txt=20
-$ git commit -m "add test_CRLF.txt"
- [detached HEAD 719c166] add test_CRLF.txt
- 1 file changed, 2 insertions(+)
- create mode 100644 test_CRLF.txt
+Hmm, does what is done by "git add HEAD" in such a situation match
+what you'd expect?
 
-$ git ls-files --eol test_CRLF.txt=20
-i/crlf  w/crlf  attr/                   test_CRLF.txt
-# So far, so good.
+        git init work
+        cd work; date >HEAD; git commit -m initial
+        git push ../bare master:master
+	date >>HEAD
+        export GIT_WORK_TREE=$(pwd)
+	cd ..
+	git --bare init bare
+	cd bare
+	git add HEAD
 
-git config core.autocrlf true
+I'd have to say that this invites unnecessary confusion, even though
+I agree that "go to the GIT_WORK_TREE and take pathspecs relative to
+that directory" is the only sensible thing for us to be doing.
 
-# Now lets patch Git to debug the safer CRLF handling
-diff --git a/convert.c b/convert.c
-index f524b8d..fcf7653 100644
---- a/convert.c
-+++ b/convert.c
-@@ -260,8 +260,11 @@ static int crlf_to_git(const char *path, const cha=
-r *src, size_t len,
-                         * If the file in the index has any CR in it, d=
-o not convert.
-                         * This is the new safer autocrlf handling.
-                         */
--                       if (has_cr_in_index(path))
-+                       if (has_cr_in_index(path)) {
-+                               fprintf(stderr, "%s/%s:%d has_cr_in_ind=
-ex(%s)\n",
-+                                       __FILE__, __FUNCTION__, __LINE_=
-_, path);
-                                return 0;
-+                       }
-
-# Of course, run make
-$ make
-#
-printf "Line3\r\n" >>test_CRLF.txt
-
-# Lets see what diff says:
-=2E/git diff test_CRLF.txt | od -c
-convert.c/crlf_to_git:265 has_cr_in_index(test_CRLF.txt)
-convert.c/crlf_to_git:265 has_cr_in_index(test_CRLF.txt)
-0000000    d   i   f   f       -   -   g   i   t       a   /   t   e   =
-s
-0000020    t   _   C   R   L   F   .   t   x   t       b   /   t   e   =
-s
-0000040    t   _   C   R   L   F   .   t   x   t  \n   i   n   d   e   =
-x
-0000060        4   a   a   5   5   1   d   .   .   d   0   f   a   f   =
-1
-0000100    d       1   0   0   6   4   4  \n   -   -   -       a   /   =
-t
-0000120    e   s   t   _   C   R   L   F   .   t   x   t  \n   +   +   =
-+
-0000140        b   /   t   e   s   t   _   C   R   L   F   .   t   x   =
-t
-0000160   \n   @   @       -   1   ,   2       +   1   ,   3       @   =
-@
-0000200   \n       L   i   n   e   1  \r  \n       L   i   n   e   2  \=
-r
-0000220   \n   +   l   i   n   e   3  \r  \n                           =
-=20
-0000231
-# Here the lines are not going to be normalized at the next commit.
-# They stay CRLF.
-# But git blame doesn't know that, because has_cr_in_index doesn't work
-# without an index.
-
-$ ./git blame test_CRLF.txt=20
-00000000 (Not Committed Yet 2016-03-29 21:44:48 +0200 1) Line1
-00000000 (Not Committed Yet 2016-03-29 21:44:48 +0200 2) Line2
-00000000 (Not Committed Yet 2016-03-29 21:44:48 +0200 3) line3
-
-
-
-$ git commit -m "Add line3" test_CRLF.txt
-
-> The "Not Committed Yet" output from "git blame" is the same thing.
-> It is telling you that the commit you would be making by adding
-> that path from the working tree in its current state will become
-> the one that is responsible for the final state of the line.
->=20
-> So it is absolutely the right thing that these lines are shown as
-> "Not Commited Yet".  You will be making the line-ending correction
-> for the entire blob, and you should be made aware of it.
-If we had made the CRLF -> LF conversion, yes. But we don't do that.
-crlf_to_git() returns without touching the line endings.
+But that is not an issue about "set only work-tree" (it is about
+"run from outside the work-tree").
