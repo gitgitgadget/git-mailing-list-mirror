@@ -1,134 +1,63 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 5/6] submodule update: align reporting path for custom command execution
-Date: Tue, 29 Mar 2016 15:23:47 -0700
-Message-ID: <1459290228-9069-6-git-send-email-sbeller@google.com>
+Subject: Re: [PATCHv2 0/6] Fix path bugs in submodule commands executed from
+ sub dir
+Date: Tue, 29 Mar 2016 15:29:11 -0700
+Message-ID: <CAGZ79kYivg3VvS6zavzjhP3wu3oaTYdEGWPYKvHrrs77yF8big@mail.gmail.com>
 References: <1459290228-9069-1-git-send-email-sbeller@google.com>
-Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com, jacob.keller@gmail.com
-X-From: git-owner@vger.kernel.org Wed Mar 30 00:24:20 2016
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 30 00:29:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1al23e-0002PT-Oe
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 00:24:19 +0200
+	id 1al28T-0004BB-Pz
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 00:29:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758194AbcC2WYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 18:24:10 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:35475 "EHLO
-	mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757685AbcC2WYB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 18:24:01 -0400
-Received: by mail-pf0-f174.google.com with SMTP id n5so25456397pfn.2
-        for <git@vger.kernel.org>; Tue, 29 Mar 2016 15:24:01 -0700 (PDT)
+	id S1758022AbcC2W3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 18:29:13 -0400
+Received: from mail-io0-f180.google.com ([209.85.223.180]:33890 "EHLO
+	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753347AbcC2W3M (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 18:29:12 -0400
+Received: by mail-io0-f180.google.com with SMTP id e3so43958635ioa.1
+        for <git@vger.kernel.org>; Tue, 29 Mar 2016 15:29:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4p15Lw3UVfKlIsa5vDPD9iJRih+dsYB2yFm3/Y6Wk+s=;
-        b=Uu80unpEJtp6IavvtBlZKBMMB6dRLLQ2mnYTKrWFuZg2PrTUDXU8+ALYzX5HDA2PzU
-         tWYDmMdplpxACaqKLUQs6x/9zqdJkB0fHrnNoBERbh/Ix+x8usLQ879si/H9q2AXLPYF
-         DL5GZwDiBUydgOGZ2tig2+JR/MizD6bhxb/Ee+Ia/nBrHtJeYjddILLrgxCbJ2hVrW4f
-         xJq2KsB/ZbJ7nAwj6kqvzmOiWI4i5K3YHVbChGBBKLYqfYuCVnZoG5BqSoUcM3ISfClR
-         xqa+01s9rYCoIlwrfBq0lV3HDObxyPogYcJ/Nv3+YjzL8JRywlKUm17Zt/LFTqHX76Dz
-         pdCg==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=L+yhrRZj8oFSlARkQ+aBlXD/C6y+jqEkUl4nGeTYQw8=;
+        b=DlMCfbpKBb8FtHgKx8D3FvmrMX3mUdFPvujIBP+AroGkq8QggAkTrwMb0wH7vPfPFv
+         tvtFvSMvWENuTEmlfOBjyaYiLffwjH6qHfh9BMJ8/xw3LgumIEBfF37TTnNGwnRM3DXq
+         10FXjKLLKlt+V+spdZr1u+XPxX9p2t2sH46eajLkac98IqM/kvKvoRsPaUNTgvKaxUTd
+         6EVJErR/tNKpT0kdz2cJKRxkMOQDMuzjvRqHRi/zExKDAczPHNMILDJ1eu8bs6W9B2IH
+         QT4w7JOUUjSjMzP/76k7/NXr2r3BER07MfIg2mnOaKGRRBTkIYxVGCOkEnNveULIsptv
+         5WbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=4p15Lw3UVfKlIsa5vDPD9iJRih+dsYB2yFm3/Y6Wk+s=;
-        b=Rai4O3yrnl2iMVxafb1iIlUh9MtvH3T0lH2OiTYyt0MDkO8Xe/aLTrANIYy8zXT8uo
-         mm0562q2oCVEQloTOSDpPhctGcTYIICxY1kGivMl1pv8U06gFgJ1DQir4lgDj29D16UH
-         zX2qcsDaO5GT0yGZXMW73aDtasvZNluTV0t1yFLhj1aH4B1YZXHDCa9PjMKw/84skDif
-         sFtiQEivrpnLMouX/6oR9afOswDxBprL/ZSAYn6B827z3/F0iTjV9seRecCiguedaYGU
-         GTGcR9SsAASdi/8piLVYGVaU6gfMXf57xPHVlZA1zzrvLVPZEpKYx1yiwYEQQ6PNxbex
-         thtg==
-X-Gm-Message-State: AD7BkJIgTd3oxJUTQ+YG81VSCxdo6vZ7xjSzXdsqgep8pQqWAmtNDBUdsUFY1BGiQnk1Ttvj
-X-Received: by 10.98.71.210 with SMTP id p79mr7383085pfi.4.1459290240278;
-        Tue, 29 Mar 2016 15:24:00 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:3dd0:2ad7:f302:a06])
-        by smtp.gmail.com with ESMTPSA id d19sm626798pfj.92.2016.03.29.15.23.59
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 29 Mar 2016 15:23:59 -0700 (PDT)
-X-Mailer: git-send-email 2.8.0.4.g5639dee.dirty
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=L+yhrRZj8oFSlARkQ+aBlXD/C6y+jqEkUl4nGeTYQw8=;
+        b=ZPK1UeBxP89z63xJu/jZy0NArDhU/HIsKdjEqSYRcu497P7D4a3Yx34f9M27Ri4Dep
+         vBK6O61VmPFREZexROMGUW/7wyYMhlzEOS8pn0ptoa4npiTzNFQJrxqvm9KW73kbiWKG
+         Rkjaf3AG5QR1/p3Pc48PK8cnqXD19QcCWCuMFU5zGcsJJCpEI6el7xlkRlQA0/46xEnW
+         9UBsXqhacqvMuGzjLgoA/P467NxQQusbkUgPRPoNUnDvHhrkH97GFf7GgG9B4cpiFtzZ
+         CEUYSLdwaNuycvF+bvNl9viw+8AWDvHcabrvjDK7M+1Z5ctqOdBugBo76dKroYRPuigV
+         0ejw==
+X-Gm-Message-State: AD7BkJKg82RUGCTCw2qVE1mU+ll/lJSsffmsh0aXvzJVK7r+T+GbfrFAJSUPEwM33SDKLg87J5cRh0tS/SIJwHIm
+X-Received: by 10.107.184.8 with SMTP id i8mr5553879iof.96.1459290551805; Tue,
+ 29 Mar 2016 15:29:11 -0700 (PDT)
+Received: by 10.107.17.27 with HTTP; Tue, 29 Mar 2016 15:29:11 -0700 (PDT)
 In-Reply-To: <1459290228-9069-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290211>
 
-In the predefined actions (merge, rebase, none, checkout), we use
-the display path, which is relative to the current working directory.
-Also use the display path when running a custom command.
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- git-submodule.sh            |  4 ++--
- t/t7406-submodule-update.sh | 29 ++++++++++++++++++++++++++---
- 2 files changed, 28 insertions(+), 5 deletions(-)
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 11ed32a..be2a2b5 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -803,8 +803,8 @@ Maybe you want to use 'update --init'?")"
- 				;;
- 			!*)
- 				command="${update_module#!}"
--				die_msg="$(eval_gettext "Execution of '\$command \$sha1' failed in submodule path '\$prefix\$sm_path'")"
--				say_msg="$(eval_gettext "Submodule path '\$prefix\$sm_path': '\$command \$sha1'")"
-+				die_msg="$(eval_gettext "Execution of '\$command \$sha1' failed in submodule path '\$displaypath'")"
-+				say_msg="$(eval_gettext "Submodule path '\$displaypath': '\$command \$sha1'")"
- 				must_die_on_failure=yes
- 				;;
- 			*)
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 9a4ba41..f062065 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -344,16 +344,39 @@ test_expect_success 'submodule update - command in .git/config' '
- 	)
- '
- 
-+cat << EOF >expect
-+Execution of 'false $submodulesha1' failed in submodule path 'submodule'
-+EOF
-+
- test_expect_success 'submodule update - command in .git/config catches failure' '
- 	(cd super &&
- 	 git config submodule.submodule.update "!false"
- 	) &&
- 	(cd super/submodule &&
--	  git reset --hard HEAD^
-+	  git reset --hard $submodulesha1^
- 	) &&
- 	(cd super &&
--	 test_must_fail git submodule update submodule
--	)
-+	 test_must_fail git submodule update submodule 2>../actual
-+	) &&
-+	test_cmp actual expect
-+'
-+
-+cat << EOF >expect
-+Execution of 'false $submodulesha1' failed in submodule path '../submodule'
-+EOF
-+
-+test_expect_success 'submodule update - command in .git/config catches failure -- subdirectory' '
-+	(cd super &&
-+	 git config submodule.submodule.update "!false"
-+	) &&
-+	(cd super/submodule &&
-+	  git reset --hard $submodulesha1^
-+	) &&
-+	(cd super &&
-+	 mkdir tmp && cd tmp &&
-+	 test_must_fail git submodule update ../submodule 2>../../actual
-+	) &&
-+	test_cmp actual expect
- '
- 
- test_expect_success 'submodule init does not copy command into .git/config' '
--- 
-2.8.0.4.g5639dee.dirty
+Please ignore this series; it was sent out prematurely. :(
