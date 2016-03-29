@@ -1,97 +1,110 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 08/17] read-cache: invalidate untracked cache data when
- reading WAMA
-Date: Tue, 29 Mar 2016 09:50:22 +0700
-Message-ID: <CACsJy8DQGadWodE3x0K+h5x75Hrf7QtcCwTC2zOgE_YiwtXc3Q@mail.gmail.com>
-References: <1458349490-1704-1-git-send-email-dturner@twopensource.com> <1458349490-1704-9-git-send-email-dturner@twopensource.com>
+From: =?UTF-8?B?5oOg6L22576k?= <huiyiqun@gmail.com>
+Subject: Re: [GSoC] A late proposal: a modern send-email
+Date: Tue, 29 Mar 2016 12:17:55 +0800
+Message-ID: <CAKqreuy0RwgxqrRf7t1AU8dM2VtkvD9gd3VnzVRe-GEieVXDNA@mail.gmail.com>
+References: <CAKqreuyC8p9m_dgVpXCiT_hf=8qBA_5kZ5NABQGx0QDOiCBbww@mail.gmail.com>
+	<xmqqzitm2zkj.fsf@gitster.mtv.corp.google.com>
+	<CAKqreux1S2ioEEjPPCkyz1NJnXJ1RyiWdM5thZD607PkL0HKuQ@mail.gmail.com>
+	<CACBZZX6q87dw6UW9z+2bAvvWu0WZcYCMD8gxW8MchHwd8Rv3kw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 04:51:27 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 29 06:18:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akjkc-0000rr-Mo
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 04:51:27 +0200
+	id 1akl6P-0007re-6B
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 06:18:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752108AbcC2Cuz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Mar 2016 22:50:55 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:35453 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751328AbcC2Cuy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Mar 2016 22:50:54 -0400
-Received: by mail-lb0-f174.google.com with SMTP id bc4so1615572lbc.2
-        for <git@vger.kernel.org>; Mon, 28 Mar 2016 19:50:53 -0700 (PDT)
+	id S1750898AbcC2ER5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2016 00:17:57 -0400
+Received: from mail-oi0-f43.google.com ([209.85.218.43]:35516 "EHLO
+	mail-oi0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750744AbcC2ER4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2016 00:17:56 -0400
+Received: by mail-oi0-f43.google.com with SMTP id h6so5922693oia.2
+        for <git@vger.kernel.org>; Mon, 28 Mar 2016 21:17:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=vubCExl5KHpR6UXOYCAcioBmL8yTb/ak+fycWSl5tMI=;
-        b=s1ug6vCX6YE4LYgAxDV73yrAQt2NkHty1JNcsa/slgZuK4Qlm1ynsVeQ9NA0W/qWcE
-         6pgLvmNdGnivlhoy22VEcdzlDKL5nEh9fqInltPrmxw2Di7BmLRjWAFHxYTN8IMIo2EL
-         GuxXUVB3zlJZNNiDJw1GyMrcUdJPtHlcHkcoOFKcxB9ZXFSXl61ysCnUIPKHhnI/Unv1
-         GseG+j1MYEa9il/kHapU9GFI1HFyCeRQKv/eLjDDLorsF65ljS8O4TTcM6kbJERGessB
-         m822y2hu9Vxb6REPC9SUA1wto2TrK568pRDLzRSa2Dqq6KzbLuKnWHoLV6DK/QH8pCM6
-         vX3Q==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=sICgFn5rzaN7VhoGDnE+RmHzLj4q5boVKhS9IRvkCYA=;
+        b=j6ZIYJdt7lKmbcuwQ/b7U2YwWvwNQv6RxvdCYEky4U0aFK3lV/UUmM3kXKc7aPCMYW
+         u9k1/i8j5ZiYjO8/fx0P6sFUZ2lc5X/kA5Ew4r98z61mIH2wYSYWOnkV98y9xVD/E/xo
+         qP7GwUPRGgbEMHgZcvKpLZCUTzcOaKi72iQNg+qDkvGeYHQ1iT2jq7G26un/pyhpUiqM
+         1J04t19tirFFQHnpiZ2kZQmP2P0jctFQCAwDylU4hXHfkW7UmttE6bF90NiTeVTbdbjS
+         IGcTVJiAD25UUnmhTMVtU2OxyuK7+ROEP7PNVkjtKT76katJHsvsKtfk6X0zPvCSZzFI
+         97/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=vubCExl5KHpR6UXOYCAcioBmL8yTb/ak+fycWSl5tMI=;
-        b=b5QZRq3PwkWnacIxFsR9gb2aKa3wuFVMg7zB9WUZw9GMXNG1+qTJ+hen9ipJbtDOTW
-         NWepqjAoEhJEkgEtRJiTC3cGNwcQbDo+DIUtONSD+o11DWJ+e/ZcPS8YbMPFWIurwAhE
-         srlh6PSRpWDIKFWYCu4ELmZvpfsRR2N5u2PEEYzb1gnUMDMsWHqqSIpQxDF5uD4ONUWW
-         +1j1nQKgFsOphBS6g9LQj5LY2+fLYClTnxpzCX8PwMGadF4h15Ra6D/KBIRbIRe15hG0
-         laoFQojTphgPySY11R5DN3DZHsNRTqrQFeNDdxFJWPwoZ6RkODBgMAOUJ8A3c+c5dnjY
-         OWOA==
-X-Gm-Message-State: AD7BkJJIzp74aERE+fsrFSM3lRZig8yu/h4Npwj3zvg8E/bOX4Qadph3H6o9PsIzRPjO3Uw0LrTDcype9UN5/A==
-X-Received: by 10.112.198.166 with SMTP id jd6mr3884444lbc.12.1459219852385;
- Mon, 28 Mar 2016 19:50:52 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Mon, 28 Mar 2016 19:50:22 -0700 (PDT)
-In-Reply-To: <1458349490-1704-9-git-send-email-dturner@twopensource.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=sICgFn5rzaN7VhoGDnE+RmHzLj4q5boVKhS9IRvkCYA=;
+        b=kGRCFRZO1FIJCOLMUanKiCX6C8C6RafnpugtikiV+43K5IfzqX0HeQzJuVjt4Ifv0N
+         BYOdkwTt0GbngHiAlDmGAQH73N04IHBynptfk8+jbFxjPp17zgejVadznQxFmrKfD/3v
+         CorNydotW1l53pQUxizhrPrYk4qda6YFuIJleYN7up15SrCGXOBob6p+Lq4xzXWYlLAT
+         KxPynotsNVRDWDnLUCkvM463w5JaUFWYIFHYx4UYKpxkTD+erLkYNJFee1H6tpBJGi+n
+         kN4QUcl8RGq8fuMDF0bsAN7R5hntxJIrv5CV0FhchmTZybslDsf4iJIMhyZmZ6JxDPMF
+         8bgg==
+X-Gm-Message-State: AD7BkJKgD1CnAxRfbVzBNdVJTsaVAB+Unq7SexUgySsLlAa3VHlwEeqEdo6OrR0/HkmScSWq0ChftA5w4/MExQ==
+X-Received: by 10.157.49.116 with SMTP id v49mr35855otd.97.1459225075173; Mon,
+ 28 Mar 2016 21:17:55 -0700 (PDT)
+Received: by 10.157.12.170 with HTTP; Mon, 28 Mar 2016 21:17:55 -0700 (PDT)
+In-Reply-To: <CACBZZX6q87dw6UW9z+2bAvvWu0WZcYCMD8gxW8MchHwd8Rv3kw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290100>
 
-On Sat, Mar 19, 2016 at 8:04 AM, David Turner <dturner@twopensource.com> wrote:
-> @@ -1407,10 +1472,24 @@ static int read_watchman_ext(struct index_state *istate, const void *data,
->         ewah_each_bit(bitmap, mark_no_watchman, istate);
->         ewah_free(bitmap);
+2016-03-29 0:49 GMT+08:00 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avara=
+b@gmail.com>:
+> On Sat, Mar 26, 2016 at 3:13 AM, =E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqu=
+n@gmail.com> wrote:
+>> 2016-03-26 2:16 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
+>>> =E6=83=A0=E8=BD=B6=E7=BE=A4 <huiyiqun@gmail.com> writes:
+>>>
+>>>> # Purpose
+>>>> The current implementation of send-email is based on perl and has =
+only
+>>>> a tui, it has two problems:
+>>>> - user must install a ton of dependencies before submit a single p=
+atch.
+>>>> - tui and parameter are both not quite friendly to new users.
+>>>
+>>> Is "a ton of dependencies" true?  "apt-cache show git-email"
+>>> suggests otherwise.  Is "a ton of dependencies" truly a problem?
+>>> "apt-get install" would resolve the dependencies for you.
+>>
+>> There are three perl packages needed to send patch through gmail:
+>> - perl-mime-tools
+>> - perl-net-smtp-ssl
+>> - perl-authen-sasl
+>>
+>> Yes, not too many, but is it better none of them?
+>>
+>> What's more, when I try to send mails, I was first disrupted by
+>> "no perl-mime-tools" then by "no perl-net-smtp-ssl or perl-authen-sa=
+sl".
+>> Then I think, why not just a mailto link?
 >
-> -       /*
-> -        * TODO: update the untracked cache from the untracked data in this
-> -        * extension.
-> -        */
-> +       if (istate->untracked && istate->untracked->root) {
-> +               int i;
-> +               const char *untracked;
-> +
-> +               untracked = data + len + 8 + bitmap_size;
-> +               for (i = 0; i < untracked_nr; ++i) {
-> +                       int len = strlen(untracked);
-> +                       string_list_append(&istate->untracked->invalid_untracked,
-> +                                          untracked);
-> +                       untracked += len + 1;
-> +               }
-> +
-> +               for_each_string_list(&istate->untracked->invalid_untracked,
-> +                        mark_untracked_invalid, istate->untracked);
+> I think your proposal should clarify a bit who these users are that
+> find it too difficult to install these perl module dependencies. User=
+s
+> on OSX & Windows I would assume, because in the case of Linux distros
+> getting these is the equivalent of an apt-get command away.
 
-I think it's a bit early to invalidate untracked cache here. We can do
-that in refresh_by_watchman() in 10/17, where ce_mark_uptodate() to
-prevent lstat() is also done.
+In fact, I'm not familiar with the build for OSX or Windows.
 
-> +
-> +               if (untracked_nr)
-> +                       istate->cache_changed |= WATCHMAN_CHANGED;
-> +       }
->         return 0;
->  }
--- 
-Duy
+> If installing these dependencies is hard for users perhaps a better
+> thing to focus on is altering the binary builds on Git for platforms
+> that don't have package systems to include these dependencies.
+
+Why `mailto` not a good choice? I'm confusing.
+
+> In this case it would mean shipping a statically linked OpenSSL since
+> that's what these perl SSL packages eventually depend on.
