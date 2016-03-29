@@ -1,161 +1,94 @@
-From: Florian Manschwetus <manschwetus@cs-software-gmbh.de>
-Subject: [PATCH] Fix http-backend reading till EOF, ignoring CONTENT_LENGTH,
- violating rfc3875 -- WAS: Problem with git-http-backend.exe as iis cgi
-Date: Tue, 29 Mar 2016 10:38:23 +0000
-Message-ID: <F0F5A56A22F20D4CB4A03BB8D6658797E261A3D6@SERVER2011.CS-SOFTWARE.local>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: `git rev-parse --git-dir` relative to current working directory?
+Date: Tue, 29 Mar 2016 11:50:14 +0100
+Message-ID: <20160329105014.GA1578@serenity.lan>
+References: <CAPZ477NfQ7pCiHQ3V42kZ1Cic5UPP03TCFPvABR_ugSZYEn4xg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: Konstantin Khomoutov <kostix+git@007spb.ru>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 29 12:38:32 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Elliott Cable <me@ell.io>
+X-From: git-owner@vger.kernel.org Tue Mar 29 13:02:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1akr2d-0001hH-4H
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 12:38:31 +0200
+	id 1akrEQ-0000zO-A7
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Mar 2016 12:50:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756706AbcC2Ki2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 06:38:28 -0400
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.219]:9666 "EHLO
-	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753100AbcC2Ki0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 06:38:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1459247903; l=7928;
-	s=domk; d=cs-software-gmbh.de;
-	h=MIME-Version:Content-Transfer-Encoding:Content-Type:
-	Content-Language:Date:Subject:CC:To:From;
-	bh=ADXEWOIi4Jlj0BciOxE8fwHN2LbM8Me+BWVYw+WBO3U=;
-	b=nn7JcS8v+gobJEY7FGgXuJF1ZgwO2HwdT0DBDHNGopJn/BOKpiXiPOASR40YZZXwKFF
-	CmFxEqs2BiWnnc8kr5Mrve/vbss4bdHubjsvQ4W2PATR5YJWrKPYKTms5bB6/TQjXl+8G
-	HEe4+J3wIyIUpsvafMLgW23uZKeIgUiY3Hs=
-X-RZG-AUTH: :LWABbUmIevNaG8tCOliF7QMkyOk5UulSewxf/wy7hQxPYOHO9hm9iyo=
-X-RZG-CLASS-ID: mo00
-Received: from remote.CS-SOFTWARE.local (business-213-023-161-242.static.arcor-ip.net [213.23.161.242])
-	by post.strato.de (RZmta 37.22 AUTH)
-	with ESMTPA id Y06666s2TAcIFOK;
-	Tue, 29 Mar 2016 12:38:18 +0200 (CEST)
-Received: from SERVER2011.CS-SOFTWARE.local ([fe80::5168:c363:4af8:7565]) by
- SERVER2011.CS-SOFTWARE.local ([fe80::5168:c363:4af8:7565%11]) with mapi id
- 14.01.0438.000; Tue, 29 Mar 2016 12:38:24 +0200
-Thread-Topic: [PATCH] Fix http-backend reading till EOF, ignoring
- CONTENT_LENGTH, violating rfc3875 -- WAS: Problem with git-http-backend.exe
- as iis cgi
-Thread-Index: AdGJpqZwdCSg4Z7vTbKWAvOGK3TJnA==
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [192.168.1.154]
-x-pmwin-version: 3.1.2.0, Antivirus-Engine: 3.63.0, Antivirus-Data: 5.25
+	id S1756735AbcC2Ku3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2016 06:50:29 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:55919 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756680AbcC2Ku1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2016 06:50:27 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 0338B866034;
+	Tue, 29 Mar 2016 11:50:26 +0100 (BST)
+X-Quarantine-ID: <hdIxjJZMg6rp>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=5
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id hdIxjJZMg6rp; Tue, 29 Mar 2016 11:50:25 +0100 (BST)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 4AC64CDA571;
+	Tue, 29 Mar 2016 11:50:19 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <CAPZ477NfQ7pCiHQ3V42kZ1Cic5UPP03TCFPvABR_ugSZYEn4xg@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290115>
 
-LS0tLS1VcnNwcsO8bmdsaWNoZSBOYWNocmljaHQtLS0tLQ0KVm9uOiBDaHJpcyBQYWNraGFtIFtt
-YWlsdG86anVkZ2UucGFja2hhbUBnbWFpbC5jb21dIA0KR2VzZW5kZXQ6IERpZW5zdGFnLCAyOS4g
-TcOkcnogMjAxNiAxMToyOA0KQW46IEZsb3JpYW4gTWFuc2Nod2V0dXMNCkNjOiBLb25zdGFudGlu
-IEtob21vdXRvdjsgZ2l0QHZnZXIua2VybmVsLm9yZw0KQmV0cmVmZjogUmU6IFByb2JsZW0gd2l0
-aCBnaXQtaHR0cC1iYWNrZW5kLmV4ZSBhcyBpaXMgY2dpDQoNCkhpIEZsb3JpYW4NCg0KT24gVHVl
-LCBNYXIgMjksIDIwMTYgYXQgNzowMSBQTSwgRmxvcmlhbiBNYW5zY2h3ZXR1cyA8bWFuc2Nod2V0
-dXNAY3Mtc29mdHdhcmUtZ21iaC5kZT4gd3JvdGU6DQo+IEhpLA0KPiBJIHB1dCB0b2dldGhlciBh
-IGZpcnN0IHBhdGNoIGZvciB0aGUgaXNzdWUuDQo+DQo+IE1pdCBmcmV1bmRsaWNoZW4gR3LDvMOf
-ZW4gLyBXaXRoIGtpbmQgcmVnYXJkcyBGbG9yaWFuIE1hbnNjaHdldHVzDQo+DQo+IEUtTWFpbDog
-bWFuc2Nod2V0dXNAY3Mtc29mdHdhcmUtZ21iaC5kZQ0KPiBUZWwuOiArNDktKDApNjExLTg5MDg1
-MzQNCj4NCj4gQ1MgU29mdHdhcmUgQ29uY2VwdHMgYW5kIFNvbHV0aW9ucyBHbWJIIEdlc2Now6Rm
-dHNmw7xocmVyIC8gTWFuYWdpbmcgDQo+IGRpcmVjdG9yOiBEci4gV2VybmVyIEFsZXhpIEFtdHNn
-ZXJpY2h0IFdpZXNiYWRlbiBIUkIgMTAwMDQgKENvbW1lcmNpYWwgDQo+IHJlZ2lzdHJ5KSBTY2hp
-ZXJzdGVpbmVyIFN0cmHDn2UgMzENCj4gRC02NTE4NyBXaWVzYmFkZW4NCj4gR2VybWFueQ0KPiBU
-ZWwuOiAwNjExLzg5MDg1NTUNCj4NCj4NCj4gLS0tLS1VcnNwcsO8bmdsaWNoZSBOYWNocmljaHQt
-LS0tLQ0KPiBWb246IEtvbnN0YW50aW4gS2hvbW91dG92IFttYWlsdG86a29zdGl4K2dpdEAwMDdz
-cGIucnVdDQo+IEdlc2VuZGV0OiBEb25uZXJzdGFnLCAxMC4gTcOkcnogMjAxNiAxMzo1NQ0KPiBB
-bjogRmxvcmlhbiBNYW5zY2h3ZXR1cw0KPiBDYzogZ2l0QHZnZXIua2VybmVsLm9yZw0KPiBCZXRy
-ZWZmOiBSZTogUHJvYmxlbSB3aXRoIGdpdC1odHRwLWJhY2tlbmQuZXhlIGFzIGlpcyBjZ2kNCj4N
-Cj4gT24gVGh1LCAxMCBNYXIgMjAxNiAwNzoyODo1MCArMDAwMA0KPiBGbG9yaWFuIE1hbnNjaHdl
-dHVzIDxtYW5zY2h3ZXR1c0Bjcy1zb2Z0d2FyZS1nbWJoLmRlPiB3cm90ZToNCj4NCj4+IEkgdHJp
-ZWQgdG8gc2V0dXAgZ2l0LWh0dHAtYmFja2VuZCB3aXRoIGlpcywgYXMgaWlzIHByb3ZpZGVzIHBy
-b3BlciANCj4+IGltcGVyc29uYXRpb24gZm9yIGNnaSB1bmRlciB3aW5kb3dzLCB3aGljaCBsZWFk
-cyB0byBoYXZlIHRoZSANCj4+IGZpbGVzeXN0ZW0gYWNjZXNzIHBlcmZvcm1lZCB3aXRoIHRoZSBs
-b2dvbiB1c2VyLCB0aGVyZWZvcmUgdGhlIA0KPj4gd2Vic2VydmVyIGRvZXNuJ3QgbmVlZCBnZW5l
-cmljIGFjY2VzcyB0byB0aGUgZmlsZXMuIEkgc3R1bWJsZWQgYWNyb3NzIA0KPj4gYSBwcm9ibGVt
-LCBlbmRpbmcgdXAgd2l0aCBwb3N0IHJlcXVlc3RzIGhhbmdpbmcgZm9yZXZlci4gQWZ0ZXIgc29t
-ZSANCj4+IGludmVzdGlnYXRpb24gSSBtYW5hZ2VkIHRvIGdldCBpdCB3b3JrIGJ5IHdyYXBwaW5n
-IHRoZSBodHRwLWJhY2tlbmQgDQo+PiBpbnRvIGEgYmFzaCBzY3JpcHQsIGdpdmluZyBhIGxvdCBv
-ZiBjb250cm9sIGFib3V0IHRoZSBlbnZpcm9ubWVudGFsIA0KPj4gdGhpbmdzLCBJIHdhcyB1bmFi
-bGUgdG8gc29sdmUgd2l0aGluIElJUyBjb25maWd1cmF0aW9uLiBUaGUgDQo+PiB3b3JrYXJvdW5k
-LCBJIHVzZSBjdXJyZW50bHksIGlzIHRvIHVzZSAiL2Jpbi9oZWFkIC1jIA0KPj4gJHtDT05URU5U
-X0xFTkdUSH0NCj4+IHwgLi9naXQtaHR0cC1iYWNrZW5kLmV4ZSIsIHdoaWNoIGRpcmVjdGx5IHNo
-b3dzIHRoZSBpc3N1ZS4gR2l0DQo+PiBodHRwLWJhY2tlbmQgc2hvdWxkIGNoZWNrIGlmIENPTlRF
-TlRfTEVOR1RIIGlzIHNldCB0byBzb21ldGhpbmcgDQo+PiByZWFzb25hYmxlIChlLmcuID4wKSBh
-bmQgc2hvdWxkIGluIHRoaXMgY2FzZSByZWFkIG9ubHkgQ09OVEVOVF9MRU5HVEggDQo+PiBieXRl
-cyBmcm9tIHN0ZGluLCBpbnN0ZWFkIG9mIHJlYWRpbmcgdGlsbCBFT0Ygd2hhdCBJIHN1c3BlY3Qg
-aXQgaXMgDQo+PiBkb2luZyBjdXJyZW50bHkuDQo+DQo+IFRoZSByZmMgWzFdIHN0YXRlcyBpbiBp
-dHMgc2VjdGlvbiA0LjI6DQo+DQo+IHwgQSByZXF1ZXN0LWJvZHkgaXMgc3VwcGxpZWQgd2l0aCB0
-aGUgcmVxdWVzdCBpZiB0aGUgQ09OVEVOVF9MRU5HVEggaXMgDQo+IHwgbm90IE5VTEwuICBUaGUg
-c2VydmVyIE1VU1QgbWFrZSBhdCBsZWFzdCB0aGF0IG1hbnkgYnl0ZXMgYXZhaWxhYmxlIA0KPiB8
-IGZvciB0aGUgc2NyaXB0IHRvIHJlYWQuICBUaGUgc2VydmVyIE1BWSBzaWduYWwgYW4gZW5kLW9m
-LWZpbGUgDQo+IHwgY29uZGl0aW9uIGFmdGVyIENPTlRFTlRfTEVOR1RIIGJ5dGVzIGhhdmUgYmVl
-biByZWFkIG9yIGl0IE1BWSBzdXBwbHkgDQo+IHwgZXh0ZW5zaW9uIGRhdGEuICBUaGVyZWZvcmUs
-IHRoZSBzY3JpcHQgTVVTVCBOT1QgYXR0ZW1wdCB0byByZWFkIG1vcmUgDQo+IHwgdGhhbiBDT05U
-RU5UX0xFTkdUSCBieXRlcywgZXZlbiBpZiBtb3JlIGRhdGEgaXMgYXZhaWxhYmxlLiAgSG93ZXZl
-ciwgDQo+IHwgaXQgaXMgbm90IG9ibGlnZWQgdG8gcmVhZCBhbnkgb2YgdGhlIGRhdGEuDQo+DQo+
-IFNvIHllcywgaWYgR2l0IGN1cnJlbnRseSByZWFkcyB1bnRpbCBFT0YsIGl0J3MgYW4gZXJyb3Iu
-DQo+IFRoZSBjb3JyZWN0IHdheSB3b3VsZCBiZToNCj4NCj4gMSkgQ2hlY2sgdG8gc2VlIGlmIHRo
-ZSBDT05URU5UX0xFTkdUSCB2YXJpYWJsZSBpcyBhdmFpbGFibGUgaW4gdGhlDQo+ICAgIGVudmly
-b25tZW50LiAgSWYgbm8sIHJlYWQgbm90aGluZy4NCj4NCj4gMikgT3RoZXJ3aXNlIHJlYWQgYXMg
-bWFueSBieXRlcyBpdCBzcGVjaWZpZXMsIGFuZCBubyBtb3JlLg0KPg0KPiAxLiBodHRwczovL3d3
-dy5pZXRmLm9yZy9yZmMvcmZjMzg3NQ0KDQpZb3VyIHBhdGNoIGRlc2NyaXB0aW9uIHNlZW1zIHdl
-bGwgdGhvdWdodCBvdXQgYnV0IGlmIHlvdSB3YW50IHNvbWVvbmUgdG8gbm90aWNlIGl0IHlvdSBz
-aG91bGQgaGF2ZSBhIHJlYWQgb2YgaHR0cHM6Ly9naXQua2VybmVsLm9yZy9jZ2l0L2dpdC9naXQu
-Z2l0L3RyZWUvRG9jdW1lbnRhdGlvbi9TdWJtaXR0aW5nUGF0Y2hlcw0KDQpNb2luLA0KSSBoYXZl
-IGNsb25lZCBnaXQgYW5kIGNyZWF0ZWQgYSBtb3JlIGNsZWFuIHBhdGNoLi4uDQoNClNpZ25lZC1v
-ZmYtYnk6IEZsb3JpYW4gTWFuc2Nod2V0dXMgPG1hbnNjaHdldHVzQGNzLXNvZnR3YXJlLWdtYmgu
-ZGU+DQotLS0NCiBodHRwLWJhY2tlbmQuYyB8IDQ4ICsrKysrKysrKysrKysrKysrKysrKysrKysr
-KysrKystLS0tLS0tLS0tLS0tLS0tLQ0KIDEgZmlsZSBjaGFuZ2VkLCAzMSBpbnNlcnRpb25zKCsp
-LCAxNyBkZWxldGlvbnMoLSkNCg0KZGlmZiAtLWdpdCBhL2h0dHAtYmFja2VuZC5jIGIvaHR0cC1i
-YWNrZW5kLmMNCmluZGV4IDg4NzBhMjYuLjk0OTc2ZGYgMTAwNjQ0DQotLS0gYS9odHRwLWJhY2tl
-bmQuYw0KKysrIGIvaHR0cC1iYWNrZW5kLmMNCkBAIC0yNzcsMTYgKzI3NywzMiBAQCBzdGF0aWMg
-c3RydWN0IHJwY19zZXJ2aWNlICpzZWxlY3Rfc2VydmljZShjb25zdCBjaGFyICpuYW1lKQ0KICAq
-Lw0KIHN0YXRpYyBzc2l6ZV90IHJlYWRfcmVxdWVzdChpbnQgZmQsIHVuc2lnbmVkIGNoYXIgKipv
-dXQpDQogew0KLQlzaXplX3QgbGVuID0gMCwgYWxsb2MgPSA4MTkyOw0KLQl1bnNpZ25lZCBjaGFy
-ICpidWYgPSB4bWFsbG9jKGFsbG9jKTsNCisJdW5zaWduZWQgY2hhciAqYnVmID0gbnVsbDsNCisJ
-c2l6ZV90IGxlbiA9IDA7DQorCS8qIGdldCByZXF1ZXN0IHNpemUgKi8NCisJc2l6ZV90IHJlcV9s
-ZW4gPSBnaXRfZW52X3Vsb25nKCJDT05URU5UX0xFTkdUSCIsDQorCQkJCQkgICAwKTsNCisNCisJ
-LyogY2hlY2sgcmVxdWVzdCBzaXplICovDQorCWlmIChtYXhfcmVxdWVzdF9idWZmZXIgPCByZXFf
-bGVuKSB7DQorCQlkaWUoInJlcXVlc3Qgd2FzIGxhcmdlciB0aGFuIG91ciBtYXhpbXVtIHNpemUg
-KCVsdSk7Ig0KKwkJCSAgICAiIHRyeSBzZXR0aW5nIEdJVF9IVFRQX01BWF9SRVFVRVNUX0JVRkZF
-UiIsDQorCQkJICAgIG1heF9yZXF1ZXN0X2J1ZmZlcik7DQorCX0NCisNCisJaWYgKHJlcV9sZW4g
-PD0gMCkgew0KKwkJKm91dCA9IG51bGw7DQorCQlyZXR1cm4gMDsNCisJfQ0KKw0KKwkvKiBhbGxv
-Y2F0ZSBidWZmZXIgKi8NCisJYnVmID0geG1hbGxvYyhyZXFfbGVuKQ0KIA0KLQlpZiAobWF4X3Jl
-cXVlc3RfYnVmZmVyIDwgYWxsb2MpDQotCQltYXhfcmVxdWVzdF9idWZmZXIgPSBhbGxvYzsNCiAN
-CiAJd2hpbGUgKDEpIHsNCiAJCXNzaXplX3QgY250Ow0KIA0KLQkJY250ID0gcmVhZF9pbl9mdWxs
-KGZkLCBidWYgKyBsZW4sIGFsbG9jIC0gbGVuKTsNCisJCWNudCA9IHJlYWRfaW5fZnVsbChmZCwg
-YnVmICsgbGVuLCByZXFfbGVuIC0gbGVuKTsNCiAJCWlmIChjbnQgPCAwKSB7DQogCQkJZnJlZShi
-dWYpOw0KIAkJCXJldHVybiAtMTsNCkBAIC0yOTQsMjEgKzMxMCwxOCBAQCBzdGF0aWMgc3NpemVf
-dCByZWFkX3JlcXVlc3QoaW50IGZkLCB1bnNpZ25lZCBjaGFyICoqb3V0KQ0KIA0KIAkJLyogcGFy
-dGlhbCByZWFkIGZyb20gcmVhZF9pbl9mdWxsIG1lYW5zIHdlIGhpdCBFT0YgKi8NCiAJCWxlbiAr
-PSBjbnQ7DQotCQlpZiAobGVuIDwgYWxsb2MpIHsNCisJCWlmIChsZW4gPCByZXFfbGVuKSB7DQor
-CQkJLyogVE9ETyByZXF1ZXN0IGluY29tcGxldGU/PyAqLw0KKwkJCS8qIG1heWJlIGp1c3QgcmVt
-b3ZlIHRoaXMgYmxvY2sgYW5kIGNvbmRpdGlvbiBhbG9uZyB3aXRoIHRoZSBsb29wLCAqLw0KKwkJ
-CS8qIGlmIHJlYWRfaW5fZnVsbCBpcyBwcm9vdmVuIHJlbGlhYmxlICovDQogCQkJKm91dCA9IGJ1
-ZjsNCiAJCQlyZXR1cm4gbGVuOw0KKwkJfSBlbHNlIHsNCisJCQkvKiByZXF1ZXN0IGNvbXBsZXRl
-ICovDQorCQkJKm91dCA9IGJ1ZjsNCisJCQlyZXR1cm4gbGVuOw0KKwkJCQ0KIAkJfQ0KLQ0KLQkJ
-Lyogb3RoZXJ3aXNlLCBncm93IGFuZCB0cnkgYWdhaW4gKGlmIHdlIGNhbikgKi8NCi0JCWlmIChh
-bGxvYyA9PSBtYXhfcmVxdWVzdF9idWZmZXIpDQotCQkJZGllKCJyZXF1ZXN0IHdhcyBsYXJnZXIg
-dGhhbiBvdXIgbWF4aW11bSBzaXplICglbHUpOyINCi0JCQkgICAgIiB0cnkgc2V0dGluZyBHSVRf
-SFRUUF9NQVhfUkVRVUVTVF9CVUZGRVIiLA0KLQkJCSAgICBtYXhfcmVxdWVzdF9idWZmZXIpOw0K
-LQ0KLQkJYWxsb2MgPSBhbGxvY19ucihhbGxvYyk7DQotCQlpZiAoYWxsb2MgPiBtYXhfcmVxdWVz
-dF9idWZmZXIpDQotCQkJYWxsb2MgPSBtYXhfcmVxdWVzdF9idWZmZXI7DQotCQlSRUFMTE9DX0FS
-UkFZKGJ1ZiwgYWxsb2MpOw0KIAl9DQogfQ0KIA0KQEAgLTcwMSwzICs3MTQsNCBAQCBpbnQgbWFp
-bihpbnQgYXJnYywgY2hhciAqKmFyZ3YpDQogCWNtZC0+aW1wKGNtZF9hcmcpOw0KIAlyZXR1cm4g
-MDsNCiB9DQorDQotLSANCjIuNy4yLndpbmRvd3MuMQ0KDQoNCk1pdCBmcmV1bmRsaWNoZW4gR3LD
-vMOfZW4gLyBXaXRoIGtpbmQgcmVnYXJkcw0KRmxvcmlhbiBNYW5zY2h3ZXR1cw0KDQpDUyBTb2Z0
-d2FyZSBDb25jZXB0cyBhbmQgU29sdXRpb25zIEdtYkgNCkdlc2Now6RmdHNmw7xocmVyIC8gTWFu
-YWdpbmcgZGlyZWN0b3I6IERyLiBXZXJuZXIgQWxleGkgDQpBbXRzZ2VyaWNodCBXaWVzYmFkZW4g
-SFJCIDEwMDA0IChDb21tZXJjaWFsIHJlZ2lzdHJ5KQ0KU2NoaWVyc3RlaW5lciBTdHJhw59lIDMx
-DQpELTY1MTg3IFdpZXNiYWRlbg0KR2VybWFueQ0KDQoNCg==
+On Tue, Mar 29, 2016 at 05:32:31AM -0500, Elliott Cable wrote:
+> So, `git help rev-parse` [mentions the following][rev-parse], as of
+> 2.8.0:
+>=20
+>     --git-dir
+>        Show $GIT_DIR if defined. Otherwise show the path to the .git
+>        directory. The path shown, when relative, is relative to the
+>        current working directory.
+>=20
+> However, when inside a symlinked repository, this doesn't function as
+> advertised:
+>=20
+>     $ ln -s a-symlink a-git-repo
+>     $ cd a-symlink/.git/hooks
+>     $ git rev-parse --git-dir
+>     /Users/ec/Documents/a-git-repo/.git
+>=20
+> From my reading of that snippet of documentation (=E2=80=9CThe path s=
+hown ... is
+> relative to the CWD=E2=80=9D), I'd expect to receive `..`, not
+> `/absolute/path/to/a-git-repo/.git`.
+>=20
+> Is the documentation incorrect, or is this a bug? (I'm hoping the
+> latter: I'm trying to write git-scripting that is sensitive to symlin=
+ks,
+> i.e. retains the user's CWD without unintentionally resolving symlink=
+s
+> in their path during operation; and it'd be ideal if this were handle=
+d
+> as documented, saving me manual effort checking symlinks.)
+
+The documentation seems correct to me, it just requires careful parsing=
+;
+I read it as:
+
+	if the path printed it relative
+	then it is relative to the current working directory
+
+but it makes not claims about when a relative path will be printed (or
+even if one ever will be, although in my testing the path is relative
+only if $CWD can be stripped from the beginning of the path; in other
+words only when no component of the relative path would be "../").
