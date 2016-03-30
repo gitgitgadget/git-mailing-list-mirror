@@ -1,83 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: weird diff output?
-Date: Tue, 29 Mar 2016 17:04:54 -0700
-Message-ID: <xmqqbn5wvnix.fsf@gitster.mtv.corp.google.com>
-References: <CA+P7+xoiFUiBwDU2Wo9nVukchBvJSknON2XN572b6rSHnOSWaQ@mail.gmail.com>
-	<CAGZ79ka4ad5dQMWANJUDx-0+kV3qR=HttOJni2XfhFzjMKfcPw@mail.gmail.com>
-	<xmqqzithxj8l.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZiiOgxh6vMDnaJ_b+VVGrFBfGzZukTN6OEBxUV9-2vQw@mail.gmail.com>
-	<CA+P7+xoLZhKzHf6khQfT_pZ2=CQAp8Nmhc9B8+10+9=YYUZH3w@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 1/3] pretty: expand tabs in indented logs to make
+ things line up properly
+Date: Tue, 29 Mar 2016 20:17:24 -0400
+Message-ID: <CAPig+cTd_VRnikMzN7b2qfeG87M0v-4_qM42MkhOcRT54Wmv=Q@mail.gmail.com>
+References: <1458775426-2215-1-git-send-email-gitster@pobox.com>
+	<1459293309-25195-1-git-send-email-gitster@pobox.com>
+	<1459293309-25195-2-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 30 02:05:03 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 30 02:17:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1al3d8-0008Rz-As
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 02:05:02 +0200
+	id 1al3pC-0004ak-Iy
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 02:17:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757847AbcC3AE6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 20:04:58 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:57697 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752438AbcC3AE5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 20:04:57 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7F78651948;
-	Tue, 29 Mar 2016 20:04:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8uAuRlUwpfYJm1hsL/MyJrbg4r8=; b=WgGCIB
-	PNweT3F5qtqRFB3ZVX3lNd6fYEZu4nQdm1kDvnYB8HmdnRd9JaSlYBNSiv3lU2xO
-	rfpz/qIHNz+aV/4GQKOljgViqLoefMgONSLpSGjAK/jetWHDKeW5mzsxfw7sB2zi
-	AC8hJVrL7Kg/bVDfTyXHyb/XV3IMHIF9AspSY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GeelpsWYj/OTQmAz0Uwg65dAv3BXAHku
-	EyGpu2GBovzj2mFTB8TW05zivzBlRsSXLOAnug85sezZYEw735Kg2XRFxmZNNKXs
-	PoFjoD9q+EJSREg0Jk/ac0qkDLZQpDiG8ZycKn6rV4CR1j4jajs4Djbxc2RF0M97
-	IucNQZ9w2Bw=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 76F5351947;
-	Tue, 29 Mar 2016 20:04:56 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EE8CB51945;
-	Tue, 29 Mar 2016 20:04:55 -0400 (EDT)
-In-Reply-To: <CA+P7+xoLZhKzHf6khQfT_pZ2=CQAp8Nmhc9B8+10+9=YYUZH3w@mail.gmail.com>
-	(Jacob Keller's message of "Tue, 29 Mar 2016 16:05:57 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 08F3B506-F60B-11E5-BB49-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753174AbcC3AR0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 20:17:26 -0400
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:33852 "EHLO
+	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751414AbcC3ARZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 20:17:25 -0400
+Received: by mail-vk0-f66.google.com with SMTP id e6so4441441vkh.1
+        for <git@vger.kernel.org>; Tue, 29 Mar 2016 17:17:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=S5XZUVCun7spHNnqOh3ktJ+EJckW7cUAoS19bwRvb84=;
+        b=uxyNbgTpxCs7E6RsIV4LiBieAK0Rn+9keCa/yg8Xh8j4QmWIbKSxqIyI95rhZ1Br7s
+         nkseF8SrueMuyTaZKE84VhIOqidC9OpNWSHbcY73kYcnd5ro2P2SHSvZj5nxhSlUA4Nv
+         xkr66tPiGNiWx0pcgKov0t2FvpcS9qI9X1Qpuoo71d/zKygCc/lZsn+xqwkOM/zVBGJL
+         3VaeOIOGNROzyexVrGMmcNLaSVickYEvU/9aYbf8SxWftsUZwqQVbMWAkFRKsUHtSMFF
+         GGLXhLYQZq2qyHn4sFu7acb2r6q/zmjRF1r+kj64MCPoYPqba+lH3XbimWLOWf2PqFYv
+         aj+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=S5XZUVCun7spHNnqOh3ktJ+EJckW7cUAoS19bwRvb84=;
+        b=ZlJJy1KQ0IpHQgIYPafSwnGhJEpAYFXwQakEVokTr1De/ShV9OTQKP8hHaevRKT3Pp
+         JPoCu7AGCxHueVEKv96RB9NZEl8fhd13/jWRG4TgiN/43sfzWLoRtqRaxQlJ0NssWWZr
+         fv1T8OuQNbKgCdVAFbPU7oOnLZIfAylRcQCwlh4ULuU/+TMP+uJsYjGYXw1LUEvrwmvb
+         tl7vjjpN9VqjX1+hrIPQojKFvJmE/iz8wOU0gDeGC9XOOu2HaqZANX+ZA3BNpobPEWrK
+         MCfdUm5kkyzhjZo6TalkCuYRIqHIyVNnjQMUppGOTCDjSwVlfyk8T/Uj8VdgR8+7V+kv
+         Ah6Q==
+X-Gm-Message-State: AD7BkJJa6TVpBD8iydZULnevBgciEL1arqXVPB2HNKQ1c8GqYAdKQymF8dKfgnuhe5NV70EZjpq5s9WhYZbT5w==
+X-Received: by 10.159.37.234 with SMTP id 97mr3020314uaf.99.1459297044458;
+ Tue, 29 Mar 2016 17:17:24 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Tue, 29 Mar 2016 17:17:24 -0700 (PDT)
+In-Reply-To: <1459293309-25195-2-git-send-email-gitster@pobox.com>
+X-Google-Sender-Auth: pOKOIjY8sS5_4Pgj9vTRKs34bpY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290231>
 
-Jacob Keller <jacob.keller@gmail.com> writes:
-
-> On Tue, Mar 29, 2016 at 11:16 AM, Stefan Beller <sbeller@google.com> wrote:
->> ...
->> To find a heuristic, which appeals both the C code
->> and the shell code, we could take the empty line
->> as a strong hint for the divider:
+On Tue, Mar 29, 2016 at 7:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> From: Linus Torvalds <torvalds@linux-foundation.org>
 >
-> This seems like a good heuristic. Can we think of any examples where
-> it would produce wildly confusing diffs? I don't think it necessarily
-> needs to be default but just a possible option when formatting diffs,
-> much like we already have today.
+> A commit log message sometimes tries to line things up using tabs,
+> assuming fixed-width font with the standard 8-place tab settings.
+> Viewing such a commit however does not work well in "git log", as
+> we indent the lines by prefixing 4 spaces in front of them.
+> [...]
+> Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
+> @@ -42,6 +42,12 @@ people using 80-column terminals.
+> +--expand-tabs::
+> +       Perform a tab expansion (replace each tab with enough number
+> +       of spaces to fill to the next display column that is
 
-I earlier said "50% of the time it is correct, you just do not
-remember", but such an option with configuration variable would let
-somebody interested set it permanently for his daily use of Git, and
-it would help him to find out (1) if he sees a "Huh?" division less
-(or more) often than he used to, and (2) if it gives a better
-division for the same change to view the diff with the plain-vanilla
-heuristic.
+Nit: "enough spaces" or "a sufficient number of spaces".
+
+> +       multiple of 8) in the log message before using the message
+> +       to show in the output.
