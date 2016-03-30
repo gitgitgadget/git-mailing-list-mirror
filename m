@@ -1,87 +1,205 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: [BUG?] retrying with "am -3" doesn't work anymore
-Date: Wed, 30 Mar 2016 12:18:30 +0800
-Message-ID: <CACRoPnSrKyNS8EdFM119TT9qoUTdNy_+P5q-7rWMahpDzzGAKw@mail.gmail.com>
-References: <20160330021502.GA16077@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: weird diff output?
+Date: Wed, 30 Mar 2016 00:55:55 -0400
+Message-ID: <20160330045554.GA11007@sigill.intra.peff.net>
+References: <CA+P7+xoiFUiBwDU2Wo9nVukchBvJSknON2XN572b6rSHnOSWaQ@mail.gmail.com>
+ <CAGZ79ka4ad5dQMWANJUDx-0+kV3qR=HttOJni2XfhFzjMKfcPw@mail.gmail.com>
+ <xmqqzithxj8l.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kZiiOgxh6vMDnaJ_b+VVGrFBfGzZukTN6OEBxUV9-2vQw@mail.gmail.com>
+ <CA+P7+xoLZhKzHf6khQfT_pZ2=CQAp8Nmhc9B8+10+9=YYUZH3w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 30 06:18:37 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git mailing list <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 30 06:58:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1al7aW-0000c3-9N
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 06:18:36 +0200
+	id 1al8Cq-0002nS-N9
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 06:58:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750887AbcC3ESc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2016 00:18:32 -0400
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:34785 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750751AbcC3ESb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2016 00:18:31 -0400
-Received: by mail-lb0-f181.google.com with SMTP id vo2so23617471lbb.1
-        for <git@vger.kernel.org>; Tue, 29 Mar 2016 21:18:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=Kl2d6nFmYUz0AMnZAsl6Kiz+5GKiOr4nrh4nXB+VR64=;
-        b=IFiasAQwDVMrMZSiFNYoFKRR7AFZGQ/DHUq/VQWnlz5Yhv2GBRplQfVCUeqtg0X9oq
-         OGoYSQV4l4y69wD9atUxL9jhQ2nPB5RdDicb2avyH+m92lkzGEaomgsvht8LcmHUYBn/
-         2AGHVkoh9CRunuCMoy5P9qMM657IOgFv4+FHfZEtPOX7ekMwW5Aw1liYHAIGi2wwLllP
-         CazL+Rid0BEbSkTKhYBUBXWBBAB3SPvQQBO7q99Wvl7+OhUcz9uxZAq8lvdzpjxzP3JS
-         we3wDnbZEdLy/qHkz94aTw8zN1opdD3Wp9EWAfiKXpfu3nC2WAcyqxGCDY/qajFRLQPD
-         y8ZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=Kl2d6nFmYUz0AMnZAsl6Kiz+5GKiOr4nrh4nXB+VR64=;
-        b=QoqRLIRN1fAYASVe46fA3M5wVOKGHhtZvJHXkQg+lesnlmc4NeMXNGcsJYTTDxezoD
-         DERv8XhLdoUBCUMquyd0ungfQIXjWOJBh8owwG4K73u2ReTSc3RFOqqiOQhHZyih04LD
-         J7R1MY3FJLievNB2aLxaG5cbvuhaoI/YBY68ZXVdnUUfDb4UUM1x7YJXqJzg3cL/qRip
-         I76ciJ7vSppjDWANmsj7/j3NQMxwCkyzbrsVjLbqCzyr3rr0hwAHaMxQClTTeskcg/CT
-         a2sHYQ3CcJJLJ3VY5IyttVzNtDoejQgjfEB+Mh5U2YnggfJJMre3ilM0VvGmgreCRg9I
-         mZdg==
-X-Gm-Message-State: AD7BkJK1Fj2dQep4Ebhca2CmeJZukVVwyciy9792wCkL3t8eZhj8QOSSeJdpwRv+7CL9LWMhbxb3K8Brf4Ilqw==
-X-Received: by 10.112.141.197 with SMTP id rq5mr2762897lbb.5.1459311510138;
- Tue, 29 Mar 2016 21:18:30 -0700 (PDT)
-Received: by 10.112.207.74 with HTTP; Tue, 29 Mar 2016 21:18:30 -0700 (PDT)
-In-Reply-To: <20160330021502.GA16077@sigill.intra.peff.net>
+	id S1751153AbcC3Ez7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2016 00:55:59 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40588 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750963AbcC3Ez6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2016 00:55:58 -0400
+Received: (qmail 438 invoked by uid 102); 30 Mar 2016 04:55:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 30 Mar 2016 00:55:57 -0400
+Received: (qmail 31522 invoked by uid 107); 30 Mar 2016 04:55:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 30 Mar 2016 00:55:56 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Mar 2016 00:55:55 -0400
+Content-Disposition: inline
+In-Reply-To: <CA+P7+xoLZhKzHf6khQfT_pZ2=CQAp8Nmhc9B8+10+9=YYUZH3w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290268>
 
-Hi Jeff,
+On Tue, Mar 29, 2016 at 04:05:57PM -0700, Jacob Keller wrote:
 
-On Wed, Mar 30, 2016 at 10:15 AM, Jeff King <peff@peff.net> wrote:
-> I noticed that I could not get a patch from Junio to apply earlier
-> today, and I think it is a regression in the builtin git-am
-> implementation.  I had trouble reproducing with a basic test case,
-> though.
->
-> Basically, I picked up the three patches from this sub-thread:
->
->   http://thread.gmane.org/gmane.comp.version-control.git/288987/focus=290222
->
-> and tried to apply them on top of v2.8.0.
->
-> Doing it with "git am -3 patches" works. But doing it with:
->
->   git am patches
->   git am -3
->
-> doesn't. Bisecting shows that it did work before 783d7e8 (builtin-am:
-> remove redirection to git-am.sh, 2015-08-04).
+> > This is what we want in both cases.
+> > And I would argue it would appease many other kinds of text as well, because
+> > an empty line is usually a strong indicator for any text that a
+> > different thing comes along.
+> > (Other programming languages, such as Java, C++ and any other C like
+> > language behaves
+> > that way; even when writing latex figures you'd rather want to break
+> > at new lines?)
+> >
+> > Thanks,
+> > Stefan
+> 
+> This seems like a good heuristic. Can we think of any examples where
+> it would produce wildly confusing diffs? I don't think it necessarily
+> needs to be default but just a possible option when formatting diffs,
+> much like we already have today.
 
-Yeah, with "git am -3" when resuming, the -3 will only affect the
-current conflicting patch since 852a171 (am: let command-line options
-override saved options, 2015-08-04).
+One thing I like to do when playing with new diff ideas is to pipe all
+of "log -p" for a real project through it and see what differences it
+produces.
 
-Regards,
-Paul
+Below is a perl script that implements Stefan's heuristic. I checked its
+output on git.git with:
+
+  git log --format='commit %H' -p >old
+  perl /path/to/script <old >new
+  diff -F ^commit -u old new | less
+
+which shows the differences, with the commit id in the hunk header
+(which makes it easy to "git show $commit | perl /path/to/script" to
+see the new diff with more context.
+
+In addition to the cases discussed, it seems to improve C comments by
+turning:
+
+   /*
+  + * new function
+  + */
+  +void foo(void);
+  +
+  +/*
+    * old function
+    ...
+
+into:
+
+  +/*
+  + * my function
+  + */
+  +void foo(void);
+  +
+   /*
+    * old function
+    ...
+
+See 47fe3f6e for an example.
+
+It also seems to do OK with shell scripts. Commit e6bb5f78 is an example
+where it improves a here-doc, as in the motivating example from this
+thread. Similarly, the headers in 4df1e79 are much improved (though I'm
+confused why the final one in that diff doesn't seem to have been
+caught).
+
+I also ran into an interesting case in 86d26f24, where we have:
+
+  + test_expect_success '
+  +   foo
+  +
+  +'
+  +
+
+and there are _two_ blank lines to choose from. It looks really terrible
+if you use the first one, but the second one looks good (and the script
+below chooses the second, as it's closest to the hunk boundary). There
+may be cases where that's bad, though.
+
+This is just a proof of concept. I guess we'd want to somehow integrate
+the heuristic into git.
+
+-- >8 --
+#!/usr/bin/perl
+
+use strict;
+use warnings 'all';
+
+use constant {
+  STATE_NONE => 0,
+  STATE_LEADING_CONTEXT => 1,
+  STATE_IN_CHUNK => 2,
+};
+my $state = STATE_NONE;
+my @hunk;
+while(<>) {
+  if ($state == STATE_NONE) {
+    print;
+    if (/^@/) {
+      $state = STATE_LEADING_CONTEXT;
+    }
+  } else {
+    if (/^ /) {
+      flush_hunk() if $state != STATE_LEADING_CONTEXT;
+      push @hunk, $_;
+    } elsif(/^[-+]/) {
+      push @hunk, $_;
+      $state = STATE_IN_CHUNK;
+    } else {
+      flush_hunk();
+      $state = STATE_NONE;
+      print;
+    }
+  }
+}
+flush_hunk();
+
+sub flush_hunk {
+  my $context_len = 0;
+  while ($context_len < @hunk && $hunk[$context_len] =~ /^ /) {
+    $context_len++;
+  }
+
+  # Find the length of the ambiguous portion.
+  # Assumes our hunks have context first, and ambiguous additions at the end,
+  # which is how git generates them
+  my $ambig_len = 0;
+  while ($ambig_len < $context_len) {
+    my $i = $context_len - $ambig_len - 1;
+    my $j = @hunk - $ambig_len - 1;
+    if ($hunk[$j] =~ /^\+/ && substr($hunk[$i], 1) eq substr($hunk[$j], 1)) {
+      $ambig_len++;
+    } else {
+      last;
+    }
+  }
+
+  # Now look for an empty line in the ambiguous portion (we can just look in
+  # the context side, as it is equivalent to the addition side at the end).
+  # We count down, though, as we prefer to use the line closest to the
+  # hunk as the cutoff.
+  my $empty;
+  for (my $i = $context_len - 1; $i >= $context_len - $ambig_len; $i--) {
+    if (length($hunk[$i]) == 2) {
+      $empty = $i;
+      last;
+    }
+  }
+
+  if (defined $empty) {
+    # move empty lines after the chunk to be part of it
+    for (my $i = $empty + 1; $i < $context_len; $i++) {
+      $hunk[$i] =~ s/^ /+/;
+      $hunk[@hunk - $context_len + $i] =~ s/^\+/ /;
+    }
+  }
+
+  print @hunk;
+  @hunk = ();
+}
