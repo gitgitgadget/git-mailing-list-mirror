@@ -1,65 +1,86 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: git show -m with a parent number
-Date: Wed, 30 Mar 2016 18:55:21 +0200
-Message-ID: <871t6rx5vq.fsf@linux-m68k.org>
-References: <nd9gq6$412$1@ger.gmane.org>
-	<20160328191608.GA22602@sigill.intra.peff.net>
-	<ndggug$c87$1@ger.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Anatoly Borodin <anatoly.borodin@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 30 18:55:38 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCHv2 2/4] abbrev_sha1_in_line: don't leak memory
+Date: Wed, 30 Mar 2016 10:05:16 -0700
+Message-ID: <1459357518-14913-3-git-send-email-sbeller@google.com>
+References: <1459357518-14913-1-git-send-email-sbeller@google.com>
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To: sunshine@sunshineco.com, peff@peff.net, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Mar 30 19:05:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alJP6-0006cb-Da
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 18:55:36 +0200
+	id 1alJYk-00026v-PW
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 19:05:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932938AbcC3Qza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2016 12:55:30 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:40458 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932696AbcC3Qz0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2016 12:55:26 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3qZv0C5hNYz3hjd6;
-	Wed, 30 Mar 2016 18:55:23 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3qZv0C5Dvjzvh24;
-	Wed, 30 Mar 2016 18:55:23 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id pAZ-C3CWnlKA; Wed, 30 Mar 2016 18:55:21 +0200 (CEST)
-X-Auth-Info: s2YxpkkQi2X75AM0waVmOyoNKGWqvrYzTuDUVo2A2XUyG1yMeXeAfe37yY1guVYA
-Received: from igel.home (ppp-88-217-14-4.dynamic.mnet-online.de [88.217.14.4])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Wed, 30 Mar 2016 18:55:21 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id 84AE72C2CE4; Wed, 30 Mar 2016 18:55:21 +0200 (CEST)
-X-Yow: I HAVE a towel.
-In-Reply-To: <ndggug$c87$1@ger.gmane.org> (Anatoly Borodin's message of "Wed,
-	30 Mar 2016 12:31:16 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.92 (gnu/linux)
+	id S1755637AbcC3RF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2016 13:05:29 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:34035 "EHLO
+	mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755210AbcC3RF0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2016 13:05:26 -0400
+Received: by mail-pf0-f173.google.com with SMTP id x3so47622763pfb.1
+        for <git@vger.kernel.org>; Wed, 30 Mar 2016 10:05:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=vw7/YKEk9wDyOaYn+idrz0eCcW/bmAHHe+CBpc8MDPg=;
+        b=Nybuwu5dgiZxoyB0YykrJEQGaWY40zM8n2U/18DXVBowUAIthhFZF9uZyQrexHCFQy
+         Ld//mTSToiBYG+Z99sbtcoS+BxRvMCPGYGdWJDYTWipI805ZS0LwtCz5fpYdyS2nTcJt
+         RGiOmCnFo6lzCv3VvyKmRQ0saPFQtI5BVJcryfP6GzDppdxfn/+9JutbE74jlv0RCeoi
+         eetI3ZBiA1dMCegbCa7uQ18g0OmakWxV+2J3tS5jHrXiUCVRJey+spCDu0Bd7rmIxdrd
+         0dk/Kt52PnNGx+2P/BvmirtaZ70N6SH/O/civ3q/D25vpSIxKRPLtAMhegYp2PNSfk+K
+         n05g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=vw7/YKEk9wDyOaYn+idrz0eCcW/bmAHHe+CBpc8MDPg=;
+        b=hJ3PrI4hOSnMfIiWLKPBhhJl0AaB4Od4mtKjealtKTUnXVr54l/tkfzjIduIGsaCrb
+         9I2up1crUy0EM7CwLP8F0RcWCkDt6KRX+kCpP9860/dkAzTWMyGrOkdA4Qwn6t+gtORg
+         5GmOwStokIU6CPBzFtoec1HntUZxTW8p7y2tWveFryVnsxRr+5/GcemVBi8Wq5Yz3nJb
+         A1hcG77EHB0KhdSyFEMhDaFiMlUyuVLbX4qTXrWDQVkyAdUZCfIQQTc+YuW8Jgmq0xZC
+         xdO1O47yOqbyc4S4ZpmLI4e/9IleI0h16pSiVouy8Aybi4vyxDPnAR4LSX5NTmNXAg7h
+         cOoQ==
+X-Gm-Message-State: AD7BkJIzSEgOEXZU789fawTwAAXvbE3/rvt0IujSBdMzRrY+/ukpV3n8nsA9sSfQKBjx8e60
+X-Received: by 10.98.68.91 with SMTP id r88mr14950887pfa.12.1459357525661;
+        Wed, 30 Mar 2016 10:05:25 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:9cc5:9f4:3ffe:cd1])
+        by smtp.gmail.com with ESMTPSA id 87sm7217832pfq.93.2016.03.30.10.05.24
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 30 Mar 2016 10:05:24 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0.2.gb331331
+In-Reply-To: <1459357518-14913-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290313>
 
-Anatoly Borodin <anatoly.borodin@gmail.com> writes:
+`split` is of type `struct strbuf **`, which we have a dedicated free
+function for, which takes care of freeing all related memory.
 
-> It's not like `git diff X^2 X` is a big problem, but too much of a
-> copypaste.
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ wt-status.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-Brace expansion helps a bit: git diff X{^2,}
-
-Andreas.
-
+diff --git a/wt-status.c b/wt-status.c
+index ef74864..1ea2ebe 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1063,9 +1063,7 @@ static void abbrev_sha1_in_line(struct strbuf *line)
+ 				strbuf_addf(line, "%s", split[i]->buf);
+ 		}
+ 	}
+-	for (i = 0; split[i]; i++)
+-		strbuf_release(split[i]);
+-
++	strbuf_list_free(split);
+ }
+ 
+ static void read_rebase_todolist(const char *fname, struct string_list *lines)
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+2.8.0.2.gb331331
