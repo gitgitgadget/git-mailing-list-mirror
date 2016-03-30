@@ -1,106 +1,96 @@
-From: Max Kirillov <max@max630.net>
-Subject: Re: [ANNOUNCE] git-push-update, tool to push with "server-side"
- merge or rebase
-Date: Wed, 30 Mar 2016 07:55:42 +0300
-Message-ID: <20160330045542.GA7541@wheezy.local>
-References: <20160328080841.GA12932@wheezy.local>
- <20160330012945.GA8888@ball>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG?] retrying with "am -3" doesn't work anymore
+Date: Wed, 30 Mar 2016 01:06:42 -0400
+Message-ID: <20160330050642.GB11007@sigill.intra.peff.net>
+References: <20160330021502.GA16077@sigill.intra.peff.net>
+ <CACRoPnSrKyNS8EdFM119TT9qoUTdNy_+P5q-7rWMahpDzzGAKw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Trevor Saunders <tbsaunde@tbsaunde.org>
-X-From: git-owner@vger.kernel.org Wed Mar 30 07:03:11 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 30 07:07:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1al8Hb-0003ve-OX
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 07:03:08 +0200
+	id 1al8LR-0004zO-Uh
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 07:07:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752182AbcC3FDB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2016 01:03:01 -0400
-Received: from p3plsmtpa11-01.prod.phx3.secureserver.net ([68.178.252.102]:43183
-	"EHLO p3plsmtpa11-01.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751270AbcC3FDA (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Mar 2016 01:03:00 -0400
-X-Greylist: delayed 430 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 Mar 2016 01:03:00 EDT
-Received: from wheezy.local ([82.181.81.240])
-	by p3plsmtpa11-01.prod.phx3.secureserver.net with 
-	id c4vi1s00D5B68XE014voCn; Tue, 29 Mar 2016 21:55:50 -0700
+	id S1752346AbcC3FGr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2016 01:06:47 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40596 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751685AbcC3FGp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2016 01:06:45 -0400
+Received: (qmail 1161 invoked by uid 102); 30 Mar 2016 05:06:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 30 Mar 2016 01:06:45 -0400
+Received: (qmail 31619 invoked by uid 107); 30 Mar 2016 05:06:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 30 Mar 2016 01:06:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Mar 2016 01:06:42 -0400
 Content-Disposition: inline
-In-Reply-To: <20160330012945.GA8888@ball>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CACRoPnSrKyNS8EdFM119TT9qoUTdNy_+P5q-7rWMahpDzzGAKw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290270>
 
-On Tue, Mar 29, 2016 at 09:29:45PM -0400, Trevor Saunders wrote:
-> hm how? the workflow you use locally has basically nothingto do with how
-> pushes work.  I work on several projects daily where everyone pushes to
-> trunk, but locally I use branches.  You just need to fetch rebase then
-> either merge your branch into master before pushing or explicitly tell
-> git push what refs to update how.
+On Wed, Mar 30, 2016 at 12:18:30PM +0800, Paul Tan wrote:
 
-If user is confident in manipulating with branches then
-probably this does not provide much value. Though it also
-to some extent prevents from pushing to wrong branch by
-mistake.
-
->> * when the trunk goes forward, user have to run merge or
->>   rebase (further "update"), interrupting other work which
->>   might be in progress.
+> On Wed, Mar 30, 2016 at 10:15 AM, Jeff King <peff@peff.net> wrote:
+> > I noticed that I could not get a patch from Junio to apply earlier
+> > today, and I think it is a regression in the builtin git-am
+> > implementation.  I had trouble reproducing with a basic test case,
+> > though.
+> >
+> > Basically, I picked up the three patches from this sub-thread:
+> >
+> >   http://thread.gmane.org/gmane.comp.version-control.git/288987/focus=290222
+> >
+> > and tried to apply them on top of v2.8.0.
+> >
+> > Doing it with "git am -3 patches" works. But doing it with:
+> >
+> >   git am patches
+> >   git am -3
+> >
+> > doesn't. Bisecting shows that it did work before 783d7e8 (builtin-am:
+> > remove redirection to git-am.sh, 2015-08-04).
 > 
-> I don't really understand this either, if you develope everything on
-> master then it would seem obvious if you want to update what version of
-> trunk you are using you either need to rebase or merge the remote master
-> with yours.
+> Yeah, with "git am -3" when resuming, the -3 will only affect the
+> current conflicting patch since 852a171 (am: let command-line options
+> override saved options, 2015-08-04).
 
-Updating your current working branch is not free, if you
-have a long compilation. Also new changes can break
-something. 
+Ah, right. I had a nagging feeling that we had discussed this, and
+indeed, I already participated in the discussion last July[1]. I even
+apparently argued in favor of the new behavior[2]. Yikes. There goes my
+mind.
 
-In CVCS (think subversion) nobody really updates after each
-commit to server from anybody. You 'keep uptodate' by
-updating something like once a day. Otherwise don't have to
-update unless somebody touches same file as you. I tried to
-restore this opportunity.
+Running "git am -3" for each patch which needs it does indeed
+successfully apply the series.
 
->> * while doing fetch, update and push back a concurrent push can happen,
->>   making user to have to repeat it all over.
-> 
-> I think this is more or less the reason for the hg extension, but I
-> think the script to deal with this is basically
-> 
-> while true
-> do
-> 	git fetch origin
-> 	git rebase origin/master
-> 	git push origin HEAD:master && break
-> done
-> 
-> obviously with a little more error checking thrown in if you care.
+Thanks for a quick response, and sorry for the noise.
 
-yes, basically push-update does not do much more than this.
+-Peff
 
->> This was discussed around some time ago, but I could not find anything
->> done about it. It might seem like nobody really interested much. But I
->> still can see discussions here and there. Also, some time ago extension
->> "pushrebase" for mercurial appeared, which indicates that there is
->> really a demand.
-> 
-> I think that was really for very heavily used repos where there was a
-> ton of fetch rebase push repeating going on.
+[1] http://thread.gmane.org/gmane.comp.version-control.git/274574
 
-If does not have to be very heavy. Even small team (3-5
-fulltime coders) can already feel a difference.
+[2] In http://thread.gmane.org/gmane.comp.version-control.git/274574/focus=274635,
+    though I think there I more meant that in:
 
-> I'm not really clear what this is helping for most of those use cases,
-> but if you want to maintain it why not?
+       git am
+       git am -3
+       git am
 
-Let's see if anybody uses it. If somebody does then I can try.
+    the third one would not use "-3" again. So I was mostly confused
+    that in:
 
--- 
-Max
+       git am
+       git am -3
+
+    we would not use "-3" for the subsequent patches applied by that
+    second invocation. So maybe that is a bug. I dunno. I could see
+    arguments either way.
