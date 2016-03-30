@@ -1,245 +1,95 @@
-From: Florian Manschwetus <manschwetus@cs-software-gmbh.de>
-Subject: AW: [PATCH] Fix http-backend reading till EOF, ignoring
- CONTENT_LENGTH, violating rfc3875 -- WAS: Problem with git-http-backend.exe
- as iis cgi
-Date: Wed, 30 Mar 2016 09:08:56 +0000
-Message-ID: <F0F5A56A22F20D4CB4A03BB8D6658797E261AF97@SERVER2011.CS-SOFTWARE.local>
-References: <F0F5A56A22F20D4CB4A03BB8D6658797E261A3D6@SERVER2011.CS-SOFTWARE.local>
- <20160329201349.GB9527@sigill.intra.peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: git-apply does not work in a sub-directory of a Git repository
+Date: Wed, 30 Mar 2016 16:33:48 +0700
+Message-ID: <CACsJy8C3QtVmqS_HPHjdWhBssJkZ197yz9uA3XAb-TDiOhEUmg@mail.gmail.com>
+References: <CACsJy8CTix-ZwN04MwYTB+JEtDCV27QVf7_0vWmhUSVCwU29Jg@mail.gmail.com>
+ <1458820579-31621-1-git-send-email-pclouds@gmail.com> <xmqq8u17akgn.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: Chris Packham <judge.packham@gmail.com>,
-	Konstantin Khomoutov <kostix+git@007spb.ru>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 30 11:09:08 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>,
+	Mehul Jain <mehul.jain2029@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 30 11:34:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alC7e-0005lv-LR
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 11:09:07 +0200
+	id 1alCW8-0007XG-D3
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 11:34:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758827AbcC3JJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2016 05:09:00 -0400
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.163]:51342 "EHLO
-	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758752AbcC3JI5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2016 05:08:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1459328934; l=14082;
-	s=domk; d=cs-software-gmbh.de;
-	h=MIME-Version:Content-Transfer-Encoding:Content-Type:
-	Content-Language:In-Reply-To:References:Date:Subject:CC:To:From;
-	bh=hpm0jP3V7WTjfb9++/EWDCz7VYbMHsocTPuGoB3hDFE=;
-	b=IPaIowJ/XIk48q9c3ScbB+MzQhcsaPdoDoYkZdtJrrp/h437e2zNkTtwYsBYLRs9q7y
-	cuzU5AidaYEoMxzaikNAUMnepU/hE5gYIBMzVS9/zaPsHLiCK2w1TYzHs18NgF74oIvpE
-	y7g6LoYiaF7V3J4GfgYhmwDLt1VLGpXPMng=
-X-RZG-AUTH: :LWABbUmIevNaG8tCOliF7QMkyOk5UulSewxf/wy7hQxPYOHO9hm9iyo=
-X-RZG-CLASS-ID: mo00
-Received: from remote.CS-SOFTWARE.local (business-213-023-161-242.static.arcor-ip.net [213.23.161.242])
-	by post.strato.de (RZmta 37.22 AUTH)
-	with ESMTPA id Y06666s2U98oDBh;
-	Wed, 30 Mar 2016 11:08:50 +0200 (CEST)
-Received: from SERVER2011.CS-SOFTWARE.local ([fe80::5168:c363:4af8:7565]) by
- SERVER2011.CS-SOFTWARE.local ([fe80::5168:c363:4af8:7565%11]) with mapi id
- 14.01.0438.000; Wed, 30 Mar 2016 11:08:57 +0200
-Thread-Topic: [PATCH] Fix http-backend reading till EOF, ignoring
- CONTENT_LENGTH, violating rfc3875 -- WAS: Problem with git-http-backend.exe
- as iis cgi
-Thread-Index: AdGJpqZwdCSg4Z7vTbKWAvOGK3TJnAAQBdaAAB8k+sA=
-In-Reply-To: <20160329201349.GB9527@sigill.intra.peff.net>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [192.168.1.154]
-x-pmwin-version: 3.1.2.0, Antivirus-Engine: 3.63.0, Antivirus-Data: 5.25
+	id S1751342AbcC3JeU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2016 05:34:20 -0400
+Received: from mail-lb0-f178.google.com ([209.85.217.178]:33711 "EHLO
+	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750915AbcC3JeT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2016 05:34:19 -0400
+Received: by mail-lb0-f178.google.com with SMTP id u8so27828861lbk.0
+        for <git@vger.kernel.org>; Wed, 30 Mar 2016 02:34:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=nQI/QjPAfStdaaDGmURAGN7PZSvDVSIwLsZRtw8ucCg=;
+        b=cerI7CeSBnMacQUuCzGU8L3fuS3cse8mjZgprD/y/ewCrjoNsfqYQWHP5g16lewdKb
+         hqijmJXnUOuXjFOi13VA8WvHOK2aGQKtMZQ1Z2qRnNK6PUl44GW0MFq+8N77N627fFoI
+         cjr9v76x4Lco13VKXiNVXwP7vdLxTN8Xvw88PU5GNH2k0FlQmw9mPFBcBrJZErcT6UTD
+         tZKmLoaOi1iZueptq4Y96TCdmnbkyCdnU71hJgjhES9XAdZ+w/xO/Z/U4xEe+S4phWXB
+         qqU5SSiFZ3sJc1hxzeCc83G7wV8w7s2Jj192xRxh0J0FwvOyG9/Hgy4PBQgc4ILxJjou
+         cRJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=nQI/QjPAfStdaaDGmURAGN7PZSvDVSIwLsZRtw8ucCg=;
+        b=jYK3rD60y106xjI6YXRkdtjvEjU8oGnhPtb6Ts6RYLz3GgF+OGVl64Y5MbztH44HSo
+         B87Rfe+D3H+rPTmuGWU/9qEfsa+BRC145riPmiG1GfJxAgQNO94O+Tu0/3jTeg9Lsywv
+         0BMvr7nIxadwJTqpHPkRMvpBpJvdLSU+fuH582k1qEArC6Tb7a7RPStP2dx6vI64Xmtj
+         gfsb6We1CTgQZCgl1YA5K9/vTFr6Mq+wCwE5dMhh54TIbvUMBQMHu4gQqzShDhLQKKFl
+         a76Ya6hPiNdwf56X5qfF34R8S+S7DAKr4IUVTSnc4ki3P+9dRgIodc1anV6mIjLIemz8
+         Fpbg==
+X-Gm-Message-State: AD7BkJIPAwLsVOyVLDYIz/kwg3ZdLsVtq0wxFFjVJq8V8heGUAku+iIhRY5IwG1sk6vTnFd4YO0jFTS1RgkOKA==
+X-Received: by 10.112.157.105 with SMTP id wl9mr3317890lbb.137.1459330457785;
+ Wed, 30 Mar 2016 02:34:17 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Wed, 30 Mar 2016 02:33:48 -0700 (PDT)
+In-Reply-To: <xmqq8u17akgn.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290282>
 
-PiAtLS0tLVVyc3Byw7xuZ2xpY2hlIE5hY2hyaWNodC0tLS0tDQo+IFZvbjogSmVmZiBLaW5nIFtt
-YWlsdG86cGVmZkBwZWZmLm5ldF0NCj4gR2VzZW5kZXQ6IERpZW5zdGFnLCAyOS4gTcOkcnogMjAx
-NiAyMjoxNA0KPiBBbjogRmxvcmlhbiBNYW5zY2h3ZXR1cw0KPiBDYzogQ2hyaXMgUGFja2hhbTsg
-S29uc3RhbnRpbiBLaG9tb3V0b3Y7IGdpdEB2Z2VyLmtlcm5lbC5vcmcNCj4gQmV0cmVmZjogUmU6
-IFtQQVRDSF0gRml4IGh0dHAtYmFja2VuZCByZWFkaW5nIHRpbGwgRU9GLCBpZ25vcmluZw0KPiBD
-T05URU5UX0xFTkdUSCwgdmlvbGF0aW5nIHJmYzM4NzUgLS0gV0FTOiBQcm9ibGVtIHdpdGggZ2l0
-LWh0dHAtDQo+IGJhY2tlbmQuZXhlIGFzIGlpcyBjZ2kNCj4gDQo+IE9uIFR1ZSwgTWFyIDI5LCAy
-MDE2IGF0IDEwOjM4OjIzQU0gKzAwMDAsIEZsb3JpYW4gTWFuc2Nod2V0dXMgd3JvdGU6DQo+IA0K
-PiA+ID4gfCBBIHJlcXVlc3QtYm9keSBpcyBzdXBwbGllZCB3aXRoIHRoZSByZXF1ZXN0IGlmIHRo
-ZSBDT05URU5UX0xFTkdUSA0KPiA+ID4gfCBpcyBub3QgTlVMTC4gIFRoZSBzZXJ2ZXIgTVVTVCBt
-YWtlIGF0IGxlYXN0IHRoYXQgbWFueSBieXRlcw0KPiA+ID4gfCBhdmFpbGFibGUgZm9yIHRoZSBz
-Y3JpcHQgdG8gcmVhZC4gIFRoZSBzZXJ2ZXIgTUFZIHNpZ25hbCBhbg0KPiA+ID4gfCBlbmQtb2Yt
-ZmlsZSBjb25kaXRpb24gYWZ0ZXIgQ09OVEVOVF9MRU5HVEggYnl0ZXMgaGF2ZSBiZWVuIHJlYWQg
-b3INCj4gPiA+IHwgaXQgTUFZIHN1cHBseSBleHRlbnNpb24gZGF0YS4gIFRoZXJlZm9yZSwgdGhl
-IHNjcmlwdCBNVVNUIE5PVA0KPiA+ID4gfCBhdHRlbXB0IHRvIHJlYWQgbW9yZSB0aGFuIENPTlRF
-TlRfTEVOR1RIIGJ5dGVzLCBldmVuIGlmIG1vcmUgZGF0YQ0KPiA+ID4gfCBpcyBhdmFpbGFibGUu
-ICBIb3dldmVyLCBpdCBpcyBub3Qgb2JsaWdlZCB0byByZWFkIGFueSBvZiB0aGUgZGF0YS4NCj4g
-PiA+DQo+ID4gPiBTbyB5ZXMsIGlmIEdpdCBjdXJyZW50bHkgcmVhZHMgdW50aWwgRU9GLCBpdCdz
-IGFuIGVycm9yLg0KPiA+ID4gVGhlIGNvcnJlY3Qgd2F5IHdvdWxkIGJlOg0KPiA+ID4NCj4gPiA+
-IDEpIENoZWNrIHRvIHNlZSBpZiB0aGUgQ09OVEVOVF9MRU5HVEggdmFyaWFibGUgaXMgYXZhaWxh
-YmxlIGluIHRoZQ0KPiA+ID4gICAgZW52aXJvbm1lbnQuICBJZiBubywgcmVhZCBub3RoaW5nLg0K
-PiA+ID4NCj4gPiA+IDIpIE90aGVyd2lzZSByZWFkIGFzIG1hbnkgYnl0ZXMgaXQgc3BlY2lmaWVz
-LCBhbmQgbm8gbW9yZS4NCj4gPiA+DQo+ID4gPiAxLiBodHRwczovL3d3dy5pZXRmLm9yZy9yZmMv
-cmZjMzg3NQ0KPiANCj4gSSBkb24ndCB0aGluayB0aGUgc2Vjb25kIHBhcnQgb2YgKDEpIHdpbGwg
-d29yayB2ZXJ5IHdlbGwgaWYgdGhlIGNsaWVudCBzZW5kcyBhDQo+IGNodW5rZWQgdHJhbnNmZXIt
-ZW5jb2RpbmcgKHdoaWNoIGdpdCB3aWxsIGRvIGlmIHRoZSBpbnB1dCBpcyBsYXJnZSkuIEluIHN1
-Y2ggYQ0KPiBjYXNlIHRoZSBzZXJ2ZXIgd291bGQgZWl0aGVyIGhhdmUgdG8gYnVmZmVyIHRoZSBl
-bnRpcmUgaW5wdXQgdG8gZmluZCBpdHMgbGVuZ3RoLA0KPiBvciBzdHJlYW0gdGhlIGRhdGEgdG8g
-dGhlIENHSSB3aXRob3V0IHNldHRpbmcgJENPTlRFTlRfTEVOR1RILiBBdCBsZWFzdA0KPiBzb21l
-IHNlcnZlcnMgY2hvb3NlIHRoZSBsYXR0ZXIgKGluY2x1ZGluZyBBcGFjaGUpLg0KPiANCj4gPiBk
-aWZmIC0tZ2l0IGEvaHR0cC1iYWNrZW5kLmMgYi9odHRwLWJhY2tlbmQuYyBpbmRleCA4ODcwYTI2
-Li45NDk3NmRmDQo+ID4gMTAwNjQ0DQo+ID4gLS0tIGEvaHR0cC1iYWNrZW5kLmMNCj4gPiArKysg
-Yi9odHRwLWJhY2tlbmQuYw0KPiA+IEBAIC0yNzcsMTYgKzI3NywzMiBAQCBzdGF0aWMgc3RydWN0
-IHJwY19zZXJ2aWNlICpzZWxlY3Rfc2VydmljZShjb25zdA0KPiBjaGFyICpuYW1lKQ0KPiA+ICAg
-Ki8NCj4gPiAgc3RhdGljIHNzaXplX3QgcmVhZF9yZXF1ZXN0KGludCBmZCwgdW5zaWduZWQgY2hh
-ciAqKm91dCkgIHsNCj4gPiAtCXNpemVfdCBsZW4gPSAwLCBhbGxvYyA9IDgxOTI7DQo+ID4gLQl1
-bnNpZ25lZCBjaGFyICpidWYgPSB4bWFsbG9jKGFsbG9jKTsNCj4gPiArCXVuc2lnbmVkIGNoYXIg
-KmJ1ZiA9IG51bGw7DQo+ID4gLi4uDQo+IA0KPiBnaXQtYW0gY29tcGxhaW5lZCB0aGF0IHlvdXIg
-cGF0Y2ggZGlkIG5vdCBhcHBseSwgYnV0IGFmdGVyIHdyaXRpbmcgc29tZXRoaW5nDQo+IHNpbWls
-YXIgbG9jYWxseSwgSSBmb3VuZCB0aGF0IHQ1NTUxLjI1IGhhbmdzIGluZGVmaW5pdGVseS4NCj4g
-V2hpY2ggaXMgbm90IHN1cnByaXNpbmcuIE1vc3QgdGVzdHMgYXJlIGRvaW5nIHZlcnkgbGltaXRl
-ZCByZWYgbmVnb3RpYXRpb24sIHNvDQo+IHRoZSBjb250ZW50IHRoYXQgaGl0cyByZWFkX3JlcXVl
-c3QoKSBoZXJlIGlzIHNtYWxsLCBhbmQgd2Ugc2VuZCBpdCBpbiBhIHNpbmdsZQ0KPiB3cml0ZSB3
-aXRoIGEgY29udGVudC1sZW5ndGggaGVhZGVyLiBCdXQgdDU1NTEuMjUgdXNlcyBhIG11Y2ggYmln
-Z2VyDQo+IHdvcmtsb2FkLCB3aGljaCBjYXVzZXMgdGhlIGNsaWVudCB0byB1c2UgYSBjaHVua2Vk
-IHRyYW5zZmVyLWVuY29kaW5nLCBhbmQNCj4gdGhpcyBjb2RlIHRvIHJlZnVzZSB0byByZWFkIGFu
-eXRoaW5nIChhbmQgdGhlbiB0aGUgcHJvdG9jb2wgc3RhbGxzLCBhcyB3ZSBhcmUNCj4gd2FpdGlu
-ZyBmb3IgdGhlIGNsaWVudCB0byBzYXkgc29tZXRoaW5nKS4NCj4gDQo+IFNvIEkgdGhpbmsgeW91
-J2Qgd2FudCB0byB0YWtlIGEgbWlzc2luZyBDT05URU5UX0xFTkdUSCBhcyBhIGhpbnQgdG8gcmVh
-ZA0KPiB1bnRpbCBFT0YuDQo+IA0KPiBUaGF0IGFsc28gcmFpc2VzIGFub3RoZXIgaXNzdWU6IHdo
-YXQgaGFwcGVucyBpbiB0aGUgcGF0aHMgdGhhdCBkb24ndCBoaXQNCj4gcmVhZF9yZXF1ZXN0KCk/
-IFdlIG1heSBhbHNvIHByb2Nlc3MgaW5wdXQgdmlhOg0KPiANCj4gICAtIGluZmxhdGVfcmVxdWVz
-dCgpLCBpZiB0aGUgY2xpZW50IGd6aXBwZWQgaXQ7IGZvciB3ZWxsLWZvcm1lZCBpbnB1dCwNCj4g
-ICAgIEkgdGhpbmsgd2UnbGwgc3RvcCByZWFkaW5nIHdoZW4gdGhlIGd6aXAgc3RyZWFtIHRlbGxz
-IHVzIHRoZXJlIGlzIG5vDQo+ICAgICBtb3JlIGRhdGEsIGJ1dCBhIG1hbGZvcm1lZCBvbmUgd291
-bGQgaGF2ZSB1cyByZWFkaW5nIHVudGlsIEVPRiwNCj4gICAgIHJlZ2FyZGxlc3Mgb2Ygd2hhdCAk
-Q09OVEVOVF9MRU5HVEggc2F5cy4NCj4gDQo+ICAgLSBmb3IgaW5wdXQgd2hpY2ggd2UgZXhwZWN0
-IHRvIGJlIGxhcmdlIChsaWtlIGluY29taW5nIHBhY2tmaWxlcyBmb3IgYQ0KPiAgICAgcHVzaCks
-IGJ1ZmZlcl9pbnB1dCB3aWxsIGJlIHVuc2V0LCBhbmQgd2Ugd2lsbCBwYXNzIHRoZSBkZXNjcmlw
-dG9yDQo+ICAgICBkaXJlY3RseSB0byBhIHN1Yi1wcm9ncmFtIGxpa2UgZ2l0LWluZGV4LXBhY2su
-IEFnYWluLCBmb3INCj4gICAgIHdlbGwtZm9ybWVkIGlucHV0IGl0IHdvdWxkIHJlYWQganVzdCB0
-aGUgcGFja2ZpbGUsIGJ1dCBpdCBtYXkNCj4gICAgIGFjdHVhbGx5IGNvbnRpbnVlIHRvIEVPRi4N
-Cj4gDQo+IFNvIEkgZG9uJ3QgdGhpbmsgeW91ciBwYXRjaCBpcyBjb3ZlcmluZyBhbGwgY2FzZXMu
-DQo+IA0KPiAtUGVmZg0KDQpBZnRlciBhZGRpdGlvbmFsIGFuYWx5c2lzIGl0IHR1cm5lZCBvdXQs
-IHRoYXQgaW4gdGhlIGNhc2UgeW91IG1lbnRpb25lZCwgYXQgbGVhc3QgSUlTLCBzZXRzIENPTlRF
-TlRfTEVOR1RIIHRvIC0xIHJlc3VsdGluZyBpbiB0aGUgY3VycmVudCBiZWhhdmlvciBvZiBnaXQt
-aHR0cC1iYWNrZW5kIGJlaW5nIHN1ZmZpY2llbnQgaW4gdGhpcyBzaXR1YXRpb24uDQpUaGVyZWZv
-cmUgSSByZWZhY3RvcmVkIHRoZSBjb2RlIGFnYWluIGEgYml0LCB0byBtYXRjaCB1cCB0aGUgYmVo
-YXZpb3IgSSBjdXJyZW50bHkgZmFrZSBieSB1c2luZyBzb21lIGJhc2ggbWFnaWMuLi4NCg0KRnJv
-bSBjY2Q2Yzg4ZTM5YTg1MGIyNTM5NzliNzg1NDYzNzE5Y2RjMGZhMWUyIE1vbiBTZXAgMTcgMDA6
-MDA6MDAgMjAwMQ0KRnJvbTogbWFuc2Nod2V0dXMgPG1hbnNjaHdldHVzQGNzLXNvZnR3YXJlLWdt
-YmguZGU+DQpEYXRlOiBUdWUsIDI5IE1hciAyMDE2IDEyOjE2OjIxICswMjAwDQpTdWJqZWN0OiBb
-UEFUQ0ggMS8yXSBGaXggaHR0cC1iYWNrZW5kIHJlYWRpbmcgdGlsbCBFT0YsIGlnbm9yaW5nDQog
-Q09OVEVOVF9MRU5HVEgsIHZpb2xhdGluZyByZmMzODc1DQoNClNpZ25lZC1vZmYtYnk6IEZsb3Jp
-YW4gTWFuc2Nod2V0dXMgPG1hbnNjaHdldHVzQGNzLXNvZnR3YXJlLWdtYmguZGU+DQotLS0NCiBo
-dHRwLWJhY2tlbmQuYyB8IDQ4ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKystLS0tLS0t
-LS0tLS0tLS0tLQ0KIDEgZmlsZSBjaGFuZ2VkLCAzMSBpbnNlcnRpb25zKCspLCAxNyBkZWxldGlv
-bnMoLSkNCg0KZGlmZiAtLWdpdCBhL2h0dHAtYmFja2VuZC5jIGIvaHR0cC1iYWNrZW5kLmMNCmlu
-ZGV4IDg4NzBhMjYuLjk0OTc2ZGYgMTAwNjQ0DQotLS0gYS9odHRwLWJhY2tlbmQuYw0KKysrIGIv
-aHR0cC1iYWNrZW5kLmMNCkBAIC0yNzcsMTYgKzI3NywzMiBAQCBzdGF0aWMgc3RydWN0IHJwY19z
-ZXJ2aWNlICpzZWxlY3Rfc2VydmljZShjb25zdCBjaGFyICpuYW1lKQ0KICAqLw0KIHN0YXRpYyBz
-c2l6ZV90IHJlYWRfcmVxdWVzdChpbnQgZmQsIHVuc2lnbmVkIGNoYXIgKipvdXQpDQogew0KLQlz
-aXplX3QgbGVuID0gMCwgYWxsb2MgPSA4MTkyOw0KLQl1bnNpZ25lZCBjaGFyICpidWYgPSB4bWFs
-bG9jKGFsbG9jKTsNCisJdW5zaWduZWQgY2hhciAqYnVmID0gbnVsbDsNCisJc2l6ZV90IGxlbiA9
-IDA7DQorCS8qIGdldCByZXF1ZXN0IHNpemUgKi8NCisJc2l6ZV90IHJlcV9sZW4gPSBnaXRfZW52
-X3Vsb25nKCJDT05URU5UX0xFTkdUSCIsDQorCQkJCQkgICAwKTsNCisNCisJLyogY2hlY2sgcmVx
-dWVzdCBzaXplICovDQorCWlmIChtYXhfcmVxdWVzdF9idWZmZXIgPCByZXFfbGVuKSB7DQorCQlk
-aWUoInJlcXVlc3Qgd2FzIGxhcmdlciB0aGFuIG91ciBtYXhpbXVtIHNpemUgKCVsdSk7Ig0KKwkJ
-CSAgICAiIHRyeSBzZXR0aW5nIEdJVF9IVFRQX01BWF9SRVFVRVNUX0JVRkZFUiIsDQorCQkJICAg
-IG1heF9yZXF1ZXN0X2J1ZmZlcik7DQorCX0NCisNCisJaWYgKHJlcV9sZW4gPD0gMCkgew0KKwkJ
-Km91dCA9IG51bGw7DQorCQlyZXR1cm4gMDsNCisJfQ0KKw0KKwkvKiBhbGxvY2F0ZSBidWZmZXIg
-Ki8NCisJYnVmID0geG1hbGxvYyhyZXFfbGVuKQ0KIA0KLQlpZiAobWF4X3JlcXVlc3RfYnVmZmVy
-IDwgYWxsb2MpDQotCQltYXhfcmVxdWVzdF9idWZmZXIgPSBhbGxvYzsNCiANCiAJd2hpbGUgKDEp
-IHsNCiAJCXNzaXplX3QgY250Ow0KIA0KLQkJY250ID0gcmVhZF9pbl9mdWxsKGZkLCBidWYgKyBs
-ZW4sIGFsbG9jIC0gbGVuKTsNCisJCWNudCA9IHJlYWRfaW5fZnVsbChmZCwgYnVmICsgbGVuLCBy
-ZXFfbGVuIC0gbGVuKTsNCiAJCWlmIChjbnQgPCAwKSB7DQogCQkJZnJlZShidWYpOw0KIAkJCXJl
-dHVybiAtMTsNCkBAIC0yOTQsMjEgKzMxMCwxOCBAQCBzdGF0aWMgc3NpemVfdCByZWFkX3JlcXVl
-c3QoaW50IGZkLCB1bnNpZ25lZCBjaGFyICoqb3V0KQ0KIA0KIAkJLyogcGFydGlhbCByZWFkIGZy
-b20gcmVhZF9pbl9mdWxsIG1lYW5zIHdlIGhpdCBFT0YgKi8NCiAJCWxlbiArPSBjbnQ7DQotCQlp
-ZiAobGVuIDwgYWxsb2MpIHsNCisJCWlmIChsZW4gPCByZXFfbGVuKSB7DQorCQkJLyogVE9ETyBy
-ZXF1ZXN0IGluY29tcGxldGU/PyAqLw0KKwkJCS8qIG1heWJlIGp1c3QgcmVtb3ZlIHRoaXMgYmxv
-Y2sgYW5kIGNvbmRpdGlvbiBhbG9uZyB3aXRoIHRoZSBsb29wLCAqLw0KKwkJCS8qIGlmIHJlYWRf
-aW5fZnVsbCBpcyBwcm9vdmVuIHJlbGlhYmxlICovDQogCQkJKm91dCA9IGJ1ZjsNCiAJCQlyZXR1
-cm4gbGVuOw0KKwkJfSBlbHNlIHsNCisJCQkvKiByZXF1ZXN0IGNvbXBsZXRlICovDQorCQkJKm91
-dCA9IGJ1ZjsNCisJCQlyZXR1cm4gbGVuOw0KKwkJCQ0KIAkJfQ0KLQ0KLQkJLyogb3RoZXJ3aXNl
-LCBncm93IGFuZCB0cnkgYWdhaW4gKGlmIHdlIGNhbikgKi8NCi0JCWlmIChhbGxvYyA9PSBtYXhf
-cmVxdWVzdF9idWZmZXIpDQotCQkJZGllKCJyZXF1ZXN0IHdhcyBsYXJnZXIgdGhhbiBvdXIgbWF4
-aW11bSBzaXplICglbHUpOyINCi0JCQkgICAgIiB0cnkgc2V0dGluZyBHSVRfSFRUUF9NQVhfUkVR
-VUVTVF9CVUZGRVIiLA0KLQkJCSAgICBtYXhfcmVxdWVzdF9idWZmZXIpOw0KLQ0KLQkJYWxsb2Mg
-PSBhbGxvY19ucihhbGxvYyk7DQotCQlpZiAoYWxsb2MgPiBtYXhfcmVxdWVzdF9idWZmZXIpDQot
-CQkJYWxsb2MgPSBtYXhfcmVxdWVzdF9idWZmZXI7DQotCQlSRUFMTE9DX0FSUkFZKGJ1ZiwgYWxs
-b2MpOw0KIAl9DQogfQ0KIA0KLS0gDQoyLjcuMi53aW5kb3dzLjENCg0KDQpGcm9tIDRiMmFhYzNk
-ZmQ0OTU0MDk4MTkwNzQ1YTllNGZhMTdmMjU0Y2Q2YTEgTW9uIFNlcCAxNyAwMDowMDowMCAyMDAx
-DQpGcm9tOiBGbG9yaWFuIE1hbnNjaHdldHVzIDxtYW5zY2h3ZXR1c0Bjcy1zb2Z0d2FyZS1nbWJo
-LmRlPg0KRGF0ZTogV2VkLCAzMCBNYXIgMjAxNiAxMDo1NDoyMSArMDIwMA0KU3ViamVjdDogW1BB
-VENIIDIvMl0gcmVzdG9yZWQgb2xkIGJlaGF2aW9yIGFzIHJlYWRfcmVxdWVzdF9lb2YoLi4uKSBh
-bmQgbW92ZWQNCiBuZXcgdmFyaWFudCB0byByZWFkX3JlcXVlc3RfZml4X2xlbiguLi4pIGFuZCBp
-bnRyb2R1Y2VkIHJlYWRfcmVxdWVzdCguLi4pIGFzDQogd3JhcHBlciwgd2hpY2ggZGVjaWRlcyBi
-YXNlZCBvbiB2YWx1ZSByZXRyaWV2ZWQgZnJvbSBDT05URU5UX0xFTkdUSCB3aGljaA0KIHZhcmlh
-bnQgdG8gdXNlDQoNClNpZ25lZC1vZmYtYnk6IEZsb3JpYW4gTWFuc2Nod2V0dXMgPG1hbnNjaHdl
-dHVzQGNzLXNvZnR3YXJlLWdtYmguZGU+DQotLS0NCiBodHRwLWJhY2tlbmQuYyB8IDY3ICsrKysr
-KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKy0tLS0NCiAx
-IGZpbGUgY2hhbmdlZCwgNjMgaW5zZXJ0aW9ucygrKSwgNCBkZWxldGlvbnMoLSkNCg0KZGlmZiAt
-LWdpdCBhL2h0dHAtYmFja2VuZC5jIGIvaHR0cC1iYWNrZW5kLmMNCmluZGV4IDk0OTc2ZGYuLjNh
-YTA0NDYgMTAwNjQ0DQotLS0gYS9odHRwLWJhY2tlbmQuYw0KKysrIGIvaHR0cC1iYWNrZW5kLmMN
-CkBAIC0yNzUsMTMgKzI3NSw1MiBAQCBzdGF0aWMgc3RydWN0IHJwY19zZXJ2aWNlICpzZWxlY3Rf
-c2VydmljZShjb25zdCBjaGFyICpuYW1lKQ0KICAqIGhpdCBtYXhfcmVxdWVzdF9idWZmZXIgd2Ug
-ZGllICh3ZSdkIHJhdGhlciByZWplY3QgYQ0KICAqIG1hbGljaW91c2x5IGxhcmdlIHJlcXVlc3Qg
-dGhhbiBjaGV3IHVwIGluZmluaXRlIG1lbW9yeSkuDQogICovDQotc3RhdGljIHNzaXplX3QgcmVh
-ZF9yZXF1ZXN0KGludCBmZCwgdW5zaWduZWQgY2hhciAqKm91dCkNCitzdGF0aWMgc3NpemVfdCBy
-ZWFkX3JlcXVlc3RfZW9mKGludCBmZCwgdW5zaWduZWQgY2hhciAqKm91dCkNCit7DQorICAgICAg
-ICBzaXplX3QgbGVuID0gMCwgYWxsb2MgPSA4MTkyOw0KKyAgICAgICAgdW5zaWduZWQgY2hhciAq
-YnVmID0geG1hbGxvYyhhbGxvYyk7DQorDQorICAgICAgICBpZiAobWF4X3JlcXVlc3RfYnVmZmVy
-IDwgYWxsb2MpDQorICAgICAgICAgICAgICAgIG1heF9yZXF1ZXN0X2J1ZmZlciA9IGFsbG9jOw0K
-Kw0KKyAgICAgICAgd2hpbGUgKDEpIHsNCisgICAgICAgICAgICAgICAgc3NpemVfdCBjbnQ7DQor
-DQorICAgICAgICAgICAgICAgIGNudCA9IHJlYWRfaW5fZnVsbChmZCwgYnVmICsgbGVuLCBhbGxv
-YyAtIGxlbik7DQorICAgICAgICAgICAgICAgIGlmIChjbnQgPCAwKSB7DQorICAgICAgICAgICAg
-ICAgICAgICAgICAgZnJlZShidWYpOw0KKyAgICAgICAgICAgICAgICAgICAgICAgIHJldHVybiAt
-MTsNCisgICAgICAgICAgICAgICAgfQ0KKw0KKyAgICAgICAgICAgICAgICAvKiBwYXJ0aWFsIHJl
-YWQgZnJvbSByZWFkX2luX2Z1bGwgbWVhbnMgd2UgaGl0IEVPRiAqLw0KKyAgICAgICAgICAgICAg
-ICBsZW4gKz0gY250Ow0KKyAgICAgICAgICAgICAgICBpZiAobGVuIDwgYWxsb2MpIHsNCisgICAg
-ICAgICAgICAgICAgICAgICAgICAqb3V0ID0gYnVmOw0KKyAgICAgICAgICAgICAgICAgICAgICAg
-IHJldHVybiBsZW47DQorICAgICAgICAgICAgICAgIH0NCisNCisgICAgICAgICAgICAgICAgLyog
-b3RoZXJ3aXNlLCBncm93IGFuZCB0cnkgYWdhaW4gKGlmIHdlIGNhbikgKi8NCisgICAgICAgICAg
-ICAgICAgaWYgKGFsbG9jID09IG1heF9yZXF1ZXN0X2J1ZmZlcikNCisgICAgICAgICAgICAgICAg
-ICAgICAgICBkaWUoInJlcXVlc3Qgd2FzIGxhcmdlciB0aGFuIG91ciBtYXhpbXVtIHNpemUgKCVs
-dSk7Ig0KKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAiIHRyeSBzZXR0aW5nIEdJVF9IVFRQ
-X01BWF9SRVFVRVNUX0JVRkZFUiIsDQorICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1heF9y
-ZXF1ZXN0X2J1ZmZlcik7DQorDQorICAgICAgICAgICAgICAgIGFsbG9jID0gYWxsb2NfbnIoYWxs
-b2MpOw0KKyAgICAgICAgICAgICAgICBpZiAoYWxsb2MgPiBtYXhfcmVxdWVzdF9idWZmZXIpDQor
-ICAgICAgICAgICAgICAgICAgICAgICAgYWxsb2MgPSBtYXhfcmVxdWVzdF9idWZmZXI7DQorICAg
-ICAgICAgICAgICAgIFJFQUxMT0NfQVJSQVkoYnVmLCBhbGxvYyk7DQorICAgICAgICB9DQorfQ0K
-Kw0KKy8qDQorICogcmVwbGFjZW1lbnQgZm9yIG9yaWdpbmFsIHJlYWRfcmVxdWVzdCwgbm93IHJl
-bmFtZWQgdG8gcmVhZF9yZXF1ZXN0X2VvZiwNCisgKiBob25vcmluZyBnaXZlbiBjb250ZW50X2xl
-bmd0aCAocmVxX2xlbiksDQorICogcHJvdmlkZWQgYnkgbmV3IHdyYXBwZXIgZnVuY3Rpb24gcmVh
-ZF9yZXF1ZXN0DQorICovDQorc3RhdGljIHNzaXplX3QgcmVhZF9yZXF1ZXN0X2ZpeF9sZW4oaW50
-IGZkLCBzaXplX3QgcmVxX2xlbiwgdW5zaWduZWQgY2hhciAqKm91dCkNCiB7DQogCXVuc2lnbmVk
-IGNoYXIgKmJ1ZiA9IG51bGw7DQogCXNpemVfdCBsZW4gPSAwOw0KLQkvKiBnZXQgcmVxdWVzdCBz
-aXplICovDQotCXNpemVfdCByZXFfbGVuID0gZ2l0X2Vudl91bG9uZygiQ09OVEVOVF9MRU5HVEgi
-LA0KLQkJCQkJICAgMCk7DQogDQogCS8qIGNoZWNrIHJlcXVlc3Qgc2l6ZSAqLw0KIAlpZiAobWF4
-X3JlcXVlc3RfYnVmZmVyIDwgcmVxX2xlbikgew0KQEAgLTMyNSw2ICszNjQsMjYgQEAgc3RhdGlj
-IHNzaXplX3QgcmVhZF9yZXF1ZXN0KGludCBmZCwgdW5zaWduZWQgY2hhciAqKm91dCkNCiAJfQ0K
-IH0NCiANCisvKioNCisgKiB3cmFwcGVyIGZ1bmN0aW9uLCB3aGNpaCBkZXRlcm1pbmVzIGJhc2Vk
-IG9uIENPTlRFTlRfTEVOR1RIIHZhbHVlLA0KKyAqIHRvDQorICogLSB1c2Ugb2xkIGJlaGF2aW91
-ciBvZiByZWFkX3JlcXVlc3QsIHRvIHJlYWQgdW50aWwgRU9GDQorICogPT4gcmVhZF9yZXF1ZXN0
-X2VvZiguLi4pDQorICogLSBqdXN0IHJlYWQgQ09OVEVOVF9MRU5HVEgtYnl0ZXMsIHdoZW4gcHJv
-dmlkZWQNCisgKiA9PiByZWFkX3JlcXVlc3RfZml4X2xlbiguLi4pDQorICovDQorc3RhdGljIHNz
-aXplX3QgcmVhZF9yZXF1ZXN0KGludCBmZCwgdW5zaWduZWQgY2hhciAqKm91dCkNCit7DQorICAg
-ICAgICAvKiBnZXQgcmVxdWVzdCBzaXplICovDQorICAgICAgICBzaXplX3QgcmVxX2xlbiA9IGdp
-dF9lbnZfdWxvbmcoIkNPTlRFTlRfTEVOR1RIIiwNCisgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgLTEpOw0KKyAgICAgICAgaWYgKHJlcV9sZW4gPCAwKXsNCisgICAg
-ICAgICAgcmVhZF9yZXF1ZXN0X2VvZihmZCwgb3V0KTsNCisgICAgICAgIH0gZWxzZSB7DQorICAg
-ICAgICAgIHJlYWRfcmVxdWVzdF9maXhfbGVuKGZkLCByZXFfbGVuLCBvdXQpOw0KKyAgICAgICAg
-fQ0KK30NCisNCiBzdGF0aWMgdm9pZCBpbmZsYXRlX3JlcXVlc3QoY29uc3QgY2hhciAqcHJvZ19u
-YW1lLCBpbnQgb3V0LCBpbnQgYnVmZmVyX2lucHV0KQ0KIHsNCiAJZ2l0X3pzdHJlYW0gc3RyZWFt
-Ow0KLS0gDQoyLjcuMi53aW5kb3dzLjENCg0KDQpNaXQgZnJldW5kbGljaGVuIEdyw7zDn2VuIC8g
-V2l0aCBraW5kIHJlZ2FyZHMNCkZsb3JpYW4gTWFuc2Nod2V0dXMNCsKgDQpDUyBTb2Z0d2FyZSBD
-b25jZXB0cyBhbmQgU29sdXRpb25zIEdtYkgNCkdlc2Now6RmdHNmw7xocmVyIC8gTWFuYWdpbmcg
-ZGlyZWN0b3I6IERyLiBXZXJuZXIgQWxleGkgDQpBbXRzZ2VyaWNodCBXaWVzYmFkZW4gSFJCIDEw
-MDA0IChDb21tZXJjaWFsIHJlZ2lzdHJ5KQ0KU2NoaWVyc3RlaW5lciBTdHJhw59lIDMxDQpELTY1
-MTg3IFdpZXNiYWRlbg0KR2VybWFueQ0KDQoNCg0K
+On Thu, Mar 24, 2016 at 11:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> So a better alternative may be to conditionally disable the "Paths
+> outside are not touched regardless of --include" logic, i.e. we
+> exclude paths outside by default just as before, but if there is at
+> least one explicit "--include" given, we skip this "return 0".
+>
+> That way, we do not have to commit to turning --include/--exclude to
+> pathspec (which I agree is a huge change in behaviour that may not
+> be a good idea) and we do not have to add "--full-tree" that is only
+> understood by "apply" but not other commands that operate on the
+> current directory by default.
+
+Suppose I don't like git-apply's default behavior, I make an alias.ap
+= "apply --include=*". So far so good, but when I want to limit paths
+back to "subdir" (it does not have to be the same as cwd), how do I do
+it without typing resorting to typing "git apply" explicitly ? I don't
+see an option to cancel out --include=*. For "git ap --exclude=*
+--include=subdir" to have that effect, we need to change
+
+for (i = 0; i < limit_by_name.nr; i++) {
+
+in use_patch() to
+
+for (i = limit_by_name.nr - 1; i >= 0; i--) {
+
+Simple change, but not exactly harmless.
+
+Off topic, but --include/--exclude should be able to deal with
+relative path like --include=../*.c or --include=./*. I guess nobody
+has complained about it, so it's not needed.
+-- 
+Duy
