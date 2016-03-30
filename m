@@ -1,128 +1,109 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] diffcore: fix iteration order of identical files during rename detection
-Date: Wed, 30 Mar 2016 10:35:07 +0200
-Message-ID: <1459326907-16179-1-git-send-email-szeder@ira.uka.de>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH 2/2 V2] MSVC: VS2013 comes with inttypes.h
+Date: Wed, 30 Mar 2016 10:52:09 +0200
+Message-ID: <56FB93B9.7090306@gmail.com>
+References: <56FAACD4.9080504@cs-ware.de> <56FAB9FD.7080409@cs-ware.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Karsten Blees <karsten.blees@gmail.com>,
-	Bill Okara <billokara@gmail.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 30 10:39:05 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: Sven Strickroth <sven@cs-ware.de>, Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>, blees@dcon.de
+X-From: git-owner@vger.kernel.org Wed Mar 30 10:52:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alBbh-0000fW-LS
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 10:36:06 +0200
+	id 1alBrR-0001xu-QU
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 10:52:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758747AbcC3If7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Mar 2016 04:35:59 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:34764 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752901AbcC3If5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Mar 2016 04:35:57 -0400
-Received: from x4db1c097.dyn.telefonica.de ([77.177.192.151] helo=localhost.localdomain)
-	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
-	iface 141.3.10.81 id 1alBbL-0006YE-Pb; Wed, 30 Mar 2016 10:35:49 +0200
-X-Mailer: git-send-email 2.8.0.46.gb821760
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1459326949.
+	id S1758810AbcC3IwQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2016 04:52:16 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36856 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753791AbcC3IwM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2016 04:52:12 -0400
+Received: by mail-wm0-f67.google.com with SMTP id 20so12604802wmh.3
+        for <git@vger.kernel.org>; Wed, 30 Mar 2016 01:52:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=MQ74Lh/QnOaYFhtjlxXEO/CgZTjvLG/FlsNBG5JOcFc=;
+        b=QqAvXm1oDQUgfd6DtlsaUrGwdcTf2wWIjOl6l+QS4E/lc3U5t6Gl8mxqPVtblUw5id
+         HiVIZmEKMlntV921bQIlEc96xPlwLFjzTZ11S2liURt98SK7Qd7cHSu5JRXwM2s/qTzC
+         wxC6U6iz4yfs2hH0fTfu5NqaUtgjmx9HUmsEC+DzmZid6Nd1IVzCpdgB1ClzVcsWNEs1
+         KE4ebiXr3Cp5FidPiO7e77gy6Q1DtHqV+P1XXAeXae8Prn2XHPSdIB6B3qCb5vZkEx+H
+         uYBAE+4NeYYka/7GWAV/6GYxu8Ld9wC9tBhtWucglbd7ncqtTq1EwdYG0t6sXRWSiFzT
+         KI3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:newsgroups:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=MQ74Lh/QnOaYFhtjlxXEO/CgZTjvLG/FlsNBG5JOcFc=;
+        b=KgUQ7x8W7Z36i8fKsSslyH87LVuVAryrFWx6NhJdSNidiXzQC+6oJRR0jN1nlNtRlp
+         Q/O3TT89yG9Oj7QCzKQc5rrvO2m3fa2Pp8RD+0De3w7f7Ekri0vMjIwJ9Prf8kiY1M7j
+         UD7zxc1AOxgNJ/j9OSCnNqOAwLkVrsWqVG/r/RHHmoNxTeUWOgzcSDx5Z/ymKPOWCevr
+         CrDfflJYS9OZtRi5NoA7VswcY+vwoDU2LL+AxveAzR87ndWlFq0pEqJqvvWfDWnZxKKg
+         l3fOikrb6tbi8zJuOik/XCQ/5pMEXsAyssjR3700pk8+ED/fIGu6qQ9mGZfrfC0a9lVa
+         /8vw==
+X-Gm-Message-State: AD7BkJJJQDDJbETpVTOh6vKChzVd5VR2+Yegi81hSfNZYdGLsEOktNPWabMhWKdfgLs8Nw==
+X-Received: by 10.28.139.129 with SMTP id n123mr8510535wmd.13.1459327931412;
+        Wed, 30 Mar 2016 01:52:11 -0700 (PDT)
+Received: from [10.223.62.205] ([131.228.216.133])
+        by smtp.googlemail.com with ESMTPSA id m141sm18632733wma.3.2016.03.30.01.52.10
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 30 Mar 2016 01:52:10 -0700 (PDT)
+Newsgroups: gmane.comp.version-control.git
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <56FAB9FD.7080409@cs-ware.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290279>
 
-If the two paths 'dir/A/file' and 'dir/B/file' have identical content
-and the parent directory is renamed, e.g. 'git mv dir other-dir', then
-diffcore reports the following exact renames:
+On 3/29/2016 19:23, Sven Strickroth wrote:
 
-    renamed:    dir/B/file -> other-dir/A/file
-    renamed:    dir/A/file -> other-dir/B/file
+> --- a/compat/mingw.h
+> +++ b/compat/mingw.h
+> @@ -415,7 +415,7 @@ int mingw_offset_1st_component(const char *path);
+>   extern void build_libgit_environment(void);
+>   extern const char *program_data_config(void);
+>   #define git_program_data_config program_data_config
+> -#ifndef __MINGW64_VERSION_MAJOR
+> +#if !defined(__MINGW64_VERSION_MAJOR) && (!defined(_MSC_VER) || _MSC_VER < 1800)
+>   #define PRIuMAX "I64u"
+>   #define PRId64 "I64d"
+>   #else
 
-While technically not wrong, this is confusing not only for the user,
-but also for git commands that make decisions based on rename
-information, e.g. 'git log --follow other-dir/A/file' follows
-'dir/B/file' past the rename.
+ACK for this part. For reference see [1].
 
-This behavior is a side effect of commit v2.0.0-rc4~8^2~14
-(diffcore-rename.c: simplify finding exact renames, 2013-11-14): the
-hashmap storing sources returns entries from the same bucket, i.e.
-sources matching the current destination, in LIFO order.  Thus the
-iteration first examines 'other-dir/A/file' and 'dir/B/file' and, upon
-finding identical content and basename, reports an exact rename.
+> diff --git a/compat/vcbuild/include/unistd.h b/compat/vcbuild/include/unistd.h
+> index c65c2cd..b7cc48c 100644
+> --- a/compat/vcbuild/include/unistd.h
+> +++ b/compat/vcbuild/include/unistd.h
+> @@ -45,11 +45,15 @@ typedef unsigned long long uintmax_t;
+>   
+>   typedef int64_t off64_t;
+>   
+> +#if !defined(_MSC_VER) || _MSC_VER < 1800
+>   #define INTMAX_MIN  _I64_MIN
+>   #define INTMAX_MAX  _I64_MAX
+>   #define UINTMAX_MAX _UI64_MAX
+>   
+>   #define UINT32_MAX 0xffffffff  /* 4294967295U */
+> +#else
+> +#include<inttypes.h>
+> +#endif
 
-Other hashmap users are apparently happy with the current iteration
-order over the entries of a bucket.  Changing the iteration order
-would risk upsetting other hashmap users and would increase the memory
-footprint of each bucket by a pointer to the tail element.
+If we would do "#include <stdint.h>" here instead, we could lower the _MSC_VER requirement to at least 1700. According to the comment at [2] we could lower it even to 1600.
 
-=46ill the hashmap with source entries in reverse order to restore the
-original exact rename detection behavior.
+Also the original code is missing a single space after "#include".
 
-Reported-by: Bill Okara <billokara@gmail.com>
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
+[1] https://blogs.msdn.microsoft.com/vcblog/2013/07/19/c99-library-support-in-visual-studio-2013/
+[2] https://stackoverflow.com/questions/126279/c99-stdint-h-header-and-ms-visual-studio#comment4620359_126279
 
-Resend of the patch, with a slightly updated commit message, included
-in
-
-  http://thread.gmane.org/gmane.comp.version-control.git/287281/focus=3D=
-287570
-
-Being embedded with scissors in an email without Junio among the
-recipients on the day the first -rc was tagged...  no wonder it flew
-below the radar.
-
- diffcore-rename.c      |  6 ++++--
- t/t4001-diff-rename.sh | 11 +++++++++++
- 2 files changed, 15 insertions(+), 2 deletions(-)
-
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 3b3c1ed535e7..7f03eb5a0404 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -340,9 +340,11 @@ static int find_exact_renames(struct diff_options =
-*options)
- 	int i, renames =3D 0;
- 	struct hashmap file_table;
-=20
--	/* Add all sources to the hash table */
-+	/* Add all sources to the hash table in reverse order, because
-+	 * later on they will be retrieved in LIFO order.
-+	 */
- 	hashmap_init(&file_table, NULL, rename_src_nr);
--	for (i =3D 0; i < rename_src_nr; i++)
-+	for (i =3D rename_src_nr-1; i >=3D 0; i--)
- 		insert_file_table(&file_table, i, rename_src[i].p->one);
-=20
- 	/* Walk the destinations and find best source match */
-diff --git a/t/t4001-diff-rename.sh b/t/t4001-diff-rename.sh
-index 2f327b749588..ed90c6c6f984 100755
---- a/t/t4001-diff-rename.sh
-+++ b/t/t4001-diff-rename.sh
-@@ -77,6 +77,17 @@ test_expect_success 'favour same basenames even with=
- minor differences' '
- 	git show HEAD:path1 | sed "s/15/16/" > subdir/path1 &&
- 	git status | test_i18ngrep "renamed: .*path1 -> subdir/path1"'
-=20
-+test_expect_success 'two files with same basename and same content' '
-+	git reset --hard &&
-+	mkdir -p dir/A dir/B &&
-+	cp path1 dir/A/file &&
-+	cp path1 dir/B/file &&
-+	git add dir &&
-+	git commit -m 2 &&
-+	git mv dir other-dir &&
-+	git status | test_i18ngrep "renamed: .*dir/A/file -> other-dir/A/file=
-"
-+'
-+
- test_expect_success 'setup for many rename source candidates' '
- 	git reset --hard &&
- 	for i in 0 1 2 3 4 5 6 7 8 9;
---=20
-2.8.0.46.gb821760
+Regards,
+Sebastian
