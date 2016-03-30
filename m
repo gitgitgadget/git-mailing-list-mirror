@@ -1,57 +1,57 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v3 05/16] ref-filter: move get_head_description() from branch.c
-Date: Wed, 30 Mar 2016 15:09:49 +0530
-Message-ID: <1459330800-12525-6-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v3 07/16] ref-filter: make %(upstream:track) prints "[gone]" for invalid upstreams
+Date: Wed, 30 Mar 2016 15:09:51 +0530
+Message-ID: <1459330800-12525-8-git-send-email-Karthik.188@gmail.com>
 References: <1459330800-12525-1-git-send-email-Karthik.188@gmail.com>
 Cc: gitster@pobox.com, jacob.keller@gmail.com,
 	Karthik Nayak <Karthik.188@gmail.com>,
 	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 30 11:40:38 2016
+X-From: git-owner@vger.kernel.org Wed Mar 30 11:40:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alCc5-0001fQ-V2
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 11:40:34 +0200
+	id 1alCc7-0001fQ-MG
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 11:40:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751422AbcC3JkY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2016 05:40:24 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:33637 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752037AbcC3JkW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2016 05:40:22 -0400
-Received: by mail-pa0-f43.google.com with SMTP id zm5so36435116pac.0
-        for <git@vger.kernel.org>; Wed, 30 Mar 2016 02:40:22 -0700 (PDT)
+	id S1752220AbcC3Jkb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2016 05:40:31 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:33955 "EHLO
+	mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752147AbcC3Jk1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2016 05:40:27 -0400
+Received: by mail-pf0-f181.google.com with SMTP id x3so37990469pfb.1
+        for <git@vger.kernel.org>; Wed, 30 Mar 2016 02:40:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VJCW+J9RCZRNVlH1jb6COr1NYPN+LraZeLRX+MyU/4E=;
-        b=Fyk0LmtIajWXybUlqUhbaAPVdRuJX1DnyhKigjkaMq5Pw4t8kit3Ze05aDIjudrCrv
-         hKElucWdklu5Y+y5AdwLXuOE2XcNzvZmSaz/hPbPxSvG4Rg+MAoMBBwBnCH4l+8YwDW/
-         pRUVUY0FHNj/+q6Fx5Y11CTV/L5lAnUvlpqWux1sk8DEMVXmEaJ4p1SjlH3g4ZV0HEGI
-         PQFFDdjSw3bWzepzxW+Ff2O4FgUilp25dY+T8ykgZSUmmzC/N5vEjk1n3rmfi0mIYZ/i
-         2YVdi3Uefi3QuLcSFZah2Ax8mv0K/FGKnGL1kuvLkj6ee9u0h3XczP79Z+CNoXM70vrc
-         TcHA==
+        bh=nuaDEVewMOS0grYAiP7U1sJ+Evdq08M/u2S7Tlk1xwk=;
+        b=gPOoLEKv+pM/2QQNmBDJJ/U0LKhG384fHQh3kxBI9XuM9dACD9EXfj9bisKFUMDuKu
+         50iB4lUMaqIi0A1GJ82WV3DU0qd6POGx2/XLfGMxo6JfqBMHOvEBKQ3jqVxg8Y7zBeR8
+         YGgiyoD6tuFQBXy5Z1w2Q3zd+WRSn7eKtvndubCzF6az/zK6Zl9OjQF33stY6k4DFPge
+         zC7sTOLdBbBhbXxDK5bvKZp3XC8M9Z91batdnecNUIx+S44fnWYQs7OwNH2zOHCg67Tw
+         3nHqa9nS6/B7wmlSVn4gkZNmmumHaOUjrCFneRF3p1L823Sdo7HCqJkF7S2w17B9qRld
+         etiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=VJCW+J9RCZRNVlH1jb6COr1NYPN+LraZeLRX+MyU/4E=;
-        b=CS3OrFmV8FR6eWYzdPWJMB/Q0XqWEm+nVKsXwTsW0Q83fIuOJ0FbtodHfsYOCX+l+r
-         6PuPoF2jE2guDZtzsyE38vSo7xfQy7mIa/pqCP6LKSyZHwievTUJVzZ8gp/g1v40pE9z
-         9dXLQrSMebka7vF8WmNcFlOFenz4vyHfXFqArGYVFN5MAW0hRz7KOfENPM+zNo+AdmvA
-         WNfA/x1aDuMKPNyInSVDTrkSp45dx+N2ZPMrZK74cAk/ARwECX6zuIdQ7oJ+/Ez1HBlH
-         K4Sh+V5un0BG4oWu5mAwDeZHqk3vav+n4c2hjp6lJZOp9DWY3fwk7RXhaPS4D0lz0vcF
-         5eQg==
-X-Gm-Message-State: AD7BkJK6Ri4o5Auxc+i6KtuErCB4P8Jy9YDKeiA8Pf3q61KVojxVmYYd1diyc8V7BYLn7A==
-X-Received: by 10.66.102.70 with SMTP id fm6mr11313231pab.98.1459330821490;
-        Wed, 30 Mar 2016 02:40:21 -0700 (PDT)
+        bh=nuaDEVewMOS0grYAiP7U1sJ+Evdq08M/u2S7Tlk1xwk=;
+        b=l+u9TYeLspkG4BShJFUEJ6mGCKBhP/uV/QmGksnkIUTQcQSYn/cVYdHgj2ZpBCU/j9
+         Xuh70Q1PdolVeQQItnUv+20DBhW7sAeTBGk/gk0AvI7Y2p/ZcwRZ9KtMLqChFLHjZlDu
+         nfqJ4yMRLf9Tn/zyyRdNiGJ9Ge4+B7qT315e+NdkTbgftoYqGFqKz6fwzJJs+h9K9caw
+         v+nZW3wOkJH+KvzJCucuH4216sAxQ4pCM6LMhDQV0L01NRudE0DGpDRn6HlG8UOgYd+v
+         WfqSRu84XPjqdH5p6RPZaozd9wyL65+6ESgApqNWd5oY4HD+1ofkB/9zagoWCwmMuGFP
+         3iEA==
+X-Gm-Message-State: AD7BkJIcGbkEA0QaXA6gFOzZY8ybJXC1BXS0Tgj1/eESNwhkED4qR/NkBrpEZYidmpZgCQ==
+X-Received: by 10.98.69.193 with SMTP id n62mr11288893pfi.46.1459330826613;
+        Wed, 30 Mar 2016 02:40:26 -0700 (PDT)
 Received: from localhost.localdomain ([106.51.243.45])
-        by smtp.gmail.com with ESMTPSA id r65sm4402606pfa.27.2016.03.30.02.40.19
+        by smtp.gmail.com with ESMTPSA id r65sm4402606pfa.27.2016.03.30.02.40.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 30 Mar 2016 02:40:20 -0700 (PDT)
+        Wed, 30 Mar 2016 02:40:25 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1459330800-12525-1-git-send-email-Karthik.188@gmail.com>
@@ -59,142 +59,69 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290287>
 
-Move the implementation of get_head_description() from branch.c to
-ref-filter.  This gives a description of the HEAD ref if called. This
-is used as the refname for the HEAD ref whenever the
-FILTER_REFS_DETACHED_HEAD option is used. Make it public because we
-need it to calculate the length of the HEAD refs description in
-branch.c:calc_maxwidth() when we port branch.c to use ref-filter
-APIs.
+Borrowing from branch.c's implementation print "[gone]" whenever an
+unknown upstream ref is encountered instead of just ignoring it.
+
+This makes sure that when branch.c is ported over to using ref-filter
+APIs for printing, this feature is not lost.
+
+Make changes to t/t6300-for-each-ref.sh and
+Documentation/git-for-each-ref.txt to reflect this change.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Helped-by : Jacob Keller <jacob.keller@gmail.com>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/branch.c | 31 -------------------------------
- ref-filter.c     | 38 ++++++++++++++++++++++++++++++++++++--
- ref-filter.h     |  2 ++
- 3 files changed, 38 insertions(+), 33 deletions(-)
+ Documentation/git-for-each-ref.txt | 3 ++-
+ ref-filter.c                       | 4 +++-
+ t/t6300-for-each-ref.sh            | 2 +-
+ 3 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 7b45b6b..460f32f 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -355,37 +355,6 @@ static void add_verbose_info(struct strbuf *out, struct ref_array_item *item,
- 	strbuf_release(&subject);
- }
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index d3223a2..85ac2a8 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -119,7 +119,8 @@ upstream::
+ 	"[ahead N, behind M]" and `:trackshort` to show the terse
+ 	version: ">" (ahead), "<" (behind), "<>" (ahead and behind),
+ 	or "=" (in sync).  Has no effect if the ref does not have
+-	tracking information associated with it.
++	tracking information associated with it. `:track` also prints
++	"[gone]" whenever unknown upstream ref is encountered.
  
--static char *get_head_description(void)
--{
--	struct strbuf desc = STRBUF_INIT;
--	struct wt_status_state state;
--	memset(&state, 0, sizeof(state));
--	wt_status_get_state(&state, 1);
--	if (state.rebase_in_progress ||
--	    state.rebase_interactive_in_progress)
--		strbuf_addf(&desc, _("(no branch, rebasing %s)"),
--			    state.branch);
--	else if (state.bisect_in_progress)
--		strbuf_addf(&desc, _("(no branch, bisect started on %s)"),
--			    state.branch);
--	else if (state.detached_from) {
--		/* TRANSLATORS: make sure these match _("HEAD detached at ")
--		   and _("HEAD detached from ") in wt-status.c */
--		if (state.detached_at)
--			strbuf_addf(&desc, _("(HEAD detached at %s)"),
--				state.detached_from);
--		else
--			strbuf_addf(&desc, _("(HEAD detached from %s)"),
--				state.detached_from);
--	}
--	else
--		strbuf_addstr(&desc, _("(no branch)"));
--	free(state.branch);
--	free(state.onto);
--	free(state.detached_from);
--	return strbuf_detach(&desc, NULL);
--}
--
- static void format_and_print_ref_item(struct ref_array_item *item, int maxwidth,
- 				      struct ref_filter *filter, const char *remote_prefix)
- {
+ push::
+ 	The name of a local ref which represents the `@{push}` location
 diff --git a/ref-filter.c b/ref-filter.c
-index 17f781d..7004bf0 100644
+index 3bb474f..4d7e0c0 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -13,6 +13,7 @@
- #include "utf8.h"
- #include "git-compat-util.h"
- #include "version.h"
-+#include "wt-status.h"
+@@ -1049,8 +1049,10 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+ 		*s = shorten_unambiguous_ref(refname, warn_ambiguous_refs);
+ 	else if (atom->u.remote_ref == RR_TRACK) {
+ 		if (stat_tracking_info(branch, &num_ours,
+-				       &num_theirs, NULL))
++				       &num_theirs, NULL)) {
++			*s = "[gone]";
+ 			return;
++		}
  
- typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
+ 		if (!num_ours && !num_theirs)
+ 			*s = "";
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 2be0a3f..a92b36f 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -382,7 +382,7 @@ test_expect_success 'Check that :track[short] cannot be used with other atoms' '
  
-@@ -1077,6 +1078,37 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
- 		*s = refname;
- }
+ test_expect_success 'Check that :track[short] works when upstream is invalid' '
+ 	cat >expected <<-\EOF &&
+-
++	[gone]
  
-+char *get_head_description(void)
-+{
-+	struct strbuf desc = STRBUF_INIT;
-+	struct wt_status_state state;
-+	memset(&state, 0, sizeof(state));
-+	wt_status_get_state(&state, 1);
-+	if (state.rebase_in_progress ||
-+	    state.rebase_interactive_in_progress)
-+		strbuf_addf(&desc, _("(no branch, rebasing %s)"),
-+			    state.branch);
-+	else if (state.bisect_in_progress)
-+		strbuf_addf(&desc, _("(no branch, bisect started on %s)"),
-+			    state.branch);
-+	else if (state.detached_from) {
-+		/* TRANSLATORS: make sure these match _("HEAD detached at ")
-+		   and _("HEAD detached from ") in wt-status.c */
-+		if (state.detached_at)
-+			strbuf_addf(&desc, _("(HEAD detached at %s)"),
-+				state.detached_from);
-+		else
-+			strbuf_addf(&desc, _("(HEAD detached from %s)"),
-+				state.detached_from);
-+	}
-+	else
-+		strbuf_addstr(&desc, _("(no branch)"));
-+	free(state.branch);
-+	free(state.onto);
-+	free(state.detached_from);
-+	return strbuf_detach(&desc, NULL);
-+}
-+
- /*
-  * Parse the object referred by ref, and grab needed value.
-  */
-@@ -1116,9 +1148,11 @@ static void populate_value(struct ref_array_item *ref)
- 			name++;
- 		}
- 
--		if (starts_with(name, "refname"))
-+		if (starts_with(name, "refname")) {
- 			refname = ref->refname;
--		else if (starts_with(name, "symref"))
-+			if (ref->kind & FILTER_REFS_DETACHED_HEAD)
-+				refname = get_head_description();
-+		} else if (starts_with(name, "symref"))
- 			refname = ref->symref ? ref->symref : "";
- 		else if (starts_with(name, "upstream")) {
- 			const char *branch_name;
-diff --git a/ref-filter.h b/ref-filter.h
-index 14d435e..4aea594 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -106,5 +106,7 @@ int parse_opt_ref_sorting(const struct option *opt, const char *arg, int unset);
- struct ref_sorting *ref_default_sorting(void);
- /*  Function to parse --merged and --no-merged options */
- int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset);
-+/*  Get the current HEAD's description */
-+char *get_head_description(void);
- 
- #endif /*  REF_FILTER_H  */
+ 	EOF
+ 	test_when_finished "git config branch.master.merge refs/heads/master" &&
 -- 
 2.7.4
