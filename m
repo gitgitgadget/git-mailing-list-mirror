@@ -1,149 +1,101 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v3 00/16] port branch.c to use ref-filter's printing options
-Date: Wed, 30 Mar 2016 15:09:44 +0530
-Message-ID: <1459330800-12525-1-git-send-email-Karthik.188@gmail.com>
-Cc: gitster@pobox.com, jacob.keller@gmail.com,
-	Karthik Nayak <Karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 30 11:41:35 2016
+From: Sven Strickroth <sven@cs-ware.de>
+Subject: Re: [PATCH 2/2 V3] MSVC: Use shipped headers instead of fallback
+ definitions
+Date: Wed, 30 Mar 2016 13:37:36 +0200
+Message-ID: <56FBBA80.8090908@cs-ware.de>
+References: <56FAACD4.9080504@cs-ware.de> <56FAB9FD.7080409@cs-ware.de>
+ <56FB93B9.7090306@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: Sebastian Schuberth <sschuberth@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>, blees@dcon.de
+X-From: git-owner@vger.kernel.org Wed Mar 30 13:37:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alCd4-0002CB-O2
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 11:41:35 +0200
+	id 1alERY-0001z0-HB
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 13:37:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752149AbcC3Jla (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2016 05:41:30 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:35728 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751344AbcC3JkJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2016 05:40:09 -0400
-Received: by mail-pa0-f50.google.com with SMTP id td3so36010932pab.2
-        for <git@vger.kernel.org>; Wed, 30 Mar 2016 02:40:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=GP2Cj/YtAaINwJktvt5AQffXzQyxK83+B5D9tMtn6HY=;
-        b=aP3Ztlh3rNN2LuL7OXKT8wiWxGpEGOC99vKCc+HNc7k7sq6UrIlnY5qq5KeyGPEfgW
-         9Ibje6zisCWQYireVIpqarB07WHWVN0hfAMDwyTC4pyZL9rkXyQDadBrGGguxR1zjJVL
-         GG38CugOx8ug25G5vEt/RQc5biRjm9HXXHrMtU8jBidB70jaeGYG4IGCC//cplXetHb+
-         aBa5JJbJjqpqTOSAvAWrd2BdYX/CcF7Rpm+sULmHsjOIEEL55oGg6vhkyMV/PUb5Ac1m
-         xDGS0L74B81KuRhAx3KxmMfuCLf+xpdh6pW2vRoBqH2oEkp4jAm7JL73kL2cHTp3tA32
-         sigg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=GP2Cj/YtAaINwJktvt5AQffXzQyxK83+B5D9tMtn6HY=;
-        b=hXjvY6/1sUxuhte2Zc7eYRAbDHinrdZX2amQjIalA3wP0g50Mus1p2uJthOxKnPkjy
-         jfNXb6Dy6kKwZLI7XCAqjYZJF3LhrhZRa41SEfNCcxezDtFRWVpW3knGTYsGunhSWWbG
-         esSh0erZ8G6WneYt7laJAvZa59V6xZMXNFvIQDHtR1Za9p+n9QFcPDX1LQfOpkb2eXTL
-         /IRf+wsYFfG7kQOxexYIaFx3+bQfjIX2ZedCOtMMf+VYvblq0yecwXQCqYNTxwdtEo7w
-         cpxh/R85ksH7sMQJHzZYBJtuA24S8b6u/Pswd62Ep5HUWuYuyM0MLA3+z/SYSlkKc0vA
-         moGA==
-X-Gm-Message-State: AD7BkJIswoALNC7eToFOWBZGsvMwVwVG/q2LSbJAo+LNtJZG2Lx2gHrmghq70MXbVSsUtg==
-X-Received: by 10.66.90.226 with SMTP id bz2mr11508663pab.31.1459330808622;
-        Wed, 30 Mar 2016 02:40:08 -0700 (PDT)
-Received: from localhost.localdomain ([106.51.243.45])
-        by smtp.gmail.com with ESMTPSA id r65sm4402606pfa.27.2016.03.30.02.40.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 30 Mar 2016 02:40:07 -0700 (PDT)
-X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
-X-Mailer: git-send-email 2.7.4
+	id S1752082AbcC3Lho (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2016 07:37:44 -0400
+Received: from srv1.79p.de ([213.239.234.118]:39728 "EHLO srv1.79p.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751425AbcC3Lhn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2016 07:37:43 -0400
+X-Virus-Scanned: Debian amavisd-new at srv1.79p.de
+Received: from [141.20.25.102] (dig102.informatik.hu-berlin.de [141.20.25.102])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: sven@cs-ware.de)
+	by srv1.79p.de (Postfix) with ESMTPSA id A79EF224474;
+	Wed, 30 Mar 2016 13:37:37 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=cs-ware.de;
+	s=mail2015b; t=1459337858;
+	bh=B+834y1HAc0UR7XvmOR31RW6+VmF4WJ/2lKMNR6QYEA=;
+	h=Subject:To:References:From:Date:In-Reply-To;
+	b=vdUwHOZRsQUSh3ZFlljD6PVXFJdzIfQ5gP60VzVdjnxn4vfL19aJimvsU9k/ykhFz
+	 v7AK3UsyUfjUR482vvcqW6Ck8NTl7KOZ3T9MD+PaNDstnWRTNkGk8kuc7QlkabPSSa
+	 QLq/eB/LGBFUXs0dAar8HhKLlMIf9w/wnASw09S/2OHvroGTbnlK4hhBGW9+lgv6ar
+	 54LpZA0Me0G8rgRga/+gI7tGIhMNoo0oOZx7WlFJD9MwQ/rg1ien1/epdp6b2hOZzK
+	 PIB9MWRKLK7Z+3VnUxubzFzIHYPJW9JH2eN0OC9HXuuqHPFWF5mwp/jcQzQNhcjklf
+	 ObSoxo8icH4/w==
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <56FB93B9.7090306@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290300>
 
-I kinda waited before sending this, since there was lot of discussions
-happening regarding to GSOC16, didn't want to clutter the mailing list.
+VS2010 comes with stdint.h [1]
+VS2013 comes with inttypes.h [2]
 
-This is part of unification of the commands 'git tag -l, git branch -l
-and git for-each-ref'. This ports over branch.c to use ref-filter's
-printing options.
+[1] https://stackoverflow.com/a/2628014/3906760
+[2] https://blogs.msdn.microsoft.com/vcblog/2013/07/19/c99-library-support-in-visual-studio-2013/
 
-Initially posted here: $(gmane/279226). It was decided that this series
-would follow up after refactoring ref-filter parsing mechanism, which
-is now merged into master (9606218b32344c5c756f7c29349d3845ef60b80c).
+Signed-off-by: Sven Strickroth <sven@cs-ware.de>
+---
+ compat/mingw.h                  | 2 +-
+ compat/vcbuild/include/unistd.h | 4 ++++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-v1 can be found here: $(gmane/288342)
-v2 can be found here: $(gmane/288863)
-
-Changes in this version:
-1. Only Documentation and commit message changes as suggested by
-Jacob in v2.
-
-Thanks to Jacob for his suggestions on the previous iteration.
-
-Karthik Nayak (16):
-  ref-filter: implement %(if), %(then), and %(else) atoms
-  ref-filter: include reference to 'used_atom' within 'atom_value'
-  ref-filter: implement %(if:equals=<string>) and
-    %(if:notequals=<string>)
-  ref-filter: modify "%(objectname:short)" to take length
-  ref-filter: move get_head_description() from branch.c
-  ref-filter: introduce format_ref_array_item()
-  ref-filter: make %(upstream:track) prints "[gone]" for invalid
-    upstreams
-  ref-filter: add support for %(upstream:track,nobracket)
-  ref-filter: make "%(symref)" atom work with the ':short' modifier
-  ref-filter: introduce symref_atom_parser()
-  ref-filter: introduce refname_atom_parser()
-  ref-filter: add support for %(refname:dir) and %(refname:base)
-  ref-filter: allow porcelain to translate messages in the output
-  branch, tag: use porcelain output
-  branch: use ref-filter printing APIs
-  branch: implement '--format' option
-
- Documentation/git-branch.txt       |   7 +-
- Documentation/git-for-each-ref.txt |  63 +++++-
- builtin/branch.c                   | 267 ++++++----------------
- builtin/tag.c                      |   2 +
- ref-filter.c                       | 447 +++++++++++++++++++++++++++++++------
- ref-filter.h                       |   7 +
- t/t3203-branch-output.sh           |  12 +
- t/t6040-tracking-info.sh           |   2 +-
- t/t6300-for-each-ref.sh            |  40 +++-
- t/t6302-for-each-ref-filter.sh     |  88 ++++++++
- 10 files changed, 657 insertions(+), 278 deletions(-)
-
-Interdiff:
-
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 0d7d80f..578bbd1 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -109,10 +109,6 @@ objectsize::
- objectname::
-        The object name (aka SHA-1).
-        For a non-ambiguous abbreviation of the object name append `:short`.
--       For an abbreviation of the object name with desired length append
--       `:short=<length>`, where the minimum length is MINIMUM_ABBREV. The
--       length may be exceeded to ensure unique object names.
--
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 6b6d695..137f42e 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -415,7 +415,7 @@ int mingw_offset_1st_component(const char *path);
+ extern void build_libgit_environment(void);
+ extern const char *program_data_config(void);
+ #define git_program_data_config program_data_config
+-#ifndef __MINGW64_VERSION_MAJOR
++#if !defined(__MINGW64_VERSION_MAJOR) && (!defined(_MSC_VER) || _MSC_VER < 1800)
+ #define PRIuMAX "I64u"
+ #define PRId64 "I64d"
+ #else
+diff --git a/compat/vcbuild/include/unistd.h b/compat/vcbuild/include/unistd.h
+index c65c2cd..b7cc48c 100644
+--- a/compat/vcbuild/include/unistd.h
++++ b/compat/vcbuild/include/unistd.h
+@@ -45,11 +45,15 @@ typedef unsigned long long uintmax_t;
  
- upstream::
-        The name of a local ref which can be considered ``upstream''
-@@ -120,11 +116,12 @@ upstream::
-        `refname` above.  Additionally respects `:track` to show
-        "[ahead N, behind M]" and `:trackshort` to show the terse
-        version: ">" (ahead), "<" (behind), "<>" (ahead and behind),
--       or "=" (in sync). `:track` also prints "[gone]" whenever
--       unknown upstream ref is encountered. Append `:track,nobracket`
--       to show tracking information without brackets (i.e "ahead N,
--       behind M").  Has no effect if the ref does not have tracking
--       information associated with it.
-+       or "=" (in sync).  Has no effect if the ref does not have
-+       tracking information associated with it. `:track` also prints
-+       "[gone]" whenever unknown upstream ref is encountered. Append
-+       `:track,nobracket` to show tracking information without
-+       brackets (i.e "ahead N, behind M").  Has no effect if the ref
-+       does not have tracking information associated with it.
+ typedef int64_t off64_t;
  
- push::
-        The name of a local ref which represents the `@{push}` location
-
++#if !defined(_MSC_VER) || _MSC_VER < 1600
+ #define INTMAX_MIN  _I64_MIN
+ #define INTMAX_MAX  _I64_MAX
+ #define UINTMAX_MAX _UI64_MAX
+ 
+ #define UINT32_MAX 0xffffffff  /* 4294967295U */
++#else
++#include <stdint.h>
++#endif
+ 
+ #define STDIN_FILENO  0
+ #define STDOUT_FILENO 1
 -- 
-2.7.4
+2.7.4.windows.1
