@@ -1,70 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 00/16] port branch.c to use ref-filter's printing options
-Date: Wed, 30 Mar 2016 15:19:06 -0700
-Message-ID: <xmqqpoubr4md.fsf@gitster.mtv.corp.google.com>
-References: <1459330800-12525-1-git-send-email-Karthik.188@gmail.com>
+Subject: Re: [PATCH 2/2] ident: make the useConfigOnly error messages more informative
+Date: Wed, 30 Mar 2016 15:27:05 -0700
+Message-ID: <xmqqlh4zr492.fsf@gitster.mtv.corp.google.com>
+References: <1459366183-15451-1-git-send-email-redneb@gmx.com>
+	<1459366183-15451-2-git-send-email-redneb@gmx.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, jacob.keller@gmail.com
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 31 00:19:15 2016
+Cc: git@vger.kernel.org
+To: Marios Titas <redneb@gmx.com>
+X-From: git-owner@vger.kernel.org Thu Mar 31 00:27:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alOSI-0006LA-VW
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 00:19:15 +0200
+	id 1alOa2-0000qT-8k
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 00:27:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755267AbcC3WTK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2016 18:19:10 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:57472 "EHLO
+	id S1754775AbcC3W1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2016 18:27:10 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:56593 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753508AbcC3WTJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2016 18:19:09 -0400
+	with ESMTP id S1754281AbcC3W1I (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2016 18:27:08 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 29007518D6;
-	Wed, 30 Mar 2016 18:19:08 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C987651B02;
+	Wed, 30 Mar 2016 18:27:07 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aDq8/bGO3iuGhaPrH5jWZAQLZ6g=; b=otXo02
-	5qg6Jh2s1XKxsG6qUBmmNWqPuXowN5zJO7meuICDlRc3/Q7Wu9WSRsP48mAaF2yw
-	QLwZyC/tHY7OJ1iU/KpYdOz/LF0hnwXETAiVf3W7LLz8BwZLKzKZ/92SnjB7pYgJ
-	F7dL3XebAZhwhO8DsGF1wdmqavYUPE6VVHhdw=
+	:content-type; s=sasl; bh=WTKxEUYAaohEqjXZieCNVilSPRQ=; b=Iacl/u
+	Ed8XLW/kY+warwK/YHfD+lWA80Jq7r+6WxkoFB4sQCU9BjGrDkLC3TALbfmkYfi3
+	JDCcgBTGFSIc/HSVladDNOHohWQThxO+2zykePYkZfEQVf5UPHJHUuSsG2tXBOvl
+	afayjA25db2tcLX/NUF7XOEA66vg+i5Bo4ntU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=r6mL8xU9G+TvlX6g/PhVIh5JWhSNLziL
-	rEhM9vLZ8VqubMVCvkPtOaqoWuBrqdjepzY3aO/Qw2ZK1nx4wghzEReZTSQWxDwj
-	tmZKl732m0WjjvacDaWTYylf9ZicdrElmZwnssiOHjny20oBKcPZnyXoozQVN+se
-	AyxfnQryx9c=
+	:content-type; q=dns; s=sasl; b=r8ut7qCtiRUXvUybTWUJz+lVxXZ7lZon
+	mGfB35wQuqQeFUphOecvT/G2G9hNLDhn/g2rKqWDRj0ZsZ0RmGarDIEgyADcHXHH
+	UGv8Y5VA/24sFtGckxfHXlpbswsX4dsRUuoG+0XioFkoJl/IfVQ1R3ZIedI2wpDP
+	65Ezdun2114=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 21100518D3;
-	Wed, 30 Mar 2016 18:19:08 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BF8D651B01;
+	Wed, 30 Mar 2016 18:27:07 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8CDFB518D0;
-	Wed, 30 Mar 2016 18:19:07 -0400 (EDT)
-In-Reply-To: <1459330800-12525-1-git-send-email-Karthik.188@gmail.com>
-	(Karthik Nayak's message of "Wed, 30 Mar 2016 15:09:44 +0530")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3DF2B51AFD;
+	Wed, 30 Mar 2016 18:27:07 -0400 (EDT)
+In-Reply-To: <1459366183-15451-2-git-send-email-redneb@gmx.com> (Marios
+	Titas's message of "Wed, 30 Mar 2016 22:29:43 +0300")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6B6C0372-F6C5-11E5-8AC7-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 8954E182-F6C6-11E5-8DE8-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290355>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Marios Titas <redneb@gmx.com> writes:
 
-> I kinda waited before sending this, since there was lot of discussions
-> happening regarding to GSOC16, didn't want to clutter the mailing list.
->
-> This is part of unification of the commands 'git tag -l, git branch -l
-> and git for-each-ref'. This ports over branch.c to use ref-filter's
-> printing options.
+> -			    && !(ident_config_given & IDENT_NAME_GIVEN))
+> -				die("user.useConfigOnly set but no name given");
+> +			    && !(ident_config_given & IDENT_NAME_GIVEN)) {
+> +				fputs(env_hint, stderr);
+> +				die("no name was given and auto-detection is disabled
 
-Overall this was a very pleasant read (I had a few comments but
-nothing that would make the whole idea of the topic invalidated).
+Hmph.  I do not think that this is making the message "more
+informative".
 
-Thanks.
+When a user hits this error, the old message allowed the user to
+easily see how to toggle the "disable auto-detection" bit off to let
+the code continue by telling the name of the configuration, but the
+updated message hides that name, making it harder for the user to
+disable the disabling of auto-detection.
+
+I can buy the argument that this change helps the user by making the
+message "less" informative, though.  By discouraging the users from
+toggling the user.useConfigOnly bit off, it indirectly makes the
+other option to work around this error condition, i.e. giving a name
+more explicitly, more appetizing.
