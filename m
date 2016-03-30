@@ -1,99 +1,119 @@
-From: Marios Titas <redneb@gmx.com>
-Subject: [PATCH 1/2] ident: check for useConfigOnly before auto-detection of name/email
-Date: Wed, 30 Mar 2016 22:29:42 +0300
-Message-ID: <1459366183-15451-1-git-send-email-redneb@gmx.com>
-Cc: Marios Titas <redneb@gmx.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 30 21:30:05 2016
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: weird diff output?
+Date: Wed, 30 Mar 2016 12:31:30 -0700
+Message-ID: <CA+P7+xrbNQqGhR_EoVe7zou_g6oVFGN_v+q+tyHguv1BCMcimQ@mail.gmail.com>
+References: <CA+P7+xoiFUiBwDU2Wo9nVukchBvJSknON2XN572b6rSHnOSWaQ@mail.gmail.com>
+ <CAGZ79ka4ad5dQMWANJUDx-0+kV3qR=HttOJni2XfhFzjMKfcPw@mail.gmail.com>
+ <xmqqzithxj8l.fsf@gitster.mtv.corp.google.com> <CAGZ79kZiiOgxh6vMDnaJ_b+VVGrFBfGzZukTN6OEBxUV9-2vQw@mail.gmail.com>
+ <CA+P7+xoLZhKzHf6khQfT_pZ2=CQAp8Nmhc9B8+10+9=YYUZH3w@mail.gmail.com>
+ <20160330045554.GA11007@sigill.intra.peff.net> <CA+P7+xqskf6Ti3tVwMrOAaj3EDykRLKiXG5EbbzkjRsZP0s_7w@mail.gmail.com>
+ <CA+P7+xp+oT2zMBZqR8zvXKm8Zp5btaNyoOWFTts29HMwX+2o=Q@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git mailing list <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 30 21:31:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alLoY-0003PI-NI
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 21:30:03 +0200
+	id 1alLqO-00046f-8V
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 21:31:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753303AbcC3T34 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2016 15:29:56 -0400
-Received: from mout.gmx.net ([212.227.17.20]:63498 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752085AbcC3T3z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2016 15:29:55 -0400
-Received: from localhost.localdomain ([79.103.155.63]) by mail.gmx.com
- (mrgmx103) with ESMTPSA (Nemesis) id 0LkP8Z-1aAuOx0s2t-00cNZi; Wed, 30 Mar
- 2016 21:29:52 +0200
-X-Mailer: git-send-email 2.8.0
-X-Provags-ID: V03:K0:ggSY/HqPfVj+Hrf3hOdWD1sGV2sgbslNMMJ2Rc/DGm8rrv27XuZ
- TYVw+tWmGzx/NrCHQoED5XIw/v78ZHTto7E60GEDQBqedDSRnRtlpPGzinXWRsBrtKkRDkJ
- aidKgPlFuYZU002d6wySLTl1cIuPo5mKEKu0chNYCYwJ3ZZkS/s7sSvOityMZ0zJg07drnb
- bbjefV8HwEJyr7+a7IF0w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:iE27LZ//YuA=:TVcx/GSck3yVa3JhV8FLjm
- mzy06ons7uJfHVVCwTk1jXYX1wIIphh6cDwlDesDXWBCZ9DFCq+EPPgQGJgHd+fwZk7VY+nMM
- mzdTOHLsadW4nAE0J3igkiJZSf0DBjrXu3C48umAHqei6Yjvz5utoKOFwgWfTpebVumjrgVAA
- 65YwY/xYCqztqkM5DsYjUfizcsKp+Os438kfHL49rmdaoybdaNNwiU31RXGJMeELqHSljx5T7
- RrUp/A9LAPezbpYiFu+uugm1VAi+b5HFYeGJj4NDuPR/RSAvlHYJbLzvp9nOYz/4M6cZNwAt1
- FR5XH68i07UvSNi/4Kf0XyG68bxSuthsA6DDme+UPzObqxseL5wxuWzw212Cwr7znfdMsFvJc
- P7JcnXqpGV4uNntayW6Dw5MuwiIkvOnbb1bUA5/wwYeCoancmVTwCIpU6ZZrj4vmX7lLXOUsV
- jGkrb1HRSe+TeP76NbziPz/BLua7Bv2CfFcigahR6SBLlIb8PJ1WKVozCTrwrYqFkifEs/3RK
- cxvxjP6rq/sRrCAGTS9zg+0bpDpDq39W73xmGT8++YOx8OvhM6WtNuHKwIg9uW4Ss+0Dx1Rih
- MXm49tnOREt8u4GDjzCqPsGxC25Uh7jfBi/SfNs4hin9VZUQQqfCjAeh4rkOOVGHFEmeh5cUc
- YzUcmMsKojfYC3O8p577QCa/7u3Rw9So/nMe6/3j1egthDaZkBxcUFI9tHt3hpDPYwgcnNWWU
- gUJ0C7J1k5gzMAzxxH7CsoVJPMUOhTALfKOobNGq71fkxaLAqQIWPz3jvEI=
+	id S1753204AbcC3Tbw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2016 15:31:52 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:37293 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752704AbcC3Tbv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2016 15:31:51 -0400
+Received: by mail-ig0-f173.google.com with SMTP id l20so51117155igf.0
+        for <git@vger.kernel.org>; Wed, 30 Mar 2016 12:31:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=E4WCmFLvmr8JWq5Q9xFO8S5jVevNpOYuq4YScKhuYWU=;
+        b=ClBp8Sau4F3J9kjLxF1LvXOP/kVvt2p8nW2UexdMKwQsohdDQvM0WjE5CVbU+aFcrB
+         mjQ0SG3Gvd/mGlaxNPw320cXSM7sxTbRgWdHirf/PeiOmVEKDvLcExvpNnnRPEY1acam
+         42MklhcNV8MiUMyuRQ4UGmJ20dJcb3wp+WApV9pRm27M4PQAZBxFBB22wGPQ/rKzCdXE
+         EiqtH0DuaD7PVkhYGXAyIpnufTctQUmUpxMi9LgGwGmi26ql3nGL3FKou7fj0PERMJ71
+         RCuDmob9GmZq6mBnpQHDjlTzG/gRZ7JeYfDzZjdX68/Fu25XAd6cKrYWNT+5rXzUq5Ae
+         Sm6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=E4WCmFLvmr8JWq5Q9xFO8S5jVevNpOYuq4YScKhuYWU=;
+        b=ZQckFai10+kLcajowxnL7yIE7a7rv5Dnp6YdmiyQeib0SeJzhguTqe2UOCESz33+yA
+         01Zvjq0jhvQ4s6CWunGtCqAxS6ZKRlPL0N/WEOa7G6OuPZTsToqmf2L/9L/qBZta1X02
+         5RrBkzS9MsGSMlnRvjotltpucw9WacLEban7hmBaBUQRr3IEVpWNCS1RGpbRzXU/Bkhx
+         fwL0ShynVNfvhtt68sNpm1CRHZYufY4mO015WVDHzZP/SrW85fpeqWKrZn+iKw6ZC7Gf
+         gk2FEvHEinRh+/R4Tp19KJbZ0/mwScoNFaTFFwQQ+Gq0yxo4IxtvNUn5VFyqNmtKGwpU
+         5xMA==
+X-Gm-Message-State: AD7BkJKJB5w82oqyimT5xmUIr7HXVdjmfPYHTYL7Ym5KRT2ISHArfaCP1MLGUfcBcamWvxSXHqAxY1kcwiiNSw==
+X-Received: by 10.50.112.169 with SMTP id ir9mr25240098igb.92.1459366310504;
+ Wed, 30 Mar 2016 12:31:50 -0700 (PDT)
+Received: by 10.107.10.202 with HTTP; Wed, 30 Mar 2016 12:31:30 -0700 (PDT)
+In-Reply-To: <CA+P7+xp+oT2zMBZqR8zvXKm8Zp5btaNyoOWFTts29HMwX+2o=Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290341>
 
-If user.useConfigOnly is set, it does not make sense to try to
-auto-detect the name and/or the email. So it's better to do the
-useConfigOnly checks first.
+On Wed, Mar 30, 2016 at 12:14 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+> I ran this on a few of my local projects and it doesn't seem to
+> produce any false positives so far. Everything looks good. Of course
+> this is with just traditional C code. I am currently trying to run
+> this against the history of Linux as well and see if I can find
+> anything that seems bad there.
+>
+> Thanks,
+> Jake
 
-Signed-off-by: Marios Titas <redneb@gmx.com>
----
- ident.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+So far I've only found a single location that ends up looking worse
+within the Linux kernel. Diffs of some Kbuild settings result in
+something like
 
-diff --git a/ident.c b/ident.c
-index 6e12582..74b2663 100644
---- a/ident.c
-+++ b/ident.c
-@@ -351,15 +351,15 @@ const char *fmt_ident(const char *name, const char *email,
- 	if (want_name) {
- 		int using_default = 0;
- 		if (!name) {
-+			if (strict && ident_use_config_only
-+			    && !(ident_config_given & IDENT_NAME_GIVEN))
-+				die("user.useConfigOnly set but no name given");
- 			name = ident_default_name();
- 			using_default = 1;
- 			if (strict && default_name_is_bogus) {
- 				fputs(env_hint, stderr);
- 				die("unable to auto-detect name (got '%s')", name);
- 			}
--			if (strict && ident_use_config_only
--			    && !(ident_config_given & IDENT_NAME_GIVEN))
--				die("user.useConfigOnly set but no name given");
- 		}
- 		if (!*name) {
- 			struct passwd *pw;
-@@ -374,14 +374,14 @@ const char *fmt_ident(const char *name, const char *email,
- 	}
- 
- 	if (!email) {
-+		if (strict && ident_use_config_only
-+		    && !(ident_config_given & IDENT_MAIL_GIVEN))
-+			die("user.useConfigOnly set but no mail given");
- 		email = ident_default_email();
- 		if (strict && default_email_is_bogus) {
- 			fputs(env_hint, stderr);
- 			die("unable to auto-detect email address (got '%s')", email);
- 		}
--		if (strict && ident_use_config_only
--		    && !(ident_config_given & IDENT_MAIL_GIVEN))
--			die("user.useConfigOnly set but no mail given");
- 	}
- 
- 	strbuf_reset(&ident);
--- 
-2.8.0
+before:
+
+          If unsure, say Y.
++
++config RMI4_I2C
++       tristate "RMI4 I2C Support"
++       depends on RMI4_CORE && I2C
++       help
++         Say Y here if you want to support RMI4 devices connected to an I2C
++         bus.
++
++         If unsure, say Y.
+
+after:
+
+          required for all RMI4 device support.
+
++         If unsure, say Y.
++
++config RMI4_I2C
++       tristate "RMI4 I2C Support"
++       depends on RMI4_CORE && I2C
++       help
++         Say Y here if you want to support RMI4 devices connected to an I2C
++         bus.
++
+          If unsure, say Y.
+
+So in this particular instance which has multiple blank lines and is a
+similar issue as with Stefan's note above, this is where the heuristic
+falls apart. At least for C code this is basically vanishingly small
+compared to the number of comment header fix ups.
+
+I think it may be that Stefan's suggestions above may be on the right
+track to resolve that too.
+
+Regards,
+Jake
