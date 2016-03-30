@@ -1,136 +1,99 @@
-From: Trevor Saunders <tbsaunde@tbsaunde.org>
-Subject: Re: [ANNOUNCE] git-push-update, tool to push with "server-side"
- merge or rebase
-Date: Tue, 29 Mar 2016 21:29:45 -0400
-Message-ID: <20160330012945.GA8888@ball>
-References: <20160328080841.GA12932@wheezy.local>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4 2/3] pretty: enable --expand-tabs by default for
+ selected pretty formats
+Date: Tue, 29 Mar 2016 21:38:51 -0400
+Message-ID: <20160330013851.GF2237@sigill.intra.peff.net>
+References: <1458775426-2215-1-git-send-email-gitster@pobox.com>
+ <1459293309-25195-1-git-send-email-gitster@pobox.com>
+ <1459293309-25195-3-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Max Kirillov <max@max630.net>
-X-From: git-owner@vger.kernel.org Wed Mar 30 03:34:07 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 30 03:38:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1al51K-0005wU-Vl
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 03:34:07 +0200
+	id 1al562-0007LB-Qs
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 03:38:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752750AbcC3BeB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 21:34:01 -0400
-Received: from tbsaunde.org ([66.228.47.254]:50606 "EHLO
-	paperclip.tbsaunde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751128AbcC3BeA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 21:34:00 -0400
-X-Greylist: delayed 536 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 Mar 2016 21:34:00 EDT
-Received: from ball (unknown [IPv6:2607:f0c8:8000:80e0:56ee:75ff:fe52:afb9])
-	by paperclip.tbsaunde.org (Postfix) with ESMTPSA id 946ECC07C;
-	Wed, 30 Mar 2016 01:25:03 +0000 (UTC)
+	id S1752986AbcC3Biy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 21:38:54 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40530 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751550AbcC3Biy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 21:38:54 -0400
+Received: (qmail 24058 invoked by uid 102); 30 Mar 2016 01:38:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Mar 2016 21:38:54 -0400
+Received: (qmail 30743 invoked by uid 107); 30 Mar 2016 01:38:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Mar 2016 21:38:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Mar 2016 21:38:51 -0400
 Content-Disposition: inline
-In-Reply-To: <20160328080841.GA12932@wheezy.local>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+In-Reply-To: <1459293309-25195-3-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290261>
 
-On Mon, Mar 28, 2016 at 11:08:41AM +0300, Max Kirillov wrote:
-> Hello.
-> 
-> I would like to announce git-push-update, a tool which emulates
-> server-side merge or rebase.
-> 
-> The link: https://github.com/max630/git-push-update
-> 
-> It is a bash script which fetches latest remote branch, creates
-> temporary clone, performs there merge or rebase, pushes results to
-> server. If during the merge or rebase remote branch was updated, it
-> fails cleanly, so you are not left with merge which did not go anywhere.
-> Or it can even retry the whole task from the beginning, until it
-> eventually succeeds.
-> 
-> I tried to make it easy to use by unexperienced users by making as few
-> options as possible and checking for some dangerous mistakes. It would
-> be nice if somebody tried to really use it, so there would be some data
-> does this direction worth exploring. Any other feedback is also welcome.
-> 
-> A longer explanation:
-> 
-> While topic branches/pullrequests/whatever-it-named workflow is
-> obviously superior to push-to-trunk approach which is used with
-> centralized VCSes, there can be cases to use the latter one. But doing
-> it with Git is not easy:
+On Tue, Mar 29, 2016 at 04:15:08PM -0700, Junio C Hamano wrote:
 
-hm how? the workflow you use locally has basically nothingto do with how
-pushes work.  I work on several projects daily where everyone pushes to
-trunk, but locally I use branches.  You just need to fetch rebase then
-either merge your branch into master before pushing or explicitly tell
-git push what refs to update how.
+> diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
+> index 4fb5c76..23967b6 100644
+> --- a/Documentation/pretty-options.txt
+> +++ b/Documentation/pretty-options.txt
+> @@ -43,10 +43,16 @@ people using 80-column terminals.
+>  	commit may be copied to the output.
+>  
+>  --expand-tabs::
+> +--no-expand-tabs::
+>  	Perform a tab expansion (replace each tab with enough number
+>  	of spaces to fill to the next display column that is
+>  	multiple of 8) in the log message before using the message
+>  	to show in the output.
+> ++
+> +By default, tabs are expanded in pretty formats that indent the log
+> +message by 4 spaces (i.e.  'medium', which is the default, 'full',
+> +and "fuller').  `--no-expand-tabs` option can be used to disable
+> +this.
 
-> * when the trunk goes forward, user have to run merge or
->   rebase (further "update"), interrupting other work which
->   might be in progress.
+Mismatched quote types on "fuller".
 
-I don't really understand this either, if you develope everything on
-master then it would seem obvious if you want to update what version of
-trunk you are using you either need to rebase or merge the remote master
-with yours.
+> @@ -172,6 +173,7 @@ void get_commit_format(const char *arg, struct rev_info *rev)
+>  
+>  	rev->commit_format = commit_format->format;
+>  	rev->use_terminator = commit_format->is_tformat;
+> +	rev->expand_tabs_in_log = commit_format->expand_tabs_in_log;
+>  	if (commit_format->format == CMIT_FMT_USERFORMAT) {
+>  		save_user_format(rev, commit_format->user_format,
+>  				 commit_format->is_tformat);
 
-> * while doing fetch, update and push back a concurrent push can happen,
->   making user to have to repeat it all over.
+This feels like the wrong time to set the value in rev_info, as it means
+that:
 
-I think this is more or less the reason for the hg extension, but I
-think the script to deal with this is basically
+  git log --no-expand-tabs --pretty=full
 
-while true
-do
-	git fetch origin
-	git rebase origin/master
-	git push origin HEAD:master && break
-done
+and
 
-obviously with a little more error checking thrown in if you care.
+  git log --pretty=full --no-expand-tabs
 
-> * some scenarios allow user to make a mistake combining branches which
->   mean to be unrelated, for example merging or rebasing active
->   development branch into maintenance branch for older version.
-> * for a merge case there is a problem of "evil pull"
->   (http://thread.gmane.org/gmane.comp.version-control.git/247237)
->   In short: the merges which are to go to remote branch should be "from
->   local to remote", and git-pull merges "from remote to local".
-> 
-> This was discussed around some time ago, but I could not find anything
-> done about it. It might seem like nobody really interested much. But I
-> still can see discussions here and there. Also, some time ago extension
-> "pushrebase" for mercurial appeared, which indicates that there is
-> really a demand.
+behave differently. The other values set in get_commit_format, like
+"use_terminator", are inherently part of the format, but I don't think
+this is. We just want to set the default if the user did not express
+another preference.
 
-I think that was really for very heavily used repos where there was a
-ton of fetch rebase push repeating going on.
+Likewise, if we were to eventually add config like "[log]expandtab = 4",
+it should not be overridden by "--pretty=full" (but we probably _would_
+want to have it kick in only for certain formats).
 
-> Looks like current git remote protocol does not really allow server to
-> tweak pushed commits: if it accepts reference, client will remember
-> exactly the commit it was pushing, no modifications is possible. Also,
-> if it is implemented as server-side feature, it might take years to
-> appear at github or other big public hostings, if ever. Until that most
-> users would not be able to try it.
+So I think we really want to set an alternate variable here, and then do
+something like:
 
-I'm not really clear what this is helping for most of those use cases,
-but if you want to maintain it why not?
+  if (rev->expand_tabs_in_log < 0)
+	rev->expand_tabs_in_log = rev->commit_format_expand_tab_default;
 
-Trev
-
-> This leaves only one option: perform merge or rebase locally, pretending
-> that it was done at server. It does not even have to be implemented in
-> git itself, instead a wrapper script can do everything.
-> 
-> So here is the script.
-> 
-> -- 
-> Max
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-Peff
