@@ -1,131 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 2/3] pretty: enable --expand-tabs by default for selected pretty formats
-Date: Wed, 30 Mar 2016 12:18:24 -0700
-Message-ID: <xmqq37r7u64f.fsf@gitster.mtv.corp.google.com>
-References: <1458775426-2215-1-git-send-email-gitster@pobox.com>
-	<1459293309-25195-1-git-send-email-gitster@pobox.com>
-	<1459293309-25195-3-git-send-email-gitster@pobox.com>
-	<20160330013851.GF2237@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 30 21:18:36 2016
+From: Marios Titas <redneb@gmx.com>
+Subject: [PATCH 2/2] ident: make the useConfigOnly error messages more informative
+Date: Wed, 30 Mar 2016 22:29:43 +0300
+Message-ID: <1459366183-15451-2-git-send-email-redneb@gmx.com>
+References: <1459366183-15451-1-git-send-email-redneb@gmx.com>
+Cc: Marios Titas <redneb@gmx.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 30 21:30:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alLdS-00081k-A3
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 21:18:34 +0200
+	id 1alLoZ-0003PI-9K
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 21:30:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752879AbcC3TSa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2016 15:18:30 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:56041 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752758AbcC3TS3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2016 15:18:29 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C7C5F51D30;
-	Wed, 30 Mar 2016 15:18:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=F39omr4RWfes5GZ8zktm4KzdA0o=; b=k7Jbkh
-	I0z9KZN9uN8g7VBWszxngvNgETo6uc2GRThMA9X6k/WXt62VE4v7mD3VpzojgJHP
-	UVjKYe2cO5A1wz3U9IChJKpaMeI8JncxccaMUAeSmgAvO17TXaH5LK14HrOQEApB
-	0lZGfRmrekDobgjxcbIMco5hkAWxdevxJ80BU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UVm4p4VMijwYl/lMr2zW78kBWZHXV+Xh
-	D46iEU0VxepR1J06oUk6y2XfrGFerFUEcbKvFoj+OtVr3P/zjuhcgjbtaAw5awFw
-	d5MOijc0U84++M2YBCsxBkvUXnyymALTPESFBSzJwwVtF7XtxI/CyrEGHcgbljQG
-	6a7dCSW72gw=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BDE3751D2F;
-	Wed, 30 Mar 2016 15:18:25 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3747A51D29;
-	Wed, 30 Mar 2016 15:18:25 -0400 (EDT)
-In-Reply-To: <20160330013851.GF2237@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 29 Mar 2016 21:38:51 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2CE0F716-F6AC-11E5-B92C-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753427AbcC3T35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2016 15:29:57 -0400
+Received: from mout.gmx.net ([212.227.17.22]:59955 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752704AbcC3T34 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2016 15:29:56 -0400
+Received: from localhost.localdomain ([79.103.155.63]) by mail.gmx.com
+ (mrgmx103) with ESMTPSA (Nemesis) id 0M6zvN-1ZpYaj3Zkz-00wn2S; Wed, 30 Mar
+ 2016 21:29:53 +0200
+X-Mailer: git-send-email 2.8.0
+In-Reply-To: <1459366183-15451-1-git-send-email-redneb@gmx.com>
+X-Provags-ID: V03:K0:PIF5uMvPf05qoUFnkMoB4gktnJYKCRczqQQOBjRb14vcgc4Iksf
+ MYi3BBPk1ZIbxC++6a1Yw2aauyhxHQAYwALmXtW7HG7cQZlBBfuEGv9EIoovbQ/0jwSI80+
+ gqs0gkk51dDiJE3/rnwvpyIwOXzMUJzNpg1M0FgE+cEUHgLd6mYDwNWHIMwTKzyN98lttEf
+ RVztE96GKNjEq7OUOk/fw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:68n6est1dWY=:ox7u/f7+X3llPxOuKzBtzX
+ lVAWrasz9wtca1XFQW1QWSdaK9LS26bGvPdcMotbn0GhTXle/aKNqQDSHhdSyCu+Zj3VJ1sCO
+ ay/F/ga7bjMAjh8smcCnWHI0UWcWdJbPIU65kKA5hj6X/SaU+QDymIZ2A78dnGXbjMyclk02s
+ 5hpFmH3t3WMEpnw1/jogLuufXNosLOu3VreO5vbnzbghjPbYhLU4+LNJXDwOak9dhNA80iGus
+ oMGhH92di5kDXRoV/fYyse7WzqnVgxTHRs4tFa+njYJRnTeeWkhojwOrgkJWw14mewJaahQ9e
+ oeq4DDXL1IsFMR0G+3yuKzD5KQcuMB5IyQjyi0LpQR91Dx1KzSWbfjg5TFgblBSSFj8KapeBz
+ tqJQTo+DLqMoDZy7bUsZ/9L2GwD9lulIKFmVqApwbIpdPBtmVqTMRlJuPHO9MKEZn/MkX2hMh
+ Odsf6/W5DxgbAYoxQynZR3xhgM+ghgRif3nxBnQ/I97v2VpcfnYlTbPYLQZmMkjwllL6YWfg8
+ q2sD3OuEKMDP7wWBFkFXgLsTNmvlYS5Mip9mMsCfcmOuuOeOjW7wXpxKpD91tbGgFKYQjTQId
+ wQnRsc5A4iH1iHzUnfR4OO/4d21g3nVET9+KKQfl795192nRUpMlWZisR+5BL6lyuTH6ZpcIh
+ yTSH5zfcaQ/tmsKuhReWK0trM0aalnpjIPh9r79EcO4n4ZDVdFnpy4XM3tjfq3Bh7T4aT0TEE
+ +Iz8I0aRQoc0EOfxwXiAjn9DrusStsx2Uf+Z2zBJGLNaU3DlGAZ8fJ/yZSA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290339>
 
-Jeff King <peff@peff.net> writes:
+The env_hint message applies perfectly to the case when
+user.useConfigOnly is set and at least one of the user.name and the
+user.email are not provided. Additionally, use a more descriptive error
+message when that happens.
 
-> On Tue, Mar 29, 2016 at 04:15:08PM -0700, Junio C Hamano wrote:
->
->> diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
->> index 4fb5c76..23967b6 100644
->> --- a/Documentation/pretty-options.txt
->> +++ b/Documentation/pretty-options.txt
->> @@ -43,10 +43,16 @@ people using 80-column terminals.
->>  	commit may be copied to the output.
->>  
->>  --expand-tabs::
->> +--no-expand-tabs::
->>  	Perform a tab expansion (replace each tab with enough number
->>  	of spaces to fill to the next display column that is
->>  	multiple of 8) in the log message before using the message
->>  	to show in the output.
->> ++
->> +By default, tabs are expanded in pretty formats that indent the log
->> +message by 4 spaces (i.e.  'medium', which is the default, 'full',
->> +and "fuller').  `--no-expand-tabs` option can be used to disable
->> +this.
->
-> Mismatched quote types on "fuller".
+Signed-off-by: Marios Titas <redneb@gmx.com>
+---
+ ident.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-Thanks.
-
->> @@ -172,6 +173,7 @@ void get_commit_format(const char *arg, struct rev_info *rev)
->>  
->>  	rev->commit_format = commit_format->format;
->>  	rev->use_terminator = commit_format->is_tformat;
->> +	rev->expand_tabs_in_log = commit_format->expand_tabs_in_log;
->>  	if (commit_format->format == CMIT_FMT_USERFORMAT) {
->>  		save_user_format(rev, commit_format->user_format,
->>  				 commit_format->is_tformat);
->
-> This feels like the wrong time to set the value in rev_info, as it means
-> that:
->
->   git log --no-expand-tabs --pretty=full
->
-> and
->
->   git log --pretty=full --no-expand-tabs
->
-> behave differently.
-
-I was sort of hoping that we can get away by defining that "an
-explicit --pretty asks for the full behaviour of the format it
-specifies, e.g. if you ask --pretty=medium, you are asking for
-4-space indented tab-expanded log with the headers at the medium
-level of detail".
-
-> The other values set in get_commit_format, like "use_terminator",
-> are inherently part of the format, but I don't think this is.
-
-IOW, I was hoping nobody would agree with that and rather everybody
-would consider tab-expansion is part of the format.
-
-Let me try your way instead and report how it went when I send out a
-reroll.
-
-> Likewise, if we were to eventually add config like "[log]expandtab = 4",
-> it should not be overridden by "--pretty=full" (but we probably _would_
-> want to have it kick in only for certain formats).
-
-This is exactly why I didn't do a configuration variable, as I think
-we can make only 50% of people happy.  Some would say "when I
-explicitly ask for the "email" format, I expect that expandtab
-configuration gets ignored" while others would say "I said I want
-expandtab in the configuration no matter what".
+diff --git a/ident.c b/ident.c
+index 74b2663..4fd82d1 100644
+--- a/ident.c
++++ b/ident.c
+@@ -352,8 +352,10 @@ const char *fmt_ident(const char *name, const char *email,
+ 		int using_default = 0;
+ 		if (!name) {
+ 			if (strict && ident_use_config_only
+-			    && !(ident_config_given & IDENT_NAME_GIVEN))
+-				die("user.useConfigOnly set but no name given");
++			    && !(ident_config_given & IDENT_NAME_GIVEN)) {
++				fputs(env_hint, stderr);
++				die("no name was given and auto-detection is disabled");
++			}
+ 			name = ident_default_name();
+ 			using_default = 1;
+ 			if (strict && default_name_is_bogus) {
+@@ -375,8 +377,10 @@ const char *fmt_ident(const char *name, const char *email,
+ 
+ 	if (!email) {
+ 		if (strict && ident_use_config_only
+-		    && !(ident_config_given & IDENT_MAIL_GIVEN))
+-			die("user.useConfigOnly set but no mail given");
++		    && !(ident_config_given & IDENT_MAIL_GIVEN)) {
++			fputs(env_hint, stderr);
++			die("no email was given and auto-detection is disabled");
++		}
+ 		email = ident_default_email();
+ 		if (strict && default_email_is_bogus) {
+ 			fputs(env_hint, stderr);
+-- 
+2.8.0
