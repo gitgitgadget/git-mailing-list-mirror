@@ -1,89 +1,65 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 1/6] path.c: allocate enough memory for string
-Date: Wed, 30 Mar 2016 09:41:38 -0700
-Message-ID: <CAGZ79kb6dsaSxQ+HaYODBurnFz3MbsisSNkdrckFZLvSCvS-JQ@mail.gmail.com>
-References: <1459298333-21899-1-git-send-email-sbeller@google.com>
-	<1459298333-21899-2-git-send-email-sbeller@google.com>
-	<CAPig+cSqC1muy+vcmpkp9uM9T3CC4pa5jWGUot_FtrVshEAUEw@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: git show -m with a parent number
+Date: Wed, 30 Mar 2016 18:55:21 +0200
+Message-ID: <871t6rx5vq.fsf@linux-m68k.org>
+References: <nd9gq6$412$1@ger.gmane.org>
+	<20160328191608.GA22602@sigill.intra.peff.net>
+	<ndggug$c87$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Mar 30 18:41:49 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Anatoly Borodin <anatoly.borodin@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 30 18:55:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alJBk-00011f-QW
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 18:41:49 +0200
+	id 1alJP6-0006cb-Da
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 18:55:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752843AbcC3Qlo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2016 12:41:44 -0400
-Received: from mail-io0-f173.google.com ([209.85.223.173]:35393 "EHLO
-	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751107AbcC3Qlo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2016 12:41:44 -0400
-Received: by mail-io0-f173.google.com with SMTP id g185so81034063ioa.2
-        for <git@vger.kernel.org>; Wed, 30 Mar 2016 09:41:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=l9r7qQ7o8lEpz4xZmpf9N6t4UNnMZq3pFP5/7FRMv/8=;
-        b=b6myTMX6583DC39HZXRjZjwPp7KytYhU3O6XR5pa3TZQshqNqPxfoy/sjhcgWPtsoF
-         hc5awE1JMuSUzsS4PtkYlVocyMOCSI39n7JkWVRQ4ItVgx5RIsrmV11y34VdkwKYWwdj
-         PTGEvmln1fnoSSZNfqEzp4WGAhoSVHl8UjvBOXVTiBFpmqgHUZC6Gk5VKeIhJRwD3Ymd
-         ei+haykqlyXYoZu8Ywbr7RdRwP85/fuWykM4EACd2P0quP5utbFuu9kdfcxJrFNlx4yj
-         JUc9sr23qUuDCzKMN7qWiKggZrgo0V50ruYyazVUEsegbAxy+0lcvFbLjqq3SQSaHhRD
-         9Ddw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=l9r7qQ7o8lEpz4xZmpf9N6t4UNnMZq3pFP5/7FRMv/8=;
-        b=mOVCxBZNsyNfc7pCe+vpi+P9NPLxPiZ0snMxyqnJQLRtE6igaXTXsOoxstN3ayvNgM
-         XAhFB/yAAmuA8TylNuhDPcqopj9gtigBG6FU95gjhVBYyVUHC5cA6BQkNyV9eIxnpE05
-         QE9EBWdvyuUY98upCC1rLgiZEszbb9+LbOWMZGDORWY5H43l9iWZC8Ancbcs/Q9LTWsH
-         LvC2I4RBNZ4yz5cxnMEdJBSeSdE/EILsKxrknLnZBskFIwF8NIUF3FD/Clntlzx+Hyj8
-         v9jkqBcSsh81YOiWsI1dGxiWuJINq5Yeq2nlpAAs2RyNcJGEprPJl3FsDos3FgKmhbNl
-         c8Bg==
-X-Gm-Message-State: AD7BkJLJqFHKLf8Xvt+oZIjILMICshnHOYqhJzCwiLZDFfwI7sGvbmR3m/SzZZAflVtbNLOrD7PUMowCdWkPMIFc
-X-Received: by 10.107.161.68 with SMTP id k65mr12387624ioe.110.1459356098765;
- Wed, 30 Mar 2016 09:41:38 -0700 (PDT)
-Received: by 10.107.17.27 with HTTP; Wed, 30 Mar 2016 09:41:38 -0700 (PDT)
-In-Reply-To: <CAPig+cSqC1muy+vcmpkp9uM9T3CC4pa5jWGUot_FtrVshEAUEw@mail.gmail.com>
+	id S932938AbcC3Qza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2016 12:55:30 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:40458 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932696AbcC3Qz0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2016 12:55:26 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3qZv0C5hNYz3hjd6;
+	Wed, 30 Mar 2016 18:55:23 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3qZv0C5Dvjzvh24;
+	Wed, 30 Mar 2016 18:55:23 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id pAZ-C3CWnlKA; Wed, 30 Mar 2016 18:55:21 +0200 (CEST)
+X-Auth-Info: s2YxpkkQi2X75AM0waVmOyoNKGWqvrYzTuDUVo2A2XUyG1yMeXeAfe37yY1guVYA
+Received: from igel.home (ppp-88-217-14-4.dynamic.mnet-online.de [88.217.14.4])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Wed, 30 Mar 2016 18:55:21 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id 84AE72C2CE4; Wed, 30 Mar 2016 18:55:21 +0200 (CEST)
+X-Yow: I HAVE a towel.
+In-Reply-To: <ndggug$c87$1@ger.gmane.org> (Anatoly Borodin's message of "Wed,
+	30 Mar 2016 12:31:16 +0000 (UTC)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.92 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290312>
 
-On Tue, Mar 29, 2016 at 5:57 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Tue, Mar 29, 2016 at 8:38 PM, Stefan Beller <sbeller@google.com> wrote:
->> `strlen` returns the length of a string without the terminating null byte.
->> To make sure enough memory is allocated we need to pass `strlen(..) + 1`
->> to the allocation function.
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->> diff --git a/path.c b/path.c
->> @@ -155,7 +155,7 @@ static struct trie *make_trie_node(const char *key, void *value)
->>         struct trie *new_node = xcalloc(1, sizeof(*new_node));
->>         new_node->len = strlen(key);
->>         if (new_node->len) {
->> -               new_node->contents = xmalloc(new_node->len);
->> +               new_node->contents = xmalloc(new_node->len + 1);
->>                 memcpy(new_node->contents, key, new_node->len);
->
-> Huh? This is a trie. It never accesses 'contents' as a NUL-terminated
-> string. Plus, no NUL is ever even copied, thus this is just
-> overallocating. How is this an improvement?
+Anatoly Borodin <anatoly.borodin@gmail.com> writes:
 
-By using strlen, I assumed it was a standard C string.
-I missed that, though.
+> It's not like `git diff X^2 X` is a big problem, but too much of a
+> copypaste.
 
->
->>         }
->>         new_node->value = value;
->> --
+Brace expansion helps a bit: git diff X{^2,}
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
