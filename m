@@ -1,85 +1,88 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 1/3] pretty: expand tabs in indented logs to make
- things line up properly
-Date: Tue, 29 Mar 2016 20:17:24 -0400
-Message-ID: <CAPig+cTd_VRnikMzN7b2qfeG87M0v-4_qM42MkhOcRT54Wmv=Q@mail.gmail.com>
-References: <1458775426-2215-1-git-send-email-gitster@pobox.com>
-	<1459293309-25195-1-git-send-email-gitster@pobox.com>
-	<1459293309-25195-2-git-send-email-gitster@pobox.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 30 02:17:31 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH 0/6] Some cleanups
+Date: Tue, 29 Mar 2016 17:38:47 -0700
+Message-ID: <1459298333-21899-1-git-send-email-sbeller@google.com>
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Mar 30 02:39:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1al3pC-0004ak-Iy
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 02:17:30 +0200
+	id 1al4A3-00042K-Pj
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 02:39:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753174AbcC3AR0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 20:17:26 -0400
-Received: from mail-vk0-f66.google.com ([209.85.213.66]:33852 "EHLO
-	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751414AbcC3ARZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 20:17:25 -0400
-Received: by mail-vk0-f66.google.com with SMTP id e6so4441441vkh.1
-        for <git@vger.kernel.org>; Tue, 29 Mar 2016 17:17:25 -0700 (PDT)
+	id S1752791AbcC3Ai7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Mar 2016 20:38:59 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:35102 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752184AbcC3Ai6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Mar 2016 20:38:58 -0400
+Received: by mail-pa0-f47.google.com with SMTP id td3so26231930pab.2
+        for <git@vger.kernel.org>; Tue, 29 Mar 2016 17:38:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=S5XZUVCun7spHNnqOh3ktJ+EJckW7cUAoS19bwRvb84=;
-        b=uxyNbgTpxCs7E6RsIV4LiBieAK0Rn+9keCa/yg8Xh8j4QmWIbKSxqIyI95rhZ1Br7s
-         nkseF8SrueMuyTaZKE84VhIOqidC9OpNWSHbcY73kYcnd5ro2P2SHSvZj5nxhSlUA4Nv
-         xkr66tPiGNiWx0pcgKov0t2FvpcS9qI9X1Qpuoo71d/zKygCc/lZsn+xqwkOM/zVBGJL
-         3VaeOIOGNROzyexVrGMmcNLaSVickYEvU/9aYbf8SxWftsUZwqQVbMWAkFRKsUHtSMFF
-         GGLXhLYQZq2qyHn4sFu7acb2r6q/zmjRF1r+kj64MCPoYPqba+lH3XbimWLOWf2PqFYv
-         aj+Q==
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=RZJcXSBx8y3pumsI7kk4BK7WFtIj2LvgU3C45zmGCNY=;
+        b=gxHtYGNYaYVMcMbXtvGmwCrPTZU0t1VD4nOlyJveuoPNnsQtC/w73bri69BQYI5lPN
+         Jra5Tk0n4OAcch08lUw2MZMG9yibE/hDw3kadoff4fXiDe1blRz/uYbcUpKHi2yjbGBX
+         IIbpBifzWeiPWiL9YtdyKyzWjB3jWyJV6aRv+a6SVFn1Qo2m+zQuVAn/3o7BLACwUBH5
+         lojibvH5B6/JGC9MnfMB1tlgfpP7kwyXtT4OY+AGAW85gxxuV9s76ZXKdgoAO//f7mFK
+         k+W8OqS0lcp/l5M6tkgPjQkeU1OJvdhJgntgJnST6OBiiQQrD5JqZF0OqZYupQ+zqUin
+         Vjkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=S5XZUVCun7spHNnqOh3ktJ+EJckW7cUAoS19bwRvb84=;
-        b=ZlJJy1KQ0IpHQgIYPafSwnGhJEpAYFXwQakEVokTr1De/ShV9OTQKP8hHaevRKT3Pp
-         JPoCu7AGCxHueVEKv96RB9NZEl8fhd13/jWRG4TgiN/43sfzWLoRtqRaxQlJ0NssWWZr
-         fv1T8OuQNbKgCdVAFbPU7oOnLZIfAylRcQCwlh4ULuU/+TMP+uJsYjGYXw1LUEvrwmvb
-         tl7vjjpN9VqjX1+hrIPQojKFvJmE/iz8wOU0gDeGC9XOOu2HaqZANX+ZA3BNpobPEWrK
-         MCfdUm5kkyzhjZo6TalkCuYRIqHIyVNnjQMUppGOTCDjSwVlfyk8T/Uj8VdgR8+7V+kv
-         Ah6Q==
-X-Gm-Message-State: AD7BkJJa6TVpBD8iydZULnevBgciEL1arqXVPB2HNKQ1c8GqYAdKQymF8dKfgnuhe5NV70EZjpq5s9WhYZbT5w==
-X-Received: by 10.159.37.234 with SMTP id 97mr3020314uaf.99.1459297044458;
- Tue, 29 Mar 2016 17:17:24 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Tue, 29 Mar 2016 17:17:24 -0700 (PDT)
-In-Reply-To: <1459293309-25195-2-git-send-email-gitster@pobox.com>
-X-Google-Sender-Auth: pOKOIjY8sS5_4Pgj9vTRKs34bpY
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=RZJcXSBx8y3pumsI7kk4BK7WFtIj2LvgU3C45zmGCNY=;
+        b=fYJ/uBdGz1eT8ZlAW4P09HhMt1RQZTI2vIBGebfErRww9fvtCJmRPROPOvth0+0Pis
+         /TV6YxNoxu/LrgOXltOK9tyNB3PZB1eHKsSgnhSKwnvZAl+Y9DyeYbrJyWx+SgCyPSxG
+         t5uX1+ZH61hafQb2md22hMAFZtFzQ3USMB+eisBYj6UaECGMtm8G0n0bFCNmqKSq2FHq
+         8ogxAnCKc+pL4tP2tbh8a74SN02nygHDne638HraDrzp05Ufn0UDL88BroCB0GlMQqPZ
+         iw2CGnCEjgNpsdjjOi6FHt3f2h98dinff8g0va5mjJrR136w2IBVX/lwOfbxJv1YRv09
+         7A6A==
+X-Gm-Message-State: AD7BkJILWl8npJg3A1cLdV8kZLNLeS5Uh8CCXczUn2mbIyGj6AXnJH2S7q50xWT3bqXpfrjT
+X-Received: by 10.66.193.202 with SMTP id hq10mr8015978pac.6.1459298337442;
+        Tue, 29 Mar 2016 17:38:57 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:9cc5:9f4:3ffe:cd1])
+        by smtp.gmail.com with ESMTPSA id n11sm980511pfb.74.2016.03.29.17.38.56
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 29 Mar 2016 17:38:56 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0.8.g27a27a6.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290232>
 
-On Tue, Mar 29, 2016 at 7:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> From: Linus Torvalds <torvalds@linux-foundation.org>
->
-> A commit log message sometimes tries to line things up using tabs,
-> assuming fixed-width font with the standard 8-place tab settings.
-> Viewing such a commit however does not work well in "git log", as
-> we indent the lines by prefixing 4 spaces in front of them.
-> [...]
-> Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
-> @@ -42,6 +42,12 @@ people using 80-column terminals.
-> +--expand-tabs::
-> +       Perform a tab expansion (replace each tab with enough number
-> +       of spaces to fill to the next display column that is
+One of my first patches to Git were cleanup patches, and I fell back
+to my old pattern here, while thinking on how to write better commit
+messages for the submodule bugfixes I currently have in flight.
 
-Nit: "enough spaces" or "a sufficient number of spaces".
+Just some one liners to not leak memory or file descriptors.
 
-> +       multiple of 8) in the log message before using the message
-> +       to show in the output.
+They are bundled as a series, but no patch relies on any predessor.
+
+This applies on v2.8.0.
+
+Thanks,
+Stefan
+
+Stefan Beller (6):
+  path.c: allocate enough memory for string
+  imap-send.c, cram: allocate enough memory for null terminated string
+  notes: don't leak memory in git_config_get_notes_strategy
+  abbrev_sha1_in_line: don't leak memory
+  bundle: don't leak an fd in case of early return
+  credential-cache, send_request: close fd when done
+
+ builtin/notes.c    |  1 +
+ bundle.c           | 10 ++++++++--
+ credential-cache.c |  1 +
+ imap-send.c        |  2 +-
+ path.c             |  2 +-
+ wt-status.c        |  2 +-
+ 6 files changed, 13 insertions(+), 5 deletions(-)
+
+-- 
+2.8.0.8.g27a27a6.dirty
