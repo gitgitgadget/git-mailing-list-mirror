@@ -1,86 +1,133 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 2/4] abbrev_sha1_in_line: don't leak memory
-Date: Wed, 30 Mar 2016 10:05:16 -0700
-Message-ID: <1459357518-14913-3-git-send-email-sbeller@google.com>
+Subject: [PATCHv2 3/4] bundle: don't leak an fd in case of early return
+Date: Wed, 30 Mar 2016 10:05:17 -0700
+Message-ID: <1459357518-14913-4-git-send-email-sbeller@google.com>
 References: <1459357518-14913-1-git-send-email-sbeller@google.com>
 Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
 To: sunshine@sunshineco.com, peff@peff.net, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Mar 30 19:05:36 2016
+X-From: git-owner@vger.kernel.org Wed Mar 30 19:05:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alJYk-00026v-PW
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 19:05:35 +0200
+	id 1alJYt-00029r-Ia
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 19:05:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755637AbcC3RF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2016 13:05:29 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:34035 "EHLO
-	mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755210AbcC3RF0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2016 13:05:26 -0400
-Received: by mail-pf0-f173.google.com with SMTP id x3so47622763pfb.1
-        for <git@vger.kernel.org>; Wed, 30 Mar 2016 10:05:26 -0700 (PDT)
+	id S1755694AbcC3RFk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2016 13:05:40 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:35304 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755198AbcC3RF2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2016 13:05:28 -0400
+Received: by mail-pa0-f53.google.com with SMTP id td3so45067700pab.2
+        for <git@vger.kernel.org>; Wed, 30 Mar 2016 10:05:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vw7/YKEk9wDyOaYn+idrz0eCcW/bmAHHe+CBpc8MDPg=;
-        b=Nybuwu5dgiZxoyB0YykrJEQGaWY40zM8n2U/18DXVBowUAIthhFZF9uZyQrexHCFQy
-         Ld//mTSToiBYG+Z99sbtcoS+BxRvMCPGYGdWJDYTWipI805ZS0LwtCz5fpYdyS2nTcJt
-         RGiOmCnFo6lzCv3VvyKmRQ0saPFQtI5BVJcryfP6GzDppdxfn/+9JutbE74jlv0RCeoi
-         eetI3ZBiA1dMCegbCa7uQ18g0OmakWxV+2J3tS5jHrXiUCVRJey+spCDu0Bd7rmIxdrd
-         0dk/Kt52PnNGx+2P/BvmirtaZ70N6SH/O/civ3q/D25vpSIxKRPLtAMhegYp2PNSfk+K
-         n05g==
+        bh=tcW14EXRqkjx5FueWQg05KLXOx6JsadTitq+nipXtG8=;
+        b=AF5J4+N4a74oRP2BvbeQDABNGvbZK5vby5T3N5e2D7mJsyvM/gDZHRp9y+XePWnhQB
+         O3YrH1JSf0UWPT/Ft5VDhCn3eyJuiPCaEb5E46w1rM6qEXN96ndlUqmDFpiHHWrZFbip
+         A3N1uuEQttge9WVYFt2kXifWPWn3BZHmEL3cl2ISGImgklabCnWmzWZ5R4PKca5Z3gam
+         C/T4juowvxUrrCpU/pR77X6oqZYg+nZsoHdJSKeejCgimiVc4skgMwU2uNZakI9P4o3i
+         j69KOpG7mRiyE7Q/+gKKH2+0nZS4nCoHELCrlhkHvT4k06V3vMPlJqDWEaP03WDDWqQ/
+         KbtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=vw7/YKEk9wDyOaYn+idrz0eCcW/bmAHHe+CBpc8MDPg=;
-        b=hJ3PrI4hOSnMfIiWLKPBhhJl0AaB4Od4mtKjealtKTUnXVr54l/tkfzjIduIGsaCrb
-         9I2up1crUy0EM7CwLP8F0RcWCkDt6KRX+kCpP9860/dkAzTWMyGrOkdA4Qwn6t+gtORg
-         5GmOwStokIU6CPBzFtoec1HntUZxTW8p7y2tWveFryVnsxRr+5/GcemVBi8Wq5Yz3nJb
-         A1hcG77EHB0KhdSyFEMhDaFiMlUyuVLbX4qTXrWDQVkyAdUZCfIQQTc+YuW8Jgmq0xZC
-         xdO1O47yOqbyc4S4ZpmLI4e/9IleI0h16pSiVouy8Aybi4vyxDPnAR4LSX5NTmNXAg7h
-         cOoQ==
-X-Gm-Message-State: AD7BkJIzSEgOEXZU789fawTwAAXvbE3/rvt0IujSBdMzRrY+/ukpV3n8nsA9sSfQKBjx8e60
-X-Received: by 10.98.68.91 with SMTP id r88mr14950887pfa.12.1459357525661;
-        Wed, 30 Mar 2016 10:05:25 -0700 (PDT)
+        bh=tcW14EXRqkjx5FueWQg05KLXOx6JsadTitq+nipXtG8=;
+        b=gGeyRFP+L2EaVir7Ofp/r1RL9qEEdCQNVo+EtoJEMMZjr1uy/8TIlq0LOVz9ftVLh0
+         vp3G7cxiVQ8KdSx5bC5fiOsJWzg429YQfK6IUVpq6rosys9rLbWXItw5I4KE2F+skwVV
+         3p+rcJwYbioYDRSfQbAIMFiyoy7ZVzdkU5SmN0QscidW2dme349Tt16pp32LrWyVn3fM
+         epke04vGo8pzCUhVOpnm/Qun3M6I6dWeKt5+m88OxHfxm5kQ9g9fP65kbsmB8B0qJO09
+         N08a33ZSdJQpGJnFOGBkZdELqnOdjVTc6TuBBmmsu5hhydEZXt2EC1zg0KvwQiqaI4ks
+         nrhA==
+X-Gm-Message-State: AD7BkJIlEH5ru01oBEFYslZsEI38AgDT2UsxJna2YmHia9CiSdnacKXfEGZeJp0CmoIGppnm
+X-Received: by 10.66.66.234 with SMTP id i10mr15068543pat.114.1459357527141;
+        Wed, 30 Mar 2016 10:05:27 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:9cc5:9f4:3ffe:cd1])
-        by smtp.gmail.com with ESMTPSA id 87sm7217832pfq.93.2016.03.30.10.05.24
+        by smtp.gmail.com with ESMTPSA id dg1sm7271929pad.18.2016.03.30.10.05.26
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 30 Mar 2016 10:05:24 -0700 (PDT)
+        Wed, 30 Mar 2016 10:05:26 -0700 (PDT)
 X-Mailer: git-send-email 2.8.0.2.gb331331
 In-Reply-To: <1459357518-14913-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290314>
 
-`split` is of type `struct strbuf **`, which we have a dedicated free
-function for, which takes care of freeing all related memory.
+In successful operation `write_pack_data` will close the `bundle_fd`,
+but when we exit early, we need to take care of the file descriptor
+as well as the lock file ourselves. The lock file may be deleted at the
+end of running the program, but we are in library code, so we should
+not rely on that.
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- wt-status.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ bundle.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/wt-status.c b/wt-status.c
-index ef74864..1ea2ebe 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1063,9 +1063,7 @@ static void abbrev_sha1_in_line(struct strbuf *line)
- 				strbuf_addf(line, "%s", split[i]->buf);
- 		}
+diff --git a/bundle.c b/bundle.c
+index 506ac49..fbc8593 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -407,6 +407,7 @@ int create_bundle(struct bundle_header *header, const char *path,
+ 	int bundle_to_stdout;
+ 	int ref_count = 0;
+ 	struct rev_info revs;
++	int ret = -1;
+ 
+ 	bundle_to_stdout = !strcmp(path, "-");
+ 	if (bundle_to_stdout)
+@@ -435,30 +436,40 @@ int create_bundle(struct bundle_header *header, const char *path,
+ 
+ 	/* write prerequisites */
+ 	if (compute_and_write_prerequisites(bundle_fd, &revs, argc, argv))
+-		return -1;
++		goto err;
+ 
+ 	argc = setup_revisions(argc, argv, &revs, NULL);
+ 
+-	if (argc > 1)
+-		return error(_("unrecognized argument: %s"), argv[1]);
++	if (argc > 1) {
++		ret = error(_("unrecognized argument: %s"), argv[1]);
++		goto err;
++	}
+ 
+ 	object_array_remove_duplicates(&revs.pending);
+ 
+ 	ref_count = write_bundle_refs(bundle_fd, &revs);
+ 	if (!ref_count)
+ 		die(_("Refusing to create empty bundle."));
+-	else if (ref_count < 0)
+-		return -1;
++	else if (ref_count < 0) {
++		if (!bundle_to_stdout)
++			close(bundle_fd);
++		goto err;
++	}
+ 
+ 	/* write pack */
+ 	if (write_pack_data(bundle_fd, &revs))
+-		return -1;
++		goto err;
+ 
+ 	if (!bundle_to_stdout) {
+ 		if (commit_lock_file(&lock))
+ 			die_errno(_("cannot create '%s'"), path);
  	}
--	for (i = 0; split[i]; i++)
--		strbuf_release(split[i]);
--
-+	strbuf_list_free(split);
+ 	return 0;
++err:
++	if (!bundle_to_stdout)
++		close(bundle_fd);
++	rollback_lock_file(&lock);
++	return ret;
  }
  
- static void read_rebase_todolist(const char *fname, struct string_list *lines)
+ int unbundle(struct bundle_header *header, int bundle_fd, int flags)
 -- 
 2.8.0.2.gb331331
