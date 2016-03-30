@@ -1,84 +1,125 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 2/6] imap-send.c, cram: allocate enough memory for null terminated string
-Date: Tue, 29 Mar 2016 17:38:49 -0700
-Message-ID: <1459298333-21899-3-git-send-email-sbeller@google.com>
-References: <1459298333-21899-1-git-send-email-sbeller@google.com>
-Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Mar 30 02:39:18 2016
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: `git rev-parse --is-inside-work-tree` and $GIT_WORK_TREE
+Date: Wed, 30 Mar 2016 07:53:58 +0700
+Message-ID: <CACsJy8BAW0E36qKjJqvLL0ZHKdh3+7G1axt1jD46Yv3atfL7fw@mail.gmail.com>
+References: <CAPZ477NxXVNNwDvzaFt7GoUGuJwnOuX3y1N+aPtVRFD3E8dQBA@mail.gmail.com>
+ <20160329203425.GA24027@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Elliott Cable <me@ell.io>, John Keeping <john@keeping.me.uk>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 30 02:54:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1al4AI-00046b-57
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 02:39:18 +0200
+	id 1al4P9-000118-85
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 02:54:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753061AbcC3AjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Mar 2016 20:39:04 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:36202 "EHLO
-	mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752184AbcC3AjB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Mar 2016 20:39:01 -0400
-Received: by mail-pf0-f180.google.com with SMTP id e128so6449407pfe.3
-        for <git@vger.kernel.org>; Tue, 29 Mar 2016 17:39:00 -0700 (PDT)
+	id S1751971AbcC3Aya convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Mar 2016 20:54:30 -0400
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:36028 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751128AbcC3Ay3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Mar 2016 20:54:29 -0400
+Received: by mail-lb0-f170.google.com with SMTP id qe11so21579053lbc.3
+        for <git@vger.kernel.org>; Tue, 29 Mar 2016 17:54:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=KF1KtlEpppkEAjl0LwRJhGGn5YhXKQ78s3v4AiT2Ka8=;
-        b=fkuQw6CXVxgzhyGEFSuz4NhADuXaMZs9368VUd8MCVFp1S2Ej01U/26J/BNurkkl2E
-         iQkFnh1okk3iUERmytzHeEaE4BIC4pK0TEJs2BB/FAstdWOmL5Z8tIqHO9H9TZRkkWuT
-         EjIS4euXLEtGVY45k+yU3yp6MmQF5mnLGaMz9cQ63YpUap2ggGUzbkVHtCr+DA56DKbX
-         PYbwp5DVRjWZowNDvghcofJXAlHZv5873341qOGg1P1ib1wwmYEGucWURA842QaZVHhe
-         6vi14vS7Jg2dFy+51laHB747Di/+mQw6nsJHmwr9ogyoXQ0CxHokQlryx9/e84KYuP86
-         fsJg==
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=GnHwMxfC4BxfgFiOYwghvVFjdUniERwlCimdOIH88Yc=;
+        b=yXNMrXZDdruYt35mirltBzP6KVKlxolZtwv++5kLQkrIFyH3IsVDUTH7QxzZ0Z6zs4
+         vQZzvxngFQTHvnKcAHiFrD+B6jW4F0y0jtEl/UzdvpmfnJXB8WwTqCaeqKRDzZ1s61S+
+         7OS/WxJjc9R22UFi6XgsE83Gnp6FW7Y6SCXDhsXqtQDk46EXD5C1fEDyqXw90FxN+nl7
+         bHXcbeUhZSHOVXJ+obup9er0SE9UaWZsZr2A2BaKcqWbU/OKqsefmf4+oHb5Hl3H3Itl
+         9bJ+NzSn3KfXzG/opTS1FQrKJIP6jPcTimBt6Qk+DvivVPxD4vCxbyFiWnLn0t6bSNy8
+         vufg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=KF1KtlEpppkEAjl0LwRJhGGn5YhXKQ78s3v4AiT2Ka8=;
-        b=IdbG2cTWSSqbHHXsNK1pSkuoNqbnWxLF4Oz+1hRQjFfX2kCHJQvhOWAsLD5fB3XizF
-         lJu2eEPxAro/lOYFNmkN4149m7HmCJJl+fLNWp2mlJ+YQEDt6FsGqrrdZtLN6RmTCHsv
-         Q9lMbKwcXBvgqJ62fpyP47gUJ/o5zjdznV8ZN8o3f16NjS+E6Tr98JoPxGWVAY3bOt73
-         lXTQGgSCgZElPdk7du/s1+brN22o8cDptgaKtfQRKtv16qsnqLMmdrcuB1He5zkBHnvp
-         lsHw2m6RgDzJ26rANdA0CNInNTBxmFY3fOWtBf0yzHk2i8vgMrzs7Jfz6FWrYmWbGdpw
-         yjzQ==
-X-Gm-Message-State: AD7BkJK6gZpb6UjJZcJTQINm9JHza2xyTo7jAfq6btZb4m84FgIJTF3v/tpQITn2BvLH7X4d
-X-Received: by 10.98.79.7 with SMTP id d7mr8038242pfb.77.1459298340273;
-        Tue, 29 Mar 2016 17:39:00 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:9cc5:9f4:3ffe:cd1])
-        by smtp.gmail.com with ESMTPSA id o71sm987375pfj.68.2016.03.29.17.38.59
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 29 Mar 2016 17:38:59 -0700 (PDT)
-X-Mailer: git-send-email 2.8.0.8.g27a27a6.dirty
-In-Reply-To: <1459298333-21899-1-git-send-email-sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=GnHwMxfC4BxfgFiOYwghvVFjdUniERwlCimdOIH88Yc=;
+        b=dqkXU43ciElh/OQhi30fwigy/gN905QfmWBLzPvHj4VdCryhD62+6Q6ptgTi1GybZT
+         W/MS7rBTaKPadTUru7skCiVPbnJ9PBwTRAhCDf4X+uFvegonAr2LitPdmrR5RyRZaPl6
+         u9O7pbNSYOZFY5wYV4CkQETmWmZRTZxAxsw5hJ8X5yFOxQo8b1Q6tXT9yp6SibVldc8i
+         3qpPhEbdQlZGJDnG3XLwxAPQ7DZ5F5P8PaLC7V18IzvdGLg+lwvDLHM+/hyEf/bTZW8B
+         t4EORpGYYDGow2gQE7nX1DGXbCNiihHZoJg9Vnxfzs2S7+uAwcpndKe8Ca4IYz8x9tS6
+         jOKQ==
+X-Gm-Message-State: AD7BkJJvmxbujYSrl2Rpq9UiGIBt5zs+BcRN2mwhnjulhnZC2gcsKM6iRSM2Jxgvky748uFGDgLOIAyeC8eFOg==
+X-Received: by 10.112.209.99 with SMTP id ml3mr2462072lbc.26.1459299268137;
+ Tue, 29 Mar 2016 17:54:28 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Tue, 29 Mar 2016 17:53:58 -0700 (PDT)
+In-Reply-To: <20160329203425.GA24027@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290239>
 
-`strlen` returns the length of a string without the terminating null byte.
-To make sure enough memory is allocated we need to pass `strlen(..) + 1`
-to the allocation function.
+On Wed, Mar 30, 2016 at 3:34 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Mar 29, 2016 at 06:42:44AM -0500, Elliott Cable wrote:
+>
+>> So, I find this behaviour a little strange; I can't determine if it'=
+s
+>> a subtle bug, or intentionally undefined/=E2=80=98fuzzy=E2=80=99 beh=
+aviour:
+>>
+>>     $ cd a-repo/.git/
+>>     $ pwd
+>>     /path/to/a-repo/.git
+>>     $ git rev-parse --is-inside-work-tree
+>>     false
+>>     $ export GIT_WORK_TREE=3D/path/to/a-repo
+>>     $ git rev-parse --is-inside-work-tree
+>>     true
+>>
+>> i.e. when within the repository (the `.git` directory), and when tha=
+t
+>> directory is a sub-directory of the working-tree, `rev-parse
+>> --is-inside-work-tree` reports *false* (reasonable enough, I suppose=
+);
+>> but then if `$GIT_WORK_TREE` is set to precisely the directory that
+>> git was *already* assuming was the working-directory, then the same
+>> command, in the same location, reports *true*.
+>>
+>> This should probably be made consistent: either `rev-parse
+>> --is-inside-work-tree` should report =E2=80=9Ctrue=E2=80=9D, even in=
+side the `.git`
+>> dir, as long as that directory is a sub-directory of the working-tre=
+e
+>> =E2=80=A6 or repository-directories / `$GIT_DIR` / `.git` directorie=
+s should
+>> be excluded from truthy responses to `rev-parse
+>> --is-inside-work-tree`.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- imap-send.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+No. Once you set GIT_WORK_TREE you tell git that worktree exists. That
+overrides the "bare repo" attribute (i.e. no worktree) that's
+automatically set when we try to find .git directory.
 
-diff --git a/imap-send.c b/imap-send.c
-index 2c52027..f7e9909 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -872,7 +872,7 @@ static char *cram(const char *challenge_64, const char *user, const char *pass)
- 	 * enough upper bound for challenge (decoded result).
- 	 */
- 	encoded_len = strlen(challenge_64);
--	challenge = xmalloc(encoded_len);
-+	challenge = xmalloc(encoded_len + 1);
- 	decoded_len = EVP_DecodeBlock((unsigned char *)challenge,
- 				      (unsigned char *)challenge_64, encoded_len);
- 	if (decoded_len < 0)
--- 
-2.8.0.8.g27a27a6.dirty
+> Yeah, I think this is a bug. Presumably what is happening is that we =
+are
+> too eager to "cd $GIT_WORK_TREE" inside git-rev-parse, and by the tim=
+e
+> we ask "are we in a work tree", the answer has become yes. But the
+> caller really wants to know "am _I_ inside the work tree".
+
+On relative GIT_WORK_TREE some mail down this thread, there's this
+note in t1510 that you might find interesting
+
+5. GIT_WORK_TREE/core.worktree was originally meant to work only if
+   GIT_DIR is set, but earlier git didn't enforce it, and some scripts
+   depend on the implementation that happened to first discover .git by
+   going up from the users $cwd and then using the specified working tr=
+ee
+   that may or may not have any relation to where .git was found in.  T=
+his
+   historical behaviour must be kept.
+
+Basically if you set GIT_WORK_TREE you better set GIT_DIR too to keep
+things sane.
+--=20
+Duy
