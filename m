@@ -1,92 +1,89 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCHv2 1/4] notes: don't leak memory in git_config_get_notes_strategy
-Date: Wed, 30 Mar 2016 13:32:46 -0400
-Message-ID: <CAPig+cTeVgyNHa5uHUMDZ6ifxyjk2wvm=jGd9tP1+BuBKKVR+g@mail.gmail.com>
+Subject: Re: [PATCHv2 2/4] abbrev_sha1_in_line: don't leak memory
+Date: Wed, 30 Mar 2016 13:35:50 -0400
+Message-ID: <CAPig+cQ92gY=A_mtToe=gb2jPBHTJKZ7DcjYL+E6t1QFbdYuWA@mail.gmail.com>
 References: <1459357518-14913-1-git-send-email-sbeller@google.com>
-	<1459357518-14913-2-git-send-email-sbeller@google.com>
+	<1459357518-14913-3-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Git List <git@vger.kernel.org>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Mar 30 19:32:57 2016
+X-From: git-owner@vger.kernel.org Wed Mar 30 19:36:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alJzC-0004GE-3P
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 19:32:54 +0200
+	id 1alK28-0005Ha-Us
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Mar 2016 19:35:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755402AbcC3Rcs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2016 13:32:48 -0400
-Received: from mail-vk0-f49.google.com ([209.85.213.49]:33123 "EHLO
+	id S1753575AbcC3Rfw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2016 13:35:52 -0400
+Received: from mail-vk0-f49.google.com ([209.85.213.49]:33462 "EHLO
 	mail-vk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755378AbcC3Rcr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2016 13:32:47 -0400
-Received: by mail-vk0-f49.google.com with SMTP id k1so70587685vkb.0
-        for <git@vger.kernel.org>; Wed, 30 Mar 2016 10:32:47 -0700 (PDT)
+	with ESMTP id S1751760AbcC3Rfv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2016 13:35:51 -0400
+Received: by mail-vk0-f49.google.com with SMTP id k1so70700933vkb.0
+        for <git@vger.kernel.org>; Wed, 30 Mar 2016 10:35:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc;
-        bh=2LnwmycJV3IMZdtKMUL80kVsHVpPmBb2RIT/BVg1TqA=;
-        b=iwXI6rVxOXgR0UEABIsRmgkj2IXv6oZXZpZqiA0POozFBhjSW/RbSzVXgcPOoraKA6
-         QhPKEEbEzlnL/kgnFFcxVp022z2Bv0QVWo2Cq6yipq3h1NJXhOV9MY57T6s21L9L6cny
-         UPrmQHzMxePGW8iD4rIaRak04VimEJpReclGdRvuY8BzDxLfsVpI4htXlwoE0Zc0l32N
-         OSKq3DxKN3z5x36UapJXMpf2nFO5RFXsZ8L+nORpx5wD8RO80lFRxKwTRo3A68xeZVgV
-         BAq2c1GcoUfj7IRwX8E4ZHr5PcfbBHWCmevPRMpR0y2NhTj4GJYveBBz+nGZ+gBELjLR
-         9tBg==
+        bh=pH6ALl6tGJhVnrzwLB4nMOaEXUk/gvTnM5zFKP57iww=;
+        b=VDVyWLqKWfR1R/K6gi2sGkeBbOp0IwuIgAtd+lR/EO1/Gy1T0WudvNjzFhmGEP0e1J
+         ZVfxjCtdc8cOwy80llBvVj678pkuUE71DSypWleOCOLdAbtumIYt4tNxRY22YzxH1giX
+         a6JzYHPgfLbodxspFDuYn3laPmzFhpmcCUhK0C3dY7x3rLjTHMt/M5y2VRu/a/ES+RXC
+         kqDky6tlEQJbEmsKlsPZL4HsCImqEYkGucXlC9NdfBtvmRCHTFTVPn31dcq1tLSSdmXT
+         wv0D8I6RAH3C6tUgCFIhbPRnLZnYs6iNdCjGISsbrJOgTsjQ0+JYU2f2+1xArGJUCsp4
+         DXQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=2LnwmycJV3IMZdtKMUL80kVsHVpPmBb2RIT/BVg1TqA=;
-        b=WWm74i72ioTEu6kyVGfDQTtzRXhYnaS6sWsE7hKyiAGlWUioxyRekclXTx/Bm/GluM
-         moM1N7QoSsjohmePgmaP6D4xqtQBR8AwnpbXkpq3aVwMiaOphJO3wxk9VqCuN+AwcydT
-         FeCVjb9qERHqSIsyWs1PwpyUqckQLO4ctNHnKyobLZUinaYGM/DgoV7aSsc7nAFlapkB
-         430TAfz3HBC2JndWxXaFLhUMw34J7D38n3uasTmEw/bmPE0EG/HALoTZ3ykh80Z2Ho3+
-         Hd/mWyAM0j48WROKuqAhiyBJ2gMjkilNUbpGGZq4KbrYJQCr9qkxLgHLsbnt+RN/lVEN
-         bc/Q==
-X-Gm-Message-State: AD7BkJIkMyCq5VIHBNW0iZi69Jp7G9IVJneAzHTbVZPFRh6SOU4KRMBlUCwcO6cq23NWlDbz1pUUGrcNaVKUrg==
-X-Received: by 10.159.37.234 with SMTP id 97mr5342979uaf.99.1459359166813;
- Wed, 30 Mar 2016 10:32:46 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Wed, 30 Mar 2016 10:32:46 -0700 (PDT)
-In-Reply-To: <1459357518-14913-2-git-send-email-sbeller@google.com>
-X-Google-Sender-Auth: tZ-ESt3NTNmGMAI2lGWt_k4B4zI
+        bh=pH6ALl6tGJhVnrzwLB4nMOaEXUk/gvTnM5zFKP57iww=;
+        b=B/qQWCNSE1Lsq/OUnBshd3BJ8O6lyi+ur0GbdXt88jYhVo+D9wPFf4NmnZU+UpTmpo
+         QckQT6ts367UYTS7d1k7ytO+m86aAes/niHKXQ+erP/0C+TwRBPDmkx1w0W5YJl2glTo
+         N3oAIUyC4SLdxzfPd0mdXGKCeqMzrjwYo9kYw5PhtCIWrbho/fgNtlbKMD7qQxxzOpqm
+         qxdQCxJQVnWLtJ4709sNS8KdjwcNNi8DVp7kJniHS9bukfOB0IOB9y32qGSjlIEoPiUh
+         aw1L/zZCKSipQRW18EzMy8k+bIa2GdHESW6W3b/XZPYyP/EJFL0unNzGQqd8/qWNr6Aa
+         JaUA==
+X-Gm-Message-State: AD7BkJLHFzsDtFM1+6JYFTzKVhZs1pqksJfZnGGADDrVQwwYCyXUMW2nzn5J4gHyHekJURGvQzWIHZA+3zFL1g==
+X-Received: by 10.31.150.76 with SMTP id y73mr6004328vkd.84.1459359350868;
+ Wed, 30 Mar 2016 10:35:50 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Wed, 30 Mar 2016 10:35:50 -0700 (PDT)
+In-Reply-To: <1459357518-14913-3-git-send-email-sbeller@google.com>
+X-Google-Sender-Auth: LAbseXYvjWZDngqQAfHnwM2HzgI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290329>
 
 On Wed, Mar 30, 2016 at 1:05 PM, Stefan Beller <sbeller@google.com> wrote:
-> `value` is just a temporary scratchpad, so we need to make sure it doesn't
-> leak. It is xstrdup'd in `git_config_get_string` and
-> `parse_notes_merge_strategy` just compares the string against predefined
-> values, so no need to keep it around longer. Make `value` non-const to
-> avoid the cast in the free.
->
+> `split` is of type `struct strbuf **`, which we have a dedicated free
+> function for, which takes care of freeing all related memory.
+
+I think it's important to explain that 'split' and each split[]
+element were being leaked (despite the existing strbuf_release()) as
+justification for why this change is beneficial.
+
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 > Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
-> diff --git a/builtin/notes.c b/builtin/notes.c
-> @@ -744,13 +744,14 @@ static int merge_commit(struct notes_merge_options *o)
->  static int git_config_get_notes_strategy(const char *key,
->                                          enum notes_merge_strategy *strategy)
->  {
-> -       const char *value;
-> +       char *value;
+>  wt-status.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
 >
-> -       if (git_config_get_string_const(key, &value))
-> +       if (git_config_get_string(key, &value))
->                 return 1;
->         if (parse_notes_merge_strategy(value, strategy))
->                 git_die_config(key, "unknown notes merge strategy %s", value);
->
-> +       free(value);
->         return 0;
+> diff --git a/wt-status.c b/wt-status.c
+> index ef74864..1ea2ebe 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -1063,9 +1063,7 @@ static void abbrev_sha1_in_line(struct strbuf *line)
+>                                 strbuf_addf(line, "%s", split[i]->buf);
+>                 }
+>         }
+> -       for (i = 0; split[i]; i++)
+> -               strbuf_release(split[i]);
+> -
+> +       strbuf_list_free(split);
 >  }
-
-Hmm, I thought Peff's suggestion of using git_config_get_value() was
-accepted as superior since it avoids the allocation altogether, thus
-no need for free() and no leak.
