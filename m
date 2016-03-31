@@ -1,81 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Signed-off-by vs Reviewed-by
-Date: Thu, 31 Mar 2016 09:28:44 -0700
-Message-ID: <xmqqtwjmpq6b.fsf@gitster.mtv.corp.google.com>
-References: <20160331123507.GC19857@collabora.co.uk>
-	<CAFZEwPMzcqrd8NEP6MH5saXL2KdUKAyN51uuoS5=aeU0aPWjJQ@mail.gmail.com>
-	<20160331143501.GE19857@collabora.co.uk>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] ident: check for useConfigOnly before auto-detection
+ of name/email
+Date: Thu, 31 Mar 2016 12:31:56 -0400
+Message-ID: <20160331163156.GA1189@sigill.intra.peff.net>
+References: <1459366183-15451-1-git-send-email-redneb@gmx.com>
+ <20160331144003.GE31116@sigill.intra.peff.net>
+ <20160331150109.GA7235@zeno>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Pranit Bauva <pranit.bauva@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Miklos Vajna <vmiklos@collabora.co.uk>
-X-From: git-owner@vger.kernel.org Thu Mar 31 18:28:53 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Marios Titas <redneb@gmx.com>
+X-From: git-owner@vger.kernel.org Thu Mar 31 18:32:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alfSl-0001Ir-TY
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 18:28:52 +0200
+	id 1alfVr-0002jD-HW
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 18:32:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754647AbcCaQ2s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 12:28:48 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:55789 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753533AbcCaQ2r (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2016 12:28:47 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 763B450BFD;
-	Thu, 31 Mar 2016 12:28:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8+YYWa7rU7Gs2i/Fe1NnffvchLA=; b=raCx1W
-	FFLHA/uIEc0sGbetbM7tsdcUcS9SEp0GH+3s+eLkL0/4TgPBz6jhc81q/o9be4Tn
-	y8XkXgr+tjDSPCTFxNJL0C01VmJYE956t1Zm/qun2PzjWSk5n0axWFCSpjcCkDM9
-	n+f7vAGRJeVpebOx3XWPNKOvHHBWTylILv53c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dV25KTkHAZUt+0xtIjt7WTniM5MuRG7L
-	2QRRAOhB0xqhyrHw70rbT/kwnaups8T/e9T+bT/V4h9ybY0jmX9L9xstcSjDWdmX
-	AJ6z5lZxj5ajr4r2XR3e8K4ExS2uCQKIemTzIXadW4DJIHv5lCDItulGzFZ7znBs
-	acr9a/xWxt0=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6E3C750BF6;
-	Thu, 31 Mar 2016 12:28:46 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D3BDE50BF4;
-	Thu, 31 Mar 2016 12:28:45 -0400 (EDT)
-In-Reply-To: <20160331143501.GE19857@collabora.co.uk> (Miklos Vajna's message
-	of "Thu, 31 Mar 2016 16:35:02 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A3EBCAF0-F75D-11E5-9F2F-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1756516AbcCaQcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 12:32:00 -0400
+Received: from cloud.peff.net ([50.56.180.127]:41641 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753118AbcCaQb7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 12:31:59 -0400
+Received: (qmail 26989 invoked by uid 102); 31 Mar 2016 16:31:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 31 Mar 2016 12:31:58 -0400
+Received: (qmail 14530 invoked by uid 107); 31 Mar 2016 16:31:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 31 Mar 2016 12:31:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Mar 2016 12:31:56 -0400
+Content-Disposition: inline
+In-Reply-To: <20160331150109.GA7235@zeno>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290412>
 
-Miklos Vajna <vmiklos@collabora.co.uk> writes:
+On Thu, Mar 31, 2016 at 06:01:09PM +0300, Marios Titas wrote:
 
-> Typing that line (including copy&pasting your name + email all the time)
-> is a bit boring.
+> On Thu, Mar 31, 2016 at 10:40:03AM -0400, Jeff King wrote:
+> >On Wed, Mar 30, 2016 at 10:29:42PM +0300, Marios Titas wrote:
+> >
+> >>If user.useConfigOnly is set, it does not make sense to try to
+> >>auto-detect the name and/or the email. So it's better to do the
+> >>useConfigOnly checks first.
+> >
+> >It might be nice to explain how it is better here. I'd guess it is
+> >because we may fail during xgetpwuid(), giving a message that is much
+> >less informative?
+> 
+> Oops sorry, my bad, I should have included an example in the commit message.
+> So with git 2.8.0, if you provide a name and set useConfigOnly to true in
+> your ~/.gitconfig file, then if try to commit something in a new git repo,
+> it will fail with the following message:
+> 
+>    *** Please tell me who you are.
+>    Run
+>      git config --global user.email "you@example.com"
+>      git config --global user.name "Your Name"
+>    to set your account's default identity.
+>    Omit --global to set the identity only in this repository.
+>    fatal: unable to auto-detect email address (got 'XXX@YYY.(none)')
+> 
+> (provided of course that auto-detection of email fails). This wrong, because
+> auto-detection is disabled anyway.
 
-I think the last message from Christian in the thread points at the
-right direction in the future.
+Ah, right. We used to die in xgetpwuid, but now we just set
+default_name_is_bogus. So I think bumping the use_config_only check
+above the name_is_bogus check would be sufficient. Where you put it
+(above ident_default_name) is fine, though it would be a problem if we
+later lazily loaded the config in that function (I don't have any
+particular plans to do so, though).
 
-The internal "parse the existing trailer block and manipulate it by
-adding, conditionally adding, replacing and deleting it" logic was
-done as an experimental "interpret-trailers" program, but polishing
-it (both its design and implementation) and integrating it to the
-front-line programs (e.g. "git commit") hasn't been done.
-
-As to the last step of "integration", we cannot use short-and-sweet
-single letter options like '-s' (for sign-off) for each and every
-custom trailer different projects use for their own purpose (as
-there are only 26 of the lowercase ASCII alphabet letters), so the
-most general syntax for the option has to become "--trailer <arg>"
-or some variation of it, and at that point "-s" would look like a
-short-hand for "--trailer signed-off-by".
+-Peff
