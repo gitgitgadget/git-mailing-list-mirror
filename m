@@ -1,72 +1,90 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv2 3/4] bundle: don't leak an fd in case of early return
-Date: Thu, 31 Mar 2016 10:47:43 -0700
-Message-ID: <CAGZ79kYFr8bjEhV9sDzR1KbqAVrO89-DRBN2u+zQBwVYViDP9w@mail.gmail.com>
-References: <1459357518-14913-1-git-send-email-sbeller@google.com>
-	<1459357518-14913-4-git-send-email-sbeller@google.com>
-	<CAPig+cSE5wVNNwiwkYoOXnfDKUO3tBKqUUbqBHPCTA5ibj-kNg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: RFC: New reference iteration paradigm
+Date: Thu, 31 Mar 2016 11:01:44 -0700
+Message-ID: <xmqqlh4yo7av.fsf@gitster.mtv.corp.google.com>
+References: <56FD4CAD.3070100@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Mar 31 19:47:55 2016
+Content-Type: text/plain
+Cc: git discussion list <git@vger.kernel.org>,
+	David Turner <dturner@twopensource.com>,
+	Jeff King <peff@peff.net>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Mar 31 20:01:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alghE-0002R7-Lv
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 19:47:53 +0200
+	id 1algum-0000BT-OC
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 20:01:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757610AbcCaRrp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 13:47:45 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:34852 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752654AbcCaRro (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2016 13:47:44 -0400
-Received: by mail-ig0-f171.google.com with SMTP id cl4so131747702igb.0
-        for <git@vger.kernel.org>; Thu, 31 Mar 2016 10:47:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=05oaDAZEN7rkDfFsctICKLpNQsE0db4v7TGyJcgnQjk=;
-        b=TweIQ3grlbLPSiSyCGsKpY6riHgivzx4xbNXl7rHuCo9hJc94ZnpOLhbPeMerbRboz
-         5h47jhjLKwCGlDb+9yEEP1FYBYZBPed4A/+eoHMmJuGZZJ6yJo1FoTx6poQnz7gKDnRq
-         YFjUecG3VBrodzxyg0J0JfP6EMIiUwlmlkBdFa1FveAqd7A3iHfsD3jp53N1U0cvj7YA
-         oqNOftWuTHMV4jbMgaqUVn4WzWa0bGjZKabFhSjenFn1DlU+LMHSFys6TOFV895pUKhs
-         fpNoj4Q37fquucyIeNyb5aKPFVzHpdNnbM0wQO7TrzvbMuAskMuh79npTeCF+ryqmxu7
-         /Edg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=05oaDAZEN7rkDfFsctICKLpNQsE0db4v7TGyJcgnQjk=;
-        b=OVTGVNmt+SP5NCOnX9akrFvbdc+LfUYcxHCGwDmmAt0VNwZMSEHtI3hM99Hkqibm3V
-         bPXcnXmErXAQwEZPqAWIEP0v0hSvdb4LWPIYoTRB6TstguZtisG13nQoFDhhQR3xNZ8Y
-         w4g8//1UOY7E1iM1wFzxjg5+4mg7tadbFkrpgeYBtkkT91N8IuPUWC1LlgPTCV/4vhcC
-         43sHdqbRYejDXvBN3SD+0esrBGsOQSVZhxTADlCSwXZ+BSmNNLdJ+XOOSEIrwGD8hu52
-         jzdF0NcryESnUHHttELf67asGK5VXToQ5G3ptg8rJsWjLmADB0x42kwSnS9nyz4GJA44
-         1CRg==
-X-Gm-Message-State: AD7BkJI2fjTNNACbkAnFWFvQ+Opv9fOwGI+StuQ/Uo4OEicDJNI/NLTnPdaWvtZ2WFLvgu3GqIudktwMxGym+WZJ
-X-Received: by 10.50.13.36 with SMTP id e4mr945180igc.85.1459446463810; Thu,
- 31 Mar 2016 10:47:43 -0700 (PDT)
-Received: by 10.107.17.27 with HTTP; Thu, 31 Mar 2016 10:47:43 -0700 (PDT)
-In-Reply-To: <CAPig+cSE5wVNNwiwkYoOXnfDKUO3tBKqUUbqBHPCTA5ibj-kNg@mail.gmail.com>
+	id S1757555AbcCaSBt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 14:01:49 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:62597 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757415AbcCaSBs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 14:01:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0BD5352697;
+	Thu, 31 Mar 2016 14:01:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jloCBq8BUonNdFydEQkMl2evYn4=; b=NfJ8Yz
+	Vagkbtln9VM7tTYKt5KEsB1NoI95V+ABJiZgLokgzUz/+jGJq9BlM0ssvpvIevyg
+	lrw4dW3HrIi2o+gF2T1K5zaHfV4cNc2urOhWUALquPXaBUuLbYYBzMN9MICkBNSW
+	ebZGaWjv5TeoCJCi1NzHgI3RiMn6vnYPHrGWg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pk7SWjH6nsRbBYMzYHxYFG9d1TclPApb
+	HdfXr2lrrqZAvOjdnAhMHOHzXct3dFST9eCI/dvYlHH+wGERjJ2pVCWlMIpSqXhb
+	x0ydGGQcu8kkKvwzqmqQwlLDRWY4ujkdyYgPdQz/tM9bvknfZ1c+EDa5r0vkDKRx
+	cU4Fj/lwzXw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 00EFA52696;
+	Thu, 31 Mar 2016 14:01:47 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 65E4E52693;
+	Thu, 31 Mar 2016 14:01:46 -0400 (EDT)
+In-Reply-To: <56FD4CAD.3070100@alum.mit.edu> (Michael Haggerty's message of
+	"Thu, 31 Mar 2016 18:13:33 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A2300B10-F76A-11E5-B3F7-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290433>
 
-On Wed, Mar 30, 2016 at 10:41 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> -       else if (ref_count < 0)
->> -               return -1;
->> +       else if (ref_count < 0) {
->> +               if (!bundle_to_stdout)
->> +                       close(bundle_fd);
+Michael Haggerty <mhagger@alum.mit.edu> writes:
+
+> the backend now has to implement
 >
-> Why is this close() here considering that it gets closed by the 'err' path?
+>> struct ref_iterator *ref_iterator_begin_fn(const char *submodule,
+>>                                            const char *prefix,
+>>                                            unsigned int flags);
+>
+> The ref_iterator itself has to implement two main methods:
+>
+>> int iterator_advance_fn(struct ref_iterator *ref_iterator);
+>> void iterator_free_fn(struct ref_iterator *ref_iterator);
+>
+> A loop over references now looks something like
+>
+>> struct ref_iterator *iter = each_ref_in_iterator("refs/tags/");
+>> while (ref_iterator_advance(iter)) {
+>>         /* code using iter->refname, iter->oid, iter->flags */
+>> }
 
-Thanks for pointing out; fixed in a reroll.
+We'd want to take advantage of the tree-like organization of the
+refs (i.e. refs/tags/a and refs/tags/b sit next to each other and
+they are closer to each other than they are to refs/heads/a) so that
+a request "I want to iterate only over tags, even though I may have
+millions of other kinds of refs" can be done with cost that is
+proportional to how many tags you have.
+
+The current implementation of for_each_tag_ref() that goes down to
+do_for_each_entry() in files-backend.c has that propertly, and the
+new iteration mechanism with the above design seems to keep it,
+which is very nice.
