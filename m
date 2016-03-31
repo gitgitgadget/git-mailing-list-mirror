@@ -1,127 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3][Outreachy] branch -D: allow - as abbreviation of @{-1}
-Date: Thu, 31 Mar 2016 12:26:28 -0700
-Message-ID: <xmqqmvpemot7.fsf@gitster.mtv.corp.google.com>
-References: <1459416327-795-1-git-send-email-elena.petrashen@gmail.com>
+From: Andy Lowry <andy.work@nglowry.com>
+Subject: Re: BUG in git diff-index
+Date: Thu, 31 Mar 2016 15:30:48 -0400
+Message-ID: <56FD7AE8.4090905@nglowry.com>
+References: <loom.20160331T143733-916@post.gmane.org>
+ <20160331140515.GA31116@sigill.intra.peff.net>
+ <CAJxkE8SVF_ikHqDCh6eHExq=seitHPVpxW2GmPo40jtqWvz1JQ@mail.gmail.com>
+ <20160331142704.GC31116@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, sunshine@sunshineco.com,
-	matthieu.moy@grenoble-inp.fr
-To: Elena Petrashen <elena.petrashen@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 31 21:26:36 2016
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 31 21:30:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aliEl-0004Ts-O2
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 21:26:36 +0200
+	id 1aliIx-0006IO-Nw
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 21:30:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753563AbcCaT0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 15:26:32 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:51543 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752539AbcCaT0b (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2016 15:26:31 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3807151DC7;
-	Thu, 31 Mar 2016 15:26:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bHOcLY65P0ywz5wXXN6qPBciZdw=; b=PYkAc3
-	6Tr4vM//6Ney9ImZHQw5yZ2ArCQOcndnxzOqWur75OcvqYcYd8nBLVg1JuYUG06X
-	HfmiBmNvGwkZ5tiim4um8bsqZywa860Qb9LjsxuXQI++QmdAlR3q5LTljoQvyp+s
-	z8EMy0s3gx/qNk62AfuxRqKcfv7u2xbsIMhuo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jZMFrjI7V+x9pjqeCufamcjU/loF9KqO
-	K27Z+MJBDRsoA2q887Ek0QqiuhA5SU+TfGkEHiFY7+7wAFBaJ0G8dOGIss0o4c4W
-	Ybf7sEm6WoDqtE187f7xzk5SyWtbjXRaaDQzSmdDUiSipy5veRTbDzn5QFguKuz6
-	spU2YLu6Y74=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2FA1D51DC6;
-	Thu, 31 Mar 2016 15:26:30 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9B42751DC5;
-	Thu, 31 Mar 2016 15:26:29 -0400 (EDT)
-In-Reply-To: <1459416327-795-1-git-send-email-elena.petrashen@gmail.com>
-	(Elena Petrashen's message of "Thu, 31 Mar 2016 12:25:27 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 78059AC4-F776-11E5-A4F3-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1756904AbcCaTav (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 15:30:51 -0400
+Received: from mail-qg0-f66.google.com ([209.85.192.66]:35592 "EHLO
+	mail-qg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756277AbcCaTau (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 15:30:50 -0400
+Received: by mail-qg0-f66.google.com with SMTP id b32so7791647qgf.2
+        for <git@vger.kernel.org>; Thu, 31 Mar 2016 12:30:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nglowry-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=aW3ahF1E2tlCyTl6DNdGdS6Q8yGhuG/YHStEB8iZ430=;
+        b=CRqmIol2ZEhsqLOSnFBthG+7px1XIrdnJGgbfhFtIn0ebyIga6JIB/szEXbmqoEYMc
+         T5sZjaKpgzTVRSTdLTuJ9iOjHcv30bcZ9LTA/im6KQ1u60O+mam8TPgTxgNc7Aho9f1I
+         Kq8L1hNXO3yEyZr6dkKONRnnEHS9rkPolXKxhqhtY0EyAtuFDZfZIN5rQvVgPPPahjO9
+         KVefzjsWJO3p5kuv3MiEO04akHSVWLeY1rzwEojgb3qpjaq+484Bndq4jI2ENaHSCwuM
+         DK/xMmpeh8yWkinUJdC7PdjU7E3P2cG5wCDIbPqy6Wxs38I/Nfg1s5E7hpfKkhVdGwzP
+         ASnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=aW3ahF1E2tlCyTl6DNdGdS6Q8yGhuG/YHStEB8iZ430=;
+        b=fP4i3/xyRlp+FHyJvQFLD5CuzUKck2VuE+4Hwl+cspp0lWeFRc8t3lzySn8qnDoCGI
+         kYS6/0sjEg5S6uDxIBl10IhIWHgZ0ckEyJhVH2Z87oDJekCoBtkELhDPHZcSNaEiCsgj
+         0UR2jGC92foC2BCsmgK8d/j5u86hRG4FQK6307pQq9d9uVqX/1lJk3NGfa9bHmgCxGZD
+         GR2iHJHn3v5yVSvDnL3AQ8k0snrsTPYMnPINzgy1FiYyAaSDODWl+abSirU7xUIz8oeo
+         0nF/ttMCY/7InvL74Jn2m4LCTSH1BAm2pYwuGKNdRPMiRe/M7qa8f/HOOqBhqard0jU4
+         2NSA==
+X-Gm-Message-State: AD7BkJKIlPpFhfXi4ZMuWz+PM+Vp8XNUWaaH5VFPQbU9aZjrAzZDwpgA2/W7KyOToUatsA==
+X-Received: by 10.141.3.11 with SMTP id f11mr20083889qhd.90.1459452649681;
+        Thu, 31 Mar 2016 12:30:49 -0700 (PDT)
+Received: from [127.0.0.1] (ool-4574ffea.dyn.optonline.net. [69.116.255.234])
+        by smtp.googlemail.com with ESMTPSA id x10sm4065001qhc.42.2016.03.31.12.30.48
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 31 Mar 2016 12:30:48 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.1
+In-Reply-To: <20160331142704.GC31116@sigill.intra.peff.net>
+X-Antivirus: avast! (VPS 160331-1, 03/31/2016), Outbound message
+X-Antivirus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290453>
 
-Elena Petrashen <elena.petrashen@gmail.com> writes:
+OK, great. I think the update-index command is what I need.
 
-> @@ -214,6 +221,9 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->  		const char *target;
->  		int flags = 0;
->  
-> +		expand_dash_shortcut (argv, i);
-> +		if(!strncmp(argv[i], "@{-", strlen("@{-")))
-> +			at_shortcut = 1;
->  		strbuf_branchname(&bname, argv[i]);
->  		if (kinds == FILTER_REFS_BRANCHES && !strcmp(head, bname.buf)) {
->  			error(_("Cannot delete the branch '%s' "
-> @@ -231,9 +241,12 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->  					    | RESOLVE_REF_ALLOW_BAD_NAME,
->  					    sha1, &flags);
->  		if (!target) {
-> -			error(remote_branch
-> -			      ? _("remote-tracking branch '%s' not found.")
-> -			      : _("branch '%s' not found."), bname.buf);
-> +			error((!strncmp(bname.buf, "@{-", strlen("@{-")))
-> +				? _("There is not enough branch switches to"
-> +					" delete '%s'.")
-> +				: remote_branch
-> +					? _("remote-tracking branch '%s' not found.")
-> +					: _("branch '%s' not found."), bname.buf);
+If you'll indulge me, I'll describe my use-case in detail, and if you 
+see anything screwy about it, I'd appreciate feedback. But don't feel 
+obligated - you've been a great help already.
 
-I was expecting that the check for "@{-" in bname.buf would be done
-immediately after strbuf_branchname(&bname, argv[i]) we see in the
-previous hunk (and an error message issued there), i.e. something
-like:
+This is all about publishing updates to a static web site hosted as a 
+gh-pages branch on a github repo.
 
-        orig_arg = argv[i];
-        if (!strcmp(orig_arg, "-"))
-		strbuf_branchname(&bname, "@{-1}");
-	else
-		strbuf_branchname(&bname, argv[i]);
-        if (starts_with(bname.buf, "@{-")) {
-		error("Not enough branch switches to delete %s", orig_arg);
-                ... clean up and fail ...
-	}
+Our master branch has everything that goes into building the site, and 
+we use subtree push to update gh-pages with the embedded subtree that 
+contains the generated site.
 
-That would give you sensible error message for "branch -d -",
-"branch -d @{-1}" and "branch -d @{-4}" if you haven't visited
-different branches enough times.
+I'm creating a bash script that does the publishing, and as a general 
+rule, we want to publish only from the master branch, and only if it's 
+clean and up-to-date. And we also want to make sure that the embedded 
+site reflects the current source content.
 
-The hope was that the remainder of the code (including this error
-message) would not have to worry about this "not enough switches"
-error at all if done that way.
+It's in that last requirement where diff-index comes in. The script runs 
+a site build, and then should fail the policy check if that results in 
+any changes to the working tree (including the embedded site)/. /I don't 
+want the script to change the index in any way (e.g. so that unintended 
+changes revealed by this policy check are less likely to be accidentally 
+commited).
 
-> @@ -262,6 +275,9 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->  			       (flags & REF_ISBROKEN) ? "broken"
->  			       : (flags & REF_ISSYMREF) ? target
->  			       : find_unique_abbrev(sha1, DEFAULT_ABBREV));
-> +			if (at_shortcut && advice_delete_branch_via_at_ref)
-> +			       delete_branch_advice (bname.buf,
-> +				find_unique_abbrev(sha1, DEFAULT_ABBREV));
->  		}
+If I understand correctly, the update-index operation you indicated will 
+not change index membership at all, but will simply resync the index 
+members with actual working tree files.
 
-The existing !quiet report already said "deleted branch" with the
-concrete branch name, not "@{-1}" or "-", taken from bname.buf at
-this point.
+So I think now that the script should do "update-index --refresh" 
+followed by "diff-index --quiet HEAD". Sound correct?
 
-If the advice on how to recover a deletion by mistake would help the
-user, wouldn't that apply equally to the case where the user made a
-typo in the original command line, i.e. "branch -d foo" when she
-meant to delete "branch -d fooo", as well?  If we drop the "at_shortcut"
-check from this if() statement, wouldn't the result be more helpful?
+Andy
 
-Thanks
+On 3/31/2016 10:27 AM, Jeff King wrote:
+> On Thu, Mar 31, 2016 at 10:12:07AM -0400, Andy Lowry wrote:
+>
+>> What I'm actually after is a tree-to-filesystem comparison, regardless
+>> of index. I've currently got a "diff" thrown in as a "work-around"
+>> before "diff-index", but  now I understand it's not a workaround at
+>> all. If there's a better way to achieve what I'm after, I'd appreciate
+>> a tip. Otherwise I'll just change the comments explaining why there's
+>> a "diff" in my script.
+> If your workaround is just to refresh the index, then you can do "git
+> update-index --refresh", rather than diff.
+>
+> I don't think there is a plumbing command to do a direct
+> filesystem-to-tree comparison without having an index at all. "git diff
+> <treeish>" claims in the documentation to do so, but besides not being
+> plumbing, I think it is really just doing the same thing as diff-index,
+> under the hood. The index is a pretty fundamental part of git's view of
+> the working tree.
+>
+> -Peff
