@@ -1,95 +1,92 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCHv2 3/5] submodule--helper clone: remove double path checking
-Date: Thu, 31 Mar 2016 17:58:32 -0400
-Message-ID: <CAPig+cToyvzc4RbBmAAQtGmJ3WpxO6Z+XzrxrXQqYVH2RJcb-g@mail.gmail.com>
-References: <1459458280-17619-1-git-send-email-sbeller@google.com>
-	<1459458280-17619-4-git-send-email-sbeller@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] git-send-pack: fix --all option when used with directory
+Date: Thu, 31 Mar 2016 15:02:43 -0700
+Message-ID: <xmqqoa9ul30c.fsf@gitster.mtv.corp.google.com>
+References: <1459432509-12934-1-git-send-email-stanislav@assembla.com>
+	<xmqq1t6qmlxk.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Norio Nomura <norio.nomura@gmail.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Mar 31 23:58:39 2016
+Content-Type: text/plain
+Cc: peff@peff.net, dborowitz@google.com, stanislav@assembla.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 01 00:02:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alkbu-0007LX-FK
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 23:58:38 +0200
+	id 1alkfz-0000rJ-64
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 00:02:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752957AbcCaV6d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 17:58:33 -0400
-Received: from mail-yw0-f171.google.com ([209.85.161.171]:35873 "EHLO
-	mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751933AbcCaV6c (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2016 17:58:32 -0400
-Received: by mail-yw0-f171.google.com with SMTP id g3so116208560ywa.3
-        for <git@vger.kernel.org>; Thu, 31 Mar 2016 14:58:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=sqpO7Jx86FJGvlkmgq00EYM2QesgSdZ5VO6pxyk+EFI=;
-        b=WekEH3cp9ANShw+ggBs5paMCv+y1WMjX7HnBLaNpaZQgysdrb6FV7TUTlbIx0YqfzG
-         wVkVZ2MRpmbUMsnMWCv+65yRhVuCfiq/btgS3fFBVJBAjNXCWd5DRyLbhfSltQBaoy4N
-         qoV39hBV3dK/pw6m4X65tqCSG9lV791TXzEe901rrEZXJSYQR8w8PeeaA0rjOIfdFaFH
-         E93x6wBmB967zZtZJSoObQETVarJ0E0v73n/iJqsGvL9g2q7r9kWN8QEw5c3bMmxuCtr
-         2txpISYmthBmIinpqvQxfdrwFG8sL0NqHabZ8IGsso1H6j01YvH5G/QHxBeBFk9JdwFy
-         TcMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=sqpO7Jx86FJGvlkmgq00EYM2QesgSdZ5VO6pxyk+EFI=;
-        b=A+wzqlHIelBn1yd8ibLUyeSkKWWbmD+8HuuVh4hyzGKMJXRU5wgSqOndFLIm2d9GlE
-         IQQOrhERuxRIwzEkBABiffDtK+1T2TV8pS5JCrQBkE9VDAVRinfdzMMbxS42IxAm5eSD
-         wccX65sEW61XwA9calfimcTJCtSCvDTkWGctt8ICV0dxB3BqzagcvD0AZ47rWnpOoG1r
-         4IpPQE6CESxRb1oLkJG7YBfnoNUYNFWcAprYYMuQ28r5q/pbbSWqqREHDEfIO7Hoojpi
-         sf8i3CduHiOYH1D9JRHW3CDoci5gR/9cWi1SFLed7LkMCDw/RgV3V4v89tVQzYfGkVKw
-         eINA==
-X-Gm-Message-State: AD7BkJLSFIXlpj3runV6p3j7fUtjhRLgqMz4ebrjMViY3VA2IZI4B2UyaXZM7UoXEVtDlkAR1L8GF4axxaq+0w==
-X-Received: by 10.31.8.142 with SMTP id 136mr2432375vki.14.1459461512147; Thu,
- 31 Mar 2016 14:58:32 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Thu, 31 Mar 2016 14:58:32 -0700 (PDT)
-In-Reply-To: <1459458280-17619-4-git-send-email-sbeller@google.com>
-X-Google-Sender-Auth: m8df0_WzCkxFChkYH5JxzKiCUVM
+	id S1756003AbcCaWCr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 18:02:47 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:54438 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751933AbcCaWCq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 18:02:46 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3F9FB52EF1;
+	Thu, 31 Mar 2016 18:02:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SUVAjvBpqbbNrtsJLbaIVTetyA8=; b=d+YIG8
+	B2foisoIFelFjZhV+oBeJvAHxB9Do54CW9/fZ799sNzZlT6bc6YXt3bl/AMMBPTX
+	ugj+A3r4BCXb2MN/A9apDaKm6Rw5V+VG6VKBrjIyB3R/JTN5mw/cCD82Zxx4R3LU
+	KVwvgT5v/yprcmLlQ2PMBNqXL6VSbVGiDppjg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WzddubPAxd03bwVwHnvC06GVPB86EE72
+	QgJm9XoiLJyvs4i0uRughJB8JvxV8EOF2VBCGGYfpfzRJrxafsvLkYO8laOw0cEK
+	y9+lHU9xzNEEK7ChQdRRWb5Vo4vjixsEYOVJ+4kjcyiqt5xrvgG/gM6fEzFnUHjz
+	Q0M/Xi26CCw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 367B752EF0;
+	Thu, 31 Mar 2016 18:02:45 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9B2A052EEF;
+	Thu, 31 Mar 2016 18:02:44 -0400 (EDT)
+In-Reply-To: <xmqq1t6qmlxk.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 31 Mar 2016 13:28:39 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 4BF56714-F78C-11E5-AAFD-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290476>
 
-On Thu, Mar 31, 2016 at 5:04 PM, Stefan Beller <sbeller@google.com> wrote:
-> submodule--helper clone: remove double path checking
+Junio C Hamano <gitster@pobox.com> writes:
 
-I think Junio mentioned in v1 that calling this "path checking" is misleading.
-
-> We make sure that the parent directory of path exists (or create it
-> otherwise) and then do the same for path + "/.git".
+> stanislav@assembla.com writes:
 >
-> That is equivalent to just making sure that the parent directory of
-> path + "/.git" exists (or create it otherwise).
-
-This part of the commit message is nicely improved.
-
-The patch itself looks fine.
-
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> @@ -215,11 +215,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
->         }
+>> From: Stanislav Kolotinskiy <stanislav@assembla.com>
+>>
+>> When using git send-pack with --all option
+>> and a target repository specification ([<host>:]<directory>),
+>> usage message is being displayed instead of performing
+>> the actual transmission.
+>>
+>> The reason for this issue is that destination and refspecs are being set
+>> in the same conditional and are populated from argv. When a target
+>> repository is passed, refspecs is being populated as well with its value.
+>> This makes the check for refspecs not being NULL to always return true,
+>> which, in conjunction with the check for --all or --mirror options,
+>> is always true as well and returns usage message instead of proceeding.
+>>
+>> This ensures that send-pack will stop execution only when --all
+>> or --mirror switch is used in conjunction with any refspecs passed.
+>>
+>> Signed-off-by: Stanislav Kolotinskiy <stanislav@assembla.com>
+>> ---
 >
->         /* Write a .git file in the submodule to redirect to the superproject. */
-> -       if (safe_create_leading_directories_const(path) < 0)
-> -               die(_("could not create directory '%s'"), path);
-> -
->         strbuf_addf(&sb, "%s/.git", path);
-> -
->         if (safe_create_leading_directories_const(sb.buf) < 0)
->                 die(_("could not create leading directories of '%s'"), sb.buf);
->         submodule_dot_git = fopen(sb.buf, "w");
-> --
-> 2.5.0.264.g39f00fe
+> Thanks, will queue.
+
+By the way, for some reason it was unusually painful to find the
+exact breakage by bisecting between maint-2.4 and maint-2.6.  It
+somehow ended up on fingering random places like v2.6.0 itself.
+
+The true culprit is 068c77a5 (builtin/send-pack.c: use parse_options
+API, 2015-08-19).  I didn't dug deep enough to tell if we recently
+broke "git bisect" or if there are something wrong in the shape of
+my history.
