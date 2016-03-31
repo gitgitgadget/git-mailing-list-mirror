@@ -1,79 +1,137 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] ident: check for useConfigOnly before auto-detection
- of name/email
-Date: Thu, 31 Mar 2016 12:31:56 -0400
-Message-ID: <20160331163156.GA1189@sigill.intra.peff.net>
-References: <1459366183-15451-1-git-send-email-redneb@gmx.com>
- <20160331144003.GE31116@sigill.intra.peff.net>
- <20160331150109.GA7235@zeno>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] recursive submodules: test for relative paths
+Date: Thu, 31 Mar 2016 09:33:54 -0700
+Message-ID: <xmqqpouappxp.fsf@gitster.mtv.corp.google.com>
+References: <1459383457-6848-1-git-send-email-sbeller@google.com>
+	<1459383457-6848-2-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Marios Titas <redneb@gmx.com>
-X-From: git-owner@vger.kernel.org Thu Mar 31 18:32:04 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, norio.nomura@gmail.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Mar 31 18:34:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alfVr-0002jD-HW
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 18:32:03 +0200
+	id 1alfXl-0003dU-Gx
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 18:34:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756516AbcCaQcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 12:32:00 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41641 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753118AbcCaQb7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2016 12:31:59 -0400
-Received: (qmail 26989 invoked by uid 102); 31 Mar 2016 16:31:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 31 Mar 2016 12:31:58 -0400
-Received: (qmail 14530 invoked by uid 107); 31 Mar 2016 16:31:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 31 Mar 2016 12:31:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Mar 2016 12:31:56 -0400
-Content-Disposition: inline
-In-Reply-To: <20160331150109.GA7235@zeno>
+	id S1757507AbcCaQd7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 12:33:59 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:54686 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757485AbcCaQd6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 12:33:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EB4F050D58;
+	Thu, 31 Mar 2016 12:33:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CU1gCqUxsP8h12UrO0a9TPgT4aM=; b=N6GRHo
+	ifhy46R9zEB81ke/mBiSiH1kgrttHN+AW1b6IKJOxBJjD/WkX8CaSIB7abNMI7sT
+	l+Sn+BZn+LdGkgUtCAPKHWhtLxPJk46GEZMFyC4D/hxzaYVGqDK62cg5ybcag33F
+	eQ4CQpNn8iFIiuro1bEv56o0aec4E2dPRJzmA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hqDvSIhCXGAc7uBOFSknD/w2U2z9EcFF
+	UkKnWJgs0lk0KeSAILHKzoEkjQ+6n9YnMrFfLj2EsrupzQ/6vzCRKCwQpLw+DTMf
+	llHj9XDvLfBisvyJ6wYSQ59Vl/0KQ3Kq9edo/1m2Pyp/UFKlBRy8Pmr0YfN+TRuU
+	V82cxzqbs9c=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E2B6950D57;
+	Thu, 31 Mar 2016 12:33:56 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4919550D56;
+	Thu, 31 Mar 2016 12:33:56 -0400 (EDT)
+In-Reply-To: <1459383457-6848-2-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Wed, 30 Mar 2016 17:17:34 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 5CF41E80-F75E-11E5-92A1-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290413>
 
-On Thu, Mar 31, 2016 at 06:01:09PM +0300, Marios Titas wrote:
+Stefan Beller <sbeller@google.com> writes:
 
-> On Thu, Mar 31, 2016 at 10:40:03AM -0400, Jeff King wrote:
-> >On Wed, Mar 30, 2016 at 10:29:42PM +0300, Marios Titas wrote:
-> >
-> >>If user.useConfigOnly is set, it does not make sense to try to
-> >>auto-detect the name and/or the email. So it's better to do the
-> >>useConfigOnly checks first.
-> >
-> >It might be nice to explain how it is better here. I'd guess it is
-> >because we may fail during xgetpwuid(), giving a message that is much
-> >less informative?
-> 
-> Oops sorry, my bad, I should have included an example in the commit message.
-> So with git 2.8.0, if you provide a name and set useConfigOnly to true in
-> your ~/.gitconfig file, then if try to commit something in a new git repo,
-> it will fail with the following message:
-> 
->    *** Please tell me who you are.
->    Run
->      git config --global user.email "you@example.com"
->      git config --global user.name "Your Name"
->    to set your account's default identity.
->    Omit --global to set the identity only in this repository.
->    fatal: unable to auto-detect email address (got 'XXX@YYY.(none)')
-> 
-> (provided of course that auto-detection of email fails). This wrong, because
-> auto-detection is disabled anyway.
+> This was reported as a regression at $gmane/290280. The root cause for
+> that bug is in using recursive submodules as their relative path handling
+> seems to be broken in ee8838d (2015-09-08, submodule: rewrite
+> `module_clone` shell function in C).
 
-Ah, right. We used to die in xgetpwuid, but now we just set
-default_name_is_bogus. So I think bumping the use_config_only check
-above the name_is_bogus check would be sufficient. Where you put it
-(above ident_default_name) is fine, though it would be a problem if we
-later lazily loaded the config in that function (I don't have any
-particular plans to do so, though).
+I've reworded the above like so while queuing.
 
--Peff
+    "git submodule update --init --recursive" uses full path to refer to
+    the true location of the repository in the "gitdir:" pointer for
+    nested submodules; the command used to use relative paths.
+
+    This was reported by Norio Nomura in $gmane/290280.
+
+    The root cause for that bug is in using recursive submodules as
+    their relative path handling was broken in ee8838d (2015-09-08,
+    submodule: rewrite `module_clone` shell function in C).
+
+Thanks.
+
+
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  t/t7400-submodule-basic.sh | 41 +++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 41 insertions(+)
+>
+> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+> index 540771c..fc11809 100755
+> --- a/t/t7400-submodule-basic.sh
+> +++ b/t/t7400-submodule-basic.sh
+> @@ -818,6 +818,47 @@ test_expect_success 'submodule add --name allows to replace a submodule with ano
+>  	)
+>  '
+>  
+> +test_expect_failure 'recursive relative submodules stay relative' '
+> +	test_when_finished "rm -rf super clone2 subsub sub3" &&
+> +	mkdir subsub &&
+> +	(
+> +		cd subsub &&
+> +		git init &&
+> +		>t &&
+> +		git add t &&
+> +		git commit -m "initial commit"
+> +	) &&
+> +	mkdir sub3 &&
+> +	(
+> +		cd sub3 &&
+> +		git init &&
+> +		>t &&
+> +		git add t &&
+> +		git commit -m "initial commit" &&
+> +		git submodule add ../subsub dirdir/subsub &&
+> +		git commit -m "add submodule subsub"
+> +	) &&
+> +	mkdir super &&
+> +	(
+> +		cd super &&
+> +		git init &&
+> +		>t &&
+> +		git add t &&
+> +		git commit -m "initial commit" &&
+> +		git submodule add ../sub3 &&
+> +		git commit -m "add submodule sub"
+> +	) &&
+> +	git clone super clone2 &&
+> +	(
+> +		cd clone2 &&
+> +		git submodule update --init --recursive &&
+> +		echo "gitdir: ../.git/modules/sub3" >./sub3/.git_expect &&
+> +		echo "gitdir: ../../../.git/modules/sub3/modules/dirdir/subsub" >./sub3/dirdir/subsub/.git_expect
+> +	) &&
+> +	test_cmp clone2/sub3/.git_expect clone2/sub3/.git &&
+> +	test_cmp clone2/sub3/dirdir/subsub/.git_expect clone2/sub3/dirdir/subsub/.git
+> +'
+> +
+>  test_expect_success 'submodule add with an existing name fails unless forced' '
+>  	(
+>  		cd addtest2 &&
