@@ -1,74 +1,163 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtin/apply: free patch when parse_chunk() fails
-Date: Thu, 31 Mar 2016 15:56:34 -0700
-Message-ID: <xmqq37r6l0il.fsf@gitster.mtv.corp.google.com>
-References: <1458156911-26649-1-git-send-email-chriscool@tuxfamily.org>
-	<CAP8UFD2uT8dF+LMEGVdM6QZztqr_FbX=UQ01U0ttODFUk4AxbA@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv2 4/5] submodule--helper, module_clone: always operate on
+ absolute paths
+Date: Thu, 31 Mar 2016 15:59:29 -0700
+Message-ID: <CAGZ79kaAs_ZwxfhLSTw3z8JY33vGToms2z6zYEiCmRpfS6SA+Q@mail.gmail.com>
+References: <1459458280-17619-1-git-send-email-sbeller@google.com>
+	<1459458280-17619-5-git-send-email-sbeller@google.com>
+	<xmqqfuv6l1xf.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 01 00:56:44 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Norio Nomura <norio.nomura@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 01 00:59:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1allW6-00085r-HJ
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 00:56:42 +0200
+	id 1allYw-0000tc-Gu
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 00:59:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757341AbcCaW4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 18:56:38 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:61063 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755163AbcCaW4h (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2016 18:56:37 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 351B1528A8;
-	Thu, 31 Mar 2016 18:56:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LfPacOrzYY+rE0kq+xUl5q7NsTg=; b=XhVfvz
-	E2Jz1uPcwOmlnHX12dI1+2ioSn8AmXZ9qzlGzGUAXdmOc3Rn6EtPENN6qYny9uRD
-	xb6qw/NTQKFRxStJbPOuoeM2B0zt8vI8+NZ62Nay3tChEx7OXEXnofqRhQFUnxVb
-	h4VaCD2VR/aOLUYmHAABmlo6nYSjqKdlcOI5E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jHjLhWPqGIg4KjyZEktACXfI12Imte/n
-	m3ZyYQkqYzIBaPBMwqpcuf2K6EevccL/KkucP0eW4ZxCDO37rJ7Xxte7TY8i3fYz
-	4aOYFqJO2ZQKlQGDzYNscjKljr5sfl8tud4eH7ugXNZwmsnnmevY45WQCrp32uB4
-	eAMQjYzpHQg=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2637B528A7;
-	Thu, 31 Mar 2016 18:56:36 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 97707528A4;
-	Thu, 31 Mar 2016 18:56:35 -0400 (EDT)
-In-Reply-To: <CAP8UFD2uT8dF+LMEGVdM6QZztqr_FbX=UQ01U0ttODFUk4AxbA@mail.gmail.com>
-	(Christian Couder's message of "Thu, 31 Mar 2016 18:29:18 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D1C5CAC6-F793-11E5-A0F6-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1757760AbcCaW7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 18:59:31 -0400
+Received: from mail-io0-f179.google.com ([209.85.223.179]:34284 "EHLO
+	mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755615AbcCaW7a (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 18:59:30 -0400
+Received: by mail-io0-f179.google.com with SMTP id e3so132160124ioa.1
+        for <git@vger.kernel.org>; Thu, 31 Mar 2016 15:59:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=fj9Ha1BPI+NQWs6pJBEEUPBVJaSyMW0xVCjhJGwGDp8=;
+        b=pkDCj4P1MD1+yL3NY/K8qOOcifG0gomXnTWCseM/gX9fQEhbL8Hjor08GzCzX1MTvC
+         RInJkjbMqRI9zD4t6gxJ2vbz/7AK7n91KA8iCgrhJ1+wBKpXNZ+0N/KtNfeKOwvhTS5x
+         G5OtkRwrmaU99PXDqk22N/kajG5P4qUcDSkWa0w3H6FBqyrinP2g6NSvR5MmnzMA1ggt
+         Hfj5wvaV5cxf5xIvimcZTL2kE16S+WXYlLT/tYjROyckcJcIbDuMoZ1XOoH/vA5L+bl6
+         M9HI6VnGakGcX80k4/scq06SOuBxqGekKl6yC2RuIOQB9MXnkdRZ9zsEBqW1G6p2NAYl
+         HPKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=fj9Ha1BPI+NQWs6pJBEEUPBVJaSyMW0xVCjhJGwGDp8=;
+        b=agXW9AkB17nv+TniSNwSHLQu/evaoJNV2OacZRpV1gNcwQvywiTV09aqkkE/nm38vW
+         BFc78tflFyR1fuB4tJxI2aEZwl45x9h+40vnR13RVMJaMla53HSSdXbL6T9FsZZvU2aF
+         m/YU81SQuP51++wHKPvkynDuBq+QWlLedDnUb8RfHNQZ69Uk4vQiEboOKx9t9YTCTvO6
+         Ll7yjTV0StzH3iJexRKGo46DCP9+1AcN709Fp+g5PA0enQZ7eJhQ/s3w2twmgRgrcUcW
+         VtBnYhqwZMRX6TjMVmRkTSA1HO5qfH2LlGmMTBS6TKbfn6TrtPIzSMlRiG1OnpoKXQJy
+         iY5g==
+X-Gm-Message-State: AD7BkJKBj3ElzwEAw0NY47LK5piUBORraFdMQANlRoqkcsNnjW68zloR+YJEMa9e9c18CEeEzcFGXyZiVZR/AcuA
+X-Received: by 10.107.184.8 with SMTP id i8mr1462516iof.96.1459465169684; Thu,
+ 31 Mar 2016 15:59:29 -0700 (PDT)
+Received: by 10.107.17.27 with HTTP; Thu, 31 Mar 2016 15:59:29 -0700 (PDT)
+In-Reply-To: <xmqqfuv6l1xf.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290486>
 
-Christian Couder <christian.couder@gmail.com> writes:
-
-> On Wed, Mar 16, 2016 at 3:35 PM, Christian Couder
-> <christian.couder@gmail.com> wrote:
->> When parse_chunk() fails it can return -1, for example
->> when find_header() doesn't find a patch header.
->>
->> In this case it's better in apply_patch() to free the
->> "struct patch" that we just allocated instead of
->> leaking it.
+On Thu, Mar 31, 2016 at 3:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> Maybe this patch has fallen through the cracks too.
+>> +     if (!is_absolute_path(sm_gitdir)) {
+>> +             char *cwd = xgetcwd();
+>> +             strbuf_addf(&sb, "%s/%s", cwd, sm_gitdir);
+>> +             sm_gitdir = strbuf_detach(&sb, 0);
+>> +             free(cwd);
+>
+> It would be surprising that this would be the first codepath that
+> needs to get an absolute pathname in the codebase that is more than
+> 10 years old, wouldn't it?  Don't we have a reasonable API helper
+> function to do this kind of thing already?
+>
+>     ... goes and looks ...
+>
+> Doesn't absolute_path() work here?
 
-Anything worthy of discussion that you sent during the feature
-freeze, please resend them to the list for discussion.
+*reads absolute_path(...)*
+
+    Yes that is great. But why is it written the way it is?
+    I would have expected:
+
+ const char *absolute_path(const char *path)
+ {
+        static struct strbuf sb = STRBUF_INIT;
+-       strbuf_reset(&sb);
+        strbuf_add_absolute_path(&sb, path);
+-       return sb.buf;
++       return strbuf_detach(&sb);
+ }
+
+Further checking reveals any caller uses it with
+
+    desired= xstrdup(absolute_path(my_argument));
+
+We are loosing memory of the strbuf here. so if I we'd
+take the diff above we can also get rid of all the xstrdups
+at the callers. For now I will adhere to all other callers and use
+xstrdup(absolute_path(...) here too.
+
+I'll remove the unrelated changes as well in a resend.
+
+>
+>> @@ -221,7 +240,6 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+>>       submodule_dot_git = fopen(sb.buf, "w");
+>>       if (!submodule_dot_git)
+>>               die_errno(_("cannot open file '%s'"), sb.buf);
+>> -
+>>       fprintf(submodule_dot_git, "gitdir: %s\n",
+>>               relative_path(sm_gitdir, path, &rel_path));
+>>       if (fclose(submodule_dot_git))
+>
+> Looks like an unrelated change to me.
+>
+>> @@ -229,24 +247,16 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+>>       strbuf_reset(&sb);
+>>       strbuf_reset(&rel_path);
+>>
+>> -     cwd = xgetcwd();
+>>       /* Redirect the worktree of the submodule in the superproject's config */
+>> -     if (!is_absolute_path(sm_gitdir)) {
+>> -             strbuf_addf(&sb, "%s/%s", cwd, sm_gitdir);
+>> -             free(sm_gitdir);
+>> -             sm_gitdir = strbuf_detach(&sb, NULL);
+>> -     }
+>> -
+>> -     strbuf_addf(&sb, "%s/%s", cwd, path);
+>>       p = git_pathdup_submodule(path, "config");
+>>       if (!p)
+>>               die(_("could not get submodule directory for '%s'"), path);
+>>       git_config_set_in_file(p, "core.worktree",
+>> -                            relative_path(sb.buf, sm_gitdir, &rel_path));
+>> +                            relative_path(path, sm_gitdir, &rel_path));
+>>       strbuf_release(&sb);
+>>       strbuf_release(&rel_path);
+>>       free(sm_gitdir);
+>> -     free(cwd);
+>> +
+>
+> This addition of blank, too.
+>
+>>       free(p);
+>>       return 0;
+>>  }
+>> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+>> index fc11809..ea3fabb 100755
+>> --- a/t/t7400-submodule-basic.sh
+>> +++ b/t/t7400-submodule-basic.sh
+>> @@ -818,7 +818,7 @@ test_expect_success 'submodule add --name allows to replace a submodule with ano
+>>       )
+>>  '
+>>
+>> -test_expect_failure 'recursive relative submodules stay relative' '
+>> +test_expect_success 'recursive relative submodules stay relative' '
+>>       test_when_finished "rm -rf super clone2 subsub sub3" &&
+>>       mkdir subsub &&
+>>       (
