@@ -1,251 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] clone: respect configured fetch respecs during initial fetch
-Date: Thu, 31 Mar 2016 09:15:58 -0700
-Message-ID: <xmqq1t6qr5c1.fsf@gitster.mtv.corp.google.com>
-References: <20160307153304.GA23010@sigill.intra.peff.net>
-	<1459349623-16443-1-git-send-email-szeder@ira.uka.de>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: RFC: New reference iteration paradigm
+Date: Thu, 31 Mar 2016 18:13:33 +0200
+Message-ID: <56FD4CAD.3070100@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Thu Mar 31 18:16:13 2016
+Content-Transfer-Encoding: 7bit
+Cc: David Turner <dturner@twopensource.com>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 31 18:20:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alfGU-0003uU-So
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 18:16:11 +0200
+	id 1alfKv-0005zy-3I
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 18:20:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752023AbcCaQQG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Mar 2016 12:16:06 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:53471 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751243AbcCaQQE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Mar 2016 12:16:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F2B2C507AC;
-	Thu, 31 Mar 2016 12:16:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=7YQ1qZisICjP
-	JCgnmXrCgR3Zyks=; b=okhFitWnNEjgsYC9nZdQkDGGMWG18H0pvpviKKbNFLZB
-	Qth8yj/i2VxKxAJnB66YU/swntVwC/xg5iNyEGOQf45NezU6MKRa4OtQNX6SQBNR
-	lR52XCPJurr/i1s5O2MZaWcD8SoU6ifUF5Y04eZlDIxlQQTIg1fcMwHubCsFijM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=To5fOD
-	4EM0rirfeHgrTVA3CAOScpgcBsiWfN+6yUSqFIVaeDzop5QA0PrDxFZOrADbO+rI
-	UmMYuxvy65hdgmKobK5KyG836E/GUR0ATen2yrL4QmImgciybx/DIVJb72YO6L4e
-	cVAa+dm5ERpNcJhyYqzrVYsnmfJBXMh/DDVcA=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7BAB1507AB;
-	Thu, 31 Mar 2016 12:16:01 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 638F3507AA;
-	Thu, 31 Mar 2016 12:16:00 -0400 (EDT)
-In-Reply-To: <1459349623-16443-1-git-send-email-szeder@ira.uka.de> ("SZEDER
-	=?utf-8?Q?G=C3=A1bor=22's?= message of "Wed, 30 Mar 2016 16:53:43 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DBAC367A-F75B-11E5-9A3A-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1755993AbcCaQUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 12:20:41 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:47426 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752961AbcCaQUk (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Mar 2016 12:20:40 -0400
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Thu, 31 Mar 2016 12:20:40 EDT
+X-AuditID: 12074412-51bff700000009f7-f3-56fd4cb04c46
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id AE.7E.02551.0BC4DF65; Thu, 31 Mar 2016 12:13:37 -0400 (EDT)
+Received: from [192.168.69.130] (p548D6127.dip0.t-ipconnect.de [84.141.97.39])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u2VGDYbl026313
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 31 Mar 2016 12:13:35 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.7.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrGIsWRmVeSWpSXmKPExsUixO6iqLvR52+YwaNL/BbzN51gtOi60s1k
+	0dB7hdniR0sPswOLx7PePYweFy8peyx4fp/d4/MmuQCWKG6bpMSSsuDM9Dx9uwTujOZ355gL
+	lklXNN6sbWC8IdrFyMkhIWAi8eHUHcYuRi4OIYGtjBIn2rcwQTjnmCQudzcxglSJCOhK7Hp2
+	lQ3EZhYolnix6hALiM0GFF/U08wEYgsL6EnM2v8UzOYV0JZYNG8BK4jNIqAqseT0b7C4qECI
+	xLZ131ghagQlTs58wgIxU13iz7xLzBC2vMT2t3OYJzDyzkJSNgtJ2SwkZQsYmVcxyiXmlObq
+	5iZm5hSnJusWJyfm5aUW6Zrp5WaW6KWmlG5ihISh0A7G9SflDjEKcDAq8fBeSP4TJsSaWFZc
+	mXuIUZKDSUmU97LX3zAhvqT8lMqMxOKM+KLSnNTiQ4wSHMxKIrzywOAX4k1JrKxKLcqHSUlz
+	sCiJ8/5crO4nJJCeWJKanZpakFoEk5Xh4FCS4L3sDdQoWJSanlqRlplTgpBm4uAEGc4lJVKc
+	mpeSWpRYWpIRD4qw+GJgjIGkeID2aoLtLS5IzAWKQrSeYlSUEuc1BkkIgCQySvPgxsKSyytG
+	caAvhXlNQbbzABMTXPcroMFMQIO3avwCGVySiJCSamBs/sNVfvz7eZYXJ+S3diofdNoy8XAI
+	68bs+zcXLrLUWnrp8VunCazf7ii3czYu8+87Iy4l8u51gaEay80ErqoPPIa6W5cve/7WaCrD
+	5vtFMq3xV99r6LBYJG1b+yxz1xYvnv2My8XZxFTd/pfLRRZaBzsf4f/7q3fVvxIe 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290409>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+Currently the way to iterate over references is via a family of
+for_each_ref()-style functions. You pass some arguments plus a callback
+function and cb_data to the function, and your callback is called for
+each reference that is selected.
 
-> Conceptually 'git clone' should behave as if the following commands
-> were run:
->
->   git init
->   git config ... # set default configuration and origin remote
->   git fetch
->   git checkout   # unless '--bare' is given
->
-> However, that initial 'git fetch' behaves differently from any
-> subsequent fetches, because it takes only the default fetch refspec
-> into account and ignores all other fetch refspecs that might have
-> been explicitly specified on the command line (e.g. 'git -c
-> remote.origin.fetch=3D<refspec> clone' or 'git clone -c ...').
+This works, but it has two big disadvantages:
 
-Is it really 'git fetch' behaves differently?
+1. It is cumbersome for callers. The caller's logic has to be split
+   into two functions, the one that calls for_each_ref() and the
+   callback function. Any data that have to be passed between the
+   functions has to be stuck in a separate data structure.
 
-What is missing in the above description is your expected behaviour
-of "git -c var=3Dval clone", and without it we cannot tell if your
-expectation is sane to begin with.
+2. This interface is not composable. For example, you can't write a
+   single function that iterates over references from two sources,
+   as is interesting for combining packed plus loose references,
+   shared plus worktree-specific references, symbolic plus normal
+   references, etc. The current code for combining packed and loose
+   references needs to walk the two reference trees in lockstep,
+   using intimate knowledge about how references are stored [1,2,3].
 
-Is the expectation like this?
+I'm currently working on a patch series to transition the reference code
+from using for_each_ref()-style iteration to using proper iterators.
 
-    git init
-    git config ... # set default configuration and origin remote
-    git config var val # update with what "-c var=3Dval" told us
-    git fetch
-    git checkout   # unless '--bare' is given
+The main point of this change is to change the base iteration paradigm
+that has to be supported by reference backends. So instead of
 
-or is it something else?
+> int do_for_each_ref_fn(const char *submodule, const char *base,
+>                        each_ref_fn fn, int trim, int flags,
+>                        void *cb_data);
 
-Is "-c var=3Dval" adding to the config variables set by default, or is
-it replacing them?  Does the choice depend on the nature of
-individual variables, and if so what is the criteria?
+the backend now has to implement
 
-Are all "-c var=3Dval" update the configuration of the resulting
-repository?  Or are certain "var"s treated as special and placed in
-the config but not other "var"s?  If the latter, what makes these
-certain "var"s special?
+> struct ref_iterator *ref_iterator_begin_fn(const char *submodule,
+>                                            const char *prefix,
+>                                            unsigned int flags);
 
-These design decisions need to be explained so that they will serve
-to guide people to decide what other variables to propagate and how
-when they have to add new configuration variables in the future.
-Otherwise we'd end up with an inconsistent mess.
+The ref_iterator itself has to implement two main methods:
 
-> Check whether there are any fetch refspecs configured for the origin
-> remote and take all of them into account during the initial fetch as
-> well.
->
-> Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
-> ---
-> Changes since previous (RFC) version:
->  - new commit message
->  - additional configured fetch refspecs are taken into account with
->    '--single-branch' as well
->
->  builtin/clone.c         | 36 ++++++++++++++++++++++++++++--------
->  t/t5708-clone-config.sh | 24 ++++++++++++++++++++++++
->  2 files changed, 52 insertions(+), 8 deletions(-)
->
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 661639255c56..5e2d2c21e456 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -515,7 +515,7 @@ static struct ref *find_remote_branch(const struc=
-t ref *refs, const char *branch
->  }
-> =20
->  static struct ref *wanted_peer_refs(const struct ref *refs,
-> -		struct refspec *refspec)
-> +		struct refspec *refspec, unsigned int refspec_count)
->  {
->  	struct ref *head =3D copy_ref(find_ref_by_name(refs, "HEAD"));
->  	struct ref *local_refs =3D head;
-> @@ -536,13 +536,18 @@ static struct ref *wanted_peer_refs(const struc=
-t ref *refs,
->  			warning(_("Could not find remote branch %s to clone."),
->  				option_branch);
->  		else {
-> -			get_fetch_map(remote_head, refspec, &tail, 0);
-> +			unsigned int i;
-> +			for (i =3D 0; i < refspec_count; i++)
-> +				get_fetch_map(remote_head, &refspec[i], &tail, 0);
-> =20
->  			/* if --branch=3Dtag, pull the requested tag explicitly */
->  			get_fetch_map(remote_head, tag_refspec, &tail, 0);
->  		}
-> -	} else
-> -		get_fetch_map(refs, refspec, &tail, 0);
-> +	} else {
-> +		unsigned int i;
-> +		for (i =3D 0; i < refspec_count; i++)
-> +			get_fetch_map(refs, &refspec[i], &tail, 0);
-> +	}
-> =20
->  	if (!option_mirror && !option_single_branch)
->  		get_fetch_map(refs, tag_refspec, &tail, 0);
-> @@ -840,7 +845,9 @@ int cmd_clone(int argc, const char **argv, const =
-char *prefix)
->  	int err =3D 0, complete_refs_before_fetch =3D 1;
-> =20
->  	struct refspec *refspec;
-> -	const char *fetch_pattern;
-> +	unsigned int refspec_count =3D 1;
-> +	const char **fetch_patterns;
-> +	const struct string_list *config_fetch_patterns;
-> =20
->  	packet_trace_identity("clone");
->  	argc =3D parse_options(argc, argv, prefix, builtin_clone_options,
-> @@ -967,9 +974,21 @@ int cmd_clone(int argc, const char **argv, const=
- char *prefix)
->  	if (option_reference.nr)
->  		setup_reference();
-> =20
-> -	fetch_pattern =3D value.buf;
-> -	refspec =3D parse_fetch_refspec(1, &fetch_pattern);
-> +	strbuf_addf(&key, "remote.%s.fetch", option_origin);
-> +	config_fetch_patterns =3D git_config_get_value_multi(key.buf);
-> +	if (config_fetch_patterns)
-> +		refspec_count =3D 1 + config_fetch_patterns->nr;
-> +	fetch_patterns =3D xcalloc(refspec_count, sizeof(*fetch_patterns));
-> +	fetch_patterns[0] =3D value.buf;
-> +	if (config_fetch_patterns) {
-> +		struct string_list_item *fp;
-> +		unsigned int i =3D 1;
-> +		for_each_string_list_item(fp, config_fetch_patterns)
-> +			fetch_patterns[i++] =3D fp->string;
-> +	}
-> +	refspec =3D parse_fetch_refspec(refspec_count, fetch_patterns);
-> =20
-> +	strbuf_reset(&key);
->  	strbuf_reset(&value);
-> =20
->  	remote =3D remote_get(option_origin);
-> @@ -1013,7 +1032,7 @@ int cmd_clone(int argc, const char **argv, cons=
-t char *prefix)
->  	refs =3D transport_get_remote_refs(transport);
-> =20
->  	if (refs) {
-> -		mapped_refs =3D wanted_peer_refs(refs, refspec);
-> +		mapped_refs =3D wanted_peer_refs(refs, refspec, refspec_count);
->  		/*
->  		 * transport_get_remote_refs() may return refs with null sha-1
->  		 * in mapped_refs (see struct transport->get_refs_list
-> @@ -1094,6 +1113,7 @@ int cmd_clone(int argc, const char **argv, cons=
-t char *prefix)
->  	strbuf_release(&value);
->  	junk_mode =3D JUNK_LEAVE_ALL;
-> =20
-> +	free(fetch_patterns);
->  	free(refspec);
->  	return err;
->  }
-> diff --git a/t/t5708-clone-config.sh b/t/t5708-clone-config.sh
-> index 27d730c0a720..136a8611c7f3 100755
-> --- a/t/t5708-clone-config.sh
-> +++ b/t/t5708-clone-config.sh
-> @@ -37,4 +37,28 @@ test_expect_success 'clone -c config is available =
-during clone' '
->  	test_cmp expect child/file
->  '
-> =20
-> +test_expect_success 'clone -c remote.origin.fetch=3D<refspec> works'=
- '
-> +	rm -rf child &&
-> +	git update-ref refs/grab/it refs/heads/master &&
-> +	git update-ref refs/keep/out refs/heads/master &&
-> +	git clone -c "remote.origin.fetch=3D+refs/grab/*:refs/grab/*" . chi=
-ld &&
-> +	(
-> +		cd child &&
-> +		git for-each-ref --format=3D"%(refname)" refs/grab/ >../actual
-> +	) &&
-> +	echo refs/grab/it >expect &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'git -c remote.origin.fetch=3D<refspec> clone wo=
-rks' '
-> +	rm -rf child &&
-> +	git -c "remote.origin.fetch=3D+refs/grab/*:refs/grab/*" clone . chi=
-ld &&
-> +	(
-> +		cd child &&
-> +		git for-each-ref --format=3D"%(refname)" refs/grab/ >../actual
-> +	) &&
-> +	echo refs/grab/it >expect &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_done
+> int iterator_advance_fn(struct ref_iterator *ref_iterator);
+> void iterator_free_fn(struct ref_iterator *ref_iterator);
+
+A loop over references now looks something like
+
+> struct ref_iterator *iter = each_ref_in_iterator("refs/tags/");
+> while (ref_iterator_advance(iter)) {
+>         /* code using iter->refname, iter->oid, iter->flags */
+> }
+
+I built quite a bit of ref_iterator infrastructure to make it easy to
+plug things together quite flexibly. For example, there is an
+overlay_ref_iterator which takes two other iterators (e.g., one for
+packed and one for loose refs) and overlays them, presenting the result
+via the same iterator interface. But the same overlay_ref_iterator can
+be used to overlay any two other iterators on top of each other.
+
+If you are interested, check out my branch wip/ref-iterators on my
+GitHub repo [4]. That branch is based off of a version of David Turner's
+patch series (i.e., it will have to be rebased at some point). But it
+all works and the early part of the patch series is pretty well polished
+I think. In fact, the later patches are optional; there is no special
+reason to rewrite client code wholesale to use the new reference
+iteration API, because the old API continues to be supported (but is now
+built on the new API).
+
+Feedback is welcome!
+
+Michael
+
+[1]
+https://github.com/git/git/blob/90f7b16b3adc78d4bbabbd426fb69aa78c714f71/refs/files-backend.c#L1665-L1719
+[2]
+https://github.com/git/git/blob/90f7b16b3adc78d4bbabbd426fb69aa78c714f71/refs/files-backend.c#L582-L608
+[3]
+https://github.com/git/git/blob/90f7b16b3adc78d4bbabbd426fb69aa78c714f71/refs/files-backend.c#L610-L680
+[4] https://github.com/mhagger/git
