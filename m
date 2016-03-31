@@ -1,96 +1,125 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCHv3 1/4] notes: don't leak memory in git_config_get_notes_strategy
-Date: Thu, 31 Mar 2016 17:08:30 -0400
-Message-ID: <CAPig+cRPNt1aNdsONXgX0SkgNiYtTS8vCGQzE2u4+vpd-N-Vew@mail.gmail.com>
-References: <1459447446-32260-1-git-send-email-sbeller@google.com>
-	<1459447446-32260-2-git-send-email-sbeller@google.com>
+Subject: Re: [PATCHv2 2/5] submodule--helper clone: simplify path check
+Date: Thu, 31 Mar 2016 17:23:10 -0400
+Message-ID: <CAPig+cSk2kDEs7nCt39LoeBjjmo-+7WH4rNNh0x6ULfeeAwQ_w@mail.gmail.com>
+References: <1459458280-17619-1-git-send-email-sbeller@google.com>
+	<1459458280-17619-3-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Norio Nomura <norio.nomura@gmail.com>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Mar 31 23:08:47 2016
+X-From: git-owner@vger.kernel.org Thu Mar 31 23:23:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aljpe-0001qZ-HU
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 23:08:46 +0200
+	id 1alk3j-0000Mm-NL
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 23:23:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933120AbcCaVIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 17:08:35 -0400
-Received: from mail-vk0-f54.google.com ([209.85.213.54]:34768 "EHLO
-	mail-vk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932274AbcCaVIc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2016 17:08:32 -0400
-Received: by mail-vk0-f54.google.com with SMTP id e185so119220015vkb.1
-        for <git@vger.kernel.org>; Thu, 31 Mar 2016 14:08:31 -0700 (PDT)
+	id S932544AbcCaVXP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 17:23:15 -0400
+Received: from mail-yw0-f171.google.com ([209.85.161.171]:34432 "EHLO
+	mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932366AbcCaVXL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 17:23:11 -0400
+Received: by mail-yw0-f171.google.com with SMTP id h129so114429738ywb.1
+        for <git@vger.kernel.org>; Thu, 31 Mar 2016 14:23:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc;
-        bh=roe3qrI1cXlEFphPg1LJIxaq2SAzlcn9jovrcMhT+jw=;
-        b=nG/Erc6vafuvYWdKwJcLfG8t+UyjF1+uxy5qA0IeNIkyuh4kshjEkgqC9fjTkdOudA
-         ZE5bMqvvnk80hQuaMsXkUrbfdt4CTfhGLlb/6BhQ0PUfaWZNL8bEuyZjyeeC94+si5pP
-         FZkEbXGvxIi1xoK78sjtlVHpVsbXgiOHj0BI9+JsPRG0St8IPGsZ6zqaqBTnq2uv2gTl
-         WTehiEUxFOJV9KOaCuwb4WPek7HBvxu90tvCsZKhJzrlnby6qYDnxOIY4R1pj3Nc29Er
-         CBdPH/YZMFDudw6BZpY7kweLKMuhNdLQ2+J8iCkzvZYd/7NyGwIgu/Zx5A+tCXBatKSR
-         0yeA==
+        bh=S0DUcRZeIIZZAN0F2+DYCdh1Q1BCkDYGRJ6sG3B/jRs=;
+        b=m9dVTGCf0k2LTUK6R9OiXW3D4MfaTgOF1TSm9siWjYtziFwGQmXQmyEqqfDyXT/gus
+         daHHs7/Tj5UAj4HcvMMdETudLz8gwsAtzeBdtr1cxolDy0CeSlg368784hbfkcwdqFmm
+         241bXhjP3RiO51As3RiTVQe1byBd3kR3Im/RddT2k9dvL9F6Qha8J7xMLWnfhTt0FOKl
+         N3jpTfdsl/N7kls/M2kWQWdSDJnnXogbphD+dCo+/XyEF7DKJWQhRnSRoF0yut1QcrUQ
+         w09EiorNzpvBRel7om8wY8I7jiiv21PDWptbReBECVhjIUSG9JsIfXsZ3Yx7kGDOLl9h
+         VJOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=roe3qrI1cXlEFphPg1LJIxaq2SAzlcn9jovrcMhT+jw=;
-        b=F8EwHoPteFvBAgy4dZeolT8DmWXlbH0QNum+mkei1OsuiNusTu+pwfmBcAEzzOK4tm
-         WKLnD752SkwPslwR5HKolUZzuuZ4g6HHTqKjDYewItVhbLYsCIWXIp6/9jgJOyy0yQDa
-         vai35xH1piF8Xp55Xxm6doINB+jXcRfBNutfQsXgFHi0SdfU/3X01CPwrQo++F0LBO+H
-         wzXjGaRcBjH2LOa0UlttCfsYxeVoY5qUlcKS421+nj+7YZtHuP9fkCtu7xS8Xpsj4UyB
-         JVIBDMjdcB5/RgLgs5ZQIW7NiigzqIFgaMGZ7S6dPem86C/FEG2PzRSkw+xUamXs8UXa
-         2pUg==
-X-Gm-Message-State: AD7BkJLme9QUjjXD9k+KxEqziNHBujF0TRI5jW1crU7UJTWQe3iOJ1jCOTbOf7Z0sDr9QieeQyUV7YIV4ZNFEQ==
-X-Received: by 10.159.38.49 with SMTP id 46mr2921468uag.139.1459458510647;
- Thu, 31 Mar 2016 14:08:30 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Thu, 31 Mar 2016 14:08:30 -0700 (PDT)
-In-Reply-To: <1459447446-32260-2-git-send-email-sbeller@google.com>
-X-Google-Sender-Auth: ZMn5Zi3AxISdIC0otlJLSsEgt7k
+        bh=S0DUcRZeIIZZAN0F2+DYCdh1Q1BCkDYGRJ6sG3B/jRs=;
+        b=iGE30z3n1zZ9zjloL30raIion5WPhR6NHUUuKBKskdlsN76YAPkGCW/HxOO3Rr/xWr
+         g0D+2uQtQiDSPqPT7hezUn7m3eEWcFwVlZQ4zr4xWZqxxaitKB43URribJOsNtGkEvxL
+         nqLn7G6bqBvdO9fBlrm77JHi2KK4CvTc33C4q14KsNYtyagLblrL14vKgjwOhEuMSLCH
+         JdlplNgrg5/fbpCZ+qUtbEEhdP4Xm3y8srhxC2zaV+fPcgyV6voXqoZ5v8V0UfOGpybB
+         OrPbH9ZFpcZSnWpyeLuo+NiGlfS9OOBUQYzW9NcCPMHHi4deOhwlmJGC723BsoP5TDUX
+         /Pgg==
+X-Gm-Message-State: AD7BkJK638JpUm0JHaA+eaUA9CNROkI0E0z0cGyw72uu+oLZ9FfSeIGhZu38lD/RffIRGh1pkBuM+ne3CUWk7Q==
+X-Received: by 10.176.6.193 with SMTP id g59mr2983555uag.67.1459459390145;
+ Thu, 31 Mar 2016 14:23:10 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Thu, 31 Mar 2016 14:23:10 -0700 (PDT)
+In-Reply-To: <1459458280-17619-3-git-send-email-sbeller@google.com>
+X-Google-Sender-Auth: AYe-cNzd_krBJ9g-lNmhLpZ_B5o
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290474>
 
-On Thu, Mar 31, 2016 at 2:04 PM, Stefan Beller <sbeller@google.com> wrote:
-> `value` is just a temporary scratchpad, so we need to make sure it doesn't
-> leak. It is xstrdup'd in `git_config_get_string_const` and
-> `parse_notes_merge_strategy` just compares the string against predefined
-> values, so no need to keep it around longer. Instead of using
-> `git_config_get_string_const`, use `git_config_get_value`, which doesn't
-> return a copy.
->
+On Thu, Mar 31, 2016 at 5:04 PM, Stefan Beller <sbeller@google.com> wrote:
+> submodule--helper clone: simplify path check
+
+I don't see anything in the patch which simplifies a path check.
+Instead, this version of the patch is now fixing a potential
+NULL-dereference.
+
+> The calling shell code makes sure that `path` is non null and non empty.
+> Side note: it cannot be null as just three lines before it is passed
+> to safe_create_leading_directories_const which would crash as you feed
+> it null. That means the `else` part is dead code, so remove it.
+
+The above description has very little if anything to do with what this
+patch is addressing considering that this is now a crash-fix patch.
+While it's true that the (current) shell code won't trigger this
+crash, that's not particularly interesting or relevant.
+
+> To make the code futureproof, add a check for path being NULL or empty
+> and report the error accordingly.
+
+Selling this as a future-proofing change is misleading; it's a crash
+fix, plain and simple. I think the entire commit message could be
+collapsed to something like this:
+
+    submodule--helper: fix potential NULL-dereference
+
+    Don't dereference NULL 'path' if it was never assigned. While
+    here also protect against empty --path argument.
+
+You don't even need to mention removal of the conditional in the
+second hunk since, for anyone reading the patch, that's an obvious
+consequence of adding the new check in the first hunk.
+
+The patch itself looks fine.
+
 > Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
-> diff --git a/builtin/notes.c b/builtin/notes.c
-> @@ -746,7 +746,7 @@ static int git_config_get_notes_strategy(const char *key,
->  {
->         const char *value;
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> @@ -194,6 +194,9 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+>         argc = parse_options(argc, argv, prefix, module_clone_options,
+>                              git_submodule_helper_usage, 0);
 >
-> -       if (git_config_get_string_const(key, &value))
-> +       if (git_config_get_value(key, &value))
-
-Hmm, doesn't this introduce a rather severe regression? Unless I'm
-misreading the code (possible), with the original, if 'key' was
-boolean (lacked a value in the config file), then it would complain:
-
-    Missing value for 'floop.blork'
-
-but, with this change, it will dereference NULL and crash.
-
-(My understanding was that Peff's suggestion to use
-git_config_get_value() implied a bit of work beyond the simple textual
-substitution of 'git_config_get_value' for
-'git_config_get_string_const'.)
-
->                 return 1;
->         if (parse_notes_merge_strategy(value, strategy))
->                 git_die_config(key, "unknown notes merge strategy %s", value);
+> +       if (!path || !*path)
+> +               die(_("submodule--helper: unspecified or empty --path"));
+> +
+>         strbuf_addf(&sb, "%s/modules/%s", get_git_dir(), name);
+>         sm_gitdir = strbuf_detach(&sb, NULL);
+>
+> @@ -215,10 +218,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+>         if (safe_create_leading_directories_const(path) < 0)
+>                 die(_("could not create directory '%s'"), path);
+>
+> -       if (path && *path)
+> -               strbuf_addf(&sb, "%s/.git", path);
+> -       else
+> -               strbuf_addstr(&sb, ".git");
+> +       strbuf_addf(&sb, "%s/.git", path);
+>
+>         if (safe_create_leading_directories_const(sb.buf) < 0)
+>                 die(_("could not create leading directories of '%s'"), sb.buf);
+> --
+> 2.5.0.264.g39f00fe
