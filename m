@@ -1,75 +1,107 @@
-From: Andy Lowry <andy.work@nglowry.com>
-Subject: BUG in git diff-index
-Date: Thu, 31 Mar 2016 10:12:07 -0400
-Message-ID: <CAJxkE8SVF_ikHqDCh6eHExq=seitHPVpxW2GmPo40jtqWvz1JQ@mail.gmail.com>
-References: <loom.20160331T143733-916@post.gmane.org>
-	<20160331140515.GA31116@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC PATCH] gpg: add support for gpgsm
+Date: Thu, 31 Mar 2016 10:22:00 -0400
+Message-ID: <20160331142200.GB31116@sigill.intra.peff.net>
+References: <1459432304-35779-1-git-send-email-cmn@dwim.me>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 31 16:12:20 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@dwim.me>
+X-From: git-owner@vger.kernel.org Thu Mar 31 16:22:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aldKd-0006Qj-RY
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 16:12:20 +0200
+	id 1aldUA-0002o4-Tl
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 16:22:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756294AbcCaOMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 10:12:09 -0400
-Received: from mail-vk0-f51.google.com ([209.85.213.51]:36473 "EHLO
-	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753223AbcCaOMI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Mar 2016 10:12:08 -0400
-Received: by mail-vk0-f51.google.com with SMTP id z68so104782748vkg.3
-        for <git@vger.kernel.org>; Thu, 31 Mar 2016 07:12:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nglowry-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=JDGKibDTXfIygWFL3YA8lIWKM883ykp98hCN/nFz9K8=;
-        b=MhxNbdEG3jUMEkGThn6k+hePXi9bsl8NIlI3k93RhtDMwY5cZhktk6CK+/eCpqcaKW
-         zQ2gKY/YOeQJEWdMb2FZ/rISpwjtlq5h3GCavyc2Sb9pIIijt3RrF5sCk5UXewlCty7f
-         ZVu8s1EyXQM2zDRI+P2tvjw2ZI8G1OhmqYmsjYzEzJincgy5quGdjc9TPxlP4745+Wb6
-         VVuRrDUTN61Ii8afbD/+uXD0BwRigyni3y7n9W2/miC6yajWxwNPJU/EPOOa4xDxqB4c
-         Uf+gA9MNhOe2FNHMpAGzOVBLrgqsMT4JPtOhoIfwt/QN/YrB495cqQEs3fmOwgZLVJIy
-         zrfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=JDGKibDTXfIygWFL3YA8lIWKM883ykp98hCN/nFz9K8=;
-        b=JWuQFuZzDt/X3GdI88etT8hnmmbsZo1OFfwktkrrfoyL7BfKHKLzG/fvrTDQHbwico
-         UZNNSHw16m97UQSRBaIrJdnnSkGRF6SzueZCbiWLsRzhsv4oOHQOuIqY4MhW5182XFbe
-         PS/WVL45obSNAbf2fBKFyxpwnG+uOM83LerEFnzAh4KDzJj5Sfc/ec+1BAuKWESLx9P2
-         rBJG2LD3kM3gtvImOl9Klx1+ZueMV58jFERzzcYeUiyL1xM19GetcH1uONlMBHTAXNxA
-         mg1hZE40BviksUS9VUyZYvHfWpEVwdguI/ZIhj4zcQItve38q3qB2gRgFmFIPKOqZc9A
-         TvBg==
-X-Gm-Message-State: AD7BkJJzBYbZmfbE9cvV3pvQkgKHNDHW9+l/P2DZvqihX9x/v43O7AHVPo8PiP5wNcc75xsAhPpI/nb5S9bcrA==
-X-Received: by 10.176.0.175 with SMTP id 44mr3679361uaj.6.1459433527470; Thu,
- 31 Mar 2016 07:12:07 -0700 (PDT)
-Received: by 10.103.86.12 with HTTP; Thu, 31 Mar 2016 07:12:07 -0700 (PDT)
-X-Originating-IP: [69.116.255.234]
-In-Reply-To: <20160331140515.GA31116@sigill.intra.peff.net>
+	id S1757339AbcCaOWF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Mar 2016 10:22:05 -0400
+Received: from cloud.peff.net ([50.56.180.127]:41481 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757274AbcCaOWD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 10:22:03 -0400
+Received: (qmail 19886 invoked by uid 102); 31 Mar 2016 14:22:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 31 Mar 2016 10:22:02 -0400
+Received: (qmail 12910 invoked by uid 107); 31 Mar 2016 14:22:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 31 Mar 2016 10:22:02 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Mar 2016 10:22:00 -0400
+Content-Disposition: inline
+In-Reply-To: <1459432304-35779-1-git-send-email-cmn@dwim.me>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290386>
 
-Thanks, very helpful.
+On Thu, Mar 31, 2016 at 03:51:44PM +0200, Carlos Mart=C3=ADn Nieto wrot=
+e:
 
-What I'm actually after is a tree-to-filesystem comparison, regardless
-of index. I've currently got a "diff" thrown in as a "work-around"
-before "diff-index", but  now I understand it's not a workaround at
-all. If there's a better way to achieve what I'm after, I'd appreciate
-a tip. Otherwise I'll just change the comments explaining why there's
-a "diff" in my script.
+> Detect the gpgsm block header and run this command instead of gpg.
 
-andy
+This part makes sense to me, and is a strict improvement (though
+offhand, I wonder if any other systems use the generic "BEGIN SIGNED
+MESSAGE" header. The obvious option would be PEM from "openssl smime",
+but it is "BEGIN PKCS7").
 
-> &gt; 5. git diff correctly reports no changes &gt; 6. git diff-index now also reports nothing This is working as designed (though I agree it is a little confusing). From "git help diff-index": These commands all compare two sets of things; what is compared differs: git-diff-index  compares the  and the files on the filesystem. git-diff-index --cached  compares the  and the index. git-diff-tree [-r]   [...] compares the trees named by the two arguments. git-diff-files [...] compares the index and the files on the filesystem. Your invocation triggers the first, though it is not a true comparison of what is on the filesystem, but rather a tree/index comparison, taking into account the filesystem values. The all-zeroes sha1 indicates that the index entry is not up to date with what is in the
-  filesystem, but we don't actually read the file contents to refresh the entry. Back when diff-index was written, it was generally assumed that scripts would refresh the index as their first operation, and then proceed to do one or more operations like diff-index, which would rely on the refresh from the first step. Running the porcelain "git diff" does refresh the index, which is why your step 6 shows no diff. If you want a pure tree-to-index comparison, use --cached (this will also be slightly faster, as it does not have to stat the working tree at all). -Peff
+> On the signing side, ask gpgsm if it knows the signing key we're tryi=
+ng
+> to use and fall back to gpg if it does not.
+
+This part looks like we incur an extra fork/exec each time we sign with
+gpg, even if the user doesn't ever want to use gpgsm, or even have it
+installed.
+
+I wonder if there are any hints we can use from the key ident, but I
+suppose not. In the default config, it comes straight from
+$GIT_COMMITTER_*, and is just a name/email.
+
+But maybe we could pull this out to a separate config option, like
+"commit.defaultSignatureType", which could be either "gpg", "gpgsm", or
+"auto" to enable the behavior you have here.  Then savvy users can pick
+the type they plan to use.  We can have a discussion then about whether
+to flip the default from "gpg" to "auto", but I'd vote to leave it at
+gpg unless gpgsm gets a huge amount of traction, and it really is 50/50
+what people would want.
+
+And regardless of the default type for creating signatures, we'd still
+automatically verify signatures from either type.
+
+>  /*
+> + * Try to figure out if the given program contains given the key. Bo=
+th
+> + * gpg and gpgsm have keys in hex format, so we don't necessarily kn=
+ow
+> + * which one to use.
+> + */
+> +static int program_knows_key(const char *program, const char *signin=
+g_key)
+> +{
+> +	struct child_process gpg =3D CHILD_PROCESS_INIT;
+> +	struct strbuf output =3D STRBUF_INIT;
+> +	const char *args[4];
+> +	size_t len;
+> +
+> +	gpg.argv =3D args;
+> +	gpg.in =3D -1;
+> +	gpg.out =3D -1;
+> +	args[0] =3D program;
+> +	args[1] =3D "-K";
+> +	args[2] =3D signing_key;
+> +	args[3] =3D NULL;
+
+I think you'd want to send stderr to /dev/null here, as this is for
+speculatively seeing "does the user even have gpgsm set up?".
+
+> +
+> +	if (start_command(&gpg))
+> +		return error(_("could not run '%s'"), program);
+
+Likewise, most users would start seeing "could not run 'gpgsm'" if they
+do not even have it installed.
+
+-Peff
