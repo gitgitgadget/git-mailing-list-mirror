@@ -1,75 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/4] Add an option to git-format-patch to record base tree info
-Date: Thu, 31 Mar 2016 10:45:02 -0700
-Message-ID: <xmqqpouao82p.fsf@gitster.mtv.corp.google.com>
-References: <1459388776-18066-1-git-send-email-xiaolong.ye@intel.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv2 3/4] bundle: don't leak an fd in case of early return
+Date: Thu, 31 Mar 2016 10:47:43 -0700
+Message-ID: <CAGZ79kYFr8bjEhV9sDzR1KbqAVrO89-DRBN2u+zQBwVYViDP9w@mail.gmail.com>
+References: <1459357518-14913-1-git-send-email-sbeller@google.com>
+	<1459357518-14913-4-git-send-email-sbeller@google.com>
+	<CAPig+cSE5wVNNwiwkYoOXnfDKUO3tBKqUUbqBHPCTA5ibj-kNg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, fengguang.wu@intel.com, ying.huang@intel.com,
-	philip.li@intel.com, julie.du@intel.com
-To: Xiaolong Ye <xiaolong.ye@intel.com>
-X-From: git-owner@vger.kernel.org Thu Mar 31 19:45:19 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Mar 31 19:47:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1algek-0001NZ-JN
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 19:45:18 +0200
+	id 1alghE-0002R7-Lv
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 19:47:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757005AbcCaRpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 13:45:08 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:61282 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756821AbcCaRpG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2016 13:45:06 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C731852272;
-	Thu, 31 Mar 2016 13:45:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EexHl8ifXsZ01xWy7a4gGZK6yvk=; b=Ydmc2E
-	4DBEVerQOW/xpFR2IhDReq7u2gOIwrFxm5zJlnC5KfTsC55T3iRjJAp646Pf53zE
-	Vy7M7OlYpaQlwTeO/R/CiXFayxEMxzNimHBpekqISiz8TyQWGKppn2czqYuvEBRr
-	qB/djint/q2vf9HBF3K3orvjemKP9q5iAes10=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=l7DuLpsKEfhT1UBKh8RN6chJmR/Y0QTE
-	JEsWVueQCPdn6GhjMc6PuAPdYM7V0ep/r6h3RkM5WAScKhUFGJoBPRjFG5WmElsP
-	kMYJVFKlaykehcWvhjagkMG3J9pqiso0YgAj89GQQIjGB/UJ6SM6DBsDZDSXx1LM
-	039qVjoR8Rk=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BD6DA52271;
-	Thu, 31 Mar 2016 13:45:05 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1B3315226E;
-	Thu, 31 Mar 2016 13:45:04 -0400 (EDT)
-In-Reply-To: <1459388776-18066-1-git-send-email-xiaolong.ye@intel.com>
-	(Xiaolong Ye's message of "Thu, 31 Mar 2016 09:46:12 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4CD02C88-F768-11E5-9B16-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1757610AbcCaRrp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 13:47:45 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:34852 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752654AbcCaRro (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 13:47:44 -0400
+Received: by mail-ig0-f171.google.com with SMTP id cl4so131747702igb.0
+        for <git@vger.kernel.org>; Thu, 31 Mar 2016 10:47:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=05oaDAZEN7rkDfFsctICKLpNQsE0db4v7TGyJcgnQjk=;
+        b=TweIQ3grlbLPSiSyCGsKpY6riHgivzx4xbNXl7rHuCo9hJc94ZnpOLhbPeMerbRboz
+         5h47jhjLKwCGlDb+9yEEP1FYBYZBPed4A/+eoHMmJuGZZJ6yJo1FoTx6poQnz7gKDnRq
+         YFjUecG3VBrodzxyg0J0JfP6EMIiUwlmlkBdFa1FveAqd7A3iHfsD3jp53N1U0cvj7YA
+         oqNOftWuTHMV4jbMgaqUVn4WzWa0bGjZKabFhSjenFn1DlU+LMHSFys6TOFV895pUKhs
+         fpNoj4Q37fquucyIeNyb5aKPFVzHpdNnbM0wQO7TrzvbMuAskMuh79npTeCF+ryqmxu7
+         /Edg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=05oaDAZEN7rkDfFsctICKLpNQsE0db4v7TGyJcgnQjk=;
+        b=OVTGVNmt+SP5NCOnX9akrFvbdc+LfUYcxHCGwDmmAt0VNwZMSEHtI3hM99Hkqibm3V
+         bPXcnXmErXAQwEZPqAWIEP0v0hSvdb4LWPIYoTRB6TstguZtisG13nQoFDhhQR3xNZ8Y
+         w4g8//1UOY7E1iM1wFzxjg5+4mg7tadbFkrpgeYBtkkT91N8IuPUWC1LlgPTCV/4vhcC
+         43sHdqbRYejDXvBN3SD+0esrBGsOQSVZhxTADlCSwXZ+BSmNNLdJ+XOOSEIrwGD8hu52
+         jzdF0NcryESnUHHttELf67asGK5VXToQ5G3ptg8rJsWjLmADB0x42kwSnS9nyz4GJA44
+         1CRg==
+X-Gm-Message-State: AD7BkJI2fjTNNACbkAnFWFvQ+Opv9fOwGI+StuQ/Uo4OEicDJNI/NLTnPdaWvtZ2WFLvgu3GqIudktwMxGym+WZJ
+X-Received: by 10.50.13.36 with SMTP id e4mr945180igc.85.1459446463810; Thu,
+ 31 Mar 2016 10:47:43 -0700 (PDT)
+Received: by 10.107.17.27 with HTTP; Thu, 31 Mar 2016 10:47:43 -0700 (PDT)
+In-Reply-To: <CAPig+cSE5wVNNwiwkYoOXnfDKUO3tBKqUUbqBHPCTA5ibj-kNg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290432>
 
-Xiaolong Ye <xiaolong.ye@intel.com> writes:
-
-> V3 mainly improves the implementation according to Junio's comments,
-> Changes vs v2 include:
+On Wed, Mar 30, 2016 at 10:41 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> -       else if (ref_count < 0)
+>> -               return -1;
+>> +       else if (ref_count < 0) {
+>> +               if (!bundle_to_stdout)
+>> +                       close(bundle_fd);
 >
->  - Remove the unnecessary output line "** base-commit-info **".
->  
->  - Improve the traverse logic to handle not only linear topology, but more
->    general cases, it will start revision walk by setting the starting points
->    of the traversal to all elements in the rev list[], and skip the ones in 
->    list[], only grab the patch-ids of prerequisite patches.
+> Why is this close() here considering that it gets closed by the 'err' path?
 
-This looks much more sensible than the previous ones.  I sent a few
-comments on remaining issues separately.
-
-
-Thanks.
+Thanks for pointing out; fixed in a reroll.
