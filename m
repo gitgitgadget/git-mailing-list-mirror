@@ -1,77 +1,96 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: Problem with Integrated Vim Editor on Win 10
-Date: Thu, 31 Mar 2016 08:49:39 +0200
-Message-ID: <1459406979.21328.14.camel@kaarsemaker.net>
-References: <CAAErz9i1=EOemq2qNijRwgY6MNmPJRhV+mFfeD1FZa5uPwvCJw@mail.gmail.com>
-	 <loom.20160331T083046-590@post.gmane.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 2/4] submodule--helper clone: simplify path check
+Date: Thu, 31 Mar 2016 03:31:11 -0400
+Message-ID: <CAPig+cTz3fTyXFM4oPNO3Tv6dP0hN152jf9_JZOrsAZad1+O6Q@mail.gmail.com>
+References: <1459383457-6848-1-git-send-email-sbeller@google.com>
+	<1459383457-6848-3-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: Peter Olsson <peter@olssononline.se>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 31 08:50:41 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	norio.nomura@gmail.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Mar 31 09:31:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alWRE-0004GC-OS
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 08:50:41 +0200
+	id 1alX4W-00008f-WC
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 09:31:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756066AbcCaGu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 02:50:26 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:33566 "EHLO
-	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753402AbcCaGto (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2016 02:49:44 -0400
-Received: by mail-wm0-f45.google.com with SMTP id r72so127420320wmg.0
-        for <git@vger.kernel.org>; Wed, 30 Mar 2016 23:49:44 -0700 (PDT)
+	id S1751210AbcCaHbN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 03:31:13 -0400
+Received: from mail-vk0-f67.google.com ([209.85.213.67]:34879 "EHLO
+	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750941AbcCaHbM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 03:31:12 -0400
+Received: by mail-vk0-f67.google.com with SMTP id e185so10223896vkb.2
+        for <git@vger.kernel.org>; Thu, 31 Mar 2016 00:31:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=xVx4gH+SMD7vh1yxxMulJOPy2W/vAzviB9grUSxivAE=;
-        b=bcBwoUWDddCiHtRRBCtHrNevpMcE9Qh3U70s3HrcPNEwwnWiB1mv9yYFqwP+YHKmF6
-         0yDL8RSVS9AprNdIaWgOp3LdwpclXlWDHvbgGyl9+Opc0tAM9xg/NBwpJTByz/YJzVL2
-         eUTHufTv/XzGiHyeKNYOrZL84hnJzn5BspRiXklHTT9uv+uuufJ7PNd4HER6kaI4sLIQ
-         lQSvK1S0NVlt14PRlNQ6w3CaK6xr8Lmq2nwj3hEAAPECcEKNwxtFCHnKWoODF1x7jj31
-         4IJFL77qb0zFBiOYfAgrnbkNZADbWiifbgfBeW+TFv1nMuhwsvHjbFxo2o9SnnZpQr2l
-         J/OA==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=/q2f86TnCm79qW6Usk6IozyRbg4Wmh9HkdXxyZw8sLw=;
+        b=ftOFN16yz3BQf2BsMTt2MtjnIJkTeEat5Zq1Pm5I4sXO/yEn47IYFuOuIJMjTEajwl
+         UaGEOxYUrMalUL6Zxsv2S3jyufUBrUBRCB/b1EDUT1ig1z+P7wFzwG+R/vuYjN/PENlT
+         vHJ8YucIoeSqrbne9zHtwCcHV5R7OtKAAIJ9IiPXTQdUjP2xpH6l5XLtvYv5o6CGcMUW
+         6Yj1DBaL/PHYbtTM6gBWGD248GnXScxeRgiDZatrOn2pvkqHO1PWaN/xnpZmOl84tqZY
+         uG4HlbpyxnYO/HaCnm+W+mNb2Nl+ucW6W8jSEN/j3KXGhMbBdvIgjBSFhVDLycfsvDTW
+         sj0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=xVx4gH+SMD7vh1yxxMulJOPy2W/vAzviB9grUSxivAE=;
-        b=mFdqiL/jlX2Np0AJH7DJ7vJD7ENov6em2pLfwB86OwprKxjZbAlNsWvuDkvAV+6fnV
-         knDrkmOB1gup7wBY1QccQ3qM63gm2c1KbCtHjaapBTuoFskag54YJbG7CdviNemLhkD3
-         xwcMmUYlW+0eZDGGH8ijCHDN3ocRguw8dxaQQpnOCzP1RygsbwTai6xxK+DXBdoM/NEp
-         mlsY5frzD2MXwEjRXqDQgXUdQa7XlHQAAM+WdYP6qjwj/hQi6iK6eU3TuncUR+rKXIWM
-         CPYR1PGCBgkTIvJnqf8UGsqmAeOXIta43+eY1BhWqNg+QObkIOTNdc0SeD7eatUb+qU4
-         u7vg==
-X-Gm-Message-State: AD7BkJKN/K8XxBctjPuakJu0HE5PmGTe7E98s4xvr+NQzdrIl7vVpoIRvMmfY3QoJ5cjaA==
-X-Received: by 10.194.238.34 with SMTP id vh2mr15095965wjc.157.1459406983375;
-        Wed, 30 Mar 2016 23:49:43 -0700 (PDT)
-Received: from seahawk.local (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id yn10sm5394055wjc.45.2016.03.30.23.49.42
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 30 Mar 2016 23:49:42 -0700 (PDT)
-In-Reply-To: <loom.20160331T083046-590@post.gmane.org>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=/q2f86TnCm79qW6Usk6IozyRbg4Wmh9HkdXxyZw8sLw=;
+        b=eBEBHJHsQoNgX309gPI2NknAi2bapVd61BxblCxDW/LhmYmIlLebEOQRlVOkl8OJGX
+         QT6M6I1y1w9nGGs+CqrDfMRPQOjG2eHgqSs5nP4jLRlL6OdnkGaVZMAFgfW1vRGg2rtj
+         C87SdQ0wafFWnHaB5Vdx2krG61PtBnXMJWRb6Ysl30dCSS3bmmKdTs5ZHJ84VUFdnJg6
+         p/60ANcmQos1T1DA90VU6IDnOa6xkwYXqnwMLlzheHbzAkY95iSb0y8R8MB6OObUMnB5
+         JGsw4WbWCMCcHVMpQQacpmeCfgnUFFbnx2jbK8FemjCkO6LzKgutu0kvHtg4LToZrhw5
+         7Meg==
+X-Gm-Message-State: AD7BkJJp39AWmFaL88+pB57BmRHZJbAG0jJq0Dlm8FRRJt8/WKLJvltIaY80kf5/ZADIscPok7qtWGC9wMMKVw==
+X-Received: by 10.176.1.54 with SMTP id 51mr3921288uak.123.1459409471750; Thu,
+ 31 Mar 2016 00:31:11 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Thu, 31 Mar 2016 00:31:11 -0700 (PDT)
+In-Reply-To: <1459383457-6848-3-git-send-email-sbeller@google.com>
+X-Google-Sender-Auth: 8XrlK328padH31vcXWeFVA6INng
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290375>
 
-On do, 2016-03-31 at 06:33 +0000, Peter Olsson wrote:
-> I'm not sure where we should report this?
+On Wed, Mar 30, 2016 at 8:17 PM, Stefan Beller <sbeller@google.com> wrote:
+> The calling shell code makes sure that `path` is non null and non empty.
+> (side note: it cannot be null as just three lines before it is passed
+> to safe_create_leading_directories_const which would crash as you feed
+> it null).
 
-While the git-for-windows maintainer does read this list, git-for
--windows specific issues should be reported in its issue tracker on
-GitHub.
+I'm confused by this. So, you're saying that it's okay (and desirable)
+for git-submodule--helper to segfault when the user does this:
 
-It looks like this issue has been reported already:
-https://github.com/git-for-windows/git/issues/711
+    % git submodule--helper clone
+    Segmentation fault: 11
 
--- 
-Dennis Kaarsemaker
-http://www.kaarsemaker.net
+rather than, say, printing a useful error message, such as:
+
+    submodule--helper: missing or empty --path
+
+?
+
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> @@ -215,10 +215,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+>         if (safe_create_leading_directories_const(path) < 0)
+>                 die(_("could not create directory '%s'"), path);
+>
+> -       if (path && *path)
+> -               strbuf_addf(&sb, "%s/.git", path);
+> -       else
+> -               strbuf_addstr(&sb, ".git");
+> +       strbuf_addf(&sb, "%s/.git", path);
+>
+>         if (safe_create_leading_directories_const(sb.buf) < 0)
+>                 die(_("could not create leading directories of '%s'"), sb.buf);
+> --
