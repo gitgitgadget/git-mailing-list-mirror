@@ -1,238 +1,119 @@
-From: =?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@dwim.me>
-Subject: [RFC PATCH] gpg: add support for gpgsm
-Date: Thu, 31 Mar 2016 15:51:44 +0200
-Message-ID: <1459432304-35779-1-git-send-email-cmn@dwim.me>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: stanislav@assembla.com
+Subject: [PATCH v4] git-send-pack: fix --all option when used with directory
+Date: Thu, 31 Mar 2016 16:55:09 +0300
+Message-ID: <1459432509-12934-1-git-send-email-stanislav@assembla.com>
+Cc: peff@peff.net, dborowitz@google.com, gitster@pobox.com,
+	Stanislav Kolotinskiy <stanislav@assembla.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 31 15:51:58 2016
+X-From: git-owner@vger.kernel.org Thu Mar 31 15:55:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ald0v-0006jx-PO
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 15:51:58 +0200
+	id 1ald4Q-0008Ag-QH
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 15:55:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756643AbcCaNvs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Mar 2016 09:51:48 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:41767 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755383AbcCaNvq (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Mar 2016 09:51:46 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-	by mailout.nyi.internal (Postfix) with ESMTP id A8BD722192
-	for <git@vger.kernel.org>; Thu, 31 Mar 2016 09:51:45 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute2.internal (MEProxy); Thu, 31 Mar 2016 09:51:45 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=dwim.me; h=
-	content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=SDv
-	Mql1UhDnI/YXD31G4nXaa338=; b=l4iwbNOYUiwjJFpCS1mxSHMfvR65QxU0sL+
-	qDjtIqRXL+onMFoUJJmh6DN0pH5CJkb0tt8QckSpvK48HZFbvIUoSCUThuI6E5qu
-	JrFB6qxtTBg5uvEZjXmtGyXtiOOqyoVcLquTg7rUqOWi37vQ8uk38pFibvQ2PLwE
-	QHn2ZuLc=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:message-id:mime-version:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=SDvMql1UhDnI/YXD31G4nXaa338=; b=F3lnn
-	ftcV/RIvlxtpTs4jBfYOaiXuU9/1l4fWBk5IifZtv2nAXRzlHDI9SY9n7ILRJFge
-	2IqfIem/SGBqz3aCoVJrNUsfhi1KJQ1/W1ewA5udjPxFuziUyPxlWOpT+tOupy4T
-	EXh8Drh4ZYesOOdWrO5Lu2uD7ra3EHFaBf6RwE=
-X-Sasl-enc: gzL/a1YuD0K/DV9sULNhCFBXnPkcaMSILGT4cnCiZBSL 1459432305
-Received: from cmartin.tk (ip5b40609c.dynamic.kabel-deutschland.de [91.64.96.156])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 17F796800A2
-	for <git@vger.kernel.org>; Thu, 31 Mar 2016 09:51:44 -0400 (EDT)
-Received: (nullmailer pid 35822 invoked by uid 1000);
-	Thu, 31 Mar 2016 13:51:44 -0000
-X-Mailer: git-send-email 2.8.0.rc3
+	id S1754085AbcCaNzb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 09:55:31 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:33429 "EHLO
+	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751654AbcCaNza (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 09:55:30 -0400
+Received: by mail-wm0-f41.google.com with SMTP id f198so2315280wme.0
+        for <git@vger.kernel.org>; Thu, 31 Mar 2016 06:55:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=assembla-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=It948F/BDl6+bPY+Fg9s7lQZDD9rA6kD0LMparF6KA0=;
+        b=I7Mw5/rTDlXUGSdE1du0+zSyytnpH8BM6uDr2ZWPe0jLDzWwtV1YfwMY1HxI8BINvk
+         7uQIjvQgFap1GfFI7uCf1D3QfX4E8A2LmPKYntIerJdWeZ2+cXv2pyLGrXJnoNWuzmFT
+         +SrHV+1Z9e6DQcCUkDzug7ZHkrN3qPGvN3MVYWXXHG5ZYyKC0Z8lxAe3KlJg8s33V6Ka
+         BGC/+QEsgJiCJCwcAwcB5mTnlfjJ3ZPbaWeOFjkwC+g99H0rRG51L8QxmptwS77AJwfq
+         3AH+Kaoihe6f7/zeueehBrWFv41Tw+kjQzGsYuBPAYPrg/D9AqG2RnMZaeLicp7LQPQv
+         69oQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=It948F/BDl6+bPY+Fg9s7lQZDD9rA6kD0LMparF6KA0=;
+        b=blzSVtusMiLv18j8xgIkj0mDfv1LxCElqJw/Y28Ni5sFHNCOD0K397c6IRu59ItiwV
+         Zy+6tVHTBScC2X/BieGJJlL/rUJzE/8fUwMCYWdi81D7rdByTYtot4vxdP7VdJlN5ogU
+         hu7DtWs74nbSpQP/maJhTXRW3qJD4IzdDfmLjDkfu9dp0DslZG036AFKru1JTY14DeCu
+         9mZ+dC5mT2MjvUDR4HZbCIsvH/NzIpDOEPNVahfCVMle367MUm/SJIiAhWkW072zvQPB
+         u2qMqHvBfQ4HjxULBsTPRGfKp4Pv2HgcldzcjC5iZLbjeKiyH8XYGHNyfY8GoygNBKHa
+         3zsQ==
+X-Gm-Message-State: AD7BkJKUlnDehnCf7YuB7txDbmiDdFWOEnEfvgHNVy+caOLvS/xrdAoOIlnySS+6smJeOQ==
+X-Received: by 10.194.184.139 with SMTP id eu11mr12448552wjc.154.1459432528703;
+        Thu, 31 Mar 2016 06:55:28 -0700 (PDT)
+Received: from localhost.localdomain ([217.26.172.139])
+        by smtp.gmail.com with ESMTPSA id 188sm14244907wml.19.2016.03.31.06.55.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 31 Mar 2016 06:55:27 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290382>
 
-Detect the gpgsm block header and run this command instead of gpg.
-On the signing side, ask gpgsm if it knows the signing key we're trying
-to use and fall back to gpg if it does not.
+From: Stanislav Kolotinskiy <stanislav@assembla.com>
 
-This lets the user more easily combine signing and verifying X509 and
-PGP signatures without having to choose a default for a particular
-repository that may need to be occasionally overridden.
+When using git send-pack with --all option
+and a target repository specification ([<host>:]<directory>),
+usage message is being displayed instead of performing
+the actual transmission.
 
-Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@dwim.me>
+The reason for this issue is that destination and refspecs are being set
+in the same conditional and are populated from argv. When a target
+repository is passed, refspecs is being populated as well with its value.
+This makes the check for refspecs not being NULL to always return true,
+which, in conjunction with the check for --all or --mirror options,
+is always true as well and returns usage message instead of proceeding.
 
+This ensures that send-pack will stop execution only when --all
+or --mirror switch is used in conjunction with any refspecs passed.
+
+Signed-off-by: Stanislav Kolotinskiy <stanislav@assembla.com>
 ---
+ builtin/send-pack.c  |  2 +-
+ t/t5400-send-pack.sh | 12 ++++++++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-Out there in the so-called "real world", companies like using X509 to
-sign things. Currently you can set 'gpg.program' to gpgsm to get
-gpg-compatible verification, but if you're changing it to swap between
-PGP and X509, it's an extra variable to keep in mind when working with
-signed commits and tags.
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index f6e5d64..19f0577 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -225,7 +225,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+ 	 * --all and --mirror are incompatible; neither makes sense
+ 	 * with any refspecs.
+ 	 */
+-	if ((refspecs && (send_all || args.send_mirror)) ||
++	if ((nr_refspecs > 0 && (send_all || args.send_mirror)) ||
+ 	    (send_all && args.send_mirror))
+ 		usage_with_options(send_pack_usage, options);
 
-While this does let us sign and verify, the probing is a bit
-awkward. gpgsm returns 0 regardless of whether it found the key, and if
-you pass in an id for which you have the public key, it'll still output=
- the
-filename as a heading, so we would consider it known. I'm not aware of =
-a
-way around that which doesn't involve parsing the output, which would
-probably be even more fragile.
+diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
+index 04cea97..305ca7a 100755
+--- a/t/t5400-send-pack.sh
++++ b/t/t5400-send-pack.sh
+@@ -128,6 +128,18 @@ test_expect_success 'denyNonFastforwards trumps --force' '
+ 	test "$victim_orig" = "$victim_head"
+ '
 
- Documentation/config.txt | 11 ++++++++
- gpg-interface.c          | 65 ++++++++++++++++++++++++++++++++++++++++=
-++++++--
- 2 files changed, 74 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 2cd6bdd..40f3912 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1484,6 +1484,17 @@ gpg.program::
- 	signed, and the program is expected to send the result to its
- 	standard output.
-=20
-+gpgsm.program::
-+	Use this custom program instead of "gpgsm" found on $PATH when
-+	making or verifying a gpsm signature. The program must support the
-+	same command-line interface as GPG, namely, to verify a detached
-+	signature, "gpgsm --verify $file - <$signature" is run, and the
-+	program is expected to signal a good signature by exiting with
-+	code 0, and to generate an ASCII-armored detached signature, the
-+	standard input of "gpgsm -bsau $key" is fed with the contents to be
-+	signed, and the program is expected to send the result to its
-+	standard output.
++test_expect_success 'send-pack --all sends all branches' '
++	# make sure we have at least 2 branches with different
++	# values, just to be thorough
++	git branch other-branch HEAD^ &&
 +
- gui.commitMsgWidth::
- 	Defines how wide the commit message window is in the
- 	linkgit:git-gui[1]. "75" is the default.
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 3dc2fe3..194a6c6 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -6,10 +6,13 @@
-=20
- static char *configured_signing_key;
- static const char *gpg_program =3D "gpg";
-+static const char *gpgsm_program =3D "gpgsm";
-=20
- #define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
- #define PGP_MESSAGE "-----BEGIN PGP MESSAGE-----"
-=20
-+#define GPGSM_MESSAGE "-----BEGIN SIGNED MESSAGE-----"
++	git init --bare all.git &&
++	git send-pack --all all.git &&
++	git for-each-ref refs/heads >expect &&
++	git -C all.git for-each-ref refs/heads >actual &&
++	test_cmp expect actual
++'
 +
- void signature_check_clear(struct signature_check *sigc)
- {
- 	free(sigc->payload);
-@@ -24,6 +27,20 @@ void signature_check_clear(struct signature_check *s=
-igc)
- 	sigc->key =3D NULL;
- }
-=20
-+/*
-+ * Guess which program this signature was made with based on the block=
- start.
-+ * Right now we just detect a gpgsm block and fall back to gpg otherwi=
-se.
-+ */
-+static const char *guess_program(const char *message, size_t message_l=
-en)
-+{
-+	size_t gpgsm_len =3D strlen(GPGSM_MESSAGE);
-+
-+	if (message_len > gpgsm_len && !strncmp(message, GPGSM_MESSAGE, gpgsm=
-_len))
-+		return gpgsm_program;
-+
-+	return gpg_program;
-+}
-+
- static struct {
- 	char result;
- 	const char *check;
-@@ -131,6 +148,11 @@ int git_gpg_config(const char *var, const char *va=
-lue, void *cb)
- 			return config_error_nonbool(var);
- 		gpg_program =3D xstrdup(value);
- 	}
-+	if (!strcmp(var, "gpgsm.program")) {
-+		if (!value)
-+			return config_error_nonbool(var);
-+		gpgsm_program =3D xstrdup(value);
-+	}
- 	return 0;
- }
-=20
-@@ -142,6 +164,41 @@ const char *get_signing_key(void)
- }
-=20
- /*
-+ * Try to figure out if the given program contains given the key. Both
-+ * gpg and gpgsm have keys in hex format, so we don't necessarily know
-+ * which one to use.
-+ */
-+static int program_knows_key(const char *program, const char *signing_=
-key)
-+{
-+	struct child_process gpg =3D CHILD_PROCESS_INIT;
-+	struct strbuf output =3D STRBUF_INIT;
-+	const char *args[4];
-+	size_t len;
-+
-+	gpg.argv =3D args;
-+	gpg.in =3D -1;
-+	gpg.out =3D -1;
-+	args[0] =3D program;
-+	args[1] =3D "-K";
-+	args[2] =3D signing_key;
-+	args[3] =3D NULL;
-+
-+	if (start_command(&gpg))
-+		return error(_("could not run '%s'"), program);
-+
-+	close(gpg.in);
-+	len =3D strbuf_read(&output, gpg.out, 1024);
-+	close(gpg.out);
-+
-+	/* If the command exits with an error, consider it as not found */
-+	if (finish_command(&gpg))
-+		return 0;
-+
-+	/* If the command showed the key we wanted, use it. */
-+	return !!len;
-+}
-+
-+/*
-  * Create a detached signature for the contents of "buffer" and append
-  * it after "signature"; "buffer" and "signature" can be the same
-  * strbuf instance, which would cause the detached signature appended
-@@ -154,10 +211,14 @@ int sign_buffer(struct strbuf *buffer, struct str=
-buf *signature, const char *sig
- 	ssize_t len;
- 	size_t i, j, bottom;
-=20
-+	if (program_knows_key(gpgsm_program, signing_key))
-+		args[0] =3D gpgsm_program;
-+	else
-+		args[0] =3D gpg_program;
-+
- 	gpg.argv =3D args;
- 	gpg.in =3D -1;
- 	gpg.out =3D -1;
--	args[0] =3D gpg_program;
- 	args[1] =3D "-bsau";
- 	args[2] =3D signing_key;
- 	args[3] =3D NULL;
-@@ -216,7 +277,7 @@ int verify_signed_buffer(const char *payload, size_=
-t payload_size,
- 	struct strbuf buf =3D STRBUF_INIT;
- 	struct strbuf *pbuf =3D &buf;
-=20
--	args_gpg[0] =3D gpg_program;
-+	args_gpg[0] =3D guess_program(signature, signature_size);
- 	fd =3D git_mkstemp(path, PATH_MAX, ".git_vtag_tmpXXXXXX");
- 	if (fd < 0)
- 		return error(_("could not create temporary file '%s': %s"),
---=20
-2.8.0.rc3
+ test_expect_success 'push --all excludes remote-tracking hierarchy' '
+ 	mkdir parent &&
+ 	(
+--
+2.8.0
