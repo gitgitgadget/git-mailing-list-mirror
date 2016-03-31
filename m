@@ -1,144 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v11 3/4] t7507-commit-verbose: improve test coverage by testing number of diffs
-Date: Thu, 31 Mar 2016 11:23:45 -0700
-Message-ID: <xmqqa8leo6a6.fsf@gitster.mtv.corp.google.com>
-References: <01020153cd2340f8-4665cd5f-cd5c-41ab-a162-20acc43ca52e-000000@eu-west-1.amazonses.com>
-	<01020153cd2341ef-eed17644-85ee-4d1d-8051-b5d56bd9ae52-000000@eu-west-1.amazonses.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH v11 1/4] test-parse-options: print quiet as integer
+Date: Fri, 1 Apr 2016 00:10:35 +0530
+Message-ID: <CAFZEwPMyVftmW8ZCCyFMUMOegqimpFxjLrHfjMKc88w+HDvG+A@mail.gmail.com>
+References: <01020153b478cf07-758c7f14-33a1-4a67-9bc9-4688de3d6742-000000@eu-west-1.amazonses.com>
+	<01020153cd2340f8-4665cd5f-cd5c-41ab-a162-20acc43ca52e-000000@eu-west-1.amazonses.com>
+	<xmqqegaqo6gg.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 31 20:23:59 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 31 20:40:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alhG7-0001V3-R8
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 20:23:56 +0200
+	id 1alhWL-0000m0-Du
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 20:40:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757248AbcCaSXu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 14:23:50 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:60272 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757203AbcCaSXt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2016 14:23:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A7CDB52B96;
-	Thu, 31 Mar 2016 14:23:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vEAAN2xxVsCOCSrRQQkQDB/Ow3Q=; b=i5gYYj
-	B6UUyQYVJJ/R+6nCLjFVfIoJYyYMYFgsBDMwkgESPQwGbKXlHNWXFGv7yYSYZw0O
-	v6pzyVdPQYaujADgRQACH5ki9aQMeOJuJRO6cVjd4OzgrAsuM1ARG7UPdXoyyC4L
-	sXPNL+DTcCA/JqooDJaP4h2mjFlO2i29s4sKw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xH50uo9pfJi7zGnDIMuoFNTb5lJD2Vcj
-	P5TMSqRTfq1OGi0PdjkCUXOwGEFvpopt+5GqD+j2XaWHIox3/xZp1SAiagUUXeX0
-	nvIa2FkwaBIBfRQtSpeAC+hIECA31Jw/ciMVh5f530FUyRGaCedwGoqdcK4ND0vY
-	TYij8JJ1xGQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9EE7252B95;
-	Thu, 31 Mar 2016 14:23:47 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 159F352B94;
-	Thu, 31 Mar 2016 14:23:47 -0400 (EDT)
-In-Reply-To: <01020153cd2341ef-eed17644-85ee-4d1d-8051-b5d56bd9ae52-000000@eu-west-1.amazonses.com>
-	(Pranit Bauva's message of "Thu, 31 Mar 2016 14:45:53 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B55E1788-F76D-11E5-BD9C-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1756605AbcCaSkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 14:40:37 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:33850 "EHLO
+	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751703AbcCaSkg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 14:40:36 -0400
+Received: by mail-yw0-f194.google.com with SMTP id f6so12809180ywa.1
+        for <git@vger.kernel.org>; Thu, 31 Mar 2016 11:40:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=+c6Y0G9VPidOW0ViyeQRKHzs7UBBWuHWB0kfSmNdjNY=;
+        b=D+rzcJZ/qb7PQGRvcfY9MxWwEfCFfCNsqW6FIiEcqV0uZoafmykCD5M2afyYdlHtRA
+         Ww42gTfxiX1/VS05k0ColINMl1pvv277I4h3rsUJC3chiNRpxCz+C7UfnIa7ua6Yi9zQ
+         bY+7dQmfPZRZ18BmtNo7Zzw57Aa0Y3EoS6WzleQfzYZNljTnn1DhN1Q6vucGjSanjVpn
+         7aOGpR8202ACDZb5t4gpPgYr4nn2Z6CMlfEuSqTFOLHxU+M09tB2l/VZqQwS3+g0UgjZ
+         Ad0o6VvGlNU3IDsd5ejGyXAnsRiz3DOD0yIgq7fi9Cr8FJ+8XzizHH1O3MJD3Yf1y752
+         /uqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=+c6Y0G9VPidOW0ViyeQRKHzs7UBBWuHWB0kfSmNdjNY=;
+        b=kNUf9PjrYEMrOuo7xOMxDIETizzOghZ3M2ArrEfT1ku0WtUFffUV6tIzBExvVCT3nF
+         uIdbyJIh1jMCJmGHbCqjN3qjuo0kEnumkobrCG51xCJvfEXTSQIb+wUU3NQjcOs0eihB
+         2byN8Ds4+CliYD0oYR0SrqwZOGGgUJ1+7xMg5PG+PJz3O3bjjjI6Lxe0/JwyV6aWZtCz
+         68IciIhSfKyO6gWt4V/VXF8dLS7XKd6kN1eaR4sZeOAnv/r1SLLBbMzEmDMGLDvIzp/X
+         3z60HiLA8TMOBatpL77gM9xALFNbATw/6tdREYC++CvDLQ6Krf5yqqwfSqEtPCOg27vt
+         eYhw==
+X-Gm-Message-State: AD7BkJK4yDy/XWUBc3JwV0Ei8YaNRE+ANDQc2pHxPO/iBKE3/Ua06DPC/KKET99cun8snwFOy656Xf0BU8vp8A==
+X-Received: by 10.129.91.6 with SMTP id p6mr8306425ywb.325.1459449635842; Thu,
+ 31 Mar 2016 11:40:35 -0700 (PDT)
+Received: by 10.13.203.137 with HTTP; Thu, 31 Mar 2016 11:40:35 -0700 (PDT)
+In-Reply-To: <xmqqegaqo6gg.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290441>
 
-Pranit Bauva <pranit.bauva@gmail.com> writes:
+On Thu, Mar 31, 2016 at 11:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Pranit Bauva <pranit.bauva@gmail.com> writes:
+>
+>> Current implementation of parse-options.c treats OPT__QUIET() as integer
+>> and not boolean and thus it is more appropriate to print it as integer
+>> to avoid confusion.
+>>
+>> While at it, fix some style issues.
+>
+> I counted the changes in t0040 and you have _more_ style fixes than
+> the real change.  That is not "while at it".
+>
+> While I welcome the style fix, it is better done as a preparatory
+> clean-up step before the real change.
 
-> Make the fake "editor" store output of grep in a file so that we can
-> see how many diffs were contained in the message and use them in
-> individual tests where ever it is required. Also use write_script()
-> to create the fake "editor".
->
-> A subsequent commit will introduce scenarios where it is important to be
-> able to exactly determine how many diffs were present.
->
-> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
->
-> Previous version of this patch:
->  - [v10]: $gmane/288820
->
-> Changes this version wrt previous one:
-> I decided to include no of diffs in every test and rewrote the commit
-> message so as to sell this idea. This was given as an option to me by
-> Eric and the other option being to drop unnecessary testing of lines
-> where it isn't required. Also this patch uses a suggestion given by Eric
-> to make the "editor" look more clean as compared to the editor in my
-> previous version.
-> ---
+Okay. I thought this was a minor change so I squashed it together. I
+will separate it though.
 
-OK, by always exiting 0 from the editor, you do not interfere with
-the "git commit" that invoked it, and you inspect the editor's
-finding after "git commit" returns.  The approach taken by this
-patch looks a lot more sensible than the previous one.
+> Missing sign-off.
 
-You'd need the three-dash right before "Previous version of..."
-line, though.
+Will include this
 
->  t/t7507-commit-verbose.sh | 16 +++++++++-------
->  1 file changed, 9 insertions(+), 7 deletions(-)
+>> -cat > typo.err << EOF
+>> +cat >typo.err <<EOF
+>>  error: did you mean \`--boolean\` (with two dashes ?)
+>>  EOF
 >
-> diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
-> index 2ddf28c..0f28a86 100755
-> --- a/t/t7507-commit-verbose.sh
-> +++ b/t/t7507-commit-verbose.sh
-> @@ -3,11 +3,10 @@
->  test_description='verbose commit template'
->  . ./test-lib.sh
->  
-> -cat >check-for-diff <<EOF
-> -#!$SHELL_PATH
-> -exec grep '^diff --git' "\$1"
-> +write_script "check-for-diff" <<\EOF &&
-> +grep '^diff --git' "$1" >out
-> +exit 0
->  EOF
-> -chmod +x check-for-diff
->  test_set_editor "$PWD/check-for-diff"
->  
->  cat >message <<'EOF'
-> @@ -23,7 +22,8 @@ test_expect_success 'setup' '
->  '
->  
->  test_expect_success 'initial commit shows verbose diff' '
-> -	git commit --amend -v
-> +	git commit --amend -v &&
-> +	test_line_count = 1 out
->  '
->  
->  test_expect_success 'second commit' '
-> @@ -39,13 +39,15 @@ check_message() {
->  
->  test_expect_success 'verbose diff is stripped out' '
->  	git commit --amend -v &&
-> -	check_message message
-> +	check_message message &&
-> +	test_line_count = 1 out
->  '
->  
->  test_expect_success 'verbose diff is stripped out (mnemonicprefix)' '
->  	git config diff.mnemonicprefix true &&
->  	git commit --amend -v &&
-> -	check_message message
-> +	check_message message &&
-> +	test_line_count = 1 out
->  '
->  
->  cat >diff <<'EOF'
+> If your "style cleanup" patch were separate, you could fix this (and
+> other that have backslash escape inside the here-document) further
+> to something like this:
 >
-> --
-> https://github.com/git/git/pull/218
+>         cat >type.err <<\EOF
+>         error: did you mean `--boolean` (with two dashes ?)
+>         EOF
+>
+> Thanks.
+
+Will include this.
