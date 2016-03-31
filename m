@@ -1,94 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 1/4] notes: don't leak memory in git_config_get_notes_strategy
-Date: Thu, 31 Mar 2016 15:54:37 -0700
-Message-ID: <xmqq7fgil0lu.fsf@gitster.mtv.corp.google.com>
-References: <1459447446-32260-1-git-send-email-sbeller@google.com>
-	<1459447446-32260-2-git-send-email-sbeller@google.com>
-	<CAPig+cRPNt1aNdsONXgX0SkgNiYtTS8vCGQzE2u4+vpd-N-Vew@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4] git-send-pack: fix --all option when used with directory
+Date: Thu, 31 Mar 2016 18:55:22 -0400
+Message-ID: <CAPig+cS-Yk7Ey8_+waG7HqG-9BijrQNrtP+0szcgbmVycv_qvQ@mail.gmail.com>
+References: <1459432509-12934-1-git-send-email-stanislav@assembla.com>
+	<xmqq1t6qmlxk.fsf@gitster.mtv.corp.google.com>
+	<xmqqoa9ul30c.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Apr 01 00:54:47 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	dborowitz@google.com, stanislav@assembla.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 01 00:55:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1allUE-0007Gz-08
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 00:54:46 +0200
+	id 1allUt-0007XY-FX
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 00:55:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932237AbcCaWyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 18:54:41 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:63645 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932204AbcCaWyl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2016 18:54:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AC2B85285C;
-	Thu, 31 Mar 2016 18:54:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7uhFB3Ptq8L6PTQ72Mxm3rrxMOU=; b=C81GIn
-	vWZR7KrSwGpEtyPd2lylXlCWaRlySwsaktnZC4xfm3EwFOo/hJibaPFW3rzcQgfa
-	qxzex8voG0kM++2bXD9E42wkHuap8koMATSVUnTksSun1cQsCvGRCIyrQEDMDbyc
-	s2GKoMpJRbndn8jNaGUMJkkoMONiZbeYPtMag=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uvI48oA0c9iQY7DNwp4wjJwGXZAguWRj
-	nBsize5RfH7Pts/gHG8J0ZaeHG335c8pVgJZLAELT8nOXGwXivuCJ2CHVpAEBlVI
-	GDbOsXhcNs4LCaSI56p6Q03xxsJZl8awyDmeERQYHrtAWzEeSAtbb91Ph+IRwBpb
-	D0ikXxpH4Ag=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A2BF15285B;
-	Thu, 31 Mar 2016 18:54:39 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 217C55285A;
-	Thu, 31 Mar 2016 18:54:39 -0400 (EDT)
-In-Reply-To: <CAPig+cRPNt1aNdsONXgX0SkgNiYtTS8vCGQzE2u4+vpd-N-Vew@mail.gmail.com>
-	(Eric Sunshine's message of "Thu, 31 Mar 2016 17:08:30 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8C5838CA-F793-11E5-A6BD-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1754351AbcCaWzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 18:55:23 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:36266 "EHLO
+	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752572AbcCaWzW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 18:55:22 -0400
+Received: by mail-yw0-f196.google.com with SMTP id p65so13950374ywb.3
+        for <git@vger.kernel.org>; Thu, 31 Mar 2016 15:55:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=QSUTROpFFgjzSTTW+03QDJ9sl+N9+SV7uN1Dg3XST2I=;
+        b=R9Oz3J2rK6ZQ8LfNQBadlREotfbMqJ288pWaQcB2TLFg+soZ49yBJejyP7Svdj4nkM
+         FQZcuFnxwPi2k5jXkBOOgN5I93JR9dpkVKQRusZIhhYlU8WZ/CeVIUzBC1NYLXd28UaM
+         t3D9b6hjPKZwPxiqHdmyep9uFeqDqzvaW3qm6pJLiVwynSJ088HVbnJdlN+jOkptSyTs
+         J9YVJaYDvlWZ06c8+PYaHmhR/3sczGzcEBNsbB1XSNaKixaVr+mQslYOHf7ieWOy5SnF
+         skphr+G7PYRL/KOUcS9hZHsp4zm4Ro0gbpSvwTs5329sE/1obKu77EA2eWiluUlSHJsq
+         zPjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=QSUTROpFFgjzSTTW+03QDJ9sl+N9+SV7uN1Dg3XST2I=;
+        b=crmvQxb1zJ3chKb7u4/4au0INmR3S+Ux+TRSBeOnjTn85V9zTG5UcxC13jghZAAkdd
+         AUBOiCjXtfM4hWvfFnNsTDQnHUFZlKc7e+LPEmOFep1ZJrY5vJAgpY2OTSkfScNnRrIk
+         RvuG+LA5RS2qIo3T0bQpX8r8OPhq7BRY0t6FO3YEwM3l3MrTi/w4mXVm/aMU4hVk6HLe
+         QnONBpvdEFDNKyWEruTDaspD4U62bTXc2t/tQJuFOk64wuoH2LhIWfsQTtcWcIuD/ANH
+         c9o/KfSy9b7jH6GR7+H1tn2iIDxp+vkMKhRcugSQZs5NagrXmYQVJFA7nnFB3HoRB/Zw
+         lbNA==
+X-Gm-Message-State: AD7BkJL0vL1WadZm25ZHutnzOmsVf+34PFCa7IVBqKAjUdKqEMyKQGZ8r+VMEwFRQz+vKER70pIoBNl2WrzPxg==
+X-Received: by 10.159.33.206 with SMTP id 72mr742951uac.14.1459464922153; Thu,
+ 31 Mar 2016 15:55:22 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Thu, 31 Mar 2016 15:55:22 -0700 (PDT)
+In-Reply-To: <xmqqoa9ul30c.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: A5cpxXgZTwbkxqGWXUpSraGABCk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290484>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On Thu, Mar 31, 2016 at 6:02 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> By the way, for some reason it was unusually painful to find the
+> exact breakage by bisecting between maint-2.4 and maint-2.6.  It
+> somehow ended up on fingering random places like v2.6.0 itself.
+>
+> The true culprit is 068c77a5 (builtin/send-pack.c: use parse_options
+> API, 2015-08-19).  I didn't dug deep enough to tell if we recently
+> broke "git bisect" or if there are something wrong in the shape of
+> my history.
 
-> On Thu, Mar 31, 2016 at 2:04 PM, Stefan Beller <sbeller@google.com> wrote:
->> `value` is just a temporary scratchpad, so we need to make sure it doesn't
->> leak. It is xstrdup'd in `git_config_get_string_const` and
->> `parse_notes_merge_strategy` just compares the string against predefined
->> values, so no need to keep it around longer. Instead of using
->> `git_config_get_string_const`, use `git_config_get_value`, which doesn't
->> return a copy.
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->> diff --git a/builtin/notes.c b/builtin/notes.c
->> @@ -746,7 +746,7 @@ static int git_config_get_notes_strategy(const char *key,
->>  {
->>         const char *value;
->>
->> -       if (git_config_get_string_const(key, &value))
->> +       if (git_config_get_value(key, &value))
->
-> Hmm, doesn't this introduce a rather severe regression? Unless I'm
-> misreading the code (possible), with the original, if 'key' was
-> boolean (lacked a value in the config file), then it would complain:
->
->     Missing value for 'floop.blork'
->
-> but, with this change, it will dereference NULL and crash.
->
-> (My understanding was that Peff's suggestion to use
-> git_config_get_value() implied a bit of work beyond the simple textual
-> substitution of 'git_config_get_value' for
-> 'git_config_get_string_const'.)
+I had a similar experience a couple months ago where I was bisecting
+to find a fix (rather than breakage), and each time I ran bisect, it
+seemed (randomly) to arrive at a different commit, often a merge,
+rather than the real fix (which I eventually located by manually
+examining commits near the commits bisect identified). At the time, I
+thought I was doing something wrong (and perhaps I was), but your
+descriptions sounds eerily similar to that experience.
 
-Yup, thanks for spelling it out.
+Unfortunately, I no longer recall precisely for what I was searching
+(other than that someone reported a Git bug which I recalled having
+been already fixed, and wanted to use bisect to respond with the exact
+commit which fixed the problem), and the bisect "run" script was
+throwaway, so I can't consult that for further details.
