@@ -1,88 +1,103 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: Signed-off-by vs Reviewed-by
-Date: Thu, 31 Mar 2016 17:09:17 +0200
-Message-ID: <CAP8UFD0ot86bmuzxkfe8hzY1LmTiupre6h7QufkDpezT_fOsrA@mail.gmail.com>
-References: <20160331123507.GC19857@collabora.co.uk>
-	<CAFZEwPMzcqrd8NEP6MH5saXL2KdUKAyN51uuoS5=aeU0aPWjJQ@mail.gmail.com>
-	<20160331143501.GE19857@collabora.co.uk>
-	<56FD3ABC.2000500@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v3][Outreachy] branch -D: allow - as abbreviation of @{-1}
+Date: Thu, 31 Mar 2016 17:09:21 +0200
+Message-ID: <vpqwpoi1y72.fsf@anie.imag.fr>
+References: <1459416327-795-1-git-send-email-elena.petrashen@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Miklos Vajna <vmiklos@collabora.co.uk>,
-	Pranit Bauva <pranit.bauva@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Sidhant Sharma <tigerkid001@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 31 17:09:25 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com
+To: Elena Petrashen <elena.petrashen@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 31 17:13:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aleDs-0007Ee-FZ
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 17:09:24 +0200
+	id 1aleHT-0000eM-Qa
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 17:13:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756846AbcCaPJU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 11:09:20 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:36332 "EHLO
-	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751511AbcCaPJT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2016 11:09:19 -0400
-Received: by mail-wm0-f52.google.com with SMTP id 127so137768628wmu.1
-        for <git@vger.kernel.org>; Thu, 31 Mar 2016 08:09:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=1f3BNPSSvbrmI0lvXOh6asRxK5wiTLyZ95cPgxzl+TI=;
-        b=VRcikW7aRlDy7hPRudfhnhB1gqLpESklzLW0U7KqSjew0uKbYJD6WWzQdwfBSEPPTv
-         xD/oQ/KZjrlnZL5yOjiySx5C+MevZCsPbWTLAORU93sfTdjdicByarMq109ETNCmdpPz
-         b138o29SJzM0MpdjC1XLtfksZUnomd6nSbbu/Lzhc4WCoiSwbT6Qf5/WjmcY5AeFksur
-         DiJQYbUCDaYAUuYoyo+q1X+F4cJizLyXUFq+QEmnVXgoz2BZEmoo44hG0CiS9zETU7Fe
-         Q8gjBG/YPEVgYgZI5uy4/E28QQPUkAXTtH0Hb8ZiBwU5In/I+5otdS6CVT8sLIAPj899
-         Imbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=1f3BNPSSvbrmI0lvXOh6asRxK5wiTLyZ95cPgxzl+TI=;
-        b=RpvYbY17qX3xGxJSt0ZxT3vBFOUSV0h/kpUmiVDc6Sl0A8YNgP1Yj4s1xyWdbBM9eO
-         LvPDjDthy6GVb1W5DwCePhtO+ICWLhufzKyp/I5KMYDW9TYvWPWLprQXDTJ1Xzqj8cHK
-         z7Ei7SxMCehvNdNgJeluJhZqTRtl/AMlU+NEKQ8j/5VuonPVls+gNGN/alBnTnwB1vCF
-         OAgXSOzsTu8G5ukjNYossudGn/q4ku3QeabU2TYHc0o6Kk3GWP+2QrvsbW2wYafqiLMc
-         XIusytuO8nXo0fDhO6WbA91SdDrutOA8I0x4gePQJOKEM3h3HubVO2sQSRqxtapkYSLR
-         gGzQ==
-X-Gm-Message-State: AD7BkJLx0ZTfHMVq5W+SmW4W04k2mZhfLsV4WG0rbZg7SYFpZOPin7xSlpct+9RByrOMI/5pPK+24zMhpSyoAw==
-X-Received: by 10.194.2.202 with SMTP id 10mr17155831wjw.94.1459436957947;
- Thu, 31 Mar 2016 08:09:17 -0700 (PDT)
-Received: by 10.194.151.131 with HTTP; Thu, 31 Mar 2016 08:09:17 -0700 (PDT)
-In-Reply-To: <56FD3ABC.2000500@gmail.com>
+	id S1757497AbcCaPNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 11:13:00 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:59349 "EHLO mx1.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757365AbcCaPJw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 11:09:52 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u2VF9KxY000774
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 31 Mar 2016 17:09:20 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u2VF9LP7024914;
+	Thu, 31 Mar 2016 17:09:21 +0200
+In-Reply-To: <1459416327-795-1-git-send-email-elena.petrashen@gmail.com>
+	(Elena Petrashen's message of "Thu, 31 Mar 2016 12:25:27 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Thu, 31 Mar 2016 17:09:21 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u2VF9KxY000774
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1460041764.7535@egB9o9FZkkMLHoZR/vz9hA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290402>
 
-On Thu, Mar 31, 2016 at 4:57 PM, Sidhant Sharma <tigerkid001@gmail.com> wrote:
-> Hi,
->
-> On Thursday 31 March 2016 08:05 PM, Miklos Vajna wrote:
->> Hi,
->>
->> On Thu, Mar 31, 2016 at 07:54:47PM +0530, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->>> Are you suggesting to use a different email address for commiting,
->>> signing off and reviewing?
->> Let's say project A has a workflow where patch authors and maintainers
->> add a "Signed-off-by: A B <a@example.com>" line. This is well-supported
->> by git, various commands have a -s option to add that line.
->>
->> However, if project B has a workflow where patch authors add no such
->> line, and reviewers add a "Reviewed-by: A B <a@example.com>" line, then
->> you have to add that line manually when you do a review.
-> When making the string configurable, would it be a good idea to
-> support more than one sign-off strings? For instance, often patches
-> here in Git have both a Signed-Off and a Reviewed-by line. What would
-> you suggest for such a case?
+Elena Petrashen <elena.petrashen@gmail.com> writes:
 
-"git interpret-trailers" supports many kinds of trailers. There were a
-lot of related discussions/bikeshedding when it was designed and
-worked on.
+> --- a/advice.c
+> +++ b/advice.c
+> @@ -15,6 +15,7 @@ int advice_detached_head = 1;
+>  int advice_set_upstream_failure = 1;
+>  int advice_object_name_warning = 1;
+>  int advice_rm_hints = 1;
+> +int advice_delete_branch_via_at_ref = 1;
+>  
+>  static struct {
+>  	const char *name;
+> @@ -35,6 +36,7 @@ static struct {
+>  	{ "setupstreamfailure", &advice_set_upstream_failure },
+>  	{ "objectnamewarning", &advice_object_name_warning },
+>  	{ "rmhints", &advice_rm_hints },
+> +	{ "deletebranchviaatref", &advice_delete_branch_via_at_ref },
+>  
+>  	/* make this an alias for backward compatibility */
+>  	{ "pushnonfastforward", &advice_push_update_rejected }
+
+This is undocumented.
+
+> +		expand_dash_shortcut (argv, i);
+> +		if(!strncmp(argv[i], "@{-", strlen("@{-")))
+
+Style: space after if.
+
+We have a starts_with() function to avoid this strncmp(... strlen()) dance.
+
+> @@ -262,6 +275,9 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+>  			       (flags & REF_ISBROKEN) ? "broken"
+>  			       : (flags & REF_ISSYMREF) ? target
+>  			       : find_unique_abbrev(sha1, DEFAULT_ABBREV));
+> +			if (at_shortcut && advice_delete_branch_via_at_ref)
+> +			       delete_branch_advice (bname.buf,
+> +				find_unique_abbrev(sha1, DEFAULT_ABBREV));
+
+Style: 1-space indent is not sufficient. Either align the arguments (not
+applicable here) or indent by one tab to mark "I'm not done with
+argument list".
+
+Also, no space between delete_branch_advice and '('.
+
+> +test_expect_success 'test deleting "-" deletes previous branch' '
+> +	git checkout -b prev &&
+> +	test_commit prev &&
+> +	git checkout master &&
+> +	git branch -D - >actual &&
+> +	sha1=$(git rev-parse prev | cut -c 1-7) &&
+
+Didn't this | cut ... turn into a --short in a previous version?
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
