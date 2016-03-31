@@ -1,100 +1,151 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Problem with Integrated Vim Editor on Win 10
-Date: Thu, 31 Mar 2016 19:41:44 +0100
-Organization: OPDS
-Message-ID: <3130A15B06774B23AF4F56D4939918F1@PhilipOakley>
-References: <CAAErz9i1=EOemq2qNijRwgY6MNmPJRhV+mFfeD1FZa5uPwvCJw@mail.gmail.com> <CAAErz9jeLPU+QocSKNssknoJdZoi4Sq0YfZiNnpf4wD70JKQUQ@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH v11 3/4] t7507-commit-verbose: improve test coverage by
+ testing number of diffs
+Date: Fri, 1 Apr 2016 00:12:20 +0530
+Message-ID: <CAFZEwPP1iQQq5WXsBa-4vZ3wXH-DeNUw5JtqsgYmeUSo-XPYxQ@mail.gmail.com>
+References: <01020153cd2340f8-4665cd5f-cd5c-41ab-a162-20acc43ca52e-000000@eu-west-1.amazonses.com>
+	<01020153cd2341ef-eed17644-85ee-4d1d-8051-b5d56bd9ae52-000000@eu-west-1.amazonses.com>
+	<xmqqa8leo6a6.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="utf-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: "Zachary Turner" <zturner@google.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 31 20:41:52 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 31 20:42:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alhXT-0001F0-SC
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 20:41:52 +0200
+	id 1alhY3-0001V2-1N
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 20:42:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756559AbcCaSlq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 14:41:46 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:48532 "EHLO
-	smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751703AbcCaSlp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2016 14:41:45 -0400
-Received: from PhilipOakley ([2.96.204.202])
-	by smtp.talktalk.net with SMTP
-	id lhXLaqN4OEnBtlhXLaPP0F; Thu, 31 Mar 2016 19:41:43 +0100
-X-Originating-IP: [2.96.204.202]
-X-Spam: 0
-X-OAuthority: v=2.1 cv=YNU/sUyx c=1 sm=1 tr=0 a=nBDDDTVn/lToA/VoCIgfnQ==:117
- a=nBDDDTVn/lToA/VoCIgfnQ==:17 a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10
- a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10 a=1XWaLZrsAAAA:8 a=NEAV23lmAAAA:8
- a=UEyZKOYoAAAA:8 a=VwQbUJbxAAAA:8 a=GtPq3gqbNhobXgMMZrQA:9 a=QEXdDO2ut3YA:10
- a=x8gzFH9gYPwA:10
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfP6rosqUQXaslyLb0G83GtvvQRnzA8/nUV9X+pzIXQfGE9Gxf/on+avMtgv9hE6pF77KOSBf5sIrQP4N+wEM8UqIeWhlHzq2AR9ZPGkGCCqxsMZE06gD
- 8EDcGvEPejZYJO/lFrZQKZqWnuTyBRyw/gt8DVKKBZDwNVfBpE+w8omDPCPWICZzSmde5MTo6ffnf10ZljZtivd4P4yJUQg5SKE=
+	id S1757885AbcCaSmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 14:42:22 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:35305 "EHLO
+	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757865AbcCaSmV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 14:42:21 -0400
+Received: by mail-yw0-f195.google.com with SMTP id u8so13030503ywa.2
+        for <git@vger.kernel.org>; Thu, 31 Mar 2016 11:42:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=nHEHvHnFhF9yJR4tWR0Q+4+6nI+f7C1hd4CF/saYFCA=;
+        b=ID6tAgHqP4NpQyASBXZn3wUz79/rp0DwC3LwvVi2ycvHqtF5OUVBGaCVl9dso8l0wS
+         MeOU/NnEVmtyI/xRE+y6W6iurkM2AkmnMX5ruu974fFvFY9EkM5V0BIhNsmxpVLFwGxl
+         9ODPQXzMzLaq3Es4cD0CVWVcUcFUM48o5KDeCk35fgCGf5FKLhFEfK6qyDivfFVnNGdr
+         n/xOzzRXFlGzN/2vMPXtnvckxo6nweeJ8z51RsicPxCQRXKSvSAJYKX3AjY0WLCTJnLQ
+         gETmYa+WYYiilHZZiFdrEL+pZkAMBZPYaaogPGLILf6LN84xcKaQD5hn/liaGzXZVQLo
+         36IQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=nHEHvHnFhF9yJR4tWR0Q+4+6nI+f7C1hd4CF/saYFCA=;
+        b=jh+F9s6IVtMWIM5KbPn+6UvJi8leMtkYlJ87fTJSVmsMvu8LmcV+1vnVdN7VDjUIMw
+         CxSZ1nZm5sADK3/wLpmWjdx0uQb6W5xOyXkk8BTuz33n3p+zbhpVEGatFY8xI3hgYUfD
+         o1se/qyQOiASI6s/D+DMQYoO4/m7IntbWpzpHIHdMpmulKeeFsYf3n8D7XtPT8Qf1yZJ
+         V9vazFEdlAD0tskedQV11ri/9JQUG2E72JRrSAT35vGypgqc3ZiVDFlhKSZUAi5J8LIj
+         fVxQQ8Eln3yxjYDcwJPDyvKW6d7BET7VcfdPTSkJmBu8xlIjjoPLGLIC1vlmrnnTWBMY
+         gObg==
+X-Gm-Message-State: AD7BkJJ08Vrs6EAUEwTZ2kOAW+eh6gS/PEnssWiUXkKkA4TpWuXTbwBOlF1AXxXyT+0PKftD35uCJdfp/+g2Mg==
+X-Received: by 10.129.9.214 with SMTP id 205mr8346954ywj.53.1459449740995;
+ Thu, 31 Mar 2016 11:42:20 -0700 (PDT)
+Received: by 10.13.203.137 with HTTP; Thu, 31 Mar 2016 11:42:20 -0700 (PDT)
+In-Reply-To: <xmqqa8leo6a6.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290444>
 
-From: "Zachary Turner" <zturner@google.com>
->I dug into this some more, and as surprising as it is, I believe the
-> release of Git 2.8.0 is just busted.  I had an installer for 2.7.0
-> lying around, so after uninstalling 2.8.0 and re-installing 2.7.0,
-> everything works fine.
+On Thu, Mar 31, 2016 at 11:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Pranit Bauva <pranit.bauva@gmail.com> writes:
 >
-> I'm not terribly active in the Git community so I don't know what the
-> procedure is for things like this, but this seems like a fairly
-> serious regression.  Suggestions on how to proceed?
-
-see https://github.com/git-for-windows/git/issues/711#issuecomment-204003950
-"Indeed, the culprit is git-for-windows/msys2-runtime@7346568 and reverting 
-it fixes the issue. Will continue tomorrow." @dscho
-
-
+>> Make the fake "editor" store output of grep in a file so that we can
+>> see how many diffs were contained in the message and use them in
+>> individual tests where ever it is required. Also use write_script()
+>> to create the fake "editor".
+>>
+>> A subsequent commit will introduce scenarios where it is important to be
+>> able to exactly determine how many diffs were present.
+>>
+>> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+>> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+>>
+>> Previous version of this patch:
+>>  - [v10]: $gmane/288820
+>>
+>> Changes this version wrt previous one:
+>> I decided to include no of diffs in every test and rewrote the commit
+>> message so as to sell this idea. This was given as an option to me by
+>> Eric and the other option being to drop unnecessary testing of lines
+>> where it isn't required. Also this patch uses a suggestion given by Eric
+>> to make the "editor" look more clean as compared to the editor in my
+>> previous version.
+>> ---
 >
-> On Wed, Mar 30, 2016 at 5:07 PM, Zachary Turner <zturner@google.com> 
-> wrote:
->> Hi, just recently I installed the latest build of Windows 10 of my
->> machine. This is my second Win10 machine. On the other I am using git
->> 2.7.0.windows.1 and everything is working just fine.
+> OK, by always exiting 0 from the editor, you do not interfere with
+> the "git commit" that invoked it, and you inspect the editor's
+> finding after "git commit" returns.  The approach taken by this
+> patch looks a lot more sensible than the previous one.
+>
+> You'd need the three-dash right before "Previous version of..."
+> line, though.
+
+That's silly of me to forget this. Will do it.
+
+>>  t/t7507-commit-verbose.sh | 16 +++++++++-------
+>>  1 file changed, 9 insertions(+), 7 deletions(-)
 >>
->> On the second machine I am using git 2.8.0.windows.1 and vim does not
->> work. I sent a bug report to bugs@vim.org, but frankly I don't know whose
->> bug this is, so I'm including it here as well.
+>> diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
+>> index 2ddf28c..0f28a86 100755
+>> --- a/t/t7507-commit-verbose.sh
+>> +++ b/t/t7507-commit-verbose.sh
+>> @@ -3,11 +3,10 @@
+>>  test_description='verbose commit template'
+>>  . ./test-lib.sh
 >>
->> The problem is that vim is just a black screen when git launches it. If I
->> mash enough keys eventually I see something that resembles vim output at
->> the bottom, but I can't actually use it.
+>> -cat >check-for-diff <<EOF
+>> -#!$SHELL_PATH
+>> -exec grep '^diff --git' "\$1"
+>> +write_script "check-for-diff" <<\EOF &&
+>> +grep '^diff --git' "$1" >out
+>> +exit 0
+>>  EOF
+>> -chmod +x check-for-diff
+>>  test_set_editor "$PWD/check-for-diff"
 >>
->> I tried going into program files\git\usr\bin and just running vim.exe.
->> Again, black screen. If I press enter about 10 times I can see the
->> introduction screen. Then if I press : about 10-20 times it will go into
->> command mode and a single : appears. after pressing a few more keys all
->> the rest of the :s appear. Basically, everything is completely unusable.
+>>  cat >message <<'EOF'
+>> @@ -23,7 +22,8 @@ test_expect_success 'setup' '
+>>  '
 >>
->> I tried downloading vim 7.4 from www.vim.org, and low and behold, it
->> works. For now I've replaced the copy of vim.exe that ships with git with
->> the copy from www.vim.org. But this leaves me nervous that something is
->> seriously wrong.
+>>  test_expect_success 'initial commit shows verbose diff' '
+>> -     git commit --amend -v
+>> +     git commit --amend -v &&
+>> +     test_line_count = 1 out
+>>  '
 >>
->> Has anyone seen anything like this before, or have any ideas how I might
->> better diagnose this?
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+>>  test_expect_success 'second commit' '
+>> @@ -39,13 +39,15 @@ check_message() {
+>>
+>>  test_expect_success 'verbose diff is stripped out' '
+>>       git commit --amend -v &&
+>> -     check_message message
+>> +     check_message message &&
+>> +     test_line_count = 1 out
+>>  '
+>>
+>>  test_expect_success 'verbose diff is stripped out (mnemonicprefix)' '
+>>       git config diff.mnemonicprefix true &&
+>>       git commit --amend -v &&
+>> -     check_message message
+>> +     check_message message &&
+>> +     test_line_count = 1 out
+>>  '
+>>
+>>  cat >diff <<'EOF'
+>>
+>> --
+>> https://github.com/git/git/pull/218
