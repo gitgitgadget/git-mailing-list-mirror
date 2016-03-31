@@ -1,84 +1,79 @@
-From: Marios Titas <redneb@gmx.com>
-Subject: Re: [PATCH 2/2] ident: make the useConfigOnly error messages more
- informative
-Date: Thu, 31 Mar 2016 02:25:52 +0300
-Message-ID: <20160330232552.GA31861@zeno>
-References: <1459366183-15451-1-git-send-email-redneb@gmx.com>
- <1459366183-15451-2-git-send-email-redneb@gmx.com>
- <xmqqlh4zr492.fsf@gitster.mtv.corp.google.com>
+From: Zachary Turner <zturner@google.com>
+Subject: Problem with Integrated Vim Editor on Win 10
+Date: Wed, 30 Mar 2016 17:07:27 -0700
+Message-ID: <CAAErz9i1=EOemq2qNijRwgY6MNmPJRhV+mFfeD1FZa5uPwvCJw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 31 01:26:17 2016
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 31 02:07:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alPV8-0004SO-Iw
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 01:26:14 +0200
+	id 1alQ98-0002H6-Hv
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 02:07:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755307AbcC3X0H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Mar 2016 19:26:07 -0400
-Received: from mout.gmx.net ([212.227.15.19]:53466 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755154AbcC3X0F (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Mar 2016 19:26:05 -0400
-Received: from localhost.localdomain ([79.103.155.63]) by mail.gmx.com
- (mrgmx003) with ESMTPSA (Nemesis) id 0M54L0-1ZnZ5H0c5G-00zG3M; Thu, 31 Mar
- 2016 01:25:57 +0200
-Content-Disposition: inline
-In-Reply-To: <xmqqlh4zr492.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
-X-Provags-ID: V03:K0:IKCXSbIjsk9LzZi8rokAeI3Ve8LqASWagZhr2chGloso5pfB0fB
- 5cAcuECyTtzA9O0nLa/PMNkppib4VgcGy6ftu5jgJmw40XLNym3nJ6iMzYRgPNSVFN6xF1v
- 2gtoWwFtuulviB1uVSZwkB8XBIuDsSXD9LL0q4HnUHZSpunylTYQoAgxYI1GN8yjebwJ5KL
- OKOJc/0pAV6BUcgS0xIKQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:EpWrUR/mnT4=:ibcvZCzmZxZZRW7gr9hMKk
- AS7arnU5fNjlluJMEzEfCw/RFvNeHs9xKvfZiGFvibpfD5MDEr6EAmTm3lgtZXlMat6u5VMGH
- iUV6n04rlzTr2KZXOnqvdGkHsB9/ktx+tHuLdQ4Hi8vPZUtotFTxtJ/CiTprNDcOnbDZQyJ85
- eVb9ac7TlrZ93wTSWuaSZ8b0QHxrfOXVSSlErqLOYcjHRF+Hf5EidL20VG76ePdbPzXG51Vuq
- 594CFFPvacilzW2dZ/sCVwFDJ2ZE8xqcCaUiNkblBShTW03ZpVp0A/rY/HiiRlmAHM4E93LTi
- Qu6CgJd2mD1KWw7BSgr5+sjzQwA74dGP8U5MHXJ250havYFaiOe217YfZ0lIapH5H3xwENXEN
- YJwaiaOGiS0IK6Z+KVFQiay22gi9ACg73dWWWCJIrvBkoxWKnf7USIorrKS8ZXfWoIUbFBg2A
- ToctnPugBjAq9IMsm3wcI2WMyqbRHYyIyYHxNOFAwVfryMtM0M0I4O+1pGm+3s2bhDBD/CAof
- tn7DDhH2mbkKIJhNr40gRJxYa1YEp7IOFoEHjNGO29SwsqWQ3wepF0ZoDwPUyFGxUlHDirj0G
- +WHOTFxDH/VY8VA+Fx78xvU4eI6oy6IpOviY3jGvhrXUtTiNcHbdIasBLVN50/P29XfNrj9Sw
- 0bXFeXJ4dgDQZ+8kdowQzXBTB6smMqppcgywilsJZQfFwDejKuTUwOtz4G7cWMv09Skf9cRam
- V/MuXi4lalavDnmPjih9sHt1g17wxDFfGu7Xj715kPqcYhifukmlsxStJok=
+	id S1751626AbcCaAH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Mar 2016 20:07:29 -0400
+Received: from mail-yw0-f180.google.com ([209.85.161.180]:35551 "EHLO
+	mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751175AbcCaAH2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Mar 2016 20:07:28 -0400
+Received: by mail-yw0-f180.google.com with SMTP id g127so78441846ywf.2
+        for <git@vger.kernel.org>; Wed, 30 Mar 2016 17:07:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to;
+        bh=z3ELDK4nF6zLCQdliEumOKwkeafyaikRtHKH5O+mAT8=;
+        b=fzrq4Omye7UzZTGapXX4DEd9upH4mA743RhiWxk5enRrSgi3wymsoiiKhmbCWO66VL
+         tMzEM2XMFvLheLDN9IQzvE2oEj9dvY73FygFmodD1N3AVwS7SNdJZAetktGX/whpLhxY
+         IAwKioe/nwzxeQ2huoGFdo+jneTv0Wdw+x7KpXIlcIKlYLO7/C9UbyWQVUnAbuzHOZzk
+         /2ZdvDaM4dxZ2tigysZWFkPKJT3eATlmUc9rA12qOMPO+6tZxv9mOKA+4oUIcz4IjK9Q
+         11cidOgZr96B39mEgZbDr6n06mUlpxVALfag3SkgcvoK0KGQ5Y5/5P8M6iH4GM+w8cwa
+         NxCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
+        bh=z3ELDK4nF6zLCQdliEumOKwkeafyaikRtHKH5O+mAT8=;
+        b=i5KV/rSVN9YKFd6hAv2hPM7DDXKXrSQ4BhA5L0l6jUjJEe0YpAPcmDfoLye7FvEiIi
+         9d/ly3xZ75/F8e3mm8/hgiCKJkYp7RvY9+ydCDXwU4zto6dK1D3IBhipoL9TaCaWWaQA
+         VVoTtaaIN37bMNB/Zg5ZZnVpfN2QBwU1gY82PmWdActLn/Jaj40MkeuFAnlne+IvaCq6
+         odVEeepdsi4tBaIAz+rzU0q+DaSqfLAbifwsOGPvkHO+//3cYAeZb8FChDo8a3c27MPG
+         IdiUEK5N2ORkZv3pjVmyxBchMcxCsLxJZlYXnZFzgrvlO4gzLHOfk1EQe/FDYaUlbi3T
+         6+mA==
+X-Gm-Message-State: AD7BkJIscSX7X2UHhU+P5F73l0Xi88me1m1DOsKtMeWN1fK4W9Lhyd1PzY6qG/3oWPk1pwQv8iGqSfcf6kOYperd
+X-Received: by 10.13.202.195 with SMTP id m186mr5714519ywd.151.1459382847351;
+ Wed, 30 Mar 2016 17:07:27 -0700 (PDT)
+Received: by 10.37.113.133 with HTTP; Wed, 30 Mar 2016 17:07:27 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290357>
 
-On Wed, Mar 30, 2016 at 03:27:05PM -0700, Junio C Hamano wrote:
->Marios Titas <redneb@gmx.com> writes:
->
->> -			    && !(ident_config_given & IDENT_NAME_GIVEN))
->> -				die("user.useConfigOnly set but no name given");
->> +			    && !(ident_config_given & IDENT_NAME_GIVEN)) {
->> +				fputs(env_hint, stderr);
->> +				die("no name was given and auto-detection is disabled
->
->Hmph.  I do not think that this is making the message "more
->informative".
->
->When a user hits this error, the old message allowed the user to
->easily see how to toggle the "disable auto-detection" bit off to let
->the code continue by telling the name of the configuration, but the
->updated message hides that name, making it harder for the user to
->disable the disabling of auto-detection.
->
->I can buy the argument that this change helps the user by making the
->message "less" informative, though.  By discouraging the users from
->toggling the user.useConfigOnly bit off, it indirectly makes the
->other option to work around this error condition, i.e. giving a name
->more explicitly, more appetizing.
+Hi, just recently I installed the latest build of Windows 10 of my
+machine. This is my second Win10 machine. On the other I am using git
+2.7.0.windows.1 and everything is working just fine.
 
-Yeah, maybe informative is not the right word. What I meant is that it 
-directs the user to do the "git config user.name" thing, which is likely 
-the most appropriate course of action in this situation. In any event, I 
-think printing the env_hint message would be really helpful in this 
-case.
+On the second machine I am using git 2.8.0.windows.1 and vim does not
+work. I sent a bug report to bugs@vim.org, but frankly I don't know whose
+bug this is, so I'm including it here as well.
+
+The problem is that vim is just a black screen when git launches it. If I
+mash enough keys eventually I see something that resembles vim output at
+the bottom, but I can't actually use it.
+
+I tried going into program files\git\usr\bin and just running vim.exe.
+Again, black screen. If I press enter about 10 times I can see the
+introduction screen. Then if I press : about 10-20 times it will go into
+command mode and a single : appears. after pressing a few more keys all
+the rest of the :s appear. Basically, everything is completely unusable.
+
+I tried downloading vim 7.4 from www.vim.org, and low and behold, it
+works. For now I've replaced the copy of vim.exe that ships with git with
+the copy from www.vim.org. But this leaves me nervous that something is
+seriously wrong.
+
+Has anyone seen anything like this before, or have any ideas how I might
+better diagnose this?
