@@ -1,61 +1,82 @@
-From: Jeff King <peff@peff.net>
+From: Miklos Vajna <vmiklos@collabora.co.uk>
 Subject: Re: Signed-off-by vs Reviewed-by
-Date: Thu, 31 Mar 2016 10:32:45 -0400
-Message-ID: <20160331143244.GD31116@sigill.intra.peff.net>
+Date: Thu, 31 Mar 2016 16:35:02 +0200
+Message-ID: <20160331143501.GE19857@collabora.co.uk>
 References: <20160331123507.GC19857@collabora.co.uk>
+ <CAFZEwPMzcqrd8NEP6MH5saXL2KdUKAyN51uuoS5=aeU0aPWjJQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@collabora.co.uk>
-X-From: git-owner@vger.kernel.org Thu Mar 31 16:32:52 2016
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="osDK9TLjxFScVI/L"
+Cc: Git List <git@vger.kernel.org>
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 31 16:35:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aldeV-0007OR-LP
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 16:32:52 +0200
+	id 1aldgo-0008N7-59
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 16:35:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756832AbcCaOcs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 10:32:48 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41510 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756543AbcCaOcr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2016 10:32:47 -0400
-Received: (qmail 20526 invoked by uid 102); 31 Mar 2016 14:32:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 31 Mar 2016 10:32:47 -0400
-Received: (qmail 13106 invoked by uid 107); 31 Mar 2016 14:32:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 31 Mar 2016 10:32:47 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Mar 2016 10:32:45 -0400
+	id S1756543AbcCaOfI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 10:35:08 -0400
+Received: from bhuna.collabora.co.uk ([46.235.227.227]:48173 "EHLO
+	bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753530AbcCaOfI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 10:35:08 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	(Authenticated sender: vmiklos)
+	with ESMTPSA id 5CBE32613C4
 Content-Disposition: inline
-In-Reply-To: <20160331123507.GC19857@collabora.co.uk>
+In-Reply-To: <CAFZEwPMzcqrd8NEP6MH5saXL2KdUKAyN51uuoS5=aeU0aPWjJQ@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290391>
 
-On Thu, Mar 31, 2016 at 02:35:07PM +0200, Miklos Vajna wrote:
 
-> Hi,
-> 
-> Some projects like LibreOffice don't use Signed-off-by, instead usually
-> use Gerrit for code review, and reviewers add a Reviewed-by line when
-> they are OK with a patch.  In this workflow it's a bit unfortunate that
-> adding a Signed-off-by line is just a command-line switch, but adding a
-> Reviewed-by line is more complex.
-> 
-> Is there anything in git that could help this situation? I didn't see
-> any related config option; I wonder if a patch would be accepted to make
-> the "Signed-off-by" line configurable, or there is a better way.
+--osDK9TLjxFScVI/L
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-There's git-interpret-trailers, which can do the heavy lifting of adding
-it in the right place. But I don't know how you'd want to trigger it; it
-would depend on the workflow that people use to add their signoff in the
-first place.  I don't think there is anything as easy as "git commit
---amend -s", but I'm not all that familiar with the interpret-trailers
-code.
+Hi,
 
--Peff
+On Thu, Mar 31, 2016 at 07:54:47PM +0530, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+> Are you suggesting to use a different email address for commiting,
+> signing off and reviewing?
+
+Let's say project A has a workflow where patch authors and maintainers
+add a "Signed-off-by: A B <a@example.com>" line. This is well-supported
+by git, various commands have a -s option to add that line.
+
+However, if project B has a workflow where patch authors add no such
+line, and reviewers add a "Reviewed-by: A B <a@example.com>" line, then
+you have to add that line manually when you do a review.
+
+I suggest to give a bit more support to this workflow in git. One way of
+doing that would be to make the Signed-off-by string configurable. I can
+look into implementing that, but first I wanted to discuss the idea here
+on the list -- perhaps there is a better way to support that. :-)
+
+Typing that line (including copy&pasting your name + email all the time)
+is a bit boring.
+
+Regards,
+
+Miklos
+
+--osDK9TLjxFScVI/L
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iEYEARECAAYFAlb9NZUACgkQe81tAgORUJbQBACeOdi99as1JuNMnvGtzh9D7v36
+c/YAn2l9HHh4MaiZ3GlFkOeuZlFObVcd
+=NDU2
+-----END PGP SIGNATURE-----
+
+--osDK9TLjxFScVI/L--
