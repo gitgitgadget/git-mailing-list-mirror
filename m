@@ -1,124 +1,89 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] git-send-pack: fix --all option when used with directory
-Date: Thu, 31 Mar 2016 13:28:39 -0700
-Message-ID: <xmqq1t6qmlxk.fsf@gitster.mtv.corp.google.com>
-References: <1459432509-12934-1-git-send-email-stanislav@assembla.com>
+Subject: Re: BUG in git diff-index
+Date: Thu, 31 Mar 2016 13:39:02 -0700
+Message-ID: <xmqqwpoil6vt.fsf@gitster.mtv.corp.google.com>
+References: <loom.20160331T143733-916@post.gmane.org>
+	<20160331140515.GA31116@sigill.intra.peff.net>
+	<CAJxkE8SVF_ikHqDCh6eHExq=seitHPVpxW2GmPo40jtqWvz1JQ@mail.gmail.com>
+	<20160331142704.GC31116@sigill.intra.peff.net>
+	<56FD7AE8.4090905@nglowry.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, peff@peff.net, dborowitz@google.com
-To: stanislav@assembla.com
-X-From: git-owner@vger.kernel.org Thu Mar 31 22:29:03 2016
+Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+To: Andy Lowry <andy.work@nglowry.com>
+X-From: git-owner@vger.kernel.org Thu Mar 31 22:39:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aljDB-0007RW-Dg
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 22:29:01 +0200
+	id 1aljNK-0004Mw-H7
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 22:39:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932930AbcCaU2p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 16:28:45 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:52032 "EHLO
+	id S1757456AbcCaUjQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 16:39:16 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:60304 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932260AbcCaU2n (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2016 16:28:43 -0400
+	with ESMTP id S932941AbcCaUjF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 16:39:05 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C8D4D52B4A;
-	Thu, 31 Mar 2016 16:28:41 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0FEC752D6C;
+	Thu, 31 Mar 2016 16:39:04 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=50Rtz+sh7hyLo1Zq2u4aKOwRALE=; b=hUMCTE
-	9K6u6wO038GL04Q7qgY1urzW57GQSBwJVnMTHqclTbhyOGzfNq3K6SdYN54EfL3/
-	4FupOGjtdDh/O05sxirpZP2d0Ou9j5mFlgIquteqGeJQ9XY84CjyyYWiM29pkgJS
-	fsC1bIOw2vj0nGUSX++QTtJM5w4s0j/uEYry8=
+	:content-type; s=sasl; bh=PN4zhfeff5PYoAxl7lUQAK46Q5s=; b=tArQX/
+	U2O/3IT7rBAWRF7uH/6yCUGu7B7znw8ByTOdXbD5BWBP9kMKnVNj7RjIbfql8bEC
+	uXV3HuAySHnypAEfJ+vqAgOFLGYWrHh7nK9ra6vtbB7o+5OIJy95e58CaeBZsH+h
+	cOdk1hCGQhyACivPGlT0JOFDdJ5yOZh2nbAlY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KBfRHQQMY5PNl81CCweDDwY0Y1+A18Fd
-	mtc1Hutls8UycxZJvujid5AltmrhQeXN0AdPCi9weQJJhlHerkCXi/SBIUpLGAqO
-	CuQKzDzXP6qTxXFMz972PzGYpOD99uWuJwYhdh532htckaK19+DtRFWLh5ymIdRz
-	3BJ6dWORWls=
+	:content-type; q=dns; s=sasl; b=AnxzB/AGm1oY3gzRHM+ZCYaFpWcEhREi
+	dGmTnh+MAg/LNd899Ucj9DZkn+AC5HycXbNH/4rz5euqsZJP5TXYc87lLZt+5dmR
+	3wD+4pStA+CmhAlMxyPvwiVZ+ljZDApxIFau6HVg4NQeqUMyhLNQeUlFUP4fVzMU
+	fDwh7Xiix2g=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C0B1C52B49;
-	Thu, 31 Mar 2016 16:28:41 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0782752D6B;
+	Thu, 31 Mar 2016 16:39:04 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3F98352B47;
-	Thu, 31 Mar 2016 16:28:41 -0400 (EDT)
-In-Reply-To: <1459432509-12934-1-git-send-email-stanislav@assembla.com>
-	(stanislav@assembla.com's message of "Thu, 31 Mar 2016 16:55:09
-	+0300")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 71CB652D63;
+	Thu, 31 Mar 2016 16:39:03 -0400 (EDT)
+In-Reply-To: <56FD7AE8.4090905@nglowry.com> (Andy Lowry's message of "Thu, 31
+	Mar 2016 15:30:48 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 283E45F0-F77F-11E5-9FF8-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 9B1B14EE-F780-11E5-BF39-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290463>
 
-stanislav@assembla.com writes:
+Andy Lowry <andy.work@nglowry.com> writes:
 
-> From: Stanislav Kolotinskiy <stanislav@assembla.com>
->
-> When using git send-pack with --all option
-> and a target repository specification ([<host>:]<directory>),
-> usage message is being displayed instead of performing
-> the actual transmission.
->
-> The reason for this issue is that destination and refspecs are being set
-> in the same conditional and are populated from argv. When a target
-> repository is passed, refspecs is being populated as well with its value.
-> This makes the check for refspecs not being NULL to always return true,
-> which, in conjunction with the check for --all or --mirror options,
-> is always true as well and returns usage message instead of proceeding.
->
-> This ensures that send-pack will stop execution only when --all
-> or --mirror switch is used in conjunction with any refspecs passed.
->
-> Signed-off-by: Stanislav Kolotinskiy <stanislav@assembla.com>
-> ---
+> So I think now that the script should do "update-index --refresh"
+> followed by "diff-index --quiet HEAD". Sound correct?
 
-Thanks, will queue.
+Yes.  That has always been one of the kosher ways for any script to
+make sure that the files in the working tree that are tracked have
+not been modified relative to HEAD (assuming that the index matches
+HEAD).  If you are fuzzy about that assumption, you would also do
+"diff-index --quiet --cached HEAD" to ensure it, making the whole
+thing:
 
->  builtin/send-pack.c  |  2 +-
->  t/t5400-send-pack.sh | 12 ++++++++++++
->  2 files changed, 13 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-> index f6e5d64..19f0577 100644
-> --- a/builtin/send-pack.c
-> +++ b/builtin/send-pack.c
-> @@ -225,7 +225,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
->  	 * --all and --mirror are incompatible; neither makes sense
->  	 * with any refspecs.
->  	 */
-> -	if ((refspecs && (send_all || args.send_mirror)) ||
-> +	if ((nr_refspecs > 0 && (send_all || args.send_mirror)) ||
->  	    (send_all && args.send_mirror))
->  		usage_with_options(send_pack_usage, options);
->
-> diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
-> index 04cea97..305ca7a 100755
-> --- a/t/t5400-send-pack.sh
-> +++ b/t/t5400-send-pack.sh
-> @@ -128,6 +128,18 @@ test_expect_success 'denyNonFastforwards trumps --force' '
->  	test "$victim_orig" = "$victim_head"
->  '
->
-> +test_expect_success 'send-pack --all sends all branches' '
-> +	# make sure we have at least 2 branches with different
-> +	# values, just to be thorough
-> +	git branch other-branch HEAD^ &&
-> +
-> +	git init --bare all.git &&
-> +	git send-pack --all all.git &&
-> +	git for-each-ref refs/heads >expect &&
-> +	git -C all.git for-each-ref refs/heads >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_expect_success 'push --all excludes remote-tracking hierarchy' '
->  	mkdir parent &&
->  	(
-> --
-> 2.8.0
+	update-index --refresh
+        diff-index --quiet --cached HEAD && diff-index --quiet HEAD
+
+Our scripts traditionally do the equivalent in a slightly different
+way.  require_clean_work_tree() in git-sh-setup makes sure that (1)
+your working tree files match what is in your index and that (2)
+your index matches the HEAD, i.e.
+
+	update-index --refresh
+        diff-files --quiet && diff-index --cached --quiet HEAD
+
+They are equivalent in that H==I && H==W (yours) mean H==I==W, while
+I==W && H==I (ours) also mean H==I==W.  Two diff-index would require
+you to open the tree object of the HEAD twice, so our version may be
+more efficient but you probably wouldn't be able to measure the
+difference.
