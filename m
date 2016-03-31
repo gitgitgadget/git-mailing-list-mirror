@@ -1,90 +1,111 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 3/5] submodule--helper clone: remove double path checking
-Date: Thu, 31 Mar 2016 14:04:38 -0700
-Message-ID: <1459458280-17619-4-git-send-email-sbeller@google.com>
-References: <1459458280-17619-1-git-send-email-sbeller@google.com>
+Subject: [PATCHv2 0/5] Fix relative path issues in recursive submodules.
+Date: Thu, 31 Mar 2016 14:04:35 -0700
+Message-ID: <1459458280-17619-1-git-send-email-sbeller@google.com>
 Cc: sunshine@sunshineco.com, jacob.keller@gmail.com,
 	norio.nomura@gmail.com, Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Mar 31 23:05:00 2016
+X-From: git-owner@vger.kernel.org Thu Mar 31 23:04:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aljly-0008U3-OV
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 23:04:59 +0200
+	id 1aljlr-0008PQ-FX
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 23:04:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933245AbcCaVEw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 17:04:52 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:36798 "EHLO
+	id S933079AbcCaVEq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 17:04:46 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:34134 "EHLO
 	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933082AbcCaVEs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2016 17:04:48 -0400
-Received: by mail-pa0-f41.google.com with SMTP id tt10so74053737pab.3
-        for <git@vger.kernel.org>; Thu, 31 Mar 2016 14:04:47 -0700 (PDT)
+	with ESMTP id S932457AbcCaVEo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 17:04:44 -0400
+Received: by mail-pa0-f41.google.com with SMTP id fe3so74150004pab.1
+        for <git@vger.kernel.org>; Thu, 31 Mar 2016 14:04:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=TxAqv1sD7OtpYYMmVnvzlApthB7yhTBWgSALLB4ATFU=;
-        b=NxozwG8hbJXxiGk9RhJ06VfovaQ9Xn8THQaENkIl0z9NRI1mkDHwhEfD/Qg0I/S8Fq
-         9irnqOVK8JOargwXWyWvX73EU04r0c3gnmvYBsVqmKt9YxzUbgWpHUWnjrLvQxObw9y6
-         toWBUwvsMFEQYExwiI6fApluVuttd5/9euDu13GX8Z73/oISw4ZwosU7obYUi9r0a8k4
-         b03H5IE+c4zaku27ptjDDntk10dsRWYn4Sa0T1m1ZlmT8zClqs64UhT3g5XMI5ef9MtK
-         x7kMvPpMdaEV8esLpN+FXLezKpikW9sJd4XJ4lgiv13aVFeq0AUURIK9eEhxgezH/KCd
-         +2aQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=7ZwLmjgmALNoNLZRD/FWubFVp8H80yt/3qC0GQI8Pt8=;
+        b=p1ffhrXW8NvunqWahFbAtnR5ruWAFFX4arbMSs/dB+/KXHW5MAsS1FZZxut/KEHWbP
+         s/RU3KwX5r2zG+CnWY7nmT8JQ9HCxux4XHVW5s4uBSlpH1vc/ejkAcMs3yDugdnUZwAX
+         hgsocCH/pJ0YRdux1J0g9SKEqTD7Svlo8YCC9m3nrDqngS5nGZzOQ42nU36IZ1I8Du59
+         GwZ1UbOThu37NZShAoUxvBwsL2U+IphX3lIUP7EbCqxKADbjPSffoLBJaxT7zi9WqjM/
+         0n9tNPUmrRARsE55JGjTZ0HoLMcvXb76WYfl5lAh7V0N4U2V8znAzLCAOH0SPGl6rzpL
+         iyLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=TxAqv1sD7OtpYYMmVnvzlApthB7yhTBWgSALLB4ATFU=;
-        b=axkw6ZJX1wj1SWN/jMq5aKYKFERZBG/jbxXoxth3AwW77n6Lt30D4srziqiThxDJo7
-         fC0yRUUosa/QqPPmDMisvV7LnqJAg2OpOnl5ZKlP6qypk07GB66Gt9iUkMHmedv56lJM
-         3qsHgHAlxhuyYqWcs2NOXdiOccNRYdE40iMKoHp29TH9GKmbsknTcF/cTm5zSyWVgP/Z
-         JQ4HC16h2GIN0u2+XAkgwaOMUjGRT1ZOMK/HZCEyCL6SDfpcrUYbJ6w4+7XMuKJjDuH3
-         MIPd+8OdUZe1hZ0CrWLLLE4Q4YFp3jsINBdsPiavhQuw5clEahoAv3a+uvZhi9oJwu7p
-         cKXQ==
-X-Gm-Message-State: AD7BkJKdGT0wTHzDS095IpNgW+bJVB3bGQSaKaXkOjmHwXuup6f20Ou4oX46qOaNTvuGCOna
-X-Received: by 10.66.122.66 with SMTP id lq2mr9730476pab.155.1459458287147;
-        Thu, 31 Mar 2016 14:04:47 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=7ZwLmjgmALNoNLZRD/FWubFVp8H80yt/3qC0GQI8Pt8=;
+        b=IB60t8AINDiTz0fPdY3OCLtDn/oMFnhlFrWwthCwQHMV7yzwFySu7qN2JW7onU8Fuo
+         +X35Td6ZJ0TCOzLBdcH0Sa3wEzw4hveWNKuhIONDSBbS8LVldHoJLJBEfz2ZrqPYzOqQ
+         eb92piTbcX6n5b+4I64zsfnXtqsSSsxe4QMojH4sZ9oTU5ubRwTFQT34RAt7UCrWgfcZ
+         iU59M9jS25lxDdHTJ56YmliB8K8w9HzyPWAfcox6aojsliLjd5lKvB+O1/MwA7DCg3It
+         dOxo1PEr632GIwexVm6XcRXFZ+fCwrx/cT+bH/yFnP4H/0ZDah5iiTA2LzHTftXw1uan
+         /CjQ==
+X-Gm-Message-State: AD7BkJI1v0FtCwxoIYf2Nx8IWa3+FunahEweQx+CNHwPmxoaIBP/+G9i2uhcB/25pvMf2cG7
+X-Received: by 10.66.121.165 with SMTP id ll5mr25151071pab.14.1459458283126;
+        Thu, 31 Mar 2016 14:04:43 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:30b6:9b24:6e56:d07e])
-        by smtp.gmail.com with ESMTPSA id w27sm15470330pfa.67.2016.03.31.14.04.46
+        by smtp.gmail.com with ESMTPSA id n74sm15488123pfa.45.2016.03.31.14.04.42
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 31 Mar 2016 14:04:46 -0700 (PDT)
+        Thu, 31 Mar 2016 14:04:42 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.264.g39f00fe
-In-Reply-To: <1459458280-17619-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290469>
 
-We make sure that the parent directory of path exists (or create it
-otherwise) and then do the same for path + "/.git".
+Thanks Junio, Eric and Jacob for review!
 
-That is equivalent to just making sure that the parent directory of
-path + "/.git" exists (or create it otherwise).
+v2:
+ * reworded commit message for test (Thanks Junio!)
+ * instead of "simplifying" the path handling in patch 2, we are prepared
+   for anything the user throws at us (i.e. instead of segfault we
+       die(_("submodule--helper: unspecified or empty --path"));
+   (Thanks Eric, Jacob for pushing back here!)
+ * reword commit message for patch 3 (safe_create_leading_directories_const is
+   not a check, Thanks Junio!)
+ * patch 4 (the fix): That got reworked completely. No flow controlling
+   conditions in the write out phase!
+ * patch 5 is a bonus! (replace fprintf by fprintf_or die) When implementing
+   that I wondered if we also have close_or_die and open_or_die, but that doesn't
+   seem to be the case.
+   
+Thanks,
+Stefan
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/submodule--helper.c | 4 ----
- 1 file changed, 4 deletions(-)
+v1:
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 4f0b002..0b9f546 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -215,11 +215,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	/* Write a .git file in the submodule to redirect to the superproject. */
--	if (safe_create_leading_directories_const(path) < 0)
--		die(_("could not create directory '%s'"), path);
--
- 	strbuf_addf(&sb, "%s/.git", path);
--
- 	if (safe_create_leading_directories_const(sb.buf) < 0)
- 		die(_("could not create leading directories of '%s'"), sb.buf);
- 	submodule_dot_git = fopen(sb.buf, "w");
+It took me longer than expected to fix this bug.
+
+It comes with a test and minor refactoring and applies on top of
+origin/sb/submodule-helper, such that it can be merged into 2.7, 2.8 as well
+as master.
+
+Patch 1 is a test which fails; it has a similar layout as the
+real failing repository Norio Nomura pointed out, but simplified to the
+bare essentials for reproduction of the bug.
+
+Patch 2&3 are not strictly necessary for fixing the isseu, but it removes
+stupid code I wrote, so the resulting code looks a little better.
+
+Patch 4 fixes the issue by giving more information to relative_path,
+such that a relative path can be found in all cases.
+
+Thanks,
+Stefan
+
+Stefan Beller (5):
+  recursive submodules: test for relative paths
+  submodule--helper clone: simplify path check
+  submodule--helper clone: remove double path checking
+  submodule--helper, module_clone: always operate on absolute paths
+  submodule--helper, module_clone: catch fprintf failure
+
+ builtin/submodule--helper.c | 52 +++++++++++++++++++++++++--------------------
+ t/t7400-submodule-basic.sh  | 41 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 70 insertions(+), 23 deletions(-)
+
 -- 
 2.5.0.264.g39f00fe
