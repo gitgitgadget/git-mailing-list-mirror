@@ -1,130 +1,96 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 1/5] recursive submodules: test for relative paths
-Date: Thu, 31 Mar 2016 14:04:36 -0700
-Message-ID: <1459458280-17619-2-git-send-email-sbeller@google.com>
-References: <1459458280-17619-1-git-send-email-sbeller@google.com>
-Cc: sunshine@sunshineco.com, jacob.keller@gmail.com,
-	norio.nomura@gmail.com, Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Mar 31 23:05:09 2016
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCHv3 1/4] notes: don't leak memory in git_config_get_notes_strategy
+Date: Thu, 31 Mar 2016 17:08:30 -0400
+Message-ID: <CAPig+cRPNt1aNdsONXgX0SkgNiYtTS8vCGQzE2u4+vpd-N-Vew@mail.gmail.com>
+References: <1459447446-32260-1-git-send-email-sbeller@google.com>
+	<1459447446-32260-2-git-send-email-sbeller@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Mar 31 23:08:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aljm7-00007s-SJ
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 23:05:08 +0200
+	id 1aljpe-0001qZ-HU
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Mar 2016 23:08:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933087AbcCaVFA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 17:05:00 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:34655 "EHLO
-	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933072AbcCaVEp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2016 17:04:45 -0400
-Received: by mail-pf0-f171.google.com with SMTP id x3so77615664pfb.1
-        for <git@vger.kernel.org>; Thu, 31 Mar 2016 14:04:45 -0700 (PDT)
+	id S933120AbcCaVIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 17:08:35 -0400
+Received: from mail-vk0-f54.google.com ([209.85.213.54]:34768 "EHLO
+	mail-vk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932274AbcCaVIc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 17:08:32 -0400
+Received: by mail-vk0-f54.google.com with SMTP id e185so119220015vkb.1
+        for <git@vger.kernel.org>; Thu, 31 Mar 2016 14:08:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=oT5CQsJ1PNN0r9VERCtzpIPQb3WF5V0bLaNATleiFFA=;
-        b=ESUgssoFowDW7pCbKyNZyecCiacrxk5DiJYvig3azMkj6bB0Jb3pAnVqbtlVYMbL+5
-         DWsTwUG08DKZ5TSO75WEpiZjZSn5Qlac6RfsY+vCUFEyFNzhEGAUYSxuc4Sqi8mgGc8X
-         1cnK0FTnHmtwRNLzfjXo3ULA30lloPuKOg0IZRRfMpvwgXjrGBGvSIppktQTpy7j69Se
-         y/mkbKtvD76dLc4x1J6zBrZtWOrdLFRgP5KKP1KGEwB+mkQ765VYhUY/YM63Mnks7bM+
-         9F4YxmKBc68DjDIWHLYmJO9sl48SZq6jAFAsmByVNqyes/bCi9igEk4baH9uXjyc69b0
-         nYQw==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=roe3qrI1cXlEFphPg1LJIxaq2SAzlcn9jovrcMhT+jw=;
+        b=nG/Erc6vafuvYWdKwJcLfG8t+UyjF1+uxy5qA0IeNIkyuh4kshjEkgqC9fjTkdOudA
+         ZE5bMqvvnk80hQuaMsXkUrbfdt4CTfhGLlb/6BhQ0PUfaWZNL8bEuyZjyeeC94+si5pP
+         FZkEbXGvxIi1xoK78sjtlVHpVsbXgiOHj0BI9+JsPRG0St8IPGsZ6zqaqBTnq2uv2gTl
+         WTehiEUxFOJV9KOaCuwb4WPek7HBvxu90tvCsZKhJzrlnby6qYDnxOIY4R1pj3Nc29Er
+         CBdPH/YZMFDudw6BZpY7kweLKMuhNdLQ2+J8iCkzvZYd/7NyGwIgu/Zx5A+tCXBatKSR
+         0yeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=oT5CQsJ1PNN0r9VERCtzpIPQb3WF5V0bLaNATleiFFA=;
-        b=S2BeOwtfYLTPovY9zgvDdrZvBsvOGgrEyXyZWZIm66+ddzPDJtPrD7uaJIvVsACdsS
-         j7GkeoGFQ+mAlHeCEM4PUs1gMeGZ19HxvmMGYC9USU5PjUPhBzlOPlQqBfBeeIT+iB6Q
-         lh3j+lndvZKXjYHHz2crJc0bCB1Gx//X2GlSImSkikesNsDteQFpFPcksQ0yV1e5Soo7
-         Tbj77HzszxfPnC2yMLWDF5j3qN4/vhnLMMJaZWwSNqCSislJ1Mi7tNpo347zk4Ynhou6
-         iJXIB6Ju+o1/vCDmTq1MuNL5lfolFxkXiwjTd/iLF8wVkTa+OTRfYiwegN5R2cICw/im
-         xK1w==
-X-Gm-Message-State: AD7BkJLdbZLSDkpPM7DPdScuGi6RJLbkajyXE/tzo7LerSTbgnT22k1CeGoFHcYNRTqdxKPg
-X-Received: by 10.98.18.71 with SMTP id a68mr25152115pfj.41.1459458284592;
-        Thu, 31 Mar 2016 14:04:44 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:30b6:9b24:6e56:d07e])
-        by smtp.gmail.com with ESMTPSA id l81sm15493522pfj.21.2016.03.31.14.04.43
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 31 Mar 2016 14:04:43 -0700 (PDT)
-X-Mailer: git-send-email 2.5.0.264.g39f00fe
-In-Reply-To: <1459458280-17619-1-git-send-email-sbeller@google.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=roe3qrI1cXlEFphPg1LJIxaq2SAzlcn9jovrcMhT+jw=;
+        b=F8EwHoPteFvBAgy4dZeolT8DmWXlbH0QNum+mkei1OsuiNusTu+pwfmBcAEzzOK4tm
+         WKLnD752SkwPslwR5HKolUZzuuZ4g6HHTqKjDYewItVhbLYsCIWXIp6/9jgJOyy0yQDa
+         vai35xH1piF8Xp55Xxm6doINB+jXcRfBNutfQsXgFHi0SdfU/3X01CPwrQo++F0LBO+H
+         wzXjGaRcBjH2LOa0UlttCfsYxeVoY5qUlcKS421+nj+7YZtHuP9fkCtu7xS8Xpsj4UyB
+         JVIBDMjdcB5/RgLgs5ZQIW7NiigzqIFgaMGZ7S6dPem86C/FEG2PzRSkw+xUamXs8UXa
+         2pUg==
+X-Gm-Message-State: AD7BkJLme9QUjjXD9k+KxEqziNHBujF0TRI5jW1crU7UJTWQe3iOJ1jCOTbOf7Z0sDr9QieeQyUV7YIV4ZNFEQ==
+X-Received: by 10.159.38.49 with SMTP id 46mr2921468uag.139.1459458510647;
+ Thu, 31 Mar 2016 14:08:30 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Thu, 31 Mar 2016 14:08:30 -0700 (PDT)
+In-Reply-To: <1459447446-32260-2-git-send-email-sbeller@google.com>
+X-Google-Sender-Auth: ZMn5Zi3AxISdIC0otlJLSsEgt7k
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290473>
 
-"git submodule update --init --recursive" uses full path to refer to
-the true location of the repository in the "gitdir:" pointer for
-nested submodules; the command used to use relative paths.
+On Thu, Mar 31, 2016 at 2:04 PM, Stefan Beller <sbeller@google.com> wrote:
+> `value` is just a temporary scratchpad, so we need to make sure it doesn't
+> leak. It is xstrdup'd in `git_config_get_string_const` and
+> `parse_notes_merge_strategy` just compares the string against predefined
+> values, so no need to keep it around longer. Instead of using
+> `git_config_get_string_const`, use `git_config_get_value`, which doesn't
+> return a copy.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+> diff --git a/builtin/notes.c b/builtin/notes.c
+> @@ -746,7 +746,7 @@ static int git_config_get_notes_strategy(const char *key,
+>  {
+>         const char *value;
+>
+> -       if (git_config_get_string_const(key, &value))
+> +       if (git_config_get_value(key, &value))
 
-This was reported by Norio Nomura in $gmane/290280.
+Hmm, doesn't this introduce a rather severe regression? Unless I'm
+misreading the code (possible), with the original, if 'key' was
+boolean (lacked a value in the config file), then it would complain:
 
-The root cause for that bug is in using recursive submodules as
-their relative path handling was broken in ee8838d (2015-09-08,
-submodule: rewrite `module_clone` shell function in C).
+    Missing value for 'floop.blork'
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- t/t7400-submodule-basic.sh | 41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+but, with this change, it will dereference NULL and crash.
 
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 540771c..fc11809 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -818,6 +818,47 @@ test_expect_success 'submodule add --name allows to replace a submodule with ano
- 	)
- '
- 
-+test_expect_failure 'recursive relative submodules stay relative' '
-+	test_when_finished "rm -rf super clone2 subsub sub3" &&
-+	mkdir subsub &&
-+	(
-+		cd subsub &&
-+		git init &&
-+		>t &&
-+		git add t &&
-+		git commit -m "initial commit"
-+	) &&
-+	mkdir sub3 &&
-+	(
-+		cd sub3 &&
-+		git init &&
-+		>t &&
-+		git add t &&
-+		git commit -m "initial commit" &&
-+		git submodule add ../subsub dirdir/subsub &&
-+		git commit -m "add submodule subsub"
-+	) &&
-+	mkdir super &&
-+	(
-+		cd super &&
-+		git init &&
-+		>t &&
-+		git add t &&
-+		git commit -m "initial commit" &&
-+		git submodule add ../sub3 &&
-+		git commit -m "add submodule sub"
-+	) &&
-+	git clone super clone2 &&
-+	(
-+		cd clone2 &&
-+		git submodule update --init --recursive &&
-+		echo "gitdir: ../.git/modules/sub3" >./sub3/.git_expect &&
-+		echo "gitdir: ../../../.git/modules/sub3/modules/dirdir/subsub" >./sub3/dirdir/subsub/.git_expect
-+	) &&
-+	test_cmp clone2/sub3/.git_expect clone2/sub3/.git &&
-+	test_cmp clone2/sub3/dirdir/subsub/.git_expect clone2/sub3/dirdir/subsub/.git
-+'
-+
- test_expect_success 'submodule add with an existing name fails unless forced' '
- 	(
- 		cd addtest2 &&
--- 
-2.5.0.264.g39f00fe
+(My understanding was that Peff's suggestion to use
+git_config_get_value() implied a bit of work beyond the simple textual
+substitution of 'git_config_get_value' for
+'git_config_get_string_const'.)
+
+>                 return 1;
+>         if (parse_notes_merge_strategy(value, strategy))
+>                 git_die_config(key, "unknown notes merge strategy %s", value);
