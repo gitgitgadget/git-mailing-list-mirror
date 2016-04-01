@@ -1,181 +1,126 @@
-From: Mehul Jain <mehul.jain2029@gmail.com>
-Subject: Re: [PATCH 5/5] t/t5520: test --[no-]autostash with pull.rebase=true
-Date: Fri, 1 Apr 2016 15:57:27 +0530
-Message-ID: <CA+DCAeT1DQvHnRpJeApcm2vO6KhXaMaRXZg9HCUmiiBv=hfxzw@mail.gmail.com>
-References: <1459258200-32444-1-git-send-email-mehul.jain2029@gmail.com>
-	<1459258200-32444-6-git-send-email-mehul.jain2029@gmail.com>
-	<CAPig+cQ93+dCqJMRcQYSRHLDuYtwkeK_aSrfv2=2=g7ZhO85TQ@mail.gmail.com>
-	<CA+DCAeQPr2vxvm6MKiOLpDtmpC2d=RcvYhuFeimSn+xX2TAvtQ@mail.gmail.com>
-	<CAPig+cQyHu1J=FYOtgsmi3ghuN7YyjNgAz-VgO06isfrS+kUSg@mail.gmail.com>
+From: shawn wilson <ag4ve.us@gmail.com>
+Subject: Re: git alias quoting help
+Date: Fri, 1 Apr 2016 06:30:44 -0400
+Message-ID: <CAH_OBie81uJASgVs7y=J1iAhpFPW6FFK1RgHp+AyohuPLye07Q@mail.gmail.com>
+References: <CAH_OBievBBjzLwPZf3-qLn-SQyJG0UHhbdkvyZFfC8b-TsTUJQ@mail.gmail.com>
+ <CAH_OBie1Bc==wPByestESHz-K8ezC7f5A1D=t1SsP9=Sd-y-eg@mail.gmail.com> <CAH_OBifdLkszB7ZnKWBuZv8AFmKC9-RLZhxK_tmC9+bNJzXrXA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Apr 01 12:27:48 2016
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 01 12:31:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alwIp-0004mQ-O1
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 12:27:44 +0200
+	id 1alwMA-0006CL-TM
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 12:31:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755099AbcDAK1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2016 06:27:30 -0400
-Received: from mail-qg0-f66.google.com ([209.85.192.66]:35896 "EHLO
-	mail-qg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752317AbcDAK12 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2016 06:27:28 -0400
-Received: by mail-qg0-f66.google.com with SMTP id n34so10847033qge.3
-        for <git@vger.kernel.org>; Fri, 01 Apr 2016 03:27:28 -0700 (PDT)
+	id S1753211AbcDAKbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Apr 2016 06:31:06 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:36708 "EHLO
+	mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752876AbcDAKbF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Apr 2016 06:31:05 -0400
+Received: by mail-pf0-f173.google.com with SMTP id e128so70394448pfe.3
+        for <git@vger.kernel.org>; Fri, 01 Apr 2016 03:31:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=6KKyMEQ6CqCsT2j+Fg7ssJsDDgBzOLpnFd2OX6oVI78=;
-        b=hWoy1s0oj6xuzUeOFYsdYfJkB2eQLtFnuHCQ+nXMN5SwBTs5wmzDCBQwb6L8jeaM6E
-         fr+qu0hGcOHCM+Tu5aP/MgDIZARgtDzqaYtDUzSQUKAv/oULIF1l8e4bIeZUDliCBBKh
-         BP5MFjIVnkenPKaSuZhm9ihm2NSAj+d079gwEBN+Ubyo5MsGespxTHeVGrzYt6TZej7s
-         lZzH+S1OvA7V7Vj07WRYgiPJygSO7XAMHeeHb78vZFSQabUm9S6Ga8n0240fgKftqeeK
-         zayEPKQFvtYJCJ4tVksz1nKGqsBSV5EmmUO+B2jSsTtc0VLndDRvuvSE60Y6equeGOoG
-         JT7Q==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=At0agNOe+ttm9dVKeIob+GNrunYj/kmk5i6j2JlsUEQ=;
+        b=KF+0sdjswNeHCTmsCuvEfEVmx+yiOALUtaolqaXC75enep91Jt7NaF2CrZyQUGPFfz
+         5byRPGC80gZgNsVWw97sScmJACBXN09iiCJ/srAHouJzWyR2VBxl4P37c5XePq4u7Sn3
+         KGUnikCffkyVqsEgqVgne2Cs4K9M91MwHrqhXzdBA2Cs5biqkRwkNAZnLJbkxaeOd0Xy
+         5WfyS9RXWCQEwI3QUDMC5i9cdeiSa2UzZiXyhIpe/wFYn1o5excQSguYVL1TK1IsrmNB
+         eMdI6w1FOM3s+uhEP92GCbJRi+nN5CQ9KG6Kdp5hGSsDApH2tZHpmvnf6QK0MCH+neo9
+         Or/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=6KKyMEQ6CqCsT2j+Fg7ssJsDDgBzOLpnFd2OX6oVI78=;
-        b=lkqSEJwH0SkrFGaGJ8N6X35liJChZTvaLBFf7YSb3kGM0K05LR6aNiU48v60TRdHOU
-         ZOKXjoAg+HdtE8mPFWapTSrlOAv/GIdUXOZklbAYmx0an3NkUyV5AdJKJuibbV1uXsz1
-         r4lKvH8s+8B10yBNqdqXP85/ExqGXEKJWAr4ivYirMUD93ZZrT+kcR+SMZH4eCxJvsjN
-         VmV4Qp6BgbVqXbS8c2tHEuNDzoDQd2HQ1XCXck0h94///vlNO92aUX312NJ99MdcpEfe
-         ekLGQnZHQtcs2DiShIkkK5QMPqLxvSq8dJhRNzSoXpV098041C9llRdkFWl1G/E+gA8A
-         g0Jg==
-X-Gm-Message-State: AD7BkJItmi463afk8Vsso+dlGCGZusT/SKXrdzrCvPUnUxaQ8Zs4qLDK22O0e1I3vdLsjfcaiSf3gy4M2S8PUA==
-X-Received: by 10.140.240.3 with SMTP id l3mr25423738qhc.93.1459506447804;
- Fri, 01 Apr 2016 03:27:27 -0700 (PDT)
-Received: by 10.55.10.135 with HTTP; Fri, 1 Apr 2016 03:27:27 -0700 (PDT)
-In-Reply-To: <CAPig+cQyHu1J=FYOtgsmi3ghuN7YyjNgAz-VgO06isfrS+kUSg@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=At0agNOe+ttm9dVKeIob+GNrunYj/kmk5i6j2JlsUEQ=;
+        b=TPHCVTqntDvbhftSzHN8jyrgdd2SN2+xcrBiVise1esSTasVAobZUbmJ23EPPPforb
+         MC7CM+8I0fKgMoUJk/rP7NyllCgiAMvPfII8SRKch0R1ToFLvhK9LsmZdznR9WjpE14G
+         kTgH33bI0aiRTvH2NuGGmFvRcuWfekBfyQkQJsvYnWFTwxIktM/bivlQEir7WsysRGsm
+         +jP+YlwVe1gBolMb/wL8jUe8u1U4N8jH1P+OgbbeauN0Hx5TvjIUvU2ID8JmmK8R187Z
+         BwqzyYabRP+ElQ4NZ4XMVfH6clH9DoG6kx08kMwg6gywCRrpBJ5GZaCL/lKx6JqUD1c8
+         NhHQ==
+X-Gm-Message-State: AD7BkJJjoXOBslOXHFy5DCHO5sNlv791/45J7Zl+talD/SsKxG2MxBKmBaHo5moVfIRr60Ug0rf9DYDIuD7EsQ==
+X-Received: by 10.98.71.156 with SMTP id p28mr29610099pfi.139.1459506663672;
+ Fri, 01 Apr 2016 03:31:03 -0700 (PDT)
+Received: by 10.66.5.163 with HTTP; Fri, 1 Apr 2016 03:30:44 -0700 (PDT)
+In-Reply-To: <CAH_OBifdLkszB7ZnKWBuZv8AFmKC9-RLZhxK_tmC9+bNJzXrXA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290517>
 
-Hi Eric,
+I think I finally figured out how I want to do this:
 
-On Thu, Mar 31, 2016 at 2:01 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> One other possibility would be to make this all table-driven by
-> collecting all of the above state information into a table and then
-> feeding that into a function (either as its argument list or via
-> stdin). For instance:
+git remote add temp ../<temp repo>/
+git fetch temp
+git merge -s ours --no-commit temp/master
+git read-tree --prefix=<wanted directory> -u temp/master:<wanted directory>
+git commit -m "foo"
+
+However, when I do this, I've got all of the commits from the original
+(temp) repo. How do I prune these out? None of the files show up, but
+I do see reference to them in: git log --stat. And nothing I do with
+gc or prune seem to have any affect.
+
+On Fri, Apr 1, 2016 at 2:10 AM, shawn wilson <ag4ve.us@gmail.com> wrote:
+> FWIW, I (finally) found two projects that like they'll do what I want:
+> git-splits and git_filter
+> The later was lacking in documentation and after the build I couldn't
+> figure it out at a glance and I think git-splits will DWIW.
 >
->     test_autostash <<\-EOF
->     ok,--rebase,rebase.autostash=true
->     ok,--rebase --autostash,rebase.autostash=true
->     ok,--rebase --autostash,rebase.autostash=false
->     ok,--rebase --autostash,rebase.autostash=
->     err,--rebase --no-autostash,rebase.autostash=true
->     err,--rebase --no-autostash,rebase.autostash=false
->     err,--rebase --no-autostash,rebase.autostash=
->     ok,--autostash,pull.rebase=true
->     err,--no-autostash,pull.rebase=true
->    EOF
->
-> The function would loop over the input, split each line apart by
-> setting IFS=, and then run the test based upon the state information.
-> "ok" means autostash is expected to succeed, and err means it is
-> expected to fail. The function would want to specially recognize the
-> "foo.bar=" in the last argument in order to invoke test_unconfig()
-> rather than test_config().
-
-I tried out this method also. Below is the script that I wrote for this:
-
----
-
-test_autostash () {
-    OLDIFS=$IFS
-    IFS=',    ='
-    while read -r expect cmd config_variable value
-    do
-        test_expect_success "$cmd, $config_variable=$value" '
-            if [ "$value" = "" ]; then
-                test_unconfig $config_variable
-            else
-                test_config $config_variable $value
-            fi &&
-
-            git reset --hard before-rebase &&
-            echo dirty >new_file &&
-            git add new_file &&
-
-            if [ $expect = "ok" ]; then
-                git pull '$cmd' . copy &&
-                echo test_cmp_rev HEAD^ copy &&
-                test "$(cat new_file)" = dirty &&
-                test "$(cat file)" = "modified again"
-            else
-                test_must_fail git pull '$cmd' . copy 2>err &&
-                test_i18ngrep "uncommitted changes." err
-            fi
-        '
-    done
-    IFS=$OLDIFS
-}
-
-
-test_autostash <<-\EOF
-    ok,--rebase,rebase.autostash=true
-    ok,--rebase --autostash,rebase.autostash=true
-    ok,--rebase --autostash,rebase.autostash=false
-    ok,--rebase --autostash,rebase.autostash=
-    err,--rebase --no-autostash,rebase.autostash=true
-    err,--rebase --no-autostash,rebase.autostash=false
-    err,--rebase --no-autostash,rebase.autostash=
-    ok,--autostash,pull.rebase=true
-    err,--no-autostash,pull.rebase=true
-    EOF
-
-
----
-
-Things worked out perfectly.
-
-Unfortunately there was a strange behaviour that I noticed
-and frankly I don't understand why it happened.
-
-In test_autostash() there's a line
-
-    echo test_cmp_rev HEAD^ copy &&
-
-Originally it should have been
-
-    test_cmp_rev HEAD^ copy &&
-
-but this raise following error while testing
-
-    ./t5520-pull.sh: 684: eval: diff -u: not found
-
-I'm not able to understand why putting an "echo" before
-test_cmp didn't raise the above error. This looks quite
-strange. Any thoughts?
-
-Though the above code works perfectly and can be used in
-place of previous tests. Only problem remains is tests titles.
-Currently with this script, test titles will be:
-
-ok 21 - --rebase, rebase.autostash=true
-ok 22 - --rebase --autostash, rebase.autostash=true
-ok 23 - --rebase --autostash, rebase.autostash=false
-ok 24 - --rebase --autostash, rebase.autostash=
-ok 25 - --rebase --no-autostash, rebase.autostash=true
-ok 26 - --rebase --no-autostash, rebase.autostash=false
-ok 27 - --rebase --no-autostash, rebase.autostash=
-ok 28 - --autostash, pull.rebase=true
-ok 29 - --no-autostash, pull.rebase=true
-
-Any thoughts/suggestions on them?
-
-Thanks,
-Mehul
+> On Thu, Mar 31, 2016 at 10:27 AM, shawn wilson <ag4ve.us@gmail.com> wrote:
+>> BTW, just trying to get filter-branch to interpret the bash script
+>> string correctly now and it still isn't working:
+>>
+>> git filter-branch -f --prune-empty --index-filter "\
+>>   git ls-files -s | \
+>>   sed \"s-\\t\\\"*-&${1}-\" | \
+>>   GIT_INDEX_FILE=\$GIT_INDEX_FILE.new \
+>>   git update-index --index-info && \
+>>     mv \$GIT_INDEX_FILE.new \$GIT_INDEX_FILE \
+>> " HEAD
+>>
+>>  I'm guessing bash is grabbing my actual bash shell is grabbing the
+>> GIT_INDEX_FILE declaration for itself. If this is the case, I'm not
+>> sure how to stop it - tried var\=\$var.new and that passes the '\='
+>> which totally messes things up.
+>>
+>> Rewrite ef54b77e59c7f4e18f00168ba88a8d2fee795802 (1/76)mv: cannot stat
+>> `/<repo path>/.git-rewrite/t/../index.new': No such file or directory
+>> index filter failed:   git ls-files -s |   sed
+>> "s-\t\"*-&cookbooks/adjoin/-" |   GIT_INDEX_FILE=$GIT_INDEX_FILE.new
+>> git update-index --index-info &&     mv $GIT_INDEX_FILE.new
+>> $GIT_INDEX_FILE
+>>
+>> On Wed, Mar 30, 2016 at 12:13 AM, shawn wilson <ag4ve.us@gmail.com> wrote:
+>>> I've also tried to make this a plain bash script (w/o the function or
+>>> if statements and am failing at the same place). The issue seems to be
+>>> with the quoting in the filter-branch | ls-files bit. Also, the end
+>>> goal here is to be able to move a directory from one repo and keep the
+>>> history. While this works if I do it at the command line, it's just
+>>> too many steps (is tedious). Also, if there's a way to do the same
+>>> thing with multiple directories in one shot, (or make this work with
+>>> something like: cookbooks/{a,b,c} # as a parameter) that'd be perfect.
+>>>
+>>>   reapdir = "!f() { \
+>>>     if [ -d "$1" ] ; then \
+>>>       git filter-branch --prune-empty --subdirectory-filter "$1" -- --all && \
+>>>       git gc --aggressive && \
+>>>       git prune && \
+>>>       git filter-branch -f --prune-empty --index-filter '\
+>>>         git ls-files -s \
+>>>           | sed \"s-\\t-&$1-\" \
+>>>           | GIT_INDEX_FILE=$GIT_INDEX_FILE.new git update-index
+>>> --index-info && \
+>>>             mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE'; \
+>>>     else \
+>>>       echo "No directory $1"; \
+>>>     fi; }; \
+>>>   f"
