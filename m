@@ -1,168 +1,99 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/2] imap-send.c: implements the GIT_CURL_DEBUG
- environment variable
-Date: Fri, 1 Apr 2016 16:25:34 -0400
-Message-ID: <CAPig+cRrmdiz4fHAX3xg6CinSOPBv207RZLaacRBkoDNHLaPwA@mail.gmail.com>
-References: <1459507482-36678-1-git-send-email-gitter.spiros@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] submodule--helper, module_clone: always operate on absolute paths
+Date: Fri, 01 Apr 2016 13:39:10 -0700
+Message-ID: <xmqqy48xgj2p.fsf@gitster.mtv.corp.google.com>
+References: <1459469849-9643-1-git-send-email-sbeller@google.com>
+	<1459469849-9643-2-git-send-email-sbeller@google.com>
+	<xmqq7fghi1ds.fsf@gitster.mtv.corp.google.com>
+	<xmqq37r5i0tv.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 01 22:25:39 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, sunshine@sunshineco.com,
+	jacob.keller@gmail.com, norio.nomura@gmail.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Apr 01 22:39:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1am5dT-00040O-I0
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 22:25:39 +0200
+	id 1am5qi-0002ob-6N
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 22:39:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752752AbcDAUZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2016 16:25:35 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:35334 "EHLO
-	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751714AbcDAUZf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2016 16:25:35 -0400
-Received: by mail-yw0-f196.google.com with SMTP id u8so22035527ywa.2
-        for <git@vger.kernel.org>; Fri, 01 Apr 2016 13:25:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=VVgUePVA/81AEljBhxdvdG7CYqctSNgsE6mLpxjlTvQ=;
-        b=YBmayxjcofwGs6TP3/lqlPvfFxuirl7xdPwv2Q68RGT2ytletpcardVX1i+WSi07Gw
-         +zBG8RSJZVOdFuwHrcz9LGos93CEmS886aeizfVcb38ESS0ZUBBXy317XI22C8SH2AQa
-         d6Vxs55JN1PcTn2hPuMFy44BXAVm6SUFFoIK0sUErBNetpLfbAtCrSgHJauTjuQmfB8f
-         7Y//bMVcoBD16DQP6KyTDsnx9TjytksIsqGzpjWa/QBDigdRPez8DfhoxjaKe1NLpRCx
-         FiM+bYW9nb2i5aC52ghglxiNdbMlvWS8E73QaK79yKYr2UtQ8ulmQURLj8UcRaYG9W1z
-         13mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=VVgUePVA/81AEljBhxdvdG7CYqctSNgsE6mLpxjlTvQ=;
-        b=WHbpexls+zRDOvh9BmSkioAX9bHwBkczoEC3WT0lLXXXiZsbgEdQI0xuGeVgRxn8UA
-         kfUBJcUWnrFeRtqoQlM64bEnSmJFsOuc167+1jxvMZGWVdrYTh1PhYVbcvIqeWgdwPIC
-         OBWU/PcvF0tsbT2vGQPBbDgFtNda0zdrzbwulVI8L/ab6+2OLPvC+NuYW4GlCfbhlEwc
-         sTvQOjKDQt86t370clwg8p88ooZFwn+/5Io7575CXy+VdYj6ssDSVsGUqQ10tsi9BtDW
-         KQ/qWIy/b1JxE3WozJyooNEr4CuENewY1ev/urUm2qWDWdKQ+pj5m4OgtlnGwPikXL8p
-         V16w==
-X-Gm-Message-State: AD7BkJIsZ6vfNZ+SvJRKY1nhEK5hkphDozEXJMgd8kKi3sONmqwl+CypQ/vbKvjaz1vpmfpZNc5M2qOwl7/0RA==
-X-Received: by 10.31.146.5 with SMTP id u5mr50981vkd.19.1459542334382; Fri, 01
- Apr 2016 13:25:34 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Fri, 1 Apr 2016 13:25:34 -0700 (PDT)
-In-Reply-To: <1459507482-36678-1-git-send-email-gitter.spiros@gmail.com>
-X-Google-Sender-Auth: pe7HrgBQCxfJ4tUfL2UhWcxAbpw
+	id S1753943AbcDAUjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Apr 2016 16:39:15 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:58384 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753451AbcDAUjN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Apr 2016 16:39:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2128350C6E;
+	Fri,  1 Apr 2016 16:39:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3VlwLlIItKIH1C1SHQxakwJbciQ=; b=jUPe7a
+	fG+4fN8axZH1bPlXXjT7Vt7IItfAAQ2daMmJCIqoM0Fd2KXfpkgfSo5xOLs252VA
+	z7J6/nd6JtOo3VQFt6mlzMJzLAkwiOieDXdZccXDUlu7ROSJ0tREVshrdlViwKa0
+	kWSi5Kv9PhX+qI5C0QC/lSsX58wSim7e4qbEk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=J7rhH9FbubuqL5A8rTATbOxwe15xj8bK
+	9vwL7TQm00JteqCBoSnw5zZpfkjGxZ9WnI63psUoXAlP29iowVNo+Y1Q+QuR/01N
+	8LWZSMfjPjRBOevVUGh8RGES+MWmtidGLId5HvxBlEe5hdT5ubD4HhRWoB3CMgxM
+	62OS0kb+Yzk=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 17F9950C6D;
+	Fri,  1 Apr 2016 16:39:12 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9085250C6C;
+	Fri,  1 Apr 2016 16:39:11 -0400 (EDT)
+In-Reply-To: <xmqq37r5i0tv.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 01 Apr 2016 12:30:20 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: CA5CB568-F849-11E5-86BE-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290581>
 
-On Fri, Apr 1, 2016 at 6:44 AM, Elia Pinto <gitter.spiros@gmail.com> wrote:
-> Implements the GIT_CURL_DEBUG environment variable to allow a greater
-> degree of detail of GIT_CURL_VERBOSE, in particular the complete
-> transport header and all the data payload exchanged.
-> It might be useful if a particular situation could require a more
-> thorough debugging analysis.
+Junio C Hamano <gitster@pobox.com> writes:
 
-In addition to review comments by others, why are the new curl_dump()
-and curl_trace() functions duplicated in both patches rather than
-factored out to a shared implementation?
-
-> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-> ---
-> diff --git a/imap-send.c b/imap-send.c
-> @@ -1395,6 +1395,96 @@ static int append_msgs_to_imap(struct imap_server_conf *server,
->  }
+> From: Junio C Hamano <gitster@pobox.com>
+> Date: Fri, 1 Apr 2016 12:23:16 -0700
+> Subject: [PATCH] submodule--helper: do not borrow absolute_path() result for too long
 >
->  #ifdef USE_CURL_FOR_IMAP_SEND
-> +
-> +static
-> +void curl_dump(const char *text,
-> +         FILE * stream, unsigned char *ptr, size_t size, char nohex)
-> +{
-> +       size_t i;
-> +       size_t c;
-> +
-> +       unsigned int width = 0x10;
-> +
-> +       if (nohex)
-> +               /* without the hex output, we can fit more on screen */
-> +               width = 0x40;
-> +
-> +       fprintf(stream, "%s, %10.10ld bytes (0x%8.8lx)\n",
-> +               text, (long)size, (long)size);
-> +
-> +       for (i = 0; i < size; i += width) {
-> +
-> +               fprintf(stream, "%4.4lx: ", (long)i);
-> +
-> +               if (!nohex) {
-> +                       /* hex not disabled, show it */
-> +                       for (c = 0; c < width; c++)
-> +                               if (i + c < size)
-> +                                       fprintf(stream, "%02x ", ptr[i + c]);
-> +                               else
-> +                                       fputs("   ", stream);
-> +               }
-> +
-> +               for (c = 0; (c < width) && (i + c < size); c++) {
-> +                       /* check for 0D0A; if found, skip past and start a new line of output */
-> +                       if (nohex && (i + c + 1 < size) && ptr[i + c] == 0x0D
-> +                           && ptr[i + c + 1] == 0x0A) {
-> +                               i += (c + 2 - width);
-> +                               break;
-> +                       }
-> +                       fprintf(stream, "%c",
-> +                               (ptr[i + c] >= 0x20)
-> +                               && (ptr[i + c] < 0x80) ? ptr[i + c] : '.');
-> +                       /* check again for 0D0A, to avoid an extra \n if it's at width */
-> +                       if (nohex && (i + c + 2 < size)
-> +                           && ptr[i + c + 1] == 0x0D
-> +                           && ptr[i + c + 2] == 0x0A) {
-> +                               i += (c + 3 - width);
-> +                               break;
-> +                       }
-> +               }
-> +               fputc('\n', stream);    /* newline */
-> +       }
-> +       fflush(stream);
-> +}
-> +
-> +static
-> +int curl_trace(CURL * handle, curl_infotype type,
-> +            char *data, size_t size, void *userp)
-> +{
-> +       const char *text;
-> +       (void)handle;           /* prevent compiler warning */
-> +
-> +       switch (type) {
-> +       case CURLINFO_TEXT:
-> +               fprintf(stderr, "== Info: %s", data);
-> +       default:                /* in case a new one is introduced to shock us */
-> +               return 0;
-> +
-> +       case CURLINFO_HEADER_OUT:
-> +               text = "=> Send header";
-> +               break;
-> +       case CURLINFO_DATA_OUT:
-> +               text = "=> Send data";
-> +               break;
-> +       case CURLINFO_SSL_DATA_OUT:
-> +               text = "=> Send SSL data";
-> +               break;
-> +       case CURLINFO_HEADER_IN:
-> +               text = "<= Recv header";
-> +               break;
-> +       case CURLINFO_DATA_IN:
-> +               text = "<= Recv data";
-> +               break;
-> +       case CURLINFO_SSL_DATA_IN:
-> +               text = "<= Recv SSL data";
-> +               break;
-> +       }
-> +
-> +       curl_dump(text, stderr, (unsigned char *)data, size, 1);
-> +       return 0;
-> +}
+> absolute_path() is designed to allow its callers to take a brief
+> peek of the result (typically, to be fed to functions like
+> strbuf_add() and relative_path() as a parameter) without having to
+> ...
+> @@ -199,8 +198,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+>  		die(_("submodule--helper: unspecified or empty --path"));
+>  
+>  	strbuf_addf(&sb, "%s/modules/%s", get_git_dir(), name);
+> -	sm_gitdir_rel = strbuf_detach(&sb, NULL);
+> -	sm_gitdir = absolute_path(sm_gitdir_rel);
+> +	sm_gitdir = xstrdup(absolute_path(sb.buf));
+
+Just to prevent others from wasting time scratching their heads,
+we need
+
+	strbuf_reset(&sb);
+
+here, as the strbuf will be reused later and is expected to be empty
+at this point.
+
+>  
+>  	if (!is_absolute_path(path)) {
+>  		strbuf_addf(&sb, "%s/%s", get_git_work_tree(), path);
+> @@ -245,7 +243,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+>  			       relative_path(path, sm_gitdir, &rel_path));
+>  	strbuf_release(&sb);
+>  	strbuf_release(&rel_path);
+> -	free(sm_gitdir_rel);
+> +	free(sm_gitdir);
+>  	free(path);
+>  	free(p);
+>  	return 0;
