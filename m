@@ -1,86 +1,87 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 2/2] submodule--helper, module_clone: catch fprintf failure
-Date: Thu, 31 Mar 2016 17:17:29 -0700
-Message-ID: <1459469849-9643-3-git-send-email-sbeller@google.com>
-References: <1459469849-9643-1-git-send-email-sbeller@google.com>
-Cc: norio.nomura@gmail.com, Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com, git@vger.kernel.org, sunshine@sunshineco.com,
-	jacob.keller@gmail.com
-X-From: git-owner@vger.kernel.org Fri Apr 01 02:17:47 2016
+Subject: Re: [PATCHv2 3/4] bundle: don't leak an fd in case of early return
+Date: Thu, 31 Mar 2016 17:25:45 -0700
+Message-ID: <CAGZ79kYMxJdh_8n8zaaaEQP_BqWfS12JEry1MHkYqwQPJTWTNw@mail.gmail.com>
+References: <1459357518-14913-1-git-send-email-sbeller@google.com>
+	<1459357518-14913-4-git-send-email-sbeller@google.com>
+	<9C112693D94545DC917C90299E52A719@PhilipOakley>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Fri Apr 01 02:25:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1almmX-0008Cc-Ui
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 02:17:46 +0200
+	id 1almuN-0003EB-5p
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 02:25:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757561AbcDAARi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 20:17:38 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:34099 "EHLO
-	mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757394AbcDAARe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2016 20:17:34 -0400
-Received: by mail-pf0-f172.google.com with SMTP id x3so80796231pfb.1
-        for <git@vger.kernel.org>; Thu, 31 Mar 2016 17:17:34 -0700 (PDT)
+	id S1753843AbcDAAZr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 20:25:47 -0400
+Received: from mail-io0-f177.google.com ([209.85.223.177]:33112 "EHLO
+	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750720AbcDAAZq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 20:25:46 -0400
+Received: by mail-io0-f177.google.com with SMTP id a129so125826219ioe.0
+        for <git@vger.kernel.org>; Thu, 31 Mar 2016 17:25:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gmvbM2SyOsTcylkCppSWn+tYLTakWB/XabKG55trbx4=;
-        b=RVlU8jN2oE2Vo6GxYdFdJj0F5MlaVqU8ih2p6d9nGBDvX9squRp1WRKhfoQmQsk5PY
-         NMoDNM0yK5x4VCqPjJeO574h67GQI1qIgP3veWzYuBh/L1hXbSvV4CmQLVcQLzdJFKy2
-         zre5qv6PbJvcEv6hY8QrosjnG1KDkx9ud4cZHq381COGlxWFj74R6g8LGe++BkVb6Phx
-         08AcjmsOQZa7zjnmDaiyfs5Rgf+icAFYEjvu60XmPg3n1bWKdeyQdlLoqwwS15DMIwSd
-         to50fDp8qlihX58RsYQAilWf0jtq/lWTyiwPFNsDQLEb8zyj/RTn5XEfDE9Dx3Hq7bLT
-         /nVw==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=rEpPJUpUr6m2piMI170+7LgZC8RE1tTuAAaI51Ls7aU=;
+        b=X36sPt/lGAuVvE51Fr7whXFjOTcoyHVFxFJ4aPvqeT2NlgsMC+EoknIRXhkfa/38tq
+         DvuOSMa7J2klpiWFLX/QSyBrM+yGc42tbSkzuWBoaYXHjP15HmuVRUxQGxaPVB7RfK7v
+         oY/Qxe5hzxsL0fBJkUnFo5EBMPTR3WF6FMDC/I05QjUOo4MpeA+9VoVO9svqIr1Ai5yP
+         OQYC9UmXhV8ruyOkP8xUQmEsXiF2BOE7J1xuDlzwqt8wxe6QRk+9aTfZljQS7qI0vAUz
+         ESg0JkciLCSARsEnfRQCJLg0TWOBxvIdfJMTer8lM8ry5wkTa0VEJB1Uo5lDfBC5HYnw
+         3PJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=gmvbM2SyOsTcylkCppSWn+tYLTakWB/XabKG55trbx4=;
-        b=a0W/A8UyYl5JONGuX/vP9J8XNJ68qHoBCv6RT8F29aYSGmaK4Cg7EP5S0bxPYsQViy
-         a29NFgXZu74xKe0QGtleg95Y+A8UEN+thLbAV177ceBwNUh5VROnDNRvflAMy1y5PVCs
-         dmj2UuGzxq0uW1QHUH6HwJtGuUIGpGAjQAlnEvcVuUkpgl840YpduG5/GaiOwmiG0NQO
-         OkD+9+gEuxchV4WYF/U+nQ9CSjMb1NvBT7CaSE7zKCOW3NjbR/xoFFVUCQN48Mqh5gZd
-         RGBVTf2Vkzl/qFQfhxsRR1BThdHrEAlp1xm1yAxbEpKryjUgZYHcWjCpDS47MTdeaTY0
-         AjVg==
-X-Gm-Message-State: AD7BkJLZfXxU131M0p7Nccars0T2TLitU7nsEzekqvubued1jwdbRKdZn2gNGd26Uzo5/RBX
-X-Received: by 10.98.17.132 with SMTP id 4mr26260637pfr.16.1459469854135;
-        Thu, 31 Mar 2016 17:17:34 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:a519:64be:5369:a180])
-        by smtp.gmail.com with ESMTPSA id m89sm15963505pfi.12.2016.03.31.17.17.33
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 31 Mar 2016 17:17:33 -0700 (PDT)
-X-Mailer: git-send-email 2.5.0.264.gc776916.dirty
-In-Reply-To: <1459469849-9643-1-git-send-email-sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=rEpPJUpUr6m2piMI170+7LgZC8RE1tTuAAaI51Ls7aU=;
+        b=FYSznlfDPlOrdJplZmPmN4V82l7k5SpbqIAjXKbvF54tvzI0y8MKgRFSNf/iD/ghQ8
+         9RQVaPSBFWAJDy8ZVaoGImLCgvdzaBTuqk4w03v7YZI97NYW/aXy/hL6cfoKCGETDyQS
+         aXWJTyQ3HQV7lH0eUInJRXyLzP+NoYr0GaDGsJSpwgB86lHNqPnMHBT4M80VbdaWOb8E
+         uq+JXrFvMdmMe5tn1sU/DMZElLP8FkW3AF+U7yiJfDI9lZRgNa2nz/bahLJX11Fpo/dR
+         9gIEBKCg2Q1M2P3S6/wSf7qnxIIX8w9Ee5TffUq9pu1hldyJ3SueakE9SG5ckKQyGMCx
+         EgMw==
+X-Gm-Message-State: AD7BkJJNPQLa6DgR+H3AOotCSf4ufcM6S8PeiM1+CXjenrlvTzLMgt0iizBZecbJ58J/xAGcG6qSqL1ndkQ85lmr
+X-Received: by 10.107.184.8 with SMTP id i8mr1737320iof.96.1459470345492; Thu,
+ 31 Mar 2016 17:25:45 -0700 (PDT)
+Received: by 10.107.17.27 with HTTP; Thu, 31 Mar 2016 17:25:45 -0700 (PDT)
+In-Reply-To: <9C112693D94545DC917C90299E52A719@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290494>
 
-The return value of fprintf is unchecked, which may lead to
-unreported errors. Use fprintf_or_die to report the error to the user.
+On Thu, Mar 31, 2016 at 12:00 PM, Philip Oakley <philipoakley@iee.org> wrote:
+> From: "Stefan Beller" <sbeller@google.com>
+>>
+>> In successful operation `write_pack_data` will close the `bundle_fd`,
+>> but when we exit early, we need to take care of the file descriptor
+>> as well as the lock file ourselves. The lock file may be deleted at the
+>> end of running the program, but we are in library code, so we should
+>> not rely on that.
+>>
+>> Helped-by: Jeff King <peff@peff.net>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>
+>
+> Has this been tested on Windows? I had a similar problem very recently
+> https://groups.google.com/forum/#!msg/git-for-windows/6LPxf9xZKhI/-s7XD18yCwAJ
+> where a bad rev-list-arg would cause the `bundle create` to die, and, on
+> windows, leave the incomplete bundle file locked.
+>
+> dscho suggested one possible solution for that, but I haven't had any time
+> to try any patches.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/submodule--helper.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index b099817..be7bf5f 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -230,8 +230,8 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	if (!submodule_dot_git)
- 		die_errno(_("cannot open file '%s'"), sb.buf);
- 
--	fprintf(submodule_dot_git, "gitdir: %s\n",
--		relative_path(sm_gitdir, path, &rel_path));
-+	fprintf_or_die(submodule_dot_git, "gitdir: %s\n",
-+		       relative_path(sm_gitdir, path, &rel_path));
- 	if (fclose(submodule_dot_git))
- 		die(_("could not close file %s"), sb.buf);
- 	strbuf_reset(&sb);
--- 
-2.5.0.264.gc776916.dirty
+I think with Jeffs suggestion to only rollback the lock in case of
+(!bundle_to_stdout)
+we're not making it worse. I do not have a Windows machine at hand to test it :(
