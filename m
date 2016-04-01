@@ -1,99 +1,152 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] submodule--helper, module_clone: always operate on absolute paths
-Date: Fri, 01 Apr 2016 13:39:10 -0700
-Message-ID: <xmqqy48xgj2p.fsf@gitster.mtv.corp.google.com>
-References: <1459469849-9643-1-git-send-email-sbeller@google.com>
-	<1459469849-9643-2-git-send-email-sbeller@google.com>
-	<xmqq7fghi1ds.fsf@gitster.mtv.corp.google.com>
-	<xmqq37r5i0tv.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 1/2] ident: check for useConfigOnly before auto-detection of name/email
+Date: Fri, 01 Apr 2016 15:00:44 -0700
+Message-ID: <xmqqr3epgfar.fsf@gitster.mtv.corp.google.com>
+References: <1459366183-15451-1-git-send-email-redneb@gmx.com>
+	<20160331144003.GE31116@sigill.intra.peff.net>
+	<20160331150109.GA7235@zeno>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, sunshine@sunshineco.com,
-	jacob.keller@gmail.com, norio.nomura@gmail.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Apr 01 22:39:23 2016
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Marios Titas <redneb@gmx.com>
+X-From: git-owner@vger.kernel.org Sat Apr 02 00:00:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1am5qi-0002ob-6N
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 22:39:20 +0200
+	id 1am77d-0005DC-3Z
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Apr 2016 00:00:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753943AbcDAUjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2016 16:39:15 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:58384 "EHLO
+	id S1754827AbcDAWAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Apr 2016 18:00:48 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:55978 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753451AbcDAUjN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2016 16:39:13 -0400
+	with ESMTP id S1753758AbcDAWAr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Apr 2016 18:00:47 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2128350C6E;
-	Fri,  1 Apr 2016 16:39:12 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5D5444F2FA;
+	Fri,  1 Apr 2016 18:00:46 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3VlwLlIItKIH1C1SHQxakwJbciQ=; b=jUPe7a
-	fG+4fN8axZH1bPlXXjT7Vt7IItfAAQ2daMmJCIqoM0Fd2KXfpkgfSo5xOLs252VA
-	z7J6/nd6JtOo3VQFt6mlzMJzLAkwiOieDXdZccXDUlu7ROSJ0tREVshrdlViwKa0
-	kWSi5Kv9PhX+qI5C0QC/lSsX58wSim7e4qbEk=
+	:content-type; s=sasl; bh=ugYBJX/wVdqBhe0iq14twsN+08A=; b=yKLtl8
+	MZhF/dTWx2+YK9ECPctARXqBYmddUEfbxB+V4cRKp57PQwkwXhyPRnROeRp0HnnT
+	y9rK9NENX3trMMt0j9Kh2v7MaD0Xb3ieNoTtMpxxnv7RAFqliERQ5XSDerFwBoZQ
+	zW6mHDKTaA7blA0VW/jJwyy1je1QFywmSs7PM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J7rhH9FbubuqL5A8rTATbOxwe15xj8bK
-	9vwL7TQm00JteqCBoSnw5zZpfkjGxZ9WnI63psUoXAlP29iowVNo+Y1Q+QuR/01N
-	8LWZSMfjPjRBOevVUGh8RGES+MWmtidGLId5HvxBlEe5hdT5ubD4HhRWoB3CMgxM
-	62OS0kb+Yzk=
+	:content-type; q=dns; s=sasl; b=tniLM7Jrn6gVTFymdF1hOZLRtmwH6aHz
+	ttJQxRq6U4jvLRG4WQ47RleIPu0daJiuFOaIEWMc95WRwf6GdCMK8wuUgk960wbo
+	rG6qLZgiKTUEQ0XpyogyS60zPNKZCDo6SmQiKAs9Z3Wd8ElVUv5WIiPWD6/H0tCw
+	YBLnIp4o0hY=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 17F9950C6D;
-	Fri,  1 Apr 2016 16:39:12 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 53EE94F2F9;
+	Fri,  1 Apr 2016 18:00:46 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9085250C6C;
-	Fri,  1 Apr 2016 16:39:11 -0400 (EDT)
-In-Reply-To: <xmqq37r5i0tv.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 01 Apr 2016 12:30:20 -0700")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B53604F2E9;
+	Fri,  1 Apr 2016 18:00:45 -0400 (EDT)
+In-Reply-To: <20160331150109.GA7235@zeno> (Marios Titas's message of "Thu, 31
+	Mar 2016 18:01:09 +0300")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: CA5CB568-F849-11E5-86BE-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 2F80A0D4-F855-11E5-886C-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290582>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Marios Titas <redneb@gmx.com> writes:
 
-> From: Junio C Hamano <gitster@pobox.com>
-> Date: Fri, 1 Apr 2016 12:23:16 -0700
-> Subject: [PATCH] submodule--helper: do not borrow absolute_path() result for too long
+> On Thu, Mar 31, 2016 at 10:40:03AM -0400, Jeff King wrote:
+>>On Wed, Mar 30, 2016 at 10:29:42PM +0300, Marios Titas wrote:
+>>
+>>> If user.useConfigOnly is set, it does not make sense to try to
+>>> auto-detect the name and/or the email. So it's better to do the
+>>> useConfigOnly checks first.
+>>
+>>It might be nice to explain how it is better here. I'd guess it is
+>>because we may fail during xgetpwuid(), giving a message that is much
+>>less informative?
 >
-> absolute_path() is designed to allow its callers to take a brief
-> peek of the result (typically, to be fed to functions like
-> strbuf_add() and relative_path() as a parameter) without having to
-> ...
-> @@ -199,8 +198,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
->  		die(_("submodule--helper: unspecified or empty --path"));
->  
->  	strbuf_addf(&sb, "%s/modules/%s", get_git_dir(), name);
-> -	sm_gitdir_rel = strbuf_detach(&sb, NULL);
-> -	sm_gitdir = absolute_path(sm_gitdir_rel);
-> +	sm_gitdir = xstrdup(absolute_path(sb.buf));
+> Oops sorry, my bad, I should have included an example in the commit
+> message. So with git 2.8.0, if you provide a name and set
+> useConfigOnly to true in your ~/.gitconfig file, then if try to commit
+> something in a new git repo, it will fail with the following message:
+>
+>    *** Please tell me who you are.
+>     Run
+>       git config --global user.email "you@example.com"
+>      git config --global user.name "Your Name"
+>     to set your account's default identity.
+>    Omit --global to set the identity only in this repository.
+>     fatal: unable to auto-detect email address (got 'XXX@YYY.(none)')
+>
+> (provided of course that auto-detection of email fails). This wrong,
+> because auto-detection is disabled anyway.
 
-Just to prevent others from wasting time scratching their heads,
-we need
+OK, let's do this, then.
 
-	strbuf_reset(&sb);
+-- >8 --
+From: Marios Titas <redneb@gmx.com>
+Date: Wed, 30 Mar 2016 22:29:42 +0300
+Subject: [PATCH] ident: check for useConfigOnly before auto-detection of
+ name/email
 
-here, as the strbuf will be reused later and is expected to be empty
-at this point.
+If user.useConfigOnly is set, it does not make sense to try to
+auto-detect the name and/or the email.  The auto-detection may
+even result in a bogus name and trigger an error message.
 
->  
->  	if (!is_absolute_path(path)) {
->  		strbuf_addf(&sb, "%s/%s", get_git_work_tree(), path);
-> @@ -245,7 +243,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
->  			       relative_path(path, sm_gitdir, &rel_path));
->  	strbuf_release(&sb);
->  	strbuf_release(&rel_path);
-> -	free(sm_gitdir_rel);
-> +	free(sm_gitdir);
->  	free(path);
->  	free(p);
->  	return 0;
+Check if the use-config-only is set and die if no explicit name was
+given, before attempting to auto-detect, to correct this.
+
+Signed-off-by: Marios Titas <redneb@gmx.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ ident.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/ident.c b/ident.c
+index 4bd8084..b2521ff 100644
+--- a/ident.c
++++ b/ident.c
+@@ -351,15 +351,15 @@ const char *fmt_ident(const char *name, const char *email,
+ 	if (want_name) {
+ 		int using_default = 0;
+ 		if (!name) {
++			if (strict && ident_use_config_only
++			    && !(ident_config_given & IDENT_NAME_GIVEN))
++				die("user.useConfigOnly set but no name given");
+ 			name = ident_default_name();
+ 			using_default = 1;
+ 			if (strict && default_name_is_bogus) {
+ 				fputs(env_hint, stderr);
+ 				die("unable to auto-detect name (got '%s')", name);
+ 			}
+-			if (strict && ident_use_config_only
+-			    && !(ident_config_given & IDENT_NAME_GIVEN))
+-				die("user.useConfigOnly set but no name given");
+ 		}
+ 		if (!*name) {
+ 			struct passwd *pw;
+@@ -374,14 +374,14 @@ const char *fmt_ident(const char *name, const char *email,
+ 	}
+ 
+ 	if (!email) {
++		if (strict && ident_use_config_only
++		    && !(ident_config_given & IDENT_MAIL_GIVEN))
++			die("user.useConfigOnly set but no mail given");
+ 		email = ident_default_email();
+ 		if (strict && default_email_is_bogus) {
+ 			fputs(env_hint, stderr);
+ 			die("unable to auto-detect email address (got '%s')", email);
+ 		}
+-		if (strict && ident_use_config_only
+-		    && !(ident_config_given & IDENT_MAIL_GIVEN))
+-			die("user.useConfigOnly set but no mail given");
+ 	}
+ 
+ 	strbuf_reset(&ident);
+-- 
+2.8.0-246-g1783343
