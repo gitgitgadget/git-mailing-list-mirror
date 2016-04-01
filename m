@@ -1,252 +1,282 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH v3 00/16] port branch.c to use ref-filter's printing
- options
-Date: Fri, 01 Apr 2016 15:31:17 +0200
-Message-ID: <1459517477.3493.5.camel@kaarsemaker.net>
-References: <1459330800-12525-1-git-send-email-Karthik.188@gmail.com>
+From: Ye Xiaolong <xiaolong.ye@intel.com>
+Subject: Re: [PATCH v3 2/4] format-patch: add '--base' option to record base
+ tree info
+Date: Fri, 1 Apr 2016 21:38:01 +0800
+Message-ID: <20160401133801.GA2915@yexl-desktop>
+References: <1459388776-18066-1-git-send-email-xiaolong.ye@intel.com>
+ <1459388776-18066-3-git-send-email-xiaolong.ye@intel.com>
+ <xmqqy48yo8eb.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, jacob.keller@gmail.com
-To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 01 15:31:25 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, fengguang.wu@intel.com, ying.huang@intel.com,
+	philip.li@intel.com, julie.du@intel.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 01 15:39:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alzAb-0003fb-2y
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 15:31:25 +0200
+	id 1alzIE-0007R5-6q
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 15:39:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758711AbcDANbW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Apr 2016 09:31:22 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:36427 "EHLO
-	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753305AbcDANbV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2016 09:31:21 -0400
-Received: by mail-wm0-f50.google.com with SMTP id 127so20169495wmu.1
-        for <git@vger.kernel.org>; Fri, 01 Apr 2016 06:31:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=FN/7M9DFAxHtHd2A6DFPL1HvAppKAsdeMVrDD/sgNSY=;
-        b=s23KvxuWJFUu2oKEMCgiHJ+EtIt2frtYP7uE0BYUdQ5CfXPf6++T6Auin3q75hoj4k
-         O32q1PjP2rPQI9eG+kQPYFjzq8SPvSn/KeB1/nvOXQ+qGDX1Gdunjlyf/cV5GKWBM4AA
-         inyGSGQSCmY438sCgECZVZVkj8a5QJHf826dkLw/ZIAFL+Nh7q0L3FJTdS/PntP89PlY
-         x5rhzcHgUGqPyHkxYJX5awMY2SYii9BbWBAvHOKhyofoXSE7sycFYlfi1omVhSCptzCj
-         HsE2678pKOn45TVV4yBl+f2lhDMHtp5uyzZh6+sfCQWQSitDaAi16C0WerPeSjoPY8hq
-         NQjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=FN/7M9DFAxHtHd2A6DFPL1HvAppKAsdeMVrDD/sgNSY=;
-        b=jY4JVi4rA5Zkd/xCMj7L0ZL6G4QGRjL5Cax1q5dnFYxayJ7TGzlS8K2oikxtckj+kU
-         jWHPPB/HP7btXDX+aGD7PH6XpJ8TqHIc+HgSGWKtYWr60DAZDzT0Dt0rEpKCLJDAuCCY
-         jlukL5L2TrwIs2x2P5Vt0Vze/LHrDnl79xB9fy/eBF17F6pUclvQyS+qluc45bRGjyLu
-         yv+NwT4Bb/DcK7rh2Zj3qJ0q8D80Wkn5ebtOKR98h8LFm99bKK2vgnR12qbvv8b2+wgr
-         suHvBDDhdv2CImIPgDqmVJiaMvpR32Efn+4+ocSnMRrLFt7nH9RO7vLhAtFTqK9yOg9R
-         EPIA==
-X-Gm-Message-State: AD7BkJKcBFpLciBbMwf12Fh8KsbtsNo4WpikHzvasKEJwqMgDEOvUlXWm6eh29dXXDMq/w==
-X-Received: by 10.194.77.193 with SMTP id u1mr172561wjw.73.1459517479547;
-        Fri, 01 Apr 2016 06:31:19 -0700 (PDT)
-Received: from spirit.home.kaarsemaker.net ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id qb8sm542178wjc.24.2016.04.01.06.31.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Apr 2016 06:31:18 -0700 (PDT)
-In-Reply-To: <1459330800-12525-1-git-send-email-Karthik.188@gmail.com>
-X-Mailer: Evolution 3.18.5.2-0ubuntu1 
+	id S1755270AbcDANjN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Apr 2016 09:39:13 -0400
+Received: from mga14.intel.com ([192.55.52.115]:62034 "EHLO mga14.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752565AbcDANjM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Apr 2016 09:39:12 -0400
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga103.fm.intel.com with ESMTP; 01 Apr 2016 06:38:44 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.24,427,1455004800"; 
+   d="scan'208";a="936262271"
+Received: from yexl-desktop.sh.intel.com (HELO localhost) ([10.239.159.26])
+  by fmsmga001.fm.intel.com with ESMTP; 01 Apr 2016 06:38:43 -0700
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	fengguang.wu@intel.com, ying.huang@intel.com, philip.li@intel.com,
+	julie.du@intel.com
+Content-Disposition: inline
+In-Reply-To: <xmqqy48yo8eb.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290535>
 
-On wo, 2016-03-30 at 15:09 +0530, Karthik Nayak wrote:
->=20
-> This is part of unification of the commands 'git tag -l, git branch -=
-l
-> and git for-each-ref'. This ports over branch.c to use ref-filter's
-> printing options.
->=20
-> Initially posted here: $(gmane/279226). It was decided that this seri=
-es
-> would follow up after refactoring ref-filter parsing mechanism, which
-> is now merged into master (9606218b32344c5c756f7c29349d3845ef60b80c).
+On Thu, Mar 31, 2016 at 10:38:04AM -0700, Junio C Hamano wrote:
+>Xiaolong Ye <xiaolong.ye@intel.com> writes:
+>
+>> Maintainers or third party testers may want to know the exact base tree
+>> the patch series applies to. Teach git format-patch a '--base' option to
+>> record the base tree info and append this information at the end of the
+>> _first_ message (either the cover letter or the first patch in the series).
+>
+>You'd need a description of what "base tree info" consists of as a
+>separate paragraph after the above paragraph.  I'd also suggest to
+>
+>	s/and append this information/and append it/;
+>
+>Based on my understanding of what you consider "base tree info", it
+>may look like this, but you know your design better, so I'd expect
+>you to rewrite it to be more useful, or at least to fill in the
+>blanks.
+>
+>	The base tree info consists of the "base commit", which is a
+>	well-known commit that is part of the stable part of the
+>	project history everybody else works off of, and zero or
+>	more "prerequisite patches", which are well-known patches in
+>	flight that is not yet part of the "base commit" that need
+>	to be applied on top of "base commit" ???IN WHAT ORDER???
+>	before the patches can be applied.
+>
+>	"base commit" is shown as "base-commit: " followed by the
+>	40-hex of the commit object name.  A "prerequisite patch" is
+>	shown as "prerequisite-patch-id: " followed by the 40-hex
+>	"patch id", which can be obtained by ???DOING WHAT???
+>
+Thanks for the review.
 
-Interaction between this series=C2=A0and something I've not yet been ab=
-le to
-identify seems to break t6302. In f08f64b (the merge commit that merges
-this with pu), that test fails. But neither of its parents show the
-same failure.
+Ok, I'll polish up the description of base tree info and add it to commit log
+as you suggested.
 
-=46ull log of a failing 'make && make test':
-https://ci.kaarsemaker.net/git/refs/heads/pu/718c0b31e51ab07181954fb514=
-7e3283793553f4/artefact/test/log
+>> Helped-by: Junio C Hamano <gitster@pobox.com>
+>> Helped-by: Wu Fengguang <fengguang.wu@intel.com>
+>> Signed-off-by: Xiaolong Ye <xiaolong.ye@intel.com>
+>> ---
+>>  Documentation/git-format-patch.txt | 25 +++++++++++
+>>  builtin/log.c                      | 89 ++++++++++++++++++++++++++++++++++++++
+>>  2 files changed, 114 insertions(+)
+>>
+>> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+>> index 6821441..067d562 100644
+>> --- a/Documentation/git-format-patch.txt
+>> +++ b/Documentation/git-format-patch.txt
+>> @@ -265,6 +265,31 @@ you can use `--suffix=-patch` to get `0001-description-of-my-change-patch`.
+>>    Output an all-zero hash in each patch's From header instead
+>>    of the hash of the commit.
+>>  
+>> +--base=<commit>::
+>> +	Record the base tree information to identify the whole tree
+>> +	the patch series applies to. For example, the patch submitter
+>> +	has a commit history of this shape:
+>> +
+>> +	---P---X---Y---Z---A---B---C
+>> +
+>> +	where "P" is the well-known public commit (e.g. one in Linus's tree),
+>> +	"X", "Y", "Z" are prerequisite patches in flight, and "A", "B", "C"
+>> +	are the work being sent out, the submitter could say "git format-patch
+>> +	--base=P -3 C" (or variants thereof, e.g. with "--cover" or using
+>> +	"Z..C" instead of "-3 C" to specify the range), and the identifiers
+>> +	for P, X, Y, Z are appended at the end of the _first_ message (either
+>> +	the cover letter or the first patch in the series).
+>> +
+>> +	For non-linear topology, such as
+>> +
+>> +	    ---P---X---A---M---C
+>> +		\         /
+>> +		 Y---Z---B
+>> +
+>> +	the submitter could also use "git format-patch --base=P -3 C" to generate
+>> +	patches for A, B and C, and the identifiers for P, X, Y, Z are appended
+>> +	at the end of the _first_ message.
+>
+>The contents of this look OK, but does it format correctly via
+>AsciiDoc?  I suspect that only the first paragraph up to "of this
+>shape:" would appear correctly and all the rest would become funny.
 
-Verbose output of the failing test:
+Sorry, just heard of AsciiDoc, I will try to use it to do the right format work.
 
-expecting success:=C2=A0
-	git for-each-ref --format=3D"%(if)%(authorname)%(then)%(authorname): %=
-(refname)%(end)" >actual &&
-	cat >expect <<-\EOF &&
-	A U Thor: refs/heads/master
-	A U Thor: refs/heads/side
-	A U Thor: refs/odd/spot
+>
+>Also the definition of "base tree information" you need to have in
+>the log message should be given somewhere in this documentation, not
+>necessarily in the documentation of --base=<commit> option.
+>
+>Because the use of this new option is not an essential part of
+>workflow of all users of format-patch, it may be a good idea to have
+>its own separate section, perhaps between the "DISCUSSION" and
+>"EXAMPLES" sections, titled "BASE TREE IDENTIFICATION", move the
+>bulk of text above there with the specification of what "base tree
+>info" consists of there.
+>
+>And shorten the description of the option to something like:
+>
+>--base=<commit>::
+>	Record the base tree information to identify the state the
+>	patch series applies to.  See the BASE TREE IDENTIFICATION
+>        section below for details.
+>
+>or something.
 
-	A U Thor: refs/tags/foo1.10
-	A U Thor: refs/tags/foo1.3
-	A U Thor: refs/tags/foo1.6
-	A U Thor: refs/tags/four
-	A U Thor: refs/tags/one
+I'll restructure the descriptions in a resend.
 
-	A U Thor: refs/tags/three
-	A U Thor: refs/tags/two
-	EOF
-	test_cmp expect actual
+>
+>> diff --git a/builtin/log.c b/builtin/log.c
+>> index 0d738d6..03cbab0 100644
+>> --- a/builtin/log.c
+>> +++ b/builtin/log.c
+>> @@ -1185,6 +1185,82 @@ static int from_callback(const struct option *opt, const char *arg, int unset)
+>>  	return 0;
+>>  }
+>>  
+>> +struct base_tree_info {
+>> +	struct object_id base_commit;
+>> +	int nr_patch_id, alloc_patch_id;
+>> +	struct object_id *patch_id;
+>> +};
+>> +
+>> +static void prepare_bases(struct base_tree_info *bases,
+>> +			  const char *base_commit,
+>> +			  struct commit **list,
+>> +			  int total)
+>> +{
+>> +	struct commit *base = NULL, *commit;
+>> +	struct rev_info revs;
+>> +	struct diff_options diffopt;
+>> +	struct object_id *patch_id;
+>> +	unsigned char sha1[20];
+>> +	int i;
+>> +
+>> +	diff_setup(&diffopt);
+>> +	DIFF_OPT_SET(&diffopt, RECURSIVE);
+>> +	diff_setup_done(&diffopt);
+>> +
+>> +	base = lookup_commit_reference_by_name(base_commit);
+>> +	if (!base)
+>> +		die(_("Unknown commit %s"), base_commit);
+>> +	oidcpy(&bases->base_commit, &base->object.oid);
+>> +
+>> +	init_revisions(&revs, NULL);
+>> +	revs.max_parents = 1;
+>> +	base->object.flags |= UNINTERESTING;
+>> +	add_pending_object(&revs, &base->object, "base");
+>> +	for (i = 0; i < total; i++) {
+>> +		list[i]->object.flags |= 0;
+>
+>What does this statement do, exactly?  Are you clearing some bits
+>but not others, and if so which ones?
 
---- expect	2016-04-01 13:28:14.157855026 +0000
-+++ actual	2016-04-01 13:28:14.153855026 +0000
-@@ -2,6 +2,8 @@
-=C2=A0A U Thor: refs/heads/side
-=C2=A0A U Thor: refs/odd/spot
-=C2=A0
-+
-+
-=C2=A0A U Thor: refs/tags/foo1.10
-=C2=A0A U Thor: refs/tags/foo1.3
-=C2=A0A U Thor: refs/tags/foo1.6
-not ok 34 - check %(if)...%(then)...%(end) atoms
-#=09
-#		git for-each-ref --format=3D"%(if)%(authorname)%(then)%(authorname):=
- %(refname)%(end)" >actual &&
-#		cat >expect <<-\EOF &&
-#		A U Thor: refs/heads/master
-#		A U Thor: refs/heads/side
-#		A U Thor: refs/odd/spot
-#=09
-#		A U Thor: refs/tags/foo1.10
-#		A U Thor: refs/tags/foo1.3
-#		A U Thor: refs/tags/foo1.6
-#		A U Thor: refs/tags/four
-#		A U Thor: refs/tags/one
-#=09
-#		A U Thor: refs/tags/three
-#		A U Thor: refs/tags/two
-#		EOF
-#		test_cmp expect actual
-#=09
+My mistake, it's useless and should be removed.
 
-expecting success:=C2=A0
-	git for-each-ref --format=3D"%(if)%(authorname)%(then)%(authorname)%(e=
-lse)No author%(end): %(refname)" >actual &&
-	cat >expect <<-\EOF &&
-	A U Thor: refs/heads/master
-	A U Thor: refs/heads/side
-	A U Thor: refs/odd/spot
-	No author: refs/tags/double-tag
-	A U Thor: refs/tags/foo1.10
-	A U Thor: refs/tags/foo1.3
-	A U Thor: refs/tags/foo1.6
-	A U Thor: refs/tags/four
-	A U Thor: refs/tags/one
-	No author: refs/tags/signed-tag
-	A U Thor: refs/tags/three
-	A U Thor: refs/tags/two
-	EOF
-	test_cmp expect actual
+>
+>> +		add_pending_object(&revs, &list[i]->object, "rev_list");
+>> +		list[i]->util = (void *)1;
+>
+>Are we sure commit objects not on the list have their ->util cleared?
+>The while() loop below seems to rely on that to correctly filter out
+>the ones that are on the list.
+>
 
---- expect	2016-04-01 13:28:14.161855026 +0000
-+++ actual	2016-04-01 13:28:14.161855026 +0000
-@@ -1,7 +1,9 @@
-=C2=A0A U Thor: refs/heads/master
-=C2=A0A U Thor: refs/heads/side
-=C2=A0A U Thor: refs/odd/spot
--No author: refs/tags/double-tag
-+No author: refs/tags/annotated-tag
-+No author: refs/tags/doubly-annotated-tag
-+No author: refs/tags/doubly-signed-tag
-=C2=A0A U Thor: refs/tags/foo1.10
-=C2=A0A U Thor: refs/tags/foo1.3
-=C2=A0A U Thor: refs/tags/foo1.6
-not ok 35 - check %(if)...%(then)...%(else)...%(end) atoms
-#=09
-#		git for-each-ref --format=3D"%(if)%(authorname)%(then)%(authorname)%=
-(else)No author%(end): %(refname)" >actual &&
-#		cat >expect <<-\EOF &&
-#		A U Thor: refs/heads/master
-#		A U Thor: refs/heads/side
-#		A U Thor: refs/odd/spot
-#		No author: refs/tags/double-tag
-#		A U Thor: refs/tags/foo1.10
-#		A U Thor: refs/tags/foo1.3
-#		A U Thor: refs/tags/foo1.6
-#		A U Thor: refs/tags/four
-#		A U Thor: refs/tags/one
-#		No author: refs/tags/signed-tag
-#		A U Thor: refs/tags/three
-#		A U Thor: refs/tags/two
-#		EOF
-#		test_cmp expect actual
-#=09
+I'll need to check it.
 
-expecting success:=C2=A0
-	git for-each-ref --format=3D"%(refname:short): %(if)%(HEAD)%(then)Head=
- ref%(else)Not Head ref%(end)" >actual &&
-	cat >expect <<-\EOF &&
-	master: Head ref
-	side: Not Head ref
-	odd/spot: Not Head ref
-	double-tag: Not Head ref
-	foo1.10: Not Head ref
-	foo1.3: Not Head ref
-	foo1.6: Not Head ref
-	four: Not Head ref
-	one: Not Head ref
-	signed-tag: Not Head ref
-	three: Not Head ref
-	two: Not Head ref
-	EOF
-	test_cmp expect actual
+>> +	}
+>> +
+>> +	if (prepare_revision_walk(&revs))
+>> +		die(_("revision walk setup failed"));
+>> +	/*
+>> +	 * Traverse the prerequisite commits list,
+>> +	 * get the patch ids and stuff them in bases structure.
+>> +	 */
+>> +	while ((commit = get_revision(&revs)) != NULL) {
+>> +		if (commit->util)
+>> +			continue;
+>> +		if (commit_patch_id(commit, &diffopt, sha1))
+>> +			die(_("cannot get patch id"));
+>> +		ALLOC_GROW(bases->patch_id, bases->nr_patch_id + 1, bases->alloc_patch_id);
+>> +		patch_id = bases->patch_id + bases->nr_patch_id;
+>> +		hashcpy(patch_id->hash, sha1);
+>
+>The variable patch_id is used only once here.  Perhaps either write
+>
+>	hashcpy(bases->patch_id[bases->nr_patch_id]->hash, sha1);
+>
+>to get rid of the variable, or move its declaration inside the
+>while() loop to limit its scope?
+>
 
---- expect	2016-04-01 13:28:14.165855026 +0000
-+++ actual	2016-04-01 13:28:14.165855026 +0000
-@@ -1,7 +1,9 @@
-=C2=A0master: Head ref
-=C2=A0side: Not Head ref
-=C2=A0odd/spot: Not Head ref
--double-tag: Not Head ref
-+annotated-tag: Not Head ref
-+doubly-annotated-tag: Not Head ref
-+doubly-signed-tag: Not Head ref
-=C2=A0foo1.10: Not Head ref
-=C2=A0foo1.3: Not Head ref
-=C2=A0foo1.6: Not Head ref
-not ok 36 - ignore spaces in %(if) atom usage
-#=09
-#		git for-each-ref --format=3D"%(refname:short): %(if)%(HEAD)%(then)He=
-ad ref%(else)Not Head ref%(end)" >actual &&
-#		cat >expect <<-\EOF &&
-#		master: Head ref
-#		side: Not Head ref
-#		odd/spot: Not Head ref
-#		double-tag: Not Head ref
-#		foo1.10: Not Head ref
-#		foo1.3: Not Head ref
-#		foo1.6: Not Head ref
-#		four: Not Head ref
-#		one: Not Head ref
-#		signed-tag: Not Head ref
-#		three: Not Head ref
-#		two: Not Head ref
-#		EOF
-#		test_cmp expect actual
-#=09
+Sure, I'll move the patch_id declaration inside the loop.
 
+>Has this traversal been told, when setting up the &revs structure,
+>to show commits in specific order (like "topo order")?  Should it
+>be?
 
-# failed 3 among 38 test(s)
-1..38
---=20
-Dennis Kaarsemaker
-www.kaarsemaker.net
+Thanks for the reminder, this traversal need to be in topo order,
+I'll set revs.topo_order to 1 explicitly.
+
+>
+>> +		bases->nr_patch_id++;
+>> +	}
+>> +}
+>> +
+>> +static void print_bases(struct base_tree_info *bases)
+>> +{
+>> +	int i;
+>> +
+>> +	/* Only do this once, either for the cover or for the first one */
+>> +	if (is_null_oid(&bases->base_commit))
+>> +		return;
+>> +
+>> +	/* Show the base commit */
+>> +	printf("base-commit: %s\n", oid_to_hex(&bases->base_commit));
+>> +
+>> +	/* Show the prerequisite patches */
+>> +	for (i = 0; i < bases->nr_patch_id; i++)
+>> +		printf("prerequisite-patch-id: %s\n", oid_to_hex(&bases->patch_id[i]));
+>
+>This shows the patches in the order discovered by the revision
+>traversal, which typically is newer to older.  Is that intended?
+>Is it assumed that the order of the patches does not matter?
+
+The prerequisite patches should show in topological order, thus robot
+could parse them one by one and apply the patches in reverse order.
+
+Thanks,
+Xiaolong.
+>
+>> @@ -1209,6 +1285,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>
+>The remainder of the patch looks very sensible, including the call
+>to reset_revision_walk().
+>
+>Thanks.
