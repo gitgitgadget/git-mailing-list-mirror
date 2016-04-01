@@ -1,111 +1,112 @@
-From: Miklos Vajna <vmiklos@collabora.co.uk>
-Subject: Re: Signed-off-by vs Reviewed-by
-Date: Fri, 1 Apr 2016 16:10:36 +0200
-Message-ID: <20160401141036.GG800@collabora.co.uk>
-References: <20160331123507.GC19857@collabora.co.uk>
- <CAFZEwPMzcqrd8NEP6MH5saXL2KdUKAyN51uuoS5=aeU0aPWjJQ@mail.gmail.com>
- <20160331143501.GE19857@collabora.co.uk>
- <xmqqtwjmpq6b.fsf@gitster.mtv.corp.google.com>
+From: Matthew Persico <matthew.persico@gmail.com>
+Subject: Re: GIT_CONFIG - what's the point?
+Date: Fri, 1 Apr 2016 10:31:12 -0400
+Message-ID: <CAL20dLDkmjpXdmHv0MdoUEe43s9TjqrOLS2ud8HHGCF2vahWNQ@mail.gmail.com>
+References: <CAL20dLDQsti1qW7CrrEifPAhPp1snq9r5MgJL+mDwhLqhe6fyQ@mail.gmail.com>
+ <20160401123830.GB12019@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="WkfBGePaEyrk4zXB"
-Cc: Pranit Bauva <pranit.bauva@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 01 16:10:54 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 01 16:31:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alzmn-0005VZ-CS
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 16:10:53 +0200
+	id 1am06q-000779-Vr
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 16:31:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752597AbcDAOKo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2016 10:10:44 -0400
-Received: from bhuna.collabora.co.uk ([46.235.227.227]:50420 "EHLO
-	bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750843AbcDAOKn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2016 10:10:43 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	(Authenticated sender: vmiklos)
-	with ESMTPSA id CC1FE260BB9
-Content-Disposition: inline
-In-Reply-To: <xmqqtwjmpq6b.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1758900AbcDAObd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Apr 2016 10:31:33 -0400
+Received: from mail-yw0-f181.google.com ([209.85.161.181]:33564 "EHLO
+	mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752212AbcDAObc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Apr 2016 10:31:32 -0400
+Received: by mail-yw0-f181.google.com with SMTP id h65so163801060ywe.0
+        for <git@vger.kernel.org>; Fri, 01 Apr 2016 07:31:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=uxQeOR0ijylfmqZe0BkZmagDwtxTKhIVG//RIkCJJxM=;
+        b=udkCQNSnrczUyg0e1irwrB4d9pcYRc2Ruks0QwEvY0HUCgdYaknn9SmHU4iPilZe+1
+         bJrYe69Cj1WbZe94xfC7bbvP5pgoAdJ5xsgTco608+RaufFm7U5+6qWU47cFvVjjJ5DQ
+         v1EEr9VBH2ocO5lA5lTWDiQbpUsp96w6OdCHnBP3Qkr5rtp6QJJvbsoxn1TP5AyykjbE
+         1oxcLDbesfH4eQ53ULfs2dlNhXTFHSAZG1mvb+6AAXfzt9jcRf2GCVd7Zx9tOaF6ie+H
+         dEVtMHvHIoapr+cDfHhJ0XrqUY8RB6xolI6bSSvEVPC3qizOrfR/UIMZqdrd182yI1ZA
+         GQEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=uxQeOR0ijylfmqZe0BkZmagDwtxTKhIVG//RIkCJJxM=;
+        b=JU5TyG12TTQ8PR3g/up6KYGO/V3hWuS7dSOZVnT96Cwe/trInWQ4nP7BZn64X6bKx+
+         XGGYwLEsEAbZ34VSymA4HmuArZsOs07GWY0rpRTIQExkldPQha3UQa12SBbiP39H8F0j
+         W1EkriI1274u1jN8C+Xt0q4vhZ11IEF9dd96g2Jv3pX6yc0YnH+eUI00LXiIM3hqKtjU
+         QfemhLwJH2FvevOMIWResHxAk8G8kJwwjQEe7k2jyU/XOxFQEZBuAq1KsmrkT7SHap6r
+         5qa69JBYeSMiEx2d4j92vmRd1lsNWYUusLyY1q807AL4W9//7tN6jkXy0edj0uA52hmR
+         Nkyg==
+X-Gm-Message-State: AD7BkJKTTcCtKqGI1bgBWillCoieUNW+p5vEkjzhWBykWpLc4j1+EJkMSoBH5Z6gpC2wNOI24yo3FfLAfEDYcw==
+X-Received: by 10.31.12.3 with SMTP id 3mr2221626vkm.28.1459521092067; Fri, 01
+ Apr 2016 07:31:32 -0700 (PDT)
+Received: by 10.159.54.228 with HTTP; Fri, 1 Apr 2016 07:31:12 -0700 (PDT)
+In-Reply-To: <20160401123830.GB12019@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290539>
+
+Let me explain my scenario. I have an nfs mounted home directory. It
+is used across multiple machines. I use different colored xterms for
+each machine. But that means that the one set of colors in my one
+.gitconfig file don't work against all my screen backgrounds. I'm
+trying to find a way to tune the git colors per login. The ability to
+set colors in an environment variable (like most UNIX utils support)
+would be the easiest way to do this. Failing that, I was hoping that
+by setting GIT_CONFIG per login, I could tune the color schemes with
+different config files.
+
+Since that is not how GIT_CONFIG is used, I have simply decided to
+squint where necessary, or open up a neutral colored xterm for the
+diff, regardless of machine.
+
+Yes, I could probably do diffs in many other ways, but git diff at the
+command line is usually the most expedient.
+
+Unless I wanted to define a GIT_CONFIG_OVER environment variable upon
+login, place inside it the appropriate -c<name>=<value> overrides for
+colors, and then define a bash function git as
+
+git () {
+   $(which git) $GIT_CONFIG_OVER "$@"
+   return $?
+}
+
+which seems silly.
+
+Thanks anyway.
+
+On Fri, Apr 1, 2016 at 8:38 AM, Jeff King <peff@peff.net> wrote:
+> On Thu, Mar 31, 2016 at 08:54:26PM -0400, Matthew Persico wrote:
+>
+>> So, what's the point of GIT_CONFIG if only git-config uses it? Or did
+>> I miss a step?
+>
+> There isn't a point to it. It's historical cruft that has been left in
+> to avoid breaking older scripts. The same thing is generally better
+> accomplished by using git-config's "--file" parameter. We should
+> probably do a better job of making that clear in the documentation.
+>
+> Or possibly deprecate it and eventually remove it entirely, as discussed
+> in:
+>
+>   http://thread.gmane.org/gmane.linux.debian.devel.bugs.general/1195694/focus=257770
+>
+> -Peff
 
 
---WkfBGePaEyrk4zXB
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 
-Hi,
-
-On Thu, Mar 31, 2016 at 09:28:44AM -0700, Junio C Hamano <gitster@pobox.com> wrote:
-> The internal "parse the existing trailer block and manipulate it by
-> adding, conditionally adding, replacing and deleting it" logic was
-> done as an experimental "interpret-trailers" program, but polishing
-> it (both its design and implementation) and integrating it to the
-> front-line programs (e.g. "git commit") hasn't been done.
-
-I had a look at interpret-trailers, and one use-case I miss is: being
-able to define a trailer type, but only add it when asked explicitly.
-
-Example:
-
-----
-$ git config trailer.review.key "Reviewed-by: "
-$ git config trailer.review.command 'echo "$(git config user.name) <$(git config user.email)>"'
-$ echo foo|git interpret-trailers
-foo
-
-Reviewed-by: A U Thor <author@example.com>
-$ echo foo|git interpret-trailers --trailer review
-foo
-
-Reviewed-by: A U Thor <author@example.com>
-----
-
-I can imagine e.g. a new configuration vaulue named
-trailer.<token>.ifMissing explicit, and when that's set, the trailer
-would be only added if it's spelled out explicitly using '--trailer
-<token>'.
-
-Does this sound like a good idea, or did I miss some way how this is
-already possible? :-)
-
-> As to the last step of "integration", we cannot use short-and-sweet
-> single letter options like '-s' (for sign-off) for each and every
-> custom trailer different projects use for their own purpose (as
-> there are only 26 of the lowercase ASCII alphabet letters), so the
-> most general syntax for the option has to become "--trailer <arg>"
-> or some variation of it, and at that point "-s" would look like a
-> short-hand for "--trailer signed-off-by".
-
-Hmm, I think the above has to be implemented first, otherwise it'll be
-hard to make "-s" an alias of "--trailer signed-off-by". (I mean having
-git understand what "signed-off-by" is, still adding it conditionally.)
-
-Regards,
-
-Miklos
-
---WkfBGePaEyrk4zXB
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iEYEARECAAYFAlb+gVsACgkQe81tAgORUJbOSQCeMSuOf/JWvAXzQQx+9d9cbcdG
-+AIAn0of8Id6+oH/UAIvzi/KISyEEK0c
-=lyAb
------END PGP SIGNATURE-----
-
---WkfBGePaEyrk4zXB--
+-- 
+Matthew O. Persico
