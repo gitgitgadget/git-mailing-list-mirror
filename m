@@ -1,62 +1,59 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 2/2] http.c: implements the GIT_CURL_DEBUG environment variable
-Date: Fri,  1 Apr 2016 10:44:42 +0000
-Message-ID: <1459507482-36678-2-git-send-email-gitter.spiros@gmail.com>
-References: <1459507482-36678-1-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 1/2] imap-send.c: implements the GIT_CURL_DEBUG environment variable
+Date: Fri,  1 Apr 2016 10:44:41 +0000
+Message-ID: <1459507482-36678-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 01 12:44:58 2016
+X-From: git-owner@vger.kernel.org Fri Apr 01 12:45:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alwZW-00049j-3z
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 12:44:58 +0200
+	id 1alwZW-00049j-MJ
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 12:44:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758498AbcDAKox (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2016 06:44:53 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33874 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754992AbcDAKow (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1758144AbcDAKow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Fri, 1 Apr 2016 06:44:52 -0400
-Received: by mail-wm0-f65.google.com with SMTP id p65so3591420wmp.1
-        for <git@vger.kernel.org>; Fri, 01 Apr 2016 03:44:51 -0700 (PDT)
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35087 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752406AbcDAKov (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Apr 2016 06:44:51 -0400
+Received: by mail-wm0-f68.google.com with SMTP id 139so3579131wmn.2
+        for <git@vger.kernel.org>; Fri, 01 Apr 2016 03:44:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/LZkZk3trXQEohWrmQ/8L8SJakbnJsaD3Q1Y1FZVCNI=;
-        b=IiAk6qR5ZF6UpwBL2NhuQ8BJMMMReHzC4creEMYBkLVqu7oazBfReyQTj4Es9gnG5T
-         1x+kxphNKugLfl8v6yMdnFaWZc6xXfPnyZBUd5r72cL3yd4h0RG/8IXni9z3LIwfWZh+
-         oEe68hK1byWOFbO5a2dJfKIu6Fr8e7pc4PsXrPDQ2qbdc8389ttN+LOUdMfQ/E0h/8i/
-         ZBeYCZHFvru/IxkL5MaW5nsgH1eWPTKCFRxBXoj6Q/6p8+I76VgyBO+D9ahIyDGN0XgF
-         MEp2X8hg1E+ZEe0gpyhbJGnkvKQ0zQQaHSFKufNxjjInLb+zvomO5N9tljsLaXNsOLKF
-         V4GQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=CvYlnq7NbRZ63YSs+eF6jLbuZVEyVf585Hdnvn0GghY=;
+        b=Ny2Lm4eMneCxicYiPhBnsmyAL8Ai1PZCHuRIIyWpyel0CMD/eBa22tIRy9uuuVgoCA
+         I20ZMLhb43FFLKET5al/b+ZMd4RITNiI5sE7bsZABWaR+67KkcxKKjarnCvhpyaSgY1q
+         Bp9EGiBo/U+UEMir7aom+IRXzW6z1ozrTrfFAL10shYkdiOxScOwjPsP5pUbBoOGOovy
+         cM0kVop+PVIcTGBw/M74pH6MOaUIFk0hh7MRfS+w9rOwC9ZWoa9s+8dSvZntFkFBE415
+         F0QNNdHfPaEvrwlz9xumUvYJErXkF8EWe4S92XiqKPj+LwfLP54U0ESbg68+lTN7dkZo
+         C5mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=/LZkZk3trXQEohWrmQ/8L8SJakbnJsaD3Q1Y1FZVCNI=;
-        b=UkY4TUcYZt7LQfLZC1bnt3nf5YI0o8f9rBZGQNTzRtN8Gqm5zFdtmBAE3J2p/eR62/
-         t0Nf3T9duLYEm8oaYsW6oynOmRllj82zzH/rby3RXENg3DgDYQEi3XuWwiX1DboH5rur
-         DiA/azqk1enA5NZWpu4CFBdIfL/Zoc1sgTDGXSXpXotNDvxifV8NMOsVrgqy7YZxHSEP
-         /2DDucTMLndfahSKdGmz3PK8uoSldMWmGPS1GzHKKNCUHuOIa7d7vc8iuRsiQNhrLoQ6
-         2frJlMUHr1SJjNiHi5apY1OrReXl1d7IU9zzgGpxwxqtT5GbpERTeIU0w7QD3nWY1DqG
-         e/cg==
-X-Gm-Message-State: AD7BkJLckBocgINX+xQglxZAmQZi/KSvAmTxJcRgSBJvXfvf5mKOixTqLaYXilPmLQr/2Q==
-X-Received: by 10.28.105.5 with SMTP id e5mr3219395wmc.87.1459507490803;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=CvYlnq7NbRZ63YSs+eF6jLbuZVEyVf585Hdnvn0GghY=;
+        b=lun4fvKnoCyEpMPtdiDKkA4mn7fTb1ic4V2JW6KT4xZ52lG236zzVOZmtg8BlONSCM
+         8XjiE1J0RtY/o/Vb/w5j5U7BmvKROfXaHl3D0RDcTcLRh8WKFzTGzh8fHSAOeAnMhC7P
+         OsEJNIdJY8FUy8ZT0QiuxgizYL8dYgHo2XdtyuuAmHE7A2PqP4/IZcmVPrAEBB4sC9wv
+         Q/wdidE9A7jqpy6kEy1ML0DXN7wuGcwJ1Ys/T0sgbAUPYnKU8h5SbepxL/E9IDiMheLw
+         iE5IymnJMOtfVaD/dvtwkMkPhGldDZRu9OrvbgKhURSfsm1dLYg+PcujayjDq8vGtS47
+         kwpA==
+X-Gm-Message-State: AD7BkJK+hCNnbUbTtxa8DMABIMvSd5W45srt9V7gMy2QA1iE2ckzai2UC2jUsWD8ueasjA==
+X-Received: by 10.28.8.139 with SMTP id 133mr3290686wmi.26.1459507490019;
         Fri, 01 Apr 2016 03:44:50 -0700 (PDT)
 Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([23.101.69.192])
-        by smtp.gmail.com with ESMTPSA id hq2sm13467438wjb.3.2016.04.01.03.44.50
+        by smtp.gmail.com with ESMTPSA id hq2sm13467438wjb.3.2016.04.01.03.44.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 01 Apr 2016 03:44:50 -0700 (PDT)
+        Fri, 01 Apr 2016 03:44:49 -0700 (PDT)
 X-Mailer: git-send-email 2.7.0.416.gbf6b42c.dirty
-In-Reply-To: <1459507482-36678-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290521>
 
 Implements the GIT_CURL_DEBUG environment variable to allow a greater
 degree of detail of GIT_CURL_VERBOSE, in particular the complete
@@ -66,17 +63,17 @@ thorough debugging analysis.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- http.c | 97 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 96 insertions(+), 1 deletion(-)
+ imap-send.c | 99 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 97 insertions(+), 2 deletions(-)
 
-diff --git a/http.c b/http.c
-index dfc53c1..079779d 100644
---- a/http.c
-+++ b/http.c
-@@ -437,6 +437,97 @@ static void set_curl_keepalive(CURL *c)
+diff --git a/imap-send.c b/imap-send.c
+index 4d3b773..cf79e7f 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -1395,6 +1395,96 @@ static int append_msgs_to_imap(struct imap_server_conf *server,
  }
- #endif
  
+ #ifdef USE_CURL_FOR_IMAP_SEND
 +
 +static
 +void curl_dump(const char *text,
@@ -167,22 +164,24 @@ index dfc53c1..079779d 100644
 +	return 0;
 +}
 +
-+
- static CURL *get_curl_handle(void)
+ static CURL *setup_curl(struct imap_server_conf *srvc)
  {
- 	CURL *result = curl_easy_init();
-@@ -532,7 +623,11 @@ static CURL *get_curl_handle(void)
- 			"your curl version is too old (>= 7.19.4)");
- #endif
+ 	CURL *curl;
+@@ -1442,8 +1532,13 @@ static CURL *setup_curl(struct imap_server_conf *srvc)
  
--	if (getenv("GIT_CURL_VERBOSE"))
-+	if (getenv("GIT_CURL_DEBUG")) {
-+		curl_easy_setopt(result, CURLOPT_VERBOSE, 1);
-+		curl_easy_setopt(result, CURLOPT_DEBUGFUNCTION, curl_trace);
-+		curl_easy_setopt(result, CURLOPT_DEBUGDATA, NULL);
-+	} else if (getenv("GIT_CURL_VERBOSE"))
- 		curl_easy_setopt(result, CURLOPT_VERBOSE, 1);
+ 	curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
  
- 	curl_easy_setopt(result, CURLOPT_USERAGENT,
+-	if (0 < verbosity || getenv("GIT_CURL_VERBOSE"))
+-		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
++	if (0 < verbosity )
++		if (getenv("GIT_CURL_DEBUG")) {
++			curl_easy_setopt(curl, CURLOPT_VERBOSE, 1);
++			curl_easy_setopt(curl, CURLOPT_DEBUGFUNCTION, curl_trace);
++		} else if (getenv("GIT_CURL_VERBOSE"))
++			curl_easy_setopt(curl, CURLOPT_VERBOSE, 1);
++
+ 
+ 	return curl;
+ }
 -- 
 2.7.0.416.gbf6b42c.dirty
