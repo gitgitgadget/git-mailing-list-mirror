@@ -1,145 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] submodule--helper, module_clone: always operate on absolute paths
-Date: Fri, 01 Apr 2016 12:30:20 -0700
-Message-ID: <xmqq37r5i0tv.fsf@gitster.mtv.corp.google.com>
-References: <1459469849-9643-1-git-send-email-sbeller@google.com>
-	<1459469849-9643-2-git-send-email-sbeller@google.com>
-	<xmqq7fghi1ds.fsf@gitster.mtv.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v3] builtin/apply: handle parse_binary() failure
+Date: Fri, 1 Apr 2016 15:31:55 -0400
+Message-ID: <CAP8UFD0RCECwy4DXM0PHe+K-XTiCbtur0dEhk6Z37wCKLDwfKQ@mail.gmail.com>
+References: <1458304241-537-1-git-send-email-chriscool@tuxfamily.org>
+	<CAP8UFD2vx17KDf5HgSYYZudbXiq7CYDg0=hXbJuJrLp9QDfJUg@mail.gmail.com>
+	<xmqqvb41i705.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, sunshine@sunshineco.com,
-	jacob.keller@gmail.com, norio.nomura@gmail.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Apr 01 21:30:29 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 01 21:32:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1am4m4-0000hw-OI
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 21:30:29 +0200
+	id 1am4nZ-0001XQ-Pm
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 21:32:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752189AbcDATaY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2016 15:30:24 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:65128 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751364AbcDATaX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2016 15:30:23 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7598C4FBD1;
-	Fri,  1 Apr 2016 15:30:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GxOqKg5dPDALcdeOxDtP0r+B6yc=; b=Xk+Hg1
-	j4KYm6HyA6GF4i4936BUnpKoFu2FA3601NnynaEWAcQoHXQJxLDoCXzM/PZkZDa9
-	5XjgCSetU3Q4J43kV72JmyRfIfxb/0OuBXwGZCQF3Ov8GrfgYflbdoZbFeUocik4
-	3zCtA4eBvCeTE5gc8rEyjRm6oEVrrLqEUsylI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rpvZwkKiZ4zyjruKElM6b5TWFzj/AwVl
-	K9UyXXA+Y4ZzMM+3tF1+PDCuHx3WYP213UsktLJHZAUfALzlmJEphBjprUlYeVLF
-	t6HWeMBbBvxKZGPXBnNDhlI0tp1Aqmnxa+jsCq2tSLtRsWUTZHI3Ca+G79jVrtAU
-	++Zc/qLKqNc=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6A1CE4FBD0;
-	Fri,  1 Apr 2016 15:30:22 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D75064FBCE;
-	Fri,  1 Apr 2016 15:30:21 -0400 (EDT)
-In-Reply-To: <xmqq7fghi1ds.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 01 Apr 2016 12:18:23 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2CDD5918-F840-11E5-A190-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1752735AbcDATb5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Apr 2016 15:31:57 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:34878 "EHLO
+	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751364AbcDATb5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Apr 2016 15:31:57 -0400
+Received: by mail-wm0-f48.google.com with SMTP id 191so2633432wmq.0
+        for <git@vger.kernel.org>; Fri, 01 Apr 2016 12:31:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=LV1PUlG6c11ZC1zwV8sn+4oVsfoPuS354DbQbix0Ik4=;
+        b=FxpSILNVtajO70EqYRdCojlbeA0cW+URcoDrtUtgOt+D3O/EYWnYWjlu1NMQEELpmy
+         tA5t/4Q7GHOdGOxmdKY1uRgnTIUN6sJtqgj1uqZXocGngIr2NNSig70KPoRoTO3WmZFR
+         UZPCfmvFRVVFCjQThRyCrJd4A/CG/1iQsZY8PIc5qx7ai219er3CwqfcF9m8GuKdVfIH
+         1tWu8rQawFxydbrW+zehEWRAWykfFUi4g140CXWz716dd2NcJV3XtZeFulm0crkO4K+Y
+         5NeBI4DR9ZMo/pCaflyrTsho8ht7NzB89Rskz2d596OlQ9W0oh+Hh6MQonIkdYUPfE1Y
+         G6CQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=LV1PUlG6c11ZC1zwV8sn+4oVsfoPuS354DbQbix0Ik4=;
+        b=PlBWuaveRDo9e+QiEVY9iB6yonTGpUNhtL0FRZvCe1xfqyEKuqfVytBGN2eMsreiXS
+         N9o7fKEnYzoI7dU75/nQAz7ZMznEBu/tV322rMX75d9aZYEY1cMtczGXRN4fgt+F5hFZ
+         q7WJej5rCPrC/DqXU2iT8Den0Kfl9/51KFjP8VWCu+0JsYkupsGg8hIoNz1+MSPSdHQB
+         mpnlBNW+7Lk3RW8co238w1pwm6jYgqip09A+68ZPF/8ngF+ST20S71z4CtYmb3cOXwop
+         v4e9Zu8I/KTZCoEjbg/UBWXd+eI9NH4bpuXZyT0H9dZRy+T60VZ0k1HwUTsZnqOfkfEA
+         42cA==
+X-Gm-Message-State: AD7BkJImAWtaej4b4GIuwha61FCcXaLFfdxpYXiGLWpAEAC1z8wrDEhNiGT8hhoRCjs/OBSf8BefzSdm1cpO6w==
+X-Received: by 10.28.107.13 with SMTP id g13mr429718wmc.62.1459539115588; Fri,
+ 01 Apr 2016 12:31:55 -0700 (PDT)
+Received: by 10.194.151.131 with HTTP; Fri, 1 Apr 2016 12:31:55 -0700 (PDT)
+In-Reply-To: <xmqqvb41i705.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290577>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> By the way, this line is the last use of sm_gitdir_rel before it
-> gets freed.  I wonder
+On Fri, Apr 1, 2016 at 1:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+>>
+>> It looks like this patch is not in pu. Maybe it has fallen through the cracks?
 >
-> 	sm_gitdir = absolute_path(sb.buf);
+> Yup, it indeed was ignored (giving priority to work towards 2.8
+> during the freeze) and then was forgotten.
 >
-> would be sufficient.  We can lose the variable, and free() on it at
-> the end of this function, and an extra allocation if we can do so.
->
->> +	if (!is_absolute_path(path)) {
->> +		strbuf_addf(&sb, "%s/%s", get_git_work_tree(), path);
->> +		path = strbuf_detach(&sb, 0);
->> +	} else
->> +		path = xstrdup(path);
->>  
->>  	if (!file_exists(sm_gitdir)) {
->>  		if (safe_create_leading_directories_const(sm_gitdir) < 0)
->
-> Other than that, looks good to me.
+> My comment on the first one that exited mentions "your follow-up
+> patch", but I cannot quite tell which one, as there was no threading
+> in your original patches.  Does this change need to come before
+> something else that I already have?
 
-Another thing I noticed is that it will not stay safe forever to
-borrow the result from absolute_path() for extended period of time.
-So how about this one (and Ramsay's "NULL must be spelled NULL, not
-0") on top?
+No, I think by "your follow-up patch" you meant the other one that had
+also been forgotten and that I also replied to, that is:
 
--- >8 --
-From: Junio C Hamano <gitster@pobox.com>
-Date: Fri, 1 Apr 2016 12:23:16 -0700
-Subject: [PATCH] submodule--helper: do not borrow absolute_path() result for too long
+[PATCH] builtin/apply: free patch when parse_chunk() fails
 
-absolute_path() is designed to allow its callers to take a brief
-peek of the result (typically, to be fed to functions like
-strbuf_add() and relative_path() as a parameter) without having to
-worry about freeing it, but the other side of the coin of that
-memory model is that the caller shouldn't rely too much on the
-result living forever--there may be a helper function the caller
-subsequently calls that makes its own call to absolute_path(),
-invalidating the earlier result.
+I had first sent both of them at around the same time.
 
-Use xstrdup() to make our own copy, and free(3) it when we are done.
-While at it, remove an unnecessary sm_gitdir_rel variable that was
-only used to as a parameter to call absolute_paht() and never used
-again.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/submodule--helper.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index b660a22..e69b340 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -157,8 +157,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	const char *reference = NULL, *depth = NULL;
- 	int quiet = 0;
- 	FILE *submodule_dot_git;
--	char *sm_gitdir_rel, *p, *path = NULL;
--	const char *sm_gitdir;
-+	char *p, *path = NULL, *sm_gitdir;
- 	struct strbuf rel_path = STRBUF_INIT;
- 	struct strbuf sb = STRBUF_INIT;
- 
-@@ -199,8 +198,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 		die(_("submodule--helper: unspecified or empty --path"));
- 
- 	strbuf_addf(&sb, "%s/modules/%s", get_git_dir(), name);
--	sm_gitdir_rel = strbuf_detach(&sb, NULL);
--	sm_gitdir = absolute_path(sm_gitdir_rel);
-+	sm_gitdir = xstrdup(absolute_path(sb.buf));
- 
- 	if (!is_absolute_path(path)) {
- 		strbuf_addf(&sb, "%s/%s", get_git_work_tree(), path);
-@@ -245,7 +243,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 			       relative_path(path, sm_gitdir, &rel_path));
- 	strbuf_release(&sb);
- 	strbuf_release(&rel_path);
--	free(sm_gitdir_rel);
-+	free(sm_gitdir);
- 	free(path);
- 	free(p);
- 	return 0;
--- 
-2.8.0-225-g297c00e
+Thanks,
+Christian.
