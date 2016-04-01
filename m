@@ -1,134 +1,155 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH v3 00/16] port branch.c to use ref-filter's printing
- options
-Date: Fri, 1 Apr 2016 15:44:36 +0200
-Message-ID: <20160401134435.GA16027@spirit>
-References: <1459330800-12525-1-git-send-email-Karthik.188@gmail.com>
- <1459517477.3493.5.camel@kaarsemaker.net>
+From: Ye Xiaolong <xiaolong.ye@intel.com>
+Subject: Re: [PATCH v3 3/4] format-patch: introduce --base=auto option
+Date: Fri, 1 Apr 2016 21:52:07 +0800
+Message-ID: <20160401135207.GB2915@yexl-desktop>
+References: <1459388776-18066-1-git-send-email-xiaolong.ye@intel.com>
+ <1459388776-18066-4-git-send-email-xiaolong.ye@intel.com>
+ <xmqqtwjmo84r.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, jacob.keller@gmail.com
-To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 01 15:44:51 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, fengguang.wu@intel.com, ying.huang@intel.com,
+	philip.li@intel.com, julie.du@intel.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 01 15:52:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alzNU-0001NP-Uf
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 15:44:45 +0200
+	id 1alzVR-0005JD-2O
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 15:52:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754279AbcDANol convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Apr 2016 09:44:41 -0400
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:38862 "EHLO
-	mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751442AbcDANok (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2016 09:44:40 -0400
-Received: by mail-wm0-f53.google.com with SMTP id 20so23749376wmh.1
-        for <git@vger.kernel.org>; Fri, 01 Apr 2016 06:44:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=mJZHm3t0m6KkCh4sLU2gVMdY7/AFg3U9626Eb5mfM2g=;
-        b=SKInUR3toyndWCpkc6sjeoqZdwXtwdZbgDMc+3w5GumylVJIUrFBhc/wY+m26z+iRx
-         gMl3Pjv5mz01uj49xAJ40P1c1xdq2hIWgvOCorrePOu2/NxKo3JF8qprvZ4OrzGx13zI
-         Xh8sKLwAr4UxkuO9OIG9Iz9avP+6Y3O9xbHmQ18il8qghvKv8pMbP7wNExeWA6oIcZgQ
-         DcaXb4qYlCprewGyveMfBdAsmZU9Ztko5cOqcat75oh2I/JeFZ/ngCxD5/qK4yfsq24o
-         jg5MmVfHRXgPSrpwzdMpVyj0zliSjFzf+yibviWXJvMRtEj6J6iyB7kaul2zVdVpJSLp
-         eHwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=mJZHm3t0m6KkCh4sLU2gVMdY7/AFg3U9626Eb5mfM2g=;
-        b=cwQvHFdqeuFxOYPupx2Jn6aMw15k513GkaxzJXF5DsildkpPSyNqGIGt83aGo/Vrks
-         CdQlEWWaizsxMRJoDm0BK2yvCY8PN/uGV/WTPL4+tCF4slSNqKv1V9IxxeB3r4cvhHYr
-         PFiAXsQt/xCbVHXwDSWKcYs9AsuKaK/nvWVkyrIAjVUm8PRiTVQdeMV03stOqjhHcnFR
-         maZ57yiDljbcZRVcaR3dZqDcX5aY91B+YTYYcKEP8FByi5vrxKQdrS9s0IT6YGYWqS43
-         KeS23TYUEF+peWkwPppkx39D5RngeIlDMlQRR8qEgY6RXXVR4s71clOQT6I5MdfKbMOs
-         YTGw==
-X-Gm-Message-State: AD7BkJKNDGWz9p6jpl4VM19sVzbmTFjlQb59IWkoRRXwYjWFP+Grwgj8VPEarozQm0/6Hw==
-X-Received: by 10.194.60.100 with SMTP id g4mr4946051wjr.30.1459518279034;
-        Fri, 01 Apr 2016 06:44:39 -0700 (PDT)
-Received: from spirit ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id b8sm14121774wjf.9.2016.04.01.06.44.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Apr 2016 06:44:38 -0700 (PDT)
+	id S1758732AbcDANww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Apr 2016 09:52:52 -0400
+Received: from mga09.intel.com ([134.134.136.24]:46015 "EHLO mga09.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752212AbcDANww (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Apr 2016 09:52:52 -0400
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga102.jf.intel.com with ESMTP; 01 Apr 2016 06:52:51 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.24,427,1455004800"; 
+   d="scan'208";a="679189415"
+Received: from yexl-desktop.sh.intel.com (HELO localhost) ([10.239.159.26])
+  by FMSMGA003.fm.intel.com with ESMTP; 01 Apr 2016 06:52:50 -0700
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	fengguang.wu@intel.com, ying.huang@intel.com, philip.li@intel.com,
+	julie.du@intel.com
 Content-Disposition: inline
-In-Reply-To: <1459517477.3493.5.camel@kaarsemaker.net>
+In-Reply-To: <xmqqtwjmo84r.fsf@gitster.mtv.corp.google.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290537>
 
-On Fri, Apr 01, 2016 at 03:31:17PM +0200, Dennis Kaarsemaker wrote:
-> On wo, 2016-03-30 at 15:09 +0530, Karthik Nayak wrote:
-> >=20
-> > This is part of unification of the commands 'git tag -l, git branch=
- -l
-> > and git for-each-ref'. This ports over branch.c to use ref-filter's
-> > printing options.
-> >=20
-> > Initially posted here: $(gmane/279226). It was decided that this se=
-ries
-> > would follow up after refactoring ref-filter parsing mechanism, whi=
-ch
-> > is now merged into master (9606218b32344c5c756f7c29349d3845ef60b80c=
-).
->=20
-> Interaction between this series=A0and something I've not yet been abl=
-e to
-> identify
+On Thu, Mar 31, 2016 at 10:43:48AM -0700, Junio C Hamano wrote:
+>Xiaolong Ye <xiaolong.ye@intel.com> writes:
+>
+>> Introduce --base=auto to record the base commit info automatically, the base_commit
+>> will be the merge base of tip commit of the upstream branch and revision-range
+>> specified in cmdline.
+>
+>This line is probably a bit too long.
 
-That someting is es/test-gpg-tags. Karthik, can you maybe squash this
-fix in if you do another reroll?
+How about simplifying it to "the base_commit is the merge base of upstream and
+specified revision-range."?
 
-diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filt=
-er.sh
-index 98a1c49..7420e48 100755
---- a/t/t6302-for-each-ref-filter.sh
-+++ b/t/t6302-for-each-ref-filter.sh
-@@ -349,6 +349,8 @@ test_expect_success 'check %(if)...%(then)...%(end)=
- atoms' '
- 	A U Thor: refs/heads/side
- 	A U Thor: refs/odd/spot
-=20
-+
-+
- 	A U Thor: refs/tags/foo1.10
- 	A U Thor: refs/tags/foo1.3
- 	A U Thor: refs/tags/foo1.6
-@@ -367,7 +369,9 @@ test_expect_success 'check %(if)...%(then)...%(else=
-)...%(end) atoms' '
- 	A U Thor: refs/heads/master
- 	A U Thor: refs/heads/side
- 	A U Thor: refs/odd/spot
--	No author: refs/tags/double-tag
-+	No author: refs/tags/annotated-tag
-+	No author: refs/tags/doubly-annotated-tag
-+	No author: refs/tags/doubly-signed-tag
- 	A U Thor: refs/tags/foo1.10
- 	A U Thor: refs/tags/foo1.3
- 	A U Thor: refs/tags/foo1.6
-@@ -385,7 +389,9 @@ test_expect_success 'ignore spaces in %(if) atom us=
-age' '
- 	master: Head ref
- 	side: Not Head ref
- 	odd/spot: Not Head ref
--	double-tag: Not Head ref
-+	annotated-tag: Not Head ref
-+	doubly-annotated-tag: Not Head ref
-+	doubly-signed-tag: Not Head ref
- 	foo1.10: Not Head ref
- 	foo1.3: Not Head ref
- 	foo1.6: Not Head ref
+>
+>>
+>> Helped-by: Junio C Hamano <gitster@pobox.com>
+>> Helped-by: Wu Fengguang <fengguang.wu@intel.com>
+>> Signed-off-by: Xiaolong Ye <xiaolong.ye@intel.com>
+>> ---
+>>  Documentation/git-format-patch.txt |  4 ++++
+>>  builtin/log.c                      | 31 +++++++++++++++++++++++++++----
+>>  2 files changed, 31 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+>> index 067d562..d8fe651 100644
+>> --- a/Documentation/git-format-patch.txt
+>> +++ b/Documentation/git-format-patch.txt
+>> @@ -290,6 +290,10 @@ you can use `--suffix=-patch` to get `0001-description-of-my-change-patch`.
+>>  	patches for A, B and C, and the identifiers for P, X, Y, Z are appended
+>>  	at the end of the _first_ message.
+>>  
+>> +	If set '--base=auto' in cmdline, it will track base commit automatically,
+>> +	the base commit will be the merge base of tip commit of the remote-tracking
+>> +	branch and revision-range specified in cmdline.
+>> +
+>>  --root::
+>>  	Treat the revision argument as a <revision range>, even if it
+>>  	is just a single commit (that would normally be treated as a
+>> diff --git a/builtin/log.c b/builtin/log.c
+>> index 03cbab0..c5efe73 100644
+>> --- a/builtin/log.c
+>> +++ b/builtin/log.c
+>> @@ -1200,6 +1200,9 @@ static void prepare_bases(struct base_tree_info *bases,
+>>  	struct rev_info revs;
+>>  	struct diff_options diffopt;
+>>  	struct object_id *patch_id;
+>> +	struct branch *curr_branch;
+>> +	struct commit_list *base_list;
+>> +	const char *upstream;
+>>  	unsigned char sha1[20];
+>>  	int i;
+>>  
+>> @@ -1207,10 +1210,30 @@ static void prepare_bases(struct base_tree_info *bases,
+>>  	DIFF_OPT_SET(&diffopt, RECURSIVE);
+>>  	diff_setup_done(&diffopt);
+>>  
+>> -	base = lookup_commit_reference_by_name(base_commit);
+>> -	if (!base)
+>> -		die(_("Unknown commit %s"), base_commit);
+>> -	oidcpy(&bases->base_commit, &base->object.oid);
+>> +	if (!strcmp(base_commit, "auto")) {
+>> +		curr_branch = branch_get(NULL);
+>
+>Can branch_get() return NULL?  Which ...
+>
+>> +		upstream = branch_get_upstream(curr_branch, NULL);
+>
+>... would cause branch_get_upstream() to give you an error (which
+>you ignore)?  I guess that is OK because upstream will safely be set
+>to NULL in that case.
+>
+Yes, branch_get_upstream(curr_branch, NULL) will safely return NULL if curr_branch
+is NULL, so I think there is no need to add error handling for branch_get().
 
+>> +		if (upstream) {
+>> +			if (get_sha1(upstream, sha1))
+>> +				die(_("Failed to resolve '%s' as a valid ref."), upstream);
+>> +			commit = lookup_commit_or_die(sha1, "upstream base");
+>> +			base_list = get_merge_bases_many(commit, total, list);
+>> +			if (!bases)
+>> +				die(_("Could not find merge base."));
+>> +			base = base_list->item;
+>> +			free_commit_list(base_list);
+>
+>What should happen when there are multiple merge bases?  The code
+>picks one at random and ignores the remainder, if I am reading this
+>correctly.
 
---=20
-Dennis Kaarsemaker <dennis@kaarsemaker.net>
+If there is more than one merge base, commits in base_list should be sorted by date,
+if I am understanding it correctly, so base_list->item should be the lastest
+merge base commit, it should be enough for us to used as base commit.
+
+Thanks,
+Xiaolong.
+>
+>> +			oidcpy(&bases->base_commit, &base->object.oid);
+>> +		} else {
+>> +			die(_("Failed to get upstream, if you want to record base commit automatically,\n"
+>> +			      "please use git branch --set-upstream-to to track a remote branch.\n"
+>> +			      "Or you could specify base commit by --base=<base-commit-id> manually."));
+>> +		}
+>> +	} else {
+>> +		base = lookup_commit_reference_by_name(base_commit);
+>> +		if (!base)
+>> +			die(_("Unknown commit %s"), base_commit);
+>> +		oidcpy(&bases->base_commit, &base->object.oid);
+>> +	}
+>>  
+>>  	init_revisions(&revs, NULL);
+>>  	revs.max_parents = 1;
