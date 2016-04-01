@@ -1,67 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Trouble with cat-file on tags
-Date: Fri, 1 Apr 2016 08:26:31 -0400
-Message-ID: <20160401122631.GA12019@sigill.intra.peff.net>
-References: <ndlesh$dj1$1@ger.gmane.org>
- <ndlf7q$ghe$1@ger.gmane.org>
- <ndlgsc$ed7$1@ger.gmane.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: What is an efficient way to get all blobs / trees that have notes attached?
+Date: Fri, 1 Apr 2016 14:16:33 +0200
+Message-ID: <CALKQrgdytYJtMTBHXbcRQ_iT5rWakZCxxqRW1rpLsPiSejud-Q@mail.gmail.com>
+References: <ndljs8$vj3$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Git mailing list <git@vger.kernel.org>
 To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 01 14:26:51 2016
+X-From: git-owner@vger.kernel.org Fri Apr 01 14:34:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alyA5-0006HH-He
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 14:26:49 +0200
+	id 1alyHE-0001gg-RS
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 14:34:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753274AbcDAM0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2016 08:26:35 -0400
-Received: from cloud.peff.net ([50.56.180.127]:42299 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752410AbcDAM0f (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2016 08:26:35 -0400
-Received: (qmail 24071 invoked by uid 102); 1 Apr 2016 12:26:34 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 01 Apr 2016 08:26:34 -0400
-Received: (qmail 23853 invoked by uid 107); 1 Apr 2016 12:26:34 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 01 Apr 2016 08:26:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Apr 2016 08:26:31 -0400
-Content-Disposition: inline
-In-Reply-To: <ndlgsc$ed7$1@ger.gmane.org>
+	id S1754466AbcDAMeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Apr 2016 08:34:08 -0400
+Received: from mail12.copyleft.no ([188.94.218.224]:57987 "EHLO
+	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752761AbcDAMeH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Apr 2016 08:34:07 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail12.copyleft.no with esmtp (Exim 4.76)
+	(envelope-from <johan@herland.net>)
+	id 1aly0F-0000Sf-8w
+	for git@vger.kernel.org; Fri, 01 Apr 2016 14:16:39 +0200
+Received: from mail-yw0-f179.google.com ([209.85.161.179])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1aly0F-0001JO-2i
+	for git@vger.kernel.org; Fri, 01 Apr 2016 14:16:39 +0200
+Received: by mail-yw0-f179.google.com with SMTP id d68so16951512ywe.1
+        for <git@vger.kernel.org>; Fri, 01 Apr 2016 05:16:39 -0700 (PDT)
+X-Gm-Message-State: AD7BkJLUWqvwXBUqP6TySd59IX6ZEd6eV2R/usopBhw5lp6XeSOtOCECqxbVz2aKOAEqlG2WiU9avfcRRhpwzg==
+X-Received: by 10.129.147.2 with SMTP id k2mr12097418ywg.69.1459512993073;
+ Fri, 01 Apr 2016 05:16:33 -0700 (PDT)
+Received: by 10.37.75.133 with HTTP; Fri, 1 Apr 2016 05:16:33 -0700 (PDT)
+In-Reply-To: <ndljs8$vj3$1@ger.gmane.org>
+X-Gmail-Original-Message-ID: <CALKQrgdytYJtMTBHXbcRQ_iT5rWakZCxxqRW1rpLsPiSejud-Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290532>
 
-On Fri, Apr 01, 2016 at 12:00:44PM +0200, Sebastian Schuberth wrote:
+On Fri, Apr 1, 2016 at 12:51 PM, Sebastian Schuberth
+<sschuberth@gmail.com> wrote:
+> Hi,
+>
+> I'm curious whether there's a more efficient way to get a list of blobs /
+> trees (and their names) that have notes attached than doing this:
+>
+> 1) Get all notes refs I'm interested in (git-for-each-ref).
+>
+> 2) For each notes ref, get the list of notes (git-notes list) and store them
+> in a hash table that maps object hashes to notes.
+>
+> 3) Recursively list all blobs / trees (git-ls-tree) and look whether an
+> object's hash is conatined in our table to get its notes.
+>
+> In particular 3) could be expensive for repos with a lot of files as we're
+> looking at all of them just to see whether they have notes attached.
 
-> This means
-> 
-> $ git cat-file tag refs/tags/v0.1.2
-> 
-> displays the *contents* of the tag, not the tag itself.
+In (3), why would you need to search through _all_ blobs/trees? Would
+it not be cheaper to simply query the object type of each annotated
+object from (2)? I.e. something like:
 
-Right. `cat-file` is about looking at object content.
+for notes_ref in $(git for-each-ref refs/notes | cut -c 49-)
+do
+    echo "--- $notes_ref ---"
+    for annotated_obj in $(git notes --ref=$notes_ref list | cut -c 41-)
+    do
+        type=$(git cat-file -t "$annotated_obj")
+        if test "$type" != "commit"
+        then
+            echo "$annotated_obj: $type"
+        fi
+    done
+done
 
-> Which leads me to
-> the next question: For a given name of an annotated tag, how to get the hash
-> of the tag object? The solution I found for now:
-> 
-> $ git show-ref --tags -- v0.1.2
-> 92b67e2b0626519ef8cd4e9cacb2bdafba6d53f0 refs/tags/v0.1.2
+Can probably be made even faster by using the --batch option to cat-file...
 
-Here you just want to resolve the ref, without looking at the object.
-The canonical way is:
 
-  git rev-parse --verify v0.1.2
+...Johan
 
-You can also use that to peel the tag to a commit, or a commit to a tree
-(e.g., with "v0.1.2^{commit}").
-
--Peff
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
