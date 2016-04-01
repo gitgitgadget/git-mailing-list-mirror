@@ -1,104 +1,94 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCHv4 1/4] notes: don't leak memory in git_config_get_notes_strategy
-Date: Thu, 31 Mar 2016 20:46:15 -0400
-Message-ID: <CAPig+cQ=83k-of=jP1r6bYqsYrUhiDKhR3_Bm-SfYndn+sL=Dg@mail.gmail.com>
-References: <1459470946-16522-1-git-send-email-sbeller@google.com>
-	<1459470946-16522-2-git-send-email-sbeller@google.com>
+From: Elliott Cable <me@ell.io>
+Subject: Re: `git rev-parse --is-inside-work-tree` and $GIT_WORK_TREE
+Date: Thu, 31 Mar 2016 19:49:26 -0500
+Message-ID: <CAPZ477MmUCmTF+Pyn0wAHVjj3LsZ9M3-v2fPb3+vD9r+rEfwBw@mail.gmail.com>
+References: <CAPZ477NxXVNNwDvzaFt7GoUGuJwnOuX3y1N+aPtVRFD3E8dQBA@mail.gmail.com>
+ <20160329203425.GA24027@sigill.intra.peff.net> <CACsJy8BAW0E36qKjJqvLL0ZHKdh3+7G1axt1jD46Yv3atfL7fw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Git List <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Apr 01 02:46:26 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, John Keeping <john@keeping.me.uk>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 01 02:49:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alnEG-0003Vi-QG
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 02:46:25 +0200
+	id 1alnHc-0004oa-Ue
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 02:49:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753424AbcDAAqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 20:46:17 -0400
-Received: from mail-yw0-f171.google.com ([209.85.161.171]:33394 "EHLO
-	mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750720AbcDAAqQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2016 20:46:16 -0400
-Received: by mail-yw0-f171.google.com with SMTP id h65so123924820ywe.0
-        for <git@vger.kernel.org>; Thu, 31 Mar 2016 17:46:15 -0700 (PDT)
+	id S1755647AbcDAAts convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Mar 2016 20:49:48 -0400
+Received: from mail-yw0-f170.google.com ([209.85.161.170]:33357 "EHLO
+	mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751653AbcDAAtr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Mar 2016 20:49:47 -0400
+Received: by mail-yw0-f170.google.com with SMTP id h65so124076005ywe.0
+        for <git@vger.kernel.org>; Thu, 31 Mar 2016 17:49:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=IH45N8xqzxiLrS2wkdkJJsFJGmcp3PBlxgRFxhTTZlk=;
-        b=jkiB2iwxJswPDfKa8I965o/+GJkPwnXTs6f2Td1KpSkHfX2dId6soglCX4V2ce3Prk
-         X+NfiksVTotZ15LPeKMawpPKoxoKp4Z+7ShrUY1bvg8t/DXSKByPALdCDSx4trUB/H3V
-         KoZphl1ApAorUQopUUjCrNavJwGEBZ+K62WriXFXt4+hYusU9yz7glcWq0adzkpc/bRP
-         c72ciBWXxMo9MpWNf2kZKHEypCnB4xC08xInjKw/DvIUN2M3rUttW3PP6F2pPjxfL1A+
-         nr1Hm3HRLfIMpqdOfi+ZwQA03HGN3P+COuIuG8M7C/Wv4eCK+WHV3Pk7mqb/3z8KwegL
-         vqZQ==
+        d=ell.io; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=NVlckgqe/+XsNk+Af9NholQLtfMl09QOLD/L1/MlJ6Y=;
+        b=Wb0D3SdEAruvE5dzY/IAngcVKQNGv0JEjqK3buARJQSHYekTGOcZrC7Gc+/h+qjt74
+         wvfp6NKLDKbNBMYZ82pJtCPYBQh7n6bNdQufwTpVJ/1Aw/p2NDJy+EnBmUaXmXavAFKB
+         OMggUjUdMNuX7PRL8H/cs6gLuFx1NxvLGYmmo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=IH45N8xqzxiLrS2wkdkJJsFJGmcp3PBlxgRFxhTTZlk=;
-        b=FQW/ghAmooa5GYEpUEoKu25qZ43ZPFaka7GYINgTlpKYmgAt7UX3Rj0aU+rUzHeQpG
-         VeU41aT1L2HY4Kar6o+NTaD3BO69Yae2DPEvYQbL/YW/D570kyd7JZw+tmfDP6HU0KLt
-         vC8mpO2c35gW73Ug8JuWuYEcvPLzMY/zgKo7h7D/pGk9O894pJq1wcSx+uRZxXjEauWy
-         aCRxAmGRICkkd75PhfFdzLTn7O7v7DStaXHuWav/hrmLuBdiApKgasiAZgBJ71Ri/BFR
-         kOXrhP+rVlMzZYowEz1ljJJs9vpNr5TgZ5uT3y0Qf7zy2+YjiFFTNnbAA22lIO9JdG2r
-         HKlg==
-X-Gm-Message-State: AD7BkJKkY8a36H0NTOyUDMb3AiSIhZSZnPXl/N6maD0BhIsKQt82D7cPwufIdn427ZqYF5pTudWnwukoP5yxBA==
-X-Received: by 10.31.146.5 with SMTP id u5mr1723274vkd.19.1459471575299; Thu,
- 31 Mar 2016 17:46:15 -0700 (PDT)
-Received: by 10.31.62.203 with HTTP; Thu, 31 Mar 2016 17:46:15 -0700 (PDT)
-In-Reply-To: <1459470946-16522-2-git-send-email-sbeller@google.com>
-X-Google-Sender-Auth: 84tp5c-bkvbQ5xni7U2ZlafDAcI
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=NVlckgqe/+XsNk+Af9NholQLtfMl09QOLD/L1/MlJ6Y=;
+        b=caXLOigmiRpB1n5H/0dO4PIZ1Wmmwbhwq7QGJRnu6BwvBEVPvKstDC0YpxDOa9NAmr
+         GYAw5jndvAl37bUxeu2AH+jxjTrwzPyOR8LJKcEewCxJPyqTpJJE6D/nRIZ9lZ3aFnMR
+         dQVJ8JCgCZCRpjyxnfhLVFVY486ryYiHV9Oc6XbkzHxZ5xe3oFsW/Rz7qwAtvyqsqkXx
+         L+XajBNR8eNW1xvBGtWKRfWQT0qVHCcD6pdBEcrqrxZsxfyU9RwCsjrqMKtgIRdcAxU0
+         4KE01obIQB6f97BAqfx/N7DivXTub25i4Tj+Kbnm4l/zuGvBXh/KPSHiSqLYw3N47Eyt
+         x0dA==
+X-Gm-Message-State: AD7BkJKAR7W92D6LlTNShsvesvG0t5JFicWkBAaNbBijaV1EvACfAjzWEw/ViRak4pj7Jq7Y+78tuaQ7rUT/nw==
+X-Received: by 10.176.3.81 with SMTP id 75mr881820uat.137.1459471786551; Thu,
+ 31 Mar 2016 17:49:46 -0700 (PDT)
+Received: by 10.31.92.206 with HTTP; Thu, 31 Mar 2016 17:49:26 -0700 (PDT)
+X-Originating-IP: [70.194.71.174]
+In-Reply-To: <CACsJy8BAW0E36qKjJqvLL0ZHKdh3+7G1axt1jD46Yv3atfL7fw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290502>
 
-On Thu, Mar 31, 2016 at 8:35 PM, Stefan Beller <sbeller@google.com> wrote:
-> `value` is just a temporary scratchpad, so we need to make sure it doesn't
-> leak. It is xstrdup'd in `git_config_get_string_const` and
-> `parse_notes_merge_strategy` just compares the string against predefined
-> values, so no need to keep it around longer.
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
-> diff --git a/builtin/notes.c b/builtin/notes.c
-> index 52aa9af..afcfa8f 100644
-> --- a/builtin/notes.c
-> +++ b/builtin/notes.c
-> @@ -741,13 +741,14 @@ static int merge_commit(struct notes_merge_options *o)
->  static int git_config_get_notes_strategy(const char *key,
->                                          enum notes_merge_strategy *strategy)
->  {
-> -       const char *value;
-> +       char *value;
->
-> -       if (git_config_get_string_const(key, &value))
-> +       if (git_config_get_string(key, &value))
->                 return 1;
+oh, wow, this got over my head *real* fast. Okay,
 
-Meh. Rather than reverting the git_config_get_value(), it would have
-been just as easy and safer (less chance of a future change
-re-introducing a leak) if you had just inserted the necessary check
-here:
+1. Yeah, my `$GIT_WORK_TREE` was def. an absolute path; I typed that
+example code without running it *precisely* that way (entirely my
+mistake! I'm so sorry for the confusion it caused, and all that typing
+you did!); if I remember correctly (not at the machine right now), I
+had run `git rev-parse --show-toplevel` from a different directory,
+with `$GIT_DIR` set, while trying to narrow down this bug, so it gave
+me an absolute path =E2=80=A6 and then copy-pasted that path, and then
+replaced my copy-paste with the original command to make the
+bug-report example as concise as possible? oops. But, yeah, it fails
+in the manner described above with an absolute path. (Which it looks
+like you two figured out above.)
 
-    if (!value)
-        return  config_error_nonbool(key);
+2. Re: intentions, again, it seems like you've changed your mind, but =E2=
+=80=A6
 
-But, perhaps it's not worth the patch churn at this point...
+   >  So it is a misconfiguration if you only set GIT_WORK_TREE
+without setting GIT_DIR.
 
->         if (parse_notes_merge_strategy(value, strategy))
->                 git_die_config(key, "unknown notes merge strategy %s", value);
->
-> +       free(value);
->         return 0;
->  }
->
-> --
-> 2.5.0.264.gc776916.dirty
+   I really, really hope not! Half the usefulness of `$GIT_WORK_TREE`
+existing is in that mode. In fact, that's how I found `$GIT_WORK_TREE`
+documented and explained, in [this blog
+post](https://git-scm.com/blog/2010/04/11/environment.html) on the Git
+site. That usage seems pretty damn useful, so I do hope it's
+eventually explicitly supported =E2=80=A6 (and if that's *not* going to=
+ be the
+case, it should be explicitly documented in the `GIT(1)` manpage,
+alongside the other documentation of the environment-variables, that
+the behaviour is undefined is `$GIT_DIR` isn't set first. =3D)
+
+
+=E2=81=93=E2=80=89ELLIOTTCABLE=E2=80=84=E2=80=94=E2=80=84fly safe.
+=E2=80=83=E2=80=89http://ell.io/tt
