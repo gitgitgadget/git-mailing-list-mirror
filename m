@@ -1,68 +1,74 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: git alias quoting help
-Date: Fri, 1 Apr 2016 13:05:40 +0200
-Message-ID: <CAP8UFD3y_hFVT_PjAQFJ_091M83nmGGFsPGii0YFKOORbHqkKg@mail.gmail.com>
-References: <CAH_OBievBBjzLwPZf3-qLn-SQyJG0UHhbdkvyZFfC8b-TsTUJQ@mail.gmail.com>
+Subject: Re: GIT_CONFIG - what's the point?
+Date: Fri, 1 Apr 2016 13:19:25 +0200
+Message-ID: <CAP8UFD23w_F8UtaykyY1KqE6Hee9355GZT+C29JL8EmYQCc6Yg@mail.gmail.com>
+References: <CAL20dLDQsti1qW7CrrEifPAhPp1snq9r5MgJL+mDwhLqhe6fyQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: shawn wilson <ag4ve.us@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 01 13:05:55 2016
+Cc: git <git@vger.kernel.org>
+To: Matthew Persico <matthew.persico@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 01 13:19:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1alwtm-0004kT-L9
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 13:05:55 +0200
+	id 1alx70-00020E-Ku
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 13:19:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759024AbcDALFn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Apr 2016 07:05:43 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:34697 "EHLO
-	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759017AbcDALFl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Apr 2016 07:05:41 -0400
-Received: by mail-wm0-f49.google.com with SMTP id p65so21164902wmp.1
-        for <git@vger.kernel.org>; Fri, 01 Apr 2016 04:05:41 -0700 (PDT)
+	id S1754186AbcDALTa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Apr 2016 07:19:30 -0400
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:32847 "EHLO
+	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754027AbcDALT1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Apr 2016 07:19:27 -0400
+Received: by mail-wm0-f47.google.com with SMTP id f198so21648138wme.0
+        for <git@vger.kernel.org>; Fri, 01 Apr 2016 04:19:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=w2PA6/f8l9xybhliVx6ChYMQQo3Os1qjMVlfzJnTZ3Y=;
-        b=PIDY3AIxsjleuJNyoCdOei7FPyzhsW+2zjUJWJz4xsq37j/Ezx26YAUmpZP0KmTl/W
-         jCl8L0Ko0nZP6/Q0fScPV8wC9XNhzcx5cnzgQmVmhwd0wkc7XbAb/nsfpk8HBystfUUd
-         /npoWWLASCEZzC2CPtHP2aNUg8H1Nn+o5Jse1lsa7D2ZeB+C029F9dYELn7EwBCZpPg0
-         As4S6D1A33ajp7fDXrctbSCO9noqdA631/O8l4wzgexSXHwzSRfLYuDivjuSmP99smBR
-         BQbHRc9sx5Z7Zm8F1aNytnfdYaShGa/QrlKbaLO6x1j26Dbrbzb3awDGDy81/G5i/ny9
-         3r8A==
+        bh=PCqLt/HXL6U0DrT9IalCfBhGnSs7AsAp96JIUa0OSSU=;
+        b=g2TCAXCb2oscrcmhwqSUIWFhXFB4vv+/HIOjUh6xR4YXcZwrGeJeqw0emTz4HrV2U2
+         VflGzBrtfQ47TfD2k5lqLg2xLuQ4hAOJfSOwRYfFe7hcwXCiU+DIAFrnLR1uxxJxv+/e
+         jfZ5Xa1F01+91CtgyKM5iMRu5yjo0ngsyIm+C95ApvMR7vdRnNXbTUJchqFUGYimSdBz
+         Xt2aqI6VAqYuqjAlQdjssMwfaYDGi877CkGOKOJVzmhxpcKhNGdjkEq8gieaYma5rVUh
+         tkd3ZeZ1nJ1gmGZyyYjznYDmhgNNaT8u+cgTXkOm61UXHW/MooUWqA8BQOpm/fHX5i5d
+         DLmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=w2PA6/f8l9xybhliVx6ChYMQQo3Os1qjMVlfzJnTZ3Y=;
-        b=RCHZqRQqe8KUl2c31xqhsTfO10M0f0JuMjyGbckWrDK0wAJSXNyEeUfl0WXcugYFCG
-         Y6pjQPYPmRMxAiqdRYysaP/p4RODtplgomBmIlJUjEiZPf2T0JOTe9N1kO6DKsaze4OQ
-         ygkB0QfS3OAmPdLLLMUDcFTZQQfMuDpRo3lHi2wPzy/kkCOHlhap7chZlYg89tqPUTea
-         M4HN+gf5M/MUoP336xEQmCsZRaESbaOMKC7RObR1lqNKe96e+7wvspn5Zb2CctNv9u60
-         G8IOrp6txKTzccsElhN3YslTvOfw/G3cF6aQU7vROTWic69ML7AtdqSluLjJuT2Ch4sm
-         ZQeQ==
-X-Gm-Message-State: AD7BkJIoce4tOeirr3kujZj7aoNnu/qQMTMN9JwI/64222JIy5AiSLVgdlODinzsYDtOtM9VlZ+/6PhLOn5tPg==
-X-Received: by 10.28.97.10 with SMTP id v10mr3381611wmb.62.1459508740159; Fri,
- 01 Apr 2016 04:05:40 -0700 (PDT)
-Received: by 10.194.151.131 with HTTP; Fri, 1 Apr 2016 04:05:40 -0700 (PDT)
-In-Reply-To: <CAH_OBievBBjzLwPZf3-qLn-SQyJG0UHhbdkvyZFfC8b-TsTUJQ@mail.gmail.com>
+        bh=PCqLt/HXL6U0DrT9IalCfBhGnSs7AsAp96JIUa0OSSU=;
+        b=Z1ru6ZnKhIUjzzauUs7NcGZm4oGzhbwYhn+nphLKfUzbQadOnsU3UOtUplZR5oJujh
+         DrFRECXfjCgnCAX63BQ75moqu+Gv7+P423+lS9I5xPWXApneL/TiYsuFxac6ehhpwZ4d
+         /w5acY3oFd43kxNNUlZPykfaU1jY0uC0/xmfc5J5BoMIPvFQHiTXEm10KeLjTIThGFcu
+         Q3VxfZSFC9ZzpwlvaMb9Z/HQ6AifoyodnYeBVtK9zRVtiANXi1J9jmWCmozUEDitMxb0
+         iXW/jqIfTO+0DrEIEEGDN2PlVJ1ReT84VXHP7Bg24s17Yoa0zRHO4BTdDgwS2CsKb8Od
+         ttAA==
+X-Gm-Message-State: AD7BkJLdXrjMIxYc0TnwYK9LjR1GJnjcjexrb4TImNI9eBJbq6gKaxBZ6Rlc4Lfz8WVkmp9jfghv9mhNLzmskg==
+X-Received: by 10.194.78.37 with SMTP id y5mr8605605wjw.78.1459509565935; Fri,
+ 01 Apr 2016 04:19:25 -0700 (PDT)
+Received: by 10.194.151.131 with HTTP; Fri, 1 Apr 2016 04:19:25 -0700 (PDT)
+In-Reply-To: <CAL20dLDQsti1qW7CrrEifPAhPp1snq9r5MgJL+mDwhLqhe6fyQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290524>
 
-On Wed, Mar 30, 2016 at 6:13 AM, shawn wilson <ag4ve.us@gmail.com> wrote:
-> I've also tried to make this a plain bash script (w/o the function or
-> if statements and am failing at the same place). The issue seems to be
-> with the quoting in the filter-branch | ls-files bit. Also, the end
-> goal here is to be able to move a directory from one repo and keep the
-> history.
+On Fri, Apr 1, 2016 at 2:54 AM, Matthew Persico
+<matthew.persico@gmail.com> wrote:
+> Greetings.
+>
+> Given the GIT_CONFIG environment variable can change 'git config'
+> behaves, it stands to reason that if GIT_CONFIG is defined, then ALL
+> git commands obey the value of GIT_CONFIG and use that file for config
+> info.
+>
+> As a test, exported GIT_CONFIG=/tmp/ohm, copied ~/.gitconfig to
+> /tmp/ohm,
 
-Did you try git subtree
-(https://github.com/git/git/blob/master/contrib/subtree/git-subtree.txt)?
+Is /tmp/ohm a directory? If that is the case, then you should probably
+have exported "GIT_CONFIG=/tmp/ohm/.gitconfig", as the git config doc
+says it specifies a filename.
