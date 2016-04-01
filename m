@@ -1,81 +1,104 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv4 4/4] credential-cache, send_request: close fd when done
-Date: Thu, 31 Mar 2016 17:35:46 -0700
-Message-ID: <1459470946-16522-5-git-send-email-sbeller@google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCHv4 1/4] notes: don't leak memory in git_config_get_notes_strategy
+Date: Thu, 31 Mar 2016 20:46:15 -0400
+Message-ID: <CAPig+cQ=83k-of=jP1r6bYqsYrUhiDKhR3_Bm-SfYndn+sL=Dg@mail.gmail.com>
 References: <1459470946-16522-1-git-send-email-sbeller@google.com>
-Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com, peff@peff.net, sunshine@sunshineco.com
-X-From: git-owner@vger.kernel.org Fri Apr 01 02:36:08 2016
+	<1459470946-16522-2-git-send-email-sbeller@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Git List <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Apr 01 02:46:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aln4J-0007pf-KO
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 02:36:07 +0200
+	id 1alnEG-0003Vi-QG
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Apr 2016 02:46:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757654AbcDAAgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Mar 2016 20:36:00 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:34626 "EHLO
-	mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757631AbcDAAf7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Mar 2016 20:35:59 -0400
-Received: by mail-pf0-f176.google.com with SMTP id x3so81111482pfb.1
-        for <git@vger.kernel.org>; Thu, 31 Mar 2016 17:35:59 -0700 (PDT)
+	id S1753424AbcDAAqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Mar 2016 20:46:17 -0400
+Received: from mail-yw0-f171.google.com ([209.85.161.171]:33394 "EHLO
+	mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750720AbcDAAqQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Mar 2016 20:46:16 -0400
+Received: by mail-yw0-f171.google.com with SMTP id h65so123924820ywe.0
+        for <git@vger.kernel.org>; Thu, 31 Mar 2016 17:46:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=mBcwRa4W6qcl2vxuRlOZIOoY/kBcgyXyrchHjz0xV6E=;
-        b=Qia7KbNtVTSe2fVRWb6f6+8WqbhgAZBCcAr5dm9i4xImdFGreHu5lB0LzyNt2c2gJg
-         rYKqqP003F85+xzLnww9nk4bcfJ1yoieffbY9T0/nhQBeJsaIHfXeCsqNt9a7R23SqPh
-         dqZuc4IhcJ+vxB82mvdJYw7sAKZll+8Ghti8zkOcHV2Wn6D//ezvINFZxGdhvN34sqeX
-         rfuc0dIyCcgfffpFp8cHiIod2GIBMYVvJOtikIDDoozWhkL+6iV6fxebgIXndYOT9KyP
-         7T5GV/qfDnJTwHtFmrOpb0sFZNMyb424Ktl1dJWDbHY5iI2F8pp8OQ0e07U9SWGc++Fg
-         nPvw==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=IH45N8xqzxiLrS2wkdkJJsFJGmcp3PBlxgRFxhTTZlk=;
+        b=jkiB2iwxJswPDfKa8I965o/+GJkPwnXTs6f2Td1KpSkHfX2dId6soglCX4V2ce3Prk
+         X+NfiksVTotZ15LPeKMawpPKoxoKp4Z+7ShrUY1bvg8t/DXSKByPALdCDSx4trUB/H3V
+         KoZphl1ApAorUQopUUjCrNavJwGEBZ+K62WriXFXt4+hYusU9yz7glcWq0adzkpc/bRP
+         c72ciBWXxMo9MpWNf2kZKHEypCnB4xC08xInjKw/DvIUN2M3rUttW3PP6F2pPjxfL1A+
+         nr1Hm3HRLfIMpqdOfi+ZwQA03HGN3P+COuIuG8M7C/Wv4eCK+WHV3Pk7mqb/3z8KwegL
+         vqZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=mBcwRa4W6qcl2vxuRlOZIOoY/kBcgyXyrchHjz0xV6E=;
-        b=XVc8OHxQUYXgeurlfntlzTpZimrbphG5sgv1RX6YPMOKAECgTQzJf1m4NGbBu3YlYp
-         U/MWu5OvxjiQiFM+UcKtFuEDf20rUsX4lMv82+mQlVW7A43omXy1022N8LhTOaK1EuZ9
-         hROIJgGx1huas/hkimHRvOF9L3XYBvqB7UZw/gMn5tVLI8iHVWgGCxuuUre6ickcjZz/
-         ZxAAf01epqY4Iw1J+xTPrPXd9/8Lc9tiVQYd+mRdjAJTOXwVRvznzf3sikynz/94UNdJ
-         qJhLQzhX/1eg2QrCDYbfKe4en+q23WIumy3V0ZOCfDuqh4agwmg1eUcxOmyB6qZU/+ud
-         uoHA==
-X-Gm-Message-State: AD7BkJIT9X4awEPcSDCsQI+YgbWqWLA2J9uY3AvSTIRR0r+LE8bblJlbMzOON4bo8+IlmhzB
-X-Received: by 10.98.73.69 with SMTP id w66mr25977022pfa.106.1459470953502;
-        Thu, 31 Mar 2016 17:35:53 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:a519:64be:5369:a180])
-        by smtp.gmail.com with ESMTPSA id 82sm15959674pfb.64.2016.03.31.17.35.52
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 31 Mar 2016 17:35:52 -0700 (PDT)
-X-Mailer: git-send-email 2.5.0.264.gc776916.dirty
-In-Reply-To: <1459470946-16522-1-git-send-email-sbeller@google.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=IH45N8xqzxiLrS2wkdkJJsFJGmcp3PBlxgRFxhTTZlk=;
+        b=FQW/ghAmooa5GYEpUEoKu25qZ43ZPFaka7GYINgTlpKYmgAt7UX3Rj0aU+rUzHeQpG
+         VeU41aT1L2HY4Kar6o+NTaD3BO69Yae2DPEvYQbL/YW/D570kyd7JZw+tmfDP6HU0KLt
+         vC8mpO2c35gW73Ug8JuWuYEcvPLzMY/zgKo7h7D/pGk9O894pJq1wcSx+uRZxXjEauWy
+         aCRxAmGRICkkd75PhfFdzLTn7O7v7DStaXHuWav/hrmLuBdiApKgasiAZgBJ71Ri/BFR
+         kOXrhP+rVlMzZYowEz1ljJJs9vpNr5TgZ5uT3y0Qf7zy2+YjiFFTNnbAA22lIO9JdG2r
+         HKlg==
+X-Gm-Message-State: AD7BkJKkY8a36H0NTOyUDMb3AiSIhZSZnPXl/N6maD0BhIsKQt82D7cPwufIdn427ZqYF5pTudWnwukoP5yxBA==
+X-Received: by 10.31.146.5 with SMTP id u5mr1723274vkd.19.1459471575299; Thu,
+ 31 Mar 2016 17:46:15 -0700 (PDT)
+Received: by 10.31.62.203 with HTTP; Thu, 31 Mar 2016 17:46:15 -0700 (PDT)
+In-Reply-To: <1459470946-16522-2-git-send-email-sbeller@google.com>
+X-Google-Sender-Auth: 84tp5c-bkvbQ5xni7U2ZlafDAcI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290501>
 
-No need to keep it open any further.
+On Thu, Mar 31, 2016 at 8:35 PM, Stefan Beller <sbeller@google.com> wrote:
+> `value` is just a temporary scratchpad, so we need to make sure it doesn't
+> leak. It is xstrdup'd in `git_config_get_string_const` and
+> `parse_notes_merge_strategy` just compares the string against predefined
+> values, so no need to keep it around longer.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+> diff --git a/builtin/notes.c b/builtin/notes.c
+> index 52aa9af..afcfa8f 100644
+> --- a/builtin/notes.c
+> +++ b/builtin/notes.c
+> @@ -741,13 +741,14 @@ static int merge_commit(struct notes_merge_options *o)
+>  static int git_config_get_notes_strategy(const char *key,
+>                                          enum notes_merge_strategy *strategy)
+>  {
+> -       const char *value;
+> +       char *value;
+>
+> -       if (git_config_get_string_const(key, &value))
+> +       if (git_config_get_string(key, &value))
+>                 return 1;
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- credential-cache.c | 1 +
- 1 file changed, 1 insertion(+)
+Meh. Rather than reverting the git_config_get_value(), it would have
+been just as easy and safer (less chance of a future change
+re-introducing a leak) if you had just inserted the necessary check
+here:
 
-diff --git a/credential-cache.c b/credential-cache.c
-index f4afdc6..86e21de 100644
---- a/credential-cache.c
-+++ b/credential-cache.c
-@@ -32,6 +32,7 @@ static int send_request(const char *socket, const struct strbuf *out)
- 		write_or_die(1, in, r);
- 		got_data = 1;
- 	}
-+	close(fd);
- 	return got_data;
- }
- 
--- 
-2.5.0.264.gc776916.dirty
+    if (!value)
+        return  config_error_nonbool(key);
+
+But, perhaps it's not worth the patch churn at this point...
+
+>         if (parse_notes_merge_strategy(value, strategy))
+>                 git_die_config(key, "unknown notes merge strategy %s", value);
+>
+> +       free(value);
+>         return 0;
+>  }
+>
+> --
+> 2.5.0.264.gc776916.dirty
