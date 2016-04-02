@@ -1,189 +1,237 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Merge driver not called for locally modified files?
-Date: Sat, 02 Apr 2016 09:21:38 -0700
-Message-ID: <xmqqwpogf0bx.fsf@gitster.mtv.corp.google.com>
-References: <56FFD3BD.1060002@svario.it>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Gioele Barabucci <gioele@svario.it>
-X-From: git-owner@vger.kernel.org Sat Apr 02 18:21:47 2016
+From: Mehul Jain <mehul.jain2029@gmail.com>
+Subject: [PATCH v2 0/7] t5520: tests for --[no-]autostash option
+Date: Sat,  2 Apr 2016 23:28:25 +0530
+Message-ID: <1459619912-5445-1-git-send-email-mehul.jain2029@gmail.com>
+Cc: sunshine@sunshineco.com, Matthieu.Moy@grenoble-inp.fr,
+	gitster@pobox.com, Mehul Jain <mehul.jain2029@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 02 19:59:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1amOJ0-0000fK-K3
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Apr 2016 18:21:47 +0200
+	id 1amPpd-00083u-6D
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Apr 2016 19:59:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751601AbcDBQVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Apr 2016 12:21:42 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:61415 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751299AbcDBQVl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Apr 2016 12:21:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7FEB24F880;
-	Sat,  2 Apr 2016 12:21:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fQbvb6+qCje//dygz1JEiBQF8/A=; b=e4gD4f
-	Oze10M7+tceU5EyUHzU2J53YEl4rhsIsVFHIfpiZsvDWoc8Vi9MDkRrh4P6toJLs
-	uxljIGZr4hIz9pcaDCoXu6IYgoRzpl7c8Q3oOmFVOnNcf4b/1LrFa7E9pwUtPkNK
-	PeyE2Ge/oHQbv4vPVW9kqqoadhZej5jJND6UU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AZThA0PJ5OzhWFdiqonfbNIdF++qboq+
-	cyo+kP0m2QSp1iQyc+qw6CvC2mLQzUuOKowbmmr08ojedltNr0OVwGK0Pv+pqyYJ
-	u4rdkFzHpBLeZtaGH9YFuEvCLQiMoNgbC+yW2kpDssb2N9avqURSN/IKNtEGZFh3
-	Sgoi+HFXSvQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 77D354F87F;
-	Sat,  2 Apr 2016 12:21:40 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DFCD64F87E;
-	Sat,  2 Apr 2016 12:21:39 -0400 (EDT)
-In-Reply-To: <56FFD3BD.1060002@svario.it> (Gioele Barabucci's message of "Sat,
-	2 Apr 2016 16:14:21 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: FADC41D6-F8EE-11E5-AA37-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751667AbcDBR73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Apr 2016 13:59:29 -0400
+Received: from mail-pa0-f66.google.com ([209.85.220.66]:33873 "EHLO
+	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750978AbcDBR72 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Apr 2016 13:59:28 -0400
+Received: by mail-pa0-f66.google.com with SMTP id hb4so973475pac.1
+        for <git@vger.kernel.org>; Sat, 02 Apr 2016 10:59:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=U5gZo+JdG7OsEqdcfqHLS3bIt6eQLnXIeYGEoeAd6fs=;
+        b=ZtTdl9qa3/Gan8Pnn+22hR3cv6mNgYPCckvPYHbi/vnT3TLspT2loBjgYjdpWrvtnQ
+         EbTOv0jK0JEaA+AQ93+DfBoFi/FYktk9+I0//B+Dg4XSG9IgYktdIiBJ/lrCBNjE0IMo
+         jLJzGU9w9iB5nFJeYS8mIc6l+7ntmuFk4gasl9waDUJAOJmPOVxkFrzu//ek0fYR4KEy
+         qTLVUFur605jODTXjHnkiwlnmgJnGJszOn8hPwPIc5HjxOek6fkxwy8ADdez5aYaRAhJ
+         RKC8di749JvByAUwgjg5ooeRJgaUQ+PDImSKzrfXvU9aQm/KEeySCP5PBsSZ5wq7sihC
+         wQpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=U5gZo+JdG7OsEqdcfqHLS3bIt6eQLnXIeYGEoeAd6fs=;
+        b=CczmjYgWrfTsk+hp2VYAlRUWiZM0wPPrOvYY8OMYCn4yYidPFG8g/+aTKVNpWsEblL
+         xvjyY2RO1huwwjYRpNl3kmuDeITYSOvg6BC4Kuz49h0CgvPfJHwQ1sH4eD06BgETSpWV
+         Bt4bAcebTkB0HL/oXZfxBJ01BynL1jaREdLAqr+SD66zI/UH04IvVL+6CoDXSgB78r+U
+         GLTI+Un6OMk79ppGq11YQDK+x1ao+2hnX0f8OwEbnbC3A9MIYIq3HXwYrwnHWtP+XwzR
+         gWqwt7zL2edwtWRNw4jSISPRWD/UypwzvSW3702Rm1jvwDdFR28u8R93YXGIc9nqfSfn
+         +d/Q==
+X-Gm-Message-State: AD7BkJKrvNKsxcWPFojCpg6FFXEpkshxU1DrRVsaGPBnPH5ne3IOOEQeUNAgoNbMAozu4g==
+X-Received: by 10.66.228.167 with SMTP id sj7mr11416113pac.101.1459619968047;
+        Sat, 02 Apr 2016 10:59:28 -0700 (PDT)
+Received: from localhost.localdomain ([1.39.37.116])
+        by smtp.gmail.com with ESMTPSA id v3sm30495734par.17.2016.04.02.10.59.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 02 Apr 2016 10:59:27 -0700 (PDT)
+X-Mailer: git-send-email 2.7.1.340.g69eb491.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290596>
 
-Gioele Barabucci <gioele@svario.it> writes:
+The following series is applicable on mj/pull-rebase-autostash.
 
-> it seems to me that merge drivers are not called while merging commits
-> that touch locally modified (but uncommited) files. Is this correct?
+Thanks Eric and Junio for there comments on previous version[1]
 
-Yes.  "git merge" first notices this situation and stops before it
-has to decide which merge driver to use.
+Changes made vs v1:
+        * [Patch v1 4/5] is broken into three patches to increase
+		  readability of the patches.
 
-When you try to merge commit 'B' when you are at commit 'A', and
-have some local changes, and these two branches were forked from a
-common ancestor 'X', the history may look like this:
+		* [Patch 4/5] Factor out code in two functions 
+		  test_pull_autostash() and test_pull_autostash_fail()
+		  instead of test_rebase_autostash() and 
+		  test_rebase_no_autostash(). This leads to further 
+		  simplification of code.
+		  
+		  Also removed two for-loops as they didn't provided
+		  the simplicity intended for.
+		  
+		  For-loop was over-intended. Corrected it.
 
-                1
-               /
-        X--o--A
-         \
-          --o--B
+		* Commit message for patches 1/5, 2/5, 3/5 are improved
+		  as suggested by Eric in the previous round.
 
-where '1' is a hypothetical commit that would result if you were to
-make a commit with all your local changes, i.e. diff(1,A) is your
-uncommitted changes.  As usual, time flows from left to right.
+Here's interdiff with v1:
 
-When you merge branch 'B' into your history, you would want to end
-up with this history (tentatively ignoring what is in the working
-tree):
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 4da9e52..bed75f5 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -9,22 +9,22 @@ modify () {
+ 	mv "$2.x" "$2"
+ }
+ 
+-test_rebase_autostash () {
++test_pull_autostash () {
+ 	git reset --hard before-rebase &&
+ 	echo dirty >new_file &&
+ 	git add new_file &&
+-	git pull --rebase --autostash . copy &&
++	git pull $@ . copy &&
+ 	test_cmp_rev HEAD^ copy &&
+ 	test "$(cat new_file)" = dirty &&
+ 	test "$(cat file)" = "modified again"
+ }
+ 
+-test_rebase_no_autostash () {
++test_pull_autostash_fail () {
+ 	git reset --hard before-rebase &&
+ 	echo dirty >new_file &&
+ 	git add new_file &&
+-	test_must_fail git pull --rebase --no-autostash . copy 2>err &&
+-	test_i18ngrep "Cannot pull with rebase: Your index contains uncommitted changes." err
++	test_must_fail git pull $@ . copy 2>err &&
++	test_i18ngrep "uncommitted changes." err
+ }
+ 
+ test_expect_success setup '
+@@ -265,48 +265,46 @@ test_expect_success '--rebase fails with multiple branches' '
+ 
+ test_expect_success 'pull --rebase succeeds with dirty working directory and rebase.autostash set' '
+ 	test_config rebase.autostash true &&
+-	git reset --hard before-rebase &&
+-	echo dirty >new_file &&
+-	git add new_file &&
+-	git pull --rebase . copy &&
+-	test_cmp_rev HEAD^ copy &&
+-	test "$(cat new_file)" = dirty &&
+-	test "$(cat file)" = "modified again"
++	test_pull_autostash --rebase
++'
++
++test_expect_success 'pull --rebase --autostash & rebase.autostash=true' '
++	test_config rebase.autostash true &&
++	test_pull_autostash --rebase --autostash
+ '
+ 
+-for i in true false
+-	do
+-		test_expect_success "pull --rebase --autostash & rebase.autostash=$i" '
+-			test_config rebase.autostash $i &&
+-			test_rebase_autostash
+-		'
+-	done
++test_expect_success 'pull --rebase --autostash & rebase.autostash=false' '
++	test_config rebase.autostash false &&
++	test_pull_autostash --rebase --autostash
++'
+ 
+-test_expect_success 'pull --rebase: --autostash & rebase.autostash unset' '
++test_expect_success 'pull --rebase --autostash & rebase.autostash unset' '
+ 	test_unconfig rebase.autostash &&
+-	test_rebase_autostash
++	test_pull_autostash --rebase --autostash
++'
++
++test_expect_success 'pull --rebase --no-autostash & rebase.autostash=true' '
++	test_config rebase.autostash true &&
++	test_pull_autostash_fail --rebase --no-autostash
+ '
+ 
+-for i in true false
+-	do
+-		test_expect_success "pull --rebase --no-autostash & rebase.autostash=$i" '
+-			test_config rebase.autostash $i &&
+-			test_rebase_no_autostash
+-		'
+-	done
++test_expect_success 'pull --rebase --no-autostash & rebase.autostash=false' '
++	test_config rebase.autostash false &&
++	test_pull_autostash_fail --rebase --no-autostash
++'
+ 
+ test_expect_success 'pull --rebase --no-autostash & rebase.autostash unset' '
+ 	test_unconfig rebase.autostash &&
+-	test_rebase_no_autostash
++	test_pull_autostash_fail --rebase --no-autostash
+ '
+ 
+ for i in --autostash --no-autostash
+-	do
+-		test_expect_success "pull $i (without --rebase) is illegal" '
+-			test_must_fail git pull $i . copy 2>actual &&
+-			test_i18ngrep "only valid with --rebase" actual
+-		'
+-	done
++do
++	test_expect_success "pull $i (without --rebase) is illegal" '
++		test_must_fail git pull $i . copy 2>err &&
++		test_i18ngrep "only valid with --rebase" err
++	'
++done
+ 
+ test_expect_success 'pull.rebase' '
+ 	git reset --hard before-rebase &&
+@@ -318,22 +316,12 @@ test_expect_success 'pull.rebase' '
+ 
+ test_expect_success 'pull --autostash & pull.rebase=true' '
+ 	test_config pull.rebase true &&
+-	git reset --hard before-rebase &&
+-	echo dirty >new_file &&
+-	git add new_file &&
+-	git pull --autostash . copy &&
+-	test_cmp_rev HEAD^ copy &&
+-	test "$(cat new_file)" = dirty &&
+-	test "$(cat file)" = "modified again"
++	test_pull_autostash --autostash
+ '
+ 
+ test_expect_success 'pull --no-autostash & pull.rebase=true' '
+ 	test_config pull.rebase true &&
+-	git reset --hard before-rebase &&
+-	echo dirty >new_file &&
+-	git add new_file &&
+-	test_must_fail git pull --no-autostash . copy 2>err &&
+-	test_i18ngrep "Cannot pull with rebase: Your index contains uncommitted changes." err
++	test_pull_autostash_fail --no-autostash
+ '
+ 
+ test_expect_success 'branch.to-rebase.rebase' '
 
-        X--o--A--M
-         \      /
-          --o--B
 
-where 'M' is the merge between 'A' and 'B', and the change diff(M,A)
-must represent what happened between 'X' and 'B' that did not happen
-between 'X' and 'A'.  When A and B are independent and without
-conflict, that is roughly the same as diff(B,X), in other words, M
-is roughly the same as patch(A,diff(B,X)).
+Mehul Jain (7):
+  t5520: use consistent capitalization in test titles
+  t5520: ensure consistent test conditions
+  t5520: use better test to check stderr output
+  t5520: factor out common code
+  t5520: factor out common code
+  t5520: reduce commom lines of code
+  t5520: test --[no-]autostash with pull.rebase=true
 
-As you haven't committed your local changes, diff(1,A) must not
-participate in computing the result M of this merge.  After this
-merge is done, the blob in M is checked out to the working tree, but
-doing so by overwriting the working tree files would lose your local
-changes, and that is the reason why you see this error message:
+ t/t5520-pull.sh | 102 +++++++++++++++++++++++++-------------------------------
+ 1 file changed, 46 insertions(+), 56 deletions(-)
 
->     error: Your local changes to the following files would
->     be overwritten by merge:
-> 	.local/share/pw/passwords
->     Please, commit your changes or stash them before you can merge.
+-- 
+2.7.1.340.g69eb491.dirty
 
-What you would want at the very end with is like this:
+[1]:http://thread.gmane.org/gmane.comp.version-control.git/290134
 
-                1  2
-               /  /
-        X--o--A--M
-         \      /
-          --o--B
-
-where '2' is a hypothetical commit that would result if you were to
-cherry pick '1' on top of 'M', after making 'M' according to
-thediscussion above (i.e. ignoring the local changes you made since
-'A').  But just like you did not have '1' because you were not ready
-to record your changes based on 'A' as a commit, you are not ready
-to actually make this commit '2', so you would want your head to be
-at 'M' and the state of '2' in your working tree, leaving diff(2,M)
-as the local uncommitted change.
-
-However.
-
-"git merge" does not do the "create the hypothetical commit '1'" to
-store away the local changes, and it does not do the "cherry pick
-'1' to create the hypothetical commit '2'" to forward-port the local
-changes on top of the merge result 'M'.
-
-This is primarily because there are two distinct steps in the above
-hypothetifcal "enhanced" merge.  Creating 'M' may conflict and you
-would have to resolve it, while "git merge" somehow need to remember
-it has to further do the "cherry pick of '1'" on the result (but
-there is no facility to do so in the system).  And after you resolve
-the conflict to help it create the merge result 'M', it has to
-somehow remember that it needs to "cherry-pick --no-commit '1'", and
-have the user resolve the conflict.  As the presence of '1' is not
-made explicit to the user (we do not even create '1'), when the
-latter step of patch(M,diff(1,A)) fails in conflicts, it is hard for
-the user to attempt to resolve them starting from scratch, which
-likely leads to "I lost the local change" when in fact it is more
-like "I had some local change, but because the merge result was
-vastly different from what I had when I started the local change, I
-was unable to forward-port them and instead I had to redo it from
-scratch".  It is not a good user experience.
-
-> Is it possible to configure git so that the merge driver is called also
-> while merging locally modified files?
-
-No.  But you _can_ do that
-
-                1  2
-               /  /
-        X--o--A--M
-         \      /
-          --o--B
-
-thing manually, by following the advice you received from the error
-message, by creating '1' yourself.
-
-	$ git merge 78d4f09 ;# should fail
-
-        $ git checkout -b store-local-changes-away
-        $ git commit -a -m 'local changes'
-        $ git checkout @{-1} ;# come back to the original branch
-			      # at this point, "git status" would report
-			      # there is no local changes, hence ...
-
-        $ git merge 78d4f09   ;# ...this should succeed
-
-	$ git cherry-pick --no-commit store-local-changes-away
-
-The last step may conflict (this is what I called 'the latter step'
-in the explanation) but at least you have the exact state of '1'
-recorded and you know what branch (i.e. store-local-changes-away)
-contains the changes, so you can resolve the conflicts in your
-working tree without fearing "git reset --hard" to clear the slate
-in order to start and retry the conflict resolution from scratch
-losing your precious local modification.
-
-And after you are done, you can
-
-	$ git branch -D store-local-changes-away
-
-to conclude the whole thing.
-
-You could simplify this somewhat by using "git stash save" before
-you run the merge and "git stash pop" after, but because using real
-commit and branch to store the local changes away is easier to see
-and understand, that is what the error message you saw suggests.
+Thanks,
+Mehul
