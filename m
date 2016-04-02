@@ -1,221 +1,259 @@
-From: santiago@nyu.edu
-Subject: [PATCH v3 4/4] tag: use pgp_verify_function in tag -v call
-Date: Sat,  2 Apr 2016 19:16:15 -0400
-Message-ID: <1459638975-17705-5-git-send-email-santiago@nyu.edu>
-References: <1459638975-17705-1-git-send-email-santiago@nyu.edu>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Santiago Torres <santiago@nyu.edu>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: [PATCH v12 3/5] parse-options.c: make OPTION_COUNTUP respect
+ "unspecified" values
+Date: Sat, 2 Apr 2016 23:33:11 +0000
+Message-ID: <01020153d952be68-ee055619-664d-4502-92e9-6aa524e2354b-000000@eu-west-1.amazonses.com>
+References: <01020153d952bd99-d3812bd6-d189-4780-ab48-f015696e9cf0-000000@eu-west-1.amazonses.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 03 01:17:11 2016
+X-From: git-owner@vger.kernel.org Sun Apr 03 01:33:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1amUmy-0004ZP-5m
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Apr 2016 01:17:08 +0200
+	id 1amV2f-0002Ng-GH
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Apr 2016 01:33:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751541AbcDBXQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Apr 2016 19:16:59 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:33668 "EHLO
-	mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751160AbcDBXQ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Apr 2016 19:16:57 -0400
-Received: by mail-qk0-f193.google.com with SMTP id d3so738168qke.0
-        for <git@vger.kernel.org>; Sat, 02 Apr 2016 16:16:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=RD+NennceD26BfXPlSjqjYxvLbBz/Wxgr1xMZDkz/NM=;
-        b=gPslFzYs8e3K1TTCQ3HBhBTTnhO7hZHYo0MjHlcScGSo8+PDEEUoOvKGhrQS4KedqR
-         ipnIrfndfM8GjX5bIIfEq7KWIOoMyMrRKoJtZiJXffxqin68RMfJ8HJR28BEon99errd
-         gSK+QXwTdC7Z9+ISdI5gwpODmEkMJJdlFjdeUyxji64j40Eo3NJevbLceukvV+OgjQhe
-         1peRbvfvFgxY5FJW2ULU4pXAVoiueqEV4rkhqTH/lqHoedl4F5LmFm78XormW+D0R0/b
-         /8YUPy1nVGs0tDztG1YlFjMXzrhQs6IYIffHyHFQ/6pgBGtTBvHJuLrDq9l1JH16Qkrb
-         YcRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=RD+NennceD26BfXPlSjqjYxvLbBz/Wxgr1xMZDkz/NM=;
-        b=SJRR4sj/5cqSL2VWNu0GAQc61z/Kh0awU9W8pHUmIfOwugjY+GLw1cNAwJQgI6cd5Z
-         3ko+Pc6a6aZPXghUVzkZwFOrGy0I+UnFUxZJZSb1o91kUdu4MjzXr9Kp/v/KQWfnKD16
-         fJ+pkyp6/z4EfnIaL5UGNwuv1rtUlRbC9sZYJEmQusipS+kn03wEeJ8gXOiEbXR8mNcB
-         ifnVWxY3RSlDbCZ786jTOr/xXi/IBN2CNX+8lWpkGBhY9ZVgC/uPsimcz3ZriLeprxGX
-         0TU3xCiM0uWStskKwOd29rXa7WKlC0LiL/LSDtbbUx20sLW++rz0PbU0m6xtJs9OuVhr
-         BDxQ==
-X-Gm-Message-State: AD7BkJJAYQ/Yx0h1F/ATN09Dj3ZqRVrcqG4rFRN8hWN/hsv6ajJQALKT7ertPoM/PLQrCQnz
-X-Received: by 10.55.72.67 with SMTP id v64mr8908903qka.101.1459639016242;
-        Sat, 02 Apr 2016 16:16:56 -0700 (PDT)
-Received: from LykOS.localdomain ([2604:2000:8183:da00:b6b6:76ff:fe46:8151])
-        by smtp.gmail.com with ESMTPSA id l33sm9199788qge.11.2016.04.02.16.16.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 02 Apr 2016 16:16:55 -0700 (PDT)
-X-Mailer: git-send-email 2.8.0
-In-Reply-To: <1459638975-17705-1-git-send-email-santiago@nyu.edu>
+	id S1751340AbcDBXdP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Apr 2016 19:33:15 -0400
+Received: from a6-245.smtp-out.eu-west-1.amazonses.com ([54.240.6.245]:40579
+	"EHLO a6-245.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751038AbcDBXdO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 2 Apr 2016 19:33:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1459639991;
+	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=JPesFGMtFzS1htVEj8fSf7Ih31Yvil3u6xgazOt5kag=;
+	b=MSEK7LPh0JotAxlyn/G2S2F3Kq1zlrHDqA5ecdRfX6GMtAMq7XG5D8w3WhD7eg5m
+	fXYa1qLBf9RkKof+0Suw4MUUuB4/DmC3zVgpzxlm+3x0j1znO1q2nkf1Ju534H2eEnV
+	CvW2gyN3prCZd4Z9lL3YXX8b+lNBrPuEBUCC7jdY=
+In-Reply-To: <01020153d952bd99-d3812bd6-d189-4780-ab48-f015696e9cf0-000000@eu-west-1.amazonses.com>
+X-SES-Outgoing: 2016.04.02-54.240.6.245
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290613>
 
-From: Santiago Torres <santiago@nyu.edu>
+The reason to make it respect "unspecified" values is to give the
+ability to differentiate whether `--option` or `--no-option` was
+specified at all. "unspecified" values should be in the form of negative
+values. If initial value is set to negative and `--option` specified
+then it will reflect the number of occurrences (counting done from 0),
+if `--no-option` is specified then it will reflect 0 and if nothing at
+all is given then it will retain its negative value.
 
-Instead of running the verify-tag plumbing command, we use the
-pgp_verify_tag(). This avoids the usage of an extra fork call. To do
-this, we extend the number of parameters that tag.c takes, and
-verify-tag passes. Redundant calls done in the pgp_verify_tag function
-are removed.
+This change will not affect existing users of COUNTUP, because they all
+use the initial value of 0 (or more).
 
-Signed-off-by: Santiago Torres <santiago@nyu.edu>
+Note that builtin/clean.c initializes the variable used with
+OPT__FORCE (which uses OPT_COUNTUP()) to a negative value, but it is set
+to either 0 or 1 by reading the configuration before the code calls
+parse_options(), i.e. as far as parse_options() is concerned, the
+initial value of the variable is not negative.
+
+To test this behavior "verbose" is set to "unspecified" while quiet is
+set to 0 which will test the new behavior with all sets of values.
+
+Helped-by: Jeff King <peff@peff.net>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+
 ---
- Notes:
- - In this version I fixed the issues with the brackets (the old patch
-   doesn't work in this case due to the new test.
+The discussion about this patch:
+[1] : http://thread.gmane.org/gmane.comp.version-control.git/289027
 
- builtin/tag.c        | 28 +++++++++-------------------
- builtin/verify-tag.c | 14 ++++++++++++--
- tag.c                |  7 ++-----
- tag.h                |  3 ++-
- 4 files changed, 25 insertions(+), 27 deletions(-)
+Previous version of the patch:
+[v11] : http://thread.gmane.org/gmane.comp.version-control.git/288820
+[v10] : http://thread.gmane.org/gmane.comp.version-control.git/288820
+[v9] : http://thread.gmane.org/gmane.comp.version-control.git/288820
+[v1] : http://thread.gmane.org/gmane.comp.version-control.git/289061
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 1705c94..3dffdff 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -65,9 +65,10 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting, con
- }
+Changes wrt previous version (v11):
+ - Use bits of commit message provided by Junio.
+
+Please Note: The diff might seem improper especially the part where I
+have introduced some continuous lines but this is a logical error by git
+diff (nothing could be done about it) and thus the changes will be
+clearly visible with the original file itself.
+---
+ Documentation/technical/api-parse-options.txt |  8 ++++--
+ parse-options.c                               |  2 ++
+ t/t0040-parse-options.sh                      | 39 ++++++++++++++++++++-------
+ test-parse-options.c                          |  3 ++-
+ 4 files changed, 39 insertions(+), 13 deletions(-)
+
+diff --git a/Documentation/technical/api-parse-options.txt b/Documentation/technical/api-parse-options.txt
+index 5f0757d..8908bf7 100644
+--- a/Documentation/technical/api-parse-options.txt
++++ b/Documentation/technical/api-parse-options.txt
+@@ -144,8 +144,12 @@ There are some macros to easily define options:
  
- typedef int (*each_tag_name_fn)(const char *name, const char *ref,
--				const unsigned char *sha1);
-+				const unsigned char *sha1, unsigned flags);
+ `OPT_COUNTUP(short, long, &int_var, description)`::
+ 	Introduce a count-up option.
+-	`int_var` is incremented on each use of `--option`, and
+-	reset to zero with `--no-option`.
++	Each use of `--option` increments `int_var`, starting from zero
++	(even if initially negative), and `--no-option` resets it to
++	zero. To determine if `--option` or `--no-option` was set at
++	all, set `int_var` to a negative value, and if it is still
++	negative after parse_options(), then neither `--option` nor
++	`--no-option` was seen.
  
--static int for_each_tag_name(const char **argv, each_tag_name_fn fn)
-+static int for_each_tag_name(const char **argv, each_tag_name_fn fn,
-+		unsigned flags)
- {
- 	const char **p;
- 	char ref[PATH_MAX];
-@@ -86,33 +87,21 @@ static int for_each_tag_name(const char **argv, each_tag_name_fn fn)
- 			had_error = 1;
- 			continue;
- 		}
--		if (fn(*p, ref, sha1))
-+		if (fn(*p, ref, sha1, flags))
- 			had_error = 1;
- 	}
- 	return had_error;
- }
+ `OPT_BIT(short, long, &int_var, description, mask)`::
+ 	Introduce a boolean option.
+diff --git a/parse-options.c b/parse-options.c
+index 47a9192..312a85d 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -110,6 +110,8 @@ static int get_value(struct parse_opt_ctx_t *p,
+ 		return 0;
  
- static int delete_tag(const char *name, const char *ref,
--				const unsigned char *sha1)
-+				const unsigned char *sha1, unsigned flags)
- {
--	if (delete_ref(ref, sha1, 0))
-+	if (delete_ref(ref, sha1, flags))
- 		return 1;
- 	printf(_("Deleted tag '%s' (was %s)\n"), name, find_unique_abbrev(sha1, DEFAULT_ABBREV));
- 	return 0;
- }
+ 	case OPTION_COUNTUP:
++		if (*(int *)opt->value < 0)
++			*(int *)opt->value = 0;
+ 		*(int *)opt->value = unset ? 0 : *(int *)opt->value + 1;
+ 		return 0;
  
--static int verify_tag(const char *name, const char *ref,
--				const unsigned char *sha1)
--{
--	const char *argv_verify_tag[] = {"verify-tag",
--					"-v", "SHA1_HEX", NULL};
--	argv_verify_tag[2] = sha1_to_hex(sha1);
--
--	if (run_command_v_opt(argv_verify_tag, RUN_GIT_CMD))
--		return error(_("could not verify the tag '%s'"), name);
--	return 0;
--}
--
- static int do_sign(struct strbuf *buffer)
- {
- 	return sign_buffer(buffer, buffer, get_signing_key());
-@@ -424,9 +413,10 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	if (filter.merge_commit)
- 		die(_("--merged and --no-merged option are only allowed with -l"));
- 	if (cmdmode == 'd')
--		return for_each_tag_name(argv, delete_tag);
-+		return for_each_tag_name(argv, delete_tag, 0);
- 	if (cmdmode == 'v')
--		return for_each_tag_name(argv, verify_tag);
-+		return for_each_tag_name(argv, pgp_verify_tag,
-+				GPG_VERIFY_VERBOSE);
+diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+index 302c315..bfd8dea 100755
+--- a/t/t0040-parse-options.sh
++++ b/t/t0040-parse-options.sh
+@@ -63,7 +63,7 @@ magnitude: 0
+ timestamp: 0
+ string: (not set)
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 0
+ dry run: no
+ file: (not set)
+@@ -211,7 +211,7 @@ magnitude: 0
+ timestamp: 0
+ string: 123
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 0
+ dry run: no
+ file: (not set)
+@@ -234,7 +234,7 @@ magnitude: 0
+ timestamp: 0
+ string: (not set)
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 0
+ dry run: no
+ file: (not set)
+@@ -263,7 +263,7 @@ magnitude: 0
+ timestamp: 0
+ string: 123
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 0
+ dry run: no
+ file: (not set)
+@@ -302,7 +302,7 @@ magnitude: 0
+ timestamp: 0
+ string: (not set)
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 0
+ dry run: no
+ file: (not set)
+@@ -322,7 +322,7 @@ magnitude: 0
+ timestamp: 1
+ string: (not set)
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 1
+ dry run: no
+ file: (not set)
+@@ -344,7 +344,7 @@ magnitude: 0
+ timestamp: 0
+ string: (not set)
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 0
+ dry run: no
+ file: (not set)
+@@ -373,7 +373,7 @@ magnitude: 0
+ timestamp: 0
+ string: (not set)
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 0
+ dry run: no
+ file: (not set)
+@@ -398,7 +398,7 @@ magnitude: 0
+ timestamp: 0
+ string: (not set)
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 0
+ dry run: no
+ file: (not set)
+@@ -429,7 +429,7 @@ magnitude: 0
+ timestamp: 0
+ string: (not set)
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 0
+ dry run: no
+ file: (not set)
+@@ -454,6 +454,25 @@ dry run: no
+ file: (not set)
+ EOF
  
- 	if (msg.given || msgfile) {
- 		if (msg.given && msgfile)
-diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
-index f776778..8abc357 100644
---- a/builtin/verify-tag.c
-+++ b/builtin/verify-tag.c
-@@ -30,6 +30,8 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
- {
- 	int i = 1, verbose = 0, had_error = 0;
- 	unsigned flags = 0;
-+	unsigned char sha1[20];
-+	const char *name;
- 	const struct option verify_tag_options[] = {
- 		OPT__VERBOSE(&verbose, N_("print tag contents")),
- 		OPT_BIT(0, "raw", &flags, N_("print raw gpg status output"), GPG_VERIFY_RAW),
-@@ -46,8 +48,16 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
- 	if (verbose)
- 		flags |= GPG_VERIFY_VERBOSE;
- 
--	while (i < argc)
--		if (pgp_verify_tag(argv[i++], flags))
-+	while (i < argc) {
-+		name = argv[i++];
-+		if (get_sha1(name, sha1)) {
-+			error("tag '%s' not found.", name);
- 			had_error = 1;
-+		}
++test_expect_success 'OPT_COUNTUP() resets to 0 with --no- flag' '
++	test-parse-options --no-verbose >output 2>output.err &&
++	test_must_be_empty output.err &&
++	test_cmp expect output
++'
 +
-+		if (pgp_verify_tag(name, NULL, sha1, flags))
-+			had_error = 1;
++cat >expect <<EOF
++boolean: 0
++integer: 0
++magnitude: 0
++timestamp: 0
++string: (not set)
++abbrev: 7
++verbose: -1
++quiet: 0
++dry run: no
++file: (not set)
++EOF
 +
-+	}
- 	return had_error;
- }
-diff --git a/tag.c b/tag.c
-index 918ae39..2a0b24c 100644
---- a/tag.c
-+++ b/tag.c
-@@ -29,18 +29,15 @@ static int run_gpg_verify(const char *buf, unsigned long size, unsigned flags)
- 	return ret;
- }
- 
--int pgp_verify_tag(const char *name, unsigned flags)
-+int pgp_verify_tag(const char *name, const char *ref,
-+		const unsigned char *sha1, unsigned flags)
- {
- 
- 	enum object_type type;
- 	unsigned long size;
--	unsigned char sha1[20];
- 	char* buf;
- 	int ret;
- 
--	if (get_sha1(name, sha1))
--		return error("tag '%s' not found.", name);
--
- 	type = sha1_object_info(sha1, NULL);
- 	if (type != OBJ_TAG)
- 		return error("%s: cannot verify a non-tag object of type %s.",
-diff --git a/tag.h b/tag.h
-index 09e71f9..22289a5 100644
---- a/tag.h
-+++ b/tag.h
-@@ -17,6 +17,7 @@ extern int parse_tag_buffer(struct tag *item, const void *data, unsigned long si
- extern int parse_tag(struct tag *item);
- extern struct object *deref_tag(struct object *, const char *, int);
- extern struct object *deref_tag_noverify(struct object *);
--extern int pgp_verify_tag(const char *name, unsigned flags);
-+extern int pgp_verify_tag(const char *name, const char *ref,
-+		const unsigned char *sha1, unsigned flags);
- 
- #endif /* TAG_H */
--- 
-2.8.0
+ test_expect_success 'negation of OPT_NONEG flags is not ambiguous' '
+ 	test-parse-options --no-ambig >output 2>output.err &&
+ 	test_must_be_empty output.err &&
+diff --git a/test-parse-options.c b/test-parse-options.c
+index 86afa98..f02c275 100644
+--- a/test-parse-options.c
++++ b/test-parse-options.c
+@@ -7,7 +7,8 @@ static int integer = 0;
+ static unsigned long magnitude = 0;
+ static unsigned long timestamp;
+ static int abbrev = 7;
+-static int verbose = 0, dry_run = 0, quiet = 0;
++static int verbose = -1; /* unspecified */
++static int dry_run = 0, quiet = 0;
+ static char *string = NULL;
+ static char *file = NULL;
+ static int ambiguous;
+
+--
+https://github.com/git/git/pull/218
