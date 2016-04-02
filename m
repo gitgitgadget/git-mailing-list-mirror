@@ -1,237 +1,90 @@
 From: Mehul Jain <mehul.jain2029@gmail.com>
-Subject: [PATCH v2 0/7] t5520: tests for --[no-]autostash option
-Date: Sat,  2 Apr 2016 23:28:25 +0530
-Message-ID: <1459619912-5445-1-git-send-email-mehul.jain2029@gmail.com>
+Subject: [PATCH v2 1/7] t5520: use consistent capitalization in test titles
+Date: Sat,  2 Apr 2016 23:28:26 +0530
+Message-ID: <1459619912-5445-2-git-send-email-mehul.jain2029@gmail.com>
+References: <1459619912-5445-1-git-send-email-mehul.jain2029@gmail.com>
 Cc: sunshine@sunshineco.com, Matthieu.Moy@grenoble-inp.fr,
 	gitster@pobox.com, Mehul Jain <mehul.jain2029@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 02 19:59:34 2016
+X-From: git-owner@vger.kernel.org Sat Apr 02 20:00:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1amPpd-00083u-6D
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Apr 2016 19:59:33 +0200
+	id 1amPqA-0008LQ-P2
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Apr 2016 20:00:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751667AbcDBR73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Apr 2016 13:59:29 -0400
-Received: from mail-pa0-f66.google.com ([209.85.220.66]:33873 "EHLO
-	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750978AbcDBR72 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Apr 2016 13:59:28 -0400
-Received: by mail-pa0-f66.google.com with SMTP id hb4so973475pac.1
-        for <git@vger.kernel.org>; Sat, 02 Apr 2016 10:59:28 -0700 (PDT)
+	id S1751796AbcDBSAB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Apr 2016 14:00:01 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:34929 "EHLO
+	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751430AbcDBSAA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Apr 2016 14:00:00 -0400
+Received: by mail-pf0-f195.google.com with SMTP id r187so7509005pfr.2
+        for <git@vger.kernel.org>; Sat, 02 Apr 2016 10:59:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=U5gZo+JdG7OsEqdcfqHLS3bIt6eQLnXIeYGEoeAd6fs=;
-        b=ZtTdl9qa3/Gan8Pnn+22hR3cv6mNgYPCckvPYHbi/vnT3TLspT2loBjgYjdpWrvtnQ
-         EbTOv0jK0JEaA+AQ93+DfBoFi/FYktk9+I0//B+Dg4XSG9IgYktdIiBJ/lrCBNjE0IMo
-         jLJzGU9w9iB5nFJeYS8mIc6l+7ntmuFk4gasl9waDUJAOJmPOVxkFrzu//ek0fYR4KEy
-         qTLVUFur605jODTXjHnkiwlnmgJnGJszOn8hPwPIc5HjxOek6fkxwy8ADdez5aYaRAhJ
-         RKC8di749JvByAUwgjg5ooeRJgaUQ+PDImSKzrfXvU9aQm/KEeySCP5PBsSZ5wq7sihC
-         wQpQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=gJ/8SZT6pKZJwastvZE3iqJjWgJnDuX4r4eUWgN3aUw=;
+        b=b20wOT0IYTrS6ytfAVTE8k/52VV/rfg/ufP/9sW9m1vVyW6jiOAQnRoFXAqHPOSBVO
+         CXpwYw9/eoAhM5qtdDHIyi1/SH0NS6SWYmIj/SELtmcp+5TuVQEJEYJUELa1U+L3PbyX
+         3P0NRYBuE+nVEU5NVZH7dJ8uAQABtDQADVsmbl/vIHQScSjM2KSYVZCbQo0v/KYvv22S
+         NfehxeYTUQpqC3lh4rsKhpDCDTYxLKdh43golM5SNh4+M3rhj/jyqt/9HDCympsWvZqt
+         XTSJmDVqssxgHqJd3Ha359pMKfl7Oh955xxEaZFDoqB0T7DKmBslWmfZbnBlNWHoqU8T
+         w+YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=U5gZo+JdG7OsEqdcfqHLS3bIt6eQLnXIeYGEoeAd6fs=;
-        b=CczmjYgWrfTsk+hp2VYAlRUWiZM0wPPrOvYY8OMYCn4yYidPFG8g/+aTKVNpWsEblL
-         xvjyY2RO1huwwjYRpNl3kmuDeITYSOvg6BC4Kuz49h0CgvPfJHwQ1sH4eD06BgETSpWV
-         Bt4bAcebTkB0HL/oXZfxBJ01BynL1jaREdLAqr+SD66zI/UH04IvVL+6CoDXSgB78r+U
-         GLTI+Un6OMk79ppGq11YQDK+x1ao+2hnX0f8OwEbnbC3A9MIYIq3HXwYrwnHWtP+XwzR
-         gWqwt7zL2edwtWRNw4jSISPRWD/UypwzvSW3702Rm1jvwDdFR28u8R93YXGIc9nqfSfn
-         +d/Q==
-X-Gm-Message-State: AD7BkJKrvNKsxcWPFojCpg6FFXEpkshxU1DrRVsaGPBnPH5ne3IOOEQeUNAgoNbMAozu4g==
-X-Received: by 10.66.228.167 with SMTP id sj7mr11416113pac.101.1459619968047;
-        Sat, 02 Apr 2016 10:59:28 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=gJ/8SZT6pKZJwastvZE3iqJjWgJnDuX4r4eUWgN3aUw=;
+        b=AZ7U3oJe0ZU6lKls3vavFLCmhsMxGjPfRKxqhONkx6I1tXmg+NhSezWuo/juJii2RX
+         Um4WpZRXp8qmhIPGCgg+fpZQ42VEK6NB2SxYtVLkrzveMrxOJ+NBlAWyuO748r/wMkLM
+         r5soo6rQIHvyAj972Ftt+ieX2ndIZHjwvxgy3bYw/QYHAdRTxiLvVkz3RtCzk8wTEhVL
+         IfH+TI2dm0HmwqbSDyV+/zupJD27gzSzjaFI7ofmaKZ31QfPwtlhDf9/gb3G2TOk5l2i
+         anc6xJdc2FByVUc6lwyR7Ze05yz6zEeLiqA//LJTbGTaHzKKuS0fvPpse2ejJw9qKLZo
+         kPYw==
+X-Gm-Message-State: AD7BkJIKHYf1tPswsFxqOrmeQ0kT6YTq8oGLxcqKVjIFsUkLsfczSxv479axWal2DxC/Ng==
+X-Received: by 10.98.73.132 with SMTP id r4mr7834518pfi.118.1459619999522;
+        Sat, 02 Apr 2016 10:59:59 -0700 (PDT)
 Received: from localhost.localdomain ([1.39.37.116])
-        by smtp.gmail.com with ESMTPSA id v3sm30495734par.17.2016.04.02.10.59.16
+        by smtp.gmail.com with ESMTPSA id v3sm30495734par.17.2016.04.02.10.59.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 02 Apr 2016 10:59:27 -0700 (PDT)
+        Sat, 02 Apr 2016 10:59:58 -0700 (PDT)
 X-Mailer: git-send-email 2.7.1.340.g69eb491.dirty
+In-Reply-To: <1459619912-5445-1-git-send-email-mehul.jain2029@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290597>
 
-The following series is applicable on mj/pull-rebase-autostash.
-
-Thanks Eric and Junio for there comments on previous version[1]
-
-Changes made vs v1:
-        * [Patch v1 4/5] is broken into three patches to increase
-		  readability of the patches.
-
-		* [Patch 4/5] Factor out code in two functions 
-		  test_pull_autostash() and test_pull_autostash_fail()
-		  instead of test_rebase_autostash() and 
-		  test_rebase_no_autostash(). This leads to further 
-		  simplification of code.
-		  
-		  Also removed two for-loops as they didn't provided
-		  the simplicity intended for.
-		  
-		  For-loop was over-intended. Corrected it.
-
-		* Commit message for patches 1/5, 2/5, 3/5 are improved
-		  as suggested by Eric in the previous round.
-
-Here's interdiff with v1:
+Signed-off-by: Mehul Jain <mehul.jain2029@gmail.com>
+---
+ t/t5520-pull.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 4da9e52..bed75f5 100755
+index 745e59e..5be39df 100755
 --- a/t/t5520-pull.sh
 +++ b/t/t5520-pull.sh
-@@ -9,22 +9,22 @@ modify () {
- 	mv "$2.x" "$2"
- }
- 
--test_rebase_autostash () {
-+test_pull_autostash () {
- 	git reset --hard before-rebase &&
- 	echo dirty >new_file &&
- 	git add new_file &&
--	git pull --rebase --autostash . copy &&
-+	git pull $@ . copy &&
- 	test_cmp_rev HEAD^ copy &&
- 	test "$(cat new_file)" = dirty &&
+@@ -267,7 +267,7 @@ test_expect_success 'pull --rebase --autostash & rebase.autostash=true' '
  	test "$(cat file)" = "modified again"
- }
+ '
  
--test_rebase_no_autostash () {
-+test_pull_autostash_fail () {
+-test_expect_success 'pull --rebase --autostash & rebase.autoStash=false' '
++test_expect_success 'pull --rebase --autostash & rebase.autostash=false' '
+ 	test_config rebase.autostash false &&
+ 	git reset --hard before-rebase &&
+ 	echo dirty >new_file &&
+@@ -278,7 +278,7 @@ test_expect_success 'pull --rebase --autostash & rebase.autoStash=false' '
+ 	test "$(cat file)" = "modified again"
+ '
+ 
+-test_expect_success 'pull --rebase: --autostash & rebase.autoStash unset' '
++test_expect_success 'pull --rebase: --autostash & rebase.autostash unset' '
  	git reset --hard before-rebase &&
  	echo dirty >new_file &&
  	git add new_file &&
--	test_must_fail git pull --rebase --no-autostash . copy 2>err &&
--	test_i18ngrep "Cannot pull with rebase: Your index contains uncommitted changes." err
-+	test_must_fail git pull $@ . copy 2>err &&
-+	test_i18ngrep "uncommitted changes." err
- }
- 
- test_expect_success setup '
-@@ -265,48 +265,46 @@ test_expect_success '--rebase fails with multiple branches' '
- 
- test_expect_success 'pull --rebase succeeds with dirty working directory and rebase.autostash set' '
- 	test_config rebase.autostash true &&
--	git reset --hard before-rebase &&
--	echo dirty >new_file &&
--	git add new_file &&
--	git pull --rebase . copy &&
--	test_cmp_rev HEAD^ copy &&
--	test "$(cat new_file)" = dirty &&
--	test "$(cat file)" = "modified again"
-+	test_pull_autostash --rebase
-+'
-+
-+test_expect_success 'pull --rebase --autostash & rebase.autostash=true' '
-+	test_config rebase.autostash true &&
-+	test_pull_autostash --rebase --autostash
- '
- 
--for i in true false
--	do
--		test_expect_success "pull --rebase --autostash & rebase.autostash=$i" '
--			test_config rebase.autostash $i &&
--			test_rebase_autostash
--		'
--	done
-+test_expect_success 'pull --rebase --autostash & rebase.autostash=false' '
-+	test_config rebase.autostash false &&
-+	test_pull_autostash --rebase --autostash
-+'
- 
--test_expect_success 'pull --rebase: --autostash & rebase.autostash unset' '
-+test_expect_success 'pull --rebase --autostash & rebase.autostash unset' '
- 	test_unconfig rebase.autostash &&
--	test_rebase_autostash
-+	test_pull_autostash --rebase --autostash
-+'
-+
-+test_expect_success 'pull --rebase --no-autostash & rebase.autostash=true' '
-+	test_config rebase.autostash true &&
-+	test_pull_autostash_fail --rebase --no-autostash
- '
- 
--for i in true false
--	do
--		test_expect_success "pull --rebase --no-autostash & rebase.autostash=$i" '
--			test_config rebase.autostash $i &&
--			test_rebase_no_autostash
--		'
--	done
-+test_expect_success 'pull --rebase --no-autostash & rebase.autostash=false' '
-+	test_config rebase.autostash false &&
-+	test_pull_autostash_fail --rebase --no-autostash
-+'
- 
- test_expect_success 'pull --rebase --no-autostash & rebase.autostash unset' '
- 	test_unconfig rebase.autostash &&
--	test_rebase_no_autostash
-+	test_pull_autostash_fail --rebase --no-autostash
- '
- 
- for i in --autostash --no-autostash
--	do
--		test_expect_success "pull $i (without --rebase) is illegal" '
--			test_must_fail git pull $i . copy 2>actual &&
--			test_i18ngrep "only valid with --rebase" actual
--		'
--	done
-+do
-+	test_expect_success "pull $i (without --rebase) is illegal" '
-+		test_must_fail git pull $i . copy 2>err &&
-+		test_i18ngrep "only valid with --rebase" err
-+	'
-+done
- 
- test_expect_success 'pull.rebase' '
- 	git reset --hard before-rebase &&
-@@ -318,22 +316,12 @@ test_expect_success 'pull.rebase' '
- 
- test_expect_success 'pull --autostash & pull.rebase=true' '
- 	test_config pull.rebase true &&
--	git reset --hard before-rebase &&
--	echo dirty >new_file &&
--	git add new_file &&
--	git pull --autostash . copy &&
--	test_cmp_rev HEAD^ copy &&
--	test "$(cat new_file)" = dirty &&
--	test "$(cat file)" = "modified again"
-+	test_pull_autostash --autostash
- '
- 
- test_expect_success 'pull --no-autostash & pull.rebase=true' '
- 	test_config pull.rebase true &&
--	git reset --hard before-rebase &&
--	echo dirty >new_file &&
--	git add new_file &&
--	test_must_fail git pull --no-autostash . copy 2>err &&
--	test_i18ngrep "Cannot pull with rebase: Your index contains uncommitted changes." err
-+	test_pull_autostash_fail --no-autostash
- '
- 
- test_expect_success 'branch.to-rebase.rebase' '
-
-
-Mehul Jain (7):
-  t5520: use consistent capitalization in test titles
-  t5520: ensure consistent test conditions
-  t5520: use better test to check stderr output
-  t5520: factor out common code
-  t5520: factor out common code
-  t5520: reduce commom lines of code
-  t5520: test --[no-]autostash with pull.rebase=true
-
- t/t5520-pull.sh | 102 +++++++++++++++++++++++++-------------------------------
- 1 file changed, 46 insertions(+), 56 deletions(-)
-
 -- 
 2.7.1.340.g69eb491.dirty
-
-[1]:http://thread.gmane.org/gmane.comp.version-control.git/290134
-
-Thanks,
-Mehul
