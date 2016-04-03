@@ -1,131 +1,101 @@
 From: Santiago Torres <santiago@nyu.edu>
-Subject: Re: [PATCH v3 1/4] builtin/verify-tag.c: Ignore SIGPIPE on
- gpg-interface
-Date: Sun, 3 Apr 2016 17:46:07 -0400
-Message-ID: <20160403214606.GB28933@LykOS>
+Subject: Re: [PATCH v3 3/4] builtin/verify-tag: move verification code to
+ tag.c
+Date: Sun, 3 Apr 2016 17:53:11 -0400
+Message-ID: <20160403215310.GC28933@LykOS>
 References: <1459638975-17705-1-git-send-email-santiago@nyu.edu>
- <1459638975-17705-2-git-send-email-santiago@nyu.edu>
- <5700BD33.6090602@kdbg.org>
+ <1459638975-17705-4-git-send-email-santiago@nyu.edu>
+ <CAPig+cS47LSmwtLWPJZG8eFByEJ+t_hegM93nqsfTZEoH-+f4Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun Apr 03 23:46:19 2016
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Apr 03 23:55:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ampqc-0004H7-7u
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Apr 2016 23:46:18 +0200
+	id 1ampzH-00087I-S8
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Apr 2016 23:55:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752353AbcDCVqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Apr 2016 17:46:11 -0400
-Received: from mail-qk0-f171.google.com ([209.85.220.171]:34328 "EHLO
-	mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751569AbcDCVqK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Apr 2016 17:46:10 -0400
-Received: by mail-qk0-f171.google.com with SMTP id r184so21612381qkc.1
-        for <git@vger.kernel.org>; Sun, 03 Apr 2016 14:46:09 -0700 (PDT)
+	id S1751984AbcDCVxO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Apr 2016 17:53:14 -0400
+Received: from mail-qg0-f52.google.com ([209.85.192.52]:34636 "EHLO
+	mail-qg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751347AbcDCVxN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Apr 2016 17:53:13 -0400
+Received: by mail-qg0-f52.google.com with SMTP id c6so6632547qga.1
+        for <git@vger.kernel.org>; Sun, 03 Apr 2016 14:53:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=nyu-edu.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=REfr1eCVvub2P4tgwjg38evYDSn+WKH1jHjNQ1r0CFY=;
-        b=jiRprB+V66Fws56zGusvto2ProOzYVbBeEwrVx4Z/3ZPrDA5C3/ZuGsXeTzklBpxok
-         PNswJNzjK/YDf82iru2sJb5LGPnIQ2hO7ySj9epRAtFBvgxJ76Jj368w94MgkHxcfM0o
-         mVFV6NaCTB8zeS1A/JWg84c6iCdGOBY/nSDqoqNaWL3QRenxAVLp5l3XiaPy3PWmy/zN
-         5x7J6l4svVDrhxJALGAQH5fwg5pfcwl7+KHBDLjXYMmaIdbixlHZYTDXLbabOaBI/2ll
-         nfjclFqR6585n66hlfjjS5Viw1GWgTMJOjzSWodonuN4Y7Lwbv2R9tMn1C7fwVAN+exT
-         5eGw==
+        bh=kfsnBUGTQIagKLr3398OVnfc/YX0th62XGhpB6gbstg=;
+        b=jKxCswlS8zKXIF3zbX1RFV90vw/GBaXnbgb7gn3JbmGOYxDI03GXI7Gt7L6RLLqcI3
+         1qXeFwtB/NPpP3vIO3jAHGR6ww18Bhdmeued8WHh/gYLuRDtpcMxi2wk9I0GPP5ksgUW
+         disaX3vKDEqnN6mVaapSEYsX4uoCP6BZljfuLs1NAeX+i5xAFE87ZuqbJaPQigPxPcEn
+         rFi5J5Lftyy6GjHxzqtvfLvj1kpXvtFzseql/eX7Y+qMpXm7meHXueC0R/GTkSj5MIvG
+         X3SX0m0YbeHI1H3TOpgrcVWmG7kTAdhvwY65yt2Y+988xdcUVMhh6MdVPrmlT+/WHAKb
+         85QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=REfr1eCVvub2P4tgwjg38evYDSn+WKH1jHjNQ1r0CFY=;
-        b=AOuaFuhgnehLTKJQh7QImN8lacdBbYce3iZHxLFe+gytHzzvhJ+x/EDhciR1WPpp4x
-         0w9rlyIzVs/A97fpNzT3/isZAZRkKRX3QDg+nYYkaX0D6u6KKFz6r7Q6Hx86s3/I1X/w
-         yNRs+ZdQ+1nZrRWSLTqQl/K1B1vZXz48krxQGBwcUoHhrGV7D8cntvk/dX7PSNMtPmOT
-         hIifNYiF/VYVOaiILPo4wp+GYpV6DxiY0uxAPxiqxicB8NmbF2DGxtaay8mSwdONl7yF
-         dFfo5ed3ZTmK8YiFJJoJk/ovEcDZWkmW3pOc2NqieiLXRRfQBSJclTH0RNkABfQquFQF
-         Lqsw==
-X-Gm-Message-State: AD7BkJJV0GbixrJAqJGrcNEx5gE3Ou0BVXBScxSF+cCh1sgw9fxNZDNJy8nKDZLp13/HVyet
-X-Received: by 10.55.215.206 with SMTP id t75mr14884459qkt.87.1459719969073;
-        Sun, 03 Apr 2016 14:46:09 -0700 (PDT)
+        bh=kfsnBUGTQIagKLr3398OVnfc/YX0th62XGhpB6gbstg=;
+        b=E+stqcrSGySB8xhouylkQjL7qFzuxhX85u3uUX0QsrEn6yn3Om/IgErU2dtNO8LJKp
+         ciEu2aKb02IKeMD7cHWlBLMCeGYYZMpmeIeTR4uVg6Scpw6Cg3IvX434zUX+aUKhAO6S
+         xVU9QONfLq7UDq2bDMhyqD2zsdM+b1OFSDY2QnB5Vjx8ax1c1+jKHVTWFNuDXU8504bd
+         jJIEEd6sFTNfdS9SY3hDJV09kdYwLuu1NgPUDwblFkG7G8BigMwBD+6xMW9VBewVm2do
+         5soljnRfOVBaPh562ZEtAvCOozxcMtcvLZgRDJmMiT6aG6OOrGQCq2uTZuErqWPrDqcT
+         97Xw==
+X-Gm-Message-State: AD7BkJIig19maXcEe9xxyUUvJw2xYRsswXAb/hNvZKzLkSJCTFZqyAEMjxPyA87sXYhyvEAG
+X-Received: by 10.140.81.51 with SMTP id e48mr7579536qgd.27.1459720392294;
+        Sun, 03 Apr 2016 14:53:12 -0700 (PDT)
 Received: from LykOS (cpe-74-65-203-27.nyc.res.rr.com. [74.65.203.27])
-        by smtp.gmail.com with ESMTPSA id c190sm11080451qkb.27.2016.04.03.14.46.08
+        by smtp.gmail.com with ESMTPSA id o77sm11048169qgd.37.2016.04.03.14.53.11
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 03 Apr 2016 14:46:08 -0700 (PDT)
+        Sun, 03 Apr 2016 14:53:11 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <5700BD33.6090602@kdbg.org>
+In-Reply-To: <CAPig+cS47LSmwtLWPJZG8eFByEJ+t_hegM93nqsfTZEoH-+f4Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290658>
 
-On Sun, Apr 03, 2016 at 08:50:27AM +0200, Johannes Sixt wrote:
-> Am 03.04.2016 um 01:16 schrieb santiago@nyu.edu:
-> > From: Santiago Torres <santiago@nyu.edu>
-> > 
-> > The verify_signed_buffer comand might cause a SIGPIPE signal when the
-> > gpg child process terminates early (due to a bad keyid, for example) and
-> > git tries to write to it afterwards. Previously, ignoring SIGPIPE was
-> > done on the builtin/gpg-verify.c command to avoid this issue. However,
-> > any other caller who wanted to use the verify_signed_buffer command
-> > would have to include this signal call.
-> > 
-> > Instead, we use sigchain_push(SIGPIPE, SIG_IGN) on the
-> > verify_signed_buffer call (pretty much like in sign_buffer()) so
-> > that any caller is not required to perform this task. This will avoid
-> > possible mistakes by further developers using verify_signed_buffer.
-> > 
+On Sun, Apr 03, 2016 at 04:19:26AM -0400, Eric Sunshine wrote:
+> On Sat, Apr 2, 2016 at 7:16 PM,  <santiago@nyu.edu> wrote:
+> > The PGP verification routine for tags could be accessed by other
+> > commands that require it. We do this by moving it to the common tag.c
+> > code. We rename the verify_tag() function to pgp_verify_tag() to avoid
+> > conflicts with the mktag.c function.
+> >
 > > Signed-off-by: Santiago Torres <santiago@nyu.edu>
 > > ---
-> > Notes:
-> >   I dropped the multiline comment altogheter.
-> > 
-> >   builtin/verify-tag.c | 3 ---
-> >   gpg-interface.c      | 3 +++
-> >   2 files changed, 3 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
-> > index 00663f6..77f070a 100644
-> > --- a/builtin/verify-tag.c
-> > +++ b/builtin/verify-tag.c
-> > @@ -95,9 +95,6 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
-> >   	if (verbose)
-> >   		flags |= GPG_VERIFY_VERBOSE;
-> > 
-> > -	/* sometimes the program was terminated because this signal
-> > -	 * was received in the process of writing the gpg input: */
-> > -	signal(SIGPIPE, SIG_IGN);
-> >   	while (i < argc)
-> >   		if (verify_tag(argv[i++], flags))
-> >   			had_error = 1;
-> > diff --git a/gpg-interface.c b/gpg-interface.c
-> > index 3dc2fe3..c1f6b2d 100644
-> > --- a/gpg-interface.c
-> > +++ b/gpg-interface.c
-> > @@ -232,6 +232,8 @@ int verify_signed_buffer(const char *payload, size_t payload_size,
-> >   	if (gpg_output)
-> >   		gpg.err = -1;
-> >   	args_gpg[3] = path;
+> > -       len = parse_signature(buf, size);
+> > -
+> > -       if (size == len) {
+> > -               if (flags & GPG_VERIFY_VERBOSE)
+> > -                       write_in_full(1, buf, len);
+> > -               return error("no signature found");
+> > -       }
+> > [...]
+> > +       payload_size = parse_signature(buf, size);
 > > +
-> > +	sigchain_push(SIGPIPE, SIG_IGN);
-> >   	if (start_command(&gpg)) {
-> >   		unlink(path);
-> >   		return error(_("could not run gpg."));
+> > +       if (size == payload_size) {
+> > +               write_in_full(1, buf, payload_size);
+> > +               return error("No PGP signature found in this tag!");
+> > +       }
 > 
-> But no sigchain_pop() in the error path that we see here?
+> Also, [1] asked why the moved code no longer respects
+> GPG_VERIFY_VERBOSE, and that question doesn't seem to be answered
+> either in the previous review thread or by this patch's commit
+> message. It's not clear at a casual glance why this change is
+> desirable.
 > 
-> Perhaps you can even defer the sigchain_push() until after start_command()?
 
-Yes, after reviewing where the sigchain_push() call is made on
-sign_buffer(), I should put the push call after starting the command in
-the same way sign_buffer() does. 
-
-Thanks!
--Santiago.
+I must've missed this when moving code around. I don't think that this
+if should change in any way. I'll put it back as it is (other than the
+variable naming that is)
