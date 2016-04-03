@@ -1,221 +1,88 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v12 2/5] test-parse-options: print quiet as integer
-Date: Sun, 3 Apr 2016 17:30:38 -0400
-Message-ID: <CAPig+cQpdr7A7GxKUN3tDs2rQ7z_S5b1WVsk01=BwkCwB2mp0A@mail.gmail.com>
-References: <01020153d952bd99-d3812bd6-d189-4780-ab48-f015696e9cf0-000000@eu-west-1.amazonses.com>
-	<01020153d952be64-9ca893f1-5a7b-4a2c-a0bd-98abf93a17ac-000000@eu-west-1.amazonses.com>
+From: Santiago Torres <santiago@nyu.edu>
+Subject: Re: [PATCH v3 4/4] tag: use pgp_verify_function in tag -v call
+Date: Sun, 3 Apr 2016 17:43:55 -0400
+Message-ID: <20160403214354.GA28933@LykOS>
+References: <1459638975-17705-1-git-send-email-santiago@nyu.edu>
+ <1459638975-17705-5-git-send-email-santiago@nyu.edu>
+ <20160403045600.GD1519@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 03 23:30:47 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Apr 03 23:44:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ampbY-00062a-RJ
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Apr 2016 23:30:45 +0200
+	id 1amppD-0003eO-J9
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Apr 2016 23:44:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752323AbcDCVak (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Apr 2016 17:30:40 -0400
-Received: from mail-ig0-f193.google.com ([209.85.213.193]:36726 "EHLO
-	mail-ig0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752110AbcDCVaj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Apr 2016 17:30:39 -0400
-Received: by mail-ig0-f193.google.com with SMTP id kb1so934672igb.3
-        for <git@vger.kernel.org>; Sun, 03 Apr 2016 14:30:39 -0700 (PDT)
+	id S1751723AbcDCVn6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Apr 2016 17:43:58 -0400
+Received: from mail-qg0-f53.google.com ([209.85.192.53]:36476 "EHLO
+	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751347AbcDCVn5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Apr 2016 17:43:57 -0400
+Received: by mail-qg0-f53.google.com with SMTP id f52so39226940qga.3
+        for <git@vger.kernel.org>; Sun, 03 Apr 2016 14:43:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=POPCPyB9559s7sSLzAexJeKIQKsn72011ie0KM30C8U=;
-        b=xDHmIW79IfQ8I0tNKoEcD89gzMvt0WCRBJVczBprYXW5hXw8v9SYlo/dD9UHGBufzX
-         6BF2V+PlbfHzw13FJ5alBnUyIpGDvOsdj/qt1TvUlXtOmkUhUCZL+V4hE4XqaOQ0T+Nb
-         mnKvWB3UpeNmhZGwZSnnMENqGNBJdiTR56pUPF9TePHyuSJjjQ9HsyO57rqyGp4iSJTO
-         1vzkpw9Ild2olj9/6HAUJmP8u4PhvLb4hp8H65csV/lnuf2B2pb1qqmW9kBUBkssspC7
-         NYWc4SoHGC9Iotv4b0QCUen/fvAlDmEHD6k6RO1mBZP9eCtK//MLo1iQbHV01rgnA8NK
-         x3Qg==
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=b8TAJpBU9q9hWu1Zdx8OCxBUHzMjqnhmtRORdIIn0bA=;
+        b=lsUXgmHGRttQgjq/WFWiVr8KtJ16VM/BLBa9QGep7p8VFXM3bZR3Zom/jfhC7BdZVb
+         vMPzfEUP6Yr4dN95dwraaknuofhhY67hfjKn4WYRIAMG7poGzG/N7LxY4wXLkgqUQove
+         SUyvujmR1wy6kQYz9tgzbOuZh0PTll6JFwgqY3fvMZf8Ha8pJBs4KaZAGxmnOE3CCP1R
+         pZwz11lyjbUf0Idr2GX4ECclpLDPqMXMjda9yDnL/fVt5Y2NnHPlHWzQj95zaPwkB/9Q
+         ZNFr4YkIRF7TymJIOLBJB4yvYMXtd2flkDBEr/qAymfhJhW7vTU/eTi7dUB4nlWk5m3h
+         appw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=POPCPyB9559s7sSLzAexJeKIQKsn72011ie0KM30C8U=;
-        b=OERoSYpoOi3y3JrfU+hHxEiUmUz+q9gXbWK1dp+yseLKOKouAJsgSiHYBii7lXMnQy
-         wX7eY86eSxHa54cN3vhhHAFaLAT/g8h7WNIrzwCv5pR9MT9RG102mr1e+S3GwwMSVDeq
-         DA44IT2USKBIGexrJJAePbrCKsGIVPI2EcDGMR2pubIyKzye1uR2CyMppNq22P3jQ5Pk
-         KTi0Qg0NbwTZr0Sc+NsNgj3dj3aqtrcPGyagxdDfvnOSIVI7IRxbpu+ELgODFFm3IiN0
-         bgJ6Ei7e5hGUm9kbySs2aVsFxUxPGam1BdY3c+8slEEk/ktPWwP6bQ5XFARCK4hV9hsf
-         gvtw==
-X-Gm-Message-State: AD7BkJJTyT1XZBcQ0PXLZFODve40hGRhu61HIE4bqs5EoEGaINUoO6/BQCGI3/xXbRZtAC+svso/reLnamXVDQ==
-X-Received: by 10.50.92.37 with SMTP id cj5mr8488118igb.91.1459719039023; Sun,
- 03 Apr 2016 14:30:39 -0700 (PDT)
-Received: by 10.79.12.139 with HTTP; Sun, 3 Apr 2016 14:30:38 -0700 (PDT)
-In-Reply-To: <01020153d952be64-9ca893f1-5a7b-4a2c-a0bd-98abf93a17ac-000000@eu-west-1.amazonses.com>
-X-Google-Sender-Auth: uGoSZz9WPOuBHecV3XACGz7LQYs
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=b8TAJpBU9q9hWu1Zdx8OCxBUHzMjqnhmtRORdIIn0bA=;
+        b=RD2XdMVb3ty/ps8yIc925+pam58JZB3vmh6G49s/FDtDp4jscFmXQMoRr6EjyzLyk3
+         ujDrBF1whfUAFzxAoSr6svrNOR1KH8dSLcqyhtiFjPmiZJLZB12dDhFwG/jviUlYN98G
+         xGQ2GFF67nh4eChHi2HLMsERK/yWmazG0Vd5b+7dTWQpG6XWSUECr2yf9AqxoXILsCSr
+         OWHIG7lHOa9hLkTtzVxk0EJ/M3noz+4FZGCTBgnH7nMgtMkt5X8n4fuFIlDLzu2f6sDX
+         1uSDZ7RFiwb3BZfVHISjm52Hev2cX4cwZR37Biw/O52UeCIm1FCk3mm8E1zz+VEtYUeW
+         Ygzw==
+X-Gm-Message-State: AD7BkJIU5u+1Zid7xvtMfTM9aLSdBwz43BHQ329S6H1OOajunGJG1M6sxc9J8MmXGAbll6lh
+X-Received: by 10.140.102.111 with SMTP id v102mr19981453qge.48.1459719836469;
+        Sun, 03 Apr 2016 14:43:56 -0700 (PDT)
+Received: from LykOS (cpe-74-65-203-27.nyc.res.rr.com. [74.65.203.27])
+        by smtp.gmail.com with ESMTPSA id c2sm11042703qkb.41.2016.04.03.14.43.55
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 03 Apr 2016 14:43:56 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20160403045600.GD1519@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290656>
 
-On Sat, Apr 2, 2016 at 7:33 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> Current implementation of parse-options.c treats OPT__QUIET() as integer
-> and not boolean and thus it is more appropriate to print it as integer
-> to avoid confusion.
+> >  	if (cmdmode == 'v')
+> > -		return for_each_tag_name(argv, verify_tag);
+> > +		return for_each_tag_name(argv, pgp_verify_tag,
+> > +				GPG_VERIFY_VERBOSE);
+> 
+> but I think that is coupling too closely. What happens later when the
+> public, multi-file pgp_verify_tag function changes its interface? Or we
+> want to change our interface here, and it no longer matches
+> pgp_verify_tag? The results ripple a lot further than they should.
+> 
+> I think you probably want to keep a simple adapter callback in this
+> file, like:
+> 
+>   int verify_tag(const char *name, const char *ref, const unsigned char *sha1)
+>   {
+> 	return pgp_verify_tag(name, GPG_VERIFY_VERBOSE));
+>   }
 
-I can buy this line of reasoning, however, it would be even easier to
-sell the change if you cited an existing client (a git command) which
-actually respects multiple quiet levels. Are there any?
+Yes, agreed. I'll give this a go
 
-More importantly, though, this change implies that you should also add
-tests to ensure that the quiet level is indeed incremented with each
---quiet, just as "-vv" and "--verbose --verbose" are already tested.
-You might be able to include such new tests directly in this patch as
-long as the commit message is clear about it, or add them in a
-separate patch.
-
-By the way, I don't see any tests to ensure that --no-verbose and
---no-quiet reset those respective values to 0. A separate patch which
-adds such tests would be nice (unless such tests already exist and I
-merely missed them).
-
-> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-> ---
->  t/t0040-parse-options.sh | 26 +++++++++++++-------------
->  test-parse-options.c     |  2 +-
->  2 files changed, 14 insertions(+), 14 deletions(-)
->
-> diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-> index c6f205b..302c315 100755
-> --- a/t/t0040-parse-options.sh
-> +++ b/t/t0040-parse-options.sh
-> @@ -64,7 +64,7 @@ timestamp: 0
->  string: (not set)
->  abbrev: 7
->  verbose: 0
-> -quiet: no
-> +quiet: 0
->  dry run: no
->  file: (not set)
->  EOF
-> @@ -164,7 +164,7 @@ timestamp: 0
->  string: 123
->  abbrev: 7
->  verbose: 2
-> -quiet: no
-> +quiet: 0
->  dry run: yes
->  file: prefix/my.file
->  EOF
-> @@ -184,7 +184,7 @@ timestamp: 0
->  string: 321
->  abbrev: 10
->  verbose: 2
-> -quiet: no
-> +quiet: 0
->  dry run: no
->  file: prefix/fi.le
->  EOF
-> @@ -212,7 +212,7 @@ timestamp: 0
->  string: 123
->  abbrev: 7
->  verbose: 0
-> -quiet: no
-> +quiet: 0
->  dry run: no
->  file: (not set)
->  arg 00: a1
-> @@ -235,7 +235,7 @@ timestamp: 0
->  string: (not set)
->  abbrev: 7
->  verbose: 0
-> -quiet: no
-> +quiet: 0
->  dry run: no
->  file: (not set)
->  EOF
-> @@ -264,7 +264,7 @@ timestamp: 0
->  string: 123
->  abbrev: 7
->  verbose: 0
-> -quiet: no
-> +quiet: 0
->  dry run: no
->  file: (not set)
->  EOF
-> @@ -303,7 +303,7 @@ timestamp: 0
->  string: (not set)
->  abbrev: 7
->  verbose: 0
-> -quiet: no
-> +quiet: 0
->  dry run: no
->  file: (not set)
->  arg 00: --quux
-> @@ -323,7 +323,7 @@ timestamp: 1
->  string: (not set)
->  abbrev: 7
->  verbose: 0
-> -quiet: yes
-> +quiet: 1
->  dry run: no
->  file: (not set)
->  arg 00: foo
-> @@ -345,7 +345,7 @@ timestamp: 0
->  string: (not set)
->  abbrev: 7
->  verbose: 0
-> -quiet: no
-> +quiet: 0
->  dry run: no
->  file: (not set)
->  EOF
-> @@ -374,7 +374,7 @@ timestamp: 0
->  string: (not set)
->  abbrev: 7
->  verbose: 0
-> -quiet: no
-> +quiet: 0
->  dry run: no
->  file: (not set)
->  EOF
-> @@ -399,7 +399,7 @@ timestamp: 0
->  string: (not set)
->  abbrev: 7
->  verbose: 0
-> -quiet: no
-> +quiet: 0
->  dry run: no
->  file: (not set)
->  EOF
-> @@ -430,7 +430,7 @@ timestamp: 0
->  string: (not set)
->  abbrev: 7
->  verbose: 0
-> -quiet: no
-> +quiet: 0
->  dry run: no
->  file: (not set)
->  EOF
-> @@ -449,7 +449,7 @@ timestamp: 0
->  string: (not set)
->  abbrev: 7
->  verbose: 0
-> -quiet: no
-> +quiet: 0
->  dry run: no
->  file: (not set)
->  EOF
-> diff --git a/test-parse-options.c b/test-parse-options.c
-> index 2c8c8f1..86afa98 100644
-> --- a/test-parse-options.c
-> +++ b/test-parse-options.c
-> @@ -90,7 +90,7 @@ int main(int argc, char **argv)
->         printf("string: %s\n", string ? string : "(not set)");
->         printf("abbrev: %d\n", abbrev);
->         printf("verbose: %d\n", verbose);
-> -       printf("quiet: %s\n", quiet ? "yes" : "no");
-> +       printf("quiet: %d\n", quiet);
->         printf("dry run: %s\n", dry_run ? "yes" : "no");
->         printf("file: %s\n", file ? file : "(not set)");
+Thanks!
+-Santiago
