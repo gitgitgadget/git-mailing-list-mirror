@@ -1,334 +1,115 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: [PATCH v12 5/5] commit: add a commit.verbose config variable
-Date: Sat, 2 Apr 2016 23:33:12 +0000
-Message-ID: <01020153d952be81-1859e6e4-81e4-473f-a2fa-7e27305b4e3e-000000@eu-west-1.amazonses.com>
-References: <01020153d952bd99-d3812bd6-d189-4780-ab48-f015696e9cf0-000000@eu-west-1.amazonses.com>
+From: "Benjamin Sandeen" <benjaminsandeen2016@u.northwestern.edu>
+Subject: Bug Report
+Date: Sat, 2 Apr 2016 19:25:17 -0500
+Message-ID: <04bf01d18d3f$4ce38410$e6aa8c30$@u.northwestern.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 03 01:46:07 2016
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Apr 03 02:24:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1amVEw-0006yA-Au
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Apr 2016 01:46:02 +0200
+	id 1amVqB-0005mv-IM
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Apr 2016 02:24:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750890AbcDBXp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Apr 2016 19:45:58 -0400
-Received: from a6-246.smtp-out.eu-west-1.amazonses.com ([54.240.6.246]:48310
-	"EHLO a6-246.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750766AbcDBXp5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 2 Apr 2016 19:45:57 -0400
-X-Greylist: delayed 763 seconds by postgrey-1.27 at vger.kernel.org; Sat, 02 Apr 2016 19:45:56 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1459639992;
-	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=2/8b3DGimOhdPZjCvgQOEXQarFEQDLkNBhxVLLMaEjE=;
-	b=UEDe4qmWgmSBwkzPoepwzY5V/JwU4OARDbvG5pXe0Be5X4R3cIjkFJB+pGina1mi
-	swqylBzDb/46eJ2o/f+NCVOADJ5C5hk9D1Cc3QRfHH2xNu6lglpjXI+K1WFhuZVzHce
-	96NZOo9/JSXE27Gt8F/B9mZeXhypSrP9bLKxpqR4=
-In-Reply-To: <01020153d952bd99-d3812bd6-d189-4780-ab48-f015696e9cf0-000000@eu-west-1.amazonses.com>
-X-SES-Outgoing: 2016.04.02-54.240.6.246
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+	id S1751051AbcDCAYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Apr 2016 20:24:11 -0400
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:33124 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750833AbcDCAYK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Apr 2016 20:24:10 -0400
+Received: by mail-ig0-f169.google.com with SMTP id ma7so40924786igc.0
+        for <git@vger.kernel.org>; Sat, 02 Apr 2016 17:24:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=u-northwestern-edu.20150623.gappssmtp.com; s=20150623;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding:thread-index:content-language;
+        bh=Q8XgL5++meRVI+00UtdEfqAUmBc5k6n87+Hn5DSiARs=;
+        b=uZEi9vTrOjuHf9qRf2asyYShgl4o7HndB4HfqTfHfGpYEfucerO+W1WHmaztEDQ9Ur
+         Sy2CXhLfryW45B9I266xTpKJujmKDcqsxmOnTn7ZNMbIIdQJjaxZ9HULlrV0a4D2lZW5
+         e01NOD05u63/Os1AwX4X6CsQVPoy1HS0iY4drEwPqR6JA7iO1rZ9K1DHyibUtby2341O
+         gUMQhr1LDs4x6/ZTXfapJEPuT7zeKdWqqVCqMwMo3eV5wFcssPdDobSmcVVVxWNeheg9
+         SsE1X148Um2gxfpxY3aahS0WYdBtLIElK/8U0T2jCQgZQmnJHK1bl+vUdG8hnfHmCYiF
+         RWbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding:thread-index:content-language;
+        bh=Q8XgL5++meRVI+00UtdEfqAUmBc5k6n87+Hn5DSiARs=;
+        b=LTsKkrzjvlx+1Aw5SIY5ecNZfk3QMYixg6bU3tp0G1yaM8XFX//PQ3XIsgqPmR2MSJ
+         LHTjs60Opl1udhsUqWjwG/Io7XlfArgFpq06RXjX5tlTdjBjn3GB7qKFy+UcnT/COGBe
+         WP5XSJGn67Zoad8OI+9SqQyJz0MNYOU+0YoZ/qZ/FeapG9lWFG07W2EQIWqdx/shlYlI
+         bH5HLNVqa7vWcqMfU0KEiOw50aqNB655qpVH9UWd1y9nGGqzq9o0qhUNw0/Pll3aYubm
+         8Lnu0FYqqu3WVbU9O21H+aZRalVg/DqZDQqHY26a3e+njkCI0qO59Ye2SrRCwXyk1qZA
+         DJpg==
+X-Gm-Message-State: AD7BkJLtA21AvzG+kS+eAi/XYVBKYcJjGD6HRNR9nMw5zHALjf7XvrPTouqLPzCUiRVRffnE
+X-Received: by 10.107.19.42 with SMTP id b42mr13410753ioj.75.1459643050099;
+        Sat, 02 Apr 2016 17:24:10 -0700 (PDT)
+Received: from Sparta (dhcp-199-74-103-76.res-hall.northwestern.edu. [199.74.103.76])
+        by smtp.gmail.com with ESMTPSA id v100sm3078956ioi.23.2016.04.02.17.24.09
+        for <git@vger.kernel.org>
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 02 Apr 2016 17:24:09 -0700 (PDT)
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdGNPz+uqeg3lH5yQZ68UNVJAoYXjA==
+Content-Language: en-us
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290618>
 
-Add commit.verbose configuration variable as a convenience for those
-who always prefer --verbose.
+Today, I managed to create a duplicate branch in a git repository.  While
+this may not be a bug per se, I do think that it is confusing and some way
+of preventing such issues in the future may be helpful.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+I first cloned the repository:
 
----
-The previous version of the patch are:
- - [v11] $gmane/288820
- - [v10] $gmane/288820
- - [v9] $gmane/288820
- - [v8] $gmane/288820
- - [v7] $gmane/288820
- - [v6] $gmane/288728
- - [v5] $gmane/288728
- - [v4] $gmane/288652
- - [v3] $gmane/288634
- - [v2] $gmane/288569
- - [v1] $gmane/287540
+$ git clone https://github.com/CodeForChicago/superclass.git
 
-   Note: One might think some tests are extra but I think that it will
-   be better to include them as they "complete the continuity" thus
-   generalising the series which will make the patch even more clearer.
----
- Documentation/config.txt     |   4 +
- Documentation/git-commit.txt |   3 +-
- builtin/commit.c             |  14 +++-
- t/t7507-commit-verbose.sh    | 175 +++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 194 insertions(+), 2 deletions(-)
+Then, I created a new branch (or so I thought):
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 2cd6bdd..1d0ec2e 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1110,6 +1110,10 @@ commit.template::
- 	"`~/`" is expanded to the value of `$HOME` and "`~user/`" to the
- 	specified user's home directory.
- 
-+commit.verbose::
-+	A boolean or int to specify the level of verbose with `git commit`.
-+	See linkgit:git-commit[1].
-+
- credential.helper::
- 	Specify an external helper to be called when a username or
- 	password credential is needed; the helper may consult external
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 9ec6b3c..d474226 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -290,7 +290,8 @@ configuration variable documented in linkgit:git-config[1].
- 	what changes the commit has.
- 	Note that this diff output doesn't have its
- 	lines prefixed with '#'. This diff will not be a part
--	of the commit message.
-+	of the commit message. See the `commit.verbose` configuration
-+	variable in linkgit:git-config[1].
- +
- If specified twice, show in addition the unified diff between
- what would be committed and the worktree files, i.e. the unstaged
-diff --git a/builtin/commit.c b/builtin/commit.c
-index b3bd2d4..96e6190 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -113,7 +113,9 @@ static char *edit_message, *use_message;
- static char *fixup_message, *squash_message;
- static int all, also, interactive, patch_interactive, only, amend, signoff;
- static int edit_flag = -1; /* unspecified */
--static int quiet, verbose, no_verify, allow_empty, dry_run, renew_authorship;
-+static int config_verbose = -1; /* unspecified */
-+static int verbose = -1; /* unspecified */
-+static int quiet, no_verify, allow_empty, dry_run, renew_authorship;
- static int no_post_rewrite, allow_empty_message;
- static char *untracked_files_arg, *force_date, *ignore_submodule_arg;
- static char *sign_commit;
-@@ -1354,6 +1356,8 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 			     builtin_status_usage, 0);
- 	finalize_colopts(&s.colopts, -1);
- 	finalize_deferred_config(&s);
-+	if (verbose == -1)
-+		verbose = 0;
- 
- 	handle_untracked_files_arg(&s);
- 	if (show_ignored_in_status)
-@@ -1505,6 +1509,11 @@ static int git_commit_config(const char *k, const char *v, void *cb)
- 		sign_commit = git_config_bool(k, v) ? "" : NULL;
- 		return 0;
- 	}
-+	if (!strcmp(k, "commit.verbose")) {
-+		int is_bool;
-+		config_verbose = git_config_bool_or_int(k, v, &is_bool);
-+		return 0;
-+	}
- 
- 	status = git_gpg_config(k, v, NULL);
- 	if (status)
-@@ -1654,6 +1663,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	argc = parse_and_validate_options(argc, argv, builtin_commit_options,
- 					  builtin_commit_usage,
- 					  prefix, current_head, &s);
-+	if (verbose == -1)
-+		verbose = (config_verbose < 0) ? 0 : config_verbose;
-+
- 	if (dry_run)
- 		return dry_run_commit(argc, argv, prefix, current_head, &s);
- 	index_file = prepare_index(argc, argv, prefix, current_head, 0);
-diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
-index 0f28a86..7c79484 100755
---- a/t/t7507-commit-verbose.sh
-+++ b/t/t7507-commit-verbose.sh
-@@ -98,4 +98,179 @@ test_expect_success 'verbose diff is stripped out with set core.commentChar' '
- 	test_i18ngrep "Aborting commit due to empty commit message." err
- '
- 
-+test_expect_success 'set up -v -v' '
-+	echo dirty >file &&
-+	echo dirty >file2 &&
-+	git add file2
-+'
-+test_expect_success 'commit.verbose true and --verbose omitted' '
-+	git -c commit.verbose=true commit -F message &&
-+	test_line_count = 1 out
-+'
-+
-+test_expect_success 'commit.verbose true and --verbose' '
-+	git -c commit.verbose=true commit --amend --verbose &&
-+	test_line_count = 1 out
-+'
-+
-+test_expect_success 'commit.verbose true and -v -v' '
-+	git -c commit.verbose=true commit --amend -v -v &&
-+	test_line_count = 2 out
-+'
-+
-+test_expect_success 'commit.verbose true and --no-verbose' '
-+	git -c commit.verbose=true commit --amend --no-verbose &&
-+	test_line_count = 0 out
-+'
-+
-+test_expect_success 'commit.verbose false and --verbose' '
-+	git -c commit.verbose=false commit --amend --verbose &&
-+	test_line_count = 1 out
-+'
-+
-+test_expect_success 'commit.verbose false and -v -v' '
-+	git -c commit.verbose=false commit --amend -v -v &&
-+	test_line_count = 2 out
-+'
-+
-+test_expect_success 'commit.verbose false and --verbose omitted' '
-+	git -c commit.verbose=false commit --amend &&
-+	test_line_count = 0 out
-+'
-+
-+test_expect_success 'commit.verbose false and --no-verbose' '
-+	git -c commit.verbose=false commit --amend --no-verbose &&
-+	test_line_count = 0 out
-+'
-+
-+test_expect_success 'commit.verbose=-2 and --verbose omitted' '
-+	git -c commit.verbose=-2 commit --amend &&
-+	test_line_count = 0 out
-+'
-+
-+test_expect_success 'commit.verbose=-1 and --verbose omitted' '
-+	git -c commit.verbose=-1 commit --amend &&
-+	test_line_count = 0 out
-+'
-+
-+test_expect_success 'commit.verbose=0 and --verbose omitted' '
-+	git -c commit.verbose=0 commit --amend &&
-+	test_line_count = 0 out
-+'
-+
-+test_expect_success 'commit.verbose=1 and --verbose omitted' '
-+	git -c commit.verbose=1 commit --amend &&
-+	test_line_count = 1 out
-+'
-+
-+test_expect_success 'commit.verbose=2 and --verbose omitted' '
-+	git -c commit.verbose=2 commit --amend &&
-+	test_line_count = 2 out
-+'
-+
-+test_expect_success 'commit-verbose=3 and --verbose omitted' '
-+	git -c commit.verbose=3 commit --amend &&
-+	test_line_count = 2 out
-+'
-+
-+test_expect_success 'commit.verbose=-2 and --verbose' '
-+	git -c commit.verbose=-2 commit --amend --verbose &&
-+	test_line_count = 1 out
-+'
-+
-+test_expect_success 'commit.verbose=-1 and --verbose' '
-+	git -c commit.verbose=-1 commit --amend --verbose &&
-+	test_line_count = 1 out
-+'
-+
-+test_expect_success 'commit.verbose=0 and --verbose' '
-+	git -c commit.verbose=0 commit --amend --verbose &&
-+	test_line_count = 1 out
-+'
-+
-+test_expect_success 'commit.verbose=1 and --verbose' '
-+	git -c commit.verbose=1 commit --amend --verbose &&
-+	test_line_count = 1 out
-+'
-+
-+test_expect_success 'commit.verbose=2 and --verbose' '
-+	git -c commit.verbose=2 commit --amend --verbose &&
-+	test_line_count = 1 out
-+'
-+
-+test_expect_success 'commit.verbose=3 and --verbose' '
-+	git -c commit.verbose=3 commit --amend --verbose &&
-+	test_line_count = 1 out
-+'
-+
-+test_expect_success 'commit.verbose=-2 and -v -v' '
-+	git -c commit.verbose=-2 commit --amend -v -v &&
-+	test_line_count = 2 out
-+'
-+
-+test_expect_success 'commit.verbose=-1 and -v -v' '
-+	git -c commit.verbose=-1 commit --amend -v -v &&
-+	test_line_count = 2 out
-+'
-+
-+test_expect_success 'commit.verbose=0 and -v -v' '
-+	git -c commit.verbose=0 commit --amend -v -v &&
-+	test_line_count = 2 out
-+'
-+
-+test_expect_success 'commit.verbose=1 and -v -v' '
-+	git -c commit.verbose=1 commit --amend -v -v &&
-+	test_line_count = 2 out
-+'
-+
-+test_expect_success 'commit.verbose=2 and -v -v' '
-+	git -c commit.verbose=2 commit --amend -v -v &&
-+	test_line_count = 2 out
-+'
-+
-+test_expect_success 'commit.verbose=3 and -v -v' '
-+	git -c commit.verbose=3 commit --amend -v -v &&
-+	test_line_count = 2 out
-+'
-+
-+test_expect_success 'commit.verbose=-2 and --no-verbose' '
-+	git -c commit.verbose=-2 commit --amend --no-verbose &&
-+	test_line_count = 0 out
-+'
-+
-+test_expect_success 'commit.verbose=-1 and --no-verbose' '
-+	git -c commit.verbose=-1 commit --amend --no-verbose &&
-+	test_line_count = 0 out
-+'
-+
-+test_expect_success 'commit.verbose=0 and --no-verbose' '
-+	git -c commit.verbose=0 commit --amend --no-verbose &&
-+	test_line_count = 0 out
-+'
-+
-+test_expect_success 'commit.verbose=1 and --no-verbose' '
-+	git -c commit.verbose=1 commit --amend --no-verbose &&
-+	test_line_count = 0 out
-+'
-+
-+test_expect_success 'commit.verbose=2 and --no-verbose' '
-+	git -c commit.verbose=2 commit --amend --no-verbose &&
-+	test_line_count = 0 out
-+'
-+
-+test_expect_success 'commit.verbose=3 and --no-verbose' '
-+	git -c commit.verbose=3 commit --amend --no-verbose &&
-+	test_line_count = 0 out
-+'
-+
-+test_expect_success 'status ignores commit.verbose=true' '
-+	git -c commit.verbose=true status >actual &&
-+	! grep "^diff --git" actual
-+'
-+
-+test_expect_success 'status does not verbose without --verbose' '
-+	git status >actual &&
-+	! grep "^diff --git" actual
-+'
-+
- test_done
+$ git checkout -b lesson_page
 
---
-https://github.com/git/git/pull/218
+However, this branch has already existed for about 4 weeks, without my
+knowledge.  I proceeded to do some work on the files it contained, and when
+it came time to commit and push, and when I pushed, I got the following
+message:
+
+To https://github.com/CodeForChicago/superclass.git
+ ! [rejected]        lesson_page -> lesson_page (non-fast-forward)
+error: failed to push some refs to '
+https://github.com/CodeForChicago/superclass.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+Given that I had believed that I had created the branch just a few hours
+prior and was the first to attempt to push to it, this error was
+consternating.
+
+I may be wrong (I am aware that my understanding of git is limited), but I
+believe that the git checkout -b command is simply supposed to create a new
+branch and then switch to it (I'm not aware of any subtle behavior that goes
+on behind the scenes if the "new" branch that the user is attempting to
+create already exists).  This is why I said it "may not be a bug per se".
+However, I expect most people who use git to expect this command to create a
+new branch and then switch to it (this is what most sources online will tell
+users to do to create a new branch), and as such, it would be extremely
+beneficial if git were to, at the very least, alert the user to the conflict
+in some way or another.
+
+Thanks,
+Ben
+
+Lead Consultant, Northwestern University Information Technology
+Research Assistant, Center for Interdisciplinary Exploration and Research in
+Astrophysics at Northwestern University
+Phsyics, Weinberg College of Arts and Sciences
+Computer Science, Weinberg College of Arts and Sciences
+Classics, Weinberg College of Arts and Sciences
