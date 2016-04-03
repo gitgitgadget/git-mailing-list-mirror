@@ -1,125 +1,94 @@
-From: Matthew Persico <matthew.persico@gmail.com>
-Subject: Re: GIT_CONFIG - what's the point?
-Date: Sun, 3 Apr 2016 16:11:55 -0400
-Message-ID: <CAL20dLAK953vmqO2E1Aw-4aDOCthJYu+xP=0GUX2DTmajLxi8A@mail.gmail.com>
-References: <CAL20dLDkmjpXdmHv0MdoUEe43s9TjqrOLS2ud8HHGCF2vahWNQ@mail.gmail.com>
- <1459531705-31906-1-git-send-email-szeder@ira.uka.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 0/7] t5520: tests for --[no-]autostash option
+Date: Sun, 3 Apr 2016 16:17:30 -0400
+Message-ID: <CAPig+cR3diDfn893-ExKNZps=C7Z=M7DFAy-zbJzH3wKCmxVeQ@mail.gmail.com>
+References: <1459619912-5445-1-git-send-email-mehul.jain2029@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Sun Apr 03 22:12:21 2016
+Cc: Git List <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Mehul Jain <mehul.jain2029@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 03 22:17:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1amoNg-0004W2-JZ
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Apr 2016 22:12:20 +0200
+	id 1amoSm-0006qI-Lw
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Apr 2016 22:17:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751986AbcDCUMR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Apr 2016 16:12:17 -0400
-Received: from mail-vk0-f51.google.com ([209.85.213.51]:33027 "EHLO
-	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750983AbcDCUMQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Apr 2016 16:12:16 -0400
-Received: by mail-vk0-f51.google.com with SMTP id k1so157600274vkb.0
-        for <git@vger.kernel.org>; Sun, 03 Apr 2016 13:12:15 -0700 (PDT)
+	id S1751550AbcDCURc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Apr 2016 16:17:32 -0400
+Received: from mail-ig0-f196.google.com ([209.85.213.196]:33491 "EHLO
+	mail-ig0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751018AbcDCURb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Apr 2016 16:17:31 -0400
+Received: by mail-ig0-f196.google.com with SMTP id nt3so10675608igb.0
+        for <git@vger.kernel.org>; Sun, 03 Apr 2016 13:17:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=8bMKzkX5uBgQtvV/cCPDpvSj6jmRybmbOPLEZrhclic=;
-        b=bUnNVcjWe4T5EtXF9uyjEdqsqd27lUPWhlKmwApO1JVa0VPdOKs31JmpQmb8tu5W0O
-         MFiJXYbLRJ4qguS4H5KBqDMqryBEkoA27k4T1h1QZGBHvB70DabxPlm+bw7iQ5ePhdwn
-         HsQzwaESaVMWN58obZF4f9PvFmuwhcC1TxHCB06mwE/rifJilOUjvtHfVniUUbHEgDRG
-         /ril0T9WMvPo4OS1792P+wT0gk8QkTsTXiQcwpslZ7+lUvu58XQS2uUGcBHchy/vWQdJ
-         p/NJhL+ZmeA0elSWXRbxNW7NmA6gxad9V/fAylAGBi4xKcJHooffTuo+XCl5bUNA3d9m
-         grNQ==
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=4Gecydc2nnxww5BsH8pHmYsbonUhnnnA1cidpVHewEw=;
+        b=Mg4cE4CbwmIT5tDhj0xt4B0+5oVxUG4d8DfyFc9Ogjz+P7MTq1DZG0azKFyzLaNVQs
+         VrUTshqbeyhTu+33d4F7sjzouZCklHIgBLEp0q8/jd80ziMsGR8svVTiw86WsPCB0x6R
+         hzd32jiZNDhn3Ukfkd86hpCymEJmrZMIfxJvGbgx+z6R+9TEIx++QbuUIrMo4Nt7WtMF
+         fDgrXXOEQPAPJgIaqHjBmwkraq5GpSPKHwFgYFS8ETnr7b7KZH67zRKmfvxfdevCKgAR
+         f9ej8XjxLFMiWeY0HnHacuRXwmBF1wr3+bDQwE2NIENYNxYsqqvUlbaqVn2667FOuvgy
+         Sk8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8bMKzkX5uBgQtvV/cCPDpvSj6jmRybmbOPLEZrhclic=;
-        b=QY9Id4C3RDs4lPj+smsL5ZCWa8oQCDAovWoTRedJpjvwTQIDtkA9CIcb9Zf0unoykh
-         VwOcW+vKVyoGxelf18lUt+kUfACJy23quHUfYnabi6fun/N18sIU78yo1SEN9J1SZ61/
-         nEqXaMxUNJhjIA5p75FOCyb/sxdIK5tdPE2uJuHkfTk6EHM7a8daGMbbXPSwPBd3aQjh
-         1eKuGhrGf3WRR/+224gbUMOyx4o/m7KgI6XSFim5BJuBqP5B/O+CcTUZZRyBliIOevv1
-         DR7MWatNUvn/W1MXreoFDX3iYgVS0SdOg/fRVJjvWevASq5H7R8u1a+4mXVawV7PFMtb
-         9axw==
-X-Gm-Message-State: AD7BkJIDHbvCn/qQqWCdGwyQTk5a1fZ31K3NGGHu+zO4lEkCeMfRDRYltyZab9DjMewF69TmF4cqV/NpxgW+zw==
-X-Received: by 10.176.2.85 with SMTP id 79mr7106467uas.32.1459714335263; Sun,
- 03 Apr 2016 13:12:15 -0700 (PDT)
-Received: by 10.159.54.228 with HTTP; Sun, 3 Apr 2016 13:11:55 -0700 (PDT)
-In-Reply-To: <1459531705-31906-1-git-send-email-szeder@ira.uka.de>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=4Gecydc2nnxww5BsH8pHmYsbonUhnnnA1cidpVHewEw=;
+        b=V6kAM59l49ozn3fb2WbWI6TjjoTU7zTSxorF480JJxXflvJ2B7jtSXsQLMG/u/h/hI
+         5YORoYhsU1fT3fJPgF2GgUlZ+nstm3PP07gaSnmQYR/4IU87gjL+e1TDUi44vcBwRHjz
+         2TdxX3bRm3UQzCC06DkaR0eSmrf2V0Y7Q8v/gxo19rnQS0vwtxDqidU1zArluUGgnRXR
+         8H1TqKDHa4yPdexwWs55FxaMKW1SvWOxOUd4I3zdLnGcDFr2PLTt0A8b2MrMD6IibnQI
+         25+G7YbJ2tx7nlXt5RUVuuX5mHW8AtDcAxWB470JS0F/4/+jl/8L8Yl7WU8vZ9wELne4
+         IcvQ==
+X-Gm-Message-State: AD7BkJK2qIheWBKj+xSZK/l8FFjWcjH0eO0P4yogwHgXcXXx7sHLVUtmrwrXmmFo/lXrovZ4NjigXF9wHflvvg==
+X-Received: by 10.50.97.70 with SMTP id dy6mr7054988igb.73.1459714650535; Sun,
+ 03 Apr 2016 13:17:30 -0700 (PDT)
+Received: by 10.79.12.139 with HTTP; Sun, 3 Apr 2016 13:17:30 -0700 (PDT)
+In-Reply-To: <1459619912-5445-1-git-send-email-mehul.jain2029@gmail.com>
+X-Google-Sender-Auth: vLncyxJbFd7omnmIvhDGCBjBywc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290653>
 
-On Fri, Apr 1, 2016 at 1:28 PM, SZEDER G=C3=A1bor <szeder@ira.uka.de> w=
-rote:
->> Let me explain my scenario. I have an nfs mounted home directory. It
->> is used across multiple machines. I use different colored xterms for
->> each machine. But that means that the one set of colors in my one
->> .gitconfig file don't work against all my screen backgrounds. I'm
->> trying to find a way to tune the git colors per login. The ability t=
-o
->> set colors in an environment variable (like most UNIX utils support)
->> would be the easiest way to do this. Failing that, I was hoping that
->> by setting GIT_CONFIG per login, I could tune the color schemes with
->> different config files.
->>
->> Since that is not how GIT_CONFIG is used, I have simply decided to
->> squint where necessary, or open up a neutral colored xterm for the
->> diff, regardless of machine.
->>
->> Yes, I could probably do diffs in many other ways, but git diff at t=
-he
->> command line is usually the most expedient.
->>
->> Unless I wanted to define a GIT_CONFIG_OVER environment variable upo=
-n
->> login, place inside it the appropriate -c<name>=3D<value> overrides =
-for
->> colors, and then define a bash function git as
->>
->> git () {
->>    $(which git) $GIT_CONFIG_OVER "$@"
->>    return $?
->> }
->>
->> which seems silly.
+On Sat, Apr 2, 2016 at 1:58 PM, Mehul Jain <mehul.jain2029@gmail.com> wrote:
+> The following series is applicable on mj/pull-rebase-autostash.
 >
-> Yeah, that 'return $?' at the end of the function does indeed seem
-> silly :)  (sorry, couldn't resist...)
-Part OCD, part OAC. :-)
-
+> Changes made vs v1:
+>         * [Patch v1 4/5] is broken into three patches to increase
+>                   readability of the patches.
 >
-> You could use machine-specific config includes instead of that
-> GIT_CONFIG_OVER environment variable.  I.e. store machine-specific
-> color configuration in ~/.gitcolors.<machine> or something and define
-> the shell function as:
+>                 * [Patch 4/5] Factor out code in two functions
+>                   test_pull_autostash() and test_pull_autostash_fail()
+>                   instead of test_rebase_autostash() and
+>                   test_rebase_no_autostash(). This leads to further
+>                   simplification of code.
 >
-> git () {
->         command git -c include.path=3D~/.gitcolors.$HOSTNAME "$@"
-> }
-BINGO! THAT was the redirection I needed! One thing I was trying to
-figure out early one was how to put HOSTNAME-based include.path-s in
-the .gitconfig. So I put them OUTSIDE the .gitconfig like this.
-
-Much obliged. Next time you are in NYC - I owe you a beer!
-
+>                   Also removed two for-loops as they didn't provided
+>                   the simplicity intended for.
 >
-> The impact on your .bashrc would be much smaller than with the
-> GIT_CONFIG_OVER approach.
-> You could even turn this into an alias, if you want.
+>                   For-loop was over-intended. Corrected it.
 >
->
+>                 * Commit message for patches 1/5, 2/5, 3/5 are improved
+>                   as suggested by Eric in the previous round.
 
+Thanks, this version was a pleasant read, much simpler and easier to
+digest than the previous round[1]. With or without addressing the few
+minor nits in my review (none of which warrant a re-roll), this entire
+series is:
 
+    Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
 
---=20
-Matthew O. Persico
+Mehul, feel free to add my Reviewed-by: if you happen to re-roll (or
+Junio can add it if he wants when he picks up the series).
+
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/290134
