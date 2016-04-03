@@ -1,11 +1,11 @@
-From: "Eric N. Vander Weele" <ericvw@gmail.com>
+From: Jacob Keller <jacob.keller@gmail.com>
 Subject: Re: Bug Report
-Date: Sat, 2 Apr 2016 22:20:55 -0400
-Message-ID: <CAGhVqYthSWCqXW2=3dSUweZ2hqTRSHJiHGNWsmQxUxtmAbnzYw@mail.gmail.com>
+Date: Sat, 2 Apr 2016 19:22:30 -0700
+Message-ID: <CA+P7+xo_MifcB8ry846=j2n7ZRn_80Os7kH1Ns+HMjuQf0N_Qw@mail.gmail.com>
 References: <04bf01d18d3f$4ce38410$e6aa8c30$@u.northwestern.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
+Cc: Git mailing list <git@vger.kernel.org>
 To: Benjamin Sandeen <benjaminsandeen2016@u.northwestern.edu>
 X-From: git-owner@vger.kernel.org Sun Apr 03 04:23:05 2016
 Return-path: <git-owner@vger.kernel.org>
@@ -13,58 +13,58 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1amXgs-0000X4-DW
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Apr 2016 04:23:02 +0200
+	id 1amXgt-0000X4-8m
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Apr 2016 04:23:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751469AbcDCCV0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Apr 2016 22:21:26 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:37774 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750819AbcDCCV0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Apr 2016 22:21:26 -0400
-Received: by mail-ig0-f174.google.com with SMTP id l20so34731957igf.0
-        for <git@vger.kernel.org>; Sat, 02 Apr 2016 19:21:25 -0700 (PDT)
+	id S1751744AbcDCCWv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Apr 2016 22:22:51 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:33836 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751610AbcDCCWv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Apr 2016 22:22:51 -0400
+Received: by mail-ig0-f170.google.com with SMTP id sy18so42941270igc.1
+        for <git@vger.kernel.org>; Sat, 02 Apr 2016 19:22:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=iISkrNWPjfH4udQDjTIIgbmp+7PRByrz3+6qpcoBjX4=;
-        b=xQpKXe5FefryPik5bkNubOAMD1XAeUIsOkunpmBxB2rlJBeKMjvxEURtW4B5CWDwjQ
-         APEaou4rTvj11pS56Webkqca0A6/QuXZhwwaqPZN72cCRlxS9l/4UFwG2xsjEZtXIl/a
-         QfFvOdd8PxTt0+4xpSjquOn0r70IoLk+DBwRYPYge+T5onIscvSfxIinT7u5CFOHnkBt
-         g0SCyMc9ilTOgPjSCdspWvpRKQJ6YMaswd/IPlfXFNB44co9QO3PDSQHflO9beTml0w7
-         Jp/tDKDjps+I/T4xW7z+HZzkNqg3PTKGpjMZFeVFPkOHa4wfis9enY434s7LNayTnzA9
-         DrUA==
+        bh=nbftG545hke7h8llcrQKHtGUA9sCAQ08FgPvO9lOLhQ=;
+        b=QupPcIYGkMIrgpISyS9ZSl3qCBvzsPpIe0PAHdnxEdyiUKubCSlkQQuR1+pdGdkdL5
+         5BB0sUAdE7tW+5P7RoTN2vzts4jsgzVdafW+EruQw/u/FTpsTf61ML0g+VZ7nSQi9Yon
+         BqfK29g7av/N02BwXEMdfUyVCjYRme/aqcASuhgjGdmCXVdVk5RVVXzjPWmrfEkCezZI
+         732/p25aM7yYwhrPzUFtbJ3LkDLcIcm+7Ws3XhpoSKIGbIzssk2luposBN04aBAKtkFe
+         cSGrmllngVNwfkJZyNiwojmCfIwCNtzyY1brP+aBIfFe18ElwPzeipp61U8KbOlaOTD4
+         Yrew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=iISkrNWPjfH4udQDjTIIgbmp+7PRByrz3+6qpcoBjX4=;
-        b=J+GPECGvZtOuztG/Q6QcQo4zglMyd0Yr73s+COks9zBzKvE+jEgAdpnHkuOpMz2Nt3
-         YwjAcmZT1B13YPCOUTqqOuyvHujuD9/BkqAf9gJ3jtnMxZJpPxDbNK2ry4FcMbIU+gUY
-         c6i6H837JHR/Jo+HpsiC7nziCM8YJ9u65Nq1ydpF5uldOGjbICbGkDZPKnDQo0lm3lv7
-         b4+UJLp11TqZ2E4oPgwJz+C4V1UHn1d63xKRnj9DvGZ1dWnCajdnmhyEX69NPLoqQObz
-         xrTwOy56dDgtvx6aq4Z/XIf/eay8LxBJXLSdkZ5iREc/7SZudxn4TM0RNSdBlnSgqjn2
-         DQpg==
-X-Gm-Message-State: AD7BkJLCto2hdXOuVT0oXGKk4J6Xxmfam91IDRI8Tz0oyvQX3Qc5ZusDmKiPEvptZkLhgXxc/v6VtJ1RiQHDHg==
-X-Received: by 10.50.64.146 with SMTP id o18mr4679651igs.51.1459650085065;
- Sat, 02 Apr 2016 19:21:25 -0700 (PDT)
-Received: by 10.36.44.3 with HTTP; Sat, 2 Apr 2016 19:20:55 -0700 (PDT)
+        bh=nbftG545hke7h8llcrQKHtGUA9sCAQ08FgPvO9lOLhQ=;
+        b=R4MS9uUK1TCzuCrYt7PXYIqI6U3BbcEIp2ULFg0vQalvJz/jf/s8wr+fh70B0eLaQb
+         byJG6bntDs3j1if9BhMm1bEC/YKL34GQXJCk7jX7p7efRxgpVhOe7S9Tkb2zuBSNItM7
+         j7a3r18Qoi6joZrsKMA3J4npnnQuyG1Ooaf7Wo5WEcmrpo6Vy/qtXLawwvlLO++9sxTD
+         zAMHmnWRAxjIWZkEtvUFgTYrgkOX+fQr55owg2e5czcGbi4P63EPFVTNAP26BAIeotzY
+         4Zj23sWK7q1v2cYqRdGVi1ZqxaxzSQsZFK2Gp3phK5XPjtSxf1sz/v0pY8GqV4JHqn8F
+         y2iw==
+X-Gm-Message-State: AD7BkJLTpC7N1gkDwWRbQDvIs0au/JN61wnGB5LbSdwazDE9QJ2Xlt/Q17rcRO6A5OUZaM/hDuu2Ad5HuTjx9A==
+X-Received: by 10.50.143.102 with SMTP id sd6mr618429igb.73.1459650170247;
+ Sat, 02 Apr 2016 19:22:50 -0700 (PDT)
+Received: by 10.107.59.78 with HTTP; Sat, 2 Apr 2016 19:22:30 -0700 (PDT)
 In-Reply-To: <04bf01d18d3f$4ce38410$e6aa8c30$@u.northwestern.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290621>
 
-On Sat, Apr 2, 2016 at 8:25 PM, Benjamin Sandeen
+Hi,
+
+On Sat, Apr 2, 2016 at 5:25 PM, Benjamin Sandeen
 <benjaminsandeen2016@u.northwestern.edu> wrote:
 > Today, I managed to create a duplicate branch in a git repository.  While
 > this may not be a bug per se, I do think that it is confusing and some way
 > of preventing such issues in the future may be helpful.
-
-This can be confusing.  I'll hopefully try to help and explain below.
-
+>
 > I first cloned the repository:
 >
 > $ git clone https://github.com/CodeForChicago/superclass.git
@@ -72,16 +72,17 @@ This can be confusing.  I'll hopefully try to help and explain below.
 > Then, I created a new branch (or so I thought):
 >
 > $ git checkout -b lesson_page
-
-At this point, you created a *local* branch called 'lesson_page' which
-points to the current HEAD and then switched to that branch .  This
-local branch is independent of the remote branch called
-'origin/lesson_page'.
-
+>
 > However, this branch has already existed for about 4 weeks, without my
 > knowledge.  I proceeded to do some work on the files it contained, and when
 > it came time to commit and push, and when I pushed, I got the following
 > message:
+
+The branch existed in the remote repository, but it doesn't exist
+locally. You never fetched a copy into refs/remotes/origin since you
+didn't say you were interested, and git will fully allow you to create
+local branches with the same name as remote branches.
+
 >
 > To https://github.com/CodeForChicago/superclass.git
 >  ! [rejected]        lesson_page -> lesson_page (non-fast-forward)
@@ -92,13 +93,23 @@ local branch is independent of the remote branch called
 > hint: 'git pull ...') before pushing again.
 > hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 >
+
+When you tried to push this branch, it will push into
+refs/heads/lesson_page on the remote, which already exists. Since it
+cannot perform a fast-forward update, as your local work isn't based
+directly on the tip of the remote branch, you either need to merge,
+rebase, or start from scratch.
+
 > Given that I had believed that I had created the branch just a few hours
 > prior and was the first to attempt to push to it, this error was
 > consternating.
 
-The non-fast-forward push is preventing history being rewritten- this
-is a good thing :).
+Let me try to explain. You created your own local branch, which
+happened to share the same name as an already existing branch. Had you
+know this you could have fetched and checked out that branch. You can
+view all branches using "git branch -a" or "git ls-remote".
 
+>
 > I may be wrong (I am aware that my understanding of git is limited), but I
 > believe that the git checkout -b command is simply supposed to create a new
 > branch and then switch to it (I'm not aware of any subtle behavior that goes
@@ -110,34 +121,33 @@ is a good thing :).
 > beneficial if git were to, at the very least, alert the user to the conflict
 > in some way or another.
 
-The `git checkout -b` command is working as expected.  `git checkout
--b <name>` is equivalent to `git branch <name> && git checkout
-<name>`.  If you were to execute `git checkout lesson_page`, you would
-get the desired behavior you were expecting because in the presence of
-one remote, git will actually execute `git checkout -b lesson_page
---track origin/lesson_page` - more details can be found in `git help
-checkout`.  Effectively, it checkouts 'origin/lesson_page' as a new
-local branch named 'lesson_page'.
+git checkout -b <branch_name> will create a new branch in your local
+copy of the repository. Git is distributed. You can do "git checkout
+--track <branch>" to attempt to create a local branch which tracks the
+upstream branch, and then git status will provide useful information
+about the relationship between your local work and the remote work.
 
-However, you indicated that you did not know there was a remote
-branch already named 'lesson_page'.  After cloning the repository, you
-can use `git branch -a` to see all remotes to determine which form of
-`git checkout` to use.
+It could maybe be improved to notice that a remote has a branch with
+the same name. However, git can support multiple remotes, so
+determining which remote to care about is difficult.
 
+In your case you have a couple of options to fix it. I would suggest at least
+
+"git branch --set-upstream-to=origin/<branch_name>" so that git status
+will give you useful information about the branch relationship. Then
+you can merge or rebase your work into the branch.
+
+The issue is in understanding how git distributes branches, and how it
+could handle this. I suspect improvements could be made so that it
+will attempt to warn you when you create a branch that already exists.
+However, often you do this *intending* to make it track the specific
+branch so I am not sure how much good a warning would do. Just a
+message wouldn't really hurt anything, however.
+
+Thanks,
+Jake
+
+>
 > Thanks,
 > Ben
 >
-> Lead Consultant, Northwestern University Information Technology
-> Research Assistant, Center for Interdisciplinary Exploration and Research in
-> Astrophysics at Northwestern University
-> Phsyics, Weinberg College of Arts and Sciences
-> Computer Science, Weinberg College of Arts and Sciences
-> Classics, Weinberg College of Arts and Sciences
->
->
->
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
