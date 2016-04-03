@@ -1,278 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix spelling mistakes
-Date: Sun, 03 Apr 2016 11:16:35 -0700
-Message-ID: <xmqqbn5qfth8.fsf@gitster.mtv.corp.google.com>
-References: <1459688165-8720-1-git-send-email-eric@engestrom.ch>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] convert.c: fix some sparse warnings
+Date: Sun, 3 Apr 2016 19:43:35 +0100
+Message-ID: <57016457.30405@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Eric Engestrom <eric@engestrom.ch>
-X-From: git-owner@vger.kernel.org Sun Apr 03 20:16:43 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Apr 03 20:43:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ammZm-0004QH-Rq
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Apr 2016 20:16:43 +0200
+	id 1ammzx-0007se-LZ
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Apr 2016 20:43:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754228AbcDCSQj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Apr 2016 14:16:39 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:53938 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753862AbcDCSQi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Apr 2016 14:16:38 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 16ECE526C6;
-	Sun,  3 Apr 2016 14:16:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fcyrfG053UGw/DcMvtdoUeaLH08=; b=PTPdeh
-	wD8PEx6wxHnCqMpDw+2uFO1hhB/PSaj7VzyiLpD9OTB/pF5bf9vIVz7vbI9s/SHG
-	pZni0GYEKbmhUvJH9fP55+ZNkJh0dIAUSyqG3/1M4EN6BZAAv7J6ElEanOMbQ99T
-	KOclhkjfDnl7d97yK0gKBUJtI29BJhvM87p3Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bJzqWzSI81kMvyG0qQBPRO+6t/na7N7N
-	hSmfpmSjbjvXw2RggHObuYX4X0Tn7liYdXZLvJ7KSJqg5Lzr9W6XTeav6vBy2NHN
-	+kaf/90214BqtdI5VHSDHR38HaWC7Rdmyoot9I5/5MHrqUW6soxTbXQORi5Ccujh
-	xt9ESVNN7cg=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0DFD2526C5;
-	Sun,  3 Apr 2016 14:16:37 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6D528526C4;
-	Sun,  3 Apr 2016 14:16:36 -0400 (EDT)
-In-Reply-To: <1459688165-8720-1-git-send-email-eric@engestrom.ch> (Eric
-	Engestrom's message of "Sun, 3 Apr 2016 13:56:05 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 33ECE082-F9C8-11E5-A728-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751722AbcDCSnm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Apr 2016 14:43:42 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:36630 "EHLO
+	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751455AbcDCSnl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Apr 2016 14:43:41 -0400
+Received: from [10.0.2.15] ([91.125.197.102])
+	by avasout07 with smtp
+	id duje1s0062D2Veb01ujfSf; Sun, 03 Apr 2016 19:43:39 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=QqujpgGd c=1 sm=1 tr=0
+ a=mTUfFwB0nGOO66Ym8a+i3w==:117 a=mTUfFwB0nGOO66Ym8a+i3w==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
+ a=EBOSESyhAAAA:8 a=zHjHsN-zKt21vhrpEdYA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290645>
 
-Eric Engestrom <eric@engestrom.ch> writes:
 
-> Signed-off-by: Eric Engestrom <eric@engestrom.ch>
-> ---
+Sparse complains thus:
 
-While I think "through" is not wrong, I do not think it is worth the
-patch churn to do s/thru/through/;
+        SP convert.c
+    convert.c:180:24: warning: Using plain integer as NULL pointer
+    convert.c:241:28: warning: dubious: !x & y
 
-If the original author wants to spell the word "thru", we are in no
-position to say it must be spelled "through" [*1*].  It's a bit
-different from correcting a non-word "usefull" to "useful".  The
-only "Huh?"  I saw around "thru" in this patch was that these said
-"fall thru" while I am fairly sure there are many places that say
-"fallthru", which is fairly common way to say that word in comments.
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-Other changes looked all sensible.
+Hi Torsten,
 
-Thanks for going through the codebase with a fine-toothed comb.
+When you re-roll your 'tb/safe-crlf-output-fix' branch, could you
+please squash this into your patch (corresponding to commit 9c7b132f,
+"convert.c: more safer crlf handling with text attribute", 01-04-2016).
 
-[Footnote]
+>From an earlier email, I see that you are aware that t6038 is failing, so
+I won't look into that.
 
-*1* http://www.merriam-webster.com/words-at-play/how-thru-turned-into-through
-and http://grammarist.com/spelling/through-thru/ were amusing reads.
+Thanks!
 
->  builtin/apply.c                    | 2 +-
->  builtin/clean.c                    | 2 +-
->  config.c                           | 2 +-
->  contrib/examples/git-am.sh         | 2 +-
->  contrib/hooks/multimail/README     | 2 +-
->  contrib/subtree/t/t7900-subtree.sh | 2 +-
->  diff.c                             | 2 +-
->  dir.c                              | 2 +-
->  git-p4.py                          | 2 +-
->  refs.h                             | 2 +-
->  sha1-lookup.c                      | 2 +-
->  t/t5535-fetch-push-symref.sh       | 2 +-
->  t/t6030-bisect-porcelain.sh        | 2 +-
->  worktree.c                         | 2 +-
->  14 files changed, 14 insertions(+), 14 deletions(-)
->
-> diff --git a/builtin/apply.c b/builtin/apply.c
-> index deb05d0..02a0259 100644
-> --- a/builtin/apply.c
-> +++ b/builtin/apply.c
-> @@ -3980,7 +3980,7 @@ static void show_rename_copy(struct patch *p)
->  		old = slash_old + 1;
->  		new = slash_new + 1;
->  	}
-> -	/* p->old_name thru old is the common prefix, and old and new
-> +	/* p->old_name through old is the common prefix, and old and new
->  	 * through the end of names are renames
->  	 */
->  	if (old != p->old_name)
-> diff --git a/builtin/clean.c b/builtin/clean.c
-> index 0371010..5426f9f 100644
-> --- a/builtin/clean.c
-> +++ b/builtin/clean.c
-> @@ -192,7 +192,7 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
->  		strbuf_setlen(path, len);
->  		strbuf_addstr(path, e->d_name);
->  		if (lstat(path->buf, &st))
-> -			; /* fall thru */
-> +			; /* fall through */
->  		else if (S_ISDIR(st.st_mode)) {
->  			if (remove_dirs(path, prefix, force_flag, dry_run, quiet, &gone))
->  				ret = 1;
-> diff --git a/config.c b/config.c
-> index 9ba40bc..482ef2e 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -1278,7 +1278,7 @@ static void git_config_raw(config_fn_t fn, void *data)
->  		 * something went really wrong and we should stop
->  		 * immediately.
->  		 */
-> -		die(_("unknown error occured while reading the configuration files"));
-> +		die(_("unknown error occurred while reading the configuration files"));
->  }
->  
->  static void configset_iter(struct config_set *cs, config_fn_t fn, void *data)
-> diff --git a/contrib/examples/git-am.sh b/contrib/examples/git-am.sh
-> index dd539f1..b3d30b7 100755
-> --- a/contrib/examples/git-am.sh
-> +++ b/contrib/examples/git-am.sh
-> @@ -542,7 +542,7 @@ then
->  	rm -f "$dotest/dirtyindex"
->  else
->  	# Possible stray $dotest directory in the independent-run
-> -	# case; in the --rebasing case, it is upto the caller
-> +	# case; in the --rebasing case, it is up to the caller
->  	# (git-rebase--am) to take care of stray directories.
->  	if test -d "$dotest" && test -z "$rebasing"
->  	then
-> diff --git a/contrib/hooks/multimail/README b/contrib/hooks/multimail/README
-> index 5512068..80df811 100644
-> --- a/contrib/hooks/multimail/README
-> +++ b/contrib/hooks/multimail/README
-> @@ -489,7 +489,7 @@ multimailhook.commitLogOpts
->  multimailhook.dateSubstitute
->  
->      String to use as a substitute for ``Date:`` in the output of ``git
-> -    log`` while formatting commit messages. This is usefull to avoid
-> +    log`` while formatting commit messages. This is useful to avoid
->      emitting a line that can be interpreted by mailers as the start of
->      a cited message (Zimbra webmail in particular). Defaults to
->      ``CommitDate: ``. Set to an empty string or ``none`` to deactivate
-> diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-> index 3bf96a9..0cf044c 100755
-> --- a/contrib/subtree/t/t7900-subtree.sh
-> +++ b/contrib/subtree/t/t7900-subtree.sh
-> @@ -932,7 +932,7 @@ test_expect_success 'split a new subtree without --onto option' '
->  
->  		# also test that we still can split out an entirely new subtree
->  		# if the parent of the first commit in the tree is not empty,
-> -		# then the new subtree has accidently been attached to something
-> +		# then the new subtree has accidentally been attached to something
->  		git subtree split --prefix="sub dir2" --branch subproj2-br &&
->  		check_equal "$(git log --pretty=format:%P -1 subproj2-br)" ""
->  	)
-> diff --git a/diff.c b/diff.c
-> index 059123c..3d8b3e5 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -2084,7 +2084,7 @@ static int is_conflict_marker(const char *line, int marker_size, unsigned long l
->  	for (cnt = 1; cnt < marker_size; cnt++)
->  		if (line[cnt] != firstchar)
->  			return 0;
-> -	/* line[1] thru line[marker_size-1] are same as firstchar */
-> +	/* line[1] through line[marker_size-1] are same as firstchar */
->  	if (len < marker_size + 1 || !isspace(line[marker_size]))
->  		return 0;
->  	return 1;
-> diff --git a/dir.c b/dir.c
-> index a4a9d9f..57892a5 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -2166,7 +2166,7 @@ static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
->  				 * wanted anyway
->  				 */
->  				continue;
-> -			/* fall thru */
-> +			/* fall through */
->  		} else if (S_ISDIR(st.st_mode)) {
->  			if (!remove_dir_recurse(path, flag, &kept_down))
->  				continue; /* happy */
-> diff --git a/git-p4.py b/git-p4.py
-> index 825b9f3..4f577e2 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -1918,7 +1918,7 @@ def run(self, args):
->          if self.useClientSpec:
->              self.clientSpecDirs = getClientSpec()
->  
-> -        # Check for the existance of P4 branches
-> +        # Check for the existence of P4 branches
->          branchesDetected = (len(p4BranchesInGit().keys()) > 1)
->  
->          if self.useClientSpec and not branchesDetected:
-> diff --git a/refs.h b/refs.h
-> index 2f3decb..fad6281 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -336,7 +336,7 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
->   *     msg -- a message describing the change (for the reflog).
->   *
->   *     err -- a strbuf for receiving a description of any error that
-> - *         might have occured.
-> + *         might have occurred.
->   *
->   * The functions make internal copies of refname and msg, so the
->   * caller retains ownership of these parameters.
-> diff --git a/sha1-lookup.c b/sha1-lookup.c
-> index 5f06921..552582f 100644
-> --- a/sha1-lookup.c
-> +++ b/sha1-lookup.c
-> @@ -199,7 +199,7 @@ int sha1_entry_pos(const void *table,
->  					break;
->  			ofs_0 = ofs;
->  			/*
-> -			 * byte 0 thru (ofs-1) are the same between
-> +			 * byte 0 through (ofs-1) are the same between
->  			 * lo and hi; ofs is the first byte that is
->  			 * different.
->  			 *
-> diff --git a/t/t5535-fetch-push-symref.sh b/t/t5535-fetch-push-symref.sh
-> index 8ed58d2..e8f6d23 100755
-> --- a/t/t5535-fetch-push-symref.sh
-> +++ b/t/t5535-fetch-push-symref.sh
-> @@ -1,6 +1,6 @@
->  #!/bin/sh
->  
-> -test_description='avoiding conflicting update thru symref aliasing'
-> +test_description='avoiding conflicting update through symref aliasing'
->  
->  . ./test-lib.sh
->  
-> diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-> index e74662b..a1b02b3 100755
-> --- a/t/t6030-bisect-porcelain.sh
-> +++ b/t/t6030-bisect-porcelain.sh
-> @@ -721,7 +721,7 @@ git bisect good 3de952f2416b6084f557ec417709eac740c6818c
->  # first bad commit: [32a594a3fdac2d57cf6d02987e30eec68511498c] Add <4: Ciao for now> into <hello>.
->  EOF
->  
-> -test_expect_success 'bisect log: successfull result' '
-> +test_expect_success 'bisect log: successful result' '
->  	git bisect reset &&
->  	git bisect start $HASH4 $HASH2 &&
->  	git bisect good &&
-> diff --git a/worktree.c b/worktree.c
-> index 6181a66..89ebe67 100644
-> --- a/worktree.c
-> +++ b/worktree.c
-> @@ -18,7 +18,7 @@ void free_worktrees(struct worktree **worktrees)
->  
->  /*
->   * read 'path_to_ref' into 'ref'.  Also if is_detached is not NULL,
-> - * set is_detached to 1 (0) if the ref is detatched (is not detached).
-> + * set is_detached to 1 (0) if the ref is detached (is not detached).
->   *
->   * $GIT_COMMON_DIR/$symref (e.g. HEAD) is practically outside $GIT_DIR so
->   * for linked worktrees, `resolve_ref_unsafe()` won't work (it uses
+ATB,
+Ramsay Jones
+
+ convert.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/convert.c b/convert.c
+index 1fddbe8..1fa7986 100644
+--- a/convert.c
++++ b/convert.c
+@@ -177,7 +177,7 @@ const char *get_wt_convert_stats_ascii(const char *path)
+ 	memset(&stats, 0, sizeof(stats));
+ 	fd = open(path, O_RDONLY);
+ 	if (fd < 0)
+-		return 0;
++		return NULL;
+ 	for (;;) {
+ 		char buf[1024];
+ 		ssize_t readlen = read(fd, buf, sizeof(buf));
+@@ -238,7 +238,7 @@ static int would_convert_lf_at_checkout(unsigned convert_stats,
+ 		return 0;
+ 
+ 	/* No "naked" LF? Nothing to convert, regardless. */
+-	if (!convert_stats & CONVERT_STAT_BITS_TXT_LF)
++	if (!(convert_stats & CONVERT_STAT_BITS_TXT_LF))
+ 		return 0;
+ 
+ 	if (crlf_action == CRLF_AUTO ||
+-- 
+2.8.0
