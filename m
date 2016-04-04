@@ -1,73 +1,69 @@
-From: "Boettger, Heiko" <Heiko.Boettger@karlstorz.com>
-Subject: git mv - exclude source / create target directory option
-Date: Mon, 4 Apr 2016 06:45:06 +0000
-Message-ID: <8C0042D8869AEA4AA334B49AFBBCEF82B53D470F@TUT-EX02-PV.KSTG.corp>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2 0/7] t5520: tests for --[no-]autostash option
+Date: Mon, 04 Apr 2016 09:31:52 +0200
+Message-ID: <vpqshz125jr.fsf@anie.imag.fr>
+References: <1459619912-5445-1-git-send-email-mehul.jain2029@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 04 08:45:16 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, sunshine@sunshineco.com, gitster@pobox.com
+To: Mehul Jain <mehul.jain2029@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 04 09:32:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1amyGB-0005mi-OL
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Apr 2016 08:45:16 +0200
+	id 1amyzk-0000af-Fb
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Apr 2016 09:32:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753926AbcDDGpK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Apr 2016 02:45:10 -0400
-Received: from mx1.karlstorz.com ([62.134.46.135]:10063 "EHLO
-	mx1.karlstorz.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752408AbcDDGpJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Apr 2016 02:45:09 -0400
-X-IronPort-AV: E=Sophos;i="5.24,439,1454972400"; 
-   d="scan'208";a="40492027"
-Received: from tut-ex03-pv.kstg.corp ([10.0.10.233])
-  by mx1.karlstorz.com with ESMTP; 04 Apr 2016 08:45:07 +0200
-Received: from TUT-EX02-PV.KSTG.corp ([169.254.2.132]) by
- TUT-EX03-PV.KSTG.corp ([10.0.10.233]) with mapi id 14.03.0266.001; Mon, 4 Apr
- 2016 08:45:07 +0200
-Thread-Topic: git mv - exclude source / create target directory option
-Thread-Index: AdGOPX/+4wM78IvSRcyQV2Hw/2SrWA==
-Accept-Language: de-CH, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.3.60.88]
-x-kse-serverinfo: TUT-EX03-PV.KSTG.corp, 9
-x-kse-antivirus-interceptor-info: scan successful
-x-kse-antivirus-info: Clean, bases: 4/4/2016 2:20:00 AM
-x-kse-attachment-filter-scan-result: Clean
+	id S1754533AbcDDHcQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Apr 2016 03:32:16 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:51823 "EHLO mx1.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751722AbcDDHcP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2016 03:32:15 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u347VqNG030822
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 4 Apr 2016 09:31:52 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u347VqBm018260;
+	Mon, 4 Apr 2016 09:31:53 +0200
+In-Reply-To: <1459619912-5445-1-git-send-email-mehul.jain2029@gmail.com>
+	(Mehul Jain's message of "Sat, 2 Apr 2016 23:28:25 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Mon, 04 Apr 2016 09:31:52 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u347VqNG030822
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1460359913.93604@E4V8QpsAmSeDQHlZ7keUYA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290680>
 
-Hi,
+Mehul Jain <mehul.jain2029@gmail.com> writes:
 
-sometimes I want to reorganize the content of a directory and simply mo=
-ve everything into a subdirectory. This seems to be more complicated th=
-an it should be. Since git mv requires the destination to exist, I need=
- to create the target directory first. Unfortunately this results in gi=
-t mv * to include that directory which results in an error since moving=
- a directory into itself is not possible. My current workaround is rath=
-er long by using extglob:
+> -test_rebase_autostash () {
+> +test_pull_autostash () {
+>  	git reset --hard before-rebase &&
+>  	echo dirty >new_file &&
+>  	git add new_file &&
+> -	git pull --rebase --autostash . copy &&
+> +	git pull $@ . copy &&
 
-mkdir -p newfolder/subfolder
-shopt -s extglob
-git mv !(newfolder) newfolder/subfolder
-shopt -u extglob
+Not strictly needed here, but I'd write "$@" (with the double-quotes)
+which is the robust way to say "transmit all my arguments without
+whitespace interpretation".
 
-=46or my usecase it would be much easier to archive that target by have=
- a parameter to simply create the target if it isn't existing.
+I don't mind for this patch since there's no whitespace to interpret,
+but some people (sysadmins ;-) ) have the bad habit of writting $@, $*
+or "$*" in wrapper scripts and it breaks when you call them with spaces
+so it's better to take good habits IHMO.
 
-Best Regards
-Heiko B=F6ttger
-
-STORZ Endoskop Produktions GmbH
-Niederlassung Schaffhausen
-Schneckenackerstr. 1
-8200 Schaffhausen
-Switzerland
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
