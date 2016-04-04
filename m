@@ -1,87 +1,94 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v12 4/5] t7507-commit-verbose: improve test coverage by
- testing number of diffs
-Date: Sun, 3 Apr 2016 21:05:09 -0400
-Message-ID: <CAPig+cQGeqvmTz1SdpJG137PgR=bC0d_Nu_q_ofhZM1BCYoxjQ@mail.gmail.com>
-References: <01020153d952bd99-d3812bd6-d189-4780-ab48-f015696e9cf0-000000@eu-west-1.amazonses.com>
-	<01020153d952be6c-04f90bd2-291e-4eca-99fd-e897d8601132-000000@eu-west-1.amazonses.com>
-	<CAPig+cRBwOjxA2cB=ZR__o7LsHxk9Rbzfv7ngRxv8h6=koQSRw@mail.gmail.com>
+From: Ivan Pozdeev <vano@mail.mipt.ru>
+Subject: [PATCH] comment for a long #ifdef
+Date: Mon, 4 Apr 2016 04:00:49 +0300
+Message-ID: <5701BCC1.9050306@mail.mipt.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 04 03:05:19 2016
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 04 03:10:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1amsxC-0006V8-7G
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Apr 2016 03:05:18 +0200
+	id 1amt1u-00009O-B6
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Apr 2016 03:10:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753140AbcDDBFL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Apr 2016 21:05:11 -0400
-Received: from mail-ig0-f193.google.com ([209.85.213.193]:34538 "EHLO
-	mail-ig0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752779AbcDDBFK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Apr 2016 21:05:10 -0400
-Received: by mail-ig0-f193.google.com with SMTP id qu10so3942187igc.1
-        for <git@vger.kernel.org>; Sun, 03 Apr 2016 18:05:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=CBVHlMrsiyIHafeaHTVGhaUy4kZBlxhITLqrbH6YXa0=;
-        b=maeaAm3cYtTVht1nc5XeZMFXxVBnesYjoqmnuqzbsE4jDcJoHVzsnEnaoMO3H+eEOW
-         2Gu34aCNYM2QX9tCWQEHcvL0iPOQ3eatHCVvvRlabjFlyc9R6JIIt/aY+c3L6btOc/mP
-         dNCi7FGXeN08ZHVZWxtHH8DLdVF+yAtYHkLT0+3/Ogr+A9nvowJONMUitFF1OCpe9u9R
-         r2VypxhpLZRDwAUlIkax5/YS1pJVlLU6gVLJpfo3dQPYaX2XTEnhm+ZC0PjFJ7zAI6dN
-         isLL5u9p3GzzF0GR0fNWNLRX+saE/2hJqROagbjhJSfc4IFdApSqjM6DKqguH9t+mFD4
-         zymw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=CBVHlMrsiyIHafeaHTVGhaUy4kZBlxhITLqrbH6YXa0=;
-        b=BDDXFKK0pvZ5AFlJeeFUxwkEOFMQ7oqB7J1EddIoeUll616RwQvSZRcjQKFik68W9r
-         f0T4X2LzdKiNGnDYdFHQz10iBgiSMVheQGeer2fkQSwAx8OuWcHfBDc1gXqqpB4V9srI
-         5K8coL5tU+sVFzpE8W75MhrmzRXUSOjj3KokGx7SgMfVp7M5B4/Q8XVl6yCYl+vtKMGW
-         aEtjOez3mVj6AFEXz/7yja0EOdyIHlz+nMg0+aVDWF6+sIBgsv/lvRTlc2O9ooGoPQ2k
-         ALJPzyCn9Cg33rg5rNEnL0Ll68kJYTXik5QpYUPxw90fOoIz9vjh5zDzsGmoq7y1RDC5
-         LP6A==
-X-Gm-Message-State: AD7BkJKr2eqSdeqhvqlCogrhL0MxE9UmLDUT4Nv0btH2g1str9/2eCeBgP6004dHP/QTIHZ9hF/f5HwQJ+TmNg==
-X-Received: by 10.107.47.41 with SMTP id j41mr13478818ioo.168.1459731909263;
- Sun, 03 Apr 2016 18:05:09 -0700 (PDT)
-Received: by 10.79.12.139 with HTTP; Sun, 3 Apr 2016 18:05:09 -0700 (PDT)
-In-Reply-To: <CAPig+cRBwOjxA2cB=ZR__o7LsHxk9Rbzfv7ngRxv8h6=koQSRw@mail.gmail.com>
-X-Google-Sender-Auth: hZj_l5EvsdHDlcj6-iM1PsVeW6Y
+	id S1753501AbcDDBKF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Apr 2016 21:10:05 -0400
+Received: from relay1.telecom.mipt.ru ([81.5.91.10]:51048 "EHLO
+	relay1.telecom.mipt.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753019AbcDDBKD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Apr 2016 21:10:03 -0400
+X-Greylist: delayed 523 seconds by postgrey-1.27 at vger.kernel.org; Sun, 03 Apr 2016 21:10:03 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by relay1.telecom.mipt.ru (Postfix) with ESMTP id 4A6C0122EA6
+	for <git@vger.kernel.org>; Mon,  4 Apr 2016 04:01:18 +0300 (MSK)
+X-Virus-Scanned: Debian amavisd-new at relay1.telecom.mipt.ru
+Received: from relay1.telecom.mipt.ru ([127.0.0.1])
+	by localhost (relay1.telecom.mipt.ru [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 9i3i8OYtnZ16 for <git@vger.kernel.org>;
+	Mon,  4 Apr 2016 04:01:17 +0300 (MSK)
+Received: from mail.mipt.ru (mail.mipt.ru [81.5.91.32])
+	by relay1.telecom.mipt.ru (Postfix) with ESMTPS id E90C1122EA3
+	for <git@vger.kernel.org>; Mon,  4 Apr 2016 04:01:15 +0300 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mipt.ru; s=mail;
+	t=1459731676; i=@mipt.ru;
+	bh=+fxQd9dBbZ+ohGAvIWox6RCSJFoZlkt+5TsyxM2d0/g=;
+	h=From:To:Subject:Date:From;
+	b=TAlREEiZ0lYHyYNJcXkCp+u61AcUOFVKLCDevHsJ9FbUz7TPhnfSxtft7C9AcJvHF
+	 +SFrwaET7D06AyTW7pzHI1dvqgV5pwMfFyFqU+TybFfLAq5klaNhwcv6Fx8sluAKHb
+	 7WCspni63GXsKGR5ZltBNrw7348vAvc6qmponJIU=
+Received: from mail.mipt.ru (localhost [127.0.0.1])
+	by mail.mipt.ru (Postfix) with ESMTPS id DB0C1B64C6E
+	for <git@vger.kernel.org>; Mon,  4 Apr 2016 04:01:15 +0300 (MSK)
+Received: from localhost (localhost [127.0.0.1])
+	by mail.mipt.ru (Postfix) with ESMTP id CDE1BB64C5D
+	for <git@vger.kernel.org>; Mon,  4 Apr 2016 04:01:15 +0300 (MSK)
+Received: from mail.mipt.ru ([127.0.0.1])
+	by localhost (mail.mipt.ru [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id Aoz8S9EfJTRc for <git@vger.kernel.org>;
+	Mon,  4 Apr 2016 04:01:15 +0300 (MSK)
+Received: from [109.184.14.38] (109-184-14-38.dynamic.mts-nn.ru [109.184.14.38])
+	by mail.mipt.ru (Postfix) with ESMTPSA id 986F1B64BB2
+	for <git@vger.kernel.org>; Mon,  4 Apr 2016 04:01:15 +0300 (MSK)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290666>
 
-On Sun, Apr 3, 2016 at 8:02 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Sat, Apr 2, 2016 at 7:33 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->> Make the fake "editor" store output of grep in a file so that we can
->> see how many diffs were contained in the message and use them in
->> individual tests where ever it is required. Also use write_script()
->> to create the fake "editor".
->>
->> A subsequent commit will introduce scenarios where it is important to be
->> able to exactly determine how many diffs were present.
->
-> These two sentences are backward. The "subsequent commit" bit is
-> justification for why you are making the "editor" store the output,
-> thus it belongs with the first paragraph. The bit about write_script()
-> is just a minor aside which can go in its own paragraph.
->
-> I think it's also important to explain that you're changing the
-> behavior of write_script() so that it always succeeds, regardless of
+---
+compat/poll/poll.c | 4 ++--
+1 file changed, 2 insertions(+), 2 deletions(-)
 
-s/write_script()/the fake "editor"/
+diff --git a/compat/poll/poll.c b/compat/poll/poll.c
+index db4e03e..5eb0280 100644
+--- a/compat/poll/poll.c
++++ b/compat/poll/poll.c
+@@ -441,7 +441,7 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
+}
 
-> whether grep found diff headers or not, and to give the reason for
-> making this change ("so that you don't have to use 'test_must_fail'
-> for cases when no diff headers are expected and can instead easily use
-> 'test_line_count = 0'").
+return rc;
+-#else
++#else /* #ifndef WIN32_NATIVE */
+static struct timeval tv0;
+static HANDLE hEvent;
+WSANETWORKEVENTS ev;
+@@ -622,5 +622,5 @@ restart:
+}
+
+return rc;
+-#endif
++#endif /* #ifndef WIN32_NATIVE */
+}
+-- 
+1.9.5.msysgit.1
+
+
+-- 
+Regards,
+Ivan
