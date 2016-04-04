@@ -1,107 +1,122 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: [PATCH] doc: Clarify which objects notes can be attached to
-Date: Mon, 4 Apr 2016 10:37:46 +0200
-Message-ID: <570227DA.6040808@gmail.com>
-References: <56FE48C6.9050306@gmail.com>
- <xmqqy48xjqg5.fsf@gitster.mtv.corp.google.com>
- <xmqq8u0xjmxh.fsf@gitster.mtv.corp.google.com>
- <CAHGBnuP71qpOoNAAwXE-nbPbVyK56Up0YpmhhjC5430VwW73kQ@mail.gmail.com>
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: Re: [PATCH 2/2] http.c: implements the GIT_CURL_DEBUG environment variable
+Date: Mon, 4 Apr 2016 14:41:27 +0200
+Message-ID: <CA+EOSBkSG6SLOgQeFuBSupYW1nc6UcHd=iCFcGhs265NBd77vw@mail.gmail.com>
+References: <1459507482-36678-1-git-send-email-gitter.spiros@gmail.com>
+	<1459507482-36678-2-git-send-email-gitter.spiros@gmail.com>
+	<56FE8DC3.5080304@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 04 10:37:54 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+X-From: git-owner@vger.kernel.org Mon Apr 04 14:41:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1an01B-0004zX-Pq
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Apr 2016 10:37:54 +0200
+	id 1an3oz-00035J-Cv
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Apr 2016 14:41:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753786AbcDDIhu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2016 04:37:50 -0400
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:36480 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750741AbcDDIht (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Apr 2016 04:37:49 -0400
-Received: by mail-lb0-f179.google.com with SMTP id qe11so149410962lbc.3
-        for <git@vger.kernel.org>; Mon, 04 Apr 2016 01:37:48 -0700 (PDT)
+	id S1754894AbcDDMl3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Apr 2016 08:41:29 -0400
+Received: from mail-vk0-f67.google.com ([209.85.213.67]:35138 "EHLO
+	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752521AbcDDMl2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2016 08:41:28 -0400
+Received: by mail-vk0-f67.google.com with SMTP id e185so20310635vkb.2
+        for <git@vger.kernel.org>; Mon, 04 Apr 2016 05:41:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=/Fbqe4Nlez4MMB2hxTLuVhWS2luilIg3unOxojX0U1U=;
-        b=pNKdep2OlSNSIx19fYihsqcO6pPvVHAGHivkmntXyhRanaInv2R37RFJtVLMBInwvP
-         eoapR9UNNU5XGJZrFZl59OEIznJWH7nICbeiv63NYSb8LR4qqohpIWZL/r2tH+KQkMwT
-         oh33PMBuW1IvSiSTJ8DPB2cpBDMGjTHX1HNsJY6xMuFw7vW0LZLukIl9fYyGGMLwE4v8
-         eGGl6Hfq5dL7WqOOwGCoYJW50q4P+L3yNGh+7xNYnFlvuvD6ZoyfPMdwqEKUt4uGqrRx
-         60ClBCLqZOgobVeJeudidF8r5CTviwFOImogzoasqe+9ADwAt1OvowBXm+ZKYbESz/yO
-         WS2w==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=NZPql/QuPmZHW4EVR9znFlkxseW3+fxEX5WOIhnVHrU=;
+        b=q7A4TjGjBq0MaVpVoXHl9fBdHIkjyEVkjLayC3F0Di7+vkGn1e1X3ISMJBiAFpK/Ro
+         NReCPCtqDHJY3k8+MMqmOdPPqZPA9kVG0NNBDmM+/DdSaTXbd89vNMR9Q+IJa6Y+Hv+a
+         GbCmLv+LjxO3XkkEj0ht1ck6JovSPyPkTMFv4wyM4hN6Y2aXLLTLxmSjshL6vaN+ab79
+         TUwn3s/+6Qw2AabVf3KuJa4/KVHfQBpUfMnRmfsDReMm5uVUq8c7oTtUJnZegOYsutD9
+         bnhIPdqVpOW0P+2w7F9rRe8SmjDTcYpJM2gI+Y8VoMqhjF9XcdQlRtao6HJ+0V9580cD
+         kPmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=/Fbqe4Nlez4MMB2hxTLuVhWS2luilIg3unOxojX0U1U=;
-        b=GEF1U9yFVFfqwRd58x7JFpV3lzZvbk/Q0aPDJwfLM1X1XRfLw9lJASWTvjUZrnge0r
-         n1V/g9yt/ND809KybRRfAHoiSZ+rSzPlT8SOAL6MMJdwhDBiDQzDwMsJz2hIGUMwafn/
-         idBYbdXbaasXBpJaXYQ+5hWPF0YxLTRUGmeYMBXTyUoSZ43S9EKYjZMnZ4YPyJqqcizK
-         s2QMgZJt8YDQTA53vasv/xZCO4lZGQHinEZ0mUTpCsAEovDVNiAY+15WL2Uc9ZrIxEJc
-         7eFjIxc0ee4j1p+jRLDwWG5ukLDgLlgdHfmsiMvfie4W+UU+vxLP5w0rpSda1psHjCEO
-         dqzg==
-X-Gm-Message-State: AD7BkJJ4CexuwF8j114D7QH++PgqjGVGceMB61FR+N3mSF6yqfS74dg+XUlLS4QEuCoEbQ==
-X-Received: by 10.28.130.67 with SMTP id e64mr10747128wmd.6.1459759067922;
-        Mon, 04 Apr 2016 01:37:47 -0700 (PDT)
-Received: from [10.223.62.205] ([131.228.216.133])
-        by smtp.googlemail.com with ESMTPSA id w8sm27800607wjf.19.2016.04.04.01.37.47
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 04 Apr 2016 01:37:47 -0700 (PDT)
-Newsgroups: gmane.comp.version-control.git
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
-In-Reply-To: <CAHGBnuP71qpOoNAAwXE-nbPbVyK56Up0YpmhhjC5430VwW73kQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=NZPql/QuPmZHW4EVR9znFlkxseW3+fxEX5WOIhnVHrU=;
+        b=VBpPfBHDFjSWpbZGmkcX270sTtg096hmoQpWDm9tKsrZsl8PCEZjEJQpL1ix1453JV
+         Sln/Tz4qWRX3yNls9pMs7Vua9hfkWkX/+H/wxpm0oNsqXcnKlC0a2nX2xJI9H7eVhJkI
+         F3TOzzBffsuYMgjAa2OcTpFY6fFGDkunulI+a0W3tfKTRX1iZb4npuVOEBJXYqok/Cqo
+         5MrPO0cL3kCNBeMfw7o4hHOu05g3GUOVspsfAkmC+I3Frusg8k6lE3umfFaGcQhVQO2g
+         qWXlO1i72ypZF/T8Nwg7NjQnF1PCB+a20ldchBc7VlU4fwd1QQ7tG4jfOmQV263rG+kx
+         K9Fw==
+X-Gm-Message-State: AD7BkJKUNjPi7zq4JFRwa/T+LxWj8Bb9pZlHWdDej+tFVe6gBIpPp35IrdxEbL5iJPQ+c85jul2eCBPxnJozBw==
+X-Received: by 10.31.52.147 with SMTP id b141mr7106076vka.82.1459773687363;
+ Mon, 04 Apr 2016 05:41:27 -0700 (PDT)
+Received: by 10.31.56.10 with HTTP; Mon, 4 Apr 2016 05:41:27 -0700 (PDT)
+In-Reply-To: <56FE8DC3.5080304@ramsayjones.plus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290687>
 
-Explicitly name the supported object types, and ensure patches cannot be
-misinterpreted as non-objects that can have notes attached.
+2016-04-01 17:03 GMT+02:00 Ramsay Jones <ramsay@ramsayjones.plus.com>:
+>
+>
+> On 01/04/16 11:44, Elia Pinto wrote:
+>> Implements the GIT_CURL_DEBUG environment variable to allow a greater
+>> degree of detail of GIT_CURL_VERBOSE, in particular the complete
+>> transport header and all the data payload exchanged.
+>> It might be useful if a particular situation could require a more
+>> thorough debugging analysis.
+>>
+>> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+>> ---
+>>  http.c | 97 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+>>  1 file changed, 96 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/http.c b/http.c
+>> index dfc53c1..079779d 100644
+>> --- a/http.c
+>> +++ b/http.c
+> [snip]
+>
+>> @@ -532,7 +623,11 @@ static CURL *get_curl_handle(void)
+>>                       "your curl version is too old (>= 7.19.4)");
+>>  #endif
+>>
+>> -     if (getenv("GIT_CURL_VERBOSE"))
+>> +     if (getenv("GIT_CURL_DEBUG")) {
+>> +             curl_easy_setopt(result, CURLOPT_VERBOSE, 1);
+>> +             curl_easy_setopt(result, CURLOPT_DEBUGFUNCTION, curl_trace);
+>> +             curl_easy_setopt(result, CURLOPT_DEBUGDATA, NULL);
+>> +     } else if (getenv("GIT_CURL_VERBOSE"))
+>>               curl_easy_setopt(result, CURLOPT_VERBOSE, 1);
+>>
+>>       curl_easy_setopt(result, CURLOPT_USERAGENT,
+>>
+>
+> Again, maybe something like:
+>
+> if (getenv("GIT_CURL_VERBOSE")) {
+>         curl_easy_setopt(result, CURLOPT_VERBOSE, 1);
+>         if (getenv("GIT_CURL_DEBUG"))
+>                 curl_easy_setopt(result, CURLOPT_DEBUGFUNCTION, curl_trace);
+> }
+>
+> Although that does make GIT_CURL_DEBUG subordinate to GIT_CURL_VERBOSE.
+> So, that may not be desired ...
 
-Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
----
- Documentation/git-notes.txt | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+Thank you. But actually it is not a desirable change, for me almost, I
+prefer that the two definitions are independent. And it is true the
+opposite: if it is defined the curl DEBUG flag then it is implicitly
+defined the curl VERBOSE flag, because it is a prerequisite of the
+DEBUG functionality.
 
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index 8de3499..101e6ba 100644
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -25,7 +25,8 @@ SYNOPSIS
- DESCRIPTION
- -----------
- Adds, removes, or reads notes attached to objects, without touching
--the objects themselves.
-+the objects themselves.  Supported objects are commits, blobs, trees
-+and annotated tags.
- 
- By default, notes are saved to and read from `refs/notes/commits`, but
- this default can be overridden.  See the OPTIONS, CONFIGURATION, and
-@@ -39,9 +40,9 @@ message stored in the commit object, the notes are indented like the
- message, after an unindented line saying "Notes (<refname>):" (or
- "Notes:" for `refs/notes/commits`).
- 
--Notes can also be added to patches prepared with `git format-patch` by
--using the `--notes` option. Such notes are added as a patch commentary
--after a three dash separator line.
-+Notes contents can also be included in patches prepared with
-+`git format-patch` by using the `--notes` option. Such notes are added
-+as a patch commentary after a three dash separator line.
- 
- To change which notes are shown by 'git log', see the
- "notes.displayRef" configuration in linkgit:git-log[1].
--- 
-2.8.0.windows.1
+Thanks in any case for the review.
+
+Best
+>
+> ATB,
+> Ramsay Jones
+>
+>
