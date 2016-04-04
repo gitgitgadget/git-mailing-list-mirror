@@ -1,69 +1,93 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 0/7] t5520: tests for --[no-]autostash option
-Date: Mon, 04 Apr 2016 09:31:52 +0200
-Message-ID: <vpqshz125jr.fsf@anie.imag.fr>
-References: <1459619912-5445-1-git-send-email-mehul.jain2029@gmail.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: What is an efficient way to get all blobs / trees that have notes attached?
+Date: Mon, 4 Apr 2016 09:46:40 +0200
+Message-ID: <CAHGBnuNQYrg70h+mjzDpYyKhHiR6tWx9j989KLO3bW-jC7XmZw@mail.gmail.com>
+References: <ndljs8$vj3$1@ger.gmane.org>
+	<CALKQrgdytYJtMTBHXbcRQ_iT5rWakZCxxqRW1rpLsPiSejud-Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, sunshine@sunshineco.com, gitster@pobox.com
-To: Mehul Jain <mehul.jain2029@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 04 09:32:21 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git mailing list <git@vger.kernel.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Apr 04 09:46:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1amyzk-0000af-Fb
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Apr 2016 09:32:20 +0200
+	id 1amzDj-0006yC-1o
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Apr 2016 09:46:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754533AbcDDHcQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2016 03:32:16 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:51823 "EHLO mx1.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751722AbcDDHcP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Apr 2016 03:32:15 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u347VqNG030822
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 4 Apr 2016 09:31:52 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u347VqBm018260;
-	Mon, 4 Apr 2016 09:31:53 +0200
-In-Reply-To: <1459619912-5445-1-git-send-email-mehul.jain2029@gmail.com>
-	(Mehul Jain's message of "Sat, 2 Apr 2016 23:28:25 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Mon, 04 Apr 2016 09:31:52 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u347VqNG030822
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1460359913.93604@E4V8QpsAmSeDQHlZ7keUYA
+	id S1754470AbcDDHqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Apr 2016 03:46:42 -0400
+Received: from mail-vk0-f51.google.com ([209.85.213.51]:36800 "EHLO
+	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751338AbcDDHql (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2016 03:46:41 -0400
+Received: by mail-vk0-f51.google.com with SMTP id c4so44089266vkb.3
+        for <git@vger.kernel.org>; Mon, 04 Apr 2016 00:46:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=Sy3qRtaanaBbH4QZ7KT93Kxp/URbBU778cgpEHSrm4E=;
+        b=KybmFAC4jxQ5i0DYDGNghQzZJ2wk70DFa4/6iFZGiPLklWnpq2jryBiHXxt0f7Nxei
+         dd6FjCJmjR/19gz3Tl85Q5FC23AvPG77aRDzvTK3+C4dazI5W/ziKor0edEx/w3tIj6a
+         FrwX35iDQJxhqOke6nh32K+5XTbSASHOmCdkmonWVPe7mnpKeX5KFkwkPz6s2EJ5y14W
+         ZoFvPd4j1QuTcLiVxZdI8LxR+j0H+Oqp1uZEFtx+L/xFmnIXrnTnJ39sizrJKeRalnvt
+         YnJSoWB+WFh1lp1NLVcMm+ebLP4dZYYgMcApTq5d0E52zMo8ZrXmrcgu5Iw04/eiq38K
+         VA7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=Sy3qRtaanaBbH4QZ7KT93Kxp/URbBU778cgpEHSrm4E=;
+        b=cHyUUgA7WAgNuFcck5ube66ESMuC74UmxeCFbbPQk/KTmbm17oSfD9z3A7etfbwPei
+         GBxizsYdal/rR7APwEbgu5My0BQenUBKOs0UsIVoTKJj24y+exqXDUcWck3CSSW4BhVp
+         AwzPJ+6bTKgWumsifkajtj3Rt9AFQW6SbWx10a2N+BHSX5Vqv+vMYi3u+I45mWV/b0Vr
+         qgteC2sBkDJO+yGmdB6pp4OxjBPgYo6kwF7dc4ZiqloEsCixOFWGBBqCPPv2a9UX744E
+         w6+YdWBpWxz75ouyNjWMyevV7sr7Yo94G2dBW00qaUOrmpYfWRB3T5UvJJlZHausEP5M
+         ruOQ==
+X-Gm-Message-State: AD7BkJLCnbPnQuNQq0AEHb59xsGgfWqg0UOvpS+DNs1CGl2ZEAen/EUq0vzx1ROa8V3l2jI/fYpNDXclTVovtg==
+X-Received: by 10.176.1.197 with SMTP id 63mr5859623ual.77.1459756000451; Mon,
+ 04 Apr 2016 00:46:40 -0700 (PDT)
+Received: by 10.176.68.6 with HTTP; Mon, 4 Apr 2016 00:46:40 -0700 (PDT)
+In-Reply-To: <CALKQrgdytYJtMTBHXbcRQ_iT5rWakZCxxqRW1rpLsPiSejud-Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290681>
 
-Mehul Jain <mehul.jain2029@gmail.com> writes:
+On Fri, Apr 1, 2016 at 2:16 PM, Johan Herland <johan@herland.net> wrote:
 
-> -test_rebase_autostash () {
-> +test_pull_autostash () {
->  	git reset --hard before-rebase &&
->  	echo dirty >new_file &&
->  	git add new_file &&
-> -	git pull --rebase --autostash . copy &&
-> +	git pull $@ . copy &&
+>> 3) Recursively list all blobs / trees (git-ls-tree) and look whether an
+>> object's hash is conatined in our table to get its notes.
+>>
+>> In particular 3) could be expensive for repos with a lot of files as we're
+>> looking at all of them just to see whether they have notes attached.
+>
+> In (3), why would you need to search through _all_ blobs/trees? Would
+> it not be cheaper to simply query the object type of each annotated
+> object from (2)? I.e. something like:
+>
+> for notes_ref in $(git for-each-ref refs/notes | cut -c 49-)
+> do
+>     echo "--- $notes_ref ---"
+>     for annotated_obj in $(git notes --ref=$notes_ref list | cut -c 41-)
+>     do
+>         type=$(git cat-file -t "$annotated_obj")
+>         if test "$type" != "commit"
+>         then
+>             echo "$annotated_obj: $type"
+>         fi
+>     done
+> done
 
-Not strictly needed here, but I'd write "$@" (with the double-quotes)
-which is the robust way to say "transmit all my arguments without
-whitespace interpretation".
-
-I don't mind for this patch since there's no whitespace to interpret,
-but some people (sysadmins ;-) ) have the bad habit of writting $@, $*
-or "$*" in wrapper scripts and it breaks when you call them with spaces
-so it's better to take good habits IHMO.
+Thanks for the idea. The problem is that I do want to list the notes
+by path of the object they belong to. As a blob could potentially
+belong to more than one path (copies of files in the repo), I do not
+see another way of getting that information other than iterating over
+all blobs and checking what path(s) they belong to.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Sebastian Schuberth
