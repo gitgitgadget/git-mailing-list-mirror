@@ -1,91 +1,102 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 5/5] t/t5520: test --[no-]autostash with pull.rebase=true
-Date: Mon, 04 Apr 2016 20:25:32 +0200
-Message-ID: <vpqmvp9i63n.fsf@anie.imag.fr>
-References: <1459258200-32444-1-git-send-email-mehul.jain2029@gmail.com>
-	<1459258200-32444-6-git-send-email-mehul.jain2029@gmail.com>
-	<CAPig+cQ93+dCqJMRcQYSRHLDuYtwkeK_aSrfv2=2=g7ZhO85TQ@mail.gmail.com>
-	<CA+DCAeQPr2vxvm6MKiOLpDtmpC2d=RcvYhuFeimSn+xX2TAvtQ@mail.gmail.com>
-	<CAPig+cQyHu1J=FYOtgsmi3ghuN7YyjNgAz-VgO06isfrS+kUSg@mail.gmail.com>
-	<CA+DCAeT1DQvHnRpJeApcm2vO6KhXaMaRXZg9HCUmiiBv=hfxzw@mail.gmail.com>
-	<CAPig+cSR9Um5FUWzkzHGAM5RanaKssAysA5hGOP4+E5oA0Y5oA@mail.gmail.com>
-	<CA+DCAeRqY7-qZt-upa5=nY8OkUL4Q76ogk5nrF_WAaiFiWOy1A@mail.gmail.com>
-	<vpq4mbhmi3g.fsf@anie.imag.fr>
-	<CA+DCAeTm7wjgdjLwR__pcyev-EsqecdAT8xdGEFfuekg4ToKSA@mail.gmail.com>
-	<CAPig+cTSHQcMh=gTLgE3kCgLqBr55ar9wn3gwXLbvRiOyqch1A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-format-patch.txt: don't show -s as shorthand for multiple options
+Date: Mon, 04 Apr 2016 12:32:27 -0700
+Message-ID: <xmqqvb3x41bo.fsf@gitster.mtv.corp.google.com>
+References: <1459113967-13864-1-git-send-email-sunshine@sunshineco.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Mehul Jain <mehul.jain2029@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Kevin Brodsky <corax26@gmail.com>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Apr 04 20:25:44 2016
+X-From: git-owner@vger.kernel.org Mon Apr 04 21:32:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1an9C3-00044O-Ne
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Apr 2016 20:25:44 +0200
+	id 1anAEm-0005tM-AA
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Apr 2016 21:32:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754983AbcDDSZk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2016 14:25:40 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:35109 "EHLO mx2.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752972AbcDDSZj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Apr 2016 14:25:39 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u34IPTZE013946
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 4 Apr 2016 20:25:29 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u34IPW6w000736;
-	Mon, 4 Apr 2016 20:25:32 +0200
-In-Reply-To: <CAPig+cTSHQcMh=gTLgE3kCgLqBr55ar9wn3gwXLbvRiOyqch1A@mail.gmail.com>
-	(Eric Sunshine's message of "Mon, 4 Apr 2016 13:48:10 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Mon, 04 Apr 2016 20:25:30 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u34IPTZE013946
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1460399130.4505@Deyb/I3uYBdOL2k1Coofww
+	id S1756230AbcDDTcc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Apr 2016 15:32:32 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:54276 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755847AbcDDTcb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2016 15:32:31 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E1F5D50C2D;
+	Mon,  4 Apr 2016 15:32:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=H1xuFK1fuJOE7722ML0wa0tVxR0=; b=jSCChz
+	YXrYA72t28JndYp2+435pOMcraOGR+Hkl3IFsCiuFlWNGWO/Lh7ksoBe1ERJGyMd
+	+e+wZKQ4DZ+4tSLcZfXy6ahACFgWo16JOYEWUEsUNlU62gEX6taRJwGrM7WGDsAY
+	yH5hEfo/PeSU6reKgyJ8cKW7UkZSzKt+Cy7pA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CtpXLzZ4gBtT9vUCwFxjq91GlrwqoUBf
+	VXAMgl9LiKH7eHufn8sBqFJt0NuhkJOwISAb2j5r/B/n3pZOjizJBw1UwA5Awyky
+	ToEsRVaZLME8Vijd2SK/Qxidr0Yi45GVmS6Mq3hr0DvEibG/HDeZi7Yo4cq9kzhn
+	1SEhuUWoOp8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D8F8350C2C;
+	Mon,  4 Apr 2016 15:32:29 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4A56E50C2B;
+	Mon,  4 Apr 2016 15:32:29 -0400 (EDT)
+In-Reply-To: <1459113967-13864-1-git-send-email-sunshine@sunshineco.com> (Eric
+	Sunshine's message of "Sun, 27 Mar 2016 17:26:07 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F80D7098-FA9B-11E5-BBDC-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290717>
 
 Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> Although I'm the one who brought up the idea of "automating" these
-> tests, I'm not convinced that it's an improvement in this case, but I
-> don't feel so strongly that I'd forbid it.
+> Documentation/diff-options.txt | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+> index 306b7e3..6eb591f 100644
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -28,10 +28,12 @@ ifdef::git-diff[]
+>  endif::git-diff[]
+>  endif::git-format-patch[]
+>  
+> +ifndef::git-format-patch[]
+>  -s::
+>  --no-patch::
+>  	Suppress diff output. Useful for commands like `git show` that
+>  	show the patch by default, or to cancel the effect of `--patch`.
+> +endif::git-format-patch[]
 
-Another option is to define helper functions to shorten the "manual"
-tests, e.g. define:
+Given that the ifndef/endif block immediately before this part is
+also about excluding -p/-u/--patch when formatting the documentation
+for format-patch, perhaps the attached may be a smaller equivalent?
 
-setup_rebase_test () {
-	git reset --hard before-rebase &&
-	echo dirty >new_file &&
-	git add new_file
-}
+ Documentation/diff-options.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-rebase_test_ok () {
-        git pull $1 . copy &&
-        test_cmp_rev HEAD^ copy &&
-        test "$(cat new_file)" = dirty &&
-        test "$(cat file)" = "modified again"
-}
-
-rebase_test_err () {
-        test_must_fail git pull $1 . copy 2>err &&
-        test_i18ngrep "uncommitted changes." err
-}
-
-I'm also OK with keeping the "manual" tests.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 306b7e3..42e6620 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -26,12 +26,12 @@ ifndef::git-format-patch[]
+ ifdef::git-diff[]
+ 	This is the default.
+ endif::git-diff[]
+-endif::git-format-patch[]
+ 
+ -s::
+ --no-patch::
+ 	Suppress diff output. Useful for commands like `git show` that
+ 	show the patch by default, or to cancel the effect of `--patch`.
++endif::git-format-patch[]
+ 
+ -U<n>::
+ --unified=<n>::
