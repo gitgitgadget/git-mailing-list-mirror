@@ -1,128 +1,77 @@
-From: Mehul Jain <mehul.jain2029@gmail.com>
-Subject: Re: [PATCH 5/5] t/t5520: test --[no-]autostash with pull.rebase=true
-Date: Mon, 4 Apr 2016 23:06:29 +0530
-Message-ID: <CA+DCAeTm7wjgdjLwR__pcyev-EsqecdAT8xdGEFfuekg4ToKSA@mail.gmail.com>
-References: <1459258200-32444-1-git-send-email-mehul.jain2029@gmail.com>
-	<1459258200-32444-6-git-send-email-mehul.jain2029@gmail.com>
-	<CAPig+cQ93+dCqJMRcQYSRHLDuYtwkeK_aSrfv2=2=g7ZhO85TQ@mail.gmail.com>
-	<CA+DCAeQPr2vxvm6MKiOLpDtmpC2d=RcvYhuFeimSn+xX2TAvtQ@mail.gmail.com>
-	<CAPig+cQyHu1J=FYOtgsmi3ghuN7YyjNgAz-VgO06isfrS+kUSg@mail.gmail.com>
-	<CA+DCAeT1DQvHnRpJeApcm2vO6KhXaMaRXZg9HCUmiiBv=hfxzw@mail.gmail.com>
-	<CAPig+cSR9Um5FUWzkzHGAM5RanaKssAysA5hGOP4+E5oA0Y5oA@mail.gmail.com>
-	<CA+DCAeRqY7-qZt-upa5=nY8OkUL4Q76ogk5nrF_WAaiFiWOy1A@mail.gmail.com>
-	<vpq4mbhmi3g.fsf@anie.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix spelling mistakes
+Date: Mon, 04 Apr 2016 10:45:51 -0700
+Message-ID: <xmqqd1q55kts.fsf@gitster.mtv.corp.google.com>
+References: <1459688165-8720-1-git-send-email-eric@engestrom.ch>
+	<xmqqbn5qfth8.fsf@gitster.mtv.corp.google.com>
+	<20160403185517.GA6612@engestrom.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Apr 04 19:36:37 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Eric Engestrom <eric@engestrom.ch>
+X-From: git-owner@vger.kernel.org Mon Apr 04 19:45:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1an8QV-0001wm-EL
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Apr 2016 19:36:35 +0200
+	id 1an8Zb-0005iK-7z
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Apr 2016 19:45:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754531AbcDDRgb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2016 13:36:31 -0400
-Received: from mail-qg0-f65.google.com ([209.85.192.65]:34070 "EHLO
-	mail-qg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752058AbcDDRga (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Apr 2016 13:36:30 -0400
-Received: by mail-qg0-f65.google.com with SMTP id j35so18294690qge.1
-        for <git@vger.kernel.org>; Mon, 04 Apr 2016 10:36:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=2XBF22b7uc2cvVWYvYCsnXP6KWldvdBGbuzxA+q1Tf4=;
-        b=W1+ZFrySDNSauMsu9cGp42i6+9vxyglZYw7qSBepL9XqIO+qC2u/7gCQCH/vEw+hn2
-         rOjwweu9On0tg6ArpqMFPXhK9qYrBIkmwK4B2LdF1j3CU7ht6MJifYkBOR9EW6FpJC/q
-         0KC5Uk6Q7wSHL/RO7pLKmRvIGtLDoNQ/JVlN+W9j6biVWXsony7cDZQWhF42Xxkx9aGL
-         wh3Jpcxy0+uzaPP5ldX2Epl03v5VevlCra2r9XqkLPRx8BBQq8f1OYuhI4SIp8woxmts
-         gFsQYSonnPvjOuT+XjL2RxisphOsTdjbdQlCkODxqeJ15uoMz1100GrDtlJH4h6/kMta
-         zFsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=2XBF22b7uc2cvVWYvYCsnXP6KWldvdBGbuzxA+q1Tf4=;
-        b=mnd3Azdr6kUTTpH8auGgLKhwr/JnFvjQ1PMBYQm4EFKkJE63O2xpGqdU9MvkLUuNbF
-         aIkwi79Jpcj8VRDHAyu5r+gUI98uyvaZRKsbUygbaL3tV5/4KSAyjSKzafOhzbuJq4sk
-         lcc+Vk4x+4bbsZ+hv2hnHG4WKQ45PdYMDHBVv5FeQlia+SXDXyGajSqAPZDfiIYFgrbh
-         jXyS1QyDWHFoVKDvEk9//LFf1NN3+R58DRs6uldICeqzSgKNptK7rMrnPtqSleXazzlx
-         RZeGDjbirL+AMXMJVLpSvEVP0VN0Hr9CmDo0bZkzhU66iKT81p1xGtvAfh9zwDWNvW6q
-         CfYA==
-X-Gm-Message-State: AD7BkJIn2NYveQBN9Yr89guq/Jtgn2Zl+vZBM1EteSG1uT9K4LA3a5v1vWYP1wkEN7id9efM6H099F+kXcf2mg==
-X-Received: by 10.140.240.3 with SMTP id l3mr15990812qhc.93.1459791389357;
- Mon, 04 Apr 2016 10:36:29 -0700 (PDT)
-Received: by 10.55.10.135 with HTTP; Mon, 4 Apr 2016 10:36:29 -0700 (PDT)
-In-Reply-To: <vpq4mbhmi3g.fsf@anie.imag.fr>
+	id S1755595AbcDDRpz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Apr 2016 13:45:55 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:61566 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752592AbcDDRpy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2016 13:45:54 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 16CC54F489;
+	Mon,  4 Apr 2016 13:45:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5D3TmS7qmEHqt2RF5sGGYm+ePlM=; b=BRtERO
+	dabVB8Rz6klceIjyqpwKV72zp+K3uALhSk05GHbQpPyd1KRJui2QbjbgeUZGECkp
+	CtoV2YoGkC5M8+7CA+lxWb5AkrgjN+VGl9SnbkXxgiq9En0XdPK3o9jdWcoDw0F4
+	NKCbrv8Cwrz7cXAFYk7I9WtTkWDdnG5GQtBb0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=acYemiuNcbufduky2oIvSEjmDHN/fONo
+	ZeqZLKR0tShBDH5XwiN6MTqmgm1Sms6fg8+6a0JarKNSDYUTLQiAJiPGNTaF20ME
+	6LC5/NYu1LmPQ+C8sGvRLcUTyqitF/UG68bbrhQATxeh2rPoPw+GO02ULs0slpmJ
+	aTOfehGuEFw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E553B4F486;
+	Mon,  4 Apr 2016 13:45:52 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 485654F479;
+	Mon,  4 Apr 2016 13:45:52 -0400 (EDT)
+In-Reply-To: <20160403185517.GA6612@engestrom.ch> (Eric Engestrom's message of
+	"Sun, 3 Apr 2016 19:55:17 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1323FA28-FA8D-11E5-BB54-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290708>
 
-On Mon, Apr 4, 2016 at 10:22 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> I think it would be much simpler to drop the loop, and write instead
-> something like (untested):
+Eric Engestrom <eric@engestrom.ch> writes:
 
-I tested it (with few minor changes), and worked fine.
+> I went by word-count: "through" was way more common than "thru", so
+> I kept the fix.
 
-test_autostash () {
-        OLDIFS=$IFS
-        IFS='='
-        set -- $*
-        IFS=$OLDIFS
-        expect=$1
-        cmd=$2
-        config_variable=$3
-        value=$4
-        test_expect_success "$cmd, $config_variable=$value"     '
-                if [ "$value" = "" ]; then
-                        test_unconfig $config_variable
-                else
-                        test_config $config_variable $value
-                fi &&
+That is not a "fix" (as it is not touching "mistakes") but "making
+them consistent".  I do not personally feel strongly against such a
+change, but please leave them out of "Subject: [PATCH] typofix".
 
-                git reset --hard before-rebase &&
-                echo dirty >new_file &&
-                git add new_file &&
+> BTW, I used codespell to fix those, I didn't do it by hand :]
+> https://github.com/lucasdemarchi/codespell
 
-                if [ $expect = "ok" ]; then
-                        git pull $cmd . copy &&
-                        test_cmp_rev HEAD^ copy &&
-                        test "$(cat new_file)" = dirty &&
-                        test "$(cat file)" = "modified again"
-                else
-                        test_must_fail git pull $cmd . copy 2>err &&
-                        test_i18ngrep "uncommitted changes." err
-                fi
-        '
-}
+Heh, cute ;-)
 
-test_autostash ok '--rebase' rebase.autostash=true
-test_autostash ok '--rebase --autostash' rebase.autostash=true
-test_autostash ok '--rebase --autostash' rebase.autostash=false
-test_autostash ok '--rebase --autostash' rebase.autostash=
-test_autostash err '--rebase --no-autostash' rebase.autostash=true
-test_autostash err '--rebase --no-autostash' rebase.autostash=false
-test_autostash err '--rebase --no-autostash' rebase.autostash=
-test_autostash ok '--autostash' pull.rebase=true
-test_autostash err '--no-autostash' pull.rebase=true
+> I can remove the "thru" fixes if you'd prefer, and resend with only the
+> other fixes.
 
-Perhaps this looks better than the one with the loop. Even better than
-the implementation in v2[1].
-
-I think it would be wise to go with the above script for v3 (as I will
-be doing a re-roll of the series[1]).
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/290596
-
-Thanks,
-Mehul
+Thanks.
