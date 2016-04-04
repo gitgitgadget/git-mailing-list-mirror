@@ -1,91 +1,99 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: Re: [PATCH 1/2] imap-send.c: implements the GIT_CURL_DEBUG
- environment variable
-Date: Mon, 4 Apr 2016 18:08:38 +0200
-Message-ID: <CA+EOSBkY-Tsz3ZAfK3uAXJsrE585cOhyxjsU4FhgDMFC-ypkUg@mail.gmail.com>
-References: <1459507482-36678-1-git-send-email-gitter.spiros@gmail.com>
-	<xmqqtwjljq97.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 13/16] ref-filter: allow porcelain to translate messages in the output
+Date: Mon, 04 Apr 2016 09:12:40 -0700
+Message-ID: <xmqq7fgd73pj.fsf@gitster.mtv.corp.google.com>
+References: <1459330800-12525-1-git-send-email-Karthik.188@gmail.com>
+	<1459330800-12525-14-git-send-email-Karthik.188@gmail.com>
+	<xmqqa8lfsk5e.fsf@gitster.mtv.corp.google.com>
+	<CAOLa=ZQjxmVHuXc0fZioe9OLi9vjNwgHQq-8vf1opWxbuedM9Q@mail.gmail.com>
+	<vpqa8l9ztmd.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 04 18:08:45 2016
+Content-Type: text/plain
+Cc: Karthik Nayak <karthik.188@gmail.com>, Git <git@vger.kernel.org>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Apr 04 18:13:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1an73U-0005Mg-Cu
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Apr 2016 18:08:44 +0200
+	id 1an77c-0007AA-Fc
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Apr 2016 18:13:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754277AbcDDQIk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2016 12:08:40 -0400
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:35691 "EHLO
-	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752968AbcDDQIj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Apr 2016 12:08:39 -0400
-Received: by mail-vk0-f65.google.com with SMTP id e185so21166029vkb.2
-        for <git@vger.kernel.org>; Mon, 04 Apr 2016 09:08:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=nVqNauEsvryCPhL6uXYUZpYCWtx75KutuH+tKk+XiUE=;
-        b=Y0wS3tP8duTyU9mJEYQ8ptwLdLFY4Es/gA76539oDU2CT5ZjrV2OcuTyhktRMDshV1
-         KNOMsG9V1WQQQ2HOZVeNTkCX+f/pkDihkeu9JTRRRZmFuauFeXabD0AObKfVeh+7Kql/
-         DLWRabLaTtMuvazxCXdwpH42KCgmxpYzyMatbyXXlQ3bJHP7qanmYN0jlhL3pT8bfHF9
-         Eo658oHHvvHzMVPy72iIV9ynORLdv5c16lhoiQSreMMgv0ZIGjWYl/edrFfMbRVf8iMi
-         GZJ8qCeT3bAb85Nj2l95BdK7DhGXityPWRuEw9QPwlTYyemGFX4J+aw2pg3Tc3P2tWKZ
-         jMmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=nVqNauEsvryCPhL6uXYUZpYCWtx75KutuH+tKk+XiUE=;
-        b=gr9uI11HibREKpiXlrfIshbRDDMwJz+o4dzugwdhk8harKJ2KGauadpwpfrfkIawFW
-         8El5CEvGyF4Vdrw7egoPwRebGVXkjf4iW3I0iDzll0taufnacujGFwIkS+f2aLp3A8Xs
-         LF26oJqmfDhCjrDADsssljxQ/kCSC1EYZigz7oR1xIIrs/30Bl/Rt9j2H3GQQpsOKa5Q
-         XLF1XZPVk71D6JIkUoNKR7L0t1dACZPRHVstMN8rZBCxrRGTPvVWwiTFiNqPZvieQl7p
-         vSdMWcDvRuL8rxfh0XxGK07Oe/mtjIaJM7bJbW2b1gTO8QKMau7cgTMji4jJjbS522dT
-         Zauw==
-X-Gm-Message-State: AD7BkJIQeS4fxKVCz3Oaou/m4e9j+w8cqMF8YOOtr59gIhvKKyaOCapJ6gxuXnMd5ws8orw0We8/X5b6oPEioQ==
-X-Received: by 10.31.4.208 with SMTP id 199mr5854026vke.110.1459786118842;
- Mon, 04 Apr 2016 09:08:38 -0700 (PDT)
-Received: by 10.31.56.10 with HTTP; Mon, 4 Apr 2016 09:08:38 -0700 (PDT)
-In-Reply-To: <xmqqtwjljq97.fsf@gitster.mtv.corp.google.com>
+	id S1755572AbcDDQMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Apr 2016 12:12:44 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:58004 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755249AbcDDQMn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2016 12:12:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3C29F4E4E1;
+	Mon,  4 Apr 2016 12:12:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=k11astf6bBdgfhFfaA2psS/BoZo=; b=CyISKv
+	avWpG0Piyv8wNBBOP1iqTThWGAxjh4LxpRTlwm4mfv344TONrO0S2ExQO04+Nac/
+	/N9AMrkPRLyYKo93/1WbqqAwCYci+ZvXl0XCk9kTv2mn73wXm3db8y/ciU9/Lqii
+	Y0pbJFtkyjr5GXOvmak9k1suZDjC3JtHlQq+o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EWJARO14ytTPpyHiXuIlgbZwbtQ7UpLo
+	MP2t1Laqeqant1NQee7lMq+W1/vgsBwMAAmQYYVLJmFjfz141EiLZ1NgLhEKN/Hb
+	dlChG26wMzAzDJ8wRr4RZpdgapZLiNlPPiHmAVcfZd/FEGDl4Fe6yvwfEaJNJZix
+	J/cz6SVj5xE=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 320464E4E0;
+	Mon,  4 Apr 2016 12:12:42 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8369F4E4DC;
+	Mon,  4 Apr 2016 12:12:41 -0400 (EDT)
+In-Reply-To: <vpqa8l9ztmd.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
+	04 Apr 2016 10:05:30 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 0EC9F30E-FA80-11E5-8F04-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290694>
 
-2016-04-01 17:35 GMT+02:00 Junio C Hamano <gitster@pobox.com>:
-> Elia Pinto <gitter.spiros@gmail.com> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+
+> I'm not sure how important it is in this case, but it was in the case of
+> setup_unpack_trees_porcelain which I took inspiration from when we
+> discussed this (actually, in setup_unpack_trees_porcelain, there's isn't
+> any translation even in porcelain).
+
+OK, so paraphrase:
+
+In the most general case, we might want to have one code to issue
+different messages between plumbing and Porcelain; further, for
+Porcelain messages may or may not want to be translated.
+
+But I suspect that all Porcelain messages should be translatable
+in general, so there probably is a room for simplification.
+
+The single macro P_() approach was done without knowing that this
+codepath wanted the distinction between the plumbing and Porcelain.
+
+> Note that this can be worked around later by adding another function like
 >
->> Implements the GIT_CURL_DEBUG environment variable to allow a greater
->> degree of detail of GIT_CURL_VERBOSE, in particular the complete
->> transport header and all the data payload exchanged.
->> It might be useful if a particular situation could require a more
->> thorough debugging analysis.
+>         static const char *get_message(const char *porcelain, const char *plumbing)
+>         {
+>                 return use_porcelain_msg ? porcelain : plumbing;
+>         }
 >
-> My impression is that using GIT_TRACE_* is the more mainstream
-> trend, and it may be beneficial to work any new debugging aid like
-> this one to fit within that mechanism.
+> to be called with get_message(_("this ref was gone"), "gone") or so.
 
-I thought about it, and I agree with you. The idea could be
+Yes, I think that would be a way to do this properly.  And we do not
+have a separate "here is the list of all translatable messages"
+table, which is a big plus.
 
-- Call the variable GIT_TRACE_CURL_DEBUG instead
-- Add the new GIT_TRACE_CURL_VERBOSE variable, keeping
-GIT_CURL_VERBOSE for compatibility
-- Documenting these GIT_TRACE_CURL_XXX variables (GIT_CURL_VERBOSE
-it is not even documented i think)
-- perhaps use the git trace api in doing these new patches
+> In summary: both would work. No strong opinion from me, but I slightly
+> prefer the version in the patch (i.e. the one I suggested IIRC) to
+> Junio's version.
 
-Look reasonable? It seems reasonable? I'd like your own opinion
-
-Thank you for your suggestion
->
-> I am not saying new GIT_*_DEBUG is wrong.  I just wanted to make
-> sure you have considered doing this as a new trace in GIT_TRACE_*
-> family and rejected that apporach with a very good reason, in
-> which case that rationale deserves to be in the log message.
+Yup.
