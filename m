@@ -1,104 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] imap-send.c: implements the GIT_CURL_DEBUG environment variable
-Date: Mon, 04 Apr 2016 09:50:08 -0700
-Message-ID: <xmqqr3el5nen.fsf@gitster.mtv.corp.google.com>
-References: <1459507482-36678-1-git-send-email-gitter.spiros@gmail.com>
-	<xmqqtwjljq97.fsf@gitster.mtv.corp.google.com>
-	<CA+EOSBkY-Tsz3ZAfK3uAXJsrE585cOhyxjsU4FhgDMFC-ypkUg@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 5/5] t/t5520: test --[no-]autostash with pull.rebase=true
+Date: Mon, 04 Apr 2016 18:52:51 +0200
+Message-ID: <vpq4mbhmi3g.fsf@anie.imag.fr>
+References: <1459258200-32444-1-git-send-email-mehul.jain2029@gmail.com>
+	<1459258200-32444-6-git-send-email-mehul.jain2029@gmail.com>
+	<CAPig+cQ93+dCqJMRcQYSRHLDuYtwkeK_aSrfv2=2=g7ZhO85TQ@mail.gmail.com>
+	<CA+DCAeQPr2vxvm6MKiOLpDtmpC2d=RcvYhuFeimSn+xX2TAvtQ@mail.gmail.com>
+	<CAPig+cQyHu1J=FYOtgsmi3ghuN7YyjNgAz-VgO06isfrS+kUSg@mail.gmail.com>
+	<CA+DCAeT1DQvHnRpJeApcm2vO6KhXaMaRXZg9HCUmiiBv=hfxzw@mail.gmail.com>
+	<CAPig+cSR9Um5FUWzkzHGAM5RanaKssAysA5hGOP4+E5oA0Y5oA@mail.gmail.com>
+	<CA+DCAeRqY7-qZt-upa5=nY8OkUL4Q76ogk5nrF_WAaiFiWOy1A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 04 18:50:20 2016
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Mehul Jain <mehul.jain2029@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 04 18:53:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1an7hj-0006dt-SA
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Apr 2016 18:50:20 +0200
+	id 1an7kT-0007pb-HT
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Apr 2016 18:53:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755854AbcDDQuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2016 12:50:13 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:53477 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755471AbcDDQuL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Apr 2016 12:50:11 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 919384F06E;
-	Mon,  4 Apr 2016 12:50:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EJGRseHAdpNWt3MCDpjAfc/aYXs=; b=q7f9tP
-	zBW5etvywnXdf6TJG/RpWJoGJbTCzQhOyBr5c6bgWTcaQ6ie0CVIt1MLSjffNsg/
-	rV2FGuhercwDlgAWQg+yHIYVFo2gbTiH5lEbePXv47F/uAe4qcYQdTxL98hc++Ho
-	Z6lxU1039CRBs2wifbpmJRltxri3PWBrXltP8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ofMhLXmbYGlKPE5hkugsuuksZXRPntaX
-	Nt/Y02b5MuvuhndnjOyNi44cBwrbRSmo0BDNPTRM4/Q5kpHu/HMHEwOuaRfoR6Kw
-	bJ9wEwefdziW6uwJAHUBXHvSI4kgtUMHy7nsbRlci16kOw6z9LyFst5pFddKUqnk
-	XGQx94IuF/s=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 88F664F06D;
-	Mon,  4 Apr 2016 12:50:10 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E7C214F06C;
-	Mon,  4 Apr 2016 12:50:09 -0400 (EDT)
-In-Reply-To: <CA+EOSBkY-Tsz3ZAfK3uAXJsrE585cOhyxjsU4FhgDMFC-ypkUg@mail.gmail.com>
-	(Elia Pinto's message of "Mon, 4 Apr 2016 18:08:38 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4AF181DA-FA85-11E5-BB81-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753704AbcDDQxD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Apr 2016 12:53:03 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:33242 "EHLO mx2.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751902AbcDDQxC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2016 12:53:02 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u34GqmQu004294
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 4 Apr 2016 18:52:48 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u34GqpQn032049;
+	Mon, 4 Apr 2016 18:52:51 +0200
+In-Reply-To: <CA+DCAeRqY7-qZt-upa5=nY8OkUL4Q76ogk5nrF_WAaiFiWOy1A@mail.gmail.com>
+	(Mehul Jain's message of "Mon, 4 Apr 2016 22:12:59 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Mon, 04 Apr 2016 18:52:49 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u34GqmQu004294
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1460393573.25736@+lGPKpEekjFoZqrmgq2Dow
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290698>
 
-Elia Pinto <gitter.spiros@gmail.com> writes:
+Mehul Jain <mehul.jain2029@gmail.com> writes:
 
->> My impression is that using GIT_TRACE_* is the more mainstream
->> trend, and it may be beneficial to work any new debugging aid like
->> this one to fit within that mechanism.
+> On Mon, Apr 4, 2016 at 12:58 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> On Fri, Apr 1, 2016 at 6:27 AM, Mehul Jain <mehul.jain2029@gmail.com> wrote:
+>>> In test_autostash() there's a line
+>>>
+>>>     echo test_cmp_rev HEAD^ copy &&
+>>>
+>>> Originally it should have been
+>>>
+>>>     test_cmp_rev HEAD^ copy &&
+>>>
+>>> but this raise following error while testing
+>>>
+>>>     ./t5520-pull.sh: 684: eval: diff -u: not found
+>>
+>> This is caused by the custom IFS=',\t=' which is still in effect when
+>> test_cmp_rev() is invoked. You need to restore IFS within the loop
+>> itself.
 >
-> I thought about it, and I agree with you. The idea could be
->
-> - Call the variable GIT_TRACE_CURL_DEBUG instead
+> Thanks for pointing it out. I made a mistake by not considering
+> the consequences of setting IFS=',\t='. I tried it out again and
+> this time all tests passed perfectly.
 
-I think GIT_TRACE_CURL_DEBUG is overly verbose; tracing by
-definition is a debugging aid.
+I think it would be much simpler to drop the loop, and write instead
+something like (untested):
 
-> - Add the new GIT_TRACE_CURL_VERBOSE variable, keeping
-> GIT_CURL_VERBOSE for compatibility
+test_autostash () {
+	expect="$1"
+        cmd="$2"
+        config_variable="$3"
+        value="$4"
+        test_expect_success "$cmd, $config_variable=$value" '
+            if [ "$value" = "" ]; then
+                test_unconfig $config_variable
+            else
+                test_config $config_variable $value
+            fi &&
 
-I do not care too deeply either way.
+            git reset --hard before-rebase &&
+            echo dirty >new_file &&
+            git add new_file &&
 
- - GIT_CURL_VERBOSE can stay the same as-is and show its output to
-   whatever output channel it spits things out.
+            if [ $expect = "ok" ]; then
+                git pull '$cmd' . copy &&
+                test_cmp_rev HEAD^ copy &&
+                test "$(cat new_file)" = dirty &&
+                test "$(cat file)" = "modified again"
+            else
+                test_must_fail git pull '$cmd' . copy 2>err &&
+                test_i18ngrep "uncommitted changes." err
+            fi
+        '
+}
 
- - Or it can be a synonym for GIT_TRACE_CURL=2 (as I understand that
-   the VERBOSE output goes to the standard error stream)
+test_autostash ok --rebase rebase.autostash=true
+test_autostash ok '--rebase --autostash' rebase.autostash=true
+test_autostash ok '--rebase --autostash' rebase.autostash=false
+test_autostash ok '--rebase --autostash' rebase.autostash=
+test_autostash err '--rebase --no-autostash' rebase.autostash=true
+test_autostash err '--rebase --no-autostash' rebase.autostash=false
+test_autostash err '--rebase --no-autostash' rebase.autostash=
+test_autostash ok --autostash pull.rebase=true
+test_autostash err --no-autostash pull.rebase=true
 
-If you want tracing as debugging aid and existing CURL_VERBOSE
-orthogonal, it would probably make more sense to go the former
-route, not linking this new "DEBUG" thing with the existing
-"VERBOSE" thing.
-
-> - Documenting these GIT_TRACE_CURL_XXX variables (GIT_CURL_VERBOSE
-> it is not even documented i think)
-
-If we decide to leave them untangled, this is not necessary.
-
-> - perhaps use the git trace api in doing these new patches
->
-> Look reasonable? It seems reasonable? I'd like your own opinion
-
-Not really sensible as long as you have that "perhaps" in the list.
-
-Something that does not use the trace API shouldn't pretend to by
-using GIT_TRACE_* names.
-
-GIT_TRACE_CURL could be your new thing and would decide where to
-show its output by using the GIT_TRACE_* api.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
