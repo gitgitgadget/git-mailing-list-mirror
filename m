@@ -1,107 +1,138 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] git-format-patch.txt: don't show -s as shorthand for
- multiple options
-Date: Mon, 4 Apr 2016 13:34:21 -0400
-Message-ID: <CAPig+cSBNHu=V1awsv0Hq=VSg+_WJ=5iFo99du699vdh1J8hEw@mail.gmail.com>
-References: <1459113967-13864-1-git-send-email-sunshine@sunshineco.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [sort-of-BUG] merge-resolve cannot resolve "content/mode" conflict
+Date: Mon, 04 Apr 2016 10:34:34 -0700
+Message-ID: <xmqqh9fh5lcl.fsf@gitster.mtv.corp.google.com>
+References: <20160403052627.GA10487@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Kevin Brodsky <corax26@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 04 19:34:29 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Apr 04 19:34:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1an8OR-00016s-GH
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Apr 2016 19:34:27 +0200
+	id 1an8Of-0001EF-Vv
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Apr 2016 19:34:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755774AbcDDReY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2016 13:34:24 -0400
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:35320 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755633AbcDDReX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Apr 2016 13:34:23 -0400
-Received: by mail-ig0-f177.google.com with SMTP id gy3so29625633igb.0
-        for <git@vger.kernel.org>; Mon, 04 Apr 2016 10:34:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=F3JbA6Zwd603owqUDMoXDoUu9aanHgMCKVbjiTlfjNQ=;
-        b=Va3JUOKktFNdqiijI1vRGkE+33ksguNgD2WuxNFaH/zjxxiEwZZqYJZ1sB6S2PyeTd
-         6nziIInzc7tAWK+ApwZi1Fk/gv+ilR1wLJIWZHxlXeHyfJVz6JZWn54OnubOpMYM40r3
-         0wCpF8tccgoho//8PEUzdaogKFqVMf30pULYZSb+F7tbuXxA8jK6xSK+++5KkrONxOSc
-         uT/41rgcIRlR8L+C+kb+oJmY7y2NlSWoOQ4FTMtxqmr9OLQCFcyzId3dF7cUE5vvPi8P
-         CkP+UpGmRPGA3ZJYtfZxl40P9ey2qJ+F1XefJe8VMe+b0F8siYRXXeudZeCKIY1454gD
-         VSAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=F3JbA6Zwd603owqUDMoXDoUu9aanHgMCKVbjiTlfjNQ=;
-        b=fx4AvjvbBJPsonS/NTc5GS+GuyStmNh6iL010c4ABdFhB23Ig7pjqStARps6ulZeMI
-         9FRIYTXzD3FuhakI+BuIlblKiYAWVFTAqZo3hu3DPJfCAkWsphpTp9oQ6spixN4XWbLl
-         Cgc4SNgm9/0E/VcLtpnk02fUnIgjDdo8a5H1pG4CbBAFDPigR6etXmx0zdebBG3aieSu
-         2C/jfsgplPC9Ih3JVtzRCu6PxVuzkHAw7FCYwkVlnv0JzISLw8NHA7rnL/7zdFfG79xb
-         EPd1hQzOWx0B13ecICX9pbbTL5nFSSaxEe4+/9MfchwIxwE2IzxchQb4Liovh6Ui8qLK
-         L/AQ==
-X-Gm-Message-State: AD7BkJJ3NjM3qerkeob0I7ZkX3EI5MZFpPfEAY/If6/1vBBwl7MyZ9BcSGC9YmETZcOPUy7UMTG/JV6dz9kOcA==
-X-Received: by 10.107.47.41 with SMTP id j41mr16888196ioo.168.1459791261868;
- Mon, 04 Apr 2016 10:34:21 -0700 (PDT)
-Received: by 10.79.12.139 with HTTP; Mon, 4 Apr 2016 10:34:21 -0700 (PDT)
-In-Reply-To: <1459113967-13864-1-git-send-email-sunshine@sunshineco.com>
-X-Google-Sender-Auth: eC061OwwJ8PIjUMXfkQLrrFJaKI
+	id S1755834AbcDDRei (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Apr 2016 13:34:38 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:57013 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753591AbcDDReh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Apr 2016 13:34:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 20DDA4FD30;
+	Mon,  4 Apr 2016 13:34:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2RPT9Bt8GWLP7WYx0RgRx824YJ4=; b=pGeKik
+	SdnjlE+Hb3g4fmln/CoxSqqYqm9HDgAljU5XBCPo5ASpNw8x1b2djaetGndPsF3v
+	gAJpy/KVwARX3JCrjLBTp0bKrFaL0kHmjlvQKFs659yDoB3SBj0p1oOMOyZDJZEf
+	PqmzwORrBm9VBNoVJH3rjhssB3nP74UwlSUxk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bcBYofEu+rodTeY3868+NdJaST+mS75P
+	zjYa9KRT2QXlPO2ytpmxa4gW37ouDQO9/BUVtU7VOLdgCOjAt9WSwtmcsZZL0MXa
+	Al5erZC9rgmbBbT5/qBiKoIjiYHDgc2R5C2tbseWSooZusb0tUuhiCYG3Nvpr8wA
+	9w4Kt9818lI=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 18D334FD2F;
+	Mon,  4 Apr 2016 13:34:36 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8BC7F4FD2D;
+	Mon,  4 Apr 2016 13:34:35 -0400 (EDT)
+In-Reply-To: <20160403052627.GA10487@sigill.intra.peff.net> (Jeff King's
+	message of "Sun, 3 Apr 2016 01:26:28 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 7FC7CA12-FA8B-11E5-9D0F-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290706>
 
-Ping?
+Jeff King <peff@peff.net> writes:
 
-On Sun, Mar 27, 2016 at 5:26 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> git-format-patch recognizes -s as shorthand only for --signoff, however,
-> its documentation shows -s as shorthand for both --signoff and
-> --no-patch. Resolve this confusion by suppressing the bogus -s shorthand
-> for --no-patch.
+> Imagine a merge where one side changes the content of a path and the
+> other changes the mode. Here's a minimal reproduction:
 >
-> While here, also avoid showing the --no-patch option in git-format-patch
-> documentation since it doesn't make sense to ask to suppress the patch
-> while at the same time explicitly asking to format the patch (which,
-> after all, is the purpose of git-format-patch).
+>   git init repo && cd repo &&
 >
-> Reported-by: Kevin Brodsky <corax26@gmail.com>
-> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-> ---
+>   echo base >file &&
+>   git add file &&
+>   git commit -m base &&
 >
-> I haven't quite managed to trace the code yet, but git-format-patch
-> oddly does recognize --no-patch, and it appears to act as an alias of
-> --no-stat. At any rate, --no-patch seems rather senseless with
-> git-format-patch, hence this patch suppresses it in documentation
-> altogether.
+>   echo changed >file &&
+>   git commit -am content &&
 >
-> Documentation/diff-options.txt | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-> index 306b7e3..6eb591f 100644
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -28,10 +28,12 @@ ifdef::git-diff[]
->  endif::git-diff[]
->  endif::git-format-patch[]
->
-> +ifndef::git-format-patch[]
->  -s::
->  --no-patch::
->         Suppress diff output. Useful for commands like `git show` that
->         show the patch by default, or to cancel the effect of `--patch`.
-> +endif::git-format-patch[]
->
->  -U<n>::
->  --unified=<n>::
-> --
-> 2.8.0.rc4.285.gc3ac548
+>   git checkout -b side HEAD^
+>   chmod +x file &&
+>   git commit -am mode
+> ...
+> This is a leftover from my experiments with merge-resolve versus
+> merge-recursive last fall, which resulted in a few actual bug-fixes. I
+> looked into fixing this case, too, at that time. It seemed possible, but
+> a little more involved than you might think (because the logic is driven
+> by a bunch of case statements, and this adds a multiplicative layer to
+> the cases; we might need to resolve the permissions, and _then_ see if
+> the content can be resolved).
+
+Perhaps I am missing some other codepath in the "multiplicative"
+layer, but is this not sufficient?
+
+The convoluted "update-index/chmod" dance is to help those on
+filesystems that lack proper executable bits.  Otherwise the last
+"update-index --chmod" is not needed.
+
+
+ git-merge-one-file.sh | 25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
+
+diff --git a/git-merge-one-file.sh b/git-merge-one-file.sh
+index 424b034..36bcdcc 100755
+--- a/git-merge-one-file.sh
++++ b/git-merge-one-file.sh
+@@ -142,8 +142,19 @@ case "${1:-.}${2:-.}${3:-.}" in
+ 	git checkout-index -f --stage=2 -- "$4" && cat "$src1" >"$4" || exit 1
+ 	rm -f -- "$orig" "$src1" "$src2"
+ 
+-	if test "$6" != "$7"
++	# Three-way merge of the permissions
++	perm= ;# assume the result is the same from stage #2, i.e. $6
++	if test "$6" = "$7" || test "$5" = "$7"
++	then
++		: nothing
++	elif test "$5" = "$6"
+ 	then
++		case "$7" in
++		100644)	perm=-x ;;
++		100755) perm=+x ;;
++		*) echo "ERROR: $7: funny filemode not handled." >&2 ;;
++		esac
++	else
+ 		if test -n "$msg"
+ 		then
+ 			msg="$msg, "
+@@ -157,7 +168,17 @@ case "${1:-.}${2:-.}${3:-.}" in
+ 		echo "ERROR: $msg in $4" >&2
+ 		exit 1
+ 	fi
+-	exec git update-index -- "$4"
++
++	if test -n "$perm"
++	then
++		chmod "$perm" -- "$4"
++	fi &&
++	git update-index -- "$4" &&
++	if test -n "$perm"
++	then
++		git update-index --chmod="$perm" -- "$4"
++	fi
++	exit
+ 	;;
+ 
+ *)
