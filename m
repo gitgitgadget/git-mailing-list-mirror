@@ -1,129 +1,100 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git diff --exit-code does not honour textconv setting
-Date: Tue, 5 Apr 2016 16:22:05 +0200
-Message-ID: <5703CA0D.2090808@drmicha.warpmail.net>
-References: <56EE9B09.6040700@gmail.com>
+From: Jacek Wielemborek <d33tah@gmail.com>
+Subject: Feature request: config option for default git commit -v
+Date: Tue, 5 Apr 2016 16:38:24 +0200
+Message-ID: <5703CDE0.7010007@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Georg Pichler <georg.pichler@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 05 16:22:20 2016
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="1hQ5WDrCqbVeUBa9uEe24Pfdj4nphCvCe"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 05 16:38:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anRs0-0002qn-5m
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 16:22:16 +0200
+	id 1anS7p-00022A-VY
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 16:38:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753784AbcDEOWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2016 10:22:09 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:50292 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751175AbcDEOWI (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Apr 2016 10:22:08 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 2830F21839
-	for <git@vger.kernel.org>; Tue,  5 Apr 2016 10:22:07 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute4.internal (MEProxy); Tue, 05 Apr 2016 10:22:07 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=1mEdg0qtVE1sgYmNbAhIRi74qK0=; b=Dn/MBj
-	Ie78d2d1ngqht7/jrp+n9bZtfHRRemO8ASxL5+EGmg8nH017GpKlTIJqM8NIfZgv
-	2EGo/opVkjbvTxD/vhk0GILYREa94+qm/kbbP+YzX2rFFwoFSGGq5F6H6fJl3+g2
-	0Ks+ILkq+GjI6qXZ+h5rgpZw+JwwszL0SB4dQ=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=1mEdg0qtVE1sgYm
-	NbAhIRi74qK0=; b=NDNArkwyE39SHym/V4K2fdVEAwTk2meiT9qeLurymcXZ6WK
-	pg1MFbLK9s0t5QnxOrEb5Mr++yjz42gYcslV3tDMVHw8GVPiplslO8B/L/ZYctXf
-	PFOgFphqCAdTcmwstIXkuqum5w0niYlku3CMe9QhX53W21UwJxuuP5O4A1Us=
-X-Sasl-enc: 774V8trJuiqhhSeJ1RVsYxI4i93yWNr34xghwVwn2wXh 1459866126
-Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 44811C0001D;
-	Tue,  5 Apr 2016 10:22:06 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.1
-In-Reply-To: <56EE9B09.6040700@gmail.com>
+	id S1758392AbcDEOid (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2016 10:38:33 -0400
+Received: from mail-lf0-f43.google.com ([209.85.215.43]:35731 "EHLO
+	mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752492AbcDEOic (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2016 10:38:32 -0400
+Received: by mail-lf0-f43.google.com with SMTP id c126so12157461lfb.2
+        for <git@vger.kernel.org>; Tue, 05 Apr 2016 07:38:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=to:from:subject:message-id:date:mime-version;
+        bh=sPpfLkQLOgr1npv0+ajCiq4M3gI6dyNrmgJeuyNaVQ8=;
+        b=xDJlycKNY1c9GJdAfMzejwy8/JdN7ELBCl+2mZS0BExvKCNWTS9vT9HsHQRxduvEPL
+         8HIOIWP5LHVROOcDIZ1Zb1+SoxxnvXuNpu3WuMJcmU90Np8P8FBAxwGH9xqmxGlATgx5
+         y7lQwdA31zRiL9qjL6WWLqQkwXE8HjIposorbPSqQs5hVlvZLPbyxivxX4R4v/VH7IGi
+         MMMemG/FgibeCfQNukVPa/0iQPIENN+EkNlTOISdu7JKt1gu2MQZuDl8cf2F6FI28Juc
+         RHDUM5xL8GDWBpsPGyHsWeoI/66lZbLn7DR7/OohUJtn/evgoN6PmoBlqIlJ41V+m+ok
+         GIIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:to:from:subject:message-id:date:mime-version;
+        bh=sPpfLkQLOgr1npv0+ajCiq4M3gI6dyNrmgJeuyNaVQ8=;
+        b=c+P6mx5VENDs1cOvMyHqO/+RQhytHHp4SXShrQ4okF0wmr+t2Rl2b3hbpUeT+WgOiT
+         vauGDrV7VBuGi1JJh0jeSXCx7fW63JN5/3QVL/rBRs2x/h/ZCvimQAugmTnx/UxHHFfA
+         EmjnPsfkvfzs5jAp6s76HYUd/bOOHB+7NTGRQlpePGTcxhJ/Wnu37vSu3kbY1u0vRxfT
+         VpkTFzCVfDq/k6UQSIrgrNk9Ik2MLfbsfx6c4EklRONZ8HtNnI5XVpnlVqLdBkMOnwgg
+         cjGjHoQL19dPMV2hhkMwkb0Qrub/Gl+c9Cn8r/ZhZFT4bJCni4HL28eX1K87OvnOq0+V
+         ry1g==
+X-Gm-Message-State: AD7BkJKZvCmjYjncPdTsNOS1dePoE0kDb313NzOJsL4TlG4U4zUuPH0r2bgXufQc4eqJsg==
+X-Received: by 10.25.162.7 with SMTP id l7mr11723555lfe.129.1459867110741;
+        Tue, 05 Apr 2016 07:38:30 -0700 (PDT)
+Received: from [192.168.0.139] (94-229-220-66.static.espol.com.pl. [94.229.220.66])
+        by smtp.googlemail.com with ESMTPSA id g199sm3935032lfe.30.2016.04.05.07.38.29
+        for <git@vger.kernel.org>
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 05 Apr 2016 07:38:29 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290783>
 
-Georg Pichler venit, vidit, dixit 20.03.2016 13:43:
-> Hi,
-> 
-> I realized that "git diff --exit-code" does not honour textconv settings.
-> Maybe this behaviour is desired. It can be partially circumvented by using the "-b" flag if one does not care about whitespace changes.
-> To reproduce this, create an empty repository and run the following commands:
-> 
-> (I was using git version 2.7.3)
-> 
-> $ git config --add diff.void.textconv test
-> $ echo "foo diff=void" >.gitattributes
-> $ echo foo >foo
-> $ git add . && git commit -m "Init"
-> [master (root-commit) 70c39d9] Init
-> 2 files changed, 2 insertions(+)
-> create mode 100644 .gitattributes
-> create mode 100644 foo
-> $ echo bar >foo
-> $ git status
-> On branch master
-> Changes not staged for commit:
-> (use "git add <file>..." to update what will be committed)
-> (use "git checkout -- <file>..." to discard changes in working directory)
-> 
-> modified: foo
-> 
-> no changes added to commit (use "git add" and/or "git commit -a")
-> $ git diff
-> $ git diff --exit-code
-> [exits with 1, no output]
-> $ git diff --exit-code -b
-> [exits with 0, no output]
-> 
-> The "test" command is used as it does not generate any output on stdout.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--1hQ5WDrCqbVeUBa9uEe24Pfdj4nphCvCe
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-"test" is a bit of a red herring here since it will receive commands.
-But your example works even with "true" which ignores its commands and
-produces no output.
+Hello,
 
-> I would expect "git diff --exit-code" to return with exit code 0. If this is not desired, it should be clearly stated in the man page,
-> that "--exit-code" does not honour the textconv setting, except if "-b" is given. Currently this is not clear:
-> 
->        --exit-code
->            Make the program exit with codes similar to diff(1). That is, it exits
->            with 1 if there were differences and 0 means no differences.
-> 
-> Best,
-> Georg Pichler
+I'm asking for this one because there's quite a lot of interest
+(including me) in this feature and there is no convenient walkaround:
 
-The description doesn't make it clear whether exit-code refers to the
-actual diff (foo vs. bar) or to the diff after textconv (empty vs.
-empty). In any case, "-b" should not make a difference for your example.
+https://stackoverflow.com/questions/5875275/git-commit-v-by-default
+
+Cheers,
+d33tah
 
 
-diff_flush() in diff.c has this piece of code:
+--1hQ5WDrCqbVeUBa9uEe24Pfdj4nphCvCe
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-        /*
-         * Report the content-level differences with HAS_CHANGES;
-         * diff_addremove/diff_change does not set the bit when
-         * DIFF_FROM_CONTENTS is in effect (e.g. with -w).
-         */
-        if (DIFF_OPT_TST(options, DIFF_FROM_CONTENTS)) {
-                if (options->found_changes)
-                        DIFF_OPT_SET(options, HAS_CHANGES);
-                else
-                        DIFF_OPT_CLR(options, HAS_CHANGES);
-        }
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-So it's clear that depending on "-b" (or "-w") or not, it's taking
-shortcuts or looking at the textconved diff but I'm not sure where's the
-proper place to fix that.
+iQIcBAEBCAAGBQJXA83gAAoJEGlViymZXJRvrsAP/1fRUERhAcqhx71R08BU+jBL
+eg7BCfZdZEv7wRhL5U++aiwVAETw+LNq9rhYytb6qEuLXp+nD8LEgLGuPooU69iU
+iC1tXq2eh6BQ0MdR77cRKGqLSA+VH1f0qj27YNnIZdu+WBIAXHq8KxpAZctw6gb1
+ilEhHKAgCAV5aeyYnH+fL7lQSuvOJ8qBW1H5LYd45eNrHkqfpE9X3nVHmvyWKgr+
+xLiofx6XtVgzQ44/bgqu0TxCGrWtToPArHM3p+9xM6woluNIISKu9HbOlPGvEtcB
+MMu/PRaGBnrYGfPi5wMTi0rEGfbzQqq5X1xyEWIXox7qhjKgyi1LJIAj4WfQ3b9u
+Pjhh8rpsLORT8CyextyREXqeZEkZ36n7PD07XSdwh4qR2PZozqBUfbO4LixWF9v8
+WtxWickXFcqbOiDNWNTJS3rmjemCGFwEgwBtB71fOQXo68SEZBOkXV5gnSitcxrQ
+5U/OVKKUuUfs30V4nmyBSya48klpSGbrbENkevPtCGe5hqsZW6d/Z6KhCZduKjWy
+bEZiArw5FrWhoIJz/EoKblL7QGmjtPobk1HMs1XGsiTmNKCY8kqpxRjJtc6PYu8q
+CO4oFpCfUTW5yAs9uR7rJkruyZUJ4mJcScy7W2XogTtqrZDSlfdqDEDNpOPFR5Ha
+iOsYVW+N8tk9HC8f3uih
+=9eO/
+-----END PGP SIGNATURE-----
 
-Michael
+--1hQ5WDrCqbVeUBa9uEe24Pfdj4nphCvCe--
