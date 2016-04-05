@@ -1,108 +1,126 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH v12 2/5] test-parse-options: print quiet as integer
-Date: Tue, 5 Apr 2016 21:09:57 +0530
-Message-ID: <CAFZEwPORAer3=WmUqqhztv4kAOHdv+yB12tRyUYh_YTSmtcQsQ@mail.gmail.com>
-References: <01020153d952bd99-d3812bd6-d189-4780-ab48-f015696e9cf0-000000@eu-west-1.amazonses.com>
-	<01020153d952be64-9ca893f1-5a7b-4a2c-a0bd-98abf93a17ac-000000@eu-west-1.amazonses.com>
-	<CAPig+cQpdr7A7GxKUN3tDs2rQ7z_S5b1WVsk01=BwkCwB2mp0A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Timestamp of zero in reflog considered invalid
+Date: Tue, 05 Apr 2016 08:52:02 -0700
+Message-ID: <xmqqbn5o2gv1.fsf@gitster.mtv.corp.google.com>
+References: <CAOTD34YpTXperaC0=Sy=21Q9_+0eGO1y-bP-WzrkxFvrDykRXg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
-	jrnieder@gmail.com
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Apr 05 17:40:47 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Erik Bray <erik.m.bray@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 05 17:54:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anT5I-00010f-81
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 17:40:04 +0200
+	id 1anTH3-0003uG-Q4
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 17:52:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933066AbcDEPj7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2016 11:39:59 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:33825 "EHLO
-	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932823AbcDEPj6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2016 11:39:58 -0400
-Received: by mail-yw0-f196.google.com with SMTP id f6so2397917ywa.1
-        for <git@vger.kernel.org>; Tue, 05 Apr 2016 08:39:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=Kx3ny2SC494uw7NQP4qI30gGZzyXi7Q4f/8z9LY5+3U=;
-        b=Mfsdf3amsQmZKgLtPg8YWGckvOdO+8MaUP//8Ai6jcpXWMA/r/BuRiHUZ8uQJ3qDSb
-         5aQxUquENDQrme5e852zP1phKJxj26XGXrLzbbKxWxmoFMdw+u8Ug5w5Th+I8WhTbb9A
-         EIVpaeQAq6U/ea+OVcCSt1zZZjfURDIAPl3noOZYcRIDAsdT5YxmdAYTM4LEeWFH6v9m
-         JXFGd7l8Ohp7qAqJ7L8B5KGhD8npzGaS2zeJ84gROCT+adFcPFu9TX8h03/85LAFBXEg
-         RNXIGgrWJ4vxFJpQZiQBxq1lTz4/jlZKp7/YvzkS5l4mw3F5RNZtmtbrzQANgveUpvbG
-         rMuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=Kx3ny2SC494uw7NQP4qI30gGZzyXi7Q4f/8z9LY5+3U=;
-        b=Cff19HH9I+gv8rJokP2qgxfPVP04CdOWtIV27IfmjeHtQ0Fzy9LMT01+YBTs0KVII2
-         M0YIzhRiE1L0Ci2FQQjmLeg0wPPv3O9UQHDkPIq3vbk7yAYaSRzArZF5JskK+YLwD2kI
-         /yXvr5chBlU5CYdC8nyzmgl50PtT5bFI9cA7HyEz90cz2JdC9r7Ugj+05e06+2ZNbBSt
-         sbQ1pInypYLiLwDEN9lsjxbjqbM68yAjJTKBn8qcA38fmOxI4qeQUCi5ZY17BJJSYBxc
-         FXT8zAX5L+nsA8i2keXAjF7QR9ZDU7CkT2MB3A4Ce+mQCkD+k+r+lW7mjDh4wdliyBKU
-         R8Ew==
-X-Gm-Message-State: AD7BkJImuLZ6BSzAxJgc87Iw20UbEAUQNlJjVXsi3l7fDEHumbg67naicdBjyTzL9krge4/Kq2TUCdGlyZapcQ==
-X-Received: by 10.129.155.137 with SMTP id s131mr7693600ywg.24.1459870797555;
- Tue, 05 Apr 2016 08:39:57 -0700 (PDT)
-Received: by 10.13.219.81 with HTTP; Tue, 5 Apr 2016 08:39:57 -0700 (PDT)
-In-Reply-To: <CAPig+cQpdr7A7GxKUN3tDs2rQ7z_S5b1WVsk01=BwkCwB2mp0A@mail.gmail.com>
+	id S933306AbcDEPwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2016 11:52:09 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:65346 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753585AbcDEPwG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2016 11:52:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4F6E151B69;
+	Tue,  5 Apr 2016 11:52:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YuGgXcFq7DGkbAJZjW7mWM7eSDM=; b=gyxbGa
+	LXbv1V0z4wmaUiFh/U0VcuVcywUh3b8xzj0V4z2Z3vfOZOqLmrrYBaA39Or6Hji2
+	Jki4Pwh+yV7l7WNmq5+yDR0FsAYe4Xzjpnb0Rnxnj/X2K9OKw6jVgU1PfanZHm9Q
+	zpRBXLi0NSrEVcBduLebcnjCS1xmTNiWd8tOA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=C4srp+8NwClYPd+U1KPbrVAP9therUGO
+	2Dgt71c5jDcAvFuE9CEP9alr8IB18S/t5rPNuAFpseH4wzhoh2N7Wr3X77+E0Q1e
+	SbK0TIq2K4fMMXSa7XIvJcG9lockZaRuQl/mrF3VcsH0llPpUSpHbY+1z3vAmL3m
+	UPvrn5yKoTc=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4721B51B66;
+	Tue,  5 Apr 2016 11:52:04 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B40BB51B65;
+	Tue,  5 Apr 2016 11:52:03 -0400 (EDT)
+In-Reply-To: <CAOTD34YpTXperaC0=Sy=21Q9_+0eGO1y-bP-WzrkxFvrDykRXg@mail.gmail.com>
+	(Erik Bray's message of "Tue, 5 Apr 2016 13:28:31 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 5769C8D4-FB46-11E5-BBAC-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290786>
 
-[+cc:Duy Nguyen, Jonathan Nieder]
+Erik Bray <erik.m.bray@gmail.com> writes:
 
-On Mon, Apr 4, 2016 at 3:00 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Sat, Apr 2, 2016 at 7:33 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->> Current implementation of parse-options.c treats OPT__QUIET() as integer
->> and not boolean and thus it is more appropriate to print it as integer
->> to avoid confusion.
+> I tracked the issue to refs/files-backend.c in show_one_reflog_ent :
 >
-> I can buy this line of reasoning, however, it would be even easier to
-> sell the change if you cited an existing client (a git command) which
-> actually respects multiple quiet levels. Are there any?
+> https://github.com/git/git/blob/11529ecec914d2f0d7575e6d443c2d5a6ff75424/refs/files-backend.c#L2923
+>
+> in which
+>
+> !(timestamp = strtoul(email_end + 2, &message, 10)) ||
+>
+> implies an invalid reflog entry.  Why should 0 be treated as an
+> invalid timestamp (even if it's unlikely outside of corner cases)?
 
-I investigated into this. But I was unable to find any git commit
-which actually respects mulitple quiet levels. I first did a 'git grep
-OPT__QUIET' to find the commands which use this. Then I went through
-the documentation which covers it. None of them have any such mention
-of multiple quiet levels. But still I dug further and and went through
-all the individual source files. I followed the corresponding C source
-code for the header file included and also searched there for any
-trace of quiet. But I still didn't find any such use of multiple quiet
-levels. I have found that the commit id 212c0a6f (Duy Ngyuyen; 7 Dec,
-2013; parse-options: remove OPT__BOOLEAN). Maybe he has something to
-say as to why this was introduced and OPT__QUIET which previously used
-OPT__BOOLEAN, now uses OPT_COUNTUP rather than OPT_BOOL. This commit
-In fact git-repack command has quiet but this is not mentioned in the
-documentation. If someone could include this it in the documentation.
-I would do it but I am not quite familiar with git-repack and haven't
-really used it anytime.
+Thanks for a report.
 
-> More importantly, though, this change implies that you should also add
-> tests to ensure that the quiet level is indeed incremented with each
-> --quiet, just as "-vv" and "--verbose --verbose" are already tested.
-> You might be able to include such new tests directly in this patch as
-> long as the commit message is clear about it, or add them in a
-> separate patch.
+I think this dates back to 883d60fa (Sanitize for_each_reflog_ent(),
+2007-01-08):
 
-I will include the tests for multiple level of quiet in the patch.
+commit 883d60fa97c6397450fb129634054e0a6101baac
+Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:   Mon Jan 8 01:59:54 2007 +0100
 
-> By the way, I don't see any tests to ensure that --no-verbose and
-> --no-quiet reset those respective values to 0. A separate patch which
-> adds such tests would be nice (unless such tests already exist and I
-> merely missed them).
-There are no tests to ensure that --no-verbose and --no-quiet reset
-those respective values to 0 just before this patch. But I have
-covered the --no-verbose tests in the upcoming patch 3/5. I will
-include the tests for --no-quiet in this patch.
+    Sanitize for_each_reflog_ent()
+    
+    It used to ignore the return value of the helper function; now, it
+    expects it to return 0, and stops iteration upon non-zero return
+    values; this value is then passed on as the return value of
+    for_each_reflog_ent().
+    
+    Further, it makes no sense to force the parsing upon the helper
+    functions; for_each_reflog_ent() now calls the helper function with
+    old and new sha1, the email, the timestamp & timezone, and the message.
+    
+    Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+    Signed-off-by: Junio C Hamano <junkio@cox.net>
+
+I do not see a corresponding "timestamp must be non-zero" check in
+the lines removed by that commit.  I suspect that there was some
+confusion as to how strtoul() signals an error condition when the
+commit was written, or something.  I do not think existing
+implementations of Git supports timestamps before the epoch (the
+timestamp on the common object headers are read into unsigned long
+variables and the code is not prepared to see anything negative
+there), but if anything the code should be detecting errors from
+strtoul() properly, i.e. if a timestamp is way long into the future
+and does not fit in "unsigned long", we should detect it.
+
+Checking the value against ULONG_MAX and errno==ERANGE would be an
+improvement.  It may be debatable if we should silently ignore an
+entry with an invalid timestamp, but that is a separate issue.
+
+ refs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/refs.c b/refs.c
+index 4e15f60..ff24184 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3701,7 +3701,8 @@ static int show_one_reflog_ent(struct strbuf *sb, each_reflog_ent_fn fn, void *c
+ 	    get_sha1_hex(sb->buf + 41, nsha1) || sb->buf[81] != ' ' ||
+ 	    !(email_end = strchr(sb->buf + 82, '>')) ||
+ 	    email_end[1] != ' ' ||
+-	    !(timestamp = strtoul(email_end + 2, &message, 10)) ||
++	    ((timestamp = strtoul(email_end + 2, &message, 10)) == ULONG_MAX &&
++	     errno == ERANGE) ||
+ 	    !message || message[0] != ' ' ||
+ 	    (message[1] != '+' && message[1] != '-') ||
+ 	    !isdigit(message[2]) || !isdigit(message[3]) ||
