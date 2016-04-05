@@ -1,67 +1,95 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] completion: complete --cherry-mark for git log
-Date: Tue,  5 Apr 2016 12:45:35 +0200
-Message-ID: <e9543514ee09f7299fe61ea8a4ca73d29c3c5143.1459853119.git.git@drmicha.warpmail.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 05 12:45:44 2016
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Triangular workflows and some anecdotes from the trenches
+Date: Tue, 5 Apr 2016 23:06:06 +1200
+Message-ID: <CAFOYHZARoEXkT6kVy7+wMSqUxSVVHHMV5KfhU6FON3tB6XEuMg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 05 13:06:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anOUS-0005rx-0Q
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 12:45:44 +0200
+	id 1anOoT-0004iw-0L
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 13:06:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757672AbcDEKpj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2016 06:45:39 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:56752 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756883AbcDEKpj (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Apr 2016 06:45:39 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 5DBE320B9A
-	for <git@vger.kernel.org>; Tue,  5 Apr 2016 06:45:37 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute3.internal (MEProxy); Tue, 05 Apr 2016 06:45:37 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
-	date:from:message-id:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp;
-	 bh=jIoWnkIhdW26mY8wC4rHFr/qcwo=; b=J4CUQMBfyMqXZcgPNYxe3unDjOEH
-	kgBSBESzMW89uXtUTFZvP1bH6UD/8D600pDcJF2xXV5vP6LCsXVkVzxGvsb/LlOT
-	HziK2xWNvNIUK/DtACs/HfNSngc9Dy9fUCq56UzQiTkpcNh8llFp2o9HvjhVP0Yh
-	wP5ZjynyNY/CteA=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=date:from:message-id:subject:to
-	:x-sasl-enc:x-sasl-enc; s=smtpout; bh=jIoWnkIhdW26mY8wC4rHFr/qcw
-	o=; b=mnHjakxYC2hV6vi4pkOtN+rjmYKo1xIcQ9U330eIJGm5vKgRzBUFsXU1zw
-	i7SIxbAvah47JaRcn8B7c+YcrVJAvFZ6OdvWlq2LeQQDys78GqqJ4PY9GmBqADd3
-	eLhudNR3HMrgfE+Q7RoxvCDNR5nd9mytNo2nR8FKiic1soMTo=
-X-Sasl-enc: krhXf4sjCZFoI6uc19hMUO/K2COWfmnvdNcIBY6EDfAh 1459853137
-Received: from localhost (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 00D1F680135;
-	Tue,  5 Apr 2016 06:45:36 -0400 (EDT)
-X-Mailer: git-send-email 2.8.1.120.g4a400c2
+	id S1757761AbcDELGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2016 07:06:11 -0400
+Received: from mail-io0-f182.google.com ([209.85.223.182]:34691 "EHLO
+	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757676AbcDELGH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2016 07:06:07 -0400
+Received: by mail-io0-f182.google.com with SMTP id 2so14387884ioy.1
+        for <git@vger.kernel.org>; Tue, 05 Apr 2016 04:06:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to;
+        bh=OssryVTGwFZhZkBNFD+1QfQ5OTClxrI0XjgzfUJ0ySk=;
+        b=ah/G2XXXqYr62cgCNVH5ge8/GWAGf2eoSwr8Y67L60EKJSNYrqaDdPyPWJNTWDDOM3
+         BPZxi0XPunWpfdtWufTvUyR2r3nlnW/XHrLXk41UG6uyb5FPTfEw2AP1Mz+a1bFPyxC6
+         Sz90tftZ5nYzdO+E/uFtlhknEqdsi5XU1g0VMtIrXc05myzpHIIijbPtk6UPrY6NwTrG
+         0rewC9hIafQqybRlVvqDoF+Pyv54+E//7ky1F/K87L6kAzGb3bBUfjk/AzwiVNqrC8cu
+         qtMhZ03AfVe+RGejsTN9YKoJC8B6/nUyFQQ0DlccGm0hZn/ZCqr9PvkHnW5phzhAgVPU
+         d/RQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
+        bh=OssryVTGwFZhZkBNFD+1QfQ5OTClxrI0XjgzfUJ0ySk=;
+        b=nInZlADndjGz/nISpuVgeSWRvUr1s7FMysugreeZOjjXg5/yvsnHx6dLPvGmU/uo2A
+         tlwff+ZEUXlYajFsk1BTOg+Iy145hz0UVgOBLJ1WLpXBLhUE4aD4ScOZ9dOujskKsH27
+         oc055LDnKSP7u0cUUtXm7ChKKqqcFnshDhcUDHA36Nzl/Fst8UkSxHEePRoHWTK6fkRw
+         grKAmfXn3U1pi8VufvuU+vlb5zSD8tudPTcKuROrCDjrBPRsRcQxoHt9ILziTBshV4Kk
+         dNedo1T+h0wfxq1Xo5QiYjvMN9UalM2K1lDWSVv1PmQ3KLp6uAIFS2O6PiDjwwGUSLRJ
+         MY4g==
+X-Gm-Message-State: AD7BkJLK0bnSGQlwdOV5lZV820nOPtvFgGMHHaZhMB6Zfpb75qkZ7meM568bwTB8O3B50PGmBkE6n/ZhSviD/g==
+X-Received: by 10.107.135.74 with SMTP id j71mr14976474iod.133.1459854366954;
+ Tue, 05 Apr 2016 04:06:06 -0700 (PDT)
+Received: by 10.79.110.87 with HTTP; Tue, 5 Apr 2016 04:06:06 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290774>
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- contrib/completion/git-completion.bash | 1 +
- 1 file changed, 1 insertion(+)
+Hi,
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index e3918c8..d87cf4d 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1458,6 +1458,7 @@ _git_log ()
- 			--relative-date --date=
- 			--pretty= --format= --oneline
- 			--show-signature
-+			--cherry-mark
- 			--cherry-pick
- 			--graph
- 			--decorate --decorate=
--- 
-2.8.1.120.g4a400c2
+We ran into something at $dayjob the other day. The actual problem was
+a developer ended up amending a commit that had already been pushed.
+It happens occasionally and is usually recoverable with a simple
+rebase and is generally a learning experience. In this particular case
+however things were a bit more complicated.
+
+We had (attempted to) setup a triangular workflow. The developers
+would fetch from a server that was closer to them but push to the
+central server that was at the other end of a WAN link. Our build
+system would update the local server after a successful build for all
+configurations. The problem was instead of setting
+branch.<name>.pushdefault we were setting remote.origin.pushurl. So
+now the warning in git-remote(1) comes back to bite us and a lot of
+head scratching ensues.
+
+It appears that the triangular workflow support is under-documented
+(mentioned in a couple of release notes and gitrevisions). I'm not
+suggesting we would have done the right thing if the documentation
+existed but we would have had a chance. Once we get our setup sorted
+I'll try and send an update for gitworkflows.txt (unless someone else
+beats me to it). There are a few blog post around the Internet that I
+might be able to draw upon.
+
+The subject of preventing modifying published history has come up on
+this list before. And in-fact it's relatively simple to implement as
+an alias
+
+  git config alias.amend '!git merge-base --is-ancestor HEAD
+@{upstream} || git commit --amend'
+
+I'm just wondering if something more official can be added to git
+commit --amend (and probably git rebase).
+
+Finally I was wondering if there is any way of detecting if
+remote.*.pushurl and remote.*.url point to the same repo, although I'm
+not sure when you'd do such verification.
+
+Thanks,
+Chris
