@@ -1,95 +1,96 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Triangular workflows and some anecdotes from the trenches
-Date: Tue, 5 Apr 2016 23:06:06 +1200
-Message-ID: <CAFOYHZARoEXkT6kVy7+wMSqUxSVVHHMV5KfhU6FON3tB6XEuMg@mail.gmail.com>
+From: Erik Bray <erik.m.bray@gmail.com>
+Subject: Timestamp of zero in reflog considered invalid
+Date: Tue, 5 Apr 2016 13:28:31 +0200
+Message-ID: <CAOTD34YpTXperaC0=Sy=21Q9_+0eGO1y-bP-WzrkxFvrDykRXg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 05 13:06:26 2016
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 05 13:28:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anOoT-0004iw-0L
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 13:06:25 +0200
+	id 1anP9y-0003sG-RM
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 13:28:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757761AbcDELGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2016 07:06:11 -0400
-Received: from mail-io0-f182.google.com ([209.85.223.182]:34691 "EHLO
-	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757676AbcDELGH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2016 07:06:07 -0400
-Received: by mail-io0-f182.google.com with SMTP id 2so14387884ioy.1
-        for <git@vger.kernel.org>; Tue, 05 Apr 2016 04:06:07 -0700 (PDT)
+	id S932490AbcDEL2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2016 07:28:34 -0400
+Received: from mail-lf0-f51.google.com ([209.85.215.51]:36729 "EHLO
+	mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757961AbcDEL2c (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2016 07:28:32 -0400
+Received: by mail-lf0-f51.google.com with SMTP id g184so8142654lfb.3
+        for <git@vger.kernel.org>; Tue, 05 Apr 2016 04:28:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:date:message-id:subject:from:to;
-        bh=OssryVTGwFZhZkBNFD+1QfQ5OTClxrI0XjgzfUJ0ySk=;
-        b=ah/G2XXXqYr62cgCNVH5ge8/GWAGf2eoSwr8Y67L60EKJSNYrqaDdPyPWJNTWDDOM3
-         BPZxi0XPunWpfdtWufTvUyR2r3nlnW/XHrLXk41UG6uyb5FPTfEw2AP1Mz+a1bFPyxC6
-         Sz90tftZ5nYzdO+E/uFtlhknEqdsi5XU1g0VMtIrXc05myzpHIIijbPtk6UPrY6NwTrG
-         0rewC9hIafQqybRlVvqDoF+Pyv54+E//7ky1F/K87L6kAzGb3bBUfjk/AzwiVNqrC8cu
-         qtMhZ03AfVe+RGejsTN9YKoJC8B6/nUyFQQ0DlccGm0hZn/ZCqr9PvkHnW5phzhAgVPU
-         d/RQ==
+        bh=JKdW+vFZsHF8v3ux4iWYvbB9jAp5fYRflGfc0oH13Ms=;
+        b=Jv0BvbQhfSyRxr1+lQMSgrV5IMtBzWhZjSUhc0vJO4Vfhaht3zUf6UK/lo1qNeb97q
+         nI7eucAnVtk7LxnyeKfQDn6XPyhSXdOcE6UeymsQN22Ug4geKGjrCT2GUyTmfUp4HDyX
+         xXRfJegLL1WsQLHIwUjyg5bFWTbarctOdb6Qix/1R8sB+8AZJBR6MKNZcQTUggOs4/1w
+         GbZ4dAwUFiS/abw/axBfrhbY1N23LBngb8Vg1iSpAZitfgtUGH1zWWdaBwO0Qh7+Auki
+         NkT1Lwj03nVwQD8Fqt07f4yFV5S2HG+0r4yf9eAZF8MJskwUtW4W0U6urD8648s8P4Vh
+         YpUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=OssryVTGwFZhZkBNFD+1QfQ5OTClxrI0XjgzfUJ0ySk=;
-        b=nInZlADndjGz/nISpuVgeSWRvUr1s7FMysugreeZOjjXg5/yvsnHx6dLPvGmU/uo2A
-         tlwff+ZEUXlYajFsk1BTOg+Iy145hz0UVgOBLJ1WLpXBLhUE4aD4ScOZ9dOujskKsH27
-         oc055LDnKSP7u0cUUtXm7ChKKqqcFnshDhcUDHA36Nzl/Fst8UkSxHEePRoHWTK6fkRw
-         grKAmfXn3U1pi8VufvuU+vlb5zSD8tudPTcKuROrCDjrBPRsRcQxoHt9ILziTBshV4Kk
-         dNedo1T+h0wfxq1Xo5QiYjvMN9UalM2K1lDWSVv1PmQ3KLp6uAIFS2O6PiDjwwGUSLRJ
-         MY4g==
-X-Gm-Message-State: AD7BkJLK0bnSGQlwdOV5lZV820nOPtvFgGMHHaZhMB6Zfpb75qkZ7meM568bwTB8O3B50PGmBkE6n/ZhSviD/g==
-X-Received: by 10.107.135.74 with SMTP id j71mr14976474iod.133.1459854366954;
- Tue, 05 Apr 2016 04:06:06 -0700 (PDT)
-Received: by 10.79.110.87 with HTTP; Tue, 5 Apr 2016 04:06:06 -0700 (PDT)
+        bh=JKdW+vFZsHF8v3ux4iWYvbB9jAp5fYRflGfc0oH13Ms=;
+        b=QrNWEXVBb2vFYThQhKaMnDZXV/TLPc2b0lgZ7BzZb/WL9Em1m8BlmTM2zMj6XHdfvU
+         3fHmW6dSgkgtEbrG3Yz0UO5lqofAp+K/HenOOhe68iA5AyW8tlP3GQ0eBZuyCYNSnsZR
+         qm0X1hmZ9v4QzQSZFX/RGPiYxUoLQnCqlimGujLw5OZfIAYFVH6b0Ji/K8HXe+Qz8Ynv
+         +ASKeP516jE7O2n28I4JR6KgDHe5hVMlA7MrP/Gi4HY6Dk/fzkfmVHZyi7c6oTQCxgSI
+         CC0wylKtW2cC9PzWEv2ubhe9p4nw0Y7SP2KKaQN08KlAq0098PELGAGG/U4q+OXlikPE
+         wcVw==
+X-Gm-Message-State: AD7BkJKkJBqtHXmfmaLwrmt4GBjeDfObvNw5VgY5D8xHl2bvH3F6stIe6DDvgrd06wMWjAgkxL6fe6lpg00LgA==
+X-Received: by 10.25.135.8 with SMTP id j8mr2513210lfd.64.1459855711283; Tue,
+ 05 Apr 2016 04:28:31 -0700 (PDT)
+Received: by 10.25.148.148 with HTTP; Tue, 5 Apr 2016 04:28:31 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290775>
 
-Hi,
+Hi all,
 
-We ran into something at $dayjob the other day. The actual problem was
-a developer ended up amending a commit that had already been pushed.
-It happens occasionally and is usually recoverable with a simple
-rebase and is generally a learning experience. In this particular case
-however things were a bit more complicated.
+I found this issue through a test suite for a Python git interface,
+which during the tests at some point sets
 
-We had (attempted to) setup a triangular workflow. The developers
-would fetch from a server that was closer to them but push to the
-central server that was at the other end of a WAN link. Our build
-system would update the local server after a successful build for all
-configurations. The problem was instead of setting
-branch.<name>.pushdefault we were setting remote.origin.pushurl. So
-now the warning in git-remote(1) comes back to bite us and a lot of
-head scratching ensues.
+GIT_COMMITTER_DATE=1970-01-01T00:00:00
 
-It appears that the triangular workflow support is under-documented
-(mentioned in a couple of release notes and gitrevisions). I'm not
-suggesting we would have done the right thing if the documentation
-existed but we would have had a chance. Once we get our setup sorted
-I'll try and send an update for gitworkflows.txt (unless someone else
-beats me to it). There are a few blog post around the Internet that I
-might be able to draw upon.
+To reproduce the issue:
 
-The subject of preventing modifying published history has come up on
-this list before. And in-fact it's relatively simple to implement as
-an alias
+$ git init
+$ echo foo > testfile
+$ git add testfile
+$ git commit -m "test"
+$ echo bar >> testfile
+$ export GIT_COMMITTER_DATE=1970-01-01T00:00:00
+$ git stash save
+$ git stash apply
+refs/stash@{0} is not a valid reference
 
-  git config alias.amend '!git merge-base --is-ancestor HEAD
-@{upstream} || git commit --amend'
+At this point one can see:
 
-I'm just wondering if something more official can be added to git
-commit --amend (and probably git rebase).
+$ git rev-parse --symbolic --verify 'refs/stash@{0}'
+fatal: Log for refs/stash is empty.
 
-Finally I was wondering if there is any way of detecting if
-remote.*.pushurl and remote.*.url point to the same repo, although I'm
-not sure when you'd do such verification.
+Expected:
+
+$ git rev-parse --symbolic --verify 'refs/stash@{0}'
+refs/stash@{0}
+
+I tracked the issue to refs/files-backend.c in show_one_reflog_ent :
+
+https://github.com/git/git/blob/11529ecec914d2f0d7575e6d443c2d5a6ff75424/refs/files-backend.c#L2923
+
+in which
+
+!(timestamp = strtoul(email_end + 2, &message, 10)) ||
+
+implies an invalid reflog entry.  Why should 0 be treated as an
+invalid timestamp (even if it's unlikely outside of corner cases)?
 
 Thanks,
-Chris
+Erik
