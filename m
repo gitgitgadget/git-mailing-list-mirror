@@ -1,153 +1,212 @@
-From: Santiago Torres <santiago@nyu.edu>
-Subject: Re: [PATCH v5 0/6] tag: move PGP verification code to tag.c
-Date: Tue, 5 Apr 2016 12:44:03 -0400
-Message-ID: <20160405164402.GB9507@LykOS>
-References: <1459872449-7537-1-git-send-email-santiago@nyu.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] diff: run arguments through precompose_argv
+Date: Tue, 05 Apr 2016 10:09:52 -0700
+Message-ID: <xmqqzit80yov.fsf@gitster.mtv.corp.google.com>
+References: <1459802325-22056-1-git-send-email-alex@fournova.com>
+	<1459802325-22056-2-git-send-email-alex@fournova.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 05 18:44:22 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+To: Alexander Rinass <alex@fournova.com>
+X-From: git-owner@vger.kernel.org Tue Apr 05 19:10:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anU5V-0002uR-Qr
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 18:44:22 +0200
+	id 1anUUR-0005XZ-To
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 19:10:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758295AbcDEQoI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2016 12:44:08 -0400
-Received: from mail-qg0-f65.google.com ([209.85.192.65]:36858 "EHLO
-	mail-qg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752428AbcDEQoG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2016 12:44:06 -0400
-Received: by mail-qg0-f65.google.com with SMTP id f105so1716748qge.3
-        for <git@vger.kernel.org>; Tue, 05 Apr 2016 09:44:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=JzSpTf2svWNhO3LEFCLyPyuZEGBZMJsnKLyPvisQ18A=;
-        b=SSLyE3WfZYnA3V5EzdkmQ1VgUXnK9sAd+lQeN/K4wloTqDXTL/CA/dmLiZKauitlK5
-         LIG22+gMOkwbzLxb58rPXWolpxjdz6wJz0mOlNL1x9iTgX8WSdDlycrjVjmD9gTZgeDS
-         bIvDimeUri4+OpfusE+3bZIosK/8CWpGg7Gc2CgaaINIP7uNzo6n+M38+/VVwa1dHmov
-         D0JE+KqicQncSjJOfd+lf85h3M55SAKPFBzGLctZU6do2Q24CJLEpeBoun8/6ABgvRn0
-         AJdx/I9PdsJsOw0bRIES9sFCcFyZMPPuOz+yZZaBnhZiiwp2lGzrbeOU9IosooJxNmrP
-         Csqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=JzSpTf2svWNhO3LEFCLyPyuZEGBZMJsnKLyPvisQ18A=;
-        b=buSXYU+DmTJksWquoI5QVz09l+NTOu0iV2qFCpC7jw68cx4WjgStVLhxEMhFVwD46M
-         EbJIRv4HYrPP2Ltg1pE9vqlGI29EvcrqQMCbC8ce71Mg4CjHzWAn6H4RuA9qr2B71B0q
-         pfvs5TQIpB8gDo11726fDF69sqx/9vT2oiySV3LNF/9/zgxuzwkBkizAEUbHuwEgVB3R
-         lzoCA0t/bp3zn9D8xz7lGZ1eZJKZty1Xaz6xk3R7R5lpW/va6nODROAH2DoNIzFYaXTl
-         GMruJkOxBTIZeyHLfjiHWMW0vFWB7U1ea5my7mnMkW0AODAgqJ4Q08URpwYmIEUB2Aqf
-         ImjA==
-X-Gm-Message-State: AD7BkJLkrKEd9jIUrz6zgKe12ahtXFg5lxGvoreKmZVdWiGVGqOs9igdX75a3nRDhMZuT91M
-X-Received: by 10.140.23.139 with SMTP id 11mr18366337qgp.62.1459874645039;
-        Tue, 05 Apr 2016 09:44:05 -0700 (PDT)
-Received: from LykOS (NYUFWA-WLESSAUTHCLIENTS-20.NATPOOL.NYU.EDU. [216.165.95.9])
-        by smtp.gmail.com with ESMTPSA id w32sm7894643qge.12.2016.04.05.09.44.04
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 05 Apr 2016 09:44:04 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1459872449-7537-1-git-send-email-santiago@nyu.edu>
+	id S1759143AbcDERJ7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Apr 2016 13:09:59 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:59746 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1759121AbcDERJ4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Apr 2016 13:09:56 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3343851130;
+	Tue,  5 Apr 2016 13:09:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=ufvLLJewcIOR
+	47gQDJu3L7lrqqs=; b=R2X10Zc26Kg3EU+kr5GKT1w+8I2a8cay5/bd3pNxbcRY
+	IjsFUOXtG+6jPQZuwiRpHZ4srFaqpxXFxQLP9aRgCvl2h2kIcMU2iqAMqpFryZo/
+	Q9xn++z1Xw6S/Ilpe23yM536sZ94VPHixIXGGJMHF2MzzrDF0sou5Q2K/dZ+Npw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=TRqexV
+	h07XsQkYL5dS2NgMrcrXcWqWT5JIC2clHAGNOTFncm+LynAj6A9quInI9R/GrPsg
+	P2l/kFL4hEl8yoltHmuyPDq4IT2Vlr/eTljP4jwS1WW9m4MSr4n4BqXCFe4UC2as
+	YaLvUUxrXobYKd+4EmRfkvY4PdIjpQGXoAwbY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 28FBC5112F;
+	Tue,  5 Apr 2016 13:09:55 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 768295112E;
+	Tue,  5 Apr 2016 13:09:54 -0400 (EDT)
+In-Reply-To: <1459802325-22056-2-git-send-email-alex@fournova.com> (Alexander
+	Rinass's message of "Mon, 4 Apr 2016 22:38:45 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 37659602-FB51-11E5-BBB7-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290799>
 
-Sorry, forgot to add, this is a follow on to [1].
+Alexander Rinass <alex@fournova.com> writes:
 
-Thanks,
--Santiago.
+> File paths containing decomposed unicode chars passed to diff
+> command are not converted to precomposed unicode form.
+>
+> As a result, no diff is displayed when feeding such a file path to th=
+e
+> diff command.
+>
+> Opposite to most builtin commands, the diff builtin is missing the
+> parse_options call, which internally runs arguments through the
+> precompose_argv call, which ensures all arguments are in precomposed
+> unicode form.
+>
+> Fix the problem by adding a precompose_argv call directly, as a call =
+to
+> parse_options would require additional work to call it.
+>
+> Also applies to diff-index, diff-files and diff-tree.
 
-[1]:
-http://git.661346.n2.nabble.com/PATCH-v4-0-6-tag-move-PGP-verification-code-to-tag-c-td7652451.html
-On Tue, Apr 05, 2016 at 12:07:23PM -0400, santiago@nyu.edu wrote:
-> From: Santiago Torres <santiago@nyu.edu>
-> 
-> v5 (this): 
-> Added helpful feedback by Eric
-> 
->  * Reordering of the patches, to avoid temporal inclusion of a regression
->  * Fix typos here and there.
->  * Review commit messages, as some weren't representative of what the patches
->    were doing anymore.
->  * Updated t7030 to include Peff's suggestion, and added a helped-by line here
->    as it was mostly Peff's code.
->  * Updated the error-handling/printing issues that were introduced when.
->    libifying the verify_tag function.
->    
-> v4:
-> 
-> Thanks Eric, Jeff, and Hannes for the feedback.
-> 
->  * I relocated the sigchain_push call so it comes after the error on
->    gpg-interface (thanks Hannnes for catching this).
->  * I updated the unit test to match the discussion on [3]. Now it generates
->    the expected output of the tag on the fly for comparison. (This is just
->    copy and paste from [3], but I verified that it works by breaking the
->    while)
->  * I split moving the code and renaming the variables into two patches so
->    these are easier to review.
->  * I used an adapter on builtin/tag.c instead of redefining all the fn*
->    declarations everywhere. This introduces an issue with the way git tag -v
->    resolves refnames though. I added a new commit to restore the previous
->    behavior of git-tag. I'm not sure if I should've split this into two commits
->    though.
-> 
-> v3:
-> Thanks Eric, Jeff, for the feedback.
-> 
->  * I separated the patch in multiple sub-patches.
->  * I compared the behavior of previous git tag -v and git verify-tag 
->    invocations to make sure the behavior is the same
->  * I dropped the multi-line comment, as suggested.
->  * I fixed the issue with the missing brackets in the while (this is 
->    now detected by the test).
-> 
-> v2:
-> 
->  * I moved the pgp-verification code to tag.c 
->  * I added extra arguments so git tag -v and git verify-tag both work
->    with the same function
->  * Relocated the SIGPIPE handling code in verify-tag to gpg-interface
-> 
-> v1:
->  
-> The verify tag function is just a thin wrapper around the verify-tag
-> command. We can avoid one fork call by doing the verification inside
-> the tag builtin instead.
-> 
-> 
-> This applies on v2.8.0.
-> 
-> Thanks!
-> -Santiago
-> 
-> 
-> Santiago Torres (6):
->   builtin/verify-tag.c: Ignore SIGPIPE on gpg-interface
->   t7030-verify-tag: Adds validation for multiple tags
->   builtin/verify-tag: change variable name for readability
->   builtin/verify-tag: replace name argument with sha1
->   builtin/verify-tag: move verification code to tag.c
->   tag: use gpg_verify_function in tag -v call
-> 
->  builtin/tag.c         |  8 +------
->  builtin/verify-tag.c  | 65 +++++++++------------------------------------------
->  gpg-interface.c       |  2 ++
->  t/t7030-verify-tag.sh | 12 ++++++++++
->  tag.c                 | 48 +++++++++++++++++++++++++++++++++++++
->  tag.h                 |  1 +
->  6 files changed, 75 insertions(+), 61 deletions(-)
-> 
-> -- 
-> 2.8.0
-> 
+Thanks.  The log message talks about "such a file path", but
+precompose_argv() applies indiscriminately on any command line
+arguments, so things like -G<string> would also get the same
+treatment, which I think is what most users would want).
+
+Will queue.
+
+> Signed-off-by: Alexander Rinass <alex@fournova.com>
+> Thanks-to: Torsten Bo=CC=88gershausen <tboegi@web.de>
+> Thanks-to: Junio C Hamano <gitster@pobox.com>
+> ---
+>  builtin/diff-files.c         |  1 +
+>  builtin/diff-index.c         |  1 +
+>  builtin/diff-tree.c          |  2 ++
+>  builtin/diff.c               |  1 +
+>  t/t3910-mac-os-precompose.sh | 42 ++++++++++++++++++++++++++++++++++=
+++++++++
+>  5 files changed, 47 insertions(+)
+>
+> diff --git a/builtin/diff-files.c b/builtin/diff-files.c
+> index 8ed2eb8..15c61fd 100644
+> --- a/builtin/diff-files.c
+> +++ b/builtin/diff-files.c
+> @@ -24,6 +24,7 @@ int cmd_diff_files(int argc, const char **argv, con=
+st char *prefix)
+>  	gitmodules_config();
+>  	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
+>  	rev.abbrev =3D 0;
+> +	precompose_argv(argc, argv);
+> =20
+>  	argc =3D setup_revisions(argc, argv, &rev, NULL);
+>  	while (1 < argc && argv[1][0] =3D=3D '-') {
+> diff --git a/builtin/diff-index.c b/builtin/diff-index.c
+> index d979824..1af373d 100644
+> --- a/builtin/diff-index.c
+> +++ b/builtin/diff-index.c
+> @@ -21,6 +21,7 @@ int cmd_diff_index(int argc, const char **argv, con=
+st char *prefix)
+>  	gitmodules_config();
+>  	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
+>  	rev.abbrev =3D 0;
+> +	precompose_argv(argc, argv);
+> =20
+>  	argc =3D setup_revisions(argc, argv, &rev, NULL);
+>  	for (i =3D 1; i < argc; i++) {
+> diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
+> index 2a12b81..806dd7a 100644
+> --- a/builtin/diff-tree.c
+> +++ b/builtin/diff-tree.c
+> @@ -114,6 +114,8 @@ int cmd_diff_tree(int argc, const char **argv, co=
+nst char *prefix)
+>  	opt->disable_stdin =3D 1;
+>  	memset(&s_r_opt, 0, sizeof(s_r_opt));
+>  	s_r_opt.tweak =3D diff_tree_tweak_rev;
+> +
+> +	precompose_argv(argc, argv);
+>  	argc =3D setup_revisions(argc, argv, opt, &s_r_opt);
+> =20
+>  	while (--argc > 0) {
+> diff --git a/builtin/diff.c b/builtin/diff.c
+> index 52c98a9..d6b8f98 100644
+> --- a/builtin/diff.c
+> +++ b/builtin/diff.c
+> @@ -319,6 +319,7 @@ int cmd_diff(int argc, const char **argv, const c=
+har *prefix)
+>  	if (!no_index)
+>  		gitmodules_config();
+>  	git_config(git_diff_ui_config, NULL);
+> +	precompose_argv(argc, argv);
+> =20
+>  	init_revisions(&rev, prefix);
+> =20
+> diff --git a/t/t3910-mac-os-precompose.sh b/t/t3910-mac-os-precompose=
+=2Esh
+> index 8319356..26dd5b7 100755
+> --- a/t/t3910-mac-os-precompose.sh
+> +++ b/t/t3910-mac-os-precompose.sh
+> @@ -49,12 +49,54 @@ test_expect_success "setup" '
+>  test_expect_success "setup case mac" '
+>  	git checkout -b mac_os
+>  '
+> +# This will test nfd2nfc in git diff
+> +test_expect_success "git diff f.Adiar" '
+> +	touch f.$Adiarnfc &&
+> +	git add f.$Adiarnfc &&
+> +	echo f.Adiarnfc >f.$Adiarnfc &&
+> +	git diff f.$Adiarnfd >expect &&
+> +	git diff f.$Adiarnfc >actual &&
+> +	test_cmp expect actual &&
+> +	git reset HEAD f.Adiarnfc &&
+> +	rm f.$Adiarnfc expect actual
+> +'
+> +# This will test nfd2nfc in git diff-files
+> +test_expect_success "git diff-files f.Adiar" '
+> +	touch f.$Adiarnfc &&
+> +	git add f.$Adiarnfc &&
+> +	echo f.Adiarnfc >f.$Adiarnfc &&
+> +	git diff-files f.$Adiarnfd >expect &&
+> +	git diff-files f.$Adiarnfc >actual &&
+> +	test_cmp expect actual &&
+> +	git reset HEAD f.Adiarnfc &&
+> +	rm f.$Adiarnfc expect actual
+> +'
+> +# This will test nfd2nfc in git diff-index
+> +test_expect_success "git diff-index f.Adiar" '
+> +	touch f.$Adiarnfc &&
+> +	git add f.$Adiarnfc &&
+> +	echo f.Adiarnfc >f.$Adiarnfc &&
+> +	git diff-index HEAD f.$Adiarnfd >expect &&
+> +	git diff-index HEAD f.$Adiarnfc >actual &&
+> +	test_cmp expect actual &&
+> +	git reset HEAD f.Adiarnfc &&
+> +	rm f.$Adiarnfc expect actual
+> +'
+>  # This will test nfd2nfc in readdir()
+>  test_expect_success "add file Adiarnfc" '
+>  	echo f.Adiarnfc >f.$Adiarnfc &&
+>  	git add f.$Adiarnfc &&
+>  	git commit -m "add f.$Adiarnfc"
+>  '
+> +# This will test nfd2nfc in git diff-tree
+> +test_expect_success "git diff-tree f.Adiar" '
+> +	echo f.Adiarnfc >>f.$Adiarnfc &&
+> +	git diff-tree HEAD f.$Adiarnfd >expect &&
+> +	git diff-tree HEAD f.$Adiarnfc >actual &&
+> +	test_cmp expect actual &&
+> +	git checkout f.$Adiarnfc &&
+> +	rm expect actual
+> +'
+>  # This will test nfd2nfc in git stage()
+>  test_expect_success "stage file d.Adiarnfd/f.Adiarnfd" '
+>  	mkdir d.$Adiarnfd &&
