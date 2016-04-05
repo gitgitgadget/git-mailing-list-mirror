@@ -1,96 +1,83 @@
-From: Erik Bray <erik.m.bray@gmail.com>
-Subject: Timestamp of zero in reflog considered invalid
-Date: Tue, 5 Apr 2016 13:28:31 +0200
-Message-ID: <CAOTD34YpTXperaC0=Sy=21Q9_+0eGO1y-bP-WzrkxFvrDykRXg@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: support block comments in gitconfig
+Date: Tue, 5 Apr 2016 13:32:48 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1604051327480.3371@virtualbox>
+References: <CANri+ExqdM-TTibWK07B2VFns6fQ09fmbqbCKC1VWET1tgRFNA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 05 13:28:39 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: timothee.cour2@gmail.com
+X-From: git-owner@vger.kernel.org Tue Apr 05 13:33:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anP9y-0003sG-RM
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 13:28:39 +0200
+	id 1anPEE-0005RT-GI
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 13:33:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932490AbcDEL2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2016 07:28:34 -0400
-Received: from mail-lf0-f51.google.com ([209.85.215.51]:36729 "EHLO
-	mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757961AbcDEL2c (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2016 07:28:32 -0400
-Received: by mail-lf0-f51.google.com with SMTP id g184so8142654lfb.3
-        for <git@vger.kernel.org>; Tue, 05 Apr 2016 04:28:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=JKdW+vFZsHF8v3ux4iWYvbB9jAp5fYRflGfc0oH13Ms=;
-        b=Jv0BvbQhfSyRxr1+lQMSgrV5IMtBzWhZjSUhc0vJO4Vfhaht3zUf6UK/lo1qNeb97q
-         nI7eucAnVtk7LxnyeKfQDn6XPyhSXdOcE6UeymsQN22Ug4geKGjrCT2GUyTmfUp4HDyX
-         xXRfJegLL1WsQLHIwUjyg5bFWTbarctOdb6Qix/1R8sB+8AZJBR6MKNZcQTUggOs4/1w
-         GbZ4dAwUFiS/abw/axBfrhbY1N23LBngb8Vg1iSpAZitfgtUGH1zWWdaBwO0Qh7+Auki
-         NkT1Lwj03nVwQD8Fqt07f4yFV5S2HG+0r4yf9eAZF8MJskwUtW4W0U6urD8648s8P4Vh
-         YpUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=JKdW+vFZsHF8v3ux4iWYvbB9jAp5fYRflGfc0oH13Ms=;
-        b=QrNWEXVBb2vFYThQhKaMnDZXV/TLPc2b0lgZ7BzZb/WL9Em1m8BlmTM2zMj6XHdfvU
-         3fHmW6dSgkgtEbrG3Yz0UO5lqofAp+K/HenOOhe68iA5AyW8tlP3GQ0eBZuyCYNSnsZR
-         qm0X1hmZ9v4QzQSZFX/RGPiYxUoLQnCqlimGujLw5OZfIAYFVH6b0Ji/K8HXe+Qz8Ynv
-         +ASKeP516jE7O2n28I4JR6KgDHe5hVMlA7MrP/Gi4HY6Dk/fzkfmVHZyi7c6oTQCxgSI
-         CC0wylKtW2cC9PzWEv2ubhe9p4nw0Y7SP2KKaQN08KlAq0098PELGAGG/U4q+OXlikPE
-         wcVw==
-X-Gm-Message-State: AD7BkJKkJBqtHXmfmaLwrmt4GBjeDfObvNw5VgY5D8xHl2bvH3F6stIe6DDvgrd06wMWjAgkxL6fe6lpg00LgA==
-X-Received: by 10.25.135.8 with SMTP id j8mr2513210lfd.64.1459855711283; Tue,
- 05 Apr 2016 04:28:31 -0700 (PDT)
-Received: by 10.25.148.148 with HTTP; Tue, 5 Apr 2016 04:28:31 -0700 (PDT)
+	id S1757991AbcDELcx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2016 07:32:53 -0400
+Received: from mout.gmx.net ([212.227.15.15]:61666 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757968AbcDELcw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2016 07:32:52 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0M70HF-1bjNhd3dDh-00wmY4; Tue, 05 Apr 2016 13:32:48
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <CANri+ExqdM-TTibWK07B2VFns6fQ09fmbqbCKC1VWET1tgRFNA@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:lGptBiTyR2C11HKaRUJ4B2BgRS3MYIwawDTVF0kl2wIZthQdw09
+ LtmN7txBQbB8Zgluv6OTy9LfGdXvb68Fr8bSndJR3Dj6uhZtb4zJik4b0PuPOfuRwScrrJ8
+ GwpHuYZIrypNTsbPLrIU5GD1RSfWg5mGVbLHk6klWvVmeXyqrFTmbV8hH1P3rJsY7pvO2sE
+ zJsmfaIy+Benjd9d11q9w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:f3HL0Oq5a64=:EYjKV+RQmBACHQLbewSyMd
+ ar5zr8SSlzhiJPsjU5+1olnGsz91DBXTNLIEaghX6TcxAK6AaZ++3Lt11+q3OfdWrNFObZw18
+ n3Z0w8tHmmcJrOSfTnjNTc9yL4cFzjP7y3PN3Z2vw2vxwovwKHFznQuC3w1IOfWXJE33FPnzs
+ VJuZPYwEhcPlL4kOc0A91Zr9+P+HnDlzVwRZYZa3oKILj2Kgi4b9cBYKuLmnj+DNyQFiqaYyj
+ 9gnVBw6x9K9NrVI81o8t1f7A8lsxtIxrumh8InjNQQZQGOFC5r9I9Ge8lQtpiSoVLu6TwVGrG
+ dCm2lewEXBTqFwWloHiMHefuzoG704PYZPcT5Kzg8shotMBrkCf6TmSMisZMtiRy4f+Gnxd/j
+ 1zUlkhHLV5JA6gHgp74Wr1HtLvDMbf+tBUQ1Z4cwJ77Bnxm/rwsllF2AFYS2KstPyNeMq/EZT
+ l4ddd4dqrlCwbny1jH7slL4KHFnk8C8wAiG/3bODWBWg/UCmZsi7cxZBZtCzPOGVc7OFhAC7Y
+ OmjqWLiO2Lezof1/L+cc0YMc9L52iRUQ8hd8XuDjaYKTV9D9WdK8KGNII/lKiOt0XBoikDlTh
+ 6UY7Xvug1zdKu1C+8JbFpUSIclugJ7ljon6Bc8x9OMtZ3PD7DH8K9Loj/+2s/ebi9pNHEkEIj
+ F7jmenAaC3UHzyLGDyPiY+VZUDOAbp9fPmLcRXc32e8wHcL/c3p5VoxqlEYMfknlwF+W5M96N
+ jNgxTQVuUdd/+fb/YZSva/twm4B4ZgG7Fyfni6SE56zAB2xkegk23vqxO/5Wuf5EV02tmhpO 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290776>
 
-Hi all,
+Hi Timothee,
 
-I found this issue through a test suite for a Python git interface,
-which during the tests at some point sets
+On Mon, 4 Apr 2016, Timothee Cour wrote:
 
-GIT_COMMITTER_DATE=1970-01-01T00:00:00
+> Could we have block comments in gitconfig?
+> It's a nice-to-have supported in most languages.
+> eg:
+> 
+> #{
+> commented out block
+> #}
+> 
+> or other intuitive syntax
 
-To reproduce the issue:
+You could have such block comments. If you implemented that feature.
 
-$ git init
-$ echo foo > testfile
-$ git add testfile
-$ git commit -m "test"
-$ echo bar >> testfile
-$ export GIT_COMMITTER_DATE=1970-01-01T00:00:00
-$ git stash save
-$ git stash apply
-refs/stash@{0} is not a valid reference
+Having said that, this syntax is distinctly *not* the INI syntax we tried
+to imitate. Plus, there are Git implementations *other* than core Git in
+the meantime, and they would need to be taught about this
+backwards-incompatible syntax, too.
 
-At this point one can see:
+And then we still could not turn on that feature by default because there
+are setups out there where different users use different versions of Git.
 
-$ git rev-parse --symbolic --verify 'refs/stash@{0}'
-fatal: Log for refs/stash is empty.
+If you are prepared to push this feature forward, you can make it happen.
+In that case, you will need to spend a bit of effort and definitely
+exercise patience because you would likely get this feature accepted only
+into 2.9.0 (or 2.10.0 or 3.0.0...), i.e. a major version bump.
 
-Expected:
-
-$ git rev-parse --symbolic --verify 'refs/stash@{0}'
-refs/stash@{0}
-
-I tracked the issue to refs/files-backend.c in show_one_reflog_ent :
-
-https://github.com/git/git/blob/11529ecec914d2f0d7575e6d443c2d5a6ff75424/refs/files-backend.c#L2923
-
-in which
-
-!(timestamp = strtoul(email_end + 2, &message, 10)) ||
-
-implies an invalid reflog entry.  Why should 0 be treated as an
-invalid timestamp (even if it's unlikely outside of corner cases)?
-
-Thanks,
-Erik
+Ciao,
+Johannes
