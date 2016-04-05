@@ -1,83 +1,83 @@
-From: Phoebe Calkins <pcalkins@aimdigitalpros.com>
-Subject: Condominium Owners List
-Date: Tue, 5 Apr 2016 15:39:28 -0400
-Message-ID: <57041470.3010205@aimdigitalpros.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] api-trace.txt: fix typo
+Date: Tue, 05 Apr 2016 13:49:25 -0700
+Message-ID: <xmqqvb3v233e.fsf@gitster.mtv.corp.google.com>
+References: <1459850723-46974-1-git-send-email-gitter.spiros@gmail.com>
+	<CAPig+cRO22wVRkrMicxLe=Gw4905QMxnnxM8kvtsMJaFv76Yrg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 05 22:01:05 2016
+Content-Type: text/plain
+Cc: Elia Pinto <gitter.spiros@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Karsten Blees <karsten.blees@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Apr 05 22:49:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anX9s-0002xP-Od
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 22:01:05 +0200
+	id 1anXum-0006io-Uv
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 22:49:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759855AbcDEUA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2016 16:00:56 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:34282 "EHLO
-	mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759641AbcDEUAz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2016 16:00:55 -0400
-Received: by mail-pf0-f172.google.com with SMTP id c20so17284132pfc.1
-        for <git@vger.kernel.org>; Tue, 05 Apr 2016 13:00:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=aimdigitalpros-com.20150623.gappssmtp.com; s=20150623;
-        h=to:subject:from:message-id:date:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=v5KWsXIY6whnz2GerBGh2kjUodcbQvEvbhu2aRSgvSY=;
-        b=GCeG2Ogulo14RT5FXn/CC3zIm4YKqMyt//0L6VP2VqTXNkVIThS/ogWob5hEN57SDN
-         vyVVkxqxpZD+rG51i/H/gWyOMULocSLhiqDpmdNLwLLqC2aAeZW3E/EdYNA9S9LJQW4N
-         JDF6Xc9KFE+GekIUgUlu/yoM79SCIM297SNq41UmqvGlr+1/0aUajzMYQAsc5zGvIsPK
-         6qdbeTLkIk4+BeQ+weJBUMar0wYKto1unkheaaAKI4xK6Gd3ajbGC/2PdiO7vrugrnsY
-         p6vGhk+lZd+RekFw8FwQ0/PqYW46Hl7JvWp5ef8X2q/jTu8YMc2jqdIab+WVweA8fgPB
-         E+nQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:to:subject:from:message-id:date:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=v5KWsXIY6whnz2GerBGh2kjUodcbQvEvbhu2aRSgvSY=;
-        b=ic5RlSZxGpoBSH7v2vDuKpvCS26T8ICox0QYy+HYTgPcusCcW2G4+ZUghQMBYRWusI
-         GJCPAb73ztlmgxW8lvpPJRdfKonYUgGyNB2Dn/eILCZvcAKy6UpC4iUCfqTngPNoFI9V
-         DVpln8NNza0bq7Ch7I2U+GsTv/a1AdxB75gEkn8Lq9oEU9b0Vi0q9PJeuyHTo85bzx0u
-         M+FgmP5tEzAfymKPUxrnDjJzfJskka4meQQvMI/gnqUQKRcmOTwY4qj4l2zNpWNUkndZ
-         pL5D3Vj9CLjVbUn1yyL6dxZDFuj+OfoerIo8Jw5O0DT4Vk/b5FJpQdsyz5FIO9k2F4u0
-         cRNQ==
-X-Gm-Message-State: AD7BkJJNKi0xMhkZ0GWDHREEH44ovCjOuDDUVbaiRWoC6dLle51EOU0TS5FEHMZEafcAyw==
-X-Received: by 10.98.89.157 with SMTP id k29mr8573048pfj.4.1459886453482;
-        Tue, 05 Apr 2016 13:00:53 -0700 (PDT)
-Received: from [127.0.0.1] ([103.6.157.158])
-        by smtp.gmail.com with ESMTPSA id g70sm48760552pfj.13.2016.04.05.13.00.51
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Apr 2016 13:00:52 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.3; rv:38.0) Gecko/20100101
- Thunderbird/38.4.0
-X-Antivirus: avast! (VPS 160405-3, 04/05/2016), Outbound message
-X-Antivirus-Status: Clean
+	id S933682AbcDEUt3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2016 16:49:29 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:50114 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1760009AbcDEUt2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2016 16:49:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8B7E253172;
+	Tue,  5 Apr 2016 16:49:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5veYfKKztJPxAVXzYR+RGPTMn2o=; b=a0yhDH
+	V/sEue3bPoNDgU2jPmBs7vZGz1JDOtq4H9laN2qVX/EYc4eo8anaOzqWWzX6VdRJ
+	2XMY9ZI3rehYssfcGhAWud7s5Fg5nQV6vl595SjhyE3OkrfK1gwFTx/yk8DfLeZ5
+	ZRm3srT8OPG1A7UBbd4Rk5+WSUeYOoUPtvUU0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=j9277nyO2yDxpdOC+5OUcRGiT8FjV3sM
+	w3dm1htN6a9MR4l96DK1LnXtoSkWWpWxFB2VTGnN3dKiLLoesTHdrCbXZvOiB9LK
+	iW009B4GaJ+UdRA1nOIbaf0nfFGQdsAvsYlHoFTemm55Noer1hadqI2XpXy/sSAc
+	h0O9kvcky+Y=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8389153171;
+	Tue,  5 Apr 2016 16:49:27 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id ECADB53170;
+	Tue,  5 Apr 2016 16:49:26 -0400 (EDT)
+In-Reply-To: <CAPig+cRO22wVRkrMicxLe=Gw4905QMxnnxM8kvtsMJaFv76Yrg@mail.gmail.com>
+	(Eric Sunshine's message of "Tue, 5 Apr 2016 13:15:45 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E2CF12F2-FB6F-11E5-BC8F-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290808>
 
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Hi,
+> On Tue, Apr 5, 2016 at 6:05 AM, Elia Pinto <gitter.spiros@gmail.com> wrote:
+>> The correct api is trace_printf_key
+>>
+>> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+>> ---
+>> diff --git a/Documentation/technical/api-trace.txt b/Documentation/technical/api-trace.txt
+>> @@ -28,7 +28,7 @@ static struct trace_key trace_foo = TRACE_KEY_INIT(FOO);
+>>  static void trace_print_foo(const char *message)
+>>  {
+>> -       trace_print_key(&trace_foo, message);
+>> +       trace_printf_key(&trace_foo, message);
+>>  }
+>
+> Since you're touching this already, I wonder if it would make sense to
+> rewrite this example to avoid the dangerous sending of an arbitrary
+> string (which might contain %) to a printf-like function. Like this,
+> for example:
+>
+>     trace_printf_key(&trace_foo, "%s", message);
 
-Would you be interested in reaching out to "Condominium Owners List"? with opt-in verified email addresses from the USA.
-
-We also have contacts of Real Estate Investors, Home Owners, Mortgage Holders, Mortgage with Home, Investors List, New Movers List, Golfers Email List, High Net-worth Individuals List, Women's List, and many more...
-
-Each record in the list contains Contact Name (First, Middle and Last Name), Mailing Address, List type and Opt-in email address.
-  
-Please let me know your targeted criteria, so that I can help you out to drive your sales effort in the right direction.
-  
-Thanks & Regards,
-Phoebe Calkins
-
-
----
-This email has been checked for viruses by Avast antivirus software.
-https://www.avast.com/antivirus
+Thanks, will squash in.
