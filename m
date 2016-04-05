@@ -1,83 +1,83 @@
-From: Seren Thompson <serent@mindtouch.com>
-Subject: Fsck message override issue
-Date: Tue, 5 Apr 2016 12:58:38 -0700
-Message-ID: <32B1B2EC-C1DD-4662-92F1-6A7A9099E110@mindtouch.com>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
+From: Phoebe Calkins <pcalkins@aimdigitalpros.com>
+Subject: Condominium Owners List
+Date: Tue, 5 Apr 2016 15:39:28 -0400
+Message-ID: <57041470.3010205@aimdigitalpros.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 05 21:59:20 2016
+X-From: git-owner@vger.kernel.org Tue Apr 05 22:01:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anX8B-00028q-VZ
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 21:59:20 +0200
+	id 1anX9s-0002xP-Od
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 22:01:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752024AbcDET6m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2016 15:58:42 -0400
-Received: from mail-qg0-f54.google.com ([209.85.192.54]:34102 "EHLO
-	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751860AbcDET6m convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Apr 2016 15:58:42 -0400
-Received: by mail-qg0-f54.google.com with SMTP id c6so19587069qga.1
-        for <git@vger.kernel.org>; Tue, 05 Apr 2016 12:58:41 -0700 (PDT)
+	id S1759855AbcDEUA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2016 16:00:56 -0400
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:34282 "EHLO
+	mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759641AbcDEUAz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2016 16:00:55 -0400
+Received: by mail-pf0-f172.google.com with SMTP id c20so17284132pfc.1
+        for <git@vger.kernel.org>; Tue, 05 Apr 2016 13:00:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mindtouch-com.20150623.gappssmtp.com; s=20150623;
-        h=from:content-transfer-encoding:subject:message-id:date:to
-         :mime-version;
-        bh=OXN+Ht0h4e5owz6EeH11IfdATYOfOgYC5J/cfLcO+hU=;
-        b=fpYzSKMkcDhhunHZV8zAhY7B4g621lw4D+LdBYcNT0J6p735BKvY0b3RRh3kibS4Jb
-         2L2N/JsQe5Asok627sdF2cP6r3WpgB/9dCg47ATcJzd5vmV1LJV/5eIbrblLlK1Ifns4
-         dUapjj+vbCST61dqjWD1bKO2CKfbFBU8eJO9J/h8UDSK9mcKH4HSJXwZ/lHc4s8Gi2AW
-         1vN4XBYtvk6svyR4/9XLkM3kuyVgp+/CkGm7v0fUOcoI6XLVggFSZgPruvcEgg4Dw9ih
-         1YBFK/JFl8G4gX1uopSYkWs3V+jKhLz/4y7+GwPTA8TYh7QxHPU7BrNf5WQsS+knIbIc
-         /ebA==
+        d=aimdigitalpros-com.20150623.gappssmtp.com; s=20150623;
+        h=to:subject:from:message-id:date:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=v5KWsXIY6whnz2GerBGh2kjUodcbQvEvbhu2aRSgvSY=;
+        b=GCeG2Ogulo14RT5FXn/CC3zIm4YKqMyt//0L6VP2VqTXNkVIThS/ogWob5hEN57SDN
+         vyVVkxqxpZD+rG51i/H/gWyOMULocSLhiqDpmdNLwLLqC2aAeZW3E/EdYNA9S9LJQW4N
+         JDF6Xc9KFE+GekIUgUlu/yoM79SCIM297SNq41UmqvGlr+1/0aUajzMYQAsc5zGvIsPK
+         6qdbeTLkIk4+BeQ+weJBUMar0wYKto1unkheaaAKI4xK6Gd3ajbGC/2PdiO7vrugrnsY
+         p6vGhk+lZd+RekFw8FwQ0/PqYW46Hl7JvWp5ef8X2q/jTu8YMc2jqdIab+WVweA8fgPB
+         E+nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:content-transfer-encoding:subject
-         :message-id:date:to:mime-version;
-        bh=OXN+Ht0h4e5owz6EeH11IfdATYOfOgYC5J/cfLcO+hU=;
-        b=c/o7H34R6Q+sSPvjpzTSZCuwkZr5ZXn9IPJZ5hcQp2IBZ/jI7iCe9nq2I0BUFpgtgA
-         nrGhVqsn4uPyIdIjw22fKqyu54wdBKjm8nAThSrvmE7tS6Egick6LxfwgoL8EExSpPfK
-         SUuvuI/b6sFDNsuoixs2+ao5OUFtVPxAlbvWJqZXslWSch9Qh/T30FAMcJIRiX2fSayH
-         Inu/abtOgFU/ffdofvil6yYQM9OlhyzsIRqAyg8o/5T8sg1F9BLx8GONSb6tJjPuW+UD
-         iqKImCqEkuVzxDhD60hHEqG2zcZiHvGeRoz3+sc6pxr+mYLHvmdymBpG/+j2mTO7kuwt
-         ZYMw==
-X-Gm-Message-State: AD7BkJJ2pekbkXog8EnA3UzQKppmb6PwdzQr1vzaQxvgXbBdR+HoBkYqKLYWsvne+qiziEon
-X-Received: by 10.140.83.212 with SMTP id j78mr49860884qgd.83.1459886320961;
-        Tue, 05 Apr 2016 12:58:40 -0700 (PDT)
-Received: from [192.168.168.183] (66.238.18.243.ptr.us.xo.net. [66.238.18.243])
-        by smtp.gmail.com with ESMTPSA id z110sm15240298qgd.45.2016.04.05.12.58.39
+        h=x-gm-message-state:to:subject:from:message-id:date:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=v5KWsXIY6whnz2GerBGh2kjUodcbQvEvbhu2aRSgvSY=;
+        b=ic5RlSZxGpoBSH7v2vDuKpvCS26T8ICox0QYy+HYTgPcusCcW2G4+ZUghQMBYRWusI
+         GJCPAb73ztlmgxW8lvpPJRdfKonYUgGyNB2Dn/eILCZvcAKy6UpC4iUCfqTngPNoFI9V
+         DVpln8NNza0bq7Ch7I2U+GsTv/a1AdxB75gEkn8Lq9oEU9b0Vi0q9PJeuyHTo85bzx0u
+         M+FgmP5tEzAfymKPUxrnDjJzfJskka4meQQvMI/gnqUQKRcmOTwY4qj4l2zNpWNUkndZ
+         pL5D3Vj9CLjVbUn1yyL6dxZDFuj+OfoerIo8Jw5O0DT4Vk/b5FJpQdsyz5FIO9k2F4u0
+         cRNQ==
+X-Gm-Message-State: AD7BkJJNKi0xMhkZ0GWDHREEH44ovCjOuDDUVbaiRWoC6dLle51EOU0TS5FEHMZEafcAyw==
+X-Received: by 10.98.89.157 with SMTP id k29mr8573048pfj.4.1459886453482;
+        Tue, 05 Apr 2016 13:00:53 -0700 (PDT)
+Received: from [127.0.0.1] ([103.6.157.158])
+        by smtp.gmail.com with ESMTPSA id g70sm48760552pfj.13.2016.04.05.13.00.51
         for <git@vger.kernel.org>
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 05 Apr 2016 12:58:39 -0700 (PDT)
-X-Mailer: Apple Mail (2.3124)
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 05 Apr 2016 13:00:52 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.3; rv:38.0) Gecko/20100101
+ Thunderbird/38.4.0
+X-Antivirus: avast! (VPS 160405-3, 04/05/2016), Outbound message
+X-Antivirus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290807>
 
-I'm not having luck with overriding the fsck message types (zeroPaddedFilemode specifically). I've tried adding
- [fsck]
-    zeroPaddedFilemode = ignore
-to both global and local configs, but it seems to have no effect:
 
-  $ git --version
-  git version 2.8.0
-  $ git config --get fetch.fsckobjects
-  true
-  $ git config --get fsck.zeroPaddedFilemode
-  ignore
-  $ git pull
-  remote: Counting objects: 14777, done.
-  remote: Compressing objects: 100% (5495/5495), done.
-  error: object 2b7227859263b6aabcc28355b0b994995b7148b6: zeroPaddedFilemode: contains zero-padded file modes
-  fatal: Error in object
-  fatal: index-pack failed
+Hi,
 
-Is this expected behavior and I'm doing something wrong? Thanks.
+Would you be interested in reaching out to "Condominium Owners List"? with opt-in verified email addresses from the USA.
 
--Seren
+We also have contacts of Real Estate Investors, Home Owners, Mortgage Holders, Mortgage with Home, Investors List, New Movers List, Golfers Email List, High Net-worth Individuals List, Women's List, and many more...
+
+Each record in the list contains Contact Name (First, Middle and Last Name), Mailing Address, List type and Opt-in email address.
+  
+Please let me know your targeted criteria, so that I can help you out to drive your sales effort in the right direction.
+  
+Thanks & Regards,
+Phoebe Calkins
+
+
+---
+This email has been checked for viruses by Avast antivirus software.
+https://www.avast.com/antivirus
