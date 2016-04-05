@@ -1,118 +1,97 @@
 From: santiago@nyu.edu
-Subject: [PATCH v5 1/6] builtin/verify-tag.c: Ignore SIGPIPE on gpg-interface
-Date: Tue,  5 Apr 2016 12:07:24 -0400
-Message-ID: <1459872449-7537-2-git-send-email-santiago@nyu.edu>
+Subject: [PATCH v5 2/6] t7030-verify-tag: Adds validation for multiple tags
+Date: Tue,  5 Apr 2016 12:07:25 -0400
+Message-ID: <1459872449-7537-3-git-send-email-santiago@nyu.edu>
 References: <1459872449-7537-1-git-send-email-santiago@nyu.edu>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Santiago Torres <santiago@nyu.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 05 18:07:58 2016
+X-From: git-owner@vger.kernel.org Tue Apr 05 18:07:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anTWE-0000aC-S5
+	id 1anTWF-0000aC-E5
 	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 18:07:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759455AbcDEQHm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2016 12:07:42 -0400
-Received: from mail-qg0-f68.google.com ([209.85.192.68]:35766 "EHLO
-	mail-qg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752143AbcDEQHh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2016 12:07:37 -0400
-Received: by mail-qg0-f68.google.com with SMTP id b32so1624138qgf.2
-        for <git@vger.kernel.org>; Tue, 05 Apr 2016 09:07:36 -0700 (PDT)
+	id S1759457AbcDEQHo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2016 12:07:44 -0400
+Received: from mail-qg0-f67.google.com ([209.85.192.67]:33794 "EHLO
+	mail-qg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752143AbcDEQHn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2016 12:07:43 -0400
+Received: by mail-qg0-f67.google.com with SMTP id j35so1618524qge.1
+        for <git@vger.kernel.org>; Tue, 05 Apr 2016 09:07:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=nyu-edu.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=zs4kBhP0be6Oe9QCTZl01LlzA+DX+vjyIBZjco+6LBI=;
-        b=NZo59V+WoPGGiYK4+KoFAvNlzoq1blHEIb57QU9z1kuGqx+Mfkf+LoQYIsNidRzBAs
-         nPN8/wbXlZ9qJQCRZcvGIyUFHZMyYIIH6eId1jMDNfld+J19+4jVawRYhhq2X8zGkfDA
-         8thXN2LQynW8ZMqlFBhYo2+dm5OaQ8MVe9E+9g5CPv0QsjsIzKCRl/ErC1zMKZ0p853+
-         yjTzG0mLNmBMZsi2Gxd/xB9GIzpYg2cUFkqW3+Fg7PLDLrtOudAONjfToKIfTbnoxXpj
-         khc4EuyiIauJ/0J72Yd1mMA4oSNNf60Sci4Z8UVhY/hLHHs9d/vy+OjspOq4DxbfQoJ6
-         dTBA==
+        bh=iGJLkb08EOCXIYpObJoXgLuQegeK+HDw479eBpgyyHg=;
+        b=M4dvJROQx6NPQ/lJjSOi11GM5Dqbd4CZ7b33IE9U2ZsD7rD14+6CHP+4Hgd7q8p0Yq
+         t/MkOIngtkVVySs0vQ17yLOBMQq0YtZvBh3cZZzD5KUbZpe3X9eEPfcy7HTTLfn02dkx
+         +f1Qt+NCry4YsXHFuECNC0AR1qqqSSgSq7JTO3Fr19FaUWVfSPACRy2yPNz/qR8deOH6
+         YdTwVHXHcx6SnRR3k/MPHyuSSol7ISa6zAMR0Y81rNipOs9N8CG49s1bALaPK15ltom6
+         Lo5FAnl/Wo5GlL7h8gbi/nZOQxuLUrNilKSu9B5ErIomoIcs7cQXvS3rPzuQPuyRje7+
+         Tpiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=zs4kBhP0be6Oe9QCTZl01LlzA+DX+vjyIBZjco+6LBI=;
-        b=g4coPNXu5jeDqBVnS8dipWlmvEE+QhIOczqYTdZPMccAnNjQmxH8mMoxnNExi9xHm6
-         K2E7h/n5eUfbRHFXXnEZFgeeeZCGCGR3/EEYW/ph8qSizjz3jrpvqlM32r12FugS5XzI
-         NzMN4WvWcHw6A9JR8Zd9X4FMvovEiAwme3wyhN4BCOhez+Qk73I7s2Y5ONCNJIQq2y+3
-         yMrTmaeGGQCkGfk0akLBsLWoEPMjvKcMxyNYylNsTykNGSXw/wrHxnpoMfMK98dFh1Wn
-         PaCFdb1aH8GdRaGsCFINtVxdZUfUovmmIU9rxWi1DE/82YTqE2y67d+bhttGkk2zlf7J
-         Uk1Q==
-X-Gm-Message-State: AD7BkJIA3kYfbxj27e2ONhHXItQY7sTSM2SP5c8uxrXd98oVtLOAMg1j9YaayvvYnDroOrge
-X-Received: by 10.140.97.202 with SMTP id m68mr47226148qge.102.1459872456237;
-        Tue, 05 Apr 2016 09:07:36 -0700 (PDT)
+        bh=iGJLkb08EOCXIYpObJoXgLuQegeK+HDw479eBpgyyHg=;
+        b=nLPHTEyM3YbPDUjuK7tRlazHEWbXR6vcJzC0FVA3Oo+50LeIf2XoY2PmfFBkKWY2y/
+         A9rUnDplCLv981SMNjkLl3dJ1p0i3yLbKH2FoDwOt4I7tbGOxWt+3t3REmjBUuhJ658z
+         b9u351sgA2pL9oBbz7wMz06pdmztZnUbXktdZxN7U5tynv5JzQ1keGVOYsVPd6iXB66e
+         3cwVWEUTlxxpnseRine+yS+28lV6bDrVqGrY4MOmfjsicft7LaC8JDdC/b+5YWtrjqa2
+         NJxOagdMEPPHg1zwa1VlvKojF1ROHKH/AJYjZdRk3MVHHy7AP7LF1gvNRJnhaZOsSJGV
+         orrg==
+X-Gm-Message-State: AD7BkJIqRcpqV46tRaDEW5cRfqgcJIFKpgryUCbNmTxQhLPt4a89LqIpulWzm0/nKhpUBxse
+X-Received: by 10.140.81.51 with SMTP id e48mr18784442qgd.27.1459872457000;
+        Tue, 05 Apr 2016 09:07:37 -0700 (PDT)
 Received: from LykOS.localdomain (NYUFWA-WLESSAUTHCLIENTS-20.NATPOOL.NYU.EDU. [216.165.95.9])
-        by smtp.gmail.com with ESMTPSA id b66sm14671343qhb.48.2016.04.05.09.07.35
+        by smtp.gmail.com with ESMTPSA id b66sm14671343qhb.48.2016.04.05.09.07.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 05 Apr 2016 09:07:35 -0700 (PDT)
+        Tue, 05 Apr 2016 09:07:36 -0700 (PDT)
 X-Mailer: git-send-email 2.8.0
 In-Reply-To: <1459872449-7537-1-git-send-email-santiago@nyu.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290794>
 
 From: Santiago Torres <santiago@nyu.edu>
 
-The verify_signed_buffer comand might cause a SIGPIPE signal when the
-gpg child process terminates early (due to a bad keyid, for example) and
-git tries to write to it afterwards. Previously, ignoring SIGPIPE was
-done on the builtin/verify-tag.c command to avoid this issue. However,
-any other caller who wanted to use the verify_signed_buffer command
-would have to include this signal call.
+The verify-tag command supports multiple tag names as an argument.
+However, existing tests only test for invocation with a single tag, so
+we add a test invoking with multiple tags.
 
-Instead, we use sigchain_push(SIGPIPE, SIG_IGN) on the
-verify_signed_buffer call (pretty much like in sign_buffer()) so
-that any caller is not required to perform this task. This will avoid
-possible mistakes by further developers using verify_signed_buffer.
-
+Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Santiago Torres <santiago@nyu.edu>
 ---
- builtin/verify-tag.c | 3 ---
- gpg-interface.c      | 2 ++
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ t/t7030-verify-tag.sh | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
-index 00663f6..77f070a 100644
---- a/builtin/verify-tag.c
-+++ b/builtin/verify-tag.c
-@@ -95,9 +95,6 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
- 	if (verbose)
- 		flags |= GPG_VERIFY_VERBOSE;
+diff --git a/t/t7030-verify-tag.sh b/t/t7030-verify-tag.sh
+index 4608e71..c01621a 100755
+--- a/t/t7030-verify-tag.sh
++++ b/t/t7030-verify-tag.sh
+@@ -112,4 +112,16 @@ test_expect_success GPG 'verify signatures with --raw' '
+ 	)
+ '
  
--	/* sometimes the program was terminated because this signal
--	 * was received in the process of writing the gpg input: */
--	signal(SIGPIPE, SIG_IGN);
- 	while (i < argc)
- 		if (verify_tag(argv[i++], flags))
- 			had_error = 1;
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 3dc2fe3..2259938 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -237,6 +237,7 @@ int verify_signed_buffer(const char *payload, size_t payload_size,
- 		return error(_("could not run gpg."));
- 	}
- 
-+	sigchain_push(SIGPIPE, SIG_IGN);
- 	write_in_full(gpg.in, payload, payload_size);
- 	close(gpg.in);
- 
-@@ -250,6 +251,7 @@ int verify_signed_buffer(const char *payload, size_t payload_size,
- 	close(gpg.out);
- 
- 	ret = finish_command(&gpg);
-+	sigchain_pop(SIGPIPE);
- 
- 	unlink_or_warn(path);
- 
++test_expect_success GPG 'verify multiple tags' '
++	tags="fourth-signed sixth-signed seventh-signed" &&
++	for i in $tags; do
++		git verify-tag -v --raw $i || return 1
++	done >expect.stdout 2>expect.stderr.1 &&
++	grep "^.GNUPG" <expect.stderr.1 >expect.stderr &&
++	git verify-tag -v --raw $tags >actual.stdout 2>actual.stderr.1 &&
++	grep "^.GNUPG" <actual.stderr.1 >actual.stderr &&
++	test_cmp expect.stdout actual.stdout &&
++	test_cmp expect.stderr actual.stderr
++'
++
+ test_done
 -- 
 2.8.0
