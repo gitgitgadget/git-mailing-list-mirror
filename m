@@ -1,80 +1,83 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] api-trace.txt: fix typo
-Date: Tue, 5 Apr 2016 13:15:45 -0400
-Message-ID: <CAPig+cRO22wVRkrMicxLe=Gw4905QMxnnxM8kvtsMJaFv76Yrg@mail.gmail.com>
-References: <1459850723-46974-1-git-send-email-gitter.spiros@gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: Timestamp of zero in reflog considered invalid
+Date: Tue, 05 Apr 2016 19:41:58 +0200
+Message-ID: <87r3ek3qc9.fsf@linux-m68k.org>
+References: <CAOTD34YpTXperaC0=Sy=21Q9_+0eGO1y-bP-WzrkxFvrDykRXg@mail.gmail.com>
+	<xmqqbn5o2gv1.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Karsten Blees <karsten.blees@gmail.com>
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 05 19:15:53 2016
+Content-Type: text/plain
+Cc: Erik Bray <erik.m.bray@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 05 19:42:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anUZz-0007o6-Eo
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 19:15:51 +0200
+	id 1anUzU-00037D-0b
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 19:42:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753210AbcDERPr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2016 13:15:47 -0400
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:37853 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752162AbcDERPq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2016 13:15:46 -0400
-Received: by mail-ig0-f177.google.com with SMTP id g8so19950416igr.0
-        for <git@vger.kernel.org>; Tue, 05 Apr 2016 10:15:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=bK3dWc5qBj+Q13jEecSgBFLT3xWfwym+e8wy1y023xU=;
-        b=r8hdAxvShFC1r5vKpfRFpCROacmbKnHASsNzc7tQUi0HGMarfU2c60euzg3saKAD0p
-         BOcgh3yhx98h96ZBXnZnJb3bkbAeEqTdRw5S/cDo2B/7TlaWFglKH70h+ypYCTk+3MPf
-         ubIpUxhViJqZ2gwtnVVXbk8E9IfCQanhIPOyJGxxN7CB1hsymkLyb9LQd3MhdOyklb0/
-         CkGjqv3mneHBtObTQNOn7tuq4k/GcLybKv2rLZ6C84llTsppynMA+jfIBXMEk3BJYCoQ
-         z121u+lExkAeuCovGo0MPF4GBVSSP9cbkj9m2uQcbtwYolv+IAsTuZs572pk27oRAY20
-         hvMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=bK3dWc5qBj+Q13jEecSgBFLT3xWfwym+e8wy1y023xU=;
-        b=AyrEWVD72ybBycQjFxY7tot1ebSg3LGFpdBZBond++jU0y+eXIHHIepwqjLnSh8qlP
-         Jvkk0u6NjARBNjL3KI52nrKSPlGsFTskfcPTzI5Ydx+D7K4R5rbr5WCXQx360aYe4VQY
-         JOwGZ2Qv+eyab1q/KKWrplKoX2Ja4f2k2YhDr0LV2UsChr4efzv3lBXJOoGY+bEUtYVF
-         popUc8JaSadnOD8OHfSmA44jaEUbgnL8I/qs8KcxveCNUeL1nPU0odUviN3iIb0tul6k
-         133wmXWoJ18UtTeoV9SZD+V1jBEBQkRpenTQpVjadM5oWbV9LQRwQhcJ+mGD/sNAdCah
-         YQ8g==
-X-Gm-Message-State: AD7BkJJ7W2ZqaN91Q9DVdBWr1yBAFR3bOgzzDEDaIotAE/dFiOJqTXT/+++TCxjdmUwhssbJWyqHskxzecpBNg==
-X-Received: by 10.50.40.101 with SMTP id w5mr18180867igk.17.1459876545444;
- Tue, 05 Apr 2016 10:15:45 -0700 (PDT)
-Received: by 10.79.12.139 with HTTP; Tue, 5 Apr 2016 10:15:45 -0700 (PDT)
-In-Reply-To: <1459850723-46974-1-git-send-email-gitter.spiros@gmail.com>
-X-Google-Sender-Auth: hbnklHYvDSKiYQhbO-hHQTF3AnQ
+	id S1759675AbcDERmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2016 13:42:06 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:45755 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751803AbcDERmE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2016 13:42:04 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3qfblC64kyz3hjP1;
+	Tue,  5 Apr 2016 19:41:59 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3qfblC5Ywczvh1s;
+	Tue,  5 Apr 2016 19:41:59 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id qt9-LgFWZnhS; Tue,  5 Apr 2016 19:41:58 +0200 (CEST)
+X-Auth-Info: QbhtywWde50mfL9EarYmK+NJTpZiv0irMamQmidHPZQxZho39EibtsM1Z2j8Ehcs
+Received: from igel.home (ppp-88-217-19-26.dynamic.mnet-online.de [88.217.19.26])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Tue,  5 Apr 2016 19:41:58 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id 78AC72C1BB9; Tue,  5 Apr 2016 19:41:58 +0200 (CEST)
+X-Yow: YOW!!  I'm in a very clever and adorable INSANE ASYLUM!!
+In-Reply-To: <xmqqbn5o2gv1.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 05 Apr 2016 08:52:02 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.92 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290801>
 
-On Tue, Apr 5, 2016 at 6:05 AM, Elia Pinto <gitter.spiros@gmail.com> wrote:
-> The correct api is trace_printf_key
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Checking the value against ULONG_MAX and errno==ERANGE would be an
+> improvement.  It may be debatable if we should silently ignore an
+> entry with an invalid timestamp, but that is a separate issue.
 >
-> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-> ---
-> diff --git a/Documentation/technical/api-trace.txt b/Documentation/technical/api-trace.txt
-> @@ -28,7 +28,7 @@ static struct trace_key trace_foo = TRACE_KEY_INIT(FOO);
->  static void trace_print_foo(const char *message)
->  {
-> -       trace_print_key(&trace_foo, message);
-> +       trace_printf_key(&trace_foo, message);
->  }
+>  refs.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/refs.c b/refs.c
+> index 4e15f60..ff24184 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -3701,7 +3701,8 @@ static int show_one_reflog_ent(struct strbuf *sb, each_reflog_ent_fn fn, void *c
+>  	    get_sha1_hex(sb->buf + 41, nsha1) || sb->buf[81] != ' ' ||
+>  	    !(email_end = strchr(sb->buf + 82, '>')) ||
+>  	    email_end[1] != ' ' ||
+> -	    !(timestamp = strtoul(email_end + 2, &message, 10)) ||
+> +	    ((timestamp = strtoul(email_end + 2, &message, 10)) == ULONG_MAX &&
+> +	     errno == ERANGE) ||
 
-Since you're touching this already, I wonder if it would make sense to
-rewrite this example to avoid the dangerous sending of an arbitrary
-string (which might contain %) to a printf-like function. Like this,
-for example:
+You need to set errno = 0 before calling strtoul, to distinguish the
+valid return of ULONG_MAX (which would keep errno intact) and a real
+overflow.
 
-    trace_printf_key(&trace_foo, "%s", message);
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
