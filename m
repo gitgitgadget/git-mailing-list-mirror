@@ -1,71 +1,73 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH] diff: run arguments through precompose_argv
-Date: Tue, 5 Apr 2016 21:27:34 +0200
-Message-ID: <570411A6.6060208@web.de>
-References: <1459802325-22056-1-git-send-email-alex@fournova.com>
- <1459802325-22056-2-git-send-email-alex@fournova.com>
- <xmqqzit80yov.fsf@gitster.mtv.corp.google.com> <57040EE0.40503@kdbg.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-To: Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
-	Alexander Rinass <alex@fournova.com>
-X-From: git-owner@vger.kernel.org Tue Apr 05 21:27:59 2016
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] send-email: more meaningful Message-ID
+Date: Tue,  5 Apr 2016 19:39:52 +0000
+Message-ID: <20160405193952.5849-1-normalperson@yhbt.net>
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 05 21:40:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anWdo-0006Ra-LU
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 21:27:57 +0200
+	id 1anWpa-0002nw-Rl
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 21:40:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752760AbcDET1w convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Apr 2016 15:27:52 -0400
-Received: from mout.web.de ([212.227.15.14]:62618 "EHLO mout.web.de"
+	id S933373AbcDETkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2016 15:40:00 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:42131 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751511AbcDET1v (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2016 15:27:51 -0400
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb003) with
- ESMTPSA (Nemesis) id 0Maazp-1b7fx10nMn-00KAc7; Tue, 05 Apr 2016 21:27:42
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
- Gecko/20100101 Thunderbird/38.7.0
-In-Reply-To: <57040EE0.40503@kdbg.org>
-X-Provags-ID: V03:K0:hT28g+kEnFhfr7t7DbGYT68ETbuYSJCdKvwfjwiOCXVwxmJz9NF
- p1M9fAXrqqFMQFuFIoXaWrZ6drkpDlKAvvy+x9diSkUu8TmZeD/6f5B3pCSHYk1tGApe6/q
- CXUJuyFePyP6wRHdmpMxXy0Xgt2vK9+pxIqw/mslMTo3GHhrwPkaHWqEIhV6EPNTdrJD+bc
- 2LmWyjzXb4wMDjynh/K/A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ocDbWSMhG40=:4nb3PAoyNhf54rqxSGO3b7
- oEtP9SAVnxmG7SvSf3/QqALlBCATjSgZgwLqyc1FyntH5ydFTHtV94Im5AUD05BpBmL6e1QqS
- HEL/NZO+GUBRmPQUVId2PzrsZK2nJJKI6bdXtvqR2C+01Js/8kppsS7n98684BqfqzfOKkNIo
- Lu37s7gg3P8BJwiVFi8LsESqa31Ejiyo9OA3OvtjvXF2uOLQiIVScy9wA7aDE8TyXbfACLvc0
- ffJwyQxeC1LI2Ty7RugBBpYKPEM4aO0HQNlOcukK3fVXeqTSPFxt9U6MkI5mBij6rUheBHIdH
- G+p2q/OdNUm6a4FZvIJQXgfwmEDw9umC9ki8kyQe4cln8aCy+Awe2/zPHHZyfPYo0jgU5cLxP
- LHKg6bzBbJHXJC4UUtAMsw0SRIgg/uEId8LpvEhQC1bpQ9Q0YYXEQB5t06zO3rNCN+A3vmuF0
- GStn9IUyjDJqx0J/0h0RnkHvc0WttSmPpd31xzAI8SZv9SjNWKtV4HouAAxFZDsskukfsAFDC
- nWzDU44j+c/1xU+zdrE70iwVlIJjPkQOYcsOYID2fZTBhLRp1SrBfc01y0C3p1Df3V7eYbLki
- obihX8R8MT9EzaKX7kCfbN2FDhrcZBB0MRsZjZVPpliFurHANBtf1UBNu4K9jUFbcszE0svVB
- jtrVYKz+gH7W8leJD30g2rkMTJVwgXVb+fB3MLYPyMfyPs98D5ITCnsMqzOBG3/ivU5w4Tkhr
- jkbqVwu5ct1JZW6pVb6gc3hRJDvOYLTHy/eBjsmX622qi6seUK+QAxJN3xsd0E3VKkz7Qo48 
+	id S933081AbcDETkA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2016 15:40:00 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BB4520437;
+	Tue,  5 Apr 2016 19:39:59 +0000 (UTC)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290805>
 
-On 05.04.16 21:15, Johannes Sixt wrote:
-> Am 05.04.2016 um 19:09 schrieb Junio C Hamano:
->>> Thanks-to: Torsten Bo=CC=88gershausen <tboegi@web.de>
->=20
-> I sense NFD disease: The combining diaresis should combine with the o=
-, not the g. Here is a correct line to copy-and-paste if you like:
->=20
-> Thanks-to: Torsten B=C3=B6gershausen <tboegi@web.de>
->=20
-> -- Hannes
+Using a YYYYmmddHHMMSS date representation is more meaningful to
+humans, especially when used for lookups on NNTP servers or linking
+to archive sites via Message-ID (e.g. mid.gmane.org or
+mid.mail-archive.com).  This timestamp format more easily gives a
+reader of the URL itself a rough date of a linked message compared
+to having them calculate the seconds since the Unix epoch.
 
-Good eyes.
+Furthermore, having the MUA name in the Message-ID seems to be a
+rare oddity I haven't noticed outside of git-send-email.  We
+already have an optional X-Mailer header field to advertise for
+us, so extending the Message-ID by 15 characters can make for
+unpleasant Message-ID-based URLs to archive sites.
 
-And thanks to Alexander for doing this patch
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-send-email.perl | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index d356901..23141e7 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -949,7 +949,8 @@ my ($message_id_stamp, $message_id_serial);
+ sub make_message_id {
+ 	my $uniq;
+ 	if (!defined $message_id_stamp) {
+-		$message_id_stamp = sprintf("%s-%s", time, $$);
++		use POSIX qw/strftime/;
++		$message_id_stamp = strftime("%Y%m%d%H%M%S.$$", gmtime(time));
+ 		$message_id_serial = 0;
+ 	}
+ 	$message_id_serial++;
+@@ -964,7 +965,7 @@ sub make_message_id {
+ 		require Sys::Hostname;
+ 		$du_part = 'user@' . Sys::Hostname::hostname();
+ 	}
+-	my $message_id_template = "<%s-git-send-email-%s>";
++	my $message_id_template = "<%s-%s>";
+ 	$message_id = sprintf($message_id_template, $uniq, $du_part);
+ 	#print "new message id = $message_id\n"; # Was useful for debugging
+ }
+-- 
+EW
