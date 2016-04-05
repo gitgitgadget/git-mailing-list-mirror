@@ -1,121 +1,153 @@
-From: Jacek Wielemborek <d33tah@gmail.com>
-Subject: Re: Feature request: config option for default git commit -v
-Date: Tue, 5 Apr 2016 18:41:26 +0200
-Message-ID: <5703EAB6.2060006@gmail.com>
-References: <5703CDE0.7010007@gmail.com>
- <CAFZEwPMq3hwM91URzoJ7WQV1QcY++KqRENNtChb8z+s4YAi4vA@mail.gmail.com>
+From: Santiago Torres <santiago@nyu.edu>
+Subject: Re: [PATCH v5 0/6] tag: move PGP verification code to tag.c
+Date: Tue, 5 Apr 2016 12:44:03 -0400
+Message-ID: <20160405164402.GB9507@LykOS>
+References: <1459872449-7537-1-git-send-email-santiago@nyu.edu>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="HVS0jBDP7GJ9dUVmTjUTE24SsQw10Ou7N"
-Cc: Git List <git@vger.kernel.org>
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 05 18:42:05 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 05 18:44:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anU3G-0001um-A1
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 18:42:02 +0200
+	id 1anU5V-0002uR-Qr
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 18:44:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758493AbcDEQlm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2016 12:41:42 -0400
-Received: from mail-lf0-f42.google.com ([209.85.215.42]:36696 "EHLO
-	mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757763AbcDEQlj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2016 12:41:39 -0400
-Received: by mail-lf0-f42.google.com with SMTP id g184so14837636lfb.3
-        for <git@vger.kernel.org>; Tue, 05 Apr 2016 09:41:39 -0700 (PDT)
+	id S1758295AbcDEQoI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2016 12:44:08 -0400
+Received: from mail-qg0-f65.google.com ([209.85.192.65]:36858 "EHLO
+	mail-qg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752428AbcDEQoG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2016 12:44:06 -0400
+Received: by mail-qg0-f65.google.com with SMTP id f105so1716748qge.3
+        for <git@vger.kernel.org>; Tue, 05 Apr 2016 09:44:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:mime-version
-         :in-reply-to;
-        bh=lLnpYT18qj8cKSN/LfE5xCzaAu/K7cMbh2YUdDQomas=;
-        b=oAjCXZTlE4IimfroMxnfSTRd2qipvXRScUa23gln/nW/ecg8E2/s4eys/S05ca6b+a
-         UGMcTMD8GvVcFWbvFSabOQFhtWlU8BQbDhG4hL6ijkEfNi473SLXXM0xY3HcSfRi6RnF
-         nOqEMLmI85teN/pU8CmxJocxXheTGawTAyBraVBjnDZ3owOPRiZwTsRtgdOp0muzNfTT
-         fezS8RpBIuBLejNYmMpSaw5kkCf8yr6KYKtSaF0pGvtzw1ncP9zKgSy8BQ7W1b/FEdAX
-         H/LH9ePjoGE/S6cyOzMZJKz4KVnvCd9d9J0LzAQjbCW3EePHAU9q6uHXYjlEOYkrH4Xx
-         fzFA==
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=JzSpTf2svWNhO3LEFCLyPyuZEGBZMJsnKLyPvisQ18A=;
+        b=SSLyE3WfZYnA3V5EzdkmQ1VgUXnK9sAd+lQeN/K4wloTqDXTL/CA/dmLiZKauitlK5
+         LIG22+gMOkwbzLxb58rPXWolpxjdz6wJz0mOlNL1x9iTgX8WSdDlycrjVjmD9gTZgeDS
+         bIvDimeUri4+OpfusE+3bZIosK/8CWpGg7Gc2CgaaINIP7uNzo6n+M38+/VVwa1dHmov
+         D0JE+KqicQncSjJOfd+lf85h3M55SAKPFBzGLctZU6do2Q24CJLEpeBoun8/6ABgvRn0
+         AJdx/I9PdsJsOw0bRIES9sFCcFyZMPPuOz+yZZaBnhZiiwp2lGzrbeOU9IosooJxNmrP
+         Csqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :mime-version:in-reply-to;
-        bh=lLnpYT18qj8cKSN/LfE5xCzaAu/K7cMbh2YUdDQomas=;
-        b=VAj2PEeGz++4erQj6PmebmqeDxwByiRJUt6Qs/gRxsCtxlmAgkFo1hvSFEJYFwN3OY
-         q8WC860V4D4gIoNbUzwZr4g/R7mO7rjoMe+tBL/W78UWlwt3lnHeAZ5CBER89ctkg/nF
-         vY+mBAoc54KXKZ92fc6bhgYKx9qfv8Qq92RDB7RX6f4khiFxo/jO6mB8lzMHpsiISBvK
-         vfyvWZ3CbeqBQv7SE/GJmTFd3bh5U/+8r3WVALLc/Bz8TEjFroqqdmOt7jsQcRaKZAUP
-         ZbQ3VpLoFw47V9ffapMUHsuj3c97Nd+vJ8Xi49VjbrY/03E0nnLfALrnAjIrudVkq8fK
-         RUZA==
-X-Gm-Message-State: AD7BkJJWADiAOJq5S+M9WGbGp+ysz968JkXWbcXY+eRE5lVv14If43eB1pdT9lCwDbW8ew==
-X-Received: by 10.25.208.144 with SMTP id h138mr5550210lfg.48.1459874498046;
-        Tue, 05 Apr 2016 09:41:38 -0700 (PDT)
-Received: from [192.168.0.139] (94-229-220-66.static.espol.com.pl. [94.229.220.66])
-        by smtp.googlemail.com with ESMTPSA id m65sm5775979lfm.13.2016.04.05.09.41.36
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=JzSpTf2svWNhO3LEFCLyPyuZEGBZMJsnKLyPvisQ18A=;
+        b=buSXYU+DmTJksWquoI5QVz09l+NTOu0iV2qFCpC7jw68cx4WjgStVLhxEMhFVwD46M
+         EbJIRv4HYrPP2Ltg1pE9vqlGI29EvcrqQMCbC8ce71Mg4CjHzWAn6H4RuA9qr2B71B0q
+         pfvs5TQIpB8gDo11726fDF69sqx/9vT2oiySV3LNF/9/zgxuzwkBkizAEUbHuwEgVB3R
+         lzoCA0t/bp3zn9D8xz7lGZ1eZJKZty1Xaz6xk3R7R5lpW/va6nODROAH2DoNIzFYaXTl
+         GMruJkOxBTIZeyHLfjiHWMW0vFWB7U1ea5my7mnMkW0AODAgqJ4Q08URpwYmIEUB2Aqf
+         ImjA==
+X-Gm-Message-State: AD7BkJLkrKEd9jIUrz6zgKe12ahtXFg5lxGvoreKmZVdWiGVGqOs9igdX75a3nRDhMZuT91M
+X-Received: by 10.140.23.139 with SMTP id 11mr18366337qgp.62.1459874645039;
+        Tue, 05 Apr 2016 09:44:05 -0700 (PDT)
+Received: from LykOS (NYUFWA-WLESSAUTHCLIENTS-20.NATPOOL.NYU.EDU. [216.165.95.9])
+        by smtp.gmail.com with ESMTPSA id w32sm7894643qge.12.2016.04.05.09.44.04
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 05 Apr 2016 09:41:36 -0700 (PDT)
-In-Reply-To: <CAFZEwPMq3hwM91URzoJ7WQV1QcY++KqRENNtChb8z+s4YAi4vA@mail.gmail.com>
+        Tue, 05 Apr 2016 09:44:04 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1459872449-7537-1-git-send-email-santiago@nyu.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290798>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---HVS0jBDP7GJ9dUVmTjUTE24SsQw10Ou7N
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Sorry, forgot to add, this is a follow on to [1].
 
-W dniu 05.04.2016 o 16:47, Pranit Bauva pisze:
-> On Tue, Apr 5, 2016 at 8:08 PM, Jacek Wielemborek <d33tah@gmail.com> wr=
-ote:
->> Hello,
->>
->> I'm asking for this one because there's quite a lot of interest
->> (including me) in this feature and there is no convenient walkaround:
->>
->> https://stackoverflow.com/questions/5875275/git-commit-v-by-default
->>
->> Cheers,
->> d33tah
->=20
-> This is currently under progress. I am the one who is working on it.
-> One of the patches is currently on the pu branch. I am still polishing
-> it to include some more stuff. You can track its status by reading the
-> git.git messages by the git maintainer. The latest revision of the
-> patch is at http://thread.gmane.org/gmane.comp.version-control.git/2888=
-20
->=20
-> Thanks,
-> Pranit Bauva
+Thanks,
+-Santiago.
 
-Awesome, thanks for the quick answer! I let the StackOverflow folks know.=
-
-
-
---HVS0jBDP7GJ9dUVmTjUTE24SsQw10Ou7N
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJXA+q2AAoJEGlViymZXJRv84kP/3xmck+uon46Dnwy7uskrXCW
-Gejgqwbmb9QpD4G32E1CjSkxB0rl9sccHJwGBoZKLjlkg5DLpQ0dQKraovfyZ81T
-Ao5sHP7fehU/F/iUACXeFKMR1wIS9fKb4O8J+zoZ08ROugQS9cNfOzpAED6B4QiP
-eveZiQI8au0UsiYJ0zwPPAcaWEY7KkULz2XMYbAfIqb/OKz8LAToFXPPXuVUnEBq
-MT3HVdMOuq5tQGAFUhwVg50BBkMHeCFmSP/YsjxVnHDPCvHRbGTt7IkIRsxsVllx
-NkNDEZ8/o0fsnlacubXgfsUJDxxFnZ/fTmxybvU0Zf2aW79M2hj50LsF3kNmufup
-cxNS3qd2AIlVBSnuATpwibVoec4GgaO/qG9qSdhxkyoRoKwGDbeFzFhr0mnKjsZO
-gFhWXh8UpBAst0/BsJYtORP2J0O4gAkDv2HncNp8nQkCt8/y0dWBGKIjzCbO4YEe
-qXL2hkbtu1mu4CeXyLydsHSWIRD5BuC0A74/FJAqJE3p14U/UTAfYQV+S0Fxvf/R
-06Pbn0lILTr9lYOYNAnfcObXNGeGjGkXXiqbT/QeqRnbVXoM8Iwkv+snPF+jwGPm
-jla2+D1QFzxH/wtpKvqjWUX4KBhL55P6M+Ro9i5CgGF7BxJbZG79JosUHe54ThMg
-oyjsSppxGeS9bX4zKbW9
-=7iGm
------END PGP SIGNATURE-----
-
---HVS0jBDP7GJ9dUVmTjUTE24SsQw10Ou7N--
+[1]:
+http://git.661346.n2.nabble.com/PATCH-v4-0-6-tag-move-PGP-verification-code-to-tag-c-td7652451.html
+On Tue, Apr 05, 2016 at 12:07:23PM -0400, santiago@nyu.edu wrote:
+> From: Santiago Torres <santiago@nyu.edu>
+> 
+> v5 (this): 
+> Added helpful feedback by Eric
+> 
+>  * Reordering of the patches, to avoid temporal inclusion of a regression
+>  * Fix typos here and there.
+>  * Review commit messages, as some weren't representative of what the patches
+>    were doing anymore.
+>  * Updated t7030 to include Peff's suggestion, and added a helped-by line here
+>    as it was mostly Peff's code.
+>  * Updated the error-handling/printing issues that were introduced when.
+>    libifying the verify_tag function.
+>    
+> v4:
+> 
+> Thanks Eric, Jeff, and Hannes for the feedback.
+> 
+>  * I relocated the sigchain_push call so it comes after the error on
+>    gpg-interface (thanks Hannnes for catching this).
+>  * I updated the unit test to match the discussion on [3]. Now it generates
+>    the expected output of the tag on the fly for comparison. (This is just
+>    copy and paste from [3], but I verified that it works by breaking the
+>    while)
+>  * I split moving the code and renaming the variables into two patches so
+>    these are easier to review.
+>  * I used an adapter on builtin/tag.c instead of redefining all the fn*
+>    declarations everywhere. This introduces an issue with the way git tag -v
+>    resolves refnames though. I added a new commit to restore the previous
+>    behavior of git-tag. I'm not sure if I should've split this into two commits
+>    though.
+> 
+> v3:
+> Thanks Eric, Jeff, for the feedback.
+> 
+>  * I separated the patch in multiple sub-patches.
+>  * I compared the behavior of previous git tag -v and git verify-tag 
+>    invocations to make sure the behavior is the same
+>  * I dropped the multi-line comment, as suggested.
+>  * I fixed the issue with the missing brackets in the while (this is 
+>    now detected by the test).
+> 
+> v2:
+> 
+>  * I moved the pgp-verification code to tag.c 
+>  * I added extra arguments so git tag -v and git verify-tag both work
+>    with the same function
+>  * Relocated the SIGPIPE handling code in verify-tag to gpg-interface
+> 
+> v1:
+>  
+> The verify tag function is just a thin wrapper around the verify-tag
+> command. We can avoid one fork call by doing the verification inside
+> the tag builtin instead.
+> 
+> 
+> This applies on v2.8.0.
+> 
+> Thanks!
+> -Santiago
+> 
+> 
+> Santiago Torres (6):
+>   builtin/verify-tag.c: Ignore SIGPIPE on gpg-interface
+>   t7030-verify-tag: Adds validation for multiple tags
+>   builtin/verify-tag: change variable name for readability
+>   builtin/verify-tag: replace name argument with sha1
+>   builtin/verify-tag: move verification code to tag.c
+>   tag: use gpg_verify_function in tag -v call
+> 
+>  builtin/tag.c         |  8 +------
+>  builtin/verify-tag.c  | 65 +++++++++------------------------------------------
+>  gpg-interface.c       |  2 ++
+>  t/t7030-verify-tag.sh | 12 ++++++++++
+>  tag.c                 | 48 +++++++++++++++++++++++++++++++++++++
+>  tag.h                 |  1 +
+>  6 files changed, 75 insertions(+), 61 deletions(-)
+> 
+> -- 
+> 2.8.0
+> 
