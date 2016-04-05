@@ -1,91 +1,102 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 2/6] t/t7030-verify-tag.sh: Adds validation for
- multiple tags
-Date: Mon, 4 Apr 2016 23:51:38 -0400
-Message-ID: <CAPig+cTkQn45ax5pEGghj6_c=FKwP=ApxRo85Jyyu1UD28FrJA@mail.gmail.com>
-References: <1459808535-8895-1-git-send-email-santiago@nyu.edu>
-	<1459808535-8895-3-git-send-email-santiago@nyu.edu>
-	<CAPig+cQJ6EzJ0976NJBHXRZyuTf1dr+0ZOvzrCfiTVZOp6fXBA@mail.gmail.com>
-	<20160405014609.GB12006@LykOS>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH v12 1/5] t0040-test-parse-options.sh: fix style issues
+Date: Tue, 5 Apr 2016 10:38:09 +0530
+Message-ID: <CAFZEwPPPf3OUb8rL-juL3dMXZamwsTO2e+pLg3y8grdJf6W6YA@mail.gmail.com>
+References: <01020153cd2340f8-4665cd5f-cd5c-41ab-a162-20acc43ca52e-000000@eu-west-1.amazonses.com>
+	<01020153d952bd99-d3812bd6-d189-4780-ab48-f015696e9cf0-000000@eu-west-1.amazonses.com>
+	<CAPig+cQ+89MZSyHJhCrZsGMc7mM_uorE5j9GXk7kCTT1OTXV6Q@mail.gmail.com>
+	<CAFZEwPNaxFyFmCkvPjRZQ0grOm1oWB1+5QhkpOMyEKW7j_99qQ@mail.gmail.com>
+	<CAPig+cQw=aG0NOgEsmdTGc7v3iBA-qG9_C4EdSm=6PcE6Qn-uQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: Santiago Torres <santiago@nyu.edu>
-X-From: git-owner@vger.kernel.org Tue Apr 05 05:51:45 2016
+Cc: Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Apr 05 07:08:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anI1o-0003M6-Se
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 05:51:45 +0200
+	id 1anJDs-0005zx-NZ
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 07:08:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932484AbcDEDvk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2016 23:51:40 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:33619 "EHLO
-	mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753910AbcDEDvj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Apr 2016 23:51:39 -0400
-Received: by mail-io0-f194.google.com with SMTP id g185so549431ioa.0
-        for <git@vger.kernel.org>; Mon, 04 Apr 2016 20:51:39 -0700 (PDT)
+	id S1752937AbcDEFIL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2016 01:08:11 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:36454 "EHLO
+	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751860AbcDEFIK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2016 01:08:10 -0400
+Received: by mail-yw0-f194.google.com with SMTP id p65so344784ywb.3
+        for <git@vger.kernel.org>; Mon, 04 Apr 2016 22:08:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=KssjDxj+UMRLC6HXxVeiVNF4bExj77mDAm0AyoVpDQA=;
-        b=c5m5UBVmHxFtkuNWlmREbZy5rfSZPK2j55+2/RJ2CwURii9P2tknZROnuOMxz8LiKT
-         CvXr6fxLZHMQNLBmTXnLDY4YilihDmXYDm755BBDehs++WaACAdpqnc0rhs1Kj809qbc
-         QpAA7ABJfZsS3OAtm2VYZAnwll9S+9IwSTtkEGVzJcNRCk1oXu0ZUNZbyVYPo5qquYQI
-         RRVjPWTz6oNig97hmxyzn9HrfKTbntAYo/6ZlyawAI5h8SNMqP0xdF7qeWga1ix1umXD
-         n1FrgiiHVriByNh98CxNq1LEyWePjsfpDLxOcpMflZ3Q+TDfeuJUz2PQL+ZrsFwI41FV
-         LK+g==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=Vcspa+G/EsapOpgqVoO3NN00tGHW0dWIOGwpVxlhbHM=;
+        b=lLM5wAdnfa4c7RBEb+NQOgk8tg4EivWpFpZLofF/UBIA4s32kI+hv6gixt1hvAMAVv
+         pYRkER9ECS6IkFb/QIz4p+Gi0+A3v3eoFhqqsn79IzZaYnXiKMqQV3YcGGRoJNDE3k81
+         RKUIYOjb3eCRbrp6hAmlw5FRPdXzyWRCY7Dd6RYR754oVOMvbnUQ+RhXHGhVbjS4hpJ2
+         l3yl20sEJ7nZDudusFg0+4d3rYb+L7M5r3cBWTg+7ZgJudIUQ3goVSiqV0cEAgvt6CbA
+         T1QZlcb1i5d+pOj/2jvt539dE/zD4UEvNsIsvyzosaqVjLPrJHvCQ/hOWdzYvG20K9tH
+         EFKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=KssjDxj+UMRLC6HXxVeiVNF4bExj77mDAm0AyoVpDQA=;
-        b=Q8/0MQYBTK57yR+M2xB8Bn1sO3RrkV+yZhDbWd47UJ+OYGZVPbD4iqxT8v5B8WxTf9
-         zj1EwSsXxrYC2iyCUly+13h2Fc1/OVJ6LGCW+yjNUaGApLgdfGHtznnGHQVSP7VxIUJh
-         c1YQSUdDrzNgORRupfsUz6fJjE5SdyVOjCSfVp5T3Bm5BDJmlTSqLPiJ1FPl/EY0nXTd
-         2cqMUyaTfFIKso02ihEjubkR4sDce/ianZx/8Rhil0cYopcFbERSLB+QUrXRklc5j/aX
-         e8kZIJMttHxmqVoalEcKv6VRO8CgcUzGtjj7jfcyr+x1W4jd3LV3SIyVEm8WECUUIi3K
-         yulQ==
-X-Gm-Message-State: AD7BkJIVYuJuM/aThuKObSc77MNS3k4r+anyuCgeraRA47basoJWoDLaR7hGzNCG2e5O1I0BVjpsijLK4pS2Vw==
-X-Received: by 10.107.9.28 with SMTP id j28mr10108375ioi.104.1459828298576;
- Mon, 04 Apr 2016 20:51:38 -0700 (PDT)
-Received: by 10.79.12.139 with HTTP; Mon, 4 Apr 2016 20:51:38 -0700 (PDT)
-In-Reply-To: <20160405014609.GB12006@LykOS>
-X-Google-Sender-Auth: v_8xxa8xcUgAewG64Xl9qpZU95g
+        bh=Vcspa+G/EsapOpgqVoO3NN00tGHW0dWIOGwpVxlhbHM=;
+        b=nF69n9bE5CpsaRjyFL8TIZoR7GEP9AWvcoFEnjaBG75qAj9lFqFo+54RYziNQngNB2
+         kCZYo/r52fbugFIubK86GJ9bQV2Izf/bTq0GE/r+/TALgigRgAJlEBfJGBO8MZpmcpVD
+         ZkncjytfoTnJUSv27D4A99vodk7yUZGLObqxnfu5moacmbvrJfI4ytbgH8+E8C8EAMlZ
+         59ImAuSEWRdkuwhBlW5xrM3kq1Nk5xpXhXadT/DDnDD/dmGL5aibhuQfdpRS0Zeux1Q0
+         j6OWHvhI5EaljDuHkj+Cs7Wd7HdG2ZsjF26MDRwk6z52qP8jnBQmdqSuO+87BWW+mR+f
+         lY5A==
+X-Gm-Message-State: AD7BkJJWaq9TCZHTwRjerD2+l4nJi5ua2ljLssyymxTBsMsK+OytaQlC/UYZdyejJkEhrqrvXfODULizeUsvrw==
+X-Received: by 10.129.94.194 with SMTP id s185mr7416995ywb.93.1459832889702;
+ Mon, 04 Apr 2016 22:08:09 -0700 (PDT)
+Received: by 10.13.219.81 with HTTP; Mon, 4 Apr 2016 22:08:09 -0700 (PDT)
+In-Reply-To: <CAPig+cQw=aG0NOgEsmdTGc7v3iBA-qG9_C4EdSm=6PcE6Qn-uQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290759>
 
-On Mon, Apr 4, 2016 at 9:46 PM, Santiago Torres <santiago@nyu.edu> wrote:
-> Eric Sunshine wrote:
->> > +test_expect_success GPG 'verify multiple tags' '
->> > +       tags="fourth-signed sixth-signed seventh-signed" &&
->> > +       for i in $tags; do
->> > +               git verify-tag -v --raw $i || return 1
->> > +       done >expect.stdout 2>expect.stderr.1 &&
->> > +       grep GOODSIG <expect.stderr.1 >expect.stderr &&
->> > +       git verify-tag -v --raw $tags >actual.stdout 2>actual.stderr.1 &&
->> > +       grep GOODSIG <actual.stderr.1 >actual.stderr &&
->>
->> Hmm, I had expected you to adopt Peff's suggestion[1] for the greps:
->>
->>     grep '^.GNUPG:.' ...
->>
->> [1]: http://article.gmane.org/gmane.comp.version-control.git/290691
+On Mon, Apr 4, 2016 at 11:00 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Mon, Apr 4, 2016 at 8:45 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>> Okay I will do the change. I was previously unaware about the use of
+>> '\' before EOF. I googled it now. But I am still confused about its
+>> use in this scenario. Upto what I understood, it is used where you
+>> want to expand a variable, substitute a command, arithmethic
+>> expansion. The use of '\' in the tests I have changed in v12 wrt 11 is
+>> understood by me as you want to remove the use of escape sequences
+>> which is justified. But this seems a bit vague. Is it some convention
+>> in git?
 >
-> I thought this was an stylistic thing. I can of course adopt this
-> suggestion.
+> Both 'EOF' and \EOF suppress interpolation and other transformations
+> in the heredoc content which would otherwise occur with plain EOF. The
+> 'EOF' form is well documented; \EOF not so much, but is used heavily
+> in git test scripts. So:
+>
+>     x=flormp
+>     echo <<EOF
+>     Hello, $x
+>     EOF
+>
+> prints "Hello, flormp", whereas:
+>
+>     echo <<\EOF
+>     Hello, $x
+>     EOF
+>
+> prints "Hello, $x".
+>
+> While test scripts sometimes use \EOF to explicitly suppress variable
+> expansion, it's also quite common to use it even when there is nothing
+> which could be expanded in the heredoc content, in which case it
+> signals to the reader that the author doesn't expect the content to
+> undergo expansion or interpolation. It's also a bit of future-proofing
+> in case some later change to the heredoc content inserts something
+> which might otherwise be expanded.
 
-It's probably not a big deal, but Peff's suggestion (at least feels
-like it) makes the test a bit more comprehensive.
-
-By the way, as the test is heavily inspired by Peff's example, it
-might be worth giving him a nod via a Helped-by: just above your
-Signed-off-by:.
+Thanks for taking out your time to explain this clearly. I will do the
+changes in the tests as suggested by your review. :)
