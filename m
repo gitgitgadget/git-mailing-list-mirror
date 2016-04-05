@@ -1,110 +1,129 @@
-From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-Subject: Re: [RFC/PATCH] git.spec: fix changelog dates
-Date: Tue, 5 Apr 2016 16:17:22 +0200 (CEST)
-Message-ID: <746021769.2985589.1459865842453.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <6ef7d9d87f0c14147267c44e8b382f988936875b.1459858117.git.git@drmicha.warpmail.net> <833355852.2977267.1459859316816.JavaMail.zimbra@ensimag.grenoble-inp.fr> <5703C084.1040405@drmicha.warpmail.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git diff --exit-code does not honour textconv setting
+Date: Tue, 5 Apr 2016 16:22:05 +0200
+Message-ID: <5703CA0D.2090808@drmicha.warpmail.net>
+References: <56EE9B09.6040700@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Apr 05 16:13:49 2016
+Content-Transfer-Encoding: 7bit
+To: Georg Pichler <georg.pichler@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 05 16:22:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anRjk-0007KG-7M
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 16:13:44 +0200
+	id 1anRs0-0002qn-5m
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 16:22:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759120AbcDEONj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Apr 2016 10:13:39 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:33997 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756517AbcDEONi convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Apr 2016 10:13:38 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id CBC03216E;
-	Tue,  5 Apr 2016 16:13:34 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Nwrnfv7mqvy7; Tue,  5 Apr 2016 16:13:34 +0200 (CEST)
-Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id B5636215B;
-	Tue,  5 Apr 2016 16:13:34 +0200 (CEST)
-In-Reply-To: <5703C084.1040405@drmicha.warpmail.net>
-X-Originating-IP: [130.190.242.137]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF39 (Linux)/8.0.9_GA_6191)
-Thread-Topic: git.spec: fix changelog dates
-Thread-Index: bxv7dg6HzYuo7NdJBc2XkTSNecmcrA==
+	id S1753784AbcDEOWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2016 10:22:09 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:50292 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751175AbcDEOWI (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Apr 2016 10:22:08 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 2830F21839
+	for <git@vger.kernel.org>; Tue,  5 Apr 2016 10:22:07 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute4.internal (MEProxy); Tue, 05 Apr 2016 10:22:07 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=1mEdg0qtVE1sgYmNbAhIRi74qK0=; b=Dn/MBj
+	Ie78d2d1ngqht7/jrp+n9bZtfHRRemO8ASxL5+EGmg8nH017GpKlTIJqM8NIfZgv
+	2EGo/opVkjbvTxD/vhk0GILYREa94+qm/kbbP+YzX2rFFwoFSGGq5F6H6fJl3+g2
+	0Ks+ILkq+GjI6qXZ+h5rgpZw+JwwszL0SB4dQ=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=1mEdg0qtVE1sgYm
+	NbAhIRi74qK0=; b=NDNArkwyE39SHym/V4K2fdVEAwTk2meiT9qeLurymcXZ6WK
+	pg1MFbLK9s0t5QnxOrEb5Mr++yjz42gYcslV3tDMVHw8GVPiplslO8B/L/ZYctXf
+	PFOgFphqCAdTcmwstIXkuqum5w0niYlku3CMe9QhX53W21UwJxuuP5O4A1Us=
+X-Sasl-enc: 774V8trJuiqhhSeJ1RVsYxI4i93yWNr34xghwVwn2wXh 1459866126
+Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 44811C0001D;
+	Tue,  5 Apr 2016 10:22:06 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.1
+In-Reply-To: <56EE9B09.6040700@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290782>
 
-Michael J Gruber <git@drmicha.warpmail.net> wrote:
-> Remi Galan Alfonso venit, vidit, dixit 05.04.2016 14:28:
-> > Michael J Gruber <git@drmicha.warpmail.net> wrote:
-> >> A few changelog entries have inconsistent dates, which rpmlint rep=
-orts
-> >> as errors.
-> >>
-> >> Fix them based on these assumptions:
-> >> - It's easier to mistype a number than a weekday abbreviation.
-> >> - changelog date must be before git commit date
-> >> - The mistyped date is just a few days off.
-> >>
-> >> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> >> ---
-> >> I dunno if this is worthwhile, but rpmlint is the first thing we t=
-ell
-> >> packagers and reviewers to check.
-> >>
-> >>  git.spec.in | 8 ++++----
-> >>  1 file changed, 4 insertions(+), 4 deletions(-)
-> >>
-> >> diff --git a/git.spec.in b/git.spec.in
-> >> index bfd1cfb..eb581a3 100644
-> >> --- a/git.spec.in
-> >> +++ b/git.spec.in
-> >> @@ -229,7 +229,7 @@ rm -rf $RPM_BUILD_ROOT
-> >>  * Sat Jan 30 2010 Junio C Hamano <gitster@pobox.com>
-> >>  - We don't ship Python bits until a real foreign scm interface co=
-mes.
-> >> =20
-> >> -* Mon Feb 04 2009 David J. Mellor <dmellor@whistlingcat.com>
-> >> +* Mon Feb 02 2009 David J. Mellor <dmellor@whistlingcat.com>
-> >>  - fixed broken git help -w after renaming the git-core package to=
- git.
-> >> =20
-> >>  * Fri Sep 12 2008 Quy Tonthat <qtonthat@gmail.com>
-> >> @@ -262,7 +262,7 @@ rm -rf $RPM_BUILD_ROOT
-> >>  * Thu Jun 21 2007 Shawn O. Pearce <spearce@spearce.org>
-> >>  - Added documentation files for git-gui
-> >> =20
-> >> -* Tue May 13 2007 Quy Tonthat <qtonthat@gmail.com>
-> >> +* Sun May 13 2007 Quy Tonthat <qtonthat@gmail.com>
-> >
-> > It is inconsistent with what you said in the commit message ("It's
-> > easier to mistype a number than a weekday abbreviation.").
-> >
-> > Following that logic, it should be:
-> >         * Tue May 15 2007 Quy Tonthat <qtonthat@gmail.com>
-> >
-> > (or 08, I didn't check the condition "changelog date must be before
-> > git commit date")
->=20
-> I did.
->=20
-> The thing is that you can't always fulfill all of these 3 conditions.
-> "Easier" doesn't mean that the other case is impossible, just less li=
-kely.
+Georg Pichler venit, vidit, dixit 20.03.2016 13:43:
+> Hi,
+> 
+> I realized that "git diff --exit-code" does not honour textconv settings.
+> Maybe this behaviour is desired. It can be partially circumvented by using the "-b" flag if one does not care about whitespace changes.
+> To reproduce this, create an empty repository and run the following commands:
+> 
+> (I was using git version 2.7.3)
+> 
+> $ git config --add diff.void.textconv test
+> $ echo "foo diff=void" >.gitattributes
+> $ echo foo >foo
+> $ git add . && git commit -m "Init"
+> [master (root-commit) 70c39d9] Init
+> 2 files changed, 2 insertions(+)
+> create mode 100644 .gitattributes
+> create mode 100644 foo
+> $ echo bar >foo
+> $ git status
+> On branch master
+> Changes not staged for commit:
+> (use "git add <file>..." to update what will be committed)
+> (use "git checkout -- <file>..." to discard changes in working directory)
+> 
+> modified: foo
+> 
+> no changes added to commit (use "git add" and/or "git commit -a")
+> $ git diff
+> $ git diff --exit-code
+> [exits with 1, no output]
+> $ git diff --exit-code -b
+> [exits with 0, no output]
+> 
+> The "test" command is used as it does not generate any output on stdout.
 
-Ah alright. Makes sense then, it is much harder to mistype 13 from 08
-than from 15.
+"test" is a bit of a red herring here since it will receive commands.
+But your example works even with "true" which ignores its commands and
+produces no output.
 
-Sorry for the noise.
+> I would expect "git diff --exit-code" to return with exit code 0. If this is not desired, it should be clearly stated in the man page,
+> that "--exit-code" does not honour the textconv setting, except if "-b" is given. Currently this is not clear:
+> 
+>        --exit-code
+>            Make the program exit with codes similar to diff(1). That is, it exits
+>            with 1 if there were differences and 0 means no differences.
+> 
+> Best,
+> Georg Pichler
 
-Thanks,
-R=C3=A9mi
+The description doesn't make it clear whether exit-code refers to the
+actual diff (foo vs. bar) or to the diff after textconv (empty vs.
+empty). In any case, "-b" should not make a difference for your example.
+
+
+diff_flush() in diff.c has this piece of code:
+
+        /*
+         * Report the content-level differences with HAS_CHANGES;
+         * diff_addremove/diff_change does not set the bit when
+         * DIFF_FROM_CONTENTS is in effect (e.g. with -w).
+         */
+        if (DIFF_OPT_TST(options, DIFF_FROM_CONTENTS)) {
+                if (options->found_changes)
+                        DIFF_OPT_SET(options, HAS_CHANGES);
+                else
+                        DIFF_OPT_CLR(options, HAS_CHANGES);
+        }
+
+So it's clear that depending on "-b" (or "-w") or not, it's taking
+shortcuts or looking at the textconved diff but I'm not sure where's the
+proper place to fix that.
+
+Michael
