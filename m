@@ -1,83 +1,104 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: support block comments in gitconfig
-Date: Tue, 5 Apr 2016 13:32:48 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604051327480.3371@virtualbox>
-References: <CANri+ExqdM-TTibWK07B2VFns6fQ09fmbqbCKC1VWET1tgRFNA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: timothee.cour2@gmail.com
-X-From: git-owner@vger.kernel.org Tue Apr 05 13:33:04 2016
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [RFC/PATCH] git.spec: fix changelog dates
+Date: Tue,  5 Apr 2016 14:09:57 +0200
+Message-ID: <6ef7d9d87f0c14147267c44e8b382f988936875b.1459858117.git.git@drmicha.warpmail.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 05 14:10:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anPEE-0005RT-GI
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 13:33:02 +0200
+	id 1anPo9-0005zT-7I
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 14:10:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757991AbcDELcx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2016 07:32:53 -0400
-Received: from mout.gmx.net ([212.227.15.15]:61666 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757968AbcDELcw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2016 07:32:52 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0M70HF-1bjNhd3dDh-00wmY4; Tue, 05 Apr 2016 13:32:48
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CANri+ExqdM-TTibWK07B2VFns6fQ09fmbqbCKC1VWET1tgRFNA@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:lGptBiTyR2C11HKaRUJ4B2BgRS3MYIwawDTVF0kl2wIZthQdw09
- LtmN7txBQbB8Zgluv6OTy9LfGdXvb68Fr8bSndJR3Dj6uhZtb4zJik4b0PuPOfuRwScrrJ8
- GwpHuYZIrypNTsbPLrIU5GD1RSfWg5mGVbLHk6klWvVmeXyqrFTmbV8hH1P3rJsY7pvO2sE
- zJsmfaIy+Benjd9d11q9w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:f3HL0Oq5a64=:EYjKV+RQmBACHQLbewSyMd
- ar5zr8SSlzhiJPsjU5+1olnGsz91DBXTNLIEaghX6TcxAK6AaZ++3Lt11+q3OfdWrNFObZw18
- n3Z0w8tHmmcJrOSfTnjNTc9yL4cFzjP7y3PN3Z2vw2vxwovwKHFznQuC3w1IOfWXJE33FPnzs
- VJuZPYwEhcPlL4kOc0A91Zr9+P+HnDlzVwRZYZa3oKILj2Kgi4b9cBYKuLmnj+DNyQFiqaYyj
- 9gnVBw6x9K9NrVI81o8t1f7A8lsxtIxrumh8InjNQQZQGOFC5r9I9Ge8lQtpiSoVLu6TwVGrG
- dCm2lewEXBTqFwWloHiMHefuzoG704PYZPcT5Kzg8shotMBrkCf6TmSMisZMtiRy4f+Gnxd/j
- 1zUlkhHLV5JA6gHgp74Wr1HtLvDMbf+tBUQ1Z4cwJ77Bnxm/rwsllF2AFYS2KstPyNeMq/EZT
- l4ddd4dqrlCwbny1jH7slL4KHFnk8C8wAiG/3bODWBWg/UCmZsi7cxZBZtCzPOGVc7OFhAC7Y
- OmjqWLiO2Lezof1/L+cc0YMc9L52iRUQ8hd8XuDjaYKTV9D9WdK8KGNII/lKiOt0XBoikDlTh
- 6UY7Xvug1zdKu1C+8JbFpUSIclugJ7ljon6Bc8x9OMtZ3PD7DH8K9Loj/+2s/ebi9pNHEkEIj
- F7jmenAaC3UHzyLGDyPiY+VZUDOAbp9fPmLcRXc32e8wHcL/c3p5VoxqlEYMfknlwF+W5M96N
- jNgxTQVuUdd/+fb/YZSva/twm4B4ZgG7Fyfni6SE56zAB2xkegk23vqxO/5Wuf5EV02tmhpO 
+	id S932786AbcDEMKB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2016 08:10:01 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:34244 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932735AbcDEMJ7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Apr 2016 08:09:59 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 9364120824
+	for <git@vger.kernel.org>; Tue,  5 Apr 2016 08:09:58 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute4.internal (MEProxy); Tue, 05 Apr 2016 08:09:58 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+	date:from:message-id:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp;
+	 bh=UOpKDgedrpBybnUEZ3GRLV7KeKk=; b=MN7ysuuAVsSBmk+AHVB9o2U67tw9
+	+4WsMF1ImM9zF5RsZvNXHIbK1g+P6jcUbxWbirQ0JcxRKM+bahzIuMLKuIBnJJK7
+	xyasXerTT9v1JXHLaB4z7M/dtQ4PAH+BQUZnu1HacpL6BAMeta26fzdjD9GwDAa6
+	ek+sQWiN7R2EF4A=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=date:from:message-id:subject:to
+	:x-sasl-enc:x-sasl-enc; s=smtpout; bh=UOpKDgedrpBybnUEZ3GRLV7KeK
+	k=; b=VZPtRkpktNSaK2Cy57D+UxPIJzqLih9yxJREbI2qZ5G7KYC1CuToF1Ixxi
+	qA6mYExlpGQXRReCifxB8EDAnoGBE07LrEafbxjhCpgBtHSE/Q+Ud5z3LNqD6lSj
+	++kubRG3hFFJjYGtVL0pSfb/oWXlFFZSFiCRmlSsilD02GXsE=
+X-Sasl-enc: WYKHzn9uiFvqpYmtOiR0mwsTYe2b7dHjZMCSnxkUWSo2 1459858198
+Received: from localhost (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 375246800FC;
+	Tue,  5 Apr 2016 08:09:58 -0400 (EDT)
+X-Mailer: git-send-email 2.8.1.120.g4a400c2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290777>
 
-Hi Timothee,
+A few changelog entries have inconsistent dates, which rpmlint reports
+as errors.
 
-On Mon, 4 Apr 2016, Timothee Cour wrote:
+Fix them based on these assumptions:
+- It's easier to mistype a number than a weekday abbreviation.
+- changelog date must be before git commit date
+- The mistyped date is just a few days off.
 
-> Could we have block comments in gitconfig?
-> It's a nice-to-have supported in most languages.
-> eg:
-> 
-> #{
-> commented out block
-> #}
-> 
-> or other intuitive syntax
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+I dunno if this is worthwhile, but rpmlint is the first thing we tell
+packagers and reviewers to check.
 
-You could have such block comments. If you implemented that feature.
+ git.spec.in | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Having said that, this syntax is distinctly *not* the INI syntax we tried
-to imitate. Plus, there are Git implementations *other* than core Git in
-the meantime, and they would need to be taught about this
-backwards-incompatible syntax, too.
-
-And then we still could not turn on that feature by default because there
-are setups out there where different users use different versions of Git.
-
-If you are prepared to push this feature forward, you can make it happen.
-In that case, you will need to spend a bit of effort and definitely
-exercise patience because you would likely get this feature accepted only
-into 2.9.0 (or 2.10.0 or 3.0.0...), i.e. a major version bump.
-
-Ciao,
-Johannes
+diff --git a/git.spec.in b/git.spec.in
+index bfd1cfb..eb581a3 100644
+--- a/git.spec.in
++++ b/git.spec.in
+@@ -229,7 +229,7 @@ rm -rf $RPM_BUILD_ROOT
+ * Sat Jan 30 2010 Junio C Hamano <gitster@pobox.com>
+ - We don't ship Python bits until a real foreign scm interface comes.
+ 
+-* Mon Feb 04 2009 David J. Mellor <dmellor@whistlingcat.com>
++* Mon Feb 02 2009 David J. Mellor <dmellor@whistlingcat.com>
+ - fixed broken git help -w after renaming the git-core package to git.
+ 
+ * Fri Sep 12 2008 Quy Tonthat <qtonthat@gmail.com>
+@@ -262,7 +262,7 @@ rm -rf $RPM_BUILD_ROOT
+ * Thu Jun 21 2007 Shawn O. Pearce <spearce@spearce.org>
+ - Added documentation files for git-gui
+ 
+-* Tue May 13 2007 Quy Tonthat <qtonthat@gmail.com>
++* Sun May 13 2007 Quy Tonthat <qtonthat@gmail.com>
+ - Added lib files for git-gui
+ - Added Documentation/technical (As needed by Git Users Manual)
+ 
+@@ -272,7 +272,7 @@ rm -rf $RPM_BUILD_ROOT
+ * Tue Mar 27 2007 Eygene Ryabinkin <rea-git@codelabs.ru>
+ - Added the git-p4 package: Perforce import stuff.
+ 
+-* Mon Feb 13 2007 Nicolas Pitre <nico@fluxnic.net>
++* Mon Feb 12 2007 Nicolas Pitre <nico@fluxnic.net>
+ - Update core package description (Git isn't as stupid as it used to be)
+ 
+ * Mon Feb 12 2007 Junio C Hamano <junkio@cox.net>
+@@ -326,5 +326,5 @@ rm -rf $RPM_BUILD_ROOT
+ * Thu Jul 14 2005 Eric Biederman <ebiederm@xmission.com>
+ - Add the man pages, and the --without docs build option
+ 
+-* Wed Jul 7 2005 Chris Wright <chris@osdl.org>
++* Wed Jul 6 2005 Chris Wright <chris@osdl.org>
+ - initial git spec file
+-- 
+2.8.1.120.g4a400c2
