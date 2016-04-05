@@ -1,113 +1,71 @@
-From: tboegi@web.de
-Subject: [PATCH v1] correct blame for files commited with CRLF
-Date: Tue,  5 Apr 2016 21:23:54 +0200
-Message-ID: <1459884234-13026-1-git-send-email-tboegi@web.de>
-References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH] diff: run arguments through precompose_argv
+Date: Tue, 5 Apr 2016 21:27:34 +0200
+Message-ID: <570411A6.6060208@web.de>
+References: <1459802325-22056-1-git-send-email-alex@fournova.com>
+ <1459802325-22056-2-git-send-email-alex@fournova.com>
+ <xmqqzit80yov.fsf@gitster.mtv.corp.google.com> <57040EE0.40503@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 05 21:20:52 2016
+Cc: git@vger.kernel.org,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+To: Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
+	Alexander Rinass <alex@fournova.com>
+X-From: git-owner@vger.kernel.org Tue Apr 05 21:27:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anWWv-0003Lq-8U
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 21:20:49 +0200
+	id 1anWdo-0006Ra-LU
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 21:27:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752127AbcDETUo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Apr 2016 15:20:44 -0400
-Received: from mout.web.de ([212.227.17.11]:60558 "EHLO mout.web.de"
+	id S1752760AbcDET1w convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Apr 2016 15:27:52 -0400
+Received: from mout.web.de ([212.227.15.14]:62618 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751511AbcDETUn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2016 15:20:43 -0400
-Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb103) with
- ESMTPSA (Nemesis) id 0Lheqz-1baLt305NB-00mqRN; Tue, 05 Apr 2016 21:20:40
+	id S1751511AbcDET1v (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2016 15:27:51 -0400
+Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb003) with
+ ESMTPSA (Nemesis) id 0Maazp-1b7fx10nMn-00KAc7; Tue, 05 Apr 2016 21:27:42
  +0200
-X-Mailer: git-send-email 2.8.0.rc2.2.g1a4d45a.dirty
-In-Reply-To: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:cqpbJV3mSJNHavKXxnE4HYaPwbERX5s+kwJZ6J3KBH7/QdMLwM1
- uTG7rgD7c/YxOVpujeXvoeiXhEtGf1b88iDSMS+B0YHlMNyKI8c4sbgShfatUOBcvtAwlRx
- QBypGjWS+3nD9EqSsNleoJ4rfAjMpz53ZMNWHjDzksFXl14NZjKkNisOsni0tLciOjSyjr3
- PoaXVyRgX5YR9SHFQILMw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:i3SrQuiVAPM=:3UQJAIRIuz+3BuUFAdspyr
- wJ897C/VAVy7nVIS9u3nSOmnPlpShjM4Wjfbt6e6KBH6CPdod6zsUWNRetpFWpGpwcpoWZIRH
- 5/idEufTDrukQu55CkA3rrQYIL6gtmwQT7OwVDgeVDyx9J/NIAeLTBxMfgH7792M/d3pmzKO/
- jfynuagpb2nRMASEmJ1sKZ3D0MycL8zeqLEXjBhS+/b62xHcaZK9Zt/ZrPV9YzGUqohilDkHk
- 5q4IZZjr1cansfBqyzhA0do4tAdXFd1rw/WBTRk/X3ff76cb6aq+A8DSqo2uN2zIxYbFQFG8K
- itUY2MLnI3KqDPypWfo9zXTpQPUfza6kR/tE3qXdYYttTzn9IrpXdh+/L7oAeFMNojRfTila8
- h+jCjOuBlsbmdEy+Op8QdHJNvBr3HVeMGXoveqw9NldQueonFtsCPLhAM2hrWPbq3lAnjBwFq
- hZ11NoiWvexNf5jHgcMHKvirpW2bZymTLaYLUGUHKmJnnZjgNZBi6OaIIGEm4FjCFAJlzzG19
- D99avCUXmC9fKWT40tk8S8NFTpm2F5acqGflvPBToLGjT6XpFly2vWw/EdgqRiziSpOP8H1AS
- d1qIo3IisbCz0x2ZDNyLoel8589//UGB0QeGKyYjCeGdFnNnqrbVHOWW6FyXjMDp0lCrE/gXx
- QcAvib3aM8TRQ+OUtCHa6e0aa91N30xdA5/d6PZrIvP6udQxJxU9T1bPhHoPGhXwaDVw/j5AR
- qNGOH1cGv/W6j1NltiVNBGjf0VjNbKF0LMAh55csCVYRgct57mb5v4gvIaEXiYm52l/EVTZe 
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
+ Gecko/20100101 Thunderbird/38.7.0
+In-Reply-To: <57040EE0.40503@kdbg.org>
+X-Provags-ID: V03:K0:hT28g+kEnFhfr7t7DbGYT68ETbuYSJCdKvwfjwiOCXVwxmJz9NF
+ p1M9fAXrqqFMQFuFIoXaWrZ6drkpDlKAvvy+x9diSkUu8TmZeD/6f5B3pCSHYk1tGApe6/q
+ CXUJuyFePyP6wRHdmpMxXy0Xgt2vK9+pxIqw/mslMTo3GHhrwPkaHWqEIhV6EPNTdrJD+bc
+ 2LmWyjzXb4wMDjynh/K/A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ocDbWSMhG40=:4nb3PAoyNhf54rqxSGO3b7
+ oEtP9SAVnxmG7SvSf3/QqALlBCATjSgZgwLqyc1FyntH5ydFTHtV94Im5AUD05BpBmL6e1QqS
+ HEL/NZO+GUBRmPQUVId2PzrsZK2nJJKI6bdXtvqR2C+01Js/8kppsS7n98684BqfqzfOKkNIo
+ Lu37s7gg3P8BJwiVFi8LsESqa31Ejiyo9OA3OvtjvXF2uOLQiIVScy9wA7aDE8TyXbfACLvc0
+ ffJwyQxeC1LI2Ty7RugBBpYKPEM4aO0HQNlOcukK3fVXeqTSPFxt9U6MkI5mBij6rUheBHIdH
+ G+p2q/OdNUm6a4FZvIJQXgfwmEDw9umC9ki8kyQe4cln8aCy+Awe2/zPHHZyfPYo0jgU5cLxP
+ LHKg6bzBbJHXJC4UUtAMsw0SRIgg/uEId8LpvEhQC1bpQ9Q0YYXEQB5t06zO3rNCN+A3vmuF0
+ GStn9IUyjDJqx0J/0h0RnkHvc0WttSmPpd31xzAI8SZv9SjNWKtV4HouAAxFZDsskukfsAFDC
+ nWzDU44j+c/1xU+zdrE70iwVlIJjPkQOYcsOYID2fZTBhLRp1SrBfc01y0C3p1Df3V7eYbLki
+ obihX8R8MT9EzaKX7kCfbN2FDhrcZBB0MRsZjZVPpliFurHANBtf1UBNu4K9jUFbcszE0svVB
+ jtrVYKz+gH7W8leJD30g2rkMTJVwgXVb+fB3MLYPyMfyPs98D5ITCnsMqzOBG3/ivU5w4Tkhr
+ jkbqVwu5ct1JZW6pVb6gc3hRJDvOYLTHy/eBjsmX622qi6seUK+QAxJN3xsd0E3VKkz7Qo48 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290804>
 
-=46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
+On 05.04.16 21:15, Johannes Sixt wrote:
+> Am 05.04.2016 um 19:09 schrieb Junio C Hamano:
+>>> Thanks-to: Torsten Bo=CC=88gershausen <tboegi@web.de>
+>=20
+> I sense NFD disease: The combining diaresis should combine with the o=
+, not the g. Here is a correct line to copy-and-paste if you like:
+>=20
+> Thanks-to: Torsten B=C3=B6gershausen <tboegi@web.de>
+>=20
+> -- Hannes
 
-git blame reports lines as not "Not Committed Yet" when they have
-CRLF in the index, CRLF in the worktree and core.autocrlf is true.
+Good eyes.
 
-Since commit c48053 "new safer autocrlf handling", files that have CRLF
-in the index are not normalized at commit when core.autocrl is set.
-
-Add a call to read_cache() early in fake_working_tree_commit(),
-before calling convert_to_git().
-
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
- This fix is completely independent of the rest of the series,
- so break out 6/7 from tb/safe-crlf-output.
- The rest of the series will be send in a couple of days, some
- rework is needed.
-builtin/blame.c               |  1 +
- t/t8003-blame-corner-cases.sh | 14 ++++++++++++++
- 2 files changed, 15 insertions(+)
-
-diff --git a/builtin/blame.c b/builtin/blame.c
-index e982fb8..21f42b0 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2307,6 +2307,7 @@ static struct commit *fake_working_tree_commit(st=
-ruct diff_options *opt,
- 	unsigned mode;
- 	struct strbuf msg =3D STRBUF_INIT;
-=20
-+	read_cache();
- 	time(&now);
- 	commit =3D alloc_commit_node();
- 	commit->object.parsed =3D 1;
-diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases=
-=2Esh
-index 6568429..a9b266f 100755
---- a/t/t8003-blame-corner-cases.sh
-+++ b/t/t8003-blame-corner-cases.sh
-@@ -212,4 +212,18 @@ test_expect_success 'blame file with CRLF attribut=
-es text' '
- 	grep "A U Thor" actual
- '
-=20
-+test_expect_success 'blame file with CRLF core.autocrlf=3Dtrue' '
-+	git config core.autocrlf false &&
-+	printf "testcase\r\n" >crlfinrepo &&
-+	>.gitattributes &&
-+	git add crlfinrepo &&
-+	git commit -m "add crlfinrepo" &&
-+	git config core.autocrlf true &&
-+	mv crlfinrepo tmp &&
-+	git checkout crlfinrepo &&
-+	rm tmp &&
-+	git blame crlfinrepo >actual &&
-+	grep "A U Thor" actual
-+'
-+
- test_done
---=20
-2.8.0.rc2.2.g1a4d45a.dirty
+And thanks to Alexander for doing this patch
