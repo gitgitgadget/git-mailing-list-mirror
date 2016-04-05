@@ -1,140 +1,241 @@
-From: Ye Xiaolong <xiaolong.ye@intel.com>
-Subject: Re: [PATCH v3 2/4] format-patch: add '--base' option to record base
- tree info
-Date: Tue, 5 Apr 2016 13:52:03 +0800
-Message-ID: <20160405055203.GA10110@yexl-desktop>
-References: <1459388776-18066-1-git-send-email-xiaolong.ye@intel.com>
- <1459388776-18066-3-git-send-email-xiaolong.ye@intel.com>
- <xmqqy48yo8eb.fsf@gitster.mtv.corp.google.com>
- <20160401133801.GA2915@yexl-desktop>
- <xmqqpou9jp4b.fsf@gitster.mtv.corp.google.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH] branch: fix shortening of non-remote symrefs
+Date: Tue, 5 Apr 2016 11:51:14 +0530
+Message-ID: <CAOLa=ZTYc1+1ekC0q+c2sZ9==Wzw_=84V3bodhh0+pBnFAfjWg@mail.gmail.com>
+References: <570085DE.9000002@orcon.net.nz> <20160403041426.GA22211@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, fengguang.wu@intel.com, ying.huang@intel.com,
-	philip.li@intel.com, julie.du@intel.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 05 07:52:56 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Phil Sainty <psainty@orcon.net.nz>,
+	Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 05 08:21:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anJv6-0001nH-CX
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 07:52:56 +0200
+	id 1anKN4-0003hm-Ie
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Apr 2016 08:21:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753425AbcDEFww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Apr 2016 01:52:52 -0400
-Received: from mga01.intel.com ([192.55.52.88]:23931 "EHLO mga01.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750763AbcDEFwv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Apr 2016 01:52:51 -0400
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga101.fm.intel.com with ESMTP; 04 Apr 2016 22:52:50 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.24,442,1455004800"; 
-   d="scan'208";a="938394447"
-Received: from yexl-desktop.sh.intel.com (HELO localhost) ([10.239.159.26])
-  by fmsmga001.fm.intel.com with ESMTP; 04 Apr 2016 22:52:49 -0700
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	fengguang.wu@intel.com, ying.huang@intel.com, philip.li@intel.com,
-	julie.du@intel.com
-Content-Disposition: inline
-In-Reply-To: <xmqqpou9jp4b.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1753067AbcDEGVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Apr 2016 02:21:46 -0400
+Received: from mail-qg0-f42.google.com ([209.85.192.42]:33902 "EHLO
+	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751398AbcDEGVo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Apr 2016 02:21:44 -0400
+Received: by mail-qg0-f42.google.com with SMTP id c6so3010820qga.1
+        for <git@vger.kernel.org>; Mon, 04 Apr 2016 23:21:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=k+CE8KfJ701reVt3+D+y8u3t0i+eCsRoUMC1jBbCRT8=;
+        b=X2AUWPFKvRvvFRU/jKaHrOzZ1eompzXqMnBnqFaIDmCX72VlLfWNN0mdNhzwyp+h+z
+         OQ+kWxufIg06N7t4oqn1ZeRzsJmb5apB5rGcz5Sjj58Q0m6qsOxsm1NeJzxRx6uOzOs4
+         klYgOo4tkLwKqmXaeEiNAoHFIxVdt0aOzy01qh99SBaCmuJqqPVCogjOukd0k7HHjZTA
+         2q2FDxtlmSCVF+3hTUvwNZuHfI1gqn4xtP99CCY3uhuD+vsk965H/x0smoORO9zeTqGl
+         qpSu1d3JfgMdS9unaO4V8SaGKAesoaMI69mz2KrUlXBap9M2vDhjzsnj1l1Ui3gwOeCw
+         ltbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=k+CE8KfJ701reVt3+D+y8u3t0i+eCsRoUMC1jBbCRT8=;
+        b=IuqpMRjkBtJvmmfzTvCcMoEGHmUeEnvD2b8gu7IJdOOC3qs5UwTAMIkVKVerZr5Nk+
+         9H8W2VFltP2VsLmmLgZ+btiY/2wPlAIHQlUf+ElVWE4+AbzRqCQnqwEDZz3ScjYQdn3i
+         zUaFtLhJz3UAcnUdogLCfzT3DVkSk0evfktwwI+hAN6wNVQ4UHmCW/ojDh3Vh9TPzmEm
+         gSQOi8bu7ASI7e5rSKc2DFxydLwgeoA1foBwrBw+vRzwM/kbzFjhjeE4hrTiUtqn/muY
+         ST/RPqB1LfRhJN+nm3BU2s3uz1NTAOJQYVYcjSxdh16p14K9+YZaIGtSaQ+jbJhcHO1C
+         eEoQ==
+X-Gm-Message-State: AD7BkJLnZYayTkZI+SB+ze9Fhp3f/oHt9+4MM7OHxyJ7xXTUhDyQFcbl+70VY6KQI2aR1Mqngk8zkJSRPNBQgw==
+X-Received: by 10.140.232.15 with SMTP id d15mr18804893qhc.87.1459837303670;
+ Mon, 04 Apr 2016 23:21:43 -0700 (PDT)
+Received: by 10.140.92.238 with HTTP; Mon, 4 Apr 2016 23:21:14 -0700 (PDT)
+In-Reply-To: <20160403041426.GA22211@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290761>
 
-On Fri, Apr 01, 2016 at 09:00:20AM -0700, Junio C Hamano wrote:
->Ye Xiaolong <xiaolong.ye@intel.com> writes:
+Hello,
+
+On Sun, Apr 3, 2016 at 9:44 AM, Jeff King <peff@peff.net> wrote:
+> On Sun, Apr 03, 2016 at 02:54:22PM +1200, Phil Sainty wrote:
 >
->> On Thu, Mar 31, 2016 at 10:38:04AM -0700, Junio C Hamano wrote:
+>> Given the following symbolic reference:
 >>
->>>The contents of this look OK, but does it format correctly via
->>>AsciiDoc?  I suspect that only the first paragraph up to "of this
->>>shape:" would appear correctly and all the rest would become funny.
+>> $ git symbolic-ref refs/heads/m refs/heads/master
 >>
->> Sorry, just heard of AsciiDoc, I will try to use it to do the right format work.
->
->Please make sure "make -C Documentation" produces sensible output
->for *.1 (manpage) and *.html.
-OK.
-
->
->>>> +	init_revisions(&revs, NULL);
->>>> +	revs.max_parents = 1;
->>>> +	base->object.flags |= UNINTERESTING;
->>>> +	add_pending_object(&revs, &base->object, "base");
->>>> +	for (i = 0; i < total; i++) {
->>>> +		list[i]->object.flags |= 0;
->>>
->>>What does this statement do, exactly?  Are you clearing some bits
->>>but not others, and if so which ones?
 >>
->> My mistake, it's useless and should be removed.
->
->It probably make sense to do "&= ~UNINTERESTING" there, though.  You
->are adding one UNINTERESTING object (i.e. the base) and adding
->objects that are on the list[] as interesting.
-Yeah, it does make sense, I'll do the change.
-
->
->>>This shows the patches in the order discovered by the revision
->>>traversal, which typically is newer to older.  Is that intended?
->>>Is it assumed that the order of the patches does not matter?
+>> Correct in 2.6.6:
 >>
->> The prerequisite patches should show in topological order, thus robot
->> could parse them one by one and apply the patches in reverse order.
->
->If you have history where base is B, with three prerequisites 1-2-3,
->before the patch series A-B-C, i.e.
->
->	B---1---2---3---A---B---C
->
->if you are showing "base-commit: B" as the first line in the base
->tree information block, it would be natural to expect that the
->prerequisite patch ids are listed for 1 and then 2 and then finally
->3, i.e.
->
->	base-commit: B
->        prerequisite-patch-id: 1
->        prerequisite-patch-id: 2
->        prerequisite-patch-id: 3
->
->no?
-I think this sounds more sensible than what I had thought, I'll adjust 
-the showing sequence accordingly.
+>> $ PATH=~/git/git-2.6.6:$PATH git branch
+>>   m -> master
+>> * master
+>>
+>>
+>> Wrong in 2.7.0:
+>>
+>> $ PATH=~/git/git-2.7.0:$PATH git branch
+>>   m -> m
+>> * master
+
+Thanks for reporting this.
 
 >
->Also I know _you_ intend to consume this by robot, but it makes me
->wonder if with a minimum update you can make the output also more
->useful for bystander humans.  A mailing list participant may
+> Thanks for an easy test case. Though we don't officially support
+> arbitrary symrefs in the ref namespace, they do mostly work. And
+> certainly the current output is nonsense, and it worked before. This
+> bisects to aedcb7d (branch.c: use 'ref-filter' APIs, 2015-09-23).
 >
-> - see an early round of a series that interests her,
-> - try to apply them to her tree,
-> - find that the series does not apply, but
-> - sees that a block to help identify to what tree the series is
->   meant to apply.
+> The fix is below. Karthik, I didn't look at all how this interacts with
+> your work to convert branch to ref-filter for printing. I imagine it
+> drops this code completely, but we should make sure that ref-filter gets
+> this case right. I almost didn't prepare this patch at all, but I
+> suspect we may want it for "maint", while the full conversion would wait
+> for "master".
 >
->With a list of 40-hex alone, she may not be able to figure out the
->prerequisites, but if there is some other clue that helps her to
->identify the base commit and these patches, she may be able to
->construct a tree that is close enough.  Maybe you can help her by
->appending the title of the commit and patches at the end of these
->lines?
->
->This is not a strong suggestion (yet); I am thinking aloud at this
->point, without knowing how much it would help in practice to do so.
-Thanks for the suggestions, actually it is what we have planned for next
-step to make the output info more friendly for human being, I'll
-follow up on it.
 
-Thanks,
-Xiaolong.
+It's dropped in my latest series. I should be able to replicate what you've done
+here onto ref-filter.c. Since I'm re-rolling my patches, I'll add this
+one along too.
 
->--
->To unsubscribe from this list: send the line "unsubscribe git" in
->the body of a message to majordomo@vger.kernel.org
->More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> -- >8 --
+> Subject: branch: fix shortening of non-remote symrefs
+>
+> Commit aedcb7d (branch.c: use 'ref-filter' APIs, 2015-09-23)
+> adjusted the symref-printing code to look like this:
+>
+>     if (item->symref) {
+>             skip_prefix(item->symref, "refs/remotes/", &desc);
+>             strbuf_addf(&out, " -> %s", desc);
+>     }
+>
+> This has three bugs in it:
+>
+>   1. It always skips past "refs/remotes/", instead of
+>      skipping past the prefix associated with the branch we
+>      are showing (so commonly we see "refs/remotes/" for the
+>      refs/remotes/origin/HEAD symref, but the previous code
+>      would skip "refs/heads/" when showing a symref it found
+>      in refs/heads/.
+>
+>   2. If skip_prefix() does not match, it leaves "desc"
+>      untouched, and we show whatever happened to be in it
+>      (which is the refname from a call to skip_prefix()
+>      earlier in the function).
+>
+>   3. If we do match with skip_prefix(), we stomp on the
+>      "desc" variable, which is later passed to
+>      add_verbose_info(). We probably want to retain the
+>      original refname there (though it likely doesn't matter
+>      in practice, since after all, one points to the other).
+>
+> The fix to match the original code is fairly easy: record
+> the prefix to strip based on item->kind, and use it here.
+> However, since we already have a local variable named "prefix",
+> let's give the two prefixes verbose names so we don't
+> confuse them.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> The test makes sure we restored the v2.6.x behavior, namely that
+> cross-prefix symrefs will not be shortened at all. It might be nice to
+> show:
+>
+>   ref-to-remote -> remotes/origin/branch-one
+>
+> or something, but that should be separate from the fix (and I don't
+> overly care either way, so I probably won't work on it).
+>
+>  builtin/branch.c         | 19 ++++++++++++-------
+>  t/t3203-branch-output.sh | 12 ++++++++++++
+>  2 files changed, 24 insertions(+), 7 deletions(-)
+>
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 7b45b6b..f6c23bf 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -393,22 +393,25 @@ static void format_and_print_ref_item(struct ref_array_item *item, int maxwidth,
+>         int current = 0;
+>         int color;
+>         struct strbuf out = STRBUF_INIT, name = STRBUF_INIT;
+> -       const char *prefix = "";
+> +       const char *prefix_to_show = "";
+> +       const char *prefix_to_skip = NULL;
+>         const char *desc = item->refname;
+>         char *to_free = NULL;
+>
+>         switch (item->kind) {
+>         case FILTER_REFS_BRANCHES:
+> -               skip_prefix(desc, "refs/heads/", &desc);
+> +               prefix_to_skip = "refs/heads/";
+> +               skip_prefix(desc, prefix_to_skip, &desc);
+>                 if (!filter->detached && !strcmp(desc, head))
+>                         current = 1;
+>                 else
+>                         color = BRANCH_COLOR_LOCAL;
+>                 break;
+>         case FILTER_REFS_REMOTES:
+> -               skip_prefix(desc, "refs/remotes/", &desc);
+> +               prefix_to_skip = "refs/remotes/";
+> +               skip_prefix(desc, prefix_to_skip, &desc);
+>                 color = BRANCH_COLOR_REMOTE;
+> -               prefix = remote_prefix;
+> +               prefix_to_show = remote_prefix;
+>                 break;
+>         case FILTER_REFS_DETACHED_HEAD:
+>                 desc = to_free = get_head_description();
+> @@ -425,7 +428,7 @@ static void format_and_print_ref_item(struct ref_array_item *item, int maxwidth,
+>                 color = BRANCH_COLOR_CURRENT;
+>         }
+>
+> -       strbuf_addf(&name, "%s%s", prefix, desc);
+> +       strbuf_addf(&name, "%s%s", prefix_to_show, desc);
+>         if (filter->verbose) {
+>                 int utf8_compensation = strlen(name.buf) - utf8_strwidth(name.buf);
+>                 strbuf_addf(&out, "%c %s%-*s%s", c, branch_get_color(color),
+> @@ -436,8 +439,10 @@ static void format_and_print_ref_item(struct ref_array_item *item, int maxwidth,
+>                             name.buf, branch_get_color(BRANCH_COLOR_RESET));
+>
+>         if (item->symref) {
+> -               skip_prefix(item->symref, "refs/remotes/", &desc);
+> -               strbuf_addf(&out, " -> %s", desc);
+> +               const char *symref = item->symref;
+> +               if (prefix_to_skip)
+> +                       skip_prefix(symref, prefix_to_skip, &symref);
+> +               strbuf_addf(&out, " -> %s", symref);
+>         }
+>         else if (filter->verbose)
+>                 /* " f7c0c00 [ahead 58, behind 197] vcs-svn: drop obj_pool.h" */
+> diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+> index 4261403..c6a3ccb 100755
+> --- a/t/t3203-branch-output.sh
+> +++ b/t/t3203-branch-output.sh
+> @@ -184,4 +184,16 @@ test_expect_success 'ambiguous branch/tag not marked' '
+>         test_cmp expect actual
+>  '
+>
+> +test_expect_success 'local-branch symrefs shortened properly' '
+> +       git symbolic-ref refs/heads/ref-to-branch refs/heads/branch-one &&
+> +       git symbolic-ref refs/heads/ref-to-remote refs/remotes/origin/branch-one &&
+> +       cat >expect <<-\EOF &&
+> +         ref-to-branch -> branch-one
+> +         ref-to-remote -> refs/remotes/origin/branch-one
+> +       EOF
+> +       git branch >actual.raw &&
+> +       grep ref-to <actual.raw >actual &&
+> +       test_cmp expect actual
+> +'
+> +
+>  test_done
+> --
+> 2.8.0.429.gaaf8de0
+>
+
+This seems to fix the bug very easily and effectively. Thanks for the patch :)
+
+-- 
+Regards,
+Karthik Nayak
