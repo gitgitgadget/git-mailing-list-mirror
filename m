@@ -1,212 +1,277 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 01/11] rerere: split conflict ID further
-Date: Wed,  6 Apr 2016 16:05:25 -0700
-Message-ID: <1459983935-25267-2-git-send-email-gitster@pobox.com>
+Subject: [PATCH v3 09/11] rerere: move code related to "forget" together
+Date: Wed,  6 Apr 2016 16:05:33 -0700
+Message-ID: <1459983935-25267-10-git-send-email-gitster@pobox.com>
 References: <1459204942-26601-1-git-send-email-gitster@pobox.com>
  <1459983935-25267-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 07 01:05:55 2016
+X-From: git-owner@vger.kernel.org Thu Apr 07 01:06:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anwWF-0008M9-VG
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 01:05:52 +0200
+	id 1anwWR-0008RF-D6
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 01:06:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753985AbcDFXFq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2016 19:05:46 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:58233 "EHLO
+	id S1754428AbcDFXFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2016 19:05:55 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:50050 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753518AbcDFXFp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2016 19:05:45 -0400
+	with ESMTP id S1752191AbcDFXFy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2016 19:05:54 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 004B853714;
-	Wed,  6 Apr 2016 19:05:39 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F3DC75373F;
+	Wed,  6 Apr 2016 19:05:52 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=TpqQ
-	KYrzDE2EW923m5iPBnTufH4=; b=icipIvuTyit2ipPBbvwkgyp8ODiYFWyQj8Lv
-	puMW2Q1zoEV8yd+xuDrq7hEjCKcWuTVb4Cyhp86U7WFBUdr9KMXJ/OUbLxw+z0lM
-	aarrmyv/ginv5H/qTEuyNQFZItJfVLHs/NDlEmp7I3RuafC1DEQid4AXHY07S9U2
-	rSJ5+80=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=k7G6
+	GPGBD+GvNxdvqzgrYVvtBzg=; b=s8LiNq0nK1NjwWkLSv3RVMEryjfh+JG1/mG/
+	D6XlrBLTgLoUFVOSOvdA2xylqreIPeBFDCtPDxpvtiSOnUJwn60nrrt98VG8OvHI
+	1kFt2DM4Cp1Dl/fwB/nchIAzahvb7Ljm5cnjjzZ6PrE7sJVv5bgRkX2TyyH16ZcG
+	7FSaCmg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=hm0XL3
-	P10zR7FIIA7pDg9qYyqXy67ZMrWF5md6kAsD1yAbUhcrriGMZrRlANatip5PCijM
-	S8s7BfkSWUdFzk8B4zch4L+eZh9bsTyeAGIendiSHuB25UoRV1zgUcjSwWa/2YUh
-	4Ssqv0j4kEqYD43r7E402QG+gNe2sWBE7QJuU=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=HYP3Q2
+	SaFSPzS22oRExpI6Jp5qdNFfQXoMu+si5bTpR8blP3Azwl+ObbsCSOOc8AC1KFv8
+	Il8orweizUXgdMkSYKQhYw5SWTHAQ8JBWQJjnjHRBRchdLEt/oFTbPkXB/2j0hT9
+	O/E8/6dTXxPIaw8V6XQrn+HBCwbq2DETPMrfg=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E4CA953712;
-	Wed,  6 Apr 2016 19:05:38 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EC0F95373E;
+	Wed,  6 Apr 2016 19:05:52 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 56EF353710;
-	Wed,  6 Apr 2016 19:05:38 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 58B7B5373C;
+	Wed,  6 Apr 2016 19:05:52 -0400 (EDT)
 X-Mailer: git-send-email 2.3.8-32-g0ce02b3
 In-Reply-To: <1459983935-25267-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 13BF532C-FC4C-11E5-B21E-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 1C18C36E-FC4C-11E5-A915-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290893>
 
-The plan is to keep assigning the backward compatible conflict ID
-based on the hash of the (normalized) text of conflicts, keep using
-that conflict ID as the directory name under $GIT_DIR/rr-cache/, but
-allow each conflicted path to use a separate "variant" to record
-resolutions, i.e. having more than one <preimage,postimage> pairs
-under $GIT_DIR/rr-cache/$ID/ directory.  As the first step in that
-direction, separate the shared "conflict ID" out of the rerere_id
-structure.
-
-The plan is to keep information per $ID in rerere_dir, that can be
-shared among rerere_id that is per conflicted path.
-
-When we are done with rerere(), which can be directly called from
-other programs like "git apply", "git commit" and "git merge", the
-shared rerere_dir structures can be freed entirely, so they are not
-reference-counted and they are not freed when we release rerere_id's
-that reference them.
+"rerere forget" is the only user of handle_cache() helper, which in
+turn is the only user of rerere_io that reads from an in-core buffer
+whose getline method is implemented as rerere_mem_getline().  Gather
+them together.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- rerere.c | 61 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-----
- rerere.h |  3 ++-
- 2 files changed, 58 insertions(+), 6 deletions(-)
+ rerere.c | 194 +++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 97 insertions(+), 97 deletions(-)
 
 diff --git a/rerere.c b/rerere.c
-index 3d0fa8f..a5d8a06 100644
+index 3d4dd33..2b870e0 100644
 --- a/rerere.c
 +++ b/rerere.c
-@@ -8,6 +8,7 @@
- #include "ll-merge.h"
- #include "attr.h"
- #include "pathspec.h"
-+#include "sha1-lookup.h"
- 
- #define RESOLVED 0
- #define PUNTED 1
-@@ -22,6 +23,23 @@ static int rerere_autoupdate;
- 
- static char *merge_rr_path;
- 
-+static int rerere_dir_nr;
-+static int rerere_dir_alloc;
-+
-+static struct rerere_dir {
-+	unsigned char sha1[20];
-+} **rerere_dir;
-+
-+static void free_rerere_dirs(void)
-+{
-+	int i;
-+	for (i = 0; i < rerere_dir_nr; i++)
-+		free(rerere_dir[i]);
-+	free(rerere_dir);
-+	rerere_dir_nr = rerere_dir_alloc = 0;
-+	rerere_dir = NULL;
-+}
-+
- static void free_rerere_id(struct string_list_item *item)
- {
- 	free(item->util);
-@@ -29,7 +47,7 @@ static void free_rerere_id(struct string_list_item *item)
- 
- static const char *rerere_id_hex(const struct rerere_id *id)
- {
--	return id->hex;
-+	return sha1_to_hex(id->collection->sha1);
+@@ -517,103 +517,6 @@ static int handle_file(const char *path, unsigned char *sha1, const char *output
  }
  
- const char *rerere_path(const struct rerere_id *id, const char *file)
-@@ -40,6 +58,37 @@ const char *rerere_path(const struct rerere_id *id, const char *file)
- 	return git_path("rr-cache/%s/%s", rerere_id_hex(id), file);
+ /*
+- * Subclass of rerere_io that reads from an in-core buffer that is a
+- * strbuf
+- */
+-struct rerere_io_mem {
+-	struct rerere_io io;
+-	struct strbuf input;
+-};
+-
+-/*
+- * ... and its getline() method implementation
+- */
+-static int rerere_mem_getline(struct strbuf *sb, struct rerere_io *io_)
+-{
+-	struct rerere_io_mem *io = (struct rerere_io_mem *)io_;
+-	char *ep;
+-	size_t len;
+-
+-	strbuf_release(sb);
+-	if (!io->input.len)
+-		return -1;
+-	ep = memchr(io->input.buf, '\n', io->input.len);
+-	if (!ep)
+-		ep = io->input.buf + io->input.len;
+-	else if (*ep == '\n')
+-		ep++;
+-	len = ep - io->input.buf;
+-	strbuf_add(sb, io->input.buf, len);
+-	strbuf_remove(&io->input, 0, len);
+-	return 0;
+-}
+-
+-static int handle_cache(const char *path, unsigned char *sha1, const char *output)
+-{
+-	mmfile_t mmfile[3] = {{NULL}};
+-	mmbuffer_t result = {NULL, 0};
+-	const struct cache_entry *ce;
+-	int pos, len, i, hunk_no;
+-	struct rerere_io_mem io;
+-	int marker_size = ll_merge_marker_size(path);
+-
+-	/*
+-	 * Reproduce the conflicted merge in-core
+-	 */
+-	len = strlen(path);
+-	pos = cache_name_pos(path, len);
+-	if (0 <= pos)
+-		return -1;
+-	pos = -pos - 1;
+-
+-	while (pos < active_nr) {
+-		enum object_type type;
+-		unsigned long size;
+-
+-		ce = active_cache[pos++];
+-		if (ce_namelen(ce) != len || memcmp(ce->name, path, len))
+-			break;
+-		i = ce_stage(ce) - 1;
+-		if (!mmfile[i].ptr) {
+-			mmfile[i].ptr = read_sha1_file(ce->sha1, &type, &size);
+-			mmfile[i].size = size;
+-		}
+-	}
+-	for (i = 0; i < 3; i++)
+-		if (!mmfile[i].ptr && !mmfile[i].size)
+-			mmfile[i].ptr = xstrdup("");
+-
+-	/*
+-	 * NEEDSWORK: handle conflicts from merges with
+-	 * merge.renormalize set, too
+-	 */
+-	ll_merge(&result, path, &mmfile[0], NULL,
+-		 &mmfile[1], "ours",
+-		 &mmfile[2], "theirs", NULL);
+-	for (i = 0; i < 3; i++)
+-		free(mmfile[i].ptr);
+-
+-	memset(&io, 0, sizeof(io));
+-	io.io.getline = rerere_mem_getline;
+-	if (output)
+-		io.io.output = fopen(output, "w");
+-	else
+-		io.io.output = NULL;
+-	strbuf_init(&io.input, 0);
+-	strbuf_attach(&io.input, result.ptr, result.size, result.size);
+-
+-	/*
+-	 * Grab the conflict ID and optionally write the original
+-	 * contents with conflict markers out.
+-	 */
+-	hunk_no = handle_path(sha1, (struct rerere_io *)&io, marker_size);
+-	strbuf_release(&io.input);
+-	if (io.io.output)
+-		fclose(io.io.output);
+-	return hunk_no;
+-}
+-
+-/*
+  * Look at a cache entry at "i" and see if it is not conflicting,
+  * conflicting and we are willing to handle, or conflicting and
+  * we are unable to handle, and return the determination in *type.
+@@ -1005,6 +908,103 @@ int rerere(int flags)
+ 	return status;
  }
  
-+static const unsigned char *rerere_dir_sha1(size_t i, void *table)
++/*
++ * Subclass of rerere_io that reads from an in-core buffer that is a
++ * strbuf
++ */
++struct rerere_io_mem {
++	struct rerere_io io;
++	struct strbuf input;
++};
++
++/*
++ * ... and its getline() method implementation
++ */
++static int rerere_mem_getline(struct strbuf *sb, struct rerere_io *io_)
 +{
-+	struct rerere_dir **rr_dir = table;
-+	return rr_dir[i]->sha1;
++	struct rerere_io_mem *io = (struct rerere_io_mem *)io_;
++	char *ep;
++	size_t len;
++
++	strbuf_release(sb);
++	if (!io->input.len)
++		return -1;
++	ep = memchr(io->input.buf, '\n', io->input.len);
++	if (!ep)
++		ep = io->input.buf + io->input.len;
++	else if (*ep == '\n')
++		ep++;
++	len = ep - io->input.buf;
++	strbuf_add(sb, io->input.buf, len);
++	strbuf_remove(&io->input, 0, len);
++	return 0;
 +}
 +
-+static struct rerere_dir *find_rerere_dir(const char *hex)
++static int handle_cache(const char *path, unsigned char *sha1, const char *output)
 +{
-+	unsigned char sha1[20];
-+	struct rerere_dir *rr_dir;
-+	int pos;
++	mmfile_t mmfile[3] = {{NULL}};
++	mmbuffer_t result = {NULL, 0};
++	const struct cache_entry *ce;
++	int pos, len, i, hunk_no;
++	struct rerere_io_mem io;
++	int marker_size = ll_merge_marker_size(path);
 +
-+	if (get_sha1_hex(hex, sha1))
-+		return NULL; /* BUG */
-+	pos = sha1_pos(sha1, rerere_dir, rerere_dir_nr, rerere_dir_sha1);
-+	if (pos < 0) {
-+		rr_dir = xmalloc(sizeof(*rr_dir));
-+		hashcpy(rr_dir->sha1, sha1);
-+		pos = -1 - pos;
++	/*
++	 * Reproduce the conflicted merge in-core
++	 */
++	len = strlen(path);
++	pos = cache_name_pos(path, len);
++	if (0 <= pos)
++		return -1;
++	pos = -pos - 1;
 +
-+		/* Make sure the array is big enough ... */
-+		ALLOC_GROW(rerere_dir, rerere_dir_nr + 1, rerere_dir_alloc);
-+		/* ... and add it in. */
-+		rerere_dir_nr++;
-+		memmove(rerere_dir + pos + 1, rerere_dir + pos,
-+			(rerere_dir_nr - pos - 1) * sizeof(*rerere_dir));
-+		rerere_dir[pos] = rr_dir;
++	while (pos < active_nr) {
++		enum object_type type;
++		unsigned long size;
++
++		ce = active_cache[pos++];
++		if (ce_namelen(ce) != len || memcmp(ce->name, path, len))
++			break;
++		i = ce_stage(ce) - 1;
++		if (!mmfile[i].ptr) {
++			mmfile[i].ptr = read_sha1_file(ce->sha1, &type, &size);
++			mmfile[i].size = size;
++		}
 +	}
-+	return rerere_dir[pos];
++	for (i = 0; i < 3; i++)
++		if (!mmfile[i].ptr && !mmfile[i].size)
++			mmfile[i].ptr = xstrdup("");
++
++	/*
++	 * NEEDSWORK: handle conflicts from merges with
++	 * merge.renormalize set, too?
++	 */
++	ll_merge(&result, path, &mmfile[0], NULL,
++		 &mmfile[1], "ours",
++		 &mmfile[2], "theirs", NULL);
++	for (i = 0; i < 3; i++)
++		free(mmfile[i].ptr);
++
++	memset(&io, 0, sizeof(io));
++	io.io.getline = rerere_mem_getline;
++	if (output)
++		io.io.output = fopen(output, "w");
++	else
++		io.io.output = NULL;
++	strbuf_init(&io.input, 0);
++	strbuf_attach(&io.input, result.ptr, result.size, result.size);
++
++	/*
++	 * Grab the conflict ID and optionally write the original
++	 * contents with conflict markers out.
++	 */
++	hunk_no = handle_path(sha1, (struct rerere_io *)&io, marker_size);
++	strbuf_release(&io.input);
++	if (io.io.output)
++		fclose(io.io.output);
++	return hunk_no;
 +}
 +
- static int has_rerere_resolution(const struct rerere_id *id)
- {
- 	struct stat st;
-@@ -50,7 +99,7 @@ static int has_rerere_resolution(const struct rerere_id *id)
- static struct rerere_id *new_rerere_id_hex(char *hex)
- {
- 	struct rerere_id *id = xmalloc(sizeof(*id));
--	xsnprintf(id->hex, sizeof(id->hex), "%s", hex);
-+	id->collection = find_rerere_dir(hex);
- 	return id;
- }
- 
-@@ -810,12 +859,14 @@ int setup_rerere(struct string_list *merge_rr, int flags)
- int rerere(int flags)
- {
- 	struct string_list merge_rr = STRING_LIST_INIT_DUP;
--	int fd;
-+	int fd, status;
- 
- 	fd = setup_rerere(&merge_rr, flags);
- 	if (fd < 0)
- 		return 0;
--	return do_plain_rerere(&merge_rr, fd);
-+	status = do_plain_rerere(&merge_rr, fd);
-+	free_rerere_dirs();
-+	return status;
- }
- 
  static int rerere_forget_one_path(const char *path, struct string_list *rr)
-@@ -900,7 +951,7 @@ int rerere_forget(struct pathspec *pathspec)
- static struct rerere_id *dirname_to_id(const char *name)
  {
- 	static struct rerere_id id;
--	xsnprintf(id.hex, sizeof(id.hex), "%s", name);
-+	id.collection = find_rerere_dir(name);
- 	return &id;
- }
- 
-diff --git a/rerere.h b/rerere.h
-index ce545d0..faf5a23 100644
---- a/rerere.h
-+++ b/rerere.h
-@@ -15,8 +15,9 @@ struct pathspec;
-  */
- extern void *RERERE_RESOLVED;
- 
-+struct rerere_dir;
- struct rerere_id {
--	char hex[41];
-+	struct rerere_dir *collection;
- };
- 
- extern int setup_rerere(struct string_list *, int);
+ 	const char *filename;
 -- 
 2.8.1-273-ga2cd0f9
