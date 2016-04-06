@@ -1,84 +1,99 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: git interpret-trailers with multiple keys
-Date: Wed, 06 Apr 2016 18:58:30 +0200
-Message-ID: <vpqlh4qbrnt.fsf@anie.imag.fr>
-References: <20160406191054-mutt-send-email-mst@redhat.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Triangular workflows and some anecdotes from the trenches
+Date: Wed, 06 Apr 2016 10:01:26 -0700
+Message-ID: <xmqqbn5my8m1.fsf@gitster.mtv.corp.google.com>
+References: <CAFOYHZARoEXkT6kVy7+wMSqUxSVVHHMV5KfhU6FON3tB6XEuMg@mail.gmail.com>
+	<xmqq37qz1ypa.fsf@gitster.mtv.corp.google.com>
+	<CAFOYHZDx1cqwUnR9E=RQKboSfF4gWDjERvEWQA_YePZq64QarQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Wed Apr 06 18:58:50 2016
+Cc: Git <git@vger.kernel.org>
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 06 19:01:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anqn2-000439-4M
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Apr 2016 18:58:48 +0200
+	id 1anqpk-0005CE-NC
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Apr 2016 19:01:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751845AbcDFQ6l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2016 12:58:41 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:39975 "EHLO mx1.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751176AbcDFQ6k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2016 12:58:40 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u36GwSAs002658
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Wed, 6 Apr 2016 18:58:29 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u36GwUW1015325;
-	Wed, 6 Apr 2016 18:58:30 +0200
-In-Reply-To: <20160406191054-mutt-send-email-mst@redhat.com> (Michael S.
-	Tsirkin's message of "Wed, 6 Apr 2016 19:12:56 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Wed, 06 Apr 2016 18:58:29 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u36GwSAs002658
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1460566709.83979@uxaundD8YIXoKCUrV1ajdg
+	id S1751315AbcDFRBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2016 13:01:30 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:52875 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750847AbcDFRB3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2016 13:01:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 06CC552CA7;
+	Wed,  6 Apr 2016 13:01:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=y0L/acKmCa8E5cxxP3QVK9TEuVk=; b=jBpDbr
+	0vIK/ADuLUCnU52L7/nqTm16vpd6VFdwcvitoBumFRucOoOoERgGvQlw6YiWLYjJ
+	aSLLup8ijAVjbD0cAVyz0YWnjahMrjatgUR9kuzGUtmESrrZOf6DUKxkGDZLnGTB
+	nLvLa7XlkZDvk8SBpMyuUWoMagHS72WLKRbY4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bCOd6kj82xSSHa02aNv4R/9XFIQZ3bAv
+	5rw77geAVTWYAuRJMTm1fFnoIH/ziGVbpcqxxsK1G7PWxADLPTFlynLm/ZEOQrGS
+	OhCT1jaBDY78AJ+NeJsYkX8RdzN+DdyuSDr3WB4HctEOJHbVwoUZXUxfKCTmWQVt
+	sIcYRTZsNOA=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F2D9352CA6;
+	Wed,  6 Apr 2016 13:01:27 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6FF1652CA5;
+	Wed,  6 Apr 2016 13:01:27 -0400 (EDT)
+In-Reply-To: <CAFOYHZDx1cqwUnR9E=RQKboSfF4gWDjERvEWQA_YePZq64QarQ@mail.gmail.com>
+	(Chris Packham's message of "Wed, 6 Apr 2016 20:30:29 +1200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 33991526-FC19-11E5-A7FF-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290854>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+Chris Packham <judge.packham@gmail.com> writes:
 
-> I have this in .git/config
+> On Wed, Apr 6, 2016 at 10:24 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> [trailer "r"]
->         key = Reviewed-by
->         command = "echo \"Michael S. Tsirkin <mst@redhat.com\""
-> [trailer "s"]
->         key = Signed-off-by
->         command = "echo \"Michael S. Tsirkin <mst@redhat.com\""
+>> Developer ending up amending is not an issue per-se, unless the
+>> result is pushed back to the public.
 >
-> whenever I run git interpret-trailers -t r I see these lines added:
+> Correct and that was when the developer in question realised he had a problem.
+
+But then "push" would have failed and correcting would all be local,
+no?
+
+>> A bigger problem may be how you make sure everybody sets up
+>> @{upstream} correctly.  You may fork your own copy of a branch from
+>> the target branch, start working on it, further fork other branches
+>> on your work to experiment different approaches, with the intention
+>> to later use the best one to update your first fork.
+>>
+>> At which point, the @{upstream} of the secondary branches are your
+>> own first branch, not the public one--which is not a problem per-se,
+>> because your first branch (whose @{upstream} is the remote one) is
+>> not yet public and you should be allowed to freely update it to
+>> polish it by rewriting.  But then after you push out your first
+>> branch as an interim snapshot to the public, you no longer want to
+>> rewrite the commits reachable from it.  So (to put it mildly) it
+>> would be quite complex to get all the corner cases right, and the
+>> definition of "right" would probably depend on the exact workflow.
 >
-> Reviewed-by: Michael S. Tsirkin <mst@redhat.com
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com
-> Reviewed-by: Michael S. Tsirkin <mst@redhat.com
+> I think you could still argue that if @{upstream} exists. Warn about
+> (or disallow) re-writing anything anything that is reachable from it.
 >
-> Why is Reviewed-by repeated?  Bug or feature?
+> There is still the possibility of if someone else rewinding
+> @{upstream} on you and I think the scenario you've highlighted is just
+> a case of doing it to yourself.
 
-The first two lines are added unconditionally:
-
-$ echo | git interpret-trailers 
-
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com
-
-The last line is added because you've asked for it with --trailer r.
-
-I don't think it's currently possible to get the behavior you seem to
-expect, ie. to define trailer tokens fully (key and value) in your
-config file but use them only on request.
-
-(BTW, I think you wanted a closing > at the end)
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+But at that point, you are not doing much to help the normal users.
+I was actually expecting a response with a different approach, e.g.
+instead of relying on @{upstream} that may or may not serve as a
+good check anyway, make sure nothing reachable from any of the
+refs in refs/remotes/* is not updated by amend or rebase.
