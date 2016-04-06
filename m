@@ -1,150 +1,212 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 06/11] t4200: rerere a merge with two identical conflicts
-Date: Wed,  6 Apr 2016 16:05:30 -0700
-Message-ID: <1459983935-25267-7-git-send-email-gitster@pobox.com>
+Subject: [PATCH v3 01/11] rerere: split conflict ID further
+Date: Wed,  6 Apr 2016 16:05:25 -0700
+Message-ID: <1459983935-25267-2-git-send-email-gitster@pobox.com>
 References: <1459204942-26601-1-git-send-email-gitster@pobox.com>
  <1459983935-25267-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 07 01:05:53 2016
+X-From: git-owner@vger.kernel.org Thu Apr 07 01:05:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anwWH-0008M9-Gy
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 01:05:53 +0200
+	id 1anwWF-0008M9-VG
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 01:05:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754387AbcDFXFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2016 19:05:50 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:54148 "EHLO
+	id S1753985AbcDFXFq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2016 19:05:46 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:58233 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752574AbcDFXFs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2016 19:05:48 -0400
+	with ESMTP id S1753518AbcDFXFp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2016 19:05:45 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8BAC853731;
-	Wed,  6 Apr 2016 19:05:47 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 004B853714;
+	Wed,  6 Apr 2016 19:05:39 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=tbwU
-	6QE1aF2CJVCf27HT6lXM9jQ=; b=cqAcklczjzEjwQJKzL1nE9kvZwpe9ZCQoVxC
-	SG2Rsxhk3nonKGpktWyrbIQsmpL0Gc98xxEK+cJ6E0eYbTucAdIZssbRBP1dhJsF
-	sAd+GCFCJO2hpjzAkYjgyhYH62kaTel3HzWHscM9IB+v5CXxhowGi9liPqqNh0Km
-	EBlrdHw=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=TpqQ
+	KYrzDE2EW923m5iPBnTufH4=; b=icipIvuTyit2ipPBbvwkgyp8ODiYFWyQj8Lv
+	puMW2Q1zoEV8yd+xuDrq7hEjCKcWuTVb4Cyhp86U7WFBUdr9KMXJ/OUbLxw+z0lM
+	aarrmyv/ginv5H/qTEuyNQFZItJfVLHs/NDlEmp7I3RuafC1DEQid4AXHY07S9U2
+	rSJ5+80=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=qVR11G
-	G+ecNefUR9wWhZi3ay8/yhDmNU7llfVc9RuALu1A4eL9s8zVW+MH2xGaHjmB6aq3
-	VbQoBJaOJE4AyZmrq6WOIHsle9eKD1mdvSE4CTDYND+AsYTrLgIueUEmTVTwzPBI
-	2lD5949mcNoEo5UdpeZJVzNKEl9m1poPjSsh0=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=hm0XL3
+	P10zR7FIIA7pDg9qYyqXy67ZMrWF5md6kAsD1yAbUhcrriGMZrRlANatip5PCijM
+	S8s7BfkSWUdFzk8B4zch4L+eZh9bsTyeAGIendiSHuB25UoRV1zgUcjSwWa/2YUh
+	4Ssqv0j4kEqYD43r7E402QG+gNe2sWBE7QJuU=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8353C53730;
-	Wed,  6 Apr 2016 19:05:47 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E4CA953712;
+	Wed,  6 Apr 2016 19:05:38 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 052BE5372E;
-	Wed,  6 Apr 2016 19:05:46 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 56EF353710;
+	Wed,  6 Apr 2016 19:05:38 -0400 (EDT)
 X-Mailer: git-send-email 2.3.8-32-g0ce02b3
 In-Reply-To: <1459983935-25267-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 18E976CA-FC4C-11E5-906B-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 13BF532C-FC4C-11E5-B21E-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290892>
 
-When the context of multiple identical conflicts are different, two
-seemingly the same conflict resolution cannot be safely applied.
+The plan is to keep assigning the backward compatible conflict ID
+based on the hash of the (normalized) text of conflicts, keep using
+that conflict ID as the directory name under $GIT_DIR/rr-cache/, but
+allow each conflicted path to use a separate "variant" to record
+resolutions, i.e. having more than one <preimage,postimage> pairs
+under $GIT_DIR/rr-cache/$ID/ directory.  As the first step in that
+direction, separate the shared "conflict ID" out of the rerere_id
+structure.
 
-In such a case, at least we should be able to record these two
-resolutions separately in the rerere database, and reuse them when
-we see the same conflict later.
+The plan is to keep information per $ID in rerere_dir, that can be
+shared among rerere_id that is per conflicted path.
+
+When we are done with rerere(), which can be directly called from
+other programs like "git apply", "git commit" and "git merge", the
+shared rerere_dir structures can be freed entirely, so they are not
+reference-counted and they are not freed when we release rerere_id's
+that reference them.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t4200-rerere.sh | 74 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 74 insertions(+)
+ rerere.c | 61 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-----
+ rerere.h |  3 ++-
+ 2 files changed, 58 insertions(+), 6 deletions(-)
 
-diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-index c428011..6fcc6d4 100755
---- a/t/t4200-rerere.sh
-+++ b/t/t4200-rerere.sh
-@@ -406,4 +406,78 @@ test_expect_success 'rerere -h' '
- 	test_i18ngrep [Uu]sage help
- '
+diff --git a/rerere.c b/rerere.c
+index 3d0fa8f..a5d8a06 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -8,6 +8,7 @@
+ #include "ll-merge.h"
+ #include "attr.h"
+ #include "pathspec.h"
++#include "sha1-lookup.h"
  
-+concat_insert () {
-+	last=$1
-+	shift
-+	cat early && printf "%s\n" "$@" && cat late "$last"
+ #define RESOLVED 0
+ #define PUNTED 1
+@@ -22,6 +23,23 @@ static int rerere_autoupdate;
+ 
+ static char *merge_rr_path;
+ 
++static int rerere_dir_nr;
++static int rerere_dir_alloc;
++
++static struct rerere_dir {
++	unsigned char sha1[20];
++} **rerere_dir;
++
++static void free_rerere_dirs(void)
++{
++	int i;
++	for (i = 0; i < rerere_dir_nr; i++)
++		free(rerere_dir[i]);
++	free(rerere_dir);
++	rerere_dir_nr = rerere_dir_alloc = 0;
++	rerere_dir = NULL;
 +}
 +
-+test_expect_failure 'multiple identical conflicts' '
-+	git reset --hard &&
+ static void free_rerere_id(struct string_list_item *item)
+ {
+ 	free(item->util);
+@@ -29,7 +47,7 @@ static void free_rerere_id(struct string_list_item *item)
+ 
+ static const char *rerere_id_hex(const struct rerere_id *id)
+ {
+-	return id->hex;
++	return sha1_to_hex(id->collection->sha1);
+ }
+ 
+ const char *rerere_path(const struct rerere_id *id, const char *file)
+@@ -40,6 +58,37 @@ const char *rerere_path(const struct rerere_id *id, const char *file)
+ 	return git_path("rr-cache/%s/%s", rerere_id_hex(id), file);
+ }
+ 
++static const unsigned char *rerere_dir_sha1(size_t i, void *table)
++{
++	struct rerere_dir **rr_dir = table;
++	return rr_dir[i]->sha1;
++}
 +
-+	test_seq 1 6 >early &&
-+	>late &&
-+	test_seq 11 15 >short &&
-+	test_seq 111 120 >long &&
-+	concat_insert short >file1 &&
-+	concat_insert long >file2 &&
-+	git add file1 file2 &&
-+	git commit -m base &&
-+	git tag base &&
-+	git checkout -b six.1 &&
-+	concat_insert short 6.1 >file1 &&
-+	concat_insert long 6.1 >file2 &&
-+	git add file1 file2 &&
-+	git commit -m 6.1 &&
-+	git checkout -b six.2 HEAD^ &&
-+	concat_insert short 6.2 >file1 &&
-+	concat_insert long 6.2 >file2 &&
-+	git add file1 file2 &&
-+	git commit -m 6.2 &&
++static struct rerere_dir *find_rerere_dir(const char *hex)
++{
++	unsigned char sha1[20];
++	struct rerere_dir *rr_dir;
++	int pos;
 +
-+	# At this point, six.1 and six.2
-+	# - derive from common ancestor that has two files
-+	#   1...6 7 11..15 (file1) and 1...6 7 111..120 (file2)
-+	# - six.1 replaces these 7s with 6.1
-+	# - six.2 replaces these 7s with 6.2
++	if (get_sha1_hex(hex, sha1))
++		return NULL; /* BUG */
++	pos = sha1_pos(sha1, rerere_dir, rerere_dir_nr, rerere_dir_sha1);
++	if (pos < 0) {
++		rr_dir = xmalloc(sizeof(*rr_dir));
++		hashcpy(rr_dir->sha1, sha1);
++		pos = -1 - pos;
 +
-+	test_must_fail git merge six.1 &&
++		/* Make sure the array is big enough ... */
++		ALLOC_GROW(rerere_dir, rerere_dir_nr + 1, rerere_dir_alloc);
++		/* ... and add it in. */
++		rerere_dir_nr++;
++		memmove(rerere_dir + pos + 1, rerere_dir + pos,
++			(rerere_dir_nr - pos - 1) * sizeof(*rerere_dir));
++		rerere_dir[pos] = rr_dir;
++	}
++	return rerere_dir[pos];
++}
 +
-+	# Check that rerere knows that file1 and file2 have conflicts
-+
-+	printf "%s\n" file1 file2 >expect &&
-+	git ls-files -u | sed -e "s/^.*	//" | sort -u >actual &&
-+	test_cmp expect actual &&
-+
-+	git rerere status | sort >actual &&
-+	test_cmp expect actual &&
-+
-+	# Resolution is to replace 7 with 6.1 and 6.2 (i.e. take both)
-+	concat_insert short 6.1 6.2 >file1 &&
-+	concat_insert long 6.1 6.2 >file2 &&
-+
-+	git rerere remaining >actual &&
-+	test_cmp expect actual &&
-+
-+	# We resolved file1 and file2
-+	git rerere &&
-+	>expect &&
-+	git rerere remaining >actual &&
-+	test_cmp expect actual &&
-+
-+	# Now we should be able to resolve them both
-+	git reset --hard &&
-+	test_must_fail git merge six.1 &&
-+	git rerere &&
-+
-+	>expect &&
-+	git rerere remaining >actual &&
-+	test_cmp expect actual &&
-+
-+	concat_insert short 6.1 6.2 >file1.expect &&
-+	concat_insert long 6.1 6.2 >file2.expect &&
-+	test_cmp file1.expect file1 &&
-+	test_cmp file2.expect file2
-+'
-+
- test_done
+ static int has_rerere_resolution(const struct rerere_id *id)
+ {
+ 	struct stat st;
+@@ -50,7 +99,7 @@ static int has_rerere_resolution(const struct rerere_id *id)
+ static struct rerere_id *new_rerere_id_hex(char *hex)
+ {
+ 	struct rerere_id *id = xmalloc(sizeof(*id));
+-	xsnprintf(id->hex, sizeof(id->hex), "%s", hex);
++	id->collection = find_rerere_dir(hex);
+ 	return id;
+ }
+ 
+@@ -810,12 +859,14 @@ int setup_rerere(struct string_list *merge_rr, int flags)
+ int rerere(int flags)
+ {
+ 	struct string_list merge_rr = STRING_LIST_INIT_DUP;
+-	int fd;
++	int fd, status;
+ 
+ 	fd = setup_rerere(&merge_rr, flags);
+ 	if (fd < 0)
+ 		return 0;
+-	return do_plain_rerere(&merge_rr, fd);
++	status = do_plain_rerere(&merge_rr, fd);
++	free_rerere_dirs();
++	return status;
+ }
+ 
+ static int rerere_forget_one_path(const char *path, struct string_list *rr)
+@@ -900,7 +951,7 @@ int rerere_forget(struct pathspec *pathspec)
+ static struct rerere_id *dirname_to_id(const char *name)
+ {
+ 	static struct rerere_id id;
+-	xsnprintf(id.hex, sizeof(id.hex), "%s", name);
++	id.collection = find_rerere_dir(name);
+ 	return &id;
+ }
+ 
+diff --git a/rerere.h b/rerere.h
+index ce545d0..faf5a23 100644
+--- a/rerere.h
++++ b/rerere.h
+@@ -15,8 +15,9 @@ struct pathspec;
+  */
+ extern void *RERERE_RESOLVED;
+ 
++struct rerere_dir;
+ struct rerere_id {
+-	char hex[41];
++	struct rerere_dir *collection;
+ };
+ 
+ extern int setup_rerere(struct string_list *, int);
 -- 
 2.8.1-273-ga2cd0f9
