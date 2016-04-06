@@ -1,139 +1,81 @@
-From: elena petrashen <elena.petrashen@gmail.com>
-Subject: Re: [PATCH v3][Outreachy] branch -D: allow - as abbreviation of @{-1}
-Date: Wed, 6 Apr 2016 13:00:25 +0300
-Message-ID: <CAJPOeMeAQVR9ZvEC+r24P-RZq46iAeVx3CrLNbGXBGE8jw-iUA@mail.gmail.com>
-References: <1459416327-795-1-git-send-email-elena.petrashen@gmail.com>
- <972993506.2587877.1459438308676.JavaMail.zimbra@ensimag.grenoble-inp.fr>
- <CAJPOeMeqMpy8wmZ3jMfw_XLAS2WbPOtJF8_Rd_sPGQNeCNyFnw@mail.gmail.com> <1048705176.2897167.1459806794368.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: Hau Chung Fung <hauchfung5@huchfan.onmicrosoft.com>
+Subject: Re:DECEASED ESTATE NOTIFICE!!!
+Date: Wed, 6 Apr 2016 11:54:09 +0200
+Message-ID: <VI1PR01MB17766191C89C617DC84123E8C99F0@VI1PR01MB1776.eurprd01.prod.exchangelabs.com>
+Reply-To: <hachufa@mynet.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Apr 06 12:01:05 2016
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: Me <hauchfung5@huchfan.onmicrosoft.com>
+X-From: git-owner@vger.kernel.org Wed Apr 06 12:25:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ankGm-0001ge-1o
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Apr 2016 12:01:04 +0200
+	id 1ankeK-0001pv-LH
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Apr 2016 12:25:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964864AbcDFKA5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Apr 2016 06:00:57 -0400
-Received: from mail-qg0-f67.google.com ([209.85.192.67]:33405 "EHLO
-	mail-qg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933798AbcDFKA4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Apr 2016 06:00:56 -0400
-Received: by mail-qg0-f67.google.com with SMTP id 7so1012898qgj.0
-        for <git@vger.kernel.org>; Wed, 06 Apr 2016 03:00:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=T3X5ArelhoE/S1t6WN40iF6Zbff/yFXHrhYgtEvn+qg=;
-        b=kY0GcMf/26rcnqZF+8pWkEj9A9y1rJYMLiCggoE+UHQHmr9t43ST/kxUUOLiU8JNQl
-         2+hY5pRBOepcPhW1rabtE/nU02e7i0HOrhHguQ1OVKHq3RiDwnsHoekqfZ7GxNbYvNBI
-         ufYhuWqggf+wU9kYVUwEtPSErQdbvcNtd/jisMyUUUwRcCD3/LieldkfVYDwMgSwDMDK
-         M5gaE2yyj4ZmMG9rWX6CpLGDg+/AdPfnfaM3SZnowbPDjiSRYKJcB4iQYg6iRr99rBAz
-         2CfihRABn+bnM46Ws1T0HSKcM5S8i7SQu3POAXG2Os+St2/GBGZjEujJIVZ46xOXirK5
-         hEiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=T3X5ArelhoE/S1t6WN40iF6Zbff/yFXHrhYgtEvn+qg=;
-        b=G42mXyTZJinuSde/NNpWlcOdCjy6Z4dVhkpFKIDB7YDP9YlqJnlpmhwdp8l3anKpPH
-         TyJiwHW7KHWkWYZHCQR/A7sXnpz4tXhtyrI/tru2WU5F1UdSqsOfhQZ8QqK/H8ohDme9
-         qmS0+Q2wjcR9AN9kPR3Q5aC+ogosFe8K49Kitp2OsQKz+plSkeZsdMghP2+yFm0pWdEw
-         +rSKgDuMwKbLfadkBCe4SMzH9DqloPb6Srdc5P1Tqinm/JG4U76MliUmpgS73sCCyEdl
-         YWUXIe8gsL+5F+lodrgSeVrdsY7JFKX8kzExes0m7sdtDpfA731aC8lufacFZtyTlwK2
-         VVEw==
-X-Gm-Message-State: AD7BkJJeZ5jhstOO2VME+NKE2jRH/CUiHs9kpVaPJcRiZ9bWdcehPoVPe3Ld/CMQNhH6ibg7XxuTK7R5+c4PRA==
-X-Received: by 10.140.194.67 with SMTP id p64mr4374749qha.19.1459936855033;
- Wed, 06 Apr 2016 03:00:55 -0700 (PDT)
-Received: by 10.233.223.4 with HTTP; Wed, 6 Apr 2016 03:00:25 -0700 (PDT)
-In-Reply-To: <1048705176.2897167.1459806794368.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	id S1751938AbcDFKZS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2016 06:25:18 -0400
+Received: from mail-am1hn0252.outbound.protection.outlook.com ([157.56.112.252]:25993
+	"EHLO emea01-am1-obe.outbound.protection.outlook.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751214AbcDFKZQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Apr 2016 06:25:16 -0400
+Authentication-Results: gandalf.ca; dkim=none (message not signed)
+ header.d=none;gandalf.ca; dmarc=none action=none
+ header.from=huchfan.onmicrosoft.com;
+Received: from [192.168.0.2] (5.137.14.106) by
+ VI1PR01MB1776.eurprd01.prod.exchangelabs.com (10.166.40.10) with Microsoft
+ SMTP Server (TLS) id 15.1.447.15; Wed, 6 Apr 2016 09:54:22 +0000
+Content-Description: Mail message body
+X-Priority: 1 (High)
+Sensitivity: Company-Confidential
+X-Originating-IP: [5.137.14.106]
+X-ClientProxiedBy: DB4PR01CA0022.eurprd01.prod.exchangelabs.com
+ (10.242.152.12) To VI1PR01MB1776.eurprd01.prod.exchangelabs.com
+ (10.166.40.10)
+X-MS-Office365-Filtering-Correlation-Id: f794f6cf-a6c9-451c-f918-08d35e01865b
+X-Microsoft-Exchange-Diagnostics: 1;VI1PR01MB1776;2:DwjYtj70ZvPY6+S3oSD9OQU/aWhjmf0rkoTfrQCLsjKMyORQeSskzMjLqY29dgo1a/FmUOq5rvem2OURKwI6pKxWzIA1rpBF/dW0p9y0SNDq048ZliQRYHXd9FWP1JtjRA7Q//IzmK9Xxcmh2ea1fsvtynj5qwzz3jRkSqohsxz7kwm4C8rxFrkQQGreRfAp;3:TtX886YEIzQnjK778Iv6vrzM9tC2y08b/8/9xhqFZOEXZjvpHaY/GZ98uDLCckfAu+jfLq2RzwzlwrSCuCkJvfkqiH4uoWSdrIDlM30DLsN9lL6/O+tE1Zf3+Ds4I9FP
+X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:VI1PR01MB1776;
+X-Microsoft-Exchange-Diagnostics: 1;VI1PR01MB1776;25:UAEo0xIdEqs/OXNbTN73hHLtWy3cknIMqT/66e+S++/RzkieVzCY0k86BSHp8CqSRc613h3f7I9uVCNzZZxQGMb+8mi1zRm+e+OAUQXRco5zFVH/hbeIsG+VjxqzhINrUhEMEdZbmg0NOjFvtsgNAzQd24D8Z2vS6SWtHmC0pxQkoKUVwbaI4MpKKeivveJLIvf28WVthfspCHYTUw2t6b3vLlMRC0qwXf17FAMX0khrNIsKfRtzPbt1f5ImlSwNjndjBy2bVO8O7D45lGw0bghADeyxxbga6m4jSHiHgqJCJKOpsohtwzsDdu3lwFy84sYsKWQ+gqT7w0qJXY9WC0CvnBo1acfJLw7I9fZmYMJnWQo2CT0HaYQxWRqgBIVVU4HNnlm4FHYt1iwSvBjWWywVeib/VVQJXNsBjsqDzl8Kk5AKHSy9fpwpQgpGwtMWSonM06tsoLyEZmsmyHNht42T/nL+NP+B6qORXg0NT7N4bYnWwVX8w2WK/OoaMjjDqcnF12jD3R8vlN+Dc3qmclFqcw0NlHCDO5zgO7Y/G4ESceEyBR6E1BPEuvl4XLNqhXnF5R0SgX4uXTsXHDEFAR+d8GhWHaVt1GwINLEAkEVLy4iWBckp9ho3ook9PMweUQgi7a8mTD7UT+fU6QnQXw==
+X-Microsoft-Antispam-PRVS: <VI1PR01MB17767F889CE4A81B26F87E51C99F0@VI1PR01MB1776.eurprd01.prod.exchangelabs.com>
+X-Exchange-Antispam-Report-Test: UriScan:;
+X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(6040074)(601004)(2401047)(8121501046)(5005006)(3002001)(10201501046)(6041046)(6043046);SRVR:VI1PR01MB1776;BCL:0;PCL:0;RULEID:;SRVR:VI1PR01MB1776;
+X-Microsoft-Exchange-Diagnostics: 1;VI1PR01MB1776;4:C0sBv3rt/DiDnWn5vU+1CbURFfS3k5v/OKTuBFvrX/6eDLjRzL81jnVmQliuohgvTWyCRlDU/XEjgtPxt/yXWBwkdKMGwoKLW4qdtHRfUZ1TPHjOYcyhHP7sovUblSccq8eNxDVTeLaZazfPW1QDEa+ScLGHRz2F1IN+P+dLDkjBlTOWUeR/z1RlAZv+GdQEM/lHvvdds8W9Vppggcy3gl7JigqEVWs/OAfBI0xOchAVYUphmkwb94OHORxQk0oWoKcFZtuyKvo2Uu3MzCzwKczK48HqrX/r8ghYx+DhdKe4qpcJWeLJQ1F1WVgYqYSF77cLQnpBqh/HcWVRuwXAajJnC4L7Kh7kxaNKAtoEEYrR0K+5TyX4TAhSkaMH6epqYkz+tvd8aSTUuQ3Mg1qeTNgv9L8GopPFpIL1WC077yU=
+X-Forefront-PRVS: 0904004ECB
+X-Forefront-Antispam-Report: SFV:SPM;SFS:(10019020)(4630300001)(6009001)(6049001)(6116002)(3480700003)(23756003)(81166005)(5008740100001)(89136004)(3846002)(2906002)(42186005)(77096005)(107886002)(81686999)(110136002)(50466002)(586003)(71446004)(53806999)(1096002)(223973002)(54356999)(86362001)(50986999)(74316001)(226693001)(189998001)(6200100001)(53256004)(5004730100002)(558084003)(64872006)(86902001)(86442001)(4001450100002)(229853001)(43066003)(66066001)(86632001)(47776003)(33656002)(117156001)(2370700003);DIR:OUT;SFP:1501;SCL:5;SRVR:VI1PR01MB1776;H:[192.168.0.2];FPR:;SPF:None;MLV:spm;PTR:InfoNoRecords;LANG:en;
+X-Microsoft-Exchange-Diagnostics: =?iso-8859-1?Q?1;VI1PR01MB1776;23:B/W6UfUuD3wNksZbVs0w/j+dVpOqyjjO8guaZXo?=
+ =?iso-8859-1?Q?hI64QkUtum5fuRz/2Cc1crDfoSHdmbUZorHiz1IuXmSGZDjDpyP0tlXuEK?=
+ =?iso-8859-1?Q?MyG5sGoXK3OkTfxMFeOTpTcQe35ugNWqEVaZDLMR+N5nZgcDue0W3U7Ycv?=
+ =?iso-8859-1?Q?hs5ikhNiiEx6hRzQxR69KE8wSTUAdHjsZOMdwUGVYnhGt+oAqdB/Jpsoph?=
+ =?iso-8859-1?Q?XOjIJlO6jQW+zJAFFiWM5ZxTnh/KjAADG1WhJZl1RoJW5diUs4Xt8gOKgw?=
+ =?iso-8859-1?Q?oxfhWchqM2I/74OBGtJHgy8+8FVct8Zmc21fRCMwuH9EeaqzO/YhM7F+Tu?=
+ =?iso-8859-1?Q?yQtAWixE5w+X8pGmHfSWImUDf5l7ZOf8SnAnT+krouOOCguotv2FZg8dkz?=
+ =?iso-8859-1?Q?PwMlLI7j63EWaHKJ5PttVrF3vHOZz063zC8hXlBMqOcfWh6wd8vvn3Hd7P?=
+ =?iso-8859-1?Q?f1l9Z0iauEUTTD9MFDcqnYOjx24PkwUtx2LLnt9yTKYFcbog9X5UwXezyE?=
+ =?iso-8859-1?Q?5VepfoJEs6KSCzEi5uvUdehQyhBvSYMMm6nykO7IhsPltz5UlFKzTrmdXm?=
+ =?iso-8859-1?Q?oU6TyncTDaIVgYIS0uch51YcbinO2Hrhl4kJ4Bd+oheomVgTRnSHFU5ytx?=
+ =?iso-8859-1?Q?smeQ 
+X-Microsoft-Exchange-Diagnostics: 1;VI1PR01MB1776;5:ozV68LkoQ4VRHuP3jN0WzKjw2rIRJOr1EPGxnkUJy988cITR6NhxMDWZCMasQJn4WYqzHeEVEHhbMsC8pD88Vj8QA50b7fVKil5vWFlQ5TwwK2u1PfeiTEcfIqfrOn2M3RaZmCekAoNTQthLRhnHqg==;24:TVdNs86rHuIGqEUHEQkMr9zodVkPE5u2eN1EZP2V4zsXrOcjO7uCWd4gISj3K3pbAJG5hXoHE4hF0F+F6bIFOA==
+SpamDiagnosticOutput: 1:22
+SpamDiagnosticMetadata: 00000000%2D0000%2D0000%2D0000%2D000000000000
+X-OriginatorOrg: huchfan.onmicrosoft.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Apr 2016 09:54:22.0732
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR01MB1776
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290836>
 
-On Tue, Apr 5, 2016 at 12:53 AM, Remi Galan Alfonso
-<remi.galan-alfonso@ensimag.grenoble-inp.fr> wrote:
-> elena petrashen <elena.petrashen@gmail.com> wrote:
->> On Thu, Mar 31, 2016 at 6:31 PM, Remi Galan Alfonso
->> <remi.galan-alfonso@ensimag.grenoble-inp.fr> wrote:
->> > Elena Petrashen <elena.petrashen@gmail.com> wrote:
->> >> +void delete_branch_advice(const char *name, const char *ref)
->> >> +{
->> >> +        const char fmt[] =3D
->> >> +        "\nNote: to restore the deleted branch:\n\ngit branch %s=
- %s\n";
->> >
->> > Shouldn't that be marked for translation, like is done with the ot=
-her
->> > strings?
->> >
->> > Thanks,
->> > R=C3=A9mi
->>
->> Thank you for letting me know about that! Could you please
->> help me out and explain how do I mark it for translation? I tried
->> to do it the same way as with the other strings but evidently
->> didn't quite succeed.
->
-> I am not sure.
-> I tried to grep similar cases, it seems that you can do the following=
-:
->
->         const char fmt[] =3D N_("\nNote: to restore [...] \ngit branc=
-h %s %s\n");
->         fprintf(stderr, _(fmt), name, ref);
->
-> Some similar example in builtin/add.c:
->
->         static const char ignore_error[] =3D
->         N_("The following paths are ignored by one of your .gitignore=
- files:\n");
->         [...]
->                         fprintf(stderr, _(ignore_error));
->
-> Or you can define fmt as a 'const char *' and in that case do the
-> following:
->
->         const char *fmt =3D _("\nNote: to restore [...] \n git branch=
- %s %s\n");
->         fprintf(stderr, fmt, name, ref);
->
->
-> In builtin/am.c:
->                 const char *invalid_line =3D _("Malformed input line:=
- '%s'.");
->         [...]
->                                 ret =3D error(invalid_line, sb.buf);
->
-> I don't know which one is the best way to go though.
->
-> Thanks,
-> R=C3=A9mi
+Hello,
 
-Thank you! I'm a bit confused though as the previous implemented advice=
- function
-in advice.c (the one I used for reference) doesn't seem to employ this.=
-=2E. does
-this mean it's also not marked for translation?
 
-void detach_advice(const char *new_name)
-{
-const char fmt[] =3D
-"Note: checking out '%s'.\n\n"
-"You are in 'detached HEAD' state. <.........>Example:\n\n"
-"  git checkout -b <new-branch-name>\n\n";
+There is a deceased customer of our organization with whom you share the same last name. His estate is available for claim. Reply for more information.
 
-fprintf(stderr, fmt, new_name);
-}
-
-Cheers,
-Elena
+Regards,
+Hau Chung Fung
