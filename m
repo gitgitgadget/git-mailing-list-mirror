@@ -1,62 +1,63 @@
-From: Willy Tarreau <w@1wt.eu>
-Subject: Re: [PATCH] sequencer.c: fix detection of duplicate s-o-b
-Date: Wed, 6 Apr 2016 18:37:26 +0200
-Message-ID: <20160406163726.GG28596@1wt.eu>
-References: <20160312130844.GA25639@1wt.eu>
- <xmqqr3eizsxu.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 0/6] tag: move PGP verification code to tag.c
+Date: Wed, 06 Apr 2016 09:39:39 -0700
+Message-ID: <xmqqy48qy9mc.fsf@gitster.mtv.corp.google.com>
+References: <1459872449-7537-1-git-send-email-santiago@nyu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-	Brandon Casey <drafnel@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 06 18:37:40 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: santiago@nyu.edu
+X-From: git-owner@vger.kernel.org Wed Apr 06 18:39:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anqSZ-0003f8-2B
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Apr 2016 18:37:39 +0200
+	id 1anqUh-0004XM-J7
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Apr 2016 18:39:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751264AbcDFQhd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2016 12:37:33 -0400
-Received: from wtarreau.pck.nerim.net ([62.212.114.60]:65377 "EHLO 1wt.eu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751153AbcDFQhc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2016 12:37:32 -0400
-Received: (from willy@localhost)
-	by pcw.home.local (8.15.2/8.15.2/Submit) id u36GbQJf028743;
-	Wed, 6 Apr 2016 18:37:26 +0200
-Content-Disposition: inline
-In-Reply-To: <xmqqr3eizsxu.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1751120AbcDFQjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2016 12:39:46 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:59443 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750943AbcDFQjp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2016 12:39:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C32A8526BF;
+	Wed,  6 Apr 2016 12:39:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=t+CQYO7lgZWnhYPivpWYfHGH7nU=; b=EQ121X
+	Xn6UNCOn4Y973hunZuAHRK1Xfs7hhJZjSR13Uq88dy7DthcPZIku9BrrjmwYEEFb
+	iO45z0IV4+V6o3Tu7pyObARjsC/glOUMajgUUs1y/MxT4zO62eHOYyv/xCnyTUYe
+	35IJJRenKB0Ys3cU3ZDdN8/w8mwJDa9KeZduk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=I9n6v2YEf5FGxwAqNKZ+xIeyzC1O4XY8
+	8h5gAgdenYgKX5iWsG7VNqRcLCMsoqfvIoN1+A5QFOAzob0VKJc+jmrv7mH4OkRT
+	6B33QBXZwUW7lGHn1/QdVKPCouMjhXlyQrOwQoPNPpxhiir0yodIw7HM1lrpdwUu
+	t3JdQwFgNfY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B6EE4526BE;
+	Wed,  6 Apr 2016 12:39:41 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A9170526BB;
+	Wed,  6 Apr 2016 12:39:40 -0400 (EDT)
+In-Reply-To: <1459872449-7537-1-git-send-email-santiago@nyu.edu>
+	(santiago@nyu.edu's message of "Tue, 5 Apr 2016 12:07:23 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 28BC5B02-FC16-11E5-8070-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290849>
 
-On Wed, Apr 06, 2016 at 07:57:01AM -0700, Junio C Hamano wrote:
-> This seems to have been lost, perhaps because the top part that was
-> quite long didn't look like a patch submission message or something.
+The first three looked almost good.  I do not fully agree with what
+4/6 does, and update to its function signature is likely to require
+updates to 5/6 and 6/6.
 
-Don't worry, we all know it's the submitter's responsibility to retransmit,
-I apply the same principle :-)
-
-> Git 1.7.12 is a quite ancient release and I wouldn't be surprised if
-> we made the behaviour change during the period leading to v2.6 on
-> purpose, but nothing immediately comes to mind. Christian (as the
-> advocate for the trailer machinery) and Brandon ("git shortlog
-> sequencer.c" suggests you), can you take a look?
-
-FWIW it wad changed in 1.8.3 by commit bab4d10 ("sequencer.c: teach
-append_signoff how to detect duplicate s-o-b").
-
-The change made a lot of sense but it didn't assume that this practice
-was common. And indeed I think this practice only happens in maintenance
-branches where people have to make a lot of adaptations to existing
-patches that they're cherry-picking. We do that a lot in stable kernels
-to keep track of what we may need to revisit if we break something.
-
-Thanks!
-Willy
+Thanks.
