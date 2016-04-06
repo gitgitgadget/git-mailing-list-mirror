@@ -1,99 +1,155 @@
-From: Alexander Rinass <alex@fournova.com>
-Subject: Re: [PATCH] diff: run arguments through precompose_argv
-Date: Wed, 6 Apr 2016 08:51:28 +0200
-Message-ID: <C52E38F0-B0F2-4769-A2C7-798D0CD99B47@fournova.com>
-References: <1459802325-22056-1-git-send-email-alex@fournova.com> <1459802325-22056-2-git-send-email-alex@fournova.com> <xmqqzit80yov.fsf@gitster.mtv.corp.google.com> <57040EE0.40503@kdbg.org>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	=?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Apr 06 08:51:35 2016
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5 4/6] builtin/verify-tag: replace name argument with sha1
+Date: Wed, 6 Apr 2016 02:56:36 -0400
+Message-ID: <CAPig+cQ_R+YJVAsDDDPBHRZ=Un=34kum096YeFrGOo3_pU-g3A@mail.gmail.com>
+References: <1459872449-7537-1-git-send-email-santiago@nyu.edu>
+	<1459872449-7537-5-git-send-email-santiago@nyu.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Santiago Torres <santiago@nyu.edu>
+X-From: git-owner@vger.kernel.org Wed Apr 06 08:56:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anhJO-0000FN-CD
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Apr 2016 08:51:34 +0200
+	id 1anhOO-00020x-5h
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Apr 2016 08:56:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751813AbcDFGvY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Apr 2016 02:51:24 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:37077 "EHLO
-	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750958AbcDFGvX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Apr 2016 02:51:23 -0400
-Received: by mail-wm0-f50.google.com with SMTP id n3so49167965wmn.0
-        for <git@vger.kernel.org>; Tue, 05 Apr 2016 23:51:23 -0700 (PDT)
+	id S1752320AbcDFG4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2016 02:56:38 -0400
+Received: from mail-ig0-f194.google.com ([209.85.213.194]:35332 "EHLO
+	mail-ig0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751299AbcDFG4h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2016 02:56:37 -0400
+Received: by mail-ig0-f194.google.com with SMTP id ya17so5949026igc.2
+        for <git@vger.kernel.org>; Tue, 05 Apr 2016 23:56:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fournova-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=uamenltZt5Lwzy3U8XhD1ULAY/yEzQZ55kXSwljx5RY=;
-        b=CQ878Kw3jIakRdbZMW+O7EHrjmLMYxVDe1N8cuOgCy7oYbROeJn/l3aAzhkajsClpG
-         QEDL7yva4GI/3Hl0diGqDexqelH/IRPX2O7s9MCCXJqFdw5TvcffAa1igMXRR2/cBd4+
-         2oQUeT2PatPy5ySgnu3fh/ANhX+paDMMtoXYVW2tfLgIStgON6M6o6i9ekD8FP4pssop
-         aKb9rTDg14uH8+QkZTmRy5xry7jPjNSu4vOPnZxgXzY6cNl8xcw11l++6d30eS+QNt4C
-         JITJe0EltBOirr+PuTYZmL/s10fw/8KixXWectbgVGt2boEvDC6AWU2OC0prV4M62fEe
-         hhfQ==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=qeiNN02Jijg77psI2PT+zQ8IUOnyNl7s7QUd/pV19Rs=;
+        b=SCclTAmYtPoROfEulOu45V2B3TfjzUyH2KCBCdqrZRyBqza/W4iiZWka8Nk7rCbOUv
+         SpKM8oXkfBvCantILnYg9LqG10cYYEtTbo/ykIrV95I0UmvaF6pVTmgkf8xmHVQ56DuT
+         hlzhvWKK2ALwHYGfby5MDY3IDQNRbVNX6YSVOfVYdadnVHaQ3CmoadswrnJX3wHOzibv
+         W8lxuHbNIpc1+MjFNfXULDUzFKbxl1VuhmezYrClCHiPnQpWA6aXcfRddrcBmDz4NjGG
+         /CR5uCcWR8Nk+Sp2Xrmarym9u2saROkUcyg8ZugMfOcXv4g5GJ4M0mOUhLqe52vkBak+
+         L/sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=uamenltZt5Lwzy3U8XhD1ULAY/yEzQZ55kXSwljx5RY=;
-        b=HCrq5CsxZbqnANfWMUpJ1aKn9jcaeOXXtSYQEPJD7o+gmZBnFIg5mOQWlokdghl5/9
-         FezPJuhfbiVpMNV1+U5dU2YeK/R3DeEO6xcuZxUI8+XxTdcr83dSmYcSy+VZZyajVyoq
-         V3kWH5u5YIavgTqvRiD4sVpiy1vIw0rD/QUIKtDJebsEWHqppVeY/3snQkhourjhSVhw
-         LUI+sSJm5ZJafVPd0Y1IdM1a+O1E5/r0z7jkiOkv614MWnjDiONys+3f8ZqWG0erGIAr
-         xtUczh9svhYd7HAXch8BrUkQR3Gi4UIlYJbK+MwQ0pgI1vdfAvwPzkUN1UyVYADgL4Lk
-         Ap3A==
-X-Gm-Message-State: AD7BkJKt5L8rgNtOy9otMQhjIqsTBG6fzVsGn0m1bmH2Z3A3tBGcMUkuiBZFwBCf44gxog==
-X-Received: by 10.194.133.161 with SMTP id pd1mr11606355wjb.66.1459925482203;
-        Tue, 05 Apr 2016 23:51:22 -0700 (PDT)
-Received: from ?IPv6:2a02:908:df42:8b00:595b:e4d9:364e:188f? ([2a02:908:df42:8b00:595b:e4d9:364e:188f])
-        by smtp.gmail.com with ESMTPSA id w202sm1971316wmw.18.2016.04.05.23.51.21
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 05 Apr 2016 23:51:21 -0700 (PDT)
-In-Reply-To: <57040EE0.40503@kdbg.org>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=qeiNN02Jijg77psI2PT+zQ8IUOnyNl7s7QUd/pV19Rs=;
+        b=jNyJVw3XXKTLllRHa1eRa1MFi7iX+kJLgyzm0OuAugCDWzZvpAXnONZAanrAuOp8gq
+         0+lhYH7iWcsOruhJBd0Zk8swnpCp0r9B7knXnYSgMrh2CrJqRmXWoklRXGBGPV9rDWvp
+         7FCxefb9yAZtCO0W6FreJo+VsEfoO6vOIS6K686XuyqFyjqoB3+fGrI9eFIYYdAGuTCl
+         HYrYhZwWO2hGH8s78PrKSMsCIcgIfee+QviGESOtxm2LK/0220wh2YMpbagr4u/QSayd
+         7UMUWPbb8oYA6CELenUd8B5ThhsmypupcOoDsB2Fi0Y61UF2EtORBcyhIDJdLikdNql/
+         +WuA==
+X-Gm-Message-State: AD7BkJLdyHlX2sA84qpfLUFo42f/KGy2dzE+JrIz922DIpbqzLIMUZKxLZ7qtLHw3IhBoYg/3S71k+U9DvaLZw==
+X-Received: by 10.50.97.70 with SMTP id dy6mr19103882igb.73.1459925796758;
+ Tue, 05 Apr 2016 23:56:36 -0700 (PDT)
+Received: by 10.79.12.139 with HTTP; Tue, 5 Apr 2016 23:56:36 -0700 (PDT)
+In-Reply-To: <1459872449-7537-5-git-send-email-santiago@nyu.edu>
+X-Google-Sender-Auth: _H7ebrNfV6PuTQFNBE-sHXeSnlI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290829>
 
+On Tue, Apr 5, 2016 at 12:07 PM,  <santiago@nyu.edu> wrote:
+> builtin/verify-tag: replace name argument with sha1
 
-> On 05 Apr 2016, at 21:15, Johannes Sixt <j6t@kdbg.org> wrote:
->=20
-> Am 05.04.2016 um 19:09 schrieb Junio C Hamano:
->>> Thanks-to: Torsten Bo=CC=88gershausen <tboegi@web.de>
->=20
-> I sense NFD disease: The combining diaresis should combine with the o=
-, not the g. Here is a correct line to copy-and-paste if you like:
->=20
-> Thanks-to: Torsten B=C3=B6gershausen <tboegi@web.de>
->=20
-> -- Hannes
+    builtin/verify-tag: prepare verify_tag() for libification
 
-Thanks for reviewing and catching the NFD encoding error.
+> This change is meant to prepare verify_tag for libification. Many
+> existing modules/commands already do the refname to sha1 resolution, so
+> should avoid resolving the refname twice.
 
-I will send in a patch v2 with the correct NFC encoding.
+If I hadn't already understood the purpose of the patch, I think I'd
+still be somewhat clueless after reading this because it doesn't do a
+thorough job of explaining what the actual problem is that this is
+solving. Perhaps something like this might be better:
 
-Would you also like me to alter the commit message as mentioned by Juni=
-o?
+    verify_tag() accepts a tag name which it resolves to a SHA1
+    before verification, however, the plan is to make this
+    functionality public and it is possible that future callers will
+    already have a SHA1 in hand. Since it would be wasteful for them
+    to supply a tag name only to have it resolved again, change
+    verify_tag() to accept a tag SHA1 rather than a name.
 
-I could rewrite the sentence:
+> To avoid breaking
+> builtin/verify-tag, we move the refname resolution outside of the
+> verify_tag() call.
 
-=E2=80=9CAs a result, no diff is displayed when feeding such a file pat=
-h to the
-diff command.=E2=80=9D
+The reasonably intelligent reader should understand implicitly that
+this is a natural consequence of changing the signature of
+verify_tag(), thus it's not really necessary to state it explicitly.
+(It makes the commit message noisier without adding value.)
 
-into simply saying:
+More below...
 
-=E2=80=9CAs a result, no diff is displayed.=E2=80=9D
+> Signed-off-by: Santiago Torres <santiago@nyu.edu>
+> ---
+> diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
+> @@ -42,25 +42,23 @@ static int run_gpg_verify(const char *buf, unsigned long size, unsigned flags)
+> -static int verify_tag(const char *name, unsigned flags)
+> +static int verify_tag(const unsigned char *sha1, unsigned flags)
+>  {
+>         enum object_type type;
+> -       unsigned char sha1[20];
+>         char *buf;
+> +       char *hex_sha1;
+>         unsigned long size;
+>         int ret;
+>
+> -       if (get_sha1(name, sha1))
+> -               return error("tag '%s' not found.", name);
+> -
+> +       hex_sha1 = sha1_to_hex(sha1);
+>         type = sha1_object_info(sha1, NULL);
+>         if (type != OBJ_TAG)
+>                 return error("%s: cannot verify a non-tag object of type %s.",
+> -                               name, typename(type));
+> +                               hex_sha1, typename(type));
+>
+>         buf = read_sha1_file(sha1, &type, &size);
+>         if (!buf)
+> -               return error("%s: unable to read file.", name);
+> +               return error("%s: unable to read file.", hex_sha1);
 
-However, I don't read the original message as it would imply that only
-file paths are affected by the precompose_argv call.=20
+Nit: sha1_to_hex() gets invoked *always*, even when there is no error.
+An alternative would be to call it within each error() invocation,
+when it's actually needed.
 
-Are there other suggestions on improving the commit message?
+    return error("%s: unable to read file.", sha1_to_hex(sha1));
+
+> @@ -96,8 +96,15 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
+> -       while (i < argc)
+> -               if (verify_tag(argv[i++], flags))
+> +       while (i < argc) {
+> +               name = argv[i++];
+> +               if (get_sha1(name, sha1)) {
+> +                       error("tag '%s' not found.", name);
+>                         had_error = 1;
+> +                       continue;
+> +               }
+> +               if (verify_tag(sha1, flags))
+> +                       had_error = 1;
+
+An alternative without 'continue':
+
+    if (get_sha1(...)) {
+        error("tag ...");
+        had_error = 1;
+    } else if (verify_tag(...))
+        had_error = 1;
+
+I don't feel strongly about it, and it's certainly not worth a re-roll.
+
+> +       }
+>         return had_error;
+>  }
