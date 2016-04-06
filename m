@@ -1,107 +1,256 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 2/6] t7030-verify-tag: Adds validation for multiple tags
-Date: Wed, 6 Apr 2016 02:21:38 -0400
-Message-ID: <CAPig+cSOLnCoX77O7khEX1cTh0Hu29d6MRdcpfN8ytTkUSVU=A@mail.gmail.com>
-References: <1459872449-7537-1-git-send-email-santiago@nyu.edu>
-	<1459872449-7537-3-git-send-email-santiago@nyu.edu>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git diff --exit-code does not honour textconv setting
+Date: Wed, 6 Apr 2016 08:44:21 +0200
+Message-ID: <5704B045.8000005@drmicha.warpmail.net>
+References: <56EE9B09.6040700@gmail.com>
+ <5703CA0D.2090808@drmicha.warpmail.net>
+ <xmqqvb3vzlw5.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: Santiago Torres <santiago@nyu.edu>
-X-From: git-owner@vger.kernel.org Wed Apr 06 08:21:47 2016
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Georg Pichler <georg.pichler@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 06 08:44:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1angqY-0006je-Rd
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Apr 2016 08:21:47 +0200
+	id 1anhCZ-0006Fp-5m
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Apr 2016 08:44:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760197AbcDFGVl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2016 02:21:41 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:35869 "EHLO
-	mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753299AbcDFGVk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2016 02:21:40 -0400
-Received: by mail-io0-f195.google.com with SMTP id s2so5799961iod.3
-        for <git@vger.kernel.org>; Tue, 05 Apr 2016 23:21:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=Bv9xfPz9UpDd6/lE+aDCol1/mY7xnG/v6j/wjDgYY9c=;
-        b=N/w+Tq4rYf9baO8GTsvJH/M8cnT5AssBJRHIGmlwdJUEasjPiOR7z5tzYVeFJA/u4s
-         PrmR3ZUhfjfU3sFAgg4aHfYtD4WDi8a8Hq3piddaUFkrj2vkt5EU2IuqyTsjPmGmeFiG
-         uTrmD05j1eBKM8Pjf7gU/eCPc53VmOv5MDJku4b6xhM0Jce1yUwxv5hlSBvNJbe6vuU6
-         NVtDkfQuL2mbaIxpcMaazvIvjpO6ATpeBK5YH7i8O7gvm8ETdSE89LyPI/15eembSq+K
-         TiUQqsKqWm4LSCNj79tkCdar9nt9+AP5b4xn99/HIqw1/aH/DzPVFfKnI0FK85VWiSf4
-         4RbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=Bv9xfPz9UpDd6/lE+aDCol1/mY7xnG/v6j/wjDgYY9c=;
-        b=DHDWlclvGxtQH91XL2FHoBmvhxrl3Ux6biN+wAp3+jgFCJeZ7Mg0AGO+UiPYsfMtex
-         6WkjxKVQ4/DLfc+D+So4GyJRLI/PY7dWS7PH8mzlaUT3p5Sj2/Q46/k8Rmxfw4KnuHVU
-         7ksnsZ/X9pUbgaT52q1Gmj67V6jONw9cVzKBxNRlcT9zdElSscTF5Am5WwGvqrds9dcQ
-         VSt37LDDCrQH80Ufbh4F0KY7caGWAN+N9UKSLZB87Z6Pt19HJc7rSpQoa7FlYLV/X7wE
-         npmJ+JNHTFSJXrwzqEJwrHpZWtFn1QSbR5yIwNj0Vq1aZX7A7JMLB4J2JHtvsOg2qQvH
-         0bvA==
-X-Gm-Message-State: AD7BkJI+rJMuUTWvV94geIKmPAGrWK78hw1omdvqhNhreRRsZmTYkRZQyuf/QT3Q1qqPOtjAW5daay0kVY26cw==
-X-Received: by 10.107.9.28 with SMTP id j28mr16287677ioi.104.1459923699039;
- Tue, 05 Apr 2016 23:21:39 -0700 (PDT)
-Received: by 10.79.12.139 with HTTP; Tue, 5 Apr 2016 23:21:38 -0700 (PDT)
-In-Reply-To: <1459872449-7537-3-git-send-email-santiago@nyu.edu>
-X-Google-Sender-Auth: sBuuhpqTh6K1SMZ1TcqTy07C7fM
+	id S1752754AbcDFGoZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2016 02:44:25 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:58756 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750731AbcDFGoY (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Apr 2016 02:44:24 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 264A620F78
+	for <git@vger.kernel.org>; Wed,  6 Apr 2016 02:44:23 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute5.internal (MEProxy); Wed, 06 Apr 2016 02:44:23 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=3NaezHBgZNzceiuuIBP25fhl/pA=; b=TNEl9i
+	wQqJVt5VbNcdaBepESushKYnDXCl5qEic1bnPOXGJhCz4j4RpBJ2JguzlrzhBZMc
+	9DJsjiRTX8T4hXcetUABLaipCvM16ZZwwC0Krgs24Mai1c8YF6bCYq2O007zix2k
+	gw32M/+K4xylmnAe4sYRSynj8bCvBdEAbpqlc=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=3NaezHBgZNzceiu
+	uIBP25fhl/pA=; b=VK7aglaGk91zz48Ose7pMYkrOLQHg2cBLX41QV8sSvlr5yA
+	LX3Rmqock6QmV6R+V5ILm+ukAfX4l4R7Xe/f7BPxP+rtwBhO07YAiq4PYkZJQKqq
+	6rU9BL2QObPXfpvlUjrArnXvsD6la2n7Lt9NmSU6f70B+m1isG6h1iBVjONc=
+X-Sasl-enc: L+7bFWRkvfkotImVjAmBDtxjzeDGKJ7x2xA8S1KyocRl 1459925062
+Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 62F076801DC;
+	Wed,  6 Apr 2016 02:44:22 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.1
+In-Reply-To: <xmqqvb3vzlw5.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290827>
 
-On Tue, Apr 5, 2016 at 12:07 PM,  <santiago@nyu.edu> wrote:
-> t7030-verify-tag: Adds validation for multiple tags
+Junio C Hamano venit, vidit, dixit 06.04.2016 01:16:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>>> The "test" command is used as it does not generate any output on stdout.
+>>
+>> "test" is a bit of a red herring here since it will receive commands.
+>> But your example works even with "true" which ignores its commands and
+>> produces no output.
+> 
+> Either sounds strange, as they exit without reading their input at
+> all, so the other side of the pipe may get an write error it has to
+> handle ;-)
+> 
+>> The description doesn't make it clear whether exit-code refers to
+>> the actual diff (foo vs. bar) or to the diff after textconv (empty
+>> vs. empty). In any case, "-b" should not make a difference for
+>> your example.
+>>
+>> diff_flush() in diff.c has this piece of code:
+>>
+> 
+> It is understandable that "-b" makes difference.  The actual
+> short-cut happens a bit before the code you quoted.
+> 
+> 	if (output_format & DIFF_FORMAT_NO_OUTPUT &&
+> 	    DIFF_OPT_TST(options, EXIT_WITH_STATUS) &&
+> 	    DIFF_OPT_TST(options, DIFF_FROM_CONTENTS)) {
+> 		/*
+> 		 * run diff_flush_patch for the exit status. setting
+> 		 * options->file to /dev/null should be safe, because we
+> 		 * aren't supposed to produce any output anyway.
+> 		 */
+> 		if (options->close_file)
+> 			fclose(options->file);
+> 		options->file = fopen("/dev/null", "w");
+> 		if (!options->file)
+> 			die_errno("Could not open /dev/null");
+> 		options->close_file = 1;
+> 		for (i = 0; i < q->nr; i++) {
+> 			struct diff_filepair *p = q->queue[i];
+> 			if (check_pair_status(p))
+> 				diff_flush_patch(p, options);
+> 			if (options->found_changes)
+> 				break;
+> 		}
+> 	}
+> 
+> When running without producing output but we need the exit status,
+> unless DIFF_FROM_CONTENTS is set (e.g. "-b" in use), we do not run
+> the code that would inspect the blob contents that would have
+> produced the actual patch.  When DIFF_FROM_CONTENTS is set, we need
+> to dig into the blob contents and the body of the above if() gets
+> run only to trigger o->found_changes (e.g. in builtin_diff() that
+> sets ecbdata.found_changesp to point at o->found_changes before
+> calling into the xdiff machinery), but the output is discarded to
+> /dev/null.
+> 
+> The textconv filter is an unfortunate beast, in that while some
+> paths use one while others don't, so it won't be as simple as "-b"
+> that flips DIFF_FROM_CONTENTS to say "We need to inspect blobs for
+> ALL FILEPAIRS to see if there is any difference" if we want to keep
+> the optimization as much as possible.
+> 
+> Without DIFF_FROM_CONTENTS set, any filepair that point at two
+> different blobs that might end up to be the same after applying
+> textconv will flip the o->found_changes bit on, and with
+> EXIT_WITH_STATUS bit on, we have another optimization to skip
+> checking the remainder of the filepairs.  So if you want to support
+> textconv with QUICK, you would also need to disable that
+> optimization by teaching diff_change() to refrain from setting
+> HAS_CHANGES bit, i.e.
+> 
+>     diff --git a/diff.h b/diff.h
+>     index 125447b..f6c0c07 100644
+>     --- a/diff.h
+>     +++ b/diff.h
+>     @@ -69,7 +69,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
+>      #define DIFF_OPT_FIND_COPIES_HARDER  (1 <<  6)
+>      #define DIFF_OPT_FOLLOW_RENAMES      (1 <<  7)
+>      #define DIFF_OPT_RENAME_EMPTY        (1 <<  8)
+>     -/* (1 <<  9) unused */
+>     +#define DIFF_OPT_WITH_TEXTCONV       (1 <<  9)
+>      #define DIFF_OPT_HAS_CHANGES         (1 << 10)
+>      #define DIFF_OPT_QUICK               (1 << 11)
+>      #define DIFF_OPT_NO_INDEX            (1 << 12)
+> 
+>     diff --git a/diff.c b/diff.c
+>     index 4dfe660..0016ad2 100644
+>     --- a/diff.c
+>     +++ b/diff.c
+>     @@ -5018,6 +5018,11 @@ void diff_change(struct diff_options *options,
+>             two->dirty_submodule = new_dirty_submodule;
+>             p = diff_queue(&diff_queued_diff, one, two);
+> 
+>     +       if (either path one or path two has textconv defined) {
+>     +               DIFF_OPT_SET(options, DIFF_WITH_TEXTCONV);
+>     +               return;
+>     +       }
+>     +
+>             if (DIFF_OPT_TST(options, DIFF_FROM_CONTENTS))
+>                     return;
+> 
+> And then in order to keep the optimization, add this to the above
+> codepath:
+> 
+>     diff --git a/diff.c b/diff.c
+>     index 4dfe660..7b318cc 100644
+>     --- a/diff.c
+>     +++ b/diff.c
+>     @@ -4598,6 +4598,7 @@ void diff_flush(struct diff_options *options)
+>             int i, output_format = options->output_format;
+>             int separator = 0;
+>             int dirstat_by_line = 0;
+>     +       int textconv_hack;
+> 
+>             /*
+>              * Order: raw, stat, summary, patch
+>     @@ -4652,9 +4653,17 @@ void diff_flush(struct diff_options *options)
+>                     separator++;
+>             }
+> 
+>     +       /*
+>     +        * If there is any path that needs textconv and we haven't
+>     +        * found any change on paths that don't, we need to pass
+>     +        * them through textconv and see the textual difference.
+>     +        */
+>     +       textconv_hack = (DIFF_OPT_TST(options, DIFF_WITH_TEXTCONV) &&
+>     +                        !DIFF_OPT_TST(options, HAS_CHANGES));
+>     +
+>             if (output_format & DIFF_FORMAT_NO_OUTPUT &&
+>                 DIFF_OPT_TST(options, EXIT_WITH_STATUS) &&
+>     -           DIFF_OPT_TST(options, DIFF_FROM_CONTENTS)) {
+>     +           (textconv_hack || DIFF_OPT_TST(options, DIFF_FROM_CONTENTS))) {
+>                     /*
+>                      * run diff_flush_patch for the exit status. setting
+>                      * options->file to /dev/null should be safe, because we
+> 
+> so that if we find some other change (e.g. diff_addremove() noticed
+> a path added or removed, or diff_change() noticed a changed blob
+> that does not have textconv defined), we do not have to inspect all
+> the paths to see if there is any change at all by going into the
+> body of this if() block.
+> 
+> And then finally, clean things up in a way similar to how
+> DIFF_FROM_CONTENTS codepath handles the HAS_CHANGES bit.
+> 
+>     diff --git a/diff.c b/diff.c
+>     index 4dfe660..7b318cc 100644
+>     --- a/diff.c
+>     +++ b/diff.c
+>     @@ -4709,7 +4718,7 @@ free_queue:
+>              * diff_addremove/diff_change does not set the bit when
+>              * DIFF_FROM_CONTENTS is in effect (e.g. with -w).
+>              */
+>     -       if (DIFF_OPT_TST(options, DIFF_FROM_CONTENTS)) {
+>     +       if (textconv_hack || DIFF_OPT_TST(options, DIFF_FROM_CONTENTS)) {
+>                     if (options->found_changes)
+>                             DIFF_OPT_SET(options, HAS_CHANGES);
+>                     else
+> 
+> By the way, I have a suspicion that the existing code immediately
+> after the context of this hunk is wrong to clear HAS_CHANGES bit
+> when options->found_changes is clear.  HAS_CHANGES bit should be
+> clear upon entry to this function, when DIFF_FROM_CONTENTS is in
+> use.
+> 
+> I also suspect that addremove() that refrains from setting
+> HAS_CHANGES when DIFF_FROM_CONTENTS is in effect is wrong.  No
+> matter what combination of -w or -b is used, an addition of a new
+> file, or a removal of an existing file, is a change.
+> 
 
-s/t7030-verify-tag/t7030/
-s/Adds/add
+We certainly share that suspicion.
 
-> The verify-tag command supports multiple tag names as an argument.
-> However, existing tests only test for invocation with a single tag, so
-> we add a test invoking with multiple tags.
->
-> Helped-by: Jeff King <peff@peff.net>
-> Signed-off-by: Santiago Torres <santiago@nyu.edu>
-> ---
-> diff --git a/t/t7030-verify-tag.sh b/t/t7030-verify-tag.sh
-> @@ -112,4 +112,16 @@ test_expect_success GPG 'verify signatures with --raw' '
-> +test_expect_success GPG 'verify multiple tags' '
-> +       tags="fourth-signed sixth-signed seventh-signed" &&
-> +       for i in $tags; do
+Even with your clear explanations, I still can't wrap my brain
+completely around that flow of different cases. But in any case:
 
-Style: 'do' on its own line; drop semicolon
+--textconv is about presenting blobs (and, as a consequence diffs) to
+the user.
 
-    for i in ...
-    do
-        ...
-    done
+--name-status and the like are about differences between the actual
+objects (irrespective of any possibly coinciding textual representation)
 
-> +               git verify-tag -v --raw $i || return 1
-> +       done >expect.stdout 2>expect.stderr.1 &&
-> +       grep "^.GNUPG" <expect.stderr.1 >expect.stderr &&
+Shouldn't "--exit-code" rather be in the "name-status ballpark" than in
+the "textconv ballpark", i.e. signal that there are changes irrespective
+of representation?
 
-Hmm, is there a reason you didn't stick with the more strict regex
-Peff suggested?
+On the other hand, if "--exit-code" should be in the "textconv ballbark"
+then, e.g., it should return 0 resp. 1 on a file with mere white space
+changes when run with resp. without "-w", which means we can never use
+optimizations with --exit-code, or more correctly: optimization (quick)
+can identify "equal" (equal blobs produce equal textual representations)
+but not "unequal". textconv filters are functions, but not necessarily
+injective. So we could keep "quick" in the presumably more common case
+of equal blobs.
 
-    ^.GNUPG:.
-
-(Genuine question: I'm not saying your choice is wrong, I'm just
-interested in the reasoning behind the decision.)
-
-> +       git verify-tag -v --raw $tags >actual.stdout 2>actual.stderr.1 &&
-> +       grep "^.GNUPG" <actual.stderr.1 >actual.stderr &&
-> +       test_cmp expect.stdout actual.stdout &&
-> +       test_cmp expect.stderr actual.stderr
-> +'
-> +
->  test_done
+Michael
