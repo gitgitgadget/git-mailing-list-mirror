@@ -1,149 +1,93 @@
-From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCH v3][Outreachy] branch -D: allow - as abbreviation of
- @{-1}
-Date: Wed, 6 Apr 2016 22:05:19 +0200 (CEST)
-Message-ID: <980248197.3116219.1459973119988.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <1459416327-795-1-git-send-email-elena.petrashen@gmail.com> <972993506.2587877.1459438308676.JavaMail.zimbra@ensimag.grenoble-inp.fr> <CAJPOeMeqMpy8wmZ3jMfw_XLAS2WbPOtJF8_Rd_sPGQNeCNyFnw@mail.gmail.com> <1048705176.2897167.1459806794368.JavaMail.zimbra@ensimag.grenoble-inp.fr> <CAJPOeMeAQVR9ZvEC+r24P-RZq46iAeVx3CrLNbGXBGE8jw-iUA@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH v2] send-email: more meaningful Message-ID
+Date: Wed, 6 Apr 2016 20:07:14 +0000
+Message-ID: <20160406200714.GA19315@dcvr.yhbt.net>
+References: <20160405193952.5849-1-normalperson@yhbt.net>
+ <xmqqinzv224x.fsf@gitster.mtv.corp.google.com>
+ <20160405213607.GA15023@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: elena petrashen <elena.petrashen@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 06 22:01:34 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 06 22:07:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1antdu-0002Sc-0x
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Apr 2016 22:01:34 +0200
+	id 1antjV-0004pn-PV
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Apr 2016 22:07:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753170AbcDFUB2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Apr 2016 16:01:28 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:49288 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753115AbcDFUB1 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Apr 2016 16:01:27 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 1A17C217F;
-	Wed,  6 Apr 2016 22:01:23 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id IcdMOZDspdHp; Wed,  6 Apr 2016 22:01:23 +0200 (CEST)
-Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 044B2217D;
-	Wed,  6 Apr 2016 22:01:23 +0200 (CEST)
-In-Reply-To: <CAJPOeMeAQVR9ZvEC+r24P-RZq46iAeVx3CrLNbGXBGE8jw-iUA@mail.gmail.com>
-X-Originating-IP: [130.190.242.136]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF45 (Linux)/8.0.9_GA_6191)
-Thread-Topic: branch -D: allow - as abbreviation of @{-1}
-Thread-Index: QxXVrS2OHsaGFzyELE+5KKD/YEF42w==
+	id S1752138AbcDFUHP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2016 16:07:15 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:42087 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751930AbcDFUHO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2016 16:07:14 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29CA22044E;
+	Wed,  6 Apr 2016 20:07:13 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20160405213607.GA15023@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290866>
 
-elena petrashen <elena.petrashen@gmail.com> wrote:
-> On Tue, Apr 5, 2016 at 12:53 AM, Remi Galan Alfonso
-> <remi.galan-alfonso@ensimag.grenoble-inp.fr> wrote:
-> > elena petrashen <elena.petrashen@gmail.com> wrote:
-> >> On Thu, Mar 31, 2016 at 6:31 PM, Remi Galan Alfonso
-> >> <remi.galan-alfonso@ensimag.grenoble-inp.fr> wrote:
-> >> > Elena Petrashen <elena.petrashen@gmail.com> wrote:
-> >> >> +void delete_branch_advice(const char *name, const char *ref)
-> >> >> +{
-> >> >> +        const char fmt[] =3D
-> >> >> +        "\nNote: to restore the deleted branch:\n\ngit branch =
-%s %s\n";
-> >> >
-> >> > Shouldn't that be marked for translation, like is done with the =
-other
-> >> > strings?
-> >> >
-> >> > Thanks,
-> >> > R=C3=A9mi
-> >>
-> >> Thank you for letting me know about that! Could you please
-> >> help me out and explain how do I mark it for translation? I tried
-> >> to do it the same way as with the other strings but evidently
-> >> didn't quite succeed.
-> >
-> > I am not sure.
-> > I tried to grep similar cases, it seems that you can do the followi=
-ng:
-> >
-> >         const char fmt[] =3D N_("\nNote: to restore [...] \ngit bra=
-nch %s %s\n");
-> >         fprintf(stderr, _(fmt), name, ref);
-> >
-> > Some similar example in builtin/add.c:
-> >
-> >         static const char ignore_error[] =3D
-> >         N_("The following paths are ignored by one of your .gitigno=
-re files:\n");
-> >         [...]
-> >                         fprintf(stderr, _(ignore_error));
-> >
-> > Or you can define fmt as a 'const char *' and in that case do the
-> > following:
-> >
-> >         const char *fmt =3D _("\nNote: to restore [...] \n git bran=
-ch %s %s\n");
-> >         fprintf(stderr, fmt, name, ref);
-> >
-> >
-> > In builtin/am.c:
-> >                 const char *invalid_line =3D _("Malformed input lin=
-e: '%s'.");
-> >         [...]
-> >                                 ret =3D error(invalid_line, sb.buf)=
-;
-> >
-> > I don't know which one is the best way to go though.
-> >
-> > Thanks,
-> > R=C3=A9mi
->=20
-> Thank you! I'm a bit confused though as the previous implemented advi=
-ce function
-> in advice.c (the one I used for reference) doesn't seem to employ thi=
-s... does
-> this mean it's also not marked for translation?
->=20
-> void detach_advice(const char *new_name)
-> {
-> const char fmt[] =3D
-> "Note: checking out '%s'.\n\n"
-> "You are in 'detached HEAD' state. <.........>Example:\n\n"
-> "  git checkout -b <new-branch-name>\n\n";
->=20
-> fprintf(stderr, fmt, new_name);
-> }
+Using a YYYYmmddHHMMSS date representation is more meaningful to
+humans, especially when used for lookups on NNTP servers or linking
+to archive sites via Message-ID (e.g. mid.gmane.org or
+mid.mail-archive.com).  This timestamp format more easily gives a
+reader of the URL itself a rough date of a linked message compared
+to having them calculate the seconds since the Unix epoch.
 
-It doesn't seem so, at least it doesn't translate:
+Furthermore, having the MUA name in the Message-ID seems to be a
+rare oddity I haven't noticed outside of git-send-email.  We
+already have an optional X-Mailer header field to advertise for
+us, so extending the Message-ID by 15 characters can make for
+unpleasant Message-ID-based URLs to archive sites.
 
-# $ LANG=3Dfr_FR.UTF-8 git checkout 9494c39
-# Note: checking out '9494c39'.
-#=20
-# You are in 'detached HEAD' state. You can look around, make experimen=
-tal
-# changes and commit them, and you can discard any commits you make in =
-this
-# state without impacting any branches by performing another checkout.
-#=20
-# If you want to create a new branch to retain commits you create, you =
-may
-# do so (now or later) by using -b with the checkout command again. Exa=
-mple:
-#=20
-#   git checkout -b <new-branch-name>
-#=20
-# HEAD est maintenant sur 9494c39... Sync with Git 2.8.1
-Only the last line is translated.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+  v2 - moved "use" to the top
+  Thanks to Dscho for addressing Windows comments:
+  http://mid.gmane.org/alpine.DEB.2.20.1604061505010.3371@virtualbox
 
-Blame traces it back to commit 2857093b that was in 2012 so obviously
-the lack of translation isn't due to the message being recent.
+ git-send-email.perl | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-Thanks,
-R=C3=A9mi
+diff --git a/git-send-email.perl b/git-send-email.perl
+index d356901..52cf828 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -19,6 +19,7 @@
+ use 5.008;
+ use strict;
+ use warnings;
++use POSIX qw/strftime/;
+ use Term::ReadLine;
+ use Getopt::Long;
+ use Text::ParseWords;
+@@ -949,7 +950,7 @@ my ($message_id_stamp, $message_id_serial);
+ sub make_message_id {
+ 	my $uniq;
+ 	if (!defined $message_id_stamp) {
+-		$message_id_stamp = sprintf("%s-%s", time, $$);
++		$message_id_stamp = strftime("%Y%m%d%H%M%S.$$", gmtime(time));
+ 		$message_id_serial = 0;
+ 	}
+ 	$message_id_serial++;
+@@ -964,7 +965,7 @@ sub make_message_id {
+ 		require Sys::Hostname;
+ 		$du_part = 'user@' . Sys::Hostname::hostname();
+ 	}
+-	my $message_id_template = "<%s-git-send-email-%s>";
++	my $message_id_template = "<%s-%s>";
+ 	$message_id = sprintf($message_id_template, $uniq, $du_part);
+ 	#print "new message id = $message_id\n"; # Was useful for debugging
+ }
+-- 
+EW
