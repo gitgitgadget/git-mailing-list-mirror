@@ -1,82 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 3/6] builtin/verify-tag: change variable name for readability
-Date: Wed, 06 Apr 2016 09:46:58 -0700
-Message-ID: <xmqqfuuyy9a5.fsf@gitster.mtv.corp.google.com>
-References: <1459872449-7537-1-git-send-email-santiago@nyu.edu>
-	<1459872449-7537-4-git-send-email-santiago@nyu.edu>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: git interpret-trailers with multiple keys
+Date: Wed, 06 Apr 2016 18:58:30 +0200
+Message-ID: <vpqlh4qbrnt.fsf@anie.imag.fr>
+References: <20160406191054-mutt-send-email-mst@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: santiago@nyu.edu
-X-From: git-owner@vger.kernel.org Wed Apr 06 18:47:11 2016
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Wed Apr 06 18:58:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anqbl-0007aw-Qf
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Apr 2016 18:47:10 +0200
+	id 1anqn2-000439-4M
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Apr 2016 18:58:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751464AbcDFQrD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2016 12:47:03 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:59696 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750748AbcDFQrB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2016 12:47:01 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 428D052883;
-	Wed,  6 Apr 2016 12:47:00 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KD1lD3zBphvb/5ec4QmlTOpPEHc=; b=Z5EPiz
-	Sxb3719n7TVWiN/i3ttsSk1lSAJJHf1jMttW6nu8OCPBt3GvEMAJXJP7U+P9QoIi
-	7O/3xwbAmVNc0fv5qHnZztE5cQ9UbA8vE1zu0OIKatqNjBbyaA+zJnn0OK6TNpNJ
-	dOY1lRJjS5p6jD93oDg7wz2GKsRozkXwV0kyI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=b5PO5QWGku2hzf1MK20ekOYB2isnGiEh
-	3fLGuk8DytDId6Pix+YUhJrWECjtuBYDDEjUkhUTC76thAc8b+XlceoOvFGx3RtC
-	3rcnUPJa3lmPpNkuYewvdxEYoZNfDmCjoG7btK/DQtzgHaBHbC4DhD9K6x62QuH2
-	4IPLT4QLMO4=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2754052882;
-	Wed,  6 Apr 2016 12:47:00 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8A24652881;
-	Wed,  6 Apr 2016 12:46:59 -0400 (EDT)
-In-Reply-To: <1459872449-7537-4-git-send-email-santiago@nyu.edu>
-	(santiago@nyu.edu's message of "Tue, 5 Apr 2016 12:07:26 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2E4B6D32-FC17-11E5-BE77-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751845AbcDFQ6l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2016 12:58:41 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:39975 "EHLO mx1.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751176AbcDFQ6k (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2016 12:58:40 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u36GwSAs002658
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 6 Apr 2016 18:58:29 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u36GwUW1015325;
+	Wed, 6 Apr 2016 18:58:30 +0200
+In-Reply-To: <20160406191054-mutt-send-email-mst@redhat.com> (Michael S.
+	Tsirkin's message of "Wed, 6 Apr 2016 19:12:56 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Wed, 06 Apr 2016 18:58:29 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u36GwSAs002658
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1460566709.83979@uxaundD8YIXoKCUrV1ajdg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290853>
 
-santiago@nyu.edu writes:
+"Michael S. Tsirkin" <mst@redhat.com> writes:
 
-> From: Santiago Torres <santiago@nyu.edu>
+> I have this in .git/config
 >
-> The run_gpg_verify function has two variables size, and len. 
+> [trailer "r"]
+>         key = Reviewed-by
+>         command = "echo \"Michael S. Tsirkin <mst@redhat.com\""
+> [trailer "s"]
+>         key = Signed-off-by
+>         command = "echo \"Michael S. Tsirkin <mst@redhat.com\""
+>
+> whenever I run git interpret-trailers -t r I see these lines added:
+>
+> Reviewed-by: Michael S. Tsirkin <mst@redhat.com
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com
+> Reviewed-by: Michael S. Tsirkin <mst@redhat.com
+>
+> Why is Reviewed-by repeated?  Bug or feature?
 
-I somehow found this harder to parse than necessary.
+The first two lines are added unconditionally:
 
-> This may come off as confusing when reading the code. We clarify which one
-> pertains to the length of the tag headers by renaming len to
-> payload_length.
+$ echo | git interpret-trailers 
 
-I'd rephrase it like so:
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com
 
-    verify-tag: change variable name for readability
+The last line is added because you've asked for it with --trailer r.
 
-    The run_gpg_verify() function has two variables, size and len.
-    This may come off as confusing when reading the code.
+I don't think it's currently possible to get the behavior you seem to
+expect, ie. to define trailer tokens fully (key and value) in your
+config file but use them only on request.
 
-    Clarify which one pertains to the length of the tag headers by
-    renaming len to payload_length.
+(BTW, I think you wanted a closing > at the end)
 
-The patch text looked good.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
