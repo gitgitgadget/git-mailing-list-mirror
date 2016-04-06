@@ -1,73 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: log --pretty accepts incomplete pre-defined formats
-Date: Wed, 6 Apr 2016 14:07:01 -0700
-Message-ID: <CAPc5daVQwP2ZxpK6+57q+_EZLTU=CuHmcVT_VHmFH-KxrSKMog@mail.gmail.com>
-References: <5704A925.9030506@gmail.com> <xmqqinzuzs3d.fsf@gitster.mtv.corp.google.com>
- <20160406210339.GA18799@dcvr.yhbt.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] send-email: do not load Data::Dumper
+Date: Wed, 6 Apr 2016 14:07:32 -0700
+Message-ID: <20160406210706.GK28749@google.com>
+References: <20160406202538.GA27651@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Sidhant Sharma <tigerkid001@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Apr 06 23:07:41 2016
+X-From: git-owner@vger.kernel.org Wed Apr 06 23:07:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anufs-0003Sf-F8
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Apr 2016 23:07:40 +0200
+	id 1anug2-0003XO-0m
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Apr 2016 23:07:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753889AbcDFVHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2016 17:07:24 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:35470 "EHLO
-	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753511AbcDFVHV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2016 17:07:21 -0400
-Received: by mail-yw0-f194.google.com with SMTP id k197so4251955ywe.2
-        for <git@vger.kernel.org>; Wed, 06 Apr 2016 14:07:21 -0700 (PDT)
+	id S1753643AbcDFVHq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2016 17:07:46 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:33711 "EHLO
+	mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753301AbcDFVHp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2016 17:07:45 -0400
+Received: by mail-pf0-f193.google.com with SMTP id e190so5309655pfe.0
+        for <git@vger.kernel.org>; Wed, 06 Apr 2016 14:07:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=4l7m7m09VHPiW3jnLb0uK+2QhrDjydj/hhWHUmTz16s=;
-        b=DkHF1cdLU9qNzegNAQtqE98NV8daO8Y0YYTk6Nfgl35fpRcdST/UOf/5tTaV6io3mn
-         wF8U+TOu5/2Tior/KATcAgfXx8eMyTRliQrXpfVRf8874c11Ntz978WgRVNhSgJekCAc
-         u/jp45mpdwPTNPCvBfYKxGL7XzbxoIiCjCPRgiJCyUR0SufPlBiCuJcwtr2I9JOstp+b
-         din7v6UCrQjjsKk8KOsBKwFzUUXRlXs4IWTyr/0S+PaJsDGTmrHj2ehzbR0VzswMhN6Z
-         i9Rc5KND1EbhuMHU07ys4032qFzX8vLw/qRSKLpgN0JNCOezf8NebsNta67hf0xY4UbC
-         y67Q==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=q32sSC19i/BhCnQVRY4VSU+I5sBdyI1VeHhoTo1VWhU=;
+        b=eb2YtqdlhW3piHOmZk8KNB8vT9OI3GwbXjnR2qLlGw3tl2Uub75tPHWzvSKE1ce5Y5
+         k8NtgD88zLeRw1BbO1d6bvLP3cO8s0QA4muIx9yySHe3Z/za2ys72JVIYOze9FsYVliB
+         Xdo1l3FdpZZDBeVChhCHareHGJ8ZseeQ/QCFZQNLDBhDWqkJeck0SlilI390tEnSL4HT
+         CDBoQHr6wa4zXkeDVONAbke51wTCYzBwV5pqbjoMAEhkLC/mDklT1I1U2kTHc080N6YL
+         hfmtXjsAOzALjveaVapo96ojK2sKDGCTRcCJIOHdfwvY8vSnPqRRFFTKIu5ZHWEzsJP5
+         wCcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=4l7m7m09VHPiW3jnLb0uK+2QhrDjydj/hhWHUmTz16s=;
-        b=Uk5z8j4ySjqfn61gHet3xEoJsv1VJnqX2gM/yXRC4PCfQ6rCNH1Hz5K1tiBw6XAhdR
-         5Mk4EeHes/tBnl28+25dpC1zoFHhK9Ctsi+Wcr8nyXyeLRsul2LAgMA8A+tlCVa91N0R
-         z0U8PeI4p5xVwgsbvuXGSWnGNvYWgHHVc8P8QSuLn9pIJ/KzwDhiuvCqJhY6Zg/+je+u
-         hVFKpz1lVA8Xblw/5E5OzctpUl6P+eCepiFxSAyC0CFBJhB48MBqXS8t3Y+fh3wJh6c8
-         A7ZlC8Pc8TcoFkGsjLOBWLtdR4YYszD/NjXN5RVGffSpFRtS9Cj8682kzopa1PJj3z6d
-         e3JA==
-X-Gm-Message-State: AD7BkJKSgHze4Umg1IjcwQ6RsyRWif2JxUfdo1Q/VdRa1gMbYNDxTqZM3BoeRDS549PeDV9mMkWLfJdtil2Mrw==
-X-Received: by 10.37.31.87 with SMTP id f84mr25225121ybf.151.1459976840731;
- Wed, 06 Apr 2016 14:07:20 -0700 (PDT)
-Received: by 10.13.251.71 with HTTP; Wed, 6 Apr 2016 14:07:01 -0700 (PDT)
-In-Reply-To: <20160406210339.GA18799@dcvr.yhbt.net>
-X-Google-Sender-Auth: J0I5Qx8FjLfrtMYWjW-4dGQ8Ceg
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=q32sSC19i/BhCnQVRY4VSU+I5sBdyI1VeHhoTo1VWhU=;
+        b=NT0ngSZXalFf2mA5nU4G3vunPDUxKpri1toCS/+wAqLkA4i1i6F7fyG2azP8SR7eDZ
+         hkG+ciSFONMut4Qhgnzt/711AnzP/kJbWmBpbE0PE7fslqW1IpVK9ww77Ep/OFveLxrI
+         WYZS4CQJB22igoPVdSYiVsIc/28WE309RNQqagZQ0C5RfJBQAwCQ5hLBwDu+Ytc8LB3h
+         Y7+c7Mi/gv0M+wDn1WqbxjhOWatzUFRYtkmdP3ShDxdl+YYhixm/7227V9CWp95LZ+Yo
+         rnI/H7NVtRQN2MRGBz5GOkxM/zwtzgprWOQWwmiNsICTX8GByY9o4b38OWPT/7Tr8ROg
+         B1Fw==
+X-Gm-Message-State: AD7BkJL26yhQ7DbztI3Po8PayH0LY/OwmofuT6FPNvUM/jggPMn5wdEXe7e6BJJHW1KKyQ==
+X-Received: by 10.98.73.69 with SMTP id w66mr41297131pfa.106.1459976864513;
+        Wed, 06 Apr 2016 14:07:44 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:e921:9e91:8d38:f26c])
+        by smtp.gmail.com with ESMTPSA id g70sm7003043pfj.13.2016.04.06.14.07.43
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 06 Apr 2016 14:07:43 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20160406202538.GA27651@dcvr.yhbt.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290870>
 
-On Wed, Apr 6, 2016 at 2:03 PM, Eric Wong <normalperson@yhbt.net> wrote:
->> which was slightly tightend by aacd404e (Fix some
->> documentation typos and grammar, 2007-02-02).
+Eric Wong wrote:
+
+> We never used Data::Dumper in this script.  The only reference
+> of it was always commented out and removed over a decade ago in
+> commit 4bc87a28be020a6bf7387161c65ea3d8e4a0228b
+> ("send-email: Change from Mail::Sendmail to Net::SMTP")
 >
-> Huh?
+> Signed-off-by: Eric Wong <normalperson@yhbt.net>
+> ---
+>  While I'm in the area...
+>
+>  git-send-email.perl | 1 -
+>  1 file changed, 1 deletion(-)
 
-Huh indeed.
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-b6936205 (Disallow invalid --pretty= abbreviations, 2007-02-02)
-
-was what I meant to name.
+Thanks.
