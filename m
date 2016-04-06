@@ -1,77 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 5/6] builtin/verify-tag: move verification code to tag.c
-Date: Wed, 06 Apr 2016 09:33:17 -0700
-Message-ID: <xmqq60vuzohe.fsf@gitster.mtv.corp.google.com>
-References: <1459872449-7537-1-git-send-email-santiago@nyu.edu>
-	<1459872449-7537-6-git-send-email-santiago@nyu.edu>
+From: Willy Tarreau <w@1wt.eu>
+Subject: Re: [PATCH] sequencer.c: fix detection of duplicate s-o-b
+Date: Wed, 6 Apr 2016 18:37:26 +0200
+Message-ID: <20160406163726.GG28596@1wt.eu>
+References: <20160312130844.GA25639@1wt.eu>
+ <xmqqr3eizsxu.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: santiago@nyu.edu
-X-From: git-owner@vger.kernel.org Wed Apr 06 18:33:29 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 06 18:37:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anqOW-00020q-HL
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Apr 2016 18:33:28 +0200
+	id 1anqSZ-0003f8-2B
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Apr 2016 18:37:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751214AbcDFQdW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2016 12:33:22 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:51028 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751060AbcDFQdV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2016 12:33:21 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E2E6A52464;
-	Wed,  6 Apr 2016 12:33:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qY9vGeVDwlWFwIsG453rg4dyzjc=; b=ulQNc9
-	5gtJuCm+z5VABtAgmrirJEGwJQDVIHV2IWyl4wzT4RV74g6xJynPif7kb6RiA5WI
-	lKsRFQlP8SOlq1JJVgdkrwcW+AxUfB5h7eNtQPEI6yPMnRIvctiM5JLiMlsDPIBe
-	CGr7WCGnRBLu3IwoSyOCjwzw8qaZnqRf5qdnU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UAHniCy46LEuRBUStTLONGX9Htpd39JZ
-	+JQQAsXzxX7jgpPOiOQ/lLSjZVA7YDNu6VufHUQWJuuUBKbtZguBHALgtw5PY/aR
-	aCUGMJlNSAtUgJyehW4WB29cB9DkL/KIdrnAdAczx5m0DttdMa8KTFtP9FnqxBq/
-	RFLOn7Xd9Pk=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DA0A952463;
-	Wed,  6 Apr 2016 12:33:19 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5841752460;
-	Wed,  6 Apr 2016 12:33:19 -0400 (EDT)
-In-Reply-To: <1459872449-7537-6-git-send-email-santiago@nyu.edu>
-	(santiago@nyu.edu's message of "Tue, 5 Apr 2016 12:07:28 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 45698992-FC15-11E5-81AC-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751264AbcDFQhd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2016 12:37:33 -0400
+Received: from wtarreau.pck.nerim.net ([62.212.114.60]:65377 "EHLO 1wt.eu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751153AbcDFQhc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2016 12:37:32 -0400
+Received: (from willy@localhost)
+	by pcw.home.local (8.15.2/8.15.2/Submit) id u36GbQJf028743;
+	Wed, 6 Apr 2016 18:37:26 +0200
+Content-Disposition: inline
+In-Reply-To: <xmqqr3eizsxu.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290848>
 
-santiago@nyu.edu writes:
+On Wed, Apr 06, 2016 at 07:57:01AM -0700, Junio C Hamano wrote:
+> This seems to have been lost, perhaps because the top part that was
+> quite long didn't look like a patch submission message or something.
 
-> From: Santiago Torres <santiago@nyu.edu>
->
-> The PGP verification routine for tags could be accessed by other
-> commands that require it. We do this by moving it to the common tag.c
-> module. We rename the verify_tag() function to gpg_verify_tag() to avoid
-> conflicts with the mktag.c function.
+Don't worry, we all know it's the submitter's responsibility to retransmit,
+I apply the same principle :-)
 
-After outlining the observation and opinion, we describe the changes
-as if we are ordering somebody to "do this, do that" to the codebase,
-like so:
+> Git 1.7.12 is a quite ancient release and I wouldn't be surprised if
+> we made the behaviour change during the period leading to v2.6 on
+> purpose, but nothing immediately comes to mind. Christian (as the
+> advocate for the trailer machinery) and Brandon ("git shortlog
+> sequencer.c" suggests you), can you take a look?
 
-	... require it.
+FWIW it wad changed in 1.8.3 by commit bab4d10 ("sequencer.c: teach
+append_signoff how to detect duplicate s-o-b").
 
-        Move the function to tag.c and make it public, and rename it
-	gpg_verify_tag() to make its name more descriptive and also
-	avoid conflicts with a static function in builtin/mktag.c.
+The change made a lot of sense but it didn't assume that this practice
+was common. And indeed I think this practice only happens in maintenance
+branches where people have to make a lot of adaptations to existing
+patches that they're cherry-picking. We do that a lot in stable kernels
+to keep track of what we may need to revisit if we break something.
+
+Thanks!
+Willy
