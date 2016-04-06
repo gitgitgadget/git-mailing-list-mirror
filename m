@@ -1,277 +1,156 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 09/11] rerere: move code related to "forget" together
-Date: Wed,  6 Apr 2016 16:05:33 -0700
-Message-ID: <1459983935-25267-10-git-send-email-gitster@pobox.com>
+Subject: [PATCH v3 10/11] rerere: split code to call ll_merge() further
+Date: Wed,  6 Apr 2016 16:05:34 -0700
+Message-ID: <1459983935-25267-11-git-send-email-gitster@pobox.com>
 References: <1459204942-26601-1-git-send-email-gitster@pobox.com>
  <1459983935-25267-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 07 01:06:05 2016
+X-From: git-owner@vger.kernel.org Thu Apr 07 01:06:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anwWR-0008RF-D6
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 01:06:03 +0200
+	id 1anwWR-0008RF-VB
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 01:06:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754428AbcDFXFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2016 19:05:55 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:50050 "EHLO
+	id S1754473AbcDFXF5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2016 19:05:57 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:62561 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752191AbcDFXFy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2016 19:05:54 -0400
+	with ESMTP id S1754390AbcDFXFz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2016 19:05:55 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F3DC75373F;
-	Wed,  6 Apr 2016 19:05:52 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AB7A153746;
+	Wed,  6 Apr 2016 19:05:54 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=k7G6
-	GPGBD+GvNxdvqzgrYVvtBzg=; b=s8LiNq0nK1NjwWkLSv3RVMEryjfh+JG1/mG/
-	D6XlrBLTgLoUFVOSOvdA2xylqreIPeBFDCtPDxpvtiSOnUJwn60nrrt98VG8OvHI
-	1kFt2DM4Cp1Dl/fwB/nchIAzahvb7Ljm5cnjjzZ6PrE7sJVv5bgRkX2TyyH16ZcG
-	7FSaCmg=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Qcpo
+	EVGLe6OVzercYwDAE7AUrFk=; b=DjitVbIJOF2/4ztu8IktLJmpFdO+fLzn+odK
+	Ok4CJQOjyRud4CZizGgJ5mMivpkOJq691vrCAbyXMIPxaXS18eBrLIipoUQ4WN7p
+	dWMWwWvIrp55hYNay6y3It/FnYtF3TtWrzHPAopTP2j5aEFr07MrtLz9vJAN1s8Q
+	gwlfI9o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=HYP3Q2
-	SaFSPzS22oRExpI6Jp5qdNFfQXoMu+si5bTpR8blP3Azwl+ObbsCSOOc8AC1KFv8
-	Il8orweizUXgdMkSYKQhYw5SWTHAQ8JBWQJjnjHRBRchdLEt/oFTbPkXB/2j0hT9
-	O/E8/6dTXxPIaw8V6XQrn+HBCwbq2DETPMrfg=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=qPsDq7
+	Xa4JpI75+lybiZ1EMXJhpCOAfCebtuqVKy8RW4J1QgU4+w2DmKPp8l5KckOEeG8u
+	GCsjxhIszSYuxI4hPtE2F62TFl+mWJKO3lVyXozqgVWHfcd3FcLk29eqM1DVGVeH
+	oNt6RoG9EmwoZxvi6HLTnWR739bAjzlFZgXPs=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EC0F95373E;
-	Wed,  6 Apr 2016 19:05:52 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A3BCB53745;
+	Wed,  6 Apr 2016 19:05:54 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 58B7B5373C;
-	Wed,  6 Apr 2016 19:05:52 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 280BB53744;
+	Wed,  6 Apr 2016 19:05:54 -0400 (EDT)
 X-Mailer: git-send-email 2.3.8-32-g0ce02b3
 In-Reply-To: <1459983935-25267-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 1C18C36E-FC4C-11E5-A915-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 1D2B3214-FC4C-11E5-BB43-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290894>
 
-"rerere forget" is the only user of handle_cache() helper, which in
-turn is the only user of rerere_io that reads from an in-core buffer
-whose getline method is implemented as rerere_mem_getline().  Gather
-them together.
+The merge() helper function is given an existing rerere ID (i.e. the
+name of the .git/rr-cache/* subdirectory, and the variant number)
+that identifies one <preimage, postimage> pair, try to see if the
+conflicted state in the given path can be resolved by using the pair,
+and if this succeeds, then update the conflicted path with the
+result in the working tree.
+
+To implement rerere_forget() in the multiple variant world, we'd
+need a helper to do the "see if a <preimage, postimage> pair cleanly
+resolves a conflicted state we have in-core" part, without actually
+touching any file in the working tree, in order to identify which
+variant(s) to remove.  Split the logic to do so into a separate
+helper function try_merge() out of merge().
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- rerere.c | 194 +++++++++++++++++++++++++++++++--------------------------------
- 1 file changed, 97 insertions(+), 97 deletions(-)
+ rerere.c | 47 +++++++++++++++++++++++++++++++----------------
+ 1 file changed, 31 insertions(+), 16 deletions(-)
 
 diff --git a/rerere.c b/rerere.c
-index 3d4dd33..2b870e0 100644
+index 2b870e0..e636d4b 100644
 --- a/rerere.c
 +++ b/rerere.c
-@@ -517,103 +517,6 @@ static int handle_file(const char *path, unsigned char *sha1, const char *output
+@@ -622,6 +622,33 @@ int rerere_remaining(struct string_list *merge_rr)
  }
  
  /*
-- * Subclass of rerere_io that reads from an in-core buffer that is a
-- * strbuf
-- */
--struct rerere_io_mem {
--	struct rerere_io io;
--	struct strbuf input;
--};
--
--/*
-- * ... and its getline() method implementation
-- */
--static int rerere_mem_getline(struct strbuf *sb, struct rerere_io *io_)
--{
--	struct rerere_io_mem *io = (struct rerere_io_mem *)io_;
--	char *ep;
--	size_t len;
--
--	strbuf_release(sb);
--	if (!io->input.len)
--		return -1;
--	ep = memchr(io->input.buf, '\n', io->input.len);
--	if (!ep)
--		ep = io->input.buf + io->input.len;
--	else if (*ep == '\n')
--		ep++;
--	len = ep - io->input.buf;
--	strbuf_add(sb, io->input.buf, len);
--	strbuf_remove(&io->input, 0, len);
--	return 0;
--}
--
--static int handle_cache(const char *path, unsigned char *sha1, const char *output)
--{
--	mmfile_t mmfile[3] = {{NULL}};
--	mmbuffer_t result = {NULL, 0};
--	const struct cache_entry *ce;
--	int pos, len, i, hunk_no;
--	struct rerere_io_mem io;
--	int marker_size = ll_merge_marker_size(path);
--
--	/*
--	 * Reproduce the conflicted merge in-core
--	 */
--	len = strlen(path);
--	pos = cache_name_pos(path, len);
--	if (0 <= pos)
--		return -1;
--	pos = -pos - 1;
--
--	while (pos < active_nr) {
--		enum object_type type;
--		unsigned long size;
--
--		ce = active_cache[pos++];
--		if (ce_namelen(ce) != len || memcmp(ce->name, path, len))
--			break;
--		i = ce_stage(ce) - 1;
--		if (!mmfile[i].ptr) {
--			mmfile[i].ptr = read_sha1_file(ce->sha1, &type, &size);
--			mmfile[i].size = size;
--		}
--	}
--	for (i = 0; i < 3; i++)
--		if (!mmfile[i].ptr && !mmfile[i].size)
--			mmfile[i].ptr = xstrdup("");
--
--	/*
--	 * NEEDSWORK: handle conflicts from merges with
--	 * merge.renormalize set, too
--	 */
--	ll_merge(&result, path, &mmfile[0], NULL,
--		 &mmfile[1], "ours",
--		 &mmfile[2], "theirs", NULL);
--	for (i = 0; i < 3; i++)
--		free(mmfile[i].ptr);
--
--	memset(&io, 0, sizeof(io));
--	io.io.getline = rerere_mem_getline;
--	if (output)
--		io.io.output = fopen(output, "w");
--	else
--		io.io.output = NULL;
--	strbuf_init(&io.input, 0);
--	strbuf_attach(&io.input, result.ptr, result.size, result.size);
--
--	/*
--	 * Grab the conflict ID and optionally write the original
--	 * contents with conflict markers out.
--	 */
--	hunk_no = handle_path(sha1, (struct rerere_io *)&io, marker_size);
--	strbuf_release(&io.input);
--	if (io.io.output)
--		fclose(io.io.output);
--	return hunk_no;
--}
--
--/*
-  * Look at a cache entry at "i" and see if it is not conflicting,
-  * conflicting and we are willing to handle, or conflicting and
-  * we are unable to handle, and return the determination in *type.
-@@ -1005,6 +908,103 @@ int rerere(int flags)
- 	return status;
- }
- 
-+/*
-+ * Subclass of rerere_io that reads from an in-core buffer that is a
-+ * strbuf
++ * Try using the given conflict resolution "ID" to see
++ * if that recorded conflict resolves cleanly what we
++ * got in the "cur".
 + */
-+struct rerere_io_mem {
-+	struct rerere_io io;
-+	struct strbuf input;
-+};
-+
-+/*
-+ * ... and its getline() method implementation
-+ */
-+static int rerere_mem_getline(struct strbuf *sb, struct rerere_io *io_)
++static int try_merge(const struct rerere_id *id, const char *path,
++		     mmfile_t *cur, mmbuffer_t *result)
 +{
-+	struct rerere_io_mem *io = (struct rerere_io_mem *)io_;
-+	char *ep;
-+	size_t len;
++	int ret;
++	mmfile_t base = {NULL, 0}, other = {NULL, 0};
 +
-+	strbuf_release(sb);
-+	if (!io->input.len)
-+		return -1;
-+	ep = memchr(io->input.buf, '\n', io->input.len);
-+	if (!ep)
-+		ep = io->input.buf + io->input.len;
-+	else if (*ep == '\n')
-+		ep++;
-+	len = ep - io->input.buf;
-+	strbuf_add(sb, io->input.buf, len);
-+	strbuf_remove(&io->input, 0, len);
-+	return 0;
-+}
-+
-+static int handle_cache(const char *path, unsigned char *sha1, const char *output)
-+{
-+	mmfile_t mmfile[3] = {{NULL}};
-+	mmbuffer_t result = {NULL, 0};
-+	const struct cache_entry *ce;
-+	int pos, len, i, hunk_no;
-+	struct rerere_io_mem io;
-+	int marker_size = ll_merge_marker_size(path);
-+
-+	/*
-+	 * Reproduce the conflicted merge in-core
-+	 */
-+	len = strlen(path);
-+	pos = cache_name_pos(path, len);
-+	if (0 <= pos)
-+		return -1;
-+	pos = -pos - 1;
-+
-+	while (pos < active_nr) {
-+		enum object_type type;
-+		unsigned long size;
-+
-+		ce = active_cache[pos++];
-+		if (ce_namelen(ce) != len || memcmp(ce->name, path, len))
-+			break;
-+		i = ce_stage(ce) - 1;
-+		if (!mmfile[i].ptr) {
-+			mmfile[i].ptr = read_sha1_file(ce->sha1, &type, &size);
-+			mmfile[i].size = size;
-+		}
-+	}
-+	for (i = 0; i < 3; i++)
-+		if (!mmfile[i].ptr && !mmfile[i].size)
-+			mmfile[i].ptr = xstrdup("");
-+
-+	/*
-+	 * NEEDSWORK: handle conflicts from merges with
-+	 * merge.renormalize set, too?
-+	 */
-+	ll_merge(&result, path, &mmfile[0], NULL,
-+		 &mmfile[1], "ours",
-+		 &mmfile[2], "theirs", NULL);
-+	for (i = 0; i < 3; i++)
-+		free(mmfile[i].ptr);
-+
-+	memset(&io, 0, sizeof(io));
-+	io.io.getline = rerere_mem_getline;
-+	if (output)
-+		io.io.output = fopen(output, "w");
++	if (read_mmfile(&base, rerere_path(id, "preimage")) ||
++	    read_mmfile(&other, rerere_path(id, "postimage")))
++		ret = 1;
 +	else
-+		io.io.output = NULL;
-+	strbuf_init(&io.input, 0);
-+	strbuf_attach(&io.input, result.ptr, result.size, result.size);
++		/*
++		 * A three-way merge. Note that this honors user-customizable
++		 * low-level merge driver settings.
++		 */
++		ret = ll_merge(result, path, &base, NULL, cur, "", &other, "", NULL);
 +
-+	/*
-+	 * Grab the conflict ID and optionally write the original
-+	 * contents with conflict markers out.
-+	 */
-+	hunk_no = handle_path(sha1, (struct rerere_io *)&io, marker_size);
-+	strbuf_release(&io.input);
-+	if (io.io.output)
-+		fclose(io.io.output);
-+	return hunk_no;
++	free(base.ptr);
++	free(other.ptr);
++
++	return ret;
 +}
 +
- static int rerere_forget_one_path(const char *path, struct string_list *rr)
++/*
+  * Find the conflict identified by "id"; the change between its
+  * "preimage" (i.e. a previous contents with conflict markers) and its
+  * "postimage" (i.e. the corresponding contents with conflicts
+@@ -635,30 +662,20 @@ static int merge(const struct rerere_id *id, const char *path)
  {
- 	const char *filename;
+ 	FILE *f;
+ 	int ret;
+-	mmfile_t cur = {NULL, 0}, base = {NULL, 0}, other = {NULL, 0};
++	mmfile_t cur = {NULL, 0};
+ 	mmbuffer_t result = {NULL, 0};
+ 
+ 	/*
+ 	 * Normalize the conflicts in path and write it out to
+ 	 * "thisimage" temporary file.
+ 	 */
+-	if (handle_file(path, NULL, rerere_path(id, "thisimage")) < 0) {
+-		ret = 1;
+-		goto out;
+-	}
+-
+-	if (read_mmfile(&cur, rerere_path(id, "thisimage")) ||
+-	    read_mmfile(&base, rerere_path(id, "preimage")) ||
+-	    read_mmfile(&other, rerere_path(id, "postimage"))) {
++	if ((handle_file(path, NULL, rerere_path(id, "thisimage")) < 0) ||
++	    read_mmfile(&cur, rerere_path(id, "thisimage"))) {
+ 		ret = 1;
+ 		goto out;
+ 	}
+ 
+-	/*
+-	 * A three-way merge. Note that this honors user-customizable
+-	 * low-level merge driver settings.
+-	 */
+-	ret = ll_merge(&result, path, &base, NULL, &cur, "", &other, "", NULL);
++	ret = try_merge(id, path, &cur, &result);
+ 	if (ret)
+ 		goto out;
+ 
+@@ -684,8 +701,6 @@ static int merge(const struct rerere_id *id, const char *path)
+ 
+ out:
+ 	free(cur.ptr);
+-	free(base.ptr);
+-	free(other.ptr);
+ 	free(result.ptr);
+ 
+ 	return ret;
 -- 
 2.8.1-273-ga2cd0f9
