@@ -1,7 +1,7 @@
 From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 2/4] builtin/interpret-trailers: suppress blank line
-Date: Thu, 7 Apr 2016 18:23:10 +0300
-Message-ID: <1460042563-32741-3-git-send-email-mst@redhat.com>
+Subject: [PATCH 4/4] builtin/am: passthrough -t and --trailer flags
+Date: Thu, 7 Apr 2016 18:23:16 +0300
+Message-ID: <1460042563-32741-5-git-send-email-mst@redhat.com>
 References: <1460042563-32741-1-git-send-email-mst@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -9,29 +9,29 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <christian.couder@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 07 17:23:21 2016
+X-From: git-owner@vger.kernel.org Thu Apr 07 17:23:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoBmC-0004xb-Td
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 17:23:21 +0200
+	id 1aoBmM-00054B-2H
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 17:23:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756550AbcDGPXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2016 11:23:14 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:56697 "EHLO mx1.redhat.com"
+	id S1756560AbcDGPX0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2016 11:23:26 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:39145 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756500AbcDGPXN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Apr 2016 11:23:13 -0400
+	id S1755688AbcDGPXZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Apr 2016 11:23:25 -0400
 Received: from int-mx14.intmail.prod.int.phx2.redhat.com (int-mx14.intmail.prod.int.phx2.redhat.com [10.5.11.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mx1.redhat.com (Postfix) with ESMTPS id 294F3C0D4706;
-	Thu,  7 Apr 2016 15:23:13 +0000 (UTC)
+	by mx1.redhat.com (Postfix) with ESMTPS id E25DD9B;
+	Thu,  7 Apr 2016 15:23:19 +0000 (UTC)
 Received: from redhat.com (vpn1-7-7.ams2.redhat.com [10.36.7.7])
-	by int-mx14.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id u37FNAF4032526;
-	Thu, 7 Apr 2016 11:23:11 -0400
+	by int-mx14.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id u37FNHwK032581;
+	Thu, 7 Apr 2016 11:23:18 -0400
 Content-Disposition: inline
 In-Reply-To: <1460042563-32741-1-git-send-email-mst@redhat.com>
 X-Mutt-Fcc: =sent
@@ -40,111 +40,136 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290919>
 
-it's sometimes useful to be able to pass output message of
-git-mailinfo through git-interpret-trailers,
-but that creates problems since that does not
-include the subject and an empty line after that,
-making interpret-trailers add an empty line.
-
-Add a flag to bypass adding the blank line.
+Pass -t and --trailer flags to git-reinterpret-trailers.
 
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- trailer.h                    |  2 +-
- builtin/interpret-trailers.c |  9 +++++++--
- trailer.c                    | 10 +++++++---
- 3 files changed, 15 insertions(+), 6 deletions(-)
+ builtin/am.c | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-diff --git a/trailer.h b/trailer.h
-index 36b40b8..afcf680 100644
---- a/trailer.h
-+++ b/trailer.h
-@@ -2,6 +2,6 @@
- #define TRAILER_H
+diff --git a/builtin/am.c b/builtin/am.c
+index 4180b04..480c4c2 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -122,6 +122,7 @@ struct am_state {
+ 	int message_id;
+ 	int scissors; /* enum scissors_type */
+ 	struct argv_array git_apply_opts;
++	struct argv_array git_interpret_trailers_opts;
+ 	const char *resolvemsg;
+ 	int committer_date_is_author_date;
+ 	int ignore_date;
+@@ -157,6 +158,8 @@ static void am_state_init(struct am_state *state, const char *dir)
  
- void process_trailers(const char *file, int in_place, int trim_empty,
--		      struct string_list *trailers);
-+		      int suppress_blank_line, struct string_list *trailers);
- 
- #endif /* TRAILER_H */
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-index 18cf640..4a92788 100644
---- a/builtin/interpret-trailers.c
-+++ b/builtin/interpret-trailers.c
-@@ -18,11 +18,14 @@ static const char * const git_interpret_trailers_usage[] = {
- 
- int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
- {
-+	int suppress_blank_line = 0;
- 	int in_place = 0;
- 	int trim_empty = 0;
- 	struct string_list trailers = STRING_LIST_INIT_DUP;
- 
- 	struct option options[] = {
-+		OPT_BOOL(0, "suppress-blank-line", &suppress_blank_line,
-+			 N_("suppress prefixing tailer(s) with a blank line ")),
- 		OPT_BOOL(0, "in-place", &in_place, N_("edit files in place")),
- 		OPT_BOOL(0, "trim-empty", &trim_empty, N_("trim empty trailers")),
- 		OPT_STRING_LIST('t', "trailer", &trailers, N_("trailer"),
-@@ -36,11 +39,13 @@ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
- 	if (argc) {
- 		int i;
- 		for (i = 0; i < argc; i++)
--			process_trailers(argv[i], in_place, trim_empty, &trailers);
-+			process_trailers(argv[i], in_place, trim_empty,
-+					 suppress_blank_line, &trailers);
- 	} else {
- 		if (in_place)
- 			die(_("no input file given for in-place editing"));
--		process_trailers(NULL, in_place, trim_empty, &trailers);
-+		process_trailers(NULL, in_place, trim_empty,
-+				 suppress_blank_line, &trailers);
- 	}
- 
- 	string_list_clear(&trailers, 0);
-diff --git a/trailer.c b/trailer.c
-index 8e48a5c..8e5be91 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -805,6 +805,7 @@ static void print_lines(FILE *outfile, struct strbuf **lines, int start, int end
- 
- static int process_input_file(FILE *outfile,
- 			      struct strbuf **lines,
-+			      int suppress_blank_line,
- 			      struct trailer_item **in_tok_first,
- 			      struct trailer_item **in_tok_last)
- {
-@@ -822,7 +823,8 @@ static int process_input_file(FILE *outfile,
- 	/* Print lines before the trailers as is */
- 	print_lines(outfile, lines, 0, trailer_start);
- 
--	if (!has_blank_line_before(lines, trailer_start - 1))
-+	if (!suppress_blank_line &&
-+	    !has_blank_line_before(lines, trailer_start - 1))
- 		fprintf(outfile, "\n");
- 
- 	/* Parse trailer lines */
-@@ -875,7 +877,8 @@ static FILE *create_in_place_tempfile(const char *file)
- 	return outfile;
+ 	if (!git_config_get_bool("commit.gpgsign", &gpgsign))
+ 		state->sign_commit = gpgsign ? "" : NULL;
++
++	argv_array_init(&state->git_interpret_trailers_opts);
  }
  
--void process_trailers(const char *file, int in_place, int trim_empty, struct string_list *trailers)
-+void process_trailers(const char *file, int in_place, int trim_empty,
-+		      int suppress_blank_line, struct string_list *trailers)
- {
- 	struct trailer_item *in_tok_first = NULL;
- 	struct trailer_item *in_tok_last = NULL;
-@@ -894,7 +897,8 @@ void process_trailers(const char *file, int in_place, int trim_empty, struct str
- 		outfile = create_in_place_tempfile(file);
+ /**
+@@ -170,6 +173,7 @@ static void am_state_release(struct am_state *state)
+ 	free(state->author_date);
+ 	free(state->msg);
+ 	argv_array_clear(&state->git_apply_opts);
++	argv_array_clear(&state->git_interpret_trailers_opts);
+ }
  
- 	/* Print the lines before the trailers */
--	trailer_end = process_input_file(outfile, lines, &in_tok_first, &in_tok_last);
-+	trailer_end = process_input_file(outfile, lines, suppress_blank_line,
-+					 &in_tok_first, &in_tok_last);
+ /**
+@@ -472,6 +476,11 @@ static void am_load(struct am_state *state)
+ 	if (sq_dequote_to_argv_array(sb.buf, &state->git_apply_opts) < 0)
+ 		die(_("could not parse %s"), am_path(state, "apply-opt"));
  
- 	arg_tok_first = process_command_line_args(trailers);
++	read_state_file(&sb, state, "interpret-trailers-opt", 1);
++	argv_array_clear(&state->git_interpret_trailers_opts);
++	if (sq_dequote_to_argv_array(sb.buf, &state->git_interpret_trailers_opts) < 0)
++		die(_("could not parse %s"), am_path(state, "interpret-trailers-opt"));
++
+ 	state->rebasing = !!file_exists(am_path(state, "rebasing"));
  
+ 	strbuf_release(&sb);
+@@ -988,6 +997,7 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
+ 	unsigned char curr_head[GIT_SHA1_RAWSZ];
+ 	const char *str;
+ 	struct strbuf sb = STRBUF_INIT;
++	struct strbuf tsb = STRBUF_INIT;
+ 
+ 	if (!patch_format)
+ 		patch_format = detect_patch_format(paths);
+@@ -1048,6 +1058,9 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
+ 	sq_quote_argv(&sb, state->git_apply_opts.argv, 0);
+ 	write_state_text(state, "apply-opt", sb.buf);
+ 
++	sq_quote_argv(&tsb, state->git_interpret_trailers_opts.argv, 0);
++	write_state_text(state, "interpret-trailers-opt", tsb.buf);
++
+ 	if (state->rebasing)
+ 		write_state_text(state, "rebasing", "");
+ 	else
+@@ -1072,6 +1085,7 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
+ 	write_state_count(state, "next", state->cur);
+ 	write_state_count(state, "last", state->last);
+ 
++	strbuf_release(&tsb);
+ 	strbuf_release(&sb);
+ }
+ 
+@@ -1233,6 +1247,34 @@ static void am_append_signoff(struct am_state *state)
+ }
+ 
+ /**
++ * Processes the supplied message file in-place with git-interpret-trailers.
++ * Returns 0 on success, -1 otherwise.
++ */
++static int run_interpret_trailers(const struct am_state *state, const char *msg)
++{
++	struct child_process cp = CHILD_PROCESS_INIT;
++
++	if (!state->git_interpret_trailers_opts.argc)
++		return 0;
++
++	cp.git_cmd = 1;
++
++	argv_array_push(&cp.args, "interpret-trailers");
++
++	argv_array_push(&cp.args, "--in-place");
++	argv_array_push(&cp.args, "--suppress-blank-line");
++
++	argv_array_pushv(&cp.args, state->git_interpret_trailers_opts.argv);
++
++	argv_array_push(&cp.args, msg);
++
++	if (run_command(&cp))
++		return -1;
++
++	return 0;
++}
++
++/**
+  * Parses `mail` using git-mailinfo, extracting its patch and authorship info.
+  * state->msg will be set to the patch message. state->author_name,
+  * state->author_email and state->author_date will be set to the patch author's
+@@ -1301,6 +1343,9 @@ static int parse_mail(struct am_state *state, const char *mail)
+ 	fclose(mi.input);
+ 	fclose(mi.output);
+ 
++	if (run_interpret_trailers(state, am_path(state, "msg")) < 0)
++		die("could not interpret trailers");
++
+ 	/* Extract message and author information */
+ 	fp = xfopen(am_path(state, "info"), "r");
+ 	while (!strbuf_getline_lf(&sb, fp)) {
+@@ -2299,6 +2344,9 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 		OPT_PASSTHRU_ARGV('p', NULL, &state.git_apply_opts, N_("num"),
+ 			N_("pass it through git-apply"),
+ 			0),
++		OPT_PASSTHRU_ARGV('t', "trailer", &state.git_interpret_trailers_opts, N_("trailer"),
++			N_("pass it through git-interpret-trailers"),
++			0),
+ 		OPT_CALLBACK(0, "patch-format", &patch_format, N_("format"),
+ 			N_("format the patch(es) are in"),
+ 			parse_opt_patchformat),
 -- 
 MST
