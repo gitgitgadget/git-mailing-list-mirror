@@ -1,7 +1,7 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH 20/24] checkout_paths(): remove unneeded flag variable
-Date: Thu,  7 Apr 2016 15:03:07 -0400
-Message-ID: <1460055791-23313-21-git-send-email-dturner@twopensource.com>
+Subject: [PATCH 19/24] cmd_merge(): remove unneeded flag variable
+Date: Thu,  7 Apr 2016 15:03:06 -0400
+Message-ID: <1460055791-23313-20-git-send-email-dturner@twopensource.com>
 References: <1460055791-23313-1-git-send-email-dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
 X-From: git-owner@vger.kernel.org Thu Apr 07 21:04:56 2016
@@ -10,52 +10,52 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoFEb-0007wR-6q
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 21:04:53 +0200
+	id 1aoFEb-0007wR-Qt
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 21:04:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757346AbcDGTEa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2016 15:04:30 -0400
-Received: from mail-qk0-f170.google.com ([209.85.220.170]:35167 "EHLO
-	mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932368AbcDGTDm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Apr 2016 15:03:42 -0400
-Received: by mail-qk0-f170.google.com with SMTP id o6so34892725qkc.2
-        for <git@vger.kernel.org>; Thu, 07 Apr 2016 12:03:42 -0700 (PDT)
+	id S1757361AbcDGTEd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2016 15:04:33 -0400
+Received: from mail-qk0-f180.google.com ([209.85.220.180]:33646 "EHLO
+	mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932363AbcDGTDl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Apr 2016 15:03:41 -0400
+Received: by mail-qk0-f180.google.com with SMTP id k135so31092742qke.0
+        for <git@vger.kernel.org>; Thu, 07 Apr 2016 12:03:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:subject:date:message-id:in-reply-to:references;
-        bh=FwzaFb9ZBFm31DyUMWF220RC7r4FwqmyASNOSVlZMUQ=;
-        b=PJx/h+w6VtKGd9zgCBFX6FHGhX9RXuWqxJN6P5CA08YVQI8vSALQGzgqc/T88oMwnt
-         ExtXvRc9aH+4xkLr7ecu2e6EYe46RV8r55XKKwW+pK1Kr+b1V/57JvmlVAbizy2X8QMd
-         3hSVOZRhnoUuS63zojl9lTdjoIeVH3VfjuUcx0KwoqNZ+r7bPbakUi2Pec8+NS3ReqjX
-         qJJjcN/N9zxMSS1Hso5lMpIdPTUAJ4M7B4PqAbrJUUhTgyXKvr4x2lXS7QV/ccSjg05Q
-         +Gpxpd/ud6SWk8QQYuLNOGi937/Q32Bh38OQkaaqKGNfuOMyXlltdpdQJVRUyiCUbDds
-         DL0g==
+        bh=6jE/4hLjtr6xSfX46NGmOeC4+pZMMAyzLqbZ5cw3Xa4=;
+        b=1O6pHYzHwdrf6yB5tpb++kjbnRAYZfhConN24b90tRsiUSuspy2E9OT1FTpp+cjCFF
+         img/IH0+dhnsplNY++hKFZdjpe0hiI6wJjr5boXyscKElo09a22r+qQ6Z/YkRltWbyWr
+         0d56WRcDfl5tsoXLlOqcALhKsXh1jf1M2NkToxSefEsxNpJV5ZEl9A2dQfiBLtGp5hBK
+         fpFSHbaEyvLCXi6DoNzzKWuodIC0+JVabwFHWbKpyGy7q+3E5kfqIG44zzyhTwperepF
+         YzVOkEfIMeSf7dyh8qYJeRNfbqGOE7xuPPLZ/HsmofuBnHqD9deE513ITfnu2E2yenFJ
+         cB9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references;
-        bh=FwzaFb9ZBFm31DyUMWF220RC7r4FwqmyASNOSVlZMUQ=;
-        b=PpzWLP5QGzkJBF5Sxm9crbq9779Dx6GsxFY8ir9PiTIsfvTcFGz3YmuxZnc5cv7CH7
-         STIJzfJGyoAcHfS8qhuBc89K+8wkhV0YYgEtABmlnwtx04GnU+J1c+kzR7e3B3HwpeQ+
-         vEc50K6xv1wJ+wdW8pprySIwmN2CeEzFQ4KvVznAq3/NNgzHIRjuCnxQ4Q3pdNIU2jFR
-         AkLggbaC8BqI3NEhP17dWE25LEd5or8hkBlgeTP2n7Gf8YWtu9DMoRSWUXXlxSlKw+w8
-         /1DbA/0nq9GB+nGI+aGF7tPVJ4sKADE5vHIiBSuQ9pvpT5gcH5BRnpZ3hryuOBcK3Ljo
-         6nqA==
-X-Gm-Message-State: AD7BkJLuTG2oKC49YBYUAj5Lzx5l2BBa54VVVfnnzkXh0ynaQRi7hCDYHZ+fcA5w3E7NLQ==
-X-Received: by 10.55.15.85 with SMTP id z82mr6177600qkg.15.1460055821874;
-        Thu, 07 Apr 2016 12:03:41 -0700 (PDT)
-Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id e11sm3959273qkb.39.2016.04.07.12.03.40
-        (version=TLSv1/SSLv3 cipher=OTHER);
+        bh=6jE/4hLjtr6xSfX46NGmOeC4+pZMMAyzLqbZ5cw3Xa4=;
+        b=LWLA9jJOiFVw9AgukQUKsW10dlt9X4dnUdiQON00/Ke8b6cQa7FrglESBi/sCkoPBP
+         44v0HbjQHog3Hwc8WVXLz+Gq39oDRrgzUxQW2unalQuxfvDLUecnGsLlh6xJXG8ax/BJ
+         u9Zih5z7tS59C0wHdIec1IY5qQbUrfV1g7j8CQ6qspG72svETJsyOdax9N36Te7w6SLz
+         OcHrn1ulAD2jABsKCJqPmEU/53ewbGVdrkckJCP7a2/1cfwAWJ90G7mC9dAPfcTmy6Dr
+         yTu/fthon7YTUJSFd7qlKFE+wLR9ewnpNrgQZGg96ykkcGSlfqlIDdnJriVPR+ywKE+8
+         JOXA==
+X-Gm-Message-State: AD7BkJLEnqaOxoE6rzhZK0AYtXPS3PtV+j4q6zIchLDEChVDyF1WpYKum9jp0A6S2AiqVQ==
+X-Received: by 10.55.217.22 with SMTP id u22mr6020121qki.63.1460055820671;
         Thu, 07 Apr 2016 12:03:40 -0700 (PDT)
+Received: from ubuntu.twitter.biz ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id e11sm3959273qkb.39.2016.04.07.12.03.39
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 07 Apr 2016 12:03:39 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1460055791-23313-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290975>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
@@ -63,29 +63,30 @@ It is never read, so we can pass NULL to resolve_ref_unsafe().
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- builtin/checkout.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ builtin/merge.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index efcbd8f..ea2fe1c 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -242,7 +242,6 @@ static int checkout_paths(const struct checkout_opts *opts,
- 	struct checkout state;
- 	static char *ps_matched;
- 	unsigned char rev[20];
--	int flag;
- 	struct commit *head;
- 	int errs = 0;
- 	struct lock_file *lock_file;
-@@ -375,7 +374,7 @@ static int checkout_paths(const struct checkout_opts *opts,
- 	if (write_locked_index(&the_index, lock_file, COMMIT_LOCK))
- 		die(_("unable to write new index file"));
- 
--	read_ref_full("HEAD", 0, rev, &flag);
-+	read_ref_full("HEAD", 0, rev, NULL);
- 	head = lookup_commit_reference_gently(rev, 1);
- 
- 	errs |= post_checkout_hook(head, head, 0);
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 101ffef..c90ee51 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1165,7 +1165,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	struct commit *head_commit;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	const char *head_arg;
+-	int flag, i, ret = 0, head_subsumed;
++	int i, ret = 0, head_subsumed;
+ 	int best_cnt = -1, merge_was_ok = 0, automerge_was_ok = 0;
+ 	struct commit_list *common = NULL;
+ 	const char *best_strategy = NULL, *wt_strategy = NULL;
+@@ -1179,7 +1179,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	 * Check if we are _not_ on a detached HEAD, i.e. if there is a
+ 	 * current branch.
+ 	 */
+-	branch = branch_to_free = resolve_refdup("HEAD", 0, head_sha1, &flag);
++	branch = branch_to_free = resolve_refdup("HEAD", 0, head_sha1, NULL);
+ 	if (branch && starts_with(branch, "refs/heads/"))
+ 		branch += 11;
+ 	if (!branch || is_null_sha1(head_sha1))
 -- 
 2.4.2.767.g62658d5-twtrsrc
