@@ -1,8 +1,10 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH 22/24] show_head_ref(): check the result of resolve_ref_namespace()
-Date: Thu,  7 Apr 2016 15:03:09 -0400
-Message-ID: <1460055791-23313-23-git-send-email-dturner@twopensource.com>
+Subject: [PATCH 24/24] refs: on symref reflog expire, lock symref not referrent
+Date: Thu,  7 Apr 2016 15:03:11 -0400
+Message-ID: <1460055791-23313-25-git-send-email-dturner@twopensource.com>
 References: <1460055791-23313-1-git-send-email-dturner@twopensource.com>
+Cc: David Turner <dturner@twopensource.com>,
+	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
 X-From: git-owner@vger.kernel.org Thu Apr 07 21:04:03 2016
 Return-path: <git-owner@vger.kernel.org>
@@ -10,77 +12,97 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoFDl-0007MT-Qj
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 21:04:02 +0200
+	id 1aoFDl-0007MT-0p
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 21:04:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932403AbcDGTDy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2016 15:03:54 -0400
-Received: from mail-qg0-f46.google.com ([209.85.192.46]:34421 "EHLO
-	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932394AbcDGTDq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Apr 2016 15:03:46 -0400
-Received: by mail-qg0-f46.google.com with SMTP id c6so71719980qga.1
-        for <git@vger.kernel.org>; Thu, 07 Apr 2016 12:03:45 -0700 (PDT)
+	id S932243AbcDGTDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2016 15:03:53 -0400
+Received: from mail-qk0-f170.google.com ([209.85.220.170]:36046 "EHLO
+	mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932401AbcDGTDs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Apr 2016 15:03:48 -0400
+Received: by mail-qk0-f170.google.com with SMTP id i4so34930928qkc.3
+        for <git@vger.kernel.org>; Thu, 07 Apr 2016 12:03:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:subject:date:message-id:in-reply-to:references;
-        bh=sLR8vLTn+t1+CArlds3EWVZ51R775dTQmKJFM6nSxKo=;
-        b=QjmtwU/cfFJUf94CFGsLITKU7WCs4VhNE9cuSwwZaIu7yLltCgslWqyzp0DYJ5K1Er
-         Efiq55pxHkNVoDH3f5lDl4hOtSO0huCqv4S0SzNABJ1/pxzxRYd93LMY0cwp4Lp7A+Mm
-         aig01NapyyII8t+K/pzN3r7dxi8duq0c5H9KKWOf/6HrnH4lD2hexFxM0bXBNgFNk5ln
-         F72ajPldQJt3xcoqYtFbgsjU72UwNyH5mQIxCJTkxhpB94wl1asSmFXRV4Z3FbHV/N7e
-         RpZxudzEblHqwPI+98pRTwVCIjOr+lez9GHB/xhqgvDa8I/hlSOIZyDr8Zp7Weo0BVLu
-         RRIw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=BTTm6VCEvyHqcI2TCf9PqEAI15H/CuJzqPOiC90xYmY=;
+        b=ksY2awcml3uVr3ony4qGX1Xv5dBXxaC2cqM8tENeE1HpjJDpp3gtzPEpSf8NGttX7U
+         n8OZYjP6pfFv5CnzPeAMYHBeJuokd+PkpZ7EqZeqJx0RmVU09jNJrXIHxvocHxN5tgP0
+         dCqCfM685i+0XBnQpMzoG5+GmmrUZ/AZLACladFkJ7sQMT3c5YfPdZHA6PsYoOpE2wOW
+         nKy3kcfDs44n2dij/s84R0K4IWZUMDoTzl4AAHh3wn/F9AiM7RZ11YWzXtCPJc971AKX
+         nISBbvzwAP3JXen71Q7/Ag+TqPAtOC6Reo4xPOiq1D5Ehr3B9hzeYnSHh2dHHZ8BHELw
+         uANw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=sLR8vLTn+t1+CArlds3EWVZ51R775dTQmKJFM6nSxKo=;
-        b=koESfSL2cQ81XQZx7yOl+TjRf2PlHDuHAFtJL6MnFHAtTCEBmpz9fF1xh6UHREMYg9
-         K0P2ipLxXrx01ZLb8zcPjXzZ1vwz0bkt6W0vF0+tdcAJqYcSZG4QZf1M42tbVd3kXF+m
-         /TOiuammeXIZKb7MTB2ixbg77tXf+mDLM/51PK5mOapp682dF4uIqMNIUkbx2fE+ytFI
-         KR7OB6c9dMmIvEct7xi2gvoBaRnsLc4l99lUIXkxxiagJzYb2u213C1/SzBtVYnNFxev
-         YV8xHgAMWya2VLr6PNMkSFqk1GuOuJFrYMA9tp6mqgF+YJC9fsqa03A8ukVVjPtgOcdn
-         jszw==
-X-Gm-Message-State: AD7BkJIA2NkZ9oVXzWC2LVxrEGAjrZupzQ4nfCTLOVE7dE4QFsXUkQAEpDj6Nl+4LRx7Uw==
-X-Received: by 10.140.86.101 with SMTP id o92mr6101445qgd.49.1460055825276;
-        Thu, 07 Apr 2016 12:03:45 -0700 (PDT)
+        bh=BTTm6VCEvyHqcI2TCf9PqEAI15H/CuJzqPOiC90xYmY=;
+        b=Ou25aUncql2u4HlsMmkPs6ekRD4RBvxFeDJLYrZhVijEU1NXnDK0Uku+AjwsChSYdR
+         OGoDI4KYAok2nysKe6bjX3a1iIoXJBM4uPJXZgycbID3kvSa9n7ljdku6ttrMSkylOdf
+         v29uM5I9LcmUmD5rClGDVzp4gCtnzjBbcfn6Sy3jaQwbPp9KbJbFFX0hK+v/M4tigm9m
+         w9j/d1MJbvbHbL7CcpWpxHIQi9gIanF7THIEdndcaDw4VWzT/QJwGBCc2fMRcufDy06m
+         1Z2TkSvwKPH64kJrSvRNZw29NRxqsumHpV9dv8vY6Vu9X2PKMt620kON4vgZ2Ifd6TWX
+         JBEQ==
+X-Gm-Message-State: AD7BkJLtoajZCabCLzLIfFt5U6bvn1LHoU/QVcFHvfAybVW9n+5c8UVD8SedYclSVrUNjQ==
+X-Received: by 10.55.77.216 with SMTP id a207mr5971606qkb.80.1460055827286;
+        Thu, 07 Apr 2016 12:03:47 -0700 (PDT)
 Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id e11sm3959273qkb.39.2016.04.07.12.03.43
+        by smtp.gmail.com with ESMTPSA id e11sm3959273qkb.39.2016.04.07.12.03.46
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 07 Apr 2016 12:03:43 -0700 (PDT)
+        Thu, 07 Apr 2016 12:03:46 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1460055791-23313-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290965>
 
-From: Michael Haggerty <mhagger@alum.mit.edu>
+When locking a symbolic ref to expire a reflog, lock the symbolic
+ref (using REF_NODEREF) instead of its referent.
 
-Only use the result of resolve_ref_namespace() if it is non-NULL.
+Add a test for this.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: David Turner <dturner@twopensource.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- http-backend.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ refs/files-backend.c |  3 ++-
+ t/t1410-reflog.sh    | 10 ++++++++++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/http-backend.c b/http-backend.c
-index 8870a26..2148814 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -484,9 +484,9 @@ static int show_head_ref(const char *refname, const struct object_id *oid,
- 		const char *target = resolve_ref_unsafe(refname,
- 							RESOLVE_REF_READING,
- 							unused.hash, NULL);
--		const char *target_nons = strip_namespace(target);
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 71848ab..5e67bfa 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -3314,7 +3314,8 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
+ 	 * reference itself, plus we might need to update the
+ 	 * reference if --updateref was specified:
+ 	 */
+-	lock = lock_ref_sha1_basic(refname, sha1, NULL, NULL, 0, &type, &err);
++	lock = lock_ref_sha1_basic(refname, sha1, NULL, NULL, REF_NODEREF,
++				   &type, &err);
+ 	if (!lock) {
+ 		error("cannot lock ref '%s': %s", refname, err.buf);
+ 		strbuf_release(&err);
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index c623824..9cf91dc 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -338,4 +338,14 @@ test_expect_failure 'reflog with non-commit entries displays all entries' '
+ 	test_line_count = 3 actual
+ '
  
--		strbuf_addf(buf, "ref: %s\n", target_nons);
-+		if (target)
-+			strbuf_addf(buf, "ref: %s\n", strip_namespace(target));
- 	} else {
- 		strbuf_addf(buf, "%s\n", oid_to_hex(oid));
- 	}
++test_expect_success 'reflog expire operates on symref not referrent' '
++	git branch -l the_symref &&
++	git branch -l referrent &&
++	git update-ref referrent HEAD &&
++	git symbolic-ref refs/heads/the_symref refs/heads/referrent &&
++	test_when_finished "rm -f .git/refs/heads/referrent.lock" &&
++	touch .git/refs/heads/referrent.lock &&
++	git reflog expire --expire=all the_symref
++'
++
+ test_done
 -- 
 2.4.2.767.g62658d5-twtrsrc
