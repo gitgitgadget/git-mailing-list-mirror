@@ -1,92 +1,168 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH 19/24] cmd_merge(): remove unneeded flag variable
-Date: Thu,  7 Apr 2016 15:03:06 -0400
-Message-ID: <1460055791-23313-20-git-send-email-dturner@twopensource.com>
+Subject: [PATCH 10/24] resolve_ref_unsafe(): ensure flags is always set
+Date: Thu,  7 Apr 2016 15:02:57 -0400
+Message-ID: <1460055791-23313-11-git-send-email-dturner@twopensource.com>
 References: <1460055791-23313-1-git-send-email-dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Thu Apr 07 21:04:56 2016
+X-From: git-owner@vger.kernel.org Thu Apr 07 21:04:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoFEb-0007wR-Qt
+	id 1aoFEc-0007wR-D5
 	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 21:04:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757361AbcDGTEd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2016 15:04:33 -0400
-Received: from mail-qk0-f180.google.com ([209.85.220.180]:33646 "EHLO
-	mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932363AbcDGTDl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Apr 2016 15:03:41 -0400
-Received: by mail-qk0-f180.google.com with SMTP id k135so31092742qke.0
-        for <git@vger.kernel.org>; Thu, 07 Apr 2016 12:03:41 -0700 (PDT)
+	id S1757370AbcDGTEh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2016 15:04:37 -0400
+Received: from mail-qg0-f48.google.com ([209.85.192.48]:36019 "EHLO
+	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756785AbcDGTDc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Apr 2016 15:03:32 -0400
+Received: by mail-qg0-f48.google.com with SMTP id f52so71730389qga.3
+        for <git@vger.kernel.org>; Thu, 07 Apr 2016 12:03:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:subject:date:message-id:in-reply-to:references;
-        bh=6jE/4hLjtr6xSfX46NGmOeC4+pZMMAyzLqbZ5cw3Xa4=;
-        b=1O6pHYzHwdrf6yB5tpb++kjbnRAYZfhConN24b90tRsiUSuspy2E9OT1FTpp+cjCFF
-         img/IH0+dhnsplNY++hKFZdjpe0hiI6wJjr5boXyscKElo09a22r+qQ6Z/YkRltWbyWr
-         0d56WRcDfl5tsoXLlOqcALhKsXh1jf1M2NkToxSefEsxNpJV5ZEl9A2dQfiBLtGp5hBK
-         fpFSHbaEyvLCXi6DoNzzKWuodIC0+JVabwFHWbKpyGy7q+3E5kfqIG44zzyhTwperepF
-         YzVOkEfIMeSf7dyh8qYJeRNfbqGOE7xuPPLZ/HsmofuBnHqD9deE513ITfnu2E2yenFJ
-         cB9Q==
+        bh=ULvlxMfGS84nxOt822d5I4rhB1/Z6ciIbxxkLlBm93I=;
+        b=fB5F/bQ/BYyHGKuroX7Tt6QDOpJSgNX9SZsPXcqytWhuZuA2dhk0S7GkIuMm94JoL1
+         r69n+hJu/QuRFfzu7g5yWe9ejiQg0yQMV2cVH7SgiWCY/HOKlMfvWL8xX2a2ERE+8pkQ
+         RYUorAFYA2zrmXBaB/LKM/BuqkOFSLtvor9FYeiIp29RhWdi6KTtJNEc31Q9ssI+xPd+
+         ToO2H4oC9xzixbyovIx9FMp97Lq/axx3EyHYd4tsQUWoK+iXwebFdRFoONn3fuMeZcLf
+         8+c2ny2VIzojb2uQj/zuvpnA4AsObdfC/sW8V5lBJlMJj0MnLkFY0ed2BHyMILc0yvp6
+         WbLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references;
-        bh=6jE/4hLjtr6xSfX46NGmOeC4+pZMMAyzLqbZ5cw3Xa4=;
-        b=LWLA9jJOiFVw9AgukQUKsW10dlt9X4dnUdiQON00/Ke8b6cQa7FrglESBi/sCkoPBP
-         44v0HbjQHog3Hwc8WVXLz+Gq39oDRrgzUxQW2unalQuxfvDLUecnGsLlh6xJXG8ax/BJ
-         u9Zih5z7tS59C0wHdIec1IY5qQbUrfV1g7j8CQ6qspG72svETJsyOdax9N36Te7w6SLz
-         OcHrn1ulAD2jABsKCJqPmEU/53ewbGVdrkckJCP7a2/1cfwAWJ90G7mC9dAPfcTmy6Dr
-         yTu/fthon7YTUJSFd7qlKFE+wLR9ewnpNrgQZGg96ykkcGSlfqlIDdnJriVPR+ywKE+8
-         JOXA==
-X-Gm-Message-State: AD7BkJLEnqaOxoE6rzhZK0AYtXPS3PtV+j4q6zIchLDEChVDyF1WpYKum9jp0A6S2AiqVQ==
-X-Received: by 10.55.217.22 with SMTP id u22mr6020121qki.63.1460055820671;
-        Thu, 07 Apr 2016 12:03:40 -0700 (PDT)
+        bh=ULvlxMfGS84nxOt822d5I4rhB1/Z6ciIbxxkLlBm93I=;
+        b=CN3CSovD3NwtW8KWiR3WuVVFb7BDM/fBx4KJuxa2V3pqSU18Z+SgUwkZ0XjvE5/tFl
+         mrjd2nPFg5HFAElDisw0wHsg+M4K7J8qV3C8uILmRwT0xc2sXgQd4X08PtjpiAks4dOK
+         MmkECDw3fruCif9TJw0Yo6O8QgcaPOaVbpyWPleWTGj/S8KwXxtXH08djuH8GDFjoFyh
+         shYdV9XWKFWfC2pILsLVZBANiqIEmgdarnHF4hZj4+ofeLPY3sfHVI9Vr13y3cyvX6/G
+         cEZLDOOHtXGOYofWeYv1a9UrDtuKZytgZu5pxYw03/zxYq6Lq9zye5u7CuI+FTIb7fRX
+         Pjbg==
+X-Gm-Message-State: AD7BkJIGp9djX5uxtx2jSwc21N4CnwR9HvlsRJ7RiS6+fbXgCRtn7wUsx8hKJn/ZmafiqA==
+X-Received: by 10.140.232.211 with SMTP id d202mr6389116qhc.27.1460055811669;
+        Thu, 07 Apr 2016 12:03:31 -0700 (PDT)
 Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id e11sm3959273qkb.39.2016.04.07.12.03.39
+        by smtp.gmail.com with ESMTPSA id e11sm3959273qkb.39.2016.04.07.12.03.30
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 07 Apr 2016 12:03:39 -0700 (PDT)
+        Thu, 07 Apr 2016 12:03:30 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1460055791-23313-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290976>
 
 From: Michael Haggerty <mhagger@alum.mit.edu>
 
-It is never read, so we can pass NULL to resolve_ref_unsafe().
+If the caller passes flags==NULL, then set it to point at a local
+scratch variable. This removes the need for a lot of "if (flags)" guards
+in resolve_ref_1() and resolve_missing_loose_ref().
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- builtin/merge.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ refs/files-backend.c | 31 +++++++++++++------------------
+ 1 file changed, 13 insertions(+), 18 deletions(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 101ffef..c90ee51 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1165,7 +1165,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 	struct commit *head_commit;
- 	struct strbuf buf = STRBUF_INIT;
- 	const char *head_arg;
--	int flag, i, ret = 0, head_subsumed;
-+	int i, ret = 0, head_subsumed;
- 	int best_cnt = -1, merge_was_ok = 0, automerge_was_ok = 0;
- 	struct commit_list *common = NULL;
- 	const char *best_strategy = NULL, *wt_strategy = NULL;
-@@ -1179,7 +1179,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 	 * Check if we are _not_ on a detached HEAD, i.e. if there is a
- 	 * current branch.
- 	 */
--	branch = branch_to_free = resolve_refdup("HEAD", 0, head_sha1, &flag);
-+	branch = branch_to_free = resolve_refdup("HEAD", 0, head_sha1, NULL);
- 	if (branch && starts_with(branch, "refs/heads/"))
- 		branch += 11;
- 	if (!branch || is_null_sha1(head_sha1))
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 101abba..067ce1c 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1383,8 +1383,7 @@ static int resolve_missing_loose_ref(const char *refname,
+ 	entry = get_packed_ref(refname);
+ 	if (entry) {
+ 		hashcpy(sha1, entry->u.value.oid.hash);
+-		if (flags)
+-			*flags |= REF_ISPACKED;
++		*flags |= REF_ISPACKED;
+ 		return 0;
+ 	}
+ 	/* refname is not a packed reference. */
+@@ -1403,12 +1402,10 @@ static const char *resolve_ref_1(const char *refname,
+ 	int bad_name = 0;
+ 	int symref_count;
+ 
+-	if (flags)
+-		*flags = 0;
++	*flags = 0;
+ 
+ 	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
+-		if (flags)
+-			*flags |= REF_BAD_NAME;
++		*flags |= REF_BAD_NAME;
+ 
+ 		if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
+ 		    !refname_is_safe(refname)) {
+@@ -1458,8 +1455,7 @@ static const char *resolve_ref_1(const char *refname,
+ 			}
+ 			if (bad_name) {
+ 				hashclr(sha1);
+-				if (flags)
+-					*flags |= REF_ISBROKEN;
++				*flags |= REF_ISBROKEN;
+ 			}
+ 			return refname;
+ 		}
+@@ -1478,8 +1474,7 @@ static const char *resolve_ref_1(const char *refname,
+ 			    !check_refname_format(sb_contents->buf, 0)) {
+ 				strbuf_swap(sb_refname, sb_contents);
+ 				refname = sb_refname->buf;
+-				if (flags)
+-					*flags |= REF_ISSYMREF;
++				*flags |= REF_ISSYMREF;
+ 				if (resolve_flags & RESOLVE_REF_NO_RECURSE) {
+ 					hashclr(sha1);
+ 					return refname;
+@@ -1526,20 +1521,17 @@ static const char *resolve_ref_1(const char *refname,
+ 			 */
+ 			if (get_sha1_hex(sb_contents->buf, sha1) ||
+ 			    (sb_contents->buf[40] != '\0' && !isspace(sb_contents->buf[40]))) {
+-				if (flags)
+-					*flags |= REF_ISBROKEN;
++				*flags |= REF_ISBROKEN;
+ 				errno = EINVAL;
+ 				return NULL;
+ 			}
+ 			if (bad_name) {
+ 				hashclr(sha1);
+-				if (flags)
+-					*flags |= REF_ISBROKEN;
++				*flags |= REF_ISBROKEN;
+ 			}
+ 			return refname;
+ 		}
+-		if (flags)
+-			*flags |= REF_ISSYMREF;
++		*flags |= REF_ISSYMREF;
+ 		buf = sb_contents->buf + 4;
+ 		while (isspace(*buf))
+ 			buf++;
+@@ -1551,8 +1543,7 @@ static const char *resolve_ref_1(const char *refname,
+ 			return refname;
+ 		}
+ 		if (check_refname_format(buf, REFNAME_ALLOW_ONELEVEL)) {
+-			if (flags)
+-				*flags |= REF_ISBROKEN;
++			*flags |= REF_ISBROKEN;
+ 
+ 			if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
+ 			    !refname_is_safe(buf)) {
+@@ -1573,8 +1564,12 @@ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
+ 	static struct strbuf sb_refname = STRBUF_INIT;
+ 	struct strbuf sb_contents = STRBUF_INIT;
+ 	struct strbuf sb_path = STRBUF_INIT;
++	int unused_flags;
+ 	const char *ret;
+ 
++	if (!flags)
++		flags = &unused_flags;
++
+ 	ret = resolve_ref_1(refname, resolve_flags, sha1, flags,
+ 			    &sb_refname, &sb_path, &sb_contents);
+ 	strbuf_release(&sb_path);
 -- 
 2.4.2.767.g62658d5-twtrsrc
