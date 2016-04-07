@@ -1,107 +1,57 @@
-From: Ulrich Buchgraber <ulrich.b@gmx.at>
-Subject: Fwd: Data loss when using "git stash -u" and ignored content in directories
-Date: Thu, 7 Apr 2016 22:34:37 +0200
-Message-ID: <CAGxq=N_Z6fWM9JLBwOHTDCRTy=CfmxqaPRUkwo-7a65Fgub_Nw@mail.gmail.com>
-References: <CAGxq=N8C5YWYt_GMYVp6ZSoGkgEKhOikfUydwiD-Xm8zRD8qWA@mail.gmail.com>
+From: =?utf-8?q?Constantin_Wei=C3=9Fer?= <i7c@posteo.de>
+Subject: Paths handled differently by diff and checkout
+Date: Thu, 07 Apr 2016 22:55:16 +0200
+Message-ID: <146006251650.27005.6715475336032533932@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 07 22:34:48 2016
+X-From: git-owner@vger.kernel.org Thu Apr 07 22:55:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoGdZ-0006ws-RS
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 22:34:46 +0200
+	id 1aoGxa-0003fE-4l
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 22:55:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755730AbcDGUem (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2016 16:34:42 -0400
-Received: from mout.gmx.net ([212.227.17.21]:53327 "EHLO mout.gmx.net"
+	id S1757570AbcDGUzV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2016 16:55:21 -0400
+Received: from mout01.posteo.de ([185.67.36.65]:51370 "EHLO mout01.posteo.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750993AbcDGUel (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Apr 2016 16:34:41 -0400
-Received: from mail-yw0-f169.google.com ([209.85.161.169]) by mail.gmx.com
- (mrgmx101) with ESMTPSA (Nemesis) id 0LaKaw-1bWibQ0vWA-00m2w8 for
- <git@vger.kernel.org>; Thu, 07 Apr 2016 22:34:38 +0200
-Received: by mail-yw0-f169.google.com with SMTP id o66so20301019ywc.3
-        for <git@vger.kernel.org>; Thu, 07 Apr 2016 13:34:38 -0700 (PDT)
-X-Gm-Message-State: AD7BkJKDl2AOtYjOTGy6i8cbDrA77nr2LLUTubqMgEtgIxgutZWSnmhSYO8GYUufVOELovL1em+VObvcTASxuw==
-X-Received: by 10.129.155.137 with SMTP id s131mr2786109ywg.24.1460061277197;
- Thu, 07 Apr 2016 13:34:37 -0700 (PDT)
-Received: by 10.129.112.210 with HTTP; Thu, 7 Apr 2016 13:34:37 -0700 (PDT)
-In-Reply-To: <CAGxq=N8C5YWYt_GMYVp6ZSoGkgEKhOikfUydwiD-Xm8zRD8qWA@mail.gmail.com>
-X-Gmail-Original-Message-ID: <CAGxq=N_Z6fWM9JLBwOHTDCRTy=CfmxqaPRUkwo-7a65Fgub_Nw@mail.gmail.com>
-X-Provags-ID: V03:K0:VVE5d6v2AXK8+mCZJfCH5wlF5Td6LscSGwpQZtxy8OH9DVoo4Vp
- LuEUO1kDToZFchim7indBYJGV2jofchW/KbXbPFbrnXZoC7I6GEqUDNTIRrLF2exvl7tki5
- qbW4ACk7RxAwxrh3XYU0y7TJn5jbmmJXJEbluVNV1FLw/og53JsNW/q5fpYB/+MFNrBQwrM
- mdgQYHX9Uw0Z5QHgVTcGg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:2YoSJRE71fc=:RnfLDMQyyakQd5R/YiY3+3
- aL18cG/vYt6UOOYwup9mz0OhaBoXgb+u8BL6cuBqktJCS2RDQ9dBTxtrCkvrtQtSgDHdnkBRm
- yrcjuujl/QDnAoUc9VPgF0eV0877SP+beEOIy5AlKi1d4sQxEwY1RWqZNlgul0H7E0NAD3+Wv
- 5nlskkiYu9yJpiHErLk37ntJ30ou0Cab61lVeUzSgTSyTXfsnr7/CvZR/iMdcYzWFv86XrIck
- DXUXA0pGMCl+UChlIYRvZ2yviRifTvThIY1fRomgpNwDo+Csn5cLnK/Ls2B11adB6T8tiT7c6
- 2lcQiY3Jv+pgwdM9CiZCvPa+Qh0+8IKcbfkt7m/Y9h3VFWajx4xapQzJlkZdCvEDp2acENsuG
- 6nSamGq4R+zgH3KvsMU9cXboxG0Kn98T+lKHgrthmoHpgL/dfTVEOjGS6MFxzS6qJicotkE7V
- HVeYi1969dh+4kVwEokdsAx4Fc9D6Z9U7yp5uNqyybzNcHUS3lgEoB/clo5lp2XaVWaQU0IMo
- 1w9ffZStbvEnPrfQn0JIaz88TfltDYoLxtPRP5XekaGkOSTlqO0gz4LbAknhctLpJJrblJIuB
- aTjkWdzBt+/8lQVU5mfwf+LMWJbN3RcNY1VaagLqeJ2tTH0dj2T31LpYY2l8kpMl6mNqslXHV
- WcpAIW4TljVk7WcLTd6oCLZUNHaBB0KUpHYFWsbuQ+etBFFKXz2c4gs8je+LBvOzP2aErhMdV
- yyvkXc3gfWHrDHuFzDYQWa3ORhhY3VD67lcYyJW9h0+/T8x6pUZ9gqtiIB2fkZC7Z/TJx8tB 
+	id S1757219AbcDGUzV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Apr 2016 16:55:21 -0400
+Received: from dovecot03.posteo.de (dovecot03.posteo.de [172.16.0.13])
+	by mout01.posteo.de (Postfix) with ESMTPS id 6242020B4B
+	for <git@vger.kernel.org>; Thu,  7 Apr 2016 22:55:17 +0200 (CEST)
+Received: from mail.posteo.de (localhost [127.0.0.1])
+	by dovecot03.posteo.de (Postfix) with ESMTPSA id 3qgvxJ73pnz5vN2
+	for <git@vger.kernel.org>; Thu,  7 Apr 2016 22:55:16 +0200 (CEST)
+User-Agent: alot/0.3.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290987>
 
-Hello,
+Hi,
 
-A "git stash -u" cleans all untracked files (after storing them), and
-normally does not clean ignored files.
+say I got a file called "asdf" somewhere in a subdirectory. I can do:
 
-But: It cleans ignored files within a directory, when the directory
-itself is not ignored (e.g. a "dir/*" ignore filter) and untracked.
+git diff other_branch -- \*asdf
 
-See the following reproduction sample. The last "ls" command shows
-that the file "ignored_dir_with_star/ignored.txt" is lost.
+and it will show me the diff *only* of that file (which is the only one
+that matches), so it works as expected. But if I do on the other hand:
 
-    git init
+git checkout other_branch -- \*asdf
 
-    mkdir ignored_dir && touch ignored_dir/ignored.txt
-    mkdir ignored_dir_with_star && touch ignored_dir_with_star/ignored.txt
+I get: error: pathspec '*asdf' did not match any file(s) known to git.
 
-    echo "/ignored_dir" >> .gitignore
-    echo "/ignored_dir_with_star/*" >> .gitignore
-    git add .gitignore
-    git commit -m "added ignores"
+which is not what I'm expecting. I figure this is due to the fact that
+diff does not use parse_pathspec() but handles paths diffently (not
+sure though)? I'd kind of find it useful to be able to 'git checkout
+some_branch -- \*.txt' to get all differing text files from another
+branch for example.
 
-    touch untracked.txt
-
-    ls -R
-    # => Output:
-    # .:
-    # ignored_dir/  ignored_dir_with_star/  untracked.txt
-    #
-    # ./ignored_dir:
-    # ignored.txt
-    #
-    # ./ignored_dir_with_star:
-    # ignored.txt
-
-    git stash -u
-    git stash pop
-
-    ls -R
-    # => Output:
-    # .:
-    # ignored_dir/  untracked.txt
-    #
-    # ./ignored_dir:
-    # ignored.txt
-
-Note that there is no data loss when instead using "git stash" or "git
-stash -a".
-
-(Tested with Git 2.8.1 on Ubuntu and Git for Windows version 2.8.1.windows.1.)
-
-Ulrich
+Cheers
+Constantin
