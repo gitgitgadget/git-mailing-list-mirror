@@ -1,70 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git segfaults on older Solaris releases
-Date: Thu, 07 Apr 2016 11:32:39 -0700
-Message-ID: <xmqqoa9lz2uw.fsf@gitster.mtv.corp.google.com>
-References: <5706A489.7070101@jupiterrise.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v3 03/16] index-helper: new daemon for caching index and
+ related stuff
+Date: Thu, 07 Apr 2016 14:47:04 -0400
+Organization: Twitter
+Message-ID: <1460054824.5540.2.camel@twopensource.com>
+References: <1459980722-4836-1-git-send-email-dturner@twopensource.com>
+	 <1459980722-4836-4-git-send-email-dturner@twopensource.com>
+	 <5705FC59.2050801@kdbg.org> <alpine.DEB.2.20.1604071614250.2967@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: "Tom G. Christensen" <tgc@jupiterrise.com>
-X-From: git-owner@vger.kernel.org Thu Apr 07 20:32:48 2016
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, pclouds@gmail.com, aevarb@gmail.com,
+	jeffhost@microsoft.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Thu Apr 07 20:47:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoEjW-00041Z-Qs
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 20:32:47 +0200
+	id 1aoExW-0004yT-2p
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 20:47:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757221AbcDGScn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2016 14:32:43 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:61598 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756577AbcDGScm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Apr 2016 14:32:42 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 080E550DDA;
-	Thu,  7 Apr 2016 14:32:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=90fXpX4bxS0m9vqgiw15V0XtcaY=; b=qelyLh
-	mu1aKukuZM2COhxTC5Bm8IbX4GdGt2hzb8kyWx64CwK++AB8q/78vteba00xyoqD
-	9vyH6n8WC9qWCDpfFbtsCdezN657ZXAM4nlv5xQaS3MuBIlyIULWpk+B5n8J+Z1i
-	U9lhrPfRONdLPfBZB6MTBqrrQDoek1T/1j+fA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FMX68ZBquQJiWfNVKbuZCE66OK3YRMMJ
-	5IiQGUIwIqI10S+2AiYxz2C0qqatiTBLJbTgp9LVEdHHI9i1BMBwUELEnHeJopPd
-	O70gUhaat8Y8yFYhforfJj8HEsKotBOtsuEZbYiVU+kqOslW3Zpsf7ML9Fxouf5n
-	aAILk9/tGD8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F377650DD7;
-	Thu,  7 Apr 2016 14:32:40 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 702BC50DD6;
-	Thu,  7 Apr 2016 14:32:40 -0400 (EDT)
-In-Reply-To: <5706A489.7070101@jupiterrise.com> (Tom G. Christensen's message
-	of "Thu, 7 Apr 2016 20:18:49 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1C2C7D0C-FCEF-11E5-8F05-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S932337AbcDGSrJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2016 14:47:09 -0400
+Received: from mail-qg0-f50.google.com ([209.85.192.50]:33982 "EHLO
+	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756793AbcDGSrI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Apr 2016 14:47:08 -0400
+Received: by mail-qg0-f50.google.com with SMTP id c6so71262504qga.1
+        for <git@vger.kernel.org>; Thu, 07 Apr 2016 11:47:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:mime-version:content-transfer-encoding;
+        bh=Vr6n2afoL0wnL7wyVA83Kd9/wEiOxWfw0YTx/Y3uRd8=;
+        b=GKbYjYcyBf/n7GWv834QGClMjZRd4DwcpR/HYOEoePXP0KSHSauLNg+l5G/jnhRb0r
+         +t1GxrRG8v9IsWUssZXdwgJtL8ULPgyhCdmJLzXtO1A5Q6V10u4GlhxA52XMdpxd3YO6
+         aoCIgWYUCPNx6QZux+xeiwT0gcicAMrla5W0WhKInqWx6YPhRhk5A779oZ6BhNa8EnOY
+         Q5jK0m43qWrtgQQ58/7DCVpdw83+yfT3i9lPz79eht3nf0pDwKh77MfdEs75/As8Oxlq
+         c3ZemuaSlA8ey88RqghfQGEsut5Szjsv6etCu2wtSri3+BmK6vPnXuAEtc9AcSUXyvYU
+         nwBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:mime-version:content-transfer-encoding;
+        bh=Vr6n2afoL0wnL7wyVA83Kd9/wEiOxWfw0YTx/Y3uRd8=;
+        b=ea/Oke8AaIp1mPW9y5i2RbJe5rlEJChSOB6L37AsxVhS44rqniFPVbUrL/R6VrHbWA
+         BwwN+XPRS/jq5fDiVlKXTTN0ebDGvtmKkLXRK9iyW5W2LSPXBu2eeGemcyPXWnEr9nsF
+         456aQFLPbuyoEUZYU5dYofkSuvzjze6+CNJmXdn+heuf1AKDq2tw0L5PitB91dHsq1i1
+         zpOJeVNjMx959LQhMK1832l7wkgznzQ5wNTkHDMogjeBLLtBZAHJBiPuFLE9TPRSaD7w
+         JaQwG/5RrADLlQxAvSI/KdPc82WNM3YL8EdzRFBFlSgvFUdaF4daBc4RT3PC9wohkgDj
+         Ngow==
+X-Gm-Message-State: AD7BkJJl9booq5yGWMdvG3Fsi1eo583CaXqG0pnmayyHqm1rzZ2Kgm1OocnkLRKpzNADPQ==
+X-Received: by 10.140.248.8 with SMTP id t8mr6300517qhc.50.1460054825665;
+        Thu, 07 Apr 2016 11:47:05 -0700 (PDT)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id y123sm3979031qka.0.2016.04.07.11.47.04
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 07 Apr 2016 11:47:04 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1604071614250.2967@virtualbox>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290945>
 
-"Tom G. Christensen" <tgc@jupiterrise.com> writes:
+On Thu, 2016-04-07 at 16:14 +0200, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Thu, 7 Apr 2016, Johannes Sixt wrote:
+> 
+> > Am 07.04.2016 um 00:11 schrieb David Turner:
+> > > +static void share_index(struct index_state *istate, struct shm
+> > > *is)
+> > > +{
+> > > +	void *new_mmap;
+> > > +	if (istate->mmap_size <= 20 ||
+> > > +	    hashcmp(istate->sha1,
+> > > +		    (unsigned char *)istate->mmap + istate
+> > > ->mmap_size - 20)
+> > > > > 
+> > > +	    !hashcmp(istate->sha1, is->sha1) ||
+> > > +	    git_shm_map(O_CREAT | O_EXCL | O_RDWR, 0700, istate
+> > > ->mmap_size,
+> > > +			&new_mmap, PROT_READ | PROT_WRITE,
+> > > MAP_SHARED,
+> > > +			"git-index-%s", sha1_to_hex(istate
+> > > ->sha1)) < 0)
+> > 
+> > Builds which have NO_MMAP set require that MAP_PRIVATE is set. So I
+> > would
+> > guess that at this point you leave those builds behind. Unless we
+> > declare
+> > such systems as hopelessly outdated and remove NO_MMAP and
+> > compat/mmap.c or
+> > you support index-helper only when NO_MMAP is not set.
+> 
+> I vote for the latter: support index-helper only when NO_MMAP is
+> unset.
 
-> The reason for the crash is simple, a null value was passed to the 's'
-> format for the *printf family of functions.
-> ...
-> Passing a null value to the 's' format is explicitly documented as
-> giving undefined results on Solaris, even on Solaris 11(2).
-
-Do you mean
-
-	*printf("...%.*s...", ..., 0, NULL, ...)
-
-i.e. you saw a NULL passed only when we use %.*s with width=0?
+Will fix, thanks.
