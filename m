@@ -1,110 +1,70 @@
-From: "Tom G. Christensen" <tgc@jupiterrise.com>
-Subject: git segfaults on older Solaris releases
-Date: Thu, 7 Apr 2016 20:18:49 +0200
-Message-ID: <5706A489.7070101@jupiterrise.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git segfaults on older Solaris releases
+Date: Thu, 07 Apr 2016 11:32:39 -0700
+Message-ID: <xmqqoa9lz2uw.fsf@gitster.mtv.corp.google.com>
+References: <5706A489.7070101@jupiterrise.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 07 20:19:49 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: "Tom G. Christensen" <tgc@jupiterrise.com>
+X-From: git-owner@vger.kernel.org Thu Apr 07 20:32:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoEWy-00047J-Eu
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 20:19:48 +0200
+	id 1aoEjW-00041Z-Qs
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 20:32:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757332AbcDGSTo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2016 14:19:44 -0400
-Received: from hapkido.dreamhost.com ([66.33.216.122]:36608 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757292AbcDGSTk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Apr 2016 14:19:40 -0400
-Received: from homiemail-a55.g.dreamhost.com (sub4.mail.dreamhost.com [69.163.253.135])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id 76F329CC51
-	for <git@vger.kernel.org>; Thu,  7 Apr 2016 11:19:38 -0700 (PDT)
-Received: from homiemail-a55.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a55.g.dreamhost.com (Postfix) with ESMTP id C30F82A23
-	for <git@vger.kernel.org>; Thu,  7 Apr 2016 11:19:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=jupiterrise.com; h=to:from
-	:subject:message-id:date:mime-version:content-type
-	:content-transfer-encoding; s=jupiterrise.com; bh=0eDPJO1GrA9mUf
-	2RH5KLHSXXkAU=; b=IRJMFI0NGG1DSDdD7IUpJPPHGUqSAE0BagK+XPS4oncObI
-	rDxBVRAkwiRm+xIqABCakE0/L4j/jh23xXP2ICgZGcUaDjPtOeDkd7WrbEkjnR3D
-	H87GY+TL2RxHfg6GVRi+t5PuqqWPP9bShEF2RpySRdTxdD1i2RnEAn+smWaMQ=
-Received: from localhost6.localdomain6 (2-106-159-182-static.dk.customer.tdc.net [2.106.159.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	id S1757221AbcDGScn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2016 14:32:43 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:61598 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756577AbcDGScm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Apr 2016 14:32:42 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 080E550DDA;
+	Thu,  7 Apr 2016 14:32:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=90fXpX4bxS0m9vqgiw15V0XtcaY=; b=qelyLh
+	mu1aKukuZM2COhxTC5Bm8IbX4GdGt2hzb8kyWx64CwK++AB8q/78vteba00xyoqD
+	9vyH6n8WC9qWCDpfFbtsCdezN657ZXAM4nlv5xQaS3MuBIlyIULWpk+B5n8J+Z1i
+	U9lhrPfRONdLPfBZB6MTBqrrQDoek1T/1j+fA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FMX68ZBquQJiWfNVKbuZCE66OK3YRMMJ
+	5IiQGUIwIqI10S+2AiYxz2C0qqatiTBLJbTgp9LVEdHHI9i1BMBwUELEnHeJopPd
+	O70gUhaat8Y8yFYhforfJj8HEsKotBOtsuEZbYiVU+kqOslW3Zpsf7ML9Fxouf5n
+	aAILk9/tGD8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F377650DD7;
+	Thu,  7 Apr 2016 14:32:40 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	(Authenticated sender: tgc99@jupiterrise.com)
-	by homiemail-a55.g.dreamhost.com (Postfix) with ESMTPSA id 3643E2A11
-	for <git@vger.kernel.org>; Thu,  7 Apr 2016 11:19:06 -0700 (PDT)
-Received: from [127.0.0.1] (localhost.localdomain [127.0.0.1])
-	by localhost6.localdomain6 (8.14.4/8.14.4) with ESMTP id u37IInsm005774
-	for <git@vger.kernel.org>; Thu, 7 Apr 2016 20:18:50 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.0
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 702BC50DD6;
+	Thu,  7 Apr 2016 14:32:40 -0400 (EDT)
+In-Reply-To: <5706A489.7070101@jupiterrise.com> (Tom G. Christensen's message
+	of "Thu, 7 Apr 2016 20:18:49 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1C2C7D0C-FCEF-11E5-8F05-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290944>
 
-Hello,
+"Tom G. Christensen" <tgc@jupiterrise.com> writes:
 
-While working on an update to the git packages in tgcware(1) I ran into 
-segfaults when running the testsuite.
+> The reason for the crash is simple, a null value was passed to the 's'
+> format for the *printf family of functions.
+> ...
+> Passing a null value to the 's' format is explicitly documented as
+> giving undefined results on Solaris, even on Solaris 11(2).
 
-Here's what it looks like on Solaris 7/SPARC:
+Do you mean
 
-Core was generated by 
-`/export/home/tgc/buildpkg/git/src/git-upstream/git update-index 
-should-be-empty'.
-Program terminated with signal SIGSEGV, Segmentation fault.
-#0  0xfee81ef4 in _doprnt () from /usr/lib/libc.so.1
-(gdb) bt
-#0  0xfee81ef4 in _doprnt () from /usr/lib/libc.so.1
-#1  0xfee83ce4 in vsnprintf () from /usr/lib/libc.so.1
-#2  0x00138dbc in strbuf_vaddf (sb=0xffbedd24, fmt=0x1af7b8 "%.*s%s", 
-ap=0xffbedde0) at strbuf.c:279
-#3  0x00139f78 in xstrvfmt (fmt=0x1af7b8 "%.*s%s", ap=0xffbedde0) at 
-strbuf.c:698
-#4  0x00139fb4 in xstrfmt (fmt=0x1af7b8 "%.*s%s") at strbuf.c:708
-#5  0x0012a0ec in prefix_path_gently (prefix=0x0, len=0, 
-remaining_prefix=0x0, path=<optimized out>) at setup.c:103
-#6  0x0012a2f0 in prefix_path (prefix=0x0, len=0, path=0xffbee7fc 
-"should-be-empty") at setup.c:116
-#7  0x00098464 in cmd_update_index (argc=2, argv=<optimized out>, 
-prefix=0x0) at builtin/update-index.c:1042
-#8  0x00025900 in run_builtin (argv=0xffbee630, argc=2, p=0x1c9adc 
-<commands+1260>) at git.c:346
-#9  handle_builtin (argc=2, argv=0xffbee630) at git.c:536
-#10 0x00025bec in run_argv (argv=0xffbee5c4, argcp=0xffbee60c) at git.c:582
-#11 main (argc=2, av=<optimized out>) at git.c:690
-(gdb)
+	*printf("...%.*s...", ..., 0, NULL, ...)
 
-
-The reason for the crash is simple, a null value was passed to the 's' 
-format for the *printf family of functions.
-To verify I modified git.c:run_builtin() so it would assign "" to prefix 
-if NULL just before the status = p->fn(..) call.
-This allowed t0000-basic.sh to pass where before it would fail because 
-git segfaulted in multiple tests.
-
-Passing a null value to the 's' format is explicitly documented as 
-giving undefined results on Solaris, even on Solaris 11(2).
-It happens that Solaris 8 and later will tolerate this without crashing, 
-though I suspect at least for Solaris 8 and 9 it might require a certain 
-patchlevel to do so. Earlier releases will just segfault as shown above.
-
-I bisected it on Solaris 2.6 and found that 75faa45 was the commit that 
-caused this problem to appear. The 2.6.x releases build and run fine.
-
-I know of course that Solaris < 8 is not terribly interesting as a 
-portability target so I understand if you're unwilling to fix this as it 
-seems it might be a somewhat invasive change.
-
--tgc
-
-1) http://jupiterrise.com/tgcware/tgcware.solaris.html
-2) http://docs.oracle.com/cd/E23824_01/html/821-1465/printf-3c.html
+i.e. you saw a NULL passed only when we use %.*s with width=0?
