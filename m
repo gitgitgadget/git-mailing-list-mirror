@@ -1,82 +1,78 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Apr 2016, #03; Thu, 7)
-Date: Thu, 07 Apr 2016 14:36:34 -0700
-Message-ID: <xmqqshyxxfrx.fsf@gitster.mtv.corp.google.com>
-References: <xmqqfuuxz1jh.fsf@gitster.mtv.corp.google.com>
-	<CAFZEwPP1aphz06Ac4ZrKinaE9uiPF4P69P_b5aNn_AYOpZ3m4g@mail.gmail.com>
+Subject: Re: [PATCH 00/24] Yet another pre-refs-backend series
+Date: Thu, 07 Apr 2016 15:29:04 -0700
+Message-ID: <xmqqoa9lxdcf.fsf@gitster.mtv.corp.google.com>
+References: <1460055791-23313-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 07 23:36:45 2016
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Fri Apr 08 00:29:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoHbX-0005h4-Ex
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 23:36:43 +0200
+	id 1aoIQe-0006og-16
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 00:29:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757767AbcDGVgi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2016 17:36:38 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:60673 "EHLO
+	id S1757870AbcDGW3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2016 18:29:15 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:61335 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757740AbcDGVgh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Apr 2016 17:36:37 -0400
+	with ESMTP id S1757862AbcDGW3N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Apr 2016 18:29:13 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 29F9854D93;
-	Thu,  7 Apr 2016 17:36:36 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9499353A50;
+	Thu,  7 Apr 2016 18:29:06 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xKgSId/yX803D1lUkJ96pkkQfFM=; b=LWmKJK
-	t08DLT2Uv1P2lpIqLRipOpbGzgaXNabHQTmooWxbIPGbskEU3tGTbPXU2mr0FGan
-	77R5TR718WhuzSgcCSPju1xJQ+458w1nJn4IUXCIbNIbBNFJswQf68a7AkWuMbPS
-	0DRCeYYCLZLO2LmVXON/FCVlCaaXz76Dtb6sc=
+	:content-type; s=sasl; bh=QC7BlNIkjsP5QVgyTUs2EHWeW2Y=; b=fFyAMo
+	MWdSgikuESf6XyXLpITWxypFS1l7zIrw4EYrLBlHZycK4428B47YidEGVqlTG0IQ
+	c3iktiSO+0BKHJ6l8EbwcWycMHIk3Ndve5r8w1N9kZlhqvTrbF4v2VhBPX60uQIZ
+	lgMfoftwc+BlREZzzLlDvm5NQYb0oW9O684n8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uKHio5qoiCUDBjVPIDCdQNlvrjOTNeJy
-	2NXoB64JzZ7VWU49av5SJgjiC8JtL05a37/K88LedUoDag9qD5S60JU4sVP0bwlQ
-	XaJ49AAjw7uE2+1dS/D1NtMkqkYrqszR1YQiegQtUd/F22TN70XNWE+pW05CReSS
-	hLxGa1+HO+4=
+	:content-type; q=dns; s=sasl; b=jVAMq7gw6kxhzaGGhDFAchac33WwUOGU
+	jyA+wbx1tyF86vzXld0e/jez1jaGtacalgwU/X9+YZMxx+ta5nSKT9X96jwg36/F
+	KDDyU/iwTXsMPK7SdOv12Rd4As/a/3yIaiGlRO2bTd49ujznoGGoTrvTV+2c/yPy
+	P+PBE0N8ZGs=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 215DF54D92;
-	Thu,  7 Apr 2016 17:36:36 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8A66053A47;
+	Thu,  7 Apr 2016 18:29:06 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 98F9C54D91;
-	Thu,  7 Apr 2016 17:36:35 -0400 (EDT)
-In-Reply-To: <CAFZEwPP1aphz06Ac4ZrKinaE9uiPF4P69P_b5aNn_AYOpZ3m4g@mail.gmail.com>
-	(Pranit Bauva's message of "Fri, 8 Apr 2016 02:33:33 +0530")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0C71853A46;
+	Thu,  7 Apr 2016 18:29:05 -0400 (EDT)
+In-Reply-To: <1460055791-23313-1-git-send-email-dturner@twopensource.com>
+	(David Turner's message of "Thu, 7 Apr 2016 15:02:47 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: CDA595DC-FD08-11E5-8CC1-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 2371B0AC-FD10-11E5-99AC-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290992>
 
-Pranit Bauva <pranit.bauva@gmail.com> writes:
+David Turner <dturner@twopensource.com> writes:
 
-> On Fri, Apr 8, 2016 at 12:31 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Here are the topics that have been cooking.  Commits prefixed with
->> '-' are only in 'pu' (proposed updates) while commits prefixed with
->> '+' are in 'next'.  The ones marked with '.' do not appear in any of
->> the integration branches, but I am still holding onto them.
->> ...
->> * pb/commit-verbose-config (2016-03-14) 1 commit
->>   (merged to 'next' on 2016-04-06 at e5c744f)
->>  + commit: add a commit.verbose config variable
->>
->>  "git commit" learned to pay attention to "commit.verbose"
->>  configuration variable and act as if "--verbose" option was
->>  given from the command line.
->>
->>  Will merge to 'master'.
+> We now have quite a large number of patches before we even get into
+> the meat of the pluggable refs backend series.  So it's worth breaking
+> those out and getting them in before we get into the main series
+> (which Michael Haggerty swants to redesign a bit anyway).
 >
-> Could you delay this a little bit. I am currently working on this.
+> This set of patches should be applied on top of
+> jk/check-repository-format.
+>
+> Michael Haggerty has reviewed those of my patches which are in here
+> except maybe:
+>   refs: on symref reflog expire, lock symref not referrent
+> This was the one from later in the series that was straightforward to
+> move to before the vtable; the other two were going to be harder to
+> move and can wait until after the vtable.
+>
+> I have reviewed all of Michael's patches.
 
-Do not quote the whole thing when you only are referring to a mere
-10 lines.
-
-Will hold and expect an incremental update.  Thanks.
+Thanks for working together well.
+Will queue.
