@@ -1,79 +1,82 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] format-patch: allow --no-patch to disable patch output
-Date: Thu, 7 Apr 2016 17:30:58 -0400
-Message-ID: <CAPig+cRNCwFmGW-Zo+osjceA6nb=6t3+rJ2uEbnyYxGfSWQ-Uw@mail.gmail.com>
-References: <1460047599-9267-1-git-send-email-jacob.e.keller@intel.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Apr 2016, #03; Thu, 7)
+Date: Thu, 07 Apr 2016 14:36:34 -0700
+Message-ID: <xmqqshyxxfrx.fsf@gitster.mtv.corp.google.com>
+References: <xmqqfuuxz1jh.fsf@gitster.mtv.corp.google.com>
+	<CAFZEwPP1aphz06Ac4ZrKinaE9uiPF4P69P_b5aNn_AYOpZ3m4g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Cc: Git List <git@vger.kernel.org>
-To: Jacob Keller <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Thu Apr 07 23:31:06 2016
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 07 23:36:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoHW5-0001xz-Qw
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 23:31:06 +0200
+	id 1aoHbX-0005h4-Ex
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 23:36:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757553AbcDGVbA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2016 17:31:00 -0400
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:36894 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757461AbcDGVa7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Apr 2016 17:30:59 -0400
-Received: by mail-ig0-f170.google.com with SMTP id g8so82304003igr.0
-        for <git@vger.kernel.org>; Thu, 07 Apr 2016 14:30:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=kRFmlloI93ywu7LaoxddentaPiwg1ZjFiiKYzZewmqc=;
-        b=ZAVuvr/i0DZD1OXPJ6Tq0RK+DDgMiIkBlWmziyT5Jo74Tuj+3COpJkYdGYoDg1jNsm
-         +AQ4HU6P5odi+3y3LbS2X2FjLcYZIu3hieZj204LiZtinYFOHLN5QfG1bez0Rot5w7P+
-         Ij9hTriGG9r+Plt2p+pV6zUzedx0+UgbmIBk5lE6RTk+LTDE2Gk2QhKplHC75nU/BEMo
-         0etAVDTkfIfnwPkdqRUlZZ5wJk5UGVgpLwG9sdj68A6UOJasjWXl0Aw7le3+JPdv+vi0
-         JS8TTxLM+nqLXBMhmKh+vHAFfaszWyU5uIgqQsEhOxvmBN0TRtKkCIgAYttBFubv744y
-         nS7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=kRFmlloI93ywu7LaoxddentaPiwg1ZjFiiKYzZewmqc=;
-        b=AjFJr7N7nJhDy5EERzeh8g7EQhcQC4Z1cQy3auQltkVzh+tqSrdvf2fgsHwUYz3Lrm
-         sC9VXBGW+URDZh60gwTw2ukx23DqoO1OqTeXrbaECvzM2X5SjumgXMaHgaroPcw1sMd5
-         bq4xoG52RukDhrrS99CA1djAgpbuPU40KvccV7YjHpzySN1Mm9/u2SqCqifKFAgZy5iq
-         R9xUdpnhwsJmLgVQ92EbsjzS/CsGOCzyGaTDHPqwtjktFV5e7I6NXtfQjcZCLDjtbiLZ
-         uwRju7VWaZyRiGlSYQYos15D+AN7t3Q9680Cs6MgBGv0/9fTW/238YzgPbnxQt2gHV1O
-         Vc7w==
-X-Gm-Message-State: AD7BkJI62sZXTW7D0p4Bd9JAcOhJV9TIhpb1NnVjBebc7nkOHs1AGgJrLcbcHM7l2WahGj6FGEF2irBM30aBgA==
-X-Received: by 10.50.92.37 with SMTP id cj5mr32131462igb.91.1460064658719;
- Thu, 07 Apr 2016 14:30:58 -0700 (PDT)
-Received: by 10.79.139.2 with HTTP; Thu, 7 Apr 2016 14:30:58 -0700 (PDT)
-In-Reply-To: <1460047599-9267-1-git-send-email-jacob.e.keller@intel.com>
-X-Google-Sender-Auth: EJXC3dk8--jV9--wdEQFS-X1w1g
+	id S1757767AbcDGVgi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2016 17:36:38 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:60673 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757740AbcDGVgh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Apr 2016 17:36:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 29F9854D93;
+	Thu,  7 Apr 2016 17:36:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xKgSId/yX803D1lUkJ96pkkQfFM=; b=LWmKJK
+	t08DLT2Uv1P2lpIqLRipOpbGzgaXNabHQTmooWxbIPGbskEU3tGTbPXU2mr0FGan
+	77R5TR718WhuzSgcCSPju1xJQ+458w1nJn4IUXCIbNIbBNFJswQf68a7AkWuMbPS
+	0DRCeYYCLZLO2LmVXON/FCVlCaaXz76Dtb6sc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uKHio5qoiCUDBjVPIDCdQNlvrjOTNeJy
+	2NXoB64JzZ7VWU49av5SJgjiC8JtL05a37/K88LedUoDag9qD5S60JU4sVP0bwlQ
+	XaJ49AAjw7uE2+1dS/D1NtMkqkYrqszR1YQiegQtUd/F22TN70XNWE+pW05CReSS
+	hLxGa1+HO+4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 215DF54D92;
+	Thu,  7 Apr 2016 17:36:36 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 98F9C54D91;
+	Thu,  7 Apr 2016 17:36:35 -0400 (EDT)
+In-Reply-To: <CAFZEwPP1aphz06Ac4ZrKinaE9uiPF4P69P_b5aNn_AYOpZ3m4g@mail.gmail.com>
+	(Pranit Bauva's message of "Fri, 8 Apr 2016 02:33:33 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: CDA595DC-FD08-11E5-8CC1-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290991>
 
-On Thu, Apr 7, 2016 at 12:46 PM, Jacob Keller <jacob.e.keller@intel.com> wrote:
-> The documentation for format-patch indicates that --no-patch wilL
-> suppress patch output. It also incorrectly mentions that -s will also
-> suppress the patch output, but this is incorrect because -s is used to
-> add the sign-off line first. Fix the documentation to remove the
-> indication about -s. Fix builtin format-patch to prevent always adding
-> the patch incase --no-patch is given. An alternative approach would be
-> to remove --no-patch from the documentation for git-format-patch, and
-> add an error check to indicate that --no-patch is not supported.
+Pranit Bauva <pranit.bauva@gmail.com> writes:
 
-See [1] and [2].
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/290023
-[2]: b73a1bc (git-format-patch.txt: don't show -s as shorthand for
-multiple options, 2016-03-27)
-
-> Add a test for --no-patch to ensure it functions as expected.
+> On Fri, Apr 8, 2016 at 12:31 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Here are the topics that have been cooking.  Commits prefixed with
+>> '-' are only in 'pu' (proposed updates) while commits prefixed with
+>> '+' are in 'next'.  The ones marked with '.' do not appear in any of
+>> the integration branches, but I am still holding onto them.
+>> ...
+>> * pb/commit-verbose-config (2016-03-14) 1 commit
+>>   (merged to 'next' on 2016-04-06 at e5c744f)
+>>  + commit: add a commit.verbose config variable
+>>
+>>  "git commit" learned to pay attention to "commit.verbose"
+>>  configuration variable and act as if "--verbose" option was
+>>  given from the command line.
+>>
+>>  Will merge to 'master'.
 >
-> Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+> Could you delay this a little bit. I am currently working on this.
+
+Do not quote the whole thing when you only are referring to a mere
+10 lines.
+
+Will hold and expect an incremental update.  Thanks.
