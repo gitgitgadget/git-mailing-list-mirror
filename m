@@ -1,84 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: "Michael S. Tsirkin" <mst@redhat.com>
 Subject: Re: [PATCH 1/4] builtin/interpret-trailers.c: allow -t
-Date: Thu, 07 Apr 2016 10:30:02 -0700
-Message-ID: <xmqq60vt1g4l.fsf@gitster.mtv.corp.google.com>
+Date: Thu, 7 Apr 2016 20:30:34 +0300
+Message-ID: <20160407202938-mutt-send-email-mst@redhat.com>
 References: <1460042563-32741-1-git-send-email-mst@redhat.com>
-	<1460042563-32741-2-git-send-email-mst@redhat.com>
-	<xmqqr3eh1hq6.fsf@gitster.mtv.corp.google.com>
-	<20160407202631-mutt-send-email-mst@redhat.com>
+ <1460042563-32741-2-git-send-email-mst@redhat.com>
+ <xmqqr3eh1hq6.fsf@gitster.mtv.corp.google.com>
+ <vpqtwjduymh.fsf@anie.imag.fr>
+ <xmqqa8l51gae.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Apr 07 19:30:24 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
+	Christian Couder <christian.couder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 07 19:30:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoDl9-0005qI-LB
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 19:30:23 +0200
+	id 1aoDlY-00067P-DS
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 19:30:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756869AbcDGRaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2016 13:30:16 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:60965 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751440AbcDGRaP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Apr 2016 13:30:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B2B7152BA4;
-	Thu,  7 Apr 2016 13:30:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ltOum4+zbAICmiM1yen6YU5yhGs=; b=i4YlKu
-	FQipS6bxLKZScUdwld2FFfDzjsL/54a7u3JMz3AKtd8TxOORmoWrK8Nox2Zuch6U
-	bgDtiyBt2FFHvvN6G1SdVM55KoUgIk7Rp8Ay6Y5YT1m6bjNx2gw5zfiQEcN9sI4z
-	kO/t4lJHsKZTwHz7jaonGlTc8lu8K5wUQJfKo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mk0Kd8t9P91dc7pICIA5eCMGcp4NY0f6
-	XhLxLoh6hIlHfEbzjWG7wrrXBnqkMFIFnAMZMoktDHYkmmaaeFwpLiS3MKPqrnOE
-	S29/bIFRrCJj1oD4s3rGFeofGiL4KTiLYPyue6TPUkhUcgVYY5hRQ1czCRm8O8pR
-	UNrlwEIQFIc=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A42A852BA2;
-	Thu,  7 Apr 2016 13:30:08 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1757026AbcDGRao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2016 13:30:44 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:48166 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756660AbcDGRan (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Apr 2016 13:30:43 -0400
+Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4EA5052B9F;
-	Thu,  7 Apr 2016 13:30:06 -0400 (EDT)
-In-Reply-To: <20160407202631-mutt-send-email-mst@redhat.com> (Michael
-	S. Tsirkin's message of "Thu, 7 Apr 2016 20:28:32 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5E891934-FCE6-11E5-9189-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	by mx1.redhat.com (Postfix) with ESMTPS id B1C3564D11;
+	Thu,  7 Apr 2016 17:30:37 +0000 (UTC)
+Received: from redhat.com (vpn1-7-7.ams2.redhat.com [10.36.7.7])
+	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id u37HUZkX012514;
+	Thu, 7 Apr 2016 13:30:36 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqa8l51gae.fsf@gitster.mtv.corp.google.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Thu, 07 Apr 2016 17:30:37 +0000 (UTC)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290936>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+On Thu, Apr 07, 2016 at 10:26:33AM -0700, Junio C Hamano wrote:
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> 
+> >> I am in principle OK with the later step that teaches a single
+> >> letter option to end-user facing "git am" that would be turned into
+> >> "--trailer" when it calls out to "interpret-trailers" (I haven't
+> >> checked if 't' is a sensible choice for that single letter option,
+> >> though).
+> >
+> > If 'am' has -t == --trailer, I think it makes sense to have the same
+> > shortcut in interpret-trailers for consistency.
+> 
+> It is the other way around.  "git am" may be OK with "-t" (or it may
+> not--I do not know yet), but other commands that are currently
+> unaware of "interpret-trailers" (cherry-pick, revert, etc.) may have
+> better uses for a short-and-sweet 't'.
+> 
+> In the ideal future, "interpret-trailers" should not have to exist
+> in the end-users' vocabulary, as all the front-line end-user facing
+> programs would be aware of it.  But we are not there.
+> 
+> Letting it reserve a short-and-sweet 't' that allows it to dictate
+> that its callers must have the same 't' is tail wagging the dog that
+> I want to avoid.
 
-> On Thu, Apr 07, 2016 at 09:55:29AM -0700, Junio C Hamano wrote:
->> "Michael S. Tsirkin" <mst@redhat.com> writes:
->> 
->> > Allow -t as a short-cut for --trailer.
->> >
->> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
->> > ---
->> 
->> As I do not think interpret-trailers is meant to be end-user facing,
->> I am not sure I should be interested in this step.
->> 
->> I am in principle OK with the later step that teaches a single
->> letter option to end-user facing "git am" that would be turned into
->> "--trailer" when it calls out to "interpret-trailers" (I haven't
->> checked if 't' is a sensible choice for that single letter option,
->> though).
->
-> Does OPT_PASSTHRU_ARGV handle this transformation for me?
+It's mostly a short-cut I took by copying calls to applypatch.
+Are there examples of other commands doing such transformations
+on the fly?
 
-As I wrote in my response to Matthieu, PASSTHRU_ARGV is one thing I
-specifically do not want to see used in this codepath.
+-- 
+MST
