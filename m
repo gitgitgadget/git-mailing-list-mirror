@@ -1,134 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] commit: --amend -m '' silently fails to wipe message
-Date: Thu, 07 Apr 2016 12:56:26 -0700
-Message-ID: <xmqq1t6hyyz9.fsf@gitster.mtv.corp.google.com>
-References: <20160406171503.GA2345@dinwoodie.org>
-	<20160407044219.GA29710@sigill.intra.peff.net>
-	<20160407044837.GA28859@sigill.intra.peff.net>
-	<xmqqshyxz3ss.fsf@gitster.mtv.corp.google.com>
-	<20160407190210.GA4478@sigill.intra.peff.net>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] sequencer.c: fix detection of duplicate s-o-b
+Date: Thu, 7 Apr 2016 16:06:59 -0400
+Message-ID: <CAP8UFD2OQfcogZj-hELxBB+-rWSW1YwPBCOXK1+oM2kKGaMwaA@mail.gmail.com>
+References: <20160312130844.GA25639@1wt.eu>
+	<xmqqr3eizsxu.fsf@gitster.mtv.corp.google.com>
+	<20160406163726.GG28596@1wt.eu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Adam Dinwoodie <adam@dinwoodie.org>, git@vger.kernel.org,
-	Chris Webb <chris@arachsys.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 07 21:56:47 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+	Brandon Casey <drafnel@gmail.com>
+To: Willy Tarreau <w@1wt.eu>
+X-From: git-owner@vger.kernel.org Thu Apr 07 22:07:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoG2k-0007sF-MJ
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 21:56:43 +0200
+	id 1aoGCw-0005zn-VH
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 22:07:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753674AbcDGT4e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2016 15:56:34 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:58574 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753175AbcDGT4d (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Apr 2016 15:56:33 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B4D40534C2;
-	Thu,  7 Apr 2016 15:56:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MojoJmvxSybs8OGs22NrsUMF4go=; b=BSamv3
-	C7HEM4ZcUIT0rGsAUb1oej1pfsz3N7CHXO+3g7Fs62pQFq0jpexUikI294KXa6St
-	34z/oVRhJeC2CvBT8xZAAgOtTa1BrpwMyNyai0wRzsPMYZJMtGc5Fd88C4+28B0k
-	g+IwjAFPjj4rrfSQ1Lm61wVRdl+qtzsh+qTBU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=X5b1JlCV2ctA4w28MKO0eeTTDxr4NNFH
-	ftqoUpJxxfFfCQlN4m3Y9mr4nAvC15Dizm8iM36Qpec/X/mv49/oTVTVYElfgGHv
-	hWEvOurf6gAWNP8JCDlyJoI4SCKbOlK8BWXDVxSF2+5VOwQzJY5SuC0B/NfAla2z
-	FeEu5WLp3Rs=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AC1CA534C1;
-	Thu,  7 Apr 2016 15:56:27 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2F7CF534C0;
-	Thu,  7 Apr 2016 15:56:27 -0400 (EDT)
-In-Reply-To: <20160407190210.GA4478@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 7 Apr 2016 15:02:11 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D057A60C-FCFA-11E5-BDEC-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1757373AbcDGUHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2016 16:07:08 -0400
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:36291 "EHLO
+	mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757342AbcDGUHH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Apr 2016 16:07:07 -0400
+Received: by mail-wm0-f43.google.com with SMTP id v188so67974020wme.1
+        for <git@vger.kernel.org>; Thu, 07 Apr 2016 13:07:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=zTLDb8aDD3Avg0xZ15h9VoX/ig3DBMYxG+QJv4qVF7Q=;
+        b=Pq+xlmYhvlXpTgAgyeyfDesMmizaugsd1fo0YN90qSpX26evHYm64kgMp3/NHqD60u
+         Tsr8zrxZe9z4N72KL4QNrweKU3c/gT7G9m6ZScb3dE6sIANvkTOIc6L/tv0K5S5HfiNL
+         IqLnkwsfFxSJjpCMFauUVi+AquHkeedqzE+jd8voTqagFqsmm3m+jZIg8m1lSf8joSGQ
+         2P+JnQ2no54mcsKnJSBNmFhjojFR7tZAnerKAB33xFzdvvlrAhJnVTq8CcpYYOtI3eaq
+         iuJdKKsrDY5A0j/bJnFJWmqOJZk3hN78TdF+zgVuYsz9146agZMipBcT+qYmhZSUR019
+         BMvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=zTLDb8aDD3Avg0xZ15h9VoX/ig3DBMYxG+QJv4qVF7Q=;
+        b=kiGutco8Ledvq4C0A+INIIcmkaaUvZ5+DEFEAyv9cnaEsWFdUkhvTxb9n5kjVS0mk4
+         A5qVS+mkTwX4DcKF8Mm6fe5a0VM10UaQj2cs0C0IZGy18z1nXFEfvONnGmL0r3B4VLMX
+         3d6Ndi8PzFSc2EzHL0lrmNKBKtepKN8uyUVXyVvD8Q7x+dVYm20zXppf/RwXerhNcpbP
+         BzUHsCQH9ndZmMDh71wGE0GIc13ndNawjYd30oneas2jcOk5KeolmLIR5k9+AAoLQNue
+         cM5M2NCdYINvLPcoE4HPiPyNaCiu5QXkpxkdQxIrsbugh+ragjEk7l+R9MYOBPAfDFbZ
+         W4zw==
+X-Gm-Message-State: AD7BkJKDmtpovSqG2iqyiA6G3I5Hksy+tX31FhTJUaGVq6pQE5Cdp29z4vNt+j42WJiZOrkcKvE/t1elZhYgig==
+X-Received: by 10.194.78.37 with SMTP id y5mr5459762wjw.78.1460059620011; Thu,
+ 07 Apr 2016 13:07:00 -0700 (PDT)
+Received: by 10.194.95.129 with HTTP; Thu, 7 Apr 2016 13:06:59 -0700 (PDT)
+In-Reply-To: <20160406163726.GG28596@1wt.eu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290980>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Apr 6, 2016 at 12:37 PM, Willy Tarreau <w@1wt.eu> wrote:
+> On Wed, Apr 06, 2016 at 07:57:01AM -0700, Junio C Hamano wrote:
+>> This seems to have been lost, perhaps because the top part that was
+>> quite long didn't look like a patch submission message or something.
+>
+> Don't worry, we all know it's the submitter's responsibility to retransmit,
+> I apply the same principle :-)
+>
+>> Git 1.7.12 is a quite ancient release and I wouldn't be surprised if
+>> we made the behaviour change during the period leading to v2.6 on
+>> purpose, but nothing immediately comes to mind. Christian (as the
+>> advocate for the trailer machinery) and Brandon ("git shortlog
+>> sequencer.c" suggests you), can you take a look?
 
-> Yes, FWIW, those were the sites and reasons I identified last night.
-> Your patch looks like the right thing to me.
+Ok, I will try to have a look at that next week.
 
-Thanks, let's do this then.  I'd already anticipated your sign-off ;-).
+> FWIW it wad changed in 1.8.3 by commit bab4d10 ("sequencer.c: teach
+> append_signoff how to detect duplicate s-o-b").
 
--- >8 --
-From: Jeff King <peff@peff.net>
-Subject: commit: do not ignore an empty message given by -m ''
+So the change is quite old and was made before I started working on
+the trailer machinery.
 
-When f9568530 (builtin-commit: resurrect behavior for multiple -m
-options, 2007-11-11) converted a "char *message" to "struct strbuf
-message" to hold the messages given with the "-m" option, it
-incorrectly changed the checks "did we get a message with the -m
-option?" to "is message.len 0?".  Later, we noticed one breakage
-from this change and corrected it with 25206778 (commit: don't start
-editor if empty message is given with -m, 2013-05-25).
+> The change made a lot of sense but it didn't assume that this practice
+> was common. And indeed I think this practice only happens in maintenance
+> branches where people have to make a lot of adaptations to existing
+> patches that they're cherry-picking. We do that a lot in stable kernels
+> to keep track of what we may need to revisit if we break something.
 
-However, "we got a message with -m, even though an empty one, so we
-shouldn't be launching an editor" was not the only breakage.
+Yeah, we know for some time, but after the above patch breakage
+happened and after I worked on interpret-trailers, that some lines
+inside [] are added by kernel people in the trailer part and that the
+trailer machinery doesn't work properly with such lines.
 
- * "git commit --amend -m '' --allow-empty", even though it looks
-   strange, is a valid request to amend the commit to have no
-   message at all.  Due to the misdetection of the presence of -m on
-   the command line, we ended up keeping the log messsage from the
-   original commit.
+Anyway if you want your patch to be applied, it will probably need tests.
 
- * "git commit -m "$msg" -F file" should be rejected whether $msg is
-   an empty string or not, but due to the same bug, was not rejected
-   when $msg is empty.
-
- * "git -c template=file -m "$msg"" should ignore the template even
-   when $msg is empty, but it didn't and instead used the contents
-   from the template file.
-
-Correct these by checking have_option_m, which the earlier 25206778
-introduced to fix the same bug.
-
-Reported-by: Adam Dinwoodie <adam@dinwoodie.org>
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/commit.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 98e1527..391126e 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -695,7 +695,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		}
- 	}
- 
--	if (message.len) {
-+	if (have_option_m) {
- 		strbuf_addbuf(&sb, &message);
- 		hook_arg1 = "message";
- 	} else if (logfile && !strcmp(logfile, "-")) {
-@@ -1172,9 +1172,9 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 		f++;
- 	if (f > 1)
- 		die(_("Only one of -c/-C/-F/--fixup can be used."));
--	if (message.len && f > 0)
-+	if (have_option_m && f > 0)
- 		die((_("Option -m cannot be combined with -c/-C/-F/--fixup.")));
--	if (f || message.len)
-+	if (f || have_option_m)
- 		template_file = NULL;
- 	if (edit_message)
- 		use_message = edit_message;
+Thanks,
+Christian.
