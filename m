@@ -1,80 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 03/16] index-helper: new daemon for caching index and
- related stuff
-Date: Thu, 7 Apr 2016 16:14:50 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604071614250.2967@virtualbox>
-References: <1459980722-4836-1-git-send-email-dturner@twopensource.com> <1459980722-4836-4-git-send-email-dturner@twopensource.com> <5705FC59.2050801@kdbg.org>
+From: "JAQUES Gilbout" <jaques_gilbout@mail.bg>
+Subject: Investment Abroad
+Date: Thu, 7 Apr 2016 08:58:06 -0600
+Message-ID: <a7492a4e0a4e3cc8b7b096df41ea5b3d.squirrel@just75.justhost.com>
+Reply-To: jaques.gilbout@yahoo.fr
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
-	pclouds@gmail.com, aevarb@gmail.com, jeffhost@microsoft.com
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Apr 07 16:15:11 2016
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: 8bit
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Thu Apr 07 17:05:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoAiE-0002aY-3D
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 16:15:10 +0200
+	id 1aoBV6-0001N0-Pv
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 17:05:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756081AbcDGOPD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2016 10:15:03 -0400
-Received: from mout.gmx.net ([212.227.15.18]:64109 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756054AbcDGOPB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Apr 2016 10:15:01 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0Lymoh-1bqqU82wCt-016AT0; Thu, 07 Apr 2016 16:14:51
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <5705FC59.2050801@kdbg.org>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:aXzW7cVfo+nL+hnVJoVQ7J8Zm7uyw3+8ii9mbrk2j6juDvte8A3
- vsRctgCroQjrAzCTf8Vh7PZQPZJXt7HzidTzfn/x7303Jw4gg6WdxYdoNkXOYg7n/l/WRfH
- 3pBIQJvpviUJhU+J+1DhAcX8G7lnQLs0VwGcfZCETV4g6jue+y5R2CtoHvqI6/CtUIzUv6h
- 0SB3OMLZ/1v1x8DkviKgg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fgFnOYXim60=:a48wILOwgxyR6bltXAu5Gb
- gBpYow8E40xZB45JsZ6McAEn5taL7DWdp6BDK9KXN0ZpLGpQTprxLRMfHurePlDsxLUPo9gYB
- WPwLi3JS7ISG8HgUpUZMH0x8OqsEWXmp+48Pv0vNDHXjbekYs831nurrHRXZO10MWrDCl/74j
- AkmvldN759ZUI3DT51aZ2Mo9CVEYBUuuMNdj7f5yJvuBnlT7x8DyuNSV2zGz7enIvOcD4wq9r
- P1qgT8dRuNElernCHgk2y/wgPmXxGdJcMKyD62vQpcXSI5uUpYmRIZovXf3/QcFv0CQJn9Ami
- Iot5/6zZCBlPnRlQ2bBuRrpKESfMcs9wQQbWOpcMpRIjObPs33SatRDG+MenSU2TDv1X9AmgX
- SCNz6pV1kQwZroxFZgbew29NTxrj+WWqIBlLswC/kdCGICHwSllYUyccPwPogbn+TYol7FsT0
- VGRchXvDhwsS5wvwJnYR55XP2k8w8176qD/X82vPh1zliWiVIAvpZ+DWrkZMltNeG1F+c9ILl
- 1dw4zK9C918636dWkiQEW4Qdd6o0hSPhfxaYm3N8qm3rbnXvIzHwGqx/hWyMiH9BInQOV8vl1
- 5KcY+v18om+0b64k2/vJGoAxWSz4VD6zPXMo5LFY0JVahI0cS0yluSHnF6ZIk3YSc3tL/gB8L
- fKOcrGUDQAygQBnGuSWq8joNzI4HRJZWAxMdbAzH8gCqjWu/OqdId3hlRMJertJz/00LBiKIK
- zKLhQgRoCo71lhMMpql2mF9ulXNeHHiWWTi6yUKbgJJ1bqp2pUkaj8Jig02KXj5FpgQyfFqe 
+	id S1756447AbcDGPFg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2016 11:05:36 -0400
+Received: from gproxy1-pub.mail.unifiedlayer.com ([69.89.25.95]:34121 "HELO
+	gproxy1-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751089AbcDGPFf (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Apr 2016 11:05:35 -0400
+X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 Apr 2016 11:05:35 EDT
+Received: (qmail 2343 invoked by uid 0); 7 Apr 2016 14:58:55 -0000
+Received: from unknown (HELO cmgw4) (10.0.90.85)
+  by gproxy1.mail.unifiedlayer.com with SMTP; 7 Apr 2016 14:58:55 -0000
+Received: from just75.justhost.com ([173.254.28.75])
+	by cmgw4 with 
+	id fSy71s0191dEDA501SyAzM; Thu, 07 Apr 2016 08:58:55 -0600
+X-Authority-Analysis: v=2.1 cv=aJ5j99Nm c=1 sm=1 tr=0
+ a=jSVgIkyGiVSBnVisTwx0qA==:117 a=lgJn9ZaqowluPYRTrogzSw==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=2hx_757Y7N8A:10
+ a=IkcTkHD0fZMA:10 a=XGNoTL3x9NQA:10 a=kziv93cY1bsA:10
+ a=Uo4PfkcYjvVS6IcSRU4A:9 a=QEXdDO2ut3YA:10
+Received: from [127.0.0.1] (port=57925 helo=just75.justhost.com)
+	by just75.justhost.com with esmtpa (Exim 4.86_2)
+	(envelope-from <jaques_gilbout@mail.bg>)
+	id 1aoBNm-0005CD-U1; Thu, 07 Apr 2016 08:58:06 -0600
+Received: from 41.202.68.119 ([41.202.68.119])
+        (SquirrelMail authenticated user z.pasha@mml.com.pk)
+        by just75.justhost.com with HTTP;
+        Thu, 7 Apr 2016 08:58:06 -0600
+User-Agent: SquirrelMail/1.4.23 [SVN]
+X-Priority: 3 (Normal)
+Importance: Normal
+X-Identified-User: {:just75.justhost.com:mmlcompk:mml.com.pk} {sentby:program running on server}
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290914>
 
-Hi,
 
-On Thu, 7 Apr 2016, Johannes Sixt wrote:
 
-> Am 07.04.2016 um 00:11 schrieb David Turner:
-> > +static void share_index(struct index_state *istate, struct shm *is)
-> > +{
-> > +	void *new_mmap;
-> > +	if (istate->mmap_size <= 20 ||
-> > +	    hashcmp(istate->sha1,
-> > +		    (unsigned char *)istate->mmap + istate->mmap_size - 20)
-> > ||
-> > +	    !hashcmp(istate->sha1, is->sha1) ||
-> > +	    git_shm_map(O_CREAT | O_EXCL | O_RDWR, 0700, istate->mmap_size,
-> > +			&new_mmap, PROT_READ | PROT_WRITE, MAP_SHARED,
-> > +			"git-index-%s", sha1_to_hex(istate->sha1)) < 0)
-> 
-> Builds which have NO_MMAP set require that MAP_PRIVATE is set. So I would
-> guess that at this point you leave those builds behind. Unless we declare
-> such systems as hopelessly outdated and remove NO_MMAP and compat/mmap.c or
-> you support index-helper only when NO_MMAP is not set.
 
-I vote for the latter: support index-helper only when NO_MMAP is unset.
+Dearest One,
 
-Ciao,
-Dscho
+  Good day!
+
+I am interested in establishing and operating a very viable business as a
+means of investment abroad with the Sum of US $ 9,500,000.00 I inherited
+from my Father which he deposited in Bahamas.
+
+My preference is any good profit yielding businesses you will suggest. My
+need for this business proposition is very urgent as I am planning to move
+out of my country and ensure that the money is invested profitably since
+it is my only and last hope of survival since I lost my Parents and entire
+Family due to the political crisis that engulfed my country.
+
+I await your prompt and urgent response for more details.
+
+Yours Respectfully,
+
+JAQUES Gilbout.
