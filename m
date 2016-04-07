@@ -1,124 +1,244 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH 08/24] resolve_missing_loose_ref(): simplify semantics
-Date: Thu,  7 Apr 2016 15:02:55 -0400
-Message-ID: <1460055791-23313-9-git-send-email-dturner@twopensource.com>
+Subject: [PATCH 02/24] refs: move for_each_*ref* functions into common code
+Date: Thu,  7 Apr 2016 15:02:49 -0400
+Message-ID: <1460055791-23313-3-git-send-email-dturner@twopensource.com>
 References: <1460055791-23313-1-git-send-email-dturner@twopensource.com>
+Cc: David Turner <dturner@twopensource.com>,
+	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Thu Apr 07 21:03:38 2016
+X-From: git-owner@vger.kernel.org Thu Apr 07 21:03:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoFDM-00073u-NX
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 21:03:37 +0200
+	id 1aoFDK-00073u-TT
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 21:03:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932258AbcDGTDe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2016 15:03:34 -0400
-Received: from mail-qg0-f42.google.com ([209.85.192.42]:33076 "EHLO
-	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932215AbcDGTDb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Apr 2016 15:03:31 -0400
-Received: by mail-qg0-f42.google.com with SMTP id j35so71757001qge.0
-        for <git@vger.kernel.org>; Thu, 07 Apr 2016 12:03:30 -0700 (PDT)
+	id S1756962AbcDGTD2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2016 15:03:28 -0400
+Received: from mail-qg0-f51.google.com ([209.85.192.51]:32967 "EHLO
+	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755730AbcDGTDX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Apr 2016 15:03:23 -0400
+Received: by mail-qg0-f51.google.com with SMTP id j35so71754051qge.0
+        for <git@vger.kernel.org>; Thu, 07 Apr 2016 12:03:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:subject:date:message-id:in-reply-to:references;
-        bh=lf+nx+7wRxAZsrs8rBTIm4v0FBhuTztSlEwYP1H3I6A=;
-        b=fbEByN28mjP359LjUjchqcDAubMVRPaWSRlCedPOPGU1ubOWiQAKxInwGH0LlprMxp
-         MVKcFWhDb3ZH1wblMp5gq1cWYwCIFeZMdkBcnm4JmrjyfPZon7rUPJBiPHFkkRTjfK8y
-         zfTqQmAKcX5IH40aRiiIQaELlm66ioaQdFQrdg5SzvFfIsqF88xJN+Nea0I7bOSgvvfr
-         DFvv94QW2ChjlaQiRz9ixlveQQ7CrUmCggsZTHJK1rR0GBv0hghk+QNmgFoz4ss3Vm9k
-         w74Wt1ExiRlM2A+sLsSOlcU/kHsYdhtuNaTBkhaTG9CC8Yfzzpa6IDftKB1loE/OpSvW
-         D8Mw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=z/W0VYm79xfZLltxY0KsjfuxJ74RL+QP4de5/4LPEUs=;
+        b=IccA5vXicbZ1ZyGwyXQ2upfnzTVurMovLffMBI/Q2P0JN/UbR4O3G6eipm71hlesCj
+         6oTygtBzV7bAWkcngaH/lI1AezD4DZlCygXy4dge47xj+Ot1JqDO2F2Ty6c/F7iwYOQy
+         cEhv2MbfzAIvkgre0mU20yTC4gnF8xLFfrmT5RIeMPRyA3sIKJGFsTlNYAxvlSHXMK+p
+         dBNnwxqQOOl4COs+tDKFkRqf4GCXsoLeXQhM2wwWE5pIKlcea6w82aMDZ5CK1b170OkE
+         pmEFPn1nMADOvz+VHMP7kKJlueJNim+M2UEV7YMoRJaHsx1RqJ+/5nW7ppPtj9rqH1hc
+         dDjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=lf+nx+7wRxAZsrs8rBTIm4v0FBhuTztSlEwYP1H3I6A=;
-        b=SIY1SsWhQD0csT63wSXtY8XdXul9d4bTV9KaHAX5h8sj5/hcEJ6iFu0DDwLHTQCMuW
-         9uddzH8QADhsPJTd5GcpRXCY+q/jslnevC6yPQi8Br18kB64S9prMWStDvK8hLSzez1y
-         tXRt+INq2IFlpQ6/M2cRbRBRlVl8Kk4c0B23sOIRZRjgkVdIcWhflONMO1ehxkhohsSj
-         vmJkJLPXJxB7BMfEcqeVEcYi2kMvARbApFXBJ5PCqGJ1EhXWr6S+/hwu5IwVghA9fBFE
-         rT8nCR9ObUY8IrNlXkWFQJUstwVesDZKnttkzFIyLncG7eb7PeyoMuLb3+Had6y0QVkG
-         oJrA==
-X-Gm-Message-State: AD7BkJLWKXPPZTwdQZ70DQa7E1mbot5QXzSjxz/2dJurEB0T2qt4kFa/qzT2t7fO5db/Tw==
-X-Received: by 10.140.176.23 with SMTP id w23mr6407451qhw.76.1460055809735;
-        Thu, 07 Apr 2016 12:03:29 -0700 (PDT)
+        bh=z/W0VYm79xfZLltxY0KsjfuxJ74RL+QP4de5/4LPEUs=;
+        b=UOx41Wk9B5ImKjYTEg7Sq34eJK01GQRdlf2DUpEs/nts6GjAom5kzr+v/NyYwgECia
+         CXMGyT41ZbCdPJaQhxayrR2vklwr66KwpDtj4OU2Z92gEYke5dxzBDWdlb66C/CMSarV
+         BSzCpvT7W7H9q+XkeJYYl36i6d318lsXRQ8A+sIXkcNw4uWQtFBlQPXfCegvfUKVtYBX
+         81xuLdFw4eB+7e9kvIhsh3jm7Cc7FaUvlRbndRqJjnOiB3pV0Xw6DZkq2ENj68IjdXBD
+         dh006HWlXfFa2xNySkV03C7AEuDfwcj6fjOWXsoadO30LC3umROOaQYZIo0AX9IeNDay
+         s+5Q==
+X-Gm-Message-State: AD7BkJLJbtVr2RNN36qW/X6E4auQyzYRIPLFQ9Dpc8PyctDXZtFWGDOLs4zBh8a/qNaPXQ==
+X-Received: by 10.141.1.87 with SMTP id c84mr6386915qhd.1.1460055802697;
+        Thu, 07 Apr 2016 12:03:22 -0700 (PDT)
 Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id e11sm3959273qkb.39.2016.04.07.12.03.28
+        by smtp.gmail.com with ESMTPSA id e11sm3959273qkb.39.2016.04.07.12.03.21
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 07 Apr 2016 12:03:29 -0700 (PDT)
+        Thu, 07 Apr 2016 12:03:21 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1460055791-23313-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290955>
 
-From: Michael Haggerty <mhagger@alum.mit.edu>
+Make do_for_each_ref take a submodule as an argument instead of a
+ref_cache.  Since all for_each_*ref* functions are defined in terms of
+do_for_each_ref, we can then move them into the common code.
 
-Make resolve_missing_loose_ref() only responsible for looking up a
-packed reference, without worrying about whether we want to read or
-write the reference and without setting errno on failure. Move the other
-logic to the caller.
+Later, we can simply make do_for_each_ref into a backend function.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: David Turner <dturner@twopensource.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- refs/files-backend.c | 24 ++++++++++--------------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+ refs.c               | 52 +++++++++++++++++++++++++++++++++++++++++++
+ refs/files-backend.c | 62 +++++-----------------------------------------------
+ refs/refs-internal.h |  9 ++++++++
+ 3 files changed, 66 insertions(+), 57 deletions(-)
 
+diff --git a/refs.c b/refs.c
+index 6b8c16c..f0feff7 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1103,3 +1103,55 @@ int head_ref(each_ref_fn fn, void *cb_data)
+ {
+ 	return head_ref_submodule(NULL, fn, cb_data);
+ }
++
++int for_each_ref(each_ref_fn fn, void *cb_data)
++{
++	return do_for_each_ref(NULL, "", fn, 0, 0, cb_data);
++}
++
++int for_each_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
++{
++	return do_for_each_ref(submodule, "", fn, 0, 0, cb_data);
++}
++
++int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data)
++{
++	return do_for_each_ref(NULL, prefix, fn, strlen(prefix), 0, cb_data);
++}
++
++int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data, unsigned int broken)
++{
++	unsigned int flag = 0;
++
++	if (broken)
++		flag = DO_FOR_EACH_INCLUDE_BROKEN;
++	return do_for_each_ref(NULL, prefix, fn, 0, flag, cb_data);
++}
++
++int for_each_ref_in_submodule(const char *submodule, const char *prefix,
++		each_ref_fn fn, void *cb_data)
++{
++	return do_for_each_ref(submodule, prefix, fn, strlen(prefix), 0, cb_data);
++}
++
++int for_each_replace_ref(each_ref_fn fn, void *cb_data)
++{
++	return do_for_each_ref(NULL, git_replace_ref_base, fn,
++			       strlen(git_replace_ref_base), 0, cb_data);
++}
++
++int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
++{
++	struct strbuf buf = STRBUF_INIT;
++	int ret;
++	strbuf_addf(&buf, "%srefs/", get_git_namespace());
++	ret = do_for_each_ref(NULL, buf.buf, fn, 0, 0, cb_data);
++	strbuf_release(&buf);
++	return ret;
++}
++
++int for_each_rawref(each_ref_fn fn, void *cb_data)
++{
++	return do_for_each_ref(NULL, "", fn, 0,
++			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
++}
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 9676ec2..c0cf6fd 100644
+index c07dc41..9676ec2 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -1368,11 +1368,9 @@ static struct ref_entry *get_packed_ref(const char *refname)
+@@ -513,9 +513,6 @@ static void sort_ref_dir(struct ref_dir *dir)
+ 	dir->sorted = dir->nr = i;
  }
  
+-/* Include broken references in a do_for_each_ref*() iteration: */
+-#define DO_FOR_EACH_INCLUDE_BROKEN 0x01
+-
  /*
-- * A loose ref file doesn't exist; check for a packed ref.  The
-- * options are forwarded from resolve_safe_unsafe().
-+ * A loose ref file doesn't exist; check for a packed ref.
+  * Return true iff the reference described by entry can be resolved to
+  * an object in the database.  Emit a warning if the referred-to
+@@ -1727,10 +1724,13 @@ static int do_for_each_entry(struct ref_cache *refs, const char *base,
+  * value, stop the iteration and return that value; otherwise, return
+  * 0.
   */
- static int resolve_missing_loose_ref(const char *refname,
--				     int resolve_flags,
- 				     unsigned char *sha1,
- 				     int *flags)
+-static int do_for_each_ref(struct ref_cache *refs, const char *base,
+-			   each_ref_fn fn, int trim, int flags, void *cb_data)
++int do_for_each_ref(const char *submodule, const char *base,
++		    each_ref_fn fn, int trim, int flags, void *cb_data)
  {
-@@ -1389,14 +1387,8 @@ static int resolve_missing_loose_ref(const char *refname,
- 			*flags |= REF_ISPACKED;
- 		return 0;
- 	}
--	/* The reference is not a packed reference, either. */
--	if (resolve_flags & RESOLVE_REF_READING) {
--		errno = ENOENT;
--		return -1;
--	} else {
--		hashclr(sha1);
--		return 0;
--	}
-+	/* refname is not a packed reference. */
-+	return -1;
+ 	struct ref_entry_cb data;
++	struct ref_cache *refs;
++
++	refs = get_ref_cache(submodule);
+ 	data.base = base;
+ 	data.trim = trim;
+ 	data.flags = flags;
+@@ -1745,58 +1745,6 @@ static int do_for_each_ref(struct ref_cache *refs, const char *base,
+ 	return do_for_each_entry(refs, base, do_one_ref, &data);
  }
  
- /* This function needs to return a meaningful errno on failure */
-@@ -1461,9 +1453,13 @@ static const char *resolve_ref_1(const char *refname,
- 		if (lstat(path, &st) < 0) {
- 			if (errno != ENOENT)
- 				return NULL;
--			if (resolve_missing_loose_ref(refname, resolve_flags,
--						      sha1, flags))
--				return NULL;
-+			if (resolve_missing_loose_ref(refname, sha1, flags)) {
-+				if (resolve_flags & RESOLVE_REF_READING) {
-+					errno = ENOENT;
-+					return NULL;
-+				}
-+				hashclr(sha1);
-+			}
- 			if (bad_name) {
- 				hashclr(sha1);
- 				if (flags)
+-int for_each_ref(each_ref_fn fn, void *cb_data)
+-{
+-	return do_for_each_ref(&ref_cache, "", fn, 0, 0, cb_data);
+-}
+-
+-int for_each_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
+-{
+-	return do_for_each_ref(get_ref_cache(submodule), "", fn, 0, 0, cb_data);
+-}
+-
+-int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data)
+-{
+-	return do_for_each_ref(&ref_cache, prefix, fn, strlen(prefix), 0, cb_data);
+-}
+-
+-int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data, unsigned int broken)
+-{
+-	unsigned int flag = 0;
+-
+-	if (broken)
+-		flag = DO_FOR_EACH_INCLUDE_BROKEN;
+-	return do_for_each_ref(&ref_cache, prefix, fn, 0, flag, cb_data);
+-}
+-
+-int for_each_ref_in_submodule(const char *submodule, const char *prefix,
+-		each_ref_fn fn, void *cb_data)
+-{
+-	return do_for_each_ref(get_ref_cache(submodule), prefix, fn, strlen(prefix), 0, cb_data);
+-}
+-
+-int for_each_replace_ref(each_ref_fn fn, void *cb_data)
+-{
+-	return do_for_each_ref(&ref_cache, git_replace_ref_base, fn,
+-			       strlen(git_replace_ref_base), 0, cb_data);
+-}
+-
+-int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
+-{
+-	struct strbuf buf = STRBUF_INIT;
+-	int ret;
+-	strbuf_addf(&buf, "%srefs/", get_git_namespace());
+-	ret = do_for_each_ref(&ref_cache, buf.buf, fn, 0, 0, cb_data);
+-	strbuf_release(&buf);
+-	return ret;
+-}
+-
+-int for_each_rawref(each_ref_fn fn, void *cb_data)
+-{
+-	return do_for_each_ref(&ref_cache, "", fn, 0,
+-			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
+-}
+-
+ static void unlock_ref(struct ref_lock *lock)
+ {
+ 	/* Do not free lock->lk -- atexit() still looks at them */
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index c7dded3..92aae80 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -197,4 +197,13 @@ const char *find_descendant_ref(const char *dirname,
+ 
+ int rename_ref_available(const char *oldname, const char *newname);
+ 
++
++/* Include broken references in a do_for_each_ref*() iteration: */
++#define DO_FOR_EACH_INCLUDE_BROKEN 0x01
++
++/*
++ * The common backend for the for_each_*ref* functions
++ */
++int do_for_each_ref(const char *submodule, const char *base,
++		    each_ref_fn fn, int trim, int flags, void *cb_data);
+ #endif /* REFS_REFS_INTERNAL_H */
 -- 
 2.4.2.767.g62658d5-twtrsrc
