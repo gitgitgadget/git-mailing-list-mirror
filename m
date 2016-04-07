@@ -1,76 +1,88 @@
 From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH] rebase: convert revert to squash on autosquash
-Date: Thu, 7 Apr 2016 18:12:56 +0300
-Message-ID: <1460041965-31526-1-git-send-email-mst@redhat.com>
+Subject: [PATCH 0/4] git-am: use trailers to add extra signatures
+Date: Thu, 7 Apr 2016 18:23:03 +0300
+Message-ID: <1460042563-32741-1-git-send-email-mst@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 07 17:13:09 2016
+X-From: git-owner@vger.kernel.org Thu Apr 07 17:23:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoBcK-0006L8-LI
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 17:13:09 +0200
+	id 1aoBm5-0004t9-T5
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 17:23:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756673AbcDGPNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Apr 2016 11:13:00 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:36057 "EHLO mx1.redhat.com"
+	id S1756157AbcDGPXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Apr 2016 11:23:09 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:39096 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756608AbcDGPM7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Apr 2016 11:12:59 -0400
-Received: from int-mx13.intmail.prod.int.phx2.redhat.com (int-mx13.intmail.prod.int.phx2.redhat.com [10.5.11.26])
+	id S1751440AbcDGPXH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Apr 2016 11:23:07 -0400
+Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mx1.redhat.com (Postfix) with ESMTPS id C9A5C80B20
-	for <git@vger.kernel.org>; Thu,  7 Apr 2016 15:12:58 +0000 (UTC)
+	by mx1.redhat.com (Postfix) with ESMTPS id 3349F85A00;
+	Thu,  7 Apr 2016 15:23:07 +0000 (UTC)
 Received: from redhat.com (vpn1-7-7.ams2.redhat.com [10.36.7.7])
-	by int-mx13.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id u37FCu59032256
-	for <git@vger.kernel.org>; Thu, 7 Apr 2016 11:12:57 -0400
+	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id u37FN4KK018497;
+	Thu, 7 Apr 2016 11:23:04 -0400
 Content-Disposition: inline
 X-Mutt-Fcc: =sent
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290916>
 
-Reverts can typically be treated like squash.  Eliminating both the
-original commit and the revert would be even nicer, but this seems a bit
-harder to implement.
+I'm using git am to apply patches, and I like the ability
+to add arbitrary trailers instead of the standard Signed-off-by
+one.
 
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- git-rebase--interactive.sh | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+To this end, I have extended git am to call git interpret-trailers
+internally. This way I can add arbitrary signatures.
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 6a766ca..6fc1935 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -777,7 +777,7 @@ rearrange_squash () {
- 	do
- 		test -z "${format}" || message=$(git log -n 1 --format="%s" ${sha1})
- 		case "$message" in
--		"squash! "*|"fixup! "*|"ack! "*)
-+		"squash! "*|"fixup! "*|"ack! "*|"Revert \""*)
- 			action="${message%%!*}"
- 			rest=$message
- 			prefix=
-@@ -789,6 +789,12 @@ rearrange_squash () {
- 					prefix="$prefix${rest%%!*},"
- 					rest="${rest#*! }"
- 					;;
-+				"Revert \""*\")
-+					action="squash"
-+					prefix="Revert,"
-+					rest="${rest#Revert \"}"
-+					rest="${rest%%\"}"
-+					;;
- 				*)
- 					break
- 					;;
+For example, I have:
+[trailer "t"]
+        key = Tested-by
+        command = "echo \"Michael S. Tsirkin <mst@redhat.com>\""
+[trailer "r"]
+        key = Reviewed-by
+        command = "echo \"Michael S. Tsirkin <mst@redhat.com>\""
+[trailer "a"]
+        key = Acked-by
+        command = "echo \"Michael S. Tsirkin <mst@redhat.com>\""
+[trailer "s"]
+        key = Signed-off-by
+        command = "echo \"Michael S. Tsirkin <mst@redhat.com>\""
+
+And now:
+	git am -t t -t r -t s
+adds all of:
+	Tested-by: Michael S. Tsirkin <mst@redhat.com>
+	Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+	Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+
+This was originally suggested by Junio (a long time ago).
+
+Documentation and tests are still TBD.
+
+Michael S. Tsirkin (4):
+  builtin/interpret-trailers.c: allow -t
+  builtin/interpret-trailers: suppress blank line
+  builtin/am: read mailinfo from file
+  builtin/am: passthrough -t and --trailer flags
+
+ trailer.h                    |  2 +-
+ builtin/am.c                 | 57 +++++++++++++++++++++++++++++++++++++++++++-
+ builtin/interpret-trailers.c | 11 ++++++---
+ trailer.c                    | 10 +++++---
+ 4 files changed, 72 insertions(+), 8 deletions(-)
+
 -- 
 MST
