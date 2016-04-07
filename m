@@ -1,156 +1,143 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 04/11] rerere: delay the recording of preimage
-Date: Wed,  6 Apr 2016 16:05:28 -0700
-Message-ID: <1459983935-25267-5-git-send-email-gitster@pobox.com>
-References: <1459204942-26601-1-git-send-email-gitster@pobox.com>
- <1459983935-25267-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 07 01:06:20 2016
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: git interpret-trailers with multiple keys
+Date: Wed, 6 Apr 2016 22:28:21 -0400
+Message-ID: <CAP8UFD0Pw+yhO1jZTAbMkZ5d-usu3rx5N0Se=PNL=N7DD-BPcA@mail.gmail.com>
+References: <20160406191054-mutt-send-email-mst@redhat.com>
+	<vpqlh4qbrnt.fsf@anie.imag.fr>
+	<20160406201509-mutt-send-email-mst@redhat.com>
+	<xmqq1t6iy6p9.fsf@gitster.mtv.corp.google.com>
+	<20160406212940-mutt-send-email-mst@redhat.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git <git@vger.kernel.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Thu Apr 07 04:28:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1anwWi-00007K-Af
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 01:06:20 +0200
+	id 1anzgL-0001Y6-0p
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Apr 2016 04:28:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753960AbcDFXFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Apr 2016 19:05:45 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:54148 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752574AbcDFXFo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Apr 2016 19:05:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1159F53726;
-	Wed,  6 Apr 2016 19:05:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=kXbJ
-	E7CQdG6oPurKWd74br0pekY=; b=LujYrKfNshssa7TQmN1YDguKV9Ptrs0IrJkJ
-	GT3asAWfqiQH0a4nGN6FjUqqK0mzAZN7dFI4BR05rnRcSrpO/N79Z0BSggyI4v28
-	AdfNmuszKigqtX6mTCgaDddMa1O0wtGQ3l4kDPgTkPpSJ5Y3v+jDsOKszUCXRcJC
-	4S1TBN4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=Q+H9AE
-	3+arFd94sMVGrOH26nSgP1FpZdOgxc12exjjQDkTe/uYgQuoyS32WKqTwR7ULIYC
-	J1HgmZmU+uZzYYLoFbX51WTonEiGQruMK7cvuc6m2YB/Oh0yq6N65QsC/Lbm4wN6
-	3Pu7tJs+L7d8bhlI7wGeuz1YnHhI2G97iEdtk=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0758753724;
-	Wed,  6 Apr 2016 19:05:44 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7DB4553722;
-	Wed,  6 Apr 2016 19:05:43 -0400 (EDT)
-X-Mailer: git-send-email 2.3.8-32-g0ce02b3
-In-Reply-To: <1459983935-25267-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 16D2708A-FC4C-11E5-BEC6-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753548AbcDGC2X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Apr 2016 22:28:23 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:38058 "EHLO
+	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751555AbcDGC2W (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Apr 2016 22:28:22 -0400
+Received: by mail-wm0-f52.google.com with SMTP id u206so68118104wme.1
+        for <git@vger.kernel.org>; Wed, 06 Apr 2016 19:28:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=ffiht+h1VaPN/Dl7+zCL4mW3Cbtk4N5Njieps1XnzqQ=;
+        b=QDNlcyPXKaBOtOqKSxtb1rjiT53utoD62Pd+e2W79J3qIBWmyGA8LduPCZ6jzoHGl2
+         +EaEWvTaE4JCaajwmYDzRynTd1SvugO2lA9x8cCOa0WlSMjG0bRHmL5pU5OUpY7Gcy7S
+         lHncw9W3Rpej4TaaQwa9AMZMtC4OoBibaZqXobDHVb+O9GP8CWoS4zJ3ZUSb6+/VwFHw
+         jvCyBEwn2eIUIZVQ2icjYJI/GjkNUPPTySQ8QE5AiZw8c4G7zYoYDL9bCkZS73Ufpgz5
+         ubUh8/8S5HxEmhu4MjN0xxRS6Hw8txfvVPhXS0f2rCWbbCYsH/EQl1BfVpTfDV/oNBNo
+         ronw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=ffiht+h1VaPN/Dl7+zCL4mW3Cbtk4N5Njieps1XnzqQ=;
+        b=G5aaIicYBYS49n/AbZoOqCvhiuynhVqOT7vTkqcPF+CsOCnOrLEVMtlCJBEihwXNkA
+         FAeRs4pJuo+DWOWhCVpNRWqJamLCppsi3vaBlxFD1OHnml/erTIZJZaRwa4ZLyfjPYlt
+         FS1Hnh505ycuBGfOVGEUa7Mhs7aCCRcobwD/JzAALSu0bm1OUUf820YJWoezP3IRdES8
+         hM23rNO8xl74nuHzXO402jZ396/W4sAoO0RiekHZ6Ttr9a5j111rbvWB16+wdnLF8wcY
+         hTJuCpCwiFQjePgGfmm/DQlKz9TQgbFYCYL3+Z5pNGK3vb1YQrgi/3EeBLsu/yPRoDkW
+         SY3Q==
+X-Gm-Message-State: AD7BkJJhRozWz+aZQ73WkmJs4Bh7svJbTZDXxpbLiwiezX0D6+ubfOCEA1/gWexrNN+RscNniYqKA8H/Q+KTiw==
+X-Received: by 10.194.78.37 with SMTP id y5mr538425wjw.78.1459996101115; Wed,
+ 06 Apr 2016 19:28:21 -0700 (PDT)
+Received: by 10.194.95.129 with HTTP; Wed, 6 Apr 2016 19:28:21 -0700 (PDT)
+In-Reply-To: <20160406212940-mutt-send-email-mst@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290900>
 
-We record the preimage only when there is no directory to record the
-conflict we encountered, i.e. when $GIT_DIR/rr-cache/$ID does not
-exist.  As the plan is to allow multiple <preimage,postimage> pairs
-as variants for the same conflict ID eventually, this logic needs to
-go.
+On Wed, Apr 6, 2016 at 3:30 PM, Michael S. Tsirkin <mst@redhat.com> wrote:
+> On Wed, Apr 06, 2016 at 10:42:42AM -0700, Junio C Hamano wrote:
+>> "Michael S. Tsirkin" <mst@redhat.com> writes:
+>>
+>> > On Wed, Apr 06, 2016 at 06:58:30PM +0200, Matthieu Moy wrote:
+>> >> "Michael S. Tsirkin" <mst@redhat.com> writes:
+>> >>
+>> >> > I have this in .git/config
+>> >> >
+>> >> > [trailer "r"]
+>> >> >         key = Reviewed-by
+>> >> >         command = "echo \"Michael S. Tsirkin <mst@redhat.com\""
+>> >> > [trailer "s"]
+>> >> >         key = Signed-off-by
+>> >> >         command = "echo \"Michael S. Tsirkin <mst@redhat.com\""
+>> >> >
+>> >> > whenever I run git interpret-trailers -t r I see these lines added:
+>> >> >
+>> >> > Reviewed-by: Michael S. Tsirkin <mst@redhat.com
+>> >> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com
+>> >> > Reviewed-by: Michael S. Tsirkin <mst@redhat.com
+>> >> >
+>> >> > Why is Reviewed-by repeated?  Bug or feature?
+>> >>
+>> >> The first two lines are added unconditionally:
+>> >>
+>> >> $ echo | git interpret-trailers
+>> >>
+>> >> Reviewed-by: Michael S. Tsirkin <mst@redhat.com
+>> >> Signed-off-by: Michael S. Tsirkin <mst@redhat.com
+>> >>
+>> >> The last line is added because you've asked for it with --trailer r.
 
-As the first step in that direction, stop the "did we create the
-directory?  Then we record the preimage" logic.  Instead, we record
-if a preimage does not exist when we saw a conflict in a path.  Also
-make sure that we remove a stale postimage, which most likely is
-totally unrelated to the resolution of this new conflict, when we
-create a new preimage under $ID when $GIT_DIR/rr-cache/$ID already
-exists.
+Yes, and because the default is to add the trailer at the end.
 
-In later patches, we will further update this logic to be "do we
-have <preimage,postimage> pair that cleanly resolve the current
-conflicts?  If not, record a new preimage as a new variant", but
-that does not happen at this stage yet.
+>> >> I don't think it's currently possible to get the behavior you seem to
+>> >> expect, ie. to define trailer tokens fully (key and value) in your
+>> >> config file but use them only on request.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- rerere.c | 52 +++++++++++++++++++++++++---------------------------
- 1 file changed, 25 insertions(+), 27 deletions(-)
+Yes, because you could define for example a function like this:
 
-diff --git a/rerere.c b/rerere.c
-index a1e2963..33b1348 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -122,6 +122,11 @@ static int has_rerere_resolution(const struct rerere_id *id)
- 	return ((id->collection->status & both) == both);
- }
- 
-+static int has_rerere_preimage(const struct rerere_id *id)
-+{
-+	return (id->collection->status & RR_HAS_PREIMAGE);
-+}
-+
- static struct rerere_id *new_rerere_id_hex(char *hex)
- {
- 	struct rerere_id *id = xmalloc(sizeof(*id));
-@@ -749,8 +754,24 @@ static void do_rerere_one_path(struct string_list_item *rr_item,
- 	const char *path = rr_item->string;
- 	const struct rerere_id *id = rr_item->util;
- 
--	/* Is there a recorded resolution we could attempt to apply? */
--	if (has_rerere_resolution(id)) {
-+	if (!has_rerere_preimage(id)) {
-+		/*
-+		 * We are the first to encounter this conflict.  Ask
-+		 * handle_file() to write the normalized contents to
-+		 * the "preimage" file.
-+		 */
-+		handle_file(path, NULL, rerere_path(id, "preimage"));
-+		if (id->collection->status & RR_HAS_POSTIMAGE) {
-+			const char *path = rerere_path(id, "postimage");
-+			if (unlink(path))
-+				die_errno("cannot unlink stray '%s'", path);
-+			id->collection->status &= ~RR_HAS_POSTIMAGE;
-+		}
-+		id->collection->status |= RR_HAS_PREIMAGE;
-+		fprintf(stderr, "Recorded preimage for '%s'\n", path);
-+		return;
-+	} else if (has_rerere_resolution(id)) {
-+		/* Is there a recorded resolution we could attempt to apply? */
- 		if (merge(id, path))
- 			return; /* failed to replay */
- 
-@@ -807,31 +828,8 @@ static int do_plain_rerere(struct string_list *rr, int fd)
- 		id = new_rerere_id(sha1);
- 		string_list_insert(rr, path)->util = id;
- 
--		/*
--		 * Ensure that the directory exists.
--		 * mkdir_in_gitdir() will fail with EEXIST if there
--		 * already is one.
--		 */
--		if (mkdir_in_gitdir(rerere_path(id, NULL)) &&
--		    errno != EEXIST)
--			continue; /* NEEDSWORK: perhaps we should die? */
--
--		if (id->collection->status & RR_HAS_PREIMAGE) {
--			;
--		} else {
--			/*
--			 * We are the first to encounter this
--			 * conflict.  Ask handle_file() to write the
--			 * normalized contents to the "preimage" file.
--			 *
--			 * NEEDSWORK: what should happen if we had a
--			 * leftover postimage that is totally
--			 * unrelated?  Perhaps we should unlink it?
--			 */
--			handle_file(path, NULL, rerere_path(id, "preimage"));
--			id->collection->status |= RR_HAS_PREIMAGE;
--			fprintf(stderr, "Recorded preimage for '%s'\n", path);
--		}
-+		/* Ensure that the directory exists. */
-+		mkdir_in_gitdir(rerere_path(id, NULL));
- 	}
- 
- 	for (i = 0; i < rr->nr; i++)
--- 
-2.8.1-273-ga2cd0f9
+reviewed() {
+    git interpret-trailers --trailer 'Reviewed-by: Michael S. Tsirkin
+<mst@redhat.com>' --in-place "$@"
+}
+
+So it is kind of easy already to make things requestable.
+
+If people really want some configured trailers to be used only on
+request, it is possible to add a config option for that.
+
+>> >> (BTW, I think you wanted a closing > at the end)
+>> >
+>> > Is this worth fixing? It doesn't look like a behaviour anyone
+>> > would want...
+>>
+>> CC'ing Christian who's done the "trailers" thing.
+>>
+>> Personally, I do not think adding any configured trailers without
+>> being asked is a sensible behaviour, but it is likely that people
+>> already depend on it, as we seem to see "How do I configure to
+>> always add this and that trailer?" from time to time.  I do not
+>> think it is unreasonable to disable the "automatically add
+>> everything that is configured" when the command line arguments ask
+>> for some specific trailer, but I haven't thought deeply about it.
+>>
+>> An additional (uninformed) observation is that the 'echo' looks like
+>> an ugly workaround for the lack of "always use this string as the
+>> value" configuration.
+>
+> Or at least a default.
+>
+>> Perhaps next to trailer.<token>.command, we
+>> would need trailer.<token>.value?
+
+Yeah, that is possible too.
+It could be bit redundant if we already have a config option to say if
+the trailer has to be requested.
