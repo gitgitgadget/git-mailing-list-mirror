@@ -1,7 +1,7 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [RFC/PATCH 02/18] Avoid checking working copy when creating a virtual merge base
-Date: Thu,  7 Apr 2016 23:58:30 -0700
-Message-ID: <1460098726-5958-3-git-send-email-newren@gmail.com>
+Subject: [RFC/PATCH 05/18] Add testcase for --index-only merges needing the recursive strategy
+Date: Thu,  7 Apr 2016 23:58:33 -0700
+Message-ID: <1460098726-5958-6-git-send-email-newren@gmail.com>
 References: <1460098726-5958-1-git-send-email-newren@gmail.com>
 Cc: Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
@@ -11,102 +11,234 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoQO7-0002VL-JC
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 08:59:27 +0200
+	id 1aoQO8-0002VL-6W
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 08:59:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757862AbcDHG7J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S932640AbcDHG7P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2016 02:59:15 -0400
+Received: from mail-pa0-f67.google.com ([209.85.220.67]:33961 "EHLO
+	mail-pa0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757475AbcDHG7J (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 8 Apr 2016 02:59:09 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:35967 "EHLO
-	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932590AbcDHG7B (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2016 02:59:01 -0400
-Received: by mail-pf0-f195.google.com with SMTP id q129so8827919pfb.3
-        for <git@vger.kernel.org>; Thu, 07 Apr 2016 23:59:00 -0700 (PDT)
+Received: by mail-pa0-f67.google.com with SMTP id hb4so8474488pac.1
+        for <git@vger.kernel.org>; Thu, 07 Apr 2016 23:59:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Anjrje2/zp+b1I7hOuoSV5meBD4MWBtHEvosuPI5M3g=;
-        b=ao+I/vElxXm6AJUVpVTJHaOBc7xJPju2tRsdslI2bUcec7tLVPbwtLwD7ubp0WdsER
-         +s3c4eRFQgTElj6qeR6fMrSoyrBIutnZ7G30Ut1QpiEv3iG2uuKHK4FRhPngKaLnQayP
-         MrLa5gB5PNLZDDKCgI4ErVZKeNQqAPDTimV6wC2Sscr37Myptws/s6nOiLO593BkvCJ9
-         bzQwTZW01YDqFqMjb5C/gghmNEeoQHBLhlQKTnwhrbYQ39aHwIhz2axKAcvn56DyrsaO
-         aakU3bLlStpvSRkmYnpihs/IerCKYOfBXgegXtexGxhS5jJyyHLEoY9g3oW1Uct8AX4/
-         PxaA==
+        bh=d5NhG/fyf0H3/ekov0nud7Sko4ZFZJQCSVanA0oCNlM=;
+        b=sl83n1xs1eOOW32BDBd+Ru+VZJYYdKDC8J8I8NUiOe3uSdKCX3Y0/iQyvsD/ffnQqF
+         01gYI1Y5YnLKXfBi0D4AUHxL1gL+KplYZQTZ82GQKzF9evHSO6qtSOoA1IBsFpHEulXQ
+         U+Y/V8U6ZmvUoQYNyJkWLF97Pz9+mqm3iJp3xg5uZSgXf5SB6IVEavBw+oUbkK9I1h29
+         Q0Stea1rWvTbG00kup6rxofIQ9E/F/5mW88EhoBNZPl7AmSkVXfLBjK8TNM4EwyTqwCI
+         8wV9lelblGgivRaz2BWDxq3Tst1vr+laLYQqiQqxtjFztuc7uoPqQyU5msmgVIPAy/cN
+         l8tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Anjrje2/zp+b1I7hOuoSV5meBD4MWBtHEvosuPI5M3g=;
-        b=N9RSxq/sSTyHdtYvRJNoN/2/LkH2EeLkk+qHwrRF8Qi54F6WXxgI+wHFMMSGxurOj4
-         H4paZ8ohvXVI2cPf4CxHupP5t9GO0XGiqql74YnI3Zu0ZOR3U3LooxDGxno1s23RAmbN
-         5MhnxF5gLFOLDE9sovjn/otPcd8NtZMrEyXMl92LkITq+MUGYwRhCPcXG22LvJ64zH2A
-         CHlhAx09wo48RQJbcqluWPCUeviN9aDfbcOJxUIadNg7voVVH797vhtX9MOdMuJPYc2Q
-         KLtHCIZs6hjn9B4v8jzZ3W+RENb+SgFrI7HT81tOS0GESDaLekR69O4Fdibjm/La1BsZ
-         725Q==
-X-Gm-Message-State: AD7BkJLataGLu1Z50o+AT8AH3uGpbx9T2SUgbNPQC3BKc/7Kt4QrxYhcbi2P5++d41h2MA==
-X-Received: by 10.98.86.28 with SMTP id k28mr10504152pfb.43.1460098740399;
-        Thu, 07 Apr 2016 23:59:00 -0700 (PDT)
+        bh=d5NhG/fyf0H3/ekov0nud7Sko4ZFZJQCSVanA0oCNlM=;
+        b=lj3VOhWIkOlW/IDNphAYnYzJ/YVuDbeEu6lX1q7kO1CdNk8QnzSHGPV57qKuUvEsix
+         UNHCgfuZnz3vGH40aFVrML7MfVrTHljO2FmQVHCoyy8oxpI1ByxmaBondzDJRbMMmZ8x
+         a7BnijXqNJv+rA++j4rf0h7gUv7JXHpfqt1X3w/Eo9mpRqGwhhfo/DgK4ABG3v36HFFH
+         GDMjyp0R0dXWJG2djpo1TT/mx8hROhOlH89ZKwtf8Zn62dNqYa/wyOL4kU21aE4rl4RD
+         zujV+jfJTOySkrB0sDVF7A8JzURekKTMeGmfto9ZSqZpMYz55YEgkk1RHbVZ7woPQ9Mt
+         Lytw==
+X-Gm-Message-State: AD7BkJIZ4MHNDzcRMzvJ7oE4UEK9y2Y9FU9JOjzQHv/Ap4iZeffP17XNkR2p3E4T27j9eQ==
+X-Received: by 10.66.122.3 with SMTP id lo3mr10365815pab.25.1460098743454;
+        Thu, 07 Apr 2016 23:59:03 -0700 (PDT)
 Received: from unknownB8F6B118D3EB.attlocal.net ([2602:30a:2c28:20f0:baf6:b1ff:fe18:d3eb])
-        by smtp.gmail.com with ESMTPSA id w62sm16371973pfa.79.2016.04.07.23.58.59
+        by smtp.gmail.com with ESMTPSA id w62sm16371973pfa.79.2016.04.07.23.59.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 07 Apr 2016 23:58:59 -0700 (PDT)
+        Thu, 07 Apr 2016 23:59:02 -0700 (PDT)
 X-Mailer: git-send-email 2.8.0.18.gc685494
 In-Reply-To: <1460098726-5958-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291003>
-
-There were a few cases in merge-recursive that could result in a check for
-the presence of files in the working copy while trying to create a virtual
-merge base.  These were rare and innocuous, but somewhat illogical.  The
-two cases were:
-
-  * When there was naming conflicts (e.g. a D/F conflict) and we had to
-    pick a new unique name for a file.  Since the new name is somewhat
-    arbitrary, it didn't matter that we consulted the working copy to
-    avoid picking a filename it has, but since the virtual merge base is
-    never checked out, it's a waste of time and slightly odd to do so.
-
-  * When two different files get renamed to the same name (on opposite
-    sides of the merge), we needed to delete the original filenames from
-    the cache and possibly also the working directory.  The caller's check
-    for determining whether to delete from the working directory was a
-    call to would_lose_untracked().  It turns out this didn't matter
-    because remove_file() had logic to avoid modifying the working
-    directory when creating a virtual merge base, but there is no reason
-    for the caller to check the working directory in such circumstances.
-    It's a waste of time, if not also a bit weird.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291004>
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ t/t6043-merge-index-only.sh | 170 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 170 insertions(+)
+ create mode 100755 t/t6043-merge-index-only.sh
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index d4292de..06d31ed 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -622,7 +622,7 @@ static char *unique_path(struct merge_options *o, const char *path, const char *
- 	base_len = newpath.len;
- 	while (string_list_has_string(&o->current_file_set, newpath.buf) ||
- 	       string_list_has_string(&o->current_directory_set, newpath.buf) ||
--	       file_exists(newpath.buf)) {
-+	       (!o->call_depth && file_exists(newpath.buf))) {
- 		strbuf_setlen(&newpath, base_len);
- 		strbuf_addf(&newpath, "_%d", suffix++);
- 	}
-@@ -1234,8 +1234,8 @@ static void conflict_rename_rename_2to1(struct merge_options *o,
- 	       a->path, c1->path, ci->branch1,
- 	       b->path, c2->path, ci->branch2);
- 
--	remove_file(o, 1, a->path, would_lose_untracked(a->path));
--	remove_file(o, 1, b->path, would_lose_untracked(b->path));
-+	remove_file(o, 1, a->path, o->call_depth || would_lose_untracked(a->path));
-+	remove_file(o, 1, b->path, o->call_depth || would_lose_untracked(b->path));
- 
- 	mfi_c1 = merge_file_special_markers(o, a, c1, &ci->ren1_other,
- 					    o->branch1, c1->path,
+diff --git a/t/t6043-merge-index-only.sh b/t/t6043-merge-index-only.sh
+new file mode 100755
+index 0000000..b8b22ab
+--- /dev/null
++++ b/t/t6043-merge-index-only.sh
+@@ -0,0 +1,170 @@
++#!/bin/sh
++
++test_description="index-only merges"
++
++. ./test-lib.sh
++
++# Testcase setup for rename/modify:
++#   Commit A: new file: a
++#   Commit B: modify a slightly
++#   Commit C: rename a->b
++# We should be able to merge B & C cleanly
++
++test_expect_success 'setup rename/modify merge' '
++	git init &&
++
++	printf "1\n2\n3\n4\n5\n6\n7\n" >a &&
++	git add a &&
++	git commit -m A &&
++	git tag A &&
++
++	git checkout -b B A &&
++	echo 8 >>a &&
++	git add a &&
++	git commit -m B &&
++
++	git checkout -b C A &&
++	git mv a b &&
++	git commit -m C
++'
++
++test_expect_failure '--index-only with rename/modify works in non-bare-clone' '
++	git checkout B^0 &&
++
++	git merge --index-only -s recursive C^0 &&
++
++	echo "Making sure the working copy was not updated" &&
++	test ! -f b &&
++	test -f a &&
++	test $(git rev-parse B:a) = $(git hash-object a) &&
++
++	echo "Making sure the index was updated" &&
++	test 1 -eq $(git ls-files -s | wc -l) &&
++	test $(git rev-parse B:a) = $(git rev-parse :b)
++'
++
++test_expect_failure '--index-only with rename/modify works in a bare clone' '
++	git clone --bare . bare.clone &&
++	(cd bare.clone &&
++
++	 git update-ref --no-deref HEAD B &&
++	 git read-tree HEAD &&
++
++	 git merge --index-only -s recursive C^0 &&
++
++	 echo "Making sure the working copy was not updated" &&
++	 test ! -f b &&
++	 test ! -f a &&
++
++	 echo "Making sure the index was updated" &&
++	 test 1 -eq $(git ls-files -s | wc -l) &&
++	 test $(git rev-parse B:a) = $(git rev-parse :b)
++	)
++'
++
++# Testcase requiring recursion to handle:
++#
++#    L1      L2
++#     o---o--o
++#    / \ /    \
++# B o   X      o C
++#    \ / \    /
++#     o---o--o
++#    R1      R2
++#
++# B : 1..20
++# L1: 1..3 a..c 4..20
++# R1: 1..13n..p14..20
++# L2: 1..3 a..i 4..13 n..p 14..20
++# R2: 1..3 a..c 4..13 n..v 14..20
++# C:  1..3 a..i 4..13 n..v 14..20
++#   needs 'recursive' strategy to get correct solution; 'resolve' would fail
++#
++
++test_expect_success 'setup single-file criss-cross resolvable with recursive strategy' '
++	git reset --hard &&
++	git rm -rf . &&
++	git clean -fdqx &&
++	rm -rf .git &&
++	git init &&
++
++	seq 1 20 >contents &&
++	git add contents &&
++	test_tick && git commit -m initial &&
++
++	git branch R1 &&
++	git checkout -b L1 &&
++	seq 1 3 >contents &&
++	seq 1 3 | tr 1-3 a-c >>contents &&
++	seq 4 20 >>contents &&
++	git add contents &&
++	test_tick && git commit -m L1 &&
++
++	git checkout R1 &&
++	seq 1 13 >contents &&
++	seq 1 3 | tr 1-3 n-p >>contents &&
++	seq 14 20 >>contents &&
++	git add contents &&
++	test_tick && git commit -m R1 &&
++
++	git checkout -b L2 L1^0 &&
++	test_tick && git merge R1 &&
++	seq 1 3 >contents &&
++	seq 1 9 | tr 1-9 a-i >>contents &&
++	seq 4 13 >>contents &&
++	seq 1 3 | tr 1-3 n-p >>contents &&
++	seq 14 20 >>contents &&
++	git add contents &&
++	test_tick && git commit -m L2 &&
++
++	git checkout -b R2 R1^0 &&
++	test_tick && git merge L1 &&
++	seq 1 3 >contents &&
++	seq 1 3 | tr 1-3 a-c >>contents &&
++	seq 4 13 >>contents &&
++	seq 1 9 | tr 1-9 n-v >>contents &&
++	seq 14 20 >>contents &&
++	git add contents &&
++	test_tick && git commit -m R2 &&
++
++	seq 1 3 >answer &&
++	seq 1 9 | tr 1-9 a-i >>answer &&
++	seq 4 13 >>answer &&
++	seq 1 9 | tr 1-9 n-v >>answer &&
++	seq 14 20 >>answer &&
++	git tag answer $(git hash-object -w answer) &&
++	rm -f answer
++'
++
++test_expect_failure 'recursive --index-only in non-bare repo' '
++	git reset --hard &&
++	git checkout L2^0 &&
++
++	git merge --index-only -s recursive R2^0 &&
++
++	test 1 = $(git ls-files -s | wc -l) &&
++	test 0 = $(git ls-files -u | wc -l) &&
++	test 0 = $(git ls-files -o | wc -l) &&
++
++	test $(git rev-parse :contents) = $(git rev-parse answer) &&
++	test $(git rev-parse L2:contents) = $(git hash-object contents)
++'
++
++test_expect_failure 'recursive --index-only in bare repo' '
++	git clone --bare . bare.clone &&
++	(cd bare.clone &&
++
++	 git update-ref --no-deref HEAD L2 &&
++	 git read-tree HEAD &&
++
++	 git merge --index-only -s recursive R2^0 &&
++
++	 test 1 = $(git ls-files -s | wc -l) &&
++	 test 0 = $(git ls-files -u | wc -l) &&
++
++	 test $(git rev-parse :contents) = $(git rev-parse answer) &&
++	 test ! -f contents
++	)
++'
++
++test_done
 -- 
 2.8.0.18.gc685494
