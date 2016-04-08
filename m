@@ -1,78 +1,56 @@
 From: Kazuki Yamaguchi <k@rhe.jp>
-Subject: [PATCH 3/4] imap-send: avoid deprecated TLSv1_method()
-Date: Sat,  9 Apr 2016 01:22:15 +0900
-Message-ID: <ecc1d4f5988f6420639f4b7500a9d3782d7c1199.1460130092.git.k@rhe.jp>
-References: <cover.1460130092.git.k@rhe.jp>
+Subject: [PATCH 0/4] fix compilation with OpenSSL 1.1.0-pre4
+Date: Sat,  9 Apr 2016 01:22:12 +0900
+Message-ID: <cover.1460130092.git.k@rhe.jp>
 Cc: Kazuki Yamaguchi <k@rhe.jp>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 08 18:22:43 2016
+X-From: git-owner@vger.kernel.org Fri Apr 08 18:22:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoZBB-0000dJ-KB
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 18:22:41 +0200
+	id 1aoZBC-0000dJ-Pb
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 18:22:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755802AbcDHQWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2016 12:22:34 -0400
-Received: from 116.58.164.79.static.zoot.jp ([116.58.164.79]:42470 "EHLO
+	id S1758454AbcDHQWh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2016 12:22:37 -0400
+Received: from 116.58.164.79.static.zoot.jp ([116.58.164.79]:42463 "EHLO
 	walnut.rhe.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751924AbcDHQWd (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753756AbcDHQWd (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 8 Apr 2016 12:22:33 -0400
 Received: from chikuwa.rhe.jp (unknown [10.0.1.1])
-	by walnut.rhe.jp (Postfix) with ESMTPSA id BF8ED61CA5;
+	by walnut.rhe.jp (Postfix) with ESMTPSA id 4B17161C9F;
 	Fri,  8 Apr 2016 16:22:30 +0000 (UTC)
 X-Mailer: git-send-email 2.8.1.104.g0d1aca6
-In-Reply-To: <cover.1460130092.git.k@rhe.jp>
-In-Reply-To: <cover.1460130092.git.k@rhe.jp>
-References: <cover.1460130092.git.k@rhe.jp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291042>
 
-Use SSLv23_method always and disable SSL if needed.
+OpenSSL 1.1.0 is not released yet, but the first beta 1.1.0-pre4 was
+released on Mar 16[1]. According to the OpenSSL's web site[2], only bug
+fixes will be applied after beta release, and 1.1.0 final will be in a
+month or two.
 
-TLSv1_method() function is deprecated in OpenSSL 1.1.0 and the compiler
-emits a warning.
+Thanks,
 
-SSLv23_method() is also deprecated, but the alternative, TLS_method(),
-is new in OpenSSL 1.1.0 so requires checking by configure. Stick to
-SSLv23_method() for now (this is aliased to TLS_method()).
+[1] https://mta.openssl.org/pipermail/openssl-announce/2016-March/000067.html
+[2] https://www.openssl.org/policies/releasestrat.html
 
-Signed-off-by: Kazuki Yamaguchi <k@rhe.jp>
----
- imap-send.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+Kazuki Yamaguchi (4):
+  imap-send: use HMAC() function provided by OpenSSL
+  imap-send: check NULL return of SSL_CTX_new()
+  imap-send: avoid deprecated TLSv1_method()
+  configure: remove checking for HMAC_CTX_cleanup
 
-diff --git a/imap-send.c b/imap-send.c
-index c5e24a35491d..f53380562c4d 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -287,11 +287,7 @@ static int ssl_socket_connect(struct imap_socket *sock, int use_tls_only, int ve
- 	SSL_library_init();
- 	SSL_load_error_strings();
- 
--	if (use_tls_only)
--		meth = TLSv1_method();
--	else
--		meth = SSLv23_method();
--
-+	meth = SSLv23_method();
- 	if (!meth) {
- 		ssl_socket_perror("SSLv23_method");
- 		return -1;
-@@ -303,6 +299,9 @@ static int ssl_socket_connect(struct imap_socket *sock, int use_tls_only, int ve
- 		return -1;
- 	}
- 
-+	if (use_tls_only)
-+		SSL_CTX_set_options(ctx, SSL_OP_NO_SSLv2 | SSL_OP_NO_SSLv3);
-+
- 	if (verify)
- 		SSL_CTX_set_verify(ctx, SSL_VERIFY_PEER, NULL);
- 
+ Makefile                     |  6 ------
+ compat/apple-common-crypto.h | 16 +++++++++++-----
+ configure.ac                 |  4 ----
+ git-compat-util.h            |  3 ---
+ imap-send.c                  | 20 ++++++++++----------
+ 5 files changed, 21 insertions(+), 28 deletions(-)
+
 -- 
 2.8.1.104.g0d1aca6
