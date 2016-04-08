@@ -1,87 +1,84 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: [RFC/PATCH 01/18] Remove duplicate code
-Date: Thu,  7 Apr 2016 23:58:29 -0700
-Message-ID: <1460098726-5958-2-git-send-email-newren@gmail.com>
-References: <1460098726-5958-1-git-send-email-newren@gmail.com>
-Cc: Elijah Newren <newren@gmail.com>
+From: Kazuki Yamaguchi <k@rhe.jp>
+Subject: [PATCH] set_worktree_head_symref(): fix error message
+Date: Fri,  8 Apr 2016 17:03:07 +0900
+Message-ID: <1460102587-22297-1-git-send-email-k@rhe.jp>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Kazuki Yamaguchi <k@rhe.jp>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 08 09:00:44 2016
+X-From: git-owner@vger.kernel.org Fri Apr 08 10:04:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoQPK-0003Tu-05
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 09:00:42 +0200
+	id 1aoROc-000655-Sc
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 10:04:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757194AbcDHHAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2016 03:00:21 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:35964 "EHLO
-	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932553AbcDHG7A (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2016 02:59:00 -0400
-Received: by mail-pf0-f194.google.com with SMTP id q129so8827903pfb.3
-        for <git@vger.kernel.org>; Thu, 07 Apr 2016 23:59:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=NG3gPlgiz7GWjCrvqzCZjj8JBheoNJqtW50r2XQy2Gg=;
-        b=hmJBQCheRVc+H9uMoNn2IUTGCS8LJlv9hGsDmbK+HhHmb/JkXnPmcVu4salekx8NOW
-         r1XxsXyJeQ1McDf/O1WJOcMp/RlZ6TeQ+UlwOlIGZrzlE0YpkUk6kuVY2xIc878rCGSY
-         CG12HS2mek7xNrcTJT+UVok70LouuMu4bxHKzei/2EAirGak881fndCxE4V2bLMOieAV
-         WiZnDCprHo97H63CKOsLoqBBmozxad/upiLPdcDJM4Qa0uUehT5dloIrk1i04jjyR2w0
-         Otv4k60o0zcWgCRr15KbXNNJA5I0vUwY9qwtfo1/d/F7jWyFCMyBheQ8d37J19EG/67V
-         4eSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=NG3gPlgiz7GWjCrvqzCZjj8JBheoNJqtW50r2XQy2Gg=;
-        b=byv/vMOOUOHDFGdKwNFshcuiyzyoHC00MqW/MvAaL7Eshs9PVzL67jSxgooBx0QwMb
-         h5orugiUFMBXfzNvooOUvlDi09dlNXFlTZ/qvOauDVP4cJev1TS7DlvzvmwJqnsvlHTf
-         o3gyxsvqw44ao/tHOLBLSwQUIsgDM2IKa4bRGAPRmuuoIo6lwOmPo6fQWM/pTMUO4OEa
-         y1IphkjYwDckBMXx4SnsAf/H09YBmVq1aQiXsblS0qI1Va3JyWyMf8IyMjcIt4eIPIIu
-         InMdiMfGim5R4X4MfjlcaaSF6HReAQ+XXsdbp6QbbmBgCw/0woitVEwvDZsLDj/e/ZCD
-         54rQ==
-X-Gm-Message-State: AD7BkJIpq6HeKRSITaicGIMgOnPZaUFY7OjzeFe5aTu/lwcgeGgNgqllkULR5JYEx6jzhw==
-X-Received: by 10.98.80.206 with SMTP id g75mr10457719pfj.127.1460098739329;
-        Thu, 07 Apr 2016 23:58:59 -0700 (PDT)
-Received: from unknownB8F6B118D3EB.attlocal.net ([2602:30a:2c28:20f0:baf6:b1ff:fe18:d3eb])
-        by smtp.gmail.com with ESMTPSA id w62sm16371973pfa.79.2016.04.07.23.58.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 07 Apr 2016 23:58:58 -0700 (PDT)
-X-Mailer: git-send-email 2.8.0.18.gc685494
-In-Reply-To: <1460098726-5958-1-git-send-email-newren@gmail.com>
+	id S1757971AbcDHIDn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2016 04:03:43 -0400
+Received: from 116.58.164.79.static.zoot.jp ([116.58.164.79]:44720 "EHLO
+	walnut.rhe.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757969AbcDHIDk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2016 04:03:40 -0400
+Received: from chikuwa.rhe.jp (unknown [10.0.1.1])
+	by walnut.rhe.jp (Postfix) with ESMTPSA id 77E7261876;
+	Fri,  8 Apr 2016 08:03:22 +0000 (UTC)
+X-Mailer: git-send-email 2.8.0.rc4.18.g70999e9.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291019>
 
-In commit 51931bf (merge-recursive: Improve handling of rename target vs.
-directory addition, 2011-08-11) I apparently added two lines of code that
-were immediately duplicated a few lines later.  No idea why, other than
-it seems pretty clear this was a mistake: there is no need to remove the
-same file twice; removing it once is sufficient...especially since the
-intervening line was working with a different file entirely.
+Emit an informative error when failed to hold lock of HEAD.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
+2233066 (refs: add a new function set_worktree_head_symref) added
+set_worktree_head_symref() but this is missing a call to
+unable_to_lock_message() after hold_lock_file_for_update() fails, so it
+emits an empty error message:
+
+  % git branch -m oldname newname
+  error:
+  error: HEAD of working tree /path/to/wt is not updated
+  fatal: Branch renamed to newname, but HEAD is not updated!
+
+Thanks to Eric Sunshine for pointing this out.
+
+Signed-off-by: Kazuki Yamaguchi <k@rhe.jp>
 ---
- merge-recursive.c | 2 --
- 1 file changed, 2 deletions(-)
+I'm sorry, this is my mistake in my previous patch which is already
+merged to 'next':
+- 2233066 (refs: add a new function set_worktree_head_symref)
+- http://thread.gmane.org/gmane.comp.version-control.git/289413/focus=290008
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index b880ae5..d4292de 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1773,8 +1773,6 @@ static int process_entry(struct merge_options *o,
- 			output(o, 1, _("CONFLICT (%s): There is a directory with name %s in %s. "
- 			       "Adding %s as %s"),
- 			       conf, path, other_branch, path, new_path);
--			if (o->call_depth)
--				remove_file_from_cache(path);
- 			update_file(o, 0, sha, mode, new_path);
- 			if (o->call_depth)
- 				remove_file_from_cache(path);
+This applies on top of ky/branch-m-worktree.
+
+Thanks,
+
+ refs/files-backend.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index ec237efec35d..ea78ce9d90f0 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2898,7 +2898,6 @@ int set_worktree_head_symref(const char *gitdir, const char *target)
+ {
+ 	static struct lock_file head_lock;
+ 	struct ref_lock *lock;
+-	struct strbuf err = STRBUF_INIT;
+ 	struct strbuf head_path = STRBUF_INIT;
+ 	const char *head_rel;
+ 	int ret;
+@@ -2906,6 +2905,8 @@ int set_worktree_head_symref(const char *gitdir, const char *target)
+ 	strbuf_addf(&head_path, "%s/HEAD", absolute_path(gitdir));
+ 	if (hold_lock_file_for_update(&head_lock, head_path.buf,
+ 				      LOCK_NO_DEREF) < 0) {
++		struct strbuf err = STRBUF_INIT;
++		unable_to_lock_message(head_path.buf, errno, &err);
+ 		error("%s", err.buf);
+ 		strbuf_release(&err);
+ 		strbuf_release(&head_path);
 -- 
-2.8.0.18.gc685494
+2.8.0.rc4.18.g70999e9.dirty
