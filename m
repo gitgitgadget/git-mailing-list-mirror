@@ -1,155 +1,78 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] git-format-patch.txt: don't show -s as shorthand for
- multiple options
-Date: Fri, 8 Apr 2016 11:22:23 -0700
-Message-ID: <CA+P7+xqzXt-uKc=K=5UPmaziApNQFL06SQbgYUdOVgZP=My5kA@mail.gmail.com>
-References: <1459113967-13864-1-git-send-email-sunshine@sunshineco.com> <xmqqvb3x41bo.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] format-patch: allow --no-patch to disable patch output
+Date: Fri, 08 Apr 2016 11:30:15 -0700
+Message-ID: <xmqqh9fcvtqg.fsf@gitster.mtv.corp.google.com>
+References: <1460047599-9267-1-git-send-email-jacob.e.keller@intel.com>
+	<CAPig+cRNCwFmGW-Zo+osjceA6nb=6t3+rJ2uEbnyYxGfSWQ-Uw@mail.gmail.com>
+	<CA+P7+xoUi5H19zOCAiiwQZ0-j8yNZS9-2DzgoMmLSVOrC8Nbpw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Kevin Brodsky <corax26@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 08 20:22:54 2016
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Git List <git@vger.kernel.org>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 08 20:30:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aob3S-0007oP-8Z
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 20:22:50 +0200
+	id 1aobAz-0005DZ-87
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 20:30:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754361AbcDHSWp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2016 14:22:45 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:32830 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753056AbcDHSWo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2016 14:22:44 -0400
-Received: by mail-ig0-f180.google.com with SMTP id kb1so41891030igb.0
-        for <git@vger.kernel.org>; Fri, 08 Apr 2016 11:22:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=kKg4jgvSC2HAYPUAAoiMIzl8WRLkryFJBQRHRw0I/WU=;
-        b=0f/NJAEbyMbXwE0BUUc+kpVOvWj3OfhM179KsEQQw0MveMhOaKODJ8rd/3k9aymY82
-         B9l8QTMeYJVWIZG2p+UHMD28j+f6hDss8mgRUhKlbjcyAWcwTEm+K+pziD1uycllcJLg
-         YHE7UUXaXCldLrRxjx+mAd2Ss7ALTiOIlOiyM2oxhOB2Ir9Kog1JXQtIcxomsrqlC7zi
-         y20q51aQkDq3TLa2oxd39dNKyXPpacM2mn+T66IZdt+ENc0L/8lPRx1cE5x2rM7dpp9N
-         Xi4vWubyD43QrbZtIbhFZXsF/3TWVivdtqFy/rV6MvAVcSfOhq7hNC1iQJt7LbbZoA+y
-         hZtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=kKg4jgvSC2HAYPUAAoiMIzl8WRLkryFJBQRHRw0I/WU=;
-        b=OsC8BUMg7TOmE/p4trANuURxyfUR99gNo05ulM/33FitGAbhgPZJ7fvLok0G2Fi6co
-         /4mRzJ2gXX0GF0ErHWLQBHI5RMI6yzTjSamXUe03vK3f/vSfFBNYVlCgfI8QZVvb2WMu
-         j2Ud/QXWnWZUNKoRRSLKY3xsHFEFBH5OK0VyKMvxvbRTNYqNWPU6CJktIQkRmg2GowPj
-         zHOTRdu+py+0TeclHL/D/ruMsZAF7/llfcD+oKGCA/fgGUlcVRaS3yf9c+ltpHFOu2ug
-         G4WfTo8NhFZrAINcZdUbLKNQbdEUJ4iopIsyjH35T/c5OOaUYBawQcJWN652CRWIMok7
-         L20g==
-X-Gm-Message-State: AD7BkJKuGD58FfloYhv+7a7q4A5HC/BC6+kUDtjCjOrqBrVWtqK08YPKQfEcRbuAsSTSxV4sFVQVVSIGnNtlqg==
-X-Received: by 10.50.47.49 with SMTP id a17mr5384797ign.35.1460139762887; Fri,
- 08 Apr 2016 11:22:42 -0700 (PDT)
-Received: by 10.107.59.78 with HTTP; Fri, 8 Apr 2016 11:22:23 -0700 (PDT)
-In-Reply-To: <xmqqvb3x41bo.fsf@gitster.mtv.corp.google.com>
+	id S1758743AbcDHSaU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2016 14:30:20 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:56257 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753725AbcDHSaS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2016 14:30:18 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 633B452F25;
+	Fri,  8 Apr 2016 14:30:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7vjN+UneWuE+fdgAwUFXcaLMAbU=; b=cKBAGo
+	7y3RjqfeCuVI/FDntnv14MI0+zGsqXcFePbSRQshrxio8vJBCGhN1Zl7IOUIcAxH
+	n6CScO97GyaZelf3MLE8FixmKEdeza7RfWUqYBPzYEfdLlir3+ksVcp53MgZSbGb
+	9SqRn8gfRLPYRj5DPlZrH7fOf419Xn0l50uQE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Aq8TJaa+WW5gt4H8o3JIp/maGOiY1wwZ
+	8az+MeQ6x/0ckd2W1fsx9tIB1MNVhMbrzMW0yuhmivFevTRp0P4u9vLp64CpqwG7
+	cdx90NICaxQhucCq8vqqewM/ujBXvpPG+V4EPPtfGz1n0BvIOfbqhqcM1Ijna16B
+	SxHDFAEbCow=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5A69552F24;
+	Fri,  8 Apr 2016 14:30:17 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CD21952F23;
+	Fri,  8 Apr 2016 14:30:16 -0400 (EDT)
+In-Reply-To: <CA+P7+xoUi5H19zOCAiiwQZ0-j8yNZS9-2DzgoMmLSVOrC8Nbpw@mail.gmail.com>
+	(Jacob Keller's message of "Fri, 8 Apr 2016 11:17:48 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F0FBEEF0-FDB7-11E5-864C-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291050>
 
-On Mon, Apr 4, 2016 at 12:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->
->> Documentation/diff-options.txt | 2 ++
->>  1 file changed, 2 insertions(+)
->>
->> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
->> index 306b7e3..6eb591f 100644
->> --- a/Documentation/diff-options.txt
->> +++ b/Documentation/diff-options.txt
->> @@ -28,10 +28,12 @@ ifdef::git-diff[]
->>  endif::git-diff[]
->>  endif::git-format-patch[]
->>
->> +ifndef::git-format-patch[]
->>  -s::
->>  --no-patch::
->>       Suppress diff output. Useful for commands like `git show` that
->>       show the patch by default, or to cancel the effect of `--patch`.
->> +endif::git-format-patch[]
->
-> Given that the ifndef/endif block immediately before this part is
-> also about excluding -p/-u/--patch when formatting the documentation
-> for format-patch, perhaps the attached may be a smaller equivalent?
->
->  Documentation/diff-options.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-> index 306b7e3..42e6620 100644
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -26,12 +26,12 @@ ifndef::git-format-patch[]
->  ifdef::git-diff[]
->         This is the default.
->  endif::git-diff[]
-> -endif::git-format-patch[]
->
->  -s::
->  --no-patch::
->         Suppress diff output. Useful for commands like `git show` that
->         show the patch by default, or to cancel the effect of `--patch`.
-> +endif::git-format-patch[]
->
->  -U<n>::
->  --unified=<n>::
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Jacob Keller <jacob.keller@gmail.com> writes:
 
-This patch or another patch should also include a check to ensure that
---no-patch isn't silently accepted, similar to a few other diff option
-arguments: (pardon if this copy below gets malformed by GMail
-webclient)
+> So if I want to get the summary of a patch out of a commit without the
+> actual diff what would you suggest?
 
----
+"git log --stat"?
 
-diff --git i/builtin/log.c w/builtin/log.c
-index dff3fbbb437c..a12db191acb1 100644
---- i/builtin/log.c
-+++ w/builtin/log.c
-@@ -1384,6 +1384,8 @@ int cmd_format_patch(int argc, const char
-**argv, const char *prefix)
-         die(_("--name-status does not make sense"));
-     if (rev.diffopt.output_format & DIFF_FORMAT_CHECKDIFF)
-         die(_("--check does not make sense"));
-+    if (rev.diffopt.output_format & DIFF_FORMAT_NO_OUTPUT)
-+        die(_("--no-patch does not make sense"));
+If you have a set of (discrete) commits, "git show --stat A B C"?
 
-     if (!use_patch_format &&
-         (!rev.diffopt.output_format ||
-diff --git i/t/t4014-format-patch.sh w/t/t4014-format-patch.sh
-index eed2981b96df..fdcd7de7a0f0 100755
---- i/t/t4014-format-patch.sh
-+++ w/t/t4014-format-patch.sh
-@@ -691,6 +691,7 @@ test_expect_success 'format-patch --notes --signoff' '
+> Basically, I have a process where we have post processed code, and I
+> want to be able to generate a "patch" that shows the diff only of the
+> post-processed code, ie:
 
- echo "fatal: --name-only does not make sense" > expect.name-only
- echo "fatal: --name-status does not make sense" > expect.name-status
-+echo "fatal: --no-patch does not make sense" > expect.no-patch
- echo "fatal: --check does not make sense" > expect.check
-
- test_expect_success 'options no longer allowed for format-patch' '
-@@ -698,6 +699,8 @@ test_expect_success 'options no longer allowed for
-format-patch' '
-     test_i18ncmp expect.name-only output &&
-     test_must_fail git format-patch --name-status 2> output &&
-     test_i18ncmp expect.name-status output &&
-+    test_must_fail git format-patch --no-patch 2> output &&
-+    test_i18ncmp expect.no-patch output &&
-     test_must_fail git format-patch --check 2> output &&
-     test_i18ncmp expect.check output'
+If you want to script and depend on the exact output, you cannot
+depend on "log" or "show", so you would likely be doing "cat-file
+commit" for log message part and "diff-tree" (with options like -p
+and --stat) for the patch part, I guess.
