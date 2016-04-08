@@ -1,91 +1,104 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 1/2] refs: add a new function set_worktree_head_symref
-Date: Fri, 8 Apr 2016 02:42:58 -0400
-Message-ID: <CAPig+cQYktE08zy3nSqxm924P0foW91RtHcapmRBy_Fwh9S_Ug@mail.gmail.com>
-References: <1458553816-29091-1-git-send-email-k@rhe.jp>
-	<cover.1459087958.git.k@rhe.jp>
-	<39bc3c1da6daf31f2a10e592dbb5d3daadc96199.1459087958.git.k@rhe.jp>
-	<CAPig+cQym57U-izza5_Hn0xCDcG0MHFMcWJFc==ohKnr7acFWQ@mail.gmail.com>
-	<20160408063713.GA17696@chikuwa.rhe.jp>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Kazuki Yamaguchi <k@rhe.jp>
-X-From: git-owner@vger.kernel.org Fri Apr 08 08:43:07 2016
+From: Elijah Newren <newren@gmail.com>
+Subject: [RFC/PATCH 13/18] Add --index-only support with read_tree_trivial merges, kind of
+Date: Thu,  7 Apr 2016 23:58:41 -0700
+Message-ID: <1460098726-5958-14-git-send-email-newren@gmail.com>
+References: <1460098726-5958-1-git-send-email-newren@gmail.com>
+Cc: Elijah Newren <newren@palantir.com>,
+	Elijah Newren <newren@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 08 08:59:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoQ8I-00006d-PW
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 08:43:07 +0200
+	id 1aoQO9-0002VL-UG
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 08:59:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757358AbcDHGnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2016 02:43:00 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:35396 "EHLO
-	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755900AbcDHGm7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2016 02:42:59 -0400
-Received: by mail-io0-f196.google.com with SMTP id q128so15140229iof.2
-        for <git@vger.kernel.org>; Thu, 07 Apr 2016 23:42:59 -0700 (PDT)
+	id S932665AbcDHG7W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2016 02:59:22 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:34809 "EHLO
+	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932659AbcDHG7S (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2016 02:59:18 -0400
+Received: by mail-pf0-f195.google.com with SMTP id d184so8834106pfc.1
+        for <git@vger.kernel.org>; Thu, 07 Apr 2016 23:59:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=UAPg+2IHayjYScaEOZwbP0jOK+j0oWmB+XQXA8v8nw8=;
-        b=qk10hy4qyhOA5Tsd3O1MwLqNqTpLvsUjnh1WFNb3HOQ+HoK7Gso2NSUq8iKWg755dj
-         3yCYBYasLpxsip+gg8c9oniy/ghsnN07sV4ZgJWK1+L/XkrynVeqap8XIEYWI5KPMIxq
-         rd4FSMM3S1HXb5/ZBa28WuINR007Q4DL3PBlviEOR0Hu8wEU4vztWOpbTGs15kWUheqb
-         tyEDcUkGld74l6iv47/99dgA+DWz4va7fA5vKLuuVFPOZlzqGt7/uozpWPH24E+biQY0
-         BbwbxDz0Q4a511X2UPq8htQIs3XoieD9cW+A73BJVAPOhuNeyzZ+PnfS/kEETFYEWUfp
-         9rpA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=enweZTJZScc5WPfAVV6xbtkMSt4NNnesyrtGXjUGWC0=;
+        b=Cp+KFzYGFe+Ho0jCKIs6TovDMIwiMScDyt4GTSGFL9Oc0u1/lYCaIIEHiqeYzeFfXc
+         rkvNdYT+4cSwDXju+r8U4FCM3Tsk6o/hnNrgY3KIo07WpFhkjgYzCTxqIYSRLa1UthEb
+         etAxgCVvTAcqTHbf4hPcVfzqk/gs53DosJIsCextY+JYpzosjOyGFbEjMNSxRL7Eo48w
+         2mE6KyOTpEHwigBMCpHeOdTssZyeXFrIc/3dFKyQGb3+mljfqPWs/uAIcn9XDu/wJqTl
+         33h3u6u+q7d1pudOF5aklT/ojPG3+wCQoqSkkO7hY0fMczOSJehUF+QAGzhvrdiJqbmo
+         D7WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=UAPg+2IHayjYScaEOZwbP0jOK+j0oWmB+XQXA8v8nw8=;
-        b=QMuJh0YTtZUAJbfdebZGk0AGnmVZ5xOK/WEUzY+VROVz9FS5xvzLtsC4eUjXUgKDnk
-         yxaiuEZ6upPPIWmIfKN+mA/M09QuVdrQvG+kxqppyzI0x7vweKIXBOFt7rGCWetIKceh
-         cZr7NoVDYLYjdHBOI07yW6WAh7E1ZfzsxKZ9ysuOEODGVwuUg4/f59CDNJxPmFTCevpF
-         WeuLxEaHbK8zpmfTH6a/ld/YqfcMDnMxhJiYgK+tBc1/T3WC2TIqfGXYobA53Iegi/AN
-         I9nPBDWER1Xm9SebNqtZPWhEBHSJ8ZuGwcRnbrSWsRziwbM0t2zFPx9IxzFGav3W/YkF
-         ieXg==
-X-Gm-Message-State: AD7BkJIvoNPYwZA5Pthk5Q5OUzAtEwz4es27wKQxtYH5Yfh5jicFmcaQMslepuGoXKbtclA2sgFCDQWFtLXUwA==
-X-Received: by 10.107.47.41 with SMTP id j41mr7067160ioo.168.1460097778642;
- Thu, 07 Apr 2016 23:42:58 -0700 (PDT)
-Received: by 10.79.139.2 with HTTP; Thu, 7 Apr 2016 23:42:58 -0700 (PDT)
-In-Reply-To: <20160408063713.GA17696@chikuwa.rhe.jp>
-X-Google-Sender-Auth: hNoItxW7nayn1uguokyQq0dvVws
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=enweZTJZScc5WPfAVV6xbtkMSt4NNnesyrtGXjUGWC0=;
+        b=lLaPB6pTwy0Kdq+f+MCUQyCGHwin08Lq/Uy3dg/7CvGK9v0BBapNO/rJutXxz9fjo2
+         e/FPz4lMMinn9MJtUlRlFD9GsGR8m3pT7wXQF1B2ZeWnHQK51bqXquUKf9gQjmodPrJR
+         XYpGo3bvowhpxApWnh/5M7NtJQ3MVPFqSEF1RjoonH59nHRRlt5Q9dAFCZSsbLZqcred
+         aH7Cep2xX6hovpJImMTh+xMACxlSP/G1vsF7m12DxpHsxvbfsgRemvTM0B76YOFP8e5z
+         o9srWNdZbyLCzbPlLkcvM5t8G6Z9gE//GK3btgC2LwbhjajMBVXMKV9H7i/JLfEajUcB
+         rszA==
+X-Gm-Message-State: AD7BkJLGaH7RTO9Tlm+BW2i3fnyjNPRNNC88qOfwxcTAproYftkUuvR40JUuAkw33DW3WA==
+X-Received: by 10.98.10.156 with SMTP id 28mr10478931pfk.130.1460098752181;
+        Thu, 07 Apr 2016 23:59:12 -0700 (PDT)
+Received: from unknownB8F6B118D3EB.attlocal.net ([2602:30a:2c28:20f0:baf6:b1ff:fe18:d3eb])
+        by smtp.gmail.com with ESMTPSA id w62sm16371973pfa.79.2016.04.07.23.59.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 07 Apr 2016 23:59:11 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0.18.gc685494
+In-Reply-To: <1460098726-5958-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291000>
 
-On Fri, Apr 8, 2016 at 2:37 AM, Kazuki Yamaguchi <k@rhe.jp> wrote:
-> On Thu, Apr 07, 2016 at 05:20:10PM -0400, Eric Sunshine wrote:
->> On Sun, Mar 27, 2016 at 10:37 AM, Kazuki Yamaguchi <k@rhe.jp> wrote:
->> > +int set_worktree_head_symref(const char *gitdir, const char *target)
->> > +{
->> > +       static struct lock_file head_lock;
->> > +       struct ref_lock *lock;
->> > +       struct strbuf err = STRBUF_INIT;
->> > +       struct strbuf head_path = STRBUF_INIT;
->> > +       const char *head_rel;
->> > +       int ret;
->> > +
->> > +       strbuf_addf(&head_path, "%s/HEAD", absolute_path(gitdir));
->> > +       if (hold_lock_file_for_update(&head_lock, head_path.buf,
->> > +                                     LOCK_NO_DEREF) < 0) {
->> > +               error("%s", err.buf);
->>
->> 'err' has not been populated at this point, so I suspect that this
->> error message is likely to be rather uninformative.
->
-> Yes, unable_to_lock_message() is missing. Thank you for pointing it out.
+From: Elijah Newren <newren@palantir.com>
 
-You're welcome. As this patch is already in Junio's "next" branch, if
-you post a fix, it should be incremental atop "ky/branch-m-worktree",
-rather than as a re-roll of this series.
+This almost works.  It creates the correct merge commit, updates the
+branch, but then if the repo is bare it leaves the index as it was before
+the merge (and if the repo is non-bare it updates the index).  I'm
+totally lost as to why the testcase behaves differently in the bare and
+non-bare cases.
+
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ builtin/merge.c             | 3 ++-
+ t/t6043-merge-index-only.sh | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/merge.c b/builtin/merge.c
+index ce5be0a..5f463ad 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -606,7 +606,8 @@ static int read_tree_trivial(unsigned char *common, unsigned char *head,
+ 	opts.head_idx = 2;
+ 	opts.src_index = &the_index;
+ 	opts.dst_index = &the_index;
+-	opts.update = 1;
++	opts.update = !index_only;
++	opts.index_only = index_only;
+ 	opts.verbose_update = 1;
+ 	opts.trivial_merges_only = 1;
+ 	opts.merge = 1;
+diff --git a/t/t6043-merge-index-only.sh b/t/t6043-merge-index-only.sh
+index 2e1d953..f79782c 100755
+--- a/t/t6043-merge-index-only.sh
++++ b/t/t6043-merge-index-only.sh
+@@ -265,7 +265,7 @@ test_expect_failure '--index-only ff update, non-bare with uncommitted changes'
+ 	test ! -d subdir
+ '
+ 
+-test_expect_failure '--index-only w/ resolve, trivial, non-bare' '
++test_expect_success '--index-only w/ resolve, trivial, non-bare' '
+ 	git clean -fdx &&
+ 	git reset --hard &&
+ 	git checkout B^0 &&
+-- 
+2.8.0.18.gc685494
