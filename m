@@ -1,87 +1,70 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/7] l10n: mv.c: add a comma ',' to string
-Date: Fri, 08 Apr 2016 13:35:29 -0700
-Message-ID: <xmqq8u0nvnxq.fsf@gitster.mtv.corp.google.com>
-References: <1460145765-7454-1-git-send-email-vascomalmeida@sapo.pt>
-	<1460145765-7454-6-git-send-email-vascomalmeida@sapo.pt>
+Subject: Re: [PATCH 03/24] t1430: test the output and error of some commands more carefully
+Date: Fri, 08 Apr 2016 13:43:59 -0700
+Message-ID: <xmqq4mbbvnjk.fsf@gitster.mtv.corp.google.com>
+References: <1460055791-23313-1-git-send-email-dturner@twopensource.com>
+	<1460055791-23313-4-git-send-email-dturner@twopensource.com>
+	<5707CACB.4030906@alum.mit.edu>
+	<1460143577.5540.11.camel@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>
-To: Vasco Almeida <vascomalmeida@sapo.pt>
-X-From: git-owner@vger.kernel.org Fri Apr 08 22:35:42 2016
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Fri Apr 08 22:44:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aod7z-0005Vn-9o
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 22:35:39 +0200
+	id 1aodGX-0003Ts-EH
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 22:44:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758726AbcDHUfd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2016 16:35:33 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:62237 "EHLO
+	id S932883AbcDHUoJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2016 16:44:09 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:63112 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753927AbcDHUfc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2016 16:35:32 -0400
+	with ESMTP id S932818AbcDHUoI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2016 16:44:08 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B4345530B9;
-	Fri,  8 Apr 2016 16:35:31 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 535CE532B8;
+	Fri,  8 Apr 2016 16:44:02 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=h5WvjhYxjRhs8Yu7D8yTvqWH7PY=; b=PpsRcF
-	KZ0189lzIQl2PWLUFLt0dj0RNgvO7J0+oXQPRFCEmY9QHrT3qi4VYayLKahqcRZZ
-	omCrhkzG2UbgR5ihCjOq9b7FGuV8Yg2WdwdQ27JB87RmaDJJavQVaBavQXljb0I9
-	ewrvyH0C58NSh7s638FsfhY1aQo0VtAreIl10=
+	:content-type; s=sasl; bh=pgY01IEFWeDbSe06mMpl3QuAPrI=; b=LRLVxy
+	bAE64ChwDMFZRiuym5FCCVXrhlSPOwcTj+NegeEyS+uDhj+SZx3ZIKRqMoAMdiVz
+	fr9+/grwpMx3lM1xc+HDDpZQIpeUEQh1YIwyGzMke2IS62Qg5H8K6+zHaZy24aqt
+	O4H0cwXm419a+Od0Xiw3ZkTTcXkNRo7WrC01g=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZxzZMqfNKXQDIgEv4YYYGOcPJ5WMJ5Cy
-	HIsOhN0X/Ofg2pWCuodvvODNbMxBlE6lwNR2O4p9OsBQ+mDGadHvrP5uoi6gxYxs
-	+9s98klICwyAz2oOGKmn7ffmFH1++dT4JjMlHuDR1p+rjhVWk1Ja5lCnTdDoAEs6
-	NTTbCQzh4sQ=
+	:content-type; q=dns; s=sasl; b=es6VNhDFk64u+TN/jwZ4oxJJpOGI9XaN
+	q3kWCsL4ERKPCfT5A40k7cPBkSS0G3EoD0RlMNnHx60euLSibQbJpJgpJ8X5ct3S
+	W4bZrO7zP2nfbXy9cLsHWLj7XDMFFbJ/8z109HtB1EUeWGTZYijnkIIBhdnV4bbY
+	dzUfntT0ldA=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9EBD9530B8;
-	Fri,  8 Apr 2016 16:35:31 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 474C9532B7;
+	Fri,  8 Apr 2016 16:44:02 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0C54B530B7;
-	Fri,  8 Apr 2016 16:35:30 -0400 (EDT)
-In-Reply-To: <1460145765-7454-6-git-send-email-vascomalmeida@sapo.pt> (Vasco
-	Almeida's message of "Fri, 8 Apr 2016 20:02:44 +0000")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4D175532B5;
+	Fri,  8 Apr 2016 16:44:01 -0400 (EDT)
+In-Reply-To: <1460143577.5540.11.camel@twopensource.com> (David Turner's
+	message of "Fri, 08 Apr 2016 15:26:17 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6FCD677A-FDC9-11E5-9475-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 9FF22962-FDCA-11E5-ACA2-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291072>
 
-Vasco Almeida <vascomalmeida@sapo.pt> writes:
+David Turner <dturner@twopensource.com> writes:
 
-> Add a comma to string marked for translation. Make the string match the
-> one in rm.c. Now translators have do handle this string only once.
+> Would you like
+> me to re-roll with my sign-off, or would you prefer to add it yourself?
 
-I suspect these "comma after Please" is a French invention.
+I take it that you see no other reason to reroll the series at this
+point (otherwise you wouldn't be asking ;-), so I'll check which
+ones need amending and add them.
 
-Aiming to reduce these minor variants is a good goal, but wouldn't
-we want to go in the opposite direction?
-
->
-> Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
-> ---
->  builtin/mv.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/builtin/mv.c b/builtin/mv.c
-> index aeae855..1bf8df1 100644
-> --- a/builtin/mv.c
-> +++ b/builtin/mv.c
-> @@ -69,7 +69,7 @@ static void prepare_move_submodule(const char *src, int first,
->  	if (!S_ISGITLINK(active_cache[first]->ce_mode))
->  		die(_("Directory %s is in index and no submodule?"), src);
->  	if (!is_staging_gitmodules_ok())
-> -		die(_("Please stage your changes to .gitmodules or stash them to proceed"));
-> +		die(_("Please, stage your changes to .gitmodules or stash them to proceed"));
->  	strbuf_addf(&submodule_dotgit, "%s/.git", src);
->  	*submodule_gitfile = read_gitfile(submodule_dotgit.buf);
->  	if (*submodule_gitfile)
+Thanks.
