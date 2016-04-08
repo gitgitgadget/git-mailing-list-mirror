@@ -1,112 +1,99 @@
-From: =?iso-8859-1?Q?Jan_Kundr=E1t?= <jkt@kde.org>
-Subject: [PATCH] log: allow --graph and --show-linear-break used together
-Date: Fri, 08 Apr 2016 13:21:07 +0200
-Organization: KDE
-Message-ID: <3305f7dc-0044-41fe-8aab-ee800535d6e9@kde.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v12 2/5] test-parse-options: print quiet as integer
+Date: Fri, 8 Apr 2016 18:33:10 +0700
+Message-ID: <CACsJy8Bru3ZW_g2HA3yNt_yc6fV9DfWLY1BHWzVWWxxrtLp-9A@mail.gmail.com>
+References: <01020153d952bd99-d3812bd6-d189-4780-ab48-f015696e9cf0-000000@eu-west-1.amazonses.com>
+ <01020153d952be64-9ca893f1-5a7b-4a2c-a0bd-98abf93a17ac-000000@eu-west-1.amazonses.com>
+ <CAPig+cQpdr7A7GxKUN3tDs2rQ7z_S5b1WVsk01=BwkCwB2mp0A@mail.gmail.com> <CAFZEwPORAer3=WmUqqhztv4kAOHdv+yB12tRyUYh_YTSmtcQsQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="trojita=_b5aa5f27-30e3-4a00-a5a7-b3db84f3b64f"
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 08 13:28:09 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 08 13:33:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoUa7-0001M6-Qj
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 13:28:08 +0200
+	id 1aoUfb-0004js-DY
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 13:33:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758218AbcDHL1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2016 07:27:46 -0400
-Received: from latimerie.flaska.net ([46.28.111.182]:50984 "EHLO
-	latimerie.flaska.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756567AbcDHL1p (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2016 07:27:45 -0400
-X-Greylist: delayed 393 seconds by postgrey-1.27 at vger.kernel.org; Fri, 08 Apr 2016 07:27:44 EDT
-Received: by latimerie.flaska.net (Postfix, from userid 1000)
-	id EA5CC630B3; Fri,  8 Apr 2016 13:21:06 +0200 (CEST)
-User-Agent: Trojita/v0.6-160-g874a773; Qt/5.6.1; xcb; Linux; 
+	id S1756567AbcDHLdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2016 07:33:43 -0400
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:36245 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753110AbcDHLdm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2016 07:33:42 -0400
+Received: by mail-lb0-f175.google.com with SMTP id bk9so40349991lbc.3
+        for <git@vger.kernel.org>; Fri, 08 Apr 2016 04:33:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=iWLg3Elo7JnfL2BTrGwjdrfrBWL2Nk7mSDXQ8uyZUzE=;
+        b=dRYR72i01gYCZSBselgHlvgsrr+c2G6klEH42V4tBePxThWrvCydwID5+m7rqbwc9x
+         aD/YXp1rawMCb1J01DH5k1p3mpymJ/nGsmiHFoHkvwkVdiuR/JBAYFDWOkRPHHLvrrb6
+         +fOZFn8mU2Kmb9GhQUhUCmHHnNL0xWTBs2A+eJfGdPH4yQUcBaKqZlguLPvfRq2xZRn2
+         +FJXqtgKbnF9q1aRCmTK+oqNvPkNboCHE4LnVuPjVmL4HzqHzQ08bDfNLhoCX6CT3TY6
+         /rqTa5+/+yXVaSTAqo04rainoW/RCpJu0xA9v1mLnTLx96l06imYF0h3AWA02VC75uAQ
+         1l5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=iWLg3Elo7JnfL2BTrGwjdrfrBWL2Nk7mSDXQ8uyZUzE=;
+        b=kDBXVEgk1EqpnI8Nt1toRb8ttZ915Wka5W4kOjMaL1LvBg7INh11kXkdGSLyLYkjSb
+         wuGNYoqtdmyfHow6H/j9VIEiQX3+1mrqsuqtXYbo5RBj/Mu1A03/K8FsN1qOZB3fZNhj
+         rWnHGztOLtKxlCiPUwgM44O7+bwguQgRLlKV2LJj13kDNIBLyNjgnwTLekiyuEHxp0dC
+         u9SAfHZsYJXFLzi/KG9OF+BgjtiUq0IjkKxASZOAztT9er7hNLaJIXaJ/Adn+o5CvLnf
+         3n3SFwYJXEuDmaPZAVQrxLOmorgz3nFuOr9lS1IGuQIFOsfjl9934i3wM6AFdTJDeZh2
+         50JQ==
+X-Gm-Message-State: AD7BkJK9QteZTU0kbTP1Qa4PQe8eBfR4064YDEpHc4mGREp1eyZXo5sD15K1+RgSmIlpQ9qjw9ax7HlwnKTwBQ==
+X-Received: by 10.112.209.99 with SMTP id ml3mr3349294lbc.26.1460115220139;
+ Fri, 08 Apr 2016 04:33:40 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Fri, 8 Apr 2016 04:33:10 -0700 (PDT)
+In-Reply-To: <CAFZEwPORAer3=WmUqqhztv4kAOHdv+yB12tRyUYh_YTSmtcQsQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291024>
 
-This is a multipart/mixed message in MIME format.
+On Tue, Apr 5, 2016 at 10:39 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+> [+cc:Duy Nguyen, Jonathan Nieder]
+>
+> On Mon, Apr 4, 2016 at 3:00 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> On Sat, Apr 2, 2016 at 7:33 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>>> Current implementation of parse-options.c treats OPT__QUIET() as integer
+>>> and not boolean and thus it is more appropriate to print it as integer
+>>> to avoid confusion.
+>>
+>> I can buy this line of reasoning, however, it would be even easier to
+>> sell the change if you cited an existing client (a git command) which
+>> actually respects multiple quiet levels. Are there any?
+>
+> I investigated into this. But I was unable to find any git commit
+> which actually respects mulitple quiet levels. I first did a 'git grep
+> OPT__QUIET' to find the commands which use this. Then I went through
+> the documentation which covers it. None of them have any such mention
+> of multiple quiet levels. But still I dug further and and went through
+> all the individual source files. I followed the corresponding C source
+> code for the header file included and also searched there for any
+> trace of quiet. But I still didn't find any such use of multiple quiet
+> levels. I have found that the commit id 212c0a6f (Duy Ngyuyen; 7 Dec,
+> 2013; parse-options: remove OPT__BOOLEAN). Maybe he has something to
+> say as to why this was introduced and OPT__QUIET which previously used
+> OPT__BOOLEAN, now uses OPT_COUNTUP rather than OPT_BOOL.
 
---trojita=_b5aa5f27-30e3-4a00-a5a7-b3db84f3b64f
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-
-Hi,
-this patch makes it possible to use --show-linear-break in `git log --graph=20=
-
---oneline --all`.
-
-(Please Cc me on replies, I'm not subscribed to the Git ML.)
-
-Cheers,
-Jan
-
---=20
-Trojit=C3=A1, a fast Qt IMAP e-mail client -- http://trojita.flaska.net/
---trojita=_b5aa5f27-30e3-4a00-a5a7-b3db84f3b64f
-Content-Type: text/x-patch
-Content-Disposition: inline;
-	filename=0001-log-allow-graph-and-show-linear-break-used-together.patch
-Content-Transfer-Encoding: base64
-
-RnJvbSAxYWM2YmI3YzMxNjUyODM1ZDNkMDQ2YzgyZTQyM2YwY2VhNmUwOTA0IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiA9P1VURi04P3E/SmFuPTIwS3VuZHI9QzM9QTF0Pz0gPGprdEBr
-ZGUub3JnPgpEYXRlOiBGcmksIDggQXByIDIwMTYgMTM6MDY6MzEgKzAyMDAKU3ViamVjdDogW1BB
-VENIXSBsb2c6IGFsbG93IC0tZ3JhcGggYW5kIC0tc2hvdy1saW5lYXItYnJlYWsgdXNlZCB0b2dl
-dGhlcgpNSU1FLVZlcnNpb246IDEuMApDb250ZW50LVR5cGU6IHRleHQvcGxhaW47IGNoYXJzZXQ9
-VVRGLTgKQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogOGJpdAoKVGhlcmUgd2FzIG5vIHZpc3Vh
-bCBicmVhayB3aGVuIC0tZ3JhcGggLS1vbmVsaW5lIHdhcyB1c2VkIHdpdGggc2V2ZXJhbApoaXN0
-b3J5IHRyZWVzIHdpdGggZGlzam9pbnQgcGFyZW50cy4KClRoZSBvcmlnaW5hbCByZWFzb25pbmcg
-Z2l2ZW4gaW4gY29tbWl0IDFiMzJkZWNlZiB3YXMgcHJvYmFibHkgdGhhdCBhCmdyYXBoIGFscmVh
-ZHkgY29udmV5cyBlbm91Z2ggaW5mb3JtYXRpb24gdG8gaW5kaWNhdGUgdGhhdCB0aGVyZSdzIG5v
-CnBhcmVudC1jaGlsZCByZWxhdGlvbiBiZXR3ZWVuIHRoZXNlIHR3byBjb21taXRzLiBIb3dldmVy
-LCB0aGlzIGlzIG5vdAp0aGUgY2FzZSB3aGVuIGEgc2luZ2xlLWxpbmUgcHJldHRpZmljYXRpb24g
-b2YgYSBsb2cgaXMgdXNlZCwgaW4gd2hpY2gKY2FzZSB0aGUgY29tbWl0cyBhcmUgZGlzcGxheWVk
-IG9uIHRvcCBvZiBlYWNoIG90aGVyIHdpdGggbm8gc3BhY2UgZm9yCnRoYXQgZ3JhcGggbGluZSB0
-byBzaG93IHRoZSBzZXBhcmF0aW9uLgoKSXQgbWlnaHQgYmUgaW50ZXJlc3RpbmcgdG8gY2hhbmdl
-IHRoZSBhY3R1YWwgcHJpbnRpbmcgb2YgdGhlIGJyZWFrX2Jhcgp0byBwcmludCBmZXdlciBsaW5l
-IGJyZWFrcywgYnV0IHRoaXMgc2ltcGxlIGFwcHJvYWNoIHdvcmtzIGFuZCBpcyBJTUhPCm5vdCB0
-aGF0IGJhZCB2aXN1YWxseSwgYW55d2F5LgoKU2lnbmVkLW9mZi1ieTogSmFuIEt1bmRyw6F0IDxq
-a3RAa2RlLm9yZz4KLS0tCiBEb2N1bWVudGF0aW9uL3Jldi1saXN0LW9wdGlvbnMudHh0IHwgNSAr
-KystLQogcmV2aXNpb24uYyAgICAgICAgICAgICAgICAgICAgICAgICB8IDQgKystLQogMiBmaWxl
-cyBjaGFuZ2VkLCA1IGluc2VydGlvbnMoKyksIDQgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEv
-RG9jdW1lbnRhdGlvbi9yZXYtbGlzdC1vcHRpb25zLnR4dCBiL0RvY3VtZW50YXRpb24vcmV2LWxp
-c3Qtb3B0aW9ucy50eHQKaW5kZXggNGYwMDlkNC4uYzVlNDg3YyAxMDA2NDQKLS0tIGEvRG9jdW1l
-bnRhdGlvbi9yZXYtbGlzdC1vcHRpb25zLnR4dAorKysgYi9Eb2N1bWVudGF0aW9uL3Jldi1saXN0
-LW9wdGlvbnMudHh0CkBAIC04MDcsOCArODA3LDkgQEAgVGhpcyBpbXBsaWVzIHRoZSBgLS10b3Bv
-LW9yZGVyYCBvcHRpb24gYnkgZGVmYXVsdCwgYnV0IHRoZQogYC0tZGF0ZS1vcmRlcmAgb3B0aW9u
-IG1heSBhbHNvIGJlIHNwZWNpZmllZC4KIAogLS1zaG93LWxpbmVhci1icmVha1s9PGJhcnJpZXI+
-XTo6Ci0JV2hlbiAtLWdyYXBoIGlzIG5vdCB1c2VkLCBhbGwgaGlzdG9yeSBicmFuY2hlcyBhcmUg
-ZmxhdHRlbmVkCi0Jd2hpY2ggY2FuIG1ha2UgaXQgaGFyZCB0byBzZWUgdGhhdCB0aGUgdHdvIGNv
-bnNlY3V0aXZlIGNvbW1pdHMKKwlJZiB0aGUgaGlzdG9yeSBpcyBmbGF0dGVuZWQsIHN1Y2ggYXMg
-d2hlbiAtLWdyYXBoIGlzIG5vdCB1c2VkCisJb3IgaWYgLS1ncmFwaCBpcyBjb21iaW5lZCB3aXRo
-IC0tb25lbGluZSB0byBwcm9kdWNlIGEgY29tcGFjdAorCXZpZXcsIGl0IGNhbiBiZSBoYXJkIHRv
-IHNlZSB0aGF0IHRoZSB0d28gY29uc2VjdXRpdmUgY29tbWl0cwogCWRvIG5vdCBiZWxvbmcgdG8g
-YSBsaW5lYXIgYnJhbmNoLiBUaGlzIG9wdGlvbiBwdXRzIGEgYmFycmllcgogCWluIGJldHdlZW4g
-dGhlbSBpbiB0aGF0IGNhc2UuIElmIGA8YmFycmllcj5gIGlzIHNwZWNpZmllZCwgaXQKIAlpcyB0
-aGUgc3RyaW5nIHRoYXQgd2lsbCBiZSBzaG93biBpbnN0ZWFkIG9mIHRoZSBkZWZhdWx0IG9uZS4K
-ZGlmZiAtLWdpdCBhL3JldmlzaW9uLmMgYi9yZXZpc2lvbi5jCmluZGV4IDhiMmRmZTMuLjgwOWM0
-M2UgMTAwNjQ0Ci0tLSBhL3JldmlzaW9uLmMKKysrIGIvcmV2aXNpb24uYwpAQCAtMTg2NCw2ICsx
-ODY0LDggQEAgc3RhdGljIGludCBoYW5kbGVfcmV2aXNpb25fb3B0KHN0cnVjdCByZXZfaW5mbyAq
-cmV2cywgaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmcKIAkJICAgc3RhcnRzX3dpdGgoYXJnLCAi
-LS1zaG93LWxpbmVhci1icmVhaz0iKSkgewogCQlpZiAoc3RhcnRzX3dpdGgoYXJnLCAiLS1zaG93
-LWxpbmVhci1icmVhaz0iKSkKIAkJCXJldnMtPmJyZWFrX2JhciA9IHhzdHJkdXAoYXJnICsgMjAp
-OworCQllbHNlIGlmIChyZXZzLT5ncmFwaCkKKwkJCXJldnMtPmJyZWFrX2JhciA9ICIgIC4uLi4u
-Li4uLi5cbiI7CiAJCWVsc2UKIAkJCXJldnMtPmJyZWFrX2JhciA9ICIgICAgICAgICAgICAgICAg
-ICAgIC4uLi4uLi4uLi4iOwogCQlyZXZzLT50cmFja19saW5lYXIgPSAxOwpAQCAtMTk5Myw4ICsx
-OTk1LDYgQEAgc3RhdGljIGludCBoYW5kbGVfcmV2aXNpb25fb3B0KHN0cnVjdCByZXZfaW5mbyAq
-cmV2cywgaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmcKIAkJCXVua3ZbKCp1bmtjKSsrXSA9IGFy
-ZzsKIAkJcmV0dXJuIG9wdHM7CiAJfQotCWlmIChyZXZzLT5ncmFwaCAmJiByZXZzLT50cmFja19s
-aW5lYXIpCi0JCWRpZSgiLS1zaG93LWxpbmVhci1icmVhayBhbmQgLS1ncmFwaCBhcmUgaW5jb21w
-YXRpYmxlIik7CiAKIAlyZXR1cm4gMTsKIH0KLS0gCjIuNy4zCgo=
-
---trojita=_b5aa5f27-30e3-4a00-a5a7-b3db84f3b64f--
+I don't have much to say because my commit is a harmless conversion :)
+OPT_BOOLEAN _is_ OPT_COUNTUP with a misleading name, see b04ba2b
+(parse-options: deprecate OPT_BOOLEAN - 2011-09-27). If you dig
+further back, both OPT_VERBOSE and OPT_QUIET are introduced at the
+same time in 0ce865b (Add shortcuts for very often used options. -
+2007-10-14) and they both are defined with OPT_BOOLEAN. I guess it was
+just an oversight that OPT_QUIET is defined as OPT_BOOLEAN instead of
+OPT_BOOL.
+-- 
+Duy
