@@ -1,98 +1,93 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] rebase: convert revert to squash on autosquash
-Date: Fri, 8 Apr 2016 13:13:51 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604081309150.2967@virtualbox>
-References: <1460041965-31526-1-git-send-email-mst@redhat.com> <alpine.DEB.2.20.1604071720160.2967@virtualbox> <20160407184026-mutt-send-email-mst@redhat.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 03/16] index-helper: new daemon for caching index and
+ related stuff
+Date: Fri, 8 Apr 2016 18:26:38 +0700
+Message-ID: <CACsJy8C5NhaAAW=wzpwkBdLvVZz8wVM7QX==n_CL5g+LLAKY=A@mail.gmail.com>
+References: <1459980722-4836-1-git-send-email-dturner@twopensource.com> <1459980722-4836-4-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Fri Apr 08 13:14:13 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>, aevarb@gmail.com,
+	jeffhost@microsoft.com
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Fri Apr 08 13:27:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoUMc-0000hz-IB
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 13:14:11 +0200
+	id 1aoUZK-0000gj-7F
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 13:27:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757551AbcDHLOD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2016 07:14:03 -0400
-Received: from mout.gmx.net ([212.227.15.19]:50280 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755802AbcDHLOA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2016 07:14:00 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0M4nt7-1bkRET2jgD-00yzcc; Fri, 08 Apr 2016 13:13:52
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160407184026-mutt-send-email-mst@redhat.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:FBwdoYBS2jUpLqQSXFQt34TCEGFVx55tK9lgONDfBkT7tLdDmRb
- hj1NewsIKsJxvOaqKtVbTaMRWkY+DNUDwqqqcdJL04Epe0473ubQu+0GMNpixOyNNmMoY1c
- qnN43pDRIGwx78RfwS64v4ep5c555f95fcn4tx3RyK2r2oFYqudznBpB28Aj8y1/cE1OJNB
- hfzTBW5QMAs5l58WHgdFw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vtBHuwtmWp0=:juPN8buRkR9hWpDyjqXIsG
- TJKrF02Wyjp+6REKBTSY6jGJplDme0dKtYPXs6WbbvfIXlNQ3yrZ9/1qWlWwT9JZq2sFg6Hcz
- EQPXcbDxJZhBDwHycgftdXoj98e18kcjqAxHrl1F3Is5HAUY3Va0s+E6TljSsb/IPwJwEe9TU
- bfunU9z8nJnKAYa3X1kcdSBg+TYVC3bhWXDJ7HkwX7LGcP59ghLus0G2SssTL3JcAhT24xBtv
- V8BTlwDSbWb0oCnNO9NjOG4if7jJLYJGsCxI0tpLoNU9rIuWfzsihYlPhsThZy90nI8Naeza7
- HU3Wn7OX/gcKTAJOg6Ab3G4FgAtERymULj/jt8w0QDMP+faLBO1xWeNOXXRnXXF2c3EqEsycU
- 7do0yskrioXbYRpDVmKigVzZPdDr8zg0jwORMFfoXdCl+4Jg+HR7S1HyxBr6KHZ4TXwbcd4T5
- y/OIfXMeCmrlMKJVt4vmVtHRu4SVs6EqlWdRzQrfnPvYXHNEbeaj6Lp3uq0Ory4u4AkEQJ6ws
- cEBKs0N54JCpJ+7o0WrZxp9osJrd0ujC/ji+ePXBweazKU8lNwqbsbSqjMUSRRY/IB8WPl/TC
- xNn+jLCC3gEG3i1w6ywIrJU0+c8DNHkGOuYaiF/ad2FwCqK4si84JNCa9quI8bB7a06/0cVLG
- eWlQrzI2tCyko3zz+FNnxbR6BDaUBgz59IhA6FuT/epllkZ6ciAuVaRSkZfLV7ZuJ60mDCs38
- Tpn2kG4YJHEWq1l3fKp89YbemPt3bqJVLWn5/IidAlGI48LyeLu/Nb2286qG/afNChPpZlFS 
+	id S1758043AbcDHL1L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2016 07:27:11 -0400
+Received: from mail-lb0-f195.google.com ([209.85.217.195]:33335 "EHLO
+	mail-lb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757920AbcDHL1J (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2016 07:27:09 -0400
+Received: by mail-lb0-f195.google.com with SMTP id ot1so2764794lbb.0
+        for <git@vger.kernel.org>; Fri, 08 Apr 2016 04:27:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=wQ7yY8y6KX6Nbvj+5GBUh30aWglILKxSA14G0gf/xWQ=;
+        b=vwaqniUphYNmVQNrhlOIC7pXL+BjrlgdRyeGOjgTLK9LOW75tio0/+dsa9aBeUhspU
+         irUniF2mQtOIBLc35HYgTa9YQLLYZdREdN+5bKQY9b7Oi3QQW8wQZh0qXcvxo5GQ3AZA
+         HcV/+rOzpvDJIFpABWDuVzq0bbE0YdqS5u3vgRmr7Pn/u/5hCd30aDaPI/4y6sgjiGKl
+         8GltuXkBQ7t85EAn2r+9fJlFanO/RBpVuLCjggM3jAE1+8aZjWC4aH1C9VgtdemXau4c
+         Q3qIQGo+UsQu/ZNFuLSKuKsiuussks5MQHWS/FtXw0IXGg1jHwpgN7b2siddYVvP5bLA
+         Jv8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=wQ7yY8y6KX6Nbvj+5GBUh30aWglILKxSA14G0gf/xWQ=;
+        b=MLubK8MDRZ9j5tGo8WGv3hI/tHXVp6ev3gzxBurFbRYNVhu2JwGkB6Q3yF8mQ/IlV2
+         YER4hkJWEdUjAAeAcB98iMZoA5yu95/3fVoyuKTquW8Muw12HzrAxoeKOY3XyeUZCcWB
+         r/0HDqEXN84zIok3HDLy0H4GyscprKZWgGtmBQbZScduJroAWG1XJwJkRtfDGV1chp28
+         sFfaBFPwnjqPmbsorrt8vmm23Y73yB8xjAEOdSP5vGBR1EHpCyrlsbKMCVjOncMV1vfe
+         kbo8/2QdtoSVoaF7K+UvvEXYcVK+XFda+UAh9GnoJ4cjXMJJaP9y75NbQOmAjQwbWbf7
+         5IQA==
+X-Gm-Message-State: AD7BkJI/C27j+h//qknL+8JhY1ysAuAUf7g2p8Wds2JJ0o/ZUJ7mAD8vRd5v0UMH3tNXbAYZVu2k3j4PIEu0og==
+X-Received: by 10.112.56.43 with SMTP id x11mr3402413lbp.145.1460114827766;
+ Fri, 08 Apr 2016 04:27:07 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Fri, 8 Apr 2016 04:26:38 -0700 (PDT)
+In-Reply-To: <1459980722-4836-4-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291022>
 
-Hi Michael,
+On Thu, Apr 7, 2016 at 5:11 AM, David Turner <dturner@twopensource.com> wrote:
+> @@ -1045,4 +1046,21 @@ struct tm *git_gmtime_r(const time_t *, struct tm *);
+>  #define getc_unlocked(fh) getc(fh)
+>  #endif
+>
+> +#ifdef __linux__
+> +#define UNIX_PATH_MAX 108
+> +#elif defined(__APPLE__) || defined(BSD)
+> +#define UNIX_PATH_MAX 104
+> +#else
+> +/*
+> + * Quoth POSIX: The size of sun_path has intentionally been left
+> + * undefined. This is because different implementations use different
+> + * sizes. For example, 4.3 BSD uses a size of 108, and 4.4 BSD uses a
+> + * size of 104. Since most implementations originate from BSD
+> + * versions, the size is typically in the range 92 to 108.
+> + *
+> + * Thanks, POSIX!  Super-helpful!  Hope we don't overflow any buffers!
+> + */
+> +#define UNIX_PATH_MAX 92
+> +#endif
 
-On Thu, 7 Apr 2016, Michael S. Tsirkin wrote:
+Okay. You probably want to fix unix-socket.c too, and maybe reuse that
+code instead of opening unix sockets manually. There's a check in
+unix_sockaddr_init() about sizeof(sun_path) but I'm not sure if it
+suffices.
 
-> On Thu, Apr 07, 2016 at 05:23:09PM +0200, Johannes Schindelin wrote:
-> > 
-> > On Thu, 7 Apr 2016, Michael S. Tsirkin wrote:
-> > 
-> > > Reverts can typically be treated like squash.  Eliminating both the
-> > > original commit and the revert would be even nicer, but this seems a bit
-> > > harder to implement.
-> > 
-> > Whoa. This rings a lot of alarm bells, very loudly.
-> 
-> Whoa don't be alarmed. It's just a patch :).
-
-It's just a patch. Like every major breakage would be. So: no, there is
-reason to be alarmed if it is likely to disrupt normal usage.
-
-> > It seems you intend to introduce a *major* change in behavior,
-> 
-> Doing this automatically for all users might be a bit too drastic for
-> the upstream git.
-
-That is a pretty safe thing to say, even without the subjunctive.
-
-> If there's a commit later followed by a revert, history can be
-> simplified by squashing them, and if the result is empty, removing both.
-
-True. But that is not what the user told Git to do. If the user's
-intention was to squash the reverting patch, she could have easily done
-this:
-
-	git revert -n deadbeef
-	git commit --squash deadbeef
-
-where "deadbeef" is the placeholder for the actual commit to revert.
-
-And indeed, I use exactly this song and dance quite frequently, *iff* my
-intention is to drop a patch.
-
-A much better idea than co-opting the "Revert" commit message would be to
-introduce a sibling to --fixup and --squash that you could call --drop.
-
-Ciao,
-Johannes
+BTW, it looks like you tested this on Mac. But config.mak.uname only
+enables HAVE_SHM on Linux. Should it be enabled on Mac as well at
+least?
+--
+Duy
