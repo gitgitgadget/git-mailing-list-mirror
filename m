@@ -1,92 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 05/18] Add testcase for --index-only merges needing the recursive strategy
-Date: Fri, 08 Apr 2016 12:37:33 -0700
-Message-ID: <xmqqzit3vqma.fsf@gitster.mtv.corp.google.com>
-References: <1460098726-5958-1-git-send-email-newren@gmail.com>
-	<1460098726-5958-6-git-send-email-newren@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 08 21:37:43 2016
+From: Vasco Almeida <vascomalmeida@sapo.pt>
+Subject: [PATCH 1/7] l10n: index-pack: use plural string instead of normal one
+Date: Fri,  8 Apr 2016 20:02:39 +0000
+Message-ID: <1460145765-7454-1-git-send-email-vascomalmeida@sapo.pt>
+Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 08 22:09:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aocDu-0004BT-SU
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 21:37:43 +0200
+	id 1aociz-0002g5-1W
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 22:09:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758250AbcDHThh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2016 15:37:37 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:61522 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750908AbcDHThg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2016 15:37:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6B4A3520A0;
-	Fri,  8 Apr 2016 15:37:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qOkQ0Eb49seHfzt8Eb4j+Yt+ew8=; b=VJWd/E
-	C9m8aTXDZHsNFdh+W3dWvUa/LpnyDIuTfQjOPkhlHsbgsPwbWzorkoQeCh747nJw
-	lDldjgd6ByKcti5O1J+9r+3Ta1JABuax0wePkAb5CIHdZ6TSNG31Ii+ZBreENrKa
-	RggVkA0trMO/6Ry4qVWEPE0sbiooGb6gd/ke0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=E3kebt/ZNkhEHtBi7Nq6Bu57cc7RdzMQ
-	qWNy79IjLcHdvGmf4RZRV6bhJ8U5PAK5g5AffRIA9l2yQaVwtuOjrdhLI/Lmbaxg
-	Mgp8c/MYdFtvr8p4bJhkj10POftQ35Q0jOXlz2FA0UJGlticQpsjK3ygaHNV/h8R
-	rY+KwrPWTlo=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 626C65209F;
-	Fri,  8 Apr 2016 15:37:35 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7C1675209E;
-	Fri,  8 Apr 2016 15:37:34 -0400 (EDT)
-In-Reply-To: <1460098726-5958-6-git-send-email-newren@gmail.com> (Elijah
-	Newren's message of "Thu, 7 Apr 2016 23:58:33 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 579ECDCC-FDC1-11E5-889E-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1758466AbcDHUJn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2016 16:09:43 -0400
+Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:43908 "EHLO sapo.pt"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753090AbcDHUJm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2016 16:09:42 -0400
+X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Fri, 08 Apr 2016 16:09:42 EDT
+Received: (qmail 3330 invoked from network); 8 Apr 2016 20:03:00 -0000
+Received: (qmail 15300 invoked from network); 8 Apr 2016 20:03:00 -0000
+Received: from unknown (HELO linux-iv58.site) (vascomalmeida@sapo.pt@[85.246.157.91])
+          (envelope-sender <vascomalmeida@sapo.pt>)
+          by mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
+          for <git@vger.kernel.org>; 8 Apr 2016 20:02:55 -0000
+X-PTMail-RemoteIP: 85.246.157.91
+X-PTMail-AllowedSender-Action: 
+X-PTMail-Service: default
+X-Mailer: git-send-email 2.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291059>
 
-Elijah Newren <newren@gmail.com> writes:
+Git could output "completed with 1 local objects", but in this case
+using "object" instead of "objects" is the correct form.
+Use Q_() instead of _().
 
-> +test_expect_failure '--index-only with rename/modify works in non-bare-clone' '
-> +	git checkout B^0 &&
-> +
-> +	git merge --index-only -s recursive C^0 &&
-> +
-> +	echo "Making sure the working copy was not updated" &&
-> +	test ! -f b &&
-> +	test -f a &&
-> +	test $(git rev-parse B:a) = $(git hash-object a) &&
-> +
-> +	echo "Making sure the index was updated" &&
-> +	test 1 -eq $(git ls-files -s | wc -l) &&
-> +	test $(git rev-parse B:a) = $(git rev-parse :b)
+Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
+---
+ builtin/index-pack.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-The most crucial test that is missing (hence prevents reviewers from
-judging if --index-only is a good idea at all) is the test on HEAD.
-Does it record a merge between B and C and move HEAD there, i.e.
-
-	test $(git rev-parse HEAD^1) = $(git rev-parse B) &&
-	test $(git rev-parse HEAD^2) = $(git rev-parse C)
-
-or does it make a merge but does not advance HEAD, i.e.
-
-	test $(git rev-parse HEAD) = $(git rev-parse B)
-
-I fear that it may give a great headache to end users if you move
-HEAD in a repository with a working tree to point at the merge
-result--how do they reconcile the difference between the working
-tree (which was based on B) and the index and HEAD (which is now
-based on the result of the merge)?  The next "git commit -a" would
-appear that it would revert the changes brought in by this merge,
-wouldn't it?
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 2d1eb8b..e8c71fc 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1250,7 +1250,9 @@ static void conclude_pack(int fix_thin_pack, const char *curr_pack, unsigned cha
+ 		       nr_unresolved * sizeof(*objects));
+ 		f = sha1fd(output_fd, curr_pack);
+ 		fix_unresolved_deltas(f);
+-		strbuf_addf(&msg, _("completed with %d local objects"),
++		strbuf_addf(&msg, Q_("completed with %d local object",
++				     "completed with %d local objects",
++				     nr_objects - nr_objects_initial),
+ 			    nr_objects - nr_objects_initial);
+ 		stop_progress_msg(&progress, msg.buf);
+ 		strbuf_release(&msg);
+-- 
+2.1.4
