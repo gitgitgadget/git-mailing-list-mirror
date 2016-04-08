@@ -1,122 +1,114 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git 2.8.1 not working with socks5h https proxy anymore
-Date: Fri, 08 Apr 2016 21:07:33 +0200
-Message-ID: <1460142453.32486.2.camel@kaarsemaker.net>
+Date: Fri, 08 Apr 2016 12:16:06 -0700
+Message-ID: <xmqq8u0nx66h.fsf@gitster.mtv.corp.google.com>
 References: <CAEc+GFeG-ZdeTXGsjmwV0QP6QwYvjA4nzCGitka0aXjqEkatfg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Felix Ruess <felix.ruess@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 08 21:07:49 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Daniel Stenberg <daniel@haxx.se>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+To: Felix Ruess <felix.ruess@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 08 21:16:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aobky-0007Ku-8R
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 21:07:48 +0200
+	id 1aobt9-00058C-8l
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 21:16:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758763AbcDHTHi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Apr 2016 15:07:38 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:37225 "EHLO
-	mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750908AbcDHTHh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2016 15:07:37 -0400
-Received: by mail-wm0-f43.google.com with SMTP id n3so33723536wmn.0
-        for <git@vger.kernel.org>; Fri, 08 Apr 2016 12:07:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=/7eiBQqDwQv6ENb9O/NMi3vqDAyEbE2g1XTttSC5Rks=;
-        b=1eloXcsRcQqRGlQlBCUbi7OJcd9onQMUglOxwktCFpzYY7JXvvHfeyplvDFlTCpjRp
-         oW65TmogiaI4domLyEJMD6YrIktEwZAxO1gA9jFswrCXOnLA6DZ807D2CP0y8wUf+mY+
-         j5IJBbUd6UX2Dpl+DRHvHOJ1jTPizb4eYElAdKW2nD/5Zujge7J1NTo+nc9EcQvlE9lK
-         0prksxxn1EuUYQosVPMMbB+8e26r1PH63miP5ZaW2s+YXLDMgis5C9PYQ3cJkbUVBgzM
-         b5l5TCBxBIkkqdUV7tTs8deERiLy6F9cXxYHFdEoEBTE+oKa5zIOeDTwRFxSVEFVRFlN
-         n/eQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/7eiBQqDwQv6ENb9O/NMi3vqDAyEbE2g1XTttSC5Rks=;
-        b=b7QoB7WtvKdPCgJm7eG8FL228kxymVC/i1jqFGncmPi5HhkXXN3hS2eulVil8EZkou
-         qqwGzgV2ai+PJpgpnExO0k0pjexh2j7rDb9C7yy61iW5pFpgLm29et0aikssr72whUR8
-         9NWAOWAmTxFnYtGgI4KVpmlrstct/H6Y4lF/REVuU94q4/k9KBij4hMi3InTEZvIYAaq
-         J0h3xXTQj88wjSeywgyMsfGu4G8XQYxuxBYSZQLZrpRK7vWqibdIm7ZgMtQA+BAqKnKH
-         qxWnujz5dAY6DUEnTFscQVV6wIOclfNjZMVTcJMWBxkwIIgbVmBxD0jy1JRVtHHJZHbe
-         KPmg==
-X-Gm-Message-State: AD7BkJJsoqvem9N2Z4Ofj3LwjyzXUL3xBaQ9JvUg9haPBEY01hVIA/WvCBzUsUQz4pYQIQ==
-X-Received: by 10.194.22.97 with SMTP id c1mr11129042wjf.19.1460142455592;
-        Fri, 08 Apr 2016 12:07:35 -0700 (PDT)
-Received: from spirit.home.kaarsemaker.net ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id hh8sm14689114wjc.42.2016.04.08.12.07.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Apr 2016 12:07:34 -0700 (PDT)
+	id S1758854AbcDHTQL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2016 15:16:11 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:50064 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758848AbcDHTQK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2016 15:16:10 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8D94E51B43;
+	Fri,  8 Apr 2016 15:16:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UJ7Gj4qn0wYPafnunIzZuyV+MNo=; b=UVh2GZ
+	5lUHZ+nvIKZb5YDzyFvSLLfPeD2JcCTeizjGMIPzMbjgbHufEkXsMDJSCf9/XwsF
+	ffB9+Qq4pvA203gve5VVMe8+QYyWO33rlO642h4hiIWq82CaoWNelX1/cr/yqY0E
+	+XBo6THtJZ6ZJ0358KNMD45ijnFwvUx4SRvNE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=C06c0IIkcsPa7tmUL0225F2PEVLTIjQ5
+	aKK1wKkHcyiISnS9/VC26RrSWghgCcBah37F1IT6zzDnNj/S5fD0EglshpT2EFjY
+	S4DfRNW7dXvRUPkMdQIdaB3WXyf5HAgJArkmbxBoUvNPzIivd56MtClPbnrfBuBS
+	HJ1ry6Xk7nE=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8455951B41;
+	Fri,  8 Apr 2016 15:16:08 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 01DC151B40;
+	Fri,  8 Apr 2016 15:16:07 -0400 (EDT)
 In-Reply-To: <CAEc+GFeG-ZdeTXGsjmwV0QP6QwYvjA4nzCGitka0aXjqEkatfg@mail.gmail.com>
-X-Mailer: Evolution 3.18.5.2-0ubuntu1 
+	(Felix Ruess's message of "Fri, 8 Apr 2016 20:46:08 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 58CE6CE6-FDBE-11E5-9E27-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291055>
 
-On vr, 2016-04-08 at 20:46 +0200, Felix Ruess wrote:
-> Hi all,
->=20
+Felix Ruess <felix.ruess@gmail.com> writes:
+
 > I just encountered a problem with the latest git version (2.8.1) that
 > looks like a regression to me:
-> When trying to clone a repo via a https socks5 proxy the connection
-> times out:
->=20
-> $ git config --global 'http.proxy=3Dsocks5h://127.0.0.1:1080'
-> $ export GIT_CURL_VERBOSE=3D1
-> $ git clone https://foo.de/bar.git
-> Cloning into 'bar'...
-> * Couldn't find host foo.de in the .netrc file; using defaults
-> * Hostname was NOT found in DNS cache
-> *=C2=A0=C2=A0=C2=A0Trying 127.0.0.1...
-> * Hostname was NOT found in DNS cache
-> * 80
-> * 147
-> * 201
-> * 194
-> channel 2: open failed: connect failed: Connection timed out
-> channel 4: open failed: connect failed: Connection timed out
-> * Failed to receive SOCKS5 connect request ack.
-> * Closing connection 0
-> fatal: unable to access 'https://foo.de/bar.git/': Failed to receive
-> SOCKS5 connect request ack.
->=20
-> I'm on Ubuntu 14.04 64bit and it works perfectly fine with git 1.9.1
-> (and was also working with older git 2.x versions, although not sure
-> any more what the last working version was).
+> When trying to clone a repo via a https socks5 proxy the connection times out:
+>
+> $ git config --global 'http.proxy=socks5h://127.0.0.1:1080'
 
-I think that's=C2=A06d7afe07f29df75f831a46fb0f657fa37e561779, which
-interprets that as a socks5 proxy.
+The first version of Git that has code that explicitly supports
+socks proxy is 2.6.4, it seems.  Since then we have always used
+CURLPROXY_SOCKS5 for curl_http_proxy that begins with a string
+"socks5".
 
-I think this should fix it (but haven't tested it beyond 'it
-compiles'):
+Checking
+
+    https://github.com/curl/curl/blob/master/docs/libcurl/symbols-in-versions
+
+I find that that at curl 7.18.0, curl added a separate
+CURLPROXY_SOCKS5_HOSTNAME that can be triggered by "socks5h:" that
+is separate from CURLPROXY_SOCKS5, and I am guessing that the
+differences in behaviour between these two is what is causing you
+trouble.  https://curl.haxx.se/libcurl/c/CURLOPT_PROXY.html says
+
+  ..., socks5h:// (the last one to enable socks5 and asking the proxy
+  to do the resolving, also known as CURLPROXY_SOCKS5_HOSTNAME type)
+
+and because not using _HOSTNAME variant would likely not ask the
+proxy to do the resolving, it explains the stall on your end, if
+your box cannot resolve external hostname.
+
+Perhaps the attached patch may help?
+
+I do not know if Pat is still active as a developer, but I am
+wondering what the reason was to use starts_with(..., "socks5")
+instead of "socks5:", "socks4a:", etc. when identifying the proxy
+type.
+
+ http.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/http.c b/http.c
 index 69da445..4304b80 100644
 --- a/http.c
 +++ b/http.c
 @@ -605,7 +605,10 @@ static CURL *get_curl_handle(void)
-=C2=A0	if (curl_http_proxy) {
-=C2=A0		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
-=C2=A0#if LIBCURL_VERSION_NUM >=3D 0x071800
+ 	if (curl_http_proxy) {
+ 		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
+ #if LIBCURL_VERSION_NUM >= 0x071800
 -		if (starts_with(curl_http_proxy, "socks5"))
 +		if (starts_with(curl_http_proxy, "socks5h"))
 +			curl_easy_setopt(result,
 +				CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
 +		else if (starts_with(curl_http_proxy, "socks5"))
-=C2=A0			curl_easy_setopt(result,
-=C2=A0				CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
-=C2=A0		else if (starts_with(curl_http_proxy, "socks4a"))
-
-But I have no socks5h proxy to test with. Can you give this patch a spi=
-n?
---=20
-Dennis Kaarsemaker
-www.kaarsemaker.net
+ 			curl_easy_setopt(result,
+ 				CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
+ 		else if (starts_with(curl_http_proxy, "socks4a"))
