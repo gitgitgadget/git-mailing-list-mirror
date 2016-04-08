@@ -1,118 +1,88 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v3 03/16] index-helper: new daemon for caching index and
- related stuff
-Date: Fri, 08 Apr 2016 18:16:24 -0400
-Organization: Twitter
-Message-ID: <1460153784.5540.19.camel@twopensource.com>
-References: <1459980722-4836-1-git-send-email-dturner@twopensource.com>
-	 <1459980722-4836-4-git-send-email-dturner@twopensource.com>
-	 <CACsJy8C5NhaAAW=wzpwkBdLvVZz8wVM7QX==n_CL5g+LLAKY=A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 11/18] merge: Add a new --index-only option, not yet implemented
+Date: Fri, 08 Apr 2016 15:33:10 -0700
+Message-ID: <xmqqzit3u3x5.fsf@gitster.mtv.corp.google.com>
+References: <1460098726-5958-1-git-send-email-newren@gmail.com>
+	<1460098726-5958-12-git-send-email-newren@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>, aevarb@gmail.com,
-	jeffhost@microsoft.com
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 09 00:16:43 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 09 00:33:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoehm-0004XR-LS
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 00:16:43 +0200
+	id 1aoext-0007xI-Ag
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 00:33:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753788AbcDHWQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2016 18:16:28 -0400
-Received: from mail-qg0-f53.google.com ([209.85.192.53]:35010 "EHLO
-	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752686AbcDHWQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2016 18:16:27 -0400
-Received: by mail-qg0-f53.google.com with SMTP id f105so78543970qge.2
-        for <git@vger.kernel.org>; Fri, 08 Apr 2016 15:16:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:mime-version:content-transfer-encoding;
-        bh=2rsfC87yWXrasOSSGuwGOuOeN3iVqBw7Ons92UjsDNY=;
-        b=ko3BEZZg5X9d0QqqxyC1eQWfY4A2UASXsIOmg4PQl/oll6vHJe9Eae/WMcigXrfpMr
-         18d2frm1ywugoWGkF3pzrOvQBJbEngZLNyedhMIKj7NrHtzIrd51ne+xJkHn3d28tmS1
-         mg/Mkvb29u6sW33WSQwsJ+fY7ui0XKCMbqnPzcNs6YkqbXuh7SAPAAo1g/+6wLWjDSFr
-         YlfV/07Rjmxhz/tTfslnLD74pZwwZ0SyBTiYw8C6EQCMg8+ye7sRDRQGNC7TAk+Sf8Ls
-         tXOsCk0lNONCJ8MSX1X7ZXd78UqCHCCPOIIJcjpwLEDaMQwnSBYLzxszCBSOaZ+iKbqN
-         7bEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=2rsfC87yWXrasOSSGuwGOuOeN3iVqBw7Ons92UjsDNY=;
-        b=ljk4J2WMrKbaVNKMSkGYh3MJhpASTV1DLXXzO5JtYyyqRcD1hg2AuxKvqJVLM5n6hg
-         ArV1+Ld96Z9xdXOvWY+zewZOzpgMKLSeL/iTXe0wwHzO/l5jTM0P/mDZHcMje0N9Y3IQ
-         pDf0t1NABBkN0kPd/tz3G6/Cvh8ZIqRyso6EhuyC8valHvNCY9mANj4TdCKB6HxHMn0J
-         otoz/gQhzhvtJpuXhURkwAKBhgChBt/cz4G5EAkDrtY4XfvYM63lD0/zN4ayfDWA6CFd
-         xbPhDDuBItiTEhyzb1io9iYgmJM1RnqB3jI1SD72au9LAI2u7BYvvIt9bwI+ObC8Zwwk
-         K3fg==
-X-Gm-Message-State: AD7BkJLgOChVzazvRjv2JlrrXN85ikN55xZ96aOunAU+b00iCcYG6rZ2D4MNhF3SZT0S1g==
-X-Received: by 10.140.136.70 with SMTP id 67mr15235976qhi.46.1460153785998;
-        Fri, 08 Apr 2016 15:16:25 -0700 (PDT)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id s8sm6339393qhb.20.2016.04.08.15.16.24
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 08 Apr 2016 15:16:25 -0700 (PDT)
-In-Reply-To: <CACsJy8C5NhaAAW=wzpwkBdLvVZz8wVM7QX==n_CL5g+LLAKY=A@mail.gmail.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S1759233AbcDHWdO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2016 18:33:14 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:64205 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1759087AbcDHWdN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2016 18:33:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0BC7052D27;
+	Fri,  8 Apr 2016 18:33:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NgSnsDF7I3LNlAZViH9yHyBw6G0=; b=Ub32ml
+	CUQcVKscfu8Vf6Nvd3K9798IL9cOlavEq2fRklKp76Er9O+u2eTSzAkPzOgylI/Z
+	rhJX1KqIInRRhfdC1mgagE329q+oK7PALPkoIQ7pEPO8QDYR1Kd/Mx4NLWBKTD+M
+	dp4WtfYpNkJI3Hm8DzBo4Hjvc3l40tmcPNK6c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=as5SkAyIrmnSrD1AVtiZ+x4SjRnmygcp
+	9FpB3b5rprKyHIxmnmif1Q79Kj0FR7pZzTFbtSSZ7YN3Kj6ZFO6XlqLzlRBxPX/E
+	8UuJjifrBOvpuaRkofMVMaICz0MbNJCuVS6neBspmKnQ5TiVspQYkyw8xurPaT5J
+	8ie9mYnyDbg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 02E1052D25;
+	Fri,  8 Apr 2016 18:33:12 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7D84E52D24;
+	Fri,  8 Apr 2016 18:33:11 -0400 (EDT)
+In-Reply-To: <1460098726-5958-12-git-send-email-newren@gmail.com> (Elijah
+	Newren's message of "Thu, 7 Apr 2016 23:58:39 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E02A8F9C-FDD9-11E5-9AF8-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291075>
 
-On Fri, 2016-04-08 at 18:26 +0700, Duy Nguyen wrote:
-> On Thu, Apr 7, 2016 at 5:11 AM, David Turner <
-> dturner@twopensource.com> wrote:
-> > @@ -1045,4 +1046,21 @@ struct tm *git_gmtime_r(const time_t *,
-> > struct tm *);
-> >  #define getc_unlocked(fh) getc(fh)
-> >  #endif
-> > 
-> > +#ifdef __linux__
-> > +#define UNIX_PATH_MAX 108
-> > +#elif defined(__APPLE__) || defined(BSD)
-> > +#define UNIX_PATH_MAX 104
-> > +#else
-> > +/*
-> > + * Quoth POSIX: The size of sun_path has intentionally been left
-> > + * undefined. This is because different implementations use
-> > different
-> > + * sizes. For example, 4.3 BSD uses a size of 108, and 4.4 BSD
-> > uses a
-> > + * size of 104. Since most implementations originate from BSD
-> > + * versions, the size is typically in the range 92 to 108.
-> > + *
-> > + * Thanks, POSIX!  Super-helpful!  Hope we don't overflow any
-> > buffers!
-> > + */
-> > +#define UNIX_PATH_MAX 92
-> > +#endif
-> 
-> Okay. You probably want to fix unix-socket.c too, and maybe reuse
-> that
-> code instead of opening unix sockets manually. There's a check in
-> unix_sockaddr_init() about sizeof(sun_path) but I'm not sure if it
-> suffices.
-> 
-> BTW, it looks like you tested this on Mac. But config.mak.uname only
-> enables HAVE_SHM on Linux. Should it be enabled on Mac as well at
-> least?
+Elijah Newren <newren@gmail.com> writes:
 
-I did not in fact test on Mac.  I should have.  And indeed I need to
-change config.mak.uname. 
+> +--index-only::
+> +	Perform merge on index only, leaving working tree alone.  Most
+> +	users do NOT want to use this flag, as it will leave the
+> +	working tree and the index completely out of sync, which is
+> +	very likely to confuse users and prevent a subsequent 'git
+> +	merge --abort' from working.
 
-Also I was leaking some memory.  And had some whiny warnings.  And had
-a bug around how non-blocking sockets work on Mac. 
+This whole paragraph is a strong sign that this feature as-is is not
+a good addition.
 
-And SHM on Macs works a bit differently than on Linux in at least two
-irritating ways. 
+On the other hand ...
 
-So, uh, new version to come once I actually make it work on Mac.
-Probably Monday.
+> +	It is intended for script
+> +	writers to have a way to easily check whether a merge would
+> +	succeed and which files would conflict, typically from bare
+> +	clones.
+
+... this may be a good goal to aim for, but I think you are
+understating.  You seem to be wanting a lot more than "easily check
+whether..."; isn't this more like "It is for scripts to create a
+merge and advance the branch when no need for manual conflict
+resolution in a bare repository, and to learn which paths would
+require manual conflicts when it fails", no?
+
+I'd think either (1) limit this to bare repository only, or (2) do
+the "git merge --into master en/topic" I outlined in the other
+message, (or both) would be a sensible alternative for a feature
+whose description has to begin with "Most users do not want this".
