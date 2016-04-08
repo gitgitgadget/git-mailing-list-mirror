@@ -1,84 +1,122 @@
-From: Felix Ruess <felix.ruess@gmail.com>
-Subject: git 2.8.1 not working with socks5h https proxy anymore
-Date: Fri, 8 Apr 2016 20:46:08 +0200
-Message-ID: <CAEc+GFeG-ZdeTXGsjmwV0QP6QwYvjA4nzCGitka0aXjqEkatfg@mail.gmail.com>
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: git 2.8.1 not working with socks5h https proxy anymore
+Date: Fri, 08 Apr 2016 21:07:33 +0200
+Message-ID: <1460142453.32486.2.camel@kaarsemaker.net>
+References: <CAEc+GFeG-ZdeTXGsjmwV0QP6QwYvjA4nzCGitka0aXjqEkatfg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 08 20:46:38 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Felix Ruess <felix.ruess@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 08 21:07:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aobQS-0000Cj-Di
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 20:46:36 +0200
+	id 1aobky-0007Ku-8R
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 21:07:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758796AbcDHSqQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2016 14:46:16 -0400
-Received: from mail-lf0-f51.google.com ([209.85.215.51]:34828 "EHLO
-	mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753725AbcDHSqP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2016 14:46:15 -0400
-Received: by mail-lf0-f51.google.com with SMTP id c126so87742844lfb.2
-        for <git@vger.kernel.org>; Fri, 08 Apr 2016 11:46:14 -0700 (PDT)
+	id S1758763AbcDHTHi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Apr 2016 15:07:38 -0400
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:37225 "EHLO
+	mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750908AbcDHTHh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2016 15:07:37 -0400
+Received: by mail-wm0-f43.google.com with SMTP id n3so33723536wmn.0
+        for <git@vger.kernel.org>; Fri, 08 Apr 2016 12:07:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=WP8eQQSaD31eY36Bg/ZCk2QhMJFpYbriNIcjkppLHN8=;
-        b=jSdk7dhnzhw67IApaFMyPfJsVHVjhb9bDKXSWxm+ip7nXhPDL3u+vOVc2H11NHtgU/
-         TRht4BVMnRwTzbz1SdRtXrdFjYzZfjbzCwb8OAn2OmNMl/7C8NHKJvZ3i+qs+hJ5Eo2w
-         xrrcPcB7Dowf4mmYiJ84JshSWuKsWDNKEBcFODKmxZ71ln+tSdaOMHWm5XTE3JQI+VqC
-         6T9ZXBZmhMtK1yc1lq4vbO4JeZsghFP4+sTv+w/SJ3uzE+rjma61mGBSGPsRx0NVoIB9
-         XS0DHqoWJlJvWl35RnlhvuPoMZiTuaDLmSSYgYkssoYTgwxVh8ReM/9yaWJFv1QxJ5ND
-         EARg==
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=/7eiBQqDwQv6ENb9O/NMi3vqDAyEbE2g1XTttSC5Rks=;
+        b=1eloXcsRcQqRGlQlBCUbi7OJcd9onQMUglOxwktCFpzYY7JXvvHfeyplvDFlTCpjRp
+         oW65TmogiaI4domLyEJMD6YrIktEwZAxO1gA9jFswrCXOnLA6DZ807D2CP0y8wUf+mY+
+         j5IJBbUd6UX2Dpl+DRHvHOJ1jTPizb4eYElAdKW2nD/5Zujge7J1NTo+nc9EcQvlE9lK
+         0prksxxn1EuUYQosVPMMbB+8e26r1PH63miP5ZaW2s+YXLDMgis5C9PYQ3cJkbUVBgzM
+         b5l5TCBxBIkkqdUV7tTs8deERiLy6F9cXxYHFdEoEBTE+oKa5zIOeDTwRFxSVEFVRFlN
+         n/eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=WP8eQQSaD31eY36Bg/ZCk2QhMJFpYbriNIcjkppLHN8=;
-        b=VCGxkt6U2GdGUvWq8bZG4AYeE6kB0rUY71Rb7NeLqfxTctRSb6nPtX/rL3+mA/yU+b
-         V3cZyhDL0vh9qarl5ZVO/7xErcKyUptLjfwCQK2Mxv3gzLwTr7xPtLv6WaSeorHNfdNZ
-         YzGUw8NTSHaj/Z4SKRFx9iiDvJFyizlvzB5wYViOJPWGS9M7PVlErhA4PWIeKQoK5FMk
-         tVGmRYHGBXCX1zKe8ExW9u57Pjw+BW4OJsMVhhEtkKALFQZkLavNTiQGcp35WHQ02hNC
-         Fq2uq+dl/u2FZt+w6h1k6E6M0qBhV9y1iKZMAkpHMbgPrvej7vpossfS5KK6sV7goJCP
-         OZvA==
-X-Gm-Message-State: AD7BkJL00a5l7SGwO+XKVQS12mWQp6GS+bGc89YgHR6jovX+cEBpSfH1iUAkLeXLJRcQKSeGzGETMicXFQ8SXA==
-X-Received: by 10.112.129.169 with SMTP id nx9mr4185393lbb.96.1460141168781;
- Fri, 08 Apr 2016 11:46:08 -0700 (PDT)
-Received: by 10.114.68.70 with HTTP; Fri, 8 Apr 2016 11:46:08 -0700 (PDT)
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=/7eiBQqDwQv6ENb9O/NMi3vqDAyEbE2g1XTttSC5Rks=;
+        b=b7QoB7WtvKdPCgJm7eG8FL228kxymVC/i1jqFGncmPi5HhkXXN3hS2eulVil8EZkou
+         qqwGzgV2ai+PJpgpnExO0k0pjexh2j7rDb9C7yy61iW5pFpgLm29et0aikssr72whUR8
+         9NWAOWAmTxFnYtGgI4KVpmlrstct/H6Y4lF/REVuU94q4/k9KBij4hMi3InTEZvIYAaq
+         J0h3xXTQj88wjSeywgyMsfGu4G8XQYxuxBYSZQLZrpRK7vWqibdIm7ZgMtQA+BAqKnKH
+         qxWnujz5dAY6DUEnTFscQVV6wIOclfNjZMVTcJMWBxkwIIgbVmBxD0jy1JRVtHHJZHbe
+         KPmg==
+X-Gm-Message-State: AD7BkJJsoqvem9N2Z4Ofj3LwjyzXUL3xBaQ9JvUg9haPBEY01hVIA/WvCBzUsUQz4pYQIQ==
+X-Received: by 10.194.22.97 with SMTP id c1mr11129042wjf.19.1460142455592;
+        Fri, 08 Apr 2016 12:07:35 -0700 (PDT)
+Received: from spirit.home.kaarsemaker.net ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id hh8sm14689114wjc.42.2016.04.08.12.07.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 08 Apr 2016 12:07:34 -0700 (PDT)
+In-Reply-To: <CAEc+GFeG-ZdeTXGsjmwV0QP6QwYvjA4nzCGitka0aXjqEkatfg@mail.gmail.com>
+X-Mailer: Evolution 3.18.5.2-0ubuntu1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291054>
 
-Hi all,
+On vr, 2016-04-08 at 20:46 +0200, Felix Ruess wrote:
+> Hi all,
+>=20
+> I just encountered a problem with the latest git version (2.8.1) that
+> looks like a regression to me:
+> When trying to clone a repo via a https socks5 proxy the connection
+> times out:
+>=20
+> $ git config --global 'http.proxy=3Dsocks5h://127.0.0.1:1080'
+> $ export GIT_CURL_VERBOSE=3D1
+> $ git clone https://foo.de/bar.git
+> Cloning into 'bar'...
+> * Couldn't find host foo.de in the .netrc file; using defaults
+> * Hostname was NOT found in DNS cache
+> *=C2=A0=C2=A0=C2=A0Trying 127.0.0.1...
+> * Hostname was NOT found in DNS cache
+> * 80
+> * 147
+> * 201
+> * 194
+> channel 2: open failed: connect failed: Connection timed out
+> channel 4: open failed: connect failed: Connection timed out
+> * Failed to receive SOCKS5 connect request ack.
+> * Closing connection 0
+> fatal: unable to access 'https://foo.de/bar.git/': Failed to receive
+> SOCKS5 connect request ack.
+>=20
+> I'm on Ubuntu 14.04 64bit and it works perfectly fine with git 1.9.1
+> (and was also working with older git 2.x versions, although not sure
+> any more what the last working version was).
 
-I just encountered a problem with the latest git version (2.8.1) that
-looks like a regression to me:
-When trying to clone a repo via a https socks5 proxy the connection times out:
+I think that's=C2=A06d7afe07f29df75f831a46fb0f657fa37e561779, which
+interprets that as a socks5 proxy.
 
-$ git config --global 'http.proxy=socks5h://127.0.0.1:1080'
-$ export GIT_CURL_VERBOSE=1
-$ git clone https://foo.de/bar.git
-Cloning into 'bar'...
-* Couldn't find host foo.de in the .netrc file; using defaults
-* Hostname was NOT found in DNS cache
-*   Trying 127.0.0.1...
-* Hostname was NOT found in DNS cache
-* 80
-* 147
-* 201
-* 194
-channel 2: open failed: connect failed: Connection timed out
-channel 4: open failed: connect failed: Connection timed out
-* Failed to receive SOCKS5 connect request ack.
-* Closing connection 0
-fatal: unable to access 'https://foo.de/bar.git/': Failed to receive
-SOCKS5 connect request ack.
+I think this should fix it (but haven't tested it beyond 'it
+compiles'):
 
-I'm on Ubuntu 14.04 64bit and it works perfectly fine with git 1.9.1
-(and was also working with older git 2.x versions, although not sure
-any more what the last working version was).
+diff --git a/http.c b/http.c
+index 69da445..4304b80 100644
+--- a/http.c
++++ b/http.c
+@@ -605,7 +605,10 @@ static CURL *get_curl_handle(void)
+=C2=A0	if (curl_http_proxy) {
+=C2=A0		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
+=C2=A0#if LIBCURL_VERSION_NUM >=3D 0x071800
+-		if (starts_with(curl_http_proxy, "socks5"))
++		if (starts_with(curl_http_proxy, "socks5h"))
++			curl_easy_setopt(result,
++				CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
++		else if (starts_with(curl_http_proxy, "socks5"))
+=C2=A0			curl_easy_setopt(result,
+=C2=A0				CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
+=C2=A0		else if (starts_with(curl_http_proxy, "socks4a"))
 
-Cheers, Felix
+But I have no socks5h proxy to test with. Can you give this patch a spi=
+n?
+--=20
+Dennis Kaarsemaker
+www.kaarsemaker.net
