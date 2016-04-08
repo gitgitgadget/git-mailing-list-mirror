@@ -1,189 +1,187 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [RFC/PATCH 00/18] Add --index-only option to git merge
-Date: Thu,  7 Apr 2016 23:58:28 -0700
-Message-ID: <1460098726-5958-1-git-send-email-newren@gmail.com>
-Cc: Elijah Newren <newren@gmail.com>
+Subject: [RFC/PATCH 14/18] Add --index-only support for ff_only merges
+Date: Thu,  7 Apr 2016 23:58:42 -0700
+Message-ID: <1460098726-5958-15-git-send-email-newren@gmail.com>
+References: <1460098726-5958-1-git-send-email-newren@gmail.com>
+Cc: Elijah Newren <newren@palantir.com>,
+	Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 08 08:59:29 2016
+X-From: git-owner@vger.kernel.org Fri Apr 08 09:00:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoQO5-0002VL-Qo
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 08:59:26 +0200
+	id 1aoQOh-0002y6-MM
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 09:00:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932603AbcDHG7B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2016 02:59:01 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34737 "EHLO
-	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932507AbcDHG67 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2016 02:58:59 -0400
-Received: by mail-pf0-f196.google.com with SMTP id d184so8833728pfc.1
-        for <git@vger.kernel.org>; Thu, 07 Apr 2016 23:58:58 -0700 (PDT)
+	id S932679AbcDHG7h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2016 02:59:37 -0400
+Received: from mail-pa0-f67.google.com ([209.85.220.67]:33046 "EHLO
+	mail-pa0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932630AbcDHG7O (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2016 02:59:14 -0400
+Received: by mail-pa0-f67.google.com with SMTP id q6so8527244pav.0
+        for <git@vger.kernel.org>; Thu, 07 Apr 2016 23:59:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=aRCookQ4SJPaoI5NWEaYU4pjhp3X67W/0RLWDF0BYDc=;
-        b=eHy9cbGTVZYQtySmq7WVSpcrlDJUQNxLv40ZXqc3NPjh3ZF4MUhnDL3xeGBMtMJvKN
-         QgTQMk2Mjt+9sXfqNn2dkMzI4N/I2Lm7cokbMwoEmNH/GaL8Lk/xT7rQabVs51WVRGZf
-         QPhxFekfBQVhtQHKNt25UlAoe32acdoNgwgMX0SM2SbMBdulZ3pTxzlnkefnVEOFB5c5
-         SYKSjEjiD/ruoDV0NQeBzJMkHJ5atbviMIsHdVUk2huowtlkZZxu+aZqiHWinX+kF2G4
-         D8hE4SzQsx84wwQYdP/fKsGcZU0v+xYwsw+Clyax2GFkFd9tSOIEZrwoipFE95JWA6u/
-         hGwQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=DCmCYe4joyX5QgvICVuK1oiL6/WrfrB03TjBqs/8fUI=;
+        b=FjFIdAQlC1KHwl6aX0A0T39RBVGErNxFyi/I5VrCRtdsRNqdTu3+t0l8JHEs5Jss3r
+         2vUWsdqV0kRZ0nfhzylfErkirrqAmMM1p4io+OnwwLGTZdHLVwm7Lz5lDl55TQ7nVc9v
+         FPKXYvHgn5d0WmYPx9+gXUcim/ZWwS8PrOdD9vSRpwm89L/7UOV9QREIHlsTwrD4q9nC
+         nkZTZ+8wrE/Dxred8eSuamPydQ/l7blFbAEBgTlNupIV4iAFL9qW4Tu1iQbSYwXWs5vg
+         BzMq2F/eVowEVbXr5WyClnG8mcA3PVjsWj2zSXLWZ3cSRuW8KYSDd3wmQcDhf5xjXHcE
+         KkdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=aRCookQ4SJPaoI5NWEaYU4pjhp3X67W/0RLWDF0BYDc=;
-        b=GO47Ut08MwNAepZd8wFZ3FywO8XXCQjzUXwLnyR/l0ZX4e6zAV2hvQaMyC1Qwmlzbu
-         dpxw1D0cF3uScKU/VuoYOna92HVDptOK00xA/c9yzWCb1sp/Z10l5QguQj/jgpLkhYz7
-         hpnYu8mCu+TeTL8Olsrsw7iefm0lDw+K+1n+8+G0SYHvw5t6myAv+OiVWPCcI+kn08qI
-         OFY3f+sTGjpXTq4a70WlOn5G4U24D30DtW0Wk9KZPucqkDCnQQGMIwusSTzqcaYPWj4m
-         20bUZLpzansRxl/F96uEcL98amfqcR0B4KPvep5ZEtcnng+7fjWJGxukH2TlM9ukpf6U
-         BSWw==
-X-Gm-Message-State: AD7BkJI5anSt7GQKsCdLZh35n6nswBDBkphlXxXubjxpOL3YXnUQ7fRfaKozz1O18BqnSA==
-X-Received: by 10.98.11.78 with SMTP id t75mr10414614pfi.72.1460098738156;
-        Thu, 07 Apr 2016 23:58:58 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=DCmCYe4joyX5QgvICVuK1oiL6/WrfrB03TjBqs/8fUI=;
+        b=gApCi8KUEHZqjxy0xUitAIrEWNkPaQMDI/Pr/LlCBeqqRXJ6+/hCYXAg15qdBu3y4s
+         asLg9l//iTxphTqYXa9lJ2oHXK4DErbtxhuhatGIubjksWm2qw7qYWoKFPcqJXQDAhu8
+         uhNMPjWdfjmrlNCGqmzpbujvbvdDYgfguZQzBTl0K6d0qYbVLsiP/WDephg7RLzvSKQm
+         VKX22hPYF6x7piEA1y6PkxTuxbvowDScYSmQIrfPgX3okfhbkAiry3LLgH2r23P+WxQq
+         j2X9zSXeXy4DgVp9zDUwho9KhBesFaewmQbgBwt5qg/cJsRp2F+mmo7YPR625G1QCqes
+         pzRg==
+X-Gm-Message-State: AD7BkJLtwpY4c3+V9aoD2KJZefxMyQ84j9VbHJut1TBkFc1//PTBf4b+jcb1ZmbddKe/5g==
+X-Received: by 10.66.248.163 with SMTP id yn3mr3990711pac.86.1460098753335;
+        Thu, 07 Apr 2016 23:59:13 -0700 (PDT)
 Received: from unknownB8F6B118D3EB.attlocal.net ([2602:30a:2c28:20f0:baf6:b1ff:fe18:d3eb])
-        by smtp.gmail.com with ESMTPSA id w62sm16371973pfa.79.2016.04.07.23.58.57
+        by smtp.gmail.com with ESMTPSA id w62sm16371973pfa.79.2016.04.07.23.59.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 07 Apr 2016 23:58:57 -0700 (PDT)
+        Thu, 07 Apr 2016 23:59:12 -0700 (PDT)
 X-Mailer: git-send-email 2.8.0.18.gc685494
+In-Reply-To: <1460098726-5958-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291008>
 
-This patch series adds an --index-only flag to git merge, the idea
-being to allow a merge to be performed entirely in the index without
-touching (or even needing) a working tree.
+From: Elijah Newren <newren@palantir.com>
 
-The core fix, to merge-recursive, was actually quite easy.  The
-recursive merge logic already had the ability to ignore the working
-directory and operate entirely on the index -- it needed to do this
-when creating a virtual merge base, i.e. when o->call_depth > 0.  It's
-just that o->call_depth was also used for other purposes, so I just
-needed to introduce a new flag to disambiguate and switch all the
-necessary index-only-related call sites to use it.  It actually seems
-to make the code slightly easier to read too, which is a nice bonus.
-That was all done in patch 12 of this series.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ builtin/merge.c             | 1 +
+ builtin/pull.c              | 4 ++--
+ cache.h                     | 1 +
+ merge.c                     | 4 +++-
+ sequencer.c                 | 2 +-
+ t/t6043-merge-index-only.sh | 6 +++---
+ 6 files changed, 11 insertions(+), 7 deletions(-)
 
-Adding all the necessary testcases and switching over the other merge
-strategies turned out to be the harder part...and still has a problem,
-as I'll mention below.
-
-
-A brief-ish summary of the series:
-
-* Patches 1 and 2 are unrelated cleanups, which could be submitted
-  independently.  However, submitting them as separate patches would
-  result in a minor conflict, so I'm just including them together.
-
-* Patches 3 and 4 add some testcases and a fix for a separate issue
-  found while testing this series which could be split off and
-  submitted separately, but fixing this problem and enforcing the
-  starting state I expected permitted me to reduce the range of
-  testcases I needed to consider for the --index-only merges.  So I
-  thought it made sense to include in this series.
-
-  In particular, I was worried about how git merge behaved when the
-  index differed from HEAD prior to the merge starting.  I discovered
-  that it wasn't just allowed for fast-forward merges (where behavior
-  is well-defined) but that it was also (accidentally I'm assuming)
-  allowed for octopus merges with weird/surprising behavior.
-
-* Patches 5-10 add testcases for the --index-only option for each of
-  the merge strategies/cases: recursive, fast-forward update, resolve,
-  octopus, ours, subtree.
-
-* Patch 11 adds the --index-only option to the code and adds the
-  documentation, while patches 12-18 implement the --index-only option
-  for each of the strategies/cases.
-
-
-Some things I am concerned about:
-
-* The option name (--index-only) may be slightly misleading since the
-  index isn't the only thing modified within the git directory, other
-  normal things under there are still modified (e.g. writing MERGE_*
-  files, sticking blobs/trees/commits in objects/*, and updating refs
-  and reflogs).  I personally prefer this name and think the confusion
-  would be minor, but I'm a bit unsure and wanted some other opinions
-  on this.
-
-* I didn't add this option to the separate git-merge-recursive
-  executable and make the worktree-optional modification to the git
-  subcommands merge-recursive, merge-recursive-ours,
-  merge-recursive-theirs, and merge-subtree in git.c.  Should I, or
-  are these separate binaries and subcommands just present for
-  historical backward compatibility reasons with people expected to
-  call e.g. "git merge -s recursive" these days?
-
-* The addition of --index-only to the various git-merge*.sh scripts is
-  lacking in flexibility (e.g. has to be passed as the first
-  argument).  These scripts seemed to have fairly rigid calling
-  conventions already, suggesting there's not much value in making
-  them flexible, but perhaps that was the wrong conclusion to draw.
-
-* Expanding on the last item, git-merge-one-file.sh is of particular
-  concern; it seemed to strongly assume exactly seven arguments and
-  that the position of each mattered.  I didn't want to break that, so
-  I added --index-only as an optional 8th argument, even though it
-  seems slightly odd force an option argument to always come after
-  positional ones (and it made the changes to merge_entry in
-  merge-index.c slightly easier to implement).  Does that seem okay?
-
-* For a long time I had two remaining bugs, one of which was in
-  checkout_fast_forward.  I was feeling kind of sheepish about that,
-  because how much simpler could it be than handling a fast-forward
-  merge (with possible uncommited index entries to carry forward)?
-  Getting stuck on a simple case like that would be embarrassing.
-  Luckily, I figured out that bug.  So, that leaves just one case left
-  that I can't seem to figure out: read_tree_trivial.  So much better,
-  right?  Even it's name is sitting there, mocking me.  "Ha ha, I'm
-  read_tree_*trivial* and you can't figure me out."  read_tree_trivial
-  is a jerk.
-
-
-Elijah Newren (18):
-  Remove duplicate code
-  Avoid checking working copy when creating a virtual merge base
-  Document weird bug in octopus merges via testcases
-  merge-octopus: Abort if index not clean
-  Add testcase for --index-only merges needing the recursive strategy
-  Add testcase for --index-only merges needing an ff update
-  Add testcase for --index-only merges with the resolve strategy
-  Add testcase for --index-only merges with the octopus strategy
-  Add testcase for --index-only merges with the ours strategy
-  Add testcase for --index-only merges with the subtree strategy
-  merge: Add a new --index-only option, not yet implemented
-  Add --index-only support for recursive merges
-  Add --index-only support with read_tree_trivial merges, kind of
-  Add --index-only support for ff_only merges
-  merge: Pass --index-only along to external merge strategy programs
-  git-merge-one-file.sh: support --index-only option
-  git-merge-resolve.sh: support --index-only option
-  git-merge-octopus.sh: support --index-only option
-
- Documentation/git-merge.txt              |  14 +
- builtin/merge-index.c                    |   9 +-
- builtin/merge.c                          |  13 +-
- builtin/pull.c                           |   4 +-
- cache.h                                  |   3 +-
- git-merge-octopus.sh                     |  19 +-
- git-merge-one-file.sh                    |  44 ++-
- git-merge-resolve.sh                     |  12 +-
- git.c                                    |   2 +-
- merge-recursive.c                        |  40 +--
- merge-recursive.h                        |   1 +
- merge.c                                  |   8 +-
- sequencer.c                              |   4 +-
- t/t6043-merge-index-only.sh              | 443 +++++++++++++++++++++++++++++++
- t/t6044-merge-unrelated-index-changes.sh | 156 +++++++++++
- 15 files changed, 730 insertions(+), 42 deletions(-)
- create mode 100755 t/t6043-merge-index-only.sh
- create mode 100755 t/t6044-merge-unrelated-index-changes.sh
-
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 5f463ad..b791702 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1443,6 +1443,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 
+ 		if (checkout_fast_forward(head_commit->object.oid.hash,
+ 					  commit->object.oid.hash,
++					  index_only,
+ 					  overwrite_ignore)) {
+ 			ret = 1;
+ 			goto done;
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 10eff03..4f33a89 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -569,7 +569,7 @@ static int pull_into_void(const unsigned char *merge_head,
+ 	 * index/worktree changes that the user already made on the unborn
+ 	 * branch.
+ 	 */
+-	if (checkout_fast_forward(EMPTY_TREE_SHA1_BIN, merge_head, 0))
++	if (checkout_fast_forward(EMPTY_TREE_SHA1_BIN, merge_head, 0, 0))
+ 		return 1;
+ 
+ 	if (update_ref("initial pull", "HEAD", merge_head, curr_head, 0, UPDATE_REFS_DIE_ON_ERR))
+@@ -871,7 +871,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 			"fast-forwarding your working tree from\n"
+ 			"commit %s."), sha1_to_hex(orig_head));
+ 
+-		if (checkout_fast_forward(orig_head, curr_head, 0))
++		if (checkout_fast_forward(orig_head, curr_head, 0, 0))
+ 			die(_("Cannot fast-forward your working tree.\n"
+ 				"After making sure that you saved anything precious from\n"
+ 				"$ git diff %s\n"
+diff --git a/cache.h b/cache.h
+index b829410..d51fcbc 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1785,6 +1785,7 @@ int try_merge_command(const char *strategy, size_t xopts_nr,
+ 		const char *head_arg, struct commit_list *remotes);
+ int checkout_fast_forward(const unsigned char *from,
+ 			  const unsigned char *to,
++			  int index_only,
+ 			  int overwrite_ignore);
+ 
+ 
+diff --git a/merge.c b/merge.c
+index 5db7d56..a40307c 100644
+--- a/merge.c
++++ b/merge.c
+@@ -46,6 +46,7 @@ int try_merge_command(const char *strategy, size_t xopts_nr,
+ 
+ int checkout_fast_forward(const unsigned char *head,
+ 			  const unsigned char *remote,
++			  int index_only,
+ 			  int overwrite_ignore)
+ {
+ 	struct tree *trees[MAX_UNPACK_TREES];
+@@ -72,7 +73,8 @@ int checkout_fast_forward(const unsigned char *head,
+ 	opts.head_idx = 1;
+ 	opts.src_index = &the_index;
+ 	opts.dst_index = &the_index;
+-	opts.update = 1;
++	opts.update = !index_only;
++	opts.index_only = index_only;
+ 	opts.verbose_update = 1;
+ 	opts.merge = 1;
+ 	opts.fn = twoway_merge;
+diff --git a/sequencer.c b/sequencer.c
+index e66f2fe..1b772fb 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -222,7 +222,7 @@ static int fast_forward_to(const unsigned char *to, const unsigned char *from,
+ 	struct strbuf err = STRBUF_INIT;
+ 
+ 	read_cache();
+-	if (checkout_fast_forward(from, to, 1))
++	if (checkout_fast_forward(from, to, 0, 1))
+ 		exit(128); /* the callee should have complained already */
+ 
+ 	strbuf_addf(&sb, "%s: fast-forward", action_name(opts));
+diff --git a/t/t6043-merge-index-only.sh b/t/t6043-merge-index-only.sh
+index f79782c..cb860f2 100755
+--- a/t/t6043-merge-index-only.sh
++++ b/t/t6043-merge-index-only.sh
+@@ -224,7 +224,7 @@ test_expect_success 'setup simple merges' '
+ 	test_tick && git commit -m E
+ '
+ 
+-test_expect_failure '--index-only ff update, non-bare' '
++test_expect_success '--index-only ff update, non-bare' '
+ 	git reset --hard &&
+ 	git checkout A^0 &&
+ 
+@@ -235,7 +235,7 @@ test_expect_failure '--index-only ff update, non-bare' '
+ 	test ! -d subdir
+ '
+ 
+-test_expect_failure '--index-only ff update, bare' '
++test_expect_success '--index-only ff update, bare' '
+ 	git clone --bare . bare.clone &&
+ 	(cd bare.clone &&
+ 
+@@ -250,7 +250,7 @@ test_expect_failure '--index-only ff update, bare' '
+ 	)
+ '
+ 
+-test_expect_failure '--index-only ff update, non-bare with uncommitted changes' '
++test_expect_success '--index-only ff update, non-bare with uncommitted changes' '
+ 	git clean -fdx &&
+ 	git reset --hard &&
+ 	git checkout A^0 &&
 -- 
 2.8.0.18.gc685494
