@@ -1,107 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] imap-send: check for NOLOGIN capability only when using LOGIN command
-Date: Fri, 08 Apr 2016 11:43:44 -0700
-Message-ID: <xmqqd1q0vt3z.fsf@gitster.mtv.corp.google.com>
-References: <cover.1460122532.git.k@rhe.jp>
-	<20160408140224.GB13469@chikuwa.rhe.jp>
+From: Felix Ruess <felix.ruess@gmail.com>
+Subject: git 2.8.1 not working with socks5h https proxy anymore
+Date: Fri, 8 Apr 2016 20:46:08 +0200
+Message-ID: <CAEc+GFeG-ZdeTXGsjmwV0QP6QwYvjA4nzCGitka0aXjqEkatfg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Hitoshi Mitake <mitake@dcl.info.waseda.ac.jp>
-To: Kazuki Yamaguchi <k@rhe.jp>
-X-From: git-owner@vger.kernel.org Fri Apr 08 20:43:57 2016
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 08 20:46:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aobNq-0006bQ-5o
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 20:43:54 +0200
+	id 1aobQS-0000Cj-Di
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Apr 2016 20:46:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758012AbcDHSns (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2016 14:43:48 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:55784 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753725AbcDHSnr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2016 14:43:47 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6915E512DD;
-	Fri,  8 Apr 2016 14:43:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yxJK9F4SdnyP4vRnxgGAGovRtcQ=; b=L+hRyo
-	MB0PoZJ1SZgaajq6cyNK6YpuXSTn2wrHtO6uS8r2KXqhmjLX3tGUZjf1Roi6kCcX
-	P6xbKP493YNshhvtyNPO+lEZoId5UP3ArqWWut/uH1cLG2oM5edwkXPh7inPpcR2
-	6C1Jn+dXAcaRJB6lCgIU2TzT4XXrVCkozdabw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZarPsGnu36VTNu3SMn6Fxwq/c/1cVGX6
-	n5+HfEMHnlqAljrwgrUdjstzolaDkizesakWjGEKXLv0d3GWcDLudlE7X7YS6QER
-	HDW7W0ZvyDuccJ9B7WxBVGS5hhVzKsyEhW0YpN5m48XvAiQmIq2M1BbJ3Uis7kFw
-	6z1UfVZFqMk=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 60545512DC;
-	Fri,  8 Apr 2016 14:43:46 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D7266512D8;
-	Fri,  8 Apr 2016 14:43:45 -0400 (EDT)
-In-Reply-To: <20160408140224.GB13469@chikuwa.rhe.jp> (Kazuki Yamaguchi's
-	message of "Fri, 8 Apr 2016 23:02:24 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D33594BE-FDB9-11E5-BCAC-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1758796AbcDHSqQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2016 14:46:16 -0400
+Received: from mail-lf0-f51.google.com ([209.85.215.51]:34828 "EHLO
+	mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753725AbcDHSqP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2016 14:46:15 -0400
+Received: by mail-lf0-f51.google.com with SMTP id c126so87742844lfb.2
+        for <git@vger.kernel.org>; Fri, 08 Apr 2016 11:46:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to;
+        bh=WP8eQQSaD31eY36Bg/ZCk2QhMJFpYbriNIcjkppLHN8=;
+        b=jSdk7dhnzhw67IApaFMyPfJsVHVjhb9bDKXSWxm+ip7nXhPDL3u+vOVc2H11NHtgU/
+         TRht4BVMnRwTzbz1SdRtXrdFjYzZfjbzCwb8OAn2OmNMl/7C8NHKJvZ3i+qs+hJ5Eo2w
+         xrrcPcB7Dowf4mmYiJ84JshSWuKsWDNKEBcFODKmxZ71ln+tSdaOMHWm5XTE3JQI+VqC
+         6T9ZXBZmhMtK1yc1lq4vbO4JeZsghFP4+sTv+w/SJ3uzE+rjma61mGBSGPsRx0NVoIB9
+         XS0DHqoWJlJvWl35RnlhvuPoMZiTuaDLmSSYgYkssoYTgwxVh8ReM/9yaWJFv1QxJ5ND
+         EARg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
+        bh=WP8eQQSaD31eY36Bg/ZCk2QhMJFpYbriNIcjkppLHN8=;
+        b=VCGxkt6U2GdGUvWq8bZG4AYeE6kB0rUY71Rb7NeLqfxTctRSb6nPtX/rL3+mA/yU+b
+         V3cZyhDL0vh9qarl5ZVO/7xErcKyUptLjfwCQK2Mxv3gzLwTr7xPtLv6WaSeorHNfdNZ
+         YzGUw8NTSHaj/Z4SKRFx9iiDvJFyizlvzB5wYViOJPWGS9M7PVlErhA4PWIeKQoK5FMk
+         tVGmRYHGBXCX1zKe8ExW9u57Pjw+BW4OJsMVhhEtkKALFQZkLavNTiQGcp35WHQ02hNC
+         Fq2uq+dl/u2FZt+w6h1k6E6M0qBhV9y1iKZMAkpHMbgPrvej7vpossfS5KK6sV7goJCP
+         OZvA==
+X-Gm-Message-State: AD7BkJL00a5l7SGwO+XKVQS12mWQp6GS+bGc89YgHR6jovX+cEBpSfH1iUAkLeXLJRcQKSeGzGETMicXFQ8SXA==
+X-Received: by 10.112.129.169 with SMTP id nx9mr4185393lbb.96.1460141168781;
+ Fri, 08 Apr 2016 11:46:08 -0700 (PDT)
+Received: by 10.114.68.70 with HTTP; Fri, 8 Apr 2016 11:46:08 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291053>
 
-Kazuki Yamaguchi <k@rhe.jp> writes:
+Hi all,
 
-> Don't check for NOLOGIN (LOGINDISABLED) capability when imap.authMethod
-> is specified.
->
-> LOGINDISABLED capability doesn't forbid using AUTHENTICATE, so it should
-> be allowed, or we can't connect to IMAP servers which only accepts
-> AUTHENTICATE command.
+I just encountered a problem with the latest git version (2.8.1) that
+looks like a regression to me:
+When trying to clone a repo via a https socks5 proxy the connection times out:
 
-Makes sense.  The code with this patch applied implements "An IMAP
-client which complies with this specification MUST NOT issue the
-LOGIN command if this capability is present." correctly.
+$ git config --global 'http.proxy=socks5h://127.0.0.1:1080'
+$ export GIT_CURL_VERBOSE=1
+$ git clone https://foo.de/bar.git
+Cloning into 'bar'...
+* Couldn't find host foo.de in the .netrc file; using defaults
+* Hostname was NOT found in DNS cache
+*   Trying 127.0.0.1...
+* Hostname was NOT found in DNS cache
+* 80
+* 147
+* 201
+* 194
+channel 2: open failed: connect failed: Connection timed out
+channel 4: open failed: connect failed: Connection timed out
+* Failed to receive SOCKS5 connect request ack.
+* Closing connection 0
+fatal: unable to access 'https://foo.de/bar.git/': Failed to receive
+SOCKS5 connect request ack.
 
-Will queue.  Thanks.
+I'm on Ubuntu 14.04 64bit and it works perfectly fine with git 1.9.1
+(and was also working with older git 2.x versions, although not sure
+any more what the last working version was).
 
->
-> Signed-off-by: Kazuki Yamaguchi <k@rhe.jp>
-> ---
->  imap-send.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/imap-send.c b/imap-send.c
-> index 2c52027c8445..30979f0c63cc 100644
-> --- a/imap-send.c
-> +++ b/imap-send.c
-> @@ -1095,11 +1095,6 @@ static struct imap_store *imap_open_store(struct imap_server_conf *srvc, char *f
->  				srvc->pass = xstrdup(cred.password);
->  		}
->  
-> -		if (CAP(NOLOGIN)) {
-> -			fprintf(stderr, "Skipping account %s@%s, server forbids LOGIN\n", srvc->user, srvc->host);
-> -			goto bail;
-> -		}
-> -
->  		if (srvc->auth_method) {
->  			struct imap_cmd_cb cb;
->  
-> @@ -1123,6 +1118,11 @@ static struct imap_store *imap_open_store(struct imap_server_conf *srvc, char *f
->  				goto bail;
->  			}
->  		} else {
-> +			if (CAP(NOLOGIN)) {
-> +				fprintf(stderr, "Skipping account %s@%s, server forbids LOGIN\n",
-> +					srvc->user, srvc->host);
-> +				goto bail;
-> +			}
->  			if (!imap->buf.sock.ssl)
->  				imap_warn("*** IMAP Warning *** Password is being "
->  					  "sent in the clear\n");
+Cheers, Felix
