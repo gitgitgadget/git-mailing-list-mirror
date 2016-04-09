@@ -1,167 +1,323 @@
-From: Vasco Almeida <vascomalmeida@sapo.pt>
-Subject: Re: [PATCH 2/7] l10n: unpack-trees: mark strings for translation
-Date: Sat, 9 Apr 2016 12:19:24 +0000
-Message-ID: <5708F34C.3090004@sapo.pt>
-References: <1460145765-7454-1-git-send-email-vascomalmeida@sapo.pt>
- <1460145765-7454-2-git-send-email-vascomalmeida@sapo.pt>
- <xmqqpotzvoia.fsf@gitster.mtv.corp.google.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: [PATCH v13 1/6] t0040-test-parse-options.sh: fix style issues
+Date: Sat, 9 Apr 2016 12:23:20 +0000
+Message-ID: <01020153faf9fc14-e6ad18fa-c892-4601-bab7-e2cc4cd9e100-000000@eu-west-1.amazonses.com>
+References: <01020153d952bd99-d3812bd6-d189-4780-ab48-f015696e9cf0-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 09 14:19:49 2016
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 09 14:23:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aorrg-0001tx-Pr
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 14:19:49 +0200
+	id 1aorvJ-0004iC-Nd
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 14:23:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752496AbcDIMTl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Apr 2016 08:19:41 -0400
-Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:50522 "EHLO sapo.pt"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751112AbcDIMTk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Apr 2016 08:19:40 -0400
-Received: (qmail 26319 invoked from network); 9 Apr 2016 12:19:38 -0000
-Received: (qmail 15121 invoked from network); 9 Apr 2016 12:19:38 -0000
-Received: from unknown (HELO [192.168.64.2]) (vascomalmeida@sapo.pt@[207.158.41.54])
-          (envelope-sender <vascomalmeida@sapo.pt>)
-          by mta-auth01 (qmail-ptmail-1.0.0) with ESMTPSA
-          for <worldhello.net@gmail.com>; 9 Apr 2016 12:19:32 -0000
-X-PTMail-RemoteIP: 207.158.41.54
-X-PTMail-AllowedSender-Action: 
-X-PTMail-Service: default
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101
- Thunderbird/38.7.0
-In-Reply-To: <xmqqpotzvoia.fsf@gitster.mtv.corp.google.com>
+	id S1753178AbcDIMXY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Apr 2016 08:23:24 -0400
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:42931
+	"EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751932AbcDIMXW (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Apr 2016 08:23:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1460204600;
+	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=PZ4O0b5o5fh4EDb9BKLlD1+IUIg0mRb9ZORiA8im8jc=;
+	b=B/lEZ/Y4R2j5vXFMlxDQ5xaxhwwHzfowoHToLFiWttsVR9sKEc1ZgfTItyowCex9
+	KQe9H4yN+ujBq6sTZmxtfvv5Vb6Y0XyVLYRlO6TEnyY3UprWbBHEWTPkAf/rCiNSwwe
+	FMigQvvDUyZi4rluQhbaySYhly5Tbbd4/8pGT7XM=
+In-Reply-To: <01020153d952bd99-d3812bd6-d189-4780-ab48-f015696e9cf0-000000@eu-west-1.amazonses.com>
+X-SES-Outgoing: 2016.04.09-54.240.7.12
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291091>
 
-=C0s 20:23 de 08-04-2016, Junio C Hamano escreveu:
-> Vasco Almeida <vascomalmeida@sapo.pt> writes:
->=20
->> Mark strings seen by the user inside setup_unpack_trees_porcelain() =
-and
->> display_error_msgs() functions for translation.
->>
->> One case Git outputs the named strings is when the user does some ed=
-iting to
->> a file on some branch and then checks out other branch, but that fil=
-e
->> changes by the checkout. This is the case of the first string marked=
-=2E
->=20
-> The second paragraph puzzling.  Other strings are not shown at all?
-> Or is it just you didn't bother explaining the others cases?
->=20
-> Either case, it is not immediately clear why you felt that one
-> string among others deserve more attention.  Care to elaborate?
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 
-I meant that as an example, which was the situation I was when I found
-the untranslated string.
-I should have written that outside the commit message, as a note.
-I'm going to remove that paragraph since it isn=92t irrelevant and
-confusing. Hope I answered you.
+---
+Changes wrt previous version (v12):
+ - Use '\' when interpolation isn't required
+---
+ t/t0040-parse-options.sh | 76 ++++++++++++++++++++++++------------------------
+ 1 file changed, 38 insertions(+), 38 deletions(-)
 
->=20
-> In the patch itself I did not find anything questionable, though.
->=20
-> Thanks.
->=20
->>
->> Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
->> ---
->>  unpack-trees.c | 24 ++++++++++++------------
->>  1 file changed, 12 insertions(+), 12 deletions(-)
->>
->> diff --git a/unpack-trees.c b/unpack-trees.c
->> index 9f55cc2..4bc6b4f 100644
->> --- a/unpack-trees.c
->> +++ b/unpack-trees.c
->> @@ -61,21 +61,21 @@ void setup_unpack_trees_porcelain(struct unpack_=
-trees_options *opts,
->>  	const char *cmd2 =3D strcmp(cmd, "checkout") ? cmd : "switch branc=
-hes";
->> =20
->>  	if (advice_commit_before_merge)
->> -		msg =3D "Your local changes to the following files would be overw=
-ritten by %s:\n%%s"
->> -			"Please, commit your changes or stash them before you can %s.";
->> +		msg =3D _("Your local changes to the following files would be ove=
-rwritten by %s:\n%%s"
->> +			"Please, commit your changes or stash them before you can %s.");
->>  	else
->> -		msg =3D "Your local changes to the following files would be overw=
-ritten by %s:\n%%s";
->> +		msg =3D _("Your local changes to the following files would be ove=
-rwritten by %s:\n%%s");
->>  	msgs[ERROR_WOULD_OVERWRITE] =3D msgs[ERROR_NOT_UPTODATE_FILE] =3D
->>  		xstrfmt(msg, cmd, cmd2);
->> =20
->>  	msgs[ERROR_NOT_UPTODATE_DIR] =3D
->> -		"Updating the following directories would lose untracked files in=
- it:\n%s";
->> +		_("Updating the following directories would lose untracked files =
-in it:\n%s");
->> =20
->>  	if (advice_commit_before_merge)
->> -		msg =3D "The following untracked working tree files would be %s b=
-y %s:\n%%s"
->> -			"Please move or remove them before you can %s.";
->> +		msg =3D _("The following untracked working tree files would be %s=
- by %s:\n%%s"
->> +			"Please move or remove them before you can %s.");
->>  	else
->> -		msg =3D "The following untracked working tree files would be %s b=
-y %s:\n%%s";
->> +		msg =3D _("The following untracked working tree files would be %s=
- by %s:\n%%s");
->> =20
->>  	msgs[ERROR_WOULD_LOSE_UNTRACKED_REMOVED] =3D xstrfmt(msg, "removed=
-", cmd, cmd2);
->>  	msgs[ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN] =3D xstrfmt(msg, "ove=
-rwritten", cmd, cmd2);
->> @@ -84,14 +84,14 @@ void setup_unpack_trees_porcelain(struct unpack_=
-trees_options *opts,
->>  	 * Special case: ERROR_BIND_OVERLAP refers to a pair of paths, we
->>  	 * cannot easily display it as a list.
->>  	 */
->> -	msgs[ERROR_BIND_OVERLAP] =3D "Entry '%s' overlaps with '%s'.  Cann=
-ot bind.";
->> +	msgs[ERROR_BIND_OVERLAP] =3D _("Entry '%s' overlaps with '%s'.  Ca=
-nnot bind.");
->> =20
->>  	msgs[ERROR_SPARSE_NOT_UPTODATE_FILE] =3D
->> -		"Cannot update sparse checkout: the following entries are not up-=
-to-date:\n%s";
->> +		_("Cannot update sparse checkout: the following entries are not u=
-p-to-date:\n%s");
->>  	msgs[ERROR_WOULD_LOSE_ORPHANED_OVERWRITTEN] =3D
->> -		"The following Working tree files would be overwritten by sparse =
-checkout update:\n%s";
->> +		_("The following Working tree files would be overwritten by spars=
-e checkout update:\n%s");
->>  	msgs[ERROR_WOULD_LOSE_ORPHANED_REMOVED] =3D
->> -		"The following Working tree files would be removed by sparse chec=
-kout update:\n%s";
->> +		_("The following Working tree files would be removed by sparse ch=
-eckout update:\n%s");
->> =20
->>  	opts->show_all_errors =3D 1;
->>  	/* rejected paths may not have a static buffer */
->> @@ -168,7 +168,7 @@ static void display_error_msgs(struct unpack_tre=
-es_options *o)
->>  		string_list_clear(rejects, 0);
->>  	}
->>  	if (something_displayed)
->> -		fprintf(stderr, "Aborting\n");
->> +		fprintf(stderr, _("Aborting\n"));
->>  }
->> =20
->>  /*
+diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+index 9be6411..477fcff 100755
+--- a/t/t0040-parse-options.sh
++++ b/t/t0040-parse-options.sh
+@@ -7,7 +7,7 @@ test_description='our own option parser'
+ 
+ . ./test-lib.sh
+ 
+-cat > expect << EOF
++cat >expect <<\EOF
+ usage: test-parse-options <options>
+ 
+     --yes                 get a boolean
+@@ -49,14 +49,14 @@ Standard options
+ EOF
+ 
+ test_expect_success 'test help' '
+-	test_must_fail test-parse-options -h > output 2> output.err &&
++	test_must_fail test-parse-options -h >output 2>output.err &&
+ 	test_must_be_empty output.err &&
+ 	test_i18ncmp expect output
+ '
+ 
+ mv expect expect.err
+ 
+-cat >expect.template <<EOF
++cat >expect.template <<\EOF
+ boolean: 0
+ integer: 0
+ magnitude: 0
+@@ -156,7 +156,7 @@ test_expect_success 'OPT_MAGNITUDE() 3giga' '
+ 	check magnitude: 3221225472 -m 3g
+ '
+ 
+-cat > expect << EOF
++cat >expect <<\EOF
+ boolean: 2
+ integer: 1729
+ magnitude: 16384
+@@ -176,7 +176,7 @@ test_expect_success 'short options' '
+ 	test_must_be_empty output.err
+ '
+ 
+-cat > expect << EOF
++cat >expect <<\EOF
+ boolean: 2
+ integer: 1729
+ magnitude: 16384
+@@ -204,7 +204,7 @@ test_expect_success 'missing required value' '
+ 	test_expect_code 129 test-parse-options --file
+ '
+ 
+-cat > expect << EOF
++cat >expect <<\EOF
+ boolean: 1
+ integer: 13
+ magnitude: 0
+@@ -222,12 +222,12 @@ EOF
+ 
+ test_expect_success 'intermingled arguments' '
+ 	test-parse-options a1 --string 123 b1 --boolean -j 13 -- --boolean \
+-		> output 2> output.err &&
++		>output 2>output.err &&
+ 	test_must_be_empty output.err &&
+ 	test_cmp expect output
+ '
+ 
+-cat > expect << EOF
++cat >expect <<\EOF
+ boolean: 0
+ integer: 2
+ magnitude: 0
+@@ -241,13 +241,13 @@ file: (not set)
+ EOF
+ 
+ test_expect_success 'unambiguously abbreviated option' '
+-	test-parse-options --int 2 --boolean --no-bo > output 2> output.err &&
++	test-parse-options --int 2 --boolean --no-bo >output 2>output.err &&
+ 	test_must_be_empty output.err &&
+ 	test_cmp expect output
+ '
+ 
+ test_expect_success 'unambiguously abbreviated option with "="' '
+-	test-parse-options --int=2 > output 2> output.err &&
++	test-parse-options --int=2 >output 2>output.err &&
+ 	test_must_be_empty output.err &&
+ 	test_cmp expect output
+ '
+@@ -256,7 +256,7 @@ test_expect_success 'ambiguously abbreviated option' '
+ 	test_expect_code 129 test-parse-options --strin 123
+ '
+ 
+-cat > expect << EOF
++cat >expect <<\EOF
+ boolean: 0
+ integer: 0
+ magnitude: 0
+@@ -270,32 +270,32 @@ file: (not set)
+ EOF
+ 
+ test_expect_success 'non ambiguous option (after two options it abbreviates)' '
+-	test-parse-options --st 123 > output 2> output.err &&
++	test-parse-options --st 123 >output 2>output.err &&
+ 	test_must_be_empty output.err &&
+ 	test_cmp expect output
+ '
+ 
+-cat > typo.err << EOF
+-error: did you mean \`--boolean\` (with two dashes ?)
++cat >typo.err <<\EOF
++error: did you mean `--boolean` (with two dashes ?)
+ EOF
+ 
+ test_expect_success 'detect possible typos' '
+-	test_must_fail test-parse-options -boolean > output 2> output.err &&
++	test_must_fail test-parse-options -boolean >output 2>output.err &&
+ 	test_must_be_empty output &&
+ 	test_cmp typo.err output.err
+ '
+ 
+-cat > typo.err << EOF
+-error: did you mean \`--ambiguous\` (with two dashes ?)
++cat >typo.err <<\EOF
++error: did you mean `--ambiguous` (with two dashes ?)
+ EOF
+ 
+ test_expect_success 'detect possible typos' '
+-	test_must_fail test-parse-options -ambiguous > output 2> output.err &&
++	test_must_fail test-parse-options -ambiguous >output 2>output.err &&
+ 	test_must_be_empty output &&
+ 	test_cmp typo.err output.err
+ '
+ 
+-cat > expect <<EOF
++cat >expect <<\EOF
+ boolean: 0
+ integer: 0
+ magnitude: 0
+@@ -310,12 +310,12 @@ arg 00: --quux
+ EOF
+ 
+ test_expect_success 'keep some options as arguments' '
+-	test-parse-options --quux > output 2> output.err &&
++	test-parse-options --quux >output 2>output.err &&
+ 	test_must_be_empty output.err &&
+-        test_cmp expect output
++	test_cmp expect output
+ '
+ 
+-cat > expect <<EOF
++cat >expect <<\EOF
+ boolean: 0
+ integer: 0
+ magnitude: 0
+@@ -331,12 +331,12 @@ EOF
+ 
+ test_expect_success 'OPT_DATE() works' '
+ 	test-parse-options -t "1970-01-01 00:00:01 +0000" \
+-		foo -q > output 2> output.err &&
++		foo -q >output 2>output.err &&
+ 	test_must_be_empty output.err &&
+ 	test_cmp expect output
+ '
+ 
+-cat > expect <<EOF
++cat >expect <<\EOF
+ Callback: "four", 0
+ boolean: 5
+ integer: 4
+@@ -351,22 +351,22 @@ file: (not set)
+ EOF
+ 
+ test_expect_success 'OPT_CALLBACK() and OPT_BIT() work' '
+-	test-parse-options --length=four -b -4 > output 2> output.err &&
++	test-parse-options --length=four -b -4 >output 2>output.err &&
+ 	test_must_be_empty output.err &&
+ 	test_cmp expect output
+ '
+ 
+-cat > expect <<EOF
++cat >expect <<\EOF
+ Callback: "not set", 1
+ EOF
+ 
+ test_expect_success 'OPT_CALLBACK() and callback errors work' '
+-	test_must_fail test-parse-options --no-length > output 2> output.err &&
++	test_must_fail test-parse-options --no-length >output 2>output.err &&
+ 	test_i18ncmp expect output &&
+ 	test_i18ncmp expect.err output.err
+ '
+ 
+-cat > expect <<EOF
++cat >expect <<\EOF
+ boolean: 1
+ integer: 23
+ magnitude: 0
+@@ -380,18 +380,18 @@ file: (not set)
+ EOF
+ 
+ test_expect_success 'OPT_BIT() and OPT_SET_INT() work' '
+-	test-parse-options --set23 -bbbbb --no-or4 > output 2> output.err &&
++	test-parse-options --set23 -bbbbb --no-or4 >output 2>output.err &&
+ 	test_must_be_empty output.err &&
+ 	test_cmp expect output
+ '
+ 
+ test_expect_success 'OPT_NEGBIT() and OPT_SET_INT() work' '
+-	test-parse-options --set23 -bbbbb --neg-or4 > output 2> output.err &&
++	test-parse-options --set23 -bbbbb --neg-or4 >output 2>output.err &&
+ 	test_must_be_empty output.err &&
+ 	test_cmp expect output
+ '
+ 
+-cat > expect <<EOF
++cat >expect <<\EOF
+ boolean: 6
+ integer: 0
+ magnitude: 0
+@@ -405,24 +405,24 @@ file: (not set)
+ EOF
+ 
+ test_expect_success 'OPT_BIT() works' '
+-	test-parse-options -bb --or4 > output 2> output.err &&
++	test-parse-options -bb --or4 >output 2>output.err &&
+ 	test_must_be_empty output.err &&
+ 	test_cmp expect output
+ '
+ 
+ test_expect_success 'OPT_NEGBIT() works' '
+-	test-parse-options -bb --no-neg-or4 > output 2> output.err &&
++	test-parse-options -bb --no-neg-or4 >output 2>output.err &&
+ 	test_must_be_empty output.err &&
+ 	test_cmp expect output
+ '
+ 
+ test_expect_success 'OPT_COUNTUP() with PARSE_OPT_NODASH works' '
+-	test-parse-options + + + + + + > output 2> output.err &&
++	test-parse-options + + + + + + >output 2>output.err &&
+ 	test_must_be_empty output.err &&
+ 	test_cmp expect output
+ '
+ 
+-cat > expect <<EOF
++cat >expect <<\EOF
+ boolean: 0
+ integer: 12345
+ magnitude: 0
+@@ -436,12 +436,12 @@ file: (not set)
+ EOF
+ 
+ test_expect_success 'OPT_NUMBER_CALLBACK() works' '
+-	test-parse-options -12345 > output 2> output.err &&
++	test-parse-options -12345 >output 2>output.err &&
+ 	test_must_be_empty output.err &&
+ 	test_cmp expect output
+ '
+ 
+-cat >expect <<EOF
++cat >expect <<\EOF
+ boolean: 0
+ integer: 0
+ magnitude: 0
+@@ -460,7 +460,7 @@ test_expect_success 'negation of OPT_NONEG flags is not ambiguous' '
+ 	test_cmp expect output
+ '
+ 
+-cat >>expect <<'EOF'
++cat >>expect <<\EOF
+ list: foo
+ list: bar
+ list: baz
+
+--
+https://github.com/git/git/pull/218
