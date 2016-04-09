@@ -1,7 +1,7 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v4 12/16] ref-filter: add support for %(refname:dir) and %(refname:base)
-Date: Sun, 10 Apr 2016 00:15:11 +0530
-Message-ID: <1460227515-28437-13-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v4 09/16] ref-filter: make "%(symref)" atom work with the ':short' modifier
+Date: Sun, 10 Apr 2016 00:15:08 +0530
+Message-ID: <1460227515-28437-10-git-send-email-Karthik.188@gmail.com>
 References: <1460227515-28437-1-git-send-email-Karthik.188@gmail.com>
 Cc: jacob.keller@gmail.com, gitster@pobox.com,
 	Karthik Nayak <Karthik.188@gmail.com>
@@ -12,45 +12,45 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoxtN-0003o8-VG
+	id 1aoxtO-0003o8-Hm
 	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 20:45:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759207AbcDISpx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Apr 2016 14:45:53 -0400
-Received: from mail-ig0-f195.google.com ([209.85.213.195]:34475 "EHLO
-	mail-ig0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759100AbcDISpv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Apr 2016 14:45:51 -0400
-Received: by mail-ig0-f195.google.com with SMTP id qu10so6553414igc.1
-        for <git@vger.kernel.org>; Sat, 09 Apr 2016 11:45:50 -0700 (PDT)
+	id S1759149AbcDISpt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Apr 2016 14:45:49 -0400
+Received: from mail-ig0-f194.google.com ([209.85.213.194]:35697 "EHLO
+	mail-ig0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759089AbcDISps (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Apr 2016 14:45:48 -0400
+Received: by mail-ig0-f194.google.com with SMTP id fn8so6500844igb.2
+        for <git@vger.kernel.org>; Sat, 09 Apr 2016 11:45:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=foRM2jqjUmP+b4o+YbCzyxGtcPG1uLOyb0Cp+XOAHXc=;
-        b=ncxKAcyKnH2wALWLw1+c7eWB6IBOeU4hQBDZqoUQ4/FI6my2PfnOyWsNQoIx1JjJt7
-         ksu5p92xelG1ceyKttzbRGmAfunDWa161zujVGRwde0fjvxa8qVU21eMD5ESr62u4bCR
-         F1meRRKlThZk7NjQdaGCP+MyKMOLVNIimn+f4oGpUNqKJ6CBdMl4aympXD81gmsIdJjU
-         drwtMeWCmJ/NDLWxMNPZrptfcA04xQ8R/EDgqQF8uYScNsEU8DNf0jqLdkVEy9nrWJ60
-         Vvr9F+hmoKAZ+EO5fqCFc0fAnfRCs/farO0IEQqtAh9TYRkzAZusrwBN1KH7SerMn6cz
-         hGWw==
+        bh=Yeu5fZh8CHXkVdh1/ezj1ofqTWEzW0ylRHbJivHrKKk=;
+        b=u+BJEY5MjGoyXQy44CvhIVd4qk/gLZ8B7pJO3nyhM1+42jTkBAAsFkFc/pFF7MZyvi
+         Dn2hYqRb4llvVYKic1xBrxsQenIddW3Ce8DG7AYXi3CSuWgLXd/tUIDNw9SCW0uh1NHC
+         LSyg6t/Yy6vzVtPRmas7Nm+XoRovt0+8UNKYbpKS8g/BSaWzp8c0NSx2/1DR7L9g2yQq
+         F8Ca5guhihD4MjXIhohisUsCY5qWU0H6pm1gnOYncOWvCJOW5t1e4AgvCew6J8Nf8M1P
+         IIKzzI8O/2fjFlQwM7pQ7ZcQVXOqSrp+6VIkqvlDbmHhZGMtMSIwC+ncE4bBPAKiaV1W
+         eZPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=foRM2jqjUmP+b4o+YbCzyxGtcPG1uLOyb0Cp+XOAHXc=;
-        b=nNGf3o69xU9kuqecUwjSeTlWmMQqbVfSIVrvBj9Dxor4x+LetpI25BN601Tnfw8Zk/
-         teLr1lj+WtjIYpaTdVDaq3Qdkzh/cxD+laNpeO/3hawk9hd2XSf/ElbEo13ZWXheoOsI
-         y9/frF0geFdu+FBMJB+MHtK4YMO6fVWMR1s7DgU/eSjjZs6i+x0Apf2XsR8Fp9ZMfIV9
-         x0ARaDx1Qn6Rxfo85X726zi1n7zmbpgVn4QeNMyq25KlXc27EJnRL9P2V3Retc6bdsDt
-         grv/7jilw7LXRkKDeVIVZD/c4t+RgKM1nOdoQo0Lc/VAMxbsTKJAmlIicZVyNur4AdP3
-         CHUw==
-X-Gm-Message-State: AD7BkJKAI1/dIx1jSjvN4+4uUCwUX102I/Y3bS1UEycL1R9I1np7bsvlyNCmNCvwwpJXMg==
-X-Received: by 10.50.112.98 with SMTP id ip2mr10580124igb.14.1460227550350;
-        Sat, 09 Apr 2016 11:45:50 -0700 (PDT)
+        bh=Yeu5fZh8CHXkVdh1/ezj1ofqTWEzW0ylRHbJivHrKKk=;
+        b=Scej3ZWvO24d11p7vkCjDdpiRFt0pvGUKeTDQ9jHeQZFlW8W8qVNTzI4sH12uj08+K
+         rz9IzVVWGWVgkOaXO+8IASaVh5LJNz2CbDrQt/HgwdXJltNq4ZUbka1hGBqgxsStssJI
+         1uqULDyid9okuy+VsW1i9Wl61NipeFq820VAKn0eOMDqtiDBdNIBu5sT/7Nu5caAeSyQ
+         zTL8sCbqa5om9ltC5O2wtDGQaoi6VwPX/i3l/yyaSqNA/lLAXlENQBglfJTmX4GKy/oM
+         u6y3hGHgca86SrjdUOxEPjuRxSd8H0PpiGTIBT6DJlgR7eHAFvTiD/3S67GpxPb3MEBu
+         AXww==
+X-Gm-Message-State: AD7BkJK/e2i5OBT0leyfTHxC4kRQH5CA/R0oheFwI2bpdQ9Zj/l7YT7APYDAt80P9qOTiQ==
+X-Received: by 10.50.2.97 with SMTP id 1mr10414707igt.43.1460227542706;
+        Sat, 09 Apr 2016 11:45:42 -0700 (PDT)
 Received: from localhost.localdomain ([106.51.241.12])
-        by smtp.gmail.com with ESMTPSA id be7sm7132351igb.1.2016.04.09.11.45.48
+        by smtp.gmail.com with ESMTPSA id be7sm7132351igb.1.2016.04.09.11.45.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 09 Apr 2016 11:45:49 -0700 (PDT)
+        Sat, 09 Apr 2016 11:45:42 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.8.0
 In-Reply-To: <1460227515-28437-1-git-send-email-Karthik.188@gmail.com>
@@ -58,102 +58,73 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291119>
 
-Add the options `:dir` and `:base` to the %(refname) atom. The `:dir`
-option gives the directory (the part after $GIT_DIR/) of the ref without
-the refname. The `:base` option gives the base directory of the given
-ref (i.e. the directory following $GIT_DIR/refs/).
+The "%(symref)" atom doesn't work when used with the ':short' modifier
+because we strictly match only 'symref' for setting the 'need_symref'
+indicator. Fix this by using comparing with valid_atom rather than used_atom.
 
-Add tests and documentation for the same.
+Add tests for %(symref) and %(symref:short) while we're here.
 
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 ---
- Documentation/git-for-each-ref.txt |  4 +++-
- ref-filter.c                       | 28 +++++++++++++++++++++++++---
- t/t6300-for-each-ref.sh            |  2 ++
- 3 files changed, 30 insertions(+), 4 deletions(-)
+ ref-filter.c            |  2 +-
+ t/t6300-for-each-ref.sh | 24 ++++++++++++++++++++++++
+ 2 files changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index be763c4..0d7d80f 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -96,7 +96,9 @@ refname::
- 	slash-separated path components from the front of the refname
- 	(e.g., `%(refname:strip=2)` turns `refs/tags/foo` into `foo`.
- 	`<N>` must be a positive integer.  If a displayed ref has fewer
--	components than `<N>`, the command aborts with an error.
-+	components than `<N>`, the command aborts with an error. For the base
-+	directory of the ref (i.e. foo in refs/foo/bar/boz) append
-+	`:base`. For the entire directory path append `:dir`.
- 
- objecttype::
- 	The type of the object (`blob`, `tree`, `commit`, `tag`).
 diff --git a/ref-filter.c b/ref-filter.c
-index dc1e404..73e0a7f 100644
+index 8c97cdb..5c59b17 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -64,7 +64,7 @@ static struct used_atom {
- 		} objectname;
- 		enum { S_FULL, S_SHORT } symref;
- 		struct {
--			enum { R_NORMAL, R_SHORT, R_STRIP } option;
-+			enum { R_BASE, R_DIR, R_NORMAL, R_SHORT, R_STRIP } option;
- 			unsigned int strip;
- 		} refname;
- 	} u;
-@@ -243,7 +243,11 @@ static void refname_atom_parser(struct used_atom *atom, const char *arg)
- 		if (strtoul_ui(arg, 10, &atom->u.refname.strip) ||
- 			atom->u.refname.strip <= 0)
- 			die(_("positive value expected refname:strip=%s"), arg);
--	} else
-+	} else if (!strcmp(arg, "dir"))
-+		atom->u.contents.option = R_DIR;
-+	else if (!strcmp(arg, "base"))
-+		atom->u.contents.option = R_BASE;
-+	else
- 		die(_("unrecognized %%(refname) argument: %s"), arg);
+@@ -338,7 +338,7 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
+ 		valid_atom[i].parser(&used_atom[at], arg);
+ 	if (*atom == '*')
+ 		need_tagged = 1;
+-	if (!strcmp(used_atom[at].name, "symref"))
++	if (!strcmp(valid_atom[i].name, "symref"))
+ 		need_symref = 1;
+ 	return at;
  }
- 
-@@ -1175,7 +1179,25 @@ static const char *get_refname(struct used_atom *atom, struct ref_array_item *re
- 		return shorten_unambiguous_ref(ref->refname, warn_ambiguous_refs);
- 	else if (atom->u.refname.option == R_STRIP)
- 		return strip_ref_components(ref->refname, atom->u.refname.strip);
--	else
-+	else if (atom->u.refname.option == R_BASE) {
-+		const char *sp, *ep;
-+
-+		if (skip_prefix(ref->refname, "refs/", &sp)) {
-+			ep = strchr(sp, '/');
-+			if (!ep)
-+				return "";
-+			return xstrndup(sp, ep - sp);
-+		}
-+		return "";
-+	} else if (atom->u.refname.option == R_DIR) {
-+		const char *sp, *ep;
-+
-+		sp = ref->refname;
-+		ep = strrchr(sp, '/');
-+		if (!ep)
-+			return "";
-+		return xstrndup(sp, ep - sp);
-+	} else
- 		return ref->refname;
- }
- 
 diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index b06ea1c..36d32d7 100755
+index 2c5f177..b06ea1c 100755
 --- a/t/t6300-for-each-ref.sh
 +++ b/t/t6300-for-each-ref.sh
-@@ -53,6 +53,8 @@ test_atom head refname refs/heads/master
- test_atom head refname:short master
- test_atom head refname:strip=1 heads/master
- test_atom head refname:strip=2 master
-+test_atom head refname:dir refs/heads
-+test_atom head refname:base heads
- test_atom head upstream refs/remotes/origin/master
- test_atom head upstream:short origin/master
- test_atom head push refs/remotes/myfork/master
+@@ -38,6 +38,7 @@ test_atom() {
+ 	case "$1" in
+ 		head) ref=refs/heads/master ;;
+ 		 tag) ref=refs/tags/testtag ;;
++		 sym) ref=refs/heads/sym ;;
+ 		   *) ref=$1 ;;
+ 	esac
+ 	printf '%s\n' "$3" >expected
+@@ -565,4 +566,27 @@ test_expect_success 'Verify sort with multiple keys' '
+ 		refs/tags/bogo refs/tags/master > actual &&
+ 	test_cmp expected actual
+ '
++
++test_expect_success 'Add symbolic ref for the following tests' '
++	git symbolic-ref refs/heads/sym refs/heads/master
++'
++
++cat >expected <<EOF
++refs/heads/master
++EOF
++
++test_expect_success 'Verify usage of %(symref) atom' '
++	git for-each-ref --format="%(symref)" refs/heads/sym > actual &&
++	test_cmp expected actual
++'
++
++cat >expected <<EOF
++heads/master
++EOF
++
++test_expect_success 'Verify usage of %(symref:short) atom' '
++	git for-each-ref --format="%(symref:short)" refs/heads/sym > actual &&
++	test_cmp expected actual
++'
++
+ test_done
 -- 
 2.8.0
