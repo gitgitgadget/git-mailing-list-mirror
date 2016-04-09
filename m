@@ -1,64 +1,66 @@
-From: Vasco Almeida <vascomalmeida@sapo.pt>
-Subject: [PATCH v2 1/7] i18n: index-pack: use plural string instead of normal one
-Date: Sat,  9 Apr 2016 20:38:38 +0000
-Message-ID: <1460234324-13506-1-git-send-email-vascomalmeida@sapo.pt>
-Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 09 22:39:07 2016
+From: Jeff King <peff@peff.net>
+Subject: Re: git segfaults on older Solaris releases
+Date: Sat, 9 Apr 2016 16:35:31 -0400
+Message-ID: <20160409203530.GA18989@sigill.intra.peff.net>
+References: <5706A489.7070101@jupiterrise.com>
+ <xmqqoa9lz2uw.fsf@gitster.mtv.corp.google.com>
+ <xmqqk2k9z20p.fsf@gitster.mtv.corp.google.com>
+ <5706C0D4.9030707@jupiterrise.com>
+ <5708A90E.1050705@jupiterrise.com>
+ <20160409173904.GA5127@sigill.intra.peff.net>
+ <57096374.6030608@jupiterrise.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: "Tom G. Christensen" <tgc@jupiterrise.com>
+X-From: git-owner@vger.kernel.org Sat Apr 09 22:39:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aozes-0000jw-1w
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 22:39:06 +0200
+	id 1aozeq-0000jw-Oa
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 22:39:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754626AbcDIUi4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Apr 2016 16:38:56 -0400
-Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:56781 "EHLO sapo.pt"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754517AbcDIUi4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Apr 2016 16:38:56 -0400
-Received: (qmail 8042 invoked from network); 9 Apr 2016 20:38:53 -0000
-Received: (qmail 15132 invoked from network); 9 Apr 2016 20:38:53 -0000
-Received: from unknown (HELO linux-iv58.site) (vascomalmeida@sapo.pt@[85.246.157.91])
-          (envelope-sender <vascomalmeida@sapo.pt>)
-          by mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 9 Apr 2016 20:38:48 -0000
-X-PTMail-RemoteIP: 85.246.157.91
-X-PTMail-AllowedSender-Action: 
-X-PTMail-Service: default
-X-Mailer: git-send-email 2.1.4
+	id S1754505AbcDIUfg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Apr 2016 16:35:36 -0400
+Received: from cloud.peff.net ([50.56.180.127]:46999 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753241AbcDIUff (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Apr 2016 16:35:35 -0400
+Received: (qmail 13274 invoked by uid 102); 9 Apr 2016 20:35:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 09 Apr 2016 16:35:34 -0400
+Received: (qmail 14354 invoked by uid 107); 9 Apr 2016 20:35:38 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 09 Apr 2016 16:35:38 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 09 Apr 2016 16:35:31 -0400
+Content-Disposition: inline
+In-Reply-To: <57096374.6030608@jupiterrise.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291127>
 
-Git could output "completed with 1 local objects", but in this case
-using "object" instead of "objects" is the correct form.
-Use Q_() instead of _().
+On Sat, Apr 09, 2016 at 10:17:56PM +0200, Tom G. Christensen wrote:
 
-Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
----
- builtin/index-pack.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+> On 09/04/16 19:39, Jeff King wrote:
+> 
+> >   [1/3]: config: lower-case first word of error strings
+> >   [2/3]: git_config_set_multivar_in_file: all non-zero returns are errors
+> >   [3/3]: git_config_set_multivar_in_file: handle "unset" errors
+> >
+> 
+> I applied them to 2.8.1 and ran the testsuite again on Solaris 8/x86 and the
+> segfault is gone.
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 2d1eb8b..e8c71fc 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1250,7 +1250,9 @@ static void conclude_pack(int fix_thin_pack, const char *curr_pack, unsigned cha
- 		       nr_unresolved * sizeof(*objects));
- 		f = sha1fd(output_fd, curr_pack);
- 		fix_unresolved_deltas(f);
--		strbuf_addf(&msg, _("completed with %d local objects"),
-+		strbuf_addf(&msg, Q_("completed with %d local object",
-+				     "completed with %d local objects",
-+				     nr_objects - nr_objects_initial),
- 			    nr_objects - nr_objects_initial);
- 		stop_progress_msg(&progress, msg.buf);
- 		strbuf_release(&msg);
--- 
-2.1.4
+Thanks for testing. By the way, I ran the whole test suite with "--tee -v"
+and grepped for "(null)", which does find this case on glibc systems. I
+didn't see any other interesting cases (there _are_ mentions of
+"(null)", but they are from our code, not glibc converting NULLs). Which
+I guess is just corroborating your testing, since you would have seen
+any bad cases as segfaults.
+
+-Peff
