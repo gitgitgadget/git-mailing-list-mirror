@@ -1,73 +1,64 @@
-From: "Tom G. Christensen" <tgc@jupiterrise.com>
-Subject: Hardcoded #!/bin/sh in t5532 causes problems on Solaris
-Date: Sat, 9 Apr 2016 22:27:37 +0200
-Message-ID: <570965B9.9040207@jupiterrise.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Vasco Almeida <vascomalmeida@sapo.pt>
+Subject: [PATCH v2 1/7] i18n: index-pack: use plural string instead of normal one
+Date: Sat,  9 Apr 2016 20:38:38 +0000
+Message-ID: <1460234324-13506-1-git-send-email-vascomalmeida@sapo.pt>
+Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
+	Jiang Xin <worldhello.net@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 09 22:27:52 2016
+X-From: git-owner@vger.kernel.org Sat Apr 09 22:39:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aozTz-0001Le-GC
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 22:27:51 +0200
+	id 1aozes-0000jw-1w
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 22:39:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754553AbcDIU1m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Apr 2016 16:27:42 -0400
-Received: from sub4.mail.dreamhost.com ([69.163.253.135]:33813 "EHLO
-	homiemail-a25.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752641AbcDIU1m (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Apr 2016 16:27:42 -0400
-Received: from homiemail-a25.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a25.g.dreamhost.com (Postfix) with ESMTP id 3107E6780B8
-	for <git@vger.kernel.org>; Sat,  9 Apr 2016 13:27:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=jupiterrise.com; h=to:from
-	:subject:message-id:date:mime-version:content-type:
-	content-transfer-encoding; s=jupiterrise.com; bh=REjlAq3iATmcMYx
-	4q0ulXt5Gsz0=; b=MNvPFZFqvDC57w9DK/hNqTL8lBCv/1Q1GNrQp+o2BvOxlTm
-	x9jhd1tyzLVMjOMC88en+QKas5mKq6RT1oQXr8MB7PxAERK406ajKvxULtp9lbaC
-	3HwKTWwAiWI5gOOPqDkY/fCjh5MNCiwIcByDFs9qxPboIEGNhPBkvEqsTtXo=
-Received: from localhost6.localdomain6 (2-106-159-182-static.dk.customer.tdc.net [2.106.159.182])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: tgc99@jupiterrise.com)
-	by homiemail-a25.g.dreamhost.com (Postfix) with ESMTPSA id B432867808D
-	for <git@vger.kernel.org>; Sat,  9 Apr 2016 13:27:40 -0700 (PDT)
-Received: from [127.0.0.1] (localhost.localdomain [127.0.0.1])
-	by localhost6.localdomain6 (8.14.4/8.14.4) with ESMTP id u39KRbs9031486
-	for <git@vger.kernel.org>; Sat, 9 Apr 2016 22:27:37 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.0
+	id S1754626AbcDIUi4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Apr 2016 16:38:56 -0400
+Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:56781 "EHLO sapo.pt"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754517AbcDIUi4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Apr 2016 16:38:56 -0400
+Received: (qmail 8042 invoked from network); 9 Apr 2016 20:38:53 -0000
+Received: (qmail 15132 invoked from network); 9 Apr 2016 20:38:53 -0000
+Received: from unknown (HELO linux-iv58.site) (vascomalmeida@sapo.pt@[85.246.157.91])
+          (envelope-sender <vascomalmeida@sapo.pt>)
+          by mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
+          for <git@vger.kernel.org>; 9 Apr 2016 20:38:48 -0000
+X-PTMail-RemoteIP: 85.246.157.91
+X-PTMail-AllowedSender-Action: 
+X-PTMail-Service: default
+X-Mailer: git-send-email 2.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291126>
 
-Hello,
+Git could output "completed with 1 local objects", but in this case
+using "object" instead of "objects" is the correct form.
+Use Q_() instead of _().
 
-Looking at the testsuite results on Solaris I see a failure in t5532.3.
+Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
+---
+ builtin/index-pack.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Running the testsuite with -v -i revealed a shell syntax error:
-
-proxying for example.com 9418
-./proxy: syntax error at line 3: `cmd=$' unexpected
-not ok 3 - fetch through proxy works
-#
-#               git fetch fake &&
-#               echo one >expect &&
-#               git log -1 --format=%s FETCH_HEAD >actual &&
-#               test_cmp expect actual
-#
-
-
-Looking a t5532-fetch-proxy.sh the problem is obvious, it writes out a 
-helper script which explicitly uses #!/bin/sh but fails to take into 
-account that systems like Solaris has an ancient /bin/sh that knows 
-nothing about POSIX things like $().
-Replacing $() with `` was enough to make the test pass.
-
--tgc
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 2d1eb8b..e8c71fc 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1250,7 +1250,9 @@ static void conclude_pack(int fix_thin_pack, const char *curr_pack, unsigned cha
+ 		       nr_unresolved * sizeof(*objects));
+ 		f = sha1fd(output_fd, curr_pack);
+ 		fix_unresolved_deltas(f);
+-		strbuf_addf(&msg, _("completed with %d local objects"),
++		strbuf_addf(&msg, Q_("completed with %d local object",
++				     "completed with %d local objects",
++				     nr_objects - nr_objects_initial),
+ 			    nr_objects - nr_objects_initial);
+ 		stop_progress_msg(&progress, msg.buf);
+ 		strbuf_release(&msg);
+-- 
+2.1.4
