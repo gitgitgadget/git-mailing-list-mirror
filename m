@@ -1,113 +1,90 @@
-From: "Tom G. Christensen" <tgc@jupiterrise.com>
-Subject: Re: git segfaults on older Solaris releases
-Date: Sat, 9 Apr 2016 09:02:38 +0200
-Message-ID: <5708A90E.1050705@jupiterrise.com>
-References: <5706A489.7070101@jupiterrise.com>
- <xmqqoa9lz2uw.fsf@gitster.mtv.corp.google.com>
- <xmqqk2k9z20p.fsf@gitster.mtv.corp.google.com>
- <5706C0D4.9030707@jupiterrise.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 09 09:03:07 2016
+From: Michael Rappazzo <rappazzo@gmail.com>
+Subject: [PATCH] rewrite t1500-rev-parse.sh
+Date: Sat,  9 Apr 2016 07:19:26 -0400
+Message-ID: <1460200767-32864-1-git-send-email-rappazzo@gmail.com>
+Cc: gitster@pobox.com, sunshine@sunshineco.com, pclouds@gmail.com,
+	szeder@ira.uka.de, Michael Rappazzo <rappazzo@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 09 13:19:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aomvC-00064V-Tb
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 09:03:07 +0200
+	id 1aoqvF-0000Kn-DH
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 13:19:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751639AbcDIHCq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Apr 2016 03:02:46 -0400
-Received: from sub4.mail.dreamhost.com ([69.163.253.135]:34497 "EHLO
-	homiemail-a97.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751137AbcDIHCp (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Apr 2016 03:02:45 -0400
-Received: from homiemail-a97.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a97.g.dreamhost.com (Postfix) with ESMTP id CC3B728607C;
-	Sat,  9 Apr 2016 00:02:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=jupiterrise.com; h=subject
-	:to:references:cc:from:message-id:date:mime-version:in-reply-to
-	:content-type:content-transfer-encoding; s=jupiterrise.com; bh=f
-	yJFnUgLimQSoNBYf74M5A02EVM=; b=qxmbLHuLlNNVXRZzHmyUlY34nGYi2r57D
-	E0JQPpmTk2swkDjM9wuUhTiu3+AIXHmGmKkt0fn/FEcqFoeJbxsKXlIftvLgKl+q
-	W6ZNWH+0AgYnP25Il7dMhWyO7BUrI9JVBk4LZoMDfYE/0SwTB0qs/lWO4wkmhf0T
-	yDPLgzIqzI=
-Received: from localhost6.localdomain6 (2-106-159-182-static.dk.customer.tdc.net [2.106.159.182])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: tgc99@jupiterrise.com)
-	by homiemail-a97.g.dreamhost.com (Postfix) with ESMTPSA id 548F6286058;
-	Sat,  9 Apr 2016 00:02:44 -0700 (PDT)
-Received: from [127.0.0.1] (localhost.localdomain [127.0.0.1])
-	by localhost6.localdomain6 (8.14.4/8.14.4) with ESMTP id u3972cLe027580;
-	Sat, 9 Apr 2016 09:02:39 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.0
-In-Reply-To: <5706C0D4.9030707@jupiterrise.com>
+	id S1752553AbcDILTS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Apr 2016 07:19:18 -0400
+Received: from mail-qg0-f66.google.com ([209.85.192.66]:35276 "EHLO
+	mail-qg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751019AbcDILTR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Apr 2016 07:19:17 -0400
+Received: by mail-qg0-f66.google.com with SMTP id b32so12165482qgf.2
+        for <git@vger.kernel.org>; Sat, 09 Apr 2016 04:19:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=2Won9VYahLtGEWeAlZp7woTUAWm6l7wCIWwBWt64xRQ=;
+        b=mRLjg6gQCCQaCSq6VzaccNWsaGdstueqydrXcarUM2JszUnVxI/nixsvwKZP2HkqS5
+         31n419MkvO11pkilyPSk3eKbdyfkfB6TtI5gFQ2jMB+Y/vDUs509NhrFEIIpClbRfAy+
+         q6UlQoST0vuvu6ogbGvf73l7lRQsP7IkCu9STi4kSuykQviiqNLKjdU9AF+OhNgAi/rY
+         O2VXSpLDGBR4C7SATj0ggIlqFdD/GNJP1+Qk+hf/ly8vZqXQI47TAG+9xM5XXAVN6ogd
+         AEoiByDNa+GXgwytW/PHAOsBz8j5H+QvAU+CjhTPnlZCHirswiRbCSQP5bH9zIjMDUgq
+         b+8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=2Won9VYahLtGEWeAlZp7woTUAWm6l7wCIWwBWt64xRQ=;
+        b=W0VYlml+OGGUsyOnG3bFpJms3XvoQzYfpe6aH/E6SpPxAk8WCxwXqTPl7Uvdzo9Yx9
+         CH55FH9L4VZXQaiUogJih62CY+Qlk2Ds+xfYqR8zGw97vaFH1IQ+v+Hg8bgVirsZLkpT
+         pgeBrZxk9RNwdGD009AH/fRUZUsQKt+r+uvDADW/UfxQizLDA7c5B/NiTgA6eO5yvmpO
+         c2Umm1ZFOqZMYkxq2EbDNdkr2f5vWkVebODx9pwK9WIWzOgUoMJ2arwMuRwhoYu/9f0g
+         2YiWNBxXSFsEcuKF+iPVCMh3tfJeXFeHGBzl5peJu9ZMgd8EFUbSfYzMLXZEsDrPHY3j
+         ILog==
+X-Gm-Message-State: AD7BkJJb3jLPu4hjmAOOyr+u8PJ8l3itB30sQZl5w5fD+dCGv8Bmi07Xg3pBk0bP6iiNtg==
+X-Received: by 10.140.16.133 with SMTP id 5mr16816134qgb.50.1460200756286;
+        Sat, 09 Apr 2016 04:19:16 -0700 (PDT)
+Received: from MRappazzo-8.local.info (pool-100-35-125-216.nwrknj.fios.verizon.net. [100.35.125.216])
+        by smtp.gmail.com with ESMTPSA id c32sm7245961qgf.36.2016.04.09.04.19.15
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sat, 09 Apr 2016 04:19:15 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291087>
 
-On 07/04/16 22:19, Tom G. Christensen wrote:
-> On 07/04/16 20:50, Junio C Hamano wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->> So perhaps this is all we need to fix your box.
->>
->>   setup.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->
-> I applied this patch to 2.8.0 and have completed a testsuite run on
-> Solaris 2.6/x86 with only a few unrelated problems.
-> I will continue testing on the other Solaris < 10 releases but I do not
-> expect any difference in the outcome.
->
+I was working on a simple bug fix[1], and I wanted to add a test to t1500.  I put
+the new test at the beginning rather than try to decipher what state the test run
+would be in at the end. In the review, Eric Sunshine described the test:
 
-I've finished testing 2.8.1 and I found one more case where a null is 
-being printed and causing a segfault. This happens even on Solaris 8 and 9.
-The failling test is t3200.63.
+> this script is ancient and cd's all around the place with wild abandon and
+> leaks environment variables
 
-Here is the backtrace from a Solaris 8/SPARC machine:
+I decided to rewrite this test in (what I hope is) the modern test format.  In
+doing so, I expanded the size of the test file greatly, but I think it is much
+clearer to read and understand as you go through it.  This also has the advantage
+of allowing a tester to use verbose options when testing.  As noted in the commit
+comment, tests which compare text (rather than booleans) were also adjusted to use
+the test_cmp function.
 
-(gdb) core trash directory.t3200-branch/core
-[New LWP 1]
-[Thread debugging using libthread_db enabled]
-[New Thread 1 (LWP 1)]
-Core was generated by `/export/home/tgc/buildpkg/git/src/git-2.8.1/git 
-branch --unset-upstream'.
-Program terminated with signal SIGSEGV, Segmentation fault.
-#0  0xfecb32cc in strlen () from /usr/lib/libc.so.1
-(gdb) bt
-#0  0xfecb32cc in strlen () from /usr/lib/libc.so.1
-#1  0xfed06508 in _doprnt () from /usr/lib/libc.so.1
-#2  0xfed08690 in vfprintf () from /usr/lib/libc.so.1
-#3  0x001487bc in vreportf (prefix=<optimized out>, err=<optimized out>, 
-params=0xffbfe408) at usage.c:23
-#4  0x0014881c in die_builtin (err=0x198f90 "Could not set '%s' to 
-'%s'", params=0xffbfe408) at usage.c:35
-#5  0x00148934 in die (err=0x198f90 "Could not set '%s' to '%s'") at 
-usage.c:108
-#6  0x000af1b0 in git_config_set_multivar_in_file (value=0x0, 
-key=0x1ecca0 "branch.master.remote",
-     config_filename=<optimized out>, value_regex=<optimized out>, 
-multi_replace=<optimized out>) at config.c:2226
-#7  git_config_set_multivar_in_file (config_filename=0x0, key=0x1ecca0 
-"branch.master.remote", value=0x0,
-     value_regex=0x0, multi_replace=1) at config.c:2220
-#8  0x0003aa6c in cmd_branch (argc=0, argv=0xffbfec00, prefix=<optimized 
-out>) at builtin/branch.c:793
-#9  0x000255e8 in run_builtin (argv=0xffbfec00, argc=2, p=0x1c365c 
-<commands+84>) at git.c:353
-#10 handle_builtin (argc=2, argv=0xffbfec00) at git.c:540
-#11 0x00168ecc in run_argv (argv=0xffbfeb30, argcp=0xffbfebdc) at git.c:594
-#12 main (argc=2, av=<optimized out>) at git.c:701
-(gdb)
+This patch is based on 'pu' because of a feature to add `--absolute-git-dir` to
+rev-parse[2].
+
+I considered including this patch as the first commit in the aforementioned bug
+fix, but I wanted to get it out for review to make sure that it is acceptible.
 
 
--tgc
+[1]http://thread.gmane.org/gmane.comp.version-control.git/290669
+[2]http://article.gmane.org/gmane.comp.version-control.git/287462
+
+Michael Rappazzo (1):
+  t1500-rev-parse: rewrite each test to run in isolation
+
+ t/t1500-rev-parse.sh | 607 +++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 545 insertions(+), 62 deletions(-)
+
+-- 
+2.8.0
