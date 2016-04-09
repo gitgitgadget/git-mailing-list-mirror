@@ -1,121 +1,167 @@
-From: Felix Ruess <felix.ruess@gmail.com>
-Subject: Re: git 2.8.1 not working with socks5h https proxy anymore
-Date: Sat, 9 Apr 2016 14:05:11 +0200
-Message-ID: <CAEc+GFerpBC_O4jMvtmUhVdLReEN4nvuz5Q30SFUp8qZnQZBmQ@mail.gmail.com>
-References: <CAEc+GFeG-ZdeTXGsjmwV0QP6QwYvjA4nzCGitka0aXjqEkatfg@mail.gmail.com>
-	<xmqq8u0nx66h.fsf@gitster.mtv.corp.google.com>
+From: Vasco Almeida <vascomalmeida@sapo.pt>
+Subject: Re: [PATCH 2/7] l10n: unpack-trees: mark strings for translation
+Date: Sat, 9 Apr 2016 12:19:24 +0000
+Message-ID: <5708F34C.3090004@sapo.pt>
+References: <1460145765-7454-1-git-send-email-vascomalmeida@sapo.pt>
+ <1460145765-7454-2-git-send-email-vascomalmeida@sapo.pt>
+ <xmqqpotzvoia.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Daniel Stenberg <daniel@haxx.se>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 09 14:05:25 2016
+X-From: git-owner@vger.kernel.org Sat Apr 09 14:19:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aordj-0007ZC-CE
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 14:05:23 +0200
+	id 1aorrg-0001tx-Pr
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 14:19:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753165AbcDIMFP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Apr 2016 08:05:15 -0400
-Received: from mail-lf0-f45.google.com ([209.85.215.45]:32848 "EHLO
-	mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751257AbcDIMFN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Apr 2016 08:05:13 -0400
-Received: by mail-lf0-f45.google.com with SMTP id e190so104037282lfe.0
-        for <git@vger.kernel.org>; Sat, 09 Apr 2016 05:05:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=BCb75K5MgfNNF0GbqI7RfkmR8EapodfPV/zz0KQulVk=;
-        b=KsfYt6qV1qBF4S5zj5MRVJYo6BaiHnvJ40rPjkrlyzrM8eh+ONiSs7FMEl9KBUonhu
-         WGz1XIDMFstYQkYPeAfFmeNn73D7U5jl1VVlzniZU1RVxi9KysAJPouRXDznhf2eQMfS
-         1N/ivEmRRM/Tqspxs9Lwz1wWj8ycZZWeWGLEAzC7hrr8fyGyxYXg3ElxdpJvwBRQQI9T
-         Je2YqQBiw8iHQMjseHH/HUyA/z8WcgJknEP1Q6YjVm/FyRFtGVTBLX8twCg4eG/CH+fw
-         r+Q1l+690ka7TNr+i8eARQLU3U1UTHdL0SY84Lr2+aDLyV7XeXY85dHLnhDIITnc3luk
-         5x2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=BCb75K5MgfNNF0GbqI7RfkmR8EapodfPV/zz0KQulVk=;
-        b=NZpNRWtwJCLvTdeSWddFAvoa72qH46Ni/RLttrFUpU9MZf+9Njs0x5lZmKgYqiFasV
-         BC02x2QMWM5yh02f2bPAMp5oHtTqdncUfdMEzvvy/u11W5YEdEq/r151pWMm5WSWP1tU
-         Vzw+aqwdHexbl0Atrv3Iw5CVhMUJ1R6kHXdzpM49woI7uZiW21/YZdaO1UG2lqpBCtjM
-         Q2sFhR9buI4faKE6PAXNm9B470FFelRx1vA5JmYAZwN4KLp9J1kY++fUgnOL0y9XBp/V
-         gbRo4iVDwNlR/KHE538GCsbuD9czTfgsN7donUx3vX0nPhM1xN5aViA4GDJWiFThOOve
-         onpQ==
-X-Gm-Message-State: AD7BkJJrqiETg2mZfglA8du6CjsAcHd5yHbygmmMBF5pqn0NL4kkT2fQaBztCuRNX2EWvOp4nN+gUlBIyXEZlA==
-X-Received: by 10.112.13.193 with SMTP id j1mr5615185lbc.24.1460203511797;
- Sat, 09 Apr 2016 05:05:11 -0700 (PDT)
-Received: by 10.114.68.70 with HTTP; Sat, 9 Apr 2016 05:05:11 -0700 (PDT)
-In-Reply-To: <xmqq8u0nx66h.fsf@gitster.mtv.corp.google.com>
+	id S1752496AbcDIMTl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Apr 2016 08:19:41 -0400
+Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:50522 "EHLO sapo.pt"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751112AbcDIMTk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Apr 2016 08:19:40 -0400
+Received: (qmail 26319 invoked from network); 9 Apr 2016 12:19:38 -0000
+Received: (qmail 15121 invoked from network); 9 Apr 2016 12:19:38 -0000
+Received: from unknown (HELO [192.168.64.2]) (vascomalmeida@sapo.pt@[207.158.41.54])
+          (envelope-sender <vascomalmeida@sapo.pt>)
+          by mta-auth01 (qmail-ptmail-1.0.0) with ESMTPSA
+          for <worldhello.net@gmail.com>; 9 Apr 2016 12:19:32 -0000
+X-PTMail-RemoteIP: 207.158.41.54
+X-PTMail-AllowedSender-Action: 
+X-PTMail-Service: default
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.0
+In-Reply-To: <xmqqpotzvoia.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291090>
 
-Thanks a lot!
-Tested the patch and it works as expected :-)
-
-On Fri, Apr 8, 2016 at 9:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felix Ruess <felix.ruess@gmail.com> writes:
->
->> I just encountered a problem with the latest git version (2.8.1) that
->> looks like a regression to me:
->> When trying to clone a repo via a https socks5 proxy the connection times out:
+=C0s 20:23 de 08-04-2016, Junio C Hamano escreveu:
+> Vasco Almeida <vascomalmeida@sapo.pt> writes:
+>=20
+>> Mark strings seen by the user inside setup_unpack_trees_porcelain() =
+and
+>> display_error_msgs() functions for translation.
 >>
->> $ git config --global 'http.proxy=socks5h://127.0.0.1:1080'
->
-> The first version of Git that has code that explicitly supports
-> socks proxy is 2.6.4, it seems.  Since then we have always used
-> CURLPROXY_SOCKS5 for curl_http_proxy that begins with a string
-> "socks5".
->
-> Checking
->
->     https://github.com/curl/curl/blob/master/docs/libcurl/symbols-in-versions
->
-> I find that that at curl 7.18.0, curl added a separate
-> CURLPROXY_SOCKS5_HOSTNAME that can be triggered by "socks5h:" that
-> is separate from CURLPROXY_SOCKS5, and I am guessing that the
-> differences in behaviour between these two is what is causing you
-> trouble.  https://curl.haxx.se/libcurl/c/CURLOPT_PROXY.html says
->
->   ..., socks5h:// (the last one to enable socks5 and asking the proxy
->   to do the resolving, also known as CURLPROXY_SOCKS5_HOSTNAME type)
->
-> and because not using _HOSTNAME variant would likely not ask the
-> proxy to do the resolving, it explains the stall on your end, if
-> your box cannot resolve external hostname.
->
-> Perhaps the attached patch may help?
->
-> I do not know if Pat is still active as a developer, but I am
-> wondering what the reason was to use starts_with(..., "socks5")
-> instead of "socks5:", "socks4a:", etc. when identifying the proxy
-> type.
->
->  http.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/http.c b/http.c
-> index 69da445..4304b80 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -605,7 +605,10 @@ static CURL *get_curl_handle(void)
->         if (curl_http_proxy) {
->                 curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
->  #if LIBCURL_VERSION_NUM >= 0x071800
-> -               if (starts_with(curl_http_proxy, "socks5"))
-> +               if (starts_with(curl_http_proxy, "socks5h"))
-> +                       curl_easy_setopt(result,
-> +                               CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
-> +               else if (starts_with(curl_http_proxy, "socks5"))
->                         curl_easy_setopt(result,
->                                 CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
->                 else if (starts_with(curl_http_proxy, "socks4a"))
+>> One case Git outputs the named strings is when the user does some ed=
+iting to
+>> a file on some branch and then checks out other branch, but that fil=
+e
+>> changes by the checkout. This is the case of the first string marked=
+=2E
+>=20
+> The second paragraph puzzling.  Other strings are not shown at all?
+> Or is it just you didn't bother explaining the others cases?
+>=20
+> Either case, it is not immediately clear why you felt that one
+> string among others deserve more attention.  Care to elaborate?
+
+I meant that as an example, which was the situation I was when I found
+the untranslated string.
+I should have written that outside the commit message, as a note.
+I'm going to remove that paragraph since it isn=92t irrelevant and
+confusing. Hope I answered you.
+
+>=20
+> In the patch itself I did not find anything questionable, though.
+>=20
+> Thanks.
+>=20
+>>
+>> Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
+>> ---
+>>  unpack-trees.c | 24 ++++++++++++------------
+>>  1 file changed, 12 insertions(+), 12 deletions(-)
+>>
+>> diff --git a/unpack-trees.c b/unpack-trees.c
+>> index 9f55cc2..4bc6b4f 100644
+>> --- a/unpack-trees.c
+>> +++ b/unpack-trees.c
+>> @@ -61,21 +61,21 @@ void setup_unpack_trees_porcelain(struct unpack_=
+trees_options *opts,
+>>  	const char *cmd2 =3D strcmp(cmd, "checkout") ? cmd : "switch branc=
+hes";
+>> =20
+>>  	if (advice_commit_before_merge)
+>> -		msg =3D "Your local changes to the following files would be overw=
+ritten by %s:\n%%s"
+>> -			"Please, commit your changes or stash them before you can %s.";
+>> +		msg =3D _("Your local changes to the following files would be ove=
+rwritten by %s:\n%%s"
+>> +			"Please, commit your changes or stash them before you can %s.");
+>>  	else
+>> -		msg =3D "Your local changes to the following files would be overw=
+ritten by %s:\n%%s";
+>> +		msg =3D _("Your local changes to the following files would be ove=
+rwritten by %s:\n%%s");
+>>  	msgs[ERROR_WOULD_OVERWRITE] =3D msgs[ERROR_NOT_UPTODATE_FILE] =3D
+>>  		xstrfmt(msg, cmd, cmd2);
+>> =20
+>>  	msgs[ERROR_NOT_UPTODATE_DIR] =3D
+>> -		"Updating the following directories would lose untracked files in=
+ it:\n%s";
+>> +		_("Updating the following directories would lose untracked files =
+in it:\n%s");
+>> =20
+>>  	if (advice_commit_before_merge)
+>> -		msg =3D "The following untracked working tree files would be %s b=
+y %s:\n%%s"
+>> -			"Please move or remove them before you can %s.";
+>> +		msg =3D _("The following untracked working tree files would be %s=
+ by %s:\n%%s"
+>> +			"Please move or remove them before you can %s.");
+>>  	else
+>> -		msg =3D "The following untracked working tree files would be %s b=
+y %s:\n%%s";
+>> +		msg =3D _("The following untracked working tree files would be %s=
+ by %s:\n%%s");
+>> =20
+>>  	msgs[ERROR_WOULD_LOSE_UNTRACKED_REMOVED] =3D xstrfmt(msg, "removed=
+", cmd, cmd2);
+>>  	msgs[ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN] =3D xstrfmt(msg, "ove=
+rwritten", cmd, cmd2);
+>> @@ -84,14 +84,14 @@ void setup_unpack_trees_porcelain(struct unpack_=
+trees_options *opts,
+>>  	 * Special case: ERROR_BIND_OVERLAP refers to a pair of paths, we
+>>  	 * cannot easily display it as a list.
+>>  	 */
+>> -	msgs[ERROR_BIND_OVERLAP] =3D "Entry '%s' overlaps with '%s'.  Cann=
+ot bind.";
+>> +	msgs[ERROR_BIND_OVERLAP] =3D _("Entry '%s' overlaps with '%s'.  Ca=
+nnot bind.");
+>> =20
+>>  	msgs[ERROR_SPARSE_NOT_UPTODATE_FILE] =3D
+>> -		"Cannot update sparse checkout: the following entries are not up-=
+to-date:\n%s";
+>> +		_("Cannot update sparse checkout: the following entries are not u=
+p-to-date:\n%s");
+>>  	msgs[ERROR_WOULD_LOSE_ORPHANED_OVERWRITTEN] =3D
+>> -		"The following Working tree files would be overwritten by sparse =
+checkout update:\n%s";
+>> +		_("The following Working tree files would be overwritten by spars=
+e checkout update:\n%s");
+>>  	msgs[ERROR_WOULD_LOSE_ORPHANED_REMOVED] =3D
+>> -		"The following Working tree files would be removed by sparse chec=
+kout update:\n%s";
+>> +		_("The following Working tree files would be removed by sparse ch=
+eckout update:\n%s");
+>> =20
+>>  	opts->show_all_errors =3D 1;
+>>  	/* rejected paths may not have a static buffer */
+>> @@ -168,7 +168,7 @@ static void display_error_msgs(struct unpack_tre=
+es_options *o)
+>>  		string_list_clear(rejects, 0);
+>>  	}
+>>  	if (something_displayed)
+>> -		fprintf(stderr, "Aborting\n");
+>> +		fprintf(stderr, _("Aborting\n"));
+>>  }
+>> =20
+>>  /*
