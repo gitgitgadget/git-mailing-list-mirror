@@ -1,150 +1,106 @@
-From: Ye Xiaolong <xiaolong.ye@intel.com>
-Subject: Re: [PATCH v3 2/4] format-patch: add '--base' option to record base
- tree info
-Date: Sat, 9 Apr 2016 23:56:30 +0800
-Message-ID: <20160409155630.GA2046@yexl-desktop>
-References: <1459388776-18066-1-git-send-email-xiaolong.ye@intel.com>
- <1459388776-18066-3-git-send-email-xiaolong.ye@intel.com>
- <xmqqy48yo8eb.fsf@gitster.mtv.corp.google.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 00/24] Yet another pre-refs-backend series
+Date: Sat, 9 Apr 2016 12:19:50 -0400
+Message-ID: <57092BA6.1060808@alum.mit.edu>
+References: <1460055791-23313-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, fengguang.wu@intel.com, ying.huang@intel.com,
-	philip.li@intel.com, julie.du@intel.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 09 17:57:30 2016
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 09 18:30:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aovGK-0000tT-Uk
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 17:57:29 +0200
+	id 1aovlq-0008NG-Hk
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 18:30:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753767AbcDIP5Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Apr 2016 11:57:24 -0400
-Received: from mga14.intel.com ([192.55.52.115]:35225 "EHLO mga14.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753137AbcDIP5X (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Apr 2016 11:57:23 -0400
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga103.fm.intel.com with ESMTP; 09 Apr 2016 08:57:23 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.24,454,1455004800"; 
-   d="scan'208";a="941750497"
-Received: from yexl-desktop.sh.intel.com (HELO localhost) ([10.239.159.26])
-  by fmsmga001.fm.intel.com with ESMTP; 09 Apr 2016 08:57:21 -0700
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	fengguang.wu@intel.com, ying.huang@intel.com, philip.li@intel.com,
-	julie.du@intel.com
-Content-Disposition: inline
-In-Reply-To: <xmqqy48yo8eb.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1754119AbcDIQ06 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Apr 2016 12:26:58 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:50742 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753908AbcDIQ05 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Apr 2016 12:26:57 -0400
+X-Greylist: delayed 424 seconds by postgrey-1.27 at vger.kernel.org; Sat, 09 Apr 2016 12:26:57 EDT
+X-AuditID: 1207440e-f07ff700000008c5-0c-57092ba707ac
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id C3.70.02245.7AB29075; Sat,  9 Apr 2016 12:19:51 -0400 (EDT)
+Received: from [192.168.0.107] (ool-4352a4a3.dyn.optonline.net [67.82.164.163])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u39GJokD012234
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Sat, 9 Apr 2016 12:19:51 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.7.0
+In-Reply-To: <1460055791-23313-1-git-send-email-dturner@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrAIsWRmVeSWpSXmKPExsUixO6iqLtcmzPcYNopNYv5m04wWnRd6WZy
+	YPJY8Pw+u8fnTXIBTFHcNkmJJWXBmel5+nYJ3BlHH11lL/gvWDFt60v2BsYtfF2MnBwSAiYS
+	O65eZOxi5OIQEtjKKHH60lc2COcck8S2h0uZQKqEBewkzq/4zgZiiwg4SFzedZQZxBYS8JA4
+	vmoDK4jNJqArsainGayeV0BbYsq9hWBxFgEViRenL7CD2KICIRLb1n1jhagRlDg58wkLiM0p
+	4Cnxuq0HbCazgJ7Ejuu/WCFseYntb+cwT2Dkm4WkZRaSsllIyhYwMq9ilEvMKc3VzU3MzClO
+	TdYtTk7My0st0jXWy80s0UtNKd3ECAk9vh2M7etlDjEKcDAq8fBmhHGEC7EmlhVX5h5ilORg
+	UhLltXoJFOJLyk+pzEgszogvKs1JLT7EKMHBrCTCe1iNM1yINyWxsiq1KB8mJc3BoiTOq7ZE
+	3U9IID2xJDU7NbUgtQgmK8PBoSTB26oF1ChYlJqeWpGWmVOCkGbi4AQZziUlUpyal5JalFha
+	khEPir34YmD0gaR4gPbyaIPsLS5IzAWKQrSeYlSUEueNBJkrAJLIKM2DGwtLKK8YxYG+FOa1
+	AaniASYjuO5XQIOZgAZf4GcDGVySiJCSamCUEpswp4LV6rPML6brRudW8rTySChKtbj2Hp8q
+	sorj7oWWm07pqVO1YoJz5HZ0TWmVPnaL/62zhcDl3xvO39W/XW3hxrLVeevxl4sj3r3gWMR0
+	pye6acZ8yUDlTzf11P9ysO5v/ZPp+tHU+ai9sIr1zJVmdnzz1sdP+bbzseGpnYef 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291100>
 
-On Thu, Mar 31, 2016 at 10:38:04AM -0700, Junio C Hamano wrote:
->> diff --git a/builtin/log.c b/builtin/log.c
->> index 0d738d6..03cbab0 100644
->> --- a/builtin/log.c
->> +++ b/builtin/log.c
->> @@ -1185,6 +1185,82 @@ static int from_callback(const struct option *opt, const char *arg, int unset)
->>  	return 0;
->>  }
->>  
->> +struct base_tree_info {
->> +	struct object_id base_commit;
->> +	int nr_patch_id, alloc_patch_id;
->> +	struct object_id *patch_id;
->> +};
->> +
->> +static void prepare_bases(struct base_tree_info *bases,
->> +			  const char *base_commit,
->> +			  struct commit **list,
->> +			  int total)
->> +{
->> +	struct commit *base = NULL, *commit;
->> +	struct rev_info revs;
->> +	struct diff_options diffopt;
->> +	struct object_id *patch_id;
->> +	unsigned char sha1[20];
->> +	int i;
->> +
->> +	diff_setup(&diffopt);
->> +	DIFF_OPT_SET(&diffopt, RECURSIVE);
->> +	diff_setup_done(&diffopt);
->> +
->> +	base = lookup_commit_reference_by_name(base_commit);
->> +	if (!base)
->> +		die(_("Unknown commit %s"), base_commit);
->> +	oidcpy(&bases->base_commit, &base->object.oid);
->> +
->> +	init_revisions(&revs, NULL);
->> +	revs.max_parents = 1;
->> +	base->object.flags |= UNINTERESTING;
->> +	add_pending_object(&revs, &base->object, "base");
->> +	for (i = 0; i < total; i++) {
->> +		list[i]->object.flags |= 0;
->
->What does this statement do, exactly?  Are you clearing some bits
->but not others, and if so which ones?
->
->> +		add_pending_object(&revs, &list[i]->object, "rev_list");
->> +		list[i]->util = (void *)1;
->
->Are we sure commit objects not on the list have their ->util cleared?
->The while() loop below seems to rely on that to correctly filter out
->the ones that are on the list.
->
-After some investigation and according to my understanding, the commit
-object is allocated through alloc_commit_node->alloc_node, 
+On 04/07/2016 03:02 PM, David Turner wrote:
+> We now have quite a large number of patches before we even get into
+> the meat of the pluggable refs backend series.  So it's worth breaking
+> those out and getting them in before we get into the main series
+> (which Michael Haggerty swants to redesign a bit anyway).
+> 
+> This set of patches should be applied on top of
+> jk/check-repository-format.
+> 
+> Michael Haggerty has reviewed those of my patches which are in here
+> except maybe:
+>   refs: on symref reflog expire, lock symref not referrent
+> This was the one from later in the series that was straightforward to
+> move to before the vtable; the other two were going to be harder to
+> move and can wait until after the vtable.
 
-void *alloc_commit_node(void)
-{
-	struct commit *c = alloc_node(&commit_state, sizeof(struct commit));
-	c->object.type = OBJ_COMMIT;
-	c->index = alloc_commit_index();
-	return c;
-}
+This last patch deserves a little bit of discussion. Currently, when the
+reflog of a symref is expired, the pointed-to ref is locked rather than
+the symref. This patch changes the code to lock the symref instead.
 
-static inline void *alloc_node(struct alloc_state *s, size_t node_size)
-{
-	void *ret;
+This is clearly the right thing to do, and I consider this change a bug
+fix. However, it introduces an incompatibility. An old version of `git
+reflog expire` and a new version wouldn't agree on the locking protocol,
+and could potentially try to overwrite the same reflog at the same time.
 
-	if (!s->nr) {
-		s->nr = BLOCKING;
-		s->p = xmalloc(BLOCKING * node_size);
-	}
-	s->nr--;
-	s->count++;
-	ret = s->p;
-	s->p = (char *)s->p + node_size;
-	memset(ret, 0, node_size);
-	return ret;
-}
+I think this risk is acceptable nevertheless, because expiring reflogs
+is an uncommon operation and unlikely to be done from two processes at
+the same time; moreover, the integrity of reflogs is not a matter of
+life or death.
 
-So the commit->util should be cleared after initialization, and it has
-not been touched except above "for" loop in our code execution path, I think
-it is safe to rely on it to filter out commits that are on the rev list.
+A far more likely conflict would be between a reflog expiration and a
+symref update (e.g., `git checkout otherbranch`). This use case is
+currently *broken* because `git checkout` locks HEAD. It would be fixed
+by this patch.
 
-Thanks,
-Xiaolong.
->> +	}
->> +
->> +	if (prepare_revision_walk(&revs))
->> +		die(_("revision walk setup failed"));
->> +	/*
->> +	 * Traverse the prerequisite commits list,
->> +	 * get the patch ids and stuff them in bases structure.
->> +	 */
->> +	while ((commit = get_revision(&revs)) != NULL) {
->> +		if (commit->util)
->> +			continue;
->> +		if (commit_patch_id(commit, &diffopt, sha1))
->> +			die(_("cannot get patch id"));
->> +		ALLOC_GROW(bases->patch_id, bases->nr_patch_id + 1, bases->alloc_patch_id);
->> +		patch_id = bases->patch_id + bases->nr_patch_id;
->> +		hashcpy(patch_id->hash, sha1);
->
+If somebody is really upset about the risk of a race between an old and
+new version of `git reflog expire`, the way to increase the safety would
+be to lock *both* the symref and the referent while changing the
+symref's reflog. I think that would be overkill.
+
+This whole series is
+
+Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
+
+David mentioned that I want to redesign the vtable patches somewhat.
+Anybody who is curious can look at the work in progress branch on my
+GitHub fork [1], branch wip/ref-storage.
+
+Michael
+
+[1] https://github.com/mhagger/git
