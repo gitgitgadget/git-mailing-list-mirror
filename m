@@ -1,114 +1,113 @@
-From: Ye Xiaolong <xiaolong.ye@intel.com>
-Subject: Re: [PATCH] builtin/log.c: fixup format-patch --base segfault
-Date: Sat, 9 Apr 2016 14:41:03 +0800
-Message-ID: <20160409064103.GA15167@yexl-desktop>
-References: <57006FB9.4080904@ramsayjones.plus.com>
+From: "Tom G. Christensen" <tgc@jupiterrise.com>
+Subject: Re: git segfaults on older Solaris releases
+Date: Sat, 9 Apr 2016 09:02:38 +0200
+Message-ID: <5708A90E.1050705@jupiterrise.com>
+References: <5706A489.7070101@jupiterrise.com>
+ <xmqqoa9lz2uw.fsf@gitster.mtv.corp.google.com>
+ <xmqqk2k9z20p.fsf@gitster.mtv.corp.google.com>
+ <5706C0D4.9030707@jupiterrise.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-X-From: git-owner@vger.kernel.org Sat Apr 09 08:42:03 2016
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 09 09:03:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aomao-0000Tn-8w
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 08:42:02 +0200
+	id 1aomvC-00064V-Tb
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 09:03:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753160AbcDIGl4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Apr 2016 02:41:56 -0400
-Received: from mga09.intel.com ([134.134.136.24]:7541 "EHLO mga09.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751987AbcDIGlz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Apr 2016 02:41:55 -0400
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga102.jf.intel.com with ESMTP; 08 Apr 2016 23:41:54 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.24,454,1455004800"; 
-   d="scan'208";a="81994737"
-Received: from yexl-desktop.sh.intel.com (HELO localhost) ([10.239.159.26])
-  by fmsmga004.fm.intel.com with ESMTP; 08 Apr 2016 23:41:53 -0700
-Mail-Followup-To: Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <57006FB9.4080904@ramsayjones.plus.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1751639AbcDIHCq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Apr 2016 03:02:46 -0400
+Received: from sub4.mail.dreamhost.com ([69.163.253.135]:34497 "EHLO
+	homiemail-a97.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751137AbcDIHCp (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Apr 2016 03:02:45 -0400
+Received: from homiemail-a97.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a97.g.dreamhost.com (Postfix) with ESMTP id CC3B728607C;
+	Sat,  9 Apr 2016 00:02:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=jupiterrise.com; h=subject
+	:to:references:cc:from:message-id:date:mime-version:in-reply-to
+	:content-type:content-transfer-encoding; s=jupiterrise.com; bh=f
+	yJFnUgLimQSoNBYf74M5A02EVM=; b=qxmbLHuLlNNVXRZzHmyUlY34nGYi2r57D
+	E0JQPpmTk2swkDjM9wuUhTiu3+AIXHmGmKkt0fn/FEcqFoeJbxsKXlIftvLgKl+q
+	W6ZNWH+0AgYnP25Il7dMhWyO7BUrI9JVBk4LZoMDfYE/0SwTB0qs/lWO4wkmhf0T
+	yDPLgzIqzI=
+Received: from localhost6.localdomain6 (2-106-159-182-static.dk.customer.tdc.net [2.106.159.182])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: tgc99@jupiterrise.com)
+	by homiemail-a97.g.dreamhost.com (Postfix) with ESMTPSA id 548F6286058;
+	Sat,  9 Apr 2016 00:02:44 -0700 (PDT)
+Received: from [127.0.0.1] (localhost.localdomain [127.0.0.1])
+	by localhost6.localdomain6 (8.14.4/8.14.4) with ESMTP id u3972cLe027580;
+	Sat, 9 Apr 2016 09:02:39 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.0
+In-Reply-To: <5706C0D4.9030707@jupiterrise.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291086>
 
-On Sun, Apr 03, 2016 at 02:19:53AM +0100, Ramsay Jones wrote:
+On 07/04/16 22:19, Tom G. Christensen wrote:
+> On 07/04/16 20:50, Junio C Hamano wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>> So perhaps this is all we need to fix your box.
+>>
+>>   setup.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
 >
->Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
->---
+> I applied this patch to 2.8.0 and have completed a testsuite run on
+> Solaris 2.6/x86 with only a few unrelated problems.
+> I will continue testing on the other Solaris < 10 releases but I do not
+> expect any difference in the outcome.
 >
->Hi Xiaolong,
->
->When you next re-roll your 'xy/format-patch-base' branch could you
->please squash this (or something like it) into the relevant patch.
->(commit 50ff6afd, "format-patch: add '--base' option to record base
->tree info", 31-03-2016).
->
->The pu branch, for me, fails a shed load of tests in the following:
->
->    t3301-notes.sh
->    t3901-i18n-patch.sh
->    t4014-format-patch.sh
->    t4021-format-patch-numbered.sh
->    t4028-format-patch-mime-headers.sh
->    t4030-diff-textconv.sh
->    t4036-format-patch-signer-mime.sh
->    t4052-stat-output.sh
->    t4122-apply-symlink-inside.sh
->    t4150-am.sh
->    t4151-am-abort.sh
->    t4152-am-subjects.sh
->    t4255-am-submodule.sh
->    t7400-submodule-basic.sh
->    t7512-status-help.sh
->    t9001-send-email.sh
->
->Looking at the first failure, the cause was a segfault while running
->git-format-patch. A quick trip to the debugger showed that the segfault
->was in print_bases(). Furthermore, the contents of the bases structure
->passed in looked very dodgy (bases->nr_patch_id was 32767 and bases->patch_id[0]
->was 0xc). Indeed, it looked like it had not been initialized ...
->
->[NOTE: t6038-merge-text-auto.sh also fails for me, but it has nothing
->to do with your patch series. ;-)]
->
->This patch was just a quick fix, you may chose a different approach to
->fix the problem (eg don't call print_bases() unconditionally ...).
 
-Thanks for the report, I will squash this to avoid segfault.
+I've finished testing 2.8.1 and I found one more case where a null is 
+being printed and causing a segfault. This happens even on Solaris 8 and 9.
+The failling test is t3200.63.
 
-Best Regards,
-Xiaolong.
->
->ATB,
->Ramsay Jones
->
-> builtin/log.c | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
->
->diff --git a/builtin/log.c b/builtin/log.c
->index 48c74f5..fed0f99 100644
->--- a/builtin/log.c
->+++ b/builtin/log.c
->@@ -1625,8 +1625,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
-> 		signature = strbuf_detach(&buf, NULL);
-> 	}
-> 
->+	memset(&bases, 0, sizeof(bases));
-> 	if (base_commit || config_base_commit) {
->-		memset(&bases, 0, sizeof(bases));
-> 		reset_revision_walk();
-> 		prepare_bases(&bases, base_commit, list, nr);
-> 	}
->-- 
->2.8.0
+Here is the backtrace from a Solaris 8/SPARC machine:
+
+(gdb) core trash directory.t3200-branch/core
+[New LWP 1]
+[Thread debugging using libthread_db enabled]
+[New Thread 1 (LWP 1)]
+Core was generated by `/export/home/tgc/buildpkg/git/src/git-2.8.1/git 
+branch --unset-upstream'.
+Program terminated with signal SIGSEGV, Segmentation fault.
+#0  0xfecb32cc in strlen () from /usr/lib/libc.so.1
+(gdb) bt
+#0  0xfecb32cc in strlen () from /usr/lib/libc.so.1
+#1  0xfed06508 in _doprnt () from /usr/lib/libc.so.1
+#2  0xfed08690 in vfprintf () from /usr/lib/libc.so.1
+#3  0x001487bc in vreportf (prefix=<optimized out>, err=<optimized out>, 
+params=0xffbfe408) at usage.c:23
+#4  0x0014881c in die_builtin (err=0x198f90 "Could not set '%s' to 
+'%s'", params=0xffbfe408) at usage.c:35
+#5  0x00148934 in die (err=0x198f90 "Could not set '%s' to '%s'") at 
+usage.c:108
+#6  0x000af1b0 in git_config_set_multivar_in_file (value=0x0, 
+key=0x1ecca0 "branch.master.remote",
+     config_filename=<optimized out>, value_regex=<optimized out>, 
+multi_replace=<optimized out>) at config.c:2226
+#7  git_config_set_multivar_in_file (config_filename=0x0, key=0x1ecca0 
+"branch.master.remote", value=0x0,
+     value_regex=0x0, multi_replace=1) at config.c:2220
+#8  0x0003aa6c in cmd_branch (argc=0, argv=0xffbfec00, prefix=<optimized 
+out>) at builtin/branch.c:793
+#9  0x000255e8 in run_builtin (argv=0xffbfec00, argc=2, p=0x1c365c 
+<commands+84>) at git.c:353
+#10 handle_builtin (argc=2, argv=0xffbfec00) at git.c:540
+#11 0x00168ecc in run_argv (argv=0xffbfeb30, argcp=0xffbfebdc) at git.c:594
+#12 main (argc=2, av=<optimized out>) at git.c:701
+(gdb)
+
+
+-tgc
