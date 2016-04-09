@@ -1,714 +1,121 @@
-From: Michael Rappazzo <rappazzo@gmail.com>
-Subject: [PATCH] t1500-rev-parse: rewrite each test to run in isolation
-Date: Sat,  9 Apr 2016 07:19:27 -0400
-Message-ID: <1460200767-32864-2-git-send-email-rappazzo@gmail.com>
-References: <1460200767-32864-1-git-send-email-rappazzo@gmail.com>
-Cc: gitster@pobox.com, sunshine@sunshineco.com, pclouds@gmail.com,
-	szeder@ira.uka.de, Michael Rappazzo <rappazzo@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 09 13:19:27 2016
+From: Felix Ruess <felix.ruess@gmail.com>
+Subject: Re: git 2.8.1 not working with socks5h https proxy anymore
+Date: Sat, 9 Apr 2016 14:05:11 +0200
+Message-ID: <CAEc+GFerpBC_O4jMvtmUhVdLReEN4nvuz5Q30SFUp8qZnQZBmQ@mail.gmail.com>
+References: <CAEc+GFeG-ZdeTXGsjmwV0QP6QwYvjA4nzCGitka0aXjqEkatfg@mail.gmail.com>
+	<xmqq8u0nx66h.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Daniel Stenberg <daniel@haxx.se>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 09 14:05:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoqvG-0000Kn-03
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 13:19:26 +0200
+	id 1aordj-0007ZC-CE
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 14:05:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752844AbcDILTU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Apr 2016 07:19:20 -0400
-Received: from mail-qg0-f68.google.com ([209.85.192.68]:35279 "EHLO
-	mail-qg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752836AbcDILTT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Apr 2016 07:19:19 -0400
-Received: by mail-qg0-f68.google.com with SMTP id b32so12165503qgf.2
-        for <git@vger.kernel.org>; Sat, 09 Apr 2016 04:19:18 -0700 (PDT)
+	id S1753165AbcDIMFP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Apr 2016 08:05:15 -0400
+Received: from mail-lf0-f45.google.com ([209.85.215.45]:32848 "EHLO
+	mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751257AbcDIMFN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Apr 2016 08:05:13 -0400
+Received: by mail-lf0-f45.google.com with SMTP id e190so104037282lfe.0
+        for <git@vger.kernel.org>; Sat, 09 Apr 2016 05:05:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=qCH0JpTMBWd1ZwmVJ61mpWkiUILZy4RkqagZz1Z3AHk=;
-        b=UbarpuAaN8dydDgMvr4AnWxb2052DdZ4XP/KUafBf/Cq+r/e92DDmzJpWFRlLUx/nG
-         FOZt5UvOgFcofLddObjhmo6J1F/WmLRjZstcRYkKRs90FzI7MjDqo6OJjvmTR/YkHonP
-         zTlaRkYUoniPJCxHVwen8BqIivMt5veRl6NWm4/Rl+JM4AVBlQ8w2XOFBccVdbrIdEQy
-         bQnGnrcKzcJqZFAs8U+0oH+GQ2ahLHw07OJmZB85Zvnpll0buRATiOKXJkAYNC1ARHq8
-         vzgvt6He9xsm3pS+pX9L20QyQyMjv5H4CxA62TDfGVU4GG/1fZpqXG1mPoBHEZNZTk1G
-         9eww==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=BCb75K5MgfNNF0GbqI7RfkmR8EapodfPV/zz0KQulVk=;
+        b=KsfYt6qV1qBF4S5zj5MRVJYo6BaiHnvJ40rPjkrlyzrM8eh+ONiSs7FMEl9KBUonhu
+         WGz1XIDMFstYQkYPeAfFmeNn73D7U5jl1VVlzniZU1RVxi9KysAJPouRXDznhf2eQMfS
+         1N/ivEmRRM/Tqspxs9Lwz1wWj8ycZZWeWGLEAzC7hrr8fyGyxYXg3ElxdpJvwBRQQI9T
+         Je2YqQBiw8iHQMjseHH/HUyA/z8WcgJknEP1Q6YjVm/FyRFtGVTBLX8twCg4eG/CH+fw
+         r+Q1l+690ka7TNr+i8eARQLU3U1UTHdL0SY84Lr2+aDLyV7XeXY85dHLnhDIITnc3luk
+         5x2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=qCH0JpTMBWd1ZwmVJ61mpWkiUILZy4RkqagZz1Z3AHk=;
-        b=cI4NLkFBWuIFXcO1yBYfaPi7ZgLUkVg2EJs7D96IRezMwsNbOPpgx4WEIy4/QHVlDS
-         TnRfXTFYAq9LiKm0Bb0RxpwXjm/cM1dBPZC5NMTb25FejxbKuUTDpYZw7AC21oIAIM05
-         mpFDWlXsu29/smNpH2BR7j7qG3k/w9xbeNw/UuHdf/4BWF5GabR8Ulc24uJRQQEN4kIa
-         22VmHu3CjQ/q6ufmcBRoYAzo3OBQkiJ+I8R73iEmTEETLGKqj2yHv54xq40trskvknET
-         lDQQIslgYOFZ11DC6dqB/qUk9OneUiWJtLCy8eL7AcIEAdj5jwpcuj2oL3YWQEeSoNpb
-         iuEw==
-X-Gm-Message-State: AD7BkJIU2SCyWQ4qkFlQeVTGMZOqtG8dRUOJiDkiYqoKgeAQDdvFxePfyO3JHhMz9BhpVg==
-X-Received: by 10.140.148.134 with SMTP id 128mr17893767qhu.98.1460200757576;
-        Sat, 09 Apr 2016 04:19:17 -0700 (PDT)
-Received: from MRappazzo-8.local.info (pool-100-35-125-216.nwrknj.fios.verizon.net. [100.35.125.216])
-        by smtp.gmail.com with ESMTPSA id c32sm7245961qgf.36.2016.04.09.04.19.16
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sat, 09 Apr 2016 04:19:16 -0700 (PDT)
-X-Mailer: git-send-email 2.8.0
-In-Reply-To: <1460200767-32864-1-git-send-email-rappazzo@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=BCb75K5MgfNNF0GbqI7RfkmR8EapodfPV/zz0KQulVk=;
+        b=NZpNRWtwJCLvTdeSWddFAvoa72qH46Ni/RLttrFUpU9MZf+9Njs0x5lZmKgYqiFasV
+         BC02x2QMWM5yh02f2bPAMp5oHtTqdncUfdMEzvvy/u11W5YEdEq/r151pWMm5WSWP1tU
+         Vzw+aqwdHexbl0Atrv3Iw5CVhMUJ1R6kHXdzpM49woI7uZiW21/YZdaO1UG2lqpBCtjM
+         Q2sFhR9buI4faKE6PAXNm9B470FFelRx1vA5JmYAZwN4KLp9J1kY++fUgnOL0y9XBp/V
+         gbRo4iVDwNlR/KHE538GCsbuD9czTfgsN7donUx3vX0nPhM1xN5aViA4GDJWiFThOOve
+         onpQ==
+X-Gm-Message-State: AD7BkJJrqiETg2mZfglA8du6CjsAcHd5yHbygmmMBF5pqn0NL4kkT2fQaBztCuRNX2EWvOp4nN+gUlBIyXEZlA==
+X-Received: by 10.112.13.193 with SMTP id j1mr5615185lbc.24.1460203511797;
+ Sat, 09 Apr 2016 05:05:11 -0700 (PDT)
+Received: by 10.114.68.70 with HTTP; Sat, 9 Apr 2016 05:05:11 -0700 (PDT)
+In-Reply-To: <xmqq8u0nx66h.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291089>
 
-t1500-rev-parse has many tests which change directories and leak
-environment variables.  This makes it difficult to add new tests without
-minding the environment variables and current directory.
+Thanks a lot!
+Tested the patch and it works as expected :-)
 
-Each test is now setup, executed, and cleaned up without leaving anything
-behind.  Tests which have textual expectations have been converted to use
-test_cmp (which will show a diff when the test is run with --verbose).
-
-Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
----
- t/t1500-rev-parse.sh | 607 +++++++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 545 insertions(+), 62 deletions(-)
-
-diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
-index 617fcd8..dffa9f3 100755
---- a/t/t1500-rev-parse.sh
-+++ b/t/t1500-rev-parse.sh
-@@ -3,88 +3,571 @@
- test_description='test git rev-parse'
- . ./test-lib.sh
- 
--test_rev_parse() {
--	name=$1
--	shift
-+test_expect_success 'toplevel: is-bare-repository' '
-+	test false = "$(git rev-parse --is-bare-repository)"
-+'
- 
--	test_expect_success "$name: is-bare-repository" \
--	"test '$1' = \"\$(git rev-parse --is-bare-repository)\""
--	shift
--	[ $# -eq 0 ] && return
-+test_expect_success 'toplevel: is-inside-git-dir' '
-+	test false = "$(git rev-parse --is-inside-git-dir)"
-+'
- 
--	test_expect_success "$name: is-inside-git-dir" \
--	"test '$1' = \"\$(git rev-parse --is-inside-git-dir)\""
--	shift
--	[ $# -eq 0 ] && return
-+test_expect_success 'toplevel: is-inside-work-tree' '
-+	test true = "$(git rev-parse --is-inside-work-tree)"
-+'
- 
--	test_expect_success "$name: is-inside-work-tree" \
--	"test '$1' = \"\$(git rev-parse --is-inside-work-tree)\""
--	shift
--	[ $# -eq 0 ] && return
-+test_expect_success 'toplevel: prefix' '
-+	echo >expected &&
-+	git rev-parse --show-prefix >actual &&
-+	test_cmp expected actual
-+'
- 
--	test_expect_success "$name: prefix" \
--	"test '$1' = \"\$(git rev-parse --show-prefix)\""
--	shift
--	[ $# -eq 0 ] && return
-+test_expect_success 'toplevel: git-dir' '
-+	echo .git >expected &&
-+	git rev-parse --git-dir >actual &&
-+	test_cmp expected actual
-+'
- 
--	test_expect_success "$name: git-dir" \
--	"test '$1' = \"\$(git rev-parse --git-dir)\""
--	shift
--	[ $# -eq 0 ] && return
-+test_expect_success 'toplevel: absolute-git-dir' '
-+	echo "$(pwd)/.git" >expected &&
-+	git rev-parse --absolute-git-dir >actual &&
-+	test_cmp expected actual
-+'
- 
--	test_expect_success "$name: absolute-git-dir" \
--	"verbose test '$1' = \"\$(git rev-parse --absolute-git-dir)\""
--}
-+test_expect_success '.git/: is-bare-repository' '
-+	(cd .git && test false = "$(git rev-parse --is-bare-repository)")
-+'
- 
--# label is-bare is-inside-git is-inside-work prefix git-dir absolute-git-dir
-+test_expect_success '.git/: is-inside-git-dir' '
-+	(cd .git && test true = "$(git rev-parse --is-inside-git-dir)")
-+'
- 
--ROOT=$(pwd)
-+test_expect_success '.git/: is-inside-work-tree' '
-+	(cd .git && test false = "$(git rev-parse --is-inside-work-tree)")
-+'
- 
--test_rev_parse toplevel false false true '' .git "$ROOT/.git"
-+test_expect_success '.git/: prefix' '
-+	(
-+		cd .git &&
-+		echo >expected &&
-+		git rev-parse --show-prefix >actual &&
-+		test_cmp expected actual
-+	)
-+'
- 
--cd .git || exit 1
--test_rev_parse .git/ false true false '' . "$ROOT/.git"
--cd objects || exit 1
--test_rev_parse .git/objects/ false true false '' "$ROOT/.git" "$ROOT/.git"
--cd ../.. || exit 1
-+test_expect_success '.git/: git-dir' '
-+	(
-+		cd .git &&
-+		echo . >expected &&
-+		git rev-parse --git-dir >actual &&
-+		test_cmp expected actual
-+	)
-+'
- 
--mkdir -p sub/dir || exit 1
--cd sub/dir || exit 1
--test_rev_parse subdirectory false false true sub/dir/ "$ROOT/.git" "$ROOT/.git"
--cd ../.. || exit 1
-+test_expect_success '.git/: absolute-git-dir' '
-+	(
-+		ROOT=$(pwd) &&
-+		cd .git &&
-+		echo "$ROOT/.git" >expected &&
-+		git rev-parse --absolute-git-dir >actual &&
-+		test_cmp expected actual
-+	)
-+'
- 
--git config core.bare true
--test_rev_parse 'core.bare = true' true false false
-+test_expect_success '.git/objects/: is-bare-repository' '
-+	(cd .git/objects && test false = "$(git rev-parse --is-bare-repository)")
-+'
- 
--git config --unset core.bare
--test_rev_parse 'core.bare undefined' false false true
-+test_expect_success '.git/objects/: is-inside-git-dir' '
-+	(cd .git/objects && test true = "$(git rev-parse --is-inside-git-dir)")
-+'
- 
--mkdir work || exit 1
--cd work || exit 1
--GIT_DIR=../.git
--GIT_CONFIG="$(pwd)"/../.git/config
--export GIT_DIR GIT_CONFIG
-+test_expect_success '.git/objects/: is-inside-work-tree' '
-+	(cd .git/objects && test false = "$(git rev-parse --is-inside-work-tree)")
-+'
- 
--git config core.bare false
--test_rev_parse 'GIT_DIR=../.git, core.bare = false' false false true '' "../.git" "$ROOT/.git"
-+test_expect_success '.git/objects/: prefix' '
-+	(
-+		cd .git/objects &&
-+		echo >expected &&
-+		git rev-parse --show-prefix >actual &&
-+		test_cmp expected actual
-+	)
-+'
- 
--git config core.bare true
--test_rev_parse 'GIT_DIR=../.git, core.bare = true' true false false ''
-+test_expect_success '.git/objects/: git-dir' '
-+	(
-+		ROOT=$(pwd) &&
-+		cd .git/objects &&
-+		echo $ROOT/.git >expected &&
-+		git rev-parse --git-dir >actual &&
-+		test_cmp expected actual
-+	)
-+'
- 
--git config --unset core.bare
--test_rev_parse 'GIT_DIR=../.git, core.bare undefined' false false true ''
-+test_expect_success '.git/objects/: absolute-git-dir' '
-+	(
-+		ROOT=$(pwd) &&
-+		cd .git/objects &&
-+		echo "$ROOT/.git" >expected &&
-+		git rev-parse --absolute-git-dir >actual &&
-+		test_cmp expected actual
-+	)
-+'
- 
--mv ../.git ../repo.git || exit 1
--GIT_DIR=../repo.git
--GIT_CONFIG="$(pwd)"/../repo.git/config
-+test_expect_success 'subdirectory: is-bare-repository' '
-+	mkdir -p sub/dir &&
-+	test_when_finished "rm -rf sub" &&
-+	(cd sub/dir && test false = "$(git rev-parse --is-bare-repository)")
-+'
- 
--git config core.bare false
--test_rev_parse 'GIT_DIR=../repo.git, core.bare = false' false false true '' "../repo.git" "$ROOT/repo.git"
-+test_expect_success 'subdirectory: is-inside-git-dir' '
-+	mkdir -p sub/dir &&
-+	test_when_finished "rm -rf sub" &&
-+	(cd sub/dir && test false = "$(git rev-parse --is-inside-git-dir)")
-+'
- 
--git config core.bare true
--test_rev_parse 'GIT_DIR=../repo.git, core.bare = true' true false false ''
-+test_expect_success 'subdirectory: is-inside-work-tree' '
-+	mkdir -p sub/dir &&
-+	test_when_finished "rm -rf sub" &&
-+	(cd sub/dir && test true = "$(git rev-parse --is-inside-work-tree)")
-+'
- 
--git config --unset core.bare
--test_rev_parse 'GIT_DIR=../repo.git, core.bare undefined' false false true ''
-+test_expect_success 'subdirectory: prefix' '
-+	mkdir -p sub/dir &&
-+	test_when_finished "rm -rf sub" &&
-+	(cd sub/dir && test sub/dir/ = "$(git rev-parse --show-prefix)")
-+'
-+
-+test_expect_success 'subdirectory: git-dir' '
-+	mkdir -p sub/dir &&
-+	test_when_finished "rm -rf sub" &&
-+	(
-+		ROOT=$(pwd) &&
-+		cd sub/dir &&
-+		echo $ROOT/.git >expected &&
-+		git rev-parse --git-dir >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'subdirectory: absolute-git-dir' '
-+	mkdir -p sub/dir &&
-+	test_when_finished "rm -rf sub" &&
-+	(
-+		ROOT=$(pwd) &&
-+		cd sub/dir &&
-+		echo $ROOT/.git >expected &&
-+		git rev-parse --absolute-git-dir >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'core.bare = true: is-bare-repository' '
-+	git config core.bare true &&
-+	test_when_finished "git config core.bare false" &&
-+	test true = "$(git rev-parse --is-bare-repository)"
-+'
-+
-+test_expect_success 'core.bare = true: is-inside-git-dir' '
-+	git config core.bare true &&
-+	test_when_finished "git config core.bare false" &&
-+	test false = "$(git rev-parse --is-inside-git-dir)"
-+'
-+
-+test_expect_success 'core.bare = true: is-inside-work-tree' '
-+	git config core.bare true &&
-+	test_when_finished "git config core.bare false" &&
-+	test false = "$(git rev-parse --is-inside-work-tree)"
-+'
-+
-+test_expect_success 'core.bare undefined: is-bare-repository' '
-+	git config --unset core.bare &&
-+	test_when_finished "git config core.bare false" &&
-+	test false = "$(git rev-parse --is-bare-repository)"
-+'
-+
-+test_expect_success 'core.bare undefined: is-inside-git-dir' '
-+	git config --unset core.bare &&
-+	test_when_finished "git config core.bare false" &&
-+	test false = "$(git rev-parse --is-inside-git-dir)"
-+'
-+
-+test_expect_success 'core.bare undefined: is-inside-work-tree' '
-+	git config --unset core.bare &&
-+	test_when_finished "git config core.bare false" &&
-+	test true = "$(git rev-parse --is-inside-work-tree)"
-+'
-+
-+test_expect_success 'GIT_DIR=../.git, core.bare = false: is-bare-repository' '
-+	mkdir work &&
-+	test_when_finished "rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../.git &&
-+		export GIT_CONFIG="$(pwd)"/../.git/config
-+		git config core.bare false &&
-+		test false = "$(git rev-parse --is-bare-repository)"
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../.git, core.bare = false: is-inside-git-dir' '
-+	mkdir work &&
-+	test_when_finished "rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../.git &&
-+		export GIT_CONFIG="$(pwd)"/../.git/config &&
-+		git config core.bare false &&
-+		test false = "$(git rev-parse --is-inside-git-dir)"
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../.git, core.bare = false: is-inside-work-tree' '
-+	mkdir work &&
-+	test_when_finished "rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../.git &&
-+		export GIT_CONFIG="$(pwd)"/../.git/config &&
-+		git config core.bare false &&
-+		test true = "$(git rev-parse --is-inside-work-tree)"
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../.git, core.bare = false: prefix' '
-+	mkdir work &&
-+	test_when_finished "rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../.git &&
-+		export GIT_CONFIG="$(pwd)"/../.git/config &&
-+		git config core.bare false &&
-+		echo >expected &&
-+		git rev-parse --show-prefix >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../.git, core.bare = false: git-dir' '
-+	mkdir work &&
-+	test_when_finished "rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../.git &&
-+		export GIT_CONFIG="$(pwd)"/../.git/config &&
-+		git config core.bare false &&
-+		echo ../.git >expected &&
-+		git rev-parse --git-dir >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../.git, core.bare = false: absolute-git-dir' '
-+	mkdir work &&
-+	test_when_finished "rm -rf work && git config core.bare false" &&
-+	(
-+		ROOT=$(pwd) &&
-+		cd work &&
-+		export GIT_DIR=../.git &&
-+		export GIT_CONFIG="$(pwd)"/../.git/config &&
-+		git config core.bare false &&
-+		echo $ROOT/.git >expected &&
-+		git rev-parse --absolute-git-dir >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../.git, core.bare = true: is-bare-repository' '
-+	mkdir work &&
-+	test_when_finished "rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../.git &&
-+		export GIT_CONFIG="$(pwd)"/../.git/config &&
-+		git config core.bare true &&
-+		test true = "$(git rev-parse --is-bare-repository)"
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../.git, core.bare = true: is-inside-git-dir' '
-+	mkdir work &&
-+	test_when_finished "rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../.git &&
-+		export GIT_CONFIG="$(pwd)"/../.git/config &&
-+		git config core.bare true &&
-+		test false = "$(git rev-parse --is-inside-git-dir)"
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../.git, core.bare = true: is-inside-work-tree' '
-+	mkdir work &&
-+	test_when_finished "rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../.git &&
-+		export GIT_CONFIG="$(pwd)"/../.git/config &&
-+		git config core.bare true &&
-+		test false = "$(git rev-parse --is-inside-work-tree)"
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../.git, core.bare = true: prefix' '
-+	mkdir work &&
-+	test_when_finished "rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../.git &&
-+		export GIT_CONFIG="$(pwd)"/../.git/config &&
-+		git config core.bare true &&
-+		echo >expected &&
-+		git rev-parse --show-prefix >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../.git, core.bare undefined: is-bare-repository' '
-+	mkdir work &&
-+	test_when_finished "rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../.git &&
-+		export GIT_CONFIG="$(pwd)"/../.git/config &&
-+		git config --unset core.bare &&
-+		test false = "$(git rev-parse --is-bare-repository)"
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../.git, core.bare undefined: is-inside-git-dir' '
-+	mkdir work &&
-+	test_when_finished "rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../.git &&
-+		export GIT_CONFIG="$(pwd)"/../.git/config &&
-+		git config --unset core.bare &&
-+		test false = "$(git rev-parse --is-inside-git-dir)"
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../.git, core.bare undefined: is-inside-work-tree' '
-+	mkdir work &&
-+	test_when_finished "rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../.git &&
-+		export GIT_CONFIG="$(pwd)"/../.git/config &&
-+		git config --unset core.bare &&
-+		test true = "$(git rev-parse --is-inside-work-tree)"
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../.git, core.bare undefined: prefix' '
-+	mkdir work &&
-+	test_when_finished "rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../.git &&
-+		export GIT_CONFIG="$(pwd)"/../.git/config &&
-+		git config --unset core.bare &&
-+		echo >expected &&
-+		git rev-parse --show-prefix >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../repo.git, core.bare = false: is-bare-repository' '
-+	mkdir work &&
-+	cp -r .git repo.git &&
-+	test_when_finished "rm -r repo.git && rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../repo.git &&
-+		export GIT_CONFIG="$(pwd)"/../repo.git/config
-+		git config core.bare false &&
-+		test false = "$(git rev-parse --is-bare-repository)"
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../repo.git, core.bare = false: is-inside-git-dir' '
-+	mkdir work &&
-+	cp -r .git repo.git &&
-+	test_when_finished "rm -r repo.git && rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../repo.git &&
-+		export GIT_CONFIG="$(pwd)"/../repo.git/config &&
-+		git config core.bare false &&
-+		test false = "$(git rev-parse --is-inside-git-dir)"
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../repo.git, core.bare = false: is-inside-work-tree' '
-+	mkdir work &&
-+	cp -r .git repo.git &&
-+	test_when_finished "rm -r repo.git && rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../repo.git &&
-+		export GIT_CONFIG="$(pwd)"/../repo.git/config &&
-+		git config core.bare false &&
-+		test true = "$(git rev-parse --is-inside-work-tree)"
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../repo.git, core.bare = false: prefix' '
-+	mkdir work &&
-+	cp -r .git repo.git &&
-+	test_when_finished "rm -r repo.git && rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../repo.git &&
-+		export GIT_CONFIG="$(pwd)"/../repo.git/config &&
-+		git config core.bare false &&
-+		echo >expected &&
-+		git rev-parse --show-prefix >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../repo.git, core.bare = false: git-dir' '
-+	mkdir work &&
-+	cp -r .git repo.git &&
-+	test_when_finished "rm -r repo.git && rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../repo.git &&
-+		export GIT_CONFIG="$(pwd)"/../repo.git/config &&
-+		git config core.bare false &&
-+		echo ../repo.git >expected &&
-+		git rev-parse --git-dir >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../repo.git, core.bare = false: absolute-git-dir' '
-+	mkdir work &&
-+	cp -r .git repo.git &&
-+	test_when_finished "rm -r repo.git && rm -rf work && git config core.bare false" &&
-+	(
-+		ROOT=$(pwd) &&
-+		cd work &&
-+		export GIT_DIR=../repo.git &&
-+		export GIT_CONFIG="$(pwd)"/../repo.git/config &&
-+		git config core.bare false &&
-+		echo $ROOT/repo.git >expected &&
-+		git rev-parse --absolute-git-dir >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../repo.git, core.bare = true: is-bare-repository' '
-+	mkdir work &&
-+	cp -r .git repo.git &&
-+	test_when_finished "rm -r repo.git && rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../repo.git &&
-+		export GIT_CONFIG="$(pwd)"/../repo.git/config &&
-+		git config core.bare true &&
-+		test true = "$(git rev-parse --is-bare-repository)"
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../repo.git, core.bare = true: is-inside-git-dir' '
-+	mkdir work &&
-+	cp -r .git repo.git &&
-+	test_when_finished "rm -r repo.git && rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../repo.git &&
-+		export GIT_CONFIG="$(pwd)"/../repo.git/config &&
-+		git config core.bare true &&
-+		test false = "$(git rev-parse --is-inside-git-dir)"
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../repo.git, core.bare = true: is-inside-work-tree' '
-+	mkdir work &&
-+	cp -r .git repo.git &&
-+	test_when_finished "rm -r repo.git && rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../repo.git &&
-+		export GIT_CONFIG="$(pwd)"/../repo.git/config &&
-+		git config core.bare true &&
-+		test false = "$(git rev-parse --is-inside-work-tree)"
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../repo.git, core.bare = true: prefix' '
-+	mkdir work &&
-+	cp -r .git repo.git &&
-+	test_when_finished "rm -r repo.git && rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../repo.git &&
-+		export GIT_CONFIG="$(pwd)"/../repo.git/config &&
-+		git config core.bare true &&
-+		echo >expected &&
-+		git rev-parse --show-prefix >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../repo.git, core.bare undefined: is-bare-repository' '
-+	mkdir work &&
-+	cp -r .git repo.git &&
-+	test_when_finished "rm -r repo.git && rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../repo.git &&
-+		export GIT_CONFIG="$(pwd)"/../repo.git/config &&
-+		git config --unset core.bare &&
-+		test false = "$(git rev-parse --is-bare-repository)"
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../repo.git, core.bare undefined: is-inside-git-dir' '
-+	mkdir work &&
-+	cp -r .git repo.git &&
-+	test_when_finished "rm -r repo.git && rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../repo.git &&
-+		export GIT_CONFIG="$(pwd)"/../repo.git/config &&
-+		git config --unset core.bare &&
-+		test false = "$(git rev-parse --is-inside-git-dir)"
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../repo.git, core.bare undefined: is-inside-work-tree' '
-+	mkdir work &&
-+	cp -r .git repo.git &&
-+	test_when_finished "rm -r repo.git && rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../repo.git &&
-+		export GIT_CONFIG="$(pwd)"/../repo.git/config &&
-+		git config --unset core.bare &&
-+		test true = "$(git rev-parse --is-inside-work-tree)"
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR=../repo.git, core.bare undefined: prefix' '
-+	mkdir work &&
-+	cp -r .git repo.git &&
-+	test_when_finished "rm -r repo.git && rm -rf work && git config core.bare false" &&
-+	(
-+		cd work &&
-+		export GIT_DIR=../repo.git &&
-+		export GIT_CONFIG="$(pwd)"/../repo.git/config &&
-+		git config --unset core.bare &&
-+		echo >expected &&
-+		git rev-parse --show-prefix >actual &&
-+		test_cmp expected actual
-+	)
-+'
- 
- test_done
--- 
-2.8.0
+On Fri, Apr 8, 2016 at 9:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felix Ruess <felix.ruess@gmail.com> writes:
+>
+>> I just encountered a problem with the latest git version (2.8.1) that
+>> looks like a regression to me:
+>> When trying to clone a repo via a https socks5 proxy the connection times out:
+>>
+>> $ git config --global 'http.proxy=socks5h://127.0.0.1:1080'
+>
+> The first version of Git that has code that explicitly supports
+> socks proxy is 2.6.4, it seems.  Since then we have always used
+> CURLPROXY_SOCKS5 for curl_http_proxy that begins with a string
+> "socks5".
+>
+> Checking
+>
+>     https://github.com/curl/curl/blob/master/docs/libcurl/symbols-in-versions
+>
+> I find that that at curl 7.18.0, curl added a separate
+> CURLPROXY_SOCKS5_HOSTNAME that can be triggered by "socks5h:" that
+> is separate from CURLPROXY_SOCKS5, and I am guessing that the
+> differences in behaviour between these two is what is causing you
+> trouble.  https://curl.haxx.se/libcurl/c/CURLOPT_PROXY.html says
+>
+>   ..., socks5h:// (the last one to enable socks5 and asking the proxy
+>   to do the resolving, also known as CURLPROXY_SOCKS5_HOSTNAME type)
+>
+> and because not using _HOSTNAME variant would likely not ask the
+> proxy to do the resolving, it explains the stall on your end, if
+> your box cannot resolve external hostname.
+>
+> Perhaps the attached patch may help?
+>
+> I do not know if Pat is still active as a developer, but I am
+> wondering what the reason was to use starts_with(..., "socks5")
+> instead of "socks5:", "socks4a:", etc. when identifying the proxy
+> type.
+>
+>  http.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/http.c b/http.c
+> index 69da445..4304b80 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -605,7 +605,10 @@ static CURL *get_curl_handle(void)
+>         if (curl_http_proxy) {
+>                 curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
+>  #if LIBCURL_VERSION_NUM >= 0x071800
+> -               if (starts_with(curl_http_proxy, "socks5"))
+> +               if (starts_with(curl_http_proxy, "socks5h"))
+> +                       curl_easy_setopt(result,
+> +                               CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
+> +               else if (starts_with(curl_http_proxy, "socks5"))
+>                         curl_easy_setopt(result,
+>                                 CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
+>                 else if (starts_with(curl_http_proxy, "socks4a"))
