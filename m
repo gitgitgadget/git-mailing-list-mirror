@@ -1,167 +1,115 @@
 From: Elijah Newren <newren@gmail.com>
 Subject: Re: [RFC/PATCH 00/18] Add --index-only option to git merge
-Date: Fri, 8 Apr 2016 19:35:07 -0700
-Message-ID: <CABPp-BGpBDsn_ZZh8iot7qbgpWn0cUcdWTypRqKOKFMm9Y-E4w@mail.gmail.com>
+Date: Fri, 8 Apr 2016 20:09:55 -0700
+Message-ID: <CABPp-BG49Gr3Kf8Q3E6Vc=GF9MG+m10HkhkwbaOBfzs1cFcgVw@mail.gmail.com>
 References: <1460098726-5958-1-git-send-email-newren@gmail.com>
-	<xmqqlh4ovuqv.fsf@gitster.mtv.corp.google.com>
+	<5707ABBF.2050701@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 09 04:35:20 2016
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Sat Apr 09 05:10:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aoik2-000291-P1
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 04:35:19 +0200
+	id 1aojHj-0007yV-M5
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 05:10:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754724AbcDICfJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2016 22:35:09 -0400
-Received: from mail-ig0-f193.google.com ([209.85.213.193]:36688 "EHLO
-	mail-ig0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754279AbcDICfI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2016 22:35:08 -0400
-Received: by mail-ig0-f193.google.com with SMTP id kb1so4571488igb.3
-        for <git@vger.kernel.org>; Fri, 08 Apr 2016 19:35:07 -0700 (PDT)
+	id S1751620AbcDIDJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Apr 2016 23:09:58 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:33024 "EHLO
+	mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751065AbcDIDJ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Apr 2016 23:09:57 -0400
+Received: by mail-io0-f195.google.com with SMTP id g185so18882351ioa.0
+        for <git@vger.kernel.org>; Fri, 08 Apr 2016 20:09:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=/SC8uRMYvOmmSlYjgWKs1vAJ5Gvc9JOC5PmrSuTeatQ=;
-        b=q73wVy368cwOERtfEKmMqOtg2vNRJP/hfbqVCGK8/Pes/EOsI1riWIrZJg9R/4B56V
-         oXNAyf0Z0bod0VC/D/sIHrSaEVbXieWXCU9Lw3XD3ajp2r3v4zLTR3iiXG8MZg9XBNEH
-         UDnFjPjc/ANW3aM0jkuFRqmiQAynlC4eduQ0T4kIqCUgseUj8ZXYN5iKqI8uWw+8IXY3
-         Q45X16hUObz2RiKqTPrxTLpP72Eo2iEPwgBZsItLwaHXlPy1oCm0YT14ccTK7Bw/OvEl
-         m/2HPx3tpcDl3a6j2d8cyFqT0jnN00op2eEWkCe/JG/TZqKnMn4Zd5ODqnNvgmzcpVyJ
-         Ly2w==
+        bh=qWqDfcPAGVot/zt1JQAWQFclzumS+pt9/AlHIogdQOs=;
+        b=pESu+yx4kRmpI74DeC3wil4En3jYmBQ5QRaW0MCnQ9Cn6jepg25g6Xbxafk9gGzqZ9
+         4D9x4ocUIQr0TeiboiP1Sc+iDB/ay9FgbbYVO610f7dwep50efbc3ZaX0mNdYc/9JHiu
+         pA/j36MUjYPuqZX4JQh2LdsLjwDU/eh5V5V7UJFjV6ghTeEt1o/QJInaqC2LOLHUqw/W
+         NNWgLyUcPcnKVwtM/jgVu7dV5J4qfaa1I/rmY5SULHH1duKz+YdmTkTgqGkFkWkR0Mtf
+         4596OK7XXATHs0TfSN6tOfE69ozBQ+vBsCbZB4ZkGIKLpCNru3aL6bpVKqjek8PvjNgU
+         hoRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=/SC8uRMYvOmmSlYjgWKs1vAJ5Gvc9JOC5PmrSuTeatQ=;
-        b=amJ0AGtjS3L2ZkhkTdWp0pmN7M7Na3EIFn/GBFNcAkv8VjcDdC7SiIdV3WWncvgg58
-         EVJ+KAnkAx0d+lD7RvwZ6g9Xu7ewAv7NC/BlVp+6PGmk1zMtkYoXR9VJ4im6ozelJ3B1
-         GvSbYWQ3/L1jUVF87pmg6LlwaPwhllpMOAhzPJlP6Re5KBcIFJJC3hqiCIJ3oGVP2aIL
-         3RNQGAgOWnbDkTMkQjAAtsXLrEZ4K9De1/wPVkoMhXv72xTosTWn2bHq/O0ElfOBNPL9
-         AkKmX7Hs78Yv/NG2E7Hw9LpaT36kznHkGBH7vTYKsZa1PO9+FbRqpE7xj/6ZATDL52nq
-         hwKg==
-X-Gm-Message-State: AD7BkJJF41YmTWVSYB0ziSB+EwqMUI6taTe8QAt2LCvJYIdiOLaQeK2/9DQt7deda6M0YgBgh2LFtG8TBzPnwg==
-X-Received: by 10.50.50.74 with SMTP id a10mr7300404igo.87.1460169307270; Fri,
- 08 Apr 2016 19:35:07 -0700 (PDT)
-Received: by 10.64.0.173 with HTTP; Fri, 8 Apr 2016 19:35:07 -0700 (PDT)
-In-Reply-To: <xmqqlh4ovuqv.fsf@gitster.mtv.corp.google.com>
+        bh=qWqDfcPAGVot/zt1JQAWQFclzumS+pt9/AlHIogdQOs=;
+        b=RcxrU3rFjbA2dRPi3GvC+AEioIoGk1waztI0/lIS3E8myDyLZfbUOzAPHf2Wg535p2
+         u6tQRJKYEgVORhDVMj5/3msgnOEUFgCc8ErwEEj6aKf6UpnNlx/R70xvoIRHMj5S4A4W
+         GsF9I2l7mhMYqfmnXWSs+ETvH/GBHDpgogruOhxoLlKicNz9GevcivWNkjvbC+nbGPPL
+         fdxThbIKHGvDMukPy0zrTLc1/K6UvkDavYv6Q0vbnOTtchgbldnB7QgGZeWynXnt1dNu
+         IFk4rRx1xzbuyCKGOJPbg35XX0K/lWJ4vT7H3Rliy+7omFgQlYajAIHcGrKosQsAbFkL
+         14hQ==
+X-Gm-Message-State: AD7BkJIYD2cWobtZR0U71imKxQry8j92H7NSBdY26CDr4KvDBCCebUACeI8ClEWJ1/GJDtH8rygWbN/s+ETeOA==
+X-Received: by 10.107.15.159 with SMTP id 31mr12475550iop.3.1460171395665;
+ Fri, 08 Apr 2016 20:09:55 -0700 (PDT)
+Received: by 10.64.0.173 with HTTP; Fri, 8 Apr 2016 20:09:55 -0700 (PDT)
+In-Reply-To: <5707ABBF.2050701@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291078>
 
-Hi,
-
-On Fri, Apr 8, 2016 at 11:08 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Elijah Newren <newren@gmail.com> writes:
+On Fri, Apr 8, 2016 at 6:01 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> I haven't looked at your series thoroughly but immediately had to think
+> of 'tr/remerge-diff' (on 'pu'), see
+> http://permalink.gmane.org/gmane.comp.version-control.git/256591
 >
-> The goal is stated rather vaguely--when you have a working tree and
-> perform this "in index" merge, you would obviously update the index
-> with the merge result and ...
-
-Yes, I think you hit the nail on the head with your suggestions
-elsewhere to (1) limit this to bare repository only, and/or (2) do the
-"git merge --into master en/topic"
-
-I'll fix this.
-
->> The core fix, to merge-recursive, was actually quite easy.  The
->> recursive merge logic already had the ability to ignore the working
->> directory and operate entirely on the index -- it needed to do this
->> when creating a virtual merge base, i.e. when o->call_depth > 0.
+> There, Thomas used index-only merge to reproduce an automatic merge as
+> the base for a useful "remerge-diff".
 >
-> You need to be careful here, though.  The creation of a virtual
-> parent accepts (actually it wants to have) conflicted blobs as if
-> that is a valid merge result--"git merge but only in index" probably
-> does not want that behaviour.
-
-Yes, precisely.  :-)
-
-A close look at the merge-recursive code showed that the code to
-handle the index-only behavior was already nicely separated from the
-other things triggered by o->call_depth (e.g. the conflicted blobs
-case you mention above, among others), making it really easy to modify
-it so we could get the index-only behavior without the other stuff.
-
-> I'd prefer these as a separate series if they are truly unrelated
-> cleanups, so that we can quickly review and have them graduated
-> without waiting for the remainder.  You can still submit the main
-> series with a comment that says it applies on that separate clean-up
-> series and the right things should happen ;-)
-
-Will do.
-
-> When you say "index only", I'd say people would understand that to
-> be saying "as opposed to using and updating both the index and the
-> working tree", so I do not think there is no confusion.
+> I've been rebasing (and using) that series on 'next' for a while now
+> without any problems; some reasons kept it from being merged on next,
+> see the thread.
 >
-> An established convention to spell "index only" found in "apply" and
-> "grep" is to say "--cached", though (cf. "git help cli").
+> So, it would be interesting whether you solve the same problem
+> differently, or face the same problems ;)
 
-I'm assuming your double negative was unintentional, i.e. that you do
-not think there is any confusion.  Let me know if I misread.
+Thanks for the link.  Looks like a very interesting series, even if
+we're solving slightly different problems (I don't want conflicts
+auto-resolved; I want to be able to look at what conflicted and why
+with commands like 'git ls-files -u' afterward.)
 
-The pointer is helpful, but I struggle a bit with the name '--cached'.
-The past tense in that word suggests to me that it should be a
-read-only operation on the cache (which works for grep), rather than a
-write operation (such as for merge or apply).  It could also be
-misconstrued in merge's case to think that the index is one of the
-things being merged (rather than erroring out if the index doesn't
-match HEAD).  I know apply already uses --cached, but if others don't
-mind, I personally would rather not use it here.  Is this something
-you feel strongly about, or are you okay with --index-only?
+But the problem he's trying to solve is interesting to me too.  We
+have one patch from each of our series that does overlap, the
+index-only modification to merge-recursive, though implemented
+slightly differently.  I think mine's a little clearer, and I have a
+hunch that he might be able to use the idea in mine to dramatically
+simplify some of the other stuff he's doing.  In particular,
+merge-recursive already has code to auto resolve conflicts that he
+could just re-use instead of reimplementing, which I believe would
+dramatically simplify his patch #8.
 
-> If you have to assume, assume that there are people who use these
-> programs in their scripts and workflows, because it is a relatively
-> new development to make "git merge" directly calling into the
-> recursive machinery bypassing these commands.
+I didn't read all his code super closely, so I might be missing
+something important, but I got the feeling that he didn't need
+different behavior than what merge-recursive already implements for
+virtual merge bases, and that even he wasn't certain whether he had
+handled all cases (e.g. not only conflict markers and modify/delete,
+but also rename/delete, rename/add, rename/rename (both 1to2 and
+2to1), D/F conflicts, and perhaps others I'm not thinking of at the
+moment).  We already have well reviewed and tested code for all those
+cases; it's just a subset of the things triggered by o->call_depth for
+virtual merges bases.  Also, like the index-only stuff triggered by
+o->call_depth, the auto-resolve-conflict stuff is pretty well
+separated so it should be easy to add a flag to trigger just this
+portion without getting all the other stuff that o->call_depth
+normally does.
 
-So, my question wasn't so much about whether the git-merge-* programs
-are used, as to whether they should support all the same options that
-e.g. "git merge -s recursive" does.  I'm not sure if having the old
-merge-* programs support fewer options is considered good ("we want to
-toss them eventually", or "they are less tested these days so we want
-to take less risk with modifying them") or bad ("we don't want there
-to be any difference in ability or behavior").
-
-It should be easy to add the --index-only option to each of these, I'm
-just unsure whether it matters or if it's wanted.
-
-> I have a suspicion that this would become moot, as the conclusion
-> may become that "git merge" that works only in index does not make
-> sense unless you are in a bare repository---in which case, these
-> external merge drivers has to be given a temporary working tree
-> anyway, and they can keep writing their result out to what they
-> consider is the working tree (i.e. via GIT_WORK_TREE or something).
-> You read the result of them from that temporary working tree into
-> the index before cleaning the temporary working tree.  That way,
-> you do not have to touch them at all, no?  In fact, the temporary
-> working tree trick may be applicable even when you are working in a
-> repository with a tree working tree.
-
-I'm a little confused; you seem to be suggesting git-merge-one-file
-will always need to have a working tree of some sort, though I don't
-see why.
-
-git-merge-one-file doesn't currently read from the working tree,
-except to check for untracked files in the way; it instead gets file
-contents from git unpack-file, which pulls it from the object store.
-git-merge-one-file currently records the merge resolution, if clean,
-in both the index and the working copy, so my modifications are about
-making it able to write to only the index. That's the only
-modification I think it needs to avoid requiring a working tree at
-all.
-
-(git-merge-one-file does create some temporary files in the current
-working directory via git unpack-file, but it doesn't need a full
-working tree for that.  I should also make it a little cleaner by
-having it not check for the presence of untracked-and-in-the-way files
-in the --index-only case.)
+As far as I could tell, his series stalled out both because of
+concerns surrounding whether all the automatic-conflict-resolutions
+were correct, and because it made git log no longer be a read-only
+operation.  Neither of those concerns are applicable to my patchset; I
+invented totally new problems and concerns instead.  :-)  I don't have
+a good solution to the second concern for his patchset, but I think
+there's probably an easy solution to the first.  Once I get my
+patchset cleaned up, I may take a look at reviving his (if he doesn't
+beat me to it.)
