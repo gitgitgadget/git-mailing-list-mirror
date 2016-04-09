@@ -1,105 +1,70 @@
-From: The Fox in the Shell <KellerFuchs@hashbang.sh>
-Subject: [PATCH] Documentation: clarify signature verification
-Date: Sat, 9 Apr 2016 20:08:39 +0000
-Message-ID: <20160409200756.GA22694@hashbang.sh>
+From: "Tom G. Christensen" <tgc@jupiterrise.com>
+Subject: Re: git segfaults on older Solaris releases
+Date: Sat, 9 Apr 2016 22:17:56 +0200
+Message-ID: <57096374.6030608@jupiterrise.com>
+References: <5706A489.7070101@jupiterrise.com>
+ <xmqqoa9lz2uw.fsf@gitster.mtv.corp.google.com>
+ <xmqqk2k9z20p.fsf@gitster.mtv.corp.google.com>
+ <5706C0D4.9030707@jupiterrise.com> <5708A90E.1050705@jupiterrise.com>
+ <20160409173904.GA5127@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C. Hamano" <gitster@pobox.com>,
-	"Michael J. Gruber" <git@drmicha.warpmail.net>,
-	"Brian M. Carlson" <sandals@crustytoothpaste.ath.cx>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 09 22:17:26 2016
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Apr 09 22:18:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aozJr-0002ST-Ky
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 22:17:23 +0200
+	id 1aozKd-00032V-BX
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 22:18:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754474AbcDIURS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Apr 2016 16:17:18 -0400
-Received: from mail.hashbang.sh ([104.236.230.244]:36194 "EHLO
-	mail.hashbang.sh" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752352AbcDIURR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Apr 2016 16:17:17 -0400
-X-Greylist: delayed 497 seconds by postgrey-1.27 at vger.kernel.org; Sat, 09 Apr 2016 16:17:17 EDT
-Received: from to1.hashbang.sh (to1.hashbang.sh [104.245.37.138])
+	id S1754664AbcDIUSG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Apr 2016 16:18:06 -0400
+Received: from sub4.mail.dreamhost.com ([69.163.253.135]:43445 "EHLO
+	homiemail-a111.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752641AbcDIUSE (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Apr 2016 16:18:04 -0400
+Received: from homiemail-a111.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a111.g.dreamhost.com (Postfix) with ESMTP id 2922E2005D935;
+	Sat,  9 Apr 2016 13:18:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=jupiterrise.com; h=subject
+	:to:references:cc:from:message-id:date:mime-version:in-reply-to
+	:content-type:content-transfer-encoding; s=jupiterrise.com; bh=S
+	NocFKaWqz9zp3VQxfPStfHUqro=; b=WZQhXiazhCRkm+lc3fk9Eg72G4gnBX3kq
+	hFggvUdmNjyj6ivaOVSWSIlZGnEq8qFw/ABxH5kKKB533ox6GmeqxA9nu2mxGRY2
+	/B5tko6GzFHN2CSeDHPoZaSYlwHAVdB0Y3RQEOxJyU2DLuG0wWJXm2BFrqCCRzS1
+	3NLDHXB50U=
+Received: from localhost6.localdomain6 (2-106-159-182-static.dk.customer.tdc.net [2.106.159.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.hashbang.sh (Postfix) with ESMTPS id 2E31C37F8;
-	Sat,  9 Apr 2016 20:08:59 +0000 (UTC)
-Received: by to1.hashbang.sh (Postfix, from userid 3412)
-	id 0D0A9E00BA; Sat,  9 Apr 2016 20:08:39 +0000 (UTC)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	(Authenticated sender: tgc99@jupiterrise.com)
+	by homiemail-a111.g.dreamhost.com (Postfix) with ESMTPSA id B59842005D901;
+	Sat,  9 Apr 2016 13:18:02 -0700 (PDT)
+Received: from [127.0.0.1] (localhost.localdomain [127.0.0.1])
+	by localhost6.localdomain6 (8.14.4/8.14.4) with ESMTP id u39KHvH3030748;
+	Sat, 9 Apr 2016 22:17:57 +0200
+Newsgroups: gmane.comp.version-control.git
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.0
+In-Reply-To: <20160409173904.GA5127@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291124>
 
-Hi,
+On 09/04/16 19:39, Jeff King wrote:
 
-I encountered some issues with the git documentation while modifying
-my deployment scripts to enforce that the tree being fetched was
-signed by a trusted key.
+>    [1/3]: config: lower-case first word of error strings
+>    [2/3]: git_config_set_multivar_in_file: all non-zero returns are errors
+>    [3/3]: git_config_set_multivar_in_file: handle "unset" errors
+>
 
-It was unclear which commits needed to be signed (in the case of `git
-merge`) and what were the criteria for the signature to be considered
-valid.
+I applied them to 2.8.1 and ran the testsuite again on Solaris 8/x86 and 
+the segfault is gone.
 
-Here is a patch proposal.
-
-Signed-off-by: The Fox in the Shell <KellerFuchs@hashbang.sh>
----
- Documentation/merge-options.txt  | 4 +++-
- Documentation/pretty-formats.txt | 4 ++--
- Documentation/pretty-options.txt | 4 ++--
- 3 files changed, 7 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-index f08e9b8..edd50bf 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -89,8 +89,10 @@ option can be used to override --squash.
- 
- --verify-signatures::
- --no-verify-signatures::
--	Verify that the commits being merged have good and trusted GPG signatures
-+	Verify that the commits being merged have good and valid GPG signatures
- 	and abort the merge in case they do not.
-+	For instance, when running `git merge --verify-signature remote/branch`,
-+	only the head commit on `remote/branch` needs to be signed.
- 
- --summary::
- --no-summary::
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 671cebd..29b19b9 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -143,8 +143,8 @@ ifndef::git-rev-list[]
- - '%N': commit notes
- endif::git-rev-list[]
- - '%GG': raw verification message from GPG for a signed commit
--- '%G?': show "G" for a Good signature, "B" for a Bad signature, "U" for a good,
--  untrusted signature and "N" for no signature
-+- '%G?': show "G" for a good (valid) signature, "B" for a bad signature,
-+  "U" for a good signature with unknown validity and "N" for no signature
- - '%GS': show the name of the signer for a signed commit
- - '%GK': show the key used to sign a signed commit
- - '%gD': reflog selector, e.g., `refs/stash@{1}`
-diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
-index 54b88b6..62cbae2 100644
---- a/Documentation/pretty-options.txt
-+++ b/Documentation/pretty-options.txt
-@@ -78,5 +78,5 @@ being displayed. Examples: "--notes=foo" will show only notes from
- endif::git-rev-list[]
- 
- --show-signature::
--	Check the validity of a signed commit object by passing the signature
--	to `gpg --verify` and show the output.
-+	Check the validity of a signed commit object, by passing the signature
-+	to `gpg --verify`, and show the output.
--- 
-2.1.4
+-tgc
