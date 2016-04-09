@@ -1,78 +1,128 @@
-From: Josiah Boning <jboning@gmail.com>
-Subject: git log with ordering option and --first-parent is unnecessarily slow
-Date: Fri, 8 Apr 2016 20:55:54 -0700
-Message-ID: <CAKdicq8MnZMBV97K5O8Oa1T=PT9DsutmBS+P-bFYitATHH3s+Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 00/18] Add --index-only option to git merge
+Date: Fri, 08 Apr 2016 21:44:41 -0700
+Message-ID: <xmqqr3eftmpy.fsf@gitster.mtv.corp.google.com>
+References: <1460098726-5958-1-git-send-email-newren@gmail.com>
+	<xmqqlh4ovuqv.fsf@gitster.mtv.corp.google.com>
+	<CABPp-BGpBDsn_ZZh8iot7qbgpWn0cUcdWTypRqKOKFMm9Y-E4w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 09 05:56:08 2016
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 09 06:44:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aok0F-0005xP-K8
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 05:56:07 +0200
+	id 1aoklT-000547-8G
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 06:44:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751414AbcDIDz4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Apr 2016 23:55:56 -0400
-Received: from mail-oi0-f53.google.com ([209.85.218.53]:32848 "EHLO
-	mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750792AbcDIDzz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Apr 2016 23:55:55 -0400
-Received: by mail-oi0-f53.google.com with SMTP id w85so156858597oiw.0
-        for <git@vger.kernel.org>; Fri, 08 Apr 2016 20:55:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=ArEIELR3cZD+gYj201vz3JCq093oymp50wb+S+fVfrk=;
-        b=cJKy4PImh5PTiRru7qZVrm7zyRNSBHstgjW831pE3olJtzW9ouUhe3IntyMckwO8Y4
-         O+2BWE0E2b8x2LRyTXw6ILrzyDIs5jC8wtmoKmD6TGpP7YLGzZTOTv/RKROregkwdqfU
-         QVNsiW063YtLwCZuUQ4B5mToxfqPVL+iV3iqJ37yipupPhAyhMK3OF88/iiVtvQrhF9M
-         eQS4ocZFXH/J1HdPBP2VbTW9DG83cPgcs8ayVzz60GwRn4TU9nkjabIuYZOk3+RKzWlx
-         k6GBgzpMpRDXYwnI4DHhlU05RRvXLefYsjQKZ3CxdWvxRGIshjleGHN1gmHtlKcJXvtO
-         u6bA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=ArEIELR3cZD+gYj201vz3JCq093oymp50wb+S+fVfrk=;
-        b=QUZQPjNJsZSDGAXDD8yPoC76VHRELbsJtvK3oIVBKIOP3FdbMv+v87OSoDN9r6qqXa
-         4YC5Kz5F2NvutmwwwQ07WDJjo9Q/3TR59Oik6sbwxhVDrwefcqGk6xy+ZcNsX3cNee52
-         m8Jsk5fC2/fptmO0wcy1buIRtt3B8IPVuO4qi8Wi78lcCVl29ewDGY1o8xoibK3NMhVJ
-         t/E3XZ0ZG26pK9XeOO+aZurc9/wg3gT8p0rdJ899exRS6TTTiFYOCECQvSN26wSgSDK8
-         hue/79yAzibeL8H5g6y1iZwm6hi/GzuoCr13AeM6X8m9XvQgNkBdZ2mtz2s+Xc+n/LEk
-         tVFw==
-X-Gm-Message-State: AD7BkJJiZEgnoc0XX+PYiR3PnPubiZLrMfUVKV/yBliyYe0DqqyEWsXbEwDtev+QcdNUJaFIYgmW3BqIgvNikA==
-X-Received: by 10.157.11.78 with SMTP id p14mr5191049otd.53.1460174154337;
- Fri, 08 Apr 2016 20:55:54 -0700 (PDT)
-Received: by 10.182.177.10 with HTTP; Fri, 8 Apr 2016 20:55:54 -0700 (PDT)
+	id S1750858AbcDIEoo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Apr 2016 00:44:44 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:60356 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750776AbcDIEoo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Apr 2016 00:44:44 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BD97A5387E;
+	Sat,  9 Apr 2016 00:44:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=d/WK1lKkRyzYvFwTkV/s8XHt2No=; b=eIluTU
+	8QUuKTQcI6C/FdaXcc+68hpAugb+BugelkOZIids+rGwv7mgLMsaLvj7hJ/G3Ye9
+	A7n4uxV7CV7SQkpQRWjQp5EE37kYhD5g52DnyjUPkMxOWEa3ZOLGck4U8dwJhiz2
+	PSGLvmSxFqpXGF5Cb2A4aeIp/HnDwMIr8j+NM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AoMAPDchD6Desi9/1H2YIqZ/pJsUnPsG
+	/3z2G/N9bVyOUZ8NgN3hZc+qsXU87EfS6cwR6dIaC8ywcdYlKBitV06PLlQ7Fy5W
+	XhmW4G4JOLKUXhBD+hLsGVOvrgwUu0HwbRvDOqKWqG2THF/d7/QfuNi0rG3L6QLZ
+	cXPj/WmH9b0=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B47D45387D;
+	Sat,  9 Apr 2016 00:44:42 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 36D405387C;
+	Sat,  9 Apr 2016 00:44:42 -0400 (EDT)
+In-Reply-To: <CABPp-BGpBDsn_ZZh8iot7qbgpWn0cUcdWTypRqKOKFMm9Y-E4w@mail.gmail.com>
+	(Elijah Newren's message of "Fri, 8 Apr 2016 19:35:07 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C677232E-FE0D-11E5-87B8-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291080>
 
-As measured on linux.git, adding --date-order to a log command can
-result in a significant slowdown (~25x here; I've seen ~100x on other
-repositories):
+Elijah Newren <newren@gmail.com> writes:
 
-    $ time git log --first-parent --max-count=51 master > /dev/null
-    real    0m0.024s
-    user    0m0.006s
-    sys    0m0.016s
-    $ time git log --date-order --first-parent --max-count=51 master > /dev/null
-    real    0m0.652s
-    user    0m0.570s
-    sys    0m0.074s
+> On Fri, Apr 8, 2016 at 11:08 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Elijah Newren <newren@gmail.com> writes:
+>>
+>> The goal is stated rather vaguely--when you have a working tree and
+>> perform this "in index" merge, you would obviously update the index
+>> with the merge result and ...
+>
+> Yes, I think you hit the nail on the head with your suggestions
+> elsewhere to (1) limit this to bare repository only, and/or (2) do the
+> "git merge --into master en/topic"
+>
+> I'll fix this.
+> ...
+> The pointer is helpful, but I struggle a bit with the name '--cached'.
+> The past tense in that word suggests to me that it should be a
+> read-only operation on the cache (which works for grep), rather than a
+> write operation (such as for merge or apply).  It could also be
+> misconstrued in merge's case to think that the index is one of the
+> things being merged (rather than erroring out if the index doesn't
+> match HEAD).  I know apply already uses --cached, but if others don't
+> mind, I personally would rather not use it here.  Is this something
+> you feel strongly about, or are you okay with --index-only?
 
-In combination with --first-parent, --date-order (or any other
-ordering option) should be a no-op, since --first-parent selects a
-linear history. So it seems like there's a significant performance win
-available by ignoring ordering options when --first-parent is present.
-Would this change be desirable? If so, I'll see about submitting a
-patch.
+"cached" is not in past tense, but is used an adjective.  You can
+update what is in the index and that is to update the "cached"
+information.
 
-More generally, it seems like it might be possible to identify when
-the selected commits are linear and avoid the cost of sorting.
+But I do not think we need to discuss this, because we do not need
+such an option, as I understand that your updated direction is to do
+one or both of (1) do the "merge and update HEAD only when no manual
+conflict resolution is needed" thing in a bare repository, (2) "git
+merge --into=master en/topic" does the "merge master and en/topic
+and update master only when no manual conflict resolution is needed
+and do so without touching HEAD, index or the working tree".
 
-Josiah
+Because the current "git merge" refuses to work without the working
+tree, (1) can be done without adding any new option---if you are run
+in a bare repository, by definition, you are being asked to do that
+new thing, and because you will not do the new thing in a repository
+with a working tree, there is no need for an option to tell the
+command, "no, don't do the usual thing but do this new thing".  And
+obviously (2) already has a new option --into and no other new option
+is needed to tell the command that it needs to do that new thing.
+
+>> I have a suspicion that this would become moot, as the conclusion
+>> may become that "git merge" that works only in index does not make
+>> sense unless you are in a bare repository---in which case, these
+>> external merge drivers has to be given a temporary working tree
+>> anyway, and they can keep writing their result out to what they
+>> consider is the working tree (i.e. via GIT_WORK_TREE or something).
+>> You read the result of them from that temporary working tree into
+>> the index before cleaning the temporary working tree.  That way,
+>> you do not have to touch them at all, no?  In fact, the temporary
+>> working tree trick may be applicable even when you are working in a
+>> repository with a tree working tree.
+>
+> I'm a little confused; you seem to be suggesting git-merge-one-file
+> will always need to have a working tree of some sort, though I don't
+> see why.
+
+I was loosely referring to the working tree, which includes things
+like having a place you can safely check out temporary files as if
+they were one of the working tree files, i.e. the arrangement in
+which "merge-one-file" is designed to operate.  Even if they are
+"tmpname" generated files, you do not want to clobber your $GIT_DIR
+with these random files when driving these blob level merge drivers
+in a bare repository.
