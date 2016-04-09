@@ -1,106 +1,104 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 00/24] Yet another pre-refs-backend series
-Date: Sat, 9 Apr 2016 12:19:50 -0400
-Message-ID: <57092BA6.1060808@alum.mit.edu>
-References: <1460055791-23313-1-git-send-email-dturner@twopensource.com>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH] rebase: convert revert to squash on autosquash
+Date: Sat, 9 Apr 2016 20:17:49 +0300
+Message-ID: <20160409201344-mutt-send-email-mst@redhat.com>
+References: <1460041965-31526-1-git-send-email-mst@redhat.com>
+ <alpine.DEB.2.20.1604071720160.2967@virtualbox>
+ <20160407184026-mutt-send-email-mst@redhat.com>
+ <alpine.DEB.2.20.1604081309150.2967@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 09 18:30:03 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Apr 09 19:18:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aovlq-0008NG-Hk
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 18:30:02 +0200
+	id 1aowWI-0003ng-Kg
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 19:18:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754119AbcDIQ06 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Apr 2016 12:26:58 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:50742 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753908AbcDIQ05 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Apr 2016 12:26:57 -0400
-X-Greylist: delayed 424 seconds by postgrey-1.27 at vger.kernel.org; Sat, 09 Apr 2016 12:26:57 EDT
-X-AuditID: 1207440e-f07ff700000008c5-0c-57092ba707ac
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id C3.70.02245.7AB29075; Sat,  9 Apr 2016 12:19:51 -0400 (EDT)
-Received: from [192.168.0.107] (ool-4352a4a3.dyn.optonline.net [67.82.164.163])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u39GJokD012234
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sat, 9 Apr 2016 12:19:51 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.7.0
-In-Reply-To: <1460055791-23313-1-git-send-email-dturner@twopensource.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrAIsWRmVeSWpSXmKPExsUixO6iqLtcmzPcYNopNYv5m04wWnRd6WZy
-	YPJY8Pw+u8fnTXIBTFHcNkmJJWXBmel5+nYJ3BlHH11lL/gvWDFt60v2BsYtfF2MnBwSAiYS
-	O65eZOxi5OIQEtjKKHH60lc2COcck8S2h0uZQKqEBewkzq/4zgZiiwg4SFzedZQZxBYS8JA4
-	vmoDK4jNJqArsainGayeV0BbYsq9hWBxFgEViRenL7CD2KICIRLb1n1jhagRlDg58wkLiM0p
-	4Cnxuq0HbCazgJ7Ejuu/WCFseYntb+cwT2Dkm4WkZRaSsllIyhYwMq9ilEvMKc3VzU3MzClO
-	TdYtTk7My0st0jXWy80s0UtNKd3ECAk9vh2M7etlDjEKcDAq8fBmhHGEC7EmlhVX5h5ilORg
-	UhLltXoJFOJLyk+pzEgszogvKs1JLT7EKMHBrCTCe1iNM1yINyWxsiq1KB8mJc3BoiTOq7ZE
-	3U9IID2xJDU7NbUgtQgmK8PBoSTB26oF1ChYlJqeWpGWmVOCkGbi4AQZziUlUpyal5JalFha
-	khEPir34YmD0gaR4gPbyaIPsLS5IzAWKQrSeYlSUEueNBJkrAJLIKM2DGwtLKK8YxYG+FOa1
-	AaniASYjuO5XQIOZgAZf4GcDGVySiJCSamCUEpswp4LV6rPML6brRudW8rTySChKtbj2Hp8q
-	sorj7oWWm07pqVO1YoJz5HZ0TWmVPnaL/62zhcDl3xvO39W/XW3hxrLVeevxl4sj3r3gWMR0
-	pye6acZ8yUDlTzf11P9ysO5v/ZPp+tHU+ai9sIr1zJVmdnzz1sdP+bbzseGpnYef 
+	id S1753736AbcDIRRx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Apr 2016 13:17:53 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:53314 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753384AbcDIRRw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Apr 2016 13:17:52 -0400
+Received: from int-mx14.intmail.prod.int.phx2.redhat.com (int-mx14.intmail.prod.int.phx2.redhat.com [10.5.11.27])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mx1.redhat.com (Postfix) with ESMTPS id DD07A64375;
+	Sat,  9 Apr 2016 17:17:51 +0000 (UTC)
+Received: from redhat.com (vpn1-7-52.ams2.redhat.com [10.36.7.52])
+	by int-mx14.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id u39HHncG014287;
+	Sat, 9 Apr 2016 13:17:50 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1604081309150.2967@virtualbox>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Sat, 09 Apr 2016 17:17:51 +0000 (UTC)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291101>
 
-On 04/07/2016 03:02 PM, David Turner wrote:
-> We now have quite a large number of patches before we even get into
-> the meat of the pluggable refs backend series.  So it's worth breaking
-> those out and getting them in before we get into the main series
-> (which Michael Haggerty swants to redesign a bit anyway).
+On Fri, Apr 08, 2016 at 01:13:51PM +0200, Johannes Schindelin wrote:
+> Hi Michael,
 > 
-> This set of patches should be applied on top of
-> jk/check-repository-format.
+> On Thu, 7 Apr 2016, Michael S. Tsirkin wrote:
 > 
-> Michael Haggerty has reviewed those of my patches which are in here
-> except maybe:
->   refs: on symref reflog expire, lock symref not referrent
-> This was the one from later in the series that was straightforward to
-> move to before the vtable; the other two were going to be harder to
-> move and can wait until after the vtable.
+> > On Thu, Apr 07, 2016 at 05:23:09PM +0200, Johannes Schindelin wrote:
+> > > 
+> > > On Thu, 7 Apr 2016, Michael S. Tsirkin wrote:
+> > > 
+> > > > Reverts can typically be treated like squash.  Eliminating both the
+> > > > original commit and the revert would be even nicer, but this seems a bit
+> > > > harder to implement.
+> > > 
+> > > Whoa. This rings a lot of alarm bells, very loudly.
+> > 
+> > Whoa don't be alarmed. It's just a patch :).
+> 
+> It's just a patch. Like every major breakage would be. So: no, there is
+> reason to be alarmed if it is likely to disrupt normal usage.
+> 
+> > > It seems you intend to introduce a *major* change in behavior,
+> > 
+> > Doing this automatically for all users might be a bit too drastic for
+> > the upstream git.
+> 
+> That is a pretty safe thing to say, even without the subjunctive.
+> 
+> > If there's a commit later followed by a revert, history can be
+> > simplified by squashing them, and if the result is empty, removing both.
+> 
+> True. But that is not what the user told Git to do. If the user's
+> intention was to squash the reverting patch, she could have easily done
+> this:
+> 
+> 	git revert -n deadbeef
+> 	git commit --squash deadbeef
+> 
+> where "deadbeef" is the placeholder for the actual commit to revert.
+> 
+> And indeed, I use exactly this song and dance quite frequently, *iff* my
+> intention is to drop a patch.
 
-This last patch deserves a little bit of discussion. Currently, when the
-reflog of a symref is expired, the pointed-to ref is locked rather than
-the symref. This patch changes the code to lock the symref instead.
+Well then you have to decide whether you want to drop it
+when you commit.
+If *I* want do drop the patch when I commit, I just do
+git rebase.
 
-This is clearly the right thing to do, and I consider this change a bug
-fix. However, it introduces an incompatibility. An old version of `git
-reflog expire` and a new version wouldn't agree on the locking protocol,
-and could potentially try to overwrite the same reflog at the same time.
+> A much better idea than co-opting the "Revert" commit message would be to
+> introduce a sibling to --fixup and --squash that you could call --drop.
+> 
+> Ciao,
+> Johannes
 
-I think this risk is acceptable nevertheless, because expiring reflogs
-is an uncommon operation and unlikely to be done from two processes at
-the same time; moreover, the integrity of reflogs is not a matter of
-life or death.
+Maybe but it's a different usecase.
 
-A far more likely conflict would be between a reflog expiration and a
-symref update (e.g., `git checkout otherbranch`). This use case is
-currently *broken* because `git checkout` locks HEAD. It would be fixed
-by this patch.
-
-If somebody is really upset about the risk of a race between an old and
-new version of `git reflog expire`, the way to increase the safety would
-be to lock *both* the symref and the referent while changing the
-symref's reflog. I think that would be overkill.
-
-This whole series is
-
-Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
-
-David mentioned that I want to redesign the vtable patches somewhat.
-Anybody who is curious can look at the work in progress branch on my
-GitHub fork [1], branch wip/ref-storage.
-
-Michael
-
-[1] https://github.com/mhagger/git
+What this addresses is a case where you first wanted to
+avoid rebases, so you reverted.
+But then you rebased after all.
+Now finding what was reverted automatically is helpful.
