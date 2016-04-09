@@ -1,66 +1,111 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git segfaults on older Solaris releases
-Date: Sat, 9 Apr 2016 16:35:31 -0400
-Message-ID: <20160409203530.GA18989@sigill.intra.peff.net>
-References: <5706A489.7070101@jupiterrise.com>
- <xmqqoa9lz2uw.fsf@gitster.mtv.corp.google.com>
- <xmqqk2k9z20p.fsf@gitster.mtv.corp.google.com>
- <5706C0D4.9030707@jupiterrise.com>
- <5708A90E.1050705@jupiterrise.com>
- <20160409173904.GA5127@sigill.intra.peff.net>
- <57096374.6030608@jupiterrise.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: "Tom G. Christensen" <tgc@jupiterrise.com>
-X-From: git-owner@vger.kernel.org Sat Apr 09 22:39:09 2016
+From: Vasco Almeida <vascomalmeida@sapo.pt>
+Subject: [PATCH v2 2/7] i18n: unpack-trees: mark strings for translation
+Date: Sat,  9 Apr 2016 20:38:39 +0000
+Message-ID: <1460234324-13506-2-git-send-email-vascomalmeida@sapo.pt>
+References: <1460234324-13506-1-git-send-email-vascomalmeida@sapo.pt>
+Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 09 22:39:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aozeq-0000jw-Oa
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 22:39:05 +0200
+	id 1aozes-0000jw-Vj
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Apr 2016 22:39:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754505AbcDIUfg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Apr 2016 16:35:36 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46999 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753241AbcDIUff (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Apr 2016 16:35:35 -0400
-Received: (qmail 13274 invoked by uid 102); 9 Apr 2016 20:35:34 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 09 Apr 2016 16:35:34 -0400
-Received: (qmail 14354 invoked by uid 107); 9 Apr 2016 20:35:38 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 09 Apr 2016 16:35:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 09 Apr 2016 16:35:31 -0400
-Content-Disposition: inline
-In-Reply-To: <57096374.6030608@jupiterrise.com>
+	id S1754760AbcDIUjB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Apr 2016 16:39:01 -0400
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:53523 "EHLO sapo.pt"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754517AbcDIUjA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Apr 2016 16:39:00 -0400
+Received: (qmail 14461 invoked from network); 9 Apr 2016 20:38:58 -0000
+Received: (qmail 15641 invoked from network); 9 Apr 2016 20:38:58 -0000
+Received: from unknown (HELO linux-iv58.site) (vascomalmeida@sapo.pt@[85.246.157.91])
+          (envelope-sender <vascomalmeida@sapo.pt>)
+          by mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
+          for <git@vger.kernel.org>; 9 Apr 2016 20:38:53 -0000
+X-PTMail-RemoteIP: 85.246.157.91
+X-PTMail-AllowedSender-Action: 
+X-PTMail-Service: default
+X-Mailer: git-send-email 2.1.4
+In-Reply-To: <1460234324-13506-1-git-send-email-vascomalmeida@sapo.pt>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291128>
 
-On Sat, Apr 09, 2016 at 10:17:56PM +0200, Tom G. Christensen wrote:
+Mark strings seen by the user inside setup_unpack_trees_porcelain() and
+display_error_msgs() functions for translation.
 
-> On 09/04/16 19:39, Jeff King wrote:
-> 
-> >   [1/3]: config: lower-case first word of error strings
-> >   [2/3]: git_config_set_multivar_in_file: all non-zero returns are errors
-> >   [3/3]: git_config_set_multivar_in_file: handle "unset" errors
-> >
-> 
-> I applied them to 2.8.1 and ran the testsuite again on Solaris 8/x86 and the
-> segfault is gone.
+Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
+---
+ unpack-trees.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-Thanks for testing. By the way, I ran the whole test suite with "--tee -v"
-and grepped for "(null)", which does find this case on glibc systems. I
-didn't see any other interesting cases (there _are_ mentions of
-"(null)", but they are from our code, not glibc converting NULLs). Which
-I guess is just corroborating your testing, since you would have seen
-any bad cases as segfaults.
-
--Peff
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 9f55cc2..4bc6b4f 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -61,21 +61,21 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+ 	const char *cmd2 = strcmp(cmd, "checkout") ? cmd : "switch branches";
+ 
+ 	if (advice_commit_before_merge)
+-		msg = "Your local changes to the following files would be overwritten by %s:\n%%s"
+-			"Please, commit your changes or stash them before you can %s.";
++		msg = _("Your local changes to the following files would be overwritten by %s:\n%%s"
++			"Please, commit your changes or stash them before you can %s.");
+ 	else
+-		msg = "Your local changes to the following files would be overwritten by %s:\n%%s";
++		msg = _("Your local changes to the following files would be overwritten by %s:\n%%s");
+ 	msgs[ERROR_WOULD_OVERWRITE] = msgs[ERROR_NOT_UPTODATE_FILE] =
+ 		xstrfmt(msg, cmd, cmd2);
+ 
+ 	msgs[ERROR_NOT_UPTODATE_DIR] =
+-		"Updating the following directories would lose untracked files in it:\n%s";
++		_("Updating the following directories would lose untracked files in it:\n%s");
+ 
+ 	if (advice_commit_before_merge)
+-		msg = "The following untracked working tree files would be %s by %s:\n%%s"
+-			"Please move or remove them before you can %s.";
++		msg = _("The following untracked working tree files would be %s by %s:\n%%s"
++			"Please move or remove them before you can %s.");
+ 	else
+-		msg = "The following untracked working tree files would be %s by %s:\n%%s";
++		msg = _("The following untracked working tree files would be %s by %s:\n%%s");
+ 
+ 	msgs[ERROR_WOULD_LOSE_UNTRACKED_REMOVED] = xstrfmt(msg, "removed", cmd, cmd2);
+ 	msgs[ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN] = xstrfmt(msg, "overwritten", cmd, cmd2);
+@@ -84,14 +84,14 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+ 	 * Special case: ERROR_BIND_OVERLAP refers to a pair of paths, we
+ 	 * cannot easily display it as a list.
+ 	 */
+-	msgs[ERROR_BIND_OVERLAP] = "Entry '%s' overlaps with '%s'.  Cannot bind.";
++	msgs[ERROR_BIND_OVERLAP] = _("Entry '%s' overlaps with '%s'.  Cannot bind.");
+ 
+ 	msgs[ERROR_SPARSE_NOT_UPTODATE_FILE] =
+-		"Cannot update sparse checkout: the following entries are not up-to-date:\n%s";
++		_("Cannot update sparse checkout: the following entries are not up-to-date:\n%s");
+ 	msgs[ERROR_WOULD_LOSE_ORPHANED_OVERWRITTEN] =
+-		"The following Working tree files would be overwritten by sparse checkout update:\n%s";
++		_("The following Working tree files would be overwritten by sparse checkout update:\n%s");
+ 	msgs[ERROR_WOULD_LOSE_ORPHANED_REMOVED] =
+-		"The following Working tree files would be removed by sparse checkout update:\n%s";
++		_("The following Working tree files would be removed by sparse checkout update:\n%s");
+ 
+ 	opts->show_all_errors = 1;
+ 	/* rejected paths may not have a static buffer */
+@@ -168,7 +168,7 @@ static void display_error_msgs(struct unpack_trees_options *o)
+ 		string_list_clear(rejects, 0);
+ 	}
+ 	if (something_displayed)
+-		fprintf(stderr, "Aborting\n");
++		fprintf(stderr, _("Aborting\n"));
+ }
+ 
+ /*
+-- 
+2.1.4
