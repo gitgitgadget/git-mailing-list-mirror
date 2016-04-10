@@ -1,7 +1,7 @@
 From: Stephan Beyer <s-beyer@gmx.net>
-Subject: [PATCH v2 11/21] bisect: use struct node_data array instead of int array
-Date: Sun, 10 Apr 2016 15:19:04 +0200
-Message-ID: <1460294354-7031-12-git-send-email-s-beyer@gmx.net>
+Subject: [PATCH v2 18/21] bisect: prepare for different algorithms based on find_all
+Date: Sun, 10 Apr 2016 15:19:11 +0200
+Message-ID: <1460294354-7031-19-git-send-email-s-beyer@gmx.net>
 References: <1460294354-7031-1-git-send-email-s-beyer@gmx.net>
 Cc: Stephan Beyer <s-beyer@gmx.net>,
 	Christian Couder <christian.couder@gmail.com>,
@@ -13,236 +13,232 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1apFI2-0000Af-Pp
+	id 1apFI3-0000Af-CD
 	for gcvg-git-2@plane.gmane.org; Sun, 10 Apr 2016 15:20:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753446AbcDJNUS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Apr 2016 09:20:18 -0400
-Received: from mout.gmx.net ([212.227.17.21]:50811 "EHLO mout.gmx.net"
+	id S1753268AbcDJNUX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Apr 2016 09:20:23 -0400
+Received: from mout.gmx.net ([212.227.17.22]:50061 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751991AbcDJNUJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Apr 2016 09:20:09 -0400
+	id S1753349AbcDJNUQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Apr 2016 09:20:16 -0400
 Received: from fermat.fritz.box ([92.76.224.62]) by mail.gmx.com (mrgmx102)
- with ESMTPSA (Nemesis) id 0MVJze-1bILxy1LsU-00YlBc; Sun, 10 Apr 2016 15:20:04
+ with ESMTPSA (Nemesis) id 0MCwbX-1axnjo1EWp-009gBN; Sun, 10 Apr 2016 15:20:07
  +0200
 X-Mailer: git-send-email 2.8.1.137.g522756c
 In-Reply-To: <1460294354-7031-1-git-send-email-s-beyer@gmx.net>
-X-Provags-ID: V03:K0:FdEBQhuWHRiIgMvwSky036kLv57xmULICqSPn8OV4eyCWwV1W6Y
- M4lvHzCNXl12mRndVqW42EmF+VmCi9F6lJlcxf3DO2HtY5fNLeuLKSczEnv7YNgNAqJMFmY
- fHcOSRnIOshcZ9xs07NQWxb8DzQ2yVbjCZ2K8HWQOP+JLt5DsQA26ok5Y/9Ex0mUkZCsxGu
- BFfaL4hfH/sBc4arH5Xfg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:PVcSnMj5xqE=:4joRCOLTToulqMexZpbMEl
- QdorIkyXlIRU4XLUxOeROX9TUEzr4IGnFdJG7qbZmi9WyS4hO+wL8hLbOh1yzlXiyTFBDapnU
- mXM7TkTOb/Fd3BCvwnCa1KjqpzpCmSaaQaFL6DDFMYOFav4kSDR84UFTB4iyQW+N3WooUvkWL
- olwgtdC5kdqi5ffhhafChmmi0FaOiiiMnRNCkC061F3cQ5uDCbJGgv5/9GCHTgoF7lEJzenKk
- wkTZGe6WAAZUTsnkZIqS9ytPL95irgA6h/5s1t/33du/f0VTkQi0Am33GidXYpEUKXnxYgnMs
- /p+E8meh4qddLe6y/9He05OQVasWnQp2SAmGXTSTww6/7Xad5R8yUC4UmwImm+HDrmfGUanid
- bJ9gIsTcKHom/rCj4AppzgNlIcm6b5ambj5JlNE97F7mLkyZGTZPPPSaRcxbUPA14OS/HQ7qh
- PA7/mOwvrysPl0/QvYfFhZEiCJfsSEockD65gd+QpwUOBD19J5UZ4xSa9QxRUgmNl7I5XS0k6
- eMG0ZrLV4yxYB7ASHBcr5QSCK9CLEGMchwnZeQTUzYmSG2z6JldtTOWJjm1yiQ8XHaqMTTOVu
- Nb5YrihyZphxEgdjvOfX6Um4ogfd8+pxuXu8EEKxxJ07uoVrTrY3YPRUhsWMN9TAxyIYdvKJL
- RFKLYC/Yi2GIUSiFn/YEFuNt581jAEmDncpqGYtv2gcxuYIIzOqb+wKnAvYoiCztOWFS7WOf8
- OSQVEJklfsjnRP8xenOSbe5yg10IVMu6gBdnjkNaygibeRnULEFmAz22sY4=
+X-Provags-ID: V03:K0:RDfCh1MEmut/cJW3fWEyfSS7/RQ0ony4lAN28FAkt3MkHKNFvXA
+ 1rWsHLP8/QEqXYIqs85XfMKs3lDh4nW04bSxs5NjNPUPe034T8sTDWX6+/baeWahtnKOMeA
+ 0P9SKkzsm2WWp2D7PIAFRO+nAr3/U5JYO2wmFnhThQA0imkQtcchQLK1pnvtjIpHhCH/zAW
+ bgYl84GyfTQz2QIiAKRSA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YqxZ8PdKdGI=:glu5sO8xDg5YAtspPO49S6
+ i6NsJb3Fya/G5RjdPycrTsBwDGg+zTlzB5hDgu+Hfzc02oc+JgLpuNeLV5jCtKtcEY6UkGsbi
+ c7pUP1DULhnUWbk7uv74xWZySR8SZUDzJ6ENTPT6J11/VcNCtcVpMdDqyG3dOOSrYv6xA1htX
+ z83VEMwev7jlw76tHgs0czzMpcWfOknyEyRtdPUzoe9H0PSlPSdeEnRd+9ugJiJeFnZa3rvMW
+ W9XDUdHaYShGVQRTv5TTNynFKJzzu0ldFZuUuk/LYDuklYV/ISFaulTR2SGhiAGJkTdxVnc4b
+ difcrWRrWkNxVSCpkl1+K0JdbCqpGQAR3UsvdHNFYGpjLbEWwU63xEa0fAWVLIJeIE6DaDuWU
+ AEDTwXi17dL9usnZTlgYTH2IXSupYSVd6BYkQGPHDJQghQH+M9r22R8EjOsbpTPQ4SE56OaFT
+ /wZeyVRk5XM67AZi8rSGdHuE3KqjSV4B20H6DdJKqK9Yy7Pj55OztG7qzHLwjOiVlHep2+yNP
+ 2LZgg8ThOo0vfDyyVsPHJNCNyIx7IbEBBnAQIZcq6PjbcGrJoQhRvlmBKrFN5x68gMuDNZAZO
+ RVDMdN4EAMVg/bRRFTomLQoR4rCojZzGvBOwjFBizDb2H1Eo5dQZcDeVKNIxwhDJ1mjrPpOiQ
+ fCLZsSfCnp8qjiyiLHNOc0AxS1oJ6xj5be4HP55FolDp8wo9a4ufrty3t4lOVSlOeEQm5jAfm
+ XFSPqTH2RzvANvFVNOW0926p8xETdIAJsU4vEabK6pKgIdD2W9hjSZ1tB+8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291155>
 
-This is a preparation for subsequent changes.
-During a bisection process, we want to augment commits with
-further information to improve speed.
+This is a preparation commit with copy-and-paste involved.
+The function do_find_bisection() is changed and copied to
+two almost similar functions compute_all_weights() and
+compute_relevant_weights().
+
+The function compute_relevant_weights() stops when a
+"halfway" commit is found.
+
+To keep the code clean, the halfway commit is not returned
+and has to be found by best_bisection() afterwards.
+This results in a singular additional O(#commits)-time
+overhead but this will be outweighed by the following
+changes to compute_relevant_weights().
+
+It is necessary to keep compute_all_weights() for the
+"git rev-list --bisect-all" command. All other bisect-related
+commands will use compute_relevant_weights().
 
 Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
 ---
- bisect.c | 61 ++++++++++++++++++++++++++++++-------------------------------
- 1 file changed, 30 insertions(+), 31 deletions(-)
+ bisect.c | 116 ++++++++++++++++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 97 insertions(+), 19 deletions(-)
 
 diff --git a/bisect.c b/bisect.c
-index 16bbfa6..bc1bfbd 100644
+index a254f28..c6bad43 100644
 --- a/bisect.c
 +++ b/bisect.c
-@@ -23,9 +23,21 @@ static const char *argv_show_branch[] = {"show-branch", NULL, NULL};
- static const char *term_bad;
- static const char *term_good;
- 
-+struct node_data {
-+	int weight;
-+};
-+
- /* Remember to update object flag allocation in object.h */
- #define COUNTED		(1u<<16)
- 
-+#define DEBUG_BISECT 0
-+
-+static inline struct node_data *node_data(struct commit *elem)
-+{
-+	assert(elem->util);
-+	return (struct node_data *)elem->util;
-+}
-+
- static int count_distance(struct commit_list *entry)
- {
- 	int nr = 0;
-@@ -59,18 +71,6 @@ static void clear_distance(struct commit_list *list)
- 	}
- }
- 
--#define DEBUG_BISECT 0
--
--static inline int weight(struct commit_list *elem)
--{
--	return *((int*)(elem->item->util));
--}
--
--static inline void weight_set(struct commit_list *elem, int weight)
--{
--	*((int*)(elem->item->util)) = weight;
--}
--
- static int count_interesting_parents(struct commit *commit)
- {
- 	struct commit_list *p;
-@@ -95,7 +95,7 @@ static inline int halfway(struct commit_list *p, int nr)
- 	 * 2 and 3 are halfway of 5.
- 	 * 3 is halfway of 6 but 2 and 4 are not.
- 	 */
--	switch (2 * weight(p) - nr) {
-+	switch (2 * node_data(p->item)->weight - nr) {
- 	case -1: case 0: case 1:
- 		return 1;
- 	default:
-@@ -128,7 +128,7 @@ static void show_list(const char *debug, int counted, int nr,
- 			(flags & UNINTERESTING) ? 'U' : ' ',
- 			(flags & COUNTED) ? 'C' : ' ');
- 		if (commit->util)
--			fprintf(stderr, "%3d", weight(p));
-+			fprintf(stderr, "%3d", node_data(commit)->weight);
- 		else
- 			fprintf(stderr, "---");
- 		fprintf(stderr, " %.*s", 8, sha1_to_hex(commit->object.oid.hash));
-@@ -156,7 +156,7 @@ static struct commit_list *best_bisection(struct commit_list *list, int nr)
- 
- 		if (flags & TREESAME)
- 			continue;
--		distance = weight(p);
-+		distance = node_data(p->item)->weight;
- 		if (nr - distance < distance)
- 			distance = nr - distance;
- 		if (distance > best_distance) {
-@@ -196,7 +196,7 @@ static struct commit_list *best_bisection_sorted(struct commit_list *list, int n
- 
- 		if (flags & TREESAME)
- 			continue;
--		distance = weight(p);
-+		distance = node_data(p->item)->weight;
- 		if (nr - distance < distance)
- 			distance = nr - distance;
- 		array[cnt].commit = p->item;
-@@ -234,7 +234,7 @@ static struct commit_list *best_bisection_sorted(struct commit_list *list, int n
-  * or positive distance.
-  */
- static struct commit_list *do_find_bisection(struct commit_list *list,
--					     int nr, int *weights,
-+					     int nr, struct node_data *weights,
- 					     int find_all)
- {
- 	int n, counted;
-@@ -246,11 +246,11 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
- 		struct commit *commit = p->item;
- 		unsigned flags = commit->object.flags;
- 
--		p->item->util = &weights[n++];
-+		commit->util = &weights[n++];
- 		switch (count_interesting_parents(commit)) {
- 		case 0:
- 			if (!(flags & TREESAME)) {
--				weight_set(p, 1);
-+				node_data(commit)->weight = 1;
- 				counted++;
- 				show_list("bisection 2 count one",
- 					  counted, nr, list);
-@@ -261,10 +261,10 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
- 			 */
- 			break;
- 		case 1:
--			weight_set(p, -1);
-+			node_data(commit)->weight = -1;
- 			break;
- 		default:
--			weight_set(p, -2);
-+			node_data(commit)->weight = -2;
- 			break;
+@@ -179,6 +179,7 @@ static struct commit_list *best_bisection(struct commit_list *list)
  		}
  	}
-@@ -287,8 +287,8 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
- 	 */
- 	for (p = list; p; p = p->next) {
- 		if (!(p->item->object.flags & UNINTERESTING)
--		 && (weight(p) == -2)) {
--			weight_set(p, count_distance(p));
-+		 && (node_data(p->item)->weight == -2)) {
-+			node_data(p->item)->weight = count_distance(p);
- 			clear_distance(list);
  
- 			/* Does it happen to be at exactly half-way? */
-@@ -305,12 +305,12 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
- 			struct commit_list *q;
- 			unsigned flags = p->item->object.flags;
++	best->next = NULL;
+ 	return best;
+ }
  
--			if (0 <= weight(p))
-+			if (0 <= node_data(p->item)->weight)
- 				continue;
- 			for (q = p->item->parents; q; q = q->next) {
- 				if (q->item->object.flags & UNINTERESTING)
- 					continue;
--				if (0 <= weight(q))
-+				if (0 <= node_data(q->item)->weight)
- 					break;
- 			}
- 			if (!q)
-@@ -321,14 +321,13 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
- 			 * add one for p itself if p is to be counted,
- 			 * otherwise inherit it from q directly.
- 			 */
-+			node_data(p->item)->weight = node_data(q->item)->weight;
- 			if (!(flags & TREESAME)) {
--				weight_set(p, weight(q)+1);
-+				node_data(p->item)->weight++;
- 				counted++;
- 				show_list("bisection 2 count one",
- 					  counted, nr, list);
- 			}
--			else
--				weight_set(p, weight(q));
- 
- 			/* Does it happen to be at exactly half-way? */
- 			if (!find_all && halfway(p, nr))
-@@ -350,7 +349,7 @@ struct commit_list *find_bisection(struct commit_list *list,
+@@ -245,9 +246,8 @@ static struct commit_list *best_bisection_sorted(struct commit_list *list)
+  * unknown.  After running compute_weight() first, they will get zero
+  * or positive distance.
+  */
+-static struct commit_list *do_find_bisection(struct commit_list *list,
+-					     struct node_data *weights,
+-					     int find_all)
++static void compute_all_weights(struct commit_list *list,
++				struct node_data *weights)
  {
- 	int nr, on_list;
- 	struct commit_list *p, *best, *next, *last;
--	int *weights;
-+	struct node_data *weights;
+ 	int n, counted;
+ 	struct commit_list *p;
+@@ -301,10 +301,88 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+ 		if (!(p->item->object.flags & UNINTERESTING)
+ 		 && (node_data(p->item)->weight == -2)) {
+ 			compute_weight(p->item);
++			counted++;
++		}
++	}
++
++	show_list("bisection 2 compute_weight", counted, list);
++
++	while (counted < total) {
++		for (p = list; p; p = p->next) {
++			struct commit_list *q;
++			unsigned flags = p->item->object.flags;
++
++			if (0 <= node_data(p->item)->weight)
++				continue;
++			for (q = p->item->parents; q; q = q->next) {
++				if (q->item->object.flags & UNINTERESTING)
++					continue;
++				if (0 <= node_data(q->item)->weight)
++					break;
++			}
++			if (!q)
++				continue;
++
++			/*
++			 * weight for p is unknown but q is known.
++			 * add one for p itself if p is to be counted,
++			 * otherwise inherit it from q directly.
++			 */
++			node_data(p->item)->weight = node_data(q->item)->weight;
++			if (!(flags & TREESAME)) {
++				node_data(p->item)->weight++;
++				counted++;
++				show_list("bisection 2 count one",
++					  counted, list);
++			}
++		}
++	}
++	show_list("bisection 2 counted all", counted, list);
++}
++
++/* At the moment this is basically the same as compute_all_weights()
++ * but with a halfway shortcut */
++static void compute_relevant_weights(struct commit_list *list,
++				     struct node_data *weights)
++{
++	int n, counted;
++	struct commit_list *p;
++
++	counted = 0;
++
++	for (n = 0, p = list; p; p = p->next) {
++		struct commit *commit = p->item;
++		unsigned flags = commit->object.flags;
++
++		commit->util = &weights[n++];
++		switch (count_interesting_parents(commit)) {
++		case 0:
++			if (!(flags & TREESAME)) {
++				node_data(commit)->weight = 1;
++				counted++;
++				show_list("bisection 2 count one",
++					  counted, list);
++			}
++			break;
++		case 1:
++			node_data(commit)->weight = -1;
++			break;
++		default:
++			node_data(commit)->weight = -2;
++			break;
++		}
++	}
++
++	show_list("bisection 2 initialize", counted, list);
++
++	for (p = list; p; p = p->next) {
++		if (!(p->item->object.flags & UNINTERESTING)
++		 && (node_data(p->item)->weight == -2)) {
++			compute_weight(p->item);
  
- 	show_list("bisection 2 entry", 0, 0, list);
- 
-@@ -376,14 +375,14 @@ struct commit_list *find_bisection(struct commit_list *list,
- 	show_list("bisection 2 sorted", 0, nr, list);
- 
- 	*all = nr;
--	weights = xcalloc(on_list, sizeof(*weights));
-+	weights = (struct node_data *)xcalloc(on_list, sizeof(*weights));
- 
- 	/* Do the real work of finding bisection commit. */
- 	best = do_find_bisection(list, nr, weights, find_all);
- 	if (best) {
- 		if (!find_all)
- 			best->next = NULL;
--		*reaches = weight(best);
-+		*reaches = node_data(best->item)->weight;
+ 			/* Does it happen to be at exactly half-way? */
+-			if (!find_all && halfway(p->item))
+-				return p;
++			if (halfway(p->item))
++				return;
+ 			counted++;
+ 		}
  	}
+@@ -341,17 +419,11 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+ 			}
+ 
+ 			/* Does it happen to be at exactly half-way? */
+-			if (!find_all && halfway(p->item))
+-				return p;
++			if (halfway(p->item))
++				return;
+ 		}
+ 	}
+-
+ 	show_list("bisection 2 counted all", counted, list);
+-
+-	if (!find_all)
+-		return best_bisection(list);
+-	else
+-		return best_bisection_sorted(list);
+ }
+ 
+ struct commit_list *find_bisection(struct commit_list *list,
+@@ -365,6 +437,9 @@ struct commit_list *find_bisection(struct commit_list *list,
+ 	total = 0;
+ 	marker = 0;
+ 
++	if (!list)
++		return NULL;
++
+ 	show_list("bisection 2 entry", 0, list);
+ 
+ 	/*
+@@ -391,13 +466,16 @@ struct commit_list *find_bisection(struct commit_list *list,
+ 	*all = total;
+ 	weights = (struct node_data *)xcalloc(on_list, sizeof(*weights));
+ 
+-	/* Do the real work of finding bisection commit. */
+-	best = do_find_bisection(list, weights, find_all);
+-	if (best) {
+-		if (!find_all)
+-			best->next = NULL;
+-		*reaches = node_data(best->item)->weight;
++	if (find_all) {
++		compute_all_weights(list, weights);
++		best = best_bisection_sorted(list);
++	} else {
++		compute_relevant_weights(list, weights);
++		best = best_bisection(list);
+ 	}
++	assert(best);
++	*reaches = node_data(best->item)->weight;
++
  	free(weights);
+ 
  	return best;
 -- 
 2.8.1.137.g522756c
