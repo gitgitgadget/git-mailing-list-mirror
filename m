@@ -1,7 +1,7 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCH 1/6] Remove duplicate code
-Date: Sat,  9 Apr 2016 23:13:35 -0700
-Message-ID: <1460268820-8308-2-git-send-email-newren@gmail.com>
+Subject: [PATCH 4/6] merge-octopus: Abort if index does not match HEAD
+Date: Sat,  9 Apr 2016 23:13:38 -0700
+Message-ID: <1460268820-8308-5-git-send-email-newren@gmail.com>
 References: <1460268820-8308-1-git-send-email-newren@gmail.com>
 Cc: Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
@@ -11,78 +11,106 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ap8dI-00049x-RO
+	id 1ap8dJ-00049x-Hx
 	for gcvg-git-2@plane.gmane.org; Sun, 10 Apr 2016 08:14:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751644AbcDJGNw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Apr 2016 02:13:52 -0400
-Received: from mail-pa0-f67.google.com ([209.85.220.67]:34614 "EHLO
-	mail-pa0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751413AbcDJGNu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Apr 2016 02:13:50 -0400
-Received: by mail-pa0-f67.google.com with SMTP id hb4so11993760pac.1
-        for <git@vger.kernel.org>; Sat, 09 Apr 2016 23:13:50 -0700 (PDT)
+	id S1751761AbcDJGNz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Apr 2016 02:13:55 -0400
+Received: from mail-pa0-f66.google.com ([209.85.220.66]:36681 "EHLO
+	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751413AbcDJGNx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Apr 2016 02:13:53 -0400
+Received: by mail-pa0-f66.google.com with SMTP id k3so8290551pav.3
+        for <git@vger.kernel.org>; Sat, 09 Apr 2016 23:13:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=NUnISwB4KyQmFtDEy3xhdbeGSM0BO+ZCY0hbb4APp3M=;
-        b=q09Q0e5HJub6jsotdJMcH6nmSciJXQ7lOWm1w4/6V1NY9bcDw51cJiRrqkM54q50fr
-         O2IflhQKHlD93VBlI//8fb5Ubtto5BQej+zcvmL9T/u5nd1aoCpssH430aUGw4KsWMUN
-         rhziVY95DA6iE2vV4wI6UH/bLwtnyPGRxSjKmt90zvnM0i+XYjj0sjeWMDblAaB1PJrb
-         2Rh4QSTgmQG3tmHyUCL83y4IpTWn/qFyyROVj+YrEgdo9eeohcRMe7RRpuMIu1+lgc48
-         Q2xsQy37lhZdCF/ErnQSOwysdRppZYJgXWNXG6i+4LdTFsyfLwRHEeRrqrKyGIemYNhK
-         LxQw==
+        bh=uh4lBIGOwtdbFIb6z0Nwlwzh3KYZO/ja+e/3QNBmQIk=;
+        b=Xei2bxqCb7DqbdL+JjTJzSueK9foUpdFE/88Y6EYsgPloolQWH1ljKxRJG+NH9XMRn
+         He8JbRTc4Ue6gBaxXvIhOnz+Fv2VSM92oKVjJwM+gyMFUNMQwPJy+/pXsRpr/gd669El
+         BiHhO2LhuVz/a3Qqj1E0bC7Jd3j1Ce7hZp2iWp0Ee52lfym7rM9Pe9sGghSnMYuLSWOS
+         oiTPpjotq5hHl+VLGkdMi9QZ7vgpFTKYMa/pnnyt3vr5iP1nHevHIU1lCnaiiTIwjaeZ
+         NB74xyytaecIlXWow/jQD/qQv0rOz2KExqQ84TlWwkL7jpXq4k7YLrR9M0lIjwO1QdnK
+         9dJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=NUnISwB4KyQmFtDEy3xhdbeGSM0BO+ZCY0hbb4APp3M=;
-        b=c2XtUZFDV2oxlEjQ2Nk8e9Rv6Kgdpm+7ZU95e7eMMPAE+tpb6o0O/GjMwSqlN6xZmB
-         qdo0+ZQkEAfkIdBrDDurcvQg6nL8a3Bmf/MroDFSpZaXwHnK5zE0Sss9Drqvm7Wc6ZLN
-         qPNoOBmx3hZCUKt5MzyF0ey9aeO3qydtJqPNMKyfKXaIuR6Q2uHCPExdCqVJmMIqEBqB
-         o4oJxroaU224gQt66hdN4WcJ5MgnFnYpd82HmQ4dJzj8PT0/7b7PJMxgHowVoitEObFf
-         Q6yThCWjROohA9AxABbPBXPKUoVaNmn58EYFPdE5/Od+6nw/dk9tj4iEattDSAWhAD/3
-         7XVQ==
-X-Gm-Message-State: AD7BkJJbqA7ld+SdsLY4tMMFT7ESdEUHWjU5lxnSNW6F7ODj9+YBPcZVTTGIflzJSu7nvQ==
-X-Received: by 10.67.1.65 with SMTP id be1mr24136087pad.46.1460268829833;
-        Sat, 09 Apr 2016 23:13:49 -0700 (PDT)
+        bh=uh4lBIGOwtdbFIb6z0Nwlwzh3KYZO/ja+e/3QNBmQIk=;
+        b=F7CShA7oIGDWJiCaH4q5qLsaI/LfNUHyEXOoYdsdePgsvk8NKSHTjM1ocVMyubStcx
+         RW/RdXV9/1kydB9fxbv+dzQCfJR4zz70erq4OJow+4CmE1jYyO6ydFGYG5VRY7eR53kU
+         OOzhN6PrAflci1xcki1Tzz4ggOHkfSawGusgnePMLtpISc99a6yDh1fEzk51FFOrOW0O
+         RIfEuUCG/YqEiYes/56G08YKMu4j5tBY22/iFF++7EwIJ2vbrEhQk3JpSniYI4GwoQ0C
+         r8dVcN3b0zr5mWL7PznbcihPAKYoArjVJEO12eANwc/br0qRpCu+GmaSxm0fO/+BaaGd
+         Nfsg==
+X-Gm-Message-State: AD7BkJJTaQZPs27v6K0j/klFvQ9pazo8JthFZjRN67ozjdgTNeqysADSxkc3rGBBLVPmvg==
+X-Received: by 10.67.6.10 with SMTP id cq10mr24108106pad.120.1460268832603;
+        Sat, 09 Apr 2016 23:13:52 -0700 (PDT)
 Received: from unknownB8F6B118D3EB.attlocal.net ([2602:30a:2c28:20f0:baf6:b1ff:fe18:d3eb])
-        by smtp.gmail.com with ESMTPSA id p26sm28228711pfi.84.2016.04.09.23.13.48
+        by smtp.gmail.com with ESMTPSA id p26sm28228711pfi.84.2016.04.09.23.13.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 09 Apr 2016 23:13:49 -0700 (PDT)
+        Sat, 09 Apr 2016 23:13:52 -0700 (PDT)
 X-Mailer: git-send-email 2.8.0.6.g5833b2a
 In-Reply-To: <1460268820-8308-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291140>
-
-In commit 51931bf (merge-recursive: Improve handling of rename target vs.
-directory addition, 2011-08-11) I apparently added two lines of code that
-were immediately duplicated a few lines later.  No idea why, other than
-it seems pretty clear this was a mistake: there is no need to remove the
-same file twice; removing it once is sufficient...especially since the
-intervening line was working with a different file entirely.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291141>
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
-Reviewed-by: Junio C Hamano <gitster@pobox.com>
 ---
- merge-recursive.c | 2 --
- 1 file changed, 2 deletions(-)
+ git-merge-octopus.sh                     | 6 ++++++
+ t/t6044-merge-unrelated-index-changes.sh | 6 +++---
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index b880ae5..d4292de 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1773,8 +1773,6 @@ static int process_entry(struct merge_options *o,
- 			output(o, 1, _("CONFLICT (%s): There is a directory with name %s in %s. "
- 			       "Adding %s as %s"),
- 			       conf, path, other_branch, path, new_path);
--			if (o->call_depth)
--				remove_file_from_cache(path);
- 			update_file(o, 0, sha, mode, new_path);
- 			if (o->call_depth)
- 				remove_file_from_cache(path);
+diff --git a/git-merge-octopus.sh b/git-merge-octopus.sh
+index 8643f74..dc2fd1b 100755
+--- a/git-merge-octopus.sh
++++ b/git-merge-octopus.sh
+@@ -44,6 +44,12 @@ esac
+ # MRC is the current "merge reference commit"
+ # MRT is the current "merge result tree"
+ 
++if ! git diff-index --quiet --cached HEAD --
++then
++    echo "Error: Your local changes to the following files would be overwritten by merge"
++    git diff-index --cached --name-only HEAD -- | sed -e 's/^/    /'
++    exit 2
++fi
+ MRC=$(git rev-parse --verify -q $head)
+ MRT=$(git write-tree)
+ NON_FF_MERGE=0
+diff --git a/t/t6044-merge-unrelated-index-changes.sh b/t/t6044-merge-unrelated-index-changes.sh
+index eed5d95..20a3ffe 100755
+--- a/t/t6044-merge-unrelated-index-changes.sh
++++ b/t/t6044-merge-unrelated-index-changes.sh
+@@ -105,7 +105,7 @@ test_expect_success 'recursive' '
+ 	test_must_fail git merge -s recursive C^0
+ '
+ 
+-test_expect_failure 'octopus, unrelated file touched' '
++test_expect_success 'octopus, unrelated file touched' '
+ 	git reset --hard &&
+ 	git checkout B^0 &&
+ 
+@@ -114,7 +114,7 @@ test_expect_failure 'octopus, unrelated file touched' '
+ 	test_must_fail git merge C^0 D^0
+ '
+ 
+-test_expect_failure 'octopus, related file removed' '
++test_expect_success 'octopus, related file removed' '
+ 	git reset --hard &&
+ 	git checkout B^0 &&
+ 
+@@ -123,7 +123,7 @@ test_expect_failure 'octopus, related file removed' '
+ 	test_must_fail git merge C^0 D^0
+ '
+ 
+-test_expect_failure 'octopus, related file modified' '
++test_expect_success 'octopus, related file modified' '
+ 	git reset --hard &&
+ 	git checkout B^0 &&
+ 
 -- 
 2.8.0.21.g229f62a
