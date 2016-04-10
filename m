@@ -1,159 +1,149 @@
 From: Stephan Beyer <s-beyer@gmx.net>
-Subject: [PATCH v2 01/21] bisect: write about `bisect next` in documentation
-Date: Sun, 10 Apr 2016 15:18:54 +0200
-Message-ID: <1460294354-7031-2-git-send-email-s-beyer@gmx.net>
+Subject: [PATCH v2 10/21] bisect: get rid of recursion in count_distance()
+Date: Sun, 10 Apr 2016 15:19:03 +0200
+Message-ID: <1460294354-7031-11-git-send-email-s-beyer@gmx.net>
 References: <1460294354-7031-1-git-send-email-s-beyer@gmx.net>
 Cc: Stephan Beyer <s-beyer@gmx.net>,
 	Christian Couder <christian.couder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 10 15:20:14 2016
+X-From: git-owner@vger.kernel.org Sun Apr 10 15:20:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1apFHh-0008VL-Dn
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Apr 2016 15:20:13 +0200
+	id 1apFI2-0000Af-6v
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Apr 2016 15:20:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753058AbcDJNUD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Apr 2016 09:20:03 -0400
-Received: from mout.gmx.net ([212.227.17.20]:57672 "EHLO mout.gmx.net"
+	id S1753441AbcDJNUQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Apr 2016 09:20:16 -0400
+Received: from mout.gmx.net ([212.227.17.21]:50412 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751991AbcDJNUC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Apr 2016 09:20:02 -0400
+	id S1753312AbcDJNUJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Apr 2016 09:20:09 -0400
 Received: from fermat.fritz.box ([92.76.224.62]) by mail.gmx.com (mrgmx102)
- with ESMTPSA (Nemesis) id 0MYcJi-1bJRIk24pO-00VSKW; Sun, 10 Apr 2016 15:19:56
+ with ESMTPSA (Nemesis) id 0LtlG5-1bqK8M3qg1-011ENL; Sun, 10 Apr 2016 15:20:04
  +0200
 X-Mailer: git-send-email 2.8.1.137.g522756c
 In-Reply-To: <1460294354-7031-1-git-send-email-s-beyer@gmx.net>
-X-Provags-ID: V03:K0:bqTL+xBsqD2u2LaAZQ7A74ZvIC+rMP9P9dPbTahXdm8mCMaHQuP
- AniUa5QlYWze9GE7CvgvrFauAaJ41gi1VxbXmxX7Eu9msixhNU4cVxL2Otcny9eEHGpZQL/
- z6BVxfAoHbmZz0MQMMaVjH2gSWN8pQDgvwfPnPNyFeyDZiHKO2JNi1Z2JjoCUYJez0DZzkp
- 3D78Kl+5X45gjQB1n2L8A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zDIPeARa8uw=:AXeEsAq93wYmrcLOjHpGk6
- V1qrxuWC7romtWVjRg+zxpCceyMmZdcWmrQ+owLmx1HZLE72jWVimKIHKkJQGnr0aoZcKypqn
- Iokl4ctOGhGN5eVt6J4zJG7GdxddyNdFnGnFuf7LBFpeevPcnrMDFOvhd8qc5z/iY9yLjbZ6b
- f5sj9V9NclWuWwPgsl1c1g8uxSsf9hsZmdCJBW3u97VDqV6N/tgwByzg81n2vusBxYcZuQcHM
- G5nr6W9cBWzAy6WD3oRmL/wVWrUtN3uHoddxJBwub/mulUK0A0kixr+sHXSw4CkDJW4rD6SXE
- OWEZQpoBchac6fCItxiwDENma7jmJ+J7WJc2ewLAcfnSuZVZTzZteY05otgUnI3hyNdGiPeNg
- gqv7+ZQ5y5hOPoxUyFYaP0l9lsoRw6x5LXx2Z3UmR668cG9KCqWLJVYhwAwAqIAPcNPxt544e
- lu8zEJce0ecC2SeSrwJIbYqUtIDV0pQDO1XD8ZMs3svDxCkZK6q/U0oPRokAL+tFbcP+SELxb
- gD4bqHHW/vvUoIRQ/ZvIhFEktnm3RoyigOy7q+VNjmnnuQrL8VoUeqYR3QZxOWwNFh4ahVgm0
- 4GSPlesWFD2CSV5O8aFzEciyC8y0km3RrITvM9Nf0wQazv5EEhHWEQWdoaAmvQa8sScUWpEyI
- pN5hj9unscp4wUGzNTv0SQmtZ35AXM2cd8tB0vGhLVbJNjaheI0WNT51LpOFMM1z6HHMGw7Ex
- T64ZP8nfx7VLgMgwagzI4ZjRvFZ+gt53T2weE6/Vj1Huf3kMQE68izS7r7U=
+X-Provags-ID: V03:K0:shxXk5pNL65IqWPuLXJ6eyIN/vKEnybHfDuetR/5/wM/4OO4LXt
+ da1oB3+FGZ/KCRGu7xlI5D5KFEoBWQUkudHGkhp9NqMcsnyCzih4LaFqoWGWJ1H0bEZJk60
+ 0syImTnsOISZ0SPU+PcIzHfXQ/k6a+PT/IR4Mh3W7zoozOI9dneTUJkmLw4WarcyI6DimAq
+ 1gjVRTI5QEXYWcy4Gya+A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ELUek6bTqJ0=:3j6Ebe7OEKCbxK7uFpnu74
+ bpSVn/N4lI82/A7QNqhPv5WHAwIKHbYLB4NgfQmK1EzVQ1KCrvLh/4dQrSL4wjjoPX+8xxzb+
+ r/rK4VOCs6cnPHXJ9bYLZfu/fLndkOk2TM3z9owxsfW01e56DKtr+n+lHHEehHeJ0uPwGh93t
+ im/ohRXjsrb37/8xLRxph2JhwU8OpBQyhrwj0CFEMI6lchfoYLOZOph5KmxBcvrYfpwPWG3Zy
+ BfZ+cahQq7eiQqHVlvfDPNpGcjzudlsvOcbVG0ngOdUYSbZ/thHzP/FZokJSRMNleguIMm2Cj
+ m4JEBvizOJZsQ/VFE+fqBh46fBvb0S2qJrE/NyfJL8znR9cZEXH2nZaEwU334QT44s+FevAcN
+ DQdYrTz/4yHFu74ZKAq3/Hw5JiuB5leyDReOVzxLBO1M7b7LXBzfLp0Jsoy/Rd+K30opHi+Oj
+ VroCbha2BJysPE56v9CJMcjG5u8cfuoz8dWBruMNscCXzxrdruSAsR09h/NJatE4g1PGVu93l
+ E6uk8+D3rT1JoBid9FNxFN8o5bhFxj2+PAuepax/K4ElX/KUeXJcxTqns7kl7UOmixnDvkfXD
+ ZPv7r2zpV3AQxKk89dLHC71zr+zVuuyBbxUPSZdqXufC3ofYJgKny3fpgVFJ6s/gUr2hyiQXD
+ CNLTzZHkmlV51Dyv3YtzCLJZROaNux4xisGWGPaP2pwcqHCh9Sy/VJJeuSwN5m6Dy1i55Sul1
+ ojJaeRGltzr7j5GJck97/mjddJ7YHZbQif3JYhGhRyDL86hRYn8L3VPbVOE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291150>
 
-Mention `bisect next` in the documentation of bisect.
-`bisect next` is only useful in rare cases and the result
-can also be accomplished using other utilities (like reflog).
-However, it is available as a bisect command and should hence be
-documented.
-
-Also mention the use case when no good commit is known.
-Some user message in git-bisect.sh is changed to reflect that
-use case. It is also simplified: there is no need to mention
-running `bisect start` explicitly, because it can be done
-indirectly using `bisect bad`.
+Large repositories with a huge amount of merge commits in the
+bisection process could lead to stack overflows in git bisect.
+In order to prevent this, this commit uses an *iterative* version
+for counting the number of ancestors of a commit.
 
 Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
 ---
+ bisect.c | 55 ++++++++++++++++++++++---------------------------------
+ 1 file changed, 22 insertions(+), 33 deletions(-)
 
-Notes:
-    I rephrased the "Bisect next" section: no encouragement of checking
-    out another branch (or commit) but mention that it recomputes the next
-    commit, if one accidentally checked out another commit.
-
- Documentation/git-bisect.txt | 24 ++++++++++++++++++++++++
- git-bisect.sh                | 15 ++++-----------
- 2 files changed, 28 insertions(+), 11 deletions(-)
-
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index 7e79aae..c76765f 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -27,6 +27,7 @@ on the subcommand:
-  git bisect replay <logfile>
-  git bisect log
-  git bisect run <cmd>...
-+ git bisect next
-  git bisect help
+diff --git a/bisect.c b/bisect.c
+index 1a13f35..16bbfa6 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -26,33 +26,23 @@ static const char *term_good;
+ /* Remember to update object flag allocation in object.h */
+ #define COUNTED		(1u<<16)
  
- This command uses a binary search algorithm to find which commit in
-@@ -66,6 +67,15 @@ checks it out, and outputs something similar to the following:
- Bisecting: 675 revisions left to test after this (roughly 10 steps)
- ------------------------------------------------
+-/*
+- * This is a truly stupid algorithm, but it's only
+- * used for bisection, and we just don't care enough.
+- *
+- * We care just barely enough to avoid recursing for
+- * non-merge entries.
+- */
+ static int count_distance(struct commit_list *entry)
+ {
+ 	int nr = 0;
++	struct commit_list *todo = NULL;
++	commit_list_append(entry->item, &todo);
  
-+Note that in cases you do not know a good commit,
-+you can also start with:
-+
-+------------------------------------------------
-+$ git bisect start
-+$ git bisect bad                 # current version is bad
-+$ git bisect next                # check out another commit
-+------------------------------------------------
-+
- You should now compile the checked-out version and test it. If that
- version works correctly, type
+-	while (entry) {
+-		struct commit *commit = entry->item;
+-		struct commit_list *p;
++	while (todo) {
++		struct commit *commit = pop_commit(&todo);
  
-@@ -353,6 +363,20 @@ rewind the tree to the pristine state.  Finally the script should exit
- with the status of the real test to let the `git bisect run` command loop
- determine the eventual outcome of the bisect session.
+-		if (commit->object.flags & (UNINTERESTING | COUNTED))
+-			break;
+-		if (!(commit->object.flags & TREESAME))
+-			nr++;
+-		commit->object.flags |= COUNTED;
+-		p = commit->parents;
+-		entry = p;
+-		if (p) {
+-			p = p->next;
+-			while (p) {
+-				nr += count_distance(p);
+-				p = p->next;
++		if (!(commit->object.flags & (UNINTERESTING | COUNTED))) {
++			struct commit_list *p;
++			if (!(commit->object.flags & TREESAME))
++				nr++;
++			commit->object.flags |= COUNTED;
++
++			for (p = commit->parents; p; p = p->next) {
++				commit_list_insert(p->item, &todo);
+ 			}
+ 		}
+ 	}
+@@ -287,7 +277,7 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+ 	 * can reach.  So we do not have to run the expensive
+ 	 * count_distance() for single strand of pearls.
+ 	 *
+-	 * However, if you have more than one parents, you cannot
++	 * However, if you have more than one parent, you cannot
+ 	 * just add their distance and one for yourself, since
+ 	 * they usually reach the same ancestor and you would
+ 	 * end up counting them twice that way.
+@@ -296,17 +286,16 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+ 	 * way, and then fill the blanks using cheaper algorithm.
+ 	 */
+ 	for (p = list; p; p = p->next) {
+-		if (p->item->object.flags & UNINTERESTING)
+-			continue;
+-		if (weight(p) != -2)
+-			continue;
+-		weight_set(p, count_distance(p));
+-		clear_distance(list);
++		if (!(p->item->object.flags & UNINTERESTING)
++		 && (weight(p) == -2)) {
++			weight_set(p, count_distance(p));
++			clear_distance(list);
  
-+Bisect next
-+~~~~~~~~~~~
-+
-+In case you have marked a commit as bad but you do not know a good
-+commit, you do not have to crawl through the commit history yourself to
-+find a good commit. Simply issue the command:
-+
-+------------
-+$ git bisect next
-+------------
-+
-+In general, the command computes the next commit for the bisection and
-+checks it out.
-+
- OPTIONS
- -------
- --no-checkout::
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 5d1cb00..5c93a27 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -334,16 +334,10 @@ bisect_next_check() {
- 	*)
- 		bad_syn=$(bisect_voc bad)
- 		good_syn=$(bisect_voc good)
--		if test -s "$GIT_DIR/BISECT_START"
--		then
--
--			eval_gettextln "You need to give me at least one \$bad_syn and one \$good_syn revision.
--(You can use \"git bisect \$bad_syn\" and \"git bisect \$good_syn\" for that.)" >&2
--		else
--			eval_gettextln "You need to start by \"git bisect start\".
--You then need to give me at least one \$good_syn and one \$bad_syn revision.
--(You can use \"git bisect \$bad_syn\" and \"git bisect \$good_syn\" for that.)" >&2
--		fi
-+		eval_gettextln "You need to give me at least one \$bad_syn revision.
-+Use \"git bisect \$bad_syn\" for that. One \$good_syn revision is also helpful
-+for bisecting (use \"git bisect \$good_syn\"). If you do not know one \$good_syn
-+revision, you can use \"git bisect next\" to find one." >&2
- 		exit 1 ;;
- 	esac
- }
-@@ -677,7 +671,6 @@ case "$#" in
- 	skip)
- 		bisect_skip "$@" ;;
- 	next)
--		# Not sure we want "next" at the UI level anymore.
- 		bisect_next "$@" ;;
- 	visualize|view)
- 		bisect_visualize "$@" ;;
+-		/* Does it happen to be at exactly half-way? */
+-		if (!find_all && halfway(p, nr))
+-			return p;
+-		counted++;
++			/* Does it happen to be at exactly half-way? */
++			if (!find_all && halfway(p, nr))
++				return p;
++			counted++;
++		}
+ 	}
+ 
+ 	show_list("bisection 2 count_distance", counted, nr, list);
 -- 
 2.8.1.137.g522756c
