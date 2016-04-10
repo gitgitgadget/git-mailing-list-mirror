@@ -1,109 +1,251 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v2 05/21] t6030: generalize test to not rely on current
- implementation
-Date: Sun, 10 Apr 2016 15:47:27 +0200
-Message-ID: <570A596F.9080200@web.de>
-References: <1460294354-7031-1-git-send-email-s-beyer@gmx.net>
- <1460294354-7031-6-git-send-email-s-beyer@gmx.net>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 0/4] support for ack commits
+Date: Sun, 10 Apr 2016 16:54:42 +0300
+Message-ID: <1460296343-17304-1-git-send-email-mst@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 10 15:47:57 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: bafain@gmail.com, sunshine@sunshineco.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 10 15:54:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1apFiW-0002QB-L4
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Apr 2016 15:47:56 +0200
+	id 1apFpD-00054Y-TA
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Apr 2016 15:54:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753120AbcDJNrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Apr 2016 09:47:51 -0400
-Received: from mout.web.de ([212.227.15.14]:61268 "EHLO mout.web.de"
+	id S1753092AbcDJNyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Apr 2016 09:54:47 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:43406 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753026AbcDJNru (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Apr 2016 09:47:50 -0400
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0MJTHn-1amlo33Lz9-0033u0; Sun, 10 Apr 2016 15:47:28
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
- Gecko/20100101 Thunderbird/38.7.0
-In-Reply-To: <1460294354-7031-6-git-send-email-s-beyer@gmx.net>
-X-Provags-ID: V03:K0:SE+1rTbaRw56olzfZ8EqCK8v/M+zyYyPSMNa2SZUuqFYXXDOw1M
- XpINJuHRrc6zbKCzP4cTWzP0Yob1BEWDzzCbAKOq34WkzPlEh0UnkAAWt42bvgKzW8W3ygV
- 1sTJJLCQU8u9zd3m1c/EylGwx3Rlldq/1u/HSGbqq3E1UH59x+IR+JE48ws6i0K2XKEQIhM
- C3C/a5j4oWLEqoe9NQr+g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:hyOuAMMKRvw=:8q8P4xclVCoOtcnOrxs9Dd
- o5ngLnYkLONZWYT7ZL3ON7WSqWiP9jeztnATSUgcFCIEbN/0mJ2DGSWqLAXj6Jd9SnRI3U4TC
- ZfUNbKC5VZY64k2oujpb1+3gY8E5PzZc0o8X1WnS4K4nBCH77k12gl+JvRfCWe1XVRdXIqJL2
- kGYGyswtJMh8l41P+ujOShBQOMeMPID5h3EGRfr/MiAkz0pbtbLBxYKDBZEKNj/4ujQGR9TPv
- I34nx1NvsBsS/L+QSdW1prD1WSg6HbbQWWi368+YVOYs7x4SDrCet9kGV0LMaX29dRbNQUF3l
- QfbpPqQyRYc+0P6x6J08EPRb1r+kZFL/7cuClKwzxClfcP6DhwxzXwWc+HJn+NasXh92LWrxs
- K23nVNqzdAoul+oGJtqii34PCaCwnNOOJhcfb0Lxub6XdHKkiiAIyoqQhOSgwAXEQ6PdWTmyY
- 8XE889Bkjo4SBzjbLMN30MIls/DmfZIulukOUNGddVlCQf7R0NwclC7/rGHRx5E1JDNMyq+pw
- Kg0suPQbGvD/yj9ayxKTtlC+qCjjK2aIfimMuGxJG0x4qIq9tEmcyqX5NGlthxgVu8sG1GjNB
- uPheupxnCUUBT0ZVZM82Ej7WzR1H98exTLY42xgG66Y99oKmkpEr65nSBRN01nC1QQct1vJo1
- 9FBIqWp1bXBLeVgXRG9GERBgAz6QApC/GK1o6VLkErrM9pZAICa3vskEsGrQB1ZKsj3F5mlL7
- nUTQQ79t3P90PCLXmRS1FAk6M4336+IJL7le24pdfrZEqRTe75l3Iy7WUm3G8ViGhVEIeYIk 
+	id S1753052AbcDJNyq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Apr 2016 09:54:46 -0400
+Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mx1.redhat.com (Postfix) with ESMTPS id 52CDB6446A;
+	Sun, 10 Apr 2016 13:54:45 +0000 (UTC)
+Received: from redhat.com (vpn1-4-6.ams2.redhat.com [10.36.4.6])
+	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id u3ADshvP023832;
+	Sun, 10 Apr 2016 09:54:44 -0400
+Content-Disposition: inline
+X-Mutt-Fcc: =sent
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Sun, 10 Apr 2016 13:54:45 +0000 (UTC)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291170>
 
-On 10.04.16 15:18, Stephan Beyer wrote:
-Some nit-comments inline
+This is a repost after rebasing, and addressing comments by Eric Sunshine and
+Fabian Ruch.  I'd like to try getting this upstream so  I can stop maintaining
+it. So reposting - rebased to latest master, with a better motivation in the
+cover letter.
 
-> ---
->  t/t6030-bisect-porcelain.sh | 167 ++++++++++++++++++++++----------------------
->  1 file changed, 85 insertions(+), 82 deletions(-)
-> 
-> diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-> index 05bc639..645ccd9 100755
-> --- a/t/t6030-bisect-porcelain.sh
-> +++ b/t/t6030-bisect-porcelain.sh
-> @@ -10,36 +10,34 @@ exec </dev/null
-> +	if [ -f "$_file" ]; then
-I know that the old code did the same, is there a chance
-to adopt to the git-style:
-	if test -f "$_file" ; then
-> +		echo "$_line" >> $_file || return $?
+As a maintainer, I get patches by mail, then
+acked-by,reviewed-by etc responses are sent by separate
+mail.
 
-[]
-> +test_expect_success '"git bisect run" simple case' '
-> +	echo "#"\!"/bin/sh" > test_script.sh &&
-> +	echo "grep Another hello > /dev/null" >> test_script.sh &&
-> +	echo "test \$? -ne 0" >> test_script.sh &&
-> +	chmod +x test_script.sh &&
-> +	git bisect start &&
-> +	git bisect good $HASH1 &&
-> +	git bisect bad $HASH4 &&
-> +	git bisect run ./test_script.sh > my_bisect_log.txt &&
-> +	grep "$HASH3 is the first bad commit" my_bisect_log.txt &&
-> +	git bisect reset
-> +'
-Portabily:
-Since yesterday/yesterweek the usage of hard-coded
-#!/bin/sh had shown to be problematic
-Junio posted an update like this:
--	printf "#!/bin/sh\n" >diff &&
--	printf "printf \"\$GIT_PREFIX\"" >>diff &&
--	chmod +x diff &&
-+	write_script diff <<-\EOF &&
-+	printf "%s" "$GIT_PREFIX"
-+	EOF
+The result is that I have a patch applied, and now
+I need to find it and apply the ack responses to it.
 
-(Same for the scripts below)
+The flow I use to handle this, is to record an
+empty commit (which I'm calling an ack commit)
+with just the ack in the log, and ack! tag
+and the subject of the original patch in the
+subject.
 
->
-> +test_expect_success '"git bisect run" with more complex "git bisect start"' '
-> +	echo "#"\!"/bin/sh" > test_script.sh &&
-> +	echo "grep Ciao hello > /dev/null" >> test_script.sh &&
-> +	echo "test \$? -ne 0" >> test_script.sh &&
-Style nit, please no ' ' after ">>":
-echo "test \$? -ne 0" >>test_script.sh &&
+Sometimes, I would also make a small change with
+that ack commit, typically using commit --amend,
+for example if the ack mail says:
 
-(and more below)
+	Subject: Re: [PATCH] xyz
+
+	please rename xyz to foo. With that:
+
+	Acked-by: Michael S. Tsirkin <mst@redhat.com>
+
+I would apply ack and make the change as part of that.
+
+Later, once in a while I rebase and squash the ack commits
+into the regular one: the rebase autosquash mechanics
+find the original commit and update the commit log,
+appending the ack.
+
+from example, we start with an email:
+	From: Michael S. Tsirkin <mst@redhat.com>
+	Subject: [PATCH] foo.c: change b to c
+	Date:   Wed Apr 6 22:07:34 2016 +0300
+
+	    foo.c: change b to c
+	    
+	    Change BBBBBBBBBBBBBBBBB to CCCCCCCCCCCCCCCCC
+	    
+	    Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+
+	---
+
+	diff --git a/foo.c b/foo.c
+	index 8e5be91..34654fc 100644
+	--- a/foo.c
+	+++ b/foo.c
+	@@ -676,6 +676,6 @@ FFFFFFFFFFFFFFFFFFFFFFF(
+		AAAAAAAAAAAAAAAAAAAAAAAAA
+	 
+	-       BBBBBBBBBBBBBBBBB
+	-       BBBBBBBBBBBBBBBBB
+	+       CCCCCCCCCCCCCCCCC
+	+       CCCCCCCCCCCCCCCCC
+
+		DDDDDDDDDDDDDDDDD
+
+and I apply it using git am.
+
+
+then I get an email:
+
+	Subject: Re: [PATCH] foo.c: change b to c
+
+        > 	    foo.c: change b to c
+        > 	    
+        > 	    Change BBBBBBBBBBBBBBBBB to CCCCCCCCCCCCCCCCC
+        > 	    
+        > 	    Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+        > 
+        > 	---
+        > 
+        > 	diff --git a/foo.c b/foo.c
+        > 	index 8e5be91..34654fc 100644
+        > 	--- a/foo.c
+        > 	+++ b/foo.c
+        > 	@@ -676,6 +676,6 @@ FFFFFFFFFFFFFFFFFFFFFFF(
+        > 		AAAAAAAAAAAAAAAAAAAAAAAAA
+        > 	 
+        > 	-       BBBBBBBBBBBBBBBBB
+        > 	-       BBBBBBBBBBBBBBBBB
+        > 	+       CCCCCCCCCCCCCCCCC
+        > 	+       CCCCCCCCCCCCCCCCC
+        > 
+        > 		DDDDDDDDDDDDDDDDD
+	    
+	Acked-by: Junio C Hamano <gitster@pobox.com>
+
+I then create an empty commit using the subject and the ack line:
+
+	commit 4d54b237d8d03323933e27119272e93cf33b4e98
+	Author: Michael S. Tsirkin <mst@redhat.com>
+	Date:   Wed Apr 6 22:07:34 2016 +0300
+
+	ack! foo.c: change b to c
+
+	Acked-by: Junio C Hamano <gitster@pobox.com>
+
+(with no change) and then after rebase -i --autosquash it is combined
+with the original commit by squashing changes (easy as the
+second one has an empty change), and appending the commit log
+from the second one to first one:
+
+commit ef7b6d457c28bcd06d0118a889c7070fc800f3d5
+Author: Michael S. Tsirkin <mst@redhat.com>
+Date:   Wed Apr 6 14:55:59 2016 +0300
+
+    foo.c: change b to c
+    
+    Change BBBBBBBBBBBBBBBBB to CCCCCCCCCCCCCCCCC
+    
+    Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+    Acked-by: Junio C Hamano <gitster@pobox.com>
+
+diff --git a/foo.c b/foo.c
+index 8e5be91..34654fc 100644
+--- a/foo.c
++++ b/foo.c
+@@ -676,6 +676,6 @@ FFFFFFFFFFFFFFFFFFFFFFF(
+	AAAAAAAAAAAAAAAAAAAAAAAAA
+ 
+-       BBBBBBBBBBBBBBBBB
+-       BBBBBBBBBBBBBBBBB
++       CCCCCCCCCCCCCCCCC
++       CCCCCCCCCCCCCCCCC
+
+	DDDDDDDDDDDDDDDDD
+
+
+The empty ack commits can be created by hand. I have also
+written a small script for that - included
+as patch 4/4 but it is still rather rough so only putting it
+under contrib for now - would like to try
+and merge the rebase machinery in place first.
+Long term, it might be cleaner to teach git-am about an --ack flag.
+But it is already helpful to explain how this is intended to be used.
+That script can be used in one of two ways:
+
+	1. pipe the mail with ack to it. we extract
+	   subject and prepend ack!, extract the ack
+	   trailer line that needs to be appended to commit,
+	   and record the result as en empty commit.
+	2. pipe the mail with ack to it with flag -s,
+	   this saves the ack trailer into a file.
+           then pipe the original patch(es) to it
+           with flag -r, now the subject is taken from
+           patch, with ack! prepended, but the ack trailer
+           is from the ack email.
+           this is useful to handle series acks, similar to:
+		   For series:
+			Acked-by: Michael S. Tsirkin <mst@redhat.com>
+
+
+
+So what is an ack commit from point of view of rebase?
+
+1. subject is ack! <original patch>
+
+2. commit can be empty and it does not mean it needs to be skipped
+
+3. when squashing into parent commit, subject and empty line
+   after it should be skipped, and the rest of commit log
+   should be appended to commit log of parent, as is.
+
+
+I have been using these patches without any problems for more than a
+year now, and find the approach very convenient.
+
+Included:
+        rebase: new ack! action to handle ack commits
+                this part seems ready for merge to me,
+                please review and comment
+
+        git-ack: new tool to record an ack
+                this does not have proper documentation
+                and tests yet, I definitely intend to
+                do this but wanted to see whether people
+                like the UI first.
+                posting for early review and feedback
+
+
+Note: people mostly using pull requests for communication
+will not find this approach useful.
+As it's optional, this should not be a problem.
+
+Note: it was suggested that "squash! --noedit" would be easier
+to maintain than "ack!" - I think this would be less
+user-friendly, so I left this suggestion out for now.
+
+
+Michael S. Tsirkin (4):
+  rebase -i: add ack action
+  git-rebase: document ack
+  rebase: test ack
+  git-ack: record an ack
+
+ Documentation/git-rebase.txt | 45 +++++++++++++++++++---
+ contrib/git-ack              | 90 ++++++++++++++++++++++++++++++++++++++++++++
+ git-rebase--interactive.sh   | 36 ++++++++++++++----
+ t/t3415-rebase-autosquash.sh | 15 ++++++++
+ 4 files changed, 173 insertions(+), 13 deletions(-)
+ create mode 100755 contrib/git-ack
+
+-- 
+MST
