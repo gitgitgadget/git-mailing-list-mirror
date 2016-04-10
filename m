@@ -1,66 +1,104 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: git interpret-trailers with multiple keys
-Date: Sun, 10 Apr 2016 20:43:01 +0300
-Message-ID: <20160410203556-mutt-send-email-mst@redhat.com>
-References: <20160406191054-mutt-send-email-mst@redhat.com>
- <vpqlh4qbrnt.fsf@anie.imag.fr>
- <20160406201509-mutt-send-email-mst@redhat.com>
- <xmqq1t6iy6p9.fsf@gitster.mtv.corp.google.com>
- <20160406212940-mutt-send-email-mst@redhat.com>
- <CAP8UFD0Pw+yhO1jZTAbMkZ5d-usu3rx5N0Se=PNL=N7DD-BPcA@mail.gmail.com>
- <20160410182750-mutt-send-email-mst@redhat.com>
- <CAP8UFD1hSg9RXLavzQgff-QioVU28_ZYhrfAvrhzNe8zXwwv5w@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 4/7] i18n: builtin/pull.c: mark strings for translation
+Date: Sun, 10 Apr 2016 11:01:27 -0700
+Message-ID: <xmqqinzptkaw.fsf@gitster.mtv.corp.google.com>
+References: <1460234324-13506-1-git-send-email-vascomalmeida@sapo.pt>
+	<1460234324-13506-4-git-send-email-vascomalmeida@sapo.pt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git <git@vger.kernel.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 10 19:43:14 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>
+To: Vasco Almeida <vascomalmeida@sapo.pt>
+X-From: git-owner@vger.kernel.org Sun Apr 10 20:01:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1apJOB-0006tR-9E
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Apr 2016 19:43:11 +0200
+	id 1apJg1-0006JX-7p
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Apr 2016 20:01:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755660AbcDJRnG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Apr 2016 13:43:06 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:57597 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754816AbcDJRnF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Apr 2016 13:43:05 -0400
-Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	id S1756189AbcDJSBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Apr 2016 14:01:31 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:52919 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756185AbcDJSBa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Apr 2016 14:01:30 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BF7C2521E0;
+	Sun, 10 Apr 2016 14:01:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=f/rjl7TrRpb1ZmuxNDYGmUkEYno=; b=Did+4m
+	p1tKlqRKeII0KHJ3tTRQRnOEVKp5MANfqG4fs5EgGVCvQkXsyRHBOutZd7lyzjKu
+	wmmtOMtbZoUAByQk6247earAeai3nEBeNu6bYCr1fKQv34/A0djbLD8rP1GgvFm7
+	BrY3d1a3DIw5ZjvbR+KGIDAJkqc47HqsYBB9o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PCOKB/E7b1SOdyaWZV0krmDGJAdDwHHr
+	A08ePmLJEDZYv9Kse+vLaWUvN8o1n3KD86fYWg2IHYI72lzwbRF5vb4Si2k+u18v
+	E6NPehC50Xh9JobVH5TqMLS6SAFX5XOqdgncqmZXG7HWR2kowFgWlnuYsGAzQnBO
+	uAyi/Wmskos=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B7089521DF;
+	Sun, 10 Apr 2016 14:01:28 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by mx1.redhat.com (Postfix) with ESMTPS id D5B827DCE3;
-	Sun, 10 Apr 2016 17:43:03 +0000 (UTC)
-Received: from redhat.com (vpn1-5-25.ams2.redhat.com [10.36.5.25])
-	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id u3AHh11a000876;
-	Sun, 10 Apr 2016 13:43:02 -0400
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD1hSg9RXLavzQgff-QioVU28_ZYhrfAvrhzNe8zXwwv5w@mail.gmail.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3A147521DE;
+	Sun, 10 Apr 2016 14:01:28 -0400 (EDT)
+In-Reply-To: <1460234324-13506-4-git-send-email-vascomalmeida@sapo.pt> (Vasco
+	Almeida's message of "Sat, 9 Apr 2016 20:38:41 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 3F7B900A-FF46-11E5-BC1D-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291183>
 
-On Sun, Apr 10, 2016 at 06:57:53PM +0200, Christian Couder wrote:
-> What I meant is that we could create new options called maybe
-> trailer.autocommands and trailer.<token>.autocommands that default to
-> 'true' and if 'false' the command would not be run automatically and
-> the corresponding trailer would not be added.
+Vasco Almeida <vascomalmeida@sapo.pt> writes:
 
-I don't think it has to do with commands.
-For example, if we add "value" it should behave the same.
+> Some translations might also translate "<remote>" and "<branch>".
 
-So I think a better name is "ifnotlisted", with values "add"
-and "donothing".
+This offers an interesting observation that I didn't think of while
+reviewing the first round of this series.
 
-Thoughts?
+Do translations want to translate "remote" and "branch" without the
+"<bra" and "ket>"?  Or is it better to allow translations to adjust
+the "quote around a placeholder" in a locale dependent way?
 
--- 
-MST
+> @@ -458,13 +458,13 @@ static void NORETURN die_no_merge_candidates(const char *repo, const char **refs
+>  			fprintf_ln(stderr, _("Please specify which branch you want to merge with."));
+>  		fprintf_ln(stderr, _("See git-pull(1) for details."));
+>  		fprintf(stderr, "\n");
+> -		fprintf_ln(stderr, "    git pull <remote> <branch>");
+> +		fprintf_ln(stderr, "    git pull <%s> <%s>", _("remote"), _("branch"));
+
+I know this hunk follows I suggested, i.e. "quotes around a
+placeholder is universal and locale independent".  However, ...
+
+>  		fprintf(stderr, "\n");
+>  	} else if (!curr_branch->merge_nr) {
+>  		const char *remote_name = NULL;
+>  
+>  		if (for_each_remote(get_only_remote, &remote_name) || !remote_name)
+> -			remote_name = "<remote>";
+> +			remote_name = _("<remote>");
+>  
+... this does not.  It allows to translate the "quote around a
+placeholder".  And where this phony "remote_name" string is used,
+there is also this reference to <branch>:
+
+    fprintf_ln(stderr, _("If you wish to set tracking information for ..."
+                    "\n"
+                    "    git branch --set-upstream-to=%s/<branch> %s\n"),
+                    remote_name, curr_branch->name);
+
+which also does.
+
+Perhaps the first hunk at around ll.458 would want to do
+
+> +	fprintf_ln(stderr, "    git pull %s %s", _("<remote>"), _("<branch>"));
+
+to be consistent and more flexible for the translator's needs?  The
+quoting convention may be locale dependent after all.
