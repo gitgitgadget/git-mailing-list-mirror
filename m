@@ -1,104 +1,114 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/7] i18n: builtin/pull.c: mark strings for translation
-Date: Sun, 10 Apr 2016 11:01:27 -0700
-Message-ID: <xmqqinzptkaw.fsf@gitster.mtv.corp.google.com>
-References: <1460234324-13506-1-git-send-email-vascomalmeida@sapo.pt>
-	<1460234324-13506-4-git-send-email-vascomalmeida@sapo.pt>
+Subject: Re: git 2.8.1 not working with socks5h https proxy anymore
+Date: Sun, 10 Apr 2016 11:11:40 -0700
+Message-ID: <xmqqegadtjtv.fsf@gitster.mtv.corp.google.com>
+References: <CAEc+GFeG-ZdeTXGsjmwV0QP6QwYvjA4nzCGitka0aXjqEkatfg@mail.gmail.com>
+	<xmqq8u0nx66h.fsf@gitster.mtv.corp.google.com>
+	<CAEc+GFerpBC_O4jMvtmUhVdLReEN4nvuz5Q30SFUp8qZnQZBmQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>
-To: Vasco Almeida <vascomalmeida@sapo.pt>
-X-From: git-owner@vger.kernel.org Sun Apr 10 20:01:38 2016
+Cc: git@vger.kernel.org, Daniel Stenberg <daniel@haxx.se>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+To: Felix Ruess <felix.ruess@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 10 20:12:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1apJg1-0006JX-7p
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Apr 2016 20:01:37 +0200
+	id 1apJq0-0001mj-AO
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Apr 2016 20:11:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756189AbcDJSBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Apr 2016 14:01:31 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:52919 "EHLO
+	id S1756092AbcDJSLp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Apr 2016 14:11:45 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:59779 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756185AbcDJSBa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Apr 2016 14:01:30 -0400
+	with ESMTP id S1756053AbcDJSLn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Apr 2016 14:11:43 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BF7C2521E0;
-	Sun, 10 Apr 2016 14:01:28 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3D9C7523E5;
+	Sun, 10 Apr 2016 14:11:42 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=f/rjl7TrRpb1ZmuxNDYGmUkEYno=; b=Did+4m
-	p1tKlqRKeII0KHJ3tTRQRnOEVKp5MANfqG4fs5EgGVCvQkXsyRHBOutZd7lyzjKu
-	wmmtOMtbZoUAByQk6247earAeai3nEBeNu6bYCr1fKQv34/A0djbLD8rP1GgvFm7
-	BrY3d1a3DIw5ZjvbR+KGIDAJkqc47HqsYBB9o=
+	:content-type; s=sasl; bh=9h6cIBkkNNqYAhf+lnZ8dTvpSO0=; b=bmtlb7
+	L/fmTyueNBp9URlSerp0Eqc3AZgcWG58vYvFrUJviTpgzQl8bf/tp9Lq1iQaUyDY
+	L4EdW+1Z5Scn4+L4DzC/yVGb+gIwvHwDKHGCG/qM+qsLpa+am8k6eqCKuK35s8/V
+	gDmufvWlyCvSP1xFt0kstERz+TWZuZXsx4chg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PCOKB/E7b1SOdyaWZV0krmDGJAdDwHHr
-	A08ePmLJEDZYv9Kse+vLaWUvN8o1n3KD86fYWg2IHYI72lzwbRF5vb4Si2k+u18v
-	E6NPehC50Xh9JobVH5TqMLS6SAFX5XOqdgncqmZXG7HWR2kowFgWlnuYsGAzQnBO
-	uAyi/Wmskos=
+	:content-type; q=dns; s=sasl; b=H8B4sReVK1FvzqCMxbAQfTewwCDUaYef
+	v2mxY2H3/SG+4paszrQh//heYhqPuGwd3G7baWZpj4XDnZ/MxuJIy+1WNDFYs0el
+	EL6TlVX589TV1qLwkWCCCs+u6BsJIYDE13N5f2dnOBkAftbqwgXpCNR5qds4ozqw
+	ruxxJ2xykaY=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B7089521DF;
-	Sun, 10 Apr 2016 14:01:28 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 349EF523E4;
+	Sun, 10 Apr 2016 14:11:42 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3A147521DE;
-	Sun, 10 Apr 2016 14:01:28 -0400 (EDT)
-In-Reply-To: <1460234324-13506-4-git-send-email-vascomalmeida@sapo.pt> (Vasco
-	Almeida's message of "Sat, 9 Apr 2016 20:38:41 +0000")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A6BC7523E2;
+	Sun, 10 Apr 2016 14:11:41 -0400 (EDT)
+In-Reply-To: <CAEc+GFerpBC_O4jMvtmUhVdLReEN4nvuz5Q30SFUp8qZnQZBmQ@mail.gmail.com>
+	(Felix Ruess's message of "Sat, 9 Apr 2016 14:05:11 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3F7B900A-FF46-11E5-BC1D-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: AD1FDE8A-FF47-11E5-B367-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291184>
 
-Vasco Almeida <vascomalmeida@sapo.pt> writes:
+Felix Ruess <felix.ruess@gmail.com> writes:
 
-> Some translations might also translate "<remote>" and "<branch>".
+> Thanks a lot!
+> Tested the patch and it works as expected :-)
 
-This offers an interesting observation that I didn't think of while
-reviewing the first round of this series.
+Thanks, lets do this, then.
 
-Do translations want to translate "remote" and "branch" without the
-"<bra" and "ket>"?  Or is it better to allow translations to adjust
-the "quote around a placeholder" in a locale dependent way?
+-- >8 --
+Subject: [PATCH] http: differentiate socks5:// and socks5h://
 
-> @@ -458,13 +458,13 @@ static void NORETURN die_no_merge_candidates(const char *repo, const char **refs
->  			fprintf_ln(stderr, _("Please specify which branch you want to merge with."));
->  		fprintf_ln(stderr, _("See git-pull(1) for details."));
->  		fprintf(stderr, "\n");
-> -		fprintf_ln(stderr, "    git pull <remote> <branch>");
-> +		fprintf_ln(stderr, "    git pull <%s> <%s>", _("remote"), _("branch"));
+Felix Ruess <felix.ruess@gmail.com> noticed that with configuration
 
-I know this hunk follows I suggested, i.e. "quotes around a
-placeholder is universal and locale independent".  However, ...
+    $ git config --global 'http.proxy=socks5h://127.0.0.1:1080'
 
->  		fprintf(stderr, "\n");
->  	} else if (!curr_branch->merge_nr) {
->  		const char *remote_name = NULL;
->  
->  		if (for_each_remote(get_only_remote, &remote_name) || !remote_name)
-> -			remote_name = "<remote>";
-> +			remote_name = _("<remote>");
->  
-... this does not.  It allows to translate the "quote around a
-placeholder".  And where this phony "remote_name" string is used,
-there is also this reference to <branch>:
+connections to remote sites time out, waiting for DNS resolution.
 
-    fprintf_ln(stderr, _("If you wish to set tracking information for ..."
-                    "\n"
-                    "    git branch --set-upstream-to=%s/<branch> %s\n"),
-                    remote_name, curr_branch->name);
+The logic to detect various flavours of SOCKS proxy and ask the
+libcurl layer to use appropriate one understands the proxy string
+that begin with socks5, socks4a, etc., but does not know socks5h,
+and we end up using CURLPROXY_SOCKS5.  The correct one to use is
+CURLPROXY_SOCKS5_HOSTNAME.
 
-which also does.
+https://curl.haxx.se/libcurl/c/CURLOPT_PROXY.html says
 
-Perhaps the first hunk at around ll.458 would want to do
+  ..., socks5h:// (the last one to enable socks5 and asking the
+  proxy to do the resolving, also known as CURLPROXY_SOCKS5_HOSTNAME
+  type).
 
-> +	fprintf_ln(stderr, "    git pull %s %s", _("<remote>"), _("<branch>"));
+which is consistent with the way the breakage was reported.
 
-to be consistent and more flexible for the translator's needs?  The
-quoting convention may be locale dependent after all.
+Tested-by: Felix Ruess <felix.ruess@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ http.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/http.c b/http.c
+index c29ce81..b560c13 100644
+--- a/http.c
++++ b/http.c
+@@ -466,7 +466,10 @@ static CURL *get_curl_handle(void)
+ 	if (curl_http_proxy) {
+ 		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
+ #if LIBCURL_VERSION_NUM >= 0x071800
+-		if (starts_with(curl_http_proxy, "socks5"))
++		if (starts_with(curl_http_proxy, "socks5h"))
++			curl_easy_setopt(result,
++				CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
++		else if (starts_with(curl_http_proxy, "socks5"))
+ 			curl_easy_setopt(result,
+ 				CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
+ 		else if (starts_with(curl_http_proxy, "socks4a"))
+-- 
+2.8.1-339-gc925d85
