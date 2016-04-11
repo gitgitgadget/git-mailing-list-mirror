@@ -1,111 +1,82 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 1/4] rebase -i: add ack action
-Date: Mon, 11 Apr 2016 22:03:39 +0200
-Message-ID: <vpqr3ebnc9w.fsf@anie.imag.fr>
-References: <alpine.DEB.2.20.1604111736060.2967@virtualbox>
-	<20160411184535-mutt-send-email-mst@redhat.com>
-	<xmqqlh4krkop.fsf@gitster.mtv.corp.google.com>
-	<20160411225222-mutt-send-email-mst@redhat.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH 0/3] index-helper: fix UNIX_PATH_MAX redefinition error
+ on cygwin
+Date: Mon, 11 Apr 2016 17:29:22 -0400
+Organization: Twitter
+Message-ID: <1460410162.5540.20.camel@twopensource.com>
+References: <570ADA5B.5030408@ramsayjones.plus.com>
+	 <20160411133343.GA7492@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, bafain@gmail.com, sunshine@sunshineco.com
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Mon Apr 11 22:04:29 2016
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+X-From: git-owner@vger.kernel.org Mon Apr 11 23:29:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1api4T-0007JS-Eo
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Apr 2016 22:04:29 +0200
+	id 1apjOm-0001ij-14
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Apr 2016 23:29:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751615AbcDKUDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2016 16:03:53 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:52987 "EHLO mx2.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750775AbcDKUDx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2016 16:03:53 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u3BK3bKV024580
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 11 Apr 2016 22:03:37 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u3BK3dor007430;
-	Mon, 11 Apr 2016 22:03:39 +0200
-In-Reply-To: <20160411225222-mutt-send-email-mst@redhat.com> (Michael S.
-	Tsirkin's message of "Mon, 11 Apr 2016 22:55:27 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Mon, 11 Apr 2016 22:03:37 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u3BK3bKV024580
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1461009818.50906@LOEgT0XMxL16Upelje61tA
+	id S1752807AbcDKV30 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2016 17:29:26 -0400
+Received: from mail-qg0-f49.google.com ([209.85.192.49]:34609 "EHLO
+	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754659AbcDKV3Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2016 17:29:24 -0400
+Received: by mail-qg0-f49.google.com with SMTP id c6so156515700qga.1
+        for <git@vger.kernel.org>; Mon, 11 Apr 2016 14:29:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:mime-version:content-transfer-encoding;
+        bh=jCq2n7Qqd5KWXYVXpSF1F/WIxbL/xe8qnzJV5HeJ1Qs=;
+        b=TidUutNbuD3uaozBWkzaM8m5DaqHGG20kN0IT/Tk9HbUl7Nh49f4yYvHyhhyGqww+t
+         8FdAyLoiSvBzzEYSn+E95HNpbNGmhKmuKhvMd37n9ZnVvphfCdM8o47Fn81fimRZsmkm
+         1/Kc38mqq4P6V0yD5MG7YO467AMZ+2hX604Xbh51n0HIObnHjyNcPiCbKBqIVznoPKph
+         XCww85uSRUfRPCmjEO7xDlAj2Eel3/SHiWaklqtGZ4aDfZmhjOQapZe4zgDA12IwObxu
+         vAjPIPB/xf98cFLeqO7DTPImGQ5P0Mgtb1LGWb+gmvgiHFPHoyVJxBkkTDYZ+pd3fmEd
+         Lqow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:mime-version:content-transfer-encoding;
+        bh=jCq2n7Qqd5KWXYVXpSF1F/WIxbL/xe8qnzJV5HeJ1Qs=;
+        b=EYcksBTVbTywDEEMLgsRC+RJ+3G6LaVNGVl8R969ue+gKNajRo2OpOUa3crdWt9qTQ
+         j5KMznTvKFzNwXNaJmzdVQJ71T8/YrKr+L+yNsKTivqrmLOFkOW1snd0LWg8RcvWqarP
+         /E9n+3CatQ+7h6VDNxUvmHhoMmbPPMyXYV6ut8DjA2DfVNGVGdKbruW+RfMC5KZLxj6Y
+         +vYEXcdZfboanHUaNEgDvSLpOHF6fekGp5oJBx/gjrJhMsw6mNAiPDy2rj218QoEkFp0
+         TISdJtBQAXEVmfmBc1U6x0MyEMoHYSPdmMQHEmQdMWrVKT1J0rrEj9xr3asDZMLnyeOO
+         PE1g==
+X-Gm-Message-State: AD7BkJIy6PYwQGRoabjBgu57kPi8I1nn5H4dSi+Qw5QoJq7MEFRugrevF5cIcuJGMFnMWg==
+X-Received: by 10.140.97.202 with SMTP id m68mr31528409qge.102.1460410163872;
+        Mon, 11 Apr 2016 14:29:23 -0700 (PDT)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id l126sm11989879qhb.30.2016.04.11.14.29.22
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 11 Apr 2016 14:29:22 -0700 (PDT)
+In-Reply-To: <20160411133343.GA7492@sigill.intra.peff.net>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291233>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+On Mon, 2016-04-11 at 09:33 -0400, Jeff King wrote:
+> On Sun, Apr 10, 2016 at 11:57:31PM +0100, Ramsay Jones wrote:
+> 
+> > So, the approach taken by patch #1 is to forget about UNIX_PATH_MAX
+> > and
+> > simply use sizeof(address.sun_path) instead!
+> 
+> That's what the existing code in unix-socket.c does. Which makes me
+> wonder why the index-helper code is not simply calling that.
 
-> On Mon, Apr 11, 2016 at 12:48:22PM -0700, Junio C Hamano wrote:
->> "Michael S. Tsirkin" <mst@redhat.com> writes:
->> 
->> > Repost, sorry about the noise.
->> >
->> > On Mon, Apr 11, 2016 at 05:36:45PM +0200, Johannes Schindelin wrote:
->> >> Hi Michael,
->> >> 
->> >> On Mon, 11 Apr 2016, Michael S. Tsirkin wrote:
->> >> 
->> >> > So far I only see examples of adding footers. If that's all we can think
->> >> > up, why code in all this genericity?
->> >> 
->> >> Because as far as I can see, the only benefitor of your patches would be
->> >> you.
->> >> 
->> >> Ciao,
->> >> Johannes
->> >
->> > This seems unlikely.  Just merging the patches won't benefit me directly
->> > - I have maintained them in my tree for a couple of years now with very
->> > little effort.  For sure, I could benefit if they get merged and then
->> > someone improves them further - that was the point of posting them - but
->> > then I'm not the only benefitor.
->> >
->> > The workflow including getting acks for patches by email is not handled
->> > well by upstream git right now.  It would surprise me if no one uses it
->> > if it's upstream, as you seem to suggest.  But maybe most people moved
->> > on and just do pull requests instead.
->> 
->> I doubt I would use this in its current form myself.
->> 
->> Patch series I receive are all queued on their own separate topic
->> branches, and having to switch branches only to create a fake empty
->> commit to record received Acked-by and Reviewed-by is a chore that
->> serves only half of what needs to be done.
->
-> Interesting. An empty commit would be rather easy to create on any
-> branch, not just the current one, using git-commit-tree.
-
-This "modify a branch without checking-it out" makes me think of "git
-notes". It may make sense to teach "git rebase -i" to look for notes in
-rebased commits and append them to the commit message when applying.
-Just an idea, not necessarily a good one ;-).
-
-> Does it sounds interesting if I teach
-> git ack to get an active branch as a parameter?
-
-I think "ack" is not a good name for this feature: you use it to append
-"Acked-by", but it can be used to append any trailer (for example,
-Reviewed-by: would make complete sense too). I think using a better name
-would help the discussion (to remove the "it's my use-case" biais).
-Perhaps "append"?
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Because I didn't notice it at the time.  Duy pointed it out on another
+comment on this series; I'll fix it.
