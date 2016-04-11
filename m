@@ -1,71 +1,74 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH 1/4] rebase -i: add ack action
-Date: Mon, 11 Apr 2016 19:41:49 +0300
-Message-ID: <20160411184535-mutt-send-email-mst@redhat.com>
-References: <alpine.DEB.2.20.1604111736060.2967@virtualbox>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Hardcoded #!/bin/sh in t5532 causes problems on Solaris
+Date: Mon, 11 Apr 2016 09:42:02 -0700
+Message-ID: <xmqqpotwrtb9.fsf@gitster.mtv.corp.google.com>
+References: <570965B9.9040207@jupiterrise.com>
+	<20160409210429.GB18989@sigill.intra.peff.net>
+	<57098259.1060608@jupiterrise.com>
+	<20160409223738.GA1738@sigill.intra.peff.net>
+	<xmqqmvp2ti20.fsf@gitster.mtv.corp.google.com>
+	<xmqq37qtthit.fsf@gitster.mtv.corp.google.com>
+	<CAPig+cQzGmohkyshwi+yhQHPT_VVb2fr52OK_1Axw4Q2vLxRHw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, bafain@gmail.com, sunshine@sunshineco.com,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Apr 11 18:41:59 2016
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>,
+	"Tom G. Christensen" <tgc@jupiterrise.com>,
+	Elia Pinto <gitter.spiros@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Apr 11 18:42:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1apeuT-0006CT-4X
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Apr 2016 18:41:57 +0200
+	id 1apeuh-0006Jt-Mn
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Apr 2016 18:42:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754363AbcDKQlx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2016 12:41:53 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:57143 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753837AbcDKQlw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2016 12:41:52 -0400
-Received: from int-mx14.intmail.prod.int.phx2.redhat.com (int-mx14.intmail.prod.int.phx2.redhat.com [10.5.11.27])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	id S1754446AbcDKQmH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2016 12:42:07 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:60526 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754403AbcDKQmF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2016 12:42:05 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8BD4053C80;
+	Mon, 11 Apr 2016 12:42:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BAvZbYsf7aAtiqLV9yuu0laTgXg=; b=GMc2Hw
+	siUK0DWqTnMuLSIRb4lnEC6qS2ZTUj5Lspw86mXOs7HtvK5KC2HiNgjWCAMCky1P
+	xMC4PeAJIb3Ys/lq0qNDxSEBAvnSJ2ZlzCgMGlOvpUxAswYT18/ZFEPmnUazGr6F
+	f6Sq/4dDF71rW7kj+PpyYehOW5CF0yVj2C4Qg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ReRaiPuPZrEKqLMXeffVCjO0AX42i5Rf
+	o0QgXfeepySmP8t/j9GH5R8YJBkgb6RPhpmPIWkualOp3m7nInx2IhLNjvS61SQc
+	p7Sgu0jbjFe9gbsv+JXQGExUpvsT86Fp3hvZ08GIhptxDOGt0dppEeIr3R2LfV2Q
+	fhqRXeR9CVM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8072B53C7F;
+	Mon, 11 Apr 2016 12:42:04 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by mx1.redhat.com (Postfix) with ESMTPS id 423913455A5;
-	Mon, 11 Apr 2016 16:41:52 +0000 (UTC)
-Received: from redhat.com (vpn1-5-155.ams2.redhat.com [10.36.5.155])
-	by int-mx14.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id u3BGfoYJ026176;
-	Mon, 11 Apr 2016 12:41:50 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1604111736060.2967@virtualbox>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E4CA153C7B;
+	Mon, 11 Apr 2016 12:42:03 -0400 (EDT)
+In-Reply-To: <CAPig+cQzGmohkyshwi+yhQHPT_VVb2fr52OK_1Axw4Q2vLxRHw@mail.gmail.com>
+	(Eric Sunshine's message of "Sun, 10 Apr 2016 17:51:06 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 5226B8F6-0004-11E6-88AC-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291221>
 
-Repost, sorry about the noise.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-On Mon, Apr 11, 2016 at 05:36:45PM +0200, Johannes Schindelin wrote:
-> Hi Michael,
-> 
-> On Mon, 11 Apr 2016, Michael S. Tsirkin wrote:
-> 
-> > So far I only see examples of adding footers. If that's all we can think
-> > up, why code in all this genericity?
-> 
-> Because as far as I can see, the only benefitor of your patches would be
-> you.
-> 
-> Ciao,
-> Johannes
+>> with "printf".  The output from the latter is compared with an
+>> expected output, again prepared with "printf" hance lacking the
+>
+> s/hance/hence/
 
-This seems unlikely.  Just merging the patches won't benefit me directly
-- I have maintained them in my tree for a couple of years now with very
-little effort.  For sure, I could benefit if they get merged and then
-someone improves them further - that was the point of posting them - but
-then I'm not the only benefitor.
-
-The workflow including getting acks for patches by email is not handled
-well by upstream git right now.  It would surprise me if no one uses it
-if it's upstream, as you seem to suggest.  But maybe most people moved
-on and just do pull requests instead.
-
--- 
-MST
+Thanks
