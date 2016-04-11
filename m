@@ -1,97 +1,94 @@
 From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH 2/3] index-helper: convert strncpy to memcpy
-Date: Mon, 11 Apr 2016 18:30:54 -0400
+Subject: Re: [PATCH v3 03/16] index-helper: new daemon for caching index and
+ related stuff
+Date: Mon, 11 Apr 2016 19:27:12 -0400
 Organization: Twitter
-Message-ID: <1460413854.5540.24.camel@twopensource.com>
-References: <570ADB68.8000705@ramsayjones.plus.com>
+Message-ID: <1460417232.5540.53.camel@twopensource.com>
+References: <1459980722-4836-1-git-send-email-dturner@twopensource.com>
+	 <1459980722-4836-4-git-send-email-dturner@twopensource.com>
+	 <CACsJy8C5NhaAAW=wzpwkBdLvVZz8wVM7QX==n_CL5g+LLAKY=A@mail.gmail.com>
+	 <1460153784.5540.19.camel@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 12 00:31:05 2016
+Cc: Git Mailing List <git@vger.kernel.org>, aevarb@gmail.com,
+	jeffhost@microsoft.com
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 12 01:27:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1apkMJ-0007dI-Ti
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 00:31:04 +0200
+	id 1aplEv-0002sX-6Q
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 01:27:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755063AbcDKWa6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2016 18:30:58 -0400
-Received: from mail-qg0-f46.google.com ([209.85.192.46]:35320 "EHLO
-	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754221AbcDKWa5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2016 18:30:57 -0400
-Received: by mail-qg0-f46.google.com with SMTP id f105so467510qge.2
-        for <git@vger.kernel.org>; Mon, 11 Apr 2016 15:30:57 -0700 (PDT)
+	id S1754760AbcDKX1S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2016 19:27:18 -0400
+Received: from mail-qg0-f47.google.com ([209.85.192.47]:33724 "EHLO
+	mail-qg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754702AbcDKX1P (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2016 19:27:15 -0400
+Received: by mail-qg0-f47.google.com with SMTP id j35so1788407qge.0
+        for <git@vger.kernel.org>; Mon, 11 Apr 2016 16:27:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=message-id:subject:from:to:cc:date:in-reply-to:references
          :organization:mime-version:content-transfer-encoding;
-        bh=DoeJM8o7vW145cy2Fd34dpfE94OnixsxWUDXTTudp7Y=;
-        b=dbUToInuBnSCOlqTX/WcpJLSh4eVOnhGVvPdsmoxBa0CAYOyPXZllTC1yUJOrYEtLP
-         dDvvYRt491SzfwMEoEv4gSoA9QOjKuxw6+dVCE5joMA4tuucZeZVnrczJAv4fHTbGn5b
-         Y0/ihOXXcaNFqgYd+5QAgRciOTjnd9S7kiX5ORsEZ85/U84P7GquFRhBn/EBBxNRQr4T
-         zHHAs52dv4AOymC4BDYX/ZrFlJtisUjEfNG2fDJALqAyqcdHnD+0AwhqjOQGl21KdP+Y
-         YuL1Bi6GAbltIOOs2ciHSJKQLZzhH8MYZDzif5Jf5KV4U9am/5ClwYHD0lfFTzA4NZti
-         YRVw==
+        bh=d/xRNzDOmGqAgtxWmYn2HizZ1ctppsxdDnVkjekm9Wc=;
+        b=aGBOopsBO3+nfgepbh3nRc0Lg5q1vZQaG2xVEJHJvO3ZGHOQIowE+1WkuF8GleQPK+
+         cA1lIhSWcFdPY2ElOKLUIKVkeQlD8wHRTqzV8XQ0w52hEX80Tt/qr9DOiUTia2t4YzDF
+         h4WZKaln7FkmDP6E/i6jgFMmPsy4R+EHHwMOyG0039J2UeNUtnAKynhSfFWHNjID0nBb
+         oP256d6jtck3C4q56NmvYyne6WlL9wEXWYSaZ5PE99GnNqrOaSiPgpoajFGnlKYCimZp
+         S/v1dNxPhN/W11V2XTg0JtHsKrWxv8bQegzktgxl3BVl6k80lc7rSckDpBLNIChVfPCr
+         ORzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
          :references:organization:mime-version:content-transfer-encoding;
-        bh=DoeJM8o7vW145cy2Fd34dpfE94OnixsxWUDXTTudp7Y=;
-        b=HA6eM06G869xeXPXvQ8IvOhT6qy4b0yMjbY0OsqY/MjR9CJPrhyxPQdBz/rtlAZjVJ
-         +x4xH1zm/10X1A9bKj6mFnciZe2hDtnWOkjFVLzAZUfofR0fcxKyvSyJwe2yL38ue+dj
-         xBZHxywrjRVk+V828ge8IIx1kv2G8A/HgWJuzdvS0YuzvGFMtkOnzgWkMvBn1HbpOtui
-         wpko1rD5uzYNSo7J16h5uJtnUXliqSWjqSyy5yGeNsFfcB1YsMaH24W+ufZvZ6EGlcQA
-         diywBHVikAGVvhhT3bW9maeYWRBxcVYRFkSWvXHAPOH5wVxiFvmJHhjiYo1ZwjO3ym5o
-         33Jw==
-X-Gm-Message-State: AD7BkJI+IhNkCaso9Q+IvpRm1lVMLExbV1XbLBDKU2dZ1K1By9TZPR4yJxoiRHHhXww/2w==
-X-Received: by 10.140.101.80 with SMTP id t74mr32069762qge.65.1460413856424;
-        Mon, 11 Apr 2016 15:30:56 -0700 (PDT)
+        bh=d/xRNzDOmGqAgtxWmYn2HizZ1ctppsxdDnVkjekm9Wc=;
+        b=DxAm3mSDwlk1ZF/pm9MWWQVhORqcEe9yQryYIoibE2qIiXD+Qi5EbIM3Eq7j6QM5pt
+         dJl8u4Rz+y0rM5pcdML3zAmfQB/L/xsXxD50EE8n8r8FQIRC/l6h/OmuVmZt4Hl1aS6t
+         YrMeuWun3zxDnFO5QsS+KFrP9zDdXL0ArMPtMUxqVLTj+Qgbh7O8PbckvHLj83Vypq+Z
+         HAhHd5cf/pwMWkbHLcA3DCjB2Ulh0HxyD0V2SlDWAYevxxbi02UIjanJQAGy8VpHSjDV
+         JUqI5lB7aF2wcYejARwk6ggbe60e6EIo0AZ2P9G5XxQuqgsRtGJ6u9mGTfH8X/sxBZK8
+         x1Bw==
+X-Gm-Message-State: AOPr4FWRVBi12YE0T+2ZgWE3kzNurncvwHHQAz6JFCFdNorUs9G36x3lesHPNahF0MvYYA==
+X-Received: by 10.140.158.68 with SMTP id e65mr245800qhe.4.1460417234310;
+        Mon, 11 Apr 2016 16:27:14 -0700 (PDT)
 Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id c18sm12117672qgd.49.2016.04.11.15.30.54
+        by smtp.gmail.com with ESMTPSA id b187sm7383587qkc.9.2016.04.11.16.27.12
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 11 Apr 2016 15:30:55 -0700 (PDT)
-In-Reply-To: <570ADB68.8000705@ramsayjones.plus.com>
+        Mon, 11 Apr 2016 16:27:13 -0700 (PDT)
+In-Reply-To: <1460153784.5540.19.camel@twopensource.com>
 X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291238>
 
-On Mon, 2016-04-11 at 00:02 +0100, Ramsay Jones wrote:
-> see commit eddda371 ("convert strncpy to memcpy", 24-09-2015).
+On Fri, 2016-04-08 at 18:16 -0400, David Turner wrote:
+> And SHM on Macs works a bit differently than on Linux in at least two
+> irritating ways. 
 > 
-> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> ---
->  index-helper.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/index-helper.c b/index-helper.c
-> index 4a8e2ae..00f286a 100644
-> --- a/index-helper.c
-> +++ b/index-helper.c
-> @@ -317,7 +317,7 @@ static int setup_socket(const char *socket_path)
->  		return -1;
->  
->  	address.sun_family = AF_UNIX;
-> -	strncpy(address.sun_path, socket_path,
-> sizeof(address.sun_path));
-> +	memcpy(address.sun_path, socket_path, len+1); /* include
-> '\0' */
->  
->  	if (bind(fd, (struct sockaddr *) &address, sizeof(address)))
->  		die_errno(_("failed to bind to socket %s"),
-> socket_path);
+> So, uh, new version to come once I actually make it work on Mac.
+> Probably Monday.
 
-Thanks. 
+I was chatting with a friend about this and he mentioned that SHM does
+not really fit well into the Unix "everything is a file" model.  It
+lives in a separate namespace, and still requires most of the file-like
+operations just with funny names and a separate namespace: shm_open,
+shm_unlink.  This weirdness is something I noticed in my porting work:
+on OS X, a shm name can only be 32 bytes long, requiring weird hacks.
+And on OSX, fstat on a shm fd is rounded up to the page size (!). 
+ There may also be other portability issues that I have not yet
+discovered.
 
-I'm actually going to drop this patch because I'm switching to the unix
--socket.c helpers, so the affected code no longer exists.  But I
-appreciate the thought anyway.
+Instead, my friend suggests that we should just use files.  For
+instance, we could do $TMPDIR/$index_helper_pid/shm-index.$sha.  
+
+(I'm proposing $TMPDIR because it's cleaned up on reboot so we don't
+need any manual intervention or complicated gc schemes)
+
+What do folks think of this?
