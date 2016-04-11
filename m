@@ -1,82 +1,90 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 1/3] index-helper: fix UNIX_PATH_MAX redefinition error on
- cygwin
-Date: Mon, 11 Apr 2016 06:20:21 +0200
-Message-ID: <570B2605.4040305@web.de>
-References: <570ADAEE.20201@ramsayjones.plus.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: git interpret-trailers with multiple keys
+Date: Mon, 11 Apr 2016 09:09:48 +0200
+Message-ID: <vpqegac7hab.fsf@anie.imag.fr>
+References: <20160406191054-mutt-send-email-mst@redhat.com>
+	<vpqlh4qbrnt.fsf@anie.imag.fr>
+	<20160406201509-mutt-send-email-mst@redhat.com>
+	<xmqq1t6iy6p9.fsf@gitster.mtv.corp.google.com>
+	<20160406212940-mutt-send-email-mst@redhat.com>
+	<CAP8UFD0Pw+yhO1jZTAbMkZ5d-usu3rx5N0Se=PNL=N7DD-BPcA@mail.gmail.com>
+	<20160410182750-mutt-send-email-mst@redhat.com>
+	<CAP8UFD1hSg9RXLavzQgff-QioVU28_ZYhrfAvrhzNe8zXwwv5w@mail.gmail.com>
+	<20160410203556-mutt-send-email-mst@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	David Turner <dturner@twopensource.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 11 06:20:49 2016
+Content-Type: text/plain
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Mon Apr 11 09:10:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1apTLE-00052R-Pp
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Apr 2016 06:20:49 +0200
+	id 1apVzI-00078k-B3
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Apr 2016 09:10:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750756AbcDKEUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2016 00:20:41 -0400
-Received: from mout.web.de ([212.227.15.3]:49495 "EHLO mout.web.de"
+	id S1752191AbcDKHKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2016 03:10:07 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:60781 "EHLO mx1.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750709AbcDKEUk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2016 00:20:40 -0400
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0Lrrva-1bnaqN0rTK-013iJx; Mon, 11 Apr 2016 06:20:25
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101
- Icedove/38.6.0
-In-Reply-To: <570ADAEE.20201@ramsayjones.plus.com>
-X-Provags-ID: V03:K0:WMSba+IxaXJlfI19YmlISw2FbwUD58cA36cpr4gKpyztA8DTPLW
- znplhk1YsBMLYvqy9gF4QFMeT41v5sb3Pol0E9m7CZ5ZYFNtkNt+UCPP19c/j+rCpKZ6vvy
- 98ch+Iyb4smnX1MnjD7I+FF0E5vnhzc1ylV4igoioahjlXktG+t+nt9KwuJhReltNaxx/vP
- EqJXa7SoKlvWZPHUJpWbA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:VFz4ubkqZ9A=:VeAnxriflCauEHwpbJf/LV
- H2RvpCgzzHprwX+qfYgdkEqVjBdE/FJIe3Ao50R3k+KyCHQ/mho+93wAGjUSaONrE1n5ofMvK
- smFBIdQkgCeI+jIukmwi95Q6F0O+terfcDmmSi+xTmU2Ch44EaJE8gVTx7kKzA2QkOOnmTbk9
- vukWASONBEyBOJTJVoJYGa/9uUmbtFkA3Ve/oqCDqqwD/xG56R8MAaLtLpc5pJTIw1Hu76VLA
- oUFm4Yz4Y3hv6Nxi3lTJMsTuCdeKRBOtgZQe+IGE4k7L57wgMmB96yYJ4EGJnP5AUZLlL1PZP
- LsV9/DCqbNcpjTGq0xxGBwALf+KNctxUoCQla6BHBB/JwyJs1mHBVPQUGLCwbvNVKxM03zObi
- J6A5fNCi+QaxASm64GCq29JvaoHfJknu5J/mCcatfw/IOyY1fszQdlM9EkkPkOW8OWfZrueJY
- jy7OnjP1Yinlo45Hk2/UFTApjWO1SobKTvaf8P8ZGxL3x2coelzyZDY8lGNMAePS4CBNUDmXV
- bjLCoOuTmEsjd2Ym/RlfTdZWlMrZSDMKKplnEAmA1kDykV+wmG7grvy7Nyg91g95Gd+6MEcow
- m4X2aHm7/X9swtgexXVkcDjcmsUWYbnetdsRoRLvZNK6SI02+gVMU+fKqDvdu7pX7dYS3Ie76
- voZX6bdjP7UwekxKyul6LBOX7aHQamMqlGNQDpmoA9sMXE/KGIfkt6Bh+4Q2sqP6i63gk0IIf
- q11YngweuOTzxzAffc39ZRBIBUOboDmbB/SnxLirgzoiY9D7qytWPKQVr+fr2yd7UVHSOELE 
+	id S1751515AbcDKHKG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2016 03:10:06 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u3B79mjW030522
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 11 Apr 2016 09:09:48 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u3B79mET022500;
+	Mon, 11 Apr 2016 09:09:48 +0200
+In-Reply-To: <20160410203556-mutt-send-email-mst@redhat.com> (Michael S.
+	Tsirkin's message of "Sun, 10 Apr 2016 20:43:01 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Mon, 11 Apr 2016 09:09:48 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u3B79mjW030522
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1460963390.8565@Bj3RtF6Jg1FHYJNJzKI1Uw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291205>
 
-On 04/11/2016 12:59 AM, Ramsay Jones wrote:
-The header mentions cygwin, but changes it for linux, BSD and Mac OS as 
-well.
-Is this intentional ?
-> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> ---
->   git-compat-util.h | 17 -----------------
->   index-helper.c    |  4 ++--
->   read-cache.c      |  2 +-
->   3 files changed, 3 insertions(+), 20 deletions(-)
+"Michael S. Tsirkin" <mst@redhat.com> writes:
+
+> On Sun, Apr 10, 2016 at 06:57:53PM +0200, Christian Couder wrote:
+>> What I meant is that we could create new options called maybe
+>> trailer.autocommands and trailer.<token>.autocommands that default to
+>> 'true' and if 'false' the command would not be run automatically and
+>> the corresponding trailer would not be added.
 >
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 0e35c13..c90c8c6 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -1043,21 +1043,4 @@ struct tm *git_gmtime_r(const time_t *, struct tm *);
->   #define getc_unlocked(fh) getc(fh)
->   #endif
->   
-> -#ifdef __linux__
-> -#define UNIX_PATH_MAX 108
-> -#elif defined(__APPLE__) || defined(BSD)
-> -#define UNIX_PATH_MAX 104
-> -#else
-Can we use a #elif __CYGWIN__ here to fix the re-definition just for cygwi ?
+> I don't think it has to do with commands.
+> For example, if we add "value" it should behave the same.
+>
+> So I think a better name is "ifnotlisted", with values "add"
+> and "donothing".
+
+Having a negation in the variable name feels wrong. When the token is
+listed on the command-line and ifnotlisted=donothing, I have to apply a
+double-negation to guess what would happen (=> "if listed then do
+something").
+
+I agree that having such variable would be a good thing. It would solve
+your issue (i.e. "How to I configure a token for quick use from the
+command-line without applying it unconditionally"), and allow full
+backward compatibility.
+
+I'd call the option "apply" or perhaps "run", with values 1/true/always
+= default = current behavior, or "auto" = "apply when asked from the
+command-line". I'm wondering whether other values could make sense (not
+to implement it right now, but to keep the design open to further
+extensions): perhaps apply=ifauthor could mean "apply this trailer to
+patches I'm the author of" for example.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
