@@ -1,88 +1,84 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: git interpret-trailers with multiple keys
-Date: Mon, 11 Apr 2016 10:24:41 +0300
-Message-ID: <20160411102346-mutt-send-email-mst@redhat.com>
-References: <20160406191054-mutt-send-email-mst@redhat.com>
- <vpqlh4qbrnt.fsf@anie.imag.fr>
- <20160406201509-mutt-send-email-mst@redhat.com>
- <xmqq1t6iy6p9.fsf@gitster.mtv.corp.google.com>
- <20160406212940-mutt-send-email-mst@redhat.com>
- <CAP8UFD0Pw+yhO1jZTAbMkZ5d-usu3rx5N0Se=PNL=N7DD-BPcA@mail.gmail.com>
- <20160410182750-mutt-send-email-mst@redhat.com>
- <CAP8UFD1hSg9RXLavzQgff-QioVU28_ZYhrfAvrhzNe8zXwwv5w@mail.gmail.com>
- <20160410203556-mutt-send-email-mst@redhat.com>
- <vpqegac7hab.fsf@anie.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Apr 11 09:25:02 2016
+From: Stan Hu <stanhu@gmail.com>
+Subject: [PATCH] fetch-pack: Add missing line-feed character when sending depth-request packet line
+Date: Mon, 11 Apr 2016 00:48:48 -0700
+Message-ID: <1460360928-95956-1-git-send-email-stanhu@gmail.com>
+Cc: git@vger.kernel.org, Stan Hu <stanhu@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Apr 11 09:49:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1apWDU-000475-Jv
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Apr 2016 09:25:00 +0200
+	id 1apWai-0003uk-8J
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Apr 2016 09:49:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751346AbcDKHYp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2016 03:24:45 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:55919 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751026AbcDKHYo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2016 03:24:44 -0400
-Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mx1.redhat.com (Postfix) with ESMTPS id BE1DB811A2;
-	Mon, 11 Apr 2016 07:24:43 +0000 (UTC)
-Received: from redhat.com (vpn1-5-155.ams2.redhat.com [10.36.5.155])
-	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id u3B7OfH0004897;
-	Mon, 11 Apr 2016 03:24:42 -0400
-Content-Disposition: inline
-In-Reply-To: <vpqegac7hab.fsf@anie.imag.fr>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+	id S1751401AbcDKHsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2016 03:48:55 -0400
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:35881 "EHLO
+	mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750820AbcDKHsy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2016 03:48:54 -0400
+Received: by mail-pf0-f175.google.com with SMTP id e128so119006554pfe.3
+        for <git@vger.kernel.org>; Mon, 11 Apr 2016 00:48:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=DGk/FGfpc53nxZGxFGeL3Yp3Vu1HdsrKoe54JeadCY8=;
+        b=H89LDKuA9hkcGA6RH8Z5ZIZmF3YMK4getmetYe9xe2xTUimfCl/0tj3QLRXrDb9DRy
+         zf26mUxlpq+N9KUm2c5glACwatIu1HAQOwNgsa1GlBgBSugv8f2KN6vMJaSbs9+1U0f6
+         J8wfdWwO/LM/0/Y8nHqIusOFuSKMpXzQ9F5KJbAxGt8SJzRw8fyOPrbgIYPO4F2o8Jcn
+         Tn8TmYYnaH88+QmcZtKtcoH3UdxmJ6/FOrapVKxSFH+d5oxe+ksSunV7wGruESLqjpg1
+         fRMb1l7rrOgt4kcjBc9EZlBhgc9i2hmjXqKKTBI4hbGoQnzy+ncygUfngiGzNwOk9rHi
+         j6tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=DGk/FGfpc53nxZGxFGeL3Yp3Vu1HdsrKoe54JeadCY8=;
+        b=KyBu8/G5QQQXA56ULzyzCe8Ke2Z1Zk02d16JlHbe3sNDKswDJ66JHxPsO+iHzlP1XN
+         VOlst0tWwOxXJfwcoVC8xoTwu6pWLJtmYwhfCI4pqmOhkvv7FH61YB2+4KdSc3wWcumu
+         OSdHa8tE+3bFl+4G/k5suv/9YBw4fqDJuzgH1NW7z+lBoHpVancDA4zsxzVgfsL4IevV
+         B6bgF/VxK0RQ6uFm0B4ox6PXN3S97RhnpOuqf54Gcml0slMpROzzTaX9Hde+QaBm95ug
+         GQIJ82uYpanjA6C5nqH/llxHnQkebd4dxls9e41Y2Em6OU47BQFn+ux/PdXeZVrfDnm0
+         v/4w==
+X-Gm-Message-State: AD7BkJIaBOlMWF4Y+A7gWslScgY6y6ptBXDk7dzAOL0xlINGkjH/tPfUdZuYhMTZ4uA/Bw==
+X-Received: by 10.98.69.75 with SMTP id s72mr31091281pfa.66.1460360933454;
+        Mon, 11 Apr 2016 00:48:53 -0700 (PDT)
+Received: from smtp.gmail.com (c-24-6-246-163.hsd1.ca.comcast.net. [24.6.246.163])
+        by smtp.gmail.com with ESMTPSA id q20sm33791929pfi.63.2016.04.11.00.48.52
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Mon, 11 Apr 2016 00:48:53 -0700 (PDT)
+Received: by smtp.gmail.com (Postfix, from userid 501)
+	id 782339310503; Mon, 11 Apr 2016 00:48:50 -0700 (PDT)
+X-Mailer: git-send-email 2.7.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291207>
 
-On Mon, Apr 11, 2016 at 09:09:48AM +0200, Matthieu Moy wrote:
-> "Michael S. Tsirkin" <mst@redhat.com> writes:
-> 
-> > On Sun, Apr 10, 2016 at 06:57:53PM +0200, Christian Couder wrote:
-> >> What I meant is that we could create new options called maybe
-> >> trailer.autocommands and trailer.<token>.autocommands that default to
-> >> 'true' and if 'false' the command would not be run automatically and
-> >> the corresponding trailer would not be added.
-> >
-> > I don't think it has to do with commands.
-> > For example, if we add "value" it should behave the same.
-> >
-> > So I think a better name is "ifnotlisted", with values "add"
-> > and "donothing".
-> 
-> Having a negation in the variable name feels wrong. When the token is
-> listed on the command-line and ifnotlisted=donothing, I have to apply a
-> double-negation to guess what would happen (=> "if listed then do
-> something").
+The pkt-line format mandates: "a sender should include a LF, but the
+receive MUST NOT complain if it is not present." This patch
+is not absolutely necessary since receivers handle the missing the LF,
+but this patch adds it for good measure.
 
-Isn't this similar to ifmissing?
+Signed-off-by: Stan Hu <stanhu@gmail.com>
+---
+ fetch-pack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> I agree that having such variable would be a good thing. It would solve
-> your issue (i.e. "How to I configure a token for quick use from the
-> command-line without applying it unconditionally"), and allow full
-> backward compatibility.
-> 
-> I'd call the option "apply" or perhaps "run", with values 1/true/always
-> = default = current behavior, or "auto" = "apply when asked from the
-> command-line". I'm wondering whether other values could make sense (not
-> to implement it right now, but to keep the design open to further
-> extensions): perhaps apply=ifauthor could mean "apply this trailer to
-> patches I'm the author of" for example.
-> 
-> -- 
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
+diff --git a/fetch-pack.c b/fetch-pack.c
+index f96f6df..77299d9 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -330,7 +330,7 @@ static int find_common(struct fetch_pack_args *args,
+ 	if (is_repository_shallow())
+ 		write_shallow_commits(&req_buf, 1, NULL);
+ 	if (args->depth > 0)
+-		packet_buf_write(&req_buf, "deepen %d", args->depth);
++		packet_buf_write(&req_buf, "deepen %d\n", args->depth);
+ 	packet_buf_flush(&req_buf);
+ 	state_len = req_buf.len;
+ 
+-- 
+2.7.3
