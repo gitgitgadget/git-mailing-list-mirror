@@ -1,97 +1,106 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 03/21] t/test-lib-functions.sh: generalize test_cmp_rev
-Date: Sun, 10 Apr 2016 20:07:32 -0400
-Message-ID: <CAPig+cSQtnk3wXg6agkHPgYzV-gV_cWv8G0rUO9NZCFxsZC5EA@mail.gmail.com>
+Subject: Re: [PATCH v2 05/21] t6030: generalize test to not rely on current implementation
+Date: Sun, 10 Apr 2016 20:23:23 -0400
+Message-ID: <CAPig+cQP8MgDZTbJZiFnp5XCAVKBmdH7VdgJrWsHX_cGtH2RDQ@mail.gmail.com>
 References: <1460294354-7031-1-git-send-email-s-beyer@gmx.net>
-	<1460294354-7031-4-git-send-email-s-beyer@gmx.net>
+	<1460294354-7031-6-git-send-email-s-beyer@gmx.net>
+	<570A596F.9080200@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Stephan Beyer <s-beyer@gmx.net>, Git List <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Mon Apr 11 02:08:23 2016
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Apr 11 02:23:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1apPOv-0007Q5-VF
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Apr 2016 02:08:22 +0200
+	id 1apPdb-0004Wd-Ap
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Apr 2016 02:23:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752718AbcDKAH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Apr 2016 20:07:59 -0400
-Received: from mail-ig0-f196.google.com ([209.85.213.196]:33670 "EHLO
-	mail-ig0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752652AbcDKAH5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Apr 2016 20:07:57 -0400
-Received: by mail-ig0-f196.google.com with SMTP id nt3so9334187igb.0
-        for <git@vger.kernel.org>; Sun, 10 Apr 2016 17:07:43 -0700 (PDT)
+	id S1751230AbcDKAXZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Apr 2016 20:23:25 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:34700 "EHLO
+	mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751118AbcDKAXY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Apr 2016 20:23:24 -0400
+Received: by mail-io0-f195.google.com with SMTP id z133so23394796iod.1
+        for <git@vger.kernel.org>; Sun, 10 Apr 2016 17:23:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=wK8HtEIcTkqLVc063tkOZe+bHmP9BassCNaby6sD2vQ=;
-        b=XVH2OmtFT3xDQAA0Ho8KP0kzMkwQZDFCk/LtGWcpbRml59ZWnJVbsUTG6fe/ZOniqb
-         CYq6nE2bJGCXFDCn+74D+FRxilfXOu0iJNjTQu2CBZ8b26jmHdsbMgjn/fAq0dIGgfcY
-         HjQ0WWD1yVLwAtWJ/TeO5Dsk6LCz2Q4K9uZBwNozwz7iHOZ689MpPlPmIeRdZ62zn7ve
-         VNb0ZSHLjkF03sYJd5Q77HRB5XwNTaMW59kNM5HK6wG1PJvI5YEhMIj4fOse9urN7gzA
-         gQXQYPWYR+nIt3C9Agks2cBy2RhM/aV9GqmiWZS3CtdqxQ1daJ3aKa9upqzpUGet5Kd6
-         KvKg==
+         :from:to:cc:content-transfer-encoding;
+        bh=Rz2LShJ5NjhoGul1VJkLJR50L+YsnzcbbvrRYHS7DuM=;
+        b=i6HFwvhjrcoRvc6n/q6uRYq62Hk2lQ2EdfhZSiDDNLFlB+xCz/RcoDKBFWcl6/CvYa
+         n1t6xEbx73YZy5AjWeTB8W/2Yk+7rf5Fq/sJzCCV+xWdsly5TUFpaUwk00Dbv1Mf75NF
+         myfMw3WNVPX2aR6GOF70LlnUYJPzXL6PxjTv2NM5paXz2dI5o6qnSWk1ZmyVBdg3uAOK
+         HP/LAFWcycYKcMsCEt6P4Gf7fucrdw13GH8/wv6Wp1phi0tNBWZmo0HJrZpcAExJHZII
+         bimAiEWGbKBB5RhunNBU+YikXE71+jzTHWjqPhR5uupLwWZOY6st57YHcCTSblr3cYSU
+         Wu+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=wK8HtEIcTkqLVc063tkOZe+bHmP9BassCNaby6sD2vQ=;
-        b=EUdhOfFsEHJmw2aoJMyrakzMnP8nvL7M/Wu0nUua7+d1xvtKpgg4Hfi2XEZqWzEYj5
-         hL+QHFe7TFYqikj0EQcbpreIKmqFgmO5ke0Iw87ic0qwhv3NsGrCsN+U/6nZJ0xSvWaM
-         Wb2NcjzNWHR/Onyn5FCSKIA+fl9skOuDP3PgQWwpIMgh2TlSqxo2CuvikPjkpDXJ22bO
-         82TfNpkLkXuCaL1kxwujIsrkhtSAKqHuqJ8E+d2w07tEDMsFvjr6NYAqK/r91V12zqRd
-         sFDKSsX1C9XLj3RO1qzKVS9SRmR5xWgiERuU43RW2EuUfG9L+6gTmWytWJ6Pyjwd3CtZ
-         5rXQ==
-X-Gm-Message-State: AOPr4FVAoha8l9kQWNWPHce0h+XfqiaYHciUplbRnQMFru4E3823KU6iKpvxH99+vI7mfOkYDrOdGb7H99lXuA==
-X-Received: by 10.50.205.42 with SMTP id ld10mr11609488igc.17.1460333252529;
- Sun, 10 Apr 2016 17:07:32 -0700 (PDT)
-Received: by 10.79.139.2 with HTTP; Sun, 10 Apr 2016 17:07:32 -0700 (PDT)
-In-Reply-To: <1460294354-7031-4-git-send-email-s-beyer@gmx.net>
-X-Google-Sender-Auth: Ttr6pytckmIdZs78qFrhkzn6UrQ
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=Rz2LShJ5NjhoGul1VJkLJR50L+YsnzcbbvrRYHS7DuM=;
+        b=YykiI65qOAC3e5HBEMloVr4T91siKvKay4C6GtU+RjjiP2CCzXQOSO2Dv7vcJVIYst
+         GtwYvdL17lztLftOIqJ04ymTLXzasM5uzj9RQWVAIviNTjQXOEivAcTEnwPSMA7oddya
+         Vnswc6elMKdqLFapFhzu+MM9B42EBgiuw3C7kJac2lHsxnvOTjmhEtH4zMLcmDG12l/p
+         9phK5uJQAGVboDSk6DHXN5qBa8qf5D8smJBw73i36JHKOrxy1zGZA3PRP4WQ+w3AD5Pl
+         5Jr1+luULmxaiX4Vjq0ttUqxA4joTZqhJSk9K5XL/pOdqWuud22nvOKJVcf+A17yYtvK
+         /Jgg==
+X-Gm-Message-State: AD7BkJLj+g/6SNAn6i7RZdGZYoAk129uwIJk3AdxdMtVAQ2uWfqtfCRO84mjjlz6WSes0IN7na0sdqhp2ym+Yw==
+X-Received: by 10.107.9.28 with SMTP id j28mr20736124ioi.104.1460334203965;
+ Sun, 10 Apr 2016 17:23:23 -0700 (PDT)
+Received: by 10.79.139.2 with HTTP; Sun, 10 Apr 2016 17:23:23 -0700 (PDT)
+In-Reply-To: <570A596F.9080200@web.de>
+X-Google-Sender-Auth: rm_b2rvx-vx7dg93M72_bgu37YE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291196>
 
-On Sun, Apr 10, 2016 at 9:18 AM, Stephan Beyer <s-beyer@gmx.net> wrote:
-> test_cmp_rev() took exactly two parameters, the expected revision
-> and the revision to test. This commit generalizes this function
-> such that it takes any number of at least two revisions: the
-> expected one and a list of actual ones. The function returns true
-> if and only if at least one actual revision coincides with the
-> expected revision.
->
-> While at it, the side effect of generating two (temporary) files
-> is removed.
->
-> Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
-> ---
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> @@ -711,11 +711,17 @@ test_must_be_empty () {
-> -# Tests that its two parameters refer to the same revision
-> +# Tests that the first parameter refers to the same revision
-> +# of at least one other parameter
->  test_cmp_rev () {
-> -       git rev-parse --verify "$1" >expect.rev &&
-> -       git rev-parse --verify "$2" >actual.rev &&
-> -       test_cmp expect.rev actual.rev
-> +       hash1="$(git rev-parse --verify "$1")" || return
-> +       shift
-> +       for rev
-> +       do
-> +               hash2="$(git rev-parse --verify "$rev")" || return
-> +               test "$hash1" = "$hash2" && return 0
-> +       done
-> +       return 1
->  }
+On Sun, Apr 10, 2016 at 9:47 AM, Torsten B=C3=B6gershausen <tboegi@web.=
+de> wrote:
+> On 10.04.16 15:18, Stephan Beyer wrote:
+>> diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.=
+sh
+>> @@ -10,36 +10,34 @@ exec </dev/null
+>> +     if [ -f "$_file" ]; then
+> I know that the old code did the same, is there a chance
+> to adopt to the git-style:
+>         if test -f "$_file" ; then
 
-The original code printed helpful diagnostic information when the
-comparison failed, but the new code does not. Is this intentional?
+Hmm, isn't the preferred style?
+
+    if test -f "$_file"
+    then
+
+>> +test_expect_success '"git bisect run" simple case' '
+>> +     echo "#"\!"/bin/sh" > test_script.sh &&
+>> +     echo "grep Another hello > /dev/null" >> test_script.sh &&
+>> +     echo "test \$? -ne 0" >> test_script.sh &&
+>> +     chmod +x test_script.sh &&
+>> +     git bisect start &&
+>> +     git bisect good $HASH1 &&
+>> +     git bisect bad $HASH4 &&
+>> +     git bisect run ./test_script.sh > my_bisect_log.txt &&
+>> +     grep "$HASH3 is the first bad commit" my_bisect_log.txt &&
+>> +     git bisect reset
+>> +'
+> Portabily:
+> Since yesterday/yesterweek the usage of hard-coded
+> #!/bin/sh had shown to be problematic
+> Junio posted an update like this:
+> -       printf "#!/bin/sh\n" >diff &&
+> -       printf "printf \"\$GIT_PREFIX\"" >>diff &&
+> -       chmod +x diff &&
+> +       write_script diff <<-\EOF &&
+> +       printf "%s" "$GIT_PREFIX"
+> +       EOF
+
+It might be nice to have these style fixes and modernizations as a
+preparatory cleanup patch.
