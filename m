@@ -1,80 +1,116 @@
-From: pedro rijo <pedrorijo91@gmail.com>
-Subject: Re: meaning of SP on ls-tree docs
-Date: Mon, 11 Apr 2016 18:23:11 +0100
-Message-ID: <CAPMsMoA4mr2-OJzNq6iOh8DsjaH+=z_ZMQKEut1f3+drG2hKew@mail.gmail.com>
-References: <CAPMsMoDKCwCL17SZt8AZyX_6WyiAMHGWJ2S77QBc983uHtYL6g@mail.gmail.com>
- <20160411201528.f09b4b27259ae84e01d1e5a4@domain007.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Hardcoded #!/bin/sh in t5532 causes problems on Solaris
+Date: Mon, 11 Apr 2016 13:27:41 -0400
+Message-ID: <20160411172741.GD4011@sigill.intra.peff.net>
+References: <570965B9.9040207@jupiterrise.com>
+ <20160409210429.GB18989@sigill.intra.peff.net>
+ <57098259.1060608@jupiterrise.com>
+ <20160409223738.GA1738@sigill.intra.peff.net>
+ <xmqqmvp2ti20.fsf@gitster.mtv.corp.google.com>
+ <xmqq37qtthit.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Users <git@vger.kernel.org>
-To: Konstantin Khomoutov <kostix+git@007spb.ru>
-X-From: git-owner@vger.kernel.org Mon Apr 11 19:23:58 2016
+Content-Type: text/plain; charset=utf-8
+Cc: "Tom G. Christensen" <tgc@jupiterrise.com>,
+	Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 11 19:28:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1apfZ8-0007yf-4J
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Apr 2016 19:23:58 +0200
+	id 1apfd4-0001dx-GL
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Apr 2016 19:28:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752792AbcDKRXy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2016 13:23:54 -0400
-Received: from mail-lf0-f46.google.com ([209.85.215.46]:36487 "EHLO
-	mail-lf0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751085AbcDKRXx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2016 13:23:53 -0400
-Received: by mail-lf0-f46.google.com with SMTP id g184so167098038lfb.3
-        for <git@vger.kernel.org>; Mon, 11 Apr 2016 10:23:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=t1SiNj1ELfM1n6mFwx1g+WBuyxvWPrri9+CAZal0oPc=;
-        b=U5NeAwjmF+ZHZVwJR7JP+vFoiYDj8A5YNhUCt3kh+Lf4Z2LxD/cKLH4Hs3Z6ZhrFHB
-         lgZQHyK30nB+FQMuvhQU79V6Dg2xMI86OZsfKOGQjYZ779ohNi3fAozihZI9ygQ6ocW8
-         yTSXqFHNwwsv3ivgSe3Z6S9gjsnF72xzNXcAijDonPpRmXvNFhMDbTP/EymJrP82jR+D
-         Nr5BcKQN1GDUo/gQ+MM1TcF9z3FGxnMjKD0xgreYzPKzUGD8xOkdMX5vmhWJDEzmu5J7
-         BKMn8vIkKoSHVbii8F8fhQrpPts0eyJSk28M3OCDCcv+GpUyvk8DchdDiT72NocTCtlf
-         +itw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=t1SiNj1ELfM1n6mFwx1g+WBuyxvWPrri9+CAZal0oPc=;
-        b=GN5eGyCpT9vwduTAfaAXUXSsK1tRdlZYjzcv1RketLT/VdQMV05logKYct0uaIMscW
-         mIRGqt6S8dALHt1w3FHDA3oOZtSweuqo3HekKZRk6i0dZqlRI5FAXANF1rnQfjj9h7wN
-         vDTaEb+l/c9+YsyUoA2MZWs8D6AuPWh6vl6/78GGw0fAp4SLvgsLZkNgrY7YjEnhARL2
-         h6Aim0mN3rebMgei/KmwoMI5Zi9LLwoGhf8Y7IMD2lXbQj6o5hH8KJOUKX1GCe9WHVj/
-         v0vymYcZgTX5yLF4EQfEETHBiJckb2/qjoczh3qEv9jfdjIkMejzvxrCUO/0JWRw1xE2
-         +dSg==
-X-Gm-Message-State: AD7BkJIDM9p9JnD0QiOchGWdpDK2kdSA8/xBsHscXVN/S9SZh9EK+57rgjXL1BDlqX9CVgBYMKokFmugftZgAw==
-X-Received: by 10.25.20.106 with SMTP id k103mr6728657lfi.149.1460395431528;
- Mon, 11 Apr 2016 10:23:51 -0700 (PDT)
-Received: by 10.112.239.6 with HTTP; Mon, 11 Apr 2016 10:23:11 -0700 (PDT)
-In-Reply-To: <20160411201528.f09b4b27259ae84e01d1e5a4@domain007.com>
+	id S1754033AbcDKR1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2016 13:27:53 -0400
+Received: from cloud.peff.net ([50.56.180.127]:47559 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754728AbcDKR1p (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2016 13:27:45 -0400
+Received: (qmail 9014 invoked by uid 102); 11 Apr 2016 17:27:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Apr 2016 13:27:43 -0400
+Received: (qmail 27653 invoked by uid 107); 11 Apr 2016 17:27:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Apr 2016 13:27:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Apr 2016 13:27:41 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq37qtthit.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291224>
 
-ups :) Thanks
+On Sun, Apr 10, 2016 at 12:01:30PM -0700, Junio C Hamano wrote:
 
-2016-04-11 18:15 GMT+01:00 Konstantin Khomoutov <kostix+git@007spb.ru>:
-> On Mon, 11 Apr 2016 18:04:42 +0100
-> pedro rijo <pedrorijo91@gmail.com> wrote:
->
->> On https://git-scm.com/docs/git-ls-tree#_output_format, the format is
->> presented as <mode> SP <type> SP <object> TAB <file>
->>
->> But what is SP? Couldn't find the meaning. Space? System separator?
->
-> A single space character, code 0x20 in HEX or 32 in decimal.
-> TAB is a single TAB character, code 9.
+> > diff --git a/t/t1020-subdirectory.sh b/t/t1020-subdirectory.sh
+> > index 8e22b03..6dedb1c 100755
+> > --- a/t/t1020-subdirectory.sh
+> > +++ b/t/t1020-subdirectory.sh
+> > @@ -142,9 +142,9 @@ test_expect_success 'GIT_PREFIX for built-ins' '
+> >  	# Use GIT_EXTERNAL_DIFF to test that the "diff" built-in
+> >  	# receives the GIT_PREFIX variable.
+> >  	printf "dir/" >expect &&
+> > -	printf "#!/bin/sh\n" >diff &&
+> > -	printf "printf \"\$GIT_PREFIX\"" >>diff &&
+> > -	chmod +x diff &&
+> > +	write_script diff <<-\EOF &&
+> > +	printf "%s" "$GIT_PREFIX"
+> > +	EOF
+> >  	(
+> >  		cd dir &&
+> >  		printf "change" >two &&
+> 
+> Regarding this one, I notice that "expect" and "actual" (produced
+> later in this script by executing "diff" script) are eventually
+> compared by test_cmp, which runs "diff" to show the actual
+> differences.  If we are doing this modernization to use write_script
+> more, we probably should make "expect" and "actual" text files that
+> end with a complete line.
 
+Yeah I wondered about that. And also the fact that the shell script
+itself doesn't end in newline. But I think that is just an accident, and
+no shell happened to complain (not that I would expect them to, but we
+come across enough weirdness around final newlines with tools like sed
+and tr, I wouldn't have been surprised).
 
+> -- >8 --
+> Subject: t1020: do not overuse printf and use write_script
+> 
+> The test prepares a sample file "dir/two" with a single incomplete
+> line in it with "printf", and also prepares a small helper script
+> "diff" to create a file with a single incomplete line in it, again
+> with "printf".  The output from the latter is compared with an
+> expected output, again prepared with "printf" hance lacking the
+> final LF.  There is no reason for this test to be using files with
+> an incomplete line at the end, and these look more like a mistake
+> of not using
+> 
+> 	printf "%s\n" "string to be written"
+> 
+> and using
+> 
+> 	printf "string to be written"
+> 
+> Depending on what would be in $GIT_PREFIX, using the latter form
+> could be a bug waiting to happen.  Correct them.
+> 
+> Also, the test uses hardcoded #!/bin/sh to create a small helper
+> script.  For a small task like what the generated script does, it
+> does not matter too much in that what appears as /bin/sh would not
+> be _so_ broken, but while we are at it, use write_script instead,
+> which happens to make the result easier to read by reducing need
+> of one level of quoting.
 
--- 
-Obrigado,
+Looks good to me. I suspect you could actually just use:
 
-Pedro Rijo
+  echo "$GIT_PREFIX"
+
+in the helper script. That is also not completely safe against arbitrary
+bytes in $GIT_PREFIX (due to unportable backslash escapes), though I
+suspect it would be fine for the purposes of the test script. Using a
+proper printf isn't that many more bytes, though.
+
+-Peff
