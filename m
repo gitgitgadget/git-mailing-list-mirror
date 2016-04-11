@@ -1,89 +1,106 @@
-From: Godwin Emefiele <loi43@petersmithst.ml>
-Subject: Central Bank Governor
-Date: Mon, 11 Apr 2016 22:24:23 +0300
-Message-ID: <DB5PR05MB1061FEBFABF11FDC0F38296DA2940@DB5PR05MB1061.eurprd05.prod.outlook.com>
-Reply-To: <bricksman@yahoo.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] rebase -i: add ack action
+Date: Mon, 11 Apr 2016 12:48:22 -0700
+Message-ID: <xmqqlh4krkop.fsf@gitster.mtv.corp.google.com>
+References: <alpine.DEB.2.20.1604111736060.2967@virtualbox>
+	<20160411184535-mutt-send-email-mst@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-To: Recipients <loi43@petersmithst.ml>
-X-From: git-owner@vger.kernel.org Mon Apr 11 21:22:45 2016
+Content-Type: text/plain
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, bafain@gmail.com, sunshine@sunshineco.com
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Mon Apr 11 21:48:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aphQ1-00036h-DP
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Apr 2016 21:22:41 +0200
+	id 1aphp0-0007Tm-Hn
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Apr 2016 21:48:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752329AbcDKTWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2016 15:22:36 -0400
-Received: from mail-am1hn0254.outbound.protection.outlook.com ([157.56.112.254]:30388
-	"EHLO emea01-am1-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753641AbcDKTWe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Apr 2016 15:22:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=petersmiths.onmicrosoft.com; s=selector1-petersmithst-ml;
- h=From:To:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=sbEjP/ZytNxP1MbzPD/TJ9H+rE57tpSI1hRMmzFTFRM=;
- b=FGt08CUrucQTL7VBNRJZ76rB1Vl31+xrXJFDNmsLImJK3Fmxjc4O19bHncBPXODCO6rMi9wrk+P/qaT+eifGLSKZ0NkMSW48O4W4eXoeCaiTHYSe/vmRztICW/hgv3Lq4dA995dJpc+PqJLKdlX4ybynWDalK4/AA6MMhn1oiFo=
-Authentication-Results: hotmail.com; dkim=none (message not signed)
- header.d=none;hotmail.com; dmarc=none action=none
- header.from=petersmithst.ml;
-Received: from [192.0.0.75] (94.249.127.153) by
- DB5PR05MB1061.eurprd05.prod.outlook.com (10.161.240.155) with Microsoft SMTP
- Server (TLS) id 15.1.447.15; Mon, 11 Apr 2016 19:22:19 +0000
-Content-Description: Mail message body
-X-Originating-IP: [94.249.127.153]
-X-ClientProxiedBy: VI1PR07CA0023.eurprd07.prod.outlook.com (10.163.160.161) To
- DB5PR05MB1061.eurprd05.prod.outlook.com (10.161.240.155)
-X-MS-Office365-Filtering-Correlation-Id: 2c89c724-2d8e-4cce-ea36-08d3623e9dcd
-X-Microsoft-Exchange-Diagnostics: 1;DB5PR05MB1061;2:vMgbxaUaUqxeXTOpA6qB1hX2IYw6xDsZ2IJRB/38XV0AvJs++aryaW7aKemVF7M3loRdk2YD+EUaPLME2Xk4kdzujI+DQtd4yOgNLMXaO9Z/gHoo9vKNyIinlmhxKb58aWmV04xQmdSjhT8gP2ybnZqNKj8tj/yEgJGxh7/u3nAaGqJ9aEEOk9u/06i3/eCh;3:iFOz9TiqGkXgae/jVq5JvPRU6bCZ7C6usqGFOyT6Ru12qpk6FTNxHW38VdyCPWFK4P49YL8peTyhYu1ShL/4w6njvhO4UX8wZlD/NkKHfQ0befw6b+/eZHp/QLcjnF2c
-X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:DB5PR05MB1061;
-X-Microsoft-Exchange-Diagnostics: 1;DB5PR05MB1061;25:deH2nYHQYZxFPFmCfuw3pXafEm0HL6SQnvGWib1Rk6qJ9aRYU6lhp22A/dQnyC8oxRGBbBKMEVj3fRvdrXhnyVaAB6VvGGmwDT7n7FfqTeZYXJcYjUgV2NgsRNtVcTRYkT0hng36FxR5iwzSfpszCQ0WJUq+MbaVDtf8fKDlQQw+DbT5ybwEa2yNQvf7Gt8kiq0bfY+BvYImDFsZmdFYFs9jfN24/vMK/ya2ukzMFrjwTF9OpBGDJH5rqxD+Eq1TPKIOUXe0acXQxLTm8NIIIgSSHV2hFmXklj8I4+hgk5tTisnKTJVe9/jptonN/bOKu4NpX45Ik9LNcxsYK9vybH82CaW0EIo8nxmgJLviiXSHoelZaLmaiwwSrxhRKjNJ2gVjcc3i7bVGduPaGQ6YKtbyYoeNlzLkcZ4wY2mTjLr60NlGzMw4tA7HloHd69IXBeJCj+Fon2MPiUEC0GTNAzjU3dCuLVNGlNzWX5KzCNP7T+GwpUHByfaAfJLq3ogTq4dxOyPqsn5gmUqaProOAXTbIwFQFFyeAR/7ZtaIHlRijHsVhZ6R2jb0qrK59bsbolq+wUo7KH9f7tttT/7BV9UFMPa5gLMD7a1e2wcWESW4S2+PNSC1sZ/EPD0t5RPta8ZLv/+KTTBDOFvLwzRxm/N+OXvJhinyW/tSErSgpXXD4PWTrRoOjWFr2b+JNg8go4/9k48ikaLQkJw9TSTUJg==
-X-Microsoft-Antispam-PRVS: <DB5PR05MB1061E351C138E305FC4E043DA2940@DB5PR05MB1061.eurprd05.prod.outlook.com>
-X-Exchange-Antispam-Report-Test: UriScan:;
-X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(6040074)(601004)(2401047)(8121501046)(5005006)(3002001)(10201501046)(6050135)(6041046)(6043046);SRVR:DB5PR05MB1061;BCL:0;PCL:0;RULEID:;SRVR:DB5PR05MB1061;
-X-Microsoft-Exchange-Diagnostics: 1;DB5PR05MB1061;4:r9KjDfsxUSOBXY98tkymXB2dFJCO3ujWiaZ3I76WuHyIB05vUGnv3HMIeHURzvLPSgmG67n2rFnb17iIbiC6Rb9oVWgTNvkoQ/sSqNFOK+v2gaE9iZUYIfuiakUDCWAS4oo8kpWz0INmaRxUCE+7FmmLqDqF/uKAKwHEkluty26JWEf5ebJW7SLHt7jTQMOFLzIhFCNEr8d4T4vV6XaWWz+hesSZEh8rfsY2aHQIFwSKS5t/i2LqMlfLCvu5nCLtnC+dKe7EBIuXjFU9QHx6kPYq8DStJokhqxjkMz3xmhE1LDgTVuuTTPoykCLAiV6ffBHcmzclI5woYn4wnczTpV+854T9La9DP6OAHaR2v3hnpcp8+dM5UMjdmAcDQqMsmMOyGZrPbVk5FB9CmW0yceoQJUoPmi60vPzy2C0wJSyON86h7QKjYo/gvgfJ+w6u
-X-Forefront-PRVS: 09090B6B69
-X-Forefront-Antispam-Report: SFV:SPM;SFS:(10009020)(4630300001)(6049001)(6009001)(586003)(66066001)(6116002)(5008740100001)(229853001)(76576001)(1096002)(250100001)(77096005)(3846002)(74316001)(42186005)(50986999)(5004730100002)(9686002)(3480700003)(33656002)(47776003)(53256004)(43066003)(4001450100002)(6200100001)(107886002)(110136002)(15650500001)(86362001)(189998001)(575854001)(23676002)(2906002)(2860700001)(81166005)(74482002)(54356999)(53806999)(50466002)(62346011);DIR:OUT;SFP:1501;SCL:5;SRVR:DB5PR05MB1061;H:[192.0.0.75];FPR:;SPF:None;MLV:spm;PTR:InfoNoRecords;LANG:en;
-X-Microsoft-Exchange-Diagnostics: =?utf-8?B?MTtEQjVQUjA1TUIxMDYxOzIzOnRXQWhJcW9iaEpuaUo3dnlleFBGRnh0Ukpm?=
- =?utf-8?B?V2xkOFVGbEM3aU4vUnNGc2QzN3RHMXh3V1pYOUc2ZW16RjJ4aG5HSVpWa0pS?=
- =?utf-8?B?eU40VnV2RGpMS2xxazE4MVQ2dmo5RTl4dEFvUW1LbHlHWUhwVGFjOE1JT0sz?=
- =?utf-8?B?SDdUOWs3VlpDN0cvblVCZ0w0SWhOVHhhOUlpaytJOGIwUUZ5MjM5UGg4SXBB?=
- =?utf-8?B?bDNxWDM3ZkZmZ3BLdk9zNGVOaVRIbkY3dlhxWC93cUlRUzhoWmx4eTFlVFNu?=
- =?utf-8?B?UE4vVnpySFZHSVlKdWUrcExFQStuTlFPc3JMcm5yNGJxTmE1Qkt6MExweHZG?=
- =?utf-8?B?c1ZJV3BXVWNZOU5aemZzMW1CRThoZmpuOWRSZnJzRjl2bmlWd1dnTTNTbHBN?=
- =?utf-8?B?Q3NXWExWUDZQblluNnVKL3Z2RmdxczRya3piNjlUQk9iT0xHY3lMSG9FcXlY?=
- =?utf-8?B?V2FWWVI2SVZWaENjamFlMEhvNkNicW9vbU1OQ3k1bWNDSnpxcnVyNmdVVm9s?=
- =?utf-8?B?SHd4K2M2WVV0QklZczdxenZzL2M4TlVmM01INDBkL2hZQVhMYmw5KzUraXQz?=
- =?utf-8?B?cXlMWHJtYk9vUldXb1AvVWIyNkM4ejBWNlVoeWQrYW82UXRDS1RKcGF4RkdO?=
- =?utf-8?B?M2JNdzdNaFhjeFVtYmN1NG5sdHRGcjBOeHhmR3NEME 
-X-Microsoft-Exchange-Diagnostics: 1;DB5PR05MB1061;5:UhLLbXnSuqA0b+qzL2oFuvfg15FTYGFMR31xCAD6iv8IAEV22kCClqasYIKta/0CLaRUuUXhpMtuggBgTRLupi6v+yHxVhUuiy6u3yWc5WRkBNfCFjgG8HJgRcrRcVVHYd4PDXiGBGmIU9a/lhawGQ==;24:zJG1k5eNJ/4Yn0XX7djb7AGN7IRroygVk4AFrt+JIZsdsUWi7YObajjCAftwpvSnJIgVt7rH1+8M2laB6xVPZA==
-SpamDiagnosticOutput: 1:22
-SpamDiagnosticMetadata: 00000000%2D0000%2D0000%2D0000%2D000000000000
-X-OriginatorOrg: petersmithst.ml
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Apr 2016 19:22:19.2509
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB5PR05MB1061
+	id S1750971AbcDKTsZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2016 15:48:25 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:53341 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750719AbcDKTsZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2016 15:48:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1F41454F3C;
+	Mon, 11 Apr 2016 15:48:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BgCtfbnAI3Iz8v+zfJLMfzJic2c=; b=JHgkK6
+	S9O/hJazUa9B/7mLnm4Va6zgqs/MPkN/8x+HE+IdmsQlYvO/DRG5xQrq/fuFj+77
+	PrkEq5xJGi9FZhDJ8At+MOOiGSOus3HcyXxdrIEbGQyujmIp7K8NubsvoM3aRZF7
+	3a1wROvrmgaEWUf23eHMrOf0G0DpBp+PRHr7E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ozLN6PiNu9Q5BmHc4iPHphxcw0X5v67a
+	BQa44zGn6yG8yAQC1209sL0ZJ3qt9bNA3Wkszv5oRW5iZH/FmEdeDvLlVHt/z3aC
+	la5xq0yJIGaOlJN/xKF1pAh0MzCj4jYVmRy6ySOtNpkVMFAIJkgN2V5oo8uwT3VC
+	01JO9ND9cBI=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 16AEF54F3B;
+	Mon, 11 Apr 2016 15:48:24 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 830DB54F3A;
+	Mon, 11 Apr 2016 15:48:23 -0400 (EDT)
+In-Reply-To: <20160411184535-mutt-send-email-mst@redhat.com> (Michael
+	S. Tsirkin's message of "Mon, 11 Apr 2016 19:41:49 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 59C04716-001E-11E6-A8F2-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291230>
 
-Dear Sir,
+"Michael S. Tsirkin" <mst@redhat.com> writes:
 
-We had a meeting with the President Rtd General Muhamad Buhari and he has ordered that all outstanding foreign payment be paid to all contractors and beneficiaries as agreed by the office of the President and National Assembly and also to make sure that all the contractors and beneficiaries received their payment within seven (7) working days and your name appeared among the beneficiaries of this second quarter pay for the year 2016, So you are therefore require to forward the following to this office:-
+> Repost, sorry about the noise.
+>
+> On Mon, Apr 11, 2016 at 05:36:45PM +0200, Johannes Schindelin wrote:
+>> Hi Michael,
+>> 
+>> On Mon, 11 Apr 2016, Michael S. Tsirkin wrote:
+>> 
+>> > So far I only see examples of adding footers. If that's all we can think
+>> > up, why code in all this genericity?
+>> 
+>> Because as far as I can see, the only benefitor of your patches would be
+>> you.
+>> 
+>> Ciao,
+>> Johannes
+>
+> This seems unlikely.  Just merging the patches won't benefit me directly
+> - I have maintained them in my tree for a couple of years now with very
+> little effort.  For sure, I could benefit if they get merged and then
+> someone improves them further - that was the point of posting them - but
+> then I'm not the only benefitor.
+>
+> The workflow including getting acks for patches by email is not handled
+> well by upstream git right now.  It would surprise me if no one uses it
+> if it's upstream, as you seem to suggest.  But maybe most people moved
+> on and just do pull requests instead.
 
-Your Names and Full Address.
-Your Telephone number.
-Your international passport or your ID.
-Your bank details.
+I doubt I would use this in its current form myself.
 
-As soon as we received these information we will commence with the transfer of your fund to your account as instructed by the President of the Federal republic of Nigeria.
+Patch series I receive are all queued on their own separate topic
+branches, and having to switch branches only to create a fake empty
+commit to record received Acked-by and Reviewed-by is a chore that
+serves only half of what needs to be done.  Once I decide to switch
+back to the topic branch after receiving Acked-by and Reviewed-by,
+I'd rather "rebase -i" to directly record them at that point, with
+"reword".
 
-Mr. Godwin Emefiele
-Central Bank Governor (CBN)
+If the "trailers" stuff is packaged into an easier-to-use format to
+use with "git commit --amend", I may use that together with "exec"
+to automatically add these while doing so, but again, I do not see
+any need for fake empty commits out of received e-mails in the
+resulting workflow.
+
+That does not at all mean nobody other than Michael would use it,
+though.
