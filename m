@@ -1,84 +1,105 @@
-From: Stan Hu <stanhu@gmail.com>
-Subject: [PATCH] fetch-pack: Add missing line-feed character when sending depth-request packet line
-Date: Mon, 11 Apr 2016 00:48:48 -0700
-Message-ID: <1460360928-95956-1-git-send-email-stanhu@gmail.com>
-Cc: git@vger.kernel.org, Stan Hu <stanhu@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Apr 11 09:49:00 2016
+From: Tema Williams <cityelectronicsplaza@gmail.com>
+Subject: WE NEED YOUR HELP URGENTLY.
+Date: Mon, 11 Apr 2016 10:03:02 +0200
+Message-ID: <CAGys7DqqEhLUGFmu9FoYrBKDFFgOsBmuVBDAg6H8FhUFDp7+qQ@mail.gmail.com>
+Reply-To: temawilliams18@yahoo.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: undisclosed-recipients:;
+X-From: git-owner@vger.kernel.org Mon Apr 11 10:03:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1apWai-0003uk-8J
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Apr 2016 09:49:00 +0200
+	id 1apWoW-0008LM-Rc
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Apr 2016 10:03:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751401AbcDKHsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2016 03:48:55 -0400
-Received: from mail-pf0-f175.google.com ([209.85.192.175]:35881 "EHLO
-	mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750820AbcDKHsy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2016 03:48:54 -0400
-Received: by mail-pf0-f175.google.com with SMTP id e128so119006554pfe.3
-        for <git@vger.kernel.org>; Mon, 11 Apr 2016 00:48:54 -0700 (PDT)
+	id S1752206AbcDKIDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2016 04:03:09 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:36259 "EHLO
+	mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751312AbcDKIDF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2016 04:03:05 -0400
+Received: by mail-lf0-f68.google.com with SMTP id p81so18520354lfb.3
+        for <git@vger.kernel.org>; Mon, 11 Apr 2016 01:03:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=DGk/FGfpc53nxZGxFGeL3Yp3Vu1HdsrKoe54JeadCY8=;
-        b=H89LDKuA9hkcGA6RH8Z5ZIZmF3YMK4getmetYe9xe2xTUimfCl/0tj3QLRXrDb9DRy
-         zf26mUxlpq+N9KUm2c5glACwatIu1HAQOwNgsa1GlBgBSugv8f2KN6vMJaSbs9+1U0f6
-         J8wfdWwO/LM/0/Y8nHqIusOFuSKMpXzQ9F5KJbAxGt8SJzRw8fyOPrbgIYPO4F2o8Jcn
-         Tn8TmYYnaH88+QmcZtKtcoH3UdxmJ6/FOrapVKxSFH+d5oxe+ksSunV7wGruESLqjpg1
-         fRMb1l7rrOgt4kcjBc9EZlBhgc9i2hmjXqKKTBI4hbGoQnzy+ncygUfngiGzNwOk9rHi
-         j6tw==
+        h=mime-version:reply-to:date:message-id:subject:from:to;
+        bh=gGjWAZ/eE2OEcARbvBk/E248hW+KMqbXfavIOtPJ0H8=;
+        b=uPXraJtL4ccjSmkJDa1CSAgacWNzPZ28VlW7VY5APvzvK+Stp2DBLDcONYMDFBc8ne
+         7kXd8xRHQLguOaAAwKX8Uj7qyDGKt6YOroERdi0XStAVXWkZjK0DZDfzZdurx6A0VFL1
+         IsyCyKCuStsjZtXRbrs/FJP01clVFd4zlOPA+Jf0keoXAfUq1GCAjRpu/NwtwgaZqlUF
+         dkQfsiwOjv6pYD+fwmhzkx+m0FeQ9nqw3R6Fhwphh6CcBPARbwWEqS1A7foehjNTbY0F
+         5yR5UVdXgQiKKXkV1LN3BU419JmntQ2SZygzPh0mSNz5yapAXRpTOcKdpSW7YJE0y92g
+         PZtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=DGk/FGfpc53nxZGxFGeL3Yp3Vu1HdsrKoe54JeadCY8=;
-        b=KyBu8/G5QQQXA56ULzyzCe8Ke2Z1Zk02d16JlHbe3sNDKswDJ66JHxPsO+iHzlP1XN
-         VOlst0tWwOxXJfwcoVC8xoTwu6pWLJtmYwhfCI4pqmOhkvv7FH61YB2+4KdSc3wWcumu
-         OSdHa8tE+3bFl+4G/k5suv/9YBw4fqDJuzgH1NW7z+lBoHpVancDA4zsxzVgfsL4IevV
-         B6bgF/VxK0RQ6uFm0B4ox6PXN3S97RhnpOuqf54Gcml0slMpROzzTaX9Hde+QaBm95ug
-         GQIJ82uYpanjA6C5nqH/llxHnQkebd4dxls9e41Y2Em6OU47BQFn+ux/PdXeZVrfDnm0
-         v/4w==
-X-Gm-Message-State: AD7BkJIaBOlMWF4Y+A7gWslScgY6y6ptBXDk7dzAOL0xlINGkjH/tPfUdZuYhMTZ4uA/Bw==
-X-Received: by 10.98.69.75 with SMTP id s72mr31091281pfa.66.1460360933454;
-        Mon, 11 Apr 2016 00:48:53 -0700 (PDT)
-Received: from smtp.gmail.com (c-24-6-246-163.hsd1.ca.comcast.net. [24.6.246.163])
-        by smtp.gmail.com with ESMTPSA id q20sm33791929pfi.63.2016.04.11.00.48.52
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Mon, 11 Apr 2016 00:48:53 -0700 (PDT)
-Received: by smtp.gmail.com (Postfix, from userid 501)
-	id 782339310503; Mon, 11 Apr 2016 00:48:50 -0700 (PDT)
-X-Mailer: git-send-email 2.7.3
+        h=x-gm-message-state:mime-version:reply-to:date:message-id:subject
+         :from:to;
+        bh=gGjWAZ/eE2OEcARbvBk/E248hW+KMqbXfavIOtPJ0H8=;
+        b=S/cOnPTWzPSkh9yTeyFdIvWMow9VgK+HDBbOnErJAqBtYRxxrGLK/Pc4BxVlLlDtad
+         TPQUtUOcSp/OVZryOCFX5jWNHshf+iVN/v7+yKXfKghhBPlKaTbvUAifGDB5+cJBJtuR
+         tOszgrDjaLSJfQ/ILd674fDosmkMdDLa1mYtrMbXm50eq9CDKRJ8SvnXRkgaUA6RM2pF
+         te2unQkwqSPyXyqI2SNgWMid71LK/6Jg1i25YDVcYn0AHLaf2gm9FUPj/E/kLojpwHys
+         kSuUqqyhQp0HU7OXGhlKw12EciV7qknUcLnGWKdkmI8CkGW81TnaCotG4NNaYBmTGrH/
+         X4cw==
+X-Gm-Message-State: AD7BkJI/pjLZhFHIOMrrWrH3HWVSElVwZUPeQyGtVGZMM3vROn+SVwfo5fpFnsRDJJHFI4aXlMescSKca/O3Gg==
+X-Received: by 10.112.235.5 with SMTP id ui5mr8187012lbc.111.1460361782779;
+ Mon, 11 Apr 2016 01:03:02 -0700 (PDT)
+Received: by 10.25.87.2 with HTTP; Mon, 11 Apr 2016 01:03:02 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291207>
+X-Spam-Report: 11.3 points;
+ *  1.8 SUBJ_ALL_CAPS Subject is all capitals
+ *  2.2 DEAR_SOMETHING BODY: Contains 'Dear (something)'
+ *  1.1 NA_DOLLARS BODY: Talks about a million North American dollars
+ *  1.2 US_DOLLARS_3 BODY: Mentions millions of $ ($NN,NNN,NNN.NN)
+ *  2.0 ADVANCE_FEE_2 Appears to be advance fee fraud (Nigerian 419)
+ *  1.4 ADVANCE_FEE_3 Appears to be advance fee fraud (Nigerian 419)
+ *  1.5 ADVANCE_FEE_4 Appears to be advance fee fraud (Nigerian 419)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291208>
 
-The pkt-line format mandates: "a sender should include a LF, but the
-receive MUST NOT complain if it is not present." This patch
-is not absolutely necessary since receivers handle the missing the LF,
-but this patch adds it for good measure.
+Dear Sir/madam,
 
-Signed-off-by: Stan Hu <stanhu@gmail.com>
----
- fetch-pack.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+With due respect and to the glory of Almighty God whom we worship I
+call upon you to assist my family.
+Please Permit me to inform you of my desire of going into business
+relationship with you.
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index f96f6df..77299d9 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -330,7 +330,7 @@ static int find_common(struct fetch_pack_args *args,
- 	if (is_repository_shallow())
- 		write_shallow_commits(&req_buf, 1, NULL);
- 	if (args->depth > 0)
--		packet_buf_write(&req_buf, "deepen %d", args->depth);
-+		packet_buf_write(&req_buf, "deepen %d\n", args->depth);
- 	packet_buf_flush(&req_buf);
- 	state_len = req_buf.len;
- 
--- 
-2.7.3
+My name is Tema Williams,The only Son of late Chief PATRICK WILLIAMS.
+My father was a very wealthy cocoa merchant in Abidjan but we are from
+Sierra Leone
+After my Father death I and my Family move to South Africa as refugee.
+
+My father was poisoned to death by his business associates on one of
+their outings on a business trip. Before his death in a private
+hospital in Abidjan he secretly called me on his bed side and told me
+that he has the sum of ($12.000,000 MILLION US DOLLAR) kept with a
+security and finance company in South Africa,He also explained to me
+that it was because of this wealth that he was poisoned by his
+business associates,that I should seek for a beneficiary in any
+country of my choice where I will transfer this money and use it for
+investment.I am honorably seeking for your assistance to transfer our
+fund out of South Africa.Upon the successful transfer of this fund,we
+shall make arrangement for me,my mother and younger sister to come
+over to your country to further our Education and invest in a
+profitable business that you may suggest.
+
+More over,I am willing to offer you 20% of the total sum as
+compensation for your effort/input after the successful transfer of
+this fund into your nominated bank account overseas.
+
+As we depend on God, and with God all things are possible.
+Anticipating to hear from you today.
+
+Thanks and God bless.
+PLEASE CALL ME +27787597591
+
+
+Best regards,
+
+Tema Williams
+(for the family)
