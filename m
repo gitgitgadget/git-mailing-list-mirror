@@ -1,73 +1,64 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: (unknown)
-Date: Mon, 11 Apr 2016 19:02:40 +0300
-Message-ID: <20160411160240.GA7721@redhat.com>
+From: Isaac Levy <isaac.r.levy@gmail.com>
+Subject: Default authentication over https?
+Date: Mon, 11 Apr 2016 12:04:02 -0400
+Message-ID: <CAPf1peAW11hZpN6_ztA62tcu6mgCfV3VwwjjtXT5yySUPD9Qpw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, bafain@gmail.com, sunshine@sunshineco.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Apr 11 18:02:49 2016
+Content-Type: text/plain; charset=UTF-8
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 11 18:04:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1apeIZ-0005uG-9k
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Apr 2016 18:02:47 +0200
+	id 1apeKW-0006nt-BT
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Apr 2016 18:04:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753318AbcDKQCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2016 12:02:43 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:60103 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753134AbcDKQCn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2016 12:02:43 -0400
-Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mx1.redhat.com (Postfix) with ESMTPS id 9B93037C101;
-	Mon, 11 Apr 2016 16:02:42 +0000 (UTC)
-Received: from redhat.com (vpn1-5-155.ams2.redhat.com [10.36.5.155])
-	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id u3BG2eMZ017274;
-	Mon, 11 Apr 2016 12:02:41 -0400
-Content-Disposition: inline
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+	id S1755197AbcDKQEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2016 12:04:44 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:34756 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752838AbcDKQEn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2016 12:04:43 -0400
+Received: by mail-ig0-f170.google.com with SMTP id gy3so85286062igb.1
+        for <git@vger.kernel.org>; Mon, 11 Apr 2016 09:04:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=ZT9nm7Eek04hhiWFDeuGttAUikJbC/CndkTUv0YnT78=;
+        b=lgUPg7HkgLCWSjMbMwh1CUVZvkKX5ZTsnfzIP1cMTrjZR130N0sOcj19M4UHwwO5+o
+         4y8j4tVKKVTrjuu9HOPrk1Kb+2D7s9xMDs+3D7qAOtlI37wCoIV9CM2ydu3WZW9wLvJH
+         6/9jGuAeaqNqbM+pivcmOHAnlYXlKhEDsep2Ia7cTRCJhQIYb/bglW4l42ldXrMDANMO
+         MDapr4HikgUDJcXLRAxOUen3uExLAnUNGNVBT7Km7yqGQnJCibblS2XNYkGBr7YfqC/Y
+         eQ+3/5RoTMUQQ/HlTHEpd+7u5zHFSWFNfScbKBtJ4rkhZIvxoY6AE2/LBmivC5vpvjxl
+         08nQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=ZT9nm7Eek04hhiWFDeuGttAUikJbC/CndkTUv0YnT78=;
+        b=goN4dZjKxV7Z/VwO/vGx6Hcd84fyCYdRSLdN+1G8xjw2Sstv6woLGR54kRMOaRAcfV
+         sHMO/XAZb5NtJHEKlzoJnjkuVyE2P2rA5u1g+wHfPHlBeC5c8bpa/HTCPwlA2qCq3I80
+         4Kfq1+E8JF+ubww27IhExH4Fzc3RhcxXtWzxG5ZxS0jjlrmyp4QrSCsXwu4sKffODCCj
+         bUG2JpyY1pksaYtXjfXik+RW3kgL14zOvU0MWhJ72ax3OXQWKq0EIV+0nh9P3tI78x/b
+         ZpkI9ZTVM2uWoScHFsnxgrxd96s4fBKjuQil+V64VN0FXLBLuTp2RC3trU5JsISj/uZ8
+         e2KQ==
+X-Gm-Message-State: AOPr4FXqA+9Z01YWNN21uMzJEK5zK1c4QilK7WL2O2fV3gWuPT8g9QSXmRA6XI33pYvRUsK8aBQJulygH9PvPQ==
+X-Received: by 10.50.226.179 with SMTP id rt19mr9138344igc.36.1460390682332;
+ Mon, 11 Apr 2016 09:04:42 -0700 (PDT)
+Received: by 10.107.41.202 with HTTP; Mon, 11 Apr 2016 09:04:02 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291218>
 
-Cc junio
-Bcc: 
-Subject: Re: [PATCH 1/4] rebase -i: add ack action
-Message-ID: <20160411184535-mutt-send-email-mst@redhat.com>
-Reply-To: 
-In-Reply-To: <alpine.DEB.2.20.1604111736060.2967@virtualbox>
+Hi all,
 
-On Mon, Apr 11, 2016 at 05:36:45PM +0200, Johannes Schindelin wrote:
-> Hi Michael,
-> 
-> On Mon, 11 Apr 2016, Michael S. Tsirkin wrote:
-> 
-> > So far I only see examples of adding footers. If that's all we can think
-> > up, why code in all this genericity?
-> 
-> Because as far as I can see, the only benefitor of your patches would be
-> you.
-> 
-> Ciao,
-> Johannes
+I use a git server which requires authentication over https. Git seems
+determined to always try an unauthenticated request first, slowing
+down operations by a couple seconds.
 
-This seems unlikely.  Just merging the patches won't benefit me directly
-- I have maintained them in my tree for a couple of years now with very
-little effort.  For sure, I could benefit if they get merged and then
-someone improves them further - that was the point of posting them - but
-then I'm not the only benefitor.
+Is there a way to configure git to default to authenticated requests?  Thanks!
 
-The workflow including getting acks for patches by email is not handled
-well by upstream git right now.  It would surprise me if no one uses it
-if it's upstream, as you seem to suggest.  But maybe most people moved
-on and just do pull requests instead.
-
--- 
-MST
+Regards,
+Isaac Levy
