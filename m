@@ -1,88 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fetch-pack: Add missing line-feed character when sending depth-request packet line
-Date: Tue, 12 Apr 2016 15:31:50 -0700
-Message-ID: <xmqqpotuo3vt.fsf@gitster.mtv.corp.google.com>
-References: <1460360928-95956-1-git-send-email-stanhu@gmail.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Migrating away from SHA-1?
+Date: Tue, 12 Apr 2016 15:38:04 -0700
+Message-ID: <570D78CC.9030807@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Stan Hu <stanhu@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 13 00:32:02 2016
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 13 00:38:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aq6ql-0007LJ-IK
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 00:31:59 +0200
+	id 1aq6x7-0001Th-Tc
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 00:38:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966059AbcDLWby (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2016 18:31:54 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:52996 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S965013AbcDLWbx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2016 18:31:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 385E6553B7;
-	Tue, 12 Apr 2016 18:31:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=C1g1uU0sFyNLXZma7VoRkJbQxjc=; b=BitzJv
-	QCJVqIUUlI+9CDqXmeOEXQRx0opiDpvMp1altkujN4GKm9gEUuugQAFOA0gZLEhf
-	csuUYmuxlQWleha4aZ3deGZwR2OsGT83Eu/q1vbhjV9toeUPyf4i+X6d3dmj/67S
-	+aFA5mrPqrb1Umt/0PnRf7xWGYTtsWYeNQXRg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XhjyjO8yDNOGJFJxHtYGo3eX96YgjqpZ
-	VJS2IAWKK3cbIKiA29daVdkUQLpJcQaom4mPCMg+S6DD3iL+9w3w6khz04qd2e2l
-	e/DXuknOEbUka1x6dTVntUHwtkXj0v1HsLvFqHFQt0lUiA0D/LqY6eZwm2IYJ818
-	vwQLhDW4B7Q=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 30377553B5;
-	Tue, 12 Apr 2016 18:31:52 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A87A9553B4;
-	Tue, 12 Apr 2016 18:31:51 -0400 (EDT)
-In-Reply-To: <1460360928-95956-1-git-send-email-stanhu@gmail.com> (Stan Hu's
-	message of "Mon, 11 Apr 2016 00:48:48 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5A3CF8CA-00FE-11E6-A769-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S966538AbcDLWia (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2016 18:38:30 -0400
+Received: from terminus.zytor.com ([198.137.202.10]:43626 "EHLO mail.zytor.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S966404AbcDLWi3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2016 18:38:29 -0400
+Received: from carbon-x1.hos.anvin.org ([67.51.76.21])
+	(authenticated bits=0)
+	by mail.zytor.com (8.15.2/8.14.5) with ESMTPSA id u3CMcAIl008707
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+	Tue, 12 Apr 2016 15:38:22 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291305>
 
-Stan Hu <stanhu@gmail.com> writes:
+OK, I'm going to open this can of worms...
 
-> The pkt-line format mandates: "a sender should include a LF, but the
-> receive MUST NOT complain if it is not present." This patch
-> is not absolutely necessary since receivers handle the missing the LF,
-> but this patch adds it for good measure.
+At what point do we migrate from SHA-1?  At this point the 
+cryptoanalysis of SHA-1 is most likely a matter of time.
 
-s/since receivers handle/since receivers are expected to handle/;
+For existing repositories we will need to have a migration mechanism. 
+Since we can't modify objects without completely invalidating the 
+cryptographic properties, what I would suggest is that we leave the 
+existing objects as is, with a persistent lookup table from SHA-1 to 
+<new hash>, and have that lookup table signed (e.g. GPG) by the person 
+responsible for converting the repository.  This freezes the 
+cryptographic status of the existing SHA-1 objects at the time the 
+conversion happens.  This is a very good reason to do this before SHA-1 
+is actually broken  In contrast. SHA-2 has been surprisingly resistant 
+to cryptoanalysis, to the point that SHA-3 was motivated by performance 
+and the desire to have a well-tested function based on entirely 
+different principles should a generic attack against the common 
+structure of MD5/SHA-1/SHA-2 would ever be found.
 
-Have you checked various re-implementations of upload-pack to see
-which one will break with this change, and made them aware about
-their non-compliance?
-
->
-> Signed-off-by: Stan Hu <stanhu@gmail.com>
-> ---
->  fetch-pack.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index f96f6df..77299d9 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -330,7 +330,7 @@ static int find_common(struct fetch_pack_args *args,
->  	if (is_repository_shallow())
->  		write_shallow_commits(&req_buf, 1, NULL);
->  	if (args->depth > 0)
-> -		packet_buf_write(&req_buf, "deepen %d", args->depth);
-> +		packet_buf_write(&req_buf, "deepen %d\n", args->depth);
->  	packet_buf_flush(&req_buf);
->  	state_len = req_buf.len;
+	-hpa
