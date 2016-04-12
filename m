@@ -1,96 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v13 2/6] test-parse-options: print quiet as integer
-Date: Tue, 12 Apr 2016 16:11:45 -0700
-Message-ID: <xmqqd1puo21a.fsf@gitster.mtv.corp.google.com>
-References: <01020153faf9fc14-e6ad18fa-c892-4601-bab7-e2cc4cd9e100-000000@eu-west-1.amazonses.com>
-	<01020153faf9fcbb-adadd774-db3a-43ce-b908-d08ac1312b31-000000@eu-west-1.amazonses.com>
-	<xmqq60vmpl5c.fsf@gitster.mtv.corp.google.com>
-	<CAFZEwPPSY+k9qc8hZ685o9_U3UktbgK-e00zrG2+7GehG-47dQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Migrating away from SHA-1?
+Date: Tue, 12 Apr 2016 19:15:19 -0400
+Message-ID: <20160412231518.GA2210@sigill.intra.peff.net>
+References: <570D78CC.9030807@zytor.com>
+ <CAGZ79kaUN0G7i0GNZgWU7ZzJvWY=k=Rc6tqWvJsTu8gcRhP5bA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 13 01:11:54 2016
+Content-Type: text/plain; charset=utf-8
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Apr 13 01:15:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aq7TN-0006PB-78
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 01:11:53 +0200
+	id 1aq7Wo-0007dh-No
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 01:15:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030402AbcDLXLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2016 19:11:49 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:54210 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932523AbcDLXLs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2016 19:11:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5E96E55D49;
-	Tue, 12 Apr 2016 19:11:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qzEN3w7HO0rMSqhYJ+ztmFfPYUw=; b=g3iHNl
-	jnK1GjkGkBUA2rWkeTGS5vTJkx5izPa1aUOAI8jRmhT8rGcnjQIx8RLf0KlPL3jT
-	VomMphuGtcSMMhL2FxOnpY0MFmxm7GdTDD/ooeQa2FmsjhoCzMUTNc0X3v+/w4ia
-	Iv3F76BUDWMjGq4l4wkXT6qSRZX6PbBUBlHpg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=T5h/Y2xOroLl85ll1lYQ2kxAe/OuAFux
-	IqQT/BRYb2yrHn4RrTFA45IW7n96iBysjgXws5LusdX99WhM16XTsBMKcmp+zCqk
-	F92FxkPblm+9uBhjA1xWq2Bjmt4Bw4lJPrfqyF9iUggYBwi4A92VCO53bAWzZcew
-	boHAc6ZyIQw=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 54C3A55D47;
-	Tue, 12 Apr 2016 19:11:47 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CFF5B55D46;
-	Tue, 12 Apr 2016 19:11:46 -0400 (EDT)
-In-Reply-To: <CAFZEwPPSY+k9qc8hZ685o9_U3UktbgK-e00zrG2+7GehG-47dQ@mail.gmail.com>
-	(Pranit Bauva's message of "Wed, 13 Apr 2016 03:46:28 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: EDDDD2AC-0103-11E6-AE2B-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S932781AbcDLXPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2016 19:15:22 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48283 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756403AbcDLXPW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2016 19:15:22 -0400
+Received: (qmail 14143 invoked by uid 102); 12 Apr 2016 23:15:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Apr 2016 19:15:21 -0400
+Received: (qmail 11940 invoked by uid 107); 12 Apr 2016 23:15:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Apr 2016 19:15:26 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Apr 2016 19:15:19 -0400
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kaUN0G7i0GNZgWU7ZzJvWY=k=Rc6tqWvJsTu8gcRhP5bA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291320>
 
-Pranit Bauva <pranit.bauva@gmail.com> writes:
+On Tue, Apr 12, 2016 at 04:00:18PM -0700, Stefan Beller wrote:
 
-> On Wed, Apr 13, 2016 at 3:03 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Pranit Bauva <pranit.bauva@gmail.com> writes:
->>
->>> Current implementation of parse-options.c treats OPT__QUIET() as integer
->>> and not boolean and thus it is more appropriate to print it as integer
->>> to avoid confusion.
->>
->> There is no "confusion" factor involved, as we do not use native
->> "boolean" type in our C code.  IIUC, the reason why we want to do
->> this is because we may want to see how it would affect the value of
->> the underlying variable to give multiple --quiet options from the
->> command line, which is a policy issue (i.e. we want to allow
->> commands to react to multiple quiet options differently), not an
->> implementation one (i.e. "current implementation happens to use
->> integer").
->>
->>         We would want to see how multiple --quiet options affect the
->>         value of the underlying variable (we may want "--quiet --quiet"
->>         to still be 1, or we may want to see the value incremented
->>         to 2).  Show the value as integer to allow us to inspect it.
->>
->> perhaps?
->
-> This commit message does look a lot better. I will re-roll this.
+> On Tue, Apr 12, 2016 at 3:38 PM, H. Peter Anvin <hpa@zytor.com> wrote:
+> > OK, I'm going to open this can of worms...
+> >
+> > At what point do we migrate from SHA-1?  At this point the cryptoanalysis of
+> > SHA-1 is most likely a matter of time.
+> 
+> And I thought the cryptographic properties of SHA1 did not matter for
+> Gits use case.
+> We could employ broken md5 or such as well.
+> ( see http://stackoverflow.com/questions/28792784/why-does-git-use-a-cryptographic-hash-function
+> )
+> That is because security goes on top via gpg signing of tags/commits.
+> 
+> I am not sure if anyone came up with
+> a counter argument to Linus reasoning there?
 
-You need to pick which one you want inside the (parentheses),
-though.  After reading 3/6 I am guessing that that you wanted the
-latter.
+I have never understood that reasoning at all, nor why it is so often
+repeated.
 
-> Should I just send an update of this patch or the whole series?
+The GPG signature is over a single object, that mentions other objects
+by their sha1 ids. But users don't care that v1.0 is securely mapped to
+tree 1234abcd. They care which files are in 1234abcd, and if sha1 is
+broken, it means you can't credibly verify the content down to the blob
+level.
 
-The latter, for a series this small.
+There's some additional protection in that git generally prefers objects
+it already has to new ones. So it's hard to reliably distribute your
+evil colliding object, depending on where people might have fetched
+from first. But:
 
-Thanks.
+  1. I know there's at least once race[1] where a colliding object can
+     still enter the repository. There may be more that have either
+     existed all along, or that have grown over the years. I don't think
+     this is something we've paid attention to and tested.
+
+  2. That helps some people, I guess, but it's little consolation to
+     somebody who runs "git clone" followed by verifying the tag.
+
+-Peff
+
+[1] The race I am thinking of is that for performance reasons, we don't
+    re-scan the pack directory when index-pack checks has_sha1_file()
+    on an incoming object and it comes up negative. So if somebody else
+    is repacking, we might skip the collision check in such a case. At
+    least that race is not under control of an attacker, though.
