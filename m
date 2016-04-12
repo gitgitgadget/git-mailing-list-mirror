@@ -1,78 +1,98 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2 12/21] bisect: replace clear_distance() by unique markers
-Date: Wed, 13 Apr 2016 01:20:54 +0200
-Message-ID: <CAP8UFD3ORx9dgWUo81BocTrpKSOdAHV-DUYTZAynH70SD2bqbQ@mail.gmail.com>
-References: <1460294354-7031-1-git-send-email-s-beyer@gmx.net>
-	<1460294354-7031-13-git-send-email-s-beyer@gmx.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-p4.py: Make submit working on bare repository
+Date: Tue, 12 Apr 2016 16:25:33 -0700
+Message-ID: <xmqqtwj6mmtu.fsf@gitster.mtv.corp.google.com>
+References: <CAPig+cQA4sJ2RneG8zRsUx+bDPAMYVtmhFjZx5SOGDqnsKNUaQ@mail.gmail.com>
+	<1455919074-5683-1-git-send-email-aidecoe@aidecoe.name>
+	<xmqq7fi0b9rt.fsf@gitster.mtv.corp.google.com>
+	<87fuwnd4u7.fsf@freja.aidecoe.name>
+	<xmqqbn7aa522.fsf@gitster.mtv.corp.google.com>
+	<877fhwd1g0.fsf@freja.aidecoe.name>
+	<xmqqegc33oal.fsf@gitster.mtv.corp.google.com>
+	<CAE5ih7_vBMsi+zRZRTCaO56VrOYZUR0NQ0CSSE+Do48xkJ_BwA@mail.gmail.com>
+	<871t83cfi7.fsf@freja.aidecoe.name>
+	<CAE5ih7-rBuipoAGEnK60iidi1nYA9xWZQV6jRMHTVQe6f=cQag@mail.gmail.com>
+	<87si0cpnpn.fsf@freja.aidecoe.name>
+	<CAE5ih7-q_PwF-T6nsu=FyyN9wO6o0Jcfkg=gKy5mhOXRGFZ+VA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Wed Apr 13 01:21:00 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Amadeusz =?utf-8?B?xbtvxYJub3dza2k=?= <aidecoe@aidecoe.name>,
+	Git Users <git@vger.kernel.org>
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Wed Apr 13 01:25:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aq7cC-0001FN-CO
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 01:21:00 +0200
+	id 1aq7gk-00030I-0b
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 01:25:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966690AbcDLXU4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2016 19:20:56 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:36577 "EHLO
-	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965202AbcDLXUz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2016 19:20:55 -0400
-Received: by mail-wm0-f47.google.com with SMTP id v188so145294590wme.1
-        for <git@vger.kernel.org>; Tue, 12 Apr 2016 16:20:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=SQveGqc0M5OGNGT8HqzSN5FWWEY8s3DOqqEkTg623co=;
-        b=0iDbbQ9EDr8msGlFq/Q5yL0IT5s0leSEHi3/KpL4Q7HLf3rfeRXtn6LDK+EdrI4Vpo
-         zxVysCMuIuZ2Uz1aJ2GywF8Aea2PhXsGOfAttQk9+gnquGOWdsJ0l8qWLyUpRe3gWy7X
-         DXYFCVvIPDHSbo/Kc/NJfMVfcA2pLDLrYQw15BrfRDQSccZI1H/Yf5N7zgTbV189aG+B
-         n1qd7NwhABbPNB3sM2mLuUPeS7fdPbQ4XCfQ9OMU7evYYobAzNM4I4Mq0Pl0G2vAmbT7
-         /fbVkUB6uovMRGMgIPXy9QPp4PikgFrOkDOmf02+1zJoAjejXi8dfuBIHI3U5xi4Srxy
-         xLHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=SQveGqc0M5OGNGT8HqzSN5FWWEY8s3DOqqEkTg623co=;
-        b=YYQ6C3Ixg0MhyNmoZwa3uavvG3jd7/Ipqwz/YMHDZ1UauGnFzSxS7W6+yn8qTLowKU
-         tzia1Xk9SffJlheLZhZNYpvQ8/HRTsL/Qod79wPrkAd8Tjb4Ihzu4DJR6ZgZMOJ9NXhx
-         68JWLYUh1Sf13nFWbNwjMwrf5djEuSP0XZAhVVr+Nu6rvrmJ2iDInwpQsaB4Cuytv/pv
-         S7cJ+UW+e7WwsrDmGRGA+BGHH2J3tLGZIwNaAehjtsNCz8QIFsioD5MLNC1KhJ+GJNj1
-         IZCNHofCiY9oj9i4uHmMvr+OinSGvr5tnHXJYTDlB/OrIz9kcRlNe0CE2JxSZoKMzGMG
-         45rw==
-X-Gm-Message-State: AOPr4FXs5xjVzK4SnTltNO9xq5jRjee41eqsjK2qg5k1CenvpxRoO3PbQmUkyGFFD+JisRIk6JxNOsjCa2MLEg==
-X-Received: by 10.194.21.102 with SMTP id u6mr6290452wje.124.1460503254500;
- Tue, 12 Apr 2016 16:20:54 -0700 (PDT)
-Received: by 10.194.95.129 with HTTP; Tue, 12 Apr 2016 16:20:54 -0700 (PDT)
-In-Reply-To: <1460294354-7031-13-git-send-email-s-beyer@gmx.net>
+	id S934423AbcDLXZh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Apr 2016 19:25:37 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:57171 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933934AbcDLXZg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Apr 2016 19:25:36 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2CFFC551CF;
+	Tue, 12 Apr 2016 19:25:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=CE4QXGavtapY
+	NpGW9ft4YRw/umM=; b=rE1RUysM+Kxwo2chuh7vXMsoC3/XXYTglG3/cXb2rVQC
+	db0KUAwJfEYQMGkrpjd9hkP6jGzytdXuPUWNR71NPkysjG+CFBhW4/LTZEGD6sFP
+	QRNbpUOzeou4c0QzsFA2jgy24Ulp1+1709KBdN4DZPo07h58bXr2vr5nBUjQGKE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=xIOygz
+	Jdl89LoPMSarTPgn/SheLdhbkRxMjQZaBkD5BesnYTACNmCGDTYWxvdxCH86aiSx
+	5Wv58wnAMkTA3LOBEzuONjgTJXOMOxjbbvFiLt8Aog61m7vhsI2hNzFWbaX0iP5u
+	utvh80uwMq78RhV+s/ASXU6mjC3xDNaGiQ+S0=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2386C551CE;
+	Tue, 12 Apr 2016 19:25:35 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 921D7551CB;
+	Tue, 12 Apr 2016 19:25:34 -0400 (EDT)
+In-Reply-To: <CAE5ih7-q_PwF-T6nsu=FyyN9wO6o0Jcfkg=gKy5mhOXRGFZ+VA@mail.gmail.com>
+	(Luke Diamand's message of "Mon, 29 Feb 2016 15:29:02 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: DB3DD2DA-0105-11E6-8002-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291325>
 
-On Sun, Apr 10, 2016 at 3:19 PM, Stephan Beyer <s-beyer@gmx.net> wrote:
+Luke Diamand <luke@diamand.org> writes:
+
+> On 28 February 2016 at 20:46, Amadeusz =C5=BBo=C5=82nowski <aidecoe@a=
+idecoe.name> wrote:
 >
-> @@ -123,10 +116,9 @@ static void show_list(const char *debug, int counted, int nr,
->                 const char *subject_start;
->                 int subject_len;
+>>
+>> True. For now I have these cases covered by wrapper scripts. The min=
+imum
+>> I need from git-p4 is just not to fail on git submit from bare
+>> repository which is covered by patch I have submitted. If I get my
+>> solution enough testing, I'd think of transforming it into patch for
+>> git-p4.py as well.
 >
-> -               fprintf(stderr, "%c%c%c ",
-> +               fprintf(stderr, "%c%c ",
->                         (flags & TREESAME) ? ' ' : 'T',
-> -                       (flags & UNINTERESTING) ? 'U' : ' ',
-> -                       (flags & COUNTED) ? 'C' : ' ');
-> +                       (flags & UNINTERESTING) ? 'U' : ' ');
+> Could you change the patch to add a command-line option to suppress
+> the rebase? I think this would be a bit more obvious: instead of
+> having some special magical behaviour kick-in on a bare repo, git-p4
+> just does what it's told on the command-line.
+>
+> It means that if we find another situation where we don't want to
+> rebase, we don't have an ever-growing list of special-case
+> circumstances, which could become hard to make sense of in future.
+> Instead, the user (who hopefully knows better) just tells git-p4 what
+> to do.
 
-Maybe node_data(commit)->marked could be printed instead of  'C' or ' '.
+Has anything happened to this topic after this?  I am wondering if I
+should discard the topic az/p4-bare-no-rebase without prejudice.
 
->                 if (commit->util)
->                         fprintf(stderr, "%3d", node_data(commit)->weight);
->                 else
+Thanks.
