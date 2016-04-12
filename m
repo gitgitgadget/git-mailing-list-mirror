@@ -1,104 +1,87 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re:
-Date: Mon, 11 Apr 2016 21:33:07 -0700
-Message-ID: <CAGZ79kYD7o3O_-zSGD24_DUy9hDc9=u6pPYXOOWp+-i-PW7vjQ@mail.gmail.com>
-References: <001a11492f107354a305303a369a@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Mike Williams <miwilliams@google.com>
-X-From: git-owner@vger.kernel.org Tue Apr 12 06:33:15 2016
+From: Stan Hu <stanhu@gmail.com>
+Subject: [PATCH] upload-pack: Exit when server finishes sending shallow-update in stateless RPC mode
+Date: Mon, 11 Apr 2016 21:55:40 -0700
+Message-ID: <1460436940-16165-1-git-send-email-stanhu@gmail.com>
+Cc: git@vger.kernel.org, Stan Hu <stanhu@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Apr 12 06:55:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1apq0o-0003l3-Rx
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 06:33:15 +0200
+	id 1apqMi-0001nM-CS
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 06:55:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751823AbcDLEdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2016 00:33:10 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:35314 "EHLO
-	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751181AbcDLEdI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2016 00:33:08 -0400
-Received: by mail-io0-f178.google.com with SMTP id g185so13450006ioa.2
-        for <git@vger.kernel.org>; Mon, 11 Apr 2016 21:33:08 -0700 (PDT)
+	id S1752008AbcDLEzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2016 00:55:47 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:33194 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751399AbcDLEzr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2016 00:55:47 -0400
+Received: by mail-pa0-f43.google.com with SMTP id zm5so6194536pac.0
+        for <git@vger.kernel.org>; Mon, 11 Apr 2016 21:55:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=T+OtT4Csm4grY0CKFKSEK9hO/O5Xchx7L8WESOMyO0Y=;
-        b=nbl8sLdG7S12XY5j25qD3jf2AKdHncoPn1YS/DlDA97w3rXwmps9/R4949H3vRj1AO
-         TY27KY4YibV56OXmE6hxkgE90c3S2RV538uiaSA7R2TBGDTw4UEhgVrF9CjACfysdzsQ
-         P7t0jvSuyqWBUuRY6k4Hs3wL2SOqr9BmYp9XscWlzZr/YzhLeZqzmqwi4q9M9hjKRAd9
-         ammFB7hIWDen8EeKfk9bV3m0JN52xJ1CiK4nubbtjXI0Yb+MBaTLaOHHe5R5ImH8Lxo6
-         T4G7oGPTnrDsrUo/tbbHak630dXKUwYAmgWIbNDvNoCNq6TY0BalltoFt7RU36+cJOpI
-         XhrA==
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=M/CiaMmO/6FHphlsMx+tvRuCF8QztrKtYDyZmK0CfZE=;
+        b=v1FYK7SRh2pKCxLi3W/hnz/RtM3A6R00Am5mPJbIVvYYkULv1tip2pr4LiZ/Tto5d4
+         mdSldL6Bl51+vuYfShBjqF9jSCB8WLe0NGkR7ue4GCN1OvCqZhTq+0ckGz81jH+ZeEZ6
+         mRwma9sTa44IIeAp9YvdnQZZZ2wq2WdTJwaH5b8t0uwyvpp1eSdiAUtujv3cT7FR/YqZ
+         Djuem5pMhZndv8HLg6n1AAh2rH83jYFmsjGBcy1opjQl5ujMWkQPTeEMb/Mip7HI2d8T
+         zLZkomYaGcrGyK9LxaNpH04uJ553GfvPR6mX2M96uXrmcDsCEKfQSzpe2dCW+fXSsJ+9
+         vO0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=T+OtT4Csm4grY0CKFKSEK9hO/O5Xchx7L8WESOMyO0Y=;
-        b=GBsaGi95ctXd+ddBcudajCXRYs3RLFq+WmzwUHp9jAbW5AqCwKEMVVWuEMWk2KrF3A
-         cWFqw6ZlM6sk+X1rC63DiQhsJQZ8IWeND3m3ZYYq5N9uU5iFFsbhjkVTigi+7k8itWlq
-         qtJF1jA50x2FIa1TXNIu/kVaLDrHrjStCQ9WQHOouh1fBtOFzuyaxHdxdL210/TjZtER
-         wdI0gLv1G6uLvKvyFyNAbufshXh039hXZbKrGPzG04se5dn9cM2Ot7XM1+I8SOQ6Hlvb
-         rHy3WIom6WmyO7rfv+K3+Eu63R0yWrh4ENlu6AZzJHp4UENDq7hBz0+lTvvdaRYYLKkU
-         o7KQ==
-X-Gm-Message-State: AOPr4FXErM9UmRrNY4g2RXCnfxbOykG2DmZ9q7Q8FIdnAtSYH9hjD9/TmnW6P/29k/kOthV/Y5I3A0/JA0Mobon3
-X-Received: by 10.107.184.8 with SMTP id i8mr1573856iof.96.1460435587831; Mon,
- 11 Apr 2016 21:33:07 -0700 (PDT)
-Received: by 10.107.17.27 with HTTP; Mon, 11 Apr 2016 21:33:07 -0700 (PDT)
-In-Reply-To: <001a11492f107354a305303a369a@google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=M/CiaMmO/6FHphlsMx+tvRuCF8QztrKtYDyZmK0CfZE=;
+        b=g/iYLQc15O3Vcp03nyievVLbzHFBrdVY4GuAECgibU17DyaRNT5//G3aS0C9tpdYOp
+         9vN2ONuYkw9lpZl5zbqupApUptlh+LDdguSJpZUWQIFUB1wse6dWKb9XNfjJZspdnIYY
+         fq5JtQBCbgOzBtLaJKnHXd0FpFE38WrfikbiXc4LGR6NpU+iGrEoPAk+zM4G7tkiT8zb
+         8EN8toj5fKiLHL0/sv5NAxBsyf3Zz7mB35jiosR0zFmIbjAbL7AfG0u7YSOK/gDue/VE
+         4VyKDInR1ojph/8JelNZyB3VYOJwv/Q2keePA+8XnSarQMO1voM/ly1L22TixG2aBbfh
+         guMQ==
+X-Gm-Message-State: AOPr4FW5GZUjIAtN15Qw1hdHnrs9HrLi7ekYjMbHBQKypci30cCK3c9CTPNz5rmwdpB49A==
+X-Received: by 10.66.33.1 with SMTP id n1mr1771547pai.65.1460436946066;
+        Mon, 11 Apr 2016 21:55:46 -0700 (PDT)
+Received: from smtp.gmail.com (c-24-6-246-163.hsd1.ca.comcast.net. [24.6.246.163])
+        by smtp.gmail.com with ESMTPSA id z68sm39712152pfi.19.2016.04.11.21.55.44
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Mon, 11 Apr 2016 21:55:45 -0700 (PDT)
+Received: by smtp.gmail.com (Postfix, from userid 501)
+	id E8AA09341419; Mon, 11 Apr 2016 21:55:41 -0700 (PDT)
+X-Mailer: git-send-email 2.7.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291244>
 
-On Mon, Apr 11, 2016 at 12:04 PM,  <miwilliams@google.com> wrote:
-> From 7201fe08ede76e502211a781250c9a0b702a78b2 Mon Sep 17 00:00:00 2001
-> From: Mike Williams <miwilliams@google.com>
-> Date: Mon, 11 Apr 2016 14:18:39 -0400
-> Subject: [PATCH 1/1] wt-status: Remove '!!' from
-> wt_status_collect_changed_cb
->
-> The wt_status_collect_changed_cb function uses an extraneous double negation
-> (!!)
+In the stateless RPC case, the server should respond to the client's depth
+request with the set of commits which are no deeper than the desired
+depth. Once this finishes, the server should terminate and receive the reply
+in another POST request.
 
-How is an !! errornous?
+Previously the server would sit idle and die when it detected the client
+closed the connection.
 
-It serves the purpose to map an integer value(-1,0,1,2,3,4)
-to a boolean (0,1, or a real bit in a bit field).
+Signed-off-by: Stan Hu <stanhu@gmail.com>
+---
+ upload-pack.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-> when determining whether or not a submodule has new commits.
->
-> Signed-off-by: Mike Williams <miwilliams@google.com>
-> ---
->  wt-status.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/wt-status.c b/wt-status.c
-> index ef74864..b955179 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -431,7 +431,7 @@ static void wt_status_collect_changed_cb(struct
-> diff_queue_struct *q,
->                         d->worktree_status = p->status;
->                 d->dirty_submodule = p->two->dirty_submodule;
->                 if (S_ISGITLINK(p->two->mode))
-> -                       d->new_submodule_commits = !!hashcmp(p->one->sha1,
-> p->two->sha1);
-> +                       d->new_submodule_commits = hashcmp(p->one->sha1,
-> p->two->sha1);
->         }
->  }
->
-> --
-> 2.8.0
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+diff --git a/upload-pack.c b/upload-pack.c
+index b3f6653..4fb1e60 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -676,6 +676,8 @@ static void receive_needs(void)
+ 			register_shallow(object->oid.hash);
+ 		}
+ 		packet_flush(1);
++		if (stateless_rpc)
++			exit(0);
+ 	} else
+ 		if (shallows.nr > 0) {
+ 			int i;
+-- 
+2.7.3
