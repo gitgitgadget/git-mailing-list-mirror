@@ -1,94 +1,97 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v3 03/16] index-helper: new daemon for caching index and
- related stuff
-Date: Mon, 11 Apr 2016 19:27:12 -0400
-Organization: Twitter
-Message-ID: <1460417232.5540.53.camel@twopensource.com>
-References: <1459980722-4836-1-git-send-email-dturner@twopensource.com>
-	 <1459980722-4836-4-git-send-email-dturner@twopensource.com>
-	 <CACsJy8C5NhaAAW=wzpwkBdLvVZz8wVM7QX==n_CL5g+LLAKY=A@mail.gmail.com>
-	 <1460153784.5540.19.camel@twopensource.com>
+From: KellerFuchs <KellerFuchs@hashbang.sh>
+Subject: Re: [PATCH] Documentation: clarify signature verification
+Date: Tue, 12 Apr 2016 01:00:09 +0000
+Message-ID: <20160412010009.GD9034@hashbang.sh>
+References: <20160409200756.GA22694@hashbang.sh>
+ <xmqqa8l1ti8d.fsf@gitster.mtv.corp.google.com>
+ <20160411003242.GC9034@hashbang.sh>
+ <xmqqtwj8rtcd.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>, aevarb@gmail.com,
-	jeffhost@microsoft.com
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 12 01:27:33 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	"Michael J. Gruber" <git@drmicha.warpmail.net>,
+	"Brian M. Carlson" <sandals@crustytoothpaste.ath.cx>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 12 03:00:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aplEv-0002sX-6Q
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 01:27:29 +0200
+	id 1apmh4-0007Uf-Lo
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 03:00:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754760AbcDKX1S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2016 19:27:18 -0400
-Received: from mail-qg0-f47.google.com ([209.85.192.47]:33724 "EHLO
-	mail-qg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754702AbcDKX1P (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2016 19:27:15 -0400
-Received: by mail-qg0-f47.google.com with SMTP id j35so1788407qge.0
-        for <git@vger.kernel.org>; Mon, 11 Apr 2016 16:27:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:mime-version:content-transfer-encoding;
-        bh=d/xRNzDOmGqAgtxWmYn2HizZ1ctppsxdDnVkjekm9Wc=;
-        b=aGBOopsBO3+nfgepbh3nRc0Lg5q1vZQaG2xVEJHJvO3ZGHOQIowE+1WkuF8GleQPK+
-         cA1lIhSWcFdPY2ElOKLUIKVkeQlD8wHRTqzV8XQ0w52hEX80Tt/qr9DOiUTia2t4YzDF
-         h4WZKaln7FkmDP6E/i6jgFMmPsy4R+EHHwMOyG0039J2UeNUtnAKynhSfFWHNjID0nBb
-         oP256d6jtck3C4q56NmvYyne6WlL9wEXWYSaZ5PE99GnNqrOaSiPgpoajFGnlKYCimZp
-         S/v1dNxPhN/W11V2XTg0JtHsKrWxv8bQegzktgxl3BVl6k80lc7rSckDpBLNIChVfPCr
-         ORzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=d/xRNzDOmGqAgtxWmYn2HizZ1ctppsxdDnVkjekm9Wc=;
-        b=DxAm3mSDwlk1ZF/pm9MWWQVhORqcEe9yQryYIoibE2qIiXD+Qi5EbIM3Eq7j6QM5pt
-         dJl8u4Rz+y0rM5pcdML3zAmfQB/L/xsXxD50EE8n8r8FQIRC/l6h/OmuVmZt4Hl1aS6t
-         YrMeuWun3zxDnFO5QsS+KFrP9zDdXL0ArMPtMUxqVLTj+Qgbh7O8PbckvHLj83Vypq+Z
-         HAhHd5cf/pwMWkbHLcA3DCjB2Ulh0HxyD0V2SlDWAYevxxbi02UIjanJQAGy8VpHSjDV
-         JUqI5lB7aF2wcYejARwk6ggbe60e6EIo0AZ2P9G5XxQuqgsRtGJ6u9mGTfH8X/sxBZK8
-         x1Bw==
-X-Gm-Message-State: AOPr4FWRVBi12YE0T+2ZgWE3kzNurncvwHHQAz6JFCFdNorUs9G36x3lesHPNahF0MvYYA==
-X-Received: by 10.140.158.68 with SMTP id e65mr245800qhe.4.1460417234310;
-        Mon, 11 Apr 2016 16:27:14 -0700 (PDT)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id b187sm7383587qkc.9.2016.04.11.16.27.12
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 11 Apr 2016 16:27:13 -0700 (PDT)
-In-Reply-To: <1460153784.5540.19.camel@twopensource.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S1755519AbcDLBAd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Apr 2016 21:00:33 -0400
+Received: from mail.hashbang.sh ([104.236.230.244]:38734 "EHLO
+	mail.hashbang.sh" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755354AbcDLBAc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2016 21:00:32 -0400
+Received: from to1.hashbang.sh (to1.hashbang.sh [104.245.37.138])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.hashbang.sh (Postfix) with ESMTPS id 407323B94;
+	Tue, 12 Apr 2016 01:00:29 +0000 (UTC)
+Received: by to1.hashbang.sh (Postfix, from userid 3412)
+	id 6DFDAE00BA; Tue, 12 Apr 2016 01:00:09 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <xmqqtwj8rtcd.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291239>
 
-On Fri, 2016-04-08 at 18:16 -0400, David Turner wrote:
-> And SHM on Macs works a bit differently than on Linux in at least two
-> irritating ways. 
-> 
-> So, uh, new version to come once I actually make it work on Mac.
-> Probably Monday.
+On Mon, Apr 11, 2016 at 09:41:22AM -0700, Junio C Hamano wrote:
+> KellerFuchs <KellerFuchs@hashbang.sh> writes:
+> > The reason for the first edit is that =E2=80=9Ctrusted=E2=80=9D and=
+ =E2=80=9Cvalid=E2=80=9D are OpenPGP
+> >   concepts: a key is trusted if the user set a trust level for it,
+> >   and a uid is valid if it has been signed by a trusted key [0].
+>=20
+> OK, so it is wrong to talk about "trusted" and/or "valid" "GPG
+> signatures" like the original one.  We should say "... have GPG
+> signatures that were signed by valid key" (not "trusted" key)?
 
-I was chatting with a friend about this and he mentioned that SHM does
-not really fit well into the Unix "everything is a file" model.  It
-lives in a separate namespace, and still requires most of the file-like
-operations just with funny names and a separate namespace: shm_open,
-shm_unlink.  This weirdness is something I noticed in my porting work:
-on OS X, a shm name can only be 32 bytes long, requiring weird hacks.
-And on OSX, fstat on a shm fd is rounded up to the page size (!). 
- There may also be other portability issues that I have not yet
-discovered.
+Well, the GnuPG documentation also talks of valid signatures,
+  and it is a convenient short-hand:
 
-Instead, my friend suggests that we should just use files.  For
-instance, we could do $TMPDIR/$index_helper_pid/shm-index.$sha.  
+  https://www.gnupg.org/documentation/manuals/gpgme/Verify.html
+ =20
+On the other hand, being more explicit here cannot hurt.
 
-(I'm proposing $TMPDIR because it's cleaned up on reboot so we don't
-need any manual intervention or complicated gc schemes)
+> Thanks for clarification.  The distinction between trusted and valid
+> should at least be in the log message and possibly (if we can find a
+> good way to flow it into the description) added to the documentation.
 
-What do folks think of this?
+Ok.  I will have a second go at the patch (with the split you requested=
+,
+  a more explicit description and an explanation in the commit msg).
+
+What is the prefered way to send a second version of a patchset here?
+Just git-email-ing it here In-Reply-To the first mail?
+
+>     Verify that the tip commit of the side branch being merged is
+>     signed with a valid key (i.e. a key that is signed by a key that
+>     the user set the trust level as trusted), and abort the merge if
+>     it is not.
+
+I would rather see something like
+
+>     Verify that the tip commit of the side branch being merged is
+>     signed with a valid key, i.e. a key that has a valid uid: in the
+>     default trust model, this means it has been signed by a trusted k=
+ey.
+>     If the tip commit of the side branch is not signed with a valid k=
+ey,
+>     the merge is aborted.
+
+It's unfortunately more verbose, but I don't want to make promises
+  about GnuPG's behaviour that depends on the user's configuration.
+
+
+Best,
+
+  kf
