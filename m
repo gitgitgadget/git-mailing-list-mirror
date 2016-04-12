@@ -1,98 +1,75 @@
-From: Daurnimator <quae@daurnimator.com>
-Subject: Re: [PATCH] git-stash: Don't GPG sign when stashing changes
-Date: Tue, 12 Apr 2016 12:46:40 +1000
-Message-ID: <CAEnbY+eaReDYOH8azpSG7n7MOrvqORkC0ar80pd1m8wR4vv20A@mail.gmail.com>
-References: <00000150dddb0eeb-b77240fb-1b63-4676-ac4b-1220b8d011ca-000000@eu-west-1.amazonses.com>
-	<loom.20160407T042319-468@post.gmane.org>
-	<alpine.DEB.2.20.1604071017510.2967@virtualbox>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: 0 bot for Git
+Date: Mon, 11 Apr 2016 21:29:59 -0700
+Message-ID: <CAGZ79kZOx8ehAB-=Frjgde2CDo_vwoVzQNizJinf4LLXek5PSQ@mail.gmail.com>
+References: <CAGZ79kYWGFN1W0_y72-V6M3n4WLgtLPzs22bWgs1ObCCDt5BfQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	me@cameroncurrie.net
-X-From: git-owner@vger.kernel.org Tue Apr 12 04:46:54 2016
+To: Greg KH <gregkh@linuxfoundation.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 12 06:30:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1apoLu-0006eU-B0
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 04:46:54 +0200
+	id 1appxv-0002uw-5i
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 06:30:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753561AbcDLCqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2016 22:46:50 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:33640 "EHLO
-	mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750953AbcDLCqt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2016 22:46:49 -0400
-Received: by mail-lf0-f67.google.com with SMTP id p64so575671lfg.0
-        for <git@vger.kernel.org>; Mon, 11 Apr 2016 19:46:48 -0700 (PDT)
+	id S1751127AbcDLEaH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2016 00:30:07 -0400
+Received: from mail-io0-f182.google.com ([209.85.223.182]:34782 "EHLO
+	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750795AbcDLEaG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2016 00:30:06 -0400
+Received: by mail-io0-f182.google.com with SMTP id 2so13473701ioy.1
+        for <git@vger.kernel.org>; Mon, 11 Apr 2016 21:30:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=daurnimator.com; s=daurnimator;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=p5EipouWrQz2l6jO0qB86oZbsvyFtSNGZA2KIAC7VRw=;
-        b=d4mkPnzGOz5AVQgTffWEFbgRl8LBEDxcXM6d/TfPvcx0/lajD/mXcmNh10jCjuSgBC
-         F5rxo0vdKIjM07c78JDXLLWNUWQHXrOY0s+SorfViALR85puS5y+ZAVO2qefLmBO5t+Y
-         bWyqEQdaKIuP3ACLYBSvH7JKNdILFJPcx+KTY=
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to;
+        bh=KwJz81iWalp0+s1SGMphDhEbrI8hI5M0QiUBkBD6Bo4=;
+        b=UaepVqaoNwZZN0F+kWt9I85NvFaytHTz2BRA0PTiK65G3pcWTM0xnjku7AwmMPKNyX
+         4qWiJBPRepMADMOaGZ9B7JMwAEH6yJ0ilh+1ybk7wLfmwrmIwg+EfRgJ37fNphcwbtE5
+         tyMNike58cgex8dcbJ5qs+xF32Sadbktt2fDU0qWEB0V4Ujt161DF0rWOkytZbYx7w6A
+         Q4c2TokXaKlWzVLm0GE/N1wUuBTg5cnPJsrFBzlw3oPggR6JRXtkDcCGFUTLqftOhVZH
+         XAJHZtBly4PKWUvnpo2WwPfsuIjVeSv/EfzaaTZIcUVKqyXMHzwJJ1BjDlBeJU/IWZzK
+         Ex4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=p5EipouWrQz2l6jO0qB86oZbsvyFtSNGZA2KIAC7VRw=;
-        b=KataqFYcXPyi6nQ3y0GZ2+slfWdVPq1rbJoDsmZY1CAY2g8ors85zE9glaH4tIsucc
-         q4sW1U88p7lmorOlAfQWCvX9AFbfyhFePuXSNrW9JM/o4S94HnTVd+ceTLX9H+c44Ohi
-         oiNCm57fUD+q0FwQIQbP2QUuw3G0mzm+u2WqB8cEdsBDxR0yAcCcUqEIAH2kUc7xsbO9
-         QFQc9XT7U14nBf6oabHBXiCoPKXRVqMtsfE1V76XyViBjD3ZIWaWeaVNUwFfvlyKXCNc
-         hh8/X0XLoSF8u7PUxtdLQFftc/M+LancdfcoskMwdoh3NV3hA7LzcVHudtvZ9hwx4om1
-         IKrw==
-X-Gm-Message-State: AOPr4FVveCIK++iphQKMpqDOLOwylZOMf4wkjppIvrTavRdxMTd2D2JFqdPJjIanUi60zA==
-X-Received: by 10.25.23.195 with SMTP id 64mr266752lfx.82.1460429207885;
-        Mon, 11 Apr 2016 19:46:47 -0700 (PDT)
-Received: from mail-lf0-f45.google.com (mail-lf0-f45.google.com. [209.85.215.45])
-        by smtp.gmail.com with ESMTPSA id rp10sm4916975lbb.13.2016.04.11.19.46.41
-        for <git@vger.kernel.org>
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 11 Apr 2016 19:46:45 -0700 (PDT)
-Received: by mail-lf0-f45.google.com with SMTP id g184so6140097lfb.3
-        for <git@vger.kernel.org>; Mon, 11 Apr 2016 19:46:41 -0700 (PDT)
-X-Received: by 10.25.218.1 with SMTP id r1mr338598lfg.130.1460429200673; Mon,
- 11 Apr 2016 19:46:40 -0700 (PDT)
-Received: by 10.25.146.16 with HTTP; Mon, 11 Apr 2016 19:46:40 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1604071017510.2967@virtualbox>
-X-Gmail-Original-Message-ID: <CAEnbY+eaReDYOH8azpSG7n7MOrvqORkC0ar80pd1m8wR4vv20A@mail.gmail.com>
+         :message-id:subject:from:to;
+        bh=KwJz81iWalp0+s1SGMphDhEbrI8hI5M0QiUBkBD6Bo4=;
+        b=lkydlpyvWIwsWa9MsXoO3tfTYgncm1LQn8d6lof410vevz26p0BihEIP2hPyEtsr6L
+         TQssj4WpRoMH3/RBM4xHTKCXkdsSgnbvyCIOGYKCxf1vvDO4/9cMKCL9HId8gzys5O/k
+         OL10zNxf93Uo2GndqYWV/cWVazDQoVnQcFvF9H0bo/KeOzUt59gVWxrdPIb//KZwDsOB
+         HkV78v/0tyXoJHVcWZypemfb6+6uunPROnhEBukaK2nVgF3EkpTW/gHAcXjloo1raeTZ
+         dsK2UlnEao1O9MWP0JPAGdEbc9v6C+gVGTKKfNj6dOD5EAS6AEE+gQ4olIdGJcMLT54r
+         +TNA==
+X-Gm-Message-State: AOPr4FWSJLlgf3FgN0bzDRMltKPe72By4eDPx1SxWmgfdiDPzbGolxgmniD+3nQG1UGYRox3qVlcN7q9npIeQqEt
+X-Received: by 10.107.18.227 with SMTP id 96mr1486522ios.174.1460435399598;
+ Mon, 11 Apr 2016 21:29:59 -0700 (PDT)
+Received: by 10.107.17.27 with HTTP; Mon, 11 Apr 2016 21:29:59 -0700 (PDT)
+In-Reply-To: <CAGZ79kYWGFN1W0_y72-V6M3n4WLgtLPzs22bWgs1ObCCDt5BfQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291242>
 
-On 7 April 2016 at 18:19, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> you dropped the Cc: list. So most likely Cameron won't get your mail nor
-> any response to your mail.
+Resending as plain text. (I need to tame my mobile)
 
-I originally replied via the gmane web interface, apparently it
-doesn't CC the original sender.
-CCd now.
-
-> On Thu, 7 Apr 2016, daurnimator wrote:
+On Mon, Apr 11, 2016 at 7:51 AM, Stefan Beller <sbeller@google.com> wrote:
+> Hi Greg,
 >
->> Cameron Currie <me <at> cameroncurrie.net> writes:
->> > This is helpful for folks with commit.gpgsign = true in their .gitconfig.
->>
->> > https://github.com/git/git/pull/186
->>
->> I too would like this.
->> Bumping due to lack of attention.
+> Thanks for your talk at the Git Merge 2016!
+> The Git community uses the same workflow as the kernel. So we may be
+> interested in the 0 bot which could compile and test each patch on the list.
+> Could you put us in touch with the authors/maintainers of said tool?
 >
-> It lacks a Sign-off, our convention is to continue in lower-case after the
-> colon in the commit's subject, and I think that it would be good to write
-> so much as one paragraph in the commit message.
+> Unlike the kernel we would not need hardware testing and we're low traffic
+> compared to the kernel, which would make it easier to set it up.
 >
-> Ciao,
-> Johannes
-
-Cameron, able you able to complete this?
+> A healthier Git would help the kernel long term as well.
+>
+> Thanks,
+> Stefan
