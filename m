@@ -1,101 +1,133 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFD/BUG?] git show with tree/commit
-Date: Tue, 12 Apr 2016 09:26:32 -0700
-Message-ID: <xmqq4mb6sshz.fsf@gitster.mtv.corp.google.com>
-References: <570D154D.6090006@drmicha.warpmail.net>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH 1/4] rebase -i: add ack action
+Date: Tue, 12 Apr 2016 19:33:50 +0300
+Message-ID: <20160412190904-mutt-send-email-mst@redhat.com>
+References: <alpine.DEB.2.20.1604111736060.2967@virtualbox>
+ <20160411184535-mutt-send-email-mst@redhat.com>
+ <xmqqlh4krkop.fsf@gitster.mtv.corp.google.com>
+ <20160411225222-mutt-send-email-mst@redhat.com>
+ <vpqr3ebnc9w.fsf@anie.imag.fr>
+ <xmqqd1pustdp.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Apr 12 18:26:46 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, bafain@gmail.com, sunshine@sunshineco.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 12 18:34:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aq19I-0002Ff-TC
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 18:26:45 +0200
+	id 1aq1GJ-0004ya-IW
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 18:33:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756841AbcDLQ0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2016 12:26:35 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:62415 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755418AbcDLQ0f (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2016 12:26:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id ED04B539C5;
-	Tue, 12 Apr 2016 12:26:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=twuQST6yeeXbXy7gN3wl2DcHo8M=; b=kx5XCm
-	q3+3ZoPgsRacvcap62kwow0QMQ6QIVlEwtauFlDpuFUDPX6keXUEL8A2FtrH/tt+
-	OKO6l/iLVtwu+CdCmJ2kRB0azKisNIUUDgrbl6TLqBbAWk1RMspM6lPE3Y4BVU+L
-	WvbaTbVCLM6qKksCg+7vR5EeTQIS0KkdNqvYU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XzMFrSIbKeQc2fM4t+JpmEAwFvPwX/vD
-	YEljJRAX2kP0wahRQyrcWrLzZciaX0Bz5LbJQ0CZzgyhyZj3kyNCHJt14DjQB1Ls
-	ihypcaIK5l2+VvVzjQxbb2+gZ3DCNTi9n8LE6bkHvixxomGOg0lB/KceaHIf34eE
-	1UzmP6SQohI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E4992539C4;
-	Tue, 12 Apr 2016 12:26:33 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S933255AbcDLQdz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2016 12:33:55 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:53430 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932552AbcDLQdy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2016 12:33:54 -0400
+Received: from int-mx09.intmail.prod.int.phx2.redhat.com (int-mx09.intmail.prod.int.phx2.redhat.com [10.5.11.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 64414539C2;
-	Tue, 12 Apr 2016 12:26:33 -0400 (EDT)
-In-Reply-To: <570D154D.6090006@drmicha.warpmail.net> (Michael J. Gruber's
-	message of "Tue, 12 Apr 2016 17:33:33 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 51EDBC78-00CB-11E6-B104-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	by mx1.redhat.com (Postfix) with ESMTPS id 0EC3880F73;
+	Tue, 12 Apr 2016 16:33:54 +0000 (UTC)
+Received: from redhat.com (vpn1-6-52.ams2.redhat.com [10.36.6.52])
+	by int-mx09.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id u3CGXper021888;
+	Tue, 12 Apr 2016 12:33:51 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqd1pustdp.fsf@gitster.mtv.corp.google.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291277>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On Tue, Apr 12, 2016 at 09:07:30AM -0700, Junio C Hamano wrote:
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> 
+> > "Michael S. Tsirkin" <mst@redhat.com> writes:
+> >
+> >> Interesting. An empty commit would be rather easy to create on any
+> >> branch, not just the current one, using git-commit-tree.
+> >
+> > This "modify a branch without checking-it out" makes me think of "git
+> > notes". It may make sense to teach "git rebase -i" to look for notes in
+> > rebased commits and append them to the commit message when applying.
+> > Just an idea, not necessarily a good one ;-).
+> 
+> Yeah that may actually fly well, as a note is designed to attach to
+> an exact commit, not to a branch, so that feels more natural.
 
-> $ git show cab2cdadfda8e8e8631026443b11d3ed6e7ba517:
-> tree cab2cdadfda8e8e8631026443b11d3ed6e7ba517:
->
-> .gitattributes
-> .gitignore
-> .mailmap
-> ...
->
-> While it's clear to me what's going on, I'm wondering whether it's a
-> good idea that "git show" says "tree" in front of the unresolved
-> treeish, whether it's a tree, a commit or something else. I think it's
-> pretty confusing.
+We'd have to invent a way to show that in the rebase -i output though.
 
-There is no "unresolved treeish" on the line that begins with
-"tree", but I suspect it wasn't very clear to you because of the way
-you gave the command its input; notice the line in question ends
-with a colon, which is unfortunate, but it turns out that it is your
-fault ;-).  Read on.
 
-> Alternatives would be:
->
-> tree <resolved tree id> # here: 040...
-> treeish <treeish>	# here: "treeish cab2c..."
-> tree <treeish>^{tree} 	# here: "tree cab2c^{tree}"
+> As to the "use commit-tree", well, personally I am not interested in
+> a solution that can work well in my workflow ONLY if I further script
+> it.  That's half-solution and unless that half is done very well,
+> I'd rather do a full solution better.
 
-So, the three choices are
+Absolutely. But that's not what I meant. I will add a flag to git-ack to
+select a branch and use commit-tree to put the ack commit there
+*internally*. Would this do everything you need? How do you select
+a branch? Automatically or do you remember the mapping from topic
+to branch name?
 
- (1) resolve the tree object name to 40-hex and show it as
-     "tree <object name in hex>"
+> 	Note: this is a continuation of "I personally would not use
+> 	it, even though other people might" discussion.
+> 
+> I was also wondering if I should just script around filter-branch,
+> if all I am futzing with is the data in the trailer block, doing the
+> munging of the trailer block with interpret-trailers, naturally.
+> 
+> In any case, a recent occasion that I had to do something related to
+> this topic may illustrate the boundary of requirements:
+> 
+>     Two developers, Michael and David, are involved.  David sends a
+>     24-patch series, some of which were written by Michael and
+>     others by David.  The in-body "From:" lines are set right and
+>     the resulting patches record authorship correctly.
+> 
+>     Michael reminds David that patches authored by Michael still
+>     need to be signed-off by David.  David sends a single message
+>     "those by Michael in this series are signed off by me".
+> 
+>     Michael also says that he reviewed all patches authored by
+>     David, i.e. "Add Acked-by Michael to all patches in this series
+>     authored by David".
+> 
+> Now this is an extreme case where a simple "OK I received an
+> e-mailed Ack, so I can rely on the subject line matching to mark it
+> to be squashed" approach will never work (i.e. if we were automating
+> it I'd expect that the script in DSL to the automation machinery to
+> take at last as many (conceptual) bits as the above problem
+> description).
 
- (2) given an object that is not a tree, show it as "treeish <object
-     name>" 
+So here's how I solve the second part for now - that
+is very common: I expect Michael to write something like
+For series:
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
 
- (3) do not do anything fancy, just show it as "tree <object name>"
-     using what the user gave us.
+then I run git ack -s to put the signature in a file .git/ACKS.
 
-I think the current output is doing the third one (notice the colon
-at the end of the line).
+(git ack -s is just writing acks into .git/ACKS so
+if the email format is wrong I just edit it manually).
 
-    $ git show master: | head -n 1
-    $ git show master^{tree} | head -n 1
-    $ git show cab2cdadf: | head -n 1
+And then I tag the series in email and run git ack -r to
+add the ack tag.
+
+For first part, that is less common but also happens
+(for example I get "for patches 1,7 and 23 in series: ACK") -
+I would do git ack -s
+to store David's signoff, then tag just messages by David
+(probably just using limit ~b From:\ David in mutt)
+and pipe them to git ack -r.
+
+Does this sound user-friendly enough? What would you do
+differently?
+
+-- 
+MST
