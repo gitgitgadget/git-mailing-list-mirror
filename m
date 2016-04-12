@@ -1,118 +1,66 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH 1/4] rebase -i: add ack action
-Date: Tue, 12 Apr 2016 10:51:02 +0300
-Message-ID: <20160412104133-mutt-send-email-mst@redhat.com>
-References: <alpine.DEB.2.20.1604111736060.2967@virtualbox>
- <20160411184535-mutt-send-email-mst@redhat.com>
- <xmqqlh4krkop.fsf@gitster.mtv.corp.google.com>
- <20160411225222-mutt-send-email-mst@redhat.com>
- <vpqr3ebnc9w.fsf@anie.imag.fr>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: clone hang prevention / timeout?
+Date: Tue, 12 Apr 2016 08:01:49 +0000
+Message-ID: <20160412080149.GA9087@dcvr.yhbt.net>
+References: <CALyZvKwxE4T8-FmEYgPMgAFKLmeAY5f-y-mDL8S9twTb0umRaA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, bafain@gmail.com, sunshine@sunshineco.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Apr 12 09:51:16 2016
+Cc: git@vger.kernel.org
+To: Jason Vas Dias <jason.vas.dias@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 12 10:01:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1apt6R-0002Xo-69
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 09:51:15 +0200
+	id 1aptGl-0006nF-Id
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 10:01:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932111AbcDLHvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2016 03:51:08 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:59756 "EHLO mx1.redhat.com"
+	id S1755751AbcDLIBv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2016 04:01:51 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:34427 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755917AbcDLHvG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2016 03:51:06 -0400
-Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mx1.redhat.com (Postfix) with ESMTPS id BB49D8AE72;
-	Tue, 12 Apr 2016 07:51:05 +0000 (UTC)
-Received: from redhat.com ([10.35.7.29])
-	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id u3C7p3YC020247;
-	Tue, 12 Apr 2016 03:51:03 -0400
+	id S1752568AbcDLIBv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2016 04:01:51 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 160B420300;
+	Tue, 12 Apr 2016 08:01:50 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <vpqr3ebnc9w.fsf@anie.imag.fr>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+In-Reply-To: <CALyZvKwxE4T8-FmEYgPMgAFKLmeAY5f-y-mDL8S9twTb0umRaA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291250>
 
-On Mon, Apr 11, 2016 at 10:03:39PM +0200, Matthieu Moy wrote:
-> "Michael S. Tsirkin" <mst@redhat.com> writes:
-> 
-> > On Mon, Apr 11, 2016 at 12:48:22PM -0700, Junio C Hamano wrote:
-> >> "Michael S. Tsirkin" <mst@redhat.com> writes:
-> >> 
-> >> > Repost, sorry about the noise.
-> >> >
-> >> > On Mon, Apr 11, 2016 at 05:36:45PM +0200, Johannes Schindelin wrote:
-> >> >> Hi Michael,
-> >> >> 
-> >> >> On Mon, 11 Apr 2016, Michael S. Tsirkin wrote:
-> >> >> 
-> >> >> > So far I only see examples of adding footers. If that's all we can think
-> >> >> > up, why code in all this genericity?
-> >> >> 
-> >> >> Because as far as I can see, the only benefitor of your patches would be
-> >> >> you.
-> >> >> 
-> >> >> Ciao,
-> >> >> Johannes
-> >> >
-> >> > This seems unlikely.  Just merging the patches won't benefit me directly
-> >> > - I have maintained them in my tree for a couple of years now with very
-> >> > little effort.  For sure, I could benefit if they get merged and then
-> >> > someone improves them further - that was the point of posting them - but
-> >> > then I'm not the only benefitor.
-> >> >
-> >> > The workflow including getting acks for patches by email is not handled
-> >> > well by upstream git right now.  It would surprise me if no one uses it
-> >> > if it's upstream, as you seem to suggest.  But maybe most people moved
-> >> > on and just do pull requests instead.
-> >> 
-> >> I doubt I would use this in its current form myself.
-> >> 
-> >> Patch series I receive are all queued on their own separate topic
-> >> branches, and having to switch branches only to create a fake empty
-> >> commit to record received Acked-by and Reviewed-by is a chore that
-> >> serves only half of what needs to be done.
-> >
-> > Interesting. An empty commit would be rather easy to create on any
-> > branch, not just the current one, using git-commit-tree.
-> 
-> This "modify a branch without checking-it out" makes me think of "git
-> notes". It may make sense to teach "git rebase -i" to look for notes in
-> rebased commits and append them to the commit message when applying.
-> Just an idea, not necessarily a good one ;-).
+Jason Vas Dias <jason.vas.dias@gmail.com> wrote:
+> It appears GIT has no way of specifying a timeout for a clone operation -
+> if the server decides not to complete a get request, the clone can
+> hang forever -
+> is this correct ?
 
-Two things making it harder
-	- machinery to look for commits is part of git rebase anyway
-	- notes are expected to come after --- at the moment
+git uses SO_KEEPALIVE for all connections it makes, so whatever
+your kernel TCP keepalive knobs are set at.
 
+By default, it's very long (around 2 hours), but you can change them
+using the tcp_keepalive_* knobs in /proc/sys/net/ipv4/ under Linux.
 
-> > Does it sounds interesting if I teach
-> > git ack to get an active branch as a parameter?
-> 
-> I think "ack" is not a good name for this feature: you use it to append
-> "Acked-by", but it can be used to append any trailer (for example,
-> Reviewed-by: would make complete sense too).
+I suppose we can do shorter timeouts (at least under Linux) via
+setsockopt(.. TCP_KEEP*) knobs, or we can call poll() ourselves
+to timeout connections.  However, git packing operations on the
+server can take a long time; so it might be bad to timeout
+manually unless we know the connection is really dead.
 
-Yes - I use it to append all trailers.
+> This appears to be what I am seeing, in a script that is attempting to do many
+> successive clone operations, eg. of
+> git://anongit.freedesktop.org/xorg/* , the script
+> occasionally hangs in a clone - I can see with netstat + strace that the TCP
+> connection is open and GIT is trying to read .
+> Is there any option I can specify to get the clone to timeout, or do I manually
+> have to strace the git process and send it a signal after a hang is detected?
 
-> I think using a better name
-> would help the discussion (to remove the "it's my use-case" biais).
-> Perhaps "append"?
-
-Or "trailer".
-
-> -- 
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
+I added git:// support for SO_KEEPALIVE in commit e47a8583a202
+("enable SO_KEEPALIVE for connected TCP sockets")
+back in 2011 (v1.7.10),
+and http:// support later in 2013 (v1.8.5) with
+commit a15d069a1986 ("http: enable keepalive on TCP sockets")
