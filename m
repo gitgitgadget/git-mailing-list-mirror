@@ -1,103 +1,74 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: 0 bot for Git
-Date: Tue, 12 Apr 2016 22:29:06 +0200
-Message-ID: <vpqoa9ea7vx.fsf@anie.imag.fr>
-References: <CAGZ79kYWGFN1W0_y72-V6M3n4WLgtLPzs22bWgs1ObCCDt5BfQ@mail.gmail.com>
-	<CAGZ79kZOx8ehAB-=Frjgde2CDo_vwoVzQNizJinf4LLXek5PSQ@mail.gmail.com>
-	<vpq60vnl28b.fsf@anie.imag.fr>
-	<CAGZ79kaLQWVdehMu4nas6UBpCxnAB_-p=xPGH=aueMZXkGK_2Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 15/16] branch: use ref-filter printing APIs
+Date: Tue, 12 Apr 2016 13:40:13 -0700
+Message-ID: <xmqqtwj6pnma.fsf@gitster.mtv.corp.google.com>
+References: <1460227515-28437-1-git-send-email-Karthik.188@gmail.com>
+	<1460227515-28437-16-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: lkp@intel.com, Greg KH <gregkh@linuxfoundation.org>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Apr 12 22:29:32 2016
+Cc: git@vger.kernel.org, jacob.keller@gmail.com
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 12 22:40:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aq4wE-0003Mq-P6
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 22:29:31 +0200
+	id 1aq56n-0007rZ-62
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 22:40:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964798AbcDLU30 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2016 16:29:26 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:54851 "EHLO mx2.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932823AbcDLU3Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2016 16:29:25 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u3CKT3T6005228
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 12 Apr 2016 22:29:03 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u3CKT625030114;
-	Tue, 12 Apr 2016 22:29:06 +0200
-In-Reply-To: <CAGZ79kaLQWVdehMu4nas6UBpCxnAB_-p=xPGH=aueMZXkGK_2Q@mail.gmail.com>
-	(Stefan Beller's message of "Tue, 12 Apr 2016 07:52:02 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Tue, 12 Apr 2016 22:29:04 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u3CKT3T6005228
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1461097745.4238@ePfHItrTZsQR3TsBoMTKwA
+	id S965371AbcDLUkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2016 16:40:19 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:50015 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S965328AbcDLUkR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2016 16:40:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0BC10552D3;
+	Tue, 12 Apr 2016 16:40:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9dG4qMja4yB+AE89B5XsqPGUIiA=; b=g1Acf5
+	xLtHFsq6n6q2bmFrUoYozCOQHM26K5vLHi6aQ2K8yWR8yg3rxulRqhzpN/GfBnMW
+	fho1awkbejsLYKZT3WJa4QE1xpnbq9smcVL4PxDwv0DXSaLStxKzocNLhTXVTuh4
+	FbZVX+AQ+qHJe5f5kB29ipffu4jU86bXhefh8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=draVLuSTEiI08IDjL5l51ipagUyTaPqM
+	5ROAgQORmkyY+iwTw9JBV1LDyWgd7hWa21QMMr7CXouXf+FjmuguZCtI7JhjG4r5
+	dJWbzplkOb+6135sxsY5dhMS5vkwGy/w5VqXUittF2xNhSM2Ch9PkerlWImAaSZ1
+	dsM/wcxolOE=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 014B1552D2;
+	Tue, 12 Apr 2016 16:40:15 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 71DC4552D1;
+	Tue, 12 Apr 2016 16:40:14 -0400 (EDT)
+In-Reply-To: <1460227515-28437-16-git-send-email-Karthik.188@gmail.com>
+	(Karthik Nayak's message of "Sun, 10 Apr 2016 00:15:14 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C261E56A-00EE-11E6-8EC0-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291293>
 
-Stefan Beller <sbeller@google.com> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> On Tue, Apr 12, 2016 at 12:23 AM, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
->> Stefan Beller <sbeller@google.com> writes:
->>
->>> Hi Greg,
->>>
->>> Thanks for your talk at the Git Merge 2016!
->>> The Git community uses the same workflow as the kernel. So we may be
->>> interested in the 0 bot which could compile and test each patch on the list.
->>
->> In the case of Git, we already have Travis-CI that can do rather
->> thorough testing automatically (run the complete testsuite on a clean
->> machine for several configurations). You get the benefit from it only if
->> you use GitHub pull-requests today.
->
-> But who uses that? (Not a lot of old-timers here, that's for sure)
+> +			    branch_get_color(BRANCH_COLOR_REMOTE), maxwidth,
+> +			    remote_prefix, branch_get_color(BRANCH_COLOR_RESET));
+> +	} else {
+> +		strbuf_addf(&local, "%%(refname:strip=2)%s%%(if)%%(symref)%%(then) -> %%(symref:short)%%(end)",
+> +			    branch_get_color(BRANCH_COLOR_RESET));
+> +		strbuf_addf(&remote, "%s%s%%(refname:strip=2)%s%%(if)%%(symref)%%(then) -> %%(symref:short)%%(end)",
+> +			    branch_get_color(BRANCH_COLOR_REMOTE), remote_prefix, branch_get_color(BRANCH_COLOR_RESET));
 
-Not many people clearly. I sometimes do, but SubmitGit as it is today
-doesn't (yet?) beat "git send-email" for me. In a perfect world where I
-could just ask SubmitGit "please wait for Travis to complete, if it
-passes then send to the list, otherwise email me", I would use it more.
+The overlong lines are somewhat irritating, but the change above in
+this round relative to the previous one shows a good use case for
+the conditional formatting feature and illustrates how powerful the
+concept it is.  I like it.
 
-But my point wasn't to say "we already have everything we need", but
-rather "we already have part of the solution, so an ideal complete
-solution could integrate with it".
-
->> It would be interesting to have a
->> bot watch the list, apply patches and push to a travis-enabled fork of
->> git.git on GitHub to get the same benefit when posting emails directly
->> to the list.
->
-> That is better (and probably more work) than what I had in mind.
-> IIUC the 0 bot can grab a patch from a mailing list and apply it to a
-> base (either the real base as encoded in the patch or a best guess)
-> and then run "make".
-
-I don't know how 0 bot solves this, but the obvious issue with this
-approach is to allow dealing with someone sending a patch like
-
-+++ Makefile
---- Makefile
-+all:
-+	rm -fr $(HOME); sudo rm -fr /
-
-to the list. One thing that Travis gives us for free is isolation:
-malicious code in the build cannot break the bot, only the build itself.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks, will queue.
