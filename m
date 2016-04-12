@@ -1,73 +1,102 @@
-From: Rudinei Goi Roecker <rudineigr@itflex.com.br>
-Subject: Re: Git config not working correctly with included configurations
-Date: Tue, 12 Apr 2016 09:13:57 -0300
-Message-ID: <assp.09101f0ea6.570CE685.8060005@itflex.com.br>
-References: <570CDB33.9020300@itflex.com.br>
- <570CE289.2000808@atlas-elektronik.com>
+From: Nikola =?ISO-8859-1?Q?Forr=F3?= <nforro@redhat.com>
+Subject: [PATCH] difftool/mergetool: make the form of yes/no questions
+ consistent
+Date: Tue, 12 Apr 2016 14:59:42 +0200
+Organization: Red Hat
+Message-ID: <1460465982.3214.7.camel@redhat.com>
+Reply-To: nforro@redhat.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: stefan.naewe@atlas-elektronik.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 12 14:14:26 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 12 14:59:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1apxD7-0000S1-7V
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 14:14:25 +0200
+	id 1apxv4-0000bk-3z
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 14:59:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933615AbcDLMOE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2016 08:14:04 -0400
-Received: from uni.itflex.com.br ([177.200.204.249]:48356 "EHLO
-	mail.itflex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933604AbcDLMOB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2016 08:14:01 -0400
-Received: (qmail 12273 invoked by uid 49); 12 Apr 2016 12:13:57 -0000
-Received: from 127.0.0.1 (rudineigr@itflex.com.br@127.0.0.1) by web.itflex.com.br (envelope-from <rudineigr@itflex.com.br>, uid 89) with qmail-scanner-2.05 
- (clamdscan: 0.95.2/9450.  
- Clear:RC:1(127.0.0.1):. 
- Processed in 0.009701 secs); 12 Apr 2016 12:13:57 -0000
-Received: from unknown (HELO ASSP.nospam) (rudineigr@itflex.com.br@127.0.0.1)
-  by web.itflex.com.br with ESMTPA; 12 Apr 2016 12:13:57 -0000
-Received: from rudineigr.itflex.lan ([192.168.47.195] helo=rudineigr.itflex.lan)
-	by ASSP.nospam with ESMTPS(AES128-SHA) (ASSP 1.10.1); 12 Apr 2016 09:13:57 -0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.1
-In-Reply-To: <570CE289.2000808@atlas-elektronik.com>
+	id S1756355AbcDLM7q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Apr 2016 08:59:46 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:40366 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756309AbcDLM7p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2016 08:59:45 -0400
+Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mx1.redhat.com (Postfix) with ESMTPS id DAA21C04B30C;
+	Tue, 12 Apr 2016 12:59:44 +0000 (UTC)
+Received: from unused-4-132.brq.redhat.com (unused-4-132.brq.redhat.com [10.34.4.132])
+	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id u3CCxgsI030255
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Tue, 12 Apr 2016 08:59:44 -0400
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291258>
 
-I tried changing to ~/.gitconfig.user and 
-/home/<user_name>/.gitconfig.user, still causes the same problem
+Every yes/no question in difftool/mergetool scripts has slightly
+different form, and none of them is consistent with the form git
+itself uses.
 
-On 12-04-2016 08:56, stefan.naewe@atlas-elektronik.com wrote:
-> Am 12.04.2016 um 13:25 schrieb Rudinei Goi Roecker:
->> I'm having a problem with included configurations in ~/.gitconfig, when
->> using this command:
->>
->> git config --global user.email
->>
->> It doesn't return anything, in commits it works as intended. The
->> configuration looks like this:
->>
->> ~/.gitconfig
->> [include]
->>     path = .gitconfig.user
-> Maybe you want to use
->
->       path = ~/.gitconfig.user
->
-> here.
->
->> # ... more configurations
->>
->> ~/.gitconfig.user
->> [user]
->>     name = My Full Name
->>     email = myemail@example.com
-> HTH,
->    Stefan
+Make the form of all the questions consistent with the form used
+by git, i.e. "Question [y/n]? ".
+
+Signed-off-by: Nikola Forr=C3=B3 <nforro@redhat.com>
+---
+ git-difftool--helper.sh | 4 ++--
+ git-mergetool--lib.sh   | 2 +-
+ git-mergetool.sh        | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
+index 2b11b1d..84d6cc0 100755
+--- a/git-difftool--helper.sh
++++ b/git-difftool--helper.sh
+@@ -44,10 +44,10 @@ launch_merge_tool () {
+ 			"$GIT_DIFF_PATH_TOTAL" "$MERGED"
+ 		if use_ext_cmd
+ 		then
+-			printf "Launch '%s' [Y/n]: " \
++			printf "Launch '%s' [Y/n]? " \
+ 				"$GIT_DIFFTOOL_EXTCMD"
+ 		else
+-			printf "Launch '%s' [Y/n]: " "$merge_tool"
++			printf "Launch '%s' [Y/n]? " "$merge_tool"
+ 		fi
+ 		read ans || return
+ 		if test "$ans" =3D n
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index 54ac8e4..92adcc0 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -100,7 +100,7 @@ check_unchanged () {
+ 		while true
+ 		do
+ 			echo "$MERGED seems unchanged."
+-			printf "Was the merge successful? [y/n] "
++			printf "Was the merge successful [y/n]? "
+ 			read answer || return 1
+ 			case "$answer" in
+ 			y*|Y*) return 0 ;;
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 9f77e3a..2e0635a 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -396,7 +396,7 @@ done
+ prompt_after_failed_merge () {
+ 	while true
+ 	do
+-		printf "Continue merging other unresolved paths (y/n) ? "
++		printf "Continue merging other unresolved paths [y/n]? "
+ 		read ans || return 1
+ 		case "$ans" in
+ 		[yY]*)
+--=20
+2.4.11
