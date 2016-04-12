@@ -1,112 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4] rebase -i: add ack action
-Date: Tue, 12 Apr 2016 13:00:25 -0700
-Message-ID: <xmqqy48ippgm.fsf@gitster.mtv.corp.google.com>
-References: <alpine.DEB.2.20.1604111736060.2967@virtualbox>
-	<20160411184535-mutt-send-email-mst@redhat.com>
-	<xmqqlh4krkop.fsf@gitster.mtv.corp.google.com>
-	<20160411225222-mutt-send-email-mst@redhat.com>
-	<vpqr3ebnc9w.fsf@anie.imag.fr>
-	<xmqqd1pustdp.fsf@gitster.mtv.corp.google.com>
-	<20160412190904-mutt-send-email-mst@redhat.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: 0 bot for Git
+Date: Tue, 12 Apr 2016 22:29:06 +0200
+Message-ID: <vpqoa9ea7vx.fsf@anie.imag.fr>
+References: <CAGZ79kYWGFN1W0_y72-V6M3n4WLgtLPzs22bWgs1ObCCDt5BfQ@mail.gmail.com>
+	<CAGZ79kZOx8ehAB-=Frjgde2CDo_vwoVzQNizJinf4LLXek5PSQ@mail.gmail.com>
+	<vpq60vnl28b.fsf@anie.imag.fr>
+	<CAGZ79kaLQWVdehMu4nas6UBpCxnAB_-p=xPGH=aueMZXkGK_2Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, bafain@gmail.com, sunshine@sunshineco.com
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Tue Apr 12 22:00:36 2016
+Cc: lkp@intel.com, Greg KH <gregkh@linuxfoundation.org>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Apr 12 22:29:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aq4UD-0007IM-6h
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 22:00:33 +0200
+	id 1aq4wE-0003Mq-P6
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 22:29:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756800AbcDLUA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2016 16:00:28 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:56527 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756753AbcDLUA2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2016 16:00:28 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0284A556A6;
-	Tue, 12 Apr 2016 16:00:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/jzXtppF3kfDpVXDN+8gVS9z68o=; b=xhHVo+
-	rg0E9AqcWiwiQ7jUNnnbOx6drVEtu6Nl4+zIFEqM53G6jL4TGZSV+bBX5TjAlfHY
-	YiYJOmZK4GJNweLNPOOWuJWMY3+5fpIGzBYWhQQzvCQo2YW6l/DwnwDmLive5HTM
-	FYOmfLilRyjkbwr+Tf1ugrZTgWYnqgKzKKh68=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=d5Te0sp+pU5tYs1vy80g5L3iZvPFqeBj
-	XvemSJKUpwbTXycTeEdp20EKVtuYr+mkzrqtFTQlZHP0Hdb5f/IXNAqfW84r40bS
-	507DZlb5Ily1v/hinuADh1Wd4K7CMDtLK0YghyNJ2C84QjBhgMMkFz2S2SVpnD8I
-	i/fRqmN6qZg=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E334B556A5;
-	Tue, 12 Apr 2016 16:00:26 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 488B5556A2;
-	Tue, 12 Apr 2016 16:00:26 -0400 (EDT)
-In-Reply-To: <20160412190904-mutt-send-email-mst@redhat.com> (Michael
-	S. Tsirkin's message of "Tue, 12 Apr 2016 19:33:50 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 32F8324E-00E9-11E6-99C5-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S964798AbcDLU30 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2016 16:29:26 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:54851 "EHLO mx2.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932823AbcDLU3Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2016 16:29:25 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u3CKT3T6005228
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Tue, 12 Apr 2016 22:29:03 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u3CKT625030114;
+	Tue, 12 Apr 2016 22:29:06 +0200
+In-Reply-To: <CAGZ79kaLQWVdehMu4nas6UBpCxnAB_-p=xPGH=aueMZXkGK_2Q@mail.gmail.com>
+	(Stefan Beller's message of "Tue, 12 Apr 2016 07:52:02 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Tue, 12 Apr 2016 22:29:04 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u3CKT3T6005228
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1461097745.4238@ePfHItrTZsQR3TsBoMTKwA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291292>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
->> As to the "use commit-tree", well, personally I am not interested in
->> a solution that can work well in my workflow ONLY if I further script
->> it.  That's half-solution and unless that half is done very well,
->> I'd rather do a full solution better.
+> On Tue, Apr 12, 2016 at 12:23 AM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> Stefan Beller <sbeller@google.com> writes:
+>>
+>>> Hi Greg,
+>>>
+>>> Thanks for your talk at the Git Merge 2016!
+>>> The Git community uses the same workflow as the kernel. So we may be
+>>> interested in the 0 bot which could compile and test each patch on the list.
+>>
+>> In the case of Git, we already have Travis-CI that can do rather
+>> thorough testing automatically (run the complete testsuite on a clean
+>> machine for several configurations). You get the benefit from it only if
+>> you use GitHub pull-requests today.
 >
-> Absolutely. But that's not what I meant. I will add a flag to git-ack to
-> select a branch and use commit-tree to put the ack commit there
-> *internally*. Would this do everything you need? How do you select
-> a branch? Automatically or do you remember the mapping from topic
-> to branch name?
-> ...
-> For first part, that is less common but also happens
-> (for example I get "for patches 1,7 and 23 in series: ACK") -
-> I would do git ack -s
-> to store David's signoff, then tag just messages by David
-> (probably just using limit ~b From:\ David in mutt)
-> and pipe them to git ack -r.
+> But who uses that? (Not a lot of old-timers here, that's for sure)
+
+Not many people clearly. I sometimes do, but SubmitGit as it is today
+doesn't (yet?) beat "git send-email" for me. In a perfect world where I
+could just ask SubmitGit "please wait for Travis to complete, if it
+passes then send to the list, otherwise email me", I would use it more.
+
+But my point wasn't to say "we already have everything we need", but
+rather "we already have part of the solution, so an ideal complete
+solution could integrate with it".
+
+>> It would be interesting to have a
+>> bot watch the list, apply patches and push to a travis-enabled fork of
+>> git.git on GitHub to get the same benefit when posting emails directly
+>> to the list.
 >
-> Does this sound user-friendly enough? What would you do
-> differently?
+> That is better (and probably more work) than what I had in mind.
+> IIUC the 0 bot can grab a patch from a mailing list and apply it to a
+> base (either the real base as encoded in the patch or a best guess)
+> and then run "make".
 
-Because my workflow is I usually comment on and review many topics
-without applying them to anywhere, by the time I start applying
-patches, I often know which one got Acked and Reviewed already.
+I don't know how 0 bot solves this, but the obvious issue with this
+approach is to allow dealing with someone sending a patch like
 
-So for them the workflow would be
++++ Makefile
+--- Makefile
++all:
++	rm -fr $(HOME); sudo rm -fr /
 
- 0. Think which maintenance track the topic should be based on.
+to the list. One thing that Travis gives us for free is isolation:
+malicious code in the build cannot break the bot, only the build itself.
 
- 1. Fork
-
-    $ git checkout -b <new topic> maint-<appropriate track>
-
- 2. In my MUA, pipe the message into this pipeline
-
-    Meta/add-by -r peff@ -a Tsirkin | git am -s3c
-
-where the "add-by" script (found in 'todo') expands the given names
-using .mailmap and appends appropriate trailers (the latter should
-eventually be updated to use interpret-trailers when the tool
-matures, but I did not think it was there yet when I last updated
-the "add-by" script).
-
-So for a use case where I work off of my MUA, I have no use for your
-"git ack".
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
