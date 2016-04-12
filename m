@@ -1,97 +1,170 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2 11/21] bisect: use struct node_data array instead of
- int array
-Date: Wed, 13 Apr 2016 01:02:53 +0200
-Message-ID: <CAP8UFD2foPEUXDD4_Y8K6hN1bWLJk11iqYXS=tM+M3eF430o7A@mail.gmail.com>
-References: <1460294354-7031-1-git-send-email-s-beyer@gmx.net>
-	<1460294354-7031-12-git-send-email-s-beyer@gmx.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] send-email: detect and offer to skip backup files
+Date: Tue, 12 Apr 2016 16:05:21 -0700
+Message-ID: <CAGZ79kZ+_JW-5BWdXse++_KaATO+qDhNtTz_k5gX507sObZyzA@mail.gmail.com>
+References: <xmqqlh4io2v1.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Wed Apr 13 01:03:00 2016
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 13 01:05:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aq7Km-0002sL-I4
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 01:03:00 +0200
+	id 1aq7N8-0003t4-Vt
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 01:05:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965202AbcDLXC4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2016 19:02:56 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:33413 "EHLO
-	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933991AbcDLXCz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2016 19:02:55 -0400
-Received: by mail-wm0-f42.google.com with SMTP id f198so206117399wme.0
-        for <git@vger.kernel.org>; Tue, 12 Apr 2016 16:02:54 -0700 (PDT)
+	id S934405AbcDLXFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2016 19:05:23 -0400
+Received: from mail-io0-f175.google.com ([209.85.223.175]:35416 "EHLO
+	mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933719AbcDLXFW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2016 19:05:22 -0400
+Received: by mail-io0-f175.google.com with SMTP id g185so48465742ioa.2
+        for <git@vger.kernel.org>; Tue, 12 Apr 2016 16:05:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=0kRHAaTwk2iDNIPQewhsxba8jCj6MzWRvJExURYbCSs=;
-        b=iRZ9fBi7cP8ObvqicFy9skbSwmJU7xj+oVlF+xz/O1Nk7qYx9z6ZMz/ykcNLIkmLt0
-         plyXJIGEsHFZesRyTbUmikWcaVDBuNaVraw9l9uXkviPgrZ78T5eLbLNYm2F0Wz/Vd+O
-         LttO1LTa0bAlQkw9JDHsopDb3PjeP1vdZnlrH3luqfbmFSpNBrdbJ5UpBzDm+c2W+Hr6
-         /r9v/uolqazXTP7eRfKeW/u0Lyx4yJ/sD+RmKTdetyJ6yYfPA9qgiL9NNrLXGc4wMyNS
-         Qxouq/KGP5M+ooeCU5YplSXzZT5k1yuKSFr3R/2IoU31XlUvKf13KSRUM6b5r8kH+xJO
-         ayvA==
+        bh=bc3008Xlrh3EPKZScPbzi+P5sDykNp2CwPVjXBBixG0=;
+        b=Ckjpjj7Dux+E3erGYirxIkVlXwwNtWwuK9eWdWVBOmeQ1RBxN2WlGudQnFiDId6qaz
+         VJyQx3Hzvq3jxeiWO3nuJYAMmZDRz6J7VJZVj8ZCxpwL0CEoxCkHrvFCgtQv5dfYU+mC
+         eFeilooz0ILaGXQt2oVfTsp3mmKx4PFHvbxCbhGTJSH3TdkLGFppWSaimnYMp1Bmo+Ei
+         8SJhcNcjlKNfBU3LQ7fxRgQIVYZZPQyG32p4uJZ/eYsMJB+CRywenF1YeUzXj781fzdr
+         Nu2o22x4lEo+4xG97D/qeXJA2KoF6L6F+8U8AFITKfDf4Ef2BUKBzGsDI5I9gCP3g7Lt
+         YXFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=0kRHAaTwk2iDNIPQewhsxba8jCj6MzWRvJExURYbCSs=;
-        b=KOAOAw23+EV+YuO75TX9Emep5PEPhn+xMvH3D080mPqfRbtAHMEoXfe5HePvKlkoSU
-         liL8K83fGAB4WtN0ShDLFi2GQ/vnD6J5pfQ0N31n6XSOACl7EO3MbV3fLOtUHdAo1zgT
-         +G51t7vH/2nbfpIoZvK7ebWynHQafXsG2GP5meD+7gubj5sQ0+GxutWy4bQdrIVv7/ha
-         ncNbqHfDoRpCGtGl+mnC6Bcc/TKSmMYwKCzgfzgUL8KURcNvlk3SP2U+CP8Kli4yxhIg
-         sXXSluu1pniinUazsTmnbmkYGtCwzMYgEwhOh4tstQHVEoylyVCxsYBZMN3mH03qdsKK
-         HsLw==
-X-Gm-Message-State: AOPr4FXoCzVgyc+GiZJRiNIkUOx5c+ZJgN22m/XHTD+3HtOjLWiRPTGilUdOaa2SUz5b89XFhGFUNmz3p8E5fA==
-X-Received: by 10.28.26.73 with SMTP id a70mr7051473wma.89.1460502173536; Tue,
- 12 Apr 2016 16:02:53 -0700 (PDT)
-Received: by 10.194.95.129 with HTTP; Tue, 12 Apr 2016 16:02:53 -0700 (PDT)
-In-Reply-To: <1460294354-7031-12-git-send-email-s-beyer@gmx.net>
+        bh=bc3008Xlrh3EPKZScPbzi+P5sDykNp2CwPVjXBBixG0=;
+        b=NCz/x/IA21Legklyw7ashBO1l8ZKDv6TcHYoZTYa2DjEiLdGr/hn5/n+nGFV6oLV5q
+         YZI6Y6Bm+lQmxudveFkXg+6T4Yt32tPPTwDipmSIggQs6sx8XXbHuoASFgMKdV7UySnY
+         lTsdhXp7eOWm3ly56jorPJuRahB9r/AScSU0Rhtnkbn8RHkPLtcGdAFeWY3B1xXa9KiA
+         5hcMqOQ6xuzfVtEKHqrXaRbJMbRQfVC+ylrQlT6UtkmsHsswvBGdj5Ms3irSVoqaN++6
+         q58UZokIn6i470c0N2qTdhmAgGDCVkkPArczmioNNxErJUwhTs17E8EkzamkcDDAs6L4
+         0LJg==
+X-Gm-Message-State: AOPr4FUJFCVmYiqlcfSow13gQ2Tfb/bkwjqkgAVbU96MtfQm3jG9tcD33Rhf2OM5MVnBhDMJrxVZL57KrR3j9ze8
+X-Received: by 10.107.184.8 with SMTP id i8mr6758183iof.96.1460502321135; Tue,
+ 12 Apr 2016 16:05:21 -0700 (PDT)
+Received: by 10.107.17.27 with HTTP; Tue, 12 Apr 2016 16:05:21 -0700 (PDT)
+In-Reply-To: <xmqqlh4io2v1.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291316>
 
-On Sun, Apr 10, 2016 at 3:19 PM, Stephan Beyer <s-beyer@gmx.net> wrote:
+On Tue, Apr 12, 2016 at 3:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Diligent people save output from format-patch to files, proofread
+> and edit them and then finally send the result out.  If the
+> resulting files are sent out with "git send-email 0*", this ends up
+> sending backup files (e.g. 0001-X.patch.backup or 0001-X.patch~)
+> left by their editors next to the final version.  Sending them with
+> "git send-email 0*.patch" (if format-patch was run with the standard
+> suffix) would avoid such an embarrassment, but not everybody is
+> careful.
 >
-> @@ -321,14 +321,13 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
->                          * add one for p itself if p is to be counted,
->                          * otherwise inherit it from q directly.
->                          */
-> +                       node_data(p->item)->weight = node_data(q->item)->weight;
->                         if (!(flags & TREESAME)) {
-> -                               weight_set(p, weight(q)+1);
-> +                               node_data(p->item)->weight++;
-
-It is not so easy to see that the above does the same thing as before.
-
-Maybe review would be easier if this part of the code was simplified
-in a separate patch and/or if the weight() and weight_set() function
-were kept, maybe like this:
-
-static inline int weight(struct commit *elem)
-{
-       return node_data(elem)->weight;
-}
-
-static inline void set_weight(struct commit *elem, int weight)
-{
-       node_data(elem)->weight = weight;
-}
-
->                                 counted++;
->                                 show_list("bisection 2 count one",
->                                           counted, nr, list);
->                         }
-> -                       else
-> -                               weight_set(p, weight(q));
+> After collecting files to be sent (and sorting them if read from a
+> directory), notice when the file being sent out has the same name as
+> the previous file, plus some suffix (e.g. 0001-X.patch was sent, and
+> we are looking at 0001-X.patch.backup or 0001-X.patch~), and the
+> suffix begins with a non-alnum (e.g. ".backup" or "~") and ask if
+> the user really wants to send it out.  Once the user skips sending
+> such a "backup" file, remember the suffix and stop asking the same
+> question (e.g. after skipping 0001-X.patch~, skip 0002-Y.patch~
+> without asking).
 >
->                         /* Does it happen to be at exactly half-way? */
->                         if (!find_all && halfway(p, nr))
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>
+>  * Just something I had lying around in my tree...
+
+I think that is a valid use case. (Save the user from embarrassment).
+Although I admit to being even more stupid than that.
+
+Once I made the mistake to not remove a previous patch series I had,
+such that there was:
+
+  0000-coverletter.patch (newly worded)
+  0001-bla-from-new-series
+  0001-foo-from-old-series
+  0002-...
+  ...
+
+`git send-email 0*` then sent out a totally bogus series for me.
+
+As another user friendly helper we could warn/abort if the first <n> characters
+are the same as the previous patch as well?
+
+>
+>  git-send-email.perl | 40 ++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 40 insertions(+)
+>
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index d356901..74ed01a 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -621,6 +621,8 @@ sub is_format_patch_arg {
+>         push @files, $repo->command('format-patch', '-o', tempdir(CLEANUP => 1), @rev_list_opts);
+>  }
+>
+> +@files = handle_backup_files(@files);
+> +
+>  if ($validate) {
+>         foreach my $f (@files) {
+>                 unless (-p $f) {
+> @@ -1726,6 +1728,44 @@ sub validate_patch {
+>         return;
+>  }
+>
+> +sub handle_backup {
+> +       my ($last, $lastlen, $file, $known_suffix) = @_;
+> +       my ($suffix, $skip);
+> +
+> +       $skip = 0;
+> +       if (defined $last &&
+> +           ($lastlen < length($file)) &&
+> +           (substr($file, 0, $lastlen) eq $last) &&
+> +           ($suffix = substr($file, $lastlen)) !~ /^[a-z0-9]/i) {
+> +               if (defined $known_suffix && $suffix eq $known_suffix) {
+> +                       print "Skipping $file with backup suffix '$known_suffix'.\n";
+> +                       $skip = 1;
+> +               } else {
+> +                       my $answer = ask("Do you really want to send $file? (y|N): ",
+> +                                        valid_re => qr/^(?:y|n)/i,
+> +                                        default => 'y');
+> +                       $skip = ($answer ne 'y');
+> +                       if ($skip) {
+> +                               $known_suffix = $suffix;
+> +                       }
+> +               }
+> +       }
+> +       return ($skip, $known_suffix);
+> +}
+> +
+> +sub handle_backup_files {
+> +       my @file = @_;
+> +       my ($last, $lastlen, $known_suffix, $skip, @result);
+> +       for my $file (@file) {
+> +               ($skip, $known_suffix) = handle_backup($last, $lastlen,
+> +                                                      $file, $known_suffix);
+> +               push @result, $file unless $skip;
+> +               $last = $file;
+> +               $lastlen = length($file);
+> +       }
+> +       return @result;
+> +}
+> +
+>  sub file_has_nonascii {
+>         my $fn = shift;
+>         open(my $fh, '<', $fn)
+> --
+> 2.8.1-347-g322afaf
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
