@@ -1,114 +1,90 @@
-From: Todd Zullinger <tmz@pobox.com>
-Subject: Re: [PATCH] There was a little inconsistancy in git prompt
-Date: Tue, 12 Apr 2016 11:27:39 -0400
-Message-ID: <20160412152739.GL15513@zaya.teonanacatl.net>
-References: <01020154095436db-40246224-5586-4e95-b5f7-59b27928ffa8-000000@eu-west-1.amazonses.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [RFD/BUG?] git show with tree/commit
+Date: Tue, 12 Apr 2016 17:33:33 +0200
+Message-ID: <570D154D.6090006@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Cc: git@vger.kernel.org
-To: Rudy YAYON <ryayon@outlook.com>
-X-From: git-owner@vger.kernel.org Tue Apr 12 17:27:49 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 12 17:33:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aq0EG-0003St-Hg
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 17:27:48 +0200
+	id 1aq0Jx-0005lE-HV
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 17:33:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965396AbcDLP1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2016 11:27:44 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:36759 "EHLO
-	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965272AbcDLP1n (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2016 11:27:43 -0400
-Received: by mail-yw0-f196.google.com with SMTP id i125so2767542ywe.3
-        for <git@vger.kernel.org>; Tue, 12 Apr 2016 08:27:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=YWujjMegpml6r9U6Tzkizfe6sxIzf+UHDi0hUU/mwvo=;
-        b=o7+U2jupe/I4UKReTE4cZsRMl+m3kl/Z7VtyCR/qHK/9LkxF8AkcGGGcmN44hukIq9
-         syG7kr6MDv5HdBHBwKZolwLWAmaKxNqzY0JnL4hw6aU7y8jL0l8LNg/sdneS17JzdoQ7
-         7J+La7Nx8O3jGisj7RWjN7aLDZNcdyXPiXitYYME2MRXe/5EIHyYCePXdeqov4E0UgpC
-         8aGjMhGEVHJUaf26oIhBr6/4kYr8laM88KehfelryDsxn8+wUgDX4iEkKdQBWzlG22qm
-         woNSKAnrm0ThezYwxDXUEh57YAI1oJbV6/pVDGeBe3qaKKzGOYzxIvpAdxyLa3uPhqd4
-         X/MQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=YWujjMegpml6r9U6Tzkizfe6sxIzf+UHDi0hUU/mwvo=;
-        b=K9RtL8Asqz2xYuL2DT/g76zfPp83cnU7PSsN8VIMx0BMVrUlqDk//yBiOjBPNAxvV6
-         oIfnLYWT+6FFkZLXt4kbHIr8jIQz7T9cohtDB6kl3aBt2PHy0tsGHkduRlzhrDGTpqNW
-         Eb3v1wTYqaMmYHUEXcCcDVYJsf58I1viiU0DEfjkElK2f/u0OdkerCJmbYaP6GDr8oGQ
-         xlJWXP8pdv1TIrTf+18cQRT5ET1tYk4hgWacV3rHIu8MU+/5r0/MC9lJ/ZfWHrOhD4cZ
-         r2hMS0hUbDwqucnnLPXtWukykFYg7rN/g3EKvqUA3GfFCQqaJdzhRW2P/qs7YxMNYtjr
-         qMgg==
-X-Gm-Message-State: AOPr4FXwiltgHoEmffW9PgKkhH9UMG2d8FhYXvzt/2Q/LBC/vhk89A1jt6yjhci3YEC7NQ==
-X-Received: by 10.13.217.75 with SMTP id b72mr2167967ywe.118.1460474862959;
-        Tue, 12 Apr 2016 08:27:42 -0700 (PDT)
-Received: from zaya.teonanacatl.net (zaya.teonanacatl.net. [2001:470:5:873:862b:2bff:fe5e:698b])
-        by smtp.gmail.com with ESMTPSA id i67sm17920477ywf.34.2016.04.12.08.27.42
-        (version=TLS1_1 cipher=AES128-SHA bits=128/128);
-        Tue, 12 Apr 2016 08:27:42 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <01020154095436db-40246224-5586-4e95-b5f7-59b27928ffa8-000000@eu-west-1.amazonses.com>
-User-Agent: Mutt/1.6.0 (2016-04-01)
+	id S965308AbcDLPdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2016 11:33:37 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:56059 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S965045AbcDLPdg (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Apr 2016 11:33:36 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 3179620EB1
+	for <git@vger.kernel.org>; Tue, 12 Apr 2016 11:33:35 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute3.internal (MEProxy); Tue, 12 Apr 2016 11:33:35 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+	content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=nyL
+	U4mWYPQart+nEwSrhv569B8Q=; b=EQAYeqyc6qvxZlV6J4FQwK4FVQfpG/EXaFz
+	lJKzeJVeSFwjyPqgRDFI7fKXJrHJWtuE2oSduogGYrfigMYNgvUpiAaWBGxQGCUP
+	533M+/wagyZ5sNCxHUqkSBnSwpwaKxl0W6y33Bf+66ugDVjb8LRowHXipicGOzHT
+	wb4chez4=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:message-id:mime-version:subject:to:x-sasl-enc
+	:x-sasl-enc; s=smtpout; bh=nyLU4mWYPQart+nEwSrhv569B8Q=; b=m6wE/
+	ROZ+pCrX3MG2Uhs3htxh7MjuDe9mCZX6by2tbayrwYI3Dyq85DJpmg5eeS54jyF4
+	K30URjNGq8Rf7wi/m2UbPyChAukeFlN0Cqv2jQRRKp3+t7NfTOSPIRWx8U3/j/RX
+	5cOe9GeV7pu3Cj+qO+RtJltO6eyDedHazXRwYo=
+X-Sasl-enc: MMn2KrRx4p02SfHEzKOyXtn1OP4lNdImNkyGRXJHf1Tx 1460475214
+Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+	by mail.messagingengine.com (Postfix) with ESMTPA id BDEAEC00018
+	for <git@vger.kernel.org>; Tue, 12 Apr 2016 11:33:34 -0400 (EDT)
+X-Mozilla-News-Host: news://news.gmane.org:119
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291268>
 
-Hi Rudy,
+With current next, using any commit sha1:
 
-I think the commit subject should include a bit more detail.  Ideally, 
-the subject would start with 'bash prompt: ' to make it clear what 
-area the commit involves.  Then you would want to describe what 
-inconsistency is being fixed (and why).
+$ git cat-file -p cab2cdadfda8e8e8631026443b11d3ed6e7ba517
+tree 04050d37b1676ba8da277be1902513049b45413a
+parent b673b5e7d121021f77768c736cd9f98d7b3b3967
+parent 7b0d47b3b6b5b64e02a5aa06b0452cadcdb18355
+...
 
-Rudy YAYON wrote:
-> ---
-> contrib/completion/git-prompt.sh | 8 ++++----
-> 1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-> index 07b52be..18be99f 100644
-> --- a/contrib/completion/git-prompt.sh
-> +++ b/contrib/completion/git-prompt.sh
-> @@ -194,13 +194,13 @@ __git_ps1_show_upstream ()
-> 		"") # no upstream
-> 			p="" ;;
-> 		"0	0") # equal to upstream
-> -			p="=" ;;
-> +			p=" =" ;;
-> 		"0	"*) # ahead of upstream
-> -			p=">" ;;
-> +			p=" >" ;;
-> 		*"	0") # behind upstream
-> -			p="<" ;;
-> +			p=" <" ;;
-> 		*)	    # diverged from upstream
-> -			p="<>" ;;
-> +			p=" <>" ;;
-> 		esac
-> 	else
-> 		case "$count" in
+$ git show cab2cdadfda8e8e8631026443b11d3ed6e7ba517:
+tree cab2cdadfda8e8e8631026443b11d3ed6e7ba517:
 
-I attempted to solve this a while back (longer than I realized, now 
-that I found the previous thread):
+.gitattributes
+.gitignore
+.mailmap
+...
 
-http://thread.gmane.org/gmane.comp.version-control.git/169330
+$ git show 04050d37b1676ba8da277be1902513049b45413a:
+tree 04050d37b1676ba8da277be1902513049b45413a
 
-Junio had some comments and suggestions, which I lacked time to follow 
-up on, it appears. (I thought there was more discussion but it must 
-have all been in my head. ;)
+.gitattributes
+.gitignore
+.mailmap
+...
 
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-When I think about all the crap I learned in high school ... it's a
-wonder I can think at all.
-    -- Paul Simon
+While it's clear to me what's going on, I'm wondering whether it's a
+good idea that "git show" says "tree" in front of the unresolved
+treeish, whether it's a tree, a commit or something else. I think it's
+pretty confusing. Alternatives would be:
+
+tree <resolved tree id> # here: 040...
+treeish <treeish>	# here: "treeish cab2c..."
+tree <treeish>^{tree} 	# here: "tree cab2c^{tree}"
+
+Cheers
+Michael
