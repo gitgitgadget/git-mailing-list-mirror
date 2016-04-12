@@ -1,64 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/3] index-helper: fix UNIX_PATH_MAX redefinition error
- on cygwin
-Date: Mon, 11 Apr 2016 21:46:16 -0400
-Message-ID: <20160412014616.GA9604@sigill.intra.peff.net>
-References: <570ADA5B.5030408@ramsayjones.plus.com>
- <20160411133343.GA7492@sigill.intra.peff.net>
- <1460410162.5540.20.camel@twopensource.com>
+From: Daurnimator <quae@daurnimator.com>
+Subject: Re: [PATCH] git-stash: Don't GPG sign when stashing changes
+Date: Tue, 12 Apr 2016 12:46:40 +1000
+Message-ID: <CAEnbY+eaReDYOH8azpSG7n7MOrvqORkC0ar80pd1m8wR4vv20A@mail.gmail.com>
+References: <00000150dddb0eeb-b77240fb-1b63-4676-ac4b-1220b8d011ca-000000@eu-west-1.amazonses.com>
+	<loom.20160407T042319-468@post.gmane.org>
+	<alpine.DEB.2.20.1604071017510.2967@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue Apr 12 03:46:30 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	me@cameroncurrie.net
+X-From: git-owner@vger.kernel.org Tue Apr 12 04:46:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1apnPR-00067N-Ak
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 03:46:29 +0200
+	id 1apoLu-0006eU-B0
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 04:46:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755274AbcDLBqZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2016 21:46:25 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47810 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753804AbcDLBqY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2016 21:46:24 -0400
-Received: (qmail 30674 invoked by uid 102); 12 Apr 2016 01:46:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Apr 2016 21:46:19 -0400
-Received: (qmail 31822 invoked by uid 107); 12 Apr 2016 01:46:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Apr 2016 21:46:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Apr 2016 21:46:16 -0400
-Content-Disposition: inline
-In-Reply-To: <1460410162.5540.20.camel@twopensource.com>
+	id S1753561AbcDLCqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Apr 2016 22:46:50 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:33640 "EHLO
+	mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750953AbcDLCqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Apr 2016 22:46:49 -0400
+Received: by mail-lf0-f67.google.com with SMTP id p64so575671lfg.0
+        for <git@vger.kernel.org>; Mon, 11 Apr 2016 19:46:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=daurnimator.com; s=daurnimator;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=p5EipouWrQz2l6jO0qB86oZbsvyFtSNGZA2KIAC7VRw=;
+        b=d4mkPnzGOz5AVQgTffWEFbgRl8LBEDxcXM6d/TfPvcx0/lajD/mXcmNh10jCjuSgBC
+         F5rxo0vdKIjM07c78JDXLLWNUWQHXrOY0s+SorfViALR85puS5y+ZAVO2qefLmBO5t+Y
+         bWyqEQdaKIuP3ACLYBSvH7JKNdILFJPcx+KTY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=p5EipouWrQz2l6jO0qB86oZbsvyFtSNGZA2KIAC7VRw=;
+        b=KataqFYcXPyi6nQ3y0GZ2+slfWdVPq1rbJoDsmZY1CAY2g8ors85zE9glaH4tIsucc
+         q4sW1U88p7lmorOlAfQWCvX9AFbfyhFePuXSNrW9JM/o4S94HnTVd+ceTLX9H+c44Ohi
+         oiNCm57fUD+q0FwQIQbP2QUuw3G0mzm+u2WqB8cEdsBDxR0yAcCcUqEIAH2kUc7xsbO9
+         QFQc9XT7U14nBf6oabHBXiCoPKXRVqMtsfE1V76XyViBjD3ZIWaWeaVNUwFfvlyKXCNc
+         hh8/X0XLoSF8u7PUxtdLQFftc/M+LancdfcoskMwdoh3NV3hA7LzcVHudtvZ9hwx4om1
+         IKrw==
+X-Gm-Message-State: AOPr4FVveCIK++iphQKMpqDOLOwylZOMf4wkjppIvrTavRdxMTd2D2JFqdPJjIanUi60zA==
+X-Received: by 10.25.23.195 with SMTP id 64mr266752lfx.82.1460429207885;
+        Mon, 11 Apr 2016 19:46:47 -0700 (PDT)
+Received: from mail-lf0-f45.google.com (mail-lf0-f45.google.com. [209.85.215.45])
+        by smtp.gmail.com with ESMTPSA id rp10sm4916975lbb.13.2016.04.11.19.46.41
+        for <git@vger.kernel.org>
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 11 Apr 2016 19:46:45 -0700 (PDT)
+Received: by mail-lf0-f45.google.com with SMTP id g184so6140097lfb.3
+        for <git@vger.kernel.org>; Mon, 11 Apr 2016 19:46:41 -0700 (PDT)
+X-Received: by 10.25.218.1 with SMTP id r1mr338598lfg.130.1460429200673; Mon,
+ 11 Apr 2016 19:46:40 -0700 (PDT)
+Received: by 10.25.146.16 with HTTP; Mon, 11 Apr 2016 19:46:40 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1604071017510.2967@virtualbox>
+X-Gmail-Original-Message-ID: <CAEnbY+eaReDYOH8azpSG7n7MOrvqORkC0ar80pd1m8wR4vv20A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291241>
 
-On Mon, Apr 11, 2016 at 05:29:22PM -0400, David Turner wrote:
+On 7 April 2016 at 18:19, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> you dropped the Cc: list. So most likely Cameron won't get your mail nor
+> any response to your mail.
 
-> On Mon, 2016-04-11 at 09:33 -0400, Jeff King wrote:
-> > On Sun, Apr 10, 2016 at 11:57:31PM +0100, Ramsay Jones wrote:
-> > 
-> > > So, the approach taken by patch #1 is to forget about UNIX_PATH_MAX
-> > > and
-> > > simply use sizeof(address.sun_path) instead!
-> > 
-> > That's what the existing code in unix-socket.c does. Which makes me
-> > wonder why the index-helper code is not simply calling that.
-> 
-> Because I didn't notice it at the time.  Duy pointed it out on another
-> comment on this series; I'll fix it.
+I originally replied via the gmane web interface, apparently it
+doesn't CC the original sender.
+CCd now.
 
-Thanks. I _think_ it should do everything you need already, but I'm
-happy to review any tweaks you need to make to it.
+> On Thu, 7 Apr 2016, daurnimator wrote:
+>
+>> Cameron Currie <me <at> cameroncurrie.net> writes:
+>> > This is helpful for folks with commit.gpgsign = true in their .gitconfig.
+>>
+>> > https://github.com/git/git/pull/186
+>>
+>> I too would like this.
+>> Bumping due to lack of attention.
+>
+> It lacks a Sign-off, our convention is to continue in lower-case after the
+> colon in the commit's subject, and I think that it would be good to write
+> so much as one paragraph in the commit message.
+>
+> Ciao,
+> Johannes
 
--Peff
+Cameron, able you able to complete this?
