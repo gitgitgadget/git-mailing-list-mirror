@@ -1,102 +1,74 @@
-From: Nikola =?ISO-8859-1?Q?Forr=F3?= <nforro@redhat.com>
-Subject: [PATCH] difftool/mergetool: make the form of yes/no questions
- consistent
-Date: Tue, 12 Apr 2016 14:59:42 +0200
-Organization: Red Hat
-Message-ID: <1460465982.3214.7.camel@redhat.com>
-Reply-To: nforro@redhat.com
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: Git config not working correctly with included configurations
+Date: Tue, 12 Apr 2016 14:02:36 +0100
+Message-ID: <20160412130236.GA11013@serenity.lan>
+References: <assp.0910338c53.570CDB33.9020300@itflex.com.br>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 12 14:59:51 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Rudinei Goi Roecker <rudineigr@itflex.com.br>
+X-From: git-owner@vger.kernel.org Tue Apr 12 15:11:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1apxv4-0000bk-3z
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 14:59:50 +0200
+	id 1apy5s-0004mS-MR
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 15:11:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756355AbcDLM7q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Apr 2016 08:59:46 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:40366 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756309AbcDLM7p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2016 08:59:45 -0400
-Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mx1.redhat.com (Postfix) with ESMTPS id DAA21C04B30C;
-	Tue, 12 Apr 2016 12:59:44 +0000 (UTC)
-Received: from unused-4-132.brq.redhat.com (unused-4-132.brq.redhat.com [10.34.4.132])
-	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id u3CCxgsI030255
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Tue, 12 Apr 2016 08:59:44 -0400
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+	id S1757187AbcDLNKu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2016 09:10:50 -0400
+Received: from mta02.prd.rdg.aluminati.org ([94.76.243.215]:46750 "EHLO
+	mta02.prd.rdg.aluminati.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757186AbcDLNKs (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Apr 2016 09:10:48 -0400
+X-Greylist: delayed 482 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Apr 2016 09:10:48 EDT
+Received: from mta02.prd.rdg.aluminati.org (localhost [127.0.0.1])
+	by mta.aluminati.local (Postfix) with ESMTP id 15869230AE;
+	Tue, 12 Apr 2016 14:02:44 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by mta02.prd.rdg.aluminati.org (Postfix) with ESMTP id 121073410;
+	Tue, 12 Apr 2016 14:02:44 +0100 (BST)
+X-Quarantine-ID: <bdkipcuDMQim>
+X-Virus-Scanned: Debian amavisd-new at mta02.prd.rdg.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.25
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.25 tagged_above=-9999 required=5
+	tests=[ALL_TRUSTED=-1, KAM_INFOUSMEBIZ=0.75]
+	autolearn=no autolearn_force=no
+Received: from mta.aluminati.local ([127.0.0.1])
+	by localhost (mta02.prd.rdg.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id bdkipcuDMQim; Tue, 12 Apr 2016 14:02:42 +0100 (BST)
+Received: from serenity.lan (unknown [10.2.0.10])
+	by mta02.prd.rdg.aluminati.org (Postfix) with ESMTPSA id AFFAD342C;
+	Tue, 12 Apr 2016 14:02:40 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <assp.0910338c53.570CDB33.9020300@itflex.com.br>
+User-Agent: Mutt/1.6.0 (2016-04-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291259>
 
-Every yes/no question in difftool/mergetool scripts has slightly
-different form, and none of them is consistent with the form git
-itself uses.
+On Tue, Apr 12, 2016 at 08:25:39AM -0300, Rudinei Goi Roecker wrote:
+> I'm having a problem with included configurations in ~/.gitconfig, when 
+> using this command:
+> 
+> git config --global user.email
 
-Make the form of all the questions consistent with the form used
-by git, i.e. "Question [y/n]? ".
 
-Signed-off-by: Nikola Forr=C3=B3 <nforro@redhat.com>
----
- git-difftool--helper.sh | 4 ++--
- git-mergetool--lib.sh   | 2 +-
- git-mergetool.sh        | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+> It doesn't return anything, in commits it works as intended. The 
+> configuration looks like this:
 
-diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
-index 2b11b1d..84d6cc0 100755
---- a/git-difftool--helper.sh
-+++ b/git-difftool--helper.sh
-@@ -44,10 +44,10 @@ launch_merge_tool () {
- 			"$GIT_DIFF_PATH_TOTAL" "$MERGED"
- 		if use_ext_cmd
- 		then
--			printf "Launch '%s' [Y/n]: " \
-+			printf "Launch '%s' [Y/n]? " \
- 				"$GIT_DIFFTOOL_EXTCMD"
- 		else
--			printf "Launch '%s' [Y/n]: " "$merge_tool"
-+			printf "Launch '%s' [Y/n]? " "$merge_tool"
- 		fi
- 		read ans || return
- 		if test "$ans" =3D n
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index 54ac8e4..92adcc0 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -100,7 +100,7 @@ check_unchanged () {
- 		while true
- 		do
- 			echo "$MERGED seems unchanged."
--			printf "Was the merge successful? [y/n] "
-+			printf "Was the merge successful [y/n]? "
- 			read answer || return 1
- 			case "$answer" in
- 			y*|Y*) return 0 ;;
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 9f77e3a..2e0635a 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -396,7 +396,7 @@ done
- prompt_after_failed_merge () {
- 	while true
- 	do
--		printf "Continue merging other unresolved paths (y/n) ? "
-+		printf "Continue merging other unresolved paths [y/n]? "
- 		read ans || return 1
- 		case "$ans" in
- 		[yY]*)
---=20
-2.4.11
+I think you need:
+
+	git config --global --includes user.email
+
+or simply:
+
+	git config user.email
+
+See the documentation of the --includes and --no-includes options in
+git-config(1).
