@@ -1,60 +1,67 @@
-From: Greg KH <gregkh@linuxfoundation.org>
-Subject: Re: 0 bot for Git
-Date: Mon, 11 Apr 2016 23:41:11 -0700
-Message-ID: <20160412064111.GA22157@kroah.com>
-References: <CAGZ79kYWGFN1W0_y72-V6M3n4WLgtLPzs22bWgs1ObCCDt5BfQ@mail.gmail.com>
- <CAGZ79kZOx8ehAB-=Frjgde2CDo_vwoVzQNizJinf4LLXek5PSQ@mail.gmail.com>
+From: Rudy YAYON <ryayon@outlook.com>
+Subject: [PATCH] There was a little inconsistancy in git prompt
+Date: Tue, 12 Apr 2016 07:16:34 +0000
+Message-ID: <01020154095436db-40246224-5586-4e95-b5f7-59b27928ffa8-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Apr 12 08:41:18 2016
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 12 09:16:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aps0i-0001Ul-Um
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 08:41:17 +0200
+	id 1apsYz-00074R-0i
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 09:16:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755945AbcDLGlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2016 02:41:12 -0400
-Received: from mail.linuxfoundation.org ([140.211.169.12]:40537 "EHLO
-	mail.linuxfoundation.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752649AbcDLGlM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2016 02:41:12 -0400
-Received: from localhost (unknown [67.51.76.21])
-	by mail.linuxfoundation.org (Postfix) with ESMTPSA id A8F29E60;
-	Tue, 12 Apr 2016 06:41:11 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZOx8ehAB-=Frjgde2CDo_vwoVzQNizJinf4LLXek5PSQ@mail.gmail.com>
-User-Agent: Mutt/1.6.0 (2016-04-01)
+	id S1756035AbcDLHQh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2016 03:16:37 -0400
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:52517
+	"EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755956AbcDLHQh (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Apr 2016 03:16:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1460445394;
+	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=P2V9kQEPn4m+zSayH3D9UXD21QFDrRD5DUP4RQQb3ZE=;
+	b=SXPmOwD3IebYXSgzrB7NJKFxM7pliCZgw4eeL06MK3/Ta88mI85Dbd0LErNgzdpe
+	js/mnynq9dV8TG6F6yQkpkAdVfz54eXyGZFde3RqXPtJyWWNTmr8QB6kZXTw/OV08el
+	sX5FQoUS+x8MhOHw3NBMdsadLEJlnUAW4ogV9Q+k=
+X-SES-Outgoing: 2016.04.12-54.240.7.12
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291247>
 
-On Mon, Apr 11, 2016 at 09:29:59PM -0700, Stefan Beller wrote:
-> Resending as plain text. (I need to tame my mobile)
-> 
-> On Mon, Apr 11, 2016 at 7:51 AM, Stefan Beller <sbeller@google.com> wrote:
-> > Hi Greg,
-> >
-> > Thanks for your talk at the Git Merge 2016!
-> > The Git community uses the same workflow as the kernel. So we may be
-> > interested in the 0 bot which could compile and test each patch on the list.
-> > Could you put us in touch with the authors/maintainers of said tool?
-> >
-> > Unlike the kernel we would not need hardware testing and we're low traffic
-> > compared to the kernel, which would make it easier to set it up.
+---
+ contrib/completion/git-prompt.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-We don't get much, if any, real hardware testing from the 0-day bot,
-it's just lots and lots of builds and static testing tools.
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index 07b52be..18be99f 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -194,13 +194,13 @@ __git_ps1_show_upstream ()
+ 		"") # no upstream
+ 			p="" ;;
+ 		"0	0") # equal to upstream
+-			p="=" ;;
++			p=" =" ;;
+ 		"0	"*) # ahead of upstream
+-			p=">" ;;
++			p=" >" ;;
+ 		*"	0") # behind upstream
+-			p="<" ;;
++			p=" <" ;;
+ 		*)	    # diverged from upstream
+-			p="<>" ;;
++			p=" <>" ;;
+ 		esac
+ 	else
+ 		case "$count" in
 
-You can reach the developers of it at:
-	kbuild test robot <lkp@intel.com>
-
-Hope this helps,
-
-greg k-h
+--
+https://github.com/git/git/pull/181
