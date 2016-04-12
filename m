@@ -1,162 +1,106 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 3/3] clone: add t5614 to test cloning submodules with shallowness involved
-Date: Tue, 12 Apr 2016 16:48:49 -0700
-Message-ID: <1460504929-19208-4-git-send-email-sbeller@google.com>
-References: <1460504929-19208-1-git-send-email-sbeller@google.com>
+Subject: [PATCH 0/3] clone --shallow-submodules flag
+Date: Tue, 12 Apr 2016 16:48:46 -0700
+Message-ID: <1460504929-19208-1-git-send-email-sbeller@google.com>
 Cc: gitster@pobox.com, jacob.keller@gmail.com,
 	Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 13 01:49:01 2016
+X-From: git-owner@vger.kernel.org Wed Apr 13 01:49:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aq83J-00036F-9M
+	id 1aq83I-00036F-NV
 	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 01:49:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965736AbcDLXs5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2016 19:48:57 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:36514 "EHLO
-	mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964951AbcDLXs4 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S965353AbcDLXs4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Tue, 12 Apr 2016 19:48:56 -0400
-Received: by mail-pf0-f174.google.com with SMTP id e128so22678350pfe.3
-        for <git@vger.kernel.org>; Tue, 12 Apr 2016 16:48:56 -0700 (PDT)
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:36486 "EHLO
+	mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965037AbcDLXsz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2016 19:48:55 -0400
+Received: by mail-pf0-f182.google.com with SMTP id e128so22677697pfe.3
+        for <git@vger.kernel.org>; Tue, 12 Apr 2016 16:48:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=McgdZACwwpyMndm/EwAharLJO8pKL9D/XM9UbiBnuZg=;
-        b=jqnJPCK8G6pbSsPMNRkj3LvA1xFDaX3+5YcDsZWFA3Wab2XTX/u/3UN8WLrQIEgRYl
-         Ut451VnpsqMl+5yxIQnCad3X7XLBNXDeIeISsOHBIHggrIJXaAz4nHpxUQoF7BTz8Tnx
-         iUA7n9l0WCM4lXwPhXBkupQVfe5hi5HqQ/qzuXmisWbeDotKG/l2bStHB8FP9vwCs9eN
-         HtdsnkyYxuBbnBJdgv1JTu427iG1S8shRnbPJcwjPpzySywSfxGWZVVa6l2PC6Q/z5o6
-         /yz7RZXwY0HOJVEQy2lBkldvQ9k65cxAvHUDzGNhQX3v3YwkbzBLRhmiJdZxsr9pXmFe
-         8ZfA==
+        h=from:to:cc:subject:date:message-id;
+        bh=yVhNC03PHyJ5ZIdeq8tipf47O/Ksz1/xofUYLbc8Vgw=;
+        b=gUX5b6HdEKDS7RkC3ildXN+JJGlXxRqECX6b+LHo2RTsMrRpugMkOLbw9y4bhqKwC1
+         uWU0E/k0qVmhI0PfkjTiwDk5Rs1HfnzwXodo7ZmW3kCNCNmdx6PLODuMoB8OEb7FtSuD
+         rotTul/+ZJsSQT6LEFCx/D8vstv2Lv9iZGV/D6MN5olI90gF3Chf6VhgGRDNcZkKjhYC
+         3jXfCwxezhEA49R1q21M/esdEz8zIwGFQXCm1x3z/UYzDA1k6gFkdV8KIbjviegcRNCP
+         WHRkS6CiDb83lXe5i0JDUAQ1EpAP4fazDTEGacVrKsju9wp7OzAJCiaKzzRwv/h0/iIq
+         jl+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=McgdZACwwpyMndm/EwAharLJO8pKL9D/XM9UbiBnuZg=;
-        b=IgFXbmxXVcGNXLvY5TKFlDq/IBwScwXAETdxttEraxxaKZpC7G0OyFy/IIFbzUnTpz
-         o079vYWUyMoTki3I+OIEL01kwdpOrpOJnLrzvrvy11z/aFZBjFOac7VUFUGibm7UCdqs
-         puYzpZADJqsSPCm9GWh9h+YzkI9zzsSq6InJCIkYZq/XHRYpHBC5TvgALW9oXtyVLdcD
-         zuCuCptnH2iPGKXykIHUWkKaVjuRaBUiIwPOH7MVoZ6w9ZS9Gc+fMcgycFcOMDPSRlW8
-         4KuUhpqcOg0ZA+qQOGrMUZdXS0r9DHFqBeMsRgdK9Mn/v9jLnEyaIGTLQYw9atSTIpvI
-         a/oA==
-X-Gm-Message-State: AOPr4FUJmg3c5TOfL7jzm+3LAT0zip/nu8CWiASvS6Zz0EOj7LY4LF/nIdo+wnCEqHieqxEx
-X-Received: by 10.98.68.71 with SMTP id r68mr8456385pfa.119.1460504935661;
-        Tue, 12 Apr 2016 16:48:55 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=yVhNC03PHyJ5ZIdeq8tipf47O/Ksz1/xofUYLbc8Vgw=;
+        b=RiLwHEH9EuLkw7elKGispBXPJLe3QwVkTJ89ND2cxqoiqpr/bd04Dye599znIDcvI7
+         PXBHWX0hVb7uY8nprj4SKgLkGbyiyn+l3Zn4GvK5Cs5/Na2L765LPfeEJTSQvIq57ssd
+         fzvgzBf6dLQclF87+vUT04y2KXclRXbczkuMEyr8Kn0zdSf+KYJB45e8xZUxRkes1BgP
+         e8j66lE/PxW8YuWS79PjFJGvJv+mnMF3je8e5BPQRRL8VEoSmKj8QZpZgwIVdal501X7
+         pXP1x0o7j+6PBwoXDWto4XJoMXETy6kDu48DijaXfBL4d2w/8+jvxGlRl/yDj/MnyCUv
+         28eg==
+X-Gm-Message-State: AOPr4FXVJ8aKPkY/eQfgLSyvbhRi/PAILYNpJKSTPcZp+t10HOi/s0HPhGqpeEDrpUpUgKND
+X-Received: by 10.98.23.201 with SMTP id 192mr1941691pfx.122.1460504932324;
+        Tue, 12 Apr 2016 16:48:52 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:705c:1d3d:8d56:4629])
-        by smtp.gmail.com with ESMTPSA id t1sm20809251paa.17.2016.04.12.16.48.55
+        by smtp.gmail.com with ESMTPSA id f12sm46110579pfd.87.2016.04.12.16.48.51
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 12 Apr 2016 16:48:55 -0700 (PDT)
+        Tue, 12 Apr 2016 16:48:51 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.264.gc776916.dirty
-In-Reply-To: <1460504929-19208-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291332>
 
-There are some inherent issues with shallow clones and submodules, such
-as having not having a commit available the superproject may point to
-in the submodule due to being shallow. Use the new file t5614 to document
-and test expectations in this area.
+(This is a resend of a series from March 15th, titled 
+"Towards sane shallow clones with submodules", this series
+applies on top of sb/submodule-parallel-update,
+it replaces sb/clone-shallow-passthru)
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+When creating a shallow clone of a repository with submodules, the depth
+argument does not influence the submodules, i.e. the submodules are done
+as non-shallow clones. It is unclear what the best default is for the
+depth of submodules of a shallow clone, so we need to have the possibility
+to do all kinds of combinations:
+
+* shallow super project with shallow submodules
+  e.g. build bots starting always from scratch. They want to transmit
+  the least amount of network data as well as using the least amount
+  of space on their hard drive.
+* shallow super project with unshallow submodules
+  e.g. The superproject is just there to track a collection of repositories
+  and it is not important to have the relationship between the repositories
+  intact. However the history of the individual submodules matter.
+* unshallow super project with shallow submodules
+  e.g. The superproject is the actual project and the submodule is a
+  library which is rarely touched.
+
+The new switch to select submodules to be shallow or unshallow supports
+all of these three cases.
+
+Changes to the previous series:
+ * Reordered patch 1 and 2, as it sounds like a more natural ordering.
+ 
+Any comments welcome!
+Thanks,
+Stefan
+
+Stefan Beller (3):
+  clone: add `--shallow-submodules` flag
+  submodule clone: pass along `local` option
+  clone: Add t5614 to test cloning submodules with shallowness involved
+
+ Documentation/git-clone.txt | 13 +++++--
+ builtin/clone.c             | 21 ++++++++++++
+ builtin/submodule--helper.c | 22 ++++++++++--
+ git-submodule.sh            |  7 ++++
  t/t5614-clone-submodules.sh | 82 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 82 insertions(+)
+ 5 files changed, 139 insertions(+), 6 deletions(-)
  create mode 100755 t/t5614-clone-submodules.sh
 
-diff --git a/t/t5614-clone-submodules.sh b/t/t5614-clone-submodules.sh
-new file mode 100755
-index 0000000..a66c2db
---- /dev/null
-+++ b/t/t5614-clone-submodules.sh
-@@ -0,0 +1,82 @@
-+#!/bin/sh
-+
-+test_description='Test shallow cloning of repos with submodules'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	git checkout -b master &&
-+	test_commit commit1 &&
-+	test_commit commit2 &&
-+	mkdir sub &&
-+	(
-+		cd sub &&
-+		git init &&
-+		test_commit subcommit1 &&
-+		test_commit subcommit2
-+	) &&
-+	git submodule add ./sub &&
-+	git commit -m "add submodule"
-+'
-+
-+test_expect_success 'nonshallow clone implies nonshallow submodule' '
-+	test_when_finished "rm -rf super_clone" &&
-+	git clone --recurse-submodules . super_clone &&
-+	(
-+		cd super_clone &&
-+		git log --oneline >lines &&
-+		test_line_count = 3 lines
-+	) &&
-+	(
-+		cd super_clone/sub &&
-+		git log --oneline >lines &&
-+		test_line_count = 2 lines
-+	)
-+'
-+
-+test_expect_success 'shallow clone implies shallow submodule' '
-+	test_when_finished "rm -rf super_clone" &&
-+	git clone --recurse-submodules --no-local --depth 1 . super_clone &&
-+	(
-+		cd super_clone &&
-+		git log --oneline >lines &&
-+		test_line_count = 1 lines
-+	) &&
-+	(
-+		cd super_clone/sub &&
-+		git log --oneline >lines &&
-+		test_line_count = 1 lines
-+	)
-+'
-+
-+test_expect_success 'shallow clone with non shallow submodule' '
-+	test_when_finished "rm -rf super_clone" &&
-+	git clone --recurse-submodules --no-local --depth 1 --no-shallow-submodules . super_clone &&
-+	(
-+		cd super_clone &&
-+		git log --oneline >lines &&
-+		test_line_count = 1 lines
-+	) &&
-+	(
-+		cd super_clone/sub &&
-+		git log --oneline >lines &&
-+		test_line_count = 2 lines
-+	)
-+'
-+
-+test_expect_success 'non shallow clone with shallow submodule' '
-+	test_when_finished "rm -rf super_clone" &&
-+	git clone --recurse-submodules --no-local --shallow-submodules . super_clone &&
-+	(
-+		cd super_clone &&
-+		git log --oneline >lines &&
-+		test_line_count = 3 lines
-+	) &&
-+	(
-+		cd super_clone/sub &&
-+		git log --oneline >lines &&
-+		test_line_count = 1 lines
-+	)
-+'
-+
-+test_done
 -- 
 2.5.0.264.gc776916.dirty
