@@ -1,92 +1,112 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: weird diff output?
-Date: Tue, 12 Apr 2016 12:34:21 -0700
-Message-ID: <CAGZ79kZ+JgVNSvJ+tZwGqP-L-NVUv8hmd1jsbh71F08F5AqsjA@mail.gmail.com>
-References: <CA+P7+xoiFUiBwDU2Wo9nVukchBvJSknON2XN572b6rSHnOSWaQ@mail.gmail.com>
-	<CAGZ79ka4ad5dQMWANJUDx-0+kV3qR=HttOJni2XfhFzjMKfcPw@mail.gmail.com>
-	<xmqqzithxj8l.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZiiOgxh6vMDnaJ_b+VVGrFBfGzZukTN6OEBxUV9-2vQw@mail.gmail.com>
-	<CA+P7+xoLZhKzHf6khQfT_pZ2=CQAp8Nmhc9B8+10+9=YYUZH3w@mail.gmail.com>
-	<20160330045554.GA11007@sigill.intra.peff.net>
-	<CA+P7+xqskf6Ti3tVwMrOAaj3EDykRLKiXG5EbbzkjRsZP0s_7w@mail.gmail.com>
-	<CA+P7+xp+oT2zMBZqR8zvXKm8Zp5btaNyoOWFTts29HMwX+2o=Q@mail.gmail.com>
-	<CA+P7+xrbNQqGhR_EoVe7zou_g6oVFGN_v+q+tyHguv1BCMcimQ@mail.gmail.com>
-	<20160331134750.GA29790@sigill.intra.peff.net>
-	<CA+P7+xpX_xR9wVdRPgymXe0wRjDY2USRx2PyWJMKTjAepWpP+A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 4/4] format-patch: introduce format.base configuration
+Date: Tue, 12 Apr 2016 12:47:23 -0700
+Message-ID: <xmqq37qqr4ms.fsf@gitster.mtv.corp.google.com>
+References: <1460342873-28900-1-git-send-email-xiaolong.ye@intel.com>
+	<1460342873-28900-5-git-send-email-xiaolong.ye@intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Jacob Keller <jacob.keller@gmail.com>, davidel@xmailserver.org
-X-From: git-owner@vger.kernel.org Tue Apr 12 21:34:29 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, fengguang.wu@intel.com, ying.huang@intel.com,
+	philip.li@intel.com, julie.du@intel.com
+To: Xiaolong Ye <xiaolong.ye@intel.com>
+X-From: git-owner@vger.kernel.org Tue Apr 12 21:47:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aq44x-0004dn-Vy
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 21:34:28 +0200
+	id 1aq4Hb-0001fD-Hk
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Apr 2016 21:47:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756171AbcDLTeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2016 15:34:23 -0400
-Received: from mail-io0-f171.google.com ([209.85.223.171]:34422 "EHLO
-	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751181AbcDLTeW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2016 15:34:22 -0400
-Received: by mail-io0-f171.google.com with SMTP id 2so42148892ioy.1
-        for <git@vger.kernel.org>; Tue, 12 Apr 2016 12:34:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=ugQW5Ji4V4atxCSLmqbDgWBASLMiaj/K4cktT+oI1aw=;
-        b=otJy5xLqLg9SQ0GaqOSrngMGI2HH7Ceh2+gPKwBV7AxEzBuvO70D+pxrS6ZYtY4LHI
-         ugx1J5WCobJA8/kycvodfp0IfXJKKJ/qUlL3z48Kq/zCM0u7Y8QEta/N9T0/RrSfv8sh
-         214vvvTjq5LL5qfdlrfyrVnHYzhG2YsAEZltU9lX0vDQ0G6Ws9m7hltuxwO2WXRHagC1
-         4EPthVdQPPd87xp7vwJJAFnCaIT6LfotQfaQJ35c6fYLF6qEBNQ16eJmXTSVEyEjeSPB
-         Us3rjdS/EQq9SEeRyDVQPuYvDu9JBdRb6L8x1T7lYXBr8Cil7rcVCiLDA7+2Haqfdq2B
-         ljtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=ugQW5Ji4V4atxCSLmqbDgWBASLMiaj/K4cktT+oI1aw=;
-        b=jz7/emsnU6BzqVX4iBMOl8SkBJ0HMksNLkvzs4bIw02a4K84F6bd4dfd4AHw3k3EBz
-         xW6dgnouBoHypJ/Y32JDMKWgbesk9kX+XGSaXnkMdg6tifbwfOnAzdYSnHM8faVZqVOU
-         9moHag5fSyyeqAd7+dnSPT2lPrkVhDYHO/NuM/XoJHYi/lI41sYNo2pg4MMwTa/vAu58
-         d3Qz3ZnxpdfUDg8/sZ4e+BKNSLPHtA1Vf4shxCNi5HKtXdUe9diOYMcBRG8WvLQq26Na
-         1IbK5sWz3ofV2qkoQyEt5vB9KJ8nmIHasj/PPn04mmRIaTBfjdB/gTEwzFH2uNDsZzu5
-         lSPQ==
-X-Gm-Message-State: AOPr4FVRBusbRtKUlCXcAyM04G8GsKW2DDEPaekUJ7J2s/y28kaZ/yykF5U4KIfVA7aeqUiExHRIS5hr+V5/L3e+
-X-Received: by 10.107.184.8 with SMTP id i8mr5912788iof.96.1460489661793; Tue,
- 12 Apr 2016 12:34:21 -0700 (PDT)
-Received: by 10.107.17.27 with HTTP; Tue, 12 Apr 2016 12:34:21 -0700 (PDT)
-In-Reply-To: <CA+P7+xpX_xR9wVdRPgymXe0wRjDY2USRx2PyWJMKTjAepWpP+A@mail.gmail.com>
+	id S1757157AbcDLTr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2016 15:47:28 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:62936 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757078AbcDLTr0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2016 15:47:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B41D65528E;
+	Tue, 12 Apr 2016 15:47:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=54uwkl4rU8WKfLWMJ1BgMENwbVQ=; b=HT0RwV
+	sSPqZ85W0DNgQwLqA8ubOBOjB99B+NpFuD88PINWuocVdpHxDRzQyQAW17giJYBc
+	qM/e/0xoml66iTsASttA0eEIaEfQVr+pF1iDdQmsD4Vvq2yeAUX9rEnJ1L50Wjog
+	syboecWBCjjzmr1kCRoBRxb8/hLl65rvpvsbI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RbhARA0fVko65xsZfuWwtXMO3US+q1d4
+	NAk85OMUldR6jzdmfPPky++RgOX7cZJDayUHn44idHM5cJSuYvxxoXAD1y3nXHYy
+	uXzKFy4Gb1iMXPHqatUs1kp9w7RfDNmhGPhoxY7mCRKb+yzZxsZSIDJLYqunZ8Nd
+	RGjC8luWe8k=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AC0835528D;
+	Tue, 12 Apr 2016 15:47:24 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3359A5528C;
+	Tue, 12 Apr 2016 15:47:24 -0400 (EDT)
+In-Reply-To: <1460342873-28900-5-git-send-email-xiaolong.ye@intel.com>
+	(Xiaolong Ye's message of "Mon, 11 Apr 2016 10:47:53 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 60C34080-00E7-11E6-8B4D-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291290>
 
-On Wed, Apr 6, 2016 at 10:47 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
->
-> I started attempting to implement this heuristic within xdiff, but I
-> am at a loss as to how xdiff actually works. I suspect this would go
-> in xdi_change_compact or after it, but I really don't understand how
-> xdiff represents the diffs at all...
+Xiaolong Ye <xiaolong.ye@intel.com> writes:
 
-I agree that this seems like the right place.
+> +static int config_base_commit;
 
-On the off chance that David, the author of xdiff remembers that
-part, I cc'd him. (The whole discussion on better diffs is found at
-http://thread.gmane.org/gmane.comp.version-control.git/290093)
+This variable is used as a simple boolean whose name is overly broad
+(if it were named "config_base_auto" this complaint would not
+apply).  If you envision possible future enhancements for this
+configuration variable, "int config_base_commit" might make sense
+but I don't think of anything offhand that would be happy with
+"int".
 
-Thanks,
-Stefan
+> @@ -786,6 +787,12 @@ static int git_format_config(const char *var, const char *value, void *cb)
+>  	}
+>  	if (!strcmp(var, "format.outputdirectory"))
+>  		return git_config_string(&config_output_directory, var, value);
+> +	if (!strcmp(var, "format.base")){
 
+Style. s/)){/)) {/
 
+> +		if (value && !strcasecmp(value, "auto")) {
 
->
-> Thanks,
-> Jake
+Does it make sense to allow "Auto" here?  Given that the command
+line parsing uses strcmp() to require "auto", I do not think so.
+
+> +			config_base_commit = 1;
+> +			return 0;
+> +		}
+
+When a value other than "auto" is given, is it sane to ignore them
+without even warning?
+
+I am wondering if this wants to be a format.useAutoBase boolean
+variable.
+
+> @@ -1215,7 +1222,12 @@ static void prepare_bases(struct base_tree_info *bases,
+>  	DIFF_OPT_SET(&diffopt, RECURSIVE);
+>  	diff_setup_done(&diffopt);
+>  
+> -	if (!strcmp(base_commit, "auto")) {
+> +	if (base_commit && strcmp(base_commit, "auto")) {
+> +		base = lookup_commit_reference_by_name(base_commit);
+> +		if (!base)
+> +			die(_("Unknown commit %s"), base_commit);
+> +		oidcpy(&bases->base_commit, &base->object.oid);
+> +	} else if ((base_commit && !strcmp(base_commit, "auto")) || config_base_commit) {
+
+It may be a poor design to teach prepare_bases() about "auto" thing.
+Doesn't it belong to the caller?  The caller used to say "If a base
+is given, then call that function, by the way, the base must be a
+concrete one", and with the new "auto" feature, the caller loosens
+the last part of the statement and says "If a base is given, call
+that function, but if it is specified as "auto", I'd have to compute
+it for the user before doing so".
