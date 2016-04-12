@@ -1,222 +1,282 @@
 From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: [PATCH v14 6/6] commit: add a commit.verbose config variable
+Subject: [PATCH v14 4/6] parse-options.c: make OPTION_COUNTUP respect
+ "unspecified" values
 Date: Tue, 12 Apr 2016 23:02:17 +0000
-Message-ID: <010201540cb60966-e9711378-3b22-4fbb-a2c7-f6876a6fb3c6-000000@eu-west-1.amazonses.com>
+Message-ID: <010201540cb60971-0bf3b786-4acd-4317-bd3c-3397dc2b51f9-000000@eu-west-1.amazonses.com>
 References: <010201540cb60832-9402a692-3caa-47a1-9e8e-ae5a1bc7eb2f-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 13 01:02:31 2016
+X-From: git-owner@vger.kernel.org Wed Apr 13 01:02:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aq7KI-0002ev-St
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 01:02:31 +0200
+	id 1aq7KS-0002iZ-T4
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 01:02:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964891AbcDLXCX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2016 19:02:23 -0400
-Received: from a6-246.smtp-out.eu-west-1.amazonses.com ([54.240.6.246]:59002
-	"EHLO a6-246.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S934392AbcDLXCU (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Apr 2016 19:02:20 -0400
+	id S934397AbcDLXC2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2016 19:02:28 -0400
+Received: from a6-247.smtp-out.eu-west-1.amazonses.com ([54.240.6.247]:35715
+	"EHLO a6-247.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S934390AbcDLXCT (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Apr 2016 19:02:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
 	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1460502137;
 	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=TIZpJmj2e/WqTpMAHJOJv4tRupzckm2b066YF7jsoMc=;
-	b=aNBroErjNi3ziO72ngt+WIuIAp+aWNEkEHsO2CojfKRsq5FXiCvEFTBedmhMtJ8y
-	IFznu9w5VVu1DzDSco0kboVlpmkclUd61T/4ljYCBRbaL4JvTFqLr1MIJeWugWmu27G
-	36vXch/eJfYQ/3yAQVnby4T313E74qlMLr4ONeCE=
+	bh=A9iK062X5JgZAyFfYOX1TRukYavl15rmjlsc+5Ya98A=;
+	b=JQ6GMQgvHb79qq4wk9lFKCL2aD7FIxa+yPCHKJ6cM/G/2MdSzYnMvP1bwfhe9vQJ
+	lHILk/IQZ9Kx1Cfu6s1uqj6Zo03dHu5qdm10jJY97xoGAzi8gYC4OnqvdmNt1soiure
+	GqubMI9BWHYmqbjf8DpSu1q64U7UF51Gg3W2yZSg=
 In-Reply-To: <010201540cb60832-9402a692-3caa-47a1-9e8e-ae5a1bc7eb2f-000000@eu-west-1.amazonses.com>
-X-SES-Outgoing: 2016.04.12-54.240.6.246
+X-SES-Outgoing: 2016.04.12-54.240.6.247
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291313>
 
-Add commit.verbose configuration variable as a convenience for those
-who always prefer --verbose.
+OPT_COUNTUP() merely increments the counter upon --option, and resets it
+to 0 upon --no-option, which means that there is no "unspecified" value
+with which a client can initialize the counter to determine whether or
+not --[no]-option was seen at all.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
+Make OPT_COUNTUP() treat any negative number as an "unspecified" value
+to address this shortcoming. In particular, if a client initializes the
+counter to -1, then if it is still -1 after parse_options(), then
+neither --option nor --no-option was seen; If it is 0, then --no-option
+was seen last, and if it is 1 or greater, than --option was seen last.
+
+This change does not affect the behavior of existing clients because
+they all use the initial value of 0 (or more).
+
+Note that builtin/clean.c initializes the variable used with
+OPT__FORCE (which uses OPT_COUNTUP()) to a negative value, but it is set
+to either 0 or 1 by reading the configuration before the code calls
+parse_options(), i.e. as far as parse_options() is concerned, the
+initial value of the variable is not negative.
+
+To test this behavior, in test-parse-options.c, "verbose" is set to
+"unspecified" while quiet is set to 0 which will test the new behavior
+with all sets of values.
+
+Helped-by: Jeff King <peff@peff.net>
 Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 
 ---
-The previous version of the patch are:
- - [v12] $gmane/288820
- - [v11] $gmane/288820
- - [v10] $gmane/288820
- - [v9] $gmane/288820
- - [v8] $gmane/288820
- - [v7] $gmane/288820
- - [v6] $gmane/288728
- - [v5] $gmane/288728
- - [v4] $gmane/288652
- - [v3] $gmane/288634
- - [v2] $gmane/288569
- - [v1] $gmane/287540
+The discussion about this patch:
+[1] : http://thread.gmane.org/gmane.comp.version-control.git/289027
 
-   Note: One might think some tests are extra but I think that it will
-   be better to include them as they "complete the continuity" thus
-   generalising the series which will make the patch even more clearer.
+Previous version of the patch:
+[v11] : http://thread.gmane.org/gmane.comp.version-control.git/288820
+[v10] : http://thread.gmane.org/gmane.comp.version-control.git/288820
+[v9] : http://thread.gmane.org/gmane.comp.version-control.git/288820
+[v1] : http://thread.gmane.org/gmane.comp.version-control.git/289061
 
-Changes wrt v12:
- - Change the setup test as suggested by Eric.
- - Use for loops for systematic testing. I have avoided nested-for loops
-   or using a function to test because I believe it will just add to the
-   complexity rather than simplifying it. Just by using for loops the
-   tests look quite systematic and easy to digest.
+Changes wrt previous version (v13):
+ - Some tests failed in v12 as the newly introduced tests weren't
+   updated by the behaviour of this patch.
+
+Please Note: The diff might seem improper especially the part where I
+have introduced some continuous lines but this is a logical error by git
+diff (nothing could be done about it) and thus the changes will be
+clearly visible with the original file itself.
 ---
- Documentation/config.txt     |  4 ++++
- Documentation/git-commit.txt |  3 ++-
- builtin/commit.c             | 14 ++++++++++-
- t/t7507-commit-verbose.sh    | 56 ++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 75 insertions(+), 2 deletions(-)
+ Documentation/technical/api-parse-options.txt |  8 +++--
+ parse-options.c                               |  2 ++
+ t/t0040-parse-options.sh                      | 43 +++++++++++++++++++--------
+ test-parse-options.c                          |  3 +-
+ 4 files changed, 41 insertions(+), 15 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 2cd6bdd..1d0ec2e 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1110,6 +1110,10 @@ commit.template::
- 	"`~/`" is expanded to the value of `$HOME` and "`~user/`" to the
- 	specified user's home directory.
+diff --git a/Documentation/technical/api-parse-options.txt b/Documentation/technical/api-parse-options.txt
+index 5f0757d..8908bf7 100644
+--- a/Documentation/technical/api-parse-options.txt
++++ b/Documentation/technical/api-parse-options.txt
+@@ -144,8 +144,12 @@ There are some macros to easily define options:
  
-+commit.verbose::
-+	A boolean or int to specify the level of verbose with `git commit`.
-+	See linkgit:git-commit[1].
-+
- credential.helper::
- 	Specify an external helper to be called when a username or
- 	password credential is needed; the helper may consult external
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 9ec6b3c..d474226 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -290,7 +290,8 @@ configuration variable documented in linkgit:git-config[1].
- 	what changes the commit has.
- 	Note that this diff output doesn't have its
- 	lines prefixed with '#'. This diff will not be a part
--	of the commit message.
-+	of the commit message. See the `commit.verbose` configuration
-+	variable in linkgit:git-config[1].
- +
- If specified twice, show in addition the unified diff between
- what would be committed and the worktree files, i.e. the unstaged
-diff --git a/builtin/commit.c b/builtin/commit.c
-index b3bd2d4..96e6190 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -113,7 +113,9 @@ static char *edit_message, *use_message;
- static char *fixup_message, *squash_message;
- static int all, also, interactive, patch_interactive, only, amend, signoff;
- static int edit_flag = -1; /* unspecified */
--static int quiet, verbose, no_verify, allow_empty, dry_run, renew_authorship;
-+static int config_verbose = -1; /* unspecified */
-+static int verbose = -1; /* unspecified */
-+static int quiet, no_verify, allow_empty, dry_run, renew_authorship;
- static int no_post_rewrite, allow_empty_message;
- static char *untracked_files_arg, *force_date, *ignore_submodule_arg;
- static char *sign_commit;
-@@ -1354,6 +1356,8 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 			     builtin_status_usage, 0);
- 	finalize_colopts(&s.colopts, -1);
- 	finalize_deferred_config(&s);
-+	if (verbose == -1)
-+		verbose = 0;
+ `OPT_COUNTUP(short, long, &int_var, description)`::
+ 	Introduce a count-up option.
+-	`int_var` is incremented on each use of `--option`, and
+-	reset to zero with `--no-option`.
++	Each use of `--option` increments `int_var`, starting from zero
++	(even if initially negative), and `--no-option` resets it to
++	zero. To determine if `--option` or `--no-option` was set at
++	all, set `int_var` to a negative value, and if it is still
++	negative after parse_options(), then neither `--option` nor
++	`--no-option` was seen.
  
- 	handle_untracked_files_arg(&s);
- 	if (show_ignored_in_status)
-@@ -1505,6 +1509,11 @@ static int git_commit_config(const char *k, const char *v, void *cb)
- 		sign_commit = git_config_bool(k, v) ? "" : NULL;
+ `OPT_BIT(short, long, &int_var, description, mask)`::
+ 	Introduce a boolean option.
+diff --git a/parse-options.c b/parse-options.c
+index 47a9192..312a85d 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -110,6 +110,8 @@ static int get_value(struct parse_opt_ctx_t *p,
  		return 0;
- 	}
-+	if (!strcmp(k, "commit.verbose")) {
-+		int is_bool;
-+		config_verbose = git_config_bool_or_int(k, v, &is_bool);
-+		return 0;
-+	}
  
- 	status = git_gpg_config(k, v, NULL);
- 	if (status)
-@@ -1654,6 +1663,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	argc = parse_and_validate_options(argc, argv, builtin_commit_options,
- 					  builtin_commit_usage,
- 					  prefix, current_head, &s);
-+	if (verbose == -1)
-+		verbose = (config_verbose < 0) ? 0 : config_verbose;
-+
- 	if (dry_run)
- 		return dry_run_commit(argc, argv, prefix, current_head, &s);
- 	index_file = prepare_index(argc, argv, prefix, current_head, 0);
-diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
-index 0f28a86..00e0c3d 100755
---- a/t/t7507-commit-verbose.sh
-+++ b/t/t7507-commit-verbose.sh
-@@ -98,4 +98,60 @@ test_expect_success 'verbose diff is stripped out with set core.commentChar' '
- 	test_i18ngrep "Aborting commit due to empty commit message." err
- '
+ 	case OPTION_COUNTUP:
++		if (*(int *)opt->value < 0)
++			*(int *)opt->value = 0;
+ 		*(int *)opt->value = unset ? 0 : *(int *)opt->value + 1;
+ 		return 0;
  
-+test_expect_success 'setup -v -v' '
-+	echo dirty >file
+diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+index c913d1c..d3f52f6 100755
+--- a/t/t0040-parse-options.sh
++++ b/t/t0040-parse-options.sh
+@@ -63,7 +63,7 @@ magnitude: 0
+ timestamp: 0
+ string: (not set)
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 0
+ dry run: no
+ file: (not set)
+@@ -211,7 +211,7 @@ magnitude: 0
+ timestamp: 0
+ string: 123
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 0
+ dry run: no
+ file: (not set)
+@@ -234,7 +234,7 @@ magnitude: 0
+ timestamp: 0
+ string: (not set)
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 0
+ dry run: no
+ file: (not set)
+@@ -263,7 +263,7 @@ magnitude: 0
+ timestamp: 0
+ string: 123
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 0
+ dry run: no
+ file: (not set)
+@@ -302,7 +302,7 @@ magnitude: 0
+ timestamp: 0
+ string: (not set)
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 0
+ dry run: no
+ file: (not set)
+@@ -322,7 +322,7 @@ magnitude: 0
+ timestamp: 1
+ string: (not set)
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 1
+ dry run: no
+ file: (not set)
+@@ -344,7 +344,7 @@ magnitude: 0
+ timestamp: 0
+ string: (not set)
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 0
+ dry run: no
+ file: (not set)
+@@ -373,7 +373,7 @@ magnitude: 0
+ timestamp: 0
+ string: (not set)
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 0
+ dry run: no
+ file: (not set)
+@@ -398,7 +398,7 @@ magnitude: 0
+ timestamp: 0
+ string: (not set)
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 0
+ dry run: no
+ file: (not set)
+@@ -429,7 +429,7 @@ magnitude: 0
+ timestamp: 0
+ string: (not set)
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 0
+ dry run: no
+ file: (not set)
+@@ -454,6 +454,25 @@ dry run: no
+ file: (not set)
+ EOF
+ 
++test_expect_success 'OPT_COUNTUP() resets to 0 with --no- flag' '
++	test-parse-options --no-verbose >output 2>output.err &&
++	test_must_be_empty output.err &&
++	test_cmp expect output
 +'
 +
-+for i in true 1
-+do
-+	test_expect_success "commit.verbose=$i and --verbose omitted" "
-+		git -c commit.verbose=$i commit --amend &&
-+		test_line_count = 1 out
-+	"
-+done
++cat >expect <<EOF
++boolean: 0
++integer: 0
++magnitude: 0
++timestamp: 0
++string: (not set)
++abbrev: 7
++verbose: -1
++quiet: 0
++dry run: no
++file: (not set)
++EOF
 +
-+for i in false -2 -1 0
-+do
-+	test_expect_success "commit.verbose=$i and --verbose omitted" "
-+		git -c commit.verbose=$i commit --amend &&
-+		test_line_count = 0 out
-+	"
-+done
-+
-+for i in 2 3
-+do
-+	test_expect_success "commit.verbose=$i and --verbose omitted" "
-+		git -c commit.verbose=$i commit --amend &&
-+		test_line_count = 2 out
-+	"
-+done
-+
-+for i in true false -2 -1 0 1 2 3
-+do
-+	test_expect_success "commit.verbose=$i and --verbose" "
-+		git -c commit.verbose=$i commit --amend --verbose &&
-+		test_line_count = 1 out
-+	"
-+
-+	test_expect_success "commit.verbose=$i and --no-verbose" "
-+		git -c commit.verbose=$i commit --amend --no-verbose &&
-+		test_line_count = 0 out
-+	"
-+
-+	test_expect_success "commit.verbose=$i and -v -v" "
-+		git -c commit.verbose=$i commit --amend -v -v &&
-+		test_line_count = 2 out
-+	"
-+done
-+
-+test_expect_success 'status ignores commit.verbose=true' '
-+	git -c commit.verbose=true status >actual &&
-+	! grep "^diff --git" actual
-+'
-+
-+test_expect_success 'status does not verbose without --verbose' '
-+	git status >actual &&
-+	! grep "^diff --git" actual
-+'
-+
- test_done
+ test_expect_success 'negation of OPT_NONEG flags is not ambiguous' '
+ 	test-parse-options --no-ambig >output 2>output.err &&
+ 	test_must_be_empty output.err &&
+@@ -483,7 +502,7 @@ magnitude: 0
+ timestamp: 0
+ string: (not set)
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 3
+ dry run: no
+ file: (not set)
+@@ -502,7 +521,7 @@ magnitude: 0
+ timestamp: 0
+ string: (not set)
+ abbrev: 7
+-verbose: 0
++verbose: -1
+ quiet: 0
+ dry run: no
+ file: (not set)
+diff --git a/test-parse-options.c b/test-parse-options.c
+index 86afa98..f02c275 100644
+--- a/test-parse-options.c
++++ b/test-parse-options.c
+@@ -7,7 +7,8 @@ static int integer = 0;
+ static unsigned long magnitude = 0;
+ static unsigned long timestamp;
+ static int abbrev = 7;
+-static int verbose = 0, dry_run = 0, quiet = 0;
++static int verbose = -1; /* unspecified */
++static int dry_run = 0, quiet = 0;
+ static char *string = NULL;
+ static char *file = NULL;
+ static int ambiguous;
 
 --
 https://github.com/git/git/pull/218
