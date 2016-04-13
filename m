@@ -1,73 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] Port `git submodule init` from shell to C
-Date: Tue, 12 Apr 2016 18:41:27 -0700
-Message-ID: <xmqqr3eal1yw.fsf@gitster.mtv.corp.google.com>
-References: <1460506710-23994-1-git-send-email-sbeller@google.com>
-	<xmqqh9f6mi9n.fsf@gitster.mtv.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Migrating away from SHA-1?
+Date: Wed, 13 Apr 2016 08:51:12 +0700
+Message-ID: <CACsJy8DmPw+cbohp-X55bp9NJSbUVN=tsABXoF5Xh-6PgPTbiA@mail.gmail.com>
+References: <570D78CC.9030807@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, pclouds@gmail.com, j6t@kdbg.org
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Apr 13 03:41:38 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Wed Apr 13 03:51:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aq9oF-000136-7u
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 03:41:35 +0200
+	id 1aq9y8-0004hJ-PA
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 03:51:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757747AbcDMBlb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2016 21:41:31 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:60664 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757523AbcDMBl3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2016 21:41:29 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F1CD9558C3;
-	Tue, 12 Apr 2016 21:41:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+HndJVoYEA35OuVAxqBYLW8V4bo=; b=BMnxbI
-	896oc7nzli0YzPwYDaLXuo8NEEv79w4yCpc696cnKSbRoisB8dP2v+Up9aHQeqd/
-	1e4D4fMWcEZ58PXco/TurMGskhb3X/fxdta13a2qOZ0mOGpRDzlMsWSzt6gGbdGD
-	2Vbf+XBLI71JhdGrOAeKplPImkR8W04zApzLw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=n017Q/xLnehTcJz5pOvmYTmkgJQeCHmg
-	GOayQq1LcJ/KThHbVAjMXfVhmoJ1EVkWPkJneeogaSZz8oLaNlgG5/l7XylT4SQG
-	r70+zlvRwBez3Zqr3l99S6rvYzyJGNOBlweoO3+19mBg5MzbIrmglm35nykgD989
-	1ntNLX7wP2g=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E21F2558C2;
-	Tue, 12 Apr 2016 21:41:28 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 55C1A558C1;
-	Tue, 12 Apr 2016 21:41:28 -0400 (EDT)
-In-Reply-To: <xmqqh9f6mi9n.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 12 Apr 2016 18:04:04 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D741E604-0118-11E6-AE39-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S1758567AbcDMBvo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2016 21:51:44 -0400
+Received: from mail-lf0-f51.google.com ([209.85.215.51]:35029 "EHLO
+	mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758554AbcDMBvo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2016 21:51:44 -0400
+Received: by mail-lf0-f51.google.com with SMTP id c126so49773913lfb.2
+        for <git@vger.kernel.org>; Tue, 12 Apr 2016 18:51:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=SyDJGh6J999+6PS7JRcFcpOGJSFWn4aeMO9q8q/MqOY=;
+        b=w4rxWUQs5vU+pJNmBoJmnOQs81NupVmuzHknL5WK1yoVDrcOrh8whqbDJT9xJUnf/c
+         zsgXAOWgvlIrIwxPr964+YGb4pOFs78k7CeNjoARZbIm0/s9P97MZ/JXcf5GJfNtZGE4
+         fYAG61rGxusI9m6pLBkaj7FYuCiJ07YbHBOwxklnHQcJ+PE2UopIGsxXAPJqGC2QFIgG
+         zbmm2/Hy0KzNkZSco7Jp9eEmLK4bnF7f+wytIma+gMI1PNb21XuXQ9211oxjcnKmn4MJ
+         wOlGQgo42rnN9qcLsc5coIooQ+4T4v1eid8Aaft0CnlXOq8KhGg3xAuwI5xAY24nGk3L
+         Xf2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=SyDJGh6J999+6PS7JRcFcpOGJSFWn4aeMO9q8q/MqOY=;
+        b=E1PQkw+fXeJTCdS+xym9FF5bRFHEGJrS2whV3qee48zLaGQ6wESHkCwMU3YERGdt/W
+         SV+2DS9XEII+EIXCbqbdFGxgIIW0BD1TtjlE5klxkyZJvGMITnLBiEhzPKwH8GLc8mVq
+         vEeJekXdv3T9FGo1R0pdi6pYTTOVyGgXnk2tsA7iGnDBVVAk87Hix0wHqywB5fg1FTnH
+         AJd+MXpUxm7xIrKPBO8v6bdDOZmKQZoThMag2XFwoowej8k3yyrFP2uJToQqePVkQzdz
+         bsL7MWZpGLR/fiztSJrs4OakCyDMJGMbXiY/o2FwVJvaYVGpmYnuVykJ/rnc2MJsuiVV
+         P65A==
+X-Gm-Message-State: AOPr4FXDGcRi25AElum3vokxGkrh0Lqa3WprDc6pjAFUslbUWVMrNvvTmGkFOiRgJg9NIfEX+JqQMXcQaqQIuQ==
+X-Received: by 10.112.85.43 with SMTP id e11mr3014247lbz.80.1460512302319;
+ Tue, 12 Apr 2016 18:51:42 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Tue, 12 Apr 2016 18:51:12 -0700 (PDT)
+In-Reply-To: <570D78CC.9030807@zytor.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291364>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Stefan Beller <sbeller@google.com> writes:
+On Wed, Apr 13, 2016 at 5:38 AM, H. Peter Anvin <hpa@zytor.com> wrote:
+> OK, I'm going to open this can of worms...
 >
->> This is a resend of origin/sb/submodule-init (and it still applies on 
->> top of submodule-parallel-update)
->
-> Resend, or update?  There was some overlap with your recent series
-> that fixes "prefix" thing, IIRC.
+> At what point do we migrate from SHA-1?
 
-I've queued one possible resolution on 'pu' and pushed the result
-out.  It sends $sm_path to the "helper init", but I think the
-implementation of "helper init" now needs to do the equivalent of
-"displaypath=$prefix$sm_path" that was done in your prefix fix
-series, or something like that.
+Brian Carlson has been slowly refactoring git code base, abstracting
+SHA-1 away. Once that work is done, I think we can talk about moving
+away from SHA-1. The process is slow because it likely causes
+conflicts with in-flight topics. A quick grep shows we still have
+about 300 SHA-1 references, so it'll be quite some time.
+-- 
+Duy
