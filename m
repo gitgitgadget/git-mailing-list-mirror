@@ -1,116 +1,73 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Migrating away from SHA-1?
-Date: Tue, 12 Apr 2016 18:38:25 -0700
-Message-ID: <570DA311.3000500@zytor.com>
-References: <570D78CC.9030807@zytor.com>
- <20160412234251.GB2210@sigill.intra.peff.net>
- <xmqqlh4imibd.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] Port `git submodule init` from shell to C
+Date: Tue, 12 Apr 2016 18:41:27 -0700
+Message-ID: <xmqqr3eal1yw.fsf@gitster.mtv.corp.google.com>
+References: <1460506710-23994-1-git-send-email-sbeller@google.com>
+	<xmqqh9f6mi9n.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 13 03:38:57 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, pclouds@gmail.com, j6t@kdbg.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Apr 13 03:41:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aq9lg-0000AP-GH
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 03:38:56 +0200
+	id 1aq9oF-000136-7u
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 03:41:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757227AbcDMBiw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2016 21:38:52 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:45998 "EHLO mail.zytor.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757149AbcDMBiw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2016 21:38:52 -0400
-Received: from carbon-x1.hos.anvin.org ([67.51.76.21])
-	(authenticated bits=0)
-	by mail.zytor.com (8.15.2/8.14.5) with ESMTPSA id u3D1cXgN008577
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
-	Tue, 12 Apr 2016 18:38:34 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.1
-In-Reply-To: <xmqqlh4imibd.fsf@gitster.mtv.corp.google.com>
+	id S1757747AbcDMBlb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2016 21:41:31 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:60664 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757523AbcDMBl3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2016 21:41:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F1CD9558C3;
+	Tue, 12 Apr 2016 21:41:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+HndJVoYEA35OuVAxqBYLW8V4bo=; b=BMnxbI
+	896oc7nzli0YzPwYDaLXuo8NEEv79w4yCpc696cnKSbRoisB8dP2v+Up9aHQeqd/
+	1e4D4fMWcEZ58PXco/TurMGskhb3X/fxdta13a2qOZ0mOGpRDzlMsWSzt6gGbdGD
+	2Vbf+XBLI71JhdGrOAeKplPImkR8W04zApzLw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=n017Q/xLnehTcJz5pOvmYTmkgJQeCHmg
+	GOayQq1LcJ/KThHbVAjMXfVhmoJ1EVkWPkJneeogaSZz8oLaNlgG5/l7XylT4SQG
+	r70+zlvRwBez3Zqr3l99S6rvYzyJGNOBlweoO3+19mBg5MzbIrmglm35nykgD989
+	1ntNLX7wP2g=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E21F2558C2;
+	Tue, 12 Apr 2016 21:41:28 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 55C1A558C1;
+	Tue, 12 Apr 2016 21:41:28 -0400 (EDT)
+In-Reply-To: <xmqqh9f6mi9n.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 12 Apr 2016 18:04:04 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D741E604-0118-11E6-AE39-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291363>
 
-On 04/12/16 18:03, Junio C Hamano wrote:
->>
->> and so on. Of course trees don't have any space for this; they have a
->> fixed-length for the hash part of each record, which is basically:
->>
->>    <mode> <name> NUL <20-byte-sha1>
->>
->> So we'd probably need a "treev2" object type that gives room for an
->> algorithm byte (or we'd have to try to shove it into the mode, but since
->> old versions won't know the new algorithm anyway, I don't think it
->> solves that much...). Or you can just define for the whole tree object
->> (either implicit in its type, or in a header) that it always uses
->> algorithm X.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Stefan Beller <sbeller@google.com> writes:
 >
-> This will hurt the performance a lot during the transition period as
-> it no longer will be possible to rely on "most of the time a fine
-> grained commit changes only a small part of the tree, and we can
-> cheaply avoid descending into trees that haven't changed because we
-> can tell that the corresponding tree objects in the pre- and post-
-> trees have the same object name" optimization.  But we cannot avoid
-> it.
+>> This is a resend of origin/sb/submodule-init (and it still applies on 
+>> top of submodule-parallel-update)
 >
+> Resend, or update?  There was some overlap with your recent series
+> that fixes "prefix" thing, IIRC.
 
-Not really, because you can point to the algoX hash even for the 
-existing objects.
-
-Perhaps the tree object can add a format descriptor at the beginning; 
-something like:
-
-<invalid mode number> <hash format used>
-
->> Transitioning to that would be something like:
->>
->>    0. Overhaul all of the git code to handle arbitrary-sized object ids.
->>
->>    1. Decide on the new algorithm and implement it in git.
->>
->>    2. Recognize parameterized object ids in commits and tags (designing
->>       format, implementing the reading side).
->>
->>    3. Recognize parameterized object ids somehow in trees (designing
->>       format, implementing the reading side).
->>
->>    4. Teach the object database to index objects by the new algorithm (or
->>       possibly both algorithms).
->>
->>    5. Add a protocol extension so that both sides can decide which
->>       algorithm is being used when they talk about oids.
->>
->>    6. Add a config option to write references in objects using the new
->>       algorithm.
->>
->>    7. After a while, flip the config option on. Hopefully the readers
->>       from steps 1-5 have percolated to the masses by then, and it's not
->>       a horrible flag day.
->>
->> We're basically on step 0 right now. I'm sure I'm missing some
->> subtleties in there, too.
->
-> One subtlety is that 7. "not a flag day" may not be a good thing.
->
-> There has to be a section of a history that spans the transition,
-> set of commits and trees that have pointers to both kinds of object
-> names.  The narrower such a section of the history, the more
-> pleasant to use the result of the transition would be.
->
-> Different projects that can have their own flag days at their own
-> pace is a good thing, so the above observation does not invalidate
-> your transition plan, though.
-
-I don't think there is any way this can *not* be by repository and 
-somehow require a manual operation in order to preserve the 
-cryptographic integrity.  In some ways, the transition point and the 
-transition table becomes a special kind of tag object.  There may have 
-to be more than one in the case of commits in multiple trees.
+I've queued one possible resolution on 'pu' and pushed the result
+out.  It sends $sm_path to the "helper init", but I think the
+implementation of "helper init" now needs to do the equivalent of
+"displaypath=$prefix$sm_path" that was done in your prefix fix
+series, or something like that.
