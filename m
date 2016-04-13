@@ -1,507 +1,322 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] Move test-* to t/helper/ subdirectory
-Date: Wed, 13 Apr 2016 20:22:42 +0700
-Message-ID: <1460553762-12419-1-git-send-email-pclouds@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v2 16/21] bisect: make total number of commits global
+Date: Wed, 13 Apr 2016 15:23:57 +0200
+Message-ID: <CAP8UFD1oYtXogrmTVTXMne2p24JoNhE0F=Rfg1GC+dTK7Fbinw@mail.gmail.com>
+References: <1460294354-7031-1-git-send-email-s-beyer@gmx.net>
+	<1460294354-7031-17-git-send-email-s-beyer@gmx.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 13 15:23:35 2016
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Wed Apr 13 15:24:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqKlZ-0008Rz-LI
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 15:23:34 +0200
+	id 1aqKm5-0000Fb-4A
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 15:24:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760634AbcDMNWs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Apr 2016 09:22:48 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:33835 "EHLO
-	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760510AbcDMNWp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2016 09:22:45 -0400
-Received: by mail-pf0-f194.google.com with SMTP id d184so4117106pfc.1
-        for <git@vger.kernel.org>; Wed, 13 Apr 2016 06:22:45 -0700 (PDT)
+	id S932540AbcDMNYA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2016 09:24:00 -0400
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:37640 "EHLO
+	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753378AbcDMNX7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2016 09:23:59 -0400
+Received: by mail-wm0-f47.google.com with SMTP id n3so77991703wmn.0
+        for <git@vger.kernel.org>; Wed, 13 Apr 2016 06:23:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=LgIb5JkaCfSZBz28rB1e/ukxG8eAvamche5Ohmn7IyU=;
-        b=xNj6dniEQSoPt1XLIz1vPJ9z0uUKOrZGDKjnTJMbRHjwuJg/4YjUurWUoZGm72L+Cs
-         /wCn98WEQhEFGFxSqFSIsrjzLnYw2iQeDyf2ooyb56NVM/0WWx7+dqDTCqHJw0S/A+3N
-         dop4orWZPYmqkU+hhLDxl44ZILL1UzUqhT97qg6+FkDLvM4iV7Fbg5/apRmVIHNr2ONq
-         +KE0kZmpVHzTVYkuyshnSjnpd4cUg/1xaDDi3Sh/YjX2o22gf1zpj4ooPXlBWIRr4YUf
-         zlojwmVt7RsK3N2QzO/JXSKo3BfSqZwdVIicIlP7nMwZj5BqnQL0HM0XQJQ+mqPCdEd9
-         QUrw==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=oHYm7usF78MskUm1dlOoQB564PPJ9+a7PzkbuVR9gjM=;
+        b=BQIC4Jub+mRDp7YM3+g81TFLQJkNU7tde4/7AVdVNmxv+FtpuCrIlr89qJPzEVCFyb
+         rjRBYEwrSAPptt2l8ac/NNaxt/1PL6M0ZthgTdUu6y/BsveQzvM3wG0h8RQB/Cm7EoA3
+         QoNzwlRQiHILGGuYHInilGMC/JkblOFOMyu8qn4WCkiuGVOQ+b6MYbsbOC3kdNRtjVi4
+         ljYLc7pdcOqj2N06jBxANBzz+21Sxqq7E18LnRLWnKS39Yi2oQke14ZiBXxD+5vrQa47
+         dVpbycX86EpwgsRXe9RhnRmypYmt4WOX+A9FWLYDjP/pANhAnXRsh4O+kcFVj65P9G8O
+         Asww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=LgIb5JkaCfSZBz28rB1e/ukxG8eAvamche5Ohmn7IyU=;
-        b=bsdd1KpJzjcz118HGjwF8qgIhxWwV2DNCSQ471ZC4zZsc6Kma9KGAtp/YDYIw5aYFQ
-         fQ9cis/wlV/D04VBEZBd00R8lxUmMlGAUPpjqjgSpItgzNwi9qWqn1LKT4/wz5U3LQVs
-         /3eAYY50a4W1+px+S2HpLuOVhDLWm2tgREg+Bo6s/Cr0Jdly8WqasVPLf1ttIjX/cb4Y
-         j8AtTj+EspvAKUkX2bC1BdSLPBf1HSKIcWkfHheZQg96xejKmOOyULRkRx0/JKp2GVtn
-         PKYuufmjhSoBUxBOHe9i1nw4yV4ZHn/Oh8254TLBnSaGShTfmIi4TnHu5BJrI0Nesqyx
-         taUw==
-X-Gm-Message-State: AOPr4FUYzyrWU39QrezlLjqTEK40jdAd7Q3TCiVNVQ1haVQXJYta/xfo9v8yuy8VEfPb2A==
-X-Received: by 10.98.86.146 with SMTP id h18mr12850694pfj.9.1460553765164;
-        Wed, 13 Apr 2016 06:22:45 -0700 (PDT)
-Received: from lanh ([115.76.233.41])
-        by smtp.gmail.com with ESMTPSA id s66sm51240206pfi.3.2016.04.13.06.22.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 13 Apr 2016 06:22:43 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 13 Apr 2016 20:22:50 +0700
-X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=oHYm7usF78MskUm1dlOoQB564PPJ9+a7PzkbuVR9gjM=;
+        b=e4E8oJWFMqiALZbFU7Aq0E5upDq3KedvfXClMgBlbsGp1oLHeLl96sZsXAjxHZiyHF
+         BSpkkqX65WoRK/vW8L9TvlIXFwPmzfyj69yMayd5WX/XfRq3GX1mEn7eoBMupkT0oU90
+         GcfbbvuZOMWUoiBMFB+rsdGP8uDtb+Ll+SH1SeJNG2pPoma/xVjt88Gah2fm9riAfBbI
+         pFuTM1k56t7+fVi1jJD2/CgFk2LZkIKEFGzpisn6JOn0+u9cAxEiv4ImkEh64vQK/5aO
+         fndRNGHqat1TJeR3rZCOxg1nQv864gM/aDRuxVcdOyA+6XrYQt+wiYBBvkUJVmarbWGZ
+         FNmg==
+X-Gm-Message-State: AOPr4FWoixZnwl7GJVas9e9fC7gXjT6bGGuOlINofJpH7V/odJdvNJQcEOpAnA+JP83Su/LWZPvxvDJWEKdJzw==
+X-Received: by 10.194.235.39 with SMTP id uj7mr9587256wjc.78.1460553837940;
+ Wed, 13 Apr 2016 06:23:57 -0700 (PDT)
+Received: by 10.194.95.129 with HTTP; Wed, 13 Apr 2016 06:23:57 -0700 (PDT)
+In-Reply-To: <1460294354-7031-17-git-send-email-s-beyer@gmx.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291448>
 
-This keeps top dir a bit less crowded. And because these programs are
-for testing purposes, it makes sense that they stay somewhere in t/
+On Sun, Apr 10, 2016 at 3:19 PM, Stephan Beyer <s-beyer@gmx.net> wrote:
+> The total number of commits in a bisect process is a property of
+> the bisect process. Making this property global helps to make the code
+> clearer.
+>
+> Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+> ---
+>  bisect.c | 74 ++++++++++++++++++++++++++++++++++------------------------------
+>  1 file changed, 39 insertions(+), 35 deletions(-)
+>
+> diff --git a/bisect.c b/bisect.c
+> index f737ce7..2b415ad 100644
+> --- a/bisect.c
+> +++ b/bisect.c
+> @@ -23,6 +23,8 @@ static const char *argv_show_branch[] = {"show-branch", NULL, NULL};
+>  static const char *term_bad;
+>  static const char *term_good;
+>
+> +static int total;
+> +
+>  static unsigned marker;
+>
+>  struct node_data {
+> @@ -38,7 +40,7 @@ static inline struct node_data *node_data(struct commit *elem)
+>         return (struct node_data *)elem->util;
+>  }
+>
+> -static inline int get_distance(struct commit *commit, int total)
+> +static inline int get_distance(struct commit *commit)
+>  {
+>         int distance = node_data(commit)->weight;
+>         if (total - distance < distance)
+> @@ -54,7 +56,7 @@ static inline int get_distance(struct commit *commit, int total)
+>   * Return 0 if the distance is halfway.
+>   * Return 1 if the distance is rising.
+>   */
+> -static inline int distance_direction(struct commit *commit, int total)
+> +static inline int distance_direction(struct commit *commit)
+>  {
+>         int doubled_diff = 2 * node_data(commit)->weight - total;
+>         if (doubled_diff < -1)
+> @@ -107,25 +109,25 @@ static int count_interesting_parents(struct commit *commit)
+>         return count;
+>  }
+>
+> -static inline int halfway(struct commit *commit, int nr)
+> +static inline int halfway(struct commit *commit)
+>  {
+>         /*
+>          * Don't short-cut something we are not going to return!
+>          */
+>         if (commit->object.flags & TREESAME)
+>                 return 0;
+> -       return !distance_direction(commit, nr);
+> +       return !distance_direction(commit);
+>  }
+>
+>  #if !DEBUG_BISECT
+> -#define show_list(a,b,c,d) do { ; } while (0)
+> +#define show_list(a,b,c) do { ; } while (0)
+>  #else
+> -static void show_list(const char *debug, int counted, int nr,
+> +static void show_list(const char *debug, int counted,
+>                       struct commit_list *list)
+>  {
+>         struct commit_list *p;
+>
+> -       fprintf(stderr, "%s (%d/%d)\n", debug, counted, nr);
+> +       fprintf(stderr, "%s (%d/%d)\n", debug, counted, total);
+>
+>         for (p = list; p; p = p->next) {
+>                 struct commit_list *pp;
+> @@ -157,7 +159,7 @@ static void show_list(const char *debug, int counted, int nr,
+>  }
+>  #endif /* DEBUG_BISECT */
+>
+> -static struct commit_list *best_bisection(struct commit_list *list, int nr)
+> +static struct commit_list *best_bisection(struct commit_list *list)
+>  {
+>         struct commit_list *p, *best;
+>         int best_distance = -1;
+> @@ -169,7 +171,7 @@ static struct commit_list *best_bisection(struct commit_list *list, int nr)
+>
+>                 if (flags & TREESAME)
+>                         continue;
+> -               distance = get_distance(p->item, nr);
+> +               distance = get_distance(p->item);
+>                 if (distance > best_distance) {
+>                         best = p;
+>                         best_distance = distance;
+> @@ -195,10 +197,10 @@ static int compare_commit_dist(const void *a_, const void *b_)
+>         return oidcmp(&a->commit->object.oid, &b->commit->object.oid);
+>  }
+>
+> -static struct commit_list *best_bisection_sorted(struct commit_list *list, int nr)
+> +static struct commit_list *best_bisection_sorted(struct commit_list *list)
+>  {
+>         struct commit_list *p;
+> -       struct commit_dist *array = xcalloc(nr, sizeof(*array));
+> +       struct commit_dist *array = xcalloc(total, sizeof(*array));
+>         int cnt, i;
+>
+>         for (p = list, cnt = 0; p; p = p->next) {
+> @@ -207,7 +209,7 @@ static struct commit_list *best_bisection_sorted(struct commit_list *list, int n
+>
+>                 if (flags & TREESAME)
+>                         continue;
+> -               distance = get_distance(p->item, nr);
+> +               distance = get_distance(p->item);
+>                 array[cnt].commit = p->item;
+>                 array[cnt].distance = distance;
+>                 cnt++;
+> @@ -243,7 +245,7 @@ static struct commit_list *best_bisection_sorted(struct commit_list *list, int n
+>   * or positive distance.
+>   */
+>  static struct commit_list *do_find_bisection(struct commit_list *list,
+> -                                            int nr, struct node_data *weights,
+> +                                            struct node_data *weights,
+>                                              int find_all)
+>  {
+>         int n, counted;
+> @@ -262,7 +264,7 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+>                                 node_data(commit)->weight = 1;
+>                                 counted++;
+>                                 show_list("bisection 2 count one",
+> -                                         counted, nr, list);
+> +                                         counted, list);
+>                         }
+>                         /*
+>                          * otherwise, it is known not to reach any
+> @@ -278,7 +280,7 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+>                 }
+>         }
+>
+> -       show_list("bisection 2 initialize", counted, nr, list);
+> +       show_list("bisection 2 initialize", counted, list);
+>
+>         /*
+>          * If you have only one parent in the resulting set
+> @@ -300,15 +302,15 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+>                         node_data(p->item)->weight = count_distance(p->item);
+>
+>                         /* Does it happen to be at exactly half-way? */
+> -                       if (!find_all && halfway(p->item, nr))
+> +                       if (!find_all && halfway(p->item))
+>                                 return p;
+>                         counted++;
+>                 }
+>         }
+>
+> -       show_list("bisection 2 count_distance", counted, nr, list);
+> +       show_list("bisection 2 count_distance", counted, list);
+>
+> -       while (counted < nr) {
+> +       while (counted < total) {
+>                 for (p = list; p; p = p->next) {
+>                         struct commit_list *q;
+>                         unsigned flags = p->item->object.flags;
+> @@ -334,40 +336,41 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+>                                 node_data(p->item)->weight++;
+>                                 counted++;
+>                                 show_list("bisection 2 count one",
+> -                                         counted, nr, list);
+> +                                         counted, list);
+>                         }
+>
+>                         /* Does it happen to be at exactly half-way? */
+> -                       if (!find_all && halfway(p->item, nr))
+> +                       if (!find_all && halfway(p->item))
+>                                 return p;
+>                 }
+>         }
+>
+> -       show_list("bisection 2 counted all", counted, nr, list);
+> +       show_list("bisection 2 counted all", counted, list);
+>
+>         if (!find_all)
+> -               return best_bisection(list, nr);
+> +               return best_bisection(list);
+>         else
+> -               return best_bisection_sorted(list, nr);
+> +               return best_bisection_sorted(list);
+>  }
+>
+>  struct commit_list *find_bisection(struct commit_list *list,
+>                                           int *reaches, int *all,
+>                                           int find_all)
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- This patch will break any patches that add new test programs.
- Luckily, none in 'next' or 'pu' does that. I know lmdb backend adds
- test-lmdb-backend, so a manual move and some .gitignore fixup is
- required there.
+If you really want to use a global variable, then you should probably
+have removed the "int *all" argument too...
 
- .gitignore                                         | 33 --------------=
---------
- Makefile                                           | 24 ++++++++------=
---
- t/helper/.gitignore (new)                          | 33 ++++++++++++++=
-++++++++
- test-chmtime.c =3D> t/helper/test-chmtime.c          |  0
- test-config.c =3D> t/helper/test-config.c            |  0
- test-ctype.c =3D> t/helper/test-ctype.c              |  0
- test-date.c =3D> t/helper/test-date.c                |  0
- test-delta.c =3D> t/helper/test-delta.c              |  0
- .../helper/test-dump-cache-tree.c                  |  0
- .../helper/test-dump-split-index.c                 |  0
- .../helper/test-dump-untracked-cache.c             |  0
- test-fake-ssh.c =3D> t/helper/test-fake-ssh.c        |  0
- test-genrandom.c =3D> t/helper/test-genrandom.c      |  0
- test-hashmap.c =3D> t/helper/test-hashmap.c          |  0
- .../helper/test-index-version.c                    |  0
- test-line-buffer.c =3D> t/helper/test-line-buffer.c  |  0
- test-match-trees.c =3D> t/helper/test-match-trees.c  |  0
- test-mergesort.c =3D> t/helper/test-mergesort.c      |  0
- test-mktemp.c =3D> t/helper/test-mktemp.c            |  0
- .../helper/test-parse-options.c                    |  0
- test-path-utils.c =3D> t/helper/test-path-utils.c    |  0
- test-prio-queue.c =3D> t/helper/test-prio-queue.c    |  0
- test-read-cache.c =3D> t/helper/test-read-cache.c    |  0
- test-regex.c =3D> t/helper/test-regex.c              |  0
- .../helper/test-revision-walking.c                 |  0
- test-run-command.c =3D> t/helper/test-run-command.c  |  0
- .../helper/test-scrap-cache-tree.c                 |  0
- test-sha1-array.c =3D> t/helper/test-sha1-array.c    |  0
- test-sha1.c =3D> t/helper/test-sha1.c                |  0
- test-sha1.sh =3D> t/helper/test-sha1.sh              |  4 +--
- test-sigchain.c =3D> t/helper/test-sigchain.c        |  0
- test-string-list.c =3D> t/helper/test-string-list.c  |  0
- .../helper/test-submodule-config.c                 |  0
- test-subprocess.c =3D> t/helper/test-subprocess.c    |  0
- test-svn-fe.c =3D> t/helper/test-svn-fe.c            |  0
- .../helper/test-urlmatch-normalization.c           |  0
- test-wildmatch.c =3D> t/helper/test-wildmatch.c      |  0
- t/t5601-clone.sh                                   |  2 +-
- t/test-lib.sh                                      |  4 +--
- 39 files changed, 50 insertions(+), 50 deletions(-)
- create mode 100644 t/helper/.gitignore
- rename test-chmtime.c =3D> t/helper/test-chmtime.c (100%)
- rename test-config.c =3D> t/helper/test-config.c (100%)
- rename test-ctype.c =3D> t/helper/test-ctype.c (100%)
- rename test-date.c =3D> t/helper/test-date.c (100%)
- rename test-delta.c =3D> t/helper/test-delta.c (100%)
- rename test-dump-cache-tree.c =3D> t/helper/test-dump-cache-tree.c (10=
-0%)
- rename test-dump-split-index.c =3D> t/helper/test-dump-split-index.c (=
-100%)
- rename test-dump-untracked-cache.c =3D> t/helper/test-dump-untracked-c=
-ache.c (100%)
- rename test-fake-ssh.c =3D> t/helper/test-fake-ssh.c (100%)
- rename test-genrandom.c =3D> t/helper/test-genrandom.c (100%)
- rename test-hashmap.c =3D> t/helper/test-hashmap.c (100%)
- rename test-index-version.c =3D> t/helper/test-index-version.c (100%)
- rename test-line-buffer.c =3D> t/helper/test-line-buffer.c (100%)
- rename test-match-trees.c =3D> t/helper/test-match-trees.c (100%)
- rename test-mergesort.c =3D> t/helper/test-mergesort.c (100%)
- rename test-mktemp.c =3D> t/helper/test-mktemp.c (100%)
- rename test-parse-options.c =3D> t/helper/test-parse-options.c (100%)
- rename test-path-utils.c =3D> t/helper/test-path-utils.c (100%)
- rename test-prio-queue.c =3D> t/helper/test-prio-queue.c (100%)
- rename test-read-cache.c =3D> t/helper/test-read-cache.c (100%)
- rename test-regex.c =3D> t/helper/test-regex.c (100%)
- rename test-revision-walking.c =3D> t/helper/test-revision-walking.c (=
-100%)
- rename test-run-command.c =3D> t/helper/test-run-command.c (100%)
- rename test-scrap-cache-tree.c =3D> t/helper/test-scrap-cache-tree.c (=
-100%)
- rename test-sha1-array.c =3D> t/helper/test-sha1-array.c (100%)
- rename test-sha1.c =3D> t/helper/test-sha1.c (100%)
- rename test-sha1.sh =3D> t/helper/test-sha1.sh (96%)
- rename test-sigchain.c =3D> t/helper/test-sigchain.c (100%)
- rename test-string-list.c =3D> t/helper/test-string-list.c (100%)
- rename test-submodule-config.c =3D> t/helper/test-submodule-config.c (=
-100%)
- rename test-subprocess.c =3D> t/helper/test-subprocess.c (100%)
- rename test-svn-fe.c =3D> t/helper/test-svn-fe.c (100%)
- rename test-urlmatch-normalization.c =3D> t/helper/test-urlmatch-norma=
-lization.c (100%)
- rename test-wildmatch.c =3D> t/helper/test-wildmatch.c (100%)
+>  {
+> -       int nr, on_list;
+> +       int on_list;
+>         struct commit_list *p, *best, *next, *last;
+>         struct node_data *weights;
+>
+> +       total = 0;
+>         marker = 0;
+>
+> -       show_list("bisection 2 entry", 0, 0, list);
+> +       show_list("bisection 2 entry", 0, list);
+>
+>         /*
+>          * Count the number of total and tree-changing items on the
+>          * list, while reversing the list.
+>          */
+> -       for (nr = on_list = 0, last = NULL, p = list;
+> +       for (on_list = 0, last = NULL, p = list;
+>              p;
+>              p = next) {
+>                 unsigned flags = p->item->object.flags;
+> @@ -378,23 +381,24 @@ struct commit_list *find_bisection(struct commit_list *list,
+>                 p->next = last;
+>                 last = p;
+>                 if (!(flags & TREESAME))
+> -                       nr++;
+> +                       total++;
+>                 on_list++;
+>         }
+>         list = last;
+> -       show_list("bisection 2 sorted", 0, nr, list);
+> +       show_list("bisection 2 sorted", 0, list);
+>
+> -       *all = nr;
+> +       *all = total;
 
-diff --git a/.gitignore b/.gitignore
-index 5087ce1..05cb58a 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -179,39 +179,6 @@
- /gitweb/gitweb.cgi
- /gitweb/static/gitweb.js
- /gitweb/static/gitweb.min.*
--/test-chmtime
--/test-ctype
--/test-config
--/test-date
--/test-delta
--/test-dump-cache-tree
--/test-dump-split-index
--/test-dump-untracked-cache
--/test-fake-ssh
--/test-scrap-cache-tree
--/test-genrandom
--/test-hashmap
--/test-index-version
--/test-line-buffer
--/test-match-trees
--/test-mergesort
--/test-mktemp
--/test-parse-options
--/test-path-utils
--/test-prio-queue
--/test-read-cache
--/test-regex
--/test-revision-walking
--/test-run-command
--/test-sha1
--/test-sha1-array
--/test-sigchain
--/test-string-list
--/test-submodule-config
--/test-subprocess
--/test-svn-fe
--/test-urlmatch-normalization
--/test-wildmatch
- /common-cmds.h
- *.tar.gz
- *.dsc
-diff --git a/Makefile b/Makefile
-index 2742a69..0a5fb9d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -624,7 +624,7 @@ TEST_PROGRAMS_NEED_X +=3D test-svn-fe
- TEST_PROGRAMS_NEED_X +=3D test-urlmatch-normalization
- TEST_PROGRAMS_NEED_X +=3D test-wildmatch
-=20
--TEST_PROGRAMS =3D $(patsubst %,%$X,$(TEST_PROGRAMS_NEED_X))
-+TEST_PROGRAMS =3D $(patsubst %,t/helper/%$X,$(TEST_PROGRAMS_NEED_X))
-=20
- # List built-in command $C whose implementation cmd_$C() is not in
- # builtin/$C.o but is linked in as part of some other command.
-@@ -1904,7 +1904,7 @@ VCSSVN_OBJS +=3D vcs-svn/fast_export.o
- VCSSVN_OBJS +=3D vcs-svn/svndiff.o
- VCSSVN_OBJS +=3D vcs-svn/svndump.o
-=20
--TEST_OBJS :=3D $(patsubst test-%$X,test-%.o,$(TEST_PROGRAMS))
-+TEST_OBJS :=3D $(patsubst %$X,%.o,$(TEST_PROGRAMS))
- OBJECTS :=3D $(LIB_OBJS) $(BUILTIN_OBJS) $(PROGRAM_OBJS) $(TEST_OBJS) =
-\
- 	$(XDIFF_OBJS) \
- 	$(VCSSVN_OBJS) \
-@@ -2211,7 +2211,7 @@ bin-wrappers/%: wrap-for-bin.sh
- 	@mkdir -p bin-wrappers
- 	$(QUIET_GEN)sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
- 	     -e 's|@@BUILD_DIR@@|$(shell pwd)|' \
--	     -e 's|@@PROG@@|$(@F)|' < $< > $@ && \
-+	     -e 's|@@PROG@@|$(patsubst test-%,t/helper/test-%,$(@F))|' < $< >=
- $@ && \
- 	chmod +x $@
-=20
- # GNU make supports exporting all variables by "export" without parame=
-ters.
-@@ -2231,25 +2231,25 @@ perf: all
-=20
- .PHONY: test perf
-=20
--test-ctype$X: ctype.o
-+t/helper/test-ctype$X: ctype.o
-=20
--test-date$X: date.o ctype.o
-+t/helper/test-date$X: date.o ctype.o
-=20
--test-delta$X: diff-delta.o patch-delta.o
-+t/helper/test-delta$X: diff-delta.o patch-delta.o
-=20
--test-line-buffer$X: vcs-svn/lib.a
-+t/helper/test-line-buffer$X: vcs-svn/lib.a
-=20
--test-parse-options$X: parse-options.o parse-options-cb.o
-+t/helper/test-parse-options$X: parse-options.o parse-options-cb.o
-=20
--test-svn-fe$X: vcs-svn/lib.a
-+t/helper/test-svn-fe$X: vcs-svn/lib.a
-=20
- .PRECIOUS: $(TEST_OBJS)
-=20
--test-%$X: test-%.o GIT-LDFLAGS $(GITLIBS)
-+t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^=
-) $(filter %.a,$^) $(LIBS)
-=20
--check-sha1:: test-sha1$X
--	./test-sha1.sh
-+check-sha1:: t/helper/test-sha1$X
-+	t/helper/test-sha1.sh
-=20
- SP_OBJ =3D $(patsubst %.o,%.sp,$(C_OBJ))
-=20
-diff --git a/t/helper/.gitignore b/t/helper/.gitignore
-new file mode 100644
-index 0000000..d6e8b36
---- /dev/null
-+++ b/t/helper/.gitignore
-@@ -0,0 +1,33 @@
-+/test-chmtime
-+/test-ctype
-+/test-config
-+/test-date
-+/test-delta
-+/test-dump-cache-tree
-+/test-dump-split-index
-+/test-dump-untracked-cache
-+/test-fake-ssh
-+/test-scrap-cache-tree
-+/test-genrandom
-+/test-hashmap
-+/test-index-version
-+/test-line-buffer
-+/test-match-trees
-+/test-mergesort
-+/test-mktemp
-+/test-parse-options
-+/test-path-utils
-+/test-prio-queue
-+/test-read-cache
-+/test-regex
-+/test-revision-walking
-+/test-run-command
-+/test-sha1
-+/test-sha1-array
-+/test-sigchain
-+/test-string-list
-+/test-submodule-config
-+/test-subprocess
-+/test-svn-fe
-+/test-urlmatch-normalization
-+/test-wildmatch
-diff --git a/test-chmtime.c b/t/helper/test-chmtime.c
-similarity index 100%
-rename from test-chmtime.c
-rename to t/helper/test-chmtime.c
-diff --git a/test-config.c b/t/helper/test-config.c
-similarity index 100%
-rename from test-config.c
-rename to t/helper/test-config.c
-diff --git a/test-ctype.c b/t/helper/test-ctype.c
-similarity index 100%
-rename from test-ctype.c
-rename to t/helper/test-ctype.c
-diff --git a/test-date.c b/t/helper/test-date.c
-similarity index 100%
-rename from test-date.c
-rename to t/helper/test-date.c
-diff --git a/test-delta.c b/t/helper/test-delta.c
-similarity index 100%
-rename from test-delta.c
-rename to t/helper/test-delta.c
-diff --git a/test-dump-cache-tree.c b/t/helper/test-dump-cache-tree.c
-similarity index 100%
-rename from test-dump-cache-tree.c
-rename to t/helper/test-dump-cache-tree.c
-diff --git a/test-dump-split-index.c b/t/helper/test-dump-split-index.c
-similarity index 100%
-rename from test-dump-split-index.c
-rename to t/helper/test-dump-split-index.c
-diff --git a/test-dump-untracked-cache.c b/t/helper/test-dump-untracked=
--cache.c
-similarity index 100%
-rename from test-dump-untracked-cache.c
-rename to t/helper/test-dump-untracked-cache.c
-diff --git a/test-fake-ssh.c b/t/helper/test-fake-ssh.c
-similarity index 100%
-rename from test-fake-ssh.c
-rename to t/helper/test-fake-ssh.c
-diff --git a/test-genrandom.c b/t/helper/test-genrandom.c
-similarity index 100%
-rename from test-genrandom.c
-rename to t/helper/test-genrandom.c
-diff --git a/test-hashmap.c b/t/helper/test-hashmap.c
-similarity index 100%
-rename from test-hashmap.c
-rename to t/helper/test-hashmap.c
-diff --git a/test-index-version.c b/t/helper/test-index-version.c
-similarity index 100%
-rename from test-index-version.c
-rename to t/helper/test-index-version.c
-diff --git a/test-line-buffer.c b/t/helper/test-line-buffer.c
-similarity index 100%
-rename from test-line-buffer.c
-rename to t/helper/test-line-buffer.c
-diff --git a/test-match-trees.c b/t/helper/test-match-trees.c
-similarity index 100%
-rename from test-match-trees.c
-rename to t/helper/test-match-trees.c
-diff --git a/test-mergesort.c b/t/helper/test-mergesort.c
-similarity index 100%
-rename from test-mergesort.c
-rename to t/helper/test-mergesort.c
-diff --git a/test-mktemp.c b/t/helper/test-mktemp.c
-similarity index 100%
-rename from test-mktemp.c
-rename to t/helper/test-mktemp.c
-diff --git a/test-parse-options.c b/t/helper/test-parse-options.c
-similarity index 100%
-rename from test-parse-options.c
-rename to t/helper/test-parse-options.c
-diff --git a/test-path-utils.c b/t/helper/test-path-utils.c
-similarity index 100%
-rename from test-path-utils.c
-rename to t/helper/test-path-utils.c
-diff --git a/test-prio-queue.c b/t/helper/test-prio-queue.c
-similarity index 100%
-rename from test-prio-queue.c
-rename to t/helper/test-prio-queue.c
-diff --git a/test-read-cache.c b/t/helper/test-read-cache.c
-similarity index 100%
-rename from test-read-cache.c
-rename to t/helper/test-read-cache.c
-diff --git a/test-regex.c b/t/helper/test-regex.c
-similarity index 100%
-rename from test-regex.c
-rename to t/helper/test-regex.c
-diff --git a/test-revision-walking.c b/t/helper/test-revision-walking.c
-similarity index 100%
-rename from test-revision-walking.c
-rename to t/helper/test-revision-walking.c
-diff --git a/test-run-command.c b/t/helper/test-run-command.c
-similarity index 100%
-rename from test-run-command.c
-rename to t/helper/test-run-command.c
-diff --git a/test-scrap-cache-tree.c b/t/helper/test-scrap-cache-tree.c
-similarity index 100%
-rename from test-scrap-cache-tree.c
-rename to t/helper/test-scrap-cache-tree.c
-diff --git a/test-sha1-array.c b/t/helper/test-sha1-array.c
-similarity index 100%
-rename from test-sha1-array.c
-rename to t/helper/test-sha1-array.c
-diff --git a/test-sha1.c b/t/helper/test-sha1.c
-similarity index 100%
-rename from test-sha1.c
-rename to t/helper/test-sha1.c
-diff --git a/test-sha1.sh b/t/helper/test-sha1.sh
-similarity index 96%
-rename from test-sha1.sh
-rename to t/helper/test-sha1.sh
-index cef4bcc..750b95a 100755
---- a/test-sha1.sh
-+++ b/t/helper/test-sha1.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
-=20
- dd if=3D/dev/zero bs=3D1048576 count=3D100 2>/dev/null |
--/usr/bin/time ./test-sha1 >/dev/null
-+/usr/bin/time t/helper/test-sha1 >/dev/null
-=20
- while read expect cnt pfx
- do
-@@ -11,7 +11,7 @@ do
- 			test -z "$pfx" || echo "$pfx"
- 			dd if=3D/dev/zero bs=3D1048576 count=3D$cnt 2>/dev/null |
- 			perl -pe 'y/\000/g/'
--		} | ./test-sha1 $cnt
-+		} | ./t/helper/test-sha1 $cnt
- 	)
- 	if test "$expect" =3D "$actual"
- 	then
-diff --git a/test-sigchain.c b/t/helper/test-sigchain.c
-similarity index 100%
-rename from test-sigchain.c
-rename to t/helper/test-sigchain.c
-diff --git a/test-string-list.c b/t/helper/test-string-list.c
-similarity index 100%
-rename from test-string-list.c
-rename to t/helper/test-string-list.c
-diff --git a/test-submodule-config.c b/t/helper/test-submodule-config.c
-similarity index 100%
-rename from test-submodule-config.c
-rename to t/helper/test-submodule-config.c
-diff --git a/test-subprocess.c b/t/helper/test-subprocess.c
-similarity index 100%
-rename from test-subprocess.c
-rename to t/helper/test-subprocess.c
-diff --git a/test-svn-fe.c b/t/helper/test-svn-fe.c
-similarity index 100%
-rename from test-svn-fe.c
-rename to t/helper/test-svn-fe.c
-diff --git a/test-urlmatch-normalization.c b/t/helper/test-urlmatch-nor=
-malization.c
-similarity index 100%
-rename from test-urlmatch-normalization.c
-rename to t/helper/test-urlmatch-normalization.c
-diff --git a/test-wildmatch.c b/t/helper/test-wildmatch.c
-similarity index 100%
-rename from test-wildmatch.c
-rename to t/helper/test-wildmatch.c
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index c1efb8e..150aeaf 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -308,7 +308,7 @@ test_expect_success 'clone checking out a tag' '
-=20
- setup_ssh_wrapper () {
- 	test_expect_success 'setup ssh wrapper' '
--		cp "$GIT_BUILD_DIR/test-fake-ssh$X" \
-+		cp "$GIT_BUILD_DIR/t/helper/test-fake-ssh$X" \
- 			"$TRASH_DIRECTORY/ssh-wrapper$X" &&
- 		GIT_SSH=3D"$TRASH_DIRECTORY/ssh-wrapper$X" &&
- 		export GIT_SSH &&
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0b47eb6..cd0ecd4 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -854,10 +854,10 @@ test -d "$GIT_BUILD_DIR"/templates/blt || {
- 	error "You haven't built things yet, have you?"
- }
-=20
--if ! test -x "$GIT_BUILD_DIR"/test-chmtime
-+if ! test -x "$GIT_BUILD_DIR"/t/helper/test-chmtime
- then
- 	echo >&2 'You need to build test-chmtime:'
--	echo >&2 'Run "make test-chmtime" in the source (toplevel) directory'
-+	echo >&2 'Run "make t/helper/test-chmtime" in the source (toplevel) d=
-irectory'
- 	exit 1
- fi
-=20
---=20
-2.8.0.rc0.210.gd302cd2
+... that would remove the above line...
+
+>         weights = (struct node_data *)xcalloc(on_list, sizeof(*weights));
+>
+>         /* Do the real work of finding bisection commit. */
+> -       best = do_find_bisection(list, nr, weights, find_all);
+> +       best = do_find_bisection(list, weights, find_all);
+>         if (best) {
+>                 if (!find_all)
+>                         best->next = NULL;
+>                 *reaches = node_data(best->item)->weight;
+>         }
+>         free(weights);
+> +
+>         return best;
+>  }
+>
+> @@ -931,7 +935,7 @@ int bisect_next_all(const char *prefix, int no_checkout)
+>  {
+>         struct rev_info revs;
+>         struct commit_list *tried;
+> -       int reaches = 0, all = 0, nr, steps;
+> +       int reaches = 0, nr, steps;
+>         const unsigned char *bisect_rev;
+>
+>         read_bisect_terms(&term_bad, &term_good);
+> @@ -945,7 +949,7 @@ int bisect_next_all(const char *prefix, int no_checkout)
+>
+>         bisect_common(&revs);
+>
+> -       revs.commits = find_bisection(revs.commits, &reaches, &all,
+> +       revs.commits = find_bisection(revs.commits, &reaches, &total,
+>                                        !!skipped_revs.nr);
+
+...and simplify the above call.
