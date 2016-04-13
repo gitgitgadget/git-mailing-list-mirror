@@ -1,88 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Question about git log --merge option
-Date: Wed, 13 Apr 2016 13:37:21 -0700
-Message-ID: <xmqqvb3ljldq.fsf@gitster.mtv.corp.google.com>
-References: <CAArk4YMOkd3dEn-09-LMO7zf=X3iJqXUjCS0YNN5v4h=PjrTLg@mail.gmail.com>
+From: Amadeusz =?utf-8?B?xbtvxYJub3dza2k=?= <aidecoe@aidecoe.name>
+Subject: Re: [PATCH] git-p4.py: Make submit working on bare repository
+Date: Wed, 13 Apr 2016 21:27:52 +0100
+Message-ID: <87d1pt5k53.fsf@freja.aidecoe.name>
+References: <CAPig+cQA4sJ2RneG8zRsUx+bDPAMYVtmhFjZx5SOGDqnsKNUaQ@mail.gmail.com> <1455919074-5683-1-git-send-email-aidecoe@aidecoe.name> <xmqq7fi0b9rt.fsf@gitster.mtv.corp.google.com> <87fuwnd4u7.fsf@freja.aidecoe.name> <xmqqbn7aa522.fsf@gitster.mtv.corp.google.com> <877fhwd1g0.fsf@freja.aidecoe.name> <xmqqegc33oal.fsf@gitster.mtv.corp.google.com> <CAE5ih7_vBMsi+zRZRTCaO56VrOYZUR0NQ0CSSE+Do48xkJ_BwA@mail.gmail.com> <871t83cfi7.fsf@freja.aidecoe.name> <CAE5ih7-rBuipoAGEnK60iidi1nYA9xWZQV6jRMHTVQe6f=cQag@mail.gmail.com> <87si0cpnpn.fsf@freja.aidecoe.name> <CAE5ih7-q_PwF-T6nsu=FyyN9wO6o0Jcfkg=gKy5mhOXRGFZ+VA@mail.gmail.com> <xmqqtwj6mmtu.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Andrey Hsiao <andreyhsiao@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 13 22:37:54 2016
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+Cc: Git Users <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>, Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Wed Apr 13 22:54:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqRXt-00056L-U8
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 22:37:54 +0200
+	id 1aqRnc-000590-6o
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 22:54:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752780AbcDMUhp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2016 16:37:45 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51580 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752290AbcDMUhZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2016 16:37:25 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id BA7F512490;
-	Wed, 13 Apr 2016 16:37:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0CGg8UBMjcnxftLQlb3FtqcweKk=; b=KYvE0h
-	/XyRudwmoRyHQ+hyB0OZs1ijehhi6Udg2qnqd//x+nBywLIfkJPu3kv9MeXGEQDD
-	rVgV20iRDuTAnwfgL1l7+xQZNOHrjgLK0C36pvoxRLM67itVVR9djHwZGgXx54on
-	llGWUvO/bjX1D9UNM78LmsetjdpDAYpCsn1iI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UM1cvF9t4wJBxda2qi8sxwZBR7L6dJJX
-	6tvqt16P9TjWVpATSDc1XN9PQ1tgLRKAZZyqXvsqLEtXuHWFpTltSWH5hP4nTULI
-	5OW2k2B3KcxkyuRiXEHCZAHma/gdh/iXFHFfPW9jn61u5D+pPZzCaGr/NXkPasO6
-	UYNgqoTIhSw=
-Received: from pb-smtp2. (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B35871248F;
-	Wed, 13 Apr 2016 16:37:23 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 269B11248E;
-	Wed, 13 Apr 2016 16:37:23 -0400 (EDT)
-In-Reply-To: <CAArk4YMOkd3dEn-09-LMO7zf=X3iJqXUjCS0YNN5v4h=PjrTLg@mail.gmail.com>
-	(Andrey Hsiao's message of "Thu, 14 Apr 2016 00:53:26 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 86AFD404-01B7-11E6-92C4-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1753435AbcDMUyD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2016 16:54:03 -0400
+Received: from jim.zolnowski.name ([188.116.54.122]:42092 "EHLO
+	jim.zolnowski.name" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753361AbcDMUyC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2016 16:54:02 -0400
+X-Greylist: delayed 1557 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Apr 2016 16:54:02 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aidecoe.name; s=jim;
+	h=Content-Type:MIME-Version:Message-ID:Date:References:In-Reply-To:Subject:Cc:To:From; bh=qdlisQSMB3gWAQ7Ut/PRLwVBcnbEQprbz/Xb1qcg6hg=;
+	b=pYN5+AAIwPgFbl2mngSJcxL2kRvYPxHwiQnrRr3zKfhJBnLVAlp5ncWlUM/pxbNmtqIrbz/p2dPkoIfEgyml8dSqNiFpRyHc992G6okNm2u2/NF4K2wmuPhaYbpUpVWf++bQwjBVHB16y35E2R7YhvRuHdMA3lGqNGMFB9MYEBtKU5RWl6PCnidqZoMadO4/Gc3qWmngwEL/gNn1NrWN1OQgAYw31XZ34HafQCDpTcpdtJrkTYBAfLt7fANh8wJlv0RnnAik1cuzhiN49YXp/A4HM6suYBbb2Da9TBlgAnq2c1itmfE6iWVV2XSfBX5dyMqnVgrD9aP3a+gy6hJDdA==;
+Received: from cpc92302-cmbg19-2-0-cust189.5-4.cable.virginm.net ([82.1.208.190] helo=localhost)
+	by jim.zolnowski.name with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
+	(Exim 4.85)
+	(envelope-from <aidecoe@aidecoe.name>)
+	id 1aqR5b-0002Wu-RS; Wed, 13 Apr 2016 22:08:40 +0200
+In-Reply-To: <xmqqtwj6mmtu.fsf@gitster.mtv.corp.google.com>
+User-Agent: Notmuch/0.21 (http://notmuchmail.org) Emacs/24.5.1 (x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291484>
 
-Andrey Hsiao <andreyhsiao@gmail.com> writes:
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> Dear list:
->
-> Just encountered the --merge option for git log.
->
-> In the man page, it has the following explanation:
-> - After a failed merge, show refs that touch files having a conflict
-> and don't exist on all heads to merge.
+Hi,
 
-	git log --merge [options] -- $paths
+Junio C Hamano <gitster@pobox.com> writes:
+> Has anything happened to this topic after this?  I am wondering if I
+> should discard the topic az/p4-bare-no-rebase without prejudice.
 
-is roughly the same as
+Sorry, I haven't got time to take a loot at this, but I'll return to
+that soon, OK? I'll prepare a patch with an option to skip rebase rather
+than do it only for bare repos.
 
-	git log [options] HEAD...MERGE_HEAD -- $paths'
+=2D-=20
+Amadeusz =C5=BBo=C5=82nowski
 
-where $paths' is $paths limited to those with conflicts.  You can
-further think of that as a rough equivalent of
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
-	git log [options] ^X HEAD MERGE_HEAD -- $paths'
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1
 
-where X is the merge base between the tips of these two branches:
-
-    X---o---o---o---H
-     \
-      o---o---o---M
-
-And the commits among these ('o's, H and M in the picture), the ones
-that change any of the $paths' are shown.  If you further limit the
-output (e.g. with -n<n>, or --since=<time>), you may not see all of
-them, of course.
+iQJ8BAEBCgBmBQJXDqvIXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
+ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXRCMzcyRTFENjI5NUM1MzYwQTQwODQyRUZD
+QkNDODAyM0Y1OUUxNzA0AAoJEMvMgCP1nhcEIaYP/jVxA272pLz5qetw1qbS4Sul
+ULZcsKXSamvQZpeGoOoqcl7Mez9bahP5zA+nXLPpWccQdiT2z6231E6ATRwZO43N
+Lln+1vvCXWBK7xIMua41oH+FlzScjTdho1vrm6UIRDtZeDsrL5p7Oyu4ze7Mqkec
+4djoOnyhYqTnQLTPw7pNwuxOKtkiO2UQ+YDWVjcg0v3J/IKo7jA37lqr1L1WG9rH
+wKQWdBwMTd8+vCIUFjQaE7e+iq7oUi1MocO15EKhVa0d9QL8KtKeo3a3Wm/ODupG
+yToplcnGwLsLywdnznYJ8XH3GFIQEDWK94wEWJOtGbSHu6S8kKlZJ5CtQV4S4ffO
+GYbnawevDUD65e3KzvtVOfNJhfuvID/JnR7J7HyTOHjmEaktDpjf/bp/pNGVGlv+
+alNWylV0eQCvkwDQhToc3D7tzKoDQx8/yIAdJqwrYqTGdM5Xxq3o39C3bvJqOk+Q
+6sNI1XCKymt/T0YAgU01JmSmdxhAqsNSIX2ac+xvz4Yv+bWNXb8HXd8+Iixwaw4V
+tH/kbvWFq50LP9e8A/Odu8sltIbs+E/LpOTfOAUcRmz+XdVTrWdNKa7Z7nPTiwwJ
+8J+83BMX08NdbolxSkbRRTt4ct0EJ4Yp1A2GiHCZXB/ZTC7krV/RgE+PFIWZljMA
+S1NH5cI11tDMewWiBTDn
+=pngI
+-----END PGP SIGNATURE-----
+--=-=-=--
