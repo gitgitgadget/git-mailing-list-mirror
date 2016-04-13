@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 09/25] git-worktree.txt: keep subcommand listing in alphabetical order
-Date: Wed, 13 Apr 2016 20:15:30 +0700
-Message-ID: <1460553346-12985-10-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 12/25] worktree.c: store "id" instead of "git_dir"
+Date: Wed, 13 Apr 2016 20:15:33 +0700
+Message-ID: <1460553346-12985-13-git-send-email-pclouds@gmail.com>
 References: <1460553346-12985-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,123 +10,205 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 13 15:16:48 2016
+X-From: git-owner@vger.kernel.org Wed Apr 13 15:17:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqKf0-0004G4-MW
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 15:16:47 +0200
+	id 1aqKfC-0004LM-Ft
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 15:16:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760636AbcDMNQm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Apr 2016 09:16:42 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34758 "EHLO
-	mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760158AbcDMNQl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2016 09:16:41 -0400
-Received: by mail-pf0-f193.google.com with SMTP id d184so4103488pfc.1
-        for <git@vger.kernel.org>; Wed, 13 Apr 2016 06:16:41 -0700 (PDT)
+	id S1760513AbcDMNQy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Apr 2016 09:16:54 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:33932 "EHLO
+	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760651AbcDMNQx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2016 09:16:53 -0400
+Received: by mail-pf0-f194.google.com with SMTP id d184so4104120pfc.1
+        for <git@vger.kernel.org>; Wed, 13 Apr 2016 06:16:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=51AMAj7GpxtK/69lvXKFFCVXYP+lfnwTdspawX3kHK4=;
-        b=tqSTnyFWvZQ2ldssNgPgMG/p69gnZkyNGOrW84ARF1u5JqAejyMrm4eL2febIS/RvC
-         G+WTOOoAzpv6uL2V4/IFkjD7H5/W/Y2/7LEREQ/ssjiyS6r7VROdP5Iau8AKnq9RtIAz
-         jMHQT26cFueifJUaSD3SrRG0JgTVqzNxpwWCR3X0JHMVtkfgDU2kxQN/Mrn5Ra1biwwc
-         DoRiAdtf5P+Hxiaw8f8miODSQwB0m9CR67nTr+R+gvdc/ivHee5imqNbfybzxQ4vggt6
-         XueoeaHdfOBED3vofN+ueg5SRdfb6bkz5666F3dA2CLZMJJKc2OdaxvNy6OwfLJtlcld
-         opeQ==
+        bh=9nPuXVPavsJoStaKzWDNjBpsYMDVLx/jgoiGb+cklN8=;
+        b=PrhnlCXA0qmA+adwLJkIQsp3bJJAspuVcf5ubcjcfvXZrgqa6zGvG0E6PPftfIUhQz
+         w0u3fXKVYXf4nIc0HJuL/ZSLk1QdyZB0vDTxX/pVA6DoCne7/TTtjRNpKk/IYpez5H/B
+         bNBHU9Re2t/5td5cfV+jAVWehXoSGHYS0vbGMMNmiRkF5QhoRlWs8cUDbswbotm3WL9C
+         vAGn8AfGMxSBdOJ+W3W8OcEJW0hGtKvZPgl5yrzdkEPflTTlbHGFBR/F5AEzS+oI5DB1
+         YRQHHeQWowOd5hRVkvtROqhIhhVujFRa+/0sH57AcKl3EwicsAD31a9YFLdGmKUNfxdU
+         4p6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=51AMAj7GpxtK/69lvXKFFCVXYP+lfnwTdspawX3kHK4=;
-        b=eOTUenxakP4W4+ZxUhkk51iMyqrnw8IpqBBmraAmtt8XKOjMcFU2nNNapFJjtyL43c
-         mvqN5XoinXbv8OeK5xj8apcy3gaZnAg7pIKfWxns8CvgN15C3cA5dQVcFJikWGAmmFpa
-         UnUBd3gaIixX18Uhn3KNkFUXaCIdLrNhOR5gn79etT8a2JZHFwB4CpP13sCV0NWMbR4b
-         pYGGxlPO7lvpcXZS/NUvF9WfdJueQZtYcX1BAgPxkDzyJ83RR7n5BaqpKw0fGqE5da5y
-         GtmEPoxgUOk+cTl6XGkPdEKzYvxNGdrXDOkNgT3gkk5nmfBXcahln+iCw5XU3DXrGpUv
-         CXAQ==
-X-Gm-Message-State: AOPr4FW0+5/zz8JSU2HlSMmOEjxWK3cgWoRRnaMAvyK2oLa1miIx24GGan2z0qkO2KstLg==
-X-Received: by 10.98.20.150 with SMTP id 144mr10864042pfu.144.1460553396208;
-        Wed, 13 Apr 2016 06:16:36 -0700 (PDT)
+        bh=9nPuXVPavsJoStaKzWDNjBpsYMDVLx/jgoiGb+cklN8=;
+        b=CgJ//iAEWpLP9wnSEe4sDT4OTGAl7Gp1EPnCej8Kcb+TddD3c5SsprcftNE0gQW/xW
+         5b48rHpXHoWmsrTQ/rZuKYWIkM0f8KUd4x4w0XcPD/ja6/ziolgRdNqgmV0UidfttWt8
+         2SsY/KnSyS+n/Ck4hLl+VGdTlC3z7uUu3YyxAE2Upz/frXcjjufQnoo4rbsSik5jtiHu
+         0EZs8qzTdRMBxBjJ8Vl2PyzrpiYmliZGbUSbE+AuaRi2dLnx9Ix4++44mgVrLd7Q4i0Y
+         aubapfE9loIJNodLP0DRJg6MV6RrMFcwApIdJfQSgVK4JxPcpQzcI7XztPnVSOEDWsC0
+         XbCw==
+X-Gm-Message-State: AOPr4FUa60W9KU71NsDe1OzMbgoMRjs0+qS0J4TgGnuoxFnS9kma/YTuXArDR4k0kIA6Gg==
+X-Received: by 10.98.18.1 with SMTP id a1mr12976290pfj.39.1460553412496;
+        Wed, 13 Apr 2016 06:16:52 -0700 (PDT)
 Received: from lanh ([115.76.233.41])
-        by smtp.gmail.com with ESMTPSA id p74sm51184505pfj.22.2016.04.13.06.16.32
+        by smtp.gmail.com with ESMTPSA id m84sm51141525pfi.75.2016.04.13.06.16.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 13 Apr 2016 06:16:35 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 13 Apr 2016 20:16:42 +0700
+        Wed, 13 Apr 2016 06:16:51 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Wed, 13 Apr 2016 20:16:58 +0700
 X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
 In-Reply-To: <1460553346-12985-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291433>
+
+We can reconstruct git_dir from id quite easily. It's a bit hackier to
+do the reverse.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/git-worktree.txt | 10 +++++-----
- builtin/worktree.c             |  2 +-
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ worktree.c | 29 ++++++++++++++++-------------
+ worktree.h |  7 ++++++-
+ 2 files changed, 22 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktre=
-e.txt
-index 62c76c1..1c9d7c1 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -10,8 +10,8 @@ SYNOPSIS
- --------
- [verse]
- 'git worktree add' [-f] [--detach] [-b <new-branch>] <path> [<branch>]
--'git worktree prune' [-n] [-v] [--expire <expire>]
- 'git worktree list' [--porcelain]
-+'git worktree prune' [-n] [-v] [--expire <expire>]
+diff --git a/worktree.c b/worktree.c
+index ddb8cb7..4c38414 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -10,7 +10,7 @@ void free_worktrees(struct worktree **worktrees)
 =20
- DESCRIPTION
- -----------
-@@ -54,10 +54,6 @@ If `<branch>` is omitted and neither `-b` nor `-B` n=
-or `--detached` used,
- then, as a convenience, a new branch based at HEAD is created automati=
-cally,
- as if `-b $(basename <path>)` was specified.
+ 	for (i =3D 0; worktrees[i]; i++) {
+ 		free(worktrees[i]->path);
+-		free(worktrees[i]->git_dir);
++		free(worktrees[i]->id);
+ 		free(worktrees[i]->head_ref);
+ 		free(worktrees[i]);
+ 	}
+@@ -75,13 +75,11 @@ static struct worktree *get_main_worktree(void)
+ 	struct worktree *worktree =3D NULL;
+ 	struct strbuf path =3D STRBUF_INIT;
+ 	struct strbuf worktree_path =3D STRBUF_INIT;
+-	struct strbuf gitdir =3D STRBUF_INIT;
+ 	struct strbuf head_ref =3D STRBUF_INIT;
+ 	int is_bare =3D 0;
+ 	int is_detached =3D 0;
 =20
--prune::
--
--Prune working tree information in $GIT_DIR/worktrees.
--
- list::
+-	strbuf_addf(&gitdir, "%s", absolute_path(get_git_common_dir()));
+-	strbuf_addbuf(&worktree_path, &gitdir);
++	strbuf_addstr(&worktree_path, absolute_path(get_git_common_dir()));
+ 	is_bare =3D !strbuf_strip_suffix(&worktree_path, "/.git");
+ 	if (is_bare)
+ 		strbuf_strip_suffix(&worktree_path, "/.");
+@@ -93,7 +91,7 @@ static struct worktree *get_main_worktree(void)
 =20
- List details of each worktree.  The main worktree is listed first, fol=
-lowed by
-@@ -65,6 +61,10 @@ each of the linked worktrees.  The output details in=
-clude if the worktree is
- bare, the revision currently checked out, and the branch currently che=
-cked out
- (or 'detached HEAD' if none).
+ 	worktree =3D xmalloc(sizeof(struct worktree));
+ 	worktree->path =3D strbuf_detach(&worktree_path, NULL);
+-	worktree->git_dir =3D strbuf_detach(&gitdir, NULL);
++	worktree->id =3D NULL;
+ 	worktree->is_bare =3D is_bare;
+ 	worktree->head_ref =3D NULL;
+ 	worktree->is_detached =3D is_detached;
+@@ -101,7 +99,6 @@ static struct worktree *get_main_worktree(void)
 =20
-+prune::
+ done:
+ 	strbuf_release(&path);
+-	strbuf_release(&gitdir);
+ 	strbuf_release(&worktree_path);
+ 	strbuf_release(&head_ref);
+ 	return worktree;
+@@ -112,16 +109,13 @@ static struct worktree *get_linked_worktree(const=
+ char *id)
+ 	struct worktree *worktree =3D NULL;
+ 	struct strbuf path =3D STRBUF_INIT;
+ 	struct strbuf worktree_path =3D STRBUF_INIT;
+-	struct strbuf gitdir =3D STRBUF_INIT;
+ 	struct strbuf head_ref =3D STRBUF_INIT;
+ 	int is_detached =3D 0;
+=20
+ 	if (!id)
+ 		die("Missing linked worktree name");
+=20
+-	strbuf_addf(&gitdir, "%s/worktrees/%s",
+-			absolute_path(get_git_common_dir()), id);
+-	strbuf_addf(&path, "%s/gitdir", gitdir.buf);
++	strbuf_git_common_path(&path, "worktrees/%s/gitdir", id);
+ 	if (strbuf_read_file(&worktree_path, path.buf, 0) <=3D 0)
+ 		/* invalid gitdir file */
+ 		goto done;
+@@ -141,7 +135,7 @@ static struct worktree *get_linked_worktree(const c=
+har *id)
+=20
+ 	worktree =3D xmalloc(sizeof(struct worktree));
+ 	worktree->path =3D strbuf_detach(&worktree_path, NULL);
+-	worktree->git_dir =3D strbuf_detach(&gitdir, NULL);
++	worktree->id =3D xstrdup(id);
+ 	worktree->is_bare =3D 0;
+ 	worktree->head_ref =3D NULL;
+ 	worktree->is_detached =3D is_detached;
+@@ -149,7 +143,6 @@ static struct worktree *get_linked_worktree(const c=
+har *id)
+=20
+ done:
+ 	strbuf_release(&path);
+-	strbuf_release(&gitdir);
+ 	strbuf_release(&worktree_path);
+ 	strbuf_release(&head_ref);
+ 	return worktree;
+@@ -189,6 +182,14 @@ struct worktree **get_worktrees(void)
+ 	return list;
+ }
+=20
++const char *get_worktree_git_dir(const struct worktree *wt)
++{
++	if (wt->id)
++		return git_common_path("worktrees/%s", wt->id);
++	else
++		return get_git_common_dir();
++}
 +
-+Prune working tree information in $GIT_DIR/worktrees.
+ char *find_shared_symref(const char *symref, const char *target)
+ {
+ 	char *existing =3D NULL;
+@@ -200,7 +201,9 @@ char *find_shared_symref(const char *symref, const =
+char *target)
+ 	for (i =3D 0; worktrees[i]; i++) {
+ 		strbuf_reset(&path);
+ 		strbuf_reset(&sb);
+-		strbuf_addf(&path, "%s/%s", worktrees[i]->git_dir, symref);
++		strbuf_addf(&path, "%s/%s",
++			    get_worktree_git_dir(worktrees[i]),
++			    symref);
+=20
+ 		if (parse_ref(path.buf, &sb, NULL)) {
+ 			continue;
+diff --git a/worktree.h b/worktree.h
+index b4b3dda..e89d423 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -3,7 +3,7 @@
+=20
+ struct worktree {
+ 	char *path;
+-	char *git_dir;
++	char *id;
+ 	char *head_ref;
+ 	unsigned char head_sha1[20];
+ 	int is_detached;
+@@ -23,6 +23,11 @@ struct worktree {
+ extern struct worktree **get_worktrees(void);
+=20
+ /*
++ * Return git dir of the worktree. Note that the path may be relative.
++ */
++extern const char *get_worktree_git_dir(const struct worktree *wt);
 +
- OPTIONS
- -------
-=20
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 38b5609..575f899 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -13,8 +13,8 @@
-=20
- static const char * const worktree_usage[] =3D {
- 	N_("git worktree add [<options>] <path> [<branch>]"),
--	N_("git worktree prune [<options>]"),
- 	N_("git worktree list [<options>]"),
-+	N_("git worktree prune [<options>]"),
- 	NULL
- };
-=20
++/*
+  * Free up the memory for worktree(s)
+  */
+ extern void free_worktrees(struct worktree **);
 --=20
 2.8.0.rc0.210.gd302cd2
