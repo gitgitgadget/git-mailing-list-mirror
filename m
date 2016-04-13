@@ -1,217 +1,95 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] t1500-rev-parse: rewrite each test to run in isolation
-Date: Wed, 13 Apr 2016 00:54:16 -0400
-Message-ID: <CAPig+cT8oD1jJdDrk+YPoquGfTh6m3m-ha0J+er42jOoxnVxzg@mail.gmail.com>
-References: <1460200767-32864-1-git-send-email-rappazzo@gmail.com>
-	<1460200767-32864-2-git-send-email-rappazzo@gmail.com>
+Subject: Re: [PATCH v14 3/6] t0040-parse-options: improve test coverage
+Date: Wed, 13 Apr 2016 01:26:51 -0400
+Message-ID: <CAPig+cTB=bYNxR8yN2CGvkmtCZKomnbdNnZon9HA5uE9aivW=Q@mail.gmail.com>
+References: <010201540cb60832-9402a692-3caa-47a1-9e8e-ae5a1bc7eb2f-000000@eu-west-1.amazonses.com>
+	<010201540cb60965-887d5e4b-b12d-4477-8271-eefa349ceddd-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-To: Michael Rappazzo <rappazzo@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 13 06:54:24 2016
+Cc: Git List <git@vger.kernel.org>
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 13 07:26:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqCop-0007OD-BD
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 06:54:23 +0200
+	id 1aqDKL-0001Zr-Lj
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 07:26:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758052AbcDMEyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2016 00:54:18 -0400
-Received: from mail-ig0-f196.google.com ([209.85.213.196]:36622 "EHLO
-	mail-ig0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757824AbcDMEyR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2016 00:54:17 -0400
-Received: by mail-ig0-f196.google.com with SMTP id kb1so5087297igb.3
-        for <git@vger.kernel.org>; Tue, 12 Apr 2016 21:54:17 -0700 (PDT)
+	id S1758942AbcDMF0x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2016 01:26:53 -0400
+Received: from mail-ig0-f195.google.com ([209.85.213.195]:34248 "EHLO
+	mail-ig0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757327AbcDMF0w (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2016 01:26:52 -0400
+Received: by mail-ig0-f195.google.com with SMTP id qu10so5187803igc.1
+        for <git@vger.kernel.org>; Tue, 12 Apr 2016 22:26:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc;
-        bh=hRlOz2Iv4Fc/mXJtO6NLXXELU/v5+ErIuDiVHf1GhD4=;
-        b=nkjGpn6t3wq8AoKbw1qsU2a0NSp8YNXke8y01sDF1Gvc/cyEJVas5gGzNukApNPmeW
-         04gdFkeUbquF4Pl9I+ajLOmtnMxOnfacCNb4QATOYejBUrtBWT4PUpsPN1XT9PeM8x8w
-         JJ6OLxsD6fJ0KFGGQPexAebUGHHqpGOMID3L0FKdtaZ+D6+9CPVTDhDobSQZe1mFhwGe
-         T5cWyFQ5HoCPnIQ4kgehDTI03SXcjJ8ahLte2b4vg2MwZr/huSTtIz0puElyBnGFEIVI
-         7n6J2c+QFXPEBsVFCyKNJMK/+/bRe+ZSlS0CA6Efz0x2W76twema/a+63XY3PbYiuW6I
-         uVGw==
+        bh=E8heAXeFFRTvc/lZK/Fr9BfOT9wPLRCcIkiCHZB1E9c=;
+        b=YI3Pc7uJkE5tphh7NssLhgxkCU78yqryjrgzfEuGNbXigy8mmVuWbf841JXPRY7DBp
+         HEldvv9s6EAlLiKRwIvhdGBCiXXCnPM+cyzD9ncTbZngRcLd5K/GFZKn2zTjO00OJA+D
+         0dUkyV0qT/iSFnBuB01LKkNtWLrms3z8JV7ZvTk92c4lBeRXFPNHJS3ipj88uQJs16ky
+         mvCc04Iw3qEz3sMTPlXx4QOXS1uI4n60HBphtl/S94jSjLDzqf+DvxdWpJU+o1PgVITn
+         0/7i9tM4UsfKuizN3p0VeRC2XhkSFh3kntT4qqODub+7DurN+G2J7o4twmWB035P+v7/
+         uIZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=hRlOz2Iv4Fc/mXJtO6NLXXELU/v5+ErIuDiVHf1GhD4=;
-        b=kwxi2WnVWaIgPYkXRxgCycIp1ImGL+QHyDY+8N4xRJuxwS4n7r/a5d2Mc7n82N+nX9
-         DZdeZGSxnSRT/d9t3vXYefm2i22iAbDJ/YTsxfnb3srWWxpGe+mNGyIGZ2aWHpCdBSmi
-         sEcwqJwH8aLO19ch/su0iYP58qISrlDzSIIWPXxF/nKVvXN6Ck6sF1C7rKImYYLvxyZB
-         t95v0p+Zccg72DQdTl6e6nCLOHG0HxXPrhxBtwlbU33d1UvZBcB1UHC3J+r1V6XwZJf8
-         S4sK+Su7ALV3AhWVNqGbjsR4HWFB9C4zhzk37AYplGFTfMtj3Z+D5qnPnh7qx+GWoOl0
-         re/w==
-X-Gm-Message-State: AOPr4FWsM2YR0xahy8AXcQF2+YMwYxCTgMXKemYZ6cAyJqbFV/0sHm8YOS8uZNXGv1Zapwmv+ShnV4qenT79rQ==
-X-Received: by 10.50.40.101 with SMTP id w5mr8065608igk.17.1460523256980; Tue,
- 12 Apr 2016 21:54:16 -0700 (PDT)
-Received: by 10.79.139.71 with HTTP; Tue, 12 Apr 2016 21:54:16 -0700 (PDT)
-In-Reply-To: <1460200767-32864-2-git-send-email-rappazzo@gmail.com>
-X-Google-Sender-Auth: oPIQrkzvGT102Wx1jjXCq9ZB24E
+        bh=E8heAXeFFRTvc/lZK/Fr9BfOT9wPLRCcIkiCHZB1E9c=;
+        b=f5SJsIPyXnpsd7hoyVo6UcaJAsVACvizhvaEViuKUaYJue0AdB4sMd4M/7qrnb5Yuw
+         yrZjuJOWNofLkiDTqVzSXzdkowvjieWp0xdDRStvrpdTHwBjIyIybZmshtHmzhY29Ajb
+         ao7C1Vg4gQMk6A4c42I76lqq9/uvNGEGvHI9D8Z0yaMWs8G+zlJPlpkuX++HxnprpX/q
+         MsQH4JSeN4uE9MgqNl+vpxC/2wxF0sbZIqdJ61edroVoAt3Oimj7e9reUg55jspU1m9T
+         F5EWokLUiGJfbtrIzQNBdfCJ5xd1ch/zA0bs4kAAWPLC7cPcjsYsFthPqy0oMwSl5QTE
+         E1Jw==
+X-Gm-Message-State: AOPr4FUlOv16L/9GpJLlTNmVVQr6Xjgl1LhHPtGcE0kQ3Q1rD/ZVY/8JTXRQUn5Qu36sUmKkrHvaUEzvS1CLIA==
+X-Received: by 10.50.189.233 with SMTP id gl9mr26215680igc.73.1460525211511;
+ Tue, 12 Apr 2016 22:26:51 -0700 (PDT)
+Received: by 10.79.139.71 with HTTP; Tue, 12 Apr 2016 22:26:51 -0700 (PDT)
+In-Reply-To: <010201540cb60965-887d5e4b-b12d-4477-8271-eefa349ceddd-000000@eu-west-1.amazonses.com>
+X-Google-Sender-Auth: 5QFOKSISag7LnhoTUVrYb-fe_4g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291369>
 
-On Sat, Apr 9, 2016 at 7:19 AM, Michael Rappazzo <rappazzo@gmail.com> wrote:
-> t1500-rev-parse has many tests which change directories and leak
-> environment variables.  This makes it difficult to add new tests without
-> minding the environment variables and current directory.
+On Tue, Apr 12, 2016 at 7:02 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+> Include tests to check for multiple levels of quiet and to check if the
+> '--no-quiet' option sets it to 0.
 >
-> Each test is now setup, executed, and cleaned up without leaving anything
-> behind.  Tests which have textual expectations have been converted to use
-> test_cmp (which will show a diff when the test is run with --verbose).
-
-It might be easier to review this if broken into several cleanup and
-modernization patches, however, some comments below...
-
-> Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 > ---
-> diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
-> @@ -3,88 +3,571 @@
-> +test_expect_success '.git/: is-bare-repository' '
-> +       (cd .git && test false = "$(git rev-parse --is-bare-repository)")
+> diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+> @@ -476,4 +476,41 @@ test_expect_success '--no-list resets list' '
+> +cat >expect <<\EOF
+> +boolean: 0
+> +integer: 0
+> +magnitude: 0
+> +timestamp: 0
+> +string: (not set)
+> +abbrev: 7
+> +verbose: 0
+> +quiet: 0
+> +dry run: no
+> +file: (not set)
+> +EOF
+> +
+> +test_expect_success '--no-quiet sets quiet to 0' '
+> +       test-parse-options --no-quiet >output 2>output.err &&
+
+Meh, as implemented, this isn't a very interesting test, is it?
+'quiet' started at 0, so all this shows is that --no-quiet didn't
+disturb the 0. To really test that it resets it to 0, you'd want:
+
+    test-parse-options --quiet --no-quiet >... 2>... &&
+
+> +       test_must_be_empty output.err &&
+> +       test_cmp expect output
 > +'
->
-> -# label is-bare is-inside-git is-inside-work prefix git-dir absolute-git-dir
-> +test_expect_success '.git/: is-inside-git-dir' '
-> +       (cd .git && test true = "$(git rev-parse --is-inside-git-dir)")
-
-Simpler:
-
-    test true = "$(git -C .git rev-parse --is-inside-git-dir)"
-
-> +'
->
-> -ROOT=$(pwd)
-> +test_expect_success '.git/: is-inside-work-tree' '
-> +       (cd .git && test false = "$(git rev-parse --is-inside-work-tree)")
-
-Ditto.
-
-> +'
->
-> -test_rev_parse toplevel false false true '' .git "$ROOT/.git"
-> +test_expect_success '.git/: prefix' '
-> +       (
-> +               cd .git &&
-> +               echo >expected &&
-> +               git rev-parse --show-prefix >actual &&
-> +               test_cmp expected actual
-> +       )
-
-Likewise, you could drop the entire subshell:
-
-    echo >expected &&
-    git -C .git rev-parse --show-prefix >actual &&
-    test_cmp expected actual
-
-> +'
->
-> +test_expect_success '.git/: git-dir' '
-> +       (
-> +               cd .git &&
-> +               echo . >expected &&
-> +               git rev-parse --git-dir >actual &&
-> +               test_cmp expected actual
-> +       )
-
-Same here and for many subsequent tests (which I won't quote).
-
-> +'
-> +test_expect_success 'core.bare = true: is-bare-repository' '
-> +       git config core.bare true &&
-> +       test_when_finished "git config core.bare false" &&
-> +       test true = "$(git rev-parse --is-bare-repository)"
-
-Simpler:
-
-    test_config core.bare true
-
-and then you can drop 'test_when_finished' altogether. However, even simpler:
-
-    test true = "$(git -c core.bare=false rev-parse --is-bare-repository)"
-
-which allows you to drop 'test_config', as well.
-
-Ditto for subsequent tests (which I won't quote).
-
-> +'
-> +test_expect_success 'core.bare undefined: is-bare-repository' '
-> +       git config --unset core.bare &&
-
-    test_unconfig core.bare
-
-> +       test_when_finished "git config core.bare false" &&
-
-Why does this need to re-instate core.bare?
-
-Same comments for subsequent tests.
-
-> +       test false = "$(git rev-parse --is-bare-repository)"
-> +'
-> +test_expect_success 'GIT_DIR=../.git, core.bare = false: is-bare-repository' '
-> +       mkdir work &&
-> +       test_when_finished "rm -rf work && git config core.bare false" &&
-> +       (
-> +               cd work &&
-> +               export GIT_DIR=../.git &&
-> +               export GIT_CONFIG="$(pwd)"/../.git/config
-> +               git config core.bare false &&
-> +               test false = "$(git rev-parse --is-bare-repository)"
-> +       )
-> +'
-
-Same comments about -C to avoid the subshell and -c for configuration.
-
-Also, you can do one-shot environment variable setting for the command
-invocation, so the subshell goes away, and everything inside the
-subshell collapses to:
-
-    test false = "$(GIT_DIR=... GIT_CONFIG=...
-        git -C work -c core.bare=false rev-parse ...)"
-
-Additionally, I'm confused about why this test "reverts" the
-core.bare=false by setting core.bare=false in 'test_when_finished'.
-
-Ditto for subsequent tests.
-
-> +test_expect_success 'GIT_DIR=../repo.git, core.bare = false: is-bare-repository' '
-> +       mkdir work &&
-> +       cp -r .git repo.git &&
-> +       test_when_finished "rm -r repo.git && rm -rf work && git config core.bare false" &&
-
-If 'cp' fails, then 'test_when_finished' will never be invoked, which
-means that the cleanup will never happen; thus 'test_when_finished'
-needs to be called earlier. Ditto for subsequent tests.
-
-> +       (
-> +               cd work &&
-> +               export GIT_DIR=../repo.git &&
-> +               export GIT_CONFIG="$(pwd)"/../repo.git/config
-> +               git config core.bare false &&
-> +               test false = "$(git rev-parse --is-bare-repository)"
-> +       )
-> +'
-
-Closing comments:
-
-By using -C, -c, and one-shot environment variables, you can ditch the
-subshells, and most of these tests should collapse to one or two
-lines.
-
-There seems to be a lot of repetition here. To reduce the repetition,
-have you considered encoding the state which varies between tests into
-a table and making the tests table-driven. Or, by encoding the varying
-state in some nested for-loops? The nice thing about driving the tests
-from a table or for-loops is that it is easier to see at a glance if
-all cases are covered.
+>  test_done
