@@ -1,86 +1,86 @@
-From: Stephen Kelly <steveire@gmail.com>
-Subject: Re: Why doesn't gitk highlight commit references from git-describe?
-Date: Wed, 13 Apr 2016 23:55:49 +0200
-Message-ID: <nemf95$e1u$1@ger.gmane.org>
-References: <nemal5$mb$1@ger.gmane.org> <CAGZ79kZVC0FxUN45KgLh-2tEK2=j2-yyTajYOc=s-LECgx+yqQ@mail.gmail.com> <xmqqk2k1jita.fsf@gitster.mtv.corp.google.com> <CAGZ79kY_C9wSS+z7XwPEWiM+8vhYuZzs_SPZ0mQR=LB+MPzTJg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Merge conflicts are reported relative to root not cwd
+Date: Wed, 13 Apr 2016 14:58:40 -0700
+Message-ID: <xmqq4mb5jhm7.fsf@gitster.mtv.corp.google.com>
+References: <CAGZ79kbVfk=yAK3UB=H385_YfAtMHZe-gSE=EYVvvcS8jjy08A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 13 23:56:12 2016
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Apr 13 23:58:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqSle-0002FI-VM
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 23:56:11 +0200
+	id 1aqSoB-0003Tx-MK
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 23:58:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752030AbcDMV4H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2016 17:56:07 -0400
-Received: from plane.gmane.org ([80.91.229.3]:44178 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750922AbcDMV4F (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2016 17:56:05 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1aqSlS-00029F-AY
-	for git@vger.kernel.org; Wed, 13 Apr 2016 23:55:58 +0200
-Received: from x55b39f7f.dyn.telefonica.de ([85.179.159.127])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 13 Apr 2016 23:55:58 +0200
-Received: from steveire by x55b39f7f.dyn.telefonica.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 13 Apr 2016 23:55:58 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: x55b39f7f.dyn.telefonica.de
-User-Agent: KNode/4.14 pre
+	id S1753042AbcDMV6o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2016 17:58:44 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60390 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752959AbcDMV6n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2016 17:58:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E5E8812327;
+	Wed, 13 Apr 2016 17:58:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Gi/oVosqysxSGj4hLIvVs/OxxHY=; b=GdKmYM
+	xKSYBXbCJeNr+0FT+t0b3Mg2RbTZzE13j10P1R2nkKBRyPtsYdjtkl/lBCo4HZ1r
+	u+CIxqaugfUT4gwRWuzFMktV9qbK1iV9OBjUwcRb5u/u6L/hTdxxHDd9/n3A2ACH
+	ZIE4QiL1LRl20rGcI+nob7gypj6+wZzlFR/Cw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=E5rcUuVRIwq8z6xAaZL0j6CRLmK0l68H
+	slLTXR15cXF5PN/Yd6xU9pedZulc9q9H+an0raSO5meNzaBoBs18F3LWo4mSfWOl
+	5Muh8vWi3RmA87w41Y6gYOC0UTEPUP3QjYQM5N9L8PgBU08ZFEIkstUkanieLWcH
+	CN+0vuIy+Ww=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DDFCA12326;
+	Wed, 13 Apr 2016 17:58:41 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5A2B112325;
+	Wed, 13 Apr 2016 17:58:41 -0400 (EDT)
+In-Reply-To: <CAGZ79kbVfk=yAK3UB=H385_YfAtMHZe-gSE=EYVvvcS8jjy08A@mail.gmail.com>
+	(Stefan Beller's message of "Wed, 13 Apr 2016 14:37:31 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E253FE9C-01C2-11E6-8654-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291494>
 
-Stefan Beller wrote:
+Stefan Beller <sbeller@google.com> writes:
 
-> We also want to have 4b9ab0ee0130~1^2 to work `right`, in the sense
-> that not just the hexadecimals are highlighted and linking to
-> 4b9ab0ee0130, but the whole expression should link to 49e863b02ae177.
+> $ cd t/
+> $ git merge ...
+> ...
+> Auto-merging builtin/submodule--helper.c
+> Auto-merging builtin/fetch.c
+> CONFLICT (content): Merge conflict in builtin/fetch.c
+> Auto-merging builtin/clone.c
+> Auto-merging README.md
+> ...
+>
+> It should say ../builtin/fetch.c IMHO.
+> Any reason to keep the old behavior?
 
-Presumably the same logic which finds 4b9ab0ee0130 to link it can also see 
-if it is suffixed with '~1^2' ?
+I actually prefer to see the "relative to root" behaviour when it
+comes to things like this, that lets you view the things that happen
+in the whole-tree context.
 
-Is a ref like 4b9ab0ee0130~1^2 commonly useful? In cmake we use the output 
-of cmake describe --contains (when there is a following tag) to refer to 
-commits, in a pattern which I've also seen in git.git occasionally:
+I would have to go insane before I start a whole-tree operation like
+"git merge" from deep in my tree, but if I happened to do that, e.g.
 
- https://cmake.org/gitweb?p=cmake.git;a=commitdiff;h=23f3798c
+	cd perl/blib/lib/Git/SVN/Memoize
+        git merge other-branch
 
-I think the only reason for using the output of cmake describe --contains is 
-that it shows the reader the 'era' of the commit (and release it appears in) 
-without having to look it up. I'm not really aware of another good reason to 
-use it, but I think that's enough to make sense.
-
-However I'm not sure I understand why anyone would refer to 4b9ab0ee0130~1^2 
-instead of 49e863b0 (or perhaps v2.6.5~12, depending on whether the tag is 
-there).
-
->> What does 'HEAD^' mean? If it is 'the commit before this one', then why
->> not link it?
-> 
-> As said I was thinking about the git development
-
-> I do not think we would want to link HEAD to anything in that example.
-> (I'd have no idea what it would link to here, so just not link it?)
-
-Right, so if a commit message contains something like 
-
- Make git rebase -i HEAD^^^^ ten times better
-
-then HEAD^^^^ shouldn't become a link. Makes sense to me.
-
-Thanks,
-
-Steve.
+I'd rather see that the conflicted path, e.g. builtin/fetch.c,
+reported by showing it like the above output, not happening in
+../../../../../../builtin/fetch.c which I have to count the
+up-dots to know which file it is talking about.
