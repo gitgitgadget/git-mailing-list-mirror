@@ -1,95 +1,82 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v14 6/6] commit: add a commit.verbose config variable
-Date: Wed, 13 Apr 2016 13:44:43 -0400
-Message-ID: <CAPig+cQjOq_cKCa7_9CVG0tzd7x1aW9Wg4tZ+UvQUAvkPRWWHA@mail.gmail.com>
-References: <010201540cb60832-9402a692-3caa-47a1-9e8e-ae5a1bc7eb2f-000000@eu-west-1.amazonses.com>
-	<010201540cb60966-e9711378-3b22-4fbb-a2c7-f6876a6fb3c6-000000@eu-west-1.amazonses.com>
-	<CAPig+cTcCyGu5Y8aHbE3i6fXh3T_mD0ZiuxPFh=DVHOE38pE5w@mail.gmail.com>
-	<CAFZEwPN+N+21CN+P3oegaxEve59BKHabdfyM_c7QdjV+bonpQA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: 0 bot for Git
+Date: Wed, 13 Apr 2016 10:47:17 -0700
+Message-ID: <xmqqzisxjt96.fsf@gitster.mtv.corp.google.com>
+References: <CAGZ79kYWGFN1W0_y72-V6M3n4WLgtLPzs22bWgs1ObCCDt5BfQ@mail.gmail.com>
+	<CAGZ79kZOx8ehAB-=Frjgde2CDo_vwoVzQNizJinf4LLXek5PSQ@mail.gmail.com>
+	<vpq60vnl28b.fsf@anie.imag.fr>
+	<CAGZ79kaLQWVdehMu4nas6UBpCxnAB_-p=xPGH=aueMZXkGK_2Q@mail.gmail.com>
+	<vpqoa9ea7vx.fsf@anie.imag.fr>
+	<xmqqmvoypn7g.fsf@gitster.mtv.corp.google.com>
+	<88CF8CB5-4105-4D0C-8064-D66092169111@gmail.com>
+	<xmqqa8kxlbix.fsf@gitster.mtv.corp.google.com>
+	<BF9D5A7E-CB73-4F82-8D5F-42E120D07A3B@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 13 19:44:53 2016
+Content-Type: text/plain
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Stefan Beller <sbeller@google.com>, lkp@intel.com,
+	Greg KH <gregkh@linuxfoundation.org>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 13 19:47:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqOqR-0007eS-Ri
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 19:44:52 +0200
+	id 1aqOsu-0000Ma-GL
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 19:47:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754511AbcDMRop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2016 13:44:45 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:35724 "EHLO
-	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754477AbcDMRoo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2016 13:44:44 -0400
-Received: by mail-io0-f193.google.com with SMTP id u185so7761552iod.2
-        for <git@vger.kernel.org>; Wed, 13 Apr 2016 10:44:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=hahjBFGKp3dRTzfhvOliMVwdaQZXXRNJxEcrDlIBGJ8=;
-        b=s/Wnfv/ELz4UnnibgvPtx1sO+7KALt+4Ujnrqiwx3YCVhpmAB8yZ/xaaB28E4usJeU
-         P+RE6LePVpoY+32a1atsipHN2nnM9WW62Sb3NzGf5q8VfjxUmHePJ9pgOfo7s6DjWlaW
-         o2OrSEwhAL76a2aovZXsybdM6u9OEQZL521tU9tMN7tG9pRksNhKDR07x+2VC+sFbr+8
-         e0cePDfejcxaIWj8jHYvd/r45UJnl6LSfsEOSzc86YohDG4HFA1aAoZLvMOJMLZHsCrw
-         cOqh+UAndS+Bir2fDmNSQKbmsHOFUwCPTiLJO9wRrm5GyfO+xZAPxn05hPocl16z3n0N
-         Qb3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=hahjBFGKp3dRTzfhvOliMVwdaQZXXRNJxEcrDlIBGJ8=;
-        b=ORWM4q23K9NB4sigsSgKC7y4kn5/qj5UVzIWa54silvFs+plmziZGEeftw4b6/yya/
-         sauejtS08h/KOisQouuAet+fhoB2rGIZO0RmTnCDII+xwiNcCJwdKgG5YZN9Q+AxQxMH
-         1FP00yBM7c4TMLwsijChmW+Fl7x+s3/scjbmDT4hlsifZ0ineGEMFZzH1qGzGKWJXesN
-         tzxvsYMnyiSU3NPmownpjwFiDl0HssPwbLQD/fm6BPH4UQp0LqoCMn6MlVhQ9ZiDp033
-         UU8P2IJpVwkZrnAzNoE38S1hDU7VvVguNmrKN8GtvzebUi48UgfD03x+oaVte2yoEH/T
-         J+zA==
-X-Gm-Message-State: AOPr4FVy9Q2ELecmWHfjMZv1qr52TBH5F05JNFd0DP0YIeQE+nTnpHzcmaE8ntNA0gdmlrr+rC3MenaMte+vqw==
-X-Received: by 10.107.8.141 with SMTP id h13mr12846361ioi.34.1460569483859;
- Wed, 13 Apr 2016 10:44:43 -0700 (PDT)
-Received: by 10.79.139.71 with HTTP; Wed, 13 Apr 2016 10:44:43 -0700 (PDT)
-In-Reply-To: <CAFZEwPN+N+21CN+P3oegaxEve59BKHabdfyM_c7QdjV+bonpQA@mail.gmail.com>
-X-Google-Sender-Auth: tRt9gbahcnagDHO8YzTZqxeZLFY
+	id S1754500AbcDMRrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2016 13:47:21 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60964 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754437AbcDMRrU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2016 13:47:20 -0400
+X-Greylist: delayed 460 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Apr 2016 13:47:20 EDT
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D684010948;
+	Wed, 13 Apr 2016 13:47:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/qpQz4Zvyyk8Fhw1TnC/RrB9pgE=; b=rusSNV
+	ktbEfB/YQHvvnJM5RPYmFZwVrFZGV0iVuS1tOpMX2q7mDQ/Y1Im7HQwSrP++NkiA
+	N7UP85ha8sflQ+czqysTTZ6VDENTGth0cfvfsUKhbfQhwLSTJkIKzuO3KjenDv6N
+	zJ5nQ9U9R26L+M1B0+cAIi4I51S4MqrAgQP5I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LjNBAELoBLYhUEFBltBAB1dgn4yq2WEO
+	Ts3Zim3LBFK201/XZlg+qj+La8ao3DqE1wF1+0Dm5bUQ5CyvA3Pg7jMGHS/tPDCu
+	2ehSjTxpABYhqAhfufcfy0cVlIxWzWf4BCLDdZ0MTn2AFHPaxJFFvfK/xIEy2wov
+	7Fez0nJ1jLA=
+Received: from pb-smtp2. (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CEDA010947;
+	Wed, 13 Apr 2016 13:47:18 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2BE8310946;
+	Wed, 13 Apr 2016 13:47:18 -0400 (EDT)
+In-Reply-To: <BF9D5A7E-CB73-4F82-8D5F-42E120D07A3B@gmail.com> (Lars
+	Schneider's message of "Wed, 13 Apr 2016 19:09:41 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C4151038-019F-11E6-996E-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291469>
 
-On Wed, Apr 13, 2016 at 5:15 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> On Wed, Apr 13, 2016 at 11:44 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Tue, Apr 12, 2016 at 7:02 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->>> +test_expect_success 'status does not verbose without --verbose' '
->>> +       git status >actual &&
->>> +       ! grep "^diff --git" actual
->>> +'
->>
->> But what is this test checking?
->
-> status is also a consumer of the verbose whose initial value is set to
-> -1. This makes it include verbose in status output. This bug was fixed
-> by explicitly initializing verbose to 0 if -1. SZEDER pointed out a
-> bug[1] which broke some tests in and then when I fixed it, you
-> requested me to include tests even in this patch[2] which I found
-> convincing enough.
->
-> [1]: http://article.gmane.org/gmane.comp.version-control.git/289730
-> [2]: http://article.gmane.org/gmane.comp.version-control.git/289993
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-Okay, makes sense, but it's not at all obvious from the context of
-this patch or its commit message. It probably would have been clearer
-had the two git-status tests been added in a separate preparatory test
-with a commit message explaining that the tests are to ensure that a
-subsequent patch (adding commit.verbose) won't break the existing
-behavior of git-status. Having a separate commit explaining that would
-also help future readers of the test script who wonder what this test
-is doing (since it's not obvious and it's not explained by the current
-commit message) when they use git-blame to try to figure out its
-purpose. If you do re-roll, you might consider breaking them out to a
-new patch or, at the very least, document their purpose in the commit
-message of this patch.
+> I am not sure what you mean by "fail to hit 'pu'". Maybe we talk at
+> cross purposes. Here is what I think you do, please correct me:
+>
+> 1.) You pick the topics from the mailing list and create feature 
+>     branches for each one of them. E.g. one of my recent topics 
+>     is "ls/config-origin".
+
+I do not do this step blindly.  The patch is studied in MUA, perhaps
+applied to a new topic to view it in wider context, and tested in
+isolation at this step.  In any of these steps, I may decide it is
+way too premature for 'pu' and discard it.
