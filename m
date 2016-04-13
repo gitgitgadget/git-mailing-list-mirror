@@ -1,119 +1,119 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: 0 bot for Git
-Date: Wed, 13 Apr 2016 19:09:41 +0200
-Message-ID: <BF9D5A7E-CB73-4F82-8D5F-42E120D07A3B@gmail.com>
-References: <CAGZ79kYWGFN1W0_y72-V6M3n4WLgtLPzs22bWgs1ObCCDt5BfQ@mail.gmail.com> <CAGZ79kZOx8ehAB-=Frjgde2CDo_vwoVzQNizJinf4LLXek5PSQ@mail.gmail.com> <vpq60vnl28b.fsf@anie.imag.fr> <CAGZ79kaLQWVdehMu4nas6UBpCxnAB_-p=xPGH=aueMZXkGK_2Q@mail.gmail.com> <vpqoa9ea7vx.fsf@anie.imag.fr> <xmqqmvoypn7g.fsf@gitster.mtv.corp.google.com> <88CF8CB5-4105-4D0C-8064-D66092169111@gmail.com> <xmqqa8kxlbix.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Content-Type: text/plain; charset=us-ascii
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v4 03/16] index-helper: new daemon for caching index and
+ related stuff
+Date: Wed, 13 Apr 2016 13:10:35 -0400
+Organization: Twitter
+Message-ID: <1460567435.5540.74.camel@twopensource.com>
+References: <1460507589-25525-1-git-send-email-dturner@twopensource.com>
+	 <1460507589-25525-4-git-send-email-dturner@twopensource.com>
+	 <570E7B1B.6040207@ramsayjones.plus.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Stefan Beller <sbeller@google.com>, lkp@intel.com,
-	Greg KH <gregkh@linuxfoundation.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 13 19:09:48 2016
+Cc: =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
+	<pclouds@gmail.com>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
+	pclouds@gmail.co,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 13 19:10:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqOIV-0004L8-QV
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 19:09:48 +0200
+	id 1aqOJP-0004oq-Cq
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 19:10:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752328AbcDMRJo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2016 13:09:44 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:34976 "EHLO
-	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751904AbcDMRJn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2016 13:09:43 -0400
-Received: by mail-wm0-f46.google.com with SMTP id a140so112609821wma.0
-        for <git@vger.kernel.org>; Wed, 13 Apr 2016 10:09:42 -0700 (PDT)
+	id S1752351AbcDMRKj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2016 13:10:39 -0400
+Received: from mail-qg0-f43.google.com ([209.85.192.43]:34740 "EHLO
+	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752341AbcDMRKj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2016 13:10:39 -0400
+Received: by mail-qg0-f43.google.com with SMTP id c6so48336521qga.1
+        for <git@vger.kernel.org>; Wed, 13 Apr 2016 10:10:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Ot1bFsvc3wD/PaiYl2UFzplk64mAgmsx6S+Shbi5je8=;
-        b=iQn18vyVxJ+4bZJwDyPPcpwdY39JPSlxhWcah/0TYjFNqzEewi3dAo65OON4RL9SPV
-         5RBCDs+9aM9yi4H9b0bnMlia0q797Kl9PWaBEypzzv1Y18tALlBCsAjWD4BUToxL7L0f
-         t5Bov5CMmDFbX2ZVIOcYfcQYllCYC7JhNIRRywfIAKh3pd+mOEyhQ6g8YdGBOxRoP+yL
-         3l4B1w7/cGHxoEOMonyoAgKe/Y6cZBohF4WTk9aktsXAGSMmAHCjjAE2UqsevIXis89G
-         2+l7xGx2nM0tFee479ekiNQRtaz8gjXia05BWXkmoMJ1Q8KvHeXs/iEf9TT949MvdsJH
-         JpZA==
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:mime-version:content-transfer-encoding;
+        bh=mRrSy0J7n+hhrstm8FW4yTPXcKGkxodypF+J9ygVXZI=;
+        b=J5ygmNzG6MgUmzj/3iR6pVhmoLBJmtCESinwzE+QGZ88BrEFOdBNEBswiAZ0w/7m4g
+         rdkBFc0HZnGmnQH1H8a2QDt7WyT+diVe8Ye5XKq49lpRoERiRNfE2uOPtjSx/+W/+3Wy
+         5Z8G1jjdkRS1+RnsnD2Cn1JaO0n3uDMlHQb1FGzn7KvPgAekCBsIyVeic77gBDz15ceG
+         vimyrcwRwojACy1R1C00skP048SW1Hn4mWg9VrMxLmoxuT3V7UQcbS3lD09O6GSkNnNc
+         n7C50N5RLDlwkfShnV78RLBCh2IWgv3Ouczjh59OtPHTbmaev2ZpiSqdvkrmlDlvKZCL
+         qR2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Ot1bFsvc3wD/PaiYl2UFzplk64mAgmsx6S+Shbi5je8=;
-        b=fTggI2SdBSPj476yWKL1UcX4et++anUOT8I88zULa1TLMxnsqnFNGazN3UpbYb9hCh
-         4NMOS8k3Ck+SmRofXd5XdltK88m4w6pTl5OTY78tmnU925uYPu6THc4mOneirrOBMoMO
-         CNmje3HsFsNnEWHIBrxiKB1RenAmDj7TK/vAqQm5BxC67d2Kle8jMDkHbiaItGL2ExrE
-         uF+KNT7n6YY/UGd0229uwPSyncni8uGO6e0IDGs7XpLeW7wOrO84Bj0RR6kaj+k3b3PB
-         9SR6471bQ4qV6cm1RTVOA7ME5ZdZV+TebL56mfOtA7HlrCr6W/uAJK5nSU/b4vQMkaRc
-         c7aA==
-X-Gm-Message-State: AOPr4FXbCigSIuxReL0uTE+i+3PPIoEc87+AOky32b2z3EQk7Y1VrbS0xIKGX5PWmCM8Wg==
-X-Received: by 10.194.58.138 with SMTP id r10mr10865179wjq.153.1460567382014;
-        Wed, 13 Apr 2016 10:09:42 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id k139sm2179818wmg.24.2016.04.13.10.09.40
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 13 Apr 2016 10:09:41 -0700 (PDT)
-In-Reply-To: <xmqqa8kxlbix.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:mime-version:content-transfer-encoding;
+        bh=mRrSy0J7n+hhrstm8FW4yTPXcKGkxodypF+J9ygVXZI=;
+        b=nMn1IX0u9sIQSROWAgYtRQWlgZ2dNV8MM8yKUEZGziGv2F8AJqTpOBznDezFBk3uio
+         PYlIa4NBECbGagHDKWuFVMnHEO4hiq47jOjO58K0wUu7CIUBvg5E/0BRUGIpFKI4upaR
+         vykQJnll7HP5Z/bCDEOW3rdyhC95dWG1m0kZQEMm82kAbOLULQaapiycpS6WiFyBvdso
+         XG/W104TQ/2ovxwapOhyBBuL2PVtNX1FDS15VjbFN31GABqehWJzhPqj8NE9S7fSR4VA
+         FtC4KQ/3c/wgkx1M/nzyRJ4ICxtqq3Nh01NB8ooZb97tyfxlvfs/lIzRh+EhIHCDHIDV
+         ApoQ==
+X-Gm-Message-State: AOPr4FVyJsbnIGH0fb7UGMcQOzy6VlK21yomGF9PW/bs++DjsQgzNC/yps4A2LpVvk857g==
+X-Received: by 10.140.92.15 with SMTP id a15mr12327917qge.93.1460567437749;
+        Wed, 13 Apr 2016 10:10:37 -0700 (PDT)
+Received: from ubuntu (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
+        by smtp.gmail.com with ESMTPSA id a6sm4922955qhd.33.2016.04.13.10.10.36
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 13 Apr 2016 10:10:36 -0700 (PDT)
+In-Reply-To: <570E7B1B.6040207@ramsayjones.plus.com>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291462>
 
-
-> On 13 Apr 2016, at 18:27, Junio C Hamano <gitster@pobox.com> wrote:
+On Wed, 2016-04-13 at 18:00 +0100, Ramsay Jones wrote:
 > 
-> Lars Schneider <larsxschneider@gmail.com> writes:
+> On 13/04/16 01:32, David Turner wrote:
 > 
->> @Junio:
->> If you setup Travis CI for your https://github.com/gitster/git fork
->> then Travis CI would build all your topic branches and you (and 
->> everyone who is interested) could check 
->> https://travis-ci.org/gitster/git/branches to see which branches 
->> will break pu if you integrate them.
+> [snip]
 > 
-> I would not say such an arrangement is worthless, but it targets a
-> wrong point in the patch flow.
+> > diff --git a/git-compat-util.h b/git-compat-util.h
+> > index c07e0c1..8b878fe 100644
+> > --- a/git-compat-util.h
+> > +++ b/git-compat-util.h
+> > @@ -513,6 +513,7 @@ static inline int ends_with(const char *str,
+> > const char *suffix)
+> >  #define PROT_READ 1
+> >  #define PROT_WRITE 2
+> >  #define MAP_PRIVATE 1
+> > +#define MAP_SHARED 2
+> >  #endif
+> >  
+> >  #define mmap git_mmap
+> > @@ -1045,4 +1046,21 @@ struct tm *git_gmtime_r(const time_t *,
+> > struct tm *);
+> >  #define getc_unlocked(fh) getc(fh)
+> >  #endif
+> >  
+> > +#ifdef __linux__
+> > +#define UNIX_PATH_MAX 108
+> > +#elif defined(__APPLE__) || defined(BSD)
+> > +#define UNIX_PATH_MAX 104
+> > +#else
+> > +/*
+> > + * Quoth POSIX: The size of sun_path has intentionally been left
+> > + * undefined. This is because different implementations use
+> > different
+> > + * sizes. For example, 4.3 BSD uses a size of 108, and 4.4 BSD
+> > uses a
+> > + * size of 104. Since most implementations originate from BSD
+> > + * versions, the size is typically in the range 92 to 108.
+> > + *
+> > + * Thanks, POSIX!  Super-helpful!  Hope we don't overflow any
+> > buffers!
+> > + */
+> > +#define UNIX_PATH_MAX 92
+> > +#endif
+> > +
 > 
-> The patches that result in the most wastage of my time (i.e. a
-> shared bottleneck resource the community should strive to optimize
-> for) are the ones that fail to hit 'pu'.  Ones that do not even
-> build in isolation, ones that may build but fail even the new tests
-> they bring in, ones that break existing tests, and ones that are OK
-> in isolation but do not play well with topics already in flight.
+> It seems you forgot to delete this hunk. ;-)
 
-I am not sure what you mean by "fail to hit 'pu'". Maybe we talk at
-cross purposes. Here is what I think you do, please correct me:
-
-1.) You pick the topics from the mailing list and create feature 
-    branches for each one of them. E.g. one of my recent topics 
-    is "ls/config-origin".
-
-2.) At some point you create a new pu branch based on the latest
-    next branch. You merge all the new topics into the new pu.
-
-If you push the topics to github.com/gitster after step 1 then
-Travis CI could tell you if the individual topic builds clean 
-and passes all tests. Then you could merge only clean topics in 
-step 2 which would result in a pu that is much more likely to 
-build clean.
-
-Could that process avoid wasting your time with bad patches?
-
-> Automated testing of what is already on 'pu' does not help reduce
-> the above cost, as the culling must be done by me _without_ help
-> from automated test you propose to run on topics in 'pu'.  Ever
-> heard of chicken and egg?
-> 
-> Your "You can setup your own CI" update to SubmittingPatches may
-> encourage people to test before sending.  The "Travis CI sends
-> failure notice as a response to a crappy patch" discussed by
-> Matthieu in the other subthread will be of great help.
-> 
-> Thanks.
-> 
+Oops.  Thanks.
