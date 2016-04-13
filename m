@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 09/26] upload-pack: move rev-list code out of check_non_tip()
-Date: Wed, 13 Apr 2016 19:54:53 +0700
-Message-ID: <1460552110-5554-10-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 12/26] fetch-pack.c: mark strings for translating
+Date: Wed, 13 Apr 2016 19:54:56 +0700
+Message-ID: <1460552110-5554-13-git-send-email-pclouds@gmail.com>
 References: <1460552110-5554-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,169 +10,348 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 13 14:56:18 2016
+X-From: git-owner@vger.kernel.org Wed Apr 13 14:56:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqKL8-0004Fa-9J
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 14:56:14 +0200
+	id 1aqKLH-0004Jx-V1
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 14:56:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030724AbcDMM4A convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Apr 2016 08:56:00 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:33579 "EHLO
-	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030495AbcDMMz6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2016 08:55:58 -0400
-Received: by mail-pf0-f196.google.com with SMTP id e190so4079751pfe.0
-        for <git@vger.kernel.org>; Wed, 13 Apr 2016 05:55:58 -0700 (PDT)
+	id S1030747AbcDMM4T convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Apr 2016 08:56:19 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:35390 "EHLO
+	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933196AbcDMM4P (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2016 08:56:15 -0400
+Received: by mail-pf0-f194.google.com with SMTP id r187so4087012pfr.2
+        for <git@vger.kernel.org>; Wed, 13 Apr 2016 05:56:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Z7N9xqy3cA5udHzyZR0pVR5zl8EqrMvEFWTtZKn/45Y=;
-        b=CG6mU6UaG+SLA18bZhJAfzaV/+NOZPAuXF8RJVu/ebMD0MGPWyudm3KaAIPijltJIh
-         +L3rY5Q9Zb3olTgVg/uSVQlwSSfYpCFkr15dTQ2S8g4+txhrUYGZHxm3TwhEWQNQ5A8c
-         5MXcewoQE/w0H/v/cYDYeQlohBSghQ4xTIQHub9KUlmNLCW7V5vKozFehoALlLvBW0vk
-         aDRiQCa4lC8PvP3MMWg9DrrAd2Yeg5yIp3BflSKHG7y9OzFrBiOoVqP0oMCji7pGNb8G
-         6pSgfY8Fk+X/x7zCClr6RNV71bkLteB1e3v2iAWXmL4sfmV0EP4/hT1IAsuOPtHwm+lz
-         CDlQ==
+        bh=UAVYEAJ2IwlvGeLQJDE+CmiyGCEiSqE5fJZOSwDwHoM=;
+        b=DASa+QVEA8CVDGEoqri/DcAT0AZGWP++FkGq2wy4eigPDm0czdmJvFigdF5QtRZhU2
+         tqpW8xYNDogeBgWA4zxoSfguiZhuy37qNuP7lj5rKp0aEY6VgRrM6KvksCyfej9pcktn
+         6IfWAhKU34cwh09AEbO3BVvCKosNNgsibT6OR29OJMmzTnL9hLmNsDY403prGpRWloG8
+         8nOiAaEZ6Lq/5hQBYaPDiRTWMATLDnuZAM81qKcGvxURH5qkDQZCoFuBjm1ANy73GLKU
+         E+1Nn4Ug1RfVLecOCdyDUqQe5/MtC9EEsAE5LNLvUoV7x2pUYRjPsWEjRueveggFs6aP
+         9rcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Z7N9xqy3cA5udHzyZR0pVR5zl8EqrMvEFWTtZKn/45Y=;
-        b=DaHXZ4uBMWj4kvUjVUu2wlsAb9uR5whM3GCugzLkqfNicZ6QC8ytGIrhSLMTkt/UMn
-         0T4y2to1lGlrgldFeMy2A9KSld1XdW61rQFWlSl93DsGzKojPXDFCBxSXfDpF3LUP/c8
-         W7JDAmgwiPsW7/cytqFdOFN8vLxpGUr2pVChD/lOuU0ty/rtVw/IzgmU1YVsa5qul1sH
-         9YK1FT0cS/1PYaHMNYVlDl7xijDwm1u+/wH2SIlFgGz2TjExURfgMncQxA2EG56vV3iA
-         XwIjwAR6N0AkuiWK3tz/NjC46OwNoEdTxkse3p0srDRflWuZesM4ItOYpKdNmlFLHHAj
-         jqQg==
-X-Gm-Message-State: AOPr4FW60agn1OyjcGEAj1TsPmPxQR1xEL74VBJ6kQEe/f4VSf3NYQmfuDphPQTbdm0ILw==
-X-Received: by 10.98.23.146 with SMTP id 140mr2856446pfx.96.1460552157901;
-        Wed, 13 Apr 2016 05:55:57 -0700 (PDT)
+        bh=UAVYEAJ2IwlvGeLQJDE+CmiyGCEiSqE5fJZOSwDwHoM=;
+        b=K0gUY17w7PdYacI3y91tZABexC+6UUTl/Fcaz7HuBdaNZwudYH4t1+Kd+XhR9CZ1zJ
+         vBy4Cxx3o2Ys9q8FDhrmndTi5o35zRjSjbDI10e/jqIINBPkwXF0DCtCrIOHUP5NBwVV
+         Ozp/kAm+vNwhxCQjrybm92Lz7eITPo0hjqxhB1w5bDm2hGffbtGCiwrUdhWDzJmj67WB
+         B2mnacGAXpq4pc5F3byMFymxLdsTWK5AcPNamKq2rIBoh+Mxd5gApUJ0Vxm5lWSxtQ22
+         tUvg5KDMyJK/9XGRKX/POoFbJ21yYAiopluG+7PbIoGnToc0HEQ6Aijhfxco5mmiXrP3
+         MNmg==
+X-Gm-Message-State: AOPr4FUWDCOW/BpjC5QLxgrV76nFGOAaWpkpCKt4yEBXecAKHUfUzfOROq5RWlwzaTlS3Q==
+X-Received: by 10.98.15.142 with SMTP id 14mr12784983pfp.6.1460552174438;
+        Wed, 13 Apr 2016 05:56:14 -0700 (PDT)
 Received: from lanh ([115.76.233.41])
-        by smtp.gmail.com with ESMTPSA id w189sm733831pfw.46.2016.04.13.05.55.54
+        by smtp.gmail.com with ESMTPSA id x64sm51043236pfa.72.2016.04.13.05.56.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 13 Apr 2016 05:55:56 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 13 Apr 2016 19:56:04 +0700
+        Wed, 13 Apr 2016 05:56:13 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Wed, 13 Apr 2016 19:56:20 +0700
 X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
 In-Reply-To: <1460552110-5554-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291406>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- upload-pack.c | 44 +++++++++++++++++++++++++-------------------
- 1 file changed, 25 insertions(+), 19 deletions(-)
+ fetch-pack.c | 75 ++++++++++++++++++++++++++++++----------------------=
+--------
+ 1 file changed, 37 insertions(+), 38 deletions(-)
 
-diff --git a/upload-pack.c b/upload-pack.c
-index 9f14933..c8dafe8 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -451,7 +451,7 @@ static int is_our_ref(struct object *o)
- 	return o->flags & ((allow_hidden_ref ? HIDDEN_REF : 0) | OUR_REF);
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 4020744..08caf1d 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -208,7 +208,7 @@ static void consume_shallow_list(struct fetch_pack_=
+args *args, int fd)
+ 				continue;
+ 			if (starts_with(line, "unshallow "))
+ 				continue;
+-			die("git fetch-pack: expected shallow list");
++			die(_("git fetch-pack: expected shallow list"));
+ 		}
+ 	}
+ }
+@@ -220,7 +220,7 @@ static enum ack_type get_ack(int fd, unsigned char =
+*result_sha1)
+ 	const char *arg;
+=20
+ 	if (!len)
+-		die("git fetch-pack: expected ACK/NAK, got EOF");
++		die(_("git fetch-pack: expected ACK/NAK, got EOF"));
+ 	if (!strcmp(line, "NAK"))
+ 		return NAK;
+ 	if (skip_prefix(line, "ACK ", &arg)) {
+@@ -238,7 +238,7 @@ static enum ack_type get_ack(int fd, unsigned char =
+*result_sha1)
+ 			return ACK;
+ 		}
+ 	}
+-	die("git fetch_pack: expected ACK/NAK, got '%s'", line);
++	die(_("git fetch_pack: expected ACK/NAK, got '%s'"), line);
  }
 =20
--static void check_non_tip(void)
-+static int check_unreachable(struct object_array *src)
+ static void send_request(struct fetch_pack_args *args,
+@@ -285,7 +285,7 @@ static int find_common(struct fetch_pack_args *args=
+,
+ 	size_t state_len =3D 0;
+=20
+ 	if (args->stateless_rpc && multi_ack =3D=3D 1)
+-		die("--stateless-rpc requires multi_ack_detailed");
++		die(_("--stateless-rpc requires multi_ack_detailed"));
+ 	if (marked)
+ 		for_each_ref(clear_marks, NULL);
+ 	marked =3D 1;
+@@ -357,23 +357,23 @@ static int find_common(struct fetch_pack_args *ar=
+gs,
+ 		while ((line =3D packet_read_line(fd[0], NULL))) {
+ 			if (skip_prefix(line, "shallow ", &arg)) {
+ 				if (get_sha1_hex(arg, sha1))
+-					die("invalid shallow line: %s", line);
++					die(_("invalid shallow line: %s"), line);
+ 				register_shallow(sha1);
+ 				continue;
+ 			}
+ 			if (skip_prefix(line, "unshallow ", &arg)) {
+ 				if (get_sha1_hex(arg, sha1))
+-					die("invalid unshallow line: %s", line);
++					die(_("invalid unshallow line: %s"), line);
+ 				if (!lookup_object(sha1))
+-					die("object not found: %s", line);
++					die(_("object not found: %s"), line);
+ 				/* make sure that it is parsed as shallow */
+ 				if (!parse_object(sha1))
+-					die("error in object: %s", line);
++					die(_("error in object: %s"), line);
+ 				if (unregister_shallow(sha1))
+-					die("no shallow found: %s", line);
++					die(_("no shallow found: %s"), line);
+ 				continue;
+ 			}
+-			die("expected shallow/unshallow, got %s", line);
++			die(_("expected shallow/unshallow, got %s"), line);
+ 		}
+ 	} else if (!args->stateless_rpc)
+ 		send_request(args, fd[1], &req_buf);
+@@ -412,8 +412,8 @@ static int find_common(struct fetch_pack_args *args=
+,
+ 			do {
+ 				ack =3D get_ack(fd[0], result_sha1);
+ 				if (ack)
+-					print_verbose(args, "got ack %d %s", ack,
+-						      sha1_to_hex(result_sha1));
++					print_verbose(args, _("got %s %d %s"), "ack",
++						      ack, sha1_to_hex(result_sha1));
+ 				switch (ack) {
+ 				case ACK:
+ 					flushes =3D 0;
+@@ -426,7 +426,7 @@ static int find_common(struct fetch_pack_args *args=
+,
+ 					struct commit *commit =3D
+ 						lookup_commit(result_sha1);
+ 					if (!commit)
+-						die("invalid commit %s", sha1_to_hex(result_sha1));
++						die(_("invalid commit %s"), sha1_to_hex(result_sha1));
+ 					if (args->stateless_rpc
+ 					 && ack =3D=3D ACK_common
+ 					 && !(commit->object.flags & COMMON)) {
+@@ -452,7 +452,7 @@ static int find_common(struct fetch_pack_args *args=
+,
+ 			} while (ack);
+ 			flushes--;
+ 			if (got_continue && MAX_IN_VAIN < in_vain) {
+-				print_verbose(args, "giving up");
++				print_verbose(args, _("giving up"));
+ 				break; /* give up */
+ 			}
+ 		}
+@@ -462,7 +462,7 @@ done:
+ 		packet_buf_write(&req_buf, "done\n");
+ 		send_request(args, fd[1], &req_buf);
+ 	}
+-	print_verbose(args, "done");
++	print_verbose(args, _("done"));
+ 	if (retval !=3D 0) {
+ 		multi_ack =3D 0;
+ 		flushes++;
+@@ -474,8 +474,8 @@ done:
+ 	while (flushes || multi_ack) {
+ 		int ack =3D get_ack(fd[0], result_sha1);
+ 		if (ack) {
+-			print_verbose(args, "got ack (%d) %s", ack,
+-				      sha1_to_hex(result_sha1));
++			print_verbose(args, _("got %s (%d) %s"), "ack",
++				      ack, sha1_to_hex(result_sha1));
+ 			if (ack =3D=3D ACK)
+ 				return 0;
+ 			multi_ack =3D 1;
+@@ -520,7 +520,7 @@ static void mark_recent_complete_commits(struct fet=
+ch_pack_args *args,
+ 					 unsigned long cutoff)
  {
- 	static const char *argv[] =3D {
- 		"rev-list", "--stdin", NULL,
-@@ -461,14 +461,6 @@ static void check_non_tip(void)
- 	char namebuf[42]; /* ^ + SHA-1 + LF */
- 	int i;
+ 	while (complete && cutoff <=3D complete->item->date) {
+-		print_verbose(args, "Marking %s as complete",
++		print_verbose(args, _("Marking %s as complete"),
+ 			      oid_to_hex(&complete->item->object.oid));
+ 		pop_most_recent_commit(&complete, COMPLETE);
+ 	}
+@@ -666,7 +666,7 @@ static int everything_local(struct fetch_pack_args =
+*args,
+ 				      ref->name);
+ 			continue;
+ 		}
+-		print_verbose(args, "already have %s (%s)", sha1_to_hex(remote),
++		print_verbose(args, _("already have %s (%s)"), sha1_to_hex(remote),
+ 			      ref->name);
+ 	}
+ 	return retval;
+@@ -702,8 +702,7 @@ static int get_pack(struct fetch_pack_args *args,
+ 		demux.data =3D xd;
+ 		demux.out =3D -1;
+ 		if (start_async(&demux))
+-			die("fetch-pack: unable to fork off sideband"
+-			    " demultiplexer");
++			die(_("fetch-pack: unable to fork off sideband demultiplexer"));
+ 	}
+ 	else
+ 		demux.out =3D xd[0];
+@@ -711,7 +710,7 @@ static int get_pack(struct fetch_pack_args *args,
+ 	if (!args->keep_pack && unpack_limit) {
 =20
--	/*
--	 * In the normal in-process case without
--	 * uploadpack.allowReachableSHA1InWant,
--	 * non-tip requests can never happen.
--	 */
--	if (!stateless_rpc && !(allow_unadvertised_object_request & ALLOW_REA=
-CHABLE_SHA1))
--		goto error;
--
- 	cmd.argv =3D argv;
+ 		if (read_pack_header(demux.out, &header))
+-			die("protocol error: bad pack header");
++			die(_("protocol error: bad pack header"));
+ 		pass_header =3D 1;
+ 		if (ntohl(header.hdr_entries) < unpack_limit)
+ 			do_keep =3D 0;
+@@ -767,7 +766,7 @@ static int get_pack(struct fetch_pack_args *args,
+ 	cmd.in =3D demux.out;
  	cmd.git_cmd =3D 1;
- 	cmd.no_stderr =3D 1;
-@@ -476,7 +468,7 @@ static void check_non_tip(void)
- 	cmd.out =3D -1;
-=20
  	if (start_command(&cmd))
--		goto error;
-+		return 0;
+-		die("fetch-pack: unable to fork off %s", cmd_name);
++		die(_("fetch-pack: unable to fork off %s"), cmd_name);
+ 	if (do_keep && pack_lockfile) {
+ 		*pack_lockfile =3D index_pack_lockfile(cmd.out);
+ 		close(cmd.out);
+@@ -783,9 +782,9 @@ static int get_pack(struct fetch_pack_args *args,
+ 			args->check_self_contained_and_connected &&
+ 			ret =3D=3D 0;
+ 	else
+-		die("%s failed", cmd_name);
++		die(_("%s failed"), cmd_name);
+ 	if (use_sideband && finish_async(&demux))
+-		die("error in sideband demultiplexer");
++		die(_("error in sideband demultiplexer"));
+ 	return 0;
+ }
 =20
- 	/*
- 	 * If rev-list --stdin encounters an unknown commit, it
-@@ -495,16 +487,16 @@ static void check_non_tip(void)
- 			continue;
- 		memcpy(namebuf + 1, oid_to_hex(&o->oid), GIT_SHA1_HEXSZ);
- 		if (write_in_full(cmd.in, namebuf, 42) < 0)
--			goto error;
-+			return 0;
+@@ -812,34 +811,34 @@ static struct ref *do_fetch_pack(struct fetch_pac=
+k_args *args,
+ 	qsort(sought, nr_sought, sizeof(*sought), cmp_ref_by_name);
+=20
+ 	if ((args->depth > 0 || is_repository_shallow()) && !server_supports(=
+"shallow"))
+-		die("Server does not support shallow clients");
++		die(_("Server does not support shallow clients"));
+ 	if (server_supports("multi_ack_detailed")) {
+-		print_verbose(args, "Server supports multi_ack_detailed");
++		print_verbose(args, _("Server supports multi_ack_detailed"));
+ 		multi_ack =3D 2;
+ 		if (server_supports("no-done")) {
+-			print_verbose(args, "Server supports no-done");
++			print_verbose(args, _("Server supports no-done"));
+ 			if (args->stateless_rpc)
+ 				no_done =3D 1;
+ 		}
  	}
- 	namebuf[40] =3D '\n';
--	for (i =3D 0; i < want_obj.nr; i++) {
--		o =3D want_obj.objects[i].item;
-+	for (i =3D 0; i < src->nr; i++) {
-+		o =3D src->objects[i].item;
- 		if (is_our_ref(o))
- 			continue;
- 		memcpy(namebuf, oid_to_hex(&o->oid), GIT_SHA1_HEXSZ);
- 		if (write_in_full(cmd.in, namebuf, 41) < 0)
--			goto error;
-+			return 0;
+ 	else if (server_supports("multi_ack")) {
+-		print_verbose(args, "Server supports multi_ack");
++		print_verbose(args, _("Server supports multi_ack"));
+ 		multi_ack =3D 1;
  	}
- 	close(cmd.in);
+ 	if (server_supports("side-band-64k")) {
+-		print_verbose(args, "Server supports side-band-64k");
++		print_verbose(args, _("Server supports side-band-64k"));
+ 		use_sideband =3D 2;
+ 	}
+ 	else if (server_supports("side-band")) {
+-		print_verbose(args, "Server supports side-band");
++		print_verbose(args, _("Server supports side-band"));
+ 		use_sideband =3D 1;
+ 	}
+ 	if (server_supports("allow-tip-sha1-in-want")) {
+-		print_verbose(args, "Server supports allow-tip-sha1-in-want");
++		print_verbose(args, _("Server supports allow-tip-sha1-in-want"));
+ 		allow_unadvertised_object_request |=3D ALLOW_TIP_SHA1;
+ 	}
+ 	if (server_supports("allow-reachable-sha1-in-want")) {
+-		print_verbose(args, "Server supports allow-reachable-sha1-in-want");
++		print_verbose(args, _("Server supports allow-reachable-sha1-in-want"=
+));
+ 		allow_unadvertised_object_request |=3D ALLOW_REACHABLE_SHA1;
+ 	}
+ 	if (!server_supports("thin-pack"))
+@@ -849,14 +848,14 @@ static struct ref *do_fetch_pack(struct fetch_pac=
+k_args *args,
+ 	if (!server_supports("include-tag"))
+ 		args->include_tag =3D 0;
+ 	if (server_supports("ofs-delta"))
+-		print_verbose(args, "Server supports ofs-delta");
++		print_verbose(args, _("Server supports ofs-delta"));
+ 	else
+ 		prefer_ofs_delta =3D 0;
 =20
-@@ -516,7 +508,7 @@ static void check_non_tip(void)
- 	 */
- 	i =3D read_in_full(cmd.out, namebuf, 1);
- 	if (i)
--		goto error;
-+		return 0;
- 	close(cmd.out);
+ 	if ((agent_feature =3D server_feature_value("agent", &agent_len))) {
+ 		agent_supported =3D 1;
+ 		if (agent_len)
+-			print_verbose(args, "Server version is %.*s",
++			print_verbose(args, _("Server version is %.*s"),
+ 				      agent_len, agent_feature);
+ 	}
 =20
- 	/*
-@@ -525,15 +517,29 @@ static void check_non_tip(void)
- 	 * even when it showed no commit.
- 	 */
- 	if (finish_command(&cmd))
--		goto error;
-+		return 0;
+@@ -869,7 +868,7 @@ static struct ref *do_fetch_pack(struct fetch_pack_=
+args *args,
+ 			/* When cloning, it is not unusual to have
+ 			 * no common commit.
+ 			 */
+-			warning("no common commits");
++			warning(_("no common commits"));
 =20
- 	/* All the non-tip ones are ancestors of what we advertised */
--	return;
-+	return 1;
-+}
-+
-+static void check_non_tip(void)
-+{
-+	int i;
-+
-+	/*
-+	 * In the normal in-process case without
-+	 * uploadpack.allowReachableSHA1InWant,
-+	 * non-tip requests can never happen.
-+	 */
-+	if (!stateless_rpc && !(allow_unadvertised_object_request & ALLOW_REA=
-CHABLE_SHA1))
-+		;		/* error */
-+	else if (check_unreachable(&want_obj))
-+		return;
+ 	if (args->stateless_rpc)
+ 		packet_flush(fd[1]);
+@@ -881,7 +880,7 @@ static struct ref *do_fetch_pack(struct fetch_pack_=
+args *args,
+ 	else
+ 		alternate_shallow_file =3D NULL;
+ 	if (get_pack(args, fd, pack_lockfile))
+-		die("git fetch-pack: fetch failed.");
++		die(_("git fetch-pack: fetch failed."));
 =20
--error:
- 	/* Pick one of them (we know there at least is one) */
- 	for (i =3D 0; i < want_obj.nr; i++) {
--		o =3D want_obj.objects[i].item;
-+		struct object *o =3D want_obj.objects[i].item;
- 		if (!is_our_ref(o))
- 			die("git upload-pack: not our ref %s",
- 			    oid_to_hex(&o->oid));
+  all_done:
+ 	return ref;
+@@ -1043,7 +1042,7 @@ struct ref *fetch_pack(struct fetch_pack_args *ar=
+gs,
+=20
+ 	if (!ref) {
+ 		packet_flush(fd[1]);
+-		die("no matching remote head");
++		die(_("no matching remote head"));
+ 	}
+ 	prepare_shallow_info(&si, shallow);
+ 	ref_cpy =3D do_fetch_pack(args, fd, ref, sought, nr_sought,
 --=20
 2.8.0.rc0.210.gd302cd2
