@@ -1,148 +1,125 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v4 06/16] index-helper: add --detach
-Date: Tue, 12 Apr 2016 20:32:59 -0400
-Message-ID: <1460507589-25525-7-git-send-email-dturner@twopensource.com>
-References: <1460507589-25525-1-git-send-email-dturner@twopensource.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Migrating away from SHA-1?
+Date: Tue, 12 Apr 2016 18:03:02 -0700
+Message-ID: <xmqqlh4imibd.fsf@gitster.mtv.corp.google.com>
+References: <570D78CC.9030807@zytor.com>
+	<20160412234251.GB2210@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, David Turner <dturner@twopensource.com>
-To: git@vger.kernel.org, pclouds@gmail.co,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>
-X-From: git-owner@vger.kernel.org Wed Apr 13 02:34:15 2016
+Content-Type: text/plain
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 13 03:03:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aq8l3-0002zV-7a
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 02:34:13 +0200
+	id 1aq9DQ-0004sB-Gn
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 03:03:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758980AbcDMAeI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Apr 2016 20:34:08 -0400
-Received: from mail-qg0-f43.google.com ([209.85.192.43]:35807 "EHLO
-	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758912AbcDMAd2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2016 20:33:28 -0400
-Received: by mail-qg0-f43.google.com with SMTP id f105so31005070qge.2
-        for <git@vger.kernel.org>; Tue, 12 Apr 2016 17:33:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=viTHvNEjsGMjbxMCYu+0ptjPNgctNYTDbm2AB8l0VH4=;
-        b=W9v7hIzFek+A4ZdGayuZnfnGeKsin0NauSy5Rr90aA3pGQ6xbPjZUwOmNag/Pmy/3M
-         DkQBF1aaEfTFMI33LY7GtXnXymcuv1D4PyM7Ht6Yx+7enEPcvvti7yXrcHNjWtMlKxEb
-         ETinbQx6zXE49zvhquhPugaRk6ti+aYHbKZ2nhhpFm8k3T7Vs4mslyRbEcSf5bL8Cz0I
-         jPq9pXimDu5yUvI8sKMGOGVgfvQdfpQsGzd9qBVzuyUUJ6q4DrKlfWCPCydcO1uvvSaO
-         cUyslwd628vBfIUqPmyr4udKjWz7WYEL+jrSGGilP8L+BT8VDB/bWcVVEteuaVBG/mx5
-         se5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=viTHvNEjsGMjbxMCYu+0ptjPNgctNYTDbm2AB8l0VH4=;
-        b=FZqm1LxhT1beXm2XrkrhxjZTVHmImCMGKavkBQxYfCJE4fLntICIeO8fhEWWtOiujM
-         M4VyLn08Y/DExtgMNsFXW1hBlsXdfYP0LyygB+kbTW6zYlfDi0K5ULqOcYRenLCjTMSd
-         IAJG3y6IFCh1h3ylxj9FVzncsOy0/rYBs6DqlqrpoXl20xo58G93wloW8MMszOpDfcCY
-         A/eim4fHgEqMjfZx5LZ7kms8gaAupX+Sqt8/WJvM6U0M6y8retR7uk+fjzqa+WOokwxs
-         5Gsl0QAkq8SU+uXbgZ84VP6yr00zJ0QlRrKlTYoyj23VcLPC4TX6aGTbAHPjEZvtA/Kh
-         gU+w==
-X-Gm-Message-State: AOPr4FVa/bK832AQDrHzgfT+07o/PYzCVqU0cS4cvxYqbmPv8S8e1rupXlCc05XmOIG0ww==
-X-Received: by 10.140.43.137 with SMTP id e9mr7580368qga.56.1460507607455;
-        Tue, 12 Apr 2016 17:33:27 -0700 (PDT)
-Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id v65sm14677604qhc.6.2016.04.12.17.33.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 12 Apr 2016 17:33:26 -0700 (PDT)
-X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
-In-Reply-To: <1460507589-25525-1-git-send-email-dturner@twopensource.com>
+	id S1757851AbcDMBDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2016 21:03:07 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:58768 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756426AbcDMBDG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2016 21:03:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D0CC855E30;
+	Tue, 12 Apr 2016 21:03:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EXccqC1R26khwkLX5GcJ6bF0New=; b=ZiZuQg
+	PQs4VRKjmBuk6Y5/1IoscSsgcXFH4u0/tYdFevwP+g/aBvtmKmSrQVJDSzqQCaJH
+	w4utWZcvYBekwxYwAMTpNBDLjpSnm30WLAMneLi56T1G/FiwFVY4Ri5SGI9I18z8
+	pQqsgpz2QPXojEg8V3NBJEaih9vyDfdVAFWH0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dYRO436p7uq7bKLlkatjgkThWbhFhEyg
+	tAxdZUV4VBpE7105nGT8oWS2yxeBhND8jrsOPTirPnXZsH6xIe4ny1ihUq2MIi9O
+	te9tAdyKc+MoXzQ/y5Ud12k9idQ9OSLBC3xUcNZAFUqKpMxb+QO4LqCqSknhhDm+
+	Ldeo8D/1Qo8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C852055E2E;
+	Tue, 12 Apr 2016 21:03:03 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4C1FA55E2B;
+	Tue, 12 Apr 2016 21:03:03 -0400 (EDT)
+In-Reply-To: <20160412234251.GB2210@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 12 Apr 2016 19:42:52 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 7958D39A-0113-11E6-A021-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291354>
 
-=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+Jeff King <peff@peff.net> writes:
 
-We detach after creating and opening the socket, because otherwise
-we might return control to the shell before index-helper is ready to
-accept commands.  This might lead to flaky tests.
+> So a slightly nicer thing is to parameterize the algorithm for every
+> object name reference. So commits look like:
+>
+>   tree sha256:1234abcd...
+>   parent sha256:1234abcd...
+>
+> and so on. Of course trees don't have any space for this; they have a
+> fixed-length for the hash part of each record, which is basically:
+>
+>   <mode> <name> NUL <20-byte-sha1>
+>
+> So we'd probably need a "treev2" object type that gives room for an
+> algorithm byte (or we'd have to try to shove it into the mode, but since
+> old versions won't know the new algorithm anyway, I don't think it
+> solves that much...). Or you can just define for the whole tree object
+> (either implicit in its type, or in a header) that it always uses
+> algorithm X.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
-Signed-off-by: David Turner <dturner@twopensource.com>
----
- Documentation/git-index-helper.txt |  3 +++
- index-helper.c                     | 11 +++++++++--
- 2 files changed, 12 insertions(+), 2 deletions(-)
+This will hurt the performance a lot during the transition period as
+it no longer will be possible to rely on "most of the time a fine
+grained commit changes only a small part of the tree, and we can
+cheaply avoid descending into trees that haven't changed because we
+can tell that the corresponding tree objects in the pre- and post-
+trees have the same object name" optimization.  But we cannot avoid
+it.
 
-diff --git a/Documentation/git-index-helper.txt b/Documentation/git-ind=
-ex-helper.txt
-index 2382ba8..305ff35 100644
---- a/Documentation/git-index-helper.txt
-+++ b/Documentation/git-index-helper.txt
-@@ -31,6 +31,9 @@ OPTIONS
- 	for reading an index, but because it will happen in the
- 	background, it's not noticable. `--strict` is enabled by default.
-=20
-+--detach::
-+	Detach from the shell.
-+
- NOTES
- -----
-=20
-diff --git a/index-helper.c b/index-helper.c
-index 9a4278f..83bfef5 100644
---- a/index-helper.c
-+++ b/index-helper.c
-@@ -16,7 +16,7 @@ struct shm {
-=20
- static struct shm shm_index;
- static struct shm shm_base_index;
--static int to_verify =3D 1;
-+static int daemonized, to_verify =3D 1;
-=20
- static char *my_tmp_dir;
-=20
-@@ -103,6 +103,8 @@ static void cleanup_shm(void)
-=20
- static void cleanup(void)
- {
-+	if (daemonized)
-+		return;
- 	unlink(git_path("index-helper.path"));
- 	cleanup_shm();
- }
-@@ -354,7 +356,7 @@ static const char * const usage_text[] =3D {
- int main(int argc, char **argv)
- {
- 	const char *prefix;
--	int idle_in_seconds =3D 600;
-+	int idle_in_seconds =3D 600, detach =3D 0;
- 	int fd;
- 	struct strbuf socket_path =3D STRBUF_INIT;
- 	struct option options[] =3D {
-@@ -362,6 +364,7 @@ int main(int argc, char **argv)
- 			    N_("exit if not used after some seconds")),
- 		OPT_BOOL(0, "strict", &to_verify,
- 			 "verify shared memory after creating"),
-+		OPT_BOOL(0, "detach", &detach, "detach the process"),
- 		OPT_END()
- 	};
-=20
-@@ -396,6 +399,10 @@ int main(int argc, char **argv)
- 		die(_("failed to delete old index-helper.path"));
- 	if (symlink(get_my_tmp_dir(), git_path("index-helper.path")))
- 		die(_("failed to symlink socket path into index-helper.path"));
-+
-+	if (detach && daemonize(&daemonized))
-+		die_errno(_("unable to detach"));
-+
- 	loop(fd, idle_in_seconds);
-=20
- 	return 0;
---=20
-2.4.2.767.g62658d5-twtrsrc
+> Transitioning to that would be something like:
+>
+>   0. Overhaul all of the git code to handle arbitrary-sized object ids.
+>
+>   1. Decide on the new algorithm and implement it in git.
+>
+>   2. Recognize parameterized object ids in commits and tags (designing
+>      format, implementing the reading side).
+>
+>   3. Recognize parameterized object ids somehow in trees (designing
+>      format, implementing the reading side).
+>
+>   4. Teach the object database to index objects by the new algorithm (or
+>      possibly both algorithms).
+>
+>   5. Add a protocol extension so that both sides can decide which
+>      algorithm is being used when they talk about oids.
+>
+>   6. Add a config option to write references in objects using the new
+>      algorithm.
+>
+>   7. After a while, flip the config option on. Hopefully the readers
+>      from steps 1-5 have percolated to the masses by then, and it's not
+>      a horrible flag day.
+>
+> We're basically on step 0 right now. I'm sure I'm missing some
+> subtleties in there, too.
+
+One subtlety is that 7. "not a flag day" may not be a good thing.
+
+There has to be a section of a history that spans the transition,
+set of commits and trees that have pointers to both kinds of object
+names.  The narrower such a section of the history, the more
+pleasant to use the result of the transition would be.
+
+Different projects that can have their own flag days at their own
+pace is a good thing, so the above observation does not invalidate
+your transition plan, though.
