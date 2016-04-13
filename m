@@ -1,113 +1,86 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Why doesn't gitk highlight commit references from git-describe?
-Date: Wed, 13 Apr 2016 14:45:07 -0700
-Message-ID: <CAGZ79kY_C9wSS+z7XwPEWiM+8vhYuZzs_SPZ0mQR=LB+MPzTJg@mail.gmail.com>
-References: <nemal5$mb$1@ger.gmane.org>
-	<CAGZ79kZVC0FxUN45KgLh-2tEK2=j2-yyTajYOc=s-LECgx+yqQ@mail.gmail.com>
-	<xmqqk2k1jita.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-p4.py: Make submit working on bare repository
+Date: Wed, 13 Apr 2016 14:47:37 -0700
+Message-ID: <xmqqfuupji4m.fsf@gitster.mtv.corp.google.com>
+References: <CAPig+cQA4sJ2RneG8zRsUx+bDPAMYVtmhFjZx5SOGDqnsKNUaQ@mail.gmail.com>
+	<1455919074-5683-1-git-send-email-aidecoe@aidecoe.name>
+	<xmqq7fi0b9rt.fsf@gitster.mtv.corp.google.com>
+	<87fuwnd4u7.fsf@freja.aidecoe.name>
+	<xmqqbn7aa522.fsf@gitster.mtv.corp.google.com>
+	<877fhwd1g0.fsf@freja.aidecoe.name>
+	<xmqqegc33oal.fsf@gitster.mtv.corp.google.com>
+	<CAE5ih7_vBMsi+zRZRTCaO56VrOYZUR0NQ0CSSE+Do48xkJ_BwA@mail.gmail.com>
+	<871t83cfi7.fsf@freja.aidecoe.name>
+	<CAE5ih7-rBuipoAGEnK60iidi1nYA9xWZQV6jRMHTVQe6f=cQag@mail.gmail.com>
+	<87si0cpnpn.fsf@freja.aidecoe.name>
+	<CAE5ih7-q_PwF-T6nsu=FyyN9wO6o0Jcfkg=gKy5mhOXRGFZ+VA@mail.gmail.com>
+	<xmqqtwj6mmtu.fsf@gitster.mtv.corp.google.com>
+	<87d1pt5k53.fsf@freja.aidecoe.name>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stephen Kelly <steveire@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 13 23:45:16 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Luke Diamand <luke@diamand.org>, Git Users <git@vger.kernel.org>
+To: Amadeusz =?utf-8?B?xbtvxYJub3dza2k=?= <aidecoe@aidecoe.name>
+X-From: git-owner@vger.kernel.org Wed Apr 13 23:47:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqSb6-00056C-3v
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 23:45:16 +0200
+	id 1aqSdV-0006Mg-EX
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 23:47:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753449AbcDMVpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2016 17:45:10 -0400
-Received: from mail-io0-f170.google.com ([209.85.223.170]:33828 "EHLO
-	mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753414AbcDMVpI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2016 17:45:08 -0400
-Received: by mail-io0-f170.google.com with SMTP id 2so85670294ioy.1
-        for <git@vger.kernel.org>; Wed, 13 Apr 2016 14:45:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=UPm3iZkuth3ZcxgoQ42o1XSPW2B3DMHyP6VORnSic+s=;
-        b=oQW+GhBEEbBI1rQaKlLOlWVETkiYAaVI5vz+ZI6+lx0zAn/3HVhIXEppqz1pOQKJee
-         O4MdWisjDCn/j5KG2+/AzFlmg6mrDZ1qDTnGvBkeE8awb6pC8bEu5lsarHHBdmZHKAAK
-         pdXv0f9iAMixH7gna3sAj41PwZw/lkTNDNPLbDuwxXf03Jf/jN0Tc22eIOCTGEiNWmh7
-         6psPBK6/r27krVWp6V5G3JOjOI6PONkBeJUUD8BmeUZ68tiSF6jzXjvd1eGGUkMEuDFI
-         WN3CM3JiS5+bQOMMerfWrEzADflCWiW0QoaFHIzCottTu/HDcU/Cz4Vyi2cPyHiyKt9m
-         WSoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=UPm3iZkuth3ZcxgoQ42o1XSPW2B3DMHyP6VORnSic+s=;
-        b=G53/Ng7K/sTibWyIOrOgE61NfP3zHQc1yL2TGvpnlrBbrIn1eqyydLUeLbZqCXsHqo
-         O3jJdIQf1dHCMV7plE59uEdSkHe/N6VvckAyiORlLL20jNIshhgwYQmAyLuyv6yIbAXm
-         QWbutsz4K2Pvhw8625r0n8SpWF1vgBQxN8TbmRF/ydj6rCG8ZMKc2WkFqyz+mF9zcTNf
-         5e0mFymOHXm+68JI8Wq4jAjpeJ0Ta4qi+XTRAQoPxvf2h7GEpo+jEDQtLJwLFN3RK52p
-         nn4vHDOK0Bi4RKKdsMjQVp9FCjhAl9tRLFQBIBK2Us7YW5qT6mb+Q9bLn36qis4eSzrX
-         1DGQ==
-X-Gm-Message-State: AOPr4FVIshA5rX14VUqbIWLhFmUvs1roOJZpZ7Z7ENmTPTxtJrgs4qNDfTWI+QsL/ipnWioHbA+UtB8Qj36eU/K3
-X-Received: by 10.107.184.8 with SMTP id i8mr12555221iof.96.1460583907734;
- Wed, 13 Apr 2016 14:45:07 -0700 (PDT)
-Received: by 10.107.17.27 with HTTP; Wed, 13 Apr 2016 14:45:07 -0700 (PDT)
-In-Reply-To: <xmqqk2k1jita.fsf@gitster.mtv.corp.google.com>
+	id S1754258AbcDMVrl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Apr 2016 17:47:41 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56225 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754235AbcDMVrk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Apr 2016 17:47:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 48D031212F;
+	Wed, 13 Apr 2016 17:47:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=7Tx32BUFTvXk
+	6h6SDfLiME8uUb8=; b=YsO9s8Ld/JUIVUbEhLiWlDjE3YqVx2EsTwNbuY9GhGz2
+	v8R5+2bHRt80ZDaUYffUTVR5WcNftW7SPPQMJjz+4DI6wPwQjkw4Jy3lLF88mC0p
+	ivMcNXt01wJx9tXmSID+733yFkTWONn6FR33MeON5S+dtdOVI9IK07IXTqBZENI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=QWiXGa
+	XQ5LY43GhwkMiA0ynKvNVoLR9p0lSeBCgmtbcWwn7QfNNtTP4XFLQ5OG2DIHRulD
+	Ax/JBIogShu6RhZfR8pfb3yevWDzUSkuC6dS1//UkT3cg/2rQYQc/taST5t0GTcg
+	cVOaCq8MtfWatGqcDldsptGBb4AfOXZnPvxyo=
+Received: from pb-smtp2. (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 413C71212E;
+	Wed, 13 Apr 2016 17:47:39 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A973E1212D;
+	Wed, 13 Apr 2016 17:47:38 -0400 (EDT)
+In-Reply-To: <87d1pt5k53.fsf@freja.aidecoe.name> ("Amadeusz =?utf-8?B?xbtv?=
+ =?utf-8?B?xYJub3dza2kiJ3M=?=
+	message of "Wed, 13 Apr 2016 21:27:52 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 57579C32-01C1-11E6-ADAB-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291491>
 
-On Wed, Apr 13, 2016 at 2:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+Amadeusz =C5=BBo=C5=82nowski <aidecoe@aidecoe.name> writes:
+
+>> Has anything happened to this topic after this?  I am wondering if I
+>> should discard the topic az/p4-bare-no-rebase without prejudice.
 >
->> How would you know(/code) that v1.6.0-rc0~120^2 is a text worth linking?
->> "v1.6.0-rc0" is a custom string as that is how we name tags in this project.
->> It can follow any convention in other projects.
->>
->> Maybe a first approximation is if there is a `~` followed by numbers
->> or a ^ character, inspect the whole thing if it is a reference into the history?
->
-> You (as a gitk process running in a repository) know what tags are
-> in your repository, so you can find the above pattern and see if the
-> prefix matches any of the known tag.  That way, you do not have to
-> worry about having to special case HEAD etc.
+> Sorry, I haven't got time to take a loot at this, but I'll return to
+> that soon, OK? I'll prepare a patch with an option to skip rebase rat=
+her
+> than do it only for bare repos.
 
-Sorry for shooting from the hip here[1], that thought was
+No hurries.
 
-But it should not be just tags?
-
-We also want to have 4b9ab0ee0130~1^2 to work `right`, in the sense
-that not just the hexadecimals are highlighted and linking to 4b9ab0ee0130,
-but the whole expression should link to 49e863b02ae177.
-
-[1] My thinking was just like in https://xkcd.com/761/
-
-Stephen Kelly:
-> Would it be possible to implement linking for <tagname> optionally followed
-> by something like that? Just tags should be links too, right?
-
-right, just tags should work I'd expect.
-
-> What does 'HEAD^' mean? If it is 'the commit before this one', then why not
-> link it?
-
-As said I was thinking about the git development, so see 5f3c3a4e6f11deda
-for an example:
-
-    files_log_ref_write: new function
-
-    Because HEAD and stash are per-worktree, every refs backend needs to
-    go through the files backend to write these refs.
-
-    So create a new function, files_log_ref_write, and add it to
-    refs/refs-internal.h. Later, we will use this to handle reflog updates
-    for per-worktree symbolic refs (HEAD).
-
-I do not think we would want to link HEAD to anything in that example.
-(I'd have no idea what it would link to here, so just not link it?)
-
-Thanks,
-Stefan
+With or without an option, I think the documentation needs to
+clarify when it is safe to omit rebase and why.
