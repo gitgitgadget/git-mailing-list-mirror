@@ -1,64 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Default authentication over https?
-Date: Wed, 13 Apr 2016 18:36:13 -0400
-Message-ID: <20160413223613.GB10011@sigill.intra.peff.net>
-References: <CAPf1peAW11hZpN6_ztA62tcu6mgCfV3VwwjjtXT5yySUPD9Qpw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Merge conflicts are reported relative to root not cwd
+Date: Wed, 13 Apr 2016 15:40:11 -0700
+Message-ID: <xmqqvb3li14k.fsf@gitster.mtv.corp.google.com>
+References: <CAGZ79kbVfk=yAK3UB=H385_YfAtMHZe-gSE=EYVvvcS8jjy08A@mail.gmail.com>
+	<xmqq4mb5jhm7.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kZSyLZxMXSSv=uDpuA0zTUy6nU4vwEF5f7WLhoRp1hXig@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git <git@vger.kernel.org>
-To: Isaac Levy <isaac.r.levy@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 14 00:36:22 2016
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Apr 14 00:40:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqTOY-0004XF-48
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 00:36:22 +0200
+	id 1aqTSR-0006Qt-Rq
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 00:40:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754526AbcDMWgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2016 18:36:17 -0400
-Received: from cloud.peff.net ([50.56.180.127]:49132 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754500AbcDMWgR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2016 18:36:17 -0400
-Received: (qmail 8157 invoked by uid 102); 13 Apr 2016 22:36:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 13 Apr 2016 18:36:16 -0400
-Received: (qmail 23479 invoked by uid 107); 13 Apr 2016 22:36:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 13 Apr 2016 18:36:21 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Apr 2016 18:36:13 -0400
-Content-Disposition: inline
-In-Reply-To: <CAPf1peAW11hZpN6_ztA62tcu6mgCfV3VwwjjtXT5yySUPD9Qpw@mail.gmail.com>
+	id S1754627AbcDMWkR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2016 18:40:17 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59219 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753165AbcDMWkP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2016 18:40:15 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 79DD7129F2;
+	Wed, 13 Apr 2016 18:40:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=w7fj9lRJ//6/3O6wbPPdECB1Z0Q=; b=jfyumo
+	92lLON/rYlLXbfKuSE5J8juvQEPgnNaBap/imw7JMYh6IL3V7mgje1lzOW8SIMJP
+	ZAJk1kfgekQjUatrhlWpB1qdvig+Ffax6xvnF+811nsoNvo7JoSjuYm3rLqFA8WT
+	znj1DahTk4IrgvycCRq6Iz+8yRsdQC5K1JgAY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Q2CZkac7CxFEycnE71lyXcSykIN0R87z
+	yECESoesy1s10HRim7PFomYB6rxXv3TQ/HtOwGDvFt2/CtUMrn6UoRjcXaiyqpZZ
+	jOe04FOSBgIhyicPkLVtD5JLIsZFAry84dVnVEKjgYEhdl4QubhtKfe58TFA/OYR
+	Qi6zCkdUOMo=
+Received: from pb-smtp2. (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 72C8A129F0;
+	Wed, 13 Apr 2016 18:40:13 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E28E3129EF;
+	Wed, 13 Apr 2016 18:40:12 -0400 (EDT)
+In-Reply-To: <CAGZ79kZSyLZxMXSSv=uDpuA0zTUy6nU4vwEF5f7WLhoRp1hXig@mail.gmail.com>
+	(Stefan Beller's message of "Wed, 13 Apr 2016 15:18:24 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: AF698870-01C8-11E6-8B4F-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291505>
 
-On Mon, Apr 11, 2016 at 12:04:02PM -0400, Isaac Levy wrote:
+Stefan Beller <sbeller@google.com> writes:
 
-> I use a git server which requires authentication over https. Git seems
-> determined to always try an unauthenticated request first, slowing
-> down operations by a couple seconds.
-> 
-> Is there a way to configure git to default to authenticated requests?  Thanks!
+> * .... What are
+>    whole-tree operations?
 
-No, there isn't. Very old versions of git would ask for the password if
-you provided a username, but since v1.7.8 we only do so in response to
-an HTTP 401. The code is still there to do the "proactive" asking, but
-it's not wired up to any particular config option.
-
-However, I don't think even that would give you what you want. Because I
-think that even if we provide a credential, curl will make an initial
-request (presumably to find out which auth type it should use, but that
-is just a guess). I don't know if there is a way to convince curl to
-stick the credential in the first request (if my guess is right, then
-perhaps by setting the auth type explicitly, or even by sticking in our
-own Authorization header).
-
-So I think the answer for now is "no", but it might be possible (and not
-even that hard) to do with a patch.
-
--Peff
+"git merge" does not let you merge "changes just in my current
+directory".  You only merge the whole tree, and you can get
+conflicts from all over the tree, not just in your current
+directory.
