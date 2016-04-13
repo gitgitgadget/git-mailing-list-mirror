@@ -1,121 +1,201 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2 19/21] bisect: use a bottom-up traversal to find
- relevant weights
-Date: Wed, 13 Apr 2016 16:11:01 +0200
-Message-ID: <CAP8UFD2_3jwGVJaoOzrKESi8qBN=4D49kiZes+bJARxMvAi3tg@mail.gmail.com>
-References: <1460294354-7031-1-git-send-email-s-beyer@gmx.net>
-	<1460294354-7031-20-git-send-email-s-beyer@gmx.net>
+From: Ye Xiaolong <xiaolong.ye@intel.com>
+Subject: Re: [PATCH v4 2/4] format-patch: add '--base' option to record base
+ tree info
+Date: Wed, 13 Apr 2016 22:42:24 +0800
+Message-ID: <20160413144224.GA32367@yexl-desktop>
+References: <1460342873-28900-1-git-send-email-xiaolong.ye@intel.com>
+ <1460342873-28900-3-git-send-email-xiaolong.ye@intel.com>
+ <xmqq7fg2r6fi.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Wed Apr 13 16:11:12 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, fengguang.wu@intel.com, ying.huang@intel.com,
+	philip.li@intel.com, julie.du@intel.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 13 16:49:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqLVd-0007tW-VU
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 16:11:10 +0200
+	id 1aqM6a-0001lg-JL
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 16:49:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933815AbcDMOLE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2016 10:11:04 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:35988 "EHLO
-	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752008AbcDMOLD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2016 10:11:03 -0400
-Received: by mail-wm0-f54.google.com with SMTP id v188so177081725wme.1
-        for <git@vger.kernel.org>; Wed, 13 Apr 2016 07:11:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=BfcrEpL4x98efKmIVF4s/5PBacVz+ZCshVEAg8CP6wA=;
-        b=W0TViKuyboOHkEmyugmnFaWXp1pF7N+pUzJXG13FdDFheBdLNyYN8Xveqdhdee3Fn+
-         qgYX6E2TqnldQcCK5FkrPHJcbol4KjNmE2cdfzkzd6piQuD87+ec1WJvP4EMQXwrA4wG
-         Ne5bqeIao83R7ch2ShGSobeuuHOxYwqxrFPh7zgga1R2uAOC0ooEMfi2bNmO4bQYVwIn
-         oELPgFp+xTAy+TgniR2uA91k2LgfcCUEwGSjHyCQ6Sd8vcLXaYn6VslrVeThETIeQXd5
-         8+WLzGFrRlubp6HVtvk4EmIx6M9WpRLnZCb5DJp1/EAby3UQDWL9Rn3jESIlGvHciYoC
-         9HpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=BfcrEpL4x98efKmIVF4s/5PBacVz+ZCshVEAg8CP6wA=;
-        b=YvoyzQJrELHZ79H+8AHXxlkG4O3PovQVZodkL8k3dUt643vRPbD9emCL4nrnAOAXIr
-         M8RxYbM9SUF2eGekH4d9NdzrLxyfcwWpxUDXsCc/15lJvIebmImnxQBZgrU5QHWFjleJ
-         y6hWoLIAyL+1xf/DEJWeSsspuQroyePLRXmDjrPRoEaWGebu0bC25QJpa37w38qkiKi8
-         OUZYK11JTyA026IcEZ2jGhczMWZeH4hD74q3BeWB0Uv/wfkR0AsUmYGtZWv/aOTJS5fG
-         mlHKf8Z5AoQGTQHd/CbWj9kCdz/cytiRCTszqhHDHOO8mZslwUva9bC6ayVrNYeoi3LJ
-         eExQ==
-X-Gm-Message-State: AOPr4FWk1NWrLJ3d0b7lQZ163DvqpINiJxqdSAMQftTOMDpyhKAK0ohV/tMbO3M4LWsQoKu5Y9DQSrs3BguVfw==
-X-Received: by 10.194.117.70 with SMTP id kc6mr10669916wjb.94.1460556661532;
- Wed, 13 Apr 2016 07:11:01 -0700 (PDT)
-Received: by 10.194.95.129 with HTTP; Wed, 13 Apr 2016 07:11:01 -0700 (PDT)
-In-Reply-To: <1460294354-7031-20-git-send-email-s-beyer@gmx.net>
+	id S1757130AbcDMOnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2016 10:43:25 -0400
+Received: from mga03.intel.com ([134.134.136.65]:54179 "EHLO mga03.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757037AbcDMOnY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2016 10:43:24 -0400
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by orsmga103.jf.intel.com with ESMTP; 13 Apr 2016 07:43:18 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.24,479,1455004800"; 
+   d="scan'208";a="957822738"
+Received: from yexl-desktop.sh.intel.com (HELO localhost) ([10.239.159.139])
+  by fmsmga002.fm.intel.com with ESMTP; 13 Apr 2016 07:43:17 -0700
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	fengguang.wu@intel.com, ying.huang@intel.com, philip.li@intel.com,
+	julie.du@intel.com
+Content-Disposition: inline
+In-Reply-To: <xmqq7fg2r6fi.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291454>
 
-On Sun, Apr 10, 2016 at 3:19 PM, Stephan Beyer <s-beyer@gmx.net> wrote:
-> The idea is to reverse the DAG and perform a traversal
-> starting on all sources of the reversed DAG.
+On Tue, Apr 12, 2016 at 12:08:33PM -0700, Junio C Hamano wrote:
+>Xiaolong Ye <xiaolong.ye@intel.com> writes:
 >
-> We walk from the bottom commits, incrementing the weight while
-> walking on a part of the graph that is single strand of pearls,
-> or doing the "count the reachable ones the hard way" using
-> compute_weight() when we hit a merge commit.
+>> Maintainers or third party testers may want to know the exact base tree
+>> the patch series applies to. Teach git format-patch a '--base' option
+>> to record the base tree info and append it at the end of the_first_
 >
-> A traversal ends when the computed weight is falling or halfway.
-
-Yeah, it looks like it could be a good optimization to end a traversal
-looking for "relevant" commits when the weight is falling.
-
-> This way, commits with too high weight to be relevant are never
-> visited (and their weights are never computed).
+>It probably was a good idea to add stress during the discussion to
+>compare various possibilities, but there no longer is a need to
+>italicise "first" like this, I think.
 >
-> Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
-> ---
+>> message(either the cover letter or the first patch in the series).
 >
-> Notes:
->     I rephrased the commit message.
+>Please have space before "(" (also found elsewhere in this message)
+>to make this readable.
 >
->     I renamed the functions such that they don't talk about "BFS"
->     because that is irrelevant. Also use a DFS now because it is
->     less code (and a little more efficient).
+>>
+>> The base tree info consists of the "base commit", which is a well-known
+>> commit that is part of the stable part of the project history everybody
+>> else works off of, and zero or more "prerequisite patches", which are
+>> well-known patches in flight that is not yet part of the "base commit"
+>> that need to be applied on top of "base commit" in topological order
+>> before the patches can be applied.
+>>
+>> The "base commit" is shown as "base-commit: " followed by the 40-hex of
+>> the commit object name.  A "prerequisite patch" is shown as
+>> "prerequisite-patch-id: " followed by the 40-hex "patch id", which is a
+>> sum of SHA-1 of the file diffs associated with a patch, with whitespace
+>> and line numbers ignored, it's reasonably stable and unique.
 >
->     I plugged some leaks.
+>Let's be more helpful to end users.  They do not need to know the
+>exact formula, especially when there is a command to generate or
+>check the id for themselves:
+>
+>    "patch id", which can be obtained by passing the patch through the
+>    "git patch-id --stable" command
+>
+>or something?  
+>
+>> For example, we have history where base is Z, with three prerequisites
+>> X-Y-Z, before the patch series A-B-C, i.e.
+>
+>base is Z???
+>
+>	Imagine that on top of the public commit P, you applied
+>	well-known patches X, Y and Z from somebody else, and then
+>	built your three-patch series A, B, C.
+>
+>perhaps?
+>
+>>
+>> 	P---X---Y---Z---A---B---C
+>>
+>> We could say "git format-patch --base=P -3 C"(or variants thereof, e.g.
+>> with "--cover-letter" of using "Z..C" instead of "-3 C" to specify the
+>> range), then we could get base tree information block showing at the
+>> end of _first_ message as below:
+>
+>Again, if "first" is _so_ important to stress, it probably is worth
+>saying that by "first" you mean either patch 1/n or patch 0/n when
+>the cover letter exists.
+>
+>Also "could" may have made sense while we were having discussion on
+>possible design of the hypothetical feature, but with the patch
+>applied, the feature becomes a reality, so you can and should stop
+>living in the hypothetical world and do s/could/can/ the above.
+>
+>	With "git format-patch --base=P -3 C" (or variants...), the
+>	base tree information block is shown at the end of the first
+>	message the command outputs (either the first patch, or the
+>	cover letter), like this:
+>
+>perhaps?
+>
+>I assume that the patch to the documentation has the same text I
+>commented on the above, so I won't repeat my comments to them.
+>
 
-That's a lot of things in just one commit.
+Thanks for the review,  I'll follow all the comments above and
+make changes to commit log as well as documentation.
+ 
+>> 	base-commit: P
+>> 	prerequisite-patch-id: X
+>> 	prerequisite-patch-id: Y
+>> 	prerequisite-patch-id: Z
+>>
+>> Helped-by: Junio C Hamano <gitster@pobox.com>
+>> Helped-by: Wu Fengguang <fengguang.wu@intel.com>
+>> Signed-off-by: Xiaolong Ye <xiaolong.ye@intel.com>
+>> ---
+>>  Documentation/git-format-patch.txt | 56 +++++++++++++++++++++++
+>>  builtin/log.c                      | 92 ++++++++++++++++++++++++++++++++++++++
+>>  t/t4014-format-patch.sh            | 15 +++++++
+>>  3 files changed, 163 insertions(+)
+>> ...
+>> +static void prepare_bases(struct base_tree_info *bases,
+>> +			  const char *base_commit,
+>> +			  struct commit **list,
+>> +			  int total)
+>> +{
+>> +	struct commit *base = NULL, *commit;
+>> +	struct rev_info revs;
+>> +	struct diff_options diffopt;
+>> +	unsigned char sha1[20];
+>> +	int i;
+>> +
+>> +	diff_setup(&diffopt);
+>> +	DIFF_OPT_SET(&diffopt, RECURSIVE);
+>> +	diff_setup_done(&diffopt);
+>> +
+>> +	base = lookup_commit_reference_by_name(base_commit);
+>> +	if (!base)
+>> +		die(_("Unknown commit %s"), base_commit);
+>> +	oidcpy(&bases->base_commit, &base->object.oid);
+>> +
+>> +	init_revisions(&revs, NULL);
+>> +	revs.max_parents = 1;
+>> +	revs.topo_order = 1;
+>> +	for (i = 0; i < total; i++) {
+>> +		if (!in_merge_bases(base, list[i]) || base == list[i])
+>> +			die(_("base commit should be the ancestor of revision list"));
+>
+>This check looks overly expensive, but I do not think of a more
+>efficient way to do this, given that "All the commits from our
+>series must reach the specified base" is what you seem to want.
 
->  bisect.c | 250 +++++++++++++++++++++++++++++++++++++++++----------------------
->  1 file changed, 162 insertions(+), 88 deletions(-)
+Yes, that's what I want to make sure, for normal case, if patch
+submitter has history as below:
 
-Also from the diff stats it looks like you add a lot of code in this
-commit and the previous one.
-I wonder why you are saying that a DFS is less code above then.
+	P---Z---A---B---C---D
 
-The previous patch (18/21) has the following diff stat:
+and she may unintentionally specify wrong base by doing
+"format-patch --base=B -4" while P or Z is the actual base,
+the recevier such as robot would get confused or fooled if we
+just provide B as the base commit in this case.
 
-> bisect.c | 116 ++++++++++++++++++++++++++++++++++++++++++++++++++++-----------
-> 1 file changed, 97 insertions(+), 19 deletions(-)
-
-And the subsequent patches don't reduce code size overall.
-Diff stat for 20/21 is:
-
-> bisect.c | 44 +++++++++++++++++++-------------------------
-> 1 file changed, 19 insertions(+), 25 deletions(-)
-
-And diff stat for 21/21 is:
-
-> bisect.c | 18 +++++++++++++-----
-> 1 file changed, 13 insertions(+), 5 deletions(-)
-
-So after your patches from 18/21 to 21/21 there are around 150 more
-lines of code.
-Maybe this is worth it, but I wonder if at least some optimizations,
-like for example ending a traversal looking for "relevant" commits
-when the weight is falling, could be implemented without changing the
-code so much and adding so many lines.
+>
+>My understanding is that if base=P is given and you are doing
+>"format-patch Z..C" in this picture:
+>
+>    Q---P---Z---B---*---C
+>     \             /
+>      .-----------A
+>
+>your list would become A, B and C, and you want to detect that P is
+>not an ancestor of A.  merge_bases_many() computes a wrong thing for
+>this use case, and you'd need to go one-by-one.
+>
+>Unless there is some clever trick to take advantage of the previous
+>traversal you made in order to find out A, B and C are the commits
+>that are part of your series somehow.
+>
+>Anybody with clever ideas?
+>
