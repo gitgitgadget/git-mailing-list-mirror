@@ -1,107 +1,88 @@
 From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH v14 3/6] t0040-parse-options: improve test coverage
-Date: Wed, 13 Apr 2016 14:29:48 +0530
-Message-ID: <CAFZEwPMU5KSoBJ0kHGnnPCq0zsoj8ROAXhJ9HFn66fqDehvWGw@mail.gmail.com>
+Subject: Re: [PATCH v14 5/6] t7507-commit-verbose: improve test coverage by
+ testing number of diffs
+Date: Wed, 13 Apr 2016 14:30:33 +0530
+Message-ID: <CAFZEwPMiYCd1Ase5r1XtOo4k3cONvryp_Kw-wpm1SVsBs37=BQ@mail.gmail.com>
 References: <010201540cb60832-9402a692-3caa-47a1-9e8e-ae5a1bc7eb2f-000000@eu-west-1.amazonses.com>
-	<010201540cb60965-887d5e4b-b12d-4477-8271-eefa349ceddd-000000@eu-west-1.amazonses.com>
-	<CAPig+cTB=bYNxR8yN2CGvkmtCZKomnbdNnZon9HA5uE9aivW=Q@mail.gmail.com>
+	<010201540cb6096f-5d2150af-6595-4d88-85e5-18eaeb699fb7-000000@eu-west-1.amazonses.com>
+	<CAPig+cS17RF6f6fuTLpn-E551_NkWjmNPbXh8EFQ_Sp5L9Xb1A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Apr 13 10:59:59 2016
+X-From: git-owner@vger.kernel.org Wed Apr 13 11:00:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqGeV-0006yv-5E
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 10:59:59 +0200
+	id 1aqGf9-0007EK-Qp
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 11:00:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759443AbcDMI7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2016 04:59:53 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:34099 "EHLO
+	id S1759550AbcDMJAf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2016 05:00:35 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:34917 "EHLO
 	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759477AbcDMI7t (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2016 04:59:49 -0400
-Received: by mail-yw0-f193.google.com with SMTP id h6so5742287ywc.1
-        for <git@vger.kernel.org>; Wed, 13 Apr 2016 01:59:48 -0700 (PDT)
+	with ESMTP id S1756304AbcDMJAe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2016 05:00:34 -0400
+Received: by mail-yw0-f193.google.com with SMTP id k197so5735902ywe.2
+        for <git@vger.kernel.org>; Wed, 13 Apr 2016 02:00:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=DXnMEqARV/ZglIRHTON8Z8Alu7f8OtXKio6Olq80wIk=;
-        b=JS7H15m0YPAS6huHObXCeszmSmeTYWLpe7OhwHxGJDiXW4YXL78hMp0hjrm8OQYnTw
-         i1aGCxKfm0p+3qUYOlt8mtGArzre/AQ6XbMrdKcODxSyxnKSNfVJR3zye2cTdqGTj7G3
-         LV7wYVV1XARErNANqDB3mhpaPCe5J0zO7PZIcNZ6Cv/WFoDAGHS3giSjVuiSgTZVFLQ0
-         D8Ym/EpDc4eemiogFhFXZTHA8anvcTQiWTXLpkrSfCtkD7e3Z9CLAC6v1gTm1XtjjIpz
-         c3uEYeffbvTjBtZkL5+nHpeq+4PwP6ClAi35p5wpQwOK1yFN+1JUwsbXXfytW0PK/lX+
-         jD5A==
+        bh=kBHaYFz2fVgT+HqSFQVu14T+JHibAZBS0+jNdndnpmc=;
+        b=YgOfwm077IFLx2FuAnjzvK0vYOckRNeEcTQyzOMP803XfDKOrQ4y9TyS3U3F4jSXeh
+         EI3qB8UfoCYU2jJ2nt2tMavcYwpoOhRYw4KBEHrEeT9mDFAYlN2T0uipeLX4KVffQucS
+         UXva2arHBaovFv7/pbajHleiKbQA4Oh/6aVgohwEAxtMQxGgd2FFb6jCCC70+Og8ye5I
+         hNeIqjw3VuUEwtF7nBy7qgd590nNv9k6afuvFTVXL+rili/VitrpNfqQq8k431EhJUqK
+         0CkK1NLNIKQco8TCreucIShYiNDDQ5fA83P5q+1UV7LjigEC9blNaOGi9AIrFmSgupCz
+         7cFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=DXnMEqARV/ZglIRHTON8Z8Alu7f8OtXKio6Olq80wIk=;
-        b=joaRtR466lTzXCSpBU6E8JCDd5Jx61iY4z3Hxty7ZgjBkH0RrAHCHe8FEOWOBuJ1b8
-         HPlLgEL7AX9LOj2mFlwA2lX6i4v0KJvF6AbrSzh21dNNqCxOpua3P7WU27ui7U6TV0AM
-         ugrUcbchEdG/HtmK/uK8YUY2O+yvAGncBtM1xmNoe4uq1by9wqH2l0vypNP/h343/UH3
-         fbePgD4Z/xpCbo5ZhfKpQIM+ZnQats+hIDwWW8BvTvuSOJwfz6lWNNKtnnrwLKQ6e+lp
-         ebWvPgj7pwyE9V6hOWYiYHgxbeTm9P6Pgf2YZCp2rECSTYql03xwC3vGsvLO+PdNL7Gl
-         /5kA==
-X-Gm-Message-State: AOPr4FWk2pl8S960rMhrTmUfQDtYJ+GrS/pvvzf0Ap1sM7yf9KUtO+hd0MsMCp1mV5Vesgz7lHiuJs+LGf2Knw==
-X-Received: by 10.129.134.133 with SMTP id w127mr4152652ywf.252.1460537988325;
- Wed, 13 Apr 2016 01:59:48 -0700 (PDT)
-Received: by 10.13.219.81 with HTTP; Wed, 13 Apr 2016 01:59:48 -0700 (PDT)
-In-Reply-To: <CAPig+cTB=bYNxR8yN2CGvkmtCZKomnbdNnZon9HA5uE9aivW=Q@mail.gmail.com>
+        bh=kBHaYFz2fVgT+HqSFQVu14T+JHibAZBS0+jNdndnpmc=;
+        b=a88pklByLih0szC/02umns86QAtLg3f9XRfHNYgqzhYUkUkIO7E7DNyYZcxL+Q2b11
+         QUFDSd3FZQyS2nImexFkB6UWordSSg7mP8+YCfH0ofU7uWWD6I1GV6xC+jV2neT9KI4H
+         f2e0NkBW7us/3VCRZJljmVFl4I9RP9UDznQ24hBTCNf9C9DVWhlq6MOCVaFuKphyRc4a
+         /Uwx/f+WQUAT2VaJ+VOf+dkggBXO4KxugmkghoUY69Nbdhcf7n/t0v3JyETOpmkGJRiw
+         i8CqxOU6Kst8XoCDG4Tol6m/uxGZRHcnk2Zp6dOcaDYNQDfkCn6JDbex3j93bxk9Nywl
+         IkEA==
+X-Gm-Message-State: AOPr4FX1RPIpJw7oNGA+3R17icF6JFr63r/FXqj5FHIcA3e8crZqIQ4/1V/Gz6b/BptJp9xQ+9zEHyDupKI0Ng==
+X-Received: by 10.37.207.141 with SMTP id f135mr4163535ybg.154.1460538033234;
+ Wed, 13 Apr 2016 02:00:33 -0700 (PDT)
+Received: by 10.13.219.81 with HTTP; Wed, 13 Apr 2016 02:00:33 -0700 (PDT)
+In-Reply-To: <CAPig+cS17RF6f6fuTLpn-E551_NkWjmNPbXh8EFQ_Sp5L9Xb1A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291382>
 
-On Wed, Apr 13, 2016 at 10:56 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+On Wed, Apr 13, 2016 at 11:33 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
 > On Tue, Apr 12, 2016 at 7:02 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->> Include tests to check for multiple levels of quiet and to check if the
->> '--no-quiet' option sets it to 0.
+>> Make the fake "editor" store output of grep in a file so that we can
+>> see how many diffs were contained in the message and use them in
+>> individual tests where ever it is required. A subsequent commit will
+>> introduce scenarios where it is important to be able to exactly
+>> determine how many diffs were present.
 >>
+>> Also use write_script() to create the fake "editor".
+>>
+>> The fake "editor" is always made to succeed regardless of whether grep
+>> found diff headers or not so that we don't have to use 'test_must_fail'
+>> for which 'test_line_count = 0' is an easy substitute and also helps in
+>> maintaining the consistency.
+>
+> As mentioned by [1], the change to write_script() is a minor aside; it
+> is less important than the explanation of how and why the return value
+> of the fake "editor" changed, thus the order of the 2nd and 3rd
+> paragraphs should be swapped.
+>
+> [1]: http://article.gmane.org/gmane.comp.version-control.git/290663
+
+I will include this if I do a re-roll
+>
+>> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 >> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
->> ---
->> diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
->> @@ -476,4 +476,41 @@ test_expect_success '--no-list resets list' '
->> +cat >expect <<\EOF
->> +boolean: 0
->> +integer: 0
->> +magnitude: 0
->> +timestamp: 0
->> +string: (not set)
->> +abbrev: 7
->> +verbose: 0
->> +quiet: 0
->> +dry run: no
->> +file: (not set)
->> +EOF
->> +
->> +test_expect_success '--no-quiet sets quiet to 0' '
->> +       test-parse-options --no-quiet >output 2>output.err &&
->
-> Meh, as implemented, this isn't a very interesting test, is it?
-> 'quiet' started at 0, so all this shows is that --no-quiet didn't
-> disturb the 0. To really test that it resets it to 0, you'd want:
->
->     test-parse-options --quiet --no-quiet >... 2>... &&
->
->> +       test_must_be_empty output.err &&
->> +       test_cmp expect output
->> +'
->>  test_done
-
-This is to test whether the 0 of quiet remains 0 if --no-quiet is
-included. This test "defines" the current behavior. Then when I change
-OPT_COUNTUP(), this test will ensure that this behavior is not
-interrupted as promised by the commit message of that patch[1]. I
-guess this also describe why I choose to include these tests between
-2/5 and 3/5 rather than 3/5 and 4/5. And also see the extended
-discussion[2] for this. If I do a re-roll then I include `--quiet`
-before `--no-quiet`
-
-[1]: http://article.gmane.org/gmane.comp.version-control.git/291313
