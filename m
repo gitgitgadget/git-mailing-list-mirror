@@ -1,119 +1,104 @@
-From: Vineet Gupta <Vineet.Gupta1@synopsys.com>
-Subject: CC in git cover letter vs patches (was Re: [PATCH 0/19] get rid of
- superfluous __GFP_REPORT)
-Date: Wed, 13 Apr 2016 16:51:37 +0530
-Message-ID: <570E2BC1.8050809@synopsys.com>
-References: <1460372892-8157-1-git-send-email-mhocko@kernel.org>
+From: Mike Rappazzo <rappazzo@gmail.com>
+Subject: Re: [PATCH] gitk: Fix how remote branch names with / are drawn
+Date: Wed, 13 Apr 2016 07:35:58 -0400
+Message-ID: <CANoM8SXixymz3=NQWgG5vSo7XDNh18_OzrNXU4+Y8CQ0LkB6sw@mail.gmail.com>
+References: <1460512743-27100-1-git-send-email-odinguru@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="windows-1252"
-Content-Transfer-Encoding: 7bit
-Cc: lkml <linux-kernel@vger.kernel.org>, "linux-mm@kvack.org"
-	<linux-mm@kvack.org>, <git@vger.kernel.org>
-To: Michal Hocko <mhocko@suse.cz>
-X-From: owner-linux-mm@kvack.org Wed Apr 13 13:21:53 2016
-Return-path: <owner-linux-mm@kvack.org>
-Envelope-to: glkm-linux-mm-2@m.gmane.org
-Received: from kanga.kvack.org ([205.233.56.17])
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: David Holmer <odinguru@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 13 13:36:37 2016
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <owner-linux-mm@kvack.org>)
-	id 1aqIro-0002Dx-OE
-	for glkm-linux-mm-2@m.gmane.org; Wed, 13 Apr 2016 13:21:53 +0200
-Received: by kanga.kvack.org (Postfix)
-	id DFC53828E2; Wed, 13 Apr 2016 07:21:51 -0400 (EDT)
-Delivered-To: linux-mm-outgoing@kvack.org
-Received: by kanga.kvack.org (Postfix, from userid 40)
-	id DD368828DF; Wed, 13 Apr 2016 07:21:51 -0400 (EDT)
-X-Original-To: int-list-linux-mm@kvack.org
-X-Delivered-To: int-list-linux-mm@kvack.org
-Received: by kanga.kvack.org (Postfix, from userid 63042)
-	id CC207828E2; Wed, 13 Apr 2016 07:21:51 -0400 (EDT)
-X-Original-To: linux-mm@kvack.org
-X-Delivered-To: linux-mm@kvack.org
-Received: from mail-pa0-f45.google.com (mail-pa0-f45.google.com [209.85.220.45])
-	by kanga.kvack.org (Postfix) with ESMTP id 9BA5B828DF
-	for <linux-mm@kvack.org>; Wed, 13 Apr 2016 07:21:51 -0400 (EDT)
-Received: by mail-pa0-f45.google.com with SMTP id fs9so13200296pac.2
-        for <linux-mm@kvack.org>; Wed, 13 Apr 2016 04:21:51 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1aqJ64-0007kQ-PA
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 13:36:37 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1760017AbcDMLgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2016 07:36:22 -0400
+Received: from mail-io0-f175.google.com ([209.85.223.175]:33313 "EHLO
+	mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759978AbcDMLgT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2016 07:36:19 -0400
+Received: by mail-io0-f175.google.com with SMTP id o126so66079147iod.0
+        for <git@vger.kernel.org>; Wed, 13 Apr 2016 04:36:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=30e3RUbVoEM81Zccy+VtPw9QHcq0wFQX82gCURRBjzk=;
+        b=Fl/+RBPpPAOXTrlFYtUiXW0KyOXsyotU4fl5nKsVQtri5mdhgHaYsUWW8Q+6tuxsIB
+         HkOlPrlhFdShrm1pzMFEz97xUgonZMDjr1OiRO95cE3LEOl4DtXZL2tswOvGSfGhf+6Y
+         0zBhEAFEn8dsNIOHTVYnUfZ34ILsb21L0RNoa6558YJX/koJ8qDwvuBu1L8xGs2eonm+
+         6g+h/9C/ZZbTSOFcX+CH9wFkhnPfa0omkBxT+gY1r9xTahbBRb/HgfQHYmJAEAtx6cs8
+         v/SrW/pclfIKt7Nk3OcSk6MESBwtuzvKxMxhKJI1VUonHYSLCkJ/fJKDrIkD7kpRyUGG
+         oX7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-original-authentication-results:x-gm-message-state:subject
-         :references:to:cc:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding;
-        bh=oU2IssV9Jl/ER0yTmEFNlBya2kZeSjIhS7HH8lvl4EQ=;
-        b=OQr5NarClehQqKlw3ULo0EKIduVMqeLhR05yyQAZLlwJYLhOmyqWZ14J5p4fZ6qzz2
-         zd2LzXz4TwDEXgCpenBFDu8skdr+ZyBsXsCI6Mc41CLttMq6m2n4zT8yEDb0I4WixwpO
-         GRRWGMwSkGggI35kM9S/hEObKmMoVP1xu9upR6YdbEnDas6v/SeDLUKcB2lxe7B7jfpa
-         Dh96sm1WZPWPNZKBDhzHCA53iIyjXlHpY2jVOuazL/7dXMkSCMn6lr4sk6pKEpgcADq+
-         E+wicfti5+5MPh4Sv/eDwFP6jG0S7DfDmJB7dOY1wCCJO1QvYn7Guo9Md9h1vL1qpPER
-         ioNw==
-X-Original-Authentication-Results: mx.google.com;       spf=pass (google.com: best guess record for domain of Vineet.Gupta1@synopsys.com designates 198.182.47.9 as permitted sender) smtp.mailfrom=Vineet.Gupta1@synopsys.com
-X-Gm-Message-State: AOPr4FXBgvBLpqKu4L8AHg1VbtRLtvA6hD7QFS240WiX0s6laNARl5HH4NMtqtNBg0aUv8PSVZem3eAhHJ4LcrL2Glxcy5oc5OQOMDwscn39WzyaOHOWvaqlO6lIkHvf/j91JroJH10IHLA+kxhV1O7v1HmzKSQOrRjTDHUaWmNOsyMApr57I1ehPsKS
-X-Received: by 10.66.101.35 with SMTP id fd3mr12008482pab.7.1460546511309;
-        Wed, 13 Apr 2016 04:21:51 -0700 (PDT)
-X-Received: by 10.66.101.35 with SMTP id fd3mr12008448pab.7.1460546510912;
-        Wed, 13 Apr 2016 04:21:50 -0700 (PDT)
-Received: from smtprelay.synopsys.com (us01smtprelay-2.synopsys.com. [198.182.47.9])
-        by mx.google.com with ESMTPS id y19si869473pfa.62.2016.04.13.04.21.50
-        for <linux-mm@kvack.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 13 Apr 2016 04:21:50 -0700 (PDT)
-Received-SPF: pass (google.com: best guess record for domain of Vineet.Gupta1@synopsys.com designates 198.182.47.9 as permitted sender) client-ip=198.182.47.9;
-Authentication-Results: mx.google.com;
-       spf=pass (google.com: best guess record for domain of Vineet.Gupta1@synopsys.com designates 198.182.47.9 as permitted sender) smtp.mailfrom=Vineet.Gupta1@synopsys.com
-Received: from dc8secmta1.synopsys.com (dc8secmta1.synopsys.com [10.13.218.200])
-	by smtprelay.synopsys.com (Postfix) with ESMTP id 3533124E0D97;
-	Wed, 13 Apr 2016 04:21:50 -0700 (PDT)
-Received: from dc8secmta1.internal.synopsys.com (dc8secmta1.internal.synopsys.com [127.0.0.1])
-	by dc8secmta1.internal.synopsys.com (Service) with ESMTP id 104D627113;
-	Wed, 13 Apr 2016 04:21:50 -0700 (PDT)
-Received: from mailhost.synopsys.com (mailhost1.synopsys.com [10.12.238.239])
-	by dc8secmta1.internal.synopsys.com (Service) with ESMTP id DDA4227102;
-	Wed, 13 Apr 2016 04:21:49 -0700 (PDT)
-Received: from mailhost.synopsys.com (localhost [127.0.0.1])
-	by mailhost.synopsys.com (Postfix) with ESMTP id CCAFE740;
-	Wed, 13 Apr 2016 04:21:49 -0700 (PDT)
-Received: from US01WEHTC2.internal.synopsys.com (us01wehtc2.internal.synopsys.com [10.12.239.237])
-	by mailhost.synopsys.com (Postfix) with ESMTP id 821A273D;
-	Wed, 13 Apr 2016 04:21:49 -0700 (PDT)
-Received: from IN01WEHTCA.internal.synopsys.com (10.144.199.104) by
- US01WEHTC2.internal.synopsys.com (10.12.239.237) with Microsoft SMTP Server
- (TLS) id 14.3.195.1; Wed, 13 Apr 2016 04:21:49 -0700
-Received: from IN01WEHTCB.internal.synopsys.com (10.144.199.105) by
- IN01WEHTCA.internal.synopsys.com (10.144.199.103) with Microsoft SMTP Server
- (TLS) id 14.3.195.1; Wed, 13 Apr 2016 16:51:47 +0530
-Received: from [10.12.197.158] (10.12.197.158) by
- IN01WEHTCB.internal.synopsys.com (10.144.199.243) with Microsoft SMTP Server
- (TLS) id 14.3.195.1; Wed, 13 Apr 2016 16:51:46 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
-In-Reply-To: <1460372892-8157-1-git-send-email-mhocko@kernel.org>
-X-Originating-IP: [10.12.197.158]
-X-Bogosity: Ham, tests=bogofilter, spamicity=0.000000, version=1.2.4
-Sender: owner-linux-mm@kvack.org
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=30e3RUbVoEM81Zccy+VtPw9QHcq0wFQX82gCURRBjzk=;
+        b=m7NK83+xAdNjgc8f6nPeNf2ze5kRyJjUvrYjzHcvaYDNrBHq8jR9UIf/C7g9+U9TYy
+         Kaxg03Umk0lp5sm0ajSGhkbOVH+qcWH09JY6Yf1ja+ypFfQ1E+4LiwX+1CIVPQGKDC0d
+         8icFy9vcXMAIQc9bHFQ3wg89CFw2+ZJQtJ+NuZXMOlmQdSNiGH/S6LWQYA/laivor9UT
+         Yw+E4wlyPNrQLykx2g1j6BxZmKv1ulGedYnEUJZ4Yqo8+5eUhU4oecWSTT/A/llF8dE7
+         aFSqe/dBItGP+N984y9t6DWseoF8FG9aRrD8Ul7BLcbqq9O7z8tCE7Ansc2ymoTD8xs8
+         bDjQ==
+X-Gm-Message-State: AOPr4FUBGVHNaYr+vsYSGLMPGJv/f/T0t5UFqNdew0vI/KDkps/CMEumhI8PClgTqYavNERypnrYafdaShg4qw==
+X-Received: by 10.107.19.104 with SMTP id b101mr8140876ioj.57.1460547378251;
+ Wed, 13 Apr 2016 04:36:18 -0700 (PDT)
+Received: by 10.107.7.193 with HTTP; Wed, 13 Apr 2016 04:35:58 -0700 (PDT)
+In-Reply-To: <1460512743-27100-1-git-send-email-odinguru@gmail.com>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Loop: owner-majordomo@kvack.org
-List-ID: <linux-mm.kvack.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291389>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291390>
 
-Trimming CC list + CC git folks
+On Tue, Apr 12, 2016 at 9:59 PM, David Holmer <odinguru@gmail.com> wrote:
+> Consider this example branch:
+>
+> remotes/origin/master
+>
+> gitk displays this branch with different background colors for each part:
+> "remotes/origin" in orange and "master" in green. The idea is to make it
+> visually easy to read the branch name separately from the remote name.
+>
+> However this fails when given this example branch:
+>
+> remotes/origin/foo/bar
+>
+> gitk displays this branch with "remotes/origin/foo" in orange and "bar" in
+> green. This makes it hard to read the branch name "foo/bar". This is due
+> to an inappropriately greedy regexp. This patch provides a fix so the same
+> branch will now be displayed with "remotes/origin" in orange and "foo/bar"
+> in green.
+>
+> Signed-off-by: David Holmer <odinguru@gmail.com>
+> ---
+>  gitk | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/gitk b/gitk
+> index 805a1c7..ca2392b 100755
+> --- a/gitk
+> +++ b/gitk
+> @@ -6640,7 +6640,7 @@ proc drawtags {id x xt y1} {
+>             set xl [expr {$xl - $delta/2}]
+>             $canv create polygon $x $yt $xr $yt $xr $yb $x $yb \
+>                 -width 1 -outline black -fill $col -tags tag.$id
+> -           if {[regexp {^(remotes/.*/|remotes/)} $tag match remoteprefix]} {
+> +           if {[regexp {^(remotes/[^/]*/|remotes/)} $tag match remoteprefix]} {
+>                 set rwid [font measure mainfont $remoteprefix]
+>                 set xi [expr {$x + 1}]
+>                 set yti [expr {$yt + 1}]
+> --
 
-Hi Michal,
+This likely fixes the problem for most situations, but doesn't for a
+remote with a '/' in the name.  Yet, I think this is a better state
+than the present.
 
-On Monday 11 April 2016 04:37 PM, Michal Hocko wrote:
-> Hi,
-> this is the second version of the patchset previously sent [1]
-
-I have a git question if you didn't mind w.r.t. this series. Maybe there's an
-obvious answer... I'm using git 2.5.0
-
-I was wondering how you manage to union the individual patch CC in just the cover
-letter w/o bombarding everyone with everything.
-
-Thx,
--Vineet
-
---
-To unsubscribe, send a message with 'unsubscribe linux-mm' in
-the body to majordomo@kvack.org.  For more info on Linux MM,
-see: http://www.linux-mm.org/ .
-Don't email: <a href=mailto:"dont@kvack.org"> email@kvack.org </a>
+Is the regex `[^/]*/` more efficient than '.*?/`?  Or do you find the
+former more readable?
