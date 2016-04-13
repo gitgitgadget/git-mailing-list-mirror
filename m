@@ -1,119 +1,122 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v2] difftool/mergetool: make the form of yes/no questions
- consistent
-Date: Tue, 12 Apr 2016 18:25:01 -0700
-Message-ID: <20160413012501.GA32611@gmail.com>
-References: <1460472260.3214.23.camel@redhat.com>
- <xmqqegaapm02.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/6] Avoid checking working copy when creating a virtual merge base
+Date: Tue, 12 Apr 2016 18:28:29 -0700
+Message-ID: <xmqq8u0imh4y.fsf@gitster.mtv.corp.google.com>
+References: <1460268820-8308-1-git-send-email-newren@gmail.com>
+	<1460268820-8308-3-git-send-email-newren@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nikola =?utf-8?B?Rm9ycsOz?= <nforro@redhat.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 13 03:25:16 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 13 03:28:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aq9YS-0003xC-1l
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 03:25:16 +0200
+	id 1aq9bg-00054m-Pr
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 03:28:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933699AbcDMBZJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Apr 2016 21:25:09 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:33664 "EHLO
-	mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933643AbcDMBZF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2016 21:25:05 -0400
-Received: by mail-pf0-f177.google.com with SMTP id 184so24183213pff.0
-        for <git@vger.kernel.org>; Tue, 12 Apr 2016 18:25:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=z4brChIhxK0TqZnYo0kzKgbYRKMQYyiCGMz/HOIOd04=;
-        b=Nhqk1rm3VRmmqgIusC7ZFepTNN+GX2IOn6AjILoR0Pk2akp5gMacxh8uXxddfg5UGC
-         Bf93yG8rw8Q+45u50ABtBoHJTfeejMz+jhU1AglKN9JY7I8MhxShBmPXjSAIph7HQkNC
-         fNQVLGVjO+TQaHTPE7u0FoMKQdXWuZCIilLZYiPlcAi3r5jIbUCWiimjO2k2Y35S937U
-         cxLXlAsZvAx0Tx9vdNZmjLLuIiJpgx95qpsLDJ9pzXzgxtQS+lath12gqYbSw+X/0nEQ
-         3AzijLmsQYoGNHKiikwDOsDjvlelTmCj8X5UhBgJAkUrHulj57m/1Kyw3F67sQuCuj3d
-         7H1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=z4brChIhxK0TqZnYo0kzKgbYRKMQYyiCGMz/HOIOd04=;
-        b=A6w0t3HsqEkOW6qq97usOLKcmCyvPdoSedIy1cSoR8ZyEY8zhOPtIhmsNKgl5NFFoU
-         L3mJw0mvG6jIKtjsgjIhUwOJY76n+Ihjqc5NLA7ZYh/JbG2CBSxnnDlLs+ntHPEW4pAU
-         bSqYnCw1DqCZCJtebIXAO+cU2WBvBaN8F6NWTKQNu2i4KplvP2yW2+tlEVXAtBcMNKsk
-         GADwjezVal0ZpoxBwwZg+x06SWv0sM3mno93o+WGAuolo6q1MACYggBjMHel6yPCUc8l
-         FMi49nTza3ju6psffGz6SKBiQvyLMiGz9h7yEkBFmWONqU8thDanlvOg6fUiUlastx7C
-         w/vg==
-X-Gm-Message-State: AOPr4FUEMfi+upbr40ecMrGhklCEab7DIH+x6QutdQDujKe2YF23CaKsOoD12PhxOIWXwQ==
-X-Received: by 10.98.15.135 with SMTP id 7mr8952494pfp.142.1460510705275;
-        Tue, 12 Apr 2016 18:25:05 -0700 (PDT)
-Received: from gmail.com (w.disneyanimation.com. [198.187.190.241])
-        by smtp.gmail.com with ESMTPSA id p74sm46413917pfj.22.2016.04.12.18.25.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 12 Apr 2016 18:25:04 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <xmqqegaapm02.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1753542AbcDMB2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Apr 2016 21:28:33 -0400
+Received: from pb-smtp0.pobox.com ([208.72.237.35]:50368 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751648AbcDMB2c (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2016 21:28:32 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EF6FE555B3;
+	Tue, 12 Apr 2016 21:28:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JMzTxKWmDSOI7x//bXfB7cyz/Ow=; b=DYwNRq
+	jAX5cH0pkU2BBBtMZtCmKSGYOXQGxrHOlT8i6Ktvc5HE/GA3dCSp+SGjuZgcgTjW
+	4NZbaXDbYBwGEh4K1fcxmPrmSMvKL4zs2QYVDL5Tio81tWSGrxRy8AUghc4GKVoi
+	roOKo/OTm726F8uDwy7nbbYemkRraZWTttk3k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fyQ45Osee3IG9ocQWuyXrS9gwzfWUxQm
+	8s5g1L9VWYSph+ZUeaZMqjQkuIfcTCvunLsePeVXQzze3wnXgcIG7wJlIWUQj4mp
+	AOpoCkGzRLjHgFTidn2EeHIoDepXSJxx98WetljcrAfopPEIDewm5daQFfqSkbGZ
+	PZi2q47vTgs=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E74B8555B2;
+	Tue, 12 Apr 2016 21:28:30 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 69F5E555B1;
+	Tue, 12 Apr 2016 21:28:30 -0400 (EDT)
+In-Reply-To: <1460268820-8308-3-git-send-email-newren@gmail.com> (Elijah
+	Newren's message of "Sat, 9 Apr 2016 23:13:36 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 079517E2-0117-11E6-B858-45AF6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291358>
 
-On Tue, Apr 12, 2016 at 02:15:09PM -0700, Junio C Hamano wrote:
-> Nikola Forr=C3=B3 <nforro@redhat.com> writes:
->=20
-> > Every yes/no question in difftool/mergetool scripts has slightly
-> > different form, and none of them is consistent with the form git
-> > itself uses.
-> >
-> > Make the form of all the questions consistent with the form used
-> > by git.
-> >
-> > Reviewed-by: John Keeping <john@keeping.me.uk>
-> > Signed-off-by: Nikola Forr=C3=B3 <nforro@redhat.com>
-> > ---
-> > Changes in v2: example dropped from the commit message
->=20
-> Thanks; have you run the test suite with this patch applied?
->=20
-> It is your responsibility to make sure that the expectation by
-> existing tests are still satisfied after your change, or update
-> their expectation to match the new (and hopefully better) world
-> order your patch introduces.
->=20
-> I needed to squash this in to make the tests pass, but because I am
-> not a difftool user, I do not at all know if the prompt produced
-> (and expected by the test) is sensible or not.
->=20
->  t/t7800-difftool.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-> index ec8bc8c..df9050f 100755
-> --- a/t/t7800-difftool.sh
-> +++ b/t/t7800-difftool.sh
-> @@ -20,7 +20,7 @@ difftool_test_setup ()
->  prompt_given ()
->  {
->  	prompt=3D"$1"
-> -	test "$prompt" =3D "Launch 'test-tool' [Y/n]: branch"
-> +	test "$prompt" =3D "Launch 'test-tool' [Y/n]? branch"
->  }
-> =20
->  # Create a file on master and change it on branch
+Elijah Newren <newren@gmail.com> writes:
 
-That looks correct to me.  Sorry 'bout that, I'll remember to
-run the tests with the patches applied next time.
+> There were a few cases in merge-recursive that could result in a check for
+> the presence of files in the working copy while trying to create a virtual
+> merge base.  These were rare and innocuous, but somewhat illogical.  The
+> two cases were:
+>
+>   * When there was naming conflicts (e.g. a D/F conflict) and we had to
+>     pick a new unique name for a file.  Since the new name is somewhat
+>     arbitrary, it didn't matter that we consulted the working copy to
+>     avoid picking a filename it has, but since the virtual merge base is
+>     never checked out, it's a waste of time and slightly odd to do so.
+>
+>   * When two different files get renamed to the same name (on opposite
+>     sides of the merge), we needed to delete the original filenames from
+>     the cache and possibly also the working directory.  The caller's check
+>     for determining whether to delete from the working directory was a
+>     call to would_lose_untracked().  It turns out this didn't matter
+>     because remove_file() had logic to avoid modifying the working
+>     directory when creating a virtual merge base, but there is no reason
+>     for the caller to check the working directory in such circumstances.
+>     It's a waste of time, if not also a bit weird.
 
-cheers,
---=20
-David
+I think "avoid checking" and "waste of time" are understatements, in
+that they make it sound as if the current code is OK and this change
+is only to reduce waste.  But doesn't the code misbehave if you had
+a file in the working tree whose path happens to be the same as the
+one involved in these codepaths (iow, if they did not check these
+paths in the working tree, the internal merge may succeed, but it
+would unnecessarily fail)?
+
+Subject: merge-recursive: do not check working tree during an internal merge
+
+or something, perhaps?
+
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  merge-recursive.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index d4292de..06d31ed 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -622,7 +622,7 @@ static char *unique_path(struct merge_options *o, const char *path, const char *
+>  	base_len = newpath.len;
+>  	while (string_list_has_string(&o->current_file_set, newpath.buf) ||
+>  	       string_list_has_string(&o->current_directory_set, newpath.buf) ||
+> -	       file_exists(newpath.buf)) {
+> +	       (!o->call_depth && file_exists(newpath.buf))) {
+>  		strbuf_setlen(&newpath, base_len);
+>  		strbuf_addf(&newpath, "_%d", suffix++);
+>  	}
+> @@ -1234,8 +1234,8 @@ static void conflict_rename_rename_2to1(struct merge_options *o,
+>  	       a->path, c1->path, ci->branch1,
+>  	       b->path, c2->path, ci->branch2);
+>  
+> -	remove_file(o, 1, a->path, would_lose_untracked(a->path));
+> -	remove_file(o, 1, b->path, would_lose_untracked(b->path));
+> +	remove_file(o, 1, a->path, o->call_depth || would_lose_untracked(a->path));
+> +	remove_file(o, 1, b->path, o->call_depth || would_lose_untracked(b->path));
+>  
+>  	mfi_c1 = merge_file_special_markers(o, a, c1, &ci->ren1_other,
+>  					    o->branch1, c1->path,
