@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 07/26] upload-pack: use skip_prefix() instead of starts_with()
-Date: Wed, 13 Apr 2016 19:54:51 +0700
-Message-ID: <1460552110-5554-8-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 08/26] upload-pack: tighten number parsing at "deepen" lines
+Date: Wed, 13 Apr 2016 19:54:52 +0700
+Message-ID: <1460552110-5554-9-git-send-email-pclouds@gmail.com>
 References: <1460552110-5554-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,144 +10,82 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 13 14:55:58 2016
+X-From: git-owner@vger.kernel.org Wed Apr 13 14:55:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqKKr-00046X-G3
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 14:55:57 +0200
+	id 1aqKKs-00046X-1l
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 14:55:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030656AbcDMMzt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Apr 2016 08:55:49 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34162 "EHLO
-	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030495AbcDMMzr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2016 08:55:47 -0400
-Received: by mail-pf0-f196.google.com with SMTP id d184so4063458pfc.1
-        for <git@vger.kernel.org>; Wed, 13 Apr 2016 05:55:46 -0700 (PDT)
+	id S1030704AbcDMMzz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Apr 2016 08:55:55 -0400
+Received: from mail-pa0-f68.google.com ([209.85.220.68]:36720 "EHLO
+	mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030495AbcDMMzx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2016 08:55:53 -0400
+Received: by mail-pa0-f68.google.com with SMTP id k3so3874908pav.3
+        for <git@vger.kernel.org>; Wed, 13 Apr 2016 05:55:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9LwZ898pBoiCj1IM39I2yk0zB1jn6dRDFvgR9Og0mvc=;
-        b=Buxgp5KBEIqUjozTeoAWwcREm9/AaBgbLx9+aYqMYerKkINs/jtkSa6xYAIBhLOzl6
-         22Xih8pw2OH/ZsFCjueZt+GlQc3+tlHB1g7vdalKTQ3t46ficUFHJwSgt84frZurYtMC
-         UW0P4TwLGbRuxvf38ZZskQA5PjhRIzfP+Ub+noELV5VTdsJKWD627I+vnr14AJwNwhEu
-         x6+Nouz79pay3xrEqfZetRgH+i7D0AHGGj0RJQ8JnckN4RB5cvW8EVZqX5QUMDaRalLt
-         K5ZhuS8J2l3BIwGAi/TLVVV2S2UxJa4p1BTE/oFpiTvSwKPa7hC2vW5Uwr1FRuGwMntB
-         ANBA==
+        bh=2XF84I1WAPNzSZuj7HWJv3f27HBj32Gmu8DlCydsUNA=;
+        b=ntNVfPleBgDNvYMryl42CLXNyF6MjaKI/LyWlGTrKfFqP7I0xUG/h8Uuv3gHR2Yeu/
+         q1jsgbhWwcwGNFTqdW1/REMi7lnlj8pNeZ/8TEufR+t02NdT6zSi0TDoV9fYn/alFDm7
+         BDzCcv7zDMaKLv3mE5fRcx/Q5HMdytp/jCqzRMLSZj6EwQX8zz10C3bNOzdh8/h+gU/Q
+         9PHaBZLJRzHxhGQ8n2U6z9O40uScxrojP9PsyMYKd9P+87qvExdore0jenuHW5U7fttX
+         83xGG0Ye3mPLV2VaHAhvHCuovw/2gJQceTAjtqQbuoqGUosh/GmvBdwFnEPMaQwawmOk
+         FVWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9LwZ898pBoiCj1IM39I2yk0zB1jn6dRDFvgR9Og0mvc=;
-        b=B2260KOnYu1hEgJzzSUL2OcGcxeRCnemqNeDGBDAQ9U2wI8iOywusX2TjR0cv4m9Ig
-         digWU8KlaEaZ3bYupeXrXTH2Zz3EFJ06tHdTeLdd4XL8UQRRN/y23bCOddhooIWLUP5y
-         VpeTyU7O/NkTqzwUvi3fwNAEN1o4z7SPHR4eJHK7HZgHXgrcrKJypqMsPrXLU9ZjSyya
-         SwB9c86QTbM2QjzF8O8KRDl0Bdv4Ox2EfptxQOxzqLoqmPDJNPlqjwnjQyn/p7FFvkuB
-         TcJ7N1qU2cdBvVhCWQm7vNTDlvCjWUrA0tHV+bb0RnK2CcST7V8N8CsUv5R8lO7ztV8t
-         dRZw==
-X-Gm-Message-State: AOPr4FW4o/LfLK/mkki2wz0x84PaCb+TroNBS8Y4lshKgJAZFD6rXIxREmpBT9GpfOY5JA==
-X-Received: by 10.98.102.15 with SMTP id a15mr7296506pfc.90.1460552146494;
-        Wed, 13 Apr 2016 05:55:46 -0700 (PDT)
+        bh=2XF84I1WAPNzSZuj7HWJv3f27HBj32Gmu8DlCydsUNA=;
+        b=Cv0p/azM0Tilq9iIMMaBxoCtj+IZL7OqFx0U3WUV6n8r1dl5uLwHDlaJ+v99o/d2a/
+         3HCkt4Cx4bhFxkPfTP9hqe+OipNpYt0Eb/13BnF5xzCLzAIso6MlhRItzK12Ni2Q6jkb
+         Vl1gBaGfEBBztQf8rT/jRtDabf7e9T5XrHsCzgoqYRwBG49qYo8fTwItq1ZucsGW1em7
+         vJ/hWBop/mu/bZ/8gL3J7KhRmOyP0+sp5kTGrXIjxnmn/6OFDx98gaGOhmgT4aAEjZgr
+         p/Mx3u48N4wzyQgn6fGZGREKuEWxAuKbxzJfjiSX9fznuOb9trTdQMx3N+p3H1YvUdC/
+         8CRg==
+X-Gm-Message-State: AOPr4FWmH34vT48fJUirYKYvSe4gytR0l6g6Oiz+YIiw0yF/tTI97PgNWq/6Cyk6EqO3Kw==
+X-Received: by 10.66.156.232 with SMTP id wh8mr12671584pab.153.1460552152523;
+        Wed, 13 Apr 2016 05:55:52 -0700 (PDT)
 Received: from lanh ([115.76.233.41])
-        by smtp.gmail.com with ESMTPSA id m10sm51042052pfi.32.2016.04.13.05.55.43
+        by smtp.gmail.com with ESMTPSA id f12sm51019454pfd.87.2016.04.13.05.55.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 13 Apr 2016 05:55:45 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 13 Apr 2016 19:55:52 +0700
+        Wed, 13 Apr 2016 05:55:50 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Wed, 13 Apr 2016 19:55:58 +0700
 X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
 In-Reply-To: <1460552110-5554-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291401>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- upload-pack.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ upload-pack.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/upload-pack.c b/upload-pack.c
-index bfb7985..257ad48 100644
+index 257ad48..9f14933 100644
 --- a/upload-pack.c
 +++ b/upload-pack.c
-@@ -276,7 +276,7 @@ static void create_pack_file(void)
- 	die("git upload-pack: %s", abort_msg);
- }
-=20
--static int got_sha1(char *hex, unsigned char *sha1)
-+static int got_sha1(const char *hex, unsigned char *sha1)
- {
- 	struct object *o;
- 	int we_knew_they_have =3D 0;
-@@ -382,6 +382,8 @@ static int get_common_commits(void)
-=20
- 	for (;;) {
- 		char *line =3D packet_read_line(0, NULL);
-+		const char *arg;
-+
- 		reset_timeout();
-=20
- 		if (!line) {
-@@ -403,8 +405,8 @@ static int get_common_commits(void)
- 			got_other =3D 0;
+@@ -641,9 +641,9 @@ static void receive_needs(void)
  			continue;
  		}
--		if (starts_with(line, "have ")) {
--			switch (got_sha1(line+5, sha1)) {
-+		if (skip_prefix(line, "have ", &arg)) {
-+			switch (got_sha1(arg, sha1)) {
- 			case -1: /* they have what we do not */
- 				got_other =3D 1;
- 				if (multi_ack && ok_to_give_up()) {
-@@ -616,14 +618,16 @@ static void receive_needs(void)
- 		const char *features;
- 		unsigned char sha1_buf[20];
- 		char *line =3D packet_read_line(0, NULL);
-+		const char *arg;
-+
- 		reset_timeout();
- 		if (!line)
- 			break;
-=20
--		if (starts_with(line, "shallow ")) {
-+		if (skip_prefix(line, "shallow ", &arg)) {
- 			unsigned char sha1[20];
- 			struct object *object;
--			if (get_sha1_hex(line + 8, sha1))
-+			if (get_sha1_hex(arg, sha1))
- 				die("invalid shallow line: %s", line);
- 			object =3D parse_object(sha1);
- 			if (!object)
-@@ -636,19 +640,19 @@ static void receive_needs(void)
- 			}
- 			continue;
- 		}
--		if (starts_with(line, "deepen ")) {
-+		if (skip_prefix(line, "deepen ", &arg)) {
- 			char *end;
--			depth =3D strtol(line + 7, &end, 0);
--			if (end =3D=3D line + 7 || depth <=3D 0)
-+			depth =3D strtol(arg, &end, 0);
-+			if (end =3D=3D arg || depth <=3D 0)
+ 		if (skip_prefix(line, "deepen ", &arg)) {
+-			char *end;
++			char *end =3D NULL;
+ 			depth =3D strtol(arg, &end, 0);
+-			if (end =3D=3D arg || depth <=3D 0)
++			if (!end || *end || depth <=3D 0)
  				die("Invalid deepen: %s", line);
  			continue;
  		}
--		if (!starts_with(line, "want ") ||
--		    get_sha1_hex(line+5, sha1_buf))
-+		if (!skip_prefix(line, "want ", &arg) ||
-+		    get_sha1_hex(arg, sha1_buf))
- 			die("git upload-pack: protocol error, "
- 			    "expected to get sha, not '%s'", line);
-=20
--		features =3D line + 45;
-+		features =3D arg + 40;
-=20
- 		if (parse_feature_request(features, "multi_ack_detailed"))
- 			multi_ack =3D 2;
 --=20
 2.8.0.rc0.210.gd302cd2
