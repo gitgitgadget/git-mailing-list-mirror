@@ -1,73 +1,97 @@
-From: Vasco Almeida <vascomalmeida@sapo.pt>
-Subject: [PATCH 2/2] i18n: branch: move comment for translators
-Date: Wed, 13 Apr 2016 10:29:54 +0000
-Message-ID: <1460543394-11050-2-git-send-email-vascomalmeida@sapo.pt>
-References: <1460543394-11050-1-git-send-email-vascomalmeida@sapo.pt>
-Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 13 12:31:37 2016
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v4 15/16] branch: use ref-filter printing APIs
+Date: Wed, 13 Apr 2016 16:19:18 +0530
+Message-ID: <CAOLa=ZQ5gwW1vwREsK=h0tDuyk18axHU491brKJM_DR53=9zcQ@mail.gmail.com>
+References: <1460227515-28437-1-git-send-email-Karthik.188@gmail.com>
+ <1460227515-28437-16-git-send-email-Karthik.188@gmail.com>
+ <xmqqtwj6pnma.fsf@gitster.mtv.corp.google.com> <xmqqinzmpmg2.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>, Jacob Keller <jacob.keller@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 13 12:49:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqI5A-0001Dn-JD
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 12:31:36 +0200
+	id 1aqIMv-0007vf-Hy
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 12:49:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030425AbcDMKbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2016 06:31:33 -0400
-Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:45267 "EHLO sapo.pt"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S965432AbcDMKbc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2016 06:31:32 -0400
-Received: (qmail 22439 invoked from network); 13 Apr 2016 10:31:30 -0000
-Received: (qmail 29957 invoked from network); 13 Apr 2016 10:31:30 -0000
-Received: from unknown (HELO linux-iv58.site) (vascomalmeida@sapo.pt@[85.246.157.91])
-          (envelope-sender <vascomalmeida@sapo.pt>)
-          by mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 13 Apr 2016 10:31:25 -0000
-X-PTMail-RemoteIP: 85.246.157.91
-X-PTMail-AllowedSender-Action: 
-X-PTMail-Service: default
-X-Mailer: git-send-email 2.1.4
-In-Reply-To: <1460543394-11050-1-git-send-email-vascomalmeida@sapo.pt>
+	id S1753638AbcDMKtx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2016 06:49:53 -0400
+Received: from mail-qg0-f42.google.com ([209.85.192.42]:33300 "EHLO
+	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752700AbcDMKtt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2016 06:49:49 -0400
+Received: by mail-qg0-f42.google.com with SMTP id j35so39622723qge.0
+        for <git@vger.kernel.org>; Wed, 13 Apr 2016 03:49:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=yWhqDe/3v6Uf3Pc5IATNVyLXZsAIXTLLaQJS4g3j3r8=;
+        b=jSB15jgb3WvM0T5LQUEfaus8cZ7g+utWNRbicRzTodKqby6/Y4EZ5fajW7xKgJ3XKs
+         VXKI0yoHIDytWOWlbMZzO+rBycIR2kXfS8ZoNS0fSKdP505MpAVvpfPMdYVEp3b+x2Eg
+         lIRRMAhulLlHU1Cc/BSR51vesNvzYLLg9bKMfRff4T3WJrjSOx8zmiciAYMrpldrDDo2
+         mVvjYZYQH5/QWBBxZqes83aG6ndrXRZl1QgZ9UHQB0V3ubHRgsiPAT++p+MMouPLyT6W
+         6hsTGZqTPg2z4/Le84DP8cXIHHV419/ihfpLr7aucdspiDKoAiQXjwHXwGPhbyRBPrzw
+         E2qA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=yWhqDe/3v6Uf3Pc5IATNVyLXZsAIXTLLaQJS4g3j3r8=;
+        b=iCQHOlQNNuYW9Hw3FyyWMaJJiPYLLiZX+9VMj8IkMs+SyLVdK9XlyTiB6oQoblj3Ac
+         ybx4vihZ+ftxqGbmpaQNpy0oa67ctt7BWrsafb7zOTAEb40btp+BoWtcxgn0zcxiXGxv
+         Ykytc74G0IqkrpLcRtKcf/7uTVqPVnG8rPUnRj47S2vwKRpPmATb2eJSXZOFeseJJHwD
+         0m5XCoRoWmu9nUv/w200LnMd7/yez1imPfPSCkz5XQYLBFwh5hqfyml49um3C3oAM2pI
+         ns4iv8scWT+deSSeqr0k6y81mKbzlc7VYseIABG0vbfn+A58jCzJZVhJPVAf5WNBdiil
+         hl+A==
+X-Gm-Message-State: AOPr4FWm+IAE48OIii+FPo56X5iRsjHSB9BXyPjBHL4ohsRzMmLR/+B6qKZrL1jXOOTLYxxmMrV3mg4ubKgQJA==
+X-Received: by 10.140.19.52 with SMTP id 49mr10003988qgg.103.1460544587689;
+ Wed, 13 Apr 2016 03:49:47 -0700 (PDT)
+Received: by 10.140.92.238 with HTTP; Wed, 13 Apr 2016 03:49:18 -0700 (PDT)
+In-Reply-To: <xmqqinzmpmg2.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291388>
 
-Move and split comment for translators (marked by TRANSLATORS) to be
-immediately above the strings marked for translation.
+Hello,
 
-As a result, the comment can now be extracted by xgettext.
+On Wed, Apr 13, 2016 at 2:35 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Karthik Nayak <karthik.188@gmail.com> writes:
+>>
+>>> +                        branch_get_color(BRANCH_COLOR_REMOTE), maxwidth,
+>>> +                        remote_prefix, branch_get_color(BRANCH_COLOR_RESET));
+>>> +    } else {
+>>> +            strbuf_addf(&local, "%%(refname:strip=2)%s%%(if)%%(symref)%%(then) -> %%(symref:short)%%(end)",
+>>> +                        branch_get_color(BRANCH_COLOR_RESET));
+>>> +            strbuf_addf(&remote, "%s%s%%(refname:strip=2)%s%%(if)%%(symref)%%(then) -> %%(symref:short)%%(end)",
+>>> +                        branch_get_color(BRANCH_COLOR_REMOTE), remote_prefix, branch_get_color(BRANCH_COLOR_RESET));
+>>
+>> The overlong lines are somewhat irritating, but the change above in
+>> this round relative to the previous one shows a good use case for
+>> the conditional formatting feature and illustrates how powerful the
+>> concept it is.  I like it.
+>>
+>> Thanks, will queue.
 
-Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
----
- builtin/branch.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+They are quite long and a little confusing, but like you said really powerful.
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index b327cca..8a0a181 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -369,12 +369,14 @@ static char *get_head_description(void)
- 		strbuf_addf(&desc, _("(no branch, bisect started on %s)"),
- 			    state.branch);
- 	else if (state.detached_from) {
--		/* TRANSLATORS: make sure these match _("HEAD detached at ")
--		   and _("HEAD detached from ") in wt-status.c */
- 		if (state.detached_at)
-+			/* TRANSLATORS: make sure this matches
-+			   "HEAD detached at " in wt-status.c */
- 			strbuf_addf(&desc, _("(HEAD detached at %s)"),
- 				state.detached_from);
- 		else
-+			/* TRANSLATORS: make sure this matches
-+			   "HEAD detached from " in wt-status.c */
- 			strbuf_addf(&desc, _("(HEAD detached from %s)"),
- 				state.detached_from);
- 	}
+>
+> Having said that, doesn't this need to be further adjusted for
+> 95c38fb0 (branch: fix shortening of non-remote symrefs, 2016-04-03)?
+>
+> http://thread.gmane.org/gmane.comp.version-control.git/290622/focus=290624
+>
+
+That was one of the changes made in this version of the patch series :)
+
 -- 
-2.1.4
+Regards,
+Karthik Nayak
