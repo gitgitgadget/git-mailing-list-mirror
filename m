@@ -1,81 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/6] Miscellaneous merge fixes
-Date: Tue, 12 Apr 2016 18:23:12 -0700
-Message-ID: <xmqqd1pumhdr.fsf@gitster.mtv.corp.google.com>
-References: <1460268820-8308-1-git-send-email-newren@gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v2] difftool/mergetool: make the form of yes/no questions
+ consistent
+Date: Tue, 12 Apr 2016 18:25:01 -0700
+Message-ID: <20160413012501.GA32611@gmail.com>
+References: <1460472260.3214.23.camel@redhat.com>
+ <xmqqegaapm02.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 13 03:23:29 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nikola =?utf-8?B?Rm9ycsOz?= <nforro@redhat.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 13 03:25:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aq9Wi-0003H3-MT
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 03:23:29 +0200
+	id 1aq9YS-0003xC-1l
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 03:25:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756279AbcDMBXQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Apr 2016 21:23:16 -0400
-Received: from pb-smtp0.pobox.com ([208.72.237.35]:54885 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752008AbcDMBXP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Apr 2016 21:23:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1604D55469;
-	Tue, 12 Apr 2016 21:23:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rg8IquVPtWfucLJQAWfPh/zhAK0=; b=xp2LIM
-	LcgLDl5hfVjxyou/jf9+YYs6ZxDHXTWnG4N3JuCdnnq/lRUy8EFd2TTrZkWONh1w
-	JedbrBFE4+9L9+GU8B8okXVn1+FFEisAn3HLymrttiWzoKEZ/r3wSuPC8jP8MzqK
-	ViomzpbQnP/dJgL3dfP+PiF6/MyaX0A1a66e4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lJj1fUBv+SZYvmvLdBcy56SjUCKE1fBR
-	3W5K8+dU7QvAPeRN4OyjednOLmGYmbcQU1GgZz55YmiO0CpTnOQOPPaMRo7fME6Y
-	4p+KPeDojkPoD931MZmF2kWCDsQJaa6WbVUcMlEck9xXmMOBWI9gMWMRHPGfzIyz
-	UHesoZsKRME=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0D0DE55468;
-	Tue, 12 Apr 2016 21:23:14 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7E64155467;
-	Tue, 12 Apr 2016 21:23:13 -0400 (EDT)
-In-Reply-To: <1460268820-8308-1-git-send-email-newren@gmail.com> (Elijah
-	Newren's message of "Sat, 9 Apr 2016 23:13:34 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4AAF7C08-0116-11E6-B016-45AF6BB36C07-77302942!pb-smtp0.pobox.com
+	id S933699AbcDMBZJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Apr 2016 21:25:09 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:33664 "EHLO
+	mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933643AbcDMBZF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Apr 2016 21:25:05 -0400
+Received: by mail-pf0-f177.google.com with SMTP id 184so24183213pff.0
+        for <git@vger.kernel.org>; Tue, 12 Apr 2016 18:25:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=z4brChIhxK0TqZnYo0kzKgbYRKMQYyiCGMz/HOIOd04=;
+        b=Nhqk1rm3VRmmqgIusC7ZFepTNN+GX2IOn6AjILoR0Pk2akp5gMacxh8uXxddfg5UGC
+         Bf93yG8rw8Q+45u50ABtBoHJTfeejMz+jhU1AglKN9JY7I8MhxShBmPXjSAIph7HQkNC
+         fNQVLGVjO+TQaHTPE7u0FoMKQdXWuZCIilLZYiPlcAi3r5jIbUCWiimjO2k2Y35S937U
+         cxLXlAsZvAx0Tx9vdNZmjLLuIiJpgx95qpsLDJ9pzXzgxtQS+lath12gqYbSw+X/0nEQ
+         3AzijLmsQYoGNHKiikwDOsDjvlelTmCj8X5UhBgJAkUrHulj57m/1Kyw3F67sQuCuj3d
+         7H1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=z4brChIhxK0TqZnYo0kzKgbYRKMQYyiCGMz/HOIOd04=;
+        b=A6w0t3HsqEkOW6qq97usOLKcmCyvPdoSedIy1cSoR8ZyEY8zhOPtIhmsNKgl5NFFoU
+         L3mJw0mvG6jIKtjsgjIhUwOJY76n+Ihjqc5NLA7ZYh/JbG2CBSxnnDlLs+ntHPEW4pAU
+         bSqYnCw1DqCZCJtebIXAO+cU2WBvBaN8F6NWTKQNu2i4KplvP2yW2+tlEVXAtBcMNKsk
+         GADwjezVal0ZpoxBwwZg+x06SWv0sM3mno93o+WGAuolo6q1MACYggBjMHel6yPCUc8l
+         FMi49nTza3ju6psffGz6SKBiQvyLMiGz9h7yEkBFmWONqU8thDanlvOg6fUiUlastx7C
+         w/vg==
+X-Gm-Message-State: AOPr4FUEMfi+upbr40ecMrGhklCEab7DIH+x6QutdQDujKe2YF23CaKsOoD12PhxOIWXwQ==
+X-Received: by 10.98.15.135 with SMTP id 7mr8952494pfp.142.1460510705275;
+        Tue, 12 Apr 2016 18:25:05 -0700 (PDT)
+Received: from gmail.com (w.disneyanimation.com. [198.187.190.241])
+        by smtp.gmail.com with ESMTPSA id p74sm46413917pfj.22.2016.04.12.18.25.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 12 Apr 2016 18:25:04 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqegaapm02.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291357>
 
-Elijah Newren <newren@gmail.com> writes:
+On Tue, Apr 12, 2016 at 02:15:09PM -0700, Junio C Hamano wrote:
+> Nikola Forr=C3=B3 <nforro@redhat.com> writes:
+>=20
+> > Every yes/no question in difftool/mergetool scripts has slightly
+> > different form, and none of them is consistent with the form git
+> > itself uses.
+> >
+> > Make the form of all the questions consistent with the form used
+> > by git.
+> >
+> > Reviewed-by: John Keeping <john@keeping.me.uk>
+> > Signed-off-by: Nikola Forr=C3=B3 <nforro@redhat.com>
+> > ---
+> > Changes in v2: example dropped from the commit message
+>=20
+> Thanks; have you run the test suite with this patch applied?
+>=20
+> It is your responsibility to make sure that the expectation by
+> existing tests are still satisfied after your change, or update
+> their expectation to match the new (and hopefully better) world
+> order your patch introduces.
+>=20
+> I needed to squash this in to make the tests pass, but because I am
+> not a difftool user, I do not at all know if the prompt produced
+> (and expected by the test) is sensible or not.
+>=20
+>  t/t7800-difftool.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+> index ec8bc8c..df9050f 100755
+> --- a/t/t7800-difftool.sh
+> +++ b/t/t7800-difftool.sh
+> @@ -20,7 +20,7 @@ difftool_test_setup ()
+>  prompt_given ()
+>  {
+>  	prompt=3D"$1"
+> -	test "$prompt" =3D "Launch 'test-tool' [Y/n]: branch"
+> +	test "$prompt" =3D "Launch 'test-tool' [Y/n]? branch"
+>  }
+> =20
+>  # Create a file on master and change it on branch
 
-> Elijah Newren (6):
->   Remove duplicate code
->   Avoid checking working copy when creating a virtual merge base
->   Add merge testcases for when index doesn't match HEAD
->   merge-octopus: Abort if index does not match HEAD
->   Add a testcase demonstrating a bug with trivial merges
->   builtin/merge.c: Fix a bug with trivial merges
+That looks correct to me.  Sorry 'bout that, I'll remember to
+run the tests with the patches applied next time.
 
-Please be careful when giving titles to your patches.  They will be
-shown in a context that is much wider than the area your attention
-is currently concentrated on.  E.g. does "Remove duplicate code"
-tell readers of "git shortlog --no-merges v2.8.0..v2.9.0" what the
-change was about when it eventually appears in the upcoming release?
-
->
->  builtin/merge.c                          |   8 ++
->  git-merge-octopus.sh                     |   6 ++
->  merge-recursive.c                        |   8 +-
->  t/t6044-merge-unrelated-index-changes.sh | 153 +++++++++++++++++++++++++++++++
->  t/t7605-merge-resolve.sh                 |   6 +-
->  5 files changed, 175 insertions(+), 6 deletions(-)
->  create mode 100755 t/t6044-merge-unrelated-index-changes.sh
+cheers,
+--=20
+David
