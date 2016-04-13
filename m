@@ -1,156 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v1] Documentation: add setup instructions for Travis CI
-Date: Wed, 13 Apr 2016 10:39:36 -0700
-Message-ID: <xmqq4mb5l86f.fsf@gitster.mtv.corp.google.com>
-References: <1460526571-93634-1-git-send-email-larsxschneider@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v14 4/6] parse-options.c: make OPTION_COUNTUP respect
+ "unspecified" values
+Date: Wed, 13 Apr 2016 13:50:26 -0400
+Message-ID: <CAPig+cQ9DvpJBBqwngfweX2KwC7mTG3TO+M+B84Rcrhw9JH-Mw@mail.gmail.com>
+References: <010201540cb60832-9402a692-3caa-47a1-9e8e-ae5a1bc7eb2f-000000@eu-west-1.amazonses.com>
+	<010201540cb60971-0bf3b786-4acd-4317-bd3c-3397dc2b51f9-000000@eu-west-1.amazonses.com>
+	<CAPig+cQM_E9VgsxifBcT_XGyTCCaanNcfQEm6rU85pSNaQG7MQ@mail.gmail.com>
+	<CAFZEwPMjDxFHOdbOgqXmBoud=2gmrpfiR4Aa83_7+bjka1bk4g@mail.gmail.com>
+	<CAPig+cRUr2sgvQimGWy1WhRZ160d_RyafO-69q5hDrPCy4EMXw@mail.gmail.com>
+	<CAFZEwPPoNz0W8kqva1_nudvK2ZVjuC1zk0xzM8f6bzL1efU4OA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: larsxschneider@gmail.com
-X-From: git-owner@vger.kernel.org Wed Apr 13 19:47:48 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 13 19:50:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqOtH-0000VY-2B
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 19:47:47 +0200
+	id 1aqOw3-0001tJ-JG
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 19:50:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754553AbcDMRrh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2016 13:47:37 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63978 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752819AbcDMRrf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2016 13:47:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6AA3B12839;
-	Wed, 13 Apr 2016 13:39:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=E9lKcT/7g2yl0zIUCxvJoIMXu6c=; b=RyVPMf
-	AWtzMY8S99ZQxJoc+rheovk4nHbDJfIRsVJSeLiWJgAfaVgiogemYJzVj1t60LMb
-	xLdJ9QepMKzmGw4n/pSiQYDg6GSsvuAFH1qqUj2a5uk60zSWVWXRR0Z5JHT3DZOK
-	sTdC1zIT/UNz9Qh5OkA4UUMD6Ea/TogEhVAV0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=c6pNzlcgH+S3uwDGaSVncEKQUOBfnGhO
-	X5eJIVvWA3Ouu1q/jJY9cycx8/BwORrXXYDZAjC3UdTzyqbFK56HW55eUUIkHEir
-	M+O2sq/Up4FIdAAjO84MrUYq70PhdV1M8qPbgqlrbKBSrhHIc4O6FDb2yBH87wAV
-	twDai9OiPhQ=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 617E012838;
-	Wed, 13 Apr 2016 13:39:39 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3B8A912837;
-	Wed, 13 Apr 2016 13:39:38 -0400 (EDT)
-In-Reply-To: <1460526571-93634-1-git-send-email-larsxschneider@gmail.com>
-	(larsxschneider@gmail.com's message of "Wed, 13 Apr 2016 07:49:31
-	+0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B1E76BF0-019E-11E6-ABF3-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1753552AbcDMRue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2016 13:50:34 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:33177 "EHLO
+	mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752351AbcDMRu2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2016 13:50:28 -0400
+Received: by mail-io0-f194.google.com with SMTP id g185so7861533ioa.0
+        for <git@vger.kernel.org>; Wed, 13 Apr 2016 10:50:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=VoILDx7xqadORqO4RCLa3Foi1cZjPcZcQE4S7nU7vqw=;
+        b=qGdArVlY/skh1OSOx4l9vDEKDSBLcHdKCXPN6/8iVGrBIeRWmNzAbpx+hqnQLTXhgC
+         xYsGXJpPieURwpN+knyk+rZpXBgUhGEMa9dhIk2mXxkHqYSZa8LfuwubkrdIpgZLTosl
+         FgMMfPo0ids+PbYFP2DlAsRB4lJpnhrrUVC3y48uLtzxbifJukW36r0iWHL7Easzd256
+         Eetpk7PAlqtAuS4YprxlxYHCCV1UIMe6tWBSJCOng6HZcaW/wn3ZiMlJKPq5a2o2tWNP
+         ioICayuJxRqGTvYj9FKozs2/psqpU2np1d1THzi4Eg4XGusBUyipUCXUFLf/NvuOmnPJ
+         gdBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=VoILDx7xqadORqO4RCLa3Foi1cZjPcZcQE4S7nU7vqw=;
+        b=HNfGC9G6wS1MoWHfnImL7DRGy+my1W0flyJ1aO87e3q9lOgxihLvLkVkCF4WTyJP+a
+         XSF1nL03/2BUP3K3AkeJu1gJUrF4EHeGly2eTLXlTdwNlUrFGUP0n4qJwZP9GjEGn6g1
+         ZgudaKOpu7KG8kU3NR+yK1SMynxulsv4wPm73LJyNZiPd6FcwoLfGKeFATMpt6ShBsVu
+         uFfVYB2XlQF8sxeUytNCYNvoOJdCk6GigEkVxhfTTZce94IkeIUdiybckpAHz0076Gc3
+         f4F8Mwdky6LinM9foKHnnMMWegWV1ogroQ+sN0Z6Hcu0IcfhSeDUEgBPAaiij+h1H1I5
+         6Z/A==
+X-Gm-Message-State: AOPr4FWHhrRQUIyQHcgLBTgqNv7IuEYDZJdCReeM1W2wCJn4BXWpRj3V1Lsx1Qc8EX1dNYb61mSr8BiYilUUFQ==
+X-Received: by 10.107.8.141 with SMTP id h13mr12875406ioi.34.1460569826821;
+ Wed, 13 Apr 2016 10:50:26 -0700 (PDT)
+Received: by 10.79.139.71 with HTTP; Wed, 13 Apr 2016 10:50:26 -0700 (PDT)
+In-Reply-To: <CAFZEwPPoNz0W8kqva1_nudvK2ZVjuC1zk0xzM8f6bzL1efU4OA@mail.gmail.com>
+X-Google-Sender-Auth: YRdXl0okI3py6g_MNuH1wvrh73I
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291471>
 
-larsxschneider@gmail.com writes:
-
-> From: Lars Schneider <larsxschneider@gmail.com>
+On Wed, Apr 13, 2016 at 1:43 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+> On Wed, Apr 13, 2016 at 11:03 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> On Wed, Apr 13, 2016 at 4:39 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>>> On Wed, Apr 13, 2016 at 11:26 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>>> On Tue, Apr 12, 2016 at 7:02 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>>>>> +test_expect_success 'OPT_COUNTUP() resets to 0 with --no- flag' '
+>>>>> +       test-parse-options --no-verbose >output 2>output.err &&
+>>>>> +       test_must_be_empty output.err &&
+>>>>> +       test_cmp expect output
+>>>>> +'
+>>>>
+>>>> In my v12 review, I noticed that neither --no-verbose nor --no-quiet
+>>>> was being tested by t0040 (which is conceptually independent of the
+>>>> OPT__COUNTUP change) and suggested[3] that you add a new patch to
+>>>> address that shortcoming. This idea was followed up by [1] saying that
+>>>> this test (here) could then be dropped since the case it checks would
+>>>> already be covered by the new patch. My impression was that you
+>>>> agreed[4] that that made sense, however, this test is still here. Did
+>>>> I misunderstand your response[4]?
+>>>>
+>>>> [1]: http://article.gmane.org/gmane.comp.version-control.git/290662
+>>>> [2]: http://article.gmane.org/gmane.comp.version-control.git/289991
+>>>> [3]: http://article.gmane.org/gmane.comp.version-control.git/290655
+>>>> [4]: http://article.gmane.org/gmane.comp.version-control.git/290787
+>>>
+>>> I actually did include the tests in the patch 3/6[1]. I mentioned in
+>>> my response[2] that I will include the tests between 2/5 and 3/5.
+>>> Since, after that no email was exchanged, I thought you agreed.
+>>
+>> I'm not sure that I understand what you are saying since the
+>> --no-verbose test does not seem to be included in the patch you cite
+>> (it is instead in the present patch under discussion).
+>>
+>> Perhaps there is some miscommunication and misunderstanding.
 >
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
->  Documentation/SubmittingPatches | 39 ++++++++++++++++++++++++++++++++++++---
->  1 file changed, 36 insertions(+), 3 deletions(-)
+> Sorry for being a bit unclear.
+> I will explain this. The patch 3/6 contains the test which tests the
+> quiet option thus in turn testing whether the variable quiet becomes 0
+> with --no flag. This patch ie. 4/6 contains the test which tests the
+> verbose options thus in turn testing whether the variable verbose
+> becomes 0 with no flag. Both of them test different behavior as quiet
+> is initially 0 while verbose is initially -1.
 >
-> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-> index 98fc4cc..79e9b33 100644
-> --- a/Documentation/SubmittingPatches
-> +++ b/Documentation/SubmittingPatches
-> @@ -63,10 +63,43 @@ t/README for guidance.
->  When adding a new feature, make sure that you have new tests to show
->  the feature triggers the new behaviour when it should, and to show the
->  feature does not trigger when it shouldn't.  Also make sure that the
-> +test suite passes after your commit.
+> So finally what I wanted to achieve is that I should test --no-quiet
+> in 3/6 as till then this new behavior is not yet introduced. Thus, it
+> will confirm the wanted behavior which exists before 4/6.
+>
+> This patch introduces a test to verify whether --no-verbose makes the
+> variable 0. This patch introduces a new "unspecified" behavior. Thus
+> we can test this new behavior with this.
+>
+> I hope now it is a bit clear on what I want to do.
 
-This is not a new issue, but it sounds as if you do not have to test
-if you are not doing a new shiny toy.  Perhaps we should rephrase
-the last sentence a bit.
-
-	After any code change, make sure that the entire test suite
-	passes.  After any documentation change, make sure that the
-	resulting documentation set formats well.
-
-By the way, can you teach our Travis thing to check for the "make
-doc" failures?
-
-> +We recommend to use our CI infrastructure to ensure your new feature
-> +passes all existing tests as well as your new tests on Linux, Mac, and
-> +(hopefully soon) Windows.  Follow these steps for the initial setup:
-> +
-> + (1) Sign in to GitHub: https://github.com
-> +     Please sign up first if you haven't already, it's free.
-
-Three issues:
-
- * None of the things utilized by the reader of this section looks
-   like "our" infrastructure to me.
-
- * The above makes it sound as if we recommend everybody to become
-   GitHub customer, which is not really the case.
-
- * This is overly long and deserves to be its own separate section,
-   just like we have MUA specific hints, this is GitHub-Travis
-   specific hints.
-
-How about just saying
-
-	If you have an account at GitHub (and you can get one for
-	free to work on open source projects), you can use their
-	Travis CI integration to test your changes on Linux, Mac,
-	and (hopefully soon) Windows.  See GitHub-Travis CI hints
-	section for details.
-	
-here, create a "GitHub-Travis CI hints" section just before "MUA
-specific hints" section, and move these numbered entries and the two
-paragraphs that follow to the new section.  As the introductory text
-for the new section itself, it may make sense to repeat a rephrased
-version of the above there, e.g.
-
-	--------------------------------------------------
-        GitHub-Travis CI hints
-
-	With an account at GitHub (you can get one for free to work
-	on open source projects), you can use Travis CI to test your
-	changes on Linux, Mac, and (hopefully soon) Windows.
-
-	Follow these steps for the initial setup:
-
-	(1) ...
-        
-
-I'd mildly prefer to leave "Please sign up first" line out
-of the first entry.
-
-> + ...
-> + (7) Enable Travis CI builds for your Git fork
-> +
-> +After the initial setup you can push your new feature branches to your
-> +Git fork on GitHub and check if they pass all tests here:
-> +https://travis-ci.org/<Your GitHub handle>/git/branches
-> +
-> +If they don't pass then they are marked "red". If that happens then
-> +click on the failing Travis CI job and scroll all the way down in the
-> +log. Find the line "<-- Click here to see detailed test output!" and
-> +click on the triangle next to the log line number to expand the detailed
-> +test output (example: https://travis-ci.org/git/git/jobs/122676187).
-> +Fix the problem and push an updated commit to your branch to ensure
-> +all tests pass.
-> +
-> +Do not forget to update the documentation to describe the updated
-> +behaviour of your new feature. It is currently a liberal mixture of US
->  and UK English norms for spelling and grammar, which is somewhat
->  unfortunate.  A huge patch that touches the files all over the place
->  only to correct the inconsistency is not welcome, though.  Potential
+Sorry, it's not clearer. I understand what you're trying to do, but it
+still seems to be the a less desirable (and more complex) approach
+since it's mixing conceptually distinct notions and mismatching them
+with changes in the wrong patches. But, perhaps my notion of
+"conceptually distinct" is different from yours and vice-versa.
