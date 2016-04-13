@@ -1,120 +1,90 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: 0 bot for Git
-Date: Wed, 13 Apr 2016 08:11:54 +0200
-Message-ID: <88CF8CB5-4105-4D0C-8064-D66092169111@gmail.com>
-References: <CAGZ79kYWGFN1W0_y72-V6M3n4WLgtLPzs22bWgs1ObCCDt5BfQ@mail.gmail.com> <CAGZ79kZOx8ehAB-=Frjgde2CDo_vwoVzQNizJinf4LLXek5PSQ@mail.gmail.com> <vpq60vnl28b.fsf@anie.imag.fr> <CAGZ79kaLQWVdehMu4nas6UBpCxnAB_-p=xPGH=aueMZXkGK_2Q@mail.gmail.com> <vpqoa9ea7vx.fsf@anie.imag.fr> <xmqqmvoypn7g.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Stefan Beller <sbeller@google.com>, lkp@intel.com,
-	Greg KH <gregkh@linuxfoundation.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 13 08:12:05 2016
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v14 6/6] commit: add a commit.verbose config variable
+Date: Wed, 13 Apr 2016 02:14:23 -0400
+Message-ID: <CAPig+cTcCyGu5Y8aHbE3i6fXh3T_mD0ZiuxPFh=DVHOE38pE5w@mail.gmail.com>
+References: <010201540cb60832-9402a692-3caa-47a1-9e8e-ae5a1bc7eb2f-000000@eu-west-1.amazonses.com>
+	<010201540cb60966-e9711378-3b22-4fbb-a2c7-f6876a6fb3c6-000000@eu-west-1.amazonses.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 13 08:14:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqE21-0000uF-0Y
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 08:12:05 +0200
+	id 1aqE4P-0001nW-I6
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Apr 2016 08:14:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965557AbcDMGMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Apr 2016 02:12:00 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:35981 "EHLO
-	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965424AbcDMGL7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2016 02:11:59 -0400
-Received: by mail-wm0-f49.google.com with SMTP id v188so154993340wme.1
-        for <git@vger.kernel.org>; Tue, 12 Apr 2016 23:11:58 -0700 (PDT)
+	id S933721AbcDMGO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Apr 2016 02:14:27 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:32869 "EHLO
+	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933260AbcDMGOY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2016 02:14:24 -0400
+Received: by mail-io0-f193.google.com with SMTP id g185so5507594ioa.0
+        for <git@vger.kernel.org>; Tue, 12 Apr 2016 23:14:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=908ujJkLUUeknqquyGOgkCBQkMMnRPJRGN+VZSEgebE=;
-        b=lD6tz4lZr8B4GBsYYSvBUPCGCPOLDO4SsA6opgqAt81SiFqZ/2SueBthz+OpSbba+B
-         jN/imrBq7/pMoIpyK3Wsoy8U+pFMsiyoODUJeO9O6WGw0e5TqSdem2d93TuUT0wtYxyx
-         ulyLRS/BWTfFUhnMI/VKnwMZxfXyySHOmocddiKbXRJV30cQTq/ZwKu3GAaYGmSSJNIh
-         8XH5M4IZGA4d5uzHXa9N6QBcp0A+IR0pjKHNbeKWRgQOk9dP1INjqkr5zqGnWzlnVTzj
-         axibkWzHvRs4ZBe8jzOdSIqJtYNqDg5+KjFcToxKPkawDEmR0hsbIEJcYdwEZrtHOTJ0
-         f7Dw==
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=q9eZMBM09URAr6tAOGMRzryfm6cXIl52lDTk+/n8Ah0=;
+        b=o/V3e/qYX7D3PJKiWLqVx8C6Kid9UdFamnrMjsXLoL9SUMlb9S8d/1PP3SYBea4k9l
+         cQ44HhFuvJMiTG5tYWmgV7cygiqfwy1AA0Wu463qeLuEzZ3mAXY4H6gD30912nLRjYg/
+         bVKtPc0YVdfVFcUSo4Fom/z2sxGHby5aiVnBruFyjAVLaj7TSmqw689GtBaRhP0nB3OX
+         /LIC6CG9ZQvGQAj+u8op1QmU3DiCBnqxd5i+BiD6mkphzBBYBFqv+gG54o03Dl5CsvoC
+         ZoD+YMul6puEdRv2J2WTTK/wKYBGdfa3gKwQTTq69BU92zWgbsUkbl92bDZJOEHucvOW
+         fE4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=908ujJkLUUeknqquyGOgkCBQkMMnRPJRGN+VZSEgebE=;
-        b=HOFXo7rLxQgeVURdMhK40qYRts0yFZpzH/OrKbdtWI6zwtCO/PQVrW+sHht1pcX73A
-         osszmnz/z6xaq7PIofGu10gyFnSpl2F6zXUN7+SAfWQv4JE4R7LlcrneTeDCXSYOv2hY
-         fpdUU8Zs1ETXix1Np0B/b9wZENF5klmDoOb0sYw2/GNZChahyysji/kqj8snsJsJENYz
-         HbR1FFO16u0L+AQH/qy6Jm/ZuHjrXmKM9hj+V3/G/iaJ0ZF9XbW6jOSe7Em27VstjrWh
-         RhcEVfXy4nVr9Sf1INB+O4tavskmbXazdG+pBAGpTTf73EEJlZGLdqW27KF/kjTw2NzO
-         HBOg==
-X-Gm-Message-State: AOPr4FW96EfRfDOtZU7BTVvtRwWTdwjvJkqUx5J1Puk48dAiwIW7gY/5vEplgLkDDOltGg==
-X-Received: by 10.28.170.137 with SMTP id t131mr8755542wme.32.1460527917492;
-        Tue, 12 Apr 2016 23:11:57 -0700 (PDT)
-Received: from slxbook3.fritz.box (p508BA361.dip0.t-ipconnect.de. [80.139.163.97])
-        by smtp.gmail.com with ESMTPSA id o128sm26142965wmb.19.2016.04.12.23.11.55
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 12 Apr 2016 23:11:56 -0700 (PDT)
-In-Reply-To: <xmqqmvoypn7g.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Apple Mail (2.1878.6)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=q9eZMBM09URAr6tAOGMRzryfm6cXIl52lDTk+/n8Ah0=;
+        b=dlufQNQaniXPwm/ohzlV/8Ekj+wvEoqu2AreJgq/lYJImB4TbVLNZRBP3dmw+C9r5i
+         o7O5xkF53yKV+IEReUskCrdjx7zNYFN5Fp6MFH8cr0WRBIXM1r4fedAQjfRgt1rCfkE1
+         J8WJKNTJ0ZEeU0Ci+sbmUAf6zU8Ea0QNPdwUBJdc+gN1T4SdP2bl5FNa6anTSlPyxCBY
+         BoXC+5JG4fELMkiwFMKVunke0RpF+mEI8sdIeHPKN5BZ7yAzZuEuAjrVGjhi9jzwECqJ
+         2VFBpPSjgT3H7XbRb0NHbRKMb/hUcML3O+IWNeZZkpvzK0Wuh6egdT+0unE6bPtqUkaF
+         aMjA==
+X-Gm-Message-State: AOPr4FWzLLStxZYL1xYIayDE3y0i9KJODb6E7zVhEQrIlJnuefQIf4afnWOXkgQ5FkFtLVYUqBStDuYk6Cs3Pg==
+X-Received: by 10.107.8.141 with SMTP id h13mr9057855ioi.34.1460528063604;
+ Tue, 12 Apr 2016 23:14:23 -0700 (PDT)
+Received: by 10.79.139.71 with HTTP; Tue, 12 Apr 2016 23:14:23 -0700 (PDT)
+In-Reply-To: <010201540cb60966-e9711378-3b22-4fbb-a2c7-f6876a6fb3c6-000000@eu-west-1.amazonses.com>
+X-Google-Sender-Auth: jW8DvuNg3E4Nmt-ndsFK0dyGUDY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291375>
 
+On Tue, Apr 12, 2016 at 7:02 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+> Add commit.verbose configuration variable as a convenience for those
+> who always prefer --verbose.
+>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+> ---
+> diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
+> @@ -98,4 +98,60 @@ test_expect_success 'verbose diff is stripped out with set core.commentChar' '
+> +test_expect_success 'status ignores commit.verbose=true' '
+> +       git -c commit.verbose=true status >actual &&
+> +       ! grep "^diff --git" actual
+> +'
 
-On 12 Apr 2016, at 22:49, Junio C Hamano <gitster@pobox.com> wrote:
+I understand what this test is checking, as it is in response to
+Junio's suggestion[1]...
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-> 
->> But my point wasn't to say "we already have everything we need", but
->> rather "we already have part of the solution, so an ideal complete
->> solution could integrate with it".
-> 
-> Yes.  That is a good direction to go.
-> 
-> They may already have part of the solution, and their half may be
-> better than what we have, in which case we may want to switch, but
-> if what we have already works well there is no need to.
-> 
->> I don't know how 0 bot solves this, but the obvious issue with this
->> approach is to allow dealing with someone sending a patch like
->> 
->> +++ Makefile
->> --- Makefile
->> +all:
->> +	rm -fr $(HOME); sudo rm -fr /
->> 
->> to the list. One thing that Travis gives us for free is isolation:
->> malicious code in the build cannot break the bot, only the build
->> itself.
-> 
-> True, presumably the Travis integration already solves that part, so
-> I suspect it is just the matter of setting up:
-> 
-> - a fork of git.git and have Travis monitor any and all new
->   branches;
-> 
-> - a bot that scans the list traffic, applies each series it sees to
->   a branch dedicated for that series and pushes to the above fork.
-> 
-> isn't it?
+> +test_expect_success 'status does not verbose without --verbose' '
+> +       git status >actual &&
+> +       ! grep "^diff --git" actual
+> +'
 
-Mailing list users can already use Travis CI to check their patches
-prior to sending them. I just posted a patch with setup instructions
-(see $gmane/291371).
+But what is this test checking?
 
-@Junio:
-If you setup Travis CI for your https://github.com/gitster/git fork
-then Travis CI would build all your topic branches and you (and 
-everyone who is interested) could check 
-https://travis-ci.org/gitster/git/branches to see which branches 
-will break pu if you integrate them.
+> +
+>  test_done
 
-I talked to Josh Kalderimis from Travis CI and he told me the load
-wouldn't be a problem for Travis CI at all.
-
-- Lars
+[1]: http://article.gmane.org/gmane.comp.version-control.git/288648
