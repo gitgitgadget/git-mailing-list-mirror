@@ -1,123 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [Bug?] "git commit --amend" always gives author-date to summary?
-Date: Thu, 14 Apr 2016 14:07:50 -0700
-Message-ID: <xmqqh9f3gaqh.fsf@gitster.mtv.corp.google.com>
+From: Isaac Levy <isaac.r.levy@gmail.com>
+Subject: Re: Default authentication over https?
+Date: Thu, 14 Apr 2016 17:32:16 -0400
+Message-ID: <CAPf1peDf_YbDsaz1ykvzKLkdUWtSqrHT7yrgfUgjE4R1eS4r6g@mail.gmail.com>
+References: <CAPf1peAW11hZpN6_ztA62tcu6mgCfV3VwwjjtXT5yySUPD9Qpw@mail.gmail.com>
+ <20160413223613.GB10011@sigill.intra.peff.net> <alpine.DEB.2.20.1604141142190.23813@tvnag.unkk.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 14 23:08:08 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+To: Daniel Stenberg <daniel@haxx.se>
+X-From: git-owner@vger.kernel.org Thu Apr 14 23:33:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqoUh-0007uK-E9
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 23:08:07 +0200
+	id 1aqoso-00041R-8g
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 23:33:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751986AbcDNVIA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2016 17:08:00 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63757 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751980AbcDNVH7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2016 17:07:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D787412EE3;
-	Thu, 14 Apr 2016 17:07:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=G
-	mXratFRHOKeL82CQ3coc5+PC8M=; b=LwXHgG7QYnZLfJQSnk/d241K8rDUVIB98
-	k7VS5giBX+IipLAavk/Ez5srmNLTUNX9GNtlgGRCdcAYVSOs5ySySoNJBl7m4Xcr
-	7kKGdv5IP/qJyRzWYfd6hv3Y6ytHoi+wqeB1nHd3zQ7qLHdyzboIRhlsGQkyRh/E
-	BDVcvfswRE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; q=dns; s=
-	sasl; b=yTPLazjy9I+6ZKqv0cjL2JJy/0VWqRIc4CLO0hsNiCSuntiKrJ9O3etK
-	y4ugiy518bBxwN+0NEUCdGhH5lEmcUBMz+cYXLXcabslaSyEld6SWD8HfLv8oAfn
-	HTPAIRBtCOFC1NjnX1nIGKj5Y3w/CnnLko+HO/yvyclrC11Dxvo=
-Received: from pb-smtp2. (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id CF73E12EE2;
-	Thu, 14 Apr 2016 17:07:52 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BB82612EE1;
-	Thu, 14 Apr 2016 17:07:51 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F30A2262-0284-11E6-9808-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1751944AbcDNVc5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2016 17:32:57 -0400
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:36410 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751824AbcDNVc4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2016 17:32:56 -0400
+Received: by mail-ig0-f181.google.com with SMTP id f1so4592091igr.1
+        for <git@vger.kernel.org>; Thu, 14 Apr 2016 14:32:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=AtUloWRzyP8nQAgvNZhrseCMf9X/izK5gGDoNQuOZYc=;
+        b=V4p+UYsB/zStZwWm2QlT5ebj2XXfcbFxBONOJnuRwe0in9DcNM2jsf7Gxlcs48S5BJ
+         LRkH1bBOJOWD8GDCh4ytyqSSMnbHna81ZLL0ZBXJG4P7mvsCIxlUqH19YTzHk2AnidyK
+         Qa11CSo8+yuqV8Ef+cpx/hT/LJdHpj9odFcQpG3Alb4Xt50GxvOCP2z1pM38jQiH63gX
+         Mm6VfysEioB5dgYpdwERTop2rzLdgell2Yfq+4wNgxV4YmKplqegBH61sH2NCK1i9eqW
+         YMcfIcnr0tXe2J+Ah8s9M5LNEwRXSXOxcM3+LTnx/LiMrHde/hsdkRkP+dtNiQtSGXZV
+         aVtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=AtUloWRzyP8nQAgvNZhrseCMf9X/izK5gGDoNQuOZYc=;
+        b=JXHCcHFq/a9JC6xYYksPbf9/5xRHhrPPVADaZGoes8KjSarnq2r1YWf1DwrDU8l3qn
+         SBSipOcVe7rX61g2Y4CwHbITHlklkpVTP7mHwMx+vjs1l+J2dY6ivWGLpxRId52UxgD2
+         E4sAzT2oViwrgSFMMRNJnds/om6vUn78DH722aC7WTyHAc40C6HzH2XL48+f2R7EtwV2
+         0loeIYO4Ro5EDfyBST+xQxtLjqlIM+flIy5sBqp3x0NosxZ1+QDekJ2QgFvbp115G6b2
+         k5XuEhereNrREIwFFyXnr++PAkyUq64k4pueEhXZMdxggsAL0vges2RN4VAscHLk/Ohg
+         JHaA==
+X-Gm-Message-State: AOPr4FWOiVX/dGic5eHRyShiXAhYICfeD00pipxVt2yegfbDlNCaNNsAIbA0aDiuxINqYLhuFSNTSCRk7opzuQ==
+X-Received: by 10.50.226.179 with SMTP id rt19mr908935igc.36.1460669575773;
+ Thu, 14 Apr 2016 14:32:55 -0700 (PDT)
+Received: by 10.107.41.202 with HTTP; Thu, 14 Apr 2016 14:32:16 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1604141142190.23813@tvnag.unkk.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291567>
 
-A simple reproduction.  Doing one of these
+After the authenticated request, curl says it's keeping the connection
+open, but the next fetch seems to do two handshakes again.  The
+unauthenticated request closes the connection, so the 2nd handshake is
+forced, but I'm not sure why subsequent git fetches still do
+handshakes.  I did a bit of sleuthing w/ source, GIT_CURL_VERBOSE and
+wireshark.
 
-    $ git commit --amend --no-edit
-    $ echo >MSG frotz; git commit --amend -F MSG
+We're using GitHub enterprise -- it'd just be nice if there was a
+better way to configure for super fast fetches.  ssh with cached
+connections does avoid the SSL this overhead -- though as I recall git
+protocols over ssh are less performant.
 
-on any commit, whether it is your own commit or somebody else's,
-seems to always show the "Date:" of the original commit, e.g.
+Finally I also checked out the persistent-https contrib section as a
+workaround but couldn't get it to work. Is that project dead?
 
-    $ git checkout v2.8.0^0
-    $ git commit --amend --no-edit
-    [detached HEAD a6f2a14] Git 2.8
-     Date: Mon Mar 28 12:19:45 2016 -0700
-     3 files changed, 14 insertions(+), 9 deletions(-)
-    $ git checkout v2.8.0^^2
-    $ git commit --amend --no-edit
-    [detached HEAD df9f57e] Documentation: fix git-p4 AsciiDoc formatting
-     Author: Lars Schneider <larsxschneider@gmail.com>
-     Date: Wed Mar 23 11:59:01 2016 +0100
-     1 file changed, 3 insertions(+), 5 deletions(-)
+Thank you for your replies and support.
 
-I can understand the latter, but I am not sure if it makes sense to
-do the former.  The output is coming from b7242b8c (commit: print
-"Date" line when the user has set date, 2014-05-01), whose objective
-I can agree with, but does not seem to match the use case.
+Regards,
+Isaac
 
-    commit: print "Date" line when the user has set date
-    
-    When we make a commit and the author is not the same as the
-    committer (e.g., because you used "-c $commit" or
-    "--author=$somebody"), we print the author's name and email
-    in both the commit-message template and as part of the
-    commit summary. This is a safety check to give the user a
-    chance to confirm that we are doing what they expect.
-    
-    This patch brings the same safety for the "date" field,
-    which may be set by "-c" or by using "--date".  Note that we
-    explicitly do not set it for $GIT_AUTHOR_DATE, as it is
-    probably not of interest when "git commit" is being fed its
-    parameters by a script.
-
-When doing "--amend", not updating the author-date is the norm.
-Also, I think the output is meant to accompany with the reminder to
-say "You are committing somebody else's change", but in the first
-case of amending v2.8.0^0, "the author is not the same as the
-committer" does not apply, either.
-
-The commit in question, b7242b8c, brings in a test for amend to
-7501, like this:
- 
-    test_expect_success 'commit mentions forced date in output' '
-            git commit --amend --date=2010-01-02T03:04:05 >output &&
-            grep "Date: *Sat Jan 2 03:04:05 2010" output
-    '
-
-But if I change it like this:
-
-    test_expect_success 'amend always mentions date in output' '
-            git commit --amend >output &&
-            grep "Date: " output
-    '
-
-the test still passes.
-
-I suspect that there are people who are already depending on this
-behaviour, so it may not be worth fixing, but I found it somewhat
-irritating (especially after wasting about an hour or so doing wild
-goose chase trying to find a stray invocation of "date" somewhere in
-my script that eventually uses "git commit --amend").
-
-Thoughts?
+On Thu, Apr 14, 2016 at 5:46 AM, Daniel Stenberg <daniel@haxx.se> wrote:
+> On Wed, 13 Apr 2016, Jeff King wrote:
+>
+>> However, I don't think even that would give you what you want. Because I
+>> think that even if we provide a credential, curl will make an initial
+>> request (presumably to find out which auth type it should use, but that
+>> is just a guess). I don't know if there is a way to convince curl to
+>> stick the credential in the first request
+>
+>
+> curl supports this. but then you must do exactly that: tell libcurl to use
+> that single auth method only. It will of course make it fail if you select
+> the wrong method etc.
+>
+> The unauthenticated first request is both to probe for which methods the
+> server wants, but also works for the case when users provide credentials
+> without the server actually ending up asking for them...
+>
+> --
+>
+>  / daniel.haxx.se
