@@ -1,102 +1,111 @@
-From: Eric Deplagne <Eric@Deplagne.name>
-Subject: Re: Merge conflicts are reported relative to root not cwd
-Date: Thu, 14 Apr 2016 09:53:00 +0200
-Message-ID: <20160414075300.GA16358@mail.eric.deplagne.name>
-References: <CAGZ79kbVfk=yAK3UB=H385_YfAtMHZe-gSE=EYVvvcS8jjy08A@mail.gmail.com> <xmqq4mb5jhm7.fsf@gitster.mtv.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Ambiguous sha-1 during a rebase
+Date: Thu, 14 Apr 2016 11:09:06 +0200
+Message-ID: <vpqr3e8wo99.fsf@anie.imag.fr>
+References: <20160413222919.GA10474@glandium.org>
+	<xmqqr3e9i10b.fsf@gitster.mtv.corp.google.com>
+	<20160413225234.GA21602@glandium.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="0PQOkvCAw33/u/bm"
-Cc: Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 14 10:35:19 2016
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Apr 14 11:09:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqck5-0005N4-Al
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 10:35:13 +0200
+	id 1aqdHW-0005tp-CH
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 11:09:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754149AbcDNIfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2016 04:35:04 -0400
-Received: from goldorak5.eric.deplagne.name ([213.246.56.18]:51767 "EHLO
-	exim4.goldorak5.eric.deplagne.name" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753569AbcDNIfA (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2016 04:35:00 -0400
-X-Greylist: delayed 2514 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Apr 2016 04:35:00 EDT
-Received: from [192.168.0.4] (helo=mail.eric.deplagne.name)
-	by exim4.goldorak5.eric.deplagne.name with esmtp (Exim 4.72)
-	(envelope-from <Eric@Deplagne.name>)
-	id 1aqc5E-0004gw-Jy; Thu, 14 Apr 2016 09:53:00 +0200
-Received: from deplagne by mail.eric.deplagne.name with local (Exim 4.69)
-	(envelope-from <Eric@Deplagne.name>)
-	id 1aqc5E-0004gr-J2; Thu, 14 Apr 2016 09:53:00 +0200
-Content-Disposition: inline
-In-Reply-To: <xmqq4mb5jhm7.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754577AbcDNJJl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2016 05:09:41 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:41224 "EHLO mx2.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754531AbcDNJJj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2016 05:09:39 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u3E995bg005406
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 14 Apr 2016 11:09:05 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u3E996rY028954;
+	Thu, 14 Apr 2016 11:09:06 +0200
+In-Reply-To: <20160413225234.GA21602@glandium.org> (Mike Hommey's message of
+	"Thu, 14 Apr 2016 07:52:34 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Thu, 14 Apr 2016 11:09:06 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u3E995bg005406
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1461229746.45826@WnZ8Y+YabsaKv64L7AGZzw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291515>
+
+Mike Hommey <mh@glandium.org> writes:
+
+> On Wed, Apr 13, 2016 at 03:42:44PM -0700, Junio C Hamano wrote:
+>> Mike Hommey <mh@glandium.org> writes:
+>> 
+>> > Should git-rebase use full sha-1s under the hood to avoid these type of
+>> > races?
+>> 
+>> It already should be doing so since Aug 2013, IIRC.
+>
+> I'm using 2.8.1. Would there have been a regression?
+
+I guess you managed to get into a corner-case which isn't managed
+properly. With my git version 2.8.1.53.g7ee34ab, I just checked the
+normal use-case:
+
+$ git rebase -i HEAD^^
+
+The editor pops up with short sha1. I insert a "exec false" like this:
+
+,----[ git-rebase-todo ]
+| pick 0c722f9 foo
+| exec false
+| pick 6305d56 commited
+`----
+
+The execution goes on like this:
+
+  Executing: false
+  Execution failed: false
+  You can fix the problem, and then run
+  
+          git rebase --continue
+  
+
+And I can check:
+
+$ cat .git/rebase-merge/git-rebase-todo
+pick 6305d56f7218b6f04451bab3ff27adb80dd6dad4 commited
+...
 
 
---0PQOkvCAw33/u/bm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I suspect you did:
 
-On Wed, 13 Apr 2016 14:58:40 -0700, Junio C Hamano wrote:
-> Stefan Beller <sbeller@google.com> writes:
->=20
-> > $ cd t/
-> > $ git merge ...
-> > ...
-> > Auto-merging builtin/submodule--helper.c
-> > Auto-merging builtin/fetch.c
-> > CONFLICT (content): Merge conflict in builtin/fetch.c
-> > Auto-merging builtin/clone.c
-> > Auto-merging README.md
-> > ...
-> >
-> > It should say ../builtin/fetch.c IMHO.
-> > Any reason to keep the old behavior?
->=20
-> I actually prefer to see the "relative to root" behaviour when it
-> comes to things like this, that lets you view the things that happen
-> in the whole-tree context.
->=20
-> I would have to go insane before I start a whole-tree operation like
-> "git merge" from deep in my tree, but if I happened to do that, e.g.
->=20
-> 	cd perl/blib/lib/Git/SVN/Memoize
->         git merge other-branch
->=20
-> I'd rather see that the conflicted path, e.g. builtin/fetch.c,
-> reported by showing it like the above output, not happening in
-> ../../../../../../builtin/fetch.c which I have to count the
-> up-dots to know which file it is talking about.
+$ git rebase -i
+# editor pops up
+# switch to another terminal and fetch from elsewhere
+# close editor
 
-  From my use of git, I'd really love to be able to copy/paste=20
-  ../../../../../../builtin/fetch.c to some vi (or anything else)=20
-  command line instead of having vi (or whatever) bark that
-  it does not know where builtin/fetch.c is.
+Then only, git turns short sha1s into long ones, and does not have the
+information to resolve ambiguities.
 
---=20
-  Eric Deplagne
+We could save a map (short -> long) before poping the editor and use
+this map in priority when normalizing the todo-list to use long sha1s,
+but we currently don't.
 
---0PQOkvCAw33/u/bm
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+But I'm tempted to say that you just went very, very unlucky, and it's
+not worth fixing ...
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iD8DBQFXD0xcej7DisjVpq4RAjvIAJ4j5q8JhcYhUAvgj2fNgtvXPkkcywCffsB2
-9wbXb0C+mFoE+ANa6I7ipmM=
-=ubaD
------END PGP SIGNATURE-----
-
---0PQOkvCAw33/u/bm--
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
