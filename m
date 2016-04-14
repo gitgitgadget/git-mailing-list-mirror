@@ -1,75 +1,132 @@
-From: Theodore Ts'o <tytso@mit.edu>
-Subject: Re: Migrating away from SHA-1?
-Date: Thu, 14 Apr 2016 18:40:51 -0400
-Message-ID: <20160414224051.GD16656@thunk.org>
-References: <570D78CC.9030807@zytor.com>
- <CAGZ79kaUN0G7i0GNZgWU7ZzJvWY=k=Rc6tqWvJsTu8gcRhP5bA@mail.gmail.com>
- <1460502934.5540.71.camel@twopensource.com>
- <20160414015324.GA16656@thunk.org>
- <1460654583.5540.87.camel@twopensource.com>
- <71A5D062-FCCD-42E5-80A8-AA9D8DE20604@zytor.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH/RFC] ll-merge: use a longer conflict marker for internal merge
+Date: Thu, 14 Apr 2016 15:57:47 -0700
+Message-ID: <xmqqy48fer2s.fsf@gitster.mtv.corp.google.com>
+References: <xmqqbn5bg7r4.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Turner <dturner@twopensource.com>,
-	Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Fri Apr 15 00:41:04 2016
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 15 00:57:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqpwc-0005jt-ER
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 00:41:02 +0200
+	id 1aqqCy-0005RA-8K
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 00:57:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752232AbcDNWk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2016 18:40:57 -0400
-Received: from imap.thunk.org ([74.207.234.97]:56582 "EHLO imap.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752108AbcDNWk4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2016 18:40:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org; s=ef5046eb;
-	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=Aqp1DpP0cV9DPoM3gaD1mFXvL5Pgue/84Gwx5hbcCC0=;
-	b=DWC2FV9RhZfjz8fLUDVLZtiZtoYwymcSpnih33Q7pZumYJ36TfMfxo+U9aiorWf36kCnc6KYOh9yzPlDgUbYsMG8ZmdVRiFLePjl865l+8ewa0w0sAf+deT5PYDkPlwMCziZPfm242Oniobt3Ao1dqHIGkb+4Q+2WP8U1mA9N8I=;
-Received: from root (helo=closure.thunk.org)
-	by imap.thunk.org with local-esmtp (Exim 4.84)
-	(envelope-from <tytso@thunk.org>)
-	id 1aqpwT-0003J8-0h; Thu, 14 Apr 2016 22:40:53 +0000
-Received: by closure.thunk.org (Postfix, from userid 15806)
-	id BAE3782F142; Thu, 14 Apr 2016 18:40:51 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <71A5D062-FCCD-42E5-80A8-AA9D8DE20604@zytor.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+	id S1752158AbcDNW5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2016 18:57:51 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65287 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751044AbcDNW5u (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2016 18:57:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 611E0133B3;
+	Thu, 14 Apr 2016 18:57:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dcnVeIhoSAS/qXha4Ky3DVHdwWg=; b=tqUlxF
+	TmENIfjtDSL55W4ogZL3wUuW5KK0W8PTEetRrb4q6LGweis388PbZU2slRJSVQJw
+	ucTz8vf/ZXozeQ5UOpsQZLPUK7PktIVhVoLjlHdXm0dl7Fw80tc7+ORrF3IEthIp
+	b3It7dzAtZi+Wnnh+MZnqF9oAj2TRCKabk1ms=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KP8T/W3klbX/FL1duVwW5VthFk8f8FtE
+	Y/CRZMcpjBL9zEt5MVadsqlB/JhL3JkeZG61TOtV1wougNYH2vu+416TAz12Rvkc
+	/ft0aAu4P5xdtd6kuIayVsYoW8qp0zd+YSk/LXX2LsLA/AKORwmSq12UJGRGCmVh
+	3glSXWdr9n8=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 596BC133B2;
+	Thu, 14 Apr 2016 18:57:49 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A473C133B1;
+	Thu, 14 Apr 2016 18:57:48 -0400 (EDT)
+In-Reply-To: <xmqqbn5bg7r4.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 14 Apr 2016 15:12:15 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 4F19783C-0294-11E6-9192-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291575>
 
-On Thu, Apr 14, 2016 at 10:28:50AM -0700, H. Peter Anvin wrote:
-> 
-> Either way, I agree with Ted, that we have enough time to do it
-> right, but that is a good reason to do it sooner rather than later
-> (see also my note about freezing the cryptographic properties.)
+The primary use of conflict markers is to help the user who resolves
+the final (outer) merge by hand to show which part came from which
+branch by separating the blocks of lines apart.  When the conflicted
+parts from a "virtual ancestor" merge created by merge-recursive
+remains in the common ancestor part in the final result, however,
+the conflict markers that are the same size as the final merge
+become harder to see.
 
-Sure, I think we should do it as well.  But the fact that the attacker
-will likely need to get a commit into the tree in order to be able to
-carry out a collision attack means that it's easier (and probably less
-detectable) to get some underhanded C code into the tree.  For one
-thing, you just need to introduce it via a patch ("Hi, I'm super eager
-newbie Nick, here's a cleanup patch!"), as opposed to getting a
-sublieutenant to accept a git pull request.
+Increase the conflict marker size slightly for these inner merges so
+that the markers from the final merge and cruft from internal merge
+can be distinguished more easily.
 
-Also, remember that while we can write programs that look for
-suspicious git objects that have stuff hidden after the null
-terminator (in fact, maybe that would be a good thing to add to git,
-hmmm?), the state of the art in detecting underhanded C code which is
-deliberately designed to not be noticed by static code checkers (or
-humans doing a superficial code review, for that matter) is not
-particularly encouraging to me.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ * This would help reduce the common issue that prevents "rerere"
+   from being used on a really complex conflict.  I have another
+   (arguably riskier) patch that teaches rerere's parser to ignore
+   "<<<" and ">>>" markers that says "Temporary merge branch " at
+   the end of the line that achives a similar effect, but I think
+   this may be a cleaner solution, partly because it also deals with
+   "===" and "|||" lines that do not have such a clue to help
+   rerere's parser.
 
-						- Ted
+ ll-merge.c                        | 8 ++++++--
+ t/t6024-recursive-merge.sh        | 2 +-
+ t/t6036-recursive-corner-cases.sh | 3 ++-
+ 3 files changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/ll-merge.c b/ll-merge.c
+index 5c73274..e5ff7f6 100644
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -376,8 +376,12 @@ int ll_merge(mmbuffer_t *result_buf,
+ 		}
+ 	}
+ 	driver = find_ll_merge_driver(ll_driver_name);
+-	if (opts->virtual_ancestor && driver->recursive)
+-		driver = find_ll_merge_driver(driver->recursive);
++
++	if (opts->virtual_ancestor) {
++		if (driver->recursive)
++			driver = find_ll_merge_driver(driver->recursive);
++		marker_size += 2;
++	}
+ 	return driver->fn(driver, result_buf, path, ancestor, ancestor_label,
+ 			  ours, our_label, theirs, their_label,
+ 			  opts, marker_size);
+diff --git a/t/t6024-recursive-merge.sh b/t/t6024-recursive-merge.sh
+index 755d30c..3f59e58 100755
+--- a/t/t6024-recursive-merge.sh
++++ b/t/t6024-recursive-merge.sh
+@@ -76,7 +76,7 @@ test_expect_success "result contains a conflict" "test_cmp expect a1"
+ 
+ git ls-files --stage > out
+ cat > expect << EOF
+-100644 439cc46de773d8a83c77799b7cc9191c128bfcff 1	a1
++100644 ec3fe2a791706733f2d8fa7ad45d9a9672031f5e 1	a1
+ 100644 cf84443e49e1b366fac938711ddf4be2d4d1d9e9 2	a1
+ 100644 fd7923529855d0b274795ae3349c5e0438333979 3	a1
+ EOF
+diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
+index a86087b..cc1ee6a 100755
+--- a/t/t6036-recursive-corner-cases.sh
++++ b/t/t6036-recursive-corner-cases.sh
+@@ -217,7 +217,8 @@ test_expect_success 'git detects differently handled merges conflict' '
+ 		-L "" \
+ 		-L "Temporary merge branch 1" \
+ 		merged empty merge-me &&
+-	test $(git rev-parse :1:new_a) = $(git hash-object merged)
++	sed -e "s/^\([<=>]\)/\1\1\1/" merged >merged-internal &&
++	test $(git rev-parse :1:new_a) = $(git hash-object merged-internal)
+ '
+ 
+ #
+-- 
+2.8.1-367-g5b624f2
