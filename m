@@ -1,91 +1,106 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v1] Documentation: add setup instructions for Travis CI
-Date: Thu, 14 Apr 2016 10:45:26 -0700
-Message-ID: <xmqqr3e8gk3t.fsf@gitster.mtv.corp.google.com>
-References: <1460526571-93634-1-git-send-email-larsxschneider@gmail.com>
-	<xmqq4mb5l86f.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kYBK-MNYZRo+LsBqng47usGPQTyBe01W2SrKDrs3435sQ@mail.gmail.com>
-	<vpqmvowwo0w.fsf@anie.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Roberto Tyley <roberto.tyley@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 14 19:45:35 2016
+Subject: [PATCH 1/2] fsck_commit_buffer(): do not special case the last validation
+Date: Thu, 14 Apr 2016 11:07:08 -0700
+Message-ID: <20160414180709.28968-1-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 14 20:07:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqlKh-0002W0-71
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 19:45:35 +0200
+	id 1aqlfx-0005Wr-Pc
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 20:07:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932148AbcDNRpb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2016 13:45:31 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64328 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755421AbcDNRpa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2016 13:45:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id E57CB1289F;
-	Thu, 14 Apr 2016 13:45:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+E3SAtK+qGdqBFig6xK/fyjvQLA=; b=Fm1Dy0
-	yHFf9BuqfZXw0S4kH92chwcAli1zWsWVSVwSRtpITTmngFk+ejUm3Vf2InEA3Wab
-	olOat6ic7dxZuK02anyP2FutE4iH5H/Saw1jIFhg8xsfXY8oyGYWx3FVBKnMQdsE
-	6fN3UG4J2TAdbJSuiBwZUUWReSLnkB719oq98=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pTVp1pkYWaJT40wOB/ApMuzNAV8NbKc8
-	x6dXmwTO6+cEiRfw2ZLFIJVQCHcZfog8ZvIrCDYtgOfXiwf/UK4l6Pj7Q8Zl9Hv4
-	H0TJJKwgb9wDrUdCgEUHNc/BJ/Q5gSSAiFqB+ykIR+XOUceIYt17vqVYRPK6a50P
-	RkGke66r0tY=
-Received: from pb-smtp2. (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D85291289C;
-	Thu, 14 Apr 2016 13:45:28 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 18DB212896;
-	Thu, 14 Apr 2016 13:45:28 -0400 (EDT)
-In-Reply-To: <vpqmvowwo0w.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
-	14 Apr 2016 11:14:07 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: ACE33F56-0268-11E6-A46B-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S932693AbcDNSHb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2016 14:07:31 -0400
+Received: from mail-pa0-f66.google.com ([209.85.220.66]:32790 "EHLO
+	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932349AbcDNSHM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2016 14:07:12 -0400
+Received: by mail-pa0-f66.google.com with SMTP id vv3so7359088pab.0
+        for <git@vger.kernel.org>; Thu, 14 Apr 2016 11:07:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:subject:date:message-id;
+        bh=pKGi5juDs0zUbD9kGrLAq44hdFwafnsc+juPjqcEfzg=;
+        b=xsuKTxqlVVX38VP3755Zn5IPBUZXCoH5TYHnC3MOBKx4zrGAZq6+5mdDHpNborYU2z
+         HkgVYFk9whURUrBkBU0+aue2j1oJnREDFK4Pd/IONj8I4G3Hx90Vue3Qvi3zgOHAU+L3
+         ZY1kGweOyJVR9Cj+55rY5pxfz+pc/HGdMQAD76KRN4cZgV/zC7xHGtrxxiNKhTmYH4yU
+         gWTdpHwjK3cmZwB1eQlNIMGUigjL2HxX6iv0Jw6Xa17NBwt7GSL2VLJWCY7DsKoY/PZT
+         1DOKj00JMBtWOv3WPQHL3JODi1i821M0EXy9czuaGOQ/gFjC1G2MsKyK1lGsppALoLWo
+         VkFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:from:to:subject:date:message-id;
+        bh=pKGi5juDs0zUbD9kGrLAq44hdFwafnsc+juPjqcEfzg=;
+        b=i3zZQCrlBaav84GltinGA9AcIIU1SMNQ5btIwILqqZkMhlGhCpecIcOJQz8GeyiKuv
+         MMQ32kyIhv5+U2CWqx6NjBd0RLYqybpwwEuT2ozj/OrN2LBVzcivh0KIQHB0uckq6a2b
+         8JL3jfdtIJ5bybiSIbdmowtiNngP9Zz1/5YqzzFt08GFLheK1vxmOol8Kvl34TKxuOVy
+         LZTp0e2cqbIBl9OW948bXpaUgyVuxkduIf6wSRiNmUeV4UK88Cc4sTJx091JjOM4bxNc
+         ar3u1YKMlEtdjxoOAtcGl1jADiD+pAHenmSNk8hSbrBgwcgAwYenxH6XcUo/Rjf6M4GC
+         L5jA==
+X-Gm-Message-State: AOPr4FX+hda2870Pe5JB8EpCfRM35eVlEFGcTZmqso5qARbGBAhOpWUDihjy+/GGc8oBtA==
+X-Received: by 10.66.136.41 with SMTP id px9mr23085079pab.80.1460657231166;
+        Thu, 14 Apr 2016 11:07:11 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:b81a:d884:c9a1:bffc])
+        by smtp.gmail.com with ESMTPSA id y27sm59414014pfi.11.2016.04.14.11.07.10
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 14 Apr 2016 11:07:10 -0700 (PDT)
+X-Mailer: git-send-email 2.8.1-355-gcea30bb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291540>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+The pattern taken by all the validations in this function is:
 
-> Stefan Beller <sbeller@google.com> writes:
->
->> On Wed, Apr 13, 2016 at 10:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->>> here, create a "GitHub-Travis CI hints" section just before "MUA
->>> specific hints" section,
->>
->> Somebody (I think it was you, Lars?) at GitMerge suggested to break
->> up the SubmittingPatches document into more than one, i.e.
->> the MUA hints and the Github-Travis hints could become their own documents,
->> and the SubmittingPatches could just contain the bare essentials.
->
-> I didn't see it on-list, but there's a PR doing that here:
->
-> https://github.com/git/git/pull/223
+	if (notice a violation exists) {
+		err = report(... VIOLATION_KIND ...);
+		if (err)
+			return err;
+	}
 
-I guess submitGit did not work well there ;-)?
+where report() returns zero if specified kind of violation is set to
+be ignored, and otherwise shows an error message and returns non-zero.
 
-To save one round-trip, I do not think it is unreasonable to treat
-submitGit as the first-class MUA that sits next to other recommended
-ways to send the patches to the list.  It is a rough equivalent to
-"format-patch and then send-email".  As long as what appears on list
-is the authoritative and final form of contribution, those on the
-receiving end should not (and would not) care how the patch e-mail
-was prepared and sent.
+The last validation in the function immediately after the function
+returns 0 to declare "all good" can cheat and directly return the
+return value from report(), and the current code does so, i.e.
+
+	if (notice a violation exists)
+		return report(... VIOLATION_KIND ...);
+	return 0;
+
+But that is a selfish code that declares it is the ultimate and
+final form of the function, never to be enhanced later.  To allow
+and invite future enhancements, make the last test follow the same
+pattern.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ fsck.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/fsck.c b/fsck.c
+index ca4c685..21dfa5f 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -666,9 +666,11 @@ static int fsck_commit_buffer(struct commit *commit, const char *buffer,
+ 	err = fsck_ident(&buffer, &commit->object, options);
+ 	if (err)
+ 		return err;
+-	if (!commit->tree)
+-		return report(options, &commit->object, FSCK_MSG_BAD_TREE, "could not load commit's tree %s", sha1_to_hex(tree_sha1));
+-
++	if (!commit->tree) {
++		err = report(options, &commit->object, FSCK_MSG_BAD_TREE, "could not load commit's tree %s", sha1_to_hex(tree_sha1));
++		if (err)
++			return err;
++	}
+ 	return 0;
+ }
+ 
+-- 
+2.8.1-355-gcea30bb
