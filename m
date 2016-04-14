@@ -1,109 +1,76 @@
-From: Ulrich Buchgraber <ulrich.b@gmx.at>
-Subject: Data loss when using "git stash -u" and ignored content in directories
-Date: Thu, 14 Apr 2016 11:16:57 +0200
-Message-ID: <CAGxq=N-n5Vt-L4iaU2AyqYbH7oA-XcERx+oUWuSOj+rD2=MhLA@mail.gmail.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: Ambiguous sha-1 during a rebase
+Date: Thu, 14 Apr 2016 18:38:47 +0900
+Message-ID: <20160414093847.GA10852@glandium.org>
+References: <20160413222919.GA10474@glandium.org>
+ <xmqqr3e9i10b.fsf@gitster.mtv.corp.google.com>
+ <20160413225234.GA21602@glandium.org>
+ <vpqr3e8wo99.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 14 11:17:11 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Apr 14 11:39:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqdOh-00017N-Aq
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 11:17:11 +0200
+	id 1aqdjy-0003Xt-J0
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 11:39:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752399AbcDNJRF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2016 05:17:05 -0400
-Received: from mout.gmx.net ([212.227.17.22]:62180 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750924AbcDNJRB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2016 05:17:01 -0400
-Received: from mail-yw0-f178.google.com ([209.85.161.178]) by mail.gmx.com
- (mrgmx101) with ESMTPSA (Nemesis) id 0M7CRe-1bkH3U1zWg-00x3Tw for
- <git@vger.kernel.org>; Thu, 14 Apr 2016 11:16:58 +0200
-Received: by mail-yw0-f178.google.com with SMTP id t10so97657512ywa.0
-        for <git@vger.kernel.org>; Thu, 14 Apr 2016 02:16:58 -0700 (PDT)
-X-Gm-Message-State: AOPr4FVXCDIA7AgkK9a7RfMtN8v0cR52XGubGViHin31MJvG1TKD8lLWAWRScfZ6pEBkwu7Oqp/JslLgVPhg0g==
-X-Received: by 10.129.119.213 with SMTP id s204mr7823627ywc.95.1460625417335;
- Thu, 14 Apr 2016 02:16:57 -0700 (PDT)
-Received: by 10.129.112.210 with HTTP; Thu, 14 Apr 2016 02:16:57 -0700 (PDT)
-X-Gmail-Original-Message-ID: <CAGxq=N-n5Vt-L4iaU2AyqYbH7oA-XcERx+oUWuSOj+rD2=MhLA@mail.gmail.com>
-X-Provags-ID: V03:K0:6lcFRKtiTVDeRyua+efFu08rY8CI7VHG5Ad89KfEmL2J3Nme1Vf
- Pfn5aBTZLoAOMstNNP6F7akE2TM0lmSPMobCX2sSjpBq/CCzXXetL3BsQkLtOn55H3WkwxV
- FLO60+0y3JYyImcwZTLMrT1g7ejp+J7Cj2ZNpmb/r7221QPr2W5vPi5DYlpKYMiq0AyPEw+
- d9jUESVLcii+veaw2aFvg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:68vENgonZwQ=:Q6VUfcxWic/eX6NGpjFB/p
- izniw02q6ThQdUpQ20FU6nDRrKiK4djXI8aZxMhqvGqQfOfE8XiyaZ1zFndtgTWkpeF+yKFDr
- Xfpnua8eGnsll9wdQLAr93vIBR+hqh/1zGwkpbyypOx64WGC9FFRt+/uIHzCfRgJoiev/fByK
- P8xJd5IIEPgNQ9QuRbPtXYUYxkNdrp8jvwB/C9FL1t1hLkOtMwi4gYQ0ISoxJBwkO0RUcf6FM
- TyA+qujqoUIO8rTtw3ciP9zQP6oloC24WKr8t0/YhJoqAKSV1SbdOyUtFDSnMbzX3Pdk0dyNn
- L9jTUVPogCWsBTg0TMyxcSfVDOek7mZPJYpVtgCIsVcsDcXJmZX4fidfu4vStVbIlEtdX5qID
- w51GCyo/S1g5mVOK3Y4WXhAraunqjZdcRqtnDz1HKTdRcst/fTsXzmMpn4o6Er0d5OiDe2Wex
- r40ZZ7aICCXr0K3vKMe9g9EZ7JC7KJSdMHtk1Eu8wk9jmh5hDAUQB0FqrFMTg9HktPuV2LEo5
- nooknyoYWL320fdSFLF6r+6FI5cOgp1JQ/x6NxLTeuw1DSadvPr8a/Mm58RJDbhoHQ1cIqq0m
- 2a5/yxzw1QV+5hugDsgWnLwytHNHutsuMr8z6giywzGGfs+BezqMyPnRDyeRqJto1GdCflDwC
- enXpXqIEoISXfynAa3X4uwOhbyVyfV6fjBUVV9ikO0Fs3AldrS2mKV3U5RwANkr+qWF8gNlZN
- Ou7LoZOl54rP7mrNJOK0x4u2kRP3vBN+7Dg28R4M6kKfSy4YonKDdW4saJyA+JwgQpKnmQlw 
+	id S1753340AbcDNJjF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2016 05:39:05 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:39498 "EHLO
+	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752928AbcDNJjC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2016 05:39:02 -0400
+Received: from glandium by zenigata with local (Exim 4.87)
+	(envelope-from <mh@glandium.org>)
+	id 1aqdjb-00031b-D5; Thu, 14 Apr 2016 18:38:47 +0900
+Content-Disposition: inline
+In-Reply-To: <vpqr3e8wo99.fsf@anie.imag.fr>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291518>
 
-Hello,
+On Thu, Apr 14, 2016 at 11:09:06AM +0200, Matthieu Moy wrote:
+> I suspect you did:
+> 
+> $ git rebase -i
+> # editor pops up
+> # switch to another terminal and fetch from elsewhere
+> # close editor
 
-A "git stash -u" cleans all untracked files (after storing them), and
-normally does not clean ignored files.
+That's possible, but I don't remember with certainty. At least it's
+plausible.
 
-But: It cleans ignored files _within_ a directory, when the directory
-itself is not ignored, but its content (e.g. a "dir/*" ignore filter).
+> Then only, git turns short sha1s into long ones, and does not have the
+> information to resolve ambiguities.
+> 
+> We could save a map (short -> long) before poping the editor and use
+> this map in priority when normalizing the todo-list to use long sha1s,
+> but we currently don't.
+> 
+> But I'm tempted to say that you just went very, very unlucky, and it's
+> not worth fixing ...
 
-The bug seems to be that in the cleanup phase of "git stash -u" Git
-immediately deletes untracked directories without checking if there
-are ignored files in there.
+Yeah, that definitely is a weird corner case. Interestingly, it was
+complaining about "error: short SHA1 e34ff55 is ambiguous." when apply
+*other* commits that were in the list prior to it, and then had the
+fatal error when it reached it.
 
-See the following reproduction sample. The last "ls" command shows
-that the file "ignored_dir_with_star/ignored.txt" is lost.
+That said, that would be less likely to happen if disambiguation was
+also checking checking the object type. Collisions between commits are
+less likely than between objects of different types.
 
-    git init
+As a matter of fact, of the 293143 commits in my repository, only 156
+have collisions with other commits (0.05%), but when comparing them to
+all the 3260854 objects in the repository, I see 3545 have collisions
+(1.2%).
 
-    mkdir ignored_dir && touch ignored_dir/ignored.txt
-    mkdir ignored_dir_with_star && touch ignored_dir_with_star/ignored.txt
-
-    echo "/ignored_dir" >> .gitignore
-    echo "/ignored_dir_with_star/*" >> .gitignore
-    git add .gitignore
-    git commit -m "added ignores"
-
-    touch untracked.txt
-
-    ls -R
-    # => Output:
-    # .:
-    # ignored_dir/  ignored_dir_with_star/  untracked.txt
-    #
-    # ./ignored_dir:
-    # ignored.txt
-    #
-    # ./ignored_dir_with_star:
-    # ignored.txt
-
-    git stash -u
-    git stash pop
-
-    ls -R
-    # => Output:
-    # .:
-    # ignored_dir/  untracked.txt
-    #
-    # ./ignored_dir:
-    # ignored.txt
-
-Note that there is no data loss when instead using "git stash" or "git
-stash -a".
-
-(Tested with Git 2.8.1 on Ubuntu and Git for Windows version 2.8.1.windows.1.)
-
-Ulrich
+Mike
