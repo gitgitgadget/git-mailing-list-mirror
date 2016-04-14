@@ -1,132 +1,135 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH/RFC] ll-merge: use a longer conflict marker for internal merge
-Date: Thu, 14 Apr 2016 15:57:47 -0700
-Message-ID: <xmqqy48fer2s.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH/RFC] ll-merge: use a longer conflict marker for internal merge
+Date: Thu, 14 Apr 2016 16:02:30 -0700
+Message-ID: <xmqqtwj3equx.fsf@gitster.mtv.corp.google.com>
 References: <xmqqbn5bg7r4.fsf@gitster.mtv.corp.google.com>
+	<xmqqy48fer2s.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 00:57:56 2016
+X-From: git-owner@vger.kernel.org Fri Apr 15 01:02:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqqCy-0005RA-8K
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 00:57:56 +0200
+	id 1aqqHW-0007sT-JS
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 01:02:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752158AbcDNW5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2016 18:57:51 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65287 "EHLO
+	id S1752520AbcDNXCe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2016 19:02:34 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53475 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751044AbcDNW5u (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2016 18:57:50 -0400
+	with ESMTP id S1752418AbcDNXCd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2016 19:02:33 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 611E0133B3;
-	Thu, 14 Apr 2016 18:57:49 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0CD6D13D96;
+	Thu, 14 Apr 2016 19:02:32 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dcnVeIhoSAS/qXha4Ky3DVHdwWg=; b=tqUlxF
-	TmENIfjtDSL55W4ogZL3wUuW5KK0W8PTEetRrb4q6LGweis388PbZU2slRJSVQJw
-	ucTz8vf/ZXozeQ5UOpsQZLPUK7PktIVhVoLjlHdXm0dl7Fw80tc7+ORrF3IEthIp
-	b3It7dzAtZi+Wnnh+MZnqF9oAj2TRCKabk1ms=
+	:content-type; s=sasl; bh=Dmsmal1Bjj/ghMiZpWmHkpv6B68=; b=v5/a8w
+	E/duZw73Biat5RE6BCmryq2A7n2yS1bXQYShsMzBfZ9aMGfUfvO0Kay+oreJaGk9
+	ahtPOorGIjZHhMwb+nkz0p9B8x8OWa47mn8m9EYXxoVQQc1Xg/u6YMF1b3x0jA3K
+	7Wb6J/XLKoIeYfdmv1TFSM3VSgfhVodb3tpoQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
 	:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KP8T/W3klbX/FL1duVwW5VthFk8f8FtE
-	Y/CRZMcpjBL9zEt5MVadsqlB/JhL3JkeZG61TOtV1wougNYH2vu+416TAz12Rvkc
-	/ft0aAu4P5xdtd6kuIayVsYoW8qp0zd+YSk/LXX2LsLA/AKORwmSq12UJGRGCmVh
-	3glSXWdr9n8=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 596BC133B2;
-	Thu, 14 Apr 2016 18:57:49 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=ShplsiYLtZeadXs+fFKAcXFtykJr4NkM
+	QTbNbLboFFVhh6RAN85UNBlbIdtvlEWyxWvWHt9w+okRTDdKPwCWWI97+6GEw/n/
+	qQYH4KFWHPo+//eFSs6J3P+B2pdplfy6dnUk7343kLKbEK1umJd0+13knRJDmlo7
+	ImYxmKl40Tg=
+Received: from pb-smtp2. (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 053C013D95;
+	Thu, 14 Apr 2016 19:02:32 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A473C133B1;
-	Thu, 14 Apr 2016 18:57:48 -0400 (EDT)
-In-Reply-To: <xmqqbn5bg7r4.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 14 Apr 2016 15:12:15 -0700")
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6872C13D94;
+	Thu, 14 Apr 2016 19:02:31 -0400 (EDT)
+In-Reply-To: <xmqqy48fer2s.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 14 Apr 2016 15:57:47 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4F19783C-0294-11E6-9192-9A9645017442-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: F7A1FD80-0294-11E6-87ED-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291576>
 
-The primary use of conflict markers is to help the user who resolves
-the final (outer) merge by hand to show which part came from which
-branch by separating the blocks of lines apart.  When the conflicted
-parts from a "virtual ancestor" merge created by merge-recursive
-remains in the common ancestor part in the final result, however,
-the conflict markers that are the same size as the final merge
-become harder to see.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Increase the conflict marker size slightly for these inner merges so
-that the markers from the final merge and cruft from internal merge
-can be distinguished more easily.
+> The primary use of conflict markers is to help the user who resolves
+> the final (outer) merge by hand to show which part came from which
+> branch by separating the blocks of lines apart.  When the conflicted
+> parts from a "virtual ancestor" merge created by merge-recursive
+> remains in the common ancestor part in the final result, however,
+> the conflict markers that are the same size as the final merge
+> become harder to see.
+>
+> Increase the conflict marker size slightly for these inner merges so
+> that the markers from the final merge and cruft from internal merge
+> can be distinguished more easily.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  * This would help reduce the common issue that prevents "rerere"
+>    from being used on a really complex conflict.  I have another
+>    (arguably riskier) patch that teaches rerere's parser to ignore
+>    "<<<" and ">>>" markers that says "Temporary merge branch " at
+>    the end of the line that achives a similar effect, but I think
+>    this may be a cleaner solution, partly because it also deals with
+>    "===" and "|||" lines that do not have such a clue to help
+>    rerere's parser.
+
+Just for comparison, this is the other "riskier" approach.
+
+-- >8 --
+Subject: [PATCH] rerere: try ignoring extra cruft left by merge-recursive
+
+Sometimes the conflict markers from the virtual ancestor synthesis
+done by merge-recursive can seep out to the conflicted area of the
+final (incomplete) merge result.  Detect and reject them by noticing
+the "Temporary merge branch 1" (or "2") branch names.
+
+This is an incomplete solution for "rerere sometimes cannot parse
+the conflicted parts" problem, because there is no such helpful clue
+on "|||||" (seen only when using "diff3" style) and "=====" lines.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- * This would help reduce the common issue that prevents "rerere"
-   from being used on a really complex conflict.  I have another
-   (arguably riskier) patch that teaches rerere's parser to ignore
-   "<<<" and ">>>" markers that says "Temporary merge branch " at
-   the end of the line that achives a similar effect, but I think
-   this may be a cleaner solution, partly because it also deals with
-   "===" and "|||" lines that do not have such a clue to help
-   rerere's parser.
+ rerere.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
- ll-merge.c                        | 8 ++++++--
- t/t6024-recursive-merge.sh        | 2 +-
- t/t6036-recursive-corner-cases.sh | 3 ++-
- 3 files changed, 9 insertions(+), 4 deletions(-)
-
-diff --git a/ll-merge.c b/ll-merge.c
-index 5c73274..e5ff7f6 100644
---- a/ll-merge.c
-+++ b/ll-merge.c
-@@ -376,8 +376,12 @@ int ll_merge(mmbuffer_t *result_buf,
- 		}
- 	}
- 	driver = find_ll_merge_driver(ll_driver_name);
--	if (opts->virtual_ancestor && driver->recursive)
--		driver = find_ll_merge_driver(driver->recursive);
+diff --git a/rerere.c b/rerere.c
+index 1693866..02cbc24 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -359,6 +359,18 @@ static int rerere_file_getline(struct strbuf *sb, struct rerere_io *io_)
+ 	return strbuf_getwholeline(sb, io->input, '\n');
+ }
+ 
++static int is_temporary_branch_mark(char *buf)
++{
++	const char *name;
 +
-+	if (opts->virtual_ancestor) {
-+		if (driver->recursive)
-+			driver = find_ll_merge_driver(driver->recursive);
-+		marker_size += 2;
-+	}
- 	return driver->fn(driver, result_buf, path, ancestor, ancestor_label,
- 			  ours, our_label, theirs, their_label,
- 			  opts, marker_size);
-diff --git a/t/t6024-recursive-merge.sh b/t/t6024-recursive-merge.sh
-index 755d30c..3f59e58 100755
---- a/t/t6024-recursive-merge.sh
-+++ b/t/t6024-recursive-merge.sh
-@@ -76,7 +76,7 @@ test_expect_success "result contains a conflict" "test_cmp expect a1"
- 
- git ls-files --stage > out
- cat > expect << EOF
--100644 439cc46de773d8a83c77799b7cc9191c128bfcff 1	a1
-+100644 ec3fe2a791706733f2d8fa7ad45d9a9672031f5e 1	a1
- 100644 cf84443e49e1b366fac938711ddf4be2d4d1d9e9 2	a1
- 100644 fd7923529855d0b274795ae3349c5e0438333979 3	a1
- EOF
-diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
-index a86087b..cc1ee6a 100755
---- a/t/t6036-recursive-corner-cases.sh
-+++ b/t/t6036-recursive-corner-cases.sh
-@@ -217,7 +217,8 @@ test_expect_success 'git detects differently handled merges conflict' '
- 		-L "" \
- 		-L "Temporary merge branch 1" \
- 		merged empty merge-me &&
--	test $(git rev-parse :1:new_a) = $(git hash-object merged)
-+	sed -e "s/^\([<=>]\)/\1\1\1/" merged >merged-internal &&
-+	test $(git rev-parse :1:new_a) = $(git hash-object merged-internal)
- '
- 
- #
++	if (!skip_prefix(buf, " Temporary merge branch ", &name))
++		return 0;
++	if (*name != '1' && *name != '2')
++		return 0;
++	name++;
++	return (!*name || (*name == '\n'));
++}
++
+ /*
+  * Require the exact number of conflict marker letters, no more, no
+  * less, followed by SP or any whitespace
+@@ -381,7 +393,7 @@ static int is_cmarker(char *buf, int marker_char, int marker_size)
+ 	while (marker_size--)
+ 		if (*buf++ != marker_char)
+ 			return 0;
+-	if (want_sp && *buf != ' ')
++	if (want_sp && (*buf != ' ' || is_temporary_branch_mark(buf)))
+ 		return 0;
+ 	return isspace(*buf);
+ }
 -- 
 2.8.1-367-g5b624f2
