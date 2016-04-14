@@ -1,161 +1,123 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: weird diff output?
-Date: Thu, 14 Apr 2016 14:05:03 -0700
-Message-ID: <CAGZ79ka8pgPNZKaVWnsa_S07esxkN9nJfhcMZvCfd5U6MtsrYQ@mail.gmail.com>
-References: <CAGZ79kZiiOgxh6vMDnaJ_b+VVGrFBfGzZukTN6OEBxUV9-2vQw@mail.gmail.com>
-	<CA+P7+xoLZhKzHf6khQfT_pZ2=CQAp8Nmhc9B8+10+9=YYUZH3w@mail.gmail.com>
-	<20160330045554.GA11007@sigill.intra.peff.net>
-	<CA+P7+xqskf6Ti3tVwMrOAaj3EDykRLKiXG5EbbzkjRsZP0s_7w@mail.gmail.com>
-	<CA+P7+xp+oT2zMBZqR8zvXKm8Zp5btaNyoOWFTts29HMwX+2o=Q@mail.gmail.com>
-	<CA+P7+xrbNQqGhR_EoVe7zou_g6oVFGN_v+q+tyHguv1BCMcimQ@mail.gmail.com>
-	<20160331134750.GA29790@sigill.intra.peff.net>
-	<CA+P7+xpX_xR9wVdRPgymXe0wRjDY2USRx2PyWJMKTjAepWpP+A@mail.gmail.com>
-	<CAGZ79kZ+JgVNSvJ+tZwGqP-L-NVUv8hmd1jsbh71F08F5AqsjA@mail.gmail.com>
-	<alpine.DEB.2.10.1604140639230.8340@zino>
-	<20160414183405.GE22068@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [Bug?] "git commit --amend" always gives author-date to summary?
+Date: Thu, 14 Apr 2016 14:07:50 -0700
+Message-ID: <xmqqh9f3gaqh.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Davide Libenzi <davidel@xmailserver.org>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
+Content-Type: text/plain
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 14 23:05:15 2016
+X-From: git-owner@vger.kernel.org Thu Apr 14 23:08:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqoRt-0006Rl-Ev
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 23:05:13 +0200
+	id 1aqoUh-0007uK-E9
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 23:08:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751819AbcDNVFG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2016 17:05:06 -0400
-Received: from mail-io0-f179.google.com ([209.85.223.179]:36446 "EHLO
-	mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751594AbcDNVFE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2016 17:05:04 -0400
-Received: by mail-io0-f179.google.com with SMTP id u185so116501814iod.3
-        for <git@vger.kernel.org>; Thu, 14 Apr 2016 14:05:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=qFx6jTwkvJwsy191I2sbzsTed7tDi2XxH6Ko6Z2bPhw=;
-        b=YLK8BjBaUaSYlybxiLOVj8YAy9lKX5dkXV/ycYJCxBOiLfgrUHVIYurtvYY+goNeBf
-         vplT4AKK0isLmZspOLcJrPJzE1rPebQfqu5M6lh9hWp3uvj5fNsN3nJwTPYZZ13rkcN9
-         +XaXGNDj9c8khqzKacpqvfUacCOw8Kyyrs/qIt0fBKXzq+pdoqLwyfinvh+J5Tgf5exx
-         Hz2xbCry6fHxbxjldFUI38E/72OE9U8iF9ENcWhnVprQnwEe1XPQ7PC98VElY9WsH9+6
-         nlp1LxLtr//BFIqik2KeF5dUXQqRzoXLx+GUCxW1DGvb54d+HQSDeWS5d5W/DwZnU2BV
-         7GCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=qFx6jTwkvJwsy191I2sbzsTed7tDi2XxH6Ko6Z2bPhw=;
-        b=cu28HRUcaOKw+YofdBHE+WePI9gLn6rk3+Hiyv0t+KjVvT2c2nKZvBNE/p+HWeAHFo
-         ZLV7m2zb6sa95BvasisaHw/cub6c6WspHzpXnyyWXiCAeTtz8qttRH6A7m8dJTE2PEoU
-         eD/VzEC0V0+HnTdFwy2s7GvSE0HNHZt9e8mGErySod3++cXwC1fk8GzEcw32mEH+rkrc
-         Zj0K5WcSVeomKxfuRkpzdoQqMu3/qifzK3e6tcLUt0JuKqc3aBWrcjmmhZ7hmynf90ii
-         lCbo3+Am1LRrzLL9eD6KbfCkDwi0DwzFB5W7STwohmLoMPse87cfs8lxM8kkYBVGrhXu
-         LtWg==
-X-Gm-Message-State: AOPr4FUq/pRXPifixqvqtkVqPwNDOT83m/SrXzZZSIqzfnWphJ2DcxbsToEzNmOVJBUW2zxQafMvLXPz/qSOuHAU
-X-Received: by 10.107.161.68 with SMTP id k65mr21136835ioe.110.1460667903680;
- Thu, 14 Apr 2016 14:05:03 -0700 (PDT)
-Received: by 10.107.17.27 with HTTP; Thu, 14 Apr 2016 14:05:03 -0700 (PDT)
-In-Reply-To: <20160414183405.GE22068@sigill.intra.peff.net>
+	id S1751986AbcDNVIA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2016 17:08:00 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63757 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751980AbcDNVH7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2016 17:07:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D787412EE3;
+	Thu, 14 Apr 2016 17:07:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=G
+	mXratFRHOKeL82CQ3coc5+PC8M=; b=LwXHgG7QYnZLfJQSnk/d241K8rDUVIB98
+	k7VS5giBX+IipLAavk/Ez5srmNLTUNX9GNtlgGRCdcAYVSOs5ySySoNJBl7m4Xcr
+	7kKGdv5IP/qJyRzWYfd6hv3Y6ytHoi+wqeB1nHd3zQ7qLHdyzboIRhlsGQkyRh/E
+	BDVcvfswRE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=yTPLazjy9I+6ZKqv0cjL2JJy/0VWqRIc4CLO0hsNiCSuntiKrJ9O3etK
+	y4ugiy518bBxwN+0NEUCdGhH5lEmcUBMz+cYXLXcabslaSyEld6SWD8HfLv8oAfn
+	HTPAIRBtCOFC1NjnX1nIGKj5Y3w/CnnLko+HO/yvyclrC11Dxvo=
+Received: from pb-smtp2. (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CF73E12EE2;
+	Thu, 14 Apr 2016 17:07:52 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BB82612EE1;
+	Thu, 14 Apr 2016 17:07:51 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F30A2262-0284-11E6-9808-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291566>
 
-On Thu, Apr 14, 2016 at 11:34 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, Apr 14, 2016 at 06:56:39AM -0700, Davide Libenzi wrote:
->
->> That was a zillions of years ago :) , but from a quick look at email
->> thread, if you want to do it within xdiff, xdi_change_compact would be
->> the place.  The issue is knowing in which situations one diff look
->> better than another, and embedding an if-tis-do-tat logic deep into
->> the core diff machinery.  In theory one could implement the same thing
->> higher up, working with the unified diff text format, where maybe a
->> user can provide its own diff post-process hook script.  In any case,
->> that still leaves open the issue on what to shift in the diff chunks,
->> and in which cases. Which is likely going to be language/format
->> dependent. IMHO, it gets nasty pretty quickly.
->
-> Thanks, that's helpful. Stefan already came up with a heuristic that I
-> implemented as a post-processing script in perl. It _seems_ to work
-> pretty well in practice across multiple languages, so our next step was
-> to implement it in an actual usable and efficient way. :)
+A simple reproduction.  Doing one of these
 
-To reiterate the heuristic for Davide (so you can avoid reading the
-whole thread):
+    $ git commit --amend --no-edit
+    $ echo >MSG frotz; git commit --amend -F MSG
 
-    If there are diff chunks, which can be shifted around, shift it such that
-    the last empty line is below the chunk and the rest above.
+on any commit, whether it is your own commit or somebody else's,
+seems to always show the "Date:" of the original commit, e.g.
 
-Example:
-(indented, shiftable part marked with Xs)
+    $ git checkout v2.8.0^0
+    $ git commit --amend --no-edit
+    [detached HEAD a6f2a14] Git 2.8
+     Date: Mon Mar 28 12:19:45 2016 -0700
+     3 files changed, 14 insertions(+), 9 deletions(-)
+    $ git checkout v2.8.0^^2
+    $ git commit --amend --no-edit
+    [detached HEAD df9f57e] Documentation: fix git-p4 AsciiDoc formatting
+     Author: Lars Schneider <larsxschneider@gmail.com>
+     Date: Wed Mar 23 11:59:01 2016 +0100
+     1 file changed, 3 insertions(+), 5 deletions(-)
 
-        diff --git a/test.c b/test.c
-        index 2d7f343..2a14d36 100644
-        --- a/test.c
-        +++ b/test.c
-        @@ -8,6 +8,14 @@ void A()
-         }
+I can understand the latter, but I am not sure if it makes sense to
+do the former.  The output is coming from b7242b8c (commit: print
+"Date" line when the user has set date, 2014-05-01), whose objective
+I can agree with, but does not seem to match the use case.
 
-         /**
-        + * This is text.
-        + */
-        +void B()
-        +{
-        +  text text
-X1      +}
-X2      +
-X3      +/**
-          * This does 'foo foo'.
-          */
-         void C()
+    commit: print "Date" line when the user has set date
+    
+    When we make a commit and the author is not the same as the
+    committer (e.g., because you used "-c $commit" or
+    "--author=$somebody"), we print the author's name and email
+    in both the commit-message template and as part of the
+    commit summary. This is a safety check to give the user a
+    chance to confirm that we are doing what they expect.
+    
+    This patch brings the same safety for the "date" field,
+    which may be set by "-c" or by using "--date".  Note that we
+    explicitly do not set it for $GIT_AUTHOR_DATE, as it is
+    probably not of interest when "git commit" is being fed its
+    parameters by a script.
 
-The last empty line is X2, so that's where we wrap:
-(X2 is the last line of the diff)
+When doing "--amend", not updating the author-date is the norm.
+Also, I think the output is meant to accompany with the reminder to
+say "You are committing somebody else's change", but in the first
+case of amending v2.8.0^0, "the author is not the same as the
+committer" does not apply, either.
 
-        diff --git a/test.c b/test.c
-        index 2d7f343..2a14d36 100644
-        --- a/test.c
-        +++ b/test.c
-        @@ -8,6 +8,14 @@ void A()
-         }
+The commit in question, b7242b8c, brings in a test for amend to
+7501, like this:
+ 
+    test_expect_success 'commit mentions forced date in output' '
+            git commit --amend --date=2010-01-02T03:04:05 >output &&
+            grep "Date: *Sat Jan 2 03:04:05 2010" output
+    '
 
-X3      +/**
-        + * This is text.
-        + */
-        +void B()
-        +{
-        +  text text
-X1      +}
-X2      +
-         /**
-          * This does 'foo foo'.
-          */
-         void C()
+But if I change it like this:
 
+    test_expect_success 'amend always mentions date in output' '
+            git commit --amend >output &&
+            grep "Date: " output
+    '
 
->
-> Looking over the code, I agree that xdl_change_compact() is the place we
-> would want to put it. We'd probably tie it to a command-line option and
-> let people play around with it, and then consider making it the default
-> if there's widespread approval.
+the test still passes.
 
-I just stumbled upon
-http://blog.scoutapp.com/articles/2016/04/12/3-git-productivity-hacks
-which advertises git config --global pager.diff "diff-so-fancy | less
---tabs=4 -RFX"
+I suspect that there are people who are already depending on this
+behaviour, so it may not be worth fixing, but I found it somewhat
+irritating (especially after wasting about an hour or so doing wild
+goose chase trying to find a stray invocation of "date" somewhere in
+my script that eventually uses "git commit --amend").
 
-Would you consider your perl script good enough to put that instead of
-diff-so-fancy?
-
->
-> -Peff
+Thoughts?
