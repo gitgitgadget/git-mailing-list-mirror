@@ -1,104 +1,87 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v4 03/16] index-helper: new daemon for caching index and
+Subject: Re: [PATCH v3 03/16] index-helper: new daemon for caching index and
  related stuff
-Date: Thu, 14 Apr 2016 17:04:17 +0700
-Message-ID: <CACsJy8CV4_AkcsmnWn4n1z15XesgHdw-g0UNMqm2EgsyQWDixw@mail.gmail.com>
-References: <1460507589-25525-1-git-send-email-dturner@twopensource.com>
- <1460507589-25525-4-git-send-email-dturner@twopensource.com>
- <CACsJy8DE40dMiiqkTb=Pz8uidPk-q1-kuX514s7mO55ChFLXhg@mail.gmail.com> <1460573236.5540.83.camel@twopensource.com>
+Date: Thu, 14 Apr 2016 17:43:23 +0700
+Message-ID: <CACsJy8B6o-8YJYemcYX3NwyMaY9jV666ZwKJYwfbwMSmzM-YGw@mail.gmail.com>
+References: <1459980722-4836-1-git-send-email-dturner@twopensource.com>
+ <1459980722-4836-4-git-send-email-dturner@twopensource.com>
+ <CACsJy8C5NhaAAW=wzpwkBdLvVZz8wVM7QX==n_CL5g+LLAKY=A@mail.gmail.com>
+ <1460153784.5540.19.camel@twopensource.com> <1460417232.5540.53.camel@twopensource.com>
+ <CACsJy8C2FtdetQ_NJSKR_JCZ5Ju0E3rV7Du=J4f2_kn5qrcHxg@mail.gmail.com>
+ <1460482108.5540.59.camel@twopensource.com> <xmqqfuuqr9ca.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	=?UTF-8?B?RHV5IE5ndXnhu4Vu?= <pclouds@gmail.co>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu Apr 14 12:04:54 2016
+Cc: David Turner <dturner@twopensource.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	=?UTF-8?B?w6Z2YXIgw77Ds3I=?= <aevarb@gmail.com>,
+	jeffhost@microsoft.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 14 12:44:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqe8s-0008KP-9q
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 12:04:54 +0200
+	id 1aqekn-0001jb-Cl
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 12:44:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753355AbcDNKEu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2016 06:04:50 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:36306 "EHLO
+	id S1754217AbcDNKoA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2016 06:44:00 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:33525 "EHLO
 	mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751987AbcDNKEt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2016 06:04:49 -0400
-Received: by mail-lf0-f67.google.com with SMTP id p81so11327471lfb.3
-        for <git@vger.kernel.org>; Thu, 14 Apr 2016 03:04:48 -0700 (PDT)
+	with ESMTP id S1754126AbcDNKoA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2016 06:44:00 -0400
+Received: by mail-lf0-f67.google.com with SMTP id p64so11594423lfg.0
+        for <git@vger.kernel.org>; Thu, 14 Apr 2016 03:43:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=iUnNUV3jL7c0CZKz8rZBWhNyWviENnUxJ1xjO4j1W8Q=;
-        b=DEFPfB87ANhLkg93rSqOo+zjwMH8IDOzfuJ8GQTXk1zK/NovMelKIjCuL9bFVB4KrK
-         zD1YIeZQv4bl8y5ghWrOcBpIAgN5GWZgJU/E92EcGJVNtwyskdyRcWbpCXGE7qQn68Dn
-         hAwi4Vg00aG2VVuXebNmgWXzpz+vKtLca71DnFE3UBxE4AmEGGmjjR+YxqnB1qeZ3NWW
-         7dhpGk11J4QaFpcJQeMVxBcQSwnl/EI4o72K/HdiNoGlQsBzkXa8lAKuctwYldZjOcTQ
-         IdIlEsBuk98GYTFyQiG43ATVRy/QqJCPG9Mu9Y+p6cAyJ6OZpRRiCcd2h/qYo1te7zYC
-         +VYA==
+        bh=2blVRnGWgNmE08IAuVtwxJIaeMZxDBFvpn6MPRLV06k=;
+        b=A5WWGWsubAKMaFNjnndm3B6zn8oVdyZ0YW5uYMvuMUbq0j1TdTQDg6jzMFQlqkMROH
+         LYlZQko/NuLv+p2r2RVmJAR+FrR7sCRJBXYJ42bMBM30rTdvath7WEBt+Ix+7MZY/qcE
+         dVDKxMm5yBAkRE4rbsXn97m4/rCmsXXmYI7k05DVH9JtaVQhRODlzlPRFulbZYXVXkR/
+         p45FxSvnGnaUyQqi3ZKFEz3rVGxerrifJU6cvJ4kjRpyNnQ/wzKdf8PrkkPYGBCcebMS
+         WTqjnSD8OnOkBncRtxQ3hLtCB2gucSkiLqPJFGgoFiYE6fM3Bjlo9RHGdDBLAQbl+39M
+         PurA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=iUnNUV3jL7c0CZKz8rZBWhNyWviENnUxJ1xjO4j1W8Q=;
-        b=kjkJq9kgVGKwhsxztAw1qvoDQwUZIdcsFOOp0mO9eC0x1ZdAnaq29I6+L/Cr2NDg2k
-         pB/z0EgYNEEi1suE7ZDxl1VWV7J2VOBxh2viGP2wwKALKnndqr+eAs8HfNLU/aiT7jdU
-         4upcsSPAYxXeomyEwmZn9SmmTkYCItgcClnK2yy0l8qoG5Pz4Aw7UYLeGsdjgcPyv/cd
-         6DE4HnTgPn2o21G7PrJd682pAxEWImXfRCYlvnYyor1KYWEvKkirwX/csb5TIm7ScIUn
-         kmeYa2ZsGc7iLM0sWWce2dnl/Oi9pfMDnOX6ntvFkQL6NuTTmOSIckTqOoAKyheudBxl
-         kQUg==
-X-Gm-Message-State: AOPr4FXZLSn+ZhvWvwVbK6Z5bwag9SZH2GC5chAyGyjxqM1T80QLlpK7U+ppSdPk6HnZWq1I5vaawiCS/Jtdqg==
-X-Received: by 10.112.56.43 with SMTP id x11mr6176769lbp.145.1460628287475;
- Thu, 14 Apr 2016 03:04:47 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Thu, 14 Apr 2016 03:04:17 -0700 (PDT)
-In-Reply-To: <1460573236.5540.83.camel@twopensource.com>
+        bh=2blVRnGWgNmE08IAuVtwxJIaeMZxDBFvpn6MPRLV06k=;
+        b=WLp5Ox7+nQu6eH1wHVQ5fkXN+9dEc6e722he14G7NUxfzZneUmBGlAABrDdwTu6U0a
+         8R0gPOoh3VpLaGoLglk/PwRpe8woUJq5HPtsMGN44eECknQvxf4MU+FMPu9V4f9Ovw/l
+         vJ04vaJXRDHslgnggUT3Ah3HGgmryxrc+hd35kjA1fxmYk5cP2ovh9FYZV6vCJaA0P3r
+         +8EjVCi+luDKoRg2G+Wukfbfo+Bo1rwTqfd3Omk6SRLAjK9+cR3uAafJaHofIQJckchD
+         G4zMEno4r6uehVHGE6Rw9/e+2V1MRbTJm12kWyGRNQiawQP+w3atcWZwanROcVigFme4
+         E4Cg==
+X-Gm-Message-State: AOPr4FXcbMAmROPSZ2YkQDwIYfDtfnp9cAa9BF5J8onnQSs12n740tcoUM45uemun7wfVnTGPbdP+wYgZWzDdA==
+X-Received: by 10.25.147.202 with SMTP id v193mr6441904lfd.162.1460630633164;
+ Thu, 14 Apr 2016 03:43:53 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Thu, 14 Apr 2016 03:43:23 -0700 (PDT)
+In-Reply-To: <xmqqfuuqr9ca.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291521>
 
-On Thu, Apr 14, 2016 at 1:47 AM, David Turner <dturner@twopensource.com> wrote:
-> On Wed, 2016-04-13 at 20:43 +0700, Duy Nguyen wrote:
->> On Wed, Apr 13, 2016 at 7:32 AM, David Turner <
->> dturner@twopensource.com> wrote:
->> > +NOTES
->> > +-----
->> > +
->> > +$GIT_DIR/index-helper.path is a symlink
+On Wed, Apr 13, 2016 at 1:05 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>  - access is slow (unless cached, but we can't be sure)
 >>
->> In multiple worktree context, this file will be per-worktree. So we
->> have one daemon per worktree. I think that's fine.
->>
->> > to a directory in $TMPDIR
->> > +containing a Unix domain socket called 's' that the daemon reads
->> > +commands from.
->>
->> Oops. I stand corrected, now it's one daemon per repository...
->> Probably good to hide the socket path in $GIT_DIR though, people may
->> protect it with dir permission of one of ancestor directories.
+>> We could solve this (and the other problem) with mlock.
 >
-> I'm not sure I understand what you're saying here.  It should be one
-> daemon per worktree, I think.  And as far as I know, it is.
+> Probably you meant madvise(2)?
+>
+> For something of a size comparable to the index file held by
+> index-helper-daemon in-core, I'd expect we wouldn't page too
+> badly.
 
-No you're right, it's still per worktree. I assumed
-$GIT_DIR/index-helper.path points to the same $TMPDIR, but it's not.
-
-> Socket paths must be short (less than 104 chars on Mac).  That's why I
-> do the weird symlink-to-tmpdir thing.
-
-Is relative path in sun_path portable? We could just chdir() there,
-open the socket and chdir() back. Though if the current solution's
-already good enough, I don't think we need to change this again.
-
-Hmm.. googling a bit pointed me back to Jeff's patch that does exactly
-that. The commit is 1eb10f4 (unix-socket: handle long socket pathnames
-- 2012-01-09). It does not mention Mac though, neither does the
-related discussion on mailing list..
+I had a look at linux implementation of madvise(MADV_WILLNEED). All it
+does is force populating the entire memory region, which is good. But
+I suspect when memory is under pressure, some pages may be reclaimed.
+index files in monster repo case can go up to a few hundred megabytes,
+chances of being reclaimed rise accordingly. But we can reconsider
+mlock() later when/if real problems happen.
 -- 
 Duy
