@@ -1,111 +1,102 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Is OS X still supported?
-Date: Thu, 14 Apr 2016 09:14:54 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604140845370.2967@virtualbox>
-References: <CAN1difv6C9VSwy6DAz7++R6PP6hpg9MD8v1aKk_4VTdBP5RwHw@mail.gmail.com> <xmqq4mbg2eqa.fsf@gitster.mtv.corp.google.com> <87EB5631-EB8F-41C3-B92C-3BEF03F1A9AF@gmail.com> <CAN1difsnc_FdDhJ+gZoR8o4VK3Xg0eyCsyqUS7DDF328B3Pjhg@mail.gmail.com>
+From: Eric Deplagne <Eric@Deplagne.name>
+Subject: Re: Merge conflicts are reported relative to root not cwd
+Date: Thu, 14 Apr 2016 09:53:00 +0200
+Message-ID: <20160414075300.GA16358@mail.eric.deplagne.name>
+References: <CAGZ79kbVfk=yAK3UB=H385_YfAtMHZe-gSE=EYVvvcS8jjy08A@mail.gmail.com> <xmqq4mb5jhm7.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-284950776-1460616379=:2967"
-Cc: Tim Harper <timcharper@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?UTF-8?Q?Micha=C5=82_Staruch?= <msta@cinkciarz.pl>
-X-From: git-owner@vger.kernel.org Thu Apr 14 09:15:11 2016
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="0PQOkvCAw33/u/bm"
+Cc: Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 14 10:35:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqbUd-0001Rx-5i
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 09:15:11 +0200
+	id 1aqck5-0005N4-Al
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 10:35:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752326AbcDNHPG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2016 03:15:06 -0400
-Received: from mout.gmx.net ([212.227.15.19]:55950 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750861AbcDNHPE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2016 03:15:04 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LynHb-1bsnPq13OZ-016BlW; Thu, 14 Apr 2016 09:14:57
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CAN1difsnc_FdDhJ+gZoR8o4VK3Xg0eyCsyqUS7DDF328B3Pjhg@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-Content-ID: <alpine.DEB.2.20.1604140847280.2967@virtualbox>
-X-Provags-ID: V03:K0:9udiXeQfXUM3b9mAMRAYLsArkq1ZEgx3sB9t8jRKRkwDmqOYCWP
- SzkeucuC1taOv5EfYes7u9c5a6AEK/lwvrSFbSXkNRRNbZEozyQJocYgjkrmFTphedDaVIq
- ejZvb46EuksFQ+4RHNihrg73ytTcWxLu9fFSEWhuo9pHNGvYBwvzhyvPIKEbtAL8Qb4pUGu
- cwrsyR+lq4bkj5l8GChmg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:TUzkcmhok20=:Jzbki2DlW1qSbmJtc3ZwEO
- 3d2NRE7V7GwHvIksTq/l8ZlfYRxi84E1iJRZwECf/58+lLex08LUBZdMELV3a5O2L2KcWRJdp
- yD7ltHZZCa7BTcx8br5rW1DhckHiu15VuROSEirmt8g0M+9WR1gRz9kWgEBYV9hLWtqCjQFPL
- G+P0SmJZrl56zFsom3mkdegZW4nveEr8MA0GPrZnd67w0fnV5eqDiTEWMbBmNJG5mI4q4PXQf
- leemzqWpVD79W3ZgIXayupPJ6nr1rtipdvdnoxd8DFNUAK5kpoVrZ3n4lCQ5MDtfUvnLccwOb
- YxFtRyISObbsNFdFkkvv2WPDM5Y1TV5bqP/HXzshmwRzWuRFlZf1NWwB7f+Lz4V5VsNEKFZxj
- r3+3U1qdcyMcFFXFB7z7kJgVtL2+qpmPqrR/aNSMJkbvjk6NHwGHNMhe7pMemp5/3H3a9/plU
- U/kErfdtnQuk7Jpl3Ip2VbzyQ3IL6eWLtNZ0Zv6+IPX/lB+m3DFk3Fzy5vXYDsN8LYKL5hVJe
- R1omNR5wghHP/GgEfr4QGy+SfTfipu2nyeVjvXVo5yHQwV2WEqp6Ypm4zFhThdiGP8FcVnzzo
- J8HCA/wt9yKva2H7+N7LXqknAXVlLNQ7SsWXZvYJT70O/cN1HNM1IY4Oy3lKGlqcqVZW6Icgm
- khXRqqOO+Fp/QhFHBEsXoRRjHfdF0X0SaH4Gs9fslkFrzPiizo/OzVvBTyf57HvIEYiqQcQhr
- IW9kZ22ksS87CXQjKGDmEwgGfV1cWrn4huRiHdDJeW38ekxRE8Q92xhyCMIHEjqn2gHhULH5 
+	id S1754149AbcDNIfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2016 04:35:04 -0400
+Received: from goldorak5.eric.deplagne.name ([213.246.56.18]:51767 "EHLO
+	exim4.goldorak5.eric.deplagne.name" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753569AbcDNIfA (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2016 04:35:00 -0400
+X-Greylist: delayed 2514 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Apr 2016 04:35:00 EDT
+Received: from [192.168.0.4] (helo=mail.eric.deplagne.name)
+	by exim4.goldorak5.eric.deplagne.name with esmtp (Exim 4.72)
+	(envelope-from <Eric@Deplagne.name>)
+	id 1aqc5E-0004gw-Jy; Thu, 14 Apr 2016 09:53:00 +0200
+Received: from deplagne by mail.eric.deplagne.name with local (Exim 4.69)
+	(envelope-from <Eric@Deplagne.name>)
+	id 1aqc5E-0004gr-J2; Thu, 14 Apr 2016 09:53:00 +0200
+Content-Disposition: inline
+In-Reply-To: <xmqq4mb5jhm7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291514>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-284950776-1460616379=:2967
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Content-ID: <alpine.DEB.2.20.1604140847281.2967@virtualbox>
+--0PQOkvCAw33/u/bm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hi Micha=C5=82,
+On Wed, 13 Apr 2016 14:58:40 -0700, Junio C Hamano wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>=20
+> > $ cd t/
+> > $ git merge ...
+> > ...
+> > Auto-merging builtin/submodule--helper.c
+> > Auto-merging builtin/fetch.c
+> > CONFLICT (content): Merge conflict in builtin/fetch.c
+> > Auto-merging builtin/clone.c
+> > Auto-merging README.md
+> > ...
+> >
+> > It should say ../builtin/fetch.c IMHO.
+> > Any reason to keep the old behavior?
+>=20
+> I actually prefer to see the "relative to root" behaviour when it
+> comes to things like this, that lets you view the things that happen
+> in the whole-tree context.
+>=20
+> I would have to go insane before I start a whole-tree operation like
+> "git merge" from deep in my tree, but if I happened to do that, e.g.
+>=20
+> 	cd perl/blib/lib/Git/SVN/Memoize
+>         git merge other-branch
+>=20
+> I'd rather see that the conflicted path, e.g. builtin/fetch.c,
+> reported by showing it like the above output, not happening in
+> ../../../../../../builtin/fetch.c which I have to count the
+> up-dots to know which file it is talking about.
 
-you probably would have received a more timely response if you
+  From my use of git, I'd really love to be able to copy/paste=20
+  ../../../../../../builtin/fetch.c to some vi (or anything else)=20
+  command line instead of having vi (or whatever) bark that
+  it does not know where builtin/fetch.c is.
 
-1. had avoided top-posting, and
-2. had kicked into action yourself rather than feeling somebody else
-   should solve your problem.
+--=20
+  Eric Deplagne
 
-On Tue, 5 Apr 2016, Micha=C5=82 Staruch wrote:
+--0PQOkvCAw33/u/bm
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-> Thanks for the information that binary builds are availably on
-> SourceForge faster than on git-scm. I can see the v2.8.1 for OS X was
-> uploaded few hours ago to the SF, so my main problem (lack of security
-> fixes in git for OS X) is solved.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-You are welcome, not only for the information, of course, but also for the
-bug fixes. Would be nice to thank hard-working people like Peff for that,
-every once in a while.
+iD8DBQFXD0xcej7DisjVpq4RAjvIAJ4j5q8JhcYhUAvgj2fNgtvXPkkcywCffsB2
+9wbXb0C+mFoE+ANa6I7ipmM=
+=ubaD
+-----END PGP SIGNATURE-----
 
-> The automation process should be probably reviewed, though - because all
-> the other folks around the world using git-scm (not the SF) to download
-> OS X builds are still stuck at v2.6.4. Ideally git-scm would point to
-> the new Mac version within single minutes since the release (or even
-> seconds) - not hours, days, or weeks.
-
-The first time I read this paragraph, I closed the mail right then and
-there. And I normally would not have looked at it again.
-
-You see, the code running git-scm.com is Open Source, which means that you
-can fix it just as well as everybody else. Of course it takes a bit more
-effort than to tell other people what you think they should do, yet taking
-action would have been the appropriate thing to do. Admittedly I find that
-sense of entitlement that I read in the above-quoted paragraph quite
-appalling.
-
-So why did I open this mail again, then? Easy: I did not notice any other
-report of the same issue, and the problem was shared by one of my
-colleagues, so I went ahead and fixed it (note that I am probably even
-less of a Ruby/Rake expert than you are, yet the documentation how to
-develop this beast locally is so good that even I was able to develop and
-test the fix):
-
-=09https://github.com/git/git-scm.com/pull/741
-
-I guess this is your lucky day ;-)
-
-Ciao,
-Johannes
---8323329-284950776-1460616379=:2967--
+--0PQOkvCAw33/u/bm--
