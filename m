@@ -1,68 +1,73 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Ambiguous sha-1 during a rebase
-Date: Thu, 14 Apr 2016 15:24:07 +0200
-Message-ID: <vpqa8kwtjbc.fsf@anie.imag.fr>
-References: <20160413222919.GA10474@glandium.org>
-	<xmqqr3e9i10b.fsf@gitster.mtv.corp.google.com>
-	<20160413225234.GA21602@glandium.org> <vpqr3e8wo99.fsf@anie.imag.fr>
-	<20160414093847.GA10852@glandium.org>
+From: Davide Libenzi <davidel@xmailserver.org>
+Subject: Re: weird diff output?
+Date: Thu, 14 Apr 2016 06:56:39 -0700 (PDT)
+Message-ID: <alpine.DEB.2.10.1604140639230.8340@zino>
+References: <CA+P7+xoiFUiBwDU2Wo9nVukchBvJSknON2XN572b6rSHnOSWaQ@mail.gmail.com> <CAGZ79ka4ad5dQMWANJUDx-0+kV3qR=HttOJni2XfhFzjMKfcPw@mail.gmail.com> <xmqqzithxj8l.fsf@gitster.mtv.corp.google.com> <CAGZ79kZiiOgxh6vMDnaJ_b+VVGrFBfGzZukTN6OEBxUV9-2vQw@mail.gmail.com>
+ <CA+P7+xoLZhKzHf6khQfT_pZ2=CQAp8Nmhc9B8+10+9=YYUZH3w@mail.gmail.com> <20160330045554.GA11007@sigill.intra.peff.net> <CA+P7+xqskf6Ti3tVwMrOAaj3EDykRLKiXG5EbbzkjRsZP0s_7w@mail.gmail.com> <CA+P7+xp+oT2zMBZqR8zvXKm8Zp5btaNyoOWFTts29HMwX+2o=Q@mail.gmail.com>
+ <CA+P7+xrbNQqGhR_EoVe7zou_g6oVFGN_v+q+tyHguv1BCMcimQ@mail.gmail.com> <20160331134750.GA29790@sigill.intra.peff.net> <CA+P7+xpX_xR9wVdRPgymXe0wRjDY2USRx2PyWJMKTjAepWpP+A@mail.gmail.com> <CAGZ79kZ+JgVNSvJ+tZwGqP-L-NVUv8hmd1jsbh71F08F5AqsjA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Thu Apr 14 15:24:45 2016
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jacob Keller <jacob.keller@gmail.com>, davidel@xmailserver.org,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Git mailing list <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Apr 14 16:04:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqhGB-0003CX-OE
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 15:24:40 +0200
+	id 1aqhtB-0006Z1-1n
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 16:04:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755636AbcDNNYe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2016 09:24:34 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:52967 "EHLO mx1.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755626AbcDNNYc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2016 09:24:32 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u3EDO5Fh015576
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 14 Apr 2016 15:24:06 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u3EDO75a001577;
-	Thu, 14 Apr 2016 15:24:07 +0200
-In-Reply-To: <20160414093847.GA10852@glandium.org> (Mike Hommey's message of
-	"Thu, 14 Apr 2016 18:38:47 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Thu, 14 Apr 2016 15:24:06 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u3EDO5Fh015576
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1461245050.17231@l1VWTjco0WzBy9RnA7aUdw
+	id S1753910AbcDNOEw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2016 10:04:52 -0400
+Received: from x35.xmailserver.org ([64.71.152.41]:38774 "EHLO
+	x35.xmailserver.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753110AbcDNOEw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2016 10:04:52 -0400
+X-Greylist: delayed 491 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Apr 2016 10:04:52 EDT
+X-AuthUser: davidel@xmailserver.org
+Received: from zino
+	by x35.xmailserver.org with [XMail 1.27 ESMTP Server]
+	id <S48D189> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
+	Thu, 14 Apr 2016 09:56:18 -0400
+X-X-Sender: davide@zino
+In-Reply-To: <CAGZ79kZ+JgVNSvJ+tZwGqP-L-NVUv8hmd1jsbh71F08F5AqsjA@mail.gmail.com>
+User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
+X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
+X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291523>
 
-Mike Hommey <mh@glandium.org> writes:
+On Tue, 12 Apr 2016, Stefan Beller wrote:
 
-> Yeah, that definitely is a weird corner case. Interestingly, it was
-> complaining about "error: short SHA1 e34ff55 is ambiguous." when apply
-> *other* commits that were in the list prior to it,
+> On Wed, Apr 6, 2016 at 10:47 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
+> >
+> > I started attempting to implement this heuristic within xdiff, but I
+> > am at a loss as to how xdiff actually works. I suspect this would go
+> > in xdi_change_compact or after it, but I really don't understand how
+> > xdiff represents the diffs at all...
+> 
+> I agree that this seems like the right place.
+> 
+> On the off chance that David, the author of xdiff remembers that
+> part, I cc'd him. (The whole discussion on better diffs is found at
+> http://thread.gmane.org/gmane.comp.version-control.git/290093)
 
-I think it did before: when normalizing the list to long sha1, i.e.
-right after you closed your editor and befor starting anything else.
-
-> That said, that would be less likely to happen if disambiguation was
-> also checking checking the object type. Collisions between commits are
-> less likely than between objects of different types.
-
-Right.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+That was a zillions of years ago :) , but from a quick look at email 
+thread, if you want to do it within xdiff, xdi_change_compact would be the 
+place.
+The issue is knowing in which situations one diff look better than 
+another, and embedding an if-tis-do-tat logic deep into the core diff 
+machinery.
+In theory one could implement the same thing higher up, working with the 
+unified diff text format, where maybe a user can provide its own diff 
+post-process hook script.
+In any case, that still leaves open the issue on what to shift in the diff 
+chunks, and in which cases. Which is likely going to be language/format 
+dependent. IMHO, it gets nasty pretty quickly.
