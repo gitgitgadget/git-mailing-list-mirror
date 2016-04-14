@@ -1,247 +1,200 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 1/2] submodule: port resolve_relative_url from shell to C
-Date: Thu, 14 Apr 2016 12:37:04 -0700
-Message-ID: <CAGZ79kYZaurmnPPTUqSOYgr3V0Pnj1S+AycF9-fi_4n9+egR-Q@mail.gmail.com>
-References: <1460657909-1329-1-git-send-email-sbeller@google.com>
-	<1460657909-1329-2-git-send-email-sbeller@google.com>
-	<570FF105.3040204@kdbg.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4 15/16] branch: use ref-filter printing APIs
+Date: Thu, 14 Apr 2016 16:05:30 -0400
+Message-ID: <20160414200530.GA26513@sigill.intra.peff.net>
+References: <1460227515-28437-1-git-send-email-Karthik.188@gmail.com>
+ <1460227515-28437-16-git-send-email-Karthik.188@gmail.com>
+ <xmqqtwj6pnma.fsf@gitster.mtv.corp.google.com>
+ <xmqqinzmpmg2.fsf@gitster.mtv.corp.google.com>
+ <CAOLa=ZQ5gwW1vwREsK=h0tDuyk18axHU491brKJM_DR53=9zcQ@mail.gmail.com>
+ <CAPc5daUZvP03o+eb2ngvRtV=aoXWGnZH9FKj9bRCEj3MrCT8WQ@mail.gmail.com>
+ <CAOLa=ZQnM95mApOmYYZa3SeFq2af5FMmiqh0ZFZDn3EO8U9-Dg@mail.gmail.com>
+ <20160413220559.GC8712@sigill.intra.peff.net>
+ <CAOLa=ZR7rKETM2b34B2Whw7Au-t7iFEkcNAB4ZygeQM=9Lp9zQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Apr 14 21:37:15 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 14 22:05:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqn4k-0003EH-BI
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 21:37:14 +0200
+	id 1aqnWE-0001CY-HN
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 22:05:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750948AbcDNThH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Apr 2016 15:37:07 -0400
-Received: from mail-io0-f170.google.com ([209.85.223.170]:36177 "EHLO
-	mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750778AbcDNThG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2016 15:37:06 -0400
-Received: by mail-io0-f170.google.com with SMTP id u185so114207254iod.3
-        for <git@vger.kernel.org>; Thu, 14 Apr 2016 12:37:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=8PyLVBldmcVSeru8I6pgnkyfR24oJhIW28ky7FdLRG0=;
-        b=kDMzlmgU3p2+skL8yADrZlF1TgGcu0DbtbboRf6u7vjm047ZIs4zXypzO+om5pWP9w
-         GecavaKDk2e9FX5gR87RggyS/si2HadtCcU+/je9zL/F5RJ58uH0514HC8GDqCPLoJZe
-         hVFampsJSKYMxpDdntxNnX2uQDKzjvG94XPDBw03oE99lcCanbsQoNm+Ip97SrJ5Z7/z
-         4ydHzryoo59qQ7LFiPicgqDo+NuVWIIOZ3Esnp8lkAq+dtNgeYx/Qlzyk7S+7UTbIfq8
-         AkFha+g7RGhrkqEAm2IHlzYrmJQ/09OhNZ4+4Njdke7j+b21fAIE8gp1t7WDr3zpwo59
-         NXUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=8PyLVBldmcVSeru8I6pgnkyfR24oJhIW28ky7FdLRG0=;
-        b=He0kDRyBkCdXMXDJlyTMToRQdgfnpIv6300O9tWGQ6puYQqmKueTDAwIdqZBDwkW5W
-         bVfYt3oj3bPsufpoRuVFmGglHGWWrSqJf1hFZRJvXzwTSLV4zzv15SQ7gMR6sipBfBTY
-         MrlAcPvXwLDZbY/F2VU5PnJppkSaGGYB4X3XAXBCxZtv9/CP2fSJN3XV5N1Gomk5Z+r3
-         f6ounxFLmV/DW9LgjowJe03RTAn5wjKUQrBiZyS0wlmpR9Z2HSGbXuXjfuCzKiGAgd/f
-         eqr4DhZNh1zyXBac2efNFY+uRIyz9ur8T5LyCnyrK1KjBAiQq+JItfDQbR0DMNfhQeaI
-         pAxw==
-X-Gm-Message-State: AOPr4FUC+AAKagLHCa+EP4XpqkxW9J8BmLzrkvZf9+AyDeYADo6/LjhH0WtEInT3iOuGU41beWRqd3WIYEjXQTD3
-X-Received: by 10.107.161.68 with SMTP id k65mr20698988ioe.110.1460662624918;
- Thu, 14 Apr 2016 12:37:04 -0700 (PDT)
-Received: by 10.107.17.27 with HTTP; Thu, 14 Apr 2016 12:37:04 -0700 (PDT)
-In-Reply-To: <570FF105.3040204@kdbg.org>
+	id S1751214AbcDNUFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2016 16:05:34 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49654 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751044AbcDNUFd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2016 16:05:33 -0400
+Received: (qmail 20501 invoked by uid 102); 14 Apr 2016 20:05:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Apr 2016 16:05:33 -0400
+Received: (qmail 2492 invoked by uid 107); 14 Apr 2016 20:05:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Apr 2016 16:05:38 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Apr 2016 16:05:30 -0400
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZR7rKETM2b34B2Whw7Au-t7iFEkcNAB4ZygeQM=9Lp9zQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291561>
 
-On Thu, Apr 14, 2016 at 12:35 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 14.04.2016 um 20:18 schrieb Stefan Beller:
->> @@ -298,4 +305,40 @@ test_git_path GIT_COMMON_DIR=3Dbar config      =
-             bar/config
->>   test_git_path GIT_COMMON_DIR=3Dbar packed-refs              bar/pa=
-cked-refs
->>   test_git_path GIT_COMMON_DIR=3Dbar shallow                  bar/sh=
-allow
->>
->> +test_submodule_relative_url "../" "../foo" "../submodule" "../../su=
-bmodule"
->> +test_submodule_relative_url "../" "../foo/bar" "../submodule" "../.=
-=2E/foo/submodule"
->> +test_submodule_relative_url "../" "../foo/submodule" "../submodule"=
- "../../foo/submodule"
->> +test_submodule_relative_url "../" "./foo" "../submodule" "../submod=
-ule"
->> +test_submodule_relative_url "../" "./foo/bar" "../submodule" "../fo=
-o/submodule"
->> +test_submodule_relative_url "../../../" "../foo/bar" "../sub/a/b/c"=
- "../../../../foo/sub/a/b/c"
->> +test_submodule_relative_url "../" "$PWD/addtest" "../repo" "$PWD/re=
-po"
->> +test_submodule_relative_url "../" "foo/bar" "../submodule" "../foo/=
-submodule"
->> +test_submodule_relative_url "../" "foo" "../submodule" "../submodul=
-e"
->> +
->> +test_submodule_relative_url "(null)" "../foo/bar" "../sub/a/b/c" ".=
-=2E/foo/sub/a/b/c"
->> +test_submodule_relative_url "(null)" "../foo/bar" "../submodule" ".=
-=2E/foo/submodule"
->> +test_submodule_relative_url "(null)" "../foo/submodule" "../submodu=
-le" "../foo/submodule"
->> +test_submodule_relative_url "(null)" "../foo" "../submodule" "../su=
-bmodule"
->> +test_submodule_relative_url "(null)" "./foo/bar" "../submodule" "fo=
-o/submodule"
->> +test_submodule_relative_url "(null)" "./foo" "../submodule" "submod=
-ule"
->> +test_submodule_relative_url "(null)" "//somewhere else/repo" "../su=
-brepo" "//somewhere else/subrepo"
->> +test_submodule_relative_url "(null)" "$PWD/subsuper_update_r" "../s=
-ubsubsuper_update_r" "$PWD/subsubsuper_update_r"
->> +test_submodule_relative_url "(null)" "$PWD/super_update_r2" "../sub=
-super_update_r" "$PWD/subsuper_update_r"
->> +test_submodule_relative_url "(null)" "$PWD/." "../." "$PWD/."
->> +test_submodule_relative_url "(null)" "$PWD" "./." "$PWD/."
->> +test_submodule_relative_url "(null)" "$PWD/addtest" "../repo" "$PWD=
-/repo"
->> +test_submodule_relative_url "(null)" "$PWD" "./=C3=A5 =C3=A4=C3=B6"=
- "$PWD/=C3=A5 =C3=A4=C3=B6"
->> +test_submodule_relative_url "(null)" "$PWD/." "../submodule" "$PWD/=
-submodule"
->> +test_submodule_relative_url "(null)" "$PWD/submodule" "../submodule=
-" "$PWD/submodule"
->> +test_submodule_relative_url "(null)" "$PWD/home2/../remote" "../bun=
-dle1" "$PWD/home2/../bundle1"
->> +test_submodule_relative_url "(null)" "$PWD/submodule_update_repo" "=
-=2E/." "$PWD/submodule_update_repo/."
->> +test_submodule_relative_url "(null)" "file:///tmp/repo" "../subrepo=
-" "file:///tmp/subrepo"
->> +test_submodule_relative_url "(null)" "foo/bar" "../submodule" "foo/=
-submodule"
->> +test_submodule_relative_url "(null)" "foo" "../submodule" "submodul=
-e"
->> +test_submodule_relative_url "(null)" "helper:://hostname/repo" "../=
-subrepo" "helper:://hostname/subrepo"
->> +test_submodule_relative_url "(null)" "ssh://hostname/repo" "../subr=
-epo" "ssh://hostname/subrepo"
->> +test_submodule_relative_url "(null)" "ssh://hostname:22/repo" "../s=
-ubrepo" "ssh://hostname:22/subrepo"
->> +test_submodule_relative_url "(null)" "user@host:path/to/repo" "../s=
-ubrepo" "user@host:path/to/subrepo"
->> +test_submodule_relative_url "(null)" "user@host:repo" "../subrepo" =
-"user@host:subrepo"
->> +
->>   test_done
->>
->
-> I am very sorry that I am chiming in again so late. I forgot to menti=
-on
-> that this requires a fixup on Windows as below. I won't mind to submi=
-t
-> the fixup as a follow-on patch, but you could also squash it in if ye=
-t
-> another round is required.
+On Fri, Apr 15, 2016 at 12:47:15AM +0530, Karthik Nayak wrote:
 
-Thanks a lot for testing a patch on Windows!
-I'll pick this up in a resend.
+> That does make sense, I guess then I'll stick to shortening all symref's
+> by default and allowing the user to change this if needed via the '--format'
+> option.
+
+Thanks.
+
+> About %(symref) not getting enough formatting options, I don't see anything
+> else in %(upstream) which would be required in %(symref), maybe the 'strip=X'
+> option could be added. But for now I see 'short' to be the only needed option.
+> If anyone feels that something else would be useful, I'd be glad to
+> add it along.
+
+"strip" was the one I was most interested in. I thought "%(upstream)"
+and "%(push)" would also take "dir" and "base", which "%(refname)" does.
+I'm not sure when those are useful in the first place, but it seems like
+they should apply equally well to any instance where we show a ref:
+%(refname), %(upstream), %(push), or %(symref).
+
+IOW, I'd expect the logic for handling atom->u.refname to be in a common
+function that just gets fed ref->refname, or ref->symref, or whatever.
+
+It looks like that's a little tricky for %(upstream) and %(push), which
+have extra tracking options, but it's pretty trivial for %(symref):
+
+diff --git a/ref-filter.c b/ref-filter.c
+index 3435df1..816f8c0 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -82,7 +82,6 @@ static struct used_atom {
+ 			enum { O_FULL, O_LENGTH, O_SHORT } option;
+ 			unsigned int length;
+ 		} objectname;
+-		enum { S_FULL, S_SHORT } symref;
+ 		struct {
+ 			enum { R_BASE, R_DIR, R_NORMAL, R_SHORT, R_STRIP } option;
+ 			unsigned int strip;
+@@ -242,16 +241,6 @@ static void if_atom_parser(struct used_atom *atom, const char *arg)
+ 		die(_("unrecognized %%(if) argument: %s"), arg);
+ }
+ 
+-static void symref_atom_parser(struct used_atom *atom, const char *arg)
+-{
+-	if (!arg)
+-		atom->u.symref = S_FULL;
+-	else if (!strcmp(arg, "short"))
+-		atom->u.symref = S_SHORT;
+-	else
+-		die(_("unrecognized %%(symref) argument: %s"), arg);
+-}
+-
+ static void refname_atom_parser(struct used_atom *atom, const char *arg)
+ {
+ 	if (!arg)
+@@ -305,7 +294,7 @@ static struct {
+ 	{ "contents", FIELD_STR, contents_atom_parser },
+ 	{ "upstream", FIELD_STR, remote_ref_atom_parser },
+ 	{ "push", FIELD_STR, remote_ref_atom_parser },
+-	{ "symref", FIELD_STR, symref_atom_parser },
++	{ "symref", FIELD_STR, refname_atom_parser },
+ 	{ "flag" },
+ 	{ "HEAD" },
+ 	{ "color", FIELD_STR, color_atom_parser },
+@@ -1180,29 +1169,33 @@ char *get_head_description(void)
+ 	return strbuf_detach(&desc, NULL);
+ }
+ 
++static const char *show_ref(struct used_atom *atom, const char *refname);
++
+ static const char *get_symref(struct used_atom *atom, struct ref_array_item *ref)
+ {
+ 	if (!ref->symref)
+ 		return "";
+-	else if (atom->u.symref == S_SHORT)
+-		return shorten_unambiguous_ref(ref->symref,
+-					       warn_ambiguous_refs);
+ 	else
+-		return ref->symref;
++		return show_ref(atom, ref->symref);
+ }
+ 
+ static const char *get_refname(struct used_atom *atom, struct ref_array_item *ref)
+ {
+ 	if (ref->kind & FILTER_REFS_DETACHED_HEAD)
+ 		return get_head_description();
++	return show_ref(atom, ref->refname);
++}
++
++static const char *show_ref(struct used_atom *atom, const char *refname)
++{
+ 	if (atom->u.refname.option == R_SHORT)
+-		return shorten_unambiguous_ref(ref->refname, warn_ambiguous_refs);
++		return shorten_unambiguous_ref(refname, warn_ambiguous_refs);
+ 	else if (atom->u.refname.option == R_STRIP)
+-		return strip_ref_components(ref->refname, atom->u.refname.strip);
++		return strip_ref_components(refname, atom->u.refname.strip);
+ 	else if (atom->u.refname.option == R_BASE) {
+ 		const char *sp, *ep;
+ 
+-		if (skip_prefix(ref->refname, "refs/", &sp)) {
++		if (skip_prefix(refname, "refs/", &sp)) {
+ 			ep = strchr(sp, '/');
+ 			if (!ep)
+ 				return "";
+@@ -1212,13 +1205,13 @@ static const char *get_refname(struct used_atom *atom, struct ref_array_item *re
+ 	} else if (atom->u.refname.option == R_DIR) {
+ 		const char *sp, *ep;
+ 
+-		sp = ref->refname;
++		sp = refname;
+ 		ep = strrchr(sp, '/');
+ 		if (!ep)
+ 			return "";
+ 		return xstrndup(sp, ep - sp);
+ 	} else
+-		return ref->refname;
++		return refname;
+ }
+ 
+ /*
 
 
->
-> diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-> index 579c1fa..1d19fbb 100755
-> --- a/t/t0060-path-utils.sh
-> +++ b/t/t0060-path-utils.sh
-> @@ -293,13 +293,16 @@ test_git_path GIT_COMMON_DIR=3Dbar config      =
-             bar/config
->  test_git_path GIT_COMMON_DIR=3Dbar packed-refs              bar/pack=
-ed-refs
->  test_git_path GIT_COMMON_DIR=3Dbar shallow                  bar/shal=
-low
->
-> +# In the tests below, the distinction between $PWD and $(pwd) is imp=
-ortant:
-> +# on Windows, $PWD is POSIX style (/c/foo), $(pwd) has drive letter =
-(c:/foo).
-> +
->  test_submodule_relative_url "../" "../foo" "../submodule" "../../sub=
-module"
->  test_submodule_relative_url "../" "../foo/bar" "../submodule" "../..=
-/foo/submodule"
->  test_submodule_relative_url "../" "../foo/submodule" "../submodule" =
-"../../foo/submodule"
->  test_submodule_relative_url "../" "./foo" "../submodule" "../submodu=
-le"
->  test_submodule_relative_url "../" "./foo/bar" "../submodule" "../foo=
-/submodule"
->  test_submodule_relative_url "../../../" "../foo/bar" "../sub/a/b/c" =
-"../../../../foo/sub/a/b/c"
-> -test_submodule_relative_url "../" "$PWD/addtest" "../repo" "$PWD/rep=
-o"
-> +test_submodule_relative_url "../" "$PWD/addtest" "../repo" "$(pwd)/r=
-epo"
->  test_submodule_relative_url "../" "foo/bar" "../submodule" "../foo/s=
-ubmodule"
->  test_submodule_relative_url "../" "foo" "../submodule" "../submodule=
-"
->
-> @@ -310,16 +313,16 @@ test_submodule_relative_url "(null)" "../foo" "=
-=2E./submodule" "../submodule"
->  test_submodule_relative_url "(null)" "./foo/bar" "../submodule" "foo=
-/submodule"
->  test_submodule_relative_url "(null)" "./foo" "../submodule" "submodu=
-le"
->  test_submodule_relative_url "(null)" "//somewhere else/repo" "../sub=
-repo" "//somewhere else/subrepo"
-> -test_submodule_relative_url "(null)" "$PWD/subsuper_update_r" "../su=
-bsubsuper_update_r" "$PWD/subsubsuper_update_r"
-> -test_submodule_relative_url "(null)" "$PWD/super_update_r2" "../subs=
-uper_update_r" "$PWD/subsuper_update_r"
-> -test_submodule_relative_url "(null)" "$PWD/." "../." "$PWD/."
-> -test_submodule_relative_url "(null)" "$PWD" "./." "$PWD/."
-> -test_submodule_relative_url "(null)" "$PWD/addtest" "../repo" "$PWD/=
-repo"
-> -test_submodule_relative_url "(null)" "$PWD" "./=C3=83=C2=A5 =C3=83=C2=
-=A4=C3=83=C2=B6" "$PWD/=C3=83=C2=A5 =C3=83=C2=A4=C3=83=C2=B6"
-> -test_submodule_relative_url "(null)" "$PWD/." "../submodule" "$PWD/s=
-ubmodule"
-> -test_submodule_relative_url "(null)" "$PWD/submodule" "../submodule"=
- "$PWD/submodule"
-> -test_submodule_relative_url "(null)" "$PWD/home2/../remote" "../bund=
-le1" "$PWD/home2/../bundle1"
-> -test_submodule_relative_url "(null)" "$PWD/submodule_update_repo" ".=
-/." "$PWD/submodule_update_repo/."
-> +test_submodule_relative_url "(null)" "$PWD/subsuper_update_r" "../su=
-bsubsuper_update_r" "$(pwd)/subsubsuper_update_r"
-> +test_submodule_relative_url "(null)" "$PWD/super_update_r2" "../subs=
-uper_update_r" "$(pwd)/subsuper_update_r"
-> +test_submodule_relative_url "(null)" "$PWD/." "../." "$(pwd)/."
-> +test_submodule_relative_url "(null)" "$PWD" "./." "$(pwd)/."
-> +test_submodule_relative_url "(null)" "$PWD/addtest" "../repo" "$(pwd=
-)/repo"
-> +test_submodule_relative_url "(null)" "$PWD" "./=C3=83=C2=A5 =C3=83=C2=
-=A4=C3=83=C2=B6" "$(pwd)/=C3=83=C2=A5 =C3=83=C2=A4=C3=83=C2=B6"
-> +test_submodule_relative_url "(null)" "$PWD/." "../submodule" "$(pwd)=
-/submodule"
-> +test_submodule_relative_url "(null)" "$PWD/submodule" "../submodule"=
- "$(pwd)/submodule"
-> +test_submodule_relative_url "(null)" "$PWD/home2/../remote" "../bund=
-le1" "$(pwd)/home2/../bundle1"
-> +test_submodule_relative_url "(null)" "$PWD/submodule_update_repo" ".=
-/." "$(pwd)/submodule_update_repo/."
->  test_submodule_relative_url "(null)" "file:///tmp/repo" "../subrepo"=
- "file:///tmp/subrepo"
->  test_submodule_relative_url "(null)" "foo/bar" "../submodule" "foo/s=
-ubmodule"
->  test_submodule_relative_url "(null)" "foo" "../submodule" "submodule=
-"
-> --
-> 2.7.0.118.g90056ae
->
+I suspect it could work for the remote_ref_atom_parser, too, if you did
+something like:
+
+  struct refname_parser_atom {
+    enum { R_BASE, R_DIR, R_NORMAL, R_SHORT, R_STRIP } option;
+    unsigned int strip;
+  };
+
+  struct used_atom {
+    ...
+    union {
+      struct refname_parser_atom refname;
+      struct {
+        struct refname_parser_atom refname;
+	enum { RR_TRACK, ... } option;
+      } remote_ref;
+      ...
+  };
+
+and then just passed the refname_parser_atom to show_ref() above. I
+don't know if that would create weird corner cases with RR_SHORTEN and
+RR_TRACK, though, which are currently in the same enum (and thus cannot
+be used at the same time). But it's not like we parse
+"%(upstream:short:track)" anyway, I don't think. For each "%()"
+placeholder you have to choose one or the other: showing the tracking
+info, or showing the refname (possibly with modifiers). So ":track"
+isn't so much a modifier as "upstream:track" is this totally other
+thing.
+
+-Peff
