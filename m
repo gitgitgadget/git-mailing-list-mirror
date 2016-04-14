@@ -1,200 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4 15/16] branch: use ref-filter printing APIs
-Date: Thu, 14 Apr 2016 16:05:30 -0400
-Message-ID: <20160414200530.GA26513@sigill.intra.peff.net>
-References: <1460227515-28437-1-git-send-email-Karthik.188@gmail.com>
- <1460227515-28437-16-git-send-email-Karthik.188@gmail.com>
- <xmqqtwj6pnma.fsf@gitster.mtv.corp.google.com>
- <xmqqinzmpmg2.fsf@gitster.mtv.corp.google.com>
- <CAOLa=ZQ5gwW1vwREsK=h0tDuyk18axHU491brKJM_DR53=9zcQ@mail.gmail.com>
- <CAPc5daUZvP03o+eb2ngvRtV=aoXWGnZH9FKj9bRCEj3MrCT8WQ@mail.gmail.com>
- <CAOLa=ZQnM95mApOmYYZa3SeFq2af5FMmiqh0ZFZDn3EO8U9-Dg@mail.gmail.com>
- <20160413220559.GC8712@sigill.intra.peff.net>
- <CAOLa=ZR7rKETM2b34B2Whw7Au-t7iFEkcNAB4ZygeQM=9Lp9zQ@mail.gmail.com>
+From: Krzysztof Voss <k.voss@usask.ca>
+Subject: Cannot checkout a branch / worktree shows multiple branches for the
+ same directory
+Date: Thu, 14 Apr 2016 13:51:19 -0600
+Message-ID: <CACB1J8XEXcy+Wewcwx_0UWZbQz-WeWUVnK_yAHw5uTBnr2fpVg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 14 22:05:39 2016
+Content-Type: text/plain; charset="UTF-8"
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 14 22:06:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqnWE-0001CY-HN
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 22:05:38 +0200
+	id 1aqnX5-0001ft-Vd
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 22:06:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751214AbcDNUFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2016 16:05:34 -0400
-Received: from cloud.peff.net ([50.56.180.127]:49654 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751044AbcDNUFd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2016 16:05:33 -0400
-Received: (qmail 20501 invoked by uid 102); 14 Apr 2016 20:05:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Apr 2016 16:05:33 -0400
-Received: (qmail 2492 invoked by uid 107); 14 Apr 2016 20:05:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Apr 2016 16:05:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Apr 2016 16:05:30 -0400
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZR7rKETM2b34B2Whw7Au-t7iFEkcNAB4ZygeQM=9Lp9zQ@mail.gmail.com>
+	id S1751824AbcDNUG2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2016 16:06:28 -0400
+Received: from mail08.usask.ca ([128.233.195.240]:42423 "EHLO mail.usask.ca"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751150AbcDNUG1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2016 16:06:27 -0400
+X-Greylist: delayed 905 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Apr 2016 16:06:27 EDT
+Received: from mail-yw0-f169.google.com (209.85.161.169) by Mail08.usask.ca
+ (192.168.228.179) with Microsoft SMTP Server (TLS) id 15.0.1178.4; Thu, 14
+ Apr 2016 13:51:20 -0600
+Received: by mail-yw0-f169.google.com with SMTP id i84so115274613ywc.2
+        for <git@vger.kernel.org>; Thu, 14 Apr 2016 12:51:20 -0700 (PDT)
+X-Gm-Message-State: AOPr4FXtOfxNn5LKQFCkCXO81Dn2t2YgvUih1lfmC4hzajfxc2jGVXLkgmFf2milE+/nZeyp24bcxfzOTlH7Sw==
+X-Received: by 10.129.157.205 with SMTP id u196mr10287739ywg.198.1460663479185;
+ Thu, 14 Apr 2016 12:51:19 -0700 (PDT)
+Received: by 10.129.72.132 with HTTP; Thu, 14 Apr 2016 12:51:19 -0700 (PDT)
+X-Gmail-Original-Message-ID: <CACB1J8XEXcy+Wewcwx_0UWZbQz-WeWUVnK_yAHw5uTBnr2fpVg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291562>
 
-On Fri, Apr 15, 2016 at 12:47:15AM +0530, Karthik Nayak wrote:
+Hi,
 
-> That does make sense, I guess then I'll stick to shortening all symref's
-> by default and allowing the user to change this if needed via the '--format'
-> option.
+I stumbled upon an interesting problem when checking out a branch.
+I had to switch to a testing branch to merge in some changes from yet
+another branch, but when I tried to check out the testing branch I got
+a message saying that I'm already on the target branch.
 
-Thanks.
+I used worktree a few times, but the checkouts were always in their
+own directories.
+It crossed my mind that this behaviour may be related, so I took a
+look at the worktree list and noticed that according to that list
+there are three branches at the same time in one directory.
 
-> About %(symref) not getting enough formatting options, I don't see anything
-> else in %(upstream) which would be required in %(symref), maybe the 'strip=X'
-> option could be added. But for now I see 'short' to be the only needed option.
-> If anyone feels that something else would be useful, I'd be glad to
-> add it along.
-
-"strip" was the one I was most interested in. I thought "%(upstream)"
-and "%(push)" would also take "dir" and "base", which "%(refname)" does.
-I'm not sure when those are useful in the first place, but it seems like
-they should apply equally well to any instance where we show a ref:
-%(refname), %(upstream), %(push), or %(symref).
-
-IOW, I'd expect the logic for handling atom->u.refname to be in a common
-function that just gets fed ref->refname, or ref->symref, or whatever.
-
-It looks like that's a little tricky for %(upstream) and %(push), which
-have extra tracking options, but it's pretty trivial for %(symref):
-
-diff --git a/ref-filter.c b/ref-filter.c
-index 3435df1..816f8c0 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -82,7 +82,6 @@ static struct used_atom {
- 			enum { O_FULL, O_LENGTH, O_SHORT } option;
- 			unsigned int length;
- 		} objectname;
--		enum { S_FULL, S_SHORT } symref;
- 		struct {
- 			enum { R_BASE, R_DIR, R_NORMAL, R_SHORT, R_STRIP } option;
- 			unsigned int strip;
-@@ -242,16 +241,6 @@ static void if_atom_parser(struct used_atom *atom, const char *arg)
- 		die(_("unrecognized %%(if) argument: %s"), arg);
- }
- 
--static void symref_atom_parser(struct used_atom *atom, const char *arg)
--{
--	if (!arg)
--		atom->u.symref = S_FULL;
--	else if (!strcmp(arg, "short"))
--		atom->u.symref = S_SHORT;
--	else
--		die(_("unrecognized %%(symref) argument: %s"), arg);
--}
--
- static void refname_atom_parser(struct used_atom *atom, const char *arg)
- {
- 	if (!arg)
-@@ -305,7 +294,7 @@ static struct {
- 	{ "contents", FIELD_STR, contents_atom_parser },
- 	{ "upstream", FIELD_STR, remote_ref_atom_parser },
- 	{ "push", FIELD_STR, remote_ref_atom_parser },
--	{ "symref", FIELD_STR, symref_atom_parser },
-+	{ "symref", FIELD_STR, refname_atom_parser },
- 	{ "flag" },
- 	{ "HEAD" },
- 	{ "color", FIELD_STR, color_atom_parser },
-@@ -1180,29 +1169,33 @@ char *get_head_description(void)
- 	return strbuf_detach(&desc, NULL);
- }
- 
-+static const char *show_ref(struct used_atom *atom, const char *refname);
-+
- static const char *get_symref(struct used_atom *atom, struct ref_array_item *ref)
- {
- 	if (!ref->symref)
- 		return "";
--	else if (atom->u.symref == S_SHORT)
--		return shorten_unambiguous_ref(ref->symref,
--					       warn_ambiguous_refs);
- 	else
--		return ref->symref;
-+		return show_ref(atom, ref->symref);
- }
- 
- static const char *get_refname(struct used_atom *atom, struct ref_array_item *ref)
- {
- 	if (ref->kind & FILTER_REFS_DETACHED_HEAD)
- 		return get_head_description();
-+	return show_ref(atom, ref->refname);
-+}
-+
-+static const char *show_ref(struct used_atom *atom, const char *refname)
-+{
- 	if (atom->u.refname.option == R_SHORT)
--		return shorten_unambiguous_ref(ref->refname, warn_ambiguous_refs);
-+		return shorten_unambiguous_ref(refname, warn_ambiguous_refs);
- 	else if (atom->u.refname.option == R_STRIP)
--		return strip_ref_components(ref->refname, atom->u.refname.strip);
-+		return strip_ref_components(refname, atom->u.refname.strip);
- 	else if (atom->u.refname.option == R_BASE) {
- 		const char *sp, *ep;
- 
--		if (skip_prefix(ref->refname, "refs/", &sp)) {
-+		if (skip_prefix(refname, "refs/", &sp)) {
- 			ep = strchr(sp, '/');
- 			if (!ep)
- 				return "";
-@@ -1212,13 +1205,13 @@ static const char *get_refname(struct used_atom *atom, struct ref_array_item *re
- 	} else if (atom->u.refname.option == R_DIR) {
- 		const char *sp, *ep;
- 
--		sp = ref->refname;
-+		sp = refname;
- 		ep = strrchr(sp, '/');
- 		if (!ep)
- 			return "";
- 		return xstrndup(sp, ep - sp);
- 	} else
--		return ref->refname;
-+		return refname;
- }
- 
- /*
+It may be a conicidence and I have no confidence in saying that these
+issues are related.
+Can someone shed some light on this issue for me?
 
 
-I suspect it could work for the remote_ref_atom_parser, too, if you did
-something like:
+    $ git --version
+    git version 2.7.0.235.g07c314d
 
-  struct refname_parser_atom {
-    enum { R_BASE, R_DIR, R_NORMAL, R_SHORT, R_STRIP } option;
-    unsigned int strip;
-  };
+    $ git status -uno -sb
+    ## ticket-22444
+    M src/core/parsers/ParserBase.py
+    M src/core/parsers/test/ParserBase_test.py
 
-  struct used_atom {
-    ...
-    union {
-      struct refname_parser_atom refname;
-      struct {
-        struct refname_parser_atom refname;
-	enum { RR_TRACK, ... } option;
-      } remote_ref;
-      ...
-  };
+    $ git stash
+    Saved working directory and index state WIP on ticket-22444:
+7c5edaa #22444 refactoring
+    HEAD is now at 7c5edaa #22444 refactoring
 
-and then just passed the refname_parser_atom to show_ref() above. I
-don't know if that would create weird corner cases with RR_SHORTEN and
-RR_TRACK, though, which are currently in the same enum (and thus cannot
-be used at the same time). But it's not like we parse
-"%(upstream:short:track)" anyway, I don't think. For each "%()"
-placeholder you have to choose one or the other: showing the tracking
-info, or showing the refname (possibly with modifiers). So ":track"
-isn't so much a modifier as "upstream:track" is this totally other
-thing.
+    $ git co testing
+    fatal: 'testing' is already checked out at '/home/k/workspace/moyo'
 
--Peff
+    $ pwd
+    /home/k/workspace/moyo
+
+    $ git branch | grep '*'
+    * ticket-22444
+
+    $ git worktree list
+    /home/k/workspace/moyo  7c5edaa [ticket-22444]
+    /var/home/k/moyo-lsf  349613d (detached HEAD)
+    /home/k/workspace/moyo  265b7f9 (detached HEAD)
+    /home/k/workspace/moyo  c852282 [testing]
+
+    $ uname -a
+    Linux k 3.13.0-83-generic #127-Ubuntu SMP Fri Mar 11 00:25:37 UTC
+2016 x86_64 x86_64 x86_64 GNU/Linux
+
+    $ cat /etc/lsb-release
+    DISTRIB_ID=Ubuntu
+    DISTRIB_RELEASE=14.04
+    DISTRIB_CODENAME=trusty
+    DISTRIB_DESCRIPTION="Ubuntu 14.04.4 LTS"
+
+
+Thanks,
+Krzysztof
