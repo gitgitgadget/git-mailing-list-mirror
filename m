@@ -1,73 +1,102 @@
-From: Davide Libenzi <davidel@xmailserver.org>
-Subject: Re: weird diff output?
-Date: Thu, 14 Apr 2016 06:56:39 -0700 (PDT)
-Message-ID: <alpine.DEB.2.10.1604140639230.8340@zino>
-References: <CA+P7+xoiFUiBwDU2Wo9nVukchBvJSknON2XN572b6rSHnOSWaQ@mail.gmail.com> <CAGZ79ka4ad5dQMWANJUDx-0+kV3qR=HttOJni2XfhFzjMKfcPw@mail.gmail.com> <xmqqzithxj8l.fsf@gitster.mtv.corp.google.com> <CAGZ79kZiiOgxh6vMDnaJ_b+VVGrFBfGzZukTN6OEBxUV9-2vQw@mail.gmail.com>
- <CA+P7+xoLZhKzHf6khQfT_pZ2=CQAp8Nmhc9B8+10+9=YYUZH3w@mail.gmail.com> <20160330045554.GA11007@sigill.intra.peff.net> <CA+P7+xqskf6Ti3tVwMrOAaj3EDykRLKiXG5EbbzkjRsZP0s_7w@mail.gmail.com> <CA+P7+xp+oT2zMBZqR8zvXKm8Zp5btaNyoOWFTts29HMwX+2o=Q@mail.gmail.com>
- <CA+P7+xrbNQqGhR_EoVe7zou_g6oVFGN_v+q+tyHguv1BCMcimQ@mail.gmail.com> <20160331134750.GA29790@sigill.intra.peff.net> <CA+P7+xpX_xR9wVdRPgymXe0wRjDY2USRx2PyWJMKTjAepWpP+A@mail.gmail.com> <CAGZ79kZ+JgVNSvJ+tZwGqP-L-NVUv8hmd1jsbh71F08F5AqsjA@mail.gmail.com>
+From: Ye Xiaolong <xiaolong.ye@intel.com>
+Subject: Re: [PATCH v4 2/4] format-patch: add '--base' option to record base
+ tree info
+Date: Thu, 14 Apr 2016 22:23:33 +0800
+Message-ID: <20160414142333.GA31621@yexl-desktop>
+References: <1460342873-28900-1-git-send-email-xiaolong.ye@intel.com>
+ <1460342873-28900-3-git-send-email-xiaolong.ye@intel.com>
+ <xmqq7fg2r6fi.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jacob Keller <jacob.keller@gmail.com>, davidel@xmailserver.org,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Apr 14 16:04:58 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, fengguang.wu@intel.com, ying.huang@intel.com,
+	philip.li@intel.com, julie.du@intel.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 14 16:24:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqhtB-0006Z1-1n
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 16:04:57 +0200
+	id 1aqiCV-0008Px-K9
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 16:24:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753910AbcDNOEw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2016 10:04:52 -0400
-Received: from x35.xmailserver.org ([64.71.152.41]:38774 "EHLO
-	x35.xmailserver.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753110AbcDNOEw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2016 10:04:52 -0400
-X-Greylist: delayed 491 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Apr 2016 10:04:52 EDT
-X-AuthUser: davidel@xmailserver.org
-Received: from zino
-	by x35.xmailserver.org with [XMail 1.27 ESMTP Server]
-	id <S48D189> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
-	Thu, 14 Apr 2016 09:56:18 -0400
-X-X-Sender: davide@zino
-In-Reply-To: <CAGZ79kZ+JgVNSvJ+tZwGqP-L-NVUv8hmd1jsbh71F08F5AqsjA@mail.gmail.com>
-User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
-X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
-X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
+	id S1756020AbcDNOYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2016 10:24:46 -0400
+Received: from mga11.intel.com ([192.55.52.93]:43879 "EHLO mga11.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756628AbcDNOYo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2016 10:24:44 -0400
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga102.fm.intel.com with ESMTP; 14 Apr 2016 07:24:28 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.24,485,1455004800"; 
+   d="scan'208";a="686245205"
+Received: from yexl-desktop.sh.intel.com (HELO localhost) ([10.239.159.139])
+  by FMSMGA003.fm.intel.com with ESMTP; 14 Apr 2016 07:24:27 -0700
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	fengguang.wu@intel.com, ying.huang@intel.com, philip.li@intel.com,
+	julie.du@intel.com
+Content-Disposition: inline
+In-Reply-To: <xmqq7fg2r6fi.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291524>
 
-On Tue, 12 Apr 2016, Stefan Beller wrote:
+On Tue, Apr 12, 2016 at 12:08:33PM -0700, Junio C Hamano wrote:
+>> +static void prepare_bases(struct base_tree_info *bases,
+>> +			  const char *base_commit,
+>> +			  struct commit **list,
+>> +			  int total)
+>> +{
+>> +	struct commit *base = NULL, *commit;
+>> +	struct rev_info revs;
+>> +	struct diff_options diffopt;
+>> +	unsigned char sha1[20];
+>> +	int i;
+>> +
+>> +	diff_setup(&diffopt);
+>> +	DIFF_OPT_SET(&diffopt, RECURSIVE);
+>> +	diff_setup_done(&diffopt);
+>> +
+>> +	base = lookup_commit_reference_by_name(base_commit);
+>> +	if (!base)
+>> +		die(_("Unknown commit %s"), base_commit);
+>> +	oidcpy(&bases->base_commit, &base->object.oid);
+>> +
+>> +	init_revisions(&revs, NULL);
+>> +	revs.max_parents = 1;
+>> +	revs.topo_order = 1;
+>> +	for (i = 0; i < total; i++) {
+>> +		if (!in_merge_bases(base, list[i]) || base == list[i])
+>> +			die(_("base commit should be the ancestor of revision list"));
+>
+>This check looks overly expensive, but I do not think of a more
+>efficient way to do this, given that "All the commits from our
+>series must reach the specified base" is what you seem to want.
+>
+>My understanding is that if base=P is given and you are doing
+>"format-patch Z..C" in this picture:
+>
+>    Q---P---Z---B---*---C
+>     \             /
+>      .-----------A
+>
 
-> On Wed, Apr 6, 2016 at 10:47 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> >
-> > I started attempting to implement this heuristic within xdiff, but I
-> > am at a loss as to how xdiff actually works. I suspect this would go
-> > in xdi_change_compact or after it, but I really don't understand how
-> > xdiff represents the diffs at all...
-> 
-> I agree that this seems like the right place.
-> 
-> On the off chance that David, the author of xdiff remembers that
-> part, I cc'd him. (The whole discussion on better diffs is found at
-> http://thread.gmane.org/gmane.comp.version-control.git/290093)
+How about we compute the merge base of the specified rev list in
+cmdline (it should be Q in above case), then check whether specified
+base (P in this case) could be reachable from it, if it couldn't, we
+just error out.
 
-That was a zillions of years ago :) , but from a quick look at email 
-thread, if you want to do it within xdiff, xdi_change_compact would be the 
-place.
-The issue is knowing in which situations one diff look better than 
-another, and embedding an if-tis-do-tat logic deep into the core diff 
-machinery.
-In theory one could implement the same thing higher up, working with the 
-unified diff text format, where maybe a user can provide its own diff 
-post-process hook script.
-In any case, that still leaves open the issue on what to shift in the diff 
-chunks, and in which cases. Which is likely going to be language/format 
-dependent. IMHO, it gets nasty pretty quickly.
+>your list would become A, B and C, and you want to detect that P is
+>not an ancestor of A.  merge_bases_many() computes a wrong thing for
+>this use case, and you'd need to go one-by-one.
+>
+>Unless there is some clever trick to take advantage of the previous
+>traversal you made in order to find out A, B and C are the commits
+>that are part of your series somehow.
+>
+>Anybody with clever ideas?
+>
