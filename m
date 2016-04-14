@@ -1,85 +1,70 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-stash: Don't GPG sign when stashing changes
-Date: Thu, 14 Apr 2016 17:50:57 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604141748370.2967@virtualbox>
-References: <00000150dddb0eeb-b77240fb-1b63-4676-ac4b-1220b8d011ca-000000@eu-west-1.amazonses.com> <loom.20160407T042319-468@post.gmane.org> <alpine.DEB.2.20.1604071017510.2967@virtualbox> <CAEnbY+eaReDYOH8azpSG7n7MOrvqORkC0ar80pd1m8wR4vv20A@mail.gmail.com>
- <CAOAY-+1TztY95z3Yi34HB3aYUG5aOHKK9G3OmpYM41ugDMtJUA@mail.gmail.com>
+Subject: Re: Ambiguous sha-1 during a rebase
+Date: Thu, 14 Apr 2016 17:55:34 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1604141754371.2967@virtualbox>
+References: <20160413222919.GA10474@glandium.org> <xmqqr3e9i10b.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Daurnimator <quae@daurnimator.com>, git@vger.kernel.org
-To: Cameron Currie <me@cameroncurrie.net>
-X-From: git-owner@vger.kernel.org Thu Apr 14 17:51:29 2016
+Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 14 17:56:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqjYH-00074W-7p
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 17:51:29 +0200
+	id 1aqjcd-0001F5-Nv
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Apr 2016 17:56:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932719AbcDNPvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2016 11:51:07 -0400
-Received: from mout.gmx.net ([212.227.15.19]:64115 "EHLO mout.gmx.net"
+	id S932651AbcDNPzz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2016 11:55:55 -0400
+Received: from mout.gmx.net ([212.227.17.20]:49545 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932709AbcDNPvD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2016 11:51:03 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LuP5z-1boIhp2WUp-011mVI; Thu, 14 Apr 2016 17:50:58
+	id S932243AbcDNPzy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2016 11:55:54 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0Lcjdr-1bWdGa3A6Z-00k7DT; Thu, 14 Apr 2016 17:55:35
  +0200
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CAOAY-+1TztY95z3Yi34HB3aYUG5aOHKK9G3OmpYM41ugDMtJUA@mail.gmail.com>
+In-Reply-To: <xmqqr3e9i10b.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:4DjnbCHxZOHxU95pCjGDVXsNokmW2ccFWXKPcLLUziVLALNPmTl
- b1CsOykmmmTR0FO3DOuXJqgYWSHOXMey5Se1w1q1rGMHnjfV8qU/tM6YBYtRDDuxqxdHIyO
- pdMvoGIXGgKmNawWPiBGB+3tzh02Xp4q62vIVl5+x5TntkXR+uNTqm9JRvUxKoibUhT1chZ
- 4glt0MbiVyKF0VXcG9IDQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OcEBqOTZiiw=:MAMB82uLh1BE5pCGYyjLzO
- fjz88F3F2ShNyULQOsBo+BNN8Y/EjPV+n4uB9Ajhwxuv7rxvOVlnOQ40uv08DZAUyxPvO1bjT
- crZ9IxlQRevZX3wKlnN9QhAx24vIWFHV5B7SVzscoveKNbxGQNaOoRPIQxPX37tcxtX/plju0
- LfwZwCKOldBuwILBYQ/v3v1QLkvJDGYJ6N4THC9b7X5+IhO4fhrW5IAk9q9RAdLqeQZlqvzsu
- rTb5wwdyp1i+YeHhodUVheZfB8KSbvO8FCZhmd0q2chkhcg3okMzUPUcknAEjF1H9XAkEu7/5
- AJDqOxDJqPZeDTir3ArzGvd01bW5wmhK4oKaz3Qg+TZjfqx62cXQj9XhpFsHcq7B4zpK5Zf/6
- ESEIqKgzCQWgWjp1xGP3y0YnKt96CynJRuKbYHNFeovmfZTkHIiuYI0PX93/O3V34tjkrVyqo
- 0XjUB6Bj9YhJFh9iTxJYUtXvXcAOHgYPvb+kVTkuItE/lyL5p+JG8eDEtOaKm6sK8uRsgoyQV
- C/FnDaCP/bbpNO77kTz3dEACte4tJrpx3Fa/FJNOBFccdP2AinHVOBHL32JFMeQv62m+fec0i
- PoEJcnpAxgwv4tiRT/+5NTRuVngOTPpiWjcjfH6aiWrevmN/YjoAHZ8o6HzS0ZVHgMtW+/b2d
- JPqSYcacr5Gpja9jghKmXUFHQXutyutTP8gevuhOS8NEBa34me0xS6IVXZOpKz8hS6rxrUmDq
- FaOTT98bK1G3xZZYPsn8EmiC8UVNnTKy1wR8aQvY+H8BxF0PNQJyZ6QV+bi75dm15WmZ8vwR 
+X-Provags-ID: V03:K0:28VD4YwXhur43KknVrFLRPKMJIFO2iqYyAgnTgHP/VEPBt8Z6GY
+ yX2GzXXWCQTxfujR18UZ9h5POu+1UWyzK3cN46GvQRrRfzRboZYhC+13OOkmgmYxDCjf5xv
+ OqLFHNz+pEviDVv6M0G4D5CSJqZQptVQvIiUHkcVraZdei7S1sNQLvvGVu21Sbz9dqH14CJ
+ y1MmwHZN/J3nJG1O1A0QA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6MDLEx/OAO8=:iq59Bwp8I6Kh1lNNLCBZWk
+ N/y0lbQkBD5XC6n00uKfZlfS/G4zWJ0c2weJA1P04VpBJT3YF/rHDqm1WxHvfFaEwL8cxiXx2
+ 9pa9U7uiQxCx81aTvne+B52naUZwqjiNN+9zhNxTt6QLTWHCbHO31FGdBeuTrB1E2Y06em/W3
+ 1Mn8ClUC5Us5o2qoQ2l1VaGGYnNtptXdLnRHYWK8pz+b0EP7PZa2n8I4EZQi4ib1RzQmZ5Wpk
+ 9aNSqspl15aPztbISAMavXXPJXl24Aco5yMRUh6jXHpO1YuOQCRSpSaguS1+wYa8x1M/70T24
+ 57ParFKMxo0FV3BA5udb1XNYVW5L8/zAw/3g/t6B3PGamnRWp7NquYjULkMPuKAro8LA1ctYD
+ JIfuv2gh5/kEn4/lkYBbaVZmqnB3DLsVXvUDdwtqKt64ogBNLBD4a+leKCJPt6ofAzMP726vt
+ m+McVVMiJjmhSYyJF4IJW+jz2gDmEqRNieZ+24Dqh9YtaFD2Ol4sm9OiSb8yuixSHZA0hQAWL
+ wH5e4zcq58a6ii8IxYPe7/eB9KeY96lc0Ki/jnEXGrpJgjBbMj10Y/mjD4z+LfWDhiPdmi8oB
+ MZ7K1kjIFd6R8+Sya5welwXD1v9r5riAkB/17aNilqWH1Klh8K+s06LXl2GNpHH8n52nXon5E
+ b8zrbzXjAQx0b4tm+DgRDzWq0NY0RgL7II3NBHM4WY2cTcv7ZwDIiBh2CTFkj1o0gtBvFRjgg
+ 8+K1xYUfZAtaX7+VycngxdJ2iAabOwjt94KjOi2RSPuXsSt0e37iav3YbvseNr1kxo/tPgh9 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291528>
 
-Hi Cameron,
+Hi Junio,
 
-On Wed, 13 Apr 2016, Cameron Currie wrote:
+On Wed, 13 Apr 2016, Junio C Hamano wrote:
 
-> > > On Thu, 7 Apr 2016, daurnimator wrote:
-> > >
-> > >> Cameron Currie <me <at> cameroncurrie.net> writes:
-> > >> > This is helpful for folks with commit.gpgsign = true in their
-> > >> > .gitconfig.
-> > >>
-> > >> > https://github.com/git/git/pull/186
-> > >>
-> > >> I too would like this.
-> > >> Bumping due to lack of attention.
-> > >
-> > > It lacks a Sign-off, our convention is to continue in lower-case
-> > > after the colon in the commit's subject, and I think that it would
-> > > be good to write so much as one paragraph in the commit message.
->
-> I don't think I can find the time right now. Feel free to rewrite the
-> commit message to match convention.
+> Mike Hommey <mh@glandium.org> writes:
+> 
+> > Should git-rebase use full sha-1s under the hood to avoid these type of
+> > races?
+> 
+> It already should be doing so since Aug 2013, IIRC.
 
-I am afraid that it would be improper for anybody to add your Sign-off, as
-it is *your* statement that you are indeed contributing this as Open
-Source, and that you indeed are free to do so.
-
-If you do not find the time to take care of these small changes, I fear
-the Git maintainer will *have* to drop your patch to avoid hassle for
-himself.
+Indeed. It is one of the things that makes interactive rebases so
+unbearably slow on Windows (because that transformation results in tons of
+spawned processes, which is slow on Windows, and even worse: tons of
+POSIX-emulated processes, which is even slower).
 
 Ciao,
-Johannes
+Dscho
