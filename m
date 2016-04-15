@@ -1,99 +1,86 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Parallel checkout (Was Re: 0 bot for Git)
-Date: Fri, 15 Apr 2016 18:32:49 +0700
-Message-ID: <CACsJy8D-VzOY7UWjM5dNmXkog2L3NN3h3cJSizxC2Rbn-g8RiA@mail.gmail.com>
-References: <CAGZ79kYWGFN1W0_y72-V6M3n4WLgtLPzs22bWgs1ObCCDt5BfQ@mail.gmail.com>
- <CAGZ79kZOx8ehAB-=Frjgde2CDo_vwoVzQNizJinf4LLXek5PSQ@mail.gmail.com>
- <CACsJy8DiCw_yZNp7st-qVA7zYEHww=ae5Q=uKVzBhAfU8akR7Q@mail.gmail.com>
- <CAGZ79kZzdioQRFEmgTGOOdLQ-Ov-tWmgi1dLhHPDVzDb+Py2RQ@mail.gmail.com>
- <CAP8UFD3xWUkCFZMN1N6t36KKwcfnkLsFznAc7j7yF89PbYaqfg@mail.gmail.com>
- <20160415095139.GA3985@lanh> <CAP8UFD0WZHriY340eh3K6ygzb0tXnoT+XaY8+c2k+N2x9UBYxA@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] fsck_commit_buffer(): do not special case the last
+ validation
+Date: Fri, 15 Apr 2016 15:41:16 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1604151538230.2967@virtualbox>
+References: <20160414180709.28968-1-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 15 13:33:42 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 15 15:41:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ar20L-0002yd-Gv
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 13:33:41 +0200
+	id 1ar408-0003Cx-0j
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 15:41:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751316AbcDOLdi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2016 07:33:38 -0400
-Received: from mail-lf0-f42.google.com ([209.85.215.42]:34875 "EHLO
-	mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751315AbcDOLdZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2016 07:33:25 -0400
-Received: by mail-lf0-f42.google.com with SMTP id c126so141870494lfb.2
-        for <git@vger.kernel.org>; Fri, 15 Apr 2016 04:33:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=8eiUt/6y7NKmN4eQ07N4jPkd9JJGEP9k2tD5IVIlXFI=;
-        b=uZ1iphx1lwSZRYZ9pliOn1eF5SHhluKbo/bkCK+0IKGtQuePV5lqMCCpWojN+xxCcl
-         q9DGTwqx641BYDYcJG9x8aXj5Rb5MiwRpCWAFGnf2IBtrsbZmEwD8r1HUObwXmrC0Qam
-         VBn32xS/RtusgvS2llHvNYFUgQMPOV8o2VakXjRNtE/x6QkkJh2mb1Mg/Ugy+zHwVedX
-         +QysYHTIGg8+X/FXF6PTrmOrnv5R83JEXZpNcO/kAzalTZaDrkoqx1roq2HOjK21J2DG
-         qmtPF5Gzhsg1lYTZQSGSQpOx2c1kYMTNmjxWLppe3r+0GzqkK0FUOYeuPKe2ZHm3Vaqk
-         GkNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=8eiUt/6y7NKmN4eQ07N4jPkd9JJGEP9k2tD5IVIlXFI=;
-        b=BG+ykNzIwS7pN24M5gS/t2iK5rH2rj1Jm98MF98rUrRG5m+14D49937bIIiwChWheD
-         zjXO3T7axkuGHBQtLrQu9t3WKA2DVM3J0k42heeIzDQM1NAH8fgDai+usPSP9hSu9XkS
-         o1dzJpL0rbVQaprQQbkKuL4SNpFY9ycGV4QAF4UanZrD62GGQ+jN4rdhDyVtlLqc+b0K
-         a7sKQh7BU4kyd/D83GEtCdnsk7c1lfVT8qq9E0Mky3K2Qtp6gnKdDkaV9HL6QHh9s5C7
-         aGv/x6ynDpHD+Ckz8r9R+xG7qKU4E4zNnYRGFYVFCDs4u5CMFZfS40jdn8SaFtK3tB87
-         FXBQ==
-X-Gm-Message-State: AOPr4FXAfi1AAbBb85jGZKuc+ZC9aCQFcOhnJtSxySdRJHUsfrQsFUELzcb4qUiVGCRwfN58RTkF3v2QVnUdMQ==
-X-Received: by 10.25.17.67 with SMTP id g64mr9315842lfi.112.1460719998958;
- Fri, 15 Apr 2016 04:33:18 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Fri, 15 Apr 2016 04:32:49 -0700 (PDT)
-In-Reply-To: <CAP8UFD0WZHriY340eh3K6ygzb0tXnoT+XaY8+c2k+N2x9UBYxA@mail.gmail.com>
+	id S1751078AbcDONl0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2016 09:41:26 -0400
+Received: from mout.gmx.net ([212.227.15.18]:49690 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750951AbcDONlZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2016 09:41:25 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MO7im-1anmCf39XA-005Wkk; Fri, 15 Apr 2016 15:41:17
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <20160414180709.28968-1-gitster@pobox.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:naUAHdxQ+GryYCZ6TVAbx57iNQQ5GPniDar7bO9WeeUgiWcjgRt
+ ZlgFTEFtY7ZlDZu0pcMwu8F8QdJwy2tA5IVRFwfmKISxmShTk9Y6qulrObqV2d0zjtmIvqI
+ uXmUcU5HjNi6cNvvcsCt5N+MDbSIbTvkEOOzGNvhhsN3pNNWv2SyP+7n7EnAXOjmMvqRFe/
+ 5xN+BAcvVrPaFxuuFjUZw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:wlIkI4kpsPk=:ABe2J2oiB+qerej1Ze0vEL
+ tvmvrLE4otKCBP8QNYQ1zbhjSVlnopwleeNChllIEeXOSGoNg27CiLm5DL22bZ2O5aKkE7ijv
+ vD2a0WzUuffyfhfWHuIC7cFeoF4TNtds4jUeX6avKjvuf+nfbV1fJtCCalf9x45gs+P/t/1th
+ Zl/SU/qMUjb3pfC6thUeV++sIpLlPKWXI5yUn2zYymgR+5wVMShnefZrE7QgguYVXufTHn6kb
+ U6n+51Fe90eEWYBL0wVYcIc5WCwJY53xjmiCXMk6V0F4ljd/kouwdTCWPHH212eT9wBDp3irj
+ m1F6ssPji4SuHsC1+is1wrTl51u6KzzsTci4O64I7XH7ODkxExJewldnnhWs2J+UW4vFiYH9U
+ rkZx2NGqbiUCpK0W7Uz3v4nfW0eMl6QEjFr2DA+W/pHUHO+0tkroCR1n31M/5GxR9jTTfqn77
+ UEpkem4JE/lL7HIfaQor0AARxxQ1Qs0WMaeiboQXQFDBQwOkypiADLhh7Ec+vK759QtBwXqh7
+ JQb4pm9NFiiif7OL5DcvzMY4MvvvisUAuZ7ETebgukIob4EfC8yf1g3usy91rgZawrZkCUcsF
+ 0zQmLnn/PB13WhkhBQUv1SGU/DI2kve07IT3e7BjsgPFEI7y7XzqutV9Rt1lCApzmwpohHdKu
+ dC+yhcbDzjzi5bqYMNb8h6lgO0H48C/VzCsUYNCxHBlmf/s83qkHfp4jyuAXFjbQly/3+K8pz
+ ANyWvxUzBIi1sTp48JMc7HVjeKbExx7vsXd6mupnR0xnm5nioLwhcwslUg+QDdAJEC54XswZ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291604>
 
-On Fri, Apr 15, 2016 at 6:18 PM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> On Fri, Apr 15, 2016 at 11:51 AM, Duy Nguyen <pclouds@gmail.com> wrote:
->> On Fri, Apr 15, 2016 at 12:04:49AM +0200, Christian Couder wrote:
->>>
->>> There is a draft of an article about the first part of the Contributor
->>> Summit in the draft of the next Git Rev News edition:
->>>
->>> https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-14.md
->>
->> Thanks. I read the sentence "This made people mention potential
->> problems with parallelizing git checkout" and wondered what these
->> problems were.
->
-> It may have been Michael or Peff (CC'ed) saying that it could break
-> some builds as the timestamps on the files might not always be ordered
-> in the same way.
+Hi Junio,
 
-Very subtle. I suppose if we dumb down the distribution algorithm, we
-could make it stable (even though it won't be the same as serial
-checkout). Performance will degrade, not sure if it's still worth
-parallelizing at that point
+On Thu, 14 Apr 2016, Junio C Hamano wrote:
 
-> Now perhaps parallel checkout could be activated only if a config
-> option was set. (Yeah, I know it looks like I am very often asking for
-> config options.)
+> The pattern taken by all the validations in this function is:
+> 
+> 	if (notice a violation exists) {
+> 		err = report(... VIOLATION_KIND ...);
+> 		if (err)
+> 			return err;
+> 	}
+> 
+> where report() returns zero if specified kind of violation is set to
+> be ignored, and otherwise shows an error message and returns non-zero.
+> 
+> The last validation in the function immediately after the function
+> returns 0 to declare "all good" can cheat and directly return the
+> return value from report(), and the current code does so, i.e.
+> 
+> 	if (notice a violation exists)
+> 		return report(... VIOLATION_KIND ...);
+> 	return 0;
+> 
+> But that is a selfish code that declares it is the ultimate and
+> final form of the function, never to be enhanced later.  To allow
+> and invite future enhancements, make the last test follow the same
+> pattern.
 
-And I think it could be unconditionally activated at clone time (I
-can't imagine different timestamp order can affect anything at that
-point), where the number of files to checkout is biggest.
--- 
-Duy
+FWIW I agree with this reasoning. Sorry for leaving this to you to clean
+up.
+
+Ciao,
+Dscho
