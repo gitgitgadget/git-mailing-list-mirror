@@ -1,335 +1,94 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v4 15/16] branch: use ref-filter printing APIs
-Date: Sat, 16 Apr 2016 01:57:23 +0530
-Message-ID: <CAOLa=ZSdnDFR52BJB1dm-D=gyUo=oB0aoh5pKAvwyNG5+u0P_A@mail.gmail.com>
-References: <1460227515-28437-1-git-send-email-Karthik.188@gmail.com>
- <1460227515-28437-16-git-send-email-Karthik.188@gmail.com>
- <xmqqtwj6pnma.fsf@gitster.mtv.corp.google.com> <xmqqinzmpmg2.fsf@gitster.mtv.corp.google.com>
- <CAOLa=ZQ5gwW1vwREsK=h0tDuyk18axHU491brKJM_DR53=9zcQ@mail.gmail.com>
- <CAPc5daUZvP03o+eb2ngvRtV=aoXWGnZH9FKj9bRCEj3MrCT8WQ@mail.gmail.com>
- <CAOLa=ZQnM95mApOmYYZa3SeFq2af5FMmiqh0ZFZDn3EO8U9-Dg@mail.gmail.com>
- <20160413220559.GC8712@sigill.intra.peff.net> <CAOLa=ZR7rKETM2b34B2Whw7Au-t7iFEkcNAB4ZygeQM=9Lp9zQ@mail.gmail.com>
- <20160414200530.GA26513@sigill.intra.peff.net> <20160414203615.GA31504@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH, WAS: "weird diff output?" 2/2] xdiff: implement empty line chunk heuristic
+Date: Fri, 15 Apr 2016 13:30:14 -0700
+Message-ID: <xmqqzisuaa3t.fsf@gitster.mtv.corp.google.com>
+References: <20160415165141.4712-1-jacob.e.keller@intel.com>
+	<20160415165141.4712-3-jacob.e.keller@intel.com>
+	<CAGZ79ka7h25=rHun_hPv1qjqeghXt1UwUU3Q6xT0aj4+OW87fg@mail.gmail.com>
+	<xmqq8u0ebpru.fsf@gitster.mtv.corp.google.com>
+	<CA+P7+xoWbrSaONH5xq=w5W190Jknk0Qsc5brS4UKFAs2_dTceg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Apr 15 22:28:01 2016
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Jens Lehmann <Jens.Lehmann@web.de>,
+	Davide Libenzi <davidel@xmailserver.org>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 15 22:30:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arALQ-0004Oz-SW
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 22:28:01 +0200
+	id 1arANp-0005ma-1l
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 22:30:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751463AbcDOU14 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2016 16:27:56 -0400
-Received: from mail-qg0-f43.google.com ([209.85.192.43]:33268 "EHLO
-	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751116AbcDOU1z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2016 16:27:55 -0400
-Received: by mail-qg0-f43.google.com with SMTP id j35so87935371qge.0
-        for <git@vger.kernel.org>; Fri, 15 Apr 2016 13:27:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=S4oRHlGqQd4i5QiaGOvjgtpac0hpz2ZIgp8iyqMX/vU=;
-        b=ShF7maaU5ZsdOnLq1emJ93N8JhEBnDT2N8FsPzPX6kLIoXK9xmuxqgtBlL4v56jxHS
-         99KcRs9qWYUJs2vAVrCI5HtUx5HRxMqzf5ZtD+27Hj17crZLGJ2woGNuxqurYxNqKwEC
-         ep9ShBiB221I9aKXWZb9gMLTExG2kvwaO9gPrYOku1D+dR1/9TnEXLbBtaCgXZXAyV4V
-         d9/pHcNe78FzX+qxLPiRIXRls7aj4IheGo6TAG/KXtQwJmBtmZu8Gl1TzuvaxZ1vsMCw
-         kjbEe5RIBA0a4dykAaXul4hxkZrYmAAbXzLmu25sUEm/dy025fzGMxPxQDMiQNmH/Lu2
-         Yjjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=S4oRHlGqQd4i5QiaGOvjgtpac0hpz2ZIgp8iyqMX/vU=;
-        b=WcPH7lX2AlVcoPpi2gsb+SSxRjayNV/MJ2h4J43jRUVh3jDN7c0HIzXMdAdon5F4x0
-         7kH4dIBWlPrab4fTqm0rwRmhzucbugT9oE0ywvR1NKQazy37pKOKMM6S4arGKUO81YQu
-         hULoBGPQMYLWKKu/upzqZseebN3NhMzCFZXX3X9tREjdD/M/cOxmulakjWFNRKclwVhm
-         VhtMNXDh72AUFf8W5aeOHjTRjmp/7GDeeySZTWQtu7reeko+WBa+lPXokJRGAqmj36EA
-         QMygSpu7IK1xPx4NuN+sSC2vnH+wBVeV9N3J2qN935+//YGNLQx+318eZLrdakET5Xy2
-         lVJQ==
-X-Gm-Message-State: AOPr4FXiNI34CqHL2NRqIApjA8WuOE6t2hW6NgPCKxS6aoUiFqEhGD3LDcalPXH7rRaMBYqG+7OSeW1GCnTU3A==
-X-Received: by 10.140.218.82 with SMTP id o79mr17452759qhb.33.1460752073752;
- Fri, 15 Apr 2016 13:27:53 -0700 (PDT)
-Received: by 10.140.92.238 with HTTP; Fri, 15 Apr 2016 13:27:23 -0700 (PDT)
-In-Reply-To: <20160414203615.GA31504@sigill.intra.peff.net>
+	id S1751729AbcDOUaV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2016 16:30:21 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50881 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751069AbcDOUaR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2016 16:30:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 082D813660;
+	Fri, 15 Apr 2016 16:30:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WTXt89UUisuArZPois67V1jswDI=; b=sHcKHK
+	zHr+q4oYtRSJEXe8ZjsYoPverh9pTHqPi6an3Eog+L5RA7qTzmddIIuFfUmeptOU
+	Gb+GiE/JDoZxUpSXp8HR8cyTJyaYd8VnRfZtGYiYMuPuFW2GMm/0z/LWQgap4g5D
+	228r8aOKHW4xDRbQ9+fIU1XqVs4c35C8YMuTM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ET0AHSwTqWAeI/2eH4+TvdlVfElalpRD
+	cNVct9ibv0ytZtDTFZo7LQDphggXO2VAUeGQFS5Qy0GhJcY0yqWVuvdVbcoNVQen
+	HG9p3JCTB8zzE8MAAx4qL0i7D61cIUAq5y4Rd1+nLzWsz9+4ZbtSalZeWiQ26Ty8
+	RBzkKmSsqiY=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id F2F6D1365F;
+	Fri, 15 Apr 2016 16:30:15 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4677A1365E;
+	Fri, 15 Apr 2016 16:30:15 -0400 (EDT)
+In-Reply-To: <CA+P7+xoWbrSaONH5xq=w5W190Jknk0Qsc5brS4UKFAs2_dTceg@mail.gmail.com>
+	(Jacob Keller's message of "Fri, 15 Apr 2016 13:17:59 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: DC84C550-0348-11E6-A87C-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291658>
 
-On Fri, Apr 15, 2016 at 2:06 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, Apr 14, 2016 at 04:05:30PM -0400, Jeff King wrote:
->
->> It looks like that's a little tricky for %(upstream) and %(push), which
->> have extra tracking options, but it's pretty trivial for %(symref):
->> [...]
->> I suspect it could work for the remote_ref_atom_parser, too, if you did
->> something like:
->
-> So here that is (handling both %(symref) and %(upstream), so replacing
-> what I sent a few minutes ago). It's only lightly tested by me, so there
-> may be more corner cases to think about. I kept things where they were
-> to create a minimal diff, but if it gets squashed in, it might be worth
-> re-ordering a little to avoid the need for forward declarations.
->
+Jacob Keller <jacob.keller@gmail.com> writes:
 
-I had a look at your patch and even tested it, seems solid, I like how you
-integrated all these atoms together under refname_atom_parser_internal().
-I'm squashing this in, for my re-roll. Thanks.
+> On Fri, Apr 15, 2016 at 1:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> I actually do not think these knobs should exist when the code is
+>> mature enough to be shipped to the end users.
+>>
+>> Use "diff.compactionHeuristics = <uint>" as an opaque set of bits to
+>> help the developers while they compare notes and reach consensus on
+>> a single tweak that they can agree on being good enough, and then
+>> remove that variable before the code hits 'next'.
+>>
+>> Thanks.
+>
+> I was under the impression that we would want a longer lived
+> configuration until we had enough data to say whether it was
+> helpful to make it default. I guess i had thought it would need to
+> be longer lived since there may be cases where it's not optimal
+> and being able to turn it off would be good?
 
->> I don't know if that would create weird corner cases with RR_SHORTEN
->> and RR_TRACK, though, which are currently in the same enum (and thus
->> cannot be used at the same time). But it's not like we parse
->> "%(upstream:short:track)" anyway, I don't think. For each "%()"
->> placeholder you have to choose one or the other: showing the tracking
->> info, or showing the refname (possibly with modifiers). So ":track"
->> isn't so much a modifier as "upstream:track" is this totally other
->> thing.
->
-> So actually, we _do_ accept "%(upstream:short,track)" with your patch,
-> which is somewhat nonsensical. It just ignores "short" and takes
-> whatever option came last. Which is reasonable, though flagging an error
-> would also be reasonable (and I think is what existing git does). I
-> don't think it matters much either way.
->
+Once you start worrying about "some cases this may misbehave", a
+configuration variable is a wrong mechanism to do so anyway.  You
+would need to tie this to attributes, so the users can say "use this
+heuristics for my C code, but do not apply it for my AsciiDoc
+input", etc.
 
-I think it was decided a while ago that it'd be best to ignore all and
-accept the
-last argument without barfing, I couldn't find the exact link. But I'm
-open to both.
-But if you look at the %(align) atom, even that accepts mutually
-exclusive arguments
-and accepts the last argument without reporting an error.
-
-> ---
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 3435df1..951c57e 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -50,6 +50,11 @@ struct if_then_else {
->                 condition_satisfied : 1;
->  };
->
-> +struct refname_atom {
-> +       enum { R_BASE, R_DIR, R_NORMAL, R_SHORT, R_STRIP } option;
-> +       unsigned int strip;
-> +};
-> +
->  /*
->   * An atom is a valid field atom listed below, possibly prefixed with
->   * a "*" to denote deref_tag().
-> @@ -67,7 +72,8 @@ static struct used_atom {
->                 char color[COLOR_MAXLEN];
->                 struct align align;
->                 struct {
-> -                       enum { RR_NORMAL, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT } option;
-> +                       enum { RR_REF, RR_TRACK, RR_TRACKSHORT } option;
-> +                       struct refname_atom refname;
->                         unsigned int nobracket: 1;
->                 } remote_ref;
->                 struct {
-> @@ -82,16 +88,14 @@ static struct used_atom {
->                         enum { O_FULL, O_LENGTH, O_SHORT } option;
->                         unsigned int length;
->                 } objectname;
-> -               enum { S_FULL, S_SHORT } symref;
-> -               struct {
-> -                       enum { R_BASE, R_DIR, R_NORMAL, R_SHORT, R_STRIP } option;
-> -                       unsigned int strip;
-> -               } refname;
-> +               struct refname_atom refname;
->         } u;
->  } *used_atom;
->  static int used_atom_cnt, need_tagged, need_symref;
->  static int need_color_reset_at_eol;
->
-> +static const char *show_ref(struct refname_atom *atom, const char *refname);
-> +
->  static void color_atom_parser(struct used_atom *atom, const char *color_value)
->  {
->         if (!color_value)
-> @@ -100,13 +104,34 @@ static void color_atom_parser(struct used_atom *atom, const char *color_value)
->                 die(_("unrecognized color: %%(color:%s)"), color_value);
->  }
->
-> +static void refname_atom_parser_internal(struct refname_atom *atom,
-> +                                        const char *arg, const char *name)
-> +{
-> +       if (!arg)
-> +               atom->option = R_NORMAL;
-> +       else if (!strcmp(arg, "short"))
-> +               atom->option = R_SHORT;
-> +       else if (skip_prefix(arg, "strip=", &arg)) {
-> +               atom->option = R_STRIP;
-> +               if (strtoul_ui(arg, 10, &atom->strip) || atom->strip <= 0)
-> +                       die(_("positive value expected refname:strip=%s"), arg);
-> +       } else if (!strcmp(arg, "dir"))
-> +               atom->option = R_DIR;
-> +       else if (!strcmp(arg, "base"))
-> +               atom->option = R_BASE;
-> +       else
-> +               die(_("unrecognized %%(%s) argument: %s"), name, arg);
-> +}
-> +
->  static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
->  {
->         struct string_list params = STRING_LIST_INIT_DUP;
->         int i;
->
->         if (!arg) {
-> -               atom->u.remote_ref.option = RR_NORMAL;
-> +               atom->u.remote_ref.option = RR_REF;
-> +               refname_atom_parser_internal(&atom->u.remote_ref.refname,
-> +                                            arg, atom->name);
->                 return;
->         }
->
-> @@ -116,16 +141,17 @@ static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
->         for (i = 0; i < params.nr; i++) {
->                 const char *s = params.items[i].string;
->
-> -               if (!strcmp(s, "short"))
-> -                       atom->u.remote_ref.option = RR_SHORTEN;
-> -               else if (!strcmp(s, "track"))
-> +               if (!strcmp(s, "track"))
->                         atom->u.remote_ref.option = RR_TRACK;
->                 else if (!strcmp(s, "trackshort"))
->                         atom->u.remote_ref.option = RR_TRACKSHORT;
->                 else if (!strcmp(s, "nobracket"))
->                         atom->u.remote_ref.nobracket = 1;
-> -               else
-> -                       die(_("unrecognized format: %%(%s)"), atom->name);
-> +               else {
-> +                       atom->u.remote_ref.option = RR_REF;
-> +                       refname_atom_parser_internal(&atom->u.remote_ref.refname,
-> +                                                    s, atom->name);
-> +               }
->         }
->
->         string_list_clear(&params, 0);
-> @@ -244,31 +270,12 @@ static void if_atom_parser(struct used_atom *atom, const char *arg)
->
->  static void symref_atom_parser(struct used_atom *atom, const char *arg)
->  {
-> -       if (!arg)
-> -               atom->u.symref = S_FULL;
-> -       else if (!strcmp(arg, "short"))
-> -               atom->u.symref = S_SHORT;
-> -       else
-> -               die(_("unrecognized %%(symref) argument: %s"), arg);
-> +       return refname_atom_parser_internal(&atom->u.refname, arg, atom->name);
->  }
->
->  static void refname_atom_parser(struct used_atom *atom, const char *arg)
->  {
-> -       if (!arg)
-> -               atom->u.refname.option = R_NORMAL;
-> -       else if (!strcmp(arg, "short"))
-> -               atom->u.refname.option = R_SHORT;
-> -       else if (skip_prefix(arg, "strip=", &arg)) {
-> -               atom->u.contents.option = R_STRIP;
-> -               if (strtoul_ui(arg, 10, &atom->u.refname.strip) ||
-> -                       atom->u.refname.strip <= 0)
-> -                       die(_("positive value expected refname:strip=%s"), arg);
-> -       } else if (!strcmp(arg, "dir"))
-> -               atom->u.contents.option = R_DIR;
-> -       else if (!strcmp(arg, "base"))
-> -               atom->u.contents.option = R_BASE;
-> -       else
-> -               die(_("unrecognized %%(refname) argument: %s"), arg);
-> +       return refname_atom_parser_internal(&atom->u.refname, arg, atom->name);
->  }
->
->  static struct {
-> @@ -1112,8 +1119,8 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
->                                     struct branch *branch, const char **s)
->  {
->         int num_ours, num_theirs;
-> -       if (atom->u.remote_ref.option == RR_SHORTEN)
-> -               *s = shorten_unambiguous_ref(refname, warn_ambiguous_refs);
-> +       if (atom->u.remote_ref.option == RR_REF)
-> +               *s = show_ref(&atom->u.remote_ref.refname, refname);
->         else if (atom->u.remote_ref.option == RR_TRACK) {
->                 if (stat_tracking_info(branch, &num_ours,
->                                        &num_theirs, NULL)) {
-> @@ -1145,8 +1152,8 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
->                         *s = ">";
->                 else
->                         *s = "<>";
-> -       } else /* RR_NORMAL */
-> -               *s = refname;
-> +       } else
-> +               die("BUG: unhandled RR_* enum");
->  }
->
->  char *get_head_description(void)
-> @@ -1184,41 +1191,43 @@ static const char *get_symref(struct used_atom *atom, struct ref_array_item *ref
->  {
->         if (!ref->symref)
->                 return "";
-> -       else if (atom->u.symref == S_SHORT)
-> -               return shorten_unambiguous_ref(ref->symref,
-> -                                              warn_ambiguous_refs);
->         else
-> -               return ref->symref;
-> +               return show_ref(&atom->u.refname, ref->symref);
->  }
->
->  static const char *get_refname(struct used_atom *atom, struct ref_array_item *ref)
->  {
->         if (ref->kind & FILTER_REFS_DETACHED_HEAD)
->                 return get_head_description();
-> -       if (atom->u.refname.option == R_SHORT)
-> -               return shorten_unambiguous_ref(ref->refname, warn_ambiguous_refs);
-> -       else if (atom->u.refname.option == R_STRIP)
-> -               return strip_ref_components(ref->refname, atom->u.refname.strip);
-> -       else if (atom->u.refname.option == R_BASE) {
-> +       return show_ref(&atom->u.refname, ref->refname);
-> +}
-> +
-> +static const char *show_ref(struct refname_atom *atom, const char *refname)
-> +{
-> +       if (atom->option == R_SHORT)
-> +               return shorten_unambiguous_ref(refname, warn_ambiguous_refs);
-> +       else if (atom->option == R_STRIP)
-> +               return strip_ref_components(refname, atom->strip);
-> +       else if (atom->option == R_BASE) {
->                 const char *sp, *ep;
->
-> -               if (skip_prefix(ref->refname, "refs/", &sp)) {
-> +               if (skip_prefix(refname, "refs/", &sp)) {
->                         ep = strchr(sp, '/');
->                         if (!ep)
->                                 return "";
->                         return xstrndup(sp, ep - sp);
->                 }
->                 return "";
-> -       } else if (atom->u.refname.option == R_DIR) {
-> +       } else if (atom->option == R_DIR) {
->                 const char *sp, *ep;
->
-> -               sp = ref->refname;
-> +               sp = refname;
->                 ep = strrchr(sp, '/');
->                 if (!ep)
->                         return "";
->                 return xstrndup(sp, ep - sp);
->         } else
-> -               return ref->refname;
-> +               return refname;
->  }
->
->  /*
-
-
-
--- 
-Regards,
-Karthik Nayak
+What you have is a pure developer support; aim to come up with "good
+enough" way, giving developers an easier way to experiment with, and
+remove it before the feature is shipped to the end user.
