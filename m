@@ -1,138 +1,335 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Adding list of p4 jobs to git commit message
-Date: Fri, 15 Apr 2016 13:27:16 -0700
-Message-ID: <xmqq4mb2bot7.fsf@gitster.mtv.corp.google.com>
-References: <010201541b7a24b8-83b0f526-2f01-40e3-afc8-d81549af70d4-000000@eu-west-1.amazonses.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v4 15/16] branch: use ref-filter printing APIs
+Date: Sat, 16 Apr 2016 01:57:23 +0530
+Message-ID: <CAOLa=ZSdnDFR52BJB1dm-D=gyUo=oB0aoh5pKAvwyNG5+u0P_A@mail.gmail.com>
+References: <1460227515-28437-1-git-send-email-Karthik.188@gmail.com>
+ <1460227515-28437-16-git-send-email-Karthik.188@gmail.com>
+ <xmqqtwj6pnma.fsf@gitster.mtv.corp.google.com> <xmqqinzmpmg2.fsf@gitster.mtv.corp.google.com>
+ <CAOLa=ZQ5gwW1vwREsK=h0tDuyk18axHU491brKJM_DR53=9zcQ@mail.gmail.com>
+ <CAPc5daUZvP03o+eb2ngvRtV=aoXWGnZH9FKj9bRCEj3MrCT8WQ@mail.gmail.com>
+ <CAOLa=ZQnM95mApOmYYZa3SeFq2af5FMmiqh0ZFZDn3EO8U9-Dg@mail.gmail.com>
+ <20160413220559.GC8712@sigill.intra.peff.net> <CAOLa=ZR7rKETM2b34B2Whw7Au-t7iFEkcNAB4ZygeQM=9Lp9zQ@mail.gmail.com>
+ <20160414200530.GA26513@sigill.intra.peff.net> <20160414203615.GA31504@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Luke Diamand <luke@diamand.org>
-To: Jan Durovec <jan.durovec@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 15 22:27:33 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 15 22:28:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arAKx-00042r-34
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 22:27:31 +0200
+	id 1arALQ-0004Oz-SW
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 22:28:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751711AbcDOU1V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2016 16:27:21 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54249 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751459AbcDOU1U (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2016 16:27:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 50FB113250;
-	Fri, 15 Apr 2016 16:27:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=j3TqzCNwVAiizcnGypLTxhPRcqo=; b=gwQQUT
-	aSIXS/PiG6XArhZHJ+qHFLf8CrfywdPoCcrJYijjnPCoeWI5vXzjAm40zdEcNmFS
-	fM8OpMl4U7ktVEZts/bOZ9P2C3JAurRYv/q06tYIw8vt4rv78dhZ7hS5HC2oyGg4
-	rVRmAUaxYXUzlySdQq5XwRx3ng0U/UetJWt2s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hjXXOSDwLErK7oww1Bs3eJh/dP/tB85m
-	TJhq02PwTMQVuh5IPh3ppP28lIdpDjmIOUXgku0AxLC3VUeiTitYdPU5csfNvYL9
-	Stgg8xX3VVjMz8EMszoWUdrERFoPYZ/8Vx+du7FpnHBnRiL72n38tNla4Ks/eXk9
-	4e3tJMQRt3E=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 48FD41324F;
-	Fri, 15 Apr 2016 16:27:18 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B103C1324E;
-	Fri, 15 Apr 2016 16:27:17 -0400 (EDT)
-In-Reply-To: <010201541b7a24b8-83b0f526-2f01-40e3-afc8-d81549af70d4-000000@eu-west-1.amazonses.com>
-	(Jan Durovec's message of "Fri, 15 Apr 2016 19:51:10 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 72A64D0C-0348-11E6-BF5C-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1751463AbcDOU14 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2016 16:27:56 -0400
+Received: from mail-qg0-f43.google.com ([209.85.192.43]:33268 "EHLO
+	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751116AbcDOU1z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2016 16:27:55 -0400
+Received: by mail-qg0-f43.google.com with SMTP id j35so87935371qge.0
+        for <git@vger.kernel.org>; Fri, 15 Apr 2016 13:27:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=S4oRHlGqQd4i5QiaGOvjgtpac0hpz2ZIgp8iyqMX/vU=;
+        b=ShF7maaU5ZsdOnLq1emJ93N8JhEBnDT2N8FsPzPX6kLIoXK9xmuxqgtBlL4v56jxHS
+         99KcRs9qWYUJs2vAVrCI5HtUx5HRxMqzf5ZtD+27Hj17crZLGJ2woGNuxqurYxNqKwEC
+         ep9ShBiB221I9aKXWZb9gMLTExG2kvwaO9gPrYOku1D+dR1/9TnEXLbBtaCgXZXAyV4V
+         d9/pHcNe78FzX+qxLPiRIXRls7aj4IheGo6TAG/KXtQwJmBtmZu8Gl1TzuvaxZ1vsMCw
+         kjbEe5RIBA0a4dykAaXul4hxkZrYmAAbXzLmu25sUEm/dy025fzGMxPxQDMiQNmH/Lu2
+         Yjjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=S4oRHlGqQd4i5QiaGOvjgtpac0hpz2ZIgp8iyqMX/vU=;
+        b=WcPH7lX2AlVcoPpi2gsb+SSxRjayNV/MJ2h4J43jRUVh3jDN7c0HIzXMdAdon5F4x0
+         7kH4dIBWlPrab4fTqm0rwRmhzucbugT9oE0ywvR1NKQazy37pKOKMM6S4arGKUO81YQu
+         hULoBGPQMYLWKKu/upzqZseebN3NhMzCFZXX3X9tREjdD/M/cOxmulakjWFNRKclwVhm
+         VhtMNXDh72AUFf8W5aeOHjTRjmp/7GDeeySZTWQtu7reeko+WBa+lPXokJRGAqmj36EA
+         QMygSpu7IK1xPx4NuN+sSC2vnH+wBVeV9N3J2qN935+//YGNLQx+318eZLrdakET5Xy2
+         lVJQ==
+X-Gm-Message-State: AOPr4FXiNI34CqHL2NRqIApjA8WuOE6t2hW6NgPCKxS6aoUiFqEhGD3LDcalPXH7rRaMBYqG+7OSeW1GCnTU3A==
+X-Received: by 10.140.218.82 with SMTP id o79mr17452759qhb.33.1460752073752;
+ Fri, 15 Apr 2016 13:27:53 -0700 (PDT)
+Received: by 10.140.92.238 with HTTP; Fri, 15 Apr 2016 13:27:23 -0700 (PDT)
+In-Reply-To: <20160414203615.GA31504@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291657>
 
-Jan Durovec <jan.durovec@gmail.com> writes:
+On Fri, Apr 15, 2016 at 2:06 AM, Jeff King <peff@peff.net> wrote:
+> On Thu, Apr 14, 2016 at 04:05:30PM -0400, Jeff King wrote:
+>
+>> It looks like that's a little tricky for %(upstream) and %(push), which
+>> have extra tracking options, but it's pretty trivial for %(symref):
+>> [...]
+>> I suspect it could work for the remote_ref_atom_parser, too, if you did
+>> something like:
+>
+> So here that is (handling both %(symref) and %(upstream), so replacing
+> what I sent a few minutes ago). It's only lightly tested by me, so there
+> may be more corner cases to think about. I kept things where they were
+> to create a minimal diff, but if it gets squashed in, it might be worth
+> re-ordering a little to avoid the need for forward declarations.
+>
+
+I had a look at your patch and even tested it, seems solid, I like how you
+integrated all these atoms together under refname_atom_parser_internal().
+I'm squashing this in, for my re-roll. Thanks.
+
+>> I don't know if that would create weird corner cases with RR_SHORTEN
+>> and RR_TRACK, though, which are currently in the same enum (and thus
+>> cannot be used at the same time). But it's not like we parse
+>> "%(upstream:short:track)" anyway, I don't think. For each "%()"
+>> placeholder you have to choose one or the other: showing the tracking
+>> info, or showing the refname (possibly with modifiers). So ":track"
+>> isn't so much a modifier as "upstream:track" is this totally other
+>> thing.
+>
+> So actually, we _do_ accept "%(upstream:short,track)" with your patch,
+> which is somewhat nonsensical. It just ignores "short" and takes
+> whatever option came last. Which is reasonable, though flagging an error
+> would also be reasonable (and I think is what existing git does). I
+> don't think it matters much either way.
+>
+
+I think it was decided a while ago that it'd be best to ignore all and
+accept the
+last argument without barfing, I couldn't find the exact link. But I'm
+open to both.
+But if you look at the %(align) atom, even that accepts mutually
+exclusive arguments
+and accepts the last argument without reporting an error.
 
 > ---
-
-A few issues.  Please:
-
- (1) Sign-off your work.
-
- (2) Try to find those who are familiar with the area and Cc them.
-
-     "git shortlog -s -n --since=18.months --no-merges git-p4.py"
-     may help.
-
- (3) Follow the style of existing commits when giving a title to
-     your patch.
-
-     "git shortlog --since=18.months --no-merges git-p4.py" may
-     help you notice "git-p4: do this thing" is the common way to
-     title "git p4" patches.
-
- (4) Justify why your change is a good thing in your log message.
-     What you did, i.e. "list p4 jobs when making a commit", can be
-     seen by the patch, but readers cannot guess why you thought it
-     is a good idea to extract "job%d" out of the P4 commit and to
-     record them in the resulting Git commit, unless you explain
-     things like:
-
-     - what goes wrong if you don't?
-     - when would "job%d" appear in P4 commit?
-     - is it sane to assume "job0", "job1",... appear consecutively?
-
- (5) Describe what your change does clearly.  "Adding list" is not
-     quite clear.  Where in the "git commit message" are you adding
-     the list, and why is that location in the message the most
-     appropriate place to add it?
-
-Thanks.
-
->  git-p4.py | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 3435df1..951c57e 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -50,6 +50,11 @@ struct if_then_else {
+>                 condition_satisfied : 1;
+>  };
 >
-> diff --git a/git-p4.py b/git-p4.py
-> index 527d44b..a81795f 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -2320,6 +2320,15 @@ def extractFilesFromCommit(self, commit):
->              fnum = fnum + 1
->          return files
->  
-> +    def extractJobsFromCommit(self, commit):
-> +        jobs = []
-> +        jnum = 0
-> +        while commit.has_key("job%s" % jnum):
-> +            job = commit["job%s" % jnum]
-> +            jobs.append(job)
-> +            jnum = jnum + 1
-> +        return jobs
+> +struct refname_atom {
+> +       enum { R_BASE, R_DIR, R_NORMAL, R_SHORT, R_STRIP } option;
+> +       unsigned int strip;
+> +};
 > +
->      def stripRepoPath(self, path, prefixes):
->          """When streaming files, this is called to map a p4 depot path
->             to where it should go in git.  The prefixes are either
-> @@ -2665,6 +2674,7 @@ def hasBranchPrefix(self, path):
->      def commit(self, details, files, branch, parent = ""):
->          epoch = details["time"]
->          author = details["user"]
-> +        jobs = self.extractJobsFromCommit(details)
->  
->          if self.verbose:
->              print('commit into {0}'.format(branch))
-> @@ -2696,6 +2706,8 @@ def commit(self, details, files, branch, parent = ""):
->                               (','.join(self.branchPrefixes), details["change"]))
->          if len(details['options']) > 0:
->              self.gitStream.write(": options = %s" % details['options'])
-> +        if len(jobs) > 0:
-> +            self.gitStream.write(": jobs = %s" % (','.join(jobs)))
->          self.gitStream.write("]\nEOT\n\n")
->  
->          if len(parent) > 0:
+>  /*
+>   * An atom is a valid field atom listed below, possibly prefixed with
+>   * a "*" to denote deref_tag().
+> @@ -67,7 +72,8 @@ static struct used_atom {
+>                 char color[COLOR_MAXLEN];
+>                 struct align align;
+>                 struct {
+> -                       enum { RR_NORMAL, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT } option;
+> +                       enum { RR_REF, RR_TRACK, RR_TRACKSHORT } option;
+> +                       struct refname_atom refname;
+>                         unsigned int nobracket: 1;
+>                 } remote_ref;
+>                 struct {
+> @@ -82,16 +88,14 @@ static struct used_atom {
+>                         enum { O_FULL, O_LENGTH, O_SHORT } option;
+>                         unsigned int length;
+>                 } objectname;
+> -               enum { S_FULL, S_SHORT } symref;
+> -               struct {
+> -                       enum { R_BASE, R_DIR, R_NORMAL, R_SHORT, R_STRIP } option;
+> -                       unsigned int strip;
+> -               } refname;
+> +               struct refname_atom refname;
+>         } u;
+>  } *used_atom;
+>  static int used_atom_cnt, need_tagged, need_symref;
+>  static int need_color_reset_at_eol;
 >
-> --
-> https://github.com/git/git/pull/225
+> +static const char *show_ref(struct refname_atom *atom, const char *refname);
+> +
+>  static void color_atom_parser(struct used_atom *atom, const char *color_value)
+>  {
+>         if (!color_value)
+> @@ -100,13 +104,34 @@ static void color_atom_parser(struct used_atom *atom, const char *color_value)
+>                 die(_("unrecognized color: %%(color:%s)"), color_value);
+>  }
+>
+> +static void refname_atom_parser_internal(struct refname_atom *atom,
+> +                                        const char *arg, const char *name)
+> +{
+> +       if (!arg)
+> +               atom->option = R_NORMAL;
+> +       else if (!strcmp(arg, "short"))
+> +               atom->option = R_SHORT;
+> +       else if (skip_prefix(arg, "strip=", &arg)) {
+> +               atom->option = R_STRIP;
+> +               if (strtoul_ui(arg, 10, &atom->strip) || atom->strip <= 0)
+> +                       die(_("positive value expected refname:strip=%s"), arg);
+> +       } else if (!strcmp(arg, "dir"))
+> +               atom->option = R_DIR;
+> +       else if (!strcmp(arg, "base"))
+> +               atom->option = R_BASE;
+> +       else
+> +               die(_("unrecognized %%(%s) argument: %s"), name, arg);
+> +}
+> +
+>  static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
+>  {
+>         struct string_list params = STRING_LIST_INIT_DUP;
+>         int i;
+>
+>         if (!arg) {
+> -               atom->u.remote_ref.option = RR_NORMAL;
+> +               atom->u.remote_ref.option = RR_REF;
+> +               refname_atom_parser_internal(&atom->u.remote_ref.refname,
+> +                                            arg, atom->name);
+>                 return;
+>         }
+>
+> @@ -116,16 +141,17 @@ static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
+>         for (i = 0; i < params.nr; i++) {
+>                 const char *s = params.items[i].string;
+>
+> -               if (!strcmp(s, "short"))
+> -                       atom->u.remote_ref.option = RR_SHORTEN;
+> -               else if (!strcmp(s, "track"))
+> +               if (!strcmp(s, "track"))
+>                         atom->u.remote_ref.option = RR_TRACK;
+>                 else if (!strcmp(s, "trackshort"))
+>                         atom->u.remote_ref.option = RR_TRACKSHORT;
+>                 else if (!strcmp(s, "nobracket"))
+>                         atom->u.remote_ref.nobracket = 1;
+> -               else
+> -                       die(_("unrecognized format: %%(%s)"), atom->name);
+> +               else {
+> +                       atom->u.remote_ref.option = RR_REF;
+> +                       refname_atom_parser_internal(&atom->u.remote_ref.refname,
+> +                                                    s, atom->name);
+> +               }
+>         }
+>
+>         string_list_clear(&params, 0);
+> @@ -244,31 +270,12 @@ static void if_atom_parser(struct used_atom *atom, const char *arg)
+>
+>  static void symref_atom_parser(struct used_atom *atom, const char *arg)
+>  {
+> -       if (!arg)
+> -               atom->u.symref = S_FULL;
+> -       else if (!strcmp(arg, "short"))
+> -               atom->u.symref = S_SHORT;
+> -       else
+> -               die(_("unrecognized %%(symref) argument: %s"), arg);
+> +       return refname_atom_parser_internal(&atom->u.refname, arg, atom->name);
+>  }
+>
+>  static void refname_atom_parser(struct used_atom *atom, const char *arg)
+>  {
+> -       if (!arg)
+> -               atom->u.refname.option = R_NORMAL;
+> -       else if (!strcmp(arg, "short"))
+> -               atom->u.refname.option = R_SHORT;
+> -       else if (skip_prefix(arg, "strip=", &arg)) {
+> -               atom->u.contents.option = R_STRIP;
+> -               if (strtoul_ui(arg, 10, &atom->u.refname.strip) ||
+> -                       atom->u.refname.strip <= 0)
+> -                       die(_("positive value expected refname:strip=%s"), arg);
+> -       } else if (!strcmp(arg, "dir"))
+> -               atom->u.contents.option = R_DIR;
+> -       else if (!strcmp(arg, "base"))
+> -               atom->u.contents.option = R_BASE;
+> -       else
+> -               die(_("unrecognized %%(refname) argument: %s"), arg);
+> +       return refname_atom_parser_internal(&atom->u.refname, arg, atom->name);
+>  }
+>
+>  static struct {
+> @@ -1112,8 +1119,8 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+>                                     struct branch *branch, const char **s)
+>  {
+>         int num_ours, num_theirs;
+> -       if (atom->u.remote_ref.option == RR_SHORTEN)
+> -               *s = shorten_unambiguous_ref(refname, warn_ambiguous_refs);
+> +       if (atom->u.remote_ref.option == RR_REF)
+> +               *s = show_ref(&atom->u.remote_ref.refname, refname);
+>         else if (atom->u.remote_ref.option == RR_TRACK) {
+>                 if (stat_tracking_info(branch, &num_ours,
+>                                        &num_theirs, NULL)) {
+> @@ -1145,8 +1152,8 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+>                         *s = ">";
+>                 else
+>                         *s = "<>";
+> -       } else /* RR_NORMAL */
+> -               *s = refname;
+> +       } else
+> +               die("BUG: unhandled RR_* enum");
+>  }
+>
+>  char *get_head_description(void)
+> @@ -1184,41 +1191,43 @@ static const char *get_symref(struct used_atom *atom, struct ref_array_item *ref
+>  {
+>         if (!ref->symref)
+>                 return "";
+> -       else if (atom->u.symref == S_SHORT)
+> -               return shorten_unambiguous_ref(ref->symref,
+> -                                              warn_ambiguous_refs);
+>         else
+> -               return ref->symref;
+> +               return show_ref(&atom->u.refname, ref->symref);
+>  }
+>
+>  static const char *get_refname(struct used_atom *atom, struct ref_array_item *ref)
+>  {
+>         if (ref->kind & FILTER_REFS_DETACHED_HEAD)
+>                 return get_head_description();
+> -       if (atom->u.refname.option == R_SHORT)
+> -               return shorten_unambiguous_ref(ref->refname, warn_ambiguous_refs);
+> -       else if (atom->u.refname.option == R_STRIP)
+> -               return strip_ref_components(ref->refname, atom->u.refname.strip);
+> -       else if (atom->u.refname.option == R_BASE) {
+> +       return show_ref(&atom->u.refname, ref->refname);
+> +}
+> +
+> +static const char *show_ref(struct refname_atom *atom, const char *refname)
+> +{
+> +       if (atom->option == R_SHORT)
+> +               return shorten_unambiguous_ref(refname, warn_ambiguous_refs);
+> +       else if (atom->option == R_STRIP)
+> +               return strip_ref_components(refname, atom->strip);
+> +       else if (atom->option == R_BASE) {
+>                 const char *sp, *ep;
+>
+> -               if (skip_prefix(ref->refname, "refs/", &sp)) {
+> +               if (skip_prefix(refname, "refs/", &sp)) {
+>                         ep = strchr(sp, '/');
+>                         if (!ep)
+>                                 return "";
+>                         return xstrndup(sp, ep - sp);
+>                 }
+>                 return "";
+> -       } else if (atom->u.refname.option == R_DIR) {
+> +       } else if (atom->option == R_DIR) {
+>                 const char *sp, *ep;
+>
+> -               sp = ref->refname;
+> +               sp = refname;
+>                 ep = strrchr(sp, '/');
+>                 if (!ep)
+>                         return "";
+>                 return xstrndup(sp, ep - sp);
+>         } else
+> -               return ref->refname;
+> +               return refname;
+>  }
+>
+>  /*
+
+
+
+-- 
+Regards,
+Karthik Nayak
