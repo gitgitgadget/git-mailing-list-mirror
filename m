@@ -1,119 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 19/21] bisect: use a bottom-up traversal to find relevant weights
-Date: Fri, 15 Apr 2016 15:47:51 -0700
-Message-ID: <xmqqtwj27alk.fsf@gitster.mtv.corp.google.com>
-References: <1460294354-7031-1-git-send-email-s-beyer@gmx.net>
-	<1460294354-7031-20-git-send-email-s-beyer@gmx.net>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [RFC PATCH, WAS: "weird diff output?" v2 1/2] xdiff: add
+ recs_match helper function
+Date: Fri, 15 Apr 2016 15:48:38 -0700
+Message-ID: <CA+P7+xpbYa993zr_JqrLbnKcKQ-9iwjMD=eLpbLXLBmkDrJ2eQ@mail.gmail.com>
+References: <20160415215622.6040-1-jacob.e.keller@intel.com>
+ <20160415215622.6040-2-jacob.e.keller@intel.com> <20160415224615.GA32306@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Sat Apr 16 00:48:00 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Jacob Keller <jacob.e.keller@intel.com>,
+	Git mailing list <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Davide Libenzi <davidel@xmailserver.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Apr 16 00:49:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arCWt-00077K-9G
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Apr 2016 00:47:59 +0200
+	id 1arCXw-0007g4-9J
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Apr 2016 00:49:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752270AbcDOWrz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2016 18:47:55 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63627 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751355AbcDOWry (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2016 18:47:54 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 341FD1373C;
-	Fri, 15 Apr 2016 18:47:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=c/odxeLrAfGRY0cN2SoGqa5ZEN8=; b=DRUvd/
-	XejawYftSNoPUoNdlExJ9HAT3d3XsazDOS5mTqHb1zAeYOMmJL11d3bnoucMApNw
-	+EQH+7qXZmhiioackojHe1UTk20KnT7TGy2OM+xhy728vla60dEsp9F4Nn9o4QpC
-	GQV87VyGY60OGuzadCD7x9RGfvjHqhS9gHVlE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WCf/hEa/kbLQxrCnakKpPm9EhAzTLXyl
-	no4cumDWunUX/52ashjAWSSkEFWoEHHLTMgcwbbN4zQ8Fuzqe1503uvoWOToX18A
-	wlSOWbfXdGfGdF83qftkLGUuy9kxonLFglEjBpxM4EyRA0ZR/mTmBRGS0G6/Wqoy
-	HWqMkaX5bjo=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2CC321373B;
-	Fri, 15 Apr 2016 18:47:53 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9338F13739;
-	Fri, 15 Apr 2016 18:47:52 -0400 (EDT)
-In-Reply-To: <1460294354-7031-20-git-send-email-s-beyer@gmx.net> (Stephan
-	Beyer's message of "Sun, 10 Apr 2016 15:19:12 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 163A2796-035C-11E6-B8C5-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1751333AbcDOWs7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2016 18:48:59 -0400
+Received: from mail-io0-f172.google.com ([209.85.223.172]:36546 "EHLO
+	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750993AbcDOWs6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2016 18:48:58 -0400
+Received: by mail-io0-f172.google.com with SMTP id u185so148519589iod.3
+        for <git@vger.kernel.org>; Fri, 15 Apr 2016 15:48:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=tLmg6w4j/Ly4/3YBjeiiHB+/+YRjHcSAogGIRKHLDN0=;
+        b=FBSKR0nSZHuxr8+OFXm2J/4xPq2RJtWJ1SeDEbcPzXeJYoHiENXZdpnp8691p+te6L
+         8HO+oRXIZhgJeLJfb9xLcDtKfXF3D+ecC8swpD6wfKmGlnOhCSc4Bh9aEK3bxTs8c7ax
+         HU/lBG3FkZzBraronZDBrXvfUre8jiONe6PZ9zCMwacFWfs1rtJgSZvmeIVpLCqs87+j
+         Wz79T1kttK1Kwm7vBnzxQ6rvmFGTR9y0BYJt9/rhbMT99cVyfQZehDCJPJGWks8r0Gy1
+         tJDGr8gtEUlaSJF9hqgShJFpBbT/WSwwlHRlZpLYKwNNEcpIm6KbweyLo7Cn3646dgk4
+         eefg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=tLmg6w4j/Ly4/3YBjeiiHB+/+YRjHcSAogGIRKHLDN0=;
+        b=mPOncZ6FNYlGTUheMia5PIvTquciJI0i2HKO05oW7hAi9pKmMnU5oPia2TXy0/JVao
+         fThYsQrotbVA9HX/6tdJJo4p0ODmb2gSgyunyYH+PB1cUXT+4gGoLgQL4zBnQx8V789q
+         /vwIE1DEHnDm1qHTvSdvMuKtKhxuvel8SlFnsI8Qvf7YcRGT4fB+L5WesZZBr2QAoV7q
+         mtkemlBjPEPBHvWUDAwDn/fVwMN2k6IHGmgzJ/2skVTim1FwD9pX69D0olFl+lD8WX9i
+         pVAFSQIurww3IbtYXzDuii1TCk56yMlbJI2JSBwtZUDoyh4iJVzfApoe4PI6fMsCA9Tt
+         RkOg==
+X-Gm-Message-State: AOPr4FULXvsclqlvD4NFeuOUyBu02SdGrItt5GhKeniKa9qXiCfSNEqwsbo1eMcLnivXd9eZRRBrY5jvGLHF4g==
+X-Received: by 10.107.136.69 with SMTP id k66mr28689411iod.0.1460760537896;
+ Fri, 15 Apr 2016 15:48:57 -0700 (PDT)
+Received: by 10.107.59.78 with HTTP; Fri, 15 Apr 2016 15:48:38 -0700 (PDT)
+In-Reply-To: <20160415224615.GA32306@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291688>
 
-Stephan Beyer <s-beyer@gmx.net> writes:
+On Fri, Apr 15, 2016 at 3:46 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, Apr 15, 2016 at 02:56:21PM -0700, Jacob Keller wrote:
+>
+>> @@ -470,8 +477,9 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+>>                        * the line next of the current change group, shift forward
+>>                        * the group.
+>>                        */
+>> -                     while (ix < nrec && recs[ixs]->ha == recs[ix]->ha &&
+>> -                            xdl_recmatch(recs[ixs]->ptr, recs[ixs]->size, recs[ix]->ptr, recs[ix]->size, flags)) {
+>> +                     while (ix < nrec && recs_match(recs, ixs, ix, flags)) {
+>> +                             emptylines += is_emptyline(recs[ix]->ptr);
+>> +
+>
+> I have not looked closely at your patches yet, but is this hunk right?
+> The is_emptyline stuff doesn't come in until patch 2.
+>
+> -Peff
 
-> The idea is to reverse the DAG and perform a traversal
-> starting on all sources of the reversed DAG.
+Oops, I suspect this is a rebase mistake, will fix it.
 
-Please clarify what you mean by "sources" here.  Those who read log
-message in Git context would know that you mean the commit graph by
-"DAG", and "reversed DAG" means "having reverse linkage that lets
-you find children given a parent", so "DAG" does not need such a
-clarification.
-
-> We walk from the bottom commits, incrementing the weight while
-> walking on a part of the graph that is single strand of pearls,
-> or doing the "count the reachable ones the hard way" using
-> compute_weight() when we hit a merge commit.
-
-Makes sense.  So instead of "all sources", you can say "perform a
-traversal starting from the bottom commits, going from parent to its
-children".
-
-> A traversal ends when the computed weight is falling or halfway.
-> This way, commits with too high weight to be relevant are never
-> visited (and their weights are never computed).
-
-Yup, beautiful.
-
-> diff --git a/bisect.c b/bisect.c
-> index c6bad43..9487ba9 100644
-> --- a/bisect.c
-> +++ b/bisect.c
-> @@ -30,6 +30,9 @@ static unsigned marker;
->  struct node_data {
->  	int weight;
->  	unsigned marked;
-> +	unsigned parents;
-> +	unsigned visited : 1;
-> +	struct commit_list *children;
->  };
->  
->  #define DEBUG_BISECT 0
-
-> +static inline void commit_list_insert_unique(struct commit *item,
-> +				      struct commit_list **list)
-> +{
-> +	if (!*list || item < (*list)->item) /* empty list or item will be first */
-> +		commit_list_insert(item, list);
-> +	else if (item != (*list)->item) { /* item will not be first or not inserted */
-> +		struct commit_list *p = *list;
-> +		for (; p->next && p->next->item < item; p = p->next);
-> +		if (!p->next || item != p->next->item) /* not already inserted */
-> +			commit_list_insert(item, &p->next);
-> +	}
-> +}
-
-Hmmmmmmmmmmmmmmmmmmmmmmmmmmmm.
-
-When you have two commits, struct commit *one, and struct commit
-*two, is it safe to do a pointer comparison for ordering?
-
-I know it would work in practice, but I am worried about language
-lawyers (and possibly static analysis tools) barking at this code.
+Thanks,
+Jake
