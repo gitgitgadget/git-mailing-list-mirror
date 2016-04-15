@@ -1,159 +1,105 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 10/21] bisect: get rid of recursion in count_distance()
-Date: Fri, 15 Apr 2016 14:31:10 -0700
-Message-ID: <xmqq4mb2a7a9.fsf@gitster.mtv.corp.google.com>
-References: <1460294354-7031-1-git-send-email-s-beyer@gmx.net>
-	<1460294354-7031-11-git-send-email-s-beyer@gmx.net>
+Subject: Re: [RFC PATCH, WAS: "weird diff output?" 2/2] xdiff: implement empty line chunk heuristic
+Date: Fri, 15 Apr 2016 14:44:51 -0700
+Message-ID: <xmqqzisu8s30.fsf@gitster.mtv.corp.google.com>
+References: <20160415165141.4712-1-jacob.e.keller@intel.com>
+	<20160415165141.4712-3-jacob.e.keller@intel.com>
+	<CAGZ79ka7h25=rHun_hPv1qjqeghXt1UwUU3Q6xT0aj4+OW87fg@mail.gmail.com>
+	<xmqq8u0ebpru.fsf@gitster.mtv.corp.google.com>
+	<CA+P7+xoWbrSaONH5xq=w5W190Jknk0Qsc5brS4UKFAs2_dTceg@mail.gmail.com>
+	<xmqqzisuaa3t.fsf@gitster.mtv.corp.google.com>
+	<CA+P7+xqe4ng9-gn1DRqhjebRXuHXbqZ6f3QsJ798k6DRo3bYyQ@mail.gmail.com>
+	<CA+P7+xp7oJoOXBhexe9zhrG1dMkz8jA3yQLzyTiqMwNQ1AQVdg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Fri Apr 15 23:31:19 2016
+Cc: Stefan Beller <sbeller@google.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Jens Lehmann <Jens.Lehmann@web.de>,
+	Davide Libenzi <davidel@xmailserver.org>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 15 23:45:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arBKg-0006b8-5C
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 23:31:18 +0200
+	id 1arBXx-0005qN-AD
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 23:45:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751585AbcDOVbO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2016 17:31:14 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55305 "EHLO
+	id S1751787AbcDOVo4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2016 17:44:56 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59320 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750956AbcDOVbN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2016 17:31:13 -0400
+	with ESMTP id S1751176AbcDOVoz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2016 17:44:55 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E977013F18;
-	Fri, 15 Apr 2016 17:31:11 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A54091303C;
+	Fri, 15 Apr 2016 17:44:53 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cQV110bDAIuvOguPUveu2ek/hlI=; b=bdoDgA
-	nPiavbYVchA78Ylp42b85tVLbzMJmPP7wouW+X4WysPf1+eXT/bpR+ZEp2HjBqt9
-	9kJSzuYLZVmY1P467srchEa2Ddssz7xNRFjeuef08yhMwGJSEGxXyYMe1Q7ztODm
-	pZvc5PGbhTz+yDwPYcHc1p6vXsJpMQGty8n1I=
+	:content-type; s=sasl; bh=o43WT4wdK54gfFQ0HteK0AoNPww=; b=BJwHrY
+	+qrqw9QKrtyR+A9svEmidAnjKST1UC0WKAiuJc347MiFBn1OVxlYzMwQMiCiwRGw
+	0ToCIqIJbSF2rjLq3/v8PaGwaoZaw1m9ok2smoCs9mLCjpSWBfbUGRz2nekl8o0m
+	T33rKb/0hRuKccpgkNu0ralhnq32up9SreXTY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=M/KiENUwu36MEWTcSeqLILd0vKqV6nPa
-	j5K1QqiG6uiavn6JXT/+SmaAfbM+d+YE7Wzmrv/sic9XTKiOrrqdt1BxvP2Gliw0
-	ULLhfUSR7h2cFCIxbWe1GnlxK3qkVkAR9tVleinsP69ZinUZcVlrZoVMTSbdoAD2
-	SE2GPOaAMt0=
+	:content-type; q=dns; s=sasl; b=qi63WMCICbWuQoyJHz/tcRnyQxx9vCwb
+	6obmkyc+ZgEpHLCYOnEWw+V4SKR3M+URMF2ptsM/fbYTnllOVPBB1iip9JnORyCM
+	mFIHfEAAJ2lxD45L9k8H+rSUOwoZ0nAm4qQOpi7MnO1qx/h9uazJuNED2iq2OmQT
+	AN+TH+RxS4M=
 Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E0E7F13F17;
-	Fri, 15 Apr 2016 17:31:11 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9CA151303B;
+	Fri, 15 Apr 2016 17:44:53 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5387413F16;
-	Fri, 15 Apr 2016 17:31:11 -0400 (EDT)
-In-Reply-To: <1460294354-7031-11-git-send-email-s-beyer@gmx.net> (Stephan
-	Beyer's message of "Sun, 10 Apr 2016 15:19:03 +0200")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EB6C413039;
+	Fri, 15 Apr 2016 17:44:52 -0400 (EDT)
+In-Reply-To: <CA+P7+xp7oJoOXBhexe9zhrG1dMkz8jA3yQLzyTiqMwNQ1AQVdg@mail.gmail.com>
+	(Jacob Keller's message of "Fri, 15 Apr 2016 14:22:48 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5FA99A52-0351-11E6-A23E-9A9645017442-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 496D6028-0353-11E6-AF26-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291670>
 
-Stephan Beyer <s-beyer@gmx.net> writes:
+Jacob Keller <jacob.keller@gmail.com> writes:
 
-> Large repositories with a huge amount of merge commits in the
-> bisection process could lead to stack overflows in git bisect.
-> In order to prevent this, this commit uses an *iterative* version
-> for counting the number of ancestors of a commit.
+>>> What you have is a pure developer support; aim to come up with "good
+>>> enough" way, giving developers an easier way to experiment with, and
+>>> remove it before the feature is shipped to the end user.
+>
+> What are your thoughts on adding this do the gitattributes diff
+> section? Ie: modifications to the diff driver.
 
-Yay!
+I do try to foresee the future needs but I try to limit the forecast
+to "just enough so that we won't waste engineering effort on a wrong
+thing".  "It may need to be turned off conditionally" suggests we
+would want attributes added per path, and that is sufficient to make
+me say "don't waste time on bikeshedding configuration variable
+names, it will not be in the final product".
 
-> -/*
-> - * This is a truly stupid algorithm, but it's only
-> - * used for bisection, and we just don't care enough.
-> - *
-> - * We care just barely enough to avoid recursing for
-> - * non-merge entries.
-> - */
->  static int count_distance(struct commit_list *entry)
->  {
->  	int nr = 0;
-> +	struct commit_list *todo = NULL;
-> +	commit_list_append(entry->item, &todo);
->  
-> -	while (entry) {
-> -		struct commit *commit = entry->item;
-> -		struct commit_list *p;
-> +	while (todo) {
-> +		struct commit *commit = pop_commit(&todo);
->  
-> -		if (commit->object.flags & (UNINTERESTING | COUNTED))
-> -			break;
-> -		if (!(commit->object.flags & TREESAME))
-> -			nr++;
-> -		commit->object.flags |= COUNTED;
-> -		p = commit->parents;
-> -		entry = p;
-> -		if (p) {
-> -			p = p->next;
-> -			while (p) {
-> -				nr += count_distance(p);
-> -				p = p->next;
-> +		if (!(commit->object.flags & (UNINTERESTING | COUNTED))) {
-> +			struct commit_list *p;
-> +			if (!(commit->object.flags & TREESAME))
-> +				nr++;
-> +			commit->object.flags |= COUNTED;
-> +
-> +			for (p = commit->parents; p; p = p->next) {
-> +				commit_list_insert(p->item, &todo);
->  			}
->  		}
->  	}
-> @@ -287,7 +277,7 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
->  	 * can reach.  So we do not have to run the expensive
->  	 * count_distance() for single strand of pearls.
->  	 *
-> -	 * However, if you have more than one parents, you cannot
-> +	 * However, if you have more than one parent, you cannot
+We do not need yet to know what the final name of the attributes
+are, or how exactly the bit to affect the low level mechanism will
+be set by the attribute mechanism.  I do not think this topic is
+there yet, and it is a waste of engineering effort to prematurely
+trying to make things too flexible and customizable, when the thing
+that will eventually become flexible by conditionally enabled is not
+even there yet.
 
-Thanks.  This grammo is mine, back in 1c4fea3a (git-rev-list
---bisect: optimization, 2007-03-21)
+As long as the low-level thing has a knob, set of internal bits, to
+enable and disable it, that is all that is necessary to know at this
+point.
 
-> @@ -296,17 +286,16 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
->  	 * way, and then fill the blanks using cheaper algorithm.
->  	 */
->  	for (p = list; p; p = p->next) {
-> -		if (p->item->object.flags & UNINTERESTING)
-> -			continue;
-> -		if (weight(p) != -2)
-> -			continue;
-> -		weight_set(p, count_distance(p));
-> -		clear_distance(list);
-> +		if (!(p->item->object.flags & UNINTERESTING)
-> +		 && (weight(p) == -2)) {
-> +			weight_set(p, count_distance(p));
-> +			clear_distance(list);
->  
-> -		/* Does it happen to be at exactly half-way? */
-> -		if (!find_all && halfway(p, nr))
-> -			return p;
-> -		counted++;
-> +			/* Does it happen to be at exactly half-way? */
-> +			if (!find_all && halfway(p, nr))
-> +				return p;
-> +			counted++;
-> +		}
->  	}
+Having said all that, I'd expect we'd compute the right bit to use
+in the same place where we currently pick the custom textconv
+driver, diff backend, etc., by consulting the attribute system
+before running the diff.
 
-I can buy collapsing two if() statements into one, but I'd prefer to
-see us keep the structure:
-
-	loop () {
-                if (... || ...)
-                        continue;
-                quite a
-                many
-                operations
-                here
-	}
-
->  
->  	show_list("bisection 2 count_distance", counted, nr, list);
+But again, I'd think it would be waste of time to think beyond that
+at this point, identifying exactly at which line of which source
+file the new code would go and what that new code would look like,
+until we are ready to start integrating it.
