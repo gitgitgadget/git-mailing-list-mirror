@@ -1,97 +1,106 @@
 From: Jacob Keller <jacob.keller@gmail.com>
 Subject: Re: [RFC PATCH, WAS: "weird diff output?" 2/2] xdiff: implement empty
  line chunk heuristic
-Date: Fri, 15 Apr 2016 13:06:31 -0700
-Message-ID: <CA+P7+xopb-kz4ipvoH6q14F+Sc5vqqHG5z93NdxJJzKwg_TSWA@mail.gmail.com>
+Date: Fri, 15 Apr 2016 13:17:59 -0700
+Message-ID: <CA+P7+xoWbrSaONH5xq=w5W190Jknk0Qsc5brS4UKFAs2_dTceg@mail.gmail.com>
 References: <20160415165141.4712-1-jacob.e.keller@intel.com>
  <20160415165141.4712-3-jacob.e.keller@intel.com> <CAGZ79ka7h25=rHun_hPv1qjqeghXt1UwUU3Q6xT0aj4+OW87fg@mail.gmail.com>
+ <xmqq8u0ebpru.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jacob Keller <jacob.e.keller@intel.com>,
+Cc: Stefan Beller <sbeller@google.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>, Jens Lehmann <Jens.Lehmann@web.de>,
 	Davide Libenzi <davidel@xmailserver.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Apr 15 22:07:16 2016
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 15 22:18:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arA1K-000105-Qt
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 22:07:15 +0200
+	id 1arAC9-0007J2-Pp
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 22:18:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751911AbcDOUHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2016 16:07:05 -0400
-Received: from mail-ig0-f178.google.com ([209.85.213.178]:38380 "EHLO
-	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751194AbcDOUGv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2016 16:06:51 -0400
-Received: by mail-ig0-f178.google.com with SMTP id ui10so32831297igc.1
-        for <git@vger.kernel.org>; Fri, 15 Apr 2016 13:06:51 -0700 (PDT)
+	id S1751234AbcDOUSV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2016 16:18:21 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:38460 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750910AbcDOUSU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2016 16:18:20 -0400
+Received: by mail-ig0-f173.google.com with SMTP id ui10so33095793igc.1
+        for <git@vger.kernel.org>; Fri, 15 Apr 2016 13:18:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=VzGUuxa5L33D/uy0CaA9o8ZBN2z6qhOU94tz82cmJq4=;
-        b=H0RhJT1dM9hxnTqKsx2EnJRs/hSy+lynDPeSMQCK85koeFif5LK8w9MGrdtym5uf7V
-         w1Z083aiSL3kgSYTBsbrmGeOUHtnqm2YjV9AvAQWyalIohbflSUcGvJYRwkT46yvhZpm
-         lWb7vr5jBzvXp3J+rlMHyUPEvmbSAXuyVevCxPjXRAXnI4+yBFu4ZkvWg+vT4Ax/+GuJ
-         dqS3ooUWbeY3N1HWMWvTRJM3NLmOaTzVLW9L4016kqHcRHS1iUcouLpMaOYi47KVayni
-         qG9hX7s6hEbRVSGzSxWzjd5Br9zTGUKM4nk2+SXSuy5ma4YTMwuBQa/L4+3LFDTYRuDj
-         FPag==
+        bh=pNVG5b3UdyvX8Uhot3jwAYerRzvZzEuPJeuCWRDypgg=;
+        b=ljnWkayEAVUQWQRJarMPe0odSC4V+M7yfeZDahFBG4jWF1CkXCSzmR644Dx8miPSYR
+         zm+/+M6tbL66c7dEthcqos4MygmBwPDC7vLnSut7aUisUG8LgSGRh+sBeH21S8n8t4j9
+         FfxVeX7iAf4U7ffEgplWnF2vSt3UqnA0097OMbchKLywFDZlj9M17ScuOM3i8R5LprzW
+         4gd0rt6egq/3JB/ioTWExGaEysHbEq6O6VU3oDUplua4ig0nVqJWhjWcv0UXAtgt/DqO
+         KYBlbwvt7H5hKg6nSt0DLFZj+62FrJCp172FbsDheHzpfuebDFOP3elO+YWLTOQTzsQm
+         KLkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=VzGUuxa5L33D/uy0CaA9o8ZBN2z6qhOU94tz82cmJq4=;
-        b=iYoL8ADP2rmkq5P9s9eOlsBdSUid2/CqoVjPmgNpXHRG4kFDCudRJgmeSAsqV2IYib
-         xKeM4T4lhENATDUCRhK8RROnprkyq9wTPhVy0ZJHhY9ieOGu3xy0jBQshzn7IzVt6A7B
-         n1CKD3dBkfab50wf7CQLxkZpodYfOYKevZ8C2ILemYhn3YjQUyPbWBFdqWhW0nUtb+eg
-         nMkw/y1ff6nbNjTR08VT7YXvchiYzVcjU3jrTXu5ChwOlwK8klMFM3NE2L4bGzN0cmcN
-         /3iIC3gI+38Rj//aOaISm49eI8K4/zNEo1nxyiK2UzKNdCM7N8D2ekp68YpO3A96Zsh2
-         HHcA==
-X-Gm-Message-State: AOPr4FXdfhvNWlfhtZjNNQSnM6NYq9bmc40mJRX3Q+3DfxZrfxy4nbsLMkIBtIKtWq9SIm0c5KbLDieJA429rA==
-X-Received: by 10.50.249.20 with SMTP id yq20mr7169616igc.35.1460750810822;
- Fri, 15 Apr 2016 13:06:50 -0700 (PDT)
-Received: by 10.107.59.78 with HTTP; Fri, 15 Apr 2016 13:06:31 -0700 (PDT)
-In-Reply-To: <CAGZ79ka7h25=rHun_hPv1qjqeghXt1UwUU3Q6xT0aj4+OW87fg@mail.gmail.com>
+        bh=pNVG5b3UdyvX8Uhot3jwAYerRzvZzEuPJeuCWRDypgg=;
+        b=LlmTXoGBmkVdey1k7HDuM/lXyKps75gRk6b87wI1pXfNhD+a8TDKkjtj44zHvcNoeR
+         IRskVKQhyvrp1JsrLeH6U2oXSs5riB93/aIIAqACRslRaR9SR9FRa+rTrjUdQv8p0O5F
+         c1wkDvALJqWhgaF3AZmgvfcYxBuqD2NB5scTE8OHj2sBbtGsrL5CbFPjVApQGzNvDd+v
+         NYL3fvIGpvrIXzh+a91Pisn228dJTr7cSwNlMWMvBUvFhgZtFEkN+K7Z6HjBBI++SuO6
+         +F3uwzgk0Cvvi9C2hT/6QBAgxJhVSWpNs6ysrh/7MTKnerCxb/FDUsWHi0Ix8WDkeA1e
+         rLQg==
+X-Gm-Message-State: AOPr4FWuVv6vG4VCIgfxu8xWCO7VfCdn8g0WIIcs4EKwSNTDvk9iJ8Zd169oiEHr3o2qhUVVsnjOAV2NYTnkSg==
+X-Received: by 10.50.123.132 with SMTP id ma4mr7224392igb.92.1460751499336;
+ Fri, 15 Apr 2016 13:18:19 -0700 (PDT)
+Received: by 10.107.59.78 with HTTP; Fri, 15 Apr 2016 13:17:59 -0700 (PDT)
+In-Reply-To: <xmqq8u0ebpru.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291653>
 
-On Fri, Apr 15, 2016 at 12:57 PM, Stefan Beller <sbeller@google.com> wrote:
-> I was looking at the TODO here and thought about the name:
-> It should not encode the `emptyLine` into the config option as
-> it is only one of many heuristics.
+On Fri, Apr 15, 2016 at 1:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> It should be something like `diff.heuristic=lastEmptyLine`
-> The we could add firstEmptyLine, aggressiveUp, aggressiveDown,
-> breakAtShortestLineLength or other styles as well later on.
+>>> +diff.emptyLineHeuristic::
+>>
+>> I was looking at the TODO here and thought about the name:
+>> It should not encode the `emptyLine` into the config option as
+>> it is only one of many heuristics.
+>>
+>> It should be something like `diff.heuristic=lastEmptyLine`
+>> The we could add firstEmptyLine, aggressiveUp, aggressiveDown,
+>> breakAtShortestLineLength or other styles as well later on.
+>>
+>> I do not quite understand the difference between diff.algorithm
+>> and the newly proposed heuristic as the heuristic is part of
+>> the algorithm? So I guess we'd need to have some documentation
+>> saying how these differ. (fundamental algorithm vs last minute
+>> style fixup?)
 >
+> I actually do not think these knobs should exist when the code is
+> mature enough to be shipped to the end users.
+>
+> Use "diff.compactionHeuristics = <uint>" as an opaque set of bits to
+> help the developers while they compare notes and reach consensus on
+> a single tweak that they can agree on being good enough, and then
+> remove that variable before the code hits 'next'.
+>
+> Thanks.
 
-This sounds better, but how does this handle multiple heuristics?
+I was under the impression that we would want a longer lived
+configuration until we had enough data to say whether it was helpful
+to make it default. I guess i had thought it would need to be longer
+lived since there may be cases where it's not optimal and being able
+to turn it off would be good?
 
-> I do not quite understand the difference between diff.algorithm
-> and the newly proposed heuristic as the heuristic is part of
-> the algorithm? So I guess we'd need to have some documentation
-> saying how these differ. (fundamental algorithm vs last minute
-> style fixup?)
-
-It is not part of the algorithm. It's applied after the algorithm.
-xdl_change_compact is run after the algorithm and run for all
-algorithms.
-
-These are last minute style changes, and should probably not use the
-term heuristic, but somehow capture "last minute style fixup"
+I'd rather keep it semi-human readable vs a uint since it would help
+keep me sane when looking at it in the interim.
 
 Thanks,
 Jake
-
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
