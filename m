@@ -1,182 +1,169 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [RFC PATCH, WAS: "weird diff output?"] Implement better chunk heuristics.
-Date: Thu, 14 Apr 2016 17:26:52 -0700
-Message-ID: <CA+P7+xqEPq=G_PMA-=h6jzWaUP=6hmWXcLzxbogs2PyuAZcn4g@mail.gmail.com>
-References: <CAGZ79ka8pgPNZKaVWnsa_S07esxkN9nJfhcMZvCfd5U6MtsrYQ@mail.gmail.com>
- <20160415000730.26446-1-sbeller@google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 00/25] worktree lock, move, remove and unlock
+Date: Fri, 15 Apr 2016 07:40:30 +0700
+Message-ID: <CACsJy8DK863+rgseeYrQJ1db+xSeFfm8WsNvGBmJwD_pr1yMJQ@mail.gmail.com>
+References: <1460553346-12985-1-git-send-email-pclouds@gmail.com> <xmqqfuuoi35o.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,
-	Davide Libenzi <davidel@xmailserver.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Apr 15 02:27:19 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 15 02:41:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqrbR-0005SE-PJ
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 02:27:18 +0200
+	id 1aqror-0003Mj-8q
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 02:41:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752934AbcDOA1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2016 20:27:13 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:32880 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752489AbcDOA1N (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2016 20:27:13 -0400
-Received: by mail-ig0-f171.google.com with SMTP id kb1so4887945igb.0
-        for <git@vger.kernel.org>; Thu, 14 Apr 2016 17:27:12 -0700 (PDT)
+	id S1752772AbcDOAlE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Apr 2016 20:41:04 -0400
+Received: from mail-lf0-f42.google.com ([209.85.215.42]:35087 "EHLO
+	mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752482AbcDOAlC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2016 20:41:02 -0400
+Received: by mail-lf0-f42.google.com with SMTP id c126so128210553lfb.2
+        for <git@vger.kernel.org>; Thu, 14 Apr 2016 17:41:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=brcWLArEzqxPXJtapIrgU2jo4e5sPnedLje/pJlvRos=;
-        b=TSdhEDHnySPhyZnA3BXZh0tpCaO6SBD3b9xlIKaOCJdHClMAq3ctOnPj8nxosB6ipI
-         lcgflD+SiUPVvVa2JgY5AZY0D7zRW7WfQI85IT44/HFieSG22TIacowwkU+bREJ8zgUJ
-         1ZtbsWFLjJtAbstnzkB7YlWvFA8XsBl7DB9/ecgjzgItXK+RAwRsbAA5mlQkgyDzJSU5
-         FFw9jEX26Rs0Yd9Dm3vFWfRF284BhU2/8hqn0a9gyUa8uOBsQNwIbD3W/HGPfnQOSDUd
-         vp4led1jgJWAFC+1bACCJ9+rL4WJnzaof80as+W2Zr0Hu0nC4eLUbugf5MTwNLxRzA9b
-         A9gQ==
+         :cc:content-transfer-encoding;
+        bh=Hio46suFkspWJkNC6XpFsu3eCfDp4WZa23ysxpOchyQ=;
+        b=Tf2TZ41tpLLZnTkVFIyKvrUnE3jyQXR/pwJ75V8uQky4fZEE7sK8GAz3GZoU2v4G4y
+         1/po7f7RYRgT2Txqjh3PhxVK9zhNpuKZBHficbLvN+KfiVVQuZuyRlg/qCZpisEnxoY7
+         QJGz96/pKL24oyXe2cEYlWFIMdrceMtyaf/2HXDtztMGVplqAIMFCCKRvcqFxHopb4qi
+         9Ex9v7M72TeYT1+Wf6b+HmF4fSmOnqB97iDlcf7Kf2XkRAZh2pZ5QzJiYZZa4S4Ey943
+         7k4kTUBwiackUsuw6mxryMumwxobla0YuGMUANRGs/Px2dGZHcbl3/eNgJLP5Fvz9UTH
+         P/xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=brcWLArEzqxPXJtapIrgU2jo4e5sPnedLje/pJlvRos=;
-        b=Cn3IZ0SFPHF2aaTytmY9UK7Ud14AYrGUnrAzOyXeyc8+g2UYXiC8ehbh1n0hwg6E+e
-         hH90ByIH3MXWv3DDnhkkqiG5vo56vC6015NOlIofmh15K4N54H1E9gOK0Q6e1hQE8dND
-         n5c3sJpZ5rbYsk+glUB0WVFRtyuoygTl1oEJg67QET1LSStD153uBikQ55wzviWG38gk
-         2mEwzKbSdkxFCthA2q2Jp7DXqWYSbU6GIJNqT+Lj0CpDaWAARS0CuI72qvNrK+SJZsJB
-         uiZV3swWgsz2j+xrkzLaPZ5eoPUCDCGfrtWg8VsWAShlfOAPIMXLKty0m6tuTDHvq2l7
-         yhjg==
-X-Gm-Message-State: AOPr4FWuEk35LOXWAkD++l1WjCcpp4UvUe71VqNAPmDZYdfJ0IWzxFSLSe3yOYNw4d+AsdgK+hLzBsNt3oUF1Q==
-X-Received: by 10.50.97.70 with SMTP id dy6mr1422918igb.73.1460680031695; Thu,
- 14 Apr 2016 17:27:11 -0700 (PDT)
-Received: by 10.107.59.78 with HTTP; Thu, 14 Apr 2016 17:26:52 -0700 (PDT)
-In-Reply-To: <20160415000730.26446-1-sbeller@google.com>
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Hio46suFkspWJkNC6XpFsu3eCfDp4WZa23ysxpOchyQ=;
+        b=aicaPbV7h9sJ5aJA0o/V1FJ+YblN7G2wcL3MVubkVEZkbHlGJAtFUScFibv7c9KtQw
+         Fq20e7qJnmYzLJY0WkEl5WoBJHnEnnHItheukupcSGaMIJLytKtSQjqzLQo3j/Lmpzg0
+         svbaXFMxaHelmRjx+Fj36VssR8o2gqOEmgYHZXQ3+bDMa/KYsFBw08woLjuLyFL3mFxN
+         DQmadUZcfr91rB2G1b9/4OtfSsiAMY3fPxA6K+rSqQf3XAQ8Z4UjxKvIwNnVi31w3z8j
+         SQBumMrA6fqH+uKL/1VBtZsl/vugZv7q+kFcLIHabtx7ixkpMhqAYw02R7cwZNKIpxzB
+         i2QQ==
+X-Gm-Message-State: AOPr4FW4rBwBl/iMp9RU4y2iatit76kEEWYk4ukV7zSkKwlqBJIOu6wywK65YFZHPpOSGCwsPV6jg6DrTzXhOA==
+X-Received: by 10.25.23.88 with SMTP id n85mr6340339lfi.3.1460680860367; Thu,
+ 14 Apr 2016 17:41:00 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Thu, 14 Apr 2016 17:40:30 -0700 (PDT)
+In-Reply-To: <xmqqfuuoi35o.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291585>
 
-On Thu, Apr 14, 2016 at 5:07 PM, Stefan Beller <sbeller@google.com> wrote:
-> TODO(sbeller):
-> * describe the discussion on why this is better
-> * see if this can be tested?
+On Thu, Apr 14, 2016 at 11:08 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
 >
+>> This is basically a resend from last time, which happened during rc
+>> time.
+>
+> It would have made them a much more pleasant read if you re-read
+> them during that time and added the missing "why" to many of the
+> commit log message.
 
-Thanks for taking time to do this! It looks like a few things are
-still missing, CRLF obviously, and making it a configuration option.
+Hmm... I thought I didn't receive any comments last time.
 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  xdiff/xdiffi.c | 39 +++++++++++++++++++++++++++++++++++++++
->  1 file changed, 39 insertions(+)
+>> It adds 4 more commands, basically cleaning up the "TODO" list
+>> in git-worktree.txt.
+>>
+>> So far I've only actually used move and remove (and maybe unlock onc=
+e
+>> because worktree-add failed on me and I had to unlock it manually).
+>> And I don't get to move worktrees a lot either so not really extensi=
+ve
+>> testing.
+>>
+>>   [01/25] usage.c: move format processing out of die_errno()
+>>   [02/25] usage.c: add sys_error() that prints strerror() automatica=
+lly
 >
-> diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-> index 2358a2d..24eb9a0 100644
-> --- a/xdiff/xdiffi.c
-> +++ b/xdiff/xdiffi.c
-> @@ -400,9 +400,16 @@ static xdchange_t *xdl_add_change(xdchange_t *xscr, long i1, long i2, long chg1,
->  }
->
->
-> +static int starts_with_emptyline(const char *recs)
-> +{
-> +       return recs[0] == '\n'; /* CRLF not covered here */
-> +}
-> +
-> +
->  int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
->         long ix, ixo, ixs, ixref, grpsiz, nrec = xdf->nrec;
->         char *rchg = xdf->rchg, *rchgo = xdfo->rchg;
-> +       unsigned char has_emptyline;
->         xrecord_t **recs = xdf->recs;
->
->         /*
-> @@ -436,6 +443,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
->
->                 do {
->                         grpsiz = ix - ixs;
-> +                       has_emptyline = 0;
->
->                         /*
->                          * If the line before the current change group, is equal to
-> @@ -447,6 +455,8 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
->                                 rchg[--ixs] = 1;
->                                 rchg[--ix] = 0;
->
-> +                               has_emptyline |=
-> +                                       starts_with_emptyline(recs[ix]->ptr);
+> This looks parallel to die_errno(); isn't error_errno() a better name=
+?
 
-I assume you're doing |= so that we don't overwrite the empty line
-setting each loop here to 0 when it's false? That's a bit subtle, and
-it took me a moment to figure out, since I am used to thinking of it
-as bitwise | and not a boolean or like we're intending here (though
-obviously we're using bitwise to perform that intended behavior).
+To me, no. Duplicating the "err" looks weird. error_no() does not look
+good either. Though there's a couple of warning(..., strerror()),
+which could become warning_errno(). Then maybe error_errno() makes
+more sense because all three follow the same naming convention.
 
->                                 /*
->                                  * This change might have joined two change groups,
->                                  * so we try to take this scenario in account by moving
-> @@ -475,6 +485,9 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
->                                 rchg[ixs++] = 0;
->                                 rchg[ix++] = 1;
+>>   [03/25] copy.c: import copy_file() from busybox
+>>   [04/25] copy.c: delete unused code in copy_file()
+>>   [05/25] copy.c: convert bb_(p)error_msg to (sys_)error
+>>   [06/25] copy.c: style fix
+>>   [07/25] copy.c: convert copy_file() to copy_dir_recursively()
 >
-> +                               has_emptyline |=
-> +                                       starts_with_emptyline(recs[ix]->ptr);
-> +
->                                 /*
->                                  * This change might have joined two change groups,
->                                  * so we try to take this scenario in account by moving
-> @@ -498,6 +511,32 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
->                         rchg[--ix] = 0;
->                         while (rchgo[--ixo]);
->                 }
-> +
-> +               /*
-> +                * If a group can be moved back and forth, see if there is an
-> +                * empty line in the moving space. If there is an empty line,
-> +                * make sure the last empty line is the end of the group.
-> +                *
-> +                * As we shifted the group forward as far as possible, we only
-> +                * need to shift it back if at all.
-> +                */
-> +               if (has_emptyline) {
-> +                       while (ixs > 0 && recs[ixs - 1]->ha == recs[ix - 1]->ha &&
-> +                              xdl_recmatch(recs[ixs - 1]->ptr, recs[ixs - 1]->size, recs[ix - 1]->ptr, recs[ix - 1]->size, flags) &&
-> +                              !starts_with_emptyline(recs[ix - 1]->ptr)) {
-> +                               rchg[--ixs] = 1;
-> +                               rchg[--ix] = 0;
-> +
-> +                               /*
-> +                                * This change did not join two change groups,
-> +                                * as we did that before already, so there is no
-> +                                * need to adapt the other-file, i.e.
-> +                                * running
-> +                                *     for (; rchg[ixs - 1]; ixs--);
-> +                                *     while (rchgo[--ixo]);
-> +                                */
-> +                       }
-> +               }
->         }
+> Somewhere among these, there needs to be a single overview of why we
+> want "cp" implementation of busybox, e.g. what part of "cp" we want?
+> the whole thing?  or "because this is to be used from this and that
+> codepaths to make copy of these things, we only need these parts and
+> can remove other features like this and that?"
 
-And this was the more difficult part which I wasn't able to fully
-understand how to do. It seems pretty reasonable. I think we can make
-it configurable by using a new XDIFF flag similar to how we handle
-various diff options like the different diff algorithms, and then we
-could add tests specific to ensure that the flag enables the behavior
-we want on some known test cases.
+We need directory move functionality. In the worst case when
+rename(<dir>, <dir>) wouldn't do the job, we have to fall back to
+copying the whole directory over, preserving metadata as much as
+possible, then delete the old directory. I don't want to write new
+code for this because I think it shows in busybox code that there are
+pitfalls in dealing with filesystems. And I don't want to fall back to
+/bin/cp either. Windows won't have one (long term I hope we won't need
+msys) and *nix is not famous for consistent command line behavior.
+Plus, if we want to clean up a failed cp operation, it's easier to do
+it in core by keeping track of what files have been copied.
 
-I am not really sure how to thoroughly test it beyond that though.
-
-Regards,
-Jake
-
+>>   [08/25] completion: support git-worktree
+>>   [09/25] git-worktree.txt: keep subcommand listing in alphabetical =
+order
 >
->         return 0;
-> --
-> 2.8.1.474.gffdc890.dirty
+> I'd defer doing this immediately before 21 if I were doing this
+> series.
+
+Will do.
+
+> Offhand, I think it makes it easier to look things up in an
+> alphabetical list in the description section, but it probably is
+> easier to get an overview if the synopsis part groups things along
+> concepts and/or lists things along the order in typical workflows
+> (e.g. "create, list, rename, remove" would be a list along
+> lifecycle), not alphabetical.
 >
+> But such judgement is better done when we know what are the final
+> elements that are to be listed, i.e. closer to where new things are
+> introduced.  This is especially true, as the log messages of patches
+> leading to 21 are all sketchy and do not give the readers a good
+> birds-view picture.
+
+Well. I think all the commands are there now at the end of this
+series. So we have add, list, prune, move, remove, lock and unlock. I
+guess we can group list/add/move/remove together and the rest as
+support commands. I might add "git worktree migrate" for converting
+between worktree v0 and v1. But it's not clear yet.
+
+>>   [10/25] path.c: add git_common_path() and strbuf_git_common_path()
+>
+> Write "what for" when adding a new API function.  "Wanting to learn
+> X is very common and there are many existing code or new code that
+> repeats sequence A, B and C to compute it.  Give a helper function
+> to do so to refactor the existing codepaths" or something like that?
+
+Pretty much for convenience. Will add some more in commit message.
+
+> Move some part of [12/25] that is not about "store 'id'" but is
+> about this refactoring to this commit.
+>
+>>   [11/25] worktree.c: use is_dot_or_dotdot()
+>>   [12/25] worktree.c: store "id" instead of "git_dir"
+>
+> It is better to have these (and other conceptually "small and
+> obvious" ones) as preliminary clean-up to make the main body of the
+> series that may need to go through iterations smaller.
+
+Sure.
+--=20
+Duy
