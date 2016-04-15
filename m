@@ -1,147 +1,99 @@
-From: Mike Rappazzo <rappazzo@gmail.com>
-Subject: Re: Cannot checkout a branch / worktree shows multiple branches for
- the same directory
-Date: Thu, 14 Apr 2016 19:11:51 -0400
-Message-ID: <CANoM8SULHrNv7R1COAZ1hq4qCFPX7H0t-v22m6AxUfwNsM_rrQ@mail.gmail.com>
-References: <CACB1J8XEXcy+Wewcwx_0UWZbQz-WeWUVnK_yAHw5uTBnr2fpVg@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v4 03/16] index-helper: new daemon for caching index and
+ related stuff
+Date: Fri, 15 Apr 2016 07:07:09 +0700
+Message-ID: <CACsJy8Dt8JDk5mkLkbc62w2kpKhBPxt5mcccs69wfpSH11sTug@mail.gmail.com>
+References: <1460507589-25525-1-git-send-email-dturner@twopensource.com>
+ <1460507589-25525-4-git-send-email-dturner@twopensource.com>
+ <xmqqy48ggmcs.fsf@gitster.mtv.corp.google.com> <1460653332.5540.84.camel@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-To: Krzysztof Voss <k.voss@usask.ca>
-X-From: git-owner@vger.kernel.org Fri Apr 15 01:12:18 2016
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	=?UTF-8?B?RHV5IE5ndXnhu4Vu?= <pclouds@gmail.co>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Fri Apr 15 02:07:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqqQs-0003v3-5I
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 01:12:18 +0200
+	id 1aqrIY-0004c8-UZ
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 02:07:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752270AbcDNXMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2016 19:12:13 -0400
-Received: from mail-io0-f174.google.com ([209.85.223.174]:36743 "EHLO
-	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752133AbcDNXMM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2016 19:12:12 -0400
-Received: by mail-io0-f174.google.com with SMTP id u185so119160607iod.3
-        for <git@vger.kernel.org>; Thu, 14 Apr 2016 16:12:11 -0700 (PDT)
+	id S1753098AbcDOAHn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2016 20:07:43 -0400
+Received: from mail-lf0-f43.google.com ([209.85.215.43]:36655 "EHLO
+	mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752568AbcDOAHm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2016 20:07:42 -0400
+Received: by mail-lf0-f43.google.com with SMTP id g184so127553201lfb.3
+        for <git@vger.kernel.org>; Thu, 14 Apr 2016 17:07:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=k2B/ePpN2V+9VAO0Nkd7MHTVkOYIxRroZHlE8hCd+Qc=;
-        b=pcLswvqAA4iA586Q0oGigtWInrAfsZBk7K1k154gCSPVNjlUqjKujASvuIjmBieKEM
-         xwAOLTb04UFM83iex7qkBB0PH3r2mu6k7bIU+bbRyI3Y+AYm6tClBU+4iHLLtttsMPg7
-         6hC0PPzBAOUsn7FefqHiv9o2X9/uJdch4kddeUMshZAeBEDk0X/l2wSNZ1uWmkO5J0H9
-         AJIAEMz6yBSVsg9doFXvrSLkZRD0OhHvV/lAe/2aJZPTvV/EJ7Mw9zcyvEeGYllNkvXS
-         zPssleK4xo8ae3Bm0V64CeYC2pNl4HAyBHqFWK1zhVEkZGwn8C0FKP3ODcKnLu2vTUXM
-         OvQQ==
+        bh=FqflEoiIAScmJGJzeVM6imZ4dtdA29MgKlgzoX39qA0=;
+        b=IBGif2VLu4mjtXIQAUMo0tmwdOAHi4B0aEfmTBM6oZ2RF3ALtFXAuz66TJtV00V+Ri
+         ohIt3E5eZg7plZlJW1IrM4kXd8JDtAj20ee1JC2txQt9E4yzmdlI10ITTaykN3H8sD3M
+         bZP2oS9Upn62n8pHeCxN3CTFm2RAg5U0sCkznYUSv2dbGH86iSie06ttTUIKQqQQ0ktu
+         TQVqkSTECVZ0HJ6nnQH1/mDFvY9kV7xwpvqXF9C5Lmz0gitUhzpeHR4nTGLl8XEs8dVA
+         HANtUilvyph1hksLMQ88LxUTuN331xFmVxPkCprwFTQc4G/5s/QE8/H50wUo/bTOCmmI
+         5sPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=k2B/ePpN2V+9VAO0Nkd7MHTVkOYIxRroZHlE8hCd+Qc=;
-        b=Qpojugjr35O9vCz5TXR79kFNfbJdYMMZSqpxWaVeea4LHrf7sLkAwKhtAWYEbYIXx2
-         pDemquEA0VwtAzDyiKivDkilwNFAw3er372uPjwVxvng9DYtCHx+dW9GJkOA3TxK+QoE
-         hde+6wiVZJi0V81nh6z7RkRBzcGKyumrNZdlsk9/n+qiw78ENzi+1mV2Y99pWXzb2FWH
-         ZFeVa2VUuZR72c88GXkSDMzKr9iNmD3U/Yc67KShBnYcb8NHvjjd2xgTNkpuoZMohnYX
-         y2Nu6mvet2yI2hd8j3dGGzdUV0oAQe4YeVbv9OXEAT4cJDyj8scJGX2dm6YbK8d1yyDb
-         jw6Q==
-X-Gm-Message-State: AOPr4FVcnvNOeEO1MEFYXartFxC5Pzd67Q8K/1v9iUO0T7PEldfGSfVVTquKN0l1ibzjHt7AV8Aoq/YqfLYeWQ==
-X-Received: by 10.107.168.233 with SMTP id e102mr21384822ioj.55.1460675530402;
- Thu, 14 Apr 2016 16:12:10 -0700 (PDT)
-Received: by 10.107.7.193 with HTTP; Thu, 14 Apr 2016 16:11:51 -0700 (PDT)
-In-Reply-To: <CACB1J8XEXcy+Wewcwx_0UWZbQz-WeWUVnK_yAHw5uTBnr2fpVg@mail.gmail.com>
+        bh=FqflEoiIAScmJGJzeVM6imZ4dtdA29MgKlgzoX39qA0=;
+        b=fSb7vHugFkJ3ChyjuptTD0NIGgJMWnaqX2y+DqHXaAyuEASrkWbggvIx7Zi22FEXsG
+         A6jIkoKL09e8FKaU0W0JoGJXk4r0pd2f9FTKgerINXQexvq0gsNnFVH5+c7iMqVWYiSv
+         s2r0+ZhD/G1+Ul2uFdGOuQLG0XCtCYff6AWYmhjeDnk7UjzSb9IXdvZq4gzawdiyW2sm
+         lYcJV1AraKMu10XmwEtJIeo0hYnHHMHCu7vBXyHw4EV6QgJ6Im4EElgJheGAuEC+JRyc
+         WJLQ8U9ftEwhA55VNpKFW+P+wynnvwF/gKbdRWIgEEnzRThyZF4HB0hO80ZPUVJPsdB3
+         wQUw==
+X-Gm-Message-State: AOPr4FVhcZjjD9+cSLzIbJWLt6DQlLhcuzzHbvy1Z+I/13avkTn7TSQHapL9FcOh4JN2Z1Rair5W/1x4s3cSJg==
+X-Received: by 10.25.211.75 with SMTP id k72mr7353954lfg.45.1460678859811;
+ Thu, 14 Apr 2016 17:07:39 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Thu, 14 Apr 2016 17:07:09 -0700 (PDT)
+In-Reply-To: <1460653332.5540.84.camel@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291580>
 
-On Thu, Apr 14, 2016 at 3:51 PM, Krzysztof Voss <k.voss@usask.ca> wrote:
-> Hi,
+On Fri, Apr 15, 2016 at 12:02 AM, David Turner <dturner@twopensource.com> wrote:
+>> > On webkit.git with index format v2, duplicating 8 times to 1.4m
+>> > entries and 200MB in size:
+>> >
+>> > (vanilla)      0.986986364 s: read_index_from .git/index
+>> > (index-helper) 0.267850279 s: read_index_from .git/index
+>> >
+>> > Interestingly with index v4, we get less out of index-helper. It
+>> > makes
+>> > sense as v4 requires more processing after loading the index:
+>> >
+>> > (vanilla)      0.722496666 s: read_index_from .git/index
+>> > (index-helper) 0.302741500 s: read_index_from .git/index
+>> >
+>> > (these benchmarks are from an earlier version of this patch, but
+>> > should
+>> > still be valid).
+>>
+>> Just something to keep in mind; we'd need to see updated numbers
+>> when the series matures.
 >
-> I stumbled upon an interesting problem when checking out a branch.
-> I had to switch to a testing branch to merge in some changes from yet
-> another branch, but when I tried to check out the testing branch I got
-> a message saying that I'm already on the target branch.
->
-> I used worktree a few times, but the checkouts were always in their
-> own directories.
-> It crossed my mind that this behaviour may be related, so I took a
-> look at the worktree list and noticed that according to that list
-> there are three branches at the same time in one directory.
->
-> It may be a conicidence and I have no confidence in saying that these
-> issues are related.
-> Can someone shed some light on this issue for me?
->
->
->     $ git --version
->     git version 2.7.0.235.g07c314d
->
->     $ git status -uno -sb
->     ## ticket-22444
->     M src/core/parsers/ParserBase.py
->     M src/core/parsers/test/ParserBase_test.py
->
->     $ git stash
->     Saved working directory and index state WIP on ticket-22444:
-> 7c5edaa #22444 refactoring
->     HEAD is now at 7c5edaa #22444 refactoring
->
->     $ git co testing
->     fatal: 'testing' is already checked out at '/home/k/workspace/moyo'
->
->     $ pwd
->     /home/k/workspace/moyo
->
->     $ git branch | grep '*'
->     * ticket-22444
->
->     $ git worktree list
->     /home/k/workspace/moyo  7c5edaa [ticket-22444]
->     /var/home/k/moyo-lsf  349613d (detached HEAD)
->     /home/k/workspace/moyo  265b7f9 (detached HEAD)
->     /home/k/workspace/moyo  c852282 [testing]
+> I don't actually know how Duy did the index duplication for this
+> benchmark.  Duy?
 
-This looks a lot like the `update_linked_gitdir()` bug that (I
-thought) was fixed[1].  Is
-it possible that you had this problem since before the bug was fixed
-and are just
-noticing it now?
+Start with webkit.git (which was one of the biggest worktree i found),
+then put the entire directory structure in a subdirectory e.g.
 
-If you look in '/home/k/workspace/moyo/.git/worktrees/`  I suspect
-that there are 3 dirs
-in there, two of which have a file 'gitdir' which have the contents
-'.git'.  These _should_
-instead point to the '.git' file in your other work trees.  It would
-be nice to know the last
-time that those bad worktrees were updated.
+git ls-files --stage | sed 's/\t/\tsubdir1\//' | git update-index
+--add --index-info --stdin
 
-If you know where the other worktrees are located, then you should be able to
-manually update this file in each of the worktree dirs.
-Alternatively, you can manually
-remove the bad linked worktrees (`rm -r .git/worktrees/bad_wt`).
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/284284
-
->
->     $ uname -a
->     Linux k 3.13.0-83-generic #127-Ubuntu SMP Fri Mar 11 00:25:37 UTC
-> 2016 x86_64 x86_64 x86_64 GNU/Linux
->
->     $ cat /etc/lsb-release
->     DISTRIB_ID=Ubuntu
->     DISTRIB_RELEASE=14.04
->     DISTRIB_CODENAME=trusty
->     DISTRIB_DESCRIPTION="Ubuntu 14.04.4 LTS"
->
->
-> Thanks,
-> Krzysztof
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+repeat until you get to a reasonable size.
+-- 
+Duy
