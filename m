@@ -1,96 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Parallel checkout (Was Re: 0 bot for Git)
-Date: Fri, 15 Apr 2016 10:31:39 -0700
-Message-ID: <xmqqwpnybwxw.fsf@gitster.mtv.corp.google.com>
-References: <CAGZ79kYWGFN1W0_y72-V6M3n4WLgtLPzs22bWgs1ObCCDt5BfQ@mail.gmail.com>
-	<CAGZ79kZOx8ehAB-=Frjgde2CDo_vwoVzQNizJinf4LLXek5PSQ@mail.gmail.com>
-	<CACsJy8DiCw_yZNp7st-qVA7zYEHww=ae5Q=uKVzBhAfU8akR7Q@mail.gmail.com>
-	<CAGZ79kZzdioQRFEmgTGOOdLQ-Ov-tWmgi1dLhHPDVzDb+Py2RQ@mail.gmail.com>
-	<CAP8UFD3xWUkCFZMN1N6t36KKwcfnkLsFznAc7j7yF89PbYaqfg@mail.gmail.com>
-	<20160415095139.GA3985@lanh>
-	<CAP8UFD0WZHriY340eh3K6ygzb0tXnoT+XaY8+c2k+N2x9UBYxA@mail.gmail.com>
-	<20160415165208.GA17928@sigill.intra.peff.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC PATCH, WAS: "weird diff output?" 0/2] implement better chunk heuristics
+Date: Fri, 15 Apr 2016 10:33:41 -0700
+Message-ID: <CAGZ79kZPsGuimv3pFAFdwuhD1ps74qx7Q6d1kqxxRX6VPwNYGQ@mail.gmail.com>
+References: <20160415165141.4712-1-jacob.e.keller@intel.com>
+	<CAGZ79kbCHA3L6mUfYn6OfVXLDEyhv70PwxXo-YHP_QZXXAB8ig@mail.gmail.com>
+	<CAGZ79kZs33sJj+DPSS4FPoJTLqbCLpvSe_h9UUQM-dBe=8ExKw@mail.gmail.com>
+	<xmqq1t66dbp8.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Apr 15 19:31:47 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Jacob Keller <jacob.e.keller@intel.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Jens Lehmann <Jens.Lehmann@web.de>,
+	Davide Libenzi <davidel@xmailserver.org>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 15 19:33:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ar7as-0000Lu-Np
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 19:31:47 +0200
+	id 1ar7cp-0001Xi-QX
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 19:33:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752551AbcDORbn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2016 13:31:43 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63260 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751851AbcDORbm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2016 13:31:42 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5F3C713AF4;
-	Fri, 15 Apr 2016 13:31:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UjAQcThT1qbk40IIUoTOii9ILRA=; b=vNct5h
-	HRtVjCk7ZDOFreIHvKTPf4lAigjsVkUSf8/eci8Me6sOf0kZe0+VZuzfaFUI8uup
-	4crLFoKDEJxZhXtHcDlCT3jE09HFRYv+7GXm8iCsdJriPfsGgfsQG6nAWiqFXIUg
-	dKioDoPtjFjhoAARNnu46OpXaUvrkSZNpEl7g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DqY6e0noTaFVSraPrW1Vxd1t2Hh9EXQq
-	qgzcoQ1HvNIioIMIRRwUZ7Y0SUfbWrT6uE640sIZ6eaZ1PCAey76fvqn5GxZ14Jn
-	6g70s9+JfkKoTwaVOphhB4CtsKVQcgVC7AhMCoz9Xm2KwQmnH2/32qJ4rskLaHS5
-	cjBUfkHefnU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 579E913AF3;
-	Fri, 15 Apr 2016 13:31:41 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A57F413AF1;
-	Fri, 15 Apr 2016 13:31:40 -0400 (EDT)
-In-Reply-To: <20160415165208.GA17928@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 15 Apr 2016 12:52:08 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: EA1D8FBC-032F-11E6-9A19-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1752122AbcDORdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2016 13:33:43 -0400
+Received: from mail-io0-f182.google.com ([209.85.223.182]:35671 "EHLO
+	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751747AbcDORdm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2016 13:33:42 -0400
+Received: by mail-io0-f182.google.com with SMTP id g185so141484748ioa.2
+        for <git@vger.kernel.org>; Fri, 15 Apr 2016 10:33:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=/F3M6nleRVRJAGnuv8LwiyldzDdcvmKFSqTgeGPBUeg=;
+        b=h5HaRKmW88aStdiiU2jWKJMWsj29ZGlIg+WylRfrJqy81mioUphjxkEUNf27Jg7dHY
+         yBQhbah/qxnTCZ5FDKcvND+Llpiz2jKcYxuWsPhdHzPnioHDoZATbWNDqciVy4avMpBM
+         dFxtrRqxyJ7sXQ+/gDlWBFLwefduVPocpnA4hvYdRP5W9caps6dghsrhTmLjB74cHHO9
+         770PY0eBCFiZSMrqwzAlCp4Z8z1/GH0XE6jOWV9bKbNcnSSww8zo8Jb3+QJ9HayKAIrD
+         jUu9c8kXd76WaTfYSvSO7MXzsyhmgJUnGgPBFwxpmYA5dBuKU8gfwU8MaDPlUjvgWJ49
+         SOXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=/F3M6nleRVRJAGnuv8LwiyldzDdcvmKFSqTgeGPBUeg=;
+        b=iOROusLwBHD6A2UnWamtIO7Pln21JTHTFUmWfNArlvLC+WG+FxIATmdmv/OVHz/S1p
+         SCf3hhs+V9dgjTQ1QR4gW4aNLBf/VHj95iHNZYO/4BLE/sW1veW8cozCnQkexNCPAdfh
+         rVuR6qxwbv85PC/XZohmkL2ppcPmfhHLsHW65UUcItYZ5PW356mRa0GA4BFVzyZnPBoK
+         3NlX2suBkFuRUvL71xjqz2N+iIy+thYC449dEHrX9l3VrRIcdDGqPCUgA91vKfyNIwXK
+         U0V7wwz/L3L+ZqtztMGXGEnK40+cKx6WyckDjuB3oyKUiIfLJPeTnv8FcBDO4ptMv37H
+         QyLg==
+X-Gm-Message-State: AOPr4FV90eRDYWi1z2mIWbwh+tSQjJpCxDODuCuJSg8+Hy2W4tJQdwPAqguvvdBrtTOtHNC3phaJ6WPpHxhGJHn/
+X-Received: by 10.107.184.8 with SMTP id i8mr23916261iof.96.1460741621660;
+ Fri, 15 Apr 2016 10:33:41 -0700 (PDT)
+Received: by 10.107.17.27 with HTTP; Fri, 15 Apr 2016 10:33:41 -0700 (PDT)
+In-Reply-To: <xmqq1t66dbp8.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291627>
 
-Jeff King <peff@peff.net> writes:
-
-> On Fri, Apr 15, 2016 at 01:18:46PM +0200, Christian Couder wrote:
+On Fri, Apr 15, 2016 at 10:27 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
->> On Fri, Apr 15, 2016 at 11:51 AM, Duy Nguyen <pclouds@gmail.com> wrote:
->> > On Fri, Apr 15, 2016 at 12:04:49AM +0200, Christian Couder wrote:
->> >>
->> >> There is a draft of an article about the first part of the Contributor
->> >> Summit in the draft of the next Git Rev News edition:
->> >>
->> >> https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-14.md
->> >
->> > Thanks. I read the sentence "This made people mention potential
->> > problems with parallelizing git checkout" and wondered what these
->> > problems were.
->> 
->> It may have been Michael or Peff (CC'ed) saying that it could break
->> some builds as the timestamps on the files might not always be ordered
->> in the same way.
+>> Actually we would only need to have the empty line count in the
+>> second loop as the first loop shifted it as much up(backwards) as
+>> possible, such that the hunk sits on one end of the movable
+>> range. The second loop would iterate over the whole range, so that
+>> would be the only place needed to count.
 >
-> I don't think it was me. I'm also not sure how it would break a build.
+> The description makes me wonder if we can do without two loops ;-)
 
-Yup, "will break a build" is a crazy-talk that I'd be surprised if
-you said something silly like that ;-)
+I think the existing 2 loops are needed to move "as much as possible"
+to either boundary to see if there is overlap to another group and combine
+the groups if so. (This whole construction prior to these patches remind
+me of shaker sort)
 
-Last time I checked, I think the accesses to attributes from the
-convert.c thing was one of the things that are cumbersome to make
-safe in multi-threaded world.
+>
+> That is, can we teach the first loop not to be so aggressive to
+> shift "as much as possible" but notice there is an empty line we
+> would want to treat specially?
+
+I think we need to be aggressive to find adjacent groups and only after
+that is done we should think about optimizing look&feel? That is why I
+even proposed to not touch the current 2 loops at all and have our own
+loop to find out if there is at least one empty line.
