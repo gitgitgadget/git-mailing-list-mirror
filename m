@@ -1,82 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 21/21] bisect: get back halfway shortcut
-Date: Fri, 15 Apr 2016 15:53:19 -0700
-Message-ID: <xmqqlh4e7acg.fsf@gitster.mtv.corp.google.com>
-References: <1460294354-7031-1-git-send-email-s-beyer@gmx.net>
-	<1460294692-7402-1-git-send-email-s-beyer@gmx.net>
-	<1460294692-7402-2-git-send-email-s-beyer@gmx.net>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Sat Apr 16 00:53:28 2016
+From: Jacob Keller <jacob.e.keller@intel.com>
+Subject: [RFC PATCH, WAS: "weird diff output?" v3 0/2] implement empty line diff chunk heuristic
+Date: Fri, 15 Apr 2016 15:57:16 -0700
+Message-ID: <20160415225718.13610-1-jacob.e.keller@intel.com>
+Cc: Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Jens Lehmann <Jens.Lehmann@web.de>,
+	Davide Libenzi <davidel@xmailserver.org>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 16 00:57:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arCcC-0001UU-7X
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Apr 2016 00:53:28 +0200
+	id 1arCg3-0003f7-DW
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Apr 2016 00:57:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751481AbcDOWxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2016 18:53:23 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62582 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751024AbcDOWxW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2016 18:53:22 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8942B137A5;
-	Fri, 15 Apr 2016 18:53:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SjVsPTuomOldYbelPL6ro4nzlEY=; b=A7YUu4
-	JR7R6tDVxGKHxqtcJu0NnTH8xcLXab8HXnzpqlMtE1445ln5snd4yp/bTVtov+Cq
-	qjIOfutrKTwctrtrPTOIJ/qHz0yVKdstgC2MeaemzIBL+RVUQr6djDUgpC60bvh3
-	L+oulZIgCx6wSH3SqmSADZSOerclS9+xqzAMk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QlgVio/u4wXiFimlv0+XRSFDZU6v4ugw
-	KR1TJ2b4UwApghqeHNkFSiMgY91jNH4hIDQ5Co1cQcdwlHi8cS+TBukXY2IUKJ4q
-	CU0iyzYLFMdO9MiQvB4E9Y2U2e7OS5w82jjMHhNbp7KLoMiVrhk5hnU6PaaxM4iu
-	uZ+8IVUMKRM=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 812B2137A4;
-	Fri, 15 Apr 2016 18:53:21 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EE6B2137A3;
-	Fri, 15 Apr 2016 18:53:20 -0400 (EDT)
-In-Reply-To: <1460294692-7402-2-git-send-email-s-beyer@gmx.net> (Stephan
-	Beyer's message of "Sun, 10 Apr 2016 15:24:52 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D9F3E640-035C-11E6-8C41-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1751213AbcDOW5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2016 18:57:22 -0400
+Received: from mga01.intel.com ([192.55.52.88]:55313 "EHLO mga01.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750982AbcDOW5W (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2016 18:57:22 -0400
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga101.fm.intel.com with ESMTP; 15 Apr 2016 15:57:20 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.24,489,1455004800"; 
+   d="scan'208";a="946203953"
+Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.173])
+  by fmsmga001.fm.intel.com with ESMTP; 15 Apr 2016 15:57:21 -0700
+X-Mailer: git-send-email 2.8.1.369.geae769a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291691>
 
-Stephan Beyer <s-beyer@gmx.net> writes:
+From: Jacob Keller <jacob.keller@gmail.com>
 
-> The documentation says that when the maximum possible distance
-> is found, the algorithm stops immediately. That feature is
-> reestablished by this commit.
->
-> Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
-> ---
->
-> Notes:
->     I plugged a memory leak here.
+Third version of my series with a few more minor fixups. I left the
+diff command line and configuration option alone for now, suspecting
+that long term we either (a) remove it or (b) use a gitattribute, so
+there is no reason to bikeshed the name or its contents right now.
 
-... relative to patch series v1, I presume?
+TODO:
+* add some tests
+* think about whether we need a git attribute or not (I did some
+  thinking, and if we do need to configure this at all, this is where I
+  would put it)
+* figure out how to make is_emptyline CRLF aware
 
-> @@ -391,7 +391,13 @@ static void traversal_up_to_merges(struct commit_list *queue,
->  		}
->  
->  		update_best_bisection(top);
-> +		if (distance_direction(top) == 0) { // halfway
+Changes since my v2:
+* fixed is_emptylines in the wrong patch
 
-Say /* halfway */ without // double-slash comment.
+Changes since my v1:
+* rename xdl_hash_and_recmatch to recs_match
+* remove counting empty lines in the first section of the looping
 
-The remainder of the patch makes sense to me.
+Changes since Stefan's v1:
+* Added a patch to implement xdl_hash_and_recmatch as Junio suggested.
+* Fixed a segfault in Stefan's patch
+* Added XDL flag to configure the behavior
+* Used an int and counted empty lines via += instead of |=
+* Renamed starts_with_emptyline to is_emptyline
+* Added diff command line and config options
+
+The interdiff between v2 and v3 is very small:
+
+diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+index 9436ad735243..dd93e6781e8b 100644
+--- a/xdiff/xdiffi.c
++++ b/xdiff/xdiffi.c
+@@ -485,6 +485,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 			 * the group.
+ 			 */
+ 			while (ix < nrec && recs_match(recs, ixs, ix, flags)) {
++
+ 				emptylines += is_emptyline(recs[ix]->ptr);
+ 
+ 				rchg[ixs++] = 0;
+
+Jacob Keller (1):
+  xdiff: add recs_match helper function
+
+Stefan Beller (1):
+  xdiff: implement empty line chunk heuristic
+
+ Documentation/diff-config.txt  |  6 ++++++
+ Documentation/diff-options.txt |  6 ++++++
+ diff.c                         | 11 +++++++++++
+ xdiff/xdiff.h                  |  2 ++
+ xdiff/xdiffi.c                 | 41 +++++++++++++++++++++++++++++++++++++----
+ 5 files changed, 62 insertions(+), 4 deletions(-)
+
+-- 
+2.8.1.369.geae769a
