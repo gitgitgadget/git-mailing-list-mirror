@@ -1,77 +1,189 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 17/21] bisect: rename count_distance() to compute_weight()
-Date: Fri, 15 Apr 2016 15:12:36 -0700
-Message-ID: <xmqq37qm8qsr.fsf@gitster.mtv.corp.google.com>
-References: <1460294354-7031-1-git-send-email-s-beyer@gmx.net>
-	<1460294354-7031-18-git-send-email-s-beyer@gmx.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Default authentication over https?
+Date: Fri, 15 Apr 2016 18:21:20 -0400
+Message-ID: <20160415222120.GA24777@sigill.intra.peff.net>
+References: <CAPf1peAW11hZpN6_ztA62tcu6mgCfV3VwwjjtXT5yySUPD9Qpw@mail.gmail.com>
+ <20160413223613.GB10011@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1604141142190.23813@tvnag.unkk.fr>
+ <CAPf1peDf_YbDsaz1ykvzKLkdUWtSqrHT7yrgfUgjE4R1eS4r6g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Sat Apr 16 00:12:46 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Daniel Stenberg <daniel@haxx.se>, git <git@vger.kernel.org>
+To: Isaac Levy <isaac.r.levy@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 16 00:21:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arByn-0004kS-3X
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Apr 2016 00:12:46 +0200
+	id 1arC7E-0001JN-59
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Apr 2016 00:21:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752284AbcDOWMl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2016 18:12:41 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62104 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751587AbcDOWMk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2016 18:12:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3F40A1200A;
-	Fri, 15 Apr 2016 18:12:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HnFE3KROLndZBozG6IEQYrS/sAo=; b=twaMyA
-	ffX9NhmwUO8sTR81tKwewNhRo8xji+JW+6apqkJ6dVWCi31hm/FopGmwfMt6UKVs
-	Qzknpu3kqWCV+aP2onWFRjOnFaqulrd/vqHxIY702mRIdRfu2PCP8YrTyXFoV1fj
-	kpDM3G+JSUJGeHerAlnX9Rac8u3lJJTb/crrc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HetVQNZSNQM+KiIDIKiVB/2OJGiJAaRk
-	DtdhFlgxpz75gq/po0ts5PieIoTNxLYQh/Hv31ZTLoWCripMpYj7Nnxg3YmyfDa9
-	fWrUHXsbInFljHvFQyRNGZ1iuragNZb3jGy54NHpflz6BZBlRFnvnA86e7BKXwwT
-	NH3dkRTeDt4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3616912008;
-	Fri, 15 Apr 2016 18:12:38 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 97CC712006;
-	Fri, 15 Apr 2016 18:12:37 -0400 (EDT)
-In-Reply-To: <1460294354-7031-18-git-send-email-s-beyer@gmx.net> (Stephan
-	Beyer's message of "Sun, 10 Apr 2016 15:19:10 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 29997A94-0357-11E6-A079-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1752171AbcDOWVY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2016 18:21:24 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50509 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751878AbcDOWVX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2016 18:21:23 -0400
+Received: (qmail 13790 invoked by uid 102); 15 Apr 2016 22:21:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 Apr 2016 18:21:22 -0400
+Received: (qmail 16206 invoked by uid 107); 15 Apr 2016 22:21:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 Apr 2016 18:21:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Apr 2016 18:21:20 -0400
+Content-Disposition: inline
+In-Reply-To: <CAPf1peDf_YbDsaz1ykvzKLkdUWtSqrHT7yrgfUgjE4R1eS4r6g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291683>
 
-Stephan Beyer <s-beyer@gmx.net> writes:
+On Thu, Apr 14, 2016 at 05:32:16PM -0400, Isaac Levy wrote:
 
-> Let us use the term "weight" for the number of ancestors
-> of each commit, and "distance" for the number
-> min{weight, #commits - weight}. (Bisect finds the commit
-> with maximum distance.)
->
-> In these terms, "count_distance()" is the wrong name of
-> the function. So it is renamed to "compute_weight()",
-> and it also directly sets the computed weight.
->
-> Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
-> ---
->  bisect.c | 11 ++++++-----
->  1 file changed, 6 insertions(+), 5 deletions(-)
+> After the authenticated request, curl says it's keeping the connection
+> open, but the next fetch seems to do two handshakes again.  The
+> unauthenticated request closes the connection, so the 2nd handshake is
+> forced, but I'm not sure why subsequent git fetches still do
+> handshakes.  I did a bit of sleuthing w/ source, GIT_CURL_VERBOSE and
+> wireshark.
+> 
+> We're using GitHub enterprise -- it'd just be nice if there was a
+> better way to configure for super fast fetches.  ssh with cached
+> connections does avoid the SSL this overhead -- though as I recall git
+> protocols over ssh are less performant.
 
-Makes sense.  We can think of the "distance" the distance from the
-periphery of the graph we are looking at, and "bisection" is to find
-a point close to the center of the graph.
+It's the opposite; generally git is more efficient over ssh, because we
+have a true full-duplex connection, and we can do everything over a
+single session (though setup for the ssh session may or may not be
+faster than SSL).
+
+Here's what I observed just for the initial contact. If I instrument git
+like this:
+
+diff --git a/http.c b/http.c
+index 4304b80..9bedad7 100644
+--- a/http.c
++++ b/http.c
+@@ -1422,6 +1422,7 @@ static int http_request(const char *url,
+ 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, headers);
+ 	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "gzip");
+ 
++	warning("running one curl slot...");
+ 	ret = run_one_slot(slot, &results);
+ 
+ 	if (options && options->content_type) {
+
+and run:
+
+  GIT_CURL_VERBOSE=1 git ls-remote 2>&1 | egrep '< HTTP|> |^Auth|^warn'
+
+I get three requests:
+
+  warning: running one curl slot...
+  > GET /my/repo/info/refs?service=git-upload-pack HTTP/1.1
+  < HTTP/1.1 401 Authorization Required
+  warning: running one curl slot...
+  > GET /my/repo/info/refs?service=git-upload-pack HTTP/1.1
+  < HTTP/1.1 401 Authorization Required
+  > GET /my/repo/info/refs?service=git-upload-pack HTTP/1.1
+  Authorization: Basic ...
+  < HTTP/1.1 200 OK
+
+The first request is us (git) asking curl to hit the URL, and curl
+returns the 401 from the server to us. At that point we'll prompt the
+user (or the credential helper) for the password, and then we'll give
+that to curl and ask it to make the request again. Curl will do the
+probe with the 401, because we haven't set an auth type, and then follow
+up (without returning the 401 to git) with the right credentials.
+
+I think we can take that down to _two_ requests pretty easily. We know
+in the very first request that the server told us something like:
+
+  < WWW-Authenticate: Basic realm="GitHub"
+
+but curl doesn't remember that. However, we should be able to pull it
+out of the old request and feed it into the new one. That would save the
+second request, which is just a probe.
+
+But ideally we'd have this down to one request. I think we could do
+something like this:
+
+diff --git a/http.c b/http.c
+index 9bedad7..7e5009d 100644
+--- a/http.c
++++ b/http.c
+@@ -870,6 +870,11 @@ struct active_request_slot *get_active_slot(void)
+ #ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
+ 	curl_easy_setopt(slot->curl, CURLOPT_HTTPAUTH, http_auth_methods);
+ #endif
++
++	/* XXX should be configurable via http.* or whatever */
++	curl_easy_setopt(slot->curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
++	credential_fill(&http_auth);
++
+ 	if (http_auth.password || curl_empty_auth)
+ 		init_curl_http_auth(slot->curl);
+ 
+
+My request then looks like:
+
+  warning: running one curl slot...
+  > GET /my/repo/info/refs?service=git-upload-pack HTTP/1.1
+  Authorization: Basic ...
+  < HTTP/1.1 200 OK
+
+with just a single round-trip.
+
+Obviously the hard-coding there is wrong, but the mental model here is
+that the user would do something like:
+
+  git config http.https://github.com.auth basic
+
+to say "I know I want to do Basic auth for this host", and that would
+trigger git to tell that to curl, and to prompt for the password
+preemptively.  The obvious downside is that it requires manual
+configuration, and some clue about "Basic" versus other auth types.
+
+I didn't trace the protocol further, but I suspect that curl ends up
+doing that probe for _each_ request, because each time we hand it only
+the credential without telling it that we know the server wants "Basic"
+auth.
+
+So that tries to keep the number of requests down in the first place. As
+far as reusing connections for the connections we _do_ make, I'm not
+sure. I do see curl claiming to leave the connection up:
+
+  * Connection #0 to host github.com left intact
+
+but then we seem to make a separate one for the next request:
+
+  * Hostname github.com was found in DNS cache
+  *   Trying 192.30.252.120...
+  * Connected to github.com (192.30.252.120) port 443 (#1)
+
+I'm not sure why that is. We do get SSL reuse:
+
+  * SSL re-using session ID
+  * SSL connection using TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
+
+which is good. And then of the two requests curl makes later, the second
+one has:
+
+  * Re-using existing connection! (#1) with host github.com
+
+which is good. So I'm not sure why we don't reuse connection #0 from the
+very first request. Perhaps it's something in the way we are setting up
+the curl handle.
+
+> Finally I also checked out the persistent-https contrib section as a
+> workaround but couldn't get it to work. Is that project dead?
+
+I don't know. It certainly hasn't seen a lot of activity lately, but
+Google folks might still be using it (I think the original impetus was
+for fetching of many repos from the same server for the Android
+project). I don't know that we've seen any mention of wide use on the
+list.
+
+-Peff
