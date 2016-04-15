@@ -1,90 +1,264 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH/RFC 0/6] fetch with refspec
-Date: Fri, 15 Apr 2016 15:19:03 -0400
-Message-ID: <1460747949-3514-1-git-send-email-dturner@twopensource.com>
+Subject: [PATCH/RFC 5/6] fetch: pass refspec to http server
+Date: Fri, 15 Apr 2016 15:19:08 -0400
+Message-ID: <1460747949-3514-6-git-send-email-dturner@twopensource.com>
+References: <1460747949-3514-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 21:19:52 2016
+X-From: git-owner@vger.kernel.org Fri Apr 15 21:19:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ar9HI-0006Qq-2n
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 21:19:40 +0200
+	id 1ar9HT-0006Y9-GJ
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 21:19:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753405AbcDOTTh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1753416AbcDOTTl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2016 15:19:41 -0400
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:33484 "EHLO
+	mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752541AbcDOTTh (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 15 Apr 2016 15:19:37 -0400
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:33472 "EHLO
-	mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751307AbcDOTTc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2016 15:19:32 -0400
-Received: by mail-qk0-f172.google.com with SMTP id n63so29972470qkf.0
-        for <git@vger.kernel.org>; Fri, 15 Apr 2016 12:19:32 -0700 (PDT)
+Received: by mail-qk0-f181.google.com with SMTP id n63so29973109qkf.0
+        for <git@vger.kernel.org>; Fri, 15 Apr 2016 12:19:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id;
-        bh=F9HEboCJ5TlJk1UxfI3fWussSnKJpIfyA+RW6ipfB6U=;
-        b=dWJl3T1dO33A6YY39CMcTljN3riMEg2Ut+Zf0dK7WU+2Og7t+1gXa7cTZ2xxVXUCas
-         Nh2LQqdySXJWAYgiZoTLvfk6+BZwtD5Hb15n0BQ1KRr4VP1d75/OVDs65GMYsS1rIDg+
-         sUon5jZ5wrOB6WE3vN9wa5EP5FPFm4p6/cg8oV0bZR3lsIoDoLMnUYhoVLSf489IyRsn
-         4Fdz0v/BeyaAD0uu6woXWHhCvU/lx6cDVVWQaKbQG82NuXdap4hpO3cpIJ56mw18L5nq
-         KqYF4zm4w9Ldj7MAmGMVdPwASSvHhXNaOezuw0WoA6Bcs2HAiXnMLr3SkIyyJYbQVhZt
-         ejkg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=JK4Q2EzwLEOwtaPCJD5b6J4qT8Nk9/GcMaByY+9HQAg=;
+        b=NcVXO2p8U7vH1sebkLH1Ab1ydph8STzWa+SZW3g4E0MdRKMl/4AyCsJQE/GUI2i07C
+         5afPhdJrpBIePR8Fvgoz3RCJAEHv8VVtgPc4u7UrZbD4KSa/4ngoFOYAiTL9J4FkPnYi
+         XGbT+JDEecfiTt9GsZJofhZcUtValWsM/sgLCfxURmdnAM9wruC/YbCDJbIQGSae68qJ
+         d76A92Voa9fxkGpDFlk5DSkq0xmD56XE+dnkb+pDjvNeCBJTnaCN41xi670jPIdZPcT9
+         cFP2V28P+aGhLVwuxQyyNGz76gC83rwK9t3CaoWvB4hqfj3TiqSHhnQS0e7BwxUJ4ml8
+         FlxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=F9HEboCJ5TlJk1UxfI3fWussSnKJpIfyA+RW6ipfB6U=;
-        b=K2d/YJfgoiQvlnG6k3AR5Th++WKTSEOgdOILnq1M7uQNKPysjcxWnqQyDuaDdpNLF1
-         M55ZD+jfwvyQypCBoZ2KzkicXl5FRrBmJ1r/33iPXmrBofgR4CxXZzkyfLB4iPyqn+jg
-         KdJywnRT6vwgvhBg0em/oKZ3kAKfnl7VhSfirSdJ4p7Bl8vdFktHv51QOmwUgAlnAaHk
-         EZ/EH1jZTNZMiu1BqZnLhUrNNtTfxRWSmHbybRE7eC9He42oSNrNIWE30AyINcT/Fcg8
-         QOBZqwEUabOnsq8M/Q+fLRvORaT6T2K8Cxm36/iZsbnZGgvcRHyr8n2es7mwLkqRDmKF
-         S7xA==
-X-Gm-Message-State: AOPr4FXVhpXkjw7nxcvdu/+azOuOeXklE28Hn85HbT2hpjzv8E8rM2ODHLCFbfA4xjuHcA==
-X-Received: by 10.55.172.72 with SMTP id v69mr27760466qke.45.1460747971451;
-        Fri, 15 Apr 2016 12:19:31 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=JK4Q2EzwLEOwtaPCJD5b6J4qT8Nk9/GcMaByY+9HQAg=;
+        b=igDsqbftljSI4pYh3+Fnf881o2V/BAH/cOpEusL9AqeNW2Z39ME5azop6BscfU4tGi
+         K+ZHswZyGp0Dcp2+WIiu9OE1BCUzwYO4/jrwYhVBJKYH0IeeDwIKIhucv8L+NaK+EkZs
+         A3WZkCpm2rtEEPnwclUhdyt9NY7Y966YIoAX8ZccPk7wGabJj+KpmMOINNEuf048WVHq
+         re+kjIMf/G504ApcSejVFN0RMpwlW+S7n5NCuLPrEphGWRzxVU1LDL1pq9MJp3HHb43c
+         EWMTcUJAVMmaS1ezxcwDWKxmegMnUQPQVaMbq6Njc7B5gLy13Ij4sK9k8NQU05zHNK17
+         /Cjg==
+X-Gm-Message-State: AOPr4FVzV8d2VMx5TkCR4Qxgh6/53fWedW6sE6cr3mkkQS8yQBNeBIKhm1hCRpHanMsXJQ==
+X-Received: by 10.55.18.217 with SMTP id 86mr27627260qks.99.1460747976456;
+        Fri, 15 Apr 2016 12:19:36 -0700 (PDT)
 Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id c2sm21077097qkb.41.2016.04.15.12.19.30
+        by smtp.gmail.com with ESMTPSA id c2sm21077097qkb.41.2016.04.15.12.19.35
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 15 Apr 2016 12:19:30 -0700 (PDT)
+        Fri, 15 Apr 2016 12:19:35 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
+In-Reply-To: <1460747949-3514-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291641>
 
-We've got a lot of refs, but pretty frequently we only want to fetch
-one.  It's silly for the server to send a bunch of refs that the client
-is just going to ignore.  Here are some patches that fix that.
+When fetching over http, send the requested refspec to the server.
+The server will then only send refs matching that refspec.  It is
+permitted for old servers to ignore that parameter, and the client
+will automatically handle this.
 
-Let me know if this seems reasonable.
+When the server has many refs, and the client only wants a few, this
+can save bandwidth and reduce fetch latency.
 
-(and I'll start in on another round of index-helper as soon as this is sent!)
-
-David Turner (6):
-  http-backend: use argv_array functions
-  remote-curl.c: fix variable shadowing
-  http-backend: handle refspec argument
-  transport: add refspec list parameters to functions
-  fetch: pass refspec to http server
-  clone: send refspec for single-branch clones
-
- Documentation/technical/protocol-capabilities.txt | 23 +++++++
- builtin/clone.c                                   | 16 ++++-
- builtin/fetch.c                                   | 24 ++++++-
- builtin/ls-remote.c                               |  2 +-
- builtin/remote.c                                  |  2 +-
- http-backend.c                                    | 23 +++++--
- remote-curl.c                                     | 25 ++++---
- t/t5552-http-fetch-branch.sh                      | 47 +++++++++++++
- transport-helper.c                                | 44 ++++++++----
- transport.c                                       | 14 ++--
- transport.h                                       |  4 +-
- upload-pack.c                                     | 81 ++++++++++++++++++++++-
- 12 files changed, 261 insertions(+), 44 deletions(-)
+Signed-off-by: David Turner <dturner@twopensource.com>
+---
+ Documentation/technical/protocol-capabilities.txt | 23 +++++++++++++
+ builtin/fetch.c                                   | 20 ++++++++++-
+ remote-curl.c                                     |  7 ++++
+ t/t5552-http-fetch-branch.sh                      | 42 +++++++++++++++++++++++
+ transport-helper.c                                |  8 ++++-
+ 5 files changed, 98 insertions(+), 2 deletions(-)
  create mode 100755 t/t5552-http-fetch-branch.sh
 
+diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
+index eaab6b4..8c4a0b9 100644
+--- a/Documentation/technical/protocol-capabilities.txt
++++ b/Documentation/technical/protocol-capabilities.txt
+@@ -275,3 +275,26 @@ to accept a signed push certificate, and asks the <nonce> to be
+ included in the push certificate.  A send-pack client MUST NOT
+ send a push-cert packet unless the receive-pack server advertises
+ this capability.
++
++interesting-refs
++----------------
++
++For HTTP(S) servers only:
++
++Whether or not the upload-pack server advertises this capability,
++fetch-pack may send a "refspec" parameter in the query string of a
++fetch request.  This capability indicates that such a parameter will
++be respected, in case the client cares.
++
++Whenever the receive-pack server gets that parameter, it will not
++advertise all refs and will instead only advertise refs that match
++those listed in the header. The parameter is a space-separated list of
++refs.  A ref may optionally contain up to one wildcard.
++Advertisements will still respect hideRefs.
++
++The presence or absence of the "refspec" parameter does not affect
++what refs a client is permitted to fetch; this is still controlled in
++the normal fashion.
++
++This saves time in the presence of a large number of refs, because the
++client need not wait for the server to send the complete list of refs.
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index cafab37..c22a92f 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -302,9 +302,27 @@ static struct ref *get_ref_map(struct transport *transport,
+ 
+ 	/* opportunistically-updated references: */
+ 	struct ref *orefs = NULL, **oref_tail = &orefs;
++	struct refspec *qualified_refspecs;
+ 	const struct ref *remote_refs;
+ 
+-	remote_refs = transport_get_remote_refs(transport, NULL, 0);
++	qualified_refspecs = xcalloc(refspec_count, sizeof(*qualified_refspecs));
++	for (i = 0; i < refspec_count; i++) {
++		if (starts_with(refspecs[i].src, "refs/")) {
++			qualified_refspecs[i].src = xstrdup(refspecs[i].src);
++		} else {
++			struct strbuf buf = STRBUF_INIT;
++			strbuf_addf(&buf, "refs/heads/%s", refspecs[i].src);
++			qualified_refspecs[i].src = strbuf_detach(&buf, NULL);
++		}
++	}
++
++	remote_refs = transport_get_remote_refs(transport, qualified_refspecs,
++						refspec_count);
++
++	for (i = 0; i < refspec_count; i++) {
++		free(qualified_refspecs[i].src);
++	}
++	free(qualified_refspecs);
+ 
+ 	if (refspec_count) {
+ 		struct refspec *fetch_refspec;
+diff --git a/remote-curl.c b/remote-curl.c
+index b9b6a90..e914d3f 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -20,6 +20,7 @@ static struct strbuf url = STRBUF_INIT;
+ struct options {
+ 	int verbosity;
+ 	unsigned long depth;
++	char *refspec;
+ 	unsigned progress : 1,
+ 		check_self_contained_and_connected : 1,
+ 		cloning : 1,
+@@ -43,6 +44,10 @@ static int set_option(const char *name, const char *value)
+ 		options.verbosity = v;
+ 		return 0;
+ 	}
++	else if (!strcmp(name, "refspec")) {
++		options.refspec = xstrdup(value);
++		return 0;
++	}
+ 	else if (!strcmp(name, "progress")) {
+ 		if (!strcmp(value, "true"))
+ 			options.progress = 1;
+@@ -269,6 +274,8 @@ static struct discovery *discover_refs(const char *service, int for_push)
+ 		else
+ 			strbuf_addch(&refs_url, '&');
+ 		strbuf_addf(&refs_url, "service=%s", service);
++		if (options.refspec)
++			strbuf_addf(&refs_url, "&refspec=%s", options.refspec);
+ 	}
+ 
+ 	memset(&get_options, 0, sizeof(get_options));
+diff --git a/t/t5552-http-fetch-branch.sh b/t/t5552-http-fetch-branch.sh
+new file mode 100755
+index 0000000..0e905d9
+--- /dev/null
++++ b/t/t5552-http-fetch-branch.sh
+@@ -0,0 +1,42 @@
++#!/bin/sh
++
++test_description='fetch just one branch'
++
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-httpd.sh
++start_httpd
++
++test_expect_success 'setup repo' '
++	git init "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
++	(
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
++		test_commit 1
++	)
++'
++
++test_expect_success 'clone http repository' '
++	git clone $HTTPD_URL/smart/repo.git clone
++'
++
++test_expect_success 'make some more commits' '
++	(
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
++		test_commit 2 &&
++		git checkout -b another_branch &&
++		test_commit 3
++		git checkout -b a_third_branch &&
++		test_commit 4
++	)
++'
++
++test_expect_success 'fetch with refspec only fetches requested branch' '
++	test_when_finished "rm trace" &&
++	(
++		cd clone &&
++		GIT_TRACE_PACKET="$TRASH_DIRECTORY/trace" git fetch origin another_branch &&
++		! grep "refs/heads/master" ../trace
++	)
++'
++
++stop_httpd
++test_done
+diff --git a/transport-helper.c b/transport-helper.c
+index b5c91d2..7d75d64 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -40,6 +40,9 @@ struct helper_data {
+ 	struct git_transport_options transport_options;
+ };
+ 
++static int set_helper_option(struct transport *transport,
++			     const char *name, const char *value);
++
+ static void sendline(struct helper_data *helper, struct strbuf *buffer)
+ {
+ 	if (debug)
+@@ -109,6 +112,7 @@ static struct child_process *get_helper(struct transport *transport, const struc
+ 	int refspec_alloc = 0;
+ 	int duped;
+ 	int code;
++	int i;
+ 
+ 	if (data->helper)
+ 		return data->helper;
+@@ -202,7 +206,6 @@ static struct child_process *get_helper(struct transport *transport, const struc
+ 		}
+ 	}
+ 	if (refspecs) {
+-		int i;
+ 		data->refspec_nr = refspec_nr;
+ 		data->refspecs = parse_fetch_refspec(refspec_nr, refspecs);
+ 		for (i = 0; i < refspec_nr; i++)
+@@ -214,6 +217,9 @@ static struct child_process *get_helper(struct transport *transport, const struc
+ 	strbuf_release(&buf);
+ 	if (debug)
+ 		fprintf(stderr, "Debug: Capabilities complete.\n");
++
++	for (i = 0; i < req_refspec_nr; i++)
++		set_helper_option(transport, "refspec", req_refspecs[i].src);
+ 	standard_options(transport);
+ 	return data->helper;
+ }
 -- 
 2.4.2.767.g62658d5-twtrsrc
