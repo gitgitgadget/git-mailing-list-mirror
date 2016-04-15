@@ -1,72 +1,617 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] fsck_commit_buffer(): do not special case the last validation
-Date: Fri, 15 Apr 2016 08:06:30 -0700
-Message-ID: <xmqqy48edi89.fsf@gitster.mtv.corp.google.com>
-References: <20160414180709.28968-1-gitster@pobox.com>
-	<alpine.DEB.2.20.1604151538230.2967@virtualbox>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: Parallel checkout (Was Re: 0 bot for Git)
+Date: Fri, 15 Apr 2016 08:08:03 -0700
+Message-ID: <CAGZ79kZP_TUUk3vWHe=c301n66FtQpnwPfPmJ6oD8n-Zz-SVyg@mail.gmail.com>
+References: <CAGZ79kYWGFN1W0_y72-V6M3n4WLgtLPzs22bWgs1ObCCDt5BfQ@mail.gmail.com>
+	<CAGZ79kZOx8ehAB-=Frjgde2CDo_vwoVzQNizJinf4LLXek5PSQ@mail.gmail.com>
+	<CACsJy8DiCw_yZNp7st-qVA7zYEHww=ae5Q=uKVzBhAfU8akR7Q@mail.gmail.com>
+	<CAGZ79kZzdioQRFEmgTGOOdLQ-Ov-tWmgi1dLhHPDVzDb+Py2RQ@mail.gmail.com>
+	<CAP8UFD3xWUkCFZMN1N6t36KKwcfnkLsFznAc7j7yF89PbYaqfg@mail.gmail.com>
+	<20160415095139.GA3985@lanh>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Apr 15 17:06:39 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Christian Couder <christian.couder@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 15 17:08:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ar5KQ-0002nu-PL
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 17:06:39 +0200
+	id 1ar5Lw-0003nN-Cu
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 17:08:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751046AbcDOPGe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2016 11:06:34 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54201 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750755AbcDOPGd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2016 11:06:33 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D66DD11981;
-	Fri, 15 Apr 2016 11:06:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=R7Tb7WeKxw6XZ090DIW7DIczAqM=; b=nrLAaP
-	lk+IURQLL1FRHwQ2hXqFWZB32PgPdW8hEEza6L9OwpXxjQ8HvZcqQJIEiYmdcOez
-	Wqph/n9o8yCvS0xsI9qqlM5sp41dr1A6qZkzjJXATSGnIDFZqEJXanlAwBjjfu2i
-	83aZCEbLzcIJKe57X9J+xBsJXAWg7ktJxku/Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ngLaHBPVJgyBvh5Ojou8ccSojl01yenk
-	bKRuKewf+dCaMLm8FRFIWPSgFLNUlCH0iXP+LbRuxIpKRS//7SwCc1xymbyWbDd4
-	Na/2MJBPFDLGMAq/LHhC4BawMQjGeS9h73U1papfv8M/i2eNZJ7LXRMX+DSUKcmV
-	vM7hQyMbgVw=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CEB4611980;
-	Fri, 15 Apr 2016 11:06:31 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3AA1A1197F;
-	Fri, 15 Apr 2016 11:06:31 -0400 (EDT)
-In-Reply-To: <alpine.DEB.2.20.1604151538230.2967@virtualbox> (Johannes
-	Schindelin's message of "Fri, 15 Apr 2016 15:41:16 +0200 (CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A2D96ED2-031B-11E6-BED7-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1751443AbcDOPIH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2016 11:08:07 -0400
+Received: from mail-io0-f182.google.com ([209.85.223.182]:35416 "EHLO
+	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750716AbcDOPIF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2016 11:08:05 -0400
+Received: by mail-io0-f182.google.com with SMTP id g185so137421925ioa.2
+        for <git@vger.kernel.org>; Fri, 15 Apr 2016 08:08:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=Ul2IzTjGxcgzvN5cFngD/XpeZ90qlMWPuFAQuHCD154=;
+        b=fwrPce0p34gInCNd6eG6uDBkc3yRXmA4tKtGe9g+8nQabjq7AxGAp34OeK/tpKEWrT
+         awTYLnjZ/pYIHmcjvoAz1VPukS5rwWaNaHlQUTHAPbUC/ZrTqVFlnHwm44Yvq++OoVdZ
+         NNWC6uVtxswoburp7G7LCbtQMpC7d0vHaIRI2XtYO9u/f29KpebLSQxxvip2RXUbyBUp
+         BqaTT68UVCvPZ1GVgxvKiLd/cfVI6GyFe9AHQo9Y3NQ7fXLCxXG+j10P1KfBrAp56XmR
+         ucTugIihUFkiD8z2qNHMw1Rp9va8pv9zbJJveHZ/eqEOs5Eob7vpQGFMvX9PGpfZ8A3j
+         V5+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=Ul2IzTjGxcgzvN5cFngD/XpeZ90qlMWPuFAQuHCD154=;
+        b=HKAUVQHYMd0SFsifzl0Yu8sp56Ct5m9R231y6FEA/Flp0qLsLKZyy7ZManVAx3Ahxc
+         m1AiPLseYjroK1QuGvVPGoYJaK2FX5kekbmuRYkJINuu2E/A87ZbK2juoSZsRoedKjBy
+         8qfyvN8ZDIPU1YuD7p29L5tDnVofZMBLtwxyKg3Y3xdTN2iADaF3V2DRKENs4m2SQuuW
+         M5d70HwLoITy2wxHI/9Sd2UuDrZVqJM5EubBPGW8T1CwC5d8HY0Y5yWw06I1l4oU6fa8
+         KEK6E80T8T7tKV2gmnN/GwRU+aueYy0gIu7TFFoz922p6OL4B5iLgK3Jn6cqNZ02Tnbl
+         L1/Q==
+X-Gm-Message-State: AOPr4FV76ET/yuNERzBlNwryDm5mKJ+RM8TATqiMs9cV35fVJ1HwVWDyxds1virKip/iV6RYpV37zLiB0QEQR6Hf
+X-Received: by 10.107.184.8 with SMTP id i8mr23118819iof.96.1460732883689;
+ Fri, 15 Apr 2016 08:08:03 -0700 (PDT)
+Received: by 10.107.17.27 with HTTP; Fri, 15 Apr 2016 08:08:03 -0700 (PDT)
+In-Reply-To: <20160415095139.GA3985@lanh>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291609>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
->> But that is a selfish code that declares it is the ultimate and
->> final form of the function, never to be enhanced later.  To allow
->> and invite future enhancements, make the last test follow the same
->> pattern.
+On Fri, Apr 15, 2016 at 2:51 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Fri, Apr 15, 2016 at 12:04:49AM +0200, Christian Couder wrote:
+>> On Tue, Apr 12, 2016 at 4:59 PM, Stefan Beller <sbeller@google.com> wrote:
+>> > On Tue, Apr 12, 2016 at 2:42 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+>> >>> On Mon, Apr 11, 2016 at 7:51 AM, Stefan Beller <sbeller@google.com> wrote:
+>> >>>> Hi Greg,
+>> >>>>
+>> >>>> Thanks for your talk at the Git Merge 2016!
+>> >>
+>> >> Huh? It already happened?? Any interesting summary to share with us?
+>>
+>> There is a draft of an article about the first part of the Contributor
+>> Summit in the draft of the next Git Rev News edition:
+>>
+>> https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-14.md
 >
-> FWIW I agree with this reasoning. Sorry for leaving this to you to clean
-> up.
+> Thanks. I read the sentence "This made people mention potential
+> problems with parallelizing git checkout" and wondered what these
+> problems were. And because it's easier to think while you test
+> something, to flesh out your thoughts, I wrote the below patch, which
+> does parallel checkout with multiple worker processes. I wonder if the
+> same set of problems apply to it.
 
-Thanks. I often fall into the same trap, and I suspect everybody
-does. After doing a large-ish change, it is easy to think that what
-was just finished is the final one for quite some time to come,
-without even realizing that I am being selfish.
+I mentioned it, as Jonathan mentioned it a while ago. (So I was just
+referring to hear say).
+
+>
+> The idea is simple, you offload some work to process workers. In this
+> patch, only entry.c:write_entry() is moved to workers. We still do
+> directory creation and all sort of checks and stat refresh in the main
+> process. Some more work may be moved away, for example, the entire
+> builtin/checkout.c:checkout_merged().
+>
+> Multi process is less efficient than multi thread model. But I doubt
+> we could make object db access thread-safe soon. The last discussion
+> was 2 years ago [1] and nothing much has happened.
+>
+> Numbers are encouraging though. On linux-2.6 repo running on linux and
+> ext4 filesystem, checkout_paths() would dominate "git checkout :/".
+> Unmodified git takes about 31s.
+
+Please also benchmark "make build" or another read heavy operation
+with these 2 different checkouts. IIRC that was the problem. (checkout
+improved, but due to file ordering on the fs, the operation afterwards
+slowed down, such that it became a net negative)
+
+>
+>
+> 16:26:00.114029 builtin/checkout.c:1299 performance: 31.184973659 s: checkout_paths
+> 16:26:00.114225 trace.c:420             performance: 31.256412935 s: git command: 'git' 'checkout' '.'
+>
+> When doing write_entry() on 8 processes, it takes 22s (shortened by ~30%)
+>
+> 16:27:39.973730 trace.c:420             performance: 5.610255442 s: git command: 'git' 'checkout-index' '--worker'
+> 16:27:40.956812 trace.c:420             performance: 6.595082013 s: git command: 'git' 'checkout-index' '--worker'
+> 16:27:41.397621 trace.c:420             performance: 7.032024175 s: git command: 'git' 'checkout-index' '--worker'
+> 16:27:47.453999 trace.c:420             performance: 13.078537207 s: git command: 'git' 'checkout-index' '--worker'
+> 16:27:48.986433 trace.c:420             performance: 14.612951643 s: git command: 'git' 'checkout-index' '--worker'
+> 16:27:53.149378 trace.c:420             performance: 18.781762536 s: git command: 'git' 'checkout-index' '--worker'
+> 16:27:54.884044 trace.c:420             performance: 20.514473730 s: git command: 'git' 'checkout-index' '--worker'
+> 16:27:55.319990 trace.c:420             performance: 20.948326263 s: git command: 'git' 'checkout-index' '--worker'
+> 16:27:55.863211 builtin/checkout.c:1299 performance: 22.723118420 s: checkout_paths
+> 16:27:55.863398 trace.c:420             performance: 22.854547640 s: git command: 'git' 'checkout' '--parallel' '.'
+>
+> I suspect on nfs or windows, the gain may be higher due to IO blocking
+> the main process more.
+>
+> Note that this for-fun patch is not optmized at all (and definitely
+> not portable). I could have sent a group of paths to the worker in a
+> single system call instead of one per call. The trace above also shows
+> unbalance issues with workers, where some workers exit early because
+> of my naive work distribution. Numbers could get a bit better.
+>
+> [1] http://thread.gmane.org/gmane.comp.version-control.git/241965/focus=242020
+
+Would it make sense to use the parallel processing infrastructure from
+run-command.h
+instead of doing all setup and teardown yourself?
+(As you call it for-fun patch, I'd assume the answer is: Writing code
+is more fun than
+using other peoples code ;)
+
+
+>
+> -- 8< --
+> diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
+> index 92c6967..7163216 100644
+> --- a/builtin/checkout-index.c
+> +++ b/builtin/checkout-index.c
+> @@ -9,6 +9,7 @@
+>  #include "quote.h"
+>  #include "cache-tree.h"
+>  #include "parse-options.h"
+> +#include "entry.h"
+>
+>  #define CHECKOUT_ALL 4
+>  static int nul_term_line;
+> @@ -179,6 +180,9 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+>                 OPT_END()
+>         };
+>
+> +       if (argc == 2 && !strcmp(argv[1], "--worker"))
+> +               return parallel_checkout_worker();
+> +
+>         if (argc == 2 && !strcmp(argv[1], "-h"))
+>                 usage_with_options(builtin_checkout_index_usage,
+>                                    builtin_checkout_index_options);
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index efcbd8f..51caad2 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -20,6 +20,7 @@
+>  #include "resolve-undo.h"
+>  #include "submodule-config.h"
+>  #include "submodule.h"
+> +#include "entry.h"
+>
+>  static const char * const checkout_usage[] = {
+>         N_("git checkout [<options>] <branch>"),
+> @@ -236,7 +237,8 @@ static int checkout_merged(int pos, struct checkout *state)
+>  }
+>
+>  static int checkout_paths(const struct checkout_opts *opts,
+> -                         const char *revision)
+> +                         const char *revision,
+> +                         int parallel)
+>  {
+>         int pos;
+>         struct checkout state;
+> @@ -357,6 +359,8 @@ static int checkout_paths(const struct checkout_opts *opts,
+>         state.force = 1;
+>         state.refresh_cache = 1;
+>         state.istate = &the_index;
+> +       if (parallel)
+> +               start_parallel_checkout(&state);
+>         for (pos = 0; pos < active_nr; pos++) {
+>                 struct cache_entry *ce = active_cache[pos];
+>                 if (ce->ce_flags & CE_MATCHED) {
+> @@ -367,11 +371,18 @@ static int checkout_paths(const struct checkout_opts *opts,
+>                         if (opts->writeout_stage)
+>                                 errs |= checkout_stage(opts->writeout_stage, ce, pos, &state);
+>                         else if (opts->merge)
+> +                               /*
+> +                                * XXX: in parallel mode, we may want
+> +                                * to let worker perform the merging
+> +                                * instead and send SHA-1 result back
+> +                                */
+>                                 errs |= checkout_merged(pos, &state);
+>                         pos = skip_same_name(ce, pos) - 1;
+>                 }
+>         }
+>
+> +       errs |= run_parallel_checkout();
+> +
+>         if (write_locked_index(&the_index, lock_file, COMMIT_LOCK))
+>                 die(_("unable to write new index file"));
+>
+> @@ -1132,6 +1143,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+>         struct branch_info new;
+>         char *conflict_style = NULL;
+>         int dwim_new_local_branch = 1;
+> +       int parallel = 0;
+>         struct option options[] = {
+>                 OPT__QUIET(&opts.quiet, N_("suppress progress reporting")),
+>                 OPT_STRING('b', NULL, &opts.new_branch, N_("branch"),
+> @@ -1159,6 +1171,8 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+>                                 N_("second guess 'git checkout <no-such-branch>'")),
+>                 OPT_BOOL(0, "ignore-other-worktrees", &opts.ignore_other_worktrees,
+>                          N_("do not check if another worktree is holding the given ref")),
+> +               OPT_BOOL(0, "parallel", &parallel,
+> +                        N_("parallel checkout")),
+>                 OPT_BOOL(0, "progress", &opts.show_progress, N_("force progress reporting")),
+>                 OPT_END(),
+>         };
+> @@ -1279,8 +1293,12 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+>                 strbuf_release(&buf);
+>         }
+>
+> -       if (opts.patch_mode || opts.pathspec.nr)
+> -               return checkout_paths(&opts, new.name);
+> +       if (opts.patch_mode || opts.pathspec.nr) {
+> +               uint64_t start = getnanotime();
+> +               int ret = checkout_paths(&opts, new.name, parallel);
+> +               trace_performance_since(start, "checkout_paths");
+> +               return ret;
+> +       }
+>         else
+>                 return checkout_branch(&opts, &new);
+>  }
+> diff --git a/entry.c b/entry.c
+> index a410957..5e0eb1c 100644
+> --- a/entry.c
+> +++ b/entry.c
+> @@ -3,6 +3,36 @@
+>  #include "dir.h"
+>  #include "streaming.h"
+>
+> +#include <sys/epoll.h>
+> +#include "pkt-line.h"
+> +#include "argv-array.h"
+> +#include "run-command.h"
+> +
+> +struct checkout_item {
+> +       struct cache_entry *ce;
+> +       struct checkout_item *next;
+> +};
+> +
+> +struct checkout_worker {
+> +       struct child_process cp;
+> +       struct checkout_item *to_complete;
+> +       struct checkout_item *to_send;
+> +};
+> +
+> +struct parallel_checkout {
+> +       struct checkout state;
+> +       struct checkout_worker *workers;
+> +       struct checkout_item *items;
+> +       int nr_items, alloc_items;
+> +       int nr_workers;
+> +};
+> +
+> +static struct parallel_checkout *parallel_checkout;
+> +
+> +static int queue_checkout(struct parallel_checkout *,
+> +                         const struct checkout *,
+> +                         struct cache_entry *);
+> +
+>  static void create_directories(const char *path, int path_len,
+>                                const struct checkout *state)
+>  {
+> @@ -290,5 +320,299 @@ int checkout_entry(struct cache_entry *ce,
+>                 return 0;
+>
+>         create_directories(path.buf, path.len, state);
+> +
+> +       if (!queue_checkout(parallel_checkout, state, ce))
+> +               /*
+> +                * write_entry() will be done by parallel_checkout_worker() in
+> +                * a separate process
+> +                */
+> +               return 0;
+> +
+>         return write_entry(ce, path.buf, state, 0);
+>  }
+> +
+> +int start_parallel_checkout(const struct checkout *state)
+> +{
+> +       if (parallel_checkout)
+> +               die("BUG: parallel checkout already initiated");
+> +       if (0 && state->force)
+> +               die("BUG: not support --force yet");
+> +       parallel_checkout = xmalloc(sizeof(*parallel_checkout));
+> +       memset(parallel_checkout, 0, sizeof(*parallel_checkout));
+> +       memcpy(&parallel_checkout->state, state, sizeof(*state));
+> +
+> +       return 0;
+> +}
+> +
+> +static int queue_checkout(struct parallel_checkout *pc,
+> +                         const struct checkout *state,
+> +                         struct cache_entry *ce)
+> +{
+> +       struct checkout_item *ci;
+> +
+> +       if (!pc ||
+> +           !S_ISREG(ce->ce_mode) ||
+> +           memcmp(&pc->state, state, sizeof(*state)))
+> +               return -1;
+> +
+> +       ALLOC_GROW(pc->items, pc->nr_items + 1, pc->alloc_items);
+> +       ci = pc->items + pc->nr_items++;
+> +       ci->ce = ce;
+> +       return 0;
+> +}
+> +
+> +static int item_cmp(const void *a_, const void *b_)
+> +{
+> +       const struct checkout_item *a = a_;
+> +       const struct checkout_item *b = b_;
+> +       return strcmp(a->ce->name, b->ce->name);
+> +}
+> +
+> +static int setup_workers(struct parallel_checkout *pc, int epoll_fd)
+> +{
+> +       int from, nr_per_worker, i;
+> +
+> +       pc->workers = xmalloc(sizeof(*pc->workers) * pc->nr_workers);
+> +       memset(pc->workers, 0, sizeof(*pc->workers) * pc->nr_workers);
+> +
+> +       nr_per_worker = pc->nr_items / pc->nr_workers;
+> +       from = 0;
+> +
+> +       for (i = 0; i < pc->nr_workers; i++) {
+> +               struct checkout_worker *worker = pc->workers + i;
+> +               struct child_process *cp = &worker->cp;
+> +               struct checkout_item *item;
+> +               struct epoll_event ev;
+> +               int to;
+> +
+> +               to = from + nr_per_worker;
+> +               if (i == pc->nr_workers - 1)
+> +                       to = pc->nr_items;
+> +               item = NULL;
+> +               while (from < to) {
+> +                       pc->items[from].next = item;
+> +                       item = pc->items + from;
+> +                       from++;
+> +               }
+> +               worker->to_send = item;
+> +               worker->to_complete = item;
+> +
+> +               cp->git_cmd = 1;
+> +               cp->in = -1;
+> +               cp->out = -1;
+> +               argv_array_push(&cp->args, "checkout-index");
+> +               argv_array_push(&cp->args, "--worker");
+> +               if (start_command(cp))
+> +                       die(_("failed to run checkout worker"));
+> +
+> +               ev.events = EPOLLOUT | EPOLLERR | EPOLLHUP;
+> +               ev.data.u32 = i * 2;
+> +               if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, cp->in, &ev) == -1)
+> +                       die_errno("epoll_ctl");
+> +
+> +               ev.events = EPOLLIN | EPOLLERR | EPOLLHUP;
+> +               ev.data.u32 = i * 2 + 1;
+> +               if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, cp->out, &ev) == -1)
+> +                       die_errno("epoll_ctl");
+> +       }
+> +       return 0;
+> +}
+> +
+> +static int send_to_worker(struct checkout_worker *worker, int epoll_fd)
+> +{
+> +       if (!worker->to_send) {
+> +               struct epoll_event ev;
+> +
+> +               packet_flush(worker->cp.in);
+> +
+> +               epoll_ctl(epoll_fd, EPOLL_CTL_DEL, worker->cp.in, &ev);
+> +               close(worker->cp.in);
+> +               worker->cp.in = -1;
+> +               return 0;
+> +       }
+> +
+> +       /*
+> +        * XXX: put the fd in non-blocking mode and send as many files
+> +        * as possible in one go.
+> +        */
+> +       packet_write(worker->cp.in, "%s %s",
+> +                    sha1_to_hex(worker->to_send->ce->sha1),
+> +                    worker->to_send->ce->name);
+> +       worker->to_send = worker->to_send->next;
+> +       return 0;
+> +}
+> +
+> +int parallel_checkout_worker(void)
+> +{
+> +       struct checkout state;
+> +       struct cache_entry *ce = NULL;
+> +
+> +       memset(&state, 0, sizeof(state));
+> +       /* FIXME: pass 'force' over */
+> +       for (;;) {
+> +               int len;
+> +               unsigned char sha1[20];
+> +               char *line = packet_read_line(0, &len);
+> +
+> +               if (!line)
+> +                       return 0;
+> +
+> +               if (len < 40)
+> +                       return 1;
+> +               if (get_sha1_hex(line, sha1))
+> +                       return 1;
+> +               line += 40;
+> +               len -= 40;
+> +               if (*line != ' ')
+> +                       return 1;
+> +               line++;
+> +               len--;
+> +               if (!ce || ce_namelen(ce) < len) {
+> +                       free(ce);
+> +                       ce = xcalloc(1, cache_entry_size(len));
+> +                       ce->ce_mode = S_IFREG | ce_permissions(0644);
+> +               }
+> +               ce->ce_namelen = len;
+> +               hashcpy(ce->sha1, sha1);
+> +               memcpy(ce->name, line, len + 1);
+> +
+> +               if (write_entry(ce, ce->name, &state, 0))
+> +                       return 1;
+> +               /*
+> +                * XXX process in batch and send bigger number of
+> +                * checked out entries back
+> +                */
+> +               packet_write(1, "1");
+> +       }
+> +}
+> +
+> +static int receive_from_worker(struct checkout_worker *worker,
+> +                              int refresh_cache)
+> +{
+> +       int len, val;
+> +       char *line;
+> +
+> +       line = packet_read_line(worker->cp.out, &len);
+> +       val = atoi(line);
+> +       if (val <= 0)
+> +               die("BUG: invalid value");
+> +       while (val && worker->to_complete &&
+> +              worker->to_complete != worker->to_send) {
+> +               if (refresh_cache) {
+> +                       struct stat st;
+> +                       struct cache_entry *ce = worker->to_complete->ce;
+> +
+> +                       lstat(ce->name, &st);
+> +                       fill_stat_cache_info(ce, &st);
+> +                       ce->ce_flags |= CE_UPDATE_IN_BASE;
+> +               }
+> +               worker->to_complete = worker->to_complete->next;
+> +               val--;
+> +       }
+> +       if (val)
+> +               die("BUG: invalid value");
+> +       return 0;
+> +}
+> +
+> +static int finish_worker(struct checkout_worker *worker, int epoll_fd)
+> +{
+> +       struct epoll_event ev;
+> +       char buf[1];
+> +       int ret;
+> +
+> +       assert(worker->to_send == NULL);
+> +       assert(worker->to_complete == NULL);
+> +
+> +       ret = xread(worker->cp.out, buf, sizeof(buf));
+> +       if (ret != 0)
+> +               die("BUG: expect eof");
+> +       epoll_ctl(epoll_fd, EPOLL_CTL_DEL, worker->cp.out, &ev);
+> +       close(worker->cp.out);
+> +       worker->cp.out = -1;
+> +       if (finish_command(&worker->cp))
+> +               die("worker had a problem");
+> +       return 0;
+> +}
+> +
+> +static int really_finished(struct parallel_checkout *pc)
+> +{
+> +       int i;
+> +
+> +       for (i = 0; i < pc->nr_workers; i++)
+> +               if (pc->workers[i].to_complete)
+> +                       return 0;
+> +       return 1;
+> +}
+> +
+> +/* XXX progress support for unpack-trees */
+> +int run_parallel_checkout(void)
+> +{
+> +       struct parallel_checkout *pc = parallel_checkout;
+> +       int ret, i;
+> +       int epoll_fd;
+> +       struct epoll_event *events;
+> +
+> +       if (!pc || !pc->nr_items) {
+> +               free(pc);
+> +               parallel_checkout = NULL;
+> +               return 0;
+> +       }
+> +
+> +       qsort(pc->items, pc->nr_items, sizeof(*pc->items), item_cmp);
+> +       pc->nr_workers = 8;
+> +       epoll_fd = epoll_create(pc->nr_workers * 2);
+> +       if (epoll_fd == -1)
+> +               die_errno("epoll_create");
+> +       ret = setup_workers(pc, epoll_fd);
+> +       events = xmalloc(sizeof(*events) * pc->nr_workers * 2);
+> +
+> +       ret = 0;
+> +       while (!ret) {
+> +               int maybe_all_done = 0, nr;
+> +
+> +               nr = epoll_wait(epoll_fd, events, pc->nr_workers * 2, -1);
+> +               if (nr == -1 && errno == EINTR)
+> +                       continue;
+> +               if (nr == -1) {
+> +                       ret = nr;
+> +                       break;
+> +               }
+> +               for (i = 0; i < nr; i++) {
+> +                       int is_in = events[i].data.u32 & 1;
+> +                       int worker_id = events[i].data.u32 / 2;
+> +                       struct checkout_worker *worker = pc->workers + worker_id;
+> +
+> +                       if (!is_in && (events[i].events & EPOLLOUT))
+> +                               ret = send_to_worker(worker, epoll_fd);
+> +                       else if (events[i].events & EPOLLIN) {
+> +                               if (worker->to_complete) {
+> +                                       int refresh = pc->state.refresh_cache;
+> +                                       ret = receive_from_worker(worker, refresh);
+> +                                       pc->state.istate->cache_changed |= CE_ENTRY_CHANGED;
+> +                               } else {
+> +                                       ret = finish_worker(worker, epoll_fd);
+> +                                       maybe_all_done = 1;
+> +                               }
+> +                       } else if (events[i].events & (EPOLLERR | EPOLLHUP)) {
+> +                               if (is_in && !worker->to_complete) {
+> +                                       ret = finish_worker(worker, epoll_fd);
+> +                                       maybe_all_done = 1;
+> +                               } else
+> +                                       ret = -1;
+> +                       } else
+> +                               die("BUG: what??");
+> +                       if (ret)
+> +                               break;
+> +               }
+> +
+> +               if (maybe_all_done && really_finished(pc))
+> +                       break;
+> +       }
+> +
+> +       close(epoll_fd);
+> +       free(pc->workers);
+> +       free(events);
+> +       free(pc);
+> +       parallel_checkout = NULL;
+> +       return ret;
+> +}
+> diff --git a/unpack-trees.c b/unpack-trees.c
+> index 9f55cc2..433c54e 100644
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -220,6 +220,7 @@ static int check_updates(struct unpack_trees_options *o)
+>         remove_marked_cache_entries(&o->result);
+>         remove_scheduled_dirs();
+>
+> +       /* start_parallel_checkout() */
+>         for (i = 0; i < index->cache_nr; i++) {
+>                 struct cache_entry *ce = index->cache[i];
+>
+> @@ -234,6 +235,7 @@ static int check_updates(struct unpack_trees_options *o)
+>                         }
+>                 }
+>         }
+> +       /* run_parallel_checkout() */
+>         stop_progress(&progress);
+>         if (o->update)
+>                 git_attr_set_direction(GIT_ATTR_CHECKIN, NULL);
+> -- 8< --
