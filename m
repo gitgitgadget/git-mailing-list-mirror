@@ -1,249 +1,111 @@
-From: Jacob Keller <jacob.e.keller@intel.com>
-Subject: [RFC PATCH, WAS: "weird diff output?" v2 2/2] xdiff: implement empty line chunk heuristic
-Date: Fri, 15 Apr 2016 14:56:22 -0700
-Message-ID: <20160415215622.6040-3-jacob.e.keller@intel.com>
-References: <20160415215622.6040-1-jacob.e.keller@intel.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [RFC PATCH, WAS: "weird diff output?" 2/2] xdiff: implement empty
+ line chunk heuristic
+Date: Fri, 15 Apr 2016 14:56:30 -0700
+Message-ID: <CA+P7+xpqVVXNRnXNJfq7moWkuwqn8HN2iqDvd+5gLsyNc9_BgQ@mail.gmail.com>
+References: <20160415165141.4712-1-jacob.e.keller@intel.com>
+ <20160415165141.4712-3-jacob.e.keller@intel.com> <CAGZ79ka7h25=rHun_hPv1qjqeghXt1UwUU3Q6xT0aj4+OW87fg@mail.gmail.com>
+ <xmqq8u0ebpru.fsf@gitster.mtv.corp.google.com> <CA+P7+xoWbrSaONH5xq=w5W190Jknk0Qsc5brS4UKFAs2_dTceg@mail.gmail.com>
+ <xmqqzisuaa3t.fsf@gitster.mtv.corp.google.com> <CA+P7+xqe4ng9-gn1DRqhjebRXuHXbqZ6f3QsJ798k6DRo3bYyQ@mail.gmail.com>
+ <CA+P7+xp7oJoOXBhexe9zhrG1dMkz8jA3yQLzyTiqMwNQ1AQVdg@mail.gmail.com> <xmqqzisu8s30.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Cc: Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
 	Jeff King <peff@peff.net>, Jens Lehmann <Jens.Lehmann@web.de>,
-	Davide Libenzi <davidel@xmailserver.org>,
-	Jacob Keller <jacob.e.keller@intel.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 23:56:33 2016
+	Davide Libenzi <davidel@xmailserver.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 15 23:56:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arBj5-0003mw-Ml
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 23:56:32 +0200
+	id 1arBjU-0003zs-62
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 23:56:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752430AbcDOV42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2016 17:56:28 -0400
-Received: from mga02.intel.com ([134.134.136.20]:29979 "EHLO mga02.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751695AbcDOV40 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2016 17:56:26 -0400
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga101.jf.intel.com with ESMTP; 15 Apr 2016 14:56:24 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.24,489,1455004800"; 
-   d="scan'208";a="86046765"
-Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.173])
-  by fmsmga004.fm.intel.com with ESMTP; 15 Apr 2016 14:56:25 -0700
-X-Mailer: git-send-email 2.8.1.369.geae769a
-In-Reply-To: <20160415215622.6040-1-jacob.e.keller@intel.com>
+	id S1751913AbcDOV4w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2016 17:56:52 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:37099 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752085AbcDOV4v (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2016 17:56:51 -0400
+Received: by mail-ig0-f182.google.com with SMTP id g8so35140935igr.0
+        for <git@vger.kernel.org>; Fri, 15 Apr 2016 14:56:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=oSU+N8mW/kz34mQq6zaWGk/nNfHjoNTJ+c5Aj+bJhzo=;
+        b=boBXl30GQWW8HwvseJVp6W8Gz9qUCoLeBf4bB6gJuLkrh0yVa6dsTx4T623u3YO2gG
+         OjHibNd5apqte7bcFHgYloL8sUbka/2c3pWVCw3PUbLXUQW2NzDhjPSpIgiNFnTLW5Qq
+         cCWS1vybWyzhhOPFay54ifDya1V9qeCuvDMQJxFDez6FAnYKYPBXuIN3YNz4dEnOo2C2
+         iUfbpxCmsfNBClRrXqgTGzbA7yHVlhVRc5e5GXsLO7KloMlv5EuyzFNv2CzuQbDa977h
+         cP10iZv/LbxDqeZFQ1L4Q3JA2X8WRd8iwXaH+YACdIeTtwUe7mnqf5Iwyf00N2sBY1GL
+         j2Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=oSU+N8mW/kz34mQq6zaWGk/nNfHjoNTJ+c5Aj+bJhzo=;
+        b=BVn9RKrvuzL6ao4Ft3Y28h3wAyM6HnhA3XqzaJW2nk9EyT90SUw9jI5V2ZDfX2tHuR
+         06aNvEAo8tAKxcAfXbd7nVpaPQVw/lDgcL/tBpLZtfQbGjSEsWpEaVqJ2Zs0zN4Mh5za
+         imaTE1reVEw48Gg1ilxONRcmGS2XvZ0HSPipXteAZrPPvVGhmuGQF2EVv6WQRS3kHBDZ
+         OWlpd44UfZw/ciJFmKAlEw7fJvLyyzsleIc4MnSdFlV+I7gdiBfp9uVresqFmzrI1Os9
+         4udzPmM0lV7jl8wPhBNpYvtZWJ6x+ppzlrYU3ulju3B3En+SD+pkfXPgT4hbiNGsAGjM
+         mlJw==
+X-Gm-Message-State: AOPr4FXA7eg8U2d0EVA6A9X4nA6pROBjZp8cwOZpyktOLa9VGLWgB3WjTkOZNoMEtNriSIoN+tlIJI2tBvykSA==
+X-Received: by 10.50.189.233 with SMTP id gl9mr7065993igc.73.1460757410251;
+ Fri, 15 Apr 2016 14:56:50 -0700 (PDT)
+Received: by 10.107.59.78 with HTTP; Fri, 15 Apr 2016 14:56:30 -0700 (PDT)
+In-Reply-To: <xmqqzisu8s30.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291675>
 
-From: Stefan Beller <sbeller@google.com>
+On Fri, Apr 15, 2016 at 2:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jacob Keller <jacob.keller@gmail.com> writes:
+>
+>>>> What you have is a pure developer support; aim to come up with "good
+>>>> enough" way, giving developers an easier way to experiment with, and
+>>>> remove it before the feature is shipped to the end user.
+>>
+>> What are your thoughts on adding this do the gitattributes diff
+>> section? Ie: modifications to the diff driver.
+>
+> I do try to foresee the future needs but I try to limit the forecast
+> to "just enough so that we won't waste engineering effort on a wrong
+> thing".  "It may need to be turned off conditionally" suggests we
+> would want attributes added per path, and that is sufficient to make
+> me say "don't waste time on bikeshedding configuration variable
+> names, it will not be in the final product".
+>
+> We do not need yet to know what the final name of the attributes
+> are, or how exactly the bit to affect the low level mechanism will
+> be set by the attribute mechanism.  I do not think this topic is
+> there yet, and it is a waste of engineering effort to prematurely
+> trying to make things too flexible and customizable, when the thing
+> that will eventually become flexible by conditionally enabled is not
+> even there yet.
+>
+> As long as the low-level thing has a knob, set of internal bits, to
+> enable and disable it, that is all that is necessary to know at this
+> point.
+>
+> Having said all that, I'd expect we'd compute the right bit to use
+> in the same place where we currently pick the custom textconv
+> driver, diff backend, etc., by consulting the attribute system
+> before running the diff.
+>
+> But again, I'd think it would be waste of time to think beyond that
+> at this point, identifying exactly at which line of which source
+> file the new code would go and what that new code would look like,
+> until we are ready to start integrating it.
 
-In order to produce the smallest possible diff and combine several diff
-hunks together, we implement a heuristic from GNU Diff which moves diff
-hunks forward as far as possible when we find common context above and
-below a diff hunk. This sometimes produces less readable diffs when
-writing C, Shell, or other programming languages, ie:
+Ok, for now I'll leave this as is then.
 
-...
- /*
-+ *
-+ *
-+ */
-+
-+/*
-...
-
-instead of the more readable equivalent of
-
-...
-+/*
-+ *
-+ *
-+ */
-+
- /*
-...
-
-Implement the following heuristic to (optionally) produce the desired
-output.
-
-  If there are diff chunks which can be shifted around, shift each hunk
-  such that the last common empty line is below the chunk with the rest
-  of the context above.
-
-This heuristic appears to resolve the above example and several other
-common issues without producing significantly weird results. However, as
-with any heuristic it is not really known whether this will always be
-more optimal. Thus, leave the heuristic disabled by default.
-
-Add an XDIFF flag to enable this heuristic only conditionally. Add
-a diff command line option and diff configuration option to allow users
-to enable this option when desired.
-
-TODO:
-* Add tests
-* Add better/more documentation explaining the heuristic, possibly with
-  examples(?)
-* better name(?)
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
----
- Documentation/diff-config.txt  |  6 ++++++
- Documentation/diff-options.txt |  6 ++++++
- diff.c                         | 11 +++++++++++
- xdiff/xdiff.h                  |  2 ++
- xdiff/xdiffi.c                 | 24 ++++++++++++++++++++++++
- 5 files changed, 49 insertions(+)
-
-diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
-index edba56522bce..9265d60d9571 100644
---- a/Documentation/diff-config.txt
-+++ b/Documentation/diff-config.txt
-@@ -170,6 +170,12 @@ diff.tool::
- 
- include::mergetools-diff.txt[]
- 
-+diff.emptyLineHeuristic::
-+	Set this option to true to enable the empty line chunk heuristic when
-+	producing diff output. This heuristic will attempt to shift hunks such
-+	that the last common empty line occurs below the hunk with the rest of
-+	the context above it.
-+
- diff.algorithm::
- 	Choose a diff algorithm.  The variants are as follows:
- +
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 4b0318e2ac15..6c1cd8b35584 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -63,6 +63,12 @@ ifndef::git-format-patch[]
- 	Synonym for `-p --raw`.
- endif::git-format-patch[]
- 
-+--empty-line-heuristic::
-+--no-empty-line-heuristic::
-+	When possible, shift common empty lines in diff hunks below the hunk
-+	such that the last common empty line for each hunk is below, with the
-+	rest of the context above the hunk.
-+
- --minimal::
- 	Spend extra time to make sure the smallest possible
- 	diff is produced.
-diff --git a/diff.c b/diff.c
-index 4dfe6609d059..8ab9a492928d 100644
---- a/diff.c
-+++ b/diff.c
-@@ -26,6 +26,7 @@
- #endif
- 
- static int diff_detect_rename_default;
-+static int diff_empty_line_heuristic = 0;
- static int diff_rename_limit_default = 400;
- static int diff_suppress_blank_empty;
- static int diff_use_color_default = -1;
-@@ -189,6 +190,10 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
- 		diff_detect_rename_default = git_config_rename(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "diff.emptylineheuristic")) {
-+		diff_empty_line_heuristic = git_config_bool(var, value);
-+		return 0;
-+	}
- 	if (!strcmp(var, "diff.autorefreshindex")) {
- 		diff_auto_refresh_index = git_config_bool(var, value);
- 		return 0;
-@@ -3278,6 +3283,8 @@ void diff_setup(struct diff_options *options)
- 	options->use_color = diff_use_color_default;
- 	options->detect_rename = diff_detect_rename_default;
- 	options->xdl_opts |= diff_algorithm;
-+	if (diff_empty_line_heuristic)
-+		DIFF_XDL_SET(options, EMPTY_LINE_HEURISTIC);
- 
- 	options->orderfile = diff_order_file_cfg;
- 
-@@ -3798,6 +3805,10 @@ int diff_opt_parse(struct diff_options *options,
- 		DIFF_XDL_SET(options, IGNORE_WHITESPACE_AT_EOL);
- 	else if (!strcmp(arg, "--ignore-blank-lines"))
- 		DIFF_XDL_SET(options, IGNORE_BLANK_LINES);
-+	else if (!strcmp(arg, "--empty-line-heuristic"))
-+		DIFF_XDL_SET(options, EMPTY_LINE_HEURISTIC);
-+	else if (!strcmp(arg, "--no-empty-line-heuristic"))
-+		DIFF_XDL_CLR(options, EMPTY_LINE_HEURISTIC);
- 	else if (!strcmp(arg, "--patience"))
- 		options->xdl_opts = DIFF_WITH_ALG(options, PATIENCE_DIFF);
- 	else if (!strcmp(arg, "--histogram"))
-diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-index 4fb7e79410c2..9195a5c0e958 100644
---- a/xdiff/xdiff.h
-+++ b/xdiff/xdiff.h
-@@ -41,6 +41,8 @@ extern "C" {
- 
- #define XDF_IGNORE_BLANK_LINES (1 << 7)
- 
-+#define XDF_EMPTY_LINE_HEURISTIC (1 << 8)
-+
- #define XDL_EMIT_FUNCNAMES (1 << 0)
- #define XDL_EMIT_FUNCCONTEXT (1 << 2)
- 
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index d14c47de5e36..9436ad735243 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -400,6 +400,11 @@ static xdchange_t *xdl_add_change(xdchange_t *xscr, long i1, long i2, long chg1,
- }
- 
- 
-+static int is_emptyline(const char *recs)
-+{
-+	return recs[0] == '\n'; /* CRLF not covered here */
-+}
-+
- static int recs_match(xrecord_t **recs, long ixs, long ix, long flags)
- {
- 	return (recs[ixs]->ha == recs[ix]->ha &&
-@@ -411,6 +416,7 @@ static int recs_match(xrecord_t **recs, long ixs, long ix, long flags)
- int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 	long ix, ixo, ixs, ixref, grpsiz, nrec = xdf->nrec;
- 	char *rchg = xdf->rchg, *rchgo = xdfo->rchg;
-+	unsigned int emptylines;
- 	xrecord_t **recs = xdf->recs;
- 
- 	/*
-@@ -444,6 +450,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 
- 		do {
- 			grpsiz = ix - ixs;
-+			emptylines = 0;
- 
- 			/*
- 			 * If the line before the current change group, is equal to
-@@ -506,6 +513,23 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 			rchg[--ix] = 0;
- 			while (rchgo[--ixo]);
- 		}
-+
-+		/*
-+		 * If a group can be moved back and forth, see if there is an
-+		 * empty line in the moving space. If there is an empty line,
-+		 * make sure the last empty line is the end of the group.
-+		 *
-+		 * As we shifted the group forward as far as possible, we only
-+		 * need to shift it back if at all.
-+		 */
-+		if ((flags & XDF_EMPTY_LINE_HEURISTIC) && emptylines) {
-+			while (ixs > 0 &&
-+			       !is_emptyline(recs[ix - 1]->ptr) &&
-+			       recs_match(recs, ixs - 1, ix - 1, flags)) {
-+				rchg[--ixs] = 1;
-+				rchg[--ix] = 0;
-+			}
-+		}
- 	}
- 
- 	return 0;
--- 
-2.8.1.369.geae769a
+Thanks,
+Jake
