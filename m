@@ -1,70 +1,168 @@
-From: =?UTF-8?Q?Reto_Habl=C3=BCtzel?= <rethab.ch@gmail.com>
-Subject: possible to checkout same branch in different worktree
-Date: Fri, 15 Apr 2016 15:53:47 +0200
-Message-ID: <CAJZYdzhG8h3s=Ep1fuGbam1cWhYkv0tW6tQ7pBGGj+fj6=Nrsw@mail.gmail.com>
+From: Michael Weiser <michael.weiser@gmx.de>
+Subject: [PATCH] Extend runtime prefix computation
+Date: Fri, 15 Apr 2016 16:30:01 +0200
+Message-ID: <20160415143001.GA67437@dinsnail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Cc: David Abdurachmanov <David.Abdurachmanov@cern.ch>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 15:54:32 2016
+X-From: git-owner@vger.kernel.org Fri Apr 15 17:00:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ar4Ca-0001Xq-VN
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 15:54:29 +0200
+	id 1ar5EJ-0007SL-J5
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 17:00:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750880AbcDONyT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2016 09:54:19 -0400
-Received: from mail-lf0-f49.google.com ([209.85.215.49]:33977 "EHLO
-	mail-lf0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750779AbcDONyS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2016 09:54:18 -0400
-Received: by mail-lf0-f49.google.com with SMTP id j11so146064662lfb.1
-        for <git@vger.kernel.org>; Fri, 15 Apr 2016 06:54:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Q3Wk/Xxc4WIWX/Mlvy0FQIscRuFwlSkArwms1oluslY=;
-        b=OhSadEMykbS8iONmafnK7VKSH544KR+cEfiUcwmkivmDHBNS1KT5xgUQI4P7jbPPRo
-         rSOFI1e8Vuh4/ULuDJQxrTa3qG1wGYirWDvzGyrUXvz3m/L3vQXQOpouA5nl819Ay/np
-         YPaorNEOPzT9OigErdSz6xSYJm37QTnovEXeyTFNk2rij5+6FwR8ALbg3BlQU80B25a8
-         nTcIkHmEBSwH3Lm9Ai7Vv6VehgfnRmvEAZLF93bn/qVdf9wCptpu5MBKmSd1mZZPd8vs
-         xc0JQBtoIVBFY1W2PjYPGvvnP9e2a5b6s2QCow6K+2TF1cl5WWajLomTi1bNQskIx8/l
-         VwgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Q3Wk/Xxc4WIWX/Mlvy0FQIscRuFwlSkArwms1oluslY=;
-        b=TUd3jh5K1F/sSH+2Aq8t8f1UFezY9PdkxOCRRNG6HAf4EcpEYN5LpoxlvXQGXDWU7/
-         /G9i9O4acJlZyCR3uGnpleWkPXRqO+GT/DIACrnVCqoghxN+9hgalhxkM3XpP0PBO6RW
-         Pdj1TlVUR/6QXk7BK1rzpiMrpbF5VfUkSfav6emqm1WLhgcM3GC2QncBD9NXqfgGmMLF
-         TWN/fSTarG2qU23B3YK8feNKPW8vP+nzd3uj5nqwos2JfXPM4p9d2QDfOXIBuwJdjSOO
-         aOszdpy56eToW3N5ryzIyGjjqkS6rUK46u3hvSDPUVzb0iv/btPt1mExg+CU5M7WFgmp
-         uBvQ==
-X-Gm-Message-State: AOPr4FUNyr1qAcNqSzcE3POYsYtArr2ilJhG49fvFX94CfF7ojo/rPQiofMBC/g4c0BS6mfLmJHgBCj7rmWHXA==
-X-Received: by 10.112.170.68 with SMTP id ak4mr7473413lbc.94.1460728457212;
- Fri, 15 Apr 2016 06:54:17 -0700 (PDT)
-Received: by 10.112.158.170 with HTTP; Fri, 15 Apr 2016 06:53:47 -0700 (PDT)
+	id S1751537AbcDOPAM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2016 11:00:12 -0400
+Received: from heinz.dinsnail.net ([85.214.155.104]:32794 "EHLO
+	heinz.dinsnail.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750773AbcDOPAL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2016 11:00:11 -0400
+X-Greylist: delayed 1777 seconds by postgrey-1.27 at vger.kernel.org; Fri, 15 Apr 2016 11:00:11 EDT
+Received: from localhost (b2b-5-10-190-98.unitymedia.biz [5.10.190.98])
+	by heinz.dinsnail.net (8.14.9/8.14.9) with ESMTP id u3FEU9Ow028136
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 15 Apr 2016 16:30:09 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-dinsnail.net-MailScanner-ID: u3FEU9Ow028136
+X-MailScanner: Found to be clean
+X-MailScanner-SpamScore: sss
+X-MailScanner-From: michael@dinsnail.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291607>
 
-Hi,
+Make git fully relocatable at runtime extending the runtime prefix
+calculation. Handle absolute and relative paths in argv0. Handle no path
+at all in argv0 in a system-specific manner.  Replace assertions with
+initialised variables and checks that lead to fallback to the static
+prefix.
+---
 
-the checkout command prevents me from checking out a branch in the
-current worktree if it is already checked out in another worktree.
+Notes:
+    Tested-by: David Abdurachmanov <David.Abdurachmanov@cern.ch>
+    Pull-Request: https://github.com/git/git/pull/224
 
-However, if I rebase the branch in the current worktree onto the
-branch in the other worktree, I end up in a situation where the same
-branch is checked out twice in the two worktrees.
+ exec_cmd.c | 72 ++++++++++++++++++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 58 insertions(+), 14 deletions(-)
 
-- Reto
-
---
-
-PGP
-Key ID = 0x67D30264
-Fingerprint = E235 F740 4419 5B4B 29EC 3437 CBF2 2CB7 67D3 0264
+diff --git a/exec_cmd.c b/exec_cmd.c
+index 9d5703a..f0db070 100644
+--- a/exec_cmd.c
++++ b/exec_cmd.c
+@@ -3,30 +3,27 @@
+ #include "quote.h"
+ #include "argv-array.h"
+ #define MAX_ARGS	32
++#if defined(__APPLE__)
++#include <mach-o/dyld.h>
++#endif
+ 
+ static const char *argv_exec_path;
+ static const char *argv0_path;
+ 
+ char *system_path(const char *path)
+ {
+-#ifdef RUNTIME_PREFIX
+-	static const char *prefix;
+-#else
+ 	static const char *prefix = PREFIX;
+-#endif
+ 	struct strbuf d = STRBUF_INIT;
+ 
+ 	if (is_absolute_path(path))
+ 		return xstrdup(path);
+ 
+ #ifdef RUNTIME_PREFIX
+-	assert(argv0_path);
+-	assert(is_absolute_path(argv0_path));
+-
+-	if (!prefix &&
+-	    !(prefix = strip_path_suffix(argv0_path, GIT_EXEC_PATH)) &&
+-	    !(prefix = strip_path_suffix(argv0_path, BINDIR)) &&
+-	    !(prefix = strip_path_suffix(argv0_path, "git"))) {
++	if (!argv0_path ||
++	    !is_absolute_path(argv0_path) ||
++	    (!(prefix = strip_path_suffix(argv0_path, GIT_EXEC_PATH)) &&
++	     !(prefix = strip_path_suffix(argv0_path, BINDIR)) &&
++	     !(prefix = strip_path_suffix(argv0_path, "git")))) {
+ 		prefix = PREFIX;
+ 		trace_printf("RUNTIME_PREFIX requested, "
+ 				"but prefix computation failed.  "
+@@ -41,6 +38,8 @@ char *system_path(const char *path)
+ const char *git_extract_argv0_path(const char *argv0)
+ {
+ 	const char *slash;
++	char *to_resolve = NULL;
++	const char *resolved;
+ 
+ 	if (!argv0 || !*argv0)
+ 		return NULL;
+@@ -48,11 +47,56 @@ const char *git_extract_argv0_path(const char *argv0)
+ 	slash = find_last_dir_sep(argv0);
+ 
+ 	if (slash) {
+-		argv0_path = xstrndup(argv0, slash - argv0);
+-		return slash + 1;
++		/* ... it's either an absolute path */
++		if (is_absolute_path(argv0)) {
++			argv0_path = xstrndup(argv0, slash - argv0);
++			return slash + 1;
++		}
++
++		/* ... or a relative path, in which case we have to make it
++		 * absolute first and do the whole thing again */
++		to_resolve = xstrdup(argv0);
++	} else {
++		/* argv0 is no path at all, just a name. Resolve it into a
++		 * path. Unfortunately, this gets system specific. */
++#if defined(__linux__)
++		struct stat st;
++		if (!stat("/proc/self/exe", &st))
++			to_resolve = xstrdup("/proc/self/exe");
++#elif defined(__APPLE__)
++		/* call with len == 0 queries the necessary buffer size */
++		uint32_t len = 0;
++		if(_NSGetExecutablePath(NULL, &len) != 0) {
++			to_resolve = malloc(len);
++			if (to_resolve) {
++				/* get the executable path now we have a buffer
++				 * of proper size */
++				if(_NSGetExecutablePath(to_resolve, &len) != 0) {
++					free(to_resolve);
++					return argv0;
++				}
++			}
++		}
++#endif
++
++		/* if to_resolve is still NULL here, something failed above or
++		 * we are on an unsupported system. system_path() will warn
++		 * and fall back to the static prefix */
++		if (!to_resolve)
++			return argv0;
+ 	}
+ 
+-	return argv0;
++	/* resolve path from absolute to canonical */
++	resolved = real_path(to_resolve);
++	free(to_resolve);
++
++	slash = find_last_dir_sep(resolved);
++	if (!slash)
++		return argv0;
++
++	argv0_path = xstrndup(resolved, slash - resolved);
++	slash = xstrdup(slash + 1);
++	return slash;
+ }
+ 
+ void git_set_argv_exec_path(const char *exec_path)
+-- 
+2.6.4 (Apple Git-63)
