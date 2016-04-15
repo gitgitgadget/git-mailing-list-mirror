@@ -1,104 +1,85 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [RFC PATCH, WAS: "weird diff output?" 2/2] xdiff: implement empty
- line chunk heuristic
-Date: Fri, 15 Apr 2016 14:15:17 -0700
-Message-ID: <CA+P7+xqe4ng9-gn1DRqhjebRXuHXbqZ6f3QsJ798k6DRo3bYyQ@mail.gmail.com>
-References: <20160415165141.4712-1-jacob.e.keller@intel.com>
- <20160415165141.4712-3-jacob.e.keller@intel.com> <CAGZ79ka7h25=rHun_hPv1qjqeghXt1UwUU3Q6xT0aj4+OW87fg@mail.gmail.com>
- <xmqq8u0ebpru.fsf@gitster.mtv.corp.google.com> <CA+P7+xoWbrSaONH5xq=w5W190Jknk0Qsc5brS4UKFAs2_dTceg@mail.gmail.com>
- <xmqqzisuaa3t.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 07/21] bisect: plug the biggest memory leak
+Date: Fri, 15 Apr 2016 14:18:32 -0700
+Message-ID: <xmqqh9f2a7vb.fsf@gitster.mtv.corp.google.com>
+References: <1460294354-7031-1-git-send-email-s-beyer@gmx.net>
+	<1460294354-7031-8-git-send-email-s-beyer@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Jens Lehmann <Jens.Lehmann@web.de>,
-	Davide Libenzi <davidel@xmailserver.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 15 23:15:52 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Fri Apr 15 23:18:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arB5j-0006Ja-Cn
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 23:15:51 +0200
+	id 1arB8V-0007wL-Ek
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 23:18:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752166AbcDOVPk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2016 17:15:40 -0400
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:36664 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751468AbcDOVPi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2016 17:15:38 -0400
-Received: by mail-ig0-f181.google.com with SMTP id f1so30136587igr.1
-        for <git@vger.kernel.org>; Fri, 15 Apr 2016 14:15:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=CcHZ7NSEJpxd/1s7j9MHp+EnTue5wA95wTgmAa30Kiw=;
-        b=nfzCx6vcH50pTZvLA7qpWPY7iPd+8nIBxDgZhrV2sNPwzvweBqXBIx1sQqHJbPwRF2
-         rEp0mKgBbynrNglUasvj85CR5Vxhi+8pXpq7N+ZiSHmnJvZi9v1/4FriZyh9FCdHkGgJ
-         upEcTQvtzX59TyFKKA0kXUSUdXk1IoW0/0kMWJeW87LluEZKCjiUFLSTEFJzRPHL9g19
-         Lb28fSWZ5Js6624dF84zQ9LTNRzqJ1kL14DJS8mm5QrRAEYkH8pjgq7NQjnCmAZICQ/r
-         FH57sEOAeyP/+5HeYgRbPZRl0KCX0yBggXM6QbMv5rlUQ1riHbX+tBm8lMWrBRxNzE8a
-         JWDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=CcHZ7NSEJpxd/1s7j9MHp+EnTue5wA95wTgmAa30Kiw=;
-        b=LB1Ymo83XURT2icjJ8HCICna3V4GHv/dKkXHBvnc0Fjqqwi2D8czgHHT+DG1oVkxCl
-         ZkToiUrcwJd+vTnd2t8uZA4WwBZhOC++Ea1CSNpKpdSnlf7bFbGVgsFo2OtjQI7L0rEr
-         yvq+BM4FCx7ghgGhn6cVLb+ZrZvzQgSgweRWucn5RVr2ynmIWGUZQQ5zQI2RwkwCzuSD
-         lfD+GiZOdjtJdgeNsLBtcfcFtzxvy5eCIpdW+k0VN2BeF+4vvRIaKwDZddKH9Oe0JiBf
-         aK7bAh+CgS3MByqMtBqvfS9PtAwMoCQVRwVOTPWuEsRgA935kfjvE1gjHQVW9NF2W9oS
-         jzcg==
-X-Gm-Message-State: AOPr4FWTQPrUi+ON33CUJQXg4cIfiIu/px1G6+fg/XjSY/Wi0ZlB8VFAKggMfcaEe8AeUFd8srCl2Rf+EXl5NA==
-X-Received: by 10.50.123.132 with SMTP id ma4mr7471886igb.92.1460754937305;
- Fri, 15 Apr 2016 14:15:37 -0700 (PDT)
-Received: by 10.107.59.78 with HTTP; Fri, 15 Apr 2016 14:15:17 -0700 (PDT)
-In-Reply-To: <xmqqzisuaa3t.fsf@gitster.mtv.corp.google.com>
+	id S1752137AbcDOVSh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2016 17:18:37 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56073 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752068AbcDOVSf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2016 17:18:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CA21B138CA;
+	Fri, 15 Apr 2016 17:18:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cahGwZm4tsKfADj3oZwpMHwkIus=; b=O5c5U3
+	7fIONhZU3T1cSwWvFGbOFnJPs9UXwHee0g3PMfin7Ft/6vFOccRErueWETtfkx35
+	TgmN11ttJgRO/F8HN36GrXkpH9JAdMlwAsOL576SB9KbUrcVv2l3JK4nZN7k8nRP
+	58SHV2Sn9vN2nfsKh07PZJVrHEn8pMiWJROmk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YMt41CZMOuuloJ0BkjzVjdwIJJOHiQOu
+	jGOHVktIPbiyWEHqDVgXnn38E+Syt/kfDt01L+ylgDiEZ4DUsYSA62XJcnsMRQ39
+	UzoUc0X+o3FQh7zajqAxlwri++fw5GAL7gpu2oEKmjdS5T9hZF5sYiu4c0ttZSaq
+	C1tZKSkI094=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C14CA138C9;
+	Fri, 15 Apr 2016 17:18:33 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2E176138C6;
+	Fri, 15 Apr 2016 17:18:33 -0400 (EDT)
+In-Reply-To: <1460294354-7031-8-git-send-email-s-beyer@gmx.net> (Stephan
+	Beyer's message of "Sun, 10 Apr 2016 15:19:00 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 9BC438DC-034F-11E6-A297-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291665>
 
-On Fri, Apr 15, 2016 at 1:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.keller@gmail.com> writes:
+Stephan Beyer <s-beyer@gmx.net> writes:
+
+> Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+> ---
+>  bisect.c | 2 ++
+>  1 file changed, 2 insertions(+)
 >
->> On Fri, Apr 15, 2016 at 1:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->>> I actually do not think these knobs should exist when the code is
->>> mature enough to be shipped to the end users.
->>>
->>> Use "diff.compactionHeuristics = <uint>" as an opaque set of bits to
->>> help the developers while they compare notes and reach consensus on
->>> a single tweak that they can agree on being good enough, and then
->>> remove that variable before the code hits 'next'.
->>>
->>> Thanks.
->>
->> I was under the impression that we would want a longer lived
->> configuration until we had enough data to say whether it was
->> helpful to make it default. I guess i had thought it would need to
->> be longer lived since there may be cases where it's not optimal
->> and being able to turn it off would be good?
->
-> Once you start worrying about "some cases this may misbehave", a
-> configuration variable is a wrong mechanism to do so anyway.  You
-> would need to tie this to attributes, so the users can say "use this
-> heuristics for my C code, but do not apply it for my AsciiDoc
-> input", etc.
->
+> diff --git a/bisect.c b/bisect.c
+> index 7996c29..901e4d3 100644
+> --- a/bisect.c
+> +++ b/bisect.c
+> @@ -984,6 +984,8 @@ int bisect_next_all(const char *prefix, int no_checkout)
+>  		exit(10);
+>  	}
+>  
+> +	free_commit_list(revs.commits);
+> +
+>  	nr = all - reaches - 1;
+>  	steps = estimate_bisect_steps(all);
+>  	printf("Bisecting: %d revision%s left to test after this "
 
-I think this makes perfect sense to apply this as an attribute,
-however.. why isn't the current diff algorithm done this way?
-
-Thanks,
-Jake
-
-> What you have is a pure developer support; aim to come up with "good
-> enough" way, giving developers an easier way to experiment with, and
-> remove it before the feature is shipped to the end user.
+While I do not think this is wrong per-se (i.e. it is clear that we
+no longer need revs.commits), after this the function will return to
+the top-level caller and exit immediately, and I do not see anything
+that desperately wants to use as much memory as available (i.e. would
+be helped by this piece of memory released early).  "the biggest"
+may be an overstatement ;-)
