@@ -1,112 +1,91 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [RFC PATCH, WAS: "weird diff output?" 2/2] xdiff: implement empty
- line chunk heuristic
-Date: Fri, 15 Apr 2016 14:22:48 -0700
-Message-ID: <CA+P7+xp7oJoOXBhexe9zhrG1dMkz8jA3yQLzyTiqMwNQ1AQVdg@mail.gmail.com>
-References: <20160415165141.4712-1-jacob.e.keller@intel.com>
- <20160415165141.4712-3-jacob.e.keller@intel.com> <CAGZ79ka7h25=rHun_hPv1qjqeghXt1UwUU3Q6xT0aj4+OW87fg@mail.gmail.com>
- <xmqq8u0ebpru.fsf@gitster.mtv.corp.google.com> <CA+P7+xoWbrSaONH5xq=w5W190Jknk0Qsc5brS4UKFAs2_dTceg@mail.gmail.com>
- <xmqqzisuaa3t.fsf@gitster.mtv.corp.google.com> <CA+P7+xqe4ng9-gn1DRqhjebRXuHXbqZ6f3QsJ798k6DRo3bYyQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 09/21] bisect: make algorithm behavior independent of DEBUG_BISECT
+Date: Fri, 15 Apr 2016 14:25:14 -0700
+Message-ID: <xmqq8u0ea7k5.fsf@gitster.mtv.corp.google.com>
+References: <1460294354-7031-1-git-send-email-s-beyer@gmx.net>
+	<1460294354-7031-10-git-send-email-s-beyer@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Jens Lehmann <Jens.Lehmann@web.de>,
-	Davide Libenzi <davidel@xmailserver.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 15 23:23:15 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Fri Apr 15 23:25:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arBCs-00028u-8D
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 23:23:14 +0200
+	id 1arBF3-0003LH-Tm
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 23:25:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751824AbcDOVXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2016 17:23:09 -0400
-Received: from mail-ig0-f176.google.com ([209.85.213.176]:34904 "EHLO
-	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751569AbcDOVXI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2016 17:23:08 -0400
-Received: by mail-ig0-f176.google.com with SMTP id gy3so30298119igb.0
-        for <git@vger.kernel.org>; Fri, 15 Apr 2016 14:23:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=mTskLySUe4k80nmbsyPb7RZCqi+PdJPP+W0MYKLe8io=;
-        b=Q0ILAH+B6jIwCxEz8UpSuUUZ33IHredjdzWakGSul6458eQzQmKVY40aXE7q4OTkca
-         X6AmK4+rrb3T/uLI3gRFLA4a2eN2f4LnoyL//hUdvx5yXK0H4bTofyKfaZUuMQa1Jiws
-         NlNPaGW0IKnXHJ4FUHckNzkyBCBp0zTtrbV4RS1+/BGbks6zJDfVpcc1Bu1nWVEtHrrw
-         phXHarRqf+l0/JJzq0yblxF1Z9L7PCEyez76jrm/1MQRtKghKyzHjBgsiCP9h9i10cA1
-         4eI+VBp8DXsyBDShnnr4uPIOiLDxco6eoGd8qqdi+fLLO0orkjMJQMnQ+KaVr0J6mn1Y
-         MxFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=mTskLySUe4k80nmbsyPb7RZCqi+PdJPP+W0MYKLe8io=;
-        b=hkBQJTVQE8JZwfafbh8AJkXfqi1E90mTRlxajzxhr55Wq3/aq4o/cZK//c9EKgZyH8
-         SKS/tSHck47wYyU00rklCNyGA3TFE73ufdk8clWx1Y3N0mg7eiu+IqQ8sVEgOX8v11Aj
-         UKRitD8w4N11oPPbXvyUax/D6nqsWoWctszmuH1es7/cJHJXzVNnlpDmZtcx5z4299ka
-         9RRlp1yLSWPn8uT+FlecMH4v2q7un5KaK1LfDkqawAupfZueQA5JWsFSh8MFaK5/nCov
-         vND0TeBBrjiGkeu+tc1PXt3s6ZVU+gpbO5hz3NCY9Rye6pbRu2btdR7P6IWMZWGWPhde
-         OhLg==
-X-Gm-Message-State: AOPr4FXtPYW5LJNzHEM1Wo+s34/ca4gjTW8HzGaIUTxsx/HNCFnZv3N55NKSmmfc1Xyd4psC2TDNmV+DqnNk8w==
-X-Received: by 10.50.189.233 with SMTP id gl9mr6953177igc.73.1460755387382;
- Fri, 15 Apr 2016 14:23:07 -0700 (PDT)
-Received: by 10.107.59.78 with HTTP; Fri, 15 Apr 2016 14:22:48 -0700 (PDT)
-In-Reply-To: <CA+P7+xqe4ng9-gn1DRqhjebRXuHXbqZ6f3QsJ798k6DRo3bYyQ@mail.gmail.com>
+	id S1751993AbcDOVZT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2016 17:25:19 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58570 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751991AbcDOVZR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2016 17:25:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 38001139B0;
+	Fri, 15 Apr 2016 17:25:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oOJ7da/RS1nXVgyTjMFq6adQ/O8=; b=gZuojb
+	TN3PnFyUxbzjvWVvTptlsbOJUAdkzsAFphrJeRF7WgFMgRAg3YpnCTP0yat6oPX2
+	c6SRHfPj+bB9EJH568bscHmgNSS6fKKHDT7kCKmDQM0S/WqVRDsNN0+dYfgck6wH
+	+zQ2pQdG90AFOy28UyV/u2fE5gSND/w+Lxkx0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gWGbssf+HUg+PUcovJW/uuu1OJx8VNbO
+	qHPQQRkHTy01LSkgP0wg+H6yulggTIJrHn124pBV6oWmYGQKsKIupT5iaaGwjBa0
+	hYEjwRdSJm3kUhBZRFXUNvCR7PErSgVilPsrUUcugwqDWj/H8f0KbOHNFZU9/jZu
+	jJ0mTTuMmRU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 30F1A139AF;
+	Fri, 15 Apr 2016 17:25:16 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A0E6F139AE;
+	Fri, 15 Apr 2016 17:25:15 -0400 (EDT)
+In-Reply-To: <1460294354-7031-10-git-send-email-s-beyer@gmx.net> (Stephan
+	Beyer's message of "Sun, 10 Apr 2016 15:19:02 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8BA849CE-0350-11E6-909B-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291668>
 
-On Fri, Apr 15, 2016 at 2:15 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> On Fri, Apr 15, 2016 at 1:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Jacob Keller <jacob.keller@gmail.com> writes:
->>
->>> On Fri, Apr 15, 2016 at 1:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>>
->>>> I actually do not think these knobs should exist when the code is
->>>> mature enough to be shipped to the end users.
->>>>
->>>> Use "diff.compactionHeuristics = <uint>" as an opaque set of bits to
->>>> help the developers while they compare notes and reach consensus on
->>>> a single tweak that they can agree on being good enough, and then
->>>> remove that variable before the code hits 'next'.
->>>>
->>>> Thanks.
->>>
->>> I was under the impression that we would want a longer lived
->>> configuration until we had enough data to say whether it was
->>> helpful to make it default. I guess i had thought it would need to
->>> be longer lived since there may be cases where it's not optimal
->>> and being able to turn it off would be good?
->>
->> Once you start worrying about "some cases this may misbehave", a
->> configuration variable is a wrong mechanism to do so anyway.  You
->> would need to tie this to attributes, so the users can say "use this
->> heuristics for my C code, but do not apply it for my AsciiDoc
->> input", etc.
->>
+Stephan Beyer <s-beyer@gmx.net> writes:
+
+> If DEBUG_BISECT is set to 1, bisect does not only show debug
+> information but also changes the algorithm behavior: halfway()
+> is always false.
 >
-> I think this makes perfect sense to apply this as an attribute,
-> however.. why isn't the current diff algorithm done this way?
+> This commit makes the algorithm independent of DEBUG_BISECT.
 >
-> Thanks,
-> Jake
+> Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+> ---
+
+Another good candidate for preliminary clean-up.
+
+I do not remember what the rationale was to do this short-cut when I
+wrote it at 1daa09d9 (make the previous optimization work also on
+path-limited rev-list --bisect, 2007-03-23).  Thanks for spotting it.
+
+>  bisect.c | 2 --
+>  1 file changed, 2 deletions(-)
 >
->> What you have is a pure developer support; aim to come up with "good
->> enough" way, giving developers an easier way to experiment with, and
->> remove it before the feature is shipped to the end user.
-
-
-What are your thoughts on adding this do the gitattributes diff
-section? Ie: modifications to the diff driver.
-
-Thanks,
-Jake
+> diff --git a/bisect.c b/bisect.c
+> index 2f54d96..1a13f35 100644
+> --- a/bisect.c
+> +++ b/bisect.c
+> @@ -101,8 +101,6 @@ static inline int halfway(struct commit_list *p, int nr)
+>  	 */
+>  	if (p->item->object.flags & TREESAME)
+>  		return 0;
+> -	if (DEBUG_BISECT)
+> -		return 0;
+>  	/*
+>  	 * 2 and 3 are halfway of 5.
+>  	 * 3 is halfway of 6 but 2 and 4 are not.
