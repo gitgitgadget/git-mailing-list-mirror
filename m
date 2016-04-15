@@ -1,78 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 03/16] index-helper: new daemon for caching index and related stuff
-Date: Thu, 14 Apr 2016 18:31:53 -0700
-Message-ID: <xmqqfuunejxy.fsf@gitster.mtv.corp.google.com>
-References: <1459980722-4836-1-git-send-email-dturner@twopensource.com>
-	<1459980722-4836-4-git-send-email-dturner@twopensource.com>
-	<CACsJy8C5NhaAAW=wzpwkBdLvVZz8wVM7QX==n_CL5g+LLAKY=A@mail.gmail.com>
-	<1460153784.5540.19.camel@twopensource.com>
-	<1460417232.5540.53.camel@twopensource.com>
-	<CACsJy8C2FtdetQ_NJSKR_JCZ5Ju0E3rV7Du=J4f2_kn5qrcHxg@mail.gmail.com>
-	<1460482108.5540.59.camel@twopensource.com>
-	<xmqqfuuqr9ca.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8B6o-8YJYemcYX3NwyMaY9jV666ZwKJYwfbwMSmzM-YGw@mail.gmail.com>
-	<xmqqd1psgiuc.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8C9wA=Yig6n4evqYnpOTqOWKbH4kXH5OaYTRvS_5a+a8A@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [Bug?] "git commit --amend" always gives author-date to summary?
+Date: Thu, 14 Apr 2016 22:03:01 -0400
+Message-ID: <20160415020300.GA22112@sigill.intra.peff.net>
+References: <xmqqh9f3gaqh.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: David Turner <dturner@twopensource.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	=?utf-8?B?w6Z2YXIgw77Ds3I=?= <aevarb@gmail.com>,
-	jeffhost@microsoft.com
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 15 03:32:52 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 15 04:03:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqscr-00028B-Tb
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 03:32:50 +0200
+	id 1aqt6F-0007Vk-1z
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 04:03:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752464AbcDOBcp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2016 21:32:45 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54159 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752059AbcDOBcp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2016 21:32:45 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id ACEB813405;
-	Thu, 14 Apr 2016 21:32:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4nkHSO9K1/ZiBN4kxmFeh1bJ4eg=; b=e7kYpA
-	4XIRA8z2OP/jFXqus/5S/K+EUW221dnkEmfuUHZ5IPpYI8qJSwAMFwuoosoSQLFV
-	8YGGlRyCWWbFayPlHkcho3Frs4aPOemVJh08e5Vti+X9cmwoBzZracJ6S0GMcmbi
-	z5fctKNoPd5MSt6lRUPjWXeRl6yCtHfDkm4ec=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oMCRjYNiWba9ZsOCiFMmYMLdmUEGyzCd
-	goX2YubjtQsrVJ9ArDjdmQMZT2315TW6VfB64+evIkHCFjcuL/ghJaMhMt5PY497
-	XLaptb4l8IvAQCMQA3Xhl0MdeKn1PDw+VpogTp0wq0/eHQQ0ChJqMz0Dg9ZqLoWq
-	3K72BE72ZF0=
-Received: from pb-smtp2. (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A376113403;
-	Thu, 14 Apr 2016 21:32:43 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4496E133D5;
-	Thu, 14 Apr 2016 21:31:54 -0400 (EDT)
-In-Reply-To: <CACsJy8C9wA=Yig6n4evqYnpOTqOWKbH4kXH5OaYTRvS_5a+a8A@mail.gmail.com>
-	(Duy Nguyen's message of "Fri, 15 Apr 2016 07:16:03 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D5F2E34C-02A9-11E6-BCBA-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1752567AbcDOCDG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Apr 2016 22:03:06 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49869 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752507AbcDOCDF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2016 22:03:05 -0400
+Received: (qmail 7118 invoked by uid 102); 15 Apr 2016 02:03:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Apr 2016 22:03:03 -0400
+Received: (qmail 5710 invoked by uid 107); 15 Apr 2016 02:03:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Apr 2016 22:03:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Apr 2016 22:03:01 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqh9f3gaqh.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291589>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Thu, Apr 14, 2016 at 02:07:50PM -0700, Junio C Hamano wrote:
 
-> We don't hold this memory forever though. If the daemon is idle for a
-> while, it exits, releasing memory back to system. And not using
-> mlock() already gives the OS more freedom in memory usage.
+> A simple reproduction.  Doing one of these
+> 
+>     $ git commit --amend --no-edit
+>     $ echo >MSG frotz; git commit --amend -F MSG
+> 
+> on any commit, whether it is your own commit or somebody else's,
+> seems to always show the "Date:" of the original commit, e.g.
+> 
+>     $ git checkout v2.8.0^0
+>     $ git commit --amend --no-edit
+>     [detached HEAD a6f2a14] Git 2.8
+>      Date: Mon Mar 28 12:19:45 2016 -0700
+>      3 files changed, 14 insertions(+), 9 deletions(-)
+>     $ git checkout v2.8.0^^2
+>     $ git commit --amend --no-edit
+>     [detached HEAD df9f57e] Documentation: fix git-p4 AsciiDoc formatting
+>      Author: Lars Schneider <larsxschneider@gmail.com>
+>      Date: Wed Mar 23 11:59:01 2016 +0100
+>      1 file changed, 3 insertions(+), 5 deletions(-)
+> 
+> I can understand the latter, but I am not sure if it makes sense to
+> do the former.  The output is coming from b7242b8c (commit: print
+> "Date" line when the user has set date, 2014-05-01), whose objective
+> I can agree with, but does not seem to match the use case.
 
-Yup, that is why I suspected you wanted to use something other than
-mlock().
+That's working as I intended it in both cases. The point is to show
+extra information whenever we have picked an ident or date that is not
+the "normal" one. As you noted later, leaving the old author date is the
+normal thing for "--amend", but it's still different from a normal
+commit that uses the current user and the current date. So I guess it
+depends on how you define normal.
+
+IMHO, we are better off generally erring on the side of printing extra
+information. The command is already quite chatty, and we are more likely
+to remind somebody that they wanted "--reset-author" than to bother
+thing.
+
+> [...]
+> I suspect that there are people who are already depending on this
+> behaviour, so it may not be worth fixing, but I found it somewhat
+> irritating (especially after wasting about an hour or so doing wild
+> goose chase trying to find a stray invocation of "date" somewhere in
+> my script that eventually uses "git commit --amend").
+> 
+> Thoughts?
+
+So I don't agree that is a "fix" to change it. But if it bothers you, I
+don't mind a knob to suppress it in certain cases.
+
+-Peff
