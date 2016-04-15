@@ -1,239 +1,136 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC PATCH, WAS: "weird diff output?"] Implement better chunk heuristics.
-Date: Thu, 14 Apr 2016 17:43:14 -0700
-Message-ID: <CAGZ79kZzb-4J82xONKX1RiAeLdJ7pGF1rBD4fJRyjbdZcPnkVA@mail.gmail.com>
-References: <CAGZ79ka8pgPNZKaVWnsa_S07esxkN9nJfhcMZvCfd5U6MtsrYQ@mail.gmail.com>
-	<20160415000730.26446-1-sbeller@google.com>
-	<CA+P7+xqEPq=G_PMA-=h6jzWaUP=6hmWXcLzxbogs2PyuAZcn4g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/25] worktree lock, move, remove and unlock
+Date: Thu, 14 Apr 2016 18:21:57 -0700
+Message-ID: <CAPc5daWHxyb5viwabR1-Tmx+7FNH4yxQJL7Oqd1FU9XXs4bNog@mail.gmail.com>
+References: <1460553346-12985-1-git-send-email-pclouds@gmail.com>
+ <xmqqfuuoi35o.fsf@gitster.mtv.corp.google.com> <CACsJy8DK863+rgseeYrQJ1db+xSeFfm8WsNvGBmJwD_pr1yMJQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,
-	Davide Libenzi <davidel@xmailserver.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 15 02:43:22 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 15 03:22:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aqrqz-0004Ip-9Y
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 02:43:21 +0200
+	id 1aqsSl-0005Xz-0r
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 03:22:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752782AbcDOAnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Apr 2016 20:43:16 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:35577 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752433AbcDOAnP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2016 20:43:15 -0400
-Received: by mail-ig0-f174.google.com with SMTP id gy3so7705452igb.0
-        for <git@vger.kernel.org>; Thu, 14 Apr 2016 17:43:15 -0700 (PDT)
+	id S1751034AbcDOBWS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Apr 2016 21:22:18 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:36672 "EHLO
+	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750888AbcDOBWR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2016 21:22:17 -0400
+Received: by mail-yw0-f194.google.com with SMTP id i125so13139576ywe.3
+        for <git@vger.kernel.org>; Thu, 14 Apr 2016 18:22:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=tA9NrBsHY8CTzgWov36THKjYi4LGKzTQgOVvcbaNWkU=;
-        b=jPm7xaJcTPSa4XNzxWnMV9AESP/OsrnjG4FRjnqTY9Bfd2JE/mHpRkA7zch7rEbTfK
-         oRw7kyk4HK8Smf37eULZ4rzfjm6pXUE8w01C6OeiVnjfoAjv7WRyuSy6N3+8mEUE/YzK
-         DCj+UCsAk1TKWUbtWoDOvyce2EsrRzkZruaQ6KP0S+K4gl8CIPXdaxLTsQG5nBxv5p9L
-         yXSqAeBdQnCQnP4FJt3xqyJEh/e1+ubZxFAyql9G5uj+T+pcyHfkqKM9gB2Ji3wDH2kX
-         6b6EJ+gxvL69EVko0B3ZWTAQ4EPFvA7aHIV8RkvssQ7TeSYDpjfLs7a3dOTPdOglf6Y8
-         xgbQ==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=lc4uYzLJyzMcUBjSyHl33PqaQpWoRoQGfLS4xY93kGQ=;
+        b=CJjQya6JmPS4Op+Fha0Jkfa+sQ3EiuS3cYrF9k7HMcTcjjQB+85bytdJ2rEtiSW9Nx
+         TcOkpMCWy72/eciYxjuIFiEtEU3DHjSK5+skz+6GDqX7fmDTHukWVfPpAZiii1IuTQvH
+         +BtScVzrpdjyRf5WmDJvLEJBCyMQVshzjH5Yfr5qNcPOcYkXKY2b2SP7Ayf5bj4WgIfq
+         lwCv9GuTKwLozYOZaPsYrNab1UXmJ2MjQbeYfA94xdve8ZiqExt5aov55NecSUW34pmZ
+         /Y5SiftWY1rENRpEQfGXokTtA9dTJIHWyn7k81N5EhnfbnvnIcz0lXDtrO5YoVggtCU0
+         hyvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=tA9NrBsHY8CTzgWov36THKjYi4LGKzTQgOVvcbaNWkU=;
-        b=cbSsFYw44pZyXs0Nzd+HaR84PLmvjKDbFmIYiGd4QUMKsSmImRN3+IKdkZFvpZn0dO
-         KsQ3tDvAEyCyRmV2uIutsukgvvAkFPPOhfcmTv0MqMgZO2uI/riGy7G/g8T3KsgJVwqM
-         sV5kc1/Ad3RpW3Qt3OqdwfIUv6s0UCVWtQquXWfzz++9XaBisISmbm8jTN1HQh5c9SnX
-         EMVEwDNM5YMLVod80ylWtAIoVx+6OVlwbkP6wdmU0itylwtzkl1KfekeLteEx42w4mbP
-         o0ArwQTublEeT/wNP2S0ev2AgJz+pFk/FlanheqCjm/x245WFsYjiJODtb8XVcPSRE6j
-         nijg==
-X-Gm-Message-State: AOPr4FUsgIjD68aCGzY1NXahFhRNkM3lP+MH8l/uZWkJfkOAUY5490aknQkq9CFq67HjyLzhw2FHRQoFlHHY4W2r
-X-Received: by 10.50.72.107 with SMTP id c11mr1568560igv.85.1460680994292;
- Thu, 14 Apr 2016 17:43:14 -0700 (PDT)
-Received: by 10.107.17.27 with HTTP; Thu, 14 Apr 2016 17:43:14 -0700 (PDT)
-In-Reply-To: <CA+P7+xqEPq=G_PMA-=h6jzWaUP=6hmWXcLzxbogs2PyuAZcn4g@mail.gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=lc4uYzLJyzMcUBjSyHl33PqaQpWoRoQGfLS4xY93kGQ=;
+        b=lCzdkABaVuzOlqzxrjrZS1vjRib8pO+CO8YyN0VM8ExRk1zTio6mpgmH8dV0Kd1+Im
+         q+p5BMF/WBu5DYuoZX2+GhMHQghrcWPvUOzEuUECg1HXlctGF7hHmt4vyqAs8eJ8okne
+         hFd7WOmby0/k2azsefzdhMEi46hzmAtLZROyzfWT9SxrDYGWscARNvQ0fDWOCiTJVoU9
+         YGYgiv2/3J5r07K102IGJjNqVwadTAK+4/3eAQGvLCXXOi2VpbxE4xgGzfgCuX+rtj/h
+         Yvzse9oXIcWKB7qqPg8KYVA/Fdh9CnXL3Ozq1QnM8P29QCxGK1yPN8FBisMVTVzVc/ko
+         szUQ==
+X-Gm-Message-State: AOPr4FX4ED/xQzzzdqi7PT8ymwBlAFCgWTqhU1kulG03CWgHn4VNa5sfL4hPEfcV+KxD9XeUn0RttJcQu3MFhw==
+X-Received: by 10.37.118.6 with SMTP id r6mr6882276ybc.80.1460683336862; Thu,
+ 14 Apr 2016 18:22:16 -0700 (PDT)
+Received: by 10.13.251.71 with HTTP; Thu, 14 Apr 2016 18:21:57 -0700 (PDT)
+In-Reply-To: <CACsJy8DK863+rgseeYrQJ1db+xSeFfm8WsNvGBmJwD_pr1yMJQ@mail.gmail.com>
+X-Google-Sender-Auth: N_Ittarwf4bz7CCvjo2IsgcPCyk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291587>
 
-On Thu, Apr 14, 2016 at 5:26 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> On Thu, Apr 14, 2016 at 5:07 PM, Stefan Beller <sbeller@google.com> wrote:
->> TODO(sbeller):
->> * describe the discussion on why this is better
->> * see if this can be tested?
+On Thu, Apr 14, 2016 at 5:40 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Thu, Apr 14, 2016 at 11:08 PM, Junio C Hamano <gitster@pobox.com> =
+wrote:
+>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> write=
+s:
 >>
+>>> This is basically a resend from last time, which happened during rc
+>>> time.
+>>
+>> It would have made them a much more pleasant read if you re-read
+>> them during that time and added the missing "why" to many of the
+>> commit log message.
 >
-> Thanks for taking time to do this! It looks like a few things are
-> still missing, CRLF obviously, and making it a configuration option.
+> Hmm... I thought I didn't receive any comments last time.
 
-I mainly wanted to get this out in the world quickly as it took me a while to
-understand the code. Do you know the feeling when you stare at code
-for hours and debug it and read headers to make sense of these
-cryptic variables and then after intensive thinking a clear image emerges?
+I think you've been here long enough to know that absense of comments
+does not mean anything more than that: lack of interest at that moment =
+in time.
 
-I put comments into the loop to convey my thought process on why that
-is enough code doing the job. So I'd be happy about a critical review. :)
-
+>> This looks parallel to die_errno(); isn't error_errno() a better nam=
+e?
 >
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>  xdiff/xdiffi.c | 39 +++++++++++++++++++++++++++++++++++++++
->>  1 file changed, 39 insertions(+)
+> To me, no. Duplicating the "err" looks weird. error_no() does not loo=
+k
+> good either. Though there's a couple of warning(..., strerror()),
+> which could become warning_errno(). Then maybe error_errno() makes
+> more sense because all three follow the same naming convention.
+
+So in the end error_errno() would be a better name to you after all ;-)
+I agree the stuttering sound coming from repeating error twice feels
+somewhat odd, but warning_errno() would be so natural and obvious
+future direction, so...
+
+>>>   [03/25] copy.c: import copy_file() from busybox
+>>>   [04/25] copy.c: delete unused code in copy_file()
+>>>   [05/25] copy.c: convert bb_(p)error_msg to (sys_)error
+>>>   [06/25] copy.c: style fix
+>>>   [07/25] copy.c: convert copy_file() to copy_dir_recursively()
 >>
->> diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
->> index 2358a2d..24eb9a0 100644
->> --- a/xdiff/xdiffi.c
->> +++ b/xdiff/xdiffi.c
->> @@ -400,9 +400,16 @@ static xdchange_t *xdl_add_change(xdchange_t *xscr, long i1, long i2, long chg1,
->>  }
->>
->>
->> +static int starts_with_emptyline(const char *recs)
->> +{
->> +       return recs[0] == '\n'; /* CRLF not covered here */
->> +}
->> +
->> +
->>  int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
->>         long ix, ixo, ixs, ixref, grpsiz, nrec = xdf->nrec;
->>         char *rchg = xdf->rchg, *rchgo = xdfo->rchg;
->> +       unsigned char has_emptyline;
->>         xrecord_t **recs = xdf->recs;
->>
->>         /*
->> @@ -436,6 +443,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
->>
->>                 do {
->>                         grpsiz = ix - ixs;
->> +                       has_emptyline = 0;
->>
->>                         /*
->>                          * If the line before the current change group, is equal to
->> @@ -447,6 +455,8 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
->>                                 rchg[--ixs] = 1;
->>                                 rchg[--ix] = 0;
->>
->> +                               has_emptyline |=
->> +                                       starts_with_emptyline(recs[ix]->ptr);
+>> Somewhere among these, there needs to be a single overview of why we
+>> want "cp" implementation of busybox, e.g. what part of "cp" we want?
+>> the whole thing?  or "because this is to be used from this and that
+>> codepaths to make copy of these things, we only need these parts and
+>> can remove other features like this and that?"
 >
-> I assume you're doing |= so that we don't overwrite the empty line
-> setting each loop here to 0 when it's false? That's a bit subtle, and
-> it took me a moment to figure out, since I am used to thinking of it
-> as bitwise | and not a boolean or like we're intending here (though
-> obviously we're using bitwise to perform that intended behavior).
+> We need directory move functionality.
 
-Here are my thoughts:
-* this loop shifts the group back and forth, "collecting" adjacent groups
-  until no more groups are eaten.
-* That is why the last iteration of the loop will shift around most
-and completely
-   cover the relevant area. we could do this in the last iteration
-only of this loop.
-   But we do not know when the last iteration will be, so do it every time.
+Yeah, I know all that but you do not want to explain that to me only wh=
+en
+I asked in a mailing list response. You want to get into the habit of h=
+aving
+that in the log message to help reviewers, not just me, before they ask=
+ such
+a question.
 
-   We could also have an extra loop after this loop to do a back and
-forth once to look
-   for empty lines.
-
-* Yes, the |= should convey:
-
-    if (starts_with_emptyline(...)
-        has_emptyline = 1;
-
-We could do += as well. (Then we'd get the count which is still good enough.)
-
-* We do not want to overwrite the has_emptyline for non empty lines in
-the inner loop.
-
-* The outer loop doesn't matter as we reset has_emptyline to 0 each
-time as explained
-   above. Technically we could "has_emptyline = 0;" before the do{ }
-while loop, to save
-   a little bit of instructions.
-
-* I assumed starts_with_emptyline returns a boolean (though it is int)
-  In this code I use unsigned char, which should probably be int as well?
-
+>> But such judgement is better done when we know what are the final
+>> elements that are to be listed, i.e. closer to where new things are
+>> introduced.  This is especially true, as the log messages of patches
+>> leading to 21 are all sketchy and do not give the readers a good
+>> birds-view picture.
 >
->>                                 /*
->>                                  * This change might have joined two change groups,
->>                                  * so we try to take this scenario in account by moving
->> @@ -475,6 +485,9 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
->>                                 rchg[ixs++] = 0;
->>                                 rchg[ix++] = 1;
->>
->> +                               has_emptyline |=
->> +                                       starts_with_emptyline(recs[ix]->ptr);
->> +
->>                                 /*
->>                                  * This change might have joined two change groups,
->>                                  * so we try to take this scenario in account by moving
->> @@ -498,6 +511,32 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
->>                         rchg[--ix] = 0;
->>                         while (rchgo[--ixo]);
->>                 }
->> +
->> +               /*
->> +                * If a group can be moved back and forth, see if there is an
->> +                * empty line in the moving space. If there is an empty line,
->> +                * make sure the last empty line is the end of the group.
->> +                *
->> +                * As we shifted the group forward as far as possible, we only
->> +                * need to shift it back if at all.
->> +                */
->> +               if (has_emptyline) {
->> +                       while (ixs > 0 && recs[ixs - 1]->ha == recs[ix - 1]->ha &&
->> +                              xdl_recmatch(recs[ixs - 1]->ptr, recs[ixs - 1]->size, recs[ix - 1]->ptr, recs[ix - 1]->size, flags) &&
->> +                              !starts_with_emptyline(recs[ix - 1]->ptr)) {
->> +                               rchg[--ixs] = 1;
->> +                               rchg[--ix] = 0;
->> +
->> +                               /*
->> +                                * This change did not join two change groups,
->> +                                * as we did that before already, so there is no
->> +                                * need to adapt the other-file, i.e.
->> +                                * running
->> +                                *     for (; rchg[ixs - 1]; ixs--);
->> +                                *     while (rchgo[--ixo]);
->> +                                */
->> +                       }
->> +               }
->>         }
->
-> And this was the more difficult part which I wasn't able to fully
-> understand how to do. It seems pretty reasonable. I think we can make
-> it configurable by using a new XDIFF flag similar to how we handle
-> various diff options like the different diff algorithms, and then we
-> could add tests specific to ensure that the flag enables the behavior
-> we want on some known test cases.
+> Well. I think all the commands are there now at the end of this
+> series. So we have add, list, prune, move, remove, lock and unlock. I
+> guess we can group list/add/move/remove together and the rest as
+> support commands. I might add "git worktree migrate" for converting
+> between worktree v0 and v1. But it's not clear yet.
 
-Ok I'll look into adding a flag for that.
-
-I have no idea what the "recs->ha" is, though (short for hash?),
-so I am not quite sure about the condition in the while loop. It was mainly
-copied from above where we shift the group backward.
-
->
-> I am not really sure how to thoroughly test it beyond that though.
-
-Thanks for the review!
-In case you want to pick it up (partially), feel free to do so. :)
-
-Stefan
-
->
-> Regards,
-> Jake
->
->>
->>         return 0;
->> --
->> 2.8.1.474.gffdc890.dirty
->>
+Just so that there is no confusion, I am not opposed to reordering.
+I was just saying that the decision on what the right ordering is can
+be easier to make when the readers more or less know what the final
+set of things in the set are, and because that becomes only clear when
+they start reading 21, and because the log messages of patches
+leading to 21 do not show the direction clearly enough, it is hard to
+make that judgment at this point so early in the series.
