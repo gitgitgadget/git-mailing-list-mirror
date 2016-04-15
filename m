@@ -1,69 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH, WAS: "weird diff output?" 2/2] xdiff: implement empty line chunk heuristic
-Date: Fri, 15 Apr 2016 13:06:29 -0700
-Message-ID: <xmqq8u0ebpru.fsf@gitster.mtv.corp.google.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [RFC PATCH, WAS: "weird diff output?" 2/2] xdiff: implement empty
+ line chunk heuristic
+Date: Fri, 15 Apr 2016 13:06:31 -0700
+Message-ID: <CA+P7+xopb-kz4ipvoH6q14F+Sc5vqqHG5z93NdxJJzKwg_TSWA@mail.gmail.com>
 References: <20160415165141.4712-1-jacob.e.keller@intel.com>
-	<20160415165141.4712-3-jacob.e.keller@intel.com>
-	<CAGZ79ka7h25=rHun_hPv1qjqeghXt1UwUU3Q6xT0aj4+OW87fg@mail.gmail.com>
+ <20160415165141.4712-3-jacob.e.keller@intel.com> <CAGZ79ka7h25=rHun_hPv1qjqeghXt1UwUU3Q6xT0aj4+OW87fg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Cc: Jacob Keller <jacob.e.keller@intel.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>, Jens Lehmann <Jens.Lehmann@web.de>,
 	Davide Libenzi <davidel@xmailserver.org>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Apr 15 22:06:38 2016
+X-From: git-owner@vger.kernel.org Fri Apr 15 22:07:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arA0j-0000dO-Fj
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 22:06:37 +0200
+	id 1arA1K-000105-Qt
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 22:07:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751521AbcDOUGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2016 16:06:33 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63243 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750899AbcDOUGc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2016 16:06:32 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C9BD713036;
-	Fri, 15 Apr 2016 16:06:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MhfqJwnMLNSlS5TRkE2Vmgdh8Hg=; b=MjsvpB
-	PK6Vof8/+nyxpmezbFQzoF5x8pyH6BlhvXk0Sj3LIZ9HWvGPvOXmbQIv4CxyKWun
-	zJk9CE6jjIje3NfnMdfdRIPKU5xwvJyeoTrrXNxWDiPLmRfT4FIdufW9KwKJMSn4
-	KUyVGFpAtUNXGYO4PWPa3HigIgZaYle1l95cQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=alQwTXLkG/+/sMk7+/v+bA9qv2aF21za
-	xvvV7dYR70u2Fh6vXc+I2/wswGrpEV5DXQOFID3H+JISuujgLv5CbQiJrETy5hcX
-	6fRPx+ASoq5ZAdpfj9Zw1WVJwnbInv5lFGjMk7frfKl4m6L8WOxcj3QGGkgk7dWK
-	remLcN3O/8g=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C247213035;
-	Fri, 15 Apr 2016 16:06:30 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 258A813034;
-	Fri, 15 Apr 2016 16:06:30 -0400 (EDT)
+	id S1751911AbcDOUHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2016 16:07:05 -0400
+Received: from mail-ig0-f178.google.com ([209.85.213.178]:38380 "EHLO
+	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751194AbcDOUGv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2016 16:06:51 -0400
+Received: by mail-ig0-f178.google.com with SMTP id ui10so32831297igc.1
+        for <git@vger.kernel.org>; Fri, 15 Apr 2016 13:06:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=VzGUuxa5L33D/uy0CaA9o8ZBN2z6qhOU94tz82cmJq4=;
+        b=H0RhJT1dM9hxnTqKsx2EnJRs/hSy+lynDPeSMQCK85koeFif5LK8w9MGrdtym5uf7V
+         w1Z083aiSL3kgSYTBsbrmGeOUHtnqm2YjV9AvAQWyalIohbflSUcGvJYRwkT46yvhZpm
+         lWb7vr5jBzvXp3J+rlMHyUPEvmbSAXuyVevCxPjXRAXnI4+yBFu4ZkvWg+vT4Ax/+GuJ
+         dqS3ooUWbeY3N1HWMWvTRJM3NLmOaTzVLW9L4016kqHcRHS1iUcouLpMaOYi47KVayni
+         qG9hX7s6hEbRVSGzSxWzjd5Br9zTGUKM4nk2+SXSuy5ma4YTMwuBQa/L4+3LFDTYRuDj
+         FPag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=VzGUuxa5L33D/uy0CaA9o8ZBN2z6qhOU94tz82cmJq4=;
+        b=iYoL8ADP2rmkq5P9s9eOlsBdSUid2/CqoVjPmgNpXHRG4kFDCudRJgmeSAsqV2IYib
+         xKeM4T4lhENATDUCRhK8RROnprkyq9wTPhVy0ZJHhY9ieOGu3xy0jBQshzn7IzVt6A7B
+         n1CKD3dBkfab50wf7CQLxkZpodYfOYKevZ8C2ILemYhn3YjQUyPbWBFdqWhW0nUtb+eg
+         nMkw/y1ff6nbNjTR08VT7YXvchiYzVcjU3jrTXu5ChwOlwK8klMFM3NE2L4bGzN0cmcN
+         /3iIC3gI+38Rj//aOaISm49eI8K4/zNEo1nxyiK2UzKNdCM7N8D2ekp68YpO3A96Zsh2
+         HHcA==
+X-Gm-Message-State: AOPr4FXdfhvNWlfhtZjNNQSnM6NYq9bmc40mJRX3Q+3DfxZrfxy4nbsLMkIBtIKtWq9SIm0c5KbLDieJA429rA==
+X-Received: by 10.50.249.20 with SMTP id yq20mr7169616igc.35.1460750810822;
+ Fri, 15 Apr 2016 13:06:50 -0700 (PDT)
+Received: by 10.107.59.78 with HTTP; Fri, 15 Apr 2016 13:06:31 -0700 (PDT)
 In-Reply-To: <CAGZ79ka7h25=rHun_hPv1qjqeghXt1UwUU3Q6xT0aj4+OW87fg@mail.gmail.com>
-	(Stefan Beller's message of "Fri, 15 Apr 2016 12:57:05 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8B1368E6-0345-11E6-8A58-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291652>
 
-Stefan Beller <sbeller@google.com> writes:
-
->> +diff.emptyLineHeuristic::
->
+On Fri, Apr 15, 2016 at 12:57 PM, Stefan Beller <sbeller@google.com> wrote:
 > I was looking at the TODO here and thought about the name:
 > It should not encode the `emptyLine` into the config option as
 > it is only one of many heuristics.
@@ -72,18 +72,26 @@ Stefan Beller <sbeller@google.com> writes:
 > The we could add firstEmptyLine, aggressiveUp, aggressiveDown,
 > breakAtShortestLineLength or other styles as well later on.
 >
+
+This sounds better, but how does this handle multiple heuristics?
+
 > I do not quite understand the difference between diff.algorithm
 > and the newly proposed heuristic as the heuristic is part of
 > the algorithm? So I guess we'd need to have some documentation
 > saying how these differ. (fundamental algorithm vs last minute
 > style fixup?)
 
-I actually do not think these knobs should exist when the code is
-mature enough to be shipped to the end users.
+It is not part of the algorithm. It's applied after the algorithm.
+xdl_change_compact is run after the algorithm and run for all
+algorithms.
 
-Use "diff.compactionHeuristics = <uint>" as an opaque set of bits to
-help the developers while they compare notes and reach consensus on
-a single tweak that they can agree on being good enough, and then
-remove that variable before the code hits 'next'.
+These are last minute style changes, and should probably not use the
+term heuristic, but somehow capture "last minute style fixup"
 
-Thanks.
+Thanks,
+Jake
+
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
