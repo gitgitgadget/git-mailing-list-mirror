@@ -1,78 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: possible to checkout same branch in different worktree
-Date: Fri, 15 Apr 2016 08:36:31 -0700
-Message-ID: <xmqqk2jydgu8.fsf@gitster.mtv.corp.google.com>
-References: <CAJZYdzhG8h3s=Ep1fuGbam1cWhYkv0tW6tQ7pBGGj+fj6=Nrsw@mail.gmail.com>
+From: Christian Howe <cjhowe7@gmail.com>
+Subject: Git mascot
+Date: Fri, 15 Apr 2016 11:41:52 -0500
+Message-ID: <CAEC5eqHEVr=k+UP8vG20L8Si-phYwZ5TLFr_dch=9_vM-99gYA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Michael Rappazzo <rappazzo@gmail.com>
-To: Reto =?utf-8?Q?Habl=C3=BCtzel?= <rethab.ch@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 15 17:36:45 2016
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 15 18:42:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ar5nZ-00045z-1I
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 17:36:45 +0200
+	id 1ar6pV-0002Gz-Eb
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 18:42:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751321AbcDOPgg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Apr 2016 11:36:36 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65455 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750924AbcDOPgf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2016 11:36:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CAB0311FC5;
-	Fri, 15 Apr 2016 11:36:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=LIPu1gRAvGs8
-	i6C8mS/GoBdsoKc=; b=DyYAz1hwePUfT6PNs9I3HZp9RTD5TwGLSLzYXsfFTv4w
-	EzHJI/IZFJWteFGLlzzaavCWc2p/gNHAMgWzjBFpAIHY2q8S7MYn91MEs4sK4rqC
-	6n32wJwAds9Jk4rlOlRnSSIG4gfWDGUpdkQRWFQAbpPu+nbpEefgr3X9mtNh9Ro=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=i8qI9A
-	Q7z8MMPGq0Z+gjUap1Tm1kTgYbBG9JUH38T7Fb/kx11IvpkzF9ML2zeGwji7hMgY
-	xragf+eq9AW1obqhGUh03mzrZYOKp3NpB+0gNOQCpfzdqrKoQGzxzuVFHm1r3L9A
-	8iVkXPD0k9yXwmRlm51nCFOQK5l0UMT3pcyhQ=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C366511FC4;
-	Fri, 15 Apr 2016 11:36:33 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4183611FC3;
-	Fri, 15 Apr 2016 11:36:33 -0400 (EDT)
-In-Reply-To: <CAJZYdzhG8h3s=Ep1fuGbam1cWhYkv0tW6tQ7pBGGj+fj6=Nrsw@mail.gmail.com>
-	("Reto =?utf-8?Q?Habl=C3=BCtzel=22's?= message of "Fri, 15 Apr 2016
- 15:53:47 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D4F0C31C-031F-11E6-B4CA-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752813AbcDOQme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2016 12:42:34 -0400
+Received: from mail-oi0-f48.google.com ([209.85.218.48]:33451 "EHLO
+	mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752608AbcDOQmd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2016 12:42:33 -0400
+Received: by mail-oi0-f48.google.com with SMTP id w85so129548413oiw.0
+        for <git@vger.kernel.org>; Fri, 15 Apr 2016 09:42:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=S4vCEguati5SQfjbu86TsZxR5h75Le+tDiQjp/vChwI=;
+        b=LDy24giAxr9k9z9REW89k/zlbUYzqS5r2picf2wETorJrdteVvWb3jfD8YwuERz/Ol
+         3KqPrb0qBUyX2RPcwKwDZHV4db6dnW70Q5CL5USWTETz2BAl8LM/y4WA8wqVzZd5rmLm
+         dOmjf0jte03x1WBsrg31F1WIa7VKs5dWVb+nj9XODrJY7PHfLSoersJhXnemBG68H6f4
+         SeoWBIjC/XVc2Bmey288TJezUljED2yHGz/11cvYwkeeziWFOn9JPLrAb0Itn7AaIJvs
+         c+3e+Sd73M1kadL1q3k2rJX16Ga2NrfKKAoTFThMSEIdL9zbcXoiwnk5eXZPsNTXSNzG
+         8XHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=S4vCEguati5SQfjbu86TsZxR5h75Le+tDiQjp/vChwI=;
+        b=ioT4nvpMCaudydRdR8Nd6GFjuZrLbvbKiAXSR8ydLZIlLCSl84ZtBeDYlNZGUL4QKc
+         1Oet9+lU44NHGQDzNS+EtKlQ/+4GodNCzYwi+pI6/XaP0bM66NlZlF+fv6yye498Y7P4
+         +H2x1QV1/alyvedrWuuIV869w5FZgF7oicGK1e4OHsFyUPANHqKI6aULFjjybBkbyK36
+         5a59mbihxAXltranyMfFoFEABhIMbRlF88IMakWeD2IP7PZlOiHwaF0coc2zxRqso67w
+         ErB4Rl6CuYJ2fr0KGoUIGThIIggrrzRG756blKDFOJ2dlw2fR6XMDlPZEV8RC2hQgSCy
+         l/Nw==
+X-Gm-Message-State: AOPr4FXQoVvtAydnpmJJ1gEs/wVctiC47xTxEopRPTHsio11UMbA6v/0+kghiDDeiw76sgpSr5J09KHipsUyng==
+X-Received: by 10.202.83.75 with SMTP id h72mr10581878oib.121.1460738552246;
+ Fri, 15 Apr 2016 09:42:32 -0700 (PDT)
+Received: by 10.202.106.137 with HTTP; Fri, 15 Apr 2016 09:41:52 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291612>
 
-Reto Habl=C3=BCtzel <rethab.ch@gmail.com> writes:
+There has been talk of a git mascot a while back in 2005. Some people
+mentioned a fish or a turtle. Since all the great open source projects
+like Linux or RethinkDB have a cute mascot, git definitely needs one
+as well. A mascot gives people a recognizable persona towards which
+they can direct their unbounded love for the project. It'd even be
+good if a plush doll of this mascot could eventually be created for
+people to physically express their love of git through cuddling and
+hugging.
 
-> the checkout command prevents me from checking out a branch in the
-> current worktree if it is already checked out in another worktree.
->
-> However, if I rebase the branch in the current worktree onto the
-> branch in the other worktree, I end up in a situation where the same
-> branch is checked out twice in the two worktrees.
+I'm not really an artist myself, but maybe someone else has some ideas
+and could make some sketches? Here's some recommended reading about
+RethinkDB's experience coming up with a mascot:
 
-I agree that any end-user facing subcommand like "git rebase", even
-if it is not "git checkout", should refuse to work on and update a
-branch that is checked out elsewhere.  Otherwise it will end up
-causing confusion.
-
-Thanks for a report.  The "multiple worktree" feature is still
-highly experimental and those who are working on it would appreciate
-your reporting issues with it.
+http://www.annieruygtillustration.com/blog/2015/3/12/uktt673n0teivjklu8g4x0bgrl4ymv
