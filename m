@@ -1,107 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Move test-* to t/helper/ subdirectory
-Date: Fri, 15 Apr 2016 10:06:52 -0700
-Message-ID: <xmqqa8kudcnn.fsf@gitster.mtv.corp.google.com>
-References: <1460553762-12419-1-git-send-email-pclouds@gmail.com>
-	<xmqqtwj2di3r.fsf@gitster.mtv.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC PATCH, WAS: "weird diff output?" 0/2] implement better chunk heuristics
+Date: Fri, 15 Apr 2016 10:10:31 -0700
+Message-ID: <CAGZ79kZs33sJj+DPSS4FPoJTLqbCLpvSe_h9UUQM-dBe=8ExKw@mail.gmail.com>
+References: <20160415165141.4712-1-jacob.e.keller@intel.com>
+	<CAGZ79kbCHA3L6mUfYn6OfVXLDEyhv70PwxXo-YHP_QZXXAB8ig@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 15 19:07:04 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Jens Lehmann <Jens.Lehmann@web.de>,
+	Davide Libenzi <davidel@xmailserver.org>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Fri Apr 15 19:10:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ar7Cw-0002Uo-2J
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 19:07:02 +0200
+	id 1ar7GV-0004oG-8Q
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Apr 2016 19:10:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752973AbcDORG5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Apr 2016 13:06:57 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54659 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752956AbcDORG4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2016 13:06:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DBD5C13E5B;
-	Fri, 15 Apr 2016 13:06:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=8Q57gJX3KScI
-	Z9uzvnjkkRGqa44=; b=pzTJ1KrtvzRZxeZmWSVlogsT0AzRL1Sqa8SPQZ+YoEb7
-	MK9SAR9k7xcyp7NHMuRmHJ4I/bR3t9vUSADu20cD4bdniOre57fUyV2ywTtixhQD
-	DmNCS4OVrb6gHcL8UOq50fZnw9nNpLoQh24tzt0lHFSqbFnUVN5bynu5rlHC7bg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ZaKu78
-	Jr/eYcLANlD8eu2nOU5ko+lRoBl88J8eYozVsUcGZfF2pevDvEZnz3Y+JIdB+lq/
-	Jsm4W0Or7vjx7Xd+l/BdwcdL+f3pZrYhsc6d5IheelpwPM5pAdhRWf8bisPOy2uZ
-	vDNVh2CYhAYR3Oo3ypYMWwt4gPQfyj51GcJz0=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D1CA913E5A;
-	Fri, 15 Apr 2016 13:06:54 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3E5DE13E58;
-	Fri, 15 Apr 2016 13:06:54 -0400 (EDT)
-In-Reply-To: <xmqqtwj2di3r.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 15 Apr 2016 08:09:12 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7419B47E-032C-11E6-96D7-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1753257AbcDORKf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2016 13:10:35 -0400
+Received: from mail-io0-f176.google.com ([209.85.223.176]:34058 "EHLO
+	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753270AbcDORKc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2016 13:10:32 -0400
+Received: by mail-io0-f176.google.com with SMTP id 2so141000791ioy.1
+        for <git@vger.kernel.org>; Fri, 15 Apr 2016 10:10:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=ULXucHFULTDlrlEaOvUJ4CtohO8g7bgJjdui6p4Rk3E=;
+        b=MDds1u2KhQ6XDPTgUKqwomkjW5yNGnDOFVsniFX4MARm0ymmm/VI3Wr9YRG+5ZCrh8
+         X2mreBeLwq360qDL8QSfNhLuIv4My++bRSyFB+PW0RpWmiE1xk45sbg2S6yl4BpvERoE
+         Gk70X8EkYlyaq+lkjCA5RJfOTDPkhZrtGC0wg6AEisWmwVL+93AbVzZLe7lbTQq2GkuO
+         IQBRp6niQwP/61Jwq8GYObyBOyti7Akjqtj2CWC4JzByYl4KVyxsgf7UOVoUwKl/Uqoj
+         PNbIsLmFLTrIs1pSXK3KVK+Ry8RsA6FRZzHLkbJkMlQmaSwmoapDwUEZOwjAJInZX4F8
+         5BtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=ULXucHFULTDlrlEaOvUJ4CtohO8g7bgJjdui6p4Rk3E=;
+        b=GH2dNKdru+TLvHUd5+265PleD5rYp7Cjbx0S18DirMeXk8DoC3q4aX8rZ5BY+LXBmS
+         QYPS7ux3qfNTQkBjNc9oVJZm8mc4mF1E/sCOeIZNKTRuKtALmdZQYZijBsZyy17FkSDc
+         Nh8E5MHWubui7Vz6L1GQKCB8HjS5OF7YBz0/EyTCzcCBSxVjMy+BWc0vjzQg2Cy0PP29
+         cmWjidg8yZhc++pS0tvrupxBuqIYjBDJYdlhW1VthWr6+V/5jNNY670EefFC8FoFc2rh
+         L4JLybMl1w4OPqTTWTwCxrs51dCIC+iHf5vVIcLhzgosrzJOZu7iXtijl/yGfaRsy9fT
+         dceg==
+X-Gm-Message-State: AOPr4FVbyYMqTov21oXjCN2qK+qcoEmmZgnKq6Qn5pkiuJIXkCZRFNp1QmZtbjpGHp9cxUXrWBmf7vRhvjqmDWF7
+X-Received: by 10.107.161.68 with SMTP id k65mr27113261ioe.110.1460740231414;
+ Fri, 15 Apr 2016 10:10:31 -0700 (PDT)
+Received: by 10.107.17.27 with HTTP; Fri, 15 Apr 2016 10:10:31 -0700 (PDT)
+In-Reply-To: <CAGZ79kbCHA3L6mUfYn6OfVXLDEyhv70PwxXo-YHP_QZXXAB8ig@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291622>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
+On Fri, Apr 15, 2016 at 10:02 AM, Stefan Beller <sbeller@google.com> wrote:
+>> @@ -458,11 +458,11 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+>>                          * the group.
+>>                          */
+>>                         while (ixs > 0 && xdl_hash_and_recmatch(recs, ixs - 1, ix - 1, flags)) {
+>> +                               emptylines += is_emptyline(recs[ix - 1]->ptr);
+>> +
+>>                                 rchg[--ixs] = 1;
+>>                                 rchg[--ix] = 0;
+>>
+>> -                               has_emptyline |=
+>> -                                       starts_with_emptyline(recs[ix]->ptr);
 >
->> This keeps top dir a bit less crowded. And because these programs ar=
-e
->> for testing purposes, it makes sense that they stay somewhere in t/
+> How is this fixing the segfault bug?
+> From my understanding ix should have the same value here as ix-1 above.
 >
-> But leaves many *.o files after "make clean".  Even "distclean" does
-> not clean them.
+>>                                 /*
+>>                                  * This change might have joined two change groups,
+>>                                  * so we try to take this scenario in account by moving
+>> @@ -492,9 +492,6 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+>>                                 rchg[ixs++] = 0;
+>>                                 rchg[ix++] = 1;
+>>
+>> -                               has_emptyline |=
+>> -                                       starts_with_emptyline(recs[ix]->ptr);
+>> -
+>
+> Or would this fix the segfault bug?
+> I think we would need to have the check for empty lines
+> in both loops to be sure to cover the whole movable range.
 
-Perhaps something like this as a preparatory patch, to protect us
-from future breakages similar to this change.
-
--- >8 --
-Subject: Makefile: clean *.o files we create
-
-The part that removes object files in the 'clean' target predates
-various Makefile macros that list object files we create, and
-instead removes the objects with shell glob, perpetually requiring
-updates whenever a new location that builds object files is added.
-
-Simplify the target by removing $(OBJECTS), which is supposed to
-have all the objects we create during the build.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Makefile | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index fe0bf7d..69d32bf 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2456,8 +2456,8 @@ profile-clean:
- 	$(RM) $(addsuffix *.gcno,$(addprefix $(PROFILE_DIR)/, $(object_dirs))=
-)
-=20
- clean: profile-clean coverage-clean
--	$(RM) *.o *.res refs/*.o block-sha1/*.o ppc/*.o compat/*.o compat/*/*=
-=2Eo
--	$(RM) xdiff/*.o vcs-svn/*.o ewah/*.o builtin/*.o
-+	$(RM) *.res
-+	$(RM) $(OBJECTS)
- 	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
- 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
- 	$(RM) $(TEST_PROGRAMS) $(NO_INSTALL)
+Actually we would only need to have the empty line count in the second loop as
+the first loop shifted it as much up(backwards) as possible, such that
+the hunk sits on one
+end of the movable range. The second loop would iterate over the whole
+range, so that
+would be the only place needed to count.
