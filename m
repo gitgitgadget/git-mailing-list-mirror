@@ -1,67 +1,66 @@
-From: Stefan Beller <sbeller@google.com>
+From: Jacob Keller <jacob.keller@gmail.com>
 Subject: Re: [PATCH 2/2] xdiff: implement empty line chunk heuristic
-Date: Fri, 15 Apr 2016 17:59:34 -0700
-Message-ID: <CAGZ79kY2u_X2xmm=+wvA13bnD57+o1br7vhAL0-Rf6K_1PeXTA@mail.gmail.com>
+Date: Fri, 15 Apr 2016 18:07:54 -0700
+Message-ID: <CA+P7+xq_Uei_ybEjJ=PPWtruk5uB5Dp2KajA=5G6TSWU0_g2kw@mail.gmail.com>
 References: <1460761306-18794-1-git-send-email-sbeller@google.com>
-	<1460761306-18794-3-git-send-email-sbeller@google.com>
-	<xmqqd1pq74ys.fsf@gitster.mtv.corp.google.com>
+ <1460761306-18794-3-git-send-email-sbeller@google.com> <xmqqd1pq74ys.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jacob Keller <jacob.keller@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
+Cc: Stefan Beller <sbeller@google.com>,
+	Git mailing list <git@vger.kernel.org>,
 	Jeff King <peff@peff.net>, Jens Lehmann <Jens.Lehmann@web.de>,
 	Davide Libenzi <davidel@xmailserver.org>,
 	Jacob Keller <jacob.e.keller@intel.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 16 02:59:42 2016
+X-From: git-owner@vger.kernel.org Sat Apr 16 03:08:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arEaK-0001G9-SP
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Apr 2016 02:59:41 +0200
+	id 1arEim-0005j3-Pl
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Apr 2016 03:08:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752690AbcDPA7g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2016 20:59:36 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:36479 "EHLO
-	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750779AbcDPA7f (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2016 20:59:35 -0400
-Received: by mail-io0-f178.google.com with SMTP id u185so150348442iod.3
-        for <git@vger.kernel.org>; Fri, 15 Apr 2016 17:59:35 -0700 (PDT)
+	id S1750955AbcDPBIP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2016 21:08:15 -0400
+Received: from mail-io0-f177.google.com ([209.85.223.177]:33292 "EHLO
+	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750865AbcDPBIO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2016 21:08:14 -0400
+Received: by mail-io0-f177.google.com with SMTP id o126so150647937iod.0
+        for <git@vger.kernel.org>; Fri, 15 Apr 2016 18:08:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=xigtstshsdCoIkMNX3R1+95C9KddiLIZ1zvKs2VMhfs=;
-        b=Rlb2jPlh+/SdoIAE7bmYtqUUpX4u2dH6/4DNKk7cpIQkdQIt1xLNc8duyS22Sn9KM5
-         v/prB2E9Mo9dW1bBexiqTKT8HWwYoNvKyL9vel+nht/diQIWrRVuyrLOWrpBL7Lcstau
-         9ieWd64vPk7T/q4pm3PEwmuCZ+uXwIeiWVEfZs95rkG+ug3ChWvLtMXBIjmlcMOPafSD
-         yaCdCTTnjcxFmDgyKkxd1fhlPUflPC4y5xBLm4fJ3RaK6q25890WbaCE4RoHVQ+pl6D6
-         rxUXd0R+YBwJyf7DWO9eHZ/aI1P9rHORr5q2Q+K2eq+0ZYKUDcTMjszoZ7o8xkMSQ5VQ
-         H36w==
+        bh=aEx/2/ax8VGKLQ1hLE68Ns/tBxsmGMDjeLjHZKNUCX8=;
+        b=Ex5DQM+m2mDuIbltPNU1+Ik+1PXvEOeDQNgtNmlIJBxIrc9aZZRenjAbFo/w2rfyul
+         sD71MGG1nHCHWT8oNurcI/wsNwpUhljfRp5yCs0l4DuNDfOyExrGLb8m7loFwz6qD+Lo
+         B7mfRczOZ6SKW8iiM06jCTXmcgRaxbaIM6IPa1GIUiVEJE40Lo9/aQcpoJNKw5SypCea
+         SknBM/E6yJ3kyu7n1j9Ko8P4WXZBeybY6Ku8UG7X4VvOkcQ9/yBkObz936oz5a2mTjNv
+         vxn1J+u+pW9fLVeJrfqG3Nih1YPJLBn6jNXXQhClFhQajWcBIGTcnusXz6av/E8wS8SI
+         ve6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=xigtstshsdCoIkMNX3R1+95C9KddiLIZ1zvKs2VMhfs=;
-        b=SayYCnkS+RpYYkJMGPlwiizJ5J6E1kzMfL9gKiqfz4jvNnDdOQraX1RYDBTi6YqdFU
-         Fn3J9dUOTqgcH51AasXM8yZWrnPEO6m0azjgoI3+W0CB3Cpjz7iLis9my+4WD04ShEep
-         H8BWZE+J6kAPc92m0RJH79+lQnSu2NJ9zO38Hr0LVJG0KufKsvJ5i+6Vnmp4AntVDMS7
-         R73hLNnc7jJoC/Wv8+mSPS5FVEiZTvOCkQiTDA8rPU6uvY9FOlpFrlqJ4OFr03ahZvx6
-         lp/JKg4a36HTdsf0O5PRsS5LF68GhENVqoX1ca4z2B0D38RRb7lyxlOydovGaxcttI9R
-         fz1Q==
-X-Gm-Message-State: AOPr4FUj53XksuwvT+Z/gtZ8QuZ1N+fr1ckLWx/RNztcGtJ/xb8PF6tVHkyJTMVgU1h3qybdOAkCEGFBMAB8p0Zh
-X-Received: by 10.107.18.227 with SMTP id 96mr24867862ios.174.1460768374553;
- Fri, 15 Apr 2016 17:59:34 -0700 (PDT)
-Received: by 10.107.17.27 with HTTP; Fri, 15 Apr 2016 17:59:34 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=aEx/2/ax8VGKLQ1hLE68Ns/tBxsmGMDjeLjHZKNUCX8=;
+        b=LuNSWyoj0uloFJeGdsKb1iy/7bWzOZCtIN3sVb5BNgPmkUq01o46y9/BfVWWgMkktr
+         XhhA+DrXdCz34qsqhERqrQ9XbHOAYb5BBs3DpGHgs0KXmjrxRveQBb98U8uz7TYj7dsQ
+         rPiCn1KkB498CeZGnQ4ULlhoeSF+wmdmyYjwBx3u+vNYab0EMVBCcO/zbXgTiDUd+Xf8
+         idvAg/wJNFlNhPkHq5bbN5fVxKKVWOr8mqrFI8t+upEqAQ+xM2d8jk+Hbf0N7+eFtFMY
+         cHPx5GKHJJr91CgKECQ/RPm1+LQlHCR6TPDPGSFZq4u0SJ/ESU5vudkkORPTn4bNc21Q
+         SNMg==
+X-Gm-Message-State: AOPr4FVwS0yp2znoufEXFh312JlWKiW+Zna/koBId0If6PcHhSrj/g+N+VnX2/0SBzusmjwWmFn7RmTA9leihw==
+X-Received: by 10.107.136.69 with SMTP id k66mr29151287iod.0.1460768893657;
+ Fri, 15 Apr 2016 18:08:13 -0700 (PDT)
+Received: by 10.107.59.78 with HTTP; Fri, 15 Apr 2016 18:07:54 -0700 (PDT)
 In-Reply-To: <xmqqd1pq74ys.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291714>
 
 On Fri, Apr 15, 2016 at 5:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > Stefan Beller <sbeller@google.com> writes:
@@ -76,29 +75,15 @@ On Fri, Apr 15, 2016 at 5:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > line, no matter what these bytes are" idea, so this may be moot, but
 > is there a guarantee that reading through recs until you happen to
 > see a NUL is safe?
-
-We discarded this idea as it produces to many errors.
-(We'd be back at the 50:50 case, "is it really worth it?")
-
-We will go back to the "empty line" heuristic, which will be solved
-via xdl_blankline(rec[i]->ptr, rec[i]->size, flags); which could be inlined.
-That will solve the CRLF issue as a CR is covered as a whitespace
-(with CRLF you'd have to specify diff to ignore white spaces).
-
-For the safety I assumed
-* there is always a \n even on the last line by convention.
-* in case it is not, the string is null terminated, hence
-  strchr and strlen for the rescue.
-
 >
 > Shouldn't the code that accesses a "line" be using the same "from
 > here to there", i.e. recs[]->ptr, recs[]->size, interface to avoid
 > having to scan the underlying string in an unbounded way?
+>
+>
 
-xdl_blankline will use ->size, so we'll be holding it right.
+I think we're going to make use of xdl_blankline instead of this or
+our own "is_emptyline"
 
 Thanks,
-Stefan
-
->
->
+Jake
