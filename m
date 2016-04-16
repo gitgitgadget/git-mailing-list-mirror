@@ -1,93 +1,109 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: fast-import's gfi_unpack_entry causes too many munmap/mmap cycles
-Date: Sat, 16 Apr 2016 20:04:03 +0900
-Message-ID: <20160416110403.GA19197@glandium.org>
-References: <20160416091839.GA12764@glandium.org>
+From: Ulrich Buchgraber <ulrich.b@gmx.at>
+Subject: [Bug] "git stash -u": Data loss of ignored content in directories
+Date: Sat, 16 Apr 2016 15:14:17 +0200
+Message-ID: <CAGxq=N8FsLapC2S_oDyD5ZcjWv6OLCPW2DXA219weLA6HthjUA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=UTF-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 13:04:40 2016
+X-From: git-owner@vger.kernel.org Sat Apr 16 15:14:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arO1n-0007X2-IG
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Apr 2016 13:04:39 +0200
+	id 1arQ3R-00019y-Nn
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Apr 2016 15:14:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751246AbcDPLEL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Apr 2016 07:04:11 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:45272 "EHLO
-	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751213AbcDPLEL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2016 07:04:11 -0400
-Received: from glandium by zenigata with local (Exim 4.87)
-	(envelope-from <mh@glandium.org>)
-	id 1arO1D-00055E-D5; Sat, 16 Apr 2016 20:04:03 +0900
-Content-Disposition: inline
-In-Reply-To: <20160416091839.GA12764@glandium.org>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1751287AbcDPNOY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Apr 2016 09:14:24 -0400
+Received: from mout.gmx.net ([212.227.15.15]:59845 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751272AbcDPNOX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2016 09:14:23 -0400
+Received: from mail-yw0-f173.google.com ([209.85.161.173]) by mail.gmx.com
+ (mrgmx001) with ESMTPSA (Nemesis) id 0MhhwJ-1b4OV61lyN-00MtN2 for
+ <git@vger.kernel.org>; Sat, 16 Apr 2016 15:14:19 +0200
+Received: by mail-yw0-f173.google.com with SMTP id i84so162112363ywc.2
+        for <git@vger.kernel.org>; Sat, 16 Apr 2016 06:14:18 -0700 (PDT)
+X-Gm-Message-State: AOPr4FXegrqAmSObDTObgTemumPWLL5e79ORx31uTEg9ArHAWTkMB4CGkCPdLw0MiBMzJIQ/BWZrkaKSKMPKug==
+X-Received: by 10.13.251.135 with SMTP id l129mr14795184ywf.283.1460812457992;
+ Sat, 16 Apr 2016 06:14:17 -0700 (PDT)
+Received: by 10.13.209.65 with HTTP; Sat, 16 Apr 2016 06:14:17 -0700 (PDT)
+X-Gmail-Original-Message-ID: <CAGxq=N8FsLapC2S_oDyD5ZcjWv6OLCPW2DXA219weLA6HthjUA@mail.gmail.com>
+X-Provags-ID: V03:K0:rLeHGBcmcv6C/l6AAqrL1UbCz3Oo06iAI2gxTQCS0mhS+wYQGfF
+ 2Mqb3Gr98PgnH6Jn3ktxA5DQbZxwEtdpUSdW5AubR7fX9c2LUoev+c3Ny/3MoKSgNfBLFdt
+ o3W4YlO/WcPYhvORZOObzCwGElfabZVKex8/Wcltcwb2fchbY5C7ZcZzBnPo4nV9AnAzlCt
+ pdV0jeRIJakWsJ1jELcew==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:PqzWNqlrne0=:t+K8XPF/uuO/I7Pf4Axyqp
+ +Ikmi02KOhmElDbxQQKXwa2h3dnfHiTocgZp212qlwGWs705ye5ptXY4zRxjf8eGkxI+Ab+pG
+ hr4mQxUjWAb7NB2RVlOIYPHA4gc0aL3jw596/m0I8HzBvGugkwBpRU2SDJhpvP++zgmVxX1YA
+ cC7UerD/Wgj9ko4ze06WYUGi7IO95dhoEMSHBsgTsYcbmh4agGKNXWuFrIXkSHj54YgDZCo5E
+ TKFXlLTE76h3mPd6sZV1lIYHRo6xIJ4A3csjE0N1Pbo1x5ytBXweFr62lW/oYjlpTOCvRJLyl
+ 9YUIbGeQEmMavRnGR7/LJQcoangtgjr8OekU+pZ6ZueOsLuYvgHi8e7QYJfu5QsppTnoCUShx
+ Qumdcl/K30fKSot/670i6mKjv7d+KRn2BoTlQeosPdQqmcpk9YiH0Y1oFddBXoSdMUPDeKXGR
+ aeCDr76JjI5DxiQLsoDXT6UM7vR2Nf8JYY1urEB1AG9PFHIHjxo002uex0X1QWr/GCSnW5Baw
+ LCUKEnL889pdh9rfCUynxnkNGNxqPwuQYE36N/XHQXiXuzLrh5KXqohV2gpnZ0ujO0TD0jAHn
+ tPIBEhj1+i/X2Noa7D5gQ8Aomv7SIqWCpbw//d+beP3/nnIWbSn0hptibbV/yb0PGNtrWvyaQ
+ Hsbv9vYzG8KVHmeiXs0qHaujvk9/JePpTaaTgzNmfRaz+TvxioSr1r8dRlcJc0YM/ZbRAFXv6
+ l2wnU2Bbg33psT3p8Vyu9TUhjTtILKGdn1FRmhDr1C9UWux89/TBQNXlQ05K9U/ykySACYTU 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291721>
 
-On Sat, Apr 16, 2016 at 06:18:39PM +0900, Mike Hommey wrote:
-> And even if I am okay with that overhead, I still hit the problem again
-> when using that tree later with `M 040000 $sha1 ` in the next commit,
-> because that does a load_tree() for the tree sha1, after a commit having
-> occurred, which touched the pack, bringing me back to square one (the
-> sad part being that it does so while the tree_content for the tree in
-> question is already in memory).
+Hello,
 
-So, interestingly, the load_tree() doesn't happen when using `from
-0000000000000000000000000000000000000000\nmerge :mark` for the commit.
+A "git stash -u" cleans all untracked files (after storing them), and
+normally does not clean ignored files.
 
-That is, with:
-  commit refs/foo
-  committer <foo@foo> 0 +0
-  data 0
+But: It cleans ignored files _within_ a directory, when the directory
+itself is not ignored, but its content (e.g. a "dir/*" ignore filter).
 
-  M 040000 bff3a42ecae0e7c8f707d328f9432c1ffe9644b0 ""
+The bug seems to be that in the cleanup phase of "git stash -u" Git
+immediately deletes untracked directories without checking if there
+are ignored files in there.
 
-load_tree is called. And with:
-  commit refs/foo
-  committer <foo@foo> 0 +0
-  data 0
+See the following reproduction sample. The last "ls" command shows
+that the file "ignored_dir_with_star/ignored.txt" is lost.
 
-  from 0000000000000000000000000000000000000000
-  merge :mark_of_parent
-  M 040000 bff3a42ecae0e7c8f707d328f9432c1ffe9644b0 ""
+    git init
 
-it's not called.
+    mkdir ignored_dir && touch ignored_dir/ignored.txt
+    mkdir ignored_dir_with_star && touch ignored_dir_with_star/ignored.txt
 
-So I think I got myself a workaround...
+    echo "/ignored_dir" >> .gitignore
+    echo "/ignored_dir_with_star/*" >> .gitignore
+    git add .gitignore
+    git commit -m "added ignores"
 
-> A --- B
->  \
->   \-- C
-> 
-> I have:
-> - diff between null-tree and A
-> - diff between A and B
-> - diff between B and C
+    touch untracked.txt
 
-I should be able to do:
+    ls -R
+    # => Output:
+    # .:
+    # ignored_dir/  ignored_dir_with_star/  untracked.txt
+    #
+    # ./ignored_dir:
+    # ignored.txt
+    #
+    # ./ignored_dir_with_star:
+    # ignored.txt
 
-- start the commit command for A
-- before finishing it, `ls ""`
-- then apply the diff for B and `ls ""`
-- then apply the diff for C and `ls ""`
-- then `deleteall`
-- then `M 040000 sha1_from_first_ls ` and finally finish A
-- create the commit for B with `from
-  0000000000000000000000000000000000000000\nmerge :mark` and `M 040000
-  sha1_from_second_ls`
-- likewise for C
+    git stash -u
+    git stash pop
 
-... and avoid gfi_unpack_entry.
+    ls -R
+    # => Output:
+    # .:
+    # ignored_dir/  untracked.txt
+    #
+    # ./ignored_dir:
+    # ignored.txt
 
-Mike
+Note that there is no data loss when instead using "git stash" or "git
+stash -a".
+
+(Tested with Git 2.8.1 on Ubuntu and Git for Windows version 2.8.1.windows.1.)
+
+Ulrich
