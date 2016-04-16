@@ -1,75 +1,85 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Git mascot
-Date: Sat, 16 Apr 2016 07:33:09 +0700
-Message-ID: <CACsJy8Dd_UbFETAAm7bGv=j2kQRvq1FvNY7dHKb13km_SxDSiA@mail.gmail.com>
-References: <CAEC5eqHEVr=k+UP8vG20L8Si-phYwZ5TLFr_dch=9_vM-99gYA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 16/21] bisect: make total number of commits global
+Date: Fri, 15 Apr 2016 17:44:44 -0700
+Message-ID: <xmqqh9f2756r.fsf@gitster.mtv.corp.google.com>
+References: <1460294354-7031-1-git-send-email-s-beyer@gmx.net>
+	<1460294354-7031-17-git-send-email-s-beyer@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Christian Howe <cjhowe7@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 16 02:33:51 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Sat Apr 16 02:44:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arEBJ-0004aA-GN
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Apr 2016 02:33:49 +0200
+	id 1arEM0-0001gY-6B
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Apr 2016 02:44:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753187AbcDPAdm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Apr 2016 20:33:42 -0400
-Received: from mail-lf0-f45.google.com ([209.85.215.45]:34549 "EHLO
-	mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752622AbcDPAdk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2016 20:33:40 -0400
-Received: by mail-lf0-f45.google.com with SMTP id j11so162875535lfb.1
-        for <git@vger.kernel.org>; Fri, 15 Apr 2016 17:33:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=I+sfg7KY60UYFbjcZORQEM9j1Bb8butvC8SUal9CLac=;
-        b=dQHTpUggDYwZ9qP/xJq2kRMhr92z/T6KM4I1/84jFxH0styPtEIb4BMAfLFNjzJ0eo
-         OrlsV2iiMSs2mqWbk4Z28AoYZZmikTx9dbKyTizDL6ZWY3/601eUR/wex3i891p2i4Pd
-         G3RysQHdEhzbffHXGkeJvtdpaACoM6W5A7P1rTmbO636nQA8bIFaxY+97dmT6gVH+Ui3
-         ejtjZ03/8igLZBLWPZO4ZNKSh6qFCGGxviG3j1XB9IoFLuahjMSbfhdCUTJMsrXADywW
-         vn2tY5GQ9rmfhaM8uFU0AF+4bk4XvedpLmKUEwClBndVvE2Omibt9rzfvkssPRig+Xqx
-         J6bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=I+sfg7KY60UYFbjcZORQEM9j1Bb8butvC8SUal9CLac=;
-        b=ByREb3x7UL8omW/oZKcXagXL9IHDyP1l53DUnuR1tUAXpqDhu6LoOyMRiwK22m943a
-         mlDIU8k4/500JRpbq5Zlrpfp7PiPdl2TSX0xtAzWgO4CFUuAChbDUepEVsaT/5S4MjPM
-         IANFDk8DH1dF3i0bpgN2PYh+G8dq7A4IUX2NSmmR7ZqgNDw61aOqEfi5ABMurLN/07fj
-         Ip9mZMQt+4kYnKYUmxFfyntfrvSrIyugrjRZuIqhyl0Iq1bQ/i38x67mEoZLFZ+jbsjF
-         bbBb4vIZnH883tAYWsfz00F26w3JxXqaj9v3rstAqq0haFTb2cTAFzv9uJTUF6ZapTdU
-         fAlA==
-X-Gm-Message-State: AOPr4FVXtb5kdmH0X71QjR/ro6pgCxOEMIYFAR/y69OvmwFnc6e+qp+qzQexl4b/pevFkMIA6Nar7t9w08ED4A==
-X-Received: by 10.112.209.99 with SMTP id ml3mr9804801lbc.26.1460766818932;
- Fri, 15 Apr 2016 17:33:38 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Fri, 15 Apr 2016 17:33:09 -0700 (PDT)
-In-Reply-To: <CAEC5eqHEVr=k+UP8vG20L8Si-phYwZ5TLFr_dch=9_vM-99gYA@mail.gmail.com>
+	id S1751811AbcDPAos (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Apr 2016 20:44:48 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51236 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751335AbcDPAor (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2016 20:44:47 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 196F11371A;
+	Fri, 15 Apr 2016 20:44:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dCiAwwcqqIScHzsPpY/zqpoZNgI=; b=Nd0yzs
+	ytpt2JjLwm/Je/sCz2vNDJJMQmYeljiYH1+Me5xCojjrainm72irwZ16jmWDR0lD
+	kod39WxaQB3EE6SR7s24NPx5OfVGFEDmRobpcMkuY2hIsSFOFBZHMgUoIKkr61Sx
+	rt5awwo9uTMOATHLo04bkbp9dO1jYJFx7T6Vw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Zf/z0JVPUNCcyzeE39mR2RRmwZIGiWSm
+	f+sJxMJD7blB2nDon9PHTB3LmPG/pDGjyP9ZcYueWstI8AxJTy5GisYNYZDZPb1T
+	p03IGVBX3jBrUv8V/b/07nu3roiBA7+0zOMTkT2p5i/u3WbWXAv1Kg2Dj8YK61kX
+	zUe5t8rLNX4=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1192113718;
+	Fri, 15 Apr 2016 20:44:46 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 763FD13717;
+	Fri, 15 Apr 2016 20:44:45 -0400 (EDT)
+In-Reply-To: <1460294354-7031-17-git-send-email-s-beyer@gmx.net> (Stephan
+	Beyer's message of "Sun, 10 Apr 2016 15:19:09 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 6A3A99EC-036C-11E6-8F2C-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291707>
 
-On Fri, Apr 15, 2016 at 11:41 PM, Christian Howe <cjhowe7@gmail.com> wrote:
-> There has been talk of a git mascot a while back in 2005. Some people
-> mentioned a fish or a turtle. Since all the great open source projects
-> like Linux or RethinkDB have a cute mascot, git definitely needs one
-> as well. A mascot gives people a recognizable persona towards which
-> they can direct their unbounded love for the project. It'd even be
-> good if a plush doll of this mascot could eventually be created for
-> people to physically express their love of git through cuddling and
-> hugging.
+Stephan Beyer <s-beyer@gmx.net> writes:
 
-Given Git's horrible interface (in some cases still) and power, I'd
-say an ugly witch (maybe doing something with trees). But I don't
-think anyone can make a cute mascot out of that. Nor does anybody want
-to cuddling :D
--- 
-Duy
+> The total number of commits in a bisect process is a property of
+> the bisect process. Making this property global helps to make the code
+> clearer.
+>
+> Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+> ---
+
+After wondring about count++ vs nr, I re-read this one.
+
+This patch is mislabled.
+
+Making it global is a lessor, supposed-to-be-no-op change, but the
+bigger change is that the definition of "total" is silently changed.
+
+The definition of mid-point was based on 'nr' in the original code,
+which counted only the tree-changing commits, and with this patch,
+it is based on 'total', which now only counts the tree-changing
+commits, so things are internally consistent, and the loop I was
+puzzled with, "while (counted < total)", would properly terminate.
+
+Perhaps things become cleaner and easier to understand if this was
+split into two steps.  One that changes the meaning of 'total' (and
+removes 'nr'), and the other that makes 'total' a global.
+
+Thanks.
