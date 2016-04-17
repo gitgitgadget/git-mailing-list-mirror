@@ -1,221 +1,95 @@
 From: santiago@nyu.edu
-Subject: [PATCH v6 5/6] verify-tag: move verification code to tag.c
-Date: Sun, 17 Apr 2016 18:27:00 -0400
-Message-ID: <1460932021-27633-6-git-send-email-santiago@nyu.edu>
+Subject: [PATCH v6 6/6] tag -v: verfy directly rather than exec-ing verify-tag
+Date: Sun, 17 Apr 2016 18:27:01 -0400
+Message-ID: <1460932021-27633-7-git-send-email-santiago@nyu.edu>
 References: <1460932021-27633-1-git-send-email-santiago@nyu.edu>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Santiago Torres <santiago@nyu.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 18 00:27:22 2016
+X-From: git-owner@vger.kernel.org Mon Apr 18 00:27:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arvA2-000518-77
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 00:27:22 +0200
+	id 1arvAA-00055l-Cv
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 00:27:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751308AbcDQW1R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Apr 2016 18:27:17 -0400
-Received: from mail-qg0-f53.google.com ([209.85.192.53]:34623 "EHLO
-	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750998AbcDQW1Q (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751413AbcDQW10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Apr 2016 18:27:26 -0400
+Received: from mail-qg0-f50.google.com ([209.85.192.50]:36685 "EHLO
+	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751226AbcDQW1Q (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 17 Apr 2016 18:27:16 -0400
-Received: by mail-qg0-f53.google.com with SMTP id c6so107580960qga.1
-        for <git@vger.kernel.org>; Sun, 17 Apr 2016 15:27:15 -0700 (PDT)
+Received: by mail-qg0-f50.google.com with SMTP id f52so107442958qga.3
+        for <git@vger.kernel.org>; Sun, 17 Apr 2016 15:27:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=nyu-edu.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vGXsSYUfBDsf+8xWDJRt5RC77qe6WfVqBctbW/r/FLQ=;
-        b=d8wtTTJJBeB37fxybxjpK9MbZvsnmGWblMvsFuE4eXnikJn+N0/TIKC/Vu/IH0zQgz
-         kMzlDjwZO0mwMB589O05IJ0aSPdM5yr3CumWjuWPTHWlkIuFtoEse7MbkJaEO1dGW6i8
-         8CFbkWTrbBs9TU4ZVGVCAjQc0Jyn8iVzI0YqbTdOaCjBdeOyx3Y9eaB0kehI7HLeBugb
-         icrHnhtZdSg+jfBvwgIqeX2d+h6GFVb0ntOGteKuNs6Epa0eeDuw2f5CRBxcVXxjkLjn
-         Ro7LmMgxkOECDYt27fInAuXHfRVc+FODZHI8ak8LxzOxKGOQqsjTAxFFwjw+qCOY8ijn
-         nKEw==
+        bh=kR4Qhf3Ob7dWeysvU9bEi6eFykF5UCGm44FzKACW6AA=;
+        b=ktkxKEqFpVHFvg3Lt/tkaMeLKeqcG0QW5YxtU52Zybws4p82QJWKoJa8zVLA0g4iCe
+         orJ974Hvo7N90nNhI1ecY/1Qd/Ir1GB7JciylSMdjiS40NxK9cdiaTO13S9T0B5D+8ft
+         IiTdrNdFuQ/l9xsC7MGFCx2majzWoO3qwrReiGroJItfOMuPZNC5rk4T37NjfazV25BH
+         TxzVLBOoAzsHFUzqMU2krlsPvRwYFUyO4wbLOB63ElP/cjSuXfKmcKtsYHdGspxss0fi
+         chE6r3ed7NqTUWNL4drsPOZ2QTdwFZDnWmAl91ZQ5B7jJxi2dr/Arn4OBV3VMOBaGsba
+         WDbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=vGXsSYUfBDsf+8xWDJRt5RC77qe6WfVqBctbW/r/FLQ=;
-        b=cGyZVnRv0DUAXVS5lGmVNmK7W0yHQ1BA0DPgVTfLW43qU9A37B+bX6+8kY3BSbTSVQ
-         RAb2LRRekq4IDJvUXG4bbLoieNuVNOOaNcrv9iOGGwsgtzULKzUlVCfg89OPpNtKdKI7
-         J8EavgSHZbVKOwewyNv310spc9BjIh7Kf52qq+kziPBJbnQnlUiEOgab5Irb210fRlva
-         RbuRWLXb2KTQSoOs9r4TxJ0EEqT44YDG2cGxz0KNFKeBgLhhrH3CJJCnOp3rvtrxMRng
-         fFbMhXBXO7CrKzaQ3cfFdWIdwMAXJwPIoF+d+aTmrDuHjRYIzkwEcyNP4XJY5vhVl+m/
-         zkgQ==
-X-Gm-Message-State: AOPr4FUZwae7RoyQAQJWglhZZJa0VnkxHbueQDiB9fw3ylvZJ7j3DDPXwtA6NG6e38nwFPeN
-X-Received: by 10.140.99.80 with SMTP id p74mr38158127qge.97.1460932035130;
-        Sun, 17 Apr 2016 15:27:15 -0700 (PDT)
+        bh=kR4Qhf3Ob7dWeysvU9bEi6eFykF5UCGm44FzKACW6AA=;
+        b=eOuyugFn8SY0Kw7pd0qec5pXK3p7scBG0nYxLG17y4NIArNhrMqNr8DJQjsnBY23d2
+         PNaWFViIRpocJfuUZF/M5H4erLEa1kJIXCpexW78g0/O1fJrv5O8tmnrn52ERwuc5+EH
+         9NjqU7rX9lBWaX9frCpfuSfLv+1/08OnIfZD91JXHxrVwGZCnEa7J5tXX+EFwf/rhZGL
+         wZk6VJsPIU4J9kyPIzuim408CehefOekjsiGn5/N9n7iM9ja3ogAbTU4RFdapShi66SO
+         NKOG/2tuoDpltWNpxCQwVHOeaL0p0ToixUDgHvxB5CldHCFaxk61sQMbYF+ai81eubpU
+         mjew==
+X-Gm-Message-State: AOPr4FW1F0hcL/fCa5Li1UNwNfctVwD4zcZSC7pEM4qZCCTwVJi4vYwuvHils9ovS+QXFMCy
+X-Received: by 10.140.104.13 with SMTP id z13mr38710252qge.68.1460932036006;
+        Sun, 17 Apr 2016 15:27:16 -0700 (PDT)
 Received: from LykOS.localdomain (NYUFWA-WLESSAUTHCLIENTS-19.NATPOOL.NYU.EDU. [216.165.95.8])
-        by smtp.gmail.com with ESMTPSA id j75sm5120767qgd.19.2016.04.17.15.27.14
+        by smtp.gmail.com with ESMTPSA id j75sm5120767qgd.19.2016.04.17.15.27.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 17 Apr 2016 15:27:14 -0700 (PDT)
+        Sun, 17 Apr 2016 15:27:15 -0700 (PDT)
 X-Mailer: git-send-email 2.8.0
 In-Reply-To: <1460932021-27633-1-git-send-email-santiago@nyu.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291779>
 
 From: Santiago Torres <santiago@nyu.edu>
 
-The PGP verification routine for tags could be accessed by other modules
-that require to do so.
+tag -v forks into verify-tag, which only calls gpg_verify_tag().
 
-Publish the verify_tag function in tag.c and rename it to gpg_verify_tag
-so it does not conflict with builtin/mktag's static function.
+Instead of forking to verify-tag, call gpg_verify_tag directly().
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Santiago Torres <santiago@nyu.edu>
 ---
- builtin/verify-tag.c | 51 +--------------------------------------------------
- tag.c                | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
- tag.h                |  3 ++-
- 3 files changed, 52 insertions(+), 51 deletions(-)
+ builtin/tag.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
-index 1d1c5c2..4e3b643 100644
---- a/builtin/verify-tag.c
-+++ b/builtin/verify-tag.c
-@@ -18,55 +18,6 @@ static const char * const verify_tag_usage[] = {
- 		NULL
- };
- 
--static int run_gpg_verify(const char *buf, unsigned long size, unsigned flags)
--{
--	struct signature_check sigc;
--	int payload_size;
--	int ret;
--
--	memset(&sigc, 0, sizeof(sigc));
--
--	payload_size = parse_signature(buf, size);
--
--	if (size == payload_size) {
--		if (flags & GPG_VERIFY_VERBOSE)
--			write_in_full(1, buf, payload_size);
--		return error("no signature found");
--	}
--
--	ret = check_signature(buf, payload_size, buf + payload_size,
--				size - payload_size, &sigc);
--	print_signature_buffer(&sigc, flags);
--
--	signature_check_clear(&sigc);
--	return ret;
--}
--
--static int verify_tag(const unsigned char *sha1, const char *report_name,
--			unsigned flags)
--{
--	enum object_type type;
--	char *buf;
--	unsigned long size;
--	int ret;
--
--	type = sha1_object_info(sha1, NULL);
--	if (type != OBJ_TAG)
--		return error("%s: cannot verify a non-tag object of type %s.",
--				report_name ? report_name : find_unique_abbrev(sha1, DEFAULT_ABBREV),
--				typename(type));
--
--	buf = read_sha1_file(sha1, &type, &size);
--	if (!buf)
--		return error("%s: unable to read file.",
--				report_name ? report_name : find_unique_abbrev(sha1, DEFAULT_ABBREV));
--
--	ret = run_gpg_verify(buf, size, flags);
--
--	free(buf);
--	return ret;
--}
--
- static int git_verify_tag_config(const char *var, const char *value, void *cb)
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 1705c94..7b2918e 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -104,13 +104,7 @@ static int delete_tag(const char *name, const char *ref,
+ static int verify_tag(const char *name, const char *ref,
+ 				const unsigned char *sha1)
  {
- 	int status = git_gpg_config(var, value, cb);
-@@ -103,7 +54,7 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
- 			error("tag '%s' not found.", name);
- 			had_error = 1;
- 		}
--		else if (verify_tag(sha1, name, flags))
-+		else if (gpg_verify_tag(sha1, name, flags))
- 			had_error = 1;
- 	}
- 	return had_error;
-diff --git a/tag.c b/tag.c
-index d72f742..e7f22c6 100644
---- a/tag.c
-+++ b/tag.c
-@@ -6,6 +6,55 @@
- 
- const char *tag_type = "tag";
- 
-+static int run_gpg_verify(const char *buf, unsigned long size, unsigned flags)
-+{
-+	struct signature_check sigc;
-+	int payload_size;
-+	int ret;
-+
-+	memset(&sigc, 0, sizeof(sigc));
-+
-+	payload_size = parse_signature(buf, size);
-+
-+	if (size == payload_size) {
-+		if (flags & GPG_VERIFY_VERBOSE)
-+			write_in_full(1, buf, payload_size);
-+		return error("no signature found");
-+	}
-+
-+	ret = check_signature(buf, payload_size, buf + payload_size,
-+				size - payload_size, &sigc);
-+	print_signature_buffer(&sigc, flags);
-+
-+	signature_check_clear(&sigc);
-+	return ret;
-+}
-+
-+int gpg_verify_tag(const unsigned char *sha1, const char *report_name,
-+			unsigned flags)
-+{
-+	enum object_type type;
-+	char *buf;
-+	unsigned long size;
-+	int ret;
-+
-+	type = sha1_object_info(sha1, NULL);
-+	if (type != OBJ_TAG)
-+		return error("%s: cannot verify a non-tag object of type %s.",
-+				report_name ? report_name : find_unique_abbrev(sha1, DEFAULT_ABBREV),
-+				typename(type));
-+
-+	buf = read_sha1_file(sha1, &type, &size);
-+	if (!buf)
-+		return error("%s: unable to read file.",
-+				report_name ? report_name : find_unique_abbrev(sha1, DEFAULT_ABBREV));
-+
-+	ret = run_gpg_verify(buf, size, flags);
-+
-+	free(buf);
-+	return ret;
-+}
-+
- struct object *deref_tag(struct object *o, const char *warn, int warnlen)
- {
- 	while (o && o->type == OBJ_TAG)
-diff --git a/tag.h b/tag.h
-index f4580ae..1a8d123 100644
---- a/tag.h
-+++ b/tag.h
-@@ -17,5 +17,6 @@ extern int parse_tag_buffer(struct tag *item, const void *data, unsigned long si
- extern int parse_tag(struct tag *item);
- extern struct object *deref_tag(struct object *, const char *, int);
- extern struct object *deref_tag_noverify(struct object *);
+-	const char *argv_verify_tag[] = {"verify-tag",
+-					"-v", "SHA1_HEX", NULL};
+-	argv_verify_tag[2] = sha1_to_hex(sha1);
 -
-+extern int gpg_verify_tag(const unsigned char *sha1, const char *report_name,
-+			unsigned flags);
- #endif /* TAG_H */
+-	if (run_command_v_opt(argv_verify_tag, RUN_GIT_CMD))
+-		return error(_("could not verify the tag '%s'"), name);
+-	return 0;
++	return gpg_verify_tag(sha1, name, GPG_VERIFY_VERBOSE);
+ }
+ 
+ static int do_sign(struct strbuf *buffer)
 -- 
 2.8.0
