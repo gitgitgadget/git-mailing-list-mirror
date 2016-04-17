@@ -1,93 +1,69 @@
-From: Andreas Mohr <andi@lisas.de>
-Subject: [BUG] git rev-parse :/ "regex" syntax not really regex?
-Date: Sun, 17 Apr 2016 15:37:41 +0200
-Message-ID: <20160417133741.GA28931@rhlx01.hs-esslingen.de>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [BUG] git rev-parse :/ "regex" syntax not really regex?
+Date: Sun, 17 Apr 2016 16:10:28 +0200
+Message-ID: <87inzgtjfv.fsf@linux-m68k.org>
+References: <20160417133741.GA28931@rhlx01.hs-esslingen.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 15:45:17 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Andreas Mohr <andi@lisas.de>
+X-From: git-owner@vger.kernel.org Sun Apr 17 16:10:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arn0l-0003ce-95
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Apr 2016 15:45:15 +0200
+	id 1arnPP-0007pK-Rj
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Apr 2016 16:10:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750778AbcDQNpF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Apr 2016 09:45:05 -0400
-Received: from rhlx01.hs-esslingen.de ([129.143.116.10]:37910 "EHLO
-	rhlx01.hs-esslingen.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750716AbcDQNpE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Apr 2016 09:45:04 -0400
-X-Greylist: delayed 440 seconds by postgrey-1.27 at vger.kernel.org; Sun, 17 Apr 2016 09:45:04 EDT
-Received: by rhlx01.hs-esslingen.de (Postfix, from userid 102)
-	id DECCF4572C; Sun, 17 Apr 2016 15:37:41 +0200 (CEST)
-Content-Disposition: inline
-X-Priority: none
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1751190AbcDQOKe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Apr 2016 10:10:34 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:34584 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751171AbcDQOKd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Apr 2016 10:10:33 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3qntTd5wt2z3hhwY;
+	Sun, 17 Apr 2016 16:10:29 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3qntTd5TmPzvh1r;
+	Sun, 17 Apr 2016 16:10:29 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id JE0GZVh8A_sd; Sun, 17 Apr 2016 16:10:29 +0200 (CEST)
+X-Auth-Info: 9E3M5N2/cSwz5NNCfusi3vEK/+ZQB2qIfAtUiW9vV8K2lLdErVBr+LJQMMglQyEr
+Received: from igel.home (ppp-88-217-25-29.dynamic.mnet-online.de [88.217.25.29])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Sun, 17 Apr 2016 16:10:28 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id 985D92C33D7; Sun, 17 Apr 2016 16:10:28 +0200 (CEST)
+X-Yow: Not SENSUOUS...  only ``FROLICSOME''...
+ and in need of DENTAL WORK...  in PAIN!!!
+In-Reply-To: <20160417133741.GA28931@rhlx01.hs-esslingen.de> (Andreas Mohr's
+	message of "Sun, 17 Apr 2016 15:37:41 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.92 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291760>
 
-Hello all,
+Andreas Mohr <andi@lisas.de> writes:
 
-I just wanted to shortly mention that to me it seems
-that while
-git help rev-parse
-says
-       :/<text>, e.g. :/fix nasty bug
-           A colon, followed by a slash, followed by a text, names a commit whose commit message matches the specified regular expression. This name returns the
-           youngest matching commit which is reachable from any ref. If the commit message starts with a !  you have to repeat that; the special sequence :/!, followed
-           by something else than !, is reserved for now. The regular expression can match any part of the commit message. To match messages starting with a string, one
-           can use e.g.  :/^foo.
-, the supported syntax seems to be decidedly not really regex,
-as opposed to
-git log --grep
+> Unless I happened to misunderstand git's regex flavour, or something else...
+> (hmm, perhaps it's a try-match-single-line vs. multi-line content issue,
+> which perhaps does not work by specifying the trailing $)
 
-Creating a minimal reproducing repo sample
-with e.g. a dummy commit series of the following commit titles:
+This is exactly the difference.  git log --grep matches individual lines
+(like grep), whereas :/<regexp> matches against the whole commit message
+including embedded (and trailing) newlines, and $ doesn't match an
+embedded newline.  Thus to address the second commit in your example you
+have to use $':/^My commit\n' (using bash's ANSI-C quoting feature).
 
-My commit last
-My commit
-My commit first
+Andreas.
 
-and doing searches via
-  git rev-parse :/'^My commi\w'
-  git rev-parse :/'^My commit$'
-  git rev-parse :/'^My commit'
-  git log --grep='^My commit$' --format=%H <---- that one seems to work fully reliably
-
-will yield surprising results
-(returning most recent commit rather than commit title exact-match one),
-and no amount of fiddling with various regex flavour syntax deviations
-managed to fix it for me.
-
-Unless I happened to misunderstand git's regex flavour, or something else...
-(hmm, perhaps it's a try-match-single-line vs. multi-line content issue,
-which perhaps does not work by specifying the trailing $)
-
-
-$ git --version
-git version 2.5.5
-
-(same irritating behaviour also encountered on some older version, perhaps 2.0/2.1 range)
-
-
-If this bug is confirmed, then I could suggest two variants:
-- fix rev-parse's handling of :/ to actually do the correct thing, if easily possible
-- simply fix rev-parse's docs to correctly indicate
-  that unfortunately it is NOT fully regex capable,
-  and ensure also having added a reference to the (much?) more reliably working
-  git log --grep.
-
-If this bug is not confirmed, then the question would be
-what kind of potential documentation / usability weaknesses
-successfully managed to lead me astray
-and thus would need to be fixed.
-
-Thanks,
-
-Andreas Mohr
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
