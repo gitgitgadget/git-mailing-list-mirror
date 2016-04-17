@@ -1,124 +1,110 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: fast-import's gfi_unpack_entry causes too many munmap/mmap cycles
-Date: Sun, 17 Apr 2016 10:13:48 +0900
-Message-ID: <20160417011348.GA17856@glandium.org>
-References: <20160416091839.GA12764@glandium.org>
- <20160416110403.GA19197@glandium.org>
- <20160417005443.GA15847@glandium.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH/RFC 3/6] http-backend: handle refspec argument
+Date: Sat, 16 Apr 2016 21:51:29 -0400
+Message-ID: <CAPig+cRSE-BCPdrSbrCYmTcT6EsabKnekr2GEAbmBsc5=jxnHQ@mail.gmail.com>
+References: <1460747949-3514-1-git-send-email-dturner@twopensource.com>
+	<1460747949-3514-4-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 03:14:03 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Sun Apr 17 03:51:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arbHl-000497-L9
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Apr 2016 03:14:02 +0200
+	id 1arbs7-0003xb-9A
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Apr 2016 03:51:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752046AbcDQBN4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Apr 2016 21:13:56 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:36630 "EHLO
-	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751993AbcDQBNz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2016 21:13:55 -0400
-Received: from glandium by zenigata with local (Exim 4.87)
-	(envelope-from <mh@glandium.org>)
-	id 1arbHY-0004lN-Po; Sun, 17 Apr 2016 10:13:48 +0900
-Content-Disposition: inline
-In-Reply-To: <20160417005443.GA15847@glandium.org>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1752383AbcDQBvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Apr 2016 21:51:31 -0400
+Received: from mail-ig0-f195.google.com ([209.85.213.195]:36695 "EHLO
+	mail-ig0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752166AbcDQBva (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2016 21:51:30 -0400
+Received: by mail-ig0-f195.google.com with SMTP id kb1so7106611igb.3
+        for <git@vger.kernel.org>; Sat, 16 Apr 2016 18:51:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=+Q+IaTdPWytQuYhh5dZtWw6aVSmyM6U2HPCvAg96NLc=;
+        b=qDhIUo/NWS6MpY/tCVwIYTENCMXJAN81itzMHymrD/r3rbl2UBr+rznFWwh+V0YaZ6
+         nktYbiWoM2a6FXbRcToPSStuAErziEfVvJBapv62UbPDUvo37a/R6GAHpznQdS4tjsBM
+         Z0r9yAax3d6EifNHqzE4e/bvVNINEvWmbS8D5NfjbTBPJuRJ5luqwW8+Hh9Z1CrR5iFL
+         MHRdwnE+qFtXTu0AmxTbaS7zN+Z0FlzfGzBy55zJzJNsxc/K236+xbfxDPESXDFaVxAG
+         erk9OJquXwQHiyatazB2oxn9Q/5KfWozy+xDIB13cB4eU2qstLJw0/+8nwJNduRAjrxP
+         KSNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=+Q+IaTdPWytQuYhh5dZtWw6aVSmyM6U2HPCvAg96NLc=;
+        b=QUCxVqCSWwVKX1T8ENOoG9tmXexbyPrrBu2etLXLfLXYhtKW4q9QKjEFpWAhGjOdSa
+         oGquIksYEwHZyreNJk5Xl6u7Sl9GdjVRgrNwz3gtsxcfxxUARDIkr7ogC6y7zSUq7Iwi
+         B4rlkTnATP26AJv8xHD3w1H0dGtaL5utGdFYXrnoKd6AfimfjtxlYW3CJzVje9BQJa9P
+         sRLiDhzmUN7A1L7Mj2Ebxoxh5efKdHmMubx+aEZ0ar2hDybonCAYC/NG4nHUlHrFAndY
+         hLZUDvaSBuORW+BESkJ0fyCjrdpfVFixmeE6aZZGh7ZZu2qPHdS22zy8cNUAYwVPeb9Y
+         zx6w==
+X-Gm-Message-State: AOPr4FUZp4LYS9NcD2lOcuDjMIJoJmJ0UaxeRb0QvBpfey4orBuRn6LKlxPpsANFmBKBuwLwgrINsq6DWk0qBw==
+X-Received: by 10.50.92.37 with SMTP id cj5mr12704522igb.91.1460857889087;
+ Sat, 16 Apr 2016 18:51:29 -0700 (PDT)
+Received: by 10.79.139.71 with HTTP; Sat, 16 Apr 2016 18:51:29 -0700 (PDT)
+In-Reply-To: <1460747949-3514-4-git-send-email-dturner@twopensource.com>
+X-Google-Sender-Auth: ULNmLWUS-y763kGOGIBNfenBRQM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291737>
 
-On Sun, Apr 17, 2016 at 09:54:43AM +0900, Mike Hommey wrote:
-> On Sat, Apr 16, 2016 at 08:04:03PM +0900, Mike Hommey wrote:
-> > So I think I got myself a workaround...
-> > 
-> > > A --- B
-> > >  \
-> > >   \-- C
-> > > 
-> > > I have:
-> > > - diff between null-tree and A
-> > > - diff between A and B
-> > > - diff between B and C
-> > 
-> > I should be able to do:
-> > 
-> > - start the commit command for A
-> > - before finishing it, `ls ""`
-> > - then apply the diff for B and `ls ""`
-> > - then apply the diff for C and `ls ""`
-> > - then `deleteall`
-> > - then `M 040000 sha1_from_first_ls ` and finally finish A
-> > - create the commit for B with `from
-> >   0000000000000000000000000000000000000000\nmerge :mark` and `M 040000
-> >   sha1_from_second_ls`
-> > - likewise for C
-> > 
-> > ... and avoid gfi_unpack_entry.
-> 
-> And it works... as an avoidance of gfi_unpack_entry... but it has its
-> own problem: somehow the store_tree() that happens for each of those
-> `ls ""` commands is storing *all* trees. Even the ones that haven't
-> changed. In terms of a minimalistic fast-import script:
-> 
-> With:
->   commit refs/FOO
->   committer <foo@foo> 0 +0
->   data 0
-> 
->   M 644 inline a/a
->   data 1
->   a
-> 
->   commit refs/FOO
->   committer <foo@foo> 0 +0
->   data 0
-> 
->   M 644 inline b/b
->   data 1
->   b
-> 
-> store_tree is called for:
-> - b39954843ff6e09ec3aa2b942938c30c6bd1629e
-> - 2c3b59f77afa6fea6c1a380eeb0cb1eb292515b5
-> - 51e58bf6ce558dd384bbf9d493f9a376f3bcb089
-> - a97dda9f3a819113b3b239b9a62edece27136080
-> 
-> With:
->   commit refs/FOO
->   committer <foo@foo> 0 +0
->   data 0
-> 
->   M 644 inline a/a
->   data 1
->   a
->   ls ""
->   M 644 inline b/b
->   data 1
->   b
-> 
-> store_tree is called for:
-> - b39954843ff6e09ec3aa2b942938c30c6bd1629e
-> - 2c3b59f77afa6fea6c1a380eeb0cb1eb292515b5
-> - b39954843ff6e09ec3aa2b942938c30c6bd1629e
-> - 51e58bf6ce558dd384bbf9d493f9a376f3bcb089
-> - a97dda9f3a819113b3b239b9a62edece27136080
-> 
-> Note how b39954843ff6e09ec3aa2b942938c30c6bd1629e is being stored twice
-> (it's the tree for a/).
+On Fri, Apr 15, 2016 at 3:19 PM, David Turner <dturner@twopensource.com> wrote:
+> Allow clients to pass a "refspec" parameter through to upload-pack;
+> upload-pack will only advertise refs which match that refspec.
+>
+> Signed-off-by: David Turner <dturner@twopensource.com>
+> ---
+> diff --git a/http-backend.c b/http-backend.c
+> @@ -465,6 +466,14 @@ static void get_info_refs(char *arg)
+>                 argv_array_push(&argv, "--stateless-rpc");
+>                 argv_array_push(&argv, "--advertise-refs");
+>
+> +               refspec = get_parameter("refspec");
+> +               if (refspec) {
+> +                       struct strbuf interesting_refs = STRBUF_INIT;
+> +                       strbuf_addstr(&interesting_refs, "--interesting-refs=");
+> +                       strbuf_addstr(&interesting_refs, refspec);
+> +                       argv_array_push(&argv, interesting_refs.buf);
+> +                       strbuf_release(&interesting_refs);
+> +               }
 
-And that happens because tree_content_get returns a duplicate of the
-tree, so when parse_ls does a store_tree, it does it on a duplicate, not
-on the tree itself. So all the work done by store_tree through parse_ls
-is thrown away.
+    if (refspec)
+        argv_array_pushf(&interesting_refs,
+            "--interesting-refs=%s", refspec);
 
-Mike
+>                 argv_array_push(&argv, ".");
+>                 run_service(argv.argv, 0);
+>                 argv_array_clear(&argv);
+> @@ -841,6 +905,19 @@ int main(int argc, char **argv)
+> +               if (starts_with(arg, "--interesting-refs=")) {
+> +                       struct string_list_item *item;
+> +
+> +                       string_list_split(&interesting_refspecs, arg + 19,
+> +                                         ' ', -1);
+> +                       for_each_string_list_item(item, &interesting_refspecs) {
+> +                               if (check_refname_format(item->string,
+> +                                                        REFNAME_REFSPEC_PATTERN))
+> +                                       die("invalid refspec %s", item->string);
+> +                               item->util = make_refspec_data(item->string);
+> +                       }
+> +                       continue;
+> +               }
+
+Is this leaking the string list?
+
+>                 if (!strcmp(arg, "--stateless-rpc")) {
+>                         stateless_rpc = 1;
+>                         continue;
+> --
+> 2.4.2.767.g62658d5-twtrsrc
