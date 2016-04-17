@@ -1,120 +1,237 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: Migrating away from SHA-1?
-Date: Fri, 15 Apr 2016 01:50:05 +0000
-Message-ID: <20160415015004.GB140502@vauxhall.crustytoothpaste.net>
-References: <570D78CC.9030807@zytor.com>
- <CACsJy8DmPw+cbohp-X55bp9NJSbUVN=tsABXoF5Xh-6PgPTbiA@mail.gmail.com>
- <8722D9F3-8A42-4BF7-A945-305F483E8364@zytor.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="NMuMz9nt05w80d4+"
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Mon Apr 18 04:20:30 2016
+Subject: [PATCH 3/6] match-trees: convert shift_tree and shift_tree_by to object_id
+Date: Sun, 17 Apr 2016 23:10:38 +0000
+Message-ID: <1460934641-435791-4-git-send-email-sandals@crustytoothpaste.net>
+References: <1460934641-435791-1-git-send-email-sandals@crustytoothpaste.net>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 18 04:20:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arync-0004Gd-1w
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 04:20:28 +0200
+	id 1aryng-0004I2-Al
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 04:20:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751216AbcDRCUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Apr 2016 22:20:20 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:52820 "EHLO
+	id S1751447AbcDRCUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Apr 2016 22:20:25 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:52822 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751193AbcDRCT4 (ORCPT
+	by vger.kernel.org with ESMTP id S1751092AbcDRCT4 (ORCPT
 	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2016 22:19:56 -0400
 Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:6680:99ff:fe4f:73a0])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id C5C3C280A0;
-	Fri, 15 Apr 2016 01:50:10 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 94216282AE;
+	Sun, 17 Apr 2016 23:11:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1460685010;
-	bh=OiFx2s3Gfandt0HahQgdZz3Zd7nEk30eFLDZEjXJ9/U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=enA8NWk6aRrd+BYuUSKgA/nQpf83mynzom3A3kvSe29O6lgS35LkQCCiTAUQDXiZo
-	 nsj7DvHdH8k1RniCKTXTrGFPQTFXDAYlL2OIuIuhSbGXdSDeKsSQRSVq0HNzMxYHC6
-	 pWMyj0raS/94EcxJ381MHcNEPZcUacLxx5eq2BFHtRGjNrJ4RF09zvqiYPgmgd1eQH
-	 /uPJ/5FAtW8BGF3yORgSgQtrOa9dQmZBZ6SUZaKiKXvICR40yLOJ/FI01Rmo54GxiD
-	 /6rmMRGlwggW7CQ3WMrDAtKQP8azn0S294kAG8XxVP0bYKyu/HDK0cVPrtKSeITVIj
-	 yEq24RmP2NWPvsPTNvTiwvn2YpFcPry5sZj1axu87oXY0infDmJ2BzMjPyhq86aE9T
-	 bd3Q9CgcKGuMgfMGhCnTx6mhI+0Q6mudjFWDZhC/2wcMtniadfMphdBQCwOzi9yp0G
-	 YqxoTasiiJsxDAtka6272lBV6EPxXqPvLBknRPHWmzsxwLwVMKZ
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	"H. Peter Anvin" <hpa@zytor.com>, Duy Nguyen <pclouds@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <8722D9F3-8A42-4BF7-A945-305F483E8364@zytor.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 4.4.0-1-amd64)
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	s=default; t=1460934674;
+	bh=P7Dc/L4lGrIXDJbgVvDklhw249bM+/Eabow6Dl6chjQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ChPnnEjC69tu+1q31gtyRcyFd5IpUPdRavPFQd1O/2wC4rkSI6HBmLzt15eRnqsLa
+	 lIbK5hg3czzssje6PvxZx3+UCn7oUUn4mSBZy+HhKxRJC/8UoU2YF+gY/4dj+S+3V8
+	 CG4WXgLqVMa5eFOPBrIVJOETBBCPcWkF+hWrFtASVV+Pyb4G/uJykb4CPaa8mh5sRJ
+	 e9rFc4DfrS+yvsnGrfS5l76DdA+nP+/u/DrGaZ7mi5NN5WzoJKd5rMLKN9CtjgxXXa
+	 ylBeurq4SCgS4usBho6ziNZrmGJu1dXrUNboTud/e+zw6Ej+oeQC3B9CHnqciX9lBT
+	 t/ywTMDsLjNLlYe/TAQ3WNPLUQ2NrQnx1aRK+6uUiAhlOJMRxX/vmjeCvtoQ3zbx0o
+	 lwKyJEsI9/BXq3Nu8bIXz0UXK6saVes/80uGi3ue/5KqdMmKQFrZNfxNRoIkbFqO4U
+	 PrC1ZnpiyCgb8SH6LKMkJvMId81aoNnd+SxJqmMDH4AnamnoJyN
+X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
+In-Reply-To: <1460934641-435791-1-git-send-email-sandals@crustytoothpaste.net>
 X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291794>
 
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ cache.h            |  4 ++--
+ match-trees.c      | 44 ++++++++++++++++++++++----------------------
+ merge-recursive.c  |  4 ++--
+ test-match-trees.c |  2 +-
+ 4 files changed, 27 insertions(+), 27 deletions(-)
 
---NMuMz9nt05w80d4+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Apr 12, 2016 at 06:58:10PM -0700, H. Peter Anvin wrote:
-> On April 12, 2016 6:51:12 PM PDT, Duy Nguyen <pclouds@gmail.com> wrote:
-> >On Wed, Apr 13, 2016 at 5:38 AM, H. Peter Anvin <hpa@zytor.com> wrote:
-> >> OK, I'm going to open this can of worms...
-> >>
-> >> At what point do we migrate from SHA-1?
-> >
-> >Brian Carlson has been slowly refactoring git code base, abstracting
-> >SHA-1 away. Once that work is done, I think we can talk about moving
-> >away from SHA-1. The process is slow because it likely causes
-> >conflicts with in-flight topics. A quick grep shows we still have
-> >about 300 SHA-1 references, so it'll be quite some time.
->=20
-> Well, at least it sounds like work is underway.  That is a big deal.
-
-Yes, it's a bunch of slow manual refactoring, and I've been busy as
-we've been doing house- and car-related things recently.  I'll try to
-spend a little more time on it this weekend.
-
-The first step is to convert all of the individual places that use
-unsigned char [20] to use struct object_id, which can then be extended
-to use different hash algorithms.  There are also constants,
-GIT_SHA1_RAWSZ and GIT_SHA1_HEXSZ, that abstract the 20 and 40 values in
-the codebase so they can be changed in the future.
-
-While this is a project I've been mostly working on, I have no objection
-to other people sending in a patch or series as they feel like it.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---NMuMz9nt05w80d4+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.11 (GNU/Linux)
-
-iQIcBAEBCgAGBQJXEEjMAAoJEL9TXYEfUvaLrisQALZgtPPYsMcGCL6iVt06UR2d
-pGu6RdXQHGczytinW79aWtckovnvFVjSXHW8autwTywFiD8EOabn7rqcB8UfxYcj
-HgPAtRzWH7AULCryVhUIfvufaF9cSyJiSLo7YrHB2QwYc3fYL0DAmiiStqi00sbN
-J8spnLmkyvFjups+sfJBW6/7aGyV0qzpbxDgteH/Qpd3y9+TXTizEuXWymgVJSKM
-bIiTYae+R6j9a8nGVO/0zNmEVBiLjtPuz16k14jKXdnviy4MOms9BWIUqzgvLpWi
-ihYTOXUlfzjYCFRiw+Ci3R1edLJO19/Jm/zDWz0ggfuVDNMOH2Udx2IZD0LV4RxZ
-oAaj6ep7ZCLhVB3lzXN/NvwypsaDz+uQ1gBqhyk1r3MRgAi33lJLJc98Cn9MW7lu
-1kHj34AXMY6lIbQhjjXf1XYgUMReTo/yKwXT6ZmY/l0a+OaDtiPwzuPeSRiLS45G
-+h1xFBwEHAj/Fo+cG6XhN2dXHEfkBxeLkVHDWI0UcCkqDjV8im35gILHdp34Nagx
-+Ha7kz1MP7p9KS5TgwQlxmbkGwFfxSs9CuZ4HuDyR5e//sJwzbnHCfoHBaHdth/e
-xHW0waDTNB3FVCUvaDzjfr97zWu2wtDi2GZ3RVhGay2S69FWAlYadj3F9fjfGXm3
-RC1m6+5KxJqXAp8u7Iuo
-=F84r
------END PGP SIGNATURE-----
-
---NMuMz9nt05w80d4+--
+diff --git a/cache.h b/cache.h
+index 22b73646..70091e73 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1768,8 +1768,8 @@ int add_files_to_cache(const char *prefix, const struct pathspec *pathspec, int
+ extern int diff_auto_refresh_index;
+ 
+ /* match-trees.c */
+-void shift_tree(const unsigned char *, const unsigned char *, unsigned char *, int);
+-void shift_tree_by(const unsigned char *, const unsigned char *, unsigned char *, const char *);
++void shift_tree(const struct object_id *, const struct object_id *, struct object_id *, int);
++void shift_tree_by(const struct object_id *, const struct object_id *, struct object_id *, const char *);
+ 
+ /*
+  * whitespace rules.
+diff --git a/match-trees.c b/match-trees.c
+index 1ce0954a..9977752a 100644
+--- a/match-trees.c
++++ b/match-trees.c
+@@ -229,9 +229,9 @@ static int splice_tree(const unsigned char *hash1,
+  * other hand, it could cover tree one and we might need to pick a
+  * subtree of it.
+  */
+-void shift_tree(const unsigned char *hash1,
+-		const unsigned char *hash2,
+-		unsigned char *shifted,
++void shift_tree(const struct object_id *hash1,
++		const struct object_id *hash2,
++		struct object_id *shifted,
+ 		int depth_limit)
+ {
+ 	char *add_prefix;
+@@ -245,7 +245,7 @@ void shift_tree(const unsigned char *hash1,
+ 	if (!depth_limit)
+ 		depth_limit = 2;
+ 
+-	add_score = del_score = score_trees(hash1, hash2);
++	add_score = del_score = score_trees(hash1->hash, hash2->hash);
+ 	add_prefix = xcalloc(1, 1);
+ 	del_prefix = xcalloc(1, 1);
+ 
+@@ -253,16 +253,16 @@ void shift_tree(const unsigned char *hash1,
+ 	 * See if one's subtree resembles two; if so we need to prefix
+ 	 * two with a few fake trees to match the prefix.
+ 	 */
+-	match_trees(hash1, hash2, &add_score, &add_prefix, "", depth_limit);
++	match_trees(hash1->hash, hash2->hash, &add_score, &add_prefix, "", depth_limit);
+ 
+ 	/*
+ 	 * See if two's subtree resembles one; if so we need to
+ 	 * pick only subtree of two.
+ 	 */
+-	match_trees(hash2, hash1, &del_score, &del_prefix, "", depth_limit);
++	match_trees(hash2->hash, hash1->hash, &del_score, &del_prefix, "", depth_limit);
+ 
+ 	/* Assume we do not have to do any shifting */
+-	hashcpy(shifted, hash2);
++	oidcpy(shifted, hash2);
+ 
+ 	if (add_score < del_score) {
+ 		/* We need to pick a subtree of two */
+@@ -271,16 +271,16 @@ void shift_tree(const unsigned char *hash1,
+ 		if (!*del_prefix)
+ 			return;
+ 
+-		if (get_tree_entry(hash2, del_prefix, shifted, &mode))
++		if (get_tree_entry(hash2->hash, del_prefix, shifted->hash, &mode))
+ 			die("cannot find path %s in tree %s",
+-			    del_prefix, sha1_to_hex(hash2));
++			    del_prefix, oid_to_hex(hash2));
+ 		return;
+ 	}
+ 
+ 	if (!*add_prefix)
+ 		return;
+ 
+-	splice_tree(hash1, add_prefix, hash2, shifted);
++	splice_tree(hash1->hash, add_prefix, hash2->hash, shifted->hash);
+ }
+ 
+ /*
+@@ -288,44 +288,44 @@ void shift_tree(const unsigned char *hash1,
+  * Unfortunately we cannot fundamentally tell which one to
+  * be prefixed, as recursive merge can work in either direction.
+  */
+-void shift_tree_by(const unsigned char *hash1,
+-		   const unsigned char *hash2,
+-		   unsigned char *shifted,
++void shift_tree_by(const struct object_id *hash1,
++		   const struct object_id *hash2,
++		   struct object_id *shifted,
+ 		   const char *shift_prefix)
+ {
+-	unsigned char sub1[20], sub2[20];
++	struct object_id sub1, sub2;
+ 	unsigned mode1, mode2;
+ 	unsigned candidate = 0;
+ 
+ 	/* Can hash2 be a tree at shift_prefix in tree hash1? */
+-	if (!get_tree_entry(hash1, shift_prefix, sub1, &mode1) &&
++	if (!get_tree_entry(hash1->hash, shift_prefix, sub1.hash, &mode1) &&
+ 	    S_ISDIR(mode1))
+ 		candidate |= 1;
+ 
+ 	/* Can hash1 be a tree at shift_prefix in tree hash2? */
+-	if (!get_tree_entry(hash2, shift_prefix, sub2, &mode2) &&
++	if (!get_tree_entry(hash2->hash, shift_prefix, sub2.hash, &mode2) &&
+ 	    S_ISDIR(mode2))
+ 		candidate |= 2;
+ 
+ 	if (candidate == 3) {
+ 		/* Both are plausible -- we need to evaluate the score */
+-		int best_score = score_trees(hash1, hash2);
++		int best_score = score_trees(hash1->hash, hash2->hash);
+ 		int score;
+ 
+ 		candidate = 0;
+-		score = score_trees(sub1, hash2);
++		score = score_trees(sub1.hash, hash2->hash);
+ 		if (score > best_score) {
+ 			candidate = 1;
+ 			best_score = score;
+ 		}
+-		score = score_trees(sub2, hash1);
++		score = score_trees(sub2.hash, hash1->hash);
+ 		if (score > best_score)
+ 			candidate = 2;
+ 	}
+ 
+ 	if (!candidate) {
+ 		/* Neither is plausible -- do not shift */
+-		hashcpy(shifted, hash2);
++		oidcpy(shifted, hash2);
+ 		return;
+ 	}
+ 
+@@ -334,11 +334,11 @@ void shift_tree_by(const unsigned char *hash1,
+ 		 * shift tree2 down by adding shift_prefix above it
+ 		 * to match tree1.
+ 		 */
+-		splice_tree(hash1, shift_prefix, hash2, shifted);
++		splice_tree(hash1->hash, shift_prefix, hash2->hash, shifted->hash);
+ 	else
+ 		/*
+ 		 * shift tree2 up by removing shift_prefix from it
+ 		 * to match tree1.
+ 		 */
+-		hashcpy(shifted, sub2);
++		oidcpy(shifted, &sub2);
+ }
+diff --git a/merge-recursive.c b/merge-recursive.c
+index b880ae50..a47c80f8 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -29,9 +29,9 @@ static struct tree *shift_tree_object(struct tree *one, struct tree *two,
+ 	struct object_id shifted;
+ 
+ 	if (!*subtree_shift) {
+-		shift_tree(one->object.oid.hash, two->object.oid.hash, shifted.hash, 0);
++		shift_tree(&one->object.oid, &two->object.oid, &shifted, 0);
+ 	} else {
+-		shift_tree_by(one->object.oid.hash, two->object.oid.hash, shifted.hash,
++		shift_tree_by(&one->object.oid, &two->object.oid, &shifted,
+ 			      subtree_shift);
+ 	}
+ 	if (!oidcmp(&two->object.oid, &shifted))
+diff --git a/test-match-trees.c b/test-match-trees.c
+index 41aff841..d446b8ea 100644
+--- a/test-match-trees.c
++++ b/test-match-trees.c
+@@ -19,7 +19,7 @@ int main(int ac, char **av)
+ 	if (!two)
+ 		die("not a tree-ish %s", av[2]);
+ 
+-	shift_tree(one->object.oid.hash, two->object.oid.hash, shifted.hash, -1);
++	shift_tree(&one->object.oid, &two->object.oid, &shifted, -1);
+ 	printf("shifted: %s\n", oid_to_hex(&shifted));
+ 
+ 	exit(0);
+-- 
+2.8.0.rc3.226.g39d4020
