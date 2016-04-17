@@ -1,86 +1,116 @@
 From: Santiago Torres <santiago@nyu.edu>
-Subject: Re: [PATCH v5 2/6] t7030-verify-tag: Adds validation for multiple
- tags
-Date: Sun, 17 Apr 2016 13:31:56 -0400
-Message-ID: <20160417173155.GA1014@LykOS>
+Subject: Re: [PATCH v5 0/6] tag: move PGP verification code to tag.c
+Date: Sun, 17 Apr 2016 13:34:06 -0400
+Message-ID: <20160417173406.GB1014@LykOS>
 References: <1459872449-7537-1-git-send-email-santiago@nyu.edu>
- <1459872449-7537-3-git-send-email-santiago@nyu.edu>
- <CAPig+cSOLnCoX77O7khEX1cTh0Hu29d6MRdcpfN8ytTkUSVU=A@mail.gmail.com>
+ <CAPig+cQ4n5j4Q-WF-0cd=2+5eSAaimh3A7La+8Fe9Ox4anjtBQ@mail.gmail.com>
+ <20160407034007.GC17848@LykOS>
+ <CAPig+cQxmovGckrbwuEoeA=hW1idukj3qKTfjmr8B+AM7E2J0A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun Apr 17 19:32:04 2016
+X-From: git-owner@vger.kernel.org Sun Apr 17 19:34:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arqYF-0004zv-AZ
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Apr 2016 19:32:03 +0200
+	id 1arqaL-000628-TT
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Apr 2016 19:34:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750901AbcDQRb7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Apr 2016 13:31:59 -0400
-Received: from mail-qg0-f52.google.com ([209.85.192.52]:36560 "EHLO
-	mail-qg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750730AbcDQRb6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Apr 2016 13:31:58 -0400
-Received: by mail-qg0-f52.google.com with SMTP id f52so105468711qga.3
-        for <git@vger.kernel.org>; Sun, 17 Apr 2016 10:31:57 -0700 (PDT)
+	id S1750794AbcDQReJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Apr 2016 13:34:09 -0400
+Received: from mail-qg0-f51.google.com ([209.85.192.51]:33799 "EHLO
+	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750696AbcDQReI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Apr 2016 13:34:08 -0400
+Received: by mail-qg0-f51.google.com with SMTP id c6so105628217qga.1
+        for <git@vger.kernel.org>; Sun, 17 Apr 2016 10:34:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=nyu-edu.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=wRFUIYrFao/TapJg+LlW37rWDUaHE7iUW33c643lvcc=;
-        b=Hz8LYDvLwGjcqTwCNOe7ujhbf2tPqdz5ygh+g3MrYU34/lT3BGPq8k4zqNCiWc8wI5
-         4H4o9l3s2BxioEmE6WCc2R1UdPBzgvg17/0D/LflVc9w0qOZGEMXPmuzJTgd/dd2hYwn
-         vhIHzAJL7c8hnJfacAeUE2Y6Wei0Gmbs9aOSuYihjDOn2CSrV3WAvgUeTbL24OTZQ5/W
-         sXZzHiuXQgCMNC4n1CKo0bdNj0lTdWDl9OehrHvH3Gno+XuxN+bByDeXGmaPKthkOi2i
-         vGznTGMXlJprTLAfRuquajYrL7fT8R9vWFFx7o0hSSXYNvP6NLpNCpC3rzsvtclku7GS
-         ZE1Q==
+        bh=dMnY7+zKTfe7GWuKFZ2m5GpWZSo5ub3Vvv0/Jy67mTk=;
+        b=gJ+HbTIsF0DYZ7CVOhCKu5QSdHQRmctkHr7hcNo5aGYuSngzLa0GrQ49rRQE7lmDuj
+         LVdQ2MYf7GJGFvgXSyJ2e7JEZFGo3heFHIM38A/8f4KEKz6K/k//lxYP5esaNz+7WZpV
+         WpjSibUwUY+bPK2y7JtRBvgYQ9DV5WjiF+1XMfAhjWaUUhunj/ZoKpW3qC8Rk/onuwXA
+         b8/L/9K+4zRlaTKdeg4rGURxnjZHwTtGjAmHY0mNMg1B+sH8oCv3c/QQ0QzkZHyrDIqp
+         2TASp2Z7hf2MJDfGTcTDOUufbnbb9v0unat7ptrwjJ/aLfdrsRCklj6dCHqovYscLG/M
+         jnGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=wRFUIYrFao/TapJg+LlW37rWDUaHE7iUW33c643lvcc=;
-        b=a0hPQtutwPFho7Qlw6+wZJV5eLfWkIw7GtWj3gV4jKFAlSE4uawqUvxCLUo6z4FaM0
-         7GFOTpPwAPZ13M1Jqld9utm5F8t0BCNq2wg10uIEX6C5cVN+A9yBHdJDRob5b5Tfx3ov
-         KC+Np9zYvRyeFg4CKDdRZVCGnqeVulCZp0d0AF8blt1TMyrR8kyR3dRaWp5oqKSkgIEt
-         AMR7Zq7qODMroo8//jdBdxrAAe/aghxL3jK1u9i+HxLKi9oTdB4jl4+FI/Y/SD/MW4sS
-         sZIljS37brYl0ohMd5y25vIknRAHulcWmC8BdN+O86G5hDR3OLH0U2QGmYDv0bOyFR4m
-         NSTA==
-X-Gm-Message-State: AOPr4FWQHyfBcbqH5eNTFLmyCbSbB9ZiwssxaKMSowBGsRXyCeXtmhXtnnYkB5C1KnoYd1ed
-X-Received: by 10.140.164.71 with SMTP id k68mr39773932qhk.97.1460914317050;
-        Sun, 17 Apr 2016 10:31:57 -0700 (PDT)
+        bh=dMnY7+zKTfe7GWuKFZ2m5GpWZSo5ub3Vvv0/Jy67mTk=;
+        b=Gqoto6xS+tq1dRDLqliTOtVe8N5mPnygZcZFA4DV1opcUyr29bpNn/x2voP+5u3IZP
+         CUxFYF8ZzL8GUdSzQeBMJ+CAi5scTlBLx5YcT0YgkW5yDD0YFGt7T9Ahme529zhbjiVd
+         Oi3KNPTvtsaEFiVqiUZTE8gn8N2o4oiaef9hy5JMyIoLS7HIvNVJ509si+aJVBC7g9T0
+         IRDYOZ1rYbRwaR/gcUPptgsz2P7ApzS6Q3lANd0pYJ0JGBOnoH5+2Fhd6EeTlH8Qpmdn
+         GCIh7rWg5AE0R8G8OaRcUC7YSNgrVxW4ZK8HpHIJdmFCnlqG/FBSE+i55t15z4DBTbQ8
+         LflQ==
+X-Gm-Message-State: AOPr4FUmr8nddYFHifuwa/iQdu/u4qv5I9pAkDVYzQG6rlkA5WAVc4zhkCFV8g3IHfrx7o50
+X-Received: by 10.140.179.15 with SMTP id z15mr39376660qhz.79.1460914447233;
+        Sun, 17 Apr 2016 10:34:07 -0700 (PDT)
 Received: from LykOS (NYUFWA-WLESSAUTHCLIENTS-19.NATPOOL.NYU.EDU. [216.165.95.8])
-        by smtp.gmail.com with ESMTPSA id c2sm24975665qkb.41.2016.04.17.10.31.56
+        by smtp.gmail.com with ESMTPSA id h34sm24746891qge.30.2016.04.17.10.34.06
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 17 Apr 2016 10:31:56 -0700 (PDT)
+        Sun, 17 Apr 2016 10:34:07 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <CAPig+cSOLnCoX77O7khEX1cTh0Hu29d6MRdcpfN8ytTkUSVU=A@mail.gmail.com>
+In-Reply-To: <CAPig+cQxmovGckrbwuEoeA=hW1idukj3qKTfjmr8B+AM7E2J0A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291767>
 
-Sorry for the delay! I just realized I had missed the second comment.
+On Thu, Apr 07, 2016 at 12:19:37PM -0400, Eric Sunshine wrote:
+> On Wed, Apr 6, 2016 at 11:40 PM, Santiago Torres <santiago@nyu.edu> wrote:
+> >> > v5 (this):
+> >> > Added helpful feedback by Eric
+> >> >
+> >> >  * Reordering of the patches, to avoid temporal inclusion of a regression
+> >> >  * Fix typos here and there.
+> >> >  * Review commit messages, as some weren't representative of what the patches
+> >> >    were doing anymore.
+> >> >  * Updated t7030 to include Peff's suggestion, and added a helped-by line here
+> >> >    as it was mostly Peff's code.
+> >> >  * Updated the error-handling/printing issues that were introduced when.
+> >> >    libifying the verify_tag function.
+> >>
+> >> This version is a more pleasant read, easier to digest and understand.
+> >> All of my review comments were minor; nothing demanding a re-roll. As
+> >> such, this version is:
+> >>
+> >>     Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+> >>
+> >> If you do happen to re-roll based upon the review comments, feel free
+> >> to add my Reviewed-by: (but not if you make larger changes).
+> >
+> > Thanks! I'll add your and Junio's in another re-roll.
+> 
+> I don't think Junio explicitly gave his Reviewed-by: (indicating his
+> approval of the patches as-is), so you wouldn't want to include his
+> Reviewed-by:.
 
-> +       grep "^.GNUPG" <expect.stderr.1 >expect.stderr &&
-> 
-> Hmm, is there a reason you didn't stick with the more strict regex
-> Peff suggested?
-> 
->     ^.GNUPG:.
-> 
-> (Genuine question: I'm not saying your choice is wrong, I'm just
-> interested in the reasoning behind the decision.)
-> 
-I actually had missed the ":". I read the email and tried to internalize
-what the new test was actually doing, then I rewrote the test. 
+Yeah, I didn't mean to imply that. I'm rewriting the commit messages and
+testing out patches 3+/6, so I'm not going to assume there's any
+reviewed-by.
 
-I think I could add it for completeness though.
+> 
+> If you make any changes beyond the minor ones mentioned in my reviews
+> or beyond plagiarizing commit message enhancements offered by my or
+> Junio's reviews, then you'd also probably want to hold off adding my
+> Reviewed-by: since I wouldn't yet have reviewed whatever new changes
+> you're making.
 
-Thanks again for the reviews!
+Speaking of which, would it make sense to add "helped-by" to the patches
+in which I'm plagiarizing the commit messages?
+
+> (And, if you do make changes beyond ones I mentioned, and if I review
+> them and consider them issue-free, I can always re-extend my
+> Reviewed-by:.)
+
+Thanks!
 -Santiago.
