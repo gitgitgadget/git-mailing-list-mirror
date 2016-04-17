@@ -1,110 +1,128 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH/RFC 3/6] http-backend: handle refspec argument
-Date: Sat, 16 Apr 2016 21:51:29 -0400
-Message-ID: <CAPig+cRSE-BCPdrSbrCYmTcT6EsabKnekr2GEAbmBsc5=jxnHQ@mail.gmail.com>
+Subject: Re: [PATCH/RFC 5/6] fetch: pass refspec to http server
+Date: Sat, 16 Apr 2016 22:33:38 -0400
+Message-ID: <CAPig+cSxkuWB5qqVY3-m9ESmmHMKwXM+qtbRsZ1j1osjp2i3HQ@mail.gmail.com>
 References: <1460747949-3514-1-git-send-email-dturner@twopensource.com>
-	<1460747949-3514-4-git-send-email-dturner@twopensource.com>
+	<1460747949-3514-6-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>
 To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Sun Apr 17 03:51:38 2016
+X-From: git-owner@vger.kernel.org Sun Apr 17 04:33:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arbs7-0003xb-9A
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Apr 2016 03:51:35 +0200
+	id 1arcX5-0006DG-HO
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Apr 2016 04:33:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752383AbcDQBvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Apr 2016 21:51:31 -0400
-Received: from mail-ig0-f195.google.com ([209.85.213.195]:36695 "EHLO
-	mail-ig0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752166AbcDQBva (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2016 21:51:30 -0400
-Received: by mail-ig0-f195.google.com with SMTP id kb1so7106611igb.3
-        for <git@vger.kernel.org>; Sat, 16 Apr 2016 18:51:29 -0700 (PDT)
+	id S1752378AbcDQCdm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Apr 2016 22:33:42 -0400
+Received: from mail-io0-f196.google.com ([209.85.223.196]:32823 "EHLO
+	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752209AbcDQCdj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2016 22:33:39 -0400
+Received: by mail-io0-f196.google.com with SMTP id g185so19576096ioa.0
+        for <git@vger.kernel.org>; Sat, 16 Apr 2016 19:33:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc;
-        bh=+Q+IaTdPWytQuYhh5dZtWw6aVSmyM6U2HPCvAg96NLc=;
-        b=qDhIUo/NWS6MpY/tCVwIYTENCMXJAN81itzMHymrD/r3rbl2UBr+rznFWwh+V0YaZ6
-         nktYbiWoM2a6FXbRcToPSStuAErziEfVvJBapv62UbPDUvo37a/R6GAHpznQdS4tjsBM
-         Z0r9yAax3d6EifNHqzE4e/bvVNINEvWmbS8D5NfjbTBPJuRJ5luqwW8+Hh9Z1CrR5iFL
-         MHRdwnE+qFtXTu0AmxTbaS7zN+Z0FlzfGzBy55zJzJNsxc/K236+xbfxDPESXDFaVxAG
-         erk9OJquXwQHiyatazB2oxn9Q/5KfWozy+xDIB13cB4eU2qstLJw0/+8nwJNduRAjrxP
-         KSNg==
+        bh=Nc50oywJ0DkhAVwNPO1v9pfddicZMeB/Evn3aeHtbfg=;
+        b=mjPJakRxzMWtuJP/JsuMwYNtDwgxu4+loro9m2K/A3zd5VrQBIMpQy+LGsKWl2p+Q8
+         fOJ7mW6dv/Qo2Kw+Ks3PbZrMaoNTiWeaX2JkqOJa6hA4abuD+szZ6iuTiCflCJa5izRv
+         DlVtWt4ctpRmqeWOGhS4eG2dVAuMB1hzyJ3fD7IWi/pTxNx+WoUqDMib/uJjyOpiTxgB
+         E9ThU4CX65OOaciJbJtpVYDpbsMFejjx9TLPlXv5UXAEqnw4UQFuyYQ2qzUBo3SQF0X+
+         itFtCScMk7bGfneeuFYI4J7c6xLxYoUwwNSg9ilTpEYOzWuandBCXcPXcyZf4wheExnL
+         kCMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=+Q+IaTdPWytQuYhh5dZtWw6aVSmyM6U2HPCvAg96NLc=;
-        b=QUCxVqCSWwVKX1T8ENOoG9tmXexbyPrrBu2etLXLfLXYhtKW4q9QKjEFpWAhGjOdSa
-         oGquIksYEwHZyreNJk5Xl6u7Sl9GdjVRgrNwz3gtsxcfxxUARDIkr7ogC6y7zSUq7Iwi
-         B4rlkTnATP26AJv8xHD3w1H0dGtaL5utGdFYXrnoKd6AfimfjtxlYW3CJzVje9BQJa9P
-         sRLiDhzmUN7A1L7Mj2Ebxoxh5efKdHmMubx+aEZ0ar2hDybonCAYC/NG4nHUlHrFAndY
-         hLZUDvaSBuORW+BESkJ0fyCjrdpfVFixmeE6aZZGh7ZZu2qPHdS22zy8cNUAYwVPeb9Y
-         zx6w==
-X-Gm-Message-State: AOPr4FUZp4LYS9NcD2lOcuDjMIJoJmJ0UaxeRb0QvBpfey4orBuRn6LKlxPpsANFmBKBuwLwgrINsq6DWk0qBw==
-X-Received: by 10.50.92.37 with SMTP id cj5mr12704522igb.91.1460857889087;
- Sat, 16 Apr 2016 18:51:29 -0700 (PDT)
-Received: by 10.79.139.71 with HTTP; Sat, 16 Apr 2016 18:51:29 -0700 (PDT)
-In-Reply-To: <1460747949-3514-4-git-send-email-dturner@twopensource.com>
-X-Google-Sender-Auth: ULNmLWUS-y763kGOGIBNfenBRQM
+        bh=Nc50oywJ0DkhAVwNPO1v9pfddicZMeB/Evn3aeHtbfg=;
+        b=hrObT/dVAuWWi6IWIbTg2CbiUiFvc4ApUDd3/KwNk5b3bQI5zNC1uZDPuUwgYQrhDe
+         27GQQQ9XgT0RkFVb/fiNx1tTd3hDEX1/hUcwIIZ1V+JvNitSjvLrtBz11cQeo8nThP/O
+         wieNU2VMi5GAmTsbova9+qDZ9/KHnZ0un5EH00CKzzp/DyCwwhV7ui+Vvoqg/ZYbJBJY
+         P7Dp6xa73WMq4D26+jWTbzvSfyQ08ye27UqK3xgYB6VdrV1+KvoWjWbk6sxx4u61qU58
+         Il8Hu0F+4IJ9+rol6UzglrUiCH87bGOcfuz2AIW/Q+yTW3TkI9WrVyy1BaaoDSZdn9zX
+         nCZA==
+X-Gm-Message-State: AOPr4FVoD/tfbLaIpJU6o4cr7ms/SAYvwjG5GirWSzJmPZ+SWaNpRtkvmIIXdce9cwqIAki7c++W/PTGHzpx9A==
+X-Received: by 10.107.9.28 with SMTP id j28mr30146159ioi.104.1460860418302;
+ Sat, 16 Apr 2016 19:33:38 -0700 (PDT)
+Received: by 10.79.139.71 with HTTP; Sat, 16 Apr 2016 19:33:38 -0700 (PDT)
+In-Reply-To: <1460747949-3514-6-git-send-email-dturner@twopensource.com>
+X-Google-Sender-Auth: AYHENIBLP6gHziqKeF7qKnUqAaI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291738>
 
 On Fri, Apr 15, 2016 at 3:19 PM, David Turner <dturner@twopensource.com> wrote:
-> Allow clients to pass a "refspec" parameter through to upload-pack;
-> upload-pack will only advertise refs which match that refspec.
+> When fetching over http, send the requested refspec to the server.
+> The server will then only send refs matching that refspec.  It is
+> permitted for old servers to ignore that parameter, and the client
+> will automatically handle this.
+>
+> When the server has many refs, and the client only wants a few, this
+> can save bandwidth and reduce fetch latency.
 >
 > Signed-off-by: David Turner <dturner@twopensource.com>
 > ---
-> diff --git a/http-backend.c b/http-backend.c
-> @@ -465,6 +466,14 @@ static void get_info_refs(char *arg)
->                 argv_array_push(&argv, "--stateless-rpc");
->                 argv_array_push(&argv, "--advertise-refs");
->
-> +               refspec = get_parameter("refspec");
-> +               if (refspec) {
-> +                       struct strbuf interesting_refs = STRBUF_INIT;
-> +                       strbuf_addstr(&interesting_refs, "--interesting-refs=");
-> +                       strbuf_addstr(&interesting_refs, refspec);
-> +                       argv_array_push(&argv, interesting_refs.buf);
-> +                       strbuf_release(&interesting_refs);
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> @@ -302,9 +302,27 @@ static struct ref *get_ref_map(struct transport *transport,
+> -       remote_refs = transport_get_remote_refs(transport, NULL, 0);
+> +       qualified_refspecs = xcalloc(refspec_count, sizeof(*qualified_refspecs));
+> +       for (i = 0; i < refspec_count; i++) {
+> +               if (starts_with(refspecs[i].src, "refs/")) {
+> +                       qualified_refspecs[i].src = xstrdup(refspecs[i].src);
+> +               } else {
+> +                       struct strbuf buf = STRBUF_INIT;
+> +                       strbuf_addf(&buf, "refs/heads/%s", refspecs[i].src);
+> +                       qualified_refspecs[i].src = strbuf_detach(&buf, NULL);
+
+Alternately, replace these three lines with:
+
+    qualified_refspecs[i].src = xstrfmt("refs/heads/%s", refspecs[i].src);
+
+and drop the braces.
+
 > +               }
-
-    if (refspec)
-        argv_array_pushf(&interesting_refs,
-            "--interesting-refs=%s", refspec);
-
->                 argv_array_push(&argv, ".");
->                 run_service(argv.argv, 0);
->                 argv_array_clear(&argv);
-> @@ -841,6 +905,19 @@ int main(int argc, char **argv)
-> +               if (starts_with(arg, "--interesting-refs=")) {
-> +                       struct string_list_item *item;
+> +       }
 > +
-> +                       string_list_split(&interesting_refspecs, arg + 19,
-> +                                         ' ', -1);
-> +                       for_each_string_list_item(item, &interesting_refspecs) {
-> +                               if (check_refname_format(item->string,
-> +                                                        REFNAME_REFSPEC_PATTERN))
-> +                                       die("invalid refspec %s", item->string);
-> +                               item->util = make_refspec_data(item->string);
-> +                       }
-> +                       continue;
-> +               }
+> +       remote_refs = transport_get_remote_refs(transport, qualified_refspecs,
+> +                                               refspec_count);
+> +
+> +       for (i = 0; i < refspec_count; i++) {
+> +               free(qualified_refspecs[i].src);
+> +       }
+> +       free(qualified_refspecs);
+> diff --git a/t/t5552-http-fetch-branch.sh b/t/t5552-http-fetch-branch.sh
+> @@ -0,0 +1,42 @@
+> +test_expect_success 'make some more commits' '
+> +       (
+> +               cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+> +               test_commit 2 &&
+> +               git checkout -b another_branch &&
+> +               test_commit 3
 
-Is this leaking the string list?
+Broken &&-chain.
 
->                 if (!strcmp(arg, "--stateless-rpc")) {
->                         stateless_rpc = 1;
->                         continue;
-> --
-> 2.4.2.767.g62658d5-twtrsrc
+> +               git checkout -b a_third_branch &&
+> +               test_commit 4
+> +       )
+> +'
+> +
+> +test_expect_success 'fetch with refspec only fetches requested branch' '
+> +       test_when_finished "rm trace" &&
+> +       (
+> +               cd clone &&
+> +               GIT_TRACE_PACKET="$TRASH_DIRECTORY/trace" git fetch origin another_branch &&
+> +               ! grep "refs/heads/master" ../trace
+> +       )
+> +'
+
+This could be done without the subshell, perhaps?
+
+    GIT_TRACE_PACKET=blah git -C clone fetch ...
