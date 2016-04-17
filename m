@@ -1,69 +1,67 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [BUG] git rev-parse :/ "regex" syntax not really regex?
-Date: Sun, 17 Apr 2016 16:10:28 +0200
-Message-ID: <87inzgtjfv.fsf@linux-m68k.org>
-References: <20160417133741.GA28931@rhlx01.hs-esslingen.de>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 2/2] t1500-rev-parse: rewrite each test to run in
+ isolation
+Date: Sun, 17 Apr 2016 17:05:33 +0200
+Message-ID: <5713A63D.3060200@kdbg.org>
+References: <1460823230-45692-1-git-send-email-rappazzo@gmail.com>
+ <1460823230-45692-3-git-send-email-rappazzo@gmail.com>
+ <20160417055955.GA13384@flurp.local>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Andreas Mohr <andi@lisas.de>
-X-From: git-owner@vger.kernel.org Sun Apr 17 16:10:45 2016
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
+	szeder@ira.uka.de, peff@peff.net
+To: Eric Sunshine <sunshine@sunshineco.com>,
+	Michael Rappazzo <rappazzo@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 17 17:06:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arnPP-0007pK-Rj
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Apr 2016 16:10:44 +0200
+	id 1aroGu-0000wW-FB
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Apr 2016 17:06:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751190AbcDQOKe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Apr 2016 10:10:34 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:34584 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751171AbcDQOKd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Apr 2016 10:10:33 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3qntTd5wt2z3hhwY;
-	Sun, 17 Apr 2016 16:10:29 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3qntTd5TmPzvh1r;
-	Sun, 17 Apr 2016 16:10:29 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id JE0GZVh8A_sd; Sun, 17 Apr 2016 16:10:29 +0200 (CEST)
-X-Auth-Info: 9E3M5N2/cSwz5NNCfusi3vEK/+ZQB2qIfAtUiW9vV8K2lLdErVBr+LJQMMglQyEr
-Received: from igel.home (ppp-88-217-25-29.dynamic.mnet-online.de [88.217.25.29])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Sun, 17 Apr 2016 16:10:28 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id 985D92C33D7; Sun, 17 Apr 2016 16:10:28 +0200 (CEST)
-X-Yow: Not SENSUOUS...  only ``FROLICSOME''...
- and in need of DENTAL WORK...  in PAIN!!!
-In-Reply-To: <20160417133741.GA28931@rhlx01.hs-esslingen.de> (Andreas Mohr's
-	message of "Sun, 17 Apr 2016 15:37:41 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.92 (gnu/linux)
+	id S1750865AbcDQPFi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Apr 2016 11:05:38 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:47246 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750831AbcDQPFh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Apr 2016 11:05:37 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 3qnvjB4281z5tlN;
+	Sun, 17 Apr 2016 17:05:34 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id AC02D5245;
+	Sun, 17 Apr 2016 17:05:33 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.0
+In-Reply-To: <20160417055955.GA13384@flurp.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291761>
 
-Andreas Mohr <andi@lisas.de> writes:
+Am 17.04.2016 um 07:59 schrieb Eric Sunshine:
+> On Sat, Apr 16, 2016 at 12:13:50PM -0400, Michael Rappazzo wrote:
+>> +test_expect_success 'GIT_DIR=../.git, core.bare = false: prefix' '
+>> +	mkdir work &&
+>> +	test_when_finished "rm -rf work" &&
+>> +	test_config -C "$(pwd)"/.git core.bare false &&
+>> +	GIT_DIR=../.git test_stdout "" git -C work rev-parse --show-prefix >actual
+>
+> Drop the unnecessary '>actual' redirection.
 
-> Unless I happened to misunderstand git's regex flavour, or something else...
-> (hmm, perhaps it's a try-match-single-line vs. multi-line content issue,
-> which perhaps does not work by specifying the trailing $)
+Not only that: setting an environment variable in front of a shell 
+function invocation keeps the variable's value in some (most?) shells. 
+This occurs frequently in the new code. I don't know whether we have a 
+shorter pattern than
 
-This is exactly the difference.  git log --grep matches individual lines
-(like grep), whereas :/<regexp> matches against the whole commit message
-including embedded (and trailing) newlines, and $ doesn't match an
-embedded newline.  Thus to address the second commit in your example you
-have to use $':/^My commit\n' (using bash's ANSI-C quoting feature).
+	(
+		GIT_DIR=../.git &&
+		export GIT_DIR &&
+		test_stdout "" git -C work rev-parse --show-prefix
+	)
 
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+-- Hannes
