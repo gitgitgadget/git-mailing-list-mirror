@@ -1,84 +1,86 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 1/2] test-lib: add a function to compare an expection
- with stdout from a command
-Date: Sun, 17 Apr 2016 12:22:23 -0400
-Message-ID: <CAPig+cT8SSeYPJe8A2DJcxeVW5KJrnDWEJ1VMWDNy5vRkYj0AA@mail.gmail.com>
-References: <1460823230-45692-1-git-send-email-rappazzo@gmail.com>
-	<1460823230-45692-2-git-send-email-rappazzo@gmail.com>
-	<CAPig+cSOuFygsScGn_Nu0_d8mvRik1hQJuanrb-Nvw3ozyt7JQ@mail.gmail.com>
-	<5713A979.6030404@kdbg.org>
+From: Santiago Torres <santiago@nyu.edu>
+Subject: Re: [PATCH v5 2/6] t7030-verify-tag: Adds validation for multiple
+ tags
+Date: Sun, 17 Apr 2016 13:31:56 -0400
+Message-ID: <20160417173155.GA1014@LykOS>
+References: <1459872449-7537-1-git-send-email-santiago@nyu.edu>
+ <1459872449-7537-3-git-send-email-santiago@nyu.edu>
+ <CAPig+cSOLnCoX77O7khEX1cTh0Hu29d6MRdcpfN8ytTkUSVU=A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Rappazzo <rappazzo@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun Apr 17 18:22:30 2016
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Apr 17 19:32:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arpSw-0004Or-Av
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Apr 2016 18:22:30 +0200
+	id 1arqYF-0004zv-AZ
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Apr 2016 19:32:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751283AbcDQQWZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Apr 2016 12:22:25 -0400
-Received: from mail-ig0-f194.google.com ([209.85.213.194]:34898 "EHLO
-	mail-ig0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751000AbcDQQWZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Apr 2016 12:22:25 -0400
-Received: by mail-ig0-f194.google.com with SMTP id fn8so8316503igb.2
-        for <git@vger.kernel.org>; Sun, 17 Apr 2016 09:22:24 -0700 (PDT)
+	id S1750901AbcDQRb7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Apr 2016 13:31:59 -0400
+Received: from mail-qg0-f52.google.com ([209.85.192.52]:36560 "EHLO
+	mail-qg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750730AbcDQRb6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Apr 2016 13:31:58 -0400
+Received: by mail-qg0-f52.google.com with SMTP id f52so105468711qga.3
+        for <git@vger.kernel.org>; Sun, 17 Apr 2016 10:31:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=TDKCx3xLvktG7zDrGOxV/iA1fgI8i+5lh1giEEWpfXI=;
-        b=Uen1xwySz7Yxj7xudKjVeGkzvcQsm56qQgfOPfIq3V/ROzyU7uO+urz2v5Rmry1CMD
-         QOW/Q0VtvVpBu49fAG7f9EmIYS7c4AUW27/2chpm6JDYFymCxWT+/ar+aLgNmcmWT3pX
-         S6/04NGWnCD8r6dSWe6scxP1KH8TcnWau/HhTBCMvvI3OIBP7F2wZy6W/5v9HJpDNnq4
-         B7gyUP0bCj/R+dgxSvfOgjWFQXRLm72aSvlWd+roUAr1Phbo15P+i/t0ShpdEELJ1sRA
-         3VJwUzHWPKsdJmBza1N+ofCE3f0uRKE9lMZ3n1oNekLYzsFhPgBXM+x5yxzOQcsoPss8
-         +CXQ==
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=wRFUIYrFao/TapJg+LlW37rWDUaHE7iUW33c643lvcc=;
+        b=Hz8LYDvLwGjcqTwCNOe7ujhbf2tPqdz5ygh+g3MrYU34/lT3BGPq8k4zqNCiWc8wI5
+         4H4o9l3s2BxioEmE6WCc2R1UdPBzgvg17/0D/LflVc9w0qOZGEMXPmuzJTgd/dd2hYwn
+         vhIHzAJL7c8hnJfacAeUE2Y6Wei0Gmbs9aOSuYihjDOn2CSrV3WAvgUeTbL24OTZQ5/W
+         sXZzHiuXQgCMNC4n1CKo0bdNj0lTdWDl9OehrHvH3Gno+XuxN+bByDeXGmaPKthkOi2i
+         vGznTGMXlJprTLAfRuquajYrL7fT8R9vWFFx7o0hSSXYNvP6NLpNCpC3rzsvtclku7GS
+         ZE1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=TDKCx3xLvktG7zDrGOxV/iA1fgI8i+5lh1giEEWpfXI=;
-        b=OFO1GG8Ym1WHo2O6ttFQYZVhGgFJh3yow5zn5tiRenJPwJQD3wArQHXGlAd04Ru8Mp
-         I/FNPsCeJE1P3oAZiGif8jlzoipraWDu8jd9+ItlT9V1BiFcVagKDMzT77D7WhbwKcDc
-         lcHJWfNGPK3Vv7gb6bZXWK/JZyzJZOQbkrb+43KkrnJZcqbgYWyGzP97THQDZjQ2fJ0K
-         G8uwYr0KzsPx8DXZPtNKtsJXJs8UrmG9zgZ5swTQlWyuJ7hlW1GEcmAdViTDL1qq26+D
-         I/ptMofiyPEFcNwa+iCjV60CPECZDuuckX5PtqpHky8Mup6Nu0jmFB4I5Lk7TrT3bPDs
-         FDDQ==
-X-Gm-Message-State: AOPr4FUEDoT2yL7QIxr1tNRlUfGMK9S8R7WSamL2pJXfU3U22ez57zYEFJ0onfT2i5NqGVUG8EoHyTNiJsIAdg==
-X-Received: by 10.50.189.233 with SMTP id gl9mr13930580igc.73.1460910144180;
- Sun, 17 Apr 2016 09:22:24 -0700 (PDT)
-Received: by 10.79.139.71 with HTTP; Sun, 17 Apr 2016 09:22:23 -0700 (PDT)
-In-Reply-To: <5713A979.6030404@kdbg.org>
-X-Google-Sender-Auth: 0_keKmRND-rxJuzdlR1jL2nqIHY
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=wRFUIYrFao/TapJg+LlW37rWDUaHE7iUW33c643lvcc=;
+        b=a0hPQtutwPFho7Qlw6+wZJV5eLfWkIw7GtWj3gV4jKFAlSE4uawqUvxCLUo6z4FaM0
+         7GFOTpPwAPZ13M1Jqld9utm5F8t0BCNq2wg10uIEX6C5cVN+A9yBHdJDRob5b5Tfx3ov
+         KC+Np9zYvRyeFg4CKDdRZVCGnqeVulCZp0d0AF8blt1TMyrR8kyR3dRaWp5oqKSkgIEt
+         AMR7Zq7qODMroo8//jdBdxrAAe/aghxL3jK1u9i+HxLKi9oTdB4jl4+FI/Y/SD/MW4sS
+         sZIljS37brYl0ohMd5y25vIknRAHulcWmC8BdN+O86G5hDR3OLH0U2QGmYDv0bOyFR4m
+         NSTA==
+X-Gm-Message-State: AOPr4FWQHyfBcbqH5eNTFLmyCbSbB9ZiwssxaKMSowBGsRXyCeXtmhXtnnYkB5C1KnoYd1ed
+X-Received: by 10.140.164.71 with SMTP id k68mr39773932qhk.97.1460914317050;
+        Sun, 17 Apr 2016 10:31:57 -0700 (PDT)
+Received: from LykOS (NYUFWA-WLESSAUTHCLIENTS-19.NATPOOL.NYU.EDU. [216.165.95.8])
+        by smtp.gmail.com with ESMTPSA id c2sm24975665qkb.41.2016.04.17.10.31.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 17 Apr 2016 10:31:56 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAPig+cSOLnCoX77O7khEX1cTh0Hu29d6MRdcpfN8ytTkUSVU=A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291766>
 
-On Sun, Apr 17, 2016 at 11:19 AM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 17.04.2016 um 05:07 schrieb Eric Sunshine:
->> Hmm, considering that $(...) collapses each whitespace run (including
->> newlines) down to a single space, I don't see how you could get a
->> multi-line result.
->
-> No, it doesn't. It only removes trailing newlines:
->
-> ~:1004> frotz=$(echo 1; echo; echo 2; echo; echo; echo); echo "$frotz"
-> 1
->
-> 2
-> ~:1005>
+Sorry for the delay! I just realized I had missed the second comment.
 
-Thanks for the correction.
+> +       grep "^.GNUPG" <expect.stderr.1 >expect.stderr &&
+> 
+> Hmm, is there a reason you didn't stick with the more strict regex
+> Peff suggested?
+> 
+>     ^.GNUPG:.
+> 
+> (Genuine question: I'm not saying your choice is wrong, I'm just
+> interested in the reasoning behind the decision.)
+> 
+I actually had missed the ":". I read the email and tried to internalize
+what the new test was actually doing, then I rewrote the test. 
+
+I think I could add it for completeness though.
+
+Thanks again for the reviews!
+-Santiago.
