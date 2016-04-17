@@ -1,92 +1,97 @@
-From: Andreas Mohr <andi@lisas.de>
-Subject: Re: [BUG] git rev-parse :/ "regex" syntax not really regex?
-Date: Sun, 17 Apr 2016 17:54:40 +0200
-Message-ID: <20160417155440.GA4817@rhlx01.hs-esslingen.de>
-References: <20160417133741.GA28931@rhlx01.hs-esslingen.de>
- <87inzgtjfv.fsf@linux-m68k.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 2/2] t1500-rev-parse: rewrite each test to run in isolation
+Date: Sun, 17 Apr 2016 12:15:19 -0400
+Message-ID: <CAPig+cQ+iqteAdEQR0PLZXnOLVuOT8Onbk3DDPujVvCmgnu=OA@mail.gmail.com>
+References: <1460823230-45692-1-git-send-email-rappazzo@gmail.com>
+	<1460823230-45692-3-git-send-email-rappazzo@gmail.com>
+	<20160417114253.Horde.giIo57RkUzhAe6GP-RahIrw@webmail.informatik.kit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Mohr <andi@lisas.de>, git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sun Apr 17 17:54:50 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Rappazzo <rappazzo@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Jeff King <peff@peff.net>,
+	Johannes Sixt <j6t@kdbg.org>
+To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Sun Apr 17 18:15:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1arp29-0007UO-8I
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Apr 2016 17:54:49 +0200
+	id 1arpM7-0000qS-2D
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Apr 2016 18:15:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750976AbcDQPym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Apr 2016 11:54:42 -0400
-Received: from rhlx01.hs-esslingen.de ([129.143.116.10]:52104 "EHLO
-	rhlx01.hs-esslingen.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750900AbcDQPyl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Apr 2016 11:54:41 -0400
-Received: by rhlx01.hs-esslingen.de (Postfix, from userid 102)
-	id 28D40456D6; Sun, 17 Apr 2016 17:54:40 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <87inzgtjfv.fsf@linux-m68k.org>
-X-Priority: none
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1751188AbcDQQPV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Apr 2016 12:15:21 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:34729 "EHLO
+	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750976AbcDQQPU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2016 12:15:20 -0400
+Received: by mail-io0-f193.google.com with SMTP id z133so20546871iod.1
+        for <git@vger.kernel.org>; Sun, 17 Apr 2016 09:15:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-transfer-encoding;
+        bh=juXyyGFzeNsNdsMoSx6SHf6FKUNkwduFpZRR/k3fyEE=;
+        b=xcRbZT2ftGh6VCrMZ2Y7cruatpcOtGb6bw/cRttYNqC5oLqeN++Ik/BjjOW9b+ChKq
+         Q4mfIPa0FFm7MGCmljN+o18DQFMT5xOQyMku1aYWm8gZgKbSPl/JIftoONjmn8io0fOw
+         0cUnHKEPvKg45l4ttIfpqbiMkYh89IVQH7EBrvDtEAu7110Xfo8B+DXj6GTpsCZPB1AS
+         LxhNx8mNhOjq+OKmNamwaBam+PoQD2vU4HNcqXqTf8znfalswAOHMDJaJ+Ob0d35Fky0
+         CuS99Q8uYlTQoHrLtIsdN+uQF4MQ3PQdUnqFei2NvoSm14PT7KzRHtWl3SAPt2cSwOEn
+         ivCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=juXyyGFzeNsNdsMoSx6SHf6FKUNkwduFpZRR/k3fyEE=;
+        b=DQDZNmFC9Nwu0CIzULrlCMTqKq6u0Xx38kHD9Tx/dJ7j2yWWOHkYPGoAjLX3jHm2TT
+         T4bwkOL1GgGyuZdYNo/usnU9uqg/9mE279Si6bfy70FGrrCoCOmw++SmLtgQnmE7ZrgW
+         2UMtGULH9TCQgaIUstBRQEbzjiRofO4S7heAAXyK0NCWU/e6oG56haidwNivaMto0onR
+         pWdOzOTTYgg6eEa1nMD+bmuhA/tEu9jPGTNSxKES/nZ93hbxx+Wi+2TUn+aXty8oOARj
+         er1JAqnYnjp+oSK/k5yahCgeZLCLJYSFm2j2iD7VPxwh8ggZzudkQJOMe+HaY727ZdHU
+         1+SA==
+X-Gm-Message-State: AOPr4FUHX/9NWIN2F2iwW7CSLNujUz2+x1Uh/p42bGEcb5wGU8rJwmDNIkSVUpVSTeOBl8RoXU9zKN2yLg54zA==
+X-Received: by 10.107.47.10 with SMTP id j10mr17260301ioo.168.1460909719554;
+ Sun, 17 Apr 2016 09:15:19 -0700 (PDT)
+Received: by 10.79.139.71 with HTTP; Sun, 17 Apr 2016 09:15:19 -0700 (PDT)
+In-Reply-To: <20160417114253.Horde.giIo57RkUzhAe6GP-RahIrw@webmail.informatik.kit.edu>
+X-Google-Sender-Auth: 4J13bPEo3pBdE21jOq3RdQxRoq4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291764>
 
-On Sun, Apr 17, 2016 at 04:10:28PM +0200, Andreas Schwab wrote:
-> Andreas Mohr <andi@lisas.de> writes:
-> 
-> > Unless I happened to misunderstand git's regex flavour, or something else...
-> > (hmm, perhaps it's a try-match-single-line vs. multi-line content issue,
-> > which perhaps does not work by specifying the trailing $)
-> 
-> This is exactly the difference.  git log --grep matches individual lines
-> (like grep), whereas :/<regexp> matches against the whole commit message
-> including embedded (and trailing) newlines, and $ doesn't match an
-> embedded newline.  Thus to address the second commit in your example you
-> have to use $':/^My commit\n' (using bash's ANSI-C quoting feature).
+On Sun, Apr 17, 2016 at 5:42 AM, SZEDER G=C3=A1bor <szeder@ira.uka.de> =
+wrote:
+> Quoting Michael Rappazzo <rappazzo@gmail.com>:
+>> +test_expect_success 'GIT_DIR=3D../.git, core.bare =3D false:
+>> is-bare-repository' '
+>> +       mkdir work &&
+>> +       test_when_finished "rm -rf work" &&
+>> +       test_config -C "$(pwd)"/.git core.bare false &&
+>> +       GIT_DIR=3D../.git test_stdout false git -C work rev-parse
+>> --is-bare-repository
+>> +'
+>
+> Here and in the following tests as well: some shells don't cope that =
+well
+> with a one-shot environmental variable set in front of a shell functi=
+on.
+> See commit 512477b17528:
+>
+>     tests: use "env" to run commands with temporary env-var settings
 
-At first I thought "no way, I already did try trailing \n",
-but then I realized that
-it's exactly use of that ANSI-C quoting feature
-which makes that \n newline be (non-)interpreted correctly here,
-and it truly works.
+While reviewing the patch, I stared at that code for a good while
+thinking that there was something about it I ought to remember but
+couldn't, so thanks for the reminder (and j6t's too).
 
-Thank you for a fast and well-inform{ed|ing} response!
-
-Now there's only one question remaining:
-do we simply take this as a documentation-supplied-by-mailing-list item ;-),
-or should certain parts of the parse-rev :/ documentation
-be improved in a certain manner?
-
-
-No, there's another one:
-this syntax seems to be (as indicated) indeed bash-specific,
-since a short dash test script (POSIX):
-#!/usr/bin/dash
-
-git rev-parse $':/^My commit\n'
-
-simply prints a
-$:/^My commit\n
-result,
-and no amount of syntax fiddling
-succeeded in getting the correct commit result on dash.
-
-Well, since that \n simply *is* a newline
-(see also
-http://unix.stackexchange.com/questions/155367/when-to-use-bash-ansi-c-style-escape-e-g-n ),
-a successful way to encode it in dash (all non-bash shells?) is:
-
-git rev-parse :/'^My commit
-'
-
-i.e. with an *actual* newline.
-
-
-BTW, as a (albeit weak) former m68k architecture user,
-thank you for your efforts!
-
-Andreas Mohr
+Considering that this patch is probably going in the wrong direction
+and that if, when re-rolled, it takes a systematic approach testing
+that the original code uses, then the "need" for test_stdout
+effectively disappears, so this issue should go away too (but it's
+good to remember, nevertheless).
