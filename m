@@ -1,90 +1,149 @@
-From: Adam Dinwoodie <adam@dinwoodie.org>
-Subject: Binary grep t7008 known breakage vanished on Cygwin
-Date: Mon, 18 Apr 2016 16:21:49 +0100
-Message-ID: <20160418152149.GD2345@dinwoodie.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git merge branch --no-commit does commit fast forward merges
+Date: Mon, 18 Apr 2016 09:36:30 -0700
+Message-ID: <xmqqy48a6fht.fsf@gitster.mtv.corp.google.com>
+References: <874mb0kkkk.fsf@gmail.com>
+	<alpine.DEB.2.20.1604180825170.2967@virtualbox>
+	<CAH5451kW3t1Y7oW=uHv85jzHwsnQcDK2jdLisauNF-x1LRwqLA@mail.gmail.com>
+	<87a8krpehl.fsf@gmail.com>
+	<CAH5451mDYhavx_OLfXe6cC2WguCsFWEBBBBOCPyX3E6ZJw27+w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 18 17:22:00 2016
+Content-Type: text/plain
+Cc: Christoph Paulik <cpaulik@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 18 18:36:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asAzv-0002Dy-8H
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 17:21:59 +0200
+	id 1asCAL-0001WA-H0
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 18:36:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752383AbcDRPVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Apr 2016 11:21:54 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:37220 "EHLO
-	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751874AbcDRPVx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2016 11:21:53 -0400
-Received: by mail-wm0-f46.google.com with SMTP id n3so130060200wmn.0
-        for <git@vger.kernel.org>; Mon, 18 Apr 2016 08:21:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=qCf97ywWCCcojaiwI95zHiLBWXv7omSbhtGbhcjnP7M=;
-        b=WBVEJ20PVVwT+6EwDmzSiyeLW19lOI4/4O6SX1rOP8ZRvOU2KrWTPyK96WH7Tj4sLP
-         cxSraaOk8+mawej5kp0ZDmuHSzDqXEEPNC834s8UpsYCaU8R1RdLz+sWrXa85ZZxZ93H
-         NJp6sG839BjBIUgwb8PFSTVa1EVIabOpMW/NE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=qCf97ywWCCcojaiwI95zHiLBWXv7omSbhtGbhcjnP7M=;
-        b=lvpMG5noR18/TT2Fk6odvIOGOu0oyh2yXNrU38RnHV+TkCxAK3LZViyr+s6wHyyTI9
-         +WjZeGWmUV05wmlObvRfras73v74tBGyt0lKSp/F4CBY0DfQelV6bIr/Le994Xl4FBxk
-         RtaT/SuKVWSvd05f3FWJf7yq2LkIWOPnLUjjAwvp+arYQJDqOdye7ENHE2tYsnpGwA1v
-         AqtEENHCDsB4IyLSqrxzwxGr/CzjbtGMsuGXHUN621EQG5Mkssx568Ku0w9jsFm7YK3K
-         HyjPoT82m9y8cZ4yL7eYefHqkdJfhOiiKpSv1aQACQP45VQIg4okJsdM5haBio8bj7gi
-         a3Lg==
-X-Gm-Message-State: AOPr4FWXZxG6rDCkib3b7y4cuw7hmYe0hx0DZZQUUZzDgIptUSKgDJWWGs9/8DEQSZccAQ==
-X-Received: by 10.194.115.196 with SMTP id jq4mr35793449wjb.101.1460992912019;
-        Mon, 18 Apr 2016 08:21:52 -0700 (PDT)
-Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
-        by smtp.gmail.com with ESMTPSA id gr4sm28981477wjd.23.2016.04.18.08.21.50
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 18 Apr 2016 08:21:50 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753268AbcDRQgg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Apr 2016 12:36:36 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56112 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753262AbcDRQge (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2016 12:36:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9A187147FC;
+	Mon, 18 Apr 2016 12:36:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZowDKhsMwfVLUBh+ZcBgJ14LIEg=; b=aC/81r
+	0+rFu3NRO6UTKE6wOxyzJpB2RPLjm5SqnUHi79qEUafuStHm9Z4r4R8xdPp+3/sB
+	Gp0MXcS++oYHuYh8SsZj3Zabh61AT0OT8sfTeKs+CgCdDCbt2/9BbkRhwWrQV2J5
+	Z+09mQX1L93tt9GKzVi1xUzyLYHSityfLUh2U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PuRlpfb4yYt7iRrkXop+YDi3MWgWK1lM
+	zeRJp8Ls8E7Q/Zrq+9o6B/wJg9o2XN7j9cbKEuKANnuSkb2Sa//yz7KzbSamzrLF
+	buR2hYDYHgJ4yFG9sit7jUHykXPx8JBbmUbVCxIipyFjIJ2YMbnymMcMDmt06DZh
+	Xs83M/vDu9o=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 917A3147FB;
+	Mon, 18 Apr 2016 12:36:32 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D1E87147F9;
+	Mon, 18 Apr 2016 12:36:31 -0400 (EDT)
+In-Reply-To: <CAH5451mDYhavx_OLfXe6cC2WguCsFWEBBBBOCPyX3E6ZJw27+w@mail.gmail.com>
+	(Andrew Ardill's message of "Mon, 18 Apr 2016 17:44:13 +1000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B51BD552-0583-11E6-9611-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291808>
 
-t7008.12 is marked as an expected failure, but building Git on Cygwin
-including a `make configure && ./configure` step has the test
-unexpectedly passing.  Building without the configure step has the test
-failing as expected.
+Andrew Ardill <andrew.ardill@gmail.com> writes:
 
-This appears to be behaviour specific to Cygwin; at least I get that
-test failing on my CentOS box regardless of whether I perform the
-configure step.
+> Yes, I think the mis-alignment in expectations comes from a
+> technicality in the description you quote. The fast forward is in some
+> ways not really counted as a true merge, and no new commits are
+> created.
 
-The "problem" here is `git grep` is matching a null byte with a "."; the
-test implies that ought to work in theory but hasn't worked in practice
-since the test was added in v1.7.1-101-gf96e567.  The commit message
-there asserts "NUL characters themselves are not matched in any way,
-though", which is evidently not the case on Cygwin, provided the
-`configure` script is run.
+Looking at 123ee3ca (Add --no-commit to git-merge/git-pull.,
+2005-11-01) and $gmane/10998 [*1*], it is clear that "--no-commit"
+was never meant as a "preview of what would happen".  The original
+documentation update at 37465016 (Documentation: -merge and -pull:
+describe merge strategies., 2005-11-04) was not great, but was
+clarified at d8ae1d10 (Document the --no-commit flag better,
+2005-11-04), and that version of text survives to this day.
 
-I'm not sufficiently familiar with the standards and library interfaces
-here to have any idea what the "correct" regex behaviour in this
-circumstance is.
+The real reason why "--no-commit" was added was because back then
+"git commit --amend" did not even exist; it appeared only at
+b4019f04 (git-commit --amend, 2006-03-02).
 
-I'm not sure what the correct thing to do in the face of such an
-unexpected test pass; it looks as though Cygwin Git's `grep` is going to
-behave in a subtly different way to Git on other platforms as a result
-of this, which is probably not ideal, but I don't know if there's
-anything that "ought" to be done to either ensure consistent behaviour
-across platforms, or to stop marking the test as an expected failure on
-platforms where it passes.
+What is (and was back then) the recommended way to see what changes
+merging the other branch brings in to your branch, then?
 
-Adam
+There are at least three ways, all of which are better suited than
+"--no-commit".
+
+When you want to study and understand what changes other branch 
+made since it forked from what you are working on, then
+
+    $ git diff ...other_branch
+
+would give you the change as a single ball of wax [*2*].
+
+If you want to see individual changes explained by their authors,
+you can also do
+
+    $ git log -p ..other_branch
+
+Finally, if you want to see what the merge result would look like,
+you just do the merge.  Advancing the HEAD by one commit and then
+going back once you are done is a cheap operation.  If you want to
+avoid updating your branch for real, these days you can even do so
+on a detached HEAD, unlike old days back when there was not even
+"commit --amend".
+
+    $ git checkout HEAD^0
+    $ git merge other_branch
+
+    $ git diff ORIG_HEAD     ;# what changed overall?
+    $ git log -p ORIG_HEAD.. ;# inspect individual changes
+
+    $ git checkout - ;# come back to the original branch
+
+> I do think that the --no-commit option should imply --no-ff (as this
+> would make the behaviour consistent for end-users). I don't know if
+> this is something that would break scripts etc, but if so you could
+> make it implied only if we detect a terminal or something like is done
+> in other places.
+
+If we were living in an ideal world where "git commit --amend" were
+already there in November 2005, we wouldn't have "merge --no-commit"
+or "pull --no-commit" in our system today, and in such a world, I
+would agree that "try to populate the working tree and the index
+with result of a hypothetical merge and stop without updating HEAD
+nor creating MERGE_HEAD, only to show what would happen if I merged"
+option could be a useful addition to these two commands.  And we may
+choose to call such an option "--no-commit".  I agree that such an
+option should probably imply "--no-ff".
+
+But we are not living in that world.  Making "--no-commit" (which is
+not that "try to populate and show" command) imply "--no-ff" will
+break existing scripts.  And unlike cosmetic things like "do we show
+in color", changing the behaviour of a command in a fundamental way
+based on term and istty() is a sure way to make commands harder to
+understand ("it works this way from the terminal, but it works
+differently in my script. what is going on?"  is not a question we
+are better off not seeing on this list).
+
+Thanks.
+
+[Notes and References]
+
+*1* http://thread.gmane.org/gmane.comp.version-control.git/10998 
+
+*2* Notice the three dots; it is a short-hand for
+
+    $ git diff ^$(git merge-base HEAD other_branch) other_branch
