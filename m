@@ -1,80 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2 v4] xdiff: implement empty line chunk heuristic
-Date: Mon, 18 Apr 2016 14:22:29 -0700
-Message-ID: <xmqqbn564noq.fsf@gitster.mtv.corp.google.com>
-References: <1461013950-12503-1-git-send-email-sbeller@google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] mv: allow moving nested submodules
+Date: Mon, 18 Apr 2016 14:26:06 -0700
+Message-ID: <CAGZ79kbVTUzKmSa9KjEJyDuRCtW5rygQmSYMpssLUKYoO1ooSw@mail.gmail.com>
+References: <1460998489-2155-1-git-send-email-sbeller@google.com>
+	<xmqqk2ju4ozy.fsf@gitster.mtv.corp.google.com>
+	<xmqqfuui4o4e.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, jacob.keller@gmail.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon Apr 18 23:22:38 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	=?UTF-8?Q?Albin_Otterh=C3=A4ll?= <gmane@otterhall.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 18 23:26:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asGcv-000726-Oi
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 23:22:38 +0200
+	id 1asGgQ-0000J3-16
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 23:26:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751626AbcDRVWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Apr 2016 17:22:34 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64519 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750968AbcDRVWd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2016 17:22:33 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id EFB15141F2;
-	Mon, 18 Apr 2016 17:22:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RXva7tOGcYN8PF/K3UgmlkPU3ao=; b=Q+pKxL
-	miLLQc0bj3qQBXiFQTu3Ra1uxr4i4Vv/tdy7nbvF8cAvsk0TgEAIKahEUO8dAYyE
-	3CRit4zsuoBi7lFqCRLy3S7jY21Bule2Cp41KOOZzjdVvRrnFsd/SSOe8L2A1oUG
-	zLEKTq0f2FdJpvHfLP+ddb2UdlYbVgBqCfx7o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=c+7s6ciSEH6m7bM2pkuNg//5oYenYI1I
-	y5vJr6szglI/eZ5vrr1hKDXbd1KPQXK2EfQWTF9eExhnnUl1hmWdSbh2E9fdkx5/
-	OUPPeaaVK44yRquSCRrkS+s9IVE2r2XKd6yNYQa/kxeSAC4EQfH3cVuDje6OcHfz
-	ZJrBe8AuNHQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id E8B2D141F0;
-	Mon, 18 Apr 2016 17:22:31 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5AB3A141EF;
-	Mon, 18 Apr 2016 17:22:31 -0400 (EDT)
-In-Reply-To: <1461013950-12503-1-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Mon, 18 Apr 2016 14:12:28 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A8F99CB4-05AB-11E6-A98C-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1751737AbcDRV0J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Apr 2016 17:26:09 -0400
+Received: from mail-io0-f175.google.com ([209.85.223.175]:35290 "EHLO
+	mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750968AbcDRV0H (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2016 17:26:07 -0400
+Received: by mail-io0-f175.google.com with SMTP id g185so116290ioa.2
+        for <git@vger.kernel.org>; Mon, 18 Apr 2016 14:26:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=gbcFnUrMtjbqSy0El8vASTtCqIg9ceJaC9FCCbXt6nA=;
+        b=VO/yiI8wZr18GBI6QnZtN4CYE0G8Y3UiDpJHwkPrvssXc3rgM+j4mJtP8gGeNqP188
+         52hvz+5aaRar9QZb2I43nZr008m4nD8GBj97dMEY/6MpHT+0LV+3rmm+P6brnOtNIACm
+         siBBpfTyX/63xIQfEuaeS7pDKDN0MgsWnuGUwJWLBTv0HhB+8BqD/fXMik1ads823NxB
+         FS2K62F8lirqF+4OXF4jK5pdxAAhAnI2SC8XATU1IIGV59kL+pqmhNwQ/INQs2ESSnsH
+         rufFEfS+BiqzGraM1opgw1u4aLySFFYCYX6NFdssTlfljEQvBZj2TMPWb//6HP337/86
+         3IHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=gbcFnUrMtjbqSy0El8vASTtCqIg9ceJaC9FCCbXt6nA=;
+        b=VDf+4rdRWjzl5lj4L4rpCveY2q69xUTIBR9gOdd2/fDel2QUdEjaH/aPWu7yp2Fpep
+         /Auc6dWtOo6P+LloTehFAgzr+w0sLn2HWZFrYn32LhGEL/YWPOLLGaE2peDSfFCKCmor
+         wRgiNOOh7I5sSOGnti1/Fi/d+urnV07fCX/B7WYSr5KazqCinYziPaBn5MJUrlKyf7Dn
+         NczSRXsTINmZBuKO9XeIRBN0DsNeHw5PDW1wxcUl2Yy9Rg/i4FJcFuyDJQTpRVD5FyDs
+         4kYN+h7AmW6goZ+DWTYpw+l58VzHem4bWnb9Zw5jBrq54r/8ua0XY4K463YjR0eylBTW
+         wrLQ==
+X-Gm-Message-State: AOPr4FWnHP1ing+lXauDT4bxaeNtoOPrDfw8rjz17j4JzHYFyxHg7rSau0MtHoQosMb2H4t9BThKOf+1DoDFWmqH
+X-Received: by 10.107.184.8 with SMTP id i8mr38395246iof.96.1461014766710;
+ Mon, 18 Apr 2016 14:26:06 -0700 (PDT)
+Received: by 10.107.17.27 with HTTP; Mon, 18 Apr 2016 14:26:06 -0700 (PDT)
+In-Reply-To: <xmqqfuui4o4e.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291831>
 
-Stefan Beller <sbeller@google.com> writes:
-
->> OK, so perhaps either of you two can do a final version people can
->> start having fun with?
+On Mon, Apr 18, 2016 at 2:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Here we go. I squashed in your patch, although with a minor change:
+>> If ignore-errors is set and rename fails, this would fall through
+>> and try to touch this codepath...
+>>
+>>>                      if (submodule_gitfile[i]) {
+>>>                              if (submodule_gitfile[i] != SUBMODULE_WITH_GITDIR)
+>>>                                      connect_work_tree_and_git_dir(dst, submodule_gitfile[i]);
+>>
+>> ... but I am not sure if this thing is prepared to cope with such a
+>> case?  src should have been moved to dst but if rename() failed we
+>> wouldn't see what we expect at dst, or would we?
 >
-> -               if ((flags & XDF_SHORTEST_LINE_HEURISTIC)) {
-> +               if ((flags & XDF_COMPACTION_HEURISTIC) && blank_lines) {
+> In other words, I was wondering if this part should read more like
+> this:
 >
-> We did not need that in the "shortest line" heuristic as we know
-> a line with the shortest line length must exist. We do not know about
-> empty lines though.
+>  builtin/mv.c | 9 +++++++--
+>  1 file changed, 7 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/mv.c b/builtin/mv.c
+> index aeae855..37ed0fc 100644
+> --- a/builtin/mv.c
+> +++ b/builtin/mv.c
+> @@ -252,9 +252,14 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+>                 int pos;
+>                 if (show_only || verbose)
+>                         printf(_("Renaming %s to %s\n"), src, dst);
+> -               if (!show_only && mode != INDEX) {
+> -                       if (rename(src, dst) < 0 && !ignore_errors)
+> +               if (show_only)
+> +                       ;
+> +               else {
+> +                       if (mode != INDEX && rename(src, dst) < 0) {
 
-Makes sense.  The last hunk of
+I agree until here.
 
-$ git show 9614b8dcf -- update-cache.c
 
-gives an unexpected result without "&& blank_lines" above.  Lack of
-"&& blank_lines" happens to make the result slightly easier to read,
-but at the cost of having an extra line in the hunk.
+> +                               if (ignore_errors)
+> +                                       continue;
+>                                 die_errno(_("renaming '%s' failed"), src);
 
-Thanks.
+This I thought would be better as:
+
+    if (!ignore_errors)
+        die_errno(...);
+
+and not continue, but continuing is the right thing I would expect.
+
+Speaking of which, connect_work_tree_and_git_dir as well as
+update_path_in_gitmodules need to learn about the ignore_errors
+flag, too.  You would expect them to not die at the faintest problem,
+but rather honor the promise of "Skip move or rename actions which
+would lead to an error condition."
+
+Thanks for a starting pointer for a new patch!
+Stefan
+
+> +                       }
+>                         if (submodule_gitfile[i]) {
+>                                 if (submodule_gitfile[i] != SUBMODULE_WITH_GITDIR)
+>                                         connect_work_tree_and_git_dir(dst, submodule_gitfile[i]);
