@@ -1,106 +1,81 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 2/2] xdiff: implement empty line chunk heuristic
-Date: Mon, 18 Apr 2016 12:33:39 -0700
-Message-ID: <CAGZ79kZDg9a=xr1gYa=kooYvk-ufyGAVubqbRoRpOnC38FzLSg@mail.gmail.com>
-References: <1460761306-18794-1-git-send-email-sbeller@google.com>
-	<1460761306-18794-3-git-send-email-sbeller@google.com>
-	<xmqqd1pq74ys.fsf@gitster.mtv.corp.google.com>
-	<CA+P7+xq_Uei_ybEjJ=PPWtruk5uB5Dp2KajA=5G6TSWU0_g2kw@mail.gmail.com>
-	<xmqq60ve67sc.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 0/6] Move PGP verification out of verify-tag
+Date: Mon, 18 Apr 2016 13:15:24 -0700
+Message-ID: <xmqqshyi4qsj.fsf@gitster.mtv.corp.google.com>
+References: <1460932021-27633-1-git-send-email-santiago@nyu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jacob Keller <jacob.keller@gmail.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Jens Lehmann <Jens.Lehmann@web.de>,
-	Davide Libenzi <davidel@xmailserver.org>,
-	Jacob Keller <jacob.e.keller@intel.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 18 21:33:45 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: santiago@nyu.edu
+X-From: git-owner@vger.kernel.org Mon Apr 18 22:15:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asEvY-0003kN-VH
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 21:33:45 +0200
+	id 1asFa7-0006yq-2S
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 22:15:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751552AbcDRTdl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Apr 2016 15:33:41 -0400
-Received: from mail-io0-f172.google.com ([209.85.223.172]:34014 "EHLO
-	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751375AbcDRTdk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2016 15:33:40 -0400
-Received: by mail-io0-f172.google.com with SMTP id 2so205199981ioy.1
-        for <git@vger.kernel.org>; Mon, 18 Apr 2016 12:33:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=094DX0ieHC/zvWhY6Rh+eRZnEnN1SgtvZYedrAy+Kvk=;
-        b=Vvj8uQoPAVdM/D2WSBwzbGSjRAjrBNImdV+K8hotrcy4lnrM1WOfE11oj39LBJ8/tv
-         B696NTMjqvibPXN4ZYpzC4PE0w+lpZcF0Lo1l1tMHZZpN+dUOu+X0wHB4DNxuHHy3fNR
-         Uf+Wo/jpw2R5LbqnQEc0OG0UUggyWtNfSoihI4fmQJoObprHhaSlHY66ff0K3HzbE/Ow
-         wvknms/+uxKUBtIWS57ZRV+3APThRXasEj2+I2eHe0a6I33o7RlZIV+ZTSD70O5gau/3
-         aPbnQOPjE+G+I/J9h42cLnAUOlF4hYN00BjSduV2cbjVqiauFAzinGy93JdNUlQIvXVR
-         Jz/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=094DX0ieHC/zvWhY6Rh+eRZnEnN1SgtvZYedrAy+Kvk=;
-        b=akbtNBZYX5UulOo22A/LpLt49p4FilrcGTS17GfgvHVbP94k/KJh5m4eT4JVupBx3k
-         KAaDsTmxTbNpVuznEU1q1GRLzZ8DeagVsquBvnci9LRT0a4F+LWYMCxn/EDGMndVBKC8
-         DBghPcMsgBuQzF9sLFbC+Am5A+QJwzD6mwgEfm/WS/mDoUWHO0foBL+6MW8NzN28U79d
-         L6WIAjVKNCNj8PVg/YmzCWeEgj9m1YhwSIRTEh/YN8EJGyxrnqyWATTWaAZvHHdQPM2F
-         Yi12ILTFBAXYdTbC94Bs6F1QEGpCyglqkCqzfuvG9YpQjIwII1ZgR3aAvA2JP+54BcGT
-         5f7Q==
-X-Gm-Message-State: AOPr4FXJuQ5JcYzGk8cFdWOoW0yaqSqTfya0HFaJQ2YHiPyr33gYQfdIEG+n9oQc5ZavdNvollPHuekPWesp4+xy
-X-Received: by 10.107.18.227 with SMTP id 96mr36774011ios.174.1461008019213;
- Mon, 18 Apr 2016 12:33:39 -0700 (PDT)
-Received: by 10.107.17.27 with HTTP; Mon, 18 Apr 2016 12:33:39 -0700 (PDT)
-In-Reply-To: <xmqq60ve67sc.fsf@gitster.mtv.corp.google.com>
+	id S1752128AbcDRUPb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Apr 2016 16:15:31 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55332 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751787AbcDRUP2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2016 16:15:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CCAB914BAB;
+	Mon, 18 Apr 2016 16:15:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6hEHUqaXdV+YY2CYBYq0U0CiApo=; b=XAVjTG
+	1kDxpnjW010p0EdejNe4FWK1SXhI3mIY+r7gfyuIyaYZGS7+hEE5no2LLL+gnjri
+	E9SfcMui9gouFPuV3DXb+wZYmduEr8WEAhNSBGukNgR1SNAounn6NHswPleV2c22
+	345wsMzMJ2LRy4UVHTTH6VSqQzCuBSST2JYts=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tdjD8d2tf+kuLk+RlCf1mQjDXyn0R+PT
+	wgxZg6fFyd1OqwoivG79VJSl6zVrDtz9W1TnOKugv+3pKWY7XHWrAYRi6+0kFzAg
+	+xqlhiMMGpOYVGrzlxh8zggwvV7WHjrv48j2JBsKqISPTZAuqyGT0TKRloKfaEeu
+	10rP1fW0XHo=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C41D214BAA;
+	Mon, 18 Apr 2016 16:15:26 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 39F0114BA9;
+	Mon, 18 Apr 2016 16:15:26 -0400 (EDT)
+In-Reply-To: <1460932021-27633-1-git-send-email-santiago@nyu.edu>
+	(santiago@nyu.edu's message of "Sun, 17 Apr 2016 18:26:55 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 49CEBA66-05A2-11E6-94A2-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291823>
 
-On Mon, Apr 18, 2016 at 12:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.keller@gmail.com> writes:
->
->> I think we're going to make use of xdl_blankline instead of this or
->> our own "is_emptyline"
->
-> OK, so perhaps either of you two can do a final version people can
-> start having fun with?
+santiago@nyu.edu writes:
 
-Junios proposal seems to be on top of my latest series sent out,
-I'll squash it in and send it out as a final version if you don't mind
-(though I'll do it later today; currently diving into Gerrits Java)
+>    I'm unsure about the 80-column
+>    on 4/6, the ternary operator is rather long.
 
->
-> By the way, I really do not want to see something this low-level to
-> be end-user tweakable with "one bit enable/disable"; the end users
-> shouldn't have to bother [1].
+You can do something like this:
 
-Ok. Thanks for fixing that mistake.
+        type = sha1_object_info(sha1, NULL);
+        if (type != OBJ_TAG)
+                return error("%s: cannot verify a non-tag object of type %s.",
+                             report_name ?
+                             report_name :
+                             find_unique_abbrev(sha1, DEFAULT_ABBREV),
+                             typename(type));
 
-> I left it in but renamed after "what"
-> it enables/disables, not "how" the enabled thing works, to clarify
-> that we have this only as a developers' aid.
+        buf = read_sha1_file(sha1, &type, &size);
+        if (!buf)
+                return error("%s: unable to read file.",
+                             report_name ?
+                             report_name :
+                             find_unique_abbrev(sha1, DEFAULT_ABBREV));
 
-
->
-> *1* I am fine with --compaction-heuristic=(shortest|blank|...) that
-> allows a choice among many as a developers' aid, but I do not think
-> this topic is there yet.
-
-This doesn't bode well with
-    > +--compaction-heuristic::
-    > +--no-compaction-heuristic::
-
-in the future? I'd rather have
-    +--compaction-heuristic=none
-    +--compaction-heuristic=lastEmptyLine
-such that we don't have to worry about further experiments (or matured
-heuristics) later?
+Thanks.
