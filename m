@@ -1,113 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mv: allow moving nested submodules
-Date: Mon, 18 Apr 2016 13:54:09 -0700
-Message-ID: <xmqqk2ju4ozy.fsf@gitster.mtv.corp.google.com>
-References: <1460998489-2155-1-git-send-email-sbeller@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jens.Lehmann@web.de, gmane@otterhall.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon Apr 18 22:54:20 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH 1/2] xdiff: add recs_match helper function
+Date: Mon, 18 Apr 2016 14:12:29 -0700
+Message-ID: <1461013950-12503-2-git-send-email-sbeller@google.com>
+References: <1461013950-12503-1-git-send-email-sbeller@google.com>
+Cc: git@vger.kernel.org, jacob.keller@gmail.com,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Apr 18 23:13:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asGBX-0000OD-T2
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 22:54:20 +0200
+	id 1asGTa-0001ds-Rc
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 23:12:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751519AbcDRUyO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Apr 2016 16:54:14 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65380 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751120AbcDRUyO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2016 16:54:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 803251512A;
-	Mon, 18 Apr 2016 16:54:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OpxGwmRKTVk5Q4LiDBs4Wo1ul3g=; b=ovt9xg
-	NTfq3suyoA+rhfxHmWJT+N81GOoto9V9PxNJNUepQnFeLDEQ08dLALdDQS/PVyAZ
-	w7N+n+5GjWwHrWD5imfbSknWfG1KJmWS1q9+AOeKX1FhSb94tSh/mnt2RNmCm729
-	bJRs9Lr3tKGv+MVJ/qfV4DXGnY3lCqd78l1ak=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=krAnAJCgMyh8zFvlLHOUoU4WnOKKgH4H
-	rtarmYwop1MbE3LJayEwTxnHyL9qoB+M72Fz9tAzjkJiMGYXvZbcKfuarWAV9qCP
-	12+hnSKwybJN6FAxUB2kSDXsoqQmtE9yj6xUm4Wxv040Q/KHekcX1/omnLkQm9II
-	V+iytjfWAGs=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 76B3C15129;
-	Mon, 18 Apr 2016 16:54:12 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DBF2B15128;
-	Mon, 18 Apr 2016 16:54:11 -0400 (EDT)
-In-Reply-To: <1460998489-2155-1-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Mon, 18 Apr 2016 09:54:49 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B40292C2-05A7-11E6-8CA4-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752041AbcDRVMm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Apr 2016 17:12:42 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:36548 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751533AbcDRVMk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2016 17:12:40 -0400
+Received: by mail-pa0-f49.google.com with SMTP id er2so53983583pad.3
+        for <git@vger.kernel.org>; Mon, 18 Apr 2016 14:12:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=JjaMM5zzTk2Z685D7ZIF3j9yaQCRt2ZR3Mt82/EZfE4=;
+        b=PKaMVQ7oai6pOJZm3VEm57Ow8787F2DtLsHG2i5FU6npaqdTiYfHy8nSz2Zq9jUJvP
+         2Lwti/bzKS20Polb1dAYhF4K3YelkubpKBlnwoM/6xvslhg2p0eRN7x0td/Xp9mWahZ7
+         /MDHFJUvng8MLJg2msxVxHjEvBUkR3PnOClI2Gane1ZAfphyc1jfxksbysCgXtAwAXPm
+         bhM6TXoiLlhXI1hvY1watasvt8nppnVk4IUERXCM6NgMrYF3KUs0saFyZRQE/y5N3eKW
+         /r4IxnN0gmcbWLOpCbwxROmC/6SFEuIMikLNikYXe4I4G14La/kOlaz+nqym2QFbeKgN
+         RwMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=JjaMM5zzTk2Z685D7ZIF3j9yaQCRt2ZR3Mt82/EZfE4=;
+        b=haTB3Vh7d6RQS6ETCdnHL/1x25cwaUIFBoGsFcb5a1GGYDUxdLSPwwgCUYLipMeR4J
+         ju7O9BxJcyPYecifBvo7KrcSL6I6v/75F3SRWUgxVXP/bLLiTDD9FofAs6hkOX/4wn+B
+         GHdTWU87/UKn0/BCVccxuXMoXlqP1yzoFQk5Y3zuAt76OJ61CB+gfCcXxCi5E7WOkNQC
+         zzn0AwNDqw+MMpNWyJI7XHctMLgdc7iCmCtvcPk/YpAzNbWaV3P1Zs1+hepjC0zWzmMS
+         8Kuv0VYuMfJzYSt1qpPNqfOA2l15tQS+n+/KMTtue5Am1D7TuLX1VaWUw0+bhjWSnSSg
+         KxZg==
+X-Gm-Message-State: AOPr4FWaBRE/oPhT4Xeq81KL4huVtNYeGVYV5k2Re4ALCUycZHatvF+nIdwQpScz1jd9KUXs
+X-Received: by 10.66.148.35 with SMTP id tp3mr12971148pab.159.1461013959543;
+        Mon, 18 Apr 2016 14:12:39 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:6869:43f:e72f:2f19])
+        by smtp.gmail.com with ESMTPSA id 26sm41371420pft.41.2016.04.18.14.12.38
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 18 Apr 2016 14:12:38 -0700 (PDT)
+X-Mailer: git-send-email 2.8.1.212.gdf84f39
+In-Reply-To: <1461013950-12503-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291826>
 
-Stefan Beller <sbeller@google.com> writes:
+From: Jacob Keller <jacob.keller@gmail.com>
 
->  		if (show_only || verbose)
->  			printf(_("Renaming %s to %s\n"), src, dst);
-> -		if (!show_only && mode != INDEX) {
-> -			if (rename(src, dst) < 0 && !ignore_errors)
-> +		if (!show_only) {
-> +			if (mode != INDEX &&
-> +			    rename(src, dst) < 0 &&
-> +			    !ignore_errors)
->  				die_errno(_("renaming '%s' failed"), src);
-> +
+It is a common pattern in xdl_change_compact to check that hashes and
+strings match. The resulting code to perform this change causes very
+long lines and makes it hard to follow the intention. Introduce a helper
+function recs_match which performs both checks to increase
+code readability.
 
-If ignore-errors is set and rename fails, this would fall through
-and try to touch this codepath...
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ xdiff/xdiffi.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
->  			if (submodule_gitfile[i]) {
->  				if (submodule_gitfile[i] != SUBMODULE_WITH_GITDIR)
->  					connect_work_tree_and_git_dir(dst, submodule_gitfile[i]);
-
-... but I am not sure if this thing is prepared to cope with such a
-case?  src should have been moved to dst but if rename() failed we
-wouldn't see what we expect at dst, or would we?
-
-> diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-> index 4008fae..4a2570e 100755
-> --- a/t/t7001-mv.sh
-> +++ b/t/t7001-mv.sh
-> @@ -292,6 +292,9 @@ test_expect_success 'setup submodule' '
->  	echo content >file &&
->  	git add file &&
->  	git commit -m "added sub and file" &&
-> +	mkdir -p deep/directory/hierachy &&
-> +	git submodule add ./. deep/directory/hierachy/sub &&
-> +	git commit -m "added another submodule" &&
->  	git branch submodule
->  '
->  
-> @@ -475,4 +478,17 @@ test_expect_success 'mv -k does not accidentally destroy submodules' '
->  	git checkout .
->  '
->  
-> +test_expect_success 'moving a submodule in nested directories' '
-> +	(
-> +		cd deep &&
-> +		git mv directory ../ &&
-> +		# git status would fail if the update of linking git dir to
-> +		# work dir of the submodule failed.
-> +		git status &&
-> +		git config -f ../.gitmodules submodule.deep/directory/hierachy/sub.path >../actual &&
-> +		echo "directory/hierachy/sub" >../expect
-> +	) &&
-> +	test_cmp actual expect
-> +'
-> +
->  test_done
+diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+index 2358a2d..748eeb9 100644
+--- a/xdiff/xdiffi.c
++++ b/xdiff/xdiffi.c
+@@ -400,6 +400,14 @@ static xdchange_t *xdl_add_change(xdchange_t *xscr, long i1, long i2, long chg1,
+ }
+ 
+ 
++static int recs_match(xrecord_t **recs, long ixs, long ix, long flags)
++{
++	return (recs[ixs]->ha == recs[ix]->ha &&
++		xdl_recmatch(recs[ixs]->ptr, recs[ixs]->size,
++			     recs[ix]->ptr, recs[ix]->size,
++			     flags));
++}
++
+ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 	long ix, ixo, ixs, ixref, grpsiz, nrec = xdf->nrec;
+ 	char *rchg = xdf->rchg, *rchgo = xdfo->rchg;
+@@ -442,8 +450,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 			 * the last line of the current change group, shift backward
+ 			 * the group.
+ 			 */
+-			while (ixs > 0 && recs[ixs - 1]->ha == recs[ix - 1]->ha &&
+-			       xdl_recmatch(recs[ixs - 1]->ptr, recs[ixs - 1]->size, recs[ix - 1]->ptr, recs[ix - 1]->size, flags)) {
++			while (ixs > 0 && recs_match(recs, ixs - 1, ix - 1, flags)) {
+ 				rchg[--ixs] = 1;
+ 				rchg[--ix] = 0;
+ 
+@@ -470,8 +477,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 			 * the line next of the current change group, shift forward
+ 			 * the group.
+ 			 */
+-			while (ix < nrec && recs[ixs]->ha == recs[ix]->ha &&
+-			       xdl_recmatch(recs[ixs]->ptr, recs[ixs]->size, recs[ix]->ptr, recs[ix]->size, flags)) {
++			while (ix < nrec && recs_match(recs, ixs, ix, flags)) {
+ 				rchg[ixs++] = 0;
+ 				rchg[ix++] = 1;
+ 
+-- 
+2.8.0.26.gba39a1b.dirty
