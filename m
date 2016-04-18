@@ -1,125 +1,116 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] mv: allow moving nested submodules
-Date: Mon, 18 Apr 2016 14:26:06 -0700
-Message-ID: <CAGZ79kbVTUzKmSa9KjEJyDuRCtW5rygQmSYMpssLUKYoO1ooSw@mail.gmail.com>
-References: <1460998489-2155-1-git-send-email-sbeller@google.com>
-	<xmqqk2ju4ozy.fsf@gitster.mtv.corp.google.com>
-	<xmqqfuui4o4e.fsf@gitster.mtv.corp.google.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH 2/2] xdiff: implement empty line chunk heuristic
+Date: Mon, 18 Apr 2016 15:04:18 -0700
+Message-ID: <CA+P7+xrisA0qqQ01GoSUdNm+O85NN9H7arovzqDD2e5GUv2GAw@mail.gmail.com>
+References: <1461013950-12503-1-git-send-email-sbeller@google.com> <1461013950-12503-3-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	=?UTF-8?Q?Albin_Otterh=C3=A4ll?= <gmane@otterhall.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 18 23:26:14 2016
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git mailing list <git@vger.kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Apr 19 00:04:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asGgQ-0000J3-16
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 23:26:14 +0200
+	id 1asHHf-0001tQ-12
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 00:04:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751737AbcDRV0J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Apr 2016 17:26:09 -0400
-Received: from mail-io0-f175.google.com ([209.85.223.175]:35290 "EHLO
-	mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750968AbcDRV0H (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2016 17:26:07 -0400
-Received: by mail-io0-f175.google.com with SMTP id g185so116290ioa.2
-        for <git@vger.kernel.org>; Mon, 18 Apr 2016 14:26:07 -0700 (PDT)
+	id S1751485AbcDRWEj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Apr 2016 18:04:39 -0400
+Received: from mail-vk0-f49.google.com ([209.85.213.49]:35110 "EHLO
+	mail-vk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750915AbcDRWEj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2016 18:04:39 -0400
+Received: by mail-vk0-f49.google.com with SMTP id t129so237720536vkg.2
+        for <git@vger.kernel.org>; Mon, 18 Apr 2016 15:04:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=gbcFnUrMtjbqSy0El8vASTtCqIg9ceJaC9FCCbXt6nA=;
-        b=VO/yiI8wZr18GBI6QnZtN4CYE0G8Y3UiDpJHwkPrvssXc3rgM+j4mJtP8gGeNqP188
-         52hvz+5aaRar9QZb2I43nZr008m4nD8GBj97dMEY/6MpHT+0LV+3rmm+P6brnOtNIACm
-         siBBpfTyX/63xIQfEuaeS7pDKDN0MgsWnuGUwJWLBTv0HhB+8BqD/fXMik1ads823NxB
-         FS2K62F8lirqF+4OXF4jK5pdxAAhAnI2SC8XATU1IIGV59kL+pqmhNwQ/INQs2ESSnsH
-         rufFEfS+BiqzGraM1opgw1u4aLySFFYCYX6NFdssTlfljEQvBZj2TMPWb//6HP337/86
-         3IHg==
+        bh=Yk1bL1+J+k8UUMmnWBijhFP+oCVvhJjhCuzIbE7fx8s=;
+        b=k1YQ/Ct0zly6tjX2Xz4/evAZrGmnPJeCZbs2q7cQ+5PeCg4v4bKsIUd7GeLM6eiP5N
+         JoKpwEApUqpzeXnJAFFjyEzQX8SyIgDGxy62zHlIwrB2Cr9XvmL6QCFfjctZ3tj7PICH
+         ngIZBW/GUkXFbkNQFU9Q1HFA6K71W1WLkWrc70DeFiMhv9A5vqkeqwhoQ7zjBMXRFIFU
+         jqskzk46v32fS7WPT9M+V8ANIIPm59dxu4HHKdVOaUtCGYB0UItkKX2MlEYOwT9awBtJ
+         DJKlVFkMwYVHg6DGL2WNFeqRp7plC1gPCruuC9Q0+P5MSSw5gOpDCP8zRXS5apkda4Nf
+         t/YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=gbcFnUrMtjbqSy0El8vASTtCqIg9ceJaC9FCCbXt6nA=;
-        b=VDf+4rdRWjzl5lj4L4rpCveY2q69xUTIBR9gOdd2/fDel2QUdEjaH/aPWu7yp2Fpep
-         /Auc6dWtOo6P+LloTehFAgzr+w0sLn2HWZFrYn32LhGEL/YWPOLLGaE2peDSfFCKCmor
-         wRgiNOOh7I5sSOGnti1/Fi/d+urnV07fCX/B7WYSr5KazqCinYziPaBn5MJUrlKyf7Dn
-         NczSRXsTINmZBuKO9XeIRBN0DsNeHw5PDW1wxcUl2Yy9Rg/i4FJcFuyDJQTpRVD5FyDs
-         4kYN+h7AmW6goZ+DWTYpw+l58VzHem4bWnb9Zw5jBrq54r/8ua0XY4K463YjR0eylBTW
-         wrLQ==
-X-Gm-Message-State: AOPr4FWnHP1ing+lXauDT4bxaeNtoOPrDfw8rjz17j4JzHYFyxHg7rSau0MtHoQosMb2H4t9BThKOf+1DoDFWmqH
-X-Received: by 10.107.184.8 with SMTP id i8mr38395246iof.96.1461014766710;
- Mon, 18 Apr 2016 14:26:06 -0700 (PDT)
-Received: by 10.107.17.27 with HTTP; Mon, 18 Apr 2016 14:26:06 -0700 (PDT)
-In-Reply-To: <xmqqfuui4o4e.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Yk1bL1+J+k8UUMmnWBijhFP+oCVvhJjhCuzIbE7fx8s=;
+        b=XfA5WTULYDLGIwSKGSclIZvV0vZJay3PJyoZrHpxFo6z3+qcFmrRcT/atpQDKrMbxL
+         M2oEo1YfF4Jvvb4JuGQM9fYO6nYUxD7nY2NjLRWitktSx2Zzi+ptNLPIZ4Xyz1Ck//O7
+         i08ZyIasLMqlj2LbU+uL4AmaDeCLI+IzNd5H5n8RMqg1M0urvUsr4TXny+yiEr1wHriC
+         JXp9yOd0xeLiAOrSTOMcTYJ0Ssw9K+etc44jmLWCF6V4Yf+Jnv9ILzR7WsIjKEY4k/zP
+         TjCsZEkWnlzPJd+1aKamKNfAc65cNMKTA6JCoBkL6Qhhq3cxhNhBEaNg60dDaW3BWf4Z
+         OUCQ==
+X-Gm-Message-State: AOPr4FWqIol2UB7mFhfVA94i6FeWG8gvJzn7B7QfGyRfYJPPEt/f0Nc5QJTGmsPvEpS8Ersu3mkB4Hrcgya1iw==
+X-Received: by 10.31.147.15 with SMTP id v15mr10086467vkd.58.1461017077459;
+ Mon, 18 Apr 2016 15:04:37 -0700 (PDT)
+Received: by 10.159.53.112 with HTTP; Mon, 18 Apr 2016 15:04:18 -0700 (PDT)
+In-Reply-To: <1461013950-12503-3-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291832>
 
-On Mon, Apr 18, 2016 at 2:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Apr 18, 2016 at 2:12 PM, Stefan Beller <sbeller@google.com> wrote:
+> In order to produce the smallest possible diff and combine several diff
+> hunks together, we implement a heuristic from GNU Diff which moves diff
+> hunks forward as far as possible when we find common context above and
+> below a diff hunk. This sometimes produces less readable diffs when
+> writing C, Shell, or other programming languages, ie:
 >
->> If ignore-errors is set and rename fails, this would fall through
->> and try to touch this codepath...
->>
->>>                      if (submodule_gitfile[i]) {
->>>                              if (submodule_gitfile[i] != SUBMODULE_WITH_GITDIR)
->>>                                      connect_work_tree_and_git_dir(dst, submodule_gitfile[i]);
->>
->> ... but I am not sure if this thing is prepared to cope with such a
->> case?  src should have been moved to dst but if rename() failed we
->> wouldn't see what we expect at dst, or would we?
+> ...
+>  /*
+> + *
+> + *
+> + */
+> +
+> +/*
+> ...
 >
-> In other words, I was wondering if this part should read more like
-> this:
+> instead of the more readable equivalent of
 >
->  builtin/mv.c | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
+> ...
+> +/*
+> + *
+> + *
+> + */
+> +
+>  /*
+> ...
 >
-> diff --git a/builtin/mv.c b/builtin/mv.c
-> index aeae855..37ed0fc 100644
-> --- a/builtin/mv.c
-> +++ b/builtin/mv.c
-> @@ -252,9 +252,14 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
->                 int pos;
->                 if (show_only || verbose)
->                         printf(_("Renaming %s to %s\n"), src, dst);
-> -               if (!show_only && mode != INDEX) {
-> -                       if (rename(src, dst) < 0 && !ignore_errors)
-> +               if (show_only)
-> +                       ;
-> +               else {
-> +                       if (mode != INDEX && rename(src, dst) < 0) {
+> Implement the following heuristic to (optionally) produce the desired
+> output.
+>
+>   If there are diff chunks which can be shifted around, shift each hunk
+>   such that the last common empty line is below the chunk with the rest
+>   of the context above.
+>
+> This heuristic appears to resolve the above example and several other
+> common issues without producing significantly weird results. However, as
+> with any heuristic it is not really known whether this will always be
+> more optimal. Thus, it can be disabled via diff.compactionHeuristic.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
 
-I agree until here.
+Thanks Stephan and Junio, this looks pretty good. I think before it's
+merged we'd probably want to implement some sort of attributes which
+allows per-path configuration, incase it needs to be configured at
+all.
 
+I've got it applied to my local git, and I'm going to try to run a
+diff between enabled vs disabled on a large section of the Linux
+kernel history and a few other projects to see if I spot anything odd.
 
-> +                               if (ignore_errors)
-> +                                       continue;
->                                 die_errno(_("renaming '%s' failed"), src);
-
-This I thought would be better as:
-
-    if (!ignore_errors)
-        die_errno(...);
-
-and not continue, but continuing is the right thing I would expect.
-
-Speaking of which, connect_work_tree_and_git_dir as well as
-update_path_in_gitmodules need to learn about the ignore_errors
-flag, too.  You would expect them to not die at the faintest problem,
-but rather honor the promise of "Skip move or rename actions which
-would lead to an error condition."
-
-Thanks for a starting pointer for a new patch!
-Stefan
-
-> +                       }
->                         if (submodule_gitfile[i]) {
->                                 if (submodule_gitfile[i] != SUBMODULE_WITH_GITDIR)
->                                         connect_work_tree_and_git_dir(dst, submodule_gitfile[i]);
+Thanks,
+Jake
