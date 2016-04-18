@@ -1,72 +1,98 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Andrew Ardill <andrew.ardill@gmail.com>
 Subject: Re: git merge branch --no-commit does commit fast forward merges
-Date: Mon, 18 Apr 2016 08:26:57 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604180825170.2967@virtualbox>
-References: <874mb0kkkk.fsf@gmail.com>
+Date: Mon, 18 Apr 2016 17:09:18 +1000
+Message-ID: <CAH5451kW3t1Y7oW=uHv85jzHwsnQcDK2jdLisauNF-x1LRwqLA@mail.gmail.com>
+References: <874mb0kkkk.fsf@gmail.com> <alpine.DEB.2.20.1604180825170.2967@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Christoph Paulik <cpaulik@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 18 08:27:11 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Christoph Paulik <cpaulik@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Apr 18 09:10:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1as2eI-0002QZ-QK
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 08:27:07 +0200
+	id 1as3K7-0000oX-89
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 09:10:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751786AbcDRG1B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Apr 2016 02:27:01 -0400
-Received: from mout.gmx.net ([212.227.15.15]:53038 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751619AbcDRG1A (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2016 02:27:00 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LhfZR-1bW09Y3uOP-00msN7; Mon, 18 Apr 2016 08:26:58
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <874mb0kkkk.fsf@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:rmiLrZNc4RV8UTaQDfZle9zxenqroWmxW3rHJGUUlEq9KFTFZU8
- 893+rL1atnzKI27VEx8L5e4GYYAnpRgHTT64tfMDEr5DZElA2aYqwFB3cAZFovcEPD+g1aN
- dcQR3bC8OJ4dwg47yTJJdck0GjKoIzql7KMcXZMJE4XC+d+y1mMqrLtT08ESMDh6lw+WdaU
- V2w0SOHwRDNkE7F7D4lXQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:67qCbTddrQQ=:bOETiYe3pcYw716cni4ZUD
- metZXiSIPsMSG1sdky/2cP65/GPP8szHN1wIUhLSR0e1RAIZtCl1Kjs2vw/Srnu0U0Z8towVR
- Dr1s4OfPveQIHZUtRtoSrqI65sAS5entvNFDJ8bFhNXq0om0fGoJuJrKMRgOO9kSc8BGVKcb+
- vFi8bgFEtjJPEMiTaKg6djyhKAXe5EwxTHTw8dlbRisS0kNQGt+m6sAAzBr4JWAbwbWQjR/fs
- LKOAihw5U1eWvB25Q6CO/bwXf+DJ1xBbuGBff6/B4GHbL07gpXLte+JYGghikMVblBqAODOl9
- 3B1jyYi7u6G3lIJL2GDSBOrvwN4i4DuyBy2yTyy33pEzLm3C2AOyNSC63GNgt0prlkAPldy3D
- RVBmnEl83Wdy+Ih7/P9Te8pJJEUtIuSKNnjLP0jycXSsvs9h2pSHp6Ggjd6TVnIQDEsm0yGei
- EC8SEibchFiQhAff2J4qtLI/S+L61trFwrqC9P/kqyMjkVwV0c3Q0JrY655IKHD2cCRhp8smi
- EcOv0BERI+0X4PZcDmmkoGnsNyPII6vU4JEPyGZAC+Gl4q37wKaIAuvmTaw4Zdc+Jn0iOvYvU
- KcR8HHMEgYvfG8MQo6PCsCwkXf9m1FKjaWUR64Wv5NADgDcfbGov0WFHH6tneXoPmICo1TaJO
- 1NCEqM0pI2GUBKXGtyDNa7T7AkTDTaTNFHOCPR5FHykE57tcuSn5/bMU+JzwbhYxe+3GBLYz/
- 3r98TN+lQiQd0Q1B+4O/UTL0W3khKoInozTEa+sndzPZ0aXMFHNxzX4oAPYzzQChHp3/ywic 
+	id S1752030AbcDRHKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Apr 2016 03:10:11 -0400
+Received: from mail-io0-f172.google.com ([209.85.223.172]:34233 "EHLO
+	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752000AbcDRHKJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2016 03:10:09 -0400
+Received: by mail-io0-f172.google.com with SMTP id 2so186905883ioy.1
+        for <git@vger.kernel.org>; Mon, 18 Apr 2016 00:10:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=wght2fQm7UrI7dEpcWPMlsbBwOV5AwFQrSoYXqoqI2k=;
+        b=zJ+6C7GNcCXERAnCa8AKQPk1f0NumG5chqU47uOlXT7xoOJqeq6DTgU/lTD6gwxI5m
+         Zw7pbj1YrYZlWIdgsA3FbpZYKTBbIiyRvbOnlMPnXhsz34xZnfdID8dyXOW/XUf20p5v
+         WiAR8xgSTOAvqvd3DE3xRO22Cuq9N1O9IBtng7MfFnexLCmvc02vyTkGbA5q1Wa+E2HM
+         tL8OEvCNfbQi2NTIqChuPUWSCCAKhdv9l5kBdGOoA7O/cOM9AEsmgKYlMNdeoDiCsfz4
+         Ty6tdF2JF/Ql8oFsvViBv/wMKFEn6AlHakQ9JAdd5TyRFrQw8z/GVq7M8J5fk1SR+o4i
+         l9KA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=wght2fQm7UrI7dEpcWPMlsbBwOV5AwFQrSoYXqoqI2k=;
+        b=KeY9r9p2Wny5NKlvv3O+zmtnAx0muIV6QK4NS7RcEzLWLlWELhty8X5n2uUhFYyyn3
+         uTYCICkOjWh16fIVU2dub7PCxCBlIuGZ/RMkFkeAa5lbDBr/NKCYrJ7l9n2Xx1kSLMmY
+         fDIgKhi0JWGSRAduvv0tn8v9a5hPQXXdi4aWsTqpqQtswZsHY1gZUKiRJX6fsw75Kd5u
+         FELyI5HyAAKy0E7qsgpjq/cxMheCLczm5yQct8cCV7uNGJkAYA5pwo1Q2C/tdWUi42lW
+         lng77hHufdWrXUuDm9FYhj6pg82Yn7mb1F2H0JZqiKnxAqr77vkb9P4trQjbuiI6FKP5
+         YeUg==
+X-Gm-Message-State: AOPr4FWL6kMeU+N9fWfzcTuHLMRtOeAzskGVXEOsBzrMJ+9Mr6nJMo9XCwXVyUmdvzBijSDD5hADEePFdpDGVg==
+X-Received: by 10.107.13.133 with SMTP id 127mr40299609ion.129.1460963398503;
+ Mon, 18 Apr 2016 00:09:58 -0700 (PDT)
+Received: by 10.36.45.69 with HTTP; Mon, 18 Apr 2016 00:09:18 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1604180825170.2967@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291798>
 
-Hi Christoph,
+On 18 April 2016 at 16:26, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> > The command only works as expected when also adding the --no-ff flag.
+>
+> Then you need to fix your expectations ;-)
 
-On Sun, 17 Apr 2016, Christoph Paulik wrote:
+I *think* the core of this problem is that the intent of the end-user
+does not align with the command options available.
 
-> git merge branch --no-commit does commit fast forward merges leaving
-> users no way to change the merge results.
+In this use case (as far as I can tell), the user wants to see what
+the result of a merge from somewhere else will look like, without
+changing their HEAD.
 
-No, this is not a bug. Please note that a fast-forward does not perform a
-commit at all (and therefore "does commit fast forward" is an inaccurate
-description).
+While you are correct in saying a fast-forward does not create any new
+commits, for the user it certainly looks like a whole slew of new
+commits have been added. Moreover, the nature of the option means that
+the user has to investigate if the merge is a fast-forward in order to
+know what the outcome of the command will be.
 
-> The command only works as expected when also adding the --no-ff flag.
+If the merge is a fast-forward, --no-commit has no effect on the
+outcome. If the merge is not a fast-forward, --no-commit has a huge
+effect on the outcome.
 
-Then you need to fix your expectations ;-)
+If I see a --no-commit option, as an inexperienced user, I would be
+quite surprised to find my HEAD changed after using it. It would be
+far more intuitive, for that user, for --no-commit to imply --no-ff
+however I suspect that such a change may well cause more problems then
+it fixes.
 
-A fast-forward *avoids* committing altogether. In that light, the current
-behavior is correct.
+What I wonder is, in what situation is the current behaviour is desirable?
 
-Ciao,
-Johannes
+While I agree that the option works as designed, I think its behaviour
+is more surprising to the end user then it should be.
+
+Regards,
+
+Andrew Ardill
