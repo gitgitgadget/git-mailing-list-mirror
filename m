@@ -1,117 +1,88 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 1/2] xdiff: add recs_match helper function
-Date: Mon, 18 Apr 2016 14:12:29 -0700
-Message-ID: <1461013950-12503-2-git-send-email-sbeller@google.com>
-References: <1461013950-12503-1-git-send-email-sbeller@google.com>
+Subject: [PATCH 0/2 v4] xdiff: implement empty line chunk heuristic
+Date: Mon, 18 Apr 2016 14:12:28 -0700
+Message-ID: <1461013950-12503-1-git-send-email-sbeller@google.com>
 Cc: git@vger.kernel.org, jacob.keller@gmail.com,
-	Jacob Keller <jacob.e.keller@intel.com>,
 	Stefan Beller <sbeller@google.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Apr 18 23:13:05 2016
+X-From: git-owner@vger.kernel.org Mon Apr 18 23:13:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asGTa-0001ds-Rc
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 23:12:59 +0200
+	id 1asGTa-0001ds-8B
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 23:12:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752041AbcDRVMm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Apr 2016 17:12:42 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:36548 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751533AbcDRVMk (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752027AbcDRVMk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Mon, 18 Apr 2016 17:12:40 -0400
-Received: by mail-pa0-f49.google.com with SMTP id er2so53983583pad.3
-        for <git@vger.kernel.org>; Mon, 18 Apr 2016 14:12:40 -0700 (PDT)
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:36415 "EHLO
+	mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751938AbcDRVMi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2016 17:12:38 -0400
+Received: by mail-pf0-f169.google.com with SMTP id e128so84309879pfe.3
+        for <git@vger.kernel.org>; Mon, 18 Apr 2016 14:12:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JjaMM5zzTk2Z685D7ZIF3j9yaQCRt2ZR3Mt82/EZfE4=;
-        b=PKaMVQ7oai6pOJZm3VEm57Ow8787F2DtLsHG2i5FU6npaqdTiYfHy8nSz2Zq9jUJvP
-         2Lwti/bzKS20Polb1dAYhF4K3YelkubpKBlnwoM/6xvslhg2p0eRN7x0td/Xp9mWahZ7
-         /MDHFJUvng8MLJg2msxVxHjEvBUkR3PnOClI2Gane1ZAfphyc1jfxksbysCgXtAwAXPm
-         bhM6TXoiLlhXI1hvY1watasvt8nppnVk4IUERXCM6NgMrYF3KUs0saFyZRQE/y5N3eKW
-         /r4IxnN0gmcbWLOpCbwxROmC/6SFEuIMikLNikYXe4I4G14La/kOlaz+nqym2QFbeKgN
-         RwMQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=d3sMasQsIfb+9epDr3ZjPatXf0gRhC9U0xHyAF/YGs8=;
+        b=Tk/DTG0OSB1YvT5FPAiYWiuRa+HbBDZ/vIcRySOkKwBPV4ebInsa/FvbVYF+tBwldK
+         C8AR/sKs00jir4H+3ZRRwUyGiRGNxl79DfrM6V4n3fiIQ3nmkeC2nVjW/rv4mSn1Z4KC
+         I/ER1klY6Qj8i5WbezoFRuYuB/lkceE6sBwfW++8HFCr4kAtjw5VVa4EX2e4dmE4Akcv
+         n3JhkzqiXPoQuIYMd3MvRGdNOEXGs83oStj0Z8hWiT8jQT890K38YJNmTx08+AeRiWLa
+         KE/dGCayS93UeDHlTFo+LF5X3fB7IZkBpIDyOO5ZG1QawUvfpwLA+fPfDqzTpNnvYwN+
+         v0iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=JjaMM5zzTk2Z685D7ZIF3j9yaQCRt2ZR3Mt82/EZfE4=;
-        b=haTB3Vh7d6RQS6ETCdnHL/1x25cwaUIFBoGsFcb5a1GGYDUxdLSPwwgCUYLipMeR4J
-         ju7O9BxJcyPYecifBvo7KrcSL6I6v/75F3SRWUgxVXP/bLLiTDD9FofAs6hkOX/4wn+B
-         GHdTWU87/UKn0/BCVccxuXMoXlqP1yzoFQk5Y3zuAt76OJ61CB+gfCcXxCi5E7WOkNQC
-         zzn0AwNDqw+MMpNWyJI7XHctMLgdc7iCmCtvcPk/YpAzNbWaV3P1Zs1+hepjC0zWzmMS
-         8Kuv0VYuMfJzYSt1qpPNqfOA2l15tQS+n+/KMTtue5Am1D7TuLX1VaWUw0+bhjWSnSSg
-         KxZg==
-X-Gm-Message-State: AOPr4FWaBRE/oPhT4Xeq81KL4huVtNYeGVYV5k2Re4ALCUycZHatvF+nIdwQpScz1jd9KUXs
-X-Received: by 10.66.148.35 with SMTP id tp3mr12971148pab.159.1461013959543;
-        Mon, 18 Apr 2016 14:12:39 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=d3sMasQsIfb+9epDr3ZjPatXf0gRhC9U0xHyAF/YGs8=;
+        b=IuF/88QBTvd1L9C4HN2i5sR7mqLXK8ENA5HjZJYb28v+RfiTXXKYUcMFhZ+D5FDAan
+         9bkU3+GiJfIorel31NX6rVqbIZHhJJhZ4N0eOyBvT48aBJi8en17xZLbVXwQ9FbJ4mNo
+         zYVJzWeS2G6LdZ7EB1jZJ3eVG0MHS8h/wHjV1z6wdTb2W2cvrhIQs2mrRr3saB2QYBFE
+         dRngY/+kyNHMP8NeJCNWdmZkV776jycT0YQJe+6bgi4ZT7WPTxvDB/JrOw7TXd/4EPtT
+         /tCK1bBznfc1S3rbpQ4SHBFGm3iLKx67IaL7qZAu8Ad9mQqmqI6fgLlVAWtqP9C2rK1n
+         aO7g==
+X-Gm-Message-State: AOPr4FXT/0sAm7AXTsOkl+rV5OpS5VcTPsQhqwRsl4C8ecowfH7dZrjJtOBe5g1Ce2A5bHaf
+X-Received: by 10.98.93.29 with SMTP id r29mr27924194pfb.18.1461013957710;
+        Mon, 18 Apr 2016 14:12:37 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:6869:43f:e72f:2f19])
-        by smtp.gmail.com with ESMTPSA id 26sm41371420pft.41.2016.04.18.14.12.38
+        by smtp.gmail.com with ESMTPSA id f12sm85763672pfd.87.2016.04.18.14.12.36
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 18 Apr 2016 14:12:38 -0700 (PDT)
+        Mon, 18 Apr 2016 14:12:36 -0700 (PDT)
 X-Mailer: git-send-email 2.8.1.212.gdf84f39
-In-Reply-To: <1461013950-12503-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291827>
 
-From: Jacob Keller <jacob.keller@gmail.com>
+> OK, so perhaps either of you two can do a final version people can
+> start having fun with?
 
-It is a common pattern in xdl_change_compact to check that hashes and
-strings match. The resulting code to perform this change causes very
-long lines and makes it hard to follow the intention. Introduce a helper
-function recs_match which performs both checks to increase
-code readability.
+Here we go. I squashed in your patch, although with a minor change:
 
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- xdiff/xdiffi.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+-               if ((flags & XDF_SHORTEST_LINE_HEURISTIC)) {
++               if ((flags & XDF_COMPACTION_HEURISTIC) && blank_lines) {
 
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 2358a2d..748eeb9 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -400,6 +400,14 @@ static xdchange_t *xdl_add_change(xdchange_t *xscr, long i1, long i2, long chg1,
- }
- 
- 
-+static int recs_match(xrecord_t **recs, long ixs, long ix, long flags)
-+{
-+	return (recs[ixs]->ha == recs[ix]->ha &&
-+		xdl_recmatch(recs[ixs]->ptr, recs[ixs]->size,
-+			     recs[ix]->ptr, recs[ix]->size,
-+			     flags));
-+}
-+
- int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 	long ix, ixo, ixs, ixref, grpsiz, nrec = xdf->nrec;
- 	char *rchg = xdf->rchg, *rchgo = xdfo->rchg;
-@@ -442,8 +450,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 			 * the last line of the current change group, shift backward
- 			 * the group.
- 			 */
--			while (ixs > 0 && recs[ixs - 1]->ha == recs[ix - 1]->ha &&
--			       xdl_recmatch(recs[ixs - 1]->ptr, recs[ixs - 1]->size, recs[ix - 1]->ptr, recs[ix - 1]->size, flags)) {
-+			while (ixs > 0 && recs_match(recs, ixs - 1, ix - 1, flags)) {
- 				rchg[--ixs] = 1;
- 				rchg[--ix] = 0;
- 
-@@ -470,8 +477,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 			 * the line next of the current change group, shift forward
- 			 * the group.
- 			 */
--			while (ix < nrec && recs[ixs]->ha == recs[ix]->ha &&
--			       xdl_recmatch(recs[ixs]->ptr, recs[ixs]->size, recs[ix]->ptr, recs[ix]->size, flags)) {
-+			while (ix < nrec && recs_match(recs, ixs, ix, flags)) {
- 				rchg[ixs++] = 0;
- 				rchg[ix++] = 1;
- 
+We did not need that in the "shortest line" heuristic as we know
+a line with the shortest line length must exist. We do not know about
+empty lines though.
+
+Thanks,
+Stefan
+
+Jacob Keller (1):
+  xdiff: add recs_match helper function
+
+Stefan Beller (1):
+  xdiff: implement empty line chunk heuristic
+
+ Documentation/diff-config.txt  |  5 +++++
+ Documentation/diff-options.txt |  6 ++++++
+ diff.c                         | 11 +++++++++++
+ xdiff/xdiff.h                  |  2 ++
+ xdiff/xdiffi.c                 | 40 ++++++++++++++++++++++++++++++++++++----
+ 5 files changed, 60 insertions(+), 4 deletions(-)
+
 -- 
 2.8.0.26.gba39a1b.dirty
