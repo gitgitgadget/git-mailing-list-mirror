@@ -1,149 +1,105 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git merge branch --no-commit does commit fast forward merges
-Date: Mon, 18 Apr 2016 09:36:30 -0700
-Message-ID: <xmqqy48a6fht.fsf@gitster.mtv.corp.google.com>
+Date: Mon, 18 Apr 2016 09:54:46 -0700
+Message-ID: <xmqqtwiy6end.fsf@gitster.mtv.corp.google.com>
 References: <874mb0kkkk.fsf@gmail.com>
 	<alpine.DEB.2.20.1604180825170.2967@virtualbox>
 	<CAH5451kW3t1Y7oW=uHv85jzHwsnQcDK2jdLisauNF-x1LRwqLA@mail.gmail.com>
 	<87a8krpehl.fsf@gmail.com>
 	<CAH5451mDYhavx_OLfXe6cC2WguCsFWEBBBBOCPyX3E6ZJw27+w@mail.gmail.com>
+	<xmqqy48a6fht.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: Christoph Paulik <cpaulik@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	"git\@vger.kernel.org" <git@vger.kernel.org>
 To: Andrew Ardill <andrew.ardill@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 18 18:36:50 2016
+X-From: git-owner@vger.kernel.org Mon Apr 18 18:54:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asCAL-0001WA-H0
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 18:36:49 +0200
+	id 1asCRs-00017J-Tc
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 18:54:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753268AbcDRQgg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Apr 2016 12:36:36 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56112 "EHLO
+	id S1753113AbcDRQyw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Apr 2016 12:54:52 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59127 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753262AbcDRQge (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2016 12:36:34 -0400
+	with ESMTP id S1752806AbcDRQyv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2016 12:54:51 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9A187147FC;
-	Mon, 18 Apr 2016 12:36:32 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E337E14C84;
+	Mon, 18 Apr 2016 12:54:49 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZowDKhsMwfVLUBh+ZcBgJ14LIEg=; b=aC/81r
-	0+rFu3NRO6UTKE6wOxyzJpB2RPLjm5SqnUHi79qEUafuStHm9Z4r4R8xdPp+3/sB
-	Gp0MXcS++oYHuYh8SsZj3Zabh61AT0OT8sfTeKs+CgCdDCbt2/9BbkRhwWrQV2J5
-	Z+09mQX1L93tt9GKzVi1xUzyLYHSityfLUh2U=
+	:content-type; s=sasl; bh=DV8e+W+PhQBJmWspaJu9Yaz2210=; b=Ln0b6F
+	D1IdyTieXZw0sctYYcqwCXDnoWgsaA/axX1rGFmkW/nAySnrkNvaUz5SBwTMsiVU
+	sHplP/oVYHlOzJ7YcYxUnCnig/r9vd36iUD4GIlUouQD5HRcTsIun6B36dygwZyf
+	04T8mCnnSLlPUVNreYE4A/H0yxQMUSW89DAW4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PuRlpfb4yYt7iRrkXop+YDi3MWgWK1lM
-	zeRJp8Ls8E7Q/Zrq+9o6B/wJg9o2XN7j9cbKEuKANnuSkb2Sa//yz7KzbSamzrLF
-	buR2hYDYHgJ4yFG9sit7jUHykXPx8JBbmUbVCxIipyFjIJ2YMbnymMcMDmt06DZh
-	Xs83M/vDu9o=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 917A3147FB;
-	Mon, 18 Apr 2016 12:36:32 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=ixljGF3ZVDzBpmp2CUw4YtYz8s2auir7
+	or+IL2Mv5SVuU+F08HWzK4ZgnDwVFOBzFmtCcjZzTx0i0Z/8VwC3r09vMnXqo6or
+	KVBppv35nFyQjDWiMqMCJ5hmoDqh5HoFktsstKnlpHkFD77xb3XVbOL8JSsdr9NF
+	t+ZOQnxcAiA=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D7F5E14C83;
+	Mon, 18 Apr 2016 12:54:49 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D1E87147F9;
-	Mon, 18 Apr 2016 12:36:31 -0400 (EDT)
-In-Reply-To: <CAH5451mDYhavx_OLfXe6cC2WguCsFWEBBBBOCPyX3E6ZJw27+w@mail.gmail.com>
-	(Andrew Ardill's message of "Mon, 18 Apr 2016 17:44:13 +1000")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B6E8014C82;
+	Mon, 18 Apr 2016 12:54:47 -0400 (EDT)
+In-Reply-To: <xmqqy48a6fht.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 18 Apr 2016 09:36:30 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B51BD552-0583-11E6-9611-D05A70183E34-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 424F46BE-0586-11E6-BBF8-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291809>
 
-Andrew Ardill <andrew.ardill@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Yes, I think the mis-alignment in expectations comes from a
-> technicality in the description you quote. The fast forward is in some
-> ways not really counted as a true merge, and no new commits are
-> created.
+> Andrew Ardill <andrew.ardill@gmail.com> writes:
+>
+>> I do think that the --no-commit option should imply --no-ff (as this
+>> would make the behaviour consistent for end-users). I don't know if
+>> this is something that would break scripts etc, but if so you could
+>> make it implied only if we detect a terminal or something like is done
+>> in other places.
+>
+> But we are not living in that world.  Making "--no-commit" (which is
+> not that "try to populate and show" command) imply "--no-ff" will
+> break existing scripts....
 
-Looking at 123ee3ca (Add --no-commit to git-merge/git-pull.,
-2005-11-01) and $gmane/10998 [*1*], it is clear that "--no-commit"
-was never meant as a "preview of what would happen".  The original
-documentation update at 37465016 (Documentation: -merge and -pull:
-describe merge strategies., 2005-11-04) was not great, but was
-clarified at d8ae1d10 (Document the --no-commit flag better,
-2005-11-04), and that version of text survives to this day.
+Having said all that, there is one change we might want to consider,
+with a plan to transition to cope with backward incompatibility.
 
-The real reason why "--no-commit" was added was because back then
-"git commit --amend" did not even exist; it appeared only at
-b4019f04 (git-commit --amend, 2006-03-02).
+A user who uses "--no-commit" does so with the intention to record a
+resulting merge after amending the merge result in the working tree.
+But there is nothing to amend and record, if the same "git merge"
+without "--no-commit" wouldn't have created a merge commit (there
+are two cases: (1) the other branch is a descendant of the current
+branch, (2) the other branch is an ancestor of the current branch).
 
-What is (and was back then) the recommended way to see what changes
-merging the other branch brings in to your branch, then?
+And the user would want to know that before doing further damange to
+his history, so we may want to start warn when "--no-commit"
+fast-forwarded or succeeded with "already up-to-date", with
+deprecation notice, and eventually want to make it an error.
 
-There are at least three ways, all of which are better suited than
-"--no-commit".
+Those who want to do a scripted
 
-When you want to study and understand what changes other branch 
-made since it forked from what you are working on, then
+	git merge --no-commit "$1" &&
+        autoedit "$1" &&
+        git commit
 
-    $ git diff ...other_branch
-
-would give you the change as a single ball of wax [*2*].
-
-If you want to see individual changes explained by their authors,
-you can also do
-
-    $ git log -p ..other_branch
-
-Finally, if you want to see what the merge result would look like,
-you just do the merge.  Advancing the HEAD by one commit and then
-going back once you are done is a cheap operation.  If you want to
-avoid updating your branch for real, these days you can even do so
-on a detached HEAD, unlike old days back when there was not even
-"commit --amend".
-
-    $ git checkout HEAD^0
-    $ git merge other_branch
-
-    $ git diff ORIG_HEAD     ;# what changed overall?
-    $ git log -p ORIG_HEAD.. ;# inspect individual changes
-
-    $ git checkout - ;# come back to the original branch
-
-> I do think that the --no-commit option should imply --no-ff (as this
-> would make the behaviour consistent for end-users). I don't know if
-> this is something that would break scripts etc, but if so you could
-> make it implied only if we detect a terminal or something like is done
-> in other places.
-
-If we were living in an ideal world where "git commit --amend" were
-already there in November 2005, we wouldn't have "merge --no-commit"
-or "pull --no-commit" in our system today, and in such a world, I
-would agree that "try to populate the working tree and the index
-with result of a hypothetical merge and stop without updating HEAD
-nor creating MERGE_HEAD, only to show what would happen if I merged"
-option could be a useful addition to these two commands.  And we may
-choose to call such an option "--no-commit".  I agree that such an
-option should probably imply "--no-ff".
-
-But we are not living in that world.  Making "--no-commit" (which is
-not that "try to populate and show" command) imply "--no-ff" will
-break existing scripts.  And unlike cosmetic things like "do we show
-in color", changing the behaviour of a command in a fundamental way
-based on term and istty() is a sure way to make commands harder to
-understand ("it works this way from the terminal, but it works
-differently in my script. what is going on?"  is not a question we
-are better off not seeing on this list).
-
-Thanks.
-
-[Notes and References]
-
-*1* http://thread.gmane.org/gmane.comp.version-control.git/10998 
-
-*2* Notice the three dots; it is a short-hand for
-
-    $ git diff ^$(git merge-base HEAD other_branch) other_branch
+(where the script takes a branch name $1 and uses auto-edit to
+further record the fact that a branch $1 was merged to somewhere in
+the contents) would already be buggy if it wants to force no-ff, and
+will get a warning (and later an error), with such a change.  And
+fixing the script to add "--no-ff" next to "--no-commit" will also
+stop the new warning/error.
