@@ -1,78 +1,100 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v6 0/6] Move PGP verification out of verify-tag
-Date: Mon, 18 Apr 2016 14:14:26 -0400
-Message-ID: <CAPig+cSmb9wFCV+9PS4LYfd3hAH5s6ifRk8orVv+e2Q=h7F3Ag@mail.gmail.com>
-References: <1460932021-27633-1-git-send-email-santiago@nyu.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC 1/6] http-backend: use argv_array functions
+Date: Mon, 18 Apr 2016 11:34:18 -0700
+Message-ID: <xmqqinze6a1h.fsf@gitster.mtv.corp.google.com>
+References: <1460747949-3514-1-git-send-email-dturner@twopensource.com>
+	<1460747949-3514-2-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: Santiago Torres <santiago@nyu.edu>
-X-From: git-owner@vger.kernel.org Mon Apr 18 20:14:34 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Mon Apr 18 20:34:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asDgu-00034h-Ij
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 20:14:32 +0200
+	id 1asE0A-0003Ae-BP
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Apr 2016 20:34:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751386AbcDRSO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Apr 2016 14:14:28 -0400
-Received: from mail-ig0-f196.google.com ([209.85.213.196]:36366 "EHLO
-	mail-ig0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750717AbcDRSO1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2016 14:14:27 -0400
-Received: by mail-ig0-f196.google.com with SMTP id kb1so11901508igb.3
-        for <git@vger.kernel.org>; Mon, 18 Apr 2016 11:14:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=53UIJMmIHzeKvILk9MKvH2MA3itUgoylbBCKHjLqNw8=;
-        b=Bu/yHnAyr6nji5RMj3PV5BpshUGhKJLxjKmmSnzBd6KnUfJ//drvi0tbH75TCyhKpl
-         2fqVUJcdAsDc+eDgbutIT2FkMmPvY59gsHkhPZrdBnU23nTWf1z1nvsVcw3h01UGEJts
-         dZF/jk9n5QxKlXKIBUabrnxLOqUsfm+oqrJMV/IcaAfZi6e08DYHz2nrwGLMbbFDN9Yk
-         qp931lD1MtMDoGjBjXAyMhN1L19A2OhmMbqV1mx35CKIUqHA0DHkT7chSIA0G4mD5rlF
-         dVzszeFV1d2MqbXAgHmhykk6Iiuu01gnAK/EBZ72h+sb0UueXlbbhHpxjqUqv4hzMZwY
-         Nyuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=53UIJMmIHzeKvILk9MKvH2MA3itUgoylbBCKHjLqNw8=;
-        b=MrpXK8kgZcZ6nzrKR2WUh1FJ5IWMSjHZAVbgxzbnJWRgIQCs6M4IevnN7liHUyvU5c
-         R/HyQ3RULGWiFTixjkbZozcAYakjwYf3qaVa879Jyib/38RD8StKq2Wo+A7YqbDl7HPO
-         ZBLwGm1x3mRhG55U6bZ9N31iG9z6QPkOKBVN1UuqRrL1uu7mdxwuKJkv0a4z90ITDNO7
-         VvT46ZDvvYc8On7QgovTyrkAJp6ufo6LEOIjk0NIEQ4n3+5armvj6hnreNAdgGQntgr7
-         8BCCmFCx5M+BtqAn1AoqOnveeITYCcZZAP/JGISvmaEH5fzOS4I29HfrBkE/p4Lebchm
-         yduw==
-X-Gm-Message-State: AOPr4FUo5y6r9ejouUCPKah4coP4x6LDo2FGTP1cB6KVmI73gZUICZIGiW7Pmfe3nQXf9qj3WSdjaA067oYsDQ==
-X-Received: by 10.50.92.37 with SMTP id cj5mr21223873igb.91.1461003266973;
- Mon, 18 Apr 2016 11:14:26 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Mon, 18 Apr 2016 11:14:26 -0700 (PDT)
-In-Reply-To: <1460932021-27633-1-git-send-email-santiago@nyu.edu>
-X-Google-Sender-Auth: a9KyCZl896lLPI8D-KZLjmC6f6g
+	id S1752610AbcDRSeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Apr 2016 14:34:22 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60119 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752550AbcDRSeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2016 14:34:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 847FA15A7B;
+	Mon, 18 Apr 2016 14:34:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0Y+LZphjUf8kKbjCQNMR/2/2koE=; b=KXmU8U
+	NtHfx0mEHy5KSCVuTjyjaA3KV46MMwrCeJG6xh6PIp6K2i7bQ6+4yUQ+mKvU2FAz
+	rxT8lU+Uh/mpi+pynx21u7nW7R21kimjq8+qlzNEs8Syi3AtxRzvuK5Nk2BL3PFL
+	tNiMvxUrrc1SkAZXRW7HXIbvw/R2+HmOkzTgw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xLVLhMVclrgVr7wzI9lZANLcMuTHPpMm
+	wSU10VGMqmdkFz0oc7K6r8NMj/POZEpfJIm/LwafSsJr+A2cl0Y/boFW03mDRqSR
+	HRCVrO9QpheP5tuNfhUVIRJ7Qwt37QJ8w9d4QnGfh81K7w65wDKXbiGEzzFxJk2W
+	ZpchQ8lGB3E=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7C17615A7A;
+	Mon, 18 Apr 2016 14:34:20 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E407615A79;
+	Mon, 18 Apr 2016 14:34:19 -0400 (EDT)
+In-Reply-To: <1460747949-3514-2-git-send-email-dturner@twopensource.com>
+	(David Turner's message of "Fri, 15 Apr 2016 15:19:04 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 2A020502-0594-11E6-B38A-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291817>
 
-On Sun, Apr 17, 2016 at 6:26 PM,  <santiago@nyu.edu> wrote:
-> This is a follow up of [1], [2], [3], [4], and [5]. patches 1/6, 2/6 and 3/6
-> are the same as the corresponding commits in pu.
+David Turner <dturner@twopensource.com> writes:
+
+> Signed-off-by: David Turner <dturner@twopensource.com>
+> ---
+
+OK (it might be easier to read if you used the pushl form for the
+"fixed initial segment" like these calls, though).
+
+>  http-backend.c | 12 +++++++-----
+>  1 file changed, 7 insertions(+), 5 deletions(-)
 >
-> v6:
->  * As Junio suggested, updated 4/6, to include the name argument and the
->    ternary operator to provide more descriptive error messages. I propagated
->    these changes to 5/6 and 6/6 as well. I'm unsure about the 80-column
->    on 4/6, the ternary operator is rather long.
->  * Updated and reviewed the commit messages based on Eric and Junio's
->    feedback
-
-Thanks. See my responses to individual patches for a few very minor
-issues, not necessarily even deserving a re-roll. With or without the
-code and commit message nits addressed, this version is:
-
-    Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+> diff --git a/http-backend.c b/http-backend.c
+> index 8870a26..a4f0066 100644
+> --- a/http-backend.c
+> +++ b/http-backend.c
+> @@ -450,9 +450,7 @@ static void get_info_refs(char *arg)
+>  	hdr_nocache();
+>  
+>  	if (service_name) {
+> -		const char *argv[] = {NULL /* service name */,
+> -			"--stateless-rpc", "--advertise-refs",
+> -			".", NULL};
+> +		struct argv_array argv = ARGV_ARRAY_INIT;
+>  		struct rpc_service *svc = select_service(service_name);
+>  
+>  		strbuf_addf(&buf, "application/x-git-%s-advertisement",
+> @@ -463,9 +461,13 @@ static void get_info_refs(char *arg)
+>  		packet_write(1, "# service=git-%s\n", svc->name);
+>  		packet_flush(1);
+>  
+> -		argv[0] = svc->name;
+> -		run_service(argv, 0);
+> +		argv_array_push(&argv, svc->name);
+> +		argv_array_push(&argv, "--stateless-rpc");
+> +		argv_array_push(&argv, "--advertise-refs");
+>  
+> +		argv_array_push(&argv, ".");
+> +		run_service(argv.argv, 0);
+> +		argv_array_clear(&argv);
+>  	} else {
+>  		select_getanyfile();
+>  		for_each_namespaced_ref(show_text_ref, &buf);
