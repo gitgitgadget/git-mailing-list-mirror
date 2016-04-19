@@ -1,79 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git for Windows Portable
-Date: Tue, 19 Apr 2016 16:35:46 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604191620470.2826@virtualbox>
-References: <6U.jusL.33l3fWlj4Dd.1N58tG@seznam.cz>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] replace --edit: respect core.editor
+Date: Tue, 19 Apr 2016 16:37:00 +0200 (CEST)
+Message-ID: <909769abaff1babdab77625bebd04e2013c6e344.1461076425.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1780211890-1461076547=:2826"
+Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: =?UTF-8?Q?Luk=C3=A1=C5=A1_Rumpala?= <Rumpala@seznam.cz>
-X-From: git-owner@vger.kernel.org Tue Apr 19 16:35:56 2016
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 19 16:37:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asWku-00022R-0x
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 16:35:56 +0200
+	id 1asWmG-00030N-6Q
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 16:37:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754704AbcDSOfx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2016 10:35:53 -0400
-Received: from mout.gmx.net ([212.227.15.15]:59940 "EHLO mout.gmx.net"
+	id S1754605AbcDSOhO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2016 10:37:14 -0400
+Received: from mout.gmx.net ([212.227.15.19]:49215 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754701AbcDSOfw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2016 10:35:52 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MMjgF-1aoyvE3V79-008XKi; Tue, 19 Apr 2016 16:35:47
+	id S1753672AbcDSOhN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 10:37:13 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0M9ra4-1b3ZOn2bJA-00B2VS; Tue, 19 Apr 2016 16:37:01
  +0200
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <6U.jusL.33l3fWlj4Dd.1N58tG@seznam.cz>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:NXKIbKBFQ49l6MNTfmNPnD8JeRekwCE4bt5tFlpuvfaw3XiR2X0
- G0upHkByYMcbf2u2//GzbV/9Tbeb2v0I0L5Aej7umYCVl8N0g3eB008uYgeUzEQ3JBeP+Aq
- kGWHqMtV7xdHuQZ4eVD/uK+j9HZBAtpLaA9uShtr/xw7bRLOGpFI+0PdnakyuWJdNLFUaKw
- lOK1WrdCVp06CRG3yaChA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+rG8812gUEw=:vLNR6mXXsnApokhg379YB2
- IuweeniF7oDQaD6NR1kTVrheMiK/l7LliUZJZ7LhbGl2J2URo0lmgT2wjXqe9dXQsz6a6GpnE
- wKrEjBHUhs6+WwJ1ia0FEgM/qRf+86IylpS5A62Rw/VXNYK16dwu8Oz1l1gcLvW3UPXKLFotx
- mBEi/eZtbNXq9NGnNP1WW9CJbDx9fZmpC6ALI9B3aaIS/AOGb6ap0DFG68gBF3NuBNN4UzJ7K
- 8E0FtfT4Pgm3Iako0GiXY//YKatHl69/TSM6PrDOymffIPTzq9PMJ/UrzptGDgSrLrAy0/4o9
- ywaYhSE5vccPPJaEFLjb4ukOOIuBXTwzCAiegZ2jp8jbhBvEsKfz+y5pc65Ig0e/70J4cyCKg
- hQh6VROypeRQc90pT0T+OiaXmOtIySU1NfqptMISPp4W29CPz9oTTL476aBbF4qU1AYN7BMPV
- ExgQnasI00jDL8wc8ubVoWvqLMDEtRduDmD5nR6kwf3a+J2sNQ45lzEJUB1mnA1I2MjmkWCoE
- gIE8hq0YGMQXBW6lZwEYPs5voQSB9jiNRGeuvYtwwyKVahF1RWWuSihp3SaAXgwYKiZFrvVTv
- h0tM0oAOIhppUpCtIVVtF8MsT0JQ2RoB9S40rO4klUHlJEDcr3H8exqK9thABH5+Inuo7grs5
- tC/alhZfWGwnZVZY5zqGuR7ycoRzBt/rAIHwNveXZAWp9DmHSVgB0bdfes4aWQjIwr2nMT/5q
- ACDEAup5P+I0z017sJwBrtjw3PmcV4dGo62Ube0l/ZZcylIUWHTt2tn+wpVRpyljrKpi0eFO 
+X-Provags-ID: V03:K0:C4iQsR8LCyKFFSrdumsCm5mPkvIxln5rxoEdCNfsF52NQgJmmdf
+ HvmPN8QJPTqOIsVSprJv1aytroF29lYecUv6GZBmH5Na1h1E11CQXs3Noa4GphqMqNknzXg
+ J5y2zuWR6S9ozoLV8HDdGYt+thQMZi7kZ6QJhTPTe4jmM5Tt2AJJHKzdUxrMi6J76GhfLof
+ ZkSaR50YXya8gdWfsp2UQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vpf2h30J7V8=:JLDOYh1l00PWNyjPaKG6jp
+ QA+9Y6GbpSCZKOh3JrGuNRqRszJbZ8vzMrxm6JrN9DC7KZYMJofQIQJswHSSvfxKa60hgcJkP
+ 3Vf6urj7vmwy26sR2EoNvG6qw2kBaohbT07stCYXzcMTKQNsIyw85MQwczUa0hvl7/ddXHc7O
+ svRN3cwn08jGgPZmfVe0LJC5zOxOya2ZBqBTeblJB8d8IjzXvSw/VuUUuEC2R1SXfcbYiyt48
+ UK94r7Z59WfTvrFF2jHe8GlI6OevEHIU1PPvDqa5S7nvm9ZDINxxWlA9JlQDzNtJSCC34HMFV
+ 4UqOqoaNY8mvCoh4YQGP39SS09n9+9AeLBoSbuFtadBBW/5pHz2lm4V6ydTQ8Ot6ZEB/u9Ejj
+ VZZydkpGC4YT2WGDnv1jTcEdZZFh+yoQ6fqHbzRWn+/xhTchtWK4rcMA0/2Y6qZwqN4rctlvT
+ 7yE2HWbYB9RUZ4SixqgzzSKPx+l3uRp5IKOEL+yO8KL8GydKNOpcqJVmatNqQ21MoI2Yxxujd
+ tb1Cjll1pLvzaxzK+VZcsQBQ3zA4n2MUgopGE6NtWBGfgMupH4I9pWwoS8X9PMTPWQriGelB/
+ hhAeReKbS4mnzY5QD0S5/LdD9J7liyjfByCibC6YoTaga5bzcTeiiasJqHZnI8Lz6q5s3XvHw
+ oaz7COSD6vNmXblmWmhSMubcMvKj4BYgClsANzFbg0YPRX8uhJWCXIfM8+WyBE2MmCKoE7i8O
+ vnxeSemxqwNzwPCsaJo0aqoOthAyPImEV93zAYB2jc9+tGOZtpQDN69itl7GZ+DgKv5WFZ+4 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291866>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+We simply need to read the config, is all.
 
---8323329-1780211890-1461076547=:2826
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+This fixes https://github.com/git-for-windows/git/issues/733
 
-Hi Luk=C3=A1=C5=A1,
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/replace.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-On Mon, 18 Apr 2016, Luk=C3=A1=C5=A1 Rumpala wrote:
-
-> I have question regarding Git for Windows Portable in version 2.8.1
-> 32bit that can be downloaded from https://git-scm.com/download/win .
-> What is the minimum version of .NET and OS that is necessary to
-> successfully run it?
-
-=2ENET is not needed to run Git for Windows. If you want to run the Git
-Credential Manager, you will need .NET v4.5.1 or later (which you should
-have anyway, if you followed all recommended updates).
-
-Git for Windows just *barely* still supports Windows XP. If you want to
-ensure that it keeps supporting Windows XP, you are welcome to participate
-actively in the project.
-
-Ciao,
-Johannes
---8323329-1780211890-1461076547=:2826--
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 748c6ca..02b13f6 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -475,6 +475,7 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 		return replace_object(argv[0], argv[1], force);
+ 
+ 	case MODE_EDIT:
++		git_config(git_default_config, NULL);
+ 		if (argc != 1)
+ 			usage_msg_opt("-e needs exactly one argument",
+ 				      git_replace_usage, options);
+-- 
+2.8.1.206.g8b39b4a
