@@ -1,8 +1,10 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv5 0/2] xdiff: implement empty line chunk heuristic
-Date: Tue, 19 Apr 2016 08:21:28 -0700
-Message-ID: <1461079290-6523-1-git-send-email-sbeller@google.com>
-Cc: Stefan Beller <sbeller@google.com>
+Subject: [PATCH 1/2] xdiff: add recs_match helper function
+Date: Tue, 19 Apr 2016 08:21:29 -0700
+Message-ID: <1461079290-6523-2-git-send-email-sbeller@google.com>
+References: <1461079290-6523-1-git-send-email-sbeller@google.com>
+Cc: Jacob Keller <jacob.e.keller@intel.com>,
+	Stefan Beller <sbeller@google.com>
 To: gitster@pobox.com, git@vger.kernel.org, jacob.keller@gmail.com,
 	peff@peff.net
 X-From: git-owner@vger.kernel.org Tue Apr 19 17:21:41 2016
@@ -11,91 +13,106 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asXTA-0005DR-2G
+	id 1asXTA-0005DR-KG
 	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 17:21:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932525AbcDSPVf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2016 11:21:35 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:34041 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932106AbcDSPVe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2016 11:21:34 -0400
-Received: by mail-pa0-f52.google.com with SMTP id r5so6945772pag.1
-        for <git@vger.kernel.org>; Tue, 19 Apr 2016 08:21:34 -0700 (PDT)
+	id S932529AbcDSPVh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2016 11:21:37 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:33752 "EHLO
+	mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932106AbcDSPVg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 11:21:36 -0400
+Received: by mail-pf0-f169.google.com with SMTP id 184so7882630pff.0
+        for <git@vger.kernel.org>; Tue, 19 Apr 2016 08:21:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=svVpgBoc9Pb6sY6VdSy1Qe2RY6PMcCea0TOgY2XgWX0=;
-        b=EbjlCfRKtYWr7aps1YHvFdkUXgddRO62cb29wFMOMphG6M77opEWq4+tH9JVkp3COV
-         AoFuZ0cw5rp38Aa2ozE7NLKrAS9ANY9owl0ryH7YVi0VRAiMiadKF4W3e6GEDBbp/F7G
-         5hDHhFwHGxmU5l/qGfY1YeF18SkTO73F+BG1Uq7fkqlaTydjxq6NcQMI1linFks7dW/S
-         uK0bkfbFQ6A4CQPiY+GY5PFGFQKUq8P21gY7eeGXzLTQmVJpjWcZSolLZxCFIZl76CT2
-         eR1VHEKKSgps5BaBEWGGoD2LIUQj+DDJmVzYsC1sJPyMDhD8ZnKmsr5+wXZkWawUZ7F1
-         PX9A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=vIL9/VhJWDOcOkqAIzbNEIHwlDIpLaiKyYlTQ8Ro/dA=;
+        b=Fj8ITsq1+Sg9IFtOBwfOk/WK0X7dhT2HETv/SQeluAlQg0RsYNGkNaFisEhrBSWYmR
+         +Ur8i0sO8sWJjYTzA+r5K/hcALFQc6hREub2rnoE9MbrRw14wX9JKbEm662Nrx+HZQxn
+         I5208pJK6xY6xthRn23G++QQyIiTNGzqu7lM9miNKBPtoY+WpIje3KAf570dR+gVRFyF
+         dyoc6/czXOIAnDvji3iuLXiatznqCwPpeYJNa5mOaaf7JrQ1LJ4IVBDTxnxwaGfL3PW9
+         MpHrf8/zi9aWp5d+HleKXbZxP0uby1Lq1RWh38mn9NQAeSgOklHA8Zkf9CeLWFN9Fo3E
+         eHHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=svVpgBoc9Pb6sY6VdSy1Qe2RY6PMcCea0TOgY2XgWX0=;
-        b=RuUOPOD1gm2Pr4EzBo4V0g5dXL040rDwn+8bVRIwn9/Cr2BPqjcHwLLKxDLYis3o5L
-         0sERLu8rk2woFtju0QM2R9sHTEmfU7L2gPKR4pTq+OyRaPcJSSwXXVrRMejvTiFJ/U0U
-         t05UKTeAMqAxLhDXj7xE90CA8SG2XWVdG4JAZsGD94TU/18CAUzv8nZwrtlyfTWVYIZy
-         YKnAd8GEGgjxmXTkngSxeQhvwcX2823r2rdwJeia7TXtSq4H2OkJIHiERrhp1W+vheT4
-         kj3cJFzq1RqaAWdto/zgNBwgfYaH7zIPxhmBfrq01aq7xEsZrMz3YbbZeHJWBel2T9DW
-         R5mg==
-X-Gm-Message-State: AOPr4FU7hH6HHZdMocSYEW8aJ9mysQ83NHChvIwq6Frk4Bpnq1hB9RaeRwv4CXrL9M6oLcH2
-X-Received: by 10.66.121.197 with SMTP id lm5mr4809044pab.143.1461079293562;
-        Tue, 19 Apr 2016 08:21:33 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=vIL9/VhJWDOcOkqAIzbNEIHwlDIpLaiKyYlTQ8Ro/dA=;
+        b=fZdtrPGDvRf4oswjVNtkTFIjITjfDQQnQEyGBqq+RC9WnfaUgFtUwHfbgwEQgyFCro
+         +5jPQBvagNRq9SD23SWYN3yjYG4L9RSszbM8UnduAdjE8SkOYkpl+IPpq6PuVxA2ZxT/
+         ePGYMnAmsTzQ3dbPitIzuR0vJ9tjL6b1GlDRBqBf10m2qi507uBF8ubqcbKpcsqfCP+o
+         ryRLEguMkK0Ypnt4oUU5vlHRkMGWggyR0GxL78sJTro7BGyOgnza42uOdRAz0Y78tuv4
+         OpSU+ItKwdWSu+I9LxnzZ+XB4YAohFbCfESQD8qr+Oys23ERbB0yxwV/oUmxTSl0/qA0
+         pF2w==
+X-Gm-Message-State: AOPr4FUhg2N80Gooo+wYV3eiUjWwQqtAWTYiJvpB1cAP7UZsw72yYK9tPkKworfG3YTmmykk
+X-Received: by 10.98.16.88 with SMTP id y85mr4741891pfi.77.1461079294887;
+        Tue, 19 Apr 2016 08:21:34 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:7418:717f:4b27:128f])
-        by smtp.gmail.com with ESMTPSA id dy6sm91996056pab.48.2016.04.19.08.21.32
+        by smtp.gmail.com with ESMTPSA id 85sm91744832pfl.18.2016.04.19.08.21.34
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 19 Apr 2016 08:21:32 -0700 (PDT)
+        Tue, 19 Apr 2016 08:21:34 -0700 (PDT)
 X-Mailer: git-send-email 2.4.11.2.g96ed4e5.dirty
+In-Reply-To: <1461079290-6523-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291875>
 
-Thanks Jeff for pointing out issues in the comment!
+From: Jacob Keller <jacob.keller@gmail.com>
 
-Thanks,
-Stefan
+It is a common pattern in xdl_change_compact to check that hashes and
+strings match. The resulting code to perform this change causes very
+long lines and makes it hard to follow the intention. Introduce a helper
+function recs_match which performs both checks to increase
+code readability.
 
-diff to origin/jk/diff-compact-heuristic:
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ xdiff/xdiffi.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
+
 diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 5a02b15..b3c6848 100644
+index 2358a2d..748eeb9 100644
 --- a/xdiff/xdiffi.c
 +++ b/xdiff/xdiffi.c
-@@ -515,12 +515,12 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 		}
+@@ -400,6 +400,14 @@ static xdchange_t *xdl_add_change(xdchange_t *xscr, long i1, long i2, long chg1,
+ }
  
- 		/*
--		 * If a group can be moved back and forth, see if there is an
-+		 * If a group can be moved back and forth, see if there is a
- 		 * blank line in the moving space. If there is a blank line,
- 		 * make sure the last blank line is the end of the group.
- 		 *
--		 * As we shifted the group forward as far as possible, we only
--		 * need to shift it back if at all.
-+		 * As we already shifted the group forward as far as possible
-+		 * in the earlier loop, we need to shift it back only if at all.
- 		 */
- 		if ((flags & XDF_COMPACTION_HEURISTIC) && blank_lines) {
- 			while (ixs > 0 &&
-
-
-Jacob Keller (1):
-  xdiff: add recs_match helper function
-
-Stefan Beller (1):
-  xdiff: implement empty line chunk heuristic
-
- Documentation/diff-config.txt  |  5 +++++
- Documentation/diff-options.txt |  6 ++++++
- diff.c                         | 11 +++++++++++
- xdiff/xdiff.h                  |  2 ++
- xdiff/xdiffi.c                 | 40 ++++++++++++++++++++++++++++++++++++----
- 5 files changed, 60 insertions(+), 4 deletions(-)
-
+ 
++static int recs_match(xrecord_t **recs, long ixs, long ix, long flags)
++{
++	return (recs[ixs]->ha == recs[ix]->ha &&
++		xdl_recmatch(recs[ixs]->ptr, recs[ixs]->size,
++			     recs[ix]->ptr, recs[ix]->size,
++			     flags));
++}
++
+ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 	long ix, ixo, ixs, ixref, grpsiz, nrec = xdf->nrec;
+ 	char *rchg = xdf->rchg, *rchgo = xdfo->rchg;
+@@ -442,8 +450,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 			 * the last line of the current change group, shift backward
+ 			 * the group.
+ 			 */
+-			while (ixs > 0 && recs[ixs - 1]->ha == recs[ix - 1]->ha &&
+-			       xdl_recmatch(recs[ixs - 1]->ptr, recs[ixs - 1]->size, recs[ix - 1]->ptr, recs[ix - 1]->size, flags)) {
++			while (ixs > 0 && recs_match(recs, ixs - 1, ix - 1, flags)) {
+ 				rchg[--ixs] = 1;
+ 				rchg[--ix] = 0;
+ 
+@@ -470,8 +477,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 			 * the line next of the current change group, shift forward
+ 			 * the group.
+ 			 */
+-			while (ix < nrec && recs[ixs]->ha == recs[ix]->ha &&
+-			       xdl_recmatch(recs[ixs]->ptr, recs[ixs]->size, recs[ix]->ptr, recs[ix]->size, flags)) {
++			while (ix < nrec && recs_match(recs, ixs, ix, flags)) {
+ 				rchg[ixs++] = 0;
+ 				rchg[ix++] = 1;
+ 
 -- 
 2.4.11.2.g96ed4e5.dirty
