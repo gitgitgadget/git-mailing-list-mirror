@@ -1,99 +1,156 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 2/2] xdiff: implement empty line chunk heuristic
-Date: Tue, 19 Apr 2016 00:05:56 -0700
-Message-ID: <CAGZ79kaJxgMCUSp3dVJt4=nPVi=p_HFY+OATh1wXthdKKGpmjA@mail.gmail.com>
-References: <1461013950-12503-1-git-send-email-sbeller@google.com>
-	<1461013950-12503-3-git-send-email-sbeller@google.com>
-	<20160419050342.GA19439@sigill.intra.peff.net>
-	<CAGZ79kaD3kyWdbT-PhR9XPV_qmYpQipZwvfYYcVvwk62+x5qnw@mail.gmail.com>
-	<20160419070001.GA21875@sigill.intra.peff.net>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH 2/2] mv: allow moving nested submodules
+Date: Tue, 19 Apr 2016 00:13:32 -0700
+Message-ID: <CA+P7+xrzH3gMWsCBmW9y40AFOEfUxMQR+s8O05ofMN09nF_Pkw@mail.gmail.com>
+References: <1461022884-30819-1-git-send-email-sbeller@google.com> <1461022884-30819-3-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Jacob Keller <jacob.e.keller@intel.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 19 09:06:02 2016
+Cc: Git mailing list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>, gmane@otterhall.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Apr 19 09:14:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asPjW-00084E-4c
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 09:06:02 +0200
+	id 1asPrB-0003Bt-Ov
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 09:13:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752060AbcDSHF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2016 03:05:58 -0400
-Received: from mail-io0-f182.google.com ([209.85.223.182]:35024 "EHLO
-	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751660AbcDSHF5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2016 03:05:57 -0400
-Received: by mail-io0-f182.google.com with SMTP id g185so9400186ioa.2
-        for <git@vger.kernel.org>; Tue, 19 Apr 2016 00:05:57 -0700 (PDT)
+	id S1752240AbcDSHNy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2016 03:13:54 -0400
+Received: from mail-vk0-f52.google.com ([209.85.213.52]:33809 "EHLO
+	mail-vk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752113AbcDSHNx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 03:13:53 -0400
+Received: by mail-vk0-f52.google.com with SMTP id e185so8819727vkb.1
+        for <git@vger.kernel.org>; Tue, 19 Apr 2016 00:13:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=kmCQW1Qno8f7vnEd1UuaosOKCIFiWjCCbiFrMDzcIJg=;
-        b=pWHIpFus0R9TMDuSNC1tk4sejYiG1dNwlpjQTKb3OcEx20okDi2+iha5u+ykj9LlDH
-         JWo0m0S0HOK68IvSaNdmAai88nQ/kEUMFC+/+80T5vps7CSvlnyhb8EvPA+HnUAfICBb
-         KjLo9TsxrjLeWnRjJ/07LaTeuzZ3eOUjycbg4hOhVtEdpUO6eJ+/KnsDNN43NWFwMrsZ
-         tTsZdJveGzRuGqy6EyNDChyBHO5f9/i3F/g5CX+kt5dsh8BU++VafpIyAEnJ9hQmNRoQ
-         pc9dgyvdzQB74sQ2IZJe4CDOpA8SHO7V80ou8Srl5/rx+GqLJX95OwTs3YKdHc/sOy8t
-         tUFw==
+        bh=I01mzWS81OikfkWZEXYfBpoUNJuJ1fLOPlPIvhnyp50=;
+        b=IPn2rLUyk8sdbNxYerPZsuL2Kd/NctFp22vBqvCCor7nlFYghi+MhgjhXoiJ0OT50+
+         A9Ddo/mOdOvN8AB7ZQ01dJDYP3KYyXuFhTo1T9uQjz8+pIbZCbZgW8WtTiPuzQE9H+tJ
+         D5bNfHO4by1hpwXGKIjro7+RQXmuqIUOtVU4ki2zLhifwMoqT+KizHyiWUrWKm330dGo
+         equ6sZZtudyLsGsDHY47ZMSXPBFPqNkPBaPbU36lXWg8NLNGdqh/dDrldFBoPbq3hvPG
+         b53cZah/9xiHvTvs2BWly3NY0Srajau8awAPYp6EZLtchJgfl7QnrYZcK4eBzHNkowuE
+         iaRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=kmCQW1Qno8f7vnEd1UuaosOKCIFiWjCCbiFrMDzcIJg=;
-        b=D6BvPr7bbxNfXXUTB9H0erjnIlYWR0tN44jsIhoGotThdo4FYq9vS7wZymAJNbfSoW
-         Ix6EqB1n5M9Vl48QBH+KsLrV+nnNRltCV4cg5zXouRhaQaRl/jkK6sz7/wzBq8tHBPSX
-         6ZRyZjAfLOJ6C3uNiFjforKkIItlFsO/P69z8caWQpGLi2tXFMiBUlxzfR5ggIhzMtq6
-         RAM/w/27TJsc3oYQaDB21SBd9tDZB+ekvml13s+MezFIu3+MQmp1J0aUrs8IPIG4jB7G
-         wEHrQh7uzAGT8A4p2AesO/TwylpEzPexIrXmI6CWzptuTEKyyoTIKmsOj1fM/2GaQNgx
-         HFgQ==
-X-Gm-Message-State: AOPr4FVnbmOJgL0COxs4WBaUEZEFfx8BamrtJXLDPCemdaWpnFbPcrsWHsTuyZTByvflsDP419Gq641Ejv3C3HE3
-X-Received: by 10.107.18.227 with SMTP id 96mr1828025ios.174.1461049556896;
- Tue, 19 Apr 2016 00:05:56 -0700 (PDT)
-Received: by 10.107.17.27 with HTTP; Tue, 19 Apr 2016 00:05:56 -0700 (PDT)
-In-Reply-To: <20160419070001.GA21875@sigill.intra.peff.net>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=I01mzWS81OikfkWZEXYfBpoUNJuJ1fLOPlPIvhnyp50=;
+        b=Sj2qTdMQCcIJ3p/0IlR1KGPRVa/ZOldOqg+Q5dOGMoyped81ahPO/7/imDTX/F4vkc
+         3rNmUp/TeazOfcOpcrPwWZjP05Yi1GU0h8qVpqHYDGL9rYcSmC1dB6/slOlJMMlVeuQ2
+         0TpP2WqKvMbCQNxoECtIPZ4WFu29k/XbUolvg0r1FzdWDfMArJj8woh1Hl9HmntUOcGT
+         HpbLBLUQ1yESCJ/ruiYvKlepqO6OB0xAzCweYuwMPIZhoqXy/WxOaAS9PDN5hg5FMwsa
+         NQ7l8RKzGgw2NdgnSrw7MjMrygIAQW1m3crZjyKLf50lQuQ6GEEU8OqwSdiu7FymsYiI
+         v+BA==
+X-Gm-Message-State: AOPr4FXtzVH4JHksl63g5VinOCDIJrABR3jn+2pY+HhKzoMDJlG9dgD4sAI0ej8W5/T+l+cA7k/fKq2fzNJJJQ==
+X-Received: by 10.176.7.35 with SMTP id h32mr714760uah.17.1461050032254; Tue,
+ 19 Apr 2016 00:13:52 -0700 (PDT)
+Received: by 10.159.53.112 with HTTP; Tue, 19 Apr 2016 00:13:32 -0700 (PDT)
+In-Reply-To: <1461022884-30819-3-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291848>
 
-On Tue, Apr 19, 2016 at 12:00 AM, Jeff King <peff@peff.net> wrote:
-> On Mon, Apr 18, 2016 at 11:47:52PM -0700, Stefan Beller wrote:
+On Mon, Apr 18, 2016 at 4:41 PM, Stefan Beller <sbeller@google.com> wrote:
+> When directories are moved using `git mv` all files in the directory
+> have been just moved, but no further action was taken on them. This
+> was done by assigning the mode = WORKING_DIRECTORY to the files
+> inside a moved directory.
 >
->> I am convinced the better way to do it is like this:
->>
->>     Calculate the entropy for each line and take the last line with the
->>     lowest entropy as the last line of the hunk.
+> submodules however need to update their link to the git directory as
+> well as updates to the .gitmodules file. By removing the condition of
+> `mode != INDEX` (the remaining modes are BOTH and WORKING_DIRECTORY) for
+> the required submodule actions, we perform these for submodules in a
+> moved directory.
 >
-> I'll be curious to see the results, but I think sometimes predictable
-> and stupid may be the best route with these sorts of things. In
-> particular, I'd worry that a content-independent measure of entropy
-> might miss some subtleties of a particular language (e.g., that "*" is
-> more or less meaningful than some other character). But we'll see. :)
+> Signed-off-by: Stefan Beller <sbeller@google.com>
 
-I would assume that the "*" would have little entropy when there are lots
-of comments, i.e. it just "feels" like an empty line.
-If there are no "*", then the entropy is high as it is unusual. And
-unusual things
-should not be at the border of a hunk I would assume.
-So m prediction is that the  'subtleties of a particular language' correlate
-highly with the actual use of characters.
 
-Anyway, the experiment can be carried out later. :)
+The patch looks good to me. I've marked some comments that I thought
+through while reviewing but it looks correct.
+
+> ---
+>  builtin/mv.c  | 39 ++++++++++++++++++++++-----------------
+>  t/t7001-mv.sh | 16 ++++++++++++++++
+>  2 files changed, 38 insertions(+), 17 deletions(-)
+>
+> diff --git a/builtin/mv.c b/builtin/mv.c
+> index 74516f4..2deb95b 100644
+> --- a/builtin/mv.c
+> +++ b/builtin/mv.c
+> @@ -253,23 +253,28 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+>                 int pos;
+>                 if (show_only || verbose)
+>                         printf(_("Renaming %s to %s\n"), src, dst);
+> -               if (!show_only && mode != INDEX) {
+> -                       if (rename(src, dst) < 0 && !ignore_errors)
+> -                               die_errno(_("renaming '%s' failed"), src);
+> -                       if (submodule_gitfile[i]) {
+> -                               if ((submodule_gitfile[i] != SUBMODULE_WITH_GITDIR &&
+> -                                   connect_work_tree_and_git_dir(dst, submodule_gitfile[i], &err)) ||
+> -                                   update_path_in_gitmodules(src, dst, &err)) {
+> -                                       if (err.len) {
+> -                                               if (ignore_errors) {
+> -                                                       warning("%s", err.buf);
+> -                                                       continue;
+> -                                               } else
+> -                                                       die("%s", err.buf);
+> -                                       }
+> -                               } else
+> -                                       gitmodules_modified = 1;
+> -                       }
+> +               if (show_only)
+> +                       continue;
+
+So here, we skip the item after displaying when we're in show only
+mode. That seems correct.
+
+> +               if (mode != INDEX &&
+> +                   rename(src, dst) < 0) {
+> +                       if (ignore_errors)
+> +                               continue;
+> +                       die_errno(_("renaming '%s' failed"), src);
+> +               }
+
+Then when the mode isn't INDEX, we attempt the rename.
+
+> +
+> +               if (submodule_gitfile[i]) {
+> +                       if ((submodule_gitfile[i] != SUBMODULE_WITH_GITDIR &&
+> +                           connect_work_tree_and_git_dir(dst, submodule_gitfile[i], &err)) ||
+> +                           update_path_in_gitmodules(src, dst, &err)) {
+> +                               if (err.len) {
+> +                                       if (ignore_errors) {
+> +                                               warning("%s", err.buf);
+> +                                               continue;
+> +                                       } else
+> +                                               die("%s", err.buf);
+> +                               }
+> +                       } else
+> +                               gitmodules_modified = 1;
+>                 }
+
+Finally for all modes, we perform the steps for submodules. That makes
+sense to me.
+>
+
+This version results in a much larger diff, but I think the resulting
+code is much easier to follow. The use of the continue allows us to
+drop a layer of indentation making the remaining code a bit easier on
+the eyes. The patch description doesn't at first glance match the code
+change, since now it's a much larger chunk of moved code. However on
+inspection, I don't think anything needs to change, as it's just the
+conversion to if (show_only) { continue; }
+
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 
 Thanks,
-Stefan
-
->
-> -Peff
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Jake
