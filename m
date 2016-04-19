@@ -1,102 +1,115 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: Binary grep t7008 known breakage vanished on Cygwin
-Date: Tue, 19 Apr 2016 19:52:11 +0100
-Message-ID: <57167E5B.6060505@ramsayjones.plus.com>
-References: <20160418152149.GD2345@dinwoodie.org>
- <5715147F.7020609@ramsayjones.plus.com> <20160419084232.GE2345@dinwoodie.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v7 4/6] verify-tag: prepare verify_tag for libification
+Date: Tue, 19 Apr 2016 15:05:01 -0400
+Message-ID: <CAPig+cTO_vC1_N79G9yMkiyjYtEeBdsivz-A4jOMw0r-vRWWaw@mail.gmail.com>
+References: <1461088041-19264-1-git-send-email-santiago@nyu.edu>
+	<1461088041-19264-5-git-send-email-santiago@nyu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-To: Adam Dinwoodie <adam@dinwoodie.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 21:02:25 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Santiago Torres <santiago@nyu.edu>
+X-From: git-owner@vger.kernel.org Tue Apr 19 21:05:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asaum-0006pL-O7
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 21:02:25 +0200
+	id 1asaxU-00006V-Uf
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 21:05:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933879AbcDSTCU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2016 15:02:20 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:41654 "EHLO
-	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933875AbcDSTCU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2016 15:02:20 -0400
-Received: from [10.0.2.15] ([91.125.197.102])
-	by avasout07 with smtp
-	id kK2G1s0032D2Veb01K2HYe; Tue, 19 Apr 2016 20:02:18 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=QqujpgGd c=1 sm=1 tr=0
- a=mTUfFwB0nGOO66Ym8a+i3w==:117 a=mTUfFwB0nGOO66Ym8a+i3w==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=N659UExz7-8A:10
- a=0vCrn0Jzb4ehFClENy4A:9 a=pILNOxqGKmIA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
-In-Reply-To: <20160419084232.GE2345@dinwoodie.org>
+	id S1754944AbcDSTFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2016 15:05:05 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:34723 "EHLO
+	mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754913AbcDSTFD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 15:05:03 -0400
+Received: by mail-io0-f194.google.com with SMTP id z133so3946386iod.1
+        for <git@vger.kernel.org>; Tue, 19 Apr 2016 12:05:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=TMFc8Tp+wlm7IA4D/SepzNbm4YgVnAn9+uhnlSr73HY=;
+        b=xpAu0GHO9lS1Psg8g0aTQGwtTtU0xYqVwCi1kNTT7w59mwWxgYQltrSDNyZi1JIxYp
+         33OJHo1vS+tpad/miVfzCHOhNFeQEMmesj/9NxM/Qw2Vjfyf1Y3yXPKPJl7OAG0HMXSk
+         DyKSzsZaSSxBam85WgWE51jyfkUZX/iZq4Zxbne1ZqguQm18HLlf0s74mr8WtCuj2wx1
+         m7gr/p1aENjOCz/WQfFh+2KtrTZ3qSb5MNTGUiMZFZj+4ba2/h8RPsidqHy3/n5kDzU9
+         erPCqnzuAR74KHfMD/TGfwOa9AgorMjQFeW4wwNBe4p5QORYm6zITMImDUpV5HKpRrDT
+         edEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=TMFc8Tp+wlm7IA4D/SepzNbm4YgVnAn9+uhnlSr73HY=;
+        b=EwDr7ySzOKsSk1+wfEI6pMHgcW7MsxuOm9aGIUUu1RAaFTPASDdkpTPIHXRqp8yxZw
+         zrtpExt/gptMwa+bk8dzu2WcUMB9yIsDL9ICRPU+7iDUJf5dZ8AF+lUL2u6kwBkpzaz+
+         A4DGBTP/GxI6Gznst64BqOFPh56g1AVjWktEVgxGC4euk+UBKzC16G7kub5v7U3pK1sq
+         bbtZW1cXlVblhUWyfU+6mjnLpw3Epmw5XF1R3UrH8t8Qsva5cWWcxzU2dxBOGg7G+RQ2
+         z/fmrW/sf/90KS2d+V0TLO3hBPQP+QM+1qtaHS2JQmaXB7jEYsRXaIBoLTBO212WAyl1
+         VUCA==
+X-Gm-Message-State: AOPr4FUmj9FapYQYUA3jl34eowt6IZgVKo93m20VZZgx0r+R+xDIREdkYknEQ5mGlnUi9phhWZvCODkhcbk0Yg==
+X-Received: by 10.107.8.141 with SMTP id h13mr6113597ioi.34.1461092701962;
+ Tue, 19 Apr 2016 12:05:01 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Tue, 19 Apr 2016 12:05:01 -0700 (PDT)
+In-Reply-To: <1461088041-19264-5-git-send-email-santiago@nyu.edu>
+X-Google-Sender-Auth: sG5VzLWX2O9BzAG3Gcvc197dCR0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291906>
 
+On Tue, Apr 19, 2016 at 1:47 PM,  <santiago@nyu.edu> wrote:
+> The current interface of verify_tag() resolves reference names to SHA1,
+> however, the plan is to make this functionality public and the current
+> interface is cumbersome for callers: they are expected to supply the
+> textual representation of a sha1/refname. In many cases, this requires
+> them to turn the sha1 to hex representation, just to be converted back
+> inside verify_tag.
+>
+> Add a SHA1 parameter to use instead of the name parameter, and rename
+> the name parameter to "name_to_report" for reporting purposes only.
 
+I'd have probably called this "display_name", but then I suppose it
+suffers the same issue Junio mentioned previously about it sounding
+like a boolean. Anyhow, as long as Junio is happy with it, that's what
+matters.
 
-On 19/04/16 09:42, Adam Dinwoodie wrote:
-> On Mon, Apr 18, 2016 at 06:08:15PM +0100, Ramsay Jones wrote:
->> On 18/04/16 16:21, Adam Dinwoodie wrote:
->>> t7008.12 is marked as an expected failure, but building Git on Cygwin
->>> including a `make configure && ./configure` step has the test
->>> unexpectedly passing.  Building without the configure step has the test
->>> failing as expected.
->>>
->>> This appears to be behaviour specific to Cygwin; at least I get that
->>> test failing on my CentOS box regardless of whether I perform the
->>> configure step.
->>
->> Yes, the configure sets NO_REGEX= whereas the config.mak.uname sets
->> NO_REGEX=UnfortunatelyYes.
->>
->> [Note that the regex bug (see t0070-fundamental.sh test #5) now seems to
->> pass with the 'native' regex library]
-> 
-> Ah, that makes sense.
-> 
-> I'm still not quite sure what the "correct" thing to do here is; it
-> looks as though the NOREGEX=UnfortunatelyYes can disappear from
-> config.mak.uname, but that still leaves t7008.12 passing when it's
-> expected to fail.
+This version of the patch is nicely improved. One nit below.
 
-Yep. ;-)
+> Signed-off-by: Santiago Torres <santiago@nyu.edu>
+> ---
+> diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
+> @@ -80,6 +83,8 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
+>  {
+>         int i = 1, verbose = 0, had_error = 0;
+>         unsigned flags = 0;
+> +       unsigned char sha1[20];
+> +       const char *name;
 
-About two years ago, I went from 32-bit 1.5 to 32-bit 1.7 then 64-bit 1.7.
-At that time the 'native' regex library suffered from the 'regex bug' (ie it
-failed t0070.5). It also 'unexpectedly passed' t7008.12. However, since the
-fix for t0070.5 was to use the compat/regex library, I didn't have to give
-t7008.12 any thought. :-D
+Mentioned previously[1]: These two declarations could be moved inside
+the while-loop scope (below).
 
-I am currently running:
+[1]: http://article.gmane.org/gmane.comp.version-control.git/291813
 
-    $ uname -a
-    CYGWIN_NT-10.0 satellite 2.4.0(0.293/5/3) 2016-01-15 16:16 x86_64 Cygwin
-    $ 
-
-Until yesterday, I didn't know that the native regex library no longer suffers
-from the t0070.5 bug. I simply don't use the configure script - never have.
-It seems that t7008.12 is still an issue, however.
-
-The commit which added that test, commit f96e5673, seems to expect that NUL
-characters should not be matched in any way. Now, _if_ you accept that this
-is correct behaviour, then the native regex library on Cygwin still has a
-problem.
-
-Maybe we need to add a check to test-regex (and/or configure)? dunno.
-Alternatively, we could skip the test with a !CYGWIN prerequisite.
-
-[Again, I don't use configure or the native regex library]
-
-ATB,
-Ramsay Jones
+>         const struct option verify_tag_options[] = {
+>                 OPT__VERBOSE(&verbose, N_("print tag contents")),
+>                 OPT_BIT(0, "raw", &flags, N_("print raw gpg status output"), GPG_VERIFY_RAW),
+> @@ -96,8 +101,12 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
+>         if (verbose)
+>                 flags |= GPG_VERIFY_VERBOSE;
+>
+> -       while (i < argc)
+> -               if (verify_tag(argv[i++], flags))
+> +       while (i < argc) {
+> +               name = argv[i++];
+> +               if (get_sha1(name, sha1))
+> +                       had_error = !!error("tag '%s' not found.", name);
+> +               else if (verify_tag(sha1, name, flags))
+>                         had_error = 1;
+> +       }
+>         return had_error;
+>  }
+> --
+> 2.8.0
