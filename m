@@ -1,69 +1,89 @@
-From: FROM Ms Faith Titi Attah <attahneedheli@gmail.com>
-Subject: Ms Faith Titi Attah
-Date: Tue, 19 Apr 2016 14:58:00 +0000
-Message-ID: <CA+v+jAp1-52XKWmoG_7K8f5BvN1qydS9kRgVPwjVOLK3LUPrHA@mail.gmail.com>
-Reply-To: msfaithattahtiti@outlook.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: undisclosed-recipients:;
-X-From: git-owner@vger.kernel.org Tue Apr 19 16:58:08 2016
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCHv2 0/4] Implements the GIT_TRACE_CURL environment variable
+Date: Tue, 19 Apr 2016 15:10:40 +0000
+Message-ID: <20160419151044.27814-1-gitter.spiros@gmail.com>
+Cc: tboegi@web.de, ramsay@ramsayjones.plus.com, gitster@pobox.com,
+	sunshine@sunshineco.com, peff@peff.net,
+	Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 19 17:11:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asX6N-0007ao-LB
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 16:58:08 +0200
+	id 1asXIq-00078I-87
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 17:11:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932422AbcDSO6D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2016 10:58:03 -0400
-Received: from mail-oi0-f65.google.com ([209.85.218.65]:35184 "EHLO
-	mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932106AbcDSO6B (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2016 10:58:01 -0400
-Received: by mail-oi0-f65.google.com with SMTP id r186so1576336oie.2
-        for <git@vger.kernel.org>; Tue, 19 Apr 2016 07:58:01 -0700 (PDT)
+	id S932469AbcDSPK4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2016 11:10:56 -0400
+Received: from mail-qg0-f68.google.com ([209.85.192.68]:34553 "EHLO
+	mail-qg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932106AbcDSPKz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 11:10:55 -0400
+Received: by mail-qg0-f68.google.com with SMTP id m8so1870511qgd.1
+        for <git@vger.kernel.org>; Tue, 19 Apr 2016 08:10:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:reply-to:date:message-id:subject:from:to;
-        bh=rs51SczqB0YbK2WG8x4xy1QvvcS+ompPPRI0ZudIl9Y=;
-        b=Xcpp4CUITHY4hPR5NMv/Ll9UtmgQcEHVPUYaHrL3UXYe1mWzcQcEzdyWOmtnipzU9I
-         JCduHA7UOobq4gEsbteh1XnUDEUv+IOD5BpO2LvnKTGuKFOThedpJFDjG/rfIos6a5qu
-         RsTM0rmPyDxyZwCd65x7M3Djz9t7BsDbgKyWlLSYwEgw0FJUg/ajU7zcwu3D5Us0oMtE
-         Mzf90W47GjBASG5YXizP7QXrM2rS8Fh8woscqD26mwCaZVIn1YC9/48diizZytXtfLJz
-         Tkg+2jUUptAappOSk/iNKk4e8aCQFhPBQrYkF3i55UPsQ3AE2uGaoYI/Qehu9W/F7qm0
-         Szyw==
+        h=from:to:cc:subject:date:message-id;
+        bh=3dKRxr7FWx7qgE2Xw79WJrEfpqb0SxsIIDqeeZHTC1Y=;
+        b=Q3A/yFs8rlm1ZBZzr4w1rymgamREh1eqLMGrujtGPRPpLcKBqQN5beiFjNCPJgCkok
+         BfmA8Semd45LAfBndA0dHzD20ihcrdV1bWiaa16UiY4A8smjyuDyEyU+gCuvdoczcq65
+         x1P8MZ9FZrJXNiZYQY3qM1KitTglHlZwFrkQ4lmVot9njq8kJFgwLyafPi3MNnWKpmE4
+         jBx0gFCxY+QbCWMo+1SrwBp+cQc8EZsamTYtIbXCsjGScTu0711XgHqe9g2u+e6r3PRx
+         drEX8yXDexv1Q4I22rqBbxwMhz6MFIfjuMbIX10k+noJzwsyoL01qpfum/4KZr3LYMJC
+         RtrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:reply-to:date:message-id:subject
-         :from:to;
-        bh=rs51SczqB0YbK2WG8x4xy1QvvcS+ompPPRI0ZudIl9Y=;
-        b=jDDQLNmlb5CFhdkhydb63HhZ10kfl2J8Wx4+sV4OvGiDKTLavntljBbMACCLyObstr
-         a9aeJEO7vztfBOUWt+L9JQFZ4pUjYNQB3sFPE03ybQ14zuhMYz1m+lXjQuZai7Ntjtjs
-         i3gETtpnD4JYOZulOxQaiRSWVeA0RXwcepBlCKoy45uGvtfHcYQr0cGK9tSB/rxtfVbh
-         DXWFZY0Rx0hJVaiCB9B5XFkUjlPcxvfAc050le2yZiptcSqnw8Q6/1a3XjSdkrFESb56
-         Ondi/AvJVrs5RjZ8rmSbfNLgIaUL1KY9xaffWYty9DJbLbolgHDA2ZxNJGO2mVbQmLsS
-         x0aw==
-X-Gm-Message-State: AOPr4FWxxEYPMUVieaBNNYdQQN1yfH7j8fAa7/zBme0ijKquN/W6dKQ9SwQfAqqQaBxe7KkrlMlUswn6KwMazA==
-X-Received: by 10.202.96.68 with SMTP id u65mr1358724oib.83.1461077880740;
- Tue, 19 Apr 2016 07:58:00 -0700 (PDT)
-Received: by 10.202.195.208 with HTTP; Tue, 19 Apr 2016 07:58:00 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=3dKRxr7FWx7qgE2Xw79WJrEfpqb0SxsIIDqeeZHTC1Y=;
+        b=YoWmEzqWTAjsL2o6DNGZ6oGajFrNljaeS6IgazaGVwhk627i+n5iSXYk28M++DDNI1
+         deQSyJBunoo+rNRUUJGOoptRNpU3yg26VUYBRc06IhjYPGEY5pVTlKGjS/EvTxnuAD8A
+         ysForw7LKrTCNXljLXlx4zzK+zE8zh6ftCEgSS9GcqQl3XIJrI45Lf6QJjBx/KL7grLF
+         Iky1PR0gqeTxsmW+CqIsRSXvh90O5ptxcu00pH66Re9SjyJJJXjU/zT/2GZlxlx0T6pa
+         fM8Xttvfv2TCom4uDZ+epfVgua+dvkc7+D0FewYTwRP375MWy9/9JRngcUI4QHchrj/N
+         wRZg==
+X-Gm-Message-State: AOPr4FVk+J+gdpffYp0ngMeBmtTOd2cr/PuuxYW+69zVTgebPDa4rQDaf7YyC3/CP7mCRA==
+X-Received: by 10.194.92.132 with SMTP id cm4mr3674247wjb.25.1461078654189;
+        Tue, 19 Apr 2016 08:10:54 -0700 (PDT)
+Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([23.101.69.192])
+        by smtp.gmail.com with ESMTPSA id u16sm4846168wmd.5.2016.04.19.08.10.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 19 Apr 2016 08:10:53 -0700 (PDT)
+X-Mailer: git-send-email 2.8.1.383.g0f2638b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291868>
 
-Dearest one
-I wish you and your family happy moments of life
-now and forever more amen.Please, I do not have formal relationship
-with you but because of my present predicament and circumstances I am
-made to contact you.I have been suffering from cancer of the Lungs and
-has a short life to leave.I have made up my mind to donate my
-inheritance of 21.5 million US to the less privileged please help me
-to fulfill my last wish.please contact me here
-(msfaithattahtiti(A)outlook.com) so i can detail you more.i await your
-reply
+This is the second version but in reality is the complete rewriting of the patches discussed here
 
-Thanks
-Ms Faith Titi Attah
+$gmane/290520
+$gmane/290521
+
+Changes from V1
+
+- introduced GIT_TRACE_CURL variable with its documentation
+- changed the name of the temporary variable "i" in "w" in the helper routine
+- used the c escape sequences instead of the hex equivalent
+- dropped the previous GIT_DEBUG_CURL env var
+- curl_dump and curl_trace factored out to a shared implementation
+in http.c 
+
+  
+Elia Pinto (4):
+  http.h: Add debug callback and helper routine for implementing     the
+    GIT_TRACE_CURL environment variable in http.c
+  http.c: implements the GIT_TRACE_CURL environment variable
+  git.txt: document the new GIT_TRACE_CURL environment variable
+  imap-send.c: introduce the GIT_TRACE_CURL enviroment variable
+
+ Documentation/git.txt |  8 +++++
+ http.c                | 98 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+ http.h                |  6 ++++
+ imap-send.c           |  6 ++++
+ 4 files changed, 117 insertions(+), 1 deletion(-)
+
+-- 
+2.5.0
