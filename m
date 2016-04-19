@@ -1,80 +1,121 @@
-From: Jan Durovec <jan.durovec@gmail.com>
-Subject: Re: [PATCH v2] git-p4: add P4 jobs to git commit message
-Date: Tue, 19 Apr 2016 22:28:58 +0200
-Message-ID: <CABEqOBxY61yObr0FeUxPYxc6C+xvde1LOS7zS_dHpBqwemJ+dQ@mail.gmail.com>
-References: <0102015420a6c30a-f2da55c9-1fc4-4df6-860e-228c5305f617-000000@eu-west-1.amazonses.com>
-	<xmqqshyi2yb7.fsf@gitster.mtv.corp.google.com>
-	<CAE5ih7-2mefGwfXRhvQZJFPD4QYAzZ1jYG82s6cnDzWVCiDS8w@mail.gmail.com>
-	<xmqqfuuh35v5.fsf@gitster.mtv.corp.google.com>
-	<CABEqOBxZkYTm7_m-Eeq-acN=Nse1vLGk8Gm44BihVGi27KaGiw@mail.gmail.com>
-	<xmqq7fft32y9.fsf@gitster.mtv.corp.google.com>
-	<CABEqOBwqW+BO4rtOx4ax35VacE4RZhpo_1pbqzTP_EGiSWasiQ@mail.gmail.com>
-	<xmqqh9ex1lsy.fsf@gitster.mtv.corp.google.com>
-	<CABEqOBxkHstqRHFUYF7=eComB-HwUGwi0tpWbhvUuKiny-=Vyw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v1 2/2] git-p4: fix Git LFS pointer parsing
+Date: Tue, 19 Apr 2016 13:30:11 -0700
+Message-ID: <xmqqtwixz6i4.fsf@gitster.mtv.corp.google.com>
+References: <1461096530-82448-1-git-send-email-larsxschneider@gmail.com>
+	<1461096530-82448-3-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Luke Diamand <luke@diamand.org>, Git Users <git@vger.kernel.org>,
-	Roberto Tyley <roberto.tyley@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 19 22:29:05 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, luke@diamand.org
+To: larsxschneider@gmail.com
+X-From: git-owner@vger.kernel.org Tue Apr 19 22:30:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ascGe-0000km-Nh
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 22:29:05 +0200
+	id 1ascIB-0001k3-Gf
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 22:30:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932138AbcDSU3A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2016 16:29:00 -0400
-Received: from mail-qg0-f65.google.com ([209.85.192.65]:33512 "EHLO
-	mail-qg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932106AbcDSU27 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2016 16:28:59 -0400
-Received: by mail-qg0-f65.google.com with SMTP id 7so2794392qgj.0
-        for <git@vger.kernel.org>; Tue, 19 Apr 2016 13:28:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=xoF0YYL/i/hLMFzZ1JxUyjVq6ORuIvF7uxz2AF+k+Gk=;
-        b=VR823oWCGyt0qt/14bMZgAHMncs+y1FledPLNGeAB892hcDZQ/i6bggIjzr/vuxPc4
-         a9/S9byUgCMFwURa9qskgaN5W08S9upMok+89XMdAL3iNJiN5vY0QjMzymtKG/yEPhzU
-         ke5o849+59k8HpzAMxnZuwJMmXnleJNxMh60oyjfUYOOAts+MBccdT3+DiP1vd33CFe7
-         +lWs003IvPnWq34WH57a1rodoToXRsKJQbXwpxoqjJSTz8hB5tBDHCbdTbU9lSR5C0qy
-         dbYcf+J/s4Oo66B/v5V3BczeqByKN0aqXv2AvRQNZU2/LW/jM7wr2p+DMcNTOM5ya8wY
-         P6UA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=xoF0YYL/i/hLMFzZ1JxUyjVq6ORuIvF7uxz2AF+k+Gk=;
-        b=RPvynLsxDSp7ECIZUD0OCobWnGW1hDQQD4yb0xAxjlz4aytnDv0/Yg08I0RPP45KKq
-         dpjsaazjtuUCvjtcNHDlnW5xVCcCfkeTtuMMPRw2dJ0ZTNVTMx4UrRpCI9VmF9yKUxqd
-         xalYxBnK0LjEGLWI9q/MdIvnoQIDZ8vrzs4O0GJCch3S9PrfB619RAXkLatCfHFmD5ys
-         jGtNtQ8JjwU9wlxGjGDEs+2NO2NQ5zTBN2vAlwIbEIlLEPpISwVzr1rDgYXeAXVzV6Md
-         dGiz7AQWXT+pVwcDw0k4T5m6IhJfntz1T2L35uxJfN3RRPBlyFIXlxTrnlohHBIZ57q+
-         XGGg==
-X-Gm-Message-State: AOPr4FV+w/gj7FYV5jsqeLO7WZpKYK3Phgjl0LUNnC0j0I5v1LWI58FTNxlK3jCNK052mZFq6UlvH8HrFQAzPg==
-X-Received: by 10.140.201.143 with SMTP id w137mr6519195qha.27.1461097738643;
- Tue, 19 Apr 2016 13:28:58 -0700 (PDT)
-Received: by 10.55.49.10 with HTTP; Tue, 19 Apr 2016 13:28:58 -0700 (PDT)
-In-Reply-To: <CABEqOBxkHstqRHFUYF7=eComB-HwUGwi0tpWbhvUuKiny-=Vyw@mail.gmail.com>
+	id S933003AbcDSUaa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2016 16:30:30 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58857 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932106AbcDSUaO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 16:30:14 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7BFA612F4A;
+	Tue, 19 Apr 2016 16:30:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZeYqYH4n+zektz8QXkPiXAeFN7A=; b=G3zHea
+	rDrCZ0zLZEvyy1/br3og4Ns0dxKV9u3G/nDsvOi2jnuSC8AKR7h0gLv7kW0fsPaS
+	eZNVo2p31BNpoE9HtIKVBaSObcoSXNJXQ3rRduem8H4HBFFZ0+f04k8HFo8iRckU
+	j5bFbmBfltAYuogXyL3+7LFF4CJoBYwun6KPU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nRGFao28laaVUJnRHDEnLQclj3I7cCZN
+	R+eXIIjrFDRNq0CiivrQ1soA6N0hC5645AXbVnNYxT8J0q3UQF9zS/eAFjU5eRlQ
+	8XfvkM7o1cpDeEoJtJ1kX3edlYPT8bJ6YqergDPaGllOATbevbtHC2o04qSjZn3O
+	YhNtQnZk3nE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 74B5912F49;
+	Tue, 19 Apr 2016 16:30:13 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E2EFF12F48;
+	Tue, 19 Apr 2016 16:30:12 -0400 (EDT)
+In-Reply-To: <1461096530-82448-3-git-send-email-larsxschneider@gmail.com>
+	(larsxschneider@gmail.com's message of "Tue, 19 Apr 2016 22:08:50
+	+0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 84BAD8BE-066D-11E6-BC8F-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291922>
 
-Huh... seems that it works :)
+larsxschneider@gmail.com writes:
 
-v3 sent in 2 parts
-
-On Tue, Apr 19, 2016 at 8:50 PM, Jan Durovec <jan.durovec@gmail.com> wrote:
->> Any submitGit users?  I think it lets you throw multiple-patch
->> series just fine.  In this case, you'd prepare a two patch series on
->> a branch, 1/2 being the clean-up and 2/2 being the new feature, and
->> if you give that branch to submitGit as a whole it should do the
->> right thing, I'd imagine.
+> From: Lars Schneider <larsxschneider@gmail.com>
 >
-> Hm... I'll see what it does with a pull request that has 2 commits.
+> Git LFS 1.2.0 removed a line from the output of the 'git lfs pointer'
+> command [1] which broke the parsing of this output. Adjust the parser
+> to the new output and add minimum Git LFS version to the docs.
+
+Hmph, adjust to operate with both, or drop the support for the old
+one?
+
+
+
+>
+> [1] https://github.com/github/git-lfs/pull/1105
+>
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> ---
+>  Documentation/git-p4.txt | 3 ++-
+>  git-p4.py                | 6 +++---
+>  2 files changed, 5 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+> index 88ba42b..b862cb9 100644
+> --- a/Documentation/git-p4.txt
+> +++ b/Documentation/git-p4.txt
+> @@ -522,7 +522,8 @@ git-p4.largeFileSystem::
+>  	that large file systems do not support the 'git p4 submit' command.
+>  	Only Git LFS is implemented right now (see https://git-lfs.github.com/
+>  	for more information). Download and install the Git LFS command line
+> -	extension to use this option and configure it like this:
+> +	extension (minimum version 1.2.0) to use this option and configure it
+> +	like this:
+>  +
+>  -------------
+>  git config       git-p4.largeFileSystem GitLFS
+> diff --git a/git-p4.py b/git-p4.py
+> index 527d44b..d2be574 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -1064,8 +1064,8 @@ class GitLFS(LargeFileSystem):
+>          if pointerProcess.wait():
+>              os.remove(contentFile)
+>              die('git-lfs pointer command failed. Did you install the extension?')
+> -        pointerContents = [i+'\n' for i in pointerFile.split('\n')[2:][:-1]]
+> -        oid = pointerContents[1].split(' ')[1].split(':')[1][:-1]
+> +        oidEntry = [i for i in pointerFile.split('\n') if i.startswith('oid')]
+> +        oid = oidEntry[0].split(' ')[1].split(':')[1]
+>          localLargeFile = os.path.join(
+>              os.getcwd(),
+>              '.git', 'lfs', 'objects', oid[:2], oid[2:4],
+> @@ -1073,7 +1073,7 @@ class GitLFS(LargeFileSystem):
+>          )
+>          # LFS Spec states that pointer files should not have the executable bit set.
+>          gitMode = '100644'
+> -        return (gitMode, pointerContents, localLargeFile)
+> +        return (gitMode, pointerFile, localLargeFile)
+>
+>      def pushFile(self, localLargeFile):
+>          uploadProcess = subprocess.Popen(
+> --
+> 2.5.1
