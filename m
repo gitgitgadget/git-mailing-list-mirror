@@ -1,84 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/6] Convert struct name_entry to use struct object_id.
-Date: Tue, 19 Apr 2016 16:02:22 -0700
-Message-ID: <xmqqshyhxkw1.fsf@gitster.mtv.corp.google.com>
-References: <1460934641-435791-1-git-send-email-sandals@crustytoothpaste.net>
-	<1460934641-435791-5-git-send-email-sandals@crustytoothpaste.net>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH 2/2] xdiff: implement empty line chunk heuristic
+Date: Tue, 19 Apr 2016 16:02:55 -0700
+Message-ID: <CA+P7+xp60r6Tsv0_=Qy6Wo39MmXMbCba7g5goPQD-e8FNaaEjw@mail.gmail.com>
+References: <1461013950-12503-1-git-send-email-sbeller@google.com>
+ <1461013950-12503-3-git-send-email-sbeller@google.com> <20160419050342.GA19439@sigill.intra.peff.net>
+ <CAGZ79kbzg7SmJHFpxeJNKmLaEEw+irCxUedo45jGx8G8fmPtKg@mail.gmail.com> <20160419170624.GA3999@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Wed Apr 20 01:02:37 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 20 01:03:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asefE-0000XL-DE
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 01:02:36 +0200
+	id 1asefx-00014r-CR
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 01:03:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752524AbcDSXC1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2016 19:02:27 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55963 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752287AbcDSXC0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2016 19:02:26 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D649015D97;
-	Tue, 19 Apr 2016 19:02:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eTF7AKy+LwzWxf1L/uY/HXCP0LM=; b=G5IMrq
-	FmZnYv/vS8y+nWYmu7CfqvE8vOYkHvaWdXzTUFK/tKtoxj41Y3dLA5ACm46gFh/o
-	xkEQUFYZt04gB+P7e9BAJSAnSUJifJ0XVmdjoM8hAunUYqgurYGk+S4bgA4Z3yGR
-	0/uTKqIg+DzGX/HGjzrN1NjzgrdkRO5y6BFNM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Sy8XXx/ewgCPveTXHvLwKZgxBTNgcQZ9
-	hBVgUzUpUMv/BllPlhvUAvqwW2IRgqXyb5fW+pWoyHwnA0Px1OGESE8oYp7dBr2/
-	qeLB7c75ac7ZbDhMO009FWL2huiZ5XcwQOIZaGO0Uk9NMMI2IXrrNQkwD7krVuiS
-	SXQVYR9s6+A=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CCB3715D96;
-	Tue, 19 Apr 2016 19:02:24 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3A80B15D95;
-	Tue, 19 Apr 2016 19:02:24 -0400 (EDT)
-In-Reply-To: <1460934641-435791-5-git-send-email-sandals@crustytoothpaste.net>
-	(brian m. carlson's message of "Sun, 17 Apr 2016 23:10:39 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C769FED2-0682-11E6-A00E-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752759AbcDSXDR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2016 19:03:17 -0400
+Received: from mail-vk0-f51.google.com ([209.85.213.51]:36712 "EHLO
+	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752660AbcDSXDQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 19:03:16 -0400
+Received: by mail-vk0-f51.google.com with SMTP id n67so34005466vkf.3
+        for <git@vger.kernel.org>; Tue, 19 Apr 2016 16:03:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=9XdVoBwG7dsFj0FESvKjeQC6SKol+H6wv6Tx+waMPIM=;
+        b=Y3HoNloytd01Vicre5qaIrJZquzwEV60L4LQX+CelG7Ee1Vo5jF9BcNvnmUJPXcXre
+         flGELDh+V4/9SWlAPEfqRzBvVRZevtqoOwxgF973PKrQp9btNCC3X3zeFooaOkWVZ8P3
+         nbHJ1bdM0ljuyfAyZxergf/zbhsok+ZXvTXzg4TEK8JT33ysWsYqf3aD/3Raw8iaeC7L
+         cjzL3Z2/4kjyJt/M7Msn3Az5/3zPm0sXoC6EBvuKQ/PC+vg2gJCpKmMH7EeLe84KvzW0
+         hwun1nLYLibjzR00MbpK0dNbXxJlZ7qrnJCIOgoa6Gx8JHIinfusfJHaVFtQ+mw/SPQa
+         Dxeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=9XdVoBwG7dsFj0FESvKjeQC6SKol+H6wv6Tx+waMPIM=;
+        b=Ze59OAUNScvnJnI78pPhAlfOl++r4VRx9qc/cL2vLaPNxre4qdZgHAiUR0Yd4Qtau+
+         D8PJQgFSYZs9T/qu2cLrk8bXfg6NUCMlA2swPE5UlEci0eRYsrJfzHareqaTXrxtj6IO
+         5JyisrkdrEoSC0EDsofjWVBIK4J6zrDe5RyC+lJs3P2lemz2uEIH3b86eLwSgdakrloV
+         w5dctsMB8EBvWUjBEsTazSapDHA73WEY83ObpbgunVGqmULNkTaaxcKtWLhfg7yDfyXv
+         lHpbxMDDrl+0lMdMsfTjswI6YMaCWdvdTxMf6NrGR9XKHLyfh5r/tp+9Z3qmQIg76KYi
+         Au6Q==
+X-Gm-Message-State: AOPr4FW1RTJRRVC+OAKb/yTAIZNUIjQLgVKyPY/6v2WvTplKOs18XOu4lyDWlxThjFt2UoPltC3JV+fH7CfPYQ==
+X-Received: by 10.31.1.67 with SMTP id 64mr2688213vkb.130.1461106995431; Tue,
+ 19 Apr 2016 16:03:15 -0700 (PDT)
+Received: by 10.159.53.112 with HTTP; Tue, 19 Apr 2016 16:02:55 -0700 (PDT)
+In-Reply-To: <20160419170624.GA3999@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291948>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Tue, Apr 19, 2016 at 10:06 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Apr 19, 2016 at 08:17:38AM -0700, Stefan Beller wrote:
+>
+>> On Mon, Apr 18, 2016 at 10:03 PM, Jeff King <peff@peff.net> wrote:
+>>
+>> > I guess this will invalidate old patch-ids, but there's not much to be
+>> > done about that.
+>>
+>> What do you mean by that? (What consequences do you imagine?)
+>> I think diffs with any kind of heuristic can still be applied, no?
+>
+> I mean that if you save any old patch-ids from "git patch-id", they
+> won't match up when compared with new versions of git. We can probably
+> ignore it, though. This isn't the first time that patch-ids might have
+> changed, and I think the advice is already that one should not count on
+> them to be stable in the long term.
+>
+> -Peff
 
-> @@ -314,7 +314,7 @@ static int threeway_callback(int n, unsigned long mask, unsigned long dirmask, s
->  	}
->  
->  	if (same_entry(entry+0, entry+1)) {
-> -		if (entry[2].sha1 && !S_ISDIR(entry[2].mode)) {
-> +		if (entry[2].oid->hash && !S_ISDIR(entry[2].mode)) {
+Plus they'll be stable within a version of Git, it's only recorded
+patch ids that change, which hopefully isn't done very much if at all.
 
-Thanks for a warning in the cover letter.
-
-"if (entry[2].oid && !S_ISDIR(entry[2].mode)" would be a faithful
-conversion, wouldn't it?
-
-threeway-callback is called from the unpack-trees codepath and
-tree-walk.c::traverse_trees() is what prepared these entries.
-
-An entry[] which is an N-element array represents the traversal
-state of walking N trees in parallel, and the callback function like
-this one gets an entry that has been tree-walk.c::entry_clear()ed
-(i.e. memset to full of '\0's) for a tree that lacks the corresponding
-path.
-
-Try to do merge-tree of two trees, where there is a path that we did
-not change since common ancestor, while the other side removed it,
-and you would hit this if () statement, I would think.
+Thanks,
+Jake
