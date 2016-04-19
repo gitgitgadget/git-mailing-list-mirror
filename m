@@ -1,96 +1,81 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] replace --edit: respect core.editor
-Date: Tue, 19 Apr 2016 09:22:37 -0700
-Message-ID: <xmqqoa9536wi.fsf@gitster.mtv.corp.google.com>
-References: <909769abaff1babdab77625bebd04e2013c6e344.1461076425.git.johannes.schindelin@gmx.de>
+Subject: Re: [PATCHv5 0/2] xdiff: implement empty line chunk heuristic
+Date: Tue, 19 Apr 2016 09:23:59 -0700
+Message-ID: <xmqqk2jt36u8.fsf@gitster.mtv.corp.google.com>
+References: <1461079290-6523-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Jeff King <peff@peff.net>,
-	Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 19 18:22:50 2016
+Cc: git@vger.kernel.org, jacob.keller@gmail.com, peff@peff.net
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Apr 19 18:24:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asYQL-0000uY-Rx
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 18:22:50 +0200
+	id 1asYRh-0001oV-Sn
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 18:24:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933454AbcDSQWl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2016 12:22:41 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53873 "EHLO
+	id S933310AbcDSQYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2016 12:24:09 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64287 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932482AbcDSQWk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2016 12:22:40 -0400
+	with ESMTP id S932482AbcDSQYI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 12:24:08 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E0BE9140A1;
-	Tue, 19 Apr 2016 12:22:38 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B3E9B12614;
+	Tue, 19 Apr 2016 12:24:01 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7qnmObmKDFWi6mMbRqeBBULCO50=; b=m0gyd9
-	SG1uDn1fw8yNdf/IsBIxNQ8JZ9UwkNpuqDHengsxbzFwL9tXV8Zh1FxIRC6JxGjI
-	SW43opM4sNBYZOSBAcGQE3A4PNeobt8xBmf1v2c2qjeDbHDdcJAex/y6Kacv/r8L
-	GalCORCS6n0sx7O5ER6vtBYYuwfYNnVY7qlKs=
+	:content-type; s=sasl; bh=FDJbGaakDEjAEqb6vlH151IJ2N4=; b=QOLfV4
+	OdAC/aEVZiHvX+KRek5fPi/b9XB80kjPPHbGsPXyuZCY2DhE8g5fBYlzBOkSoF4F
+	Mys17g5TCeBemTh3PK5RIpqI2p7KZmZ+UOwQSs6Df00cBQRQrjCzHz4EQyHQzvJ+
+	kUywKDe3chhNYL3jhEaIKJWd4ob2wsDe6CEio=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Jb10bwHbm5IGtb18cDWfjdio64HrZyta
-	Cam8XL5x4Do5K/bTZziIojLCSAYAuXJ1BCXe6PdahCbQ2QGO54tOHvoLvnxO7/O+
-	VDppdhIJGLp3M/sfCb5/wqMRE5DTZWDIXUuQm3mjGdUrN3xPcEEgkBkVk8Nru0uy
-	0hqvpWyWrOU=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D8A85140A0;
-	Tue, 19 Apr 2016 12:22:38 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=DUtBr1v+JWNEgsPy2zGNqILVCJvjuV5x
+	2AWbLvzN8XLeYTaq+46NeEz4xzqS82IkR1oyJ0LcUcpSWRceKvfxokpBlNIBk/Pt
+	qbSpPfGU/OdYaUi33qYOe8UvtNokydAJCgC+7tPXQYFdoHlGHj70VhpyU1DdfFGm
+	LrAL5Fw8Bbc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8BEBB12613;
+	Tue, 19 Apr 2016 12:24:01 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4489F1409E;
-	Tue, 19 Apr 2016 12:22:38 -0400 (EDT)
-In-Reply-To: <909769abaff1babdab77625bebd04e2013c6e344.1461076425.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Tue, 19 Apr 2016 16:37:00 +0200
-	(CEST)")
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 798C812612;
+	Tue, 19 Apr 2016 12:24:00 -0400 (EDT)
+In-Reply-To: <1461079290-6523-1-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Tue, 19 Apr 2016 08:21:28 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: EEAB594C-064A-11E6-80A7-9A9645017442-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 1FAD7FE8-064B-11E6-836D-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291878>
 
-"git blame -L475,6 builtin/replace.c" points at b892bb45 (replace:
-add --edit option, 2014-04-26) and the commit log message names two
-people who can review this change, so that is what I am doing here.
+Stefan Beller <sbeller@google.com> writes:
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-
-> We simply need to read the config, is all.
+> Thanks Jeff for pointing out issues in the comment!
 >
-> This fixes https://github.com/git-for-windows/git/issues/733
+> Thanks,
+> Stefan
 >
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  builtin/replace.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/builtin/replace.c b/builtin/replace.c
-> index 748c6ca..02b13f6 100644
-> --- a/builtin/replace.c
-> +++ b/builtin/replace.c
-> @@ -475,6 +475,7 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
->  		return replace_object(argv[0], argv[1], force);
+> diff to origin/jk/diff-compact-heuristic:
+> diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+> index 5a02b15..b3c6848 100644
+> --- a/xdiff/xdiffi.c
+> +++ b/xdiff/xdiffi.c
+> @@ -515,12 +515,12 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+>  		}
 >  
->  	case MODE_EDIT:
-> +		git_config(git_default_config, NULL);
->  		if (argc != 1)
->  			usage_msg_opt("-e needs exactly one argument",
->  				      git_replace_usage, options);
+>  		/*
+> -		 * If a group can be moved back and forth, see if there is an
+> +		 * If a group can be moved back and forth, see if there is a
+>  		 * blank line in the moving space. If there is a blank line,
+>  		 * make sure the last blank line is the end of the group.
 
-The placement of git_config() makes me wonder why.
+I guess this is mine to blame.  Thanks for catching and rerolling.
 
-I can understand "we only know edit mode needs config, and we know
-it will never affect other modes to have the new call here", and it
-would be good for an emergency patch for ancient maintenance track
-that will not get any other changes or enhancements.  I do not think
-it is a sound reasoning to maintain the codefor the longer term,
-though.
+Will re-queue.
