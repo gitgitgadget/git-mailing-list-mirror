@@ -1,196 +1,88 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH v2] git-p4: add P4 jobs to git commit message
-Date: Tue, 19 Apr 2016 09:13:37 +0100
-Message-ID: <CAE5ih7-2mefGwfXRhvQZJFPD4QYAzZ1jYG82s6cnDzWVCiDS8w@mail.gmail.com>
-References: <0102015420a6c30a-f2da55c9-1fc4-4df6-860e-228c5305f617-000000@eu-west-1.amazonses.com>
-	<xmqqshyi2yb7.fsf@gitster.mtv.corp.google.com>
+From: Adam Dinwoodie <adam@dinwoodie.org>
+Subject: Re: Binary grep t7008 known breakage vanished on Cygwin
+Date: Tue, 19 Apr 2016 09:42:32 +0100
+Message-ID: <20160419084232.GE2345@dinwoodie.org>
+References: <20160418152149.GD2345@dinwoodie.org>
+ <5715147F.7020609@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jan Durovec <jan.durovec@gmail.com>,
-	Git Users <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 19 10:13:57 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 19 10:42:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asQnE-0005bn-ES
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 10:13:56 +0200
+	id 1asRF5-0002Sx-8W
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 10:42:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752788AbcDSINr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2016 04:13:47 -0400
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:33440 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752665AbcDSINn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2016 04:13:43 -0400
-Received: by mail-ob0-f177.google.com with SMTP id tz8so6309912obc.0
-        for <git@vger.kernel.org>; Tue, 19 Apr 2016 01:13:38 -0700 (PDT)
+	id S1752308AbcDSImi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2016 04:42:38 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:38254 "EHLO
+	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751480AbcDSImg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 04:42:36 -0400
+Received: by mail-wm0-f52.google.com with SMTP id u206so16894439wme.1
+        for <git@vger.kernel.org>; Tue, 19 Apr 2016 01:42:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=Lpt5SOGBQoX8ox8Kln7YTmekzTT33Fr+joM307zslgI=;
-        b=V98UN7iH7S3JvjvqgdWbYTMS5/NxjXG8dIfD3sR0aWIElwRsd+6wvrrTjE4ojfCGI0
-         APV/mjrAEnZCnBhEIggwPBHHseT0y/tlY05px4SI/vXCY4GZ3KsdvqWKRE3oAA5Aoc0l
-         dd10tlVLom6JB46zWvwAs3vBN1Xsk72VQUKms=
+        d=dinwoodie.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=+r63JA8l7wyqbGnFD07jp5ghSMBow14F0Gd5PVbgYUk=;
+        b=vkVbfW/Bh5QFkrV9GmETx1Chxt7FlSghz0jK1tjs+qGJT8Ln0GMnh4Pn0owAkbJoe2
+         C0D4RdB47ZpYOlZgZu+lsUHJO9AWutT1LZm8GP3tNf5FS0/kCra1qQL9mXB2SIjL6U/x
+         stCE7AuQ+xja6Q2lUPCuHVfxVpMtgqplmfTOw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=Lpt5SOGBQoX8ox8Kln7YTmekzTT33Fr+joM307zslgI=;
-        b=Lf/y+gR7xN0fQIX4SG2sa28oicazKevdzJJ7R05eyq4tdxlLg6dJfYi4jlDPMn7azu
-         Eq092lheaTFqmPRbn33QAoP98/pWlRRlINTSTp7SO8LQLc6Px1mj6btyZoYh8CoCt0yb
-         41c97FCnRGPskInl7J6SNcqLQoMS2x2Sp11IfhTKm3pO6ytOXva0mQ933g8+sDr95Lna
-         IJU4joY7YucifTMOSW6kMeOvysja9PIFLQtdmAW1PfvoPPAx54vegfUPRvpBNZt9IrGw
-         tq6QtlM1S4vItaHCdFbr/9qIB2fwVJPkLqv8QI3o5jkyB3iPPQVHwwBwOMObXq8diUIj
-         ZzqQ==
-X-Gm-Message-State: AOPr4FW26DHY4L+2Eky1ILVZOGpY625xUuWwPBfW/eQvORXSC3D2NqyNG9c9g2CBh5r2O9n9MeF2q0zQEgYHdw==
-X-Received: by 10.60.63.84 with SMTP id e20mr536542oes.37.1461053617800; Tue,
- 19 Apr 2016 01:13:37 -0700 (PDT)
-Received: by 10.202.75.210 with HTTP; Tue, 19 Apr 2016 01:13:37 -0700 (PDT)
-In-Reply-To: <xmqqshyi2yb7.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=+r63JA8l7wyqbGnFD07jp5ghSMBow14F0Gd5PVbgYUk=;
+        b=OEbce5ABa1R7Ea/Ogn9OdJoixh6bcyL5mNtGHCjf+pUcYiNTDyExz6sh/aFKH/ceZm
+         33ZWmZbvNsw/9znsWFh5T5/jkwpsjAbd+x2bk5jkyf13zysv0XFpz+yeBgQUsu5Y1qlp
+         UB0WWOtJ2/9hfHv5A7vUzeGbLlgIXQZcmwJjFs0Hz6Y4BxF59zFyc+WIsuYkAd//ph5l
+         M2BrCW96kU3YzzhumlzklU5rvnN1dM4jW6r5NnubbIFEcfn/fFcWfErSqeqGyrsucmB1
+         NPWwW/Jw9b/Aand6hLLe4ZGWSTXQg3fxQIDWWdw9YQPuHrhlzA5GQILNfs7VuUKPBY1n
+         qK8w==
+X-Gm-Message-State: AOPr4FXqezZaMbwN9fF4pvH1+8EaHgJgtQSxgqHwT5J4MLr5RfqoTnh7I5/bZyYDGbDm7Q==
+X-Received: by 10.194.92.163 with SMTP id cn3mr1806840wjb.3.1461055354840;
+        Tue, 19 Apr 2016 01:42:34 -0700 (PDT)
+Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
+        by smtp.gmail.com with ESMTPSA id kj9sm68413833wjb.14.2016.04.19.01.42.33
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 19 Apr 2016 01:42:33 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <5715147F.7020609@ramsayjones.plus.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291852>
 
-On 19 April 2016 at 02:15, Junio C Hamano <gitster@pobox.com> wrote:
-> Jan Durovec <jan.durovec@gmail.com> writes:
->
->> When migrating from Perforce to git the information about P4 jobs
->> associated with P4 changelists is lost.
->>
->> Having these jobs listed on messages of related git commits enables smooth
->> migration for projects that take advantage of e.g. JIRA integration
->> (which uses jobs on Perforce side and parses commit messages on git side).
->>
->> The jobs are added to the message in the same format as is expected when
->> migrating in the reverse direction.
->>
->> Signed-off-by: Jan Durovec <jan.durovec@gmail.com>
->> ---
->
-> Thanks for describing the change more throughly than the previous
-> round.
->
-> Luke, how does this one look?
->
->>  git-p4.py              | 12 ++++++
->>  t/lib-git-p4.sh        | 10 +++++
->>  t/t9829-git-p4-jobs.sh | 99 ++++++++++++++++++++++++++++++++++++++++++++++++++
->>  3 files changed, 121 insertions(+)
->>  create mode 100755 t/t9829-git-p4-jobs.sh
->>
->> diff --git a/git-p4.py b/git-p4.py
->> index 527d44b..8f869d7 100755
->> --- a/git-p4.py
->> +++ b/git-p4.py
->> @@ -2320,6 +2320,15 @@ def extractFilesFromCommit(self, commit):
->>              fnum = fnum + 1
->>          return files
->>
->> +    def extractJobsFromCommit(self, commit):
->> +        jobs = []
->> +        jnum = 0
->> +        while commit.has_key("job%s" % jnum):
->> +            job = commit["job%s" % jnum]
->> +            jobs.append(job)
->> +            jnum = jnum + 1
->
-> I am not familiar with "Perforce jobs", but I assume that they are
-> always named as "job" + small non-negative integer in a dense way
-> and it is OK for this loop to always begin at 0 and immediately stop
-> when job + num does not exist (i.e. if job7 is missing, it is
-> guaranteed that we will not see job8).
+On Mon, Apr 18, 2016 at 06:08:15PM +0100, Ramsay Jones wrote:
+> On 18/04/16 16:21, Adam Dinwoodie wrote:
+> > t7008.12 is marked as an expected failure, but building Git on Cygwin
+> > including a `make configure && ./configure` step has the test
+> > unexpectedly passing.  Building without the configure step has the test
+> > failing as expected.
+> > 
+> > This appears to be behaviour specific to Cygwin; at least I get that
+> > test failing on my CentOS box regardless of whether I perform the
+> > configure step.
+> 
+> Yes, the configure sets NO_REGEX= whereas the config.mak.uname sets
+> NO_REGEX=UnfortunatelyYes.
+> 
+> [Note that the regex bug (see t0070-fundamental.sh test #5) now seems to
+> pass with the 'native' regex library]
 
-This is OK - P4 jobs have arbitrary names, but this code is just
-extracting an array of them from the commit by index.
+Ah, that makes sense.
 
->
-> Shouldn't the formatting be "job%d" % jnum, though, as you are using
-> jnum as a number that begins at 0 and increments by 1?
+I'm still not quite sure what the "correct" thing to do here is; it
+looks as though the NOREGEX=UnfortunatelyYes can disappear from
+config.mak.uname, but that still leaves t7008.12 passing when it's
+expected to fail.
 
-Python seems to handle this by turning jnum into a string.
-
->
->> +        return jobs
->> +
->>      def stripRepoPath(self, path, prefixes):
->>          """When streaming files, this is called to map a p4 depot path
->>             to where it should go in git.  The prefixes are either
->> @@ -2665,6 +2674,7 @@ def hasBranchPrefix(self, path):
->>      def commit(self, details, files, branch, parent = ""):
->>          epoch = details["time"]
->>          author = details["user"]
->> +        jobs = self.extractJobsFromCommit(details)
->>
->>          if self.verbose:
->>              print('commit into {0}'.format(branch))
->> @@ -2692,6 +2702,8 @@ def commit(self, details, files, branch, parent = ""):
->>
->>          self.gitStream.write("data <<EOT\n")
->>          self.gitStream.write(details["desc"])
->> +        if len(jobs) > 0:
->> +            self.gitStream.write("\nJobs: %s" % (' '.join(jobs)))
->>          self.gitStream.write("\n[git-p4: depot-paths = \"%s\": change = %s" %
->>                               (','.join(self.branchPrefixes), details["change"]))
->>          if len(details['options']) > 0:
->> diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
->> index f9ae1d7..3907560 100644
->> --- a/t/lib-git-p4.sh
->> +++ b/t/lib-git-p4.sh
->> @@ -160,6 +160,16 @@ p4_add_user() {
->>       EOF
->>  }
->>
->> +p4_add_job() {
->
-> Not a new problem in this script, but we'd prefer to spell this as
->
->     p4_add_job () {
->
-> i.e. a space on both sides of ().
->
->> +     name=$1 &&
->> +     p4 job -f -i <<-EOF
->> +     Job: $name
->> +     Status: open
->> +     User: dummy
->> +     Description:
->> +     EOF
->> +}
->
-> It may be better without $name?
->
->> +test_expect_success 'check log message of changelist with no jobs' '
->> +     client_view "//depot/... //client/..." &&
->> +     test_when_finished cleanup_git &&
->> +     (
->> +             cd "$git" &&
->> +             git init . &&
->> +             git p4 clone --use-client-spec --destination="$git" //depot@all &&
->> +             cat >expect <<-\EOF &&
->> +Add file 1
->> +[git-p4: depot-paths = "//depot/": change = 1]
->> +
->> +             EOF
->
-> As you are using <<- to begin the here document, it is easier on the
-> eyes if you indented the text with HT, i.e.
->
->                 cat >expect <<-\EOF &&
->                 Add file 1
->                 [git-p4: depot-paths = "//depot/": change = 1]
->
->                 EOF
->
-> I won't repeat the same for other instances below.
->
-> Thanks.
-
-Modulo Junio's other comments, this seems fine to me. I tried it out
-on a scratch repo and it works very nicely, thanks!
-
-Luke
+Adam
