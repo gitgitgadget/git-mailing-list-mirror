@@ -1,110 +1,144 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 4/6] Convert struct name_entry to use struct object_id.
-Date: Tue, 19 Apr 2016 23:16:17 +0000
-Message-ID: <20160419231617.GA572694@vauxhall.crustytoothpaste.net>
-References: <1460934641-435791-1-git-send-email-sandals@crustytoothpaste.net>
- <1460934641-435791-5-git-send-email-sandals@crustytoothpaste.net>
- <xmqqshyhxkw1.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC 4/6] transport: add refspec list parameters to
+ functions
+Date: Tue, 19 Apr 2016 19:22:43 -0400
+Message-ID: <20160419232243.GF18255@sigill.intra.peff.net>
+References: <1460747949-3514-1-git-send-email-dturner@twopensource.com>
+ <1460747949-3514-5-git-send-email-dturner@twopensource.com>
+ <xmqqa8kq69i5.fsf@gitster.mtv.corp.google.com>
+ <20160419071403.GA22577@sigill.intra.peff.net>
+ <1461102001.5540.125.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="gKMricLos+KVdGMg"
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 20 01:16:33 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Wed Apr 20 01:23:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asesi-0000rE-G8
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 01:16:32 +0200
+	id 1asezf-0005EN-P9
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 01:23:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752244AbcDSXQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2016 19:16:27 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:54212 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752101AbcDSXQ0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2016 19:16:26 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:6680:99ff:fe4f:73a0])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id A1191282A8;
-	Tue, 19 Apr 2016 23:16:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1461107783;
-	bh=dCYHEFrFs0n0ZkWWzc29n6nVeNxQnNkVladU2S/MohU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=wEe0dKZZNrEEM9LHs4O1QyIS4lOqhR69+OtbUac2SuarUKRE2qDoiG9QSfyNvXUoN
-	 uwXKcrsyfPzy5Yo6qu6aiK/XihbPUoE1PXdiUrjOrJK1sSUPy1zvBs+/gW0eGlRyri
-	 SDhKHR1Kw2I+oAMi6gAU6y+h2Sz5fJ2yLLYNa7bXIFlucxywDAsZAN0GXNvVWL1K30
-	 Eoscl54OaEFvYCnBtez2PeZbJ5Bmncju3/iqz1OM5Rli9LCr1CG8wygcnDkgnzwLaM
-	 pQgCRQa4G7RVR4ExDkvVuHDpWGMngYHuAcQUBnp9vDRCv3ytaufj7L3sN18WZxfDG5
-	 v+DIFFdFYXjOiUg8FatW6CZarUjtIlch/KZVmyV6WLuDdP80TuZUBd1WcRMyab2obi
-	 zXvWgriPZLwPtrEv4sr90tCJhH9oMOwRhwEyUNpManXViOlgCpkMp0gtr7l2EZM0nk
-	 oiYHpkYtZ27xTACXUsR+Uw3PuvpLG7WbAuReaXWVJUlWDPJiZv8
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
+	id S1752420AbcDSXWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2016 19:22:47 -0400
+Received: from cloud.peff.net ([50.56.180.127]:52486 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752281AbcDSXWq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 19:22:46 -0400
+Received: (qmail 29833 invoked by uid 102); 19 Apr 2016 23:22:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 19 Apr 2016 19:22:46 -0400
+Received: (qmail 21657 invoked by uid 107); 19 Apr 2016 23:22:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 19 Apr 2016 19:22:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Apr 2016 19:22:43 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqqshyhxkw1.fsf@gitster.mtv.corp.google.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 4.4.0-1-amd64)
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
+In-Reply-To: <1461102001.5540.125.camel@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291951>
 
+On Tue, Apr 19, 2016 at 05:40:01PM -0400, David Turner wrote:
 
---gKMricLos+KVdGMg
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > I dunno, I am a bit negative on bringing new features to Git-over
+> > -HTTP
+> > (which is already less efficient than the other protocols!) without
+> > any
+> > plan for supporting them in the other protocols.
+> 
+> Interesting -- can you expand on git-over-http being less efficient?
+> This is the first I'd heard of it.  Is it documented somewhere?
 
-On Tue, Apr 19, 2016 at 04:02:22PM -0700, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > @@ -314,7 +314,7 @@ static int threeway_callback(int n, unsigned long m=
-ask, unsigned long dirmask, s
-> >  	}
-> > =20
-> >  	if (same_entry(entry+0, entry+1)) {
-> > -		if (entry[2].sha1 && !S_ISDIR(entry[2].mode)) {
-> > +		if (entry[2].oid->hash && !S_ISDIR(entry[2].mode)) {
->=20
-> Thanks for a warning in the cover letter.
->=20
-> "if (entry[2].oid && !S_ISDIR(entry[2].mode)" would be a faithful
-> conversion, wouldn't it?
+I don't know offhand of thorough discussion I can link to. But
+basically, the issue is the tip negotiation that happens during a fetch.
+In the normal git-over-ssh and git-over-tcp protocols, we're
+full-duplex, and both sides remember all of the state. So the client is
+spewing "want" and "have" lines at the server, which is responding
+asynchronously with acks or naks until they reach a shared point to
+generate the pack from.
 
-Yes, I think that would be a better conversion.  I'll reroll after
-waiting for further comments.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+In the HTTP protocol, this negotiation has to happen via synchronous
+request/response pairs. So the client says "here are some haves; what do
+you think?" and gets back the response. Then it prepares another of
+haves, and so on, until the server says "OK, I've seen enough; here's
+the pack". But because the server is stateless, each request has to
+summarize the findings of the prior request. And so each request gets
+slightly bigger as we iterate.
 
---gKMricLos+KVdGMg
-Content-Type: application/pgp-signature; name="signature.asc"
+There are some tunable parameters there (e.g., how many haves to send in
+the first batch?), and the current settings are meant to be a mix of not
+wasting too much time preparing a request, but also putting enough into
+it that common requests can complete with only a single round trip.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.11 (GNU/Linux)
+I don't have numbers on how often we have to fall back multiple
+requests, or how big they can grow. I know I have very occasionally seen
+pathological cases where we outgrew the HTTP buffer sizes, and re-trying
+the fetch via ssh just worked.
 
-iQIcBAEBCgAGBQJXFrxBAAoJEL9TXYEfUvaLIycP/j6EhrbUefyE8WHE5A4Boq0c
-y8wrSvSdYemBHz8j3NAcHZSFsvx9l55VW+APQ/nUQMQIyZpWj1Sr97dzYPr9EAlW
-yE/pOjhhgX8DhoFjflh+rWYTYClqIRdYNbAPez4IdxrLTq4yPVmsUnjB4K0ie1An
-HXxpvQa9fLuLLy7551D/Q53uqk6TmdPrBH4J2f0KLmOxa++S6vX6DTRtpoPR5GB5
-1nOB0kJDLXDRZoRpo1jOiKBaBz93Xcgw1sz57W03rr0mgV9ZUYxVzfRr3nXh4F5b
-3kYnyyZ98FluV8Oe1VIVHyULd51ffz/4q179Cyb//kkE6/eAmStyoLyu5Gj9E0Pa
-1cCny4lLXM1H7Y7WiBu9tEFkn02vQdbFoEKNPcvG5ajijYvExq1AeUjvvbOg7/1g
-zF5EzGkLA3bVYWnuH1H8dW2uC2HHccSoxv8B/YoOK+eBMSfrDASc/o3YtNW7sVFs
-FleMNlfWTvmw5hIKOL0oZoNJNZVrvbAa/M8ALa7SXCy5/4RV40cfIOcGb3F1aFHZ
-OA0Xd60JYD0/XDCGN8Yf9bBrgnPIoTZnua2Kz68y7pR3aBwu7kmk5mpUSx4QP/kw
-kn4tm1gZbIoRat56Km/3SjkXneWYfF6C9LvSX1ATMrzrZSnywnDS3BS5tRORwZM5
-JHUJBNNbKvW996MEVgaD
-=dwqs
------END PGP SIGNATURE-----
+I'm cc-ing Shawn, who designed all of this, and can probably give more
+details (and may also have opinions on new http-only protocol features,
+as he'd probably end up implementing them in JGit, too).
 
---gKMricLos+KVdGMg--
+It would be nice if we could do a true full-duplex conversation over
+HTTP. I looked into Websockets at one point, but IIRC there wasn't
+libcurl support for them.
+
+> > So I'd rather see something like:
+> > 
+> >   1. Support for v2 "capabilities only" initial negotiation, followed
+> >      by ref advertisement.
+> > 
+> >   2. Support for refspec-limiting capability.
+> > 
+> >   3. HTTP-only option from client to trigger v2 on the server.
+> > 
+> > That's still HTTP-specific, but it has a clear path for converging
+> > with
+> > the ssh and git protocols eventually, rather than having to support
+> > magic out-of-band capabilities forever.
+> > 
+> > It does require an extra round of HTTP request/response, though.
+> 
+> This seems way more complicated to me, and not necessarily super
+> -efficient.  That is, it seems like rather a lot of work to add a whole
+> round of negotiation and a new protocol, when all we really need is one
+> little tweak.
+
+It is less efficient because of the extra round. If the new protocol
+were truly client-speaks-first, we could drop that round (which is
+essentially what your proposal is doing; you're just sticking the
+first-speak part into HTTP parameters).
+
+I don't know how much that round costs if it's part of the same TCP
+session, or part of the same pipelined HTTP connection.
+
+> I wonder if it would be possible to just add these tweaks to v1, and
+> save the v2 work for when someone has the time to implement it?
+
+I don't think it's possible for the non-HTTP protocols. The single
+change in v2 is to add a phase before the ref advertisement starts.
+Without that, the server is going to start spewing advertisements.
+
+You can find previous discussion on the list, but I think the options
+basically are:
+
+  1. Something like v2, where the client gets a chance to speak before
+     the advertisement.
+
+  2. Some out-of-band way of getting values from the client to the
+     server (so maybe extra command-line arguments for git-over-ssh, and
+     maybe shoving something after the "\0" for git-daemon, and of
+     course extra parameters for HTTP).
+
+  3. The client saying "stop spewing refs at me, I want to give you a
+     ref filter" asynchronously, and accepting a little spew at the
+     beginning of each conversation. That obviously only works for the
+     full-duplex transports, so you'd probably fall back to (2) for
+     http.
+
+-Peff
