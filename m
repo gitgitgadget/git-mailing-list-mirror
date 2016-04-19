@@ -1,101 +1,102 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH/RFC 3/6] http-backend: handle refspec argument
-Date: Tue, 19 Apr 2016 14:57:57 -0400
-Organization: Twitter
-Message-ID: <1461092277.5540.108.camel@twopensource.com>
-References: <1460747949-3514-1-git-send-email-dturner@twopensource.com>
-	 <1460747949-3514-4-git-send-email-dturner@twopensource.com>
-	 <CAPig+cRSE-BCPdrSbrCYmTcT6EsabKnekr2GEAbmBsc5=jxnHQ@mail.gmail.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: Binary grep t7008 known breakage vanished on Cygwin
+Date: Tue, 19 Apr 2016 19:52:11 +0100
+Message-ID: <57167E5B.6060505@ramsayjones.plus.com>
+References: <20160418152149.GD2345@dinwoodie.org>
+ <5715147F.7020609@ramsayjones.plus.com> <20160419084232.GE2345@dinwoodie.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Apr 19 20:58:15 2016
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+To: Adam Dinwoodie <adam@dinwoodie.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 19 21:02:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asaql-0004IL-7q
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 20:58:15 +0200
+	id 1asaum-0006pL-O7
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 21:02:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933135AbcDSS6C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2016 14:58:02 -0400
-Received: from mail-qg0-f54.google.com ([209.85.192.54]:34266 "EHLO
-	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932392AbcDSS6A (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2016 14:58:00 -0400
-Received: by mail-qg0-f54.google.com with SMTP id c6so14980242qga.1
-        for <git@vger.kernel.org>; Tue, 19 Apr 2016 11:57:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:mime-version:content-transfer-encoding;
-        bh=y2C26fU7OjY9fvTOIGzR90Hm6SgbxYM5v1bq6h8U3MU=;
-        b=dEZxT5RowHRuSCc9EH5XHG83BIdkRfL5FrdlnuUykq//WirohN2+W6tHAD78Xy/EG3
-         I5ZsNz5z5g9cOHtt/PWKcjcEw8JuCQB2qj4KRqQYgJ+SLjvv0CkJMrZtwkLa/IF+kNjp
-         L7w8KTjwdBO9wGuW53Y/DCZZ20IfpGBYAQBFg8uIYT+nZcSYr75IztyNDxQcHPNiPAme
-         mRUN0B7dHMhmk1s9W4NK1EozCmc4kTys/rJ2wdq+jA0WsVRdHC733veRmk+NjO1CJFCQ
-         RZ88GPQuoYq5OHDxspXS7sTl2AwmEn0qZoHUXBQXGUZyguZkv6luXLEtWjY6/DY2YW74
-         Ewgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=y2C26fU7OjY9fvTOIGzR90Hm6SgbxYM5v1bq6h8U3MU=;
-        b=i6mz3x8DhS9/e8e6xSNev2S+JxpX7j3DTdwVmO6kYO8JYNd3DIW5qcK2W3XVS+Ogj1
-         +Jj9uObJnnqOSofI1HnZ6ynSyPgi+nDYy45fefuhZgeiXxcJdrZ5qVMUuY+4s+Hwb8E+
-         h7HjoRwbs/loMJlPMdr2ZMUB+tZs/b4Vr8Lo3qyDKQDSyRgxEKr4t9rdxi5Oss6n71Z7
-         pEpM300tYztv+X2NUs2KagBLvDJeKTcZpvQkLJ0Qe040kG95JWstFDjT71dMUU3Uulhv
-         xF7JnFccgKBTPsJOIWJvtcEdIo/Gg7T4O9TY0zrtHUK0NeuuXR7BUC0p5KWPwWwaCE0N
-         nRqQ==
-X-Gm-Message-State: AOPr4FXcPmqWz12G7WSsbtVz5EX4RZOvtaQroSC1abAkcNv9ZD3W9Iy3FsEr1TsuubcLjA==
-X-Received: by 10.140.248.8 with SMTP id t8mr5948380qhc.50.1461092279208;
-        Tue, 19 Apr 2016 11:57:59 -0700 (PDT)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id r66sm3432278qhe.47.2016.04.19.11.57.58
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 19 Apr 2016 11:57:58 -0700 (PDT)
-In-Reply-To: <CAPig+cRSE-BCPdrSbrCYmTcT6EsabKnekr2GEAbmBsc5=jxnHQ@mail.gmail.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S933879AbcDSTCU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2016 15:02:20 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:41654 "EHLO
+	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933875AbcDSTCU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 15:02:20 -0400
+Received: from [10.0.2.15] ([91.125.197.102])
+	by avasout07 with smtp
+	id kK2G1s0032D2Veb01K2HYe; Tue, 19 Apr 2016 20:02:18 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=QqujpgGd c=1 sm=1 tr=0
+ a=mTUfFwB0nGOO66Ym8a+i3w==:117 a=mTUfFwB0nGOO66Ym8a+i3w==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=N659UExz7-8A:10
+ a=0vCrn0Jzb4ehFClENy4A:9 a=pILNOxqGKmIA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <20160419084232.GE2345@dinwoodie.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291905>
 
-On Sat, 2016-04-16 at 21:51 -0400, Eric Sunshine wrote:
-> On Fri, Apr 15, 2016 at 3:19 PM, David Turner <
-> dturner@twopensource.com> wrote:
-> > +               if (refspec) {
-> > +                       struct strbuf interesting_refs =
-> > STRBUF_INIT;
-> > +                       strbuf_addstr(&interesting_refs, "-
-> > -interesting-refs=");
-> > +                       strbuf_addstr(&interesting_refs, refspec);
-> > +                       argv_array_push(&argv,
-> > interesting_refs.buf);
-> > +                       strbuf_release(&interesting_refs);
-> > +               }
+
+
+On 19/04/16 09:42, Adam Dinwoodie wrote:
+> On Mon, Apr 18, 2016 at 06:08:15PM +0100, Ramsay Jones wrote:
+>> On 18/04/16 16:21, Adam Dinwoodie wrote:
+>>> t7008.12 is marked as an expected failure, but building Git on Cygwin
+>>> including a `make configure && ./configure` step has the test
+>>> unexpectedly passing.  Building without the configure step has the test
+>>> failing as expected.
+>>>
+>>> This appears to be behaviour specific to Cygwin; at least I get that
+>>> test failing on my CentOS box regardless of whether I perform the
+>>> configure step.
+>>
+>> Yes, the configure sets NO_REGEX= whereas the config.mak.uname sets
+>> NO_REGEX=UnfortunatelyYes.
+>>
+>> [Note that the regex bug (see t0070-fundamental.sh test #5) now seems to
+>> pass with the 'native' regex library]
 > 
->     if (refspec)
->         argv_array_pushf(&interesting_refs,
->             "--interesting-refs=%s", refspec);
-
-
-Will fix, thanks.
-
-> >                 argv_array_push(&argv, ".");
-> >                 run_service(argv.argv, 0);
-> >                 argv_array_clear(&argv);
-> > @@ -841,6 +905,19 @@ int main(int argc, char **argv)
-> > +               if (starts_with(arg, "--interesting-refs=")) {
-> > ...
-> > +                       continue;
-> > +               }
+> Ah, that makes sense.
 > 
-> Is this leaking the string list?
+> I'm still not quite sure what the "correct" thing to do here is; it
+> looks as though the NOREGEX=UnfortunatelyYes can disappear from
+> config.mak.uname, but that still leaves t7008.12 passing when it's
+> expected to fail.
 
-Yes, intentionally.  interesting_refspec is a global that we look at
-later.  
+Yep. ;-)
+
+About two years ago, I went from 32-bit 1.5 to 32-bit 1.7 then 64-bit 1.7.
+At that time the 'native' regex library suffered from the 'regex bug' (ie it
+failed t0070.5). It also 'unexpectedly passed' t7008.12. However, since the
+fix for t0070.5 was to use the compat/regex library, I didn't have to give
+t7008.12 any thought. :-D
+
+I am currently running:
+
+    $ uname -a
+    CYGWIN_NT-10.0 satellite 2.4.0(0.293/5/3) 2016-01-15 16:16 x86_64 Cygwin
+    $ 
+
+Until yesterday, I didn't know that the native regex library no longer suffers
+from the t0070.5 bug. I simply don't use the configure script - never have.
+It seems that t7008.12 is still an issue, however.
+
+The commit which added that test, commit f96e5673, seems to expect that NUL
+characters should not be matched in any way. Now, _if_ you accept that this
+is correct behaviour, then the native regex library on Cygwin still has a
+problem.
+
+Maybe we need to add a check to test-regex (and/or configure)? dunno.
+Alternatively, we could skip the test with a !CYGWIN prerequisite.
+
+[Again, I don't use configure or the native regex library]
+
+ATB,
+Ramsay Jones
