@@ -1,87 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] git-p4: add P4 jobs to git commit message
-Date: Tue, 19 Apr 2016 14:09:10 -0700
-Message-ID: <xmqqd1plz4p5.fsf@gitster.mtv.corp.google.com>
-References: <0102015420a6c30a-f2da55c9-1fc4-4df6-860e-228c5305f617-000000@eu-west-1.amazonses.com>
-	<xmqqshyi2yb7.fsf@gitster.mtv.corp.google.com>
-	<CAE5ih7-2mefGwfXRhvQZJFPD4QYAzZ1jYG82s6cnDzWVCiDS8w@mail.gmail.com>
-	<xmqqfuuh35v5.fsf@gitster.mtv.corp.google.com>
-	<CABEqOBxZkYTm7_m-Eeq-acN=Nse1vLGk8Gm44BihVGi27KaGiw@mail.gmail.com>
-	<xmqq7fft32y9.fsf@gitster.mtv.corp.google.com>
-	<CABEqOBwqW+BO4rtOx4ax35VacE4RZhpo_1pbqzTP_EGiSWasiQ@mail.gmail.com>
-	<xmqqh9ex1lsy.fsf@gitster.mtv.corp.google.com>
-	<CABEqOBxkHstqRHFUYF7=eComB-HwUGwi0tpWbhvUuKiny-=Vyw@mail.gmail.com>
-	<CABEqOBxY61yObr0FeUxPYxc6C+xvde1LOS7zS_dHpBqwemJ+dQ@mail.gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH/RFC 6/6] clone: send refspec for single-branch clones
+Date: Tue, 19 Apr 2016 17:24:24 -0400
+Organization: Twitter
+Message-ID: <1461101064.5540.118.camel@twopensource.com>
+References: <1460747949-3514-1-git-send-email-dturner@twopensource.com>
+	 <1460747949-3514-7-git-send-email-dturner@twopensource.com>
+	 <CAPig+cRGDsBn4EKWn7Vqqmt_ZhZbYgUh9Tg-rgQPchn015SNMw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Luke Diamand <luke@diamand.org>, Git Users <git@vger.kernel.org>,
-	Roberto Tyley <roberto.tyley@gmail.com>
-To: Jan Durovec <jan.durovec@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 19 23:09:20 2016
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Apr 19 23:24:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ascta-0000TV-N6
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 23:09:19 +0200
+	id 1asd8P-0001B6-8Y
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 23:24:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753983AbcDSVJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2016 17:09:14 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65061 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753872AbcDSVJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2016 17:09:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7ED64145AC;
-	Tue, 19 Apr 2016 17:09:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uexbJYNV0POfmdISSTc0jJsxjMM=; b=mvQy00
-	hwiTwPjJIFbScc0CNsd0vUiNPdQrMfngcOhC/6fq2lRtRuW5zGLss0drag92zboh
-	6CQmRCFp1YnWQfeUPBMDF8UE/gfJn4QuAHfhieTKxZBt8BVICBGCszi/zPLh5Ui1
-	HwZ6g3xmkwXqLieyMWeubVzNRm4sbir/vpiH4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Km9CyLokp3rMwX6olIndlnub1ko3WtIe
-	F1ZrD/b5RXH6UCqOOR2yh6juQySojT6M7iSyZVQ0tgtG+SpV2bWtrjs9ATuTkku6
-	F3DJzhta9Ig64mIdWp3GdKhdlt79HZkGjx4mxtZxtzMx2XvIPsv1Ry2JMwvBRwhQ
-	VlWxfNqn0V8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 779BA145AB;
-	Tue, 19 Apr 2016 17:09:12 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EB4EE145A9;
-	Tue, 19 Apr 2016 17:09:11 -0400 (EDT)
-In-Reply-To: <CABEqOBxY61yObr0FeUxPYxc6C+xvde1LOS7zS_dHpBqwemJ+dQ@mail.gmail.com>
-	(Jan Durovec's message of "Tue, 19 Apr 2016 22:28:58 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F6E6F62A-0672-11E6-B7C5-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S932937AbcDSVY2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2016 17:24:28 -0400
+Received: from mail-qg0-f49.google.com ([209.85.192.49]:34796 "EHLO
+	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932903AbcDSVY1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 17:24:27 -0400
+Received: by mail-qg0-f49.google.com with SMTP id c6so17697013qga.1
+        for <git@vger.kernel.org>; Tue, 19 Apr 2016 14:24:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:mime-version:content-transfer-encoding;
+        bh=2aSmNPTAl1sjNxlLAC7sSkhw4Aj3/evSFasSQCTlYRs=;
+        b=F7FvzM6koGsd9vE0ceVdu2a88DkUHxPuQxPrwSyefLll6c1s92hIR0qD16c6Bm+n0W
+         DgE+8NOt5XlusFTCRAXYCgouF7HKzeJGVVXGq3rfc6EKXlz4eAfaM6tPefYnwoSUMzFZ
+         GwprExk6HLhKNtBYRVS1levwQm06u2l0VXXXZL7rfn25duPSHEGjlUT6LW+yrI4v87MO
+         mZfts0VRknRprNoA4G9J/dRJ0Ih2MLmrW7JY3upmCfj8x8YC01D9SFf1yjvkkc03zMhT
+         75L02ikE8AgBoVdgKpD96xB9v2ansy1yIIUkZ+SEABk60WSa4CkWw83Ra28HL9O6biUm
+         8qyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:mime-version:content-transfer-encoding;
+        bh=2aSmNPTAl1sjNxlLAC7sSkhw4Aj3/evSFasSQCTlYRs=;
+        b=HITKwyPM16M5lz0NH6jWHkTLFNzRXx/q+joQN07F75zzxunD1ssItqQHT7ZMNhXUmG
+         zRZ4YkEZJ/ZT6MbyFvtkPOl1cWmcmCRYgYZKEU1C/DtGM9sjSHV1DbkVYiq/88ZRWLOE
+         LBO2FlEBQp3eaai6E9U/d1HzJ0XeavI/G03cN2dFGzqcOpHtsefzW02RgvJYXMZKG2q2
+         USHlCzbuhzcuxPNftEdC/OHgMLhDzJ33ZMgsoLJ7jbDmo6jass5/PaqHOQmmbSZLMtIJ
+         kmA9e3xYfz0QC+luxCeuVSMiNsifZ1qlqlyshvBDI7jaeUnfhEfqA0HoFzusy4OYVBsn
+         ISiA==
+X-Gm-Message-State: AOPr4FV6iRBsQHVeJJGLOlUQ2LoV7ybZqtqHAMB6doFwCCMtk3kxGOUrVH+NdZWr0UHf3g==
+X-Received: by 10.140.30.247 with SMTP id d110mr6485160qgd.43.1461101066565;
+        Tue, 19 Apr 2016 14:24:26 -0700 (PDT)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id i67sm29547493qhi.45.2016.04.19.14.24.25
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 19 Apr 2016 14:24:25 -0700 (PDT)
+In-Reply-To: <CAPig+cRGDsBn4EKWn7Vqqmt_ZhZbYgUh9Tg-rgQPchn015SNMw@mail.gmail.com>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291928>
 
-Jan Durovec <jan.durovec@gmail.com> writes:
+On Sat, 2016-04-16 at 22:36 -0400, Eric Sunshine wrote:
+> On Fri, Apr 15, 2016 at 3:19 PM, David Turner <
+> dturner@twopensource.com> wrote:
+> > For single-branch clones (when we know in advance what the remote
+> > branch name will be), send a refspec so that the server doesn't
+> > tell us about any other refs.
+> > 
+> > Signed-off-by: David Turner <dturner@twopensource.com>
+> > ---
+> > diff --git a/builtin/clone.c b/builtin/clone.c
+> > @@ -1010,7 +1010,21 @@ int cmd_clone(int argc, const char **argv,
+> > const char *prefix)
+> > +       if (option_single_branch && option_branch) {
+> > +               struct refspec branch_refspec = {0};
+> > +
+> > +               if (starts_with(option_branch, "refs/")) {
+> > +                       branch_refspec.src =
+> > xstrdup(option_branch);
+> > +               } else {
+> > +                       struct strbuf buf = STRBUF_INIT;
+> > +                       strbuf_addf(&buf, "refs/heads/%s",
+> > option_branch);
+> > +                       branch_refspec.src = strbuf_detach(&buf,
+> > NULL);
+> 
+> branch_refspec.src = xstrfmt("refs/heads/%s", option_branch);
 
-> On Tue, Apr 19, 2016 at 8:50 PM, Jan Durovec <jan.durovec@gmail.com> wrote:
->>> Any submitGit users?  I think it lets you throw multiple-patch
->>> series just fine.  In this case, you'd prepare a two patch series on
->>> a branch, 1/2 being the clean-up and 2/2 being the new feature, and
->>> if you give that branch to submitGit as a whole it should do the
->>> right thing, I'd imagine.
->>
->> Hm... I'll see what it does with a pull request that has 2 commits.
->
-> Huh... seems that it works :)
->
-> v3 sent in 2 parts
 
-Thanks.
-
-For a series this small it does not matter, but anything longer it
-would be easier to review with a cover letter (i.e. [PATCH 0/N]).  I
-do not know if submitGit lets us do that, though.
+Will fix, thanks.
