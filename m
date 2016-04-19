@@ -1,136 +1,173 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v4 03/16] index-helper: new daemon for caching index and
- related stuff
-Date: Tue, 19 Apr 2016 18:00:02 -0400
-Organization: Twitter
-Message-ID: <1461103202.5540.127.camel@twopensource.com>
-References: <1460507589-25525-1-git-send-email-dturner@twopensource.com>
-	 <1460507589-25525-4-git-send-email-dturner@twopensource.com>
-	 <CAGZ79kYV6dHzuT51Pg9Oc6yBf_f9407JTe2kRpPyNxgXyfha4g@mail.gmail.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH 1/4] http.h: Add debug callback and helper routine for
+ implementing the GIT_TRACE_CURL environment variable in http.c
+Date: Tue, 19 Apr 2016 22:48:54 +0100
+Message-ID: <5716A7C6.40507@ramsayjones.plus.com>
+References: <20160419151044.27814-1-gitter.spiros@gmail.com>
+ <20160419151044.27814-2-gitter.spiros@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.co>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	=?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
-	<pclouds@gmail.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Apr 20 00:00:27 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: tboegi@web.de, gitster@pobox.com, sunshine@sunshineco.com,
+	peff@peff.net, Junio C Hamano <gitster@pobox.com>
+To: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 00:07:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asdgz-0005bN-2I
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 00:00:21 +0200
+	id 1asdnO-00011B-N6
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 00:06:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752599AbcDSWAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2016 18:00:09 -0400
-Received: from mail-qg0-f54.google.com ([209.85.192.54]:35195 "EHLO
-	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752575AbcDSWAH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2016 18:00:07 -0400
-Received: by mail-qg0-f54.google.com with SMTP id f74so16294903qge.2
-        for <git@vger.kernel.org>; Tue, 19 Apr 2016 15:00:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:mime-version:content-transfer-encoding;
-        bh=dQc0v34dv5mMtXV2aZBihXtg2gRZ3tn2gNOrQl1QGgE=;
-        b=0jjigS1mDv7HUleuXptCSZFSXEfneYvTayxAMYhUJ37/GYxGQeRteXhiqAmnwrVtsQ
-         nwdC/JhnNgwq/zWmYu8FJX+3SgLPQlY73DQsPZjgsPv5h9gIYbOyDcAiIuVBTHyvii+a
-         6fb44+SnJjPy1y4xrJMLSDH6wrurs35vRXZzkrFmlx0pCUvmYjNHMfAt5WIQA0Sat1ga
-         vpgySrGn40xJb/l61x83gwp3ei9IPeO06NqWzlR35pmFYTHEQkuEUQL2CkAl/1bB8mmR
-         S7MbnGzukyM6nToZT+4oNVrvCS66HY4Da/ADnTNF8vmVSl1LbebvOxGN0tFrO0eLnjiV
-         tDgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=dQc0v34dv5mMtXV2aZBihXtg2gRZ3tn2gNOrQl1QGgE=;
-        b=TsDY7MnTGBqJulpEQV3d5zDn4cGynYEwmSDmvsPKLzLMJqR9Ysnjxc1RyTfIIFa/H/
-         GmkPauVx6NlppGThSEY9+dBKrIAyXFpBm/PsUr+ZrGkXcTR+Z+rJpoJmxJrNEJDbidLX
-         K/jS+lqDDZVEerk/lC/92VScGg6yK0S0vLimERq+3EAH9m9zJ0gEdKYxiZ4f7KsbQFcm
-         5NKXOU2XP79S+5a5uic7a5HBAGhIZO1anOeuZq99Ttc8Aso/heR5dlR6k0wMCIwVJDdN
-         87xsw1Ba/eqIcH+9Cc8KpnvGDdRmjJErMmvBB4wPKL3NA+KXJxfl7WqrkcgSbw5GQ81o
-         l7Aw==
-X-Gm-Message-State: AOPr4FWsz5DUqrT1a0URvDuCCeLi7WmM3tFSyB1zRX8rNVqg03NtYzg5uOcWIIHb4xAQ1A==
-X-Received: by 10.141.30.201 with SMTP id t70mr7084724qhf.3.1461103205563;
-        Tue, 19 Apr 2016 15:00:05 -0700 (PDT)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id f83sm29916962qkb.25.2016.04.19.15.00.03
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 19 Apr 2016 15:00:03 -0700 (PDT)
-In-Reply-To: <CAGZ79kYV6dHzuT51Pg9Oc6yBf_f9407JTe2kRpPyNxgXyfha4g@mail.gmail.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S1752611AbcDSWGy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Apr 2016 18:06:54 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:51955 "EHLO
+	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751728AbcDSWGy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 18:06:54 -0400
+Received: from [10.0.2.15] ([91.125.197.102])
+	by avasout07 with smtp
+	id kN6m1s0052D2Veb01N6nYe; Tue, 19 Apr 2016 23:06:51 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=QqujpgGd c=1 sm=1 tr=0
+ a=mTUfFwB0nGOO66Ym8a+i3w==:117 a=mTUfFwB0nGOO66Ym8a+i3w==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
+ a=EBOSESyhAAAA:8 a=ybZZDoGAAAAA:8 a=BCjA09oAAAAA:8 a=PKzvZo6CAAAA:8
+ a=pGLkceISAAAA:8 a=cEvoh9r76P9KZmHScfAA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <20160419151044.27814-2-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291936>
-
-On Fri, 2016-04-15 at 17:04 -0700, Stefan Beller wrote:
-> > +static int try_shm(struct index_state *istate)
-> > +{
-> > +       void *new_mmap = NULL;
-> > +       size_t old_size = istate->mmap_size;
-> > +       ssize_t new_size;
-> > +       const unsigned char *sha1;
-> > +       struct stat st;
-> > +       int fd;
-> > +
-> > +       if (!is_main_index(istate) ||
-> > +           old_size <= 20 ||
-> > +           stat(git_path("index-helper.path"), &st))
-> > +               return -1;
-> > +       if (poke_daemon(istate, &st, 0))
-> > +               return -1;
-> > +       sha1 = (unsigned char *)istate->mmap + old_size - 20;
-> > +
-> > +       fd = open(index_helper_path("git-index-%s",
-> > sha1_to_hex(sha1)),
-> > +                 O_RDONLY);
-> > +       if (fd < 0)
-> > +               goto fail;
-> > +
-> > +       if (fstat(fd, &st))
-> > +               goto fail;
-> > +
-> > +       new_size = st.st_size;
-> > +       new_mmap = mmap(NULL, new_size, PROT_READ, MAP_SHARED, fd,
-> > 0);
-> > +       if (new_size <= 20 ||
-> > +           hashcmp((unsigned char *)istate->mmap + old_size - 20,
-> > +                   (unsigned char *)new_mmap + new_size - 20)) {
-> > +               if (new_mmap)
-> > +                       munmap(new_mmap, new_size);
-> > +               goto fail;
-> 
-> coming from here
-> 
-> > +       }
-> > +
-> > +       /* The memory barrier here matches index
-> > -helper.c:share_index. */
-> > +       __sync_synchronize();
-> > +
-> > +       munmap(istate->mmap, istate->mmap_size);
-> > +       istate->mmap = new_mmap;
-> > +       istate->mmap_size = new_size;
-> > +       istate->from_shm = 1;
-> > +       return 0;
-> > +
-> > +fail:
-> 
-> fd may be leaking here?
-> 
-> > +       poke_daemon(istate, &st, 1);
-> > +       return -1;
-> > +}
-> > +
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291937>
 
 
-Good point.  (It's also leaking on the happy path -- will fix all of
-those)
+
+On 19/04/16 16:10, Elia Pinto wrote:
+> Add the debug callback and helper routine prototype used by
+> curl_easy_setopt CURLOPT_DEBUGFUNCTION in http.c
+> for implementing the GIT_TRACE_CURL environment variable
+>=20
+>=20
+> Helped-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>=20
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+> ---
+>  http.h | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>=20
+> diff --git a/http.h b/http.h
+> index 4ef4bbd..a2d10bc 100644
+> --- a/http.h
+> +++ b/http.h
+> @@ -224,4 +224,10 @@ extern int finish_http_object_request(struct htt=
+p_object_request *freq);
+>  extern void abort_http_object_request(struct http_object_request *fr=
+eq);
+>  extern void release_http_object_request(struct http_object_request *=
+freq);
+> =20
+> +/* Debug callback and helper routine for curl_easy_setopt CURLOPT_DE=
+BUGFUNCTION */
+> +static struct trace_key trace_curl =3D TRACE_KEY_INIT(CURL);
+
+Ah no, this would add 6 instances of the 'trace_curl' key in http-fetch=
+=2Ec,
+http-push.c, http-walker.c, http.c, imap-send.c and remote-curl.c. Hmm =
+=2E..
+since these would end up in different executables (by and large) it mig=
+ht
+work OK, ... but is simply not necessary.
+
+Also, patches #1 and #2 should be squashed into one patch and, since th=
+e
+curl_dump() function is only called from http.c, it can be a static sym=
+bol.
+
+I think the minimal fixup (including Junio's comment on patch #2, which=
+ also
+triggered for me) is given in the patch below.
+
+Hope that helps.
+
+ATB,
+Ramsay Jones
+
+> +int curl_trace(CURL *handle, curl_infotype type, char *data, size_t =
+size, void *userp);
+> +void curl_dump(const char *text, unsigned char *ptr, size_t size, ch=
+ar nohex);
+> +
+> +
+>  #endif /* HTTP_H */
+
+-- >8 --
+Subject: [PATCH] curl-trace: fix scope/visibility of various symbols
+
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
+ http.c | 9 +++------
+ http.h | 3 +--
+ 2 files changed, 4 insertions(+), 8 deletions(-)
+
+diff --git a/http.c b/http.c
+index 64dd975..ce91421 100644
+--- a/http.c
++++ b/http.c
+@@ -11,9 +11,7 @@
+ #include "gettext.h"
+ #include "transport.h"
+=20
+-/*
+-tatic struct trace_key trace_curl =3D TRACE_KEY_INIT(CURL);
+-*/
++struct trace_key trace_curl =3D TRACE_KEY_INIT(CURL);
+ #if LIBCURL_VERSION_NUM >=3D 0x070a08
+ long int git_curl_ipresolve =3D CURL_IPRESOLVE_WHATEVER;
+ #else
+@@ -468,12 +466,11 @@ static void set_curl_keepalive(CURL *c)
+ #endif
+=20
+=20
+-void curl_dump(const char *text, unsigned char *ptr, size_t size, char=
+ nohex)
++static void curl_dump(const char *text, unsigned char *ptr, size_t siz=
+e, char nohex)
+ {
+ 	size_t i;
+ 	size_t w;
+-	struct strbuf out =3D STRBUF_INIT;;
+-
++	struct strbuf out =3D STRBUF_INIT;
+ 	unsigned int width =3D 0x10;
+=20
+ 	if (nohex)
+diff --git a/http.h b/http.h
+index a2d10bc..00e4ad7 100644
+--- a/http.h
++++ b/http.h
+@@ -225,9 +225,8 @@ extern void abort_http_object_request(struct http_o=
+bject_request *freq);
+ extern void release_http_object_request(struct http_object_request *fr=
+eq);
+=20
+ /* Debug callback and helper routine for curl_easy_setopt CURLOPT_DEBU=
+GFUNCTION */
+-static struct trace_key trace_curl =3D TRACE_KEY_INIT(CURL);
++extern struct trace_key trace_curl;
+ int curl_trace(CURL *handle, curl_infotype type, char *data, size_t si=
+ze, void *userp);
+-void curl_dump(const char *text, unsigned char *ptr, size_t size, char=
+ nohex);
+=20
+=20
+ #endif /* HTTP_H */
+--=20
+2.8.0
