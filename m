@@ -1,95 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/7] i18n: index-pack: use plural string instead of normal one
-Date: Tue, 19 Apr 2016 12:06:52 -0700
-Message-ID: <xmqqbn551kqb.fsf@gitster.mtv.corp.google.com>
-References: <1461071964-323-1-git-send-email-vascomalmeida@sapo.pt>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v7 0/6] Move PGP verification out of verify-tag
+Date: Tue, 19 Apr 2016 15:10:00 -0400
+Message-ID: <CAPig+cRz4stVQWFD-NroVHft2xFvyZJi1ePX9T4zZ3k3=X6ZrA@mail.gmail.com>
+References: <1461088041-19264-1-git-send-email-santiago@nyu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>
-To: Vasco Almeida <vascomalmeida@sapo.pt>
-X-From: git-owner@vger.kernel.org Tue Apr 19 21:07:01 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Santiago Torres <santiago@nyu.edu>
+X-From: git-owner@vger.kernel.org Tue Apr 19 21:10:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asazF-0001Bt-BX
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 21:07:01 +0200
+	id 1asb2M-000395-Vq
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 21:10:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755003AbcDSTG5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2016 15:06:57 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54246 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753263AbcDSTG4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2016 15:06:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BF44313DF0;
-	Tue, 19 Apr 2016 15:06:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QWuXCJDT6mdQ0a5YEIxeTd1lkTw=; b=rfivtE
-	V8YCedI5phEK9qVJbwZMVBqV06DmodNHjmsoCmTGpRQT5cUAp4JOarkCikPAgOjv
-	6SNQdW4yaoBpwBHrX7UhNHfOZ1ebFc7lmAFF2Jz/3bPvCuijayhl/7+OlsTZN8li
-	kuZhSfWdHv4eBCnmy4KRnyl2zSgEPq6Sxzekg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Fap7EnxUzja3XXbo+0OJrmeOjI6pZajL
-	4S/5A5PhrV/D+eth7TqS1gULqrwQhG4OXqte0IyRlkIRds+KxnSDeox03uBEAsPj
-	uGH5SDFaptyKQgwhVpx3P/cY5GQ2QV9BlbdLmPQBxJI1hMOgLswMjjAL+crhsoBw
-	F1xd+GXTCg0=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AE4E613DEF;
-	Tue, 19 Apr 2016 15:06:54 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1587813DEE;
-	Tue, 19 Apr 2016 15:06:54 -0400 (EDT)
-In-Reply-To: <1461071964-323-1-git-send-email-vascomalmeida@sapo.pt> (Vasco
-	Almeida's message of "Tue, 19 Apr 2016 13:19:18 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E13056AC-0661-11E6-8FFA-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S933622AbcDSTKD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2016 15:10:03 -0400
+Received: from mail-io0-f196.google.com ([209.85.223.196]:34785 "EHLO
+	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933248AbcDSTKB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 15:10:01 -0400
+Received: by mail-io0-f196.google.com with SMTP id z133so3965779iod.1
+        for <git@vger.kernel.org>; Tue, 19 Apr 2016 12:10:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=RZX1WB7U2Y7i2sw/6o5quwPlWBGGQDF/KDGWIrUAGTw=;
+        b=TXtlUDo1sKGt47bmibn33qh7w4JgZouNjJFekPTLKmu3SnE7re/Z9YRJwyOdh5t4nY
+         WIXqJBThtiMfxz4GNItaZxncs8IfXZ3YVYkay4PbDuHwyDV4oZwZJTB/iAc5gYnNga3g
+         tMMwqzvXlJlleQGlVNP+gtz3pBjdDF9fRR4lCjoDsfxaBS6BxKPyYkraeomKNgmeQTtP
+         FG/xO12BLBF+dNtP5zHA/sYRF96ku/1jAMTBBkCJyaeaPDVZt/NSqMfICvbMzFkL/q5G
+         Qn4wOqj5NAhApMtsy8fCN0N7OEDeMTagtknNjyrSWm2pOqLaq0cI9t5HU5KULMGnIxif
+         NH0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=RZX1WB7U2Y7i2sw/6o5quwPlWBGGQDF/KDGWIrUAGTw=;
+        b=WpApzXYGIxSp4jC6FL5FUt+7lmlWvihWEAB5+YvPjW/7qP8HuRFIt6EU+Mj7ZLmP+P
+         O1MSLYZ19/jznDQvu7Xen8hI4P9T8+9BQUCw0fJdUBa53PqccvMKO8zNMphvSNfC4VrN
+         VPfewVwsKz/z5xjeNp3qgWmXM0xpCF4UN1uqt53MNL7ax3d/gQMoN3SufxNV01Q+Inn2
+         BWje1sAxqYElblHntONHsMADUtlAA2xO+vHLWB/Sbxl3OVr6hRPBqfSGX3a+Oze7tgfj
+         uvovLIJXhwpYcItYp0hYgkFtFk5D6/MDWLbX27gxVGyb0B6QXhIWX/3AKQqZDJj4Hzih
+         VS5Q==
+X-Gm-Message-State: AOPr4FVG/tr3SpO2Q9fa+7f8pQcr2hkJXB2EP5C6XYblaMybPE3LzPlPyhVAB3rWUb5hBw1n6vR5RFgF5ZUuEQ==
+X-Received: by 10.107.9.102 with SMTP id j99mr1596677ioi.104.1461093000501;
+ Tue, 19 Apr 2016 12:10:00 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Tue, 19 Apr 2016 12:10:00 -0700 (PDT)
+In-Reply-To: <1461088041-19264-1-git-send-email-santiago@nyu.edu>
+X-Google-Sender-Auth: ZuKfwbm2HEQ2XQApwRTz9Yx21fQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291909>
 
-Hmph, two patches in the previous series seem to be missing.  On
-purpose, or by mistake?  Their net-effect is shown at the end of
-this message, and I thought they made sense.
+On Tue, Apr 19, 2016 at 1:47 PM,  <santiago@nyu.edu> wrote:
+> This is a follow up of [1], [2], [3], [4], [5], [6]. patches 1/6, 2/6, are the
+> same as the corresponding commits in pu.
+>
+> v7:
+> Mostly style/clarity changes mostly. Thanks Peff, Eric and Junio for the
+> feedback! In summary:
+>
+>  * Eric pointed out issues with 3/6's commit message. It doesn't match the one
+>    in pu though. I also took the opportunity to update payload_size to a size_t
+>    as Peff suggested.
+>  * 4/6 I updated report_name to name_to_report, I updated the commit message
+>    and addressed some nits in the code, one of the fixes removed all three nits
+>    that Eric pointed out. I updated 5/6 to match these changes
+>  * I gave the commit message on 6/6 another go.
 
-Puzzled...
+Thanks, this re-roll looks good. My reviews mention a couple nits, but
+I hope they are not worth a re-roll (perhaps Junio can address them
+when/if he picks up the series).
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 5ab106b..32be954 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -369,12 +369,14 @@ static char *get_head_description(void)
- 		strbuf_addf(&desc, _("(no branch, bisect started on %s)"),
- 			    state.branch);
- 	else if (state.detached_from) {
--		/* TRANSLATORS: make sure these match _("HEAD detached at ")
--		   and _("HEAD detached from ") in wt-status.c */
- 		if (state.detached_at)
-+			/* TRANSLATORS: make sure this matches
-+			   "HEAD detached at " in wt-status.c */
- 			strbuf_addf(&desc, _("(HEAD detached at %s)"),
- 				state.detached_from);
- 		else
-+			/* TRANSLATORS: make sure this matches
-+			   "HEAD detached from " in wt-status.c */
- 			strbuf_addf(&desc, _("(HEAD detached from %s)"),
- 				state.detached_from);
- 	}
-@@ -828,8 +830,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		if (argc == 1 && track == BRANCH_TRACK_OVERRIDE &&
- 		    !branch_existed && remote_tracking) {
- 			fprintf(stderr, _("\nIf you wanted to make '%s' track '%s', do this:\n\n"), head, branch->name);
--			fprintf(stderr, _("    git branch -d %s\n"), branch->name);
--			fprintf(stderr, _("    git branch --set-upstream-to %s\n"), branch->name);
-+			fprintf(stderr, "    git branch -d %s\n", branch->name);
-+			fprintf(stderr, "    git branch --set-upstream-to %s\n", branch->name);
- 		}
- 
- 	} else
+As before, the entire series is:
+
+    Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
