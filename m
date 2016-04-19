@@ -1,152 +1,138 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v5 02/15] read-cache: allow to keep mmap'd memory after reading
-Date: Tue, 19 Apr 2016 19:27:56 -0400
-Message-ID: <1461108489-29376-3-git-send-email-dturner@twopensource.com>
-References: <1461108489-29376-1-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v5 00/15] index-helper/watchman
+Date: Tue, 19 Apr 2016 19:27:54 -0400
+Message-ID: <1461108489-29376-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Wed Apr 20 01:28:29 2016
+X-From: git-owner@vger.kernel.org Wed Apr 20 01:28:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asf4D-0008Bb-GE
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 01:28:25 +0200
+	id 1asf47-00086s-Js
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 01:28:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753323AbcDSX2U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Apr 2016 19:28:20 -0400
-Received: from mail-qg0-f44.google.com ([209.85.192.44]:33708 "EHLO
-	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753292AbcDSX2R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2016 19:28:17 -0400
-Received: by mail-qg0-f44.google.com with SMTP id v14so19449955qge.0
-        for <git@vger.kernel.org>; Tue, 19 Apr 2016 16:28:17 -0700 (PDT)
+	id S1753279AbcDSX2Q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Apr 2016 19:28:16 -0400
+Received: from mail-qg0-f46.google.com ([209.85.192.46]:36302 "EHLO
+	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751723AbcDSX2P (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 19:28:15 -0400
+Received: by mail-qg0-f46.google.com with SMTP id f52so19234059qga.3
+        for <git@vger.kernel.org>; Tue, 19 Apr 2016 16:28:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ekjAg6xDgyvPohJwU4J+YHYZbuoZ+VN3zd1N7IiKp1M=;
-        b=wRltV+gczKe/BBfpQMbS3MKAT65Sgl3Cx5O9Pz17n6N4WfasbYMIff+MWKhsfbyAZ+
-         6vB33m9haHztNle7QEzDKSLDTLinSnni+WZHlMl4SVfX5nk9JyfqERv6GJn+6Pu6dBYe
-         Tw3S2OfItmjD4pJZ3j6nCiSykB/CNASnjfIdgdLkt2K89uklCGbHksDZ7Cl0vJ9bPR9I
-         WsGSO8yPUpSwYudls9RYi2s7KQ/G98BqfLuAyKQsF7MyBCdGACg11TW7cSxXkquc17PE
-         ojiG7fK0vm56FMXE0Ib8uyxnp8z7yEVFiupkO9ptHs5gmci6BtrWQ4cbaR+E75YIxROg
-         cntQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eBEWAKwY7n42ybu992qW8577P+3+CzFd2weVlfp4/zk=;
+        b=b1If+Wpt/pe3+FljRomTjrvTKIxVYBfCksE7FDNEcPRKfAvTLbydvd9j5PwoFboF/Z
+         7EKcm22VH+IgpgPmUNQDWNyCZWbWjw0KIdE8UvXHx6GIMx7KMrNkIoLQHMC87DgBloWP
+         krlNqC7GSc9L0vtfp4q1RxKY+6Vah4sSHeJkv0UYtSnKcsUss1aK4FmPZbaKvl5GQOIn
+         Ct9ah1THtcRnhZSQIyQ66utGJ7ZgwnqDXNPovo6Qi0ZsJkrguOa1ulcuj5brP5NAmmya
+         4guT7/b1tXysgl58iCn5dxzaIQpsJY31auEuNHit2n1Cen9zsfoVJ6P4ZVPVIUim/DIg
+         Y2fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ekjAg6xDgyvPohJwU4J+YHYZbuoZ+VN3zd1N7IiKp1M=;
-        b=a86b/8axQT7hS7/rdp2P/H3TcrovkQ6TljfaQuqi60YAuqA2X2TeBXNgSbsRGNUrXm
-         ErCMjiSzr+4DKsJp9HxPUFNQYUimWDuVJBbIXlfPmyTX8eH6QNRzLV9l2sqF2W2ASFfB
-         fV552Jykn+okMjLmCJyRsIJOEqTig985oE5oX/h5YPSOyq0WIwiQhj9zWyW0SyPqeAtk
-         1Upmes7WUMqUeZgmo63hN1myivVflW10nl01wAp76bpLh4CUJ/u0g6CaY5vtDjC9+AcR
-         efysA+xj2Yr15r+M1kxQhlA1c2XmqYL50vquk78Piq72EeDekrtQwQ6RoW1jGtz+o6eH
-         uLCA==
-X-Gm-Message-State: AOPr4FWj/SsiCgzlTEVW16mMT0sJUc+o7aB0daUd57Kn8YiJOI//4yIE3BHydMl4ePuPPg==
-X-Received: by 10.140.92.65 with SMTP id a59mr5732951qge.93.1461108496734;
-        Tue, 19 Apr 2016 16:28:16 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eBEWAKwY7n42ybu992qW8577P+3+CzFd2weVlfp4/zk=;
+        b=KiebiDlgHqgruJErosmWSzOvHyFSLz2I+1fGoHQRvQIPUW6M/FpUpu1kyu1rvVNc/c
+         iH/1JH9KQ5qoZF9YlBU65hYoYrD/oRe3O7j3NfxJ+v051TKdeTIhh8NnhM480qQJSrZu
+         XFwkoiY3kkUh6zW6CCFsazJfitig7LyfLzsoIJQUYKnne0IF837bGHSMkBhVwXzmzfXL
+         VrZ1ky4azSCAfmX7udl+k9+oE+pjZtoYBOJ0p5XD/zQVqnsU5EFgbZtNOnmH51nJumGI
+         SuyN9VZyL9KdyneMU0BBK/UWJyUjNgAntdO94CbjDqHKBJunl4vsVM7zBRNbXaLF4ElM
+         17/Q==
+X-Gm-Message-State: AOPr4FWTFFq+1PIIPviuRpk4/vOib8IXGm2nM0h+Tas4ddql+Sw1KAcwxCnm7O+6o8ODtg==
+X-Received: by 10.140.82.20 with SMTP id g20mr6913875qgd.69.1461108494004;
+        Tue, 19 Apr 2016 16:28:14 -0700 (PDT)
 Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id h34sm29879663qge.30.2016.04.19.16.28.15
+        by smtp.gmail.com with ESMTPSA id h34sm29879663qge.30.2016.04.19.16.28.12
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 19 Apr 2016 16:28:15 -0700 (PDT)
+        Tue, 19 Apr 2016 16:28:12 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
-In-Reply-To: <1461108489-29376-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291955>
 
-=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+This version includes the following changes since v4:
+1. The last patch has been removed; it's pretty much always a good
+idea to wait for the index-helper
 
-Later, we will introduce git index-helper to share this memory with
-other git processes.
+2. Documentation for index-helper --kill and --autorun.  Documentation
+for update-index --watchman.  Documentation for index-format for WAMA.
+Documentation for index-helper suggesting running update-index --watchm=
+an.
 
-Since the memory will be shared, it will never be unmapped (although
-the kernel may of course choose to page it out).
+3. index-helper autorun moved to read-cache so it's only run on relevan=
+t
+commands.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
-Signed-off-by: David Turner <dturner@twopensource.com>
----
- cache.h      |  3 +++
- read-cache.c | 13 ++++++++++++-
- 2 files changed, 15 insertions(+), 1 deletion(-)
+4. Tests: Broken && chain fixed; removed a subshell
 
-diff --git a/cache.h b/cache.h
-index b829410..4180e2b 100644
---- a/cache.h
-+++ b/cache.h
-@@ -333,11 +333,14 @@ struct index_state {
- 	struct split_index *split_index;
- 	struct cache_time timestamp;
- 	unsigned name_hash_initialized : 1,
-+		 keep_mmap : 1,
- 		 initialized : 1;
- 	struct hashmap name_hash;
- 	struct hashmap dir_hash;
- 	unsigned char sha1[20];
- 	struct untracked_cache *untracked;
-+	void *mmap;
-+	size_t mmap_size;
- };
-=20
- extern struct index_state the_index;
-diff --git a/read-cache.c b/read-cache.c
-index 16cc487..7e387e9 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1574,6 +1574,10 @@ int do_read_index(struct index_state *istate, co=
-nst char *path, int must_exist)
- 	mmap =3D xmmap(NULL, mmap_size, PROT_READ, MAP_PRIVATE, fd, 0);
- 	if (mmap =3D=3D MAP_FAILED)
- 		die_errno("unable to map index file");
-+	if (istate->keep_mmap) {
-+		istate->mmap =3D mmap;
-+		istate->mmap_size =3D mmap_size;
-+	}
- 	close(fd);
-=20
- 	hdr =3D mmap;
-@@ -1626,10 +1630,12 @@ int do_read_index(struct index_state *istate, c=
-onst char *path, int must_exist)
- 		src_offset +=3D 8;
- 		src_offset +=3D extsize;
- 	}
--	munmap(mmap, mmap_size);
-+	if (!istate->keep_mmap)
-+		munmap(mmap, mmap_size);
- 	return istate->cache_nr;
-=20
- unmap:
-+	istate->mmap =3D NULL;
- 	munmap(mmap, mmap_size);
- 	die("index file corrupt");
- }
-@@ -1655,6 +1661,7 @@ int read_index_from(struct index_state *istate, c=
-onst char *path)
- 		discard_index(split_index->base);
- 	else
- 		split_index->base =3D xcalloc(1, sizeof(*split_index->base));
-+	split_index->base->keep_mmap =3D istate->keep_mmap;
- 	ret =3D do_read_index(split_index->base,
- 			    git_path("sharedindex.%s",
- 				     sha1_to_hex(split_index->base_sha1)), 1);
-@@ -1698,6 +1705,10 @@ int discard_index(struct index_state *istate)
- 	free(istate->cache);
- 	istate->cache =3D NULL;
- 	istate->cache_alloc =3D 0;
-+	if (istate->keep_mmap && istate->mmap) {
-+		munmap(istate->mmap, istate->mmap_size);
-+		istate->mmap =3D NULL;
-+	}
- 	discard_split_index(istate);
- 	free_untracked_cache(istate->untracked);
- 	istate->untracked =3D NULL;
+5. A couple of fd leaks fixed.
+
+6. Cruft removed.
+
+7. New perf numbers.
+
+David Turner (5):
+  unpack-trees: preserve index extensions
+  index-helper: kill mode
+  index-helper: don't run if already running
+  index-helper: autorun mode
+  index-helper: optionally automatically run
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (10):
+  read-cache.c: fix constness of verify_hdr()
+  read-cache: allow to keep mmap'd memory after reading
+  index-helper: new daemon for caching index and related stuff
+  index-helper: add --strict
+  daemonize(): set a flag before exiting the main process
+  index-helper: add --detach
+  read-cache: add watchman 'WAMA' extension
+  Add watchman support to reduce index refresh cost
+  index-helper: use watchman to avoid refreshing index with lstat()
+  update-index: enable/disable watchman support
+
+ .gitignore                               |   1 +
+ Documentation/config.txt                 |   4 +
+ Documentation/git-index-helper.txt       |  75 +++++
+ Documentation/git-update-index.txt       |   6 +
+ Documentation/technical/index-format.txt |  22 ++
+ Makefile                                 |  17 ++
+ builtin/gc.c                             |   2 +-
+ builtin/update-index.c                   |  11 +
+ cache.h                                  |  16 +-
+ config.c                                 |   5 +
+ configure.ac                             |   8 +
+ daemon.c                                 |   2 +-
+ dir.c                                    |  23 +-
+ dir.h                                    |   6 +
+ environment.c                            |   3 +
+ git-compat-util.h                        |   1 +
+ index-helper.c                           | 454 +++++++++++++++++++++++=
++++++
+ read-cache.c                             | 488 +++++++++++++++++++++++=
++++++++-
+ setup.c                                  |   4 +-
+ t/t7063-status-untracked-cache.sh        |  22 ++
+ t/t7900-index-helper.sh                  |  68 +++++
+ t/test-lib-functions.sh                  |   4 +
+ unpack-trees.c                           |   1 +
+ watchman-support.c                       | 135 +++++++++
+ watchman-support.h                       |   7 +
+ 25 files changed, 1364 insertions(+), 21 deletions(-)
+ create mode 100644 Documentation/git-index-helper.txt
+ create mode 100644 index-helper.c
+ create mode 100755 t/t7900-index-helper.sh
+ create mode 100644 watchman-support.c
+ create mode 100644 watchman-support.h
+
 --=20
 2.4.2.767.g62658d5-twtrsrc
