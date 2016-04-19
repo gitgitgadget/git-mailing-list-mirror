@@ -1,208 +1,129 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] http.c: implements the GIT_TRACE_CURL environment variable
-Date: Tue, 19 Apr 2016 11:03:38 -0700
-Message-ID: <xmqqtwix1nnp.fsf@gitster.mtv.corp.google.com>
-References: <20160419151044.27814-1-gitter.spiros@gmail.com>
-	<20160419151044.27814-3-gitter.spiros@gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH/RFC 4/6] transport: add refspec list parameters to functions
+Date: Tue, 19 Apr 2016 11:04:13 -0700
+Message-ID: <CAGZ79kZOY9guHWYmxh+J4-BXzFCMWLFhF0sDS3Kau3oXqWsSxg@mail.gmail.com>
+References: <1460747949-3514-1-git-send-email-dturner@twopensource.com>
+	<1460747949-3514-5-git-send-email-dturner@twopensource.com>
+	<xmqqa8kq69i5.fsf@gitster.mtv.corp.google.com>
+	<20160419071403.GA22577@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, tboegi@web.de, ramsay@ramsayjones.plus.com,
-	sunshine@sunshineco.com, peff@peff.net
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 19 20:03:47 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	David Turner <dturner@twopensource.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 19 20:04:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asa02-0004Q8-Os
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 20:03:47 +0200
+	id 1asa0Y-0004Yo-P8
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 20:04:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754203AbcDSSDm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Apr 2016 14:03:42 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55226 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752918AbcDSSDm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2016 14:03:42 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CEE16132D7;
-	Tue, 19 Apr 2016 14:03:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=a3HxDZKBvlvk
-	A7j59n9/ADYOmT8=; b=I3C2Nv5fgkEu30hS8zcnBM8zYZiu4A6R3Ac7oKssZSqV
-	GnvrKkAdiCifeRkAX2PSbVqg/qUUP29OywQV7MYvfvUts07evVgYnxepP9Ss2Oi1
-	0+Xx2M3g68N1a2RqBK2qDZIi6UC/t5o1DzopZs6PoruTLwcoxUSqVAM749m39UA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=nZYgvz
-	fYF63SJYDWhEZNiwXZRpPrPcMy6MSS4g69JDCUwfcGrxvU3DurUXOfa48VPQ6PKj
-	BCeP8DBjslYtyYU1qB68+Zgh2djaYrq24znGhNJ3EB5jcj7p5ufiCYL5r3BkvG1r
-	wheoDhW6XHPgrHDtimhAixDHt3UQUG7uVZaG8=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C4CCF132D6;
-	Tue, 19 Apr 2016 14:03:40 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 23F80132D5;
-	Tue, 19 Apr 2016 14:03:40 -0400 (EDT)
-In-Reply-To: <20160419151044.27814-3-gitter.spiros@gmail.com> (Elia Pinto's
-	message of "Tue, 19 Apr 2016 15:10:42 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0BDD125E-0659-11E6-B335-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1754653AbcDSSEP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2016 14:04:15 -0400
+Received: from mail-io0-f182.google.com ([209.85.223.182]:34340 "EHLO
+	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754420AbcDSSEO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 14:04:14 -0400
+Received: by mail-io0-f182.google.com with SMTP id 2so27248477ioy.1
+        for <git@vger.kernel.org>; Tue, 19 Apr 2016 11:04:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=WucxX0qMQMnx//7wSttPnW4xxQamAwTLhqbnJXEUWmU=;
+        b=HAJuCwdPol/SNi/AiFJ3b3/yKwqDJK83p7jWwerz/KqHiuaR/kqQfn/pHws8m0AV51
+         1DLsFyqiIHB7h7sRWZIt/yUJaYdtMmdBb00BKIysjK9Z41TUVvzmeXqGQxpv32ccfdQm
+         T9HSAFugwCGMMfiveT9x9h2yPwvzHKYq9qEb0wRQJoHPfSYPMDThy4ZYYJiTJvPEyOi7
+         T1o5oYSIdqspnK8QcZeEA880jI5Q9viatYMs3Gle2YTXDdA4oH2C23dz3GeYO+bKx+ix
+         ICqhE5OaoEERR9Ln/j9Sp4sxWuf/IVpJVGL5L6Mbj+0gjnYQ+vNJBG5t73WKgLmaL2NJ
+         JTtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=WucxX0qMQMnx//7wSttPnW4xxQamAwTLhqbnJXEUWmU=;
+        b=Xa/bEpPDwIR7QHdt3KHSyklaUHHCesrPEiQZCVOP6HBRrUTclzRXw9J+2nuwvVx4HA
+         tQDdwHqW719hW4cZu3KvMWaBxTKLnVUoc7IGaPRXqnZwQMpI3yd6E0MuLk+fYQXY7/v3
+         rrzzA/xs3qIAhhcB3dhT20S/HXzvliNJ/fqbzKa5CGZfQfFO/obCAgoO3VWbTF2yvNnb
+         2hNhm4oWy+3yTuQf4AcFWuks+BUybO4P6EYj6ypxtFyzFKU5m5dTKus5xx2L1PLtqk1p
+         fqP4m7AD5RB2PHbxt7t7zSSij0edAd1yZZoz1/B5EtF9apg9qvmmkn6CXjcdDsnvzpL1
+         IrqA==
+X-Gm-Message-State: AOPr4FXMiZsgRZZjgJUVfWk9JpNKIHvP28WI4ZK4y+syyCpZoN2XdQXRLQ7ib5ZIwhDzkr/GEuhETJSN2NcgAHfW
+X-Received: by 10.107.184.8 with SMTP id i8mr5146108iof.96.1461089053471; Tue,
+ 19 Apr 2016 11:04:13 -0700 (PDT)
+Received: by 10.107.17.27 with HTTP; Tue, 19 Apr 2016 11:04:13 -0700 (PDT)
+In-Reply-To: <20160419071403.GA22577@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291895>
 
-Elia Pinto <gitter.spiros@gmail.com> writes:
-
-> Implements the GIT_TRACE_CURL environment variable to allow a
-> greater degree of detail of GIT_CURL_VERBOSE, in particular
-> the complete transport header and all the data payload exchanged.
-> It might be useful if a particular situation could require a more
-> thorough debugging analysis
+On Tue, Apr 19, 2016 at 12:14 AM, Jeff King <peff@peff.net> wrote:
+> On Mon, Apr 18, 2016 at 11:45:54AM -0700, Junio C Hamano wrote:
 >
+>> David Turner <dturner@twopensource.com> writes:
+>>
+>> > Add parameters for a list of refspecs to transport_get_remote_refs and
+>> > get_refs_list.  These parameters are presently unused -- soon, we will
+>> > use them to implement fetches which only learn about a subset of refs.
+>> >
+>> > Signed-off-by: David Turner <dturner@twopensource.com>
+>> > ---
+>>
+>> What the code tries to do I am more than halfway happy.  It is
+>> unfortunate that we cannot do this natively without upgrading the
+>> protocol in a fundamental way, but this is a nice way to work it
+>> around only for Git-over-HTTP transport without having to break the
+>> protocol.
 >
-> Helped-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Helped-by: Eric Sunshine <sunshine@sunshineco.com>=20
-> Helped-by: Jeff King <peff@peff.net>
-> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-> ---
->  http.c | 98 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
-+++++++++-
->  1 file changed, 97 insertions(+), 1 deletion(-)
+> I dunno, I am a bit negative on bringing new features to Git-over-HTTP
+> (which is already less efficient than the other protocols!) without any
+> plan for supporting them in the other protocols.
 >
-> diff --git a/http.c b/http.c
-> index 4304b80..278991e 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -11,6 +11,9 @@
->  #include "gettext.h"
->  #include "transport.h"
-> =20
-> +/*
-> +tatic struct trace_key trace_curl =3D TRACE_KEY_INIT(CURL);
-> +*/
+> I thought Stefan's v2 protocol work looked quite good, but it seems to
+> have stalled. The hardest part of that topic is figuring out the upgrade
+> path. But for git-over-http, we can solve that in the same way that
+> David is passing in the extra refspecs.
 
-Is this a sign that this hasn't been proof-read before sending?
+Yeah it stalled, though I hope to revive it eventually.
 
->  #if LIBCURL_VERSION_NUM >=3D 0x070a08
->  long int git_curl_ipresolve =3D CURL_IPRESOLVE_WHATEVER;
->  #else
-> @@ -464,6 +467,95 @@ static void set_curl_keepalive(CURL *c)
->  }
->  #endif
-> =20
-> +
-> +void curl_dump(const char *text, unsigned char *ptr, size_t size, ch=
-ar nohex)
-> +{
-> +	size_t i;
-> +	size_t w;
-> +	struct strbuf out =3D STRBUF_INIT;;
-> +
-> +	unsigned int width =3D 0x10;
-> +
-> +	if (nohex)
-> +		/* without the hex output, we can fit more on screen */
-> +		width =3D 0x40;
-> +
-> +	strbuf_addf(&out, "%s, %10.10ld bytes (0x%8.8lx)\n",
-> +		text, (long)size, (long)size);
-> +
-> +	for (i =3D 0; i < size; i +=3D width) {
-> +
-> +		strbuf_addf(&out, "%4.4lx: ", (long)i);
-> +
-> +		if (!nohex) {
-> +			/* hex not disabled, show it */
-> +			for (w =3D 0; w < width; w++)
-> +				if (i + w < size)
-> +					strbuf_addf(&out, "%02x ", ptr[i + w]);
-> +				else
-> +					strbuf_addf(&out,"   ");
-> +		}
-> +
-> +		for (w =3D 0; (w < width) && (i + w < size); w++) {
-> +			/* check for 0D0A; if found, skip past and start a new line of ou=
-tput */
-> +			if (nohex && (i + w + 1 < size) && ptr[i + w] =3D=3D '\r'
-> +			    && ptr[i + w + 1] =3D=3D '\n') {
-> +				i +=3D (w + 2 - width);
-> +				break;
-> +			}
-> +			strbuf_addch(&out, (ptr[i + w] >=3D 0x20)
-> +				&& (ptr[i + w] < 0x80) ? ptr[i + w] : '.');
-> +			/* check again for 0D0A, to avoid an extra \n if it's at width */
-> +			if (nohex && (i + w + 2 < size)
-> +			    && ptr[i + w + 1] =3D=3D '\r'
-> +			    && ptr[i + w + 2] =3D=3D '\n') {
-> +				i +=3D (w + 3 - width);
-> +				break;
-> +			}
-> +		}
-> +		strbuf_addch(&out, '\n');
-> +		trace_strbuf(&trace_curl, &out);
-> +		strbuf_release(&out);
-> +	}
-> +}
-> +
-> +int curl_trace(CURL *handle, curl_infotype type,
-> +	     char *data, size_t size, void *userp)
-> +{
-> +	const char *text;
-> +	(void)handle;		/* prevent compiler warning */
-> +
-> +	switch (type) {
-> +	case CURLINFO_TEXT:
-> +		trace_printf_key(&trace_curl, "=3D=3D Info: %s", data);
-> +	default:		/* in case a new one is introduced to shock us */
-> +		return 0;
-> +
-> +	case CURLINFO_HEADER_OUT:
-> +		text =3D "=3D> Send header";
-> +		break;
-> +	case CURLINFO_DATA_OUT:
-> +		text =3D "=3D> Send data";
-> +		break;
-> +	case CURLINFO_SSL_DATA_OUT:
-> +		text =3D "=3D> Send SSL data";
-> +		break;
-> +	case CURLINFO_HEADER_IN:
-> +		text =3D "<=3D Recv header";
-> +		break;
-> +	case CURLINFO_DATA_IN:
-> +		text =3D "<=3D Recv data";
-> +		break;
-> +	case CURLINFO_SSL_DATA_IN:
-> +		text =3D "<=3D Recv SSL data";
-> +		break;
-> +	}
-> +
-> +	curl_dump(text, (unsigned char *)data, size, 1);
-> +	return 0;
-> +}
-> +
-> +
->  static CURL *get_curl_handle(void)
->  {
->  	CURL *result =3D curl_easy_init();
-> @@ -563,7 +655,11 @@ static CURL *get_curl_handle(void)
->  			"your curl version is too old (>=3D 7.19.4)");
->  #endif
-> =20
-> -	if (getenv("GIT_CURL_VERBOSE"))
-> +	if (trace_want(&trace_curl)) {
-> +		curl_easy_setopt(result, CURLOPT_VERBOSE, 1L);
-> +		curl_easy_setopt(result, CURLOPT_DEBUGFUNCTION, curl_trace);
-> +		curl_easy_setopt(result, CURLOPT_DEBUGDATA, NULL);
-> +	} else if (getenv("GIT_CURL_VERBOSE"))
->  		curl_easy_setopt(result, CURLOPT_VERBOSE, 1);
-> =20
->  	curl_easy_setopt(result, CURLOPT_USERAGENT,
+I was positive about these changes for that same reason: If http and native
+protocol move apart even more, it will be easier to make the native only
+v2 protocol without needing to fiddle with http, i.e. this series would reduce
+scope of the v2 series drastically?
+
+>
+> So I'd rather see something like:
+>
+>   1. Support for v2 "capabilities only" initial negotiation, followed
+>      by ref advertisement.
+
+And the client needs to talk in between capabilities and ref advertisement.
+Even if it is just a flush for now. That can be extended later to the actual
+desired capabilities, but the server needs to at least wait for a client packet
+in here.
+
+Note that the server side for v2 capabilites only first is done, the client side
+is missing as I found that to be the hard part.
+
+
+>
+>   2. Support for refspec-limiting capability.
+>
+>   3. HTTP-only option from client to trigger v2 on the server.
+>
+> That's still HTTP-specific, but it has a clear path for converging with
+> the ssh and git protocols eventually, rather than having to support
+> magic out-of-band capabilities forever.
+>
+> It does require an extra round of HTTP request/response, though.
+>
+> -Peff
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
