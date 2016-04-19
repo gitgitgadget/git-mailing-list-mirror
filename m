@@ -1,80 +1,100 @@
 From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH/RFC 2/6] remote-curl.c: fix variable shadowing
-Date: Tue, 19 Apr 2016 15:14:31 -0400
+Subject: Re: [PATCH/RFC 4/6] transport: add refspec list parameters to
+ functions
+Date: Tue, 19 Apr 2016 15:31:03 -0400
 Organization: Twitter
-Message-ID: <1461093271.5540.110.camel@twopensource.com>
+Message-ID: <1461094263.5540.113.camel@twopensource.com>
 References: <1460747949-3514-1-git-send-email-dturner@twopensource.com>
-	 <1460747949-3514-3-git-send-email-dturner@twopensource.com>
-	 <xmqqega26a01.fsf@gitster.mtv.corp.google.com>
+	 <1460747949-3514-5-git-send-email-dturner@twopensource.com>
+	 <xmqqa8kq69i5.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 19 21:14:39 2016
+X-From: git-owner@vger.kernel.org Tue Apr 19 21:31:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asb6c-0005qB-Ow
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 21:14:39 +0200
+	id 1asbMf-0007NB-AH
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 21:31:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753553AbcDSTOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2016 15:14:34 -0400
-Received: from mail-qg0-f41.google.com ([209.85.192.41]:35542 "EHLO
-	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752981AbcDSTOe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2016 15:14:34 -0400
-Received: by mail-qg0-f41.google.com with SMTP id f74so13695595qge.2
-        for <git@vger.kernel.org>; Tue, 19 Apr 2016 12:14:33 -0700 (PDT)
+	id S1753550AbcDSTbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2016 15:31:08 -0400
+Received: from mail-qg0-f47.google.com ([209.85.192.47]:34455 "EHLO
+	mail-qg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752554AbcDSTbH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 15:31:07 -0400
+Received: by mail-qg0-f47.google.com with SMTP id c6so15629038qga.1
+        for <git@vger.kernel.org>; Tue, 19 Apr 2016 12:31:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=message-id:subject:from:to:cc:date:in-reply-to:references
          :organization:mime-version:content-transfer-encoding;
-        bh=zwk63p9Y7PheEw8byJTB7etefb9h56EWo63zpd/EhxM=;
-        b=WrQ31R9e58C7uodRJ73x9mkjMCbPVer1tzi5ClDwrxrBBvRXDPgLkL1yh0VlB5/BfD
-         J9dex8yv8aOxnhNd8A7gI0k3RH3XY1AI96DKv3WJzIzNgnx1Tl+oI5wcw6+Qmg+ZVZ/7
-         kNhqd7Zk/3J13j2bjgcdJ+9MXWEJZ3kDjW7Wg21WKxMrh/ctdEB11pEdEKQdIvdAT8SN
-         fjIEz2c4rSkYhcQObuh6/X3DTdKsJ93BiaPnFqd1979oqMiiz+wA9rsEhFlxaWCExogP
-         F4hMQYhv2jSDy1XGqhhoLl+HUOIGhvtGPvo9JtRyHedR0kN80LX2sJaNj4AaHQx99JXn
-         AQ+A==
+        bh=8j+xWLF4fTCG5fP01LVtw5Vd02t/AugFCmI4xXaAeik=;
+        b=zFxsweZ0BYzm3aVxkjqjUEXBb1URi1qqNx/HqGRHS0HTYDNjEZnHBCV3SWkpqUeWVe
+         PR7D+WCzfg5uDGGeCujp/vxCeePo1ee0SIHITXgz2mRgHNKooR+yqAAQvPLokyo/Hv1K
+         DOiE5CaiOnZb6nOV/Z0cR1kMU2Q5aNR6m+wyDueAXFBQO0VYJCHAnCubsNwT0W6R8DW1
+         p5vYSWJcxdzPran1Z0d7Pnk/KPMO67F6eQIs61M8aTV/VRy+tsECtXu6P5xlmgdTzoHw
+         Qlx1hFHPv/t6mq5bb5KWCaBP7HA53vjjI3bbnhD7JwLzwoRC8vMfSaNgMKl3B7n8RMoP
+         ab1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
          :references:organization:mime-version:content-transfer-encoding;
-        bh=zwk63p9Y7PheEw8byJTB7etefb9h56EWo63zpd/EhxM=;
-        b=ElmrgcIgoMr4aRw/27TaJT7NMly29zagt0tWYfXCX/eXWpO9yYuJQmQhBLIcsamZFN
-         VwOZKEaFmgAh4wuNsip0+7rF20RC0GrQsVmX+yuqIuY2Y2jfIhwcT7RKwhUS1eZDVKBB
-         jzrObFTtfmsUPhuxQMtg5QTMjQG6mSmNqLOS0cV/AUeCDK9zvqhwhnUxm1wpxV42Jckw
-         3bErc3Q9EM6Ic+zlHAkY+sQPVqKd9aY0iH3Xi7SsaVQ22Z6sBPqwqYSewDxsZKZES3lP
-         /8ds2CmM/hluEqMl50yXk5eOG29W8EUf9JY+PxZh8WjOVsmi1i9Dmq2FxontLuGDfWJC
-         rnvQ==
-X-Gm-Message-State: AOPr4FUCRdXP8O8q3RERnoItG22kDzW0kTypfP7TwWcEHIEms/G9LERmKxGx497vDbZ/TQ==
-X-Received: by 10.140.36.231 with SMTP id p94mr5671805qgp.79.1461093273115;
-        Tue, 19 Apr 2016 12:14:33 -0700 (PDT)
+        bh=8j+xWLF4fTCG5fP01LVtw5Vd02t/AugFCmI4xXaAeik=;
+        b=H3bYc+7c/DIFTIozQyXkrkKvcJNJm1n2E/R1hUjNKBUR1Ho6I9A9KArnCFe/zuxeNC
+         AxsVhHdlyaGBL6502QbLcYPAuCUv4Sn/NpP1sSoEhmGSwMvl2p9g6pDq2N0CVlZToPVD
+         iAMK2F1cK25YrvlkbiK2bjC9+qZXwlqqhJq9W5IaKaU+cVoXS5cyw9eAK0kg7vnNgHDJ
+         iocQ8TyDj1PznxvKUnhqj80YXUF1S3vOtT2hySDO7U6wxHleUTTiameCLDcQhKLv+gxz
+         sg0A1iEX+daq6sPrlbzPAOKgb3LfQkiWrIZvOgjaQxtO9LrA1H4oW7hrftYsxYeUCqa1
+         FFXw==
+X-Gm-Message-State: AOPr4FW5eYpVw74wd40vdmUAkSd0QeOo3SwBuZSnMXl6cVMVEBeMKblmoZJlJFf5jxtrQA==
+X-Received: by 10.141.41.130 with SMTP id s124mr6231661qhe.69.1461094265474;
+        Tue, 19 Apr 2016 12:31:05 -0700 (PDT)
 Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id z62sm29626112qka.26.2016.04.19.12.14.32
+        by smtp.gmail.com with ESMTPSA id u16sm29697669qka.22.2016.04.19.12.31.04
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 19 Apr 2016 12:14:32 -0700 (PDT)
-In-Reply-To: <xmqqega26a01.fsf@gitster.mtv.corp.google.com>
+        Tue, 19 Apr 2016 12:31:04 -0700 (PDT)
+In-Reply-To: <xmqqa8kq69i5.fsf@gitster.mtv.corp.google.com>
 X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291912>
 
-On Mon, 2016-04-18 at 11:35 -0700, Junio C Hamano wrote:
+On Mon, 2016-04-18 at 11:45 -0700, Junio C Hamano wrote:
 > David Turner <dturner@twopensource.com> writes:
 > 
-> > The local variable 'options' was shadowing a global of the same
-> > name.
+> > Add parameters for a list of refspecs to transport_get_remote_refs
+> > and
+> > get_refs_list.  These parameters are presently unused -- soon, we
+> > will
+> > use them to implement fetches which only learn about a subset of
+> > refs.
 > > 
 > > Signed-off-by: David Turner <dturner@twopensource.com>
 > > ---
 > 
-> OK.  In general, giving a longer and more descriptive name to the
-> global would be a direction to lead to more readable code, though.
+> What the code tries to do I am more than halfway happy.  It is
+> unfortunate that we cannot do this natively without upgrading the
+> protocol in a fundamental way, but this is a nice way to work it
+> around only for Git-over-HTTP transport without having to break the
+> protocol.
+>  
+> As a POC it is OK, but I am moderately unhappy with the use of
+> "refspec" here.
+> 
+> At the transport layer, we shouldn't care what the receiving end
+> intends to do with the objects that sits at the tip of the refs at
+> the other end, so sending "refspecs" down feels somewhat wrong for
+> this feature.  At one layer up in the next patch, you do use
+> "interesting refs" which makes it clear that only the left-hand-side
+> of a refspec, i.e. what they call it, matters, and I think that is a
+> much better phrasing of the concept (and the passed data should only
+> be the left-hand-side of refspecs).
 
-OK, will do that instead.
+I will rename the parameter to "interesting_refs".
