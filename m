@@ -1,73 +1,69 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH] replace --edit: respect core.editor
-Date: Tue, 19 Apr 2016 16:37:00 +0200 (CEST)
-Message-ID: <909769abaff1babdab77625bebd04e2013c6e344.1461076425.git.johannes.schindelin@gmx.de>
+From: FROM Ms Faith Titi Attah <attahneedheli@gmail.com>
+Subject: Ms Faith Titi Attah
+Date: Tue, 19 Apr 2016 14:58:00 +0000
+Message-ID: <CA+v+jAp1-52XKWmoG_7K8f5BvN1qydS9kRgVPwjVOLK3LUPrHA@mail.gmail.com>
+Reply-To: msfaithattahtiti@outlook.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 19 16:37:22 2016
+Content-Type: text/plain; charset=UTF-8
+To: undisclosed-recipients:;
+X-From: git-owner@vger.kernel.org Tue Apr 19 16:58:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asWmG-00030N-6Q
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 16:37:20 +0200
+	id 1asX6N-0007ao-LB
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 16:58:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754605AbcDSOhO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2016 10:37:14 -0400
-Received: from mout.gmx.net ([212.227.15.19]:49215 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753672AbcDSOhN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2016 10:37:13 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0M9ra4-1b3ZOn2bJA-00B2VS; Tue, 19 Apr 2016 16:37:01
- +0200
-X-X-Sender: virtualbox@virtualbox
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:C4iQsR8LCyKFFSrdumsCm5mPkvIxln5rxoEdCNfsF52NQgJmmdf
- HvmPN8QJPTqOIsVSprJv1aytroF29lYecUv6GZBmH5Na1h1E11CQXs3Noa4GphqMqNknzXg
- J5y2zuWR6S9ozoLV8HDdGYt+thQMZi7kZ6QJhTPTe4jmM5Tt2AJJHKzdUxrMi6J76GhfLof
- ZkSaR50YXya8gdWfsp2UQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vpf2h30J7V8=:JLDOYh1l00PWNyjPaKG6jp
- QA+9Y6GbpSCZKOh3JrGuNRqRszJbZ8vzMrxm6JrN9DC7KZYMJofQIQJswHSSvfxKa60hgcJkP
- 3Vf6urj7vmwy26sR2EoNvG6qw2kBaohbT07stCYXzcMTKQNsIyw85MQwczUa0hvl7/ddXHc7O
- svRN3cwn08jGgPZmfVe0LJC5zOxOya2ZBqBTeblJB8d8IjzXvSw/VuUUuEC2R1SXfcbYiyt48
- UK94r7Z59WfTvrFF2jHe8GlI6OevEHIU1PPvDqa5S7nvm9ZDINxxWlA9JlQDzNtJSCC34HMFV
- 4UqOqoaNY8mvCoh4YQGP39SS09n9+9AeLBoSbuFtadBBW/5pHz2lm4V6ydTQ8Ot6ZEB/u9Ejj
- VZZydkpGC4YT2WGDnv1jTcEdZZFh+yoQ6fqHbzRWn+/xhTchtWK4rcMA0/2Y6qZwqN4rctlvT
- 7yE2HWbYB9RUZ4SixqgzzSKPx+l3uRp5IKOEL+yO8KL8GydKNOpcqJVmatNqQ21MoI2Yxxujd
- tb1Cjll1pLvzaxzK+VZcsQBQ3zA4n2MUgopGE6NtWBGfgMupH4I9pWwoS8X9PMTPWQriGelB/
- hhAeReKbS4mnzY5QD0S5/LdD9J7liyjfByCibC6YoTaga5bzcTeiiasJqHZnI8Lz6q5s3XvHw
- oaz7COSD6vNmXblmWmhSMubcMvKj4BYgClsANzFbg0YPRX8uhJWCXIfM8+WyBE2MmCKoE7i8O
- vnxeSemxqwNzwPCsaJo0aqoOthAyPImEV93zAYB2jc9+tGOZtpQDN69itl7GZ+DgKv5WFZ+4 
+	id S932422AbcDSO6D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2016 10:58:03 -0400
+Received: from mail-oi0-f65.google.com ([209.85.218.65]:35184 "EHLO
+	mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932106AbcDSO6B (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 10:58:01 -0400
+Received: by mail-oi0-f65.google.com with SMTP id r186so1576336oie.2
+        for <git@vger.kernel.org>; Tue, 19 Apr 2016 07:58:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:date:message-id:subject:from:to;
+        bh=rs51SczqB0YbK2WG8x4xy1QvvcS+ompPPRI0ZudIl9Y=;
+        b=Xcpp4CUITHY4hPR5NMv/Ll9UtmgQcEHVPUYaHrL3UXYe1mWzcQcEzdyWOmtnipzU9I
+         JCduHA7UOobq4gEsbteh1XnUDEUv+IOD5BpO2LvnKTGuKFOThedpJFDjG/rfIos6a5qu
+         RsTM0rmPyDxyZwCd65x7M3Djz9t7BsDbgKyWlLSYwEgw0FJUg/ajU7zcwu3D5Us0oMtE
+         Mzf90W47GjBASG5YXizP7QXrM2rS8Fh8woscqD26mwCaZVIn1YC9/48diizZytXtfLJz
+         Tkg+2jUUptAappOSk/iNKk4e8aCQFhPBQrYkF3i55UPsQ3AE2uGaoYI/Qehu9W/F7qm0
+         Szyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:reply-to:date:message-id:subject
+         :from:to;
+        bh=rs51SczqB0YbK2WG8x4xy1QvvcS+ompPPRI0ZudIl9Y=;
+        b=jDDQLNmlb5CFhdkhydb63HhZ10kfl2J8Wx4+sV4OvGiDKTLavntljBbMACCLyObstr
+         a9aeJEO7vztfBOUWt+L9JQFZ4pUjYNQB3sFPE03ybQ14zuhMYz1m+lXjQuZai7Ntjtjs
+         i3gETtpnD4JYOZulOxQaiRSWVeA0RXwcepBlCKoy45uGvtfHcYQr0cGK9tSB/rxtfVbh
+         DXWFZY0Rx0hJVaiCB9B5XFkUjlPcxvfAc050le2yZiptcSqnw8Q6/1a3XjSdkrFESb56
+         Ondi/AvJVrs5RjZ8rmSbfNLgIaUL1KY9xaffWYty9DJbLbolgHDA2ZxNJGO2mVbQmLsS
+         x0aw==
+X-Gm-Message-State: AOPr4FWxxEYPMUVieaBNNYdQQN1yfH7j8fAa7/zBme0ijKquN/W6dKQ9SwQfAqqQaBxe7KkrlMlUswn6KwMazA==
+X-Received: by 10.202.96.68 with SMTP id u65mr1358724oib.83.1461077880740;
+ Tue, 19 Apr 2016 07:58:00 -0700 (PDT)
+Received: by 10.202.195.208 with HTTP; Tue, 19 Apr 2016 07:58:00 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291867>
 
-We simply need to read the config, is all.
+Dearest one
+I wish you and your family happy moments of life
+now and forever more amen.Please, I do not have formal relationship
+with you but because of my present predicament and circumstances I am
+made to contact you.I have been suffering from cancer of the Lungs and
+has a short life to leave.I have made up my mind to donate my
+inheritance of 21.5 million US to the less privileged please help me
+to fulfill my last wish.please contact me here
+(msfaithattahtiti(A)outlook.com) so i can detail you more.i await your
+reply
 
-This fixes https://github.com/git-for-windows/git/issues/733
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/replace.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 748c6ca..02b13f6 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -475,6 +475,7 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
- 		return replace_object(argv[0], argv[1], force);
- 
- 	case MODE_EDIT:
-+		git_config(git_default_config, NULL);
- 		if (argc != 1)
- 			usage_msg_opt("-e needs exactly one argument",
- 				      git_replace_usage, options);
--- 
-2.8.1.206.g8b39b4a
+Thanks
+Ms Faith Titi Attah
