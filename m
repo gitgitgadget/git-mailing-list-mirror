@@ -1,137 +1,92 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH 1/4] http.h: Add debug callback and helper routine for
- implementing the GIT_TRACE_CURL environment variable in http.c
-Date: Tue, 19 Apr 2016 23:11:55 +0100
-Message-ID: <5716AD2B.3050701@ramsayjones.plus.com>
-References: <20160419151044.27814-1-gitter.spiros@gmail.com>
- <20160419151044.27814-2-gitter.spiros@gmail.com>
- <5716A7C6.40507@ramsayjones.plus.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v4 15/16] index-helper: optionally automatically run
+Date: Tue, 19 Apr 2016 18:31:19 -0400
+Organization: Twitter
+Message-ID: <1461105079.5540.131.camel@twopensource.com>
+References: <1460507589-25525-1-git-send-email-dturner@twopensource.com>
+	 <1460507589-25525-16-git-send-email-dturner@twopensource.com>
+	 <CACsJy8C8un8AAwr5OWX6b8+ync=hqe3JLb=zNMN947oDLmZo4w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: tboegi@web.de, gitster@pobox.com, sunshine@sunshineco.com,
-	peff@peff.net
-To: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 00:30:58 2016
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Duy =?UTF-8?Q?Nguy=E1=BB=85n?= <pclouds@gmail.co>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 20 00:31:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aseAb-0006jD-Qq
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 00:30:58 +0200
+	id 1aseB9-00074b-Is
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 00:31:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753492AbcDSWax (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2016 18:30:53 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:56166 "EHLO
-	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752694AbcDSWax (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2016 18:30:53 -0400
-Received: from [10.0.2.15] ([91.125.197.102])
-	by avasout07 with smtp
-	id kNWp1s0022D2Veb01NWq9A; Tue, 19 Apr 2016 23:30:50 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=QqujpgGd c=1 sm=1 tr=0
- a=mTUfFwB0nGOO66Ym8a+i3w==:117 a=mTUfFwB0nGOO66Ym8a+i3w==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
- a=EBOSESyhAAAA:8 a=uqDsM_BnWSDKI580JFEA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
-In-Reply-To: <5716A7C6.40507@ramsayjones.plus.com>
+	id S932098AbcDSWbX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2016 18:31:23 -0400
+Received: from mail-qg0-f54.google.com ([209.85.192.54]:34681 "EHLO
+	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752694AbcDSWbW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 18:31:22 -0400
+Received: by mail-qg0-f54.google.com with SMTP id c6so18613178qga.1
+        for <git@vger.kernel.org>; Tue, 19 Apr 2016 15:31:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:mime-version:content-transfer-encoding;
+        bh=/U6ROMOgOxWLlk6KJhk9dd7rOMcWaG8amGEKAbG9ez0=;
+        b=EqWIspOLWkMqeoIFnvhqVrRw9yjqbJWXDaicAuC+OgsEk7g7brtlPG1eulsfKFpAgx
+         47YbES0uqE0VR5tUHAaZLmeQAr5f9Fut9xiN22JTqc7PJqDscDURCYvAyasKtreuhNCD
+         rKou3n+HahtxoTm6KxZ8xR6+g/dxc6G8NnnOGrMBM28wShb6EQCvVcCvqEX8aOTQ9eko
+         QV/Es0O6kRQ9nHIeXBruSfcfLpyeYXpEoACQ+VAdxF7YsyAsKLe0ODxLW0Olyur7HndT
+         7+shSqPkBy6RDZ4hcpdtzx8S+UWxveG9zaqI1j4h6bjdEWJxHKLrqBqAOxDv7XjJVQy6
+         MTpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:mime-version:content-transfer-encoding;
+        bh=/U6ROMOgOxWLlk6KJhk9dd7rOMcWaG8amGEKAbG9ez0=;
+        b=BBBMQ61+ERsbstviqUuezTmuDLaSAfxt6a0kjiXsNu5rXVJy7yskf2W3j7cuIfv6Ah
+         k3my3oYxsZVPT/F+31LmC4lVfMGpO2emTCDFDqI4n6ZmYC7mydWJUrzh0Jxrycqw+m1O
+         8JLJaudO9M9TdljQqi4aPj+7LKE0yy+dIOkGRL2s1ApwrFA7D8qK42O2/AUZjuwDLj/A
+         ++Q3oVcOarC6n4vTwHqYxAICgDZT2tr/+io9Kb2mIZvG1pnkrGlQyDqdV8GdS249GK2P
+         qFmlQRstYtGISjCFQwwAmjMaSFFSDckqSKAxVLEjnuTvY6cwDZTm13sQW048dm36JuRj
+         usAA==
+X-Gm-Message-State: AOPr4FW3dcnTOShHxFG/uLwJ4B1e3qzE2CEjAPdskO7deNddKw5YibQuVXri0viz/oDUFA==
+X-Received: by 10.140.87.116 with SMTP id q107mr2973429qgd.61.1461105081110;
+        Tue, 19 Apr 2016 15:31:21 -0700 (PDT)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id f13sm26524641qhe.7.2016.04.19.15.31.19
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 19 Apr 2016 15:31:19 -0700 (PDT)
+In-Reply-To: <CACsJy8C8un8AAwr5OWX6b8+ync=hqe3JLb=zNMN947oDLmZo4w@mail.gmail.com>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291940>
 
-
-
-On 19/04/16 22:48, Ramsay Jones wrote:
+On Sun, 2016-04-17 at 12:19 +0700, Duy Nguyen wrote:
+> On Wed, Apr 13, 2016 at 7:33 AM, David Turner <
+> dturner@twopensource.com> wrote:
+> > @@ -536,8 +567,10 @@ static void handle_builtin(int argc, const
+> > char **argv)
+> >         }
+> > 
+> >         builtin = get_builtin(cmd);
+> > -       if (builtin)
+> > +       if (builtin) {
+> > +               maybe_run_index_helper(builtin);
+> >                 exit(run_builtin(builtin, argc, argv));
+> > +       }
+> >  }
 > 
-[snip]
+> Isn't it too early to start index-helper here? Unrelated commands
+> like
+> git-log are affected. And config handling this early could be tricky.
+> A better place may be in the socket connection code. When we fail to
+> connect, we can check config key and run index-helper then.
 
-> I think the minimal fixup (including Junio's comment on patch #2, which also
-> triggered for me) is given in the patch below.
-
-BTW, if you want to have a single static instance of the 'struct trace_key',
-then the following patch on top should work. (Also, I have compiled and run
-the testsuite on these patches, but _not_ tested that the trace functionality
-actually works!) ;-)
-
-HTH
-
-ATB,
-Ramsay Jones
--- >8 --
-Subject: [PATCH] curl-trace: reduce visibility of the trace key struct
-
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
- http.c      | 9 +++++++--
- http.h      | 2 +-
- imap-send.c | 2 +-
- 3 files changed, 9 insertions(+), 4 deletions(-)
-
-diff --git a/http.c b/http.c
-index ce91421..eed6dba 100644
---- a/http.c
-+++ b/http.c
-@@ -11,7 +11,7 @@
- #include "gettext.h"
- #include "transport.h"
- 
--struct trace_key trace_curl = TRACE_KEY_INIT(CURL);
-+static struct trace_key trace_curl = TRACE_KEY_INIT(CURL);
- #if LIBCURL_VERSION_NUM >= 0x070a08
- long int git_curl_ipresolve = CURL_IPRESOLVE_WHATEVER;
- #else
-@@ -516,6 +516,11 @@ static void curl_dump(const char *text, unsigned char *ptr, size_t size, char no
- 	}
- }
- 
-+int curl_trace_want(void)
-+{
-+	return trace_want(&trace_curl);
-+}
-+
- int curl_trace(CURL *handle, curl_infotype type,
- 	     char *data, size_t size, void *userp)
- {
-@@ -652,7 +657,7 @@ static CURL *get_curl_handle(void)
- 			"your curl version is too old (>= 7.19.4)");
- #endif
- 
--	if (trace_want(&trace_curl)) {
-+	if (curl_trace_want()) {
- 		curl_easy_setopt(result, CURLOPT_VERBOSE, 1L);
- 		curl_easy_setopt(result, CURLOPT_DEBUGFUNCTION, curl_trace);
- 		curl_easy_setopt(result, CURLOPT_DEBUGDATA, NULL);
-diff --git a/http.h b/http.h
-index 00e4ad7..153ff17 100644
---- a/http.h
-+++ b/http.h
-@@ -225,7 +225,7 @@ extern void abort_http_object_request(struct http_object_request *freq);
- extern void release_http_object_request(struct http_object_request *freq);
- 
- /* Debug callback and helper routine for curl_easy_setopt CURLOPT_DEBUGFUNCTION */
--extern struct trace_key trace_curl;
-+int curl_trace_want(void);
- int curl_trace(CURL *handle, curl_infotype type, char *data, size_t size, void *userp);
- 
- 
-diff --git a/imap-send.c b/imap-send.c
-index 36ff843..627ffa4 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -1444,7 +1444,7 @@ static CURL *setup_curl(struct imap_server_conf *srvc)
- 	if (0 < verbosity || getenv("GIT_CURL_VERBOSE"))
- 		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
- 
--	if (trace_want(&trace_curl)) {
-+	if (curl_trace_want()) {
- 		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
- 		curl_easy_setopt(curl, CURLOPT_DEBUGFUNCTION, curl_trace);
- 		curl_easy_setopt(curl, CURLOPT_DEBUGDATA, NULL);
--- 
-2.8.0
+Will move.
