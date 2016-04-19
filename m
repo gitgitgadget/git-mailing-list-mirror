@@ -1,87 +1,182 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 0/7] fix checking out a being-rebased branch
-Date: Tue, 19 Apr 2016 08:04:46 +0700
-Message-ID: <CACsJy8BCg3GO1g0Z+S+bDYT3Bdh8d8q0WHz=JoeALvYwfNrM0A@mail.gmail.com>
-References: <CACsJy8BOwzJSmS3PPeeRuaRwq=+kYLH8NX0i7P_wfDW9gLt6bA@mail.gmail.com>
- <1460897965-486-1-git-send-email-pclouds@gmail.com> <xmqqpotm6cfq.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] git-p4: add P4 jobs to git commit message
+Date: Mon, 18 Apr 2016 18:15:56 -0700
+Message-ID: <xmqqshyi2yb7.fsf@gitster.mtv.corp.google.com>
+References: <0102015420a6c30a-f2da55c9-1fc4-4df6-860e-228c5305f617-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>, rethab.ch@gmail.com,
-	Mike Rappazzo <rappazzo@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 19 03:09:25 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Luke Diamand <luke@diamand.org>
+To: Jan Durovec <jan.durovec@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 19 03:16:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asKAO-00033C-6F
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 03:09:24 +0200
+	id 1asKHE-0006iA-MQ
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 03:16:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751807AbcDSBFT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Apr 2016 21:05:19 -0400
-Received: from mail-lf0-f48.google.com ([209.85.215.48]:33735 "EHLO
-	mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751590AbcDSBFS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2016 21:05:18 -0400
-Received: by mail-lf0-f48.google.com with SMTP id e190so1539398lfe.0
-        for <git@vger.kernel.org>; Mon, 18 Apr 2016 18:05:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=p3j5u3wosiha25tkk3NapPrTedVGxf/i5jM+5fMpy0Q=;
-        b=UpOyvIX8Rd8fH8JLR/mgoYTT8zcmfdYl6SkvYtX+mZzvYQd33Zb2spGoOLcJ94OJgo
-         xEkrGYNNw5HRIZBsfughwM1eUFyTCxFXOcLBhipKTpHV3DXn/yOZxa7hBR13t15hA7cS
-         dMYYxoFt6rsMfuFfHaYISk7NUSq+agAGoblizBdxSM55lkU53YN3v14XgXedWcvQVIo0
-         e3+1GHhK8odKXhX54JSmEu8HqNLIOO1bPpf9A3MtEInE90FAT4lTQthtI/GRY44j7Lt5
-         uDZg7K/pPyUzWk/LYeWArybgCJCxP+NMUkyh6irVt7/PA65wyfcyqWTP8cTLpsMntFS7
-         vPNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=p3j5u3wosiha25tkk3NapPrTedVGxf/i5jM+5fMpy0Q=;
-        b=NLKQ6y30jvOkiKvyzXvOBv2vEVjmLMyqqOKDl9VIxABL8Csn2RHrcqU6f80gHcwlCl
-         fR2BlZZVh3IjdC+PyMk1PexRxAjzsjNiD4QrBzZDXfplcgmlAuMXJYpdEGbF8ou8jHIg
-         tK5eOpB6zGZ4Ubra5rqLqZFXt/ULZ1hFNvWfcPozS1fJIUULTSK8uYWGbCWjCB1jOyce
-         wZMC4HRWvFLYinK+JMm55oJMeLrY8LTdhGCzulE5QrFxXs/Or4UaPV0Gw/79Ptmo4feV
-         cWr9edO6fVIp19F6EdiIPsGeS4AuYRr8zuDPoiQhnlTX3R6XlGgtheqHvZGzObajQzAl
-         b+FA==
-X-Gm-Message-State: AOPr4FXd9iC2Fhm9FN6KIpSIbNX3swn8mKHn8SELS6NCK0mHFlPCjuPgLtSBUaePh+ZGrNbCx3J0b+PkfZni6w==
-X-Received: by 10.112.130.41 with SMTP id ob9mr59188lbb.81.1461027916459; Mon,
- 18 Apr 2016 18:05:16 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Mon, 18 Apr 2016 18:04:46 -0700 (PDT)
-In-Reply-To: <xmqqpotm6cfq.fsf@gitster.mtv.corp.google.com>
+	id S1751841AbcDSBQB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Apr 2016 21:16:01 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63993 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751728AbcDSBQA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2016 21:16:00 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A96A314F57;
+	Mon, 18 Apr 2016 21:15:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AjEru3d+FHX0KW/fOV4CMwNuvnc=; b=H//45d
+	AJ+xEPMkyb6p2bvxEx14GszrZVLlNrwewXwo1evQU0IOblypacGXd+veb2yHzGFC
+	p2xdYQ3l3I/Aqdsxlyhsy9CErtfKphTHIqESj0+A/2JZXmab1+n6h7+CKPce5FXO
+	X7CLLUvb/A74H+j4k81bPm1LU28mCz26yQ3ok=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=u2oAK9PDDHkYFJ2wsErdNTERWwtj9jH8
+	HQ7bJuam381EFgBNEfnLIdSW6Er1V/yGMtHgCTbOA4Pyy4hDYP4Te1HfPtW8o+mb
+	BcYxfQTz8G9gfI2ZMJIfTVrbofgckMQKh3HY8CWEfqzxOaJn/yNhamvU9pJwPKxD
+	H/fWlmtLHx0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A1C4014F56;
+	Mon, 18 Apr 2016 21:15:58 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1942C14F55;
+	Mon, 18 Apr 2016 21:15:58 -0400 (EDT)
+In-Reply-To: <0102015420a6c30a-f2da55c9-1fc4-4df6-860e-228c5305f617-000000@eu-west-1.amazonses.com>
+	(Jan Durovec's message of "Sat, 16 Apr 2016 19:58:00 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 45A2E2DA-05CC-11E6-BC99-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291841>
 
-On Tue, Apr 19, 2016 at 12:42 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Another option is leave wt_status_get_state() alone, factor out the
->> rebase-detection code and use that for worktree/checkout. We save a
->> few syscalls this way too.
->>
->> Comments?
->>
->>   [01/07] path.c: add git_common_path() and strbuf_git_common_path()
->>   [02/07] worktree.c: store "id" instead of "git_dir"
->>   [03/07] path.c: refactor and add worktree_git_path()
->>   [04/07] worktree.c: add worktree_git_path_..._head()
+Jan Durovec <jan.durovec@gmail.com> writes:
+
+> When migrating from Perforce to git the information about P4 jobs
+> associated with P4 changelists is lost.
 >
-> I actually wondered how ky/branch-[dm]-worktree topics to avoid
-> "branch -d" and "branch -m" from removing or renaming a branch that
-> is checked out in other worktrees from screwing them up.  There may
-> be a missed opportunity to clean them up with using these?
+> Having these jobs listed on messages of related git commits enables smooth
+> migration for projects that take advantage of e.g. JIRA integration
+> (which uses jobs on Perforce side and parses commit messages on git side).
+>
+> The jobs are added to the message in the same format as is expected when
+> migrating in the reverse direction.
+>
+> Signed-off-by: Jan Durovec <jan.durovec@gmail.com>
+> ---
 
-branch-m-worktree uses info populated at get_worktrees() phase.
-branch-d-worktree uses find_shared_symref() which is modified in this
-series in order to detect rebase branch. So both topics have the same
-problem when a branch is being rebased and if I do it right, I'll fix
-them both without extra code. Actually I may need to check
-branch-m-worktree again, renaming a branch under rebase might cause
-problems, I need to have a closer look at git-rebase*.sh.
--- 
-Duy
+Thanks for describing the change more throughly than the previous
+round.
+
+Luke, how does this one look?
+
+>  git-p4.py              | 12 ++++++
+>  t/lib-git-p4.sh        | 10 +++++
+>  t/t9829-git-p4-jobs.sh | 99 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 121 insertions(+)
+>  create mode 100755 t/t9829-git-p4-jobs.sh
+>
+> diff --git a/git-p4.py b/git-p4.py
+> index 527d44b..8f869d7 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -2320,6 +2320,15 @@ def extractFilesFromCommit(self, commit):
+>              fnum = fnum + 1
+>          return files
+>  
+> +    def extractJobsFromCommit(self, commit):
+> +        jobs = []
+> +        jnum = 0
+> +        while commit.has_key("job%s" % jnum):
+> +            job = commit["job%s" % jnum]
+> +            jobs.append(job)
+> +            jnum = jnum + 1
+
+I am not familiar with "Perforce jobs", but I assume that they are
+always named as "job" + small non-negative integer in a dense way
+and it is OK for this loop to always begin at 0 and immediately stop
+when job + num does not exist (i.e. if job7 is missing, it is
+guaranteed that we will not see job8).
+
+Shouldn't the formatting be "job%d" % jnum, though, as you are using
+jnum as a number that begins at 0 and increments by 1?
+
+> +        return jobs
+> +
+>      def stripRepoPath(self, path, prefixes):
+>          """When streaming files, this is called to map a p4 depot path
+>             to where it should go in git.  The prefixes are either
+> @@ -2665,6 +2674,7 @@ def hasBranchPrefix(self, path):
+>      def commit(self, details, files, branch, parent = ""):
+>          epoch = details["time"]
+>          author = details["user"]
+> +        jobs = self.extractJobsFromCommit(details)
+>  
+>          if self.verbose:
+>              print('commit into {0}'.format(branch))
+> @@ -2692,6 +2702,8 @@ def commit(self, details, files, branch, parent = ""):
+>  
+>          self.gitStream.write("data <<EOT\n")
+>          self.gitStream.write(details["desc"])
+> +        if len(jobs) > 0:
+> +            self.gitStream.write("\nJobs: %s" % (' '.join(jobs)))
+>          self.gitStream.write("\n[git-p4: depot-paths = \"%s\": change = %s" %
+>                               (','.join(self.branchPrefixes), details["change"]))
+>          if len(details['options']) > 0:
+> diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
+> index f9ae1d7..3907560 100644
+> --- a/t/lib-git-p4.sh
+> +++ b/t/lib-git-p4.sh
+> @@ -160,6 +160,16 @@ p4_add_user() {
+>  	EOF
+>  }
+>  
+> +p4_add_job() {
+
+Not a new problem in this script, but we'd prefer to spell this as
+
+    p4_add_job () {
+
+i.e. a space on both sides of ().
+
+> +	name=$1 &&
+> +	p4 job -f -i <<-EOF
+> +	Job: $name
+> +	Status: open
+> +	User: dummy
+> +	Description:
+> +	EOF
+> +}
+
+It may be better without $name?
+
+> +test_expect_success 'check log message of changelist with no jobs' '
+> +	client_view "//depot/... //client/..." &&
+> +	test_when_finished cleanup_git &&
+> +	(
+> +		cd "$git" &&
+> +		git init . &&
+> +		git p4 clone --use-client-spec --destination="$git" //depot@all &&
+> +		cat >expect <<-\EOF &&
+> +Add file 1
+> +[git-p4: depot-paths = "//depot/": change = 1]
+> +
+> +		EOF
+
+As you are using <<- to begin the here document, it is easier on the
+eyes if you indented the text with HT, i.e.
+
+		cat >expect <<-\EOF &&
+		Add file 1
+		[git-p4: depot-paths = "//depot/": change = 1]
+
+		EOF
+
+I won't repeat the same for other instances below.
+
+Thanks.
