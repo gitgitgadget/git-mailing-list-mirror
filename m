@@ -1,157 +1,68 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 0/2 v4] xdiff: implement empty line chunk heuristic
-Date: Mon, 18 Apr 2016 16:53:43 -0700
-Message-ID: <CAGZ79kZXAtLVdQkU=RJqDrFRvCvPTXjANQ=GPja+NRSn57twAQ@mail.gmail.com>
-References: <1461013950-12503-1-git-send-email-sbeller@google.com>
-	<xmqqbn564noq.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] WAS: [PATCH] mv: allow moving nested submodules
+Date: Mon, 18 Apr 2016 17:01:45 -0700
+Message-ID: <xmqqwpnu31qu.fsf@gitster.mtv.corp.google.com>
+References: <1461022884-30819-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jacob Keller <jacob.keller@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 19 01:53:50 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de, gmane@otterhall.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Apr 19 02:02:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asIzG-0005XN-6T
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 01:53:50 +0200
+	id 1asJ7F-0001MP-Ok
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 02:02:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751737AbcDRXxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Apr 2016 19:53:45 -0400
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:38343 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751530AbcDRXxo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2016 19:53:44 -0400
-Received: by mail-ig0-f181.google.com with SMTP id y9so2662156igg.1
-        for <git@vger.kernel.org>; Mon, 18 Apr 2016 16:53:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=3ltWclcyv4wwF9jGyL/Elp/FKZPsrr+pMpsEMzPeei0=;
-        b=Omw/Bz8YLAcxKohCytmupwqyjLkdPs1mo+Ctj6nS1B/OVWjENRw0NyniqJi56NVnEJ
-         fodX5eO5LksQfTqXUT7gaYthpc097MlLQlc4xtVw2cz25PY/uxroYdHdNULVii1ivkr0
-         WCZIpXAVZd8493HpQI8W8d/t8tr2pNmIelCvPJK5gSgGIIYMo0sfUWReR0isOheNmxfW
-         BBZlbG+e6EMynefgJZTPWh/mOmVVelOR5akkw+eUz3qLVICF3yblUPWe18lClAIGTP8t
-         asZW/vNTH18aJmCBKoUHXTVCgkYJw0QcQeLF8DW8BPLajih1IWEKnqYQ4srGfZCfMSjQ
-         F4yQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=3ltWclcyv4wwF9jGyL/Elp/FKZPsrr+pMpsEMzPeei0=;
-        b=efmV5uAyfakPFXF1EjXG9AN6hfvQLHwJfdJXENUDnK7fiu8i7WrVJ2E0Pbgu88/+FK
-         HZ/oxrgJ7V2efseBf5eR69n50XBBgxYgkHlgi1szFoiJVCnDjYr2Fh4ODCj0a64+xMoC
-         811hB5ILXcAw4YO92W6h2BDGmh0UUQg/gCfT7CS4Erz6N29irZ4DFpIGXcUNGlB7DENP
-         oB54AEeSwzh2aiYmQg2aBstPFrkdRPCFsaNeXpJ8q/UlHACps/vQSm0Lruh4Ggg8HCpK
-         IF0/LXdZzQzU25G1TdP2diJHR+uMm6Ma5FI0wpRxe97rJGUAcRjdu03tK+4XJ7LfI5vb
-         ieVQ==
-X-Gm-Message-State: AOPr4FXuK8G0+gmojweXTd6pw5aOg9jE+rcQENOan+dytY+Xaqou/n67rtJudUalgj0bFIIRc1ml667Vxhc+46EA
-X-Received: by 10.50.57.50 with SMTP id f18mr22150195igq.93.1461023623403;
- Mon, 18 Apr 2016 16:53:43 -0700 (PDT)
-Received: by 10.107.17.27 with HTTP; Mon, 18 Apr 2016 16:53:43 -0700 (PDT)
-In-Reply-To: <xmqqbn564noq.fsf@gitster.mtv.corp.google.com>
+	id S1752194AbcDSACA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Apr 2016 20:02:00 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51534 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752101AbcDSAB7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2016 20:01:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CE0C715644;
+	Mon, 18 Apr 2016 20:01:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DzHjIb1KkBxilvUXmZfHaDeO0tw=; b=yWYxNr
+	vcrnueWzb+Furp/KhU9536w5bl0Ko7Q7kGS2bL2S6AdRaZo34/rEfHt4+nF/VgPZ
+	ya2LkKojaX8MFCwi7bXF4XpQ3blj0ljbWVozS+NmCwengs4oLw2AVQGoKDwFCeUe
+	U/O2HFkzy2uFyWPLOZUAtKzvhizFTmhCrX9tE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Umc0Y8+dRSlzbnxhfsGMfDOHADTLHiHa
+	/0a4rXkLFjybw+jW/Vph+Vz2UcXz5ATvwlkP3c2JJ7OD45GOVXa7utJ/ZzKzN5yn
+	azjaAz9UTTdafAupa0qkGi+i0oTiZrCZ9pNUzu8eUnXpfyA/8tBVgZsfuUjrIwMl
+	vi0XRuSpzog=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C5FF515643;
+	Mon, 18 Apr 2016 20:01:47 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1F4EE15642;
+	Mon, 18 Apr 2016 20:01:47 -0400 (EDT)
+In-Reply-To: <1461022884-30819-1-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Mon, 18 Apr 2016 16:41:22 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E8A63E56-05C1-11E6-A14C-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291839>
 
-On Mon, Apr 18, 2016 at 2:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->>> OK, so perhaps either of you two can do a final version people can
->>> start having fun with?
->>
->> Here we go. I squashed in your patch, although with a minor change:
->>
->> -               if ((flags & XDF_SHORTEST_LINE_HEURISTIC)) {
->> +               if ((flags & XDF_COMPACTION_HEURISTIC) && blank_lines) {
->>
->> We did not need that in the "shortest line" heuristic as we know
->> a line with the shortest line length must exist. We do not know about
->> empty lines though.
->
-> Makes sense.  The last hunk of
->
-> $ git show 9614b8dcf -- update-cache.c
->
-> gives an unexpected result without "&& blank_lines" above.  Lack of
-> "&& blank_lines" happens to make the result slightly easier to read,
-> but at the cost of having an extra line in the hunk.
+Stefan Beller <sbeller@google.com> writes:
 
-So without the blank_lines check you get  (A):
-    @@ -271,15 +279,14 @@ int main(int argc, char **argv)
-                     if (!verify_path(path)) {
-                             fprintf(stderr, "Ignoring path %s\n", argv[i]);
-                             continue;
-    -                }
-    -                if (add_file_to_cache(path)) {
-    -                        fprintf(stderr, "Unable to add %s to
-database\n", path);
-    -                        goto out;
-                     }
-    +                if (add_file_to_cache(path))
-    +                        usage("Unable to add %s to database", path);
-             }
-    ...
+> A single patch evolves into a series.
 
-and with the heuristic you get (B):
+Power of code inspection to see bugs that are not reported, perhaps
+;-)?
 
-@@ -272,14 +280,13 @@ int main(int argc, char **argv)
-    @@ -272,14 +280,13 @@ int main(int argc, char **argv)
-                             fprintf(stderr, "Ignoring path %s\n", argv[i]);
-                             continue;
-                     }
-    -                if (add_file_to_cache(path)) {
-    -                        fprintf(stderr, "Unable to add %s to
-database\n", path);
-    -                        goto out;
-    -                }
-    +                if (add_file_to_cache(path))
-    +                        usage("Unable to add %s to database", path);
-             }
-    ...
+I wonder if we can come up with test cases to cover these potential
+issues that are addressed in [1/2]?
 
-In case of (A) the compaction heuristic tries to shift the hunk upwards,
-stopping at the first empty line or when lines miss match.
-As there is no blank line, it goes until the miss match.
-
-Personally I'd find it less readable, because the intent was not to remove
-
-    -                }
-    -                if (add_file_to_cache(path)) {
-    -                        fprintf(stderr, "Unable to add %s to
-database\n", path);
-    -                        goto out;
-
-but rather remove
-
-    -                if (add_file_to_cache(path)) {
-    -                        fprintf(stderr, "Unable to add %s to
-database\n", path);
-    -                        goto out;
-    -                }
-
-as that is the logic unit I'd think.
-
-Although you find this instance easier to read the behavior without the
-blank_lines check would result in
-
-    Shift hunk upward as much as possible, stop at the first empty line.
-
-For hunks without empty line this just becomes
-
-    Shift hunk upward as much as possible.
-
-which is 50:50 for looking good, so we kept the old behavior as
-that is just as good.
-
-Thanks,
-Stefan
-
-
->
-> Thanks.
+Thanks.
