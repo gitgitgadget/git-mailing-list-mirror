@@ -1,110 +1,96 @@
-From: Jan Durovec <jan.durovec@gmail.com>
-Subject: Re: [PATCH v2] git-p4: add P4 jobs to git commit message
-Date: Tue, 19 Apr 2016 20:04:23 +0200
-Message-ID: <CABEqOBwqW+BO4rtOx4ax35VacE4RZhpo_1pbqzTP_EGiSWasiQ@mail.gmail.com>
-References: <0102015420a6c30a-f2da55c9-1fc4-4df6-860e-228c5305f617-000000@eu-west-1.amazonses.com>
-	<xmqqshyi2yb7.fsf@gitster.mtv.corp.google.com>
-	<CAE5ih7-2mefGwfXRhvQZJFPD4QYAzZ1jYG82s6cnDzWVCiDS8w@mail.gmail.com>
-	<xmqqfuuh35v5.fsf@gitster.mtv.corp.google.com>
-	<CABEqOBxZkYTm7_m-Eeq-acN=Nse1vLGk8Gm44BihVGi27KaGiw@mail.gmail.com>
-	<xmqq7fft32y9.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/4] imap-send.c: introduce the GIT_TRACE_CURL enviroment variable
+Date: Tue, 19 Apr 2016 11:05:14 -0700
+Message-ID: <xmqqpotl1nl1.fsf@gitster.mtv.corp.google.com>
+References: <20160419151044.27814-1-gitter.spiros@gmail.com>
+	<20160419151044.27814-5-gitter.spiros@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Luke Diamand <luke@diamand.org>, Git Users <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 19 20:04:30 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, tboegi@web.de, ramsay@ramsayjones.plus.com,
+	sunshine@sunshineco.com, peff@peff.net
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 19 20:05:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asa0j-0004p7-O8
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 20:04:30 +0200
+	id 1asa1c-0005Lw-FL
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Apr 2016 20:05:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932281AbcDSSE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2016 14:04:26 -0400
-Received: from mail-qg0-f66.google.com ([209.85.192.66]:33251 "EHLO
-	mail-qg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754420AbcDSSEY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2016 14:04:24 -0400
-Received: by mail-qg0-f66.google.com with SMTP id 7so2372343qgj.0
-        for <git@vger.kernel.org>; Tue, 19 Apr 2016 11:04:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=QaY7jGe26LL5loHTAmoFJ+nQFNGF0cOciUb7Cq7q6ZQ=;
-        b=SIzoXIPrR4jgDA92jaAlqQr4P5ShKwKgcrVX096kuwhMpvMa3ZvjupUFXEjxSYhhP4
-         g8XzU+33fpHmNj4lFyluA226ZVCAHyviOw9jo5F8eumoANbAaJNqVRpQvaUh8oItAWnv
-         +h206skf0ZaslN9Lh6bcjmjXmNWFc+goEQyCPwEEgpfQdHw1uChA/0sWTg9EAjtTm0xj
-         p1dBtVaXzdqEe3A/qixT/Nfad4cmCghmEXoiEOR+8Z9iiT4+PABSoE/4oDhjpHKuUfCv
-         nzhF+sHwpt+ut83Gm9rUWkya7qWYewd9QwB7IY8jZvkA9EltSHqIMgWe0D0DB+YZP5xd
-         fNBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=QaY7jGe26LL5loHTAmoFJ+nQFNGF0cOciUb7Cq7q6ZQ=;
-        b=gyMPpb/Fv7W9s2AZ48NqMApEI15zwyJKjFrw18a29txu9MywO62eC3Sxr0ToZ4OpF+
-         LeWpFDANx27qRuKXNFfDGiozeS4eKjq4eCYXXxvz+GVh/kZ2yxsVXcm3py1S+6WmnJLc
-         v5CmzGuKq8yMTQb2VpKwMda0qToDeKdlV6Ew3ShI5TykCdwJJhurms/xEkAsZm0DeMHy
-         w4Ik1XKIRRnTIZVm7udmDTKNNFWrN/i3ALzMJUZLMgzCj5qc4UXYmQm7J37Jb+tYv3DB
-         OUMC5XP3eTc3i9inAXCn6mxRX24qDiDaJL0tJL+68xl2rztN/xYwTyet62ayzHakQnYB
-         8HVw==
-X-Gm-Message-State: AOPr4FXnc9jrlbOqrlYLswli+gBpe2gKLPfCx5KZlBlJAlA5cU2Y6B+sTdMbxBWPKqTMyOrkRvH8qbJxUQ1doA==
-X-Received: by 10.140.18.114 with SMTP id 105mr5356011qge.41.1461089063765;
- Tue, 19 Apr 2016 11:04:23 -0700 (PDT)
-Received: by 10.55.49.10 with HTTP; Tue, 19 Apr 2016 11:04:23 -0700 (PDT)
-In-Reply-To: <xmqq7fft32y9.fsf@gitster.mtv.corp.google.com>
+	id S932292AbcDSSFS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Apr 2016 14:05:18 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61795 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932209AbcDSSFR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2016 14:05:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 266F813788;
+	Tue, 19 Apr 2016 14:05:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Y5kkAZp7mLqu
+	P+4ZFc0dUQZF+Ro=; b=NP6OSO5iWkesSRXXDGTd2eRCmZR6dqhCdqvnkw4cgfyB
+	Ki6lq6JtRL3MBFZSLsspysBDHN/Z0kuQTu75FvNqIo6zaj3nJsYVT/O4LTYz5A6g
+	RV4jUp1x/rdfIOUU4lDiG6duyjPbddO3oWZoPxcdFL0gmZwdwZ1vRHPcpasoDq0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=kVGHDN
+	o5tlprg04rwUGDgGD1LYBLkDrmIhlj2S1GSwLBl1eh+4+g7R20aHYfQLUSsWCKbV
+	QzssjJ+3IjiEreoIeUSl4AccQLC1kJvLjppnZIIsShEDzwQ8zLBG9Le55eb6pugR
+	+PRoMePeSozHsIkLgBk54rIk+k+35syaLm1Mw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1F26713787;
+	Tue, 19 Apr 2016 14:05:16 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 73AB613785;
+	Tue, 19 Apr 2016 14:05:15 -0400 (EDT)
+In-Reply-To: <20160419151044.27814-5-gitter.spiros@gmail.com> (Elia Pinto's
+	message of "Tue, 19 Apr 2016 15:10:44 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 44ADFB2A-0659-11E6-B824-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291897>
 
-Would it be acceptable the other way around? I.e. this patch followed
-by the one that fixes code style (once this gets merged)?
+Elia Pinto <gitter.spiros@gmail.com> writes:
 
-Reason being that I don't know how to use submitGit to generate a patch
-against a state that is not already in git repo (ie. based on another
-patch).
+> Permit the use of the GIT_TRACE_CURL environment variable calling
+> the curl_trace and curl_dump http.c helper routine
 
-In the following patch I'll
-* add spaces before () for functions in t/lib-git-p4.sh
-* remove name local variable in p4_add_job/user in t/lib-git-p4.sh
-* fix t/t98* leading tabs where <<- is used
+s/$/./; the patch itself is very concise and the "dump" thing in 3/4
+looked sensible.
 
-On Tue, Apr 19, 2016 at 7:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jan Durovec <jan.durovec@gmail.com> writes:
 >
->> given the fact that the rest of the code just follows existing
->> source code style, i.e.
->>
->> * using %s not %d to add number to string (see git-p4.py:2301)
+> Helped-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>=20
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+> ---
+>  imap-send.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
 >
-> This one I do not care too deeply about, as formatting anything that
-> can be formatted via '%s' could just be more Pythonic style, in
-> which case "%s" is perfectly fine.  It just didn't look kosher to my
-> C trained eyes, that's all.
->
->> * no space between function name and parentheses (see all functions
->>   in t/lib-git-p4.sh)
->
-> I thought I said "Not a new issue, but..." to this one, and it
-> appears that leaving <<- here-doc unindented, which is stupid as
-> that shows the person who is writing the here-doc does not know what
-> the dash s/he is writing means at all, is also not a new issue.
->
->> * no tab when specifying in-line expected output (see t/t9826...)
->
->> ...is there anything left to fix in this patch or is it good as is?
->>
->> I.e. would you prefer me to change the code mentioned above at the cost
->> of code style consistency?
->
-> Not really.
->
-> If you really want to know the preference, we prefer a preliminary
-> clean-up patch to correct existing style issues, followed by a new
-> feature patch that builds on the cleaned up codebase.
->
+> diff --git a/imap-send.c b/imap-send.c
+> index 938c691..b371a78 100644
+> --- a/imap-send.c
+> +++ b/imap-send.c
+> @@ -1444,6 +1444,12 @@ static CURL *setup_curl(struct imap_server_con=
+f *srvc)
+>  	if (0 < verbosity || getenv("GIT_CURL_VERBOSE"))
+>  		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+> =20
+> +	if (trace_want(&trace_curl)) {
+> +		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+> +		curl_easy_setopt(curl, CURLOPT_DEBUGFUNCTION, curl_trace);
+> +		curl_easy_setopt(curl, CURLOPT_DEBUGDATA, NULL);
+> +	}
+> +
+>  	return curl;
+>  }
