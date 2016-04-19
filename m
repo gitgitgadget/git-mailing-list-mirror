@@ -1,683 +1,765 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v5 09/15] index-helper: use watchman to avoid refreshing index with lstat()
-Date: Tue, 19 Apr 2016 19:28:03 -0400
-Message-ID: <1461108489-29376-10-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v5 03/15] index-helper: new daemon for caching index and related stuff
+Date: Tue, 19 Apr 2016 19:27:57 -0400
+Message-ID: <1461108489-29376-4-git-send-email-dturner@twopensource.com>
 References: <1461108489-29376-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Turner <dturner@twopensource.com>
+Cc: David Turner <dturner@twopensource.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
 To: git@vger.kernel.org, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Wed Apr 20 01:28:42 2016
+X-From: git-owner@vger.kernel.org Wed Apr 20 01:28:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asf4P-0008Hl-R3
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 01:28:38 +0200
+	id 1asf4N-0008Hl-Hl
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 01:28:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753409AbcDSX2e convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Apr 2016 19:28:34 -0400
-Received: from mail-qg0-f41.google.com ([209.85.192.41]:36336 "EHLO
-	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753358AbcDSX20 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2016 19:28:26 -0400
-Received: by mail-qg0-f41.google.com with SMTP id f52so19236107qga.3
-        for <git@vger.kernel.org>; Tue, 19 Apr 2016 16:28:25 -0700 (PDT)
+	id S1753344AbcDSX2W convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Apr 2016 19:28:22 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:35636 "EHLO
+	mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751791AbcDSX2T (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 19:28:19 -0400
+Received: by mail-qk0-f173.google.com with SMTP id q76so701362qke.2
+        for <git@vger.kernel.org>; Tue, 19 Apr 2016 16:28:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hdOPLIZbRKsSSEYJelwtgx50k3G3E7Udrae5oapKkHY=;
-        b=0t4+W/GewXhgfGh/X0vhMC8+jY07vzfXImq7qCW8N662JZllT7iaLPiFiSY2As6nHX
-         wjW9PZQboYUTFXcIEe/6h8R7OHy4T/qudqQvAKQx/ZTymetYU04sG8Xml6oLVmDlbZ4w
-         3r9cnkW3/74Dnhxm1e6wVR2e3cJ+PAa2YSlNxodiUwX6OMgfSCOnko7m6I390jRjihgW
-         gYsPGrJtWUEZfzkxkvfHWTB3PArPjMeB9HOZIWr6kIqyN0JFUJzgtnRkseNQHG5JNrpi
-         BkKgnCjrGDGlhhBcp6KopOQFO+eH7RVCoKm1Le5AVGIWyaEOD/uitdglFlu0qYStJbC9
-         0UaA==
+        bh=ovbZPh0YxjpWiawE4sHRjiHIsL/AhD8cnqfe4QEjPXE=;
+        b=MG0DhaOdkA1Qx7BHkBJxDtl9aGTVVzX8Fo7HIsyB7UwmZXgb+EAJ9KtQ4GIj327DQL
+         VWfiFVFVRnXYTs9RcNknxzRtrKBFTMQuIaz6Q8RMByI3GsTIu94kfiBom2k051jpg7oe
+         l0MJCoQChS4M231qco1UJ9yOmetmnilVbSGM0n3/RFCIOyrCayAGLt9UyjX4pTidBKy+
+         LZtxoH9wwKekhhzkJbJZuGX+pYMgXksDTeDeNNoUFUpvM3WaDKlJIHTHU1GVM03qh2GG
+         f/zUGgzEt8xHMLkDgQq2mO1hTeTRCQvdiKkrL720EyMvM8oD/oX8Y8HO7NPUymo48gIm
+         D+yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hdOPLIZbRKsSSEYJelwtgx50k3G3E7Udrae5oapKkHY=;
-        b=aLZbdfPAhdzVg5y5m1K5HHgUl61l3VyqhKO9fEeVWHD26PodJ2EDkwHzvpLUWohKc7
-         bFD8dRVuxLYF3M/72SiW3JQL6Ue4QJBnp0vhqc1R+mh41XDGZVBTKk5e5xvLg0KWfPDY
-         /qyrmGc5RS43emlZyFnl7zv+VuBTzehIo2tRC+rAz7a6GpTM0RqEuGNzrmzhqqtRQXOM
-         alabafedhM6Ka7SZRWElOvVRpeAD9O2nuB1tZJupknbQhNTHZLW0KJ80O/UiJ8Jbt5i1
-         z+mArEBGlYM7sLZCTuzx6H3N1bRrqUWFq23YRRjzezVYU+86TFDuhK2a08CWFJBbmHXx
-         ddtg==
-X-Gm-Message-State: AOPr4FW8KYee7qTrNt+hJp/6kPACzxxiKwDTb3bUIj98ZJUqM8xygKSeV7UFV3xtMpTTqw==
-X-Received: by 10.140.161.135 with SMTP id h129mr7430005qhh.66.1461108505191;
-        Tue, 19 Apr 2016 16:28:25 -0700 (PDT)
+        bh=ovbZPh0YxjpWiawE4sHRjiHIsL/AhD8cnqfe4QEjPXE=;
+        b=K+pQFtjnGUx5bo75sjmoYsrzoiy3bbZlb+gk120LELPK1I66Oe42zJtyVz3Sgi3ncs
+         O0IeaaMnR641xsWSiKThLvTyWQukiRrC8N/0CWXiJlGtrPJI5BolAsGYho8ITcCotR0n
+         gnzCWl8s6sgeeUUxPgKI+dkxxUokgGYU7YdhAzPRhnGbdbzXJNdOxIyd7YjFK7YaTnl6
+         wQl4XT81oxFyFn2WC8CGGyltHECmtodPu3aL/fcdryhhmBXj8ZkpTRveejNhjjs1/qQr
+         cRW3SsclcrfXNrn1rWPo2MB63hmaRh076CX/7BTSx1FVh7qeJxbXH7shDWtwaFixKRgX
+         D3tA==
+X-Gm-Message-State: AOPr4FVB0CI7BAwDjzAc7G6G2PzQNJ0/+CnhQ0wlnA6h9WdwMB0MUUuUdU8KJGVwp6KazA==
+X-Received: by 10.55.75.14 with SMTP id y14mr7478202qka.33.1461108498371;
+        Tue, 19 Apr 2016 16:28:18 -0700 (PDT)
 Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id h34sm29879663qge.30.2016.04.19.16.28.24
+        by smtp.gmail.com with ESMTPSA id h34sm29879663qge.30.2016.04.19.16.28.16
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 19 Apr 2016 16:28:24 -0700 (PDT)
+        Tue, 19 Apr 2016 16:28:17 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1461108489-29376-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291958>
 
 =46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
 
-Watchman is hidden behind index-helper. Before git tries to read the
-index from shm, it notifies index-helper through the socket and waits
-for index-helper to prepare a file for sharing memory (with
-MAP_SHARED). index-helper then contacts watchman, updates 'WAMA'
-extension and put it in a separate file and wakes git up with a reply
-to git's socket.
+Instead of reading the index from disk and worrying about disk
+corruption, the index is cached in memory (memory bit-flips happen
+too, but hopefully less often). The result is faster read. Read time
+is reduced by 70%.
 
-Git uses this extension to not lstat unchanged entries. Git only
-trusts the 'WAMA' extension when it's received from the separate file,
-not from disk. Unmarked entries are "clean". Marked entries are dirty
-from watchman point of view. If it finds out some entries are
-'watchman-dirty', but are really unchanged (e.g. the file was changed,
-then reverted back), then Git will clear the marking in 'WAMA' before
-writing it down.
+The biggest gain is not having to verify the trailing SHA-1, which
+takes lots of time especially on large index files. But this also
+opens doors for further optimiztions:
 
-Hiding watchman behind index-helper means you need both daemons. You
-can't run watchman alone. Not so good. But on the other hand, 'git'
-binary is not linked to watchman/json libraries, which is good for
-packaging. Core git package will run fine without watchman-related
-packages. If they need watchman, they can install git-index-helper and
-dependencies.
+ - we could create an in-memory format that's essentially the memory
+   dump of the index to eliminate most of parsing/allocation
+   overhead. The mmap'd memory can be used straight away. Experiment
+   [1] shows we could reduce read time by 88%.
 
-This also lets us trust anything in the untracked cache that we haven't
-marked invalid, saving those stat() calls.
+ - we could cache non-index info such as name hash
 
-Another reason for tying watchman to index-helper is, when used with
-untracked cache, we need to keep track of $GIT_WORK_TREE file
-listing. That kind of list can be kept in index-helper.
+Shared memory is done by storing files in a per-repository temporary
+directory.  This is more portable than shm (which requires
+posix-realtime and has various quirks on OS X).  It might even work on
+Windows, although this has not been tested. The shared memory file's
+name folows the template "shm-<object>-<SHA1>" where <SHA1> is the
+trailing SHA-1 of the index file. <object> is "index" for cached index
+files (and might later be "name-hash" for name-hash cache). If such
+shared memory exists, it contains the same index content as on
+disk. The content is already validated by the daemon and git won't
+validate it again (except comparing the trailing SHA-1s).
+
+We keep this daemon's logic as thin as possible. The "brain" stays in
+git. So the daemon can read and validate stuff, but that's all it's
+allowed to do. It does not add/create new information. It doesn't even
+accept direct updates from git.
+
+Git can poke the daemon via unix domain sockets to tell it to refresh
+the index cache, or to keep it alive some more minutes. It can't give
+any real index data directly to the daemon. Real data goes to disk
+first, then the daemon reads and verifies it from there. Poking only
+happens for $GIT_DIR/index, not temporary index files.
+
+$GIT_DIR/index-helper.sock is the socket for the daemon process. The
+daemon reads from the socket and executes commands.
+
+Named pipes were considered for portability reasons, but then commands
+that need replies from the daemon would have open their own pipes,
+since a named pipe should only have one reader.  Unix domain sockets
+don't have this problem.
+
+On webkit.git with index format v2, duplicating 8 times to 1.5m
+entries and 236MB in size:
+
+(vanilla)      0.50 s: read_index_from .git/index
+(index-helper) 0.18 s: read_index_from .git/index
+
+Interestingly with index v4, we get less out of index-helper. It makes
+sense as v4 requires more processing after loading the index:
+
+(vanilla)      0.37 s: read_index_from .git/index
+(index-helper) 0.22 s: read_index_from .git/index
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/247268/focus=
+=3D248771
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 Signed-off-by: David Turner <dturner@twopensource.com>
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
- Documentation/git-index-helper.txt |   6 +
+ .gitignore                         |   1 +
+ Documentation/git-index-helper.txt |  47 +++++++
+ Makefile                           |   5 +
  cache.h                            |   2 +
- dir.c                              |  23 +++-
- dir.h                              |   3 +
- index-helper.c                     |  86 +++++++++++++--
- read-cache.c                       | 220 +++++++++++++++++++++++++++++=
-+++++---
- 6 files changed, 315 insertions(+), 25 deletions(-)
+ git-compat-util.h                  |   1 +
+ index-helper.c                     | 276 +++++++++++++++++++++++++++++=
+++++++++
+ read-cache.c                       | 120 ++++++++++++++--
+ t/t7900-index-helper.sh            |  23 ++++
+ 8 files changed, 466 insertions(+), 9 deletions(-)
+ create mode 100644 Documentation/git-index-helper.txt
+ create mode 100644 index-helper.c
+ create mode 100755 t/t7900-index-helper.sh
 
+diff --git a/.gitignore b/.gitignore
+index 5087ce1..b92f122 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -71,6 +71,7 @@
+ /git-http-fetch
+ /git-http-push
+ /git-imap-send
++/git-index-helper
+ /git-index-pack
+ /git-init
+ /git-init-db
 diff --git a/Documentation/git-index-helper.txt b/Documentation/git-ind=
 ex-helper.txt
-index f6aa525..b1fa49e 100644
---- a/Documentation/git-index-helper.txt
+new file mode 100644
+index 0000000..77687c0
+--- /dev/null
 +++ b/Documentation/git-index-helper.txt
-@@ -52,6 +52,12 @@ command. The following commands are used to control =
-the daemon:
- 	Let the daemon know the index is to be read. It keeps the
- 	daemon alive longer, unless `--exit-after=3D0` is used.
-=20
-+"poke <path>":
-+	Like "poke", but replies with "OK".  If the index has the
-+	watchman extension, index-helper queries watchman, then
-+	prepares a shared memory object with the watchman index
-+	extension before replying.
+@@ -0,0 +1,47 @@
++git-index-helper(1)
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 +
- All commands and replies are terminated by a 0 byte.
++NAME
++----
++git-index-helper - A simple cache daemon for speeding up index file ac=
+cess
++
++SYNOPSIS
++--------
++[verse]
++'git index-helper' [options]
++
++DESCRIPTION
++-----------
++Keep the index file in memory for faster access. This daemon is per
++repository.
++
++OPTIONS
++-------
++
++--exit-after=3D<n>::
++	Exit if the cached index is not accessed for `<n>`
++	seconds. Specify 0 to wait forever. Default is 600.
++
++NOTES
++-----
++
++$GIT_DIR/index-helper.sock a Unix domain socket that the daemon reads
++commands from.  The directory will also contain files named
++"shm-index-<SHA1>".  These are used as backing stores for shared
++memory.  Normally the daemon will clean up these files when it exits
++or when they are no longer relevant.  But if it crashes, some objects
++could remain there and they can be safely deleted with "rm"
++command. The following commands are used to control the daemon:
++
++"refresh"::
++	Reread the index.
++
++"poke":
++	Let the daemon know the index is to be read. It keeps the
++	daemon alive longer, unless `--exit-after=3D0` is used.
++
++All commands and replies are terminated by a 0 byte.
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Makefile b/Makefile
+index 2742a69..c8be0e7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1433,6 +1433,10 @@ ifdef HAVE_DEV_TTY
+ 	BASIC_CFLAGS +=3D -DHAVE_DEV_TTY
+ endif
 =20
- GIT
++ifndef NO_MMAP
++	PROGRAM_OBJS +=3D index-helper.o
++endif
++
+ ifdef DIR_HAS_BSD_GROUP_SEMANTICS
+ 	COMPAT_CFLAGS +=3D -DDIR_HAS_BSD_GROUP_SEMANTICS
+ endif
+@@ -2159,6 +2163,7 @@ GIT-BUILD-OPTIONS: FORCE
+ 	@echo NO_PERL=3D\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@=
++
+ 	@echo NO_PYTHON=3D\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' =
+>>$@+
+ 	@echo NO_UNIX_SOCKETS=3D\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SO=
+CKETS)))'\' >>$@+
++	@echo NO_MMAP=3D\''$(subst ','\'',$(subst ','\'',$(NO_MMAP)))'\' >>$@=
++
+ ifdef TEST_OUTPUT_DIRECTORY
+ 	@echo TEST_OUTPUT_DIRECTORY=3D\''$(subst ','\'',$(subst ','\'',$(TEST=
+_OUTPUT_DIRECTORY)))'\' >>$@+
+ endif
 diff --git a/cache.h b/cache.h
-index 37f211b..4cc89bb 100644
+index 4180e2b..43fb314 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -558,6 +558,7 @@ extern int daemonize(int *);
-=20
- /* Initialize and use the cache information */
- struct lock_file;
-+extern int verify_index(const struct index_state *);
- extern int read_index(struct index_state *);
- extern int read_index_preload(struct index_state *, const struct paths=
-pec *pathspec);
- extern int do_read_index(struct index_state *istate, const char *path,
-@@ -565,6 +566,7 @@ extern int do_read_index(struct index_state *istate=
-, const char *path,
- extern int read_index_from(struct index_state *, const char *path);
- extern int is_index_unborn(struct index_state *);
- extern int read_index_unmerged(struct index_state *);
-+extern void write_watchman_ext(struct strbuf *sb, struct index_state* =
-istate);
- #define COMMIT_LOCK		(1 << 0)
- #define CLOSE_LOCK		(1 << 1)
- extern int write_locked_index(struct index_state *, struct lock_file *=
-lock, unsigned flags);
-diff --git a/dir.c b/dir.c
-index 69e0be6..5058b29 100644
---- a/dir.c
-+++ b/dir.c
-@@ -597,9 +597,9 @@ static void trim_trailing_spaces(char *buf)
-  *
-  * If "name" has the trailing slash, it'll be excluded in the search.
-  */
--static struct untracked_cache_dir *lookup_untracked(struct untracked_c=
-ache *uc,
--						    struct untracked_cache_dir *dir,
--						    const char *name, int len)
-+struct untracked_cache_dir *lookup_untracked(struct untracked_cache *u=
-c,
-+					     struct untracked_cache_dir *dir,
-+					     const char *name, int len)
- {
- 	int first, last;
- 	struct untracked_cache_dir *d;
-@@ -1726,6 +1726,17 @@ static int valid_cached_dir(struct dir_struct *d=
-ir,
- 	if (!untracked)
- 		return 0;
-=20
-+	if (dir->untracked->use_watchman) {
-+		/*
-+		 * With watchman, we can trust the untracked cache's
-+		 * valid field.
-+		 */
-+		if (untracked->valid)
-+			goto skip_stat;
-+		else
-+			invalidate_directory(dir->untracked, untracked);
-+	}
-+
- 	if (stat(path->len ? path->buf : ".", &st)) {
- 		invalidate_directory(dir->untracked, untracked);
- 		memset(&untracked->stat_data, 0, sizeof(untracked->stat_data));
-@@ -1739,6 +1750,7 @@ static int valid_cached_dir(struct dir_struct *di=
-r,
- 		return 0;
- 	}
-=20
-+skip_stat:
- 	if (untracked->check_only !=3D !!check_only) {
- 		invalidate_directory(dir->untracked, untracked);
- 		return 0;
-@@ -2625,8 +2637,10 @@ static void free_untracked(struct untracked_cach=
-e_dir *ucd)
-=20
- void free_untracked_cache(struct untracked_cache *uc)
- {
--	if (uc)
-+	if (uc) {
- 		free_untracked(uc->root);
-+		string_list_clear(&uc->invalid_untracked, 0);
-+	}
- 	free(uc);
- }
-=20
-@@ -2775,6 +2789,7 @@ struct untracked_cache *read_untracked_extension(=
-const void *data, unsigned long
- 		return NULL;
-=20
- 	uc =3D xcalloc(1, sizeof(*uc));
-+	string_list_init(&uc->invalid_untracked, 1);
- 	strbuf_init(&uc->ident, ident_len);
- 	strbuf_add(&uc->ident, ident, ident_len);
- 	load_sha1_stat(&uc->ss_info_exclude, &ouc->info_exclude_stat,
-diff --git a/dir.h b/dir.h
-index 3d540de..8fd3f9e 100644
---- a/dir.h
-+++ b/dir.h
-@@ -315,4 +315,7 @@ struct untracked_cache *read_untracked_extension(co=
-nst void *data, unsigned long
- void write_untracked_extension(struct strbuf *out, struct untracked_ca=
-che *untracked);
- void add_untracked_cache(struct index_state *istate);
- void remove_untracked_cache(struct index_state *istate);
-+struct untracked_cache_dir *lookup_untracked(struct untracked_cache *u=
-c,
-+					     struct untracked_cache_dir *dir,
-+					     const char *name, int len);
+@@ -334,6 +334,8 @@ struct index_state {
+ 	struct cache_time timestamp;
+ 	unsigned name_hash_initialized : 1,
+ 		 keep_mmap : 1,
++		 from_shm : 1,
++		 to_shm : 1,
+ 		 initialized : 1;
+ 	struct hashmap name_hash;
+ 	struct hashmap dir_hash;
+diff --git a/git-compat-util.h b/git-compat-util.h
+index c07e0c1..56945a7 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -513,6 +513,7 @@ static inline int ends_with(const char *str, const =
+char *suffix)
+ #define PROT_READ 1
+ #define PROT_WRITE 2
+ #define MAP_PRIVATE 1
++#define MAP_SHARED 2
  #endif
+=20
+ #define mmap git_mmap
 diff --git a/index-helper.c b/index-helper.c
-index 80b1dbe..9d85a7c 100644
---- a/index-helper.c
+new file mode 100644
+index 0000000..d64e49b
+--- /dev/null
 +++ b/index-helper.c
-@@ -7,15 +7,18 @@
- #include "lockfile.h"
- #include "cache.h"
- #include "unix-socket.h"
-+#include "watchman-support.h"
-=20
- struct shm {
- 	unsigned char sha1[20];
- 	void *shm;
- 	size_t size;
-+	pid_t pid;
- };
-=20
- static struct shm shm_index;
- static struct shm shm_base_index;
-+static struct shm shm_watchman;
- static int daemonized, to_verify =3D 1;
-=20
- static void release_index_shm(struct shm *is)
-@@ -27,10 +30,21 @@ static void release_index_shm(struct shm *is)
- 	is->shm =3D NULL;
- }
-=20
-+static void release_watchman_shm(struct shm *is)
+@@ -0,0 +1,276 @@
++#include "cache.h"
++#include "parse-options.h"
++#include "sigchain.h"
++#include "strbuf.h"
++#include "exec_cmd.h"
++#include "split-index.h"
++#include "lockfile.h"
++#include "cache.h"
++#include "unix-socket.h"
++
++struct shm {
++	unsigned char sha1[20];
++	void *shm;
++	size_t size;
++};
++
++static struct shm shm_index;
++static struct shm shm_base_index;
++
++static void release_index_shm(struct shm *is)
 +{
 +	if (!is->shm)
 +		return;
 +	munmap(is->shm, is->size);
-+	unlink(git_path("shm-watchman-%s-%" PRIuMAX,
-+			sha1_to_hex(is->sha1), (uintmax_t)is->pid));
++	unlink(git_path("shm-index-%s", sha1_to_hex(is->sha1)));
 +	is->shm =3D NULL;
 +}
 +
- static void cleanup_shm(void)
- {
- 	release_index_shm(&shm_index);
- 	release_index_shm(&shm_base_index);
-+	release_watchman_shm(&shm_watchman);
- }
-=20
- static void cleanup(void)
-@@ -161,9 +175,10 @@ static void share_the_index(void)
- 	if (the_index.split_index && the_index.split_index->base)
- 		share_index(the_index.split_index->base, &shm_base_index);
- 	share_index(&the_index, &shm_index);
--	if (to_verify && !verify_shm())
-+	if (to_verify && !verify_shm()) {
- 		cleanup_shm();
--	discard_index(&the_index);
-+		discard_index(&the_index);
-+	}
- }
-=20
- static void set_socket_blocking_flag(int fd, int make_nonblocking)
-@@ -196,6 +211,54 @@ static void refresh(void)
-=20
- #ifndef NO_MMAP
-=20
-+#ifdef USE_WATCHMAN
-+static void share_watchman(struct index_state *istate,
-+			   struct shm *is, pid_t pid)
++static void cleanup_shm(void)
 +{
-+	struct strbuf sb =3D STRBUF_INIT;
-+	void *shm;
-+
-+	write_watchman_ext(&sb, istate);
-+	if (!shared_mmap_create(O_CREAT | O_EXCL | O_RDWR, 0700, sb.len + 20,
-+				&shm, PROT_READ | PROT_WRITE, MAP_SHARED,
-+				git_path("shm-watchman-%s-%" PRIuMAX,
-+					 sha1_to_hex(istate->sha1),
-+					 (uintmax_t)pid))) {
-+		is->size =3D sb.len + 20;
-+		is->shm =3D shm;
-+		is->pid =3D pid;
-+		hashcpy(is->sha1, istate->sha1);
-+
-+		memcpy(shm, sb.buf, sb.len);
-+		hashcpy((unsigned char *)shm + is->size - 20, is->sha1);
-+	}
-+	strbuf_release(&sb);
++	release_index_shm(&shm_index);
++	release_index_shm(&shm_base_index);
 +}
 +
-+
-+static void prepare_with_watchman(pid_t pid)
++static void cleanup(void)
 +{
-+	/*
-+	 * TODO: with the help of watchman, maybe we could detect if
-+	 * $GIT_DIR/index is updated.
-+	 */
-+	if (check_watchman(&the_index))
++	unlink(git_path("index-helper.sock"));
++	cleanup_shm();
++}
++
++static void cleanup_on_signal(int sig)
++{
++	/* We ignore sigpipes -- that's just a client being broken. */
++	if (sig =3D=3D SIGPIPE)
 +		return;
-+
-+	share_watchman(&the_index, &shm_watchman, pid);
++	cleanup();
++	sigchain_pop(sig);
++	raise(sig);
 +}
 +
-+static void prepare_index(pid_t pid)
++static int shared_mmap_create(int file_flags, int file_mode, size_t si=
+ze,
++			      void **new_mmap, int mmap_prot, int mmap_flags,
++			      const char *path)
 +{
-+	if (shm_index.shm =3D=3D NULL)
-+		refresh();
-+	release_watchman_shm(&shm_watchman);
-+	if (the_index.last_update)
-+		prepare_with_watchman(pid);
-+}
-+
-+#endif
-+
- static void loop(int fd, int idle_in_seconds)
- {
- 	struct timeval timeout;
-@@ -250,11 +313,20 @@ static void loop(int fd, int idle_in_seconds)
- 		if (strbuf_getwholeline_fd(&command, client_fd, '\0') =3D=3D 0) {
- 			if (!strcmp(command.buf, "refresh")) {
- 				refresh();
--			} else if (!strcmp(command.buf, "poke")) {
--				/*
--				 * Just a poke to keep us
--				 * alive, nothing to do.
--				 */
-+			} else if (starts_with(command.buf, "poke")) {
-+				if (command.buf[4] =3D=3D ' ') {
-+#ifdef USE_WATCHMAN
-+					pid_t client_pid =3D strtoull(command.buf + 5, NULL, 10);
-+					prepare_index(client_pid);
-+#endif
-+					if (write_in_full(client_fd, "OK", 3) !=3D 3)
-+						warning(_("client write failed"));
-+				} else {
-+					/*
-+					 * Just a poke to keep us
-+					 * alive, nothing to do.
-+					 */
-+				}
- 			} else {
- 				warning("BUG: Bogus command %s", command.buf);
- 			}
-diff --git a/read-cache.c b/read-cache.c
-index 050668f..fb0168e 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1233,7 +1233,7 @@ int refresh_index(struct index_state *istate, uns=
-igned int flags,
- 		if (!new) {
- 			const char *fmt;
-=20
--			if (really && cache_errno =3D=3D EINVAL) {
-+			if (really || cache_errno =3D=3D EINVAL) {
- 				/* If we are doing --really-refresh that
- 				 * means the index is not valid anymore.
- 				 */
-@@ -1373,11 +1373,76 @@ static int verify_hdr(const struct cache_header=
- *hdr, unsigned long size)
- 	return 0;
- }
-=20
-+static struct untracked_cache_dir *find_untracked_cache_dir(
-+	struct untracked_cache *uc, struct untracked_cache_dir *ucd,
-+	const char *name)
-+{
-+	int component_len;
-+	const char *end;
-+	struct untracked_cache_dir *dir;
-+
-+	if (!*name)
-+		return ucd;
-+
-+	end =3D strchr(name, '/');
-+	if (end)
-+		component_len =3D end - name;
-+	else
-+		component_len =3D strlen(name);
-+
-+	dir =3D lookup_untracked(uc, ucd, name, component_len);
-+	if (dir)
-+		return find_untracked_cache_dir(uc, dir, name + component_len + 1);
-+
-+	return NULL;
-+}
-+
- static void mark_no_watchman(size_t pos, void *data)
- {
- 	struct index_state *istate =3D data;
-+	struct cache_entry *ce =3D istate->cache[pos];
-+	struct strbuf sb =3D STRBUF_INIT;
-+	char *c;
-+	struct untracked_cache_dir *dir;
-+
- 	assert(pos < istate->cache_nr);
--	istate->cache[pos]->ce_flags |=3D CE_WATCHMAN_DIRTY;
-+	ce->ce_flags |=3D CE_WATCHMAN_DIRTY;
-+
-+	if (!istate->untracked || !istate->untracked->root)
-+		return;
-+
-+	strbuf_add(&sb, ce->name, ce_namelen(ce));
-+
-+	for (c =3D sb.buf + sb.len - 1; c > sb.buf; c--) {
-+		if (*c =3D=3D '/') {
-+			strbuf_setlen(&sb, c - sb.buf);
-+			break;
-+		}
-+	}
-+
-+	if (c =3D=3D sb.buf) {
-+		strbuf_setlen(&sb, 0);
-+	}
-+
-+	dir =3D find_untracked_cache_dir(istate->untracked,
-+				       istate->untracked->root, sb.buf);
-+	if (dir)
-+		dir->valid =3D 0;
-+
-+	strbuf_release(&sb);
-+}
-+
-+static int mark_untracked_invalid(struct string_list_item *item, void =
-*uc)
-+{
-+	struct untracked_cache *untracked =3D uc;
-+	struct untracked_cache_dir *dir;
-+
-+	dir =3D find_untracked_cache_dir(untracked, untracked->root,
-+				       item->string);
-+	if (dir)
-+		dir->valid =3D 0;
-+
-+	return 0;
- }
-=20
- static int read_watchman_ext(struct index_state *istate, const void *d=
-ata,
-@@ -1407,10 +1472,24 @@ static int read_watchman_ext(struct index_state=
- *istate, const void *data,
- 	ewah_each_bit(bitmap, mark_no_watchman, istate);
- 	ewah_free(bitmap);
-=20
--	/*
--	 * TODO: update the untracked cache from the untracked data in this
--	 * extension.
--	 */
-+	if (istate->untracked && istate->untracked->root) {
-+		int i;
-+		const char *untracked;
-+
-+		untracked =3D (const char *)data + len + 8 + bitmap_size;
-+		for (i =3D 0; i < untracked_nr; ++i) {
-+			int len =3D strlen(untracked);
-+			string_list_append(&istate->untracked->invalid_untracked,
-+					   untracked);
-+			untracked +=3D len + 1;
-+		}
-+
-+		for_each_string_list(&istate->untracked->invalid_untracked,
-+			 mark_untracked_invalid, istate->untracked);
-+
-+		if (untracked_nr)
-+			istate->cache_changed |=3D WATCHMAN_CHANGED;
-+	}
- 	return 0;
- }
-=20
-@@ -1643,26 +1722,67 @@ static void post_read_index_from(struct index_s=
-tate *istate)
- 	tweak_untracked_cache(istate);
- }
-=20
-+static int poke_and_wait_for_reply(int fd)
-+{
-+	struct strbuf buf =3D STRBUF_INIT;
-+	struct strbuf reply =3D STRBUF_INIT;
++	int fd =3D -1;
 +	int ret =3D -1;
-+	fd_set fds;
-+	struct timeval timeout;
 +
-+	timeout.tv_usec =3D 0;
-+	timeout.tv_sec =3D 1;
++	fd =3D open(path, file_flags, file_mode);
 +
 +	if (fd < 0)
-+		return -1;
++		goto done;
 +
-+	strbuf_addf(&buf, "poke %d", getpid());
-+	if (write_in_full(fd, buf.buf, buf.len + 1) !=3D buf.len + 1)
-+		goto done_poke;
++	if (ftruncate(fd, size))
++		goto done;
 +
-+	/* Now wait for a reply */
-+	FD_ZERO(&fds);
-+	FD_SET(fd, &fds);
-+	if (select(fd + 1, &fds, NULL, NULL, &timeout) =3D=3D 0)
-+		/* No reply, giving up */
-+		goto done_poke;
++	*new_mmap =3D mmap(NULL, size, mmap_prot, mmap_flags, fd, 0);
 +
-+	if (strbuf_getwholeline_fd(&reply, fd, 0))
-+		goto done_poke;
-+
-+	if (!starts_with(reply.buf, "OK"))
-+		goto done_poke;
++	if (*new_mmap =3D=3D MAP_FAILED) {
++		*new_mmap =3D NULL;
++		goto done;
++	}
++	madvise(new_mmap, size, MADV_WILLNEED);
 +
 +	ret =3D 0;
-+done_poke:
-+	close(fd);
-+	strbuf_release(&buf);
-+	strbuf_release(&reply);
-+
++done:
++	if (fd > 0)
++		close(fd);
 +	return ret;
 +}
 +
- static int poke_daemon(struct index_state *istate,
- 		       const struct stat *st, int refresh_cache)
- {
- 	int fd;
--	int ret =3D 0;
--	const char *socket_path;
-+	int ret =3D -1;
-=20
- 	/* if this is from index-helper, do not poke itself (recursively) */
- 	if (istate->to_shm)
- 		return 0;
-=20
--	socket_path =3D git_path("index-helper.sock");
--	if (!socket_path)
-+	fd =3D unix_stream_connect(git_path("index-helper.sock"));
-+	if (fd < 0) {
-+		warning("Failed to connect to index-helper socket");
-+		unlink(git_path("index-helper.sock"));
- 		return -1;
-+	}
-=20
--	fd =3D unix_stream_connect(socket_path);
- 	if (refresh_cache) {
- 		ret =3D write_in_full(fd, "refresh", 8) !=3D 8;
- 	} else {
--		ret =3D write_in_full(fd, "poke", 5) !=3D 5;
-+		ret =3D poke_and_wait_for_reply(fd);
- 	}
-=20
- 	close(fd);
-@@ -1732,6 +1852,74 @@ fail:
- 	return -1;
- }
-=20
-+static void refresh_by_watchman(struct index_state *istate)
++static void share_index(struct index_state *istate, struct shm *is)
 +{
-+	void *shm =3D NULL;
-+	int length;
-+	int i;
-+	struct stat st;
-+	int fd =3D -1;
-+	const char *path =3D git_path("shm-watchman-%s-%"PRIuMAX,
-+				    sha1_to_hex(istate->sha1),
-+				    (uintmax_t)getpid());
-+
-+	fd =3D open(path, O_RDONLY);
-+	if (fd < 0)
++	void *new_mmap;
++	if (istate->mmap_size <=3D 20 ||
++	    hashcmp(istate->sha1,
++		    (unsigned char *)istate->mmap + istate->mmap_size - 20) ||
++	    !hashcmp(istate->sha1, is->sha1) ||
++	    shared_mmap_create(O_CREAT | O_EXCL | O_RDWR, 0700,
++			       istate->mmap_size, &new_mmap,
++			       PROT_READ | PROT_WRITE, MAP_SHARED,
++			       git_path("shm-index-%s",
++					sha1_to_hex(istate->sha1))) < 0)
 +		return;
 +
++	release_index_shm(is);
++	is->size =3D istate->mmap_size;
++	is->shm =3D new_mmap;
++	hashcpy(is->sha1, istate->sha1);
++
++	memcpy(new_mmap, istate->mmap, istate->mmap_size - 20);
++
 +	/*
-+	 * This watchman data is just for us -- no need to keep it
-+	 * around once we've got it open.
++	 * The trailing hash must be written last after everything is
++	 * written. It's the indication that the shared memory is now
++	 * ready.
++	 * The memory barrier here matches read-cache.c:try_shm.
 +	 */
-+	unlink(path);
++	__sync_synchronize();
 +
-+	if (fstat(fd, &st) < 0)
-+		goto done;
++	hashcpy((unsigned char *)new_mmap + istate->mmap_size - 20, is->sha1)=
+;
++}
 +
-+	length =3D st.st_size;
-+	shm =3D mmap(NULL, length, PROT_READ, MAP_SHARED, fd, 0);
++static void share_the_index(void)
++{
++	if (the_index.split_index && the_index.split_index->base)
++		share_index(the_index.split_index->base, &shm_base_index);
++	share_index(&the_index, &shm_index);
++	discard_index(&the_index);
++}
 +
-+	if (shm =3D=3D MAP_FAILED)
-+		goto done;
++static void set_socket_blocking_flag(int fd, int make_nonblocking)
++{
++	int flags;
++
++	flags =3D fcntl(fd, F_GETFL, NULL);
++
++	if (flags < 0)
++		die(_("fcntl failed"));
++
++	if (make_nonblocking)
++		flags |=3D O_NONBLOCK;
++	else
++		flags &=3D ~O_NONBLOCK;
++
++	if (fcntl(fd, F_SETFL, flags) < 0)
++		die(_("fcntl failed"));
++}
++
++static void refresh(void)
++{
++	discard_index(&the_index);
++	the_index.keep_mmap =3D 1;
++	the_index.to_shm    =3D 1;
++	if (read_cache() < 0)
++		die(_("could not read index"));
++	share_the_index();
++}
++
++#ifndef NO_MMAP
++
++static void loop(int fd, int idle_in_seconds)
++{
++	struct timeval timeout;
++	struct timeval *timeout_p;
++
++	while (1) {
++		fd_set readfds;
++		int result, client_fd;
++		struct strbuf command =3D STRBUF_INIT;
++
++		/* need to reset timer in case select() decremented it */
++		if (idle_in_seconds) {
++			timeout.tv_usec =3D 0;
++			timeout.tv_sec =3D idle_in_seconds;
++			timeout_p =3D &timeout;
++		} else {
++			timeout_p =3D NULL;
++		}
++
++		/* Wait for a request */
++		FD_ZERO(&readfds);
++		FD_SET(fd, &readfds);
++		result =3D select(fd + 1, &readfds, NULL, NULL, timeout_p);
++		if (result < 0) {
++			if (errno =3D=3D EINTR)
++				/*
++				 * This can lead to an overlong keepalive,
++				 * but that is better than a premature exit.
++				 */
++				continue;
++			die_errno(_("select() failed"));
++		}
++		if (result =3D=3D 0)
++			/* timeout */
++			break;
++
++		client_fd =3D accept(fd, NULL, NULL);
++		if (client_fd < 0)
++			/*
++			 * An error here is unlikely -- it probably
++			 * indicates that the connecting process has
++			 * already dropped the connection.
++			 */
++			continue;
++
++		/*
++		 * Our connection to the client is blocking since a client
++		 * can always be killed by SIGINT or similar.
++		 */
++		set_socket_blocking_flag(client_fd, 0);
++
++		if (strbuf_getwholeline_fd(&command, client_fd, '\0') =3D=3D 0) {
++			if (!strcmp(command.buf, "refresh")) {
++				refresh();
++			} else if (!strcmp(command.buf, "poke")) {
++				/*
++				 * Just a poke to keep us
++				 * alive, nothing to do.
++				 */
++			} else {
++				warning("BUG: Bogus command %s", command.buf);
++			}
++		} else {
++			/*
++			 * No command from client.  Probably it's just
++			 * a liveness check.  Just close up.
++			 */
++		}
++		close(client_fd);
++		strbuf_release(&command);
++	}
 +
 +	close(fd);
-+	fd =3D -1;
++}
 +
-+	if (length <=3D 20 ||
-+	    hashcmp(istate->sha1, (unsigned char *)shm + length - 20) ||
-+	    /*
-+	     * No need to clear CE_WATCHMAN_DIRTY set by 'WAMA' on
-+	     * disk. Watchman can only set more, not clear any, so
-+	     * this is OR mask.
-+	     */
-+	    read_watchman_ext(istate, shm, length - 20))
-+		goto done;
++#else
 +
-+	/*
-+	 * Now that we've marked the invalid entries in the
-+	 * untracked-cache itself, we can erase them from the list of
-+	 * entries to be processed and mark the untracked cache for
-+	 * watchman usage.
-+	 */
-+	if (istate->untracked) {
-+		string_list_clear(&istate->untracked->invalid_untracked, 0);
-+		istate->untracked->use_watchman =3D 1;
++static void loop(int fd, int idle_in_seconds)
++{
++	die(_("index-helper is not supported on this platform"));
++}
++
++#endif
++
++static const char * const usage_text[] =3D {
++	N_("git index-helper [options]"),
++	NULL
++};
++
++int main(int argc, char **argv)
++{
++	const char *prefix;
++	int idle_in_seconds =3D 600;
++	int fd;
++	struct strbuf socket_path =3D STRBUF_INIT;
++	struct option options[] =3D {
++		OPT_INTEGER(0, "exit-after", &idle_in_seconds,
++			    N_("exit if not used after some seconds")),
++		OPT_END()
++	};
++
++	git_extract_argv0_path(argv[0]);
++	git_setup_gettext();
++
++	if (argc =3D=3D 2 && !strcmp(argv[1], "-h"))
++		usage_with_options(usage_text, options);
++
++	prefix =3D setup_git_directory();
++	if (parse_options(argc, (const char **)argv, prefix,
++			  options, usage_text, 0))
++		die(_("too many arguments"));
++
++	atexit(cleanup);
++	sigchain_push_common(cleanup_on_signal);
++
++	strbuf_git_path(&socket_path, "index-helper.sock");
++
++	fd =3D unix_stream_listen(socket_path.buf);
++	if (fd < 0)
++		die_errno(_("could not set up index-helper socket"));
++
++	loop(fd, idle_in_seconds);
++
++	close(fd);
++	return 0;
++}
+diff --git a/read-cache.c b/read-cache.c
+index 7e387e9..af2101f 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -18,6 +18,7 @@
+ #include "varint.h"
+ #include "split-index.h"
+ #include "utf8.h"
++#include "unix-socket.h"
+=20
+ static struct cache_entry *refresh_cache_entry(struct cache_entry *ce,
+ 					       unsigned int options);
+@@ -1541,6 +1542,95 @@ static void post_read_index_from(struct index_st=
+ate *istate)
+ 	tweak_untracked_cache(istate);
+ }
+=20
++static int poke_daemon(struct index_state *istate,
++		       const struct stat *st, int refresh_cache)
++{
++	int fd;
++	int ret =3D 0;
++	const char *socket_path;
++
++	/* if this is from index-helper, do not poke itself (recursively) */
++	if (istate->to_shm)
++		return 0;
++
++	socket_path =3D git_path("index-helper.sock");
++	if (!socket_path)
++		return -1;
++
++	fd =3D unix_stream_connect(socket_path);
++	if (refresh_cache) {
++		ret =3D write_in_full(fd, "refresh", 8) !=3D 8;
++	} else {
++		ret =3D write_in_full(fd, "poke", 5) !=3D 5;
 +	}
 +
-+	for (i =3D 0; i < istate->cache_nr; i++) {
-+		struct cache_entry *ce =3D istate->cache[i];
-+		if (ce_stage(ce) || (ce->ce_flags & CE_WATCHMAN_DIRTY))
-+			continue;
-+		ce_mark_uptodate(ce);
-+	}
-+done:
-+	if (shm)
-+		munmap(shm, length);
++	close(fd);
++	return ret;
++}
 +
++static int is_main_index(struct index_state *istate)
++{
++	return istate =3D=3D &the_index ||
++		(the_index.split_index &&
++		 istate =3D=3D the_index.split_index->base);
++}
++
++/*
++ * Try to open and verify a cached shm index if available. Return 0 if
++ * succeeds (istate->mmap and istate->mmap_size are updated). Return
++ * negative otherwise.
++ */
++static int try_shm(struct index_state *istate)
++{
++	void *new_mmap =3D NULL;
++	size_t old_size =3D istate->mmap_size;
++	ssize_t new_size;
++	const unsigned char *sha1;
++	struct stat st;
++	int fd =3D -1;
++
++	if (!is_main_index(istate) ||
++	    old_size <=3D 20 ||
++	    stat(git_path("index-helper.sock"), &st))
++		return -1;
++	if (poke_daemon(istate, &st, 0))
++		return -1;
++	sha1 =3D (unsigned char *)istate->mmap + old_size - 20;
++
++	fd =3D open(git_path("shm-index-%s", sha1_to_hex(sha1)), O_RDONLY);
++	if (fd < 0)
++		goto fail;
++
++	if (fstat(fd, &st))
++		goto fail;
++
++	new_size =3D st.st_size;
++	new_mmap =3D mmap(NULL, new_size, PROT_READ, MAP_SHARED, fd, 0);
++	if (new_size <=3D 20 ||
++	    hashcmp((unsigned char *)istate->mmap + old_size - 20,
++		    (unsigned char *)new_mmap + new_size - 20)) {
++		if (new_mmap)
++			munmap(new_mmap, new_size);
++		goto fail;
++	}
++
++	/* The memory barrier here matches index-helper.c:share_index. */
++	__sync_synchronize();
++
++	munmap(istate->mmap, istate->mmap_size);
++	istate->mmap =3D new_mmap;
++	istate->mmap_size =3D new_size;
++	istate->from_shm =3D 1;
++	close(fd);
++	return 0;
++
++fail:
 +	if (fd >=3D 0)
 +		close(fd);
++	poke_daemon(istate, &st, 1);
++	return -1;
 +}
 +
  /* remember to discard_cache() before reading a different cache! */
  int do_read_index(struct index_state *istate, const char *path, int mu=
 st_exist)
  {
-@@ -1851,7 +2039,7 @@ int read_index_from(struct index_state *istate, c=
+@@ -1555,6 +1645,7 @@ int do_read_index(struct index_state *istate, con=
+st char *path, int must_exist)
+ 	if (istate->initialized)
+ 		return istate->cache_nr;
+=20
++	istate->from_shm =3D 0;
+ 	istate->timestamp.sec =3D 0;
+ 	istate->timestamp.nsec =3D 0;
+ 	fd =3D open(path, O_RDONLY);
+@@ -1574,15 +1665,17 @@ int do_read_index(struct index_state *istate, c=
+onst char *path, int must_exist)
+ 	mmap =3D xmmap(NULL, mmap_size, PROT_READ, MAP_PRIVATE, fd, 0);
+ 	if (mmap =3D=3D MAP_FAILED)
+ 		die_errno("unable to map index file");
+-	if (istate->keep_mmap) {
+-		istate->mmap =3D mmap;
+-		istate->mmap_size =3D mmap_size;
+-	}
+ 	close(fd);
+=20
+-	hdr =3D mmap;
+-	if (verify_hdr(hdr, mmap_size) < 0)
++	istate->mmap =3D mmap;
++	istate->mmap_size =3D mmap_size;
++	if (try_shm(istate) &&
++	    verify_hdr(istate->mmap, istate->mmap_size) < 0)
+ 		goto unmap;
++	hdr =3D mmap =3D istate->mmap;
++	mmap_size =3D istate->mmap_size;
++	if (!istate->keep_mmap)
++		istate->mmap =3D NULL;
+=20
+ 	hashcpy(istate->sha1, (const unsigned char *)hdr + mmap_size - 20);
+ 	istate->version =3D ntohl(hdr->hdr_version);
+@@ -1662,6 +1755,8 @@ int read_index_from(struct index_state *istate, c=
 onst char *path)
- 	split_index =3D istate->split_index;
- 	if (!split_index || is_null_sha1(split_index->base_sha1)) {
- 		post_read_index_from(istate);
--		return ret;
-+		goto done;
- 	}
-=20
- 	if (split_index->base)
-@@ -1872,6 +2060,10 @@ int read_index_from(struct index_state *istate, =
-const char *path)
- 		    sha1_to_hex(split_index->base->sha1));
- 	merge_base_index(istate);
- 	post_read_index_from(istate);
-+
-+done:
-+	if (ret > 0 && istate->from_shm && istate->last_update)
-+		refresh_by_watchman(istate);
- 	return ret;
- }
-=20
-@@ -2173,7 +2365,7 @@ out:
+ 	else
+ 		split_index->base =3D xcalloc(1, sizeof(*split_index->base));
+ 	split_index->base->keep_mmap =3D istate->keep_mmap;
++	split_index->base->to_shm    =3D istate->to_shm;
++	split_index->base->from_shm  =3D istate->from_shm;
+ 	ret =3D do_read_index(split_index->base,
+ 			    git_path("sharedindex.%s",
+ 				     sha1_to_hex(split_index->base_sha1)), 1);
+@@ -1712,6 +1807,8 @@ int discard_index(struct index_state *istate)
+ 	discard_split_index(istate);
+ 	free_untracked_cache(istate->untracked);
+ 	istate->untracked =3D NULL;
++	istate->from_shm =3D 0;
++	istate->to_shm   =3D 0;
  	return 0;
  }
 =20
--static int verify_index(const struct index_state *istate)
-+int verify_index(const struct index_state *istate)
- {
- 	return verify_index_from(istate, get_index_file());
- }
+@@ -2138,9 +2235,14 @@ static int do_write_locked_index(struct index_st=
+ate *istate, struct lock_file *l
+ 		return ret;
+ 	assert((flags & (COMMIT_LOCK | CLOSE_LOCK)) !=3D
+ 	       (COMMIT_LOCK | CLOSE_LOCK));
+-	if (flags & COMMIT_LOCK)
+-		return commit_locked_index(lock);
+-	else if (flags & CLOSE_LOCK)
++	if (flags & COMMIT_LOCK) {
++		struct stat st;
++		ret =3D commit_locked_index(lock);
++		if (!ret && is_main_index(istate) &&
++		    !stat(git_path("index-helper.sock"), &st))
++			poke_daemon(istate, &st, 1);
++		return ret;
++	} else if (flags & CLOSE_LOCK)
+ 		return close_lock_file(lock);
+ 	else
+ 		return ret;
+diff --git a/t/t7900-index-helper.sh b/t/t7900-index-helper.sh
+new file mode 100755
+index 0000000..114c112
+--- /dev/null
++++ b/t/t7900-index-helper.sh
+@@ -0,0 +1,23 @@
++#!/bin/sh
++#
++# Copyright (c) 2016, Twitter, Inc
++#
++
++test_description=3D'git-index-helper
++
++Testing git index-helper
++'
++
++. ./test-lib.sh
++
++test -n "$NO_MMAP" && {
++	skip_all=3D'skipping index-helper tests: no mmap'
++	test_done
++}
++
++test_expect_success 'index-helper smoke test' '
++	git index-helper --exit-after 1 &&
++	test_path_is_missing .git/index-helper.sock
++'
++
++test_done
 --=20
 2.4.2.767.g62658d5-twtrsrc
