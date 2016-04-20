@@ -1,86 +1,93 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] replace --edit: respect core.editor
-Date: Wed, 20 Apr 2016 07:51:43 +0200
-Message-ID: <CAP8UFD189+AcLstEx4s_2ZYWp6UOtDb=vWGYhCpJayM8ma5hxw@mail.gmail.com>
-References: <909769abaff1babdab77625bebd04e2013c6e344.1461076425.git.johannes.schindelin@gmx.de>
-	<xmqqoa9536wi.fsf@gitster.mtv.corp.google.com>
-	<20160420035353.GA31890@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] xdiff: implement empty line chunk heuristic
+Date: Tue, 19 Apr 2016 23:00:17 -0700
+Message-ID: <xmqqfuugyg3y.fsf@gitster.mtv.corp.google.com>
+References: <1461013950-12503-1-git-send-email-sbeller@google.com>
+	<1461013950-12503-3-git-send-email-sbeller@google.com>
+	<20160419050342.GA19439@sigill.intra.peff.net>
+	<CAGZ79kbzg7SmJHFpxeJNKmLaEEw+irCxUedo45jGx8G8fmPtKg@mail.gmail.com>
+	<20160419170624.GA3999@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Jacob Keller <jacob.e.keller@intel.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 20 07:51:52 2016
+X-From: git-owner@vger.kernel.org Wed Apr 20 08:00:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asl3H-0007e0-6J
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 07:51:51 +0200
+	id 1aslBY-0005R5-VU
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 08:00:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753124AbcDTFvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2016 01:51:46 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:38870 "EHLO
-	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753057AbcDTFvp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 01:51:45 -0400
-Received: by mail-wm0-f54.google.com with SMTP id u206so62502822wme.1
-        for <git@vger.kernel.org>; Tue, 19 Apr 2016 22:51:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=JnlS9eJ2f7PS3kzkQs/EePu32AkcSp6pho4B8ntMCdc=;
-        b=BnJAESSDIfFFr7OxEKgVJak+qCLJe7Zz7rXscbuHi46Tu0YjCik1zGwXUWRSF3ULCd
-         FZzFExn++OSg3hYWGndN7lKpUI0lu6YUlNqQyk3OHOwvZG3t8Rt0WvJ7/0xP2S84Y1t8
-         I4b4Ci7SD/YDT5eDRe69f2ucb/ECD85DrIIYF45/PNm/xUvWvJazadX7X+sedFK3UBDJ
-         rK/yvYAyRcj9YLfEOL4MPfazzlUl2YYN8nz6y3mnESMreNdIeX1wfNK8DzC24j1QNurf
-         VNJtfsDAZU5HBaXYFoNN+dFAncPZR5tcpFtT0LlJfkVgOznLeBjec6R+kAslvJD127Kc
-         8fPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=JnlS9eJ2f7PS3kzkQs/EePu32AkcSp6pho4B8ntMCdc=;
-        b=X6qFqEcODOmFZhF3TYS0xylP7j2Sd1KvNld2TXNpTVM1/Bb5YRLghi7YZZ4m0DYteh
-         LfpHCHXJImI07NO2Echb17OTPbyUSftdBHRwUBrIGasTC7hApPlNbjzlRt12/K5vqgO2
-         zq/4IBm4A8hLITb1zQuGFpX9Sg3eLt8A8eZMdp6/Hkjm29pHqZszppCsV+MqGxr5RIFK
-         LE2xrU5yfnll+FQ4Ln3a5s4Kw23fgfHz4LUQQRpK5LBC+ph0jCiHmihahtuKPKVrXQVj
-         bdz/VWV487c3BUhTGDgmRmyFxkCYe6VHfRcA3r0xQNn9e1bdteVypPYZwHrrmwbzbo59
-         VEtg==
-X-Gm-Message-State: AOPr4FWmioEHRBkEHZKC2rHahXRX2GOjeggIkji4+FnzLjvgWwmm7X/pL0r8p/Y+KRfovRnRm2Nix3pbuQL9oA==
-X-Received: by 10.28.72.10 with SMTP id v10mr29052803wma.89.1461131503803;
- Tue, 19 Apr 2016 22:51:43 -0700 (PDT)
-Received: by 10.194.95.129 with HTTP; Tue, 19 Apr 2016 22:51:43 -0700 (PDT)
-In-Reply-To: <20160420035353.GA31890@sigill.intra.peff.net>
+	id S1753435AbcDTGAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2016 02:00:21 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57732 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752692AbcDTGAU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 02:00:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EAC2F15E17;
+	Wed, 20 Apr 2016 02:00:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PelRL/5ME6CZHHKu5EDpUzNT51I=; b=Yj++lt
+	MAJq5uKBSDDceEOTRnTKr2G8kIKAHTiwC9fpXYiLUL+t/kPwv3CAB5Uc0YP0yauu
+	mr5XL+Hbn0bCcE0hC/s03tqB56EtqT0dz3NWaZQ0IQczLngEGW+VRLm4YE1qklbl
+	vZo3KoTwhGz8cAs8besHJN0P4o8JFXRwWwpkw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kyVcAN/ZyVUrhRid4+OHWHmYSkgesSdR
+	4gGqm/hGw9+RFIcsYN/jGneL7d9YGVkVUYeTaE2gLz8FtDoNE8YRUQsKML/Dnp0j
+	v8J0dW39pLWSuFIQnkWpJi6oGl8DV/FJYVcTA2tWJj0Ihc7edLOn/G9rzpRul+F0
+	tURhIFKmlJE=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DF2B015E16;
+	Wed, 20 Apr 2016 02:00:18 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 33D6215E15;
+	Wed, 20 Apr 2016 02:00:18 -0400 (EDT)
+In-Reply-To: <20160419170624.GA3999@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 19 Apr 2016 13:06:25 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 28B4DE16-06BD-11E6-8339-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291983>
 
-On Wed, Apr 20, 2016 at 5:53 AM, Jeff King <peff@peff.net> wrote:
-> On Tue, Apr 19, 2016 at 09:22:37AM -0700, Junio C Hamano wrote:
->
->> I can understand "we only know edit mode needs config, and we know
->> it will never affect other modes to have the new call here", and it
->> would be good for an emergency patch for ancient maintenance track
->> that will not get any other changes or enhancements.  I do not think
->> it is a sound reasoning to maintain the codefor the longer term,
->> though.
->
-> Yeah. I agree the patch here is not wrong, but I would prefer to just
-> have git-replace load the config when it starts. It's _possible_ that
-> something might break or misbehave, but IMHO any program which breaks
-> when git_default_config() is run is probably in need of fixing.
+Jeff King <peff@peff.net> writes:
 
-I agree.
+> I mean that if you save any old patch-ids from "git patch-id", they
+> won't match up when compared with new versions of git. We can probably
+> ignore it, though. This isn't the first time that patch-ids might have
+> changed, and I think the advice is already that one should not count on
+> them to be stable in the long term.
 
-> And I cannot recall any reason we did not read config when "--edit"
-> was added; we just didn't think of it.
+Another thing that this *will* break is the patch signature upload
+protocol k.org uses to allow Linus, Greg, et al. on the road with
+limited hotel wifi bandwidth to prepare patch-X-test1.gz and
+patch-X-test1.sign file.  They can locally tag X-test1, prepare
+"git diff X X-test1 | gzip -n >patch-X-test1.gz" and sign the
+result, and upload _only_ the detached signature after pushing.
 
-Yeah I think so.
+They can tell k.org, when uploading the detached signature, to
+recreate the patchfile by running the same "git diff" to save the
+bandwidth of sending the same thing twice (as they have to "push"
+anyway, having to send the generated patch is a pure overhead).
 
-Thanks,
-Christian.
+Having said all that, kup(1) users are already warned that the
+textual diff produced by "git diff-tree -p" (which is mentioned in
+the documentation of the tool) varies across versions of Git and
+the above "optimization" would not work unless both ends have the
+same version of Git, so it may not be too big an issue for them.
+They have already been burned once when we corrected "git archive"
+output in the past (they obviously have the same optimization to
+sign tarballs, and the kup(1) mechanism relies to have byte-for-byte
+identical output).
