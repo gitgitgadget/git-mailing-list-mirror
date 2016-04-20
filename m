@@ -1,130 +1,91 @@
-From: Yaroslav Halchenko <yoh@onerussian.com>
-Subject: problems serving non-bare repos with submodules over http
-Date: Wed, 20 Apr 2016 11:22:09 -0400
-Message-ID: <20160420152209.GH23764@onerussian.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] git-p4: add P4 jobs to git commit message
+Date: Wed, 20 Apr 2016 08:51:38 -0700
+Message-ID: <xmqqtwiwwa5x.fsf@gitster.mtv.corp.google.com>
+References: <0102015420a6c30a-f2da55c9-1fc4-4df6-860e-228c5305f617-000000@eu-west-1.amazonses.com>
+	<xmqqshyi2yb7.fsf@gitster.mtv.corp.google.com>
+	<CAE5ih7-2mefGwfXRhvQZJFPD4QYAzZ1jYG82s6cnDzWVCiDS8w@mail.gmail.com>
+	<xmqqfuuh35v5.fsf@gitster.mtv.corp.google.com>
+	<CABEqOBxZkYTm7_m-Eeq-acN=Nse1vLGk8Gm44BihVGi27KaGiw@mail.gmail.com>
+	<xmqq7fft32y9.fsf@gitster.mtv.corp.google.com>
+	<CABEqOBwqW+BO4rtOx4ax35VacE4RZhpo_1pbqzTP_EGiSWasiQ@mail.gmail.com>
+	<xmqqh9ex1lsy.fsf@gitster.mtv.corp.google.com>
+	<CABEqOBxkHstqRHFUYF7=eComB-HwUGwi0tpWbhvUuKiny-=Vyw@mail.gmail.com>
+	<CABEqOBxY61yObr0FeUxPYxc6C+xvde1LOS7zS_dHpBqwemJ+dQ@mail.gmail.com>
+	<xmqqd1plz4p5.fsf@gitster.mtv.corp.google.com>
+	<CABEqOBx4vCUpYTGYM9VF6QHxGGgQSG5APSHymtbV7uVxAbU+ow@mail.gmail.com>
+	<xmqqzispxoqt.fsf@gitster.mtv.corp.google.com>
+	<CAE5ih7_7TeJDekoubzJ=ZPT_JUwQVyGczDt5yORZES89Qo=VjA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Benjamin Poldrack <benjaminpoldrack@gmail.com>,
-	Joey Hess <id@joeyh.name>
-To: Git Gurus hangout <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 20 17:51:03 2016
+Content-Type: text/plain
+Cc: Jan Durovec <jan.durovec@gmail.com>,
+	Git Users <git@vger.kernel.org>,
+	Roberto Tyley <roberto.tyley@gmail.com>
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Wed Apr 20 17:51:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asuP8-0000Wd-64
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 17:51:02 +0200
+	id 1asuPr-00011p-LL
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 17:51:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751322AbcDTPu6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Apr 2016 11:50:58 -0400
-Received: from washoe.dartmouth.edu ([129.170.30.229]:58667 "EHLO
-	smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750903AbcDTPu5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 11:50:57 -0400
-X-Greylist: delayed 1726 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Apr 2016 11:50:57 EDT
-Received: from smtp.onerussian.com ([192.168.100.6] helo=washoe.onerussian.com)
-	by smtp.onerussian.com with esmtps (TLS1.2:RSA_AES_128_CBC_SHA1:128)
-	(Exim 4.80)
-	(envelope-from <yoh@onerussian.com>)
-	id 1astxB-00014g-KN; Wed, 20 Apr 2016 11:22:09 -0400
-Received: from yoh by washoe.onerussian.com with local (Exim 4.84)
-	(envelope-from <yoh@onerussian.com>)
-	id 1astxB-00014b-E0; Wed, 20 Apr 2016 11:22:09 -0400
-Content-Disposition: inline
-X-URL: http://www.onerussian.com
-X-Image-Url: http://www.onerussian.com/img/yoh.png
-X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
-X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-SA-Exim-Connect-IP: 192.168.100.6
-X-SA-Exim-Rcpt-To: git@vger.kernel.org, benjaminpoldrack@gmail.com, id@joeyh.name
-X-SA-Exim-Mail-From: yoh@onerussian.com
-X-SA-Exim-Scanned: No (on smtp.onerussian.com); SAEximRunCond expanded to false
+	id S1752119AbcDTPvm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2016 11:51:42 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64097 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751608AbcDTPvl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 11:51:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C7CA12298;
+	Wed, 20 Apr 2016 11:51:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GrtOmUu2ZR0lSIDoo8CrhCit5uA=; b=T493Bl
+	rz6zveLTapt8nlJ5/0sT3oZQZGpm15Go0C3RnJozTidsDw50dzFTnvCcVTOQnZrc
+	DFHJYi/5FAcv6WTHpHdDpG0LqH3Smw/0Sod6zOR5hdL5+PVmFG9sXuOkEHLhoPXu
+	O7ueyf6i5nS4AyoZEWqwVk54/HOUdOw8rLNHI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=g99TZGbEwK0kLqERqSTI/5fIiUDfpmrz
+	32SS5xYx7xjhCOWSAW8+S3epR2uzRNn/UaaghDuGk5kcEDB4KxYd0vqXqSah7ZKV
+	g13LxI97hb4fpNPVoOlFeoG9v5WgpYg05fYi8w4cgsmSLZ2kO5VPOl+Amqx2Ax/A
+	+Ble9axTEvQ=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2464412297;
+	Wed, 20 Apr 2016 11:51:40 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8860412296;
+	Wed, 20 Apr 2016 11:51:39 -0400 (EDT)
+In-Reply-To: <CAE5ih7_7TeJDekoubzJ=ZPT_JUwQVyGczDt5yORZES89Qo=VjA@mail.gmail.com>
+	(Luke Diamand's message of "Wed, 20 Apr 2016 08:58:58 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C5333556-070F-11E6-B0B9-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292033>
 
-Dear Git Folks,
+Luke Diamand <luke@diamand.org> writes:
 
-I do realize that the situation is quite uncommon, partially I guess du=
-e
-to git submodules mechanism flexibility and power on one hand and
-under-use (imho) on the other, which leads to discovery of regressions
-[e.g. 1] and corner cases as mine.
+> One thing I wondered about is whether this should be enabled by
+> default or not. Long-time users of git-p4 might be a bit surprised to
+> find their git commits suddenly gaining an extra Job: field.
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/288064
-[2] http://www.onerussian.com/tmp/git-web-submodules.sh
+Ahh, I didn't even wonder about but that is not because I didn't
+think it matters.
 
-My use case:  We are trying to serve a git repository with submodules
-specified with relative paths over http from a simple web server.  With=
- a demo
-case and submodule specification [complete script to reproduce includin=
-g the
-webserver using python is at 2] such as
+Does this change affect reproducibility of importing the history
+from P4, doesn't it?  Would that be a problem?
 
-(git)hopa:/tmp/gitxxmsxYFO[master]git
-$> tree
-=2E
-=E2=94=9C=E2=94=80=E2=94=80 f1
-=E2=94=94=E2=94=80=E2=94=80 sub1
-    =E2=94=94=E2=94=80=E2=94=80 f2
-
-$> cat .gitmodules
-[submodule "sub1"]
-    path =3D sub1
-    url =3D ./sub1
-
-
-1. After cloning=20
-
-    git clone http://localhost:8080/.git
-
-   I cannot 'submodule update' the sub1 in the clone since its url afte=
-r
-   'submodule init' would be  http://localhost:8080/.git/sub1 .  If I m=
-anually fix
-   it up -- it seems to proceed normally since in original repository I=
- have
-   sub1/.git/ directory and not the "gitlink" for that submodule.
-
-2. If I serve the clone [2 demos that too] itself, there is no easy rem=
-edy at
-   all since sub1/.git is not a directory but a gitlink.
-
-N.B. I haven't approached nested submodules case yet in [2]
-
-I wondered
-
-a. could 'git clone' (probably actually some relevant helper used by fe=
-tch
-   etc) acquire ability to sense for URL/.git if URL itself doesn't poi=
-nt to a
-   usable git repository?
-
-    I think this could provide complete remedy for 1 since then relativ=
-e urls
-    would be properly assembled, with similar 'sensing' for /.git for t=
-he final urls
-
-    I guess we could do it with rewrites/forwards on the "server side",
-    but it wouldn't be generally acceptable solution.
-
-b. is there a better or already existing way to remedy my situation?
-
-c. shouldn't "git clone" (or the relevant helper) be aware of remote
-   /.git possibly being a gitlink file within submodule?
-
-
-Thank you in advance for your thoughts and feedback on this case.
-
-P.S. Please maintain the CC list in replies.
---=20
-Yaroslav O. Halchenko
-Center for Open Neuroscience     http://centerforopenneuroscience.org
-Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
-Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
-WWW:   http://www.linkedin.com/in/yarik       =20
+How common is it to have the "extra" Job: thing in the history on P4
+side?  If the answer to this question is "on rare occasions and only
+when there is a very good reason to have 'jobs' associated with the
+changelist", then the 'might be a bit surprised' brought by this
+change can probably be explained away as "a fix to a (design) bug
+that used to discard crucial information" that (unfortunately) have
+to change the resulting Git object names.
