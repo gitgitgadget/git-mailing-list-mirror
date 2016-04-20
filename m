@@ -1,84 +1,102 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 01/12] path.c: add git_common_path() and strbuf_git_common_path()
-Date: Wed, 20 Apr 2016 14:11:15 -0400
-Message-ID: <CAPig+cSRQBJM9xFnDszC84Z3JaF83sOg7=z-w6nRQdcu6nA3Bw@mail.gmail.com>
-References: <1460897965-486-1-git-send-email-pclouds@gmail.com>
-	<1461158693-21289-1-git-send-email-pclouds@gmail.com>
-	<1461158693-21289-2-git-send-email-pclouds@gmail.com>
+From: Ben Woosley <Ben.Woosley@gmail.com>
+Subject: [PATCH] git-rebase--merge: don't include absent parent as a base
+Date: Wed, 20 Apr 2016 18:20:56 +0000
+Message-ID: <0102015434e7556a-2d9848cb-93c3-4883-96ec-c0c70098796b-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	rethab.ch@gmail.com, Mike Rappazzo <rappazzo@gmail.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 20 20:11:24 2016
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 20:21:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aswau-00030i-T2
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 20:11:21 +0200
+	id 1aswkL-0001H3-SK
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 20:21:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751990AbcDTSLQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Apr 2016 14:11:16 -0400
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:37408 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751979AbcDTSLQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2016 14:11:16 -0400
-Received: by mail-ig0-f170.google.com with SMTP id g8so57320415igr.0
-        for <git@vger.kernel.org>; Wed, 20 Apr 2016 11:11:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-transfer-encoding;
-        bh=s9gHhIMB6T3RuLxncUf+OnP07IsbI1g8V6hCpAF0BZQ=;
-        b=OQ/36Gj/kyrciVq2Se+x6/RHtUcxrNEQ6wf7Qk2HoK9BnCQUz+2m3BUfVEnCVPodU0
-         1syptAUZlxmco1KhVlmvgy79duD4qLL6X0vRCaJrfpyZ39UQR7ciRj4TceZ2Zgn+r9SE
-         bIxyB/z36hx1YSe3+uy8e/jCgENh5CcE/ev3qpDyXjxpEXVrK/KFQx3N2uFM9yVXUkCg
-         wTWrtWFqnPdWPcM2quyGFWABvsz2Z2xtp9ONz94ONg/D6RXnfpTRhlio6OPAlB/ocDkb
-         MwTNvNdomabuKXSgjUSYDP6yPpO9XXY64WU144c0b4JfdIN9uEVJUzy5n9JZ9EZUkSzK
-         2mdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=s9gHhIMB6T3RuLxncUf+OnP07IsbI1g8V6hCpAF0BZQ=;
-        b=QV9l7EaR2Up032+bqKq+G3usovRtJz00Poi3GzPJT5Fkrq8Tu/Y9G1HYYFwsZUuK0B
-         2bF70EgvcKBt5dY9kc2OJOKSPmz1WIUkUmm7kZilR2DNeaPh4DGCjMJ4X+yLRkY0pZRK
-         M0vR5k+7Nfqt7kw7XbGUaOgOgfPM3HTcLMrbxKP7SxQvKIuEEgb2LmTPqnkzewyZYF7I
-         12n8idqZKvTG8qKlXbaOCk/5Qv8dpXoYCglC88wWJut7LtzBXWp+VPsSPneK9E3+8/AB
-         O2YuNS/k5uipbdCAXPH8TbCudCZkmbK/x0mbA83jNKYlc6Th7y4ezsmoW3AYfccKA4I6
-         pTmw==
-X-Gm-Message-State: AOPr4FWW9uD3zNPQd9ay51/ELa3kHMs3K7BwYqyhcENw9zGPMekzHRdUgX31c841S3VkECD5Z5TfOl1CuCMyVQ==
-X-Received: by 10.50.77.107 with SMTP id r11mr5376686igw.91.1461175875207;
- Wed, 20 Apr 2016 11:11:15 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Wed, 20 Apr 2016 11:11:15 -0700 (PDT)
-In-Reply-To: <1461158693-21289-2-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: FoOpUd_VHMW9xnXDbrdLwQaL0XQ
+	id S1751102AbcDTSU7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2016 14:20:59 -0400
+Received: from a6-245.smtp-out.eu-west-1.amazonses.com ([54.240.6.245]:33788
+	"EHLO a6-245.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750717AbcDTSU7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2016 14:20:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1461176456;
+	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=n9ratpyfb8lCRj9Fg0YZyapVUI2CZr6sM9C7pB33I7M=;
+	b=M0iZobdHAQUrn8pMofYgWHq6QlLkVvTSmX+mDFAWxoivyBdx2SRrwDOh1QB9j3oW
+	I1fVZvfMAjF0D0kxvdk0x+Uq0bg59k1u/XyygzlO4HNQLI6FrNLYvqqbvrSS9yXZiG7
+	F8V2KA65yXup7p0fGHM008jUig61eMJK6f+lhpj8=
+X-SES-Outgoing: 2016.04.20-54.240.6.245
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292051>
 
-On Wed, Apr 20, 2016 at 9:24 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> diff --git a/path.c b/path.c
-> @@ -503,6 +503,35 @@ void strbuf_git_path_submodule(struct strbuf *bu=
-f, const char *path,
-> +const char *git_common_path(const char *fmt, ...)
-> +{
-> +       struct strbuf *pathname =3D get_pathname();
-> +       va_list args;
-> +       va_start(args, fmt);
-> +       do_git_common_path(pathname, fmt, args);
-> +       va_end(args);
-> +       return pathname->buf;
+From: Ben Woosley <ben.woosley@gmail.com>
 
-Is the caller expected to free this value? If not, then shouldn't
-'pathname' be static? If so, then perhaps strbuf_detach() would be
-clearer (and return 'char *' rather than 'const char *').
+Absent this fix, attempts to rebase an orphan branch with --strategy recursive
+will fail with:
 
-> +}
+    $ git rebase ORPHAN_TARGET_BASE -s recursive
+    First, rewinding head to replay your work on top of it...
+    fatal: Could not parse object 'ORPHAN_ROOT_SHA^'
+    Unknown exit code (128) from command: git-merge-recursive ORPHAN_ROOT_SHA^ -- HEAD ORPHAN_ROOT_SHA
+
+To fix, this will only include the rebase root's parent as a base if it exists,
+so that in cases of rebasing an orphan branch, it is a simple two-way merge.
+
+Note the default rebase behavior does not fail:
+
+    $ git rebase ORPHAN_TARGET_BASE
+    First, rewinding head to replay your work on top of it...
+    Applying: ORPHAN_ROOT_COMMIT_MSG
+    Using index info to reconstruct a base tree...
+
+Signed-off-by: Ben Woosley <ben.woosley@gmail.com>
+---
+ git-rebase--merge.sh    | 4 +++-
+ t/t3402-rebase-merge.sh | 9 +++++++++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
+index 2cc2a6d..8d43db9 100644
+--- a/git-rebase--merge.sh
++++ b/git-rebase--merge.sh
+@@ -67,7 +67,9 @@ call_merge () {
+ 		GIT_MERGE_VERBOSITY=1 && export GIT_MERGE_VERBOSITY
+ 	fi
+ 	test -z "$strategy" && strategy=recursive
+-	eval 'git-merge-$strategy' $strategy_opts '"$cmt^" -- "$hd" "$cmt"'
++	# If cmt doesn't have a parent, don't include it as a base
++	base=$(git rev-parse --verify --quiet $cmt^)
++	eval 'git-merge-$strategy' $strategy_opts $base ' -- "$hd" "$cmt"'
+ 	rv=$?
+ 	case "$rv" in
+ 	0)
+diff --git a/t/t3402-rebase-merge.sh b/t/t3402-rebase-merge.sh
+index 8f64505..488945e 100755
+--- a/t/t3402-rebase-merge.sh
++++ b/t/t3402-rebase-merge.sh
+@@ -85,6 +85,15 @@ test_expect_success 'rebase -Xtheirs' '
+ 	! grep 11 original
+ '
+ 
++test_expect_success 'rebase -Xtheirs from orphan' '
++	git checkout --orphan orphan-conflicting master~2 &&
++	echo "AB $T" >> original &&
++	git commit -morphan-conflicting original &&
++	git rebase -Xtheirs master &&
++	grep AB original &&
++	! grep 11 original
++'
++
+ test_expect_success 'merge and rebase should match' '
+ 	git diff-tree -r test-rebase test-merge >difference &&
+ 	if test -s difference
+
+--
+https://github.com/git/git/pull/228
