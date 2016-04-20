@@ -1,92 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: problems serving non-bare repos with submodules over http
-Date: Wed, 20 Apr 2016 12:51:23 -0700
-Message-ID: <xmqqh9ewukhw.fsf@gitster.mtv.corp.google.com>
-References: <20160420152209.GH23764@onerussian.com>
-	<CAGZ79kYS-F1yKpNP7jmhTiZT1R_pucUBBTCbmHKZz6Xd6dy8EA@mail.gmail.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCHv3 3/3] http.c: implements the GIT_TRACE_CURL environment
+ variable
+Date: Wed, 20 Apr 2016 20:56:28 +0100
+Message-ID: <5717DEEC.4000903@ramsayjones.plus.com>
+References: <20160420162825.62380-1-gitter.spiros@gmail.com>
+ <20160420162825.62380-4-gitter.spiros@gmail.com>
+ <xmqqzisoun5n.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Yaroslav Halchenko <yoh@onerussian.com>,
-	Git Gurus hangout <git@vger.kernel.org>,
-	Benjamin Poldrack <benjaminpoldrack@gmail.com>,
-	Joey Hess <id@joeyh.name>, Jens Lehmann <Jens.Lehmann@web.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Apr 20 21:51:36 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, tboegi@web.de, sunshine@sunshineco.com,
+	peff@peff.net
+To: Junio C Hamano <gitster@pobox.com>,
+	Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 20 21:56:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asy9t-00061B-SA
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 21:51:34 +0200
+	id 1asyEp-0001Bm-2C
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 21:56:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752260AbcDTTva (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2016 15:51:30 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50494 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752257AbcDTTv1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 15:51:27 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D112612640;
-	Wed, 20 Apr 2016 15:51:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RkKt+y+LN0NQ7oiDtMck0pP6XKc=; b=yL14KG
-	xst6kNDUgdN65bU3BMtWh84EXNPdTySYcGaOKOvaKjiKItWi549HS9AF8/+0f4bZ
-	j1J05eexhX6rHgfwXM04v8heBe6gITM4Q/LZKsnOmoOtitCeLwmi4wtg18RcWc/c
-	jBJ/PMGhrfVx5HIYrke78FLyHrxxu1VbMdpLg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rSup8jOJDcB3W1HSIb71IAxrLf5Eqnh9
-	Q3kZXX3KTsFlUJwko96gMdCVaJJoOorIq8wLrWJp/HriGF0pUck4YED0iTNGK/k8
-	Nm/6Y2OgOsri8lf88UBIe/YLX6uOSUytAYfKScOEx1L6DmZMVXsk6HK9sS3/i6eJ
-	wEiaTUs/JkQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C5E8C1263F;
-	Wed, 20 Apr 2016 15:51:25 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2606C1263E;
-	Wed, 20 Apr 2016 15:51:25 -0400 (EDT)
-In-Reply-To: <CAGZ79kYS-F1yKpNP7jmhTiZT1R_pucUBBTCbmHKZz6Xd6dy8EA@mail.gmail.com>
-	(Stefan Beller's message of "Wed, 20 Apr 2016 09:14:08 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 43AE9F8A-0731-11E6-BA39-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1751010AbcDTT4f convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Apr 2016 15:56:35 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:42898 "EHLO
+	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750902AbcDTT4e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 15:56:34 -0400
+Received: from [10.0.2.15] ([91.125.197.102])
+	by avasout07 with smtp
+	id kjwX1s0032D2Veb01jwYeB; Wed, 20 Apr 2016 20:56:32 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=QqujpgGd c=1 sm=1 tr=0
+ a=mTUfFwB0nGOO66Ym8a+i3w==:117 a=mTUfFwB0nGOO66Ym8a+i3w==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
+ a=pGLkceISAAAA:8 a=EBOSESyhAAAA:8 a=ybZZDoGAAAAA:8 a=BCjA09oAAAAA:8
+ a=PKzvZo6CAAAA:8 a=3Q2Y9p4gJdUVHI5vUAEA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <xmqqzisoun5n.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292068>
 
-Stefan Beller <sbeller@google.com> writes:
 
->> 1. After cloning
+
+On 20/04/16 19:53, Junio C Hamano wrote:
+> Elia Pinto <gitter.spiros@gmail.com> writes:
+>=20
+>> Implements the GIT_TRACE_CURL environment variable to allow a
+>=20
+> s/Implements/Implement/; speak as if you are giving an order to the
+> codebase to "be like so".
+>=20
+>> greater degree of detail of GIT_CURL_VERBOSE, in particular
+>> the complete transport header and all the data payload exchanged.
+>> It might be useful if a particular situation could require a more
+>> thorough debugging analysis.
 >>
->>     git clone http://localhost:8080/.git
+>> Helped-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+>> Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+>> Helped-by: Junio C Hamano <gitster@pobox.com>
+>> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+>> Helped-by: Jeff King <peff@peff.net>
+>> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+>> ---
+>>  http.c | 101 ++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++++++-
+>>  http.h |   6 ++++
+>>  2 files changed, 106 insertions(+), 1 deletion(-)
 >>
->>    I cannot 'submodule update' the sub1 in the clone since its url after
->>    'submodule init' would be  http://localhost:8080/.git/sub1 .  If I manually fix
->>    it up -- it seems to proceed normally since in original repository I have
->>    sub1/.git/ directory and not the "gitlink" for that submodule.
->
-> So the expected URL would be  http://localhost:8080/sub1/.git ?
->
-> I thought you could leave out the .git prefix, i.e. you can type
->
->      git clone http://localhost:8080
->
-> and Git will recognize the missing .git and try that as well. The relative URL
-> would then be constructed as http://localhost:8080/sub1, which will use the
-> same mechanism to find the missing .git ending.
+>> diff --git a/http.c b/http.c
+>> index 4304b80..507c386 100644
+>> --- a/http.c
+>> +++ b/http.c
+>> @@ -11,6 +11,7 @@
+>>  #include "gettext.h"
+>>  #include "transport.h"
+>> =20
+>> +static struct trace_key trace_curl =3D TRACE_KEY_INIT(CURL);
+>>  #if LIBCURL_VERSION_NUM >=3D 0x070a08
+>>  long int git_curl_ipresolve =3D CURL_IPRESOLVE_WHATEVER;
+>>  #else
+>> @@ -464,6 +465,100 @@ static void set_curl_keepalive(CURL *c)
+>>  }
+>>  #endif
+>> =20
+>> +
+>=20
+> No need for this extra blank line.
+>=20
+>> +void curl_dump(const char *text, unsigned char *ptr, size_t size, c=
+har nohex)
+>> +{
+>> +	size_t i;
+>> +	size_t w;
 
-I may be missing the subtleties, but if you are serving others from
-a non-bare repository with submodules, I do not think you would want
-to expose the in-tree version of the submodule in the first place.
+As I said in a previous email, curl_dump() should be marked
+static here (and remove the declaration from http.h). Unless,
+of course, there are plans for future use/calls being added?
 
-These $submodule/.git files point via "gitdir:" to their real
-repository location, don't they?  And I would think that they are
-what you would want to expose to the outside world.  Your in-tree
-submodules may come and go as you checkout different branches in
-your working tree, but these copies at their real locations will
-stay.
+ATB,
+Ramsay Jones
