@@ -1,93 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] xdiff: implement empty line chunk heuristic
-Date: Wed, 20 Apr 2016 09:09:53 -0700
-Message-ID: <xmqqpotkw9bi.fsf@gitster.mtv.corp.google.com>
-References: <1461013950-12503-1-git-send-email-sbeller@google.com>
-	<1461013950-12503-3-git-send-email-sbeller@google.com>
-	<20160419050342.GA19439@sigill.intra.peff.net>
-	<CAGZ79kbzg7SmJHFpxeJNKmLaEEw+irCxUedo45jGx8G8fmPtKg@mail.gmail.com>
-	<20160419170624.GA3999@sigill.intra.peff.net>
-	<CA+P7+xp60r6Tsv0_=Qy6Wo39MmXMbCba7g5goPQD-e8FNaaEjw@mail.gmail.com>
-	<xmqqoa95xknc.fsf@gitster.mtv.corp.google.com>
-	<20160420161028-mutt-send-email-mst@redhat.com>
+From: Marcus Nascimento <marcus.cps@gmail.com>
+Subject: Git gui - Commit message lost when changing from New Commit to Amend
+ Last Commit
+Date: Wed, 20 Apr 2016 17:13:27 +0100
+Message-ID: <CAO+c80580vmOh7U22-z3Tjkn1e6rTYNKQ66=c9ehCArzEAJcUg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jacob Keller <jacob.keller@gmail.com>, Jeff King <peff@peff.net>,
-	Stefan Beller <sbeller@google.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Wed Apr 20 18:10:03 2016
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 18:13:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asuhV-0004fp-Uk
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 18:10:02 +0200
+	id 1asulE-0007KR-Hl
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 18:13:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751183AbcDTQJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2016 12:09:58 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54175 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750804AbcDTQJ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 12:09:57 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B2275125C8;
-	Wed, 20 Apr 2016 12:09:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cQf/51TSaNkm8YZ67jUVwqq1W9o=; b=mBqti4
-	fRH+NONAgRjdXqcInGzVR9y7owvLN1l3QG1knQ/oU3DTb7fQOprCAkOucEqXXKSg
-	oIAJpKqH2Dk1agx/xQm20FhtpbzMx2CtXAKt0bjai9WyoeRPdlCfOe+rbTFGlp+F
-	SFgjVcRn95jI7lov70Nwk+XXK1A32OnxB8xvg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=H62LdzCGSZB0nd2LNEbyiPFHYrSq+FR7
-	E27zntMIYVjD7u67/4q3uql+drDBiA46G9mi7jmOqnSLMaVKNYZcMSh41JlgbLSl
-	eRZDnZWefh2rNQ0buPJO3cS1NxbQ+NZfYVOls0tK1BrPz5kulxoeAtDczIMsstAP
-	SG0BkUMh1Z8=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AA6C0125C7;
-	Wed, 20 Apr 2016 12:09:55 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E73B3125C6;
-	Wed, 20 Apr 2016 12:09:54 -0400 (EDT)
-In-Reply-To: <20160420161028-mutt-send-email-mst@redhat.com> (Michael
-	S. Tsirkin's message of "Wed, 20 Apr 2016 16:12:08 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5223C01E-0712-11E6-8361-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1751371AbcDTQNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2016 12:13:49 -0400
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:34867 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750717AbcDTQNs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 12:13:48 -0400
+Received: by mail-lb0-f180.google.com with SMTP id os9so12123517lbb.2
+        for <git@vger.kernel.org>; Wed, 20 Apr 2016 09:13:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=EvAd28/5l55d9oDXiZDyLaFBTUTs+DUGGWzwTcK+UG8=;
+        b=lwnZATYX07xtJUJvsZJB6uHDcD1Cdp2BkjKRAZKGIeKXICUjra3tC4Bfg1306oo3Px
+         UjEAMJn+pmv+mGAWnxN2b+hn7KazZZF8+w6qDlAYyC1UPbjWDAbHhx5IFDTyBjNO0E/C
+         NbwWlxWUzvPr39MDKDmUIAilcWOQ/r+PGER0lMPVYzIQfTcTfM6Lmp+WXOtkxtqujmmQ
+         VfZM3umm4r21W4qOntsLOzPDdxJHkwvCUMfJcHNU4chovRu7mF3SsLAY2m3hm/rBgMNx
+         6lYo2ODY4s7E8inrhmoltcuXu+uBkOV3wVP9CWoxrTGxvA+plan0gnWjIhPBQ8RCT/ZZ
+         HgkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=EvAd28/5l55d9oDXiZDyLaFBTUTs+DUGGWzwTcK+UG8=;
+        b=O/XXntQa1VhnXMbGfjuBYEQyzZBT5DSmCs0ExbF3VY0Owlk3YiIMq1mv9fWaKvunIU
+         7R3hha6Zso39w+7hiF10+FwrfN6LRUo1XXYTtkgcmYcfzAL0Qi8vPX/VSnGf5eiQO+wN
+         PhLq4vvUIHyjFWgN2gBARbo+pyJoQU/eiIXGfNKUX+JZz3tNwr0ltOfeL3Gi+cOSHOCn
+         ZGZUs93Zu07Rh+GZIoBSu4TNrIzkmRTYDXYrQ/aZHQroJNvP2j7wLNikMI22llMRUeRG
+         lMH1Q1TO0MrCXUcg+u0ZCH6WGkeWrBIP1HsA+z/KJ4eBTo19BmF4fs96SlyfRzdBOr/W
+         wINA==
+X-Gm-Message-State: AOPr4FUR+CsY/rbFeMIlcTSV2hDoAkuEb8GlPLnTA/qafFnJkwGII9rlTD08VN3g+NnTiNaIK8DTWlpT5t2JWw==
+X-Received: by 10.112.147.101 with SMTP id tj5mr3430793lbb.119.1461168826891;
+ Wed, 20 Apr 2016 09:13:46 -0700 (PDT)
+Received: by 10.112.221.38 with HTTP; Wed, 20 Apr 2016 09:13:27 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292036>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+Hi,
 
-> FWIW IIRC what that commit is about is ability to reorder the chunks in
-> a patch without changing patch-id. Not about keeping id stable across
-> git revisions.
+When changing from New Commit to Amend Last Commit, the commit message
+it discarded.
+It could be appended to the previous commit message with a place
+holder or something similar.
 
-OK, but "reorder the chunks" is not meant to stay to be the _ONLY_
-purpose for an option whose name is a broad "--[un]stable", but
-merely one (and only) possible cause of patch-id instability that
-happened to be noticed as an issue back then and was dealt with that
-commit, no?  In other words, the intent of the "--stable" feature is
-to give a stable ID that is not affected by random end-user settings
-(e.g. diff.orderfile) and if somebody invents a new configurable knob
-in the future, they are supposed to pay attention to the "--stable"
-feature or existing users who do use "--stable" will be broken, no?
+git-gui version 0.20.0.1
+git version 2.8.0.rc3
 
-I can still buy "--stable is not about stability across versions of
-Git"--it makes our job easier ;-)  I just want to make sure that
-"--stable is about stability inside a single version of Git that
-patch ID for the same commit will stay the same and unaffected by
-random end-user configuration knobs".
-
-Which in turn would mean that we won't have to worry about this
-option in patch-id as long as we remove the diff.compactionheuristic
-configuration and command line option once the developers are done
-experimenting with their heuristics code.
+Cheers,
+--
+Marcus Nascimento
