@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 07/12] wt-status.c: make wt_status_check_rebase() work on any worktree
-Date: Wed, 20 Apr 2016 20:24:48 +0700
-Message-ID: <1461158693-21289-8-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 05/12] path.c: refactor and add worktree_git_path()
+Date: Wed, 20 Apr 2016 20:24:46 +0700
+Message-ID: <1461158693-21289-6-git-send-email-pclouds@gmail.com>
 References: <1460897965-486-1-git-send-email-pclouds@gmail.com>
  <1461158693-21289-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -19,181 +19,186 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ass9G-0004zG-TH
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 15:26:31 +0200
+	id 1ass95-0004sf-8T
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 15:26:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754482AbcDTN00 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Apr 2016 09:26:26 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:34031 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752908AbcDTN0Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 09:26:25 -0400
-Received: by mail-pa0-f42.google.com with SMTP id r5so16302116pag.1
-        for <git@vger.kernel.org>; Wed, 20 Apr 2016 06:26:25 -0700 (PDT)
+	id S1753785AbcDTN0O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Apr 2016 09:26:14 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:36368 "EHLO
+	mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752093AbcDTN0N (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 09:26:13 -0400
+Received: by mail-pf0-f179.google.com with SMTP id e128so18319421pfe.3
+        for <git@vger.kernel.org>; Wed, 20 Apr 2016 06:26:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Qe3oop8N6kCSB4Fzj/YUZD4SbXizvO+B2fdhJrxRoT8=;
-        b=MFcuMRpzKlsIDnvHbCHkl8wZEFfkTwA9mAnXwrztQkoZ397B2Ztu5SNYSEH/OOG+B5
-         U1Zi9YmXpQAuQ1RLe35uwuuatdsrsAiTNOFRq/RIommKaHecuvJ3QTsEF6oMqJJquhDC
-         Z/eMoATKK+1wdqlVVpi4EKAHWQ1fOZnoedQOEqTXXUw+gSEzUna90BHF0jogXBX9YXyZ
-         XqLCBL8D3bjyJfusf5RUppbbX9SJN//dlbuoX+8NsFFqj7ZH/+jbEG6TZ4JpFR8mnVdf
-         pWMREDeriul/VALHoZRJDQJd5nbuRYq+TC4hPLZALXLMLBKY6Vkwxl+DhUiOoJRv/qDk
-         4PEQ==
+        bh=oi7GCkBLc+qDP6UIBdum53o1mo/JnlAudc8/JcCEXeY=;
+        b=AW1Y1/2DcgTfIPchSlFi3fNysORw+DTFUI14A9aHCx17e4PFblOsB5DJKC2jnwkDKB
+         g0gkIPtEr8gP8ws5u3iH4YQQvDZua1eJ5jShdR9G39ndWxmbH6WysHwy5TYPpCzLOykj
+         oozc5RW7PcHYc5cwYrgidKNS/tzgOQnOpRf53B6KsRs4KtPCirUZ88CP3wA8cEfx18F2
+         mW3ZOuWdWJCJnLLmjfN8cwqPu65hvxxbypecjvQ3FvROreye/fCMkWrEaq/V/TvQFQsX
+         qNl4VWr+gRAfkvWJQFBNXpV17nJDzE7DzlcyPAw34XTD0Akrq/EKloOvldJ0U67jtE2p
+         v6Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Qe3oop8N6kCSB4Fzj/YUZD4SbXizvO+B2fdhJrxRoT8=;
-        b=HHZLKxjUvu4hubGwLXmT9nbCtDihQ3aXGDxLIyhHxpky5OogM1ucHp5VqU2149c+wW
-         qBGCWHBqEoCtaZehyPFs/J29r4qhV3G35eDyqTCPMpKeoLS2+rV2mM0YdQPNj6/AtyEA
-         chgOsVOHs2+zkPq3gjaxkh8r7pPeQLgkercLPXWTUNCqefJ/yH4NMJymU80zyE0ZlCd3
-         sdUOA0oOTfVOikw8yuTtjlqR/QuDZ0+Te1KEyn3Ki7qSeG+kFeV8AB3yqA/8R9SmDP4L
-         PCT7i/pO7WHwuza0//xfF/G6Eif6UjuvI2vXbsNJFplYGqG1fLS3KPPYEP/vW0qLwjut
-         o+tA==
-X-Gm-Message-State: AOPr4FWKVIpTqKKS0BVJbWjOmFyp8NL7IwXBKfcX49Iq+gWao9Y4RZhhciFifkYeWxN8Ng==
-X-Received: by 10.66.63.98 with SMTP id f2mr12290751pas.123.1461158784660;
-        Wed, 20 Apr 2016 06:26:24 -0700 (PDT)
+        bh=oi7GCkBLc+qDP6UIBdum53o1mo/JnlAudc8/JcCEXeY=;
+        b=PxofRxWzxTtg5vPvx8IUecurk9AdoDQsx5ViOuYtdiuQ5jun92SViweqO0oiy+JhAy
+         Gx+SBVJJQFsRwsDqoHgkVylBR1x8inXiz1nohWXCvFsFUcT8DUEu9d3606lzWfQofEoJ
+         D80Uk+sfB2PkdSz6zPt71AHC7uK7/59XaLmvDMci9AynEyuR/znv6HB5ODWuzBtu78AV
+         verhgh6KuV6XhHAtogXB60GKD34prmsKMsrqU63mQ+tapcXEZBJrGvu9UjPRGYinIf5s
+         d824p6ZZzDdLRzvwfJWZWQcUopCZcE5N7h/CIH4M3iCJyHgIAuLq6TSXw6EgYQlCz/fm
+         BKSQ==
+X-Gm-Message-State: AOPr4FVXdhVFOcDNgB3QFvafrLR6u8wiXU18is31kbCTm7Z71qwKyamAi3v7qD7IfEMGPA==
+X-Received: by 10.98.22.193 with SMTP id 184mr7004906pfw.116.1461158772482;
+        Wed, 20 Apr 2016 06:26:12 -0700 (PDT)
 Received: from lanh ([171.232.186.157])
-        by smtp.gmail.com with ESMTPSA id w125sm34977958pfb.16.2016.04.20.06.26.20
+        by smtp.gmail.com with ESMTPSA id i7sm54430716pfc.47.2016.04.20.06.26.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Apr 2016 06:26:23 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 20 Apr 2016 20:26:36 +0700
+        Wed, 20 Apr 2016 06:26:11 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Wed, 20 Apr 2016 20:26:24 +0700
 X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
 In-Reply-To: <1461158693-21289-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292017>
 
-This is a preparation step for find_shared_symref() to detect if any
-worktree is being rebased.
+do_git_path(), which is the common code for all git_path* functions, is
+modified to take a worktree struct and can produce paths for any
+worktree.
+
+worktree_git_path() is the first function that makes use of this. It ca=
+n
+be used to write code that can examine any worktree. For example,
+wt_status_get_state() will be converted using this to take
+am/rebase/... state of any worktree.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- wt-status.c | 33 ++++++++++++++++++++-------------
- wt-status.h |  5 ++++-
- 2 files changed, 24 insertions(+), 14 deletions(-)
+ path.c     | 34 ++++++++++++++++++++++++++++------
+ worktree.h | 11 +++++++++++
+ 2 files changed, 39 insertions(+), 6 deletions(-)
 
-diff --git a/wt-status.c b/wt-status.c
-index 35787ec..2295682 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -15,6 +15,7 @@
- #include "column.h"
+diff --git a/path.c b/path.c
+index 2ebb23d..c421d37 100644
+--- a/path.c
++++ b/path.c
+@@ -5,6 +5,7 @@
  #include "strbuf.h"
- #include "utf8.h"
+ #include "string-list.h"
+ #include "dir.h"
 +#include "worktree.h"
 =20
- static const char cut_line[] =3D
- "------------------------ >8 ------------------------\n";
-@@ -1262,13 +1263,13 @@ static void show_bisect_in_progress(struct wt_s=
-tatus *s,
- /*
-  * Extract branch information from rebase/bisect
-  */
--static char *read_and_strip_branch(const char *path)
-+static char *get_branch(const struct worktree *wt, const char *path)
+ static int get_st_mode_bits(const char *path, int *mode)
  {
- 	struct strbuf sb =3D STRBUF_INIT;
- 	unsigned char sha1[20];
- 	const char *branch_name;
-=20
--	if (strbuf_read_file(&sb, git_path("%s", path), 0) <=3D 0)
-+	if (strbuf_read_file(&sb, worktree_git_path(wt, "%s", path), 0) <=3D =
-0)
- 		goto got_nothing;
-=20
- 	while (sb.len && sb.buf[sb.len - 1] =3D=3D '\n')
-@@ -1295,6 +1296,11 @@ got_nothing:
- 	return NULL;
+@@ -383,10 +384,11 @@ static void adjust_git_path(struct strbuf *buf, i=
+nt git_dir_len)
+ 		update_common_dir(buf, git_dir_len, NULL);
  }
 =20
-+static char *read_and_strip_branch(const char *path)
+-static void do_git_path(struct strbuf *buf, const char *fmt, va_list a=
+rgs)
++static void do_git_path(const struct worktree *wt, struct strbuf *buf,
++			const char *fmt, va_list args)
+ {
+ 	int gitdir_len;
+-	strbuf_addstr(buf, get_git_dir());
++	strbuf_addstr(buf, get_worktree_git_dir(wt));
+ 	if (buf->len && !is_dir_sep(buf->buf[buf->len - 1]))
+ 		strbuf_addch(buf, '/');
+ 	gitdir_len =3D buf->len;
+@@ -400,7 +402,7 @@ char *git_path_buf(struct strbuf *buf, const char *=
+fmt, ...)
+ 	va_list args;
+ 	strbuf_reset(buf);
+ 	va_start(args, fmt);
+-	do_git_path(buf, fmt, args);
++	do_git_path(NULL, buf, fmt, args);
+ 	va_end(args);
+ 	return buf->buf;
+ }
+@@ -409,7 +411,7 @@ void strbuf_git_path(struct strbuf *sb, const char =
+*fmt, ...)
+ {
+ 	va_list args;
+ 	va_start(args, fmt);
+-	do_git_path(sb, fmt, args);
++	do_git_path(NULL, sb, fmt, args);
+ 	va_end(args);
+ }
+=20
+@@ -418,7 +420,7 @@ const char *git_path(const char *fmt, ...)
+ 	struct strbuf *pathname =3D get_pathname();
+ 	va_list args;
+ 	va_start(args, fmt);
+-	do_git_path(pathname, fmt, args);
++	do_git_path(NULL, pathname, fmt, args);
+ 	va_end(args);
+ 	return pathname->buf;
+ }
+@@ -428,7 +430,7 @@ char *git_pathdup(const char *fmt, ...)
+ 	struct strbuf path =3D STRBUF_INIT;
+ 	va_list args;
+ 	va_start(args, fmt);
+-	do_git_path(&path, fmt, args);
++	do_git_path(NULL, &path, fmt, args);
+ 	va_end(args);
+ 	return strbuf_detach(&path, NULL);
+ }
+@@ -454,6 +456,26 @@ const char *mkpath(const char *fmt, ...)
+ 	return cleanup_path(pathname->buf);
+ }
+=20
++const char *worktree_git_path(const struct worktree *wt, const char *f=
+mt, ...)
 +{
-+	return get_branch(NULL, path);
++	struct strbuf *pathname =3D get_pathname();
++	va_list args;
++	va_start(args, fmt);
++	do_git_path(wt, pathname, fmt, args);
++	va_end(args);
++	return pathname->buf;
 +}
 +
- struct grab_1st_switch_cbdata {
- 	struct strbuf buf;
- 	unsigned char nsha1[20];
-@@ -1360,27 +1366,28 @@ static void wt_status_get_detached_from(struct =
-wt_status_state *state)
- 	strbuf_release(&cb.buf);
- }
-=20
--int wt_status_check_rebase(struct wt_status_state *state)
-+int wt_status_check_rebase(const struct worktree *wt,
-+			   struct wt_status_state *state)
- {
- 	struct stat st;
-=20
--	if (!stat(git_path("rebase-apply"), &st)) {
--		if (!stat(git_path("rebase-apply/applying"), &st)) {
-+	if (!stat(worktree_git_path(wt, "rebase-apply"), &st)) {
-+		if (!stat(worktree_git_path(wt, "rebase-apply/applying"), &st)) {
- 			state->am_in_progress =3D 1;
--			if (!stat(git_path("rebase-apply/patch"), &st) && !st.st_size)
-+			if (!stat(worktree_git_path(wt, "rebase-apply/patch"), &st) && !st.=
-st_size)
- 				state->am_empty_patch =3D 1;
- 		} else {
- 			state->rebase_in_progress =3D 1;
--			state->branch =3D read_and_strip_branch("rebase-apply/head-name");
--			state->onto =3D read_and_strip_branch("rebase-apply/onto");
-+			state->branch =3D get_branch(wt, "rebase-apply/head-name");
-+			state->onto =3D get_branch(wt, "rebase-apply/onto");
- 		}
--	} else if (!stat(git_path("rebase-merge"), &st)) {
--		if (!stat(git_path("rebase-merge/interactive"), &st))
-+	} else if (!stat(worktree_git_path(wt, "rebase-merge"), &st)) {
-+		if (!stat(worktree_git_path(wt, "rebase-merge/interactive"), &st))
- 			state->rebase_interactive_in_progress =3D 1;
- 		else
- 			state->rebase_in_progress =3D 1;
--		state->branch =3D read_and_strip_branch("rebase-merge/head-name");
--		state->onto =3D read_and_strip_branch("rebase-merge/onto");
-+		state->branch =3D get_branch(wt, "rebase-merge/head-name");
-+		state->onto =3D get_branch(wt, "rebase-merge/onto");
- 	} else
- 		return 0;
- 	return 1;
-@@ -1394,7 +1401,7 @@ void wt_status_get_state(struct wt_status_state *=
-state,
-=20
- 	if (!stat(git_path_merge_head(), &st)) {
- 		state->merge_in_progress =3D 1;
--	} else if (wt_status_check_rebase(state)) {
-+	} else if (wt_status_check_rebase(NULL, state)) {
- 		/* all set */
- 	} else if (!stat(git_path_cherry_pick_head(), &st) &&
- 			!get_sha1("CHERRY_PICK_HEAD", sha1)) {
-diff --git a/wt-status.h b/wt-status.h
-index b398353..c4ddcad 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -6,6 +6,8 @@
- #include "color.h"
- #include "pathspec.h"
-=20
-+struct worktree;
++char *worktree_git_pathdup(const struct worktree *wt, const char *fmt,=
+ ...)
++{
++	struct strbuf path =3D STRBUF_INIT;
++	va_list args;
++	va_start(args, fmt);
++	do_git_path(wt, &path, fmt, args);
++	va_end(args);
++	return strbuf_detach(&path, NULL);
++}
 +
- enum color_wt_status {
- 	WT_STATUS_HEADER =3D 0,
- 	WT_STATUS_UPDATED,
-@@ -100,7 +102,8 @@ void wt_status_prepare(struct wt_status *s);
- void wt_status_print(struct wt_status *s);
- void wt_status_collect(struct wt_status *s);
- void wt_status_get_state(struct wt_status_state *state, int get_detach=
-ed_from);
--int wt_status_check_rebase(struct wt_status_state *state);
-+int wt_status_check_rebase(const struct worktree *wt,
-+			   struct wt_status_state *state);
+ static void do_submodule_path(struct strbuf *buf, const char *path,
+ 			      const char *fmt, va_list args)
+ {
+diff --git a/worktree.h b/worktree.h
+index 625fb8d..9d2463e 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -43,4 +43,15 @@ extern void free_worktrees(struct worktree **);
+ extern const struct worktree *find_shared_symref(const char *symref,
+ 						 const char *target);
 =20
- void wt_shortstatus_print(struct wt_status *s);
- void wt_porcelain_print(struct wt_status *s);
++/*
++ * Similar to git_path() and git_pathdup() but can produce paths for a
++ * specified worktree instead of current one
++ */
++extern const char *worktree_git_path(const struct worktree *wt,
++				     const char *fmt, ...)
++	__attribute__((format (printf, 2, 3)));
++extern char *worktree_git_pathdup(const struct worktree *wt,
++				  const char *fmt, ...)
++	__attribute__((format (printf, 2, 3)));
++
+ #endif
 --=20
 2.8.0.rc0.210.gd302cd2
