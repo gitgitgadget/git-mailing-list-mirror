@@ -1,7 +1,11 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCHv3 0/3] Implements the GIT_TRACE_CURL environment variable
-Date: Wed, 20 Apr 2016 16:28:22 +0000
-Message-ID: <20160420162825.62380-1-gitter.spiros@gmail.com>
+Subject: [PATCHv3 1/3] git.txt: document the new GIT_TRACE_CURL environment variable
+Date: Wed, 20 Apr 2016 16:28:23 +0000
+Message-ID: <20160420162825.62380-2-gitter.spiros@gmail.com>
+References: <20160420162825.62380-1-gitter.spiros@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: tboegi@web.de, ramsay@ramsayjones.plus.com, gitster@pobox.com,
 	sunshine@sunshineco.com, peff@peff.net,
 	Elia Pinto <gitter.spiros@gmail.com>
@@ -12,86 +16,84 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asuzV-0000N1-1A
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 18:28:37 +0200
+	id 1asuzV-0000N1-No
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 18:28:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751608AbcDTQ2c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1751703AbcDTQ2f convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Apr 2016 12:28:35 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36486 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751587AbcDTQ2c (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 20 Apr 2016 12:28:32 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34529 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751185AbcDTQ2b (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 12:28:31 -0400
-Received: by mail-wm0-f68.google.com with SMTP id n3so15268973wmn.1
-        for <git@vger.kernel.org>; Wed, 20 Apr 2016 09:28:30 -0700 (PDT)
+Received: by mail-wm0-f65.google.com with SMTP id l6so15195253wml.3
+        for <git@vger.kernel.org>; Wed, 20 Apr 2016 09:28:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=fNPI6lZ2iFgniVUe/NvyS1+BRRElLwXWQdLnPNmcldc=;
-        b=j7Mwb21gPvmzj+EzGaBGpKaizWw20YAIrFLg/NyHn45WnSdeVQ1KfXPMMV19D3R+gi
-         jCResgqoHUTxJkKCjQcMEVR9qDT+t1TrhTqw7bEgwEoVHL1X1pUJNlgiPIeQJ4foiWOq
-         q8gYlQsD/fns8mv2EDcKF1YLQdv2Le5mVF0SQ8Iwb0mnkMWuHd2HAr/U2sNgSlvfVljX
-         Xg+IiJECS05LnoHmCzMmPgLTe09O2dtLjIVAruG5LfGgfvY2tWtGMgt3EOiYakwvLr+L
-         ilgLomIbCep2PKVfFUr/6QASpkzabmBDeSxM3QlU0iCdjVqjHGDjeSDD/IfNLaCdpJ1d
-         qFXw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=fDDx9CBc5DKVo1EBKW6OT4PzgTcTLnZskYEnTHdhNRk=;
+        b=eOlnMqjE5/wOFAyGbuJgpUobqWtNPm6pvflqPIrFxD1HmYdiLF1G3dNEAgCwMKpEPP
+         h8wuXKxReNZWWXOyjCFG5QN8uqT7TAarHBuPNSf1d5eqNxVRxq7EvBdE4R4T9exarlVT
+         jWvzwZ/LCciN40cLsNg3JCNFPACMMrEi2QCVz2HoViy0TxTlAtP8UeKWB4xF6LcvSlbA
+         viJzFrSFgf+NG5d1yw/L2MmJzH8uqknuJvKqSjiZaAouLQ0T9p03I56A0z+csQCuRJ9Y
+         EWOPsMFfimCxSMGnjE6SpNFQGxI5xtBXiavdnQaIxF4yQY61OJTo+vIKIsqgJ3CTUclA
+         WuUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=fNPI6lZ2iFgniVUe/NvyS1+BRRElLwXWQdLnPNmcldc=;
-        b=f1Pb6DjVxDUMdo75lYnMMZLRWvmePt4XuaNc9mfcCfwpNRPxVTiGHIkznJEnWl+goF
-         CLbh2l1BnG164PLcD0Y8s0/07PcCbFGmFRv1Ki4dVR/bjxu68Nh8kC63ymcTr+VHm8+a
-         a6+AzqeKqnCuRx88DRG80Z5R6R8pGcGMbeLy+R+X5OsP+38Ua7NnB8NCENHzqNzbm05p
-         y6zVmmpsOQOCz50x2b5kuVTmnI+A2VCUrqQEZCXYak4S+9IxGqwxJL/qvN7oesE71fEt
-         VCalbPXiZTawNrlCEWA+/XiTlcs3i96TsWuZE3g2mAt1fNl8967i9tPUHthYPF5DXpTv
-         x5qg==
-X-Gm-Message-State: AOPr4FWDbfdnWYHk9bfDzMRPBQHZgGfsz1x1+xfRdFrAb2Ay8H2MR6xA3sRiECq4Q9ZwWg==
-X-Received: by 10.194.133.161 with SMTP id pd1mr11057821wjb.66.1461169710000;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=fDDx9CBc5DKVo1EBKW6OT4PzgTcTLnZskYEnTHdhNRk=;
+        b=A1wUuvVNcm59xGMp7AJ8HO2ipOYWTMov22hTHSygY6mtNqtqzr9M6hh6nC28XptIaV
+         BRRGG6YfpAtK+ynHNp2Ph+uM0AnLrxdUBHlYhzPzqsL5MRb/9aiSfUZr8GbHsMiIERDf
+         SbxkuOl1/F6dXUkWrF3Hud8CmlTgfoTcFMwYJjZxhiY2+MLRDbbyzDmkYn8muezpiCN/
+         o0ydoAo9a5OwnpOJGoqviuyIiELDtqnNIuBVZvhu1eZkxOzGQGS/MAHDLiIB35PmX/4x
+         E3ZPL7+XVwTsqugiugQ7DZnOdlNOjb5qgoDE/zBpO15jyrLiRsoyguU4v/XFBopkY9fx
+         0mQA==
+X-Gm-Message-State: AOPr4FXmiEybuBthwD8hYObEPDzaniVKtQfm5t5WUCIoQVgo3GQDZRNmvojbsSkx02r8Jg==
+X-Received: by 10.194.95.167 with SMTP id dl7mr9697276wjb.163.1461169710861;
         Wed, 20 Apr 2016 09:28:30 -0700 (PDT)
 Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([23.101.69.192])
-        by smtp.gmail.com with ESMTPSA id qt3sm6368445wjc.32.2016.04.20.09.28.29
+        by smtp.gmail.com with ESMTPSA id qt3sm6368445wjc.32.2016.04.20.09.28.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 20 Apr 2016 09:28:29 -0700 (PDT)
+        Wed, 20 Apr 2016 09:28:30 -0700 (PDT)
 X-Mailer: git-send-email 2.8.1.383.g31b84cc
+In-Reply-To: <20160420162825.62380-1-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292041>
 
+Describe the purpose of the GIT_TRACE_CURL environment variable.
 
-This is the third version but in reality is the complete rewriting of the patches discussed here
-(here called V1)
+Helped-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ Documentation/git.txt | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-$gmane/290520
-$gmane/290521
-
-*Changes from V2
-($gmane/291868)
-
-- fix garbage comment in http.c (i am very sorry for that)
-- add final '.' to the commit message for imap-send.c and to other commit messages
-- typofix double ; in http.c
-- merge the nice cleanup and code refactoring of Ramsay Jones (Thank you very much !!)
-- squash the previous commit 2/4
-
-*Changes from V1
-
-- introduced GIT_TRACE_CURL variable with its documentation
-- changed the name of the temporary variable "i" in "w" in the helper routine
-- used the c escape sequences instead of the hex equivalent
-- dropped the previous GIT_DEBUG_CURL env var
-- curl_dump and curl_trace factored out to a shared implementation
-in http.c
-
-Elia Pinto (3):
-  git.txt: document the new GIT_TRACE_CURL environment variable
-  imap-send.c: introduce the GIT_TRACE_CURL enviroment variable
-  http.c: implements the GIT_TRACE_CURL environment variable
-
- Documentation/git.txt |   8 ++++
- http.c                | 101 +++++++++++++++++++++++++++++++++++++++++++++++++-
- http.h                |   6 +++
- imap-send.c           |   6 +++
- 4 files changed, 120 insertions(+), 1 deletion(-)
-
--- 
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 8afe349..958db0f 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -1075,6 +1075,14 @@ of clones and fetches.
+ 	cloning of shallow repositories.
+ 	See 'GIT_TRACE' for available trace output options.
+=20
++'GIT_TRACE_CURL'::
++	Enables a curl full trace dump of all incoming and outgoing data,
++	including descriptive information, of the git transport protocol.
++	This is similar to doing curl --trace-ascii on the command line.
++	This option overrides setting the GIT_CURL_VERBOSE environment
++	variable.
++	See 'GIT_TRACE' for available trace output options.
++
+ 'GIT_LITERAL_PATHSPECS'::
+ 	Setting this variable to `1` will cause Git to treat all
+ 	pathspecs literally, rather than as glob patterns. For example,
+--=20
 2.8.1.383.g31b84cc
