@@ -1,90 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 4/4] convert.c: ident + core.autocrlf didn't work
-Date: Wed, 20 Apr 2016 15:27:37 -0700
-Message-ID: <xmqqoa93ud9i.fsf@gitster.mtv.corp.google.com>
-References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
-	<1461072363-2874-1-git-send-email-tboegi@web.de>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Tcl/Tk now has a little 'c' style language..
+Date: Wed, 20 Apr 2016 23:45:46 +0100
+Organization: OPDS
+Message-ID: <9C2D8C85399647FFAF918B7260C93EB9@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: tboegi@web.de
-X-From: git-owner@vger.kernel.org Thu Apr 21 00:27:46 2016
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: "Git List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 21 00:45:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1at0b3-0004tt-3Y
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 00:27:45 +0200
+	id 1at0sb-00027b-78
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 00:45:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751416AbcDTW1l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2016 18:27:41 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62658 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751188AbcDTW1k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 18:27:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 02D2216056;
-	Wed, 20 Apr 2016 18:27:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=og0aPvESddSvRxtN1Qxmkc2bImo=; b=OW/nGe
-	/S9Ds4WZRrxPyWx4+EEdZ58yFp8QNjqbgD6NCFR0SjXvAlBkA8U/BLqcvjWTrQ0v
-	QuaSD+YLcf2zJV0vmow8KBe2XPXxqRSAJUoNDH2UG6E9whj25uFNDJHe2eSeXpV6
-	zAuO7UtaUdoNFzcGlIeuLc+hfhAro6CNh35Ho=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tb7fO5mJH9axccR22VXXwi3CLw5hl1GD
-	GyDCrNzKIdLt7ggUnZvjARwQVg0wlZ3a+2GVZjBRAiti/kDNUPBKJRULKCGHAxSU
-	RT5h68MPLyxv4BlYOJcEREpOcbID2QidksofrVORohCvrmG4LMs0CoHCnyWrn0JC
-	4CXYSS/nLU4=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E5A8616055;
-	Wed, 20 Apr 2016 18:27:38 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4C44116054;
-	Wed, 20 Apr 2016 18:27:38 -0400 (EDT)
-In-Reply-To: <1461072363-2874-1-git-send-email-tboegi@web.de> (tboegi@web.de's
-	message of "Tue, 19 Apr 2016 15:26:03 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 16848716-0747-11E6-84FE-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1751216AbcDTWps (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2016 18:45:48 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:15826 "EHLO
+	smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750998AbcDTWpr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 18:45:47 -0400
+Received: from PhilipOakley ([92.22.28.167])
+	by smtp.talktalk.net with SMTP
+	id t0sSaTV9HavFft0sSaR3uh; Wed, 20 Apr 2016 23:45:45 +0100
+X-Originating-IP: [92.22.28.167]
+X-Spam: 0
+X-OAuthority: v=2.1 cv=M9ntU3Es c=1 sm=1 tr=0 a=Vx6b4YafqH5AAhvJeISbbQ==:117
+ a=Vx6b4YafqH5AAhvJeISbbQ==:17 a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10
+ a=s5jvgZ67dGcA:10 a=8nJEP1OIZ-IA:10 a=e6c7lSkLAAAA:8 a=15GXwTAegi8SsyhKxDkA:9
+ a=wPNLvfGTeEIA:10
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfFL4TLoyy1KWliJ6tq/0+AEts/w6d/tfBsmDLy3HA4h/eXBv96sXGVOiX76dZzCDekwTONfhSc8KIXpJFLu2P6tOCyGjuMnXleuI0bccql/PnnlVCIIi
+ NdNu6xlPV6pYm2BdtSKbmgW2B+JTAOPYPA9MZueLFG7bHqGR2i5OO+rr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292088>
 
-tboegi@web.de writes:
+The CodeProject news today mentioned the release of the 'L' (little) 
+language which integrates with Tcl/Tk and compiles to Tcl/Tk  byte code.
 
->  	if (ca.drv && (ca.drv->smudge || ca.drv->clean))
-> -		return filter;
-> +		return NULL;
->  
->  	if (ca.ident)
->  		filter = ident_filter(sha1);
+This should be of interest to those looking at the Git Gui and Gitk code, in 
+particular the examples showing code simplification (easire to 
+read/understand).
 
-We allocated an ident-filter here...
+The project page is at http://www.little-lang.org, with the original L paper 
+(pdf) at http://www.little-lang.org/little.pdf and looks to have some solid 
+documentation.
 
-> -	crlf_action = ca.crlf_action;
-> -
-> -	if ((crlf_action == CRLF_BINARY) ||
-> -			crlf_action == CRLF_AUTO_INPUT ||
-> -			(crlf_action == CRLF_TEXT_INPUT))
-> -		filter = cascade_filter(filter, &null_filter_singleton);
-> -
-> -	else if (output_eol(crlf_action) == EOL_CRLF &&
-> -		 !(crlf_action == CRLF_AUTO || crlf_action == CRLF_AUTO_CRLF))
-> +	if (output_eol(ca.crlf_action) == EOL_CRLF) {
-> +		if (ca.crlf_action == CRLF_AUTO || ca.crlf_action == CRLF_AUTO_CRLF)
-> +			return NULL;
+--
 
-and then by returning NULL, we lost it.
-
->  		filter = cascade_filter(filter, lf_to_crlf_filter());
-> +	} else
-> +		filter = cascade_filter(filter, &null_filter_singleton);
->  
->  	return filter;
->  }
+Philip 
