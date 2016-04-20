@@ -1,109 +1,153 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] git-p4: fix Git LFS pointer parsing
-Date: Wed, 20 Apr 2016 14:01:00 -0700
-Message-ID: <xmqq60vcuh9v.fsf@gitster.mtv.corp.google.com>
-References: <1461139809-6573-1-git-send-email-larsxschneider@gmail.com>
-	<1461139809-6573-3-git-send-email-larsxschneider@gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: problems serving non-bare repos with submodules over http
+Date: Wed, 20 Apr 2016 14:05:43 -0700
+Message-ID: <CAGZ79kZMOv0r9fRFbP1WV8qFJBm+s=V8=ueFbYvnyFtgV8j9iQ@mail.gmail.com>
+References: <20160420152209.GH23764@onerussian.com>
+	<CAGZ79kYS-F1yKpNP7jmhTiZT1R_pucUBBTCbmHKZz6Xd6dy8EA@mail.gmail.com>
+	<xmqqh9ewukhw.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, luke@diamand.org, sschuberth@gmail.com
-To: larsxschneider@gmail.com
-X-From: git-owner@vger.kernel.org Wed Apr 20 23:01:10 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Yaroslav Halchenko <yoh@onerussian.com>,
+	Git Gurus hangout <git@vger.kernel.org>,
+	Benjamin Poldrack <benjaminpoldrack@gmail.com>,
+	Joey Hess <id@joeyh.name>, Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 20 23:05:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aszFF-0005w3-Tt
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 23:01:10 +0200
+	id 1aszJl-0000pI-9S
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 23:05:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751871AbcDTVBG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2016 17:01:06 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55389 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751704AbcDTVBE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 17:01:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9F48B142FB;
-	Wed, 20 Apr 2016 17:01:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1/FXONmxzYpBT1700eMUNhibAAc=; b=vfsJUn
-	RaO0jFBN9hf4v7v64TxSDH91GcvbM0BHHhTCwFa2JizfAihyqu+UAyqp22Bo2K+4
-	jhQ8nz96m4x+4HFFtaJWOM5Mq9zwA7fjiKQkCAE8IQxpn+aahK3qOsdJcwj7XXNI
-	YUBKPIe7T1s7UqCBWOY5wAew+sYZwaJ6Z28f8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WFj8Oq2AWy0F67Y3ATMiK1HhuswRjM7u
-	NJqLnMABC5UeuQI6aVSvj/5qulTOOA+i9KsNSy2pX/YG/yVPRqpa3Pv4mueYaD9M
-	6Uy4r5ToHDDcFDVJyevHinJJyVh1j7ySNvC6NtDfHL1XDuNb67xNeXQ9gyMXqWF6
-	RIAj/Fl8K/Y=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 97F8F142FA;
-	Wed, 20 Apr 2016 17:01:02 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 13A96142F8;
-	Wed, 20 Apr 2016 17:01:02 -0400 (EDT)
-In-Reply-To: <1461139809-6573-3-git-send-email-larsxschneider@gmail.com>
-	(larsxschneider@gmail.com's message of "Wed, 20 Apr 2016 10:10:09
-	+0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: FD52AD24-073A-11E6-9FA5-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1751391AbcDTVFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2016 17:05:45 -0400
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:35663 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751162AbcDTVFo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 17:05:44 -0400
+Received: by mail-ig0-f169.google.com with SMTP id gy3so140127844igb.0
+        for <git@vger.kernel.org>; Wed, 20 Apr 2016 14:05:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=EUYRMMEyPJpxFOhrkuGpilDGDx52K6hnZYHlQem+XY4=;
+        b=WMZoxA8G1VWf0YCMqGYdef/YxDifadfEArwfiNLzTKORn3p/u/qBRCv1qADS0wOKMo
+         swBQ2Cec0l9FiLkPpMnU/EiNQW/wEpRJKCeCDVLQRqcKVpVD/dHT0meMOdInOIExLmhl
+         cnvvf3D/eCXp53ctYEmLiX/bjxUrmG9zd+B22/5VHPOdPWBOqezLvt4AwP3iLenDSJma
+         SxxmwrdKbF3/CjkVUyuz4zozkRv/mMmwj5HgGB3z4bJGUsgtCs6Fl34Z6kGcbiJANGko
+         PoTzj3stmlbCCMPtY59Nd2pREA0HvIcgKjjcFLw35GkQg61LNtJHrgyGxq5WCten16ct
+         Tjdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=EUYRMMEyPJpxFOhrkuGpilDGDx52K6hnZYHlQem+XY4=;
+        b=ETZCJcg5O9ycdJ0lZAnc2LRKLGS7udY2VhQaL+zftzMRcA4Xh8EYuiMpu0gqYPLiSA
+         0YxGyptNVO/a+qitVARAwRqJzET+MqNz73egfx+9IzgsB8Fpff04QVf7voKXJ85WwSEw
+         4mjqXYTmpPSyJ0iiSduraHKa6y42V3dtSWyCtzvEItnsRu5sMGSeWREx4H95xnF0cqjz
+         6fiDeRgwgrxHxW7EQiDbD3vfWvVCRNQh21hakPHfGG6Jbj3EJNeV08qQe/ZDoCZSyBzU
+         hfw0J30bOFcxaLbZ3VEq6wLU+oa+br7y6U3eo3s+4f/TCuv1bRkWu32bVvjC0j7U/IKO
+         okSA==
+X-Gm-Message-State: AOPr4FWUJBYMn0Fiubx1JpIslEsTIeZA51w43bZTHNRK9tyBtoWb1YlWT/J692fqthC8Uwlq62c8BbtRmsr2mNWy
+X-Received: by 10.50.111.15 with SMTP id ie15mr3895111igb.94.1461186343245;
+ Wed, 20 Apr 2016 14:05:43 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Wed, 20 Apr 2016 14:05:43 -0700 (PDT)
+In-Reply-To: <xmqqh9ewukhw.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292078>
 
-larsxschneider@gmail.com writes:
+On Wed, Apr 20, 2016 at 12:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>>> 1. After cloning
+>>>
+>>>     git clone http://localhost:8080/.git
+>>>
+>>>    I cannot 'submodule update' the sub1 in the clone since its url after
+>>>    'submodule init' would be  http://localhost:8080/.git/sub1 .  If I manually fix
+>>>    it up -- it seems to proceed normally since in original repository I have
+>>>    sub1/.git/ directory and not the "gitlink" for that submodule.
+>>
+>> So the expected URL would be  http://localhost:8080/sub1/.git ?
+>>
+>> I thought you could leave out the .git prefix, i.e. you can type
+>>
+>>      git clone http://localhost:8080
+>>
+>> and Git will recognize the missing .git and try that as well. The relative URL
+>> would then be constructed as http://localhost:8080/sub1, which will use the
+>> same mechanism to find the missing .git ending.
+>
+> I may be missing the subtleties, but if you are serving others from
+> a non-bare repository with submodules, I do not think you would want
+> to expose the in-tree version of the submodule in the first place.
 
-> -        pointerContents = [i+'\n' for i in pointerFile.split('\n')[2:][:-1]]
-> -        oid = pointerContents[1].split(' ')[1].split(':')[1][:-1]
-> +
-> +        # Git LFS removed the preamble in the output of the 'pointer' command
-> +        # starting from version 1.2.0. Check for the preamble here to support
-> +        # earlier versions.
-> +        # c.f. https://github.com/github/git-lfs/commit/da2935d9a739592bc775c98d8ef4df9c72ea3b43
-> +        preamble = 'Git LFS pointer for ' + contentFile + '\n\n'
-> +        if pointerFile.startswith(preamble):
-> +            pointerFile = pointerFile[len(preamble):]
-> +
-> +        oidEntry = [i for i in pointerFile.split('\n') if i.startswith('oid')]
-> +        oid = oidEntry[0].split(' ')[1].split(':')[1]
->          localLargeFile = os.path.join(
->              os.getcwd(),
->              '.git', 'lfs', 'objects', oid[:2], oid[2:4],
-> @@ -1073,7 +1082,7 @@ class GitLFS(LargeFileSystem):
->          )
->          # LFS Spec states that pointer files should not have the executable bit set.
->          gitMode = '100644'
-> -        return (gitMode, pointerContents, localLargeFile)
-> +        return (gitMode, pointerFile, localLargeFile)
+Well I would imagine that is the exact point.
+If I was not trying to expose my state, I could ask you to
+obtain your copy from $(git remote get-url origin) just as I did.
 
-It seems to me that you used to return pointerContents which is an
-array of lines (each of which are LF terminated); the updated one
-returns pointerFile which is a bare string with many lines.
+I would imagine, if I have a problem with some repo I can tell my
+coworker or others to get my copy to took into that exact state.
+(Or I want to transfer state from workstation to laptop to
+continue working)
 
-Is that change intentional?  Does the difference matter to the
-caller of this method?  Even if it doesn't, is it a good idea to
-change it as part of this commit?
+Without submodules this workflow works. So I'd expect it
+to work with submodules as well eventually. Also we probably don't
+want to mix cloning the superproject from this non bare repo and
+the generic submodule locations as the superproject may have
+advanced submodule pointers to commits which are not present
+in the generic submodule remotes.
 
->      def pushFile(self, localLargeFile):
->          uploadProcess = subprocess.Popen(
-> diff --git a/t/t9824-git-p4-git-lfs.sh b/t/t9824-git-p4-git-lfs.sh
-> index 0b664a3..ca93ac8 100755
-> --- a/t/t9824-git-p4-git-lfs.sh
-> +++ b/t/t9824-git-p4-git-lfs.sh
-> @@ -13,6 +13,10 @@ test_file_in_lfs () {
->  	FILE="$1" &&
->  	SIZE="$2" &&
->  	EXPECTED_CONTENT="$3" &&
-> +	sed -n '1,1 p' "$FILE" | grep "^version " &&
-> +	sed -n '2,2 p' "$FILE" | grep "^oid " &&
-> +	sed -n '3,3 p' "$FILE" | grep "^size " &&
-> +	test_line_count = 3 "$FILE" &&
->  	cat "$FILE" | grep "size $SIZE" &&
->  	HASH=$(cat "$FILE" | grep "oid sha256:" | sed -e "s/oid sha256://g") &&
->  	LFS_FILE=".git/lfs/objects/$(echo "$HASH" | cut -c1-2)/$(echo "$HASH" | cut -c3-4)/$HASH" &&
+So for the non-bare case I would really expect to be able to "copy"
+the remote including submodules from that remote?
+
+We could reason about only providing this for the superproject though
+and not for submodules, i.e. cloning from the non bare submodule
+could be not supported. (If you really want that non bare submodule,
+you can still clone it manually from
+
+    $GIT_DIR_SUPER_PROJECT/modules/$MODULE_NAME
+
+
+
+>
+> These $submodule/.git files point via "gitdir:" to their real
+> repository location, don't they?
+
+Yes they do.
+
+> And I would think that they are
+> what you would want to expose to the outside world.  Your in-tree
+> submodules may come and go as you checkout different branches in
+> your working tree, but these copies at their real locations will
+> stay.
+
+Right instead of cloning $WORKTREE/sub/.git you rather want
+$GITDIR/module/sub
+
+(GITDIR and WORKTREE from the superprojects point of view)
+
+The problem with a copy of a superproject including submodules is
+the way cloning submodules work.
+
+  1) clone the superproject
+  2) for each gitlink in the tree, consult the .gitmodules file
+  3) if we have a match in the .gitmodules file, clone from there
+
+So currently the protocol doesn't allow to even specify the submodules
+directories. In case the remote superproject is non bare in 1) the remote
+would need to advertise the submodule repository URLS separately,
+such that the cloning can be performed from those direct copies.
+
+
+Thanks,
+Stefan
+
+>
+>
