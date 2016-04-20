@@ -1,84 +1,92 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v5 10/15] update-index: enable/disable watchman support
-Date: Wed, 20 Apr 2016 15:50:40 -0400
-Organization: Twitter
-Message-ID: <1461181840.5540.171.camel@twopensource.com>
-References: <1461108489-29376-1-git-send-email-dturner@twopensource.com>
-	 <1461108489-29376-11-git-send-email-dturner@twopensource.com>
-	 <CACsJy8D34SKcA0dsG0ZrsOZiOFLwgEuG-TJ914t4qFV1xZGnew@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: problems serving non-bare repos with submodules over http
+Date: Wed, 20 Apr 2016 12:51:23 -0700
+Message-ID: <xmqqh9ewukhw.fsf@gitster.mtv.corp.google.com>
+References: <20160420152209.GH23764@onerussian.com>
+	<CAGZ79kYS-F1yKpNP7jmhTiZT1R_pucUBBTCbmHKZz6Xd6dy8EA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 20 21:51:04 2016
+Content-Type: text/plain
+Cc: Yaroslav Halchenko <yoh@onerussian.com>,
+	Git Gurus hangout <git@vger.kernel.org>,
+	Benjamin Poldrack <benjaminpoldrack@gmail.com>,
+	Joey Hess <id@joeyh.name>, Jens Lehmann <Jens.Lehmann@web.de>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Apr 20 21:51:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asy9O-0005eB-GX
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 21:51:02 +0200
+	id 1asy9t-00061B-SA
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 21:51:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752114AbcDTTu7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2016 15:50:59 -0400
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:35391 "EHLO
-	mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752141AbcDTTun (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 15:50:43 -0400
-Received: by mail-qk0-f177.google.com with SMTP id q76so8096405qke.2
-        for <git@vger.kernel.org>; Wed, 20 Apr 2016 12:50:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:mime-version:content-transfer-encoding;
-        bh=R90oyYV5TZrCMYck4ZiwzqCUqYcOCNnnZpaiS3lFV/Y=;
-        b=yk52EDHbvTenUJZsKaEvIyHxnvc/WiMqUEb5lGzHAUg1vd1eUnYoywB4DWbC0CefiW
-         ubeEOLY41ggE2QNPAUN3Kg50Zi88UlFkpheRM8PAXrsqZfgLfmKX1zuWtOPvfT0Svuy+
-         1mAmgtDRNjyQuNUgo0Ai9INmUbZufpmSNlSQ9Th+FZ9a9qBoYgzhVb/5ayfFfojx4wGo
-         n1bHcJTVwwnX0hZLMXYpnbJCgmZOQKSKCbjqL55s0RepQIcxRI+WoPtPCQO17hSdaGjs
-         Ab+9+r0r9NH4AUjct07qQgMl57SP5kmJXTRKNrOh4qh1dT/g0ITfGZd6EC+hETvLQtXw
-         bmBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=R90oyYV5TZrCMYck4ZiwzqCUqYcOCNnnZpaiS3lFV/Y=;
-        b=GHSHdkPHlkNBUOCT5exiDKYffmPFOyFYMG4VymuKb66uDM/TOlO1+GP1zppX60iIoY
-         mrSy4Jm0qNiF+fZwd8z2EmRJfNbz4ecYHLB+m9WuY9iJLgNdCB8vlROBVmtwNvoz4QBb
-         sOR5D58yxgm/fsJ5xBQkFoHAPEqJOJoyiNYhQ9Xqh7aJcB4WyxM+BKsx1V8sA0Qxji7t
-         u6EynKr2yjdAoROJwIN76/pY6PFRWYGWHaMCA7WXyUwTD7PyntzqTnqbLO0ozWg4M6QU
-         f7VTh+MiwvJ4zNnSY7aCXKimrU/YqzpICfbBGaHFhfF1xz1i/PETfVYza37O+6e3OKGO
-         VB4A==
-X-Gm-Message-State: AOPr4FVZ6OBWD/P9Fydf8aXJm2KbOBsgWhj6fYIyxjWQfYjkmlhD8xx3zVXOdY8r8cWZOQ==
-X-Received: by 10.55.79.207 with SMTP id d198mr13902178qkb.49.1461181841844;
-        Wed, 20 Apr 2016 12:50:41 -0700 (PDT)
-Received: from ubuntu (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id 139sm5539511qho.46.2016.04.20.12.50.40
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 20 Apr 2016 12:50:41 -0700 (PDT)
-In-Reply-To: <CACsJy8D34SKcA0dsG0ZrsOZiOFLwgEuG-TJ914t4qFV1xZGnew@mail.gmail.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S1752260AbcDTTva (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2016 15:51:30 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50494 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752257AbcDTTv1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 15:51:27 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D112612640;
+	Wed, 20 Apr 2016 15:51:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RkKt+y+LN0NQ7oiDtMck0pP6XKc=; b=yL14KG
+	xst6kNDUgdN65bU3BMtWh84EXNPdTySYcGaOKOvaKjiKItWi549HS9AF8/+0f4bZ
+	j1J05eexhX6rHgfwXM04v8heBe6gITM4Q/LZKsnOmoOtitCeLwmi4wtg18RcWc/c
+	jBJ/PMGhrfVx5HIYrke78FLyHrxxu1VbMdpLg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rSup8jOJDcB3W1HSIb71IAxrLf5Eqnh9
+	Q3kZXX3KTsFlUJwko96gMdCVaJJoOorIq8wLrWJp/HriGF0pUck4YED0iTNGK/k8
+	Nm/6Y2OgOsri8lf88UBIe/YLX6uOSUytAYfKScOEx1L6DmZMVXsk6HK9sS3/i6eJ
+	wEiaTUs/JkQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C5E8C1263F;
+	Wed, 20 Apr 2016 15:51:25 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2606C1263E;
+	Wed, 20 Apr 2016 15:51:25 -0400 (EDT)
+In-Reply-To: <CAGZ79kYS-F1yKpNP7jmhTiZT1R_pucUBBTCbmHKZz6Xd6dy8EA@mail.gmail.com>
+	(Stefan Beller's message of "Wed, 20 Apr 2016 09:14:08 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 43AE9F8A-0731-11E6-BA39-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292067>
 
-On Wed, 2016-04-20 at 06:45 +0700, Duy Nguyen wrote:
-> On Wed, Apr 20, 2016 at 6:28 AM, David Turner <
-> dturner@twopensource.com> wrote:
-> > +       if (use_watchman > 0) {
-> > +               the_index.last_update    = xstrdup("");
-> > +               the_index.cache_changed |= WATCHMAN_CHANGED;
-> > +       } else if (!use_watchman) {
-> > +               the_index.last_update    = NULL;
-> > +               the_index.cache_changed |= WATCHMAN_CHANGED;
-> > +       }
-> > +
-> 
-> We probably should warn people if index-helper is not built with
-> watchman support, which makes this knob completely useless. If
-> watchman fails to start, that's a separate problem..
+Stefan Beller <sbeller@google.com> writes:
 
-Will warn.
+>> 1. After cloning
+>>
+>>     git clone http://localhost:8080/.git
+>>
+>>    I cannot 'submodule update' the sub1 in the clone since its url after
+>>    'submodule init' would be  http://localhost:8080/.git/sub1 .  If I manually fix
+>>    it up -- it seems to proceed normally since in original repository I have
+>>    sub1/.git/ directory and not the "gitlink" for that submodule.
+>
+> So the expected URL would be  http://localhost:8080/sub1/.git ?
+>
+> I thought you could leave out the .git prefix, i.e. you can type
+>
+>      git clone http://localhost:8080
+>
+> and Git will recognize the missing .git and try that as well. The relative URL
+> would then be constructed as http://localhost:8080/sub1, which will use the
+> same mechanism to find the missing .git ending.
+
+I may be missing the subtleties, but if you are serving others from
+a non-bare repository with submodules, I do not think you would want
+to expose the in-tree version of the submodule in the first place.
+
+These $submodule/.git files point via "gitdir:" to their real
+repository location, don't they?  And I would think that they are
+what you would want to expose to the outside world.  Your in-tree
+submodules may come and go as you checkout different branches in
+your working tree, but these copies at their real locations will
+stay.
