@@ -1,108 +1,157 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Is there a "git reset --keep <sha1> || git reset --hard <sha1>" alternative?
-Date: Wed, 20 Apr 2016 19:18:14 +0200
-Message-ID: <CACBZZX6k6sFv2GWOzu0Ow1T+5ci2gmMOvaD37bvbm1_qfetr8Q@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: bug: git submodule add fails when .git is a symlink
+Date: Wed, 20 Apr 2016 10:31:47 -0700
+Message-ID: <CAGZ79kZ2A6c9H7C4xPXJ1Lmh1TaVy+VgcjxvKrgcJb0-4LRvhA@mail.gmail.com>
+References: <20160301204218.GA4083@kitenet.net>
+	<CAGZ79kY6Lf6u0=s8J_cqRNFsry4nu2SdL0GZ2gkFsu6gBrB65Q@mail.gmail.com>
+	<xmqq8u217tqa.fsf@gitster.mtv.corp.google.com>
+	<20160301231720.GB3731@kitenet.net>
+	<20160302084904.GA30295@sigill.intra.peff.net>
+	<CAGZ79kbpyu34kz7gRgro-HZqNvpmRoCsyQatZRbxP19bk1gkfg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Christian Couder <chriscool@tuxfamily.org>
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 20 19:18:44 2016
+Cc: Joey Hess <id@joeyh.name>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 20 19:31:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asvlv-0000Sh-CX
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 19:18:39 +0200
+	id 1asvyj-00018X-BQ
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 19:31:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751984AbcDTRSf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2016 13:18:35 -0400
-Received: from mail-qg0-f53.google.com ([209.85.192.53]:34407 "EHLO
-	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751791AbcDTRSf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 13:18:35 -0400
-Received: by mail-qg0-f53.google.com with SMTP id c6so32766455qga.1
-        for <git@vger.kernel.org>; Wed, 20 Apr 2016 10:18:34 -0700 (PDT)
+	id S1751371AbcDTRbt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2016 13:31:49 -0400
+Received: from mail-io0-f178.google.com ([209.85.223.178]:35367 "EHLO
+	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751185AbcDTRbs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 13:31:48 -0400
+Received: by mail-io0-f178.google.com with SMTP id g185so59763958ioa.2
+        for <git@vger.kernel.org>; Wed, 20 Apr 2016 10:31:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=t1M00ClES58rWn9CND0/u68arEV0N0HcXmY32CSAJ3Q=;
-        b=YGMW77F5G8WKqiS0vGOz38ZSTJBQfGWKUfQvkSsis7uzZin+vRvjaaKDXe3fWsKg+0
-         w0cLLa9y4y06HTcPzr9Oc8Va3gFZbotJw4SKj1eAU7p8jNpkCCPkcZ92JMyAJTTFCjZk
-         BYvSJ4g5SwBkVTNhjluWtFyt77gy464r8EHU9XYiK1P8vY2JsW/B2BLdACRTiBAe+8bz
-         k6OrBAbZ5Xd8YVQqpqO33yflfg9E65/e3uw3h6sNGgFtljBfqHOueKUcFXkujF+JK6PA
-         GNJ+GE8yL839apxCRwCVo/jKrdkNJlf14ywdEFusE/xfrTCZtI7KQTDm01BFfeitA/yr
-         9scg==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=opNkYuEcuglBR7CxI8T+/ylwBMM+r22v+PmS75SvAc4=;
+        b=E0Uu8zddexV5Exe6baznoNf4kPgOFgUaN+PcqECbzYb3sFe98k9wg/p3FZoFN5xUaJ
+         QX0yGeiqjeZDA4VMMWjOk6mNAYjPOSWiVUT/UhvLch0L6xs92zFoo1D3hbm8fIKdSqh7
+         Jmsq5BW57K++TntdiqZHYojUFAdQnwAX+LvGlsQHUgvaZwVDEO6IwzoXdtkyhwT7PCCS
+         37JJHBopYQVKqalv/wU+Eq1gjvyap1Lrl4RyOpWxOdvoMYx76GgLGYQWyhn2SGdcIT1g
+         GlQm16qbk2awRj3T++HE/YHRMECXIR3Kur5p/UK/8sy40emfkyq3V6r0gi/0Hh2F8khz
+         nymg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=t1M00ClES58rWn9CND0/u68arEV0N0HcXmY32CSAJ3Q=;
-        b=LarNO4tx9RKo0PumJnFhb6PLC0hGsXYZ7uvsKy2zkPG1bfzWLd1vHwEPEyPh3iO6Gr
-         BDHT9bY2mLWuO07ahh3v9g0YZSS9B78StW7J5a9T/F6kzmob1V4EH6kBXQnDriCFkpg5
-         oLnGmpfDsthn/E/ABZoahl9f7u3adyIGLEQMbb1nOgCDdUdfN9UeR2rh00TjxIv9n/EV
-         04lzMf2pTciIc/zUjzYDMssupm2GUIccHBWyPzpzDAJ2wX5an29MbdTgb4T0QOU2lFVs
-         Nc95oKSoobuUx7FvwIujY+inPGBrxp67/QWshcDdWnLLwvDXgxc+eQqE5mmiEiwnr1Jf
-         O5Qw==
-X-Gm-Message-State: AOPr4FVDXwVlMYPCvywWfGvYQEjpI8TkGQ6BWBhI0LI+NyAYUQSKmEyfax1SEVeuhTYYIZXCz/mteZ8xDof9BA==
-X-Received: by 10.140.218.82 with SMTP id o79mr13263999qhb.33.1461172714158;
- Wed, 20 Apr 2016 10:18:34 -0700 (PDT)
-Received: by 10.55.77.82 with HTTP; Wed, 20 Apr 2016 10:18:14 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=opNkYuEcuglBR7CxI8T+/ylwBMM+r22v+PmS75SvAc4=;
+        b=OLAx+3SoS5tgcN2u/XBASykP0wXM04xpN+JVQhmQ8F/UM1FiZVlccHSLJ9hzbF/DhL
+         +gu57PI1VFeAYmBufx0euMubVdvn2P3iV3spLWHerk74iPPtfK+FOlQ7fSWEHhiB4RIr
+         0jsoSwJUogLLqZQD/blPFKDJWHGp3pOyosevo65iVnKXLbaBnau+i+5KsfFmQPv9PhpO
+         Lg/A4rsTovAXQCdi+W3cWo/BKexOlM0I8iwk9YVN8wW2DE3JUcIHaN4P9ncO23+udXRq
+         Zgzv6jHukUrFTazW8yVmlzXOPLmX38h17g6b/N2MEyg/pK/VspwuimsdyLcFSoRGQ4cF
+         0iCw==
+X-Gm-Message-State: AOPr4FVP4ZA6V00mcyRtz+pQJmK2/bd1aw4Y6N5GsGkFoQSKGNTk4kLreudaPJHmMkIFut49cJDJzR5aPZOjODkN
+X-Received: by 10.107.161.68 with SMTP id k65mr13023728ioe.110.1461173507265;
+ Wed, 20 Apr 2016 10:31:47 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Wed, 20 Apr 2016 10:31:47 -0700 (PDT)
+In-Reply-To: <CAGZ79kbpyu34kz7gRgro-HZqNvpmRoCsyQatZRbxP19bk1gkfg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292047>
 
-If you check out a git repository and chmod a checked-in file there
-there away from git defaults then "git reset --hard" will re-chmod it.
+On Wed, Apr 20, 2016 at 9:41 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Wed, Mar 2, 2016 at 12:49 AM, Jeff King <peff@peff.net> wrote:
+>> On Tue, Mar 01, 2016 at 07:17:20PM -0400, Joey Hess wrote:
+>>
+>>> Junio C Hamano wrote:
+>>> > A more pertinent question may be which version of Git did the above
+>>> > ever work, I guess.  We fairly liberally chdir around and I do not
+>>> > think we deliberately avoid assuming that "cd .git && cd .." might
+>>> > not come back to the original directory, for example, so I wouldn't
+>>> > be surprised if it never worked.
+>>>
+>>> IIRC git used symlinks for .git in submodules before version 1.7.8, so I
+>>> guess that older versions supported that pretty well.
+>>>
+>>> This one case is the only time I've seen a symlink for .git present a
+>>> problem so far.
+>>
+>> Fortunately you provided a simple reproduction case, so it is easy to
+>> bisect. It did work in v1.7.8, and broke in d75219b (submodules: always
+>> use a relative path from gitdir to work tree, 2012-03-04). Not
+>> surprising, I guess. It presumably worked before only because we were
+>> using absolute paths.
+>
+> So I was looking into this bug again, as it was linked from another bug report.
+>
+> fatal: Could not chdir to '../../../sub': No such file or directory
+>
+> sounds like a path issue with the prefix thing.
+>
+> Using the " echo "gitdir: ../gitdir/.git" > .git" workaround does still work,
+> I'll see if there is another way to fix it with actual links.
 
-The use-case for not having this happen is if you e.g. have some
-inotify thing or a stat() loop monitoring changes to the files, and
-you'd like them to fire on "real" updates, not just updates that were
-introduced because something re-chmoded a file.
+So I debugged into that using a test case
 
-E.g. on current git.git master:
+test_expect_success 'submodules are not confused by linked gitdir' '
+        git init gitdir &&
+        mkdir worktree &&
+        (
+                cd worktree &&
+                #echo "gitdir: ../gitdir/.git" >.git &&
+                ln -s ../gitdir/.git .git &&
+                test_pause &&
+                git submodule add ../ sub &&
+                test_pause
+        ) &&
+        test_pause &&
+        git status
+'
 
-    $ ls -l INSTALL ; chmod 600 INSTALL ; git reset --hard @{u} ; ls -l INSTALL
-    -rw-r--r-- 1 avar avar 9147 Apr 20 17:11 INSTALL
-    HEAD is now at e6ac6e1 Fifth batch for post 2.8 cycle
-    -rw-r--r-- 1 avar avar 9147 Apr 20 17:12 INSTALL
+My observation: the error comes up in `git submodule add`,
+which consists of 2 parts: the cloning and then the checkout.
+The cloning works fine using the new "submodule--helper update-clone",
+the checkout however breaks. So in your original test case you can go
+into the submodule and run
 
-What I'd like is for the permissions not to be altered:
+    git checkout -f -q
 
-    $ ls -l INSTALL ; chmod 600 INSTALL ; git reset --keep @{u} ; ls -l INSTALL
-    -rw-r--r-- 1 avar avar 9147 Apr 20 17:12 INSTALL
-    -rw------- 1 avar avar 9147 Apr 20 17:12 INSTALL
+and you'll get the error message
 
-But I don't want this to happen:
+    fatal: Could not chdir to '../../../sub': No such file or directory
 
-    $ echo "Blah" > INSTALL && git add INSTALL && git commit -m"blah"
-    [master d29463e] blah
-     1 file changed, 1 insertion(+), 223 deletions(-)
-     rewrite INSTALL (100%)
-    $ ls -l INSTALL ; chmod 600 INSTALL ; git reset --keep @{u} ; ls -l INSTALL
-    -rw------- 1 avar avar 5 Apr 20 17:14 INSTALL
-    error: Entry 'INSTALL' not uptodate. Cannot merge.
-    fatal: Could not reset index file to revision '@{u}'.
-    -rw------- 1 avar avar 5 Apr 20 17:14 INSTALL
+Looking at sub/.git:
 
-Instead I want:
+    $ cat .git
+    gitdir: ../.git/modules/sub
+    $ ls ../.git/modules/sub
+    HEAD  branches config description  hooks  info  logs objects
+packed-refs  ref
 
-    $ ls -l INSTALL ; chmod 600 INSTALL ; git reset --keep @{u} || git
-reset --hard @{u}  ; ls -l INSTALL
-    -rw------- 1 avar avar 5 Apr 20 17:14 INSTALL
-    error: Entry 'INSTALL' not uptodate. Cannot merge.
-    fatal: Could not reset index file to revision '@{u}'.
-    HEAD is now at e6ac6e1 Fifth batch for post 2.8 cycle
-    -rw-r--r-- 1 avar avar 9147 Apr 20 17:15 INSTALL
+so that gitlink of the submodule works just fine. The problem is `git checkout`
+or any other core command (I tested with `git status`) doesn't like
+the gitlink pointing to a directory which is symlinked.
 
-And the expectation here is that I'll have something that does a chmod
-after the reset happens, which is fine because we had a "real" change,
-I just don't want the repo to keep having flip-flopping permissions
-because I'd both like:
+I think the issue is a wrongly configured "core.worktree"
+in gitdir/.git/modules/sub/config which contains the "../../../sub".
 
- * Local chmod to be respected
- * Actual file content changes to be wiped away by reset --hard
+So I think the fix needs to be in the vicinity of
+builtin/submodule--helper.c:module_clone
+near the end of the function, where core.worktree is set.
 
-Is there another way to do this, or dare I say alternatively maybe we
-could use another option to reset making it even more confusing :)
+Thanks,
+Stefan
+
+
+>
+>
+>>
+>> -Peff
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
