@@ -1,64 +1,83 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: git rebase -i without altering the committer date
-Date: Wed, 20 Apr 2016 23:47:13 +0200
-Message-ID: <87ega0eyvy.fsf@linux-m68k.org>
-References: <etPan.5717e605.4004d424.12d1@sjackman03-imac.phage.bcgsc.ca>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/5] fix deadlock in git-push
+Date: Wed, 20 Apr 2016 17:51:17 -0400
+Message-ID: <20160420215117.GA18297@sigill.intra.peff.net>
+References: <20160419223945.GA18055@sigill.intra.peff.net>
+ <xmqqwpnst1yb.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Shaun Jackman <sjackman@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 20 23:47:23 2016
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 20 23:51:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aszxy-0005h1-8m
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 23:47:22 +0200
+	id 1at01u-0001mn-0C
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 23:51:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751371AbcDTVrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2016 17:47:20 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:45790 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751308AbcDTVrT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 17:47:19 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3qqwTH0bXfz3hjjj;
-	Wed, 20 Apr 2016 23:47:15 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3qqwTH0MWrzvhNT;
-	Wed, 20 Apr 2016 23:47:15 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id wJ4d77XWlOeT; Wed, 20 Apr 2016 23:47:14 +0200 (CEST)
-X-Auth-Info: lqIJcCUtm/34XGqBzrJywChrejmEkg0TqWQ7HNKqbfSNYj6/yz8ji2W1q4uXspDM
-Received: from igel.home (ppp-88-217-31-255.dynamic.mnet-online.de [88.217.31.255])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Wed, 20 Apr 2016 23:47:14 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id D42872C1F62; Wed, 20 Apr 2016 23:47:13 +0200 (CEST)
-X-Yow: YOW!!
-In-Reply-To: <etPan.5717e605.4004d424.12d1@sjackman03-imac.phage.bcgsc.ca>
-	(Shaun Jackman's message of "Wed, 20 Apr 2016 13:24:45 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.92 (gnu/linux)
+	id S1751324AbcDTVvV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2016 17:51:21 -0400
+Received: from cloud.peff.net ([50.56.180.127]:53260 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751179AbcDTVvU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 17:51:20 -0400
+Received: (qmail 16827 invoked by uid 102); 20 Apr 2016 21:51:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 Apr 2016 17:51:20 -0400
+Received: (qmail 3368 invoked by uid 107); 20 Apr 2016 21:51:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 Apr 2016 17:51:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Apr 2016 17:51:17 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqwpnst1yb.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292086>
 
-Shaun Jackman <sjackman@gmail.com> writes:
+On Wed, Apr 20, 2016 at 02:17:16PM -0700, Junio C Hamano wrote:
 
-> I'd like to insert a commit between two commits without changing the committer date or author date of that commit or the subsequent commits. I'd planned on using `git rebase -i` to insert the commit. I believe it retains the author date, but changes the committer date to the current time. I've seen the options `--committer-date-is-author-date` and `--ignore-date`, but I don't believe either of those options does what I want. If no such option currently exists to leave the committer and author date unchanged, is there any chance that this functionality could please be implemented?
+> Jeff King <peff@peff.net> writes:
+> 
+> > The first patch below fixes the deadlock. Unfortunately, it turns it
+> > into a likely SIGPIPE death. Which is an improvement, but not ideal.
+> >
+> > Patches 2 and 3 address that by fixing the way we handle SIGPIPE in
+> > async threads.
+> >
+> > Patches 4 and 5 are cleanups to earlier topics that are enabled by the
+> > new SIGPIPE handling.
+> >
+> >   [1/5]: send-pack: close demux pipe before finishing async process
+> >   [2/5]: run-command: teach async threads to ignore SIGPIPE
+> >   [3/5]: send-pack: isolate sigpipe in demuxer thread
+> >   [4/5]: fetch-pack: isolate sigpipe in demuxer thread
+> >   [5/5]: t5504: drop sigpipe=ok from push tests
+> 
+> Thanks for a very well explained series.
+> 
+> We do not call finish_async (rather, we do not use async) from that
+> many places, and from a cursory look this codepath is the only case
+> where we may encounter this kind of deadlock (the ones in
+> receive-pack is about relaying the error messages back to the other
+> end over sideband multiplexing)?
 
-The easiest way to implement that is to add a graft to redirect the
-parent of the second commit to the inserted commit, then use git
-filter-branch to make the graft permanent.
+Yeah, I checked the other demuxer in fetch-pack, but it does not have
+any early returns like this (it just dies :) ).
 
-Andreas.
+It does not do an explicit close on demux.out, but I think it is
+effectively closed when we hand it off to index-pack/unpack-objects via
+cmd.in.
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Arguably finish_async() should "close(demux.out)" itself, but that felt
+like an ownership violation. Yes, that's how "struct async" passes out
+the descriptor, but the caller is then expected to handle it, and
+correct callers will typically have closed it themselves, handed it off
+to a sub-process, etc. Closing it in finish_async() runs the risk that
+we just call close() on a descriptor number that is either unattached,
+or attached to some random other thing.
+
+-Peff
