@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 09/12] worktree.c: test if branch being rebased in another worktree
-Date: Wed, 20 Apr 2016 20:24:50 +0700
-Message-ID: <1461158693-21289-10-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 12/12] branch: do not rename a branch under bisect or rebase
+Date: Wed, 20 Apr 2016 20:24:53 +0700
+Message-ID: <1461158693-21289-13-git-send-email-pclouds@gmail.com>
 References: <1460897965-486-1-git-send-email-pclouds@gmail.com>
  <1461158693-21289-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,337 +13,198 @@ Cc: Junio C Hamano <gitster@pobox.com>, rethab.ch@gmail.com,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 15:26:49 2016
+X-From: git-owner@vger.kernel.org Wed Apr 20 15:27:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ass9X-00058K-8t
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 15:26:47 +0200
+	id 1ass9p-0005JX-Rc
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 15:27:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932697AbcDTN0i convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Apr 2016 09:26:38 -0400
-Received: from mail-pf0-f182.google.com ([209.85.192.182]:36427 "EHLO
-	mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752908AbcDTN0h (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 09:26:37 -0400
-Received: by mail-pf0-f182.google.com with SMTP id e128so18322658pfe.3
-        for <git@vger.kernel.org>; Wed, 20 Apr 2016 06:26:37 -0700 (PDT)
+	id S1753726AbcDTN05 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Apr 2016 09:26:57 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:35903 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753097AbcDTN0z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 09:26:55 -0400
+Received: by mail-pa0-f43.google.com with SMTP id er2so17938277pad.3
+        for <git@vger.kernel.org>; Wed, 20 Apr 2016 06:26:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HzLVMsfScglndJCzVZ+P4kFvd7xjl4sVlVJsuTAL72c=;
-        b=kmnW92z52Beh2fcRfJs+3OkTe018criwu1vZRLIQdWmvz/hX146HycPlPr3XXL/Bak
-         h8C0Xbjz1gRsXEYaJHzVF9ainY4kGV1GXYYpeTQuzRpxn1LNRcN5kVTLn9JpFDWOGSye
-         5ZSnRma6YfsUFp2MjSP9uCABaYwC6K2S1dVccw2Yt1PadDkkRmBWXsWaPRhD+rECnUHd
-         fwG8SahlRGH0vnFEMT/ZpvSZRhmwKz8kP8hpKPUtLc5mhsCZOZruKqkEj7uTsuMjoiiz
-         r9sKoLppSzSrfwBS/uzxwAfsnkHwYX90EZKocdBq4XBReyS31k/yBpJZgyfkNP8cEExN
-         EfEg==
+        bh=95cUSQsMwa3KplkFnGZXh2+YWzAsDLG+LXmx/oHnx/0=;
+        b=JnvmrWVoGc9NRjfg/IpieRn0y+lr8eDpfcrjVMpePaSj9MmZJKhpwVH93v/nFpNdae
+         5uMGOB0VGqr7KJ/lABQGmUa7sZLwLsjWSkbIzSa7UStPi3bX6apr0nmJTFVNbAsEh66d
+         zFcxO92d/Rpv+1AhzmSu+Gmaxn+X/AxtNJxdU0QsdAdNVBhMzgG8GnKhRW6GInDb1Un/
+         vTV7Pndsw7ZkUVc9fY5+4Nt+Pr79SaFZLhX8WhH3XiAY4D9S4FV+XKctw5MXfSjJwByc
+         s5HrpK8l9Glbar8QiAkmNn5zXAEys+VbVL5WrvWM2RfyoRG1MqrdoWqTc4EghezqtZP2
+         q42w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HzLVMsfScglndJCzVZ+P4kFvd7xjl4sVlVJsuTAL72c=;
-        b=VDlVBmY5hSi79MSQfr7MUk1NJy+UpSe095tU2fZ8r4Ar3JR0xE+qLbLpraN2pEoGnE
-         ck+yCWhFTuZkPcr6igip/Yls7N9566ASuxDh8jhCk5KiSC55fZfR+lfK5XP9oGa6Poqm
-         6eIePn0jIhdsOGVerQTg/FlRX3cktqYkJHg79yGCk2bXV2MmL0pUk1ztloG8w44D3/gy
-         vfG6yeZ/5vSsiwDCQeguGz07hYWd9ZtrshWRL+Y3K7vEj6zqcalbkYgUa1AE/wmBCc08
-         jUwBoCDt7MHXUUXeBs3oOLS6X4enB21TnCcmLLgJcj94SPdSSfDuFkao09UaKqdRDlcC
-         y1mA==
-X-Gm-Message-State: AOPr4FXwZDr5en3Rj3Gp2AO6sssS/7ulrsjAoBGynlatoFhDjjPjL03gKBSsSrKpAW4uLA==
-X-Received: by 10.98.1.197 with SMTP id 188mr12274249pfb.8.1461158796728;
-        Wed, 20 Apr 2016 06:26:36 -0700 (PDT)
+        bh=95cUSQsMwa3KplkFnGZXh2+YWzAsDLG+LXmx/oHnx/0=;
+        b=ju6EQSL+CwPjd3FINSxPFqpvhzhAOA+45UWBXGQpMHAOH+HH6cmApBvdWrThr28fLt
+         5ocYgnhjIL2wAVQurxuvdGUPasJwwkm5rB7Y6cGVxCH4Wvr/Fn7d3GyQ2AQpPm7ecrk4
+         eDHB2B8iV1Hjbwelk7bjG1iyPoAQ/WJk1acPFlxP9W2BUBN5aBwKmWnOXgodq4+2rUvS
+         +lAEqp0XC5KilsdMfU+8e7KIaNSeXhteQ6POImHpQDTadCu5OSKTNGF4TNBXsVACVsSZ
+         HtLb1Njsda9YSXK72BPOsc9dxPbqsgwnzRp48tYUt1/++Litl7fyKXLqdX+5WBH6shhF
+         FH2A==
+X-Gm-Message-State: AOPr4FXnbFd4Z2nZnyrREYTAovnuZ8qJRCWrtdEikSLLWGpEpQ5hi3Fhp19HdnSWM/rjrw==
+X-Received: by 10.66.162.39 with SMTP id xx7mr12007308pab.97.1461158814985;
+        Wed, 20 Apr 2016 06:26:54 -0700 (PDT)
 Received: from lanh ([171.232.186.157])
-        by smtp.gmail.com with ESMTPSA id qb1sm31948669pac.44.2016.04.20.06.26.32
+        by smtp.gmail.com with ESMTPSA id t85sm13379228pfi.55.2016.04.20.06.26.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Apr 2016 06:26:35 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 20 Apr 2016 20:26:48 +0700
+        Wed, 20 Apr 2016 06:26:53 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Wed, 20 Apr 2016 20:27:07 +0700
 X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
 In-Reply-To: <1461158693-21289-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292022>
 
-This function find_shared_symref() is used in a couple places:
+The branch name in that case could be saved in rebase's head_name or
+bisect's BISECT_START files. Ideally we should try to update them as
+well. But it's trickier (*). Let's play safe and see if the user
+complains about inconveniences before doing that.
 
-1) in builtin/branch.c: it's used to detect if a branch is checked out
-   elsewhere and refuse to delete the branch.
-
-2) in builtin/notes.c: it's used to detect if a note is being merged in
-   another worktree
-
-3) in branch.c, the function die_if_checked_out() is actually used by
-   "git checkout" and "git worktree add" to see if a branch is already
-   checked out elsewhere and refuse the operation.
-
-In cases 1 and 3, if a rebase is ongoing, "HEAD" will be in detached
-mode, find_shared_symref() fails to detect it and declares "no branch i=
-s
-checked out here", which is incorrect.
-
-This patch tightens the test. If the given symref is "HEAD", we try to
-detect if rebase is ongoing. If so return the branch being rebased. Thi=
-s
-makes checkout and branch delete operations safer because you can't
-checkout a branch being rebased in another place, or delete it.
-
-Special case for checkout. If the current branch is being rebased,
-git-rebase.sh may use "git checkout" to abort and return back to the
-original branch. The updated test in find_shared_symref() will prevent
-that and "git rebase --abort" will fail as a result.
-find_shared_symref() and die_if_checked_out() have to learn a new
-option ignore_current_worktree to loose the test a bit.
+(*) If we do it, bisect and rebase need to provide an API to rename
+branches. We can't do it in worktree.c or builtin/branch.c because
+when other people change rebase/bisect code, they may not be aware of
+this code and accidentally break it (e.g. rename the branch file, or
+refer to the branch in new files). It's a lot more work.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- branch.c                |  4 ++--
- branch.h                |  2 +-
- builtin/branch.c        |  2 +-
- builtin/checkout.c      |  2 +-
- builtin/notes.c         |  2 +-
- builtin/worktree.c      |  4 ++--
- t/t2025-worktree-add.sh | 38 ++++++++++++++++++++++++++++++++++++++
- worktree.c              | 32 +++++++++++++++++++++++++++++++-
- worktree.h              |  3 ++-
- 9 files changed, 79 insertions(+), 10 deletions(-)
+ builtin/branch.c        | 25 +++++++++++++++++++++++++
+ t/t2025-worktree-add.sh |  8 ++++++++
+ worktree.c              |  8 ++++----
+ worktree.h              |  3 +++
+ 4 files changed, 40 insertions(+), 4 deletions(-)
 
-diff --git a/branch.c b/branch.c
-index a84fb2c..8e323d3 100644
---- a/branch.c
-+++ b/branch.c
-@@ -334,11 +334,11 @@ void remove_branch_state(void)
- 	unlink(git_path_squash_msg());
- }
-=20
--void die_if_checked_out(const char *branch)
-+void die_if_checked_out(const char *branch, int ignore_current_worktre=
-e)
- {
- 	const struct worktree *wt;
-=20
--	wt =3D find_shared_symref("HEAD", branch);
-+	wt =3D find_shared_symref("HEAD", branch, ignore_current_worktree);
- 	if (wt) {
- 		skip_prefix(branch, "refs/heads/", &branch);
- 		die(_("'%s' is already checked out at '%s'"),
-diff --git a/branch.h b/branch.h
-index d69163d..b2f9649 100644
---- a/branch.h
-+++ b/branch.h
-@@ -58,7 +58,7 @@ extern int read_branch_desc(struct strbuf *, const ch=
-ar *branch_name);
-  * worktree and die (with a message describing its checkout location) =
-if
-  * it is.
-  */
--extern void die_if_checked_out(const char *branch);
-+extern void die_if_checked_out(const char *branch, int ignore_current_=
-worktree);
-=20
- /*
-  * Update all per-worktree HEADs pointing at the old ref to point the =
-new ref.
 diff --git a/builtin/branch.c b/builtin/branch.c
-index bcde87d..bf91bbd 100644
+index bf91bbd..3a2eceb 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -221,7 +221,7 @@ static int delete_branches(int argc, const char **a=
-rgv, int force, int kinds,
+@@ -524,6 +524,29 @@ static void print_ref_list(struct ref_filter *filt=
+er, struct ref_sorting *sortin
+ 	ref_array_clear(&array);
+ }
 =20
- 		if (kinds =3D=3D FILTER_REFS_BRANCHES) {
- 			const struct worktree *wt =3D
--				find_shared_symref("HEAD", name);
-+				find_shared_symref("HEAD", name, 0);
- 			if (wt) {
- 				error(_("Cannot delete branch '%s' "
- 					"checked out at '%s'"),
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index efcbd8f..6041718 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1111,7 +1111,7 @@ static int checkout_branch(struct checkout_opts *=
-opts,
- 		char *head_ref =3D resolve_refdup("HEAD", 0, sha1, &flag);
- 		if (head_ref &&
- 		    (!(flag & REF_ISSYMREF) || strcmp(head_ref, new->path)))
--			die_if_checked_out(new->path);
-+			die_if_checked_out(new->path, 1);
- 		free(head_ref);
- 	}
++static void reject_rebase_or_bisect_branch(const char *target)
++{
++	struct worktree **worktrees =3D get_worktrees();
++	int i;
++
++	for (i =3D 0; worktrees[i]; i++) {
++		struct worktree *wt =3D worktrees[i];
++
++		if (!wt->is_detached)
++			continue;
++
++		if (is_worktree_being_rebased(wt, target))
++			die(_("Branch %s is being rebased at %s"),
++			    target, wt->path);
++
++		if (is_worktree_being_bisected(wt, target))
++			die(_("Branch %s is being bisected at %s"),
++			    target, wt->path);
++	}
++
++	free_worktrees(worktrees);
++}
++
+ static void rename_branch(const char *oldname, const char *newname, in=
+t force)
+ {
+ 	struct strbuf oldref =3D STRBUF_INIT, newref =3D STRBUF_INIT, logmsg =
+=3D STRBUF_INIT;
+@@ -553,6 +576,8 @@ static void rename_branch(const char *oldname, cons=
+t char *newname, int force)
 =20
-diff --git a/builtin/notes.c b/builtin/notes.c
-index c65b59a..f154a69 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -852,7 +852,7 @@ static int merge(int argc, const char **argv, const=
- char *prefix)
- 		update_ref(msg.buf, "NOTES_MERGE_PARTIAL", result_sha1, NULL,
- 			   0, UPDATE_REFS_DIE_ON_ERR);
- 		/* Store ref-to-be-updated into .git/NOTES_MERGE_REF */
--		wt =3D find_shared_symref("NOTES_MERGE_REF", default_notes_ref());
-+		wt =3D find_shared_symref("NOTES_MERGE_REF", default_notes_ref(), 0)=
-;
- 		if (wt)
- 			die(_("A notes merge into %s is already in-progress at %s"),
- 			    default_notes_ref(), wt->path);
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index d8e3795..12c0af7 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -205,7 +205,7 @@ static int add_worktree(const char *path, const cha=
-r *refname,
- 	if (!opts->detach && !strbuf_check_branch_ref(&symref, refname) &&
- 		 ref_exists(symref.buf)) { /* it's a branch */
- 		if (!opts->force)
--			die_if_checked_out(symref.buf);
-+			die_if_checked_out(symref.buf, 0);
- 	} else { /* must be a commit */
- 		commit =3D lookup_commit_reference_by_name(refname);
- 		if (!commit)
-@@ -349,7 +349,7 @@ static int add(int ac, const char **av, const char =
-*prefix)
- 		if (!opts.force &&
- 		    !strbuf_check_branch_ref(&symref, opts.new_branch) &&
- 		    ref_exists(symref.buf))
--			die_if_checked_out(symref.buf);
-+			die_if_checked_out(symref.buf, 0);
- 		strbuf_release(&symref);
- 	}
+ 	validate_new_branchname(newname, &newref, force, clobber_head_ok);
+=20
++	reject_rebase_or_bisect_branch(oldref.buf);
++
+ 	strbuf_addf(&logmsg, "Branch: renamed %s to %s",
+ 		 oldref.buf, newref.buf);
 =20
 diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-index 3acb992..da54327 100755
+index 8f53944..3a22fc5 100755
 --- a/t/t2025-worktree-add.sh
 +++ b/t/t2025-worktree-add.sh
-@@ -4,6 +4,8 @@ test_description=3D'test git worktree add'
-=20
- . ./test-lib.sh
-=20
-+. "$TEST_DIRECTORY"/lib-rebase.sh
-+
- test_expect_success 'setup' '
- 	test_commit init
- '
-@@ -225,4 +227,40 @@ test_expect_success '"add" worktree with --checkou=
-t' '
- 	test_cmp init.t swamp2/init.t
+@@ -254,6 +254,10 @@ test_expect_success 'not allow to delete a branch =
+under rebase' '
+ 	)
  '
 =20
-+test_expect_success 'put a worktree under rebase' '
-+	git worktree add under-rebase &&
-+	(
-+		cd under-rebase &&
-+		set_fake_editor &&
-+		FAKE_LINES=3D"edit 1" git rebase -i HEAD^ &&
-+		git worktree list | grep "under-rebase.*detached HEAD"
-+	)
++test_expect_success 'rename a branch under rebase not allowed' '
++	test_must_fail git branch -M under-rebase rebase-with-new-name
 +'
 +
-+test_expect_success 'add a worktree, checking out a rebased branch' '
-+	test_must_fail git worktree add new-rebase under-rebase &&
-+	! test -d new-rebase
-+'
-+
-+test_expect_success 'checking out a rebased branch from another worktr=
-ee' '
-+	git worktree add new-place &&
-+	test_must_fail git -C new-place checkout under-rebase
-+'
-+
-+test_expect_success 'not allow to delete a branch under rebase' '
-+	(
-+		cd under-rebase &&
-+		test_must_fail git branch -D under-rebase
-+	)
-+'
-+
-+test_expect_success 'check out from current worktree branch ok' '
-+	(
-+		cd under-rebase &&
-+		git checkout under-rebase &&
-+		git checkout - &&
-+		git rebase --abort
-+	)
+ test_expect_success 'check out from current worktree branch ok' '
+ 	(
+ 		cd under-rebase &&
+@@ -276,4 +280,8 @@ test_expect_success 'checkout a branch under bisect=
+' '
+ 	)
+ '
+=20
++test_expect_success 'rename a branch under bisect not allowed' '
++	test_must_fail git branch -M under-bisect bisect-with-new-name
 +'
 +
  test_done
 diff --git a/worktree.c b/worktree.c
-index b5ca78f..dc380a2 100644
+index 7b66071..8a3d394 100644
 --- a/worktree.c
 +++ b/worktree.c
-@@ -3,6 +3,7 @@
- #include "strbuf.h"
- #include "worktree.h"
- #include "dir.h"
-+#include "wt-status.h"
-=20
- void free_worktrees(struct worktree **worktrees)
- {
-@@ -207,8 +208,27 @@ const char *get_worktree_git_dir(const struct work=
-tree *wt)
+@@ -208,8 +208,8 @@ const char *get_worktree_git_dir(const struct workt=
+ree *wt)
  		return git_common_path("worktrees/%s", wt->id);
  }
 =20
-+static int is_worktree_being_rebased(const struct worktree *wt,
-+				     const char *target)
-+{
-+	struct wt_status_state state;
-+	int found_rebase;
-+
-+	memset(&state, 0, sizeof(state));
-+	found_rebase =3D wt_status_check_rebase(wt, &state) &&
-+		((state.rebase_in_progress ||
-+		  state.rebase_interactive_in_progress) &&
-+		 state.branch &&
-+		 starts_with(target, "refs/heads/") &&
-+		 !strcmp(state.branch, target + strlen("refs/heads/")));
-+	free(state.branch);
-+	free(state.onto);
-+	return found_rebase;
-+}
-+
- const struct worktree *find_shared_symref(const char *symref,
--					  const char *target)
-+					  const char *target,
-+					  int ignore_current_worktree)
+-static int is_worktree_being_rebased(const struct worktree *wt,
+-				     const char *target)
++int is_worktree_being_rebased(const struct worktree *wt,
++			      const char *target)
  {
- 	const struct worktree *existing =3D NULL;
- 	struct strbuf path =3D STRBUF_INIT;
-@@ -223,6 +243,16 @@ const struct worktree *find_shared_symref(const ch=
-ar *symref,
- 	for (i =3D 0; worktrees[i]; i++) {
- 		struct worktree *wt =3D worktrees[i];
+ 	struct wt_status_state state;
+ 	int found_rebase;
+@@ -226,8 +226,8 @@ static int is_worktree_being_rebased(const struct w=
+orktree *wt,
+ 	return found_rebase;
+ }
 =20
-+		if (ignore_current_worktree && wt->is_current)
-+			continue;
-+
-+		if (wt->is_detached && !strcmp(symref, "HEAD")) {
-+			if (is_worktree_being_rebased(wt, target)) {
-+				existing =3D wt;
-+				break;
-+			}
-+		}
-+
- 		strbuf_reset(&path);
- 		strbuf_reset(&sb);
- 		strbuf_addf(&path, "%s/%s",
+-static int is_worktree_being_bisected(const struct worktree *wt,
+-				      const char *target)
++int is_worktree_being_bisected(const struct worktree *wt,
++			       const char *target)
+ {
+ 	struct wt_status_state state;
+ 	int found_rebase;
 diff --git a/worktree.h b/worktree.h
-index 9d2463e..fb9f5cc 100644
+index fb9f5cc..d4a3534 100644
 --- a/worktree.h
 +++ b/worktree.h
-@@ -41,7 +41,8 @@ extern void free_worktrees(struct worktree **);
-  * may be destroyed by the next call.
-  */
- extern const struct worktree *find_shared_symref(const char *symref,
--						 const char *target);
-+						 const char *target,
-+						 int ignore_current_worktree);
+@@ -44,6 +44,9 @@ extern const struct worktree *find_shared_symref(cons=
+t char *symref,
+ 						 const char *target,
+ 						 int ignore_current_worktree);
 =20
++int is_worktree_being_rebased(const struct worktree *wt, const char *t=
+arget);
++int is_worktree_being_bisected(const struct worktree *wt, const char *=
+target);
++
  /*
   * Similar to git_path() and git_pathdup() but can produce paths for a
+  * specified worktree instead of current one
 --=20
 2.8.0.rc0.210.gd302cd2
