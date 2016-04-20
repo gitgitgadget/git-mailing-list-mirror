@@ -1,97 +1,164 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v5 06/15] index-helper: add --detach
-Date: Wed, 20 Apr 2016 16:33:16 +0700
-Message-ID: <CACsJy8DbA6Es3-Kb5XXad0+6Mm2VkMtbNCo6rmEio_180L-G0w@mail.gmail.com>
+Subject: Re: [PATCH v5 09/15] index-helper: use watchman to avoid refreshing
+ index with lstat()
+Date: Wed, 20 Apr 2016 16:36:22 +0700
+Message-ID: <CACsJy8CijNvJJzjxh5c-2bxJtEHzUNmR_iTPNLTqHGFQjOP9Eg@mail.gmail.com>
 References: <1461108489-29376-1-git-send-email-dturner@twopensource.com>
- <1461108489-29376-7-git-send-email-dturner@twopensource.com>
- <CACsJy8Bcb=-V0wc8En2SCSz8jPefEL4qibxJsLsTB-c94x9y3Q@mail.gmail.com> <1461114267.5540.161.camel@twopensource.com>
+ <1461108489-29376-10-git-send-email-dturner@twopensource.com>
+ <CACsJy8CM409OH12w3EdVP3UjXoURbWNuqb_coQ=AagdCs+ctaQ@mail.gmail.com> <1461114098.5540.158.camel@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git Mailing List <git@vger.kernel.org>
 To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Wed Apr 20 11:34:01 2016
+X-From: git-owner@vger.kernel.org Wed Apr 20 11:37:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asoWF-0005ht-RI
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 11:34:00 +0200
+	id 1asoZA-0007dj-Dx
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 11:37:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933133AbcDTJdu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2016 05:33:50 -0400
-Received: from mail-lf0-f48.google.com ([209.85.215.48]:33920 "EHLO
-	mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933125AbcDTJdr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 05:33:47 -0400
-Received: by mail-lf0-f48.google.com with SMTP id j11so37250185lfb.1
-        for <git@vger.kernel.org>; Wed, 20 Apr 2016 02:33:47 -0700 (PDT)
+	id S933059AbcDTJgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2016 05:36:55 -0400
+Received: from mail-lf0-f43.google.com ([209.85.215.43]:35301 "EHLO
+	mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932079AbcDTJgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 05:36:54 -0400
+Received: by mail-lf0-f43.google.com with SMTP id c126so37297438lfb.2
+        for <git@vger.kernel.org>; Wed, 20 Apr 2016 02:36:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=KHcBphNGGfLzjZTywSon3CH7I3VbKvngcmLTeb+NfAA=;
-        b=O656/Awujs7ud2gg/mva/tgqotad6xvcHoLDW/jTexdSPJILZD8zLxnPSOwiUTVxZX
-         xsEeLO9frAZXG8AJlrWqTH0c2uckCn6nczDaDzg+CD5AM6n9DizFIEr7XcqS51sy7x9T
-         uZt/DRAcweIAMZQQoKcd2x1ofy+z7wUPRDENID6WthIxPuA4xMoh0MzIsXYYGFmGJs1G
-         XChDsa++jvDKJbV2yXrFo1bxW8HY9nGHHWw8x1Tv1g35/E6Dbz+1BuClNvAXz/yqFcEr
-         8fD6ZtnGvf266nW6GU0XxHfvvoWocAaTfFfVyNFU+OLqEZM+MqR8KgHNluJwbtBOSoFG
-         V94w==
+        bh=13MqSbF6JGuKvJcWBem50X232mi1VFVH0U/gVpcDIkc=;
+        b=DONOBzhp2vaGAp55pFGkwMPf6KBiYFMQbpUppKAMh2rPHU49Mc7V3t7i8ooGogrvlZ
+         RE839S/+UCr05a01rC3MjjDdNXXjY3AWwfe5dz3GrjAIKg8fmL8Z3xKOs6vwNwrEOUpc
+         pzENsKbtaGyAhXP8iKV5I9lrE94kAsiLwQbOeEvlXk/ONu9XBTepZT4MLe0J2udDqLbG
+         zN+bByklmxbTZwyXpNxTorxpM0j0/+DUM2CFzcunFcHtWQlpg/7bP5wn/HJ6YpASsXxW
+         x6GC+pv3Px73d60B9mUTqjmzsZZ5qiR76NCqzRsCxorHXmvHEuqkxbuzBciz/BYTZ+nN
+         Faxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=KHcBphNGGfLzjZTywSon3CH7I3VbKvngcmLTeb+NfAA=;
-        b=SLduSnVqY2igKCdMpLw3uCnHpJJ+CPvmJpd3aChV0cdXH4Xjgs/RDeN0FSDSyXP7V9
-         qVB6Nl4QPK3gDVfBeste6wP8BBIHS5JJNO9o1sWTS01afI07ssjOudLSiyuA4Z31+Kbq
-         18w4ViJDUUvVmiE99mA1XjJqsRfJP8KdC4eq7ucVdKl7PsYCgdX76I0dk79JW6tcTRoq
-         1dO6uLi58C6B928UVJaIPDJnvU1uaozq6Dy/ZpNHBa+iHiHMu+xYakV7vVbt5AA0f+dL
-         ZAhQONUl8McsVHODBKT/adMpT6PBkfqPA5+Hqv0AUbzZLHIBaulpALUBU9QDMxwJL7t9
-         s3fw==
-X-Gm-Message-State: AOPr4FVmwZyykkPDxyWF86v+hOKxI3J+xhM/XVNmq+FrsIF/FYrDyttMxkeQQtgV59nMq1PsihVZZdQbLBylhQ==
-X-Received: by 10.25.22.19 with SMTP id m19mr3268427lfi.118.1461144826041;
- Wed, 20 Apr 2016 02:33:46 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Wed, 20 Apr 2016 02:33:16 -0700 (PDT)
-In-Reply-To: <1461114267.5540.161.camel@twopensource.com>
+        bh=13MqSbF6JGuKvJcWBem50X232mi1VFVH0U/gVpcDIkc=;
+        b=gLDtnGwnliCFShqwDE+JHLuQqdH7MxiLVOfU+4qTYacbo4zkVV3YCxff0MHG7aJ1Aw
+         8pR9WqOOMEhjFJ6DSI3LiyP+bzFXKEZXoq+/4txwTnJ6nV2Vz1wyZK4lWssgset7Ke7l
+         IRChjoMSFLRkoGldFovbqqcZAPfRY+MrtG0s5c+eRNP1cWZ0SnYKYLrfPpuclN0xU2Js
+         YEl6XVPNsv0MgG/8NmhVEKPt5Wr0HQTeZAgs2TUaXVcV2ZAnMjLwJPTQyReyX4tI/PM1
+         0npKxj6aFy1jXoD/OAsmdyZe5v1BS7HWsVkkPuCyCT4/dsgl4CjQsJtD2yVWdIzun2dV
+         zJdw==
+X-Gm-Message-State: AOPr4FX+IttqOJlzy9Hx2JGPDjqMMo+c4r/pdaertAzXD9mM7mm7qwnbOclxs2Q3WZBA7/hkOLbloF6Sb/kyfw==
+X-Received: by 10.25.42.1 with SMTP id q1mr3183621lfq.94.1461145012336; Wed,
+ 20 Apr 2016 02:36:52 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Wed, 20 Apr 2016 02:36:22 -0700 (PDT)
+In-Reply-To: <1461114098.5540.158.camel@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292000>
 
-On Wed, Apr 20, 2016 at 8:04 AM, David Turner <dturner@twopensource.com> wrote:
-> On Wed, 2016-04-20 at 06:50 +0700, Duy Nguyen wrote:
+On Wed, Apr 20, 2016 at 8:01 AM, David Turner <dturner@twopensource.com> wrote:
+> On Wed, 2016-04-20 at 07:15 +0700, Duy Nguyen wrote:
+>> Continuing my comment from the --use-watchman patch about watchman
+>> not
+>> being supported...
+>>
 >> On Wed, Apr 20, 2016 at 6:28 AM, David Turner <
 >> dturner@twopensource.com> wrote:
->> > @@ -317,6 +320,8 @@ int main(int argc, char **argv)
->> >         if (fd < 0)
->> >                 die_errno(_("could not set up index-helper
->> > socket"));
->> >
->> > +       if (detach && daemonize(&daemonized))
->> > +               die_errno(_("unable to detach"));
+>> > +static int poke_and_wait_for_reply(int fd)
+>> > +{
+>> > +       struct strbuf buf = STRBUF_INIT;
+>> > +       struct strbuf reply = STRBUF_INIT;
+>> > +       int ret = -1;
+>> > +       fd_set fds;
+>> > +       struct timeval timeout;
+>> > +
+>> > +       timeout.tv_usec = 0;
+>> > +       timeout.tv_sec = 1;
+>> > +
+>> > +       if (fd < 0)
+>> > +               return -1;
+>> > +
+>> > +       strbuf_addf(&buf, "poke %d", getpid());
+>> > +       if (write_in_full(fd, buf.buf, buf.len + 1) != buf.len + 1)
+>> > +               goto done_poke;
+>> > +
+>> > +       /* Now wait for a reply */
+>> > +       FD_ZERO(&fds);
+>> > +       FD_SET(fd, &fds);
+>> > +       if (select(fd + 1, &fds, NULL, NULL, &timeout) == 0)
+>> > +               /* No reply, giving up */
+>> > +               goto done_poke;
+>> > +
+>> > +       if (strbuf_getwholeline_fd(&reply, fd, 0))
+>> > +               goto done_poke;
+>> > +
+>> > +       if (!starts_with(reply.buf, "OK"))
+>> > +               goto done_poke;
 >>
->> At the least, I think we need to redirect both stdout and stderr to a
->> file, so we can catch errors. The watchman patch uses warning() to
->> report errors, for example. And there is always a chance of die().
->>
->> Then we need to report the errors back. I faced the same problem with
->> daemonizing git-gc, but I'm not sure if we can do exactly the same
->> here like in commit 329e6e8 (gc: save log from daemonized gc --auto
->> and print it next time - 2015-09-19)
+>> ... while we could simply check USE_WATCHMAN macro and reject in
+>> update-index, a better solution is sending "poke %d watchman" and
+>> returning "OK watchman" (vs "OK") when watchman is supported and
+>> active. If the user already requests watchman and index-helper
+>> returns
+>> just "OK" then we can warn the user the reason of possible
+>> performance
+>> degradation. It's related to the error reporting, but I don't think
+>> you can send straight errors over unix socket. It's possible but it's
+>> a bit more complicated.
 >
-> I'll add in code to log errors.  I'm not sure where it would make sense
-> to report the errors.  Generally, for errors during a client operation,
-> we would like to report them to the client, but the client might have
-> already disconnected.  I guess in that case it's OK if they just go to
-> the log?  The client could warn on a timeout while waiting for index
-> -helper and direct people to the log.
+> Do you mean that we should do this here?  Or in update-index -
+> -watchman?  If the former, I agree.  If the latter, I'm not sure; maybe
+> you'll be setting up your index before you've started the index helper?
 
-Yeah if the client already disconnects, we have no way but saving the
-errors somewhere. index-helper can pick up from the log and report to
-the next client, if you want to keep it simple. If we're building a
-more complicated protocol on top of unix socket, I suggest you use
-pkt-line to wrap/unwrap messages. Bonus point, we can trace what's
-sending/receiving with GIT_TRACE_PACKET.
+Here is better than update-index because we can't know what
+index-helper is capable of (the USE_WATCHMAN macro is more like a
+suggestion)
+
+>> > +static void refresh_by_watchman(struct index_state *istate)
+>> > +{
+>> > +       void *shm = NULL;
+>> > +       int length;
+>> > +       int i;
+>> > +       struct stat st;
+>> > +       int fd = -1;
+>> > +       const char *path = git_path("shm-watchman-%s-%"PRIuMAX,
+>> > +                                   sha1_to_hex(istate->sha1),
+>> > +                                   (uintmax_t)getpid());
+>> > +
+>> > +       fd = open(path, O_RDONLY);
+>> > +       if (fd < 0)
+>> > +               return;
+>> > +
+>> > +       /*
+>> > +        * This watchman data is just for us -- no need to keep it
+>> > +        * around once we've got it open.
+>> > +        */
+>> > +       unlink(path);
+>>
+>> This will not play well when multiple processes read and refresh the
+>> index at the same time.
+>
+> Multiple processes will have different pids, right?  And the pid is
+> included in the filename.  Am I missing something?
+
+Ahhh! I thought that pid was index-helper's. Silly me.
+
+>> Now that I think of it, with watchman backing us, we probably should
+>> just do nothing in update_index_if_able() (or write_locked_index()
+>> when we know only stat info is changed) when watchman is active. The
+>> purpose of update_index_if_able() is to avoid costly refresh, but we
+>> can already avoid that with watchman. And updating big index files is
+>> always costly (even though it should cost less with split-index).
+>
+> That sounds like a change we could make in a separate series.  It's not
+> a bad idea, but if our goal is to get the basic version out, we should
+> start there.
+
+Agreed. More optimizations can always wait till later. We just need a
+good foundation first.
 -- 
 Duy
