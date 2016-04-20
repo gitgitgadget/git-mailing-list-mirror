@@ -1,73 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v1 2/2] git-p4: fix Git LFS pointer parsing
-Date: Wed, 20 Apr 2016 08:30:46 -0700
-Message-ID: <xmqqy488wb4p.fsf@gitster.mtv.corp.google.com>
-References: <1461096530-82448-1-git-send-email-larsxschneider@gmail.com>
-	<1461096530-82448-3-git-send-email-larsxschneider@gmail.com>
-	<xmqqtwixz6i4.fsf@gitster.mtv.corp.google.com>
-	<A6FD8E93-63E8-49EE-838D-2AF3FD3910D4@gmail.com>
-	<xmqqh9exz4xq.fsf@gitster.mtv.corp.google.com>
-	<CAHGBnuOuFYvf=CSyCLbhn7pyq4jsqH+p+xV9rxAtU1y3r+qjzw@mail.gmail.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] tag.c: remove extern keyword from function definition
+Date: Wed, 20 Apr 2016 16:34:25 +0100
+Message-ID: <5717A181.1000603@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>, luke@diamand.org
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 20 17:30:57 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: santiago@nyu.edu
+X-From: git-owner@vger.kernel.org Wed Apr 20 17:34:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asu5e-0003mU-8h
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 17:30:54 +0200
+	id 1asu9D-0006Ha-Ft
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 17:34:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750928AbcDTPau (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2016 11:30:50 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59789 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750701AbcDTPat (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 11:30:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3CC4B13F4C;
-	Wed, 20 Apr 2016 11:30:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PfsygozJAF6WUXKCQVIDICZeaAo=; b=hkSAGz
-	wUqjFCK0pkEb6L92i394ecgyWmaXC0aY8YDAqlHrpWtZypzYgsBR8bQ8wGAGf+lL
-	DxYv4i1t7L4Cy/qlTml9GjuvL6X91ji6nXgNyoshZtGEeI41JvV0a/urM0kvndsq
-	cRUwKEp1ATpFWWkq7M9yV2ORRrizwHoQ6vzaY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BJfuCHpoZcoqReMdYonk81zx6lWY/l/F
-	yJnbTyFcTzmvDLPFMDJJ9Q5YFzUwWpP1wBEssknChICzyKdinNp2cRn/k0AM9+T9
-	ors6iIEnuLgsBYRgOE+H7UvLiRm71yo+rQ5UPu2dx55ARi2l2R4SJRF1HQLNPmBT
-	EQMbNXvLrXg=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 341E213F4A;
-	Wed, 20 Apr 2016 11:30:48 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 943E313F48;
-	Wed, 20 Apr 2016 11:30:47 -0400 (EDT)
-In-Reply-To: <CAHGBnuOuFYvf=CSyCLbhn7pyq4jsqH+p+xV9rxAtU1y3r+qjzw@mail.gmail.com>
-	(Sebastian Schuberth's message of "Wed, 20 Apr 2016 10:32:38 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DAF9E5AE-070C-11E6-B110-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1751758AbcDTPec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2016 11:34:32 -0400
+Received: from avasout08.plus.net ([212.159.14.20]:57541 "EHLO
+	avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750807AbcDTPeb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 11:34:31 -0400
+Received: from [10.0.2.15] ([91.125.197.102])
+	by avasout08 with smtp
+	id kfaT1s0032D2Veb01faU3k; Wed, 20 Apr 2016 16:34:29 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=O6PEx0JW c=1 sm=1 tr=0
+ a=mTUfFwB0nGOO66Ym8a+i3w==:117 a=mTUfFwB0nGOO66Ym8a+i3w==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
+ a=EBOSESyhAAAA:8 a=bODdSWX3Sw0OpkgCeiIA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292029>
 
-Sebastian Schuberth <sschuberth@gmail.com> writes:
 
-> If clients rely on output targeted at human consumption it's not
-> surprising that these clients need to be adjusted from time to time.
-> What's troubling is not the change to git-lfs, but the very un-generic
-> way git-p4 is implemented.
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-Sounds like the subcommand they are using is not meant for
-scripting?  What is the kosher way to get at the information they
-can use that is a supported interface for scripters?
+Hi Santiago,
+
+If you need to re-roll your 'st/verify-tag' branch, could you
+please squash this into the relevant patch (commit c5213b40,
+"verify-tag: move tag verification code to tag.c", 19-04-2016).
+
+Although not actually an error, it is very unusual for an extern
+keyword to be used on a function definition (it seems to be getting
+quite unusual on a function declaration these days!), which causes
+sparse to issue a warning.
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ tag.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tag.c b/tag.c
+index ace619a..93c6ae6 100644
+--- a/tag.c
++++ b/tag.c
+@@ -30,7 +30,7 @@ static int run_gpg_verify(const char *buf, unsigned long size, unsigned flags)
+ 	return ret;
+ }
+ 
+-extern int gpg_verify_tag(const unsigned char *sha1,
++int gpg_verify_tag(const unsigned char *sha1,
+ 		const char *name_to_report, unsigned flags)
+ {
+ 	enum object_type type;
+-- 
+2.8.0
