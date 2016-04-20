@@ -1,80 +1,80 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 06/12] wt-status.c: split rebase detection out of wt_status_get_state()
-Date: Wed, 20 Apr 2016 20:54:27 +0700
-Message-ID: <CACsJy8CV+MtLYumsej6VDkBZMqTmSHedpVhe6pwhz_Vokw3_fA@mail.gmail.com>
-References: <1460897965-486-1-git-send-email-pclouds@gmail.com>
- <1461158693-21289-1-git-send-email-pclouds@gmail.com> <1461158693-21289-7-git-send-email-pclouds@gmail.com>
- <57178897.20509@ramsayjones.plus.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 14
+Date: Wed, 20 Apr 2016 16:19:33 +0200
+Message-ID: <CAP8UFD0GZWkJRF02DOXS8QbKT6nrvc2=US5pGv-+6f+A8ihiXQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
+Cc: lwn@lwn.net, Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	Nicola Paolucci <nick@durdn.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Reto_Habl=C3=BCtzel?= <rethab.ch@gmail.com>,
-	Mike Rappazzo <rappazzo@gmail.com>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-X-From: git-owner@vger.kernel.org Wed Apr 20 15:55:05 2016
+	Greg KH <gregkh@linuxfoundation.org>,
+	Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Charles Bailey <charles@hashpling.org>,
+	Tim Pettersen <tim@atlassian.com>,
+	David Turner <dturner@twopensource.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Andrew Ardill <andrew.ardill@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 20 16:19:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1assat-0005ko-S8
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 15:55:04 +0200
+	id 1assym-0003uy-Go
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 16:19:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932097AbcDTNy7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Apr 2016 09:54:59 -0400
-Received: from mail-lb0-f176.google.com ([209.85.217.176]:36804 "EHLO
-	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752644AbcDTNy7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2016 09:54:59 -0400
-Received: by mail-lb0-f176.google.com with SMTP id ys16so9741272lbb.3
-        for <git@vger.kernel.org>; Wed, 20 Apr 2016 06:54:58 -0700 (PDT)
+	id S932797AbcDTOTf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2016 10:19:35 -0400
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:37120 "EHLO
+	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932107AbcDTOTe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 10:19:34 -0400
+Received: by mail-wm0-f42.google.com with SMTP id n3so84588092wmn.0
+        for <git@vger.kernel.org>; Wed, 20 Apr 2016 07:19:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=jE7bZnnGn1BELBPufErSQ40f7JU2OPhia4GC2A/a+Xs=;
-        b=uePfiyq8H84xhBQefB1f8X4RzevUEegRh66m6iin2sJQx+NMXfidNk/+OF5/i+7hcT
-         FnDMgBGZnu9NXeygfTnSZ62zxCmrYBD3M7jBe6Zfek0vfywbsYDGqzlir3DMEK6JJLfq
-         uvApHPxwPcvqAShyKQIfsVaxni7GQF956RLffTBv/stkPbHdLvVDprcCwOd2bLEf8zVg
-         d518H2PUJD3HI2B0S53x3bN3pmJZIKrzh/h107IvSx2847rQEI0yccmlNXWiK6hgZPvB
-         KX1q6Fpa5AakcZo6qnBpi7pIU8VxPMfOi063Lw0SrxOpYdNh/Gj2zSbuK98Dyj5NW42r
-         q/qA==
+        h=mime-version:date:message-id:subject:from:to:cc;
+        bh=SuAFsM7EV39JNkD22axk1MMYRuY3S46nzgk9R572XqI=;
+        b=i7jOPXjHte72oKYTVJq3PoM1WGMAeif0mLNis18lS6phiu7L1QyQNGSkYTOa0xo3PZ
+         +oJCJQP3quk+r9Rybdhtr6CiEcrmxQosWpbxRYKRy0NKhx/Va6RXcAGQEmpJp8nETaaX
+         Bhlaav6tjxPRHHqy6fZa2JxT8KIRMBE1DVqmeVk8dYCt9Bk3FiLg8pAwc8zSuxRKQs5x
+         NYf1kEFeYFPHFL8+ZE0wyZC2PwSM9gdZecyqZJUT9HSAN4OuPMCGmLv2Qnny9eNbQ3YM
+         QSOOJobRGQhc6zIrKsgaeIyxGVldH+w7jP2likhtbwqOV2G84LCdcYoHNcFXgmz7Z4m9
+         nDAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=jE7bZnnGn1BELBPufErSQ40f7JU2OPhia4GC2A/a+Xs=;
-        b=Lc29UljmysxINeAmjapjnktUAwx9miUWfbnH4NNkTWu3g1RY/QXXbpyl0PLRfgNWA0
-         uf/aKuebB//uxiQzT8ivIKDdirOF1ZC3eKwURwcFYHBwhZYhdehiQOa3rxmyPf082V0e
-         mkInQsyMWR1+YBydQzHL6m7UvGIlDOKTpwtj/kwNNrMk5ryQ2DPj929K/tOQiHq6UMte
-         x5NjBDwPGr+iJUSBkPhSxGaYz5YgcKBETpp4Bfdu+lrDglrWKxABe0TYzFM35iGlzi1U
-         XUsWfsgzA976dWgLfDJuI51KhzZBi1syeFpIxeP/4WB+C6zPwKxfOv7B6dT5/u3vv9gr
-         RLzw==
-X-Gm-Message-State: AOPr4FWc3am4P8xg+R+0KTdmksXIDUwdeL+2snIC/cOSIeA+TqC89r85qGIs7w7ACrmmtmSQELkyZbXzfxpfBg==
-X-Received: by 10.112.130.41 with SMTP id ob9mr3690643lbb.81.1461160497286;
- Wed, 20 Apr 2016 06:54:57 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Wed, 20 Apr 2016 06:54:27 -0700 (PDT)
-In-Reply-To: <57178897.20509@ramsayjones.plus.com>
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
+        bh=SuAFsM7EV39JNkD22axk1MMYRuY3S46nzgk9R572XqI=;
+        b=F8F2b8V3mB0pBoVD8KRtkIQeYscIuQbopdPWXuooa1BoRYB5QT+y/qjucr8yAkHWAk
+         ElAGYrw4wS11sMr02LCapPx6HhCJY+JX/+6grMlDHp8xOZ9teKeDwBGUTTrP4bUFGlzc
+         K0vfiEz6O7TGQKFE4AMOd6Tp8VdeE34+SWTZXPZdHHLApXOeoEsBxqiQzslJFvPP8f9/
+         uwio/FttsY2WIPURhO2AZ6Y2fNBNmiu58mN5bBtFXFaLDC7SxU3FkO9w0Ey8x5kDX4ry
+         RJGU2+IvQzoNEZ9dEaWWYtgQMpGif4FeXYssEBnpaES02GEmj6FnJfTz1L0hwbQa0RT2
+         9ODg==
+X-Gm-Message-State: AOPr4FU94v/Sv3nxGEQMfpAtqbT1MgX1/0HNvuMYaEP5msFtlfyxelVnaxBfCpCkB32ArGlmNyeueLYHIx2HGQ==
+X-Received: by 10.194.235.39 with SMTP id uj7mr8925093wjc.78.1461161973264;
+ Wed, 20 Apr 2016 07:19:33 -0700 (PDT)
+Received: by 10.194.95.129 with HTTP; Wed, 20 Apr 2016 07:19:33 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292025>
 
-On Wed, Apr 20, 2016 at 8:48 PM, Ramsay Jones
-<ramsay@ramsayjones.plus.com> wrote:
->
->
-> On 20/04/16 14:24, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->> worktree.c:find_shared_symref() later needs to know if a branch is b=
-eing
->> rebased, and only rebased only. Split this code so it can be used
-> ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> Err ... what?
+Hi everyone,
 
-wt_status_get_state() detects more than rebase, it does bisect,
-cherry-pick, detached head as well. I "only" too much there though.
---=20
-Duy
+I'm happy announce that the 14th edition of Git Rev News is now published:
+
+http://git.github.io/rev_news/2016/04/20/edition-14/
+
+Thanks a lot to all the contributors and helpers, especially Johannes Sixt!
+
+Enjoy,
+Christian, Thomas and Nicola.
