@@ -1,78 +1,105 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v5 02/15] read-cache: allow to keep mmap'd memory after
- reading
-Date: Wed, 20 Apr 2016 11:01:23 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604201059530.2826@virtualbox>
-References: <1461108489-29376-1-git-send-email-dturner@twopensource.com> <1461108489-29376-3-git-send-email-dturner@twopensource.com>
+From: Adam Dinwoodie <adam@dinwoodie.org>
+Subject: Silent failure to add Windows-style paths in Cygwin Git
+Date: Wed, 20 Apr 2016 10:17:47 +0100
+Message-ID: <20160420091747.GH2345@dinwoodie.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, pclouds@gmail.com
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Wed Apr 20 11:01:42 2016
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 11:17:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aso0y-0002wD-Hz
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 11:01:40 +0200
+	id 1asoGj-0004Rg-4x
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 11:17:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753578AbcDTJBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2016 05:01:30 -0400
-Received: from mout.gmx.net ([212.227.15.18]:61556 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753466AbcDTJB2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 05:01:28 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MfmWy-1b4qga0rdE-00NCD5; Wed, 20 Apr 2016 11:01:24
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <1461108489-29376-3-git-send-email-dturner@twopensource.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:5LZ8egsDsS+JHOKL0wncEX28MFZAwyGQ+KFjDmXLdmyjuB7vKwe
- cSklJSMzVOzq+cY1ZODXLVshosW7lpQVW1o7qxCLJaTrOl1cJy5CQQfzoe3Y25ddSimNvz9
- b4/JMOXm9iSpmvwxzwHgEKuUDFsQNwt2fHhXtVfvX49xOdnrJ7Z3V/gEGF4lxLCHWE3O9cg
- gFoZLacbGkPcxbCB1Z0ZQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qxJeVK0CRhc=:0fhUwTcIoGH+IcRJZlRvUq
- Tj9fAzSlxims98685gBBRBzeGX/tY7h2NDIGtPrM203/Z0zsxImnYJlEz4P7x3CjhENicd1JU
- GkpiPOKCXCPRJrXS4ZP14U6IMj5rbrSo93U+67c0dxUFQ4n6wdS8ZnJNH9SPHKY6UfjJFdMRu
- YC1QVN2BebOczytg6dodKiLOtAhKjN9M3MCAI8I0LdJv/T67V+ED1sI6mKdObZ8PbvwLdXPkO
- 5EC33637n0zTmai8EI77kzmuAuR0DkXpnd9W+7PnkWO8YrFjKqp2Kp2z2X5R8BUn+K/hCazsa
- cdAu/gunmWinCbU+KqLGVVqkS5FrBjOcRTppAYAYWoiupnBJ3Lg4AT/+r1IFL5wI7yCd/P084
- Er6mnWQ25mZu5fOJ+qIwIuZ4S8xgLVFGYWGwMSY58bserO2feImMGuFr4TYvbiLd8vJ0+9J3X
- Kf9Mz8+XxkpaWdRCQYkTFsfaKQV1Iyq5ei0MA1nEEaeMYYSpVEaOh1Gpt0DNZLqonBHxN5prT
- MN/91Ri2WJaMhgFosfj6ZLbV/tuTorszwQslpW1Ofm4HCQHTddOInJds3x1HfXbtNe2O/cvnF
- f6cJeRGmZ3pBSK2rhPIL96pCzCOg+wLKhXNsTciIS/aTksIhtc/4u1M5cCpK7Q1P3Lr/CbLSA
- EFnTdbF4/IeCCvxhhMAA5B2Kl5lvW0I7OkOleT7MVILI/g/pTMLje3RkVnkkURl4TOqtNXf9O
- r293r6ZM/mblF4HXr8Dgc2CzFWoq4SLmgv2L/oEMRYBDO9HTCwIE5nM16Trs3wk4wdr1qT+C 
+	id S932122AbcDTJRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2016 05:17:52 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:37366 "EHLO
+	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932079AbcDTJRu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 05:17:50 -0400
+Received: by mail-wm0-f51.google.com with SMTP id n3so70841786wmn.0
+        for <git@vger.kernel.org>; Wed, 20 Apr 2016 02:17:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dinwoodie.org; s=google;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=YoVwmmIHbtQ/8UaeqV/HBY7mbV15QAbCUeOmDWKupRM=;
+        b=QP/mQj4j8KHKR4dNW92SkiQnbDvv0ElAV8pcwuup891HSVcUzqH9mZlVKRm+X1NmF0
+         785oQyMVfZ3VneCf5fDDiyMSXqYmFW3eY13r4rCsSBP3GogN7WW5OuKdpWGPodrc2D8v
+         g8y1mQHTjSgc3BFAmpXyJHi5xCnIotkmPQTEk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=YoVwmmIHbtQ/8UaeqV/HBY7mbV15QAbCUeOmDWKupRM=;
+        b=gzvvSYcpXta19P19I6xzmjQZDKcmCBqbx6IUvbZXNJY4yCaP/jxDOLDVp4R1WnAyJN
+         bdFjHmC0rnUFLQTl3+gdkG7efx0FBVWi7V9gK7SWbkWfmpl+aEsWBy/mMywrd9+SqmzE
+         mmQvNOdiCLHQmeusAcJz29pHss7UTOZQW0jTH3KzECLJb7L8D45VWviHZSGiuo5G00G5
+         Iwf6aSHTepXb37NOaTnpiiFTI/m46K21p1w5kOcplAot6/CH02bqrvqH2tt9YjAxa1ww
+         QfEXlgzc9SZp+hFXKsfCw0IWt4QpuTkoL2SguGFOLWiSk8lihujv9PzFsmqKKVeODcql
+         4/Hg==
+X-Gm-Message-State: AOPr4FXiibrsjw9eRFVvJA/ibDr0EV0lD9nhcJAiKacieXUrNP8sA074xd4AFsirtMd7MA==
+X-Received: by 10.194.133.161 with SMTP id pd1mr8682846wjb.66.1461143869483;
+        Wed, 20 Apr 2016 02:17:49 -0700 (PDT)
+Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
+        by smtp.gmail.com with ESMTPSA id q127sm8582389wmd.13.2016.04.20.02.17.48
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 20 Apr 2016 02:17:48 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291997>
 
-Hi Dave,
+If I attempt to `git add` an extant file specified using a Windows-style
+path on Cygwin Git, this doesn't add the file, and produces no error
+message:
 
-On Tue, 19 Apr 2016, David Turner wrote:
+    $ pwd  # As seen by Cygwin
+    /cygdrive/c/tmp
 
->  unmap:
-> +	istate->mmap = NULL;
->  	munmap(mmap, mmap_size);
->  	die("index file corrupt");
->  }
-> [...]
-> @@ -1698,6 +1705,10 @@ int discard_index(struct index_state *istate)
->  	free(istate->cache);
->  	istate->cache = NULL;
->  	istate->cache_alloc = 0;
-> +	if (istate->keep_mmap && istate->mmap) {
-> +		munmap(istate->mmap, istate->mmap_size);
-> +		istate->mmap = NULL;
-> +	}
->  	discard_split_index(istate);
+    $ cygpath -aw .  # As seen by Windows
+    C:\tmp
 
-Just curious: any reason why the first hunk munmap()s after resetting the
-field to NULL and the second hunk does it in the opposite order?
+    $ git init
+    Initialized empty Git repository in /cygdrive/c/tmp/.git/
 
-Ciao,
-Dscho
+    $ git add 'c:\tmp\file' || echo non-zero exit code  # Errors out as expected
+    fatal: pathspec 'c:\tmp\file' did not match any files
+    non-zero exit code
+
+    $ touch file
+
+    $ git add 'c:\tmp\file' || echo non-zero exit code  # No error this time...
+
+    $ git status  # ...even though the file didn't get added
+    On branch master
+
+    Initial commit
+
+    Untracked files:
+      (use "git add <file>..." to include in what will be committed)
+
+            file
+
+    nothing added to commit but untracked files present (use "git add" to track)
+
+I wouldn't expect adding the file to actually succeed, but I would
+expect it to either succeed or produce an error, rather than silently
+failing.
+
+Experimentation shows I get the same behaviour for 'c:\tmp\file',
+'c:/tmp/file' and 'subdir\file'.  I'm seeing this on v2.8.0; the
+downstream report says the same behaviour occurs on v2.7.4[0], and I've
+also seen what appears to be the same behaviour on a v2.0.5 build I
+produced to check.
+
+Adam
+
+[0]: https://cygwin.com/ml/cygwin/2016-04/msg00474.html
