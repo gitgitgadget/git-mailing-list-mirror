@@ -1,81 +1,141 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] fix deadlock in git-push
-Date: Wed, 20 Apr 2016 14:17:16 -0700
-Message-ID: <xmqqwpnst1yb.fsf@gitster.mtv.corp.google.com>
-References: <20160419223945.GA18055@sigill.intra.peff.net>
+From: Ben Woosley <ben.woosley@gmail.com>
+Subject: Re: [PATCH] git-rebase--merge: don't include absent parent as a base
+Date: Wed, 20 Apr 2016 14:19:04 -0700
+Message-ID: <CAC5gnOxFVT=Y-YURxQxnT3Qng162=jogoZMEYJdN1jz8SmJtCg@mail.gmail.com>
+References: <0102015434e7556a-2d9848cb-93c3-4883-96ec-c0c70098796b-000000@eu-west-1.amazonses.com>
+ <xmqq1t60ugoi.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 20 23:17:24 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Users <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 20 23:19:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aszUy-0000l7-6i
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 23:17:24 +0200
+	id 1aszXB-0002S2-0D
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 23:19:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751391AbcDTVRU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2016 17:17:20 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53882 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751078AbcDTVRT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 17:17:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 92B1014526;
-	Wed, 20 Apr 2016 17:17:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TnfJyktIVCccLxHtSsHmgbi3+YY=; b=Qg7k6f
-	UAyfn3oEszVNELJoLa2xPVQ6k8zrR9OrLHRx1Vi9fHbglw628hElcN2VWzq5vAae
-	IeCrV1htjP+0F+WRrZt40kiIUZ2w0FEulXcf40WSvyj9PDRDNV4tUkCo9mjKFppj
-	Fmvy+dzifFFtMr6L7BDLcirPcr0P5tnSH7WZQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VRVL5Ms4pwA70c8e4RGP4VArj95/Q2ma
-	jAcNW4g1f3qiHB5CtXHRYDsOMZn369Uaqjhq0ZZ6aF+6ARlxzylXWFyoahX8HeJV
-	nAOoWJNORQk5/6ibosRx2IOyZajXo37LVadEDd6Q+qNNRZKYMAfSdE3MQfnIYPgQ
-	y6nLSxFBAck=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8B43014525;
-	Wed, 20 Apr 2016 17:17:18 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0565114524;
-	Wed, 20 Apr 2016 17:17:17 -0400 (EDT)
-In-Reply-To: <20160419223945.GA18055@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 19 Apr 2016 18:39:46 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4307AF8E-073D-11E6-A98B-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1751237AbcDTVTg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2016 17:19:36 -0400
+Received: from mail-oi0-f49.google.com ([209.85.218.49]:34854 "EHLO
+	mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751092AbcDTVTf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 17:19:35 -0400
+Received: by mail-oi0-f49.google.com with SMTP id p188so63205398oih.2
+        for <git@vger.kernel.org>; Wed, 20 Apr 2016 14:19:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=zdb3xR6qFUADk11WHMRCCbeAaflbA2KW93e/gHy88Ok=;
+        b=E5k2fhD1GZOLSLWDEmE6nB1TBNO0pRd/Xz97DD1FlQzutVRlCqzitxzekWbSjFrevK
+         xgNEkbjZMgne7Aq5o5kp2ubRlunDfB9VQNgKgHH1QlDIbB7PtdtfWXJhysjFI301yEOh
+         x2FmwPj09t0QUsJxVLogppTkIFVpIHhmObgcko/6smExm1/oFImC64j/Dk2F/qFYpdse
+         9GikNKvVJo3OtIi5I1aPzhEd7Et0cgy4gUNfQTRyJE22njOwUK6/Kx6HCs9UsgIgzSC/
+         Lnro7z3MvfYu9CKWCBgcmORul2q/l69qjQLrF24xSVgHY+xmmzJxaFDXbUVQFSKiurpx
+         SZzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=zdb3xR6qFUADk11WHMRCCbeAaflbA2KW93e/gHy88Ok=;
+        b=dGrXUjbl2BCsTNzZSRcjS8FxLd70T7B3agRIcIBecQg5F+MLpvxaCXBI5DIxrqq163
+         adv+3vp03Hrb/hiC11VDrMcmqpKTMMRizjpv0wj6rq2R0TA5f4LCJrqe/+sKQWGn/gSI
+         9F11eCSuGZQHdrSfE3POg4Uul3XgjEonr0nexSJ4meL4am0CZCX+M64zSXNog1+W3cTS
+         Q9VfZiA0iRquubpMQP2we2LGjRv7GPMeGOuvyKNWpIN+CS4Py/dGVwSSAbiTmfQ0moV4
+         PwdkPFqWJglXIt+a+Cq8UBZQEEk0Xh1YVy/HQlJ1qxi2lSVA7jbjW6wAuBjmTtCYLBzb
+         0p/Q==
+X-Gm-Message-State: AOPr4FXZpnQ/zusRPNriZUcmzsoDa99Msnl1vmyL+Yqn/Og+LQI5NuV6Bo74RiN9n4yQdyMQ985uiarn9IoNNQ==
+X-Received: by 10.157.4.72 with SMTP id 66mr5090877otc.141.1461187174264; Wed,
+ 20 Apr 2016 14:19:34 -0700 (PDT)
+Received: by 10.202.201.82 with HTTP; Wed, 20 Apr 2016 14:19:04 -0700 (PDT)
+In-Reply-To: <xmqq1t60ugoi.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292083>
 
-Jeff King <peff@peff.net> writes:
+It's helpful in the case where a bit of code has been detached from
+its history by way of copying the files and starting a new repo, where
+development continues. If you want to reunite the new history with the
+prior history, while preferring the new history, you need to `rebase
+-Xtheirs` the new branch onto the old.
 
-> The first patch below fixes the deadlock. Unfortunately, it turns it
-> into a likely SIGPIPE death. Which is an improvement, but not ideal.
+Best,
+Ben
+
+On Wed, Apr 20, 2016 at 2:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Ben Woosley <Ben.Woosley@gmail.com> writes:
 >
-> Patches 2 and 3 address that by fixing the way we handle SIGPIPE in
-> async threads.
+>> From: Ben Woosley <ben.woosley@gmail.com>
+>>
+>> Absent this fix, attempts to rebase an orphan branch with --strategy recursive
+>> will fail with:
+>>
+>>     $ git rebase ORPHAN_TARGET_BASE -s recursive
+>>     First, rewinding head to replay your work on top of it...
+>>     fatal: Could not parse object 'ORPHAN_ROOT_SHA^'
+>>     Unknown exit code (128) from command: git-merge-recursive ORPHAN_ROOT_SHA^ -- HEAD ORPHAN_ROOT_SHA
+>>
+>> To fix, this will only include the rebase root's parent as a base if it exists,
+>> so that in cases of rebasing an orphan branch, it is a simple two-way merge.
+>>
+>> Note the default rebase behavior does not fail:
+>>
+>>     $ git rebase ORPHAN_TARGET_BASE
+>>     First, rewinding head to replay your work on top of it...
+>>     Applying: ORPHAN_ROOT_COMMIT_MSG
+>>     Using index info to reconstruct a base tree...
+>>
+>> Signed-off-by: Ben Woosley <ben.woosley@gmail.com>
+>> ---
+>>  git-rebase--merge.sh    | 4 +++-
+>>  t/t3402-rebase-merge.sh | 9 +++++++++
+>>  2 files changed, 12 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
+>> index 2cc2a6d..8d43db9 100644
+>> --- a/git-rebase--merge.sh
+>> +++ b/git-rebase--merge.sh
+>> @@ -67,7 +67,9 @@ call_merge () {
+>>               GIT_MERGE_VERBOSITY=1 && export GIT_MERGE_VERBOSITY
+>>       fi
+>>       test -z "$strategy" && strategy=recursive
+>> -     eval 'git-merge-$strategy' $strategy_opts '"$cmt^" -- "$hd" "$cmt"'
+>> +     # If cmt doesn't have a parent, don't include it as a base
+>> +     base=$(git rev-parse --verify --quiet $cmt^)
+>> +     eval 'git-merge-$strategy' $strategy_opts $base ' -- "$hd" "$cmt"'
 >
-> Patches 4 and 5 are cleanups to earlier topics that are enabled by the
-> new SIGPIPE handling.
+> Makes sense to me.  It is not clear if such a merge without common
+> ancestor is all that useful, but as it is mechanically possible,
+> I do not see a reason to forbid it.
 >
->   [1/5]: send-pack: close demux pipe before finishing async process
->   [2/5]: run-command: teach async threads to ignore SIGPIPE
->   [3/5]: send-pack: isolate sigpipe in demuxer thread
->   [4/5]: fetch-pack: isolate sigpipe in demuxer thread
->   [5/5]: t5504: drop sigpipe=ok from push tests
-
-Thanks for a very well explained series.
-
-We do not call finish_async (rather, we do not use async) from that
-many places, and from a cursory look this codepath is the only case
-where we may encounter this kind of deadlock (the ones in
-receive-pack is about relaying the error messages back to the other
-end over sideband multiplexing)?
+>>       rv=$?
+>>       case "$rv" in
+>>       0)
+>> diff --git a/t/t3402-rebase-merge.sh b/t/t3402-rebase-merge.sh
+>> index 8f64505..488945e 100755
+>> --- a/t/t3402-rebase-merge.sh
+>> +++ b/t/t3402-rebase-merge.sh
+>> @@ -85,6 +85,15 @@ test_expect_success 'rebase -Xtheirs' '
+>>       ! grep 11 original
+>>  '
+>>
+>> +test_expect_success 'rebase -Xtheirs from orphan' '
+>> +     git checkout --orphan orphan-conflicting master~2 &&
+>> +     echo "AB $T" >> original &&
+>> +     git commit -morphan-conflicting original &&
+>> +     git rebase -Xtheirs master &&
+>> +     grep AB original &&
+>> +     ! grep 11 original
+>> +'
+>> +
+>>  test_expect_success 'merge and rebase should match' '
+>>       git diff-tree -r test-rebase test-merge >difference &&
+>>       if test -s difference
+>>
+>> --
+>> https://github.com/git/git/pull/228
