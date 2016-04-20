@@ -1,89 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/6] Convert struct name_entry to use struct object_id.
-Date: Tue, 19 Apr 2016 17:17:20 -0700
-Message-ID: <xmqqk2jtxhf3.fsf@gitster.mtv.corp.google.com>
-References: <1460934641-435791-1-git-send-email-sandals@crustytoothpaste.net>
-	<1460934641-435791-5-git-send-email-sandals@crustytoothpaste.net>
-	<xmqqshyhxkw1.fsf@gitster.mtv.corp.google.com>
-	<20160419231617.GA572694@vauxhall.crustytoothpaste.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v5 03/15] index-helper: new daemon for caching index and
+ related stuff
+Date: Wed, 20 Apr 2016 07:31:08 +0700
+Message-ID: <CACsJy8D_4KFjz6HefvzmWw-6Qqg0uguq8MXL6kLY0oMyVhPS0w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Wed Apr 20 02:17:30 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Wed Apr 20 02:31:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asfpg-0004L5-3v
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 02:17:28 +0200
+	id 1asg3U-0004b3-HO
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 02:31:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752806AbcDTARY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Apr 2016 20:17:24 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55835 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752132AbcDTARX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2016 20:17:23 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1D2A114EA8;
-	Tue, 19 Apr 2016 20:17:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nxlrfZi59Sr8me3RCk5lMRlAmp0=; b=gJByYR
-	FbkWRwLaNfPHUyNXTV3M5GUdYWmNKOGlCwlNt2Gyr+B6vqaJPlLkASwLQl0/ssW9
-	r6iEBh3JfUL4rJWqqGHifDvrm67gah2DO0yj4IT/fPCZqSjRLqVvGLHBdUsYa+NV
-	f/tydEBlRmfiSwXnMCzIjUv7RZcz2/WJsxETQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jL4Z5sqg4lIjwiSnBMW2ivr7KrNSpbMP
-	PHE6K/Dt4p23jagepLJxs+/lSJBGUz+8qyDYLgwtIMiLS0btc0SORVpHpFAKEggD
-	Mn+/htiLGtqKibnW3H+ksgxXlssJjqg0pJT6qkVzvXo3rn7PeA7XixuSdT4XxG+T
-	8WsjEckrHoI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 15AA014EA7;
-	Tue, 19 Apr 2016 20:17:22 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8470614EA5;
-	Tue, 19 Apr 2016 20:17:21 -0400 (EDT)
-In-Reply-To: <20160419231617.GA572694@vauxhall.crustytoothpaste.net> (brian
-	m. carlson's message of "Tue, 19 Apr 2016 23:16:17 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 40040BD0-068D-11E6-864D-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S932181AbcDTAbk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Apr 2016 20:31:40 -0400
+Received: from mail-lf0-f45.google.com ([209.85.215.45]:33648 "EHLO
+	mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751692AbcDTAbk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2016 20:31:40 -0400
+Received: by mail-lf0-f45.google.com with SMTP id e190so31526914lfe.0
+        for <git@vger.kernel.org>; Tue, 19 Apr 2016 17:31:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=Xavs3HffqQvzkG717pL6/USwbPCisLl5Z9VJ4V5JZ5Q=;
+        b=xeIFwNXxzTLmH0DX01qitSw6FHpk/HaevYszj6WYKxuOsyE+1i2wtXBWARhxbbgQFW
+         4/vhD9/w7/SmPxBRh7kcDm8pWnDwNPF9qQMT2Lq++MpcYYGRllO86aezk4wPreCiwJmv
+         zIZZGfCGpfeBhy7pdWWa/IX5Tfa51YQvSXnvxBbd+9eMxYcrtuwbb5Rcl1zWI/iEelDl
+         lr2tYekwAS12LAuGHU6PUS5bn6dMeGK34audFnEsP4ep14mneuc2D1dRNIfeNORcQH/c
+         jk4/Kdirj9aajgw9LjJaUGAQkGOTqwySeQaEKP9BqxNMPl7q2dP321zQ45fEwn5XS0nR
+         jqNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=Xavs3HffqQvzkG717pL6/USwbPCisLl5Z9VJ4V5JZ5Q=;
+        b=Z+aL+EM8ZfigFefvUv5Ivt/gRK/LreTYQsQJTF1NPHTX267nHr2+B66Ao6jyVx8O+S
+         /JzDqzTp1+ucrTNkH7yU1vxnEtX+sZt4zZ0l0gFbFAwmCzTeRSHr4LoyFYWmH1VYzXuM
+         pD2i3rJB8yYylU86GKyRIwu92VKaNYNj0vZMucyGhoMvXhCZYrLb6BI3TsO99Dce39+5
+         hh5VfFWKJwiRNHZBdf9vJmeEZpKouyXDBpkFFpvNPTj2+M2hluC03sCuqR0L8lEBm2+d
+         CeW4X7IBDjnl3CMAgPTH44F+kgTax7VOqcqbWce9dTOfAmth7AHeRrm6jPdpGgKTAevy
+         jc5Q==
+X-Gm-Message-State: AOPr4FWKIZJvgiKfbIo8vZS+ZmvH3qBvQQLbSxh2SLHfiLLKVZsHnVMcsX2lM2kvgkEEfTT0zmuHO/0TgKUtkw==
+X-Received: by 10.25.162.198 with SMTP id l189mr2371762lfe.162.1461112298496;
+ Tue, 19 Apr 2016 17:31:38 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Tue, 19 Apr 2016 17:31:08 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291973>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Wed, Apr 20, 2016 at 6:27 AM, David Turner <dturner@twopensource.com> wrote:
+> Shared memory is done by storing files in a per-repository temporary
+> directory.  This is more portable than shm (which requires
+> posix-realtime and has various quirks on OS X).  It might even work on
+> Windows, although this has not been tested.
 
-> On Tue, Apr 19, 2016 at 04:02:22PM -0700, Junio C Hamano wrote:
->> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->> 
->> > @@ -314,7 +314,7 @@ static int threeway_callback(int n, unsigned long mask, unsigned long dirmask, s
->> >  	}
->> >  
->> >  	if (same_entry(entry+0, entry+1)) {
->> > -		if (entry[2].sha1 && !S_ISDIR(entry[2].mode)) {
->> > +		if (entry[2].oid->hash && !S_ISDIR(entry[2].mode)) {
->> 
->> Thanks for a warning in the cover letter.
->> 
->> "if (entry[2].oid && !S_ISDIR(entry[2].mode)" would be a faithful
->> conversion, wouldn't it?
->
-> Yes, I think that would be a better conversion.  I'll reroll after
-> waiting for further comments.
+There's another option, but I'm not sure if it's too clever/tricky to
+do. Anyway, on *nix we can send file descriptors over unix socket [2],
+then mmap them back to access content. On Windows, it looks like
+DuplicateHandle [1] can do nearly the same thing. This keeps
+everything in memory and we don't have to worry about cleaning up
+shm-* files.
 
-Thanks.  A simple general rule to follow is that anything that
-assumed entry.sha1 is non-NULL should become entry.oid->hash, while
-anyting that checked if entry.sha1 is NULL or not should become a
-check on entry.oid, I think.  Even though offsetof(oid.hash) might
-happen to be zero, compiler writers are crazy and "optimize" the
-above entry[2].oid->hash saying "you are dereerencing into the hash
-field without first checking if oid pointer is NULL, so we'd assume
-that you know oid is not NULL here--which makes this always true so
-we won't even do any check and only check entry[2].mode"..
+[1] http://lackingrhoticity.blogspot.com/2015/05/passing-fds-handles-between-processes.html
+[2] http://www.normalesup.org/~george/comp/libancillary/
+-- 
+Duy
