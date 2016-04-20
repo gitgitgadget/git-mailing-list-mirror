@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 11/12] worktree.c: test if branch being bisected in another worktree
-Date: Wed, 20 Apr 2016 20:24:52 +0700
-Message-ID: <1461158693-21289-12-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 10/12] wt-status.c: split bisect detection out of wt_status_get_state()
+Date: Wed, 20 Apr 2016 20:24:51 +0700
+Message-ID: <1461158693-21289-11-git-send-email-pclouds@gmail.com>
 References: <1460897965-486-1-git-send-email-pclouds@gmail.com>
  <1461158693-21289-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,139 +13,135 @@ Cc: Junio C Hamano <gitster@pobox.com>, rethab.ch@gmail.com,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 15:26:55 2016
+X-From: git-owner@vger.kernel.org Wed Apr 20 15:26:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ass9e-0005FC-8a
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 15:26:54 +0200
+	id 1ass9Y-00058K-4c
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 15:26:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753561AbcDTN0u convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Apr 2016 09:26:50 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:32848 "EHLO
-	mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752908AbcDTN0t (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 09:26:49 -0400
-Received: by mail-pf0-f180.google.com with SMTP id 184so18582625pff.0
-        for <git@vger.kernel.org>; Wed, 20 Apr 2016 06:26:49 -0700 (PDT)
+	id S1754492AbcDTN0o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Apr 2016 09:26:44 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:35831 "EHLO
+	mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753097AbcDTN0n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 09:26:43 -0400
+Received: by mail-pf0-f170.google.com with SMTP id n1so18488595pfn.2
+        for <git@vger.kernel.org>; Wed, 20 Apr 2016 06:26:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=DHSSiBDHSI1r8/gbNmC52KpR00TfqN7w+3TOIihPim8=;
-        b=VL5+zHbiVxUSHWXSlaF3jOIZXYbetFF1oQQj97UvvLcd5IXjBszPpLmsrdsQNkfP3W
-         qUJA+cEf7vkuGclC85o7Ct+Dt/c0GJ/cMfseSjX7k9JLWm5UQ2OKGsYDH4Mxd35l4cIJ
-         ISybY/6Bu/YCuuTz/6EXTjl1gV4BIVUAT+pnfqbqtecxmJw1QL4OghOZ+J/8JBpKitrl
-         5t2GlCr1vBSfmet5YecgX5OmBE5sNDWIFvhOqKvLIMyMDdSU+sl38re8QPRmnaoDLdoV
-         zKOLgiFX0yX+bEVWlwzX8YLNHtebe0npyQQL9S4NU6FZQI+T/f7UPz52qeMGuGRIRzq+
-         +qhA==
+        bh=4SbNHqL1MPuaLFriHD+9exKIA0+Ly12zOrOW8DwDLAU=;
+        b=ukfR7lAXRZh+HdpGBhfn8AheegnCCB+lpAKqNCJ/vURU+ejrCGYiWPvMb58OcImD9z
+         GsL8ls+XgkA47x7x0q6oBTTIfLjOB39CHzS2jmuHXdat3Hmkn2D7Yk94nJy7A74tjcYB
+         ZGmzsgbGXo2THlRIOAcjVZM0hheb4JXcJebrg2vnzSO/AXp7THKH6BhqTNYjIB44+iou
+         IpCSUB/mz5HpKT/AfGhyHteMzUI2BrNdO6v5eWbkrKgA4OwIx997RaeSQwWSSj2JCB11
+         Ft8FYUXkgZCsYrJhbJ+4WAFpgEsi1UvDl/gaZ5APmpgD2zuNg86vzfySzAMn+PVBh1Vi
+         qmNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=DHSSiBDHSI1r8/gbNmC52KpR00TfqN7w+3TOIihPim8=;
-        b=L7hI6pbCwpC29xaxxPxDBfWw7higPnEoOGPu56COesfsLbpO93x+Vwb/HudWughM0A
-         9bnAr60JkCQ6F6gMdWBaWntZHg4E3vQ0AioUR++UdUPyEQQjUUpDkXwDYyVAhr9Vvqfi
-         LkJ627Ldc8o465A4ayfCjU+2JhEFnqfq+YaCuXhHHH/ipT8hHTa1deA2vqFXrSJ2l51G
-         n6JNOxBJPbSe/ozLQidlaWKHxfpUBCMy4JAj4Ywws8NpOw1dzHkFBRcI7ZKBMRA4k3F9
-         B8O/I7C13F5X5uHBAoBzKeidZqGOTeqJ8XWC6+V9E2zAJquNOk8ydWFDtz98R1eBa/h0
-         p0uA==
-X-Gm-Message-State: AOPr4FVSD98Gt1/c625l26RWvM+Mf+ldV+3p4E6bBk75jZBC91VlrtFTD45GT5JW/WL36Q==
-X-Received: by 10.98.36.195 with SMTP id k64mr12239115pfk.88.1461158809006;
-        Wed, 20 Apr 2016 06:26:49 -0700 (PDT)
+        bh=4SbNHqL1MPuaLFriHD+9exKIA0+Ly12zOrOW8DwDLAU=;
+        b=elBLwhjfLcY9jBfvE8rg7c5pp2DtRwlIN+ZGAQW5UwPH7bycNIUBOVT7oc7t4MIMrQ
+         mJjTEdEKwvk5QAfeSzxPlIQxo6Pm3FkSQsT6MdS6+JQ4dmr9dDKZqSwBADvSLnvu57Xp
+         aN8o1K4j9Q1kg0erdyd0CqExJKFF+p2oH6gSiZInzsIqqB52eoYmRVHEbwAZnRYcUeue
+         NWouF4GOyXbKVhUReYoym2G1cW8ne+in8kgZqkQemtlY4tf46S764sv9aKFitjF4QeYm
+         mHp7eb8TFKRFuJRo3QugLbbdjYcZoYdB3JV6HrUTqhZ/5EHsq4EIR2YQ+7K15aFewGIa
+         uWPw==
+X-Gm-Message-State: AOPr4FViyw8Pa2qBgRiupAjOAXuMIxLan9UU5XOHZzWLt0aYD/yL7tR0SP5jsXTQudlWKw==
+X-Received: by 10.98.82.134 with SMTP id g128mr12327418pfb.113.1461158803047;
+        Wed, 20 Apr 2016 06:26:43 -0700 (PDT)
 Received: from lanh ([171.232.186.157])
-        by smtp.gmail.com with ESMTPSA id z28sm27358377pfi.32.2016.04.20.06.26.45
+        by smtp.gmail.com with ESMTPSA id z28sm27357725pfi.32.2016.04.20.06.26.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Apr 2016 06:26:47 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 20 Apr 2016 20:27:01 +0700
+        Wed, 20 Apr 2016 06:26:41 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Wed, 20 Apr 2016 20:26:54 +0700
 X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
 In-Reply-To: <1461158693-21289-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292020>
 
-Similar to the rebase case, we want to detect if "HEAD" in some worktre=
-e
-is being bisected because
-
-1) we do not want to checkout this branch in another worktree, after
-   bisect is done it will want to go back to this branch
-
-2) we do not want to delete the branch is either or git bisect will
-   fail to return to the (long gone) branch
+And make it work with any given worktree, in preparation for (again)
+find_shared_symref(). read_and_strip_branch() is deleted because it's
+no longer used.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- t/t2025-worktree-add.sh | 13 +++++++++++++
- worktree.c              | 19 +++++++++++++++++++
- 2 files changed, 32 insertions(+)
+ wt-status.c | 23 ++++++++++++++---------
+ wt-status.h |  2 ++
+ 2 files changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-index da54327..8f53944 100755
---- a/t/t2025-worktree-add.sh
-+++ b/t/t2025-worktree-add.sh
-@@ -263,4 +263,17 @@ test_expect_success 'check out from current worktr=
-ee branch ok' '
- 	)
- '
-=20
-+test_expect_success 'checkout a branch under bisect' '
-+	git worktree add under-bisect &&
-+	(
-+		cd under-bisect &&
-+		git bisect start &&
-+		git bisect bad &&
-+		git bisect good HEAD~2 &&
-+		git worktree list | grep "under-bisect.*detached HEAD" &&
-+		test_must_fail git worktree add new-bisect under-bisect &&
-+		! test -d new-bisect
-+	)
-+'
-+
- test_done
-diff --git a/worktree.c b/worktree.c
-index dc380a2..7b66071 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -226,6 +226,21 @@ static int is_worktree_being_rebased(const struct =
-worktree *wt,
- 	return found_rebase;
+diff --git a/wt-status.c b/wt-status.c
+index 2295682..36c85f8 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1296,11 +1296,6 @@ got_nothing:
+ 	return NULL;
  }
 =20
-+static int is_worktree_being_bisected(const struct worktree *wt,
-+				      const char *target)
+-static char *read_and_strip_branch(const char *path)
+-{
+-	return get_branch(NULL, path);
+-}
+-
+ struct grab_1st_switch_cbdata {
+ 	struct strbuf buf;
+ 	unsigned char nsha1[20];
+@@ -1393,6 +1388,19 @@ int wt_status_check_rebase(const struct worktree=
+ *wt,
+ 	return 1;
+ }
+=20
++int wt_status_check_bisect(const struct worktree *wt,
++			   struct wt_status_state *state)
 +{
-+	struct wt_status_state state;
-+	int found_rebase;
++	struct stat st;
 +
-+	memset(&state, 0, sizeof(state));
-+	found_rebase =3D wt_status_check_bisect(wt, &state) &&
-+		state.branch &&
-+		starts_with(target, "refs/heads/") &&
-+		!strcmp(state.branch, target + strlen("refs/heads/"));
-+	free(state.branch);
-+	return found_rebase;
++	if (!stat(worktree_git_path(wt, "BISECT_LOG"), &st)) {
++		state->bisect_in_progress =3D 1;
++		state->branch =3D get_branch(wt, "BISECT_START");
++		return 1;
++	}
++	return 0;
 +}
 +
- const struct worktree *find_shared_symref(const char *symref,
- 					  const char *target,
- 					  int ignore_current_worktree)
-@@ -251,6 +266,10 @@ const struct worktree *find_shared_symref(const ch=
-ar *symref,
- 				existing =3D wt;
- 				break;
- 			}
-+			if (is_worktree_being_bisected(wt, target)) {
-+				existing =3D wt;
-+				break;
-+			}
- 		}
+ void wt_status_get_state(struct wt_status_state *state,
+ 			 int get_detached_from)
+ {
+@@ -1408,10 +1416,7 @@ void wt_status_get_state(struct wt_status_state =
+*state,
+ 		state->cherry_pick_in_progress =3D 1;
+ 		hashcpy(state->cherry_pick_head_sha1, sha1);
+ 	}
+-	if (!stat(git_path("BISECT_LOG"), &st)) {
+-		state->bisect_in_progress =3D 1;
+-		state->branch =3D read_and_strip_branch("BISECT_START");
+-	}
++	wt_status_check_bisect(NULL, state);
+ 	if (!stat(git_path_revert_head(), &st) &&
+ 	    !get_sha1("REVERT_HEAD", sha1)) {
+ 		state->revert_in_progress =3D 1;
+diff --git a/wt-status.h b/wt-status.h
+index c4ddcad..2ca93f6 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -104,6 +104,8 @@ void wt_status_collect(struct wt_status *s);
+ void wt_status_get_state(struct wt_status_state *state, int get_detach=
+ed_from);
+ int wt_status_check_rebase(const struct worktree *wt,
+ 			   struct wt_status_state *state);
++int wt_status_check_bisect(const struct worktree *wt,
++			   struct wt_status_state *state);
 =20
- 		strbuf_reset(&path);
+ void wt_shortstatus_print(struct wt_status *s);
+ void wt_porcelain_print(struct wt_status *s);
 --=20
 2.8.0.rc0.210.gd302cd2
