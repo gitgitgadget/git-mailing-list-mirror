@@ -1,82 +1,99 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] replace --edit: respect core.editor
-Date: Wed, 20 Apr 2016 08:37:21 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604200836050.2826@virtualbox>
-References: <909769abaff1babdab77625bebd04e2013c6e344.1461076425.git.johannes.schindelin@gmx.de> <xmqqoa9536wi.fsf@gitster.mtv.corp.google.com> <20160420035353.GA31890@sigill.intra.peff.net>
- <CAP8UFD189+AcLstEx4s_2ZYWp6UOtDb=vWGYhCpJayM8ma5hxw@mail.gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v2] replace --edit: respect core.editor
+Date: Wed, 20 Apr 2016 08:38:03 +0200 (CEST)
+Message-ID: <a7b889d525f99fecfb9d4a890fd2a5d4bf3001e0.1461134258.git.johannes.schindelin@gmx.de>
+References: <909769abaff1babdab77625bebd04e2013c6e344.1461076425.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 20 08:37:52 2016
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Christian Couder <christian.couder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 20 08:38:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asllm-0007Yy-ER
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 08:37:50 +0200
+	id 1aslmF-0007uS-GS
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 08:38:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754178AbcDTGhp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2016 02:37:45 -0400
-Received: from mout.gmx.net ([212.227.17.21]:56861 "EHLO mout.gmx.net"
+	id S1754188AbcDTGiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2016 02:38:15 -0400
+Received: from mout.gmx.net ([212.227.15.18]:59765 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754092AbcDTGhn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 02:37:43 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MAQMg-1b3Bss0Ouw-00BbsZ; Wed, 20 Apr 2016 08:37:24
+	id S1754092AbcDTGiP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 02:38:15 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MFcg9-1avmSO0LK9-00Ec3M; Wed, 20 Apr 2016 08:38:05
  +0200
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CAP8UFD189+AcLstEx4s_2ZYWp6UOtDb=vWGYhCpJayM8ma5hxw@mail.gmail.com>
+In-Reply-To: <909769abaff1babdab77625bebd04e2013c6e344.1461076425.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:+M4Ide4I34IIi73IwChnajEsa0nf9xDnIqRJqt4iF1j9h+6zpjB
- LGJOdDekZ2WWszlFEfzPqWBiGRzgGoHdnFx2hDLLB6IjOH0AtvzNhY6A58X+g2yQTlJju7W
- xmCzoEr90W3EZnF/TS4dQ8hF5Oh850s6Oy+1oC3Z68w5vQKC5vLdV9F6/1rM9Ijf5uwmSg6
- qWdAY0qxqqPPaowa1grPA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:oeug/9cUO3U=:aALE/bk7vsgpia6TlyFWl7
- ysieIoX+/Oe4DqZkUIyuz8AwNoDxKOaqmqRy/wllswtvbLdolL93fwXGB1o9bATkKSBxAqT+x
- dqqQ+VMiFAg3Ubu949aOsw04yVEWrPFNLpoAE7VGfDQQLlePDSI/HWqoolghNijktPrIUyW+b
- ivsWuT/sB/pV+CYGsgCEHMGHmjw/C99YKPNDoSh1VOBkDpdqOT/xnDZ2JXaclDIx3rdIbt7Hq
- oFixzazoyvx5lrw1JvlxmMmFlUTBw6SfANo4uETJJqZlU1evuoA0+0kWncoL6msNoFnlT0V83
- yOO/FGNChu/9iQVbsUKML2/5XBTduVFUxRbgguPPeKPBfEQiAZ6fL+RtoyNnsm4mWpmfwk03B
- wy6VUdmmUehnGvGfLZiLkCzbk8+NeVt1PwiV2qDvSW8xdHzkOZHJo7xrLYNC1x6oTQF4Iy+eq
- zKUBfvzfJXE4tb+RAvZLwWh8DL2QtEk4rjjUe50L/iEGXOK8dCwmZnOPXhPNWbccaq2zBLVuv
- na1K4TTg44Xy3eBX7pGYvc3/zPJGU4G387qxgnkhpoTxeph7AV1Cj4wgGN6uMcOUas1Xj/oE/
- tGBe8l7nxVnKT38GadXIDzrAAW4+4lTsAURK2QPH98qGcKMmdSfL0TVPq9ou12xYSDbEYb/+o
- kCaLBpeiZSD8jNwRkg9NN1+yOj6D/+lk2cJExHeXFGL2QKPxGdtCRQ6LbXugvplfl0T9D8SaA
- NCwqz4CogI1xxf/+Pbfpw446OjsWtDIXYf2euknatogCbjBLCE54nWD4aGv/tq5JoArrsxpF 
+X-Provags-ID: V03:K0:ARIZoIx1YSc1eAvm7Xv66zR4K36hwdfGeA90NK/8QCpBmXqCWqF
+ dUF5WTrIk1mHZtNIUeK/bXUVSoZwIGo6yIhihgltccpk0IR/XEHHjO7azX0pzVCi3D8KVKC
+ v0WyQb38A6e3wkVVqzGkxNZGvelhTAWOiucW3H9Pis/R1Qsv7Vg8gJkJzsXvukI50I5cdrV
+ XmUrcEUK9tsmTxmiWNBlA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:9xGspzDlqlc=:cWfiel1uBtjjnsI1t2NPiE
+ 44TSzrykE6YJjeX9KDXk6yI9EsoWOMXe6lHmQ/NwoXWkOfuMQ9QNAYGokruZb8JbAlt6I0a1u
+ BoDWuTzAMy4W00AJSiDCq5Fa9J6HX0uCmXsh70c/50PQ54WpWP6Rxx2ktey1fpWF8ubxvdX8S
+ 2VdT89P7TCBUvBJLMZOus5YIR33zjZbzObUhP5BzPwH1iSRygus6YC38BefFijwtjfSI5PIRZ
+ fCXbZ0GRuMGeCrNP+OotOFXKU1XExb8F/89cE46GdHDvhp9w4t1y25mG0gzfCsWDabqTIqh/+
+ IrynbmioM81cw8dpKQWxjZ7qmZ1uMjCg6+xFG/wVWFjnwriN5mxffCqRx/3o8rDP0aNlczb57
+ RS79WM4eMtOkkSeKUg8RkWouZNiNMFtUqii8CmIwXlwlCNyk3D2cqzGZeB9uYZZd31ONYP352
+ riQh6MXJllfFGdHF5HIDamtFZ8Q1EGJzcwe6NF3z61uIgPGj1YLQ8z0Oo+jgj/PJuW7F58uLD
+ u9Mhx57xv7Tfq4wkSndhHrzQEoMVXYRCelO5ia9CqvkraqNvo9mv4e9ZS1ZmHBdYyLk5zagYU
+ Lwg+a1lxY+pX8x6YvdxVk86bKOztazGsdDRYCKup6+61G1TvdIBPWYIRV4rFaU70ypUgworUW
+ 4ccoqKSgK672WUzug4WS9XW2UEtt/SYPOu+0A8E+L26mC7NU1LpSUYmL0KtMgpI7i26imKU0q
+ ViYhL+kiS8wrASfZCUyyXXJJ2IKyTIKtOEnCHVwxlGQR6EvaGz39C3Y+VhoDXv8nctCtGLZW 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291986>
 
-Hi Christian & Peff,
+We simply need to read the config, is all.
 
-On Wed, 20 Apr 2016, Christian Couder wrote:
+This fixes https://github.com/git-for-windows/git/issues/733
 
-> On Wed, Apr 20, 2016 at 5:53 AM, Jeff King <peff@peff.net> wrote:
-> > On Tue, Apr 19, 2016 at 09:22:37AM -0700, Junio C Hamano wrote:
-> >
-> >> I can understand "we only know edit mode needs config, and we know it
-> >> will never affect other modes to have the new call here", and it
-> >> would be good for an emergency patch for ancient maintenance track
-> >> that will not get any other changes or enhancements.  I do not think
-> >> it is a sound reasoning to maintain the codefor the longer term,
-> >> though.
-> >
-> > Yeah. I agree the patch here is not wrong, but I would prefer to just
-> > have git-replace load the config when it starts. It's _possible_ that
-> > something might break or misbehave, but IMHO any program which breaks
-> > when git_default_config() is run is probably in need of fixing.
-> 
-> I agree.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/replace.c | 1 +
+ 1 file changed, 1 insertion(+)
+Interdiff vs v1:
 
-Okay. I tried to err on the side of caution (side effects? Ever heard of
-side effects? ;-))
+ diff --git a/builtin/replace.c b/builtin/replace.c
+ index 02b13f6..b58c714 100644
+ --- a/builtin/replace.c
+ +++ b/builtin/replace.c
+ @@ -440,6 +440,7 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+  	};
+  
+  	check_replace_refs = 0;
+ +	git_config(git_default_config, NULL);
+  
+  	argc = parse_options(argc, argv, prefix, options, git_replace_usage, 0);
+  
+ @@ -475,7 +476,6 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+  		return replace_object(argv[0], argv[1], force);
+  
+  	case MODE_EDIT:
+ -		git_config(git_default_config, NULL);
+  		if (argc != 1)
+  			usage_msg_opt("-e needs exactly one argument",
+  				      git_replace_usage, options);
 
-v2 coming.
 
-Ciao,
-Dscho
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 748c6ca..b58c714 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -440,6 +440,7 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 	};
+ 
+ 	check_replace_refs = 0;
++	git_config(git_default_config, NULL);
+ 
+ 	argc = parse_options(argc, argv, prefix, options, git_replace_usage, 0);
+ 
+-- 
+2.8.1.207.g7b140d3
