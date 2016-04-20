@@ -1,141 +1,126 @@
-From: Ben Woosley <ben.woosley@gmail.com>
-Subject: Re: [PATCH] git-rebase--merge: don't include absent parent as a base
-Date: Wed, 20 Apr 2016 14:19:04 -0700
-Message-ID: <CAC5gnOxFVT=Y-YURxQxnT3Qng162=jogoZMEYJdN1jz8SmJtCg@mail.gmail.com>
-References: <0102015434e7556a-2d9848cb-93c3-4883-96ec-c0c70098796b-000000@eu-west-1.amazonses.com>
- <xmqq1t60ugoi.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: problems serving non-bare repos with submodules over http
+Date: Wed, 20 Apr 2016 14:27:47 -0700
+Message-ID: <xmqqshygt1gs.fsf@gitster.mtv.corp.google.com>
+References: <20160420152209.GH23764@onerussian.com>
+	<CAGZ79kYS-F1yKpNP7jmhTiZT1R_pucUBBTCbmHKZz6Xd6dy8EA@mail.gmail.com>
+	<xmqqh9ewukhw.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kZMOv0r9fRFbP1WV8qFJBm+s=V8=ueFbYvnyFtgV8j9iQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Users <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 20 23:19:42 2016
+Content-Type: text/plain
+Cc: Yaroslav Halchenko <yoh@onerussian.com>,
+	Git Gurus hangout <git@vger.kernel.org>,
+	Benjamin Poldrack <benjaminpoldrack@gmail.com>,
+	Joey Hess <id@joeyh.name>, Jens Lehmann <Jens.Lehmann@web.de>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Apr 20 23:28:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aszXB-0002S2-0D
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 23:19:41 +0200
+	id 1aszfA-0000Iw-HE
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 23:27:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751237AbcDTVTg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2016 17:19:36 -0400
-Received: from mail-oi0-f49.google.com ([209.85.218.49]:34854 "EHLO
-	mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751092AbcDTVTf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 17:19:35 -0400
-Received: by mail-oi0-f49.google.com with SMTP id p188so63205398oih.2
-        for <git@vger.kernel.org>; Wed, 20 Apr 2016 14:19:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=zdb3xR6qFUADk11WHMRCCbeAaflbA2KW93e/gHy88Ok=;
-        b=E5k2fhD1GZOLSLWDEmE6nB1TBNO0pRd/Xz97DD1FlQzutVRlCqzitxzekWbSjFrevK
-         xgNEkbjZMgne7Aq5o5kp2ubRlunDfB9VQNgKgHH1QlDIbB7PtdtfWXJhysjFI301yEOh
-         x2FmwPj09t0QUsJxVLogppTkIFVpIHhmObgcko/6smExm1/oFImC64j/Dk2F/qFYpdse
-         9GikNKvVJo3OtIi5I1aPzhEd7Et0cgy4gUNfQTRyJE22njOwUK6/Kx6HCs9UsgIgzSC/
-         Lnro7z3MvfYu9CKWCBgcmORul2q/l69qjQLrF24xSVgHY+xmmzJxaFDXbUVQFSKiurpx
-         SZzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=zdb3xR6qFUADk11WHMRCCbeAaflbA2KW93e/gHy88Ok=;
-        b=dGrXUjbl2BCsTNzZSRcjS8FxLd70T7B3agRIcIBecQg5F+MLpvxaCXBI5DIxrqq163
-         adv+3vp03Hrb/hiC11VDrMcmqpKTMMRizjpv0wj6rq2R0TA5f4LCJrqe/+sKQWGn/gSI
-         9F11eCSuGZQHdrSfE3POg4Uul3XgjEonr0nexSJ4meL4am0CZCX+M64zSXNog1+W3cTS
-         Q9VfZiA0iRquubpMQP2we2LGjRv7GPMeGOuvyKNWpIN+CS4Py/dGVwSSAbiTmfQ0moV4
-         PwdkPFqWJglXIt+a+Cq8UBZQEEk0Xh1YVy/HQlJ1qxi2lSVA7jbjW6wAuBjmTtCYLBzb
-         0p/Q==
-X-Gm-Message-State: AOPr4FXZpnQ/zusRPNriZUcmzsoDa99Msnl1vmyL+Yqn/Og+LQI5NuV6Bo74RiN9n4yQdyMQ985uiarn9IoNNQ==
-X-Received: by 10.157.4.72 with SMTP id 66mr5090877otc.141.1461187174264; Wed,
- 20 Apr 2016 14:19:34 -0700 (PDT)
-Received: by 10.202.201.82 with HTTP; Wed, 20 Apr 2016 14:19:04 -0700 (PDT)
-In-Reply-To: <xmqq1t60ugoi.fsf@gitster.mtv.corp.google.com>
+	id S1751829AbcDTV1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2016 17:27:51 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54044 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751371AbcDTV1u (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 17:27:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5CA67146E3;
+	Wed, 20 Apr 2016 17:27:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+C6V7ioABWMq7i95gHNusYnIQzE=; b=T+c6tY
+	k7j3ydFOel/RzuLwB6EA7pY5eg8hyyQ7tCWUnNVFSVydeqt5RsGUJdcCr+fBdi2L
+	GaUoUxnm/m0ylVqsNeklK7XVjI53jvvtSDU1dx53ajcbRWXzT/BmoEQpdHCR45rV
+	rc+59eTZHsIT8JMUYu37Wnuilg8d73RJPeros=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PQ5YtLIcxyWhJxPYYKfpvK37ejjxpxeY
+	58Mz48qFa/Iib1ftQPQZY49iUysgspBXpFruIj8g8wxBDk1lQfh0qV0fpIzpA55x
+	LMayRCdZy7sIgEbKV4YukUtEN90sDffMsCc+iAHPY/vmAb3bQgRQ337eJYi0X5Jq
+	MU0COiMASKQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 54CE2146E2;
+	Wed, 20 Apr 2016 17:27:49 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B1B92146E1;
+	Wed, 20 Apr 2016 17:27:48 -0400 (EDT)
+In-Reply-To: <CAGZ79kZMOv0r9fRFbP1WV8qFJBm+s=V8=ueFbYvnyFtgV8j9iQ@mail.gmail.com>
+	(Stefan Beller's message of "Wed, 20 Apr 2016 14:05:43 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: BAF5F626-073E-11E6-8456-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292084>
 
-It's helpful in the case where a bit of code has been detached from
-its history by way of copying the files and starting a new repo, where
-development continues. If you want to reunite the new history with the
-prior history, while preferring the new history, you need to `rebase
--Xtheirs` the new branch onto the old.
+Stefan Beller <sbeller@google.com> writes:
 
-Best,
-Ben
+>> I may be missing the subtleties, but if you are serving others from
+>> a non-bare repository with submodules, I do not think you would want
+>> to expose the in-tree version of the submodule in the first place.
+>
+> Well I would imagine that is the exact point.
+> If I was not trying to expose my state, I could ask you to
+> obtain your copy from $(git remote get-url origin) just as I did.
 
-On Wed, Apr 20, 2016 at 2:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ben Woosley <Ben.Woosley@gmail.com> writes:
->
->> From: Ben Woosley <ben.woosley@gmail.com>
->>
->> Absent this fix, attempts to rebase an orphan branch with --strategy recursive
->> will fail with:
->>
->>     $ git rebase ORPHAN_TARGET_BASE -s recursive
->>     First, rewinding head to replay your work on top of it...
->>     fatal: Could not parse object 'ORPHAN_ROOT_SHA^'
->>     Unknown exit code (128) from command: git-merge-recursive ORPHAN_ROOT_SHA^ -- HEAD ORPHAN_ROOT_SHA
->>
->> To fix, this will only include the rebase root's parent as a base if it exists,
->> so that in cases of rebasing an orphan branch, it is a simple two-way merge.
->>
->> Note the default rebase behavior does not fail:
->>
->>     $ git rebase ORPHAN_TARGET_BASE
->>     First, rewinding head to replay your work on top of it...
->>     Applying: ORPHAN_ROOT_COMMIT_MSG
->>     Using index info to reconstruct a base tree...
->>
->> Signed-off-by: Ben Woosley <ben.woosley@gmail.com>
->> ---
->>  git-rebase--merge.sh    | 4 +++-
->>  t/t3402-rebase-merge.sh | 9 +++++++++
->>  2 files changed, 12 insertions(+), 1 deletion(-)
->>
->> diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
->> index 2cc2a6d..8d43db9 100644
->> --- a/git-rebase--merge.sh
->> +++ b/git-rebase--merge.sh
->> @@ -67,7 +67,9 @@ call_merge () {
->>               GIT_MERGE_VERBOSITY=1 && export GIT_MERGE_VERBOSITY
->>       fi
->>       test -z "$strategy" && strategy=recursive
->> -     eval 'git-merge-$strategy' $strategy_opts '"$cmt^" -- "$hd" "$cmt"'
->> +     # If cmt doesn't have a parent, don't include it as a base
->> +     base=$(git rev-parse --verify --quiet $cmt^)
->> +     eval 'git-merge-$strategy' $strategy_opts $base ' -- "$hd" "$cmt"'
->
-> Makes sense to me.  It is not clear if such a merge without common
-> ancestor is all that useful, but as it is mechanically possible,
-> I do not see a reason to forbid it.
->
->>       rv=$?
->>       case "$rv" in
->>       0)
->> diff --git a/t/t3402-rebase-merge.sh b/t/t3402-rebase-merge.sh
->> index 8f64505..488945e 100755
->> --- a/t/t3402-rebase-merge.sh
->> +++ b/t/t3402-rebase-merge.sh
->> @@ -85,6 +85,15 @@ test_expect_success 'rebase -Xtheirs' '
->>       ! grep 11 original
->>  '
->>
->> +test_expect_success 'rebase -Xtheirs from orphan' '
->> +     git checkout --orphan orphan-conflicting master~2 &&
->> +     echo "AB $T" >> original &&
->> +     git commit -morphan-conflicting original &&
->> +     git rebase -Xtheirs master &&
->> +     grep AB original &&
->> +     ! grep 11 original
->> +'
->> +
->>  test_expect_success 'merge and rebase should match' '
->>       git diff-tree -r test-rebase test-merge >difference &&
->>       if test -s difference
->>
->> --
->> https://github.com/git/git/pull/228
+That wasn't what I had in mind, but if the cloner cloned from your
+repository with a working tree, the cloner would discover submodules
+you use from your .gitmodules file, which would record the location
+you cloned them from, so something like that may come into the
+picture.  What I had in mind was more like this one you mentioned
+below:
+
+>     $GIT_DIR_SUPER_PROJECT/modules/$MODULE_NAME
+> ...
+> Right instead of cloning $WORKTREE/sub/.git you rather want
+> $GITDIR/module/sub
+
+> So currently the protocol doesn't allow to even specify the submodules
+> directories.
+
+Depends on what you exactly mean by "the protocol", but the
+networking protocol is about accessing a single repository.  It is
+up to you to decide where to go next after learning what you can
+learn from the result, typically by following what appears in
+the .gitmodules file.
+
+The only special case is when .gitmodules file records the URL in a
+relative form, I would think.  Traditionally (i.e. when it was
+considered sane to clone only from bare repositories) I think people
+expected a layout like this:
+
+	top.git/
+	top.git/refs/{heads,tags,...}/...
+        top.git/objects/...
+        top.git/sub.git/
+	top.git/sub.git/refs/{heads,tags,...}/...
+        top.git/sub.git/objects/...
+
+and refer to ./sub.git from .gitmodules recorded in top.git.  It
+still would be norm for common distribution sites (i.e. the original
+place Yaroslav likely has cloned things from) to be bare, and with
+or without $GIT_DIR/modules/, the relative path of submodule seen
+by its superproject would (have to) be different between a bare and
+a non-bare repository.
+
+I'd imagine that people could agree on a common layout like this
+even for a forest of bare repositories:
+
+	top.git/
+	top.git/refs/{heads,tags,...}/...
+        top.git/objects/...
+        top.git/modules/sub.git/
+	top.git/modules/sub.git/refs/{heads,tags,...}/...
+        top.git/modules/sub.git/objects/...
+
+which would probably make the "relative" relationship between the
+supermodule and its submodules the same between bare and non-bare
+repositories, but I didn't think it too deeply.
