@@ -1,83 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/5] fix deadlock in git-push
-Date: Wed, 20 Apr 2016 17:51:17 -0400
-Message-ID: <20160420215117.GA18297@sigill.intra.peff.net>
-References: <20160419223945.GA18055@sigill.intra.peff.net>
- <xmqqwpnst1yb.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 4/4] convert.c: ident + core.autocrlf didn't work
+Date: Wed, 20 Apr 2016 15:27:37 -0700
+Message-ID: <xmqqoa93ud9i.fsf@gitster.mtv.corp.google.com>
+References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
+	<1461072363-2874-1-git-send-email-tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 20 23:51:27 2016
+To: tboegi@web.de
+X-From: git-owner@vger.kernel.org Thu Apr 21 00:27:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1at01u-0001mn-0C
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 23:51:26 +0200
+	id 1at0b3-0004tt-3Y
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 00:27:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751324AbcDTVvV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2016 17:51:21 -0400
-Received: from cloud.peff.net ([50.56.180.127]:53260 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751179AbcDTVvU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 17:51:20 -0400
-Received: (qmail 16827 invoked by uid 102); 20 Apr 2016 21:51:20 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 Apr 2016 17:51:20 -0400
-Received: (qmail 3368 invoked by uid 107); 20 Apr 2016 21:51:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 Apr 2016 17:51:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Apr 2016 17:51:17 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqwpnst1yb.fsf@gitster.mtv.corp.google.com>
+	id S1751416AbcDTW1l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2016 18:27:41 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62658 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751188AbcDTW1k (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 18:27:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 02D2216056;
+	Wed, 20 Apr 2016 18:27:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=og0aPvESddSvRxtN1Qxmkc2bImo=; b=OW/nGe
+	/S9Ds4WZRrxPyWx4+EEdZ58yFp8QNjqbgD6NCFR0SjXvAlBkA8U/BLqcvjWTrQ0v
+	QuaSD+YLcf2zJV0vmow8KBe2XPXxqRSAJUoNDH2UG6E9whj25uFNDJHe2eSeXpV6
+	zAuO7UtaUdoNFzcGlIeuLc+hfhAro6CNh35Ho=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tb7fO5mJH9axccR22VXXwi3CLw5hl1GD
+	GyDCrNzKIdLt7ggUnZvjARwQVg0wlZ3a+2GVZjBRAiti/kDNUPBKJRULKCGHAxSU
+	RT5h68MPLyxv4BlYOJcEREpOcbID2QidksofrVORohCvrmG4LMs0CoHCnyWrn0JC
+	4CXYSS/nLU4=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E5A8616055;
+	Wed, 20 Apr 2016 18:27:38 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4C44116054;
+	Wed, 20 Apr 2016 18:27:38 -0400 (EDT)
+In-Reply-To: <1461072363-2874-1-git-send-email-tboegi@web.de> (tboegi@web.de's
+	message of "Tue, 19 Apr 2016 15:26:03 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 16848716-0747-11E6-84FE-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292087>
 
-On Wed, Apr 20, 2016 at 02:17:16PM -0700, Junio C Hamano wrote:
+tboegi@web.de writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > The first patch below fixes the deadlock. Unfortunately, it turns it
-> > into a likely SIGPIPE death. Which is an improvement, but not ideal.
-> >
-> > Patches 2 and 3 address that by fixing the way we handle SIGPIPE in
-> > async threads.
-> >
-> > Patches 4 and 5 are cleanups to earlier topics that are enabled by the
-> > new SIGPIPE handling.
-> >
-> >   [1/5]: send-pack: close demux pipe before finishing async process
-> >   [2/5]: run-command: teach async threads to ignore SIGPIPE
-> >   [3/5]: send-pack: isolate sigpipe in demuxer thread
-> >   [4/5]: fetch-pack: isolate sigpipe in demuxer thread
-> >   [5/5]: t5504: drop sigpipe=ok from push tests
-> 
-> Thanks for a very well explained series.
-> 
-> We do not call finish_async (rather, we do not use async) from that
-> many places, and from a cursory look this codepath is the only case
-> where we may encounter this kind of deadlock (the ones in
-> receive-pack is about relaying the error messages back to the other
-> end over sideband multiplexing)?
+>  	if (ca.drv && (ca.drv->smudge || ca.drv->clean))
+> -		return filter;
+> +		return NULL;
+>  
+>  	if (ca.ident)
+>  		filter = ident_filter(sha1);
 
-Yeah, I checked the other demuxer in fetch-pack, but it does not have
-any early returns like this (it just dies :) ).
+We allocated an ident-filter here...
 
-It does not do an explicit close on demux.out, but I think it is
-effectively closed when we hand it off to index-pack/unpack-objects via
-cmd.in.
+> -	crlf_action = ca.crlf_action;
+> -
+> -	if ((crlf_action == CRLF_BINARY) ||
+> -			crlf_action == CRLF_AUTO_INPUT ||
+> -			(crlf_action == CRLF_TEXT_INPUT))
+> -		filter = cascade_filter(filter, &null_filter_singleton);
+> -
+> -	else if (output_eol(crlf_action) == EOL_CRLF &&
+> -		 !(crlf_action == CRLF_AUTO || crlf_action == CRLF_AUTO_CRLF))
+> +	if (output_eol(ca.crlf_action) == EOL_CRLF) {
+> +		if (ca.crlf_action == CRLF_AUTO || ca.crlf_action == CRLF_AUTO_CRLF)
+> +			return NULL;
 
-Arguably finish_async() should "close(demux.out)" itself, but that felt
-like an ownership violation. Yes, that's how "struct async" passes out
-the descriptor, but the caller is then expected to handle it, and
-correct callers will typically have closed it themselves, handed it off
-to a sub-process, etc. Closing it in finish_async() runs the risk that
-we just call close() on a descriptor number that is either unattached,
-or attached to some random other thing.
+and then by returning NULL, we lost it.
 
--Peff
+>  		filter = cascade_filter(filter, lf_to_crlf_filter());
+> +	} else
+> +		filter = cascade_filter(filter, &null_filter_singleton);
+>  
+>  	return filter;
+>  }
