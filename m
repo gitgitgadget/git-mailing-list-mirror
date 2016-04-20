@@ -1,92 +1,81 @@
-From: Shaun Jackman <sjackman@gmail.com>
-Subject: Re: git rebase -i without altering the committer date
-Date: Wed, 20 Apr 2016 14:15:03 -0700
-Message-ID: <etPan.5717f1cf.1fc1bca8.12d1@sjackman03-imac.phage.bcgsc.ca>
-References: <etPan.5717e605.4004d424.12d1@sjackman03-imac.phage.bcgsc.ca>
- <xmqqd1pkuidw.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/5] fix deadlock in git-push
+Date: Wed, 20 Apr 2016 14:17:16 -0700
+Message-ID: <xmqqwpnst1yb.fsf@gitster.mtv.corp.google.com>
+References: <20160419223945.GA18055@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 20 23:17:15 2016
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 20 23:17:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aszUk-0000ce-Tc
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 23:17:11 +0200
+	id 1aszUy-0000l7-6i
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 23:17:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751179AbcDTVRG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2016 17:17:06 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:34866 "EHLO
-	mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751078AbcDTVRF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 17:17:05 -0400
-Received: by mail-pf0-f174.google.com with SMTP id n1so22136989pfn.2
-        for <git@vger.kernel.org>; Wed, 20 Apr 2016 14:17:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding:content-disposition;
-        bh=J+41fectIBSje12wAgxZNCv26pDXVwbBEfsBF+a0SYY=;
-        b=kVHmGr+6BmLnbckMIpPYjlwZ3qqYd0JTMe9x1XCF/hxv+qpBOQ3gWTYyQZc2/2XJvg
-         nQ5r2UDXmynjpWusNQNtxahy1sKj1O0KnYf6YbvAawtRJerY37JmMKzlBCAHcR3XYYUt
-         9zCkzjajzlmQRfKKOBTCtaEUWHrWAwYiZhKzu7zyXJsb3dPyOvPpXxsCFPVKey9/p5be
-         zpmgTr+oP8Aig0UVThD+PgnJlqzDZ7TZcQ9D2fatuw/FqQ1Jab/Zep8e2Wonn2dx3l9x
-         /VjzKqtbilSA9+85FSRifd1W2GdQPU+gik1jktsrPd1x0872C35xk5msH4g89HIbW+Bm
-         +tGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding
-         :content-disposition;
-        bh=J+41fectIBSje12wAgxZNCv26pDXVwbBEfsBF+a0SYY=;
-        b=Px3dEpOWdOi8Y62biYyMXQ+9GPqMrZoPuJSO3e8uYeqJCmamJPn4fc4nPW09XatKSo
-         Xs0K3+Regk7Ytc6fo5zWUPxJDGxfTJLi7ezDSBLaLGnDdTMIl2SbTbpqWscAvNpq0ciY
-         1LWHxXJr2nVa6vuy6JWjhaaa2kwzM1hfwtXY6uUHTa7KpuDZX0Hh8n4CtUinAWeLpnJY
-         /FEkg+VjnqTiT+lx8dAwodsMsnbffM/hKU89HrOgcfbOE6mHSBwS/rDcHlgG85hVh8Nc
-         IkrUkcF8AATlGjR/FNg6LUMZJKXDl/LU27hzXD7wmsKyCILwy0qOxgdkeg3QRKhLKVXs
-         35Gw==
-X-Gm-Message-State: AOPr4FW1rsGdUiuTWQuCCvlBStt2BpIyF60E9xQNLQJDD6FSuMuZu0kGoEtR8yjFvIXKHg==
-X-Received: by 10.98.1.69 with SMTP id 66mr15662701pfb.10.1461187023371;
-        Wed, 20 Apr 2016 14:17:03 -0700 (PDT)
-Received: from sjackman03-imac.phage.bcgsc.ca (outbound.bcgsc.ca. [134.87.4.251])
-        by smtp.gmail.com with ESMTPSA id e87sm100413094pfb.76.2016.04.20.14.17.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 20 Apr 2016 14:17:01 -0700 (PDT)
-In-Reply-To: <xmqqd1pkuidw.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Airmail (351)
-Content-Disposition: inline
+	id S1751391AbcDTVRU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2016 17:17:20 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53882 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751078AbcDTVRT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 17:17:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 92B1014526;
+	Wed, 20 Apr 2016 17:17:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TnfJyktIVCccLxHtSsHmgbi3+YY=; b=Qg7k6f
+	UAyfn3oEszVNELJoLa2xPVQ6k8zrR9OrLHRx1Vi9fHbglw628hElcN2VWzq5vAae
+	IeCrV1htjP+0F+WRrZt40kiIUZ2w0FEulXcf40WSvyj9PDRDNV4tUkCo9mjKFppj
+	Fmvy+dzifFFtMr6L7BDLcirPcr0P5tnSH7WZQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VRVL5Ms4pwA70c8e4RGP4VArj95/Q2ma
+	jAcNW4g1f3qiHB5CtXHRYDsOMZn369Uaqjhq0ZZ6aF+6ARlxzylXWFyoahX8HeJV
+	nAOoWJNORQk5/6ibosRx2IOyZajXo37LVadEDd6Q+qNNRZKYMAfSdE3MQfnIYPgQ
+	y6nLSxFBAck=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8B43014525;
+	Wed, 20 Apr 2016 17:17:18 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0565114524;
+	Wed, 20 Apr 2016 17:17:17 -0400 (EDT)
+In-Reply-To: <20160419223945.GA18055@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 19 Apr 2016 18:39:46 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 4307AF8E-073D-11E6-A98B-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292082>
 
-On April 20, 2016 at 13:37:01, Junio C Hamano (gitster@pobox.com(mailto:gitster@pobox.com)) wrote:
-> Shaun Jackman writes: 
-> 
-> > I'd like to insert a commit between two commits without changing 
-> > the committer date or author date of that commit or the subsequent 
-> > commits. I'd planned on using `git rebase -i` to insert the 
-> > commit. I believe it retains the author date, but changes the 
-> > committer date to the current time. I've seen the options 
-> > `--committer-date-is-author-date` and `--ignore-date`, but I don't 
-> > believe either of those options does what I want. If no such 
-> > option currently exists to leave the committer and author date 
-> > unchanged, is there any chance that this functionality could 
-> > please be implemented? 
-> 
-> You can mark the commit as "edit", use "git commit --amend" when 
-> "rebase -i" stops and gives control back to you, and say "rebase 
-> --continue". That way, you can use your favourite trick to lie 
-> about committer date (or identity or other aspects) when running 
-> "git commit --amend" and its effect will be left in the resulting 
-> history, I would think. 
+Jeff King <peff@peff.net> writes:
 
-Thanks for the suggestion, Junio. That would retain the committer date for the commit being inserted. I believe that the subsequent commits would have their committer date modified to the current time by the `git rebase --continue`.
+> The first patch below fixes the deadlock. Unfortunately, it turns it
+> into a likely SIGPIPE death. Which is an improvement, but not ideal.
+>
+> Patches 2 and 3 address that by fixing the way we handle SIGPIPE in
+> async threads.
+>
+> Patches 4 and 5 are cleanups to earlier topics that are enabled by the
+> new SIGPIPE handling.
+>
+>   [1/5]: send-pack: close demux pipe before finishing async process
+>   [2/5]: run-command: teach async threads to ignore SIGPIPE
+>   [3/5]: send-pack: isolate sigpipe in demuxer thread
+>   [4/5]: fetch-pack: isolate sigpipe in demuxer thread
+>   [5/5]: t5504: drop sigpipe=ok from push tests
 
-Cheers,
-Shaun
+Thanks for a very well explained series.
+
+We do not call finish_async (rather, we do not use async) from that
+many places, and from a cursory look this codepath is the only case
+where we may encounter this kind of deadlock (the ones in
+receive-pack is about relaying the error messages back to the other
+end over sideband multiplexing)?
