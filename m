@@ -1,157 +1,155 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: bug: git submodule add fails when .git is a symlink
-Date: Wed, 20 Apr 2016 10:31:47 -0700
-Message-ID: <CAGZ79kZ2A6c9H7C4xPXJ1Lmh1TaVy+VgcjxvKrgcJb0-4LRvhA@mail.gmail.com>
-References: <20160301204218.GA4083@kitenet.net>
-	<CAGZ79kY6Lf6u0=s8J_cqRNFsry4nu2SdL0GZ2gkFsu6gBrB65Q@mail.gmail.com>
-	<xmqq8u217tqa.fsf@gitster.mtv.corp.google.com>
-	<20160301231720.GB3731@kitenet.net>
-	<20160302084904.GA30295@sigill.intra.peff.net>
-	<CAGZ79kbpyu34kz7gRgro-HZqNvpmRoCsyQatZRbxP19bk1gkfg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 09/12] worktree.c: test if branch being rebased in another worktree
+Date: Wed, 20 Apr 2016 11:04:31 -0700
+Message-ID: <xmqqh9eww40g.fsf@gitster.mtv.corp.google.com>
+References: <1460897965-486-1-git-send-email-pclouds@gmail.com>
+	<1461158693-21289-1-git-send-email-pclouds@gmail.com>
+	<1461158693-21289-10-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Joey Hess <id@joeyh.name>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 20 19:31:54 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, rethab.ch@gmail.com, rappazzo@gmail.com
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 20 20:04:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asvyj-00018X-BQ
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 19:31:53 +0200
+	id 1aswUi-0006w3-Gb
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 20:04:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751371AbcDTRbt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2016 13:31:49 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:35367 "EHLO
-	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751185AbcDTRbs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 13:31:48 -0400
-Received: by mail-io0-f178.google.com with SMTP id g185so59763958ioa.2
-        for <git@vger.kernel.org>; Wed, 20 Apr 2016 10:31:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=opNkYuEcuglBR7CxI8T+/ylwBMM+r22v+PmS75SvAc4=;
-        b=E0Uu8zddexV5Exe6baznoNf4kPgOFgUaN+PcqECbzYb3sFe98k9wg/p3FZoFN5xUaJ
-         QX0yGeiqjeZDA4VMMWjOk6mNAYjPOSWiVUT/UhvLch0L6xs92zFoo1D3hbm8fIKdSqh7
-         Jmsq5BW57K++TntdiqZHYojUFAdQnwAX+LvGlsQHUgvaZwVDEO6IwzoXdtkyhwT7PCCS
-         37JJHBopYQVKqalv/wU+Eq1gjvyap1Lrl4RyOpWxOdvoMYx76GgLGYQWyhn2SGdcIT1g
-         GlQm16qbk2awRj3T++HE/YHRMECXIR3Kur5p/UK/8sy40emfkyq3V6r0gi/0Hh2F8khz
-         nymg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=opNkYuEcuglBR7CxI8T+/ylwBMM+r22v+PmS75SvAc4=;
-        b=OLAx+3SoS5tgcN2u/XBASykP0wXM04xpN+JVQhmQ8F/UM1FiZVlccHSLJ9hzbF/DhL
-         +gu57PI1VFeAYmBufx0euMubVdvn2P3iV3spLWHerk74iPPtfK+FOlQ7fSWEHhiB4RIr
-         0jsoSwJUogLLqZQD/blPFKDJWHGp3pOyosevo65iVnKXLbaBnau+i+5KsfFmQPv9PhpO
-         Lg/A4rsTovAXQCdi+W3cWo/BKexOlM0I8iwk9YVN8wW2DE3JUcIHaN4P9ncO23+udXRq
-         Zgzv6jHukUrFTazW8yVmlzXOPLmX38h17g6b/N2MEyg/pK/VspwuimsdyLcFSoRGQ4cF
-         0iCw==
-X-Gm-Message-State: AOPr4FVP4ZA6V00mcyRtz+pQJmK2/bd1aw4Y6N5GsGkFoQSKGNTk4kLreudaPJHmMkIFut49cJDJzR5aPZOjODkN
-X-Received: by 10.107.161.68 with SMTP id k65mr13023728ioe.110.1461173507265;
- Wed, 20 Apr 2016 10:31:47 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Wed, 20 Apr 2016 10:31:47 -0700 (PDT)
-In-Reply-To: <CAGZ79kbpyu34kz7gRgro-HZqNvpmRoCsyQatZRbxP19bk1gkfg@mail.gmail.com>
+	id S1752270AbcDTSEg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Apr 2016 14:04:36 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52919 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751998AbcDTSEe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2016 14:04:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2FFF113517;
+	Wed, 20 Apr 2016 14:04:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=uryKOsmtkkhA
+	JE+sCT3lhQH69Ms=; b=j49G9xdwlV+H6WqbU3ouAEYUk0HdhCo1Dmgqyigm67A6
+	VVzM7kIQWiwHILk16/Qwp3srVRCc8pamwIBUVuNXZdyUBGWYzcBYHWinWhoyEeF+
+	T/BFJ16bgKlrgMmOZ5QNx9cU2QvQlIGzZLR+EXfIn3maoAIern4KUHGKnxTjeXY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=fap+TY
+	3IeTI98fB5/5MUImUk0Rh4Mw5j5zadKzS5ryeV5hLcdSI59YsWmD5qyxB9Ke17YG
+	g1v2YdgKqVU9wBzExSRXnc2DWMiR+AJLUU53nIPDDhgLpCg4R7zcJcA+D/XEvrKq
+	xLvJPZesh7Ab8RN7Gk5wHhsGiRh9bLhzEXJZ4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 281CC13516;
+	Wed, 20 Apr 2016 14:04:33 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 926EF13515;
+	Wed, 20 Apr 2016 14:04:32 -0400 (EDT)
+In-Reply-To: <1461158693-21289-10-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 20
+ Apr 2016 20:24:50 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 55803372-0722-11E6-A553-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292048>
 
-On Wed, Apr 20, 2016 at 9:41 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Wed, Mar 2, 2016 at 12:49 AM, Jeff King <peff@peff.net> wrote:
->> On Tue, Mar 01, 2016 at 07:17:20PM -0400, Joey Hess wrote:
->>
->>> Junio C Hamano wrote:
->>> > A more pertinent question may be which version of Git did the above
->>> > ever work, I guess.  We fairly liberally chdir around and I do not
->>> > think we deliberately avoid assuming that "cd .git && cd .." might
->>> > not come back to the original directory, for example, so I wouldn't
->>> > be surprised if it never worked.
->>>
->>> IIRC git used symlinks for .git in submodules before version 1.7.8, so I
->>> guess that older versions supported that pretty well.
->>>
->>> This one case is the only time I've seen a symlink for .git present a
->>> problem so far.
->>
->> Fortunately you provided a simple reproduction case, so it is easy to
->> bisect. It did work in v1.7.8, and broke in d75219b (submodules: always
->> use a relative path from gitdir to work tree, 2012-03-04). Not
->> surprising, I guess. It presumably worked before only because we were
->> using absolute paths.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+
+> Subject: Re: [PATCH v2 09/12] worktree.c: test if branch being rebase=
+d in another worktree
+
+Lacks the verb?  Perhaps s/being/is/ is sufficient.
+
+> This function find_shared_symref() is used in a couple places:
 >
-> So I was looking into this bug again, as it was linked from another bug report.
+> 1) in builtin/branch.c: it's used to detect if a branch is checked ou=
+t
+>    elsewhere and refuse to delete the branch.
 >
-> fatal: Could not chdir to '../../../sub': No such file or directory
+> 2) in builtin/notes.c: it's used to detect if a note is being merged =
+in
+>    another worktree
 >
-> sounds like a path issue with the prefix thing.
+> 3) in branch.c, the function die_if_checked_out() is actually used by
+>    "git checkout" and "git worktree add" to see if a branch is alread=
+y
+>    checked out elsewhere and refuse the operation.
 >
-> Using the " echo "gitdir: ../gitdir/.git" > .git" workaround does still work,
-> I'll see if there is another way to fix it with actual links.
+> In cases 1 and 3, if a rebase is ongoing, "HEAD" will be in detached
+> mode, find_shared_symref() fails to detect it and declares "no branch=
+ is
+> checked out here", which is incorrect.
 
-So I debugged into that using a test case
+which is technically correct but is not what we want to check.
 
-test_expect_success 'submodules are not confused by linked gitdir' '
-        git init gitdir &&
-        mkdir worktree &&
-        (
-                cd worktree &&
-                #echo "gitdir: ../gitdir/.git" >.git &&
-                ln -s ../gitdir/.git .git &&
-                test_pause &&
-                git submodule add ../ sub &&
-                test_pause
-        ) &&
-        test_pause &&
-        git status
-'
+> This patch tightens the test. If the given symref is "HEAD", we try t=
+o
+> detect if rebase is ongoing. If so return the branch being rebased. T=
+his
+> makes checkout and branch delete operations safer because you can't
+> checkout a branch being rebased in another place, or delete it.
 
-My observation: the error comes up in `git submodule add`,
-which consists of 2 parts: the cloning and then the checkout.
-The cloning works fine using the new "submodule--helper update-clone",
-the checkout however breaks. So in your original test case you can go
-into the submodule and run
+Is rebase the only thing that tentatively detach before working on
+the real branch?  It may be currently the case, but I would imagine
+that we want to makefind-shared-symref to be responsible for
+detecting new cases other than rebase that we may introduce in the
+future, in which case we may want to leave come comment near the
+function to describe that expectation.
 
-    git checkout -f -q
+> Special case for checkout. If the current branch is being rebased,
+> git-rebase.sh may use "git checkout" to abort and return back to the
+> original branch. The updated test in find_shared_symref() will preven=
+t
+> that and "git rebase --abort" will fail as a result.
+> find_shared_symref() and die_if_checked_out() have to learn a new
+> option ignore_current_worktree to loose the test a bit.
 
-and you'll get the error message
+s/loose/&n/
 
-    fatal: Could not chdir to '../../../sub': No such file or directory
+> +void die_if_checked_out(const char *branch, int ignore_current_workt=
+ree)
+>  {
+>  	const struct worktree *wt;
+> =20
+> -	wt =3D find_shared_symref("HEAD", branch);
+> +	wt =3D find_shared_symref("HEAD", branch, ignore_current_worktree);
+>  	if (wt) {
+>  		skip_prefix(branch, "refs/heads/", &branch);
+>  		die(_("'%s' is already checked out at '%s'"),
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index efcbd8f..6041718 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -1111,7 +1111,7 @@ static int checkout_branch(struct checkout_opts=
+ *opts,
+>  		char *head_ref =3D resolve_refdup("HEAD", 0, sha1, &flag);
+>  		if (head_ref &&
+>  		    (!(flag & REF_ISSYMREF) || strcmp(head_ref, new->path)))
+> -			die_if_checked_out(new->path);
+> +			die_if_checked_out(new->path, 1);
+>  		free(head_ref);
+>  	}
 
-Looking at sub/.git:
+So the idea is "if the branch is checked out (or "being worked on"
+even if technically the HEAD is detached, like with 'rebase')
+anywhere, callers of die-if-checked-out in general want to die; but
+for this caller, it is OK if the place the branch is checked out or
+being worked on is in this repository"?
 
-    $ cat .git
-    gitdir: ../.git/modules/sub
-    $ ls ../.git/modules/sub
-    HEAD  branches config description  hooks  info  logs objects
-packed-refs  ref
-
-so that gitlink of the submodule works just fine. The problem is `git checkout`
-or any other core command (I tested with `git status`) doesn't like
-the gitlink pointing to a directory which is symlinked.
-
-I think the issue is a wrongly configured "core.worktree"
-in gitdir/.git/modules/sub/config which contains the "../../../sub".
-
-So I think the fix needs to be in the vicinity of
-builtin/submodule--helper.c:module_clone
-near the end of the function, where core.worktree is set.
-
-Thanks,
-Stefan
-
-
->
->
->>
->> -Peff
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+I understand die_if_checked_out() taking that "ignore this one" bit
+may be sensible, but I do not understand why find_shared_symref()
+needs to be told about it.  The change makes the meaning of the
+find_shared_symref() function unclear.  It used to mean "This
+symbolic ref cannot point at the same ref in different worktrees, so
+for a given pair of a symbolic ref and a concrete ref, there can be
+at most one worktree in which the symbolic ref points at that ref".
+That is already a mouthful.  As the worktree structure already have
+"Am I the current worktree?" bit, "ignore" logic can easily be done
+inside die_if_checked_out() and that would help find_shared_symref()
+stay simpler and more focused function, no?
