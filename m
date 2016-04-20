@@ -1,101 +1,79 @@
-From: Ben Woosley <Ben.Woosley@gmail.com>
-Subject: [PATCH] Update git-p4 to be compatible with git-lfs 1.2
-Date: Wed, 20 Apr 2016 18:28:34 +0000
-Message-ID: <0102015434ee502d-d91a9a46-299f-47b0-a583-104b540200bc-000000@eu-west-1.amazonses.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] git-p4: fix Git LFS pointer parsing
+Date: Wed, 20 Apr 2016 11:30:24 -0700
+Message-ID: <xmqq8u08w2tb.fsf@gitster.mtv.corp.google.com>
+References: <1461139809-6573-1-git-send-email-larsxschneider@gmail.com>
+	<1461139809-6573-3-git-send-email-larsxschneider@gmail.com>
+	<CAHGBnuOjb+zmzwJeY-hbU4MYKpOMCQSRtDC4hS4zvCD5DQzv3w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 20:28:46 2016
+Content-Type: text/plain
+Cc: larsxschneider@gmail.com, Git Mailing List <git@vger.kernel.org>,
+	luke@diamand.org
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 20 20:30:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aswrj-0006IM-Qi
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 20:28:44 +0200
+	id 1aswtU-0007a5-TW
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 20:30:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751891AbcDTS2h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2016 14:28:37 -0400
-Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:53674
-	"EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751824AbcDTS2g (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2016 14:28:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1461176914;
-	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=D19ol9npfcQvdTd4W2rXyVwWcuF7DhsRM6aLwuteW3w=;
-	b=VgC3Ici+V+Yqml1OWH7ipf7YqODOM8p5eS+o57C2n1AuH9PZAnNvCIkErwD9zvwj
-	S4IPpXHBRPXs2p2PhQMtWBK1q5ap+CDkzqUy+WTkrtCtqk7GzZEocGuaqg+DHbMxzP5
-	j/CrgiE7EApo41AKQpJhRF1u+kAmAhAcoDOYCItw=
-X-SES-Outgoing: 2016.04.20-54.240.7.12
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+	id S1751102AbcDTSa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2016 14:30:28 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64436 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750808AbcDTSa2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 14:30:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A26A14B48;
+	Wed, 20 Apr 2016 14:30:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=H7FiX14PwmG/i8zaveoaeVlt0GI=; b=WM1le8
+	5iUIDaYkE6ufojk6p4PSV7nipn7mYXy68z6WHXkhqpP5sUp/n6RHiFNh6EOEAj9L
+	l6lD8Y81FLqNC5TRIZDghN17U1yMG+Cqgiw4dBEbgcDRIyVCfi9aeussPUYzlEuS
+	l/8y23HXyJnwHLr30SzduaomdKjruGlkGO/Ns=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XuJlTAguZVWBzetnz8N+mgE46G8GFw5P
+	9rAHqnPcze9FwqJ1Y3JrYbz5Q31O1Wu/AerVpwVKgDoUCweJndawEwVbMEs7ElTH
+	yeUAtqL2PubXtO5y67JqBFgDPw2UEbs7dSCwql2ZQEuEZFRel8nScHFMGbOu6nmN
+	lm78p4e3KIA=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 81A8914B47;
+	Wed, 20 Apr 2016 14:30:26 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E128114B46;
+	Wed, 20 Apr 2016 14:30:25 -0400 (EDT)
+In-Reply-To: <CAHGBnuOjb+zmzwJeY-hbU4MYKpOMCQSRtDC4hS4zvCD5DQzv3w@mail.gmail.com>
+	(Sebastian Schuberth's message of "Wed, 20 Apr 2016 10:59:32 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F35A6D08-0725-11E6-8F8C-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292053>
 
-From: Ben Woosley <ben.woosley@gmail.com>
+Sebastian Schuberth <sschuberth@gmail.com> writes:
 
-The git lfs pointer output was changed in:
-https://github.com/github/git-lfs/pull/1105
+> Why do we need to remove the preamble at all, if present? If all we
+> want is the oid, we should simply only look at the line that starts
+> with that keyword, which would skip any preamble. Which is what you
+> already do here. However, I'd probably use .splitlines() instead of
+> .split('\n') and .startswith('oid ') (note the trailing space) instead
+> of .startswith('oid') to ensure "oid" is a separate word.
+>
+> But then again, I wonder why there's so much split() logic involved in
+> extracting the oid. Couldn't we replace all of that with a regexp like
+>
+> oid = re.search(r"^oid \w+:(\w+)", pointerFile, re.MULTILINE).group(1)
 
-This was causing Mac Travis runs to fail, as homebrew had updated to 1.2
-while Linux was pinned at 1.1 via GIT_LFS_VERSION.
-
-The travis builds against 1.1 and 1.2 both on linux. Mac can't do the same as
-it takes the latest homebrew version regardless.
----
- .travis.yml | 9 ++++++++-
- git-p4.py   | 7 ++++++-
- 2 files changed, 14 insertions(+), 2 deletions(-)
-
-diff --git a/.travis.yml b/.travis.yml
-index 78e433b..71510ee 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -23,7 +23,6 @@ env:
-   global:
-     - DEVELOPER=1
-     - P4_VERSION="15.2"
--    - GIT_LFS_VERSION="1.1.0"
-     - DEFAULT_TEST_TARGET=prove
-     - GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
-     - GIT_TEST_OPTS="--verbose --tee"
-@@ -31,6 +30,14 @@ env:
-     # t9810 occasionally fails on Travis CI OS X
-     # t9816 occasionally fails with "TAP out of sequence errors" on Travis CI OS X
-     - GIT_SKIP_TESTS="t9810 t9816"
-+  matrix:
-+    - GIT_LFS_VERSION="1.2.0"
-+    - GIT_LFS_VERSION="1.1.0"
-+
-+matrix:
-+  exclude:
-+    - os: osx
-+      env: GIT_LFS_VERSION="1.1.0"
- 
- before_install:
-   - >
-diff --git a/git-p4.py b/git-p4.py
-index 527d44b..6c06d17 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1064,7 +1064,12 @@ def generatePointer(self, contentFile):
-         if pointerProcess.wait():
-             os.remove(contentFile)
-             die('git-lfs pointer command failed. Did you install the extension?')
--        pointerContents = [i+'\n' for i in pointerFile.split('\n')[2:][:-1]]
-+        pointerLines = pointerFile.split('\n')
-+        # In git-lfs < 1.2, the pointer output included some extraneous information
-+        # this was removed in https://github.com/github/git-lfs/pull/1105
-+        if pointerLines[0].startswith('Git LFS pointer for'):
-+            pointerLines = pointerLines[2:]
-+        pointerContents = [i+'\n' for i in pointerLines[:-1]]
-         oid = pointerContents[1].split(' ')[1].split(':')[1][:-1]
-         localLargeFile = os.path.join(
-             os.getcwd(),
-
---
-https://github.com/git/git/pull/231
+Yup, all of that is a very useful suggestion.  If we know how the
+piece of information we want is identified in the output,
+specifically looking for it would future-proof the code better, as
+it will not be affected by future change that adds unexpected cruft
+to the output we are reading from.
