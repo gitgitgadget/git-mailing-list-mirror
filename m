@@ -1,99 +1,106 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 16/15] Add tracing to measure where most of the time is
- spent
-Date: Wed, 20 Apr 2016 14:28:24 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604201427440.2826@virtualbox>
-References: <1461108489-29376-16-git-send-email-dturner@twopensource.com> <1461146394-5135-1-git-send-email-pclouds@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v5 03/15] index-helper: new daemon for caching index and
+ related stuff
+Date: Wed, 20 Apr 2016 19:31:55 +0700
+Message-ID: <CACsJy8D7_MhzG0yYC-fWjBeqeceVj5aPo2-vYdBMdX6xaSVZrg@mail.gmail.com>
+References: <1461108489-29376-1-git-send-email-dturner@twopensource.com>
+ <1461108489-29376-4-git-send-email-dturner@twopensource.com> <alpine.DEB.2.20.1604201349590.2826@virtualbox>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-979179825-1461155305=:2826"
-Cc: git@vger.kernel.org, dturner@twopensource.com
-To: =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 20 14:28:37 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: David Turner <dturner@twopensource.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 20 14:32:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1asrFD-0002Om-VA
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 14:28:36 +0200
+	id 1asrJ1-0004vu-GF
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Apr 2016 14:32:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753303AbcDTM2b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Apr 2016 08:28:31 -0400
-Received: from mout.gmx.net ([212.227.17.22]:52350 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752066AbcDTM2a (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2016 08:28:30 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MaE4a-1bCb0z3lF2-00JtTF; Wed, 20 Apr 2016 14:28:25
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <1461146394-5135-1-git-send-email-pclouds@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:Qkj9Ae1eWx094L+ifSQU/YZlYcyqaKazNAfsGrZKCCMZkGvJBbT
- w2cOx8794fVDQoJGfruk3iwDZTFJzoa4RpXL8brgIR5Iib+5sAzsN6MBypbFfTS+bVx1ZWQ
- ohw7lC/7Lt1x3EDW/4l2mKdOKmfvJpWWbAgpOYrh3vA3NA0kHCuzmUJbYjVD7zdX6kijOL6
- WyUk+oxdSRnzk7e6uUsEQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mKQeV6ktpqY=:bbtEfn5rTV6Ge3EpFJrWaC
- mZcXxJc4akzUXUUPv6M6aClkTpPI4Oi1Zu1ERHiATWYMWxnfk8BU9W2BVfRLbNzLEQnjaei4C
- 4YsAdaJ0+6+9jxP44JfrC8AWrButv/90MZy+h1D8cK0IESv+q8N48s2tyQm1GqXqU7NDyrugh
- O7kKnfqltDXqCVfTOVUafffjdnX+E/nkHwtZDiOZ3Le83AqespZ09mxqzVrUyaIn9BdidwZYe
- yGfqF+JuLZHnT3giIPDoypeTdk1BJLht/KMS2OAHPgrpQwnW/7oPgW55a5u+R1iC6Dz2tvLoI
- msmeAeQWkCn7qOzYOYxWUgAjXMxTWFv1GgaMUYpGkRG13ZyGF5raDepWVlAs/wfxbKPwaOjR8
- tcOYN7DlIF7C8TVH6vwY/0mgcAdYGbbluYlTFCclN+GSwD+kdvr3uLAOkoiwLXXTUDWYRGrLS
- hz0/CWNQ1S8QEzE2giPT4vs38b9mXhwejptDgCba+SGN9EZiY6rWshXpq/1y/HFpGer63oYd4
- W/ok/kC7loUycdrhmWqkbVJbLeXvm2jMtP8oyPW+XccrvS4eFdTtknv3c3xOFcRApvcve39YJ
- MvA30dmiwmYB0J0JZ0c7murbJ20BR0ftC9F0F3B7TOfn5n0WE3YtpsBy3wSxPX0xZEJMoydZt
- qN1A7SJwyPyS/AW9xv1T4cXb9796yxNI6/NrOgKKdaQvIba9XIs2vUurKrcLRsDhfD/18U+CY
- oz1YHyBRK6EvCv54tQOGmZ9X+fv6rjeiAGnAYDRYFI6KCl8ytPFaE5n8qeekZvIcxBPpHj6S 
+	id S1754254AbcDTMc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Apr 2016 08:32:27 -0400
+Received: from mail-lf0-f42.google.com ([209.85.215.42]:36446 "EHLO
+	mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752415AbcDTMc1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2016 08:32:27 -0400
+Received: by mail-lf0-f42.google.com with SMTP id g184so39806158lfb.3
+        for <git@vger.kernel.org>; Wed, 20 Apr 2016 05:32:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=JRtmjri++rJ0KYKDQGmPzlldxOx3OYJNQ16k8uVz3H4=;
+        b=dDCmuPxlANFEm47m5FZbj9MaBq9XaxJR9v2YVdkfFTsRlHDOBhybnI/di608yPCih1
+         C8rOr9S5AHm1Vx2/SHV4skFpPkMHPDtY3WMHn4O/vdIpHXn6hcus0IwAfbdG4a029Pn5
+         yN603bYPUTBsLMpFfAmXnRPzt9ItsEkmzwH543ZJHcWLCWgq/et1TJoP5jekZvZht1oX
+         vONTJYHqTb0SAmUpkGKk8OeZIdczrMsbVtpT93sPrUHo2WYdUrRQ+Y7hOUhZxghQKp3W
+         j2qE0bS8whPoDzAh3JleLu4laJjjb3ZjRPUPoanmJ5GZfN9MlAwoU9sQlPAslDjaEJQB
+         CBjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=JRtmjri++rJ0KYKDQGmPzlldxOx3OYJNQ16k8uVz3H4=;
+        b=OXmDJik1FU1/nFJZ4tTNWowiTMwsmKBqpo18eWACtaobPi0tFj0R7CsnH/SlV0MFBP
+         VoBNqGNbSOdlbTSijAr+IybLkL4VOwzqEUJ2fQ+bLcw18hOU57XxXRsN3RLABltiI/e3
+         GXeep/MBMsfaGZU1Gnp4Y2fr2j/zFIV+cbSOuvDBZS6wRTewdCzZDeEJR0R5MnSp2+8m
+         OfDnAkXtBYpjfzQVQMGd2vKzna6kI5s8hudecIDEN7tbnyOu5jYYtF4Dwk8dgp9CGN2n
+         Vt46iXQu2UI+Sau4NsnbRMa3tLEb7rSwDMMn6A4DR48F/0f+jKD0+zBfpFQMhwe2dfYn
+         qZtQ==
+X-Gm-Message-State: AOPr4FWl5yxV5AhIMMDVfr+eBskcFagQ+jiohFR4b0jm9c2/gUmnd/wbVXTR7x7czJVuUgxL+aStqvhY65gO7g==
+X-Received: by 10.25.211.75 with SMTP id k72mr3510468lfg.45.1461155545255;
+ Wed, 20 Apr 2016 05:32:25 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Wed, 20 Apr 2016 05:31:55 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1604201349590.2826@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292007>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Wed, Apr 20, 2016 at 7:17 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>> We keep this daemon's logic as thin as possible. The "brain" stays in
+>> git. So the daemon can read and validate stuff, but that's all it's
+>> allowed to do. It does not add/create new information. It doesn't even
+>> accept direct updates from git.
+>
+> I like this design. For now. Later, I really think we should add the
+> ability to update the index via the index-helper.
 
---8323329-979179825-1461155305=:2826
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Later we do. For watchman, index-helper creates and shares a piece of
+information retrieved from watchman, which has to be combined back to
+the index by git process. But it's still not a _direct_ index update.
 
-Hi Duy,
+> I am thinking about a
+> method similar to watchman where a separate process (that may use the
+> inotify syscall on Linux, or tap into the NTFS journal on Windows) tells
+> the index-helper specifically which paths to look at, so that nobody ever
+> has to look at any files that were not modified at all.
 
-On Wed, 20 Apr 2016, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+Am I missing something here? I thought watchman could already run on
+Windows. We benefit from watchman, which was originally written for
+Mercurial. If there's a better way to do inotify equivalent for
+Windows, is it possible to do it in watchman so Mercurial can benefit
+from it too?
 
-> All the known heavy code blocks are measured (except object database
-> access). This should help identify if an optimization is effective or
-> not. An unoptimized git-status would give something like below (92% of
-> time is accounted). To sum up the effort of making git scale better:
->=20
->  - read cache line is being addressed by index-helper
->  - preload/refresh index by watchman
->  - read packed refs by lmdb backend
->  - diff-index by rebuilding cache-tree
->  - read directory by untracked cache and watchman
->  - write index by split index
->  - name hash potientially by index-helper
->=20
-> read-cache.c:2075         performance: 0.004058570 s: read cache .../inde=
-x
-> preload-index.c:104       performance: 0.004419864 s: preload index
-> read-cache.c:1265         performance: 0.000185224 s: refresh index
-> refs/files-backend.c:1100 performance: 0.001935788 s: read packed refs
-> diff-lib.c:240            performance: 0.000144132 s: diff-files
-> diff-lib.c:506            performance: 0.013592000 s: diff-index
-> name-hash.c:128           performance: 0.000614177 s: initialize name has=
-h
-> dir.c:2030                performance: 0.015814103 s: read directory
-> read-cache.c:2565         performance: 0.004052343 s: write index, change=
-d mask =3D 2
-> trace.c:420               performance: 0.048365509 s: git command: './git=
-' 'status'
+On Wed, Apr 20, 2016 at 7:19 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>> On Wed, Apr 20, 2016 at 6:27 AM, David Turner <dturner@twopensource.com> wrote:
+>> > Shared memory is done by storing files in a per-repository temporary
+>> > directory.  This is more portable than shm (which requires
+>> > posix-realtime and has various quirks on OS X).  It might even work on
+>> > Windows, although this has not been tested.
+>>
+>> There's another option, but I'm not sure if it's too clever/tricky to
+>> do. Anyway, on *nix we can send file descriptors over unix socket [2],
+>> then mmap them back to access content.
+>
+> This sounds too clever to me ;-)
 
-Thank you for doing this! It will be *highly* valuable to get the
-performance on Windows where I want it to be, too.
-
-Ciao,
-Dscho
---8323329-979179825-1461155305=:2826--
+Well. At least we have considered everything (that I'm aware of).
+-- 
+Duy
