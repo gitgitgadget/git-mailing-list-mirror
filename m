@@ -1,70 +1,109 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: John Keeping <john@keeping.me.uk>
 Subject: Re: history damage in linux.git
-Date: Thu, 21 Apr 2016 14:51:13 +0200
-Message-ID: <vpqy487unum.fsf@anie.imag.fr>
-References: <20160421113004.GA3140@aepfle.de> <vpqmvonw4a6.fsf@anie.imag.fr>
-	<20160421123251.GA3186@aepfle.de>
+Date: Thu, 21 Apr 2016 14:19:16 +0100
+Message-ID: <20160421131916.GB1589@serenity.lan>
+References: <20160421113004.GA3140@aepfle.de>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Olaf Hering <olaf@aepfle.de>
-X-From: git-owner@vger.kernel.org Thu Apr 21 14:51:31 2016
+X-From: git-owner@vger.kernel.org Thu Apr 21 15:19:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atE4r-0004CV-KM
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 14:51:25 +0200
+	id 1atEW1-00075b-CM
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 15:19:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751884AbcDUMvV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2016 08:51:21 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:48324 "EHLO mx2.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751851AbcDUMvV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2016 08:51:21 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u3LCpCoF023898
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 21 Apr 2016 14:51:12 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u3LCpDVX009245;
-	Thu, 21 Apr 2016 14:51:13 +0200
-In-Reply-To: <20160421123251.GA3186@aepfle.de> (Olaf Hering's message of "Thu,
-	21 Apr 2016 14:32:51 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Thu, 21 Apr 2016 14:51:12 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u3LCpCoF023898
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1461847876.04661@dQ6ZOy3RlafcyfBW3Tycig
+	id S1752144AbcDUNT1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2016 09:19:27 -0400
+Received: from mta02.prd.rdg.aluminati.org ([94.76.243.215]:37380 "EHLO
+	mta02.prd.rdg.aluminati.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752386AbcDUNTZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2016 09:19:25 -0400
+Received: from mta02.prd.rdg.aluminati.org (localhost [127.0.0.1])
+	by mta.aluminati.local (Postfix) with ESMTP id 3D79A230D6;
+	Thu, 21 Apr 2016 14:19:23 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by mta02.prd.rdg.aluminati.org (Postfix) with ESMTP id 38C3F34A8;
+	Thu, 21 Apr 2016 14:19:23 +0100 (BST)
+X-Quarantine-ID: <VlRWRUpaeSpm>
+X-Virus-Scanned: Debian amavisd-new at mta02.prd.rdg.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.15
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.15 tagged_above=-9999 required=5
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, KAM_INFOUSMEBIZ=0.75]
+	autolearn=no autolearn_force=no
+Received: from mta.aluminati.local ([127.0.0.1])
+	by localhost (mta02.prd.rdg.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id VlRWRUpaeSpm; Thu, 21 Apr 2016 14:19:19 +0100 (BST)
+Received: from serenity.lan (unknown [10.2.0.9])
+	by mta02.prd.rdg.aluminati.org (Postfix) with ESMTPSA id 23A933466;
+	Thu, 21 Apr 2016 14:19:17 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <20160421113004.GA3140@aepfle.de>
+User-Agent: Mutt/1.6.0 (2016-04-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292109>
 
-Olaf Hering <olaf@aepfle.de> writes:
+On Thu, Apr 21, 2016 at 01:30:04PM +0200, Olaf Hering wrote:
+> To track the changes in hyperv related files I created some scripts
+> years ago to automate the process of finding relevant commits in
+> linux.git. Part of that process is to record the tag when a commit
+> appeared in mainline. This worked fine, until very recently.
+> 
+> Suddenly years-old commits are declared as having-just-arrived in
+> linux.git. Look at this example:
+> 
+>   $ git log --oneline -- drivers/input/serio/hyperv-keyboard.c
+>   2048157 Drivers: hv: vmbus: fix the building warning with hyperv-keyboard
+>   62238f3 Input: hyperv-keyboard - register as a wakeup source
+>   c3c4d99 Input: hyperv-keyboard - pass through 0xE1 prefix
+>   aed06b9 Input: add a driver to support Hyper-V synthetic keyboard
+>   $ git describe --contains aed06b9
+>   v4.6-rc1~9^2~792
+>   $ git show aed06b9 | head
+>   commit aed06b9cfcabf8644ac5f6f108c0b3d01522f88b
+>   Author: K. Y. Srinivasan <kys@microsoft.com>
+>   Date:   Wed Sep 18 12:50:42 2013 -0700
+> 
+> Obviously that and other commits are in the tree since a very long time.
+> 
+> How can I find out whats going on? Is my git(1) 2.8.1 broken, or did
+> Linus just pull some junk tree (and does he continue to do so)?
 
-> On Thu, Apr 21, Matthieu Moy wrote:
->
->> My guess is that this commit has been sitting for a long time in a
->> repo outside Linus' linux.git, and got merged only recently.
->
-> Thats what it looks like. And thats what I'm complaining about. But in
-> fact that file is there since v3.13-rc7 (if the tag is really correct in
-> my patch file), since at least end of 2014.
+I suspect it indicates that an old tree was pulled in such that the path
+to v4.6-rc1 is shorter than to the older version.  The commit is clearly
+in v3.13-rc1:
 
-Ah, indeed. It was merged right before 3.13. See "git tag --contains
-aed06b9cfcab".
+	$ git tag --contains aed06b9cfcabf8644ac5f6f108c0b3d01522f88b
+	v3.13
+	v3.13-rc1
+	v3.13-rc2
+	[snip]
 
-It's indeed weird that "git describe --contains" gives a named based on
-tag v4.6-rc1, but it is not really incorrect since tags/v4.6-rc1~9^2~792
-is indeed a correct name for aed06b9cfcabf8644ac5f6f108c0b3d01522f88b,
-and actually uses a tag that follows it.
+The behaviour of describe is a bit clearer if you limit it to v3.*:
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+	$ git describe --match='v3.*' --contains aed06b9cfcabf8644ac5f6f108c0b3d01522f88b
+	v3.13-rc7~9^2~14^2~42
+
+	$ git describe --match='v3.13-rc1' --contains aed06b9cfcabf8644ac5f6f108c0b3d01522f88b
+	v3.13-rc1~65^2^2~42
+
+It seems that the path to v4.6-rc1 is "more direct" than to either of
+these commits: there is only one second-parent merge transition.
+
+>From a quick look, I think the problem is in commit c155c7492c9a ("Merge
+branch 'for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/dtor/input")
+which merges a branch that has repeatedly had master merged back into it
+but does not build on any recent releases.  The most recent tag on the
+first-parent history of that branch is v3.0-rc4.
+
+I think it is as simple as git-describe (or git-name-rev which is used
+in the --contains case) preferring a less branchy path, which has been
+introduced in v4.6 with the merge commit above.
