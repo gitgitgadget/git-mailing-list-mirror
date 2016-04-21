@@ -1,81 +1,101 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git rebase -i without altering the committer date
-Date: Thu, 21 Apr 2016 09:17:02 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604210914420.2826@virtualbox>
-References: <etPan.5717e605.4004d424.12d1@sjackman03-imac.phage.bcgsc.ca> <87ega0eyvy.fsf@linux-m68k.org> <571863CE.6090002@kdbg.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 04/12] worktree.c: mark current worktree
+Date: Thu, 21 Apr 2016 03:20:07 -0400
+Message-ID: <CAPig+cR99Nx=dk+zT2Jgpr2ZgYM4v0q2vX7v6TXmWHU5k6ga3w@mail.gmail.com>
+References: <1460897965-486-1-git-send-email-pclouds@gmail.com>
+	<1461158693-21289-1-git-send-email-pclouds@gmail.com>
+	<1461158693-21289-5-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Andreas Schwab <schwab@linux-m68k.org>,
-	Shaun Jackman <sjackman@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Apr 21 09:17:27 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Reto_Habl=C3=BCtzel?= <rethab.ch@gmail.com>,
+	Mike Rappazzo <rappazzo@gmail.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 21 09:20:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1at8re-0002q1-TB
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 09:17:27 +0200
+	id 1at8uO-0004ZT-Gv
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 09:20:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751608AbcDUHRW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2016 03:17:22 -0400
-Received: from mout.gmx.net ([212.227.17.21]:58877 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751571AbcDUHRW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2016 03:17:22 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Ld4xA-1bbF6b1SDI-00iBVp; Thu, 21 Apr 2016 09:17:17
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <571863CE.6090002@kdbg.org>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:V/D9sJ54iZhQEjBrSAj5RVdiPQzjNieXeJNI8+du8QDCLZJKcks
- hNUz5NDNeDR1zMFBaPqhLlc9tgQ6r/uP2u6DFx30+xa4/KGvZgaDXu98xLslQNaoZaXVWlf
- aHtvtHbcHHHBfWTQashjyiuYbUSdVGLzLpR30BT6L7IL8gQrdtWMkzfOif8RIK2077XnL2f
- /WZwCzv8hhF1vTg4GJoeA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:8md69wPKcFw=:AkxF6IA8RrJ+6aVOgMiSRa
- JLIg751ZUh1l2kGd8iEepHHTWuGZuSaaZszVp9iCZFc+eT/rrTNQGoQ98KkOaF7F7MnxBsuid
- AysM5aURJ6HhFlYs6f9VSvcO3pEy2t2pb6o+2mPj7xlS6MJHMV1xysBx1yvqBcSs6y/LYQ4os
- 8EBvOh2gV49ghZe61GWfmzKR3PAuTopHn52kO9o28gysFvUAxr0SfT0YT/hrJtwY+kwCaFN8a
- YvSkXtUoUX+D6PWm49X4KDRI9t2SkKiuIUxq/6za6GonXSVsS+qf3pRjkPm71SUIlO1iofxap
- +jXulf7wGSc5q1i3KHV0dPKwEdjvopsIKTUrpOJfWy+z2T2/KiwTcWGdhXU8RgSFG3r0BZ0oD
- XkrQ23R/fHGY5xjsk5dUnmJaJBXsT8BWcrM8wiZ1mccWgiQUy2kiDlTypeZlFJsMFD45kJEiF
- ITVwyceomMi2ILydnoV9BvHnhPgGskf7HGuZryIpgIIHriN8xR6eDt6LJBbmNcqqbibH0q8eT
- jifIZ88nWzCRhNBzUpliv+EH/XyveeLOo/ww0CMupB649ZuexjExMG8cxN554gZ8zi6k/+sH8
- rQFxXscu7Q+LD7ObLyLd+teWQIMgT1RVjM24r4TlOf+6Mjy1yM6Ws+Gbrk9uJx5ZuGVTRyuWJ
- geHapm/26C0k32D06R3O4tYe7BovwFeeDdpkGTMvcrP6ir8FkM8h3TQSPhEuCmjEh9eEhF0d5
- fkeKbB4BSiZWyr6s2PtoKzqxzT5oHS7Qdz80ufHMxN8t7BmEPephn6l4rIQyVF+H8elQJCdv 
+	id S1751676AbcDUHUJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Apr 2016 03:20:09 -0400
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:37805 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751364AbcDUHUI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2016 03:20:08 -0400
+Received: by mail-ig0-f181.google.com with SMTP id g8so73293309igr.0
+        for <git@vger.kernel.org>; Thu, 21 Apr 2016 00:20:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-transfer-encoding;
+        bh=XXZRZ9uX2+Habo17Ee0YsPNZRVd0mbfRrcsOan8cyV4=;
+        b=omDDftFNx+fpYw3oi++T60jtgldY9NiBU8RVOprkomZYKfMj/uFcwniD+s//qPXYuZ
+         l4UWAx7kaDjk5s7s+Mdhm7pCtJIznIG7l84TtIKMAaVBko61Z+Byq4csOgvKgla0KboM
+         0riOZs7hB1SIR8FJwAJl0AHmV3T34pWik8pEvOFzSQpxM6H2YLTLKZoh7mpG2KNrhrJl
+         EwwhH8MtGn5y1vOpfd+K3AW1kZf2TF6+vAIGbkFCgJwBdS1yvsT0sn7rAGBz0dfdmC2A
+         6LTrOzh6NAx9YoeINSB34BZcOKJantOu98l+yh3Cqw4ZZajmrqVyi/uYQZ+WoLdv31Ms
+         dleA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=XXZRZ9uX2+Habo17Ee0YsPNZRVd0mbfRrcsOan8cyV4=;
+        b=DvnzjNto7N38IXyUp5y2MsRcy+WyJhrBALc7e7DazpN3CoZCWw577lklT5+7Qg5zLd
+         fyhTJqv+A4EHVigMfY7qvvuGrKDcLgFIv+2xilHDfM/pU+A4049p/fAgPElLjuKk0/mV
+         xupSdrmI59QRt1RW9BVFNWG2dyRKIo3u3+sBf7Qi9SCHE7AwYMHLB6CRWdOVUEK8ehiF
+         M6qqHzanm+r9SxqxxgQBbHEXZzISmURjGSuPiRnn+w5M21DTyWkk9VwOuEpe4tHtGVqZ
+         qjDvb1FEvcb4urs6o4zDEEe0/xeHZVjG5Zx05BUGT9Mklg0UBHFOySaMFnGIgUJ12akQ
+         GeMg==
+X-Gm-Message-State: AOPr4FUS/6dqihivepTGBxCVWjeEDonbaXdks1P185cXMMgOeH5StGzFkCXz8KtNkeDQ47ly024nvIDTVLGOZQ==
+X-Received: by 10.50.77.107 with SMTP id r11mr1761216igw.91.1461223207339;
+ Thu, 21 Apr 2016 00:20:07 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Thu, 21 Apr 2016 00:20:07 -0700 (PDT)
+In-Reply-To: <1461158693-21289-5-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: qbiwd_tb5JtHAfu6ZDMdiOUIYeE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292098>
 
-Hi,
+On Wed, Apr 20, 2016 at 9:24 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+> diff --git a/worktree.c b/worktree.c
+> @@ -178,6 +182,18 @@ struct worktree **get_worktrees(void)
+>         }
+>         ALLOC_GROW(list, counter + 1, alloc);
+>         list[counter] =3D NULL;
+> +
+> +       strbuf_addstr(&git_dir, absolute_path(get_git_dir()));
+> +       for (i =3D 0; i < counter; i++) {
+> +               struct worktree *wt =3D list[i];
+> +               strbuf_addstr(&path, absolute_path(get_worktree_git_d=
+ir(wt)));
+> +               wt->is_current =3D !strcmp_icase(git_dir.buf, path.bu=
+f);
 
-On Thu, 21 Apr 2016, Johannes Sixt wrote:
+Can you talk a bit about why this uses 'icase'? Should it be
+respecting cache.h:ignore_case?
 
-> Am 20.04.2016 um 23:47 schrieb Andreas Schwab:
-> > Shaun Jackman <sjackman@gmail.com> writes:
-> >
-> > > I'd like to insert a commit between two commits without changing
-> > > the committer date or author date of that commit or the subsequent
-> > > commits.
-> >
-> > The easiest way to implement that is to add a graft to redirect the
-> > parent of the second commit to the inserted commit, then use git
-> > filter-branch to make the graft permanent.
-> 
-> This only inserts a new project state, but does not propagate the changes
-> brought in by the new commit to the subsequent commits. This propagation of
-> changes could also be done with filter-branch, but it may be difficult
-> depending on circumstances.
+> +               strbuf_reset(&path);
+> +               if (wt->is_current)
+> +                       break;
+> +       }
+> +       strbuf_release(&git_dir);
+> +       strbuf_release(&path);
 
-I agree that rebase -i is the wrong wrench for this job. Either use
-filter-branch or fast-export/edit/fast-import.
+Minor: Would it make sense to place this new code in its own function
+-- say, mark_current_worktree() -- to keep get_worktrees() from
+becoming overlong?
 
-Or take a step back and ask yourself why you need to fool anybody about
-the commit date... ;-D
-
-Ciao,
-Johannes
+>         return list;
+>  }
