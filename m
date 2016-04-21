@@ -1,132 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/4] merge: GIT_MERGE_ALLOW_UNRELATED_HISTORIES environment
-Date: Thu, 21 Apr 2016 12:24:59 -0700
-Message-ID: <20160421192500.23563-4-gitster@pobox.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 2/4] pull: pass --allow-unrelated-histories to "git merge"
+Date: Thu, 21 Apr 2016 12:36:14 -0700
+Message-ID: <CAGZ79kZgenHyvAKxKNGxKkybM=LgTfsvB7s91s1sQxxbp1xoFg@mail.gmail.com>
 References: <20160421192500.23563-1-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 21 21:34:00 2016
+	<20160421192500.23563-3-gitster@pobox.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 21 21:36:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atKMQ-0001yk-Cp
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 21:33:58 +0200
+	id 1atKOi-0003tD-3G
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 21:36:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753054AbcDUTdy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2016 15:33:54 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64374 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752318AbcDUTdx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2016 15:33:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E9E3E1326A;
-	Thu, 21 Apr 2016 15:25:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=iBEp
-	qQUVF8h872cL/+jslt6yZYk=; b=iLodnpusMNR8PvsY8btUcsJlWol1wdaPy4me
-	kCUHsAO7lTqm9w9DIFj3Jc19v+hx58MCjCVjxCyLi96DXsgv3r4kP9tgDZSjqGQw
-	rXqkQSW11bmh1h/MYSRz6B2SZNeAlUfTpg3AoRikUXz5C8ztST5H1uoT6RKcYf+Z
-	/FSBNOA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=KkrfGS
-	6tFrYGchf+RwxA0zJRtnMMsBvy4tVIJeQYe3bup5yLATZ044YcRbT77v9zlulrep
-	K3CrbUijEAn2UpbEKGh6KAZGVL4LbXhwLNxg5T3G7VXfyuAwSWseqHke0SLK5Eth
-	qtOponjzR+A8UMeX77xPLG16ysUf9bzR9ND8A=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E1D6D13268;
-	Thu, 21 Apr 2016 15:25:08 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4580913247;
-	Thu, 21 Apr 2016 15:25:08 -0400 (EDT)
-X-Mailer: git-send-email 2.8.1-422-g6d9b748
-In-Reply-To: <20160421192500.23563-1-gitster@pobox.com>
-X-Pobox-Relay-ID: C23553A6-07F6-11E6-A0AF-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1753083AbcDUTgQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2016 15:36:16 -0400
+Received: from mail-io0-f180.google.com ([209.85.223.180]:33460 "EHLO
+	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751697AbcDUTgP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2016 15:36:15 -0400
+Received: by mail-io0-f180.google.com with SMTP id f89so76511313ioi.0
+        for <git@vger.kernel.org>; Thu, 21 Apr 2016 12:36:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=kusf2Ti9UAJqjRkTK3I4EP0PD+B+zPIkV+REcLF4P+4=;
+        b=gBB1UQs4FCr3afsY/uP2jtZ1OXLR3YBkUVM4DmIP/QeH7ESH9BZMWENTq4SiMbzcQR
+         GXM/jmzkI6sGafsv5XLWtD7TaUs4FkUBuQ0CatVW+zUofcy1rbtCe3FQjHLRSpq3szYJ
+         fUxtDdAgzKF4sIK4nW7p3mPJTMZ4v27TPjRayRTMpkO4ypVYK9Gs/onois8W0yL2y2cV
+         BQPEnCVGCRGVXEl8Q0+GTCdm6LWQvd4QV2vbXPNTLVXmflwiUtTbBAtGUTJV6RXcZ1DH
+         ZD/LLSU2TtI/JWaHcb42DhGrPe2h1gQfakktXs/wMeJp4qPrcu4ac+BiNKQR0qC9MfC4
+         Qm/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=kusf2Ti9UAJqjRkTK3I4EP0PD+B+zPIkV+REcLF4P+4=;
+        b=X67wbDjORFL528J6GEAZiTT9k951k4lGdelfA17vG2TM/htniE9++rGkawAPOlvH/z
+         BsJykCIbttqUuJeTnc77szVwseL2xvQv33kn8Xl3IGUHTqOsXY8z5gsqVTBfb8Gf81xS
+         TTzrhXGkNxrEIwSWxf59oQpsSp1Qh7/jl4hO1Rxa5qT5IiJ2fqMcSwIhiOxkRT0G2d66
+         xyrAkx5glCz0wqtOGUkKvBebf1Sx+LpolqhEERgsvNust8gD7O8cabYvjIFe0bkdSZqH
+         tSpcV6igQCsysgovKJ7nnxxzRGli9UCtiBHk4kcLY12C+YusQrjZvNCg+z7xECOmoE55
+         UHTQ==
+X-Gm-Message-State: AOPr4FXw5brb0n0Mc2oXcY8ncw61609+Bj1Ui6sgRQg0Evk2CkcPLlawlOv4EnMSelqbU7xjYUf57JzTG4SkWmuH
+X-Received: by 10.107.184.8 with SMTP id i8mr18557268iof.96.1461267374660;
+ Thu, 21 Apr 2016 12:36:14 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Thu, 21 Apr 2016 12:36:14 -0700 (PDT)
+In-Reply-To: <20160421192500.23563-3-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292149>
 
-It is rumored that some scripts rely on being able to regularly
-create two project merges.  Instead of forcing them to pass the
-option --allow-unrelated-histories when they call "git merge", allow
-them to set and export an environment at the beginning and forget
-about it.
+On Thu, Apr 21, 2016 at 12:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> An earlier commit said:
 
-This will be less damaging than adding a configuration variable to
-disable the safety, as contaminating the configuration file of users
-of such a script will allow any invocation of "git merge", not
-limited to such a script, to go without the safety.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git.txt | 3 +++
- builtin/merge.c       | 3 +++
- builtin/pull.c        | 7 ++++++-
- 3 files changed, 12 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 754dc80..5c9380d 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -1138,6 +1138,9 @@ of clones and fetches.
- 	  - any external helpers are named by their protocol (e.g., use
- 	    `hg` to allow the `git-remote-hg` helper)
- 
-+'GIT_MERGE_ALLOW_UNRELATED_HISTORIES'::
-+	Allow "git merge" to merge unrelated histories by default.
-+
- 
- Discussion[[Discussion]]
- ------------------------
-diff --git a/builtin/merge.c b/builtin/merge.c
-index e3db41b..4e8b1a1 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1191,6 +1191,9 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		head_commit = lookup_commit_or_die(head_sha1, "HEAD");
- 
- 	git_config(git_merge_config, NULL);
-+	if (getenv("GIT_MERGE_ALLOW_UNRELATED_HISTORIES"))
-+		allow_unrelated_histories =
-+			git_env_bool("GIT_MERGE_ALLOW_UNRELATED_HISTORIES", 0);
- 
- 	if (branch_mergeoptions)
- 		parse_branch_merge_options(branch_mergeoptions);
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 797932d..4e886a5 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -86,7 +86,7 @@ static char *opt_verify_signatures;
- static struct argv_array opt_strategies = ARGV_ARRAY_INIT;
- static struct argv_array opt_strategy_opts = ARGV_ARRAY_INIT;
- static char *opt_gpg_sign;
--static int opt_allow_unrelated_histories;
-+static int opt_allow_unrelated_histories = -1; /* unspecified */
- 
- /* Options passed to git-fetch */
- static char *opt_all;
-@@ -159,6 +159,9 @@ static struct option pull_options[] = {
- 	OPT_SET_INT(0, "allow-unrelated-histories",
- 		    &opt_allow_unrelated_histories,
- 		    N_("allow merging unrelated histories"), 1),
-+	OPT_SET_INT(0, "no-allow-unrelated-histories",
-+		    &opt_allow_unrelated_histories,
-+		    N_("do not allow merging unrelated histories"), 0),
- 
- 	/* Options passed to git-fetch */
- 	OPT_GROUP(N_("Options related to fetching")),
-@@ -609,6 +612,8 @@ static int run_merge(void)
- 		argv_array_push(&args, opt_gpg_sign);
- 	if (opt_allow_unrelated_histories > 0)
- 		argv_array_push(&args, "--allow-unrelated-histories");
-+	else if (!opt_allow_unrelated_histories)
-+		argv_array_push(&args, "--no-allow-unrelated-histories");
- 
- 	argv_array_push(&args, "FETCH_HEAD");
- 	ret = run_command_v_opt(args.argv, RUN_GIT_CMD);
--- 
-2.8.1-422-g6d9b748
+And by earlier you meant to say e379fdf34f (2016-03-18, merge: refuse
+to create too cool a merge by default)?
