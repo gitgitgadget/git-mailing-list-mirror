@@ -1,135 +1,107 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: history damage in linux.git
-Date: Thu, 21 Apr 2016 10:23:10 -0700
-Message-ID: <CA+55aFyadCxX_Ws5fUC0QXwYYyaAjC5TC=y+tVA+YUHX1o+-iQ@mail.gmail.com>
-References: <20160421113004.GA3140@aepfle.de>
-	<87lh473xic.fsf@linux-m68k.org>
+Date: Thu, 21 Apr 2016 10:23:07 -0700
+Message-ID: <xmqqvb3aswp0.fsf@gitster.mtv.corp.google.com>
+References: <20160421113004.GA3140@aepfle.de> <87lh473xic.fsf@linux-m68k.org>
 	<CA+55aFx8hPKKcuwe-HHoO7LHVYLmJ6khndd-OtQotMs3EJzZ0w@mail.gmail.com>
-	<xmqqzismsxsu.fsf@gitster.mtv.corp.google.com>
-	<20160421170815.GA10783@sigill.intra.peff.net>
+	<CA+55aFzk4rZFdhOjkPDqFC3_tk4BUvx4-STsY2L_tKMH2FxCCA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Andreas Schwab <schwab@linux-m68k.org>,
+Content-Type: text/plain
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
 	Olaf Hering <olaf@aepfle.de>,
 	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 21 19:23:20 2016
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Apr 21 19:23:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atIJx-0004NH-4b
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 19:23:17 +0200
+	id 1atIJw-0004NH-HA
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 19:23:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751878AbcDURXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2016 13:23:14 -0400
-Received: from mail-ig0-f196.google.com ([209.85.213.196]:36321 "EHLO
-	mail-ig0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751806AbcDURXN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2016 13:23:13 -0400
-Received: by mail-ig0-f196.google.com with SMTP id kb1so11062191igb.3
-        for <git@vger.kernel.org>; Thu, 21 Apr 2016 10:23:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=tMS9NVpdhR87RRJyGFxcu5ufvy5zeOgyE9+jx/EW4Cs=;
-        b=Fr39SPP+DH7TqEY4gCl0W4tySHmBhB/eGrX+k8WsA9Oka1dudQIJcNEkcsIQ3GbFUP
-         VzNsZXEUhRXCx0PIq/HOuEIjoNkE83fKvVEzVzeDEmK/9fVPOPG3+Uqq9rNhYFGftGWt
-         mQkDihpgoXJlfHUe7K9K+JefPnkcyk+G+hS6JDaDBqYxHsigNqLARdV9+jnPZZyjqCQQ
-         1MvkNq83kxpWfgUu9DtBcIgyt31T94erdSsDTZHqnOjGLqOYQ28YxGG01E7wN9rOV2sQ
-         Y/1s3phKOu+HWdn+LJPSOFBuwAROJ8Lvbbamv4i6K6rD3XO52Hq9OK5BQ5XJLq26/kCt
-         2wXw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=tMS9NVpdhR87RRJyGFxcu5ufvy5zeOgyE9+jx/EW4Cs=;
-        b=BwsAQPAn/rINzPOZPGxaZiOJBGimssj4nrRQAPWQtH2uCctbigaA39UfQKy1w2z8Q6
-         lcMO8w3/qD9mvlm16hpQmJEBsReoWTXqQawhgPNsfWHyWwVZEIgyDwG313XDJPMYlyv1
-         /smLq7ELNgD9LqTQ6HKaSsrn6BVDRSXUkYd/c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=tMS9NVpdhR87RRJyGFxcu5ufvy5zeOgyE9+jx/EW4Cs=;
-        b=H+IOetpnRRoBv0Prt5Eo2vZ/HZ62VaW6VcQmKup2mJD5I0wRN78BysD9lhk+mNfOAz
-         r4D+UZWHEmeiCr8BebyprUxA0fBw/ZzS7OCCdjT2LdZFDr79W4F6+bGku0TnUO72+jWL
-         vE6VGa3IG+8U3vSMCaRkgbSJnSacekhAQQg/SsHiJxMl1pjXMtKRBrlWVaVosCwvJT75
-         7E8lQ9J5Z1BJVagffznUS/e2K6JyO2Jok/uv9GxPvabtpH1RPKP7UA7DYExVljOaVKQb
-         7/kE39ZO+oS3gasZlyJgYlY4/qqwhKxgzxAW1yZw79AFww/o/Lav+sTN6WMzHOy3CIAA
-         mukg==
-X-Gm-Message-State: AOPr4FXeB+7tSliB2CJEMt4JOnYfr2+tVM5oWu1evI5uYJ0x7QMFyyeKe9WtO36iEMyNxtzLerK2qct+WwS75w==
-X-Received: by 10.50.120.198 with SMTP id le6mr5153151igb.25.1461259390824;
- Thu, 21 Apr 2016 10:23:10 -0700 (PDT)
-Received: by 10.36.2.9 with HTTP; Thu, 21 Apr 2016 10:23:10 -0700 (PDT)
-In-Reply-To: <20160421170815.GA10783@sigill.intra.peff.net>
-X-Google-Sender-Auth: RyT0h3rJr9Yq6IFtk9pdnDrtOkU
+	id S1751756AbcDURXM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2016 13:23:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56092 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751340AbcDURXL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2016 13:23:11 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8925814151;
+	Thu, 21 Apr 2016 13:23:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hteXqylHxBEi+IemwEbxv5AEl5E=; b=NIm3UD
+	nCYIV03FiTbc6Cs60irpz18sokPdVLPu4Q9EQrpzVSM2voyTjCPX5z4wAN8EPkoO
+	37f3GpLMnRClzhLNzYzLKkk/3Dc5IY9K9IgRYOcT/30/Un5atYTj9MZp134NPpDe
+	mCIn07Mw1JcHlEQlojg0Ji1Gwm8nhcJ1BL5Cs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kqkA8jEE3mIVRdRSjLtjWHQ/dxQtTJUz
+	RkFEOq6i1gAFJAVRtMD0SAfe+wUZF0L8BqxXiG1/H9I0pXqze0qnX4TlaVEmZAhx
+	yf/LJX+AwrxmAGrq3p/Ut68ySpHOFFO/GvZvaK+/eUuc4+Ux9yNF9x+xq7Swp8mw
+	O4t/RMvIJ6k=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7FFD014150;
+	Thu, 21 Apr 2016 13:23:09 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D34191414F;
+	Thu, 21 Apr 2016 13:23:08 -0400 (EDT)
+In-Reply-To: <CA+55aFzk4rZFdhOjkPDqFC3_tk4BUvx4-STsY2L_tKMH2FxCCA@mail.gmail.com>
+	(Linus Torvalds's message of "Thu, 21 Apr 2016 10:00:47 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B77E7D68-07E5-11E6-B581-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292131>
 
-On Thu, Apr 21, 2016 at 10:08 AM, Jeff King <peff@peff.net> wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
+
+> On Thu, Apr 21, 2016 at 9:36 AM, Linus Torvalds
+> <torvalds@linux-foundation.org> wrote:
+>>
+>> This seems to be a git bug.
+>>
+>> That commit aed06b9 can also be described as
+>>
+>>     v3.13-rc7~9^2~14^2~42
+>>
+>> so describing it as 'v4.6-rc1~9^2~792' is clearly not closer in any way.
 >
-> Right, because it makes the names longer. We give the second-parent
-> traversal a heuristic cost. If we drop that cost to "1", like:
-
-So I dropped it to 500 (removed the two last digits), and it gave a
-reasonable answer. With 1000, it gave the same "based on 4.6" answer
-as the current 65536 value does.
-
-> which is technically true, but kind of painful to read. It may be that a
-> reasonable weight is somewhere between "1" and "65535", though.
-
-Based on my tests, the "right" number is somewhere in the 500-1000
-range for this particular case. But it's still a completely made up
-number.
-
-> However, I think the more fundamental confusion with git-describe is
-> that people expect the shortest distance to be the "first" tag that
-> contained the commit, and that is clearly not true in a branchy history.
-
-Yeah.
-
-And I don't think people care *too* much, because I'm sure this has
-happened before, it's just that before when it happened it wasn't
-quite _so_ far off the expected path..
-
-> I actually think most people would be happy with an algorithm more like:
+> Hmm. I think I see what's up. The git distance function has a special
+> hack for preferring first-parent traversal, introduced long long ago
+> with commit ac076c29ae8d ("name-rev: Fix non-shortest description").
 >
->   1. Find the "oldest" tag (either by timestamp, or by version-sorting
->      the tags) that contains the commit in question.
+> Changing that
+>
+>   #define MERGE_TRAVERSAL_WEIGHT 65535
+>
+> to be a smaller value makes git find the shorter path.
+>
+> I do not know what the correct fix is, though.
 
-Yes, we might want to base the "distance" at least partly on the age
-of the base commits.
+I think avoiding side branches to describe with the weight is a
+right thing to do, i.e. if you have this history:
 
->   2. Find the "simplest" path from that tag to the commit, where we
->      are striving mostly for shortness of explanation, not of path (so
->      "~500" is way better than "~20^2~30^2~14", even though the latter
->      is technically a shorter path).
+    X---o---o---o---o---v4.6
+     \             /
+      o-----------o
 
-Well, so the three different paths I've seen are:
+you do not want to explain X as "v4.6~^2~2", and instead you want it
+as "v4.6~5", even though the former is 4 hops while the latter is 5
+hops (which is longer).
 
- - standard git (65536), and 1000:
-   aed06b9 tags/v4.6-rc1~9^2~792
+But when comparing a name based on v4.6 (which I think the algorithm
+with the weight heuristics would choose v4.6~5) and another name
+based on v3.13, I suspect that we compare them with number of hops
+with the weight heuristics, and that is what gives us a wrong
+result, isn't it?
 
- - non-first-parent cost: 500:
-   aed06b9 tags/v3.13-rc7~9^2~14^2~42
+I think it should instead compare the number of true hops.
 
- - non-first parent cost: 1:
-   aed06b9 tags/v3.13~5^2~4^2~2^2~1^2~42
-
-so there clearly are multiple valid answers.
-
-I would actually claim that the middle one is the best one - but I
-claim that based on your algorithm case #1. The last one may be the
-shortest actual path, but it's a shorter path to a newer tag that is a
-superset of the older tag, so the middle one is actually not just
-better based on age, but is a better choice based on "minimal actual
-history".
-
-               Linus
+v3.13-rc7~9^2~14^2~42 = 9 + 1 + 14 + 1 + 42 = 67 hops from v3.13
+v4.6-rc1~9^2~792 = 9 + 1 + 792 = 802 hops from v4.6-rc1
