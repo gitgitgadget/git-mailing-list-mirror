@@ -1,112 +1,105 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: history damage in linux.git
-Date: Thu, 21 Apr 2016 11:18:02 -0700
-Message-ID: <CA+55aFzEVy6BsVzTrYda3Nfo4o+QtqiqsX5xJqRt=se0eREDsA@mail.gmail.com>
-References: <20160421113004.GA3140@aepfle.de>
-	<87lh473xic.fsf@linux-m68k.org>
-	<CA+55aFx8hPKKcuwe-HHoO7LHVYLmJ6khndd-OtQotMs3EJzZ0w@mail.gmail.com>
-	<xmqqzismsxsu.fsf@gitster.mtv.corp.google.com>
-	<20160421170815.GA10783@sigill.intra.peff.net>
-	<CA+55aFyadCxX_Ws5fUC0QXwYYyaAjC5TC=y+tVA+YUHX1o+-iQ@mail.gmail.com>
-	<20160421180507.GA12950@sigill.intra.peff.net>
+From: Joey Hess <id@joeyh.name>
+Subject: Re: 'next'ed --allow-unrelated-histories could cause lots of grief
+Date: Thu, 21 Apr 2016 14:19:17 -0400
+Message-ID: <20160421181917.GA3628@kitenet.net>
+References: <20160421161043.GK7907@onerussian.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Olaf Hering <olaf@aepfle.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 21 20:18:16 2016
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="RnlQjJ0d97Da+TV1"
+Cc: Git Gurus hangout <git@vger.kernel.org>,
+	Benjamin Poldrack <benjaminpoldrack@gmail.com>
+To: Yaroslav Halchenko <yoh@onerussian.com>
+X-From: git-owner@vger.kernel.org Thu Apr 21 20:19:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atJB8-0000qZ-EE
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 20:18:14 +0200
+	id 1atJCX-00023X-Oz
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 20:19:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753643AbcDUSSG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2016 14:18:06 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:35267 "EHLO
-	mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752291AbcDUSSD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2016 14:18:03 -0400
-Received: by mail-io0-f194.google.com with SMTP id u185so11600320iod.2
-        for <git@vger.kernel.org>; Thu, 21 Apr 2016 11:18:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=Y01+iqaUz2JAOi37V2hKtXCQrwVra5j4DvojXt/yJV4=;
-        b=V9GLDEhdfla1GDT2giuY7eAvKEDDX3+OoxnBSjphUJc7RyWYFOH7UsXPpdBIZ2Acxb
-         pDDeQUercajTpOpnE0nMEOk8HFrDhht7MJnRp1g1fapX/591w04LwwSX2PfccRjbCH+J
-         VKBKdw9xACsiu38q40iyNmQUyPHKMw0VIIcpmdY6loLTL0Sf+maH08jkc5lncidE43Aa
-         fyyaqrdVzXbX6u81cgB+HN1xdwq7R5ISb8aBlwUEF6N1Cq5aGykFy2kTlX/9cZl/xVpm
-         XZk7lBGp2sU/c0yUqsBFLK5hX/hZZGUmmxgfnoGsFEsmOtCSQeVHnhkMy/kN40wZmznS
-         b2KQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=Y01+iqaUz2JAOi37V2hKtXCQrwVra5j4DvojXt/yJV4=;
-        b=X1Eu2fCuzcb1RWhxPWgN91ZmjT7LxY3en1YeDTrUZTFId3N/4YyZmtVPvQyUPNKOTY
-         0OyyS4l/joQ4t5t6XhsQ8cX4VS5Zs6XsfCKjATa+cbmn/jHlNIpPOqw89r9Uecyq4i/+
-         nMi5W5O3bMCdqP14s2ye55gtaZLh8Gwp77Nms=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=Y01+iqaUz2JAOi37V2hKtXCQrwVra5j4DvojXt/yJV4=;
-        b=HguQRqw0UrU/fZWpHWyFvhzliEpbq9vcl0HWbizz0nqhR+sQ1ZCPQjtvYwoKoFa++B
-         FlcIutUV8T5XWiD7JpP5wzYE1DMN7eboAX/mwKwV6yhioXJ84+zp1JqJ1w4Gr+SXB0+0
-         AW27buRjvSGApoShuPtKLzcJSnkCu7Rp0YfVamDNi+s0ErxcDoxT6alzXS6iIbQ/3TtK
-         lJXcOTfrPfhrwAQThjW74G3XaxHcVrmL3AlkQAuV11iWcwO35Jc+pNB5zlw4y/Z5z0M4
-         bAQ/5KvLcHHCdpXImZLhcqqKZ1cbwfmTwDlEXCOi9toP5UcBzZFu0K/L0axDSs+kVDLH
-         G+aQ==
-X-Gm-Message-State: AOPr4FWwtnwtNBmqLpNmU1SlCQ1CwJYMuIgV24ip4aP5s/HS4aQJrtofa6HsDiVuUTJSUubK7CMHbj8DILS2zQ==
-X-Received: by 10.107.23.131 with SMTP id 125mr19026612iox.186.1461262682330;
- Thu, 21 Apr 2016 11:18:02 -0700 (PDT)
-Received: by 10.36.2.9 with HTTP; Thu, 21 Apr 2016 11:18:02 -0700 (PDT)
-In-Reply-To: <20160421180507.GA12950@sigill.intra.peff.net>
-X-Google-Sender-Auth: YQDWbYEMc74wwCXw6jw8SwlCkeQ
+	id S1753937AbcDUST3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2016 14:19:29 -0400
+Received: from kitenet.net ([66.228.36.95]:55136 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753257AbcDUST1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2016 14:19:27 -0400
+X-Question: 42
+Authentication-Results: kitenet.net;
+	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=Hcbt46Xs;
+	dkim-atps=neutral
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+	t=1461262757; bh=im1i6zAVcS3oO+fHheBjntvZoDhJmlX8nx2TXJs7HmQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Hcbt46Xs/R0Zg9AytgJnUbKM4m3YZ6Kyz86l3RfwwZizLV3SrXNWln3cuX4G3hol9
+	 +9wNFjr2FZtcDRfqyp5tqpFjA8SDOx2nGaEU3t0DVUFodqDOib8/dRxlH0ZUUImuS8
+	 6crmtPEcF/l43zIO1TFsABb919BrLhumTabK24VY=
+Content-Disposition: inline
+In-Reply-To: <20160421161043.GK7907@onerussian.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Spam-Status: No, score=-94.3 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_PBL,RCVD_IN_SORBS_DUL,
+	RDNS_NONE,SPF_SOFTFAIL,USER_IN_WHITELIST autolearn=no autolearn_force=no
+	version=3.4.1
+X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on kite.kitenet.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292141>
 
-On Thu, Apr 21, 2016 at 11:05 AM, Jeff King <peff@peff.net> wrote:
->
-> I actually think the best name for aed06b9 is probably:
->
->   v3.13-rc1~65^2^2~42
 
-Sounds likely. I don't know how to find that best match without a
-complete rewrite, though.
+--RnlQjJ0d97Da+TV1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-My recent patch that got
+Yaroslav Halchenko wrote:
+> which is planned for the next release.  I guess it is indeed a
+> worthwhile accident-prevention measure BUT not sure if it is so
+> important as to cause a change in behavior on which some projects using
+> git through the cmdline interface might have been relying upon for
+> years!
 
-  v3.13-rc2~32^2^2~47
+Not only through the command line interface. The git-annex webapp has
+common use cases that will be broken by this change.
 
-comes close to that, and the complexity is similar but the numbers are
-actually smaller, so I guess my heuristic did indeed find a "simpler"
-name, but yes, the one based on 3.13-rc1 would definitely be the
-better one.
+> Moreover, it was explicitly stated that "no configuration variable to
+> enable this by default exists and will not be added", which would cause
+> 3rd party scripts/code/projects relying on previous behavior  to provide
+> version specific handling (either to add that
+> --allow-unrelated-histories or not)... very cumbersome!
 
-> which I found by picking the oldest tag from "git tag --contains" and
-> plugging it into "git describe --match".
+Agreed, a configuration setting that could be passed via -c would be
+much less cumbersome than checking the version of git in order to only
+pass the option to git versions that understand it. This would also
+provide a way to get git pull to allow such merges.
 
-Yeah, so you basically did the "let's figure out minimal inclusion" by hand.
+Compare with, for example, the change to default to an interactive
+merge, where GIT_MERGE_AUTOEDIT=3Dno was provided to ease compatability.
 
-> Sadly, neither git's internal
-> version-sorting nor GNU's "sort -V" knows that "v1.0-rc1" comes before
-> "v1.0", so I had to rely on "--sort=taggerdate".
+--=20
+see shy jo
 
-I'm not seeing the "sadly".
+--RnlQjJ0d97Da+TV1
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I think "--sort=taggerdate" is pretty much the only sane sort there is
-for tags, unless you do a true and full topological one (ie sort based
-on by how many commits that tag encompasses, but also by how each tag
-contains another tag).
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-              Linus
+iQIUAwUBVxkZo8kQ2SIlEuPHAQIOAQ/41l2F1Q42V93+BM6FrYeXRRmUyDOZUGaz
+k591zN2C9fpnzr3KMzj/bRShu9RkNLZxeEL5lF6G179UdHfwRVTerC8XQ135DHDg
+jPmFNp/RNVX2LQb3hejIBlzg8wEvC5bfzVCSbha90fU+pmONR+Ds8apuXyqKf76S
+TIT8QWbr4pLzhJ9c3Da7eevqZbR4uwAjcZ9jkUxSl5T7fr/xA2lel8QOOgHt85z9
+QHFt/MZjn4M73nBvjTHsryGTxgh/REN+FERDkN3I/6dbBUr/Ms6w4r8dVjmnAYKl
+KoyGVM+VE4pFSUFn1ZWqxsCvJW/wh15fSH3UfuVmpTz03wMXH2p88q4lJ0R0RFW8
+YA+pu0z6VfhR2UMrbPlc9Cvrk39Aa3xtSDxmEHTMzmwVYV7Z9Ru8Ymhee7nXxIdq
+3mmC637E2gQA9ltogNxwMpJklumT+C/x/g0jgZ/rU3OahhKTIPU0ZA4O2RJTP+Qu
+vhdUBCETASQuJfq/7/Ern7WV8KDv1A9ViW5lrUUzfjQYi/gIVszN/PExhaJS1IgX
+7lEaHmsVgCCvMFbX3MY2ZmwYdZJ/lciNUZPPqbg6+hQi2azaHoScG7AGyOtAMc2u
+fjriWWqo7p8N9S3z6utYKaTjxV+ZRab4q7pNTwpsyOXRv+uVonlVztrlKlte0mvt
+e9lYQBRmqA==
+=S6d7
+-----END PGP SIGNATURE-----
+
+--RnlQjJ0d97Da+TV1--
