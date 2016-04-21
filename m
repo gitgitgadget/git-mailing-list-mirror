@@ -1,7 +1,7 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Stefan Beller <sbeller@google.com>
 Subject: Re: problems serving non-bare repos with submodules over http
-Date: Thu, 21 Apr 2016 10:45:41 -0700
-Message-ID: <xmqqr3dysvne.fsf@gitster.mtv.corp.google.com>
+Date: Thu, 21 Apr 2016 10:48:25 -0700
+Message-ID: <CAGZ79kYTo+CHPvhV6i0U3xqezhGBSXQs9h+5JL6MRh9oAWXvFg@mail.gmail.com>
 References: <20160420152209.GH23764@onerussian.com>
 	<CAGZ79kYS-F1yKpNP7jmhTiZT1R_pucUBBTCbmHKZz6Xd6dy8EA@mail.gmail.com>
 	<xmqqh9ewukhw.fsf@gitster.mtv.corp.google.com>
@@ -10,76 +10,86 @@ References: <20160420152209.GH23764@onerussian.com>
 	<CAGZ79kbyDuu8hUQXOUNmDLyO88GOi3kqSzsc0UfgzwAL9peZHg@mail.gmail.com>
 	<20160421031426.GY23764@onerussian.com>
 	<CAGZ79kYmobvZgAeJv7MNXeFXd+Ahg5mtyagt5m+f7Gpp=Ps4iQ@mail.gmail.com>
+	<xmqqr3dysvne.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Cc: Yaroslav Halchenko <yoh@onerussian.com>,
 	Git Gurus hangout <git@vger.kernel.org>,
 	Benjamin Poldrack <benjaminpoldrack@gmail.com>,
 	Joey Hess <id@joeyh.name>, Jens Lehmann <Jens.Lehmann@web.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Apr 21 19:45:51 2016
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 21 19:48:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atIfl-00074p-Dl
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 19:45:49 +0200
+	id 1atIiN-0000sC-K4
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 19:48:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753362AbcDURpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2016 13:45:45 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50316 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751878AbcDURpp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2016 13:45:45 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 804DB14477;
-	Thu, 21 Apr 2016 13:45:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4QVA6c42+RaGUa2PeVi2UXLC1ZI=; b=LBti+s
-	ByfndHdQJ2+LWACX3vm4kCPXzR1AHM9Li34R4FA3QpSwGdl6pzb+fzEHX/8c2kbd
-	8Q2871s839Jap3HJL+92PxisuB2reEkskaFDVeKlAU36AvVJPzw64dnQ4sZxYKP9
-	riVThAGx1/2q8nFRJ4FGQ70ktTQDRG/E25lLU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ya0svwbi2Psv0UH2n61mtg6lINlesv+W
-	Tf4wqMFF9JqZOTzYctKQnQbS7KwKGI/RzS1b9ZydpKJLOCCEYLzz7ivAPkv9yIPj
-	D3dsfHnibZ+7kEbX10F7ItNcynhs8uPO8LrsGmhcxTH7fVl38bNHDXa/GBcWFYwB
-	U0jh7tOCQwE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 765DF14476;
-	Thu, 21 Apr 2016 13:45:43 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DB35714475;
-	Thu, 21 Apr 2016 13:45:42 -0400 (EDT)
-In-Reply-To: <CAGZ79kYmobvZgAeJv7MNXeFXd+Ahg5mtyagt5m+f7Gpp=Ps4iQ@mail.gmail.com>
-	(Stefan Beller's message of "Thu, 21 Apr 2016 10:11:02 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DE8F13A6-07E8-11E6-A4A7-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1753375AbcDURs1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2016 13:48:27 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:38460 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751871AbcDURs0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2016 13:48:26 -0400
+Received: by mail-ig0-f173.google.com with SMTP id m9so72465132ige.1
+        for <git@vger.kernel.org>; Thu, 21 Apr 2016 10:48:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=BrdE8PuJSjVxb24vBtRbFl2tKH9Hy5nsu+tlB52++e8=;
+        b=B0zPEMYiptIgDr3laZPvzuRnVKfHWH0qNkfXX9moKCP6b8lWCSfsRy++JkLrqUo1+B
+         tG4SyMjyccO8+cOJxLjoElL9gyinTk8TYV7kg66imazKLCk7nbQU1HebF8A2Ah18/QhL
+         p6z6qeI2YHoHTETF2hnORUyJD8+UnLXSuG0Av67JNRunq1H3dKGIIsu8KlWuZWHSLIWl
+         bDnbdza1g6WV66tu4210+7xOjYzN7EqcDbxXuVdkoMn/lmGX+Vt/dNJd7A1FBQcPnGQL
+         +5AHsOw77jHGR8RA3MII6lSHKILuw8QYkrnmt6l2R9vYrs0tP0ywR3Z1aBYflB5jiRQc
+         S0dg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=BrdE8PuJSjVxb24vBtRbFl2tKH9Hy5nsu+tlB52++e8=;
+        b=X7C3x6I7csl/PzD7N+6AmZmzMzaJI8ItkoFHSvjw974URfHWD4NNsvexCnYolq8FO9
+         lnGHZJACpwlhDnVQ6JMnn09BOl92VVX887iQS879lIGFcZ0GOimPArdIFdZwQV8byeGr
+         hm+n1LoZxZpRWs61oy/ni19OKg5kY6AVn8xHbMaRcrzeoTM4fgw41EBftk6y9HZnGs2V
+         kRGWfMF6xR6P1jO7UoUO4GoDHUzCJ4YY4Jl+l+dhWNiaamWQSUeUehu4+HrvyZTlTWfD
+         5fFcqdzWcWT9j2CcJRZn+YJD8c3B8MY4vUOzmsWMiWIEykj65qGrhNrKDg1nOnJtXWbu
+         Ygog==
+X-Gm-Message-State: AOPr4FW9E/4MMCM9bLyPuRESncnzdvyPctg6GjKLLEV6zODrQ/fwgBQK0pP/G/5rfrgCHWL4UStA0B7vpAVJAvfh
+X-Received: by 10.50.111.15 with SMTP id ie15mr5567499igb.94.1461260905371;
+ Thu, 21 Apr 2016 10:48:25 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Thu, 21 Apr 2016 10:48:25 -0700 (PDT)
+In-Reply-To: <xmqqr3dysvne.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292136>
 
-Stefan Beller <sbeller@google.com> writes:
-
-> In case of non bare:
+On Thu, Apr 21, 2016 at 10:45 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
->     Get the repo and all its submodules from the specified remote.
->     (As the submodule is right there, that's the best guess to get it from,
->     no need to get it from somewhere else. The submodule at the remote
->     is the closest match you can get for replicating the superproject with
->     its submodules.)
+>> In case of non bare:
+>>
+>>     Get the repo and all its submodules from the specified remote.
+>>     (As the submodule is right there, that's the best guess to get it from,
+>>     no need to get it from somewhere else. The submodule at the remote
+>>     is the closest match you can get for replicating the superproject with
+>>     its submodules.)
+>>
+>> This way is heavy underutilized as it wasn't exercised as often I would
+>> guess,
 >
-> This way is heavy underutilized as it wasn't exercised as often I would
-> guess, 
+> My guess is somewhat different. It is not used because the right
+> semantics for such a use case hasn't been defined yet (in other
+> words, what you suggested is _wrong_ as is).  You need to remember
+> that a particular clone may not be interested in all submodules, and
+> it is far from "the closest match".
 
-My guess is somewhat different. It is not used because the right
-semantics for such a use case hasn't been defined yet (in other
-words, what you suggested is _wrong_ as is).  You need to remember
-that a particular clone may not be interested in all submodules, and
-it is far from "the closest match".
+Yes, when that clone doesn't have some submodules, we can still fall back
+on the .gitmodules file.
+
+If you have a submodule chances are, you are interested in it and modified it.
+So the highest chance to get your changes is from your remote, no?
