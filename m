@@ -1,167 +1,138 @@
-From: Simon P <simon.git@le-huit.fr>
-Subject: [git-multimail] smtplib, check certificate
-Date: Thu, 21 Apr 2016 23:44:50 +0200
-Message-ID: <571949D2.10507@le-huit.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: history damage in linux.git
+Date: Thu, 21 Apr 2016 15:16:45 -0700
+Message-ID: <xmqq37qesj3m.fsf@gitster.mtv.corp.google.com>
+References: <20160421113004.GA3140@aepfle.de> <87lh473xic.fsf@linux-m68k.org>
+	<CA+55aFx8hPKKcuwe-HHoO7LHVYLmJ6khndd-OtQotMs3EJzZ0w@mail.gmail.com>
+	<xmqqzismsxsu.fsf@gitster.mtv.corp.google.com>
+	<20160421170815.GA10783@sigill.intra.peff.net>
+	<CA+55aFyadCxX_Ws5fUC0QXwYYyaAjC5TC=y+tVA+YUHX1o+-iQ@mail.gmail.com>
+	<CAGZ79kY9cpT7FN673P1u78XUwmqd0S4trAe5mauC1bdjrEsq9Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------000806070406020603010205"
-Cc: mhagger@alum.mit.edu, matthieu.moy@grenoble-inp.fr
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 21 23:53:32 2016
+Content-Type: text/plain
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jeff King <peff@peff.net>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Olaf Hering <olaf@aepfle.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Apr 22 00:16:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atMXT-0000oF-5i
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 23:53:31 +0200
+	id 1atMu6-00029C-Md
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 00:16:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751681AbcDUVx1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2016 17:53:27 -0400
-Received: from mail.gnubox.eu ([212.129.16.229]:35393 "EHLO mail.gnubox.eu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751603AbcDUVx0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2016 17:53:26 -0400
-X-Greylist: delayed 443 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Apr 2016 17:53:25 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by mail.gnubox.eu (Postfix) with ESMTP id 642C85A6CD0;
-	Thu, 21 Apr 2016 23:45:56 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new using ClamAV at gnubox.info
-Received: from mail.gnubox.eu ([127.0.0.1])
-	by localhost (mail.gnubox.eu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QOhui5hqMdEy; Thu, 21 Apr 2016 23:45:31 +0200 (CEST)
-Received: from [192.168.0.73] (85-169-145-244.rev.numericable.fr [85.169.145.244])
-	by mail.gnubox.eu (Postfix) with ESMTPSA id 225585A6CCE;
-	Thu, 21 Apr 2016 23:45:31 +0200 (CEST)
-X-Enigmail-Draft-Status: N1110
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101
- Icedove/38.7.0
+	id S1752571AbcDUWQt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2016 18:16:49 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52234 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751604AbcDUWQs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2016 18:16:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 356BD15AF5;
+	Thu, 21 Apr 2016 18:16:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=d5FBMcdfesF9W4uHK3cj+14wUBs=; b=F9r7t1
+	Tgm7f/LlZRmaTF6KVHdPJenS0Ke1CXRfMJNgN7Clzm/S18vmvvd/cuBq8Q9MAkIe
+	HyV9llf2EVC0SvJmV1v7CXYpAwS5qF4FCCU5IMl5thmF5D9NYEeNH39Gu7jJIubX
+	A65OocF9V/YSPBiJXLy+ZXiWOGQvAYQKtAhC0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=N/jBtSC/w0FBOO1zjOZsl5cd5ff0LI/R
+	07Js/jslzOE9dxHYmUGMzhownpQZbCm+Q3c/NRrcY8LB4PsOZS3TlHuxXVcTrP44
+	UU0KfbiWhJTP82Jb9Au+1HXrDCgYVwriHOY2IeygD5kNeWUQsOCzuzDL7ew3rjxJ
+	C6gXDV/isYo=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 261EE15AF4;
+	Thu, 21 Apr 2016 18:16:47 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 87A9215AF3;
+	Thu, 21 Apr 2016 18:16:46 -0400 (EDT)
+In-Reply-To: <CAGZ79kY9cpT7FN673P1u78XUwmqd0S4trAe5mauC1bdjrEsq9Q@mail.gmail.com>
+	(Stefan Beller's message of "Thu, 21 Apr 2016 10:44:50 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: BC74AA30-080E-11E6-8449-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292155>
 
-This is a multi-part message in MIME format.
---------------000806070406020603010205
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Stefan Beller <sbeller@google.com> writes:
 
-Hi,
+> Combining Junios and Linus idea:
+>
+> * We want to have the minimal history, i.e. that tag with the fewest
+> cummulative parent commits. (i.e. v3.13-rc7 is better than v3.13
+> because `git log --oneline v3.13-rc7 |wc -l` (414317) is smaller tha
+> `git log --oneline v3.13 |wc -l` (414530).
+> The difference is 213.
+>
+> tags/v3.13-rc7~9^2~14^2~42 has 9 + 14 + 42 additional steps (65)
+>
+> tags/v3.13~5^2~4^2~2^2~1^2~42 has 5 + 4 + 2 + 1 +42 steps (54)
+>
+> tags/v3.13~5^2~4^2~2^2~1^2~42 has 9 less steps, but its base tag
+> has a higher weight by 213.
+>
+> v4.6-rc1 has even more weight (588477).
+>
+> So I guess what I propose is to take the weight of a tag into account
+> via `git log --oneline <tag> |wc -l` as that gives the tag which encloses
+> least history?
+>
+> We also do not want to have "a lot of side traversals", so we could
+> punish each additional addendum by a heuristic.
 
-It seems that smtplib doesn't check if a certificate is valid (signed by
-a trusted CA).
+These are essentially shooting for what Linus meant "something
+optimal", contrasting his "improved heuristics" version, and it is
+good that you are thinking about these issues.
 
-For my personal usage, I patched the starttls code in git-multimail:
-only for starttls with smtplib.
+It may be a bit tricky to think the "optimum description" in terms
+of "how many commits are behind these tags", though.  One thing that
+commonly happens is:
 
-This patch is inspired from
+ (1) A fix X is developed on an ancient codebase, e.g. on top of
+     v1.0.0 release.
 
-https://github.com/graingert/secure-smtplib/blob/master/src/secure_smtplib/__init__.py
+ (2) X is first merged to the current 'master' and becomes part of
+     the next release v2.0.0.
 
-It could be easy to add support cert check in for smtps (see
-secure_smtplib).
+ (3) X is later merged to the maintenance track and included in
+     v1.0.1.
 
-This patch was tested only on git-multimail (v1.2)
+There are a few questions you would want to ask "describe --contains
+X" and depending on the reason why you are asking the question, the
+desired answer may be different:
 
-It introduces two new options:
-  - multimailhook.smtpcheckcert (default false)
-  - multimailhook.smtpcacerts (default
-                               /etc/ssl/certs/ca-certificates.crt)
+ - In which release did the fix X first appear?  (answer: v2.0.0)
+ - What is the oldest release with the fix X?    (answer: v1.0.1)
 
-Best regards,
-Simon P.
+I happen to be a maintainer who prefers to have a tidy containment
+relationships among his releases, and after the above three steps,
+there will be this:
 
---------------000806070406020603010205
-Content-Type: text/x-patch;
- name="git-multimail-secure-smtplib.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="git-multimail-secure-smtplib.patch"
+ (4) Later v1.0.1 is merged back to 'master' branch and a tag v2.0.1
+     on the maintenance track for v2.0.x series would contain it.
 
-diff --git a/git-multimail/git_multimail.py b/git-multimail/git_multimail.py
-index fae5c91..b49ed9d 100755
---- a/git-multimail/git_multimail.py
-+++ b/git-multimail/git_multimail.py
-@@ -57,6 +57,7 @@ import subprocess
- import shlex
- import optparse
- import smtplib
-+import ssl
- import time
- import cgi
- 
-@@ -1945,6 +1946,7 @@ class SMTPMailer(Mailer):
-                  smtpservertimeout=10.0, smtpserverdebuglevel=0,
-                  smtpencryption='none',
-                  smtpuser='', smtppass='',
-+                 smtpcacerts='/etc/ssl/certs/ca-certificates.crt',smtpcheckcert=False
-                  ):
-         if not envelopesender:
-             sys.stderr.write(
-@@ -1974,13 +1976,43 @@ class SMTPMailer(Mailer):
-             if self.security == 'none':
-                 self.smtp = call(smtplib.SMTP, self.smtpserver, timeout=self.smtpservertimeout)
-             elif self.security == 'ssl':
-+                if smtpcheckcert:
-+                    msg = "Checking certificate is not supported for ssl, prefer starttls"
-+                    raise smtplib.SMTPException(msg)
-                 self.smtp = call(smtplib.SMTP_SSL, self.smtpserver, timeout=self.smtpservertimeout)
-             elif self.security == 'tls':
-                 if ':' not in self.smtpserver:
-                     self.smtpserver += ':587'  # default port for TLS
-                 self.smtp = call(smtplib.SMTP, self.smtpserver, timeout=self.smtpservertimeout)
--                self.smtp.ehlo()
--                self.smtp.starttls()
-+                if smtpcheckcert:
-+                    # inspired form:
-+                    #   https://github.com/graingert/secure-smtplib/blob/master/src/secure_smtplib/__init__.py
-+                    # but add the path to trusted ca, and force ceritficate verification.
-+                    self.smtp.ehlo_or_helo_if_needed()
-+                    if not self.smtp.has_extn("starttls"):
-+                        msg = "STARTTLS extension not supported by server"
-+                        raise smtplib.SMTPException(msg)
-+                    (resp, reply) = self.smtp.docmd("STARTTLS")
-+                    if resp == 220:
-+                        self.smtp.sock = ssl.wrap_socket(
-+                            self.smtp.sock,
-+                            ca_certs=smtpcacerts,
-+                            cert_reqs=ssl.CERT_REQUIRED
-+                        )
-+                        if not hasattr(self.smtp.sock, "read"):
-+                            # using httplib.FakeSocket with Python 2.5.x or earlier
-+                            self.smtp.sock.read = self.smtp.sock.recv
-+                        self.smtp.file = smtplib.SSLFakeFile(self.smtp.sock)
-+                        self.smtp.helo_resp = None
-+                        self.smtp.ehlo_resp = None
-+                        self.smtp.esmtp_features = {}
-+                        self.smtp.does_esmtp = 0
-+                    else:
-+                        msg = "Wrong answer to the STARTTLS command"
-+                        raise smtplib.SMTPException(msg)
-+                else:
-+                    self.smtp.ehlo()
-+                    self.smtp.starttls()
-                 self.smtp.ehlo()
-             else:
-                 sys.stdout.write('*** Error: Control reached an invalid option. ***')
-@@ -3500,6 +3532,8 @@ def choose_mailer(config, environment):
-         smtpencryption = config.get('smtpencryption', default='none')
-         smtpuser = config.get('smtpuser', default='')
-         smtppass = config.get('smtppass', default='')
-+        smtpcacerts = config.get('smtpcacerts', default='/etc/ssl/certs/ca-certificates.crt')
-+        smtpcheckcert = config.get_bool('smtpcheckcert', default='false')
-         mailer = SMTPMailer(
-             envelopesender=(environment.get_sender() or environment.get_fromaddr()),
-             smtpserver=smtpserver, smtpservertimeout=smtpservertimeout,
-@@ -3507,6 +3541,8 @@ def choose_mailer(config, environment):
-             smtpencryption=smtpencryption,
-             smtpuser=smtpuser,
-             smtppass=smtppass,
-+            smtpcacerts=smtpcacerts,
-+            smtpcheckcert=smtpcheckcert
-             )
-     elif mailer == 'sendmail':
-         command = config.get('sendmailcommand')
+But not all projects are run that way.  Often older maintenance
+tracks will never merge back to the current development track
+(i.e. fixes are only ported-back).
 
---------------000806070406020603010205--
+If the v1.0.x codebase had an unrelated problem in the code that no
+longer exists in v2.0.x codebase, the maintenance track may have
+quite a many commits that exist only there and not in 'master', and
+when (3) happens, the "weight", i.e. the commits behind the tag, of
+v1.0.1 may be greater than the weight of v2.0.0 in such a project.
+
+In other words, an algorithm that uses "how many commits are behind
+the tag" as one of the deciding factor to name X would choose
+between v1.0.1 and v2.0.0 depending on what other things that have
+nothing to do with X happend on these parallel development tracks,
+which may not be desirable.
