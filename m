@@ -1,65 +1,74 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 2/4] pull: pass --allow-unrelated-histories to "git merge"
-Date: Thu, 21 Apr 2016 12:36:14 -0700
-Message-ID: <CAGZ79kZgenHyvAKxKNGxKkybM=LgTfsvB7s91s1sQxxbp1xoFg@mail.gmail.com>
-References: <20160421192500.23563-1-gitster@pobox.com>
-	<20160421192500.23563-3-gitster@pobox.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: 'next'ed --allow-unrelated-histories could cause lots of grief
+Date: Thu, 21 Apr 2016 12:37:36 -0700
+Message-ID: <xmqqinzasqgv.fsf@gitster.mtv.corp.google.com>
+References: <20160421161043.GK7907@onerussian.com>
+	<xmqqbn52ud6r.fsf@gitster.mtv.corp.google.com>
+	<20160421185528.GJ23764@onerussian.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 21 21:36:20 2016
+Content-Type: text/plain
+Cc: Git Gurus hangout <git@vger.kernel.org>,
+	Benjamin Poldrack <benjaminpoldrack@gmail.com>,
+	Joey Hess <id@joeyh.name>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Yaroslav Halchenko <yoh@onerussian.com>
+X-From: git-owner@vger.kernel.org Thu Apr 21 21:37:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atKOi-0003tD-3G
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 21:36:20 +0200
+	id 1atKQ4-00050P-30
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 21:37:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753083AbcDUTgQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2016 15:36:16 -0400
-Received: from mail-io0-f180.google.com ([209.85.223.180]:33460 "EHLO
-	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751697AbcDUTgP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2016 15:36:15 -0400
-Received: by mail-io0-f180.google.com with SMTP id f89so76511313ioi.0
-        for <git@vger.kernel.org>; Thu, 21 Apr 2016 12:36:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=kusf2Ti9UAJqjRkTK3I4EP0PD+B+zPIkV+REcLF4P+4=;
-        b=gBB1UQs4FCr3afsY/uP2jtZ1OXLR3YBkUVM4DmIP/QeH7ESH9BZMWENTq4SiMbzcQR
-         GXM/jmzkI6sGafsv5XLWtD7TaUs4FkUBuQ0CatVW+zUofcy1rbtCe3FQjHLRSpq3szYJ
-         fUxtDdAgzKF4sIK4nW7p3mPJTMZ4v27TPjRayRTMpkO4ypVYK9Gs/onois8W0yL2y2cV
-         BQPEnCVGCRGVXEl8Q0+GTCdm6LWQvd4QV2vbXPNTLVXmflwiUtTbBAtGUTJV6RXcZ1DH
-         ZD/LLSU2TtI/JWaHcb42DhGrPe2h1gQfakktXs/wMeJp4qPrcu4ac+BiNKQR0qC9MfC4
-         Qm/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=kusf2Ti9UAJqjRkTK3I4EP0PD+B+zPIkV+REcLF4P+4=;
-        b=X67wbDjORFL528J6GEAZiTT9k951k4lGdelfA17vG2TM/htniE9++rGkawAPOlvH/z
-         BsJykCIbttqUuJeTnc77szVwseL2xvQv33kn8Xl3IGUHTqOsXY8z5gsqVTBfb8Gf81xS
-         TTzrhXGkNxrEIwSWxf59oQpsSp1Qh7/jl4hO1Rxa5qT5IiJ2fqMcSwIhiOxkRT0G2d66
-         xyrAkx5glCz0wqtOGUkKvBebf1Sx+LpolqhEERgsvNust8gD7O8cabYvjIFe0bkdSZqH
-         tSpcV6igQCsysgovKJ7nnxxzRGli9UCtiBHk4kcLY12C+YusQrjZvNCg+z7xECOmoE55
-         UHTQ==
-X-Gm-Message-State: AOPr4FXw5brb0n0Mc2oXcY8ncw61609+Bj1Ui6sgRQg0Evk2CkcPLlawlOv4EnMSelqbU7xjYUf57JzTG4SkWmuH
-X-Received: by 10.107.184.8 with SMTP id i8mr18557268iof.96.1461267374660;
- Thu, 21 Apr 2016 12:36:14 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Thu, 21 Apr 2016 12:36:14 -0700 (PDT)
-In-Reply-To: <20160421192500.23563-3-gitster@pobox.com>
+	id S1753267AbcDUThk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2016 15:37:40 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52226 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752379AbcDUThj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2016 15:37:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B544813483;
+	Thu, 21 Apr 2016 15:37:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1r+14sTmkv3jnIf3zSfKpPb6V2M=; b=cZcLBq
+	iD0tsYKg5G89faRzgDrTGWKKLuMSN3uavZTkvcuyyXMjYgxyxlzPtVntP6YQ2seo
+	AhRcevaVpYUW4zka4U/BhanJB8K1a804QWk/sZ2+SyOEecu42STorpdQB/rT4pB/
+	OE8SSc24k4KDbRy/yLNiGEkojl+mR54hMnJIw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ejp1z18e787RwOQRTEEBQyGUKSSqcNN4
+	VrGDpnztYkHrRqOaR7W6KZvaCQ3qrANKkBI1Wtl+D+EwS8BvT/o8X+vcZlPUgl/r
+	MXWw8iwxo7PbDluKI4hQqYhZLCWqMBm+6uaKvpj1nAayXUc3u5zcGAjzwbESqc/2
+	kWI3LEzdFzo=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AA35213482;
+	Thu, 21 Apr 2016 15:37:38 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1CA1B13481;
+	Thu, 21 Apr 2016 15:37:38 -0400 (EDT)
+In-Reply-To: <20160421185528.GJ23764@onerussian.com> (Yaroslav Halchenko's
+	message of "Thu, 21 Apr 2016 14:55:28 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 81244A32-07F8-11E6-A733-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292150>
 
-On Thu, Apr 21, 2016 at 12:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> An earlier commit said:
+Yaroslav Halchenko <yoh@onerussian.com> writes:
 
-And by earlier you meant to say e379fdf34f (2016-03-18, merge: refuse
-to create too cool a merge by default)?
+>> It is not very productive to make such an emotional statement
+>> without substantiating _why_ a merge that adds a new root, which was
+>> declared in the thread above as "crap" (in the context of the kernel
+>> project),
+>
+> Sorry if my statement sounded too emotional ;)  I will outline some of
+> the use-cases below.
+
+Thanks.  Emotional is fine, as long as you _also_ have useful
+information.
