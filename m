@@ -1,59 +1,98 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: git rebase -i without altering the committer date
-Date: Thu, 21 Apr 2016 07:23:26 +0200
-Message-ID: <571863CE.6090002@kdbg.org>
-References: <etPan.5717e605.4004d424.12d1@sjackman03-imac.phage.bcgsc.ca>
- <87ega0eyvy.fsf@linux-m68k.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 03/12] worktree.c: make find_shared_symref() return
+ struct worktree *
+Date: Thu, 21 Apr 2016 03:02:53 -0400
+Message-ID: <CAPig+cTMRJYFwzRbsoyd06BKwKOLf0LJirnB5rp4fWDb09r6Fg@mail.gmail.com>
+References: <1460897965-486-1-git-send-email-pclouds@gmail.com>
+	<1461158693-21289-1-git-send-email-pclouds@gmail.com>
+	<1461158693-21289-4-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>,
-	Shaun Jackman <sjackman@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 21 07:23:37 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	rethab.ch@gmail.com, Mike Rappazzo <rappazzo@gmail.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 21 09:03:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1at75R-0007WH-9N
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 07:23:33 +0200
+	id 1at8dh-0002r7-Em
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 09:03:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751565AbcDUFX3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2016 01:23:29 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:42539 "EHLO bsmtp1.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751282AbcDUFX2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2016 01:23:28 -0400
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 3qr6bf60ysz5tlM;
-	Thu, 21 Apr 2016 07:23:26 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 7CFBE5232;
-	Thu, 21 Apr 2016 07:23:26 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.0
-In-Reply-To: <87ega0eyvy.fsf@linux-m68k.org>
+	id S1751704AbcDUHC5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Apr 2016 03:02:57 -0400
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:35626 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751604AbcDUHC4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2016 03:02:56 -0400
+Received: by mail-ig0-f181.google.com with SMTP id gy3so149548494igb.0
+        for <git@vger.kernel.org>; Thu, 21 Apr 2016 00:02:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-transfer-encoding;
+        bh=34wKt5pNunohbQ4Euud0YmOEOFiSWH6ma+KiSWtPze8=;
+        b=wcOO+gk33yNvPDSmdjfLkXeuOejopHSXtyhf0ogTebneieO3jHEH1uc2x7OlH1O7ZD
+         3pGejto9P0g2CgmutTza274aJqomdPAeOvD08qBe5EvWLK+EGzDm+5vz/CqRLQjgJIX2
+         7EuIxKAmrEs61uuysKqG87tNQSRtxI9zIJWiOyN6dFdflANNJWpoVZs8yxOPvubGdY9u
+         slSW0JXM6mVoPTgFqNhblmpTQ9xtHefibEmmnrfkZ5vRQFa4juDeWJcMiJ7FjgmCU93u
+         CBD19bwcvDI0uzJ0mZn3acBI4e8t7LKu0Oqm1XrELX688CsqpJ809VubsywqOEtdWdil
+         9VsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=34wKt5pNunohbQ4Euud0YmOEOFiSWH6ma+KiSWtPze8=;
+        b=XI1VdB+QcAioiVG/TGWnsYOPzv9EtEitUga17N6B6G8rVGFJ7jegv4v5kZjsxknbaX
+         kOw9uy4KZDBFkyemZnc7nMtW3shP3mXSDlQsYbyjk/R059tRLYiDyhS2mbEvWIObIoQM
+         4VeRvUwqScxk/hp4r9v160kk9hyyfaO7zVyE+AJEamsdEcZ298407E0x9WM0uTILRkAX
+         QLDNNbTY7VJAEFxcDQI1dt17y3fkA57DZD1v2edj4ruVWZVZa77hnARf8eHC0+cukVOR
+         oU5RL1MgH/te82j5SeC5Sc2n3zuV6c9xZiJoVPzUhjsHpe3/+d2HBMYp/8KtyyP57cEq
+         d5zg==
+X-Gm-Message-State: AOPr4FVZpq3E5yy3iiwNh5j2YjK0BybtuRhabBrUD/EmO+3x8pnB0heCPUk24XG2fWmFKETwEi0340bMKamtjw==
+X-Received: by 10.50.205.42 with SMTP id ld10mr1641044igc.17.1461222173707;
+ Thu, 21 Apr 2016 00:02:53 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Thu, 21 Apr 2016 00:02:53 -0700 (PDT)
+In-Reply-To: <1461158693-21289-4-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: Eq5LHl0bmqwiLGAxbuct94h6i9U
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292096>
 
-Am 20.04.2016 um 23:47 schrieb Andreas Schwab:
-> Shaun Jackman <sjackman@gmail.com> writes:
+On Wed, Apr 20, 2016 at 9:24 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> This gives the caller more information and they can answer things lik=
+e,
+> "is it the main worktree" or "is it the current worktree". The latter
+> question is needed for the "checkout a rebase branch" case later.
 >
->> I'd like to insert a commit between two commits without changing
->> the committer date or author date of that commit or the subsequent
->> commits.
->
-> The easiest way to implement that is to add a graft to redirect the
-> parent of the second commit to the inserted commit, then use git
-> filter-branch to make the graft permanent.
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+> diff --git a/worktree.h b/worktree.h
+> @@ -36,9 +36,10 @@ extern void free_worktrees(struct worktree **);
+>  /*
+>   * Check if a per-worktree symref points to a ref in the main worktr=
+ee
+>   * or any linked worktree, and return the path to the exising worktr=
+ee
 
-This only inserts a new project state, but does not propagate the 
-changes brought in by the new commit to the subsequent commits. This 
-propagation of changes could also be done with filter-branch, but it may 
-be difficult depending on circumstances.
+Doesn't "return the path" become outdated with this patch?
 
--- Hannes
+Also (not a new problem): s/exising/existing/
+
+> - * if it is.  Returns NULL if there is no existing ref.  The caller =
+is
+> - * responsible for freeing the returned path.
+> + * if it is. Returns NULL if there is no existing ref. The result
+> + * may be destroyed by the next call.
+>   */
+> -extern char *find_shared_symref(const char *symref, const char *targ=
+et);
+> +extern const struct worktree *find_shared_symref(const char *symref,
+> +                                                const char *target);
