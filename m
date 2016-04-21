@@ -1,95 +1,99 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Jeff King <peff@peff.net>
 Subject: Re: history damage in linux.git
-Date: Thu, 21 Apr 2016 10:00:47 -0700
-Message-ID: <CA+55aFzk4rZFdhOjkPDqFC3_tk4BUvx4-STsY2L_tKMH2FxCCA@mail.gmail.com>
+Date: Thu, 21 Apr 2016 13:08:15 -0400
+Message-ID: <20160421170815.GA10783@sigill.intra.peff.net>
 References: <20160421113004.GA3140@aepfle.de>
-	<87lh473xic.fsf@linux-m68k.org>
-	<CA+55aFx8hPKKcuwe-HHoO7LHVYLmJ6khndd-OtQotMs3EJzZ0w@mail.gmail.com>
+ <87lh473xic.fsf@linux-m68k.org>
+ <CA+55aFx8hPKKcuwe-HHoO7LHVYLmJ6khndd-OtQotMs3EJzZ0w@mail.gmail.com>
+ <xmqqzismsxsu.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Olaf Hering <olaf@aepfle.de>,
+Content-Type: text/plain; charset=utf-8
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Olaf Hering <olaf@aepfle.de>,
 	Git Mailing List <git@vger.kernel.org>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Thu Apr 21 19:00:57 2016
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 21 19:08:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atHyJ-0002Fa-4n
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 19:00:55 +0200
+	id 1atI5X-0008NK-Og
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 19:08:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751719AbcDURAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2016 13:00:51 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:36085 "EHLO
-	mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751340AbcDURAu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2016 13:00:50 -0400
-Received: by mail-io0-f195.google.com with SMTP id s2so11321739iod.3
-        for <git@vger.kernel.org>; Thu, 21 Apr 2016 10:00:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=3GnKj3h1u7qJZc5rqGeplGRdteDaHbyzhoBpx+L1U88=;
-        b=ftU7yyy/MBZTzfFrwyZ+slW7A1aOH2fky4svWM+XgiDG1Mn+gbD61C29qETU8FOQ9+
-         AOAqd+QW+Ak1VjYcRyaCiLcN31S6s2wHpjH2DNgqyVKstQEBRmv5me9SDUG+diHwlb+A
-         riKX3CEWXYfm16m23kdV2mrAjvNiFl1B/NScYAuWbHMo1Zyr+ov+oqgQXH3kl7u++OiV
-         a6bi+32/yQnqAHAp0KWbQ+/Qu6aPaGfBus7mpXhrTeoJxj/jVpXtr9+7rCzWow20OA5l
-         zHajNtzXj/HBxT45BrkJC9JUI0f2N8iyt693iQHxFNtqFm+8GZ24MdxYgvuln5kVlguY
-         9YiQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=3GnKj3h1u7qJZc5rqGeplGRdteDaHbyzhoBpx+L1U88=;
-        b=EHkXXVsPco5VxCGXTcbxuc0vVm4CC/OqJnqegHXtGM4hT9IfOTcTrcSiFZg8hFKq3B
-         0fX1N5snjkJW/vAcbhdJBqloyCV88ZNBAL/5yfo+OeYnvT9Youemyiv7RXh26O+8cxmF
-         6xhq4uL5maiWaQdtMLk6y4S22z/WOt4H/DWRI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=3GnKj3h1u7qJZc5rqGeplGRdteDaHbyzhoBpx+L1U88=;
-        b=ComnXFrf8b69OSXM+prJ11WhMKFCaf+Kc4xTf21WFd7gqShwjgLIfyQ93FgPEk5NU9
-         F2SS9J3rWLaueOusWR77TKI9N1hUZwNjWzc9oCCG8liir2A2akWkVJ3zl7f1XDbSeub1
-         dEJxUWDvv27wDUH0K3VGT9hMUDOfc/Al7mIS9qlwOafT5kzwUnIarYbMlhFgiQguqjKt
-         BmUd2J00Vg9iitabhcy5/ZvLwb+fVYNfjCMh3AklqM6+jy22BrRmbUrZRn+lNvL9hAPa
-         reRMujV16GgaKMh6JQnwUEMlbQn/9uOVoM65hirRh4bw0rr8dUIhBbPNic4cFr5LXrxx
-         ORZQ==
-X-Gm-Message-State: AOPr4FUphlNZiSR44J0fisRXHDXgj3OgJxWxqfSFrIx20gqTnMpaVdJBzRYxLgdm9/TIri4wGv0L7kPQ7vDlJA==
-X-Received: by 10.107.130.148 with SMTP id m20mr20092909ioi.137.1461258047636;
- Thu, 21 Apr 2016 10:00:47 -0700 (PDT)
-Received: by 10.36.2.9 with HTTP; Thu, 21 Apr 2016 10:00:47 -0700 (PDT)
-In-Reply-To: <CA+55aFx8hPKKcuwe-HHoO7LHVYLmJ6khndd-OtQotMs3EJzZ0w@mail.gmail.com>
-X-Google-Sender-Auth: uWudaAhaKa8LpjecsDZSY5gFgmc
+	id S1753126AbcDURIT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2016 13:08:19 -0400
+Received: from cloud.peff.net ([50.56.180.127]:53658 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751841AbcDURIS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2016 13:08:18 -0400
+Received: (qmail 17693 invoked by uid 102); 21 Apr 2016 17:08:17 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 21 Apr 2016 13:08:17 -0400
+Received: (qmail 10973 invoked by uid 107); 21 Apr 2016 17:08:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 21 Apr 2016 13:08:17 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Apr 2016 13:08:15 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqzismsxsu.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292128>
 
-On Thu, Apr 21, 2016 at 9:36 AM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
->
-> This seems to be a git bug.
->
-> That commit aed06b9 can also be described as
->
->     v3.13-rc7~9^2~14^2~42
->
-> so describing it as 'v4.6-rc1~9^2~792' is clearly not closer in any way.
+On Thu, Apr 21, 2016 at 09:59:13AM -0700, Junio C Hamano wrote:
 
-Hmm. I think I see what's up. The git distance function has a special
-hack for preferring first-parent traversal, introduced long long ago
-with commit ac076c29ae8d ("name-rev: Fix non-shortest description").
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> 
+> > That commit aed06b9 can also be described as
+> >
+> >     v3.13-rc7~9^2~14^2~42
+> >
+> > so describing it as 'v4.6-rc1~9^2~792' is clearly not closer in any way.
+> 
+> I seem to recall that name-rev had an unexplained heuristics to
+> strongly avoid following second parent changes (I see two ^2 in the
+> path from 3.13-rc7 above).
 
-Changing that
+Right, because it makes the names longer. We give the second-parent
+traversal a heuristic cost. If we drop that cost to "1", like:
 
-  #define MERGE_TRAVERSAL_WEIGHT 65535
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index 092e03c..03be8be 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -17,7 +17,7 @@ typedef struct rev_name {
+ static long cutoff = LONG_MAX;
+ 
+ /* How many generations are maximally preferred over _one_ merge traversal? */
+-#define MERGE_TRAVERSAL_WEIGHT 65535
++#define MERGE_TRAVERSAL_WEIGHT 1
+ 
+ static void name_rev(struct commit *commit,
+ 		const char *tip_name, int generation, int distance,
 
-to be a smaller value makes git find the shorter path.
 
-I do not know what the correct fix is, though.
+then this case gives:
 
-              Linus
+  v3.13~5^2~4^2~2^2~1^2~42
+
+which is technically true, but kind of painful to read. It may be that a
+reasonable weight is somewhere between "1" and "65535", though.
+
+However, I think the more fundamental confusion with git-describe is
+that people expect the shortest distance to be the "first" tag that
+contained the commit, and that is clearly not true in a branchy history.
+
+I actually think most people would be happy with an algorithm more like:
+
+  1. Find the "oldest" tag (either by timestamp, or by version-sorting
+     the tags) that contains the commit in question.
+
+  2. Find the "simplest" path from that tag to the commit, where we
+     are striving mostly for shortness of explanation, not of path (so
+     "~500" is way better than "~20^2~30^2~14", even though the latter
+     is technically a shorter path).
+
+-Peff
