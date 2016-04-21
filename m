@@ -1,89 +1,108 @@
-From: Santiago Torres <santiago@nyu.edu>
-Subject: Re: What's cooking in git.git (Apr 2016, #06; Thu, 21)
-Date: Thu, 21 Apr 2016 18:51:16 -0400
-Message-ID: <20160421225116.GF1096@LykOS>
-References: <xmqqy486r4co.fsf@gitster.mtv.corp.google.com>
+From: Joey Hess <id@joeyh.name>
+Subject: Re: 'next'ed --allow-unrelated-histories could cause lots of grief
+Date: Thu, 21 Apr 2016 18:57:39 -0400
+Message-ID: <20160421225739.GA7508@kitenet.net>
+References: <20160421161043.GK7907@onerussian.com>
+ <xmqqbn52ud6r.fsf@gitster.mtv.corp.google.com>
+ <20160421185528.GJ23764@onerussian.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, ramsay@ramsayjones.plus.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 22 00:51:23 2016
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="sdtB3X0nJg68CQEu"
+Cc: Git Gurus hangout <git@vger.kernel.org>
+To: Yaroslav Halchenko <yoh@onerussian.com>
+X-From: git-owner@vger.kernel.org Fri Apr 22 00:57:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atNRS-0002yt-Rb
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 00:51:23 +0200
+	id 1atNXm-0007vj-4x
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 00:57:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753775AbcDUWvT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2016 18:51:19 -0400
-Received: from mail-qk0-f178.google.com ([209.85.220.178]:33240 "EHLO
-	mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752705AbcDUWvS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2016 18:51:18 -0400
-Received: by mail-qk0-f178.google.com with SMTP id n63so32177827qkf.0
-        for <git@vger.kernel.org>; Thu, 21 Apr 2016 15:51:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=SuSlHC8z6f5zIeVt/0+CUYsSs4lA3LaF17O/Lb1hmG8=;
-        b=aGcsWQZ/u+RRbNNBMlvqA2zTLHkZjtOVLlFGvNfWnTCFgU65j+a1yyDjrfwIZZ561U
-         UnNAUvoIIX+w5CxrehOsZ5IUCQgE5KWGGk1TLNPs+zsmEQL211C+16nVLaFuo77wVuNl
-         33OD7QpNaXDpz3foj0hA93cwje9FzEH+M3vkQpxZiWrcyR7tr2m9fVAtSsbFu0hEDoy2
-         IBnUBnl8Oc0JjrhRsg/AZqWVHGjv3XHyfkYPIjN+fvAx48x7ICIaIawtdU5MYaR832Rj
-         weWmZo2DeqBM92q3kOM6jD61cy11wCnjagSkpug8BNSU0b6KSXl7rFz44NePNL6UDM6g
-         J/Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=SuSlHC8z6f5zIeVt/0+CUYsSs4lA3LaF17O/Lb1hmG8=;
-        b=LREjTAcY+X9qrxLcpj8u+C2I3TakRa7Bd8oOcJXJj/XQbEoDhCx0l5Xq643lkky9GR
-         q2lWJHgZ4MeRMrr6gK7PSESm2bO24wcLmMorrFUBeUvXNg4awXsRFgNLT7Gkpqz28R+b
-         Kn3GebZjElX8Wi71KRjlSGPSOignpOcwFn6TCpQueGI354NQSIxZyjV3kf5mzL1eQpt4
-         7htw+JHOchM+OtiIuKCOjR8kcEzxZDmBgb9uprvAo3nVv45Tc3c3Ss2oSVXgtBAre9s7
-         WS5UqSZGIXwP/xz5KhKYC8MOW/AD5Cia1159JdwuA0uOjfRM3RgGoSXaYW/edcKA4Ha1
-         OxpQ==
-X-Gm-Message-State: AOPr4FU1GMcsySTMHwDNb1aGjGKlHRFrdb/+xF2Q7Uplpcr37EZMek1EYigYsrgmr5OFL238
-X-Received: by 10.55.90.130 with SMTP id o124mr2278832qkb.178.1461279077339;
-        Thu, 21 Apr 2016 15:51:17 -0700 (PDT)
-Received: from LykOS (NYUFWA-WLESSAUTHCLIENTS-05.NATPOOL.NYU.EDU. [216.165.95.76])
-        by smtp.gmail.com with ESMTPSA id j15sm1379361qge.0.2016.04.21.15.51.17
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 21 Apr 2016 15:51:17 -0700 (PDT)
+	id S1753926AbcDUW5t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2016 18:57:49 -0400
+Received: from kitenet.net ([66.228.36.95]:38818 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751760AbcDUW5t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2016 18:57:49 -0400
+X-Question: 42
+Authentication-Results: kitenet.net;
+	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=jjlFmMfS;
+	dkim-atps=neutral
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+	t=1461279459; bh=ZWQ8dggRcM0KKbWl5ITpCCxw1sseSIIjmO59t6v3bo4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jjlFmMfSH0qf18naIBjCt0CTxopeSSyl1/L32Wxbb5D35KeU4lbXIlp8n+p9QDddA
+	 7qkPxF90Y1382ucYqXtkykT4FiFkLAiSP/mhlAsyFbaDiUGrilVSk+UX8hXrx9ktWh
+	 8BIy8SOvJV2nVoPU5G0EhNYLAzSUQtPYLpXNd1d8=
 Content-Disposition: inline
-In-Reply-To: <xmqqy486r4co.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20160421185528.GJ23764@onerussian.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Spam-Status: No, score=-93.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_PBL,RCVD_IN_RP_RNBL,
+	RCVD_IN_SORBS_DUL,RDNS_NONE,SPF_SOFTFAIL,USER_IN_WHITELIST autolearn=no
+	autolearn_force=no version=3.4.1
+X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on kite.kitenet.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292162>
 
-On Thu, Apr 21, 2016 at 03:20:39PM -0700, Junio C Hamano wrote:
-> * st/verify-tag (2016-04-19) 6 commits
->  - tag -v: verfy directly rather than exec-ing verify-tag
->  - verify-tag: move tag verification code to tag.c
->  - verify-tag: prepare verify_tag for libification
->  - verify-tag: update variable name and type
->  - t7030: test verifying multiple tags
->  - builtin/verify-tag.c: ignore SIGPIPE in gpg-interface
-> 
->  Unify internal logic between "git tag -v" and "git verify-tag"
->  commands by making one directly call into the other.
-> 
->  Will merge to 'next'.
 
-Hi Junio, 
+--sdtB3X0nJg68CQEu
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Ramsay Jones[1] Suggested we dropped the extern qualifier on the
-declaration of verify-tag() in tag.c as it is causing a warning with
-sparse.
+Yaroslav Halchenko wrote:
+> - for git-annex (Joey was CCed from the beginning, not sure if annex
+>   would be affected though), it would be merging of git-annex
+>   branches while joining multiple annexes for the sync (e.g. by git
+>   annex assistant).=20
 
-Should I re-roll this before it's merged into next?
+Not entirely accurate (git-annex merges its git-annex branches using a
+custom merge method and not involving git-merge). The actual use case is
+two users (or one user with two devices) each with a git-annex
+repository who decide to share their files by combining the two
+repositories. This is pretty far from the kernel world, so it's not like
+bisection is something they care about.
 
-Thanks!
--Santiago.
+However, I also see --allow-unrelated-histories as very useful to
+prevent many foot-shooting maneuvers. Especially when a repository has
+special-purpose branches, like git-annex's git-annex branch, or other
+branches that are never intended to be merged into master. It's a not
+entirely uncommon mistake for users to merge in such a branch, and the
+users who make such a mistake often don't know enough git to easily
+recover from it.
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/292029
+Junio C Hamano wrote:
+>   merge: GIT_MERGE_ALLOW_UNRELATED_HISTORIES environment
+
+I hope this patch lands, it will save me a lot of bother.
+
+--=20
+see shy jo
+
+--sdtB3X0nJg68CQEu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIVAwUBVxla4ckQ2SIlEuPHAQITGg/+L7dQvJTtMQUxsr/8HEtbvV26LOXK3HIg
+qXfocgiuuJMM/b6hEx5Uf1hWoKKvnmo8NPUd44r1Fjj15gy/nkAQN/uUshe+5euL
+GyaVxrCo8jBwWz2xXNcLMBWw0ZZBa+8tuHgB3+Z5PWPrPkoh2ppH5yBymf6mMEm6
+KuE+yMsjmK1AFWzqqNOuJqX2Db65lAssBasjfapE5FVs1AwBfP+mmLNozyxXSt/p
+fgcJvrsTnNnZbSRb0/zMKhdPyABP3zH5mrk89mETluoi96Qt+JmgtuPqVisiJo22
+Pvxya4YZ7kWXoQQIpIIRuLrd7apS80kFF5HzMfYhILxTElkLrq+m8KeoIptFiTTX
+jmLqHGOKtpWvKMRNuyFrf68zNg4rkiHXmwfHOXSPMoW1tvCjePxh94A++8ZrdOxe
+hYSaUPU/PkMFGRO9Cl8VO4OJrqz4bshBvmNcWv4qkHGBsAXtrHf5Td4rhaG3G6eu
+8dU6hlLygmokJwSgxjvnRvsGpEHphOVsk+txYdHmIUbQax0SDAkQY74FxAP/JP4I
+RYe0G2izMsQ97vmQJdAWwY8rvwohVpwUi1uB7lbxd3P/NfHe5TUrzBMI7AaU9aRO
+1fcJ2Y+OTtmWPDh5X8eKHV3YozOvcjqCcjN3b1S0FY7tDSDL9qs2GKzTTB+3sbRC
+w3PYiu8ToN4=
+=7sbc
+-----END PGP SIGNATURE-----
+
+--sdtB3X0nJg68CQEu--
