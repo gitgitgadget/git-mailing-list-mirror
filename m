@@ -1,89 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 04/12] worktree.c: mark current worktree
-Date: Thu, 21 Apr 2016 08:37:32 -0700
-Message-ID: <xmqqk2jrt1kz.fsf@gitster.mtv.corp.google.com>
-References: <1460897965-486-1-git-send-email-pclouds@gmail.com>
-	<1461158693-21289-1-git-send-email-pclouds@gmail.com>
-	<1461158693-21289-5-git-send-email-pclouds@gmail.com>
-	<CAPig+cR99Nx=dk+zT2Jgpr2ZgYM4v0q2vX7v6TXmWHU5k6ga3w@mail.gmail.com>
-	<CACsJy8DwzfsPthWy6pG2t0cGVT0kcrJT7xWdyvs+0EPFDbNtSQ@mail.gmail.com>
-	<CACsJy8ATaYx0Fk-7HK9Rz_o687hxCLuOJYJ6DkBd4Xk8sP+byw@mail.gmail.com>
-	<CAPig+cQkT8vb-OVdS_ALVuDii9njY6BN2FhkXt=CavAfyeO2Fg@mail.gmail.com>
-	<20160421151355.GA6200@sigill.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH/RFC/GSoC 0/2] add a add.patch config variable
+Date: Thu, 21 Apr 2016 17:39:52 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1604211737170.2826@virtualbox>
+References: <xmqqio0b5ash.fsf@gitster.mtv.corp.google.com> <CAP8UFD0KZk1nTgR8gdbedsAuw2ztWZDWri6EkeEkf8FhwS9yag@mail.gmail.com> <cover.1459946531.git.d.f.fischer@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Duy Nguyen <pclouds@gmail.com>, Git List <git@vger.kernel.org>,
-	Reto =?utf-8?Q?Hab?= =?utf-8?Q?l=C3=BCtzel?= 
-	<rethab.ch@gmail.com>, Mike Rappazzo <rappazzo@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 21 17:37:42 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: XZS <d.f.fischer@web.de>
+X-From: git-owner@vger.kernel.org Thu Apr 21 17:40:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atGfl-00069f-2C
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 17:37:41 +0200
+	id 1atGi7-0007tY-LF
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 17:40:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752168AbcDUPhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2016 11:37:36 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56840 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751722AbcDUPhf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2016 11:37:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8E1EC13111;
-	Thu, 21 Apr 2016 11:37:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iahwJBez4LbTOsyR6GRiiTLCRTY=; b=rqZrfd
-	2Y65jg0lPoSGizFjvzpbumyHrRVnxtz9NdZ+8uUtWcYzbh6R1oczZ8J6gEXwjywW
-	3k063vXgU71lzEh5GSO6wESBrig5iHdB7TMQWQ7hkZRperml6gbqjWR9+P3n79O8
-	7WsDIPAM5qX9fuWp1e5LEO5Zqq+4fYBFI8UAk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BDqkn7kkUb0rbkCusmJaGl+JU6mX/F/B
-	KlNVk+6v7F+wVeMRMTGN3lGvsrukfSoibO3ziqPOZUz4zE2Zw23x4K6t0NvDI+jZ
-	Y2L94FeJU+0l8fh1Ht/wN9cJwCHiSaxgu5c36nInx8hnFAncHpBIZ5n45BaC+6E5
-	3ov2P8WdsuQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8643113110;
-	Thu, 21 Apr 2016 11:37:34 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DDDE21310F;
-	Thu, 21 Apr 2016 11:37:33 -0400 (EDT)
-In-Reply-To: <20160421151355.GA6200@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 21 Apr 2016 11:13:56 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F79A8AB8-07D6-11E6-A04B-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1752602AbcDUPkB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2016 11:40:01 -0400
+Received: from mout.gmx.net ([212.227.15.19]:53572 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752389AbcDUPkA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2016 11:40:00 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0M6Ana-1bdnr42RUw-00yABf; Thu, 21 Apr 2016 17:39:56
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <cover.1459946531.git.d.f.fischer@web.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:v+SfMKFZ0edBNAdzyDTaN+5jf9vM3H/9k/WPFB4CoGo0SuDHIhX
+ HVMizjs8ZuqPc6zJvZNpodO0Tcb4KK06P0qXZXVmTtrcfM/b/z8ku97xJ2mEzMmBaAKWRlj
+ r+Yk2DOWir62nIaxgwqdk1CIOEwBj15TvSOajaGvgYlZ+LHgUyddfncQICBQA0qoGbSNzXG
+ IiqBxHtstwpnRYGVhowYw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:g9gkNU17gww=:Uidkyd1usHXCtcVwaq32Ks
+ yyNMH72rz3mPNEu0TIzFLMgCTQoh33OKXGoH4qCSfME96/mdPz3ysl8bOac1NSDsRSMFC+W1D
+ 5hzLEC6IxqWCB36UrwlBrjqxfHbFbZTb4TorKVf9PUNd6HfQ53f3UHgy9rJ8fqM8VpxoR9p2V
+ xr2xjAUzy4Rg8U4sMST5AFL9M+DiJ3nUH52Vh6U5Jrrrkdf3ZOqhQkXnIrcqMCgQ9PVLZD394
+ OQDA0g/TH4dGos+w4MMBV8bal4R5qBRTEtlXzLLw7VnyBzNqFqmTJs7N7wb/Tbm0usxnzKcZQ
+ n9Jby7pShHEe7eszEMb4IMSv64puDMnh/SCU/GOa/yBOxdMqBPgbzksiMaY1aQews68DPKR/p
+ QhYI0T9RTeVpf4tuW8yMiyqgjB07OwoByNzfScCEQ/l4khWZ8x/ez7wc6xRyVOdZ97eCkrWln
+ 33AxF9nye6Se8onflcSTwHfx83jCQ1+c24X/U6Jt/8ptxkknBAAL5ZFWJfpuXxjSCvksFCzoT
+ L9MioXtOeYDLcBdJS6ghYJFhpS95sSiv8TLLKX4Zu8Jwz+A974Qm6fjIUgAZcu3OKJCQJAlN9
+ 19iLrD/JKXuuq3rI2XDeLKo0H5VIVwLQuVnte32liQR4pdpmUs33liSETEok1/YJlyz/a2BQz
+ j8E8ev5zvzVO37Wp/e7231Pesyvajjs9Dg+k33+4iszNcvrch1GH5RBHIAbuTRXYfXYxi0KyO
+ U/537tkFy/+bjz7SJjgOp1yJ7trifh3vWYOvH3VdaYmhhcPyx4Xo50m5m3SZyWKS1SWlA8YX 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292115>
 
-Jeff King <peff@peff.net> writes:
+Hi Dominik,
 
-> On Thu, Apr 21, 2016 at 10:23:09AM -0400, Eric Sunshine wrote:
->
->> > While we're at it, how about renaming it to pathcmp (and its friend
->> > strncmp_icase to pathncmp)?
->> 
->> Yes, that seems like a good idea. For anyone familiar with
->> strcasecmp() or stricmp(), having "icase" in the name makes it seem as
->> though it's unconditionally case-insensitive, so dropping it from the
->> name would likely be beneficial.
->
-> Seconded (thirded?). I have been caught by this confusion in the past,
-> too.
+On Thu, 21 Apr 2016, XZS wrote:
 
-I agree that strcmp_icase() gives a false impression that it always
-ignores case differences, but a new name that does not at all hint
-that it may do icase comparison as necessary will catch me by an
-opposite confusion in the future.
+> The following patches try to provide an add.patch configuration variable
+> while keeping out of the way of other commands. To do so, an environment
+> variable counts how often git was recursively invoked. The variable is
+> then only considered in the first recursion.
 
-I have not yet formed a firm opinion if pathcmp() conveys enough
-hint.
+This dives right into the "how". Maybe a good idea would be to start with
+a paragraph that explains the "what" and the "why" first, and only then go
+into the details how you implemented it, what other options you considered
+and why you preferred your solution?
+
+Even after skimming the patch series, I am still a bit puzzled what issue
+it solves...
+
+Ciao,
+Johannes
