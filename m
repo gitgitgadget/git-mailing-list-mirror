@@ -1,106 +1,108 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH v2] git-p4: add P4 jobs to git commit message
-Date: Thu, 21 Apr 2016 08:34:49 +0100
-Message-ID: <CAE5ih78r=14fPdk76H=VBYbvFj7eqKrdoEEbaX9+vo+G_HREVA@mail.gmail.com>
-References: <0102015420a6c30a-f2da55c9-1fc4-4df6-860e-228c5305f617-000000@eu-west-1.amazonses.com>
-	<xmqqshyi2yb7.fsf@gitster.mtv.corp.google.com>
-	<CAE5ih7-2mefGwfXRhvQZJFPD4QYAzZ1jYG82s6cnDzWVCiDS8w@mail.gmail.com>
-	<xmqqfuuh35v5.fsf@gitster.mtv.corp.google.com>
-	<CABEqOBxZkYTm7_m-Eeq-acN=Nse1vLGk8Gm44BihVGi27KaGiw@mail.gmail.com>
-	<xmqq7fft32y9.fsf@gitster.mtv.corp.google.com>
-	<CABEqOBwqW+BO4rtOx4ax35VacE4RZhpo_1pbqzTP_EGiSWasiQ@mail.gmail.com>
-	<xmqqh9ex1lsy.fsf@gitster.mtv.corp.google.com>
-	<CABEqOBxkHstqRHFUYF7=eComB-HwUGwi0tpWbhvUuKiny-=Vyw@mail.gmail.com>
-	<CABEqOBxY61yObr0FeUxPYxc6C+xvde1LOS7zS_dHpBqwemJ+dQ@mail.gmail.com>
-	<xmqqd1plz4p5.fsf@gitster.mtv.corp.google.com>
-	<CABEqOBx4vCUpYTGYM9VF6QHxGGgQSG5APSHymtbV7uVxAbU+ow@mail.gmail.com>
-	<xmqqzispxoqt.fsf@gitster.mtv.corp.google.com>
-	<CAE5ih7_7TeJDekoubzJ=ZPT_JUwQVyGczDt5yORZES89Qo=VjA@mail.gmail.com>
-	<xmqqtwiwwa5x.fsf@gitster.mtv.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 04/12] worktree.c: mark current worktree
+Date: Thu, 21 Apr 2016 15:19:48 +0700
+Message-ID: <CACsJy8DwzfsPthWy6pG2t0cGVT0kcrJT7xWdyvs+0EPFDbNtSQ@mail.gmail.com>
+References: <1460897965-486-1-git-send-email-pclouds@gmail.com>
+ <1461158693-21289-1-git-send-email-pclouds@gmail.com> <1461158693-21289-5-git-send-email-pclouds@gmail.com>
+ <CAPig+cR99Nx=dk+zT2Jgpr2ZgYM4v0q2vX7v6TXmWHU5k6ga3w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jan Durovec <jan.durovec@gmail.com>,
-	Git Users <git@vger.kernel.org>,
-	Roberto Tyley <roberto.tyley@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 21 09:34:56 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Reto_Habl=C3=BCtzel?= <rethab.ch@gmail.com>,
+	Mike Rappazzo <rappazzo@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Apr 21 10:20:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1at98Z-0004kM-Sh
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 09:34:56 +0200
+	id 1at9qo-0005Ar-C1
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 10:20:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751487AbcDUHew (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2016 03:34:52 -0400
-Received: from mail-oi0-f46.google.com ([209.85.218.46]:36404 "EHLO
-	mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751369AbcDUHev (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2016 03:34:51 -0400
-Received: by mail-oi0-f46.google.com with SMTP id x201so71786163oif.3
-        for <git@vger.kernel.org>; Thu, 21 Apr 2016 00:34:50 -0700 (PDT)
+	id S1752045AbcDUIUX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Apr 2016 04:20:23 -0400
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:34131 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751555AbcDUIUU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2016 04:20:20 -0400
+Received: by mail-lb0-f179.google.com with SMTP id b1so20043647lbi.1
+        for <git@vger.kernel.org>; Thu, 21 Apr 2016 01:20:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=XHR+x74cccTtvVu5vg+6OiZQH28F6AJlh1MAHBYOsBE=;
-        b=ZzizBQ0RFDX0GOx+E55pAKPQhbh1F0z5vAvRy/C/9OqegoryW3mo0Kdr9LZeT7Vmae
-         /q4AdME0eFBygXAZnkpwkoq0fYX2VFXbv0Dn+HEENvJFRTpB1cKOXCrkBaUl7sY5q0MY
-         GR0zWFI2n8zzVMeS/DpNLJciNr0YLTsjgLnKU=
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Hgd4sbkqA10HpMPtOrxrPY36GNGov81eHQKn42+QwXg=;
+        b=hvX8yz07spy+sJz4vZBwKvjVBYZ7eRX54xfWyt8LoKfRizvbyhsIhAwjHoY79NVzlX
+         5J1tQ7yClffFkMp60nSeJGsYdmLAjHAgZpssOtMO+Uoa+pnYQt8cvpPE29SAHKDCBA37
+         McBIRfNRZj/oZy4XOL6laC903sXmjpOgePCh7XPNTgpdUNNbjEX9EY3ifucsMTGGD1PX
+         IaEP3a3CRt9pBVfo6c/PoatsAqAv8hDrI1Cxw5O6DMa6mldny4H/kFm1ogZxvRTRXoIW
+         afTDxQHDIYhsX9fERtm0MOPpHLhZeagGyJzpP54xoqsX2DS/udkDNgJlhkfk0W1LauT1
+         K2cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=XHR+x74cccTtvVu5vg+6OiZQH28F6AJlh1MAHBYOsBE=;
-        b=NAWtMz09+2Ei09YvT2WfcL+W8lk0ZDW13b8lBjSCGYKcc8X/oRr3js4Q6cq1RJNsNu
-         cRgwM3obBxOxn6BchLNIFUg52JFDI7RQIpX7nUpCzxndZWdKgT+sDSpm71UdMnOFWhWY
-         BzUjft0nAk99DRByW//JZjKId4vNoxT2HLE/Wlkry03Nm98IHyU+R8J10JlYlD8Ajmfg
-         OKchqlPmDD9YbjUEeAW5lei52B1PkIgzCgFPbcYhz3bc9gbDpIlSa+MxR+rQc7X8BQHf
-         P8eH8QtHQmgsZ6544+O04wx2EtNtrnXlcgL6wwO1H8QCszTRRxZ5Gve5IXvlWLqkfj+H
-         YCWw==
-X-Gm-Message-State: AOPr4FVfmMVg7G/3xcxX+ce80tH3vEf5L2mx9sFOfyPE+j79C3ie/3GvZytXU3mhox7GMqRlxcd5st+WzUTMSQ==
-X-Received: by 10.182.157.37 with SMTP id wj5mr5549884obb.71.1461224089667;
- Thu, 21 Apr 2016 00:34:49 -0700 (PDT)
-Received: by 10.202.75.210 with HTTP; Thu, 21 Apr 2016 00:34:49 -0700 (PDT)
-In-Reply-To: <xmqqtwiwwa5x.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Hgd4sbkqA10HpMPtOrxrPY36GNGov81eHQKn42+QwXg=;
+        b=lSSwnjuaVabpDQdyT+ivJGcqFJKYzhK9Y18R5DNYIxvZnNhCqFvn8OU7QOiCXxaXAU
+         fbZ8NVZVEGOi6MbzugHXvj66oNCCeIZy5POq7hx67813Fbt0N4Fw34+h5n6wKRYQFw2m
+         VQIly0GUqpYkr6ofvUoB1fJhQnRa7+tY7mTBOXzOzIbAn6BIx6ME1wwXJ13eqGUa77tA
+         sOlYJiefdLNnMtQ7xCQYgT6OCLTNa9kOfTJwTZYWmxpyYGlMzxU4iMC7wHDNlvujC44C
+         4SQxJNJVbk14d0RALQ20jZf9NlpzupFtffk8wS0EX7AzkYRBkCQHgVpEm9nkrvla5C++
+         bHnw==
+X-Gm-Message-State: AOPr4FUOgm3KLh63AUDT1O9+tLq0W0zHVmhtcIoFN57s1t3nPCLmbC9b4kwmMd/wDg6cd8Zvi8fOxtUwgsQVUA==
+X-Received: by 10.112.198.166 with SMTP id jd6mr5695183lbc.12.1461226818302;
+ Thu, 21 Apr 2016 01:20:18 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Thu, 21 Apr 2016 01:19:48 -0700 (PDT)
+In-Reply-To: <CAPig+cR99Nx=dk+zT2Jgpr2ZgYM4v0q2vX7v6TXmWHU5k6ga3w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292100>
 
-On 20 April 2016 at 16:51, Junio C Hamano <gitster@pobox.com> wrote:
-> Luke Diamand <luke@diamand.org> writes:
+On Thu, Apr 21, 2016 at 2:20 PM, Eric Sunshine <sunshine@sunshineco.com=
+> wrote:
+> On Wed, Apr 20, 2016 at 9:24 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8D=
+c Duy <pclouds@gmail.com> wrote:
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+>> ---
+>> diff --git a/worktree.c b/worktree.c
+>> @@ -178,6 +182,18 @@ struct worktree **get_worktrees(void)
+>>         }
+>>         ALLOC_GROW(list, counter + 1, alloc);
+>>         list[counter] =3D NULL;
+>> +
+>> +       strbuf_addstr(&git_dir, absolute_path(get_git_dir()));
+>> +       for (i =3D 0; i < counter; i++) {
+>> +               struct worktree *wt =3D list[i];
+>> +               strbuf_addstr(&path, absolute_path(get_worktree_git_=
+dir(wt)));
+>> +               wt->is_current =3D !strcmp_icase(git_dir.buf, path.b=
+uf);
 >
->> One thing I wondered about is whether this should be enabled by
->> default or not. Long-time users of git-p4 might be a bit surprised to
->> find their git commits suddenly gaining an extra Job: field.
+> Can you talk a bit about why this uses 'icase'? Should it be
+> respecting cache.h:ignore_case?
+
+It does.That function (in dir.c) is just one-liner
+
+    return ignore_case ? strcasecmp(a, b) : strcmp(a, b);
+
+I admit though, the naming does not make that clear.
+
+>> +               strbuf_reset(&path);
+>> +               if (wt->is_current)
+>> +                       break;
+>> +       }
+>> +       strbuf_release(&git_dir);
+>> +       strbuf_release(&path);
 >
-> Ahh, I didn't even wonder about but that is not because I didn't
-> think it matters.
->
-> Does this change affect reproducibility of importing the history
-> from P4, doesn't it?  Would that be a problem?
+> Minor: Would it make sense to place this new code in its own function
+> -- say, mark_current_worktree() -- to keep get_worktrees() from
+> becoming overlong?
 
-It would change the history created, but I don't see why that would be
-a problem.
-
->
-> How common is it to have the "extra" Job: thing in the history on P4
-> side?
-
-Where I work currently we don't use jobs (at present). Where I worked
-before, jobs were created automatically to track issues in JIRA, and
-were (supposed to be) entered into commits. It's potentially quite
-useful so I guess might be quite widespread.
-
-> If the answer to this question is "on rare occasions and only
-> when there is a very good reason to have 'jobs' associated with the
-> changelist", then the 'might be a bit surprised' brought by this
-> change can probably be explained away as "a fix to a (design) bug
-> that used to discard crucial information" that (unfortunately) have
-> to change the resulting Git object names.
->
-
-Luke
+Good idea. Will do.
+--=20
+Duy
