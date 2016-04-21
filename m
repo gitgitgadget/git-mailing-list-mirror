@@ -1,74 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 'next'ed --allow-unrelated-histories could cause lots of grief
-Date: Thu, 21 Apr 2016 12:37:36 -0700
-Message-ID: <xmqqinzasqgv.fsf@gitster.mtv.corp.google.com>
-References: <20160421161043.GK7907@onerussian.com>
-	<xmqqbn52ud6r.fsf@gitster.mtv.corp.google.com>
-	<20160421185528.GJ23764@onerussian.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: history damage in linux.git
+Date: Thu, 21 Apr 2016 12:43:53 -0700
+Message-ID: <CA+55aFxESRnvr76n601X8dJhZT4qTpiF3GphNhvK2hh4O_GChg@mail.gmail.com>
+References: <20160421113004.GA3140@aepfle.de>
+	<87lh473xic.fsf@linux-m68k.org>
+	<CA+55aFx8hPKKcuwe-HHoO7LHVYLmJ6khndd-OtQotMs3EJzZ0w@mail.gmail.com>
+	<CA+55aFzk4rZFdhOjkPDqFC3_tk4BUvx4-STsY2L_tKMH2FxCCA@mail.gmail.com>
+	<xmqqvb3aswp0.fsf@gitster.mtv.corp.google.com>
+	<CA+55aFwOtyW7zLHdJND=FGBWKBfhQV95RPVRG5gcoRUrtGCrAQ@mail.gmail.com>
+	<xmqqmvomsqwx.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Gurus hangout <git@vger.kernel.org>,
-	Benjamin Poldrack <benjaminpoldrack@gmail.com>,
-	Joey Hess <id@joeyh.name>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Yaroslav Halchenko <yoh@onerussian.com>
-X-From: git-owner@vger.kernel.org Thu Apr 21 21:37:51 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	Olaf Hering <olaf@aepfle.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 21 21:44:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atKQ4-00050P-30
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 21:37:44 +0200
+	id 1atKW7-0001dW-Sk
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 21:44:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753267AbcDUThk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2016 15:37:40 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52226 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752379AbcDUThj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2016 15:37:39 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B544813483;
-	Thu, 21 Apr 2016 15:37:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1r+14sTmkv3jnIf3zSfKpPb6V2M=; b=cZcLBq
-	iD0tsYKg5G89faRzgDrTGWKKLuMSN3uavZTkvcuyyXMjYgxyxlzPtVntP6YQ2seo
-	AhRcevaVpYUW4zka4U/BhanJB8K1a804QWk/sZ2+SyOEecu42STorpdQB/rT4pB/
-	OE8SSc24k4KDbRy/yLNiGEkojl+mR54hMnJIw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ejp1z18e787RwOQRTEEBQyGUKSSqcNN4
-	VrGDpnztYkHrRqOaR7W6KZvaCQ3qrANKkBI1Wtl+D+EwS8BvT/o8X+vcZlPUgl/r
-	MXWw8iwxo7PbDluKI4hQqYhZLCWqMBm+6uaKvpj1nAayXUc3u5zcGAjzwbESqc/2
-	kWI3LEzdFzo=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AA35213482;
-	Thu, 21 Apr 2016 15:37:38 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1CA1B13481;
-	Thu, 21 Apr 2016 15:37:38 -0400 (EDT)
-In-Reply-To: <20160421185528.GJ23764@onerussian.com> (Yaroslav Halchenko's
-	message of "Thu, 21 Apr 2016 14:55:28 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 81244A32-07F8-11E6-A733-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1753187AbcDUTnz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2016 15:43:55 -0400
+Received: from mail-ig0-f194.google.com ([209.85.213.194]:35190 "EHLO
+	mail-ig0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752781AbcDUTny (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2016 15:43:54 -0400
+Received: by mail-ig0-f194.google.com with SMTP id fn8so11510159igb.2
+        for <git@vger.kernel.org>; Thu, 21 Apr 2016 12:43:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=uSap8C8jZPXjLRprws2t/Nyl7tD0JHhLn4zIPbJzQ2g=;
+        b=VauC3NjGd2nxXa5rmjx7cb/okK6fqQIgJizeNR0B2I2FvOrfMuF5ahpLuTjoReBoSg
+         C1a4QfXwrJAt03BPTXdM5b4BdzoVP/lg0SHegxcdZzrrUT8LTWXpnyJ8lBqvNzYy71vX
+         Byhh+2DJzPY1Xu09+uqm0A3yvyTikck56UBgYkUOUAxZFtXf0eTchqhK7J3G+6lLQOIm
+         O8sjCLTPA9n4VXDoBWtmBojxbxmKe1gqdwJpMEo0dGvNGOgeWET1kIax/ZaLuVey1sUp
+         iQaQBk2Ev03NjmxesG2r6O6LCcYGoeSU/pVmrpYahfGfuR8MfrXbChf7l7nOqKreZWIs
+         eicA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=uSap8C8jZPXjLRprws2t/Nyl7tD0JHhLn4zIPbJzQ2g=;
+        b=JdfF4CzuH6EpilJgUv1qXbNN2r8jiDNBmLigxbHEWkqbCTb8NlYUt7rwO/jHK/37EF
+         4FxM7Xe40+ZGs7zKvNv7Cv2BV/c60dmDcrRC1aEs9fYeaTaT0QlyR48w90GD7QrTUqNo
+         cOZnKbc4gMqsuINrHj+HNEGAN2s+jl9QfbgAE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=uSap8C8jZPXjLRprws2t/Nyl7tD0JHhLn4zIPbJzQ2g=;
+        b=YKi5/ywdv3mm6X43ztv1l2wOlpMyq0r3fHjAqlobE1rSw5lROFmQQvcQCUSeDFBOAV
+         Fjoc6ODZaRZtVzu7fXBsTpx4r2ofFLT1p+NqUuC0AYVG6euZzd49LPJwPpnu9zLMmf1V
+         Xnrr3y6uCxyS2Sar2DVE+y2sGFNPg9/B26xjTSWXRvkJ/FY59FNu/WBOw2AACa13tRXG
+         CDBqhoVI2RUWLVwMG3qcwj9Pm8+oa2LbA+UaM41Vg/f7WDTjVf+aApSRwhdESX2AyGrU
+         2BXrh3rXZWvyID8hgDBc+m80H/lAPXl+cfd6laxkzIwq0MC+8zGeBc+zKEHDG3h41gY+
+         sJFQ==
+X-Gm-Message-State: AOPr4FU3yUiksEq39TvTfTMIlbDCrRBcUEVveYU85cOPL6MXuY/kStzaB5pF46IrSCjubpzWRqAyuwBFErF95w==
+X-Received: by 10.50.36.195 with SMTP id s3mr5881294igj.25.1461267833648; Thu,
+ 21 Apr 2016 12:43:53 -0700 (PDT)
+Received: by 10.36.2.9 with HTTP; Thu, 21 Apr 2016 12:43:53 -0700 (PDT)
+In-Reply-To: <xmqqmvomsqwx.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: iOInJXpzpDNwpHJFhepjXRTL1qo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292151>
 
-Yaroslav Halchenko <yoh@onerussian.com> writes:
-
->> It is not very productive to make such an emotional statement
->> without substantiating _why_ a merge that adds a new root, which was
->> declared in the thread above as "crap" (in the context of the kernel
->> project),
+On Thu, Apr 21, 2016 at 12:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
 >
-> Sorry if my statement sounded too emotional ;)  I will outline some of
-> the use-cases below.
+>> But this patch is small and simple, and has some excuses for its
+>> behavior. What do people think?
+>
+> I like it that you call it "excuse" not "rationale", as I couldn't
+> form a logical connection between your "4 (2) letters" and "10000
+> (100)" at all ;-)
 
-Thanks.  Emotional is fine, as long as you _also_ have useful
-information.
+Think of the distance number as a "order of magnitude in complexity",
+and it actually makes a certain amount of sense.
+
+It's not the same as the length of the string, but the "log()" of the
+distance number really does give a kind of complexity value.
+
+Think of it this way: if things are entirely linear (all just first
+parenthood), there will be just a single simple number, and the
+relationship between the simple distance number (that just increments
+by one for each parent traversed) and the length of the string that
+describes it will really be "log10(distance)". That's literally how
+many characters you need to describe the linear distance number.
+
+So a simple linear distance of 'n' commits will need on the order of
+'log10(n)' digits to describe it (ie a number around a thousand will
+need around three digits).
+
+The "100" and "10000" are just extending that notion of distance to
+the more complex cases., and expresses their complexity in the same
+logarithmic units. The same way you need four digits to express a
+_linear_ distance of 10000, you need four characters to express that
+"~n^p" case of "merge parent p, n generations back".
+
+And if you don't have the generation thing, you only need two
+characters to express parent #'p': "^p".
+
+So two characters really *are* equivalent to ~100 linear steps, and
+four characters really *are* equivalent to ~10000 linear steps.
+
+So it's not _just_ an excuse. There's an actual rationale for picking
+those numbers, and why they are equivalent in a complexity measure.
+
+             Linus
