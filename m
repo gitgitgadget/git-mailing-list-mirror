@@ -1,95 +1,107 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: problems serving non-bare repos with submodules over http
-Date: Thu, 21 Apr 2016 10:48:25 -0700
-Message-ID: <CAGZ79kYTo+CHPvhV6i0U3xqezhGBSXQs9h+5JL6MRh9oAWXvFg@mail.gmail.com>
-References: <20160420152209.GH23764@onerussian.com>
-	<CAGZ79kYS-F1yKpNP7jmhTiZT1R_pucUBBTCbmHKZz6Xd6dy8EA@mail.gmail.com>
-	<xmqqh9ewukhw.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZMOv0r9fRFbP1WV8qFJBm+s=V8=ueFbYvnyFtgV8j9iQ@mail.gmail.com>
-	<xmqqshygt1gs.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kbyDuu8hUQXOUNmDLyO88GOi3kqSzsc0UfgzwAL9peZHg@mail.gmail.com>
-	<20160421031426.GY23764@onerussian.com>
-	<CAGZ79kYmobvZgAeJv7MNXeFXd+Ahg5mtyagt5m+f7Gpp=Ps4iQ@mail.gmail.com>
-	<xmqqr3dysvne.fsf@gitster.mtv.corp.google.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: history damage in linux.git
+Date: Thu, 21 Apr 2016 10:59:52 -0700
+Message-ID: <CA+55aFzYWoeUq3MFgGtELaN-2sEc4j3egsAHZHVzK1CNPOqhKQ@mail.gmail.com>
+References: <20160421113004.GA3140@aepfle.de>
+	<87lh473xic.fsf@linux-m68k.org>
+	<CA+55aFx8hPKKcuwe-HHoO7LHVYLmJ6khndd-OtQotMs3EJzZ0w@mail.gmail.com>
+	<CA+55aFzk4rZFdhOjkPDqFC3_tk4BUvx4-STsY2L_tKMH2FxCCA@mail.gmail.com>
+	<xmqqvb3aswp0.fsf@gitster.mtv.corp.google.com>
+	<CA+55aFwOtyW7zLHdJND=FGBWKBfhQV95RPVRG5gcoRUrtGCrAQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Yaroslav Halchenko <yoh@onerussian.com>,
-	Git Gurus hangout <git@vger.kernel.org>,
-	Benjamin Poldrack <benjaminpoldrack@gmail.com>,
-	Joey Hess <id@joeyh.name>, Jens Lehmann <Jens.Lehmann@web.de>
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	Olaf Hering <olaf@aepfle.de>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 21 19:48:54 2016
+X-From: git-owner@vger.kernel.org Thu Apr 21 20:02:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atIiN-0000sC-K4
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 19:48:31 +0200
+	id 1atItV-0002XY-0O
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 20:00:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753375AbcDURs1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2016 13:48:27 -0400
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:38460 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751871AbcDURs0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2016 13:48:26 -0400
-Received: by mail-ig0-f173.google.com with SMTP id m9so72465132ige.1
-        for <git@vger.kernel.org>; Thu, 21 Apr 2016 10:48:26 -0700 (PDT)
+	id S1752750AbcDUR7z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2016 13:59:55 -0400
+Received: from mail-ig0-f195.google.com ([209.85.213.195]:34249 "EHLO
+	mail-ig0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752094AbcDUR7y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2016 13:59:54 -0400
+Received: by mail-ig0-f195.google.com with SMTP id qu10so11218547igc.1
+        for <git@vger.kernel.org>; Thu, 21 Apr 2016 10:59:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=BrdE8PuJSjVxb24vBtRbFl2tKH9Hy5nsu+tlB52++e8=;
-        b=B0zPEMYiptIgDr3laZPvzuRnVKfHWH0qNkfXX9moKCP6b8lWCSfsRy++JkLrqUo1+B
-         tG4SyMjyccO8+cOJxLjoElL9gyinTk8TYV7kg66imazKLCk7nbQU1HebF8A2Ah18/QhL
-         p6z6qeI2YHoHTETF2hnORUyJD8+UnLXSuG0Av67JNRunq1H3dKGIIsu8KlWuZWHSLIWl
-         bDnbdza1g6WV66tu4210+7xOjYzN7EqcDbxXuVdkoMn/lmGX+Vt/dNJd7A1FBQcPnGQL
-         +5AHsOw77jHGR8RA3MII6lSHKILuw8QYkrnmt6l2R9vYrs0tP0ywR3Z1aBYflB5jiRQc
-         S0dg==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=zkoKlhEdELs7vBb42nVFSXgXoQOq+1AGGETvG+Vk3Sc=;
+        b=Gi6On+Kc5FD2ce/0gFkQv0mHEM+G5ZN5LHW+lqGfgs6Oa0DybCeLJgEaNO6PZRXRHZ
+         xlJIsMC3jX8n3mTwonGkNcnz3/mN9UrRFyaxAlrrdQa+0k53RrfE5zMH3a7aNnUuE22V
+         E3faOtf6aSZyDgN9L9KpxMPp8j8WI5EbH5CiFCnFXjhhIIDU3Ysan4hO/1Pgs8h8kXRw
+         Wcx82k/OKqDR5jy/BHQu5AV9VQi6JGh5T9A0EUy2/f6s4RJ7lMcq4dSYh4lBflnl713M
+         PVJijrvuTU08rLqoUb0S5X4MrXhHfnO5iMF7pdLKQ3cwZJLENMfp27GYYeycxjpdkaZB
+         e+4A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=zkoKlhEdELs7vBb42nVFSXgXoQOq+1AGGETvG+Vk3Sc=;
+        b=R5m3fvbFgNlBoacXBB95rEcS0AEpAN+NTDk0ODupu88xcAm3e1kV27O1fBl7h4IR19
+         cEo4kyjkl7RH2pNKH0lUIMUMM/C/1RGpyv59N04jSC6tft6yZHskm1Wy9gpn3scNz1y7
+         +y/h7DU7P/nBJp60PE4JsiauMoDxuabBaUyIY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=BrdE8PuJSjVxb24vBtRbFl2tKH9Hy5nsu+tlB52++e8=;
-        b=X7C3x6I7csl/PzD7N+6AmZmzMzaJI8ItkoFHSvjw974URfHWD4NNsvexCnYolq8FO9
-         lnGHZJACpwlhDnVQ6JMnn09BOl92VVX887iQS879lIGFcZ0GOimPArdIFdZwQV8byeGr
-         hm+n1LoZxZpRWs61oy/ni19OKg5kY6AVn8xHbMaRcrzeoTM4fgw41EBftk6y9HZnGs2V
-         kRGWfMF6xR6P1jO7UoUO4GoDHUzCJ4YY4Jl+l+dhWNiaamWQSUeUehu4+HrvyZTlTWfD
-         5fFcqdzWcWT9j2CcJRZn+YJD8c3B8MY4vUOzmsWMiWIEykj65qGrhNrKDg1nOnJtXWbu
-         Ygog==
-X-Gm-Message-State: AOPr4FW9E/4MMCM9bLyPuRESncnzdvyPctg6GjKLLEV6zODrQ/fwgBQK0pP/G/5rfrgCHWL4UStA0B7vpAVJAvfh
-X-Received: by 10.50.111.15 with SMTP id ie15mr5567499igb.94.1461260905371;
- Thu, 21 Apr 2016 10:48:25 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Thu, 21 Apr 2016 10:48:25 -0700 (PDT)
-In-Reply-To: <xmqqr3dysvne.fsf@gitster.mtv.corp.google.com>
+        bh=zkoKlhEdELs7vBb42nVFSXgXoQOq+1AGGETvG+Vk3Sc=;
+        b=DdULTUFvBG3cYQNYVtI8IY3qF3fh3Tvj6/9gBSLxv4D5SL+Z/s5TuvA9sNa0A6fxPs
+         Q2dVihAt7GV1+6yeVFWXZkqUSPxU7UdtOwhrmMrcuyZpnPCshtTPbixkVGfDSnO82hv7
+         WVmipr8Nt75qTn/vgRwRM3GROpFRNgBPydrGTVKBVw1d6LwEOXS5l5BlXAHdCCKWzD+w
+         ezoAYxBSgUB1F2Ot8y09WKwZlSVmbSPUZYK58eip0m8kA8KEUak8rG1sCWM9e7H0e7Pi
+         /MOZWcnziY9JPnzkMyEtE3N/yqU2zJUPpoIWfuNHkAIj4+XlNYXwZMKjTUodyGM/YmA4
+         6D8A==
+X-Gm-Message-State: AOPr4FXYi+NzOcWoJX1mC/GV4uM7zmyOJLWTuTx2vyYpQQ9Ypuq2HeYM8muFrCjAVqisV3WUeikfA/dOswB6Cg==
+X-Received: by 10.50.129.69 with SMTP id nu5mr5325673igb.45.1461261592946;
+ Thu, 21 Apr 2016 10:59:52 -0700 (PDT)
+Received: by 10.36.2.9 with HTTP; Thu, 21 Apr 2016 10:59:52 -0700 (PDT)
+In-Reply-To: <CA+55aFwOtyW7zLHdJND=FGBWKBfhQV95RPVRG5gcoRUrtGCrAQ@mail.gmail.com>
+X-Google-Sender-Auth: pll2eFUcv0B82qBweTtZzGUUJF0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292137>
 
-On Thu, Apr 21, 2016 at 10:45 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+On Thu, Apr 21, 2016 at 10:43 AM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
 >
->> In case of non bare:
->>
->>     Get the repo and all its submodules from the specified remote.
->>     (As the submodule is right there, that's the best guess to get it from,
->>     no need to get it from somewhere else. The submodule at the remote
->>     is the closest match you can get for replicating the superproject with
->>     its submodules.)
->>
->> This way is heavy underutilized as it wasn't exercised as often I would
->> guess,
->
-> My guess is somewhat different. It is not used because the right
-> semantics for such a use case hasn't been defined yet (in other
-> words, what you suggested is _wrong_ as is).  You need to remember
-> that a particular clone may not be interested in all submodules, and
-> it is far from "the closest match".
+> In other words, I'm trying to convince people that my patch not only
+> gives a good result, but that the "weight numbers" I use make some
+> kind of conceptual sense from a complexity cost angle.
 
-Yes, when that clone doesn't have some submodules, we can still fall back
-on the .gitmodules file.
+Basically, the patch approximates the numerical representation of the
+distance measure with the complexity of the suffix.
 
-If you have a submodule chances are, you are interested in it and modified it.
-So the highest chance to get your changes is from your remote, no?
+It's not a *true* length of the suffix (which does heavily favor
+first-parent use, kind of like the current code), but I think it's
+better than the pretty random "+65535" that the current git code has.
+That number is clearly just completely made up. The new numbers at
+least have some kind of logic behind them.
+
+And the current code obviously does give really bad results. Picking
+the v4.6-rc1 tag as a base just because it happens to get a lot of
+first-parent traversals (800!) from one second-parent commit that is
+close to 4.6-rc1 is just obscene.
+
+So the more I look at my patch, the more I go "it's a real improvement
+on the current situation".
+
+That said, I do think that a much bigger conceptual change that
+actually does full traversal and be much more complicated might be the
+only "correct" solution.
+
+So my patch is just a "improve heuristics" small fixlet rather than
+something optimal.
+
+                 Linus
