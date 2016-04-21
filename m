@@ -1,175 +1,159 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Stefan Beller <sbeller@google.com>
 Subject: Re: history damage in linux.git
-Date: Thu, 21 Apr 2016 10:43:17 -0700
-Message-ID: <CA+55aFwOtyW7zLHdJND=FGBWKBfhQV95RPVRG5gcoRUrtGCrAQ@mail.gmail.com>
+Date: Thu, 21 Apr 2016 10:44:50 -0700
+Message-ID: <CAGZ79kY9cpT7FN673P1u78XUwmqd0S4trAe5mauC1bdjrEsq9Q@mail.gmail.com>
 References: <20160421113004.GA3140@aepfle.de>
 	<87lh473xic.fsf@linux-m68k.org>
 	<CA+55aFx8hPKKcuwe-HHoO7LHVYLmJ6khndd-OtQotMs3EJzZ0w@mail.gmail.com>
-	<CA+55aFzk4rZFdhOjkPDqFC3_tk4BUvx4-STsY2L_tKMH2FxCCA@mail.gmail.com>
-	<xmqqvb3aswp0.fsf@gitster.mtv.corp.google.com>
+	<xmqqzismsxsu.fsf@gitster.mtv.corp.google.com>
+	<20160421170815.GA10783@sigill.intra.peff.net>
+	<CA+55aFyadCxX_Ws5fUC0QXwYYyaAjC5TC=y+tVA+YUHX1o+-iQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=047d7bf0cefad275040531023e56
-Cc: Andreas Schwab <schwab@linux-m68k.org>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Andreas Schwab <schwab@linux-m68k.org>,
 	Olaf Hering <olaf@aepfle.de>,
 	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 21 19:43:23 2016
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Apr 21 19:45:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atIdP-0004wZ-5h
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 19:43:23 +0200
+	id 1atIez-0006Nh-RS
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 19:45:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753167AbcDURnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2016 13:43:19 -0400
-Received: from mail-ig0-f195.google.com ([209.85.213.195]:33056 "EHLO
-	mail-ig0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751720AbcDURnS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2016 13:43:18 -0400
-Received: by mail-ig0-f195.google.com with SMTP id g8so11175643igr.0
-        for <git@vger.kernel.org>; Thu, 21 Apr 2016 10:43:17 -0700 (PDT)
+	id S1753315AbcDURox (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2016 13:44:53 -0400
+Received: from mail-io0-f181.google.com ([209.85.223.181]:33617 "EHLO
+	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751720AbcDURov (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2016 13:44:51 -0400
+Received: by mail-io0-f181.google.com with SMTP id f89so73792199ioi.0
+        for <git@vger.kernel.org>; Thu, 21 Apr 2016 10:44:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=QnTkSn4vtU6K8o6SpGTUBEITRWeIR/4chV3Xm0TFtKg=;
-        b=pfV/HJF1Uf1MgN60r15tTDFOlxi469EdLu1/hSabzydACNGZ+cJqmTwatZk1D9aXfa
-         rRRoiga7paFJayJZPM/efaZQtZHdLtQTt6MxiJCMu1mwuf9bc+GhQgS8fFCfHJtyYIOt
-         lib/EDtJoGdrVyfcefuK191//q1cP0X5JTi4PuwHNv8OBw/i7m9TBol/7/VInSZIkLRr
-         t9L/oNA5vi9sSTjaavzccxo4r8HxDze6KBsWUfnpWVzgsXg0Yb8nVS2KA8dQd0m6JneN
-         5xh+gzeq1oRtSfWb3sSTtf+cttraxf/e62/3IJ0c0EG1rTS5DzQ0kOYbYq9tknqSB9ro
-         optA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=QnTkSn4vtU6K8o6SpGTUBEITRWeIR/4chV3Xm0TFtKg=;
-        b=YabVbYppBFdaC1N9jRZ/P5zesqf9lRnrRL6PHkCyrRf12m0rHuRLfarDlglm8RuvA7
-         +Rci+IhYblMZRaepcQGZgoW2fbDBf2l5V87Kml0OYPjk8lpzIjmnw64Q+/TmqT+xBCo/
-         h9GPzYr//a6OPDQSBqSzoPIi+36UazCvGuPdM=
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=t7N0sHCcRlQfIJvupZ7jZL/IOVOJFYqPpjAcCneBwWE=;
+        b=hpTh06aRObPQCA+KERuF7g3GZsZ+GREt1hQOB6P4cGrGbBvVmSr0w4BF1Hf4PsJKn5
+         0azKh1wFI1lVqlaFfDYhnUjt21B63u78SYj0AJUgIfCOn5ORXFokDyNXtSk3HF89rYRU
+         ucyAdVIJsE0MqSgX0pczofjnyKYpUz1vWgEP6/XDPXqn3k0Zr60LhE6bh18WEesYlDX5
+         2VDKSkhidW1ahool3K5Fpc/orMml54SomRRXCN4Agoc42Uz3VMyOn4CYvJmcbgVRBdWW
+         XDnMnxBq8DitU8HqyByC9/nkilZvNG064KKexR8xaecQa2Otko+gufNDM7Um4VlybbqH
+         FFiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=QnTkSn4vtU6K8o6SpGTUBEITRWeIR/4chV3Xm0TFtKg=;
-        b=Q5cY+r+Tz/TX4Qsv24dE/1ooWy2kk/+gcS4GgEXbjCFvxJVG6RM9Mw1xlhmNg7P25U
-         1NYWTDedhuM+tHDKTwFoBM5TpBzVXkO6em3lqpc/GkogzHyYPjySUzmGIyl1xAkeY3TZ
-         BHkp+nDV1s0XAlnNEr60Upa36VVkN6hhaTd/Ao9xI6dceBd4AJ87yu4fB2d8AIolAhmy
-         3+LjjMTRB5q7DELYNifLb2B+hhndRsmPRatNvuk/jYco3U8Y+O8IiH4JqJoyHiP05+3C
-         gPspOvpYuFJjs62LGgHCVjE5qrAYtU12jc8TuOv586XBrgsYPXRS3KAqFWk7FdQH3Jl4
-         LR/w==
-X-Gm-Message-State: AOPr4FV83IaXu6lwyOVBVspyvyezyhT3R5Da2CrA063Yn5JPgD4Fw455Yn/uQLgFTg/a74fnJKQ9r4rxabDk1w==
-X-Received: by 10.50.24.131 with SMTP id u3mr5353729igf.93.1461260597216; Thu,
- 21 Apr 2016 10:43:17 -0700 (PDT)
-Received: by 10.36.2.9 with HTTP; Thu, 21 Apr 2016 10:43:17 -0700 (PDT)
-In-Reply-To: <xmqqvb3aswp0.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: YIY-ghoIWaWOu4MXqzsQxQqPYgU
+        bh=t7N0sHCcRlQfIJvupZ7jZL/IOVOJFYqPpjAcCneBwWE=;
+        b=iYMQNJjAQfjTJIpREyggbJMVoMwynjQ08PwlXK5dq4yrDW+gmnqovndft6tkWsFmyA
+         kkZao7/DKXDvaQ0Zi51nj0LLfhtLmFLD9NPwURsKPQN2gxSjLjmliE5iApesscdH/+Uj
+         EgQ/kpLOZzf+6ajH/tGxkQ3xtRDzepAEkQItakAP8xs3a9Pw8rHEQlAl3uIRiquFEPbu
+         XfCjaTMAXe/JEj5KLLP2psPUAUrIsiSPY13MrVfly+LxGXVTAX95lNjj5PjZVQRq7c0l
+         o6eVvJgeHB+w1w06fyHf0XRGAq8jxWBZ1AGfL7073S1BwzPfE5D01I95yGlkl7HV2fK8
+         CUlg==
+X-Gm-Message-State: AOPr4FXMMYoODjIhsVUv0zudvS2hmcPEsxavOTocSXKkO3EsUIIgKen82kjn9599MEeHGtNZhJJqdauedg83+gEw
+X-Received: by 10.107.53.200 with SMTP id k69mr10922029ioo.174.1461260690326;
+ Thu, 21 Apr 2016 10:44:50 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Thu, 21 Apr 2016 10:44:50 -0700 (PDT)
+In-Reply-To: <CA+55aFyadCxX_Ws5fUC0QXwYYyaAjC5TC=y+tVA+YUHX1o+-iQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292134>
 
---047d7bf0cefad275040531023e56
-Content-Type: text/plain; charset=UTF-8
-
-On Thu, Apr 21, 2016 at 10:23 AM, Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Apr 21, 2016 at 10:23 AM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+> On Thu, Apr 21, 2016 at 10:08 AM, Jeff King <peff@peff.net> wrote:
+>>
+>> Right, because it makes the names longer. We give the second-parent
+>> traversal a heuristic cost. If we drop that cost to "1", like:
 >
-> I think avoiding side branches to describe with the weight is a
-> right thing to do, i.e. if you have this history:
+> So I dropped it to 500 (removed the two last digits), and it gave a
+> reasonable answer. With 1000, it gave the same "based on 4.6" answer
+> as the current 65536 value does.
 >
->     X---o---o---o---o---v4.6
->      \             /
->       o-----------o
+>> which is technically true, but kind of painful to read. It may be that a
+>> reasonable weight is somewhere between "1" and "65535", though.
 >
-> you do not want to explain X as "v4.6~^2~2", and instead you want it
-> as "v4.6~5", even though the former is 4 hops while the latter is 5
-> hops (which is longer).
+> Based on my tests, the "right" number is somewhere in the 500-1000
+> range for this particular case. But it's still a completely made up
+> number.
+>
+>> However, I think the more fundamental confusion with git-describe is
+>> that people expect the shortest distance to be the "first" tag that
+>> contained the commit, and that is clearly not true in a branchy history.
+>
+> Yeah.
+>
+> And I don't think people care *too* much, because I'm sure this has
+> happened before, it's just that before when it happened it wasn't
+> quite _so_ far off the expected path..
+>
+>> I actually think most people would be happy with an algorithm more like:
+>>
+>>   1. Find the "oldest" tag (either by timestamp, or by version-sorting
+>>      the tags) that contains the commit in question.
+>
+> Yes, we might want to base the "distance" at least partly on the age
+> of the base commits.
+>
+>>   2. Find the "simplest" path from that tag to the commit, where we
+>>      are striving mostly for shortness of explanation, not of path (so
+>>      "~500" is way better than "~20^2~30^2~14", even though the latter
+>>      is technically a shorter path).
+>
+> Well, so the three different paths I've seen are:
+>
+>  - standard git (65536), and 1000:
+>    aed06b9 tags/v4.6-rc1~9^2~792
+>
+>  - non-first-parent cost: 500:
+>    aed06b9 tags/v3.13-rc7~9^2~14^2~42
+>
+>  - non-first parent cost: 1:
+>    aed06b9 tags/v3.13~5^2~4^2~2^2~1^2~42
+>
+> so there clearly are multiple valid answers.
+>
+> I would actually claim that the middle one is the best one - but I
+> claim that based on your algorithm case #1. The last one may be the
+> shortest actual path, but it's a shorter path to a newer tag that is a
+> superset of the older tag, so the middle one is actually not just
+> better based on age, but is a better choice based on "minimal actual
+> history".
+>
+>                Linus
 
-Yes. I have a new suggestion: make the "merge weight" depend on how
-complex the name ends up being.
+Combining Junios and Linus idea:
 
-And that algorithm actually gives a completely new and improved path:
+* We want to have the minimal history, i.e. that tag with the fewest
+cummulative parent commits. (i.e. v3.13-rc7 is better than v3.13
+because `git log --oneline v3.13-rc7 |wc -l` (414317) is smaller tha
+`git log --oneline v3.13 |wc -l` (414530).
+The difference is 213.
 
-   aed06b9 tags/v3.13-rc2~32^2^2~47
+tags/v3.13-rc7~9^2~14^2~42 has 9 + 14 + 42 additional steps (65)
 
-which is still complex, but is actually the best one I've found so far.
+tags/v3.13~5^2~4^2~2^2~1^2~42 has 5 + 4 + 2 + 1 +42 steps (54)
 
-To compare against the previous ones I looked at:
+tags/v3.13~5^2~4^2~2^2~1^2~42 has 9 less steps, but its base tag
+has a higher weight by 213.
 
-   v4.6-rc1~9^2~792    <- current git code
-   v3.13-rc2~32^2^2~47     <- new with attached patch
-   v3.13-rc7~9^2~14^2~42     <- merge weight 500
-   v3.13~5^2~4^2~2^2~1^2~42   <- merge weight 1
+v4.6-rc1 has even more weight (588477).
 
-that new one is actually the second-most dense, and uses the oldest
-tag. So it's a good combination of denseness, but still gets the best
-actual base tag.
+So I guess what I propose is to take the weight of a tag into account
+via `git log --oneline <tag> |wc -l` as that gives the tag which encloses
+least history?
 
-The logic of the patch is that there are different "complexities" in
-the naming, and it's not just whether you are following a second
-parent, it's also if you're doing generational hops.
+We also do not want to have "a lot of side traversals", so we could
+punish each additional addendum by a heuristic.
 
-So when you do a first-parent change, the name stays simple (the last
-number changes), and that means that the "distance" weight is low (so
-that's the normal "+1" we do for first-parent.
 
-But if it's not a first parent, there are two different cases:
-
- - generation > 0: we add "~%d^%d", and we approximate that with "four
-characters", and use a cost that is four orders of magnitude higher
-(so 10000).
-
- - generation == 0: we add just "^%d", so generally just two
-characters. So use a cost that is just two orders of magnitude higher
-(so 100).
-
-In other words, I'm trying to convince people that my patch not only
-gives a good result, but that the "weight numbers" I use make some
-kind of conceptual sense from a complexity cost angle.
-
-With that, the patch itself is attached.
-
-I think it's better than what "git name-rev" does now. Is it optimal?
-No, I think the *optimal* would use some kind of "does one tag contain
-the other" logic, and discarding all base names that are just
-supersets of another base that still reaches the target.
-
-But this patch is small and simple, and has some excuses for its
-behavior. What do people think?
-
-                 Linus
-
---047d7bf0cefad275040531023e56
-Content-Type: text/plain; charset=US-ASCII; name="patch.diff"
-Content-Disposition: attachment; filename="patch.diff"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_inakqucr0
-
-IGJ1aWx0aW4vbmFtZS1yZXYuYyB8IDE2ICsrKysrKysrKystLS0tLS0KIDEgZmlsZSBjaGFuZ2Vk
-LCAxMCBpbnNlcnRpb25zKCspLCA2IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2J1aWx0aW4v
-bmFtZS1yZXYuYyBiL2J1aWx0aW4vbmFtZS1yZXYuYwppbmRleCAwOTJlMDNjM2NjOWIuLjAzNTRj
-OGQyMjJlMSAxMDA2NDQKLS0tIGEvYnVpbHRpbi9uYW1lLXJldi5jCisrKyBiL2J1aWx0aW4vbmFt
-ZS1yZXYuYwpAQCAtMTYsOSArMTYsNiBAQCB0eXBlZGVmIHN0cnVjdCByZXZfbmFtZSB7CiAKIHN0
-YXRpYyBsb25nIGN1dG9mZiA9IExPTkdfTUFYOwogCi0vKiBIb3cgbWFueSBnZW5lcmF0aW9ucyBh
-cmUgbWF4aW1hbGx5IHByZWZlcnJlZCBvdmVyIF9vbmVfIG1lcmdlIHRyYXZlcnNhbD8gKi8KLSNk
-ZWZpbmUgTUVSR0VfVFJBVkVSU0FMX1dFSUdIVCA2NTUzNQotCiBzdGF0aWMgdm9pZCBuYW1lX3Jl
-dihzdHJ1Y3QgY29tbWl0ICpjb21taXQsCiAJCWNvbnN0IGNoYXIgKnRpcF9uYW1lLCBpbnQgZ2Vu
-ZXJhdGlvbiwgaW50IGRpc3RhbmNlLAogCQlpbnQgZGVyZWYpCkBAIC01NSwxOSArNTIsMjYgQEAg
-Y29weV9kYXRhOgogCQkJcGFyZW50czsKIAkJCXBhcmVudHMgPSBwYXJlbnRzLT5uZXh0LCBwYXJl
-bnRfbnVtYmVyKyspIHsKIAkJaWYgKHBhcmVudF9udW1iZXIgPiAxKSB7CisJCQlpbnQgd2VpZ2h0
-OwogCQkJc2l6ZV90IGxlbjsKIAkJCWNoYXIgKm5ld19uYW1lOwogCiAJCQlzdHJpcF9zdWZmaXgo
-dGlwX25hbWUsICJeMCIsICZsZW4pOwotCQkJaWYgKGdlbmVyYXRpb24gPiAwKQorCisJCQkvLyBU
-aGUgZXh0cmEgbWVyZ2UgdHJhdmVyc2FsICJ3ZWlnaHQiIGRlcGVuZHMKKwkJCS8vIG9uIGhvdyBj
-b21wbGV4IHRoZSByZXN1bHRpbmcgbmFtZSBpcy4KKwkJCWlmIChnZW5lcmF0aW9uID4gMCkgewor
-CQkJCXdlaWdodCA9IDEwMDAwOwogCQkJCW5ld19uYW1lID0geHN0cmZtdCgiJS4qc34lZF4lZCIs
-IChpbnQpbGVuLCB0aXBfbmFtZSwKIAkJCQkJCSAgIGdlbmVyYXRpb24sIHBhcmVudF9udW1iZXIp
-OwotCQkJZWxzZQorCQkJfSBlbHNlIHsKKwkJCQl3ZWlnaHQgPSAxMDA7CiAJCQkJbmV3X25hbWUg
-PSB4c3RyZm10KCIlLipzXiVkIiwgKGludClsZW4sIHRpcF9uYW1lLAogCQkJCQkJICAgcGFyZW50
-X251bWJlcik7CisJCQl9CiAKIAkJCW5hbWVfcmV2KHBhcmVudHMtPml0ZW0sIG5ld19uYW1lLCAw
-LAotCQkJCWRpc3RhbmNlICsgTUVSR0VfVFJBVkVSU0FMX1dFSUdIVCwgMCk7CisJCQkJZGlzdGFu
-Y2UgKyB3ZWlnaHQsIDApOwogCQl9IGVsc2UgewogCQkJbmFtZV9yZXYocGFyZW50cy0+aXRlbSwg
-dGlwX25hbWUsIGdlbmVyYXRpb24gKyAxLAogCQkJCWRpc3RhbmNlICsgMSwgMCk7Cg==
---047d7bf0cefad275040531023e56--
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
