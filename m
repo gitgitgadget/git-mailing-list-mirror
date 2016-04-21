@@ -1,72 +1,71 @@
-From: Dominik Fischer <d.f.fischer@web.de>
-Subject: Re: [PATCH/RFC/GSoC 0/2] add a add.patch config variable
-Date: Thu, 21 Apr 2016 18:30:04 +0200
-Message-ID: <34fb607f-1c4c-528a-cb5d-eca95e0e7c68@web.de>
-References: <xmqqio0b5ash.fsf@gitster.mtv.corp.google.com>
- <CAP8UFD0KZk1nTgR8gdbedsAuw2ztWZDWri6EkeEkf8FhwS9yag@mail.gmail.com>
- <cover.1459946531.git.d.f.fischer@web.de>
- <alpine.DEB.2.20.1604211737170.2826@virtualbox>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: history damage in linux.git
+Date: Thu, 21 Apr 2016 18:36:10 +0200
+Message-ID: <vpqy486udfp.fsf@anie.imag.fr>
+References: <20160421113004.GA3140@aepfle.de>
+	<20160421131916.GB1589@serenity.lan> <20160421155408.GE3186@aepfle.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Apr 21 18:30:20 2016
+Content-Type: text/plain
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org
+To: Olaf Hering <olaf@aepfle.de>
+X-From: git-owner@vger.kernel.org Thu Apr 21 18:36:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atHUh-0003DS-K2
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 18:30:19 +0200
+	id 1atHaz-00080h-WE
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 18:36:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752618AbcDUQaL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2016 12:30:11 -0400
-Received: from mout.web.de ([212.227.17.12]:61001 "EHLO mout.web.de"
+	id S1752182AbcDUQgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2016 12:36:45 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:53872 "EHLO mx2.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751783AbcDUQaK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2016 12:30:10 -0400
-Received: from [192.168.178.38] ([95.116.240.233]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0LylnX-1bq7Q236jH-016Bd5; Thu, 21 Apr 2016 18:30:05
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.0
-In-Reply-To: <alpine.DEB.2.20.1604211737170.2826@virtualbox>
-X-Provags-ID: V03:K0:VQEXS5KF2zrZZSGZ0zK6NGRV3MvTEYYdgQ/dVkll4jlsSsd3ux5
- AYfLaH6IRs1+ofQyo7QAwZwnMdswSIjofUq7YwQLHQ83KZfn8kpmCFrJNktvUXmwXku13NB
- SL7f61MBYVKj0JXUlkgTBWTq4+Jkhrg2iJ52lpZ5D+j4PkXDZ3TcmCBsraItiFCgCVQHwmK
- Sr/gim5hOISTPnNe0pPYA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:lowT7Bc7v+8=:W8Y+dgZDIqplWgE8Hcu5Hp
- SD/S5UZWCUQpa6ndMt3SIDoxn9j9oI6TLyQQC8enIQSbGnMtm4IaLwZ+DOSQYlS6QzCQD3QJc
- voQHVbXb7t4fpadY/PfDgUIPrv8TCC29xSS7cptOaCwEkT916KcPu6NWhJjCddFWvM6nsSnMy
- xll+dXXGt8tbp4lu7Zg+IIFGCxbKEEIKhdEj0b2SizPlW1D/GUg5m/Z5tgtptEUoDCwmsLE5g
- oQ8j313k/6toGeA+Ivh0S4H1T8RmeZu+/xsDq94nY1GxZsXMi26d/p0zvMPvwwAiTw78iTiXF
- HUWbX8HRyFboY7HuNZByASXFHPc/4S5SXd+4rXZuFKzRH1Y53bIuFIaWZa8DTOVJ777VXMqgd
- Nqp8QxiILEwP0Gxscx1cclJ5qcffjM6fdCkDLogcNvT99/sLFyH/4Rs/Egv1Bpo7b/ncU3pkj
- rqgHRLrgZwiTwMjUWw8XZ0Hr9Xd3s08TJfM5NtJZsVoThWCDlada3iWdFxoSxVc7aG4AQmcEu
- aTdmlZDXidDysu6k4Nnwzyi/yLKXGtIumXkE4zw7LuuoPu/9uaaWtb9/WyBJ0gJ5pFQkPSBYQ
- 8dL/vWb7dT6Y2xrGTHkqvnmdcqimMlG8FH9GlyKnH/2O1i1dX3+1IQmha64n08xWMPfbOT9p9
- TSlIrNncn0fZyz6YKDZ9iRnFzPJ8wM4ARoDq3Zc4Z1tkdNJSFC+Xuc+rt3AvxVPjKWjlEa97n
- IqCHTt5WzrOcXemiDf5e3xJsX1T1hh9nLbYh5eRGIYYxSO1okBsOLWZqD7JJhX3hoCxHTpR/ 
+	id S1751897AbcDUQgo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2016 12:36:44 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u3LGa8gX026747
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 21 Apr 2016 18:36:08 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u3LGaBWx014236;
+	Thu, 21 Apr 2016 18:36:11 +0200
+In-Reply-To: <20160421155408.GE3186@aepfle.de> (Olaf Hering's message of "Thu,
+	21 Apr 2016 17:54:08 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Thu, 21 Apr 2016 18:36:09 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u3LGa8gX026747
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1461861372.77174@yL2AtnPf5w3CKKaxKza85Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292121>
 
-Indeed this needs more explanations for everyone who did not read the 
-posts before.
+Olaf Hering <olaf@aepfle.de> writes:
 
-I strove to create an add.patch configuration option that did the same 
-as always passing the parameter --patch to git-add. Junio C Hamano then 
-made me aware that when set, this option would influence and possibly 
-destroy other commands that internally use git-add. So I implemented the 
-recursion counter, which is now the first of the two commits. With this, 
-git-add is able to only consider the configuration option when run 
-directly by the user, not affecting any commands building upon it.
+> On Thu, Apr 21, John Keeping wrote:
+>
+>> 	$ git tag --contains aed06b9cfcabf8644ac5f6f108c0b3d01522f88b
+>
+> Thanks for that, I did not know this variant.
+>
+> Unless git does not do it for me, I may hackup my script like that to
+> find the earlierst tag:
 
-I would be interested whether this is a suited method to restrict the 
-effect of a configuration option to cases where a command is explicitly 
-invoked by the user.
+"git tag" has a --sort key, so you can sort on dates, and "| head -n 1".
+See also "git for-each-ref" which is essentially a superset of what "git
+tag" does, and for-each-ref is plumbing, so safer to use in scripts (we
+have a strong tradition of backward compatibility for plumbing).
 
-Regards.
+This relies on the dates recorded in the commits, which may be wrong
+(typically if someone commited on a machine with an incorrect clock).
+But hopefully not.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
