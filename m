@@ -1,88 +1,72 @@
-From: Yaroslav Halchenko <yoh@onerussian.com>
-Subject: 'next'ed --allow-unrelated-histories could cause lots of grief
-Date: Thu, 21 Apr 2016 12:10:43 -0400
-Message-ID: <20160421161043.GK7907@onerussian.com>
+From: Dominik Fischer <d.f.fischer@web.de>
+Subject: Re: [PATCH/RFC/GSoC 0/2] add a add.patch config variable
+Date: Thu, 21 Apr 2016 18:30:04 +0200
+Message-ID: <34fb607f-1c4c-528a-cb5d-eca95e0e7c68@web.de>
+References: <xmqqio0b5ash.fsf@gitster.mtv.corp.google.com>
+ <CAP8UFD0KZk1nTgR8gdbedsAuw2ztWZDWri6EkeEkf8FhwS9yag@mail.gmail.com>
+ <cover.1459946531.git.d.f.fischer@web.de>
+ <alpine.DEB.2.20.1604211737170.2826@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Benjamin Poldrack <benjaminpoldrack@gmail.com>,
-	Joey Hess <id@joeyh.name>
-To: Git Gurus hangout <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 21 18:11:00 2016
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Apr 21 18:30:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atHBz-0005Vm-Pq
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 18:11:00 +0200
+	id 1atHUh-0003DS-K2
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Apr 2016 18:30:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753564AbcDUQKr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Apr 2016 12:10:47 -0400
-Received: from washoe.dartmouth.edu ([129.170.30.229]:50443 "EHLO
-	smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751871AbcDUQKq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2016 12:10:46 -0400
-Received: from smtp.onerussian.com ([192.168.100.6] helo=washoe.onerussian.com)
-	by smtp.onerussian.com with esmtps (TLS1.2:RSA_AES_128_CBC_SHA1:128)
-	(Exim 4.80)
-	(envelope-from <yoh@onerussian.com>)
-	id 1atHBj-0003px-Ra; Thu, 21 Apr 2016 12:10:43 -0400
-Received: from yoh by washoe.onerussian.com with local (Exim 4.84)
-	(envelope-from <yoh@onerussian.com>)
-	id 1atHBj-0003ps-KV; Thu, 21 Apr 2016 12:10:43 -0400
-Content-Disposition: inline
-X-URL: http://www.onerussian.com
-X-Image-Url: http://www.onerussian.com/img/yoh.png
-X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
-X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-SA-Exim-Connect-IP: 192.168.100.6
-X-SA-Exim-Rcpt-To: git@vger.kernel.org, benjaminpoldrack@gmail.com, id@joeyh.name
-X-SA-Exim-Mail-From: yoh@onerussian.com
-X-SA-Exim-Scanned: No (on smtp.onerussian.com); SAEximRunCond expanded to false
+	id S1752618AbcDUQaL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Apr 2016 12:30:11 -0400
+Received: from mout.web.de ([212.227.17.12]:61001 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751783AbcDUQaK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2016 12:30:10 -0400
+Received: from [192.168.178.38] ([95.116.240.233]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0LylnX-1bq7Q236jH-016Bd5; Thu, 21 Apr 2016 18:30:05
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.0
+In-Reply-To: <alpine.DEB.2.20.1604211737170.2826@virtualbox>
+X-Provags-ID: V03:K0:VQEXS5KF2zrZZSGZ0zK6NGRV3MvTEYYdgQ/dVkll4jlsSsd3ux5
+ AYfLaH6IRs1+ofQyo7QAwZwnMdswSIjofUq7YwQLHQ83KZfn8kpmCFrJNktvUXmwXku13NB
+ SL7f61MBYVKj0JXUlkgTBWTq4+Jkhrg2iJ52lpZ5D+j4PkXDZ3TcmCBsraItiFCgCVQHwmK
+ Sr/gim5hOISTPnNe0pPYA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lowT7Bc7v+8=:W8Y+dgZDIqplWgE8Hcu5Hp
+ SD/S5UZWCUQpa6ndMt3SIDoxn9j9oI6TLyQQC8enIQSbGnMtm4IaLwZ+DOSQYlS6QzCQD3QJc
+ voQHVbXb7t4fpadY/PfDgUIPrv8TCC29xSS7cptOaCwEkT916KcPu6NWhJjCddFWvM6nsSnMy
+ xll+dXXGt8tbp4lu7Zg+IIFGCxbKEEIKhdEj0b2SizPlW1D/GUg5m/Z5tgtptEUoDCwmsLE5g
+ oQ8j313k/6toGeA+Ivh0S4H1T8RmeZu+/xsDq94nY1GxZsXMi26d/p0zvMPvwwAiTw78iTiXF
+ HUWbX8HRyFboY7HuNZByASXFHPc/4S5SXd+4rXZuFKzRH1Y53bIuFIaWZa8DTOVJ777VXMqgd
+ Nqp8QxiILEwP0Gxscx1cclJ5qcffjM6fdCkDLogcNvT99/sLFyH/4Rs/Egv1Bpo7b/ncU3pkj
+ rqgHRLrgZwiTwMjUWw8XZ0Hr9Xd3s08TJfM5NtJZsVoThWCDlada3iWdFxoSxVc7aG4AQmcEu
+ aTdmlZDXidDysu6k4Nnwzyi/yLKXGtIumXkE4zw7LuuoPu/9uaaWtb9/WyBJ0gJ5pFQkPSBYQ
+ 8dL/vWb7dT6Y2xrGTHkqvnmdcqimMlG8FH9GlyKnH/2O1i1dX3+1IQmha64n08xWMPfbOT9p9
+ TSlIrNncn0fZyz6YKDZ9iRnFzPJ8wM4ARoDq3Zc4Z1tkdNJSFC+Xuc+rt3AvxVPjKWjlEa97n
+ IqCHTt5WzrOcXemiDf5e3xJsX1T1hh9nLbYh5eRGIYYxSO1okBsOLWZqD7JJhX3hoCxHTpR/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292120>
 
-Dear Git Gurus,
+Indeed this needs more explanations for everyone who did not read the 
+posts before.
 
-I guess whenever it rains it indeed pours, so it is me whining again.
+I strove to create an add.patch configuration option that did the same 
+as always passing the parameter --patch to git-add. Junio C Hamano then 
+made me aware that when set, this option would influence and possibly 
+destroy other commands that internally use git-add. So I implemented the 
+recursion counter, which is now the first of the two commits. With this, 
+git-add is able to only consider the configuration option when run 
+directly by the user, not affecting any commands building upon it.
 
-I have decided to try 2.8.1.369.geae769a available from debian
-experimental and through our (datalad) tests failing I became
-aware of the 
+I would be interested whether this is a suited method to restrict the 
+effect of a configuration option to cases where a command is explicitly 
+invoked by the user.
 
-    https://github.com/git/git/pull/158/commits/e379fdf34fee96cd205be83ff4e71699bdc32b18
-    merge: refuse to create too cool a merge by default
-
-which is planned for the next release.  I guess it is indeed a
-worthwhile accident-prevention measure BUT not sure if it is so
-important as to cause a change in behavior on which some projects using
-git through the cmdline interface might have been relying upon for
-years!
-
-Given that git is quite 'self-healing', i.e. if someone has managed to
-make a merge he didn't intend to, there is always a way back (e.g., as
-simple as git reset --hard HEAD^), I am really not sure how valuable
-such change of default behavior would be?  Could it may be made into a
-warning instead? or reversed option "--dont-allow-unrelated-histories"?
-
-Moreover, it was explicitly stated that "no configuration variable to
-enable this by default exists and will not be added", which would cause
-3rd party scripts/code/projects relying on previous behavior  to provide
-version specific handling (either to add that
---allow-unrelated-histories or not)... very cumbersome!  If nothing else
-remains, could there at least be a config option which we could
-then use regardless of the version of git we are using for such merges?
-
-P.S. Please maintain CC list
-
-Thank you in advance for your consideration,
--- 
-Yaroslav O. Halchenko
-Center for Open Neuroscience     http://centerforopenneuroscience.org
-Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
-Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
-WWW:   http://www.linkedin.com/in/yarik        
+Regards.
