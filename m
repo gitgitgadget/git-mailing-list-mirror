@@ -1,98 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 0 bot for Git
-Date: Fri, 22 Apr 2016 10:30:24 -0700
-Message-ID: <xmqqr3dxpn4f.fsf@gitster.mtv.corp.google.com>
-References: <CAGZ79kYWGFN1W0_y72-V6M3n4WLgtLPzs22bWgs1ObCCDt5BfQ@mail.gmail.com>
-	<CAGZ79kZOx8ehAB-=Frjgde2CDo_vwoVzQNizJinf4LLXek5PSQ@mail.gmail.com>
-	<vpq60vnl28b.fsf@anie.imag.fr>
-	<CAGZ79kaLQWVdehMu4nas6UBpCxnAB_-p=xPGH=aueMZXkGK_2Q@mail.gmail.com>
-	<vpqoa9ea7vx.fsf@anie.imag.fr>
-	<xmqqmvoypn7g.fsf@gitster.mtv.corp.google.com>
-	<88CF8CB5-4105-4D0C-8064-D66092169111@gmail.com>
-	<xmqqa8kxlbix.fsf@gitster.mtv.corp.google.com>
-	<BF9D5A7E-CB73-4F82-8D5F-42E120D07A3B@gmail.com>
-	<CAGZ79ka4WmT8NjD-04WqwczuCuJZcoKMyDRQKkRH1sT5xoqRhQ@mail.gmail.com>
-	<DB5772D2-89D4-4D14-8FD1-4AF6DDFD77AC@gmail.com>
-	<xmqq60vh77pt.fsf@gitster.mtv.corp.google.com>
-	<7F130640-40F1-454F-BC00-ACC5364404B8@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, lkp@intel.com,
-	Greg KH <gregkh@linuxfoundation.org>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 22 19:30:35 2016
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] string_list: use string-list API in unsorted_string_list_lookup()
+Date: Fri, 22 Apr 2016 19:35:00 +0200
+Message-ID: <20160422173500.32329-1-ralf.thielow@gmail.com>
+Cc: Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 22 19:35:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ateuX-0000uF-6e
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 19:30:33 +0200
+	id 1atez4-0004Td-01
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 19:35:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932145AbcDVRa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Apr 2016 13:30:28 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54367 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754478AbcDVRa1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2016 13:30:27 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5DE6212ADE;
-	Fri, 22 Apr 2016 13:30:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=syKO6oujTrY5HTnSNC6djsotsVU=; b=KZjaTP
-	L5L0QcLqam9kQWiRcC8MUP4fw/9HnFGPb4TqAWxoWC/oc8WDZT9svZ95mpEqnlnS
-	94hISfDpzDLgO33/e7vG8GvukaWQdKfp9nGN1pS15LqfP64DwN0BgGGpfocpJT8t
-	zfNrU/zE4vHCftTLjXLSEVCosVCDN62AjIilM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pIH1CWZeDIVMH7VR71WaicBVNCZdtLEb
-	65MK7SmczMQXxCvvW3gBlTAc9ORyc3r8+xamuWME8tsJIiblxRW+13iP/DYWGJLo
-	EAHuq5a4dSyBKlIxZmV6n1lA7RK9U09ZU5YCePLzLT2C+8P7JY1iKXESpxjVUY5Z
-	77dVYx4IbME=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 53C5712ADD;
-	Fri, 22 Apr 2016 13:30:26 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B41E012ADC;
-	Fri, 22 Apr 2016 13:30:25 -0400 (EDT)
-In-Reply-To: <7F130640-40F1-454F-BC00-ACC5364404B8@gmail.com> (Lars
-	Schneider's message of "Fri, 22 Apr 2016 10:19:21 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E657078E-08AF-11E6-9E38-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S932165AbcDVRfI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Apr 2016 13:35:08 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:35154 "EHLO
+	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932122AbcDVRfH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Apr 2016 13:35:07 -0400
+Received: by mail-wm0-f51.google.com with SMTP id e201so25785465wme.0
+        for <git@vger.kernel.org>; Fri, 22 Apr 2016 10:35:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=WD7zKr6reaJDn3nUGV+NxQL21xS/Xeyl4qUVkw9GnkY=;
+        b=KRSuBZHPeeoAY9TC+emTXsuBpK78qU1AJUxbPOxPLgF6nV6T3nfMpb7b2PjIGGYD4P
+         aFYUCpXl0NPtTeTlVUO673CLygvDXeN7QeQWzkYuZuo3N25xIJ4xKtYHCao3h6eC2w2E
+         BeWq6eL2Ho//rMIQqoAq8ZRSihMqxYve+hlCPUp6ZCIe7SWArc5CHZd0vMty68vC2niQ
+         WjHL7upe/Mq+mgtOAG6EUL0LyzRqGglmwD2hq1ST3WYTPLJCD687k5iPSSsTF5m7fg/6
+         Yr5MHf6XDAUNrQku7z3aJbtJc8yWRQ11w0fY0eoGrBsKlVCrET/FNUZMSuqy0EgHPx4S
+         htlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=WD7zKr6reaJDn3nUGV+NxQL21xS/Xeyl4qUVkw9GnkY=;
+        b=F8NL2tlFYyW1QA+AEOIKBzBEEuxGCNOaWJBFdw8uXn9Sv9fBfFYUE6wAtyndcgmTfw
+         HpH+ICcEvlz98zvP8SC7lnUUvW/yy4aomd1kIA5Vw8T+S24I4er330aqwE5jR4hykJYj
+         d046jl0mp6mWD0JkzXYU2a6zflLNIseVuNTdi5VYcaZW19XAAuFr/gAuQswJ6zCXQI82
+         r9I/gjrAqED8K22vcrX6anW0b5AG8z1l/vL6obEckpreWQKDz5XtHCSqFe65fljzd1I+
+         us2nWA3Xb/K5r2O0aw4A1FML5QLxcQzh8WCXk2ufRvuvmTPrfpfrldnA3zHndvoLrTJO
+         MNaw==
+X-Gm-Message-State: AOPr4FUM5KWlG47YWpWb3O+WArKAioaksYrlQkmxxC2stWRZro2/yLUyuNH6FNBkemRhrg==
+X-Received: by 10.194.116.9 with SMTP id js9mr24956259wjb.112.1461346504712;
+        Fri, 22 Apr 2016 10:35:04 -0700 (PDT)
+Received: from localhost (cable-86-56-73-63.cust.telecolumbus.net. [86.56.73.63])
+        by smtp.gmail.com with ESMTPSA id i194sm4392237wmf.6.2016.04.22.10.35.04
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 22 Apr 2016 10:35:04 -0700 (PDT)
+X-Mailer: git-send-email 2.8.1.382.g1352ede
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292235>
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+Using the string-list API in function unsorted_string_list_lookup()
+makes the code more readable.  So let's do this.
 
-> Thanks for the explanation. My intention was not to be offensive.
-> I was curious about your workflow and I was wondering if the
-> Travis CI integration could be useful for you in any way.
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ string-list.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-Don't worry; I didn't feel offended.  The Travis stuff running on
-the branches at http://github.com/git/git would surely catch issues
-on MacOSX and/or around git-p4 (neither of which I test myself when
-merging to 'pu') before they hit 'next', and that is already helping
-us greatly.
-
-And if volunteers or bots pick up in-flight patches that have not
-hit 'pu' and feed them to Travis through their repositories, that
-would also help the project, so your work on hooking up our source
-tree with Travis is greatly appreciated.
-
-It was just that Travis running on broken-down topic branches that
-appear in http://github.com/gitster/git would not help my workflow,
-which was the main point of illustrating the way how these branches
-work.
-
-Thanks.
-
-
-  
+diff --git a/string-list.c b/string-list.c
+index 2a32a3f..8127e12 100644
+--- a/string-list.c
++++ b/string-list.c
+@@ -231,12 +231,13 @@ void string_list_sort(struct string_list *list)
+ struct string_list_item *unsorted_string_list_lookup(struct string_list *list,
+ 						     const char *string)
+ {
+-	int i;
++	struct string_list_item *item;
+ 	compare_strings_fn cmp = list->cmp ? list->cmp : strcmp;
+ 
+-	for (i = 0; i < list->nr; i++)
+-		if (!cmp(string, list->items[i].string))
+-			return list->items + i;
++	for_each_string_list_item(item, list) {
++		if (!cmp(string, item->string))
++			return item;
++	}
+ 	return NULL;
+ }
+ 
+-- 
+2.8.1.382.g1352ede
