@@ -1,83 +1,105 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] test-lib: simplify '--option=value' parsing
-Date: Fri, 22 Apr 2016 17:38:23 +0200
-Message-ID: <1461339503-6854-1-git-send-email-szeder@ira.uka.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v8 5/6] verify-tag: move tag verification code to tag.c
+Date: Fri, 22 Apr 2016 13:19:21 -0400
+Message-ID: <CAPig+cSXoVeiHsq1m7Ng_+fP0bY3eR20jJqCmTwUF5a1C-F=LA@mail.gmail.com>
+References: <1461336725-29915-1-git-send-email-santiago@nyu.edu>
+	<1461336725-29915-6-git-send-email-santiago@nyu.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 22 17:52:03 2016
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Santiago Torres <santiago@nyu.edu>
+X-From: git-owner@vger.kernel.org Fri Apr 22 19:19:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atdNC-0000Bk-SX
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 17:52:03 +0200
+	id 1atejr-0000j3-1l
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 19:19:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754500AbcDVPvx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Apr 2016 11:51:53 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:50987 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754107AbcDVPi7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2016 11:38:59 -0400
-Received: from x590e2083.dyn.telefonica.de ([89.14.32.131] helo=localhost.localdomain)
-	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
-	iface 141.3.10.81 id 1atdAV-0007yw-Cb; Fri, 22 Apr 2016 17:38:56 +0200
-X-Mailer: git-send-email 2.8.1.99.g5d5236f
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1461339536.
+	id S932489AbcDVRTZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Apr 2016 13:19:25 -0400
+Received: from mail-io0-f196.google.com ([209.85.223.196]:32886 "EHLO
+	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932298AbcDVRTW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Apr 2016 13:19:22 -0400
+Received: by mail-io0-f196.google.com with SMTP id x35so4104137ioi.0
+        for <git@vger.kernel.org>; Fri, 22 Apr 2016 10:19:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=enU7aYObQ0zEO5eipGH4SvJqbWhR2YpOPpOBbuPLkPA=;
+        b=t5/2V4hHfDHcLooaBGwDf1ANJyTjwHshBblXYA/+705IZ9nogAK1sKY6iVcJtdO+N3
+         dBA2u4rrFQkKuNB1qRFquRcCvMav/CLK/uKQuMcjAQTxLzlSr5hIliRYNs34Oe4dfei1
+         N3k12vImWfiI5n6CE5BdXBm74Lp/V8JdQQM8VvBK8I2NSzwRYIPxs6pMSM3A4yOxcNp7
+         3YsKsHba02lyAgBorbTBJbOvUPq3ZHr1Bp+d80HY3AMiRPyPynpjOTAGdqGATO7BUmj7
+         6MWAPOtKmGnEm25bLGeMNh+L+7ea49i5LaXgutIxUhQ9yHacockqmL31pKo4aX/o+klR
+         PFvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=enU7aYObQ0zEO5eipGH4SvJqbWhR2YpOPpOBbuPLkPA=;
+        b=AFwRCwRaZCXeRvQPPvaHsx71iYwiogs/ErUyscTvR7bzad3MNBzyCP7jowiZvUr5bl
+         x0jZ2GWUJxVXHW23ZNVspsNh1Ct5OddlIIzClhY65kf/Qum09emBy0mM/1xlcXqCULuN
+         kEuPX0XXTq2bznXNLLav4IZ4WWZ7ZPgMjqSNbJ0uAfptOx1n8YC2tyqwF1H2Rtx6HU4p
+         BkovBRIac1QMfLg8bCdb70z1fXDRJiOIYEWaEcarsbCo2RWLv2rsEJX9YhO9hy494VqF
+         dUTTeU3NT1vuDdgQwQBZajKlJAnx7657hkzw58A4i+L3i3GgfLkfQRVjYs6LooebL1ya
+         oSHQ==
+X-Gm-Message-State: AOPr4FV81eQ3WQHmmm9ZGopEwdIAGKTKWSQG3aH3talfyQ6hU12nE0ELNAFObZVJ6qMmUynNRUtrvJYOJ793Hw==
+X-Received: by 10.107.9.102 with SMTP id j99mr20896480ioi.104.1461345561910;
+ Fri, 22 Apr 2016 10:19:21 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Fri, 22 Apr 2016 10:19:21 -0700 (PDT)
+In-Reply-To: <1461336725-29915-6-git-send-email-santiago@nyu.edu>
+X-Google-Sender-Auth: 1p-la66xQYRQgxSaEAY2yUZ8qmE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292228>
 
-To get the 'value' from '--option=3Dvalue', test-lib.sh parses said
-option running 'expr' with a regexp.  This involves a subshell, an
-external process, and a lot of non-alphanumeric characters in the
-regexp.
+On Fri, Apr 22, 2016 at 10:52 AM,  <santiago@nyu.edu> wrote:
+> The PGP verification routine for tags could be accessed by other modules
+> that require to do so.
+>
+> Publish the verify_tag function in tag.c and rename it to gpg_verify_tag
+> so it does not conflict with builtin/mktag's static function.
+>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Santiago Torres <santiago@nyu.edu>
+> ---
+> diff --git a/tag.c b/tag.c
+> @@ -6,6 +6,59 @@
+> +int gpg_verify_tag(const unsigned char *sha1, const char *name_to_report,
 
-Use a much simpler shell parameter expansion instead to do the same.
+Nit: This line has trailing whitespace. Probably not worth a re-roll.
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
- t/test-lib.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0b47eb6bb299..8373d5b5c900 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -208,7 +208,7 @@ do
- 	-v|--v|--ve|--ver|--verb|--verbo|--verbos|--verbose)
- 		verbose=3Dt; shift ;;
- 	--verbose-only=3D*)
--		verbose_only=3D$(expr "z$1" : 'z[^=3D]*=3D\(.*\)')
-+		verbose_only=3D${1#--*=3D}
- 		shift ;;
- 	-q|--q|--qu|--qui|--quie|--quiet)
- 		# Ignore --quiet under a TAP::Harness. Saying how many tests
-@@ -222,15 +222,15 @@ do
- 		valgrind=3Dmemcheck
- 		shift ;;
- 	--valgrind=3D*)
--		valgrind=3D$(expr "z$1" : 'z[^=3D]*=3D\(.*\)')
-+		valgrind=3D${1#--*=3D}
- 		shift ;;
- 	--valgrind-only=3D*)
--		valgrind_only=3D$(expr "z$1" : 'z[^=3D]*=3D\(.*\)')
-+		valgrind_only=3D${1#--*=3D}
- 		shift ;;
- 	--tee)
- 		shift ;; # was handled already
- 	--root=3D*)
--		root=3D$(expr "z$1" : 'z[^=3D]*=3D\(.*\)')
-+		root=3D${1#--*=3D}
- 		shift ;;
- 	--chain-lint)
- 		GIT_TEST_CHAIN_LINT=3D1
---=20
-2.8.1.99.g5d5236f
+> +               unsigned flags)
+> +{
+> +       enum object_type type;
+> +       char *buf;
+> +       unsigned long size;
+> +       int ret;
+> +
+> +       type = sha1_object_info(sha1, NULL);
+> +       if (type != OBJ_TAG)
+> +               return error("%s: cannot verify a non-tag object of type %s.",
+> +                               name_to_report ?
+> +                               name_to_report :
+> +                               find_unique_abbrev(sha1, DEFAULT_ABBREV),
+> +                               typename(type));
+> +
+> +       buf = read_sha1_file(sha1, &type, &size);
+> +       if (!buf)
+> +               return error("%s: unable to read file.",
+> +                               name_to_report ?
+> +                               name_to_report :
+> +                               find_unique_abbrev(sha1, DEFAULT_ABBREV));
+> +
+> +       ret = run_gpg_verify(buf, size, flags);
+> +
+> +       free(buf);
+> +       return ret;
+> +}
