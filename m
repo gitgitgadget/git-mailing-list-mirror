@@ -1,42 +1,42 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v2 5/6] tree-walk: convert tree_entry_extract to struct object_id
-Date: Fri, 22 Apr 2016 22:02:52 +0000
-Message-ID: <20160422220253.839970-6-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 3/6] match-trees: convert shift_tree and shift_tree_by to object_id
+Date: Fri, 22 Apr 2016 22:02:50 +0000
+Message-ID: <20160422220253.839970-4-sandals@crustytoothpaste.net>
 References: <20160422220253.839970-1-sandals@crustytoothpaste.net>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 23 00:03:36 2016
+X-From: git-owner@vger.kernel.org Sat Apr 23 00:03:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atjAk-0000rb-Pz
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Apr 2016 00:03:35 +0200
+	id 1atjAx-00011u-2a
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Apr 2016 00:03:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753091AbcDVWD0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Apr 2016 18:03:26 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:56148 "EHLO
+	id S1753203AbcDVWDc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Apr 2016 18:03:32 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:56136 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752204AbcDVWDX (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2016 18:03:23 -0400
+	by vger.kernel.org with ESMTP id S1751718AbcDVWDW (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2016 18:03:22 -0400
 Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:6680:99ff:fe4f:73a0])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 71E47282AD;
-	Fri, 22 Apr 2016 22:03:20 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 8CCD0282AB;
+	Fri, 22 Apr 2016 22:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1461362600;
-	bh=HECuPxs7qxnUcT+nOuV+ytgPWwePGQRh8xmfre6cH2A=;
+	s=default; t=1461362599;
+	bh=VQ7CNAD+DPMTX5mab5f82nte/276XUvTcdxxcrqDs8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cYKHz5X75ZTEqEYmgOB1S/98CYBbxwH3REA+NcX2cD/sz64E+X/z9kVWjTMzB3hzf
-	 V0r/GOqhtfaNWygGVH+hiapXWNfy0kMH6Sxw4XQ2bKnViX7wB24GQY8DqEtTRglK6i
-	 NODRv7t4HFXFffDmOe0XsNh5oYAv2+XMnGv75v3v0t1u13SHVx550J2EaxSM6OLvpf
-	 LBva/HA0RCs9oh2QRUBxf21MsD5r2LGGdp1Fe+yxzfG17qyn5Nkl0VLZKv8nBkBuGK
-	 DsQPMkOAcbyDmy1pgBjG+P4HWjGU1A7K1n0ALi7IXVhMNuFdMaROUHCExzxZanTvcE
-	 Ev/rlhT7IIhZEAQlYBUxmD1qdNPPcSEfsKYxCnZmpOxhf6sX9mArSaltUgvIl17z/T
-	 CXm89faJXqhWJ2fZFirhobl5p0IBmToohs8rV0M9tV+yV6MCjX9RsijvMBvfDmVjV1
-	 Kh/EZXIQTmZbETK9H8KfDg7YZfgN3jvhJ7+7z6k7xGC+ITAjmuu
+	b=UdjOAmpC9JWf1+QdfWhEZp+VpqQV3zXKw6S2Tw6IfoVdCxB2mp38WYEwlJ1gfSXRe
+	 QyY1eOo/eMLObhaMC0ESCeE79aR0vhU7ogrKygGicpQuuj5U3SoDu1jPdxJaR0iMbB
+	 IdxD8CaXyEgGlDYJOMesCr5ZsTkmi5sOW/tgfEYs7eXbciaHeciLOayK1Zp0v2ob+M
+	 nX27tsG/bhsePjEP1Ple75Ua6zlOO63n/Ra/L9C3AwZY4Vn9XOUIDbcssd3wPuE6Wj
+	 36qi3irVfKQzrNybWVsINvaRwkMEPwIsAfHHjuTuBaXqKEctww8mDwVNRKQHsrhZC3
+	 ueP+qbz9+nRXL88L82Dlj9isXSy6rewqn+OljfwjqdQgWJ6k+tOLSAJLHWHMYpsJ4Y
+	 32tbFGLBQq9cnOkTfW/QWYx37v3Zx2c2SJYdStmnQitXJSGf6uTr8DGiMixm28tiJH
+	 jGbS4fBXuwQjgfOy4AObxh1tsJfRJyXHGddqi87xHC3ADc7dtk2
 X-Mailer: git-send-email 2.8.1.369.geae769a
 In-Reply-To: <20160422220253.839970-1-sandals@crustytoothpaste.net>
 X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
@@ -44,154 +44,194 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292281>
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- fsck.c        |  6 +++---
- match-trees.c | 12 ++++++------
- tree-diff.c   |  2 +-
- tree-walk.c   | 10 +++++-----
- tree-walk.h   |  4 ++--
- 5 files changed, 17 insertions(+), 17 deletions(-)
+ cache.h            |  4 ++--
+ match-trees.c      | 44 ++++++++++++++++++++++----------------------
+ merge-recursive.c  |  4 ++--
+ test-match-trees.c |  2 +-
+ 4 files changed, 27 insertions(+), 27 deletions(-)
 
-diff --git a/fsck.c b/fsck.c
-index 606eba8c..92b17f5d 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -450,11 +450,11 @@ static int fsck_tree(struct tree *item, struct fsck_options *options)
- 	while (desc.size) {
- 		unsigned mode;
- 		const char *name;
--		const unsigned char *sha1;
-+		const struct object_id *oid;
+diff --git a/cache.h b/cache.h
+index 22b73646..70091e73 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1768,8 +1768,8 @@ int add_files_to_cache(const char *prefix, const struct pathspec *pathspec, int
+ extern int diff_auto_refresh_index;
  
--		sha1 = tree_entry_extract(&desc, &name, &mode);
-+		oid = tree_entry_extract(&desc, &name, &mode);
+ /* match-trees.c */
+-void shift_tree(const unsigned char *, const unsigned char *, unsigned char *, int);
+-void shift_tree_by(const unsigned char *, const unsigned char *, unsigned char *, const char *);
++void shift_tree(const struct object_id *, const struct object_id *, struct object_id *, int);
++void shift_tree_by(const struct object_id *, const struct object_id *, struct object_id *, const char *);
  
--		has_null_sha1 |= is_null_sha1(sha1);
-+		has_null_sha1 |= is_null_oid(oid);
- 		has_full_path |= !!strchr(name, '/');
- 		has_empty_name |= !*name;
- 		has_dot |= !strcmp(name, ".");
+ /*
+  * whitespace rules.
 diff --git a/match-trees.c b/match-trees.c
-index 751f8f20..8ca7c68f 100644
+index 1ce0954a..9977752a 100644
 --- a/match-trees.c
 +++ b/match-trees.c
-@@ -131,14 +131,14 @@ static void match_trees(const unsigned char *hash1,
+@@ -229,9 +229,9 @@ static int splice_tree(const unsigned char *hash1,
+  * other hand, it could cover tree one and we might need to pick a
+  * subtree of it.
+  */
+-void shift_tree(const unsigned char *hash1,
+-		const unsigned char *hash2,
+-		unsigned char *shifted,
++void shift_tree(const struct object_id *hash1,
++		const struct object_id *hash2,
++		struct object_id *shifted,
+ 		int depth_limit)
+ {
+ 	char *add_prefix;
+@@ -245,7 +245,7 @@ void shift_tree(const unsigned char *hash1,
+ 	if (!depth_limit)
+ 		depth_limit = 2;
  
- 	while (one.size) {
- 		const char *path;
--		const unsigned char *elem;
-+		const struct object_id *elem;
- 		unsigned mode;
+-	add_score = del_score = score_trees(hash1, hash2);
++	add_score = del_score = score_trees(hash1->hash, hash2->hash);
+ 	add_prefix = xcalloc(1, 1);
+ 	del_prefix = xcalloc(1, 1);
+ 
+@@ -253,16 +253,16 @@ void shift_tree(const unsigned char *hash1,
+ 	 * See if one's subtree resembles two; if so we need to prefix
+ 	 * two with a few fake trees to match the prefix.
+ 	 */
+-	match_trees(hash1, hash2, &add_score, &add_prefix, "", depth_limit);
++	match_trees(hash1->hash, hash2->hash, &add_score, &add_prefix, "", depth_limit);
+ 
+ 	/*
+ 	 * See if two's subtree resembles one; if so we need to
+ 	 * pick only subtree of two.
+ 	 */
+-	match_trees(hash2, hash1, &del_score, &del_prefix, "", depth_limit);
++	match_trees(hash2->hash, hash1->hash, &del_score, &del_prefix, "", depth_limit);
+ 
+ 	/* Assume we do not have to do any shifting */
+-	hashcpy(shifted, hash2);
++	oidcpy(shifted, hash2);
+ 
+ 	if (add_score < del_score) {
+ 		/* We need to pick a subtree of two */
+@@ -271,16 +271,16 @@ void shift_tree(const unsigned char *hash1,
+ 		if (!*del_prefix)
+ 			return;
+ 
+-		if (get_tree_entry(hash2, del_prefix, shifted, &mode))
++		if (get_tree_entry(hash2->hash, del_prefix, shifted->hash, &mode))
+ 			die("cannot find path %s in tree %s",
+-			    del_prefix, sha1_to_hex(hash2));
++			    del_prefix, oid_to_hex(hash2));
+ 		return;
+ 	}
+ 
+ 	if (!*add_prefix)
+ 		return;
+ 
+-	splice_tree(hash1, add_prefix, hash2, shifted);
++	splice_tree(hash1->hash, add_prefix, hash2->hash, shifted->hash);
+ }
+ 
+ /*
+@@ -288,44 +288,44 @@ void shift_tree(const unsigned char *hash1,
+  * Unfortunately we cannot fundamentally tell which one to
+  * be prefixed, as recursive merge can work in either direction.
+  */
+-void shift_tree_by(const unsigned char *hash1,
+-		   const unsigned char *hash2,
+-		   unsigned char *shifted,
++void shift_tree_by(const struct object_id *hash1,
++		   const struct object_id *hash2,
++		   struct object_id *shifted,
+ 		   const char *shift_prefix)
+ {
+-	unsigned char sub1[20], sub2[20];
++	struct object_id sub1, sub2;
+ 	unsigned mode1, mode2;
+ 	unsigned candidate = 0;
+ 
+ 	/* Can hash2 be a tree at shift_prefix in tree hash1? */
+-	if (!get_tree_entry(hash1, shift_prefix, sub1, &mode1) &&
++	if (!get_tree_entry(hash1->hash, shift_prefix, sub1.hash, &mode1) &&
+ 	    S_ISDIR(mode1))
+ 		candidate |= 1;
+ 
+ 	/* Can hash1 be a tree at shift_prefix in tree hash2? */
+-	if (!get_tree_entry(hash2, shift_prefix, sub2, &mode2) &&
++	if (!get_tree_entry(hash2->hash, shift_prefix, sub2.hash, &mode2) &&
+ 	    S_ISDIR(mode2))
+ 		candidate |= 2;
+ 
+ 	if (candidate == 3) {
+ 		/* Both are plausible -- we need to evaluate the score */
+-		int best_score = score_trees(hash1, hash2);
++		int best_score = score_trees(hash1->hash, hash2->hash);
  		int score;
  
- 		elem = tree_entry_extract(&one, &path, &mode);
- 		if (!S_ISDIR(mode))
- 			goto next;
--		score = score_trees(elem, hash2);
-+		score = score_trees(elem->hash, hash2);
- 		if (*best_score < score) {
- 			free(*best_match);
- 			*best_match = xstrfmt("%s%s", base, path);
-@@ -146,7 +146,7 @@ static void match_trees(const unsigned char *hash1,
+ 		candidate = 0;
+-		score = score_trees(sub1, hash2);
++		score = score_trees(sub1.hash, hash2->hash);
+ 		if (score > best_score) {
+ 			candidate = 1;
+ 			best_score = score;
  		}
- 		if (recurse_limit) {
- 			char *newbase = xstrfmt("%s%s/", base, path);
--			match_trees(elem, hash2, best_score, best_match,
-+			match_trees(elem->hash, hash2, best_score, best_match,
- 				    newbase, recurse_limit - 1);
- 			free(newbase);
- 		}
-@@ -191,15 +191,15 @@ static int splice_tree(const unsigned char *hash1,
- 	while (desc.size) {
- 		const char *name;
- 		unsigned mode;
--		const unsigned char *sha1;
-+		const struct object_id *oid;
- 
--		sha1 = tree_entry_extract(&desc, &name, &mode);
-+		oid = tree_entry_extract(&desc, &name, &mode);
- 		if (strlen(name) == toplen &&
- 		    !memcmp(name, prefix, toplen)) {
- 			if (!S_ISDIR(mode))
- 				die("entry %s in tree %s is not a tree",
- 				    name, sha1_to_hex(hash1));
--			rewrite_here = (unsigned char *) sha1;
-+			rewrite_here = (unsigned char *) oid->hash;
- 			break;
- 		}
- 		update_tree_entry(&desc);
-diff --git a/tree-diff.c b/tree-diff.c
-index 402f9ff2..ff4e0d3c 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -183,7 +183,7 @@ static struct combine_diff_path *emit_path(struct combine_diff_path *p,
- 
- 	if (t) {
- 		/* path present in resulting tree */
--		sha1 = tree_entry_extract(t, &path, &mode);
-+		sha1 = tree_entry_extract(t, &path, &mode)->hash;
- 		pathlen = tree_entry_len(&t->entry);
- 		isdir = S_ISDIR(mode);
- 	} else {
-diff --git a/tree-walk.c b/tree-walk.c
-index fab57dd5..ce278424 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -433,10 +433,10 @@ static int find_tree_entry(struct tree_desc *t, const char *name, unsigned char
- 	int namelen = strlen(name);
- 	while (t->size) {
- 		const char *entry;
--		const unsigned char *sha1;
-+		const struct object_id *oid;
- 		int entrylen, cmp;
- 
--		sha1 = tree_entry_extract(t, &entry, mode);
-+		oid = tree_entry_extract(t, &entry, mode);
- 		entrylen = tree_entry_len(&t->entry);
- 		update_tree_entry(t);
- 		if (entrylen > namelen)
-@@ -447,7 +447,7 @@ static int find_tree_entry(struct tree_desc *t, const char *name, unsigned char
- 		if (cmp < 0)
- 			break;
- 		if (entrylen == namelen) {
--			hashcpy(result, sha1);
-+			hashcpy(result, oid->hash);
- 			return 0;
- 		}
- 		if (name[entrylen] != '/')
-@@ -455,10 +455,10 @@ static int find_tree_entry(struct tree_desc *t, const char *name, unsigned char
- 		if (!S_ISDIR(*mode))
- 			break;
- 		if (++entrylen == namelen) {
--			hashcpy(result, sha1);
-+			hashcpy(result, oid->hash);
- 			return 0;
- 		}
--		return get_tree_entry(sha1, name + entrylen, result, mode);
-+		return get_tree_entry(oid->hash, name + entrylen, result, mode);
+-		score = score_trees(sub2, hash1);
++		score = score_trees(sub2.hash, hash1->hash);
+ 		if (score > best_score)
+ 			candidate = 2;
  	}
- 	return -1;
- }
-diff --git a/tree-walk.h b/tree-walk.h
-index 58f31f55..97a7d695 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -13,11 +13,11 @@ struct tree_desc {
- 	unsigned int size;
- };
  
--static inline const unsigned char *tree_entry_extract(struct tree_desc *desc, const char **pathp, unsigned int *modep)
-+static inline const struct object_id *tree_entry_extract(struct tree_desc *desc, const char **pathp, unsigned int *modep)
- {
- 	*pathp = desc->entry.path;
- 	*modep = desc->entry.mode;
--	return desc->entry.oid->hash;
-+	return desc->entry.oid;
- }
+ 	if (!candidate) {
+ 		/* Neither is plausible -- do not shift */
+-		hashcpy(shifted, hash2);
++		oidcpy(shifted, hash2);
+ 		return;
+ 	}
  
- static inline int tree_entry_len(const struct name_entry *ne)
+@@ -334,11 +334,11 @@ void shift_tree_by(const unsigned char *hash1,
+ 		 * shift tree2 down by adding shift_prefix above it
+ 		 * to match tree1.
+ 		 */
+-		splice_tree(hash1, shift_prefix, hash2, shifted);
++		splice_tree(hash1->hash, shift_prefix, hash2->hash, shifted->hash);
+ 	else
+ 		/*
+ 		 * shift tree2 up by removing shift_prefix from it
+ 		 * to match tree1.
+ 		 */
+-		hashcpy(shifted, sub2);
++		oidcpy(shifted, &sub2);
+ }
+diff --git a/merge-recursive.c b/merge-recursive.c
+index b880ae50..a47c80f8 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -29,9 +29,9 @@ static struct tree *shift_tree_object(struct tree *one, struct tree *two,
+ 	struct object_id shifted;
+ 
+ 	if (!*subtree_shift) {
+-		shift_tree(one->object.oid.hash, two->object.oid.hash, shifted.hash, 0);
++		shift_tree(&one->object.oid, &two->object.oid, &shifted, 0);
+ 	} else {
+-		shift_tree_by(one->object.oid.hash, two->object.oid.hash, shifted.hash,
++		shift_tree_by(&one->object.oid, &two->object.oid, &shifted,
+ 			      subtree_shift);
+ 	}
+ 	if (!oidcmp(&two->object.oid, &shifted))
+diff --git a/test-match-trees.c b/test-match-trees.c
+index 41aff841..d446b8ea 100644
+--- a/test-match-trees.c
++++ b/test-match-trees.c
+@@ -19,7 +19,7 @@ int main(int ac, char **av)
+ 	if (!two)
+ 		die("not a tree-ish %s", av[2]);
+ 
+-	shift_tree(one->object.oid.hash, two->object.oid.hash, shifted.hash, -1);
++	shift_tree(&one->object.oid, &two->object.oid, &shifted, -1);
+ 	printf("shifted: %s\n", oid_to_hex(&shifted));
+ 
+ 	exit(0);
 -- 
 2.8.1.369.geae769a
