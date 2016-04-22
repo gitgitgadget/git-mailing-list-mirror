@@ -1,385 +1,179 @@
-From: tboegi@web.de
-Subject: [PATCH v6 06/10] convert.c: stream and early out
-Date: Fri, 22 Apr 2016 16:53:51 +0200
-Message-ID: <1461336831-5224-1-git-send-email-tboegi@web.de>
-References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+From: santiago@nyu.edu
+Subject: [PATCH v8 0/6] Move PGP verification out of verify-tag
+Date: Fri, 22 Apr 2016 10:51:59 -0400
+Message-ID: <1461336725-29915-1-git-send-email-santiago@nyu.edu>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Santiago Torres <santiago@nyu.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 22 16:50:33 2016
+X-From: git-owner@vger.kernel.org Fri Apr 22 16:52:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atcPc-0003rx-0p
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 16:50:28 +0200
+	id 1atcRN-00058b-KD
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 16:52:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754369AbcDVOuC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Apr 2016 10:50:02 -0400
-Received: from mout.web.de ([212.227.17.12]:51628 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754104AbcDVOtn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2016 10:49:43 -0400
-Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb102) with
- ESMTPSA (Nemesis) id 0MKrPw-1atcOr2Er2-0000th; Fri, 22 Apr 2016 16:49:41
- +0200
-X-Mailer: git-send-email 2.8.0.rc2.2.g1a4d45a.dirty
-In-Reply-To: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:2PydfzhDYPeqi1Imz0BvOlSZBlnhAisQv21Js4kMCC2z/kyZEfr
- yt2z471mB2uy+fqrUq9VGh79mHwn23FEr7xXW0slHek+oqgRqTmlPjLUpBTcYf8UMq7g8Hw
- aV3fNUtetcNPzsw9KoIWAfWvvSGVQ/q744LtkS+tlv/Dwc5QFdfm3lcZ9IG8u5JqwtSBrSw
- 95OgubixHVv2dcbKxHotg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ZL38CPJMgiA=:BSAh5rvyZtSeobvc7OvrQI
- ZvMaKNepAs/84fhMMjodiMU6WqGm7ekufwUW84sK8uLRX6dB57no7jlqAGHK029B5F4SNjfcV
- dQOzGchBWvMRa51vkoDCtRrpqGYTCRLTPaNWkCz+w+tdkCbU+oIIWv1FQgyt84zdwnDanOfL2
- p3rv+oRYspyK6cL/MFZc9H2Z2i74oFTgzT5HFChgxpWPiPngZvgjtUZc2nCQanY1mhuev/Wm9
- o499VEvGyDVfZyDiLh7R1lwIFcd3Pu8iGKZXmJNdrZgBAOAfAx//G2wjBZgiXMpSjBTOgR4ix
- KlOHhXbDmjX5w+jav95wMkPN/DLlfgeZv2eE63hickz5/OFkuPJkozDvzYznYdoz6oyBTQ72U
- NFDqEh6WCrXqwwk8V7whzUaVGNWYgZUlTqcNHC6T9gIyV4ODyTkRDJSr7XFEXkX8tcAGecU+m
- nRgaROhDyYXJTRcALuhgwtC11uQhV/w9M4QOxrtzo7HZ2ueQVQowf7TI6udBigHXAPq86zTI3
- haZ6plbmulrMSm0PoeulxZe0FWfAMOSubTQ2gf3WFW4bHH/lwL1hMCMkssgvbe7slMP6PBgtW
- kkIxwGw9otFYV0C6NU6T0B105fvyNNRndpOqz9EZI/jekuqaN3bC7hhxTPzXI35Qnr7VKgii4
- tCJFhnHmhm4lvpoHIvq25kCzMUVhdgGO+aQp/fcb2f/ZkbHblWUQL7dGvyfeIYZXV/5DFz2o3
- v+qpIuw4Lia5CUXzQfdNKlf4512pF5lMjhSKXQinMbT2k+JLEIdZcp0BkoB1ZPZbBmabb+uv 
+	id S1753248AbcDVOwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Apr 2016 10:52:12 -0400
+Received: from mail-qk0-f179.google.com ([209.85.220.179]:32800 "EHLO
+	mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751761AbcDVOwL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Apr 2016 10:52:11 -0400
+Received: by mail-qk0-f179.google.com with SMTP id n63so39137101qkf.0
+        for <git@vger.kernel.org>; Fri, 22 Apr 2016 07:52:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=yG1n291S8X8/UVOesq/Rh/SBVfDH8TRPfvbvpQwFJUw=;
+        b=sS0z1Vujt8HaXM84Ic3QTJg1rGZgf5raTKQk2M2/3sI96vFWRD8dmL96kfjVgDmpDb
+         7QDYtPVBP47BUMDCZZ2A2ReswyTtkz32lXdCYzHjivSYdoDUENCkP8yqj7Fo8pvmtlOz
+         ENqcIp6wkgBd1vrLgBTgB4T7mhWKFgu56/TAmocnEIa+9uYkutswYKGPyer21Kq4Q0gk
+         Yhbp/v2UfRLrOCofVAA1M12VzVS7ieypWOz/99eDmRmFr0yBxKilqXF0nsfEl/bjrmSI
+         BMqpGwqvj+sn20G5s6Q699Dw5eEG5V7MmFJf7lA41wFuN1BzEUQMNBUsIdDeXSjZke0h
+         kZfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=yG1n291S8X8/UVOesq/Rh/SBVfDH8TRPfvbvpQwFJUw=;
+        b=kOurD2h7RniRkDjx31QIUqOrvvN/19ll9dyUPWF9tTY1TYh+bbjLKK3iH45mMUOiEd
+         GL2z229o3KqHSqfrCC4PS/cqfs0qIGHEo9GuxbrApR1FQOo1DF+t3p77i771G5tq2hXX
+         rmLZ9YMwGtXfbDC14xnV2aLzB9yykoszmLF7CbRM5I94nf6lorollK37VlfwfhUgCOGu
+         OmSvHEx7J1GanI6UBi+P/yvm3YY2Fr6rF5pHYEkVaGGR0/NDIiV4Hz5q5aLv4G6mmmoT
+         P86rvEMj+srw6/n/kc1N4jQ8gA3KWBKi5g76rKHIQNTsnPBbIBSjGSoth2CBki6TW3/u
+         K41A==
+X-Gm-Message-State: AOPr4FWJp6pJ5v54peYgeYQ8bVvMQKZAmWaIZCMzzIrRLwEtYuM/PAatSrobPaG2VNklKrnx
+X-Received: by 10.55.117.12 with SMTP id q12mr5127646qkc.192.1461336730259;
+        Fri, 22 Apr 2016 07:52:10 -0700 (PDT)
+Received: from LykOS.localdomain (NYUFWA-WLESSAUTHCLIENTS-18.NATPOOL.NYU.EDU. [216.165.95.7])
+        by smtp.gmail.com with ESMTPSA id s67sm2583005qgs.48.2016.04.22.07.52.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 22 Apr 2016 07:52:09 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292220>
 
-=46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
+From: Santiago Torres <santiago@nyu.edu>
 
-When statistics are done for the autocrlf handling, the search in
-the content can be stopped, if e.g
-- a search for binary is done, and a NUL character is found
-- a search for CRLF is done, and the first CRLF is found.
+This is a follow up of [1], [2], [3], [4], [5], [6], and [7].  patches 1/6,
+2/6, and 3/6, are the same as the corresponding commits in pu.
 
-Similar when statistics for binary vs non-binary are gathered:
-Whenever a lone CR or NUL is found, the search can be aborted.
+v8:  
+Minor nits, I decided to quickly reroll to drop the extern qualifier in tag.c:
+  * Eric pointed out that we could block-scope the declaration of name and sha1
+    in b/verify-tag.c, for 4/6
+  * There was a typo in 6/6
+  * I dropped the extern qualifier in tag.c for 5/6 as suggested by Ramsay
+    Jones[8]
 
-When checking out files in "auto" mode, any file that has a "lone CR"
-or a CRLF will not be converted, so the search can be aborted early.
+v7: 
+Mostly style/clarity changes. Thanks Peff, Eric and Junio for the
+feedback! In summary: 
 
-Add the new bit, CONVERT_STAT_BITS_ANY_CR,
-which is set for either lone CR or CRLF.
+ * Eric pointed out issues with 3/6's commit message. It doesn't match the one 
+   in pu though. I also took the opportunity to update payload_size to a size_t
+   as Peff suggested.
+ * 4/6 I updated report_name to name_to_report, I updated the commit message 
+   and addressed some nits in the code, one of the fixes removed all three nits
+   that Eric pointed out. I updated 5/6 to match these changes
+ * I gave the commit message on 6/6 another go.
 
-Many binary files have a NUL very early (within the first few bytes,
-latest within the first 1..2K).
-It is often not necessary to load the whole content of a file or blob
-into memory.
+v6: 
+ * As Junio suggested, updated 4/6, to include the name argument and the
+   ternary operator to provide more descriptive error messages. I propagated
+   these changes to 5/6 and 6/6 as well. I'm unsure about the 80-column
+   on 4/6, the ternary operator is rather long.
+ * Updated and reviewed the commit messages based on Eric and Junio's
+   feedback
 
-Use a streaming handling for blobs and files in the worktree.
+v5:
+Added helpful feedback by Eric
 
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
- convert.c | 159 ++++++++++++++++++++++++++++++++++++++++--------------=
---------
- 1 file changed, 103 insertions(+), 56 deletions(-)
+ * Reordering of the patches, to avoid temporal inclusion of a regression
+ * Fix typos here and there.
+ * Review commit messages, as some weren't representative of what the patches
+   were doing anymore.
+ * Updated t7030 to include Peff's suggestion, and added a helped-by line here
+   as it was mostly Peff's code.
+ * Updated the error-handling/printing issues that were introduced when.
+   libifying the verify_tag function.
 
-diff --git a/convert.c b/convert.c
-index b1614bf..24ab095 100644
---- a/convert.c
-+++ b/convert.c
-@@ -3,6 +3,7 @@
- #include "run-command.h"
- #include "quote.h"
- #include "sigchain.h"
-+#include "streaming.h"
-=20
- /*
-  * convert.c - convert a file when checking it out and checking it in.
-@@ -13,10 +14,10 @@
-  * translation when the "text" attribute or "auto_crlf" option is set.
-  */
-=20
--/* Stat bits: When BIN is set, the txt bits are unset */
- #define CONVERT_STAT_BITS_TXT_LF    0x1
- #define CONVERT_STAT_BITS_TXT_CRLF  0x2
- #define CONVERT_STAT_BITS_BIN       0x4
-+#define CONVERT_STAT_BITS_ANY_CR    0x8
-=20
- enum crlf_action {
- 	CRLF_UNDEFINED,
-@@ -31,30 +32,36 @@ enum crlf_action {
-=20
- struct text_stat {
- 	/* NUL, CR, LF and CRLF counts */
--	unsigned nul, lonecr, lonelf, crlf;
-+	unsigned stat_bits, lonecr, lonelf, crlf;
-=20
- 	/* These are just approximations! */
- 	unsigned printable, nonprintable;
- };
-=20
--static void gather_stats(const char *buf, unsigned long size, struct t=
-ext_stat *stats)
-+static void do_gather_stats(const char *buf, unsigned long size,
-+			    struct text_stat *stats, unsigned earlyout)
- {
- 	unsigned long i;
-=20
--	memset(stats, 0, sizeof(*stats));
--
-+	if (!buf || !size)
-+		return;
- 	for (i =3D 0; i < size; i++) {
- 		unsigned char c =3D buf[i];
- 		if (c =3D=3D '\r') {
-+			stats->stat_bits |=3D CONVERT_STAT_BITS_ANY_CR;
- 			if (i+1 < size && buf[i+1] =3D=3D '\n') {
- 				stats->crlf++;
- 				i++;
--			} else
-+				stats->stat_bits |=3D CONVERT_STAT_BITS_TXT_CRLF;
-+			} else {
- 				stats->lonecr++;
-+				stats->stat_bits |=3D CONVERT_STAT_BITS_BIN;
-+			}
- 			continue;
- 		}
- 		if (c =3D=3D '\n') {
- 			stats->lonelf++;
-+			stats->stat_bits |=3D CONVERT_STAT_BITS_TXT_LF;
- 			continue;
- 		}
- 		if (c =3D=3D 127)
-@@ -67,7 +74,7 @@ static void gather_stats(const char *buf, unsigned lo=
-ng size, struct text_stat *
- 				stats->printable++;
- 				break;
- 			case 0:
--				stats->nul++;
-+				stats->stat_bits |=3D CONVERT_STAT_BITS_BIN;
- 				/* fall through */
- 			default:
- 				stats->nonprintable++;
-@@ -75,6 +82,8 @@ static void gather_stats(const char *buf, unsigned lo=
-ng size, struct text_stat *
- 		}
- 		else
- 			stats->printable++;
-+		if (stats->stat_bits & earlyout)
-+			break; /* We found what we have been searching for */
- 	}
-=20
- 	/* If file ends with EOF then don't count this EOF as non-printable. =
-*/
-@@ -86,41 +95,62 @@ static void gather_stats(const char *buf, unsigned =
-long size, struct text_stat *
-  * The same heuristics as diff.c::mmfile_is_binary()
-  * We treat files with bare CR as binary
-  */
--static int convert_is_binary(unsigned long size, const struct text_sta=
-t *stats)
-+static void convert_nonprintable(struct text_stat *stats)
- {
--	if (stats->lonecr)
--		return 1;
--	if (stats->nul)
--		return 1;
- 	if ((stats->printable >> 7) < stats->nonprintable)
--		return 1;
--	return 0;
-+		stats->stat_bits |=3D CONVERT_STAT_BITS_BIN;
-+}
-+
-+static void gather_stats(const char *buf, unsigned long size,
-+			 struct text_stat *stats, unsigned earlyout)
-+{
-+	memset(stats, 0, sizeof(*stats));
-+	do_gather_stats(buf, size, stats, earlyout);
-+	convert_nonprintable(stats);
- }
-=20
--static unsigned int gather_convert_stats(const char *data, unsigned lo=
-ng size)
-+
-+static unsigned get_convert_stats_sha1(unsigned const char *sha1,
-+				       unsigned earlyout)
- {
-+	struct git_istream *st;
- 	struct text_stat stats;
--	int ret =3D 0;
--	if (!data || !size)
--		return 0;
--	gather_stats(data, size, &stats);
--	if (convert_is_binary(size, &stats))
--		ret |=3D CONVERT_STAT_BITS_BIN;
--	if (stats.crlf)
--		ret |=3D CONVERT_STAT_BITS_TXT_CRLF;
--	if (stats.lonelf)
--		ret |=3D  CONVERT_STAT_BITS_TXT_LF;
-+	enum object_type type;
-+	unsigned long sz;
-=20
--	return ret;
-+	if (!sha1)
-+		return 0;
-+	memset(&stats, 0, sizeof(stats));
-+	st =3D open_istream(sha1, &type, &sz, NULL);
-+	if (!st) {
-+		return 0;
-+	}
-+	if (type !=3D OBJ_BLOB)
-+		goto close_and_exit_i;
-+	for (;;) {
-+		char buf[1024];
-+		ssize_t readlen =3D read_istream(st, buf, sizeof(buf));
-+		if (readlen < 0)
-+			break;
-+		if (!readlen)
-+			break;
-+		do_gather_stats(buf, (unsigned long)readlen, &stats, earlyout);
-+		if (stats.stat_bits & earlyout)
-+			break; /* We found what we have been searching for */
-+	}
-+close_and_exit_i:
-+	close_istream(st);
-+	convert_nonprintable(&stats);
-+	return stats.stat_bits;
- }
-=20
--static const char *gather_convert_stats_ascii(const char *data, unsign=
-ed long size)
-+static const char *convert_stats_ascii(unsigned convert_stats)
- {
--	unsigned int convert_stats =3D gather_convert_stats(data, size);
--
-+	unsigned mask =3D CONVERT_STAT_BITS_TXT_LF |
-+		CONVERT_STAT_BITS_TXT_CRLF;
- 	if (convert_stats & CONVERT_STAT_BITS_BIN)
- 		return "-text";
--	switch (convert_stats) {
-+	switch (convert_stats & mask) {
- 	case CONVERT_STAT_BITS_TXT_LF:
- 		return "lf";
- 	case CONVERT_STAT_BITS_TXT_CRLF:
-@@ -132,24 +162,45 @@ static const char *gather_convert_stats_ascii(con=
-st char *data, unsigned long si
- 	}
- }
-=20
-+static unsigned get_convert_stats_wt(const char *path)
-+{
-+	struct text_stat stats;
-+	unsigned earlyout =3D CONVERT_STAT_BITS_BIN;
-+	int fd;
-+	memset(&stats, 0, sizeof(stats));
-+	fd =3D open(path, O_RDONLY);
-+	if (fd < 0)
-+		return 0;
-+	for (;;) {
-+		char buf[1024];
-+		ssize_t readlen =3D read(fd, buf, sizeof(buf));
-+		if (readlen < 0)
-+			break;
-+		if (!readlen)
-+			break;
-+		do_gather_stats(buf, (unsigned long)readlen, &stats, earlyout);
-+		if (stats.stat_bits & earlyout)
-+			break; /* We found what we have been searching for */
-+	}
-+	close(fd);
-+	convert_nonprintable(&stats);
-+	return stats.stat_bits;
-+}
-+
- const char *get_cached_convert_stats_ascii(const char *path)
- {
--	const char *ret;
--	unsigned long sz;
--	void *data =3D read_blob_data_from_cache(path, &sz);
--	ret =3D gather_convert_stats_ascii(data, sz);
--	free(data);
--	return ret;
-+	unsigned convert_stats;
-+	unsigned earlyout =3D CONVERT_STAT_BITS_BIN;
-+	convert_stats =3D get_convert_stats_sha1(get_sha1_from_cache(path),
-+					       earlyout);
-+	return convert_stats_ascii(convert_stats);
- }
-=20
- const char *get_wt_convert_stats_ascii(const char *path)
- {
--	const char *ret =3D "";
--	struct strbuf sb =3D STRBUF_INIT;
--	if (strbuf_read_file(&sb, path, 0) >=3D 0)
--		ret =3D gather_convert_stats_ascii(sb.buf, sb.len);
--	strbuf_release(&sb);
--	return ret;
-+	unsigned convert_stats;
-+	convert_stats =3D get_convert_stats_wt(path);
-+	return convert_stats_ascii(convert_stats);
- }
-=20
- static int text_eol_is_crlf(void)
-@@ -219,16 +270,10 @@ static void check_safe_crlf(const char *path, enu=
-m crlf_action crlf_action,
-=20
- static int has_cr_in_index(const char *path)
- {
--	unsigned long sz;
--	void *data;
--	int has_cr;
--
--	data =3D read_blob_data_from_cache(path, &sz);
--	if (!data)
--		return 0;
--	has_cr =3D memchr(data, '\r', sz) !=3D NULL;
--	free(data);
--	return has_cr;
-+	unsigned convert_stats;
-+	convert_stats =3D get_convert_stats_sha1(get_sha1_from_cache(path),
-+					       CONVERT_STAT_BITS_ANY_CR);
-+	return convert_stats & CONVERT_STAT_BITS_ANY_CR;
- }
-=20
- static int crlf_to_git(const char *path, const char *src, size_t len,
-@@ -249,10 +294,10 @@ static int crlf_to_git(const char *path, const ch=
-ar *src, size_t len,
- 	if (!buf && !src)
- 		return 1;
-=20
--	gather_stats(src, len, &stats);
-+	gather_stats(src, len, &stats, CONVERT_STAT_BITS_BIN);
-=20
- 	if (crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_AUTO_INPU=
-T || crlf_action =3D=3D CRLF_AUTO_CRLF) {
--		if (convert_is_binary(len, &stats))
-+		if (stats.stat_bits & CONVERT_STAT_BITS_BIN)
- 			return 0;
-=20
- 		if (crlf_action =3D=3D CRLF_AUTO_INPUT || crlf_action =3D=3D CRLF_AU=
-TO_CRLF) {
-@@ -309,11 +354,13 @@ static int crlf_to_worktree(const char *path, con=
-st char *src, size_t len,
- {
- 	char *to_free =3D NULL;
- 	struct text_stat stats;
-+	unsigned earlyout =3D CONVERT_STAT_BITS_TXT_CRLF | CONVERT_STAT_BITS_=
-BIN;
-+
-=20
- 	if (!len || output_eol(crlf_action) !=3D EOL_CRLF)
- 		return 0;
-=20
--	gather_stats(src, len, &stats);
-+	gather_stats(src, len, &stats, earlyout);
-=20
- 	/* No "naked" LF? Nothing to convert, regardless. */
- 	if (!stats.lonelf)
-@@ -327,7 +374,7 @@ static int crlf_to_worktree(const char *path, const=
- char *src, size_t len,
- 				return 0;
- 		}
-=20
--		if (convert_is_binary(len, &stats))
-+		if (stats.stat_bits & CONVERT_STAT_BITS_BIN)
- 			return 0;
- 	}
-=20
---=20
-2.8.0.rc2.2.g1a4d45a.dirty
+v4:
+
+Thanks Eric, Jeff, and Hannes for the feedback.
+
+ * I relocated the sigchain_push call so it comes after the error on
+   gpg-interface (thanks Hannnes for catching this).
+ * I updated the unit test to match the discussion on [3]. Now it generates
+   the expected output of the tag on the fly for comparison. (This is just
+   copy and paste from [3], but I verified that it works by breaking the
+   while)
+ * I split moving the code and renaming the variables into two patches so
+   these are easier to review.
+ * I used an adapter on builtin/tag.c instead of redefining all the fn*
+   declarations everywhere. This introduces an issue with the way git tag -v
+   resolves refnames though. I added a new commit to restore the previous
+   behavior of git-tag. I'm not sure if I should've split this into two commits
+   though.
+
+v3:
+Thanks Eric, Jeff, for the feedback.
+
+ * I separated the patch in multiple sub-patches.
+ * I compared the behavior of previous git tag -v and git verify-tag 
+   invocations to make sure the behavior is the same
+ * I dropped the multi-line comment, as suggested.
+ * I fixed the issue with the missing brackets in the while (this is 
+   now detected by the test).
+
+v2:
+
+ * I moved the pgp-verification code to tag.c 
+ * I added extra arguments so git tag -v and git verify-tag both work
+   with the same function
+ * Relocated the SIGPIPE handling code in verify-tag to gpg-interface
+
+v1:
+ 
+The verify tag function is just a thin wrapper around the verify-tag
+command. We can avoid one fork call by doing the verification inside
+the tag builtin instead.
+
+
+This applies on v2.8.0. 
+Thanks!
+-Santiago
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/287649
+[2] http://thread.gmane.org/gmane.comp.version-control.git/289836
+[3] http://thread.gmane.org/gmane.comp.version-control.git/290608
+[4] http://thread.gmane.org/gmane.comp.version-control.git/290731
+[5] http://thread.gmane.org/gmane.comp.version-control.git/290790
+[6] http://thread.gmane.org/gmane.comp.version-control.git/291780
+[7] http://thread.gmane.org/gmane.comp.version-control.git/291887
+[8] http://thread.gmane.org/gmane.comp.version-control.git/292029
+
+
+
+Santiago Torres (6):
+  builtin/verify-tag.c: ignore SIGPIPE in gpg-interface
+  t7030: test verifying multiple tags
+  verify-tag: update variable name and type
+  verify-tag: prepare verify_tag for libification
+  verify-tag: move tag verification code to tag.c
+  tag -v: verify directly rather than exec-ing verify-tag
+
+ builtin/tag.c         |  8 +------
+ builtin/verify-tag.c  | 61 ++++++---------------------------------------------
+ gpg-interface.c       |  2 ++
+ t/t7030-verify-tag.sh | 13 +++++++++++
+ tag.c                 | 53 ++++++++++++++++++++++++++++++++++++++++++++
+ tag.h                 |  2 ++
+ 6 files changed, 78 insertions(+), 61 deletions(-)
+
+-- 
+2.8.0
