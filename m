@@ -1,179 +1,138 @@
 From: santiago@nyu.edu
-Subject: [PATCH v8 0/6] Move PGP verification out of verify-tag
-Date: Fri, 22 Apr 2016 10:51:59 -0400
-Message-ID: <1461336725-29915-1-git-send-email-santiago@nyu.edu>
+Subject: [PATCH v8 4/6] verify-tag: prepare verify_tag for libification
+Date: Fri, 22 Apr 2016 10:52:03 -0400
+Message-ID: <1461336725-29915-5-git-send-email-santiago@nyu.edu>
+References: <1461336725-29915-1-git-send-email-santiago@nyu.edu>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Santiago Torres <santiago@nyu.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 22 16:52:20 2016
+X-From: git-owner@vger.kernel.org Fri Apr 22 16:52:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atcRN-00058b-KD
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 16:52:17 +0200
+	id 1atcRW-0005C3-0s
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 16:52:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753248AbcDVOwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Apr 2016 10:52:12 -0400
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:32800 "EHLO
-	mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751761AbcDVOwL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2016 10:52:11 -0400
-Received: by mail-qk0-f179.google.com with SMTP id n63so39137101qkf.0
-        for <git@vger.kernel.org>; Fri, 22 Apr 2016 07:52:10 -0700 (PDT)
+	id S1754463AbcDVOwS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Apr 2016 10:52:18 -0400
+Received: from mail-qg0-f51.google.com ([209.85.192.51]:35638 "EHLO
+	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752811AbcDVOwP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Apr 2016 10:52:15 -0400
+Received: by mail-qg0-f51.google.com with SMTP id f74so54495533qge.2
+        for <git@vger.kernel.org>; Fri, 22 Apr 2016 07:52:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id;
-        bh=yG1n291S8X8/UVOesq/Rh/SBVfDH8TRPfvbvpQwFJUw=;
-        b=sS0z1Vujt8HaXM84Ic3QTJg1rGZgf5raTKQk2M2/3sI96vFWRD8dmL96kfjVgDmpDb
-         7QDYtPVBP47BUMDCZZ2A2ReswyTtkz32lXdCYzHjivSYdoDUENCkP8yqj7Fo8pvmtlOz
-         ENqcIp6wkgBd1vrLgBTgB4T7mhWKFgu56/TAmocnEIa+9uYkutswYKGPyer21Kq4Q0gk
-         Yhbp/v2UfRLrOCofVAA1M12VzVS7ieypWOz/99eDmRmFr0yBxKilqXF0nsfEl/bjrmSI
-         BMqpGwqvj+sn20G5s6Q699Dw5eEG5V7MmFJf7lA41wFuN1BzEUQMNBUsIdDeXSjZke0h
-         kZfQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=01MKujRNvFEXdqr9O5FEUy/MtpVUMqbq2/zN6B34dNY=;
+        b=sb5uUNYhUuuAuw6QMkEHiKCME+k55+At2RDLCywzhqBmHPXKPB1yCC5Cq+8SayzmGD
+         YKUTDjUpeZctqWVlWUVqmUIgV2dgjOcS0PUUUiJYJIcollE+KaA3dkavAfBsizagUmkO
+         ZtLn0x9qsbUzhZogX0fXlHj7PQyAwOj+PLipam6jb2H4Vm6DGFRVn5sKaZomTNp59JvF
+         t667TjhAu04XQaTIP7+u3seJ6H2ph+6zvI5YKfhCpLfD8huBzmpnSTbcB6MNt2wv4u/y
+         TUuBrsxtFkXWb7qdR9+f1n+MxNjWaSl3DbKq/6qpRoePW4DjrXN9dhP1fue/y5h2ivjI
+         qJhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=yG1n291S8X8/UVOesq/Rh/SBVfDH8TRPfvbvpQwFJUw=;
-        b=kOurD2h7RniRkDjx31QIUqOrvvN/19ll9dyUPWF9tTY1TYh+bbjLKK3iH45mMUOiEd
-         GL2z229o3KqHSqfrCC4PS/cqfs0qIGHEo9GuxbrApR1FQOo1DF+t3p77i771G5tq2hXX
-         rmLZ9YMwGtXfbDC14xnV2aLzB9yykoszmLF7CbRM5I94nf6lorollK37VlfwfhUgCOGu
-         OmSvHEx7J1GanI6UBi+P/yvm3YY2Fr6rF5pHYEkVaGGR0/NDIiV4Hz5q5aLv4G6mmmoT
-         P86rvEMj+srw6/n/kc1N4jQ8gA3KWBKi5g76rKHIQNTsnPBbIBSjGSoth2CBki6TW3/u
-         K41A==
-X-Gm-Message-State: AOPr4FWJp6pJ5v54peYgeYQ8bVvMQKZAmWaIZCMzzIrRLwEtYuM/PAatSrobPaG2VNklKrnx
-X-Received: by 10.55.117.12 with SMTP id q12mr5127646qkc.192.1461336730259;
-        Fri, 22 Apr 2016 07:52:10 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=01MKujRNvFEXdqr9O5FEUy/MtpVUMqbq2/zN6B34dNY=;
+        b=aXfF0tkoacpEFKFZPnFC9FaPqwVL+vj0wh2lwtBuopCSBWWxdnj+eBpQ3AOJCHEhSq
+         3+e6RPU9Iev5DyZJBaPOuC2rkZpv5mxufyLhbik1j7m+3V+KLKfyyXBEk7PKtnF/WlkR
+         +kZQEaoEnvwi+Fx4yhI9Bs7JXTpMuApqjQD37gZ16gzFE5iNdMvQHDX9l3qvp9ONv4K5
+         i8TgYEAHai0U92W4FJRESr+WJrufWHZ2u3xavN+ubkR34cxop6xHqMwRNXek4DBFw9f0
+         Ja6Gql8ZvT/Q799xDJBMzK/ahdIjcVc+piODGeUkU0YECeoN+iiKPBwSXT3Vddls3s2Y
+         1CUQ==
+X-Gm-Message-State: AOPr4FVE2wwgQ1jDFt41in56C/rbRTCIKncRrPnMtk4uP/cB1AlQFe1g3DvSa9jsoVk6DILK
+X-Received: by 10.140.130.14 with SMTP id 14mr22887290qhc.85.1461336734165;
+        Fri, 22 Apr 2016 07:52:14 -0700 (PDT)
 Received: from LykOS.localdomain (NYUFWA-WLESSAUTHCLIENTS-18.NATPOOL.NYU.EDU. [216.165.95.7])
-        by smtp.gmail.com with ESMTPSA id s67sm2583005qgs.48.2016.04.22.07.52.09
+        by smtp.gmail.com with ESMTPSA id s67sm2583005qgs.48.2016.04.22.07.52.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 22 Apr 2016 07:52:09 -0700 (PDT)
+        Fri, 22 Apr 2016 07:52:13 -0700 (PDT)
 X-Mailer: git-send-email 2.8.0
+In-Reply-To: <1461336725-29915-1-git-send-email-santiago@nyu.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292221>
 
 From: Santiago Torres <santiago@nyu.edu>
 
-This is a follow up of [1], [2], [3], [4], [5], [6], and [7].  patches 1/6,
-2/6, and 3/6, are the same as the corresponding commits in pu.
+The current interface of verify_tag() resolves reference names to SHA1,
+however, the plan is to make this functionality public and the current
+interface is cumbersome for callers: they are expected to supply the
+textual representation of a sha1/refname. In many cases, this requires
+them to turn the sha1 to hex representation, just to be converted back
+inside verify_tag.
 
-v8:  
-Minor nits, I decided to quickly reroll to drop the extern qualifier in tag.c:
-  * Eric pointed out that we could block-scope the declaration of name and sha1
-    in b/verify-tag.c, for 4/6
-  * There was a typo in 6/6
-  * I dropped the extern qualifier in tag.c for 5/6 as suggested by Ramsay
-    Jones[8]
+Add a SHA1 parameter to use instead of the name parameter, and rename
+the name parameter to "name_to_report" for reporting purposes only.
 
-v7: 
-Mostly style/clarity changes. Thanks Peff, Eric and Junio for the
-feedback! In summary: 
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Santiago Torres <santiago@nyu.edu>
+---
+ builtin/verify-tag.c | 26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
- * Eric pointed out issues with 3/6's commit message. It doesn't match the one 
-   in pu though. I also took the opportunity to update payload_size to a size_t
-   as Peff suggested.
- * 4/6 I updated report_name to name_to_report, I updated the commit message 
-   and addressed some nits in the code, one of the fixes removed all three nits
-   that Eric pointed out. I updated 5/6 to match these changes
- * I gave the commit message on 6/6 another go.
-
-v6: 
- * As Junio suggested, updated 4/6, to include the name argument and the
-   ternary operator to provide more descriptive error messages. I propagated
-   these changes to 5/6 and 6/6 as well. I'm unsure about the 80-column
-   on 4/6, the ternary operator is rather long.
- * Updated and reviewed the commit messages based on Eric and Junio's
-   feedback
-
-v5:
-Added helpful feedback by Eric
-
- * Reordering of the patches, to avoid temporal inclusion of a regression
- * Fix typos here and there.
- * Review commit messages, as some weren't representative of what the patches
-   were doing anymore.
- * Updated t7030 to include Peff's suggestion, and added a helped-by line here
-   as it was mostly Peff's code.
- * Updated the error-handling/printing issues that were introduced when.
-   libifying the verify_tag function.
-
-v4:
-
-Thanks Eric, Jeff, and Hannes for the feedback.
-
- * I relocated the sigchain_push call so it comes after the error on
-   gpg-interface (thanks Hannnes for catching this).
- * I updated the unit test to match the discussion on [3]. Now it generates
-   the expected output of the tag on the fly for comparison. (This is just
-   copy and paste from [3], but I verified that it works by breaking the
-   while)
- * I split moving the code and renaming the variables into two patches so
-   these are easier to review.
- * I used an adapter on builtin/tag.c instead of redefining all the fn*
-   declarations everywhere. This introduces an issue with the way git tag -v
-   resolves refnames though. I added a new commit to restore the previous
-   behavior of git-tag. I'm not sure if I should've split this into two commits
-   though.
-
-v3:
-Thanks Eric, Jeff, for the feedback.
-
- * I separated the patch in multiple sub-patches.
- * I compared the behavior of previous git tag -v and git verify-tag 
-   invocations to make sure the behavior is the same
- * I dropped the multi-line comment, as suggested.
- * I fixed the issue with the missing brackets in the while (this is 
-   now detected by the test).
-
-v2:
-
- * I moved the pgp-verification code to tag.c 
- * I added extra arguments so git tag -v and git verify-tag both work
-   with the same function
- * Relocated the SIGPIPE handling code in verify-tag to gpg-interface
-
-v1:
+diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
+index fa26e40..a3d3a43 100644
+--- a/builtin/verify-tag.c
++++ b/builtin/verify-tag.c
+@@ -42,25 +42,28 @@ static int run_gpg_verify(const char *buf, unsigned long size, unsigned flags)
+ 	return ret;
+ }
  
-The verify tag function is just a thin wrapper around the verify-tag
-command. We can avoid one fork call by doing the verification inside
-the tag builtin instead.
-
-
-This applies on v2.8.0. 
-Thanks!
--Santiago
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/287649
-[2] http://thread.gmane.org/gmane.comp.version-control.git/289836
-[3] http://thread.gmane.org/gmane.comp.version-control.git/290608
-[4] http://thread.gmane.org/gmane.comp.version-control.git/290731
-[5] http://thread.gmane.org/gmane.comp.version-control.git/290790
-[6] http://thread.gmane.org/gmane.comp.version-control.git/291780
-[7] http://thread.gmane.org/gmane.comp.version-control.git/291887
-[8] http://thread.gmane.org/gmane.comp.version-control.git/292029
-
-
-
-Santiago Torres (6):
-  builtin/verify-tag.c: ignore SIGPIPE in gpg-interface
-  t7030: test verifying multiple tags
-  verify-tag: update variable name and type
-  verify-tag: prepare verify_tag for libification
-  verify-tag: move tag verification code to tag.c
-  tag -v: verify directly rather than exec-ing verify-tag
-
- builtin/tag.c         |  8 +------
- builtin/verify-tag.c  | 61 ++++++---------------------------------------------
- gpg-interface.c       |  2 ++
- t/t7030-verify-tag.sh | 13 +++++++++++
- tag.c                 | 53 ++++++++++++++++++++++++++++++++++++++++++++
- tag.h                 |  2 ++
- 6 files changed, 78 insertions(+), 61 deletions(-)
-
+-static int verify_tag(const char *name, unsigned flags)
++static int verify_tag(const unsigned char *sha1, const char *name_to_report,
++			unsigned flags)
+ {
+ 	enum object_type type;
+-	unsigned char sha1[20];
+ 	char *buf;
+ 	unsigned long size;
+ 	int ret;
+ 
+-	if (get_sha1(name, sha1))
+-		return error("tag '%s' not found.", name);
+-
+ 	type = sha1_object_info(sha1, NULL);
+ 	if (type != OBJ_TAG)
+ 		return error("%s: cannot verify a non-tag object of type %s.",
+-				name, typename(type));
++				name_to_report ?
++				name_to_report :
++				find_unique_abbrev(sha1, DEFAULT_ABBREV),
++				typename(type));
+ 
+ 	buf = read_sha1_file(sha1, &type, &size);
+ 	if (!buf)
+-		return error("%s: unable to read file.", name);
++		return error("%s: unable to read file.",
++				name_to_report ?
++				name_to_report :
++				find_unique_abbrev(sha1, DEFAULT_ABBREV));
+ 
+ 	ret = run_gpg_verify(buf, size, flags);
+ 
+@@ -96,8 +99,13 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
+ 	if (verbose)
+ 		flags |= GPG_VERIFY_VERBOSE;
+ 
+-	while (i < argc)
+-		if (verify_tag(argv[i++], flags))
++	while (i < argc) {
++		unsigned char sha1[20];
++		const char *name = argv[i++];
++		if (get_sha1(name, sha1))
++			had_error = !!error("tag '%s' not found.", name);
++		else if (verify_tag(sha1, name, flags))
+ 			had_error = 1;
++	}
+ 	return had_error;
+ }
 -- 
 2.8.0
