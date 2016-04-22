@@ -1,89 +1,105 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 2/3] mmap(win32): avoid copy-on-write when it is
- unnecessary
-Date: Fri, 22 Apr 2016 16:31:26 +0200 (CEST)
-Message-ID: <3e2a45e60e2905f52f962604cf19a0e5e39b9b1b.1461335463.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 3/3] mmap(win32): avoid expensive fstat() call
+Date: Fri, 22 Apr 2016 16:31:32 +0200 (CEST)
+Message-ID: <54698524fa95e2f83167ca78205749f855bfaee6.1461335463.git.johannes.schindelin@gmx.de>
 References: <cover.1461335463.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org, Sven Strickroth <email@cs-ware.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 22 16:31:59 2016
+X-From: git-owner@vger.kernel.org Fri Apr 22 16:32:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atc7i-0006bQ-WA
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 16:31:59 +0200
+	id 1atc7k-0006bQ-U9
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 16:32:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754122AbcDVObg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Apr 2016 10:31:36 -0400
-Received: from mout.gmx.net ([212.227.15.19]:52966 "EHLO mout.gmx.net"
+	id S1754214AbcDVObj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Apr 2016 10:31:39 -0400
+Received: from mout.gmx.net ([212.227.15.18]:51309 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753961AbcDVObd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2016 10:31:33 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MbOoG-1bCNS741gq-00ImLD; Fri, 22 Apr 2016 16:31:28
+	id S1754192AbcDVObi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Apr 2016 10:31:38 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MFdDB-1azKcr2nUz-00Ec2E; Fri, 22 Apr 2016 16:31:32
  +0200
 X-X-Sender: virtualbox@virtualbox
 In-Reply-To: <cover.1461335463.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:jwV5Q7wdYTFAI0WW196b+d5qfrUaHtgTw6uPnZPHYY++Ob0Hg9s
- CO66fC01+JA5c1eBpkE+Ex7l8ePOiEfJ5Ydn9j62miOyxiiB5cCK9khyrsa+zDuJT65KV33
- dGq7OHpXwoW3gJv0FoQQpUOhMEcaepfZJZePeNFfqyE6r7lK1h4b8U9gqr+M4mdJ+0gxuwY
- qrELHDx8VTtB/mCH6Retw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Txv7hpVRhEE=:FSiHCGeFG8VgeYhgbYzUmE
- Ad0vvvbseWhTpGpMXU23oHKXPnv/ckPZVDgE1dkfEtxR6kHUtwspIUxUFNsipOvOz8AJPGLhE
- YZ+aScGO07rQYKnkDoNovBKhZG481Kr/z90qKnrjUBN6jGG4s8U2DMvTdwhYaaMhm1uxaUoCJ
- Bc8oXJGPxFOnJDnyF2ODum0fvDTiQhnj/ptNTihK4I14vkOkV1+Cav/CzfCuwZRI1AFuaJEHe
- qFechvJ4cE1ODzqjQqqYRUmd/4KjWYRwFwdRVo3Oi1DK1TA1Hc5n02z16lVELQ6prWNh2gqJN
- nX3Bx8ZfFl0EPjYIk2M8t3HsPO7pjrvmp4NdxMarmnVeuFVferW9rTS/O22JVfIVTSzEKPvNn
- bwQ5TpQUyxwsiQOBn30itDRul/w8nvZp1I4RpZwvP6sfVZnHMbmBuGYBOpfdbrb4JYlN4MwmQ
- dJgYfdioRwlbkld7Y7spxgnw/5caHGUiPGPRZ70ylh/IwUnqSr6negNSaAqOLGuf+CbEIZfGs
- hzzovOGV/kTUx+Q2cnoX26OSl9kmcmok8mNu/HkZlYDp3YCltUKoJux6qonv97Nr8HJyKP6eu
- bC3bn3gEUK+LLEPWtYt90JnLpvY8sxIxUF69FfCSFZuI6yaqRth8J8PCeaGs0fhaAd8n8XrMz
- n/8Fsba7YU3xYRPhrC6KkEYSL3vURGacYXbn/UNfAC02idmAl9P99eHit9UDR9YbVuL/DNp2W
- Bps3pEhkMspTQkECf7xpSMeZhwc4bM6eZD4aNMO6DqMFm+YlnS9P3mpRj49w4rSf1ecLuvKA 
+X-Provags-ID: V03:K0:paaFp/qBmhGuKfvSCfV4H6vOpYkfB44OJA//pc7AAlzV+n56Ix3
+ Zlrbo7ovYi1H86UPRRvbEwPeaBwCdx25A5+UENEYSt/znWlguh7vQaLnX82X+ZxaglME7dl
+ cDz/gxy2+gEExBtrLY6/PLgC50U/H6I7k7UGPGilvBv+/wrsJHutSRKNFFZB5Jx5KtWxUA0
+ HvpufhcBszQYcBslp+sTQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:avceGcTz21g=:5cLVBYzCMU63pjCf+fDGlN
+ nM3PA6eW6k9gKOsiSmByI1wyh6j/Z1mPg3LUIXD4CnNf9fpEF1TzO6dbkajVr28RiV5lKobU7
+ VVSUUW9NBky3HFHdDYtkwURZ27KCf29pU23vGme6DCcXtC3kl1PphNu2Uxb59FWQSD8DXtcYX
+ k/0Vm/omUNYGfTpwSXBovMevETyTU0/Va0n5AWM8XEArQLigaZpI6zcOcvUhRCr+6foml/9nd
+ QbHbqIiechKnJk6ZNfztLS0lmZxNVv8dwZEkNwTj4gjjsjnFl1npSwQMnenvNxMNglFd+s1uk
+ VMI+jS9s9ei5+6xvlYcamf6YwPFsAI+GOBO/J6lFkg2/qjAE9XcjWLsRhia2D435hgn7YBGaE
+ FavwvWnKsqVswJ10nPDrasf9D+1z7Ke2n6jrYbbm6DS554S2P5zS0Uj0xnv+dTsJmXE7tsczB
+ HJQIEAkiQHWk0rhgwoyeJ61EIB+Ucn4q5WQD77NG5/MhbJI3hzPIixM3FMbICsbJK3v0XO2UV
+ QsBdaWEPEalzt418LQZI/yiW2zJmzU+7FMflQsTa72dyZXBayTr2IsXw215GSvEP8X4qy9Cm1
+ Jo+NHuHWNwPyGzaasUGDEYf40rejmUAYvxbH5Asm4JSeG73s5p6Dv1HKSlkIFuEpOAA2ahlPf
+ TOcconk15C/NzOTyIhpAI/KFlizgza1TJ+EqUouXDwQlQX2c0596LsEhYERxemiy9rzvaepUJ
+ ZadkAH9WQdOD31bjL1Q9CXGFIJHN3iNabL88LhCVeacqKRZmc9/w3nwf2t6o2rCmKQPGgzox 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292209>
 
-Often we are mmap()ing read-only. In those cases, it is wasteful to map in
-copy-on-write mode. Even worse: it can cause errors where we run out of
-space in the page file.
+On Windows, we have to emulate the fstat() call to fill out information
+that takes extra effort to obtain, such as the file permissions/type.
 
-So let's be extra careful to map files in read-only mode whenever
-possible.
+If all we want is the file size, we can use the much cheaper
+GetFileSizeEx() function (available since Windows XP).
+
+Suggested by Philip Kelley.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/win32mmap.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ compat/win32mmap.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
 diff --git a/compat/win32mmap.c b/compat/win32mmap.c
-index 3a39f0f..b836169 100644
+index b836169..519d51f 100644
 --- a/compat/win32mmap.c
 +++ b/compat/win32mmap.c
-@@ -22,14 +22,15 @@ void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t of
+@@ -2,26 +2,24 @@
+ 
+ void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t offset)
+ {
+-	HANDLE hmap;
++	HANDLE osfhandle, hmap;
+ 	void *temp;
+-	off_t len;
+-	struct stat st;
++	LARGE_INTEGER len;
+ 	uint64_t o = offset;
+ 	uint32_t l = o & 0xFFFFFFFF;
+ 	uint32_t h = (o >> 32) & 0xFFFFFFFF;
+ 
+-	if (!fstat(fd, &st))
+-		len = st.st_size;
+-	else
++	osfhandle = (HANDLE)_get_osfhandle(fd);
++	if (!GetFileSizeEx(osfhandle, &len))
+ 		die("mmap: could not determine filesize");
+ 
+-	if ((length + offset) > len)
+-		length = xsize_t(len - offset);
++	if ((length + offset) > len.QuadPart)
++		length = xsize_t(len.QuadPart - offset);
+ 
+ 	if (!(flags & MAP_PRIVATE))
  		die("Invalid usage of mmap when built with USE_WIN32_MMAP");
  
- 	hmap = CreateFileMapping((HANDLE)_get_osfhandle(fd), NULL,
--		PAGE_WRITECOPY, 0, 0, NULL);
-+		prot == PROT_READ ? PAGE_READONLY : PAGE_WRITECOPY, 0, 0, NULL);
+-	hmap = CreateFileMapping((HANDLE)_get_osfhandle(fd), NULL,
++	hmap = CreateFileMapping(osfhandle, NULL,
+ 		prot == PROT_READ ? PAGE_READONLY : PAGE_WRITECOPY, 0, 0, NULL);
  
  	if (!hmap) {
- 		errno = EINVAL;
- 		return MAP_FAILED;
- 	}
- 
--	temp = MapViewOfFileEx(hmap, FILE_MAP_COPY, h, l, length, start);
-+	temp = MapViewOfFileEx(hmap, prot == PROT_READ ?
-+			FILE_MAP_READ : FILE_MAP_COPY, h, l, length, start);
- 
- 	if (!CloseHandle(hmap))
- 		warning("unable to close file mapping handle");
 -- 
 2.8.1.306.gff998f2
