@@ -1,77 +1,103 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: make test Unexpected passes
-Date: Fri, 22 Apr 2016 21:05:24 +0100
-Message-ID: <571A8404.5030200@ramsayjones.plus.com>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH v2] test-lib: simplify '--option=value' parsing
+Date: Fri, 22 Apr 2016 22:32:21 +0200
+Message-ID: <1461357141-12417-1-git-send-email-szeder@ira.uka.de>
+References: <20160422183703.GA7595@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: ben.woosley@gmail.com, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 22 22:05:36 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 22 22:33:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1athKZ-0004qd-EF
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 22:05:35 +0200
+	id 1athlH-0000zK-QO
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 22:33:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751719AbcDVUFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Apr 2016 16:05:30 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:57800 "EHLO
-	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751554AbcDVUFa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2016 16:05:30 -0400
-Received: from [10.0.2.15] ([91.125.197.102])
-	by avasout07 with smtp
-	id lY5S1s0062D2Veb01Y5UWg; Fri, 22 Apr 2016 21:05:28 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=QqujpgGd c=1 sm=1 tr=0
- a=mTUfFwB0nGOO66Ym8a+i3w==:117 a=mTUfFwB0nGOO66Ym8a+i3w==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
- a=ytdg1oe-me6gtZ-LOuwA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
+	id S1752461AbcDVUdH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Apr 2016 16:33:07 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:54084 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751470AbcDVUdG (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2016 16:33:06 -0400
+Received: from x590e2083.dyn.telefonica.de ([89.14.32.131] helo=localhost.localdomain)
+	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
+	iface 141.3.10.81 id 1athl4-0000Ep-UT; Fri, 22 Apr 2016 22:33:00 +0200
+X-Mailer: git-send-email 2.8.1.99.g5d5236f
+In-Reply-To: <20160422183703.GA7595@sigill.intra.peff.net>
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1461357180.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292264>
 
-Hi Ben, Junio,
+To get the 'value' from '--option=3Dvalue', test-lib.sh parses said
+option running 'expr' with a regexp.  This involves a subshell, an
+external process, and a lot of non-alphanumeric characters in the
+regexp.
 
-Tonight, the testsuite passed with a couple of 'unexpected passes', viz:
+Use a much simpler POSIX-defined shell parameter expansion instead to
+do the same.
 
-$ tail -17 ptest-out
-[13:24:29]
-All tests successful.
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+---
 
-Test Summary Report
--------------------
-t3421-rebase-topology-linear.sh                  (Wstat: 0 Tests: 76 Failed: 0)
-  TODO passed:   50, 54
-t6036-recursive-corner-cases.sh                  (Wstat: 0 Tests: 22 Failed: 0)
-  TODO passed:   11
-Files=746, Tests=13515, 445 wallclock secs ( 3.83 usr  0.61 sys + 52.78 cusr 27.89 csys = 85.11 CPU)
-Result: PASS
-make clean-except-prove-cache
-make[2]: Entering directory `/home/ramsay/git/t'
-rm -f -r 'trash directory'.* 'test-results'
-rm -f -r valgrind/bin
-make[2]: Leaving directory `/home/ramsay/git/t'
-make[1]: Leaving directory `/home/ramsay/git/t'
-$ 
+>>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> I count 5 cases in my copy of test-lib.sh. I think you are missing
+> "--run".
 
-In the first case, t3421-*.sh, git bisect fingered commit f32ec670
-("git-rebase--merge: don't include absent parent as a base", 20-04-2016).
+Oh, indeed, '--run' managed to hide between these
+-l|--l|--lo|--lon|--long patterns.
 
-In the second case, t6036-*.sh, git bisect fingered commit b61f9d6e
-("ll-merge: use a longer conflict marker for internal merge", 14-04-2016).
 
-I won't have any time tonight to look into this any further (are these
-false positives?), so I thought I would just make sure you were aware
-of these 'unexpected passes'.
+ t/test-lib.sh | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-ATB,
-Ramsay Jones
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 0b47eb6bb299..79afa8748eec 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -202,13 +202,13 @@ do
+ 		}
+ 		run_list=3D$1; shift ;;
+ 	--run=3D*)
+-		run_list=3D$(expr "z$1" : 'z[^=3D]*=3D\(.*\)'); shift ;;
++		run_list=3D${1#--*=3D}; shift ;;
+ 	-h|--h|--he|--hel|--help)
+ 		help=3Dt; shift ;;
+ 	-v|--v|--ve|--ver|--verb|--verbo|--verbos|--verbose)
+ 		verbose=3Dt; shift ;;
+ 	--verbose-only=3D*)
+-		verbose_only=3D$(expr "z$1" : 'z[^=3D]*=3D\(.*\)')
++		verbose_only=3D${1#--*=3D}
+ 		shift ;;
+ 	-q|--q|--qu|--qui|--quie|--quiet)
+ 		# Ignore --quiet under a TAP::Harness. Saying how many tests
+@@ -222,15 +222,15 @@ do
+ 		valgrind=3Dmemcheck
+ 		shift ;;
+ 	--valgrind=3D*)
+-		valgrind=3D$(expr "z$1" : 'z[^=3D]*=3D\(.*\)')
++		valgrind=3D${1#--*=3D}
+ 		shift ;;
+ 	--valgrind-only=3D*)
+-		valgrind_only=3D$(expr "z$1" : 'z[^=3D]*=3D\(.*\)')
++		valgrind_only=3D${1#--*=3D}
+ 		shift ;;
+ 	--tee)
+ 		shift ;; # was handled already
+ 	--root=3D*)
+-		root=3D$(expr "z$1" : 'z[^=3D]*=3D\(.*\)')
++		root=3D${1#--*=3D}
+ 		shift ;;
+ 	--chain-lint)
+ 		GIT_TEST_CHAIN_LINT=3D1
+--=20
+2.8.1.99.g5d5236f
