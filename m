@@ -1,75 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: possible bug of git stash deleting uncommitted files in corner case
-Date: Fri, 22 Apr 2016 10:37:19 -0700
-Message-ID: <xmqqmvolpmsw.fsf@gitster.mtv.corp.google.com>
-References: <CAND5yRvCK9YuVOJ91CHbnbWAVYcPrpihGkoKs28f7PJgzRwW6Q@mail.gmail.com>
-	<CAND5yRvU1-AgvQW106fHbNN-GRQ615HjTDjR6AY9gkpoquBgDw@mail.gmail.com>
-	<1304154573.4013923.1461328186541.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] name-rev: include taggerdate in considering the best name
+Date: Fri, 22 Apr 2016 14:11:04 -0400
+Message-ID: <20160422181103.GA5920@sigill.intra.peff.net>
+References: <d58135a6720d6fda4c7bc609e77e2709d161fe25.1461332260.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Daniele Segato <daniele.segato@gmail.com>, git@vger.kernel.org
-To: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Apr 22 19:37:33 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Olaf Hering <olaf@aepfle.de>,
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Apr 22 20:11:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atf1F-0006Gf-Nh
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 19:37:30 +0200
+	id 1atfXt-0007Wt-L9
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 20:11:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932361AbcDVRh0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Apr 2016 13:37:26 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60900 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932091AbcDVRhZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2016 13:37:25 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id F2E1E1577B;
-	Fri, 22 Apr 2016 13:37:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iQhqUakvk92MreUMMHzYDEpqNlg=; b=EigzFY
-	tCI5OYNoSj/gUh8r63n7NqICnJylnEp8JytiJGN3hPsfyfVjrP8aTkD8j3TmIy1c
-	og04J9ibI0I6RHMe0dWHUcallEDk74dGw6nId0kDtIvJIU1bgzDR8BVF/9/noF5h
-	yiGUpHkz9AT8anQBkb4Y/20qTJdPWR2ERFrN8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DhUQ2f05eCgtsBHVjh4VciJnD9LaFNfm
-	AOqgFHjUM/WgmglmW8vKx4DqrAiabfu8HlzrRnUtFy9OwjHRcvMcUiXPj+F9bBZP
-	hKs9y8mlfuwSVMHWH/wc1804PkSAIVRLITK5912wHmCz5HUa5n4DY0WAhrVy7sai
-	Uux6iFq/MHo=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EA2F51577A;
-	Fri, 22 Apr 2016 13:37:21 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D698915779;
-	Fri, 22 Apr 2016 13:37:20 -0400 (EDT)
-In-Reply-To: <1304154573.4013923.1461328186541.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	(Remi Galan Alfonso's message of "Fri, 22 Apr 2016 14:29:46 +0200
-	(CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DDBF70BA-08B0-11E6-86F9-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1753895AbcDVSLI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Apr 2016 14:11:08 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54285 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753284AbcDVSLH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Apr 2016 14:11:07 -0400
+Received: (qmail 16742 invoked by uid 102); 22 Apr 2016 18:11:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 Apr 2016 14:11:06 -0400
+Received: (qmail 8622 invoked by uid 107); 22 Apr 2016 18:11:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 Apr 2016 14:11:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Apr 2016 14:11:04 -0400
+Content-Disposition: inline
+In-Reply-To: <d58135a6720d6fda4c7bc609e77e2709d161fe25.1461332260.git.johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292237>
 
-Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-writes:
+On Fri, Apr 22, 2016 at 03:39:01PM +0200, Johannes Schindelin wrote:
 
-> Daniele Segato <daniele.segato@gmail.com> wrote:
-> ...
->> git version 1.9.1
->
-> Contrary to what I expected, this seems to still be the case with:
->   $ git --version
->   git version 2.8.0.rc2
+> We most likely want the oldest tag that contained the commit to be
+> reported. So let's remember the taggerdate, and make it more important
+> than anything else when choosing the best name for a given commit.
+> 
+> Suggested by Linus Torvalds.
+> 
+> Note that we need to update t9903 because it tested for the old behavior
+> (which preferred the description "b1~1" over "tags/t2~1").
+> 
+> We might want to introduce a --heed-taggerdate option, and make the new
+> behavior dependent on that, if it turns out that some scripts rely on the
+> old name-rev method.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  builtin/name-rev.c     | 19 +++++++++++++------
+>  t/t9903-bash-prompt.sh |  2 +-
+>  2 files changed, 14 insertions(+), 7 deletions(-)
 
-I do not think "git stash" has been updated in any major way to
-address correctness (including its corner case behaviour) ever since
-it was originally written, so it is very likely that any bug you see
-would be with it since the very old days.
+That turned out to be quite simple (I wasn't sure originally if we'd
+actually visit all of the tags, which is why I had conceived of this as
+an initial pass; but of course it makes sense that we'd have to see all
+of the tags in the existing code).
+
+I confirmed that it does find the "optimal" tag for the case we've been
+discussing.
+
+We could _also_ tweak the merge-weight as Linus's patch did, just
+because 10000 has more basis than 65535. But I think it really matters a
+lot less at this point.
+
+-Peff
