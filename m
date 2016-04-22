@@ -1,96 +1,67 @@
-From: Jeff King <peff@peff.net>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
 Subject: Re: What's cooking in git.git (Apr 2016, #06; Thu, 21)
-Date: Fri, 22 Apr 2016 00:42:59 -0400
-Message-ID: <20160422044258.GA31619@sigill.intra.peff.net>
+Date: Fri, 22 Apr 2016 07:01:41 +0200
+Message-ID: <5719B035.6070103@web.de>
 References: <xmqqy486r4co.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 22 06:43:13 2016
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 22 07:02:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atSvv-0005uf-SV
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 06:43:12 +0200
+	id 1atTEM-0003T6-7Z
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 07:02:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751829AbcDVEnE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Apr 2016 00:43:04 -0400
-Received: from cloud.peff.net ([50.56.180.127]:53945 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750814AbcDVEnC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2016 00:43:02 -0400
-Received: (qmail 5801 invoked by uid 102); 22 Apr 2016 04:43:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 Apr 2016 00:43:01 -0400
-Received: (qmail 3539 invoked by uid 107); 22 Apr 2016 04:43:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 Apr 2016 00:43:00 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Apr 2016 00:42:59 -0400
-Content-Disposition: inline
+	id S1751978AbcDVFCH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Apr 2016 01:02:07 -0400
+Received: from mout.web.de ([212.227.15.3]:50343 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751067AbcDVFCH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Apr 2016 01:02:07 -0400
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0LqGCu-1bO79N2sW8-00dje8; Fri, 22 Apr 2016 07:01:53
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101
+ Icedove/38.7.0
 In-Reply-To: <xmqqy486r4co.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:BuAovTWxkj8txNYcH5KSGOCj4KTlOmDJ+N2aa0IvJnkJwlU2V8Y
+ 4UKugLc5NxHipKoC375pVj8zq7PnfUrvOVLCbG0tVZNc6+1yVLmPq+Lne8ibNETjiMk+wA6
+ NwSTepJrZM9QXaVexQrGn+QwhOwubGYSGkRGwit5MptxqQ9uupt3i3SGFTfTEI4HXT2qE5+
+ YXXBOEH8cXj3/vb8v9izQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:plrCDEz+pPM=:q1h7w/wstox1Iw8wFbXyzZ
+ zgEWCCC71L+AmVV/Ook7wZ1hmFBOz5ccNbN979vvfBdQGiDQ30/cQNhKGNWapoOXtvpQWlqLO
+ nzsxSpb95TyBRSe350aqmdG7S8/smRl8ZoPFfg5roglcF5zj7EkYphj6MN+Arh2VPD53JTQac
+ uYoVn4mXUsWrUGMKTT+4nEJndxWXGglVYG/kQWj9GijIxPZJHanQJNyJyxZOE9GTlFoKfjMwR
+ 1vntINwmK6QMiJYD8dm8fxuXYiTzcsVUrFUPy0DVECmBus8wKeErYytv/RRz8EqqhLsssTQW6
+ 26DF2m3yeONenWaUc5wZPYad/sSKnXl7/pDDeekMn/rgo0boGPQ+wh39vF/HcO8dHkKklnYM1
+ vGO0+Ga1rEojSr6w+N2E6Cyq97DPtM59Y68+aev8Cwu6T7l2tuUteYUt3LhJPr3VTMmZowp7c
+ Vna64CcGdJjhSAbrPac4iPFXZbxV0UtGT2e9gYR7rBZCAIybitwgQMgN8bWHJKth3NcpcmNsG
+ /6XoDCDCs1mRtx8wvBWVaipZFIR0rUdjHWXn7A3ScDTerJvVWY0yiwlzVRPDfKHrknXE1gdvi
+ 5sMGXd/C/7fws9ccPQRhUaoF7chTiMQ9JJ0MpCF3/ZF2TRSnr1z9F2i+USliSVWdXjGvEaVwh
+ kU+3CxF/P77zSBsk3pdfWN3ojt4w0rU+eHPZ+zoLKjPW2wvSStRqpUcrazM2tfisRmbUvEQVg
+ ogNBFdIlts+Z9UvA4FmsS5Yj6ku9lY4vTkC1suQ4DjjefVALvd1iMFsxYiLWFdPkU15Ql4Xy 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292166>
 
-On Thu, Apr 21, 2016 at 03:20:39PM -0700, Junio C Hamano wrote:
 
-> * jk/push-client-deadlock-fix (2016-04-20) 5 commits
->  - t5504: drop sigpipe=ok from push tests
->  - fetch-pack: isolate sigpipe in demuxer thread
->  - send-pack: isolate sigpipe in demuxer thread
->  - run-command: teach async threads to ignore SIGPIPE
->  - send-pack: close demux pipe before finishing async process
-> 
->  "git push" from a corrupt repository that attempts to push a large
->  number of refs deadlocked waiting for a rejection from the
->  receiving end that will never come.
-> 
->  Will merge to 'next'.
+* tb/convert-eol-autocrlf (2016-04-19) 4 commits
+  - convert.c: ident + core.autocrlf didn't work
+  - t0027: test cases for combined attributes
+  - convert: allow core.autocrlf=input and core.eol=crlf
+  - t0027: avoid false "unchanged" due to lstat() matching after a change
 
-Minor nit, but the deadlock is the other way around: the rejection
-showed up and our demuxer is blocked writing to a reader who does not
-care about it.
+  Setting core.autocrlf to 'input' and core.eol to 'crlf' used to be
+  rejected, but because the code gives precedence to core.autcrlf,
+  there is no need to, hence we no longer reject the combination.
 
-Might be worth fixing since this text goes into the topic merge commit
-(though I really hope nobody ever has to debug it enough ever again for
-that distinction to matter :) ).
-
-> * da/user-useconfigonly (2016-04-01) 2 commits
->  - ident: give "please tell me" message upon useConfigOnly error
->  - ident: check for useConfigOnly before auto-detection of name/email
-> 
->  The "user.useConfigOnly" configuration variable makes it an error
->  if users do not explicitly set user.name and user.email.  However,
->  its check was not done early enough and allowed another error to
->  trigger, reporting that the default value we guessed from the
->  system setting was unusable.  This was a suboptimal end-user
->  experience as we want the users to set user.name/user.email without
->  relying on the auto-detection at all.
-> 
->  Waiting for Acks.
->  ($gmane/290340)
-
-I think you are waiting for the Ack from the original author on your
-tweaks. But FWIW, what you have queued looks good to me.
-
-> * dk/gc-more-wo-pack (2016-01-13) 4 commits
->  - gc: clean garbage .bitmap files from pack dir
->  - t5304: ensure non-garbage files are not deleted
->  - t5304: test .bitmap garbage files
->  - prepare_packed_git(): find more garbage
-> 
->  Follow-on to dk/gc-idx-wo-pack topic, to clean up stale
->  .bitmap and .keep files.
-> 
->  Waiting for a reroll.
->  ($gmane/284368).
-
-This one's getting pretty stale, but as I recall was pretty close to
-done.  I'll try to give it a look in the next couple of days.
-
--Peff
+  Will merge to 'next'.
+I know that I asked for an early merge of 4/4, but there is a new version
+with a fix for the leaking filter coming out this evening, european time.
+Please hold it.
