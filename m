@@ -1,79 +1,121 @@
 From: Michael Rappazzo <rappazzo@gmail.com>
-Subject: [PATCH v2 0/4] rev-parse: adjust results when they should be relative
-Date: Fri, 22 Apr 2016 17:53:08 -0400
-Message-ID: <1461361992-91918-1-git-send-email-rappazzo@gmail.com>
+Subject: [PATCH v2 2/4] t1500-rev-parse: add tests executed from sub path of the main worktree
+Date: Fri, 22 Apr 2016 17:53:10 -0400
+Message-ID: <1461361992-91918-3-git-send-email-rappazzo@gmail.com>
+References: <1461361992-91918-1-git-send-email-rappazzo@gmail.com>
 Cc: gitster@pobox.com, sunshine@sunshineco.com, pclouds@gmail.com,
 	Michael Rappazzo <rappazzo@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 22 23:53:15 2016
+X-From: git-owner@vger.kernel.org Fri Apr 22 23:53:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atj0k-0001lV-AL
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 23:53:14 +0200
+	id 1atj0t-0001sL-Ch
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 23:53:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752546AbcDVVxE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Apr 2016 17:53:04 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:33187 "EHLO
-	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752201AbcDVVxC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2016 17:53:02 -0400
-Received: by mail-yw0-f193.google.com with SMTP id o63so17215895ywe.0
-        for <git@vger.kernel.org>; Fri, 22 Apr 2016 14:53:01 -0700 (PDT)
+	id S1752914AbcDVVxP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Apr 2016 17:53:15 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:35602 "EHLO
+	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752536AbcDVVxD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Apr 2016 17:53:03 -0400
+Received: by mail-yw0-f196.google.com with SMTP id v81so16133769ywa.2
+        for <git@vger.kernel.org>; Fri, 22 Apr 2016 14:53:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=cDQZKIZSIxTzGOubqBy+Y1IhOrI5SCWJjX9Nl0SqgyU=;
-        b=M5sa52DZ9H04lz+LlCWP6AU1UcWXL0maNsNBOV/yF0u/uBwqKRmL1RrwRiFaW1ksRX
-         5yxitFUGPbHZaomwtzgyycAqRoRLxEwgRu4/6DrEWqgRsKrfmX3ZWCsLWJbTA8bxmliI
-         oSu0ED1X5LiYqx2kkTjbFLR2e7CgKSX7uk3A7REMaqnbMM7tv/C4BxscxWXVoAUNwoHU
-         w0M7uZ7HThK7IUJeogKZ23xohp0u756Qvq/pmxeE6PY5vAg4MqHBoDaX9JRD56WoX6ah
-         TsHIKjHOe3RNkOifSBwZNJ9XXiGDXOvZDZXZCyctEVeGHA9P2LMsAl/yOsphfhft6Pqx
-         LLTg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Tl3xcyCbR0tuA19qYLpNqlOk364Csz3Jpyl4yyMogQI=;
+        b=W84n4cMWhBToh5kcWpLiaItSxqmlkvHVIFooye+MYWQO4fjxOc7YsH/3gdvb8Q1hoM
+         JyaQLM+w6PVoNjUK4WCW9hAfzVuLLibaBmlD0sAPuKIXwp+VXm0MnyykRvWWRQ3mQ2kk
+         Obvisk+ERS6R0gP8Y/VEqVPVfs3WvWCG8gdtkiKJAQXfnQsO8Qt2vI3cA+XOm16kls1w
+         n2PdfnmChfz0wTEwONQLGPQXIJpTz9ue3YkaBl6XOW1pXw+RHoBFyoVbNEVYs2IKU+fp
+         txPEr5MwStU41mAk9dI7lzaClyF73TiSAUCqL2ni9o8lgrapxkA2HSNnZ45Lo0S6HeS0
+         9Kyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=cDQZKIZSIxTzGOubqBy+Y1IhOrI5SCWJjX9Nl0SqgyU=;
-        b=Cf+YzpULP7sXupz6xPFMDlmkIx55tGc7cfxMMGg14m05u1aKPzELIVaHTpFYpukyeD
-         vHlv/7QKXK3SOwfSfEt4NShTH2WLXfaObhK3NWapJYhEdpU0u0u8e7xjzn7bpOTXGEB2
-         hrhfLR2YbpEd7LpYsyQ0emWOFxGEAVVPdVcecQzemNnjh3dHlA+RVX2X0MxlyOikj7mO
-         9I1a8XNp3IkxBv5/4uI5SAvqruabpcr9MhTIgLyFqZfObYVrYjUTnwhy42gMd1kuweaf
-         nR9fGcklRqd9gQBFyHLi73ONPjKi3BbWu4PpGJHusxb2EWf4ZdD4xu5ufsjikoP5WtNQ
-         ukDA==
-X-Gm-Message-State: AOPr4FWBtaQxdpaN0vD2ImElk0kLLWcl8WRA+n1fkqFRnKoyAgB71u3JbpzopS76EkpAYw==
-X-Received: by 10.37.65.12 with SMTP id o12mr14540999yba.170.1461361980848;
-        Fri, 22 Apr 2016 14:53:00 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Tl3xcyCbR0tuA19qYLpNqlOk364Csz3Jpyl4yyMogQI=;
+        b=S9rUTfVboCIP5C5/LT+Sswh5qXB19r8ZwL+rJRUYiVAn/7nAAorvq2+1SfN8K1cUhr
+         6iCwpyZn+6lTDx5LQJq7SkgPjleaX7f8YugayzEc6wCObtOmFUZV7photmjNCAA0EELV
+         UH5Y0kwLGdsiTN+Ut8kqAo7F5LzkUxzbnmk8iobk4uj1iU/u4eE1wC1CCN7VgHH8zyCj
+         kvrwpLokArTp78Pa5uByDFMwJf51DLD19UYGdMmVqk1otnqTTxTEDC+/bwxDx0vCBjXr
+         kOokdIf/cELlnNnAqLFFBWgobT9F8LLWqkggl30H/DysgwpNtGbRDfcQUjs0mUVJs7Vu
+         okWA==
+X-Gm-Message-State: AOPr4FXUkSkJyNsqvcQC4gzU+RwMY1fbgPD23cNUcL6ZSniBJ3ZgVyIGke796uKN5SVB1g==
+X-Received: by 10.37.223.210 with SMTP id w201mr14781175ybg.74.1461361982794;
+        Fri, 22 Apr 2016 14:53:02 -0700 (PDT)
 Received: from MRappazzo-8.local.com (pool-100-35-125-216.nwrknj.fios.verizon.net. [100.35.125.216])
-        by smtp.gmail.com with ESMTPSA id m141sm5542104ywd.2.2016.04.22.14.52.59
+        by smtp.gmail.com with ESMTPSA id m141sm5542104ywd.2.2016.04.22.14.53.01
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Fri, 22 Apr 2016 14:53:00 -0700 (PDT)
+        Fri, 22 Apr 2016 14:53:02 -0700 (PDT)
 X-Mailer: git-send-email 2.8.0
+In-Reply-To: <1461361992-91918-1-git-send-email-rappazzo@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292273>
 
-Differences from v1[1]:
- - Simplify implementation based on review comments
- - Included similar changes in rev-parse for --git-path and --shared-index-path
- - Added tests and separated them into individual commits
+Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+---
+ t/t1500-rev-parse.sh | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/290669
-
-Michael Rappazzo (4):
-  rev-parse: fix some options when executed from subpath of main tree
-  t1500-rev-parse: add tests executed from sub path of the main worktree
-  t2027-worktree-list: add and adjust tests related to git-rev-parse
-  t1700-split-index: add test for rev-parse --shared-index-path
-
- builtin/rev-parse.c      | 19 ++++++++++++++-----
- t/t1500-rev-parse.sh     | 37 +++++++++++++++++++++++++++++++++++++
- t/t1700-split-index.sh   | 17 +++++++++++++++++
- t/t2027-worktree-list.sh | 10 +++++++++-
- 4 files changed, 77 insertions(+), 6 deletions(-)
-
+diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+index 48ee077..1e220f7 100755
+--- a/t/t1500-rev-parse.sh
++++ b/t/t1500-rev-parse.sh
+@@ -36,6 +36,7 @@ test_rev_parse() {
+ # label is-bare is-inside-git is-inside-work prefix git-dir
+ 
+ ROOT=$(pwd)
++original_core_bare=$(git config core.bare)
+ 
+ test_rev_parse toplevel false false true '' .git
+ 
+@@ -84,4 +85,40 @@ test_rev_parse 'GIT_DIR=../repo.git, core.bare = true' true false false ''
+ git config --unset core.bare
+ test_rev_parse 'GIT_DIR=../repo.git, core.bare undefined' false false true ''
+ 
++#cleanup from the above
++cd ..
++rm -r work
++mv repo.git .git || exit 1
++unset GIT_DIR
++unset GIT_CONFIG
++git config core.bare $original_core_bare
++
++test_expect_success 'git-common-dir from worktree root' '
++	echo .git >expect &&
++	git rev-parse --git-common-dir >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git-common-dir inside sub-dir' '
++	mkdir -p path/to/child &&
++	test_when_finished "rm -rf path" &&
++	echo "$(git -C path/to/child rev-parse --show-cdup).git" >expect &&
++	git -C path/to/child rev-parse --git-common-dir >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git-path from worktree root' '
++	echo .git/objects >expect &&
++	git rev-parse --git-path objects >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git-path inside sub-dir' '
++	mkdir -p path/to/child &&
++	test_when_finished "rm -rf path" &&
++	echo "$(git -C path/to/child rev-parse --show-cdup).git/objects" >expect &&
++	git -C path/to/child rev-parse --git-path objects >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.8.0
