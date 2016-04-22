@@ -1,104 +1,95 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [git-multimail] smtplib, check certificate
-Date: Fri, 22 Apr 2016 08:05:11 +0200
-Message-ID: <vpqoa92rxew.fsf@anie.imag.fr>
-References: <571949D2.10507@le-huit.fr>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH/RFC/GSoC 0/2] add a add.patch config variable
+Date: Fri, 22 Apr 2016 08:42:32 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1604220836060.2826@virtualbox>
+References: <xmqqio0b5ash.fsf@gitster.mtv.corp.google.com> <CAP8UFD0KZk1nTgR8gdbedsAuw2ztWZDWri6EkeEkf8FhwS9yag@mail.gmail.com> <cover.1459946531.git.d.f.fischer@web.de> <alpine.DEB.2.20.1604211737170.2826@virtualbox>
+ <34fb607f-1c4c-528a-cb5d-eca95e0e7c68@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: Simon P <simon.git@le-huit.fr>
-X-From: git-owner@vger.kernel.org Fri Apr 22 08:05:23 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Dominik Fischer <d.f.fischer@web.de>
+X-From: git-owner@vger.kernel.org Fri Apr 22 08:42:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atUDT-0000SB-94
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 08:05:23 +0200
+	id 1atUnZ-0003PD-JK
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 08:42:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751712AbcDVGFT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Apr 2016 02:05:19 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:36121 "EHLO mx2.imag.fr"
+	id S1751761AbcDVGmh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Apr 2016 02:42:37 -0400
+Received: from mout.gmx.net ([212.227.15.18]:54162 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751093AbcDVGFS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2016 02:05:18 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u3M65BZq023240
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Fri, 22 Apr 2016 08:05:11 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u3M65BRD021615;
-	Fri, 22 Apr 2016 08:05:11 +0200
-In-Reply-To: <571949D2.10507@le-huit.fr> (Simon P.'s message of "Thu, 21 Apr
-	2016 23:44:50 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Fri, 22 Apr 2016 08:05:11 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u3M65BZq023240
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1461909911.94502@xwZfphUqtNWrcddkEciV4Q
+	id S1751712AbcDVGmg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Apr 2016 02:42:36 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0LhOO8-1bX0Tw3y3U-00mZOc; Fri, 22 Apr 2016 08:42:33
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <34fb607f-1c4c-528a-cb5d-eca95e0e7c68@web.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:cnokmDiVcDGGITqN0bVfvLApJkvuNSzevPRYPqxuWkobbpFFgvL
+ 9hjFvoT+3ulUQ1lceI3swCVMpI7dpRymI9rymjwCwOkRgbv1Z0dNWbTyw0bSJ2gL/kCIRV/
+ wv8ttMu0dsZCY717QMvcw/pP+Fft8Z0mxDMMOeU0CJF+DnPTiA56WSvv5n7BwmWsPTIoZDE
+ L1ty/3Adh2S0oZoKzBd+w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:n8SQm6Huhew=:ujjnfE/TcJMrra+VWd1KcN
+ SE8foWstn8r/4fsdqwqXdyMM5lILvKVX4QENlVHRRjBqAxjnTjdPs7Nat5SF5EhHK5loWR6UC
+ 9ezFQVK2yMpi/0ILno0O1L90y3n//Ls3DLtqyD/wj+9+hEz3bcCi9GXxnTV4wVk4vYBzDtcKS
+ +R3VPGb0ODWm4JrEf3A8gJ01kc/WM7E2f/rqAWZhvIq4Cyanxip4SN7meiKNq0RioxKl9EqY3
+ RlqBTCtZbXnoF01UE6/OVaeN6lupoVshWLvtFiVAYqwksP3ppd8JJ6ZpoXyTiFK9p65FlDe/O
+ eiFDy7ow2+06fK99cAxxEhIZFKPVoKi8Q7W9HE+/Pn9mbdkjyE4WhnSl+GUnvIRywJ1HHH/3R
+ GQD1vCko2yDpTGgJsFU+B50RId94vqLRpyUbH0KdziI1jVrP4wl40+TyepoHmM1kj992d8Wak
+ z/WpSjtDtX9CWXck4yz8tmtAuRp3TBG6FC80rlXGMkqrjTix6bvCwIa5BUYWvME73mDjhLUKv
+ 0b9d1uLZjNtq0K4rh+1jnt4xJH+E44pOz0m+oadBJle0RrPHQsZOKSM3gGQuZ1TE+lb66Lodd
+ C9R8WeRCWEuRAmTXxM6D8PqXSy4v3KJcIJXeC15ZijQ7ffe2dj0/cwTi2nRyPBstmI1M6rXbn
+ /XV3353uf05rt6huTAgiC7Wv9OLq4+Setq/nhMvwM2RooDrHrXFPZvl8otWGiGRSx4/Bz9PCx
+ iNHfJY7L6IA8IbwTtX2yxhuur7B+E2TZmmDYSx0cCoz3QCqT/Xf6EAgBEtI3XoeesRyV5LpJ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292174>
 
-Simon P <simon.git@le-huit.fr> writes:
+Hi Dominik,
 
-> Hi,
+On Thu, 21 Apr 2016, Dominik Fischer wrote:
 
-Hi, and thanks for the patch.
+> Indeed this needs more explanations for everyone who did not read the posts
+> before.
 
-Please, add your sign-off and a proper commit message to your patch,
-see:
+Such as is the case for me. And most future readers of the commit messages
+;-)
 
-https://github.com/git-multimail/git-multimail/blob/master/CONTRIBUTING.rst
+> I strove to create an add.patch configuration option that did the same as
+> always passing the parameter --patch to git-add.
 
-I'm OK with patches by email, but you may prefer using a pull-request
-(among other things, creating a pull-request triggers a Travis-CI build
-and would have noticed the absence of sign-off and a minor PEP8 issue in
-your code.
+Ah. So a much more intriguing mail subject would be "add: optionally imply
+--patch by default"?
 
-The patch obviously lacks documentation, and some way to test it.
-Actually, the testsuite will fail if you document the configuration
-variable and they don't appear somewhere in the testsuite. A fully
-automatic test would be hard to write, but I have a semi-automated
-testsuite for smtp: some configurations in t/*.config.in, and a script
-test-email-config to run a test with each of the configurations (then I
-check my mailbox). There should be one configuration with a valid
-certificate and another with a buggy one so that we can check that the
-certificate is actually checked.
+> Junio C Hamano then made me aware that when set, this option would
+> influence and possibly destroy other commands that internally use
+> git-add. So I implemented the recursion counter, which is now the first
+> of the two commits. With this, git-add is able to only consider the
+> configuration option when run directly by the user, not affecting any
+> commands building upon it.
 
-> @@ -1945,6 +1946,7 @@ class SMTPMailer(Mailer):
->                   smtpservertimeout=10.0, smtpserverdebuglevel=0,
->                   smtpencryption='none',
->                   smtpuser='', smtppass='',
-> +                 smtpcacerts='/etc/ssl/certs/ca-certificates.crt',smtpcheckcert=False
+Hmm. But what if `git add` was not run by the user, but rather by a
+script? I am wary that the recursion counter may not really be able to
+answer the question "Was this `git add` called by the user *directly*?".
 
-Do you need a default for smtpcheckcert if you already have one in
-config.get(smtpcheckcert)? In any case, I'd rather avoid having two
-hardcoded path in the code. If you need
-'/etc/ssl/certs/ca-certificates.crt' in two places, please define a
-constant elsewhere in the code and use it here.
+> I would be interested whether this is a suited method to restrict the
+> effect of a configuration option to cases where a command is explicitly
+> invoked by the user.
 
-Missing space after ,.
+As I said, I do not think this method can do that reliably.
 
-> +                if smtpcheckcert:
-> +                    # inspired form:
-> +                    #   https://github.com/graingert/secure-smtplib/blob/master/src/secure_smtplib/__init__.py
-> +                    # but add the path to trusted ca, and force ceritficate verification.
-> +                    self.smtp.ehlo_or_helo_if_needed()
-> +                    if not self.smtp.has_extn("starttls"):
-> +                        msg = "STARTTLS extension not supported by server"
-> +                        raise smtplib.SMTPException(msg)
-> +                    (resp, reply) = self.smtp.docmd("STARTTLS")
+Traditionally, we recommend aliases in such a case. They are just as
+opt-in and also config settings:
 
-Parenthesis around (resp, reply) are not needed, I prefer to omit them.
+	git config [--global] alias.ap 'add -p'
 
-Thanks,
+Then, `git ap m*.cpp` would work just like you would expect.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Ciao,
+Johannes
