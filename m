@@ -1,411 +1,77 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v5 15/16] branch: use ref-filter printing APIs
-Date: Sat, 23 Apr 2016 00:34:06 +0530
-Message-ID: <1461351847-22903-16-git-send-email-Karthik.188@gmail.com>
-References: <1461351847-22903-1-git-send-email-Karthik.188@gmail.com>
-Cc: jacob.keller@gmail.com, gitster@pobox.com, peff@peff.net,
-	Karthik Nayak <Karthik.188@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 22 21:05:59 2016
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: make test Unexpected passes
+Date: Fri, 22 Apr 2016 21:05:24 +0100
+Message-ID: <571A8404.5030200@ramsayjones.plus.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: ben.woosley@gmail.com, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 22 22:05:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atgOo-0000Sh-I0
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 21:05:55 +0200
+	id 1athKZ-0004qd-EF
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 22:05:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752546AbcDVTFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Apr 2016 15:05:30 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:34666 "EHLO
-	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751949AbcDVTF2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2016 15:05:28 -0400
-Received: by mail-pf0-f194.google.com with SMTP id 145so3075055pfz.1
-        for <git@vger.kernel.org>; Fri, 22 Apr 2016 12:05:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=EtZzNBWD3L+SVYY68AJBqO6Q9huCHgM9LUuA/PMZcp4=;
-        b=H6iPdYh19N6wbPalefbdu6wa+E9BQfDr/rDErfcg3as/YtzcYZ6H9UkbsS+t8EkqhK
-         uxYvdYtmSTTZ85OxKU7zOUg6VkZQ5fKNOK/drVDmbxA3PxqMfMWsfHheWUkVVqHOXV0F
-         PIJ9F7bBoq7nxTwmT9+YURnAhhWGKdmGUBUIjAHz1RKwjoDhe8h5BQPDXOyo0jBLtEGQ
-         HHCW2B/eBkltTRO8TEPhhC4AXiJN0ZaUh8lQdedzP6dmxcx2Y5Tg8yYehSEULJPrhsAp
-         JWp0Y/3AgxVMu2gBhbodaXMLyz++0EmVtGXgk/ujTCCnLMWhEHNNg5YSW67bp8+4rFPf
-         k7Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=EtZzNBWD3L+SVYY68AJBqO6Q9huCHgM9LUuA/PMZcp4=;
-        b=K3EtymyUfyqmaKT8bz7yxOVA9AJasJt1Z5W4X1fHEEfEBPZ6GhB4Nuo+1zGBayil/u
-         89jMqGsKu1oHLVFxU0k9s++yqUkYphX7B0bYTvX6rZRmUVXjAhf7OT6KTJokbXp+g+e5
-         E+gP6KK97etsPwO1UEtZSINjd4Enb0KESd4N/PYFOiGzt087RSvBEXkik3KGfa4RqaUZ
-         caf8znbvVdXKSvEVvTtoPm7vjpxoRWiN1WgkWimAw4gPEthAK0/7brQPj28WQEoNPWkN
-         xmbqF0AYeCT2cY76A7sU51CSttMoEMvFtkZw2PFfCMbLlSVwXK7Xge556DgKQSHDvjV2
-         x7Fw==
-X-Gm-Message-State: AOPr4FU+lINiKPFIa2Q4FxGWCDX17uM+W4Qb4A8G9Zde0DE4Tt4RLx0r8oJiNi/xeL8gSQ==
-X-Received: by 10.98.98.131 with SMTP id w125mr30564302pfb.112.1461351927833;
-        Fri, 22 Apr 2016 12:05:27 -0700 (PDT)
-Received: from ashley.localdomain ([106.216.186.206])
-        by smtp.gmail.com with ESMTPSA id t1sm11266470paa.17.2016.04.22.12.05.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 22 Apr 2016 12:05:27 -0700 (PDT)
-X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
-X-Mailer: git-send-email 2.8.0
-In-Reply-To: <1461351847-22903-1-git-send-email-Karthik.188@gmail.com>
+	id S1751719AbcDVUFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Apr 2016 16:05:30 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:57800 "EHLO
+	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751554AbcDVUFa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Apr 2016 16:05:30 -0400
+Received: from [10.0.2.15] ([91.125.197.102])
+	by avasout07 with smtp
+	id lY5S1s0062D2Veb01Y5UWg; Fri, 22 Apr 2016 21:05:28 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=QqujpgGd c=1 sm=1 tr=0
+ a=mTUfFwB0nGOO66Ym8a+i3w==:117 a=mTUfFwB0nGOO66Ym8a+i3w==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
+ a=ytdg1oe-me6gtZ-LOuwA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292263>
 
-Port branch.c to use ref-filter APIs for printing. This clears out
-most of the code used in branch.c for printing and replaces them with
-calls made to the ref-filter library.
+Hi Ben, Junio,
 
-Introduce build_format() which gets the format required for printing
-of refs. Make amendments to print_ref_list() to reflect these changes.
+Tonight, the testsuite passed with a couple of 'unexpected passes', viz:
 
-Change calc_maxwidth() to also account for the length of HEAD ref, by
-calling ref-filter:get_head_discription().
+$ tail -17 ptest-out
+[13:24:29]
+All tests successful.
 
-Also change the test in t6040 to reflect the changes.
+Test Summary Report
+-------------------
+t3421-rebase-topology-linear.sh                  (Wstat: 0 Tests: 76 Failed: 0)
+  TODO passed:   50, 54
+t6036-recursive-corner-cases.sh                  (Wstat: 0 Tests: 22 Failed: 0)
+  TODO passed:   11
+Files=746, Tests=13515, 445 wallclock secs ( 3.83 usr  0.61 sys + 52.78 cusr 27.89 csys = 85.11 CPU)
+Result: PASS
+make clean-except-prove-cache
+make[2]: Entering directory `/home/ramsay/git/t'
+rm -f -r 'trash directory'.* 'test-results'
+rm -f -r valgrind/bin
+make[2]: Leaving directory `/home/ramsay/git/t'
+make[1]: Leaving directory `/home/ramsay/git/t'
+$ 
 
-Before this patch, all cross-prefix symrefs weren't shortened. Since
-we're using ref-filter APIs, we shorten all symrefs by default. We also
-allow the user to change the format if needed with the introduction of
-the '--format' option in the next patch.
+In the first case, t3421-*.sh, git bisect fingered commit f32ec670
+("git-rebase--merge: don't include absent parent as a base", 20-04-2016).
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Helped-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- builtin/branch.c         | 234 ++++++++++++++---------------------------------
- t/t3203-branch-output.sh |   2 +-
- t/t6040-tracking-info.sh |   2 +-
- 3 files changed, 70 insertions(+), 168 deletions(-)
+In the second case, t6036-*.sh, git bisect fingered commit b61f9d6e
+("ll-merge: use a longer conflict marker for internal merge", 14-04-2016).
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index ecd7ffc..07068d2 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -36,12 +36,12 @@ static unsigned char head_sha1[20];
- 
- static int branch_use_color = -1;
- static char branch_colors[][COLOR_MAXLEN] = {
--	GIT_COLOR_RESET,
--	GIT_COLOR_NORMAL,	/* PLAIN */
--	GIT_COLOR_RED,		/* REMOTE */
--	GIT_COLOR_NORMAL,	/* LOCAL */
--	GIT_COLOR_GREEN,	/* CURRENT */
--	GIT_COLOR_BLUE,		/* UPSTREAM */
-+	"%(color:reset)",
-+	"%(color:reset)",	/* PLAIN */
-+	"%(color:red)",		/* REMOTE */
-+	"%(color:reset)",	/* LOCAL */
-+	"%(color:green)",	/* CURRENT */
-+	"%(color:blue)",	/* UPSTREAM */
- };
- enum color_branch {
- 	BRANCH_COLOR_RESET = 0,
-@@ -277,162 +277,6 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 	return(ret);
- }
- 
--static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
--		int show_upstream_ref)
--{
--	int ours, theirs;
--	char *ref = NULL;
--	struct branch *branch = branch_get(branch_name);
--	const char *upstream;
--	struct strbuf fancy = STRBUF_INIT;
--	int upstream_is_gone = 0;
--	int added_decoration = 1;
--
--	if (stat_tracking_info(branch, &ours, &theirs, &upstream) < 0) {
--		if (!upstream)
--			return;
--		upstream_is_gone = 1;
--	}
--
--	if (show_upstream_ref) {
--		ref = shorten_unambiguous_ref(upstream, 0);
--		if (want_color(branch_use_color))
--			strbuf_addf(&fancy, "%s%s%s",
--					branch_get_color(BRANCH_COLOR_UPSTREAM),
--					ref, branch_get_color(BRANCH_COLOR_RESET));
--		else
--			strbuf_addstr(&fancy, ref);
--	}
--
--	if (upstream_is_gone) {
--		if (show_upstream_ref)
--			strbuf_addf(stat, _("[%s: gone]"), fancy.buf);
--		else
--			added_decoration = 0;
--	} else if (!ours && !theirs) {
--		if (show_upstream_ref)
--			strbuf_addf(stat, _("[%s]"), fancy.buf);
--		else
--			added_decoration = 0;
--	} else if (!ours) {
--		if (show_upstream_ref)
--			strbuf_addf(stat, _("[%s: behind %d]"), fancy.buf, theirs);
--		else
--			strbuf_addf(stat, _("[behind %d]"), theirs);
--
--	} else if (!theirs) {
--		if (show_upstream_ref)
--			strbuf_addf(stat, _("[%s: ahead %d]"), fancy.buf, ours);
--		else
--			strbuf_addf(stat, _("[ahead %d]"), ours);
--	} else {
--		if (show_upstream_ref)
--			strbuf_addf(stat, _("[%s: ahead %d, behind %d]"),
--				    fancy.buf, ours, theirs);
--		else
--			strbuf_addf(stat, _("[ahead %d, behind %d]"),
--				    ours, theirs);
--	}
--	strbuf_release(&fancy);
--	if (added_decoration)
--		strbuf_addch(stat, ' ');
--	free(ref);
--}
--
--static void add_verbose_info(struct strbuf *out, struct ref_array_item *item,
--			     struct ref_filter *filter, const char *refname)
--{
--	struct strbuf subject = STRBUF_INIT, stat = STRBUF_INIT;
--	const char *sub = _(" **** invalid ref ****");
--	struct commit *commit = item->commit;
--
--	if (!parse_commit(commit)) {
--		pp_commit_easy(CMIT_FMT_ONELINE, commit, &subject);
--		sub = subject.buf;
--	}
--
--	if (item->kind == FILTER_REFS_BRANCHES)
--		fill_tracking_info(&stat, refname, filter->verbose > 1);
--
--	strbuf_addf(out, " %s %s%s",
--		find_unique_abbrev(item->commit->object.oid.hash, filter->abbrev),
--		stat.buf, sub);
--	strbuf_release(&stat);
--	strbuf_release(&subject);
--}
--
--static void format_and_print_ref_item(struct ref_array_item *item, int maxwidth,
--				      struct ref_filter *filter, const char *remote_prefix)
--{
--	char c;
--	int current = 0;
--	int color;
--	struct strbuf out = STRBUF_INIT, name = STRBUF_INIT;
--	const char *prefix_to_show = "";
--	const char *prefix_to_skip = NULL;
--	const char *desc = item->refname;
--	char *to_free = NULL;
--
--	switch (item->kind) {
--	case FILTER_REFS_BRANCHES:
--		prefix_to_skip = "refs/heads/";
--		skip_prefix(desc, prefix_to_skip, &desc);
--		if (!filter->detached && !strcmp(desc, head))
--			current = 1;
--		else
--			color = BRANCH_COLOR_LOCAL;
--		break;
--	case FILTER_REFS_REMOTES:
--		prefix_to_skip = "refs/remotes/";
--		skip_prefix(desc, prefix_to_skip, &desc);
--		color = BRANCH_COLOR_REMOTE;
--		prefix_to_show = remote_prefix;
--		break;
--	case FILTER_REFS_DETACHED_HEAD:
--		desc = to_free = get_head_description();
--		current = 1;
--		break;
--	default:
--		color = BRANCH_COLOR_PLAIN;
--		break;
--	}
--
--	c = ' ';
--	if (current) {
--		c = '*';
--		color = BRANCH_COLOR_CURRENT;
--	}
--
--	strbuf_addf(&name, "%s%s", prefix_to_show, desc);
--	if (filter->verbose) {
--		int utf8_compensation = strlen(name.buf) - utf8_strwidth(name.buf);
--		strbuf_addf(&out, "%c %s%-*s%s", c, branch_get_color(color),
--			    maxwidth + utf8_compensation, name.buf,
--			    branch_get_color(BRANCH_COLOR_RESET));
--	} else
--		strbuf_addf(&out, "%c %s%s%s", c, branch_get_color(color),
--			    name.buf, branch_get_color(BRANCH_COLOR_RESET));
--
--	if (item->symref) {
--		const char *symref = item->symref;
--		if (prefix_to_skip)
--			skip_prefix(symref, prefix_to_skip, &symref);
--		strbuf_addf(&out, " -> %s", symref);
--	}
--	else if (filter->verbose)
--		/* " f7c0c00 [ahead 58, behind 197] vcs-svn: drop obj_pool.h" */
--		add_verbose_info(&out, item, filter, desc);
--	if (column_active(colopts)) {
--		assert(!filter->verbose && "--column and --verbose are incompatible");
--		string_list_append(&output, out.buf);
--	} else {
--		printf("%s\n", out.buf);
--	}
--	strbuf_release(&name);
--	strbuf_release(&out);
--	free(to_free);
--}
--
- static int calc_maxwidth(struct ref_array *refs, int remote_bonus)
- {
- 	int i, max = 0;
-@@ -443,7 +287,12 @@ static int calc_maxwidth(struct ref_array *refs, int remote_bonus)
- 
- 		skip_prefix(it->refname, "refs/heads/", &desc);
- 		skip_prefix(it->refname, "refs/remotes/", &desc);
--		w = utf8_strwidth(desc);
-+		if (it->kind == FILTER_REFS_DETACHED_HEAD) {
-+			char *head_desc = get_head_description();
-+			w = strlen(head_desc);
-+			free(head_desc);
-+		} else
-+			w = utf8_strwidth(desc);
- 
- 		if (it->kind == FILTER_REFS_REMOTES)
- 			w += remote_bonus;
-@@ -453,12 +302,52 @@ static int calc_maxwidth(struct ref_array *refs, int remote_bonus)
- 	return max;
- }
- 
-+static char *build_format(struct ref_filter *filter, int maxwidth, const char *remote_prefix)
-+{
-+	struct strbuf fmt = STRBUF_INIT;
-+	struct strbuf local = STRBUF_INIT;
-+	struct strbuf remote = STRBUF_INIT;
-+
-+	strbuf_addf(&fmt, "%%(if)%%(HEAD)%%(then)* %s%%(else)  %%(end)", branch_get_color(BRANCH_COLOR_CURRENT));
-+
-+	if (filter->verbose) {
-+		strbuf_addf(&local, "%%(align:%d,left)%%(refname:strip=2)%%(end)", maxwidth);
-+		strbuf_addf(&local, "%s", branch_get_color(BRANCH_COLOR_RESET));
-+		strbuf_addf(&local, " %%(objectname:short=7) ");
-+
-+		if (filter->verbose > 1)
-+			strbuf_addf(&local, "%%(if)%%(upstream)%%(then)[%s%%(upstream:short)%s%%(if)%%(upstream:track)"
-+				    "%%(then): %%(upstream:track,nobracket)%%(end)] %%(end)%%(contents:subject)",
-+				    branch_get_color(BRANCH_COLOR_UPSTREAM), branch_get_color(BRANCH_COLOR_RESET));
-+		else
-+			strbuf_addf(&local, "%%(if)%%(upstream:track)%%(then)%%(upstream:track) %%(end)%%(contents:subject)");
-+
-+		strbuf_addf(&remote, "%s%%(align:%d,left)%s%%(refname:strip=2)%%(end)%s%%(if)%%(symref)%%(then) -> %%(symref:short)"
-+			    "%%(else) %%(objectname:short=7) %%(contents:subject)%%(end)",
-+			    branch_get_color(BRANCH_COLOR_REMOTE), maxwidth,
-+			    remote_prefix, branch_get_color(BRANCH_COLOR_RESET));
-+	} else {
-+		strbuf_addf(&local, "%%(refname:strip=2)%s%%(if)%%(symref)%%(then) -> %%(symref:short)%%(end)",
-+			    branch_get_color(BRANCH_COLOR_RESET));
-+		strbuf_addf(&remote, "%s%s%%(refname:strip=2)%s%%(if)%%(symref)%%(then) -> %%(symref:short)%%(end)",
-+			    branch_get_color(BRANCH_COLOR_REMOTE), remote_prefix, branch_get_color(BRANCH_COLOR_RESET));
-+	}
-+
-+	strbuf_addf(&fmt, "%%(if:notequals=remotes)%%(refname:base)%%(then)%s%%(else)%s%%(end)", local.buf, remote.buf);
-+
-+	strbuf_release(&local);
-+	strbuf_release(&remote);
-+	return strbuf_detach(&fmt, NULL);
-+}
-+
- static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sorting)
- {
- 	int i;
- 	struct ref_array array;
- 	int maxwidth = 0;
- 	const char *remote_prefix = "";
-+	struct strbuf out = STRBUF_INIT;
-+	char *format;
- 
- 	/*
- 	 * If we are listing more than just remote branches,
-@@ -470,12 +359,14 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
- 
- 	memset(&array, 0, sizeof(array));
- 
--	verify_ref_format("%(refname)%(symref)");
- 	filter_refs(&array, filter, filter->kind | FILTER_REFS_INCLUDE_BROKEN);
- 
- 	if (filter->verbose)
- 		maxwidth = calc_maxwidth(&array, strlen(remote_prefix));
- 
-+	format = build_format(filter, maxwidth, remote_prefix);
-+	verify_ref_format(format);
-+
- 	/*
- 	 * If no sorting parameter is given then we default to sorting
- 	 * by 'refname'. This would give us an alphabetically sorted
-@@ -487,10 +378,21 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
- 		sorting = ref_default_sorting();
- 	ref_array_sort(sorting, &array);
- 
--	for (i = 0; i < array.nr; i++)
--		format_and_print_ref_item(array.items[i], maxwidth, filter, remote_prefix);
-+	for (i = 0; i < array.nr; i++) {
-+		format_ref_array_item(array.items[i], format, 0, &out);
-+		if (column_active(colopts)) {
-+			assert(!filter->verbose && "--column and --verbose are incompatible");
-+			 /* format to a string_list to let print_columns() do its job */
-+			string_list_append(&output, out.buf);
-+		} else {
-+			fwrite(out.buf, 1, out.len, stdout);
-+			putchar('\n');
-+		}
-+		strbuf_release(&out);
-+	}
- 
- 	ref_array_clear(&array);
-+	free(format);
- }
- 
- static void rename_branch(const char *oldname, const char *newname, int force)
-diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index c6a3ccb..980c732 100755
---- a/t/t3203-branch-output.sh
-+++ b/t/t3203-branch-output.sh
-@@ -189,7 +189,7 @@ test_expect_success 'local-branch symrefs shortened properly' '
- 	git symbolic-ref refs/heads/ref-to-remote refs/remotes/origin/branch-one &&
- 	cat >expect <<-\EOF &&
- 	  ref-to-branch -> branch-one
--	  ref-to-remote -> refs/remotes/origin/branch-one
-+	  ref-to-remote -> origin/branch-one
- 	EOF
- 	git branch >actual.raw &&
- 	grep ref-to <actual.raw >actual &&
-diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-index 3d5c238..97a0765 100755
---- a/t/t6040-tracking-info.sh
-+++ b/t/t6040-tracking-info.sh
-@@ -44,7 +44,7 @@ b1 [ahead 1, behind 1] d
- b2 [ahead 1, behind 1] d
- b3 [behind 1] b
- b4 [ahead 2] f
--b5 g
-+b5 [gone] g
- b6 c
- EOF
- 
--- 
-2.8.0
+I won't have any time tonight to look into this any further (are these
+false positives?), so I thought I would just make sure you were aware
+of these 'unexpected passes'.
+
+ATB,
+Ramsay Jones
