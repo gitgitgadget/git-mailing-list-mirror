@@ -1,78 +1,164 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: history damage in linux.git
-Date: Fri, 22 Apr 2016 15:38:53 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604221538060.6812@virtualbox>
-References: <20160421113004.GA3140@aepfle.de> <87lh473xic.fsf@linux-m68k.org> <CA+55aFx8hPKKcuwe-HHoO7LHVYLmJ6khndd-OtQotMs3EJzZ0w@mail.gmail.com> <xmqqzismsxsu.fsf@gitster.mtv.corp.google.com> <20160421170815.GA10783@sigill.intra.peff.net>
- <CA+55aFyadCxX_Ws5fUC0QXwYYyaAjC5TC=y+tVA+YUHX1o+-iQ@mail.gmail.com> <20160421180507.GA12950@sigill.intra.peff.net> <CA+55aFzEVy6BsVzTrYda3Nfo4o+QtqiqsX5xJqRt=se0eREDsA@mail.gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] name-rev: include taggerdate in considering the best name
+Date: Fri, 22 Apr 2016 15:39:01 +0200 (CEST)
+Message-ID: <d58135a6720d6fda4c7bc609e77e2709d161fe25.1461332260.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+Cc: git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jeff King <peff@peff.net>,
 	Andreas Schwab <schwab@linux-m68k.org>,
 	Olaf Hering <olaf@aepfle.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Apr 22 15:39:22 2016
+	=?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 22 15:39:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atbIj-0005i1-MA
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 15:39:18 +0200
+	id 1atbIq-0005lr-B8
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 15:39:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752473AbcDVNjN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Apr 2016 09:39:13 -0400
-Received: from mout.gmx.net ([212.227.15.15]:60221 "EHLO mout.gmx.net"
+	id S1752669AbcDVNjU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Apr 2016 09:39:20 -0400
+Received: from mout.gmx.net ([212.227.17.22]:64640 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752031AbcDVNjM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2016 09:39:12 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MIuSH-1arfLq0dh3-002VAz; Fri, 22 Apr 2016 15:38:55
+	id S1752494AbcDVNjT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Apr 2016 09:39:19 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MEo4s-1avE713eVm-00Fzhb; Fri, 22 Apr 2016 15:39:06
  +0200
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CA+55aFzEVy6BsVzTrYda3Nfo4o+QtqiqsX5xJqRt=se0eREDsA@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:dtapRAdJKB77zlj8NyRXZ2mGMAJ7zbxlnPS9vzqkDkkzY1+uvKf
- 3llx+E1O0XFIlx1uqHjYglvpQ5MDnhoUvg/8F28ECQk6DJw7xFg/adAP+A+DM5O+c1tSHz+
- v8aWm1MRXIjqp27w+THZlASbIuEB9dW1e80FQB4+LlsXUNhIoZRYb9LZO3nQCJb1wsBMxTu
- AH3OZrC7p19GcpaPcx/9w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:HkhdaagWvLU=:ENbogEIRnj2RuhB1n/1Qj/
- T7yO3WwODtItBYysdM3kephVkfgTyVncbH/G8c9jq6IZy6R+jfhdb7DBJ1ChNR/dIHxLdzPgd
- PAqXcz9E4hMrDrYRkokOmIcfvLCBmP8VPlYLwTHcMKQLtdE1SZbzuOME28kMdNaHyNm17BXfJ
- JDvRsZM7zaNdxOi6wOIXj5A6EQLt/tu72rhLSdWSbY5x08+LytZNOTaaYlUUWhAq4qXy4VPqF
- tiC+evzr5dZQlbhvn9GG7peceIshXI7uIrhpheyqOIrm0z9t695e93Tp3RDZX3zs7zqy7wp3m
- C8FpWg3rwAGrx6wAlBFTrEUoRWHZhnRP/Q9fMnKNoZ0jVTxIro/rsVc5d4QamImHAMDAnyQP2
- hTOoe2JQ5WOSpJsxW7xBvOs7bgfs1eixpyZzbUESQCXjdAF36YZRBfTLrVSCuXq5ghH7yG5p/
- x4ZsHIlPv/H19++HJ+i1soBDKnqti5WK9qprugGrV9KeBwW58+Csr69g84T/+rZILrxGGeIDx
- MpAqQjb2jVg7i0InqXEYinlOWw70r7xfu/E8uMr8kRkkRQECdg6/fGUprREJIb7Dzqh10QbKH
- kE76qdiGvhqavJy7NIpUFnHQzLyOYiN9ymxf/Fx0xZtePP9vvcKpZkkMy2CBd39NWGNFhfC0B
- fkFMEvm6ox2ZNjC9FzMQej6yRIkb9uLIxqBG5sA0ofI2F0YQBxG9gIslwTRQKKUCn/WCWLktN
- vw94qaxRTtlzcwuiucVihNsykWTnBFtCekkGanqUugeCS4ZBId5PIR7UmCb7PBLtR63bGHmN 
+X-Provags-ID: V03:K0:Z36P+vXMEiuGCqa6VaIfQOKkIHt6OdedY7sP98IZ6aB7w15MBHa
+ 3m7WiHdtMPfxhCeUF7MB4I/tJzUlGyqaLBqR4p65gTOrSnDvkj44q49fGO4QbGLSXm5LR9Y
+ cmdzDQO+xwsDHChKfpKPv0d4Hz7W8pURv1er/GNOAyWLC3ytwXCGODtUIak1Gbw0EdS2PZr
+ 9aTu+3RY68PhJo71mcezQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Ttmvl3Akw1E=:4pZaMvWMjosY8hSirAdy64
+ 2wn/Zd33ZmesSnCm1oE17PNxA5SdUs1uS1anZsdtf3LQIBegOcHeHiT+uZ4HEI0k7A7HWyWt1
+ 74XeUZgR952bZT981UH4FoOq9UJPOoCnEQlgwHk1StXTtW+Kr3Stwj/LJ5hCALr6X8eMU6kur
+ 6zEKQnxa+HsPpxh0Ud4dyQf5GjYhrRhod9Xkjfoy6VviGAfEjTWCi2MBJBaiOz97euCfyWO9C
+ Uag9+k54HfV99aZJbp4K8R4NVHrO/RQC6fQd6EtAmbVTKr8w6lb4lSIvYeOSLEIb1tyZT0GvF
+ MHotsM+bOBHuqL60lO4Pt/754SudmFmyauB67jRnMV7msDMEaWRpHwql6RuN7RPxPynCDFB0H
+ 4gMDRevlf+eQ0vl8vQ3TO0VY74L6PNTjD49WM00p4X95A+OBE7bQ1lebFBZDx+KOgbbmPQoEL
+ x7fQ+RBnKgqHhWKlDn4/bNFL9ST7/F1b/ABkXhjmG8jqTPvDSMa4vPe34fEV4OJIT7qj/HwUm
+ hUVERPzExXd5FeoF5jY+62UV3f86zdvrIRbYN3V+lNEcaBpMcRMiiFYsH5mODkWA+9si6rDw3
+ rJwqNgIVAI8PN5h88N0HfPAuXFi2HJqtvaPNaYiW9BLAhfrloKEzoA3G0R/Yuy2uJzydYS1FI
+ NQBs36ujVqqkS15qUqKLdvlFPZmpB9Q2S4Vizn5bi/QGytmMfkY2y9POZ6Iqi/A3IDarcqaqb
+ azdYpf/qQTttNvUmjrp3F6RCvq5RC8vSjhQrNBBLab2FzOUjfsfkigBXKZ/cMLlXzEOOYm4t 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292204>
 
-Hi Linus,
+We most likely want the oldest tag that contained the commit to be
+reported. So let's remember the taggerdate, and make it more important
+than anything else when choosing the best name for a given commit.
 
-On Thu, 21 Apr 2016, Linus Torvalds wrote:
+Suggested by Linus Torvalds.
 
-> On Thu, Apr 21, 2016 at 11:05 AM, Jeff King <peff@peff.net> wrote:
-> >
-> > Sadly, neither git's internal version-sorting nor GNU's "sort -V"
-> > knows that "v1.0-rc1" comes before "v1.0", so I had to rely on
-> > "--sort=taggerdate".
-> 
-> I'm not seeing the "sadly".
-> 
-> I think "--sort=taggerdate" is pretty much the only sane sort there is
-> for tags, unless you do a true and full topological one (ie sort based
-> on by how many commits that tag encompasses, but also by how each tag
-> contains another tag).
+Note that we need to update t9903 because it tested for the old behavior
+(which preferred the description "b1~1" over "tags/t2~1").
 
-Turns out it is pretty easy to implement this in name-rev. Expect the
-patch in your inbox in a minute.
+We might want to introduce a --heed-taggerdate option, and make the new
+behavior dependent on that, if it turns out that some scripts rely on the
+old name-rev method.
 
-Ciao,
-Dscho
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/name-rev.c     | 19 +++++++++++++------
+ t/t9903-bash-prompt.sh |  2 +-
+ 2 files changed, 14 insertions(+), 7 deletions(-)
+
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index 092e03c..57be35f 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -10,6 +10,7 @@
+ 
+ typedef struct rev_name {
+ 	const char *tip_name;
++	unsigned long taggerdate;
+ 	int generation;
+ 	int distance;
+ } rev_name;
+@@ -20,7 +21,8 @@ static long cutoff = LONG_MAX;
+ #define MERGE_TRAVERSAL_WEIGHT 65535
+ 
+ static void name_rev(struct commit *commit,
+-		const char *tip_name, int generation, int distance,
++		const char *tip_name, unsigned long taggerdate,
++		int generation, int distance,
+ 		int deref)
+ {
+ 	struct rev_name *name = (struct rev_name *)commit->util;
+@@ -43,9 +45,12 @@ static void name_rev(struct commit *commit,
+ 		name = xmalloc(sizeof(rev_name));
+ 		commit->util = name;
+ 		goto copy_data;
+-	} else if (name->distance > distance) {
++	} else if (name->taggerdate > taggerdate ||
++			(name->taggerdate == taggerdate &&
++			 name->distance > distance)) {
+ copy_data:
+ 		name->tip_name = tip_name;
++		name->taggerdate = taggerdate;
+ 		name->generation = generation;
+ 		name->distance = distance;
+ 	} else
+@@ -66,11 +71,11 @@ copy_data:
+ 				new_name = xstrfmt("%.*s^%d", (int)len, tip_name,
+ 						   parent_number);
+ 
+-			name_rev(parents->item, new_name, 0,
++			name_rev(parents->item, new_name, taggerdate, 0,
+ 				distance + MERGE_TRAVERSAL_WEIGHT, 0);
+ 		} else {
+-			name_rev(parents->item, tip_name, generation + 1,
+-				distance + 1, 0);
++			name_rev(parents->item, tip_name, taggerdate,
++				generation + 1, distance + 1, 0);
+ 		}
+ 	}
+ }
+@@ -140,6 +145,7 @@ static int name_ref(const char *path, const struct object_id *oid, int flags, vo
+ 	struct name_ref_data *data = cb_data;
+ 	int can_abbreviate_output = data->tags_only && data->name_only;
+ 	int deref = 0;
++	unsigned long taggerdate = ULONG_MAX;
+ 
+ 	if (data->tags_only && !starts_with(path, "refs/tags/"))
+ 		return 0;
+@@ -164,12 +170,13 @@ static int name_ref(const char *path, const struct object_id *oid, int flags, vo
+ 			break; /* broken repository */
+ 		o = parse_object(t->tagged->oid.hash);
+ 		deref = 1;
++		taggerdate = t->date;
+ 	}
+ 	if (o && o->type == OBJ_COMMIT) {
+ 		struct commit *commit = (struct commit *)o;
+ 
+ 		path = name_ref_abbrev(path, can_abbreviate_output);
+-		name_rev(commit, xstrdup(path), 0, 0, deref);
++		name_rev(commit, xstrdup(path), taggerdate, 0, 0, deref);
+ 	}
+ 	return 0;
+ }
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index ffbfa0e..0db4469 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -107,7 +107,7 @@ test_expect_success 'prompt - describe detached head - contains' '
+ '
+ 
+ test_expect_success 'prompt - describe detached head - branch' '
+-	printf " ((b1~1))" >expected &&
++	printf " ((tags/t2~1))" >expected &&
+ 	git checkout b1^ &&
+ 	test_when_finished "git checkout master" &&
+ 	(
+-- 
+2.8.1.207.g7b140d3
