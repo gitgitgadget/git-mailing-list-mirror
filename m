@@ -1,97 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [PATCH] name-rev: include taggerdate in considering the best name
-Date: Fri, 22 Apr 2016 11:40:39 -0700
-Message-ID: <xmqqa8klpjvc.fsf@gitster.mtv.corp.google.com>
+Date: Fri, 22 Apr 2016 11:45:27 -0700
+Message-ID: <CA+55aFxLoi8RAYOZS8ziaGXkbTOdQ=YFbMA0EO0eFpNVgnugKA@mail.gmail.com>
 References: <d58135a6720d6fda4c7bc609e77e2709d161fe25.1461332260.git.johannes.schindelin@gmx.de>
 	<20160422181103.GA5920@sigill.intra.peff.net>
-	<xmqqeg9xpkhb.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
 	Andreas Schwab <schwab@linux-m68k.org>,
-	Olaf Hering <olaf@aepfle.de>
+	Olaf Hering <olaf@aepfle.de>,
+	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Apr 22 20:40:47 2016
+X-From: git-owner@vger.kernel.org Fri Apr 22 20:45:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atg0U-0005cl-KL
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 20:40:46 +0200
+	id 1atg57-00010r-Cq
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 20:45:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751609AbcDVSkn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Apr 2016 14:40:43 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64207 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751172AbcDVSkm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2016 14:40:42 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 35FB4149A6;
-	Fri, 22 Apr 2016 14:40:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sQSUhxkePr58Qll3B7OlWVxrfOI=; b=II0f3S
-	buiWjN7qhrm7xTAwaoFufmw9KFG0XwAGRtbQaUE3/qRzvE9aDIk2rV/A2fAVusdB
-	uIClrF8zwtfl9Tfc8O1kuVBOLRP8H71b3Ug6IFSElpLNA7amNyiptyfo4nfJejFO
-	PKMuSlost6PkAaqIT5lVeseeyhS5sPaEvNXtI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=q9T0l0+0hHwkml5PIiwf8YGHrDTMjbCB
-	b7KY/ViGp4Koebh0JFFvmnPrV5j90gjMzhM+8JXsRyVWzCLSSlTrMLjgciQKqFZi
-	ns6Y9OMCjzdZgoTz3UL/B4IBUZm50Zz+s0MYAPHG9OHBbO7L8ZaJBhr9M3fk7zyl
-	9OXWarlaKeg=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2D8E9149A5;
-	Fri, 22 Apr 2016 14:40:41 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 895C5149A4;
-	Fri, 22 Apr 2016 14:40:40 -0400 (EDT)
-In-Reply-To: <xmqqeg9xpkhb.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 22 Apr 2016 11:27:28 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B689C47E-08B9-11E6-8EBC-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1751959AbcDVSp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Apr 2016 14:45:29 -0400
+Received: from mail-ig0-f193.google.com ([209.85.213.193]:34719 "EHLO
+	mail-ig0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751831AbcDVSp2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Apr 2016 14:45:28 -0400
+Received: by mail-ig0-f193.google.com with SMTP id qu10so3301285igc.1
+        for <git@vger.kernel.org>; Fri, 22 Apr 2016 11:45:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=hZU5ooi3sb5PK8AFbvCW2R2K0VAUHFxcOldkCcvUrLc=;
+        b=LMseKUxajEW34fhxEtCUB88bV3S6SC59EDd5FnCv071EaL82CHKdtVm2/P6ZiamDok
+         wV0busu1Rkc0E3zAtrC07hplu4cfOApFuWdIENJDZw9c2VUq6BUtf6+2771BMHm+XFl4
+         j6Cb94x2z/K6D/MZIu4MuTN8N0pnvkT8Gqydh1hhRmBA17agU1y7srnj51ZQVDyw+R99
+         OeTcPNh8Qycebuqj+ILaQZGigTT2Tax+AdMLurVgNn3sEy26c2b/VReFN1x9Hs4FmK7p
+         WER6BgON2n8usuO3Qh/2f+BqMkqn9bcu6ggwtdnA7bSacPxkrDzWMY8r9IksyRg4QSbj
+         nOQA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=hZU5ooi3sb5PK8AFbvCW2R2K0VAUHFxcOldkCcvUrLc=;
+        b=Qx7C3uEgbjjXj/VBBy1GbFGzF+3lcMNiiGSMjq0sk/dVSVZ5W1KtFcbU1fTMNBJsLG
+         22RCtATLzCp8oCGzHy0lJt39juGGxnHfB2FlVJcNjx3+6/zRdxEndvHfgcO8TjjRy7tK
+         jD6nCqhxYWPRX9tkZDxT1bnnhb8+pXr9qlt6k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=hZU5ooi3sb5PK8AFbvCW2R2K0VAUHFxcOldkCcvUrLc=;
+        b=T1cNF+UdmTnIKaHSRRHZIvoXD4igoec52TJcKcfPnrQi4kI8FvoohuRqX2jaDjIqIL
+         7gK8dQBENLXBPTv+ERcaIrWOcVREijIxGbeGeTs4Ixr5qcg2Sra1JeC+HCMz8SIf6a2B
+         z2INKWLGml09eQWBi1rdSvjW2s9Y4spo/aUjxZb0D5aqdh1ixYIoGp++8kcjnO488rrv
+         JsbiN/9VPLuLha3KNsdG7dXy+f7EtwPU8QQmp9PKlEzjXlIHv2Yr2/P3YxuOzfniMA4S
+         ttStu5xvT+2U9FK/2Ok8deNrOfEPWnTfNw0+IW+ZKlqat8opbnIwu/rA0t+5bjR0iaj2
+         tEFQ==
+X-Gm-Message-State: AOPr4FVmaghwPFMTv/kmw6bRhsNqzUWCDH84Cy82RypbS+GT5nfc2XFOtU2DhRYDXavqxdC0YIJ9muc7SA4ZXw==
+X-Received: by 10.50.36.195 with SMTP id s3mr6124572igj.25.1461350727683; Fri,
+ 22 Apr 2016 11:45:27 -0700 (PDT)
+Received: by 10.36.2.9 with HTTP; Fri, 22 Apr 2016 11:45:27 -0700 (PDT)
+In-Reply-To: <20160422181103.GA5920@sigill.intra.peff.net>
+X-Google-Sender-Auth: zmgSHXY2Lbju31WtU6tIRH-eRqc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292244>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Jeff King <peff@peff.net> writes:
+On Fri, Apr 22, 2016 at 11:11 AM, Jeff King <peff@peff.net> wrote:
 >
->> That turned out to be quite simple (I wasn't sure originally if we'd
->> actually visit all of the tags, which is why I had conceived of this as
->> an initial pass; but of course it makes sense that we'd have to see all
->> of the tags in the existing code).
->> ...
->> We could _also_ tweak the merge-weight as Linus's patch did, just
->> because 10000 has more basis than 65535. But I think it really matters a
->> lot less at this point.
->
-> I agree, but if we were to go this route of keeping track of "some"
-> attribute of the tip the traversal started from, I wonder if it is
-> better to keep the actual tag object, not just its tagger date as an
-> unsigned long, in the new field.
+> I confirmed that it does find the "optimal" tag for the case we've been
+> discussing.
 
-Actually, I take it back.  The "object" approach would not give us
-enough flexibility to go beyond "date".  A light-weight tag that
-directly point at a commit object can still yield "date" (probably
-"committerdate" to be compared with other dates, be it the committer
-date from another commit or the tagger date from a real tag), but if
-we later wanted to do a v:refname kind of comparison, we'd need to
-keep the name of the ref (we cannot go back from the commit object
-to the refname), so at that point, we would be talking about adding
-yet another field anyway to hold the refname, in addition to the
-field we would be adding at this step.  As we do not want to be
-always doing "name to object to date" conversion in this codepath,
-adding an "unsigned long" date field is the right thing to do here.
-A more elaborate future can add refname (or refname and object) as
-additional fields, but we can wait because even after that update
-the codepath to do date comparison likely would want to have direct
-access to the date field anyway.
+Yes. I'm a bit more worried about the date behavior for projects that
+merge back stable branches into their development trees (is the
+development tag better than the stable tag? the date doesn't really
+say much), but I think this is still the simplest model we can use
+without trying to really do a topo-sort. And in many ways it's the
+simplest one to explain to people too: "we try to use the oldest
+reference we can find as a base for the resulting name" is not a
+complex or hard concept to explain.
+
+> We could _also_ tweak the merge-weight as Linus's patch did, just
+> because 10000 has more basis than 65535. But I think it really matters a
+> lot less at this point.
+
+Yes. I still think that my tweak makes more sense than the existing
+code, but it's a tiny tweak, compared to the date-based approach.
+Unlikely to ever matter much.
+
+            Linus
