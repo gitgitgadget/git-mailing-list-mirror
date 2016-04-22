@@ -1,89 +1,75 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] string_list: use string-list API in unsorted_string_list_lookup()
-Date: Fri, 22 Apr 2016 19:35:00 +0200
-Message-ID: <20160422173500.32329-1-ralf.thielow@gmail.com>
-Cc: Ralf Thielow <ralf.thielow@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 22 19:35:14 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: possible bug of git stash deleting uncommitted files in corner case
+Date: Fri, 22 Apr 2016 10:37:19 -0700
+Message-ID: <xmqqmvolpmsw.fsf@gitster.mtv.corp.google.com>
+References: <CAND5yRvCK9YuVOJ91CHbnbWAVYcPrpihGkoKs28f7PJgzRwW6Q@mail.gmail.com>
+	<CAND5yRvU1-AgvQW106fHbNN-GRQ615HjTDjR6AY9gkpoquBgDw@mail.gmail.com>
+	<1304154573.4013923.1461328186541.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Daniele Segato <daniele.segato@gmail.com>, git@vger.kernel.org
+To: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Apr 22 19:37:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atez4-0004Td-01
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 19:35:14 +0200
+	id 1atf1F-0006Gf-Nh
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Apr 2016 19:37:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932165AbcDVRfI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Apr 2016 13:35:08 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:35154 "EHLO
-	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932122AbcDVRfH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2016 13:35:07 -0400
-Received: by mail-wm0-f51.google.com with SMTP id e201so25785465wme.0
-        for <git@vger.kernel.org>; Fri, 22 Apr 2016 10:35:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=WD7zKr6reaJDn3nUGV+NxQL21xS/Xeyl4qUVkw9GnkY=;
-        b=KRSuBZHPeeoAY9TC+emTXsuBpK78qU1AJUxbPOxPLgF6nV6T3nfMpb7b2PjIGGYD4P
-         aFYUCpXl0NPtTeTlVUO673CLygvDXeN7QeQWzkYuZuo3N25xIJ4xKtYHCao3h6eC2w2E
-         BeWq6eL2Ho//rMIQqoAq8ZRSihMqxYve+hlCPUp6ZCIe7SWArc5CHZd0vMty68vC2niQ
-         WjHL7upe/Mq+mgtOAG6EUL0LyzRqGglmwD2hq1ST3WYTPLJCD687k5iPSSsTF5m7fg/6
-         Yr5MHf6XDAUNrQku7z3aJbtJc8yWRQ11w0fY0eoGrBsKlVCrET/FNUZMSuqy0EgHPx4S
-         htlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=WD7zKr6reaJDn3nUGV+NxQL21xS/Xeyl4qUVkw9GnkY=;
-        b=F8NL2tlFYyW1QA+AEOIKBzBEEuxGCNOaWJBFdw8uXn9Sv9fBfFYUE6wAtyndcgmTfw
-         HpH+ICcEvlz98zvP8SC7lnUUvW/yy4aomd1kIA5Vw8T+S24I4er330aqwE5jR4hykJYj
-         d046jl0mp6mWD0JkzXYU2a6zflLNIseVuNTdi5VYcaZW19XAAuFr/gAuQswJ6zCXQI82
-         r9I/gjrAqED8K22vcrX6anW0b5AG8z1l/vL6obEckpreWQKDz5XtHCSqFe65fljzd1I+
-         us2nWA3Xb/K5r2O0aw4A1FML5QLxcQzh8WCXk2ufRvuvmTPrfpfrldnA3zHndvoLrTJO
-         MNaw==
-X-Gm-Message-State: AOPr4FUM5KWlG47YWpWb3O+WArKAioaksYrlQkmxxC2stWRZro2/yLUyuNH6FNBkemRhrg==
-X-Received: by 10.194.116.9 with SMTP id js9mr24956259wjb.112.1461346504712;
-        Fri, 22 Apr 2016 10:35:04 -0700 (PDT)
-Received: from localhost (cable-86-56-73-63.cust.telecolumbus.net. [86.56.73.63])
-        by smtp.gmail.com with ESMTPSA id i194sm4392237wmf.6.2016.04.22.10.35.04
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 22 Apr 2016 10:35:04 -0700 (PDT)
-X-Mailer: git-send-email 2.8.1.382.g1352ede
+	id S932361AbcDVRh0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Apr 2016 13:37:26 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60900 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932091AbcDVRhZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Apr 2016 13:37:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id F2E1E1577B;
+	Fri, 22 Apr 2016 13:37:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iQhqUakvk92MreUMMHzYDEpqNlg=; b=EigzFY
+	tCI5OYNoSj/gUh8r63n7NqICnJylnEp8JytiJGN3hPsfyfVjrP8aTkD8j3TmIy1c
+	og04J9ibI0I6RHMe0dWHUcallEDk74dGw6nId0kDtIvJIU1bgzDR8BVF/9/noF5h
+	yiGUpHkz9AT8anQBkb4Y/20qTJdPWR2ERFrN8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DhUQ2f05eCgtsBHVjh4VciJnD9LaFNfm
+	AOqgFHjUM/WgmglmW8vKx4DqrAiabfu8HlzrRnUtFy9OwjHRcvMcUiXPj+F9bBZP
+	hKs9y8mlfuwSVMHWH/wc1804PkSAIVRLITK5912wHmCz5HUa5n4DY0WAhrVy7sai
+	Uux6iFq/MHo=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EA2F51577A;
+	Fri, 22 Apr 2016 13:37:21 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D698915779;
+	Fri, 22 Apr 2016 13:37:20 -0400 (EDT)
+In-Reply-To: <1304154573.4013923.1461328186541.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	(Remi Galan Alfonso's message of "Fri, 22 Apr 2016 14:29:46 +0200
+	(CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: DDBF70BA-08B0-11E6-86F9-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292236>
 
-Using the string-list API in function unsorted_string_list_lookup()
-makes the code more readable.  So let's do this.
+Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+writes:
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
- string-list.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+> Daniele Segato <daniele.segato@gmail.com> wrote:
+> ...
+>> git version 1.9.1
+>
+> Contrary to what I expected, this seems to still be the case with:
+>   $ git --version
+>   git version 2.8.0.rc2
 
-diff --git a/string-list.c b/string-list.c
-index 2a32a3f..8127e12 100644
---- a/string-list.c
-+++ b/string-list.c
-@@ -231,12 +231,13 @@ void string_list_sort(struct string_list *list)
- struct string_list_item *unsorted_string_list_lookup(struct string_list *list,
- 						     const char *string)
- {
--	int i;
-+	struct string_list_item *item;
- 	compare_strings_fn cmp = list->cmp ? list->cmp : strcmp;
- 
--	for (i = 0; i < list->nr; i++)
--		if (!cmp(string, list->items[i].string))
--			return list->items + i;
-+	for_each_string_list_item(item, list) {
-+		if (!cmp(string, item->string))
-+			return item;
-+	}
- 	return NULL;
- }
- 
--- 
-2.8.1.382.g1352ede
+I do not think "git stash" has been updated in any major way to
+address correctness (including its corner case behaviour) ever since
+it was originally written, so it is very likely that any bug you see
+would be with it since the very old days.
