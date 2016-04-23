@@ -1,94 +1,162 @@
-From: Ben Woosley <ben.woosley@gmail.com>
-Subject: Re: make test Unexpected passes
-Date: Fri, 22 Apr 2016 23:16:16 +0000 (UTC)
-Message-ID: <loom.20160423T011428-888@post.gmane.org>
-References: <571A8404.5030200@ramsayjones.plus.com>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] hooks: Add ability to specify where the hook directory is
+Date: Sat, 23 Apr 2016 02:13:02 +0200
+Message-ID: <1461370382-16524-1-git-send-email-szeder@ira.uka.de>
+References: <1461367997-28745-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 23 01:55:17 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 23 02:13:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1atkur-0001e1-3U
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Apr 2016 01:55:17 +0200
+	id 1atlCj-0006Fp-8c
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Apr 2016 02:13:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751737AbcDVXzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Apr 2016 19:55:11 -0400
-Received: from plane.gmane.org ([80.91.229.3]:49548 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751470AbcDVXzK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2016 19:55:10 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1atkuh-0001XF-88
-	for git@vger.kernel.org; Sat, 23 Apr 2016 01:55:07 +0200
-Received: from c-73-189-198-63.hsd1.ca.comcast.net ([73.189.198.63])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 23 Apr 2016 01:55:07 +0200
-Received: from ben.woosley by c-73-189-198-63.hsd1.ca.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 23 Apr 2016 01:55:07 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 73.189.198.63 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36)
+	id S1751476AbcDWANj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Apr 2016 20:13:39 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:55630 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751407AbcDWANi (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2016 20:13:38 -0400
+Received: from x590e2083.dyn.telefonica.de ([89.14.32.131] helo=localhost.localdomain)
+	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
+	iface 141.3.10.81 id 1atlCT-00051B-04; Sat, 23 Apr 2016 02:13:34 +0200
+X-Mailer: git-send-email 2.8.1.99.g5d5236f
+In-Reply-To: <1461367997-28745-1-git-send-email-avarab@gmail.com>
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1461370414.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292293>
 
-Ramsay Jones <ramsay <at> ramsayjones.plus.com> writes:
 
-> 
-> Hi Ben, Junio,
-> 
-> Tonight, the testsuite passed with a couple of 'unexpected passes', viz:
->
-> In the first case, t3421-*.sh, git bisect fingered commit f32ec670
-> ("git-rebase--merge: don't include absent parent as a base", 20-04-2016).
->
-> ATB,
-> Ramsay Jones
-> 
- 
-Yep,
+> Change the hardcoded lookup for .git/hooks/* to optionally lookup in
+> $(git config core.hooksDirectory)/* instead if that config key is set=
+=2E
+>=20
+> This is essentially a more intrusive version of the git-init ability =
+to
+> specify hooks on init time via init templates.
+>=20
+> The difference between that facility and this feature is that this ca=
+n
+> be set up after the fact via e.g. ~/.gitconfig or /etc/gitconfig to
+> apply for all your personal repositories, or all repositories on the
+> system.
+>=20
+> I plan on using this on a centralized Git server where users can crea=
+te
+> arbitrary repositories under /gitroot, but I'd like to manage all the
+> hooks that should be run centrally via a unified dispatch mechanism.
+>=20
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.c=
+om>
+> ---
+>  Documentation/config.txt          | 10 ++++++++++
+>  Documentation/githooks.txt        |  5 ++++-
+>  cache.h                           |  1 +
+>  config.c                          |  3 +++
+>  environment.c                     |  1 +
+>  run-command.c                     |  5 ++++-
+>  t/t1350-config-hooks-directory.sh | 35 +++++++++++++++++++++++++++++=
+++++++
+>  7 files changed, 58 insertions(+), 2 deletions(-)
+>  create mode 100755 t/t1350-config-hooks-directory.sh
+>=20
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 42d2b50..2faf3c0 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -618,6 +618,16 @@ core.attributesFile::
+>  	$XDG_CONFIG_HOME/git/attributes. If $XDG_CONFIG_HOME is either not
+>  	set or empty, $HOME/.config/git/attributes is used instead.
+> =20
+> +core.hooksDirectory::
+> +	By default Git will look for your hooks in the '$GIT_DIR/hooks'
+> +	directory. Set this to different absolute directory name,
 
-These know breakages:
+Mental note: here you say that it should be an absolute directory.
 
-ok 50 - rebase -m --onto --root
-ok 54 - rebase -m without --onto --root with disjoint history
+> +	e.g. '/etc/git/hooks', and Git will try to find your hooks that
 
-Have to do with rebasing a root/orphan branch with the -m flag,
-which defaults to -- merge=recursive, which is the case the patch fixed.
+s/hooks that/hooks in that/
 
-Here are the necessary changes:
+> +	directory, e.g. '/etc/git/hooks/pre-receive' instead of in
+> +	'$GIT_DIR/hooks'.
+> ++
+> +This is useful in cases where you'd like to centrally configure your
+> +Git hooks instead of configuring them on a per-repository basis.
+> +
+>  core.editor::
+>  	Commands such as `commit` and `tag` that lets you edit
+>  	messages by launching an editor uses the value of this
 
---- a/t/t3421-rebase-topology-linear.sh
-+++ b/t/t3421-rebase-topology-linear.sh
-@@ -253,7 +253,7 @@ test_run_rebase () {
- 	"
- }
- test_run_rebase success ''
--test_run_rebase failure -m
-+test_run_rebase success -m
- test_run_rebase success -i
- test_run_rebase success -p
- 
-@@ -268,7 +268,7 @@ test_run_rebase () {
- 	"
- }
- test_run_rebase success ''
--test_run_rebase failure -m
-+test_run_rebase success -m
- test_run_rebase success -i
- test_run_rebase failure -p
- 
--- 
-2.8.1.211.g8e54d77
+
+> diff --git a/t/t1350-config-hooks-directory.sh b/t/t1350-config-hooks=
+-directory.sh
+> new file mode 100755
+> index 0000000..556c1d3
+> --- /dev/null
+> +++ b/t/t1350-config-hooks-directory.sh
+> @@ -0,0 +1,35 @@
+> +#!/bin/sh
+> +
+> +test_description=3D'Test the core.hooksDirectory configuration varia=
+ble'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'set up a pre-commit hook in core.hooksDirectory=
+' '
+> +	mkdir -p .git/custom-hooks .git/hooks &&
+> +	cat >.git/custom-hooks/pre-commit <<EOF &&
+> +#!$SHELL_PATH
+> +printf "%s" "." >>.git/PRE-COMMIT-HOOK-WAS-CALLED
+> +EOF
+> +	cat >.git/hooks/pre-commit <<EOF &&
+> +	chmod +x .git/hooks/pre-commit
+> +#!$SHELL_PATH
+> +printf "%s" "SHOULD NOT BE CALLED" >>.git/PRE-COMMIT-HOOK-WAS-CALLED
+> +EOF
+> +	chmod +x .git/custom-hooks/pre-commit
+> +'
+
+Please use the 'write_script' helper for, well, writing scripts.
+
+> +
+> +test_expect_success 'Check that various forms of specifying core.hoo=
+ksDirectory work' '
+> +	test_commit no_custom_hook &&
+> +	git config core.hooksDirectory .git/custom-hooks &&
+> +	test_commit have_custom_hook &&
+> +	git config core.hooksDirectory .git/custom-hooks/ &&
+> +	test_commit have_custom_hook_trailing_slash &&
+
+These two cases ensure that it should work even when the configured
+hook directory is given as a relative path, though the docs say it
+should be an absolute path.
+
+> +	git config core.hooksDirectory "$PWD/.git/custom-hooks" &&
+> +	test_commit have_custom_hook_abs_path &&
+> +	git config core.hooksDirectory "$PWD/.git/custom-hooks/" &&
+> +	test_commit have_custom_hook_abs_path_trailing_slash &&
+> +    printf "%s" "...." >.git/PRE-COMMIT-HOOK-WAS-CALLED.expect &&
+> +    test_cmp .git/PRE-COMMIT-HOOK-WAS-CALLED.expect .git/PRE-COMMIT-=
+HOOK-WAS-CALLED
+
+Indentation with spaces.
+
+> +'
+> +
+> +test_done
+> --=20
+> 2.1.3
