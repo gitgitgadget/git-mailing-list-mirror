@@ -1,104 +1,141 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [GIT PULL] l10n updates for maint branch (2.8.2)
-Date: Sun, 24 Apr 2016 21:12:57 +0800
-Message-ID: <CANYiYbHOkYx6CXHkUHBoWfQOJGiEFXJJi4tDTFvAGigKZfO7gw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jean-Noel Avila <jn.avila@free.fr>, Git List <git@vger.kernel.org>,
-	Vasco Almeida <vascomalmeida@sapo.pt>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 24 15:13:07 2016
+From: Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH 01/83] builtin/apply: make gitdiff_verify_name() return void
+Date: Sun, 24 Apr 2016 15:33:01 +0200
+Message-ID: <1461504863-15946-2-git-send-email-chriscool@tuxfamily.org>
+References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 24 15:34:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auJqV-00065Q-4d
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 15:13:07 +0200
+	id 1auKBc-0007do-ME
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 15:34:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752647AbcDXNNA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Apr 2016 09:13:00 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33652 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752616AbcDXNM7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2016 09:12:59 -0400
-Received: by mail-wm0-f68.google.com with SMTP id r12so15633306wme.0
-        for <git@vger.kernel.org>; Sun, 24 Apr 2016 06:12:58 -0700 (PDT)
+	id S1752690AbcDXNes (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Apr 2016 09:34:48 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:38121 "EHLO
+	mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752496AbcDXNeq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2016 09:34:46 -0400
+Received: by mail-wm0-f53.google.com with SMTP id u206so89917341wme.1
+        for <git@vger.kernel.org>; Sun, 24 Apr 2016 06:34:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc
-         :content-transfer-encoding;
-        bh=lq03QS2qs1eBlujWASXl7FCBIdbW5sSCgx+T8Yhw8hA=;
-        b=gKI+1S0Ay0YIeIP3dYtyfMqJOtWDTJb6EYNQ1gX71fQL7Mk0fnU/0cKnli6sh8vWVu
-         pVb78ty6fvtM5zGfKThN5q2Ch4LU5bqKLfxRnd92vGH7ON7ZCmZ9F15I8MCBvgZIpNW+
-         OWtTrCLftdrPBrtacgkQ5jcVH1X+BrMA7zEIq1RRBRnM4Gi34wA98Le/fKYPe0VLR2Xp
-         5Y2BUuzEzihDbCECziaFrhUxK7PCgfFRIVkvKtkIPYCHuGwvCqjLeXYdw4weROJWLjbW
-         YItXDjW14mbd/2x22gpG83uXCxS6qdvAnehWWk4gE4GcMUdPPKAhBgQbgDlgkPsruVMz
-         jo5A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=gM8oXVARd4mryQQl2keakAgfc1YtJz9527QMJFwIP14=;
+        b=uP/IxPht8PYLt1i5Un91HBvoKqECPYSDDWWToezNojRD+namR40WCV25h0tUKGfFPb
+         ldvnXArWoAVWbVFNXov8Mp/Km9FqFmVzrEbi6va1P/ZaEkS5YwVcDRJjRMniFfYsBOP8
+         iK5tkrlUBR+oepaUpt9BICg+L1k7Iir4fhk6X3Qe3zEb3ER4vjhgjqmMBLCTnOAUeiPd
+         U+Ru+RFtF33SOrEmETvW8ZUg5TMpNa/+HbnQcXXLQd9wE0hqGZaj65KpHTPjkxBSXrO/
+         Mes+sw2i8qoAQQ7mKVPieBmjGYUaaaCB8Jom0/e2/vcwyItR1OSGUuGwluKyVy/0R0hb
+         7L9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
-         :content-transfer-encoding;
-        bh=lq03QS2qs1eBlujWASXl7FCBIdbW5sSCgx+T8Yhw8hA=;
-        b=NUTiqGnmEKj4a9hKvlq7wTnNhcoThiyDK8CPtEg/WbtpERKVKnGfMnkVuafdOwdwtv
-         ZnfhWD3CTJl1aotizQf+JavIAfpznr8/VP4jWGvLqt60h0vFerKJGBdamTm399W9V3Sr
-         8acIdUZ7fjS/6lvvU7kmWzCxxrAhq3N/P4AsRemds5PbemzK3Zv3n2P8UNb3K26W2sg/
-         J5cEWp5tHRFc6MGfPC2ounGqPxFDTlnFljoyuJ7e5XGsYf1MaOVaDWZoRliQZ6aFfvfT
-         7veiWevykmKatUNyQs49yoH3+s/nAe9GJbd+fbE/H++ysTEYjVE9OK3IpUeaOlcjkBZj
-         MF3Q==
-X-Gm-Message-State: AOPr4FXJQX8REH2KqT6CETvcuCA+7+6GTKw+GQrNDuEfqyKZaZdCMmsA+Chqsq2kWm4+ssjZO59AbOUg1zR/lw==
-X-Received: by 10.28.174.70 with SMTP id x67mr6590875wme.43.1461503577586;
- Sun, 24 Apr 2016 06:12:57 -0700 (PDT)
-Received: by 10.194.6.231 with HTTP; Sun, 24 Apr 2016 06:12:57 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=gM8oXVARd4mryQQl2keakAgfc1YtJz9527QMJFwIP14=;
+        b=LxX1kTRxg5Ic+9H5CWu2xjuzW8cHZX2Y3Jm37+XGyDO23bbyErGbdS5XCP/6f3wqdt
+         vJ64rMcZv1ZLAbIhKicsRrUQy30CiZ2UAcfMbZShPQlGDhag9YqpXcOO4oNqZAZbg0Df
+         Bc89lyp7TmXpgGmZTys+jCgqGWp8FcoXWyuTb7ycLbjs5tO0mpD8KpK8Rq4nzzGpedzU
+         D0quAZNuofhtK4z8DqrDIBJgA7CeQJjTWfT5FpGM/Nw4G0RvrqkLzgO4Fh2M9pwkqveb
+         mLhcC/aIT6233o77xT8CGwM7pYvgLpvCaberMEH/Q8cB/FNQot/GNt0RFUsHJlPK3p7H
+         Qb0A==
+X-Gm-Message-State: AOPr4FU8F8Jzq1dHAfn0ciCae4/kD5A8rWNFDcDXW0xrhSENt5H1b89Cw5lEg7cRjgRq1g==
+X-Received: by 10.194.175.168 with SMTP id cb8mr29776129wjc.56.1461504885133;
+        Sun, 24 Apr 2016 06:34:45 -0700 (PDT)
+Received: from localhost.localdomain (121.73.115.78.rev.sfr.net. [78.115.73.121])
+        by smtp.gmail.com with ESMTPSA id j6sm6717101wjb.29.2016.04.24.06.34.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 24 Apr 2016 06:34:44 -0700 (PDT)
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.8.1.300.g5fed0c0
+In-Reply-To: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292323>
 
-Hi Junio,
+As the value returned by gitdiff_verify_name() is put into the
+same variable that is passed as a parameter to this function,
+it is simpler to pass the address of the variable and have
+gitdiff_verify_name() change the variable itself.
 
-Please pull this update to the maint branch.  It should have been merge=
-d to
-Git 2.8.0, but I was busy these weeks and forgot to check my private ma=
-ilbox.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin/apply.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-The following changes since commit 26e4cbec4558ea21cd572bfc915a462f63c1=
-ebb4:
-
-  l10n: zh_CN: review for git v2.8.0 l10n round 2 (2016-03-20 18:46:02 =
-+0800)
-
-are available in the git repository at:
-
-  git://github.com/git-l10n/git-po tags/l10n-2.8.0-rnd3-fr
-
-for you to fetch changes up to 2ee0fca122653572f2ecb3c3a2d5441170f8e17c=
-:
-
-  Merge branch 'fr_v2.8.0_r3' of git://github.com/jnavila/git into
-maint (2016-04-24 20:36:34 +0800)
-
-----------------------------------------------------------------
-l10n-2.8.0-rnd3-fr
-
-----------------------------------------------------------------
-Jean-No=C3=ABl Avila (1):
-      Merge pull request #9 from vascool/fr
-
-Jiang Xin (1):
-      Merge branch 'fr_v2.8.0_r3' of git://github.com/jnavila/git into =
-maint
-
-Vasco Almeida (4):
-      l10n: fr: fix transcation of "dir"
-      l10n: fr: fix wrongly translated option name
-      l10n: fr: change "id de cl=C3=A9" to match "id-cl=C3=A9"
-      l10n: fr: don't translate "merge" as a parameter
-
- po/fr.po | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
---
-Jiang Xin
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 8e4da2e..fe5aebd 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -925,43 +925,43 @@ static int gitdiff_hdrend(const char *line, struct patch *patch)
+ #define DIFF_OLD_NAME 0
+ #define DIFF_NEW_NAME 1
+ 
+-static char *gitdiff_verify_name(const char *line, int isnull, char *orig_name, int side)
++static void gitdiff_verify_name(const char *line, int isnull, char **name, int side)
+ {
+-	if (!orig_name && !isnull)
+-		return find_name(line, NULL, p_value, TERM_TAB);
++	if (!*name && !isnull) {
++		*name = find_name(line, NULL, p_value, TERM_TAB);
++		return;
++	}
+ 
+-	if (orig_name) {
+-		int len = strlen(orig_name);
++	if (*name) {
++		int len = strlen(*name);
+ 		char *another;
+ 		if (isnull)
+ 			die(_("git apply: bad git-diff - expected /dev/null, got %s on line %d"),
+-			    orig_name, linenr);
++			    *name, linenr);
+ 		another = find_name(line, NULL, p_value, TERM_TAB);
+-		if (!another || memcmp(another, orig_name, len + 1))
++		if (!another || memcmp(another, *name, len + 1))
+ 			die((side == DIFF_NEW_NAME) ?
+ 			    _("git apply: bad git-diff - inconsistent new filename on line %d") :
+ 			    _("git apply: bad git-diff - inconsistent old filename on line %d"), linenr);
+ 		free(another);
+-		return orig_name;
+ 	} else {
+ 		/* expect "/dev/null" */
+ 		if (memcmp("/dev/null", line, 9) || line[9] != '\n')
+ 			die(_("git apply: bad git-diff - expected /dev/null on line %d"), linenr);
+-		return NULL;
+ 	}
+ }
+ 
+ static int gitdiff_oldname(const char *line, struct patch *patch)
+ {
+-	patch->old_name = gitdiff_verify_name(line, patch->is_new, patch->old_name,
+-					      DIFF_OLD_NAME);
++	gitdiff_verify_name(line, patch->is_new, &patch->old_name,
++			    DIFF_OLD_NAME);
+ 	return 0;
+ }
+ 
+ static int gitdiff_newname(const char *line, struct patch *patch)
+ {
+-	patch->new_name = gitdiff_verify_name(line, patch->is_delete, patch->new_name,
+-					      DIFF_NEW_NAME);
++	gitdiff_verify_name(line, patch->is_delete, &patch->new_name,
++			    DIFF_NEW_NAME);
+ 	return 0;
+ }
+ 
+-- 
+2.8.1.300.g5fed0c0
