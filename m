@@ -1,96 +1,93 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] string_list: use string-list API in
- unsorted_string_list_lookup()
-Date: Sun, 24 Apr 2016 09:06:12 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604240901570.2896@virtualbox>
-References: <20160422173500.32329-1-ralf.thielow@gmail.com>
+Subject: Re: 0 bot for Git
+Date: Sun, 24 Apr 2016 09:15:10 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1604240908200.2896@virtualbox>
+References: <CAGZ79kYWGFN1W0_y72-V6M3n4WLgtLPzs22bWgs1ObCCDt5BfQ@mail.gmail.com> <CAGZ79kZOx8ehAB-=Frjgde2CDo_vwoVzQNizJinf4LLXek5PSQ@mail.gmail.com> <vpq60vnl28b.fsf@anie.imag.fr> <CAGZ79kaLQWVdehMu4nas6UBpCxnAB_-p=xPGH=aueMZXkGK_2Q@mail.gmail.com>
+ <vpqoa9ea7vx.fsf@anie.imag.fr> <xmqqmvoypn7g.fsf@gitster.mtv.corp.google.com> <88CF8CB5-4105-4D0C-8064-D66092169111@gmail.com> <xmqqa8kxlbix.fsf@gitster.mtv.corp.google.com> <BF9D5A7E-CB73-4F82-8D5F-42E120D07A3B@gmail.com>
+ <CAGZ79ka4WmT8NjD-04WqwczuCuJZcoKMyDRQKkRH1sT5xoqRhQ@mail.gmail.com> <DB5772D2-89D4-4D14-8FD1-4AF6DDFD77AC@gmail.com> <xmqq60vh77pt.fsf@gitster.mtv.corp.google.com> <7F130640-40F1-454F-BC00-ACC5364404B8@gmail.com>
+ <xmqqr3dxpn4f.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 24 09:06:27 2016
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, lkp@intel.com,
+	Greg KH <gregkh@linuxfoundation.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 24 09:19:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auE7d-0000ff-OQ
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 09:06:26 +0200
+	id 1auEKB-0005z2-Kr
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 09:19:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752264AbcDXHGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Apr 2016 03:06:18 -0400
-Received: from mout.gmx.net ([212.227.17.20]:55483 "EHLO mout.gmx.net"
+	id S1751982AbcDXHPm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Apr 2016 03:15:42 -0400
+Received: from mout.gmx.net ([212.227.17.20]:54274 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752246AbcDXHGR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2016 03:06:17 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MYfJW-1bGemd011m-00VRzN; Sun, 24 Apr 2016 09:06:13
+	id S1751717AbcDXHPl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2016 03:15:41 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0M5a9E-1beUC90Rh2-00xc20; Sun, 24 Apr 2016 09:15:13
  +0200
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160422173500.32329-1-ralf.thielow@gmail.com>
+In-Reply-To: <xmqqr3dxpn4f.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:DbKqn0CJHrFynD7HP6JgRUkR2LlKl+FWQm+scXsOT3ps49koIln
- UjejDSzC2j9SC4ejQGb8Nflfd0CgyZ/p1inSZcoXkbopTnwMb/ECF0PU2zcxbJK/nWpGHG9
- EJcGjHaYwKm3unKT3nWsTTtpJZquV2tJ55/Zjy0lq7elwspQgIwgiwKJln2IbbHmqFSSpfq
- EXRcPcspj1EZ0TyPQvOGw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:eWlVCtzXne0=:uowCbGf6WQxanxrKccLtC4
- yB41ty5jgjUYOHvoTV72DUaCtPIzFUmhqX/dDJWmW5KvX+rHAXw1l4pYpqXND1v28f2U3hkwK
- ch+Ls8O8ObnopYevrTIWS5l1YWMyb4OyQyu0Scr32s5ZXYjWc1nN8ZIz7xUighQy4o9LGewTN
- i3OwzcuNrWn6Jbz3IOWfYjPiwOuxbfTV9zIq7GYn3PaboPMC4UlhKZjX8GWd4mBPrxgSTVr/k
- tAUayD96cDGvBMsbN+ljs7dL1cebc8fbQ7FWogQ4CNayhyI5gUBKU51BG6auF8uPO1Ecb8B5H
- Y4WFTz2Ytlwfi66lkp49HpRjQu3wkDnZAn8PsYdOW7kQopAz1fZ0R5uy8PPRvSq8LE1ZF1pCs
- 4Dny9O/LgQwPJBr1zdNgBzq/qJhkXEU8exEokyOrEb/2er6ls3nGL2G4bpys3W5UxpszpFqmz
- 7liryMGmn+6HdeuX/fityKQwA8hpAsB57v1/3JEG3MlPKkhRjxlua0x6XgtjKMjuCbw1Qzkrm
- ZV3iw1n3Jh34NX4N2GD4PUm9uc9adH7UwdIcwMdLi0s/yQbt5i724AkYKtITMa4KQjr0iSV21
- c44H1zDFoIqjDPg9dXVA19DBR6wAdDaaAVMhWNUqKsmhGn76aRH84Xwgco6CtHcuJ6HdqfPFb
- qkttQHCZPGE99u3a8gNKr9nTAyKiPrLHAxPdsv0fOpMlUZZXYvrmw/HAToUftHj1kNIvRtciS
- l9b/CH+gaiFpnYoUvz4KU0B49M/aG5JGlO4VLZSQXmJqae4/MIrtJBEEQb3jKh0GS7YTctvY 
+X-Provags-ID: V03:K0:vHcGXSEZvVPygqJwWNF17/P33IyCRZ0hLHLT9H/EfKK6N8seI81
+ 91hpJRj4suPOuQeaLcqVYjrln0OIANxlFtXwYX1CzNc2waA266bQ5/LkTB1IHCiELPoMkzQ
+ KWVe42DYJAyn5efUez7dzS8TuPQxBOOLiRzTGX9pkHlDtnvQ4QhZyzvvAxa+k5bliQl0TeZ
+ rsycEH5r1NGiOTeT8eRxQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:eBoh68QJizc=:rxRNQLP98ulT9DdaXd957t
+ U0PXwnnwu5vGwpFCCpXbNV/OUuYcXPQ4iSXLcud6Hji8vEkidzkwvSmStfZrWZiGi+NP6KIMT
+ hxqkVOj8lpY6a1kH5BFGLwzX2Gg3CtDhWBF45h/J+woFdOek7IWmNvUOkHsYOMVCxG3RCDzjg
+ QHGCehkWL6W+gAkZ0ZtnariQoCu2L0/HpMXKIkp/kzpnDpYXVGTdbN1Z/RfjYMW6M39I/rHdy
+ 2FmFUk4OWLha0aR59qsKOpWY9g3mYKZrX743sWhtstRt3N8dnm33O553UtZIVAtVNs7euP3aM
+ vha0N3QVYSRJ/YcyfuXm3cC0uPSLFbGS0A4pBTya2PaTgZBDCjVk9Ms7854KNPSJcYvFGBC97
+ rXuYvcHUizSc7R0UoRqgVo6yNQ3ssO0roFC60xsjWCmvFQzq0A/BfuIl/EqN6jvO1qADAq5Z3
+ 83Cuv07Zn8vU+OmQu4GMt+0o3bs+Uey7hEjl7trDWo2LkYfV7WQBI94dtpSlZAEx0+3i+LsCW
+ 2byGUBHCXoqAo5BmIXdQ3c5ZHdW4ddh4BwOt9TzvHLdqBdt993XUU3NHHoPCfi6jQB8d0fMDR
+ hGBvnxvTZhuJVpxJvMQ2QQU2rKNZrz1Ixq4ndECHOuLjIb66UT8WfjNcUayunZ0yVeb9Apy2n
+ eEMtnNhDuz4x104zFxaaXmKEKwvjBeeQ+CRRrRofqNwH0SoymvgXmXheUAWlggX7Dsb7JSvT3
+ fa6cFlqWcNPPqG3m+h4vjS+VSgi/gkfkcuad9O/4eKLNcBlPi7QI3nYTS9n/SOn8HLLbPzx+ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292317>
 
-Hi Ralf,
+Hi Lars & Junio,
 
-On Fri, 22 Apr 2016, Ralf Thielow wrote:
+On Fri, 22 Apr 2016, Junio C Hamano wrote:
 
-> Using the string-list API in function unsorted_string_list_lookup()
-> makes the code more readable.  So let's do this.
+> Lars Schneider <larsxschneider@gmail.com> writes:
 > 
-> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
-> ---
->  string-list.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
+> > Thanks for the explanation. My intention was not to be offensive.
+> > I was curious about your workflow and I was wondering if the
+> > Travis CI integration could be useful for you in any way.
+> 
+> Don't worry; I didn't feel offended.  The Travis stuff running on
+> the branches at http://github.com/git/git would surely catch issues
+> on MacOSX and/or around git-p4 (neither of which I test myself when
+> merging to 'pu') before they hit 'next', and that is already helping
+> us greatly.
 
-Oh. I hoped for a reduction, not an increase.
+I agree that it helps to catch those Mac and P4 issues early.
 
-> diff --git a/string-list.c b/string-list.c
-> index 2a32a3f..8127e12 100644
-> --- a/string-list.c
-> +++ b/string-list.c
-> @@ -231,12 +231,13 @@ void string_list_sort(struct string_list *list)
->  struct string_list_item *unsorted_string_list_lookup(struct string_list *list,
->  						     const char *string)
->  {
-> -	int i;
-> +	struct string_list_item *item;
->  	compare_strings_fn cmp = list->cmp ? list->cmp : strcmp;
->  
-> -	for (i = 0; i < list->nr; i++)
-> -		if (!cmp(string, list->items[i].string))
-> -			return list->items + i;
-> +	for_each_string_list_item(item, list) {
-> +		if (!cmp(string, item->string))
-> +			return item;
-> +	}
->  	return NULL;
+However, it is possible that bogus errors are reported that might not have
+been introduced by the changes of the PR, and I find it relatively hard to
+figure out the specifics. Take for example
 
-If you drop the extra curly braces (thereby matching Git's coding style as
-an additional bonus), at least the patch won't increase the number of
-lines.
+	https://travis-ci.org/git/git/jobs/124767554
 
-In any case, I like the simplification of the code.
+It appears that t9824 fails with my interactive rebase work on MacOSX,
+both Clang and GCC versions. I currently have no access to a Mac for
+developing (so I am denied my favorite debugging technique: sh t... -i -v
+-x), and I seem to be unable to find any useful log of what went wrong
+*specifically*.
+
+Any ideas how to find out?
 
 Ciao,
 Dscho
