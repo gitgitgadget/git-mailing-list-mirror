@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH 18/83] builtin/apply: move 'numstat' global into 'struct apply_state'
-Date: Sun, 24 Apr 2016 15:33:18 +0200
-Message-ID: <1461504863-15946-19-git-send-email-chriscool@tuxfamily.org>
+Subject: [PATCH 20/83] builtin/apply: move 'threeway' global into 'struct apply_state'
+Date: Sun, 24 Apr 2016 15:33:20 +0200
+Message-ID: <1461504863-15946-21-git-send-email-chriscool@tuxfamily.org>
 References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -18,45 +18,45 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auKFR-0001Ek-MT
+	id 1auKFS-0001Ek-8H
 	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 15:38:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753162AbcDXNis (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1753160AbcDXNis (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Sun, 24 Apr 2016 09:38:48 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:38268 "EHLO
-	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752758AbcDXNfM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2016 09:35:12 -0400
-Received: by mail-wm0-f42.google.com with SMTP id u206so89926832wme.1
-        for <git@vger.kernel.org>; Sun, 24 Apr 2016 06:35:11 -0700 (PDT)
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:38281 "EHLO
+	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752764AbcDXNfO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2016 09:35:14 -0400
+Received: by mail-wm0-f52.google.com with SMTP id u206so89927814wme.1
+        for <git@vger.kernel.org>; Sun, 24 Apr 2016 06:35:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=7ZPVxgAZURdAsm0W4LFm4hYR9tZGeFP4PAyhp2ISxAk=;
-        b=ESTRfzElmiDP2zuoMBNKaxPX0Ifp8FmQ7iBPYRtwS8XvR/geoXESyNRxcH63Ny4Vnn
-         80V4fP0TXCQIJmxLhwA/PfDOpOjGrkonsGBT1lckUoH7uVbq/893mY3PA4L+Jj0TGSYd
-         3F+V2R0TfkJLGtW9BQVcY780QClDE6yh0Jo6KhAbncTSLWjo1eZpX1ndnZgNFE4UfCIF
-         V7VtxHeEBByPV+4JITl2nxveFq+X6DwtWXfY1U5D2LiNYeMYRcGuS72md4RqBHYGM3NE
-         SW0twa6rMLgRiGJ4+NxWDENPn6A1l7QXXBd0Sz2J1wsjDB0RG1SxxutHGde1YFHXSOFg
-         5N8g==
+        bh=ZBHOnehDBkAJDZCElDUdnd6mGySbRi2LEJpUYxJbd3s=;
+        b=WkhwsinynImpbjEkNxp1kspMyG+y3SEuYHHbLc8LKhPEKStcIrJzxppfrfRpQwQeAI
+         7IVUbi9uCWROjIt1jQ/tBTf8pOTHwP2im1qXQOY9134/o7BpOxv1KSnIiOmRmorLnJes
+         XUknvyol0a5nthShNk9GCSSZKGvxIGnKqEAKk8R8eml7G6mqdQJffCiSsxDDaC02v9rQ
+         hDE8TB5UQp0r3M6WGQ+RlwFncxWLpOnhZ0lsKsv1qelJdhGMhmhPfe4de7eLcxOwfNGJ
+         dNPf7ItSd/zT19E95z0CJ96862WINboaIqA/CDWv3Qkg1CUSp6aPHTgaJjf5c54014k9
+         pKlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=7ZPVxgAZURdAsm0W4LFm4hYR9tZGeFP4PAyhp2ISxAk=;
-        b=brPtEtVKx/+/WJ3YxiXwwCaPObff4F41ez/7JDF3ZO2HAdOQMrEJoBUhXZkVK0cyOm
-         WQU7lYxkTDACG2LFhszEc47nV47zFjAGhIEvJUwBoLOVZPmwb37rUzTUASB/sGyxmc1S
-         0q/C7c/PQ6thYwOICW2D1y5E7q1mCHeSe7CjtY+LazTk7kYIDhmaDsxT1E5i1GGcYJFS
-         7wmeIu+vMKsgYP15ZFpRYqD11RlldaL0Ozxh3FXiHrApQ7A2tOB/zyRpfibJlnKIU0E1
-         WuZC+1VNHdIt1FeKusRb6R4NeokOW0zKaeC/U7SOltDzc2meqmMwH9M3QkHXKXjse1Jf
-         VcVw==
-X-Gm-Message-State: AOPr4FUI8Pcy+8uXLTbuFPYx7OrPJTL7MvZ5sTtx2LkKzz1T6fWzj38VrjrISYQU2CvoJA==
-X-Received: by 10.28.17.211 with SMTP id 202mr6685109wmr.11.1461504910690;
-        Sun, 24 Apr 2016 06:35:10 -0700 (PDT)
+        bh=ZBHOnehDBkAJDZCElDUdnd6mGySbRi2LEJpUYxJbd3s=;
+        b=Y578taEshQoSza7HXHQJIHyK/JIPWOPnB5nHQOOy9plLOsre4ApvoHG/bn3Ld99YgG
+         k1mHhqbYIqqf7ebFYGGJeaMuFfSrdCvXx/2TGa91xwZk0eqVXqmR5VXVhDoUIAt4Be4m
+         kaFudYSs6ZYDqzLyTfYPfyuyu3K0A/RcDJwkaX2Wx/eGx8seCAuceAv+z6lDo2+8a5mx
+         LovWdyY0wdmvCc1mRQLoxFLIhduJccjafoKb4NcfZ3p81B/VZkHu9mX5oQv1y3lqQbk9
+         hylrcLOw9zdHcCiNVVoQ3vcsyDLp6xm93dJwmqSrQ/C2aukZz3JxHa5Ga1OYSCuzgsEC
+         GLeQ==
+X-Gm-Message-State: AOPr4FUnoZUmBiIhpnUGFHP4X6xyZW1VhtCK3KYgUIsdgd47gakGC5H/zHecixu+3iTwBQ==
+X-Received: by 10.194.48.7 with SMTP id h7mr32848715wjn.81.1461504913378;
+        Sun, 24 Apr 2016 06:35:13 -0700 (PDT)
 Received: from localhost.localdomain (121.73.115.78.rev.sfr.net. [78.115.73.121])
-        by smtp.gmail.com with ESMTPSA id j6sm6717101wjb.29.2016.04.24.06.35.09
+        by smtp.gmail.com with ESMTPSA id j6sm6717101wjb.29.2016.04.24.06.35.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 24 Apr 2016 06:35:09 -0700 (PDT)
+        Sun, 24 Apr 2016 06:35:12 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.1.300.g5fed0c0
 In-Reply-To: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
@@ -64,68 +64,75 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292393>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ builtin/apply.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index d90948a..16d78f9 100644
+index e488879..33a1f8f 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -36,6 +36,9 @@ struct apply_state {
- 	/* --stat does just a diffstat, and doesn't actually apply */
- 	int diffstat;
+@@ -41,6 +41,8 @@ struct apply_state {
  
-+	/* --numstat does numeric diffstat, and doesn't actually apply */
-+	int numstat;
+ 	int summary;
+ 
++	int threeway;
 +
  	/*
  	 *  --check turns on checking that the working tree matches the
  	 *    files that are being modified, but doesn't apply the patch
-@@ -51,14 +54,12 @@ struct apply_state {
- };
- 
- /*
-- *  --numstat does numeric diffstat, and doesn't actually apply
-  *  --index-info shows the old and new index info for paths if available.
-  */
- static int newfd = -1;
- 
- static int state_p_value = 1;
+@@ -64,7 +66,6 @@ static int state_p_value = 1;
  static int p_value_known;
--static int numstat;
- static int summary;
  static int apply = 1;
  static int no_add;
-@@ -4500,7 +4501,7 @@ static int apply_patch(struct apply_state *state,
- 	if (state->diffstat)
- 		stat_patch_list(list);
- 
--	if (numstat)
-+	if (state->numstat)
- 		numstat_patch_list(list);
- 
- 	if (summary)
-@@ -4598,7 +4599,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 			N_("instead of applying the patch, output diffstat for the input")),
- 		OPT_NOOP_NOARG(0, "allow-binary-replacement"),
- 		OPT_NOOP_NOARG(0, "binary"),
--		OPT_BOOL(0, "numstat", &numstat,
-+		OPT_BOOL(0, "numstat", &state.numstat,
- 			N_("show number of added and deleted lines in decimal notation")),
- 		OPT_BOOL(0, "summary", &summary,
- 			N_("instead of applying the patch, output a summary for the input")),
-@@ -4675,7 +4676,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+-static int threeway;
+ static int unsafe_paths;
+ static const char *fake_ancestor;
+ static int line_termination = '\n';
+@@ -3504,7 +3505,7 @@ static int apply_data(struct apply_state *state, struct patch *patch,
+ 	if (patch->direct_to_threeway ||
+ 	    apply_fragments(state, &image, patch) < 0) {
+ 		/* Note: with --reject, apply_fragments() returns 0 */
+-		if (!threeway || try_threeway(state, &image, patch, st, ce) < 0)
++		if (!state->threeway || try_threeway(state, &image, patch, st, ce) < 0)
+ 			return -1;
  	}
- 	if (state.apply_with_reject)
- 		apply = state.apply_verbosely = 1;
--	if (!force_apply && (state.diffstat || numstat || summary || state.check || fake_ancestor))
-+	if (!force_apply && (state.diffstat || state.numstat || summary || state.check || fake_ancestor))
- 		apply = 0;
- 	if (state.check_index && is_not_gitdir)
- 		die(_("--index outside a repository"));
+ 	patch->result = image.buf;
+@@ -3799,7 +3800,7 @@ static int check_patch(struct apply_state *state, struct patch *patch)
+ 	    ((0 < patch->is_new) || patch->is_rename || patch->is_copy)) {
+ 		int err = check_to_create(state, new_name, ok_if_exists);
+ 
+-		if (err && threeway) {
++		if (err && state->threeway) {
+ 			patch->direct_to_threeway = 1;
+ 		} else switch (err) {
+ 		case 0:
+@@ -4614,7 +4615,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 			N_("accept a patch that touches outside the working area")),
+ 		OPT_BOOL(0, "apply", &force_apply,
+ 			N_("also apply the patch (use with --stat/--summary/--check)")),
+-		OPT_BOOL('3', "3way", &threeway,
++		OPT_BOOL('3', "3way", &state.threeway,
+ 			 N_( "attempt three-way merge if a patch does not apply")),
+ 		OPT_FILENAME(0, "build-fake-ancestor", &fake_ancestor,
+ 			N_("build a temporary index based on embedded index information")),
+@@ -4666,11 +4667,11 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 	argc = parse_options(argc, argv, state.prefix, builtin_apply_options,
+ 			apply_usage, 0);
+ 
+-	if (state.apply_with_reject && threeway)
++	if (state.apply_with_reject && state.threeway)
+ 		die("--reject and --3way cannot be used together.");
+-	if (state.cached && threeway)
++	if (state.cached && state.threeway)
+ 		die("--cached and --3way cannot be used together.");
+-	if (threeway) {
++	if (state.threeway) {
+ 		if (is_not_gitdir)
+ 			die(_("--3way outside a repository"));
+ 		state.check_index = 1;
 -- 
 2.8.1.300.g5fed0c0
