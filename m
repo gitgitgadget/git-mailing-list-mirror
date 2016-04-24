@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH 23/83] builtin/apply: move 'line_termination' global into 'struct apply_state'
-Date: Sun, 24 Apr 2016 15:33:23 +0200
-Message-ID: <1461504863-15946-24-git-send-email-chriscool@tuxfamily.org>
+Subject: [PATCH 28/83] builtin/apply: move 'patch_input_file' global into 'struct apply_state'
+Date: Sun, 24 Apr 2016 15:33:28 +0200
+Message-ID: <1461504863-15946-29-git-send-email-chriscool@tuxfamily.org>
 References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -12,51 +12,51 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 24 15:35:36 2016
+X-From: git-owner@vger.kernel.org Sun Apr 24 15:35:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auKCF-0007z6-Bd
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 15:35:35 +0200
+	id 1auKCH-0007z6-3A
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 15:35:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752782AbcDXNfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Apr 2016 09:35:21 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:37610 "EHLO
-	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752737AbcDXNfS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2016 09:35:18 -0400
-Received: by mail-wm0-f50.google.com with SMTP id n3so90204168wmn.0
-        for <git@vger.kernel.org>; Sun, 24 Apr 2016 06:35:18 -0700 (PDT)
+	id S1752831AbcDXNfb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Apr 2016 09:35:31 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:36493 "EHLO
+	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752778AbcDXNfZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2016 09:35:25 -0400
+Received: by mail-wm0-f45.google.com with SMTP id v188so69562537wme.1
+        for <git@vger.kernel.org>; Sun, 24 Apr 2016 06:35:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=q/PjLvX/aV3OKahrkO3hbyT6knqGnk++VWID8Rg6iAw=;
-        b=ICzbeRUJgnFKsk7j9M5OrZKoFaZY5tDv+sdsuFr/YVBoPSRo8Iurr7msTN1tbvFiEg
-         TUcKwgSN1f38sKluRgnrZ28Migrx5L9XPdRXSfMn++yIFNwn4lW2yPP5nVCwpglsccV+
-         bSlk3WrYNbty+CetO22OsWUQPo1lG1WAyCgLyF7uJsuv4dtonEgSwwhFJywpE4WIsXHP
-         y6Uw3GPhPrPY3ZDj43HxLonLpkStbv/XUQsnt2QFHZNCfhOYrCLp7nBV9L4VCsrDMdkt
-         N2x/L/OIkjJ+q/gFA5Gx1G0zOvkWTxOpOypysCLy4XlB823I1Ukt4aAibOi26emNe7g/
-         tchg==
+        bh=XL7WqZDmSFWUpu9nJfJX75UDYQUI56a+mi6xyhrF8zg=;
+        b=JxTLRPOPrNpFPsRYahPJfxQnO1tuRRZ48yqW/+8jt9Occ+X8fH7mgbPvi7GxhrsNlw
+         ZI24GC3uerQtiLfV2I4DgU4eCzYU4s8I4MxSpu3YIuC/EM0SoROeTGL9m3lZRTo1YaHk
+         AIdazcvPnUwgR/3z1BDev2iBksgQVEoy0sLAFYX8MsKvU3rTDBggEx+8klholkAjM16o
+         coEi4h4kYRGYuK20bSIbz9pRkarr8a0QOVQOsB36ZJnmv3iQI4D0ZS1J43sRRFwYdaTV
+         W03169oG2RlSOsKEP4lJpiP3SzNrY51bsDXp/ZDw/oe3oDbtDk5ey0voP7hffHgmsTHg
+         WHmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=q/PjLvX/aV3OKahrkO3hbyT6knqGnk++VWID8Rg6iAw=;
-        b=m2wrkwdxsowVyr+9FZIfXE8zwdDoyQZelXxkEqePXozxf+ChpB4YHZ3yxYKaDleeS+
-         GaZIv+zJEadMl6pcCYIqwB0GbL7N1TCnmVZDW9uxUFk8/Pw1mIuWUKvX6lhokCPiiV65
-         W8aKyUxdBFih6JWFCH+7ICLNXzHYUO6/lD5OVt17eT+AQLYcvpOI909aVPqspIlfVOsW
-         UAs9rIleDPkxiMKIzxfO2erkNzsrUkRvsCSAZwgRjmzfCXs2dBRzkj8AKJNuO8uWkPO3
-         hVxqPHcYmejjEfsYWcl21/fu+5qIJdIDwpFAG/cI8/uqtotm48U6TUnDfTueHlGWzhk1
-         GeNQ==
-X-Gm-Message-State: AOPr4FWuFLwCoVt+oFKPGacrU0KgLoXXUrJXAAxxW81pDYsnT1BjWk36j8uv1/B2lWMORQ==
-X-Received: by 10.28.236.88 with SMTP id k85mr7193963wmh.53.1461504917483;
-        Sun, 24 Apr 2016 06:35:17 -0700 (PDT)
+        bh=XL7WqZDmSFWUpu9nJfJX75UDYQUI56a+mi6xyhrF8zg=;
+        b=OWBenJ4rXeOy70ddHuCmFLNF8IF3j57vBDCkjl60PETnfyfir832Sf7DVahFPyduEE
+         HIuJRLIf59A6/k3hUGeU55EpRp59aKlI0O0s38tCldqa81cNHYM8yvzElGWoaJC+sWYL
+         ysSX8Rbd8rxCI1t9UhSkJozyPqzH2rQDH/tebCK8PAMrSP3c93cquZnBJua2OedZUgU6
+         vsAZ154P8Sgw63AYFJOgY00QflC92z+7fHFWAzQOCpKKWdckuUEr3rHkqPFL/K2H0Ug8
+         bOiBcZpEdoF4acayoEPOsabfK4PeWGfe+zwgSFARFmltApVcWQUEui+46/XkzqTyjTPt
+         qc6w==
+X-Gm-Message-State: AOPr4FUeiwxTmcvvOVe//GyrmV+BNCq97fz7JS7JH0b8Z3pmhbP5R2gU7aYtEsEUAu15MQ==
+X-Received: by 10.194.107.6 with SMTP id gy6mr11957150wjb.20.1461504924279;
+        Sun, 24 Apr 2016 06:35:24 -0700 (PDT)
 Received: from localhost.localdomain (121.73.115.78.rev.sfr.net. [78.115.73.121])
-        by smtp.gmail.com with ESMTPSA id j6sm6717101wjb.29.2016.04.24.06.35.16
+        by smtp.gmail.com with ESMTPSA id j6sm6717101wjb.29.2016.04.24.06.35.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 24 Apr 2016 06:35:16 -0700 (PDT)
+        Sun, 24 Apr 2016 06:35:23 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.1.300.g5fed0c0
 In-Reply-To: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
@@ -64,78 +64,110 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292337>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ builtin/apply.c | 28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index c45e481..228595d 100644
+index be237d1..ab311c1 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -59,6 +59,8 @@ struct apply_state {
- 	int update_index;
+@@ -66,6 +66,8 @@ struct apply_state {
+ 	int line_termination;
  
- 	int unsafe_paths;
+ 	unsigned int p_context;
 +
-+	int line_termination;
++	const char *patch_input_file;
  };
  
- /*
-@@ -70,7 +72,6 @@ static int state_p_value = 1;
- static int p_value_known;
- static int apply = 1;
- static const char *fake_ancestor;
--static int line_termination = '\n';
- static unsigned int p_context = UINT_MAX;
- static const char * const apply_usage[] = {
- 	N_("git apply [<options>] [<patch>...]"),
-@@ -3993,7 +3994,8 @@ static void stat_patch_list(struct patch *patch)
- 	print_stat_summary(stdout, files, adds, dels);
+ static int newfd = -1;
+@@ -94,7 +96,6 @@ static enum ws_ignore {
+ } ws_ignore_action = ignore_ws_none;
+ 
+ 
+-static const char *patch_input_file;
+ static struct strbuf root = STRBUF_INIT;
+ 
+ static void parse_whitespace_option(const char *option)
+@@ -1540,7 +1541,11 @@ static int find_header(struct apply_state *state,
+ 	return -1;
  }
  
--static void numstat_patch_list(struct patch *patch)
-+static void numstat_patch_list(struct apply_state *state,
-+			       struct patch *patch)
+-static void record_ws_error(unsigned result, const char *line, int len, int l_nr)
++static void record_ws_error(struct apply_state *state,
++			    unsigned result,
++			    const char *line,
++			    int len,
++			    int l_nr)
  {
- 	for ( ; patch; patch = patch->next) {
- 		const char *name;
-@@ -4002,7 +4004,7 @@ static void numstat_patch_list(struct patch *patch)
- 			printf("-\t-\t");
- 		else
- 			printf("%d\t%d\t", patch->lines_added, patch->lines_deleted);
--		write_name_quoted(name, stdout, line_termination);
-+		write_name_quoted(name, stdout, state->line_termination);
- 	}
+ 	char *err;
+ 
+@@ -1554,15 +1559,18 @@ static void record_ws_error(unsigned result, const char *line, int len, int l_nr
+ 
+ 	err = whitespace_error_string(result);
+ 	fprintf(stderr, "%s:%d: %s.\n%.*s\n",
+-		patch_input_file, l_nr, err, len, line);
++		state->patch_input_file, l_nr, err, len, line);
+ 	free(err);
  }
  
-@@ -4506,7 +4508,7 @@ static int apply_patch(struct apply_state *state,
- 		stat_patch_list(list);
+-static void check_whitespace(const char *line, int len, unsigned ws_rule)
++static void check_whitespace(struct apply_state *state,
++			     const char *line,
++			     int len,
++			     unsigned ws_rule)
+ {
+ 	unsigned result = ws_check(line + 1, len - 1, ws_rule);
  
- 	if (state->numstat)
--		numstat_patch_list(list);
-+		numstat_patch_list(state, list);
+-	record_ws_error(result, line + 1, len - 2, linenr);
++	record_ws_error(state, result, line + 1, len - 2, linenr);
+ }
  
- 	if (state->summary)
- 		summary_patch_list(list);
-@@ -4622,7 +4624,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 		OPT_FILENAME(0, "build-fake-ancestor", &fake_ancestor,
- 			N_("build a temporary index based on embedded index information")),
- 		/* Think twice before adding "--nul" synonym to this */
--		OPT_SET_INT('z', NULL, &line_termination,
-+		OPT_SET_INT('z', NULL, &state.line_termination,
- 			N_("paths are separated with NUL character"), '\0'),
- 		OPT_INTEGER('C', NULL, &p_context,
- 				N_("ensure at least <n> lines of context match")),
-@@ -4659,6 +4661,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 	memset(&state, 0, sizeof(state));
- 	state.prefix = prefix_;
- 	state.prefix_length = state.prefix ? strlen(state.prefix) : 0;
-+	state.line_termination = '\n';
+ /*
+@@ -1617,12 +1625,12 @@ static int parse_fragment(struct apply_state *state,
+ 			trailing++;
+ 			if (!state->apply_in_reverse &&
+ 			    ws_error_action == correct_ws_error)
+-				check_whitespace(line, len, patch->ws_rule);
++				check_whitespace(state, line, len, patch->ws_rule);
+ 			break;
+ 		case '-':
+ 			if (state->apply_in_reverse &&
+ 			    ws_error_action != nowarn_ws_error)
+-				check_whitespace(line, len, patch->ws_rule);
++				check_whitespace(state, line, len, patch->ws_rule);
+ 			deleted++;
+ 			oldlines--;
+ 			trailing = 0;
+@@ -1630,7 +1638,7 @@ static int parse_fragment(struct apply_state *state,
+ 		case '+':
+ 			if (!state->apply_in_reverse &&
+ 			    ws_error_action != nowarn_ws_error)
+-				check_whitespace(line, len, patch->ws_rule);
++				check_whitespace(state, line, len, patch->ws_rule);
+ 			added++;
+ 			newlines--;
+ 			trailing = 0;
+@@ -2920,7 +2928,7 @@ static int apply_one_fragment(struct apply_state *state,
+ 		    preimage.nr + applied_pos >= img->nr &&
+ 		    (ws_rule & WS_BLANK_AT_EOF) &&
+ 		    ws_error_action != nowarn_ws_error) {
+-			record_ws_error(WS_BLANK_AT_EOF, "+", 1,
++			record_ws_error(state, WS_BLANK_AT_EOF, "+", 1,
+ 					found_new_blank_lines_at_end);
+ 			if (ws_error_action == correct_ws_error) {
+ 				while (new_blank_lines_at_end--)
+@@ -4443,7 +4451,7 @@ static int apply_patch(struct apply_state *state,
+ 	struct patch *list = NULL, **listp = &list;
+ 	int skipped_patch = 0;
  
- 	git_apply_config();
- 	if (apply_default_whitespace)
+-	patch_input_file = filename;
++	state->patch_input_file = filename;
+ 	read_patch_file(&buf, fd);
+ 	offset = 0;
+ 	while (offset < buf.len) {
 -- 
 2.8.1.300.g5fed0c0
