@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH 69/83] builtin/apply: make add_conflicted_stages_file() return -1 on error
-Date: Sun, 24 Apr 2016 15:34:09 +0200
-Message-ID: <1461504863-15946-70-git-send-email-chriscool@tuxfamily.org>
+Subject: [PATCH 75/83] builtin/apply: make create_one_file() return -1 on error
+Date: Sun, 24 Apr 2016 15:34:15 +0200
+Message-ID: <1461504863-15946-76-git-send-email-chriscool@tuxfamily.org>
 References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -18,45 +18,45 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auKDQ-0000Cp-PJ
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 15:36:49 +0200
+	id 1auKDU-0000Cp-5D
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 15:36:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753005AbcDXNgd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Apr 2016 09:36:33 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:38667 "EHLO
-	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752959AbcDXNg2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2016 09:36:28 -0400
-Received: by mail-wm0-f41.google.com with SMTP id u206so89953056wme.1
-        for <git@vger.kernel.org>; Sun, 24 Apr 2016 06:36:23 -0700 (PDT)
+	id S1753050AbcDXNgs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Apr 2016 09:36:48 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:34627 "EHLO
+	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752999AbcDXNgb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2016 09:36:31 -0400
+Received: by mail-wm0-f54.google.com with SMTP id v200so10012875wmv.1
+        for <git@vger.kernel.org>; Sun, 24 Apr 2016 06:36:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FvsA6P/M25FOS6uXm/oa+1uDQOojhkjPgGbS3V22rDg=;
-        b=Fge22b/bmsIAoqavJmk0zS9YpOdy+Rtk1l7BjUBsqnHk7dmO1TTdxeYsCuVqAW2k9/
-         TWomjMdwK47zbqVbDwRLvwMLBt7aLR/YC8u8zjZALpCqPqiEJn8IJjJTzuv39eZjcEl0
-         T7+IppYA30hD2xO1sRd5KuMCMNjdrhZaLA9AYrM6g/r22ikWXBAqqovqBmcu6WhWw/EP
-         8Hv2lVRYm/TDEJWzDWBk96DQo6X/0WlUwSH05x0J5zvwp7VI9F+kJXs+x4JvfZ/9kyXI
-         Q5bMreSosSyF/HoV0Ju9m6B41lB2sx3oH97Y/ih/cwMwEgM9HPMWrWKNImjxt8jR9jss
-         EHZA==
+        bh=3veF4Bzryw4kmOP8vzLXYQErsFHh0Ur1ce3o6nE0kGM=;
+        b=jq8+rIy9+X5guAf1S6DvuV4NDzAS2QnR73Clv5m4PjzlwkH3w+rxi+pC3GRmw4huw3
+         UBsHIHuRSPDD7FkgnjrKAGwWn+bp2jES1/eZCVvcwKPDQzu/SYn7f7cL8yozyG0O083I
+         /7M0IUFh7sd+sm7IPU5RZ+FmOt1MPVejz5VhRNb2Wt6J/AmGJ1yrDtDYQPmkHXduETyW
+         3v2rDdHTxeJ+caZpDcD3+VrKyeTlAmN0idU0RgEAxxlLJnkjxIljzhfxF69b+AIOykM1
+         OP/eOc37fz3qkjkk3dDISj9Z6u8zYMoos7zeGsqOC/P8HtOoo3L+lkdExt5/LwYdO8Hy
+         kjTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=FvsA6P/M25FOS6uXm/oa+1uDQOojhkjPgGbS3V22rDg=;
-        b=O8l+pG6obbE8ExFznU8x+UWZAwCfGNAjMkKN/rnxPOAh/yukfUnc8tdt9Q1iRM4yTb
-         95VR5fRekqGruA5ChOb1P1tg3O6mYAASycX+IcsJySzBIpC4Y1Wp4HR3stu6sCMITv+b
-         EDXTGJ8hd5ImUQWjl3FYtmG5V4uzma18e4qMRq6+zoNWzpCNGWZC9qZW1F6rewUf2Wqd
-         NSOKtGtVklEqJWCSPr2gWppXGlcsnIIbQIA944p9/wZ/r+D2coLG4Ksm76sKuO1jFvQx
-         mVz4QqaAqTs0yzcZaWG6SxtNu4/x+zqbFLRyxvKYqWy08/GTImR5IxbmfyL7kXDbM1WZ
-         hQTg==
-X-Gm-Message-State: AOPr4FX6ZEI81B6lGMwfzv0Fcp8gw3WF67voFs2D5O6ZBU0rafjdIqiZUID2QEbyfu399g==
-X-Received: by 10.28.29.147 with SMTP id d141mr2487830wmd.91.1461504982686;
-        Sun, 24 Apr 2016 06:36:22 -0700 (PDT)
+        bh=3veF4Bzryw4kmOP8vzLXYQErsFHh0Ur1ce3o6nE0kGM=;
+        b=JTQQcThKbHmbuU5hBO8d8LCG40XLeaxlrCzeuJ1UPD55FFfb1k7hjKTJWhna+tOovN
+         hHFv7v/9BqSonOiAiPotf8w5WUmva58Ug6qqSASC61OQe6Ic9MjghLg0ZPwc3b0ix7Vu
+         b4n5BCSW19MO2EiuVqDzLOAqbxjArXv9Bjuq/if2KBdg7vQSUaBRuPKZq1/EiPbQxhAU
+         if0Q/0IcMwRaLNGcUVtWb7raVYMaP62MjDcMWMlBLoAedsbEIozSw0JU4EO+lpFLEb5/
+         Clh2WzkcXpn+5BjQn2Gbe+cS1U139foVRqQizo1P+6abPX6ZwwFpoZqDjHA6mzo2ISW1
+         Bt/g==
+X-Gm-Message-State: AOPr4FW5bMVe0BgqwAhm4IWCkpWDMowNq83c161AMH7M20VmyhYVIVs/hbj0+6bnACra3g==
+X-Received: by 10.194.201.37 with SMTP id jx5mr4520818wjc.60.1461504990361;
+        Sun, 24 Apr 2016 06:36:30 -0700 (PDT)
 Received: from localhost.localdomain (121.73.115.78.rev.sfr.net. [78.115.73.121])
-        by smtp.gmail.com with ESMTPSA id j6sm6717101wjb.29.2016.04.24.06.36.21
+        by smtp.gmail.com with ESMTPSA id j6sm6717101wjb.29.2016.04.24.06.36.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 24 Apr 2016 06:36:21 -0700 (PDT)
+        Sun, 24 Apr 2016 06:36:29 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.1.300.g5fed0c0
 In-Reply-To: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
@@ -64,61 +64,97 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292365>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ builtin/apply.c | 36 +++++++++++++++++++++---------------
+ 1 file changed, 21 insertions(+), 15 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 89118c1..5a5be49 100644
+index 32c38f0..5bd5154 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -4210,7 +4210,7 @@ static void create_one_file(struct apply_state *state,
- 	die_errno(_("unable to write file '%s' mode %o"), path, mode);
- }
- 
--static void add_conflicted_stages_file(struct apply_state *state,
-+static int add_conflicted_stages_file(struct apply_state *state,
- 				       struct patch *patch)
+@@ -4184,32 +4184,36 @@ static int try_create_file(const char *path, unsigned int mode, const char *buf,
+  * We optimistically assume that the directories exist,
+  * which is true 99% of the time anyway. If they don't,
+  * we create them and try again.
++ *
++ * Returns:
++ *   -1 on error
++ *   0 otherwise
+  */
+-static void create_one_file(struct apply_state *state,
+-			    char *path,
+-			    unsigned mode,
+-			    const char *buf,
+-			    unsigned long size)
++static int create_one_file(struct apply_state *state,
++			   char *path,
++			   unsigned mode,
++			   const char *buf,
++			   unsigned long size)
  {
- 	int stage, namelen;
-@@ -4218,7 +4218,7 @@ static void add_conflicted_stages_file(struct apply_state *state,
- 	struct cache_entry *ce;
+ 	int res;
  
- 	if (!state->update_index)
+ 	if (state->cached)
 -		return;
 +		return 0;
- 	namelen = strlen(patch->new_name);
- 	ce_size = cache_entry_size(namelen);
- 	mode = patch->new_mode ? patch->new_mode : (S_IFREG | 0644);
-@@ -4234,8 +4234,11 @@ static void add_conflicted_stages_file(struct apply_state *state,
- 		ce->ce_namelen = namelen;
- 		hashcpy(ce->sha1, patch->threeway_stage[stage - 1].hash);
- 		if (add_cache_entry(ce, ADD_CACHE_OK_TO_ADD) < 0)
--			die(_("unable to add cache entry for %s"), patch->new_name);
-+			return error(_("unable to add cache entry for %s"),
-+				     patch->new_name);
+ 
+ 	res = try_create_file(path, mode, buf, size);
+ 	if (!res)
+-		return;
++		return 0;
+ 	if (res < 0)
+-		exit(1);
++		return -1;
+ 
+ 	if (errno == ENOENT) {
+ 		if (safe_create_leading_directories(path))
+-			return;
++			return 0;
+ 		res = try_create_file(path, mode, buf, size);
+ 		if (!res)
+-			return;
++			return 0;
+ 		if (res < 0)
+-			exit(1);
++			return -1;
  	}
-+
-+	return 0;
+ 
+ 	if (errno == EEXIST || errno == EACCES) {
+@@ -4230,18 +4234,19 @@ static void create_one_file(struct apply_state *state,
+ 			res = try_create_file(newpath, mode, buf, size);
+ 			if (!res) {
+ 				if (!rename(newpath, path))
+-					return;
++					return 0;
+ 				unlink_or_warn(newpath);
+ 				break;
+ 			}
+ 			if (res < 0)
+-				exit(1);
++				return -1;
+ 			if (errno != EEXIST)
+ 				break;
+ 			++nr;
+ 		}
+ 	}
+-	die_errno(_("unable to write file '%s' mode %o"), path, mode);
++	return error(_("unable to write file '%s' mode %o: %s"),
++		     path, mode, strerror(errno));
  }
  
- static void create_file(struct apply_state *state, struct patch *patch)
-@@ -4249,9 +4252,10 @@ static void create_file(struct apply_state *state, struct patch *patch)
+ static int add_conflicted_stages_file(struct apply_state *state,
+@@ -4284,7 +4289,8 @@ static int create_file(struct apply_state *state, struct patch *patch)
+ 
+ 	if (!mode)
  		mode = S_IFREG | 0644;
- 	create_one_file(state, path, mode, buf, size);
+-	create_one_file(state, path, mode, buf, size);
++	if (create_one_file(state, path, mode, buf, size))
++		return -1;
  
--	if (patch->conflicted_threeway)
--		add_conflicted_stages_file(state, patch);
--	else
-+	if (patch->conflicted_threeway) {
-+		if (add_conflicted_stages_file(state, patch))
-+			exit(1);
-+	} else
- 		add_index_file(state, path, mode, buf, size);
- }
- 
+ 	if (patch->conflicted_threeway)
+ 		return add_conflicted_stages_file(state, patch);
 -- 
 2.8.1.300.g5fed0c0
