@@ -1,61 +1,73 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Subject: Re: git-scm.org bug: Broken link in git-push documentation
-Date: Sun, 24 Apr 2016 21:58:19 +0200
-Message-ID: <vpqfuuau6ck.fsf@anie.imag.fr>
+Date: Sun, 24 Apr 2016 22:05:09 +0200
+Message-ID: <CACBZZX5B0n9we_-mcHhnQJ=b4nc=j9P=0WSm+tf2fNnyPJU7hg@mail.gmail.com>
 References: <CACBZZX6aMXzs04DuEiQNtH1Y27s4V4=-7u8HwtuZ=PoADTFOtw@mail.gmail.com>
+ <vpqfuuau6ck.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git <git@vger.kernel.org>, Scott Chacon <schacon@gmail.com>
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 24 21:58:45 2016
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sun Apr 24 22:05:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auQB2-0006Fl-Sk
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 21:58:45 +0200
+	id 1auQHv-0000oh-Bj
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 22:05:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752999AbcDXT6l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Apr 2016 15:58:41 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:45720 "EHLO mx1.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751170AbcDXT6k (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2016 15:58:40 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u3OJwHJK005558
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Sun, 24 Apr 2016 21:58:17 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u3OJwJQo030799;
-	Sun, 24 Apr 2016 21:58:19 +0200
-In-Reply-To: <CACBZZX6aMXzs04DuEiQNtH1Y27s4V4=-7u8HwtuZ=PoADTFOtw@mail.gmail.com>
-	(=?iso-8859-1?Q?=22=C6var_Arnfj=F6r=F0?= Bjarmason"'s message of "Sun, 24
- Apr 2016 21:28:58
-	+0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Sun, 24 Apr 2016 21:58:17 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u3OJwHJK005558
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1462132701.577@aR2NZ1jtrlq7SZrdeqHtnw
+	id S1753065AbcDXUFa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Apr 2016 16:05:30 -0400
+Received: from mail-qg0-f42.google.com ([209.85.192.42]:35405 "EHLO
+	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751170AbcDXUF3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2016 16:05:29 -0400
+Received: by mail-qg0-f42.google.com with SMTP id f74so70038797qge.2
+        for <git@vger.kernel.org>; Sun, 24 Apr 2016 13:05:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=QJDIeGDg7njGHhykX+5I1BGNbEX29bpLQP0c33v3WgU=;
+        b=XacbuWXft+4AZ+uIlJ6QwdmWh3pVekVD8eKx4S3trKZ8q7y3LcfKutZjZ8trbz93M/
+         kUkvNFfY49m1aBfx/wEmwvZGFjRARJ1XmIdwhYWG4l81Au2pl+7SI8xy24OXLLExjoHs
+         xMo5VJmof53hLEQpT+Nt7oDrQRb8X1K3XmxjlPhgKxSUeNQTc0Tanb6ZJEdnr8RhF4VP
+         HJ340XLPxs2kxHmhrHBz7oDiUgGphs+4NqMyohELdP4/8coDu65LCqMUAvJ+2HiBS37T
+         FstU8oJ4UzxgQAD/28ef/buefPUAlpxU3l+MbA2GUS1WPe0v2nbH/EJTnKtuvMTeIcJz
+         vhBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=QJDIeGDg7njGHhykX+5I1BGNbEX29bpLQP0c33v3WgU=;
+        b=UdY13+AGDtcJmgvVUEcJc2oeVA7qSYo8FVXcY/i9ZNSBqyFIMjASsIYxnYZbpR4EQh
+         kNOa5N0eBDwt4+sxsIuCptHw5g/4snMn//jD1Aeonr4o3uAn7wvp+zESzpwdhXkeYX81
+         5Vmnxypb4lmMYaKa+R4qRuSCSOi0lu1/EyOR/+o6fcQ9dyX9YuA/Dbrk5zNuP6rOx+Vv
+         Kko3u30stVDjWK70dbR54/P/XPavK3VZSlUDlNg3tffHl0iAMGLjcdSUOhUpVYS/M93e
+         mWrBcbh8XZbo8kd/88AUus9hjL33SSRDhN2mthDlU5JEAuVejK7578PqFq7Y6EIXYed1
+         WZgA==
+X-Gm-Message-State: AOPr4FUoHnuo9QZr6gqbCVrE/9wtHL1vSQkeu3GH1nH6SJEE79Ki5aFhYEzKe3yuY8/ELJNChujxVvpLzCGDsg==
+X-Received: by 10.140.155.19 with SMTP id b19mr4375857qhb.14.1461528328999;
+ Sun, 24 Apr 2016 13:05:28 -0700 (PDT)
+Received: by 10.55.77.133 with HTTP; Sun, 24 Apr 2016 13:05:09 -0700 (PDT)
+In-Reply-To: <vpqfuuau6ck.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292437>
 
-=C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
+On Sun, Apr 24, 2016 at 9:58 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> =C4=98var Arnfj=C3=B6r=C5=A1 Bjarmason <avarab@gmail.com> writes:
+>
+>> I couldn't find a way to report git-scm.org-specific bugs
+>
+> You can do so here:
+>
+> https://github.com/git/git-scm.com/issues
 
-> I couldn't find a way to report git-scm.org-specific bugs
-
-You can do so here:
-
-https://github.com/git/git-scm.com/issues
-
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks. I didn't find that, filed: https://github.com/git/git-scm.com/i=
+ssues/749
