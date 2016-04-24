@@ -1,110 +1,61 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH v2 2/3] githooks.txt: Amend dangerous advice about 'update' hook ACL
-Date: Sun, 24 Apr 2016 21:26:42 +0000
-Message-ID: <1461533202-10706-1-git-send-email-avarab@gmail.com>
-References: <CA+P7+xqveyG7RTWb2k8UsFWRwjvM6JJkveRr3NV-bammqSkpkQ@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [git send-email] Less secure?
+Date: Sun, 24 Apr 2016 22:36:57 +0000
+Message-ID: <20160424223657.GA25762@dcvr.yhbt.net>
+References: <CAL+bK4Ms5WLSiWEPhXOX2i5T9UdcaZyD+kaTZpVsd0NZBts+7A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 24 23:27:15 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Neven Sajko <nsajko@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 25 00:37:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auRYg-0004nv-9U
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 23:27:14 +0200
+	id 1auSek-0000mz-RG
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 00:37:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753219AbcDXV1J convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Apr 2016 17:27:09 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:38858 "EHLO
-	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753191AbcDXV1I (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2016 17:27:08 -0400
-Received: by mail-wm0-f49.google.com with SMTP id u206so100014262wme.1
-        for <git@vger.kernel.org>; Sun, 24 Apr 2016 14:27:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Q+i8pxd4YQBsuXkEX/5Cfv4nKSJOhNUDp7tJMe/Gwzw=;
-        b=hPxP4AYe3bnVGJ0b5w+B9rmkvpAJVQPlQ2tkJKz+2eaVvL6tVANUhIgAUPecKeO2JE
-         YgHPv8bi/x0JykTeDjCuk6akZ+9k8ag9xRYFUScpk3lr3K6wvo6gUxsTKgTpP70kl8kR
-         LKAtCHdmV2y0V86r4F+IG1P4KgAfYCKr8PkSCB62cWxLQ32obAqVwFd1iwilT7H/JIsA
-         5QrFPa9T+Yb2rWGxVY9GBAOKtwos0MP0RAYhnKu7CyDF/7E54js/cJqTSElHHhnlvPyy
-         eHB2Ggn8A3L8mZQ3CY73FLicf0I0GBN0bQbsSk+j1/TBtZtCN9+pQqi8HTm4/wbb97Ch
-         a6gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Q+i8pxd4YQBsuXkEX/5Cfv4nKSJOhNUDp7tJMe/Gwzw=;
-        b=eVdeqETVjd/gHkuqXBg3A7f17YV/QRD3QR82EpGek6dyREhoWlXBmTgkELRf1lzXdj
-         B2+Sjo5EoIVjGitFKvxkxAm0Ek/Fdd2I3lPewWBFZAB5q/tuoLakKlZJnEEpzQ/EYnsQ
-         A0QXGS5ndx7+QOGGikoLwxeXAX0QG7tf1QZbrp5IzuG97t2NkVk9BJK4UQ7mwGc2wweU
-         53lBB+5GsGFqlSsTeo5Rklo8akuvHKDvsBVci+1UoZqbEWW1krNF814pYwhOEkE0lvjU
-         kQO09zvwgPkIxFNkjmv7NAiecmxQqcNY0eyRVwji16wihs/5uP4x68FMpnor0Z94iCzb
-         XCTQ==
-X-Gm-Message-State: AOPr4FWR7Wx4sipdRGVA/clPyAu1kyUao8rwqt3+fay4On2lAlhrasczSF3EMtXR1uGnQA==
-X-Received: by 10.194.20.193 with SMTP id p1mr31574767wje.87.1461533226810;
-        Sun, 24 Apr 2016 14:27:06 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id w77sm15387563wmw.10.2016.04.24.14.27.05
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 24 Apr 2016 14:27:06 -0700 (PDT)
-X-Mailer: git-send-email 2.1.3
-In-Reply-To: <CA+P7+xqveyG7RTWb2k8UsFWRwjvM6JJkveRr3NV-bammqSkpkQ@mail.gmail.com>
+	id S1752143AbcDXWhB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Apr 2016 18:37:01 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:53590 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752094AbcDXWhA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2016 18:37:00 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D646633822;
+	Sun, 24 Apr 2016 22:36:57 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <CAL+bK4Ms5WLSiWEPhXOX2i5T9UdcaZyD+kaTZpVsd0NZBts+7A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292446>
 
-Any ACL you implement via an 'update' hook isn't actual access control
-if the user has login access to the machine running git, because they
-can trivially just built their own git version which doesn't run the
-hook.
+Neven Sajko <nsajko@gmail.com> wrote:
+> Gmail by default doesn't allow usage through send-email.
+> They say that send-email is "less secure" and that enabling it
+> makes it easier to break into my account.
+> 
+> Is send-email really less secure than the Gmail web browser
+> interface?
 
-Change the documentation to take this dangerous edge case into account,
-and remove the mention of the advice originating on the mailing list,
-the users reading this don't care where the idea came up.
+Like any email client, git send-email is only as secure as your
+own practices.  It can use git's native git-credential system
+for handling passwords.
 
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
----
-> "by just using not executing the hook."
+According to the following post from Javier, you will need
+an extra password if you have two-factor auth enabled with Gmail:
 
-Yeah that made no sense. Fixed in this version.
- Documentation/githooks.txt | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+http://mid.gmane.org/CALZVapn9KjXCpO+zaYuB6RSnG747u4a7e_m_HDg+uH-uz8UhQg@mail.gmail.com
 
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 2f3caf7..86504ba 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -275,9 +275,13 @@ does not know the entire set of branches, so it wo=
-uld end up
- firing one e-mail per ref when used naively, though.  The
- <<post-receive,'post-receive'>> hook is more suited to that.
-=20
--Another use suggested on the mailing list is to use this hook to
--implement access control which is finer grained than the one
--based on filesystem group.
-+Another use for this hook to implement access control which is finer
-+grained than the one based on filesystem group. Note that if the user
-+pushing has a normal login shell on the machine receiving the push
-+implementing access control like this can be trivially bypassed by
-+just not executing the hook. In those cases consider using
-+e.g. linkgit:git-shell[1] as the login shell to restrict the user's
-+access.
-=20
- Both standard output and standard error output are forwarded to
- 'git send-pack' on the other end, so you can simply `echo` messages
---=20
-2.1.3
+Additionally, since (AFAIK) you can still get multiple Gmail
+accounts, there's no reason you need to use your primary email
+account (that might be tied to your private/personal life)
+for sending patches to a public mailing list.
+
+
+Disclaimer: I have little experience with Gmail myself and do
+not endorse Google (or any corporation).  I just care deeply
+about the continued existence of vendor-neutral messaging.
