@@ -1,8 +1,9 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH 1/3] githooks.txt: Improve the intro section
-Date: Sun, 24 Apr 2016 20:20:27 +0000
-Message-ID: <1461529229-15222-1-git-send-email-avarab@gmail.com>
+Subject: [PATCH 3/3] githooks.txt: Minor improvements to the grammar & phrasing
+Date: Sun, 24 Apr 2016 20:20:29 +0000
+Message-ID: <1461529229-15222-3-git-send-email-avarab@gmail.com>
+References: <1461529229-15222-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -10,149 +11,153 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 24 22:20:42 2016
+X-From: git-owner@vger.kernel.org Sun Apr 24 22:20:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auQWG-00077j-2Y
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 22:20:40 +0200
+	id 1auQWM-00079t-FA
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 22:20:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753156AbcDXUUf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Apr 2016 16:20:35 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:38455 "EHLO
-	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753083AbcDXUUf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2016 16:20:35 -0400
-Received: by mail-wm0-f41.google.com with SMTP id u206so98702250wme.1
-        for <git@vger.kernel.org>; Sun, 24 Apr 2016 13:20:34 -0700 (PDT)
+	id S1753201AbcDXUUl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Apr 2016 16:20:41 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:38478 "EHLO
+	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753083AbcDXUUj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2016 16:20:39 -0400
+Received: by mail-wm0-f54.google.com with SMTP id u206so98703909wme.1
+        for <git@vger.kernel.org>; Sun, 24 Apr 2016 13:20:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=h/N03KQSM/shZgORJtJPaISSx0nYK6bGD5jh6wKm2Zk=;
-        b=O3wTrct3eXkMc89aHzH5J8MGjN11peSG1oXMUCJUAGmC5NFSA4WsudW64XgYMH+SbX
-         J0dA0S4brb0CPTZ7xAs81CdXngCBvBd8af3zg5D31gt9FjI/X68Br1QTmJsLXNMmFsTP
-         8EMmQ17RBCrUFS+9OhFl9XWw+2MDN0namK/tk0KMKqZwkFSlxvdgC0BnKX1JKxmezC8K
-         5qh5JBTE/wIRre7nDQ4nh43SgdvjP5w78wMRLYo1YuGYVJBWk7xQrB88Wdl1fpS+u/X/
-         CvIz+pmG7kcMAvWlSvmpCkiIoCXnv4Q/3clj0Gr6Uk1kiyNsY6FBti6mEKMvH/uFycoL
-         t6/A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=nh6ouOWPqCqLQI6K+YA7RQa/C6W4E3g3SuFgXkLJFQc=;
+        b=BWLIl4mCJVF/UXmrTelcuL8ad8pUiGlJc/PAkUXXo4yw3VjB331D/OXjCRpfjKphTD
+         UnhDluKvhbm/BHY6gkzRrCJIwHset4Kif6Oj2ubDNN7/hHGFrmrAuWFziDnLeRpmZ7TK
+         hEZ0SKnI374PPqWhl1MK2GWY2iTS8vbZiPDsjRIJUSp36pJh3FFgspqZxQyirHhxfgy4
+         PWSSvI1Gy7e7tiuZ4nTB++w045NC++f19Sp1nx77/jag8+ivIx3yaG78rCe3x9cgYss1
+         cMQ1y+P9AlFNkNkoadVxD0pof9c/sEqvKNCm8QgI4/AbndM/ZdsT7I0SxveykWayiAvG
+         b7WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=h/N03KQSM/shZgORJtJPaISSx0nYK6bGD5jh6wKm2Zk=;
-        b=mhJ82IJeIJH4xEoJqW673g6wYoFJNdqsJEEBEW3ylOnau4OCklWG7YJFdrj7mUNhoS
-         hZD9EDW57sZuaqTEGoL2sLcsddeRWXhIcoNKDelfWXI1iWPYhWiL0fxNtQtLYNGrJGay
-         kOaPWlliNCc/fU47qA4USmDWpQqY9KyjS84tEqeJl9o9rE/iMSrjB8AsHUYr7uVyTe+b
-         VIygWgzHdP4BurGJoQsEoXq2o4HdbvABEaIVLW+19tYXRaqi7ZRKAuaQSHdUTMIFosYZ
-         tgKMxnJ7/6vtzoGSSHd/Bcsl95zqXvnJzCmgFGs8054qc3LH/3idtTJet3hPogIL+1E/
-         f9Iw==
-X-Gm-Message-State: AOPr4FVi+mFRJgIkWcsuXkJLEdYpwHvOVGaCwvhgefSaN1QBqvynH7V4cTsAFy7e8v15fw==
-X-Received: by 10.28.230.137 with SMTP id e9mr8884969wmi.0.1461529233475;
-        Sun, 24 Apr 2016 13:20:33 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=nh6ouOWPqCqLQI6K+YA7RQa/C6W4E3g3SuFgXkLJFQc=;
+        b=GCfyyHhgkrnBUI+RWkwbjFe66McRBrjoaz/HQdGJF/G+6WxKyJQmqlT9ucWz63CnNk
+         +/17gDCplweediJVydR/5e403oWyErmUpJautxAgDoD3mRN3cHhAya7J49BSstYf33wt
+         RG9+m3Rw4XsgY4GpSf0UtlB7J7NH6Oswp+FKZCix23Y2+VM21EV+g4O3PPGsketPu+o0
+         6GplwXrIcMsyye7yEEVDmoEzvcetG4dytpmpN9UT8Uty9jneKhuZaGoD2uJjx7C1AYzB
+         c8RlSAZjUW6OF/7d8jED7Zy8pLing/HCbyKn+V3rVA/FCH+AV06Oobmcm/Qxpv1u/Et0
+         eDIg==
+X-Gm-Message-State: AOPr4FXT4p/sbXaiFAtlHJ9/6jrUR/4eoRzhzfOFepDqwxo1MboWbSOCdghLazy3JJkYkA==
+X-Received: by 10.194.234.101 with SMTP id ud5mr29874828wjc.34.1461529238111;
+        Sun, 24 Apr 2016 13:20:38 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id m20sm15233040wma.23.2016.04.24.13.20.32
+        by smtp.gmail.com with ESMTPSA id m20sm15233040wma.23.2016.04.24.13.20.37
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 24 Apr 2016 13:20:32 -0700 (PDT)
+        Sun, 24 Apr 2016 13:20:37 -0700 (PDT)
 X-Mailer: git-send-email 2.1.3
+In-Reply-To: <1461529229-15222-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292440>
 
-Change the documentation so that:
+Change:
 
- * We don't talk about "little scripts". Hooks can be as big as you
-   want, and don't have to be scripts, just call them "programs".
+ * Sentences that needed "the" or "a" to either add those or change the=
+m
+   so they don't need them.
 
- * We note what happens with chdir() before a hook is called, nothing
-   documented this explicitly, but the current behavior is
-   predictable. It helps a lot to know what directory these hooks will
-   be executed from.
+ * The little tangent about "You can use this to do X (if your project
+   wants to do X)" can just be shortened to "e.g. if you want to do X".
 
- * We don't make claims about the example hooks which may not be true
-   depending on the configuration of 'init.templateDir'. Clarify that
-   we're talking about the default settings of git-init in those cases,
-   and move some of this documentation into git-init's documentation
-   about the default templates.
+ * s/parameter/parameters/ when the plural made more sense.
 
- * We briefly note in the intro that hooks can get their arguments in
-   various different ways, and that how exactly is described below for
-   each hook.
+Most of this goes all the way back to the initial introduction of
+hooks.txt in v0.99.5-76-g6d35cc7 by Junio.
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- Documentation/git-init.txt |  6 +++++-
- Documentation/githooks.txt | 32 ++++++++++++++++++++------------
- 2 files changed, 25 insertions(+), 13 deletions(-)
+ Documentation/githooks.txt | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-index 8174d27..cf37926 100644
---- a/Documentation/git-init.txt
-+++ b/Documentation/git-init.txt
-@@ -130,7 +130,11 @@ The template directory will be one of the followin=
-g (in order):
-  - the default template directory: `/usr/share/git-core/templates`.
-=20
- The default template directory includes some directory structure, sugg=
-ested
--"exclude patterns" (see linkgit:gitignore[5]), and sample hook files (=
-see linkgit:githooks[5]).
-+"exclude patterns" (see linkgit:gitignore[5]), and example hook files.
-+
-+The example are all disabled by default. To enable a hook, rename it
-+by removing its `.sample` suffix. See linkgit:githooks[5] for more
-+info on hook execution.
-=20
- EXAMPLES
- --------
 diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index a2f59b1..2f3caf7 100644
+index e9d169e..d30492c 100644
 --- a/Documentation/githooks.txt
 +++ b/Documentation/githooks.txt
-@@ -13,18 +13,26 @@ $GIT_DIR/hooks/*
- DESCRIPTION
- -----------
+@@ -40,15 +40,15 @@ HOOKS
+ applypatch-msg
+ ~~~~~~~~~~~~~~
 =20
--Hooks are little scripts you can place in `$GIT_DIR/hooks`
--directory to trigger action at certain points.  When
--'git init' is run, a handful of example hooks are copied into the
--`hooks` directory of the new repository, but by default they are
--all disabled.  To enable a hook, rename it by removing its `.sample`
--suffix.
--
--NOTE: It is also a requirement for a given hook to be executable.
--However - in a freshly initialized repository - the `.sample` files ar=
-e
--executable by default.
--
--This document describes the currently defined hooks.
-+Hooks are programs you can place in the `$GIT_DIR/hooks` directory to
-+trigger action at certain points. Hooks that don't have the executable
-+bit set are ignored.
-+
-+When a hook is called in a non-bare repository the working directory
-+is guaranteed to be the root of the working tree, in a bare repository
-+the working directory will be the path to the repository. I.e. hooks
-+don't need to worry about the user's current working directory.
-+
-+Hooks can get their arguments via the environment, command-line
-+arguments, and stdin. See the documentation for each below hook for
-+details.
-+
-+When 'git init' is run it may depending on its configuration copy
-+hooks to the new repository, see the the "TEMPLATE DIRECTORY" section
-+in linkgit:git-init[1] for details. When the rest of this document
-+refers to "default hooks" we're talking about the default template
-+shipped with Git.
-+
-+The currently supported hooks are described below.
+-This hook is invoked by 'git am' script.  It takes a single
++This hook is invoked by 'git am'.  It takes a single
+ parameter, the name of the file that holds the proposed commit
+-log message.  Exiting with non-zero status causes
+-'git am' to abort before applying the patch.
++log message.  Exiting with non-zero causes 'git am' to abort
++before applying the patch.
 =20
- HOOKS
- -----
+ The hook is allowed to edit the message file in place, and can
+-be used to normalize the message into some project standard
+-format (if the project has one). It can also be used to refuse
+-the commit after inspecting the message file.
++be used to e.g. normalize the message into some project standard
++format. It can also be used to refuse the commit after inspecting
++the message file.
+=20
+ The default 'applypatch-msg' hook, when enabled, runs the
+ 'commit-msg' hook, if the latter is enabled.
+@@ -81,10 +81,10 @@ pre-commit
+ ~~~~~~~~~~
+=20
+ This hook is invoked by 'git commit', and can be bypassed
+-with `--no-verify` option.  It takes no parameter, and is
++with the `--no-verify` option.  It takes no parameters, and is
+ invoked before obtaining the proposed commit log message and
+-making a commit.  Exiting with non-zero status from this script
+-causes the 'git commit' to abort.
++making a commit.  Exiting with a non-zero status from this script
++causes the 'git commit' command to abort before creating a commit.
+=20
+ The default 'pre-commit' hook, when enabled, catches introduction
+ of lines with trailing whitespaces and aborts the commit when
+@@ -123,15 +123,15 @@ commit-msg
+ ~~~~~~~~~~
+=20
+ This hook is invoked by 'git commit', and can be bypassed
+-with `--no-verify` option.  It takes a single parameter, the
++with the `--no-verify` option.  It takes a single parameter, the
+ name of the file that holds the proposed commit log message.
+-Exiting with non-zero status causes the 'git commit' to
++Exiting with a non-zero status causes the 'git commit' to
+ abort.
+=20
+-The hook is allowed to edit the message file in place, and can
+-be used to normalize the message into some project standard
+-format (if the project has one). It can also be used to refuse
+-the commit after inspecting the message file.
++The hook is allowed to edit the message file in place, and can be used
++to e.g. normalize the message into some project standard format. It
++can also be used to refuse the commit after inspecting the message
++file.
+=20
+ The default 'commit-msg' hook, when enabled, detects duplicate
+ "Signed-off-by" lines, and aborts the commit if one is found.
+@@ -139,8 +139,8 @@ The default 'commit-msg' hook, when enabled, detect=
+s duplicate
+ post-commit
+ ~~~~~~~~~~~
+=20
+-This hook is invoked by 'git commit'.  It takes no
+-parameter, and is invoked after a commit is made.
++This hook is invoked by 'git commit'. It takes no parameters, and is
++invoked after a commit is made.
+=20
+ This hook is meant primarily for notification, and cannot affect
+ the outcome of 'git commit'.
 --=20
 2.1.3
