@@ -1,121 +1,88 @@
-From: =?UTF-8?Q?Simon_Ponti=c3=a9?= <simon@le-huit.fr>
-Subject: Re: [git-multimail] smtplib, check certificate
-Date: Sun, 24 Apr 2016 20:20:51 +0200
-Message-ID: <571D0E83.8010400@le-huit.fr>
-References: <571949D2.10507@le-huit.fr> <vpqoa92rxew.fsf@anie.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Simon P <simon.git@le-huit.fr>
-X-From: git-owner@vger.kernel.org Sun Apr 24 20:23:48 2016
+From: larsxschneider@gmail.com
+Subject: [PATCH v3 0/3] git-p4: fix Git LFS pointer parsing
+Date: Sun, 24 Apr 2016 20:58:09 +0200
+Message-ID: <1461524292-20490-1-git-send-email-larsxschneider@gmail.com>
+Cc: sschuberth@gmail.com, gitster@pobox.com, ben.woosley@gmail.com,
+	Lars Schneider <larsxschneider@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 24 20:58:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auOh8-0008Vk-RD
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 20:23:47 +0200
+	id 1auPEc-0006Dm-B2
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 20:58:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752547AbcDXSXn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Apr 2016 14:23:43 -0400
-Received: from mail.gnubox.eu ([212.129.16.229]:41374 "EHLO mail.gnubox.eu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751735AbcDXSXm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2016 14:23:42 -0400
-X-Greylist: delayed 392 seconds by postgrey-1.27 at vger.kernel.org; Sun, 24 Apr 2016 14:23:42 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by mail.gnubox.eu (Postfix) with ESMTP id 2D8B95A6BC2;
-	Sun, 24 Apr 2016 20:17:08 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new using ClamAV at gnubox.info
-Received: from mail.gnubox.eu ([127.0.0.1])
-	by localhost (mail.gnubox.eu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id e49H9gfBUO_r; Sun, 24 Apr 2016 20:16:43 +0200 (CEST)
-Received: from [192.168.0.112] (85-169-145-244.rev.numericable.fr [85.169.145.244])
-	by mail.gnubox.eu (Postfix) with ESMTPSA id 346F15A60B1;
-	Sun, 24 Apr 2016 20:16:43 +0200 (CEST)
-Openpgp: id=E0275791E6CB63F284093FAF1BC5D2ED8EDF838D
-X-Enigmail-Draft-Status: N1110
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.7.0
-In-Reply-To: <vpqoa92rxew.fsf@anie.imag.fr>
+	id S1752114AbcDXS6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Apr 2016 14:58:18 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:38038 "EHLO
+	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751785AbcDXS6R (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2016 14:58:17 -0400
+Received: by mail-wm0-f52.google.com with SMTP id u206so96929795wme.1
+        for <git@vger.kernel.org>; Sun, 24 Apr 2016 11:58:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=qpJcP9mGtoxc7fmW5NqXOtHZwm9W0FAlEHwUY4Ch2XU=;
+        b=O/jBA9z5RMb+DQxLgUZKctDnefmJGw2u6i5l3g0hTm4VNTgSSDAFGpghi1fAvBOvlo
+         1kA5cycQ9kFxslOK/EDNCXLvEKa9Bv587zlADxvTD/UvQS6/Msir6XScU647NpFXXQmu
+         DGEC0apfhTlFCEWy9dCUu2fSCG77ELQwhymjHKUCk6vbFNmLeb2EpRv7AjHZPKOjbcMa
+         JpsCEuqLO97QDeLpvodg4c8Dnp4NcmpkkxyowBI1iJIQ/NS2eS8sOIs6lwHcd3rmhzUA
+         UxOQb3lCuqWYurkYMPMuvw/qCFttsMmpMVL5M28EfFGKJgEHflSl3o3iuncLv03kqook
+         byzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=qpJcP9mGtoxc7fmW5NqXOtHZwm9W0FAlEHwUY4Ch2XU=;
+        b=DCyGFXE9fBOfitlAJmJhWGxbe5Fu+QsYRAyart0jjBH9DOQOUJgTmwz9dukuqKdPjd
+         /YMxzRer9QN/+PtZXX22jILj3A6S59f+QAt7sNbs/7H2+SukBpOjvPs4vd/4d/1Vx6/R
+         tze3Rv50/Wr19k52WEtWmogFiYIMiaxYPjn3gIaUEqYM/pORGjk9vwsFEJ7zdD3L7mSD
+         HcIYtDlyxNEpy0IXxv6NOPxXPfvvRTP+VXUbQMcuWZXTlnO9XI0Zgwq2P+eMkN/PqvJK
+         wAAWhuFHcozcxecwfJnTvt1wDOTgc24jaUZb12NtPPFzrM+Oks/PQ8tmiFuoMVJZiWOM
+         wu0Q==
+X-Gm-Message-State: AOPr4FXB48OtaDNXkJ+FTpBaW31h0Qz4g0zz5VKUkGmmwlW4mxLfog7gdGqAhrC69zyt7A==
+X-Received: by 10.28.216.83 with SMTP id p80mr6533562wmg.49.1461524295764;
+        Sun, 24 Apr 2016 11:58:15 -0700 (PDT)
+Received: from slxBook3.fritz.box (p508BA7B8.dip0.t-ipconnect.de. [80.139.167.184])
+        by smtp.gmail.com with ESMTPSA id d79sm14948541wmi.23.2016.04.24.11.58.13
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sun, 24 Apr 2016 11:58:14 -0700 (PDT)
+X-Mailer: git-send-email 2.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292425>
 
-Le 22/04/2016 08:05, Matthieu Moy a =C3=A9crit :
-> Hi, and thanks for the patch.
+From: Lars Schneider <larsxschneider@gmail.com>
 
-Hi.
+v1: $gmane/291917
+v2: $gmane/291991
 
-Thanks for your tool, it is very useful!
+diff to v2:
+ * use regex to parse "oid" instead of a complicated split logic
+   ($gmane/291995, thanks Sebastian)
+ * add a note to the commit message emphasizing the change from array
+   to string in the second return parameter ($gmane/292077, thanks Junio)
+ * detect the Git-LFS preamble by the constant first part of the string
+   ($gmane/292079, thanks Ben)
+ * change the name of the Git-LFS and Perforce version variables to
+   express that they are only used in the Linux build
 
+Thanks,
+Lars
 
-> Please, add your sign-off and a proper commit message to your patch,
-> see:
+Lars Schneider (3):
+  travis-ci: update Git-LFS and P4 to the latest version
+  travis-ci: express Linux/OS X dependency versions more clearly
+  git-p4: fix Git LFS pointer parsing
 
-Done, I also signed my commit via PGP.
+ .travis.yml               | 17 ++++++++++-------
+ git-p4.py                 | 13 ++++++++++---
+ t/t9824-git-p4-git-lfs.sh |  4 ++++
+ 3 files changed, 24 insertions(+), 10 deletions(-)
 
-> I'm OK with patches by email, but you may prefer using a pull-request
-> (among other things, creating a pull-request triggers a Travis-CI bui=
-ld
-> and would have noticed the absence of sign-off and a minor PEP8 issue=
- in
-> your code.
-
-I don't like github, but I understand your requirement. I submitted a
-pull-request of a modified version of the patch:
-  https://github.com/git-multimail/git-multimail/pull/150
-I am not a python developer and I am not a Travis-CI user, so I cannot
-understand failure messages at:
-  https://travis-ci.org/git-multimail/git-multimail/builds/125406555
-
-> The patch obviously lacks documentation
-
-I have added a description in the README file.
-
-> and some way to test it.
-> Actually, the testsuite will fail if you document the configuration
-> variable and they don't appear somewhere in the testsuite. A fully
-> automatic test would be hard to write, but I have a semi-automated
-> testsuite for smtp: some configurations in t/*.config.in
-> test-email-config to run a test with each of the configurations (then=
- I
-> check my mailbox). There should be one configuration with a valid
-> certificate and another with a buggy one so that we can check that th=
-e
-> certificate is actually checked.
-
-I have added some test: firstly, I renamed the file `smtp-tls.config.in=
-`
-to `smtp-tls-nocheckcert.config.in` because this configuration do not
-check the server certificate. I also added to test files:
-  - `smtp-tls-checkcert-unverifiedcert.config.in`
-  - `smtp-tls-checkcert-verifiedcert.config.in`
-
-The first one (unverifiedcert) uses a fake trusted CA list to check the
-unverified server certificate detection (that can be tested with the
-gmail server for example).
-
-The second one (verifiedcert), assumes that your system have a file
-`/etc/ssl/certs/ca-certificates.crt` with a list of all CA trusted by
-your system (this file exist in Debian systems). It should succeed with
-the gmail server.
-
-> Do you need a default for smtpcheckcert if you already have one in
-> config.get(smtpcheckcert)? In any case, I'd rather avoid having two
-> hardcoded path in the code. If you need
-> '/etc/ssl/certs/ca-certificates.crt' in two places, please define a
-> constant elsewhere in the code and use it here.
-
-I have modified the configuration, there is now only one configuration
-var: smtpCACerts. If it is empty (default), the server certificate is
-not verified (like before the patch) but a warning is emitted. If the
-var is set, the targeted file is used to verify the server certificate.
-
-=46or now, only the tls configuration is supported.
-
-Simon P.
+--
+2.5.1
