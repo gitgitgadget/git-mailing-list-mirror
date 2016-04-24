@@ -1,68 +1,94 @@
-From: =?UTF-8?Q?Simon_Ponti=c3=a9?= <simon@le-huit.fr>
-Subject: Re: [git-multimail] smtplib, check certificate
-Date: Sun, 24 Apr 2016 21:14:43 +0200
-Message-ID: <571D1B23.7090806@le-huit.fr>
-References: <571949D2.10507@le-huit.fr> <vpqoa92rxew.fsf@anie.imag.fr>
- <5719C7A0.50403@alum.mit.edu>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH v3 3/3] git-p4: fix Git LFS pointer parsing
+Date: Sun, 24 Apr 2016 21:16:48 +0200
+Message-ID: <CAHGBnuMs6h478FXGA_x2nP1D6BJCxGzhumR_xq5JFmNgzM6Sdw@mail.gmail.com>
+References: <1461524292-20490-1-git-send-email-larsxschneider@gmail.com>
+	<1461524292-20490-4-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Simon P <simon.git@le-huit.fr>
-X-From: git-owner@vger.kernel.org Sun Apr 24 21:11:12 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>, ben.woosley@gmail.com
+To: larsxschneider@gmail.com
+X-From: git-owner@vger.kernel.org Sun Apr 24 21:17:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auPQy-00039R-7c
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 21:11:08 +0200
+	id 1auPX0-0005h1-2x
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 21:17:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752908AbcDXTLD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Apr 2016 15:11:03 -0400
-Received: from mail.gnubox.eu ([212.129.16.229]:41437 "EHLO mail.gnubox.eu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751814AbcDXTLC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2016 15:11:02 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.gnubox.eu (Postfix) with ESMTP id A96BE5A6BC2;
-	Sun, 24 Apr 2016 21:10:58 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new using ClamAV at gnubox.info
-Received: from mail.gnubox.eu ([127.0.0.1])
-	by localhost (mail.gnubox.eu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id GUtQKCM-wg79; Sun, 24 Apr 2016 21:10:34 +0200 (CEST)
-Received: from [192.168.0.112] (85-169-145-244.rev.numericable.fr [85.169.145.244])
-	by mail.gnubox.eu (Postfix) with ESMTPSA id 344605A60B1;
-	Sun, 24 Apr 2016 21:10:34 +0200 (CEST)
-Openpgp: id=E0275791E6CB63F284093FAF1BC5D2ED8EDF838D
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.7.0
-In-Reply-To: <5719C7A0.50403@alum.mit.edu>
+	id S1752946AbcDXTQu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Apr 2016 15:16:50 -0400
+Received: from mail-yw0-f174.google.com ([209.85.161.174]:33345 "EHLO
+	mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752017AbcDXTQu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2016 15:16:50 -0400
+Received: by mail-yw0-f174.google.com with SMTP id t10so172903829ywa.0
+        for <git@vger.kernel.org>; Sun, 24 Apr 2016 12:16:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=eluIn/s+hoDMyCTYJLqOdSm6hyX0vssiNYpF+71zdMA=;
+        b=dSTLfTfp/VQQyy2gIO+dmpDSNxNs+ZJCxoNfBD0L7P0izn1+IyGyt+npy1xlc9jdxS
+         mjNJF31fwItcBCsLwBTpZ4NLMXewoyi/qfAYwPtNOqGUu/T9WrBGVU05RZDv+ZbjPGai
+         GBRZb3zzkNZVNlt51oYmbGK4OLDEW3afiHtLGZxYcTZbhOiYnt+xKDX4haxwQMoKjXSQ
+         A+iK46LjKXQUDnigu6WTGxzHqicmA4uJxOxc9ha5bzVDIpb0Yxrji7BvnSgjdgSh1Lhj
+         c1Q9aKkU54d63TChTNfGnP7XAPXhlHB5nNqVXFXlV7h0Kwd3xEX2qcVVElU1GLzPLEzT
+         6Lxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=eluIn/s+hoDMyCTYJLqOdSm6hyX0vssiNYpF+71zdMA=;
+        b=T6B0f376BJv0f8/vsd9V48WrPSUFZyxv4S20F5bzjdpBF+mgsP0x/+wCCCUOkqBxgJ
+         yAveBIbmJOjJE90199IBOK976WxBSIAuSTaPF3uBcURetfdQLbLDBydlteWPUOQZLKV4
+         5Or14VBeyxwwkeo1uxgZZ/0fYTNF5WT668I0RnIygnOFk70W/t02FodpckYRJvZ8k14V
+         DaRn4YGTcuTKJsg4V7Ms02/SWFA7Owo1EdHc02PaM9CdjDNFYSSKEFaviXOKV0sVq71G
+         smP25IO5v32SRSF9SwE7nBkYi/HRxARZ/hzCJfXzpjHixbwdsHv6mdm+fbU7qQ7udHs5
+         y9rA==
+X-Gm-Message-State: AOPr4FXmdmY75mviIq/dhM5G+yvMvo5gjvOiJ1STHVw4kUkhscOhzyIE+nKvJdtIO7TRicjRswHHoSeEW4xuHw==
+X-Received: by 10.159.38.40 with SMTP id 37mr14645397uag.8.1461525409054; Sun,
+ 24 Apr 2016 12:16:49 -0700 (PDT)
+Received: by 10.176.5.2 with HTTP; Sun, 24 Apr 2016 12:16:48 -0700 (PDT)
+In-Reply-To: <1461524292-20490-4-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292431>
 
+On Sun, Apr 24, 2016 at 8:58 PM,  <larsxschneider@gmail.com> wrote:
 
-Le 22/04/2016 08:41, Michael Haggerty a =C3=A9crit :
-> I hate that we even have to worry about this stuff, but
-> graingert/secure-smtplib looks to be GPLv3, whereas git-multimail is
-> GPLv2 (like the Git project and Linux); *not* "GPLv2 or later". So if
-> "inspired" means "incorporated copyrightable content" then this patch
-> might be problematic.
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -1064,8 +1064,15 @@ class GitLFS(LargeFileSystem):
+>          if pointerProcess.wait():
+>              os.remove(contentFile)
+>              die('git-lfs pointer command failed. Did you install the extension?')
+> -        pointerContents = [i+'\n' for i in pointerFile.split('\n')[2:][:-1]]
+> -        oid = pointerContents[1].split(' ')[1].split(':')[1][:-1]
+> +
+> +        # Git LFS removed the preamble in the output of the 'pointer' command
+> +        # starting from version 1.2.0. Check for the preamble here to support
+> +        # earlier versions.
+> +        # c.f. https://github.com/github/git-lfs/commit/da2935d9a739592bc775c98d8ef4df9c72ea3b43
+> +        if pointerFile.startswith('Git LFS pointer for'):
+> +            re.sub(r'Git LFS pointer for.*\n\n', '', pointerFile)
 
-https://github.com/git-multimail/git-multimail/pull/150#issuecomment-21=
-4020193
+I liked the code from v2 better. I know Ben said "there could be
+expansions or other modifications applied by git-lfs between input and
+output", but I believe it's better to be too strict than too lenient
+if you're omitting lines from the output. Also, the regex matches
+against the whole multi-line string. That is, if the file for some
+reason was ending in '\n\n' instead of just '\n', the '.*' would match
+almost all content of the pointer file, not just the remains of the
+preamble. One way to fix this would be to use
 
-There is a GPLv3 on the secure-smtplib implementation:
-https://github.com/graingert/secure-smtplib
-but I also found an older code equivalent to my patch under MIT license
-here: https://github.com/cybercase/django-smtp-starttls (code in
-django_smtp_starttls.py, licence in setup.py)
+re.sub(r'Git LFS pointer for [^\n]+\n\n', '', pointerFile)
 
-I think there is not problem to re-use MIT code.
+instead.
 
-Simon.
+Regards,
+Sebastian
