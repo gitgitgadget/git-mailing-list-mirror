@@ -1,92 +1,92 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 00/83] libify apply and use lib in am
-Date: Sun, 24 Apr 2016 18:56:27 +0200
-Message-ID: <CAP8UFD0rKNAoZgCPQkfo_qd7b_V4rOtLqBvQ-XQoeT6OnZidGw@mail.gmail.com>
-References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
-	<571CE4D5.8010403@ramsayjones.plus.com>
-	<CAP8UFD0dEYPSku8w=7ehJFFgtNFO8EbUc4RDn+KRdrYG3-=Rxg@mail.gmail.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] convert.c: fix some sparse warnings
+Date: Sun, 24 Apr 2016 18:14:10 +0100
+Message-ID: <571CFEE2.2070708@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-X-From: git-owner@vger.kernel.org Sun Apr 24 18:56:35 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Apr 24 19:14:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auNKk-0005KP-U5
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 18:56:35 +0200
+	id 1auNbx-0004jN-Fk
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 19:14:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752830AbcDXQ4a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Apr 2016 12:56:30 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:36188 "EHLO
-	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752783AbcDXQ42 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2016 12:56:28 -0400
-Received: by mail-wm0-f46.google.com with SMTP id v188so72905482wme.1
-        for <git@vger.kernel.org>; Sun, 24 Apr 2016 09:56:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=mUcIUIL4erbN/1aSwW5tq5CPsy54wTHWfPG0IaPqKSU=;
-        b=HVaO9zkwOzd/O8U8lsOA3gbXtkH/G7iRGeWlfuAsm5y/7awwgk+7xFI0PSvM9uayH6
-         gRv+nNS7E9d+SnoNPfLeQldNzJx1Kl7GVNJqScM3dUk/NopbjGyv3c2Igili8jb8lG6W
-         uXxEdhxdBhq7SzQtUAe0qboSAUw7l9jywe6TM3VaF4LkOybY/mLXmKHCM58RtV8XUp8a
-         Ek9xn7OllUjajUUZoLk3Ow3Uza6gaTHbY0QxHnGHIiVsMTF7rShC1/5O+cScl2YwYoa9
-         Yb4LvV5dTaA+mpz2nuNv6B90OzsCWiL/ngZZJhO+amK+xz5QqkTArIq2q0fOiFMmxWXw
-         3V9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=mUcIUIL4erbN/1aSwW5tq5CPsy54wTHWfPG0IaPqKSU=;
-        b=TVhw4s5gM0W4Fs3oLgmSCVLguN/U4qP/6yLeUk9K3S/uR5H7xrXbcyDnbVPsX17ELX
-         XCdZbeXMXDp1Gsi1/MrdGmcLzuKCtySv+5XZKxfhyTVNyM9w2t9dY44CS/EIuUJrm2BG
-         7m5wgZRzGpZGobl4LIRjUUEWZ2Uyo8wOUneLsHxSqLlScEmn5UxbPyVcYp39Fc+q/Z+k
-         NlCpLpJjAuyvEpreU+4+AK6nVxTf84s4x5g3Mpfslx4d26Nj+rjlgDy8yBQHb4qYWJET
-         VqJ7+gNl8Ans4Ce7WYA73+3dc01SnHmG1+DuNovp3JSfHXe2leShzF0/uqhkhKDXVlVe
-         oRjQ==
-X-Gm-Message-State: AOPr4FWE56Imu3qMfyCjuuwn6Ai3N/nBi8BkgDVjz4t4aiHrYraO3KwbfTmyY8jUhOmt8iopQGEu58DeV76fWg==
-X-Received: by 10.28.32.199 with SMTP id g190mr8078629wmg.62.1461516987234;
- Sun, 24 Apr 2016 09:56:27 -0700 (PDT)
-Received: by 10.194.95.129 with HTTP; Sun, 24 Apr 2016 09:56:27 -0700 (PDT)
-In-Reply-To: <CAP8UFD0dEYPSku8w=7ehJFFgtNFO8EbUc4RDn+KRdrYG3-=Rxg@mail.gmail.com>
+	id S1752699AbcDXROR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Apr 2016 13:14:17 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:48478 "EHLO
+	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752583AbcDXROQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2016 13:14:16 -0400
+Received: from [10.0.2.15] ([91.125.197.102])
+	by avasout07 with smtp
+	id mHED1s0032D2Veb01HEERe; Sun, 24 Apr 2016 18:14:15 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=QqujpgGd c=1 sm=1 tr=0
+ a=mTUfFwB0nGOO66Ym8a+i3w==:117 a=mTUfFwB0nGOO66Ym8a+i3w==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
+ a=EBOSESyhAAAA:8 a=ehP1j3z9y6A82uJi7o4A:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292422>
 
-On Sun, Apr 24, 2016 at 6:27 PM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> On Sun, Apr 24, 2016 at 5:23 PM, Ramsay Jones
-> <ramsay@ramsayjones.plus.com> wrote:
->>
->>
->> On 24/04/16 14:33, Christian Couder wrote:
->>> This is a patch series about libifying `git apply` functionality, and
->>> using this libified functionality in `git am`, so that no 'git apply'
->>> process is spawn anymore. This makes `git am` significantly faster, so
->>> `git rebase`, when it uses the am backend, is also significantly
->>> faster.
->>
->> I just tried to git-am these patches, but patch #78 did not make it
->> to the list.
->
-> That's strange because gmail tells me it has been sent, and it made it
-> to chriscool@tuxfamily.org.
 
-Instead of waiting for the patch to appear on the list, you might want
-to use branch libify-apply-use-in-am25 in my GitHub repo:
+Sparse complains thus:
 
-https://github.com/chriscool/git/commits/libify-apply-use-in-am25
+      SP convert.c
+  convert.c:178:24: warning: Using plain integer as NULL pointer
+  convert.c:239:28: warning: dubious: !x & y
+
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
+
+Hi Torsten,
+
+When you next re-roll your 'tb/convert-eol-autocrlf' branch, could you
+please squash this into your patch corresponding to commit cbcc0471
+("convert.c: more safer crlf handling with text attribute", 22-04-2016).
+
+[No, you have seen this before! ;-) ]
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ convert.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/convert.c b/convert.c
+index 8d4c42a..3d36c45 100644
+--- a/convert.c
++++ b/convert.c
+@@ -175,7 +175,7 @@ const char *get_wt_convert_stats_ascii(const char *path)
+ 	memset(&stats, 0, sizeof(stats));
+ 	fd = open(path, O_RDONLY);
+ 	if (fd < 0)
+-		return 0;
++		return NULL;
+ 	for (;;) {
+ 		char buf[1024];
+ 		ssize_t readlen = read(fd, buf, sizeof(buf));
+@@ -236,7 +236,7 @@ static int would_convert_lf_at_checkout(unsigned convert_stats,
+ 		return 0;
+ 
+ 	/* No "naked" LF? Nothing to convert, regardless. */
+-	if (!convert_stats & CONVERT_STAT_BITS_TXT_LF)
++	if (!(convert_stats & CONVERT_STAT_BITS_TXT_LF))
+ 		return 0;
+ 
+ 	if (crlf_action == CRLF_AUTO ||
+-- 
+2.8.0
