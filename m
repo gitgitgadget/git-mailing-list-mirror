@@ -1,93 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: make test Unexpected passes
-Date: Sun, 24 Apr 2016 12:09:00 -0700
-Message-ID: <xmqqtwiqn7sj.fsf@gitster.mtv.corp.google.com>
-References: <571A8404.5030200@ramsayjones.plus.com>
-	<loom.20160423T011428-888@post.gmane.org>
+From: =?UTF-8?Q?Simon_Ponti=c3=a9?= <simon@le-huit.fr>
+Subject: Re: [git-multimail] smtplib, check certificate
+Date: Sun, 24 Apr 2016 21:14:43 +0200
+Message-ID: <571D1B23.7090806@le-huit.fr>
+References: <571949D2.10507@le-huit.fr> <vpqoa92rxew.fsf@anie.imag.fr>
+ <5719C7A0.50403@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Ben Woosley <ben.woosley@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 24 21:09:13 2016
+To: Michael Haggerty <mhagger@alum.mit.edu>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Simon P <simon.git@le-huit.fr>
+X-From: git-owner@vger.kernel.org Sun Apr 24 21:11:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auPP6-0002Mx-Pb
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 21:09:13 +0200
+	id 1auPQy-00039R-7c
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 21:11:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752854AbcDXTJF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Apr 2016 15:09:05 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62998 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751814AbcDXTJD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2016 15:09:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D4A6E15343;
-	Sun, 24 Apr 2016 15:09:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dqVeKIBO5I7Owyjc3D5D4o9i81Q=; b=siUyPs
-	Bbp1Z501CTO9U9dKWDLWUE5tubjCHEVCgfkyauyplo4dnI7+M8YpYW8y2QilxD41
-	Oz8wGn327s0mQ+1kGbB5L/hOsTkO4mheXIukMPikMbH8YSmWuR7X0la3t0hLvTJa
-	7swzdpuTMUs2UXvuzZMiebDW4YsBm35hslB0E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=x4/aVv2brbrP5p8Csy0PdDr3MVKNUXGO
-	olu4j9vNY3NFpuEJow7cwv95Lkyct5KC9J9Iq7iAT0DdzDCzFO0HeiKgw6XFW9FX
-	zcRf1UIZQ73lNlKkUszz47GOdqub70YuinVr07FZtgoMn93gxf7AqoXsxQiefDIy
-	YFA3AtYFoo4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C3B4415342;
-	Sun, 24 Apr 2016 15:09:01 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 42A8B15341;
-	Sun, 24 Apr 2016 15:09:01 -0400 (EDT)
-In-Reply-To: <loom.20160423T011428-888@post.gmane.org> (Ben Woosley's message
-	of "Fri, 22 Apr 2016 23:16:16 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 01100E1C-0A50-11E6-A99D-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1752908AbcDXTLD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Apr 2016 15:11:03 -0400
+Received: from mail.gnubox.eu ([212.129.16.229]:41437 "EHLO mail.gnubox.eu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751814AbcDXTLC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2016 15:11:02 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail.gnubox.eu (Postfix) with ESMTP id A96BE5A6BC2;
+	Sun, 24 Apr 2016 21:10:58 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new using ClamAV at gnubox.info
+Received: from mail.gnubox.eu ([127.0.0.1])
+	by localhost (mail.gnubox.eu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id GUtQKCM-wg79; Sun, 24 Apr 2016 21:10:34 +0200 (CEST)
+Received: from [192.168.0.112] (85-169-145-244.rev.numericable.fr [85.169.145.244])
+	by mail.gnubox.eu (Postfix) with ESMTPSA id 344605A60B1;
+	Sun, 24 Apr 2016 21:10:34 +0200 (CEST)
+Openpgp: id=E0275791E6CB63F284093FAF1BC5D2ED8EDF838D
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.7.0
+In-Reply-To: <5719C7A0.50403@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292430>
 
-Ben Woosley <ben.woosley@gmail.com> writes:
 
-> These know breakages:
->
-> ok 50 - rebase -m --onto --root
-> ok 54 - rebase -m without --onto --root with disjoint history
->
-> Have to do with rebasing a root/orphan branch with the -m flag,
-> which defaults to -- merge=recursive, which is the case the patch fixed.
->
-> Here are the necessary changes:
-> ...
+Le 22/04/2016 08:41, Michael Haggerty a =C3=A9crit :
+> I hate that we even have to worry about this stuff, but
+> graingert/secure-smtplib looks to be GPLv3, whereas git-multimail is
+> GPLv2 (like the Git project and Linux); *not* "GPLv2 or later". So if
+> "inspired" means "incorporated copyrightable content" then this patch
+> might be problematic.
 
-Thanks, will squash them in and reword the log message accordingly.
+https://github.com/git-multimail/git-multimail/pull/150#issuecomment-21=
+4020193
 
-    git-rebase--merge: don't include absent parent as a base
+There is a GPLv3 on the secure-smtplib implementation:
+https://github.com/graingert/secure-smtplib
+but I also found an older code equivalent to my patch under MIT license
+here: https://github.com/cybercase/django-smtp-starttls (code in
+django_smtp_starttls.py, licence in setup.py)
 
-    Absent this fix, attempts to rebase an orphan branch using "rebase -m"
-    fails with:
+I think there is not problem to re-use MIT code.
 
-        $ git rebase -m ORPHAN_TARGET_BASE
-        First, rewinding head to replay your work on top of it...
-        ...
-    Note the default rebase behavior does not fail:
-
-        $ git rebase ORPHAN_TARGET_BASE
-        First, rewinding head to replay your work on top of it...
-        Applying: ORPHAN_ROOT_COMMIT_MSG
-        Using index info to reconstruct a base tree...
-
-    A few tests were expecting the old behaviour to forbid rebasing such
-    a history with "rebase -m", which now need to expect them to succeed.
-
-    Signed-off-by: Ben Woosley <ben.woosley@gmail.com>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Simon.
