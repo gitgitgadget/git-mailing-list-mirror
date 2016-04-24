@@ -1,113 +1,104 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: 0 bot for Git
-Date: Sun, 24 Apr 2016 15:05:54 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604241505290.2896@virtualbox>
-References: <CAGZ79kYWGFN1W0_y72-V6M3n4WLgtLPzs22bWgs1ObCCDt5BfQ@mail.gmail.com> <xmqqa8kxlbix.fsf@gitster.mtv.corp.google.com> <BF9D5A7E-CB73-4F82-8D5F-42E120D07A3B@gmail.com> <CAGZ79ka4WmT8NjD-04WqwczuCuJZcoKMyDRQKkRH1sT5xoqRhQ@mail.gmail.com>
- <DB5772D2-89D4-4D14-8FD1-4AF6DDFD77AC@gmail.com> <xmqq60vh77pt.fsf@gitster.mtv.corp.google.com> <7F130640-40F1-454F-BC00-ACC5364404B8@gmail.com> <xmqqr3dxpn4f.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1604240908200.2896@virtualbox>
- <CAE5ih7-fyuEvSDzmHVfXta3hd_7ZRp1+_VtytDM+u0372Kyidg@mail.gmail.com> <CAE5ih7_fabo7DyZyHoxdp1Y4ygby2qwKA8E1N6MuGzHa60Wf4w@mail.gmail.com> <CAE5ih7-DzFe_3=kyan=E17zCo-iNdNdH7DE5ZwYVHmFvUBkDkA@mail.gmail.com> <CAE5ih7-d9ow0dF6wfWCkmx+HAQOzVBONGCC_U4-2bkDUZGPecQ@mail.gmail.com>
- <CAE5ih7_OEAWjYm9LwMAwBCtnvG+KgGo1aFuT9CyQjeN6nFmC5w@mail.gmail.com> <CAE5ih7-z8K5Z7HuBa=pF53b6obU60ZCxrEkTLWbaSMsg0G1Ctg@mail.gmail.com> <CAE5ih78arC2V76XR7yUoXk77c0d_z3Hzupw6MA1+saS3faXjTw@mail.gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [GIT PULL] l10n updates for maint branch (2.8.2)
+Date: Sun, 24 Apr 2016 21:12:57 +0800
+Message-ID: <CANYiYbHOkYx6CXHkUHBoWfQOJGiEFXJJi4tDTFvAGigKZfO7gw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1695198022-1461503156=:2896"
-Cc: Lars Schneider <larsxschneider@gmail.com>, lkp@intel.com,
-	Greg KH <gregkh@linuxfoundation.org>,
-	Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Sun Apr 24 15:06:25 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jean-Noel Avila <jn.avila@free.fr>, Git List <git@vger.kernel.org>,
+	Vasco Almeida <vascomalmeida@sapo.pt>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 24 15:13:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auJk0-00034Z-PO
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 15:06:25 +0200
+	id 1auJqV-00065Q-4d
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 15:13:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752654AbcDXNGT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Apr 2016 09:06:19 -0400
-Received: from mout.gmx.net ([212.227.15.19]:57668 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752616AbcDXNGS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2016 09:06:18 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MfVU3-1b66O70pVD-00P78M; Sun, 24 Apr 2016 15:05:56
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CAE5ih78arC2V76XR7yUoXk77c0d_z3Hzupw6MA1+saS3faXjTw@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:jl4PIh6FxUj25IREA05xbswvDI92LEXkSvx0cmkfWzYTyJtjw1v
- Lqu4tKJJIk7O3F6M+HKe2JiSr0irB56tQoSCN5lKSJVha+utBA0m5ol38qvV0hRihXmAUcu
- v8rupK7frmfY3Iumu37r9UTalfu7OvS2vo0A4oESCWZQvElYsZvgHOm1BZ4q5cTbxWsR0b4
- KdeLaSZmMjy3Cd5NV+xIw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:26Hp56l+eZw=:P3nC2dIELI8MXusD4+A6H4
- R7V+Yv1KSY3y03D3Yaeuh4Y0VlSCII0xLou9ziGIM+NJJfFBukjfUVqiKX3hefjHeQqjGq8Q4
- CFjDmz9DUjPrYZowtCBtwktNr2Ys2MQLNuTy8p1M3+Cc4z+uxFM7I4dZyA5Vi8oSJHB3I3jFN
- L9JfMSlM9/L4eGFX5p/AUleKHbddyB3Dh/QxM9+zYcVZB3S+xxl9DGcTjRlgIGnBbQ32o1eqR
- UDHg0/0XvBkVDzK9fImjlU+1nyGi1SWPst+/SyiQEif+wNu/i1C13PR30hTZXkkbObvqwo9vA
- Vo+GWu/cYKkbxZUyISVh7JhgXYZTw0sXZRKZwgL/2yHGB63vTtAYSefznj+kW/mfozsw8lNkH
- c8QWU/AFPXUP82HcacWDJsYlvl3o2WJTrbYoWoVWz1lzKcxcIBVfCV9j9InEdUD3/5kV5FRrg
- +dcgBMrF9LQkPB7CV11P+55eTzMf1AhWVIf13lJ4GDTVQC9Uk6PKzNqD8A/S5+HcybCYvg7wL
- 5t4J0TI+mYxKODHAH/qTCcHSSapCc5Fnn1eNiquryssVR7Z+StuFb3/IPCgL7cPSqBJGm82Tu
- rahjZVW0E6iTD8hJPLp1YmuKk9RCmRWN84x/mVFrNu6GNA/4OTyzoHuwHJ8MKeBbsbTxHyRmg
- i045NX9eHLEqqvOTEv4CNivAFOMf2319vJKi4yypwSpWZ9BOCCTPiFuowgVtdtnDsEQJ2ZmaR
- 5l6YwhqYD4QR+D553+EAUTb+CJL9fKOQCxjKhrnL87B4P4nafzS6FhULEQuhdGEUwOUjvnD9 
+	id S1752647AbcDXNNA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Apr 2016 09:13:00 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33652 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752616AbcDXNM7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2016 09:12:59 -0400
+Received: by mail-wm0-f68.google.com with SMTP id r12so15633306wme.0
+        for <git@vger.kernel.org>; Sun, 24 Apr 2016 06:12:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc
+         :content-transfer-encoding;
+        bh=lq03QS2qs1eBlujWASXl7FCBIdbW5sSCgx+T8Yhw8hA=;
+        b=gKI+1S0Ay0YIeIP3dYtyfMqJOtWDTJb6EYNQ1gX71fQL7Mk0fnU/0cKnli6sh8vWVu
+         pVb78ty6fvtM5zGfKThN5q2Ch4LU5bqKLfxRnd92vGH7ON7ZCmZ9F15I8MCBvgZIpNW+
+         OWtTrCLftdrPBrtacgkQ5jcVH1X+BrMA7zEIq1RRBRnM4Gi34wA98Le/fKYPe0VLR2Xp
+         5Y2BUuzEzihDbCECziaFrhUxK7PCgfFRIVkvKtkIPYCHuGwvCqjLeXYdw4weROJWLjbW
+         YItXDjW14mbd/2x22gpG83uXCxS6qdvAnehWWk4gE4GcMUdPPKAhBgQbgDlgkPsruVMz
+         jo5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
+         :content-transfer-encoding;
+        bh=lq03QS2qs1eBlujWASXl7FCBIdbW5sSCgx+T8Yhw8hA=;
+        b=NUTiqGnmEKj4a9hKvlq7wTnNhcoThiyDK8CPtEg/WbtpERKVKnGfMnkVuafdOwdwtv
+         ZnfhWD3CTJl1aotizQf+JavIAfpznr8/VP4jWGvLqt60h0vFerKJGBdamTm399W9V3Sr
+         8acIdUZ7fjS/6lvvU7kmWzCxxrAhq3N/P4AsRemds5PbemzK3Zv3n2P8UNb3K26W2sg/
+         J5cEWp5tHRFc6MGfPC2ounGqPxFDTlnFljoyuJ7e5XGsYf1MaOVaDWZoRliQZ6aFfvfT
+         7veiWevykmKatUNyQs49yoH3+s/nAe9GJbd+fbE/H++ysTEYjVE9OK3IpUeaOlcjkBZj
+         MF3Q==
+X-Gm-Message-State: AOPr4FXJQX8REH2KqT6CETvcuCA+7+6GTKw+GQrNDuEfqyKZaZdCMmsA+Chqsq2kWm4+ssjZO59AbOUg1zR/lw==
+X-Received: by 10.28.174.70 with SMTP id x67mr6590875wme.43.1461503577586;
+ Sun, 24 Apr 2016 06:12:57 -0700 (PDT)
+Received: by 10.194.6.231 with HTTP; Sun, 24 Apr 2016 06:12:57 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292322>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323329-1695198022-1461503156=:2896
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Please pull this update to the maint branch.  It should have been merge=
+d to
+Git 2.8.0, but I was busy these weeks and forgot to check my private ma=
+ilbox.
 
-Hi Luk,
+The following changes since commit 26e4cbec4558ea21cd572bfc915a462f63c1=
+ebb4:
 
-On Sun, 24 Apr 2016, Luke Diamand wrote:
+  l10n: zh_CN: review for git v2.8.0 l10n round 2 (2016-03-20 18:46:02 =
++0800)
 
-> On 24 Apr 2016 08:19, "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-> wrote:
-> >
-> > Hi Lars & Junio,
-> >
-> > On Fri, 22 Apr 2016, Junio C Hamano wrote:
-> >
-> > > Lars Schneider <larsxschneider@gmail.com> writes:
-> > >
-> > > > Thanks for the explanation. My intention was not to be offensive.
-> > > > I was curious about your workflow and I was wondering if the
-> > > > Travis CI integration could be useful for you in any way.
-> > >
-> > > Don't worry; I didn't feel offended.  The Travis stuff running on
-> > > the branches at http://github.com/git/git would surely catch issues
-> > > on MacOSX and/or around git-p4 (neither of which I test myself when
-> > > merging to 'pu') before they hit 'next', and that is already helping
-> > > us greatly.
-> >
-> > I agree that it helps to catch those Mac and P4 issues early.
-> >
-> > However, it is possible that bogus errors are reported that might not h=
-ave
-> > been introduced by the changes of the PR, and I find it relatively hard=
- to
-> > figure out the specifics. Take for example
-> >
-> >         https://travis-ci.org/git/git/jobs/124767554
-> >
-> > It appears that t9824 fails with my interactive rebase work on MacOSX,
-> > both Clang and GCC versions. I
->=20
-> That test is failing because git-lfs has changed its  output format and
-> git-p4 had not yet been taught about this.
->=20
-> There's a patch from Lars to fix it -  see the mailing list for details.
+are available in the git repository at:
 
-Yeah, thanks, G=C3=A1bor provided me with the link.
+  git://github.com/git-l10n/git-po tags/l10n-2.8.0-rnd3-fr
 
-Ciao,
-Johannes
---8323329-1695198022-1461503156=:2896--
+for you to fetch changes up to 2ee0fca122653572f2ecb3c3a2d5441170f8e17c=
+:
+
+  Merge branch 'fr_v2.8.0_r3' of git://github.com/jnavila/git into
+maint (2016-04-24 20:36:34 +0800)
+
+----------------------------------------------------------------
+l10n-2.8.0-rnd3-fr
+
+----------------------------------------------------------------
+Jean-No=C3=ABl Avila (1):
+      Merge pull request #9 from vascool/fr
+
+Jiang Xin (1):
+      Merge branch 'fr_v2.8.0_r3' of git://github.com/jnavila/git into =
+maint
+
+Vasco Almeida (4):
+      l10n: fr: fix transcation of "dir"
+      l10n: fr: fix wrongly translated option name
+      l10n: fr: change "id de cl=C3=A9" to match "id-cl=C3=A9"
+      l10n: fr: don't translate "merge" as a parameter
+
+ po/fr.po | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+--
+Jiang Xin
