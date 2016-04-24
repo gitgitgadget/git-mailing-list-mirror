@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH 74/83] builtin/apply: make try_create_file() return -1 on error
-Date: Sun, 24 Apr 2016 15:34:14 +0200
-Message-ID: <1461504863-15946-75-git-send-email-chriscool@tuxfamily.org>
+Subject: [PATCH 63/83] builtin/apply: make apply_all_patches() return -1 on error
+Date: Sun, 24 Apr 2016 15:34:03 +0200
+Message-ID: <1461504863-15946-64-git-send-email-chriscool@tuxfamily.org>
 References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -12,51 +12,51 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 24 15:37:07 2016
+X-From: git-owner@vger.kernel.org Sun Apr 24 15:37:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auKDi-0000Mv-FN
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 15:37:06 +0200
+	id 1auKDj-0000Mv-1p
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 15:37:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753067AbcDXNg5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Apr 2016 09:36:57 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:38706 "EHLO
-	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752990AbcDXNga (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2016 09:36:30 -0400
-Received: by mail-wm0-f42.google.com with SMTP id u206so89955634wme.1
-        for <git@vger.kernel.org>; Sun, 24 Apr 2016 06:36:29 -0700 (PDT)
+	id S1752971AbcDXNgU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Apr 2016 09:36:20 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:36703 "EHLO
+	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752936AbcDXNgP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2016 09:36:15 -0400
+Received: by mail-wm0-f49.google.com with SMTP id v188so69575989wme.1
+        for <git@vger.kernel.org>; Sun, 24 Apr 2016 06:36:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=NPLsCN0PtbeZH6yLGPJKS9FYGGqqxe2B5rx9txodDS8=;
-        b=hrNffHHaaP0b8KeK4xhTvlKfgFhRrIabs7IP+NACmfhdGU4e7x6uuAsjOYgqXphdb1
-         ke/EJ0RL9eskaCmm2/1teV+ZMumsJ/FSwREmxS52l2TXbbiqCxSpCeg0NG+Cs41Mx3Dh
-         BVHvyVQ2cuTiDYLtLiMeIgEKtXwXGQpTNYymgBlOpbIvij9bOGvANnQzGqKvzoRNJktu
-         lKBCO9aLMm3XvQAnrM9c1amLklKm5daDcs8EZD3PcyFSQ3PLqBGaGTx7bQjEYnJT/OmF
-         9MVRFrJTKRsQ/lTt0bBahzp92wqOVBeMeeeFY7KKviMzSjcpW8vF+/bvTS5YMBGRP91s
-         uNDA==
+        bh=+kRMptTe7ncW7WCL21/Tltzv7VafWqmsyX/imuFly8A=;
+        b=B3g/g1n2MWJIVVsBUtgSQCmfZSzeqUrauchOTIn/ad8jF3Y3Bu4w3wfwkOUimfEQqt
+         YUTh6ssaqkGFXh+J6a9rQ8GO2KxECGYt+qLQL37WGqEYAWWoBRREsZQdyORfDD6I9QD0
+         Vz736LtxxtINSsl0UNjXoaipXrkYXIH44uR5QyozhNmkXoSAzygZcgDby0IzqTjN/ATF
+         yp1GDQA2GSYo5pHSWKhrU1L241nxUEAna0Dqsnk3CbCG2xmKaaeY4AbKGhFnlKhbqLy5
+         nJMEypRWccxmT3v2KI7rKRaMizZHY5I/eFCVBSH5kbMbivch9ViO6wfrI8OZOsNa+oJ9
+         dNWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=NPLsCN0PtbeZH6yLGPJKS9FYGGqqxe2B5rx9txodDS8=;
-        b=YYGfHWVklQ4u5vGa0tyCGck/e3KzRwDKEfX9GKFKmpANvoOpYsCaL4FjAmphb+X1S2
-         ZmBf3Ea5oqGh/msQ9hVpjtl7lCwQjRQSTohWJcQh//vwEpMhJJ89cPyNn3Qmd9fqDuQn
-         xyFk8O5+3W8k53UsiCc6iP19Ci7ZKL4A8rctm1rt2xX9hJ8bIom/hvow2XWlHn1NG+sF
-         rNEnvPcJ9fHCD1UYPp43ANQHeQ8dy7g+OWYNLiHBqWiXEUyk/gytxIRqy2wga0OWoX7E
-         Qp90UUaJxxuDJjKFb/5A/m5LKGykVZeU8u8UC1sPIxjs2/C/UsaiFKpGwSeSO63wFC6e
-         9yYQ==
-X-Gm-Message-State: AOPr4FWDFbbMDeAcC5n4Z4OUI4Qwtgdz7Aq7ADBfWLR24zTBqVlYfhpDNdBX9uXrepdKRg==
-X-Received: by 10.28.94.5 with SMTP id s5mr7197566wmb.26.1461504989186;
-        Sun, 24 Apr 2016 06:36:29 -0700 (PDT)
+        bh=+kRMptTe7ncW7WCL21/Tltzv7VafWqmsyX/imuFly8A=;
+        b=f8MoTDhSlAuIpGu40SbCtl5v3QZMWS0r0W2RZGGPa4FldRqFKr6TUUaU9TC3Ulp9xF
+         +E9jRoigk5KJU099mv3+SDEw0SfuiD+pF3+C+EHPzHEwQ5vbAvJdDb31frJ9zdFnSs1Q
+         UYuSEtaZz/kXbcyR3cZ6498llp6drYyjs4Sh47pyeNd9ZE4vmv786ZRDvJZLh/FZSMgG
+         vVDgwnbkO0NG+FIlpyJbc4wCCo6fRbmxFgNAtzYWA+WiZqfBILfCr7mmNtgTHwfCZcDT
+         tCwvBA2Y+3Gc7nH+M1JxTd62i9fTt/+77Wdb1SreOETiLhSX8aaugiJsKmwvuQT1o659
+         wjcA==
+X-Gm-Message-State: AOPr4FUbI2G6zw6dVWH1/lC/1ZP5t2REyzfghMCSdxuIilRegkB7LS8X2r83/1dzSPWZFw==
+X-Received: by 10.28.140.12 with SMTP id o12mr6852101wmd.19.1461504974404;
+        Sun, 24 Apr 2016 06:36:14 -0700 (PDT)
 Received: from localhost.localdomain (121.73.115.78.rev.sfr.net. [78.115.73.121])
-        by smtp.gmail.com with ESMTPSA id j6sm6717101wjb.29.2016.04.24.06.36.28
+        by smtp.gmail.com with ESMTPSA id j6sm6717101wjb.29.2016.04.24.06.36.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 24 Apr 2016 06:36:28 -0700 (PDT)
+        Sun, 24 Apr 2016 06:36:13 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.1.300.g5fed0c0
 In-Reply-To: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
@@ -64,112 +64,83 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292368>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 38 ++++++++++++++++++++++++++++++--------
- 1 file changed, 30 insertions(+), 8 deletions(-)
+ builtin/apply.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 49ef4c9..32c38f0 100644
+index eab5ae1..73247c7 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -4136,6 +4136,12 @@ static int add_index_file(struct apply_state *state,
- 	return 0;
- }
+@@ -4551,7 +4551,7 @@ static int apply_all_patches(struct apply_state *state,
+ 		if (!strcmp(arg, "-")) {
+ 			res = apply_patch(state, 0, "<stdin>", options);
+ 			if (res < 0)
+-				exit(1);
++				return -1;
+ 			errs |= res;
+ 			read_stdin = 0;
+ 			continue;
+@@ -4562,12 +4562,12 @@ static int apply_all_patches(struct apply_state *state,
  
-+/*
-+ * Returns:
-+ *  -1 if an unrecoverable error happened
-+ *   0 if everything went well
-+ *   1 if a recoverable error happened
-+ */
- static int try_create_file(const char *path, unsigned int mode, const char *buf, unsigned long size)
- {
- 	int fd;
-@@ -4145,28 +4151,32 @@ static int try_create_file(const char *path, unsigned int mode, const char *buf,
- 		struct stat st;
- 		if (!lstat(path, &st) && S_ISDIR(st.st_mode))
- 			return 0;
--		return mkdir(path, 0777);
-+		return !!mkdir(path, 0777);
+ 		fd = open(arg, O_RDONLY);
+ 		if (fd < 0)
+-			die_errno(_("can't open patch '%s'"), arg);
++			return error(_("can't open patch '%s': %s"), arg, strerror(errno));
+ 		read_stdin = 0;
+ 		set_default_whitespace_mode(state);
+ 		res = apply_patch(state, fd, arg, options);
+ 		if (res < 0)
+-			exit(1);
++			return -1;
+ 		errs |= res;
+ 		close(fd);
+ 	}
+@@ -4575,7 +4575,7 @@ static int apply_all_patches(struct apply_state *state,
+ 	if (read_stdin) {
+ 		res = apply_patch(state, 0, "<stdin>", options);
+ 		if (res < 0)
+-			exit(1);
++			return -1;
+ 		errs |= res;
  	}
  
- 	if (has_symlinks && S_ISLNK(mode))
- 		/* Although buf:size is counted string, it also is NUL
- 		 * terminated.
- 		 */
--		return symlink(buf, path);
-+		return !!symlink(buf, path);
+@@ -4590,10 +4590,10 @@ static int apply_all_patches(struct apply_state *state,
+ 				squelched);
+ 		}
+ 		if (state->ws_error_action == die_on_ws_error)
+-			die(Q_("%d line adds whitespace errors.",
+-			       "%d lines add whitespace errors.",
+-			       state->whitespace_error),
+-			    state->whitespace_error);
++			return error(Q_("%d line adds whitespace errors.",
++					"%d lines add whitespace errors.",
++					state->whitespace_error),
++				     state->whitespace_error);
+ 		if (state->applied_after_fixing_ws && state->apply)
+ 			warning("%d line%s applied after"
+ 				" fixing whitespace errors.",
+@@ -4608,7 +4608,7 @@ static int apply_all_patches(struct apply_state *state,
  
- 	fd = open(path, O_CREAT | O_EXCL | O_WRONLY, (mode & 0100) ? 0777 : 0666);
- 	if (fd < 0)
--		return -1;
-+		return 1;
- 
- 	if (convert_to_working_tree(path, buf, size, &nbuf)) {
- 		size = nbuf.len;
- 		buf  = nbuf.buf;
+ 	if (state->update_index) {
+ 		if (write_locked_index(&the_index, state->lock_file, COMMIT_LOCK))
+-			die(_("Unable to write new index file"));
++			return error(_("Unable to write new index file"));
  	}
--	write_or_die(fd, buf, size);
-+
-+	if (!write_or_whine_pipe(fd, buf, size, path)) {
-+		strbuf_release(&nbuf);
-+		return -1;
-+	}
- 	strbuf_release(&nbuf);
  
- 	if (close(fd) < 0)
--		die_errno(_("closing file '%s'"), path);
-+		return error(_("closing file '%s': %s"), path, strerror(errno));
- 	return 0;
- }
+ 	return !!errs;
+@@ -4698,5 +4698,8 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
+ 	if (check_apply_state(&state, force_apply))
+ 		exit(1);
  
-@@ -4181,16 +4191,25 @@ static void create_one_file(struct apply_state *state,
- 			    const char *buf,
- 			    unsigned long size)
- {
-+	int res;
-+
- 	if (state->cached)
- 		return;
--	if (!try_create_file(path, mode, buf, size))
-+
-+	res = try_create_file(path, mode, buf, size);
-+	if (!res)
- 		return;
-+	if (res < 0)
+-	return apply_all_patches(&state, argc, argv, options);
++	if (apply_all_patches(&state, argc, argv, options))
 +		exit(1);
- 
- 	if (errno == ENOENT) {
- 		if (safe_create_leading_directories(path))
- 			return;
--		if (!try_create_file(path, mode, buf, size))
-+		res = try_create_file(path, mode, buf, size);
-+		if (!res)
- 			return;
-+		if (res < 0)
-+			exit(1);
- 	}
- 
- 	if (errno == EEXIST || errno == EACCES) {
-@@ -4208,12 +4227,15 @@ static void create_one_file(struct apply_state *state,
- 		for (;;) {
- 			char newpath[PATH_MAX];
- 			mksnpath(newpath, sizeof(newpath), "%s~%u", path, nr);
--			if (!try_create_file(newpath, mode, buf, size)) {
-+			res = try_create_file(newpath, mode, buf, size);
-+			if (!res) {
- 				if (!rename(newpath, path))
- 					return;
- 				unlink_or_warn(newpath);
- 				break;
- 			}
-+			if (res < 0)
-+				exit(1);
- 			if (errno != EEXIST)
- 				break;
- 			++nr;
++
++	return 0;
+ }
 -- 
 2.8.1.300.g5fed0c0
