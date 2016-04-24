@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH 29/83] builtin/apply: move 'limit_by_name' global into 'struct apply_state'
-Date: Sun, 24 Apr 2016 15:33:29 +0200
-Message-ID: <1461504863-15946-30-git-send-email-chriscool@tuxfamily.org>
+Subject: [PATCH 27/83] builtin/apply: move 'read_stdin' global into cmd_apply()
+Date: Sun, 24 Apr 2016 15:33:27 +0200
+Message-ID: <1461504863-15946-28-git-send-email-chriscool@tuxfamily.org>
 References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -12,51 +12,51 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 24 15:38:14 2016
+X-From: git-owner@vger.kernel.org Sun Apr 24 15:38:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auKEl-0000sg-KH
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 15:38:11 +0200
+	id 1auKEr-0000wH-F7
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 15:38:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752839AbcDXNfe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Apr 2016 09:35:34 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:34978 "EHLO
-	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752778AbcDXNfc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2016 09:35:32 -0400
-Received: by mail-wm0-f41.google.com with SMTP id e201so60532539wme.0
-        for <git@vger.kernel.org>; Sun, 24 Apr 2016 06:35:31 -0700 (PDT)
+	id S1752825AbcDXNf3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Apr 2016 09:35:29 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:38336 "EHLO
+	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752776AbcDXNfY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2016 09:35:24 -0400
+Received: by mail-wm0-f45.google.com with SMTP id u206so89931439wme.1
+        for <git@vger.kernel.org>; Sun, 24 Apr 2016 06:35:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=CBVYhjLtt/aDUgYt7iOzseJtMHbBJux3hzpJNQDfhJo=;
-        b=zGMGu5q6/CXij/pgawWR2gtuoEBA5aKz5JnH773J07B/LdPaOCyyq/rpQYXjpMkBeQ
-         OVHJ+5g3YgKcQM3QG0gag4bX1yQStDNDybY50v8CO0ZISgCOvtuiCIr3wIpROlvZGOUb
-         BQj1GD99LVEOfZOliUq5qnVNaY6JftDLc8kCZ0Ir0PPUrmNlu8ckGYJtcnJiMAVzBvKe
-         0vRit1hhVI3Hm+g1CrTWB4RRNHhc4UVxdz0XKlreLSMtSZ5GLEjZISEs0vjSnz1mS6E3
-         ijb9f1HaIdVb3ejItct0v/FKq3MAbdt9cilHixwftF+y8TFq3V4zfraJXoGi1dezxOG6
-         URDg==
+        bh=CsBTuGSvQ8l6XYH84lClpIqY5lmMEYGwl8OnCNtxkvM=;
+        b=VRTLOh5n5K90IPIxsCJU3NsZaUcK8erwoimCS+uPRu2dJ6aFaYan1XTVgszAPk2wmx
+         SydAIcXH/45w4WDu153f364+EEk3JY+CIzMYK/16ZFVnSNj6d48PjaqZfnlfpoPLxx6M
+         6DyHsWRIbCAsVhA4jsWRxHIfJdb0JEaoVERzuyrhQ56yLLF5YSMeEVJrKcgxL+sbdKwA
+         BgxeHWqFZz0U5+YTiONvaj4qrSgc6O1Jcs9hAsJovryUpFOT5mh6wdjlRlXWgICJ3+Oz
+         ANf3/CZxwmu3Jpzns+cFYLBUBAFGlShnU3RSUnkS5xaMME/KNWjWVZHIlwiNgV15j7fd
+         tkHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=CBVYhjLtt/aDUgYt7iOzseJtMHbBJux3hzpJNQDfhJo=;
-        b=je5EYZNIMeOASFSpIG05PJMinD+m3GpMQokNToCUzh8+DKRZzxTjuN1N507KAc3RyD
-         DZu5SAifa9Ygcs3B1W5UMYdDNHbyAim7gQ69VPrGgikX06dLUMZzfwRvkxtmOiZUF6EB
-         DSEcX6GQFe4zFtSEidTnHQTOufyG1zUO/8htVOEzdQoKG9LjhrMnVZgtvDEiFeMQ/TO8
-         QY6i+x8akqti/9VdsG8cKhurEVVeVwvDCtWeHi0tfycCovB6+lr69hAcPfBccvqSRVGk
-         i3mvdIycuvhq1n4CUc65cOVjG/iimlow8s0biDMvsGaYPAFmac9+22hA01oevmTjza29
-         QCuw==
-X-Gm-Message-State: AOPr4FWid0/cQkz7nqnmZ6z5KJN2pbuaWmWEm7fH96c/qe8qW7l1YuUguCU9Edf+hzxzNw==
-X-Received: by 10.28.54.69 with SMTP id d66mr7474959wma.94.1461504925842;
-        Sun, 24 Apr 2016 06:35:25 -0700 (PDT)
+        bh=CsBTuGSvQ8l6XYH84lClpIqY5lmMEYGwl8OnCNtxkvM=;
+        b=a5cW+TIHIXbCcoGiIm5nmjVzwmx2whoq8gIsplG0ePHTElnOfqnWAdj2iM9OPZCsh3
+         qEV/Ti/kQszuOXtFFuoYIIAarKslm8rmri3pBvjj6zRvu0+Az5/MGuIQDjY35gxUfZ/3
+         3imTaAqqlLD0WHYv+5LFN7D9em1uTZbX5BC0hEafSNNdXsrd3p20ZvheRXmBkikvdaI8
+         FUPw34yPnPl5TNI3FM2U55f4UB2bla+pr8SIzeWAV32BGF1tu0oY/s1sOnfDlOBnQdLn
+         X0uqR0Y479M8agXf/Vy0TSzqDQrNytnIJkPiwfjzVNDNxKfldTutWrutcm5iGgkcnMR4
+         xDag==
+X-Gm-Message-State: AOPr4FXPl9vcGVUMTL+YgHd6uPMcOmf9WhtLFxaRDdzcuviTegOj+qG1OXgbKgqBTSle6w==
+X-Received: by 10.28.170.194 with SMTP id t185mr7112455wme.91.1461504923093;
+        Sun, 24 Apr 2016 06:35:23 -0700 (PDT)
 Received: from localhost.localdomain (121.73.115.78.rev.sfr.net. [78.115.73.121])
-        by smtp.gmail.com with ESMTPSA id j6sm6717101wjb.29.2016.04.24.06.35.24
+        by smtp.gmail.com with ESMTPSA id j6sm6717101wjb.29.2016.04.24.06.35.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 24 Apr 2016 06:35:24 -0700 (PDT)
+        Sun, 24 Apr 2016 06:35:22 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.1.300.g5fed0c0
 In-Reply-To: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
@@ -64,86 +64,32 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292386>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ builtin/apply.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index ab311c1..c8b9bf0 100644
+index 699cabf..be237d1 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -68,6 +68,8 @@ struct apply_state {
- 	unsigned int p_context;
+@@ -96,7 +96,6 @@ static enum ws_ignore {
  
- 	const char *patch_input_file;
-+
-+	struct string_list limit_by_name;
- };
+ static const char *patch_input_file;
+ static struct strbuf root = STRBUF_INIT;
+-static int read_stdin = 1;
  
- static int newfd = -1;
-@@ -1974,13 +1976,14 @@ static void prefix_patch(struct apply_state *state, struct patch *p)
-  * include/exclude
-  */
- 
--static struct string_list limit_by_name;
- static int has_include;
--static void add_name_limit(const char *name, int exclude)
-+static void add_name_limit(struct apply_state *state,
-+			   const char *name,
-+			   int exclude)
+ static void parse_whitespace_option(const char *option)
  {
- 	struct string_list_item *it;
+@@ -4586,6 +4585,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 	int is_not_gitdir = !startup_info->have_repository;
+ 	int force_apply = 0;
+ 	int options = 0;
++	int read_stdin = 1;
+ 	struct apply_state state;
  
--	it = string_list_append(&limit_by_name, name);
-+	it = string_list_append(&state->limit_by_name, name);
- 	it->util = exclude ? NULL : (void *) 1;
- }
- 
-@@ -1998,8 +2001,8 @@ static int use_patch(struct apply_state *state, struct patch *p)
- 	}
- 
- 	/* See if it matches any of exclude/include rule */
--	for (i = 0; i < limit_by_name.nr; i++) {
--		struct string_list_item *it = &limit_by_name.items[i];
-+	for (i = 0; i < state->limit_by_name.nr; i++) {
-+		struct string_list_item *it = &state->limit_by_name.items[i];
- 		if (!wildmatch(it->string, pathname, 0, NULL))
- 			return (it->util != NULL);
- 	}
-@@ -4537,14 +4540,16 @@ static void git_apply_config(void)
- static int option_parse_exclude(const struct option *opt,
- 				const char *arg, int unset)
- {
--	add_name_limit(arg, 1);
-+	struct apply_state *state = opt->value;
-+	add_name_limit(state, arg, 1);
- 	return 0;
- }
- 
- static int option_parse_include(const struct option *opt,
- 				const char *arg, int unset)
- {
--	add_name_limit(arg, 0);
-+	struct apply_state *state = opt->value;
-+	add_name_limit(state, arg, 0);
- 	has_include = 1;
- 	return 0;
- }
-@@ -4599,10 +4604,10 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
  	const char *whitespace_option = NULL;
- 
- 	struct option builtin_apply_options[] = {
--		{ OPTION_CALLBACK, 0, "exclude", NULL, N_("path"),
-+		{ OPTION_CALLBACK, 0, "exclude", &state, N_("path"),
- 			N_("don't apply changes matching the given path"),
- 			0, option_parse_exclude },
--		{ OPTION_CALLBACK, 0, "include", NULL, N_("path"),
-+		{ OPTION_CALLBACK, 0, "include", &state, N_("path"),
- 			N_("apply changes matching the given path"),
- 			0, option_parse_include },
- 		{ OPTION_CALLBACK, 'p', NULL, NULL, N_("num"),
 -- 
 2.8.1.300.g5fed0c0
