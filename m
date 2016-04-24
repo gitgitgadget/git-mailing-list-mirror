@@ -1,75 +1,96 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: GSoC Project Selected | Incremental Rewrite of git bisect
-Date: Sun, 24 Apr 2016 08:52:50 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604240851290.2896@virtualbox>
-References: <CAFZEwPMr=imv==kvVULy4PDYKW-0RRQ5a+X8DFqNFhNjCSyWKA@mail.gmail.com>
+Subject: Re: [PATCH] string_list: use string-list API in
+ unsorted_string_list_lookup()
+Date: Sun, 24 Apr 2016 09:06:12 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1604240901570.2896@virtualbox>
+References: <20160422173500.32329-1-ralf.thielow@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Roberto Tyley <roberto.tyley@gmail.com>
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 24 08:53:23 2016
+Cc: git@vger.kernel.org
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 24 09:06:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auDuy-0003al-A9
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 08:53:20 +0200
+	id 1auE7d-0000ff-OQ
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Apr 2016 09:06:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751778AbcDXGxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Apr 2016 02:53:06 -0400
-Received: from mout.gmx.net ([212.227.17.21]:61507 "EHLO mout.gmx.net"
+	id S1752264AbcDXHGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Apr 2016 03:06:18 -0400
+Received: from mout.gmx.net ([212.227.17.20]:55483 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751592AbcDXGxF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2016 02:53:05 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Ldcv0-1bcsP13JpK-00iju4; Sun, 24 Apr 2016 08:52:53
+	id S1752246AbcDXHGR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2016 03:06:17 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MYfJW-1bGemd011m-00VRzN; Sun, 24 Apr 2016 09:06:13
  +0200
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CAFZEwPMr=imv==kvVULy4PDYKW-0RRQ5a+X8DFqNFhNjCSyWKA@mail.gmail.com>
+In-Reply-To: <20160422173500.32329-1-ralf.thielow@gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:WZ5/YZg/1+SjkNML9qglaGkIqejK9LoV30HKxuZ/hHmp2stIvK4
- PEqeL6cK1xkZsiQHajUMfz3PrmMtx3BlZFBq1DhCOclt4RR6QCIWUBjLfngVj9sac3IK6b7
- O5KbJMwntZssqR/dqqgkfazL7i+vXiNpBmVXzXygCYiilajPeIBHX1zBJ63ES+2nua8sNTZ
- X0k1imPGdYqqX49/udjFQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4xYnQSLgeiM=:5veA57geKPB4716RgT0xya
- JXNvWkZ+EkwkQEfz73Ze2fY91eYviOSipHbcj8eAVuumpRbAw00EeWSYwD1nvA9vrV6aCEWeu
- itPOaHhoimBrF9/TiMgo8MGHwmJkJMhattmDIwPFJUeKLjZqRo+MF9q6ZGtiDc8+dLKRL2fdN
- dhvYmn8aR1Nv7X2h4oW1wznHNs655Rlq490Mk47N2wGGxeCg1+kDiCGt9YXao0c+gCFWnafM7
- MRMHU50ZVBoRaPEB580JbG7QPdt9y/+vqPjODYmy57Z0KopVw4xc062CmAV6WR9lNsZwQ1Bk7
- 8VDi6bqIFC/QS6oJEuMKb0RUFAYdMDtzhyxOYwQxqnXskVaPgimo3rrc9GOHO+Lp2lDYE4Dus
- YJinVMyH7iz3UEHNe1xlUykLe+e6VeR4nt0/FqQcX35SOBOhaV320d+4uSFE70Y2MLUxnKucs
- +Yf+QNxI5i/2OR/zzPBICGCKC42+G0NzXlrtwrdZ7JzTE9wv++KUbPlsGunPqttudiZeMgWIS
- CPGGZ2G9IzluodBcK/0DP4L//3uzepyNDq54Orfn4UZht5f87A6E7UOBOHNw+rqGP3ZjMdg07
- gW23WjADr+ZRuUmj3A4pCap51aUzIc0HU81jaDsNfdiS8F/LEF0kj6pCCCyIgz6XpdFyxY1e3
- VWBgSWGSJhRYjCfgipaGD8LKVYNDmZR8sjzSAVXnzZYroyj7Ik6zCrwI5hGoUuPcl+BKsbPRa
- RCNdlA4Owi1nHfeU9UAwx6kBtQsf6xAFHHgUfX1ZRCYhvOg4WGpYcXvHRlq9if6qcFktejPd 
+X-Provags-ID: V03:K0:DbKqn0CJHrFynD7HP6JgRUkR2LlKl+FWQm+scXsOT3ps49koIln
+ UjejDSzC2j9SC4ejQGb8Nflfd0CgyZ/p1inSZcoXkbopTnwMb/ECF0PU2zcxbJK/nWpGHG9
+ EJcGjHaYwKm3unKT3nWsTTtpJZquV2tJ55/Zjy0lq7elwspQgIwgiwKJln2IbbHmqFSSpfq
+ EXRcPcspj1EZ0TyPQvOGw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:eWlVCtzXne0=:uowCbGf6WQxanxrKccLtC4
+ yB41ty5jgjUYOHvoTV72DUaCtPIzFUmhqX/dDJWmW5KvX+rHAXw1l4pYpqXND1v28f2U3hkwK
+ ch+Ls8O8ObnopYevrTIWS5l1YWMyb4OyQyu0Scr32s5ZXYjWc1nN8ZIz7xUighQy4o9LGewTN
+ i3OwzcuNrWn6Jbz3IOWfYjPiwOuxbfTV9zIq7GYn3PaboPMC4UlhKZjX8GWd4mBPrxgSTVr/k
+ tAUayD96cDGvBMsbN+ljs7dL1cebc8fbQ7FWogQ4CNayhyI5gUBKU51BG6auF8uPO1Ecb8B5H
+ Y4WFTz2Ytlwfi66lkp49HpRjQu3wkDnZAn8PsYdOW7kQopAz1fZ0R5uy8PPRvSq8LE1ZF1pCs
+ 4Dny9O/LgQwPJBr1zdNgBzq/qJhkXEU8exEokyOrEb/2er6ls3nGL2G4bpys3W5UxpszpFqmz
+ 7liryMGmn+6HdeuX/fityKQwA8hpAsB57v1/3JEG3MlPKkhRjxlua0x6XgtjKMjuCbw1Qzkrm
+ ZV3iw1n3Jh34NX4N2GD4PUm9uc9adH7UwdIcwMdLi0s/yQbt5i724AkYKtITMa4KQjr0iSV21
+ c44H1zDFoIqjDPg9dXVA19DBR6wAdDaaAVMhWNUqKsmhGn76aRH84Xwgco6CtHcuJ6HdqfPFb
+ qkttQHCZPGE99u3a8gNKr9nTAyKiPrLHAxPdsv0fOpMlUZZXYvrmw/HAToUftHj1kNIvRtciS
+ l9b/CH+gaiFpnYoUvz4KU0B49M/aG5JGlO4VLZSQXmJqae4/MIrtJBEEQb3jKh0GS7YTctvY 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292316>
 
-Hi Pranit,
+Hi Ralf,
 
-On Sun, 24 Apr 2016, Pranit Bauva wrote:
+On Fri, 22 Apr 2016, Ralf Thielow wrote:
 
-> I am Pranit Bauva studying Mining Engineering at Indian Institute of
-> Technology, Kharagpur. I have applied for Google Summer of Code 2016
-> under Git organization and my project[1], "Incremental Rewrite of git
-> bisect has been selected under the guidance of mentors namely Christian
-> Couder and Lars Schneider.
+> Using the string-list API in function unsorted_string_list_lookup()
+> makes the code more readable.  So let's do this.
+> 
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+> ---
+>  string-list.c | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
 
-Awesome, congratulations!
+Oh. I hoped for a reduction, not an increase.
 
-Looking forward to seeing your project progress, and to you feeling at
-home here in the Git developer community.
+> diff --git a/string-list.c b/string-list.c
+> index 2a32a3f..8127e12 100644
+> --- a/string-list.c
+> +++ b/string-list.c
+> @@ -231,12 +231,13 @@ void string_list_sort(struct string_list *list)
+>  struct string_list_item *unsorted_string_list_lookup(struct string_list *list,
+>  						     const char *string)
+>  {
+> -	int i;
+> +	struct string_list_item *item;
+>  	compare_strings_fn cmp = list->cmp ? list->cmp : strcmp;
+>  
+> -	for (i = 0; i < list->nr; i++)
+> -		if (!cmp(string, list->items[i].string))
+> -			return list->items + i;
+> +	for_each_string_list_item(item, list) {
+> +		if (!cmp(string, item->string))
+> +			return item;
+> +	}
+>  	return NULL;
+
+If you drop the extra curly braces (thereby matching Git's coding style as
+an additional bonus), at least the patch won't increase the number of
+lines.
+
+In any case, I like the simplification of the code.
 
 Ciao,
-Johannes
+Dscho
