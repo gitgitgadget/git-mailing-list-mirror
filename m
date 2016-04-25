@@ -1,105 +1,100 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v5 06/15] index-helper: add --detach
-Date: Mon, 25 Apr 2016 16:53:06 -0400
-Organization: Twitter
-Message-ID: <1461617586.24444.4.camel@twopensource.com>
-References: <1461108489-29376-1-git-send-email-dturner@twopensource.com>
-	 <1461108489-29376-7-git-send-email-dturner@twopensource.com>
-	 <CACsJy8Bcb=-V0wc8En2SCSz8jPefEL4qibxJsLsTB-c94x9y3Q@mail.gmail.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [RFC] How to pass Git config command line instructions to
+ Submodule commands?
+Date: Mon, 25 Apr 2016 13:59:03 -0700
+Message-ID: <CA+P7+xoaqNF+uBHVnD2QR7j-=0Hyvd-scTc_vOdV+etC0VS9jA@mail.gmail.com>
+References: <60724588-B06E-47E8-9302-8709C4601826@gmail.com> <CAGZ79kYmAr-O6_Jw2KO9eZEfZQ+_WBiERF=nhOYLJCZpUjSSyA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 25 22:53:21 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Git Users <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon Apr 25 22:59:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aunVQ-0004N6-Hn
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 22:53:20 +0200
+	id 1aunbO-0007N6-8f
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 22:59:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965035AbcDYUxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2016 16:53:11 -0400
-Received: from mail-qg0-f48.google.com ([209.85.192.48]:35904 "EHLO
-	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964963AbcDYUxJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2016 16:53:09 -0400
-Received: by mail-qg0-f48.google.com with SMTP id d90so55137141qgd.3
-        for <git@vger.kernel.org>; Mon, 25 Apr 2016 13:53:09 -0700 (PDT)
+	id S964983AbcDYU7Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Apr 2016 16:59:25 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:35265 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933466AbcDYU7Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2016 16:59:24 -0400
+Received: by mail-ob0-f174.google.com with SMTP id n10so76783444obb.2
+        for <git@vger.kernel.org>; Mon, 25 Apr 2016 13:59:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:mime-version:content-transfer-encoding;
-        bh=OzI1C1YTzdO0mklHyK1xJH4sAnZ3PKE15JD9SDRjXDc=;
-        b=eWQgj6dI4SOj1Q4/m2Vhql1fV9lLZSQTJplxz34Qii06AmNu42JLOWhLsin+E4+jA9
-         0iiIGC5CYDHYsmqSVmf8tpSvmdYmGzVMCmb3IKGU7kG+m+k8YETtf9eoDv74cOOsGFp/
-         w0qeXaY99b9h0rCMphNVk3IEijvKmNuJWyYeibHc9bWSqChdD7Au8zq4LME2WW/l7Tpw
-         hoiFXytQiWDeOQxSA6BXppIG6VKZi3Ikt8WiYlAWmMFnNKQtMFjnOtolzuZpRiMduK4o
-         F6x68OVBns8xOOOblHLCPatYDh/xUo8voIro5hbZWqNwPwWAJZRH9vyUGK5v4q8jdpSF
-         RUOQ==
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=2Md+n+CtNxJPEW8dYE7EdGXrXQ/xeyHwPesFdZ+r8f8=;
+        b=BVsVT9fRRWX/BKzRrqasX6u35DZzMqZYNIOutap7NCQ5+A/p9bQZo4Hg4XbaLtHX96
+         8IxzpLuCPRkB4mFNBow+89SO0hsUwUGgseNySdGl8eQv42WvZORtxjgnfK19bzjD7sZZ
+         C1KZjJC9nFUsk1BsI5seEWJkRa0+m7GgENlS/e5G4LF2zb0rkiOJXc7Rc/YG0y4CvzTF
+         O4uQCSbNlpIr1FYThAqZkZ+T645whdgWmf8RjmviH0LdJOTF3YVY0OZwjsqxiy03z2rW
+         qZs1/GMIIcjOtZ8taH4lXv/RvdfFp+sWr8nz20o1s2GB+jm/kDu4Dkk7qtjIx2Shz7XC
+         uMTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=OzI1C1YTzdO0mklHyK1xJH4sAnZ3PKE15JD9SDRjXDc=;
-        b=aSX9m4vdxgBOwMlQr/P7hOYiXChC613NLjGTyMAdsNZZ1np5feP6BYGTmpnC78cnB7
-         ErP049nQeI8bB0JOjqNEyDiKs2g1EE2h0fVizKSscJiEH1psQDhb8OByNpP2eFaEEQuU
-         EUl1EAAKqU6Y8ivCyosErGnLhXCKMVqFXVu1bMxGjmiJP+M25q1AfEhrofAVAhQHEJ05
-         HRPgYQNmLTkG9BJmtMAAJUC3CZYqreRHa79osJ24HfB3UnHIKz/UOGAWMNBSZK2jsDbQ
-         rwhyYNNUmuipAxyGZKWBfkWw9jhU22LRAjMS19T3EaR/B/ckT0ah+b2eAqaRHbA6TMqF
-         RFRA==
-X-Gm-Message-State: AOPr4FWEuoZYjszV1qfqX8o/B980/6lYQXZVOwbjLagjecYav8/y89rWIGbD0aEoqW6L1g==
-X-Received: by 10.140.29.246 with SMTP id b109mr36354398qgb.2.1461617588545;
-        Mon, 25 Apr 2016 13:53:08 -0700 (PDT)
-Received: from ubuntu ([8.25.196.26])
-        by smtp.gmail.com with ESMTPSA id z141sm7759233qhd.1.2016.04.25.13.53.07
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 25 Apr 2016 13:53:07 -0700 (PDT)
-In-Reply-To: <CACsJy8Bcb=-V0wc8En2SCSz8jPefEL4qibxJsLsTB-c94x9y3Q@mail.gmail.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=2Md+n+CtNxJPEW8dYE7EdGXrXQ/xeyHwPesFdZ+r8f8=;
+        b=LbhDy/A1nxawrQW87ijA7rzaJ7n+IhSFbVgpVyu8sgITydaV4SHkV42eGhr8migSRT
+         pIO0CDOuPOgXfcXkgYleJagH7tiPoxDYbmFLEfQo6L7TeO0ZyP1Jdk1kUYbUBkrXCAPK
+         TwJq7dN62TTL9UTC6ZNCJgoWUoWVRZ7Pdz3zbEdQovmcwNpAfCqqLPGWGF520mT6ns7z
+         VBLLKRVO3jh/IlQZPtPUkFRD1OUSo3AtU8iowH6x76qXkUdJzpJakyNMO/bDuG+p+tow
+         kSs9hc6fODnKvY+piFFm0iPjQSz0CqFzOEgoun7c5cdPiiKoJ/0qW0BqWWir7yCrnZnR
+         ZMcQ==
+X-Gm-Message-State: AOPr4FU+4h/MGYUYUAw+4XRepWRnEl9gXMUHbyEBiilwyI8Eiz/ZsbNYCNvoSkrC6wraujFKWuJ9Zgm+S027sg==
+X-Received: by 10.60.94.40 with SMTP id cz8mr16213667oeb.65.1461617962917;
+ Mon, 25 Apr 2016 13:59:22 -0700 (PDT)
+Received: by 10.182.117.132 with HTTP; Mon, 25 Apr 2016 13:59:03 -0700 (PDT)
+In-Reply-To: <CAGZ79kYmAr-O6_Jw2KO9eZEfZQ+_WBiERF=nhOYLJCZpUjSSyA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292555>
 
-On Wed, 2016-04-20 at 06:50 +0700, Duy Nguyen wrote:
-> On Wed, Apr 20, 2016 at 6:28 AM, David Turner <
-> dturner@twopensource.com> wrote:
-> > @@ -317,6 +320,8 @@ int main(int argc, char **argv)
-> >         if (fd < 0)
-> >                 die_errno(_("could not set up index-helper
-> > socket"));
-> > 
-> > +       if (detach && daemonize(&daemonized))
-> > +               die_errno(_("unable to detach"));
-> 
-> At the least, I think we need to redirect both stdout and stderr to a
-> file, so we can catch errors. The watchman patch uses warning() to
-> report errors, for example. And there is always a chance of die().
-> 
-> Then we need to report the errors back. I faced the same problem with
-> daemonizing git-gc, but I'm not sure if we can do exactly the same
-> here like in commit 329e6e8 (gc: save log from daemonized gc --auto
-> and print it next time - 2015-09-19)
+On Mon, Apr 25, 2016 at 10:02 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Mon, Apr 25, 2016 at 3:39 AM, Lars Schneider
+> <larsxschneider@gmail.com> wrote:
+>> Hi,
+>>
+>> a few folks from the Git LFS project and I try to make cloning of repositories
+>> with a lot of LFS files faster.
+>>
+>> The core problem is that Git LFS uses a Git smudge filter to replace LFS
+>> pointers with the actual file content. Right now, a smudge filter can only
+>> be executed on an individual file which makes the operation slow for many
+>> files [1].
+>>
+>> We solved this issue by temporarily disabling the smudge filter for the clone
+>> command via Git config (optimized in 1a8630 [2]):
+>>
+>>     git -c filter.lfs.smudge= -c filter.lfs.required=false clone <url> <path>
+>>
+>> Afterwards Git LFS runs a special command to download and replace all LFS
+>> content in bulk [3]. This works great for LFS repositories.
+>>
+>> However, I noticed that git config command line instructions such as
+>> "-c filter.lfs.smudge=" are not passed to Git submodule operations. Thus
+>> this does not work as expected:
+>>
+>>     git -c filter.lfs.smudge= -c filter.lfs.required=false clone --recursive <url> <path>
+>
+> I have cc'd Jacob Keller, who authored origin/jk/submodule-c-credential,
+> which does work in that area (deciding which config option to pass down
+> into the submodule commands).
+>
 
-On reflection, I decided not to do a complicated system for replaying
-warnings.  Here are my reasons why:
+This is a tricky question. The problem is that some configurations are
+obviously not intended to go into the submodules, but determining how
+is somewhat troublesome. There was some discussion on this previous
+thread when we added support for credential options to pass through.
 
-1. A user will not be expecting to see warnings from previous git
-commands.  
-
-2. It's not super-important that users see most of these warnings.  GC
-is different because it's critical to the health of a repository so it
-really matters that users learn about issues.  
-
-3. It involves many complications to the (presently very simple)
-protocol. We would need to distinguish between messages, warnings, and
-previous-session warnings.
-
-4. There are only a few cases where errors will happen, and none seem
-to be exciting to clients.
-
-Instead, I'll just log errors.
+Thanks,
+Jake
