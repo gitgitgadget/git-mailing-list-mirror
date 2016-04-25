@@ -1,114 +1,253 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH v14 3/6] t0040-parse-options: improve test coverage
-Date: Tue, 26 Apr 2016 00:10:16 +0530
-Message-ID: <CAFZEwPMsmay+tv48p=zh3r4L1d38tNU0Z6zyn3Op_pd-nsv3Aw@mail.gmail.com>
-References: <010201540cb60832-9402a692-3caa-47a1-9e8e-ae5a1bc7eb2f-000000@eu-west-1.amazonses.com>
-	<010201540cb60965-887d5e4b-b12d-4477-8271-eefa349ceddd-000000@eu-west-1.amazonses.com>
-	<CAPig+cTB=bYNxR8yN2CGvkmtCZKomnbdNnZon9HA5uE9aivW=Q@mail.gmail.com>
-	<CAFZEwPMU5KSoBJ0kHGnnPCq0zsoj8ROAXhJ9HFn66fqDehvWGw@mail.gmail.com>
-	<CAPig+cSvvAJT6yb2h6B1S5LDr8H03t-b66rmbKWpo88Fw-ehmg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] http: Support sending custom HTTP headers
+Date: Mon, 25 Apr 2016 11:43:37 -0700
+Message-ID: <xmqq7fflleau.fsf@gitster.mtv.corp.google.com>
+References: <abe253758829795c285c2036196ebe7edd9bab34.1461589951.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Apr 25 20:40:24 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Apr 25 20:43:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aulQm-0001lx-A5
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 20:40:24 +0200
+	id 1aulU3-0003QB-09
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 20:43:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933040AbcDYSkS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2016 14:40:18 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:35387 "EHLO
-	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754736AbcDYSkR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2016 14:40:17 -0400
-Received: by mail-yw0-f194.google.com with SMTP id v81so577283ywa.2
-        for <git@vger.kernel.org>; Mon, 25 Apr 2016 11:40:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=QjJyuNhBPwIKDhXfOFtGqqrSjetHLUNNgcdLormyi7I=;
-        b=OtyK08dImUItrlP9iWcj2mu9OVAiM/HiVc4BaajwijcYvHnx1gwIOudWmHDEAHyzfg
-         3lR5dQGzON8OiXraY4r+8WJttmcV0Bml3VJdaok+DT30f2LB5m6y1U8WSI00nOGZJPZP
-         ssOpZTkJ+UFwlDLgP3NtlcHRlaTwpuQWaHmni43KCoEguYPJGFVjLxxhjDGj+QCbOaxB
-         1/JspQAvULMhl0cCgMNeprGKiNBgtO8eWZAinjUQvkX+nwbBbgnRMQCAgjAvBO74psvg
-         4N32i6RFu3ROAMCyFL8mOffwcu0BSv3OQdyGsRcuohcPr+joHJNq2rEZKeSvvEXtOkUP
-         tA6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=QjJyuNhBPwIKDhXfOFtGqqrSjetHLUNNgcdLormyi7I=;
-        b=VPdFbeKxoGGR30lWLIL+wcyTklgvVRq+9QZhAMZ5MqWpHiYFP2nXHkFBG5j+FISk0e
-         xF+80hswwBZIQulVqet2+oZuwjvdOejC8zR8HXRb8QuMp9Du09rOvn6TRAR30GE7+jjE
-         8IjOZSP4znDtM73l9GZQgjZVEL15NaxK6s6jFzS3Pn7bGN26eYTn8Y4MBjn767VPbQ/A
-         CpCfZ53V3lpecXF7sPnjgNVSed0qNVMsi7wRUR/crn3z7PjnULZQgkHg+axKr2Ouxx/C
-         irG7OGjNYT8zIhLsTr5EqZ4We5a/Mx+7RHrp5XNyINPdaYxu1y/lLTkxkTKsaNH5fVVY
-         hUMA==
-X-Gm-Message-State: AOPr4FWIe7hDgr7QmOwYdaMN2ylOwclborOGwqFDd3ONkV/NhPm6NUW85XgUa+JmO3q27hbOt0hr74I5zgH/Qw==
-X-Received: by 10.37.210.9 with SMTP id j9mr21746758ybg.53.1461609616400; Mon,
- 25 Apr 2016 11:40:16 -0700 (PDT)
-Received: by 10.13.219.213 with HTTP; Mon, 25 Apr 2016 11:40:16 -0700 (PDT)
-In-Reply-To: <CAPig+cSvvAJT6yb2h6B1S5LDr8H03t-b66rmbKWpo88Fw-ehmg@mail.gmail.com>
+	id S933384AbcDYSnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Apr 2016 14:43:43 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62030 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932487AbcDYSnl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2016 14:43:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 64C7514856;
+	Mon, 25 Apr 2016 14:43:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=X1bqRISHjABEriTj8ZyCOmQQrmw=; b=mFPe6k
+	WUgm0brlxKONoPKuMzLxZl3TmdXHDKnnTDovXiZKqsH4tyOfdPa2wZWELew/JX0M
+	68fYpECxUoJYwUypBKM38DKiWOFs1FA3qmzimlMNwFW7GP2qqttVHVKyeZK3xHtB
+	++HnqwJjgLNx4TKJAP8JKHMba14/6h5yyecwQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VJbGAdFhovRQDtww4ipftX2IUVoZq8Io
+	OFrUALMtsXX5hKs1gnoOcaQ0/FLovCDwYXIif51KapY+zFd80tHDUsVqr3SnZYnO
+	lzLK1eK2Mtj4t9Hx3Wcsk02THzWsTsMi7ZXBe4X7v6pdDW2EKtJfEy7OUlJ7PjLg
+	/setw0I1Fe4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5D04214855;
+	Mon, 25 Apr 2016 14:43:40 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 46E6714850;
+	Mon, 25 Apr 2016 14:43:39 -0400 (EDT)
+In-Reply-To: <abe253758829795c285c2036196ebe7edd9bab34.1461589951.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Mon, 25 Apr 2016 15:13:08 +0200
+	(CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A04D96FA-0B15-11E6-B3B2-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292543>
 
-On Wed, Apr 13, 2016 at 10:57 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Wed, Apr 13, 2016 at 4:59 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->> On Wed, Apr 13, 2016 at 10:56 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>> On Tue, Apr 12, 2016 at 7:02 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->>>> +test_expect_success '--no-quiet sets quiet to 0' '
->>>> +       test-parse-options --no-quiet >output 2>output.err &&
->>>
->>> Meh, as implemented, this isn't a very interesting test, is it?
->>> 'quiet' started at 0, so all this shows is that --no-quiet didn't
->>> disturb the 0. To really test that it resets it to 0, you'd want:
->>>
->>>     test-parse-options --quiet --no-quiet >... 2>... &&
->>>
->>>> +       test_must_be_empty output.err &&
->>>> +       test_cmp expect output
->>>> +'
->>>>  test_done
->>
->> This is to test whether the 0 of quiet remains 0 if --no-quiet is
->> included. This test "defines" the current behavior. Then when I change
->> OPT_COUNTUP(), this test will ensure that this behavior is not
->> interrupted as promised by the commit message of that patch[1]. I
->> guess this also describe why I choose to include these tests between
->> 2/5 and 3/5 rather than 3/5 and 4/5. And also see the extended
->> discussion[2] for this. If I do a re-roll then I include `--quiet`
->> before `--no-quiet`
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+
+> To make communication for `git fetch`, `git ls-remote` and friends extra
+> secure, we introduce a way to send custom HTTP headers with all
+> requests.
+
+I think an ability to send custom headers may be a good addition and
+have no problem with it, but I tend to agree with Shawn that its log
+message that advertises it as if it has anything to do with security
+is probably a bad idea in both ways (i.e. it isn't very secure, and
+the usefulness of the feature is not limited to security).
+
+> This allows us, for example, to send an extra token that the server
+> tests for. The server could use this token e.g. to ensure that only
+> certain operations or refs are allowed, or allow the token to be used
+> only once.
 >
-> Each of these patches should have a single conceptual purpose. It
-> seems, from the above explanation, that you're mixing and mismatching
-> bits of such changes between patches.
+> This feature can be used like this:
 >
-> * The two new tests for --no-verbose and --no-quiet should be together
-> and check that they correctly reverse --verbose and --quiet,
-> respectively.
+> 	git -c http.extraheader='Secret: sssh!' fetch $URL $REF
 >
-> * The test you describe above which ensures that --no-quiet leaves
-> 'quiet' at 0 should be bundled with the change that might break that
-> behavior, namely, the OPT__COUNTUP() change.
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-I am planning to re-roll this.
-So, I am just confirming whether I understood properly.
 
- * I will add the tests for check for '-q --no-quiet' instead of just
-'--no-quiet' sets to 0 and '-v --no-verbose' sets to 0 in the patch
-which improves test coverage which will be before the OPT_COUNTUP()
-change.
+> Published-As: https://github.com/dscho/git/releases/tag/extra-http-headers-v1
 
- * I will then add the test for '--no-quiet' sets to 0 in the separate
-patch after OPT_COUNTUP() change.
+Move this after "---".
 
-Is there something else or something different that you are suggesting?
+> ---
+
+This obviously needs documentation updates and tests, no?
+
+>  http-push.c   | 10 +++++-----
+>  http.c        | 28 +++++++++++++++++++++++++---
+>  http.h        |  1 +
+>  remote-curl.c |  4 ++--
+>  4 files changed, 33 insertions(+), 10 deletions(-)
+>
+> diff --git a/http-push.c b/http-push.c
+> index bd60668..04eef17 100644
+> --- a/http-push.c
+> +++ b/http-push.c
+> @@ -211,7 +211,7 @@ static void curl_setup_http(CURL *curl, const char *url,
+>  static struct curl_slist *get_dav_token_headers(struct remote_lock *lock, enum dav_header_flag options)
+>  {
+>  	struct strbuf buf = STRBUF_INIT;
+> -	struct curl_slist *dav_headers = NULL;
+> +	struct curl_slist *dav_headers = http_get_default_headers();
+>  
+>  	if (options & DAV_HEADER_IF) {
+>  		strbuf_addf(&buf, "If: (<%s>)", lock->token);
+> @@ -417,7 +417,7 @@ static void start_put(struct transfer_request *request)
+>  static void start_move(struct transfer_request *request)
+>  {
+>  	struct active_request_slot *slot;
+> -	struct curl_slist *dav_headers = NULL;
+> +	struct curl_slist *dav_headers = http_get_default_headers();
+>  
+>  	slot = get_active_slot();
+>  	slot->callback_func = process_response;
+> @@ -845,7 +845,7 @@ static struct remote_lock *lock_remote(const char *path, long timeout)
+>  	char *ep;
+>  	char timeout_header[25];
+>  	struct remote_lock *lock = NULL;
+> -	struct curl_slist *dav_headers = NULL;
+> +	struct curl_slist *dav_headers = http_get_default_headers();
+>  	struct xml_ctx ctx;
+>  	char *escaped;
+>  
+> @@ -1126,7 +1126,7 @@ static void remote_ls(const char *path, int flags,
+>  	struct slot_results results;
+>  	struct strbuf in_buffer = STRBUF_INIT;
+>  	struct buffer out_buffer = { STRBUF_INIT, 0 };
+> -	struct curl_slist *dav_headers = NULL;
+> +	struct curl_slist *dav_headers = http_get_default_headers();
+>  	struct xml_ctx ctx;
+>  	struct remote_ls_ctx ls;
+>  
+> @@ -1204,7 +1204,7 @@ static int locking_available(void)
+>  	struct slot_results results;
+>  	struct strbuf in_buffer = STRBUF_INIT;
+>  	struct buffer out_buffer = { STRBUF_INIT, 0 };
+> -	struct curl_slist *dav_headers = NULL;
+> +	struct curl_slist *dav_headers = http_get_default_headers();
+>  	struct xml_ctx ctx;
+>  	int lock_flags = 0;
+>  	char *escaped;
+> diff --git a/http.c b/http.c
+> index 4304b80..02d7147 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -114,6 +114,7 @@ static unsigned long http_auth_methods = CURLAUTH_ANY;
+>  
+>  static struct curl_slist *pragma_header;
+>  static struct curl_slist *no_pragma_header;
+> +static struct curl_slist *extra_http_headers;
+>  
+>  static struct active_request_slot *active_queue_head;
+>  
+> @@ -323,6 +324,12 @@ static int http_options(const char *var, const char *value, void *cb)
+>  #endif
+>  	}
+>  
+> +	if (!strcmp("http.extraheader", var)) {
+> +		extra_http_headers =
+> +			curl_slist_append(extra_http_headers, value);
+> +		return 0;
+> +	}
+> +
+>  	/* Fall back on the default ones */
+>  	return git_default_config(var, value, cb);
+>  }
+> @@ -678,8 +685,10 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
+>  	if (remote)
+>  		var_override(&http_proxy_authmethod, remote->http_proxy_authmethod);
+>  
+> -	pragma_header = curl_slist_append(pragma_header, "Pragma: no-cache");
+> -	no_pragma_header = curl_slist_append(no_pragma_header, "Pragma:");
+> +	pragma_header = curl_slist_append(http_get_default_headers(),
+> +		"Pragma: no-cache");
+> +	no_pragma_header = curl_slist_append(http_get_default_headers(),
+> +		"Pragma:");
+>  
+>  #ifdef USE_CURL_MULTI
+>  	{
+> @@ -765,6 +774,9 @@ void http_cleanup(void)
+>  #endif
+>  	curl_global_cleanup();
+>  
+> +	curl_slist_free_all(extra_http_headers);
+> +	extra_http_headers = NULL;
+> +
+>  	curl_slist_free_all(pragma_header);
+>  	pragma_header = NULL;
+>  
+> @@ -1163,6 +1175,16 @@ int run_one_slot(struct active_request_slot *slot,
+>  	return handle_curl_result(results);
+>  }
+>  
+> +struct curl_slist *http_get_default_headers()
+> +{
+> +	struct curl_slist *headers = NULL, *h;
+> +
+> +	for (h = extra_http_headers; h; h = h->next)
+> +		headers = curl_slist_append(headers, h->data);
+> +
+> +	return headers;
+> +}
+> +
+>  static CURLcode curlinfo_strbuf(CURL *curl, CURLINFO info, struct strbuf *buf)
+>  {
+>  	char *ptr;
+> @@ -1380,7 +1402,7 @@ static int http_request(const char *url,
+>  {
+>  	struct active_request_slot *slot;
+>  	struct slot_results results;
+> -	struct curl_slist *headers = NULL;
+> +	struct curl_slist *headers = http_get_default_headers();
+>  	struct strbuf buf = STRBUF_INIT;
+>  	const char *accept_language;
+>  	int ret;
+> diff --git a/http.h b/http.h
+> index 4ef4bbd..b0927de 100644
+> --- a/http.h
+> +++ b/http.h
+> @@ -106,6 +106,7 @@ extern void step_active_slots(void);
+>  extern void http_init(struct remote *remote, const char *url,
+>  		      int proactive_auth);
+>  extern void http_cleanup(void);
+> +extern struct curl_slist *http_get_default_headers();
+>  
+>  extern long int git_curl_ipresolve;
+>  extern int active_requests;
+> diff --git a/remote-curl.c b/remote-curl.c
+> index 15e48e2..86ba787 100644
+> --- a/remote-curl.c
+> +++ b/remote-curl.c
+> @@ -474,7 +474,7 @@ static int run_slot(struct active_request_slot *slot,
+>  static int probe_rpc(struct rpc_state *rpc, struct slot_results *results)
+>  {
+>  	struct active_request_slot *slot;
+> -	struct curl_slist *headers = NULL;
+> +	struct curl_slist *headers = http_get_default_headers();
+>  	struct strbuf buf = STRBUF_INIT;
+>  	int err;
+>  
+> @@ -503,7 +503,7 @@ static int probe_rpc(struct rpc_state *rpc, struct slot_results *results)
+>  static int post_rpc(struct rpc_state *rpc)
+>  {
+>  	struct active_request_slot *slot;
+> -	struct curl_slist *headers = NULL;
+> +	struct curl_slist *headers = http_get_default_headers();
+>  	int use_gzip = rpc->gzip_request;
+>  	char *gzip_body = NULL;
+>  	size_t gzip_size = 0;
