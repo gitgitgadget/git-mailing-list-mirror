@@ -1,100 +1,161 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v1] travis-ci: build documentation
-Date: Mon, 25 Apr 2016 11:37:26 +0200
-Message-ID: <vpq8u02yqp5.fsf@anie.imag.fr>
-References: <1461314042-3132-1-git-send-email-larsxschneider@gmail.com>
-	<vpq37qeovu4.fsf@anie.imag.fr>
-	<E752A0BF-92D9-4BCF-ADD2-94F8E7BD66F2@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH 00/83] libify apply and use lib in am
+Date: Mon, 25 Apr 2016 11:57:44 +0200
+Message-ID: <CAP8UFD05Cpsms8Tf_VmMeemoerfMm0E8fUqL3o0n_9d1hu7VMg@mail.gmail.com>
+References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
+	<CACsJy8AAQJhX+b1UUhVxC_vV_4r=XjDSbtDDd5MLkgwKri8dEg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 25 11:37:44 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 25 11:57:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aucxa-0005Yr-87
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 11:37:42 +0200
+	id 1audH4-0006Hr-9z
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 11:57:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754123AbcDYJhi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2016 05:37:38 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:57533 "EHLO mx1.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754087AbcDYJhi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2016 05:37:38 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u3P9bQK2025800
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 25 Apr 2016 11:37:26 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u3P9bQK4010466;
-	Mon, 25 Apr 2016 11:37:26 +0200
-In-Reply-To: <E752A0BF-92D9-4BCF-ADD2-94F8E7BD66F2@gmail.com> (Lars
-	Schneider's message of "Mon, 25 Apr 2016 10:17:25 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Mon, 25 Apr 2016 11:37:26 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u3P9bQK2025800
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1462181847.44735@Jhzirus+nQgd/LaOiISyXg
+	id S1754104AbcDYJ5q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Apr 2016 05:57:46 -0400
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:38650 "EHLO
+	mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753946AbcDYJ5p convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2016 05:57:45 -0400
+Received: by mail-wm0-f43.google.com with SMTP id u206so118256447wme.1
+        for <git@vger.kernel.org>; Mon, 25 Apr 2016 02:57:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=mwL7swrKmno/4YTQVx4Ij+7slCuuE7ZSmwYzJw/smtg=;
+        b=yGEpDTY9csc2iCPsTsUnbJRcY2h/I6pTZvOJoNmzxgA5RC9jw3Y2D2UzjZEUEyhxIn
+         YTHv3J+VSJfOvnDld8EYUzqBmE8vvhsNKk1cs/L8LSF9NtVp//VKwaRlyxeg7VmS7o9n
+         Wxi1B0ELQS1zVs9mYVA3apwmVSE3YIcHL6UENfUfc3ZcHKedyuOPC7+4n6Locsvd2lFq
+         54d1bLNsoMg1NAkG6kl+1e7DhsSUZx/kLUFfYA3RzF9HnPJygxNFVqiGeqRXR74yDy82
+         5fkxDMih6FBZS8JZS7BEodGJhm/lAWx1oUXuo4BTIHMfhMFeCj9NPfRM6m0lRPzYrZej
+         kPlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=mwL7swrKmno/4YTQVx4Ij+7slCuuE7ZSmwYzJw/smtg=;
+        b=O86SCFpp/AyS8alufNShYFeVAR+N4Ak0fRMubpr3ZfKtHixRESO2iGCbPxxYwHagmr
+         bM8bQrgkJyebKMDu4T/C54Eu9t4n8a/dMhcDhfRkMWJ5jq3DbHIT2kR7zaNsVY8oaSd/
+         uX5t3erglsJuZG3tL/V5o2XaXSwnr9NvQfSGeNwhr3SIpC6SeRxsbRh/jSSMm5LXIM65
+         CNnlyRKNxGWSE1TpVZ7BDxlRk+7+UnXCFfdGjob0AyKdqgIDwEDl4EDZs0vwPhRQRcs+
+         4cWVbP8MXjGPlaUmANztQknEu2auNbOjkJAryw1JBBUiFS6WuBRKjeelbxR5K2luDpLR
+         PUwg==
+X-Gm-Message-State: AOPr4FVDtCvz0AVoIg2LgQDdgSle3u+BmLPd84l5nFY7DwHSnb4plR249UxA6FDF+L1dTO79BvPVGK8t7NqGpA==
+X-Received: by 10.194.235.39 with SMTP id uj7mr32973376wjc.78.1461578264215;
+ Mon, 25 Apr 2016 02:57:44 -0700 (PDT)
+Received: by 10.194.95.129 with HTTP; Mon, 25 Apr 2016 02:57:44 -0700 (PDT)
+In-Reply-To: <CACsJy8AAQJhX+b1UUhVxC_vV_4r=XjDSbtDDd5MLkgwKri8dEg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292464>
 
-Lars Schneider <larsxschneider@gmail.com> writes:
-
-> On 22 Apr 2016, at 11:07, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
+On Mon, Apr 25, 2016 at 11:02 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Sun, Apr 24, 2016 at 8:33 PM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> Sorry if this patch series is a bit long. I can split it into two or
+>> more series if it is prefered.
 >
->> The ; or the newline is not needed either.
-> Unfortunately it seems to be required. Travis CI generates a shell script
-> out of the yml file and I think they don't respect newlines or something...
+> I suspect you deliberately made the series long just to show off how
+> good new git-rebase is ;-)
 
-OK.
+Yeah, and `git am` too :-)
 
->>> +          then
->>> +          echo ""
->>> +          echo "------------------------------------------------------------------------" &&
->> 
->> I usualy avoid "echo <something-starting-with-dash>" as I'm not sure how
->> portable it is across variants of "echo". Maybe this one is portable
->> enough, I don't know. Perhaps printf, or cat << EOF ...?
-> I am curious. Do you have an example on what platform echo "-something" 
-> could go wrong? I wasn't aware of such an issue.
+>> Performance numbers:
+>>
+>>   - A few days ago =C3=86var did a huge many-hundred commit rebase o=
+n the
+>>     kernel with untracked cache.
+>>
+>> command: git rebase --onto 1993b17 52bef0c 29dde7c
+>>
+>> Vanilla "next" without split index:                1m54.953s
+>> Vanilla "next" with split index:                   1m22.476s
+>> This series on top of "next" without split index:  1m12.034s
+>> This series on top of "next" with split index:     0m15.678s
+>
+> I was a bit puzzled why split-index helped so much. It shouldn't have
+> in my opinion unless you paired it with index-helper, to cut down bot=
+h
+> read and write time. So I ran some tests. Long story short, I think w=
+e
+> can achieve this gain (and a little more) even without split-index.
 
-echo can, but doesn't have to implement non-POSIX options. For example,
+Yeah, perhaps. For now though =C3=86var and myself would be happy to ju=
+st
+have a config option for split-index :-)
 
-  $ dash -c 'echo -e foo'
-  -e foo
-  $ bash -c 'echo -e foo'
-  foo
+The other performance numbers I mentioned show that now the `git am`
+part of a 13 commit long rebase is reduced from 58% to 19% of the
+whole rebase time. So further improvements in speeding up `git am`
+could only make such a rebase at most 19% faster.
 
-This is a good reason to avoid
+> I ran my measurement patch [1] with and without your series used this
+> series as rebase material. Without the series, the picture is not so
+> surprising. We run git-apply 80+ times, each consists of this sequenc=
+e
+>
+> read index
+> write index (cache tree updates only)
+> read index again
+> optionally initialize name hash (when new entries are added, I guess)
+> read packed-refs
+> write index
+>
+> With this series, we run a single git-apply which does
+>
+> read index (and sharedindex too if in split-index mode)
+> initialize name hash
+> write index 80+ times
+>
+> This explains why I guessed it wrong: when you write only, not read
+> back, of course index-helper is not required. And with split-index yo=
+u
+> only write as many entries as you touch (which is usually a small
+> number compared to worktree's size), so writing 80+ times with
+> split-index is a lot faster than write 80+ times with whole index.
 
-  echo "$string"
+Yeah, I tried to explain in the cover letter and in the last patch why
+this series enables split-index to give great results, but I think you
+are much better at explaining it.
 
-if $string is a user-supplied string.
+> But why write so many times when nobody reads it? We only need to
+> write before git-apply exits,
 
-I don't know if any shell have issue with --------, but I wouldn't be
-surprised if some implementation complained with "invalid option
----------".
+You mean `git am` here I think.
 
-But it is also likely that I'm the one being paranoid and your code is
-fine ;-).
+> either after successfully applying the
+> whole series, or after it stops at conflicts, and maybe even at die()
+> and SIGINT. Yes if git-apply segfaults,
 
->> test -s Documentation/git.html &&
->> test -s Documentation/git.1
-> Great idea. Added to v2! The && is not necessary as Travis runs this script with "set -e".
+Here too.
 
-Maybe I'm doing too much Python, but "explicit is better than
-implicit" ;-). I'd keep the && in case someone ever moves the code to a
-script that doesn't have -e, but I'm really nit-picking here ;-).
+> then the index update is lost,
+> but in such a case, it's usually a good idea to restart fresh anyway.
+> When you only write index once (or twice) it won't matter if
+> split-index is used.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Yeah I agree, but it would need further work, that can be done after
+this series is merged.
+And I am not sure if the potential gains on a typical rebase would be w=
+orth it.
+
+Thanks,
+Christian.
