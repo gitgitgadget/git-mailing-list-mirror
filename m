@@ -1,264 +1,75 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH v3] fast-import: implement unpack limit
-Date: Mon, 25 Apr 2016 21:17:28 +0000
-Message-ID: <20160425211727.GA17750@dcvr.yhbt.net>
-References: <20160423024225.GA4293@dcvr.yhbt.net>
- <20160423031313.GA15043@sigill.intra.peff.net>
- <20160424043223.GA27609@dcvr.yhbt.net>
- <xmqqpoten7db.fsf@gitster.mtv.corp.google.com>
- <20160424203650.GA32458@dcvr.yhbt.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] How to pass Git config command line instructions to
+ Submodule commands?
+Date: Mon, 25 Apr 2016 17:24:50 -0400
+Message-ID: <20160425212449.GA7636@sigill.intra.peff.net>
+References: <60724588-B06E-47E8-9302-8709C4601826@gmail.com>
+ <CAGZ79kYmAr-O6_Jw2KO9eZEfZQ+_WBiERF=nhOYLJCZpUjSSyA@mail.gmail.com>
+ <CA+P7+xoaqNF+uBHVnD2QR7j-=0Hyvd-scTc_vOdV+etC0VS9jA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 25 23:17:35 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Stefan Beller <sbeller@google.com>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Git Users <git@vger.kernel.org>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 25 23:25:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aunsr-0007FX-FC
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 23:17:33 +0200
+	id 1auo03-0001pt-BF
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 23:24:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964896AbcDYVRa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2016 17:17:30 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:45305 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933361AbcDYVR3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2016 17:17:29 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 547E520A21;
-	Mon, 25 Apr 2016 21:17:28 +0000 (UTC)
+	id S965093AbcDYVYy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Apr 2016 17:24:54 -0400
+Received: from cloud.peff.net ([50.56.180.127]:56098 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S964906AbcDYVYx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2016 17:24:53 -0400
+Received: (qmail 8924 invoked by uid 102); 25 Apr 2016 21:24:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 25 Apr 2016 17:24:52 -0400
+Received: (qmail 6369 invoked by uid 107); 25 Apr 2016 21:24:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 25 Apr 2016 17:24:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Apr 2016 17:24:50 -0400
 Content-Disposition: inline
-In-Reply-To: <20160424203650.GA32458@dcvr.yhbt.net>
+In-Reply-To: <CA+P7+xoaqNF+uBHVnD2QR7j-=0Hyvd-scTc_vOdV+etC0VS9jA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292563>
 
-With many incremental imports, small packs become highly
-inefficient due to the need to readdir scan and load many
-indices to locate even a single object.  Frequent repacking and
-consolidation may be prohibitively expensive in terms of disk
-I/O, especially in large repositories where the initial packs
-were aggressively optimized and marked with .keep files.
+On Mon, Apr 25, 2016 at 01:59:03PM -0700, Jacob Keller wrote:
 
-In those cases, users may be better served with loose objects
-and relying on "git gc --auto".
+> >> However, I noticed that git config command line instructions such as
+> >> "-c filter.lfs.smudge=" are not passed to Git submodule operations. Thus
+> >> this does not work as expected:
+> >>
+> >>     git -c filter.lfs.smudge= -c filter.lfs.required=false clone --recursive <url> <path>
+> >
+> > I have cc'd Jacob Keller, who authored origin/jk/submodule-c-credential,
+> > which does work in that area (deciding which config option to pass down
+> > into the submodule commands).
+> >
+> 
+> This is a tricky question. The problem is that some configurations are
+> obviously not intended to go into the submodules, but determining how
+> is somewhat troublesome. There was some discussion on this previous
+> thread when we added support for credential options to pass through.
 
-This changes the default behavior of fast-import for small
-imports found in test cases, so adjustments to t9300 were
-necessary.
+Right. I think it may be reasonable to pass through filter.* in the
+whitelist.  They are not activated without a matching .gitattributes
+entry in the repository (and people would generally configure them in
+their user-level ~/.gitconfig for that reason).
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
-  v2 changes: implemented as a git-config directive
-  v3 changes:
-  * honor --quiet for fast-import as -q for unpack-objects
-  * minor style adjustment when calling loosen_small_pack
+It does mean that somebody would be stuck who really wanted to run the
+smudge filter in their local repo, but for some reason not in the
+subrepos. I am trying to think of a case in which that might be
+security-relevant if you didn't trust the sub-repos[1]. But I really
+don't see it. The filter is arbitrary code, but that's specified by the
+user; we're just feeding it possibly untrusted blobs.
 
- Documentation/config.txt            |  9 +++++++
- Documentation/git-fast-import.txt   |  2 ++
- fast-import.c                       | 32 +++++++++++++++++++++++++
- t/t9300-fast-import.sh              |  2 ++
- t/t9302-fast-import-unpack-limit.sh | 48 +++++++++++++++++++++++++++++++++++++
- 5 files changed, 93 insertions(+)
- create mode 100755 t/t9302-fast-import-unpack-limit.sh
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 42d2b50..3d8bc97 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1154,6 +1154,15 @@ difftool.<tool>.cmd::
- difftool.prompt::
- 	Prompt before each invocation of the diff tool.
- 
-+fastimport.unpackLimit::
-+	If the number of objects imported by linkgit:git-fast-import[1]
-+	is below this limit, then the objects will be unpacked into
-+	loose object files.  However if the number of imported objects
-+	equals or exceeds this limit then the pack will be stored as a
-+	pack.  Storing the pack from a fast-import can make the import
-+	operation complete faster, especially on slow filesystems.  If
-+	not set, the value of `transfer.unpackLimit` is used instead.
-+
- fetch.recurseSubmodules::
- 	This option can be either set to a boolean value or to 'on-demand'.
- 	Setting it to a boolean changes the behavior of fetch and pull to
-diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-index 66910aa..644df99 100644
---- a/Documentation/git-fast-import.txt
-+++ b/Documentation/git-fast-import.txt
-@@ -136,6 +136,8 @@ Performance and Compression Tuning
- 	Maximum size of each output packfile.
- 	The default is unlimited.
- 
-+fastimport.unpackLimit::
-+	See linkgit:git-config[1]
- 
- Performance
- -----------
-diff --git a/fast-import.c b/fast-import.c
-index 9fc7093..4fb464c 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -166,6 +166,7 @@ Format of STDIN stream:
- #include "quote.h"
- #include "exec_cmd.h"
- #include "dir.h"
-+#include "run-command.h"
- 
- #define PACK_ID_BITS 16
- #define MAX_PACK_ID ((1<<PACK_ID_BITS)-1)
-@@ -282,6 +283,7 @@ struct recent_command {
- /* Configured limits on output */
- static unsigned long max_depth = 10;
- static off_t max_packsize;
-+static int unpack_limit = 100;
- static int force_update;
- static int pack_compression_level = Z_DEFAULT_COMPRESSION;
- static int pack_compression_seen;
-@@ -950,6 +952,23 @@ static void unkeep_all_packs(void)
- 	}
- }
- 
-+static int loosen_small_pack(const struct packed_git *p)
-+{
-+	struct child_process unpack = CHILD_PROCESS_INIT;
-+
-+	if (lseek(p->pack_fd, 0, SEEK_SET) < 0)
-+		die_errno("Failed seeking to start of '%s'", p->pack_name);
-+
-+	unpack.in = p->pack_fd;
-+	unpack.git_cmd = 1;
-+	unpack.stdout_to_stderr = 1;
-+	argv_array_push(&unpack.args, "unpack-objects");
-+	if (!show_stats)
-+		argv_array_push(&unpack.args, "-q");
-+
-+	return run_command(&unpack);
-+}
-+
- static void end_packfile(void)
- {
- 	static int running;
-@@ -972,6 +991,12 @@ static void end_packfile(void)
- 		fixup_pack_header_footer(pack_data->pack_fd, pack_data->sha1,
- 				    pack_data->pack_name, object_count,
- 				    cur_pack_sha1, pack_size);
-+
-+		if (object_count <= unpack_limit) {
-+			if (!loosen_small_pack(pack_data))
-+				goto discard_pack;
-+		}
-+
- 		close(pack_data->pack_fd);
- 		idx_name = keep_pack(create_index());
- 
-@@ -1002,6 +1027,7 @@ static void end_packfile(void)
- 		pack_id++;
- 	}
- 	else {
-+discard_pack:
- 		close(pack_data->pack_fd);
- 		unlink_or_warn(pack_data->pack_name);
- 	}
-@@ -3317,6 +3343,7 @@ static void parse_option(const char *option)
- static void git_pack_config(void)
- {
- 	int indexversion_value;
-+	int limit;
- 	unsigned long packsizelimit_value;
- 
- 	if (!git_config_get_ulong("pack.depth", &max_depth)) {
-@@ -3341,6 +3368,11 @@ static void git_pack_config(void)
- 	if (!git_config_get_ulong("pack.packsizelimit", &packsizelimit_value))
- 		max_packsize = packsizelimit_value;
- 
-+	if (!git_config_get_int("fastimport.unpacklimit", &limit))
-+		unpack_limit = limit;
-+	else if (!git_config_get_int("transfer.unpacklimit", &limit))
-+		unpack_limit = limit;
-+
- 	git_config(git_default_config, NULL);
- }
- 
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 25bb60b..e6a2b8a 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -52,6 +52,7 @@ echo "$@"'
- ###
- 
- test_expect_success 'empty stream succeeds' '
-+	git config fastimport.unpackLimit 0 &&
- 	git fast-import </dev/null
- '
- 
-@@ -2675,6 +2676,7 @@ test_expect_success 'R: blob bigger than threshold' '
- 	echo >>input &&
- 
- 	test_create_repo R &&
-+	git --git-dir=R/.git config fastimport.unpackLimit 0 &&
- 	git --git-dir=R/.git fast-import --big-file-threshold=1 <input
- '
- 
-diff --git a/t/t9302-fast-import-unpack-limit.sh b/t/t9302-fast-import-unpack-limit.sh
-new file mode 100755
-index 0000000..0f686d2
---- /dev/null
-+++ b/t/t9302-fast-import-unpack-limit.sh
-@@ -0,0 +1,48 @@
-+#!/bin/sh
-+test_description='test git fast-import unpack limit'
-+. ./test-lib.sh
-+
-+test_expect_success 'create loose objects on import' '
-+	test_tick &&
-+	cat >input <<-INPUT_END &&
-+	commit refs/heads/master
-+	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+	data <<COMMIT
-+	initial
-+	COMMIT
-+
-+	done
-+	INPUT_END
-+
-+	git -c fastimport.unpackLimit=2 fast-import --done <input &&
-+	git fsck --no-progress &&
-+	test $(find .git/objects/?? -type f | wc -l) -eq 2 &&
-+	test $(find .git/objects/pack -type f | wc -l) -eq 0
-+'
-+
-+test_expect_success 'bigger packs are preserved' '
-+	test_tick &&
-+	cat >input <<-INPUT_END &&
-+	commit refs/heads/master
-+	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+	data <<COMMIT
-+	incremental should create a pack
-+	COMMIT
-+	from refs/heads/master^0
-+
-+	commit refs/heads/branch
-+	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+	data <<COMMIT
-+	branch
-+	COMMIT
-+
-+	done
-+	INPUT_END
-+
-+	git -c fastimport.unpackLimit=2 fast-import --done <input &&
-+	git fsck --no-progress &&
-+	test $(find .git/objects/?? -type f | wc -l) -eq 2 &&
-+	test $(find .git/objects/pack -type f | wc -l) -eq 2
-+'
-+
-+test_done
--- 
-EW
+-Peff
