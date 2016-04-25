@@ -1,151 +1,101 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 18/83] builtin/apply: move 'numstat' global into 'struct apply_state'
-Date: Mon, 25 Apr 2016 14:40:15 -0700
-Message-ID: <CAGZ79kaCqfwgwngcqG5W0fe=SNOsp7nqtvWw=-xhZ60FBPpg+w@mail.gmail.com>
-References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
-	<1461504863-15946-19-git-send-email-chriscool@tuxfamily.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5b 00/17] port branch.c to use ref-filter's printing options
+Date: Mon, 25 Apr 2016 14:47:29 -0700
+Message-ID: <xmqq4mapjr7y.fsf@gitster.mtv.corp.google.com>
+References: <1461581558-32348-1-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 25 23:40:26 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, jacob.keller@gmail.com, peff@peff.net
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 25 23:47:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auoEz-0000Tm-48
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 23:40:25 +0200
+	id 1auoM3-0003ws-DI
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 23:47:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965101AbcDYVkS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2016 17:40:18 -0400
-Received: from mail-io0-f177.google.com ([209.85.223.177]:36602 "EHLO
-	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965041AbcDYVkR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2016 17:40:17 -0400
-Received: by mail-io0-f177.google.com with SMTP id u185so198525841iod.3
-        for <git@vger.kernel.org>; Mon, 25 Apr 2016 14:40:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=FXIOjg461Qk5TEV45LEFiIzSwElC7lMIi4tibme3IrA=;
-        b=UEyuajHYUHDRdYBLpSatgEJt1oL4G9FTzI6JvyQGHSJjyM1YaWwTtrNlIBU+urheQU
-         be+k9R3JuQ4VEMTC25hfekzqxP3g3UPk5FawMVSk+LDiWA1JhrGtannAAOL98AyQlSb1
-         svVGSuBt48ODawrcomTHCEulx2InptZvTLLCZXe2QWyJBSjPMwuiyei9EKlGnOdSj7OT
-         C7e9xZ1a+gbW5/9Etxl0ANDHAksMZxoxq8eW/7rzoMPAJiY38nq6MQUkctPAodld44mZ
-         vt1Bw/jS2+bCLGFjrNlRuqpKYaogjr8K2IFSeIVErVJfajE+r6tQ6c5o6Redc2BfjU37
-         x4Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=FXIOjg461Qk5TEV45LEFiIzSwElC7lMIi4tibme3IrA=;
-        b=AiRysiS6zyiYUtBYXJ8Hm8SiiC/ICOS8onjzM+wI74SJSO7L40z3OM1taQhq4hZ+2e
-         YqvqWtR78+S50eEczH38t8/X2h0AS128/mXfDw+3++aDva0jq8glZBGZMNmVMRrZ+yJb
-         aLQ0sCI+v+NPsr9mQbWQATUs8j3H/6jgnjjC9pdqb9bKPvPMCqJ4/zCjkTsU48WjEz3+
-         CAHm15XbOLUbyh+yttprOfE3KuDncFBOi3FQmhdafXHhgbcU0UMV12mcA3KtqBozC+xc
-         hRm+9qzZhtaZXYleXROZIqVfW5QNytuqCUkBUuLhVfJoFGUXdwYV5qeLDPezWKHFIvVw
-         a/4A==
-X-Gm-Message-State: AOPr4FXSuUH5x2HabNJRUMybwcohQiX+rH8yeOfYN8L1v8wBZ7WxHJ1SdPI/7UEs0Z+xdg1cpLn7DYpsd4i3/HwS
-X-Received: by 10.107.53.200 with SMTP id k69mr33163730ioo.174.1461620415864;
- Mon, 25 Apr 2016 14:40:15 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Mon, 25 Apr 2016 14:40:15 -0700 (PDT)
-In-Reply-To: <1461504863-15946-19-git-send-email-chriscool@tuxfamily.org>
+	id S965242AbcDYVrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Apr 2016 17:47:39 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65508 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S965232AbcDYVri (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2016 17:47:38 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D26AB152B7;
+	Mon, 25 Apr 2016 17:47:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sF9ATO9lngZv47DLHuXN2dQIVAM=; b=LkLH4Q
+	JVW6NmLwkNqk63RFbRTpbNSDmD9X7WNLNZdalkAUPXiU+aFUdAMN166ebadzgLrZ
+	5kdcOxMq4Ztm+reD6w7as6dQCb4t4ouFV4mMuFO2FwjzGymVCfzqQKQkbRuqf7mX
+	0g+HvDMN9CXyNoDgV3xTg6OPziFwtkeSNwiRc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vOiTivq+MDlgMNxm53guNXQEHdQA68bR
+	vxnY4wfgXZoqmE7OVqnxiu0/oiEi6rNrymhDPg2LlxZWV378mYE0R8eDEkLyIQfc
+	LIMPAVf41eQM3pVIUll90MjnmoMgH9wYK8xKs7gAPZVrDXhkjqjWVgKnPbxBrQgB
+	kH/wMq1q+cI=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C8931152B4;
+	Mon, 25 Apr 2016 17:47:31 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1F07E152B3;
+	Mon, 25 Apr 2016 17:47:31 -0400 (EDT)
+In-Reply-To: <1461581558-32348-1-git-send-email-Karthik.188@gmail.com>
+	(Karthik Nayak's message of "Mon, 25 Apr 2016 16:22:21 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 4FCAA49C-0B2F-11E6-8BBB-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292570>
 
-On Sun, Apr 24, 2016 at 6:33 AM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  builtin/apply.c | 11 ++++++-----
->  1 file changed, 6 insertions(+), 5 deletions(-)
->
-> diff --git a/builtin/apply.c b/builtin/apply.c
-> index d90948a..16d78f9 100644
-> --- a/builtin/apply.c
-> +++ b/builtin/apply.c
-> @@ -36,6 +36,9 @@ struct apply_state {
->         /* --stat does just a diffstat, and doesn't actually apply */
->         int diffstat;
->
-> +       /* --numstat does numeric diffstat, and doesn't actually apply */
-> +       int numstat;
-> +
->         /*
->          *  --check turns on checking that the working tree matches the
->          *    files that are being modified, but doesn't apply the patch
-> @@ -51,14 +54,12 @@ struct apply_state {
->  };
->
->  /*
-> - *  --numstat does numeric diffstat, and doesn't actually apply
->   *  --index-info shows the old and new index info for paths if available.
->   */
->  static int newfd = -1;
->
->  static int state_p_value = 1;
->  static int p_value_known;
-> -static int numstat;
->  static int summary;
->  static int apply = 1;
->  static int no_add;
-> @@ -4500,7 +4501,7 @@ static int apply_patch(struct apply_state *state,
->         if (state->diffstat)
->                 stat_patch_list(list);
->
-> -       if (numstat)
-> +       if (state->numstat)
->                 numstat_patch_list(list);
->
->         if (summary)
-> @@ -4598,7 +4599,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
->                         N_("instead of applying the patch, output diffstat for the input")),
->                 OPT_NOOP_NOARG(0, "allow-binary-replacement"),
->                 OPT_NOOP_NOARG(0, "binary"),
-> -               OPT_BOOL(0, "numstat", &numstat,
-> +               OPT_BOOL(0, "numstat", &state.numstat,
->                         N_("show number of added and deleted lines in decimal notation")),
->                 OPT_BOOL(0, "summary", &summary,
->                         N_("instead of applying the patch, output a summary for the input")),
-> @@ -4675,7 +4676,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
->         }
->         if (state.apply_with_reject)
->                 apply = state.apply_verbosely = 1;
-> -       if (!force_apply && (state.diffstat || numstat || summary || state.check || fake_ancestor))
-> +       if (!force_apply && (state.diffstat || state.numstat || summary || state.check || fake_ancestor))
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Mental note: This patch is just doing a mechanical conversion, so it
-is fine to check for many "state.FOOs" here.
-
-However later we may want to move this out to a static oneliner like:
-
-    static int really_apply(state *s) {
-      return s->diffstat || s->numstat || ...;
-    }
-
-(with a better name obviously)
-
-
->                 apply = 0;
->         if (state.check_index && is_not_gitdir)
->                 die(_("--index outside a repository"));
-> --
-> 2.8.1.300.g5fed0c0
+> This is part of unification of the commands 'git tag -l, git branch -l
+> and git for-each-ref'. This ports over branch.c to use ref-filter's
+> printing options.
 >
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Initially posted here: $(gmane/279226). It was decided that this series
+> would follow up after refactoring ref-filter parsing mechanism, which
+> is now merged into master (9606218b32344c5c756f7c29349d3845ef60b80c).
+>
+> v1 can be found here: $(gmane/288342)
+> v2 can be found here: $(gmane/288863)
+> v3 can be found here: $(gmane/290299)
+> v4 can be found here: $(gmane/291106)
+>
+> Changes in this version (v5b):
+> 1. Added the first patch of the series which was missing in v5.
+
+2. Rebased on top of 'master', which includes
+   jk/branch-shortening-funny-symrefs.
+
+> Interdiff:
+>
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index c9a2e5b..6847ac3 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -288,9 +288,11 @@ static int calc_maxwidth(struct ref_array *refs, int remote_bonus)
+>
+>                 skip_prefix(it->refname, "refs/heads/", &desc);
+>                 skip_prefix(it->refname, "refs/remotes/", &desc);
+> -               if (it->kind == FILTER_REFS_DETACHED_HEAD)
+> -                       w = strlen(get_head_description());
+> -               else
+> +               if (it->kind == FILTER_REFS_DETACHED_HEAD) {
+> +                       char *head_desc = get_head_description();
+> +                       w = strlen(head_desc);
+> +                       free(head_desc);
+> +               } else
+>                         w = utf8_strwidth(desc);
+
+Presumably w is computed here to be used later for some kind of
+alignment?  It is curious why we can assume that head_desc does not
+need utf8_strwidth() here.
