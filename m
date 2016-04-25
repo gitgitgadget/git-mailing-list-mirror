@@ -1,101 +1,162 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Update git-p4 to be compatible with git-lfs 1.2
-Date: Mon, 25 Apr 2016 10:24:17 -0700
-Message-ID: <xmqq8u01mwji.fsf@gitster.mtv.corp.google.com>
-References: <E230B4FD-79B5-4CA7-9F0D-A4F8F3470296@gmail.com>
-	<20160425162502.31558-1-szeder@ira.uka.de>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 1/3] clone: add `--shallow-submodules` flag
+Date: Mon, 25 Apr 2016 10:26:11 -0700
+Message-ID: <CAGZ79kYJipjCVGFXQkHyLNr4GTZA+vJFv+-8bWDXTrN3VUORuA@mail.gmail.com>
+References: <1458090737-14030-1-git-send-email-sbeller@google.com>
+	<1458090737-14030-2-git-send-email-sbeller@google.com>
+	<DC38BBF1-9837-45C6-B744-F95FAA645FE3@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	Ben Woosley <Ben.Woosley@gmail.com>,
-	Luke Diamand <luke@diamand.org>,
-	Git Users <git@vger.kernel.org>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Apr 25 19:24:33 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 25 19:26:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aukFL-0006Xo-B1
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 19:24:31 +0200
+	id 1aukH6-0007Lm-Ju
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 19:26:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754764AbcDYRY1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Apr 2016 13:24:27 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61449 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754456AbcDYRY0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2016 13:24:26 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2178C14D27;
-	Mon, 25 Apr 2016 13:24:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Fhf6S0q550DY
-	fxmytt5ko9GcF6c=; b=e8cxhgHArffzpD/ESMRNsTgUzWcfpmnMtwCBWJfqqbmQ
-	H6dg/dTQW+WNpo48GomBUk/Qv3jaTRpa8xWqhvjv167H8lKIF3QOw2H6LRMLMUJl
-	dGY+Eluy/nI4C9ZqdyKnqTfntDh39JaIXk5paiq/H/c+NsCIcZVaDaP3+r5m7SM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ByBbiP
-	HJQLHW0vWDEj3I0BZ0tYzBHp9+NasYNIP9aHvrXjxF93ifu3DM1Q880lyMgqdD0L
-	vr8fZmJm/OsU7UNbpthQ1+A4R0kNLrEjmA00BjG44458e2w9DYGUQkBws51wetjU
-	saTt6Gap74svRW9e6TfDLnxffv8gfwNDgtXgU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 199C814D26;
-	Mon, 25 Apr 2016 13:24:20 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5DB8C14D22;
-	Mon, 25 Apr 2016 13:24:19 -0400 (EDT)
-In-Reply-To: <20160425162502.31558-1-szeder@ira.uka.de> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?=
-	message of "Mon, 25 Apr 2016 18:25:02 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8B370504-0B0A-11E6-A105-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S932609AbcDYR0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Apr 2016 13:26:14 -0400
+Received: from mail-io0-f181.google.com ([209.85.223.181]:34804 "EHLO
+	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932526AbcDYR0M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2016 13:26:12 -0400
+Received: by mail-io0-f181.google.com with SMTP id 2so191051114ioy.1
+        for <git@vger.kernel.org>; Mon, 25 Apr 2016 10:26:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=L2iDU4IrjiVIYYofScMFT/JN1ABneLkUZOvXPE8OuMA=;
+        b=W7QeN5mv1b2V/74RpZPZjJYobLv1QEMqUZMkdlJmiZi1W+l083/RZba0ZV8KnQpquc
+         GVsKsppMCwFcfdNki+NBDn9dW95+Y1l6d0+5sR/nzFANoOn0ae5ytxVeNaHWOtBZ2f/f
+         R4e1wY/RyjE2GjQea+ByoEiku+FC2rrXRHNFVdyPP2HwBZFZZliDM7SdDoo16hxFEZ93
+         1BSS91bZmL/sxRwPIsVvzsjCjaNAuwbBteKEsAg/DSLG9RLoxil3gIfaJkxdYhNo2dtP
+         xBCMYk6AvbGSa/MUf8uitWYg8tz3X00LvUt/X1XEn5k37kj8zAhsPkREIhta++3DaaGI
+         +ylw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=L2iDU4IrjiVIYYofScMFT/JN1ABneLkUZOvXPE8OuMA=;
+        b=lm6vYCPWAMAebR3RJi6n9UX0yWAi4p1i2UN4WaYV2XwdKvXK0T+oPSd9scDj7vRQF3
+         oCivyiw9SpiuxajX9Fiia7yMlzA983J5B2JsseBC2dTmZkKRazE5S99QqOX8Zmop9uZK
+         DfM9zC9mdv8t1/H4b56RPYgF7Co0jwcXqSor1aUn5IV/1hEZVeTyb5qx1NEp+mIqJQ3Q
+         cp4Ck3orOtLYltxIhkJhaFUaDPYT+Y4uyPa0/AkhIowAcxdXIl+PRgkNV37B892dJTsx
+         5i7BXqd7Nt2PQ4fcGj8Hw/W2bxGp6xnNIe0tumXCRCGkQ8OX4z9BgcXCYS81vPSRrH3u
+         DN/Q==
+X-Gm-Message-State: AOPr4FUDVh7srJtV1ESBEOfL/Vx4HfKduuYys3zzM0lj3bUQ4Bzo9HAKBgo2B21Z6Avm6aN7teSWPNgarkzNUjZK
+X-Received: by 10.107.161.68 with SMTP id k65mr45249048ioe.110.1461605171755;
+ Mon, 25 Apr 2016 10:26:11 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Mon, 25 Apr 2016 10:26:11 -0700 (PDT)
+In-Reply-To: <DC38BBF1-9837-45C6-B744-F95FAA645FE3@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292529>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+On Mon, Apr 25, 2016 at 4:50 AM, Lars Schneider
+<larsxschneider@gmail.com> wrote:
+>> first case (as we wouldd have already transmitted the non shallow over
+> s/wouldd/would/
 
-> You can have a look at these patches at
+will be fixed in a reroll
+
+>> --depth <depth>::
+>>       Create a 'shallow' clone with a history truncated to the
+>> -     specified number of revisions.
+>> +     specified number of revisions. Implies `--single-branch` unless
+>> +     `--no-single-branch` is given to fetch the histories near the
+>> +     tips of all branches. This implies `--shallow-submodules`. If
+>> +     you want to have a shallow clone, but full submodules, also pass
+> Can we make this more explicit. Attention, bikeshedding:
+> If you want to have a shallow parent clone, but full submodules...
+
+Good point, but with s/parent/superproject/ ? (What is a "parent clone"?
+It is not defined in the glossary, so let's not make up more confusing words
+for Git here :)
+
 >
->   https://github.com/szeder/git completion-test-multiple-bash-version=
-s
 >
-> and perhaps you could even adapt it to LFS and/or p4 somehow.
+>> +     `--no-shallow-submodules`.
+>>
+>> --[no-]single-branch::
+>>       Clone only the history leading to the tip of a single branch,
+>> @@ -214,6 +218,9 @@ objects from the source repository into a pack in the cloned repository.
+>>       repository does not have a worktree/checkout (i.e. if any of
+>>       `--no-checkout`/`-n`, `--bare`, or `--mirror` is given)
+>>
+>> +--shallow-submodules::
+> Should that be "--[no-]shallow-submodules" ?
+
+will be fixed in a reroll
+
 >
->> Plus if we want to be consistent we would
->> need to do the same for LFS 1.0, 1.2, and for pretty much every othe=
-r
->> dependency... =20
 >
-> I'm not sure we should be consistent in this case, at least not solel=
-y
-> for consistency's sake and not in git.git. Taking what I did for Bash
-> and doing it for different versions of LFS, p4, etc. could perhaps
-> keep the runtime under control, but t/Makefile would surely get out
-> of control rather quickly.  Putting these into a travis-ci matrix is
-> so much simpler, but the runtime makes it infeasible, of course.
+>> +     All submodules which are cloned, will be shallow.
+> Maybe you could extend it with "... will be shallow with a depth of 1." ?
 
-I took a brief look of your branch, and I like its approach.  If I
-understood your approach correctly, you:
+done
 
- * Group selected tests in t/ as "these are bash related tests I
-   care about" in t/Makefile;
+>
+>
+>> +
+>> --separate-git-dir=<git dir>::
+>>       Instead of placing the cloned repository where it is supposed
+>>       to be, place the cloned repository at the specified directory,
+>> diff --git a/builtin/clone.c b/builtin/clone.c
+>> index b004fb4..ecdf308 100644
+>> --- a/builtin/clone.c
+>> +++ b/builtin/clone.c
+>> @@ -40,6 +40,7 @@ static const char * const builtin_clone_usage[] = {
+>>
+>> static int option_no_checkout, option_bare, option_mirror, option_single_branch = -1;
+>> static int option_local = -1, option_no_hardlinks, option_shared, option_recursive;
+>> +static int option_shallow_submodules = -1;
+>> static char *option_template, *option_depth;
+>> static char *option_origin = NULL;
+>> static char *option_branch = NULL;
+>> @@ -91,6 +92,8 @@ static struct option builtin_clone_options[] = {
+>>                   N_("create a shallow clone of that depth")),
+>>       OPT_BOOL(0, "single-branch", &option_single_branch,
+>>                   N_("clone only one branch, HEAD or --branch")),
+>> +     OPT_BOOL(0, "shallow-submodules", &option_shallow_submodules,
+>> +                 N_("any cloned submodules will be shallow")),
+> I am not familiar with this code but I assume the "no-" prefix flips the bool?
 
- * Add Travis test target to build Git with specific versions of
-   bash, and run the above target instead of the full test to
-   exercise the version of bash you are testing.
+Giving the --no-option stores an explicit 0 (it is initialized as -1),
+and passing --option stores a 1.
 
-And I agree that the same can be done for LFS versions and P4
-versions.  Only a handful tests in t/ are about these niches.
+>> @@ -727,6 +730,10 @@ static int checkout(void)
+>>               struct argv_array args = ARGV_ARRAY_INIT;
+>>               argv_array_pushl(&args, "submodule", "update", "--init", "--recursive", NULL);
+>>
+>> +             if (option_shallow_submodules == 1
+>> +                 || (option_shallow_submodules == -1 && option_depth))
+>> +                     argv_array_push(&args, "--depth=1");
+>> +
 
-> I think the best we can do is to keep this out of git.git and let
-> (hope?) developers interested in a particular subsystem do this
-> "multiple version compatibility" tests as they see fit.
+which explains this here as:
+
+        If  --shallow-submodules was given
+          || (neither --[no-]shallow-submodules was given, but --depth
+was given,
+            i.e. depth implies --shallow-submodule only if no explicit
+choice was made
+            by the user.
+
+>>               if (max_jobs != -1)
+>>                       argv_array_pushf(&args, "--jobs=%d", max_jobs);
+>>
+>> --
+>> 2.7.0.rc0.42.g8e9204f.dirty
+>>
+>
