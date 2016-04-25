@@ -1,136 +1,194 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v1] travis-ci: build documentation
-Date: Mon, 25 Apr 2016 21:32:04 +0200
-Message-ID: <vpqwpnlpjrf.fsf@anie.imag.fr>
-References: <1461314042-3132-1-git-send-email-larsxschneider@gmail.com>
-	<vpq37qeovu4.fsf@anie.imag.fr>
-	<xmqqinz9pl3l.fsf@gitster.mtv.corp.google.com>
-	<EDD0757C-2BD3-476F-B703-147D35BB1FAC@gmail.com>
-	<xmqqh9epmxtj.fsf@gitster.mtv.corp.google.com>
-	<xmqq37q9ldd9.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v7 07/10] convert: unify the "auto" handling of CRLF
+Date: Mon, 25 Apr 2016 12:37:00 -0700
+Message-ID: <xmqqtwipjx9f.fsf@gitster.mtv.corp.google.com>
+References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
+	<1461603397-30873-1-git-send-email-tboegi@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 25 21:32:33 2016
+Cc: git@vger.kernel.org
+To: tboegi@web.de
+X-From: git-owner@vger.kernel.org Mon Apr 25 21:37:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aumFD-0000Vs-CD
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 21:32:31 +0200
+	id 1aumJk-0002U2-14
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 21:37:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964796AbcDYTcN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Apr 2016 15:32:13 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:43802 "EHLO mx1.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933381AbcDYTcL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2016 15:32:11 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u3PJW2M7020383
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 25 Apr 2016 21:32:02 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u3PJW4uG022463;
-	Mon, 25 Apr 2016 21:32:04 +0200
-In-Reply-To: <xmqq37q9ldd9.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 25 Apr 2016 12:03:46 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Mon, 25 Apr 2016 21:32:02 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u3PJW2M7020383
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1462217524.39167@9VXKHFjVlxdktrj0sp2D3A
+	id S933422AbcDYThG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Apr 2016 15:37:06 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64676 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933381AbcDYThE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2016 15:37:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B2A281610B;
+	Mon, 25 Apr 2016 15:37:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=JGjEr3sR1CCt
+	0s+4Y0Uxqn8slU8=; b=ae3n6VB81aViqzDElFQCWaRQAvbMx++A2m8msr37cNzp
+	CHM2Qv4tDyodZWHDpYnHZyn/0DocEALgZo7S+R1MRBlpQO7sTw9Luu+nOXrOj1zh
+	7uhkoUHiLUat/piv9wfD6FdbBsqfaua7nKYKbg35e7HkCHLL93a2h9AwO5Fp760=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=h+1r+f
+	TT5XbC3T0r8LKsYRNBtijcL5YL6qRZMO85WMuVxyVudvu1W0rNSDUWDjy4uBWUmD
+	GvrPU7Z6choAtAs61KkIDhYAHiyRlFozJIm6YRULbtTeLAU09JXGSDVg4/2Ts0mT
+	ZnWnWG8nz93z+7Ug6/y2uwdTVdjAsUAAaUREw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id AAFAB1610A;
+	Mon, 25 Apr 2016 15:37:02 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0C84516108;
+	Mon, 25 Apr 2016 15:37:01 -0400 (EDT)
+In-Reply-To: <1461603397-30873-1-git-send-email-tboegi@web.de>
+	(tboegi@web.de's message of "Mon, 25 Apr 2016 18:56:37 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 154BC772-0B1D-11E6-B9A2-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292550>
 
-Junio C Hamano <gitster@pobox.com> writes:
+tboegi@web.de writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> From: Torsten B=C3=B6gershausen <tboegi@web.de>
 >
->> Lars Schneider <larsxschneider@gmail.com> writes:
->>
->>>> There also are existing instances of "useless ;" that would want t=
-o
->>>> be cleaned up regardless of portability issues.
->>> Unfortunately it seems to be required. Travis CI generates a shell =
-script
->>> out of the yml file and I think they don't respect newlines or some=
-thing...
->>
->> If they squash all the lines into a single long line before
->> executing, these semicolons do indeed become necessary (we have to
->> write a logical single line shell script in our Makefiles with ';',
->> and I'd imagine Travis's scriptlets are done similarly).
-
-Actually, it's not Travis, but just the Yaml syntax:
-
-  http://docs.ansible.com/ansible/YAMLSyntax.html
- =20
-  Values can span multiple lines using | or >. Spanning multiple lines
-  using a | will include the newlines. Using a > will ignore newlines;
-  it=E2=80=99s used to make what would otherwise be a very long line ea=
-sier to
-  read and edit
-
-So, a simpler solution would be to apply something like this:
-
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -33,7 +33,7 @@ env:
-     - GIT_SKIP_TESTS=3D"t9810 t9816"
-=20
- before_install:
--  - >
-+  - |
-     case "${TRAVIS_OS_NAME:-linux}" in
-     linux)
-       mkdir --parents custom/p4
-@@ -81,7 +81,7 @@ before_script: make --jobs=3D2
- script: make --quiet test
-=20
- after_failure:
--  - >
-+  - |
-     : '<-- Click here to see detailed test output!                    =
-                     =20
-            ';                                                         =
-                    =20
-     for TEST_EXIT in t/test-results/*.exit;
-     do
-
-(untested)
-
-Actually, this may also be a motivation to move anything non-trivial ou=
-t
-of .travic.yml and to start using separate scripts (to avoid writting
-shell within a Yaml syntax).
-
-> ... but the above does not quite explain it.  The newlines are
-> mostly honoured as logical end-of-line in existing .travis.yml e.g.
-> we do not see a semicolon before "pushd".
+> Before this change,
+> $ echo "* text=3Dauto" >.gitattributes
+> $ echo "* eol=3Dcrlf" >>.gitattributes
 >
->             case "${TRAVIS_OS_NAME:-linux}" in
->             linux)
->               mkdir --parents custom/p4
->               pushd custom/p4
+> would have the same effect as
+> $ echo "* text" >.gitattributes
+> $ git config core.eol crlf
+>
+> Since the 'eol' attribute had higher priority than 'text=3Dauto', thi=
+s may
+> corrupt binary files and is not what users expect to happen.
 
-I'm tempted to think that these lines create directories pushd/ and
-custom/p4/, but that doesn't quite explain it either. There's more magi=
-c
-somewhere ...
+Is the last "Since ..." continuation of the above two, i.e. "with
+the current code, the first one (unfortunately) means the same as
+the second one, BECAUSE ..."?  If so, s/Since/since/ (I needed to
+read it twice to guess that is probably what you meant).
 
-> Puzzled...
+The above is a very good justification of the entire series,
+illustrating why this is worth doing.
 
-Likewise.
+> Make the 'eol' attribute to obey 'text=3Dauto', and now
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+s/to obey/obey/ (make X do Y, not make X to do Y); I'd probably
+further do 's/obey/honor/' or even 's/obey/work better with/'
+
+> $ echo "* text=3Dauto" >.gitattributes
+> $ echo "* eol=3Dcrlf" >>.gitattributes
+> behaves the same as
+> $ echo "* text=3Dauto" >.gitattributes
+> $ git config core.eol crlf
+>
+> In other words,
+> $ echo "* text=3Dauto eol=3Dcrlf" >.gitattributes
+> has the same effect as
+> $ git config core.autocrlf true
+> and
+> $ echo "* text=3Dauto eol=3Dlf" >.gitattributes
+> has the same effect as
+> $ git config core.autocrlf input
+
+It is kind of disappointing that the none of the above block of
+configuration examples does not quite say what the reader really
+wants to know directly.  I am guessing that the point is
+
+    now text=3Dauto does autodetection even when eol=3Dcrlf is
+    specified, and files that are declared to be non-text will not
+    get clobbered with eol=3Dcrlf conversion
+
+right?  If that is the case, replacing everything below "In other
+words" with these three lines would make the text much easier to
+grok, I would think.
+
+> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> ---
+>  Documentation/config.txt        | 14 +++++++-------
+>  Documentation/gitattributes.txt | 15 +++++++++------
+>  convert.c                       | 42 +++++++++++++++++++++----------=
+----------
+>  convert.h                       |  3 ++-
+>  t/t0025-crlf-auto.sh            |  4 ++--
+>  t/t0027-auto-crlf.sh            | 32 +++++++++++++++----------------
+>  t/t6038-merge-text-auto.sh      | 23 ++++++++++++++--------
+>  7 files changed, 73 insertions(+), 60 deletions(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 4a27ad4..9caf6ae 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -389,13 +389,13 @@ file with mixed line endings would be reported =
+by the `core.safecrlf`
+>  mechanism.
+> =20
+>  core.autocrlf::
+> -	Setting this variable to "true" is almost the same as setting
+> -	the `text` attribute to "auto" on all files except that text
+> -	files are not guaranteed to be normalized: files that contain
+> -	`CRLF` in the repository will not be touched.  Use this
+> -	setting if you want to have `CRLF` line endings in your
+> -	working directory even though the repository does not have
+> -	normalized line endings.  This variable can be set to 'input',
+> +	Setting this variable to "true" is the same as setting
+> +	the `text` attribute to "auto" on all files and core.eol to "crlf".
+> +	Set to true if you want to have `CRLF` line endings in your
+> +	working directory and the repository has LF line endings.
+> +	Text files are guaranteed not to be normalized: files that contain
+> +	`CRLF` in the repository will not be touched.
+
+This is not a new problem but the last sentence and a half look
+bad.  Telling readers "X is not guaranteed to happen" is not all
+that useful--telling them what happens is.  Also the use of colon
+there is probably ungrammatical.
+
+	Set to true if you want to have CRLF line endings in your
+	working directory and LF line endings in the repository.
+	Text files that contain CRLF in the repository will not get
+	their end-of-line converted.
+
+perhaps?
+
+> diff --git a/convert.h b/convert.h
+> index ccf436b..81b6cdf 100644
+> --- a/convert.h
+> +++ b/convert.h
+> @@ -7,7 +7,8 @@
+>  enum safe_crlf {
+>  	SAFE_CRLF_FALSE =3D 0,
+>  	SAFE_CRLF_FAIL =3D 1,
+> -	SAFE_CRLF_WARN =3D 2
+> +	SAFE_CRLF_WARN =3D 2,
+> +	SAFE_CRLF_RENORMALIZE =3D 4
+
+Are these bits in a word?  If not where did 3 go?
+
+> diff --git a/convert.c b/convert.c
+> index 24ab095..3782172 100644
+> --- a/convert.c
+> +++ b/convert.c
+> @@ -227,7 +227,9 @@ static enum eol output_eol(enum crlf_action crlf_=
+action)
+>  		return EOL_LF;
+>  	case CRLF_UNDEFINED:
+>  	case CRLF_AUTO_CRLF:
+> +		return EOL_CRLF;
+
+Hmph, do we want UNDEFINED case to return EOL_CRLF here?
+
+>  	case CRLF_AUTO_INPUT:
+> +		return EOL_LF;
+>  	case CRLF_TEXT:
+>  	case CRLF_AUTO:
+>  		/* fall through */
