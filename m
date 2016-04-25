@@ -1,90 +1,107 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] remote.c: spell __attribute__ correctly
-Date: Mon, 25 Apr 2016 17:15:23 -0400
-Message-ID: <20160425211523.GA11227@sigill.intra.peff.net>
-References: <D7C0C4062A7242B6912E56480CBB06F4@PhilipOakley>
- <20160425211030.GA10309@sigill.intra.peff.net>
+From: =?UTF-8?q?Guido=20Mart=C3=ADnez?= <mtzguido@gmail.com>
+Subject: [RFC/PATCH] Ordering of remotes for fetch --all
+Date: Mon, 25 Apr 2016 23:15:05 +0200
+Message-ID: <20160425211506.8421-1-mtzguido@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Mon Apr 25 23:15:33 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Guido=20Mart=C3=ADnez?= <mtzguido@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 25 23:15:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aunqu-0006Jl-96
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 23:15:32 +0200
+	id 1aunqm-0006Ds-LO
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 23:15:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964972AbcDYVP1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2016 17:15:27 -0400
-Received: from cloud.peff.net ([50.56.180.127]:56078 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933361AbcDYVP0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2016 17:15:26 -0400
-Received: (qmail 8431 invoked by uid 102); 25 Apr 2016 21:15:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 25 Apr 2016 17:15:26 -0400
-Received: (qmail 6136 invoked by uid 107); 25 Apr 2016 21:15:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 25 Apr 2016 17:15:26 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Apr 2016 17:15:23 -0400
-Content-Disposition: inline
-In-Reply-To: <20160425211030.GA10309@sigill.intra.peff.net>
+	id S964945AbcDYVPS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Apr 2016 17:15:18 -0400
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:38541 "EHLO
+	mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933361AbcDYVPQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2016 17:15:16 -0400
+Received: by mail-wm0-f43.google.com with SMTP id u206so147879190wme.1
+        for <git@vger.kernel.org>; Mon, 25 Apr 2016 14:15:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rLX5MSlARh/xu8Vxfs7765U7supsTeFHXOhBtCT86yY=;
+        b=x/bM4qNTS0jOojppzyrbmHwyFSTxvyjZFYs/ON33qb0m/RrwaIPDSgeoCibVliuPBS
+         uk1ZJUSTDPTQ/oFW+O0dmJobU3eKBBxXiWsjHAmNctioE44u1YmZtAmnure4QjybA5H/
+         NKU372rj3O/qFqm5h08NH9PILkAI3cUh3azf1LQC8n4fIr97oIqQhL51Y6E/Xhmn8F3l
+         eDP44Yuss4ZIrgIK7AdON/GwB01wH30/lIztHifj9qZUGbjOM2lY1gTMc46lTmC6bi5k
+         SCTAM/8sJlFBFlO2cAqiWyS5dfW+6zgPqKDTbZruSDeEoKDo4uhOO2AeAZTYCT4r/B7I
+         VL3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rLX5MSlARh/xu8Vxfs7765U7supsTeFHXOhBtCT86yY=;
+        b=mMeZPmyBeeeT4hUFC/Z5xv3kLya5KmO1PwbQ3y6ZlWnH7wn7FXJojw3HOGDLqP3vj4
+         NaJAq1UjHsxz6201A5PXnUnJ6gvR+mDnEjiyYOJHZWUzm1B9+bz8cQaNghFTGHMSwoEM
+         RJ+EfiAYw2s0+4cKYBZKkmtr4x+5JS2aeQ/txhllJx5vMIFGRq4hjFE7/+rX7yR/egeq
+         hG9IE7SKZK84zTXo/EnGWF00ZKLOzviR+lJCtX2o7xhsGWuLnQNo3StXfYCo+WvtV9w+
+         C3qgntThIXw51sDF+2Y1GeTftBh4C+LRQV9DL3cqKy+oDqmR9uZjfIhmUS4PP0SMZqzY
+         vrmA==
+X-Gm-Message-State: AOPr4FVQuRXtOZBrudAOEfglNe86LDyAJa+vYXyfGexoQ7Fieio9sCfY5rPjz6Mz0wMjDg==
+X-Received: by 10.194.163.229 with SMTP id yl5mr33570185wjb.6.1461618915034;
+        Mon, 25 Apr 2016 14:15:15 -0700 (PDT)
+Received: from localhost ([78.250.243.110])
+        by smtp.gmail.com with ESMTPSA id w79sm20580611wme.19.2016.04.25.14.15.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 25 Apr 2016 14:15:14 -0700 (PDT)
+X-Mailer: git-send-email 2.8.1.281.g0994585
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292560>
 
-On Mon, Apr 25, 2016 at 05:10:30PM -0400, Jeff King wrote:
+Hi all,
 
-> It should be handled in git-compat-util.h, which is included by cache.h,
-> which is included by remote.c.
-> 
-> There we have:
-> 
->   #ifndef __GNUC__
->   #ifndef __attribute__
->   #define __attribute__(x)
->   #endif
->   #endif
-> 
-> which should make it a noop on compilers which don't know about it. Is
-> VS (or another file) setting __GNUC__?
+I run a server with several git mirrors, that are updated every hour. O=
+n
+that same server, users clone those projects and work on them. We use
+the local mirrors to reduce network load: the users can fetch from the
+mirror first (to get most of the objects with zero network cost) and
+then fetch the real remote (to make sure they're completely up to date)=
+=2E
 
-Of course it helps if we spell the name right...
+I would like this to be configurable in each git working directory,
+so users can just configure the order they want and then just do "git
+remote update".
 
--- >8 --
-Subject: remote.c: spell __attribute__ correctly
+I'm aware one can get this behavior by editing .git/config and
+ordering the remotes as one wishes, but I find that very hacky and not
+scripting-friendly.
 
-We want to tell the compiler that error_buf() uses
-printf()-style arguments via the __attribute__ mechanism,
-but the original commit (3a429d0), forgot the trailing "__".
-This happens to work with real GNUC-compatible compilers
-like gcc and clang, but confuses our fallback macro in
-git-compat-util.h, which only matches the official name (and
-thus the build fails on compilers like Visual Studio).
+This patch introduces a fetch priority for each remote, at a default of
+50 and modifiable via git config. This new order will only matter when
+doing fetch --all.
 
-Reported-by: Philip Oakley <philipoakley@iee.org>
-Signed-off-by: Jeff King <peff@peff.net>
+Do you think this is a useful feature? Hopefully you don't consider thi=
+s
+as just noise :)
+
+(As a side note: for ordering the remotes a stable sort would be best,
+to have the least impact possible on current behavior. I believe
+git_qsort is stable but a confirmation would be nice.)
+
+Thanks!
+Guido
+
+Guido Mart=C3=ADnez (1):
+  remote: add a fetching priority to each remote
+
+ Documentation/config.txt |  5 +++++
+ builtin/fetch.c          |  2 +-
+ remote.c                 | 43 +++++++++++++++++++++++++++++++++++++++-=
 ---
- remote.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ remote.h                 |  2 ++
+ 4 files changed, 47 insertions(+), 5 deletions(-)
 
-diff --git a/remote.c b/remote.c
-index 28fd676..ddc4f8f 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1660,7 +1660,7 @@ int branch_merge_matches(struct branch *branch,
- 	return refname_match(branch->merge[i]->src, refname);
- }
- 
--__attribute((format (printf,2,3)))
-+__attribute__((format (printf,2,3)))
- static const char *error_buf(struct strbuf *err, const char *fmt, ...)
- {
- 	if (err) {
--- 
-2.8.1.562.gc7e1b3c
+--=20
+2.8.1.281.g0994585
