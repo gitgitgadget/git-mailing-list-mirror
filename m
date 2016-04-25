@@ -1,91 +1,88 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 81/83] apply: roll back index in case of error
-Date: Mon, 25 Apr 2016 18:06:03 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604251802480.2896@virtualbox>
-References: <1461505189-16234-1-git-send-email-chriscool@tuxfamily.org> <1461505189-16234-2-git-send-email-chriscool@tuxfamily.org>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] Update git-p4 to be compatible with git-lfs 1.2
+Date: Mon, 25 Apr 2016 18:25:02 +0200
+Message-ID: <20160425162502.31558-1-szeder@ira.uka.de>
+References: <E230B4FD-79B5-4CA7-9F0D-A4F8F3470296@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 25 18:06:49 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+	Ben Woosley <Ben.Woosley@gmail.com>,
+	Luke Diamand <luke@diamand.org>,
+	Git Users <git@vger.kernel.org>
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 25 18:25:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auj27-0004Bb-Uy
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 18:06:48 +0200
+	id 1aujKL-0004eR-VK
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 18:25:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932920AbcDYQGl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2016 12:06:41 -0400
-Received: from mout.gmx.net ([212.227.17.20]:59474 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932865AbcDYQGl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2016 12:06:41 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Ld4xA-1bctWn2Zo8-00iBW4; Mon, 25 Apr 2016 18:06:05
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <1461505189-16234-2-git-send-email-chriscool@tuxfamily.org>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:00jiPeFSYaC7ZbgZqprcZfQ0fB9sCSjLuDb0A6EX8HoznOis5Vh
- HStj2bnrXTZI3Xgucw8f+TzFSamOSX87WIcTCRFYDtFc/yeSePD/vummBJIajmc5rc/qwTe
- F8CC7RjrMePUm08ku/e/MW+k5ZZbOSEYqYRTDHsNB0HnXJ7IjlbiZ5LoPLR6JnJ/mRTjA/0
- 2QOIIEb36Bhg8sosF6mbw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:9n18S1yIYQg=:fl5EF/abkKEgb3k79k2bUg
- ltk5KX3AdZoReYJ6w6MCi78sd1FgmYCa4v8I4iq7oyEhDjU8pydpnp9kPv5HMpnoPrbafSK3i
- amsdVda4JwqNQvN1c2mDSg3WBOXmwSX+v03/Ga8AB/HsbFbmQrKTki61kmdc3CvaZu2s6irch
- 37JilBQya/ENmkB8x8UA6ic7FjLqhfBXTmTVP2vjLriDA4ADaCof6R6S81RmJuefyYa37PLQU
- coyQpMnZxE1uZv8Do5MUW5aNmiEx6+AUYT5R66QBWjsMQrtore8ulS3chsmyjq+9CU7Kob3LM
- Ej95eF6I+67Bwerc77wpQMUz4uyhsu8zTjSxj5WgcmpP2qIcbUT5vtZcViS9ICfyb67LUhOE6
- dh6eqR+JD59uLbhUrINf1L0FpJupvT8EQkD8jVDdiVVXJFYnI1hFWIyNDho02dtaohRPVkLkr
- /6vmRbXRpELQhATzRwbO0FTZ0221hDXTjSEmphEgurv5up2w62yija0PpmgKJfWahMOUJJ1hH
- DyoArEvI91LUCi8mwq2tIHKY6UN93fSnUeKAvvFUGGIFVDQCHC5bIlYwMg5vDwx8wJLzxmjSQ
- b/ccRSvLsj8wfz8oZte9KkxUbxaj24w83m1tv0T8rTzAxkM7IwI+fVtDjWaHaE99jPtwN8MHG
- 22wBzawRmJFy57d2EyJuOrIn2V/C4RU6jFyo922GC0w7/QRwdX0GTH3mr9TzmVp2/UiaiIO97
- t/n3M11r7xKrlP6AtV9kIbkgrZw7ZZcOWJv1HchKfFB2uc1i2Bzu9Ay2FieYbpsKURgfnn1K 
+	id S933116AbcDYQZZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Apr 2016 12:25:25 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:58626 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932882AbcDYQZY (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2016 12:25:24 -0400
+Received: from x4db01c0d.dyn.telefonica.de ([77.176.28.13] helo=localhost.localdomain)
+	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
+	iface 141.3.10.81 id 1aujK2-0001hJ-6U; Mon, 25 Apr 2016 18:25:20 +0200
+X-Mailer: git-send-email 2.8.1.339.g9380849
+In-Reply-To: <E230B4FD-79B5-4CA7-9F0D-A4F8F3470296@gmail.com>
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1461601520.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292509>
 
-Hi Chris,
 
-On Sun, 24 Apr 2016, Christian Couder wrote:
+> > * One option on the Travis front would be to just test one combination
+> > of the 1.1 build - e.g. linux + clang + 1.1, so you'll stay within the
+> > 5 parallel builds while also having some coverage on lfs 1.1.
+> TBH I still think testing an outdated Git LFS version does not justify
+> +10 extra minutes of computing.
 
-> @@ -4734,16 +4737,22 @@ int apply_all_patches(struct apply_state *state,
->  		read_stdin = 0;
->  		set_default_whitespace_mode(state);
->  		res = apply_patch(state, fd, arg, options);
-> -		if (res < 0)
-> +		if (res < 0) {
-> +			if (state->lock_file)
-> +				rollback_lock_file(state->lock_file);
->  			return -1;
-> +		}
->  		errs |= res;
->  		close(fd);
+I agree that checking compatibility with an older Git LFS version
+doesn't worth the extra 10 minutes.  However, since Git LFS is only
+involved in two test scripts and for the rest of the test suite it
+doesn't matter at all, doing a full build and running the whole test
+suite for the sole sake of a different Git LFS version is definitely
+unnecessary.
 
-In case of error, this leaves fd open, which in the end will prevent the
-"patch" file, and hence the "rebase-apply/" directory from being removed
-on Windows. This triggered a failure of t4014 here (and possibly more, but
-it took me quite a while to track this down, what with builtin/am.c's
-am_destroy() not bothering at all to check the return value of
-remove_dir_recursively(), resulting in the error to be caught only much,
-much later).
+The Bash completion and prompt scripts are in a similar situation:
+there are only two test scripts involved and the rest of the test
+suite couldn't care less.  However, we definitely want to support
+older Bash versions as well, all the way back to v3.0, and there are a
+few commits fixing breakages reported by users of old Bash versions.
 
-Could you please review all open()/close() and fopen()/fclose() calls in
-your patch series, to make sure that there are no mistakes? A passing test
-suite does not really make me confident here, as our code coverage is not
-quite 100%.
+As I somehow grew fond of those Bash scripts over the years, I put
+together a couple of patches allowing me to say 'cd t && make -j4
+full-bash-test', which runs the completion and prompt tests with
+multiple Bash versions.  For the seven major and minor releases
+including and after v3.0 it usually takes less than 8 seconds.  As far
+as runtime goes, I think that's well worth it.
 
-Thanks,
-Dscho
+You can have a look at these patches at
+
+  https://github.com/szeder/git completion-test-multiple-bash-versions
+
+and perhaps you could even adapt it to LFS and/or p4 somehow.
+
+> Plus if we want to be consistent we would
+> need to do the same for LFS 1.0, 1.2, and for pretty much every other
+> dependency...  
+
+I'm not sure we should be consistent in this case, at least not solely
+for consistency's sake and not in git.git. Taking what I did for Bash
+and doing it for different versions of LFS, p4, etc. could perhaps
+keep the runtime under control, but t/Makefile would surely get out
+of control rather quickly.  Putting these into a travis-ci matrix is
+so much simpler, but the runtime makes it infeasible, of course.
+
+I think the best we can do is to keep this out of git.git and let
+(hope?) developers interested in a particular subsystem do this
+"multiple version compatibility" tests as they see fit.
