@@ -1,162 +1,183 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 03/21] t/test-lib-functions.sh: generalize test_cmp_rev
-Date: Mon, 25 Apr 2016 11:08:54 -0700
-Message-ID: <xmqqvb35lfwp.fsf@gitster.mtv.corp.google.com>
-References: <1460294354-7031-1-git-send-email-s-beyer@gmx.net>
-	<1460294354-7031-4-git-send-email-s-beyer@gmx.net>
-	<xmqqd1pqbq2a.fsf@gitster.mtv.corp.google.com>
-	<571D23CB.8020305@gmx.net>
+Subject: Re: [PATCH 1/3] githooks.txt: Improve the intro section
+Date: Mon, 25 Apr 2016 11:23:56 -0700
+Message-ID: <xmqqr3dtlf7n.fsf@gitster.mtv.corp.google.com>
+References: <1461529229-15222-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Mon Apr 25 20:09:06 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 25 20:24:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aukwT-00042a-V8
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 20:09:06 +0200
+	id 1aulAz-0002R9-QE
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 20:24:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932948AbcDYSI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2016 14:08:58 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60110 "EHLO
+	id S933087AbcDYSYB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Apr 2016 14:24:01 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59078 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754800AbcDYSI6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2016 14:08:58 -0400
+	with ESMTP id S1754798AbcDYSYA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2016 14:24:00 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 620E1150AE;
-	Mon, 25 Apr 2016 14:08:56 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CDA7015376;
+	Mon, 25 Apr 2016 14:23:58 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SQr2d2LXizV8mlKYgjkkjm3tyI8=; b=sa1AZ3
-	JPyGQtSReB8XOLPBZCzjZzpCpaNyUBpS707rMpe2TsscP12b0o8UTgAMf+gCkrR7
-	hrJRxc5frE/SZ1eyWkmighcxxKO2YSAq1Lt2UqMjo/DqvvCi+NQLmhTd3V/LeEQJ
-	LfLTzUqFioujMlnWAcZ1nNh3aNJ8Y7C0Roktg=
+	:content-type:content-transfer-encoding; s=sasl; bh=WgN7am+4tzFN
+	oWMIF12wNC1mjVo=; b=PQ87vBAhC9unhlEhVCL4NmXhIeSsAEZPkJwHFf92wyTx
+	mi4eAAzzJbm2h9xUhx+48WhYVSqKRqodAcj8jy9IhRlJTdp8hpnsSl5BpJkIqDXt
+	0sUwahj1ZXt4VehUfr5+pQyVAEa90ESOV8sXZyiGCOaYi+a0NSFPY0/d02xJlgU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WOMz+nXxCO7VEfoJuDAhVfNvIwipHs3q
-	o2qANv70mMj2em7hUj3wW+Mq8ty2pU1cWx0zHN6ySedf0d/TVMQdZMW9PKXSAzwX
-	ccTciaU34XyATz+NptqBTGnw1iD25bzWeScN77svEEqGI+4xurz1VNWNIyPisO6j
-	6iKj/mmGHXY=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=A56mm2
+	1vOkyvSstvGVBeLSYED/AulvBOGCK6diPyupQrch3CGOnSFuJHnAQOjRabatL+SE
+	fiih4dDQmQB9nBq7MIh2+vMn54X3ROSi2Eq4ymr0Ok3TENDa08EJGej63+EQ63+p
+	d6mloa0Igfdx/QNT2thrnJJCY5yy2PXHxbFMM=
 Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 578DE150AD;
-	Mon, 25 Apr 2016 14:08:56 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C028115375;
+	Mon, 25 Apr 2016 14:23:58 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9CD48150AC;
-	Mon, 25 Apr 2016 14:08:55 -0400 (EDT)
-In-Reply-To: <571D23CB.8020305@gmx.net> (Stephan Beyer's message of "Sun, 24
-	Apr 2016 21:51:39 +0200")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1615D15373;
+	Mon, 25 Apr 2016 14:23:58 -0400 (EDT)
+In-Reply-To: <1461529229-15222-1-git-send-email-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun, 24 Apr
+ 2016 20:20:27 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C65A0EAA-0B10-11E6-9BDB-9A9645017442-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: E0409152-0B12-11E6-8F19-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292537>
 
-Stephan Beyer <s-beyer@gmx.net> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Hi,
+> Change the documentation so that:
 >
-> On 04/15/2016 10:00 PM, Junio C Hamano wrote:
->> Stephan Beyer <s-beyer@gmx.net> writes:
->> 
->>> test_cmp_rev() took exactly two parameters, the expected revision
->>> and the revision to test. This commit generalizes this function
->>> such that it takes any number of at least two revisions: the
->>> expected one and a list of actual ones. The function returns true
->>> if and only if at least one actual revision coincides with the
->>> expected revision.
->> 
->> There may be cases where you want to find the expected one among
->> various things you actually have (which is what the above talks
->> about; it is like "list-what-I-actually-got | grep what-i-want"),
->> but an equally useful use case would be "I would get only one
->> outcome from test, I anticipate one of these things, all of which is
->> OK, but I cannot dictate which one of them should come out" (it is
->> like "list-what-I-can-accept | grep what-I-actually-got").
+>  * We don't talk about "little scripts". Hooks can be as big as you
+>    want, and don't have to be scripts, just call them "programs".
 >
-> I see that these are strictly speaking (slightly) different semantics
-> but in the end it boils down to be the same, or am I missing anything?
+>  * We note what happens with chdir() before a hook is called, nothing
+>    documented this explicitly, but the current behavior is
+>    predictable. It helps a lot to know what directory these hooks wil=
+l
+>    be executed from.
 >
->> I am not enthused by the new test that implements the "match one
->> against multi" check only in one way among these possible two to
->> squat on a very generic name, test_cmp_rev.
->> 
->> The above _may_ appear a non-issue until you realize one thing that
->> is there to help those who debug the tests, which is ...
->> 
->>> While at it, the side effect of generating two (temporary) files
->>> is removed.
->> 
->> That is not strictly a side effect.  test_cmp allows you to see what
->> was expected and what you actually had when the test failed (we
->> always compare expect with actual and not the other way around, so
->> that "diff -u expect actual" would show how the actual behaviour
->> diverted from our expectation in a natural way).
+>  * We don't make claims about the example hooks which may not be true
+>    depending on the configuration of 'init.templateDir'. Clarify that
+>    we're talking about the default settings of git-init in those case=
+s,
+>    and move some of this documentation into git-init's documentation
+>    about the default templates.
 >
-> I was referring to *generating the files* as a side effect. I did not
-> even think about the fact that "diff" in the original code does not only
-> return an exit code but that it also generates output that can be used
-> as "helpful diagnostic information" (referring to Eric Sunshine's mail
-> here). I was not aware that the Git tests should -- besides testing --
-> already include "tools" for easier debugging in case of a failure... So
-> dropping this information was not intentional.
+>  * We briefly note in the intro that hooks can get their arguments in
+>    various different ways, and that how exactly is described below fo=
+r
+>    each hook.
 >
->> Something with the semantics of these two:
->> 
->> 	test_revs_have_expected () {
->>         	expect=$1
->> 		shift
->> 		git rev-parse "$@" | grep -e "$expect" >/dev/null && return
->> 		echo >&2 "The expected '$1' is not found in:"
->>                 printf >&2 " '%s'\n", "$@"
->>                 return 1
->> 	}
->> 
->> 	test_rev_among_expected () {
->> 		actual=$1
->>                 shift
->> 		git rev-parse "$@" | grep -e "$actual" >/dev/null && return
->> 		echo >&2 "'$1' is not among expected ones:"
->>                 printf >&2 " '%s'\n", "$@"
->>                 return 1
->> 	}
->> 
->> might be more appropriate.
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.c=
+om>
+> ---
+>  Documentation/git-init.txt |  6 +++++-
+>  Documentation/githooks.txt | 32 ++++++++++++++++++++------------
+>  2 files changed, 25 insertions(+), 13 deletions(-)
 >
-> Ah! That's what I meant above. The code is copy&paste besides variable
-> naming and the output "title". Such code duplication for the sake of
-> "easier debugging" in case of a failure?
->
-> Also I wonder if test authors in the future would really know *which*
-> one is the right one to use.
+> diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
+> index 8174d27..cf37926 100644
+> --- a/Documentation/git-init.txt
+> +++ b/Documentation/git-init.txt
+> @@ -130,7 +130,11 @@ The template directory will be one of the follow=
+ing (in order):
+>   - the default template directory: `/usr/share/git-core/templates`.
+> =20
+>  The default template directory includes some directory structure, su=
+ggested
+> -"exclude patterns" (see linkgit:gitignore[5]), and sample hook files=
+ (see linkgit:githooks[5]).
+> +"exclude patterns" (see linkgit:gitignore[5]), and example hook file=
+s.
+> +
+> +The example are all disabled by default. To enable a hook, rename it
 
-I saw that even you were originally confused about it ;-).
+"sample hooks are all disabled" would be better; if for some unknown
+reason you are trying to avoid "sample hooks", "examples are all
+disabled" may be acceptable.
 
-In your proposed log message, you talk about "the expected, and list
-of actual ones", which can only mean "there may be multiple answers
-from the command (e.g. "merge-base --all") and we only require that
-one of the answers is the expected one", which is why among the two
-necessary functions I listed "test_revs_have_expected" above first,
-but I think most (if not all) of the invocations of the multi-match
-form in your patch actually wanted "test_rev_among_expected"
-variant, i.e. "there will be one answer from the command, but there
-are multiple acceptable answers, all of them valid".
+> +by removing its `.sample` suffix. See linkgit:githooks[5] for more
+> +info on hook execution.
 
-I do not think test authors who understands the reason why we always
-say "test_cmp actual expect" and not the other way around will share
-the same confusion (and now you were explained and understood why
-"diff" in the original was given the expected and actual result in
-that order, you no longer are confused wrt this).
+Makes a first-time reader wonder if I am allowed to ignore the
+sample and write my own from scratch, or if the only thing that is
+allowed is to enable what is shipped with .sample suffix.
 
-And no, this is not "for the sake of easier debugging in case of a
-failure".  It is about knowing what you are doing--are you going to
-have multiple answers and making sure one right one appears in it,
-or are you going to have one answer and allowing any one of multiple
-valid ones?  These two are quite different things and it helps the
-readers of the test to know which one is being used.
+I wonder it would become less confusing if we placed even _less_
+stress on these sample hooks; I find that saying we ship sample
+hooks that are disabled is probably more confusing.
+
+We do not ship any hook (hence nothing is enabled by definition);
+there are a handful of sample files that you can use when adding
+your own hook by either referencing them or taking them as-is, and
+the latter can be done by removing .sample suffix, which is merely a
+special case convenience.
+
+
+> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+> index a2f59b1..2f3caf7 100644
+> --- a/Documentation/githooks.txt
+> +++ b/Documentation/githooks.txt
+> @@ -13,18 +13,26 @@ $GIT_DIR/hooks/*
+>  DESCRIPTION
+>  -----------
+> =20
+> -Hooks are little scripts you can place in `$GIT_DIR/hooks`
+> -directory to trigger action at certain points.  When
+> -'git init' is run, a handful of example hooks are copied into the
+> -`hooks` directory of the new repository, but by default they are
+> -all disabled.  To enable a hook, rename it by removing its `.sample`
+> -suffix.
+> -
+> -NOTE: It is also a requirement for a given hook to be executable.
+> -However - in a freshly initialized repository - the `.sample` files =
+are
+> -executable by default.
+> -
+> -This document describes the currently defined hooks.
+> +Hooks are programs you can place in the `$GIT_DIR/hooks` directory t=
+o
+> +trigger action at certain points. Hooks that don't have the executab=
+le
+> +bit set are ignored.
+
+The last sentence is POSIXPERM only, though.
+
+> +When a hook is called in a non-bare repository the working directory
+> +is guaranteed to be the root of the working tree, in a bare reposito=
+ry
+> +the working directory will be the path to the repository. I.e. hooks
+> +don't need to worry about the user's current working directory.
+
+This sentence took me two reads until I mentally substituted "the
+working directory" with "its working diretory", to realize that you
+are talking about the cwd of the process that runs the hook.
+
+While "is guaranteed" may be technically correct and we have no
+intention to change it, it sounds unnecessarily strong.
+
+    When a hook is invoked, it is run at the root of the working
+    tree in a non-bare repository, or in the $GIT_DIR in a bare
+    repository.
+
+perhaps?
+
+> +Hooks can get their arguments via the environment, command-line
+> +arguments, and stdin. See the documentation for each below hook for
+> +details.
+
+"each below hook" sounds somewhat ungrammatical.
