@@ -1,101 +1,350 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5b 00/17] port branch.c to use ref-filter's printing options
-Date: Mon, 25 Apr 2016 14:47:29 -0700
-Message-ID: <xmqq4mapjr7y.fsf@gitster.mtv.corp.google.com>
-References: <1461581558-32348-1-git-send-email-Karthik.188@gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 33/83] builtin/apply: move 'root' global into 'struct apply_state'
+Date: Mon, 25 Apr 2016 14:50:09 -0700
+Message-ID: <CAGZ79kaaATDzOHFOmCAANcZmrF_5JGAUYW3Ub1WJ7vSLODVP_g@mail.gmail.com>
+References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
+	<1461504863-15946-34-git-send-email-chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, jacob.keller@gmail.com, peff@peff.net
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 25 23:47:47 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 25 23:50:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auoM3-0003ws-DI
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 23:47:43 +0200
+	id 1auoOZ-0005E4-MG
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 23:50:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965242AbcDYVrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2016 17:47:39 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65508 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S965232AbcDYVri (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2016 17:47:38 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D26AB152B7;
-	Mon, 25 Apr 2016 17:47:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sF9ATO9lngZv47DLHuXN2dQIVAM=; b=LkLH4Q
-	JVW6NmLwkNqk63RFbRTpbNSDmD9X7WNLNZdalkAUPXiU+aFUdAMN166ebadzgLrZ
-	5kdcOxMq4Ztm+reD6w7as6dQCb4t4ouFV4mMuFO2FwjzGymVCfzqQKQkbRuqf7mX
-	0g+HvDMN9CXyNoDgV3xTg6OPziFwtkeSNwiRc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vOiTivq+MDlgMNxm53guNXQEHdQA68bR
-	vxnY4wfgXZoqmE7OVqnxiu0/oiEi6rNrymhDPg2LlxZWV378mYE0R8eDEkLyIQfc
-	LIMPAVf41eQM3pVIUll90MjnmoMgH9wYK8xKs7gAPZVrDXhkjqjWVgKnPbxBrQgB
-	kH/wMq1q+cI=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C8931152B4;
-	Mon, 25 Apr 2016 17:47:31 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1F07E152B3;
-	Mon, 25 Apr 2016 17:47:31 -0400 (EDT)
-In-Reply-To: <1461581558-32348-1-git-send-email-Karthik.188@gmail.com>
-	(Karthik Nayak's message of "Mon, 25 Apr 2016 16:22:21 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4FCAA49C-0B2F-11E6-8BBB-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S965212AbcDYVuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Apr 2016 17:50:12 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:38510 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965002AbcDYVuK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2016 17:50:10 -0400
+Received: by mail-ig0-f170.google.com with SMTP id m9so75267120ige.1
+        for <git@vger.kernel.org>; Mon, 25 Apr 2016 14:50:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=RIoHch5UYarzAPNbMU/tIgepr4DJWwO9oN5wA1Huz5g=;
+        b=L2EbXIO2oxF3KX1MnFFxmYNcHTWdk1Fym0We9ItrQZ3Nf1nR8z09Z3QEdb/5FQOOBa
+         YvZ+v85FLsaexZm9jTviBs1VaePfjMQYPGGJhFCwbsSImoMZeIw25MrIQzYjVfjG3hIi
+         7LSoBYrrpvU56xOkGx5MAssvlbMrcx/mgWTlsKdYsTXCUQYvQuwtbxcBpLg5IWRWJYuH
+         UEc59+Dl3wPiah1y6KsRZGMm5Slagu32ldj7IEz9xqkC+Bn0D7bwa4AsDl4bA2BT7pRy
+         a3O5g5hcTSdPxBWg/TfhvT0i7PLLcE1e4YWjLVzugJqS7+NdyE+gNA4t4IxAhCHBNd/O
+         xtHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=RIoHch5UYarzAPNbMU/tIgepr4DJWwO9oN5wA1Huz5g=;
+        b=bs4qIbsDIH8n/sIE6BNAHgviz/ZfFFScTTIi7N5UECPUXiA1pMyJS98SvKFsN4xQjQ
+         o3caCa1IM0+YFtfyl7Mutfpp+josisaJJ/7il+HE2dfK4LiDRdHjnHlap8IM4oakWrD9
+         Esh/DAkHwhhat+6SgGHhiMzH5+UXZLftpZ7ISZhxvyhsRa/hwKFeOSjIVuK/YQUHVqvq
+         qLcTDHrsRzVQR8VkbVjubBj3p5HGQzfN7lvDE0XpVWpcmDfXSUBJxrC/af+zWiKCe+OX
+         o8dMvhWRTxpa3g084oE8vPBH4EGLLKQFPKlxpSJrVJMuSAwXrTmFY4BdXg0HqS0EQLkv
+         Li6g==
+X-Gm-Message-State: AOPr4FXg4ypZFF+vYq0Jy+IBbUVuj5TJz74rC0nLZ7Auq0DOAL3HuAiqPe5pRfVuRV84pVfg1TvtfBgLhGLnGyAF
+X-Received: by 10.50.102.207 with SMTP id fq15mr10129118igb.94.1461621009344;
+ Mon, 25 Apr 2016 14:50:09 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Mon, 25 Apr 2016 14:50:09 -0700 (PDT)
+In-Reply-To: <1461504863-15946-34-git-send-email-chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292571>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On Sun, Apr 24, 2016 at 6:33 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  builtin/apply.c | 82 ++++++++++++++++++++++++++++++++++-----------------------
+>  1 file changed, 49 insertions(+), 33 deletions(-)
+>
+> diff --git a/builtin/apply.c b/builtin/apply.c
+> index fecdb66..209a1b4 100644
+> --- a/builtin/apply.c
+> +++ b/builtin/apply.c
+> @@ -73,6 +73,8 @@ struct apply_state {
+>
+>         struct string_list limit_by_name;
+>         int has_include;
+> +
+> +       struct strbuf root;
+>  };
+>
+>  static int newfd = -1;
+> @@ -98,8 +100,6 @@ static enum ws_ignore {
+>  } ws_ignore_action = ignore_ws_none;
+>
+>
+> -static struct strbuf root = STRBUF_INIT;
+> -
+>  static void parse_whitespace_option(const char *option)
+>  {
+>         if (!option) {
+> @@ -489,7 +489,10 @@ static char *squash_slash(char *name)
+>         return name;
+>  }
+>
+> -static char *find_name_gnu(const char *line, const char *def, int p_value)
+> +static char *find_name_gnu(struct apply_state *state,
+> +                          const char *line,
+> +                          const char *def,
+> +                          int p_value)
+>  {
+>         struct strbuf name = STRBUF_INIT;
+>         char *cp;
+> @@ -513,8 +516,8 @@ static char *find_name_gnu(const char *line, const char *def, int p_value)
+>         }
+>
+>         strbuf_remove(&name, 0, cp - name.buf);
+> -       if (root.len)
+> -               strbuf_insert(&name, 0, root.buf, root.len);
+> +       if (state->root.len)
+> +               strbuf_insert(&name, 0, state->root.buf, state->root.len);
+>         return squash_slash(strbuf_detach(&name, NULL));
+>  }
+>
+> @@ -677,8 +680,12 @@ static size_t diff_timestamp_len(const char *line, size_t len)
+>         return line + len - end;
+>  }
+>
+> -static char *find_name_common(const char *line, const char *def,
+> -                             int p_value, const char *end, int terminate)
+> +static char *find_name_common(struct apply_state *state,
+> +                             const char *line,
+> +                             const char *def,
+> +                             int p_value,
+> +                             const char *end,
+> +                             int terminate)
+>  {
+>         int len;
+>         const char *start = NULL;
+> @@ -716,32 +723,39 @@ static char *find_name_common(const char *line, const char *def,
+>                         return squash_slash(xstrdup(def));
+>         }
+>
+> -       if (root.len) {
+> -               char *ret = xstrfmt("%s%.*s", root.buf, len, start);
+> +       if (state->root.len) {
+> +               char *ret = xstrfmt("%s%.*s", state->root.buf, len, start);
+>                 return squash_slash(ret);
+>         }
+>
+>         return squash_slash(xmemdupz(start, len));
+>  }
+>
+> -static char *find_name(const char *line, char *def, int p_value, int terminate)
+> +static char *find_name(struct apply_state *state,
+> +                      const char *line,
+> +                      char *def,
+> +                      int p_value,
+> +                      int terminate)
+>  {
+>         if (*line == '"') {
+> -               char *name = find_name_gnu(line, def, p_value);
+> +               char *name = find_name_gnu(state, line, def, p_value);
+>                 if (name)
+>                         return name;
+>         }
+>
+> -       return find_name_common(line, def, p_value, NULL, terminate);
+> +       return find_name_common(state, line, def, p_value, NULL, terminate);
+>  }
+>
+> -static char *find_name_traditional(const char *line, char *def, int p_value)
+> +static char *find_name_traditional(struct apply_state *state,
+> +                                  const char *line,
+> +                                  char *def,
+> +                                  int p_value)
+>  {
+>         size_t len;
+>         size_t date_len;
+>
+>         if (*line == '"') {
+> -               char *name = find_name_gnu(line, def, p_value);
+> +               char *name = find_name_gnu(state, line, def, p_value);
+>                 if (name)
+>                         return name;
+>         }
+> @@ -749,10 +763,10 @@ static char *find_name_traditional(const char *line, char *def, int p_value)
+>         len = strchrnul(line, '\n') - line;
+>         date_len = diff_timestamp_len(line, len);
+>         if (!date_len)
+> -               return find_name_common(line, def, p_value, NULL, TERM_TAB);
+> +               return find_name_common(state, line, def, p_value, NULL, TERM_TAB);
+>         len -= date_len;
+>
+> -       return find_name_common(line, def, p_value, line + len, 0);
+> +       return find_name_common(state, line, def, p_value, line + len, 0);
+>  }
+>
+>  static int count_slashes(const char *cp)
+> @@ -777,7 +791,7 @@ static int guess_p_value(struct apply_state *state, const char *nameline)
+>
+>         if (is_dev_null(nameline))
+>                 return -1;
+> -       name = find_name_traditional(nameline, NULL, 0);
+> +       name = find_name_traditional(state, nameline, NULL, 0);
+>         if (!name)
+>                 return -1;
+>         cp = strchr(name, '/');
+> @@ -902,17 +916,17 @@ static void parse_traditional_patch(struct apply_state *state,
+>         if (is_dev_null(first)) {
+>                 patch->is_new = 1;
+>                 patch->is_delete = 0;
+> -               name = find_name_traditional(second, NULL, state->p_value);
+> +               name = find_name_traditional(state, second, NULL, state->p_value);
+>                 patch->new_name = name;
+>         } else if (is_dev_null(second)) {
+>                 patch->is_new = 0;
+>                 patch->is_delete = 1;
+> -               name = find_name_traditional(first, NULL, state->p_value);
+> +               name = find_name_traditional(state, first, NULL, state->p_value);
+>                 patch->old_name = name;
+>         } else {
+>                 char *first_name;
+> -               first_name = find_name_traditional(first, NULL, state->p_value);
+> -               name = find_name_traditional(second, first_name, state->p_value);
+> +               first_name = find_name_traditional(state, first, NULL, state->p_value);
+> +               name = find_name_traditional(state, second, first_name, state->p_value);
+>                 free(first_name);
+>                 if (has_epoch_timestamp(first)) {
+>                         patch->is_new = 1;
+> @@ -957,7 +971,7 @@ static void gitdiff_verify_name(struct apply_state *state,
+>                                 int side)
+>  {
+>         if (!*name && !isnull) {
+> -               *name = find_name(line, NULL, state->p_value, TERM_TAB);
+> +               *name = find_name(state, line, NULL, state->p_value, TERM_TAB);
+>                 return;
+>         }
+>
+> @@ -967,7 +981,7 @@ static void gitdiff_verify_name(struct apply_state *state,
+>                 if (isnull)
+>                         die(_("git apply: bad git-diff - expected /dev/null, got %s on line %d"),
+>                             *name, linenr);
+> -               another = find_name(line, NULL, state->p_value, TERM_TAB);
+> +               another = find_name(state, line, NULL, state->p_value, TERM_TAB);
+>                 if (!another || memcmp(another, *name, len + 1))
+>                         die((side == DIFF_NEW_NAME) ?
+>                             _("git apply: bad git-diff - inconsistent new filename on line %d") :
+> @@ -1042,7 +1056,7 @@ static int gitdiff_copysrc(struct apply_state *state,
+>  {
+>         patch->is_copy = 1;
+>         free(patch->old_name);
+> -       patch->old_name = find_name(line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
+> +       patch->old_name = find_name(state, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
+>         return 0;
+>  }
+>
+> @@ -1052,7 +1066,7 @@ static int gitdiff_copydst(struct apply_state *state,
+>  {
+>         patch->is_copy = 1;
+>         free(patch->new_name);
+> -       patch->new_name = find_name(line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
+> +       patch->new_name = find_name(state, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
+>         return 0;
+>  }
+>
+> @@ -1062,7 +1076,7 @@ static int gitdiff_renamesrc(struct apply_state *state,
+>  {
+>         patch->is_rename = 1;
+>         free(patch->old_name);
+> -       patch->old_name = find_name(line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
+> +       patch->old_name = find_name(state, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
+>         return 0;
+>  }
+>
+> @@ -1072,7 +1086,7 @@ static int gitdiff_renamedst(struct apply_state *state,
+>  {
+>         patch->is_rename = 1;
+>         free(patch->new_name);
+> -       patch->new_name = find_name(line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
+> +       patch->new_name = find_name(state, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
+>         return 0;
+>  }
+>
+> @@ -1331,8 +1345,8 @@ static int parse_git_header(struct apply_state *state,
+>          * the default name from the header.
+>          */
+>         patch->def_name = git_header_name(state, line, len);
+> -       if (patch->def_name && root.len) {
+> -               char *s = xstrfmt("%s%s", root.buf, patch->def_name);
+> +       if (patch->def_name && state->root.len) {
+> +               char *s = xstrfmt("%s%s", state->root.buf, patch->def_name);
+>                 free(patch->def_name);
+>                 patch->def_name = s;
+>         }
+> @@ -4630,9 +4644,10 @@ static int option_parse_whitespace(const struct option *opt,
+>  static int option_parse_directory(const struct option *opt,
+>                                   const char *arg, int unset)
+>  {
+> -       strbuf_reset(&root);
+> -       strbuf_addstr(&root, arg);
+> -       strbuf_complete(&root, '/');
+> +       struct apply_state *state = opt->value;
 
-> This is part of unification of the commands 'git tag -l, git branch -l
-> and git for-each-ref'. This ports over branch.c to use ref-filter's
-> printing options.
->
-> Initially posted here: $(gmane/279226). It was decided that this series
-> would follow up after refactoring ref-filter parsing mechanism, which
-> is now merged into master (9606218b32344c5c756f7c29349d3845ef60b80c).
->
-> v1 can be found here: $(gmane/288342)
-> v2 can be found here: $(gmane/288863)
-> v3 can be found here: $(gmane/290299)
-> v4 can be found here: $(gmane/291106)
->
-> Changes in this version (v5b):
-> 1. Added the first patch of the series which was missing in v5.
+Or even
 
-2. Rebased on top of 'master', which includes
-   jk/branch-shortening-funny-symrefs.
+    struct strbuf root = ((state*)opt->value)->root;
 
-> Interdiff:
->
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index c9a2e5b..6847ac3 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -288,9 +288,11 @@ static int calc_maxwidth(struct ref_array *refs, int remote_bonus)
->
->                 skip_prefix(it->refname, "refs/heads/", &desc);
->                 skip_prefix(it->refname, "refs/remotes/", &desc);
-> -               if (it->kind == FILTER_REFS_DETACHED_HEAD)
-> -                       w = strlen(get_head_description());
-> -               else
-> +               if (it->kind == FILTER_REFS_DETACHED_HEAD) {
-> +                       char *head_desc = get_head_description();
-> +                       w = strlen(head_desc);
-> +                       free(head_desc);
-> +               } else
->                         w = utf8_strwidth(desc);
+and then keep the next lines as is?
 
-Presumably w is computed here to be used later for some kind of
-alignment?  It is curious why we can assume that head_desc does not
-need utf8_strwidth() here.
+> +       strbuf_reset(&state->root);
+> +       strbuf_addstr(&state->root, arg);
+> +       strbuf_complete(&state->root, '/');
+>         return 0;
+>  }
+>
+> @@ -4711,7 +4726,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+>                 OPT_BIT(0, "recount", &options,
+>                         N_("do not trust the line counts in the hunk headers"),
+>                         RECOUNT),
+> -               { OPTION_CALLBACK, 0, "directory", NULL, N_("root"),
+> +               { OPTION_CALLBACK, 0, "directory", &state, N_("root"),
+>                         N_("prepend <root> to all filenames"),
+>                         0, option_parse_directory },
+>                 OPT_END()
+> @@ -4724,6 +4739,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+>         state.line_termination = '\n';
+>         state.p_value = 1;
+>         state.p_context = UINT_MAX;
+> +       strbuf_init(&state.root, 0);
+
+Eventually we want to have some sort of `init_apply_state` function or
+a define which has all the values, I guess?
+
+Compare for example to sliding_window.h, where
+we have
+
+    struct sliding_view {
+        ...
+        struct strbuf buf;
+    };
+
+    #define SLIDING_VIEW_INIT(..., STRBUF_INIT }
+
+>
+>         git_apply_config();
+>         if (apply_default_whitespace)
+> --
+> 2.8.1.300.g5fed0c0
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
