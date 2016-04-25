@@ -1,113 +1,73 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 00/83] libify apply and use lib in am
-Date: Mon, 25 Apr 2016 11:15:38 +0200
-Message-ID: <CAP8UFD2PwqcFPnBGexehKKSog=kkGa_C749QokQE-R3wt0yLqQ@mail.gmail.com>
-References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
-	<571CE4D5.8010403@ramsayjones.plus.com>
-	<CAP8UFD0dEYPSku8w=7ehJFFgtNFO8EbUc4RDn+KRdrYG3-=Rxg@mail.gmail.com>
-	<CAP8UFD0rKNAoZgCPQkfo_qd7b_V4rOtLqBvQ-XQoeT6OnZidGw@mail.gmail.com>
-	<571D059B.2010908@ramsayjones.plus.com>
-	<CACsJy8Bu+fsWP-dmckbSCRvonpqtCyvwGZWHCvjtfSWKY3A6QQ@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v1] travis-ci: build documentation
+Date: Mon, 25 Apr 2016 11:26:02 +0200
+Message-ID: <vpqr3duyr85.fsf@anie.imag.fr>
+References: <1461314042-3132-1-git-send-email-larsxschneider@gmail.com>
+	<vpq37qeovu4.fsf@anie.imag.fr>
+	<xmqqinz9pl3l.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 25 11:15:51 2016
+Content-Type: text/plain
+Cc: larsxschneider@gmail.com, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 25 11:26:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auccK-0004S1-BU
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 11:15:44 +0200
+	id 1aucmk-0000gd-VC
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 11:26:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753972AbcDYJPk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2016 05:15:40 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:37332 "EHLO
-	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753635AbcDYJPj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2016 05:15:39 -0400
-Received: by mail-wm0-f42.google.com with SMTP id n3so116872645wmn.0
-        for <git@vger.kernel.org>; Mon, 25 Apr 2016 02:15:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=73Ysv5QJOFKIA4UooJemZovWfINf0hOcW1j2P59NK0k=;
-        b=JSc95MsjhEkzGcsy4+U0RAl8pgWfw6Na/wtLflL925foZq8iVESKPb6iY13t1KoXXh
-         KCrHOOkxN3W/wJGIHmQ1zQUfUVgAtxHgkiSt1XKK9LqJnc59VJMsTBEhobzphEKypyjc
-         yyPatRjeYmFtyOqx+wUsZxqpciWiGBzOWjShl+SZ5qbbgBamVellyCg8+rIwBHNT+bnP
-         WBXiCQw79xcJXcSuwoysCgvKDi8WCcEV++4c2q1aB1oQrd6ODK5FQt6DiNLH9V848XV9
-         bVcAhQ9B/qfR4734GopPRZhmFULwRc3WVf36fRGzhPmsFG+WZWUNJxmnHy/BYQftu4YF
-         OUCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=73Ysv5QJOFKIA4UooJemZovWfINf0hOcW1j2P59NK0k=;
-        b=e421gJNJFPSNn/TvEXoyzY7CK8Um+HbKkLb82+sy3q5FjAZbBQ0N7y+nJtDz+7yLrm
-         mTYTBh5G/oLq72QF5TfzV7VgcLlqR/acs2xPlYRaSJSsOgk08L0MVBx8VoWTUIqEUfTg
-         z8vX7RRCd4fEhRoFiMuliAiw4dW+UxeNcG3hAJ1Ve4s0vOXJ1y2bg7tuaOD7gC+lHhR9
-         Nw+h24t1KpldwiM7kvHAuTq8P25b8vnK4P6sasFWjBb777jQuYi+6v6/GjN1rw9+Yfx/
-         AngaSOs+mKbH4A0iWqumPlVtxkYLHr2nYdpamUh/gh7UNOxvQRhXgZpH6tmwJE3IfkGb
-         yfbw==
-X-Gm-Message-State: AOPr4FVDd1JhnP8e5o6nZooUX5AENn7MqiEWojKF8d+F6/ItAd43Lr4x7GfK/5bVezav803ZiDVhw5I/O+ctRA==
-X-Received: by 10.28.151.133 with SMTP id z127mr10602346wmd.79.1461575738085;
- Mon, 25 Apr 2016 02:15:38 -0700 (PDT)
-Received: by 10.194.95.129 with HTTP; Mon, 25 Apr 2016 02:15:38 -0700 (PDT)
-In-Reply-To: <CACsJy8Bu+fsWP-dmckbSCRvonpqtCyvwGZWHCvjtfSWKY3A6QQ@mail.gmail.com>
+	id S1753956AbcDYJ00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Apr 2016 05:26:26 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:58344 "EHLO mx2.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753753AbcDYJ0Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2016 05:26:25 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u3P9Q1to011089
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 25 Apr 2016 11:26:01 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u3P9Q2fV010210;
+	Mon, 25 Apr 2016 11:26:02 +0200
+In-Reply-To: <xmqqinz9pl3l.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 22 Apr 2016 11:14:06 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Mon, 25 Apr 2016 11:26:02 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u3P9Q1to011089
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1462181164.86815@SJK3bjGYWt7sWvpzKUXayA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292462>
 
-On Mon, Apr 25, 2016 at 2:14 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Mon, Apr 25, 2016 at 12:42 AM, Ramsay Jones
-> <ramsay@ramsayjones.plus.com> wrote:
->>
->>
->> On 24/04/16 17:56, Christian Couder wrote:
->>> On Sun, Apr 24, 2016 at 6:27 PM, Christian Couder
->>> <christian.couder@gmail.com> wrote:
->>>> On Sun, Apr 24, 2016 at 5:23 PM, Ramsay Jones
->>>> <ramsay@ramsayjones.plus.com> wrote:
->>>>>
->>>>> I just tried to git-am these patches, but patch #78 did not make it
->>>>> to the list.
->>>>
->>>> That's strange because gmail tells me it has been sent, and it made it
->>>> to chriscool@tuxfamily.org.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 >
-> #78 moves 4000k lines around and ends up ~260k in size, I think it may
-> have hit vger limit.
-
-Yeah probably. Thanks for looking at this.
-
-I think I will have to split it into smaller patches in a v2.
-
->>> Instead of waiting for the patch to appear on the list, you might want
->>> to use branch libify-apply-use-in-am25 in my GitHub repo:
->>>
->>> https://github.com/chriscool/git/commits/libify-apply-use-in-am25
+>> larsxschneider@gmail.com writes:
 >>
->> Hmm, that branch doesn't correspond directly to the patches you sent
->> out (there are 86 commits, some marked with draft. I think commit d13d2ac
->> corresponds kinda to patch #83, but .... ).
+>>> +      if [[ "$TRAVIS_OS_NAME" = linux ]] && [[ "$CC" = gcc ]];
 >>
->> I think I'll wait to see the patches as you intend them to be seen. ;-)
+>> [[ is a bashism, and doesn't bring anything here compared to the POSIX
+>> [ ... ], or "test" which is prefered in Git's source code.
+>>
+>> The ; or the newline is not needed either.
 >
-> I git-am'd the series then compared with the rebased version of
-> libify-apply-use-in-am25 on master. 33198a1 (i.e.
-> libify-apply-use-in-am25^) matches what was sent in content (didn't
-> compare commit messages).
+> Honestly, I didn't know that we were even trying to be pure POSIX,
+> avoid bashism or GNUism, or in general to follow our shell scripting
+> style in the scriptlet in the .travis.yml file.
 
-Thanks for checking.
+I'm not implying that we should absolutely avoid non-POSIX constructs,
+just that the conjuction "non-POSIX + not useful" made me prefer to
+remain POSIX.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
