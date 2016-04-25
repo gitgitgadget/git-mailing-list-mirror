@@ -1,102 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC: Supporting .git/hooks/$NAME.d/* && /etc/git/hooks/$NAME.d/*
-Date: Mon, 25 Apr 2016 10:45:45 -0700
-Message-ID: <xmqq4mapmvjq.fsf@gitster.mtv.corp.google.com>
-References: <CACBZZX6j6q2DUN_Z-Pnent1u714dVNPFBrL_PiEQyLmCzLUVxg@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2] string_list: use string-list API in unsorted_string_list_lookup()
+Date: Mon, 25 Apr 2016 10:47:09 -0700
+Message-ID: <CAGZ79kbjtcnRmKPz-vP3C38hsjD3OauAvqctCmhhhfy7g4WDFQ@mail.gmail.com>
+References: <20160422173500.32329-1-ralf.thielow@gmail.com>
+	<20160425174000.24943-1-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git <git@vger.kernel.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 25 19:45:55 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 25 19:47:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auka2-0000LC-5J
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 19:45:54 +0200
+	id 1aukbU-0001An-OL
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 19:47:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933132AbcDYRpu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Apr 2016 13:45:50 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62647 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933071AbcDYRpt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2016 13:45:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0606D14FEB;
-	Mon, 25 Apr 2016 13:45:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=6AIEBJb5sy9n
-	uU0arba1dfgDbvo=; b=FMBc5qijNzIETCY24ksjjFN4Oa177W6h/85GDXKXeLLx
-	hmmicV9sEQOYmuUSSSWyh+ywF0HqFu6JuRy6f9coXMgypjlpsNdXDZsQacBLfk2c
-	1/RKJCUPbCzpusXVduKtUadCwipHII14oHsZF7k7Dx8Mh12qUOEW313QvC8Uwb4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Lr9F8R
-	cen5G8MOYnv7OtlJOK8ZhiGJon5gamHcqdGiYX1bxdTRpMtc9nVM8xJxLePPbHC0
-	/dzWzJ6vUxBFv4WIfzqJxTSQjLDef51DmL4C/8A2L315eCWSFq0FssvU667EHvab
-	Ergd6AaKJyFWd3sc5wyZoTrDQMrPgAxcDJ4Fk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id F2FC914FEA;
-	Mon, 25 Apr 2016 13:45:47 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 61C4814FE9;
-	Mon, 25 Apr 2016 13:45:47 -0400 (EDT)
-In-Reply-To: <CACBZZX6j6q2DUN_Z-Pnent1u714dVNPFBrL_PiEQyLmCzLUVxg@mail.gmail.com>
-	(=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sat, 23 Apr
- 2016 01:51:06
-	+0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8AE4DF6A-0B0D-11E6-88C1-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S933209AbcDYRrR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Apr 2016 13:47:17 -0400
+Received: from mail-io0-f178.google.com ([209.85.223.178]:36766 "EHLO
+	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933183AbcDYRrP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2016 13:47:15 -0400
+Received: by mail-io0-f178.google.com with SMTP id u185so191738336iod.3
+        for <git@vger.kernel.org>; Mon, 25 Apr 2016 10:47:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=CQfu7mHhzelrYfCFP720IZmnsOzcvIS1Cli4M4Uurj8=;
+        b=IVRLkK6nvARY3CTw/rSgszJ+KvTNBznnLlmSBFUYN22H4j3AKDVvVYdef1tE06p2q3
+         il4UnIX9W05bF/XY0fHvyycNztrSIi1LMIKseFtPaimNFeg8ERZ2ubhMxZ9FpenRpf23
+         PSrEw5lf7NDiZ13Bqo845uysI+4rA4ZIWDSDCeA4jJppaHxKKTqG34uQ+kF4NS3lsJpe
+         fxEfoUpCKYM4rlwjhbKTjcypWkXfGgQYxFrG8giJREWocISF3EJ8DDaDHLD5Z7cLrkn/
+         nchXMK8AJBTtBZdGMIBYeBdSNIwfYpAk5jrxKWIPWia9QEVZvwZvxDQdz8rRvVkR9vJ4
+         DVcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=CQfu7mHhzelrYfCFP720IZmnsOzcvIS1Cli4M4Uurj8=;
+        b=IVCnsUi01vmhU/9G478OPkBzr5lKSBzOsyyEZ1nuhLSGejmt9lfjvqztE2rLu97r/B
+         G58fSCmZuG1BhZ5rvVbRO+NCyMy2VKMKRkGt56Bja7VfXPYq+g6s6k0FrjhDAN/hmD0h
+         7FKSFJxwDzbBGjLD16o7dWzfEJsUeo7s7OmGQnpoASh7EpS/1cWaVv3RNWxz8IAwdUIs
+         TLeGW31V5e2pDyRaunSPHKRykqpdWlK+Uw2wCgqilSHP+zSG334Wlb0rWmneqhU/QlCW
+         cFMgzKJXk/xi8L0acU4rxKEONbOkOvk7s/s2SbCWArC+5HsWQ+R67zO2jWth4ZyjFbKo
+         /CKA==
+X-Gm-Message-State: AOPr4FUewIkYIZPVjLujSqc0F6hwqnfqH94lGvPziOMqo3/YdHPZgdp3JA+OCLWRbrIAD3r3Xm3OjDhQtXONgITe
+X-Received: by 10.107.161.68 with SMTP id k65mr45354980ioe.110.1461606429721;
+ Mon, 25 Apr 2016 10:47:09 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Mon, 25 Apr 2016 10:47:09 -0700 (PDT)
+In-Reply-To: <20160425174000.24943-1-ralf.thielow@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292534>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Mon, Apr 25, 2016 at 10:40 AM, Ralf Thielow <ralf.thielow@gmail.com> wrote:
+> Using the string-list API in function unsorted_string_list_lookup()
+> makes the code more readable.
+>
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+> ---
+> Changes since v1:
+> - remove extra curly braces
 
-> The reason for supporting the *.d directories was that I spotted a lo=
-t
-> of hooks people had hacked up at work using the pee(1) command[1] to
-> run sequences of other unrelated hook commands.
+Reviewed-by: Stefan Beller <sbeller@google.com>
 
-IIRC, we wanted to do this several years ago but after discussion
-decided that we didn't want to have this in the core, because we
-didn't want to hardcode the policy on interaction among multiple
-hooks.
-
-You can easily resolve the ordering of hooks--just declare that they
-are executed sequentially in strcmp() order of filenames and users
-will know to prefix them with fixed-number-of-digits to force their
-desired ordering without complaining.
-
-What is harder and the core part cannot unilaterally dictate is what
-should happen after seeing a failure/rejection from a hook.  Some
-hooks among the remainder would not want to be even called.  Some
-others do want to be called but want to learn that the previous
-hooks already have decided to fail/reject the operation.  There may
-even be some others that cannot be moved to earlier part of the hook
-chain for other external constraints (e.g. side effect of some
-previous hook is part of its input), but would want to override the
-previous decision to reject and let the operation pass.
-
-I am happy to see that the idea brought back alive again, but I
-think we prefer this start its life clearly marked as "highly
-experimental and subject to change", then invite interested and
-brave users who tolerate backward incompatible changes to
-experiment, in order to allow us to gauge what the right semantics
-and flexibility the users would want.  One way to do so may be an
-opt-in configuration variable e.g. "experimental.multiHooks";
-another may be to implement the logic as a pair of scripts (one for
-the command line argument variant, the other for stdin variant) and
-ship them in contrib/.
-
-The latter approach (i.e. scripting) might be easier for people to
-experiment and tweak, and in the olden days that would certainly be
-the approach would would have taken, but I am not too afraid of
-appearing uninviting to casual scripters anymore these days, so...
+>
+>  string-list.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/string-list.c b/string-list.c
+> index 2a32a3f..62d2084 100644
+> --- a/string-list.c
+> +++ b/string-list.c
+> @@ -231,12 +231,12 @@ void string_list_sort(struct string_list *list)
+>  struct string_list_item *unsorted_string_list_lookup(struct string_list *list,
+>                                                      const char *string)
+>  {
+> -       int i;
+> +       struct string_list_item *item;
+>         compare_strings_fn cmp = list->cmp ? list->cmp : strcmp;
+>
+> -       for (i = 0; i < list->nr; i++)
+> -               if (!cmp(string, list->items[i].string))
+> -                       return list->items + i;
+> +       for_each_string_list_item(item, list)
+> +               if (!cmp(string, item->string))
+> +                       return item;
+>         return NULL;
+>  }
+>
+> --
+> 2.8.1.430.g7c694c5
+>
