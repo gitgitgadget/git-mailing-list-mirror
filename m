@@ -1,131 +1,544 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: [RFC] How to pass Git config command line instructions to Submodule commands?
-Date: Mon, 25 Apr 2016 12:39:48 +0200
-Message-ID: <60724588-B06E-47E8-9302-8709C4601826@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Stefan Beller <sbeller@google.com>
-To: Git Users <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 25 12:39:59 2016
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v5b 00/17] port branch.c to use ref-filter's printing options
+Date: Mon, 25 Apr 2016 16:22:21 +0530
+Message-ID: <1461581558-32348-1-git-send-email-Karthik.188@gmail.com>
+Cc: jacob.keller@gmail.com, gitster@pobox.com, peff@peff.net,
+	Karthik Nayak <Karthik.188@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 25 12:53:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1audvm-0001L5-Tq
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 12:39:55 +0200
+	id 1aue8R-0007Jz-Td
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Apr 2016 12:53:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932069AbcDYKjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Apr 2016 06:39:51 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:35518 "EHLO
-	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754325AbcDYKju convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2016 06:39:50 -0400
-Received: by mail-wm0-f45.google.com with SMTP id e201so80727614wme.0
-        for <git@vger.kernel.org>; Mon, 25 Apr 2016 03:39:49 -0700 (PDT)
+	id S1754486AbcDYKw5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Apr 2016 06:52:57 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:36583 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754457AbcDYKw4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2016 06:52:56 -0400
+Received: by mail-pa0-f43.google.com with SMTP id bt5so9559627pac.3
+        for <git@vger.kernel.org>; Mon, 25 Apr 2016 03:52:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:content-transfer-encoding:subject:date:message-id:cc:to
-         :mime-version;
-        bh=7orbnASZey5N8EswLCAe5YVBeufKygvdALX1ovRvg84=;
-        b=CybSmz/TX9KmuIHixNI/nsILHAxdaIe4CUFaLzw5QmPLWZy/1F71w/JXo3dL0eu8vk
-         fdsTVPBxIJ6BhgvSDdOtdOtQOM3eVbL9a3wYScvcb2mNy9UDFG1pAJmK++KCk3zNpris
-         2vLhYyoPGX/JLrNRnnsfMibu7xK/b1FNFCfnwaCznw/1Y1+ZIgv/JS4ZfLZuBHrm10kW
-         NaT2Bj4rY0pYH9l4IzecmiSMVjqUSkHhJ/LXktv8prmK8aRYnnaFAxT5yb4geTdUO9UU
-         ihPngLDHB4flzubRainNQKr0R8wTaIQIJWI605Q5l8OCiB3sy3rj0sfWrZN6pVfftknh
-         Tzog==
+        h=from:to:cc:subject:date:message-id;
+        bh=t0pxd7RrfmWGCwmV/ljC3CyNulk+vvxGHIVKbjDyE3o=;
+        b=vG8CfQ7drip9qXgcrdSByshdvKVvQRRyKXN6tMEc4MrF0Ud/3tJ+Jg71Y2H4mFZgN3
+         D5Q5g2FlIAHsrF298nMmXEch7ik99vx1hcWgKQhXwAKrsM7heHJ8brF+lqxttmRXg+Jy
+         I/X9NipQt25mgcQDJ6I6XPoPBalr0gSF2cquTtUzISMzGGsYZKxFLRpy87/uZcuWnd7M
+         j7qwnXTRrHqi+jZpovdGJLWrFm0CwKv6t22VHI+WDFRn0hnmOVT7FXFxjeCcchVDfxY1
+         rja7rBg62kAlwC0KfKuONshThfCk4KKlUIhyGzCBuYrnzEwdIb8F/A8BeANIUFoi//zB
+         DIcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:content-transfer-encoding:subject:date
-         :message-id:cc:to:mime-version;
-        bh=7orbnASZey5N8EswLCAe5YVBeufKygvdALX1ovRvg84=;
-        b=MYM73egq7FzdTa5ujr6PqdknIjxWnGOS78n71SBd7oJ0AL9BaWSHmki2xlZVTSlUQc
-         yWGRxnQebJzkTQtHpyqTAnlA2ADcu+lPKMBTVu8Et/Lo9XuqO2HFI/FAyWZlWiGfexYl
-         cvTx+4qEJ8RdnOYzaYHrasm3pvFaD785RIWDijG/ixRkubgaEVQM+ox39BkfATj7h/gu
-         Zc0lKMICvIALzTUYEPk1Eqno3lsn01bmAbPfA8IMhoMf6y572ntY4zLJATdj/Ykh8AxV
-         kOVN7raSOoUJBd8n0aISKEyFr3e5CARK1snUA1PGrZtaIUme8jq3YvwYWNDxcpoL6RsK
-         O6wQ==
-X-Gm-Message-State: AOPr4FXJmj+DLrS7pe5zpOXp7TzwGlloV4E5q5YV2digezSRyVD/MTrInTwxKaKI8uqKbg==
-X-Received: by 10.28.135.200 with SMTP id j191mr11845416wmd.54.1461580788589;
-        Mon, 25 Apr 2016 03:39:48 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id a207sm13219507wma.8.2016.04.25.03.39.47
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 25 Apr 2016 03:39:47 -0700 (PDT)
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=t0pxd7RrfmWGCwmV/ljC3CyNulk+vvxGHIVKbjDyE3o=;
+        b=A+OWjjoKo26N5mHl3QzQpo2Bu97aQqptgbAJf1FKqvG+ILywmZsG8RzO9f+ryd5/rW
+         SgHYyXoWDKRiGUj2F43GqFhdsumHvT9ty4xcabnBDZ1QBhGKV8ldf19ZOS/kXa2TYIwd
+         vwzKXIt1pS7IBdor/q3R+zlcGbJKgLCxql6WdJ5WGnz8PoIGZU4RzKtiB1JfIfZp4Tqx
+         Z8KvNzEHil+g0Pklu3Lr+NuZfRe0m0R13Ar0Ob67cbCP2iIYikdhJKQE04/9s2g6GFID
+         aFYWoyDln+LZ9dAE4BoH9c4CtA2NvGJkZRaFH6nwqoC87zdQDG1Hu596cj69Te/3qJnl
+         e/Rg==
+X-Gm-Message-State: AOPr4FVnfNgsPWmTCLKzCZHJ+FywodIp5dv7DIxkPr79+7b53RCtC+IlSUdXvR9pFva9Yw==
+X-Received: by 10.66.169.109 with SMTP id ad13mr47425280pac.20.1461581575266;
+        Mon, 25 Apr 2016 03:52:55 -0700 (PDT)
+Received: from ashley.localdomain ([117.192.84.38])
+        by smtp.gmail.com with ESMTPSA id o65sm27710286pfb.24.2016.04.25.03.52.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 25 Apr 2016 03:52:53 -0700 (PDT)
+X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
+X-Mailer: git-send-email 2.8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292467>
 
-Hi,
+This is part of unification of the commands 'git tag -l, git branch -l
+and git for-each-ref'. This ports over branch.c to use ref-filter's
+printing options.
 
-a few folks from the Git LFS project and I try to make cloning of repositories 
-with a lot of LFS files faster. 
+Initially posted here: $(gmane/279226). It was decided that this series
+would follow up after refactoring ref-filter parsing mechanism, which
+is now merged into master (9606218b32344c5c756f7c29349d3845ef60b80c).
 
-The core problem is that Git LFS uses a Git smudge filter to replace LFS 
-pointers with the actual file content. Right now, a smudge filter can only 
-be executed on an individual file which makes the operation slow for many 
-files [1].
+v1 can be found here: $(gmane/288342)
+v2 can be found here: $(gmane/288863)
+v3 can be found here: $(gmane/290299)
+v4 can be found here: $(gmane/291106)
 
-We solved this issue by temporarily disabling the smudge filter for the clone 
-command via Git config (optimized in 1a8630 [2]):
+Changes in this version (v5b):
+1. Added the first patch of the series which was missing in v5.
 
-    git -c filter.lfs.smudge= -c filter.lfs.required=false clone <url> <path>
+Changes in v5:
+1. Rebased on top of jk/branch-shortening-funny-symrefs ($gmane/291295).
+2. Introduced refname_atom_parser_internal() to act as a common ground
+for ref-printing atoms. Written by Jeff ($gmane/291497).
+3. Ensure that ':dir', 'base', 'strip' is available to all ref-printing
+atoms. Written by Jeff.
+4. Fix a memory leak which was reported by Stefan ($gmane/291703).
 
-Afterwards Git LFS runs a special command to download and replace all LFS 
-content in bulk [3]. This works great for LFS repositories.
+Thanks to Junio, Jeff and Stefan for suggestions on the previous version.
 
-However, I noticed that git config command line instructions such as 
-"-c filter.lfs.smudge=" are not passed to Git submodule operations. Thus
-this does not work as expected:
+Karthik Nayak (17):
+  ref-filter: implement %(if), %(then), and %(else) atoms
+  ref-filter: include reference to 'used_atom' within 'atom_value'
+  ref-filter: implement %(if:equals=<string>) and
+    %(if:notequals=<string>)
+  ref-filter: modify "%(objectname:short)" to take length
+  ref-filter: move get_head_description() from branch.c
+  ref-filter: introduce format_ref_array_item()
+  ref-filter: make %(upstream:track) prints "[gone]" for invalid
+    upstreams
+  ref-filter: add support for %(upstream:track,nobracket)
+  ref-filter: make "%(symref)" atom work with the ':short' modifier
+  ref-filter: introduce refname_atom_parser_internal()
+  ref-filter: introduce symref_atom_parser() and refname_atom_parser()
+  ref-filter: make remote_ref_atom_parser() use
+    refname_atom_parser_internal()
+  ref-filter: add `:dir` and `:base` options for ref printing atoms
+  ref-filter: allow porcelain to translate messages in the output
+  branch, tag: use porcelain output
+  branch: use ref-filter printing APIs
+  branch: implement '--format' option
 
-    git -c filter.lfs.smudge= -c filter.lfs.required=false clone --recursive <url> <path>
+ Documentation/git-branch.txt       |   7 +-
+ Documentation/git-for-each-ref.txt |  87 +++++--
+ builtin/branch.c                   | 275 +++++++---------------
+ builtin/tag.c                      |   2 +
+ ref-filter.c                       | 456 +++++++++++++++++++++++++++++++------
+ ref-filter.h                       |   7 +
+ t/t3203-branch-output.sh           |  16 +-
+ t/t6040-tracking-info.sh           |   2 +-
+ t/t6300-for-each-ref.sh            |  73 +++++-
+ t/t6302-for-each-ref-filter.sh     |  94 ++++++++
+ 10 files changed, 726 insertions(+), 293 deletions(-)
 
-I tried to work around that by copying the relevant pieced from the Git 
-Submodule command [4] and applying the command line Git config
-manually (look closely at the modified checkout command):
+Interdiff:
 
-    git -c filter.lfs.smudge= -c filter.lfs.required=false clone $@
-    if [[ -z $2 ]]; then
-        CLONE_PATH=$(basename ${1%.git});
-    else
-        CLONE_PATH=$2;
-    fi
-    pushd "$CLONE_PATH"
-        git submodule init
-        wt_prefix=$(git rev-parse --show-prefix)
-        git submodule--helper list --prefix "$wt_prefix" | {
-            while read mode sha1 stage sm_path
-            do
-                name=$(git submodule--helper name "$sm_path") || exit
-                url=$(git config submodule."$name".url)
-                if ! test -d "$sm_path"/.git && ! test -f "$sm_path"/.git
-                then
-                    git submodule--helper clone --prefix "$wt_prefix" --path "$sm_path" --name "$name" --url "$url"
-                    pushd "$sm_path"
-                        git -c filter.lfs.smudge= -c filter.lfs.required=false checkout -q $sha1 || exit
-                        git-lfs pull || exit
-                    popd
-                fi
-            done
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index 0954269..4a5e9ea 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -116,21 +116,23 @@ objectname::
+
+ upstream::
+        The name of a local ref which can be considered ``upstream''
+-       from the displayed ref. Respects `:short` in the same way as
+-       `refname` above.  Additionally respects `:track` to show
+-       "[ahead N, behind M]" and `:trackshort` to show the terse
+-       version: ">" (ahead), "<" (behind), "<>" (ahead and behind),
+-       or "=" (in sync). `:track` also prints "[gone]" whenever
+-       unknown upstream ref is encountered. Append `:track,nobracket`
+-       to show tracking information without brackets (i.e "ahead N,
+-       behind M").  Has no effect if the ref does not have tracking
+-       information associated with it.
++       from the displayed ref. Respects `:short`, `:strip`, `:base`
++       and `:dir` in the same way as `refname` above.  Additionally
++       respects `:track` to show "[ahead N, behind M]" and
++       `:trackshort` to show the terse version: ">" (ahead), "<"
++       (behind), "<>" (ahead and behind), or "=" (in sync). `:track`
++       also prints "[gone]" whenever unknown upstream ref is
++       encountered. Append `:track,nobracket` to show tracking
++       information without brackets (i.e "ahead N, behind M").  Has
++       no effect if the ref does not have tracking information
++       associated with it.
+
+ push::
+-       The name of a local ref which represents the `@{push}` location
+-       for the displayed ref. Respects `:short`, `:track`, and
+-       `:trackshort` options as `upstream` does. Produces an empty
+-       string if no `@{push}` ref is configured.
++       The name of a local ref which represents the `@{push}`
++       location for the displayed ref. Respects `:short`, `:strip`,
++       `:track`, `:trackshort`, `:base` and `:dir` options as
++       `upstream` does. Produces an empty string if no `@{push}` ref
++       is configured.
+
+ HEAD::
+        '*' if HEAD matches current ref (the checked out branch), ' '
+@@ -165,6 +167,12 @@ if::
+        the value between the %(if:...) and %(then) atoms with the
+        given string.
+
++symref::
++       The ref which the given symbolic ref refers to. If not a
++       symbolic ref, nothing is printed. Respects the `:short`,
++       `:strip`, `:base` and `:dir` options in the same way as
++       `refname` above.
++
+ In addition to the above, for commit and tag objects, the header
+ field names (`tree`, `parent`, `object`, `type`, and `tag`) can
+ be used to specify the value in the header field.
+diff --git a/builtin/branch.c b/builtin/branch.c
+index c9a2e5b..6847ac3 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -288,9 +288,11 @@ static int calc_maxwidth(struct ref_array *refs, int remote_bonus)
+
+                skip_prefix(it->refname, "refs/heads/", &desc);
+                skip_prefix(it->refname, "refs/remotes/", &desc);
+-               if (it->kind == FILTER_REFS_DETACHED_HEAD)
+-                       w = strlen(get_head_description());
+-               else
++               if (it->kind == FILTER_REFS_DETACHED_HEAD) {
++                       char *head_desc = get_head_description();
++                       w = strlen(head_desc);
++                       free(head_desc);
++               } else
+                        w = utf8_strwidth(desc);
+
+                if (it->kind == FILTER_REFS_REMOTES)
+diff --git a/ref-filter.c b/ref-filter.c
+index 3435df1..74c4869 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -50,6 +50,11 @@ struct if_then_else {
+                condition_satisfied : 1;
+ };
+
++struct refname_atom {
++       enum { R_BASE, R_DIR, R_NORMAL, R_SHORT, R_STRIP } option;
++       unsigned int strip;
++};
++
+ /*
+  * An atom is a valid field atom listed below, possibly prefixed with
+  * a "*" to denote deref_tag().
+@@ -67,7 +72,8 @@ static struct used_atom {
+                char color[COLOR_MAXLEN];
+                struct align align;
+                struct {
+-                       enum { RR_NORMAL, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT } option;
++                       enum { RR_REF, RR_TRACK, RR_TRACKSHORT } option;
++                       struct refname_atom refname;
+                        unsigned int nobracket: 1;
+                } remote_ref;
+                struct {
+@@ -82,11 +88,7 @@ static struct used_atom {
+                        enum { O_FULL, O_LENGTH, O_SHORT } option;
+                        unsigned int length;
+                } objectname;
+-               enum { S_FULL, S_SHORT } symref;
+-               struct {
+-                       enum { R_BASE, R_DIR, R_NORMAL, R_SHORT, R_STRIP } option;
+-                       unsigned int strip;
+-               } refname;
++               struct refname_atom refname;
+        } u;
+ } *used_atom;
+ static int used_atom_cnt, need_tagged, need_symref;
+@@ -100,13 +102,34 @@ static void color_atom_parser(struct used_atom *atom, const char *color_value)
+                die(_("unrecognized color: %%(color:%s)"), color_value);
+ }
+
++static void refname_atom_parser_internal(struct refname_atom *atom,
++                                        const char *arg, const char *name)
++{
++       if (!arg)
++               atom->option = R_NORMAL;
++       else if (!strcmp(arg, "short"))
++               atom->option = R_SHORT;
++       else if (skip_prefix(arg, "strip=", &arg)) {
++               atom->option = R_STRIP;
++               if (strtoul_ui(arg, 10, &atom->strip) || atom->strip <= 0)
++                       die(_("positive value expected refname:strip=%s"), arg);
++       } else if (!strcmp(arg, "dir"))
++               atom->option = R_DIR;
++       else if (!strcmp(arg, "base"))
++               atom->option = R_BASE;
++       else
++               die(_("unrecognized %%(%s) argument: %s"), name, arg);
++}
++
+ static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
+ {
+        struct string_list params = STRING_LIST_INIT_DUP;
+        int i;
+
+        if (!arg) {
+-               atom->u.remote_ref.option = RR_NORMAL;
++               atom->u.remote_ref.option = RR_REF;
++               refname_atom_parser_internal(&atom->u.remote_ref.refname,
++                                            arg, atom->name);
+                return;
         }
-    popd
 
-Do you see an easier way to pass command line Git config instructions to the 
-underlaying Git Submodule commands? If not, do you think a patch adding this
-would be worth working on?
+@@ -116,16 +139,17 @@ static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
+        for (i = 0; i < params.nr; i++) {
+                const char *s = params.items[i].string;
 
-I also started a discussion about that on the Git LFS issue page [5].
+-               if (!strcmp(s, "short"))
+-                       atom->u.remote_ref.option = RR_SHORTEN;
+-               else if (!strcmp(s, "track"))
++               if (!strcmp(s, "track"))
+                        atom->u.remote_ref.option = RR_TRACK;
+                else if (!strcmp(s, "trackshort"))
+                        atom->u.remote_ref.option = RR_TRACKSHORT;
+                else if (!strcmp(s, "nobracket"))
+                        atom->u.remote_ref.nobracket = 1;
+-               else
+-                       die(_("unrecognized format: %%(%s)"), atom->name);
++               else {
++                       atom->u.remote_ref.option = RR_REF;
++                       refname_atom_parser_internal(&atom->u.remote_ref.refname,
++                                                    arg, atom->name);
++               }
+        }
 
-Thanks,
-Lars
+        string_list_clear(&params, 0);
+@@ -170,7 +194,7 @@ static void objectname_atom_parser(struct used_atom *atom, const char *arg)
+        else if (!strcmp(arg, "short"))
+                atom->u.objectname.option = O_SHORT;
+        else if (skip_prefix(arg, "short=", &arg)) {
+-               atom->u.contents.option = O_LENGTH;
++               atom->u.objectname.option = O_LENGTH;
+                if (strtoul_ui(arg, 10, &atom->u.objectname.length) ||
+                    atom->u.objectname.length == 0)
+                        die(_("positive value expected objectname:short=%s"), arg);
+@@ -180,6 +204,16 @@ static void objectname_atom_parser(struct used_atom *atom, const char *arg)
+                die(_("unrecognized %%(objectname) argument: %s"), arg);
+ }
 
++static void symref_atom_parser(struct used_atom *atom, const char *arg)
++{
++       return refname_atom_parser_internal(&atom->u.refname, arg, atom->name);
++}
++
++static void refname_atom_parser(struct used_atom *atom, const char *arg)
++{
++       return refname_atom_parser_internal(&atom->u.refname, arg, atom->name);
++}
++
+ static align_type parse_align_position(const char *s)
+ {
+        if (!strcmp(s, "right"))
+@@ -242,41 +276,12 @@ static void if_atom_parser(struct used_atom *atom, const char *arg)
+                die(_("unrecognized %%(if) argument: %s"), arg);
+ }
 
-[1] https://github.com/github/git-lfs/issues/931
-[2] https://github.com/git/git/commit/1a8630dc3b1cc6f1361a4e5d94630133c24c97d9
-[3] https://developer.atlassian.com/blog/2016/04/git-lfs-12-clone-faster/
-[4] https://github.com/git/git/blob/6a6636270fbaf74609cd3e1bd207dd2c420d640a/git-submodule.sh#L686-L731
-[5] https://github.com/github/git-lfs/issues/1172
+-static void symref_atom_parser(struct used_atom *atom, const char *arg)
+-{
+-       if (!arg)
+-               atom->u.symref = S_FULL;
+-       else if (!strcmp(arg, "short"))
+-               atom->u.symref = S_SHORT;
+-       else
+-               die(_("unrecognized %%(symref) argument: %s"), arg);
+-}
+-
+-static void refname_atom_parser(struct used_atom *atom, const char *arg)
+-{
+-       if (!arg)
+-               atom->u.refname.option = R_NORMAL;
+-       else if (!strcmp(arg, "short"))
+-               atom->u.refname.option = R_SHORT;
+-       else if (skip_prefix(arg, "strip=", &arg)) {
+-               atom->u.contents.option = R_STRIP;
+-               if (strtoul_ui(arg, 10, &atom->u.refname.strip) ||
+-                       atom->u.refname.strip <= 0)
+-                       die(_("positive value expected refname:strip=%s"), arg);
+-       } else if (!strcmp(arg, "dir"))
+-               atom->u.contents.option = R_DIR;
+-       else if (!strcmp(arg, "base"))
+-               atom->u.contents.option = R_BASE;
+-       else
+-               die(_("unrecognized %%(refname) argument: %s"), arg);
+-}
+-
+ static struct {
+        const char *name;
+        cmp_type cmp_type;
+        void (*parser)(struct used_atom *atom, const char *arg);
+ } valid_atom[] = {
+-       { "refname", FIELD_STR, refname_atom_parser },
++       { "refname" , FIELD_STR, refname_atom_parser },
+        { "objecttype" },
+        { "objectsize", FIELD_ULONG },
+        { "objectname", FIELD_STR, objectname_atom_parser },
+@@ -1098,7 +1103,7 @@ static const char *strip_ref_components(const char *refname, unsigned int len)
+        while (remaining) {
+                switch (*start++) {
+                case '\0':
+-                       die("ref '%s' does not have %ud components to :strip",
++                       die(_("ref '%s' does not have %ud components to :strip"),
+                            refname, len);
+                case '/':
+                        remaining--;
+@@ -1108,12 +1113,40 @@ static const char *strip_ref_components(const char *refname, unsigned int len)
+        return start;
+ }
+
++static const char *show_ref(struct refname_atom *atom, const char *refname)
++{
++       if (atom->option == R_SHORT)
++               return shorten_unambiguous_ref(refname, warn_ambiguous_refs);
++       else if (atom->option == R_STRIP)
++               return strip_ref_components(refname, atom->strip);
++       else if (atom->option == R_BASE) {
++               const char *sp, *ep;
++
+pp+             if (skip_prefix(refname, "refs/", &sp)) {
++                       ep = strchr(sp, '/');
++                       if (!ep)
++                               return "";
++                       return xstrndup(sp, ep - sp);
++               }
++               return "";
++       } else if (atom->option == R_DIR) {
++               const char *sp, *ep;
++
++               sp = refname;
++               ep = strrchr(sp, '/');
++               if (!ep)
++                       return "";
++               return xstrndup(sp, ep - sp);
++       } else
++               return refname;
++}
++
+ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+                                    struct branch *branch, const char **s)
+ {
+        int num_ours, num_theirs;
+-       if (atom->u.remote_ref.option == RR_SHORTEN)
+-               *s = shorten_unambiguous_ref(refname, warn_ambiguous_refs);
++       if (atom->u.remote_ref.option == RR_REF)
++               *s = show_ref(&atom->u.remote_ref.refname, refname);
+        else if (atom->u.remote_ref.option == RR_TRACK) {
+                if (stat_tracking_info(branch, &num_ours,
+                                       &num_theirs, NULL)) {
+@@ -1145,8 +1178,8 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+                        *s = ">";
+                else
+                        *s = "<>";
+-       } else /* RR_NORMAL */
+-               *s = refname;
++       } else
++               die("BUG: unhandled RR_* enum");
+ }
+
+ char *get_head_description(void)
+@@ -1184,41 +1217,15 @@ static const char *get_symref(struct used_atom *atom, struct ref_array_item *ref
+ {
+        if (!ref->symref)
+                return "";
+-       else if (atom->u.symref == S_SHORT)
+-               return shorten_unambiguous_ref(ref->symref,
+-                                              warn_ambiguous_refs);
+        else
+-               return ref->symref;
++               return show_ref(&atom->u.refname, ref->symref);
+ }
+
+ static const char *get_refname(struct used_atom *atom, struct ref_array_item *ref)
+ {
+        if (ref->kind & FILTER_REFS_DETACHED_HEAD)
+                return get_head_description();
+-       if (atom->u.refname.option == R_SHORT)
+-               return shorten_unambiguous_ref(ref->refname, warn_ambiguous_refs);
+-       else if (atom->u.refname.option == R_STRIP)
+-               return strip_ref_components(ref->refname, atom->u.refname.strip);
+-       else if (atom->u.refname.option == R_BASE) {
+-               const char *sp, *ep;
+-
+-               if (skip_prefix(ref->refname, "refs/", &sp)) {
+-                       ep = strchr(sp, '/');
+-                       if (!ep)
+-                               return "";
+-                       return xstrndup(sp, ep - sp);
+-               }
+-               return "";
+-       } else if (atom->u.refname.option == R_DIR) {
+-               const char *sp, *ep;
+-
+-               sp = ref->refname;
+-               ep = strrchr(sp, '/');
+-               if (!ep)
+-                       return "";
+-               return xstrndup(sp, ep - sp);
+-       } else
+-               return ref->refname;
++       return show_ref(&atom->u.refname, ref->refname);
+ }
+
+ /*
+diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+index 0bd6368..d8edaf2 100755
+--- a/t/t3203-branch-output.sh
++++ b/t/t3203-branch-output.sh
+@@ -189,7 +189,7 @@ test_expect_success 'local-branch symrefs shortened properly' '
+        git symbolic-ref refs/heads/ref-to-remote refs/remotes/origin/branch-one &&
+        cat >expect <<-\EOF &&
+          ref-to-branch -> branch-one
+-         ref-to-remote -> refs/remotes/origin/branch-one
++         ref-to-remote -> origin/branch-one
+        EOF
+        git branch >actual.raw &&
+        grep ref-to <actual.raw >actual &&
+@@ -203,6 +203,8 @@ test_expect_success 'git branch --format option' '
+        Refname is refs/heads/branch-one
+        Refname is refs/heads/branch-two
+        Refname is refs/heads/master
++       Refname is refs/heads/ref-to-branch
++       Refname is refs/heads/ref-to-remote
+        EOF
+        git branch --format="Refname is %(refname)" >actual &&
+        test_cmp expect actual
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 36d32d7..8ff6568 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -57,8 +57,14 @@ test_atom head refname:dir refs/heads
+ test_atom head refname:base heads
+ test_atom head upstream refs/remotes/origin/master
+ test_atom head upstream:short origin/master
++test_atom head upstream:strip=2 origin/master
++test_atom head upstream:dir refs/remotes/origin
++test_atom head upstream:base remotes
+ test_atom head push refs/remotes/myfork/master
+ test_atom head push:short myfork/master
++test_atom head push:strip=1 remotes/myfork/master
++test_atom head push:dir refs/remotes/myfork
++test_atom head push:base remotes
+ test_atom head objecttype commit
+ test_atom head objectsize 171
+ test_atom head objectname $(git rev-parse refs/heads/master)
+@@ -591,4 +597,31 @@ test_expect_success 'Verify usage of %(symref:short) atom' '
+        test_cmp expected actual
+ '
+
++cat >expected <<EOF
++master
++EOF
++
++test_expect_success 'Verify usage of %(symref:strip) atom' '
++       git for-each-ref --format="%(symref:strip=2)" refs/heads/sym > actual &&
++       test_cmp expected actual
++'
++
++cat >expected <<EOF
++refs/heads
++EOF
++
++test_expect_success 'Verify usage of %(symref:dir) atom' '
++       git for-each-ref --format="%(symref:dir)" refs/heads/sym > actual &&
++       test_cmp expected actual
++'
++
++cat >expected <<EOF
++heads
++EOF
++
++test_expect_success 'Verify usage of %(symref:base) atom' '
++       git for-each-ref --format="%(symref:base)" refs/heads/sym > actual &&
++       test_cmp expected actual
++'
++
+ test_done
+
+-- 
+2.8.0
