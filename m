@@ -1,88 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] http: Support sending custom HTTP headers
-Date: Tue, 26 Apr 2016 09:22:44 -0700
-Message-ID: <xmqqeg9sibl7.fsf@gitster.mtv.corp.google.com>
-References: <abe253758829795c285c2036196ebe7edd9bab34.1461589951.git.johannes.schindelin@gmx.de>
-	<xmqq7fflleau.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1604260851390.2896@virtualbox>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH 09/83] builtin/apply: move 'check' global into 'struct apply_state'
+Date: Tue, 26 Apr 2016 18:26:31 +0200
+Message-ID: <CAP8UFD2rD5qo7TBPFdP5BifOGuWHAtZA2BNGDqnY_feoCfmKeQ@mail.gmail.com>
+References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
+	<1461504863-15946-10-git-send-email-chriscool@tuxfamily.org>
+	<CAGZ79kYUr9wQ--898OeyqVw_upqxfVNRsOveUAPSn=PtXZ4xBQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Apr 26 18:22:56 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Apr 26 18:26:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1av5lF-0002Lf-BP
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 18:22:53 +0200
+	id 1av5p3-000438-Cp
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 18:26:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752353AbcDZQWt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2016 12:22:49 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62216 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752257AbcDZQWs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2016 12:22:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 280161499C;
-	Tue, 26 Apr 2016 12:22:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OPjaxASyUVinHoh4AkKzsGG26C0=; b=ZfbCAZ
-	rOtKhUl4g4Q9efwHomHi98WmyCvCRQAzC6Sca5pXcM/W1cNZa8M8/cWDhuWs+z1A
-	XlBEk6J1bV1Ee4chbF3f1+E6IAn7y57sceyDZ7Fvwh2msKeCAt2hg7ytOFK46+NO
-	loZoy3TblFoneXVnu3SFbz8VpIFbs05yD+cXg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=c6hbKFyUYsjq4S5yWwpG9xb/JHy7VJB2
-	Owq8UEsV2boIdikzyuJnyUzPEJzSYIavMspwkI0mVxyPtM9ekMmtFV9uJjL8j0ba
-	G7OWGE0I4e255B6ieUtaCdyXvomB5q83XHIc/Lz4TrtowZkfBFvKBKbVijfODv3Q
-	p7X8y6Ym2Fg=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2052B1499A;
-	Tue, 26 Apr 2016 12:22:47 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8AC3814997;
-	Tue, 26 Apr 2016 12:22:46 -0400 (EDT)
-In-Reply-To: <alpine.DEB.2.20.1604260851390.2896@virtualbox> (Johannes
-	Schindelin's message of "Tue, 26 Apr 2016 17:33:33 +0200 (CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1C807340-0BCB-11E6-8A63-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752231AbcDZQ0p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2016 12:26:45 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:36561 "EHLO
+	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751317AbcDZQ0m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2016 12:26:42 -0400
+Received: by mail-wm0-f51.google.com with SMTP id v188so138346177wme.1
+        for <git@vger.kernel.org>; Tue, 26 Apr 2016 09:26:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=VP/PZHnuhVGRcwBMRn+Bw+lTUzK8tYRfnTWwsmwUtjs=;
+        b=XaV0xXjZz9YnaumntMeUcGP6BMNTsV6HPgxtbPCP9ZVvBFN0DwtkEqS8Pjf+njqLng
+         K6gYILOuCSE9MIURpMIeXanKPCRSsr7EjwgJxTkleZQHRdWhUmWnJ9zBa2+e3dpCS4Nr
+         y6Fhlhq7ilLHpXDKkHyeYohqvyZBfo4SCoRSByLoT8qB41pNzBMpY6dN3RgDp4iEt4oY
+         oGaLa0yCzUXdSfUFSzTRZQa/6hLTipSmrUP3bAyIXwYpI0YzJ/Qmm/36hip26a0qDQBN
+         Md/jAT+daIMdElAvQ1Z7jSPhaaXgqu9ehkHCuvFy1qs83um0O9KUJQvi1jRu81buU6YI
+         hYdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=VP/PZHnuhVGRcwBMRn+Bw+lTUzK8tYRfnTWwsmwUtjs=;
+        b=Hmls1PiBiZkmuxAUTWfEdr32RsSBB4Lq/eEim2mXUbDns/h1H4Gr5CyQ4ZteWFkiSc
+         0V5mTwiYE3ZdXbZ5szQhVp8d+vy+kqqXy/bh+5NzoGVm//a6TcgVbTV9HmPwI3g8wE+I
+         G3aVHa2fvOCjmf5J3rG7cStj79WPYYjrbzGNKz333Vv/6HawMFIMlmAE9OmjyBLNGuyX
+         7344+jmOLf9u1U6c20+WU1bm0NmfpKObLD+VxnOybooyeASKEFJolPfGZQ0YnBokVD99
+         RDQj7lOM6/plW6xun4fcmmnG/jASCFmof5+i6vPfVw64GtiMKUHL01bZAQaR4hzOPZqG
+         NsUQ==
+X-Gm-Message-State: AOPr4FVDAI3oeknBq+/8Xp3uqUY9tDyOAs2bsMw0uIL3+KEKiJP7Pds5YJSzBh/2rJ6pA1qgxe2gbFWxZyAZsQ==
+X-Received: by 10.28.54.33 with SMTP id d33mr4987800wma.62.1461687991316; Tue,
+ 26 Apr 2016 09:26:31 -0700 (PDT)
+Received: by 10.194.95.129 with HTTP; Tue, 26 Apr 2016 09:26:31 -0700 (PDT)
+In-Reply-To: <CAGZ79kYUr9wQ--898OeyqVw_upqxfVNRsOveUAPSn=PtXZ4xBQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292611>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> Testing the headers? I dunno, do we have tests for that already? I thought
-> we did not: it requires an HTTP server (so that the headers are actually
-> sent) that we can force to check the header...
+On Mon, Apr 25, 2016 at 8:57 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Sun, Apr 24, 2016 at 6:33 AM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>> ---
+>>  builtin/apply.c | 16 +++++++++-------
+>>  1 file changed, 9 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/builtin/apply.c b/builtin/apply.c
+>> index ad81210..6c628f6 100644
+>> --- a/builtin/apply.c
+>> +++ b/builtin/apply.c
+>> @@ -25,12 +25,15 @@ struct apply_state {
+>>         const char *prefix;
+>>         int prefix_length;
+>>
+>> +       /*
+>> +        *  --check turns on checking that the working tree matches the
+>> +        *    files that are being modified, but doesn't apply the patch
 >
-> So I see we have some tests that use Apache, and one that uses our own
-> http-backend. But is there already anything that logs HTTP requests? I did
-> not think so, please correct me if I am wrong.
+> This is true, but at this part of the file/code we rather want to know what
+> `check` does, instead of what the command line option --check does.
+> (They are 2 different things, though one leading to the other one?) How about:
+>
+>     /*
+>      * Only check the files to be modified, but do not modify the files.
+>      */
+>
+>
+>>  /*
+>> - *  --check turns on checking that the working tree matches the
+>> - *    files that are being modified, but doesn't apply the patch
+>
+> Oh I see it was moved from here. Not sure if we want to rename
+> comments along the way or just keep it in this series.
 
-I suspect that no codepath in the current system has cared about
-what http headers are sent; auth stuff might have but even then I
-would imagine that a test for auth would observe the end result
-(i.e. it would ask "did the server accept or reject us?") not the
-mechanism (i.e. it would not ask "did we correctly send an
-Authorization header?").
-
-So I wouldn't be surprised if this topic is the first one that cares
-exactly what headers are sent out (eh, rather, "we told Git to send
-this and that header, do they appear at the server end?"), in which
-case it is very likely that we do not have any existing test that
-can be imitated for that purpose X-<.
-
-In other words, the answer to "Do we already have a test so that I
-can mimick it instead of thinking of a way to test this?" would
-probably be "No".
-
-Do we care about this feature deeply enough to devise a mechanism
-to prevent it from getting broken by careless others in the future?
+I kept the existing comments when they were still relevant.
+It could be a cleanup to change them to something like what you
+suggest, but as it is not important for this series which is already
+long, I prefer to leave it for now.
