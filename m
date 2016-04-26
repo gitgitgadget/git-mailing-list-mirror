@@ -1,123 +1,95 @@
-From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
-Subject: Re: [PATCH] Update git-p4 to be compatible with git-lfs 1.2
-Date: Tue, 26 Apr 2016 01:10:56 +0200
-Message-ID: <20160426011056.Horde.yl47nWMpVGsuGDgrKiKb_nR@webmail.informatik.kit.edu>
-References: <E230B4FD-79B5-4CA7-9F0D-A4F8F3470296@gmail.com>
- <20160425162502.31558-1-szeder@ira.uka.de>
- <xmqq8u01mwji.fsf@gitster.mtv.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] clone: add `--shallow-submodules` flag
+Date: Mon, 25 Apr 2016 18:08:39 -0700
+Message-ID: <CAGZ79kYJeqjoxXmcoe8ZdsdpwEjFrf4MtOuJsZ3EZr0NMuNAaQ@mail.gmail.com>
+References: <1461609054-17118-1-git-send-email-sbeller@google.com>
+	<xmqqd1pdjt7m.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kbPcefodLd4Jt4tvJJmHZXJGe-AMEgzREWZiUvNeciFSQ@mail.gmail.com>
+	<xmqqvb35iabx.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed	DelSp=Yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	Ben Woosley <Ben.Woosley@gmail.com>,
-	Luke Diamand <luke@diamand.org>,
-	Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Cc: Jacob Keller <jacob.keller@gmail.com>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 26 01:11:35 2016
+X-From: git-owner@vger.kernel.org Tue Apr 26 03:08:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aupfD-000687-71
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 01:11:35 +0200
+	id 1aurUe-00081J-Np
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 03:08:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752562AbcDYXLb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Apr 2016 19:11:31 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:34907 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751848AbcDYXLa convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2016 19:11:30 -0400
-Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	iface 141.3.10.81 id 1aupf2-0000Td-IT; Tue, 26 Apr 2016 01:11:24 +0200
-Received: from apache by webmail.ira.uka.de with local (Exim 4.84_2)
-	(envelope-from <szeder@ira.uka.de>)
-	id 1aupea-0002F2-R2; Tue, 26 Apr 2016 01:10:56 +0200
-Received: from x4db01c0d.dyn.telefonica.de (x4db01c0d.dyn.telefonica.de
- [77.176.28.13]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
- Tue, 26 Apr 2016 01:10:56 +0200
-In-Reply-To: <xmqq8u01mwji.fsf@gitster.mtv.corp.google.com>
-User-Agent: Horde Application Framework 5
-Content-Disposition: inline
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1461625884.
+	id S1751220AbcDZBIl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Apr 2016 21:08:41 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:36540 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750817AbcDZBIk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2016 21:08:40 -0400
+Received: by mail-ig0-f172.google.com with SMTP id u10so28141250igr.1
+        for <git@vger.kernel.org>; Mon, 25 Apr 2016 18:08:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=A4fCGPm6eQiEg+1oLVTp9q705PbJegfp2/C583BTwDU=;
+        b=G6TV/1J+l0bwh01EATKKMHrIsChyZJdzg7aTJQMe5pLFe6cV1w5w3hnWf1wvQ2bUkA
+         /tU3qqxNIehnIyaFksWwZrF2t8K3WWdrG+oT+VyN9lw9PKaCIEJ7NpnjMhe9ggZ+ZHM6
+         rFhVkqQ1uujZqySWUwke+L3Afm76FtNuvZ40h4QFfxcRzUFmgKGUcgOx45pyc0q3a9O9
+         RUBxbBnJCX4QfwciNvFL4y8jmzwixso9tjlyZ7oKfxCN/T05u48p6LUZ1rcEJKVRsaEE
+         gzq6eVXFR1O192UxmJqvFXed70Gvr9X8tJ664+owAa2PTU9jtWtQQhGXRwBJFHg1IVw8
+         xsng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=A4fCGPm6eQiEg+1oLVTp9q705PbJegfp2/C583BTwDU=;
+        b=cmIviBinXDyrlaD/tA84E5g/3ccoyXVjiyU/ce5krrzmtxRQxoKq4K6w3QYlhQvRrA
+         HNpkRsXonEQbAzBSzfmTyfGL/Y+Z/UAck/4VZTDGaiaG8AdPxMhOYvzUsZ8z0OmUJBzf
+         v+DNnKp9vZ7LeT0eZQMxl3lXCkgA9uiJAwHRZ1a6c+lSKluL6OueNG1wENfK78mhFOYT
+         UBLjbndvdu7meHoAUUCYZ/FtGOcfZWfK4zQGvfc+ZWNjRKSAmX1FPVeG10crVnCOvvLJ
+         r9SK3v6whZMjWO2pa8Ea6Bxq2PXI+ZOUdgxRrYenp++l8bZszjrBB/sLxN8oZxKcKSFu
+         Do6g==
+X-Gm-Message-State: AOPr4FXarUzpn1lywcwCs6jTBmrZYcn5mzwfwfuIKf9FgeY2XeIdfAe8NrMSSkuB3pNwhWBKpipdNHteN8LK8nRL
+X-Received: by 10.50.102.207 with SMTP id fq15mr10842285igb.94.1461632919703;
+ Mon, 25 Apr 2016 18:08:39 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Mon, 25 Apr 2016 18:08:39 -0700 (PDT)
+In-Reply-To: <xmqqvb35iabx.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292581>
 
-
-Quoting Junio C Hamano <gitster@pobox.com>:
-
-> SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+On Mon, Apr 25, 2016 at 3:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
->> You can have a look at these patches at
->>
->>   https://github.com/szeder/git completion-test-multiple-bash-versio=
-ns
->>
->> and perhaps you could even adapt it to LFS and/or p4 somehow.
->>
->>> Plus if we want to be consistent we would
->>> need to do the same for LFS 1.0, 1.2, and for pretty much every oth=
-er
->>> dependency...
->>
->> I'm not sure we should be consistent in this case, at least not sole=
-ly
->> for consistency's sake and not in git.git. Taking what I did for Bas=
-h
->> and doing it for different versions of LFS, p4, etc. could perhaps
->> keep the runtime under control, but t/Makefile would surely get out
->> of control rather quickly.  Putting these into a travis-ci matrix is
->> so much simpler, but the runtime makes it infeasible, of course.
+>> I agree. How about `currentdir`, `testdir` or `testtop` instead?
+>> That is slightly longer than `D`, `here` or `top`, but is slightly more
+>> informative. $TRASH would also work for me.
 >
-> I took a brief look of your branch, and I like its approach.  If I
-> understood your approach correctly, you:
+> I would not be happy to see a patch that adds yet another variable
+> that is never used so far, like currentdir, testdir, or testtop.
+
+D seems to be popular in 5510, the submodule crowd seems to prefer
+$pwd though, see
+t5526-fetch-submodules.sh
+t7406-submodule-update.sh
+t7407-submodule-foreach.s
+t7400-submodule-basic.sh
+
+as grep -r "\$pwd" put it.
+
 >
->  * Group selected tests in t/ as "these are bash related tests I
->    care about" in t/Makefile;
+> Among the ones I found that are already in use, $here is probably my
+> favourite, because it does _not_ have to be set to the top; it just
+> says "this is the directory my main focus is in".
+>
+> Having said that, personally, I find $D (as long as D is in capital)
+> is distinctive and descriptive enough.
 
-Yes.
+I rather go with pwd for now (it keeps the submodule stuff consistent),
 
->  * Add Travis test target to build Git with specific versions of
->    bash, and run the above target instead of the full test to
->    exercise the version of bash you are testing.
-
-Not quite.
-
-   * Add t/Makefile targets to run a Bash-related test script with a
-     specific Bash version, one target for each script-version pair,
-     and a target to run all Bash-related tests with all listed
-     Bash-versions.
-
-   * Extend the travis-ci config so that, after building Git as usual
-     and running the full test suite as usual, it additionaly runs all
-     Bash-related tests will all listed Bash versions on Linux builds.
-
-> And I agree that the same can be done for LFS versions and P4
-> versions.  Only a handful tests in t/ are about these niches.
-
-Luckily for me, running a test script with a specific Bash version is
-as trivial as '/path/to/bash-vX.Y t9902-completion.sh'.  No
-modifications to the test scripts or to lib-bash.sh were necessary.
-
-OTOH, Git LFS and p4 tests, AFAICS, rely on git-lfs and p4 binaries
-being available in $PATH, and the p4 tests need two binaries.  So
-there is more work that has to be done, as we would need a way to
-override those binaries found in $PATH, either through an environment
-variable or a command line option.  Bonus points for a solution that
-would work equally well with LFS, p4 and Bash: then perhaps we could
-have a single unified block of Makefile metaprogramming, which could
-generate  all those test targets from a list of dependency-specific
-tests and a list of paths to different versions of that dependency.
-Then it might even be suitable for inclusion in git.git.
-
-
->> I think the best we can do is to keep this out of git.git and let
->> (hope?) developers interested in a particular subsystem do this
->> "multiple version compatibility" tests as they see fit.
+Thanks,
+Stefan
