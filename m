@@ -1,100 +1,88 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 05/83] builtin/apply: extract line_by_line_fuzzy_match()
- from match_fragment()
-Date: Tue, 26 Apr 2016 18:15:05 +0200
-Message-ID: <CAP8UFD228joDLyomvae7rVs02TuTbmEHerwWvH=VR+FE-YFLRA@mail.gmail.com>
-References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
-	<1461504863-15946-6-git-send-email-chriscool@tuxfamily.org>
-	<CAGZ79kYi0seMF12+Y4VxHBJxTh9wo4LUw0A50PYRvZEBvj6SBA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] http: Support sending custom HTTP headers
+Date: Tue, 26 Apr 2016 09:22:44 -0700
+Message-ID: <xmqqeg9sibl7.fsf@gitster.mtv.corp.google.com>
+References: <abe253758829795c285c2036196ebe7edd9bab34.1461589951.git.johannes.schindelin@gmx.de>
+	<xmqq7fflleau.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1604260851390.2896@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Apr 26 18:15:16 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Apr 26 18:22:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1av5dr-0007Pt-Oy
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 18:15:16 +0200
+	id 1av5lF-0002Lf-BP
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 18:22:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752395AbcDZQPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2016 12:15:09 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:37891 "EHLO
-	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752036AbcDZQPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2016 12:15:07 -0400
-Received: by mail-wm0-f41.google.com with SMTP id u206so12989630wme.1
-        for <git@vger.kernel.org>; Tue, 26 Apr 2016 09:15:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=mESAsCLq8iZJtuts3JIctQlrhvtlqLdVGxzn6h8QSlo=;
-        b=laFY6N+7mt04Ji2AqmyPimSa4+28InPMf5SE2bnJ3RePCq6vkFWmJXauHAPKZFKWI8
-         U9gt/3wxwiRFkX7hbDl5iyehhkKZjGnM2md3A/YeCxfuHYMncOGd8i9kr8OwQMmDUR8s
-         u3hTtDEuvmHCGbjHhzQgvdOePBUl9dYtvZ8WBK4SexNSjsl6dE4upldUMNqohejg8eTK
-         9QF03TenOuDbvUiVu6z/0OD48x8d3Z0LrkRew1IgarpiqgC7o5fbmDQqSWWeT28Og5w9
-         tJ67oedMjfE4sKCPmVpHp4gMpVqSFlLLZcWZ2poFy3Tq08yEezfvkjdYT1JzlIk/4oUE
-         0lUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=mESAsCLq8iZJtuts3JIctQlrhvtlqLdVGxzn6h8QSlo=;
-        b=Pi81xQd4YEX5HGeojrQb+AklpUElLLNwEfban9cAE/dYZvMk786kK3X5zWOz0eNjmK
-         tt1yJY/de2V2OJxf/aeTw+ckb2SMAJ1SzlxWXN+8xzZ09/kvTBjjSD0gzfsK3P2uYL8Q
-         OGkkm+H5qk+S0w1RzvInRmwhWZ8CQpd2dKRgdyzJblF+e0kdHtNd9KI+NRdCq2vWRc1P
-         77OexV+phnB7wkAnz296NH9nwm3cQv9VOn4aS2O25DuXwnadWyI/DadOfHB3y3ILvER7
-         kCZgJNNl1GpBtBgB6bEqb5HbdtP//1ziGTaPLvM32S75N+xD8sF/MiHqZKcB7jbjCq1S
-         2QFA==
-X-Gm-Message-State: AOPr4FX+fzqSuZMmT/oW3umDNdkXILYSRZLST/qUCIl28ACaIJR9BCZ7L/OB4dGu813MtqXWh6xbbq9PMPN1mg==
-X-Received: by 10.194.117.70 with SMTP id kc6mr4512464wjb.94.1461687305609;
- Tue, 26 Apr 2016 09:15:05 -0700 (PDT)
-Received: by 10.194.95.129 with HTTP; Tue, 26 Apr 2016 09:15:05 -0700 (PDT)
-In-Reply-To: <CAGZ79kYi0seMF12+Y4VxHBJxTh9wo4LUw0A50PYRvZEBvj6SBA@mail.gmail.com>
+	id S1752353AbcDZQWt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2016 12:22:49 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62216 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752257AbcDZQWs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2016 12:22:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 280161499C;
+	Tue, 26 Apr 2016 12:22:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OPjaxASyUVinHoh4AkKzsGG26C0=; b=ZfbCAZ
+	rOtKhUl4g4Q9efwHomHi98WmyCvCRQAzC6Sca5pXcM/W1cNZa8M8/cWDhuWs+z1A
+	XlBEk6J1bV1Ee4chbF3f1+E6IAn7y57sceyDZ7Fvwh2msKeCAt2hg7ytOFK46+NO
+	loZoy3TblFoneXVnu3SFbz8VpIFbs05yD+cXg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=c6hbKFyUYsjq4S5yWwpG9xb/JHy7VJB2
+	Owq8UEsV2boIdikzyuJnyUzPEJzSYIavMspwkI0mVxyPtM9ekMmtFV9uJjL8j0ba
+	G7OWGE0I4e255B6ieUtaCdyXvomB5q83XHIc/Lz4TrtowZkfBFvKBKbVijfODv3Q
+	p7X8y6Ym2Fg=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2052B1499A;
+	Tue, 26 Apr 2016 12:22:47 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8AC3814997;
+	Tue, 26 Apr 2016 12:22:46 -0400 (EDT)
+In-Reply-To: <alpine.DEB.2.20.1604260851390.2896@virtualbox> (Johannes
+	Schindelin's message of "Tue, 26 Apr 2016 17:33:33 +0200 (CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1C807340-0BCB-11E6-8A63-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292610>
 
-On Mon, Apr 25, 2016 at 8:50 PM, Stefan Beller <sbeller@google.com> wrote:
->> @@ -2251,7 +2319,7 @@ static int match_fragment(struct image *img,
->>                           int match_beginning, int match_end)
->>  {
->>         int i;
->> -       char *fixed_buf, *buf, *orig, *target;
->> +       char *fixed_buf, *orig, *target;
->>         struct strbuf fixed;
->>         size_t fixed_len, postlen;
->>         int preimage_limit;
->> @@ -2312,6 +2380,7 @@ static int match_fragment(struct image *img,
->>                  * There must be one non-blank context line that match
->>                  * a line before the end of img.
->>                  */
->> +               char *buf;
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> Testing the headers? I dunno, do we have tests for that already? I thought
+> we did not: it requires an HTTP server (so that the headers are actually
+> sent) that we can force to check the header...
 >
-> patches 1-4 looking good, with no comment from me. Here is the first spot to
-> comment on.
->
-> It's not clear why we need to declare buf here? Oh wait it is. It's just
-> moved from the start of the function. But why do it in this patch?
-> It seems unrelated to the general intent of the patch. No need to reroll
-> for this nit alone, it just took me a while to figure out it was an unrelated
-> thing.
+> So I see we have some tests that use Apache, and one that uses our own
+> http-backend. But is there already anything that logs HTTP requests? I did
+> not think so, please correct me if I am wrong.
 
-Yeah, I agree it's a bit unrelated. But rather than add another patch
-to an already long series just for this, I added the following to the
-commit message:
+I suspect that no codepath in the current system has cared about
+what http headers are sent; auth stuff might have but even then I
+would imagine that a test for auth would observe the end result
+(i.e. it would ask "did the server accept or reject us?") not the
+mechanism (i.e. it would not ask "did we correctly send an
+Authorization header?").
 
-While at it, let's reduce the scope of "char *buf" in match_fragment().
+So I wouldn't be surprised if this topic is the first one that cares
+exactly what headers are sent out (eh, rather, "we told Git to send
+this and that header, do they appear at the server end?"), in which
+case it is very likely that we do not have any existing test that
+can be imitated for that purpose X-<.
+
+In other words, the answer to "Do we already have a test so that I
+can mimick it instead of thinking of a way to test this?" would
+probably be "No".
+
+Do we care about this feature deeply enough to devise a mechanism
+to prevent it from getting broken by careless others in the future?
