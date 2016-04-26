@@ -1,155 +1,152 @@
-From: Xiaolong Ye <xiaolong.ye@intel.com>
-Subject: [PATCH v6 4/4] format-patch: introduce format.useAutoBase configuration
-Date: Tue, 26 Apr 2016 15:51:24 +0800
-Message-ID: <1461657084-9223-5-git-send-email-xiaolong.ye@intel.com>
-References: <1461657084-9223-1-git-send-email-xiaolong.ye@intel.com>
-Cc: fengguang.wu@intel.com, ying.huang@intel.com, philip.li@intel.com,
-	julie.du@intel.com, Xiaolong Ye <xiaolong.ye@intel.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 26 09:52:54 2016
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: RFC: Supporting .git/hooks/$NAME.d/* && /etc/git/hooks/$NAME.d/*
+Date: Tue, 26 Apr 2016 12:58:04 +0200
+Message-ID: <CACBZZX6AYBYeb5S4nEBhYbx1r=icJ81JGYBx5=H4wacPhHjFbQ@mail.gmail.com>
+References: <CACBZZX6j6q2DUN_Z-Pnent1u714dVNPFBrL_PiEQyLmCzLUVxg@mail.gmail.com>
+ <xmqq4mapmvjq.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 26 12:58:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auxnh-00082T-29
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 09:52:53 +0200
+	id 1av0hP-00007M-Q9
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 12:58:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752582AbcDZHwp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2016 03:52:45 -0400
-Received: from mga09.intel.com ([134.134.136.24]:45363 "EHLO mga09.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752324AbcDZHwo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2016 03:52:44 -0400
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga102.jf.intel.com with ESMTP; 26 Apr 2016 00:52:44 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.24,536,1455004800"; 
-   d="scan'208";a="962812093"
-Received: from yexl-desktop.sh.intel.com ([10.239.159.139])
-  by orsmga002.jf.intel.com with ESMTP; 26 Apr 2016 00:52:42 -0700
-X-Mailer: git-send-email 2.6.4
-In-Reply-To: <1461657084-9223-1-git-send-email-xiaolong.ye@intel.com>
+	id S1752274AbcDZK60 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Apr 2016 06:58:26 -0400
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:34437 "EHLO
+	mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751977AbcDZK6Z convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2016 06:58:25 -0400
+Received: by mail-qk0-f193.google.com with SMTP id i7so687365qkd.1
+        for <git@vger.kernel.org>; Tue, 26 Apr 2016 03:58:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=hkrc5PIsKvKC8lGob8C/p/bsbAkGhN5MNrd2SO4V42k=;
+        b=kLdBCW+mlUER2bq8nh7sHJ6hEbIEJiP0Mx/Q3G+x9vYL3+f+uRQc6ASsPbBJ3ZbdQ+
+         dtAdvfN111frFLTvqhMpPUZk0ejiSUhJtu5mMnp1SI3afxz737/crIPlyUMNU+HCra1y
+         UPsotCHV2Ky5aVWzuQQ1638wajaVQdkUY0fwys9fJc7t8W5iDN+xTVnCT/Dpe3+cTayA
+         oLVei76/HEw0BPNB+WxnmeKecEY3BSZ5aoKTl2rLPYXmnca1tepsAMpXZoTqHd3PKKqw
+         WBrFTnBgallTdZRe3NPQsq8QwCeN3vz30L91koBGKKeEKfjiGwg8cE6hxmlX38sPkjIO
+         As3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=hkrc5PIsKvKC8lGob8C/p/bsbAkGhN5MNrd2SO4V42k=;
+        b=KkFB4jezKiA/IEyy0fPXeshbUGWJkguciiGa2YHZrDFf5GvxHbpqojx0ImdcFAOAmo
+         n+bQ619MVJo3R/vLRn35cmW48Gre9EF4DxnYXix1BmGZELM1KxDJz54AENmrlEsMgUWE
+         bz7p+S6t8PfhuHshfkugKmekGtOTZZBIkkuLvN87I0PuzKxYuwxoppsPZRLjJRXb/Ma7
+         lDxdS/uoCltpukBf5okRESpqFKgPiChde5h4x7JRc70Aptrq/3Z9VLAMvmeUNG2ZlIq5
+         /rBpDF9epJE2QahfmyOQC62spuW0dQrQZCGxyLS/M4fUBmsXDlc50P+C5GroeU7W38Gp
+         5Ufg==
+X-Gm-Message-State: AOPr4FWVpdfht3u9B3O2TL1QfVbrFSMBBj6xP/j3FM+nV15QneJKZA2Lq1nKSUM85eKjjo1a+EQzrUaiSYGZ0g==
+X-Received: by 10.55.161.7 with SMTP id k7mr1531908qke.112.1461668304333; Tue,
+ 26 Apr 2016 03:58:24 -0700 (PDT)
+Received: by 10.55.77.133 with HTTP; Tue, 26 Apr 2016 03:58:04 -0700 (PDT)
+In-Reply-To: <xmqq4mapmvjq.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292597>
 
-This allows to record the base commit automatically, it is equivalent
-to set --base=auto in cmdline.
+On Mon, Apr 25, 2016 at 7:45 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> The reason for supporting the *.d directories was that I spotted a l=
+ot
+>> of hooks people had hacked up at work using the pee(1) command[1] to
+>> run sequences of other unrelated hook commands.
+>
+> IIRC, we wanted to do this several years ago but after discussion
+> decided that we didn't want to have this in the core, because we
+> didn't want to hardcode the policy on interaction among multiple
+> hooks.
 
-The format.useAutoBase has lower priority than command line option,
-so if user set format.useAutoBase and pass the command line option in
-the meantime, base_commit will be the one passed to command line
-option.
+Ah, would be interesting to see that discussion if someone knows
+enough to dig it up, didn't find it with some brief searching.
 
-Signed-off-by: Xiaolong Ye <xiaolong.ye@intel.com>
----
- Documentation/config.txt |  5 +++++
- builtin/log.c            | 17 +++++++++++------
- t/t4014-format-patch.sh  | 19 +++++++++++++++++++
- 3 files changed, 35 insertions(+), 6 deletions(-)
+> You can easily resolve the ordering of hooks--just declare that they
+> are executed sequentially in strcmp() order of filenames and users
+> will know to prefix them with fixed-number-of-digits to force their
+> desired ordering without complaining.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 42d2b50..1fe2a85 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1259,6 +1259,11 @@ format.outputDirectory::
- 	Set a custom directory to store the resulting files instead of the
- 	current working directory.
- 
-+format.useAutoBase::
-+	A boolean value which lets you enable the `--base=auto` option of
-+	format-patch by default.
-+
-+
- filter.<driver>.clean::
- 	The command which is used to convert the content of a worktree
- 	file to a blob upon checkin.  See linkgit:gitattributes[5] for
-diff --git a/builtin/log.c b/builtin/log.c
-index db27135..099f4f7 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -702,6 +702,7 @@ static void add_header(const char *value)
- #define THREAD_DEEP 2
- static int thread;
- static int do_signoff;
-+static int base_auto;
- static const char *signature = git_version_string;
- static const char *signature_file;
- static int config_cover_letter;
-@@ -786,6 +787,10 @@ static int git_format_config(const char *var, const char *value, void *cb)
- 	}
- 	if (!strcmp(var, "format.outputdirectory"))
- 		return git_config_string(&config_output_directory, var, value);
-+	if (!strcmp(var, "format.useautobase")) {
-+		base_auto = git_config_bool(var, value);
-+		return 0;
-+	}
- 
- 	return git_log_config(var, value, cb);
- }
-@@ -1205,7 +1210,11 @@ static struct commit *get_base_commit(const char *base_commit,
- 	struct commit **rev;
- 	int i = 0, rev_nr = 0;
- 
--	if (!strcmp(base_commit, "auto")) {
-+	if (base_commit && strcmp(base_commit, "auto")) {
-+		base = lookup_commit_reference_by_name(base_commit);
-+		if (!base)
-+			die(_("Unknown commit %s"), base_commit);
-+	} else if ((base_commit && !strcmp(base_commit, "auto")) || base_auto) {
- 		struct branch *curr_branch = branch_get(NULL);
- 		const char *upstream = branch_get_upstream(curr_branch, NULL);
- 		if (upstream) {
-@@ -1227,10 +1236,6 @@ static struct commit *get_base_commit(const char *base_commit,
- 			      "please use git branch --set-upstream-to to track a remote branch.\n"
- 			      "Or you could specify base commit by --base=<base-commit-id> manually."));
- 		}
--	} else {
--		base = lookup_commit_reference_by_name(base_commit);
--		if (!base)
--			die(_("Unknown commit %s"), base_commit);
- 	}
- 
- 	ALLOC_ARRAY(rev, total);
-@@ -1669,7 +1674,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	memset(&bases, 0, sizeof(bases));
--	if (base_commit) {
-+	if (base_commit || base_auto) {
- 		struct commit *base = get_base_commit(base_commit, list, nr);
- 		reset_revision_walk();
- 		prepare_bases(&bases, base, list, nr);
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 8102158..8049cad 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -1546,4 +1546,23 @@ test_expect_success 'format-patch errors out when history involves criss-cross'
- 	test_must_fail 	git format-patch --base=auto -1
- '
- 
-+test_expect_success 'format-patch format.useAutoBaseoption' '
-+	test_when_finished "git config --unset format.useAutoBase" &&
-+	git checkout local &&
-+	git config format.useAutoBase true &&
-+	git format-patch --stdout -1 >patch &&
-+	grep "^base-commit:" patch >actual &&
-+	echo "base-commit: $(git rev-parse upstream)" >expected &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'format-patch --base overrides format.useAutoBase' '
-+	test_when_finished "git config --unset format.useAutoBase" &&
-+	git config format.useAutoBase true &&
-+	git format-patch --stdout --base=HEAD~1 -1 >patch &&
-+	grep "^base-commit:" patch >actual &&
-+	echo "base-commit: $(git rev-parse HEAD~1)" >expected &&
-+	test_cmp expected actual
-+'
-+
- test_done
--- 
-2.8.1.343.gda643e5
+In principle you're describing glob() order here:
+http://pubs.opengroup.org/onlinepubs/7908799/xsh/glob.html
+
+We don't set LC_COLLATE in git so this'll be C order, which I think
+will just fall back to strcmp().
+
+If it doesn't and there's a functional difference, I'm not sure, it's
+probably less confusing to use glob() order, since that's what you'll
+get with shell expansion.
+
+I.e. it would be confusing if you expand the hooks in the shell, and
+git executes them in a slightly different order.
+
+> What is harder and the core part cannot unilaterally dictate is what
+> should happen after seeing a failure/rejection from a hook.  Some
+> hooks among the remainder would not want to be even called.  Some
+> others do want to be called but want to learn that the previous
+> hooks already have decided to fail/reject the operation.  There may
+> even be some others that cannot be moved to earlier part of the hook
+> chain for other external constraints (e.g. side effect of some
+> previous hook is part of its input), but would want to override the
+> previous decision to reject and let the operation pass.
+
+I think it's fair enough to say that if we had this facility this
+would be good enough:
+
+ * Your hooks are executed in glob() order, local .git first, then /etc=
+/git/...
+
+ * If it's a hook like pre-commit that can reject something the first
+hook to fail short-circuits. I.e. none of the rest get executed.
+
+ * If it's not a hook like that e.g. post-commit all of the hooks will
+get executed.
+
+ * If you need anything more complex you can just wrap your hooks in
+your own shellscript.
+
+I.e. it takes care of the common case where:
+
+ * You just want to execute N hooks and don't want to write a wrapper.
+
+ * For pre-* hooks the common case is it doesn't matter /what/
+rejected things, just that it gets rejected, e.g. for pre-receive.
+Also if you care about performance you can order them in
+cheapest-first order.
+
+> I am happy to see that the idea brought back alive again, but I
+> think we prefer this start its life clearly marked as "highly
+> experimental and subject to change", then invite interested and
+> brave users who tolerate backward incompatible changes to
+> experiment, in order to allow us to gauge what the right semantics
+> and flexibility the users would want.  One way to do so may be an
+> opt-in configuration variable e.g. "experimental.multiHooks";
+> another may be to implement the logic as a pair of scripts (one for
+> the command line argument variant, the other for stdin variant) and
+> ship them in contrib/.
+
+Makes sense to have an experimental.* config tree for git for stuff lik=
+e this.
+
+> The latter approach (i.e. scripting) might be easier for people to
+> experiment and tweak, and in the olden days that would certainly be
+> the approach would would have taken, but I am not too afraid of
+> appearing uninviting to casual scripters anymore these days, so...
+
+Yeah, actually one thing I didn't think of is that the core.hooksPath
+patch I submitted makes this rather trivial to implement as a
+collection of scripts...
