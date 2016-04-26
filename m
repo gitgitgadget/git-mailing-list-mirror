@@ -1,107 +1,192 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 10/83] builtin/apply: move 'check_index' global into 'struct apply_state'
-Date: Tue, 26 Apr 2016 13:25:04 -0700
-Message-ID: <xmqq7ffkf78f.fsf@gitster.mtv.corp.google.com>
-References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
-	<1461504863-15946-11-git-send-email-chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 26 22:46:53 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH 00/15] submodule groups (once again)
+Date: Tue, 26 Apr 2016 13:50:18 -0700
+Message-ID: <1461703833-10350-1-git-send-email-sbeller@google.com>
+Cc: gitster@pobox.com, git@vger.kernel.org, Jens.Lehmann@web.de,
+	pclouds@gmail.com, Stefan Beller <sbeller@google.com>
+To: jrnieder@gmail.com
+X-From: git-owner@vger.kernel.org Tue Apr 26 22:50:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1av9si-0004m4-BN
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 22:46:52 +0200
+	id 1av9wV-0006Og-UX
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 22:50:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753040AbcDZUZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2016 16:25:09 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61115 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752489AbcDZUZI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2016 16:25:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id AD57F14347;
-	Tue, 26 Apr 2016 16:25:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Yi8koC8dpNb4YUWzwNytKFFfGiU=; b=AMCs43
-	q7TLNA/k/BOlLd3rA1gYxYJ6wzjw8W7PUACjivKHkkpdo+OsX3uLoZO9bZnEk6Yj
-	+m2bx+4R+MAnM+VOj8eoPhNwNPgpx3pccUyvuS4HjBDnm4vAR4w2dMyfMoRFfyKn
-	E6eBM7FUbxvlMPlLkeKlcSsQBZrXubmaWokic=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pOm5rF+Y0b17mlODYZIyzzV0K9zN/A2k
-	1/FtFhX0XIZD08tBTG55DuQloydPbEnG2vELjO6ty3sWsWd1oXyb6h105Pu9RXZ+
-	LDhZAnlxdfCY5j8riUZc4ITbylMzG85tPta3l5z1/TdljETxsX5G1/ftwAA3NVS/
-	1gv0YS/1ZEM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A4A4F14346;
-	Tue, 26 Apr 2016 16:25:06 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 00BEF14345;
-	Tue, 26 Apr 2016 16:25:06 -0400 (EDT)
-In-Reply-To: <1461504863-15946-11-git-send-email-chriscool@tuxfamily.org>
-	(Christian Couder's message of "Sun, 24 Apr 2016 15:33:10 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F6B7EDE2-0BEC-11E6-9EA6-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1752608AbcDZUuo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2016 16:50:44 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:33259 "EHLO
+	mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752549AbcDZUun (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2016 16:50:43 -0400
+Received: by mail-pf0-f180.google.com with SMTP id 206so11458937pfu.0
+        for <git@vger.kernel.org>; Tue, 26 Apr 2016 13:50:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=8725pp6L8GH+s1P4ADKi2gwZFmgMHrB4j77XzsnvlNE=;
+        b=hikL2l8g520t4Kg3SVwVsNlv3HshhBF8HLjnzBce9ROphN2PGGLDd1pLHhDPluY3PO
+         GKcDlrpANaLknt58VgFG708rSu8YOwTQ7GMKrDTx32xyV5sYy/b6y4ZQ+fraKcNuQ7CC
+         YhNbyEEkR5TQaL2rnciq3S23s74b93XLEfieoLzOuog5G5DULPxz3sdrwRsZIBiQ2zXq
+         c2xCuguPmizsgFxwXyftfw30ykZyaEaXhBrJv2nAzof25Lffdtwenw3ppKBa3Cof56sX
+         osQvMz2E2bVwn/n9gIx2LrxK6BqPUwXAJi3d7ftbnLL6m0smUXAi5uwYJWxNNaGdtwTK
+         OXfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=8725pp6L8GH+s1P4ADKi2gwZFmgMHrB4j77XzsnvlNE=;
+        b=Zs0m+QgSYGA0VsgZjuvx7CN2plrOx+HLcC9bg1X+er+tZcocXaOaILYaKhdP+5G6UK
+         1PCDJ/BnAheJQnRTYXEj/+ZTvGxS4iC8/4XBc55zLf9ttdmJENnd9k06FNvc/x8AX5Pb
+         OFXmiLIPMBDI4wCHDWA0rCmhXgFm5UQddUxS9QUTZv9HdVOcw2bQnwW3e2TOVDjGR/hI
+         AEXh/GHGXYrpUivCYK2vXQpAnjOi6yyn2SqfC2L60/cEe2CZG+DUr+9RV/a50YjDqIFU
+         0n04j9QcYoLJauQqMrOwrGMNqooNtF5RjVR1r/4WQxSos15QEFZ1vBMOXF4U3IMt6ehg
+         Yp5Q==
+X-Gm-Message-State: AOPr4FUXt0UQDoeIcQRDNdejLF/70dbkgChhgqlAupRz4kz+Z47FTc13aa3zOVSpgft6TIzi
+X-Received: by 10.98.24.208 with SMTP id 199mr6506636pfy.160.1461703842954;
+        Tue, 26 Apr 2016 13:50:42 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:fcb4:82e7:2d29:45d6])
+        by smtp.gmail.com with ESMTPSA id r191sm485403pfr.36.2016.04.26.13.50.41
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 26 Apr 2016 13:50:42 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0.41.g8d9aeb3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292666>
 
-Christian Couder <christian.couder@gmail.com> writes:
+New in this series: git status, git diff and all remaining git submodule subcommands.
 
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  builtin/apply.c | 69 +++++++++++++++++++++++++++++++++------------------------
->  1 file changed, 40 insertions(+), 29 deletions(-)
->
-> diff --git a/builtin/apply.c b/builtin/apply.c
-> index 6c628f6..3f8671c 100644
-> --- a/builtin/apply.c
-> +++ b/builtin/apply.c
-> @@ -30,6 +30,10 @@ struct apply_state {
->  	 *    files that are being modified, but doesn't apply the patch
->  	 */
->  	int check;
-> +
-> +	/* --index updates the cache as well. */
-> +	int check_index;
-> +
->  	int unidiff_zero;
->  };
->  
-> @@ -37,14 +41,12 @@ struct apply_state {
->   *  --stat does just a diffstat, and doesn't actually apply
->   *  --numstat does numeric diffstat, and doesn't actually apply
->   *  --index-info shows the old and new index info for paths if available.
-> - *  --index updates the cache as well.
->   *  --cached updates only the cache without ever touching the working tree.
->   */
->  static int newfd = -1;
->  
->  static int state_p_value = 1;
->  static int p_value_known;
-> -static int check_index;
->  static int update_index;
->  static int cached;
+One pain point I am still aware of:
+`git diff` and `git status` completely ignore submodules which are not in the
+default group. I am not sure if that is a reasonable default.
 
-I like the way this series moves only a few variables at a time to
-limit the scope of each step.  I would have expected check-index and
-cached to touch pretty much the same codepaths (the latter would
-involve a subset of the codepaths involved for the former), but
-doing them separately is fine.
+A poor analogy could be the .gitignore file configuration:
+If an entry exists in .gitignore, the corresponding file is ignored if
+(and only if) the file is not part of the repository, i.e changes to 
+a tracked (but ignored) file are still shown. Another way of saying it:
+The ignore mechanism doesn't influence the diff machinery.
+
+git diff is supposed to view the differences between "what would I
+get after checkout" (i.e. what is in the index run through smudge filters)
+compared to the actual worktree.
+With the submodule default group set, we would expect to not see some
+submodules checked out. But if such a submodule is in the worktree,
+we may want to show a message instead:
+
+    $ git status
+    ... # normal git status stuff
+        More than 2 submodules (123 actually) including 
+            'path/foo'
+            'lib/baz'
+            # have a reasonable maximum for the number of submodules shown
+        are checked out, but not part of the default group.
+        You can add these submodules via
+            git config --add submodule.defaultGroup ./path/foo
+            git config --add submodule.defaultGroup ./lib/baz
+
+Once we have such a message, we would need to train `git checkout` to checkout
+and drop the right submodules for switching branches.
+
+It has been a while since last posting this series and it is substantially
+different in scope (and I have rewritten most of the patches), so I'll not
+provide an intra-diff or a version number for this series.
+
+What is this series about?
+==========================
+
+If you have lots of submodules, you probably don't need all of them at once, 
+but you have functional units. Some submodules are absolutely required, 
+some are optional and only for very specific purposes. 
+
+This patch series adds labels to submodules in the .gitmodules file. 
+
+So you could have a .gitmodules file such as: 
+
+[submodule "gcc"] 
+        path = gcc 
+        url = git://... 
+        label = default
+        label = devel 
+[submodule "linux"] 
+        path = linux 
+        url = git://... 
+        label = default 
+[submodule "nethack"] 
+        path = nethack 
+        url = git://... 
+        label = optional
+        label = games 
+
+and by this series you can work on an arbitrary group of these submodules
+composed by the labels, names or paths of the submodules.
+
+    git clone --recurse-submodules --init-submodule=label --init-submodule=label2   git://... 
+    # will clone the superproject and recursively 
+    # checkout any submodule being labeled label or label2
+    
+    git submodule add --label <name> git://... ..
+    # record a label while adding a submodule
+    
+    git config submodule.defaultGroups default
+    git config --add submodule.defaultGroups devel
+    # configure which submodules you are interested in.
+    
+    git submodule update
+    # update only the submodules in the default group if that is configured.
+    
+    git status
+    git diff
+    git submodule summary
+    # show only changes to submodules which are in the default group.
+
+Any feedback welcome, specially on the design level! 
+(Do we want to have it stored in the .gitmodules file? Do we want to have 
+the groups configured in .git/config as "submodule.groups", any other way 
+to make it future proof and extend the groups syntax?) 
+
+Thanks, 
+Stefan 
+
+Stefan Beller (15):
+  string_list: add string_list_duplicate
+  submodule doc: write down what we want to achieve in this series
+  submodule add: label submodules if asked to
+  submodule-config: keep labels around
+  submodule-config: check if submodule a submodule is in a group
+  submodule init: redirect stdout to stderr
+  submodule deinit: loose requirement for giving '.'
+  submodule--helper list: respect submodule groups
+  submodule--helper init: respect submodule groups
+  submodule--helper update_clone: respect submodule groups
+  diff: ignore submodules excluded by groups
+  git submodule summary respects groups
+  cmd_status: respect submodule groups
+  cmd_diff: respect submodule groups
+  clone: allow specification of submodules to be cloned
+
+ Documentation/config.txt        |   4 +
+ Documentation/git-clone.txt     |   6 +
+ Documentation/git-submodule.txt |  13 +-
+ builtin/clone.c                 |  40 +++++-
+ builtin/commit.c                |   3 +
+ builtin/diff.c                  |   2 +
+ builtin/submodule--helper.c     |  94 ++++++++++++-
+ diff.c                          |   3 +
+ diff.h                          |   1 +
+ git-submodule.sh                |  24 +++-
+ string-list.c                   |  18 +++
+ string-list.h                   |   2 +
+ submodule-config.c              |  66 ++++++++++
+ submodule-config.h              |   5 +
+ t/t7400-submodule-basic.sh      | 129 +++++++++++++++++-
+ t/t7406-submodule-update.sh     |  24 +++-
+ t/t7413-submodule--helper.sh    | 285 ++++++++++++++++++++++++++++++++++++++++
+ wt-status.c                     |   2 +
+ wt-status.h                     |   1 +
+ 19 files changed, 701 insertions(+), 21 deletions(-)
+ create mode 100755 t/t7413-submodule--helper.sh
+
+-- 
+2.8.0.41.g8d9aeb3
