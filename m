@@ -1,62 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] config doc: improve exit code listing
-Date: Tue, 26 Apr 2016 11:30:58 -0700
-Message-ID: <xmqq8u00gr31.fsf@gitster.mtv.corp.google.com>
-References: <20160426181058.7901-1-sbeller@google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v6 0/4] Add --base option to git-format-patch to record
+ base tree info
+Date: Tue, 26 Apr 2016 11:43:15 -0700
+Message-ID: <CAGZ79kZNV+g3_Rmpynh-WQVc3dW6nuNDsTM=gTxNuJnr3V3Azg@mail.gmail.com>
+References: <1461657084-9223-1-git-send-email-xiaolong.ye@intel.com>
+	<CAGZ79kajpAtbHaKLaLHN5+qUOvBofFs-q-vUYWua49GWK7FO9Q@mail.gmail.com>
+	<xmqqlh40gs9o.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kZg3OpR8k45=q1m-g=t+aGGs8VDYBrBYaBU_DbfuuoBig@mail.gmail.com>
+	<xmqqd1pcgr3s.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: john@keeping.me.uk, git@vger.kernel.org
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Apr 26 20:31:16 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Xiaolong Ye <xiaolong.ye@intel.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Fengguang Wu <fengguang.wu@intel.com>, ying.huang@intel.com,
+	philip.li@intel.com, julie.du@intel.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 26 20:43:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1av7lP-0006c7-II
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 20:31:11 +0200
+	id 1av7xE-0003XD-Vz
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 20:43:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753241AbcDZSbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2016 14:31:05 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55296 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753110AbcDZSbD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2016 14:31:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0A6CE15C85;
-	Tue, 26 Apr 2016 14:31:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MDnSInSlrKae0Jm+ObZ3jLejz0A=; b=k8yKs3
-	6VEQBdN26ipZHajUYUVkwIcdWU6XBioMu3InFyWBssAC6nDpQejaTAGqN3mJk75j
-	wKxmWxVBocvPHFHUls/h3hkTKynGwKrtXOHhMOekeRfg41Qzg7XF6KdmFC5APqx1
-	QQwAzdznzcZ47yS3fpAPNhcGFeOCHm7/4OfHs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EsouGdRtOSKR7JT2SvLvwaPbJ/zK651e
-	Nw3sE9YMGK1kbaK64BZ/kH6Oh9lv6sUcA3fIkA7Mje5Dov17pMuzKvli/Tm+2lCD
-	TSCNAKnpMu84BcoZiW0BFJt7bPQOyfvUQ5dlgy9PN4kl4pKVnpnTSh9rT7dINsQl
-	bnMp2FpNlMI=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C96B615C82;
-	Tue, 26 Apr 2016 14:31:00 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1C32015C81;
-	Tue, 26 Apr 2016 14:31:00 -0400 (EDT)
-In-Reply-To: <20160426181058.7901-1-sbeller@google.com> (Stefan Beller's
-	message of "Tue, 26 Apr 2016 11:10:58 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0636D7DE-0BDD-11E6-B907-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752837AbcDZSnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2016 14:43:19 -0400
+Received: from mail-io0-f176.google.com ([209.85.223.176]:33342 "EHLO
+	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752787AbcDZSnQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2016 14:43:16 -0400
+Received: by mail-io0-f176.google.com with SMTP id f89so24848614ioi.0
+        for <git@vger.kernel.org>; Tue, 26 Apr 2016 11:43:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=cTW8ejh2UsIeSowRVAnqNSPTZH5SS4VgnL2Jn/KQh+M=;
+        b=bHi/jOwBvq0Cgjotk84k/kZdWLodQrOeFfyZwlyBV8YzoHMOuzkPDZRx5RbZTaRPu3
+         06tTaZsD5xOeSVyJbXweWY/lb3S0znuzB3iXqOQP9S8HxUXWHR2Ar8SnPM77H4mOPgcX
+         Dr8xRlvvpX14t20fbOgjl2nSvzSLG6J1dlMtFdIWUOBkiMTRff07+l7gIYzT9IcbwqoU
+         old+kdNAyzfxv7vBh1SUPIqAEEqZVeFSufwxeZqc301WtcO5yauFWt3u288Ccln5xRuQ
+         b8qCS789WGLALDSo9Rez5LiIwu+gcRshZOMck8kVXdd4fdihljrOUYzlxwCQnDEdFo8n
+         I8bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=cTW8ejh2UsIeSowRVAnqNSPTZH5SS4VgnL2Jn/KQh+M=;
+        b=GjBzdW19IPbmmTQBiHY5PftIThhJ/4J1i160CX3ipHO4y6LvGzsNo+WBZ+Ps3Ul3kE
+         PamHj1kLxJiDAfeZVzaONddHyeXu2DaNV5YInIsylsbmbCHBRVU4R2yCLpAv3IIHC9uH
+         06K0jx2BE5JNaMgWvSgMXCf2NmfCEh1NL3Xz0AZZFwzW3Tjo8S1j1RuM79OI/Cf9oMA3
+         GW631yjEhyhyslUMt4i/cjEzWb7y3vBY56jXaITQcjhxgarHWFOtrW8a9XbufYg+d/yi
+         xT+bxFCPVHSqCit8VOwAkJY2C7DB5VYTUd4P0jl65O7BhNRrHKrui8+oLVg0mx4o3TeD
+         kCBg==
+X-Gm-Message-State: AOPr4FWY9wtbtr12/JIBeSIMxwyRAeSF0TaGAHeAN4+TM1JDS5IbTJ/Ha14ar4Uxdvr337wjkSooqwkLsnqPOjUC
+X-Received: by 10.107.53.200 with SMTP id k69mr5239368ioo.174.1461696195459;
+ Tue, 26 Apr 2016 11:43:15 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Tue, 26 Apr 2016 11:43:15 -0700 (PDT)
+In-Reply-To: <xmqqd1pcgr3s.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292645>
 
-Stefan Beller <sbeller@google.com> writes:
+On Tue, Apr 26, 2016 at 11:30 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> I can totally do that for longer series which require some back and forth.
+>>
+>> But one-offs, such as typo fixes or other small things[1], for which I do
+>> even have a local branch (i.e. checkout origin/master && fix &&
+>> commit && send-email) this is another step that potentially bothers me.
+>
+> So from where are you proposing Git to grab that information if you
+> do not tell it?  "If the HEAD is detached, assume that the base is
+> where it was detached from" or something?
 
-> The possible reasons for exiting are now ordered by the exit code value.
+That would also work for me. In my first mail I was proposing to take
+the information from the format-patch argument, such that a one off fix
+would be:
 
-Which makes sense.  Will queue.
+    (1) git checkout origin/master
+    (2) EDIT
+    (3) git commit -a -m "fix"
+    (4) git format-patch origin/master..  # <- This is the information.
+
+However you read it as taking the information from the first line,
+which is also fine with me, as then the (4) can become
+
+    (4a) git format-patch HEAD^
+
+Another thought:
+
+  Most workflows do not have different remotes per branch, e.g.
+  when `master` maps to  `origin/master` as its upstream it is likely that
+  `topic-foo` maps to its equivalent at `origin/..` as well.
+
+  Branches come and go in a topic based workflow, so configuring them
+  for each new branch is cumbersome, so let's have a default `remote` for
+  repository.
+
+If we have a default remote per repository, the base finding algorithm
+in format-patch could check if the base(s) of the patch series is a head
+in one of the default remote branches, i.e. check all origin/* branches for
+a match?
+
+
+>
+>> From a UI perspective it seems logical to also check if the base
+>> can be obtained from the patch range specifier.
+>
+> If you are doing "format-patch master..my-branch", what do you
+> propose to set your base to?  master@{u}, perhaps?
+
+Yes. (I usually use that command with |s|master|origin/master|, so the
+argument is the upstream already. A local master branch does not exist for me.)
+
+>
