@@ -1,121 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] http: support sending custom HTTP headers
-Date: Tue, 26 Apr 2016 10:20:19 -0700
-Message-ID: <xmqq4maoi8x8.fsf@gitster.mtv.corp.google.com>
-References: <abe253758829795c285c2036196ebe7edd9bab34.1461589951.git.johannes.schindelin@gmx.de>
-	<921e007f445476b27325c12a9e92fdd169a073b7.1461685158.git.johannes.schindelin@gmx.de>
-	<xmqq8u00i9pp.fsf@gitster.mtv.corp.google.com>
-	<20160426171238.GA7609@sigill.intra.peff.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v6 0/4] Add --base option to git-format-patch to record
+ base tree info
+Date: Tue, 26 Apr 2016 10:21:25 -0700
+Message-ID: <CAGZ79kajpAtbHaKLaLHN5+qUOvBofFs-q-vUYWua49GWK7FO9Q@mail.gmail.com>
+References: <1461657084-9223-1-git-send-email-xiaolong.ye@intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 26 19:20:47 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Fengguang Wu <fengguang.wu@intel.com>, ying.huang@intel.com,
+	philip.li@intel.com, julie.du@intel.com
+To: Xiaolong Ye <xiaolong.ye@intel.com>
+X-From: git-owner@vger.kernel.org Tue Apr 26 19:21:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1av6fB-00020N-BX
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 19:20:41 +0200
+	id 1av6fz-0002Mj-Av
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 19:21:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752453AbcDZRUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2016 13:20:25 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65361 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751999AbcDZRUX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2016 13:20:23 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A192C152EF;
-	Tue, 26 Apr 2016 13:20:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OEDLQqV2K9S8FX4NxM0mjozcQA0=; b=p6K0yS
-	P11OColRT/m+QmMBedhcB6ux0UJIuUOGhSMciA6vGKrMIkecbbipiOzMLSKN2N8U
-	4HiS2hf+3s+2yDrBsfNfNVXk7sHYy29Fo3rZtC64FXKjjFbtLPs+vcQPPqbNa8MF
-	D0bCjYUbJe6doPJ7YOBLiJDMVEJ+BWPIjnvg8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=L05AFFaRAQQ6acQrIymAfnvpLwSo3AzN
-	2IOWOU0T9WC+zx5OcYJnGpuzvA8CPSK/RbqGbEH+Sz3MFACWX4/Gvsev2c36jGD7
-	MBLyaOLfIws5NWtvis9Ddw6i++6wnkoAWLKQNCPaMmeXOMZYp+pT4NNDsCXJdCnt
-	QOeexw8420M=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 99079152EE;
-	Tue, 26 Apr 2016 13:20:21 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E6FFD152ED;
-	Tue, 26 Apr 2016 13:20:20 -0400 (EDT)
-In-Reply-To: <20160426171238.GA7609@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 26 Apr 2016 13:12:38 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2778ADF0-0BD3-11E6-80A8-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752546AbcDZRV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2016 13:21:27 -0400
+Received: from mail-io0-f181.google.com ([209.85.223.181]:34348 "EHLO
+	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752457AbcDZRV0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2016 13:21:26 -0400
+Received: by mail-io0-f181.google.com with SMTP id 190so16835279iow.1
+        for <git@vger.kernel.org>; Tue, 26 Apr 2016 10:21:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=gwp6cfaxBWNx2OG47zQ9jzayKxPr8Nwzaj59OWEDJec=;
+        b=QDp9m7XRfSaOCR/euAyZb70iDXo+USyEoM78nnL9iEymrmIW1L2KlPi1h3o3hLMuhf
+         muvDrQ1n8PlEbukAPxPvDpsQwheUZjR6m4srxt4MIP8cepE91YlX/xy3oE6RzxFxhhim
+         hARXZUn66h/+waqt15uZAhaWWPWtxSbtyqOUYbp7g4SjHD+gav5mb5R3RmYmq87USdRG
+         kpj+RAdU0R7lckdku+k6QbApBtJxtfhYSmRra7XaRozYp2B3+AsKVGcwAKD6hsgsR0fZ
+         GtThSVUFkot8ehauQId3yMO9sYmoktpHbp5MJWEF/wKz2aXg5RJrWrNa3A1zm5aNJM6h
+         24qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=gwp6cfaxBWNx2OG47zQ9jzayKxPr8Nwzaj59OWEDJec=;
+        b=kj50H+Ftlp7GSQFbFEYxRbin3EBUMbsFRf2150PARJIHGBRitm2YsVl6AYKHfsgPx8
+         betCXUGLmqeb5QJVdWEUtQshs8dq7ZTfJRC/OejNOU4rECE+xqLkthCYm1e+CnDUbXSb
+         2TRl78a9UOWfgtSk2Tmw48xcPruvWu6g6KCG2vW/RS7puNyjGw93X7U2hWJqIKZvR1xZ
+         3XoFhW0geVPrHFn9bfWY746Px8/3PUIVG2+uQK1FcgEJD+ybxwmZrDTbkL6Nu7UFIW6f
+         9krb2qaPwgcaWwHeui+jeYFfeA+Km28HzzUZHTwq+TfgBPKJI0kmU6stDxZ2m5J7RkW1
+         xJwg==
+X-Gm-Message-State: AOPr4FVc5CSo5FAT/ZT8QfxfVQT6LNWWB5bSSqHVS/uExw0/znKHp/qx58wJdnPII52CoIPf6yAxLVLnw7Pk04Dz
+X-Received: by 10.107.53.200 with SMTP id k69mr4810579ioo.174.1461691285451;
+ Tue, 26 Apr 2016 10:21:25 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Tue, 26 Apr 2016 10:21:25 -0700 (PDT)
+In-Reply-To: <1461657084-9223-1-git-send-email-xiaolong.ye@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292622>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Apr 26, 2016 at 12:51 AM, Xiaolong Ye <xiaolong.ye@intel.com> wrote:
+> Thanks for Junio's reviews and suggestions.
+>
+> This version contains the following changes since v5:
+>
+>  - Fix a decl-after-statement in patch 3/4.
+>
+>  - Improve testcases to cover more scenarios and make them more portable and
+>    readable.
+>
+> Thanks,
+> Xiaolong
+>
 
-> But I think this block (even before my patch) also needs to handle the
-> case where "value" is NULL (presumably by complaining with
-> config_error_nonbool).
+Thanks for this feature!
 
-OK, so squashes found to be necessary so far amounts to the attached
-patch.  I still haven't figured out the best way to rephrase the "by
-default" in the proposed log message that made me stutter while
-reading it, though.
+I am playing around with this series, and here comes a feature request:
+I have a local branch with no upstream set. My usual workflow is like this
 
+    git checkout origin/master
+    # toy around, do stuff
+    git checkout -b new-shiny-feature
+    git format-patch origin-master..
 
- http.c | 13 ++++++++++---
- http.h |  2 +-
- 2 files changed, 11 insertions(+), 4 deletions(-)
+Now I have set the format.useautobase option and then the `git format-patch`
+fails with
 
-diff --git a/http.c b/http.c
-index 6c4d2ed..aae9944 100644
---- a/http.c
-+++ b/http.c
-@@ -325,8 +325,15 @@ static int http_options(const char *var, const char *value, void *cb)
- 	}
- 
- 	if (!strcmp("http.extraheader", var)) {
--		extra_http_headers =
--			curl_slist_append(extra_http_headers, value);
-+		if (!value) {
-+			return config_error_nonbool(var);
-+		} else if (!*value) {
-+			curl_slist_free_all(extra_http_headers);
-+			extra_http_headers = NULL;
-+		} else {
-+			extra_http_headers =
-+				curl_slist_append(extra_http_headers, value);
-+		}
- 		return 0;
- 	}
- 
-@@ -1172,7 +1179,7 @@ int run_one_slot(struct active_request_slot *slot,
- 	return handle_curl_result(results);
- }
- 
--struct curl_slist *http_copy_default_headers()
-+struct curl_slist *http_copy_default_headers(void)
- {
- 	struct curl_slist *headers = NULL, *h;
- 
-diff --git a/http.h b/http.h
-index 5f13695..36f558b 100644
---- a/http.h
-+++ b/http.h
-@@ -106,7 +106,7 @@ extern void step_active_slots(void);
- extern void http_init(struct remote *remote, const char *url,
- 		      int proactive_auth);
- extern void http_cleanup(void);
--extern struct curl_slist *http_copy_default_headers();
-+extern struct curl_slist *http_copy_default_headers(void);
- 
- extern long int git_curl_ipresolve;
- extern int active_requests;
+    fatal: Failed to get upstream, if you want to record base commit
+automatically,
+    please use git branch --set-upstream-to to track a remote branch.
+    Or you could specify base commit by --base=<base-commit-id> manually.
+
+but as I indicated I want patches from origin/master onwards,
+Could we make use of that information? To record the base in my workflow
+currently I need to do:
+
+    git format-patch origin/master.. --base=origin/master
+
+which seems redundant to me.
+(I may be holding it wrong though? Should I try to set upstream
+branches for my local branches? This seems weird to me as I cannot
+push/change the upstream branches directly, as Junio owns the branches)
+
+Thanks,
+Stefan
