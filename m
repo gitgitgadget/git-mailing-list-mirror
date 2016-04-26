@@ -1,96 +1,112 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Parallel checkout (Was Re: 0 bot for Git)
-Date: Tue, 26 Apr 2016 18:35:50 +0700
-Message-ID: <CACsJy8Ab=q0mbdcXn9O7=dKHaOuhUCNk4g6BU5kZHdPM+z7yng@mail.gmail.com>
-References: <CAGZ79kYWGFN1W0_y72-V6M3n4WLgtLPzs22bWgs1ObCCDt5BfQ@mail.gmail.com>
- <CAGZ79kZOx8ehAB-=Frjgde2CDo_vwoVzQNizJinf4LLXek5PSQ@mail.gmail.com>
- <CACsJy8DiCw_yZNp7st-qVA7zYEHww=ae5Q=uKVzBhAfU8akR7Q@mail.gmail.com>
- <CAGZ79kZzdioQRFEmgTGOOdLQ-Ov-tWmgi1dLhHPDVzDb+Py2RQ@mail.gmail.com>
- <CAP8UFD3xWUkCFZMN1N6t36KKwcfnkLsFznAc7j7yF89PbYaqfg@mail.gmail.com> <20160415095139.GA3985@lanh>
+From: Nikolai Kosjar <nikolai.kosjar@qt.io>
+Subject: "gitk --author=foo" shows also parent
+Date: Tue, 26 Apr 2016 15:08:34 +0200
+Message-ID: <571F6852.1070405@qt.io>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 26 13:36:29 2016
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 26 15:42:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1av1I2-0008D7-Q8
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 13:36:27 +0200
+	id 1av3GE-0003F9-0f
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 15:42:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752621AbcDZLgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2016 07:36:22 -0400
-Received: from mail-lf0-f50.google.com ([209.85.215.50]:33152 "EHLO
-	mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752017AbcDZLgV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2016 07:36:21 -0400
-Received: by mail-lf0-f50.google.com with SMTP id y84so12613310lfc.0
-        for <git@vger.kernel.org>; Tue, 26 Apr 2016 04:36:20 -0700 (PDT)
+	id S1751848AbcDZNmi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2016 09:42:38 -0400
+Received: from mail-am1on0119.outbound.protection.outlook.com ([157.56.112.119]:7872
+	"EHLO emea01-am1-obe.outbound.protection.outlook.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751507AbcDZNmh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2016 09:42:37 -0400
+X-Greylist: delayed 2033 seconds by postgrey-1.27 at vger.kernel.org; Tue, 26 Apr 2016 09:42:36 EDT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=nriodug8TnBjlDoiPQjuXT+kjp66ZEIOnopPFWcMUb4=;
-        b=EMOk/GK30zrOUB2SYRh8mzKCYUeQIOuL6hjDYO3ZwpZAMt3DokkHBFrEeUjKspL6ji
-         F+03k/8aie6WgyUGnju7gvOsTJJvaLECa8R/cccpzgOjfeMI/JXU7tEjGLy9NywtbhpO
-         xXU4jBfHbpUQRzlQw3gq12Bot7RgSqzLbnzizKemCniNWt64OtUcF2GcRlB2KPDqpcKU
-         kntHvA2vwwnNCMVFjD6oUDZESXTTGd1Dur+jL7Zbx3tsWK3OHsW82BHU1EulbXGoCZVJ
-         01VxWXAWnKq4qfe6+HH3me/ttHCjtF6XPz9y0X8GlCIQuFefD8rFIn1bbeE8DHz3xhyV
-         w4yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=nriodug8TnBjlDoiPQjuXT+kjp66ZEIOnopPFWcMUb4=;
-        b=OH1E3DyXJQLYfGqQLKaodXdiSWihvCTf7hHFfFqurOvYMxzrdhA9quVWhSgY4IdzIl
-         zxWXAr+6f+RNo0x9gReMAf9IU+VrOMV272Ln6AsbsxyyU8BGB8yHYjdbnlTtJBDj6r4R
-         7mLo16o5Hg7JDPLxvMQc1xC89+ZU2tPJA3z7WptsHxc9/2HXpMDLzeJM58BJ7NPkTqS+
-         kKACfyRXF/QfhL4BsoKjVHqrITq1K8SKHB5ruIVFB4PWlhniyINrvPStuffM3Bk6BamS
-         YFN3RIf2Uvs3NwFH7RFxmkIONTCLApYJ1Cuwgm//rb262gIXBj/1lF8Sd85OOCdXewoC
-         1LGQ==
-X-Gm-Message-State: AOPr4FXBM6kk6Rp7HrxVykymd+Jsq99vsxPstgFqB7wVGHw2TF09hNAzTYh3W6OMpeVIyu3L5VK1se31/4QLyQ==
-X-Received: by 10.112.157.105 with SMTP id wl9mr1073732lbb.137.1461670579773;
- Tue, 26 Apr 2016 04:36:19 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Tue, 26 Apr 2016 04:35:50 -0700 (PDT)
-In-Reply-To: <20160415095139.GA3985@lanh>
+ d=qtcompany.onmicrosoft.com; s=selector1-qt-io;
+ h=From:To:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=15GqYvXPNpkxRy8oGF4kPyHi7jiy/nj3dAtwa1ZLnbM=;
+ b=Au7gIE2dXu4IgrDA0Sb/XZiJAh87OH2jxFbwKtIMXqJoKpMIFzDt8Sgxfgs6csM2V2KSzErjjmWu9lDoT4u/OOo+qdanqc8ryAw7kn6GtwsVov0kWE3PCbFsBxZKpV/nUF+5SwQgljI+OIfHdpA42y7Bfcy2WTUHL0vq4KE0mPM=
+Authentication-Results: vger.kernel.org; dkim=none (message not signed)
+ header.d=none;vger.kernel.org; dmarc=none action=none header.from=qt.io;
+Received: from [10.9.78.41] (62.220.2.194) by
+ HE1PR02MB1643.eurprd02.prod.outlook.com (10.166.37.17) with Microsoft SMTP
+ Server (TLS) id 15.1.477.8; Tue, 26 Apr 2016 13:08:40 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+X-Originating-IP: [62.220.2.194]
+X-ClientProxiedBy: HE1PR06CA0072.eurprd06.prod.outlook.com (10.164.28.168) To
+ HE1PR02MB1643.eurprd02.prod.outlook.com (10.166.37.17)
+X-MS-Office365-Filtering-Correlation-Id: 2a789390-2f3d-4372-bc03-08d36dd3e2ec
+X-Microsoft-Exchange-Diagnostics: 1;HE1PR02MB1643;2:PqFUcIVzuJWOBJJRY1IFdvjZ5ZBcHfOxFjmZKFufGuyDrnVNaiHKEf7QbGwmbYNxoXhjFW05WD927Uirbrjn6M/ISGD0p8Zp2GC7riVDSc5337b075kAjnQbIOdWgy8m4MTao7TyVmWZHICKQ7UGhMdL16j7mIVv+UWOBZJ1KaVAm9o5O2FvUOf4DNqCTEaN;3:0yqkAqMD3flTpr25b8xClOH6Ij6nzHy6sPJVa905KYMVM176Xjy95xFxR0aSAEWNI9IMC1hpnTMXHbGcSa+nmizTkJa5q80owBJzEPSgCYVcpBlNer/vciTc6lt0S621;25:voQgM2y5bHXeUQ8fn0BBIh0IKq0Hsh4syze3/VOqHJHjLPWf2vmddhsUgRlAusbWAflKTQSXvSRuNM1TP9jVahkerqQSGBETXeLIuRkdpaZ8fTQgGb4Z1yOzrGIV7zGrEkVlfW9vkGTKdq0XouBPfAestLVRgacZAO1h9CreBH2rvE6K8OV+gDNxVcYixMlwZYMChmci5mN5tSljYeOwuWT8yrPNaIevbfg5KSf3X53XHqOWuI/1GwPyN6hUCXDqOcdSyjFjJIwSxA9peoJ1E31QhLsroz2wowx2UM+ZXTqU0gYbWO2zGsyD6BrVuYA4LsnYYJJRk8hnEuo95wRz8A==
+X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:HE1PR02MB1643;
+X-Microsoft-Antispam-PRVS: <HE1PR02MB1643C84EB874BDB1F3DA110990630@HE1PR02MB1643.eurprd02.prod.outlook.com>
+X-Exchange-Antispam-Report-Test: UriScan:;
+X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(9101521072)(6040130)(601004)(2401047)(8121501046)(5005006)(10201501046)(3002001)(6041072)(6043046);SRVR:HE1PR02MB1643;BCL:0;PCL:0;RULEID:;SRVR:HE1PR02MB1643;
+X-Microsoft-Exchange-Diagnostics: 1;HE1PR02MB1643;4:vsrxVFWrKWoIsQVumEkv3dk56mbfOxk1sVKfKuumOTbCsa5eCoo6mKMdfuIRV0fcFggCNpbNhspC+SQQ57yIJx4tzNBCQgPfnznlsPj8sCyY2CQ/HUx+F/Xr5JQa+QZ2xEdylvx7D8PzHYYjK+HU1BKD4/AO/KgNF3Ma4BozqKBjWgiV9XGIIu+CjA3JMbCwrEpU7J1/wWX7Tjg6kQqPfe7CjKZIclXl5Ae4G25HAX2AGJ5KdPB2wIRw07gkHsuY+OJs0MMLQ9D9AwqKgwCCmzBx/Bf6WHAD0yzlpeWMG4+YhnFhG+YfPzAlbOwSuqpbrLwkHhwZLG8XQOB5Tuwq/NfVnqeenQU16b/KkHLJfpPO/5JIHu7j7J5VArn8dJsZX6tQzoKJJ0j829Kdz34agYkmZIQJWxcpf2aUxFWKcjk7Xb3f6tmu9zsvHt107vhBN9WoaTbacdIr/u0V/oXOUg==
+X-Forefront-PRVS: 0924C6A0D5
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(4630300001)(6049001)(6009001)(54356999)(50986999)(87266999)(2906002)(4001350100001)(81166005)(110136002)(107886002)(189998001)(450100001)(83506001)(86362001)(23676002)(33656002)(36756003)(65816999)(50466002)(64126003)(5008740100001)(230700001)(2351001)(42186005)(77096005)(59896002)(65956001)(80316001)(74482002)(229853001)(586003)(5004730100002)(3846002)(1096002)(6116002)(47776003)(19580405001)(66066001)(92566002);DIR:OUT;SFP:1102;SCL:1;SRVR:HE1PR02MB1643;H:[10.9.78.41];FPR:;SPF:None;MLV:sfv;LANG:en;
+X-Microsoft-Exchange-Diagnostics: =?utf-8?B?MTtIRTFQUjAyTUIxNjQzOzIzOi92OVladWNsSWE1Q0RFVmxMa3F2R2FXYWZX?=
+ =?utf-8?B?c3d2TDNtaEs4anNpR21ERFU3YlRKd3gzRC9aTW5DejYvU1ZCMGxKZTVEanRG?=
+ =?utf-8?B?QzFxUXJPYmRNcWxaZlhuUGw2ZGFTZk1TWEc3WDZtb1dsay9NZy8yK1lPdmZ0?=
+ =?utf-8?B?V3pJV1V1Y2IxdnM4bEsrYmpPWmRnbzlYbVppT0QwVnNuOTB1aTZXRHJPSDIw?=
+ =?utf-8?B?SG9LOVpGZllua2tXa05UYndjWXBUb3RTTis1ZS92WUV0WWI5Yi8zWGZDSjlE?=
+ =?utf-8?B?OU5MbXgrS0NjeVpjaStkRWpnSk1tcldMTkhERHBmOHRrY0FndmZPYVRLcVFG?=
+ =?utf-8?B?bzRtNm9Pc0o0ZWhIY3JjcnBHRndrTlRDdTh0UVVoMFRxQnh2VzZYUkxzTXR0?=
+ =?utf-8?B?Rm1BbXdlMjZPdmZSVnZQcHpHT3A1SlhZcjRnMW14S3M1V1JHOGdlakVqM3Fz?=
+ =?utf-8?B?VU1SS0VWZEk4SkEyV3dhZ2ZXQnh4ZmxoZ0JYWXo5cnluZGNJUHFxaVVHY3d3?=
+ =?utf-8?B?WHhKOFV2TmhnUkVLQjN6L05EclZqcEhDMFJzWWU5K3h1NXpsZUpzaDRxM1Na?=
+ =?utf-8?B?L1JFNUY3QnVENEhDY1JzdXh2ci84eXo4RGkzK3d3dk5US0lINWlvalFvMnR5?=
+ =?utf-8?B?RmhJSldxbHd0RUptWDlVVWZ4TkJYVHE1VXRiT3NlK0 
+X-Microsoft-Exchange-Diagnostics: 1;HE1PR02MB1643;5:bok8fR436cBzArNt1OAcbyWJ697HgMkPIeWa7g3go9MEBI/WvdPfkMycJvKxUCLd3DFyJQLrMLBejhXPxZsAN52JpuGOL/mLVp5Uy1ToUHkCBVpGp/p+9AndXzRR0bWPQfC9HsJJVpno4x3Oq9E9QQ==;24:hDBu+IdcKICEytt6OAtj2kSlyJgTUNrdo+l3EPa65WhUBeAH8s99mwo4ADgb0898DyQMPvWJsJjaiJtIOecZhuiW2vkMqdd4jgPxVgMBHa8=;7:W5fRmYs4S4VyXkLZzj447KkN1oPTiT9/+C94/Az/OYgvpwWGU5neMRsCBZMBHCaaan6g6UImxZ/kb8rkHf2SziktV9mw8ZZ3MsAND5pApql+ZumoU3OnChgQznDldxgxVhiJr/VPA+nBTsL8zNpysvhkwsvN0QIYzEtqo1ENT+4lfJ/zaMPswwq9iBJUEpXN
+SpamDiagnosticOutput: 1:23
+SpamDiagnosticMetadata: NSPM
+X-OriginatorOrg: qt.io
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Apr 2016 13:08:40.0501 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HE1PR02MB1643
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292599>
 
-On Fri, Apr 15, 2016 at 4:51 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> Numbers are encouraging though. On linux-2.6 repo running on linux and
-> ext4 filesystem, checkout_paths() would dominate "git checkout :/".
-> Unmodified git takes about 31s.
->
->
-> 16:26:00.114029 builtin/checkout.c:1299 performance: 31.184973659 s: checkout_paths
-> 16:26:00.114225 trace.c:420             performance: 31.256412935 s: git command: 'git' 'checkout' '.'
->
-> When doing write_entry() on 8 processes, it takes 22s (shortened by ~30%)
+Hi!
 
-I continued to develop it into a series. This same laptop now reduces
-checkout time closer to 50% on linux-2.6. However my other laptop
-gives me the opposite result, parallel checkout takes longer time to
-complete. I suspect that only with fast enough disks that CPU may
-become temporary bottleneck. This is where parallel checkout shines
-because it spreads the load out and quickly moves the bottleneck back
-to I/O (after a while I/O queues should be fully populated again). On
-systems with slower disks like mine, I/O is always the bottleneck and
-spreading I/O over many processes just makes it worse (probably
-confuse I/O scheduler more).
+	$ gitk --author=foo
 
-Since it's not doing anything for _me_, I'm dropping this. Anybody
-interested can check it out and maybe try it from parallel-checkout
-branch [1]. It probably can build on windows (epoll is gone). And it
-probably help improve performance when smudge filter is used (because
-that can potentially add more load to cpu). More notes in commit
-8fe9b5c (entry.c: parallel checkout support - 2016-04-18)
+...seems to show also the parent of each author-matched commit, whereas
 
-[1] https://github.com/pclouds/git/commits/parallel-checkout
--- 
-Duy
+	$ git log --author=foo
+
+does not. Is this intended or a bug? I've stumbled over this while 
+configuring a gitk view with the author field.
+
+Nikolai
+
+
+
+
+
+# Setup
+~/work/gitkBug % git init .
+~/work/gitkBug % touch file1 file2
+~/work/gitkBug % git add file1
+~/work/gitkBug % git commit "--author=MrFoo <foo@world>" file1 -m "add 
+file1"
+~/work/gitkBug % git add file2
+~/work/gitkBug % git commit "--author=MrBar <bar@world>" file2 -m "add 
+file2"
+
+# TEST: git log --author - OK
+~/work/gitkBug % git log --author=MrBar # OK, as expected
+commit 8aa4a4f651162bcb2275a1e9ee23fc1bb7226097
+Author: MrBar <bar@world>
+Date:   Tue Apr 26 14:22:58 2016 +0200
+
+     add file2
+
+# TEST: gitk --author - OPS
+~/work/gitkBug % gitk --author=MrBar  # Ops, gitk shows also the parent 
+commit
