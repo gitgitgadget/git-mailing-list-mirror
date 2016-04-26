@@ -1,91 +1,96 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 2/3] mmap(win32): avoid copy-on-write when it is
- unnecessary
-Date: Tue, 26 Apr 2016 20:53:23 +0200
-Message-ID: <571FB923.9040808@kdbg.org>
-References: <cover.1461335463.git.johannes.schindelin@gmx.de>
- <3e2a45e60e2905f52f962604cf19a0e5e39b9b1b.1461335463.git.johannes.schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 0/4] Add --base option to git-format-patch to record base tree info
+Date: Tue, 26 Apr 2016 11:58:39 -0700
+Message-ID: <xmqq4maogpsw.fsf@gitster.mtv.corp.google.com>
+References: <1461657084-9223-1-git-send-email-xiaolong.ye@intel.com>
+	<CAGZ79kajpAtbHaKLaLHN5+qUOvBofFs-q-vUYWua49GWK7FO9Q@mail.gmail.com>
+	<xmqqlh40gs9o.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kZg3OpR8k45=q1m-g=t+aGGs8VDYBrBYaBU_DbfuuoBig@mail.gmail.com>
+	<xmqqd1pcgr3s.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kZNV+g3_Rmpynh-WQVc3dW6nuNDsTM=gTxNuJnr3V3Azg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Sven Strickroth <email@cs-ware.de>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Apr 26 20:53:38 2016
+Content-Type: text/plain
+Cc: Xiaolong Ye <xiaolong.ye@intel.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Fengguang Wu <fengguang.wu@intel.com>, ying.huang@intel.com,
+	philip.li@intel.com, julie.du@intel.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Apr 26 20:58:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1av876-0007aB-Bo
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 20:53:36 +0200
+	id 1av8C7-0001EH-VJ
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 20:58:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752749AbcDZSx2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2016 14:53:28 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:18027 "EHLO bsmtp1.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752616AbcDZSx1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2016 14:53:27 -0400
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 3qvXKw2YHqz5tlB;
-	Tue, 26 Apr 2016 20:53:24 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id A6DD8524D;
-	Tue, 26 Apr 2016 20:53:23 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.0
-In-Reply-To: <3e2a45e60e2905f52f962604cf19a0e5e39b9b1b.1461335463.git.johannes.schindelin@gmx.de>
+	id S1752339AbcDZS6n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2016 14:58:43 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61069 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752074AbcDZS6n (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2016 14:58:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8B8EC15405;
+	Tue, 26 Apr 2016 14:58:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GoMdusLOtXKMcYVEQ3ZwdPy0HAE=; b=VGcqnw
+	ycHC3x0nTmIDVIF9LZYWLt/feBtIAgFojV1M0hHz1SnjBHC8+uwTk7FPqA29ZQPS
+	1b7LMd04Or4q2PJjZZ+noSOBUtRFR0lcL7RznT2p/Eu64nHVxTOACRNFIWHnaWPb
+	1l90fbWH3F53Z/Ukh/Ae4uYPKW7pDXI6W96Vg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DiVNXN0N8jT2Jm+jq1hnX/OcMlzcH9lz
+	zj8vU2VsuckhSFzqcLGCtEDloTx+zdpanWPf40wXYpI9L0lWXEfmhKama/a0hfkv
+	DLumBGmUCAaLkHibQTOeUfBKBSHaY+h/c9KhxmZ/IP9npTATiASXX6jHIIiFfW6B
+	K6C+J4I7DLM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 83D0815404;
+	Tue, 26 Apr 2016 14:58:41 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D893615403;
+	Tue, 26 Apr 2016 14:58:40 -0400 (EDT)
+In-Reply-To: <CAGZ79kZNV+g3_Rmpynh-WQVc3dW6nuNDsTM=gTxNuJnr3V3Azg@mail.gmail.com>
+	(Stefan Beller's message of "Tue, 26 Apr 2016 11:43:15 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E425F0A4-0BE0-11E6-9356-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292647>
 
-Am 22.04.2016 um 16:31 schrieb Johannes Schindelin:
-> Often we are mmap()ing read-only. In those cases, it is wasteful to map in
-> copy-on-write mode. Even worse: it can cause errors where we run out of
-> space in the page file.
->
-> So let's be extra careful to map files in read-only mode whenever
-> possible.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->   compat/win32mmap.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/compat/win32mmap.c b/compat/win32mmap.c
-> index 3a39f0f..b836169 100644
-> --- a/compat/win32mmap.c
-> +++ b/compat/win32mmap.c
-> @@ -22,14 +22,15 @@ void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t of
->   		die("Invalid usage of mmap when built with USE_WIN32_MMAP");
->
->   	hmap = CreateFileMapping((HANDLE)_get_osfhandle(fd), NULL,
-> -		PAGE_WRITECOPY, 0, 0, NULL);
-> +		prot == PROT_READ ? PAGE_READONLY : PAGE_WRITECOPY, 0, 0, NULL);
+Stefan Beller <sbeller@google.com> writes:
 
-As long as we use this implementation with MAP_PRIVATE, PAGE_WRITECOPY 
-is the right setting. Should we insert a check for MAP_PRIVATE to catch 
-unexpected use-cases (think of the index-helper daemon effort)?
-
+>> So from where are you proposing Git to grab that information if you
+>> do not tell it?  "If the HEAD is detached, assume that the base is
+>> where it was detached from" or something?
 >
->   	if (!hmap) {
->   		errno = EINVAL;
->   		return MAP_FAILED;
->   	}
+> That would also work for me. In my first mail I was proposing to take
+> the information from the format-patch argument, such that a one off fix
+> would be:
 >
-> -	temp = MapViewOfFileEx(hmap, FILE_MAP_COPY, h, l, length, start);
-> +	temp = MapViewOfFileEx(hmap, prot == PROT_READ ?
-> +			FILE_MAP_READ : FILE_MAP_COPY, h, l, length, start);
-
-Same here: FILE_MAP_COPY is the right choice for MAP_SHARED mmaps.
-
+>     (1) git checkout origin/master
+>     (2) EDIT
+>     (3) git commit -a -m "fix"
+>     (4) git format-patch origin/master..  # <- This is the information.
 >
->   	if (!CloseHandle(hmap))
->   		warning("unable to close file mapping handle");
+> However you read it as taking the information from the first line,
+> which is also fine with me, as then the (4) can become
 >
+>     (4a) git format-patch HEAD^
 
-Except for these mental notes, I've no comments on this series. Looks good.
+Either would work, but reading from (4) feels a lot less black magic
+to me.
 
--- Hannes
+>> If you are doing "format-patch master..my-branch", what do you
+>> propose to set your base to?  master@{u}, perhaps?
+>
+> Yes. (I usually use that command with |s|master|origin/master|, so the
+> argument is the upstream already. A local master branch does not exist for me.)
+
+Let's hear from folks at Intel ;-) Both of the above sounds like
+sensible enhancements to me.
