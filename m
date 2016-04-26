@@ -1,83 +1,111 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: RFC: Supporting .git/hooks/$NAME.d/* && /etc/git/hooks/$NAME.d/*
-Date: Tue, 26 Apr 2016 09:40:05 -0400
-Message-ID: <571F6FB5.2000305@xiplink.com>
-References: <CACBZZX6j6q2DUN_Z-Pnent1u714dVNPFBrL_PiEQyLmCzLUVxg@mail.gmail.com>
- <xmqq4mapmvjq.fsf@gitster.mtv.corp.google.com>
- <CACBZZX6AYBYeb5S4nEBhYbx1r=icJ81JGYBx5=H4wacPhHjFbQ@mail.gmail.com>
+From: Mike Rappazzo <rappazzo@gmail.com>
+Subject: Re: "gitk --author=foo" shows also parent
+Date: Tue, 26 Apr 2016 10:06:02 -0400
+Message-ID: <CANoM8SXn0CgUqQU3vmH-kwuxiDfC1=4FCh1SUsYuOOv4fQtWpw@mail.gmail.com>
+References: <571F6852.1070405@qt.io>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git <git@vger.kernel.org>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 26 15:46:59 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, paulus@samba.org
+To: Nikolai Kosjar <nikolai.kosjar@qt.io>
+X-From: git-owner@vger.kernel.org Tue Apr 26 16:06:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1av3KK-0005D2-9w
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 15:46:56 +0200
+	id 1av3dG-0005lp-W7
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 16:06:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751966AbcDZNqk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Apr 2016 09:46:40 -0400
-Received: from smtp98.iad3a.emailsrvr.com ([173.203.187.98]:57115 "EHLO
-	smtp98.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751815AbcDZNqk (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2016 09:46:40 -0400
-X-Greylist: delayed 392 seconds by postgrey-1.27 at vger.kernel.org; Tue, 26 Apr 2016 09:46:39 EDT
-Received: from smtp29.relay.iad3a.emailsrvr.com (localhost.localdomain [127.0.0.1])
-	by smtp29.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id DF50D380554;
-	Tue, 26 Apr 2016 09:40:06 -0400 (EDT)
-X-Auth-ID: mbranchaud@xiplink.com
-Received: by smtp29.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 592A0380119;
-	Tue, 26 Apr 2016 09:40:06 -0400 (EDT)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-	by 0.0.0.0:465 (trex/5.5.4);
-	Tue, 26 Apr 2016 09:40:06 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
-In-Reply-To: <CACBZZX6AYBYeb5S4nEBhYbx1r=icJ81JGYBx5=H4wacPhHjFbQ@mail.gmail.com>
+	id S1751951AbcDZOGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2016 10:06:24 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:36096 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751696AbcDZOGX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2016 10:06:23 -0400
+Received: by mail-ig0-f171.google.com with SMTP id u10so42579304igr.1
+        for <git@vger.kernel.org>; Tue, 26 Apr 2016 07:06:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=yOvYOhcjrTzXNRpaH2Mv9hce74l+YYveppGRvjn/7AM=;
+        b=eQHp6Sy1JwMDHYh2Bh+Bc66AH+zSmNgXIwFdjnobB5a/MP8JEGz59NidqMsqkCEH03
+         qn+ycoAJL6fNj6Tom7PWBkzU51Y1SuNw5SkDRBiapljZaVu9U/WgYZOxhAyYvrRy1nEw
+         fq0Gzsq0A2Y1CMiqFxxVG7IG0t0mkI3YXSIBocTTPdnlf1u7ZcWkjA8BP6NU9Gtztdgk
+         KKh5rtKAIkPXHxGElklPe2VEwm94OcBM6S6WfGxoIdHndNyOAB/fCn8lifZSIpHjTCEh
+         siEemhWsXIvITZduXbU+d0t0E85dvgDha0vYELyKvIdFUBnnwTda86eHO0sKCGdxN6C1
+         UYkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=yOvYOhcjrTzXNRpaH2Mv9hce74l+YYveppGRvjn/7AM=;
+        b=M7cuSrxhnO5ZJ5l4yawdYjLqbA69FusOwSYhtmiCMiB6bmB3KD8+CdOpEajx8vacx9
+         bpfxAED1Lu5RpjtO9gb7TR1DVdGgsvok7bEYfpRgNm6zJ2UABqmeT1MOUTLgD+eL+Kjv
+         L1c6wv2Rvj1WvEuStygmOZCHevogrm+o9yPJvqXRw05JIt9Nm1+K1tuy1gLx7rR+kZHj
+         0gJTKC+eiaQigDAAGZE9WK6/b0fuXqVKpTVoiiMRa4v0LRNHLL6VviJdH097ycZzl7Q7
+         IG6/NhmKGR8eXyVUfjvvG8ANMINMlztunVpKlffSdGPwyAY0el7sxQUUsCXfdbHVhfhT
+         189g==
+X-Gm-Message-State: AOPr4FW0B3YQYZhhxz6JqCsoCfrgtQjLWGdG+0Qy+x/T3NWnIFpPqKXqgEH7B87rhBuyuxmntzWaarI7Llb6lw==
+X-Received: by 10.50.30.41 with SMTP id p9mr3608204igh.86.1461679582197; Tue,
+ 26 Apr 2016 07:06:22 -0700 (PDT)
+Received: by 10.107.7.220 with HTTP; Tue, 26 Apr 2016 07:06:02 -0700 (PDT)
+In-Reply-To: <571F6852.1070405@qt.io>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292601>
 
-On 2016-04-26 06:58 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->=20
-> Makes sense to have an experimental.* config tree for git for stuff l=
-ike this.
+On Tue, Apr 26, 2016 at 9:08 AM, Nikolai Kosjar <nikolai.kosjar@qt.io> wrote:
+> Hi!
+>
+>         $ gitk --author=foo
+>
+> ...seems to show also the parent of each author-matched commit, whereas
+>
+>         $ git log --author=foo
+>
+> does not. Is this intended or a bug? I've stumbled over this while
+> configuring a gitk view with the author field.
 
-I disagree.
+I believe that this is intentional.  Notice that the parent commit's
+circle is just outlined
+compared to the selected authored commits are filled.  I consider this
+the context
+of the commits you are looking at.
 
-* If the point is to express some kind of warning to users, I think the
-community has been much better served by leaving experimental settings
-undocumented (or documented only in unmerged topic branches).  It feels=
- like
-an experimental.* tree is a doorway to putting experimental features in
-official releases, which seems odd considering that (IMHO) git has so f=
-ar
-done very well with the carefully-planned-out integration of all sorts =
-of
-features.
-
-* Part of the experiment is coming up with appropriate configuration kn=
-obs,
-including where those knobs should live.  Often such considerations lea=
-d to a
-better implementation for the feature.  Dumping things into an experime=
-ntal.*
-tree would merely postpone that part of the feature's design.
-
-* Such a tree creates a flag day when the experimental feature eventual=
-ly
-becomes a "real" feature. That'll annoy any early adopters. Sure, they
-*should* be prepared to deal with config tree bike-shedding, but still =
-that
-extra churn seems unnecessary.
-
-		M.
+>
+> Nikolai
+>
+>
+>
+>
+>
+> # Setup
+> ~/work/gitkBug % git init .
+> ~/work/gitkBug % touch file1 file2
+> ~/work/gitkBug % git add file1
+> ~/work/gitkBug % git commit "--author=MrFoo <foo@world>" file1 -m "add
+> file1"
+> ~/work/gitkBug % git add file2
+> ~/work/gitkBug % git commit "--author=MrBar <bar@world>" file2 -m "add
+> file2"
+>
+> # TEST: git log --author - OK
+> ~/work/gitkBug % git log --author=MrBar # OK, as expected
+> commit 8aa4a4f651162bcb2275a1e9ee23fc1bb7226097
+> Author: MrBar <bar@world>
+> Date:   Tue Apr 26 14:22:58 2016 +0200
+>
+>     add file2
+>
+> # TEST: gitk --author - OPS
+> ~/work/gitkBug % gitk --author=MrBar  # Ops, gitk shows also the parent
+> commit
+>
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
