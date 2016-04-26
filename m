@@ -1,103 +1,194 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 02/15] submodule doc: write down what we want to achieve in this series
-Date: Tue, 26 Apr 2016 13:50:20 -0700
-Message-ID: <1461703833-10350-3-git-send-email-sbeller@google.com>
+Subject: [PATCH 03/15] submodule add: label submodules if asked to
+Date: Tue, 26 Apr 2016 13:50:21 -0700
+Message-ID: <1461703833-10350-4-git-send-email-sbeller@google.com>
 References: <1461703833-10350-1-git-send-email-sbeller@google.com>
 Cc: gitster@pobox.com, git@vger.kernel.org, Jens.Lehmann@web.de,
 	pclouds@gmail.com, Stefan Beller <sbeller@google.com>
 To: jrnieder@gmail.com
-X-From: git-owner@vger.kernel.org Tue Apr 26 22:51:10 2016
+X-From: git-owner@vger.kernel.org Tue Apr 26 22:51:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1av9wi-0006WI-R8
+	id 1av9wj-0006WI-Hy
 	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 22:51:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752697AbcDZUut (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2016 16:50:49 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:35752 "EHLO
-	mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752549AbcDZUur (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2016 16:50:47 -0400
-Received: by mail-pf0-f172.google.com with SMTP id n1so12600367pfn.2
-        for <git@vger.kernel.org>; Tue, 26 Apr 2016 13:50:46 -0700 (PDT)
+	id S1752723AbcDZUuv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2016 16:50:51 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:33046 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752644AbcDZUus (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2016 16:50:48 -0400
+Received: by mail-pa0-f52.google.com with SMTP id zm5so12054071pac.0
+        for <git@vger.kernel.org>; Tue, 26 Apr 2016 13:50:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=epSgxEk1TbfWSH15W1f7/TPo9Mnq+UYHtJqUgUEx4bU=;
-        b=DTtrn/qTVYf3U7W9gtGxxKg3xEN6RRAS6Ns2FOMFoNae+vXqPRqjgGij4fEhswtUXY
-         c2dqhW2QDkdxiuO95pPtA7NT1hdoJEy4l91zHpvM+fM1fBqafKHUUp2cWvbuhZ1qLVYk
-         5U4QuryUwtpQfy+WPYCvwWtqWfdHzHLWWd3m0tK4TrutRmsrVB9KtNltbmvo+6O1aBcF
-         HalUc1a9IWaMYg8Hvi4cZMg6PUYD/+BcpI+VWSwwLKrJ1KI9GGSU1JnK2ybib+IT+WhR
-         iZTIAfoN+ivghyt/koEtw/94DpexkaVzaZjq8Oi04LbI2SLwARJ4do5nkTtaXkbJi+JN
-         J/hA==
+        bh=Q/BHJCAC/SDgCTwiIcF8afFjR7dv2Rn2dkhy9OwGyVw=;
+        b=QpaNLkZRfMoarFtX/fTTEixiqtqEDO0Sd/Gprv93tgjyv3yqk9kyLT5wCnTsqApJev
+         pr3GYoPuR1arm6xD8dUY7/izPfAZWPSMBKpo1AURF4idxUObmEhnbe62qlakDfENrV2f
+         L4gyY+6qhI2z2Ufds+qBsirSRvDRUrxmCvZepulOXkcu8ojzmC8amIo3ZcRQy2Fo28YD
+         45/Ecp54o9A69b+XkuHFJRwkxERm/CGlKuLNxJqJ6qsloqlrHDbCrFOGmGKHFNQegGBT
+         YB+641AZPYpyANe71cSa/yps1FzHJaffkw+DsnawjSQ02WVhdVAisbZ/9Ig/ll9scJ9I
+         B2ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=epSgxEk1TbfWSH15W1f7/TPo9Mnq+UYHtJqUgUEx4bU=;
-        b=fUf+Ng6NXF2bJMf8C2DteVtuw2MujdPkWxVEaWn3V9/2IbYcO0bwoXlMJJK9HU3YeM
-         pp6KE/weTVuWVyPb5lKJYbwQsbQtOjmFQGwzYs0gU+iio4WsnqqKmkFvDYeXJx5f9sFO
-         rOo+ylnqfjebtXK5k+QiIZ+LuLbryO9ieSf4PpiYzEL2CKRiYH1ngl4Pas0o17YYGyes
-         CE6uBNaBLCeRHhstysy7eFI5eIY7FVF0OKkc0WYPK1cGnwglJFF+PyftGdVLRx3vldcz
-         jFShJQxFhQCuNuy+So/QDvH7CZzJi4ZFT14IBP7mT6hNDhmPVdzmEwLQyO2FZbnlNkRk
-         HAYw==
-X-Gm-Message-State: AOPr4FXzwf2RYZWEoDyz+c2Gklg+z9duEhJP2un/xQNCNQ84vvoIuRfxPQvRPcCebYTvP4qm
-X-Received: by 10.98.64.144 with SMTP id f16mr6483405pfd.159.1461703846216;
-        Tue, 26 Apr 2016 13:50:46 -0700 (PDT)
+        bh=Q/BHJCAC/SDgCTwiIcF8afFjR7dv2Rn2dkhy9OwGyVw=;
+        b=e7pCjBfqhqtBwju6dOkvB6vCMVDMaB1XtX86l25vVYoM4MZwlvMx1URVltg5SaE2cM
+         VPxQIDgmizEAXI1C4V4kz/24kEr0H9d0RBns+NHHNpWOwsBhyQ8juqn5EJIJkaGTQxkT
+         UEg7iWgkrfIxGF9qrj+jZ4tPLAONd2SkWg8sZEClTPariSGEampdGR82UnFaYxetkLZ0
+         tuILqRZVANO9Wa0U81Fpro2ixbRPjhvkrbwh21HfSLEsbUP6RpAfM/R/DcB0y9n16+QA
+         8iHpJV50dJziNb6DMW5sw0NWbC3zjb/J7N7gHuGdxCrpvVdpr7lwou+7zMvaJSRZ7mRe
+         9Y5Q==
+X-Gm-Message-State: AOPr4FXlCEcB34Lg1fIijf3Exbu/3sP2uDk3Hal1P0d/tW2s7oeboDpUn79HHbEbiuufRUzp
+X-Received: by 10.66.136.10 with SMTP id pw10mr6504874pab.113.1461703847631;
+        Tue, 26 Apr 2016 13:50:47 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:fcb4:82e7:2d29:45d6])
-        by smtp.gmail.com with ESMTPSA id v189sm449286pfb.85.2016.04.26.13.50.45
+        by smtp.gmail.com with ESMTPSA id g70sm512215pfb.7.2016.04.26.13.50.47
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 26 Apr 2016 13:50:45 -0700 (PDT)
+        Tue, 26 Apr 2016 13:50:47 -0700 (PDT)
 X-Mailer: git-send-email 2.8.0.41.g8d9aeb3
 In-Reply-To: <1461703833-10350-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292669>
+
+When adding new submodules, you can specify the
+label(s) the submodule belongs to by giving one or more
+--label arguments. This will record each label in the
+.gitmodules file as a value of the key
+"submodule.$NAME.label".
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- Documentation/config.txt        | 4 ++++
- Documentation/git-submodule.txt | 8 ++++++++
- 2 files changed, 12 insertions(+)
+ Documentation/git-submodule.txt |  5 ++++-
+ git-submodule.sh                | 14 +++++++++++++-
+ t/t7400-submodule-basic.sh      | 32 ++++++++++++++++++++++++++++++++
+ 3 files changed, 49 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 59d7046..c5b6a4e 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2735,6 +2735,10 @@ submodule.fetchJobs::
- 	in parallel. A value of 0 will give some reasonable default.
- 	If unset, it defaults to 1.
- 
-+submodule.defaultGroup::
-+	Specifies the group of submodules to be operated on
-+	in a command if no submodules were specified in the command.
-+
- tag.sort::
- 	This variable controls the sort ordering of tags when displayed by
- 	linkgit:git-tag[1]. Without the "--sort=<value>" option provided, the
 diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 13adebf..8c4bbe2 100644
+index 8c4bbe2..349ead8 100644
 --- a/Documentation/git-submodule.txt
 +++ b/Documentation/git-submodule.txt
-@@ -37,6 +37,14 @@ these will not be checked out by default; the 'init' and 'update'
- subcommands will maintain submodules checked out and at
- appropriate revision in your working tree.
+@@ -9,7 +9,7 @@ git-submodule - Initialize, update or inspect submodules
+ SYNOPSIS
+ --------
+ [verse]
+-'git submodule' [--quiet] add [-b <branch>] [-f|--force] [--name <name>]
++'git submodule' [--quiet] add [-b <branch>] [-f|--force] [-l|--label <label>]
+ 	      [--reference <repository>] [--depth <depth>] [--] <repository> [<path>]
+ 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
+ 'git submodule' [--quiet] init [--] [<path>...]
+@@ -109,6 +109,9 @@ is the superproject and submodule repositories will be kept
+ together in the same relative location, and only the
+ superproject's URL needs to be provided: git-submodule will correctly
+ locate the submodule using the relative URL in .gitmodules.
+++
++If at least one label argument was given, all labels are recorded in the
++.gitmodules file in the label fields.
  
-+When operating on submodules you can either give paths to specify the
-+desired submodules or give no paths at all to apply the command to the
-+default group of submodules. By default all submodules are included in
-+the default group. You can change the default group by configuring
-+submodule.defaultGroup. Once the default group is configured any
-+submodule operation without a specified set of submodules will use
-+the default group as the set to operate on.
+ status::
+ 	Show the status of the submodules. This will print the SHA-1 of the
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 82e95a9..d7a5e1a 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -5,7 +5,7 @@
+ # Copyright (c) 2007 Lars Hjemli
+ 
+ dashless=$(basename "$0" | sed -e 's/-/ /')
+-USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
++USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [-l|--label <label>][--] <repository> [<path>]
+    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] init [--] [<path>...]
+    or: $dashless [--quiet] deinit [-f|--force] [--] <path>...
+@@ -130,6 +130,7 @@ cmd_add()
+ {
+ 	# parse $args after "submodule ... add".
+ 	reference_path=
++	labels=
+ 	while test $# -ne 0
+ 	do
+ 		case "$1" in
+@@ -165,6 +166,13 @@ cmd_add()
+ 		--depth=*)
+ 			depth=$1
+ 			;;
++		-l|--label)
++			labels="${labels} $2"
++			shift
++			;;
++		--label=*)
++			labels="${labels} ${1#--label=}"
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -292,6 +300,10 @@ Use -f if you really want to add it." >&2
+ 
+ 	git config -f .gitmodules submodule."$sm_name".path "$sm_path" &&
+ 	git config -f .gitmodules submodule."$sm_name".url "$repo" &&
++	for label in $labels
++	do
++		git config --add -f .gitmodules submodule."$sm_name".label "${label}"
++	done &&
+ 	if test -n "$branch"
+ 	then
+ 		git config -f .gitmodules submodule."$sm_name".branch "$branch"
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index f99f674..e9d1d58 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -1040,6 +1040,7 @@ test_expect_success 'submodule with UTF-8 name' '
+ '
+ 
+ test_expect_success 'submodule add clone shallow submodule' '
++	test_when_finished "rm -rf super" &&
+ 	mkdir super &&
+ 	pwd=$(pwd) &&
+ 	(
+@@ -1078,5 +1079,36 @@ test_expect_success 'submodule helper list is not confused by common prefixes' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'submodule add records a label' '
++	test_when_finished "rm -rf super" &&
++	mkdir super &&
++	pwd=$(pwd) &&
++	(
++		cd super &&
++		git init &&
++		git submodule add --label labelA file://"$pwd"/example2 submodule &&
++		git config -f .gitmodules submodule."submodule".label >actual &&
++		echo labelA >expected &&
++		test_cmp expected actual
++	)
++'
 +
- Submodules are composed from a so-called `gitlink` tree entry
- in the main repository that refers to a particular commit object
- within the inner repository that is completely separate.
++cat >expected <<-EOF
++labelA
++labelB
++EOF
++
++test_expect_success 'submodule add records multiple labels' '
++	test_when_finished "rm -rf super" &&
++	mkdir super &&
++	pwd=$(pwd) &&
++	(
++		cd super &&
++		git init &&
++		git submodule add --label=labelA -l labelB file://"$pwd"/example2 submodule &&
++		git config --get-all -f .gitmodules submodule."submodule".label >../actual
++	) &&
++	test_cmp expected actual
++'
+ 
+ test_done
 -- 
 2.8.0.41.g8d9aeb3
