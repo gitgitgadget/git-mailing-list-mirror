@@ -1,82 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 05/83] builtin/apply: extract line_by_line_fuzzy_match() from match_fragment()
-Date: Tue, 26 Apr 2016 13:20:38 -0700
-Message-ID: <xmqqbn4wf7ft.fsf@gitster.mtv.corp.google.com>
-References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
-	<1461504863-15946-6-git-send-email-chriscool@tuxfamily.org>
-	<CAGZ79kYi0seMF12+Y4VxHBJxTh9wo4LUw0A50PYRvZEBvj6SBA@mail.gmail.com>
-	<CAP8UFD228joDLyomvae7rVs02TuTbmEHerwWvH=VR+FE-YFLRA@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH] remote.c: spell __attribute__ correctly
+Date: Tue, 26 Apr 2016 14:19:05 +0100
+Organization: OPDS
+Message-ID: <05BBD86AE63E4FA0ADE63F05DBD834C0@PhilipOakley>
+References: <D7C0C4062A7242B6912E56480CBB06F4@PhilipOakley> <20160425211030.GA10309@sigill.intra.peff.net> <20160425211523.GA11227@sigill.intra.peff.net> <2FDBFACB68254498A8F83367553AED80@PhilipOakley> <571E96CE.80606@ramsayjones.plus.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	=?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 26 22:20:50 2016
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Git List" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Jeff King" <peff@peff.net>,
+	"Ramsay Jones" <ramsay@ramsayjones.plus.com>
+X-From: git-owner@vger.kernel.org Tue Apr 26 22:22:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1av9TU-0001V6-2n
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 22:20:48 +0200
+	id 1av9VN-0002Jz-GC
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 22:22:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752339AbcDZUUn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2016 16:20:43 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65411 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752568AbcDZUUm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2016 16:20:42 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6029F15F28;
-	Tue, 26 Apr 2016 16:20:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sDRjOEP9E2JIXnbwP514S8DQu04=; b=TaP2Vq
-	N354YN+/bKddsrOc49Bw/NL4H1mxX66/IvFXgtrDTvcAhWHjMN7hthV0oWU0XVF3
-	PVakqMcJRKxvs9qtCwKLSnd0oUr3HbPB1foqEGBipYuio67iZJJiMzy+o/altpKN
-	dP2pnneMIOfc7x3eJksM9RAMkU/xQ5P+Bo7Vk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=G6T0yWWuF+ADyXW9Mx/vq8LdeXpkrlG7
-	RssQ5KrzN5JN9/Rk7R0ax+Dy4/S3dTjymordx18nawdlKji6d0fmpjSNzdZq7lL+
-	QutdGCBz2TaQ4xeBOX39HnJRJQJqnXi6s7Anpa7RyMP6skzEcQG3wtnkRCi95h/+
-	1z/YwjMG+TE=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 578B715F27;
-	Tue, 26 Apr 2016 16:20:40 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9028215F25;
-	Tue, 26 Apr 2016 16:20:39 -0400 (EDT)
-In-Reply-To: <CAP8UFD228joDLyomvae7rVs02TuTbmEHerwWvH=VR+FE-YFLRA@mail.gmail.com>
-	(Christian Couder's message of "Tue, 26 Apr 2016 18:15:05 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 57ECC1C4-0BEC-11E6-BDA7-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752943AbcDZUWj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2016 16:22:39 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:61757 "EHLO
+	smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752871AbcDZUWi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2016 16:22:38 -0400
+Received: from PhilipOakley ([92.22.43.189])
+	by smtp.talktalk.net with SMTP
+	id v9VDaaZ3rm8hQv9VEauYa8; Tue, 26 Apr 2016 21:22:36 +0100
+X-Originating-IP: [92.22.43.189]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=EbSKe7uC c=1 sm=1 tr=0 a=2rP9O2QEpdw3eaV+VKDZAA==:117
+ a=2rP9O2QEpdw3eaV+VKDZAA==:17 a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8
+ a=PKzvZo6CAAAA:8 a=5J3k7-N-xnN75VLOaPMA:9
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfH8pxPDBxU+vphhp/OYSvraiXqmwvVnEhSG+hkzHFp81HwL1mIHl41nEN6a1xNR2P3RAEKc1EFK3EZz1OHA6vAHthhF387eyMrW36klkL5EPmahQ6sCz
+ LOcFr4/CRbROPSPTU/dmKBn+e+tbAz5hWtX+gQYYXBFHHqLgSGLr7lZHazgPCBptBXG9jWIceb6qhy0GElIG19r3Qpt9SbYnneS+cwBCQ3IyG+5/DLArUedH
+ rjX+r8v8PcTHnsaifjjXOg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292660>
 
-Christian Couder <christian.couder@gmail.com> writes:
-
->> It's not clear why we need to declare buf here? Oh wait it is. It's just
->> moved from the start of the function. But why do it in this patch?
->> It seems unrelated to the general intent of the patch. No need to reroll
->> for this nit alone, it just took me a while to figure out it was an unrelated
->> thing.
+Thnx,
+From: "Ramsay Jones" <ramsay@ramsayjones.plus.com>
+> On 25/04/16 22:50, Philip Oakley wrote:
+>> From: "Jeff King" <peff@peff.net>
+>>> On Mon, Apr 25, 2016 at 05:10:30PM -0400, Jeff King wrote:
+>>>
+>>>> It should be handled in git-compat-util.h, which is included by 
+>>>> cache.h,
+>>>> which is included by remote.c.
+>>>>
+>>>> There we have:
+>>>>
+>>>>   #ifndef __GNUC__
+>>>>   #ifndef __attribute__
+>>>>   #define __attribute__(x)
+>>>>   #endif
+>>>>   #endif
+>>>>
+>>>> which should make it a noop on compilers which don't know about it. Is
+>>>> VS (or another file) setting __GNUC__?
+>>>
+>>> Of course it helps if we spell the name right...
 >
-> Yeah, I agree it's a bit unrelated. But rather than add another patch
-> to an already long series just for this,...
+> Indeed! ;-)
+>
+> Not that it matters, but the above #define in git-compat-util.h is not
+> the relevant definition - msvc will not see it.
 
-Isn't not doing the unrelated move at all a more sensible
-alternative, if that change does not deserve its own place in the
-series after all?
+Ah, I see that that block is further guarded with other if/elif/else clauses 
+so that it's not seen if _MSC_VER is defined.
+
+git-compat-util.h#L400-411
+
+> However, it does see
+> the #define on line 12 of compat/msvc.h. :-D
+>
+> ATB,
+> Ramsay Jones
+>
