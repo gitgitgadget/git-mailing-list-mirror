@@ -1,279 +1,293 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 15/15] clone: allow specification of submodules to be cloned
-Date: Tue, 26 Apr 2016 13:50:33 -0700
-Message-ID: <1461703833-10350-16-git-send-email-sbeller@google.com>
+Subject: [PATCH 05/15] submodule-config: check if submodule a submodule is in a group
+Date: Tue, 26 Apr 2016 13:50:23 -0700
+Message-ID: <1461703833-10350-6-git-send-email-sbeller@google.com>
 References: <1461703833-10350-1-git-send-email-sbeller@google.com>
 Cc: gitster@pobox.com, git@vger.kernel.org, Jens.Lehmann@web.de,
 	pclouds@gmail.com, Stefan Beller <sbeller@google.com>
 To: jrnieder@gmail.com
-X-From: git-owner@vger.kernel.org Tue Apr 26 22:51:24 2016
+X-From: git-owner@vger.kernel.org Tue Apr 26 22:51:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1av9x4-0006iJ-KL
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 22:51:22 +0200
+	id 1av9x9-0006kM-Em
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 22:51:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752921AbcDZUvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2016 16:51:13 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:33819 "EHLO
-	mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752888AbcDZUvH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2016 16:51:07 -0400
-Received: by mail-pf0-f179.google.com with SMTP id y69so11425309pfb.1
-        for <git@vger.kernel.org>; Tue, 26 Apr 2016 13:51:06 -0700 (PDT)
+	id S1752760AbcDZUux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2016 16:50:53 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:36341 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752644AbcDZUuv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2016 16:50:51 -0400
+Received: by mail-pa0-f45.google.com with SMTP id bt5so10782655pac.3
+        for <git@vger.kernel.org>; Tue, 26 Apr 2016 13:50:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=30NTVI0p05gXbDkkNDtfq7RkR8yuhNNANcKlcw9LKTY=;
-        b=F5s6WjoMXtlDH9E465ufxB/NL+qCXmSLBNp8fxMvOFYPG2E0xJIdv7hFyiwt5LDIoE
-         2+MwCeiXTzdbyBoo/ni25bPhM9PePEt/LKE0noUtTyLnIc3nOhgexNoNE0vkOOeZnsIm
-         2Wi2Ykg4g7v9kRHuwgeEShZDSEeGMNuZolKzpar6n8WTdDhqQVouU1K3KPeaOZtCqaJq
-         dZN8DtzXYIBZDWkC6osFDs2roZLSE4jGn1h5BB9nzIm8+Y73cPKoVnvzl+obLl2UJoTe
-         5TYE2EOQefDnmO31K0jLT0lsc8PhT5CQnlOSjbeChJabnDIPGoIGMYtIDIFar81ZiqII
-         IiiA==
+        bh=NHKraAUGm88/JRX3aR9W2E5Zqi6SAiGIRgLujp23HIQ=;
+        b=LHQa2q70KrZ6Ge9tNbRsvROSCAjCpUbmvUaPPsdw64/Y1pxEanESnxFQfg3OVvQYWN
+         HmYhjcTIX1+kt3lYZgxuPvo3bOu9NCUdPvJyv5Fhj3UkNf6Pww5u/NiwKAzj5Oggudqf
+         yEp+0NBnh2A7B1HyaK3802VXuluDXrSFzoEF670ZGz5mrXHBy578C3nbOn7ec8e2u/mq
+         i6Wx/gA90arN9dRHuCgZzX7QZEq3oyQojA5RMeqKgkTpB5xWQ4Nfe3LDU6E8r0JjtefJ
+         gDtTZJhsANSGWQeM48FFejkwPOJVM47Ozp/HrTd5xPl40Cvozbm7wvssA0zfswJCvF5N
+         aA1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=30NTVI0p05gXbDkkNDtfq7RkR8yuhNNANcKlcw9LKTY=;
-        b=EM69aOE8jTlju4jA3GAnxFOjXCD1zdeEsZVbaA46xZAHJO1HfxTM2T2tjK1KMTNcpI
-         4C6hhO+yNG0oCUDE2bPQmGYSL8RH1YLFZI+tehYvLKVMrMqku2adpvJATqgYtHFro7JX
-         nIscapsWMa0ieGi7pYfYCjEytA0EanpU0ULvLX07PaxvaeA3Eo2HTtDMF2lCq4z10j/w
-         VAqmAlJ3rC77Gr/DiNMNJXXGqxrPMZSb9hJzz0qNjECX3/U3pfVEM0TFN8QzWkTIgMGC
-         ooNlWNwnlEjriiY0jmGW57RopFxoRtrburvHsT7OwF0ZUmEuS8IXV1OIiIDRYsljcN7N
-         T5hg==
-X-Gm-Message-State: AOPr4FWoJfDywyRevIg96SNTpttJntG8E7Hau9puzIdonbvoM5ZFP/rX+9ObudKQQGsl1J5X
-X-Received: by 10.98.64.144 with SMTP id f16mr6485075pfd.159.1461703866252;
-        Tue, 26 Apr 2016 13:51:06 -0700 (PDT)
+        bh=NHKraAUGm88/JRX3aR9W2E5Zqi6SAiGIRgLujp23HIQ=;
+        b=P4IJpzC75P6bQBfVEPSJfccdL5tPVP8gCXH1ZF4E7Tic1l6ZmRDeiWPANlNp3EQEQY
+         USzW2B3tRL7IKfJTkIvfdo4i3OogdgSqATeLAC9K6pI9xtiUYrnqpOiWBTWcdOg4QYFR
+         pnY3F86l1SYIITMS/JZ1XdQHNxbvm0rWe9ZPfdT5G7PRzotAOpAQJsIdu5IKKkXNIM8J
+         1nsFskw9DV69Pv6YFnWjDkP891jWVhnR8S4DCshlpqgFs3UUiI+pcKWrk8gmeVOnrN8r
+         Nw/69ejZdqrVoUT9v0025UALfCPvW2QzEJpmtIu+FWwf1y3nLc1JqhMRsFv8lrVd8PGp
+         I7YA==
+X-Gm-Message-State: AOPr4FVlqfNURKSKPsaCGP2WTrvRTtPrFmm5YLXxWR4dUURUlXk7hJODjrrO+qzWMs3OzkVr
+X-Received: by 10.66.217.137 with SMTP id oy9mr6563403pac.103.1461703850807;
+        Tue, 26 Apr 2016 13:50:50 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:fcb4:82e7:2d29:45d6])
-        by smtp.gmail.com with ESMTPSA id d78sm470239pfb.59.2016.04.26.13.51.05
+        by smtp.gmail.com with ESMTPSA id k65sm490785pfb.30.2016.04.26.13.50.50
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 26 Apr 2016 13:51:05 -0700 (PDT)
+        Tue, 26 Apr 2016 13:50:50 -0700 (PDT)
 X-Mailer: git-send-email 2.8.0.41.g8d9aeb3
 In-Reply-To: <1461703833-10350-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292679>
 
-This is in line with clone being the contraction of
-    mkdir <path> && cd <path>
-    git init
-    git config
-    git fetch
-    git submodule update
+In later patches we need to tell if a submodule is in a group,
+which is defined by name, path or labels.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- Documentation/git-clone.txt |  6 +++
- builtin/clone.c             | 40 +++++++++++++++++--
- t/t7400-submodule-basic.sh  | 96 +++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 139 insertions(+), 3 deletions(-)
+ builtin/submodule--helper.c  | 43 ++++++++++++++++++++++-
+ submodule-config.c           | 50 +++++++++++++++++++++++++++
+ submodule-config.h           |  3 ++
+ t/t7413-submodule--helper.sh | 81 ++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 176 insertions(+), 1 deletion(-)
+ create mode 100755 t/t7413-submodule--helper.sh
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 45d74be..38b1948 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -212,6 +212,12 @@ objects from the source repository into a pack in the cloned repository.
- 	repository does not have a worktree/checkout (i.e. if any of
- 	`--no-checkout`/`-n`, `--bare`, or `--mirror` is given)
- 
-+--init-submodule::
-+	After the repository is cloned, specified submodules are cloned.
-+	It is possible to give multiple specifications by repeating the
-+	argument. This option will be recorded in the repository config
-+	as `submodule.defaultGroup`.
-+
- --separate-git-dir=<git dir>::
- 	Instead of placing the cloned repository where it is supposed
- 	to be, place the cloned repository at the specified directory,
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 6576ecf..8371bc2 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -52,6 +52,22 @@ static struct string_list option_config;
- static struct string_list option_reference;
- static int option_dissociate;
- static int max_jobs = -1;
-+static struct string_list init_submodules;
-+
-+static int init_submodules_cb(const struct option *opt, const char *arg, int unset)
-+{
-+	struct string_list_item *item;
-+	struct string_list sl = STRING_LIST_INIT_DUP;
-+
-+	if (unset)
-+		return -1;
-+
-+	string_list_split(&sl, arg, ',', -1);
-+	for_each_string_list_item(item, &sl)
-+		string_list_append((struct string_list *)opt->value, item->string);
-+
-+	return 0;
-+}
- 
- static struct option builtin_clone_options[] = {
- 	OPT__VERBOSITY(&option_verbosity),
-@@ -100,6 +116,8 @@ static struct option builtin_clone_options[] = {
- 			TRANSPORT_FAMILY_IPV4),
- 	OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
- 			TRANSPORT_FAMILY_IPV6),
-+	OPT_CALLBACK(0, "init-submodule", &init_submodules, N_("string"),
-+			N_("clone specific submodules"), init_submodules_cb),
- 	OPT_END()
- };
- 
-@@ -731,17 +749,24 @@ static int checkout(void)
- 	err |= run_hook_le(NULL, "post-checkout", sha1_to_hex(null_sha1),
- 			   sha1_to_hex(sha1), "1", NULL);
- 
--	if (!err && option_recursive) {
-+	if (err)
-+		goto out;
-+
-+	if (option_recursive || init_submodules.nr > 0) {
- 		struct argv_array args = ARGV_ARRAY_INIT;
--		argv_array_pushl(&args, "submodule", "update", "--init", "--recursive", NULL);
-+		argv_array_pushl(&args, "submodule", "update", NULL);
- 
-+		if (option_recursive) {
-+			argv_array_pushf(&args, "--init");
-+			argv_array_pushf(&args, "--recursive");
-+		}
- 		if (max_jobs != -1)
- 			argv_array_pushf(&args, "--jobs=%d", max_jobs);
- 
- 		err = run_command_v_opt(args.argv, RUN_GIT_CMD);
- 		argv_array_clear(&args);
- 	}
--
-+out:
- 	return err;
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index b6d4f27..23d7224 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -814,6 +814,46 @@ static int update_clone(int argc, const char **argv, const char *prefix)
+ 	return 0;
  }
  
-@@ -876,6 +901,15 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		option_no_checkout = 1;
- 	}
- 
-+	if (init_submodules.nr > 0) {
-+		struct string_list_item *item;
-+		struct strbuf sb = STRBUF_INIT;
-+		for_each_string_list_item(item, &init_submodules) {
-+			strbuf_addf(&sb, "submodule.defaultGroup=%s", item->string);
-+			string_list_append(&option_config, strbuf_detach(&sb, 0));
-+		}
++int in_group(int argc, const char **argv, const char *prefix)
++{
++	const struct string_list *list;
++	struct string_list actual_list = STRING_LIST_INIT_DUP;
++	const struct submodule *sub;
++	const char *group = NULL;
++
++	struct option default_group_options[] = {
++		OPT_STRING('g', "group", &group, N_("group"),
++				N_("group specifier for submodules")),
++		OPT_END()
++	};
++
++	const char *const git_submodule_helper_usage[] = {
++		N_("git submodule--helper in-group <path>"),
++		NULL
++	};
++
++	argc = parse_options(argc, argv, prefix, default_group_options,
++			     git_submodule_helper_usage, 0);
++
++	/* Overlay the parsed .gitmodules file with .git/config */
++	gitmodules_config();
++	git_config(submodule_config, NULL);
++
++	if (argc != 1)
++		usage(git_submodule_helper_usage[0]);
++
++	sub = submodule_from_path(null_sha1, argv[0]);
++
++	if (!group)
++		list = git_config_get_value_multi("submodule.defaultGroup");
++	else {
++		string_list_split(&actual_list, group, ',', -1);
++		list = &actual_list;
 +	}
 +
- 	if (!option_origin)
- 		option_origin = "origin";
++	return !submodule_in_group(list, sub);
++}
++
+ struct cmd_struct {
+ 	const char *cmd;
+ 	int (*fn)(int, const char **, const char *);
+@@ -826,7 +866,8 @@ static struct cmd_struct commands[] = {
+ 	{"update-clone", update_clone},
+ 	{"resolve-relative-url", resolve_relative_url},
+ 	{"resolve-relative-url-test", resolve_relative_url_test},
+-	{"init", module_init}
++	{"init", module_init},
++	{"in-group", in_group}
+ };
  
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index ac477b2..1fd313b 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -1110,4 +1110,100 @@ test_expect_success 'submodule add records multiple labels' '
- 	test_cmp expected actual
- '
+ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+diff --git a/submodule-config.c b/submodule-config.c
+index 0cdb47e..ebed0f2 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -522,3 +522,53 @@ void submodule_free(void)
+ 	cache_free(&cache);
+ 	is_cache_init = 0;
+ }
++
++int submodule_in_group(const struct string_list *group,
++		       const struct submodule *sub)
++{
++	int matched = 0;
++	struct strbuf sb = STRBUF_INIT;
++
++	if (!group)
++		/*
++		 * If no group is specified all, all submodules match to
++		 * keep traditional behavior
++		 */
++		return 1;
++
++	if (sub->labels) {
++		struct string_list_item *item;
++		for_each_string_list_item(item, sub->labels) {
++			strbuf_reset(&sb);
++			strbuf_addf(&sb, "*%s", item->string);
++			if (string_list_has_string(group, sb.buf)) {
++				matched = 1;
++				break;
++			}
++		}
++	}
++	if (sub->path) {
++		/*
++		 * NEEDSWORK: This currently works only for
++		 * exact paths, but we want to enable
++		 * inexact matches such wildcards.
++		 */
++		strbuf_reset(&sb);
++		strbuf_addf(&sb, "./%s", sub->path);
++		if (string_list_has_string(group, sb.buf))
++			matched = 1;
++	}
++	if (sub->name) {
++		/*
++		 * NEEDSWORK: Same as with path. Do we want to
++		 * support wildcards or such?
++		 */
++		strbuf_reset(&sb);
++		strbuf_addf(&sb, ":%s", sub->name);
++		if (string_list_has_string(group, sb.buf))
++			matched = 1;
++	}
++	strbuf_release(&sb);
++
++	return matched;
++}
+diff --git a/submodule-config.h b/submodule-config.h
+index d57da59..4c696cc 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -31,4 +31,7 @@ const struct submodule *submodule_from_path(const unsigned char *commit_sha1,
+ 		const char *path);
+ void submodule_free(void);
  
-+cat <<EOF > expected
-+submodule
-+EOF
++int submodule_in_group(const struct string_list *group,
++		       const struct submodule *sub);
 +
-+test_expect_success 'clone --init-submodule works' '
-+	test_when_finished "rm -rf super super_clone" &&
-+	mkdir super &&
-+	pwd=$(pwd) &&
-+	(
-+		cd super &&
-+		git init &&
-+		git submodule add --label labelA file://"$pwd"/example2 submodule &&
-+		git submodule add file://"$pwd"/example2 submodule1 &&
-+		git commit -a -m "create repository with 2 submodules, one is in a group"
-+	) &&
-+	git clone --recurse-submodules --init-submodule \*labelA super super_clone &&
-+	(
-+		cd super_clone &&
-+		git submodule status |cut -c1,42-52 | tr -d " " >../actual
-+	) &&
-+	test_cmp actual expected
+ #endif /* SUBMODULE_CONFIG_H */
+diff --git a/t/t7413-submodule--helper.sh b/t/t7413-submodule--helper.sh
+new file mode 100755
+index 0000000..c6939ab
+--- /dev/null
++++ b/t/t7413-submodule--helper.sh
+@@ -0,0 +1,81 @@
++#!/bin/sh
++
++# This should be merged with t7412 eventually.
++# (currently in flight as jk/submodule-c-credential)
++
++
++test_description='Basic plumbing support of submodule--helper
++
++This test verifies the submodule--helper plumbing command used to implement
++git-submodule.
 +'
 +
-+cat <<EOF > expect
-+submoduleA
-+submoduleC
-+submoduleE
-+EOF
++. ./test-lib.sh
 +
-+test_expect_success 'clone with multiple --init-submodule options' '
-+	test_when_finished "rm -rf super super_clone" &&
++test_expect_success 'setup superproject with submodules' '
++
++	mkdir sub &&
++	(
++		cd sub &&
++		git init &&
++		test_commit test
++		test_commit test2
++	) &&
 +	mkdir super &&
-+	pwd=$(pwd) &&
 +	(
 +		cd super &&
 +		git init &&
-+		git submodule add --label groupA file://"$pwd"/example2 submoduleA &&
-+		git submodule add --label groupB file://"$pwd"/example2 submoduleB &&
-+		git submodule add --label groupC file://"$pwd"/example2 submoduleC &&
-+		git submodule add --label groupD --name submoduleE file://"$pwd"/example2 submoduleD &&
-+		git submodule add --label groupE --name submoduleD file://"$pwd"/example2 submoduleE &&
-+		git submodule add file://"$pwd"/example2 submodule1 &&
-+		git commit -a -m "create repository with submodules groups"
-+	) &&
-+	git clone --recurse-submodules --init-submodule=\*groupA --init-submodule ./submoduleC --init-submodule :submoduleD super super_clone &&
-+	(
-+		cd super_clone &&
-+		git submodule status |cut -c1,42-52 | tr -d " " >../actual
-+	) &&
-+	test_cmp expect actual
++		git submodule add ../sub sub0 &&
++		git submodule add -l bit1 ../sub sub1 &&
++		git submodule add -l bit2 ../sub sub2 &&
++		git submodule add -l bit2 -l bit1 ../sub sub3 &&
++		git commit -m "add labeled submodules"
++	)
 +'
 +
-+cat <<EOF > expect
-+submoduleA
-+EOF
-+
-+cat <<EOF > expect2
-+submoduleA
-+submoduleC
-+EOF
-+
-+test_expect_success 'clone and subsequent updates correctly auto-initialize submodules' '
-+	test_when_finished "rm -rf super super_clone" &&
-+	mkdir super &&
-+	pwd=$(pwd) &&
++test_expect_success 'in-group' '
 +	(
 +		cd super &&
-+		git init &&
-+		git submodule add --label LA file://"$pwd"/example2 submoduleA &&
-+		git submodule add file://"$pwd"/example2 submoduleB &&
-+		git commit -a -m "create repository with submodules groups"
-+	) &&
-+	git clone --recurse-submodules --init-submodule=\*LA super super_clone &&
-+	(
-+		cd super_clone &&
-+		git submodule status |cut -c1,42-52 | tr -d " " >../actual
-+	) &&
-+	test_cmp expect actual &&
-+	(
-+		cd super &&
-+		git init &&
-+		git submodule add --label LA file://"$pwd"/example2 submoduleC &&
-+		git commit -a -m "add another labled submodule"
-+	) &&
-+	(
-+		cd super_clone &&
-+		# obtain the new superproject
-+		git pull &&
-+		# submoduleC should just appear as it has the label LA
-+		# which was configured in git clone
-+		git submodule update --init &&
-+		git submodule status |cut -c1,42-52 | tr -d " " >../actual
-+	) &&
-+	test_cmp expect2 actual
++		# we do not specify a group nor have set a default group,
++		# any submodule should be in the default group:
++		git submodule--helper in-group sub0 &&
++		git submodule--helper in-group sub1 &&
++		git submodule--helper in-group sub2 &&
++		git submodule--helper in-group sub3 &&
++
++		# test bit1:
++		test_must_fail git submodule--helper in-group --group=*bit1 sub0 &&
++			       git submodule--helper in-group --group=*bit1 sub1 &&
++		test_must_fail git submodule--helper in-group --group=*bit1 sub2 &&
++			       git submodule--helper in-group --group=*bit1 sub3 &&
++
++		# test by path:
++			       git submodule--helper in-group --group=./sub0 sub0 &&
++		test_must_fail git submodule--helper in-group --group=./sub0 sub1 &&
++		test_must_fail git submodule--helper in-group --group=./sub0 sub2 &&
++		test_must_fail git submodule--helper in-group --group=./sub0 sub3 &&
++
++		# test by name:
++			       git submodule--helper in-group --group=:sub0 sub0 &&
++		test_must_fail git submodule--helper in-group --group=:sub0 sub1 &&
++		test_must_fail git submodule--helper in-group --group=:sub0 sub2 &&
++		test_must_fail git submodule--helper in-group --group=:sub0 sub3 &&
++
++		# logical OR of path and labels
++			       git submodule--helper in-group --group=*bit1,./sub0 sub0 &&
++			       git submodule--helper in-group --group=*bit1,./sub0 sub1 &&
++		test_must_fail git submodule--helper in-group --group=*bit1,./sub0 sub2 &&
++			       git submodule--helper in-group --group=*bit1,./sub0 sub3 &&
++
++		# test if the config option is picked up
++		git config --add submodule.defaultGroup *bit1 &&
++		git config --add submodule.defaultGroup ./sub0 &&
++
++			       git submodule--helper in-group sub0 &&
++			       git submodule--helper in-group sub1 &&
++		test_must_fail git submodule--helper in-group sub2 &&
++			       git submodule--helper in-group sub3
++	)
 +'
 +
- test_done
++test_done
 -- 
 2.8.0.41.g8d9aeb3
