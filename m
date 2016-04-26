@@ -1,89 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 13/21] rev-parse: add '--absolute-git-dir' option
-Date: Tue, 26 Apr 2016 01:35:22 -0400
-Message-ID: <20160426053522.GA23949@sigill.intra.peff.net>
-References: <1456440650-32623-1-git-send-email-szeder@ira.uka.de>
- <1456440650-32623-14-git-send-email-szeder@ira.uka.de>
- <CANoM8SXO_Rz_CVOz9ptsaVCzcQ2D1FQrSuFFW4vZ4SdRYMzD=w@mail.gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH 0/2] git-p4: support python3 in the tests
+Date: Tue, 26 Apr 2016 08:27:30 +0100
+Message-ID: <CAE5ih7_MzKWG+=PDMW8a5uJ28uGGnvh-25-3b4bgnO3VdBiyLA@mail.gmail.com>
+References: <1461420826-4416-1-git-send-email-luke@diamand.org>
+	<xmqqzishibpz.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Mike Rappazzo <rappazzo@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 26 07:35:31 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Users <git@vger.kernel.org>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Vitor Antunes <vitor.hda@gmail.com>,
+	Sam Hocevar <sam@hocevar.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 26 09:27:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1auvek-0007rh-IS
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 07:35:30 +0200
+	id 1auxPE-0006oY-MM
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 09:27:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751146AbcDZFf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2016 01:35:26 -0400
-Received: from cloud.peff.net ([50.56.180.127]:56331 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751082AbcDZFfZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2016 01:35:25 -0400
-Received: (qmail 32630 invoked by uid 102); 26 Apr 2016 05:35:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 26 Apr 2016 01:35:25 -0400
-Received: (qmail 11313 invoked by uid 107); 26 Apr 2016 05:35:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 26 Apr 2016 01:35:25 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Apr 2016 01:35:22 -0400
-Content-Disposition: inline
-In-Reply-To: <CANoM8SXO_Rz_CVOz9ptsaVCzcQ2D1FQrSuFFW4vZ4SdRYMzD=w@mail.gmail.com>
+	id S1752437AbcDZH1c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2016 03:27:32 -0400
+Received: from mail-oi0-f46.google.com ([209.85.218.46]:36269 "EHLO
+	mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752375AbcDZH1b (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2016 03:27:31 -0400
+Received: by mail-oi0-f46.google.com with SMTP id x201so6298961oif.3
+        for <git@vger.kernel.org>; Tue, 26 Apr 2016 00:27:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=YHF8W2VOs3p6TzrHdLhvftTNomrqPlM5OIkLnfG83MI=;
+        b=XiqY1FJGaCCy3Sx6iJj4jt5nRRDu1G9g9jxvgey5Ornrr5ziYIIY/MchVRZYyGJF4y
+         pZw6qte2H7UgyWwtSYjktPgw3Y0XOcWixSkcs27y+tUr/9U9YM7jMoy+tk+R3iE/Ll/d
+         aTFpA3W0E2DYz1DHAvBlzI17H0D/I45qgbvL4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=YHF8W2VOs3p6TzrHdLhvftTNomrqPlM5OIkLnfG83MI=;
+        b=K31sDERy7tj7TET8UH6SydemQ/+gvL4wv127vPFkTW2CJ+S+qXlYVZIxUYwNlRrRnN
+         Z6DxOHh+pLjIzYq81ItLhG3iT5Qv9hbQlppJ2APXRmDdR4PshWKZY/tWA9pCUhGJ8wDj
+         gWuJHWxU5uAqaxkmzqcenPWeqdWKWI/A14e1w5zYpaftcGORSU0wn1oJ/EpEEhdTvVHb
+         s7CPwUyYqwUhN8XdD4cRMFNGDe/wVdYifdD3hRzuPY/qjlNOuNNU5XH6NFJuNF+Y7Bif
+         ZgArW9L4ojJCO9SXd715l6MTjRiASVGmwPkvoeHEhJP6vW3OREpTJkRzTkFzA/UHda1w
+         UZPQ==
+X-Gm-Message-State: AOPr4FVsm9CkRxoi+A4Ft4kp9QUwBbr0BGTS1xYWDI02BqaQpsR2kDxGWDBVmN/iBTapX6JdXK8QLPlc9TT0VA==
+X-Received: by 10.157.24.41 with SMTP id b38mr350893ote.190.1461655650823;
+ Tue, 26 Apr 2016 00:27:30 -0700 (PDT)
+Received: by 10.202.75.210 with HTTP; Tue, 26 Apr 2016 00:27:30 -0700 (PDT)
+In-Reply-To: <xmqqzishibpz.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292587>
 
-On Mon, Apr 25, 2016 at 10:33:13PM -0400, Mike Rappazzo wrote:
+On 25 April 2016 at 23:07, Junio C Hamano <gitster@pobox.com> wrote:
+> Luke Diamand <luke@diamand.org> writes:
+>
+>> This patchset updates the git-p4 tests so that they work with
+>> either Python2 or Python3.
+>>
+>> Note that this does *not* fix git-p4 to work with Python3 - that's
+>> a much bigger challenge.
+>
+> We use Python outside p4 tests (e.g. remote-svn test), and the way
+> they invoke the interpreter is to say "$PYTHON_PATH" and avoid
+> saying "python" which picks whatever random version of Python
+> interpreter happens to be the first on $PATH.  Shouldn't the tests
+> touched by this series be doing the same?
 
-> I propose that it might make more sense to use something like
-> `--abs-path` to indicate
-> that the result should include an absolute path (or we could also just spell out
-> `--absolute-path`).  That way we don't have to add additional options
-> for any other type
-> that might want an absolute path.
-> 
->     git rev-parse --git-dir --abs-path
->     git rev-parse --git-common-dir --absolute-path
-> 
-> I do understand that this might be more work than is necessary for the
-> completion series
-> here.  Would it be unreasonable to suggest a partial implementation
-> that, for now, only
-> works with `--git-dir`?
+Yes, they should. I'll update them accordingly.
 
-I do like the concept of keeping "--absolute-path" orthogonal. The only
-trick is that we need to either support it for all appropriate options,
-or document which options it _does_ work with. Otherwise, we're going to
-get bug reports when somebody tries "--absolute-path --git-common-dir".
+But the real reason for doing this is that at some point, git-p4 has
+to start working with python3, since python2 is going away (albeit not
+until 2020).
 
-It would be cleaner to provide a separate option to let people compose
-the options, like:
-
-  git rev-parse --git-dir | git rev-parse --realpath
-
-but that's a lot less efficient.
-
-> > +                                       if (gitdir) {
-> > +                                               char absolute_path[PATH_MAX];
-> > +                                               if (!realpath(gitdir, absolute_path))
-> > +                                                       die_errno(_("unable to get absolute path"));
-> > +                                               puts(absolute_path);
-> > +                                               continue;
-> > +                                       }
-
-I don't recall if this came up in earlier review, but I happened to
-notice the use of realpath() here. We should be using our custom
-real_path() instead. There are some platforms without realpath(), I
-think, and our real_path() is not limited to the static PATH_MAX (which
-is too small on some platforms).
-
--Peff
+Luke
