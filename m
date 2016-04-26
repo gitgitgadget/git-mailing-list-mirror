@@ -1,91 +1,99 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH] config doc: improve exit code listing
-Date: Tue, 26 Apr 2016 11:10:58 -0700
-Message-ID: <20160426181058.7901-1-sbeller@google.com>
-Cc: john@keeping.me.uk, git@vger.kernel.org,
-	Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Apr 26 20:11:38 2016
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH v4 0/4] githooks.txt improvements + core.hooksDirectory
+Date: Tue, 26 Apr 2016 18:13:18 +0000
+Message-ID: <1461694402-9629-1-git-send-email-avarab@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 20:13:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1av7SR-0005gg-Re
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 20:11:36 +0200
+	id 1av7UZ-0006dN-RZ
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 20:13:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752280AbcDZSLZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2016 14:11:25 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:33956 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752260AbcDZSLY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2016 14:11:24 -0400
-Received: by mail-pa0-f48.google.com with SMTP id r5so9471439pag.1
-        for <git@vger.kernel.org>; Tue, 26 Apr 2016 11:11:24 -0700 (PDT)
+	id S1752255AbcDZSNn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Apr 2016 14:13:43 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35520 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751704AbcDZSNm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2016 14:13:42 -0400
+Received: by mail-wm0-f66.google.com with SMTP id e201so6506780wme.2
+        for <git@vger.kernel.org>; Tue, 26 Apr 2016 11:13:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=5XNqEEmDvQkXad5b3VjT+ttaAifX6RVPaWLqLZzyaWk=;
-        b=aK6uVndSxUrTwO+8X6m+4en0Q5UJDLbSP8Pg8m3guGUhBT6OPG9fjTKRUFXe7zyFVd
-         fl5K9vi+FFPbjMtU+5e3aVyRknrE9C70GdyScTPElRImRYI7qvd/Xuxz69ZwmiCmDum3
-         b1HcYUviCOc1aCgYJf18fBbAmDWqvY78Lye8+5BV1Fveynqv8BZ1pmEek+x108AXmF+6
-         toG8FCdJrnpHj3dO6qcGe4RbFmhWRpCGJytFvnSv4D/Ah/yOlxePJXa0FhVy3NWsD7ti
-         YYrDM0aMdgfwCwxDxA5+EMUZpH+LkzR1+e7OfUgKy6MeMwMM+PiWYnh0ch1aaK5F8zB8
-         QoeQ==
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eS4QsApHe4VnCMvNq9p4qXF6kfbVPKMswnS4oFuY+hk=;
+        b=d/YGeF36wRsQ+8qoYr6Q6WLnq5udzF2EiVch2TGKIASL726VdMn6N13tWtzyioNwwZ
+         dkc8RMgzd/G8BB5ix8nMZYxqgTpFLpfpd2WElarsWSxJCete09AyllH0EdHRfnTfCn3o
+         mmDp4/Z9CHMG3WuUmfv2Qdu3lpnGOpQ1lK21oEE5OarTcOuvo5KRYEItkE7/TcWiZUog
+         PL/+nR+5I+corMgGzqVuQrhii67FKUNcHKGiaGkVWhKKbulossP93hcZfvbovtLCxsda
+         h9OYlcxePLw1PxigoE1fqOjgliO9HKoKmhBi5JPkZAhG6WEGgmYzKBelJeu7tDerbMjJ
+         ZrvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=5XNqEEmDvQkXad5b3VjT+ttaAifX6RVPaWLqLZzyaWk=;
-        b=coG/xCM0EdHRAPJOy35hmEwErgnBkjjcLjGYLsSCdlfY0OR+BuLqQva+4h1FcLfoJz
-         RtOPh8SMoxpuCSUGd34VBioXfP4dGEiOES5IYaGgH6geD5A0tN1lYqFH4vc8MjW28FV+
-         hx27NijBjmjzt16WciPxlHP9nnSeSroP8a2ebFWxbZGuoMYWqpEi6T9nMjMRBezK34uf
-         SYWwthfEj5M/qQx0IvpYqDMVCLoqmRjniBTIfRvQTZGSYLLQ8B+/oWOTQ+YCQK3n6ktN
-         ffs2jHfp7GOILv0gjuHAt0aWMg1IBAL4N5jYt6ZXKPRRrcdWdeDqLKFklCcqPAqbgiJz
-         HgKg==
-X-Gm-Message-State: AOPr4FXXlXKPWIBiJxoysQgqBPeq5ZGC4VrBGFEFM1PejWaafYLOT7DqpWURDQmrHT2wFf6hOShTH/ZJx7vFYTjRbc6G5YJk6KsRbmaWKtkwMBV/BymanlnJGGlhAw==
-X-Received: by 10.66.160.7 with SMTP id xg7mr5600210pab.10.1461694283366;
-        Tue, 26 Apr 2016 11:11:23 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:fcb4:82e7:2d29:45d6])
-        by smtp.gmail.com with ESMTPSA id 194sm6918388pfv.8.2016.04.26.11.11.22
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 26 Apr 2016 11:11:22 -0700 (PDT)
-X-Mailer: git-send-email 2.8.1.343.gb96d81e
-X-ccpol: medium
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eS4QsApHe4VnCMvNq9p4qXF6kfbVPKMswnS4oFuY+hk=;
+        b=GTM8UtuWksYnfy7jP2+pV84+4JklrxDE4AyJd+hesG/IKqlgwtcPARZ+Lp5FbF9je9
+         MEP61Nt5huronZFZI5rxyqhSpyJq9foGbzBrK4B/GY4yIo95Sa5SbQZ5MPaBWxfrVD6q
+         vLwvWmafWvniuIj1gsayxkeGuOIPaKJL/Hv2y+KBUYVBtdzxKc/FPEslabdR4U5RBpGv
+         tbq1pPzIWVFn8zaUUUCDUn0MwCsTK54ePyhYHHCuECuCj4Y3qmWfMQ9C2gqhbHNsWQVy
+         9qTuV8/3rSy6III6pMSZlolIhKylCnxlWdviD2LFJAINwEko7UPZahix1gzf1o04YH+N
+         FWJg==
+X-Gm-Message-State: AOPr4FXiGy1dj89+2d2ogCWds0RUYKlZmCWmzFVrOI3wnRaNE05qWU0KczB6dp6KguGXOA==
+X-Received: by 10.194.248.135 with SMTP id ym7mr4704796wjc.174.1461694421048;
+        Tue, 26 Apr 2016 11:13:41 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id h8sm4392371wmd.2.2016.04.26.11.13.38
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 26 Apr 2016 11:13:39 -0700 (PDT)
+X-Mailer: git-send-email 2.1.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292635>
 
-The possible reasons for exiting are now ordered by the exit code value.
-While at it, rewrite the `can not write to the config file` to
-`the config file cannot be written` to be grammatically correct and a
-proper sentence.
+In this version of the series I've hopefully addressed all the
+comments that came up on the list after the last one, and a few fixes
+I noticed myself, e.g. a couple of grammar errors and a broken
+asciidoc syntax.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- Documentation/git-config.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+I've combined both the githooks.txt documentation improvements and the
+core.hooksDirectory patch into one series. Although they're logically
+different things I think it makes more sense to combine them for ease
+of reading, since the core.hooksDirectory documentation refers to some
+documentation I fixed earlier in the series.
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 6fc08e3..6843114 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -58,10 +58,10 @@ that location (you can say '--local' but that is the default).
- This command will fail with non-zero status upon error.  Some exit
- codes are:
- 
--- The config file is invalid (ret=3),
--- can not write to the config file (ret=4),
-+- The section or key is invalid (ret=1),
- - no section or name was provided (ret=2),
--- the section or key is invalid (ret=1),
-+- the config file is invalid (ret=3),
-+- the config file cannot be written (ret=4),
- - you try to unset an option which does not exist (ret=5),
- - you try to unset/set an option for which multiple lines match (ret=5), or
- - you try to use an invalid regexp (ret=6).
--- 
-2.8.1.343.gb96d81e
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (4):
+  githooks.txt: Improve the intro section
+  githooks.txt: Amend dangerous advice about 'update' hook ACL
+  githooks.txt: Minor improvements to the grammar & phrasing
+  hooks: Add ability to specify where the hook directory is
 
-base-commit: 3ad15fd5e17bbb73fb1161ff4e9c3ed254d5b243
+ Documentation/config.txt     | 18 +++++++++++
+ Documentation/git-init.txt   |  7 ++++-
+ Documentation/githooks.txt   | 74 ++++++++++++++++++++++++++----------=
+--------
+ cache.h                      |  1 +
+ config.c                     |  3 ++
+ environment.c                |  1 +
+ run-command.c                |  5 ++-
+ t/t1350-config-hooks-path.sh | 31 +++++++++++++++++++
+ 8 files changed, 108 insertions(+), 32 deletions(-)
+ create mode 100755 t/t1350-config-hooks-path.sh
+
+--=20
+2.1.3
