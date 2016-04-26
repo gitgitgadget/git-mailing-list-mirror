@@ -1,101 +1,130 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v6 0/4] Add --base option to git-format-patch to record
- base tree info
-Date: Tue, 26 Apr 2016 15:56:36 -0700
-Message-ID: <CAGZ79kbTqW82Tj3KvXwYYhSWxuGvaGeYoAZrJkkM6FR4rhwC+Q@mail.gmail.com>
-References: <1461657084-9223-1-git-send-email-xiaolong.ye@intel.com>
-	<CAGZ79kajpAtbHaKLaLHN5+qUOvBofFs-q-vUYWua49GWK7FO9Q@mail.gmail.com>
-	<xmqqlh40gs9o.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZg3OpR8k45=q1m-g=t+aGGs8VDYBrBYaBU_DbfuuoBig@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 05/15] submodule-config: check if submodule a submodule is in a group
+Date: Tue, 26 Apr 2016 15:58:24 -0700
+Message-ID: <xmqq37q8c6zz.fsf@gitster.mtv.corp.google.com>
+References: <1461703833-10350-1-git-send-email-sbeller@google.com>
+	<1461703833-10350-6-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Xiaolong Ye <xiaolong.ye@intel.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Fengguang Wu <fengguang.wu@intel.com>, ying.huang@intel.com,
-	philip.li@intel.com, julie.du@intel.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 00:57:03 2016
+Content-Type: text/plain
+Cc: jrnieder@gmail.com, git@vger.kernel.org, Jens.Lehmann@web.de,
+	pclouds@gmail.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Apr 27 01:03:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avBuc-0002WP-Um
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 00:56:59 +0200
+	id 1avC0b-00053F-0P
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 01:03:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753260AbcDZW4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2016 18:56:39 -0400
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:35938 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753082AbcDZW4h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2016 18:56:37 -0400
-Received: by mail-ig0-f177.google.com with SMTP id u10so56844451igr.1
-        for <git@vger.kernel.org>; Tue, 26 Apr 2016 15:56:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=LmPbj8MP++QlDpFNRB86xtMHAslLVsL4peENqX9h4Yg=;
-        b=crYAG08e2T/xpBfQUtjkaNM49d5QETr4kBCcPDugSHwXJbccYga0rAasnvo0gTZrF5
-         10lhiO4LcMa/SYqYBQOoX+xyCwRzFyoOvIUkYPrnj61NmB1Ib00inFUEHAK/+vI4AqWn
-         poB4QsB1sOI4RUwlzVPYcrnK3Bn6/kNiulvLRnhLG5MjQVcfTkUxt/KZ429TNnKn3Zzo
-         UUG5572oSz984IQ4wqCT6Or+xu9DtePMrsjjC74WkA625me+5E1f4NFemCxC6F1X5W9q
-         Q2ayrRvnIe8XAJLB4LMHv7XGDNNmEnUQCaVVbwUeMpkVZS1w5OzNBV4++LAi3BLho/bZ
-         CuUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=LmPbj8MP++QlDpFNRB86xtMHAslLVsL4peENqX9h4Yg=;
-        b=YvKskGfGPzB2xGCYs2CZ2RHe2YjfvJxrhmjF8UiAd4RlmLQBBRtThotfdG9YE+OJLk
-         KypqG/Sl8ycawSx31lpGzfdTWbcWEe658Cjn/24DCJEON/Qs2JkaLOJOPt6pOv63Omvd
-         XWLl2KBBFMi6M5BZHSExbqi8biGTovz+iPs++x4zKiJrKs0pLQcKLC9Ko5w66qmx/RWL
-         t/2K5PjI2ZgQUEUs2C9ttSn9upynWetA4VrKq8WPLLP52+QVfjl/pcnRPqW4tyPFJsxs
-         JTcuKfUmM3L8F351RDsX8MGLaSPtQYYdhJkFJZwRWCiAd4ry11z81Wq8L3ppp4DmPL8p
-         xVGA==
-X-Gm-Message-State: AOPr4FWDlohNJW/lfjly7xQ7YhwMAfEE6uWuWBRH+UJ12Dp6x9SxGOsBQHHoVu+la3JPtFZgcXfg5MVcEbZ+rHwV
-X-Received: by 10.50.57.50 with SMTP id f18mr22681559igq.93.1461711396748;
- Tue, 26 Apr 2016 15:56:36 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Tue, 26 Apr 2016 15:56:36 -0700 (PDT)
-In-Reply-To: <CAGZ79kZg3OpR8k45=q1m-g=t+aGGs8VDYBrBYaBU_DbfuuoBig@mail.gmail.com>
+	id S1753749AbcDZXDD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2016 19:03:03 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60521 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753723AbcDZW62 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2016 18:58:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E2E9116BC7;
+	Tue, 26 Apr 2016 18:58:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3X/P/OWOwvj12CsmfM8Yd8N9W4c=; b=Kuwn5X
+	0fQsy3PaonDG1j8IXIcT79w5dyoEQUvkf4BQ+vmMin6P01h61wwD9LB+uIgXFyRG
+	8Pz0/5W/c+Fxx36bP7AH/w5PKVRHDwSlIR3MFI6lO8a+pwMnlrmk8m1TWqlWWvxg
+	YF9XVp6aKhSpW6mfW1xglmZraAFgjaJzB2Z9U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lyUDsPCJbJRrFRVW4RgjQSr+yqSbptcp
+	so/mzNV7R6xOArtySzPjGZMScLUyMZWaezIkBg+gycoqDzd6q3tx0AcExLBAPpIp
+	2LmLRMrh2ppnx+6SPuJpbevkqFPgnAbYdT9jQ6PSOkDJyncUMAlygQpb3o77ylXn
+	eG2I55VWFxE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id DA87216BC5;
+	Tue, 26 Apr 2016 18:58:26 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4D46416BC4;
+	Tue, 26 Apr 2016 18:58:26 -0400 (EDT)
+In-Reply-To: <1461703833-10350-6-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Tue, 26 Apr 2016 13:50:23 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 627E31DE-0C02-11E6-95CC-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292696>
 
-On Tue, Apr 26, 2016 at 11:20 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Tue, Apr 26, 2016 at 11:05 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> I think the way for you to indicate that desire expected by this
->> series is to use "git branch" to set upstream of new-shiny-feature
->> branch to origin/master.  Shouldn't that work, or is that too much
->> work?
->
-> I can totally do that for longer series which require some back and forth.
->
+Stefan Beller <sbeller@google.com> writes:
 
-So the submodule groups series is an example with some back and forth,
-so I'll try to take that workflow with setting an upstream there for now.
-As the groups stuff is based on origin/sb/submodule-init I set that as the
-remote upstream branch. Upon checking that out I get:
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index b6d4f27..23d7224 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -814,6 +814,46 @@ static int update_clone(int argc, const char **argv, const char *prefix)
+>  	return 0;
+>  }
+>  
+> +int in_group(int argc, const char **argv, const char *prefix)
 
-    Switched to branch 'submodule-groups'
-    Your branch is ahead of 'origin/sb/submodule-init' by 15 commits.
-      (use "git push" to publish your local commits)
+It is inconceivable that "submodule group" will be the only user of
+the concept whose name is "group".  Please do not give such a
+generic name to a helper function that is specific to "submodule
+group" and make it global.  Naming a file-scope static helper
+function as in_group() is perfectly fine; it is clear that such a
+function in submodule--helper.c is about submodule group.
 
-The first 2 lines are correct, the third however is not correct. (I cannot push
-to your repository, but only email patches)
+> +	if (!group)
+> +		list = git_config_get_value_multi("submodule.defaultGroup");
+> +	else {
+> +		string_list_split(&actual_list, group, ',', -1);
+> +		list = &actual_list;
 
-So I wonder if
- * I configured the wrong upstream branch
- * the upstream branch concept is extended to more/other use cases by the
-   format.useAutoBase option. (In an email based workflow you would use the
-   a remote branch to a remote, which is not owned by yourself, so the push
-   advice is invalid from now on and we patch that message)
- * using an explicit upstream branch is the wrong approach here and the
-   base should be implicit, i.e. Take the base sha1 and see if there is
-   (one/any) remote branch matching that sha1.
-   If there is, use the sha1 just fine.
+Hmm, where did this syntax to use comma-separated things come from?
+Did I miss it in 02/15?
 
-Thanks,
-Stefan
+> +	if (sub->labels) {
+> +		struct string_list_item *item;
+> +		for_each_string_list_item(item, sub->labels) {
+> +			strbuf_reset(&sb);
+> +			strbuf_addf(&sb, "*%s", item->string);
+> +			if (string_list_has_string(group, sb.buf)) {
+> +				matched = 1;
+> +				break;
+> +			}
+> +		}
+> +	}
+> +	if (sub->path) {
+> +		/*
+> +		 * NEEDSWORK: This currently works only for
+> +		 * exact paths, but we want to enable
+> +		 * inexact matches such wildcards.
+> +		 */
+> +		strbuf_reset(&sb);
+> +		strbuf_addf(&sb, "./%s", sub->path);
+> +		if (string_list_has_string(group, sb.buf))
+> +			matched = 1;
+> +	}
+> +	if (sub->name) {
+> +		/*
+> +		 * NEEDSWORK: Same as with path. Do we want to
+> +		 * support wildcards or such?
+> +		 */
+> +		strbuf_reset(&sb);
+> +		strbuf_addf(&sb, ":%s", sub->name);
+> +		if (string_list_has_string(group, sb.buf))
+> +			matched = 1;
+> +	}
+> +	strbuf_release(&sb);
+
+I see room for bikeshedding here, but the material to bikeshed
+around is not even documented yet ;-)
+
+ * a token prefixed with '*' is a label.
+ * a token prefixed with './' is a path.
+ * a token prefixed with ':' is a name.
+
+Hopefully I will see some description like that in later patches.
+I'll read on.
