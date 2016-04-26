@@ -1,78 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Move test-* to t/helper/ subdirectory
-Date: Tue, 26 Apr 2016 15:07:49 -0700
-Message-ID: <xmqqwpnkc9ca.fsf@gitster.mtv.corp.google.com>
-References: <1460553762-12419-1-git-send-email-pclouds@gmail.com>
+Subject: Re: [PATCH 00/15] submodule groups (once again)
+Date: Tue, 26 Apr 2016 15:19:57 -0700
+Message-ID: <xmqqshy8c8s2.fsf@gitster.mtv.corp.google.com>
+References: <1461703833-10350-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 00:08:01 2016
+Content-Type: text/plain
+Cc: jrnieder@gmail.com, git@vger.kernel.org, Jens.Lehmann@web.de,
+	pclouds@gmail.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Apr 27 00:20:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avB9D-0002p6-29
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 00:07:59 +0200
+	id 1avBKy-0006wD-If
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 00:20:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752233AbcDZWHy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Apr 2016 18:07:54 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60485 "EHLO
+	id S1752415AbcDZWUB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2016 18:20:01 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57446 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751998AbcDZWHx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2016 18:07:53 -0400
+	with ESMTP id S1752313AbcDZWUA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2016 18:20:00 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id EA7D41642F;
-	Tue, 26 Apr 2016 18:07:51 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5E2CE15382;
+	Tue, 26 Apr 2016 18:19:59 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=iqIYuVWgRQqH
-	qGbYmrGe51si9Cw=; b=RcLSp4mYOZLDZT5cKP3RND7z2wmce387py/Yub6idUIB
-	HC6znBwY8snTZuHOVCTHnSVn5UuivVnh9EZ4MP5NM+GSILzbB4T1QqDacF983qN+
-	9RGIzksoi9bMEZqYskMGr03Pdhjl0jB+KXLUbSe2WhHjBMGdaTlLY5cLVPH0VSg=
+	:content-type; s=sasl; bh=nlWyx2HY1+DaObXvnVHJqlkOaCg=; b=L9KqIu
+	sfD66keqRwDPJxtp+a51GuCT+TGtHe6lwdFX6f0s491vPoA5a0qj5QoaneGqEvAz
+	QtTUeP4Q543nu8JAk/+Vq0p4JGkYOYBwjXCoe9GNAKy8UPXsx37Au74bflsnzXgP
+	M267/NkPVMSghaK+FQdvNxJ/UK445wJfIrO5k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=PBrX5D
-	Uv8/aY0V7+tcDh36Dm4BAeNZfom4yiKrrUGa5WfwH4ldtI/IqcZhSkTTt0yf1bMC
-	FlM/vrTacgVC/+LPFzyeZC/FIJI9Jc8KxGGhcbRipbnqwRgxX3wGwJmQDeUE63Uc
-	z6L0tQSbmu+4x1BLYQ1dPsYCbINdPOPuCWbDA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id E2C9E16429;
-	Tue, 26 Apr 2016 18:07:51 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=SDlM+09Jh3pDpwL6GKMnQ8emdT6vd1HQ
+	ddDffTUPlPxwqf8q0mjj7lllYse3icHC/99tnAVfJHOXOJQjjVYLIoBsHI4lAePU
+	7B3Q97Zy0Z+nqk8s6Lov/wImQUy23dWp22+a4a500P0c7jhDnMfzafWVt9WXlZrh
+	42IritQ5gZQ=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5582615380;
+	Tue, 26 Apr 2016 18:19:59 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 50DF516427;
-	Tue, 26 Apr 2016 18:07:51 -0400 (EDT)
-In-Reply-To: <1460553762-12419-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 13
- Apr 2016 20:22:42 +0700")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B22EE1537E;
+	Tue, 26 Apr 2016 18:19:58 -0400 (EDT)
+In-Reply-To: <1461703833-10350-1-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Tue, 26 Apr 2016 13:50:18 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5180EB8A-0BFB-11E6-BC75-D05A70183E34-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 031079A0-0BFD-11E6-AAFE-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292689>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> This keeps top dir a bit less crowded. And because these programs are
-> for testing purposes, it makes sense that they stay somewhere in t/
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  This patch will break any patches that add new test programs.
->  Luckily, none in 'next' or 'pu' does that. I know lmdb backend adds
->  test-lmdb-backend, so a manual move and some .gitignore fixup is
->  required there.
+> git diff is supposed to view the differences between "what would I
+> get after checkout" (i.e. what is in the index run through smudge filters)
+> compared to the actual worktree.
 
-Can you (or somebody else) double check that the resulting Makefile
-gets the build dependencies and exec path right?
-
-I am seeing occasional failure from t0040 when checking out between
-master and pu, and between the branches test-parse-options do change
-behaviour which explains the breakage.
+I do not think it affects your conclusion, but the above is wrong.
+"git diff" is a preview of what you would add (i.e. what will be in
+the index after passing working tree contents via the clean filter)
+relative to what is actually in the index.
