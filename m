@@ -1,127 +1,209 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 09/15] submodule--helper init: respect submodule groups
-Date: Tue, 26 Apr 2016 13:50:27 -0700
-Message-ID: <1461703833-10350-10-git-send-email-sbeller@google.com>
+Subject: [PATCH 08/15] submodule--helper list: respect submodule groups
+Date: Tue, 26 Apr 2016 13:50:26 -0700
+Message-ID: <1461703833-10350-9-git-send-email-sbeller@google.com>
 References: <1461703833-10350-1-git-send-email-sbeller@google.com>
 Cc: gitster@pobox.com, git@vger.kernel.org, Jens.Lehmann@web.de,
 	pclouds@gmail.com, Stefan Beller <sbeller@google.com>
 To: jrnieder@gmail.com
-X-From: git-owner@vger.kernel.org Tue Apr 26 22:51:29 2016
+X-From: git-owner@vger.kernel.org Tue Apr 26 22:51:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1av9xA-0006kM-7o
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 22:51:28 +0200
+	id 1av9xH-0006pt-7K
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 22:51:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752988AbcDZUvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2016 16:51:23 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:36449 "EHLO
-	mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752811AbcDZUu6 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753011AbcDZUvY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2016 16:51:24 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:36354 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752806AbcDZUu6 (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 26 Apr 2016 16:50:58 -0400
-Received: by mail-pf0-f178.google.com with SMTP id c189so11430484pfb.3
-        for <git@vger.kernel.org>; Tue, 26 Apr 2016 13:50:57 -0700 (PDT)
+Received: by mail-pa0-f54.google.com with SMTP id bt5so10783365pac.3
+        for <git@vger.kernel.org>; Tue, 26 Apr 2016 13:50:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dHHo2LF2rsJJSWQDLdP6dEZYbx/Wvif1SMivI6Gttqk=;
-        b=O/Upcpc6d7iELOfArbgI6KXcxbn8VWUfe4HO3qemx/VGepVnLUvEf0MFW7mjwn+fwl
-         RkfloynKSdjZuCnsH6Ho85VgMoGjhZpm1vqRcykDFZxCzH4WbcoQrbgPAFmuFgcjcbAJ
-         yvAcaLFQSgNjE+dk6k5W0kROL7ilO3RdKnRlhNDNPpwRnqRugf8MtMGyPT/7CLkU1+mh
-         q++qm/OwXF8l7n0HRHjjFyJBCuPfCdglo4l8eP9r+6OBJMfOBQApNg4gatKMbT7cURxc
-         2udP1F4ugElui/u1m+Ok6gKYfrI+AP42kCTdShsL0pzOyO5em421g1dp+GuQ0xhQW6A2
-         0VAQ==
+        bh=JCN0TeQ+TQT9BIu9Rsg8/XyckHr1oDJg06xLqLd0J2s=;
+        b=iX6bNg7imjRSGLEkdp5dgGg4fK4h7OmoqCbhwTVWDv2h7nug+vccoWIkDSPPimDTL8
+         h1NAZrkkXYy4+xjvYzXNgYYm2VqSCNE4VlAhJTDvqXjF8qQbD4vY3U1AEXjMGIVKfHCN
+         w1tl+R2wqp0dBiJicrXnE6bLbV7BPj41lMqMm45h2RnSvnCspU/s8xjCrdMfk7cGVWJ9
+         6aMcwlMl7cfAa9wBpBZWB0vU7FlQE15f2a2czIhR8/vm2n7QSf+jsn9rzNrD+RlcE+Ij
+         YklASGXUxx46JHAw8tQ22INwOz8RvRefPvgb+udN7EuJ3gFYozZ0H0LlugHSCb6D1vjZ
+         n5eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=dHHo2LF2rsJJSWQDLdP6dEZYbx/Wvif1SMivI6Gttqk=;
-        b=Y2jdDevm4fIjaE7qXua8E8Oj8vyi2X2dt3ydtmBqnowBuE5yCjh6Ec1JBp9kZc3132
-         KsPnUyBuJyCmIIRnWPubZB4gWhYda4WYjRPcrx3Wu96ZeYcYCfnyY8fZS4IJcbac/A+v
-         joEJ2ZXGme3hgLdrX0yHXH4YF0IIGJuj6NiWDM3YGjk+8YQ6KPGHXZPFsnicYntkikO/
-         lrkclMIRcNV3dRgRxlrm5dfS1CAj41qiWitnLkN9JFs0nGNg4fPelXOserrZ4cjIgTiW
-         PX2m8TefTEawCoQ/NT6tihyDGgG1roS/t5/OSOAKcncW5QGz/YGNqeMb+JbLa6Ifdvf+
-         JjUQ==
-X-Gm-Message-State: AOPr4FWRjmLZQB4JU7XkPc4h0hIU1C6RdQUsCYw1Wiy6q2GY8zC80rfBgZiEcqY3/dMfQjIv
-X-Received: by 10.98.0.202 with SMTP id 193mr6512993pfa.120.1461703857140;
-        Tue, 26 Apr 2016 13:50:57 -0700 (PDT)
+        bh=JCN0TeQ+TQT9BIu9Rsg8/XyckHr1oDJg06xLqLd0J2s=;
+        b=dRhfkw6XNY8M3LTVn40wsUB5Lyuaw1eAXCRHD99WG0y++zwOqEG55oQRewNewOLg+v
+         nyv/eh16vXwkcNCH/K+Z9IUGce+2be6oFV2ukp6MHDk9BaUfFS6BxrqmEO/MxiJ1uFJb
+         EuYfnqZqNw0WjGI2x4vt7ZVt+QvlB+XrmuWwYP4q2OPdHbFbkepSmLGfyg6zvDsniRbL
+         ufJtRHMpjvsrS4eEEb8+y4MBOJ3+EPgbDpPLmMWl4uqLNhfxzocImaqWO8YYSbxAEX43
+         6ziLOWuv5218mwY+eQRfGP3nmN2zCRyIh/DexyBfPPipqLRcrzszplrqNrnZcBs4nO46
+         GrfQ==
+X-Gm-Message-State: AOPr4FUUP7QdQrbXu3OUE0FMwuC8xakm4ZO8jjWjBWTKgnbNVfPAijWwNihNzpMGgR8UMf/t
+X-Received: by 10.66.90.226 with SMTP id bz2mr6645877pab.31.1461703855595;
+        Tue, 26 Apr 2016 13:50:55 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:fcb4:82e7:2d29:45d6])
-        by smtp.gmail.com with ESMTPSA id g70sm512713pfb.7.2016.04.26.13.50.56
+        by smtp.gmail.com with ESMTPSA id n10sm502069pfj.14.2016.04.26.13.50.54
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 26 Apr 2016 13:50:56 -0700 (PDT)
+        Tue, 26 Apr 2016 13:50:54 -0700 (PDT)
 X-Mailer: git-send-email 2.8.0.41.g8d9aeb3
 In-Reply-To: <1461703833-10350-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292681>
+
+As submodule--helper list is the building block for some submodule
+commands (foreach, deinit, status, sync), also add tests for those.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/submodule--helper.c  | 19 +++++++++++++++++--
- t/t7413-submodule--helper.sh | 15 +++++++++++++++
- 2 files changed, 32 insertions(+), 2 deletions(-)
+ builtin/submodule--helper.c  | 13 ++++++
+ t/t7413-submodule--helper.sh | 97 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 110 insertions(+)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index adb6188..29a345e 100644
+index 7b9a4d7..adb6188 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -405,6 +405,7 @@ static int module_init(int argc, const char **argv, const char *prefix)
- {
+@@ -271,6 +271,7 @@ static int module_list(int argc, const char **argv, const char *prefix)
+ 	int i;
  	struct pathspec pathspec;
  	struct module_list list = MODULE_LIST_INIT;
-+	struct string_list *group = NULL;
- 	int quiet = 0;
- 	int i;
++	const struct string_list *group = NULL;
  
-@@ -427,8 +428,22 @@ static int module_init(int argc, const char **argv, const char *prefix)
- 	if (module_list_compute(argc, argv, prefix, &pathspec, &list) < 0)
+ 	struct option module_list_options[] = {
+ 		OPT_STRING(0, "prefix", &prefix,
+@@ -292,9 +293,21 @@ static int module_list(int argc, const char **argv, const char *prefix)
  		return 1;
+ 	}
  
--	for (i = 0; i < list.nr; i++)
--		init_submodule(list.entries[i]->name, prefix, quiet);
 +	if (!pathspec.nr)
-+		group = string_list_duplicate(
-+			git_config_get_value_multi("submodule.defaultGroup"), 1);
-+	if (group) {
++		group = git_config_get_value_multi("submodule.defaultGroup");
++	if (group)
 +		gitmodules_config();
-+		for (i = 0; i < list.nr; i++) {
-+			const struct submodule *sub =
-+				submodule_from_path(null_sha1,
-+						    list.entries[i]->name);
-+			if (submodule_in_group(group, sub))
-+				init_submodule(list.entries[i]->name, prefix, quiet);
-+		}
-+		string_list_clear(group, 1);
-+	} else
-+		for (i = 0; i < list.nr; i++)
-+			init_submodule(list.entries[i]->name, prefix, quiet);
++
+ 	for (i = 0; i < list.nr; i++) {
+ 		const struct cache_entry *ce = list.entries[i];
  
- 	return 0;
- }
++		if (group) {
++			const struct submodule *sub =
++				submodule_from_path(null_sha1, ce->name);
++			if (!submodule_in_group(group, sub))
++				continue;
++		}
++
+ 		if (ce_stage(ce))
+ 			printf("%06o %s U\t", ce->ce_mode, sha1_to_hex(null_sha1));
+ 		else
 diff --git a/t/t7413-submodule--helper.sh b/t/t7413-submodule--helper.sh
-index 1b5d135..ef12c63 100755
+index c6939ab..1b5d135 100755
 --- a/t/t7413-submodule--helper.sh
 +++ b/t/t7413-submodule--helper.sh
-@@ -175,4 +175,19 @@ test_expect_success 'submodule sync respects groups' '
+@@ -78,4 +78,101 @@ test_expect_success 'in-group' '
  	)
  '
  
-+test_expect_success 'submodule--helper init respects groups' '
++submodule_sha1=$(git -C sub rev-parse HEAD)
++
++cat >expect <<-EOF
++160000 $submodule_sha1 0	sub0
++160000 $submodule_sha1 0	sub1
++160000 $submodule_sha1 0	sub3
++EOF
++
++test_expect_success 'submodule--helper list respects groups' '
 +	(
-+		cd super_clone &&
-+		git submodule deinit . &&
++		cd super &&
 +		git config --add submodule.defaultGroup *bit1 &&
 +		git config --add submodule.defaultGroup ./sub0 &&
-+		git submodule init &&
++		git submodule--helper list >../actual
++	) &&
++	test_cmp expect actual
++'
++
++cat >expect <<-EOF
++Entering 'sub0'
++$submodule_sha1 sub0
++Entering 'sub1'
++$submodule_sha1 sub1
++Entering 'sub3'
++$submodule_sha1 sub3
++EOF
++
++test_expect_success 'submodule foreach respects groups' '
++	(
++		cd super &&
++		git submodule foreach "echo \$sha1 \$name" >../actual
++	) &&
++	test_cmp expect actual
++'
++
++sub_priorsha1=$(git -C sub rev-parse HEAD^)
++
++cat >expect <<-EOF
+++$sub_priorsha1 sub0 (test)
+++$sub_priorsha1 sub1 (test)
+++$sub_priorsha1 sub3 (test)
++EOF
++
++test_expect_success 'submodule status respects groups' '
++	git clone --recurse-submodules super super_clone &&
++	(
++		cd super_clone &&
++		git -C sub0 checkout HEAD^ &&
++		git -C sub1 checkout HEAD^ &&
++		git -C sub2 checkout HEAD^ &&
++		git -C sub3 checkout HEAD^ &&
++		git config --add submodule.defaultGroup *bit1 &&
++		git config --add submodule.defaultGroup ./sub0 &&
++		git submodule status >../actual &&
++		git config --unset-all submodule.defaultGroup &&
++		git submodule update
++	) &&
++	test_cmp expect actual
++'
++
++test_expect_success 'submodule deinit respects groups' '
++	suburl=$(pwd)/sub &&
++	(
++		cd super_clone &&
++		git config --add submodule.defaultGroup *bit1 &&
++		git config --add submodule.defaultGroup ./sub0 &&
++		git submodule deinit &&
++		test_must_fail git config submodule.sub0.url &&
++		test_must_fail git config submodule.sub1.url &&
++		test "$(git config submodule.sub2.url)" = "$suburl" &&
++		test_must_fail git config submodule.sub3.url &&
++		git config --unset-all submodule.defaultGroup &&
++		git submodule init
++	)
++'
++
++test_expect_success 'submodule sync respects groups' '
++	suburl=$(pwd)/sub &&
++	(
++		cd super_clone &&
++		git config submodule.sub0.url nonsense &&
++		git config submodule.sub1.url nonsense &&
++		git config submodule.sub2.url nonsense &&
++		git config submodule.sub3.url nonsense &&
++		git config --add submodule.defaultGroup *bit1 &&
++		git config --add submodule.defaultGroup ./sub0 &&
++		git submodule sync &&
 +		git config --unset-all submodule.defaultGroup &&
 +		test "$(git config submodule.sub0.url)" = "$suburl" &&
 +		test "$(git config submodule.sub1.url)" = "$suburl" &&
-+		test_must_fail git config submodule.sub2.url &&
-+		test "$(git config submodule.sub3.url)" = "$suburl"
++		test "$(git config submodule.sub2.url)" = "nonsense" &&
++		test "$(git config submodule.sub3.url)" = "$suburl" &&
++		git submodule sync sub2 &&
++		test "$(git config submodule.sub2.url)" = "$suburl"
 +	)
 +'
 +
