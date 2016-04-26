@@ -1,111 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC: Supporting .git/hooks/$NAME.d/* && /etc/git/hooks/$NAME.d/*
-Date: Tue, 26 Apr 2016 14:52:02 -0700
-Message-ID: <xmqq60v4don1.fsf@gitster.mtv.corp.google.com>
-References: <CACBZZX6j6q2DUN_Z-Pnent1u714dVNPFBrL_PiEQyLmCzLUVxg@mail.gmail.com>
-	<xmqq4mapmvjq.fsf@gitster.mtv.corp.google.com>
-	<CACBZZX6AYBYeb5S4nEBhYbx1r=icJ81JGYBx5=H4wacPhHjFbQ@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 2/2] merge: warn --no-commit merge when no new commit is created
+Date: Tue, 26 Apr 2016 14:53:31 -0700
+Message-ID: <CAGZ79ka-HbB=oCidTtKSa32R9kqd2_c-cG8h+ttAVy=a8UfgFQ@mail.gmail.com>
+References: <874mb0kkkk.fsf@gmail.com>
+	<alpine.DEB.2.20.1604180825170.2967@virtualbox>
+	<CAH5451kW3t1Y7oW=uHv85jzHwsnQcDK2jdLisauNF-x1LRwqLA@mail.gmail.com>
+	<87a8krpehl.fsf@gmail.com>
+	<CAH5451mDYhavx_OLfXe6cC2WguCsFWEBBBBOCPyX3E6ZJw27+w@mail.gmail.com>
+	<xmqqy48a6fht.fsf@gitster.mtv.corp.google.com>
+	<xmqqtwiy6end.fsf@gitster.mtv.corp.google.com>
+	<xmqqd1pcdpb8.fsf_-_@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git <git@vger.kernel.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 26 23:52:14 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Andrew Ardill <andrew.ardill@gmail.com>,
+	Christoph Paulik <cpaulik@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 26 23:53:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avAtx-0005LN-PK
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 23:52:14 +0200
+	id 1avAvd-00061D-2u
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 23:53:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753153AbcDZVwJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Apr 2016 17:52:09 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53771 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752344AbcDZVwH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2016 17:52:07 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 05903161E0;
-	Tue, 26 Apr 2016 17:52:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=09ODDdnf4l1O
-	0/7pppWCboQyCj0=; b=pMwSw3QFiVOlzPWam/wxptXRul1K47N7KL7BpYhjp9aO
-	Nmfwle8qeUjYiOUGXSrpGL4kJKROCJV83ok6ZBwtWx+HsC7dqFqtxNUSTsRTPWoh
-	P9HO9aioL/ceAuRFP27oh1/SG273ASWpvmmZ4bkRFjC+9ix8dqkskYk7pULtNFE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=hadYUU
-	vYUvkcGCd1Phte3sKoUAsYd08Gi/CG5G297qhT7locL5njVaNJyGq8kI8chv0aIn
-	EIhz88oDP+HGfEEJcHiqdXBBv8ZwYNSyH5Rf/QjiMBQ6ZDusYjNYhT/nEJPKK46T
-	Z4Onef+7nFBMBNFYKC0Dl93qSwnMiYo7B39Ig=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id F1627161DF;
-	Tue, 26 Apr 2016 17:52:04 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 319DE161DE;
-	Tue, 26 Apr 2016 17:52:04 -0400 (EDT)
-In-Reply-To: <CACBZZX6AYBYeb5S4nEBhYbx1r=icJ81JGYBx5=H4wacPhHjFbQ@mail.gmail.com>
-	(=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 26 Apr
- 2016 12:58:04
-	+0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1CF8518E-0BF9-11E6-B02D-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1753432AbcDZVxe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2016 17:53:34 -0400
+Received: from mail-io0-f178.google.com ([209.85.223.178]:34969 "EHLO
+	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753417AbcDZVxc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2016 17:53:32 -0400
+Received: by mail-io0-f178.google.com with SMTP id d62so29613771iof.2
+        for <git@vger.kernel.org>; Tue, 26 Apr 2016 14:53:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=7fzNA4P4VJrRBBu2NquA0L7tZN3SLDs1IjN8pG8h5nI=;
+        b=J/8ARVBBuVpYu2/Vi0aXaIXdLLKuS5nOhw93WxeSUS1LFp0+Z0c4Z9lDM11aUMxsz8
+         BqTlpXC2EW1DqI34KxaiNL2S+Q0fk2eZMzwumjZd5zF1mUC8znVvuNKXAXnXpyHg02VR
+         tB6NPVF4/p7hqRQ9mEQFoNp8zr1Hu8pLXo5itQh/J49mI99hZ0A6MCApyNTeN8bw6NtH
+         wyQQ31txlDUjCHfkjICYNord9BQb7aPNgMvN3T/W/rLXw7oA3ZiU//GOYiOx4I0JPW+b
+         ciOCPGEg/t45jzGJHulkY+I8rsPdewvS9ajiSzWPFESch8jDF27glGsTHH4G00JCkKJh
+         yqXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=7fzNA4P4VJrRBBu2NquA0L7tZN3SLDs1IjN8pG8h5nI=;
+        b=IsAgLl723AGqWlQbbgmmbH94C/0qmK3u/6CTjUtnSKb4uVQ8Gm7/jnyEjqwG4d2/W3
+         ZyBpnDyLF5Yp/xL4pe8Ksad2SJDhxtPEWlcFwKJZFgfyTmnB8buzt6agVoa45f64BQgR
+         MLfRmFsN6uDn2b4mKiXLlBPnQPN0xtmuH6DQD+OZ3kdDoVKuG83wIJXwwXipV750iJG+
+         a6kp20mfsyhzd5dwcdEJxd+jDzBQxw0LRxinBlND2CF711DPoelRE2K9JEcWbdvdy122
+         IoJoNTzDrSzAV5/Z1mTzzjjgORDbgRFWoM54E8kLU+YvGE+9MmrcuzHLaXtsVCUXXYww
+         t3Xw==
+X-Gm-Message-State: AOPr4FXgtuYSXVgSwZXfl8MkqTyjBgwJ2U8UUMwQbmtFZ1l5UiGeNrwSEnuA90mWw5HEbxLM1SKZkQeMGOyGvbnK
+X-Received: by 10.107.53.200 with SMTP id k69mr6181168ioo.174.1461707611882;
+ Tue, 26 Apr 2016 14:53:31 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Tue, 26 Apr 2016 14:53:31 -0700 (PDT)
+In-Reply-To: <xmqqd1pcdpb8.fsf_-_@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292686>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Tue, Apr 26, 2016 at 2:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> +static void no_commit_impossible(const char *message)
+> +{
+> +       if (!option_commit) {
+> +               warning("%s\n%s", _(message),
+> +                       _("--no-commit is impossible"));
+> +               warning(_("In future versions of Git, this will become an error."));
+> +       }
+> +}
 
-> I think it's fair enough to say that if we had this facility this
-> would be good enough:
->
->  * Your hooks are executed in glob() order, local .git first, then /e=
-tc/git/...
->
->  * If it's a hook like pre-commit that can reject something the first
-> hook to fail short-circuits. I.e. none of the rest get executed.
->
->  * If it's not a hook like that e.g. post-commit all of the hooks wil=
-l
-> get executed.
->
->  * If you need anything more complex you can just wrap your hooks in
-> your own shellscript.
->
-> I.e. it takes care of the common case where:
->
->  * You just want to execute N hooks and don't want to write a wrapper=
-=2E
->
->  * For pre-* hooks the common case is it doesn't matter /what/
-> rejected things, just that it gets rejected, e.g. for pre-receive.
-> Also if you care about performance you can order them in
-> cheapest-first order.
+During discussion of the parallel process framework
+(sb/submodule-parallel-fetch~3),
+you seemed very inclined on not having major decisions made deep
+inside the helper
+function, but rather at the main function to easier see the program flow IIRC.
 
-Stop using the word "common" to describe what is not demonstratably
-"common".
+This looks very similar to me as we'll have the no_commit_impossible function
+which is a helper of cmd_merge. Following your advice there, I would
+have expected to
+have
 
-The above only covers a very limited subset of the use cases, which
-is the two bullet points above (one of them i.e. "I do not bother to
-write a wrapper" is not even a valid use case).  That may be a good
-starting point, but it is so simple that can be done with a wrapper
-with several lines at most.  So I am not sympathetic to that line of
-reasoning at all.
+    static void no_commit_impossible(const char *message)
+    {
+        warning("%s\n%s", _(message), _("--no-commit is impossible"));
+        warning(_("In future versions of Git, this will become an error."));
+    }
 
-I can buy "It is too cumbersome to require everybody to reinvent and
-script the cascading logic, and the core side should help by giving
-a standard interface that is flexible enough to suit people's need",
-though.
+and later
 
-And I have to say that a sequential execution that always
-short-circuits at the first failure is below that threshold.
+    if (!option_commit)
+        no_commit_impossible(_("Already up-to-date"));
 
-One reason I care about allowing the users to specify "do not
-shortcut" is that I anticipate that people would want to have a
-logging of the result at the end of the chain.
+
+> +
+>  int cmd_merge(int argc, const char **argv, const char *prefix)
+>  {
+>         unsigned char result_tree[20];
+> @@ -1403,6 +1412,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>                  * If head can reach all the merge then we are up to date.
+>                  * but first the most common case of merging one remote.
+>                  */
+> +               no_commit_impossible(_("Already up-to-date"));
+>                 finish_up_to_date("Already up-to-date.");
+
+Coming back to this patch, in case of -v given, we'll
+see ("Already up-to-date") twice?
+
+If --quiet is given, do we want to suppress output
+in no_commit_impossible?
