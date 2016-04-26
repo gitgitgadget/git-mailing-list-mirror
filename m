@@ -1,111 +1,129 @@
-From: Mike Rappazzo <rappazzo@gmail.com>
-Subject: Re: "gitk --author=foo" shows also parent
-Date: Tue, 26 Apr 2016 10:06:02 -0400
-Message-ID: <CANoM8SXn0CgUqQU3vmH-kwuxiDfC1=4FCh1SUsYuOOv4fQtWpw@mail.gmail.com>
-References: <571F6852.1070405@qt.io>
+From: Nikolay Chashnikov <nikolay.chashnikov@jetbrains.com>
+Subject: Re: How to have EOL=LF and keep binary files auto-detection?
+Date: Tue, 26 Apr 2016 18:31:16 +0300
+Message-ID: <CALnWy=-3ncjHZOHuE6aEp-GGhErkccQLed+oGBMYOFu7YcEHqA@mail.gmail.com>
+References: <3670335C-4938-4DCD-9B1D-6B4737CBE6C2@jetbrains.com> <4501b117-09e9-d24c-e209-bda28059765a@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, paulus@samba.org
-To: Nikolai Kosjar <nikolai.kosjar@qt.io>
-X-From: git-owner@vger.kernel.org Tue Apr 26 16:06:32 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>,
+	git <git@vger.kernel.org>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Apr 26 17:32:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1av3dG-0005lp-W7
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 16:06:31 +0200
+	id 1av4y8-0004Ks-QB
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 17:32:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751951AbcDZOGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2016 10:06:24 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:36096 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751696AbcDZOGX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2016 10:06:23 -0400
-Received: by mail-ig0-f171.google.com with SMTP id u10so42579304igr.1
-        for <git@vger.kernel.org>; Tue, 26 Apr 2016 07:06:22 -0700 (PDT)
+	id S1752555AbcDZPb6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Apr 2016 11:31:58 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:35193 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752296AbcDZPb5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2016 11:31:57 -0400
+Received: by mail-ig0-f182.google.com with SMTP id bi2so100385411igb.0
+        for <git@vger.kernel.org>; Tue, 26 Apr 2016 08:31:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=jetbrains.com; s=googleapps;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=yOvYOhcjrTzXNRpaH2Mv9hce74l+YYveppGRvjn/7AM=;
-        b=eQHp6Sy1JwMDHYh2Bh+Bc66AH+zSmNgXIwFdjnobB5a/MP8JEGz59NidqMsqkCEH03
-         qn+ycoAJL6fNj6Tom7PWBkzU51Y1SuNw5SkDRBiapljZaVu9U/WgYZOxhAyYvrRy1nEw
-         fq0Gzsq0A2Y1CMiqFxxVG7IG0t0mkI3YXSIBocTTPdnlf1u7ZcWkjA8BP6NU9Gtztdgk
-         KKh5rtKAIkPXHxGElklPe2VEwm94OcBM6S6WfGxoIdHndNyOAB/fCn8lifZSIpHjTCEh
-         siEemhWsXIvITZduXbU+d0t0E85dvgDha0vYELyKvIdFUBnnwTda86eHO0sKCGdxN6C1
-         UYkg==
+         :cc:content-transfer-encoding;
+        bh=k+HvOdfufze7EKDKzRLD1os3xWM8NDkhkhwbWOxjHmg=;
+        b=OM+7/1n1ze/pdmjmkIbtZuTGAqvv0uMlynWspRWHe9xGUI9SyYPK3/3mD2uC+LWUUW
+         l65K550fpzA2+nUS1Bfzrq6eBOoeAeTB8/UOTgcH3AXf9xlK2eIYXbQ6/4pN8hs+xKSr
+         nYBVrSjATxnpyWvuo6WqgMrlbqXkVsrtKMP+E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=yOvYOhcjrTzXNRpaH2Mv9hce74l+YYveppGRvjn/7AM=;
-        b=M7cuSrxhnO5ZJ5l4yawdYjLqbA69FusOwSYhtmiCMiB6bmB3KD8+CdOpEajx8vacx9
-         bpfxAED1Lu5RpjtO9gb7TR1DVdGgsvok7bEYfpRgNm6zJ2UABqmeT1MOUTLgD+eL+Kjv
-         L1c6wv2Rvj1WvEuStygmOZCHevogrm+o9yPJvqXRw05JIt9Nm1+K1tuy1gLx7rR+kZHj
-         0gJTKC+eiaQigDAAGZE9WK6/b0fuXqVKpTVoiiMRa4v0LRNHLL6VviJdH097ycZzl7Q7
-         IG6/NhmKGR8eXyVUfjvvG8ANMINMlztunVpKlffSdGPwyAY0el7sxQUUsCXfdbHVhfhT
-         189g==
-X-Gm-Message-State: AOPr4FW0B3YQYZhhxz6JqCsoCfrgtQjLWGdG+0Qy+x/T3NWnIFpPqKXqgEH7B87rhBuyuxmntzWaarI7Llb6lw==
-X-Received: by 10.50.30.41 with SMTP id p9mr3608204igh.86.1461679582197; Tue,
- 26 Apr 2016 07:06:22 -0700 (PDT)
-Received: by 10.107.7.220 with HTTP; Tue, 26 Apr 2016 07:06:02 -0700 (PDT)
-In-Reply-To: <571F6852.1070405@qt.io>
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=k+HvOdfufze7EKDKzRLD1os3xWM8NDkhkhwbWOxjHmg=;
+        b=k3u5X+7znBuKhFNDOmecq33g32vPV1EZd5zxTvOBd0K8mXhPzFI9dXeeEV2fawyB/A
+         YVZrfMRNXrSAM49g08R/6h5thycl6l9n0fMj/Xs9uXKIH6vEiAgXkj14BqYrZnPF6t6O
+         xUXkdKCF1KZ0tl8MLdbhncBt1an/ZerIBQb7sR9cHHLRqOfZBY4ID1b3xnn+4N4R1fFr
+         R1sI3uhItlx87sV1TRjpmdt7VYMDOAcWC2Zg8Mh9OFiMuR9OMGXiXwotXLx8TY1phIV8
+         FR7eJ9Z7qw3QyRnIZbR1NMf0hOlvk6W3lPbzQYFYNWqAnNmI93QIGDZJHpXFBrPjEbTH
+         cPoA==
+X-Gm-Message-State: AOPr4FWoWd/R0RhqiFUg3enI/od6dhKAmArAXGYi2i4YIRDaDhnybjM8VYbxyusQDQdtUqASvVD6wxFpa5W03wpg
+X-Received: by 10.50.20.40 with SMTP id k8mr4585090ige.9.1461684715824; Tue,
+ 26 Apr 2016 08:31:55 -0700 (PDT)
+Received: by 10.64.57.75 with HTTP; Tue, 26 Apr 2016 08:31:16 -0700 (PDT)
+In-Reply-To: <4501b117-09e9-d24c-e209-bda28059765a@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292602>
 
-On Tue, Apr 26, 2016 at 9:08 AM, Nikolai Kosjar <nikolai.kosjar@qt.io> wrote:
-> Hi!
->
->         $ gitk --author=foo
->
-> ...seems to show also the parent of each author-matched commit, whereas
->
->         $ git log --author=foo
->
-> does not. Is this intended or a bug? I've stumbled over this while
-> configuring a gitk view with the author field.
+Thank you for the information.
 
-I believe that this is intentional.  Notice that the parent commit's
-circle is just outlined
-compared to the selected authored commits are filled.  I consider this
-the context
-of the commits you are looking at.
+We create products (IDEs for different programming languages) for the
+three major platforms (Window/Linux/Mac OSX). Our products are written
+in Java and we want to minimize differences between distributions for
+different platforms, so we use LF separators for all resource files.
 
+On Mon, Apr 25, 2016 at 7:46 PM, Torsten B=C3=B6gershausen <tboegi@web.=
+de> wrote:
+> On 25.04.16 16:11, Kirill Likhodedov wrote:
+>> Hi,
+>>
+>> I wonder if it is possible both to have LFs in all and only text fil=
+es in working trees, and keep Git=E2=80=99s binary files auto-detection=
+?
+>>
+>> To be more precise:
+>> * we want all text files to be checked out in LF;
+>> * we don=E2=80=99t want force people to set =E2=80=9Ccore.autocrlf=E2=
+=80=9D to false, preferring to keep this configuration in .gitattribute=
+s;
+>> * we obviously don=E2=80=99t want binary files to be touched by eol-=
+normalization;
+>> * we also don=E2=80=99t want to declare all possible patterns of bin=
+ary files - Git is good enough in detecting them automatically.
+>>
+>> However, I=E2=80=99ve found no way to do so.
+>>
+>> If I declare `* eol=3Dlf` in .gitattributes, it makes Git treat all =
+files as text and thus convert CRLF to LF even in binary files. It is c=
+onsistent with man, but a bit surprising to have e.g. a zip or png file=
+ modified in this way.
+>>
+>> One could expect `* text=3Dauto eol=3Dlf` to work the way we want, b=
+ut unfortunately it doesn=E2=80=99t work either: =E2=80=9Ceol=3Dlf=E2=80=
+=9D forces =E2=80=9Ctext=E2=80=9D on all files.
+>>
+>> Thanks a lot for your help!
+>> -- Kirill.
 >
-> Nikolai
+> The short answer: Git doesn't currently do that.
+> The closest you can get, is to use
+> echo "* text=3Dauto" >.gitattributes
+> and
+> git config core.eol lf
+> git config core.autocrlf false.
+>
+> The longer answer is, that I am working on a patch to allow just
+> the combination of "* text=3Dauto eol=3Dlf" to work as you want it.
+>
+> Which platform do you use ?
+> And (out of curiosity, why do you want text files with LF ?)
+>
+> If you are willing to compile and install Git yourself,
+> you can use the branch here:
+> https://github.com/tboegi/git/commits/160421_0706_reliable_t0027_allo=
+w_TC_combined_ident_CRLF_v7
+>
+> Feedback is welcome, if it works as expected.
 >
 >
 >
 >
->
-> # Setup
-> ~/work/gitkBug % git init .
-> ~/work/gitkBug % touch file1 file2
-> ~/work/gitkBug % git add file1
-> ~/work/gitkBug % git commit "--author=MrFoo <foo@world>" file1 -m "add
-> file1"
-> ~/work/gitkBug % git add file2
-> ~/work/gitkBug % git commit "--author=MrBar <bar@world>" file2 -m "add
-> file2"
->
-> # TEST: git log --author - OK
-> ~/work/gitkBug % git log --author=MrBar # OK, as expected
-> commit 8aa4a4f651162bcb2275a1e9ee23fc1bb7226097
-> Author: MrBar <bar@world>
-> Date:   Tue Apr 26 14:22:58 2016 +0200
->
->     add file2
->
-> # TEST: gitk --author - OPS
-> ~/work/gitkBug % gitk --author=MrBar  # Ops, gitk shows also the parent
-> commit
->
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+
+
+--=20
+Nikolay Chashnikov
+JetBrains
+http://www.jetbrains.com
+The Drive to Develop
