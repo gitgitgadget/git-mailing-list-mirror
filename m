@@ -1,83 +1,101 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH 03/15] submodule add: label submodules if asked to
-Date: Tue, 26 Apr 2016 15:50:59 -0700
-Message-ID: <CA+P7+xrPYHEoLPNbGaSDSniHUCLeqj+d85ei3T_uwnBmz68G1g@mail.gmail.com>
-References: <1461703833-10350-1-git-send-email-sbeller@google.com> <1461703833-10350-4-git-send-email-sbeller@google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v6 0/4] Add --base option to git-format-patch to record
+ base tree info
+Date: Tue, 26 Apr 2016 15:56:36 -0700
+Message-ID: <CAGZ79kbTqW82Tj3KvXwYYhSWxuGvaGeYoAZrJkkM6FR4rhwC+Q@mail.gmail.com>
+References: <1461657084-9223-1-git-send-email-xiaolong.ye@intel.com>
+	<CAGZ79kajpAtbHaKLaLHN5+qUOvBofFs-q-vUYWua49GWK7FO9Q@mail.gmail.com>
+	<xmqqlh40gs9o.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kZg3OpR8k45=q1m-g=t+aGGs8VDYBrBYaBU_DbfuuoBig@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 00:51:26 2016
+Cc: Xiaolong Ye <xiaolong.ye@intel.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Fengguang Wu <fengguang.wu@intel.com>, ying.huang@intel.com,
+	philip.li@intel.com, julie.du@intel.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 27 00:57:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avBpE-0000dY-LZ
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 00:51:25 +0200
+	id 1avBuc-0002WP-Um
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 00:56:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752368AbcDZWvV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2016 18:51:21 -0400
-Received: from mail-ob0-f169.google.com ([209.85.214.169]:35761 "EHLO
-	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751704AbcDZWvU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2016 18:51:20 -0400
-Received: by mail-ob0-f169.google.com with SMTP id n10so12769717obb.2
-        for <git@vger.kernel.org>; Tue, 26 Apr 2016 15:51:20 -0700 (PDT)
+	id S1753260AbcDZW4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2016 18:56:39 -0400
+Received: from mail-ig0-f177.google.com ([209.85.213.177]:35938 "EHLO
+	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753082AbcDZW4h (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2016 18:56:37 -0400
+Received: by mail-ig0-f177.google.com with SMTP id u10so56844451igr.1
+        for <git@vger.kernel.org>; Tue, 26 Apr 2016 15:56:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=bCbeknZ8vqiWw1poFXP+xDLZ5aNAMphSVeTZtaY42aM=;
-        b=mGGyeguVr4/q9ilYvo3nN7jiRqYS4cyu9gNNg37LkiZlNiNaTkY/qJx28lpJ06HtRp
-         nvUwxliDtPn5R3NNCY0hlQ0WK425O3SscAvTbRQUTv8YeBHKI5p6BtxcvhbKWtP8XGrE
-         /VFFnIkkEBdz5ZzyeRurv0Lyfhe3mMSw/76kGm2Len7Equ4O87U0q6n98G8eK8fnyysL
-         998duCgvRjGRePa3ou1e4KDKEVGtwRmpt1QG55H27QKwGRQIoM6Z9TirbyP4D0GIrl1y
-         xd7toTeqCbkkmyUHGh/lj4Gp/7drSgl5nsgphLyclaBGykSE9aErYB+qz9yzq668eccp
-         w8Mg==
+        bh=LmPbj8MP++QlDpFNRB86xtMHAslLVsL4peENqX9h4Yg=;
+        b=crYAG08e2T/xpBfQUtjkaNM49d5QETr4kBCcPDugSHwXJbccYga0rAasnvo0gTZrF5
+         10lhiO4LcMa/SYqYBQOoX+xyCwRzFyoOvIUkYPrnj61NmB1Ib00inFUEHAK/+vI4AqWn
+         poB4QsB1sOI4RUwlzVPYcrnK3Bn6/kNiulvLRnhLG5MjQVcfTkUxt/KZ429TNnKn3Zzo
+         UUG5572oSz984IQ4wqCT6Or+xu9DtePMrsjjC74WkA625me+5E1f4NFemCxC6F1X5W9q
+         Q2ayrRvnIe8XAJLB4LMHv7XGDNNmEnUQCaVVbwUeMpkVZS1w5OzNBV4++LAi3BLho/bZ
+         CuUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=bCbeknZ8vqiWw1poFXP+xDLZ5aNAMphSVeTZtaY42aM=;
-        b=ISH8ZBpc9WmoiSnB4Q0Nmkzge5oyYG2/5sedS7jSDZ+XuDi2vtGWNTPvRGjt4BUCSb
-         WllXioDVsC3usxAkROeNhTnefvOjta/1060o7hEw7fD0GEV72cjMctJaGXPFDdu3Lm0D
-         v7VFlesmiJdNGu5fT92gLLRf6RPG7dVcACfmpCOypKihY4mkOb2gXpvnaXl5Pu3XnS4R
-         dtU7kUB3FWIlCSlu1MhCBe944ZNZ5g81OVNEmS/XiuLcFGQa5Q44u8PyJxmP8/QUrfYV
-         pcEoQp3k8CH3I0cSYxzGxPgERYfJiQmqjsK5wY4BXWtLZJjB43HGSabMzvOssnq3LiW2
-         RgfA==
-X-Gm-Message-State: AOPr4FX4ng3czP3AFBmQZoMETZZfeExRcwh0R2K4OiiK6WaEWBA/yG3zjptOwyCbiJ2N/wDMH/kEboY8THUOwg==
-X-Received: by 10.60.52.177 with SMTP id u17mr2258069oeo.61.1461711079371;
- Tue, 26 Apr 2016 15:51:19 -0700 (PDT)
-Received: by 10.182.117.132 with HTTP; Tue, 26 Apr 2016 15:50:59 -0700 (PDT)
-In-Reply-To: <1461703833-10350-4-git-send-email-sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=LmPbj8MP++QlDpFNRB86xtMHAslLVsL4peENqX9h4Yg=;
+        b=YvKskGfGPzB2xGCYs2CZ2RHe2YjfvJxrhmjF8UiAd4RlmLQBBRtThotfdG9YE+OJLk
+         KypqG/Sl8ycawSx31lpGzfdTWbcWEe658Cjn/24DCJEON/Qs2JkaLOJOPt6pOv63Omvd
+         XWLl2KBBFMi6M5BZHSExbqi8biGTovz+iPs++x4zKiJrKs0pLQcKLC9Ko5w66qmx/RWL
+         t/2K5PjI2ZgQUEUs2C9ttSn9upynWetA4VrKq8WPLLP52+QVfjl/pcnRPqW4tyPFJsxs
+         JTcuKfUmM3L8F351RDsX8MGLaSPtQYYdhJkFJZwRWCiAd4ry11z81Wq8L3ppp4DmPL8p
+         xVGA==
+X-Gm-Message-State: AOPr4FWDlohNJW/lfjly7xQ7YhwMAfEE6uWuWBRH+UJ12Dp6x9SxGOsBQHHoVu+la3JPtFZgcXfg5MVcEbZ+rHwV
+X-Received: by 10.50.57.50 with SMTP id f18mr22681559igq.93.1461711396748;
+ Tue, 26 Apr 2016 15:56:36 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Tue, 26 Apr 2016 15:56:36 -0700 (PDT)
+In-Reply-To: <CAGZ79kZg3OpR8k45=q1m-g=t+aGGs8VDYBrBYaBU_DbfuuoBig@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292695>
 
-On Tue, Apr 26, 2016 at 1:50 PM, Stefan Beller <sbeller@google.com> wrote:
-> When adding new submodules, you can specify the
-> label(s) the submodule belongs to by giving one or more
-> --label arguments. This will record each label in the
-> .gitmodules file as a value of the key
-> "submodule.$NAME.label".
+On Tue, Apr 26, 2016 at 11:20 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Tue, Apr 26, 2016 at 11:05 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> I think the way for you to indicate that desire expected by this
+>> series is to use "git branch" to set upstream of new-shiny-feature
+>> branch to origin/master.  Shouldn't that work, or is that too much
+>> work?
+>
+> I can totally do that for longer series which require some back and forth.
 >
 
-Ok so labels will be in the .gitmodules file. This means that if we go
-back in history using git bisect or something similar, we'll
-potentially change what the default submodules are for example?
+So the submodule groups series is an example with some back and forth,
+so I'll try to take that workflow with setting an upstream there for now.
+As the groups stuff is based on origin/sb/submodule-init I set that as the
+remote upstream branch. Upon checking that out I get:
 
-This is sort of why having some submodule data appear in the
-.git/config file is useful since it helps keep things like the remote
-url safe from being updated when doing this sort of thing.
+    Switched to branch 'submodule-groups'
+    Your branch is ahead of 'origin/sb/submodule-init' by 15 commits.
+      (use "git push" to publish your local commits)
 
-I am not sure if labels will be that important in this case?
+The first 2 lines are correct, the third however is not correct. (I cannot push
+to your repository, but only email patches)
+
+So I wonder if
+ * I configured the wrong upstream branch
+ * the upstream branch concept is extended to more/other use cases by the
+   format.useAutoBase option. (In an email based workflow you would use the
+   a remote branch to a remote, which is not owned by yourself, so the push
+   advice is invalid from now on and we patch that message)
+ * using an explicit upstream branch is the wrong approach here and the
+   base should be implicit, i.e. Take the base sha1 and see if there is
+   (one/any) remote branch matching that sha1.
+   If there is, use the sha1 just fine.
 
 Thanks,
-Jake
+Stefan
