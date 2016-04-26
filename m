@@ -1,110 +1,100 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH] config doc: improve exit code listing
-Date: Tue, 26 Apr 2016 20:41:30 +0100
-Message-ID: <571FC46A.1090202@ramsayjones.plus.com>
-References: <20160426181058.7901-1-sbeller@google.com>
- <571FBD52.4040206@ramsayjones.plus.com>
- <CAGZ79ka_spZCCwpKtUhJTA+osetbzZDpmmv6GWYV+QeBkU5Tmg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 1/4] githooks.txt: Improve the intro section
+Date: Tue, 26 Apr 2016 12:48:27 -0700
+Message-ID: <xmqqr3dsf8xg.fsf@gitster.mtv.corp.google.com>
+References: <1461694402-9629-1-git-send-email-avarab@gmail.com>
+	<1461694402-9629-2-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	John Keeping <john@keeping.me.uk>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Apr 26 21:42:01 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Johannes Sixt <j6t@kdbg.org>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 26 21:48:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1av8rt-0002Bn-KD
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 21:41:57 +0200
+	id 1av8yL-000510-JR
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 21:48:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753381AbcDZTli (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Apr 2016 15:41:38 -0400
-Received: from avasout08.plus.net ([212.159.14.20]:55797 "EHLO
-	avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752983AbcDZTlg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2016 15:41:36 -0400
-Received: from [10.0.2.15] ([91.125.197.102])
-	by avasout08 with smtp
-	id n7hZ1s0012D2Veb017haWU; Tue, 26 Apr 2016 20:41:34 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=O6PEx0JW c=1 sm=1 tr=0
- a=mTUfFwB0nGOO66Ym8a+i3w==:117 a=mTUfFwB0nGOO66Ym8a+i3w==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
- a=EBOSESyhAAAA:8 a=1XWaLZrsAAAA:8 a=gW8RpNARDj_721OHMQEA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
-In-Reply-To: <CAGZ79ka_spZCCwpKtUhJTA+osetbzZDpmmv6GWYV+QeBkU5Tmg@mail.gmail.com>
+	id S1753272AbcDZTsd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Apr 2016 15:48:33 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50652 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753235AbcDZTsb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2016 15:48:31 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id F1FCA15998;
+	Tue, 26 Apr 2016 15:48:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=W5VP9IS5i0mP
+	Qk56rKT6PdDx0LY=; b=aUTGp6YBFJk4pajs6V56cBawc+vLJNzYYp1+rVQ/5ZLI
+	JG03EW2R0SokVWHtZrrt2tLhJzdrYs2eLp1uKwojijkGX9WDFgHNa4rsoC3U7Yh8
+	/NQxu3kaP/g8EVUoZdFAs9carA1bazwOlL4/7uP9P1uJ2FYMocVMerQwBfG7Ef8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=T9/8P6
+	3dwrFORmmuc6tJvoM/yTWQ3kzWSkFf0tos41es6zmjLqXXTlSjrwQE3lKiDmAkVs
+	c2xdqPBx22KAwHh1L0+ha+OXH8leK8h3ABMrW9kcYytX92VFzMBp2gjFSBFkus8o
+	i4Txpvv2M1MiEirIYmMIKujTCs/jxH+5KpeME=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E8E7415996;
+	Tue, 26 Apr 2016 15:48:29 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4E4A415994;
+	Tue, 26 Apr 2016 15:48:29 -0400 (EDT)
+In-Reply-To: <1461694402-9629-2-git-send-email-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 26 Apr
+ 2016 18:13:19 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D95AFFE6-0BE7-11E6-B664-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292654>
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
+>  * We note what happens with chdir() before a hook is called, nothing
+>    documented this explicitly, but the current behavior is
+>    predictable. It helps a lot to know what directory these hooks wil=
+l
+>    be executed from.
 
-On 26/04/16 20:18, Stefan Beller wrote:
-> On Tue, Apr 26, 2016 at 12:11 PM, Ramsay Jones
-> <ramsay@ramsayjones.plus.com> wrote:
->>
->>
->> On 26/04/16 19:10, Stefan Beller wrote:
->>> The possible reasons for exiting are now ordered by the exit code value.
->>> While at it, rewrite the `can not write to the config file` to
->>> `the config file cannot be written` to be grammatically correct and a
->>> proper sentence.
->>>
->>> Signed-off-by: Stefan Beller <sbeller@google.com>
->>> ---
->>>  Documentation/git-config.txt | 6 +++---
->>>  1 file changed, 3 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
->>> index 6fc08e3..6843114 100644
->>> --- a/Documentation/git-config.txt
->>> +++ b/Documentation/git-config.txt
->>> @@ -58,10 +58,10 @@ that location (you can say '--local' but that is the default).
->>>  This command will fail with non-zero status upon error.  Some exit
->>>  codes are:
->>>
->>> -- The config file is invalid (ret=3),
->>      ^
->> I don't see why this is capitalised, so ...
-> 
-> Because the whole listing is a bunch of sentences,
-> stringed together with commas at the end of each line.
-> Note that there is a ',' at the end of each line, except for
-> the last, where you see a '.'.
+I _think_ this item is what you meant by "changed the wording for
+all of this to hopefully be more clear in my v4.", but I do not
+think it addresses "find it somehow and then chdir()" confusion.
 
-Heh, I hadn't noticed the commas, no - I assumed periods.
+It does say "it is run at", meaning that chdir() happens before it
+is run.  That is not sufficient to let the reader guess taht chdir()
+happens before the hooks directory is checked relative to that
+directory to find the hook to run.
 
->                                 I thought about breaking that
-> up into a list and make all of the bullet points either a sentence
-> (all capitalised and ending in dot) or part sentences (lower
-> case for each bullet point, not clear about the ending)
+> +When 'git init' is run it may, depending on its configuration, copy
+> +hooks to the new repository, see the the "TEMPLATE DIRECTORY" sectio=
+n
 
-That's probably what I would have done.
+"... is run, it may, depending on its configuration, copy hooks..."
 
-> I kept it as is in a long sentence as I expected to see
-> lowest resistance there. ;)
+If that is too much sentence fragments, you could reorder them, e.g.
 
-'One long sentence' split into a bullet/numbered list is err ...
-Hmm, I'm lost for words. ;-)
+	'git init' may copy hooks to the new repository, depending
+	on its configuration.  See the "TEMPLATE DIRECTORY" section
 
->> Only a minor point.
-> 
-> If the current state bothers you too much,
-> please send a patch with correct lists. :)
-> (Feel free to squash this patch into that or
-> just on top of this)
+That would fix "the the" as a side effect ;-).
 
-Having said all that, (since I have very few documentation
-skills), I will leave this for others to improve, if
-necessary.
-
-ATB,
-Ramsay Jones
+> +in linkgit:git-init[1] for details. When the rest of this document
+> +refers to "default hooks" it's talking about the default template
+> +shipped with Git.
+> +
+> +The currently supported hooks are described below.
+> =20
+>  HOOKS
+>  -----
