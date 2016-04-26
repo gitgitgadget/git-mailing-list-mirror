@@ -1,177 +1,144 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v7 07/10] convert: unify the "auto" handling of CRLF
-Date: Tue, 26 Apr 2016 18:33:22 +0200
-Message-ID: <41d4d5c6-f964-8d3f-0e07-fd98b2f6b71e@web.de>
-References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
- <1461603397-30873-1-git-send-email-tboegi@web.de>
- <xmqqtwipjx9f.fsf@gitster.mtv.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH 18/83] builtin/apply: move 'numstat' global into 'struct apply_state'
+Date: Tue, 26 Apr 2016 18:35:52 +0200
+Message-ID: <CAP8UFD09oT=FtP2sig9htR=C_36jWiH=t4nSD7VrWh_gkKbkDg@mail.gmail.com>
+References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
+	<1461504863-15946-19-git-send-email-chriscool@tuxfamily.org>
+	<CAGZ79kaCqfwgwngcqG5W0fe=SNOsp7nqtvWw=-xhZ60FBPpg+w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>, tboegi@web.de
-X-From: git-owner@vger.kernel.org Tue Apr 26 18:33:54 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Apr 26 18:36:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1av5vm-0007D2-4O
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 18:33:46 +0200
+	id 1av5y0-0008B1-B5
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Apr 2016 18:36:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752522AbcDZQdm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Apr 2016 12:33:42 -0400
-Received: from mout.web.de ([212.227.15.14]:53370 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752508AbcDZQdl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2016 12:33:41 -0400
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb002) with
- ESMTPSA (Nemesis) id 0LtXDY-1btYqa0Yku-010xJI; Tue, 26 Apr 2016 18:33:28
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
- Gecko/20100101 Thunderbird/45.0
-In-Reply-To: <xmqqtwipjx9f.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:Icx6+HoPHNgL1bjxhuj1iYHaWn2Dcg8frAP25fGjdI4txTGLnJ5
- s9TG0CFQEBnyvfBxzWIPOHZ6gb/CmgfEXl6p8vR/Xtyl2sb9WRrRknj0kyLS2bIl+p7qAef
- dBxvmNfVHdYO+hEIVosS9O+Zrol3bRXrs6cqJhg4BWpqh01sDLp9+CGGa6+/6/T9zt8shYk
- /M2WevyosFEmvNi9QKM8g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:FbDicsuEyCI=:NTrjfJwWGs07PmKtZ/f2SM
- P3Z6ihWGPZX5e9paugnxCAV45y0sAQsBZFwJGd/UlDnLRneDZBNSiHYW5EK4YOQvw//X5XR7I
- EhHd0ESImQegQ7pE3KDae/l8WiPWT5C1wwzYBG15256491N5SDSunS4/M8cvG52f4SCOXSGC4
- YXsHPIMegmqpdpGAiwo1V35D2BeplcXPOAjb+86H7zuE0kL1bTBjXQYWbZgxTA1/b1mpYlv9g
- 30w4aBgZfL1k9bGbI1Yx/yoEKThNhnWZwD+ZDpUtjCqfIV1N8oWmfAcLwyxEcbbUWwQGKk37I
- 9a1SmtEM6Cs/X3aScxx6WWAEuuJsBDhxhCqhbWzSh5sHJySAhaJlJj4aPtm2+VSOdhbi2yLot
- XtZIbBGsdxxoVDqQ151PJp1UKjKw58OGl4QnWu0e9r1CmaR7FpzrfWLTagP9isW2M5CEubcL7
- nF15ghBTPAbGPdpOKADhGSpz/YrqJAqTmqEL/N3T8QSx3BpmbQiBzeNdKCKyiWfM005zVAU1C
- YmIBZk2BOvoQv2VNYzIlTYY5CbRBAciTXi3IvAum5rVw3E1tORzkBES4Xuc1xMKcoz3ZnU68I
- l/eY1oy1k74pR8R4YysPlAmEvX+lzgojbu30QKbj2fJxsmVEMyT8Cg/1v9ULR0KEPQ+UkPoxs
- naMLQsB3S96egkaeSH5kJoAKArhD1L1Mr+BtTK/VGAriQSMQjNB2EHdA4Yr/hot2JkFR7y/+V
- vxb3sCbRF/3jE6VBjZ0rJnfulSl84vEV2shZw5HI3m49z0fupXpbnJ0uS0xZpXmq+IiOZRf1 
+	id S1752305AbcDZQfy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Apr 2016 12:35:54 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:37436 "EHLO
+	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751704AbcDZQfx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2016 12:35:53 -0400
+Received: by mail-wm0-f41.google.com with SMTP id n3so13846023wmn.0
+        for <git@vger.kernel.org>; Tue, 26 Apr 2016 09:35:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=Q06WBgKuV7N+JKYzepEHJaNeGft6KCxob/REjENo/Zo=;
+        b=IZNG2XD/ZqJRm8fY4EuzaEzaKF6oppHecF/sxjqLmQsmpUP+DQoRvOc0fX15CmKZ09
+         j29LOl/rWBRIAawgkc9furXeGfVCPvVnSr4s656FhJmhTGK46wpauMtKmXTSm8V6YFMB
+         Uhj2rHsMdeHRjgn/tDnoGUBpbR9TBlwQEXRFT3v0xUngy9yIEp6EHpYTdbc+MhKWx/GB
+         WqShxx15OTsDwixcqjeJM5F0X6GEtTIOnRHWDts7dDx646VwQb0V8tzYwzvbC98itFQu
+         MmADTUT9Tc9mZgi+rt6u9/wk/Sszpw7NJVPkXqGM/nNRaMAyCcCV6p4YiWv2ir3G07/a
+         ouQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=Q06WBgKuV7N+JKYzepEHJaNeGft6KCxob/REjENo/Zo=;
+        b=m/Vu+cA9e/Y5zkxvnXauZ4l6iN5LKXN/daYBhC7jQFJvaf7vyt9l+9KLvjHEuK16kd
+         7dA1a/myo0rdzJawvSA3l2aDDNeWCMAtFheUvwEHOmIfEpYUGZfaDY3JAXgZ7Tpp0AbW
+         /As6He/ZxJdUjSBWEwnfo6G8jDHPzNoTRk6F1wShpgPIpazP9NDoXBqfCBk+bicAl0RV
+         2KqTJjyROOq+mb5AardBNqvxYPT+9HbE1U0jA+KU4KH6/jTLNuIGA2VV7Hgyeyi71rMX
+         R+KxkYhq4XKmbfGR/488Er/3QHewJuQ0PXmcDzYqJAwu0MrG4izaPn/AHYinobxmL1Vu
+         XZ+g==
+X-Gm-Message-State: AOPr4FXEj4RVt7gdS1Tud3yB/MRQC4UfRJR7K4MNOs4/RQVcHTt4AP3SuHuyG9WEp6rrMm2M86hARyJ1k16dzA==
+X-Received: by 10.194.117.70 with SMTP id kc6mr4626294wjb.94.1461688552461;
+ Tue, 26 Apr 2016 09:35:52 -0700 (PDT)
+Received: by 10.194.95.129 with HTTP; Tue, 26 Apr 2016 09:35:52 -0700 (PDT)
+In-Reply-To: <CAGZ79kaCqfwgwngcqG5W0fe=SNOsp7nqtvWw=-xhZ60FBPpg+w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292615>
 
-On 25.04.16 21:37, Junio C Hamano wrote:
-> tboegi@web.de writes:
-Thanks for review.
-Some comments are inline, and a suggestion to a new commit message at t=
-he end.
-[]
->> diff --git a/Documentation/config.txt b/Documentation/config.txt
->> index 4a27ad4..9caf6ae 100644
->> --- a/Documentation/config.txt
->> +++ b/Documentation/config.txt
->> @@ -389,13 +389,13 @@ file with mixed line endings would be reported=
- by the `core.safecrlf`
->>  mechanism.
->> =20
->>  core.autocrlf::
->> -	Setting this variable to "true" is almost the same as setting
->> -	the `text` attribute to "auto" on all files except that text
->> -	files are not guaranteed to be normalized: files that contain
->> -	`CRLF` in the repository will not be touched.  Use this
->> -	setting if you want to have `CRLF` line endings in your
->> -	working directory even though the repository does not have
->> -	normalized line endings.  This variable can be set to 'input',
->> +	Setting this variable to "true" is the same as setting
->> +	the `text` attribute to "auto" on all files and core.eol to "crlf"=
-=2E
->> +	Set to true if you want to have `CRLF` line endings in your
->> +	working directory and the repository has LF line endings.
->> +	Text files are guaranteed not to be normalized: files that contain
->> +	`CRLF` in the repository will not be touched.
->=20
-> This is not a new problem but the last sentence and a half look
-> bad.  Telling readers "X is not guaranteed to happen" is not all
-> that useful--telling them what happens is.  Also the use of colon
-> there is probably ungrammatical.
+On Mon, Apr 25, 2016 at 11:40 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Sun, Apr 24, 2016 at 6:33 AM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>> ---
+>>  builtin/apply.c | 11 ++++++-----
+>>  1 file changed, 6 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/builtin/apply.c b/builtin/apply.c
+>> index d90948a..16d78f9 100644
+>> --- a/builtin/apply.c
+>> +++ b/builtin/apply.c
+>> @@ -36,6 +36,9 @@ struct apply_state {
+>>         /* --stat does just a diffstat, and doesn't actually apply */
+>>         int diffstat;
+>>
+>> +       /* --numstat does numeric diffstat, and doesn't actually apply */
+>> +       int numstat;
+>> +
+>>         /*
+>>          *  --check turns on checking that the working tree matches the
+>>          *    files that are being modified, but doesn't apply the patch
+>> @@ -51,14 +54,12 @@ struct apply_state {
+>>  };
+>>
+>>  /*
+>> - *  --numstat does numeric diffstat, and doesn't actually apply
+>>   *  --index-info shows the old and new index info for paths if available.
+>>   */
+>>  static int newfd = -1;
+>>
+>>  static int state_p_value = 1;
+>>  static int p_value_known;
+>> -static int numstat;
+>>  static int summary;
+>>  static int apply = 1;
+>>  static int no_add;
+>> @@ -4500,7 +4501,7 @@ static int apply_patch(struct apply_state *state,
+>>         if (state->diffstat)
+>>                 stat_patch_list(list);
+>>
+>> -       if (numstat)
+>> +       if (state->numstat)
+>>                 numstat_patch_list(list);
+>>
+>>         if (summary)
+>> @@ -4598,7 +4599,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+>>                         N_("instead of applying the patch, output diffstat for the input")),
+>>                 OPT_NOOP_NOARG(0, "allow-binary-replacement"),
+>>                 OPT_NOOP_NOARG(0, "binary"),
+>> -               OPT_BOOL(0, "numstat", &numstat,
+>> +               OPT_BOOL(0, "numstat", &state.numstat,
+>>                         N_("show number of added and deleted lines in decimal notation")),
+>>                 OPT_BOOL(0, "summary", &summary,
+>>                         N_("instead of applying the patch, output a summary for the input")),
+>> @@ -4675,7 +4676,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+>>         }
+>>         if (state.apply_with_reject)
+>>                 apply = state.apply_verbosely = 1;
+>> -       if (!force_apply && (state.diffstat || numstat || summary || state.check || fake_ancestor))
+>> +       if (!force_apply && (state.diffstat || state.numstat || summary || state.check || fake_ancestor))
+>
+> Mental note: This patch is just doing a mechanical conversion, so it
+> is fine to check for many "state.FOOs" here.
+>
+> However later we may want to move this out to a static oneliner like:
+>
+>     static int really_apply(state *s) {
+>       return s->diffstat || s->numstat || ...;
+>     }
+>
+> (with a better name obviously)
 
->=20
-> 	Set to true if you want to have CRLF line endings in your
-> 	working directory and LF line endings in the repository.
-> 	Text files that contain CRLF in the repository will not get
-> 	their end-of-line converted.
->=20
-> perhaps?
-OK, but may be=20
-s/end-of-line/line endings/
-----------
-Set to true if you want to have CRLF line endings in your
-working directory and LF line endings in the repository.
-Text files that contain CRLF in the repository will not get
-their line endings converted.
-
-
->=20
->> diff --git a/convert.h b/convert.h
->> index ccf436b..81b6cdf 100644
->> --- a/convert.h
->> +++ b/convert.h
->> @@ -7,7 +7,8 @@
->>  enum safe_crlf {
->>  	SAFE_CRLF_FALSE =3D 0,
->>  	SAFE_CRLF_FAIL =3D 1,
->> -	SAFE_CRLF_WARN =3D 2
->> +	SAFE_CRLF_WARN =3D 2,
->> +	SAFE_CRLF_RENORMALIZE =3D 4
->=20
-> Are these bits in a word?  If not where did 3 go?
-We use an enum, sometimes mixed with an int, so my brain automatically
-changed it into a bit field.
-"3" is probably better.
->=20
->> diff --git a/convert.c b/convert.c
->> index 24ab095..3782172 100644
->> --- a/convert.c
->> +++ b/convert.c
->> @@ -227,7 +227,9 @@ static enum eol output_eol(enum crlf_action crlf=
-_action)
->>  		return EOL_LF;
->>  	case CRLF_UNDEFINED:
->>  	case CRLF_AUTO_CRLF:
->> +		return EOL_CRLF;
->=20
-> Hmph, do we want UNDEFINED case to return EOL_CRLF here?
->=20
->>  	case CRLF_AUTO_INPUT:
->> +		return EOL_LF;
-One of the compilers claimed that UNDEFINED was not handled in switch-c=
-ase.
-A Warning may be better ?=20
->>  	case CRLF_TEXT:
->>  	case CRLF_AUTO:
->>  		/* fall through */
->=20
-How about this as the commit message:
---------------------------------------
-
-convert: unify the "auto" handling of CRLF
-
-=46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
-
-Before this change,
-$ echo "* text=3Dauto" >.gitattributes
-$ echo "* eol=3Dcrlf" >>.gitattributes
-would have the same effect as
-$ echo "* text" >.gitattributes
-$ git config core.eol crlf
-
-The 'eol' attribute had higher priority than 'text=3Dauto'. Binary
-files may had been corrupted, and this is not what users expect to happ=
-en.
-
-Make the 'eol' attribute to work together with 'text=3Dauto'.
-
-With this change
-
-$ echo "* text=3Dauto eol=3Dcrlf" >.gitattributes
-has the same effect as
-$ git config core.autocrlf true
-
-and
-
-$ echo "* text=3Dauto eol=3Dlf" >.gitattributes
-has the same effect as
-$ git config core.autocrlf input
+Yeah, this is another cleanup that could be done.
+I added it to a list and will try to take care of it later.
