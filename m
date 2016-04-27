@@ -1,96 +1,133 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] trailer: load config to handle core.commentChar
-Date: Wed, 27 Apr 2016 22:13:09 +0200
-Message-ID: <CAP8UFD1O+V64dr-j9bu7D1mrLxEy3zG017zdJahJTx-MUYv5Pg@mail.gmail.com>
-References: <1461785062-23523-1-git-send-email-rafalklys@wp.pl>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 24/29] ref_transaction_update(): check refname_is_safe() at a minimum
+Date: Wed, 27 Apr 2016 13:14:33 -0700
+Message-ID: <xmqqtwim95cm.fsf@gitster.mtv.corp.google.com>
+References: <cover.1461768689.git.mhagger@alum.mit.edu>
+	<a67a1b745d0a14111c774f13a5776d3756cbf2f2.1461768690.git.mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Rafal Klys <rafalklys@wp.pl>
-X-From: git-owner@vger.kernel.org Wed Apr 27 22:13:18 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, David Turner <dturner@twopensource.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Apr 27 22:14:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avVpk-0005q0-Jm
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 22:13:16 +0200
+	id 1avVr7-0006Jp-CN
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 22:14:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753069AbcD0UNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 16:13:12 -0400
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:35974 "EHLO
-	mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752352AbcD0UNL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 16:13:11 -0400
-Received: by mail-wm0-f44.google.com with SMTP id n129so41904142wmn.1
-        for <git@vger.kernel.org>; Wed, 27 Apr 2016 13:13:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=ZkfbJnEop0GMALuJ3al3SzFjJWkJPEt8cZPn1gGtfvk=;
-        b=GUSwU62rEWPWcBohZ3mR57VERgBFBN7tVs+EBnSA/ouRlqHdYB6/keGIi2oOTkv3PG
-         FyDxDz6dQ9mhtKHVTfSQwP4AvQ785bdTMZkRtNwD/5vHN/VwuHcrVgQFEfr/Ab7OIj9v
-         oY/NLhO5IpFN3y8kA0u5UH41lAqQXPfKNLKnyWHKK7hUS+jOmZWuMo+HYkMHuNO6/2/M
-         QjeOscMbGdqWQ/aUgmfL2LgGoEg9t/KXN6DMiqRoX2m1p7ZTN3kriO4XyynR9TRGnv6Q
-         84Jz1nIK7KuPGxbcxjl6I/8sB4NA+vpoTTG7JG2Yn/2RFjAQHZOe1YpVEUTz5a5Fn3xP
-         JqNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=ZkfbJnEop0GMALuJ3al3SzFjJWkJPEt8cZPn1gGtfvk=;
-        b=HjNAN3uUvXs8GVpNiCVXi//E8AQDxku7OV7NIdjIvrrKn4x2CgmWuPlo1DmjVSmWbf
-         IZ0WBxV+se5+HPHYAmfye7gRJ80HTpOqWN9f0PVqzVp6AXfycg/TPHYryeEXFqTcedjp
-         od09lF65TbyN82/SPgyxTkoQbTB3HCPDcYY5rs6lMZwSv506+h+YDFdYcbVMmYCcml57
-         avKZcTMW0UeGiWa2GFNWjDzb70xyeEesV8S4gKgUAkaUKMwvbJ60Br+KDMM3/LUWaBUJ
-         9Gpi3J+XW5LanLvVXoS2bCR7dAyoMflcq32Zbky+KE5OfDH9KcI3e2DC9xBxXwyNW5/1
-         7TkA==
-X-Gm-Message-State: AOPr4FXAmA5iAE0wS+gQK/ZuH+scTt9d3QNuT4140mx2QJjKPfAXTI3+oNydicrTqTve35zSiB00V1tU0kShrQ==
-X-Received: by 10.195.17.166 with SMTP id gf6mr11192242wjd.124.1461787989358;
- Wed, 27 Apr 2016 13:13:09 -0700 (PDT)
-Received: by 10.194.95.129 with HTTP; Wed, 27 Apr 2016 13:13:09 -0700 (PDT)
-In-Reply-To: <1461785062-23523-1-git-send-email-rafalklys@wp.pl>
+	id S1752759AbcD0UOh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 16:14:37 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57950 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752558AbcD0UOh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 16:14:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A65D017E1A;
+	Wed, 27 Apr 2016 16:14:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/JDh0VRzVChTS4leDKEUu9THucQ=; b=JySob5
+	qwHv5R3aAdOvYvEJzkHHiQa9KQUyMLUFR0TAYwSOZB0x21NB15QdNmmKt/rhqJH/
+	XFuUj9UE7cMPiS1A1loCpwztuMjf5Mwcf54tSSpKYcGyQ6YyNGS8tKrScceiljDg
+	SQyr7yhNs6PRvVG0pfclr0Fi65/Zpf9Pi0zYQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dhlc7x8fVP/4U4ZHBCsaFEH5oi0acGhH
+	++wsT7JC0oXchGmyF4HGuiAByAdO3jPkQkUK8ifwcO7Oe4i5h4p4E37XUMPJNxmz
+	USuMr0TTo/mzTBT6wsE1QWrHrQS8Mf3KHVCHcnS9nm5DLPxDTVvDqQyEYZuOZcSd
+	uUwafbqnoFs=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9C89717E19;
+	Wed, 27 Apr 2016 16:14:35 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 03BF017E18;
+	Wed, 27 Apr 2016 16:14:35 -0400 (EDT)
+In-Reply-To: <a67a1b745d0a14111c774f13a5776d3756cbf2f2.1461768690.git.mhagger@alum.mit.edu>
+	(Michael Haggerty's message of "Wed, 27 Apr 2016 18:57:41 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A9084376-0CB4-11E6-BFD4-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292812>
 
-On Wed, Apr 27, 2016 at 9:24 PM, Rafal Klys <rafalklys@wp.pl> wrote:
-> Add call to git_config(git_default_config, NULL) to update the
-> comment_char_line from default '#' to possible different value set in
-> core.commentChar.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-It is "comment_line_char" not "comment_char_line", but otherwise you
-can add "Reviewed-by: Christian Couder <chriscool@tuxfamily.org>".
+> If the user has asked that a new value be set for a reference, we use
+> check_refname_format() to verify that the reference name satisfies all
+> of the rules. But in other cases, at least check that refname_is_safe().
 
-Thanks!
+It isn't clear to me what "in other cases" exactly refers to.  A
+request to delete a ref would obviously one of those that do not
+"ask that a new value be set", but are there other cases?
 
-> Signed-off-by: Rafal Klys <rafalklys@wp.pl>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 > ---
->  trailer.c | 3 +++
->  1 file changed, 3 insertions(+)
+> There are remaining problems in this area of the code. For example,
+> check_refname_format() is *less* strict than refname_is_safe(). It
+> allows almost arbitrary top-level reference names like "foo" and
+> "refs". (The latter is especially fun because if you manage to create
+> a reference called "refs", Git stops recognizing the directory as a
+> Git repository.) On the other hand, some callers call
+> check_refname_format() with incomplete reference names (e.g., branch
+> names like "master"), so the functions can't be made stricter until
+> those callers are changed.
 >
-> diff --git a/trailer.c b/trailer.c
-> index 8e48a5c..a3700b4 100644
-> --- a/trailer.c
-> +++ b/trailer.c
-> @@ -888,6 +888,9 @@ void process_trailers(const char *file, int in_place, int trim_empty, struct str
->         git_config(git_trailer_default_config, NULL);
->         git_config(git_trailer_config, NULL);
+> I'll address these problems separately if I find the time.
+
+Thanks.
+
+>  refs.c                  | 5 +++--
+>  t/t1400-update-ref.sh   | 2 +-
+>  t/t1430-bad-ref-name.sh | 2 +-
+>  3 files changed, 5 insertions(+), 4 deletions(-)
 >
-> +       /* for core.commentChar */
-> +       git_config(git_default_config, NULL);
-> +
->         lines = read_input_file(file);
->
->         if (in_place)
-> --
-> 2.8.1.68.g625efa9.dirty
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> diff --git a/refs.c b/refs.c
+> index 858b6d7..41eb9e2 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -802,8 +802,9 @@ int ref_transaction_update(struct ref_transaction *transaction,
+>  	if ((flags & REF_ISPRUNING) && !(flags & REF_NODEREF))
+>  		die("BUG: REF_ISPRUNING set without REF_NODEREF");
+>  
+> -	if (new_sha1 && !is_null_sha1(new_sha1) &&
+> -	    check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
+> +	if ((new_sha1 && !is_null_sha1(new_sha1)) ?
+> +	    check_refname_format(refname, REFNAME_ALLOW_ONELEVEL) :
+> +	    !refname_is_safe(refname)) {
+>  		strbuf_addf(err, "refusing to update ref with bad name '%s'",
+>  			    refname);
+>  		return -1;
+> diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+> index 40b0cce..08bd8fd 100755
+> --- a/t/t1400-update-ref.sh
+> +++ b/t/t1400-update-ref.sh
+> @@ -23,7 +23,7 @@ test_expect_success setup '
+>  m=refs/heads/master
+>  n_dir=refs/heads/gu
+>  n=$n_dir/fixes
+> -outside=foo
+> +outside=refs/foo
+>  
+>  test_expect_success \
+>  	"create $m" \
+> diff --git a/t/t1430-bad-ref-name.sh b/t/t1430-bad-ref-name.sh
+> index 25ddab4..8937e25 100755
+> --- a/t/t1430-bad-ref-name.sh
+> +++ b/t/t1430-bad-ref-name.sh
+> @@ -285,7 +285,7 @@ test_expect_success 'update-ref -d cannot delete non-ref in .git dir' '
+>  	echo precious >expect &&
+>  	test_must_fail git update-ref -d my-private-file >output 2>error &&
+>  	test_must_be_empty output &&
+> -	test_i18ngrep -e "cannot lock .*: unable to resolve reference" error &&
+> +	test_i18ngrep -e "refusing to update ref with bad name" error &&
+>  	test_cmp expect .git/my-private-file
+>  '
