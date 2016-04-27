@@ -1,94 +1,83 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v6 0/4] Add --base option to git-format-patch to record
- base tree info
-Date: Wed, 27 Apr 2016 08:45:08 -0700
-Message-ID: <CAGZ79kbvdTTLReVrrO8X0jTJn5kDn1n1cAS1Fo+-jWdGK5G1LQ@mail.gmail.com>
-References: <1461657084-9223-1-git-send-email-xiaolong.ye@intel.com>
-	<CAGZ79kajpAtbHaKLaLHN5+qUOvBofFs-q-vUYWua49GWK7FO9Q@mail.gmail.com>
-	<xmqqlh40gs9o.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZg3OpR8k45=q1m-g=t+aGGs8VDYBrBYaBU_DbfuuoBig@mail.gmail.com>
-	<xmqqd1pcgr3s.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZNV+g3_Rmpynh-WQVc3dW6nuNDsTM=gTxNuJnr3V3Azg@mail.gmail.com>
-	<xmqq4maogpsw.fsf@gitster.mtv.corp.google.com>
-	<20160427073350.GA30342@yexl-desktop>
-	<xmqqr3dray9e.fsf@gitster.mtv.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH 47/83] builtin/apply: move applying patches into apply_all_patches()
+Date: Wed, 27 Apr 2016 17:51:33 +0200
+Message-ID: <CAP8UFD0Q3USKhXMZrxTxQc0hr3kjBP517_KBqc7CS--4eTbJww@mail.gmail.com>
+References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
+	<1461504863-15946-48-git-send-email-chriscool@tuxfamily.org>
+	<CAGZ79kZ4UprHxtmO-rgiOo=od0U2nraq6m6wYcm_g87bsrL-Wg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Ye Xiaolong <xiaolong.ye@intel.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Fengguang Wu <fengguang.wu@intel.com>, ying.huang@intel.com,
-	philip.li@intel.com, julie.du@intel.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 17:45:17 2016
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Apr 27 17:51:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avReP-0002rO-7Z
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 17:45:17 +0200
+	id 1avRka-0005hL-3H
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 17:51:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752315AbcD0PpL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 11:45:11 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:36277 "EHLO
-	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751513AbcD0PpJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 11:45:09 -0400
-Received: by mail-io0-f178.google.com with SMTP id u185so58049783iod.3
-        for <git@vger.kernel.org>; Wed, 27 Apr 2016 08:45:09 -0700 (PDT)
+	id S1753197AbcD0Pvf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 11:51:35 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:37668 "EHLO
+	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752249AbcD0Pve (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 11:51:34 -0400
+Received: by mail-wm0-f49.google.com with SMTP id a17so21908434wme.0
+        for <git@vger.kernel.org>; Wed, 27 Apr 2016 08:51:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
+        d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=ic8Rdl9qMHpgLwE3UZgsiWzqXdcfzEisxvNyAGoAvKQ=;
-        b=mS00SG6wcjbk3AGvhup5U/2RwlIZKKtAkK8IDavCAqFb9V7zRg1HoJlPd80/LD9bie
-         8/ir1bw/Q5IXuB0DHUAUv6pXqUAD4pjwEERGX7slUEojYsE/6F84GI9QDfS6TDPhgYZO
-         xFpxph0lMp4XWEZ1xuBU7hs1BOY6k+e2DySHRhiroR9ST9ngUjawJmPlTvtIOpv1Y/sr
-         frCM3e9Ajg8bCDHdqgannIguRoil3W0sJhE9hZHkQ3QfjZCEtnSwd3cpqefZvmtCHqd5
-         ZeS8CzCzcnXmbzOz1NyHFT/EnX6U2GgT89bws4tAxJ6Uut4J+0KOSSLVXe+dxWyT9hoG
-         bT1w==
+        bh=/7nROWzpq4jtHDEBUYvv1MW+deJZspGDLHoiG5n73Vs=;
+        b=n3P21PZSccfxxs7H/awMjDLZ4zZRZ0ApvtgqvuT1FD9AZnl4fO9XeK5JZpdRmSOsuk
+         q4FfyHC9tvEXDlmbAeVPx/kkXDG5QVORM3auVTuTiqGiFPTsrQ8LAviDav7eyah1ybJn
+         6nCGuHE582nm/pVCvPt3iltDgRZREjVrX9hte5AxhmJJgke4jwJlLG48Y5ljUzP0Kybe
+         l2N9OsydGwsRdRPNXzLWDpLpOsUUqNodjS5Q610NAawr5eQSp07WLsAHZ7FfafaMfcSy
+         gm6BaiJ3USNg/EzXf12BynX+gpuReuXbED2GfuKIKfSppsjY9ANnT2Zv9K2rUo0eCF9Y
+         +yow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=ic8Rdl9qMHpgLwE3UZgsiWzqXdcfzEisxvNyAGoAvKQ=;
-        b=hpISd9gtnzv0KrLw89zX+eZmc7R7qGf09Ntds/8sENBi6q7im9ZWYOCMylB3C86gEr
-         YNGBPM4A93UEsxebIEirtODushnnL2ctLAgA0mc+BMHd5je2S0jTHKDR7LQcdBGolBJI
-         oXMcjVtJ9W42Xxx+OiqTPIpnJapH3hK6YiZWG2jxYyxzYso8lT4yUkIfMcdsb6QAHPg2
-         wnwO+n8/+FBZBl/Y+lNv0SpDIVqzWXFPZUc3tFL+x855MjI/xI207IRX52ndo/0FBsTa
-         cbDz57uhHHZIgrFVvexBEbHdAADMI5zlWgLzD9ZoMIpOO6yQUYX5SbIaEYrk0SWSILeK
-         R4OQ==
-X-Gm-Message-State: AOPr4FWG+lnkVXkahf7E1rgen1sbsy9EA2tm/gsjekydUCyIGJcJ/VmijfDOCKkDsakD6GQ9O4SnHr0hz7/uABn5
-X-Received: by 10.107.53.200 with SMTP id k69mr11007181ioo.174.1461771908607;
- Wed, 27 Apr 2016 08:45:08 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Wed, 27 Apr 2016 08:45:08 -0700 (PDT)
-In-Reply-To: <xmqqr3dray9e.fsf@gitster.mtv.corp.google.com>
+        bh=/7nROWzpq4jtHDEBUYvv1MW+deJZspGDLHoiG5n73Vs=;
+        b=X4U89Rl1PNUur97wfOGzFyeSQAhIfy54yOk0SmBGN/mvOGdQLpqU/3mHIKWhg6LZl7
+         yHryrvNz16XY7ek4ykiLFYb3zRN5RK7NRYTx2iojxMarLtwl1S88NkvSnul73T2MifLR
+         mCjnX6APMxnFnGJ8z8puGXFyrxYyfK2EUHy3tQWtjifGaqKPJPYhypXGvs3N84KRqI9w
+         Dzn/nP1aBbAiTP1qKaITziz7ACW0CQUZtB3XHpCpf19ZMI2M3DbnWGd9TsCUJT4EcOXC
+         z6TbyeLITQyHfzwgMeVmhPo98VVhHHIjcxutpTZeAxE6+SFk7DNrNPrt+GEJv+i+wDGI
+         bS+A==
+X-Gm-Message-State: AOPr4FXTiF0bnYDgibBogUN9iJi/9wVwcm+4hfAAX3n0qZAmnFiw4UIvJ9zdlZCq0wdGNmZ6g+vwurUKrR0T0g==
+X-Received: by 10.28.128.83 with SMTP id b80mr11311503wmd.89.1461772293448;
+ Wed, 27 Apr 2016 08:51:33 -0700 (PDT)
+Received: by 10.194.95.129 with HTTP; Wed, 27 Apr 2016 08:51:33 -0700 (PDT)
+In-Reply-To: <CAGZ79kZ4UprHxtmO-rgiOo=od0U2nraq6m6wYcm_g87bsrL-Wg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292736>
 
-On Wed, Apr 27, 2016 at 8:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ye Xiaolong <xiaolong.ye@intel.com> writes:
+On Tue, Apr 26, 2016 at 12:00 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Sun, Apr 24, 2016 at 6:33 AM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 >
->> On Tue, Apr 26, 2016 at 11:58:39AM -0700, Junio C Hamano wrote:
->>
->>>Let's hear from folks at Intel ;-) Both of the above sounds like
->>>sensible enhancements to me.
->>
->> Shall I squash these enhancements in this series, or I need to make
->> another patch for them?
+> Up to this patch, have a
+> Reviewed-by: Stefan Beller <sbeller@google.com>
+> in case you want to split the series in here (as indicated in the
+> cover letter, this was the last
+> patch rerolled, the next patches are new and may need more discussion).
 >
-> The update being discussed is not a "oops, the series without this
-> update is embarrassingly flawed" fix, but rather "the series is good
-> enough to be used as-is, but here is to potentially make it even
-> better", I'd prefer to have it as a separate, follow-up patch that
-> applies on top of what has been queued.  That way, if this turns out
-> to be not so good idea, removing it alone while preserving what is
-> already there will be easier, and also others who will be studying
-> the code to further enhance the heuristics of base selection in the
-> future will benefit.
+> I had some nits, but they cleared up in later patches.
 
-I agree. I was just suggesting going the extra mile to make it easier
-for the user. :)
+Thanks for your review! I will add your Reviewed-by in the next reroll.
