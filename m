@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 17/29] delete_branches(): use resolve_refdup()
-Date: Wed, 27 Apr 2016 18:57:34 +0200
-Message-ID: <6fd1a07674b903e005a25184d2fef44dcc3f1d2f.1461768690.git.mhagger@alum.mit.edu>
+Subject: [PATCH 15/29] ref_transaction_create(): disallow recursive pruning
+Date: Wed, 27 Apr 2016 18:57:32 +0200
+Message-ID: <615204c877610855b02b21ce14efa5b7342182bc.1461768689.git.mhagger@alum.mit.edu>
 References: <cover.1461768689.git.mhagger@alum.mit.edu>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -9,115 +9,88 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org, David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 18:59:35 2016
+X-From: git-owner@vger.kernel.org Wed Apr 27 18:59:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avSoI-00047Q-Qc
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 18:59:35 +0200
+	id 1avSoP-0004DJ-LY
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 18:59:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753596AbcD0Q7c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 12:59:32 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:53611 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753487AbcD0Q6c (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2016 12:58:32 -0400
-X-AuditID: 12074414-62bff700000008e6-44-5720efb705aa
+	id S1753495AbcD0Q6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 12:58:32 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:43117 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753475AbcD0Q63 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2016 12:58:29 -0400
+X-AuditID: 1207440d-bb3ff7000000090b-58-5720efb41346
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 81.72.02278.7BFE0275; Wed, 27 Apr 2016 12:58:31 -0400 (EDT)
+	by  (Symantec Messaging Gateway) with SMTP id 1D.8E.02315.4BFE0275; Wed, 27 Apr 2016 12:58:28 -0400 (EDT)
 Received: from michael.fritz.box (p548D622A.dip0.t-ipconnect.de [84.141.98.42])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u3RGvw6U022189
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u3RGvw6S022189
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Wed, 27 Apr 2016 12:58:30 -0400
+	Wed, 27 Apr 2016 12:58:26 -0400
 X-Mailer: git-send-email 2.8.1
 In-Reply-To: <cover.1461768689.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrCIsWRmVeSWpSXmKPExsUixO6iqLv9vUK4wZ55VhbzN51gtOi60s1k
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrKIsWRmVeSWpSXmKPExsUixO6iqLvlvUK4wYll8hbzN51gtOi60s1k
 	0dB7hdni9or5zBbdU94yWvxo6WG2mHnV2oHd4+/7D0weO2fdZfd41ruH0ePiJWWP/Uu3sXks
-	eH6f3ePzJrkA9ihum6TEkrLgzPQ8fbsE7ox1e56zFhwRqGifw9nAeIini5GTQ0LARKJnYR9r
-	FyMXh5DAVkaJW5uXsUE4x5kkdtzcyAhSxSagK7Gop5kJxBYRcJBYvvIXO0gRs0ATk8T35U0s
-	IAlhATuJRZNvgtksAqoSez8+YgaxeQWiJGY+uswCsU5O4vL0B2wgNqeAhcSX1rdgC4QEzCWW
-	PFjNPoGRZwEjwypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXQu93MwSvdSU0k2MkBAT2cF45KTc
-	IUYBDkYlHt4TUgrhQqyJZcWVuYcYJTmYlER5l5wFCvEl5adUZiQWZ8QXleakFh9ilOBgVhLh
-	nf4GKMebklhZlVqUD5OS5mBREuf9tljdT0ggPbEkNTs1tSC1CCYrw8GhJMF79B1Qo2BRanpq
-	RVpmTglCmomDE2Q4l5RIcWpeSmpRYmlJRjwoBuKLgVEAkuIB2lsK0s5bXJCYCxSFaD3FqCgl
-	zvsaJCEAksgozYMbC0scrxjFgb4U5g0CqeIBJh247ldAg5mABl8+JAsyuCQRISXVwNgvq6mv
-	4b9a96n68S9vfRd0VKoeNpE4azrx07LZ24wZM6x866ZcXHp95u4u1/VKPyYfu/ll6UfPdUL8
-	JRmMZqbsf9WfJr/ynb4+Oeky/5584XvBzbZPQ9cE7jrf5nR51dmVa7fa8ZlKenrv 
+	eH6f3ePzJrkA9ihum6TEkrLgzPQ8fbsE7oyru/exFfTxVHRsfcbawPiJs4uRk0NCwESiad4N
+	5i5GLg4hga2MEq8WfWeEcI4zSRzsO8YKUsUmoCuxqKeZCcQWEXCQWL7yFztIEbNAE5PE9+VN
+	LCAJYQFviTuv14DZLAKqEj9b37GB2LwCURJfXm1ghVgnJ3F5+gOwOKeAhcSX1reMILaQgLnE
+	kger2Scw8ixgZFjFKJeYU5qrm5uYmVOcmqxbnJyYl5dapGukl5tZopeaUrqJERJkvDsY/6+T
+	OcQowMGoxMNbIKEQLsSaWFZcmXuIUZKDSUmUd8lZoBBfUn5KZUZicUZ8UWlOavEhRgkOZiUR
+	3ulvgHK8KYmVValF+TApaQ4WJXFetSXqfkIC6YklqdmpqQWpRTBZGQ4OJQles3dAjYJFqemp
+	FWmZOSUIaSYOTpDhXFIixal5KalFiaUlGfGgKIgvBsYBSIoHaO+ftyB7iwsSc4GiEK2nGBWl
+	xHldQRICIImM0jy4sbDU8YpRHOhLYd4gkO08wLQD1/0KaDAT0ODLh2RBBpckIqSkGoBpxuhH
+	+/zmDXKSVxhmb/tyavql1+sk51fXLHgdcn3Jxulpj7/6i34qvlYV9bScvTX3lMzVoHNRfK0n
+	sgS+mzuteXJJsUtoXe30yyVdlnsLeH9kp35ik5Et0M7f4yL0LU/F3rW/cfL5G7fk 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292767>
 
-The return value of resolve_ref_unsafe() is not guaranteed to stay
-around as long as we need it, so use resolve_refdup() instead.
+It is nonsensical (and a little bit dangerous) to use REF_ISPRUNING
+without REF_NODEREF. Forbid it explicitly. Change the one REF_ISPRUNING
+caller to pass REF_NODEREF too.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- builtin/branch.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+This also makes later patches a bit clearer.
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 0adba62..ae55688 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -212,7 +212,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 			die(_("Couldn't look up commit object for HEAD"));
- 	}
- 	for (i = 0; i < argc; i++, strbuf_release(&bname)) {
--		const char *target;
-+		char *target = NULL;
- 		int flags = 0;
+ refs.c               | 3 +++
+ refs/files-backend.c | 2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/refs.c b/refs.c
+index ba14105..5dc2473 100644
+--- a/refs.c
++++ b/refs.c
+@@ -790,6 +790,9 @@ int ref_transaction_update(struct ref_transaction *transaction,
+ 	if (transaction->state != REF_TRANSACTION_OPEN)
+ 		die("BUG: update called for transaction that is not open");
  
- 		strbuf_branchname(&bname, argv[i]);
-@@ -231,11 +231,11 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 			}
- 		}
- 
--		target = resolve_ref_unsafe(name,
--					    RESOLVE_REF_READING
--					    | RESOLVE_REF_NO_RECURSE
--					    | RESOLVE_REF_ALLOW_BAD_NAME,
--					    sha1, &flags);
-+		target = resolve_refdup(name,
-+					RESOLVE_REF_READING
-+					| RESOLVE_REF_NO_RECURSE
-+					| RESOLVE_REF_ALLOW_BAD_NAME,
-+					sha1, &flags);
- 		if (!target) {
- 			error(remote_branch
- 			      ? _("remote-tracking branch '%s' not found.")
-@@ -248,7 +248,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 		    check_branch_commit(bname.buf, name, sha1, head_rev, kinds,
- 					force)) {
- 			ret = 1;
--			continue;
-+			goto next;
- 		}
- 
- 		if (delete_ref(name, is_null_sha1(sha1) ? NULL : sha1,
-@@ -258,7 +258,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 			      : _("Error deleting branch '%s'"),
- 			      bname.buf);
- 			ret = 1;
--			continue;
-+			goto next;
- 		}
- 		if (!quiet) {
- 			printf(remote_branch
-@@ -270,6 +270,9 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 			       : find_unique_abbrev(sha1, DEFAULT_ABBREV));
- 		}
- 		delete_branch_config(bname.buf);
++	if ((flags & REF_ISPRUNING) && !(flags & REF_NODEREF))
++		die("BUG: REF_ISPRUNING set without REF_NODEREF");
 +
-+	next:
-+		free(target);
- 	}
- 
- 	free(name);
+ 	if (new_sha1 && !is_null_sha1(new_sha1) &&
+ 	    check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
+ 		strbuf_addf(err, "refusing to update ref with bad name '%s'",
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 9faf17c..8fcbd7d 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2116,7 +2116,7 @@ static void prune_ref(struct ref_to_prune *r)
+ 	transaction = ref_transaction_begin(&err);
+ 	if (!transaction ||
+ 	    ref_transaction_delete(transaction, r->name, r->sha1,
+-				   REF_ISPRUNING, NULL, &err) ||
++				   REF_ISPRUNING | REF_NODEREF, NULL, &err) ||
+ 	    ref_transaction_commit(transaction, &err)) {
+ 		ref_transaction_free(transaction);
+ 		error("%s", err.buf);
 -- 
 2.8.1
