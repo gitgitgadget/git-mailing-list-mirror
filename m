@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 27/29] lock_ref_for_update(): don't resolve symrefs
-Date: Wed, 27 Apr 2016 18:57:44 +0200
-Message-ID: <dc9cd5747320dbbfc328f79b60ba8d6d78764fff.1461768690.git.mhagger@alum.mit.edu>
+Subject: [PATCH 29/29] lock_ref_sha1_basic(): only handle REF_NODEREF mode
+Date: Wed, 27 Apr 2016 18:57:46 +0200
+Message-ID: <a3d853510719a37c1e4bbb52261169c25b19c148.1461768690.git.mhagger@alum.mit.edu>
 References: <cover.1461768689.git.mhagger@alum.mit.edu>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -9,282 +9,233 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org, David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 18:59:17 2016
+X-From: git-owner@vger.kernel.org Wed Apr 27 18:59:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avSo1-00040G-4P
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 18:59:17 +0200
+	id 1avSo1-00040G-MJ
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 18:59:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753568AbcD0Q6z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 12:58:55 -0400
+	id S1753578AbcD0Q64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 12:58:56 -0400
 Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:43127 "EHLO
 	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752841AbcD0Q6u (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2016 12:58:50 -0400
-X-AuditID: 1207440d-bc7ff7000000090b-a4-5720efc9f97c
+	by vger.kernel.org with ESMTP id S1753228AbcD0Q6x (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2016 12:58:53 -0400
+X-AuditID: 1207440d-bb3ff7000000090b-ae-5720efccef1b
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 52.9E.02315.9CFE0275; Wed, 27 Apr 2016 12:58:49 -0400 (EDT)
+	by  (Symantec Messaging Gateway) with SMTP id 23.9E.02315.CCFE0275; Wed, 27 Apr 2016 12:58:52 -0400 (EDT)
 Received: from michael.fritz.box (p548D622A.dip0.t-ipconnect.de [84.141.98.42])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u3RGvw6e022189
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u3RGvw6g022189
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Wed, 27 Apr 2016 12:58:47 -0400
+	Wed, 27 Apr 2016 12:58:51 -0400
 X-Mailer: git-send-email 2.8.1
 In-Reply-To: <cover.1461768689.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrEIsWRmVeSWpSXmKPExsUixO6iqHvyvUK4wbUtkhbzN51gtOi60s1k
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrCIsWRmVeSWpSXmKPExsUixO6iqHvmvUK4wY3dBhbzN51gtOi60s1k
 	0dB7hdni9or5zBbdU94yWvxo6WG2mHnV2oHd4+/7D0weO2fdZfd41ruH0ePiJWWP/Uu3sXks
-	eH6f3ePzJrkA9ihum6TEkrLgzPQ8fbsE7oyVx1uZC1Y7VBzvWMPWwPjFsIuRk0NCwETixv2r
-	rF2MXBxCAlsZJZ4t7GQGSQgJHGeSaDrEC2KzCehKLOppZgKxRQQcJJav/MUO0sAs0MQk8X15
-	E0sXIweHsICzxKuzcSAmi4CqxPGVYOW8AlESP69uZ4TYJSdxefoDNhCbU8BC4kvrW0aIVeYS
-	Sx6sZp/AyLOAkWEVo1xiTmmubm5iZk5xarJucXJiXl5qka6RXm5miV5qSukmRkh48e5g/L9O
-	5hCjAAejEg9vgYRCuBBrYllxZe4hRkkOJiVR3iVngUJ8SfkplRmJxRnxRaU5qcWHGCU4mJVE
-	eKe/AcrxpiRWVqUW5cOkpDlYlMR51Zao+wkJpCeWpGanphakFsFkZTg4lCR4zd4BNQoWpaan
-	VqRl5pQgpJk4OEGGc0mJFKfmpaQWJZaWZMSDwj++GBgBICkeoL1/3oLsLS5IzAWKQrSeYlSU
-	Eud1BUkIgCQySvPgxsKSxitGcaAvhXmDQLbzABMOXPcroMFMQIMvH5IFGVySiJCSamD0+XtD
-	tHnttvDIqNknVXrnhn5Rv2OuzDhficWch9mU9+jf2wuvv1y10n+zh8QKV68b1VH5Fy46fC6I
-	uWRt4XK8Ncbnc4/zaiYH3tK2HwpKZs3Hbtqr1G1ub0r36Xhu5/g/M+rVlXcvDI48 
+	eH6f3ePzJrkA9ihum6TEkrLgzPQ8fbsE7oy3Z0oLVhlVfNlzmrGBcYVGFyMnh4SAicTeZ2+Y
+	uxi5OIQEtjJKbDrVwQrhHGeSuN53lwmkik1AV2JRTzOYLSLgILF85S92kCJmgSYmie/Lm1hA
+	EsICXhIn3nWAFbEIqEoc+f2BGcTmFYiSOD/xISvEOjmJy9MfsIHYnAIWEl9a3zKC2EIC5hJL
+	Hqxmn8DIs4CRYRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRrpFebmaJXmpK6SZGSIjx7mD8v07m
+	EKMAB6MSD2+BhEK4EGtiWXFl7iFGSQ4mJVHeJWeBQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR4
+	p78ByvGmJFZWpRblw6SkOViUxHnVlqj7CQmkJ5akZqemFqQWwWRlODiUJHjN3gE1ChalpqdW
+	pGXmlCCkmTg4QYZzSYkUp+alpBYllpZkxINiIL4YGAUgKR6gvX/eguwtLkjMBYpCtJ5iVJQS
+	53UFSQiAJDJK8+DGwhLHK0ZxoC+FeYNAtvMAkw5c9yugwUxAgy8fkgUZXJKIkJJqYNRyXh6w
+	J2rjs/6Z9dJ3d4hlF80643xek8c9h3uC03mXhAVTKl/80I3q+vC7uq52Y4Jow78maU4BLtOb
+	D5ccu83Bbdw259LCSM/pix6/uzRpHffUyhvfW5WXX09uKru/3Fjy18+D/duXObt5 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292761>
 
-If a transaction includes a non-NODEREF update to a symbolic reference,
-we don't have to look it up in lock_ref_for_update(). The reference will
-be dereferenced anyway when the split-off update is processed.
+Now lock_ref_sha1_basic() is only called with flags==REF_NODEREF. So we
+don't have to handle other cases anymore.
 
-This change requires that we store a backpointer from the split-off
-update to its parent update, for two reasons:
+This enables several simplifications, the most interesting of which come
+from the fact that ref_lock::orig_ref_name is now always the same as
+ref_lock::ref_name:
 
-* We still want to report the original reference name in error messages.
-  So if an error occurs when checking the split-off update's old_sha1,
-  walk the parent_update pointers back to find the original reference
-  name, and report that one.
-
-* We still need to write the old_sha1 of the symref to its reflog. So
-  after we read the split-off update's reference value, walk the
-  parent_update pointers back and fill in their old_sha1 fields.
-
-Aside from eliminating unnecessary reads, this change fixes a
-subtle (though not very serious) race condition: in the old code, the
-old_sha1 of the symref was resolved before the reference that it pointed
-at was locked. So it was possible that the old_sha1 value logged to the
-symref's reflog could be wrong if another process changed the downstream
-reference before it was locked.
+* Remove ref_lock::orig_ref_name
+* Remove local variable orig_refname from lock_ref_sha1_basic()
+* commit_ref_update() never has to write to the reflog for
+  lock->orig_ref_name
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
-There is one remaining race that I know of: the value of HEAD is read
-at the start of the transaction to determine whether its referent is
-changed in the transaction. If so, the update is also logged in HEAD's
-reflog.
-
-The problem is that HEAD is read without acquiring its lock. So in
-principle HEAD could change during the time that the transaction is
-being processed, leading to inconsistencies in the reflogs.
-
-This problem could be fixed, but it would require HEAD to be locked
-for every reference transaction, probably in some kind of an
-additional fake ref_update. I don't know that it's worth the effort,
-but if it is it can be done within the same framework that I
-implemented here.
-
- refs/files-backend.c | 108 +++++++++++++++++++++++++++++++++++++--------------
- refs/refs-internal.h |  17 ++++++++
- 2 files changed, 95 insertions(+), 30 deletions(-)
+ refs/files-backend.c | 54 ++++++++++++++++++++--------------------------------
+ 1 file changed, 21 insertions(+), 33 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 66ceb83..40ed157 100644
+index 938871b..5dca352 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -3366,8 +3366,15 @@ static int split_symref_update(struct ref_update *update,
- 			update->new_sha1, update->old_sha1,
- 			update->msg);
+@@ -7,7 +7,6 @@
  
--	/* Change the symbolic ref update to log only: */
-+	new_update->parent_update = update;
-+
-+	/*
-+	 * Change the symbolic ref update to log only. Also, it
-+	 * doesn't need to check its old SHA-1 value, as that will be
-+	 * done when new_update is processed.
-+	 */
- 	update->flags |= REF_LOG_ONLY | REF_NODEREF;
-+	update->flags &= ~REF_HAVE_OLD;
- 
- 	item->util = new_update;
- 
-@@ -3375,6 +3382,17 @@ static int split_symref_update(struct ref_update *update,
+ struct ref_lock {
+ 	char *ref_name;
+-	char *orig_ref_name;
+ 	struct lock_file *lk;
+ 	struct object_id old_oid;
+ };
+@@ -1551,7 +1550,6 @@ static void unlock_ref(struct ref_lock *lock)
+ 	if (lock->lk)
+ 		rollback_lock_file(lock->lk);
+ 	free(lock->ref_name);
+-	free(lock->orig_ref_name);
+ 	free(lock);
  }
  
- /*
-+ * Return the refname under which update was originally requested.
-+ */
-+static const char *original_update_refname(struct ref_update *update)
-+{
-+	while (update->parent_update)
-+		update = update->parent_update;
-+
-+	return update->refname;
-+}
-+
-+/*
-  * Prepare for carrying out update:
-  * - Lock the reference referred to by update.
-  * - Read the reference under lock.
-@@ -3428,44 +3446,74 @@ static int lock_ref_for_update(struct ref_update *update,
- 	lock = update->lock;
+@@ -1605,7 +1603,6 @@ static int lock_raw_ref(const char *refname, int deleting, int mustexist,
+ 	*lock_p = lock = xcalloc(1, sizeof(*lock));
  
- 	if (update->type & REF_ISSYMREF) {
--		if (read_ref_full(update->refname,
--				  mustexist ? RESOLVE_REF_READING : 0,
--				  lock->old_oid.hash, NULL)) {
--			if (update->flags & REF_HAVE_OLD) {
--				strbuf_addf(err, "cannot lock ref '%s': can't resolve old value",
--					    update->refname);
-+		if (update->flags & REF_NODEREF) {
-+			/*
-+			 * We won't be reading the referent as part of
-+			 * the transaction, so we have to read it here
-+			 * to record and possibly check old_sha1:
-+			 */
-+			if (read_ref_full(update->refname,
-+					  mustexist ? RESOLVE_REF_READING : 0,
-+					  lock->old_oid.hash, NULL)) {
-+				if (update->flags & REF_HAVE_OLD) {
-+					strbuf_addf(err, "cannot lock ref '%s': "
-+						    "can't resolve old value",
-+						    update->refname);
-+					return TRANSACTION_GENERIC_ERROR;
-+				} else {
-+					hashclr(lock->old_oid.hash);
-+				}
-+			}
-+			if ((update->flags & REF_HAVE_OLD) &&
-+			    hashcmp(lock->old_oid.hash, update->old_sha1)) {
-+				strbuf_addf(err, "cannot lock ref '%s': "
-+					    "is at %s but expected %s",
-+					    update->refname,
-+					    sha1_to_hex(lock->old_oid.hash),
-+					    sha1_to_hex(update->old_sha1));
- 				return TRANSACTION_GENERIC_ERROR;
--			} else {
--				hashclr(lock->old_oid.hash);
- 			}
--		}
--		if ((update->flags & REF_HAVE_OLD) &&
--		    hashcmp(lock->old_oid.hash, update->old_sha1)) {
--			strbuf_addf(err, "cannot lock ref '%s': is at %s but expected %s",
--				    update->refname,
--				    sha1_to_hex(lock->old_oid.hash),
--				    sha1_to_hex(update->old_sha1));
--			return TRANSACTION_GENERIC_ERROR;
--		}
+ 	lock->ref_name = xstrdup(refname);
+-	lock->orig_ref_name = xstrdup(refname);
+ 	strbuf_git_path(&ref_file, "%s", refname);
  
--		if (!(update->flags & REF_NODEREF)) {
-+		} else {
-+			/*
-+			 * Create a new update for the reference this
-+			 * symref is pointing at. Also, we will record
-+			 * and verify old_sha1 for this update as part
-+			 * of processing the split-off update, so we
-+			 * don't have to do it here.
-+			 */
- 			ret = split_symref_update(update, referent.buf, transaction,
- 						  affected_refnames, err);
- 			if (ret)
- 				return ret;
+ retry:
+@@ -1991,14 +1988,13 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 					    struct strbuf *err)
+ {
+ 	struct strbuf ref_file = STRBUF_INIT;
+-	struct strbuf orig_ref_file = STRBUF_INIT;
+-	const char *orig_refname = refname;
+ 	struct ref_lock *lock;
+ 	int last_errno = 0;
+-	int lflags = 0;
++	int lflags = LOCK_NO_DEREF;
+ 	int mustexist = (old_sha1 && !is_null_sha1(old_sha1));
+-	int resolve_flags = 0;
++	int resolve_flags = RESOLVE_REF_NO_RECURSE;
+ 	int attempts_remaining = 3;
++	int resolved;
+ 
+ 	assert(err);
+ 
+@@ -2008,46 +2004,39 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 		resolve_flags |= RESOLVE_REF_READING;
+ 	if (flags & REF_DELETING)
+ 		resolve_flags |= RESOLVE_REF_ALLOW_BAD_NAME;
+-	if (flags & REF_NODEREF) {
+-		resolve_flags |= RESOLVE_REF_NO_RECURSE;
+-		lflags |= LOCK_NO_DEREF;
+-	}
+ 
+-	refname = resolve_ref_unsafe(refname, resolve_flags,
+-				     lock->old_oid.hash, type);
+-	if (!refname && errno == EISDIR) {
++	resolved = !!resolve_ref_unsafe(refname, resolve_flags,
++					lock->old_oid.hash, type);
++	if (!resolved && errno == EISDIR) {
+ 		/*
+ 		 * we are trying to lock foo but we used to
+ 		 * have foo/bar which now does not exist;
+ 		 * it is normal for the empty directory 'foo'
+ 		 * to remain.
+ 		 */
+-		strbuf_git_path(&orig_ref_file, "%s", orig_refname);
+-		if (remove_empty_directories(&orig_ref_file)) {
++		strbuf_git_path(&ref_file, "%s", refname);
++		if (remove_empty_directories(&ref_file)) {
+ 			last_errno = errno;
+-			if (!verify_refname_available_dir(orig_refname, extras, skip,
++			if (!verify_refname_available_dir(refname, extras, skip,
+ 							  get_loose_refs(&ref_cache), err))
+ 				strbuf_addf(err, "there are still refs under '%s'",
+-					    orig_refname);
++					    refname);
+ 			goto error_return;
  		}
--	} else if ((update->flags & REF_HAVE_OLD) &&
--		   hashcmp(lock->old_oid.hash, update->old_sha1)) {
--		if (is_null_sha1(update->old_sha1))
--			strbuf_addf(err, "cannot lock ref '%s': reference already exists",
--				    update->refname);
--		else
--			strbuf_addf(err, "cannot lock ref '%s': is at %s but expected %s",
--				    update->refname,
--				    sha1_to_hex(lock->old_oid.hash),
--				    sha1_to_hex(update->old_sha1));
-+	} else {
-+		struct ref_update *parent_update;
+-		refname = resolve_ref_unsafe(orig_refname, resolve_flags,
+-					     lock->old_oid.hash, type);
++		resolved = !!resolve_ref_unsafe(refname, resolve_flags,
++						lock->old_oid.hash, type);
+ 	}
+-	if (!refname) {
++	if (!resolved) {
+ 		last_errno = errno;
+ 		if (last_errno != ENOTDIR ||
+-		    !verify_refname_available_dir(orig_refname, extras, skip,
++		    !verify_refname_available_dir(refname, extras, skip,
+ 						  get_loose_refs(&ref_cache), err))
+ 			strbuf_addf(err, "unable to resolve reference '%s': %s",
+-				    orig_refname, strerror(last_errno));
++				    refname, strerror(last_errno));
  
--		return TRANSACTION_GENERIC_ERROR;
-+		/*
-+		 * If this update is happening indirectly because of a
-+		 * symref update, record the old SHA-1 in the parent
-+		 * update:
-+		 */
-+		for (parent_update = update->parent_update;
-+		     parent_update;
-+		     parent_update = parent_update->parent_update) {
-+			oidcpy(&parent_update->lock->old_oid, &lock->old_oid);
-+		}
-+
-+		if ((update->flags & REF_HAVE_OLD) &&
-+		    hashcmp(lock->old_oid.hash, update->old_sha1)) {
-+			if (is_null_sha1(update->old_sha1))
-+				strbuf_addf(err, "cannot lock ref '%s': reference already exists",
-+					    original_update_refname(update));
-+			else
-+				strbuf_addf(err, "cannot lock ref '%s': is at %s but expected %s",
-+					    original_update_refname(update),
-+					    sha1_to_hex(lock->old_oid.hash),
-+					    sha1_to_hex(update->old_sha1));
-+
-+			return TRANSACTION_GENERIC_ERROR;
-+		}
+ 		goto error_return;
  	}
  
- 	if ((update->flags & REF_HAVE_NEW) &&
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 9839b07..2355735 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -143,24 +143,41 @@ int should_autocreate_reflog(const char *refname);
-  * not exist before update.
-  */
- struct ref_update {
-+
+-	if (flags & REF_NODEREF)
+-		refname = orig_refname;
+-
  	/*
- 	 * If (flags & REF_HAVE_NEW), set the reference to this value:
- 	 */
- 	unsigned char new_sha1[20];
+ 	 * If the ref did not exist and we are creating it, make sure
+ 	 * there is no existing packed ref whose name begins with our
+@@ -2064,7 +2053,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 	lock->lk = xcalloc(1, sizeof(struct lock_file));
+ 
+ 	lock->ref_name = xstrdup(refname);
+-	lock->orig_ref_name = xstrdup(orig_refname);
++	strbuf_reset(&ref_file);
+ 	strbuf_git_path(&ref_file, "%s", refname);
+ 
+  retry:
+@@ -2108,7 +2097,6 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 
+  out:
+ 	strbuf_release(&ref_file);
+-	strbuf_release(&orig_ref_file);
+ 	errno = last_errno;
+ 	return lock;
+ }
+@@ -2873,9 +2861,7 @@ static int commit_ref_update(struct ref_lock *lock,
+ 			     struct strbuf *err)
+ {
+ 	clear_loose_ref_cache(&ref_cache);
+-	if (log_ref_write(lock->ref_name, lock->old_oid.hash, sha1, logmsg, 0, err) < 0 ||
+-	    (strcmp(lock->ref_name, lock->orig_ref_name) &&
+-	     log_ref_write(lock->orig_ref_name, lock->old_oid.hash, sha1, logmsg, 0, err) < 0)) {
++	if (log_ref_write(lock->ref_name, lock->old_oid.hash, sha1, logmsg, 0, err)) {
+ 		char *old_msg = strbuf_detach(err, NULL);
+ 		strbuf_addf(err, "cannot update the ref '%s': %s",
+ 			    lock->ref_name, old_msg);
+@@ -2883,7 +2869,8 @@ static int commit_ref_update(struct ref_lock *lock,
+ 		unlock_ref(lock);
+ 		return -1;
+ 	}
+-	if (strcmp(lock->orig_ref_name, "HEAD") != 0) {
 +
- 	/*
- 	 * If (flags & REF_HAVE_OLD), check that the reference
- 	 * previously had this value:
- 	 */
- 	unsigned char old_sha1[20];
++	if (strcmp(lock->ref_name, "HEAD") != 0) {
+ 		/*
+ 		 * Special hack: If a branch is updated directly and HEAD
+ 		 * points to it (may happen on the remote side of a push
+@@ -2899,6 +2886,7 @@ static int commit_ref_update(struct ref_lock *lock,
+ 		unsigned char head_sha1[20];
+ 		int head_flag;
+ 		const char *head_ref;
 +
- 	/*
- 	 * One or more of REF_HAVE_NEW, REF_HAVE_OLD, REF_NODEREF,
- 	 * REF_DELETING, REF_ISPRUNING, REF_LOG_ONLY, and
- 	 * REF_UPDATE_VIA_HEAD:
- 	 */
- 	unsigned int flags;
+ 		head_ref = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
+ 					      head_sha1, &head_flag);
+ 		if (head_ref && (head_flag & REF_ISSYMREF) &&
+@@ -2911,6 +2899,7 @@ static int commit_ref_update(struct ref_lock *lock,
+ 			}
+ 		}
+ 	}
 +
- 	struct ref_lock *lock;
- 	unsigned int type;
- 	char *msg;
-+
-+	/*
-+	 * If this ref_update was split off of a symref update via
-+	 * split_symref_update(), then this member points at that
-+	 * update. This is used for two purposes:
-+	 * 1. When reporting errors, we report the refname under which
-+	 *    the update was originally requested.
-+	 * 2. When we read the old value of this reference, we
-+	 *    propagate it back to its parent update for recording in
-+	 *    the latter's reflog.
-+	 */
-+	struct ref_update *parent_update;
-+
- 	const char refname[FLEX_ARRAY];
- };
+ 	if (commit_ref(lock)) {
+ 		strbuf_addf(err, "couldn't set '%s'", lock->ref_name);
+ 		unlock_ref(lock);
+@@ -3016,7 +3005,6 @@ int set_worktree_head_symref(const char *gitdir, const char *target)
+ 	lock = xcalloc(1, sizeof(struct ref_lock));
+ 	lock->lk = &head_lock;
+ 	lock->ref_name = xstrdup(head_rel);
+-	lock->orig_ref_name = xstrdup(head_rel);
+ 
+ 	ret = create_symref_locked(lock, head_rel, target, NULL);
  
 -- 
 2.8.1
