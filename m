@@ -1,113 +1,135 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] http: Support sending custom HTTP headers
-Date: Wed, 27 Apr 2016 08:31:50 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604270830220.2896@virtualbox>
-References: <abe253758829795c285c2036196ebe7edd9bab34.1461589951.git.johannes.schindelin@gmx.de> <xmqq7fflleau.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1604260851390.2896@virtualbox> <20160426173853.GB7609@sigill.intra.peff.net>
+Subject: Re: [PATCH 2/3] mmap(win32): avoid copy-on-write when it is
+ unnecessary
+Date: Wed, 27 Apr 2016 08:43:01 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1604270834440.2896@virtualbox>
+References: <cover.1461335463.git.johannes.schindelin@gmx.de> <3e2a45e60e2905f52f962604cf19a0e5e39b9b1b.1461335463.git.johannes.schindelin@gmx.de> <571FB923.9040808@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 27 08:32:05 2016
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Sven Strickroth <email@cs-ware.de>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Apr 27 08:43:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avJ11-00058l-1Q
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 08:32:03 +0200
+	id 1avJBr-0007hj-GG
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 08:43:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752759AbcD0Gb6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 02:31:58 -0400
-Received: from mout.gmx.net ([212.227.15.15]:58956 "EHLO mout.gmx.net"
+	id S1752701AbcD0GnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 02:43:12 -0400
+Received: from mout.gmx.net ([212.227.17.21]:55326 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751890AbcD0Gb5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 02:31:57 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MS5QA-1b6oWt2pVi-00THBv; Wed, 27 Apr 2016 08:31:49
+	id S1752424AbcD0GnK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 02:43:10 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0LmNHK-1bVByB4Axm-00ZtlS; Wed, 27 Apr 2016 08:43:02
  +0200
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160426173853.GB7609@sigill.intra.peff.net>
+In-Reply-To: <571FB923.9040808@kdbg.org>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:sh2gN0kX+vh/eqgzzfkSoXurGi3WcCo6F/zQ0rDUZHqvabe5HjO
- M59MXLmLZuv+XBcAMFbxmCeE6x0DvhVoBIVe1RNusZOLNmQzqfZ214vf+BPQlA7yKlRIzeH
- Lqy/fDPQ/ZvQ96Q7/vjVz4NSo4Zq8mEF8mN3CeT9eVkpoE9WL+MmbAAXJ/sm/QluAtXT+jq
- cF4u9Wy+Q96ASNrJ5Y5Sg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ItudnpKHrKs=:w4LuelsAvrNN2YSgh8AJdv
- 4urvPWbxBcbMpT0bTOagu5UdqzJMb4y8wbEBRwgXpX5r7pAmU2ogI/XU6b9qlXqsfjrfytJAH
- pU0twTpvfX8ptqumlvvAO3y9Yb2Y+7cCrj33kgaQFfimrW/Y4WuygSiKqEAfZV5DEvgBXM+J8
- Ft7W05hd5s3QpIefMSzVxRDh2mKO6xQhe956O5F4+uDPmy/E6bL84JeqmrCxXKgCmTIfmYv0w
- A5bAtd3TsjImk+BtqZdliQ3CrO4RPM4MjwWAV+4u7BKmDgudgMnG+/8AVBoHZ3tvufwwXYoIC
- R9lZdy/Ez7boPvZjuWI9S24H2CWYR6wMM7MmV8r8F5REWkuwoEZuU7/pxcI64AdFfRgO/GO2w
- fvqZsV7EJa3zFsmz4I0TX1GSTWZr5pE83LO+W9PIxr7RMGmjFskPthCWjWWY4s/6DU+d1Gn+8
- M3S8QrOMf7Ho+ToHEuqaghxttJHufDFMNrnHd7LGg3FWXkDc9h2In6QhIbMxw+T4LyP3D+vdb
- g/nArKUhhgbAxi+sAsjUcrlEVKBIbxgfF2p4zHhvwm1wfFqmEKUwgiZqexGfClkq8dI4g26lB
- uKEDHzKsbe01OWlyym4J0O3u+FLKJ6PHlLiIyfz5z32Psk9vnhupnNS1DUcccRGewCCFBa2+9
- Q5HdcuNYind/AZOo9201tIjLht0/rb+Vki6KIy5j9NJQCMpvHAkvdNgdnGh+60YGqTQqWPPQY
- f1aOXUMzWDXVS8LV9D1SJeEg14Qo2SdET57vMBLo5VOkzOIrRZuOcFfY/wdENGUdF6brNvtC 
+X-Provags-ID: V03:K0:Cc/ZlQj8Y0HmLlGvSZ2cnLwe8o5RkUElSdNxELDcGnhPJba5nHW
+ r7NZdwyy/y9QgbQE5wW1KsM1j3C0C6VbgP6d8FDZSwOH7MW3YZQvKbbmEdXjcjJdRYmJE8P
+ LEPPYBPbz892LwP8CE1sQkhvCt6l+F+GgGLj20w1BFqAjOqLzxuNIgNRCk4Ik1inJwSq+tL
+ AkC7rslrAZwQ8Ytv+EH/g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:g8K/ZoBkHSI=:nuLBHhTbnGlInx/nJSQ9IH
+ eIMOlX9Ndkg6m8Tuwgl75fRqDQNyZB5Sue/XXuLI/SztDPWepoELYG8kXhjXuYB+ri6k8Txc3
+ 6gI0FvWX5n23K8Ftn1gGk+J036JG0ksiz085v5THV/PpyzdjyxBc3RbW7KjrOH6lR5u4h+BZJ
+ OfgHC1GhDWHuW+ch2TXgzcNtAqfl3bN/sBzUYwTFjCEdn45oKZ8wZZ44nRSTpjOAE/Tqcnl2P
+ KbNPZJOtZWi6/3TIPO3RYBnBHVQZ6siyTWtUkYxk5D1PxFq0ov5B3POTS6GJ76vlw+vO4oIbZ
+ Eo27cGb5rK7oktzfhvM/9M3RmLXQY9mGWgHluG4UGxaeZdlimoNLf3aN1NrgCLuASdlPX8mOy
+ MeKDv/RjdNioTU2yoTM0z4Ismp4d2MBsU6EVfNV3g8n+DnpBGY008ngnUsuXUf/igqJlVULtG
+ 5DTMBEPU6CBLO2AOnaOS3XXYyCflYM++gpCukLXjGNn4cQCygdWo/a9mOQ/iwlZ+0QV49FZsu
+ Pohs/7VERfxPaRJ1pbUagxSjVhZfbzzt6RlWYymqqkSAXQok2PjvTuDrW/PTfUqMqWX91AfNn
+ 2KcTJwkf8/j/OdqSlQKB/ONNUX7N3YpB42GrfyHrDKKAMDrgrQ8i1WDuIEFhG6FoxwSNVK2Pn
+ DnYDYl2EG8hgB830j4r2shnyOb8T4Vup6213a/7oSDppcqKOHwTPsb61lmH4tRHWEkxnBy1D5
+ /5Dhe2Bh4oZuBGeGo3kR1l5zL5nZJqvZ0RKgXfbk6yAKCkZZ9GXJeDdy358nYa+68YybxNrZ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292709>
 
-Hi Peff,
+Hi Hannes,
 
-On Tue, 26 Apr 2016, Jeff King wrote:
+On Tue, 26 Apr 2016, Johannes Sixt wrote:
 
-> On Tue, Apr 26, 2016 at 05:33:33PM +0200, Johannes Schindelin wrote:
+> Am 22.04.2016 um 16:31 schrieb Johannes Schindelin:
+> > Often we are mmap()ing read-only. In those cases, it is wasteful to map in
+> > copy-on-write mode. Even worse: it can cause errors where we run out of
+> > space in the page file.
+> >
+> > So let's be extra careful to map files in read-only mode whenever
+> > possible.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >   compat/win32mmap.c | 5 +++--
+> >   1 file changed, 3 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/compat/win32mmap.c b/compat/win32mmap.c
+> > index 3a39f0f..b836169 100644
+> > --- a/compat/win32mmap.c
+> > +++ b/compat/win32mmap.c
+> > @@ -22,14 +22,15 @@ void *git_mmap(void *start, size_t length, int prot, int
+> > flags, int fd, off_t of
+> >     die("Invalid usage of mmap when built with USE_WIN32_MMAP");
+> >
+> >   	hmap = CreateFileMapping((HANDLE)_get_osfhandle(fd), NULL,
+> > -		PAGE_WRITECOPY, 0, 0, NULL);
+> > +		prot == PROT_READ ? PAGE_READONLY : PAGE_WRITECOPY, 0, 0,
+> > NULL);
 > 
-> > Testing the headers? I dunno, do we have tests for that already? I thought
-> > we did not: it requires an HTTP server (so that the headers are actually
-> > sent) that we can force to check the header...
-> > 
-> > So I see we have some tests that use Apache, and one that uses our own
-> > http-backend. But is there already anything that logs HTTP requests? I did
-> > not think so, please correct me if I am wrong.
+> As long as we use this implementation with MAP_PRIVATE, PAGE_WRITECOPY
+> is the right setting. Should we insert a check for MAP_PRIVATE to catch
+> unexpected use-cases (think of the index-helper daemon effort)?
+
+I agree, we should have such a check. The line above the `die("Invalid
+usage ...")` that you can read as first line in above-quoted hunk reads:
+
+	if (!(flags & MAP_PRIVATE))
+
+So I think we're fine :-)
+
+And yes, I am worrying about the index-helper support, too: I need this
+myself, so I will have to make mmap() work for that use case, too. But
+that is a story for another day ;-)
+
+> >    if (!hmap) {
+> >     errno = EINVAL;
+> >     return MAP_FAILED;
+> >    }
+> >
+> > -	temp = MapViewOfFileEx(hmap, FILE_MAP_COPY, h, l, length, start);
+> > +	temp = MapViewOfFileEx(hmap, prot == PROT_READ ?
+> > +			FILE_MAP_READ : FILE_MAP_COPY, h, l, length, start);
 > 
-> You can ask apache to check for specific headers. Like this:
+> Same here: FILE_MAP_COPY is the right choice for MAP_SHARED mmaps.
+
+I agree ;-)
+
+> >    if (!CloseHandle(hmap))
+> >     warning("unable to close file mapping handle");
+> >
 > 
-> diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-> index 9317ba0..de5a8fe 100644
-> --- a/t/lib-httpd/apache.conf
-> +++ b/t/lib-httpd/apache.conf
-> @@ -102,6 +102,12 @@ Alias /auth/dumb/ www/auth/dumb/
->  	SetEnv GIT_HTTP_EXPORT_ALL
->  	Header set Set-Cookie name=value
->  </LocationMatch>
-> +<LocationMatch /smart_headers/>
-> +	Require expr %{HTTP:x-magic-one} == 'abra'
-> +	Require expr %{HTTP:x-magic-two} == 'cadabra'
-> +	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
-> +	SetEnv GIT_HTTP_EXPORT_ALL
-> +</LocationMatch>
->  ScriptAliasMatch /smart_*[^/]*/(.*) ${GIT_EXEC_PATH}/git-http-backend/$1
->  ScriptAlias /broken_smart/ broken-smart-http.sh/
->  ScriptAlias /error/ error.sh/
-> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-> index 58207d8..e44fe72 100755
-> --- a/t/t5551-http-fetch-smart.sh
-> +++ b/t/t5551-http-fetch-smart.sh
-> @@ -282,5 +282,12 @@ test_expect_success EXPENSIVE 'http can handle enormous ref negotiation' '
->  	test_line_count = 100000 tags
->  '
->  
-> +test_expect_success 'custom http headers' '
-> +	test_must_fail git fetch "$HTTPD_URL/smart_headers/repo.git" &&
-> +	git -c http.extraheader="x-magic-one: abra" \
-> +	    -c http.extraheader="x-magic-two: cadabra" \
-> +	    fetch "$HTTPD_URL/smart_headers/repo.git"
-> +'
-> +
->  stop_httpd
->  test_done
+> Except for these mental notes, I've no comments on this series. Looks good.
 
-That's pretty easy.
+Thanks for reviewing!
 
-After sleeping over the issue, I realized, though, that the test can use
-the very same method *I* used to verify that the headers are sent: using
-GIT_CURL_VERBOSE.
+Do you think we should add a note to the commit message that we'll have to
+do something about this when MAP_PRIVATE is not the only way mmap() will
+be used?
 
-I hope you do not mind that I used this method instead.
+I am torn: on the one hand, it is the appropriate thing to do, on the
+other hand, it is easy to forget such notes in commit messages. On the
+third hand, I hope to find time to work on the index-helper this week,
+meaning that I will still know about this when touching
+compat/win32mmap.c.
 
-Thanks,
+So maybe I can just leave things as are here, and focus on the
+index-helper?
+
+Ciao,
 Dscho
