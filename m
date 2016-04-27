@@ -1,85 +1,108 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] merge: warn --no-commit merge when no new commit is
- created
-Date: Wed, 27 Apr 2016 08:50:01 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604270846430.2896@virtualbox>
-References: <874mb0kkkk.fsf@gmail.com> <alpine.DEB.2.20.1604180825170.2967@virtualbox> <CAH5451kW3t1Y7oW=uHv85jzHwsnQcDK2jdLisauNF-x1LRwqLA@mail.gmail.com> <87a8krpehl.fsf@gmail.com> <CAH5451mDYhavx_OLfXe6cC2WguCsFWEBBBBOCPyX3E6ZJw27+w@mail.gmail.com>
- <xmqqy48a6fht.fsf@gitster.mtv.corp.google.com> <xmqqtwiy6end.fsf@gitster.mtv.corp.google.com> <xmqqd1pcdpb8.fsf_-_@gitster.mtv.corp.google.com>
+From: Ye Xiaolong <xiaolong.ye@intel.com>
+Subject: Re: [PATCH v6 0/4] Add --base option to git-format-patch to record
+ base tree info
+Date: Wed, 27 Apr 2016 15:33:50 +0800
+Message-ID: <20160427073350.GA30342@yexl-desktop>
+References: <1461657084-9223-1-git-send-email-xiaolong.ye@intel.com>
+ <CAGZ79kajpAtbHaKLaLHN5+qUOvBofFs-q-vUYWua49GWK7FO9Q@mail.gmail.com>
+ <xmqqlh40gs9o.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kZg3OpR8k45=q1m-g=t+aGGs8VDYBrBYaBU_DbfuuoBig@mail.gmail.com>
+ <xmqqd1pcgr3s.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kZNV+g3_Rmpynh-WQVc3dW6nuNDsTM=gTxNuJnr3V3Azg@mail.gmail.com>
+ <xmqq4maogpsw.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Andrew Ardill <andrew.ardill@gmail.com>,
-	Christoph Paulik <cpaulik@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Fengguang Wu <fengguang.wu@intel.com>, ying.huang@intel.com,
+	philip.li@intel.com, julie.du@intel.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 08:50:27 2016
+X-From: git-owner@vger.kernel.org Wed Apr 27 09:35:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avJIo-0000nc-0t
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 08:50:26 +0200
+	id 1avK0I-0002sy-TY
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 09:35:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753069AbcD0GuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 02:50:20 -0400
-Received: from mout.gmx.net ([212.227.15.15]:63382 "EHLO mout.gmx.net"
+	id S1752365AbcD0HfR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 03:35:17 -0400
+Received: from mga01.intel.com ([192.55.52.88]:42976 "EHLO mga01.intel.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753018AbcD0GuR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 02:50:17 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MMkDH-1b3rjq1xoV-008XYo; Wed, 27 Apr 2016 08:50:01
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqd1pcdpb8.fsf_-_@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:rwPrJwVnpatjVaH3V65wrO2QPjS9HkgdwBH5HHSQfuBW8NovgQ7
- I1XhrohuKhY+r0uuQ/fg1+pxpn0JrT37AcWf9uT0tAlk0EVqOnjMNHjhozl/rtlWNxYBssC
- BLeQDVtuUKMXNEZpjjjsgrg5ouf0K3Vm4iIJUJVp6DPF2OS+t0YKube8vL8XUrssfN7ma9f
- bNtH8XwSoPzz4DCY3L14A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vMua4i22qak=:eEFRJo9dfs0Qttf0Hsw5Uz
- 92IUCd3M8ruD1DZp+SAOAmXbLJn+1B6VMFo/sUZbJlxTgBb15fy02sx0cWPVJCDu5RCqJo8sY
- MUfBjrA21sB/Q26i0KYWvdl3RlCD0UScKUDcFbAeKBJKxJQ0NxoXNLK42TQS1MVxRP/EmHk2f
- hFDyYrZe3AiZJIPzZpshzboLnXRSMfHeEzYr+38K1uB7znp7+K8vF4hAuj88f97faq3rt3bx7
- NoG8k/KoIvnBGUROQwi7s56g3EM2hNzSUTHJnL9O11zhZlruB6S6jPgEA9X2m+OQ//Pqy4cfM
- zw0cz4DYHzQ5KfDW598y5f4X8o+RtkFOPr3MeN5czEBxWkFNR8l4QSZzc5vXID2Zkc56WHnQL
- mzT8VDNuIB2QVtsFlEHGgpVzXm921qwy4Zwp5mUhgp2vEPBASaqN9JSN0NgEz48MZzSxgPhZa
- 2Fsy2li9gPKxkPzefAvGeuo7pkpjlEDi7bK3CeCTfWTNpRupV3GB9UG7xia8o7tuuHUh0holL
- AN8PTj4iSup/YIvkmMCniol4mr85iA7CBvQsDZxteDLAZAZFMqNExMHQx9jXDpYjlH7BZ8NBg
- n+2ab21Hbk3pgy7JnOteN3LxJ+oNCm7W/3Q/Vfrqaj+mbuPLQZD1YKM0lCvSNYg167Xu+DqHI
- siXXUBkpbKVC82aw6WZLov9uouZ4dRCQD/cqz0D7pti3PelnXr/FwefRj1Cyzt+LD+XGNFW4P
- y/1VLPM09LtJDqDL9LQyUDxhZz6/rAeRG6KeFkWIycaOEtDR3NRj/VQtN8v/W6PSp6BH4JXy 
+	id S1752348AbcD0HfQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 03:35:16 -0400
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by fmsmga101.fm.intel.com with ESMTP; 27 Apr 2016 00:35:00 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.24,540,1455004800"; 
+   d="scan'208";a="793282281"
+Received: from yexl-desktop.sh.intel.com (HELO localhost) ([10.239.159.139])
+  by orsmga003.jf.intel.com with ESMTP; 27 Apr 2016 00:34:57 -0700
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Fengguang Wu <fengguang.wu@intel.com>, ying.huang@intel.com,
+	philip.li@intel.com, julie.du@intel.com
+Content-Disposition: inline
+In-Reply-To: <xmqq4maogpsw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292712>
 
-Hi Junio,
+On Tue, Apr 26, 2016 at 11:58:39AM -0700, Junio C Hamano wrote:
+>Stefan Beller <sbeller@google.com> writes:
+>
+>>> So from where are you proposing Git to grab that information if you
+>>> do not tell it?  "If the HEAD is detached, assume that the base is
+>>> where it was detached from" or something?
+>>
+>> That would also work for me. In my first mail I was proposing to take
+>> the information from the format-patch argument, such that a one off fix
+>> would be:
+>>
+>>     (1) git checkout origin/master
+>>     (2) EDIT
+>>     (3) git commit -a -m "fix"
+>>     (4) git format-patch origin/master..  # <- This is the information.
+>>
+>> However you read it as taking the information from the first line,
+>> which is also fine with me, as then the (4) can become
+>>
+>>     (4a) git format-patch HEAD^
 
-On Tue, 26 Apr 2016, Junio C Hamano wrote:
+Thanks for the suggestion, I think this feature would definitely save
+effort for end users and help to improve the usage rate of this "--base"
+option.
 
-> @@ -1157,6 +1157,15 @@ static struct commit_list *collect_parents(struct commit *head_commit,
->  	return remoteheads;
->  }
->  
-> +static void no_commit_impossible(const char *message)
-> +{
-> +	if (!option_commit) {
-> +		warning("%s\n%s", _(message),
-> +			_("--no-commit is impossible"));
-> +		warning(_("In future versions of Git, this will become an error."));
-> +	}
-> +}
+If I understand it correctly, we should try to parse the "revision range"
+specified in the fomat-patch cmdline if format.useAutoBase is set and we
+couldn't find the remote-tracking branch, if its pattern matches something
+like "<branchname>..<rev2>", we will try to get base commit from it:
 
-I think this would be a step forward in usability, and I agree that this
-is a great opportunity for the users who wish for this feature to get
-involved and drive this forward, based on your excellent initial version.
+  - If it is a remote branch, just set its head as base
+  - If it isn't, try to set branchname@{u} as base
 
-I am not sure about this double negation "no_commit_impossible" (I only
-understood what you meant because I had read the commit message first,
-something I won't do when stumbling over this code later).
+Please correct me if I'm wrong.
 
-Maybe something like `disallow_no_commit`?
+>
+>Either would work, but reading from (4) feels a lot less black magic
+>to me.
+>
+>>> If you are doing "format-patch master..my-branch", what do you
+>>> propose to set your base to?  master@{u}, perhaps?
+>>
+>> Yes. (I usually use that command with |s|master|origin/master|, so the
+>> argument is the upstream already. A local master branch does not exist for me.)
+>
+>Let's hear from folks at Intel ;-) Both of the above sounds like
+>sensible enhancements to me.
 
-Ciao,
-Dscho
+Shall I squash these enhancements in this series, or I need to make
+another patch for them?
+
+Thanks,
+Xiaolong
