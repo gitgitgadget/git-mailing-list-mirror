@@ -1,183 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] pack-objects: warn on split packs disabling bitmaps
-Date: Wed, 27 Apr 2016 15:56:46 -0700
-Message-ID: <xmqqfuu67j9t.fsf@gitster.mtv.corp.google.com>
-References: <20160427215324.GA22165@dcvr.yhbt.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 05/15] submodule-config: check if submodule a submodule is
+ in a group
+Date: Wed, 27 Apr 2016 16:00:12 -0700
+Message-ID: <CAGZ79kZRf=fTbPh5_Qx8dHfiD9gxeDhQqvqDnyZRrMfv_adHXQ@mail.gmail.com>
+References: <1461703833-10350-1-git-send-email-sbeller@google.com>
+	<1461703833-10350-6-git-send-email-sbeller@google.com>
+	<xmqq37q8c6zz.fsf@gitster.mtv.corp.google.com>
+	<xmqqvb34arjj.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Apr 28 00:56:56 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 28 01:00:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avYO6-0002z1-1O
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 00:56:54 +0200
+	id 1avYRR-000406-Ri
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 01:00:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752321AbcD0W4u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 18:56:50 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61099 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751679AbcD0W4t (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 18:56:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 450ED16900;
-	Wed, 27 Apr 2016 18:56:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=L8zCaA1eu0vDkLwdoykPMMSvu2c=; b=r6S3qi
-	VfrxR3g/udeTRQx58TBVDwa9SbzqBWlnUukSql8XAXy9W8Ap41NCinDnCom8w1ML
-	jzQo16rfE4seUTbcmy9yt7Aqm2jGrv5i1WjJC35xUJDwARDabT6clYhUfxWUzb0/
-	cQ4KI0GZIm1kTnMw8EEfcgcd9/AJweUjjyg7Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=j67+dfWGxF5IHBVKLt+ntfb/6UUT7OBt
-	F1vr8PZWN27cBO/Y5zxsyiS9lUQf7032rw17RV+Y9SfFVPObLnFeeV/F2QqhRwcL
-	Sup24zYmF/9121E7F5OM5uKxmgJlwAknk/asAwD/zp18OapVyCtOClwqXTHayL6J
-	npKg9EZQrlQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D3E0168FF;
-	Wed, 27 Apr 2016 18:56:48 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A182C168FE;
-	Wed, 27 Apr 2016 18:56:47 -0400 (EDT)
-In-Reply-To: <20160427215324.GA22165@dcvr.yhbt.net> (Eric Wong's message of
-	"Wed, 27 Apr 2016 21:53:24 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 521A54C0-0CCB-11E6-AB6D-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1752194AbcD0XAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 19:00:15 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:35630 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751679AbcD0XAO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 19:00:14 -0400
+Received: by mail-ig0-f171.google.com with SMTP id bi2so142952937igb.0
+        for <git@vger.kernel.org>; Wed, 27 Apr 2016 16:00:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=wjDABtLjWStPcWaF9AB5/kt6cmBKpTd1Ezpvj4QQKSc=;
+        b=m7GiUi+4pZuU7jzfTZolwcLRN+880+kC/9/xljpx+IK1ATvSUWrEjNXbdCqu1Rv30J
+         occoCh9SIt1MMg60/tDy7yrKGQsSBf00VPp5Kt+Fk5QIXJ/IOYTUaSyPdYIVwZZ4DwMB
+         Uk6XUYkuqlhLRIioYY0R4NijUU/dIdGvfJTRY8n87TvibPp9zaQGz8hICe/cIzeR2oi3
+         vkADzWZoIY7Z4PVCk7SBDUMI0CN1lpW3P8yGQxrbennLSFfB91LJkBtU7loHb8oGAVCi
+         LLLQ9kee+qInhtBNH+ZHwUl5vJ/UKY+/vEo0lpkKbwv+s4Yn6UF19kP/PwEdlaw2A+Ja
+         dmnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=wjDABtLjWStPcWaF9AB5/kt6cmBKpTd1Ezpvj4QQKSc=;
+        b=FsKrqiggRk8R6BSWB9/nDzeVWasXXpndlp7jZpedTxEaxh53tCYae2439s+bDzsnSb
+         RAvugNpaLixt1Ph6JQNaQZC8+dW79UuAski6xdHzl/AwxjcFq6BNSS3UGUNL1t+qUhUm
+         luj5XVaEEDyof1e3LDF8cFkfn59xqgojC6N9ZcOM+24k0POBmIpLKjh3hOdLKHQFP8xA
+         GmlsoyiACweLqWRWfNe/oWp/7x55uth3CxRbe979IpvksfKQP1aUkE/2tbnLs0l5euuz
+         RquD7qQVi8YESuICRGRwur1MyKwDOPBs3mxKpmMt/StASAoizD5NRJn0YC1JHUuWgiwN
+         tOoQ==
+X-Gm-Message-State: AOPr4FVqymAEqBqf3QEpEEGZq1J7xyEWFJPZ3nhqR+JD3ywMHh2aRisf4zW+pDi5eiG8/uWVTG/1WBBhqSL8wXKy
+X-Received: by 10.50.111.15 with SMTP id ie15mr14409514igb.94.1461798013006;
+ Wed, 27 Apr 2016 16:00:13 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Wed, 27 Apr 2016 16:00:12 -0700 (PDT)
+In-Reply-To: <xmqqvb34arjj.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292839>
 
-Eric Wong <normalperson@yhbt.net> writes:
-
-> It can be tempting for a server admin to want a stable set of
-> long-lived packs for dumb clients; but also want to enable
-> bitmaps to serve smart clients more quickly.
+On Tue, Apr 26, 2016 at 4:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Unfortunately, such a configuration is impossible;
-> so at least warn users of this incompatibility since
-> commit 21134714787a02a37da15424d72c0119b2b8ed71
-> ("pack-objects: turn off bitmaps when we split packs").
+>> I see room for bikeshedding here, but the material to bikeshed
+>> around is not even documented yet ;-)
+>>
+>>  * a token prefixed with '*' is a label.
+>>  * a token prefixed with './' is a path.
+>>  * a token prefixed with ':' is a name.
+>>
+>> Hopefully I will see some description like that in later patches.
+>> I'll read on.
 >
-> Tested the warning by inspecting the output of:
+> Extending this on a bit, I would suggest tweaking the above slightly
+> and make the rule more like this:
 >
-> 	make -C t t5310-pack-bitmaps.sh GIT_TEST_OPTS=-v
+>   * a token prefixed with '*' is a label.
+>
+>   * a token prefixed with ':' is a name.
+>
+>   * everything else is a path, but "./" at the front is skipped,
+>     which can be used to disambiguate an unfortunate path that
+>     begins with ':' or '*'.
+>
+> A bigger thing I am wondering is if it is bettter to do _without_
+> adding a new --group=X option everywhere.  I am assuming that most
+> if not all submodule subcommands already use "module_list" aka
+> "submodule--helper list" that takes paths, and to them, extending
+> that interface to also understand the groups and names would be a
+> more natural way to extend the UI, no?  e.g.
+>
+>         $ git submodule update -- 'path1' 'path2'
+>         $ git submodule update -- '*default'
+>         $ git submodule update -- ':named'
+>
+> instead of
+>
+>         $ git submodule update -- 'path1 'path2'
+>         $ git submodule update --group='*default' --
+>         $ git submodule update --group=':named' --
+>
+> which special-cases the way to specify a set of submodules by
+> listing their paths.
 
-While I do not think the update in this patch is wrong, this makes
-me wonder what happens to a server admin who wants a stable set of
-long-lived objects in a pack, and other objects in another pack that
-is frequently recreated, by first packing objects needed for the
-latest released version into a single pack and marking it with .keep
-and then running "git repack" to create the second pack for the
-remainder.
+This is indeed a better way.
 
-There is no automatic split involved, so we would get a bitmap file
-for each of these two packs.  Would that pose a problem?  The pack
-with the newer part of the history would not satisfy "all of the
-reachable objects are in the same pack" condition.
+Currently there is no way to initialize another group as that group
+specified by submodule.defaultGroup. But having the possibility
+to use the grouping in such a way is more flexible.
 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 42d2b50..ec31170 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -2156,8 +2156,10 @@ pack.packSizeLimit::
->  	The maximum size of a pack.  This setting only affects
->  	packing to a file when repacking, i.e. the git:// protocol
->  	is unaffected.  It can be overridden by the `--max-pack-size`
-> -	option of linkgit:git-repack[1]. The minimum size allowed is
-> -	limited to 1 MiB. The default is unlimited.
-> +	option of linkgit:git-repack[1].  Reaching this limit prevents
-> +	pack bitmaps from being written when `repack.writeBitmaps`
-> +	is configured.  The minimum size allowed is limited to 1 MiB.
-> +	The default is unlimited.
-
-This is not wrong per-se, but I find the additional text overly
-verbose.  The resulting text has at least three issues:
-
- - This sets maximum.  It does not say what happens when the maximum
-   is reached ("packing fails" is a valid expectation).  We should
-   spell out that when the maximum is reached, we will create
-   multiple packfiles.
-
- - It is not "reaching this limit" that prevents bitmaps from being
-   written.  It is "we will create multiple packfiles" that does.
-
- - Even when repack.writeBitmaps is not configured, but bitmap is
-   requested via the command line option "repack -b", bitmap
-   generation is disabled once we end up creating multiple
-   packfiles.
-
-> @@ -2557,8 +2559,9 @@ repack.writeBitmaps::
->  	objects to disk (e.g., when `git repack -a` is run).  This
->  	index can speed up the "counting objects" phase of subsequent
->  	packs created for clones and fetches, at the cost of some disk
-> -	space and extra time spent on the initial repack.  Defaults to
-> -	false.
-> +	space and extra time spent on the initial repack.  This has
-> +	no effect if `pack.packSizeLimit` is configured and reached.
-> +	Defaults to false.
-
-This has the opposite issue as the third point above.  We have to
-ignore repack.writeBitmaps when we end up splitting a pack,
-regardless of the reason why we split was pack.packSizeLimit or by
-an explicit request from the command line.
-
-Also to future-proof these two paragraphs (and those that are
-touched by later parts of this patch), it may even be a good idea to
-omit the mention of packsizelimit altogether.  We may invent a new
-and different reason why we end up producing multiple packfiles,
-other than packsizelimit.  What this patch wants to make readers
-aware is that when multiple packs are generated, bitmap generation
-is disabled.  Other details (e.g. how the user asks us to create
-multiple packs, either via command line or configuration, or how the
-use asks us to generate bitmaps) are of lessor importance.
-
-> diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-> index bbea529..19cdcd0 100644
-> --- a/Documentation/git-pack-objects.txt
-> +++ b/Documentation/git-pack-objects.txt
-> @@ -110,7 +110,8 @@ base-name::
->  --max-pack-size=<n>::
->  	Maximum size of each output pack file. The size can be suffixed with
->  	"k", "m", or "g". The minimum size allowed is limited to 1 MiB.
-> -	If specified,  multiple packfiles may be created.
-> +	If specified, multiple packfiles may be created, which also
-> +	prevents the creation of a bitmap index.
-
-This is a good update, judging with the yardstick I set in the
-previous paragraph in this review.
-
->  	The default is unlimited, unless the config variable
->  	`pack.packSizeLimit` is set.
->  
-> diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-> index af230d0..2065812 100644
-> --- a/Documentation/git-repack.txt
-> +++ b/Documentation/git-repack.txt
-> @@ -106,7 +106,8 @@ other objects in that pack they already have locally.
->  --max-pack-size=<n>::
->  	Maximum size of each output pack file. The size can be suffixed with
->  	"k", "m", or "g". The minimum size allowed is limited to 1 MiB.
-> -	If specified,  multiple packfiles may be created.
-> +	If specified, multiple packfiles may be created, causing
-> +	`--write-bitmap-index` and `repack.writeBitmaps` to be ignored.
-
-And this is not.  Just say "bitmap index is not created".
-
-> @@ -115,7 +116,9 @@ other objects in that pack they already have locally.
->  	Write a reachability bitmap index as part of the repack. This
->  	only makes sense when used with `-a` or `-A`, as the bitmaps
->  	must be able to refer to all reachable objects. This option
-> -	overrides the setting of `pack.writeBitmaps`.
-> +	overrides the setting of `repack.writeBitmaps`.  This option
-> +	has no effect if a multiple packfiles are created due to
-> +	reaching `pack.packSizeLimit` or `--max-pack-size`.
-
-Dropping "due to ..." makes it perfect.
+Thanks,
+Stefan
