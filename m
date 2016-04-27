@@ -1,73 +1,123 @@
-From: Jacob Smith <jaroslov@gmail.com>
-Subject: Re: BUG on OSX `git p4 submit` can fail when the workspace root
- doesn't exist locally.
-Date: Wed, 27 Apr 2016 13:06:53 -0500
-Message-ID: <CAMsgv2W7mtJpFf6A4MZs-Sbvdof8EdOOP+uiGYudH8LUjNRo8g@mail.gmail.com>
-References: <CAMsgv2UXPkxpocjKhoR7HbmubSBnhJPJ3hMq9Jsk2AD0DoCifA@mail.gmail.com>
-	<CAGZ79kZ6rx4UpPmeGjC8TyHKbVd+Y6i1JyEdDzKuF_9rj4c_7g@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 53/83] builtin/apply: make find_header() return -1 instead
+ of die()ing
+Date: Wed, 27 Apr 2016 14:08:48 -0400
+Message-ID: <CAPig+cRw7_6hbLZ7HfvCHwy7UcujnfOTToMSXaRbx30WTXvaQA@mail.gmail.com>
+References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
+	<1461504863-15946-54-git-send-email-chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 20:06:59 2016
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 27 20:09:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avTrX-00017l-9p
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 20:06:59 +0200
+	id 1avTtV-0001nT-6x
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 20:09:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753065AbcD0SGz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 14:06:55 -0400
-Received: from mail-lf0-f47.google.com ([209.85.215.47]:34436 "EHLO
-	mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752797AbcD0SGz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 14:06:55 -0400
-Received: by mail-lf0-f47.google.com with SMTP id j11so66483603lfb.1
-        for <git@vger.kernel.org>; Wed, 27 Apr 2016 11:06:54 -0700 (PDT)
+	id S1753863AbcD0SIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 14:08:51 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:33790 "EHLO
+	mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753839AbcD0SIt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 14:08:49 -0400
+Received: by mail-io0-f194.google.com with SMTP id x35so7716350ioi.0
+        for <git@vger.kernel.org>; Wed, 27 Apr 2016 11:08:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=ld1jbiO6J6hFc6P3cWu/6uPNS/q3ygsVqDlgKBZjXW0=;
-        b=cMoD1CTPA8vp/Kh1Y1UCd8++nPHAfv+M5sVVC/k6NJfZpvxFERXHd1A6Q0Tx+Qulct
-         7U33I86kyTq9TkuyMdZyLDzqmCF6QqaoYjM9W3FTrf14Ntv2Lpdhz2J/EghOmn7Mj9BB
-         8sir8ApNYkuBCFGdrhpt8/vQhE7Sp6PNKCU5ZkAO5821MDauBDKS2z+RtYfdwvsHDImB
-         +xl2vvGwUgYYcid+a25Id4mxrRAkR8fF1PXt5JNK8kbDexnK4qabSw/rUkZWfb5FJ0wh
-         htWFYHfG6Lr1HilwdIqdfiNVPxLCxEvsuqg6EkV6ZE/rMsXqZ8a/y9Y3EzlBc5/Mro8+
-         +ITg==
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=f8Pkx5GNhAviVSMX0Nq6oyR060J/aj/4nOsXzpQ5Wm8=;
+        b=EAhdB45pi0iX+n7IG5aB8Not/90ajZ/y0zB0DlCvsBMcNl0TSyyetL8gBI4uTFdX8t
+         wKn8H0T1uRRkrbeSZ0xH30tOWcAptT6WObMz73csHcm3wBNuPLVKBWEXUaw1fALODx+t
+         yuF3Yy5DEj1bul6qTvo3LTMPD3ci0Z9TGsO4X4/GDA9r3/cJPxCX5yZ59LnaHOU8PLUF
+         fn8/AbpfC8L84JBZTnOTBXCiUzJXLk2tVoDOCenbInQ9lu4igNiuvTW9ZQC+7QoyP1HO
+         +dBuNdMezhtONsBytA+YSI9TxunbzWb683UuiHtkvVUe41CelCTnrL92GfsE2l7OvUaU
+         AQ0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=ld1jbiO6J6hFc6P3cWu/6uPNS/q3ygsVqDlgKBZjXW0=;
-        b=hjvRLhz0YP1T8N5DLG4Brrk5O5dATiqLScITeX9VCqbwUK0dYpuNZR5bSucRuexK0S
-         7Bg6aB8kUIzxzCX4y3t4FkVzta6OIS0PXp6cDRwHGxT8xGBz4RhHpcMY4If8XOGsLs3k
-         mib7JkWk15SPnkxddUBESd1DAvPrWbwSItAMn+OYXliE8azktbNYxQy94K8Ell1jg0EU
-         eC0etyoRX+irqwjjuexWc8riEoQssJYS39KyX1VBtRLUMVQBWbBukmRbBHHnlVNEBqf9
-         RskpZmuaFgTEwI3elPSEFpV5/PEAKGqnoDcjdlOtrlGxeFJGJ4iqF6YfjnPZLLzwywRA
-         +8PA==
-X-Gm-Message-State: AOPr4FXSnSdKdsgGk0GA8Uut6Jg9osetW6z5DP59HGf9Dl5f6F45krdbDv5TMIDFsgSfHK8c9BGpjc/pKldUSw==
-X-Received: by 10.112.63.196 with SMTP id i4mr4208262lbs.93.1461780413205;
- Wed, 27 Apr 2016 11:06:53 -0700 (PDT)
-Received: by 10.25.21.37 with HTTP; Wed, 27 Apr 2016 11:06:53 -0700 (PDT)
-In-Reply-To: <CAGZ79kZ6rx4UpPmeGjC8TyHKbVd+Y6i1JyEdDzKuF_9rj4c_7g@mail.gmail.com>
+        bh=f8Pkx5GNhAviVSMX0Nq6oyR060J/aj/4nOsXzpQ5Wm8=;
+        b=TDK/nNCllG1pJeME/w5QGpUk4O7Imn6HF4VrwohkQZSNq6xbX7FG847BsVbs9D1Yfj
+         z12fxvfxqhHBJqYxEZlv8N2CEPNe/ZKTCV4YNBd0jvs9IHo6U+EN31O5l9UpcijaaPzA
+         HLfNRM+7NtYrNgRpMhNtX2uDVArucaLtGNFAqxnkkiVfKa3VN4XfdOS4sZh5A6Woxxe4
+         nkP4+Q1nW7z9ZXqefhzPPjq6iykum5C+t+TFkXETduVTXFbcynM2o1Nn6P+CUTZAdm/0
+         S+ExeEUTa5MqT4tyIChYiyhWOuNaWzkyPVGCIV1bChhWYXVPs7AOcGArdFG+WNdXiYvS
+         HfyA==
+X-Gm-Message-State: AOPr4FX1AFk7ShYU8v0iIM7FHVF7JpEhXTJ3Tx5I20+h4faweiYybmIhi3JxZA8TtoEgar2uqxSeTViEfKF9Cg==
+X-Received: by 10.107.47.37 with SMTP id j37mr11570805ioo.168.1461780528274;
+ Wed, 27 Apr 2016 11:08:48 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Wed, 27 Apr 2016 11:08:48 -0700 (PDT)
+In-Reply-To: <1461504863-15946-54-git-send-email-chriscool@tuxfamily.org>
+X-Google-Sender-Auth: swt_0CScYHvRgBqxEpBU7PgaZ88
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292780>
 
-I debugged the issue using the script here:
-    https://github.com/git/git/blob/master/git-p4.py
-I'm not sure how close to the main repo that is.
-
-On Wed, Apr 27, 2016 at 11:28 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Wed, Apr 27, 2016 at 9:15 AM, Jacob Smith <jaroslov@gmail.com> wrote:
->> On OS X,
+On Sun, Apr 24, 2016 at 9:33 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> To be compatible with the rest of the error handling in builtin/apply.c,
+> find_header() should return -1 instead of calling die().
 >
-> Do you use the Git as provided from OS X? In that case you better report the bug
-> to Apple, as their version of Git is slightly different (not close on
-> upstream, by both
-> having additional patches as well as not following the upstream closely IIUC).
+> Unfortunately find_header() already returns -1 when no header is found,
+> so let's make it return -2 instead in this case.
+>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+> diff --git a/builtin/apply.c b/builtin/apply.c
+> @@ -1588,18 +1596,18 @@ static int find_header(struct apply_state *state,
+>                                 continue;
+>                         if (!patch->old_name && !patch->new_name) {
+>                                 if (!patch->def_name)
+> -                                       die(Q_("git diff header lacks filename information when removing "
+> -                                              "%d leading pathname component (line %d)",
+> -                                              "git diff header lacks filename information when removing "
+> -                                              "%d leading pathname components (line %d)",
+> -                                              state->p_value),
+> -                                           state->p_value, state->linenr);
+> +                                       return error(Q_("git diff header lacks filename information when removing "
+> +                                                       "%d leading pathname component (line %d)",
+> +                                                       "git diff header lacks filename information when removing "
+> +                                                       "%d leading pathname components (line %d)",
+> +                                                       state->p_value),
+> +                                                    state->p_value, state->linenr);
+>                                 patch->old_name = xstrdup(patch->def_name);
+>                                 patch->new_name = xstrdup(patch->def_name);
+>                         }
+>                         if (!patch->is_delete && !patch->new_name)
+> -                               die("git diff header lacks filename information "
+> -                                   "(line %d)", state->linenr);
+> +                               return error("git diff header lacks filename information "
+> +                                            "(line %d)", state->linenr);
+
+I realize that the caller in this patch currently just die()'s, and I
+haven't looked at subsequent patches yet, but is this new 'return'
+going to cause the caller to start leaking patch->old_name and
+patch->new_name which are xstrdup()'d just above?
+
+>                         patch->is_toplevel_relative = 1;
+>                         *hdrsize = git_hdr_len;
+>                         return offset;
+> @@ -2115,6 +2123,9 @@ static int parse_chunk(struct apply_state *state, char *buffer, unsigned long si
+>         int hdrsize, patchsize;
+>         int offset = find_header(state, buffer, size, &hdrsize, patch);
+>
+> +       if (offset == -1)
+> +               exit(1);
+> +
+>         if (offset < 0)
+>                 return offset;
