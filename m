@@ -1,88 +1,85 @@
-From: Jacob Smith <jaroslov@gmail.com>
-Subject: BUG on OSX `git p4 submit` can fail when the workspace root doesn't
- exist locally.
-Date: Wed, 27 Apr 2016 11:15:26 -0500
-Message-ID: <CAMsgv2UXPkxpocjKhoR7HbmubSBnhJPJ3hMq9Jsk2AD0DoCifA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Move test-* to t/helper/ subdirectory
+Date: Wed, 27 Apr 2016 09:15:41 -0700
+Message-ID: <xmqqy47z9geq.fsf@gitster.mtv.corp.google.com>
+References: <1460553762-12419-1-git-send-email-pclouds@gmail.com>
+	<xmqqwpnkc9ca.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8A8vbp4-LrxoNX510Nme97EKfu0hBBs-LDRap1Z5=v3rA@mail.gmail.com>
+	<20160427101833.GA5536@lanh>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 27 18:15:35 2016
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 27 18:15:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avS7j-0005Fw-G9
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 18:15:35 +0200
+	id 1avS7x-0005Mf-DI
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 18:15:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753099AbcD0QP3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 12:15:29 -0400
-Received: from mail-lf0-f46.google.com ([209.85.215.46]:34313 "EHLO
-	mail-lf0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753057AbcD0QP2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 12:15:28 -0400
-Received: by mail-lf0-f46.google.com with SMTP id j11so62742206lfb.1
-        for <git@vger.kernel.org>; Wed, 27 Apr 2016 09:15:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=ybW5yed65KNauBE8aM4OHIA+J5N1XUpGOYeQXyQdUds=;
-        b=NoKFxMKdgQDfdY+G0U8J8q3y4v3Fkzh6L+FU1rZ1KwvyeZmQBwhvGmsHlyOByw2vtt
-         FesEPpLst8vIZLM66eNsHwhQvM4wi/oRLn7wm7LISSJy4G+RKy7X5SVjMiksnHHkdkdx
-         fr6mwve1FS81PVUuJCtpCr1ufq5MdQjiTbUmS4WuBwQua82IKtnqGBPY40mp/N1ob9PY
-         1/UioU5gHDLh4ht21uSuDWFHBGvhLoK7aBYPS/lyd2WLjkiWgf0paNfuU4rzk/VyCtmZ
-         6YBxXZnGE7xX3Ay6E3KJBIBNj762SxWxiLTQJKa/8DDghdQVWK24278J5x64bMvwWhL3
-         GZwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=ybW5yed65KNauBE8aM4OHIA+J5N1XUpGOYeQXyQdUds=;
-        b=Z8UoSe/RcyL5wTkWmQpDtEJ2gRoNEcacYGsJvNS7XOUBsKI8Uyz9aNgujpnhVQ2mkV
-         Gw5B7pCPLIrJgwtOcoi2ae31CbNgmZxk5MaXeAIWUz6mXe3LPXIy2qxSOcVp39My+SSK
-         aAcTwZzxjr8pf8FZ/ezO9CiKuB6d6ynxSEwLrD59bhkK9Jy4zsODid92ZuIkfKWfVCdc
-         0bokMh4KGgh7LmXwSf1fTJeS9I6oqIU7A70faYLmlj9QyxFSqmwzA0e61+9L/rSOE98I
-         S5+AnUtM+qx4YM+YIsJXgD5gdxAgn6KxG9ZEpqCovdv2wTkaSCu+iYtTRsBQ3O7WO1uI
-         feSQ==
-X-Gm-Message-State: AOPr4FXH66MIquHpyDTn/q/gbHQ7szRRXXyDoX2K2J13wVLBHMRe2yh/XMJuCGcWFI5m34Lbb/1NfISvCzV5UQ==
-X-Received: by 10.25.196.20 with SMTP id u20mr4005003lff.164.1461773726388;
- Wed, 27 Apr 2016 09:15:26 -0700 (PDT)
-Received: by 10.25.21.37 with HTTP; Wed, 27 Apr 2016 09:15:26 -0700 (PDT)
+	id S1753135AbcD0QPp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 12:15:45 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59237 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753126AbcD0QPo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 12:15:44 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 78C1B15823;
+	Wed, 27 Apr 2016 12:15:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tcqj+GjBEOMaRXGMQfyJ6lWiHuo=; b=XlDEwz
+	d5g1NaCj4dD9yQQ7v5I4lSouA52j69xgKkFPg4+9ypBOvGkvcnofvMKI/aIMRenj
+	p49rBuwKb9ynGIdIc60SC7qoCcirgV1+NUx5w/67HFK7lrCTogZX/KRvuDgKDk6T
+	7j/0PJOZQPS6N8u30XfFVU1ZHN2Kb0DbjplEs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gmKKAOoDct5Z09WG0xx3/+OE5ivFAd+w
+	/90HKrnJkzPicLRKgoQtwxNCytvFREUnZ5lpDksfEMFpiCkJ9bAGoTbgAYgxzVPO
+	gQ9NQHkyhQlkD1R5MeoGTIztzL8mfxe+PqyMRohtbWPop6qBlbl3DdYa+UQOi34c
+	HztJBVCO2QA=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 70DBF15822;
+	Wed, 27 Apr 2016 12:15:43 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AC24615821;
+	Wed, 27 Apr 2016 12:15:42 -0400 (EDT)
+In-Reply-To: <20160427101833.GA5536@lanh> (Duy Nguyen's message of "Wed, 27
+	Apr 2016 17:18:34 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 4A45875C-0C93-11E6-B18E-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292740>
 
-On OS X, if the local p4 workspace root doesn't exist, then git-p4 can
-fail on submit. The error message looks like this:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-    Synchronizing p4 checkout...
+> This patch forces bin-wrappers regeneration every time a test program
+> is updated. A bit wasteful, but I don't see a better option (which is
+> also why I limit this to test programs only).
 
-    Git submit failed!
-    shell-init: error retrieving current directory: getcwd: cannot
-access parent directories: No such file or directory
-    fatal: Unable to read current working directory: No such file or directory
-    Command failed: ['git', 'rev-list', '--no-merges',
-'remotes/p4/master..master']
+In other words, when we update the location where the programs that
+would be eventually installed are created, we'd see the same
+problem.
 
-The problem is in the function 'run()' around line 1957. The logic in
-the code is:
+I actually wonder if it is a better overall structure to move
+t/helper/test-foo back to test-foo, while keeping the source file
+that contains main() for test-foo at t/helper/test-foo.c.  Then we
+do not have to have many copies that are slightly different in
+bin-wrappers, but they can all be
 
-    1. Detect if the clientPath exists;
-    2. If the clientPath doesn't exist, set the 'new_client_dir'
-variable to 'True';
-    3. chdir() to the clientPath; then,
-    4. If 'new_client_dir' is 'True', then p4_sync("...", True).
+	exec "${GIT_EXEC_PATH}/$0" "$@"
 
-On my system, the call to `p4 sync -f` leaves the clientPath directory
-that git-p4 had chdir()'d into an orphan, so the call to 'git rev-list
-...' a few lines fails because the call to getcwd() fails (the
-directory has no parents).
+instead of "bin-wrappers/git-bar" being
 
-I can make the problem "go away" by moving the location of the call to
-'chdir(self.clientPath, is_client_path=True)' after the call to
-`p4_sync()`, but I'm not sure if that's really fixing the issue, or
-not.
+	exec "${GIT_EXEC_PATH}/git-bar" "$@"
 
-Thanks!
--j.
+and "bin-wrappers/test-foo" being
+
+	exec "${GIT_EXEC_PATH}/t/helper/test-foo" "$@"
