@@ -1,9 +1,9 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 12/29] read_raw_ref(): improve docstring
-Date: Wed, 27 Apr 2016 11:31:44 -0700
-Message-ID: <xmqqa8keaoof.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 15/29] ref_transaction_create(): disallow recursive pruning
+Date: Wed, 27 Apr 2016 11:47:11 -0700
+Message-ID: <xmqq60v2anyo.fsf@gitster.mtv.corp.google.com>
 References: <cover.1461768689.git.mhagger@alum.mit.edu>
-	<5b73d10ec47a68535725d77ebbc5c4f0512ac5f3.1461768689.git.mhagger@alum.mit.edu>
+	<615204c877610855b02b21ce14efa5b7342182bc.1461768689.git.mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org, David Turner <dturner@twopensource.com>,
@@ -11,63 +11,101 @@ Cc: git@vger.kernel.org, David Turner <dturner@twopensource.com>,
 	Jeff King <peff@peff.net>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>
 To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Apr 27 20:32:08 2016
+X-From: git-owner@vger.kernel.org Wed Apr 27 20:47:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avUFo-0000kQ-Uo
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 20:32:05 +0200
+	id 1avUUZ-0005Ep-Vg
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 20:47:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752766AbcD0Sbt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 14:31:49 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58272 "EHLO
+	id S1752380AbcD0SrP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 14:47:15 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58078 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752626AbcD0Sbs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 14:31:48 -0400
+	with ESMTP id S1751884AbcD0SrO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 14:47:14 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D849B16837;
-	Wed, 27 Apr 2016 14:31:46 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6CECC16F55;
+	Wed, 27 Apr 2016 14:47:13 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8LVCxDfohNjN9SKCETacLah8pug=; b=Jc7Cie
-	J1Bv1N6xCvJDUEejhYRTVIWRkTEt5sPY+1Tej2K97lp/vmJtwHor7x47Hq1QX0vm
-	tLJjf1L0CStBDbOdliQQ9A3YwTDoBdxgcpa6VHc6pohYBmopr1B8WjI+8Pf4+Dl4
-	ahiD/5egAoC5hucG+uu+0CqW1ZzmKEuNoByno=
+	:content-type; s=sasl; bh=lqZIYUDMP9AnY5vcKfx0XYQJ21c=; b=w8c5DV
+	s2z5WDNLRGZIeta+paBPIa458/P5b5gdsPBjTFoInGlRRkqdxKRfePEeJn8QWoQd
+	ts9UeVMC5p+tns+IQYUa0ZE512lHbtya+6quUNQo0Ca0XhIjEiLcaDOgQapXbOlm
+	O9mxfn5E6L6zRjHWr+w6JANaP1J7gqIAbqlco=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iUiPW4te9rqM0CeMSwSrkYRSwQmirSUR
-	1BZCzL16FirpkWSoT4PTesoi7GWAMrA0flXW0ABEGPFKjRn/6sRtw3jmt5InEqfo
-	sW46z4Ax9saN8xtC+fO0UmTZlmgKUDflVR6iiG16l95xPNmxUrDcUTMBJd6WvsMK
-	Gw7ntfRIaRI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id CFF8116836;
-	Wed, 27 Apr 2016 14:31:46 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=XmgzeQwrFAphbeqLUMihAs8jMXVsVEt0
+	3D6ELLaQf3OkpTCPAnOsMgU12J0P6M82Z9uUR5ky3H9oW1IRvSnqJQ+0WEeWOqWz
+	rNlKzTdbh88STrVs0+nnIp7ZiuSGkiPXeWZK5qbuyX7XrXjPHWPS1JqAe9ERF67n
+	HV/nBPIMWUE=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 642FC16F54;
+	Wed, 27 Apr 2016 14:47:13 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1CE4816835;
-	Wed, 27 Apr 2016 14:31:46 -0400 (EDT)
-In-Reply-To: <5b73d10ec47a68535725d77ebbc5c4f0512ac5f3.1461768689.git.mhagger@alum.mit.edu>
-	(Michael Haggerty's message of "Wed, 27 Apr 2016 18:57:29 +0200")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B991F16F51;
+	Wed, 27 Apr 2016 14:47:12 -0400 (EDT)
+In-Reply-To: <615204c877610855b02b21ce14efa5b7342182bc.1461768689.git.mhagger@alum.mit.edu>
+	(Michael Haggerty's message of "Wed, 27 Apr 2016 18:57:32 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4C157944-0CA6-11E6-93C5-D05A70183E34-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 74679B3C-0CA8-11E6-94FF-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292785>
 
 Michael Haggerty <mhagger@alum.mit.edu> writes:
 
->   * Backend-specific flags might be set in type as well, regardless of
->   * outcome.
->   *
-> - * sb_path is workspace: the caller should allocate and free it.
+> It is nonsensical (and a little bit dangerous) to use REF_ISPRUNING
+> without REF_NODEREF. Forbid it explicitly. Change the one REF_ISPRUNING
+> caller to pass REF_NODEREF too.
+>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+> This also makes later patches a bit clearer.
 
-All made sense.
+I wonder if it is more future-proof to solve this by doing
 
-A welcome bonus is the removal of this stale comment that 42a38cf7
-(read_raw_ref(): manage own scratch space, 2016-04-07) forgot to
-remove.
+    -#define REF_ISPRUNING	0x04
+    +#define REF_ISPRUNING	(0x04 | REF_NODEREF)
+
+instead.  It makes the intention clear that pruning is always about
+the single level (i.e. no-deref).
+
+
+>  refs.c               | 3 +++
+>  refs/files-backend.c | 2 +-
+>  2 files changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/refs.c b/refs.c
+> index ba14105..5dc2473 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -790,6 +790,9 @@ int ref_transaction_update(struct ref_transaction *transaction,
+>  	if (transaction->state != REF_TRANSACTION_OPEN)
+>  		die("BUG: update called for transaction that is not open");
+>  
+> +	if ((flags & REF_ISPRUNING) && !(flags & REF_NODEREF))
+> +		die("BUG: REF_ISPRUNING set without REF_NODEREF");
+> +
+>  	if (new_sha1 && !is_null_sha1(new_sha1) &&
+>  	    check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
+>  		strbuf_addf(err, "refusing to update ref with bad name '%s'",
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index 9faf17c..8fcbd7d 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -2116,7 +2116,7 @@ static void prune_ref(struct ref_to_prune *r)
+>  	transaction = ref_transaction_begin(&err);
+>  	if (!transaction ||
+>  	    ref_transaction_delete(transaction, r->name, r->sha1,
+> -				   REF_ISPRUNING, NULL, &err) ||
+> +				   REF_ISPRUNING | REF_NODEREF, NULL, &err) ||
+>  	    ref_transaction_commit(transaction, &err)) {
+>  		ref_transaction_free(transaction);
+>  		error("%s", err.buf);
