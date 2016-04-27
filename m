@@ -1,91 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 15/29] ref_transaction_create(): disallow recursive pruning
-Date: Wed, 27 Apr 2016 14:15:16 -0700
-Message-ID: <xmqqvb327nyz.fsf@gitster.mtv.corp.google.com>
-References: <cover.1461768689.git.mhagger@alum.mit.edu>
-	<615204c877610855b02b21ce14efa5b7342182bc.1461768689.git.mhagger@alum.mit.edu>
-	<xmqq60v2anyo.fsf@gitster.mtv.corp.google.com>
-	<1461788637.11504.3.camel@twopensource.com>
-	<xmqqh9em93xo.fsf@gitster.mtv.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 01/15] string_list: add string_list_duplicate
+Date: Wed, 27 Apr 2016 14:17:34 -0700
+Message-ID: <CAGZ79kagX5TJU_mbjpo4PKJDoc1wh24DhyS814Kkq76EU9aykA@mail.gmail.com>
+References: <1461703833-10350-1-git-send-email-sbeller@google.com>
+	<1461703833-10350-2-git-send-email-sbeller@google.com>
+	<xmqqh9eoc7zc.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kbWMN3YG5Jtz8i8Y9A3id8bX-YxSWp19+yGAdzMX_wKKA@mail.gmail.com>
+	<xmqqzise7o4l.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 23:15:28 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 27 23:17:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avWnt-00089W-58
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 23:15:25 +0200
+	id 1avWq4-0000Pn-Gx
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 23:17:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752753AbcD0VPV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 17:15:21 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58887 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752170AbcD0VPU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 17:15:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0C75816693;
-	Wed, 27 Apr 2016 17:15:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=k8GeJwMEOvMoNvyaubz8cSaib7s=; b=Kvl0EZ
-	b2zmucN0ODc/xAh4ffmf19DzzJrvZlDzOUr8raDsfIuCZpWHr53ip3RtU2lOkuP6
-	OGD1pjWgHEqMFROi0zEdk/U+yUwrZqc2boRgcQnLTRSq9ydSdyeZI+t6Bs29U8YY
-	KxP32Gh6SSTkAySAr3sWqXF4B5rcGiAGwlXY4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VAbiKd8O4wkEyyPs24BgGJR4jIGaGy2Y
-	twskxD8qWBFTsRDHqc4a9eEMPODued9UAAiteGXYmN9qFeQ9Spc5CA9wxUTLS4vJ
-	vKDUO2MP7gkMjh3mVRihQu813CjxEvizeeS3IJIWb/TUQE9GId14wOohqFPyEkjq
-	MpMciBryNwY=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 00FAD16692;
-	Wed, 27 Apr 2016 17:15:19 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4ED4E1668E;
-	Wed, 27 Apr 2016 17:15:18 -0400 (EDT)
-In-Reply-To: <xmqqh9em93xo.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 27 Apr 2016 13:45:07 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 249D1ED2-0CBD-11E6-8CB5-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752625AbcD0VRg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 17:17:36 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:33462 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752322AbcD0VRg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 17:17:36 -0400
+Received: by mail-ig0-f173.google.com with SMTP id c3so1073105igl.0
+        for <git@vger.kernel.org>; Wed, 27 Apr 2016 14:17:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=qJJrT6c5lqhlZ2qXm1fMTwlqs9g+LKR3cDqIv6dbxBk=;
+        b=TTDQBsX/b4d0uy2MCLeVkFyvu3OV1EwKNIcXwQSHdBs16WF1pikgMpDfoDVw5pm5rD
+         kL+FUsuEveJQIFsXR+YE69YTOORhXoiFzupT869taj10y/1THVRr5xTPaZyMvEQVzrIi
+         c9gjpt5PbIuVzwk0DkMnz4H5KXwVWOBdlnCoQByBMiB4X70hIgFF951TZshX6C8THnAC
+         MWFwFrRq2L5relmYHgTDWyEQS0lkeniJULRg2kRAhkNVskID7UuQGFrJdpaaTtDtMBQK
+         tCs0db40rrFxhz5hF0rLRautT7wbecwl1wcFkSFaBoDeumF9UYDcTpioRsCfQmSkfT48
+         SS/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=qJJrT6c5lqhlZ2qXm1fMTwlqs9g+LKR3cDqIv6dbxBk=;
+        b=jTqhXSRhlj9KWrqWOmNq8KrnhNGMCA4hbO+E96D9457emO9cW9ZVQrlP7GzOViSRXW
+         WPGYLYqzS3jauFZ8fs5nBMJIlONqnxgtAq/HPxN0AKcczqZgM6rPlpcPokbU6XUlQPGi
+         2gyEQHE9kF0CpMlQHLSUFFJrK1IMMGc55sgNESCTJMARwM9SdBBGSLgd7a9flBmMFs9+
+         t8auJrvuhkwU28v1A0pxPtMvyvdUKSQYxM5rDQ8CA+Ecty/qomm0v1ccoYN+Hlt9AYMU
+         Kq2s+iqQW2GYiG6unf0VZMO0szJPi3fPuNJMFkCRxPYXWojU2cRTlEcMx9Mc/XoeKRJB
+         Fg+A==
+X-Gm-Message-State: AOPr4FWVA+nKB56A7Z09jOADnaYGzkMMMlspuEV1yRMWPfQt6JppZbWJw4TpIF5KA/PsLhvoK9PWiZ6cKfQLv7Yb
+X-Received: by 10.50.102.207 with SMTP id fq15mr24464253igb.94.1461791855066;
+ Wed, 27 Apr 2016 14:17:35 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Wed, 27 Apr 2016 14:17:34 -0700 (PDT)
+In-Reply-To: <xmqqzise7o4l.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292828>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Apr 27, 2016 at 2:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> When not duplicating git_config_get_value_multi("submodule.defaultGroup");
+>> I run into
+>>
+>> Program received signal SIGSEGV, Segmentation fault.
+>> ...
+>> So the string list seems to be corrupted here.
+>> Someone stomping over our memory? How long is the result
+>> of git_config_get_value_multi deemed to be stable and usable?
+>
+> That call goes to
+>
+>     git_config_get_value_multi()
+>     -> git_configset_get_value_multi()
+>        -> configset_find_element()
+>
+> the returned value from there would be either NULL or the list of
+> values that belong to the config cache layer, i.e. a caller of the
+> API can peek but is not allowed to modify it.
+>
+> So if you are modifying the value you obtain from the API, you must
+> make a copy; otherwise you will "stomp over" memory that belongs to
+> the config cache layer, not to you.
 
-> If a casual reader sees this code:
->
->     ref_transaction_delete(transaction, r->name, r->sha1,
-> 			   REF_ISPRUNING | REF_NODEREF, NULL, &err)
->
-> it gives an incorrect impression that there may also be a valid case
-> to make a "delete" call with ISPRUNING alone without NODEREF, in
-> other codepaths and under certain conditions, and write an incorrect
->
->     ref_transaction_delete(transaction, refname, sha1,
-> 			   REF_ISPRUNING, NULL, &err)
->
-> in her new code.  Or a careless programmer and reviewer may not even
-> memorize and remember what the new world order is when they see such
-> a code and let it pass.
->
-> As I understand that we declare that "to prune a ref from set of
-> loose refs is to prune the named one, never following a symbolic
-> ref" is the new world order with this patch, making sure that
-> ISPRUNING automatically and always mean NODEREF will eliminate the
-> possibility that any new code makes an incorrect call to "delete",
-> which I think is much better.
+Yes, we do not modify the string_list (the return of git_config_get_value_multi)
 
-... but my understanding of the point of this patch may be flawed,
-in which case I of course am willing to be enlightened ;-)
+Another way to corrupt it is to change the configuration (e.g. add
+things to the config hashmap such that it reallocates and grows).
+
+The problem arises after a call to submodule_from_path(...);
+which may change the cache for submodules. I assumed that was
+completely different from the regular config cache, but somehow there is
+a relation, which I have not tracked down yet.
+
+Thanks,
+Stefan
