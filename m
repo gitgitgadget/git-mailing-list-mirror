@@ -1,84 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bisect limited to Merge Commits
-Date: Wed, 27 Apr 2016 13:56:42 -0700
-Message-ID: <xmqq8tzy93ed.fsf@gitster.mtv.corp.google.com>
-References: <20160427204551.GB4613@virgo.localdomain>
+Subject: Re: [PATCH v4] http: support sending custom HTTP headers
+Date: Wed, 27 Apr 2016 14:03:48 -0700
+Message-ID: <xmqq4mam932j.fsf@gitster.mtv.corp.google.com>
+References: <d087647975742a803735c838d0b970d962d75048.1461738362.git.johannes.schindelin@gmx.de>
+	<3b71deffa5d07cf73a793773cc3d60ff611843fa.1461759454.git.johannes.schindelin@gmx.de>
+	<20160427193055.GA6727@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Hagen Paul Pfeifer <hagen@jauu.net>
-X-From: git-owner@vger.kernel.org Wed Apr 27 22:56:51 2016
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 27 23:03:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avWVu-0002WE-6M
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 22:56:50 +0200
+	id 1avWcn-0004VW-1K
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 23:03:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753419AbcD0U4q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 16:56:46 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62212 "EHLO
+	id S1752323AbcD0VDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 17:03:53 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61867 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753375AbcD0U4p (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 16:56:45 -0400
+	with ESMTP id S1752184AbcD0VDw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 17:03:52 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 43D9E16380;
-	Wed, 27 Apr 2016 16:56:44 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0F58B16725;
+	Wed, 27 Apr 2016 17:03:51 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bD9ClUpELxflMfIf51ZQCoR0WGM=; b=c4Ca6a
-	hbwhRGbhBKcKn7OW+O8BzwaFGeFPlFOPZN3AAC3/YyNnpvCZdhg4cFKVg7IFtZpQ
-	tiELNB3IixUmEt6/kcp+iyEksgC7bapGe9cuHqm/Hn5UeUqSayj0yqzTgel6i7Dh
-	OkqByAmKIEUT0oFkXEE6qXgla5LsVYjV+THrY=
+	:content-type; s=sasl; bh=SVaIBuPn8rLQfWE+Cp8Fg01pzPE=; b=xHHF5D
+	gYiiFVElbwHiNkaKwiZ2FADx+HpBsZWv1iIMzEPNQ8gtLy6U11o2BWLuSDf5BeoC
+	ql8LUOLQvj9Z8Pkn/0+jIgl4HUm4crRc2TDXQEUbCqOeCPU16cN3SUSiWoIt5vuw
+	Rm5rKmXg/4dc1qDMklXK/VCVhLAKTS8Qgxw0M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qXXh1RjWnK0/LIt/5iGdi42XuPaZcWul
-	YFVs5lgTZWvlKL6c61+6OOdETGk38kctF3I2qmlcgIPJRzrgGJLhQ60JDkjQcPEK
-	wSTppb4vcdsxaP70u2MCm+3mRngHyibKYjIZjs5t0tvlCWEh4bDzdKadGq/u/YrX
-	oAVD5Gsw1qo=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3BDF71637F;
-	Wed, 27 Apr 2016 16:56:44 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=MDM+OBjsd0M04LCjbmsaauqJpx+xZHW6
+	SUOLDXwS+BvYShSsBlTvX/kOsTbePnq36sqpx+aiItZ+/d50KsG207TF2PeZ/kLJ
+	voRpd4NiO6X+4DVOjTbIiXdVsz5KYKWG1xzA458AhMpgy+m8dLtZR8pDCcaLJIt/
+	H7zNip9iP4U=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 071DB16724;
+	Wed, 27 Apr 2016 17:03:51 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A13901637E;
-	Wed, 27 Apr 2016 16:56:43 -0400 (EDT)
-In-Reply-To: <20160427204551.GB4613@virgo.localdomain> (Hagen Paul Pfeifer's
-	message of "Wed, 27 Apr 2016 22:45:51 +0200")
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6865A16723;
+	Wed, 27 Apr 2016 17:03:50 -0400 (EDT)
+In-Reply-To: <20160427193055.GA6727@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 27 Apr 2016 15:30:55 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8C2EEA2E-0CBA-11E6-B97B-9A9645017442-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 8A8E696E-0CBB-11E6-9D60-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292825>
 
-Hagen Paul Pfeifer <hagen@jauu.net> writes:
+Jeff King <peff@peff.net> writes:
 
-> Imagine a "rebase feature branch" style of development. All features are
-> developed on separate features branch which are rebased on master and
-> immediately merged into the upstream master. 
+> On Wed, Apr 27, 2016 at 02:20:37PM +0200, Johannes Schindelin wrote:
+>
+>> The only change vs v3 is that I replaced my flimsical test by Peff's (with
+>> *one* change: I realized that we need to group the Require statements in a
+>> <RequireAll> block when I tried to verify that the test fails when I
+>> modify the first header).
+>
+> Whoops, I didn't actually test that case. Thanks for catching (as you
+> might guess, I wanted to make sure we handle multiple values correctly).
+>
+>>  Documentation/config.txt    |  6 ++++++
+>>  http-push.c                 | 10 +++++-----
+>>  http.c                      | 35 ++++++++++++++++++++++++++++++++---
+>>  http.h                      |  1 +
+>>  remote-curl.c               |  4 ++--
+>>  t/lib-httpd/apache.conf     |  8 ++++++++
+>>  t/t5551-http-fetch-smart.sh |  7 +++++++
+>>  7 files changed, 61 insertions(+), 10 deletions(-)
+>
+> This version looks good to me.
+>
+> -Peff
 
-I do not want to imagine such ;-)  The only semi-sensible reason why
-people might want to always rebase on top of 'master' is to keep the
-history completely linear, so with such a workflow, there won't be a
-merge commit.
-
-But I think "rebase" part of your description is a red herring.  If
-a development goes by always doing a new feature in a side branch
-and then merge the branch only after it is done to the 'master'
-branch, then bisecting only the commits on first-parent chain would
-often be a quick first-pass to find the topic whose merge into the
-'master' branch introduced a breakage.  From there you can dig down
-to each individual commit on the side branch.  And for that, it is
-immaterial that the side branch gets rebased on 'master' and forced
-to become a merge with "--no-ff", of the side branch was developed
-on older upstream but in a careless way full of "oops, previous one
-I broke the entire world and it does not even compile; this commit
-fixes it" commits.
-
-So being able to stop at only commits on the first-parent chain is a
-valid and useful tool.  "git bisect --first-parent" is one of the
-things that are sometimes asked for.
+Thanks, both.
