@@ -1,78 +1,110 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 05/29] refname_is_safe(): insist that the refname already
- be normalized
-Date: Wed, 27 Apr 2016 18:19:06 -0400
-Message-ID: <20160427221906.GA9707@sigill.intra.peff.net>
-References: <cover.1461768689.git.mhagger@alum.mit.edu>
- <a8e1e1a9e6a48fbb20fab2144279b93a48db584a.1461768689.git.mhagger@alum.mit.edu>
- <xmqqinz39bl2.fsf@gitster.mtv.corp.google.com>
- <1461787832.11504.1.camel@twopensource.com>
- <20160427201512.GA8073@sigill.intra.peff.net>
- <1461789293.11504.5.camel@twopensource.com>
- <20160427203728.GA8364@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bisect limited to Merge Commits
+Date: Wed, 27 Apr 2016 15:25:36 -0700
+Message-ID: <xmqqk2ji7kpr.fsf@gitster.mtv.corp.google.com>
+References: <20160427204551.GB4613@virgo.localdomain>
+	<xmqq8tzy93ed.fsf@gitster.mtv.corp.google.com>
+	<57213041.5070506@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 00:19:43 2016
+Content-Type: text/plain
+Cc: Hagen Paul Pfeifer <hagen@jauu.net>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Thu Apr 28 00:25:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avXo7-0000YQ-Al
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 00:19:43 +0200
+	id 1avXtw-0002ME-Tw
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 00:25:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752229AbcD0WTL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 18:19:11 -0400
-Received: from cloud.peff.net ([50.56.180.127]:57953 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750777AbcD0WTK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 18:19:10 -0400
-Received: (qmail 9428 invoked by uid 102); 27 Apr 2016 22:19:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 Apr 2016 18:19:09 -0400
-Received: (qmail 3218 invoked by uid 107); 27 Apr 2016 22:19:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 Apr 2016 18:19:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Apr 2016 18:19:06 -0400
-Content-Disposition: inline
-In-Reply-To: <20160427203728.GA8364@sigill.intra.peff.net>
+	id S1753711AbcD0WZk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 18:25:40 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61194 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751731AbcD0WZk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 18:25:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7C39816492;
+	Wed, 27 Apr 2016 18:25:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FbHvsd5HUnpDSCorIV/Ist+lt30=; b=rGcpc3
+	Gr+4ZQwYJvKS4/9A8az2CBqVDSm/QG6KLnuK1YhOJFTM12zSiirJ2KuqRy9CNiYp
+	75P3jh5Gh591u90fw5MUgbA5ma7sLDcTxM3IaUIYJAZhyT7WzHEO1dRI+UiJjQPH
+	CUIPGaMLYVB2X5ZBo/cU27HEYlcbQ4iSXsCCw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CGqdqfNoTiaiEo7E2335M+ZV2S5UfFS3
+	c5r9QlK4zk2lhqYXdtQUIcB2w9MXc9G9D4UU/2dJqJQ71GgAdugAf6uWQdm/dwFX
+	O7GlbvRQWS7iZO6DxwiFFUDMB5r7ANsEL7i0uZPNH28tOOLUMAGtaTpRJoh8JFSd
+	U2sh6bs4LV4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 74F6616491;
+	Wed, 27 Apr 2016 18:25:38 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DF91F16490;
+	Wed, 27 Apr 2016 18:25:37 -0400 (EDT)
+In-Reply-To: <57213041.5070506@kdbg.org> (Johannes Sixt's message of "Wed, 27
+	Apr 2016 23:33:53 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F7A5C7A8-0CC6-11E6-BD0C-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292835>
 
-On Wed, Apr 27, 2016 at 04:37:28PM -0400, Jeff King wrote:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> > > But anything writing a _new_ refname (whether the actual ref, or
-> > > referencing it via a symref) should be using check_refname_format()
-> > > before writing.
-> > 
-> > Unfortunately, neither check is lesser -- refname_is_safe allows
-> > refs/heads//foo but not a/b while check_refname_format allows a/b but
-> > not refs/heads//foo.  So sometimes we need both, while other times we
-> > just need one :(
-> 
-> IMHO, that sounds like a bug. check_refname_format() should
-> conceptually[1] be a superset of refname_is_safe(). Is there a case
-> where we would want to _allow_ a refname that is not safe to look at on
-> disk?
+> Am 27.04.2016 um 22:56 schrieb Junio C Hamano:
+>> So being able to stop at only commits on the first-parent chain is a
+>> valid and useful tool.  "git bisect --first-parent" is one of the
+>> things that are sometimes asked for.
+>
+> With origin pointing to git.git, I attempted this:
+>
+>  git bisect start
+>  git rev-list --first-parent --boundary origin..origin/pu |
+>    sed -ne s/-//p | xargs git bisect good
+>  git bisect bad origin/pu
+>
+> and it starts bisecting among the 50-something first-parent commits
+> between origin and origin/pu.
 
-BTW, if there isn't a superset relationship here, then I suspect I may
-have introduced some loosening or inconsistencies in 03afcbe
-(read_packed_refs: avoid double-checking sane refs, 2015-04-16). So any
-tightening now may simply be fixing that (which doesn't change anything
-with respect to correctness, but may give people more confidence that
-the tightening is not breaking something people have been depending on).
+That is a cute idea but I wonder if it would work well in a history
+full of pointless no-ff merges.
 
--Peff
+Here is a sample topology (output from "git log --oneline --graph")
 
-PS Reading over that commit message, I think it mis-states
-   "refname_is_safe() can only be true if check_refname_format() also
-   failed". It should be "!refname_is_safe() ...". I.e., the condition can
-   only trigger if...
+    *   84ef1bb pointless
+    |\  
+    | * 4ae9f68 third
+    |/  
+    *   aec8732 pointless
+    |\  
+    | * fd4ed0d second
+    |/  
+    * 696b5c1 initial
+
+where the tip of 'master' was initial, a side branch built 'second'
+on it and then 'master' made a no-ff 'pointless' merge, another side
+branch built 'third' on it and then 'master' again made a no-ff
+'pointless' merge.
+
+    $ git rev-list --first-parent --boundary initial..pointless
+
+would give us 'third' and 'second' as boundaries, but by marking
+'third' as GOOD, we declare to 'bisect' machinery that it and all of
+its ancestors are GOOD.  So upon seeing 'bisect bad HEAD', we would
+immediately see that HEAD is the first bad commit, wouldn't we?
+
+Actually, "pointless no-ff merges" is a red herring.  Any history
+with side branch that branched from the first-parent chain after the
+commit at the bottom of the bisection range (in this example, the
+side branch that built 'third' was forked off of the first 'pointless'
+commit on the first-parent chain of 'master', which was made after
+the bottom of the range 'initial') would have the same problem, I
+would imagine.
