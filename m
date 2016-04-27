@@ -1,113 +1,88 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] Move test-* to t/helper/ subdirectory
-Date: Wed, 27 Apr 2016 17:18:34 +0700
-Message-ID: <20160427101833.GA5536@lanh>
-References: <1460553762-12419-1-git-send-email-pclouds@gmail.com>
- <xmqqwpnkc9ca.fsf@gitster.mtv.corp.google.com>
- <CACsJy8A8vbp4-LrxoNX510Nme97EKfu0hBBs-LDRap1Z5=v3rA@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] http: Support sending custom HTTP headers
+Date: Wed, 27 Apr 2016 13:56:47 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1604271355350.2896@virtualbox>
+References: <abe253758829795c285c2036196ebe7edd9bab34.1461589951.git.johannes.schindelin@gmx.de> <xmqq7fflleau.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1604260851390.2896@virtualbox> <20160426173853.GB7609@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1604270830220.2896@virtualbox> <20160427075219.GA32535@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 12:18:26 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 27 13:57:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avMY6-0005a3-Bv
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 12:18:26 +0200
+	id 1avO60-0001mf-S4
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 13:57:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752881AbcD0KSR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 06:18:17 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:36098 "EHLO
-	mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752273AbcD0KSQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 06:18:16 -0400
-Received: by mail-pf0-f180.google.com with SMTP id c189so18559923pfb.3
-        for <git@vger.kernel.org>; Wed, 27 Apr 2016 03:18:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=cjcVtgCSbzabr/R44k/D0BMNDjbkCYI1cEEbUtJ3Auw=;
-        b=OHKsPOBBZuRjsc6ngHY26JOvCxr4qVNcxUh+XzQfBLtu1g8b5IpxFbOIexOOR5K58Y
-         Wey5V4wjUeBk6yElC+Xc/M8i2hzb5TMDAX/t/eKW5VLkCcPphJ0t2NCyOEyd+v57YX5K
-         pr6W1bTDyLZhdYeMLWiA+mqF4zhpesIWby+c4mfQtlZrXyxUwk4mQ8Gs/7PZojPgVOD6
-         W1PmysT+UcmpRRwkT97R1uloSeenfylJiJ7p4RtrxTgE/gz9k+kWaoBep4cI1i/Cbv4J
-         6k7xFVtAiGf/UAozyabcauE3trGmRGRM9/cegV0capVpx3UWAGbcxL+rahnB9HMhLy50
-         7thQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=cjcVtgCSbzabr/R44k/D0BMNDjbkCYI1cEEbUtJ3Auw=;
-        b=J9viRfqnqi151SC/3bztRhBkePpnTaNCBBe7A08R/HfKa3KbvjVGoO0h19y9dwoyT8
-         o9TwjSDhI2Z9oyZTDzKYBhrG1ZxcSVP4+OYJGQYqzsa6JyxIEsOrGtBv2dR60WBuCicc
-         eKcwI7/KeusM3ySTJYGRBwYZGt7cLSfsPBwuxFigds981OIgA0cC2FrIqQb9B1dzLa5x
-         jg+IcFHQyxi6AyoKkPNcaUEvFf6CNo8zaunDfgcwWgeMIMG2mONJEbLeFlf15V28770p
-         0SaIwlhziw6zQZz4FXNP8OPN6A4KGpd2X0wa2zILFI3/ceo5wwXh8Q9m8oquueQjQ2Kj
-         rTRw==
-X-Gm-Message-State: AOPr4FVtn4hrleYrh8A/l71E/wX27lCAaP2tc7QdEdlPKj6Kp90y1qh10S/GJCNvlonYOQ==
-X-Received: by 10.98.98.131 with SMTP id w125mr10463676pfb.112.1461752294963;
-        Wed, 27 Apr 2016 03:18:14 -0700 (PDT)
-Received: from lanh ([171.232.191.76])
-        by smtp.gmail.com with ESMTPSA id t85sm5160655pfi.55.2016.04.27.03.18.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Apr 2016 03:18:13 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 27 Apr 2016 17:18:34 +0700
-Content-Disposition: inline
-In-Reply-To: <CACsJy8A8vbp4-LrxoNX510Nme97EKfu0hBBs-LDRap1Z5=v3rA@mail.gmail.com>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753871AbcD0L5L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 07:57:11 -0400
+Received: from mout.gmx.net ([212.227.15.15]:60136 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753405AbcD0L5I (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 07:57:08 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MA9Yv-1ap1Eu3wUL-00BKoo; Wed, 27 Apr 2016 13:56:50
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <20160427075219.GA32535@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:ObkURBRV/uWHnG5gqmkEkzMx0rxj27oHrjNLyKcT++4KWyQemkH
+ 80ZKFM4nAGYCd4AhJG+fhKT6FrhGa4/HY3mdHN7Uh8ahJ7jlIwkYGzFPDXjD0Z7D5SUfdem
+ hvDH0yicF6SQesyuMb32CrfE9YGA0MNmK7s6ppNp0CEJejrl6W0ILPOhSDlTZFDilwFm5fa
+ E4L0I6+SFlF6wO97a2OOg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:98Y+Dz0d2LA=:DAfw4tVorh33KZyylEoDHw
+ vVj2Ul2owrdfcWOaI77cNGjYnBfvUxmhOE8J0S3RweIXjJugUrVIhgRy2m1VAP9qa4nRTa2At
+ sAH1hBtUcQX+9Fh9dWPDJ5oaoN/DiPQJva1FvTxqwUM9Q3jH0oMPiBU2GMNopHc5zipv5k6E2
+ eDrWQB4erkIsfRiOoYdspdtD39AKt4927pQet4M9LDGinaDAYKBkVua6CB5M8rm9qjdB92E6E
+ PjdsHe6LVJHFz1fbUKN7UYG190DDhdc0FBpDCgM7QNlAiO7w0xp6KxiReYzgkh0Ru5kJBmSTe
+ rxSW07BjcS5Hr60rGJHuNozxQmCrM7OsodyA2vPJAaySu8Anhxx7Fu2m4XmENphXZcL9U2z4z
+ qG7j0h6d8ZeW/1sdNGR5YLRFtunbjqUku+3Xyb+DkHUE+Z+HQ+hFKWfsh1xIXouzTWZKVzGOR
+ bHvugvj3+k2UsUNgz6p9EH2sp9wLEEktikcWzH2rL+cX7WdVBHH1UeV7DVJprAYCE6W4+iBMq
+ kR8MKQP3dKGtEk6iaBzzG/gOl880eRh2Q2Yj7Fkkndbgk1eX85utVMdgOnWNUNhtTq9wWNjqb
+ NPPdbh+/uSUdb/CDTQF2WTYk41RsQRjxz6ML4RnHUt6E5fHs7jX6f6pGrXN3/nquaWii7yNUj
+ SgW2xd/jVyds2oHDQfwsoMiEu6UDKxNNouztcA8e3ewEGr75qaqeeQYsIV6PmAy9l/LRAsM9P
+ aObEoifC0kqBfUPzLvUWQrAOk8Gw0glt3LazIKjC91rE7e+RFJWcoa0OQY7leiN/q7xWu+55 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292718>
 
-On Wed, Apr 27, 2016 at 07:52:41AM +0700, Duy Nguyen wrote:
-> > Can you (or somebody else) double check that the resulting Makefile
-> > gets the build dependencies and exec path right?
-> >
-> > I am seeing occasional failure from t0040 when checking out between
-> > master and pu, and between the branches test-parse-options do change
-> > behaviour which explains the breakage.
+Hi Peff,
+
+On Wed, 27 Apr 2016, Jeff King wrote:
+
+> On Wed, Apr 27, 2016 at 08:31:50AM +0200, Johannes Schindelin wrote:
 > 
-> There is a problem moving between master and next/pu though.
-> bin-wrappers is not regenerated after the move so it could point to
-> the old binaries (in the other place). Not sure how to fix that
-> cleanly, will think of something, maybe, in about 8 hours.
+> > > +test_expect_success 'custom http headers' '
+> > > +	test_must_fail git fetch "$HTTPD_URL/smart_headers/repo.git" &&
+> > > +	git -c http.extraheader="x-magic-one: abra" \
+> > > +	    -c http.extraheader="x-magic-two: cadabra" \
+> > > +	    fetch "$HTTPD_URL/smart_headers/repo.git"
+> > > +'
+> > > +
+> > >  stop_httpd
+> > >  test_done
+> > 
+> > That's pretty easy.
+> > 
+> > After sleeping over the issue, I realized, though, that the test can use
+> > the very same method *I* used to verify that the headers are sent: using
+> > GIT_CURL_VERBOSE.
+> > 
+> > I hope you do not mind that I used this method instead.
+> 
+> TBH, I think mine is a little more robust, but I don't overly care
+> either way.
 
-This patch forces bin-wrappers regeneration every time a test program
-is updated. A bit wasteful, but I don't see a better option (which is
-also why I limit this to test programs only).
+Yes, you are correct, I only test that the header is sent twice, assuming
+that exactly two HTTP requests are sent. Your test verifies that whatever
+request is sent *requires* the header.
 
-A similar patch (without "t/helper/") could be applied on
-maint/master, otherwise bin-wrappers is still not updated when moving
-back from next/pu. And of course the problem will pop up again if you
-build old history...
+Will send out v4 with your test instead of mine in a few moments.
 
--- 8< --
-diff --git a/Makefile b/Makefile
-index dd178ee..6b6a844 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2196,10 +2196,13 @@ GIT-PYTHON-VARS: FORCE
- endif
- 
- test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
-+bindir_test_programs := $(patsubst %,bin-wrappers/%,$(TEST_PROGRAMS_NEED_X))
- 
- all:: $(TEST_PROGRAMS) $(test_bindir_programs)
- all:: $(NO_INSTALL)
- 
-+$(bindir_test_programs): bin-wrappers/%: t/helper/%$X
-+
- bin-wrappers/%: wrap-for-bin.sh
- 	@mkdir -p bin-wrappers
- 	$(QUIET_GEN)sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
--- 8< --
-
--- 
-Duy
+Thanks,
+Dscho
