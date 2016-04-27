@@ -1,118 +1,75 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 05/15] submodule-config: check if submodule a submodule is
- in a group
-Date: Wed, 27 Apr 2016 16:00:12 -0700
-Message-ID: <CAGZ79kZRf=fTbPh5_Qx8dHfiD9gxeDhQqvqDnyZRrMfv_adHXQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/15] string_list: add string_list_duplicate
+Date: Wed, 27 Apr 2016 16:17:14 -0700
+Message-ID: <xmqqbn4u7ibp.fsf@gitster.mtv.corp.google.com>
 References: <1461703833-10350-1-git-send-email-sbeller@google.com>
-	<1461703833-10350-6-git-send-email-sbeller@google.com>
-	<xmqq37q8c6zz.fsf@gitster.mtv.corp.google.com>
-	<xmqqvb34arjj.fsf@gitster.mtv.corp.google.com>
+	<1461703833-10350-2-git-send-email-sbeller@google.com>
+	<xmqqh9eoc7zc.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kbWMN3YG5Jtz8i8Y9A3id8bX-YxSWp19+yGAdzMX_wKKA@mail.gmail.com>
+	<xmqqzise7o4l.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kagX5TJU_mbjpo4PKJDoc1wh24DhyS814Kkq76EU9aykA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
 	Jens Lehmann <Jens.Lehmann@web.de>,
 	Duy Nguyen <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 01:00:22 2016
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Apr 28 01:17:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avYRR-000406-Ri
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 01:00:22 +0200
+	id 1avYhu-0008QL-Ac
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 01:17:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752194AbcD0XAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 19:00:15 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:35630 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751679AbcD0XAO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 19:00:14 -0400
-Received: by mail-ig0-f171.google.com with SMTP id bi2so142952937igb.0
-        for <git@vger.kernel.org>; Wed, 27 Apr 2016 16:00:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=wjDABtLjWStPcWaF9AB5/kt6cmBKpTd1Ezpvj4QQKSc=;
-        b=m7GiUi+4pZuU7jzfTZolwcLRN+880+kC/9/xljpx+IK1ATvSUWrEjNXbdCqu1Rv30J
-         occoCh9SIt1MMg60/tDy7yrKGQsSBf00VPp5Kt+Fk5QIXJ/IOYTUaSyPdYIVwZZ4DwMB
-         Uk6XUYkuqlhLRIioYY0R4NijUU/dIdGvfJTRY8n87TvibPp9zaQGz8hICe/cIzeR2oi3
-         vkADzWZoIY7Z4PVCk7SBDUMI0CN1lpW3P8yGQxrbennLSFfB91LJkBtU7loHb8oGAVCi
-         LLLQ9kee+qInhtBNH+ZHwUl5vJ/UKY+/vEo0lpkKbwv+s4Yn6UF19kP/PwEdlaw2A+Ja
-         dmnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=wjDABtLjWStPcWaF9AB5/kt6cmBKpTd1Ezpvj4QQKSc=;
-        b=FsKrqiggRk8R6BSWB9/nDzeVWasXXpndlp7jZpedTxEaxh53tCYae2439s+bDzsnSb
-         RAvugNpaLixt1Ph6JQNaQZC8+dW79UuAski6xdHzl/AwxjcFq6BNSS3UGUNL1t+qUhUm
-         luj5XVaEEDyof1e3LDF8cFkfn59xqgojC6N9ZcOM+24k0POBmIpLKjh3hOdLKHQFP8xA
-         GmlsoyiACweLqWRWfNe/oWp/7x55uth3CxRbe979IpvksfKQP1aUkE/2tbnLs0l5euuz
-         RquD7qQVi8YESuICRGRwur1MyKwDOPBs3mxKpmMt/StASAoizD5NRJn0YC1JHUuWgiwN
-         tOoQ==
-X-Gm-Message-State: AOPr4FVqymAEqBqf3QEpEEGZq1J7xyEWFJPZ3nhqR+JD3ywMHh2aRisf4zW+pDi5eiG8/uWVTG/1WBBhqSL8wXKy
-X-Received: by 10.50.111.15 with SMTP id ie15mr14409514igb.94.1461798013006;
- Wed, 27 Apr 2016 16:00:13 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Wed, 27 Apr 2016 16:00:12 -0700 (PDT)
-In-Reply-To: <xmqqvb34arjj.fsf@gitster.mtv.corp.google.com>
+	id S1752416AbcD0XRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 19:17:18 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56742 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751038AbcD0XRR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 19:17:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 839C91792D;
+	Wed, 27 Apr 2016 19:17:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/RiZQF+nVzzNQkZt5Zi7iDCRsC4=; b=u3ebci
+	TDQ4GOBKzWW8jFKMn1oPlIERiNbLHI1dqS8ZCcV5KrS/05i8D3C8//d/SPfH8/jB
+	Qz07YZ6o6D+gKnDkTRjOt+rlpDjob0NvPo2MobnXxCMVps9nkz/y7XlhkvQJCeFx
+	6sZQIuJJnG8EnpGINsfxQoxDSapJQyEetG3Gw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YzbZfRajU9MBfBV5FF/r06Zos0IDUcwl
+	OS3g2k+SuPJi6IkKMfBuz3I4SyoRvNXqQ5Pqe4UmnXQMbKSiiMs6heAhB2zaBJI/
+	Cbp+VSJk0Qz8PPBHVsNIbJotn4wMwCWEMlOTDyebAKLRGcSERFLqA+FxRwZtB6KV
+	9JxQF8lDmSc=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7B42D1792C;
+	Wed, 27 Apr 2016 19:17:16 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C59AC1792A;
+	Wed, 27 Apr 2016 19:17:15 -0400 (EDT)
+In-Reply-To: <CAGZ79kagX5TJU_mbjpo4PKJDoc1wh24DhyS814Kkq76EU9aykA@mail.gmail.com>
+	(Stefan Beller's message of "Wed, 27 Apr 2016 14:17:34 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 2E22D800-0CCE-11E6-9A12-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292840>
 
-On Tue, Apr 26, 2016 at 4:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> I see room for bikeshedding here, but the material to bikeshed
->> around is not even documented yet ;-)
->>
->>  * a token prefixed with '*' is a label.
->>  * a token prefixed with './' is a path.
->>  * a token prefixed with ':' is a name.
->>
->> Hopefully I will see some description like that in later patches.
->> I'll read on.
->
-> Extending this on a bit, I would suggest tweaking the above slightly
-> and make the rule more like this:
->
->   * a token prefixed with '*' is a label.
->
->   * a token prefixed with ':' is a name.
->
->   * everything else is a path, but "./" at the front is skipped,
->     which can be used to disambiguate an unfortunate path that
->     begins with ':' or '*'.
->
-> A bigger thing I am wondering is if it is bettter to do _without_
-> adding a new --group=X option everywhere.  I am assuming that most
-> if not all submodule subcommands already use "module_list" aka
-> "submodule--helper list" that takes paths, and to them, extending
-> that interface to also understand the groups and names would be a
-> more natural way to extend the UI, no?  e.g.
->
->         $ git submodule update -- 'path1' 'path2'
->         $ git submodule update -- '*default'
->         $ git submodule update -- ':named'
->
-> instead of
->
->         $ git submodule update -- 'path1 'path2'
->         $ git submodule update --group='*default' --
->         $ git submodule update --group=':named' --
->
-> which special-cases the way to specify a set of submodules by
-> listing their paths.
+Stefan Beller <sbeller@google.com> writes:
 
-This is indeed a better way.
+> Another way to corrupt it is to change the configuration (e.g. add
+> things to the config hashmap such that it reallocates and grows).
 
-Currently there is no way to initialize another group as that group
-specified by submodule.defaultGroup. But having the possibility
-to use the grouping in such a way is more flexible.
+You're right.  But doesn't it hint that there is a deeper problem?
 
-Thanks,
-Stefan
+By making a copy and keeping it, you would hold onto a stale value
+and would not see the result of updates you yourself make to the
+system.
