@@ -1,164 +1,366 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v6 11/19] update-index: enable/disable watchman support
-Date: Wed, 27 Apr 2016 16:04:33 -0400
-Message-ID: <1461787481-877-12-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v6 09/19] Add watchman support to reduce index refresh cost
+Date: Wed, 27 Apr 2016 16:04:31 -0400
+Message-ID: <1461787481-877-10-git-send-email-dturner@twopensource.com>
 References: <1461787481-877-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Wed Apr 27 22:06:44 2016
+X-From: git-owner@vger.kernel.org Wed Apr 27 22:06:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avVjM-0003h7-O4
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 22:06:41 +0200
+	id 1avVjC-0003bG-RO
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 22:06:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753621AbcD0UGa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Apr 2016 16:06:30 -0400
-Received: from mail-qk0-f176.google.com ([209.85.220.176]:34292 "EHLO
-	mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753375AbcD0UFX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 16:05:23 -0400
-Received: by mail-qk0-f176.google.com with SMTP id r184so23560638qkc.1
-        for <git@vger.kernel.org>; Wed, 27 Apr 2016 13:05:22 -0700 (PDT)
+	id S1753548AbcD0UFX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Apr 2016 16:05:23 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:32929 "EHLO
+	mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753463AbcD0UFU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 16:05:20 -0400
+Received: by mail-qk0-f173.google.com with SMTP id n63so23536526qkf.0
+        for <git@vger.kernel.org>; Wed, 27 Apr 2016 13:05:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=BiE/4MghRhUUz0x3FvRk6J8y3I48vOVYv5CR/E/pCi4=;
-        b=TGtWzaxaSsCV/o6z/cC1WwsqpFzUYa69iY99i3FHC7v9HF/o37QB4LtFjAd510FJ6h
-         0Yr0Q/p2xYUbn+asbEe8PlL9s/2e1TYjGD5nZlW/x54Gc1Qmy29WsZNkXe1nMwLVw89H
-         hu76vGAjJpaDZ9BBoy2xVb5aMnh6TGq10ANRH4E18zRg8bm1JAdletpad/uPUD/3ip7E
-         cQXwgqOzdCeKInErGTlkrUChq7dq8lQxiXS0yTqokEEK1YJTYqDa1Y9Pv6xPyeoAqA4B
-         roHPO/94nPe2vew0p/2uq3PqeAZzTgyXRMRCNeFKfXe+C8NN9TM49Tr5zkwTlNpNS8/j
-         meJg==
+        bh=H/0pHdIDIvo90pYujwVP8o0w4vfpQuqNryeRygeVqoc=;
+        b=celyXxIzeoiQU2Md5nrKOJx0jMUoBiXXsiuOt9sFqVgdJnLiYN3rTD2jcNxqx2ed7u
+         UBlbfzZw4ATveXdeOw/q8j20k9/7SY0CDgkPsaEJHPXKPaAOZGsAYeTJEMG3njEUpiiG
+         woDNhENKGY6xVwfC8Nx7RVVD8+RMtiB5qUDLT8KZ8SEVumxin3u2xiGy03TE5bNxP5vK
+         ma1zH5YmntpRoN/px7NobBY8Im0OW0nqjjPONxcDaj75nKRm3v/k9KTpqxbFRad+5Za6
+         5DJyPXhXaJAOfOZHp3xI35jstG3/5cGIj6SHwslNPgSXZA8K91tnr9ncpljpIA1XYOZk
+         sJ/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BiE/4MghRhUUz0x3FvRk6J8y3I48vOVYv5CR/E/pCi4=;
-        b=anNJRAII8/rL2xG6IYp1BbLzPH57YlViDYu2he9Hce3VUH+FC85B9v5/ZbtARxzjx6
-         i+U0KRSkeYMcRbviw/BjWHPJWZtuPc9//mt0RRD2EuSG+9JqB63Hav5lGlvdct/2Crsc
-         tzmfvMZIx4NE7SgmYkC52TlC07JznYRIW67F6Prxymwvj2vzmqt6LnfgcVwEeZtRmpVA
-         MxNbjme53NcqXmesTt6YJPTWowyf3Pv1WlhX9gKtObkk+TZHb+ldZjybf5fp04EC1ihY
-         uAEP6kqkJmjcUz0GPr8qYH3lFV3hLJzgjn5CsrMqT9ax7Aw2UEnfhT5jj3YtPFeGrx0y
-         BDiA==
-X-Gm-Message-State: AOPr4FWAjiiBkZqBbArzev3aKQ1xhFCUaIkS2qQVcF5RIqaVl52D6vFYSvrShzLHnLqn+Q==
-X-Received: by 10.55.70.66 with SMTP id t63mr11107591qka.173.1461787522001;
-        Wed, 27 Apr 2016 13:05:22 -0700 (PDT)
+        bh=H/0pHdIDIvo90pYujwVP8o0w4vfpQuqNryeRygeVqoc=;
+        b=Pm+ZF2XcSJtEwFqdwmFk2yVI5RmGDu4CGYil7R28ePijxuDYjpTr028GcbECvwm63r
+         4xDkpvh6qwdSQtgqaSXV7x9u0GTy+8kMwJzYAjWTFC07jDP8uek379uyV2n/NdCJgNAI
+         8I0/VS8c474Q1eEIP7cFiXaMqWzz1M201wFAIhjlN3Vr1R5vqx0sf2ASvc6bT/SxyV8A
+         jKLTb8V3Ikkf35+9XMWVLZplIovKvOBWiSKqNIsc2nzWJKWefEnXhjZ2i5gOBp6AgXHa
+         mZ49OKu6JNMeogmy0mB4oealSBK5CrVvtAwN3zUKm7u+uczTyfN3fW/cFtRVA+oIcIS5
+         LcNA==
+X-Gm-Message-State: AOPr4FXaLxWiVopXy0ORQFRFe/iOKP1afOiD2mLv7yXJYhqQMjPk+Fs/cDGCE56qw31brA==
+X-Received: by 10.233.221.66 with SMTP id r63mr10601137qkf.87.1461787519556;
+        Wed, 27 Apr 2016 13:05:19 -0700 (PDT)
 Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id r124sm1700085qhr.48.2016.04.27.13.05.21
+        by smtp.gmail.com with ESMTPSA id r124sm1700085qhr.48.2016.04.27.13.05.18
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 27 Apr 2016 13:05:21 -0700 (PDT)
+        Wed, 27 Apr 2016 13:05:18 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1461787481-877-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292803>
 
 =46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+
+The previous patch has the logic to clear bits in 'WAMA' bitmap. This
+patch has logic to set bits as told by watchman. The missing bit,
+_using_ these bits, are not here yet.
+
+A lot of this code is written by David Turner originally, mostly from
+[1]. I'm just copying and polishing it a bit.
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/248006
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- Documentation/git-index-helper.txt |  3 +++
- Documentation/git-update-index.txt |  6 ++++++
- builtin/update-index.c             | 16 ++++++++++++++++
- 3 files changed, 25 insertions(+)
+ Makefile           |  12 +++++
+ cache.h            |   1 +
+ config.c           |   5 ++
+ configure.ac       |   8 ++++
+ environment.c      |   3 ++
+ watchman-support.c | 135 +++++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ watchman-support.h |   7 +++
+ 7 files changed, 171 insertions(+)
+ create mode 100644 watchman-support.c
+ create mode 100644 watchman-support.h
 
-diff --git a/Documentation/git-index-helper.txt b/Documentation/git-ind=
-ex-helper.txt
-index 647b796..d8b8efb 100644
---- a/Documentation/git-index-helper.txt
-+++ b/Documentation/git-index-helper.txt
-@@ -15,6 +15,9 @@ DESCRIPTION
- Keep the index file in memory for faster access. This daemon is per
- repository.
+diff --git a/Makefile b/Makefile
+index c8be0e7..65ab0f4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -451,6 +451,7 @@ MSGFMT =3D msgfmt
+ CURL_CONFIG =3D curl-config
+ PTHREAD_LIBS =3D -lpthread
+ PTHREAD_CFLAGS =3D
++WATCHMAN_LIBS =3D
+ GCOV =3D gcov
 =20
-+If you want the index-helper to accelerate untracked file checking,
-+run git update-index --watchman before using it.
+ export TCL_PATH TCLTK_PATH
+@@ -1416,6 +1417,13 @@ else
+ 	LIB_OBJS +=3D thread-utils.o
+ endif
+=20
++ifdef USE_WATCHMAN
++	LIB_H +=3D watchman-support.h
++	LIB_OBJS +=3D watchman-support.o
++	WATCHMAN_LIBS =3D -lwatchman
++	BASIC_CFLAGS +=3D -DUSE_WATCHMAN
++endif
 +
- OPTIONS
- -------
+ ifdef HAVE_PATHS_H
+ 	BASIC_CFLAGS +=3D -DHAVE_PATHS_H
+ endif
+@@ -2025,6 +2033,9 @@ git-remote-testsvn$X: remote-testsvn.o GIT-LDFLAG=
+S $(GITLIBS) $(VCSSVN_LIB)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^=
+) $(LIBS) \
+ 	$(VCSSVN_LIB)
 =20
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-upd=
-ate-index.txt
-index c6cbed1..6736487 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -19,6 +19,7 @@ SYNOPSIS
- 	     [--ignore-submodules]
- 	     [--[no-]split-index]
- 	     [--[no-|test-|force-]untracked-cache]
-+	     [--[no-]watchman]
- 	     [--really-refresh] [--unresolve] [--again | -g]
- 	     [--info-only] [--index-info]
- 	     [-z] [--stdin] [--index-version <n>]
-@@ -176,6 +177,11 @@ may not support it yet.
- --no-untracked-cache::
- 	Enable or disable untracked cache feature. Please use
- 	`--test-untracked-cache` before enabling it.
++git-index-helper$X: index-helper.o GIT-LDFLAGS $(GITLIBS)
++	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^=
+) $(LIBS) $(WATCHMAN_LIBS)
 +
-+--watchman::
-+--no-watchman::
-+	Enable or disable watchman support. This is, at present,
-+	only useful with git index-helper.
- +
- These options take effect whatever the value of the `core.untrackedCac=
-he`
- configuration variable (see linkgit:git-config[1]). But a warning is
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 1c94ca5..a3b4b5d 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -914,6 +914,7 @@ int cmd_update_index(int argc, const char **argv, c=
-onst char *prefix)
- {
- 	int newfd, entries, has_errors =3D 0, nul_term_line =3D 0;
- 	enum uc_mode untracked_cache =3D UC_UNSPECIFIED;
-+	int use_watchman =3D -1;
- 	int read_from_stdin =3D 0;
- 	int prefix_length =3D prefix ? strlen(prefix) : 0;
- 	int preferred_index_format =3D 0;
-@@ -1012,6 +1013,8 @@ int cmd_update_index(int argc, const char **argv,=
- const char *prefix)
- 			    N_("test if the filesystem supports untracked cache"), UC_TEST)=
-,
- 		OPT_SET_INT(0, "force-untracked-cache", &untracked_cache,
- 			    N_("enable untracked cache without testing the filesystem"), UC=
-_FORCE),
-+		OPT_BOOL(0, "watchman", &use_watchman,
-+			N_("use or not use watchman to reduce refresh cost")),
- 		OPT_END()
- 	};
+ $(REMOTE_CURL_ALIASES): $(REMOTE_CURL_PRIMARY)
+ 	$(QUIET_LNCP)$(RM) $@ && \
+ 	ln $< $@ 2>/dev/null || \
+@@ -2164,6 +2175,7 @@ GIT-BUILD-OPTIONS: FORCE
+ 	@echo NO_PYTHON=3D\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' =
+>>$@+
+ 	@echo NO_UNIX_SOCKETS=3D\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SO=
+CKETS)))'\' >>$@+
+ 	@echo NO_MMAP=3D\''$(subst ','\'',$(subst ','\'',$(NO_MMAP)))'\' >>$@=
++
++	@echo USE_WATCHMAN=3D\''$(subst ','\'',$(subst ','\'',$(USE_WATCHMAN)=
+))'\' >>$@+
+ ifdef TEST_OUTPUT_DIRECTORY
+ 	@echo TEST_OUTPUT_DIRECTORY=3D\''$(subst ','\'',$(subst ','\'',$(TEST=
+_OUTPUT_DIRECTORY)))'\' >>$@+
+ endif
+diff --git a/cache.h b/cache.h
+index f4f7eef..37f211b 100644
+--- a/cache.h
++++ b/cache.h
+@@ -687,6 +687,7 @@ extern char *git_replace_ref_base;
 =20
-@@ -1149,6 +1152,19 @@ int cmd_update_index(int argc, const char **argv=
-, const char *prefix)
- 		die("Bug: bad untracked_cache value: %d", untracked_cache);
+ extern int fsync_object_files;
+ extern int core_preload_index;
++extern int core_watchman_sync_timeout;
+ extern int core_apply_sparse_checkout;
+ extern int precomposed_unicode;
+ extern int protect_hfs;
+diff --git a/config.c b/config.c
+index 9ba40bc..e6dc141 100644
+--- a/config.c
++++ b/config.c
+@@ -882,6 +882,11 @@ static int git_default_core_config(const char *var=
+, const char *value)
+ 		return 0;
  	}
 =20
-+	if (use_watchman > 0) {
-+		the_index.last_update    =3D xstrdup("");
-+		the_index.cache_changed |=3D WATCHMAN_CHANGED;
-+#ifndef USE_WATCHMAN
-+		warning("git was built without watchman support -- I'm "
-+			"adding the extension here, but it probably won't "
-+			"do you any good.");
-+#endif
-+	} else if (!use_watchman) {
-+		the_index.last_update    =3D NULL;
-+		the_index.cache_changed |=3D WATCHMAN_CHANGED;
++	if (!strcmp(var, "core.watchmansynctimeout")) {
++		core_watchman_sync_timeout =3D git_config_int(var, value);
++		return 0;
 +	}
 +
- 	if (active_cache_changed) {
- 		if (newfd < 0) {
- 			if (refresh_args.flags & REFRESH_QUIET)
+ 	if (!strcmp(var, "core.createobject")) {
+ 		if (!strcmp(value, "rename"))
+ 			object_creation_mode =3D OBJECT_CREATION_USES_RENAMES;
+diff --git a/configure.ac b/configure.ac
+index 0cd9f46..334d63b 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1099,6 +1099,14 @@ AC_COMPILE_IFELSE([BSD_SYSCTL_SRC],
+ 	HAVE_BSD_SYSCTL=3D])
+ GIT_CONF_SUBST([HAVE_BSD_SYSCTL])
+=20
++#
++# Check for watchman client library
++
++AC_CHECK_LIB([watchman], [watchman_connect],
++	[USE_WATCHMAN=3DYesPlease],
++	[USE_WATCHMAN=3D])
++GIT_CONF_SUBST([USE_WATCHMAN])
++
+ ## Other checks.
+ # Define USE_PIC if you need the main git objects to be built with -fP=
+IC
+ # in order to build and link perl/Git.so.  x86-64 seems to need this.
+diff --git a/environment.c b/environment.c
+index 6dec9d0..35e03c7 100644
+--- a/environment.c
++++ b/environment.c
+@@ -94,6 +94,9 @@ int core_preload_index =3D 1;
+  */
+ int ignore_untracked_cache_config;
+=20
++int core_watchman_sync_timeout =3D 300;
++
++
+ /* This is set by setup_git_dir_gently() and/or git_default_config() *=
+/
+ char *git_work_tree_cfg;
+ static char *work_tree;
+diff --git a/watchman-support.c b/watchman-support.c
+new file mode 100644
+index 0000000..b168e88
+--- /dev/null
++++ b/watchman-support.c
+@@ -0,0 +1,135 @@
++#include "cache.h"
++#include "watchman-support.h"
++#include "strbuf.h"
++#include "dir.h"
++#include <watchman.h>
++
++static struct watchman_query *make_query(const char *last_update)
++{
++	struct watchman_query *query =3D watchman_query();
++	watchman_query_set_fields(query, WATCHMAN_FIELD_NAME |
++					 WATCHMAN_FIELD_EXISTS |
++					 WATCHMAN_FIELD_NEWER);
++	watchman_query_set_empty_on_fresh(query, 1);
++	query->sync_timeout =3D core_watchman_sync_timeout;
++	if (*last_update)
++		watchman_query_set_since_oclock(query, last_update);
++	return query;
++}
++
++static struct watchman_query_result* query_watchman(
++	struct index_state *istate, struct watchman_connection *connection,
++	const char *fs_path, const char *last_update)
++{
++	struct watchman_error wm_error;
++	struct watchman_query *query;
++	struct watchman_expression *expr;
++	struct watchman_query_result *result;
++
++	query =3D make_query(last_update);
++	expr =3D watchman_true_expression();
++	result =3D watchman_do_query(connection, fs_path, query, expr, &wm_er=
+ror);
++	watchman_free_query(query);
++	watchman_free_expression(expr);
++
++	if (!result)
++		warning("Watchman query error: %s (at %s)",
++			wm_error.message,
++			*last_update ? last_update : "the beginning");
++
++	return result;
++}
++
++static void update_index(struct index_state *istate,
++			 struct watchman_query_result *result)
++{
++	int i;
++
++	if (result->is_fresh_instance) {
++		/* let refresh clear them later */
++		for (i =3D 0; i < istate->cache_nr; i++)
++			istate->cache[i]->ce_flags |=3D CE_WATCHMAN_DIRTY;
++		goto done;
++	}
++
++	for (i =3D 0; i < result->nr; i++) {
++		struct watchman_stat *wm =3D result->stats + i;
++		int pos;
++
++		if (S_ISDIR(wm->mode) ||
++		    !strncmp(wm->name, ".git/", 5) ||
++		    strstr(wm->name, "/.git/"))
++			continue;
++
++		pos =3D index_name_pos(istate, wm->name, strlen(wm->name));
++		if (pos < 0) {
++			if (istate->untracked) {
++				char *name =3D xstrdup(wm->name);
++				char *dname =3D dirname(name);
++
++				/*
++				 * dirname() returns '.' for the root,
++				 * but we call it ''.
++				 */
++				if (dname[0] =3D=3D '.' && dname[1] =3D=3D 0)
++					string_list_append(&istate->untracked->invalid_untracked, "");
++				else
++					string_list_append(&istate->untracked->invalid_untracked,
++							   dname);
++				free(name);
++			}
++			continue;
++		}
++		/* FIXME: ignore staged entries and gitlinks too? */
++
++		istate->cache[pos]->ce_flags |=3D CE_WATCHMAN_DIRTY;
++	}
++
++done:
++	free(istate->last_update);
++	istate->last_update    =3D xstrdup(result->clock);
++	istate->cache_changed |=3D WATCHMAN_CHANGED;
++	if (istate->untracked)
++		string_list_remove_duplicates(&istate->untracked->invalid_untracked,=
+ 0);
++}
++
++int check_watchman(struct index_state *istate)
++{
++	struct watchman_error wm_error;
++	struct watchman_connection *connection;
++	struct watchman_query_result *result;
++	const char *fs_path;
++	struct timeval timeout;
++	/*
++	 * Convert core_watchman_sync_timeout, in milliseconds, to
++	 * struct timeval, in seconds and microseconds.
++	 */
++
++	fs_path =3D get_git_work_tree();
++	if (!fs_path)
++		return -1;
++
++	timeout.tv_sec =3D core_watchman_sync_timeout / 1000;
++	timeout.tv_usec =3D (core_watchman_sync_timeout % 1000) * 1000;
++	connection =3D watchman_connect(timeout, &wm_error);
++
++	if (!connection) {
++		warning("Watchman watch error: %s", wm_error.message);
++		return -1;
++	}
++
++	if (watchman_watch(connection, fs_path, &wm_error)) {
++		warning("Watchman watch error: %s", wm_error.message);
++		watchman_connection_close(connection);
++		return -1;
++	}
++
++
++	result =3D query_watchman(istate, connection, fs_path, istate->last_u=
+pdate);
++	watchman_connection_close(connection);
++	if (!result)
++		return -1;
++	update_index(istate, result);
++	watchman_free_query_result(result);
++	return 0;
++}
+diff --git a/watchman-support.h b/watchman-support.h
+new file mode 100644
+index 0000000..ee1ef2c
+--- /dev/null
++++ b/watchman-support.h
+@@ -0,0 +1,7 @@
++#ifndef WATCHMAN_SUPPORT_H
++#define WATCHMAN_SUPPORT_H
++
++struct index_state;
++int check_watchman(struct index_state *index);
++
++#endif /* WATCHMAN_SUPPORT_H */
 --=20
 2.4.2.767.g62658d5-twtrsrc
