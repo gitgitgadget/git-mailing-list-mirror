@@ -1,76 +1,114 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 05/29] refname_is_safe(): insist that the refname already
- be normalized
-Date: Wed, 27 Apr 2016 16:37:29 -0400
-Message-ID: <20160427203728.GA8364@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 15/29] ref_transaction_create(): disallow recursive pruning
+Date: Wed, 27 Apr 2016 13:45:07 -0700
+Message-ID: <xmqqh9em93xo.fsf@gitster.mtv.corp.google.com>
 References: <cover.1461768689.git.mhagger@alum.mit.edu>
- <a8e1e1a9e6a48fbb20fab2144279b93a48db584a.1461768689.git.mhagger@alum.mit.edu>
- <xmqqinz39bl2.fsf@gitster.mtv.corp.google.com>
- <1461787832.11504.1.camel@twopensource.com>
- <20160427201512.GA8073@sigill.intra.peff.net>
- <1461789293.11504.5.camel@twopensource.com>
+	<615204c877610855b02b21ce14efa5b7342182bc.1461768689.git.mhagger@alum.mit.edu>
+	<xmqq60v2anyo.fsf@gitster.mtv.corp.google.com>
+	<1461788637.11504.3.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+Content-Type: text/plain
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
 	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Jeff King <peff@peff.net>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>
 To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 22:37:38 2016
+X-From: git-owner@vger.kernel.org Wed Apr 27 22:45:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avWDJ-0004sc-N6
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 22:37:38 +0200
+	id 1avWKl-0007MG-0Y
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 22:45:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753343AbcD0Uhe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 16:37:34 -0400
-Received: from cloud.peff.net ([50.56.180.127]:57886 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752486AbcD0Uhc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 16:37:32 -0400
-Received: (qmail 3836 invoked by uid 102); 27 Apr 2016 20:37:31 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 Apr 2016 16:37:31 -0400
-Received: (qmail 2114 invoked by uid 107); 27 Apr 2016 20:37:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 Apr 2016 16:37:33 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Apr 2016 16:37:29 -0400
-Content-Disposition: inline
-In-Reply-To: <1461789293.11504.5.camel@twopensource.com>
+	id S1752523AbcD0UpM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 16:45:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57656 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752227AbcD0UpL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 16:45:11 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B0ED216295;
+	Wed, 27 Apr 2016 16:45:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=s19d5yqJF+OQNDn06cYP89cMkcE=; b=sEc6PD
+	BzTqzpXusadZ2uOh2MAVH27ZXgmXnzpVwIK/8LBqOcU8yRBMT1ll5bFIc5txqcd3
+	YgT3+da3RTbF+qT1C7izHjsU+nuA8LAnNGmuZa0OKEq3RaZDHaK0ZzUY100M3Guq
+	y62s9XmATFJPQngqOHD9iAYoSor5v9B9kkl18=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xhyB1omDSrL6VXAzaNVG8sw0qkz96YY+
+	KtCu7w7yQL9uU562BRafU9EvVvilhBHruJl45uK0d/7XG5KzJD6tVE2+0AQgzWbw
+	MkggXuMxS48S8Pb4eCKSlSK4QF/l4LgbpwMjOTNe6/X9Fud2+bVsqdaH06Wx1jUy
+	iHknMADyZ9g=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A410816294;
+	Wed, 27 Apr 2016 16:45:09 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0067616293;
+	Wed, 27 Apr 2016 16:45:08 -0400 (EDT)
+In-Reply-To: <1461788637.11504.3.camel@twopensource.com> (David Turner's
+	message of "Wed, 27 Apr 2016 16:23:57 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: EE233570-0CB8-11E6-A35F-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292820>
 
-On Wed, Apr 27, 2016 at 04:34:53PM -0400, David Turner wrote:
+David Turner <dturner@twopensource.com> writes:
 
-> > I thought the point is that one is a lesser check than the other, and
-> > we
-> > need different rules for different situations. So we might allow
-> > deletion on a refname that does not pass check_refname_format(), but
-> > we
-> > must make sure it is not going to cause any mischief (e.g., escaping
-> > ".git" and deleting random files).
-> > 
-> > But anything writing a _new_ refname (whether the actual ref, or
-> > referencing it via a symref) should be using check_refname_format()
-> > before writing.
-> 
-> Unfortunately, neither check is lesser -- refname_is_safe allows
-> refs/heads//foo but not a/b while check_refname_format allows a/b but
-> not refs/heads//foo.  So sometimes we need both, while other times we
-> just need one :(
+> On Wed, 2016-04-27 at 11:47 -0700, Junio C Hamano wrote:
+>> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>> 
+>> > It is nonsensical (and a little bit dangerous) to use REF_ISPRUNING
+>> > without REF_NODEREF. Forbid it explicitly. Change the one
+>> > REF_ISPRUNING
+>> > caller to pass REF_NODEREF too.
+>> > 
+>> > Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+>> > ---
+>> > This also makes later patches a bit clearer.
+>> 
+>> I wonder if it is more future-proof to solve this by doing
+>> 
+>>     -#define REF_ISPRUNING	0x04
+>>     +#define REF_ISPRUNING	(0x04 | REF_NODEREF)
+>> 
+>> instead.  It makes the intention clear that pruning is always about
+>> the single level (i.e. no-deref).
+>
+> I think the approach in Michael's patch might be clearer than yours,
+> since someone reading the code doesn't have to look at the definition
+> of REF_ISPRUNING to understand what is going on.
 
-IMHO, that sounds like a bug. check_refname_format() should
-conceptually[1] be a superset of refname_is_safe(). Is there a case
-where we would want to _allow_ a refname that is not safe to look at on
-disk?
+I have to strongly disagree, assuming that my understanding of the
+point of this patch correctly.
 
--Peff
+If a casual reader sees this code:
 
-[1] The implementation can be a direct call, or can simply implement a
-    superset of the rules, if that's more efficient.
+    ref_transaction_delete(transaction, r->name, r->sha1,
+			   REF_ISPRUNING | REF_NODEREF, NULL, &err)
+
+it gives an incorrect impression that there may also be a valid case
+to make a "delete" call with ISPRUNING alone without NODEREF, in
+other codepaths and under certain conditions, and write an incorrect
+
+    ref_transaction_delete(transaction, refname, sha1,
+			   REF_ISPRUNING, NULL, &err)
+
+in her new code.  Or a careless programmer and reviewer may not even
+memorize and remember what the new world order is when they see such
+a code and let it pass.
+
+As I understand that we declare that "to prune a ref from set of
+loose refs is to prune the named one, never following a symbolic
+ref" is the new world order with this patch, making sure that
+ISPRUNING automatically and always mean NODEREF will eliminate the
+possibility that any new code makes an incorrect call to "delete",
+which I think is much better.
