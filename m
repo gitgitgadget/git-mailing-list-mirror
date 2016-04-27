@@ -1,144 +1,149 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v6 06/19] daemonize(): set a flag before exiting the main process
-Date: Wed, 27 Apr 2016 16:04:28 -0400
-Message-ID: <1461787481-877-7-git-send-email-dturner@twopensource.com>
-References: <1461787481-877-1-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v6 00/19] index-helper/watchman
+Date: Wed, 27 Apr 2016 16:04:22 -0400
+Message-ID: <1461787481-877-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Wed Apr 27 22:06:44 2016
+X-From: git-owner@vger.kernel.org Wed Apr 27 22:06:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avVjN-0003h7-TI
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 22:06:42 +0200
+	id 1avVjM-0003h7-5I
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 22:06:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753712AbcD0UGi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Apr 2016 16:06:38 -0400
-Received: from mail-qk0-f182.google.com ([209.85.220.182]:32913 "EHLO
-	mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753256AbcD0UFR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 16:05:17 -0400
-Received: by mail-qk0-f182.google.com with SMTP id n63so23535856qkf.0
-        for <git@vger.kernel.org>; Wed, 27 Apr 2016 13:05:16 -0700 (PDT)
+	id S1753320AbcD0UFL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Apr 2016 16:05:11 -0400
+Received: from mail-qg0-f48.google.com ([209.85.192.48]:36090 "EHLO
+	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753065AbcD0UFJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 16:05:09 -0400
+Received: by mail-qg0-f48.google.com with SMTP id d90so21813109qgd.3
+        for <git@vger.kernel.org>; Wed, 27 Apr 2016 13:05:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Nl3fugkTQAnDSHcKP9j4UztqtVTu+w4OYfeOvg4LTaA=;
-        b=q/yYy10UOIi/3bPrgvhnt79orrtpNzI+fc8fJEy7xcickm8vIaSzEU7PndghYxgutE
-         yDEF7De2o8W6eUTaVpWOCtYMJvtSUk1UbruKxoxCofZ0QI2Cycg7gA9Pt4DZTOgBI5kJ
-         sULWgJDJn4fgpJ5Ykpr/W0/HAytSIusMWL4rpeIsv3ct8XkXyIQKU72pSFELOifOtDgh
-         ga5wGurwjZqGVr+NWM+vERRqCz2APYuVc1WUm+4hUB7pCqoiSuA7v6arzCHO7AfvkImi
-         5d1YiM4uTQxIIh6E41FfidH4D4vPjmAKHbee0LYc8NCIIH7sl8yKZqLdWhIHvs4TOYcD
-         EfnQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=M1Zky+jckzImQc7PEnzFVpzuVQSJPr07TEbIXk8XXkI=;
+        b=EDZ+5W//+C8DwahbEvim5GfSdniXoDjPAlmFE7D01JIWo12RpRmkeCgSJpW0yE2pqv
+         Phq0hzje3JsFxYW3jonfdyV3Y+YIBfmOBx+wqBoEWYiFYsL7rzeSMtaD54iwQchAON3E
+         XpIB3zpIgvLRHb18KmLk0R695RyVTfiFeYnMTNHWcU/Qd99f+NYCgz+YxnVPKrLM3uVK
+         8zA6b9sOLTVkWByTWgfiW9RDRueha4jQPqreMHQ45+FA/rGg+ZQ0D2l3UZTslzdzynPe
+         637MkeZHa3OEvzwBo/RZVIiazkfZ0h6X/6zKz+KDbdW1oLVkN5drMoaciiY1dxNDJ4Ez
+         9BPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Nl3fugkTQAnDSHcKP9j4UztqtVTu+w4OYfeOvg4LTaA=;
-        b=VJXfSQF1KU8rXZ5XLDFUOpDeE8/y5a+olDfsQTvPP94yRU786du9uh3vnFaQMbM0DD
-         1MFXf1TKzZloD/bxNcESn/vgfUfykunU1eny26Pu1EjzQUtZ3IEaTCKon0rVt5ZZzO4l
-         7GlsE9qYkRH4XEjUul5UfNVcw2TPoEHtst8qCp8/hpJCIx9CehrWUNuUiTng0MxasLZ2
-         fzxUNSjVOcrFI6Iw5yHt87hwU4O5hvsvYwxo29rq6uVt65jEp773URz93YUBlp9Z6IdO
-         B0vewn0QVmJmRGGRMTyNhJEqmgKkDgt2h3EOEmRWxO9zeKl0aXyteDW1lnC4ZSCh62ie
-         dLqw==
-X-Gm-Message-State: AOPr4FUZ6k9MEYcEvNFwA5yNy5xnMxl/0fFcsPBzWd7997po0o3CeMtpSaYekg8QWVaIww==
-X-Received: by 10.55.33.92 with SMTP id h89mr11162848qkh.143.1461787516105;
-        Wed, 27 Apr 2016 13:05:16 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=M1Zky+jckzImQc7PEnzFVpzuVQSJPr07TEbIXk8XXkI=;
+        b=g6TRqemuqT4e8x2NDJ2S4+jFc80V+giYjuYcAFdGfcfpB/1/SSsma3ykn4Z8BoB+g5
+         N8vOOAAgWlEVuQRNz0wBzloTql38ci3Q2sCbibyZe12W3YoNot/AOSBLTYHOdRJt8j/n
+         xZ4ycOgzyL//CiS0ZKihLeFp+xLph/7N7QU5pX2Y0mFbJ6aqR4TcUK5SMBqWoi0Sy3OB
+         7a97UVYw7+Fy/frpPfryBxV8SK+EEK0bgWS9/l++w3IslTEe/Hj/T574gkZgH99n9TOu
+         7YAh3m7yjaQT9Z5G218JddVsSgB+C8cBBQ5tHDQgpZhapTHt1JS3o+ebW4SQnxejIVfq
+         bWbg==
+X-Gm-Message-State: AOPr4FVvDr9SXBWej56+kQmZ49Nab8a1yiFJsuTl2yz5unmmXxQZmhBSmW1m0esXCZYFSQ==
+X-Received: by 10.140.30.10 with SMTP id c10mr10323869qgc.87.1461787508596;
+        Wed, 27 Apr 2016 13:05:08 -0700 (PDT)
 Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id r124sm1700085qhr.48.2016.04.27.13.05.15
+        by smtp.gmail.com with ESMTPSA id r124sm1700085qhr.48.2016.04.27.13.05.07
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 27 Apr 2016 13:05:15 -0700 (PDT)
+        Wed, 27 Apr 2016 13:05:07 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
-In-Reply-To: <1461787481-877-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292805>
 
-=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+What's new:
 
-This allows signal handlers and atexit functions to realize this
-situation and not clean up.
+1. configs for automatically populating the untracked-cache and
+watchman extensions.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
-Signed-off-by: David Turner <dturner@twopensource.com>
----
- builtin/gc.c | 2 +-
- cache.h      | 2 +-
- daemon.c     | 2 +-
- setup.c      | 4 +++-
- 4 files changed, 6 insertions(+), 4 deletions(-)
+2. index-helper errors go to index-helper.log (index-helper redirects s=
+tdout,
+stderr)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index c583aad..37180de 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -385,7 +385,7 @@ int cmd_gc(int argc, const char **argv, const char =
-*prefix)
- 			 * failure to daemonize is ok, we'll continue
- 			 * in foreground
- 			 */
--			daemonized =3D !daemonize();
-+			daemonized =3D !daemonize(NULL);
- 		}
- 	} else
- 		add_repack_all_option();
-diff --git a/cache.h b/cache.h
-index 4b678e9..0aeb994 100644
---- a/cache.h
-+++ b/cache.h
-@@ -530,7 +530,7 @@ extern int set_git_dir_init(const char *git_dir, co=
-nst char *real_git_dir, int);
- extern int init_db(const char *template_dir, unsigned int flags);
-=20
- extern void sanitize_stdfds(void);
--extern int daemonize(void);
-+extern int daemonize(int *);
-=20
- #define alloc_nr(x) (((x)+16)*3/2)
-=20
-diff --git a/daemon.c b/daemon.c
-index 8d45c33..a5cf954 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -1365,7 +1365,7 @@ int main(int argc, char **argv)
- 		return execute();
-=20
- 	if (detach) {
--		if (daemonize())
-+		if (daemonize(NULL))
- 			die("--detach not supported on this platform");
- 	} else
- 		sanitize_stdfds();
-diff --git a/setup.c b/setup.c
-index de1a2a7..9adf13f 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1017,7 +1017,7 @@ void sanitize_stdfds(void)
- 		close(fd);
- }
-=20
--int daemonize(void)
-+int daemonize(int *daemonized)
- {
- #ifdef NO_POSIX_GOODIES
- 	errno =3D ENOSYS;
-@@ -1029,6 +1029,8 @@ int daemonize(void)
- 		case -1:
- 			die_errno("fork failed");
- 		default:
-+			if (daemonized)
-+				*daemonized =3D 1;
- 			exit(0);
- 	}
- 	if (setsid() =3D=3D -1)
+3. Duy's "Add tracing to measure where most of the time is spent"
+
+4. index-helper sends/receives watchman status (OK/NAK)
+
+5. use packet_read infrastructure for communication with index-helper.
+
+6. rearranged a tiny bit of code so two instances match up
+
+I decided not to do the weird thing where we pass fds over the socket,
+because the mailing list consensus was that it was maybe too weird.
+
+David Turner (8):
+  index-helper: log warnings
+  unpack-trees: preserve index extensions
+  watchman: add a config option to enable the extension
+  index-helper: kill mode
+  index-helper: don't run if already running
+  index-helper: autorun mode
+  index-helper: optionally automatically run
+  untracked-cache: config option
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (11):
+  read-cache.c: fix constness of verify_hdr()
+  read-cache: allow to keep mmap'd memory after reading
+  index-helper: new daemon for caching index and related stuff
+  index-helper: add --strict
+  daemonize(): set a flag before exiting the main process
+  index-helper: add --detach
+  read-cache: add watchman 'WAMA' extension
+  Add watchman support to reduce index refresh cost
+  index-helper: use watchman to avoid refreshing index with lstat()
+  update-index: enable/disable watchman support
+  Add tracing to measure where most of the time is spent
+
+ .gitignore                               |   2 +
+ Documentation/config.txt                 |  12 +
+ Documentation/git-index-helper.txt       |  78 +++++
+ Documentation/git-update-index.txt       |   6 +
+ Documentation/technical/index-format.txt |  22 ++
+ Makefile                                 |  18 ++
+ builtin/gc.c                             |   2 +-
+ builtin/update-index.c                   |  16 +
+ cache.h                                  |  16 +-
+ config.c                                 |   5 +
+ configure.ac                             |   8 +
+ daemon.c                                 |   2 +-
+ diff-lib.c                               |   4 +
+ dir.c                                    |  25 +-
+ dir.h                                    |   6 +
+ environment.c                            |   3 +
+ git-compat-util.h                        |   1 +
+ index-helper.c                           | 511 +++++++++++++++++++++++=
+++++++
+ name-hash.c                              |   2 +
+ preload-index.c                          |   2 +
+ read-cache.c                             | 533 +++++++++++++++++++++++=
++++++++-
+ refs/files-backend.c                     |   2 +
+ setup.c                                  |   4 +-
+ t/t1701-watchman-extension.sh            |  37 +++
+ t/t7063-status-untracked-cache.sh        |  22 ++
+ t/t7900-index-helper.sh                  |  68 ++++
+ t/test-lib-functions.sh                  |   4 +
+ test-dump-watchman.c                     |  16 +
+ unpack-trees.c                           |   1 +
+ watchman-support.c                       | 135 ++++++++
+ watchman-support.h                       |   7 +
+ 31 files changed, 1549 insertions(+), 21 deletions(-)
+ create mode 100644 Documentation/git-index-helper.txt
+ create mode 100644 index-helper.c
+ create mode 100755 t/t1701-watchman-extension.sh
+ create mode 100755 t/t7900-index-helper.sh
+ create mode 100644 test-dump-watchman.c
+ create mode 100644 watchman-support.c
+ create mode 100644 watchman-support.h
+
 --=20
 2.4.2.767.g62658d5-twtrsrc
