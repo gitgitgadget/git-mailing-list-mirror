@@ -1,84 +1,104 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: [PATCH] Makefile: remove dependency on git.spec
-Date: Wed, 27 Apr 2016 19:54:35 +0200
-Message-ID: <20160427175431.GA15178@spirit>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v14 3/6] t0040-parse-options: improve test coverage
+Date: Wed, 27 Apr 2016 13:55:36 -0400
+Message-ID: <CAPig+cQJok5HnFYqqhvDxAKnoEjiwrzGuc04EWrnYBYcUfQpLA@mail.gmail.com>
+References: <010201540cb60832-9402a692-3caa-47a1-9e8e-ae5a1bc7eb2f-000000@eu-west-1.amazonses.com>
+	<010201540cb60965-887d5e4b-b12d-4477-8271-eefa349ceddd-000000@eu-west-1.amazonses.com>
+	<CAPig+cTB=bYNxR8yN2CGvkmtCZKomnbdNnZon9HA5uE9aivW=Q@mail.gmail.com>
+	<CAFZEwPMU5KSoBJ0kHGnnPCq0zsoj8ROAXhJ9HFn66fqDehvWGw@mail.gmail.com>
+	<CAPig+cSvvAJT6yb2h6B1S5LDr8H03t-b66rmbKWpo88Fw-ehmg@mail.gmail.com>
+	<CAFZEwPMsmay+tv48p=zh3r4L1d38tNU0Z6zyn3Op_pd-nsv3Aw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Apr 27 19:54:44 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 27 19:55:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avTff-0005Zl-Lg
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 19:54:44 +0200
+	id 1avTgd-0005sZ-75
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 19:55:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752377AbcD0Ryk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 13:54:40 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:37284 "EHLO
-	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751774AbcD0Ryj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 13:54:39 -0400
-Received: by mail-wm0-f48.google.com with SMTP id a17so26790077wme.0
-        for <git@vger.kernel.org>; Wed, 27 Apr 2016 10:54:38 -0700 (PDT)
+	id S1752863AbcD0Rzj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 13:55:39 -0400
+Received: from mail-ig0-f196.google.com ([209.85.213.196]:35178 "EHLO
+	mail-ig0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752287AbcD0Rzi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 13:55:38 -0400
+Received: by mail-ig0-f196.google.com with SMTP id fn8so8138681igb.2
+        for <git@vger.kernel.org>; Wed, 27 Apr 2016 10:55:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=xn3E1obApCmdlrodTxCs7/J1bHkaXJxpGuO4PciDXz4=;
-        b=f10licTpGqZ2IFFGGMSrtxIJbS6e0Z3xCOzFmNtrd+TO4pga0lkJxIrTlMNQ+vFcbl
-         th02BHHTdHazZp8r+0Bd48aBn8ubxs24PwoMnoqRkO4jMt/bJoINcr8RDxZ+QqJci9kl
-         u6V4KzogchC3V/6nyDLS+l+jSbgPqiRgEL4s/13J69dTi6MfW8ohTKw4h8GkzIy0ANEK
-         mSWLtyyZg9BVAYfZQVo9PV2yUZ7sBmRssRW56xqsLQHyvktqAixkV2x1bjcXajJLPRnu
-         d7gvgCLLjMrU9PQMH22GdMKfRD4ZlEINGwdbPEfgknmAcWjkT4ZjQEs7DYJcH3Igj/Ck
-         KO4Q==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=UuIAcPU23v7UT6CIss66obkIFfCLSBVVs9blyiCCioc=;
+        b=nPXoy4ZPTxUcris5O3TmmaYfxdHa5OoMCcSLad3OB8rtkSHPqoa+cOTdy4/Xw4oE13
+         jr6uwsgKhhyf7H6N/NnMc+XZoMUnCQcNvuMgQ3KyKXOwS3Q6Mh511FH/NavT0i9x/UAq
+         3KS9Aked+RvQOEQFKFLV559NPI6iCz+TTk3XalndMDW+n2TasKOJh5xbpJ0augXGb30I
+         lx8gxCAiTne7mui5FhyHDiYB38fraqYt2Rb5D/okZu5y3SSJ2R6OgQ4X+8kSBgHS2JXE
+         AoGcfbAh3yXNbirgIXnK6f+eGikjFmCiAD6w7j74LHUybpvK8E0Hed7fsf2T8HDXl06A
+         r+rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=xn3E1obApCmdlrodTxCs7/J1bHkaXJxpGuO4PciDXz4=;
-        b=TMW3oXFhb+PYdIJVyvEVRq9krIPUinhowXYAY/KS68UISROmUI2I1jNVTlMghyx7wK
-         p3jT9Zp/aLgMFyp1Oj25E4t1aw1dYbi26r912f9gltgRbPsSksDorhbVKe5h3ksp6cYe
-         0RJPeU87pstgfH1v76uYAiQtyGXh1s1bQPlXSKS92FUMXeGK6G4ScTgGWnWaoNjEWBuI
-         wDW74jVxhTCdNeBLOiV3PyP9t2BH8I5ZW1Yfbpfv6fYN22n9qQYTG4BIpSboESYeOHLZ
-         ONRkLEo1q52i4qwJvR+O5PY7JVfu1FNECU8/VC3jNYVCcOQ/+DXIgdVLTE+9UcMc225T
-         +dsQ==
-X-Gm-Message-State: AOPr4FUS3T9Kucwkr2PzLiym/VLBC15YBWp+bETClQq7J/gILZuOy5FoKi0V6I2ajat3lA==
-X-Received: by 10.194.201.37 with SMTP id jx5mr10456694wjc.60.1461779677518;
-        Wed, 27 Apr 2016 10:54:37 -0700 (PDT)
-Received: from spirit ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id gr4sm5204971wjd.23.2016.04.27.10.54.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Apr 2016 10:54:36 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=UuIAcPU23v7UT6CIss66obkIFfCLSBVVs9blyiCCioc=;
+        b=WELwf3/Lc19u/D4fKamaKi2oYV5AH3u1268noalVNnhYl9I4DJuDpB8XDKx3BrPJTo
+         QW/ZggPb+WS93J79ZNAylpXLsinuEwk6YdokfrEdQD84qjazo/sgBllnZmd4uV+jwaH/
+         lPtVS3DsThXMgRHfS72DDenY4eapd2Qk6tyMEFCmWFfuQ5MtWhsD8KEi8fvxNzScTky+
+         nbGE9a0f+2F9SEF/xoyonk0hGbwxVgUjQkLDoDYHNgOQ4Oic9bG9NvmDdAuksF2qh2eM
+         G2RqQphjLBdoDFCnsKP8ST3xWokxbmFtr+nMl8MhnTGRiQMS6vXfappMnHAnf8P7xgyJ
+         Gfjw==
+X-Gm-Message-State: AOPr4FWrIwrBEAwbrh0snNGVQrY+AFFcLpHKNx4wmA4L+OTt1cZfCLefEdcD07LnmUxsAqKYkya2RywRKCuZ+g==
+X-Received: by 10.50.49.15 with SMTP id q15mr11820388ign.73.1461779736672;
+ Wed, 27 Apr 2016 10:55:36 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Wed, 27 Apr 2016 10:55:36 -0700 (PDT)
+In-Reply-To: <CAFZEwPMsmay+tv48p=zh3r4L1d38tNU0Z6zyn3Op_pd-nsv3Aw@mail.gmail.com>
+X-Google-Sender-Auth: iVrwHUuoWrokfrKCd967zao_9oU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292776>
 
-ab21433 dropped support for rpmbuild using our own specfile by removing
-git.spec.in, but forgot to remove the dependency of dist on git.spec.
+On Mon, Apr 25, 2016 at 2:40 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+> On Wed, Apr 13, 2016 at 10:57 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> Each of these patches should have a single conceptual purpose. It
+>> seems, from the above explanation, that you're mixing and mismatching
+>> bits of such changes between patches.
+>>
+>> * The two new tests for --no-verbose and --no-quiet should be together
+>> and check that they correctly reverse --verbose and --quiet,
+>> respectively.
+>>
+>> * The test you describe above which ensures that --no-quiet leaves
+>> 'quiet' at 0 should be bundled with the change that might break that
+>> behavior, namely, the OPT__COUNTUP() change.
+>
+> I am planning to re-roll this.
+> So, I am just confirming whether I understood properly.
+>
+>  * I will add the tests for check for '-q --no-quiet' instead of just
+> '--no-quiet' sets to 0 and '-v --no-verbose' sets to 0 in the patch
+> which improves test coverage which will be before the OPT_COUNTUP()
+> change.
 
-Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
----
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+These tests would be even a bit more interesting if you tested "-q -q
+--no-quiet" and "-v -v --no-verbose", respectively, to ensure that the
+"no" options actually reset to 0 rather than merely decrementing by 1.
 
-diff --git a/Makefile b/Makefile
-index 23182bc..8083b10 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2396,7 +2396,7 @@ quick-install-html:
- ### Maintainer's dist rules
- 
- GIT_TARNAME = git-$(GIT_VERSION)
--dist: git.spec git-archive$(X) configure
-+dist: git-archive$(X) configure
- 	./git-archive --format=tar \
- 		--prefix=$(GIT_TARNAME)/ HEAD^{tree} > $(GIT_TARNAME).tar
- 	@mkdir -p $(GIT_TARNAME)
--- 
-2.8.1-387-gd7fd66b
+I recall also suggesting adding a new test checking that "-q -q"
+increments the quiet count to 2 (which could be done in the patch
+which makes 'quiet' print as a number instead of a boolean or in the
+same "improve test coverage" patch).
+
+>  * I will then add the test for '--no-quiet' sets to 0 in the separate
+> patch after OPT_COUNTUP() change.
+
+No, this and "--no-verbose sets to 0" are logically related to the
+OPT__COUNTUP() change, thus would be incorporated into that patch.
+Alternately, these two tests could just be part of "improve test
+coverage" patch, establishing base behavior which the OPT__COUNTUP()
+patch shouldn't break.
