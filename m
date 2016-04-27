@@ -1,79 +1,84 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: BUG on OSX `git p4 submit` can fail when the workspace root
- doesn't exist locally.
-Date: Wed, 27 Apr 2016 13:53:50 -0700
-Message-ID: <CAGZ79kZX5H8ddhZQa4r9SPyhAYo=o6gBae3oPCYQ6iNtxXq1Cg@mail.gmail.com>
-References: <CAMsgv2UXPkxpocjKhoR7HbmubSBnhJPJ3hMq9Jsk2AD0DoCifA@mail.gmail.com>
-	<CAGZ79kZ6rx4UpPmeGjC8TyHKbVd+Y6i1JyEdDzKuF_9rj4c_7g@mail.gmail.com>
-	<CAMsgv2W7mtJpFf6A4MZs-Sbvdof8EdOOP+uiGYudH8LUjNRo8g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bisect limited to Merge Commits
+Date: Wed, 27 Apr 2016 13:56:42 -0700
+Message-ID: <xmqq8tzy93ed.fsf@gitster.mtv.corp.google.com>
+References: <20160427204551.GB4613@virgo.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Jacob Smith <jaroslov@gmail.com>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Wed Apr 27 22:53:56 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Hagen Paul Pfeifer <hagen@jauu.net>
+X-From: git-owner@vger.kernel.org Wed Apr 27 22:56:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avWT5-0001ad-RC
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 22:53:56 +0200
+	id 1avWVu-0002WE-6M
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 22:56:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752533AbcD0Uxw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 16:53:52 -0400
-Received: from mail-io0-f180.google.com ([209.85.223.180]:33874 "EHLO
-	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751553AbcD0Uxv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 16:53:51 -0400
-Received: by mail-io0-f180.google.com with SMTP id 190so52980862iow.1
-        for <git@vger.kernel.org>; Wed, 27 Apr 2016 13:53:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=mjDamN/CN5NjEuSMBarToP/qZavbv6kwhbLKP81AXmQ=;
-        b=St8BBKzAPr0WKWd5yneg90+hC+7pBg7Pf7iEew77wLAiIASnZvwaLn5/NoxeXAojVm
-         vvxfP1EYHTS2thYCGd2CLPZ53gbqKoJaCZNHnfm3S2dOpOQdwweWeEc3as2snPUVNADa
-         KRVMguVAyeUE+M+rw0THB+zc8B+rLfwUBkAkoU5JsbNgXxCxdaooksG/IajYJvRBVRWa
-         3QTNEhqR5X3I7rSlhbXN6IKmZaW8UAJeqdseeyTedlQZ0fGp680T8V589dQ7tgPW7RKA
-         YlI7lyvayTj9p7Q4XD8ODzNPmJEf4Xn5Ji4siwn93PRUpd9AtXR6Rxl9wgzt9RLHA8xi
-         5sMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=mjDamN/CN5NjEuSMBarToP/qZavbv6kwhbLKP81AXmQ=;
-        b=UAn/1j79pplBrbK34qJnMpYpfm+vsXCQpyyrhRYBewX1vrb0jjTJ3+NXKyXExwQoy8
-         p7qIDMV9L6W4kgTrTVJC3/EqjZBIF1OClku5AyYn2m9ERYMlCau/oELFHcNsf0DZO3La
-         NtmzpAWxfDiqkEM4/C2KQGL4l8wQAjwljg6GCgaHzq3kVomrxjEbGHXesNPaOfBDxmw4
-         pNl0Xk0j44iw7PqUFKDKGcf4mIMwFKP0LNKkxpdvNwTEo5NsHzFmCNSqMCGOWQnZp1Ae
-         3qNPeftIX3/UjXcH7QWuZV3QQFLyeYAbTze12LkClnDEgR1sgkIjnpzFq2G07KEtrSEv
-         LIEg==
-X-Gm-Message-State: AOPr4FWu9j661I0SdydZQ9Jvkr6FFtJq+rQ/XNafrQKSptxS/smugWwntogtwlH+DzuUVokgxF5zjhd8IhSNtUvK
-X-Received: by 10.107.174.205 with SMTP id n74mr12797787ioo.96.1461790430252;
- Wed, 27 Apr 2016 13:53:50 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Wed, 27 Apr 2016 13:53:50 -0700 (PDT)
-In-Reply-To: <CAMsgv2W7mtJpFf6A4MZs-Sbvdof8EdOOP+uiGYudH8LUjNRo8g@mail.gmail.com>
+	id S1753419AbcD0U4q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 16:56:46 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62212 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753375AbcD0U4p (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 16:56:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 43D9E16380;
+	Wed, 27 Apr 2016 16:56:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bD9ClUpELxflMfIf51ZQCoR0WGM=; b=c4Ca6a
+	hbwhRGbhBKcKn7OW+O8BzwaFGeFPlFOPZN3AAC3/YyNnpvCZdhg4cFKVg7IFtZpQ
+	tiELNB3IixUmEt6/kcp+iyEksgC7bapGe9cuHqm/Hn5UeUqSayj0yqzTgel6i7Dh
+	OkqByAmKIEUT0oFkXEE6qXgla5LsVYjV+THrY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qXXh1RjWnK0/LIt/5iGdi42XuPaZcWul
+	YFVs5lgTZWvlKL6c61+6OOdETGk38kctF3I2qmlcgIPJRzrgGJLhQ60JDkjQcPEK
+	wSTppb4vcdsxaP70u2MCm+3mRngHyibKYjIZjs5t0tvlCWEh4bDzdKadGq/u/YrX
+	oAVD5Gsw1qo=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3BDF71637F;
+	Wed, 27 Apr 2016 16:56:44 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A13901637E;
+	Wed, 27 Apr 2016 16:56:43 -0400 (EDT)
+In-Reply-To: <20160427204551.GB4613@virgo.localdomain> (Hagen Paul Pfeifer's
+	message of "Wed, 27 Apr 2016 22:45:51 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8C2EEA2E-0CBA-11E6-B97B-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292824>
 
-On Wed, Apr 27, 2016 at 11:06 AM, Jacob Smith <jaroslov@gmail.com> wrote:
-> I debugged the issue using the script here:
->     https://github.com/git/git/blob/master/git-p4.py
-> I'm not sure how close to the main repo that is.
->
-> On Wed, Apr 27, 2016 at 11:28 AM, Stefan Beller <sbeller@google.com> wrote:
->> On Wed, Apr 27, 2016 at 9:15 AM, Jacob Smith <jaroslov@gmail.com> wrote:
->>> On OS X,
->>
->> Do you use the Git as provided from OS X? In that case you better report the bug
->> to Apple, as their version of Git is slightly different (not close on
->> upstream, by both
->> having additional patches as well as not following the upstream closely IIUC).
+Hagen Paul Pfeifer <hagen@jauu.net> writes:
 
-In that case, I have cc'd Luke and Lars, who work on p4
+> Imagine a "rebase feature branch" style of development. All features are
+> developed on separate features branch which are rebased on master and
+> immediately merged into the upstream master. 
+
+I do not want to imagine such ;-)  The only semi-sensible reason why
+people might want to always rebase on top of 'master' is to keep the
+history completely linear, so with such a workflow, there won't be a
+merge commit.
+
+But I think "rebase" part of your description is a red herring.  If
+a development goes by always doing a new feature in a side branch
+and then merge the branch only after it is done to the 'master'
+branch, then bisecting only the commits on first-parent chain would
+often be a quick first-pass to find the topic whose merge into the
+'master' branch introduced a breakage.  From there you can dig down
+to each individual commit on the side branch.  And for that, it is
+immaterial that the side branch gets rebased on 'master' and forced
+to become a merge with "--no-ff", of the side branch was developed
+on older upstream but in a careless way full of "oops, previous one
+I broke the entire world and it does not even compile; this commit
+fixes it" commits.
+
+So being able to stop at only commits on the first-parent chain is a
+valid and useful tool.  "git bisect --first-parent" is one of the
+things that are sometimes asked for.
