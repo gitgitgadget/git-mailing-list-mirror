@@ -1,85 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Move test-* to t/helper/ subdirectory
-Date: Wed, 27 Apr 2016 09:15:41 -0700
-Message-ID: <xmqqy47z9geq.fsf@gitster.mtv.corp.google.com>
-References: <1460553762-12419-1-git-send-email-pclouds@gmail.com>
-	<xmqqwpnkc9ca.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8A8vbp4-LrxoNX510Nme97EKfu0hBBs-LDRap1Z5=v3rA@mail.gmail.com>
-	<20160427101833.GA5536@lanh>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: BUG on OSX `git p4 submit` can fail when the workspace root
+ doesn't exist locally.
+Date: Wed, 27 Apr 2016 09:28:55 -0700
+Message-ID: <CAGZ79kZ6rx4UpPmeGjC8TyHKbVd+Y6i1JyEdDzKuF_9rj4c_7g@mail.gmail.com>
+References: <CAMsgv2UXPkxpocjKhoR7HbmubSBnhJPJ3hMq9Jsk2AD0DoCifA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 18:15:50 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Jacob Smith <jaroslov@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 27 18:29:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avS7x-0005Mf-DI
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 18:15:49 +0200
+	id 1avSKr-0001e7-PM
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 18:29:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753135AbcD0QPp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 12:15:45 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59237 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753126AbcD0QPo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 12:15:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 78C1B15823;
-	Wed, 27 Apr 2016 12:15:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tcqj+GjBEOMaRXGMQfyJ6lWiHuo=; b=XlDEwz
-	d5g1NaCj4dD9yQQ7v5I4lSouA52j69xgKkFPg4+9ypBOvGkvcnofvMKI/aIMRenj
-	p49rBuwKb9ynGIdIc60SC7qoCcirgV1+NUx5w/67HFK7lrCTogZX/KRvuDgKDk6T
-	7j/0PJOZQPS6N8u30XfFVU1ZHN2Kb0DbjplEs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gmKKAOoDct5Z09WG0xx3/+OE5ivFAd+w
-	/90HKrnJkzPicLRKgoQtwxNCytvFREUnZ5lpDksfEMFpiCkJ9bAGoTbgAYgxzVPO
-	gQ9NQHkyhQlkD1R5MeoGTIztzL8mfxe+PqyMRohtbWPop6qBlbl3DdYa+UQOi34c
-	HztJBVCO2QA=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 70DBF15822;
-	Wed, 27 Apr 2016 12:15:43 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AC24615821;
-	Wed, 27 Apr 2016 12:15:42 -0400 (EDT)
-In-Reply-To: <20160427101833.GA5536@lanh> (Duy Nguyen's message of "Wed, 27
-	Apr 2016 17:18:34 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4A45875C-0C93-11E6-B18E-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1753660AbcD0Q3E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 12:29:04 -0400
+Received: from mail-io0-f180.google.com ([209.85.223.180]:36453 "EHLO
+	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752666AbcD0Q3B (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 12:29:01 -0400
+Received: by mail-io0-f180.google.com with SMTP id u185so59533756iod.3
+        for <git@vger.kernel.org>; Wed, 27 Apr 2016 09:29:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=ekg14dkjnHjAHP3iVeT/bXJdO1uQ4op0KIXW0C+dKFE=;
+        b=UHfi59WweRbCZqLlC+11x47vFDh/djczavB07sa5990Ud9SXjdZ3gTA+G1a95lGkT6
+         NEXt/D/kaYgzxunGdWp9insWt+G68iDGzN9v3r3BhW+b1i7ERx9Ght+5RL4Bmrkw36Vw
+         5uD3J4ru1KhR17S7y3i0E5lho+ZQyqjBbSpIpZQnds7AyGXCdZtxpjbvJ6GpLFCRPOU+
+         6kEdt1KiP+ooNHzabNVJi1TvQkJb85TOTKGkc+cBbLDrj8vWNI226DBDMsV2A0QKAN+q
+         pHGHMZbPPvdWqas/JECCe3xXqIZdrrO3/eOHs/ryKZvwqL2x9YKtHd0WSiUr3gvPYlLP
+         7JWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=ekg14dkjnHjAHP3iVeT/bXJdO1uQ4op0KIXW0C+dKFE=;
+        b=A8HolFS8hbo7XIHCtgLel/4Jr7jAFwcHVPVdpDE9akJLHXIT11waaLwqrf/qZ6UT2u
+         +wB+HL/fM3Vyg3hfXahfJ+oE8iu9wpb+QGInJ/izsA4LVcihKQadMdP0bZ9fsfqcV9FJ
+         cy9I5iAW49ewDNc/5ZMjU78nd2srxP/DMkZitT7oxfwT5rYEwobhWfHkQNo2iZUok65Z
+         nKMfeZIJYSRwK1a5pfWf+4jQZk4Ii9bPgj54HUd+e2lPUNc8H4+OzY8SyLZtNy7OQb3H
+         lBK+htTQ3vYVwmumSKewFOuvQPHjevQTGqFUoNit6gqlMqG3W8h/jvDojv7wXbDhPVsp
+         z+wg==
+X-Gm-Message-State: AOPr4FW7TacWLNuA8ecWKPt2sm4gBveshBd5tPD4RHyi5wNgUB5eWbOPYSn6rQ4n68QcdD/V+AJuJ4zD4i8xK6/w
+X-Received: by 10.107.174.205 with SMTP id n74mr11392949ioo.96.1461774535787;
+ Wed, 27 Apr 2016 09:28:55 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Wed, 27 Apr 2016 09:28:55 -0700 (PDT)
+In-Reply-To: <CAMsgv2UXPkxpocjKhoR7HbmubSBnhJPJ3hMq9Jsk2AD0DoCifA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292741>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Wed, Apr 27, 2016 at 9:15 AM, Jacob Smith <jaroslov@gmail.com> wrote:
+> On OS X,
 
-> This patch forces bin-wrappers regeneration every time a test program
-> is updated. A bit wasteful, but I don't see a better option (which is
-> also why I limit this to test programs only).
-
-In other words, when we update the location where the programs that
-would be eventually installed are created, we'd see the same
-problem.
-
-I actually wonder if it is a better overall structure to move
-t/helper/test-foo back to test-foo, while keeping the source file
-that contains main() for test-foo at t/helper/test-foo.c.  Then we
-do not have to have many copies that are slightly different in
-bin-wrappers, but they can all be
-
-	exec "${GIT_EXEC_PATH}/$0" "$@"
-
-instead of "bin-wrappers/git-bar" being
-
-	exec "${GIT_EXEC_PATH}/git-bar" "$@"
-
-and "bin-wrappers/test-foo" being
-
-	exec "${GIT_EXEC_PATH}/t/helper/test-foo" "$@"
+Do you use the Git as provided from OS X? In that case you better report the bug
+to Apple, as their version of Git is slightly different (not close on
+upstream, by both
+having additional patches as well as not following the upstream closely IIUC).
