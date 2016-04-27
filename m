@@ -1,104 +1,124 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 01/15] string_list: add string_list_duplicate
-Date: Wed, 27 Apr 2016 14:17:34 -0700
-Message-ID: <CAGZ79kagX5TJU_mbjpo4PKJDoc1wh24DhyS814Kkq76EU9aykA@mail.gmail.com>
-References: <1461703833-10350-1-git-send-email-sbeller@google.com>
-	<1461703833-10350-2-git-send-email-sbeller@google.com>
-	<xmqqh9eoc7zc.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kbWMN3YG5Jtz8i8Y9A3id8bX-YxSWp19+yGAdzMX_wKKA@mail.gmail.com>
-	<xmqqzise7o4l.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 27 23:17:41 2016
+Subject: [PATCH 2/2] submodule-config: don't shadow `cache`
+Date: Wed, 27 Apr 2016 14:30:40 -0700
+Message-ID: <1461792640-18898-2-git-send-email-sbeller@google.com>
+References: <1461792640-18898-1-git-send-email-sbeller@google.com>
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Apr 27 23:31:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avWq4-0000Pn-Gx
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 23:17:41 +0200
+	id 1avX2x-0004eb-5M
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 23:30:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752625AbcD0VRg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 17:17:36 -0400
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:33462 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752322AbcD0VRg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 17:17:36 -0400
-Received: by mail-ig0-f173.google.com with SMTP id c3so1073105igl.0
-        for <git@vger.kernel.org>; Wed, 27 Apr 2016 14:17:35 -0700 (PDT)
+	id S1753787AbcD0Vas (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 17:30:48 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:34031 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753775AbcD0Var (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 17:30:47 -0400
+Received: by mail-pa0-f51.google.com with SMTP id r5so24234658pag.1
+        for <git@vger.kernel.org>; Wed, 27 Apr 2016 14:30:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=qJJrT6c5lqhlZ2qXm1fMTwlqs9g+LKR3cDqIv6dbxBk=;
-        b=TTDQBsX/b4d0uy2MCLeVkFyvu3OV1EwKNIcXwQSHdBs16WF1pikgMpDfoDVw5pm5rD
-         kL+FUsuEveJQIFsXR+YE69YTOORhXoiFzupT869taj10y/1THVRr5xTPaZyMvEQVzrIi
-         c9gjpt5PbIuVzwk0DkMnz4H5KXwVWOBdlnCoQByBMiB4X70hIgFF951TZshX6C8THnAC
-         MWFwFrRq2L5relmYHgTDWyEQS0lkeniJULRg2kRAhkNVskID7UuQGFrJdpaaTtDtMBQK
-         tCs0db40rrFxhz5hF0rLRautT7wbecwl1wcFkSFaBoDeumF9UYDcTpioRsCfQmSkfT48
-         SS/A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Fc54TkOpCm2Vs5PSwqHEYmDCPbaltL5RjdExilsUCtg=;
+        b=L5Y7odQ2Zxxah27pgp5iCj3T+ODgrT0McPmCnmJ7lLYnbPUWlEDaRXaRfuFQWZCFLE
+         A/oI0ItM4XeskzGv/un9M6GLImN4kERkqyB/7Ug+ElDj0tMBkHZ5Tqr8JMfuFRzoIu+w
+         ue35y79mxdmuEijWGGTOR/P1p8lKSGeQZhbPcF0haeIjpslAgY1/MR2d7GIL2la7M8fs
+         7pPaM87Awlf4YzRnIY6yiFAPw3At6zA9/eR7UgIp1g6w3sspGUGshMdrQc/H/89LycHx
+         ml28mi5xTsCxB2TWjw7GCX7dM6W+E5/TNbWq+eBCmt6GoY9/VT7Du8pzVPbdYSE1Ncsc
+         CCTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=qJJrT6c5lqhlZ2qXm1fMTwlqs9g+LKR3cDqIv6dbxBk=;
-        b=jTqhXSRhlj9KWrqWOmNq8KrnhNGMCA4hbO+E96D9457emO9cW9ZVQrlP7GzOViSRXW
-         WPGYLYqzS3jauFZ8fs5nBMJIlONqnxgtAq/HPxN0AKcczqZgM6rPlpcPokbU6XUlQPGi
-         2gyEQHE9kF0CpMlQHLSUFFJrK1IMMGc55sgNESCTJMARwM9SdBBGSLgd7a9flBmMFs9+
-         t8auJrvuhkwU28v1A0pxPtMvyvdUKSQYxM5rDQ8CA+Ecty/qomm0v1ccoYN+Hlt9AYMU
-         Kq2s+iqQW2GYiG6unf0VZMO0szJPi3fPuNJMFkCRxPYXWojU2cRTlEcMx9Mc/XoeKRJB
-         Fg+A==
-X-Gm-Message-State: AOPr4FWVA+nKB56A7Z09jOADnaYGzkMMMlspuEV1yRMWPfQt6JppZbWJw4TpIF5KA/PsLhvoK9PWiZ6cKfQLv7Yb
-X-Received: by 10.50.102.207 with SMTP id fq15mr24464253igb.94.1461791855066;
- Wed, 27 Apr 2016 14:17:35 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Wed, 27 Apr 2016 14:17:34 -0700 (PDT)
-In-Reply-To: <xmqqzise7o4l.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Fc54TkOpCm2Vs5PSwqHEYmDCPbaltL5RjdExilsUCtg=;
+        b=MS75evCakCA77Y4j46dsG/NhedgHOnYErs0qGRxCfx14GOohaxCd/3JU6SZOP5wk8F
+         Hn9SAr3YYLPpEeGjgEXfl6amiyBLUj4KqzZKRghGzOIJqfPZczlrDKaCIvDAT0l3LSKg
+         VqsQsy7PAGVc1VX61aRr6ZyFBl37Je/KjuaQIzI/EIhugswDeKHL2gR8ucoacYGhrdpV
+         D+tyPOGqaYWknPWpEGoVCg78pOGOndiYp+mjMMaEw0s+OgDiDhhzAZwgTeoHVb8DA21o
+         3tRsJ0F02Vh7hiyVCVVFsCMPMzDFPIa5I5/D5NBAR3TiPfYe58WyOfwig3x1Dombd8ti
+         D+WA==
+X-Gm-Message-State: AOPr4FUOl7S915MRCnJGLNeeRT0OycXkG3IW4OUtn47dXbljYsXQaAg1DpFQC75gT3BYNAfQ
+X-Received: by 10.66.65.169 with SMTP id y9mr15394643pas.102.1461792646023;
+        Wed, 27 Apr 2016 14:30:46 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:95db:80a2:4fac:5374])
+        by smtp.gmail.com with ESMTPSA id 133sm8998421pfw.35.2016.04.27.14.30.45
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 27 Apr 2016 14:30:45 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0.41.g0ac0153.dirty
+In-Reply-To: <1461792640-18898-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292829>
 
-On Wed, Apr 27, 2016 at 2:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> When not duplicating git_config_get_value_multi("submodule.defaultGroup");
->> I run into
->>
->> Program received signal SIGSEGV, Segmentation fault.
->> ...
->> So the string list seems to be corrupted here.
->> Someone stomping over our memory? How long is the result
->> of git_config_get_value_multi deemed to be stable and usable?
->
-> That call goes to
->
->     git_config_get_value_multi()
->     -> git_configset_get_value_multi()
->        -> configset_find_element()
->
-> the returned value from there would be either NULL or the list of
-> values that belong to the config cache layer, i.e. a caller of the
-> API can peek but is not allowed to modify it.
->
-> So if you are modifying the value you obtain from the API, you must
-> make a copy; otherwise you will "stomp over" memory that belongs to
-> the config cache layer, not to you.
+Lots of internal functions in submodule-confic.c have a first parameter
+`struct submodule_cache *cache`, which currently always refers to the
+global variable `cache` in the file. To avoid confusion rename the
+global `cache` variable.
 
-Yes, we do not modify the string_list (the return of git_config_get_value_multi)
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ submodule-config.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-Another way to corrupt it is to change the configuration (e.g. add
-things to the config hashmap such that it reallocates and grows).
-
-The problem arises after a call to submodule_from_path(...);
-which may change the cache for submodules. I assumed that was
-completely different from the regular config cache, but somehow there is
-a relation, which I have not tracked down yet.
-
-Thanks,
-Stefan
+diff --git a/submodule-config.c b/submodule-config.c
+index 8ac5031..debab29 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -30,7 +30,7 @@ enum lookup_type {
+ 	lookup_path
+ };
+ 
+-static struct submodule_cache cache;
++static struct submodule_cache the_submodule_cache;
+ static int is_cache_init;
+ 
+ static int config_path_cmp(const struct submodule_entry *a,
+@@ -470,14 +470,14 @@ static void ensure_cache_init(void)
+ 	if (is_cache_init)
+ 		return;
+ 
+-	cache_init(&cache);
++	cache_init(&the_submodule_cache);
+ 	is_cache_init = 1;
+ }
+ 
+ int parse_submodule_config_option(const char *var, const char *value)
+ {
+ 	struct parse_config_parameter parameter;
+-	parameter.cache = &cache;
++	parameter.cache = &the_submodule_cache;
+ 	parameter.commit_sha1 = NULL;
+ 	parameter.gitmodules_sha1 = null_sha1;
+ 	parameter.overwrite = 1;
+@@ -490,18 +490,18 @@ const struct submodule *submodule_from_name(const unsigned char *commit_sha1,
+ 		const char *name)
+ {
+ 	ensure_cache_init();
+-	return config_from_name(&cache, commit_sha1, name);
++	return config_from_name(&the_submodule_cache, commit_sha1, name);
+ }
+ 
+ const struct submodule *submodule_from_path(const unsigned char *commit_sha1,
+ 		const char *path)
+ {
+ 	ensure_cache_init();
+-	return config_from_path(&cache, commit_sha1, path);
++	return config_from_path(&the_submodule_cache, commit_sha1, path);
+ }
+ 
+ void submodule_free(void)
+ {
+-	cache_free(&cache);
++	cache_free(&the_submodule_cache);
+ 	is_cache_init = 0;
+ }
+-- 
+2.8.0.41.g0ac0153.dirty
