@@ -1,88 +1,96 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH 05/29] refname_is_safe(): insist that the refname
- already be normalized
-Date: Wed, 27 Apr 2016 16:10:32 -0400
-Organization: Twitter
-Message-ID: <1461787832.11504.1.camel@twopensource.com>
-References: <cover.1461768689.git.mhagger@alum.mit.edu>
-	 <a8e1e1a9e6a48fbb20fab2144279b93a48db584a.1461768689.git.mhagger@alum.mit.edu>
-	 <xmqqinz39bl2.fsf@gitster.mtv.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] trailer: load config to handle core.commentChar
+Date: Wed, 27 Apr 2016 22:13:09 +0200
+Message-ID: <CAP8UFD1O+V64dr-j9bu7D1mrLxEy3zG017zdJahJTx-MUYv5Pg@mail.gmail.com>
+References: <1461785062-23523-1-git-send-email-rafalklys@wp.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
-	<pclouds@gmail.com>, Jeff King <peff@peff.net>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Apr 27 22:10:49 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Rafal Klys <rafalklys@wp.pl>
+X-From: git-owner@vger.kernel.org Wed Apr 27 22:13:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avVnM-00053M-Hx
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 22:10:48 +0200
+	id 1avVpk-0005q0-Jm
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Apr 2016 22:13:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753400AbcD0UKf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 16:10:35 -0400
-Received: from mail-qg0-f51.google.com ([209.85.192.51]:34997 "EHLO
-	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753577AbcD0UKe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 16:10:34 -0400
-Received: by mail-qg0-f51.google.com with SMTP id f74so21906205qge.2
-        for <git@vger.kernel.org>; Wed, 27 Apr 2016 13:10:34 -0700 (PDT)
+	id S1753069AbcD0UNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 16:13:12 -0400
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:35974 "EHLO
+	mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752352AbcD0UNL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 16:13:11 -0400
+Received: by mail-wm0-f44.google.com with SMTP id n129so41904142wmn.1
+        for <git@vger.kernel.org>; Wed, 27 Apr 2016 13:13:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:mime-version:content-transfer-encoding;
-        bh=Ss+rQttDYvgiMC8n2C00SdIZC1fa5WJq90OhSVGeCoo=;
-        b=CAjZAvPIo4LdGDjzkGsZapRSMwdhug6mKFZTxwJYVLSYjXkVXW+QmQ3QP/8ZyWktmB
-         zmTuH9FDFHngezaResIl3ARRkNnicYTTzErNL43kzqXBJNDgABmvv0HanEKVvZNDaSv1
-         MOtqNY0/z/kBSuzK+nDKSoDggIcokEsR8N9uqzVAbQ5W67hawXZLHvwhfs2cti5kWK+L
-         ryf4uSL5JAkJo4KHM8BxP3GpgsltlHT5aBfPVGZFfPPPCy2XpbjeenraFuWBlOxgK/sj
-         GXMqpkJ8T8Fo9X0MTmk/cKXbsDCpKkHLOxHsDs0ZmgpqCKult5RWZrUJpct8RassD5hi
-         Q+XA==
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=ZkfbJnEop0GMALuJ3al3SzFjJWkJPEt8cZPn1gGtfvk=;
+        b=GUSwU62rEWPWcBohZ3mR57VERgBFBN7tVs+EBnSA/ouRlqHdYB6/keGIi2oOTkv3PG
+         FyDxDz6dQ9mhtKHVTfSQwP4AvQ785bdTMZkRtNwD/5vHN/VwuHcrVgQFEfr/Ab7OIj9v
+         oY/NLhO5IpFN3y8kA0u5UH41lAqQXPfKNLKnyWHKK7hUS+jOmZWuMo+HYkMHuNO6/2/M
+         QjeOscMbGdqWQ/aUgmfL2LgGoEg9t/KXN6DMiqRoX2m1p7ZTN3kriO4XyynR9TRGnv6Q
+         84Jz1nIK7KuPGxbcxjl6I/8sB4NA+vpoTTG7JG2Yn/2RFjAQHZOe1YpVEUTz5a5Fn3xP
+         JqNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=Ss+rQttDYvgiMC8n2C00SdIZC1fa5WJq90OhSVGeCoo=;
-        b=DwVBzCxujdjN3/X2tPRgoCAB1COhO+duDs8ksp5JE2Pm9VX/V/ZcNtVVVcz/d0NXUp
-         KzVtAHmmgRiaRsxGSEjAT+LBEoYiV08BueLXrFpslnh3sIxkO+cCEIYymkTX0jtP+Y1W
-         eP5nKjq6/6H2dyfAW8bQO7vuGm6/2RQX5uAJ33i6FRbq+lj5gmbek4s+prgFKoYLyg4t
-         Kqksm3wyF7ePFlvdxuthY+QQIAtoC9Qtni+6dsAdJ1BfyXyvpm0fhYVJ2NwrcWXSVzzz
-         NNNeCqwflPxkXybTpI0QTfo5ZpnqOdymYdnOERSsKbEImO9oAj1b41N3oTPCR2yjdDzy
-         wpLw==
-X-Gm-Message-State: AOPr4FXNI8FvjYb1E//JBGakpleso33iccME+GJ4u3dNlMyW2LGMfFRmKptReDoeAVDxKw==
-X-Received: by 10.140.167.137 with SMTP id n131mr10610276qhn.73.1461787833546;
-        Wed, 27 Apr 2016 13:10:33 -0700 (PDT)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id h83sm1731793qhh.4.2016.04.27.13.10.32
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 27 Apr 2016 13:10:32 -0700 (PDT)
-In-Reply-To: <xmqqinz39bl2.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=ZkfbJnEop0GMALuJ3al3SzFjJWkJPEt8cZPn1gGtfvk=;
+        b=HjNAN3uUvXs8GVpNiCVXi//E8AQDxku7OV7NIdjIvrrKn4x2CgmWuPlo1DmjVSmWbf
+         IZ0WBxV+se5+HPHYAmfye7gRJ80HTpOqWN9f0PVqzVp6AXfycg/TPHYryeEXFqTcedjp
+         od09lF65TbyN82/SPgyxTkoQbTB3HCPDcYY5rs6lMZwSv506+h+YDFdYcbVMmYCcml57
+         avKZcTMW0UeGiWa2GFNWjDzb70xyeEesV8S4gKgUAkaUKMwvbJ60Br+KDMM3/LUWaBUJ
+         9Gpi3J+XW5LanLvVXoS2bCR7dAyoMflcq32Zbky+KE5OfDH9KcI3e2DC9xBxXwyNW5/1
+         7TkA==
+X-Gm-Message-State: AOPr4FXAmA5iAE0wS+gQK/ZuH+scTt9d3QNuT4140mx2QJjKPfAXTI3+oNydicrTqTve35zSiB00V1tU0kShrQ==
+X-Received: by 10.195.17.166 with SMTP id gf6mr11192242wjd.124.1461787989358;
+ Wed, 27 Apr 2016 13:13:09 -0700 (PDT)
+Received: by 10.194.95.129 with HTTP; Wed, 27 Apr 2016 13:13:09 -0700 (PDT)
+In-Reply-To: <1461785062-23523-1-git-send-email-rafalklys@wp.pl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292811>
 
-On Wed, 2016-04-27 at 10:59 -0700, Junio C Hamano wrote:
+On Wed, Apr 27, 2016 at 9:24 PM, Rafal Klys <rafalklys@wp.pl> wrote:
+> Add call to git_config(git_default_config, NULL) to update the
+> comment_char_line from default '#' to possible different value set in
+> core.commentChar.
 
-> There is another call to refname_is_safe() in resolve_ref_unsafe(),
-> which applies the sanity check to the string from a symref.  We seem
-> to allow
-> 
->     $ git symbolic-ref refs/heads/SSS refs/heads//master
-> 
-> and we end up storing "ref: refs/heads//master" (or make a symbolic
-> link with doubled slashes), but the current code considers the
-> resulting symbolic link as "dangling".  Again, this change moves the
-> rejection a bit earlier in the codepath, without changing the end
-> result, I'd think.
+It is "comment_line_char" not "comment_char_line", but otherwise you
+can add "Reviewed-by: Christian Couder <chriscool@tuxfamily.org>".
 
-I think we should disallow that -- refname_is_safe should probably call
-(or be replaced with calls to) check_refname_format.  
+Thanks!
+
+> Signed-off-by: Rafal Klys <rafalklys@wp.pl>
+> ---
+>  trailer.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/trailer.c b/trailer.c
+> index 8e48a5c..a3700b4 100644
+> --- a/trailer.c
+> +++ b/trailer.c
+> @@ -888,6 +888,9 @@ void process_trailers(const char *file, int in_place, int trim_empty, struct str
+>         git_config(git_trailer_default_config, NULL);
+>         git_config(git_trailer_config, NULL);
+>
+> +       /* for core.commentChar */
+> +       git_config(git_default_config, NULL);
+> +
+>         lines = read_input_file(file);
+>
+>         if (in_place)
+> --
+> 2.8.1.68.g625efa9.dirty
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
