@@ -1,85 +1,141 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 2/2] submodule: pass on http.extraheader config
- settings
-Date: Thu, 28 Apr 2016 15:10:38 -0400
-Message-ID: <20160428191038.GA10574@sigill.intra.peff.net>
-References: <cover.1461837783.git.johannes.schindelin@gmx.de>
- <89d0024450b0e6e9997ad9e3d681248bde1bafc0.1461837783.git.johannes.schindelin@gmx.de>
- <20160428112912.GB11522@sigill.intra.peff.net>
- <alpine.DEB.2.20.1604281405540.2896@virtualbox>
- <20160428134953.GB25364@sigill.intra.peff.net>
- <CA+P7+xq-_D2Mszyjd11CyYLiKBBh9A2e1exaZQVmWz1qVKv7ug@mail.gmail.com>
- <20160428153902.GF31063@sigill.intra.peff.net>
- <CAGZ79kZFLTARQ25h4u4SGgNn=Q4TQi-kxFLN3sQvOmejsRmAWA@mail.gmail.com>
- <20160428165031.GA31421@sigill.intra.peff.net>
- <xmqq1t5p5z8v.fsf@gitster.mtv.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] submodule init: fail gracefully with a missing
+ .gitmodules file
+Date: Thu, 28 Apr 2016 12:12:56 -0700
+Message-ID: <CAGZ79kairv4jXsaRfqj_TA9ejqOyinOVwrj+-ATMTraaiQsvBA@mail.gmail.com>
+References: <1461868119-9146-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Stefan Beller <sbeller@google.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 21:10:46 2016
+X-From: git-owner@vger.kernel.org Thu Apr 28 21:13:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avrKo-0008L0-4H
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 21:10:46 +0200
+	id 1avrN1-000179-NB
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 21:13:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751932AbcD1TKl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 15:10:41 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58672 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751539AbcD1TKl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 15:10:41 -0400
-Received: (qmail 10026 invoked by uid 102); 28 Apr 2016 19:10:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 28 Apr 2016 15:10:40 -0400
-Received: (qmail 13453 invoked by uid 107); 28 Apr 2016 19:10:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 28 Apr 2016 15:10:42 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Apr 2016 15:10:38 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqq1t5p5z8v.fsf@gitster.mtv.corp.google.com>
+	id S1752678AbcD1TM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2016 15:12:59 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:37793 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752632AbcD1TM6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2016 15:12:58 -0400
+Received: by mail-ig0-f182.google.com with SMTP id s8so1039839ign.0
+        for <git@vger.kernel.org>; Thu, 28 Apr 2016 12:12:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=U9PQQpCZWbAeNuWRrGaMmwyJrMDrybyQtN0rXfEGVoQ=;
+        b=I4uRRwx1QU5FhoNZBEdygdJQMjCo8D2lMqE4NoccfZUZTqH6/xQCapEzap9ewB34SL
+         QEnfgtv3/4jy3GgePv05m2HVihWBrJZ4H+M0qH6fwRHwZi41M9cbfXRg67c2D4YBMuFm
+         fBxVvnbmQLdKZlA+T9tkCQ10IRoiPcthz3P8vN6C1nSQdqMkmVDyLL9Akl9FVTurrw2u
+         9KbGiO9DsvPEu0j3Y8nRXkD97vcbJ7WVpX2O1e3p5tvmtKIS8wcLLrEsGDylr7r7b9fX
+         LU8BYrGWJ98v3clmjhd2GcHdUmyLXyEmlNNi1tSGS/Vwh9AhSZfctFEYllkoY9rh50h3
+         tMFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=U9PQQpCZWbAeNuWRrGaMmwyJrMDrybyQtN0rXfEGVoQ=;
+        b=AIVHro/tw5OnsB5EDUvTP5nq5wROF5eS+C0bMKSeUMnp260QeZyXT6OBjTj8/5I5Pe
+         SJdteZSR+vjPU6aXAiitP9D6k+ZCXHVZb+W6idNnU3HztrqkQ82euK+P+Gx7H97nrxrs
+         +1xOHtiSRtRNyvaf3FfFztgCNl+czgXXaRB3+LfBY7x67rRMZjiILbiRFOv+ZzupS/lS
+         QL/izsZiwi3+HkMK9wowSGaUtzSLdxI6sHJQ3Myt+kLja059e7PLemrPg+pXxqjM5Vzu
+         2zgr8GdPei8zns8ywSqLdlc5lgBp9onkTtY1iBbjhhNl26lT0VfvKs94EJ1r0fdDEAQF
+         RgjA==
+X-Gm-Message-State: AOPr4FVpemH9Z563Atv6gVZQg/YRHWbPuVY9ItlBZQYlAaIJhSMYIGMxylQnlvRSy0TPAWbUjlQinYKPTDfVdiLG
+X-Received: by 10.50.72.107 with SMTP id c11mr20416709igv.85.1461870777017;
+ Thu, 28 Apr 2016 12:12:57 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Thu, 28 Apr 2016 12:12:56 -0700 (PDT)
+In-Reply-To: <1461868119-9146-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292937>
 
-On Thu, Apr 28, 2016 at 12:06:56PM -0700, Junio C Hamano wrote:
+On Thu, Apr 28, 2016 at 11:28 AM, Stefan Beller <sbeller@google.com> wrote:
+> When there is no .gitmodules file availabe to initialize a submodule
+> from, `submodule_from_path` just returns NULL. We need to check for
+> that and abort gracefully. When `submodule init` was implemented in shell,
+> a missing .gitmodules file would result in an error message
+>
+>     No url found for submodule path '%s' in .gitmodules
+>
+> While that is technically true, I think we can broaden the error message
+> and just say there is no section for the submodule in the .gitmodules file.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Thu, Apr 28, 2016 at 09:09:44AM -0700, Stefan Beller wrote:
-> >
-> >> > I think the key thing with a blacklist is somebody has to go to the work
-> >> > to audit the existing keys.
-> >> 
-> >> Would it be sufficient to wait until someone screams at the mailing list
-> >> for some key to be blacklisted? (I mean in the short term that would be
-> >> of less quality, but relying on the larger community would result in a better
-> >> end result? So your going through is just a jump start this process of
-> >> listening to the community?)
-> >
-> > Yeah, I think ultimately we will rely on the community. But I would feel
-> > a lot more comfortable if somebody made at least a single pass.
-> >
-> > I'll be curious what Junio says, too. I generally defer to him on how
-> > conservative we want to be in cases like this.
-> 
-> Starting from an empty whitelist and waiting for people to scream
-> with valid use cases would automatically give us the single pass to
-> identify the set of essential ones that users must be able to pass,
-> no?
+Actually I am not so sure any more about this part. In a resend I will use
+the old error message again.
 
-It's definitely sufficient, it's just annoying if a user shows up every
-week and says "I want X.Y", and then somebody else shows up a week later
-and says "I want X.Z".
+This fix is also required for `submodule--helper update-clone`.
 
-Are we serving any purpose in vetting each one (and if so, what)?
-
--Peff
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>
+>  This goes on top of sb/submodule-init (I added the base-commit
+>  below, just in case anyone uses that feature already. Though I did
+>  that manually :)
+>
+>  Thanks,
+>  Stefan
+>
+>  builtin/submodule--helper.c | 10 +++++++---
+>  t/t7400-submodule-basic.sh  |  8 ++++++++
+>  2 files changed, 15 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index b6d4f27..af5406e 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -314,13 +314,17 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+>         /* Only loads from .gitmodules, no overlay with .git/config */
+>         gitmodules_config();
+>
+> -       sub = submodule_from_path(null_sha1, path);
+> -
+>         if (prefix) {
+>                 strbuf_addf(&sb, "%s%s", prefix, path);
+>                 displaypath = strbuf_detach(&sb, NULL);
+>         } else
+> -               displaypath = xstrdup(sub->path);
+> +               displaypath = xstrdup(path);
+> +
+> +       sub = submodule_from_path(null_sha1, path);
+> +
+> +       if (!sub)
+> +               die(_("No section found for submodule path '%s' in .gitmodules"),
+> +                       displaypath);
+>
+>         /*
+>          * Copy url setting when it is not set yet.
+> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+> index f99f674..f2b3519 100755
+> --- a/t/t7400-submodule-basic.sh
+> +++ b/t/t7400-submodule-basic.sh
+> @@ -18,6 +18,14 @@ test_expect_success 'setup - initial commit' '
+>         git branch initial
+>  '
+>
+> +test_expect_success 'sane abort on missing .gitmodules file' '
+> +       test_when_finished "git update-index --remove sub" &&
+> +       git update-index --add --cacheinfo 160000,$(git rev-parse HEAD),sub &&
+> +       # missing the .gitmodules file here
+> +       test_must_fail git submodule init 2>actual &&
+> +       test_i18ngrep "No section found for submodule path" actual
+> +'
+> +
+>  test_expect_success 'configuration parsing' '
+>         test_when_finished "rm -f .gitmodules" &&
+>         cat >.gitmodules <<-\EOF &&
+> --
+> 2.8.0.26.g3604242.dirty
+>
+> base-commit: 3604242f080a813d6f20a7394def422d1e55b30e
