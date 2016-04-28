@@ -1,124 +1,163 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v5 2/2] submodule: pass on http.extraheader config settings
-Date: Thu, 28 Apr 2016 13:01:09 -0700
-Message-ID: <CAGZ79kY1TB9sZpZcihiC5rPmbf8qD9KsAZsWDcon+UnHG7R3jw@mail.gmail.com>
-References: <cover.1461837783.git.johannes.schindelin@gmx.de>
-	<89d0024450b0e6e9997ad9e3d681248bde1bafc0.1461837783.git.johannes.schindelin@gmx.de>
-	<20160428112912.GB11522@sigill.intra.peff.net>
-	<alpine.DEB.2.20.1604281405540.2896@virtualbox>
-	<20160428134953.GB25364@sigill.intra.peff.net>
-	<CA+P7+xq-_D2Mszyjd11CyYLiKBBh9A2e1exaZQVmWz1qVKv7ug@mail.gmail.com>
-	<20160428153902.GF31063@sigill.intra.peff.net>
-	<CAGZ79kZFLTARQ25h4u4SGgNn=Q4TQi-kxFLN3sQvOmejsRmAWA@mail.gmail.com>
-	<20160428165031.GA31421@sigill.intra.peff.net>
-	<xmqq1t5p5z8v.fsf@gitster.mtv.corp.google.com>
-	<20160428191038.GA10574@sigill.intra.peff.net>
-	<xmqqwpnh4joq.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kYoRP=rkfaL+rLapmvouUdPxXGBr-KWOLhL94bYB1B2-w@mail.gmail.com>
-	<xmqqoa8t4il8.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Jacob Keller <jacob.keller@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git mailing list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 22:01:17 2016
+Subject: [PATCH 2/2] submodule--helper update-clone: abort gracefully on missing .gitmodules
+Date: Thu, 28 Apr 2016 13:02:46 -0700
+Message-ID: <1461873766-14703-2-git-send-email-sbeller@google.com>
+References: <1461873766-14703-1-git-send-email-sbeller@google.com>
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de,
+	Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Apr 28 22:02:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avs7f-0004ut-Mw
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 22:01:16 +0200
+	id 1avs9I-0005dx-9C
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 22:02:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752714AbcD1UBL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 16:01:11 -0400
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:33952 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751865AbcD1UBK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 16:01:10 -0400
-Received: by mail-ig0-f172.google.com with SMTP id u5so5110449igk.1
-        for <git@vger.kernel.org>; Thu, 28 Apr 2016 13:01:09 -0700 (PDT)
+	id S1752906AbcD1UCw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2016 16:02:52 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:34168 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751865AbcD1UCv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2016 16:02:51 -0400
+Received: by mail-pa0-f48.google.com with SMTP id r5so36555691pag.1
+        for <git@vger.kernel.org>; Thu, 28 Apr 2016 13:02:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=1rSXJDx8QuM9WLDuqdlICxBOrbDHba6eG2Dqg42ag54=;
-        b=XNj4mMGTi9a74lcXVCG9FIdRHHfuQhoFtDN1BrPiN4CGXM9PLMI1fTdTXdUmty0jQd
-         0WZPudHUVuVvLfTY+NaJY1ku/OOYHuG8ae4C0ZlKXqNFQfKR76qiFTrg8SqYIAkG7U7U
-         Zb0v165HGHVUZNwPJeZxR8qgXFlnJM+S/jj5q/zEeD02i6Ic9QgxXzTSodKlZDpFexG/
-         LWSnN4R9PVmQQdmZ/1WQLP4QXsZJsBx3yH6iVaOklqUyLu61Rx5qzFPQV1G6AhFl5NTE
-         b71Ugw2VrrQE/fdJka0eNu+jy6ONwBde29S+u1bSEEucFlEMAHfoKRGsbXsXWT2PeHjd
-         sUqA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=GvU978TijkRtnZMeOvccDLJIUsDr/8bYP2UeGLPZ3vY=;
+        b=ePDc20SbiBWasAGX/CNbCfm4bx5lv3VG6LaojghJ/Ao4zgzUhezx1+kvbvynEAVHpq
+         GdktMNja0O4nLZYiuMab16EiVpO1hJht76NHjrewpnxqJunmC5sUfFN4m9AJUlhMrSMv
+         szERX7pTRsMZ+Sn9Q62nVGGz1QRvKip1mK/Ee+E7oe3UC2/uFhHF85rIIVdvck8F2Joa
+         aJ9bojqGLLoHaSMFhTFIw0o8LvnTFuW2rlsGEpUYFKpsG+CPCx5p6OiGMJ7LgJhMl/hT
+         ku2xKxX3MVn6XbJXseHUuH+gqRisx7Zx0mztVNP/cWGMyEgYu0CxwdY7OFyiTPcFI4wo
+         hScQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=1rSXJDx8QuM9WLDuqdlICxBOrbDHba6eG2Dqg42ag54=;
-        b=cOIIpxHNGcvdkRSxJwdFRyBUOkFpmxv1Jd2ObOKBtPP/QRFZsxGRsRqrl1U4G17a+b
-         ZOUEeblkKIqjyKMzgys87zPZU/zKkp1MgKzzKXfHwGIM6tdT1WYL1BlBs3PJyZ/FgDEH
-         DvA4nqM6Q0lSJuGzj5Prza8i0OeAvxfvpW9YP9W8yPV//8PURR+0gksJ0vR9G3u7NRmu
-         I9D1w+Uy9RbzpSRS3AaWVV8D9S/3EyPYn1lRcFhqyry2Dl+2UFd9T8QIr760lSNANftx
-         +YwE4UBFgqrunnNMRUSjzwCsGFeVQK5xfRrVRDWzQUa9g57KxT2pnVoar9BNAZs1Fgt0
-         G75g==
-X-Gm-Message-State: AOPr4FUIvONofAkCKRrsew4YFuApO2XYJofGQGcH1/bYblh8AafxVv/+p2kOAGwSjiiWNQngz8ak45RV60dahwd7
-X-Received: by 10.50.111.15 with SMTP id ie15mr21202263igb.94.1461873669201;
- Thu, 28 Apr 2016 13:01:09 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Thu, 28 Apr 2016 13:01:09 -0700 (PDT)
-In-Reply-To: <xmqqoa8t4il8.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=GvU978TijkRtnZMeOvccDLJIUsDr/8bYP2UeGLPZ3vY=;
+        b=LzBxBKg0TyB8AhHoMSmWJty/SlhZxLqSxIFKyQKDnwuFR46ZnNJvv8aSfa1V/T+KdF
+         kWtYi4I68O9kkp6Sd4qBKfhjaC9PsiEV5B/tCMrZV5JWOfQXqnLuCeuqwsDjEviJ5LDZ
+         xHWAJY0iFqd7hOlxGD1TWmItV551xO6BE9b+vfrKmYoIVUyM20Y+pKJ8snZNsallzY+/
+         g2pzNYVQj14YVsdnI3GPEjD0nQYFiJ8fDMHHfWc8E22F41o5jzXpFwTvwnBt4LcGDenw
+         kPbUml1lsfS+yzAg3S1KVZGPN6ZRa6o02LCUbq3pg5CSdxNQzXoeJ9BNtedhQhV5PBow
+         tbWQ==
+X-Gm-Message-State: AOPr4FV+cbHIOK9SD4AjA70cP7fAFy/8IDbgyD7ZtG1UMuWjJNWw5UYx9/t93U+PnijyyWgP
+X-Received: by 10.66.251.132 with SMTP id zk4mr23481843pac.50.1461873770488;
+        Thu, 28 Apr 2016 13:02:50 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:fce0:3f2f:7f7d:8246])
+        by smtp.gmail.com with ESMTPSA id kh2sm24264340pad.9.2016.04.28.13.02.49
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 28 Apr 2016 13:02:49 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0.28.ga4e36c9
+In-Reply-To: <1461873766-14703-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292945>
 
-On Thu, Apr 28, 2016 at 12:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> So when going with that philosophy, the user might be missing
->> switches like
->>
->>     -c-for-this-repo-only core.worktree=... -c
->> submodule.worktree=align-relative-to-parent
->>
->> i.e. when shifting the responsibility to the user, we need to have
->> switches to pass options to the repository or a subset of submodules?
->
-> I think that is an excellent illlustration of the issue by an
-> example of what we shouldn't do ;-)
+When there is no .gitmodules file availabe to initialize a submodule
+from, `submodule_from_path` just returns NULL. We need to check for
+that and abort gracefully.
 
-So rather have a white / black list?
+When `git submodule update` was implemented in shell, this error out
+with the warning
 
-Could we have a pre curated list with the list easily changed by the user?
-So instead of screaming at the mailing list they can work around easily,
-and eventually someone fixes the "stupid" default?
+    Submodule path '%s' not initialized
+    Maybe you want to use 'update --init'?
 
-Maybe a user would want to do
+Replicate that behavior for now instead of crashing.
 
-    git config --global submodule-credentials-filter-white-list "host.*"
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ builtin/submodule--helper.c | 38 +++++++++++++++++++++++++-------------
+ t/t7400-submodule-basic.sh  |  8 ++++++++
+ 2 files changed, 33 insertions(+), 13 deletions(-)
 
-instead? (Naming intentionally bad)
-
->
-> "git" is not always about submodules, so "-c-but-not-for-submodules"
-> option does not belong to "git" wrapper.
->
-> Users use "git -c" and hope to affect what happens in submodules,
-> only because "git submodule" support is still immature and does not
-> have options to do that.  You certainly smell a linkage between
-> "pass options to a selected subset of submodules" and your recent
-> "give labels to submodules so that they can be named with *group
-> syntax" topic, no?
-
-I thought about that for a split second, but no. I mean it in the
-most general  way possible.
-
-It doesn't even have to be a submodule related thing at all.
-
-I can imagine that `git gc` could learn to walk nested repos
-(not submodules, just repos on disk inside the work tree).
-And for that use case we'd maybe want to have a setting
-to pack the nested repos more aggressively than the toplevel repo.
-
-(Not sure if there would be a use case or such a thing, but it is the
-first I came up with)
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index ce9d11e..5d05393 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -593,6 +593,25 @@ struct submodule_update_clone {
+ 	SUBMODULE_UPDATE_STRATEGY_INIT, 0, NULL, NULL, NULL, NULL, \
+ 	STRING_LIST_INIT_DUP, 0}
+ 
++
++static void next_submodule_warn_missing(struct submodule_update_clone *suc,
++		struct strbuf *out, const char *displaypath)
++{
++	/*
++	 * Only mention uninitialized submodules when their
++	 * paths have been specified.
++	 */
++	if (suc->warn_if_uninitialized) {
++		strbuf_addf(out,
++			_("Submodule path '%s' not initialized"),
++			displaypath);
++		strbuf_addch(out, '\n');
++		strbuf_addstr(out,
++			_("Maybe you want to use 'update --init'?"));
++		strbuf_addch(out, '\n');
++	}
++}
++
+ /**
+  * Determine whether 'ce' needs to be cloned. If so, prepare the 'child' to
+  * run the clone. Returns 1 if 'ce' needs to be cloned, 0 otherwise.
+@@ -627,6 +646,11 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+ 	else
+ 		displaypath = ce->name;
+ 
++	if (!sub) {
++		next_submodule_warn_missing(suc, out, displaypath);
++		goto cleanup;
++	}
++
+ 	if (suc->update.type == SM_UPDATE_NONE
+ 	    || (suc->update.type == SM_UPDATE_UNSPECIFIED
+ 		&& sub->update_strategy.type == SM_UPDATE_NONE)) {
+@@ -644,19 +668,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+ 	strbuf_addf(&sb, "submodule.%s.url", sub->name);
+ 	git_config_get_string(sb.buf, &url);
+ 	if (!url) {
+-		/*
+-		 * Only mention uninitialized submodules when their
+-		 * path have been specified
+-		 */
+-		if (suc->warn_if_uninitialized) {
+-			strbuf_addf(out,
+-				_("Submodule path '%s' not initialized"),
+-				displaypath);
+-			strbuf_addch(out, '\n');
+-			strbuf_addstr(out,
+-				_("Maybe you want to use 'update --init'?"));
+-			strbuf_addch(out, '\n');
+-		}
++		next_submodule_warn_missing(suc, out, displaypath);
+ 		goto cleanup;
+ 	}
+ 
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index df6b4da..814ee63 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -26,6 +26,14 @@ test_expect_success 'submodule init aborts on missing .gitmodules file' '
+ 	test_i18ngrep "No url found for submodule path" actual
+ '
+ 
++test_expect_success 'submodule update aborts on missing .gitmodules file' '
++	test_when_finished "git update-index --remove sub" &&
++	git update-index --add --cacheinfo 160000,$(git rev-parse HEAD),sub &&
++	# missing the .gitmodules file here
++	git submodule update sub 2>actual &&
++	test_i18ngrep "Submodule path .sub. not initialized" actual
++'
++
+ test_expect_success 'configuration parsing' '
+ 	test_when_finished "rm -f .gitmodules" &&
+ 	cat >.gitmodules <<-\EOF &&
+-- 
+2.8.0.28.ga4e36c9
