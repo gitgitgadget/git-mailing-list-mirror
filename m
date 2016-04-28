@@ -1,96 +1,104 @@
-From: Michal Hocko <mhocko@kernel.org>
-Subject: feature request for cc-cmd
-Date: Thu, 28 Apr 2016 15:43:46 +0200
-Message-ID: <20160428134346.GA31496@dhcp22.suse.cz>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v5 2/2] submodule: pass on http.extraheader config
+ settings
+Date: Thu, 28 Apr 2016 09:49:53 -0400
+Message-ID: <20160428134953.GB25364@sigill.intra.peff.net>
+References: <3b71deffa5d07cf73a793773cc3d60ff611843fa.1461759454.git.johannes.schindelin@gmx.de>
+ <cover.1461837783.git.johannes.schindelin@gmx.de>
+ <89d0024450b0e6e9997ad9e3d681248bde1bafc0.1461837783.git.johannes.schindelin@gmx.de>
+ <20160428112912.GB11522@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1604281405540.2896@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 15:43:56 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Jacob Keller <jacob.keller@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Apr 28 15:50:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avmEV-00076g-3B
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 15:43:55 +0200
+	id 1avmKW-00019a-9I
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 15:50:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752229AbcD1Nnt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 09:43:49 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:35314 "EHLO
-	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750923AbcD1Nnt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 09:43:49 -0400
-Received: by mail-wm0-f46.google.com with SMTP id e201so77341731wme.0
-        for <git@vger.kernel.org>; Thu, 28 Apr 2016 06:43:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=l7wx9lz/Pu0Iqnr/iWMV9JvGrlBKZOiWFHZW9ZYuUCY=;
-        b=YEsOTgJrqUxxWwuvoYeYHj4t9HuzG2whGDxNcIlgHqiVfZCSvWYxKUFnDoKsNyIaiD
-         7/tTKbW6uMV37P5W83onOtfYl0I9ORiiCjLUM2xKlYqlAjzkzHrv6H6X0HAyfHf6NU71
-         b6o1VK384LDT1OeJrmTgIWWoVfQgANo5db+xx9tPz704dcNKH0GV7kSUB+DSNkT+e/R/
-         r5Dfskta0kk6MFmgCkfy7JDnXMpKWzbZ6G4RqVuJG+pZdByuGC+vqE3I0Pu6aNJ4wcLU
-         kWeHEVp9l7R1OPjol90/6m7vxexRQCGMXIB4EaLq3l2b8XH9qiuRTgk2g7hJdzn50+1+
-         4VmA==
-X-Gm-Message-State: AOPr4FW8qm8RzwcNlVf5yoCbRyfZDaZZYNjOQMTv4PlAErQiIPCkJIjpB41yBqHzG4nTRA==
-X-Received: by 10.194.58.195 with SMTP id t3mr15010706wjq.97.1461851027289;
-        Thu, 28 Apr 2016 06:43:47 -0700 (PDT)
-Received: from localhost (nat1.scz.suse.com. [213.151.88.250])
-        by smtp.gmail.com with ESMTPSA id u187sm23923783wmu.21.2016.04.28.06.43.46
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Apr 2016 06:43:46 -0700 (PDT)
+	id S1752668AbcD1Nt5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2016 09:49:57 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58333 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752634AbcD1Nt5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2016 09:49:57 -0400
+Received: (qmail 26177 invoked by uid 102); 28 Apr 2016 13:49:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 28 Apr 2016 09:49:55 -0400
+Received: (qmail 9719 invoked by uid 107); 28 Apr 2016 13:49:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 28 Apr 2016 09:49:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Apr 2016 09:49:53 -0400
 Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <alpine.DEB.2.20.1604281405540.2896@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292883>
 
-Hi,
-currently I am using --cc-cmd for larger patch series which are of
-interest of different parties (e.g. kernel tree wide stuff) and I do not
-want to spam all of them by patches which are not of their interest but
-I still want them to receive the cover letter because that is useful to
-get a context of a change. In order to do that each particular commit
-has
- Cc: email
- {Acked,Reported,Reviewed,...}-by: email
-in the patch header and I use the following
+On Thu, Apr 28, 2016 at 02:19:37PM +0200, Johannes Schindelin wrote:
 
-$ cat cc-cmd.sh
-!/bin/bash
+> > Should we consider just white-listing all of "http.*"?
+> > 
+> > That would help other cases which have come up, like:
+> > 
+> >   http://thread.gmane.org/gmane.comp.version-control.git/264840
+> > 
+> > which wants to turn off http.sslverify. That would mean it turns off for
+> > every submodule, too, but if you want to be choosy about your http
+> > variables, you should be using the "http.$URL.sslverify" form, to only
+> > affect specific servers (whether they are in submodules or not).
+> 
+> I considered that, and thought that it might be dangerous, what with me
+> not vetting carefully which http.* variables are safe to pass on to the
+> submodules' update and which are not.
+> 
+> So I had a look now, and the most prominent potential problem is the
+> http.cookieFile setting, which could be reused all of a sudden if we
+> made my patch more general.
+> 
+> But then, we are talking about the code that filters what gets passed via
+> the *command-line*. And to be quite honest, I am not sure that we should
+> actually filter out *any* of these settings.
 
-if [[ $1 == *gitsendemail.msg* || $1 == *cover-letter* ]]; then
-        grep '<.*@.*>' -h *.patch | sed 's/^.*: //' | sort | uniq
-else
-        grep '<.*@.*>' -h $1 | sed 's/^.*: //' | sort | uniq
-fi
+The intent of the whitelist (from my recollection of the discussion) is
+to filter out config that must be repo-specific. E.g., core.worktree or
+core.bare should definitely _not_ be passed to a submodule.
 
-git send-email --cc-cmd ./cc-cmd.sh --to lkml patches...
+I don't know if there are others. We started with a whitelist because it
+was the smallest and safest change away from the status quo. A blacklist
+would also work, with the risk that we might let through nonsense in
+some cases (but only if the user triggers us to do so).
 
-which works reasonably well except I have to git format-patch the whole
-series before posting. Quite often I do git send-email commit-range
-though. This way is also little bit error prone because I have to make
-sure no unrelated patch files are in the same directory. Would it be
-possible that the cc script would get a list of all patch files for the
-cover email? I have noticed that git send-email from the sha range will
-use /tmp/$rand_dir/*.patch so this should be possible I guess. I would
-update my script to
+> The commit message that introduced this particular filtering has this
+> rationale to let only credential.* through:
+> 
+>     GIT_CONFIG_PARAMETERS is special, and we actually do want to
+>     preserve these settings. However, we do not want to preserve all
+>     configuration as many things should be left specific to the parent
+>     project.
+> 
+>     Add a git submodule--helper function, sanitize-config, which shall be
+>     used to sanitize GIT_CONFIG_PARAMETERS, removing all key/value pairs
+>     except a small subset that are known to be safe and necessary.
+> 
+> Dunno. I tried to err on the side of caution... But this sounds maybe a
+> bit *too* cautious?
 
-!/bin/bash
-grep '<.*@.*>' -h $1 | sed 's/^.*: //' | sort | uniq
-if [[ $1 == *gitsendemail.msg* || $1 == *cover-letter* ]]; then
-	shift
-        grep '<.*@.*>' -h $* | sed 's/^.*: //' | sort | uniq
-fi
+So if we all agree that the sanitizing is really about preventing
+repo-specific variables from leaking, and not any kind of security
+boundary, I think we should generally be pretty liberal in whitelisting
+things.
 
-Would something like that make sense or there is an easier way
-which I am just not aware of?
+I can certainly come up with a pathological case where using it as a
+security boundary may have some practical use, but in general I think it
+is mostly getting in the way of what users are trying to do.
 
-Thanks a lot!
--- 
-Michal Hocko
-SUSE Labs
+-Peff
