@@ -1,164 +1,176 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v5 2/2] submodule: pass on http.extraheader config settings
-Date: Thu, 28 Apr 2016 14:08:43 -0700
-Message-ID: <CAGZ79kZF4UeNuwBoA-Vw0OFHin4=8GTWPK-GT+5fsEuCFe7Now@mail.gmail.com>
-References: <20160428112912.GB11522@sigill.intra.peff.net>
-	<alpine.DEB.2.20.1604281405540.2896@virtualbox>
-	<20160428134953.GB25364@sigill.intra.peff.net>
-	<CA+P7+xq-_D2Mszyjd11CyYLiKBBh9A2e1exaZQVmWz1qVKv7ug@mail.gmail.com>
-	<20160428153902.GF31063@sigill.intra.peff.net>
-	<CAGZ79kZFLTARQ25h4u4SGgNn=Q4TQi-kxFLN3sQvOmejsRmAWA@mail.gmail.com>
-	<20160428165031.GA31421@sigill.intra.peff.net>
-	<xmqq1t5p5z8v.fsf@gitster.mtv.corp.google.com>
-	<20160428191038.GA10574@sigill.intra.peff.net>
-	<xmqqwpnh4joq.fsf@gitster.mtv.corp.google.com>
-	<20160428210026.GA12268@sigill.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] trailer: load config to handle core.commentChar
+Date: Thu, 28 Apr 2016 17:12:16 -0400
+Message-ID: <CAPig+cT=Ca+Jd_SN_SM=iOmLnYtAt82dW7ammW4-AKdRReFfPA@mail.gmail.com>
+References: <1461873658-11394-1-git-send-email-rafalklys@wp.pl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git mailing list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 28 23:08:59 2016
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Rafal Klys <rafalklys@wp.pl>
+X-From: git-owner@vger.kernel.org Thu Apr 28 23:12:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avtB8-0000el-Ov
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 23:08:55 +0200
+	id 1avtEZ-00027a-De
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 23:12:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753614AbcD1VIr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 17:08:47 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:32881 "EHLO
-	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753602AbcD1VIo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 17:08:44 -0400
-Received: by mail-io0-f178.google.com with SMTP id f89so89749625ioi.0
-        for <git@vger.kernel.org>; Thu, 28 Apr 2016 14:08:44 -0700 (PDT)
+	id S1753564AbcD1VMS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2016 17:12:18 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:35829 "EHLO
+	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753552AbcD1VMR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2016 17:12:17 -0400
+Received: by mail-io0-f193.google.com with SMTP id u185so15189588iod.2
+        for <git@vger.kernel.org>; Thu, 28 Apr 2016 14:12:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=IyNW69NPekhHi196UE+nsUkhaEKch2dnhE4h95Stj3s=;
-        b=c+uxMHjLfZkN/Ebkrh4uOZTs7kYbc62aBilLOvcz2om1h7mDxq9g/b3pTU1Tz2MCjH
-         nspNaa9qAel9CwKPWz2m+XA3GzB0hUi++Pemcm1Onm2vyt335af6xSDXAwrl6lkEoRCW
-         YXLoAHyUsbbFVMzHj4Xt780p+DySv/JR6CnWOlMs4iyQQPNbkjssT16QXQJAMlqpOCjA
-         JP85XJlI7oJF4MiR/7kXvVsN1pEjyk6SCqDtHJVv2Zu5xN1QAAv+qaLuSdT3B1oeo+cX
-         dlhFQL0FDLmzJrMKNT0twBdH2Xlg4kN9GulguqWTScgUsL5vmXl+f9f0lyPCahGRLSND
-         fY0A==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=CWisgQZZA4OyEUrhJZX89s+O9VuIKJjrMAHgnxcNtTc=;
+        b=VSZZYwV6XRoW4ryV82JkLln/IZjNLviS5uMxa5Kv1OEW0ICpqtNfqozPWh808KP/XA
+         7mrp3QQnP6+f1z75RkxSBznr3uqlPTEBW3HGsweAYBdt2M06eGOIJm2MkX3CaWj9So2v
+         bf3E7ziDLwowc0kZviu+4y8m9K6/+NpMHcRi29K9lWpWkQx/YocU6sT51SA1wf7CaAZ7
+         vvasKUwyMRwUlhSaMnsASq5CaDhzdvciRnTP6xYPsS8yzLIshDh0xavnrc6Y5/TCyYWP
+         Gs5lL1NrzJ9c2/Nt4GMcN4N92QgUWhCHwIaN9PrJaesU9/zP6hmzMltGxtKuNC7KpkZ8
+         poMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=IyNW69NPekhHi196UE+nsUkhaEKch2dnhE4h95Stj3s=;
-        b=G4EPnqkR218HGiMou0KY/eOoQ3lDnN9IeWYIzz5effzUEE0/S6L63UcnLIGZxOympS
-         wjGHm00X9hz0N25rWdU8EoEaNDCOymTqOvUnmwYNvGUyEY7fHTJIFi93aFgrhmlL5XOL
-         e/C9ML0Y4zreMagbLgWBMnsX83hpFG3IKCxHgOaAhtS5LNmZyTvKw9YPaURs8+Ry93CB
-         0PGPnFoj0yN2vMNR9jSX5e4cE9WZO1Ua9GnwiehKV4yd4y26t1d66dgtmoxhO6CIb7cJ
-         E2Q+NNOwpreblwH3HCZG01vkYpGqhRI8wPuiY2v5/TrfjSmcYheg5o7O0wfru8BvfkSk
-         VtDg==
-X-Gm-Message-State: AOPr4FVrGioqfjswKMVvwqWoowJSnj+bEfSpY23b9gbLof6/vjfc7xhuEojjuvSeix2/pksI80BhIWQdyTo5aaeC
-X-Received: by 10.107.161.68 with SMTP id k65mr22622969ioe.110.1461877723578;
- Thu, 28 Apr 2016 14:08:43 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Thu, 28 Apr 2016 14:08:43 -0700 (PDT)
-In-Reply-To: <20160428210026.GA12268@sigill.intra.peff.net>
+        bh=CWisgQZZA4OyEUrhJZX89s+O9VuIKJjrMAHgnxcNtTc=;
+        b=GuTBQztUQSz0An+3iKVzCdzj97Hz0dkULTHjvR3oMk+jvnj4seZDUnASKn/rMSx4Nb
+         zAH3gp0Dz7pBaIh9CI13Ld+hTTaoMPTOCdjmMwKcWWi+HnukrVGaBWqUYVXWwi0DuXNt
+         IjficNWJIvvwyXPiyTHzDn1kxccT/dsvUxUvaGSX8a4haImSwxYFQODgMWimGiyojC+p
+         cTzRF+ON39Xsq3afyuD+8Icl9ybBC5pmKY1fsWMt15iAGa3+0eATHBuA5CEH1qEE4iMr
+         EDK36HJnhaPtMq41DM5K0ZbnC+FqcaZwgOpXr/JrGISVZKIghpaAqcoJ1P1+6Cis5oe5
+         HeGw==
+X-Gm-Message-State: AOPr4FVqRQrqLrG62t1HNoY/HCDc71PAitqEHQ2lbg82GeCgDUy+pOobaspF0dZCHafrE0vweCOxv/sj37VZ4g==
+X-Received: by 10.107.47.37 with SMTP id j37mr19539757ioo.168.1461877936155;
+ Thu, 28 Apr 2016 14:12:16 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Thu, 28 Apr 2016 14:12:16 -0700 (PDT)
+In-Reply-To: <1461873658-11394-1-git-send-email-rafalklys@wp.pl>
+X-Google-Sender-Auth: zniudKYjFnP9ZM1V6eh3Q_hHu-U
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292955>
 
-On Thu, Apr 28, 2016 at 2:00 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Apr 28, 2016 at 12:28:21PM -0700, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->>
->> > It's definitely sufficient, it's just annoying if a user shows up every
->> > week and says "I want X.Y", and then somebody else shows up a week later
->> > and says "I want X.Z".
->> >
->> > Are we serving any purpose in vetting each one (and if so, what)?
->>
->> Personally I do not think we would need to filter _anything_ if we
->> can tell that the user directly said
->>
->>       git -c var1=val1 -c var2=val2 $cmd ...
->>
->> and "git $cmd" ended up needing to spawn another "git" subcommand,
->> possibly in some other repository (i.e. "$cmd" in this case is
->> likely to be "submodule", but in principle it does not have to be).
->> If the user somehow gives variables like core.worktree that are
->> inappropriate to be applied across repositories, that's user's
->> problem, i.e. "don't do it then if it hurts".
->
-> Right, we are talking about that direct case here. And any time our
-> filter heuristic lets something through, it is probably "if it hurts
-> don't do it" as the worst case.
->
-> So I think the only two cases worth filtering are:
->
->   1. Ones where we _know_ that the config is nonsense to pass along,
->      _and_ where a user might conceivably make use of the
->      just-the-top-level version of it (core.worktree
->      comes to mind, though of course they are probably better served by
->      "--work-tree" in such a case).
+On Thu, Apr 28, 2016 at 4:00 PM, Rafal Klys <rafalklys@wp.pl> wrote:
+> trailer: load config to handle core.commentChar
 
-My gut reaction to this:
-In this specific case I would rather error out, as you never want to have
-core.worktree to point at the same dir for all of the repo and submodules.
+This subject is describing low-level details of the patch rather than
+giving a high-level overview. A possible rewrite might be:
 
-Thinking about it further, I am not so sure any more.
-(What if you have multiple submodules tracking the same project
-and you want to see each submodule version with the one worktree you point to?
-Highly unlikely edge case, but it voids the /never/ assumption of my
-gut reaction)
+    trailer: respect core.commentChar
 
+> Fall throught git_default_config when reading config to update the
+> comment_line_char from default '#' to possible different value set in
+> core.commentChar.
 
+Similarly, this text is pretty much repeating what the patch itself
+already states more concisely. Instead, you'd probably want to say
+here what problem the patch is solving, and give an explanation of the
+fix. For example:
+
+    git-trailer fails to respect core.commentChar. Fix this oversight
+    by invoking git_default_config() which loads core.commentChar.
+
+In fact, this is such a simple fix that the subject suggested above
+may itself be a sufficient commit message; any extra text might just
+be noise since the patch itself contains enough information to
+understand the problem and the fix.
+
+By the way, the above minor comments are probably not worth a re-roll.
+See below for a few more...
+
+> Signed-off-by: Rafal Klys <rafalklys@wp.pl>
+> ---
+> diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
+> +test_expect_success 'with message that has comments using non-default core.commentChar' '
+> +       git config core.commentChar x &&
+> +       test_when_finished "git config --unset core.commentChar" &&
+
+The above two lines could be collapsed to:
+
+    test_config core.commentChar x &&
+
+> +       cat basic_message >message_with_comments &&
+> +       sed -e "s/ Z\$/ /" >>message_with_comments <<-\EOF &&
+> +               x comment
+> +
+> +               x other comment
+> +               Cc: Z
+> +               x yet another comment
+> +               Reviewed-by: Johan
+> +               Reviewed-by: Z
+> +               x last comment
+> +
+> +       EOF
+> +       cat basic_patch >>message_with_comments &&
+> +       cat basic_message >expected &&
+> +       cat >>expected <<-\EOF &&
+> +               x comment
+> +
+> +               Reviewed-by: Johan
+> +               Cc: Peff
+> +               x last comment
+> +
+> +       EOF
+> +       cat basic_patch >>expected &&
+> +       git interpret-trailers --trim-empty --trailer "Cc: Peff" message_with_comments >actual &&
+> +       test_cmp expected actual
+> +'
+
+As this new test is effectively a copy of the preceding test, another
+option would be to factor out the common code. For instance:
+
+    test_comment () {
+        cat basic_message >message_with_comments &&
+        sed -e "s/ Z\$/ /" >>message_with_comments <<-EOF &&
+            $1 comment
+        ...
+    }
+
+    test_expect_success 'with message that has comments' '
+        test_comment '#'
+    '
+
+    test_expect_success 'with message that has custom comment char' '
+        test_config core.commentChar x &&
+        test_comment x
+    '
+
+Note that the backslash is dropped from -\EOF so that $1 can be
+interpolated into the here-doc.
+
+Such a re-factoring would be done as a preparatory patch, thus making
+this a two-patch series, however, it's probably not worth it for only
+two tests sharing common code. (Although, the following test is also
+nearly identical...)
+
+> diff --git a/trailer.c b/trailer.c
+> @@ -483,7 +483,8 @@ static int git_trailer_default_config(const char *conf_key, const char *value, v
+>         const char *trailer_item, *variable_name;
 >
->   2. An option where we think there may be some security implication.
->      Setting "http.sslverify" to false does have some security
->      implications ("oops, I only meant to turn off verification for the
->      root repo, and I got MiTM-attacked for the submodules!"). But it's
->      so obscure and unlikely that I think the benefit outweighs it.
->
->      And I can't think of any other cases whose security implications
->      aren't similarly unlikely. But I haven't carefully gone down the
->      list (and as I said, I'd be hesitant to support a blacklist until
->      _somebody_ takes the time to do so).
+>         if (!skip_prefix(conf_key, "trailer.", &trailer_item))
+> -               return 0;
+> +               /* for core.commentChar */
+> +               return git_default_config(conf_key, value, cb);
 
-I think in this case, it is more likely for the user to say:
+I'm a bit torn about this comment. On the one hand, it does add a bit
+of value since it's not obvious at a glance what config from the
+default set is needed by git-trailer, however, if git-trailer someday
+takes advantage of some additional config from the default set, then
+this comment will likely become outdated.
 
-    I know my ssl is so borked, so I want all traffic with no ssl
-(including submodules).
+If I was authoring the patch, I'd probably omit the comment. Someone
+wanting to know the reason for this invocation can always consult the
+commit message (which does explain its purpose).
 
->
->> If we are doing any filtering, however, it is always hard, if not
->> impossible, to take away what we originally granted, even by
->> mistake, for any reason, even for correctness or for security, in a
->> later release.
->
-> Yep, agreed.
->
-> I am OK staying with a whitelist. But I think we should be fairly
-> lenient in whitelisting hierarchies that people have a use for, and
-> which do not violate (1) or (2) above.
->
->> We probably could sidestep it by introducing an end-user
->> configurable "whitelist" somewhere.
->
-> Ugh. Please no. I do not want to have to think about explaining to
-> somebody that they can accomplish what they want with submodules, but
-> only by pre-configuring their ~/.gitconfig to allow certain keys so that
-> they can pass the appropriate config on the command line.
-
-I view the whitelist more like an "emergency knob to turn, because the
-developers did it wrong and I want it now". the general case should be
-covered by a mechanism we provide?
-
-Thanks,
-Stefan
-
->
-> -Peff
+>         variable_name = strrchr(trailer_item, '.');
+>         if (!variable_name) {
+> --
