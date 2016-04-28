@@ -1,105 +1,92 @@
 From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH 2/5] t5550: break submodule config test into multiple sub-tests
-Date: Thu, 28 Apr 2016 08:25:41 -0700
-Message-ID: <CA+P7+xqpntuL==uW75r29TxJsdjJ5WDdfBEorqd5-zHKZt5mQg@mail.gmail.com>
-References: <20160428133534.GA19056@sigill.intra.peff.net> <20160428133704.GB25319@sigill.intra.peff.net>
- <CAGZ79kacgJ_=C-Y=QkSDmvEvCrmEbcvdMkg0x76zkj-Y86m4=g@mail.gmail.com>
+Subject: Re: [PATCH 1/5] t5550: fix typo in $HTTPD_URL
+Date: Thu, 28 Apr 2016 08:26:46 -0700
+Message-ID: <CA+P7+xpR7wWso2yiaschPYbf7eDDvZ+RuS2aWdNPS2FeeGV1qg@mail.gmail.com>
+References: <20160428133534.GA19056@sigill.intra.peff.net> <20160428133636.GA25319@sigill.intra.peff.net>
+ <CA+P7+xqSYA5++pq0_0FYFg8TXhc7f0=X_4uNWtFRpebEDzqtHQ@mail.gmail.com> <20160428152549.GB31063@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,
-	Lars Schneider <larsxschneider@gmail.com>,
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
 	Git Users <git@vger.kernel.org>,
 	Jens Lehmann <Jens.Lehmann@web.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 17:26:17 2016
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 28 17:27:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avnpR-0004DH-7W
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 17:26:09 +0200
+	id 1avnqT-00051C-QO
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 17:27:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752907AbcD1P0E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 11:26:04 -0400
-Received: from mail-oi0-f53.google.com ([209.85.218.53]:34131 "EHLO
-	mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752774AbcD1P0D (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 11:26:03 -0400
-Received: by mail-oi0-f53.google.com with SMTP id k142so87382889oib.1
-        for <git@vger.kernel.org>; Thu, 28 Apr 2016 08:26:01 -0700 (PDT)
+	id S1752622AbcD1P1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2016 11:27:08 -0400
+Received: from mail-ob0-f173.google.com ([209.85.214.173]:36698 "EHLO
+	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751865AbcD1P1H (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2016 11:27:07 -0400
+Received: by mail-ob0-f173.google.com with SMTP id j9so40600012obd.3
+        for <git@vger.kernel.org>; Thu, 28 Apr 2016 08:27:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=ha8zJbcQ4VNEd9e82EP/YPr0KSY7RkafkSvVYkTyKN0=;
-        b=Iah5Gm+cHnv6UoXgNAG9bzmHf87SLegpaJ/d3P/e1QiOEwEfGR1HrA8+DuuJMNf5VW
-         8RiUbTopbkX5XF7RN0erHycvGQ1MWd86Ie/RwDuhOedMcRCxJkwk9pE5CebtN501t2ml
-         3dCCnjOw6VhqnT0YkoCGangU8cUiJDRFnTatfIV9uHGIAf1wst6tBTrMub2gePHMMhr7
-         BE9QAVBZsyDTUtC9qrHxRe3qj1eXTs0FH5E40zt5ZC2AoNck6ZcymfjFEnNuHppHHNiQ
-         kz+NeeJOO6d3ywwN+9Tq5OkXU+P9x2bUHHUKXGBHcY7YF4VCuIplLRwQT02yzRxcK1S7
-         dy7g==
+        bh=76BK6hj4BK3GeLV1ngc87kxEJg/ts95FfKXh76Lsruw=;
+        b=l35pjBpnkxktT5+QggyBVYqmZv5nu4NiLu06qb9j0DMpQHqh745WQC6K4B4dZqPprQ
+         qcKkEnoLsFt1Wh5CEv5P//LS7FQSs7b9N3ZBoFx75kK2X8KB8htxvfKTAtKX89MTLG+f
+         AypodYMCdrxeT2YrUU/JClQFltMbcmDFM5GpYoQvPuRSx/WXKiL3D4WhQrqaSwOVNM+Q
+         fskNZaWzxsZrI2jI9ehPlczBsbTTx0av4MTs+R6ww6vT+hpkMOq8MZe+LKLA4xapRFCa
+         xw1E4RBC+ieKs9ugop00eiohC7qFNvFrEYuKPgqW7CnZm2yt8W29ra42X5w/Qv5uQlEM
+         IMHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=ha8zJbcQ4VNEd9e82EP/YPr0KSY7RkafkSvVYkTyKN0=;
-        b=AhAa+rl3a9UeDxQPb+70dcT5jB6bHRWFao4qP972s7nVQzpm7PHIq1ZuQvpqZsTg3b
-         ZQxwsljW3w8iOOmTFYfZKa/PFxO+IvuRJL2codh8xq5Dt7/sgPlWqmjGsOdcpcA8Kjke
-         4PSExQNBlVH7IJcnpvHFD6XjD/JicM22kjfE/Ego8gtN5Y1Z0bS+0FuZ3eo4kQMZf27u
-         7Cqilmf5iJGFPV3gkZ6aMJv6t4lLwvFA6zP7KdiGmrzq1El410lXWf3hTGpyi2eggS5t
-         SFA2D2AtJHkIDc2KgkMudluFnB2i0+Obalw6tZPNluA73f6Fqzhu36HCMbFoWPRRcA8t
-         fE2A==
-X-Gm-Message-State: AOPr4FUC+AjlfhWErC925ZThbGc7OLj9ashMaECDxe39hwO6As3S3tYoAM5yCSyLw8el1gG7DfXF2+oQx0GY3g==
-X-Received: by 10.157.39.202 with SMTP id c68mr6479836otb.36.1461857161124;
- Thu, 28 Apr 2016 08:26:01 -0700 (PDT)
-Received: by 10.182.117.132 with HTTP; Thu, 28 Apr 2016 08:25:41 -0700 (PDT)
-In-Reply-To: <CAGZ79kacgJ_=C-Y=QkSDmvEvCrmEbcvdMkg0x76zkj-Y86m4=g@mail.gmail.com>
+        bh=76BK6hj4BK3GeLV1ngc87kxEJg/ts95FfKXh76Lsruw=;
+        b=BAvskP4wBoaAKMZ8oS1OszKHAZn3Zn68mRZ64H9H0Saoa7zlyLaxjdYWpEa2LLzPW+
+         0lR+Q8DBVhlSDfQv5Jn2tvYAy/zvcWT+Qa/mfiHFxH/KQ8hKxp8IAEl6sIksRZJesEjN
+         T3HcIt9XGwKN46sj8lk5zakIANYWorz7lCNdXk0GR/ADYnlGskm6lgrtU4vt02OcTcv3
+         EZKYZk+oj2zrKzVIsSb2JLdtVBmQYHb/u7eHfgjKqhXR4wNsWKSIQVnj8uniadRRMVdX
+         yIC/NS6+ELiPdpQDRX82JatMoK8v36pxb9SuK32fcUrfDoy3P+PAl5SsNelEZGwyB4D4
+         124A==
+X-Gm-Message-State: AOPr4FUCOAtOQtlTBu0/i/4nwkX1LxIs5Ssb4EX7XQsb6z9wGb4Z/jmE/V2C7AwwPnxVp2khSaY3gPIa2pv6kQ==
+X-Received: by 10.60.33.69 with SMTP id p5mr7189349oei.65.1461857226352; Thu,
+ 28 Apr 2016 08:27:06 -0700 (PDT)
+Received: by 10.182.117.132 with HTTP; Thu, 28 Apr 2016 08:26:46 -0700 (PDT)
+In-Reply-To: <20160428152549.GB31063@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292900>
 
-On Thu, Apr 28, 2016 at 8:21 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Thu, Apr 28, 2016 at 6:37 AM, Jeff King <peff@peff.net> wrote:
->> Right now we test only the cloning case, but there are other
->> interesting cases (e.g., fetching). Let's pull the setup
->> bits into their own test, which will make things flow more
->> logically once we start adding more tests which use the
->> setup.
->>
->> Let's also introduce some whitespace to the clone-test to
->> split the two parts: making sure it fails without our
->> cmdline config, and that it succeeds with it.
->>
->> Signed-off-by: Jeff King <peff@peff.net>
->> ---
->>  t/t5550-http-fetch-dumb.sh | 8 ++++++--
->>  1 file changed, 6 insertions(+), 2 deletions(-)
->>
->> diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
->> index 81cc57f..e8e91bb 100755
->> --- a/t/t5550-http-fetch-dumb.sh
->> +++ b/t/t5550-http-fetch-dumb.sh
->> @@ -91,17 +91,21 @@ test_expect_success 'configured username does not override URL' '
->>         expect_askpass pass user@host
->>  '
->>
->> -test_expect_success 'cmdline credential config passes into submodules' '
->> +test_expect_success 'set up repo with http submodules' '
+On Thu, Apr 28, 2016 at 8:25 AM, Jeff King <peff@peff.net> wrote:
+> On Thu, Apr 28, 2016 at 08:24:05AM -0700, Jacob Keller wrote:
 >
-> set up or setup?
+>> On Thu, Apr 28, 2016 at 6:36 AM, Jeff King <peff@peff.net> wrote:
+>> > Commit 14111fc (git: submodule honor -c credential.* from
+>> > command line, 2016-02-29) accidentally wrote $HTTP_URL. It
+>> > happened to work because we ended up with "credential..helper",
+>> > which we treat the same as "credential.helper", applying it
+>> > to all URLs.
+>>
+>> You say "credential.helper" twice here? I think that's confusing. The
+>> patch looks perfectly fine but I am having trouble parsing this
+>> description. 'We end up with X which we treat the same as X"?
 >
-> $ grep -r "set up" |wc -l
-> 69
-> $ grep -r "setup" |wc -l
-> 1162
+> Note the two dots in the first one. There is no variable $HTTP_URL, so:
 >
-> Apart from that nit, this patch looks good to me.
+>   credential.$HTTP_URL.helper
 >
+> becomes:
+>
+>   credential..helper
+>
+> -Peff
 
-Yes this looks quite a bit more readable.
+Ah yes, very tiny text and tired morning eyes you are right. Makes
+more sense now.
 
 Thanks,
 Jake
