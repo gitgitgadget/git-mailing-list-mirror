@@ -1,73 +1,97 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH v4 0/3] git-p4: fix Git LFS pointer parsing
-Date: Thu, 28 Apr 2016 08:34:09 +0200
-Message-ID: <CAHGBnuN93Pz_CDxajugnFbaPhrQNpH6b_8D5rahEO2DOREZJuw@mail.gmail.com>
-References: <1461824793-43235-1-git-send-email-larsxschneider@gmail.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: Bisect limited to Merge Commits
+Date: Wed, 27 Apr 2016 23:44:23 -0700
+Message-ID: <CA+P7+xq-g3JPxKROa9Ne0EGiSgSqHKgqVG3eoW9Q-dP0yPOrVA@mail.gmail.com>
+References: <20160427204551.GB4613@virgo.localdomain> <xmqq8tzy93ed.fsf@gitster.mtv.corp.google.com>
+ <57213041.5070506@kdbg.org> <20160428061929.GA11322@virgo.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>, ben.woosley@gmail.com,
-	sunshine@sunshineco.com
-To: larsxschneider@gmail.com
-X-From: git-owner@vger.kernel.org Thu Apr 28 08:34:16 2016
+Cc: Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
+	Git mailing list <git@vger.kernel.org>
+To: Hagen Paul Pfeifer <hagen@jauu.net>
+X-From: git-owner@vger.kernel.org Thu Apr 28 08:44:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avfWi-0008J1-5a
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 08:34:16 +0200
+	id 1avfgu-0002KV-8G
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 08:44:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751518AbcD1GeM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 02:34:12 -0400
-Received: from mail-vk0-f68.google.com ([209.85.213.68]:36067 "EHLO
-	mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751122AbcD1GeL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 02:34:11 -0400
-Received: by mail-vk0-f68.google.com with SMTP id u23so2873048vkb.3
-        for <git@vger.kernel.org>; Wed, 27 Apr 2016 23:34:11 -0700 (PDT)
+	id S1752135AbcD1Goo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2016 02:44:44 -0400
+Received: from mail-ob0-f179.google.com ([209.85.214.179]:34991 "EHLO
+	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750943AbcD1Gon (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2016 02:44:43 -0400
+Received: by mail-ob0-f179.google.com with SMTP id n10so30249378obb.2
+        for <git@vger.kernel.org>; Wed, 27 Apr 2016 23:44:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=VSHqn1CsXZSoRoic3IGDCVBxuTjXsDQllV/80F/L/oA=;
-        b=VFVlXKePlLo0WorrDDAmzmL4P36ukarPPlTVRFM0vLU8w+ogzp+3ZcpqyWOjrfTXLG
-         iytgC9r+ZMFhyfUCJCjlnPlA2MvbAAlEOnmEsaHR0+BuRYdB9bybNp3Sw2OkI2C/we+M
-         mjcWkqVnuhDvwxW3SwjL9ijWRHd3c4i5pxl0fhTqqmyu4SH6ll1A68VK8ubju79WHiBk
-         iX29FqcundrBbJSumZpmD6Kw8NTqp7Dc24C1+c8Z86Esyl/8zi8FmEn+Dj4qRGUmruFb
-         U178NyAotgJBrpsSVQwTQZIHtDCI9jGJyhGY7F3I3GwRb31uQZyvW6KtVzVHoe6xX6H5
-         cxgA==
+        bh=KdpVsm9s0ygekRYLl3GdpRaH/8BC4GrrGaYpgMavxd8=;
+        b=MZ6MQYzLDUZKH0wyItbHkaI2+V3Yo86wHDFtfh6vL9e+CkpeGADWiWkf7ZtohQPwuF
+         1ulev+m3dG67q0WieoOrcoAO6swjjSgQw7q1iX/5ozscUe6O+yMwd6qk0e2rLNiDj7Q1
+         EwrHFm0I14BnlX6O1ImHrDNy78urm7GQsBTkM9WK7ZZKf/wmSCK3N1gf/ZQwNUQYWlNv
+         UNsaXk2xTP41eCNRxIIRUa2mLOyQLh+9dotk7DNCSeNaMRIrxN3PlDtdhvM3WquAsh3/
+         kQC1lewkC49u7ueukySLAe6MkzQCla4d/b/SQAW1tjqmkPivLKLBTLee4XAcbD0bIOTn
+         d4JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=VSHqn1CsXZSoRoic3IGDCVBxuTjXsDQllV/80F/L/oA=;
-        b=Alr7Nq8sbkchAbV3oDP2VixKrFlZODD8p9SWdS04RKwSpvkAMfDYQrKQLPojFF3KHO
-         I7VgJh0NXCNrE1B2tgSxC7QNXCwbPJk27oOZzaaUF1cWB6S9L6lWV5GaxrNp32YsBVns
-         fr4R2jd4qlbOtkYDNrfjQRfVGiU+NhDSN4MaBEh8SoabeU+N+asRgOMVhrTMwQpcCirQ
-         iCoPF/zVIcj9BTtWgS5vPPkIldRMN42ZnkORr4C/NEUtzSxDvh8Xf6qGoF/WtesWabDb
-         SuOy3OgQoYvdhwI9/fiJUgaR2kUNsXynYkRSTBAF5DQbi7EAmhkDqlQURvNk+HR/rHfi
-         DSsw==
-X-Gm-Message-State: AOPr4FWv+kPDDH+VY6jH2UcWZQh3ROFr78TR+IMa/mTNz6caZBbZmKx6hW2p3HZKxJUsU49McNGsYOUPW9MHMQ==
-X-Received: by 10.176.1.197 with SMTP id 63mr6772090ual.77.1461825249514; Wed,
- 27 Apr 2016 23:34:09 -0700 (PDT)
-Received: by 10.176.4.132 with HTTP; Wed, 27 Apr 2016 23:34:09 -0700 (PDT)
-In-Reply-To: <1461824793-43235-1-git-send-email-larsxschneider@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=KdpVsm9s0ygekRYLl3GdpRaH/8BC4GrrGaYpgMavxd8=;
+        b=bNLTIUwYEg3bFOIEPwslDQIdAl6/+zhA/KiP5279dkVwMHRlE4vtSJ4kxz6ZSHhXWn
+         KTpbLM8vYfvy2qQ6dRTW3Gfea198eBHqLkDbmrBlhrX06GCtF4e5skay0s5Rwgb3HGsd
+         XseDK4EqKZiSVMCjXTByekr2LgWng/Mj/3aJupKDXVI3ehdcN93kqqoNMuFT5zYsX01P
+         J/sW8y0hQZuH1OemkDtHLdGPhV+EpWwOXhxmiQyNlMcQDa8e1y6NjggIeXDVEUDWDBVV
+         +gx7t2GbasREzC3cYwQhjCxbWmwy474l1y5wPWjmTxUxINnPBwgFxZSeBXpdgPpuQume
+         pRRw==
+X-Gm-Message-State: AOPr4FXRB7+G/k+AuXtdLDGGYLh9tcsbc6N6PzxiykEMZZosa/oNOfsPAC3u+6UHKcX7jpsOGRcMFi3ixvIUUA==
+X-Received: by 10.60.74.97 with SMTP id s1mr5547751oev.24.1461825882735; Wed,
+ 27 Apr 2016 23:44:42 -0700 (PDT)
+Received: by 10.182.117.132 with HTTP; Wed, 27 Apr 2016 23:44:23 -0700 (PDT)
+In-Reply-To: <20160428061929.GA11322@virgo.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292852>
 
-On Thu, Apr 28, 2016 at 8:26 AM,  <larsxschneider@gmail.com> wrote:
+On Wed, Apr 27, 2016 at 11:19 PM, Hagen Paul Pfeifer <hagen@jauu.net> wrote:
+> * Johannes Sixt | 2016-04-27 23:33:53 [+0200]:
+>
+> Hey Junio, hey Hannes,
+>
+>> git bisect start
+>> git rev-list --first-parent --boundary origin..origin/pu |
+>>   sed -ne s/-//p | xargs git bisect good
+>> git bisect bad origin/pu
+>>
+>>and it starts bisecting among the 50-something first-parent commits between
+>>origin and origin/pu.
+>
+> just for clarification: contributors rebase their work before pushing it on
+> master. The integrator simple merges --no-ff the individual branches. Just a
+> regular workflow, nothing special - except that many contributor commits will
+> not build. ;(
+>
+> The idea is just to skip the contributor commits during bisect and focus on
+> the merge commits (the ones with more than one ancestors) because they are
+> likely build and testable.
+>
+> One possible approach is probably to sort out all non-merge commits before
+> bisecting and bisect only on a this set of commits. The advantage is that the
+> first bad commit is the merge commit introduced the regression. Mmmh, any
+> comments?
+>
 
-> diff to v3:
-> * fix missing assignment of pointerFile variable
->   ($gmane/292454, thanks Sebastian for making me aware)
-> * fix s/brake/break/ in commit message
->   ($gmane/292451, thanks Eric)
+I suspect doing something akin to the idea of "bisect --first-parent"
+would work for this use case and be more flexible in general. Your
+idea is pretty much what i think bisect --first-parent would do,
+except that it would also work for non-merge commits which happen to
+be in the "mainline" history.
 
-The series looks good to me now.
-
-Regards,
-Sebastian
+Thanks,
+Jake
