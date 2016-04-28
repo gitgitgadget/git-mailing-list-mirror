@@ -1,7 +1,7 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Stefan Beller <sbeller@google.com>
 Subject: Re: [PATCH v5 2/2] submodule: pass on http.extraheader config settings
-Date: Thu, 28 Apr 2016 12:28:21 -0700
-Message-ID: <xmqqwpnh4joq.fsf@gitster.mtv.corp.google.com>
+Date: Thu, 28 Apr 2016 12:34:31 -0700
+Message-ID: <CAGZ79kYoRP=rkfaL+rLapmvouUdPxXGBr-KWOLhL94bYB1B2-w@mail.gmail.com>
 References: <cover.1461837783.git.johannes.schindelin@gmx.de>
 	<89d0024450b0e6e9997ad9e3d681248bde1bafc0.1461837783.git.johannes.schindelin@gmx.de>
 	<20160428112912.GB11522@sigill.intra.peff.net>
@@ -13,85 +13,100 @@ References: <cover.1461837783.git.johannes.schindelin@gmx.de>
 	<20160428165031.GA31421@sigill.intra.peff.net>
 	<xmqq1t5p5z8v.fsf@gitster.mtv.corp.google.com>
 	<20160428191038.GA10574@sigill.intra.peff.net>
+	<xmqqwpnh4joq.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Jacob Keller <jacob.keller@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Git mailing list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 28 21:28:42 2016
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 28 21:34:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avrc1-0007nN-E9
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 21:28:33 +0200
+	id 1avrhs-00020Q-7u
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 21:34:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752725AbcD1T20 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 15:28:26 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54613 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751865AbcD1T2Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 15:28:25 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 914071604C;
-	Thu, 28 Apr 2016 15:28:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QsTMSz/5/pAvvuLr+Y6AFPOSYhM=; b=uRmr40
-	8UsSOV6VO5IshAImJiEZYe7exj7/2T0SHqqM9EAeheYbSxdAzv9QJt/vgEFy2RNi
-	Lyqk7DLiF4zy1dZ+fhrvqhRsxHdNtOW2zI+Ni/Kkm+LGho1Ot6kEbWSvopRiZRCD
-	0bX5i4heEUeyIxCWhL+hwf4UxSHIR7IkkvyXM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rrV0kZPtw7SQTB1i5gemyU6SAjPWhJra
-	wXTVEBoI1mIbvjr1S2lOdNXBEPqxzVSSFnOZebgsXPURLPn98q/gZirmtrVn1LXJ
-	Hp53MtjKcegf4CX4Mrry5D33Jls0/a8ZzBs1aHmKwAu/5qxXySVYms5+MQI6dlYL
-	dHZBNJ9lIFE=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 892E21604B;
-	Thu, 28 Apr 2016 15:28:23 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D7D281604A;
-	Thu, 28 Apr 2016 15:28:22 -0400 (EDT)
-In-Reply-To: <20160428191038.GA10574@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 28 Apr 2016 15:10:38 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5F16D016-0D77-11E6-B9BE-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752774AbcD1Ted (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2016 15:34:33 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:37305 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751539AbcD1Tec (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2016 15:34:32 -0400
+Received: by mail-ig0-f173.google.com with SMTP id s8so1576806ign.0
+        for <git@vger.kernel.org>; Thu, 28 Apr 2016 12:34:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=cdCvmAk/fX5PJBOsdcZOz8+pMEWP2kA4qrWHq3xhXeo=;
+        b=pwFmEIgtz87tA5KxegN19wuPLAObqOuIvaF27yEeC0qx/5AIiL8I8xENyP2uixrfDt
+         3eLrBi4FG43//NZf+ZMbPqPPeyfRQkFbE+YBLIHZp/EH/Sy8ueSubV+DV1LCNMAh8kjq
+         Itp9WDbJho9iqDb+rJfSmgrEDsX5lf0BlH2vGnXWEwOS2f8ONosizjl9KOCXx7YqK5zD
+         fERDp4BWGetBBIRLdDZ2WOYBt6chwtCy5Tz4LDeekVStmiCrcQXc/4NGf/bAiXX/N/QM
+         gWyIEFkBaeJSBagMXItungtxxN+DbGMQABrjNwt5ph4getPNR672tZyGxNnIyYI5KIQH
+         cblg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=cdCvmAk/fX5PJBOsdcZOz8+pMEWP2kA4qrWHq3xhXeo=;
+        b=UczWzQt29iySl8opZXBrSJs7zK59B9TYtZ6qO+KDlsUIIb8MuzkpYgLMJZQwJXARsi
+         6ad9T3eb2XXb/0Km46P8D/Xtg+axVZ0T05ouKIHqTurr8AeTRXRgaRQfZpE+qPmpL4LB
+         ZpbsaNdwokb2MooKSzmkTiKKQ0VX6bFNe0JH0DJExF9IBO4KzyE8/Uor9snWctpinyJV
+         qEfrV/HaSaJfnm01P42utoHqhm9KLXuK6pGGXilOb/j8AU6k8hPwzwNkoO9GN7rtM811
+         xQMkBURrHBQclxs3srmL3bUtdpcJv7Ve79pswxBRQvlnesm9LzidCwfFioM5c1oJ6fxy
+         wUpA==
+X-Gm-Message-State: AOPr4FWby+6HhzNemJBQiqgrRUCeQDVYk6o7SsLUTsX2pOj18DiIwtxkrZAveeum8VW3GN6HVvzFnHj8GQAWWq/V
+X-Received: by 10.50.111.15 with SMTP id ie15mr21062701igb.94.1461872071274;
+ Thu, 28 Apr 2016 12:34:31 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Thu, 28 Apr 2016 12:34:31 -0700 (PDT)
+In-Reply-To: <xmqqwpnh4joq.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292940>
 
-Jeff King <peff@peff.net> writes:
-
-> It's definitely sufficient, it's just annoying if a user shows up every
-> week and says "I want X.Y", and then somebody else shows up a week later
-> and says "I want X.Z".
+On Thu, Apr 28, 2016 at 12:28 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
 >
-> Are we serving any purpose in vetting each one (and if so, what)?
+>> It's definitely sufficient, it's just annoying if a user shows up every
+>> week and says "I want X.Y", and then somebody else shows up a week later
+>> and says "I want X.Z".
+>>
+>> Are we serving any purpose in vetting each one (and if so, what)?
+>
+> Personally I do not think we would need to filter _anything_ if we
+> can tell that the user directly said
+>
+>         git -c var1=val1 -c var2=val2 $cmd ...
+>
+> and "git $cmd" ended up needing to spawn another "git" subcommand,
+> possibly in some other repository (i.e. "$cmd" in this case is
+> likely to be "submodule", but in principle it does not have to be).
+> If the user somehow gives variables like core.worktree that are
+> inappropriate to be applied across repositories, that's user's
+> problem, i.e. "don't do it then if it hurts".
 
-Personally I do not think we would need to filter _anything_ if we
-can tell that the user directly said
+So when going with that philosophy, the user might be missing
+switches like
 
-	git -c var1=val1 -c var2=val2 $cmd ...
+    -c-for-this-repo-only core.worktree=... -c
+submodule.worktree=align-relative-to-parent
 
-and "git $cmd" ended up needing to spawn another "git" subcommand,
-possibly in some other repository (i.e. "$cmd" in this case is
-likely to be "submodule", but in principle it does not have to be).
-If the user somehow gives variables like core.worktree that are
-inappropriate to be applied across repositories, that's user's
-problem, i.e. "don't do it then if it hurts".
+i.e. when shifting the responsibility to the user, we need to have
+switches to pass options to the repository or a subset of submodules?
 
-If we are doing any filtering, however, it is always hard, if not
-impossible, to take away what we originally granted, even by
-mistake, for any reason, even for correctness or for security, in a
-later release.
-
-We probably could sidestep it by introducing an end-user
-configurable "whitelist" somewhere.
+>
+> If we are doing any filtering, however, it is always hard, if not
+> impossible, to take away what we originally granted, even by
+> mistake, for any reason, even for correctness or for security, in a
+> later release.
+>
+> We probably could sidestep it by introducing an end-user
+> configurable "whitelist" somewhere.
+>
+>
