@@ -1,97 +1,73 @@
-From: Andrew J <andj2223@gmail.com>
-Subject: Re: Strangeness with git-add and nested repositories
-Date: Wed, 27 Apr 2016 23:10:24 -0700
-Message-ID: <CAH6n4TfvybZyAYLkzyjfaP=2ZkirpacTgVQApF3bZT-j8=_Qng@mail.gmail.com>
-References: <CAH6n4TdG9LQOPaaw_H6vuCgia0-4JXhPsSiAJPa5GtjfduQoSw@mail.gmail.com>
-	<CAGZ79kZhATfP1FpXnhivCa_Az-3KADSCReOo68E2Q3s29x5HNw@mail.gmail.com>
+From: Hagen Paul Pfeifer <hagen@jauu.net>
+Subject: Re: Bisect limited to Merge Commits
+Date: Thu, 28 Apr 2016 08:19:30 +0200
+Message-ID: <20160428061929.GA11322@virgo.localdomain>
+References: <20160427204551.GB4613@virgo.localdomain>
+ <xmqq8tzy93ed.fsf@gitster.mtv.corp.google.com>
+ <57213041.5070506@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 08:10:33 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Thu Apr 28 08:19:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avf9k-0002nb-6A
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 08:10:32 +0200
+	id 1avfIY-0004n2-Dp
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 08:19:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751513AbcD1GK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 02:10:27 -0400
-Received: from mail-ig0-f194.google.com ([209.85.213.194]:34486 "EHLO
-	mail-ig0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751122AbcD1GK0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 02:10:26 -0400
-Received: by mail-ig0-f194.google.com with SMTP id qu10so10832660igc.1
-        for <git@vger.kernel.org>; Wed, 27 Apr 2016 23:10:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=TMfyS+zvpN0O26iP2Ose8VNdbncHCoGRlaU9lpJoKgQ=;
-        b=sNidwCEngH3G+KG8KgVtq8OeTYhvVEJTW2yljADnacd4tivIBJdIZOd5lQXpZxET9u
-         JFffNVFMRS0cTHIRpeKRwwujbs3VZWbQGapRcms4/E1gHWzBymNXXmgs88giwTgNK7fd
-         lS2BRhs0nGmTvLyGaWqRrHzZ4gpjf2hcezBp5hqcXcwBBb4edIkQoclRw1G5hIBCHM9C
-         WFIEzngN3nCWJKZeG25JwOgW09tqNS/QG5iF7Cv26uy4hYGxWoewrhYf1fMZ9MdcZDR7
-         ySAELgVtYEtmaAla+VK2vKjb9JcedLkW8Hr855wj1iTpWhzxeOXm3d0i5SfwGEItQEbc
-         lSnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=TMfyS+zvpN0O26iP2Ose8VNdbncHCoGRlaU9lpJoKgQ=;
-        b=i3/8MrO83dTELIvzvr6hjoJTWIOJWhwXapcrgxNd8NN+IMIKgplefdqRWYNjJRDBgg
-         /ZH1ZQsJE1C5ZaTwe5z/tsp8baTGWSHufs5AxLRNSW1MSR9VCN+S6a+I890plj3LyNQP
-         zcEvYjLkSMZU2opzoDWxfYFMdZw5SlW+XYs8EsbqBOVo7JqQNpqADdZImg7HH8V8Oj2M
-         Wc7ShLv4UVFI12WEcZ2OXSUhZ1Mjwse0RfDMqx4l1C9jVthXanwbzNOG7qyv12A+tpdN
-         cBlk4ahllfODsOvtTD+dI/H8SoF6tok2BohkZyevti4aUijgrYrumLnIo1s/tAYJximK
-         nR7Q==
-X-Gm-Message-State: AOPr4FUX89uLk46+HXqZhNVo7KbQjOiZSlnTCzNXhRazKX+N67y7Gc0Lqkz7IH/KPP7OTTWKFcJh2OD3v6g9+w==
-X-Received: by 10.50.141.193 with SMTP id rq1mr31487868igb.39.1461823825009;
- Wed, 27 Apr 2016 23:10:25 -0700 (PDT)
-Received: by 10.107.10.219 with HTTP; Wed, 27 Apr 2016 23:10:24 -0700 (PDT)
-In-Reply-To: <CAGZ79kZhATfP1FpXnhivCa_Az-3KADSCReOo68E2Q3s29x5HNw@mail.gmail.com>
+	id S1750943AbcD1GTe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2016 02:19:34 -0400
+Received: from mx2.mailbox.org ([80.241.60.215]:41979 "EHLO mx2.mailbox.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750809AbcD1GTe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2016 02:19:34 -0400
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [80.241.60.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mx2.mailbox.org (Postfix) with ESMTPS id C1FC3420FD;
+	Thu, 28 Apr 2016 08:19:31 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at heinlein-support.de
+Received: from smtp1.mailbox.org ([80.241.60.240])
+	by hefe.heinlein-support.de (hefe.heinlein-support.de [91.198.250.172]) (amavisd-new, port 10030)
+	with ESMTP id r9iGvpeT2XdZ; Thu, 28 Apr 2016 08:19:30 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <57213041.5070506@kdbg.org>
+X-Key-Id: 98350C22
+X-Key-Fingerprint: 490F 557B 6C48 6D7E 5706 2EA2 4A22 8D45 9835 0C22
+X-GPG-Key: gpg --recv-keys --keyserver wwwkeys.eu.pgp.net 98350C22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292846>
 
-Hi Stefan,
+* Johannes Sixt | 2016-04-27 23:33:53 [+0200]:
 
-On Wed, Apr 27, 2016 at 9:08 AM, Stefan Beller <sbeller@google.com> wrote:
-> I think (pure speculation), that it the error is in the context
-> (repository) switching logic.
-> What happens if you alter the order, i.e. give testfile first and then
-> the files in the nested
-> repos?
+Hey Junio, hey Hannes,
 
-Interestingly, reversing the order produces the same result (the
-testfile is added, the nested files are not).
+> git bisect start
+> git rev-list --first-parent --boundary origin..origin/pu |
+>   sed -ne s/-//p | xargs git bisect good
+> git bisect bad origin/pu
+>
+>and it starts bisecting among the 50-something first-parent commits between
+>origin and origin/pu.
 
-I've also noticed that running something like 'git status testfile
-nestedfiles' results in the nested files being omitted from the git
-status output; I'd expect them to be printed by git-status as
-untracked files. So it appears the problem is not isolated to git-add.
+just for clarification: contributors rebase their work before pushing it on
+master. The integrator simple merges --no-ff the individual branches. Just a
+regular workflow, nothing special - except that many contributor commits will
+not build. ;(
 
-To give some context, my use case is that I have a parent project that
-links to numerous chromium libraries, thus my parent project needs
-access to many of chromium's headers at build time. I wanted to make
-these headers available to other developers without them needing to
-check out all of chromium.
-So I add all the chromium headers to the parent project with something like:
-find deps/chromium/src -name "*.h" | xargs git add --
-I was weirded out to find that many of the header files weren't being
-added, as I've already described.
+The idea is just to skip the contributor commits during bisect and focus on
+the merge commits (the ones with more than one ancestors) because they are
+likely build and testable.
 
-I ultimately worked around this by doing:
-find chromium/src -name "*.h" | xargs -n 1 git add
-Since each file gets added separately, this is quite slow. So it'd be
-nice if this little bug was fixed someday :)
+One possible approach is probably to sort out all non-merge commits before
+bisecting and bisect only on a this set of commits. The advantage is that the
+first bad commit is the merge commit introduced the regression. Mmmh, any
+comments?
 
-As you probably know, Chromium is comprised of many hundreds of nested
-repos, so that aided in manifesting this issue.
-
-Thanks,
-Andrew
+hgn
