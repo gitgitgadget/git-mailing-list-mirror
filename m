@@ -1,124 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] pull: make --rebase --verify-signatures illegal
-Date: Thu, 28 Apr 2016 10:23:26 -0700
-Message-ID: <xmqqmvod641d.fsf@gitster.mtv.corp.google.com>
-References: <20160428095254.GA5205@netblarch>
-	<20160428134435.GA5901@netblarch>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv4 1/2] http.c: implement the GIT_TRACE_CURL environment variable
+Date: Thu, 28 Apr 2016 10:26:06 -0700
+Message-ID: <CAGZ79kYe-WsAJj3xkr9YkHZbHqQ9rhKV80+K0Bx3SZsB85+tHA@mail.gmail.com>
+References: <20160428115748.37177-1-gitter.spiros@gmail.com>
+	<20160428115748.37177-2-gitter.spiros@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-To: Alexander 'z33ky' Hirsch <1zeeky@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 19:23:41 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 28 19:26:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avpfA-0003rA-8b
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 19:23:40 +0200
+	id 1avphd-000525-PD
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 19:26:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753236AbcD1RXa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 13:23:30 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53192 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753021AbcD1RX3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 13:23:29 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 59626142D5;
-	Thu, 28 Apr 2016 13:23:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3OjhK0Fdiqb2Ub4wx51cyEkKP9Y=; b=JWc6UK
-	h1I2RvEwSDuNRUdoIB4F9iP309dqXzYo5o1+jcBSZ4HN62VVeOR5nFcDU0N3YOZS
-	ei0xxzEAaQkY6uYuNRSJAsKwTqx6GvOTh5zsz271qbJye6l777RG31Kd0yQ2xB5E
-	BEZ1CTLa7XDQxk/7M1RjI7XdZqNsXF6yGTYRQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NB7Wz6MAz0nLpWeAqvQxgVOCiI+XopnS
-	3xPWUASePfEdi73CzVgKu7A9xLusGt8MlNp60GVrmtWux5K7tRsAB7KiiOuYwXBW
-	m8vIQCmB4CWbMnkW4iDTsbvyybsVNyYTU/0Q8fKIic6CbgClb5SNJTbV/R5iwfOJ
-	a6rdluQrlsU=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4FEBE142CF;
-	Thu, 28 Apr 2016 13:23:28 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9E43F142CE;
-	Thu, 28 Apr 2016 13:23:27 -0400 (EDT)
-In-Reply-To: <20160428134435.GA5901@netblarch> (Alexander Hirsch's message of
-	"Thu, 28 Apr 2016 15:44:35 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: EB94647A-0D65-11E6-AE07-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752845AbcD1R0I convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Apr 2016 13:26:08 -0400
+Received: from mail-io0-f170.google.com ([209.85.223.170]:35975 "EHLO
+	mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752560AbcD1R0H convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2016 13:26:07 -0400
+Received: by mail-io0-f170.google.com with SMTP id u185so96814605iod.3
+        for <git@vger.kernel.org>; Thu, 28 Apr 2016 10:26:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=uSCyEvgP+HRLzIFHT0FadBCVEoTPi0wQA7q7rMyo8cE=;
+        b=aThc45vqRrUWDZ164CYOv+Hk9thebzJxfcJXnPmeMjNuc3uuhvFZmkMKfZKWXyeevn
+         a2JPmTS0bj2+elJNYqMVu40HPjzlUtuE861pK3s3A9viyOvLNYZWOlz5BuElBA3F9BJR
+         DDtUTf4arIcZQbNOjNHS0LwOQd8hwTe8Vdv9BXsV5QUnqzr4V6bpgK6oBY27Eis3hklK
+         ImSYtFj5YzN6mBxkSh9gG5KRMq+rZqSD56fhzvbSsR/uXU+1gzDTxbokt6hntr+nrm2/
+         rZiNyhYvqihMkG/BQ7GgMcV1u3BlixP0p6r+/1zQlvPBud2i3dWgdBsZOwneVXm3V1Wh
+         4Wrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=uSCyEvgP+HRLzIFHT0FadBCVEoTPi0wQA7q7rMyo8cE=;
+        b=H6nLiCanDutkZnn4dVMwfptX7PRM3xLhn7X5dqnjZmJZsA1PeluYuQgY/BCjLRezDS
+         RpWdWjYub/F+eTWpOiTbKS5dt4YvUntaMl/soKFuxSpe2k/QENzkETdbZwiPDx/j0+b8
+         QAXBRYof7aS9fAmqzOMR3jxSYrEmM20ktwKyaKmwiH+UnVF+Sqt1EoerJQgCbfHTefZm
+         JQBGH0CXBG58SWFgd5gsY0/T+FDXRxc19xX72VMi0oeGqKI5m5/YtFrHkmD62TOdwkla
+         ioQaTrZUP09kjtD3hIg4/d1vYB35ibOtVeKKmPzpGD/tmfzHDKtjj1loXBoxEwJYKinA
+         iVKA==
+X-Gm-Message-State: AOPr4FUNz8+s50EB5k/NniAKEyO9S4mDv+qwIJE1xtngWtrJ3MkGWZfpHHX1fEIGD589j1Ct9u/9iV0Y8EYGck18
+X-Received: by 10.107.161.68 with SMTP id k65mr21327689ioe.110.1461864366712;
+ Thu, 28 Apr 2016 10:26:06 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Thu, 28 Apr 2016 10:26:06 -0700 (PDT)
+In-Reply-To: <20160428115748.37177-2-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292925>
 
-Alexander 'z33ky' Hirsch <1zeeky@gmail.com> writes:
-
-> Previously git-pull would silently ignore the --verify-signatures
-> option.
-
-I do not see a point of making it error out.  Adding a warning about
-the option being ignored might be a worthwhile thing to do (e.g. it
-may solicit responses from those who have been depending on it not
-erroring out, saying "these warnings are pointless and noisy--here
-is my valid use case that ends up passing --rebase and --v-s at the
-same time"), though.
-
-
-
-> Signed-off-by: Alexander 'z33ky' Hirsch <1zeeky@gmail.com>
+On Thu, Apr 28, 2016 at 4:57 AM, Elia Pinto <gitter.spiros@gmail.com> w=
+rote:
+> Implement the GIT_TRACE_CURL environment variable to allow a
+> greater degree of detail of GIT_CURL_VERBOSE, in particular
+> the complete transport header and all the data payload exchanged.
+> It might be useful if a particular situation could require a more
+> thorough debugging analysis. Document the new GIT_TRACE_CURL
+> environment variable.
+>
+> Helped-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 > ---
+>  Documentation/git.txt |   8 ++++
+>  http.c                | 109 ++++++++++++++++++++++++++++++++++++++++=
++++++++++-
+>  http.h                |   4 ++
+>  3 files changed, 120 insertions(+), 1 deletion(-)
 >
-> I made the error-message conform to the CodingGuidelines (removed
-> capitalization and full stop).
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 8afe349..958db0f 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -1075,6 +1075,14 @@ of clones and fetches.
+>         cloning of shallow repositories.
+>         See 'GIT_TRACE' for available trace output options.
 >
-> Also, in the previous mail I said that I proposed a patch for git-pull
-> last December, when I actually meant git-rebase.
->
->  builtin/pull.c  |  2 ++
->  t/t5520-pull.sh | 14 ++++++++++++++
->  2 files changed, 16 insertions(+)
->
-> diff --git a/builtin/pull.c b/builtin/pull.c
-> index d98f481..b6e1507 100644
-> --- a/builtin/pull.c
-> +++ b/builtin/pull.c
-> @@ -809,6 +809,8 @@ static int run_rebase(const unsigned char *curr_head,
->  		argv_array_push(&args, "--no-autostash");
->  	else if (opt_autostash == 1)
->  		argv_array_push(&args, "--autostash");
-> +	if (opt_verify_signatures && strcmp(opt_verify_signatures, "--verify-signatures") == 0)
-> +		die(_("the --verify-signatures option does not work for --rebase"));
->  
->  	argv_array_push(&args, "--onto");
->  	argv_array_push(&args, sha1_to_hex(merge_head));
-> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-> index 739c089..cb8f741 100755
-> --- a/t/t5520-pull.sh
-> +++ b/t/t5520-pull.sh
-> @@ -341,6 +341,20 @@ test_expect_success 'branch.to-rebase.rebase should override pull.rebase' '
->  	test new = "$(git show HEAD:file2)"
->  '
->  
-> +test_expect_success "pull --rebase --verify-signatures is illegal" '
-> +	git reset --hard before-rebase &&
-> +	test_must_fail git pull --rebase --verify-signatures . copy 2>err &&
-> +	test "$(git rev-parse HEAD)" = "$(git rev-parse before-rebase)" &&
-> +	test_i18ngrep "The --verify-signatures option does not work for --rebase." err
-> +'
-> +
-> +test_expect_success "pull --rebase --no-verify-signatures" '
-> +	git reset --hard before-rebase &&
-> +	git pull --rebase --no-verify-signatures . copy &&
-> +	test "$(git rev-parse HEAD^)" = "$(git rev-parse copy)" &&
-> +	test new = "$(git show HEAD:file2)"
-> +'
-> +
->  # add a feature branch, keep-merge, that is merged into master, so the
->  # test can try preserving the merge commit (or not) with various
->  # --rebase flags/pull.rebase settings.
+> +'GIT_TRACE_CURL'::
+> +       Enables a curl full trace dump of all incoming and outgoing d=
+ata,
+> +       including descriptive information, of the git transport proto=
+col.
+> +       This is similar to doing curl --trace-ascii on the command li=
+ne.
+> +       This option overrides setting the GIT_CURL_VERBOSE environmen=
+t
+> +       variable.
+
+How does it overwrite the GIT_CURL_VERBOSE variable?
+After a quick `grep -r GIT_CURL_VERBOSE`, I notice 2 things:
+
+* apparently GIT_CURL_VERBOSE is used as a boolean,
+  so I presume we assume True for GIT_CURL_VERBOSE, but
+  extend it?
+* GIT_CURL_VERBOSE is not documented at all. (It is mentioned in
+  the release notes for 2.3.0, not sure if that counts as documentation=
+)
+  As you know the area, care to send a documentation patch for
+  GIT_CURL_VERBOSE?
+
+I am trying to understand how much more information I get by using
+GIT_TRACE_CURL instead of GIT_CURL_VERBOSE.
+
+GIT_TRACE_CURL follows the standard of GIT_TRACE_$subsystem, so I
+guess that will be the encouraged way of debugging and GIT_CURL_VERBOSE
+will not be encouraged to the user?
