@@ -1,111 +1,306 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v5 2/2] submodule: pass on http.extraheader config settings
-Date: Thu, 28 Apr 2016 12:03:47 +0200 (CEST)
-Message-ID: <89d0024450b0e6e9997ad9e3d681248bde1bafc0.1461837783.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v5 1/2] http: support sending custom HTTP headers
+Date: Thu, 28 Apr 2016 12:03:40 +0200 (CEST)
+Message-ID: <3b71deffa5d07cf73a793773cc3d60ff611843fa.1461837783.git.johannes.schindelin@gmx.de>
 References: <3b71deffa5d07cf73a793773cc3d60ff611843fa.1461759454.git.johannes.schindelin@gmx.de> <cover.1461837783.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 12:04:10 2016
+X-From: git-owner@vger.kernel.org Thu Apr 28 12:04:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avino-0000yM-I4
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 12:04:08 +0200
+	id 1avinp-0000yM-5r
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 12:04:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753669AbcD1KEE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 06:04:04 -0400
-Received: from mout.gmx.net ([212.227.15.18]:54895 "EHLO mout.gmx.net"
+	id S1753575AbcD1KED (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2016 06:04:03 -0400
+Received: from mout.gmx.net ([212.227.17.22]:60442 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753247AbcD1KEB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 06:04:01 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LZzKf-1bOzHj3J65-00lm14; Thu, 28 Apr 2016 12:03:46
+	id S1752907AbcD1KEA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2016 06:04:00 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Lb90f-1bNvnT1svB-00kfZ0; Thu, 28 Apr 2016 12:03:42
  +0200
 X-X-Sender: virtualbox@virtualbox
 In-Reply-To: <cover.1461837783.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:4dDPKC/e80wCVtAXhYd8WafCUumf/bcjubaWTjpN6wBKwpegeBU
- dtU87EfcViGEKoDSB8Ye1+vtNGfzfbWjQs1W6iiHglFd3hCxx1ys+/JWq90MWXqNItIp5qq
- mSI4y3NYl/N3HXWNs7lJoR74CvfQuYUbhszY7FYTyFzUvj2SbScu1gLN9P7+XqvXceSxX/g
- TVuW947yIDi6mKPG3uhvQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:psuafRNU1Jo=:F5Bs7FTddgfeaUDgD/zdMC
- ohi25g7dN8GFm0l8DGQQ7mSG0KHzJaDAKdngdHmzWjZKwyuVHzdCk4vKbVzN3AquZipWw0+Vr
- htk5J+oy6mWvGbcKMUYxhbzBEPzifpG8/kUoFnngEFFtYZuT/mgWzuACs3olbER74nkIhR0yg
- f3xwHWamKcAR6+idiREdzYihrmk9IWXGAIfFlDL+s8bwqNjXX7tlkrAjENGl+CqRZiAVHHhl3
- juAOMUD2AF3UZ5ARUh4u18SrwGp4eKZVSxb5ODBecidgxR385bQJhbp7/kPkosHGDPB04Spby
- pKzm6cPbwZqktlkw0RP6SeuPiejzBx6TYwtougIM5pqOLJQmGfccyxpiMIXu0DNEyEltpn410
- BiYrJqiB1OY9m+9oAK0FzKqd6yQXs+EHzBVvoWOgExnQ5YgW9ZDRfvLQKWKlvrsRD8plrS69L
- J2uzfKmPQ2tR2hJi7zpBo9lz/q9yr4wYnLwUl3j8C3dUMV+bpC6N3d3A/HFEvAAoSDLwNKu8p
- vbZmsZBnllYxRrcqgpq/ebIijgVGX06Pf7ktncYl3KVhlzQwOhng4c4j1CsdfQYB0UXQJxQIE
- q1DVREBH8ouVUBrSmNdLXpe8+JnpnWeExe7HqbjTHZ0BjCAlhq4y+5YhbaWHp1Ns3H1AJHS0h
- uKQLd8LtYteM3h+O8t/0gizbDHUe+AAk6WQETg8acHJ3KZBJuhtIMO2vZFr8+a98XJbUnmW8E
- LrRKx/R9mJZdyJJsQcXhFRo7Bby9Nbjll4dOOZX+xdCQ0SZ/5Gjz4Fp0b+OA804JXD/VtPd6 
+X-Provags-ID: V03:K0:Qijvbiu+IFZDHppowfJkPXZbBCcrLA5egN7QuusZ0e902I4UJ/I
+ QThT0+KXTP5TgQJAbanhztD1CSCuwNqYOkx9XhiBTJ9XQSTk8WKB/W5hXCidkrlTm8uTOFS
+ 7ZAsgnEszMCevumtfUQIRIQDZZHhkDD3ir29rAM1NvDCKjoeYeuaOAFxayTHmHCGT8ip5h5
+ uH5P0h/H4PsoNBkAe+tpg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:PyHNys7JDvM=:srU2nhjjzSIWnKGi2TaepB
+ oV4Z35dd3gIwZYLdNRMqxAlI+CbyfgimVo2mPrLFa18l8XtpqS1mzGOvbvHp8m6I186MTMJNP
+ Xm2kOQUGl+cXjVT1XfNCbhcCgwcZO392j/ljBwB5wq0Kq8FVyA/Jc48Or8VahJntoKd2LBWzP
+ 1Zf08AIYlcZHpGPYI6bvFk4Vzim1Bt0Y/+6hgu8+0PwwpW/QkYb1L4ynH3k5kGHit3IKHRK5+
+ R35oA8FVFtET+/f7JuFylEU8j2QTlZiami8dVZHffa3pkF3d7StJ+PwiHrUWCYa3lsyDl5uy7
+ 6Bz9oCcmwXE5EllqaddycfjHETzCl8LEsoRMaTlWZVUCABUSksxbMBeZdlIGOJPifsLK4Y79I
+ uG+5ZLk8zibBFV1GW/LQKUoiF7CKp3e+F0+f7KGyWSjScuxWQwwkc8u2vQawAKBgp8U8pG8eA
+ tOMeDv+uK4nbYlj+L1K5YyfZxEZU1o3giOctjssVb55pe5Wh+710OlsqvcZIzU9/9kPunWviD
+ rWu5oQEMFdA2NvrNlBO9cxDc11UTtjBEjv/loBZEJEUEfCEfTOz3AZGJqDsMXNAnYvjZJJpvi
+ MPVuUDjWCZaTPe04SUGC5zrHVX1m3bYBo+0anl4fq7YzVclPSb0R4ojkugyoEzBOVWJUI6Mpp
+ Njh4RjEGUU+ncipc1zShFJ8oNSqeJoy6oZwdaM+MTgV4sCb59wgAJwtpQ/j8HwiIOLEn4uKtk
+ huRY8tRDWZ11/9zWUerHVeMcS3S1NVZZEOovVl/KvtQyfMK1eJ1tbSJrbKhxSYn09nZPb/hn 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292862>
 
-To support this developer's use case of allowing build agents token-based
-access to private repositories, we introduced the http.extraheader
-feature, allowing extra HTTP headers to be sent along with every HTTP
-request.
+We introduce a way to send custom HTTP headers with all requests.
 
-This patch allows us to configure these extra HTTP headers for use with
-`git submodule update`, too. It requires somewhat special handling:
-submodules do not share the parent project's config. It would be
-incorrect to simply reuse that specific part of the parent's config.
-Instead, the config option needs to be specified on the command-line or
-in ~/.gitconfig or friends.
+This allows us, for example, to send an extra token from build agents
+for temporary access to private repositories. (This is the use case that
+triggered this patch.)
 
-Example: git -c http.extraheader="Secret: Sauce" submodule update --init
+This feature can be used like this:
+
+	git -c http.extraheader='Secret: sssh!' fetch $URL $REF
+
+Note that `curl_easy_setopt(..., CURLOPT_HTTPHEADER, ...)` takes only
+a single list, overriding any previous call. This means we have to
+collect _all_ of the headers we want to use into a single list, and
+feed it to cURL in one shot. Since we already unconditionally set a
+"pragma" header when initializing the curl handles, we can add our new
+headers to that list.
+
+For callers which override the default header list (like probe_rpc),
+we provide `http_copy_default_headers()` so they can do the same
+trick.
+
+Big thanks to Jeff King and Junio Hamano for their outstanding help and
+patient reviews.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/submodule--helper.c |  4 +++-
- t/t5551-http-fetch-smart.sh | 11 ++++++++++-
- 2 files changed, 13 insertions(+), 2 deletions(-)
+ Documentation/config.txt    |  6 ++++++
+ http-push.c                 | 10 +++++-----
+ http.c                      | 35 ++++++++++++++++++++++++++++++++---
+ http.h                      |  1 +
+ remote-curl.c               |  4 ++--
+ t/lib-httpd/apache.conf     |  8 ++++++++
+ t/t5551-http-fetch-smart.sh |  7 +++++++
+ 7 files changed, 61 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 3bd6883..b338f93 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -127,7 +127,9 @@ static int module_name(int argc, const char **argv, const char *prefix)
-  */
- static int submodule_config_ok(const char *var)
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 42d2b50..c7bbe98 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1655,6 +1655,12 @@ http.emptyAuth::
+ 	a username in the URL, as libcurl normally requires a username for
+ 	authentication.
+ 
++http.extraHeader::
++	Pass an additional HTTP header when communicating with a server.  If
++	more than one such entry exists, all of them are added as extra
++	headers.  To allow overriding the settings inherited from the system
++	config, an empty value will reset the extra headers to the empty list.
++
+ http.cookieFile::
+ 	File containing previously stored cookie lines which should be used
+ 	in the Git http session, if they match the server. The file format
+diff --git a/http-push.c b/http-push.c
+index bd60668..ae2b7f1 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -211,7 +211,7 @@ static void curl_setup_http(CURL *curl, const char *url,
+ static struct curl_slist *get_dav_token_headers(struct remote_lock *lock, enum dav_header_flag options)
  {
--	if (starts_with(var, "credential."))
-+	if (starts_with(var, "credential.") ||
-+			(starts_with(var, "http.") &&
-+			 ends_with(var, ".extraheader")))
- 		return 1;
- 	return 0;
+ 	struct strbuf buf = STRBUF_INIT;
+-	struct curl_slist *dav_headers = NULL;
++	struct curl_slist *dav_headers = http_copy_default_headers();
+ 
+ 	if (options & DAV_HEADER_IF) {
+ 		strbuf_addf(&buf, "If: (<%s>)", lock->token);
+@@ -417,7 +417,7 @@ static void start_put(struct transfer_request *request)
+ static void start_move(struct transfer_request *request)
+ {
+ 	struct active_request_slot *slot;
+-	struct curl_slist *dav_headers = NULL;
++	struct curl_slist *dav_headers = http_copy_default_headers();
+ 
+ 	slot = get_active_slot();
+ 	slot->callback_func = process_response;
+@@ -845,7 +845,7 @@ static struct remote_lock *lock_remote(const char *path, long timeout)
+ 	char *ep;
+ 	char timeout_header[25];
+ 	struct remote_lock *lock = NULL;
+-	struct curl_slist *dav_headers = NULL;
++	struct curl_slist *dav_headers = http_copy_default_headers();
+ 	struct xml_ctx ctx;
+ 	char *escaped;
+ 
+@@ -1126,7 +1126,7 @@ static void remote_ls(const char *path, int flags,
+ 	struct slot_results results;
+ 	struct strbuf in_buffer = STRBUF_INIT;
+ 	struct buffer out_buffer = { STRBUF_INIT, 0 };
+-	struct curl_slist *dav_headers = NULL;
++	struct curl_slist *dav_headers = http_copy_default_headers();
+ 	struct xml_ctx ctx;
+ 	struct remote_ls_ctx ls;
+ 
+@@ -1204,7 +1204,7 @@ static int locking_available(void)
+ 	struct slot_results results;
+ 	struct strbuf in_buffer = STRBUF_INIT;
+ 	struct buffer out_buffer = { STRBUF_INIT, 0 };
+-	struct curl_slist *dav_headers = NULL;
++	struct curl_slist *dav_headers = http_copy_default_headers();
+ 	struct xml_ctx ctx;
+ 	int lock_flags = 0;
+ 	char *escaped;
+diff --git a/http.c b/http.c
+index 4304b80..985b995 100644
+--- a/http.c
++++ b/http.c
+@@ -114,6 +114,7 @@ static unsigned long http_auth_methods = CURLAUTH_ANY;
+ 
+ static struct curl_slist *pragma_header;
+ static struct curl_slist *no_pragma_header;
++static struct curl_slist *extra_http_headers;
+ 
+ static struct active_request_slot *active_queue_head;
+ 
+@@ -323,6 +324,19 @@ static int http_options(const char *var, const char *value, void *cb)
+ #endif
+ 	}
+ 
++	if (!strcmp("http.extraheader", var)) {
++		if (!value) {
++			return config_error_nonbool(var);
++		} else if (!*value) {
++			curl_slist_free_all(extra_http_headers);
++			extra_http_headers = NULL;
++		} else {
++			extra_http_headers =
++				curl_slist_append(extra_http_headers, value);
++		}
++		return 0;
++	}
++
+ 	/* Fall back on the default ones */
+ 	return git_default_config(var, value, cb);
  }
+@@ -678,8 +692,10 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
+ 	if (remote)
+ 		var_override(&http_proxy_authmethod, remote->http_proxy_authmethod);
+ 
+-	pragma_header = curl_slist_append(pragma_header, "Pragma: no-cache");
+-	no_pragma_header = curl_slist_append(no_pragma_header, "Pragma:");
++	pragma_header = curl_slist_append(http_copy_default_headers(),
++		"Pragma: no-cache");
++	no_pragma_header = curl_slist_append(http_copy_default_headers(),
++		"Pragma:");
+ 
+ #ifdef USE_CURL_MULTI
+ 	{
+@@ -765,6 +781,9 @@ void http_cleanup(void)
+ #endif
+ 	curl_global_cleanup();
+ 
++	curl_slist_free_all(extra_http_headers);
++	extra_http_headers = NULL;
++
+ 	curl_slist_free_all(pragma_header);
+ 	pragma_header = NULL;
+ 
+@@ -1163,6 +1182,16 @@ int run_one_slot(struct active_request_slot *slot,
+ 	return handle_curl_result(results);
+ }
+ 
++struct curl_slist *http_copy_default_headers(void)
++{
++	struct curl_slist *headers = NULL, *h;
++
++	for (h = extra_http_headers; h; h = h->next)
++		headers = curl_slist_append(headers, h->data);
++
++	return headers;
++}
++
+ static CURLcode curlinfo_strbuf(CURL *curl, CURLINFO info, struct strbuf *buf)
+ {
+ 	char *ptr;
+@@ -1380,7 +1409,7 @@ static int http_request(const char *url,
+ {
+ 	struct active_request_slot *slot;
+ 	struct slot_results results;
+-	struct curl_slist *headers = NULL;
++	struct curl_slist *headers = http_copy_default_headers();
+ 	struct strbuf buf = STRBUF_INIT;
+ 	const char *accept_language;
+ 	int ret;
+diff --git a/http.h b/http.h
+index 4ef4bbd..36f558b 100644
+--- a/http.h
++++ b/http.h
+@@ -106,6 +106,7 @@ extern void step_active_slots(void);
+ extern void http_init(struct remote *remote, const char *url,
+ 		      int proactive_auth);
+ extern void http_cleanup(void);
++extern struct curl_slist *http_copy_default_headers(void);
+ 
+ extern long int git_curl_ipresolve;
+ extern int active_requests;
+diff --git a/remote-curl.c b/remote-curl.c
+index 15e48e2..672b382 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -474,7 +474,7 @@ static int run_slot(struct active_request_slot *slot,
+ static int probe_rpc(struct rpc_state *rpc, struct slot_results *results)
+ {
+ 	struct active_request_slot *slot;
+-	struct curl_slist *headers = NULL;
++	struct curl_slist *headers = http_copy_default_headers();
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int err;
+ 
+@@ -503,7 +503,7 @@ static int probe_rpc(struct rpc_state *rpc, struct slot_results *results)
+ static int post_rpc(struct rpc_state *rpc)
+ {
+ 	struct active_request_slot *slot;
+-	struct curl_slist *headers = NULL;
++	struct curl_slist *headers = http_copy_default_headers();
+ 	int use_gzip = rpc->gzip_request;
+ 	char *gzip_body = NULL;
+ 	size_t gzip_size = 0;
+diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+index 9317ba0..b8ed96f 100644
+--- a/t/lib-httpd/apache.conf
++++ b/t/lib-httpd/apache.conf
+@@ -102,6 +102,14 @@ Alias /auth/dumb/ www/auth/dumb/
+ 	SetEnv GIT_HTTP_EXPORT_ALL
+ 	Header set Set-Cookie name=value
+ </LocationMatch>
++<LocationMatch /smart_headers/>
++	<RequireAll>
++		Require expr %{HTTP:x-magic-one} == 'abra'
++		Require expr %{HTTP:x-magic-two} == 'cadabra'
++	</RequireAll>
++	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
++	SetEnv GIT_HTTP_EXPORT_ALL
++</LocationMatch>
+ ScriptAliasMatch /smart_*[^/]*/(.*) ${GIT_EXEC_PATH}/git-http-backend/$1
+ ScriptAlias /broken_smart/ broken-smart-http.sh/
+ ScriptAlias /error/ error.sh/
 diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-index e44fe72..1794168 100755
+index 58207d8..e44fe72 100755
 --- a/t/t5551-http-fetch-smart.sh
 +++ b/t/t5551-http-fetch-smart.sh
-@@ -286,7 +286,16 @@ test_expect_success 'custom http headers' '
- 	test_must_fail git fetch "$HTTPD_URL/smart_headers/repo.git" &&
- 	git -c http.extraheader="x-magic-one: abra" \
- 	    -c http.extraheader="x-magic-two: cadabra" \
--	    fetch "$HTTPD_URL/smart_headers/repo.git"
-+	    fetch "$HTTPD_URL/smart_headers/repo.git" &&
-+	git update-index --add --cacheinfo 160000,$(git rev-parse HEAD),sub &&
-+	git config -f .gitmodules submodule.sub.path sub &&
-+	git config -f .gitmodules submodule.sub.url \
-+		"$HTTPD_URL/smart_headers/repo.git" &&
-+	git submodule init sub &&
-+	test_must_fail git submodule update sub &&
-+	git -c http.extraheader="x-magic-one: abra" \
-+	    -c http.extraheader="x-magic-two: cadabra" \
-+		submodule update sub
+@@ -282,5 +282,12 @@ test_expect_success EXPENSIVE 'http can handle enormous ref negotiation' '
+ 	test_line_count = 100000 tags
  '
  
++test_expect_success 'custom http headers' '
++	test_must_fail git fetch "$HTTPD_URL/smart_headers/repo.git" &&
++	git -c http.extraheader="x-magic-one: abra" \
++	    -c http.extraheader="x-magic-two: cadabra" \
++	    fetch "$HTTPD_URL/smart_headers/repo.git"
++'
++
  stop_httpd
+ test_done
 -- 
 2.8.1.306.gff998f2
