@@ -1,108 +1,104 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 01/15] string_list: add string_list_duplicate
-Date: Wed, 27 Apr 2016 16:24:41 -0700
-Message-ID: <CAGZ79kYRhk8bH7+rGRjfvwk=HHy8=Yfg_P54pp8Goeb-bO1wSw@mail.gmail.com>
-References: <1461703833-10350-1-git-send-email-sbeller@google.com>
-	<1461703833-10350-2-git-send-email-sbeller@google.com>
-	<xmqqh9eoc7zc.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kbWMN3YG5Jtz8i8Y9A3id8bX-YxSWp19+yGAdzMX_wKKA@mail.gmail.com>
-	<xmqqzise7o4l.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kagX5TJU_mbjpo4PKJDoc1wh24DhyS814Kkq76EU9aykA@mail.gmail.com>
-	<xmqqbn4u7ibp.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] pack-objects: warn on split packs disabling bitmaps
+Date: Wed, 27 Apr 2016 22:15:09 -0400
+Message-ID: <20160428021509.GB9707@sigill.intra.peff.net>
+References: <20160427215324.GA22165@dcvr.yhbt.net>
+ <xmqqfuu67j9t.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 01:24:47 2016
+X-From: git-owner@vger.kernel.org Thu Apr 28 04:15:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avYp4-0001fz-W0
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 01:24:47 +0200
+	id 1avbUA-0004dF-V5
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 04:15:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752205AbcD0XYn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Apr 2016 19:24:43 -0400
-Received: from mail-io0-f182.google.com ([209.85.223.182]:34063 "EHLO
-	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751829AbcD0XYm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2016 19:24:42 -0400
-Received: by mail-io0-f182.google.com with SMTP id 190so56040843iow.1
-        for <git@vger.kernel.org>; Wed, 27 Apr 2016 16:24:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=7vkljwrn+CBMSf65ytER+40hT+q+wHg4wAB2669CO0c=;
-        b=PhcyjY9xkAxzYHIgUonGvkH75RtZf7b656dsa/OhSXaFRbxFlZiiIOunH6/JAHQfay
-         gNFWMM24fjMSzj1WSFsTEcd9tPNhllc/JuJTBM2V8tx9h2fSbPPPxEnGYIkaEB0Xn2Yo
-         G+NBp2q7+VSfFeoViqe+XQFnC6DpRnua/GEcTE0a7jFHVhaMTEDgaDbPEOEc3aJhJcfZ
-         MhnIeTxNzUX1ruApIkp62WiPRPsU7/fLHeU6fWuoVF09FWWA4WlZQKLy2LX/ZP4jjsPc
-         leG6KTXrHSVAVualjvKKVWAPLdmss8Fk8DneJurkjyn3fOYhPruRPO9ITSkU+OgP3/gZ
-         W6OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=7vkljwrn+CBMSf65ytER+40hT+q+wHg4wAB2669CO0c=;
-        b=EAbEOIrUd+x8t0VDADbmZFR9TVQf9JULED4zfCEhTwPd59SJY6TmhdbMNYKFtF5h/L
-         jG4gL7YcbhX1Un7cuFaO43draLOJ2s6opNHdSKXkYeddwVWQW6+PMhsc5oQHuxCOmCWC
-         8TFMsegue/YvwuVFGFhHZS+yTi1hS4WMxnzulTvyO4JVLqa0pG0HrC3f4L6vCUkHIXV1
-         RuRsEMff1pu/xwGh6jE+SgkKwsy+Fql6+gGFW+Twpml2I8Qcysh0/vxXJSmDlgfVSuDv
-         7SZgomYEIfd318iG5rFsj8X5oTFpKSAppKiO1E8mpwdJ5iOPHq3Tf4PKCfwWovMOlMMR
-         BrMg==
-X-Gm-Message-State: AOPr4FWtFhzDPlnhavpOfDpqlALhfgGueH43TF7Cmei+sDSjlu5vHEXd1noLNpMp/1T08+b6mSDDuFf2jTxNtHCG
-X-Received: by 10.107.53.200 with SMTP id k69mr13330300ioo.174.1461799481265;
- Wed, 27 Apr 2016 16:24:41 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Wed, 27 Apr 2016 16:24:41 -0700 (PDT)
-In-Reply-To: <xmqqbn4u7ibp.fsf@gitster.mtv.corp.google.com>
+	id S1752542AbcD1CPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Apr 2016 22:15:14 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58013 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752363AbcD1CPN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2016 22:15:13 -0400
+Received: (qmail 22583 invoked by uid 102); 28 Apr 2016 02:15:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 Apr 2016 22:15:12 -0400
+Received: (qmail 4495 invoked by uid 107); 28 Apr 2016 02:15:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 Apr 2016 22:15:13 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Apr 2016 22:15:09 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqfuu67j9t.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292842>
 
-On Wed, Apr 27, 2016 at 4:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> Another way to corrupt it is to change the configuration (e.g. add
->> things to the config hashmap such that it reallocates and grows).
->
-> You're right.  But doesn't it hint that there is a deeper problem?
->
-> By making a copy and keeping it, you would hold onto a stale value
-> and would not see the result of updates you yourself make to the
-> system.
->
+On Wed, Apr 27, 2016 at 03:56:46PM -0700, Junio C Hamano wrote:
 
-In this case the value doesn't go stale. We do not change
-"submodule.defaultGroup", but only new submodule.$NAME.url
-and such. The memory for accessing it goes stale, so in this case
-it is okay. I don't think we want to see repeated calls to
-git_config_get_value_multi
-like :
+> Eric Wong <normalperson@yhbt.net> writes:
+> 
+> > It can be tempting for a server admin to want a stable set of
+> > long-lived packs for dumb clients; but also want to enable
+> > bitmaps to serve smart clients more quickly.
+> >
+> > Unfortunately, such a configuration is impossible;
+> > so at least warn users of this incompatibility since
+> > commit 21134714787a02a37da15424d72c0119b2b8ed71
+> > ("pack-objects: turn off bitmaps when we split packs").
+> >
+> > Tested the warning by inspecting the output of:
+> >
+> > 	make -C t t5310-pack-bitmaps.sh GIT_TEST_OPTS=-v
+> 
+> While I do not think the update in this patch is wrong, this makes
+> me wonder what happens to a server admin who wants a stable set of
+> long-lived objects in a pack, and other objects in another pack that
+> is frequently recreated, by first packing objects needed for the
+> latest released version into a single pack and marking it with .keep
+> and then running "git repack" to create the second pack for the
+> remainder.
+> 
+> There is no automatic split involved, so we would get a bitmap file
+> for each of these two packs.  Would that pose a problem?  The pack
+> with the newer part of the history would not satisfy "all of the
+> reachable objects are in the same pack" condition.
 
-        if (!pathspec.nr && git_config_get_value_multi(
-                        "submodule.defaultGroup")) {
-                gitmodules_config();
-                for (i = 0; i < list.nr; i++) {
-                        const struct submodule *sub =
-                                submodule_from_path(null_sha1,
-                                                    list.entries[i]->name);
-                        group =
-git_config_get_value_multi("submodule.defaultGroup")
-                        if (submodule_in_group(group, sub))
-                                init_submodule(list.entries[i]->name,
-prefix, quiet);
-                }
-        }
+You will not get two bitmaps in such a case. In add_object_entry(), if
+we exclude an object via want_object_in_pack(), we will issue a warning
+and turn off bitmaps.  That includes finding that one of the reachable
+objects we would need is in a .keep pack.
 
-Maybe I am overestimating the cost of git_config_get_value_multi, so it is no
-problem?
+You could in theory construct a broken non-closed bitmap by feeding an
+arbitrary set of objects to pack-objects, but we turn off bitmap writing
+entirely unless --all is used. So the test in add_object_entry() should
+be sufficient for all cases there (it's actually too conservative; it's
+possible that the object is not reachable from the other objects that
+are going into the pack, but this is so impractical that it's not even
+worth trying to catch).
 
-Thanks,
-Stefan
+The split-pack check from 211347147 had to come separately, because we
+only find out about the split much later during the write phase (and
+again, it is too conservative; it's _possible_ that the objects being
+split aren't reachable from anything in the previous pack, but it's
+exceedingly unlikely and not worth caring about).
+
+Adding a warning as Eric's patch does is a definite improvement, and
+something I should have done in the original (we _could_ just use the
+same no_closure_warning, as that is technically what is going on, but I
+think it is nice to mention pack-splitting, which is more likely to lead
+the user in the right direction to fixing it).
+
+> [discussion of doc fixes]
+
+I do not mind overly if pack-splitting mentions disabling bitmaps. But I
+think it may be simpler to keep the documentation in the bitmap section,
+rather than trying to cross-reference in both directions.  It is the
+bitmap code which is not prepared to work with pack-splits (and other
+things, like .keep), not the other way around.
+
+-Peff
