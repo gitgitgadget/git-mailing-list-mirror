@@ -1,121 +1,88 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v5 2/2] submodule: pass on http.extraheader config
- settings
-Date: Thu, 28 Apr 2016 14:19:37 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604281405540.2896@virtualbox>
-References: <3b71deffa5d07cf73a793773cc3d60ff611843fa.1461759454.git.johannes.schindelin@gmx.de> <cover.1461837783.git.johannes.schindelin@gmx.de> <89d0024450b0e6e9997ad9e3d681248bde1bafc0.1461837783.git.johannes.schindelin@gmx.de>
- <20160428112912.GB11522@sigill.intra.peff.net>
+From: Mike Rappazzo <rappazzo@gmail.com>
+Subject: Re: [PATCH v3 0/2] gitk: changes for the "Tags and heads" view
+Date: Thu, 28 Apr 2016 08:42:11 -0400
+Message-ID: <CANoM8SXZjcDxrNoosk2agzq=nq_MnenoRtDMbY414o50OtzWig@mail.gmail.com>
+References: <1459091168-46908-1-git-send-email-rappazzo@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Jacob Keller <jacob.keller@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 28 14:21:10 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Michael Rappazzo <rappazzo@gmail.com>
+To: paulus@samba.org
+X-From: git-owner@vger.kernel.org Thu Apr 28 14:42:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avkwP-0001ej-1y
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 14:21:09 +0200
+	id 1avlHB-0000iv-2S
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 14:42:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753126AbcD1MVF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 08:21:05 -0400
-Received: from mout.gmx.net ([212.227.17.20]:54403 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752016AbcD1MVE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 08:21:04 -0400
-Received: from virtualbox ([89.204.153.107]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0LZmd6-1bPGid1MxI-00lTJp; Thu, 28 Apr 2016 14:19:39
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160428112912.GB11522@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:qBEN6lXoXltvyn0eIK07oPqe5Cd3aRmZrL3byMvv3S+UOeJNa2l
- I+YMBXkW2+1risAagU1KJ8dg7Zuw4IdTv8M15ksTLpJ35FJD+ccNlmC03BYOxppQCAm/iKv
- b6hlW/pKfdMXajUmd3XFDLPjC2pPnqrDHOLcIXLh4Uhpqtlhlm+Y6kCLUYQOEsWFo3Hv1RK
- jxl+c/GaLjhDcwpkphyvw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:BGHxmMkYZNM=:y8ANmnCikAXaHP3qKQjQCe
- Dwd5Ju3E5Jd6uhwf32OjsxXAQM3NNC2ZpX0Bx5Ec2kZU0VmOPq/HIJVMTn4f3OUSKc9bKaMPP
- bNqYNLKJHRc1KstfL9neTtCGPHroVAuB6m8551vsTffxOIRzB52e/kbT0Kgul7VykhKJKYFqy
- nPhh1wHjBky2wGeFYgdnL4ZddgmdLbGkNgtYxI1awft1rHFfOwQ/ZuC5o1lfltazVEAs/PjPU
- iLsKoGyO8b8ZcHrsmgD35ei8oPl+vKkIk9e99/2zi92FcqC5Yw8ZjHNZPSa+wR8dqH7xeIeRi
- KaMJM9DAdrYO1I7yRffgh7zHJcTGY3xHQrjjZv+FJadwFqA4lgmrSr5WF/czbPs0iy6XZ42T3
- A6z3keo+pW673CfuMPAQuNC4LWA83r2y767HY0Sm8YHc/iIJrk20z5ycYHqMwMtK71Cv9qAOv
- eesDzCEYMzu/y2AavvW+9/8CFQyrufmDJIXrU+KVFsawwNJ/b2JLKs5vcNmRQwa7/zbXGwcpu
- 4eyOIQo7+olexE+o+RWkI959lp1s7mZXmbDV4x9jVz9zjY65XypRBaDHD4S3O10dSdThsPCyW
- 5JqxQNlyimQvdBIaFDgzjpoY7W4o1o8JgLOKztrdd7hC7UYss2TqVpSITM1X7ZAEEjpzvdTVM
- NZW093EpBilM3KbX+Y9eNpPCf4B7uarhQPVVo0o0DiqgIZborvwfW6pqvpytdyqmknhq84Z82
- tkdnu7oWfsFE3oymnPPkF0kz19PKf3/sBfq0GM1kapbil/FyItOQrRSsfNkMubKGkDHxX7h6 
+	id S1752171AbcD1Mmd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2016 08:42:33 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:34551 "EHLO
+	mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751513AbcD1Mmc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2016 08:42:32 -0400
+Received: by mail-io0-f194.google.com with SMTP id d62so11821720iof.1
+        for <git@vger.kernel.org>; Thu, 28 Apr 2016 05:42:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ycfvOSe3LmqulvgkjnX2xWBd9kvkc3IHIKh9nMmfO7s=;
+        b=kH83nGL2ljHEcJfvPEOprzrk5PaxbqgwQDioW4EXRKuDXDHyCBDqvLr3xSeZih6h3I
+         PhWzFCJ4Yc2o9yZesmmX3RcPeXxmXnMEojAjDaElinpY4sLj65NCj80FzlbgVIibu7Op
+         +3/fsGpVkBBPYYOEeF7ijRjsNMPExxZd5DEfsFoQRY7/TGYUdy+07mNWzLfDnj7aZJdr
+         FzWpXr9og8+s/vsMEWjM48KDqMypA6ChyI5qLSBNYAlRzJZCw3vDtfyqhpPnDH+302I7
+         ddm2eUbHwSr5hKbssG7IjTcGDuez6pYBVSIAwa8Z98mUrVUFnAP5Vo3QDoYW9XiTa94b
+         LG3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ycfvOSe3LmqulvgkjnX2xWBd9kvkc3IHIKh9nMmfO7s=;
+        b=e1Qzoe+vuKkZfrtuNnl3Jk6iPkDwUeow3fT571qE0O2Yrspa07CZ1DPdrzfqgzIUz1
+         1hvqNFx8GS5axDit+Xno+Vqe1Zt0rx3lbQ/L4q+e+wZvV5mF1E94nJcJnJoPJzi428MQ
+         MFpOlnsKlchonrpXBTC1rDw3BBbbSaFUM1f27ex9B7Lkhqdh8xmDVbAiFxTOD99d+zbj
+         NZkW1++oSJHelI1Fhmt5/Zh7BSb/WHJSRtGmULHcMsCEHxYWIpIiUAJHaNLh9K2E0hbm
+         p/T8z+6Gw2CNnu0uKGmjYgVrELN522uhQrLjf7erCAsIiGQFhTJp5aawC4CUO/Fd7/6w
+         uVuQ==
+X-Gm-Message-State: AOPr4FUywnQAGjxsuURQxdkDUPs88OjTwEArQv7hK5ctfrK7V6pQmvoCOfEmyIZoWX5gXi23Ff6ER55bGY7pKQ==
+X-Received: by 10.107.136.223 with SMTP id s92mr19451770ioi.109.1461847351245;
+ Thu, 28 Apr 2016 05:42:31 -0700 (PDT)
+Received: by 10.107.7.220 with HTTP; Thu, 28 Apr 2016 05:42:11 -0700 (PDT)
+In-Reply-To: <1459091168-46908-1-git-send-email-rappazzo@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292873>
 
-Hi Peff,
+On Sun, Mar 27, 2016 at 11:06 AM, Michael Rappazzo <rappazzo@gmail.com> wrote:
+> Changes since v2[1]:
+>  - Instead of getting the remote info for each local branch individually,
+>    grab it all at once and store the result
+>  - Instead of a command line option to enable the new sorting option,
+>    enable it with a preference which is stored in the config.
+>
+> v1 can be found here[2].
+>
+> [1] http://thread.gmane.org/gmane.comp.version-control.git/289244
+> [2] http://thread.gmane.org/gmane.comp.version-control.git/288544
+>
+> Michael Rappazzo (2):
+>   gitk: alter the ordering for the "Tags and heads" view
+>   gitk: add an option to enable sorting the "Tags and heads" view by ref
+>     type
+>
+>  gitk | 79 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++------------
+>  1 file changed, 66 insertions(+), 13 deletions(-)
+>
+> --
+> 2.7.4
+>
 
-Cc:ing Jacob, the author of the CONFIG_DATA_ENVIRONMENT sanitizing code.
+I am still looking for comments on this patch.
 
-On Thu, 28 Apr 2016, Jeff King wrote:
-
-> On Thu, Apr 28, 2016 at 12:03:47PM +0200, Johannes Schindelin wrote:
-> 
-> > diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> > index 3bd6883..b338f93 100644
-> > --- a/builtin/submodule--helper.c
-> > +++ b/builtin/submodule--helper.c
-> > @@ -127,7 +127,9 @@ static int module_name(int argc, const char **argv, const char *prefix)
-> >   */
-> >  static int submodule_config_ok(const char *var)
-> >  {
-> > -	if (starts_with(var, "credential."))
-> > +	if (starts_with(var, "credential.") ||
-> > +			(starts_with(var, "http.") &&
-> > +			 ends_with(var, ".extraheader")))
-> >  		return 1;
-> >  	return 0;
-> >  }
-> 
-> Should we consider just white-listing all of "http.*"?
-> 
-> That would help other cases which have come up, like:
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/264840
-> 
-> which wants to turn off http.sslverify. That would mean it turns off for
-> every submodule, too, but if you want to be choosy about your http
-> variables, you should be using the "http.$URL.sslverify" form, to only
-> affect specific servers (whether they are in submodules or not).
-
-I considered that, and thought that it might be dangerous, what with me
-not vetting carefully which http.* variables are safe to pass on to the
-submodules' update and which are not.
-
-So I had a look now, and the most prominent potential problem is the
-http.cookieFile setting, which could be reused all of a sudden if we
-made my patch more general.
-
-But then, we are talking about the code that filters what gets passed via
-the *command-line*. And to be quite honest, I am not sure that we should
-actually filter out *any* of these settings.
-
-The commit message that introduced this particular filtering has this
-rationale to let only credential.* through:
-
-    GIT_CONFIG_PARAMETERS is special, and we actually do want to
-    preserve these settings. However, we do not want to preserve all
-    configuration as many things should be left specific to the parent
-    project.
-
-    Add a git submodule--helper function, sanitize-config, which shall be
-    used to sanitize GIT_CONFIG_PARAMETERS, removing all key/value pairs
-    except a small subset that are known to be safe and necessary.
-
-Dunno. I tried to err on the side of caution... But this sounds maybe a
-bit *too* cautious?
-
-Jacob, Junio?
-
-Ciao,
-Dscho
+Also, is there a 'pu' repo for gitk?  Currently, I am only tracking
+git://ozlabs.org/~paulus/gitk
