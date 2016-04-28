@@ -1,95 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 49/83] builtin/apply: move 'lock_file' global into 'struct apply_state'
-Date: Thu, 28 Apr 2016 13:17:55 -0700
-Message-ID: <xmqq1t5p4he4.fsf@gitster.mtv.corp.google.com>
-References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
-	<1461504863-15946-50-git-send-email-chriscool@tuxfamily.org>
-	<CAPig+cRSe8oOjo2h6SuJQyD+he_Q7zHfF4TivZ0amhAu4HLQ+g@mail.gmail.com>
-	<xmqqzishlgj1.fsf@gitster.mtv.corp.google.com>
-	<CAP8UFD1=w2D-5q9bWrYqzL3v1q7fYi9imy1UhG2OaW2vB=2ECA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v5 2/2] submodule: pass on http.extraheader config
+ settings
+Date: Thu, 28 Apr 2016 17:00:27 -0400
+Message-ID: <20160428210026.GA12268@sigill.intra.peff.net>
+References: <20160428112912.GB11522@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1604281405540.2896@virtualbox>
+ <20160428134953.GB25364@sigill.intra.peff.net>
+ <CA+P7+xq-_D2Mszyjd11CyYLiKBBh9A2e1exaZQVmWz1qVKv7ug@mail.gmail.com>
+ <20160428153902.GF31063@sigill.intra.peff.net>
+ <CAGZ79kZFLTARQ25h4u4SGgNn=Q4TQi-kxFLN3sQvOmejsRmAWA@mail.gmail.com>
+ <20160428165031.GA31421@sigill.intra.peff.net>
+ <xmqq1t5p5z8v.fsf@gitster.mtv.corp.google.com>
+ <20160428191038.GA10574@sigill.intra.peff.net>
+ <xmqqwpnh4joq.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	=?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= 
-	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+Content-Type: text/plain; charset=utf-8
+Cc: Stefan Beller <sbeller@google.com>,
+	Jacob Keller <jacob.keller@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 22:18:04 2016
+	Git mailing list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 28 23:00:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avsNv-0003FM-Ev
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 22:18:03 +0200
+	id 1avt35-0005NV-KR
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 23:00:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752388AbcD1UR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 16:17:59 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54729 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751829AbcD1UR6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 16:17:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8224A157D6;
-	Thu, 28 Apr 2016 16:17:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xnXCym8/Hx3ygOX6sJaYAeCAl7w=; b=u0/P+B
-	dWoL1Z7YxsBs0dZ8nYcCgGjWWBuWE9wbS/TrrkZ7z2D4hrkF+pSd7FJ5XngEIYnM
-	h1Iqt9yN/SiLhdMQ4ZE6dOtpyuuuXGLzv/xJuOR6Tu4+2o1bpKN5Knnkpehn8XhF
-	hNgLCGiYcb5GiHzmS2NEmM/An4gv7OYaiFp3I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KBbY9iQvy3o9SkB9hpe0XfcHddd7tAUe
-	3mKG449rSEsrgrqnDmV74qhXc+hC9Luhs6+xpCyWCcnZff6vY3atGV+idCYaJ9jC
-	Ehwxay269R69XX1UzcHr8w/rY+gmXnrbWQ5oPB7KOc+mg5vQbwAImsxdocEwpH6X
-	KdxYyrST6yQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7987D157D2;
-	Thu, 28 Apr 2016 16:17:57 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C6D0F157D0;
-	Thu, 28 Apr 2016 16:17:56 -0400 (EDT)
-In-Reply-To: <CAP8UFD1=w2D-5q9bWrYqzL3v1q7fYi9imy1UhG2OaW2vB=2ECA@mail.gmail.com>
-	(Christian Couder's message of "Thu, 28 Apr 2016 18:30:53 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4BBA7AC0-0D7E-11E6-98E3-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1753526AbcD1VAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2016 17:00:31 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58756 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753265AbcD1VAa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2016 17:00:30 -0400
+Received: (qmail 15473 invoked by uid 102); 28 Apr 2016 21:00:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 28 Apr 2016 17:00:29 -0400
+Received: (qmail 14553 invoked by uid 107); 28 Apr 2016 21:00:31 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 28 Apr 2016 17:00:31 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Apr 2016 17:00:27 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqwpnh4joq.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292951>
 
-Christian Couder <christian.couder@gmail.com> writes:
+On Thu, Apr 28, 2016 at 12:28:21PM -0700, Junio C Hamano wrote:
 
->> I do not think you need to think about "free"ing.
->
-> Yeah, lockfile.h says:
-> ...
-> and:
-> ...
+> Jeff King <peff@peff.net> writes:
+> 
+> > It's definitely sufficient, it's just annoying if a user shows up every
+> > week and says "I want X.Y", and then somebody else shows up a week later
+> > and says "I want X.Z".
+> >
+> > Are we serving any purpose in vetting each one (and if so, what)?
+> 
+> Personally I do not think we would need to filter _anything_ if we
+> can tell that the user directly said
+> 
+> 	git -c var1=val1 -c var2=val2 $cmd ...
+> 
+> and "git $cmd" ended up needing to spawn another "git" subcommand,
+> possibly in some other repository (i.e. "$cmd" in this case is
+> likely to be "submodule", but in principle it does not have to be).
+> If the user somehow gives variables like core.worktree that are
+> inappropriate to be applied across repositories, that's user's
+> problem, i.e. "don't do it then if it hurts".
 
-Yup, we are now on the same page.
+Right, we are talking about that direct case here. And any time our
+filter heuristic lets something through, it is probably "if it hurts
+don't do it" as the worst case.
 
->> Even if the libified version of the apply internal can be called
->> multiple times to process multiple patch inputs, there is no need to
->> run multiple instances of it yet.  And a lockfile, after the caller
->> finishes interacting with one file using it by calling commit or
->> rollback, can be reused to interact with another file.
+So I think the only two cases worth filtering are:
 
-lockfile.h says this about the above paragraph, which is a more
-important part ;-)
+  1. Ones where we _know_ that the config is nonsense to pass along,
+     _and_ where a user might conceivably make use of the
+     just-the-top-level version of it (core.worktree
+     comes to mind, though of course they are probably better served by
+     "--work-tree" in such a case).
 
- * When finished writing, the caller can:
- * ...
- * Even after the lockfile is committed or rolled back, the
- * `lock_file` object must not be freed or altered by the caller.
- * However, it may be reused; just pass it to another call of
- * `hold_lock_file_for_update()`.
+  2. An option where we think there may be some security implication.
+     Setting "http.sslverify" to false does have some security
+     implications ("oops, I only meant to turn off verification for the
+     root repo, and I got MiTM-attacked for the submodules!"). But it's
+     so obscure and unlikely that I think the benefit outweighs it.
+
+     And I can't think of any other cases whose security implications
+     aren't similarly unlikely. But I haven't carefully gone down the
+     list (and as I said, I'd be hesitant to support a blacklist until
+     _somebody_ takes the time to do so).
+
+> If we are doing any filtering, however, it is always hard, if not
+> impossible, to take away what we originally granted, even by
+> mistake, for any reason, even for correctness or for security, in a
+> later release.
+
+Yep, agreed.
+
+I am OK staying with a whitelist. But I think we should be fairly
+lenient in whitelisting hierarchies that people have a use for, and
+which do not violate (1) or (2) above.
+
+> We probably could sidestep it by introducing an end-user
+> configurable "whitelist" somewhere.
+
+Ugh. Please no. I do not want to have to think about explaining to
+somebody that they can accomplish what they want with submodules, but
+only by pre-configuring their ~/.gitconfig to allow certain keys so that
+they can pass the appropriate config on the command line.
+
+-Peff
