@@ -1,97 +1,222 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: Bisect limited to Merge Commits
-Date: Wed, 27 Apr 2016 23:44:23 -0700
-Message-ID: <CA+P7+xq-g3JPxKROa9Ne0EGiSgSqHKgqVG3eoW9Q-dP0yPOrVA@mail.gmail.com>
-References: <20160427204551.GB4613@virgo.localdomain> <xmqq8tzy93ed.fsf@gitster.mtv.corp.google.com>
- <57213041.5070506@kdbg.org> <20160428061929.GA11322@virgo.localdomain>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH v2] pack-objects: warn on split packs disabling bitmaps
+Date: Thu, 28 Apr 2016 07:28:55 +0000
+Message-ID: <20160428072854.GA5252@dcvr.yhbt.net>
+References: <20160427215324.GA22165@dcvr.yhbt.net>
+ <xmqqfuu67j9t.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Hagen Paul Pfeifer <hagen@jauu.net>
-X-From: git-owner@vger.kernel.org Thu Apr 28 08:44:48 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 28 09:29:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avfgu-0002KV-8G
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 08:44:48 +0200
+	id 1avgNi-0004id-AH
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 09:29:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752135AbcD1Goo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 02:44:44 -0400
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:34991 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750943AbcD1Gon (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 02:44:43 -0400
-Received: by mail-ob0-f179.google.com with SMTP id n10so30249378obb.2
-        for <git@vger.kernel.org>; Wed, 27 Apr 2016 23:44:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=KdpVsm9s0ygekRYLl3GdpRaH/8BC4GrrGaYpgMavxd8=;
-        b=MZ6MQYzLDUZKH0wyItbHkaI2+V3Yo86wHDFtfh6vL9e+CkpeGADWiWkf7ZtohQPwuF
-         1ulev+m3dG67q0WieoOrcoAO6swjjSgQw7q1iX/5ozscUe6O+yMwd6qk0e2rLNiDj7Q1
-         EwrHFm0I14BnlX6O1ImHrDNy78urm7GQsBTkM9WK7ZZKf/wmSCK3N1gf/ZQwNUQYWlNv
-         UNsaXk2xTP41eCNRxIIRUa2mLOyQLh+9dotk7DNCSeNaMRIrxN3PlDtdhvM3WquAsh3/
-         kQC1lewkC49u7ueukySLAe6MkzQCla4d/b/SQAW1tjqmkPivLKLBTLee4XAcbD0bIOTn
-         d4JQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=KdpVsm9s0ygekRYLl3GdpRaH/8BC4GrrGaYpgMavxd8=;
-        b=bNLTIUwYEg3bFOIEPwslDQIdAl6/+zhA/KiP5279dkVwMHRlE4vtSJ4kxz6ZSHhXWn
-         KTpbLM8vYfvy2qQ6dRTW3Gfea198eBHqLkDbmrBlhrX06GCtF4e5skay0s5Rwgb3HGsd
-         XseDK4EqKZiSVMCjXTByekr2LgWng/Mj/3aJupKDXVI3ehdcN93kqqoNMuFT5zYsX01P
-         J/sW8y0hQZuH1OemkDtHLdGPhV+EpWwOXhxmiQyNlMcQDa8e1y6NjggIeXDVEUDWDBVV
-         +gx7t2GbasREzC3cYwQhjCxbWmwy474l1y5wPWjmTxUxINnPBwgFxZSeBXpdgPpuQume
-         pRRw==
-X-Gm-Message-State: AOPr4FXRB7+G/k+AuXtdLDGGYLh9tcsbc6N6PzxiykEMZZosa/oNOfsPAC3u+6UHKcX7jpsOGRcMFi3ixvIUUA==
-X-Received: by 10.60.74.97 with SMTP id s1mr5547751oev.24.1461825882735; Wed,
- 27 Apr 2016 23:44:42 -0700 (PDT)
-Received: by 10.182.117.132 with HTTP; Wed, 27 Apr 2016 23:44:23 -0700 (PDT)
-In-Reply-To: <20160428061929.GA11322@virgo.localdomain>
+	id S1750876AbcD1H26 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2016 03:28:58 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:36663 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750787AbcD1H25 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2016 03:28:57 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 271361F980;
+	Thu, 28 Apr 2016 07:28:55 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <xmqqfuu67j9t.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292853>
 
-On Wed, Apr 27, 2016 at 11:19 PM, Hagen Paul Pfeifer <hagen@jauu.net> wrote:
-> * Johannes Sixt | 2016-04-27 23:33:53 [+0200]:
->
-> Hey Junio, hey Hannes,
->
->> git bisect start
->> git rev-list --first-parent --boundary origin..origin/pu |
->>   sed -ne s/-//p | xargs git bisect good
->> git bisect bad origin/pu
->>
->>and it starts bisecting among the 50-something first-parent commits between
->>origin and origin/pu.
->
-> just for clarification: contributors rebase their work before pushing it on
-> master. The integrator simple merges --no-ff the individual branches. Just a
-> regular workflow, nothing special - except that many contributor commits will
-> not build. ;(
->
-> The idea is just to skip the contributor commits during bisect and focus on
-> the merge commits (the ones with more than one ancestors) because they are
-> likely build and testable.
->
-> One possible approach is probably to sort out all non-merge commits before
-> bisecting and bisect only on a this set of commits. The advantage is that the
-> first bad commit is the merge commit introduced the regression. Mmmh, any
-> comments?
->
+Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Wong <normalperson@yhbt.net> writes:
+> > +++ b/Documentation/git-pack-objects.txt
+> > @@ -110,7 +110,8 @@ base-name::
+> >  --max-pack-size=<n>::
+> >  	Maximum size of each output pack file. The size can be suffixed with
+> >  	"k", "m", or "g". The minimum size allowed is limited to 1 MiB.
+> > -	If specified,  multiple packfiles may be created.
+> > +	If specified, multiple packfiles may be created, which also
+> > +	prevents the creation of a bitmap index.
+> 
+> This is a good update, judging with the yardstick I set in the
+> previous paragraph in this review.
 
-I suspect doing something akin to the idea of "bisect --first-parent"
-would work for this use case and be more flexible in general. Your
-idea is pretty much what i think bisect --first-parent would do,
-except that it would also work for non-merge commits which happen to
-be in the "mainline" history.
+Thanks for the review; made some adjustments and have v2 below.
 
-Thanks,
-Jake
+> > --- a/Documentation/git-repack.txt
+> > +++ b/Documentation/git-repack.txt
+> > @@ -106,7 +106,8 @@ other objects in that pack they already have locally.
+> >  --max-pack-size=<n>::
+> >  	Maximum size of each output pack file. The size can be suffixed with
+> >  	"k", "m", or "g". The minimum size allowed is limited to 1 MiB.
+> > -	If specified,  multiple packfiles may be created.
+> > +	If specified, multiple packfiles may be created, causing
+> > +	`--write-bitmap-index` and `repack.writeBitmaps` to be ignored.
+> 
+> And this is not.  Just say "bitmap index is not created".
+
+Ah, I've now synced the same --max-pack-size doc from
+git-pack-objects.txt you liked into v2 below.
+
+I worded my original differently between pack-objects and repack
+since I figured repack is more likely used by end users;
+and perhaps warranted an explanation that didn't require
+describing the actual problem...
+
+But I suppose "repack" isn't commonly called anymore, either.
+
+> > @@ -115,7 +116,9 @@ other objects in that pack they already have locally.
+> >  	Write a reachability bitmap index as part of the repack. This
+> >  	only makes sense when used with `-a` or `-A`, as the bitmaps
+> >  	must be able to refer to all reachable objects. This option
+> > -	overrides the setting of `pack.writeBitmaps`.
+> > +	overrides the setting of `repack.writeBitmaps`.  This option
+> > +	has no effect if a multiple packfiles are created due to
+> > +	reaching `pack.packSizeLimit` or `--max-pack-size`.
+> 
+> Dropping "due to ..." makes it perfect.
+
+Done, along with:
+
+	s/effect if a multiple/effect when multiple/
+
+"if a" was definitely a typo, "if" is probably alright, but
+I suspect "when" is even better.
+
+-------------8<-------------
+Subject: [PATCH] pack-objects: warn on split packs disabling bitmaps
+
+It can be tempting for a server admin to want a stable set of
+long-lived packs for dumb clients; but also want to enable
+bitmaps to serve smart clients more quickly.
+
+Unfortunately, such a configuration is impossible;
+so at least warn users of this incompatibility since
+commit 21134714787a02a37da15424d72c0119b2b8ed71
+("pack-objects: turn off bitmaps when we split packs").
+
+Tested the warning by inspecting the output of:
+
+	make -C t t5310-pack-bitmaps.sh GIT_TEST_OPTS=-v
+
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ Documentation/config.txt           | 12 ++++++++----
+ Documentation/git-pack-objects.txt |  3 ++-
+ Documentation/git-repack.txt       |  8 +++++---
+ builtin/pack-objects.c             |  9 ++++++++-
+ 4 files changed, 23 insertions(+), 9 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 3d8bc97..3ea3372 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2165,8 +2165,11 @@ pack.packSizeLimit::
+ 	The maximum size of a pack.  This setting only affects
+ 	packing to a file when repacking, i.e. the git:// protocol
+ 	is unaffected.  It can be overridden by the `--max-pack-size`
+-	option of linkgit:git-repack[1]. The minimum size allowed is
+-	limited to 1 MiB. The default is unlimited.
++	option of linkgit:git-repack[1].  Reaching this limit results
++	in the creation of multiple packfiles; which in turn prevents
++	bitmaps from being created.
++	The minimum size allowed is limited to 1 MiB.
++	The default is unlimited.
+ 	Common unit suffixes of 'k', 'm', or 'g' are
+ 	supported.
+ 
+@@ -2566,8 +2569,9 @@ repack.writeBitmaps::
+ 	objects to disk (e.g., when `git repack -a` is run).  This
+ 	index can speed up the "counting objects" phase of subsequent
+ 	packs created for clones and fetches, at the cost of some disk
+-	space and extra time spent on the initial repack.  Defaults to
+-	false.
++	space and extra time spent on the initial repack.  This has
++	no effect if multiple packfiles are created.
++	Defaults to false.
+ 
+ rerere.autoUpdate::
+ 	When set to true, `git-rerere` updates the index with the
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index bbea529..19cdcd0 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -110,7 +110,8 @@ base-name::
+ --max-pack-size=<n>::
+ 	Maximum size of each output pack file. The size can be suffixed with
+ 	"k", "m", or "g". The minimum size allowed is limited to 1 MiB.
+-	If specified,  multiple packfiles may be created.
++	If specified, multiple packfiles may be created, which also
++	prevents the creation of a bitmap index.
+ 	The default is unlimited, unless the config variable
+ 	`pack.packSizeLimit` is set.
+ 
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index af230d0..b9c02ce 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -106,7 +106,8 @@ other objects in that pack they already have locally.
+ --max-pack-size=<n>::
+ 	Maximum size of each output pack file. The size can be suffixed with
+ 	"k", "m", or "g". The minimum size allowed is limited to 1 MiB.
+-	If specified,  multiple packfiles may be created.
++	If specified, multiple packfiles may be created, which also
++	prevents the creation of a bitmap index.
+ 	The default is unlimited, unless the config variable
+ 	`pack.packSizeLimit` is set.
+ 
+@@ -115,7 +116,8 @@ other objects in that pack they already have locally.
+ 	Write a reachability bitmap index as part of the repack. This
+ 	only makes sense when used with `-a` or `-A`, as the bitmaps
+ 	must be able to refer to all reachable objects. This option
+-	overrides the setting of `pack.writeBitmaps`.
++	overrides the setting of `repack.writeBitmaps`.  This option
++	has no effect if multiple packfiles are created.
+ 
+ --pack-kept-objects::
+ 	Include objects in `.keep` files when repacking.  Note that we
+@@ -123,7 +125,7 @@ other objects in that pack they already have locally.
+ 	This means that we may duplicate objects, but this makes the
+ 	option safe to use when there are concurrent pushes or fetches.
+ 	This option is generally only useful if you are writing bitmaps
+-	with `-b` or `pack.writeBitmaps`, as it ensures that the
++	with `-b` or `repack.writeBitmaps`, as it ensures that the
+ 	bitmapped packfile has the necessary objects.
+ 
+ Configuration
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index a27de5b..b6664ce 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -759,6 +759,10 @@ static off_t write_reused_pack(struct sha1file *f)
+ 	return reuse_packfile_offset - sizeof(struct pack_header);
+ }
+ 
++static const char no_split_warning[] = N_(
++"disabling bitmap writing, packs are split due to pack.packSizeLimit"
++);
++
+ static void write_pack_file(void)
+ {
+ 	uint32_t i = 0, j;
+@@ -813,7 +817,10 @@ static void write_pack_file(void)
+ 			fixup_pack_header_footer(fd, sha1, pack_tmp_name,
+ 						 nr_written, sha1, offset);
+ 			close(fd);
+-			write_bitmap_index = 0;
++			if (write_bitmap_index) {
++				warning(_(no_split_warning));
++				write_bitmap_index = 0;
++			}
+ 		}
+ 
+ 		if (!pack_to_stdout) {
+-- 
+EW
