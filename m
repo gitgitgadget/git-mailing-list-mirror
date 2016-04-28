@@ -1,104 +1,100 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v5 2/2] submodule: pass on http.extraheader config settings
-Date: Thu, 28 Apr 2016 14:12:37 -0700
-Message-ID: <CAGZ79kY8s9pV_Lb8D0OYCrarDyC6v2U0VkaJSJBnviditYK9aA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v5 2/2] submodule: pass on http.extraheader config
+ settings
+Date: Thu, 28 Apr 2016 17:20:11 -0400
+Message-ID: <20160428212011.GC12268@sigill.intra.peff.net>
 References: <20160428134953.GB25364@sigill.intra.peff.net>
-	<CA+P7+xq-_D2Mszyjd11CyYLiKBBh9A2e1exaZQVmWz1qVKv7ug@mail.gmail.com>
-	<20160428153902.GF31063@sigill.intra.peff.net>
-	<CAGZ79kZFLTARQ25h4u4SGgNn=Q4TQi-kxFLN3sQvOmejsRmAWA@mail.gmail.com>
-	<20160428165031.GA31421@sigill.intra.peff.net>
-	<xmqq1t5p5z8v.fsf@gitster.mtv.corp.google.com>
-	<20160428191038.GA10574@sigill.intra.peff.net>
-	<xmqqwpnh4joq.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kYoRP=rkfaL+rLapmvouUdPxXGBr-KWOLhL94bYB1B2-w@mail.gmail.com>
-	<xmqqoa8t4il8.fsf@gitster.mtv.corp.google.com>
-	<20160428210342.GB12268@sigill.intra.peff.net>
+ <CA+P7+xq-_D2Mszyjd11CyYLiKBBh9A2e1exaZQVmWz1qVKv7ug@mail.gmail.com>
+ <20160428153902.GF31063@sigill.intra.peff.net>
+ <CAGZ79kZFLTARQ25h4u4SGgNn=Q4TQi-kxFLN3sQvOmejsRmAWA@mail.gmail.com>
+ <20160428165031.GA31421@sigill.intra.peff.net>
+ <xmqq1t5p5z8v.fsf@gitster.mtv.corp.google.com>
+ <20160428191038.GA10574@sigill.intra.peff.net>
+ <xmqqwpnh4joq.fsf@gitster.mtv.corp.google.com>
+ <20160428210026.GA12268@sigill.intra.peff.net>
+ <CAGZ79kZF4UeNuwBoA-Vw0OFHin4=8GTWPK-GT+5fsEuCFe7Now@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Jacob Keller <jacob.keller@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Git mailing list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 28 23:13:00 2016
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Apr 28 23:20:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avtF5-0002NJ-On
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 23:13:00 +0200
+	id 1avtME-0005av-0N
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 23:20:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753658AbcD1VMk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 17:12:40 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:37858 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753645AbcD1VMi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 17:12:38 -0400
-Received: by mail-ig0-f174.google.com with SMTP id s8so3878895ign.0
-        for <git@vger.kernel.org>; Thu, 28 Apr 2016 14:12:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=XrGiDzelDAl69p516Jozr3XfMqgDjxvnQIidWZhGBLM=;
-        b=D1keEYql0BNR8VM1C/x3zBsMNlntcqvCsX+iLWCqbI6qhvbjNhYRZWWeeDihVGPEd1
-         q+FLBcImJYMPtQYxvt0zi8ddrjU7galwxjQmjdG3GXPJjssajixe+ufXqD7KkfKE3zwm
-         GLb01lJV/P/Spepbtha3HFcP4fLlgKwgT8jnVHIOYSA7L1Le2TN7ZuzaqgPnLbE5cmxd
-         Q9eyMQQBgyPgdMh1LwX76gwKHKoMSq9QBt+PMjMZfMTU0aileN6oGgwI4/Pydy7c0Cx3
-         A+fV2rnJcwY2QyCASBEwzUGv5XDo7GvWLBdC6O98oInFt4Suwi9vVW7/ayIfBQTHSTv8
-         6x9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=XrGiDzelDAl69p516Jozr3XfMqgDjxvnQIidWZhGBLM=;
-        b=cxLkHi16fnhAaC2czoNG5FkmjYPFmozEMAnVD5b3qQTAyYhv0meit/Juy/SLY3C7Ae
-         y9YhHrJU8RdLjsY4cmOlwS3WB6kVFtTHCPdrnEP35DpFxkbrBxtIZtDW+VQT9sSqYg/E
-         D+39UwxQ2K4QU9hFbHsKS1mnNHd1x8z5PmLFgtleBScl80E44EL4ELgAzat2VwPCAC5r
-         9jrrQpb7gBnrAEdKBhRIsMeGQ3BXIBC+/+Iz4tTGS1gDEWa58TKrbZMchfCK/UmGFH7E
-         NHT8qbShVj4y5cclU1HtYg0Me5lV2UTZz+b5STpv5XLPTYiV3KYfAU22vGvu3PS9TPQX
-         Yizg==
-X-Gm-Message-State: AOPr4FXYKE85hsvjNYGbI8Giw+2DNOoFrmEU1DbwY0xHTsJbTSCFZHTKGTTqyBQ5MmahDNM/8xyUjLw111RmJKeo
-X-Received: by 10.50.102.207 with SMTP id fq15mr42779igb.94.1461877957149;
- Thu, 28 Apr 2016 14:12:37 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Thu, 28 Apr 2016 14:12:37 -0700 (PDT)
-In-Reply-To: <20160428210342.GB12268@sigill.intra.peff.net>
+	id S1753809AbcD1VUR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2016 17:20:17 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58788 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753728AbcD1VUP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2016 17:20:15 -0400
+Received: (qmail 16527 invoked by uid 102); 28 Apr 2016 21:20:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 28 Apr 2016 17:20:14 -0400
+Received: (qmail 14846 invoked by uid 107); 28 Apr 2016 21:20:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 28 Apr 2016 17:20:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Apr 2016 17:20:11 -0400
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kZF4UeNuwBoA-Vw0OFHin4=8GTWPK-GT+5fsEuCFe7Now@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292957>
 
-On Thu, Apr 28, 2016 at 2:03 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Apr 28, 2016 at 12:52:03PM -0700, Junio C Hamano wrote:
->
->> "git" is not always about submodules, so "-c-but-not-for-submodules"
->> option does not belong to "git" wrapper.
->>
->> Users use "git -c" and hope to affect what happens in submodules,
->> only because "git submodule" support is still immature and does not
->> have options to do that.  You certainly smell a linkage between
->> "pass options to a selected subset of submodules" and your recent
->> "give labels to submodules so that they can be named with *group
->> syntax" topic, no?
->
-> Keep in mind that submodule interactions may be triggered from other
-> non-submodule commands. So "git fetch", for instance, may end up caring
-> about whether you pass "http.*" or "credential.*" down to the
-> submodules.
+On Thu, Apr 28, 2016 at 02:08:43PM -0700, Stefan Beller wrote:
 
-Or clone. I recently sent origin/sb/clone-shallow-passthru
-which adds more options to a non-submodule command.
-I think a command line option there is better than a "git -c $OPTION"
+> >   1. Ones where we _know_ that the config is nonsense to pass along,
+> >      _and_ where a user might conceivably make use of the
+> >      just-the-top-level version of it (core.worktree
+> >      comes to mind, though of course they are probably better served by
+> >      "--work-tree" in such a case).
+> 
+> My gut reaction to this:
+> In this specific case I would rather error out, as you never want to have
+> core.worktree to point at the same dir for all of the repo and submodules.
 
-> I do not think "fetch" should grow submodule-specific
-> options, so that pretty much leaves "git" options as the only place
-> left.
+But then you're erroring out on a case that currently works today (we
+apply core.worktree to the root repo, and ignore it for the others),
+which I think is worth avoiding.
 
-I would rather see it in fetch as in the generic Git?
+> Thinking about it further, I am not so sure any more.
+> (What if you have multiple submodules tracking the same project
+> and you want to see each submodule version with the one worktree you point to?
+> Highly unlikely edge case, but it voids the /never/ assumption of my
+> gut reaction)
 
-Stefan
+I think this falls in my "nonsense" category. Especially when there are
+other ways to handle it (e.g., by asking "git submodule foreach" to look
+at each directory).
 
->
-> -Peff
+> I view the whitelist more like an "emergency knob to turn, because the
+> developers did it wrong and I want it now". the general case should be
+> covered by a mechanism we provide?
+
+I think the emergency knob is "visit each submodule individually if you
+have want to do something clever in each one" (or "ask git not to
+recurse into submodules" for the opposite effect). The use cases I have
+seen discussed are:
+
+  1. Convenience. People expect to set some global-ish config like
+     credential.helper, and have it applied uniformly.
+
+  2. Inserting config into awkward parts of the call chain. E.g., I
+     think Lars is mostly interested in speeding up clones where the
+     submodules have a lot of slow clean/smudge filters. So he wants to
+     disable "filter.*" _just_ for the clone, but there's no easy way to
+     intercept the clone step of each submodule, stop, and the run the
+     individual checkout with "git -c filter.foo.smudge=". I'm sure
+     there's probably a way to hack it with plumbing, but it fails in
+     "convenience".
+
+-Peff
