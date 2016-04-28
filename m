@@ -1,100 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 2/2] submodule: pass on http.extraheader config
- settings
-Date: Thu, 28 Apr 2016 17:20:11 -0400
-Message-ID: <20160428212011.GC12268@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 2/2] submodule: pass on http.extraheader config settings
+Date: Thu, 28 Apr 2016 15:44:50 -0700
+Message-ID: <xmqqwpnh2w0t.fsf@gitster.mtv.corp.google.com>
 References: <20160428134953.GB25364@sigill.intra.peff.net>
- <CA+P7+xq-_D2Mszyjd11CyYLiKBBh9A2e1exaZQVmWz1qVKv7ug@mail.gmail.com>
- <20160428153902.GF31063@sigill.intra.peff.net>
- <CAGZ79kZFLTARQ25h4u4SGgNn=Q4TQi-kxFLN3sQvOmejsRmAWA@mail.gmail.com>
- <20160428165031.GA31421@sigill.intra.peff.net>
- <xmqq1t5p5z8v.fsf@gitster.mtv.corp.google.com>
- <20160428191038.GA10574@sigill.intra.peff.net>
- <xmqqwpnh4joq.fsf@gitster.mtv.corp.google.com>
- <20160428210026.GA12268@sigill.intra.peff.net>
- <CAGZ79kZF4UeNuwBoA-Vw0OFHin4=8GTWPK-GT+5fsEuCFe7Now@mail.gmail.com>
+	<CA+P7+xq-_D2Mszyjd11CyYLiKBBh9A2e1exaZQVmWz1qVKv7ug@mail.gmail.com>
+	<20160428153902.GF31063@sigill.intra.peff.net>
+	<CAGZ79kZFLTARQ25h4u4SGgNn=Q4TQi-kxFLN3sQvOmejsRmAWA@mail.gmail.com>
+	<20160428165031.GA31421@sigill.intra.peff.net>
+	<xmqq1t5p5z8v.fsf@gitster.mtv.corp.google.com>
+	<20160428191038.GA10574@sigill.intra.peff.net>
+	<xmqqwpnh4joq.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kYoRP=rkfaL+rLapmvouUdPxXGBr-KWOLhL94bYB1B2-w@mail.gmail.com>
+	<xmqqoa8t4il8.fsf@gitster.mtv.corp.google.com>
+	<20160428210342.GB12268@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>,
 	Jacob Keller <jacob.keller@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Git mailing list <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 23:20:22 2016
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 29 00:45:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avtME-0005av-0N
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 23:20:22 +0200
+	id 1avugU-0001iB-19
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 00:45:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753809AbcD1VUR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 17:20:17 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58788 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753728AbcD1VUP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 17:20:15 -0400
-Received: (qmail 16527 invoked by uid 102); 28 Apr 2016 21:20:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 28 Apr 2016 17:20:14 -0400
-Received: (qmail 14846 invoked by uid 107); 28 Apr 2016 21:20:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 28 Apr 2016 17:20:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Apr 2016 17:20:11 -0400
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZF4UeNuwBoA-Vw0OFHin4=8GTWPK-GT+5fsEuCFe7Now@mail.gmail.com>
+	id S1752622AbcD1WpN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2016 18:45:13 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55511 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752194AbcD1Woy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2016 18:44:54 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D3F4917C93;
+	Thu, 28 Apr 2016 18:44:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5SVdOhRB+ApZU8rRZvwklmGh2d4=; b=uAZpTj
+	bo4Xi0OCO3SCW8hBQw0JpPAdEav3N2xp7gAxBqFirxRGO6xYrIvjadOYll4lsvTc
+	+a5XAC+uvlELZOHKPLUzwnoBhsV/9zS/6FPeFgtikBTw35z/FVCkzmI9WeQWJClG
+	4RiVNiyfkt9Wd8AABcDyCiIxBYAiLE623qg4I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bCk53WVcd0z4gSO1O5hmoXvNECxgNfTF
+	6oW655WqTAMtAppvNxeQx7Yt7Z2soJCYd0pxF/R365rMBcJc3a4TJOPdglQJn6Gn
+	L8xULpgqltU+cxoj8jQUTipdGc/5LpKspGQ04DNDYVDUSsdMhdRrEBZQ5tEUvWcK
+	G/hkxLgWvnQ=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CB43D17C91;
+	Thu, 28 Apr 2016 18:44:52 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3CC2517C8F;
+	Thu, 28 Apr 2016 18:44:52 -0400 (EDT)
+In-Reply-To: <20160428210342.GB12268@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 28 Apr 2016 17:03:42 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D219139C-0D92-11E6-A1E9-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292958>
 
-On Thu, Apr 28, 2016 at 02:08:43PM -0700, Stefan Beller wrote:
+Jeff King <peff@peff.net> writes:
 
-> >   1. Ones where we _know_ that the config is nonsense to pass along,
-> >      _and_ where a user might conceivably make use of the
-> >      just-the-top-level version of it (core.worktree
-> >      comes to mind, though of course they are probably better served by
-> >      "--work-tree" in such a case).
-> 
-> My gut reaction to this:
-> In this specific case I would rather error out, as you never want to have
-> core.worktree to point at the same dir for all of the repo and submodules.
+> Keep in mind that submodule interactions may be triggered from other
+> non-submodule commands. So "git fetch", for instance, may end up caring
+> about whether you pass "http.*" or "credential.*" down to the
+> submodules.
 
-But then you're erroring out on a case that currently works today (we
-apply core.worktree to the root repo, and ignore it for the others),
-which I think is worth avoiding.
+> I do not think "fetch" should grow submodule-specific
+> options,...
 
-> Thinking about it further, I am not so sure any more.
-> (What if you have multiple submodules tracking the same project
-> and you want to see each submodule version with the one worktree you point to?
-> Highly unlikely edge case, but it voids the /never/ assumption of my
-> gut reaction)
+The updated "git fetch" needs to grow submodule-specific options to
+at least either enable or disable "recurse into submodules", and
+that is true even if the default behaviour in the future were to
+recurse into submodules in a top-level project repository that has
+submodules (i.e. you must have "git fetch --no-recurse-submodules"
+option).  "Please use these configuration when you do recurse into
+them" options are very much submodule specific in the same way.
 
-I think this falls in my "nonsense" category. Especially when there are
-other ways to handle it (e.g., by asking "git submodule foreach" to look
-at each directory).
+If anything, with Stefan's "submodule groups" thing, I would expect
+more commands (like "git diff") to become aware of the possibility
+of descending into submodules (and even "selected subset of
+submodules"), and they need command line options to tell which ones
+to descend into.  "Here is the set of submodules I want you to
+descend into" and "By the way, I want you to use these settings
+while working in them" would go naturally hand in hand, I would
+imagine, so I strongly disagree with the statement "fetch should not
+grow submodule specific options".
 
-> I view the whitelist more like an "emergency knob to turn, because the
-> developers did it wrong and I want it now". the general case should be
-> covered by a mechanism we provide?
-
-I think the emergency knob is "visit each submodule individually if you
-have want to do something clever in each one" (or "ask git not to
-recurse into submodules" for the opposite effect). The use cases I have
-seen discussed are:
-
-  1. Convenience. People expect to set some global-ish config like
-     credential.helper, and have it applied uniformly.
-
-  2. Inserting config into awkward parts of the call chain. E.g., I
-     think Lars is mostly interested in speeding up clones where the
-     submodules have a lot of slow clean/smudge filters. So he wants to
-     disable "filter.*" _just_ for the clone, but there's no easy way to
-     intercept the clone step of each submodule, stop, and the run the
-     individual checkout with "git -c filter.foo.smudge=". I'm sure
-     there's probably a way to hack it with plumbing, but it fails in
-     "convenience".
-
--Peff
+Of course, we can stop teaching --recurse-submodules to non "git
+submodule" commands and concentrate on improving "git submodule" as
+the end-user facing command, or cover usecases to work on subset of
+submodules with "git submodule foreach".  But I do not think that is
+what you are advocating for.
