@@ -1,88 +1,121 @@
-From: Mike Rappazzo <rappazzo@gmail.com>
-Subject: Re: [PATCH v3 0/2] gitk: changes for the "Tags and heads" view
-Date: Thu, 28 Apr 2016 08:42:11 -0400
-Message-ID: <CANoM8SXZjcDxrNoosk2agzq=nq_MnenoRtDMbY414o50OtzWig@mail.gmail.com>
-References: <1459091168-46908-1-git-send-email-rappazzo@gmail.com>
+From: Alexander 'z33ky' Hirsch <1zeeky@gmail.com>
+Subject: [PATCH v2] pull: make --rebase --verify-signatures illegal
+Date: Thu, 28 Apr 2016 15:44:35 +0200
+Message-ID: <20160428134435.GA5901@netblarch>
+References: <20160428095254.GA5205@netblarch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Michael Rappazzo <rappazzo@gmail.com>
-To: paulus@samba.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 14:42:38 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 28 15:34:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avlHB-0000iv-2S
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 14:42:37 +0200
+	id 1avm5Y-0003i3-IE
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 15:34:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752171AbcD1Mmd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 08:42:33 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:34551 "EHLO
-	mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751513AbcD1Mmc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 08:42:32 -0400
-Received: by mail-io0-f194.google.com with SMTP id d62so11821720iof.1
-        for <git@vger.kernel.org>; Thu, 28 Apr 2016 05:42:31 -0700 (PDT)
+	id S1752826AbcD1Nei (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2016 09:34:38 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35996 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752448AbcD1Neh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2016 09:34:37 -0400
+Received: by mail-wm0-f66.google.com with SMTP id w143so23472346wmw.3
+        for <git@vger.kernel.org>; Thu, 28 Apr 2016 06:34:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ycfvOSe3LmqulvgkjnX2xWBd9kvkc3IHIKh9nMmfO7s=;
-        b=kH83nGL2ljHEcJfvPEOprzrk5PaxbqgwQDioW4EXRKuDXDHyCBDqvLr3xSeZih6h3I
-         PhWzFCJ4Yc2o9yZesmmX3RcPeXxmXnMEojAjDaElinpY4sLj65NCj80FzlbgVIibu7Op
-         +3/fsGpVkBBPYYOEeF7ijRjsNMPExxZd5DEfsFoQRY7/TGYUdy+07mNWzLfDnj7aZJdr
-         FzWpXr9og8+s/vsMEWjM48KDqMypA6ChyI5qLSBNYAlRzJZCw3vDtfyqhpPnDH+302I7
-         ddm2eUbHwSr5hKbssG7IjTcGDuez6pYBVSIAwa8Z98mUrVUFnAP5Vo3QDoYW9XiTa94b
-         LG3w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=wASp0i1au9I5yOpVZWUrrhfB3yjcBqX4rTSL9Ls4Quc=;
+        b=RNuKeP35inLpXbfYamaQ1R7palPr7x26JOfVtunH0ocBNFSJrmiA3y2GsrTW+OSQzc
+         Q/72FA5818WFhUaWGA5iLgVT1+KJK7rJEJ127FSacAHgRzrmUKdfBJGmTXqO7gFUUZJ5
+         tJScVSoNhfJBX0+E5scSVNzx6OJzNDs9bb6pN0HYxM/hBIbKO8zSFbNIZgICF1+6Scku
+         bzvc0prQA/gYVMA69emWePVQL9Znucy+p0wdjq0ddPcCbnMADMxuktYQMsBNfTrm/aqK
+         y5MLHsf+bVb0rlkRqyLEl1jVDfBydq985xog0yahu7pniTP2NlvtvBjYklJwhFKaP2TW
+         4yNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ycfvOSe3LmqulvgkjnX2xWBd9kvkc3IHIKh9nMmfO7s=;
-        b=e1Qzoe+vuKkZfrtuNnl3Jk6iPkDwUeow3fT571qE0O2Yrspa07CZ1DPdrzfqgzIUz1
-         1hvqNFx8GS5axDit+Xno+Vqe1Zt0rx3lbQ/L4q+e+wZvV5mF1E94nJcJnJoPJzi428MQ
-         MFpOlnsKlchonrpXBTC1rDw3BBbbSaFUM1f27ex9B7Lkhqdh8xmDVbAiFxTOD99d+zbj
-         NZkW1++oSJHelI1Fhmt5/Zh7BSb/WHJSRtGmULHcMsCEHxYWIpIiUAJHaNLh9K2E0hbm
-         p/T8z+6Gw2CNnu0uKGmjYgVrELN522uhQrLjf7erCAsIiGQFhTJp5aawC4CUO/Fd7/6w
-         uVuQ==
-X-Gm-Message-State: AOPr4FUywnQAGjxsuURQxdkDUPs88OjTwEArQv7hK5ctfrK7V6pQmvoCOfEmyIZoWX5gXi23Ff6ER55bGY7pKQ==
-X-Received: by 10.107.136.223 with SMTP id s92mr19451770ioi.109.1461847351245;
- Thu, 28 Apr 2016 05:42:31 -0700 (PDT)
-Received: by 10.107.7.220 with HTTP; Thu, 28 Apr 2016 05:42:11 -0700 (PDT)
-In-Reply-To: <1459091168-46908-1-git-send-email-rappazzo@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=wASp0i1au9I5yOpVZWUrrhfB3yjcBqX4rTSL9Ls4Quc=;
+        b=LKeRE8HcYOaB4IvBGxuWcW4X1TnlEVd1FFngDDl8d9iCD3PnHfeXCsQVlg7hZ4WYiN
+         CCsHzESC3BwvXfkf64N94wVW0H5mL4etyBD9n09JTnGh+btakxwX6J9om7yypwmC+MJl
+         ZaxuyMdjGSdZPjnDQUuxxkH3/Pf02+0pi5TOS1gBl6IAtlKGXK5jLTHjd6ulF4kX37rI
+         21YmKdlWqX0quxCshomwxsMPgE3yTlB0ax52LJ/U8eQmO3RcvEAGGWgThG0RKfT/IUH9
+         mG0rvghnydWUiO7ZZUV4ootVMh0pFj6fDnGv7PYq+FHYFvF/T1Inx6pW2qDG6yopswM8
+         hiPw==
+X-Gm-Message-State: AOPr4FWo2EFiAwVIU06N3QiDGWFYLxcEFxbW5AQCmo5Ni62IP82HeVKt7hEMhlWN+yl3cQ==
+X-Received: by 10.28.92.69 with SMTP id q66mr17193195wmb.102.1461850471205;
+        Thu, 28 Apr 2016 06:34:31 -0700 (PDT)
+Received: from netblarch ([2001:41b8:83c:ff04:cdf1:96f8:56e0:4777])
+        by smtp.gmail.com with ESMTPSA id b12sm31699601wmb.0.2016.04.28.06.34.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 28 Apr 2016 06:34:30 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20160428095254.GA5205@netblarch>
+User-Agent: Mutt/1.6.0 (2016-04-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292874>
 
-On Sun, Mar 27, 2016 at 11:06 AM, Michael Rappazzo <rappazzo@gmail.com> wrote:
-> Changes since v2[1]:
->  - Instead of getting the remote info for each local branch individually,
->    grab it all at once and store the result
->  - Instead of a command line option to enable the new sorting option,
->    enable it with a preference which is stored in the config.
->
-> v1 can be found here[2].
->
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/289244
-> [2] http://thread.gmane.org/gmane.comp.version-control.git/288544
->
-> Michael Rappazzo (2):
->   gitk: alter the ordering for the "Tags and heads" view
->   gitk: add an option to enable sorting the "Tags and heads" view by ref
->     type
->
->  gitk | 79 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++------------
->  1 file changed, 66 insertions(+), 13 deletions(-)
->
-> --
-> 2.7.4
->
+Previously git-pull would silently ignore the --verify-signatures
+option.
 
-I am still looking for comments on this patch.
+Signed-off-by: Alexander 'z33ky' Hirsch <1zeeky@gmail.com>
+---
 
-Also, is there a 'pu' repo for gitk?  Currently, I am only tracking
-git://ozlabs.org/~paulus/gitk
+I made the error-message conform to the CodingGuidelines (removed
+capitalization and full stop).
+
+Also, in the previous mail I said that I proposed a patch for git-pull
+last December, when I actually meant git-rebase.
+
+ builtin/pull.c  |  2 ++
+ t/t5520-pull.sh | 14 ++++++++++++++
+ 2 files changed, 16 insertions(+)
+
+diff --git a/builtin/pull.c b/builtin/pull.c
+index d98f481..b6e1507 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -809,6 +809,8 @@ static int run_rebase(const unsigned char *curr_head,
+ 		argv_array_push(&args, "--no-autostash");
+ 	else if (opt_autostash == 1)
+ 		argv_array_push(&args, "--autostash");
++	if (opt_verify_signatures && strcmp(opt_verify_signatures, "--verify-signatures") == 0)
++		die(_("the --verify-signatures option does not work for --rebase"));
+ 
+ 	argv_array_push(&args, "--onto");
+ 	argv_array_push(&args, sha1_to_hex(merge_head));
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 739c089..cb8f741 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -341,6 +341,20 @@ test_expect_success 'branch.to-rebase.rebase should override pull.rebase' '
+ 	test new = "$(git show HEAD:file2)"
+ '
+ 
++test_expect_success "pull --rebase --verify-signatures is illegal" '
++	git reset --hard before-rebase &&
++	test_must_fail git pull --rebase --verify-signatures . copy 2>err &&
++	test "$(git rev-parse HEAD)" = "$(git rev-parse before-rebase)" &&
++	test_i18ngrep "The --verify-signatures option does not work for --rebase." err
++'
++
++test_expect_success "pull --rebase --no-verify-signatures" '
++	git reset --hard before-rebase &&
++	git pull --rebase --no-verify-signatures . copy &&
++	test "$(git rev-parse HEAD^)" = "$(git rev-parse copy)" &&
++	test new = "$(git show HEAD:file2)"
++'
++
+ # add a feature branch, keep-merge, that is merged into master, so the
+ # test can try preserving the merge commit (or not) with various
+ # --rebase flags/pull.rebase settings.
+-- 
+2.8.0
