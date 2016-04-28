@@ -1,80 +1,105 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/5] fixes for sanitized submodule config
-Date: Thu, 28 Apr 2016 16:02:07 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604281600020.9313@virtualbox>
-References: <60724588-B06E-47E8-9302-8709C4601826@gmail.com> <CAGZ79kYmAr-O6_Jw2KO9eZEfZQ+_WBiERF=nhOYLJCZpUjSSyA@mail.gmail.com> <CA+P7+xoaqNF+uBHVnD2QR7j-=0Hyvd-scTc_vOdV+etC0VS9jA@mail.gmail.com> <20160425212449.GA7636@sigill.intra.peff.net>
- <017AA7DB-5224-49C3-A4A6-6C93005BF006@gmail.com> <20160428112511.GA11522@sigill.intra.peff.net> <20160428120504.GA22399@sigill.intra.peff.net> <20160428121753.GA5023@sigill.intra.peff.net> <20160428133534.GA19056@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Git Users <git@vger.kernel.org>, Jens.Lehmann@web.de
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 28 16:02:26 2016
+From: Mike Hommey <mh@glandium.org>
+Subject: [PATCH 1/4] git_connect: extend to take a pseudo format string for the program to run
+Date: Thu, 28 Apr 2016 23:12:36 +0900
+Message-ID: <1461852759-28429-2-git-send-email-mh@glandium.org>
+References: <1461852759-28429-1-git-send-email-mh@glandium.org>
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 28 16:12:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avmWO-0005j0-Ss
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 16:02:25 +0200
+	id 1avmgT-0000yc-C3
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 16:12:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752147AbcD1OCU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 10:02:20 -0400
-Received: from mout.gmx.net ([212.227.17.22]:52343 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750932AbcD1OCT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 10:02:19 -0400
-Received: from virtualbox ([89.204.153.107]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0LpPg1-1baru30bOn-00f77U; Thu, 28 Apr 2016 16:02:10
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160428133534.GA19056@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:hJlPY5+LYa51VHgwjMZMGrR5/ZMK01lYlKy9D2jnZ1/unQVH0X/
- oygS2vBWr74643LCgJdgTN5xsFfIdpUUKw2HnBycn3+vEkFX1e7002f3/2MROUV1wNSO0mV
- 6HuRZvJtT4uNbo92Pwqi24eI7EWOqMrLEhBHFZU9xYyBu1svvupM0EHK8Et7fHWuv138AjL
- UhdkyQ/wUMkiabVxnQn1w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:dn7oCjmh/L0=:yGFAMFQ9jjRKhnXuWuTXGC
- fensfChZkc6rsWHpfERAWOdAcrR1PFYG8Id4ssx/kujFJft8fwmVDrZzwcGyN3OzlRs9JOV3P
- 7q4h+uSJiT27zBMF4+Ft8ix1qIq0H8giol+Uo006N8WcRmv1ZnbS2zfkrLYcIj0veFog64bQ/
- jkqpOzad6Wizhi1TziP6G8X9HWHOl348NBp9lKF4c9foP4+DR4Bv+hwLc+QbP+DPwuSLbEJPf
- nPNhTAr1NE/W+977lX7zotTmfhty3Ohcfna+rA2QwG6TZqw5XrkcmCHlhrnuoXMAJP7ziPw8o
- xoFSlOmhkeWpp5Q/XcZQRdsZQCvyMCvyhcsOKtwMk+mP6vHRfC4waCYvyaF145AEnVu2RUnOi
- xUjvNjaPsIV8rnVtVL1cgi8Z/s0RhlVzgWGIfvvs0haSlTY4YMy8aT9oMn1ulhJ4gra5qLSjM
- UeNs5DRRJFgjs9ghCW9SlBjvnvrAdR08lFQ6+Ej8LuAwmJ/6o/nGxSezjVM9Z3QwNhphWTs2T
- 5vh5JMumR4Cnl4Ke/cegoDQOZBJeasO34nVJrLVq0x5d6eLH30lh53nboFG5i8l7GXLqtZPbH
- dSEthfemnCNiESUSnQzISLnO0eucNDfIl3HMlK1Vc9vdO7+8fviZL4+1zRGsnheaBzG4co+uF
- Z0B8L7HkDMS0/vdJJ77ZIHTm2dSI6YWVijAqr8QbyNvn7XSrnASoE6HnDW67784FhhIXRmxLn
- Z6zTpDD7DjIH2TNgTArDeVtXE9UqAQWHbhmL0l9w5Ks/2hqRhLLB7GWv+ig+txfAzOd++LHP 
+	id S1752570AbcD1OMq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2016 10:12:46 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:45582 "EHLO
+	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752022AbcD1OMo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2016 10:12:44 -0400
+Received: from glandium by zenigata with local (Exim 4.87)
+	(envelope-from <glandium@glandium.org>)
+	id 1avmgJ-0007PJ-GF; Thu, 28 Apr 2016 23:12:39 +0900
+X-Mailer: git-send-email 2.8.1.5.g18c8a48
+In-Reply-To: <1461852759-28429-1-git-send-email-mh@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292886>
 
-Hi Peff,
+Currently, the path extracted from the url is passed as last argument to
+the program/command passed to git_connect(). In every case the function
+is used in the git code base, it's enough, but in order to allow the
+reuse of e.g. the GIT_SSH/GIT_SSH_COMMAND logic, additional flexibility
+is welcome.
 
-On Thu, 28 Apr 2016, Jeff King wrote:
+With this change, when the program/command passed to git_connect()
+contains a "%s", that "%s" is replaced with the path from the url,
+allowing the path to be at a different position than last on the
+executed command line.
 
-> On Thu, Apr 28, 2016 at 08:17:53AM -0400, Jeff King wrote:
-> 
-> > So that case _is_ correct right now. It's just that t5550 isn't testing
-> > the shell script part, which is broken. Probably running "git submodule
-> > update" in the resulting clone would cover that.
-> > 
-> > And for the fetch case, we probably just need to be calling
-> > prepare_submodule_repo_env() there, too.
-> 
-> So here's a series which fixes sanitizing in the "git-submodule" shell
-> script, along with "git fetch". And cleans up a few things along the
-> way.
+Signed-off-by: Mike Hommey <mh@glandium.org>
+---
+ connect.c | 29 ++++++++++++++++++++++++-----
+ 1 file changed, 24 insertions(+), 5 deletions(-)
 
-Nice!
-
-I reviewed those changes and they all look sensible to me (did not apply
-them locally for lack of time, though).
-
-Ciao,
-Dscho
+diff --git a/connect.c b/connect.c
+index dccf673..96c8c1d 100644
+--- a/connect.c
++++ b/connect.c
+@@ -658,6 +658,25 @@ static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
+ 
+ static struct child_process no_fork = CHILD_PROCESS_INIT;
+ 
++static void prepare_connect_command(struct strbuf *cmd, const char *prog,
++                                    const char *path, int quote)
++{
++	const char *found = strstr(prog, "%s");
++	if (found)
++		strbuf_add(cmd, prog, found - prog);
++	else {
++		strbuf_addstr(cmd, prog);
++		strbuf_addch(cmd, ' ');
++	}
++	if (quote)
++		sq_quote_buf(cmd, path);
++	else
++		strbuf_addstr(cmd, path);
++
++	if (found)
++		strbuf_addstr(cmd, found + 2);
++}
++
+ /*
+  * This returns a dummy child_process if the transport protocol does not
+  * need fork(2), or a struct child_process object if it does.  Once done,
+@@ -717,18 +736,18 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 		 * Note: Do not add any other headers here!  Doing so
+ 		 * will cause older git-daemon servers to crash.
+ 		 */
++		prepare_connect_command(&cmd, prog, path, 0);
+ 		packet_write(fd[1],
+-			     "%s %s%chost=%s%c",
+-			     prog, path, 0,
++			     "%s%chost=%s%c",
++			     cmd.buf, 0,
+ 			     target_host, 0);
++		strbuf_release(&cmd);
+ 		free(target_host);
+ 	} else {
+ 		conn = xmalloc(sizeof(*conn));
+ 		child_process_init(conn);
+ 
+-		strbuf_addstr(&cmd, prog);
+-		strbuf_addch(&cmd, ' ');
+-		sq_quote_buf(&cmd, path);
++		prepare_connect_command(&cmd, prog, path, 1);
+ 
+ 		/* remove repo-local variables from the environment */
+ 		conn->env = local_repo_env;
+-- 
+2.8.1.5.g18c8a48
