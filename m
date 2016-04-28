@@ -1,63 +1,95 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] How to pass Git config command line instructions to
- Submodule commands?
-Date: Thu, 28 Apr 2016 08:05:04 -0400
-Message-ID: <20160428120504.GA22399@sigill.intra.peff.net>
-References: <60724588-B06E-47E8-9302-8709C4601826@gmail.com>
- <CAGZ79kYmAr-O6_Jw2KO9eZEfZQ+_WBiERF=nhOYLJCZpUjSSyA@mail.gmail.com>
- <CA+P7+xoaqNF+uBHVnD2QR7j-=0Hyvd-scTc_vOdV+etC0VS9jA@mail.gmail.com>
- <20160425212449.GA7636@sigill.intra.peff.net>
- <017AA7DB-5224-49C3-A4A6-6C93005BF006@gmail.com>
- <20160428112511.GA11522@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [RFC] How to pass Git config command line instructions to Submodule commands?
+Date: Thu, 28 Apr 2016 14:05:20 +0200
+Message-ID: <FF931AB2-2381-4DF9-AE28-CE30EEC5C352@gmail.com>
+References: <60724588-B06E-47E8-9302-8709C4601826@gmail.com> <CAGZ79kYmAr-O6_Jw2KO9eZEfZQ+_WBiERF=nhOYLJCZpUjSSyA@mail.gmail.com> <CA+P7+xoaqNF+uBHVnD2QR7j-=0Hyvd-scTc_vOdV+etC0VS9jA@mail.gmail.com> <20160425212449.GA7636@sigill.intra.peff.net> <017AA7DB-5224-49C3-A4A6-6C93005BF006@gmail.com> <20160428112511.GA11522@sigill.intra.peff.net>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
 Cc: Jacob Keller <jacob.keller@gmail.com>,
 	Stefan Beller <sbeller@google.com>,
 	Git Users <git@vger.kernel.org>, Jens.Lehmann@web.de
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 14:05:21 2016
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 28 14:06:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avkh4-0004VS-Lc
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 14:05:19 +0200
+	id 1avkiO-0004wI-4d
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 14:06:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753239AbcD1MFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 08:05:08 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58219 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752876AbcD1MFH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 08:05:07 -0400
-Received: (qmail 20725 invoked by uid 102); 28 Apr 2016 12:05:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 28 Apr 2016 08:05:06 -0400
-Received: (qmail 8811 invoked by uid 107); 28 Apr 2016 12:05:08 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 28 Apr 2016 08:05:08 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Apr 2016 08:05:04 -0400
-Content-Disposition: inline
+	id S1753603AbcD1MGe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2016 08:06:34 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:37835 "EHLO
+	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753366AbcD1MFX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2016 08:05:23 -0400
+Received: by mail-wm0-f49.google.com with SMTP id a17so61484988wme.0
+        for <git@vger.kernel.org>; Thu, 28 Apr 2016 05:05:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=DaolKYHjXva2HXirJwJn0UPr4CHuSMPeKze1E6Xvk7s=;
+        b=uQ5HiG3Ckby0wchHUQkpi12w+rAMbVAGLXXNAYdfSA+fA/Qr7hdR5tdR/F26g0VdSl
+         /F0fcwH32KCVFZKwl21uxfYIn/TxuwAobwsGltFaD0YhknTy5uGr63RRWNDDFfSfSWxo
+         niOdJ6qdg1wzjJb4qbTByhezdoJNMbqd5cOQ8Pzzdq9dShZVXbW39HWF9nZsZDxD5Lr9
+         1Y6AUkQFZh12Gee2WjPuJJS3Mcd4A2L9ReoX4LWvwkjyrxtADJ2TH4r9exr6kHwsXS6D
+         Mz0P3tbOIlE0zNQ7oqoi2aVBH5MVGDc+BnNySpjRIkKAKNGzjP6VZufWKVFYSOHsEHN2
+         vyTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=DaolKYHjXva2HXirJwJn0UPr4CHuSMPeKze1E6Xvk7s=;
+        b=QvHXCyJWq+JFYYraealEbP1kiWIcQOz//jvtqEXsqOxwUtL3IekI7k1CYB6nUObqhJ
+         Er54x9fYnX5Y/MKiqTCJHibIkRLVxl6I2ycipYeWduISDguxu8ravcTjwC+E92cn0del
+         VdpL/kvwF1ykxYGSOItHlHcIgz56GRKudqreNfTopoJMM2nt5Ctzap3SSSX2u2XRLksM
+         XeNBBQT2574loL7EBvHeegmtisIcMFJtv9dDApiEG2Zn+G9anR4NMdEvASfN7mGb1l/B
+         4vssY9cKqw6HlpTO5nlc/CAfXRkzQozgvQOOJS8RR0hKctcnJEayT0x/CmcsJJF0NGEi
+         ejtQ==
+X-Gm-Message-State: AOPr4FUDemzB5b2uqPQqAZq5+WlncHCypKe6M98IcKFE1k8kfKd5qUGA08L61aP/zwxX/Q==
+X-Received: by 10.194.120.135 with SMTP id lc7mr3173979wjb.34.1461845121623;
+        Thu, 28 Apr 2016 05:05:21 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id kz1sm9322911wjc.46.2016.04.28.05.05.20
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 28 Apr 2016 05:05:20 -0700 (PDT)
 In-Reply-To: <20160428112511.GA11522@sigill.intra.peff.net>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292870>
 
-On Thu, Apr 28, 2016 at 07:25:11AM -0400, Jeff King wrote:
 
-> > diff --git a/git-submodule.sh b/git-submodule.sh
-> > index 2a84d7e..b02f5b9 100755
-> > --- a/git-submodule.sh
-> > +++ b/git-submodule.sh
-> > @@ -199,7 +199,7 @@ sanitize_submodule_env()
-> >  {
-> >  	sanitized_config=$(git submodule--helper sanitize-config)
-> >  	clear_local_git_env
-> > -	GIT_CONFIG_PARAMETERS=$sanitized_config
-> > +	export GIT_CONFIG_PARAMETERS=$sanitized_config
-> >  }
+> On 28 Apr 2016, at 13:25, Jeff King <peff@peff.net> wrote:
+> 
+> On Thu, Apr 28, 2016 at 01:06:45PM +0200, Lars Schneider wrote:
+> 
+>> I got my Git-LFS use case working with the patch below. 
+>> For me it was necessary to export GIT_CONFIG_PARAMETERS
+>> to make it available to the Git process if the process is 
+>> invoked as follows [2]: 
+>> 
+>> (sanitize_submodule_env; cd "$sm_path" && git <something>")
+> 
+> Hrm. I'm not sure why you need to export. Or perhaps, I am not sure why
+> it ever works in the first place in git-submodule.sh. In this code:
+> 
+>> diff --git a/git-submodule.sh b/git-submodule.sh
+>> index 2a84d7e..b02f5b9 100755
+>> --- a/git-submodule.sh
+>> +++ b/git-submodule.sh
+>> @@ -199,7 +199,7 @@ sanitize_submodule_env()
+>> {
+>> 	sanitized_config=$(git submodule--helper sanitize-config)
+>> 	clear_local_git_env
+>> -	GIT_CONFIG_PARAMETERS=$sanitized_config
+>> +	export GIT_CONFIG_PARAMETERS=$sanitized_config
+>> }
 > 
 > If you already have $GIT_CONFIG_PARAMETERS exported when we enter the
 > function, then we should not need to re-export it when changing the
@@ -74,54 +106,19 @@ On Thu, Apr 28, 2016 at 07:25:11AM -0400, Jeff King wrote:
 > 
 > Confused...
 
-Ah. t5550 passes because it does not exercise this code path at all. We
-try a recursive clone, which calls "git submodule update --init", which
-does not seem to clear the config at all. So it works even without
-14111fc49.
+I am no expert in the Submodule code but I think the cloning of
+the submodules is not yet guarded with sanitize_submodule_env [3].
+That means the submodule is cloned with the GIT_CONFIG_PARAMETERS
+of the super project. That might explain why t5550 passes as the 
+credential config is only used in that area.
 
-I tried to improve the test by adding git-fetch (note that I also fixed
-a bug where we use $HTTP_URL instead of $HTTPD_URL, and added some
-whitespace to make the result more readable):
+The submodule checkout is guarded with sanitize_submodule_env
+and therefore my Git-LFS filter use case is affect.
 
-diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-index 69ef388..6ec3ba3 100755
---- a/t/t5550-http-fetch-dumb.sh
-+++ b/t/t5550-http-fetch-dumb.sh
-@@ -103,12 +103,23 @@ test_expect_success 'cmdline credential config passes into submodules' '
- 		git submodule add "$HTTPD_URL/auth/dumb/repo.git" sub &&
- 		git commit -m "add submodule"
- 	) &&
-+
- 	set_askpass wrong pass@host &&
- 	test_must_fail git clone --recursive super super-clone &&
- 	rm -rf super-clone &&
-+
- 	set_askpass wrong pass@host &&
--	git -c "credential.$HTTP_URL.username=user@host" \
-+	git -c "credential.$HTTPD_URL.username=user@host" \
- 		clone --recursive super super-clone &&
-+	expect_askpass pass user@host &&
-+
-+	set_askpass wrong pass@host &&
-+	test_must_fail git -C super-clone fetch --recurse-submodules &&
-+
-+	set_askpass wrong pass@host &&
-+	git -C super-clone \
-+	    -c "credential.$HTTPD_URL.username=user@host" \
-+	    fetch --recurse-submodules &&
- 	expect_askpass pass user@host
- '
- 
+Does this sound reasonable?
 
-but that doesn't pass, even with the export fix! That's because fetch
-doesn't go through git-submodule at all; it calls "git fetch" itself,
-and uses local_repo_env, which clears the config. It needs to learn to
-use the same mechanism that sanitize_submodule_env() does.
+Thanks,
+Lars
 
-So AFAICT 14111fc49 is totally broken. It doesn't actually work for
-git-submodule (because of the missing export), nor for git-fetch
-(because that skips the shell script), and the one case we are testing
-already worked without it (but probably _should_ be sanitizing the
-config, so is buggy, too).
-
--Peff
+[3] https://github.com/git/git/blob/3ad15fd5e17bbb73fb1161ff4e9c3ed254d5b243/git-submodule.sh#L704-L711
+[4] https://github.com/git/git/blob/3ad15fd5e17bbb73fb1161ff4e9c3ed254d5b243/git-submodule.sh#L811
