@@ -1,83 +1,127 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/5] submodule: export sanitized GIT_CONFIG_PARAMETERS
-Date: Thu, 28 Apr 2016 18:51:43 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604281840350.9313@virtualbox>
-References: <20160428133534.GA19056@sigill.intra.peff.net> <20160428133744.GC25319@sigill.intra.peff.net> <CAGZ79karNW3+xiZQuoh5v-nRabs+h-5pyHDfjHS4vTVBkAyv_Q@mail.gmail.com> <20160428152811.GC31063@sigill.intra.peff.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: Strangeness with git-add and nested repositories
+Date: Thu, 28 Apr 2016 09:54:23 -0700
+Message-ID: <CAGZ79ka0WB58HyHYXAkaMYKccWD-NwSxhRUGHvq1TrA_ix+Hxw@mail.gmail.com>
+References: <CAH6n4TdG9LQOPaaw_H6vuCgia0-4JXhPsSiAJPa5GtjfduQoSw@mail.gmail.com>
+	<CAGZ79kZhATfP1FpXnhivCa_Az-3KADSCReOo68E2Q3s29x5HNw@mail.gmail.com>
+	<xmqq1t5p7kmp.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Stefan Beller <sbeller@google.com>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Git Users <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 28 18:54:09 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Andrew J <andj2223@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 28 18:54:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avpCY-0008GL-HS
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 18:54:06 +0200
+	id 1avpCv-0008R3-Ty
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 18:54:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753037AbcD1Qx7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 12:53:59 -0400
-Received: from mout.gmx.net ([212.227.17.20]:56418 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752934AbcD1Qx6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 12:53:58 -0400
-Received: from virtualbox ([89.204.138.106]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MMXVC-1b2wSS1qQA-008GbG; Thu, 28 Apr 2016 18:53:48
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160428152811.GC31063@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:/kJEdHbeUGusiSXmCojlyK925MVsNK5pnkJmXhdxYtBotLLwO7f
- EkN2E4WR7T3NIpgKHXIvR+qb1zn+PRRnajF97jg5+GQksFxEgF+n+BBCjYVRDK1ongjogtf
- PIgf3mgcksQ41k99q3WZ3jj2DCd+6BVKbhIyACZPYH4hMNam9QzEAmGpYb0jI6r4xq2mFkv
- OR/OoANqMN+tlah3T2ODQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:xSyQDnZrUTs=:pWOHpJYz67HC78+3ERCGuV
- JXqgo0J90xZ138JPCjhX7Xdx7p3TUUnlPViaOI/OLIUIsa/ecnu3eA6fbvOYv/Pp52deg+NbP
- jgBSp+FzC4CSEGBFH5xPhecfYtZ4xCxVoovEifPiU3TbFJ19QP+JRugt1FggHptCqHet5VZ3a
- OBhosd3GJhsJr/ccZgWaKAer0c+LU9nSrs6kgmVG4r7poAyp9YgelPa8jNoJ57znjaDLuTEKn
- TiweEOSi1NwXXjxyADFllOEYGNNEwbHXuOJoTE6SHdfAlV7sbW7hU4VrkujHCzfUh8s1iCwDF
- O2lQqZUObpbe5fgPFp/iJ2cjOKzryk4iya5jf6wGl2/D2cLDouCStfj8ySllHS5Su50jxwb/V
- VZNVHgBQNY5U9MmIYhxxmlYejuUDc8z6sUxQhJ/sJWz78OrzIQoXpvySktAMnGXOtjcQ2m6bR
- DsjxIno2CfUElNYHaK/hQkY9HwywID1lQLZ9cfHORP0DNs4Td4EE1wbOeKlrPp+r1ruzDSEs0
- PlKvUvfJ3JyORxuW2MasQxiEtYeSsmw1aot6vFkFWoplivXVNw78B2Ma7FrZ7NiizcL987RfL
- NF5yIBIsnZxmO/v53+8LwTrTNo5qLr6eqd73KQqNAewhr/+6xXcON5DEzZYjtUNyzspr7+6Nl
- P9GqzSu8Lkt/nnXTHwIFWPdE53onhBvIOZ57FB4UDw+PFwc9whKqS+yf4wQWu0gjz9l3Ch8V2
- B+xC0AVarLLaP6Jpx3F3aaQpaMm4FKxr5zKAqlJNi7WHlWlTJqJZdviHIjdzovIxbi9U5zP/ 
+	id S1753132AbcD1Qy0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2016 12:54:26 -0400
+Received: from mail-io0-f180.google.com ([209.85.223.180]:35067 "EHLO
+	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752625AbcD1QyZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2016 12:54:25 -0400
+Received: by mail-io0-f180.google.com with SMTP id d62so82929527iof.2
+        for <git@vger.kernel.org>; Thu, 28 Apr 2016 09:54:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=CmyUzVc6z7NITX06T+LHxxMb7+szW2WAcF4MxQEn52g=;
+        b=B+M+HuMbNWV4soWMRgQcmACX9DKnO9GI+Dln/JRbInYUQ3bp9IMG9w3gmBJdOF3VYf
+         SUSKzfw00bGgyJihHVQ7KH9tBc6IFveLM5kMAHoKk2KG18onIpdemzCeRswlZoFV8ytu
+         zBq3mwAoBKFe/CV03OLPUV47SPoHYl8zgq6gRV6nKMGR0XGTWcTFBhZ5vUBoAyn6gAkF
+         Ms7yIhED/WItmOAuUT0oF5JVgZiu8CipLjzwd+3sKHCCUJlzdjGsjcao6/COIi/b24Sb
+         bOirqK9eXZa3ck3g9qKNOse4PI/PBcxRNaTAowEuHp0hB49l6fXo6GO02fZjTg2H9Ytq
+         zUog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=CmyUzVc6z7NITX06T+LHxxMb7+szW2WAcF4MxQEn52g=;
+        b=BHbWBzDwbd5IlxKFcLJcbI+1ba/54WfTpDBKGfMhJRjoat4Z33FEZDIJbTmkizQzri
+         wv4qMXq1BRa5gSgo1hgaWLskQMFGTrVMaPHDmETxt+yFmUMAbtmSvMXgQkgywOG/h25+
+         hxGSDAvvSGHoXTl0zjIEnFVdZkjHT8dWR55btEjGjfj+VlfYGooqgkDgzz/+agndj64w
+         fV5sTmR25wGV+oWTevsFNqAXvYdMe3WWtcJdnFVrtJfKhVJ4huciNNb2WCq6KAy4QdoX
+         3EU+jKIDlHJF/++V3Qv9O/dx4f0fua0LR6YKN2imiuWed4AIhsdfhUFm9FlTuWrJ8lJG
+         6LAg==
+X-Gm-Message-State: AOPr4FXU9aJbb0lbBivQiaSSY/JGdr98IUQd1kzOx6rxgr1rDktxdM1fE/WH3644x6Tj9Tw8Vrf71inn2ZsKhXPa
+X-Received: by 10.107.174.205 with SMTP id n74mr18726176ioo.96.1461862464039;
+ Thu, 28 Apr 2016 09:54:24 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Thu, 28 Apr 2016 09:54:23 -0700 (PDT)
+In-Reply-To: <xmqq1t5p7kmp.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292921>
 
-Hi,
+On Thu, Apr 28, 2016 at 9:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> I think (pure speculation), that it the error is in the context
+>> (repository) switching logic.
+>> What happens if you alter the order, i.e. give testfile first and then
+>> the files in the nested
+>> repos?
+>>
+>>     git add -- file path/to/subdir/file
+>>
+>> should do internally IMHO:
+>>
+>>     git add file
+>>     git -C path-to-subdir add file
+>
+> My undertanding of what _should_ happen in the world order as
+> currently defined (not necessarily implemented) is:
+>
+>  * "git add -- A B" must work the same way as "git add -- B A" and
+>    "git add -- A; git add -- B"
 
-On Thu, 28 Apr 2016, Jeff King wrote:
+I agree.
 
-> On Thu, Apr 28, 2016 at 08:25:29AM -0700, Stefan Beller wrote:
-> 
-> > > +test_expect_success 'cmdline credential config passes submodule update' '
-> > > +       # advance the submodule HEAD so that a fetch is required
-> > > +       git commit --allow-empty -m foo &&
-> > > +       git push "$HTTPD_DOCUMENT_ROOT_PATH/auth/dumb/repo.git" HEAD &&
-> > > +       sha1=$(git rev-parse HEAD) &&
-> > > +       git -C super-clone update-index --cacheinfo 160000,$sha1,sub &&
-> > 
-> > The use of update-index seems elegant to me, though different than
-> > any submodule test I wrote so far. :)
-> 
-> Yeah, I actually wrestled with finding the shortest recipe to convince
-> git-submodule to actually call git-fetch. Suggestions welcome if there's
-> something more canonical.
+>
+>  * "git add -- path/to/subdir/file", when any of path/, path/to/,
+>    path/to/subdir/ is a Git repository that is different from the
+>    current Git repository, must fail.
 
-FWIW that's exactly how I did things in
-https://github.com/dscho/git/commit/89d0024450b0e6e9997ad9e3d681248bde1bafc0
+I agree that this is the current expectation for the world order.
+However I would like to propose to change that eventually.
+(Once the submodule groups are there and we can treat
+submodules as a special form of narrow checkout, we want to
+have the feature of adding across submodules and even committing
+across submodules/repos, I would think)
 
-:-)
-
-Ciao,
-Dscho
+>
+> IOW, if 'path' is a repository (whether it is known as a submodule
+> to the repository whose working tree contains it, or it is an
+> untracked directory from the containing repository's point of view),
+> the index of the containing repository cannot get path/$anything in
+> it.  If you managed to do so, you found a bug [*1*].
+>
+> path/.git/index can of course have "to/subdir/file" in it, and from
+> that point of view, "git -C path/to/subdir add file" may one day
+> become an improved world order.  It is just we haven't discussed
+> that possibility or reached concensus that it is a good idea.
+>
+>
+> [Footnote]
+>
+> *1* Of course, some of the bugs in this class may fundamentally be
+>     unfixable and would fall into the same category as "doctor, it
+>     hurts when I do this--don't do it then".  For example, you may
+>     treat path/ as the top of the working tree of another repository
+>     whose git-dir is not at path/.git by arranging GIT_WORK_TREE and
+>     GIT_DIR environment variables, but you may do so only when you
+>     actually are accessing the contents of path/ as its own project.
+>     And when you are using the enclosing project (whose .git/ would
+>     sit next to path/), there is no way for "git add path/to/file"
+>     to know that everything under "path/" does not belong to the
+>     current repository and instead it is part of the project rooted
+>     at path/, which is an obvious example of "fundamentally
+>     unfixable" case.
+>
