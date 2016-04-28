@@ -1,144 +1,110 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 49/83] builtin/apply: move 'lock_file' global into 'struct apply_state'
-Date: Thu, 28 Apr 2016 18:30:53 +0200
-Message-ID: <CAP8UFD1=w2D-5q9bWrYqzL3v1q7fYi9imy1UhG2OaW2vB=2ECA@mail.gmail.com>
-References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
-	<1461504863-15946-50-git-send-email-chriscool@tuxfamily.org>
-	<CAPig+cRSe8oOjo2h6SuJQyD+he_Q7zHfF4TivZ0amhAu4HLQ+g@mail.gmail.com>
-	<xmqqzishlgj1.fsf@gitster.mtv.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: Strangeness with git-add and nested repositories
+Date: Thu, 28 Apr 2016 09:35:26 -0700
+Message-ID: <CAGZ79ka9v0v4gwtbiojR5o89JWLDZYkDM2CmhySeXXKYaiLQig@mail.gmail.com>
+References: <CAH6n4TdG9LQOPaaw_H6vuCgia0-4JXhPsSiAJPa5GtjfduQoSw@mail.gmail.com>
+	<CAGZ79kZhATfP1FpXnhivCa_Az-3KADSCReOo68E2Q3s29x5HNw@mail.gmail.com>
+	<CAH6n4TfvybZyAYLkzyjfaP=2ZkirpacTgVQApF3bZT-j8=_Qng@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 28 18:31:02 2016
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Andrew J <andj2223@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 28 18:35:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avoqB-0006bf-Ce
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 18:30:59 +0200
+	id 1avouZ-0008UR-Gy
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Apr 2016 18:35:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752830AbcD1Qaz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 12:30:55 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:36470 "EHLO
-	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752067AbcD1Qay (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 12:30:54 -0400
-Received: by mail-wm0-f54.google.com with SMTP id n129so72154248wmn.1
-        for <git@vger.kernel.org>; Thu, 28 Apr 2016 09:30:54 -0700 (PDT)
+	id S1752853AbcD1Qf2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Apr 2016 12:35:28 -0400
+Received: from mail-io0-f174.google.com ([209.85.223.174]:36091 "EHLO
+	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752424AbcD1Qf1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2016 12:35:27 -0400
+Received: by mail-io0-f174.google.com with SMTP id u185so95164168iod.3
+        for <git@vger.kernel.org>; Thu, 28 Apr 2016 09:35:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=keRDoRejtuxZA0z1b98rcNmdg9mtb+LsesLHB2gQ/F0=;
-        b=xQ8TMwigOwMuWNhbOTlRtq+gSR0T3VztFqekDgPL1e8xBpJfF03846+psrJF4wpk95
-         n2mLcj6VRy3a0Zb0On61wnqx39SGfsAfPjKgYqWqnuUvSoruPScf+GHN0G4/L6xyGZrw
-         dwcwMi7LbI8RS111bZmRCn1jwyHYKOExnmP7Rst+HSTWJzvdMk3cPEUZe5yCkotiIXCj
-         EMBqtJM6tN9R6ctiCNqRBOposQCdEXB6snahot9nG52kUDHppf44ItXqsia0q750kXdB
-         4oqatM2FU86yLaFBQQJgYpnQ4xyLPWr4w4MaGbjG9AcNnq5U9zOUfIHAR3tQiS9norLz
-         FPeQ==
+        bh=RqiSmtm0Jc7TFZ3+Nizfx1tfao5YnXmPYeLumbLWww8=;
+        b=GKgjalNXYrp/Csi13YGUY0rzJAAkmZ/eDmNAmFS5TLHAGsABnYj9oXES76XIEyWG1n
+         H0Y4bMId+XxKmophERJY0bpXEGYw2qusAp1cQd9r8wvok/vobbeFlRdvwvsSryuHKU1e
+         w9iO4vhO+5oomWb6TI1ehE3AYh1S+pez1p+nOC6s/rRx9SZaS3IVH2lz7v0hou42PLMV
+         aDR50IPgMPqy5z7feMMQy2/LuzTh9cENAAn2+4az1sFhPtktOMejMPlPXCMmqvWWU7+4
+         rUmiwx5v2Kxqd8VMyr91BfngrQPawb0wtwttW6s/DBzDis+40W5Vvb4HSL8wribRwSCz
+         4xcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=keRDoRejtuxZA0z1b98rcNmdg9mtb+LsesLHB2gQ/F0=;
-        b=cjrm8OMOQaojCKCbICLLv1LuNzfsQ/yb4QVafMGWl1zbQcwXRl6P4X0TSloxSqcBIv
-         hilv0d7+Uj4nyKRoIAZKwHSY2SKj0UhF+bEyf0kCSS3BmfLwCEy2k9w5pFtSRqDxP1Xz
-         iX1pb/UyGKd5pD2fI3NL3gP37GSiSZV7N4Rud+oRSQS3jOdU6sZA7kO2UURomZ3nf/2o
-         aGn9Crq6jS19VW7br67VAD235W1cvXH8y2vMcIs+W5WAhUbvjlo0nF6SdsK870xDGr6R
-         /QTQV3EDP/1DMgU0ddcW7JHti787LuaUq58veKEj1NP18mvdlgwJEFn3gIXWBtzAGChQ
-         9LBA==
-X-Gm-Message-State: AOPr4FU75EaSAP0Z2ghs5ch+HtdDDCrFEvvjxUHVXPog7pAUD6bwKT9t3H0V6/bp+8OOY+SViPigMcrwL9JM+w==
-X-Received: by 10.195.17.166 with SMTP id gf6mr16585275wjd.124.1461861053165;
- Thu, 28 Apr 2016 09:30:53 -0700 (PDT)
-Received: by 10.194.95.129 with HTTP; Thu, 28 Apr 2016 09:30:53 -0700 (PDT)
-In-Reply-To: <xmqqzishlgj1.fsf@gitster.mtv.corp.google.com>
+        bh=RqiSmtm0Jc7TFZ3+Nizfx1tfao5YnXmPYeLumbLWww8=;
+        b=AsUHxLxitwrCxCVC5hYo4jy4HIOsSClHtQ5rgyk3BchpiWkaAY49xM3ymGzv80/cgD
+         CRz/V/3Q0D82VdgT6fniNp4n4Doq1m+UrTABUOkVREzNXP6trt6r5zBMzhCdlk4GCNv9
+         blB1TiNqt1w/vXr59OuAgh2enh0NfihhBcTqCP+Yh5LJZigDSINS6WAHlX/AmpKE9QWW
+         PN/YXP7ZVOFTKBTXhU14qcRMVmItdECQcXaZvs7TbdMCtcwlYrTfBjir2U/wcnQv9lbI
+         LHauqgYW31/5gp2ZNTy0y1rjZuk+XOk6niaVlsUB0am3XFuzcWGyJbjfgt5DyhoKhin0
+         5aFQ==
+X-Gm-Message-State: AOPr4FUyBbfgZX02KfBEXHc61qx4d/WJ69ArWi9AzIXQ+AyOliqr8A60i9iUM0ItLHn/7XdFo58cika0pOY37DTq
+X-Received: by 10.107.53.200 with SMTP id k69mr18429873ioo.174.1461861326191;
+ Thu, 28 Apr 2016 09:35:26 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Thu, 28 Apr 2016 09:35:26 -0700 (PDT)
+In-Reply-To: <CAH6n4TfvybZyAYLkzyjfaP=2ZkirpacTgVQApF3bZT-j8=_Qng@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292916>
 
-On Mon, Apr 25, 2016 at 7:55 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
+On Wed, Apr 27, 2016 at 11:10 PM, Andrew J <andj2223@gmail.com> wrote:
+> Hi Stefan,
 >
->>> +       /*
->>> +        * Since lockfile.c keeps a linked list of all created
->>> +        * lock_file structures, it isn't safe to free(lock_file).
->>> +        */
->>> +       struct lock_file *lock_file;
->>
->> Is there ever a time when lock_file is removed from the list (such as
->> upon successful write of the index), in which case it would be safe to
->> free() this?
+> On Wed, Apr 27, 2016 at 9:08 AM, Stefan Beller <sbeller@google.com> wrote:
+>> I think (pure speculation), that it the error is in the context
+>> (repository) switching logic.
+>> What happens if you alter the order, i.e. give testfile first and then
+>> the files in the nested
+>> repos?
 >
-> I do not think you need to think about "free"ing.
-
-Yeah, lockfile.h says:
-
- * * Automatic cruft removal. If the program exits after we lock a
- *   file but before the changes have been committed, we want to make
- *   sure that we remove the lockfile. This is done by remembering the
- *   lockfiles we have created in a linked list and setting up an
- *   `atexit(3)` handler and a signal handler that clean up the
- *   lockfiles. This mechanism ensures that outstanding lockfiles are
- *   cleaned up if the program exits (including when `die()` is
- *   called) or if the program is terminated by a signal.
-
-and:
-
- * The caller:
- *
- * * Allocates a `struct lock_file` either as a static variable or on
- *   the heap, initialized to zeros. Once you use the structure to
- *   call the `hold_lock_file_for_*()` family of functions, it belongs
- *   to the lockfile subsystem and its storage must remain valid
- *   throughout the life of the program (i.e. you cannot use an
- *   on-stack variable to hold this structure).
-
-> Even if the libified version of the apply internal can be called
-> multiple times to process multiple patch inputs, there is no need to
-> run multiple instances of it yet.  And a lockfile, after the caller
-> finishes interacting with one file using it by calling commit or
-> rollback, can be reused to interact with another file.
+> Interestingly, reversing the order produces the same result (the
+> testfile is added, the nested files are not).
 >
-> So the cleanest would be to:
+> I've also noticed that running something like 'git status testfile
+> nestedfiles' results in the nested files being omitted from the git
+> status output; I'd expect them to be printed by git-status as
+> untracked files. So it appears the problem is not isolated to git-add.
+
+Looking at the code, git-add uses parse_pathspec, which is used my
+most commands[https://github.com/git/git/blob/master/builtin/add.c#L364]
+and I think that function needs to learn to cover paths for different
+repositories.
+Maybe we can pass in a flag, which allows parse_pathspec to get files from
+the different repos and then it's up to each command how to deal with that
+list of files.
+
+
+
 >
->  * make the caller of apply API responsible for preparing a static
->    or (allocating and leaking) lockfile instance,
-
-Ok.
-
->  * make it pass a pointer to the lockfile to the apply API so that
->    it can store it in apply_state, and
-
-Ok, I will add a new "struct lock_file *" parameter to
-init_apply_state(), for the caller of the apply API to do that.
-Though I think it should be ok for the caller to pass a NULL pointer
-and in this case have init_apply_state() allocate the lockfile file
-instance.
-
->  * have the caller use apply API feeding one patch at a time in a
->    loop, allowing the same lockfile instance used for each
->    "invocation".
-
-Ok, the same lockfile instance will be used for each invocation.
-
-> I sounded as if I were advocating non-reentrant implementation in
-> the introductory paragraph, but that is not the intention.  If you
-> want to do N threads, you would prepare N lockfile instances, give
-> them to N apply API instances to be stored in N apply_state
-> instances, and you would have N parallel applications, if you wanted
-> to.
-
-Thanks,
-Christian.
+> To give some context, my use case is that I have a parent project that
+> links to numerous chromium libraries, thus my parent project needs
+> access to many of chromium's headers at build time. I wanted to make
+> these headers available to other developers without them needing to
+> check out all of chromium.
+> So I add all the chromium headers to the parent project with something like:
+> find deps/chromium/src -name "*.h" | xargs git add --
+> I was weirded out to find that many of the header files weren't being
+> added, as I've already described.
+>
+> I ultimately worked around this by doing:
+> find chromium/src -name "*.h" | xargs -n 1 git add
+> Since each file gets added separately, this is quite slow. So it'd be
+> nice if this little bug was fixed someday :)
+>
+> As you probably know, Chromium is comprised of many hundreds of nested
+> repos, so that aided in manifesting this issue.
+>
+> Thanks,
+> Andrew
