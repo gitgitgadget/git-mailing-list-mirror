@@ -1,154 +1,88 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 15/29] ref_transaction_create(): disallow recursive
- pruning
-Date: Fri, 29 Apr 2016 08:56:28 +0200
-Message-ID: <5723059C.5080406@alum.mit.edu>
-References: <cover.1461768689.git.mhagger@alum.mit.edu>
- <615204c877610855b02b21ce14efa5b7342182bc.1461768689.git.mhagger@alum.mit.edu>
- <xmqq60v2anyo.fsf@gitster.mtv.corp.google.com>
- <1461788637.11504.3.camel@twopensource.com>
- <xmqqh9em93xo.fsf@gitster.mtv.corp.google.com>
- <xmqqvb327nyz.fsf@gitster.mtv.corp.google.com>
+From: =?UTF-8?Q?Jean-No=c3=abl_Avila?= <avila.jn@gmail.com>
+Subject: Re: [PATCH v2 4/7] i18n: builtin/pull.c: mark strings for translation
+Date: Fri, 29 Apr 2016 08:57:50 +0200
+Message-ID: <572305EE.8040704@gmail.com>
+References: <1460234324-13506-1-git-send-email-vascomalmeida@sapo.pt>
+ <1460234324-13506-4-git-send-email-vascomalmeida@sapo.pt>
+ <xmqqinzptkaw.fsf@gitster.mtv.corp.google.com> <570B7FCD.5050809@sapo.pt>
+ <CACsJy8BsxZTChST8Gb25LT1HwwR1AcAthjfOQmoAjxkF4qzvBw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Jeff King <peff@peff.net>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Fri Apr 29 08:56:38 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jiang Xin <worldhello.net@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 29 08:57:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aw2Lu-00048c-G5
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 08:56:38 +0200
+	id 1aw2NB-0004fJ-Pj
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 08:57:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753171AbcD2G4e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 02:56:34 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:60204 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753154AbcD2G4d (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2016 02:56:33 -0400
-X-AuditID: 1207440d-bc7ff7000000090b-c3-572305a04ee6
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id C9.A5.02315.0A503275; Fri, 29 Apr 2016 02:56:32 -0400 (EDT)
-Received: from [192.168.69.130] (p548D6182.dip0.t-ipconnect.de [84.141.97.130])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u3T6uSh7010285
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 29 Apr 2016 02:56:30 -0400
+	id S1753188AbcD2G5y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Apr 2016 02:57:54 -0400
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:33730 "EHLO
+	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753029AbcD2G5x (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 02:57:53 -0400
+Received: by mail-wm0-f42.google.com with SMTP id g17so8495149wme.0
+        for <git@vger.kernel.org>; Thu, 28 Apr 2016 23:57:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=XyuX7NU9k7Kd+Mx163/42YcBs8dyqEaB9pnrfO822zY=;
+        b=f1zQI6xs/yLNlspYerH+Hyw1OXsdxym96080P8SJ8vUo3EgaWjFB6a5AwKGDhlFIFn
+         81dKN/UVdznnhOlwkLBIFpYGyFaC5DKW1zLL60NSyeLMsucaV+QU9p+5lX4FEyNNkxj/
+         6CqcRukbuIzj8cViXL0JPZ8KQ9rOzl3f0YVWKVReNnbo2/DWdGF1Q4gEt8xQx1QYtqBf
+         pRddlOb/irkBwxty9G7c+g8wnw7oAqMNGU82p1cHlWdxiaPzubfk5jHt4/7cNgWDATRi
+         0fpk1AYys1MuXidXWS1qnSPiAONIVI1eSiMAu0IMQIgDFj8Uyr/Pgj5z4gemtNscrz82
+         VSDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=XyuX7NU9k7Kd+Mx163/42YcBs8dyqEaB9pnrfO822zY=;
+        b=hrdb1JTovzZMwAd2lgYYWoOG0Bwg5Z3UW9uagDvX69PIAzUY0x1xrgQrqmb40i6Mq/
+         /uOj+9L77X2nDKiXey9fVjVNmUARElXB7M9nPbVHdGn8gCeTGkVFHjLcdsQHBxLsMz4W
+         cLUMPfxXzO4otsbrBNbUHmD/q2eTMwaRaUtbCm3k0IL5xLXt1/4fpHgfcGXBCR+pNtRm
+         n+PYDHgFFXhAqK6JEEQNwqvnDX0IaV/eBLV13380XNDdMTqSttLZMSl23viw1QMLBZ4D
+         DxKG4mLZgymlgLBp1eTe+4bOzn8p1fZLVreuJtR7ErTQTlUY0vdv6iJNhSBNHwkfB/Zy
+         OR6A==
+X-Gm-Message-State: AOPr4FV2rINPRRWGrOgnBX0WJ5RHl8Ti1xbo3NhkWB34RASwSooveEqP1jDP5TtBH13Mcw==
+X-Received: by 10.28.104.131 with SMTP id d125mr1858538wmc.99.1461913072001;
+        Thu, 28 Apr 2016 23:57:52 -0700 (PDT)
+Received: from [192.168.1.75] (static-csq-cds-097114.business.bouyguestelecom.com. [164.177.97.114])
+        by smtp.googlemail.com with ESMTPSA id gr4sm13202752wjd.23.2016.04.28.23.57.50
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 28 Apr 2016 23:57:50 -0700 (PDT)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.7.0
-In-Reply-To: <xmqqvb327nyz.fsf@gitster.mtv.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrMKsWRmVeSWpSXmKPExsUixO6iqLuAVTncYOIJNov5m04wWnRd6Way
-	aOi9wmzRPeUto8WPlh5mi5lXrR3YPHbOusvu8ax3D6PHxUvKHvuXbmPzWPD8PrvH501yAWxR
-	3DZJiSVlwZnpefp2CdwZbROXMhdckKpY8n8SUwPjLtEuRk4OCQETiR137jB3MXJxCAlsZZRY
-	s+I7G4Rznkli46mFTCBVwgKBEj8/fWIDsUUEIiQaXrUwQhSdZJJ4/6IFrINZYAejxK2HXWBV
-	bAK6Eot6msG6eQW0JY5f7GMHsVkEVCWeLr/ECGKLCoRIbFv3jRWiRlDi5MwnLF2MHBycAtYS
-	Nw5Gg4SZBfQkdlz/xQphy0tsfzuHeQIj/ywkHbOQlM1CUraAkXkVo1xiTmmubm5iZk5xarJu
-	cXJiXl5qka6RXm5miV5qSukmRkiA8+5g/L9O5hCjAAejEg/vjHtK4UKsiWXFlbmHGCU5mJRE
-	eXVuAIX4kvJTKjMSizPii0pzUosPMUpwMCuJ8DYyKIcL8aYkVlalFuXDpKQ5WJTEedWWqPsJ
-	CaQnlqRmp6YWpBbBZGU4OJQkeJtZgBoFi1LTUyvSMnNKENJMHJwgw7mkRIpT81JSixJLSzLi
-	QVEZXwyMS5AUD9De/SDtvMUFiblAUYjWU4yKUuK8ZSAJAZBERmke3FhY2nrFKA70pTDvT5Aq
-	HmDKg+t+BTSYCWiwwCZFkMEliQgpqQZGRT6fX0F9WX479286c3pjb+RENg3LTXVOasf2m2S3
-	lm/+Jmbl7OR7+4FWWpJSxYyNc+YtqNvXr7LHOqBZW3rWrGLxtB2JhraOt88KPmTw 
+ Thunderbird/38.7.2
+In-Reply-To: <CACsJy8BsxZTChST8Gb25LT1HwwR1AcAthjfOQmoAjxkF4qzvBw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292973>
 
-On 04/27/2016 11:15 PM, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> If a casual reader sees this code:
->>
->>     ref_transaction_delete(transaction, r->name, r->sha1,
->> 			   REF_ISPRUNING | REF_NODEREF, NULL, &err)
->>
->> it gives an incorrect impression that there may also be a valid case
->> to make a "delete" call with ISPRUNING alone without NODEREF, in
->> other codepaths and under certain conditions, and write an incorrect
->>
->>     ref_transaction_delete(transaction, refname, sha1,
->> 			   REF_ISPRUNING, NULL, &err)
->>
->> in her new code.  Or a careless programmer and reviewer may not even
->> memorize and remember what the new world order is when they see such
->> a code and let it pass.
->>
->> As I understand that we declare that "to prune a ref from set of
->> loose refs is to prune the named one, never following a symbolic
->> ref" is the new world order with this patch, making sure that
->> ISPRUNING automatically and always mean NODEREF will eliminate the
->> possibility that any new code makes an incorrect call to "delete",
->> which I think is much better.
-> 
-> ... but my understanding of the point of this patch may be flawed,
-> in which case I of course am willing to be enlightened ;-)
+Le 12/04/2016 11:52, Duy Nguyen a =C3=A9crit :
+>
+> Ex-translator speaking. Context is important. If it's me, I would eve=
+n
+> go as far as marking the whole line translatable just to give more
+> context (it's mostly just copy and translate a few words then). But
+> then again, I was half developer half translator and may see things a
+> bit differently. Maybe _("<remote>") is a good balance.
 
-I was thinking of this patch as documenting and enforcing a limitation
-in the current implementation of pruning. But to be honest I can't think
-of a reason that we would ever want to remove this limitation, so I am
-OK with changing the policy to "REF_ISPRUNING always implies
-REF_NODEREF" as you have suggested.
+I second this opinion. Translating a single word without context is
+generally not advised. The english word might come up in different
+situations with different grammatical forms for the translated version.
 
-But I think it would be cleaner to achieve that goal with the following
-change:
-
-diff --git a/refs.c b/refs.c
-index 5dc2473..1d4c12a 100644
---- a/refs.c
-+++ b/refs.c
-@@ -790,8 +790,10 @@ int ref_transaction_update(struct ref_transaction
-*transaction,
- 	if (transaction->state != REF_TRANSACTION_OPEN)
- 		die("BUG: update called for transaction that is not open");
-
--	if ((flags & REF_ISPRUNING) && !(flags & REF_NODEREF))
--		die("BUG: REF_ISPRUNING set without REF_NODEREF");
-+	if (flags & REF_ISPRUNING) {
-+		/* Pruning is always non-recursive */
-+		flags |= REF_NODEREF;
-+	}
-
- 	if (new_sha1 && !is_null_sha1(new_sha1) &&
- 	    check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 8fcbd7d..9faf17c 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2116,7 +2116,7 @@ static void prune_ref(struct ref_to_prune *r)
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
- 	    ref_transaction_delete(transaction, r->name, r->sha1,
--				   REF_ISPRUNING | REF_NODEREF, NULL, &err) ||
-+				   REF_ISPRUNING, NULL, &err) ||
- 	    ref_transaction_commit(transaction, &err)) {
- 		ref_transaction_free(transaction);
- 		error("%s", err.buf);
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 37a1a37..704eea7 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -15,7 +15,7 @@
-
- /*
-  * Used as a flag in ref_update::flags when a loose ref is being
-- * pruned.
-+ * pruned. This flag implies REF_NODEREF.
-  */
- #define REF_ISPRUNING	0x04
+Adding the brackets provides enough context, as long as the string is
+always used in the same semantic field, describing the command line. I
+just don't know how much that helps reducing the amount of translated
+strings.
 
 
-Note that patch "add_update(): initialize the whole ref_update" should
-then be adjusted to do the flag-tweak in the add_update() function.
-
-If there are no objections, I will implement these changes in v2.
-
-Michael
+JN
