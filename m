@@ -1,67 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Strangeness with git-add and nested repositories
-Date: Thu, 28 Apr 2016 19:54:55 -0700
-Message-ID: <xmqq8tzx2kg0.fsf@gitster.mtv.corp.google.com>
-References: <CAH6n4TdG9LQOPaaw_H6vuCgia0-4JXhPsSiAJPa5GtjfduQoSw@mail.gmail.com>
-	<CAGZ79kZhATfP1FpXnhivCa_Az-3KADSCReOo68E2Q3s29x5HNw@mail.gmail.com>
-	<xmqq1t5p7kmp.fsf@gitster.mtv.corp.google.com>
-	<xmqqd1p92kll.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Andrew J <andj2223@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Apr 29 04:55:05 2016
+From: Brian Norris <computersforpeace@gmail.com>
+Subject: [PATCH 1/2] Documentation: config: improve word ordering for http.cookieFile
+Date: Fri, 29 Apr 2016 00:23:56 -0600
+Message-ID: <20160429062357.12647-1-computersforpeace@gmail.com>
+Cc: Brian Norris <computersforpeace@gmail.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 29 08:25:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1avya7-0001am-D8
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 04:55:03 +0200
+	id 1aw1rR-0007X3-Jg
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 08:25:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752502AbcD2Cy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Apr 2016 22:54:59 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61955 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752189AbcD2Cy7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2016 22:54:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 893CF17ADA;
-	Thu, 28 Apr 2016 22:54:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0HRtck/cZ8PjozcU/4UaJX086LY=; b=Gi1Hib
-	dB5wyEzGEERP1auvpg2uMQIFUNZh/4SeULF4l5BJeKz1fgM51w0CDuHUoXErdNyv
-	nZNVV2FkkB+U8xD9DeVYZOXYuw9cI+kNILlknuOdNJXARuDKSgrb9HP2pCYFb8Pk
-	ZZlkFkWTPQb3V94gY5OYNg8qvWgXUZKrdvSNU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jbLG37B5G5fsnAuKfELDoPtcspGe8+b9
-	xp/9H+mHgzg/RJsCETmRWnO8tRxOPJ8NBf9JXHMEGyaFC/jk6f21sMyrpbEjSbUi
-	jPaE8ry1y4RM9gUgSLrk07c+irTlSKI+dpVNBRKLInJv4jcv/7e+DnT7GPAjx+rw
-	yemVbbgp5pg=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8043C17AD9;
-	Thu, 28 Apr 2016 22:54:57 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EEF6217AD8;
-	Thu, 28 Apr 2016 22:54:56 -0400 (EDT)
-In-Reply-To: <xmqqd1p92kll.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 28 Apr 2016 19:51:34 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C19CC342-0DB5-11E6-B389-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752756AbcD2GY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 02:24:58 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:33122 "EHLO
+	mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752416AbcD2GY6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 02:24:58 -0400
+Received: by mail-pf0-f181.google.com with SMTP id 206so44129451pfu.0
+        for <git@vger.kernel.org>; Thu, 28 Apr 2016 23:24:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=AxFiguQFEI1rt0uF4KWUZLhT8/5D0ryGd9G0s3ZbI5w=;
+        b=h1EJ+MobfIZK9SAXVBLm0vhYT55aNzLBI4r499vM5siCpjp3K+kGOvzasCOQdc4JDD
+         M6VLOO8mor7LY4k+atQ/W4oymEcJJ2QMDTNPgd2ozfgVJgMJ0O8nytp7M3FRES2tOva5
+         pVZdumGGX1X9/z1PXnrEUzLeZeQ59Cc0OcAkvBat6U6pJ3VTXvSXmskU478XjWQ6gHf1
+         kJ/bfUuDY9FEcvJYXoyWfsI81kZSBLWdsiKUu/Y8xLqegLR2SmyH+8Gc54hDiH2gNnOF
+         wF3WOTtaz8de33mM5OXSbLc/3P7cT38qYI9AIi/D2LGWXYGTc7MXkVMLoWiTZiuZUWmQ
+         y9mQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=AxFiguQFEI1rt0uF4KWUZLhT8/5D0ryGd9G0s3ZbI5w=;
+        b=ZWkPBkdCndpF9mDaCmibEldWDxnwVHqL1k57g1HkioHYpzl0BZEXu4J6gF1pfW9N49
+         GW2PE4so3r+2Pl9A9LcZCGDAunVkjiR3sPtVahB8H3ZgQDPYZbUYzbO6F16S1j0qaN8C
+         iOegQ/wg3k/xaBOfYT0aIgfCKbeCbEkswE6YciVbIopFnLAV7RegK19HzDy2Ee6vGEy9
+         jyDIOyUCo7ISY8PXYjWQQXmccUzA7yaKHai+tbEndar/v3LISxx4xmS5XTiFzH9wQE5Y
+         j4ziLGL/8NicRb5UCzdaL5viHz4Jy4DEpTNroE2z4TTE5b1+V8uaNg8ATCoLwVz/041d
+         I/vA==
+X-Gm-Message-State: AOPr4FWoklJLjxAXFQu3oxES5P/X34oww87H4Djz1rhrwWnZ9REdPv35DyZu7dg/VccQoQ==
+X-Received: by 10.98.100.77 with SMTP id y74mr26580668pfb.101.1461911097318;
+        Thu, 28 Apr 2016 23:24:57 -0700 (PDT)
+Received: from briannorris-glaptop2.roam.corp.google.com ([66.232.90.194])
+        by smtp.gmail.com with ESMTPSA id a64sm20044853pfa.6.2016.04.28.23.24.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 28 Apr 2016 23:24:56 -0700 (PDT)
+X-Mailer: git-send-email 2.8.1.340.g018a5d0.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292969>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Signed-off-by: Brian Norris <computersforpeace@gmail.com>
+---
+ Documentation/config.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> A cursory bisection suggests that this used to work up to at least
-> v2.7.4; this must be a recent regression.
-
-No, false report.  This seems to be broken from ages ago.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 42d2b50477b2..a775ad885a76 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1660,7 +1660,7 @@ http.cookieFile::
+ 	in the Git http session, if they match the server. The file format
+ 	of the file to read cookies from should be plain HTTP headers or
+ 	the Netscape/Mozilla cookie file format (see linkgit:curl[1]).
+-	NOTE that the file specified with http.cookieFile is only used as
++	NOTE that the file specified with http.cookieFile is used only as
+ 	input unless http.saveCookies is set.
+ 
+ http.saveCookies::
+-- 
+2.8.1.340.g018a5d0.dirty
