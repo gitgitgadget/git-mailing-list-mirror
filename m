@@ -1,89 +1,121 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v5 2/2] submodule: pass on http.extraheader config
- settings
-Date: Fri, 29 Apr 2016 14:48:44 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604291443561.9313@virtualbox>
-References: <3b71deffa5d07cf73a793773cc3d60ff611843fa.1461759454.git.johannes.schindelin@gmx.de> <cover.1461837783.git.johannes.schindelin@gmx.de> <89d0024450b0e6e9997ad9e3d681248bde1bafc0.1461837783.git.johannes.schindelin@gmx.de> <xmqqshy54j2h.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1604291429560.9313@virtualbox>
+From: Jan Keromnes <janx@linux.com>
+Subject: Fwd: Git 2.8.1 fails test 32 of t7300-clean.sh, breaks profile build
+Date: Fri, 29 Apr 2016 14:53:49 +0200
+Message-ID: <CAA6PgK4of46eEJOJstnVvPvDFqU_OC5QVz9LWxyKgqHt9V5ySQ@mail.gmail.com>
+References: <CAA6PgK7b=ithSYREV5axaE3fmRG5Vp06UtWiZXD-aJuZKfEVYA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 29 14:49:01 2016
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 29 14:53:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aw7qu-0004IO-2j
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 14:49:00 +0200
+	id 1aw7vf-0006kC-L2
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 14:53:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753558AbcD2Msz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 08:48:55 -0400
-Received: from mout.gmx.net ([212.227.17.22]:63411 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753531AbcD2Msy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 08:48:54 -0400
-Received: from virtualbox ([88.128.80.158]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0M6fXs-1bsTjW0JMq-00wVS8; Fri, 29 Apr 2016 14:48:46
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <alpine.DEB.2.20.1604291429560.9313@virtualbox>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:viv2p2SEr1yoOtqPAYUCB9PtbiBpXndsIBC0Daa92A8FVpfh/6U
- lzc22y+3kGeRPomMlI6uauMZ8nT0n1jUX14SH0rjGGr7imKHescF5bpuZNr/UFeYBj+HJYD
- 7rSgnKmuQt47R94rCdDxhTRqUX5WT3w9RHCJ48DOCPCvwmcqW5uQGE/o0/1uqoO+gvIH6oS
- Gsa1dNAC5YLN+Z3og8Qlw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:hcoyJ+Z2Tq4=:isad0CrtopRP90PZlaFyew
- Chd1au7BejlKWb+ksF95OEp9EWV1SUoF3CAC/j1nwIToFyXbXAca7501WW3AO8ng0WuvYQBod
- QVrjKkY6APu0Vfte9/gCy7HgSk9YG6OW6eAkdkj9HNSkeTfT9Xwc2opdFfm0297gX2n4Imr/p
- xIPR/QJ480Z8MtmdpkpwmqTypoYGxsyjTClqRHc02FVgAdv931l2eFLXuRShU/6Sxj8rX6Dj5
- eBYzbMWmXlEagLqPDtgHVwjp3rKdLwXnuqwZKOWUH2fQAh342qiPjs71uLMyrvF2xoGcOTrpo
- VvRnkl0B4fKPwlfF5hF8W7yNUk62aiguDKKR6T56gaXe9zhwqAFgN9YAoIMqGkqDvG5TBG3rD
- +A0uzSr47ZKditIMsVTYGYBQ+rqCeEfH92eFtrWSdSJKqK16ouf4vsPfm9HTw7IWQtAJEM3dj
- u8K1is184KoT/+lCsXM7R69UzYoCtSjQdvOg18rIs8VcIaAwU1+Kj5HhdiN8Apepkv2aaDgbw
- YckjfsbS3v6v4Y/KZsZBmG9Zylrz3YqkahTCkZNR5IhtWyxb3/7FskdjYKE9TaXSeXIDegpz/
- zoRWdydtnyFjL0ZElka8h30H5pywsVaFhi2I3fhnJk2AMjT87Ijb0VM6IigOjNAC04tJgYhpz
- iNki3+fS5XdVL4Xvt9ndbjkyIY68AzDFeZfLBD74Zn20hxZY9jQIFrRoRFHKmdjSaMpvsh80b
- xNqUPQPWGrr2JZZQzCv6WRUBwQvGy1bHXL/ilj1CXF/8FrYj56ebYFJf54/5UFWip5bynZ0K 
+	id S1753336AbcD2Mxw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 08:53:52 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:35836 "EHLO
+	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753181AbcD2Mxv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 08:53:51 -0400
+Received: by mail-wm0-f52.google.com with SMTP id e201so26489376wme.0
+        for <git@vger.kernel.org>; Fri, 29 Apr 2016 05:53:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to;
+        bh=kkhzz5tJIZyJpYi+vjtSre6TmdPldPC/a5LGW4j5FUM=;
+        b=Ps4RkwAWWvUcD9nZRGFDHa4o/5N6Ly4fUj47pwLVnBcweFuvBCseIRImIlzWgHGrW4
+         q5+oR8kbr448QDDvsaWW20yQDPRVSu9qX6trMMjbyHmVMClPsIOAmGZGnYUeOXDaP9LG
+         xis1Cj1Zdz1xYwHodpmFTAWGUgqM/w1v5ICDwmlpS3TcGO/GbRVnqUevTideew6Z5c2f
+         rgBjx33mewaZrN4WjyTrQTbUxTVDlMlGvDNLmMDedz99G/QgZ2MHPh4feLTZ0xrTePy5
+         Vno5DCOQrodNrNUrXLMErXe5lzQQ5QnpCEY4A69QYi7DJQ0x7TDNXYAoJTJiy1uzOiJx
+         sn+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to;
+        bh=kkhzz5tJIZyJpYi+vjtSre6TmdPldPC/a5LGW4j5FUM=;
+        b=nBjo5J06OoNKRcqzKIq5Cjc7TZ+RC3khkWQp1oy8gc/Xk5aKEKJs/Fnu3sGJJ0ASV3
+         zFHT0mDsQHxS9GOHMC41vdYpCcaf5p+vqMYAfoIbHZvdTYTEPx9vkbVrcwwYgcbpfY4w
+         qqyHHHhN1sCz2lbB5U3gqK7J2JVZpPvIkTBYnOuNbK3TFeHdg+ZvigHriS7Nk93QTWIQ
+         7aZRZduW7swDuS8vVO4rtrrHvuo9BO4hDbewhqqWXaHyiHSGQMSw06OrqSgCt0tntqNF
+         Xxab8iFEIx8g79dkEnaNACOKxmXS2kEpj50MpD0FkOUofLWcFmGD8MTIgcFw7YaaRuc5
+         MQ2A==
+X-Gm-Message-State: AOPr4FUeYJCaM0M0Xsg7iWemqG0gCvZheS/3lZLrpllE9/AC50/NIy3/QFCkRFf3nx1kKdphzjCLY6fD7JYFQw==
+X-Received: by 10.28.85.137 with SMTP id j131mr3795303wmb.15.1461934430019;
+ Fri, 29 Apr 2016 05:53:50 -0700 (PDT)
+Received: by 10.28.175.74 with HTTP; Fri, 29 Apr 2016 05:53:49 -0700 (PDT)
+In-Reply-To: <CAA6PgK7b=ithSYREV5axaE3fmRG5Vp06UtWiZXD-aJuZKfEVYA@mail.gmail.com>
+X-Google-Sender-Auth: XixINHhQABg6xdkrmXkbAAbWPMY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292993>
 
-Hi Junio,
+Hello,
 
-On Fri, 29 Apr 2016, Johannes Schindelin wrote:
+I tried running a full profile build of Git 2.8.1, but it looks like
+test #32 in `t7300-clean.sh` fails:
 
-> On Thu, 28 Apr 2016, Junio C Hamano wrote:
-> 
-> > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> > 
-> > > -     if (starts_with(var, "credential."))
-> > > +     if (starts_with(var, "credential.") ||
-> > > +                     (starts_with(var, "http.") &&
-> > > +                      ends_with(var, ".extraheader")))
-> > 
-> > I know you are fond of indenting with HT without aligning things,
-> > but this is going too far in the quest of making the code
-> > unreadable.
-> 
-> Hah. I am actually not fond of anything there, but I go with the default
-> in my vim when selecting lines and pressing the '=' key...
-> 
-> If you know off-hand how to teach my vim to use your preferred indenting,
-> I'll gladly just brow-beat it into submission.
+Commands:
 
-For the record, I think the default in vim is to indent two tabs after an
-unclosed parenthesis in an `if` line (the "(2s" just below
-http://vimdoc.sourceforge.net/htmldoc/indent.html#javascript-indenting in
-the default cinoptions). The "(0" setting fixes this, I think, so I forced
-my vim to use
+> curl https://www.kernel.org/pub/software/scm/git/git-2.8.1.tar.xz | tar xJ
+> cd git-2.8.1
+> make prefix=/usr profile-install install-man -j18
 
-	cinoptions=>s,e0,n0,f0,{0,}0,^0,L-1,:s,=s,l0,b0,gs,hs,ps,ts,is,+s,c3,C0,/0,(0,us,U0,w0,W0,m0,j0,J0,)20,*70,#0
+Logs of test-suite that fails:
 
-from now on.
+*** t7300-clean.sh ***
+ok 1 - setup
+ok 2 - git clean with skip-worktree .gitignore
+ok 3 - git clean
+ok 4 - git clean src/
+ok 5 - git clean src/ src/
+ok 6 - git clean with prefix
+ok 7 - git clean with relative prefix
+ok 8 - git clean with absolute path
+ok 9 - git clean with out of work tree relative path
+ok 10 - git clean with out of work tree absolute path
+ok 11 - git clean -d with prefix and path
+ok 12 - git clean symbolic link
+ok 13 - git clean with wildcard
+ok 14 - git clean -n
+ok 15 - git clean -d
+ok 16 - git clean -d src/ examples/
+ok 17 - git clean -x
+ok 18 - git clean -d -x
+ok 19 - git clean -d -x with ignored tracked directory
+ok 20 - git clean -X
+ok 21 - git clean -d -X
+ok 22 - git clean -d -X with ignored tracked directory
+ok 23 - clean.requireForce defaults to true
+ok 24 - clean.requireForce
+ok 25 - clean.requireForce and -n
+ok 26 - clean.requireForce and -f
+ok 27 - core.excludesfile
+ok 28 # skip removal failure (missing SANITY)
+ok 29 - nested git work tree
+ok 30 - should clean things that almost look like git but are not
+ok 31 - should not clean submodules
+not ok 32 - should avoid cleaning possible submodules
+#
+#               rm -fr to_clean possible_sub1 &&
+#               mkdir to_clean possible_sub1 &&
+#               test_when_finished "rm -rf possible_sub*" &&
+#               echo "gitdir: foo" >possible_sub1/.git &&
+#               >possible_sub1/hello.world &&
+#               chmod 0 possible_sub1/.git &&
+#               >to_clean/should_clean.this &&
+#               git clean -f -d &&
+#               test_path_is_file possible_sub1/.git &&
+#               test_path_is_file possible_sub1/hello.world &&
+#               test_path_is_missing to_clean
+#
 
-Ciao,
-Dscho
+Best,
+Jan
