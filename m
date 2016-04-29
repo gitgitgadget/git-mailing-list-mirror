@@ -1,79 +1,77 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [RFC PATCH 2/3] connect: group CONNECT_DIAG_URL handling code
-Date: Fri, 29 Apr 2016 22:00:52 +0200
-Message-ID: <632a7629-645b-43a7-abd7-fcbc35362f60@web.de>
-References: <20160428232936.GA8663@glandium.org>
- <1461890625-23222-1-git-send-email-mh@glandium.org>
- <1461890625-23222-2-git-send-email-mh@glandium.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] xdiff: implement empty line chunk heuristic
+Date: Fri, 29 Apr 2016 13:29:06 -0700
+Message-ID: <xmqqa8kcxip9.fsf@gitster.mtv.corp.google.com>
+References: <1461079290-6523-1-git-send-email-sbeller@google.com>
+	<1461079290-6523-3-git-send-email-sbeller@google.com>
+	<CA+P7+xoqn3fxEZGn02ST1XV-2UpQGr3iwV-37R8pakFJy_9n0w@mail.gmail.com>
+	<20160420041827.GA7627@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com
-To: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 22:01:24 2016
+Content-Type: text/plain
+Cc: Jacob Keller <jacob.keller@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Git mailing list <git@vger.kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 29 22:29:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1awEbM-00072S-62
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 22:01:24 +0200
+	id 1awF2L-00048z-17
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 22:29:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752319AbcD2UBU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 16:01:20 -0400
-Received: from mout.web.de ([212.227.15.4]:50424 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751980AbcD2UBT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 16:01:19 -0400
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0MZleQ-1bGdnA1dyo-00LYje; Fri, 29 Apr 2016 22:00:58
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
- Gecko/20100101 Thunderbird/45.0
-In-Reply-To: <1461890625-23222-2-git-send-email-mh@glandium.org>
-X-Provags-ID: V03:K0:U8fDucbG+SLjLhMqZbUprwKbdIJYXa+P3uaFv7M4UuXRbPjdgJR
- DnE/PwXpFDjSWPSd6vP8BS+dLzKgK86fKWuZ/guEhprufNh5Q1c9OR0b5XhHvHQEctj91dW
- Zuh8kyS8ajefdsl22YhQfB02Bjmac3OxTcfC++kunGZptagHrE54P5i6oxFiNmjR0qhihLt
- wpPXKOUl5G+/DMwvoC1Dw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:js7sjLaioos=:Th9JGAX3UUTiHB/IRXKqkA
- cAPp1As5ZXoUJTE+opmVXAa1x7vzaVQKupJkCEVCKSZYyAkR3+ghZYQ6PyCaNWNre9L4fVLeY
- S0jzMmVzwnUlkcqLupzy+tTzKyFVqkyM/74JlY+QIZkwWhajTCqOY/uLF9cKihGiOWmkkKgFU
- 7TLYKsuJsXLuWut1uKMg68jsytLut4EF1n/3s1dhn8dS6yG6F5s9tjPLt8ORwbfQsAAB6Te2R
- p/tYdF+UfcyErTJJvgHl0MfMD/f8U9iZqv8uvVyne0xgmb5eQliEld7ZyJ4FXCenn84yNg+YT
- aVhJ1sXrja2MVE8YlTbBoWXGnBnEPSz7zTXV/jajxgvD9iKGXv5+2IfoqS7lm9//qTA/4RO/V
- z5KxR4n35qnhZhWRqbhhbs+qD2RkH3y551nK5CMSzWSSKW3crYPZUUjARh8i5OF8BAGWmFMPK
- v0jYGW1pva4Pasy/sKPCNUvhDyg5zzJHIIV/L3mN1+6/SENGw2tnlyddji22c4WvYSe/7cuij
- uavhXM05Z3/8Xs6xsUCZsa1rNc2XELqPyvc1Gxxj/nxlJy9AWv/z9iu6XzPYvPJfYMzpU/msO
- IjKDAbTNPZr9f1gL/s7hUmifiP2lJOS3KdzJPqcsm5xnolBYnTOieTECuDBANc1ylXsHaiSxa
- GMS/1W0m//sEY6FqevSWBcCZP1kBRHKQHxPB849qIMGaL4ATXtcBEMFl58okhpMKeadBzN/oP
- STISBmOpDkw9SdiD2j3i8KA6aPetSgaqYMNDbDvZMbmHrOtqZMNqATDfJ/lOno7Twga16ZMu 
+	id S1752808AbcD2U3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 16:29:11 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58720 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752560AbcD2U3K (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 16:29:10 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D705B17EEE;
+	Fri, 29 Apr 2016 16:29:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2mKlRGsm+kZ4zIzJdjuGhjbkch4=; b=qBpT6/
+	87ICrX8VeN1OicI4iD66bQ680Oo7Xnhma7MFonPOefIsH2TO6KWXZfX0yy4pxRDY
+	T7/4lm/gApG7n4HuTk/YL0v4DK6rXHXB8i2hD3HaW7zG3YIke8BamVMNH/WpPlPZ
+	1zCBhUgu5Bznz6vL9cBU7xPbHe8UVI4XcHrY8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bgPyKBetBzx11HVn09+7jljFWzrSpco7
+	DDayuHS6qBvirzImO0d4eL8RqnzgzP5phm0FwUxCSqp+HWoeGvZYV9WxnSMNURtK
+	R1x1WLiaEYP+H/1ZuxIBGn+OZP0QFsrumnFqEThvKS7BhDJc7B8DnOptZyr3V0g7
+	X5NbTb75LWA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CE3F117EED;
+	Fri, 29 Apr 2016 16:29:08 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 34D2A17EEC;
+	Fri, 29 Apr 2016 16:29:08 -0400 (EDT)
+In-Reply-To: <20160420041827.GA7627@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 20 Apr 2016 00:18:27 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 0653AE7C-0E49-11E6-A2D7-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293049>
 
-On 29.04.16 02:43, Mike Hommey wrote:
-> get_host_and_port(&ssh_host, &port);
-> +			if (!port)
-> +				port = get_port(ssh_host);
+Jeff King <peff@peff.net> writes:
 
-I'm not sure, if this is an improvement or not.
+> ... Having the two directly next to each other reads
+> better to me. This is a pretty unusual diff, though, in that it did
+> change the surrounding whitespace (and if you look further in the diff,
+> the identical change is made elsewhere _without_ touching the
+> whitespace). So this is kind of an anomaly. And IMHO the weirdness here
+> is outweighed by the vast number of improvements elsewhere.
 
-The original intention was, to check what the parser did, before
-going out to the external program (like ssh) or opening a socket.
+So... is everybody happy with the result and now we can drop the
+tweaking knob added to help experimentation before merging the
+result to 'master'?
 
-Everything should be prepared, as if the action had been taken,
-and in the last nanosecond we jump out and print what would have
-been done.
-(The nanosecond may depend on the CPU speed)
-
-In any case, for SSH there should be only one line calling get_host_and_port(),
-or get_port().
-
-This is to check the complete logic path in test cases, as well as it allows
-the user to check the URL, especially when using SSH.
-
-Splitting the logic into a path where we just print and one, where
-the connection is really made, looses "single point of truth" - we don't know
-any longer, what we test or print for diag.
+I am pretty happy with the end result myself.
