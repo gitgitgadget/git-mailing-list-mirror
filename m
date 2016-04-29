@@ -1,120 +1,89 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH v5 2/2] submodule: pass on http.extraheader config
  settings
-Date: Fri, 29 Apr 2016 14:35:07 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604291429560.9313@virtualbox>
-References: <3b71deffa5d07cf73a793773cc3d60ff611843fa.1461759454.git.johannes.schindelin@gmx.de> <cover.1461837783.git.johannes.schindelin@gmx.de> <89d0024450b0e6e9997ad9e3d681248bde1bafc0.1461837783.git.johannes.schindelin@gmx.de>
- <xmqqshy54j2h.fsf@gitster.mtv.corp.google.com>
+Date: Fri, 29 Apr 2016 14:48:44 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1604291443561.9313@virtualbox>
+References: <3b71deffa5d07cf73a793773cc3d60ff611843fa.1461759454.git.johannes.schindelin@gmx.de> <cover.1461837783.git.johannes.schindelin@gmx.de> <89d0024450b0e6e9997ad9e3d681248bde1bafc0.1461837783.git.johannes.schindelin@gmx.de> <xmqqshy54j2h.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1604291429560.9313@virtualbox>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 29 14:35:28 2016
+X-From: git-owner@vger.kernel.org Fri Apr 29 14:49:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aw7dm-00067o-Pe
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 14:35:27 +0200
+	id 1aw7qu-0004IO-2j
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 14:49:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752793AbcD2MfX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 08:35:23 -0400
-Received: from mout.gmx.net ([212.227.17.22]:62336 "EHLO mout.gmx.net"
+	id S1753558AbcD2Msz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 08:48:55 -0400
+Received: from mout.gmx.net ([212.227.17.22]:63411 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752625AbcD2MfW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 08:35:22 -0400
+	id S1753531AbcD2Msy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 08:48:54 -0400
 Received: from virtualbox ([88.128.80.158]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0Meduu-1bKF7f1dma-00OH9T; Fri, 29 Apr 2016 14:35:11
+ ESMTPSA (Nemesis) id 0M6fXs-1bsTjW0JMq-00wVS8; Fri, 29 Apr 2016 14:48:46
  +0200
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqshy54j2h.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <alpine.DEB.2.20.1604291429560.9313@virtualbox>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:Fw5L4lfg313YrOB8nxYF29MjjUSiy+E6aOEP9896MIiiBjEzQkD
- hCHK8FA4HXtK7aHyKD+g4QmVnCsMw1lhouh2yexdXVbN17WoJPn/fQJ0un4kXOv34SoCc8B
- S+WNzm4l4YfrNnFn15dMnFwQEBhOCzqW6vfgHFe2PmL7VrpKqrveaCwUaI8VxlfDuWhdI77
- cqXUmSeG15OGOhiC49/kQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3eV9qKJI5k4=:owm+i9HjI6VlIIgfVERnoB
- mzacTbNzGiV+//gptQd7JDExTBCEiQfvbllU+4Uy6QbDhGEfaXcGvJLg8j5xIvusMkld6jwV7
- UYgWhQjrBeBQJ9q5lsi3KeBoOkBHUgSo2tFhMQAnUWokRtf8tbi7O+baVmB48kgBHoYIpsg4+
- gAL0K9yXjcBsmFu90Ew8KCxfr/y/KFCPM7Y4v9xicAMXZ1dznnt4SDHr4WnW6Ck0FRJedpmnM
- TQV4ife8TSbf4n+UGEUKyzOO0zfXo3Ns+0pKs/M8NrPqVVP9uaLGCz/A8PpbwZHgwGTcKQgCI
- t0cSK1hm61swbYdhu+0kbP+ZExZ4k8JVBW8MMLa2hg6nboW5lAEDES4gjCZCUE4psl+75f71D
- 6OQiCzt+ANRQXlkjXJPV4tTufDeut4ZYqqoml7n7U32xbbfj5QSc4Q4M/xvl7vw/VUw8wwuZl
- GH5BUoy5B0CQex2OJ4dy3nc8hPCmbiecx2Dm9P7VowYAvUISzQFb07NU1UDZqs3btl0ICND1X
- bQib0J6p7TBtSoozJrTX2H23EZ0cjhugBByfaact6+hiUZjrhKGjcSBhzT2itpl08KJ1sVnt8
- l3eegpiJY/PexKHDeEpJUSPsHYBEQYOmqAbvqiixZMPLNXBHn7Uq3DCZ1h0qqGjLYmW/01VnW
- gbyAMhIstlhu9RzeK9MkWm1lM8S5yIXUe34v9lRGP6+L+1hrJxcq76zHQhRgsbCsecT2PMGW0
- YRRMiCXIHew/qT8c8ZDds69Be2GVDB+bIwPgtYqaJQQbAg+OzRxLQEY/bbkfFdMuLU3ZfnZ5 
+X-Provags-ID: V03:K0:viv2p2SEr1yoOtqPAYUCB9PtbiBpXndsIBC0Daa92A8FVpfh/6U
+ lzc22y+3kGeRPomMlI6uauMZ8nT0n1jUX14SH0rjGGr7imKHescF5bpuZNr/UFeYBj+HJYD
+ 7rSgnKmuQt47R94rCdDxhTRqUX5WT3w9RHCJ48DOCPCvwmcqW5uQGE/o0/1uqoO+gvIH6oS
+ Gsa1dNAC5YLN+Z3og8Qlw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:hcoyJ+Z2Tq4=:isad0CrtopRP90PZlaFyew
+ Chd1au7BejlKWb+ksF95OEp9EWV1SUoF3CAC/j1nwIToFyXbXAca7501WW3AO8ng0WuvYQBod
+ QVrjKkY6APu0Vfte9/gCy7HgSk9YG6OW6eAkdkj9HNSkeTfT9Xwc2opdFfm0297gX2n4Imr/p
+ xIPR/QJ480Z8MtmdpkpwmqTypoYGxsyjTClqRHc02FVgAdv931l2eFLXuRShU/6Sxj8rX6Dj5
+ eBYzbMWmXlEagLqPDtgHVwjp3rKdLwXnuqwZKOWUH2fQAh342qiPjs71uLMyrvF2xoGcOTrpo
+ VvRnkl0B4fKPwlfF5hF8W7yNUk62aiguDKKR6T56gaXe9zhwqAFgN9YAoIMqGkqDvG5TBG3rD
+ +A0uzSr47ZKditIMsVTYGYBQ+rqCeEfH92eFtrWSdSJKqK16ouf4vsPfm9HTw7IWQtAJEM3dj
+ u8K1is184KoT/+lCsXM7R69UzYoCtSjQdvOg18rIs8VcIaAwU1+Kj5HhdiN8Apepkv2aaDgbw
+ YckjfsbS3v6v4Y/KZsZBmG9Zylrz3YqkahTCkZNR5IhtWyxb3/7FskdjYKE9TaXSeXIDegpz/
+ zoRWdydtnyFjL0ZElka8h30H5pywsVaFhi2I3fhnJk2AMjT87Ijb0VM6IigOjNAC04tJgYhpz
+ iNki3+fS5XdVL4Xvt9ndbjkyIY68AzDFeZfLBD74Zn20hxZY9jQIFrRoRFHKmdjSaMpvsh80b
+ xNqUPQPWGrr2JZZQzCv6WRUBwQvGy1bHXL/ilj1CXF/8FrYj56ebYFJf54/5UFWip5bynZ0K 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292992>
 
 Hi Junio,
 
-On Thu, 28 Apr 2016, Junio C Hamano wrote:
+On Fri, 29 Apr 2016, Johannes Schindelin wrote:
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> On Thu, 28 Apr 2016, Junio C Hamano wrote:
 > 
-> > -     if (starts_with(var, "credential."))
-> > +     if (starts_with(var, "credential.") ||
-> > +                     (starts_with(var, "http.") &&
-> > +                      ends_with(var, ".extraheader")))
+> > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> > 
+> > > -     if (starts_with(var, "credential."))
+> > > +     if (starts_with(var, "credential.") ||
+> > > +                     (starts_with(var, "http.") &&
+> > > +                      ends_with(var, ".extraheader")))
+> > 
+> > I know you are fond of indenting with HT without aligning things,
+> > but this is going too far in the quest of making the code
+> > unreadable.
 > 
-> I know you are fond of indenting with HT without aligning things,
-> but this is going too far in the quest of making the code
-> unreadable.
-
-Hah. I am actually not fond of anything there, but I go with the default
-in my vim when selecting lines and pressing the '=' key...
-
-If you know off-hand how to teach my vim to use your preferred indenting,
-I'll gladly just brow-beat it into submission.
-
->         if (starts_with(var, "credential.") ||
->             (starts_with(var, "http.") && ends_with(var, ".extraheader")))
+> Hah. I am actually not fond of anything there, but I go with the default
+> in my vim when selecting lines and pressing the '=' key...
 > 
-> would make iteasier to see what are the top-level items (there are two)
-> and how they are related (just one of them needs to be satisfied).
+> If you know off-hand how to teach my vim to use your preferred indenting,
+> I'll gladly just brow-beat it into submission.
 
-Fine by me!
+For the record, I think the default in vim is to indent two tabs after an
+unclosed parenthesis in an `if` line (the "(2s" just below
+http://vimdoc.sourceforge.net/htmldoc/indent.html#javascript-indenting in
+the default cinoptions). The "(0" setting fixes this, I think, so I forced
+my vim to use
 
-> Assuming that we will discover more variables that can be safely
-> passed, I'd rather see the above written like this, though:
-> 
->         if (starts_with(var, "credential."))
->                 return 1;
->         if (starts_with(var, "http.") && ends_with(var, ".extraheader"))
->                 return 1;
-> 
->         return 0;
-> 
-> Or even something along this line:
-> 
->         struct whitelist {
->                 const char *prefix;
->                 const char *suffix;
->         } whitelist[] = {
->                 { "credential.", NULL },
->                 { "http.", ".extraheader" },
->         };
-> 
->         for (i = 0; i < ARRAY_SIZE(whitelist); i++) {
->                 struct whitelist *w = &whitelist[i];
->                 if ((!w->prefix || starts_with(var, w->prefix)) &&
->                     (!w->suffix || ends_with(var, w->suffix)))
->                         return 1;
->         }
->         return 0;
+	cinoptions=>s,e0,n0,f0,{0,}0,^0,L-1,:s,=s,l0,b0,gs,hs,ps,ts,is,+s,c3,C0,/0,(0,us,U0,w0,W0,m0,j0,J0,)20,*70,#0
 
-Iff. Iff we go with a white-list.
-
-However, I think you did a really good job arguing that the
-CONFIG_DATA_ENVIRONMENT filtering is, in fact, overzealous.
-
-Just let me know what to go with, and I'll update the patch accordingly.
+from now on.
 
 Ciao,
 Dscho
