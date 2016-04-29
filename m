@@ -1,115 +1,139 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH 19/29] refs: don't dereference on rename
-Date: Fri, 29 Apr 2016 19:21:48 -0400
-Organization: Twitter
-Message-ID: <1461972108.4123.43.camel@twopensource.com>
-References: <cover.1461768689.git.mhagger@alum.mit.edu>
-	 <27f8b223e42dcf1cf3c010833e0aff7baa4559c2.1461768690.git.mhagger@alum.mit.edu>
-	 <xmqqy47y98zx.fsf@gitster.mtv.corp.google.com>
-	 <57230F71.2020401@alum.mit.edu>
+From: Stefan Beller <sbeller@google.com>
+Subject: [WIP PATCH 00/14] Protocol v2 patches
+Date: Fri, 29 Apr 2016 16:34:33 -0700
+Message-ID: <1461972887-22100-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
-	<pclouds@gmail.com>, Jeff King <peff@peff.net>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 30 01:21:57 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To: dturner@twopensource.com
+X-From: git-owner@vger.kernel.org Sat Apr 30 01:35:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1awHjQ-0003D1-Il
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Apr 2016 01:21:56 +0200
+	id 1awHw4-0000kw-T1
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Apr 2016 01:35:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752639AbcD2XVx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 19:21:53 -0400
-Received: from mail-qk0-f170.google.com ([209.85.220.170]:34683 "EHLO
-	mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752613AbcD2XVv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 19:21:51 -0400
-Received: by mail-qk0-f170.google.com with SMTP id r184so52471501qkc.1
-        for <git@vger.kernel.org>; Fri, 29 Apr 2016 16:21:51 -0700 (PDT)
+	id S1752203AbcD2Xe4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Apr 2016 19:34:56 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:35489 "EHLO
+	mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751339AbcD2Xez (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 19:34:55 -0400
+Received: by mail-pf0-f181.google.com with SMTP id 77so21503868pfv.2
+        for <git@vger.kernel.org>; Fri, 29 Apr 2016 16:34:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:mime-version:content-transfer-encoding;
-        bh=F2ezArMMM1jYoXXQzaYIJlshsxK8biYvMvZMbXh2cac=;
-        b=EK9h8Cl97QvRLumZBwEjXwxdGpzxFu2AjAKyPkJBsiWohRDxlWdDK3F50icXoeQkAm
-         QPNWC1RvNm+DDOtfx4gZK1bjgfa97nKBXCVVwrrC2xQlUyRXeIMdSmMP5BgcBULNBKIN
-         EP8DwmkbXuThWb3gSFrA8fDYyr6y5Yqlb8XO3le8eUphgsQohu0St78bamgF/IbWLAj5
-         dc+GVC8tosUQ4EmrX8VpjTfpgs7HuamBbir+nPW9dnxKoCq/isRLBWHx1J4wEx+R++iT
-         LF60N/v7r3Pyb6e+QKMz3hYjOS47p/9AITXqorb03oewjVFsIvOIT8OfDIWEme+PTdOW
-         f7OQ==
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TML5tFB2MbK24S0w3QXd3ZKbfPCUQQM6pJA3M7IxcEs=;
+        b=BgQYGF31jYN5weMpZysc2jxKCLmBDI/9PdbocWtCSkWzxJ5oLHqnZgINp5XnSyDWnN
+         1ajO8I036S1hFvFnF+V288HsDOyxDbOkye/+/dIDtY3Yz+mR9gfR5Yho78MGmK0UvjbD
+         ny9A7viXjSx4HwhxyNB33nRV4FAM0VxCKUWX+KhQoKIut3ghcuet+36xKpFbwRpcastn
+         6MjMl+ol88k0Wpl3TNUhgZnG2MMEPe29zod27+ZPtiogW1X7sV4CH8eAZPR68WA8kGZM
+         f57eny6/p61ZYuUZu4yAdO6HubOVD1zHCuKfwjO3Apk0lWFJ9A8GJDNZzbQbY+qV5j5z
+         Dcpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=F2ezArMMM1jYoXXQzaYIJlshsxK8biYvMvZMbXh2cac=;
-        b=lZbhzz7FNQli73d5p11G2FFRFtkrYQ8U7o21yTJ31B3JOnt6BykQeneVqB7/HT1OHt
-         tzvWgPtSymf83R98XMpsUxg38tLhM+4p5pwIo9jXRxfsc5jsDq/jDImrO1pcn77xRX2/
-         Ii3KS33O8pQnnxG49yLeB0myP0N5fc/qxV/xTQO/EDLvEaMmh2c3xxWnnZpWuDFPG8uF
-         S5nXkbMKVlpcsGuIzMnterDMVEke3aXPnHXcE4OdS8rDPm2k8YDFrMeys45S9U72nw73
-         AZ1Qnmgy1GEpb/oES/KGn6dDv1sG+zNnqU35lSowKPx/Iq3PUn4plz4+6BnJib4C58/F
-         kfSg==
-X-Gm-Message-State: AOPr4FV7Nb76wR0RBCDY2pPf2mNQsguctBWPx6kf1L/BLo1nHWfEdpwgH2b6nElFnFlUIg==
-X-Received: by 10.55.41.27 with SMTP id p27mr21944691qkh.84.1461972110595;
-        Fri, 29 Apr 2016 16:21:50 -0700 (PDT)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id r136sm5208825qke.46.2016.04.29.16.21.49
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 29 Apr 2016 16:21:49 -0700 (PDT)
-In-Reply-To: <57230F71.2020401@alum.mit.edu>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TML5tFB2MbK24S0w3QXd3ZKbfPCUQQM6pJA3M7IxcEs=;
+        b=RXES2GNNTpx06NgOWaZxhUOu2CTP9ewcz1nk9hyL7qeAP0ZEkt9ndcEyjYhwFXEq1h
+         pKrmKdqXjGD6bVUOdmFdxCByI+BceP+pShi+q1oJu2HQKPF+sPYcqlI+sQfZXs1xnuyM
+         vOa6aHG4bBgO4EgtnmW8DBVDtS0OFLXUByQyapJwXbp0aHaYvjD2x6CDCIPTa/axO5VA
+         PQimsxL8XJrbRehdj0e3Xgq+HQakOgxcqKL9z+OvhBBZo+Vl/t9sR3h7m9a5nm2xKekF
+         Pvt0DuZVYZkeaE/jJiXDA1lk/iEsA9GTHwJVRrMr9F5DeF4EfS2VJZiZir/Vm21cZcY4
+         dWQA==
+X-Gm-Message-State: AOPr4FVCkdAsdfflFEMk+DhR9iJIgqqC7R4MpWkraLdlqpkpUhKNaNFrKfkCuxCkZ4B6nEOY
+X-Received: by 10.98.18.80 with SMTP id a77mr32691054pfj.27.1461972894634;
+        Fri, 29 Apr 2016 16:34:54 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:1c8a:9b5c:52bb:4ac5])
+        by smtp.gmail.com with ESMTPSA id 127sm26208901pfe.72.2016.04.29.16.34.53
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 29 Apr 2016 16:34:53 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0.32.g71f8beb.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293070>
 
-On Fri, 2016-04-29 at 09:38 +0200, Michael Haggerty wrote:
-> On 04/27/2016 08:55 PM, Junio C Hamano wrote:
-> > Michael Haggerty <mhagger@alum.mit.edu> writes:
-> > 
-> > > @@ -2380,8 +2381,8 @@ int rename_ref(const char *oldrefname,
-> > > const char *newrefname, const char *logms
-> > >  		goto rollback;
-> > >  	}
-> > >  
-> > > -	if (!read_ref_full(newrefname, RESOLVE_REF_READING,
-> > > sha1, NULL) &&
-> > > -	    delete_ref(newrefname, sha1, REF_NODEREF)) {
-> > > +	if (!read_ref_full(newrefname, resolve_flags, sha1,
-> > > NULL) &&
-> > > +	    delete_ref(newrefname, NULL, REF_NODEREF)) {
-> > 
-> > Could you explain s/sha1/NULL/ here in the proposed log message?
-> 
-> Good question.
-> 
-> Passing sha1 to delete_ref() doesn't add any safety, because the same
-> sha1 was just read a moment before, and it is not used for anything
-> else. So the check only protects us from a concurrent update to
-> newrefname between the call to read_ref_full() and the call to
-> delete_ref(). But such a race is indistinguishable from the case that
-> a
-> modification to newrefname happens just before the call to
-> read_ref_full(), which would have the same outcome as the new code.
-> So
-> the "sha1" check only adds ways for the rename() to fail in
-> situations
-> where nothing harmful would have happened anyway.
-> 
-> That being said, this is a very unlikely race, and I don't think it
-> matters much either way. In any case, the change s/sha1/NULL/ here
-> seems
-> orthogonal to the rest of the patch.
-> 
-> David, you wrote the original version of this patch. Am I overlooking
-> something?
+Hi David,
 
-I think I might have been handling some weird case related to symbolic
-refs, but I don't recall the details.  Your argument seems right to me.
+here are my patches for a protocol v2.
+
+("Negotiate capabilities before doing anything else", or as code:
+
+        static void upload_pack_version_2(void)
+        {
+                send_capabilities_version_2();
+                receive_capabilities_version_2();
+
+                /* The rest of the protocol stays the same, capabilitie=
+s advertising
+                   is disabled though. */
+                advertise_capabilities =3D 0;
+                upload_pack();
+        }
+)
+
+They are rough and unfinished as you can see by the tailing WIPs.
+However the plumbing (upload-pack and fetch-pack) works and we'd need t=
+o
+integrate that into user porcelains, i.e. fetch, clone, push.
+
+Also we need to add tests for all the options again, so we'd need to be=
+ smart
+about testing that.
+
+I am not sure if it makes sense to integrate that with the http series,=
+ though.
+
+Thanks,
+Stefan
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (1):
+  upload-pack: make client capability parsing code a separate function
+
+Stefan Beller (13):
+  upload-pack.c: Refactor capability advertising
+  upload-pack-2: Implement the version 2 of upload-pack
+  connect: rewrite feature parsing to work on string_list
+  transport: add infrastructure to support a protocol version number
+  remote.h: add get_remote_capabilities, request_capabilities
+  fetch-pack: move capability selection out of do_fetch_pack
+  fetch-pack: factor out get_selected_capabilities_list
+  fetch-pack: Add negotiate_capabilities
+  do_fetch_pack: select capabilities for transport version 1 only
+  builtin/fetch-pack: add argument for transport version
+  Add test for fetch-pack
+  WIP add test for git pull
+  WIP test git fetch
+
+ .gitignore             |   1 +
+ Makefile               |   4 ++
+ builtin/fetch-pack.c   |  20 ++++++-
+ builtin/receive-pack.c |  15 +++--
+ connect.c              | 141 +++++++++++++++++++++++++++++------------=
+--
+ connect.h              |   2 +-
+ fetch-pack.c           | 102 ++++++++++++++++++++++++-------
+ fetch-pack.h           |   7 +++
+ remote.c               |   2 +
+ remote.h               |   5 ++
+ t/t5500-fetch-pack.sh  |  21 +++++++
+ t/t5510-fetch.sh       |   5 ++
+ t/t5520-pull.sh        |   6 ++
+ transport-helper.c     |   1 +
+ transport.c            |  20 ++++++-
+ transport.h            |   8 +++
+ upload-pack-2.c        |   1 +
+ upload-pack.c          | 159 ++++++++++++++++++++++++++++++++++++-----=
+--------
+ 18 files changed, 403 insertions(+), 117 deletions(-)
+ create mode 120000 upload-pack-2.c
+
+--=20
+2.8.0.32.g71f8beb.dirty
