@@ -1,124 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v5 2/2] submodule: pass on http.extraheader config
- settings
-Date: Fri, 29 Apr 2016 14:29:25 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1604291417580.9313@virtualbox>
-References: <20160428112912.GB11522@sigill.intra.peff.net> <alpine.DEB.2.20.1604281405540.2896@virtualbox> <20160428134953.GB25364@sigill.intra.peff.net> <CA+P7+xq-_D2Mszyjd11CyYLiKBBh9A2e1exaZQVmWz1qVKv7ug@mail.gmail.com> <20160428153902.GF31063@sigill.intra.peff.net>
- <CAGZ79kZFLTARQ25h4u4SGgNn=Q4TQi-kxFLN3sQvOmejsRmAWA@mail.gmail.com> <20160428165031.GA31421@sigill.intra.peff.net> <xmqq1t5p5z8v.fsf@gitster.mtv.corp.google.com> <20160428191038.GA10574@sigill.intra.peff.net> <xmqqwpnh4joq.fsf@gitster.mtv.corp.google.com>
- <20160428210026.GA12268@sigill.intra.peff.net>
+From: termnml tml <termnml@gmail.com>
+Subject: git-subtree checkout under alternate foldername (git version 2.8.1.windows.1)
+Date: Fri, 29 Apr 2016 14:33:38 +0200
+Message-ID: <CAEDerUrtWSeka5Er4FqktWvPWkD53VqQpvawu9DNtY-JKbMg8Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Apr 29 14:30:06 2016
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 29 14:33:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aw7Yb-0003l8-2V
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 14:30:05 +0200
+	id 1aw7c7-0005O4-B7
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 14:33:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752998AbcD2M34 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 08:29:56 -0400
-Received: from mout.gmx.net ([212.227.15.18]:65525 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752563AbcD2M3z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 08:29:55 -0400
-Received: from virtualbox ([88.128.80.158]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LsTge-1bgQfd2S2C-01246l; Fri, 29 Apr 2016 14:29:41
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160428210026.GA12268@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:XJ+lPDStcWQLj+O9gZGu3QdFCAGs6Gb5hJzgo43uUhKWtV535ox
- r4srsmfYM2MHf59EbKU4AIRaMobAJ/7gcvMMjxpb63n1osTQIxOjyS6YIcfEjh8V+29Hd8d
- jwx1/lLwWrNMum9nA7okS07tpQAS/p0v08a2lVciTxdkRaKw+XipoeHmOz3/+dPwT6F8YqP
- V7Mbhc5gOd78V8rs9AXVw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6p0iYnnfyiw=:gj/wkgXUChTAMTcft9pFBk
- UHuSelQAy+NrJOqbkQZ9+KFW5/txi0FNjmqOtnWE78NGKFoR/b5lWgB9Dbc1bmIhIgEle/xDa
- LEERTllCT9+w18+QPeEGAc3+7dUsielX5LhK8VY0jp4EV7R+kzJSqQYmBrsujsIlcCaR8s71i
- TWGXcqA44jFUGmDbHAoR7GiiAXf8nLGmxNPOb6pW9Wb/uM0Yo3rUhpqYKu7pQhOBHV2EE8hdF
- ukF34nwwK2NfMpWpHTQLYEkmzpqiPQWO8zjDVZKVrm7ejNUqwDznfChuO6lMRRCEN2Ybukuha
- 4IwpGjGvJxDSPlZCo7Hyos36wQrvv57TQJ0VcJ6yMOnzTeHiwCGiYziqf8kTXpNV0aQHQSwMC
- k9554zI+T5h0Wb64rVZdOABke406gPC4Hj4tT6IgyNoVAD9o5h5JRxp1MYA4m09zdoifaU78W
- zxcBZtFwu3z58fU9giQTzwZQbm5yOumqkK+LD6/n7VqVrtgUCImgSGIZ778mL95gCgzcvqiOE
- kDyIUbOKFvvUh9Biw3zuQqyaurht0T+EvmvoiY7NnNajbXWLOVMDcTvOJ63sMasNNa7D5bGWs
- ZLI7skWgeUjbR6zBRjEKzc5+quQxD3KIie1xEt0vOrHWwxjtpWLcrkrXRp/wxck18gxEVKF3E
- 2uDPA/2WU6v8ZvTarEcK1GzARzVf3x5q2JlDUaRXj35uq7AGAv/Y4/C9qHjmjfjsf1iDQdReE
- NnBrSNYabnZp65seMv8OUee1LAEWi8Z7lfz+uwH+J2eEEaPbEUEgzkcgGsbEu+671i7Dl34T 
+	id S1753000AbcD2Mdj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 08:33:39 -0400
+Received: from mail-oi0-f52.google.com ([209.85.218.52]:36194 "EHLO
+	mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752793AbcD2Mdj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 08:33:39 -0400
+Received: by mail-oi0-f52.google.com with SMTP id x201so116579611oif.3
+        for <git@vger.kernel.org>; Fri, 29 Apr 2016 05:33:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to;
+        bh=i3g/y+RGOm/zqkHI99WLAQ4WmTkub332QcCXZvYQ11c=;
+        b=s7MIHSZrpgKDjtklhk/PSLp38pTVXCNCuWjz9ckHArHs/bHPiynBtgFzWKZejFk03P
+         3uzQkmvtkhlWJCSmAvLqYdQUvQgf+3kf0bMSE5SY9nUEabndDri5hEdyMMNfsVLKp2G2
+         mL2eQ9WZfYwrv/VeNxlIcXu1zajscrdXfYKCYv416+YZ8/zTrZqv8CsqxcAdct+LtPNk
+         Qnzxw8Afvw609e4jSPzgYlwTj3J3epEirh7zMlsj0oE0PNOZSiczBcN7XPCr4WP7nqS0
+         mXYYnRbb6ntbwyL6We3ssGglxZ+tdIkU/D5QYNvk+aJpsTsYJCAB0e0vWvLTyfH2eAEY
+         t/Jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
+        bh=i3g/y+RGOm/zqkHI99WLAQ4WmTkub332QcCXZvYQ11c=;
+        b=SFQeDBcq7hCfQXxqCfAjfCNKvUkpTBG8KRoYExvJCuU52+mJXYmIWiYtiJsYBVtw9Q
+         gdFt87BgN6Zk3BY+w/mDdmeHj7ppf3I1z6VZrFusNeOKgQyhVDyd+cArChGFhURic8J+
+         m0nSdosy3ztNeR8Dpf2/mqOZ2kKmffebx5Fb70DAxbrvMQD+qSmDfJEdm6ERguzZDbV1
+         6/qcWOo+2uiPHTbFpiUeLAtEQxUPn8b78wcojbMT8LOUqO17MH5LdUB5Np5WiO6jtPmu
+         haDcApjCqpynAy4TcxsBYec0CnA7/U+mw0fmcHnX9vKHbCS3O5efHulVKEGJa0WMVou+
+         2RmA==
+X-Gm-Message-State: AOPr4FW4F/YOX8ljfyvDyE76zd9v2EmuvpGI993n2w9ACOQrNfbbGYq9Lez9m9cInAdyZ34IQgvBlo2ACFUnOQ==
+X-Received: by 10.157.49.118 with SMTP id v51mr9579347otd.97.1461933218044;
+ Fri, 29 Apr 2016 05:33:38 -0700 (PDT)
+Received: by 10.157.24.17 with HTTP; Fri, 29 Apr 2016 05:33:38 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292990>
 
-Hi Peff,
+Hi people.
 
-On Thu, 28 Apr 2016, Jeff King wrote:
+I want to creat a git repo with two upstreams.
 
-> On Thu, Apr 28, 2016 at 12:28:21PM -0700, Junio C Hamano wrote:
-> 
-> > Jeff King <peff@peff.net> writes:
-> > 
-> > > It's definitely sufficient, it's just annoying if a user shows up
-> > > every week and says "I want X.Y", and then somebody else shows up a
-> > > week later and says "I want X.Z".
-> > >
-> > > Are we serving any purpose in vetting each one (and if so, what)?
-> > 
-> > Personally I do not think we would need to filter _anything_ if we can
-> > tell that the user directly said
-> > 
-> > 	git -c var1=val1 -c var2=val2 $cmd ...
-> > 
-> > and "git $cmd" ended up needing to spawn another "git" subcommand,
-> > possibly in some other repository (i.e. "$cmd" in this case is likely
-> > to be "submodule", but in principle it does not have to be).  If the
-> > user somehow gives variables like core.worktree that are inappropriate
-> > to be applied across repositories, that's user's problem, i.e. "don't
-> > do it then if it hurts".
-> 
-> Right, we are talking about that direct case here. And any time our
-> filter heuristic lets something through, it is probably "if it hurts
-> don't do it" as the worst case.
+The first is the root of JointsWP (https://github.com/JeremyEnglert/JointsWP
+) going straight to my root (repo /).
+No problem with this upstream-jointswp.
 
-The more I think about it, I actually think that we do the user a *really*
-great disservice by filtering the CONFIG_DATA_ENVIRONMENT. If I call
+The second is the sub dir /templates of WooComerce (
+https://github.com/woothemes/woocommerce).
+he content in this one should go directly into my subdir /woocommerce.
 
-	git -c ... $cmd
+I was able to do a sparseCheckout to only catch the /templates subdir of
+the upstream(-woocommerce:/templates).
+Now I want to "mv or rename" the checked out /templates to /woocommerce.
+I want to keep full track of the commits done to /templates in the
+upstream-channel.
 
-and that configuration is *not* picked up, it is much worse than letting
-users shoot themselves in their own feet by specifying config settings
-that are *prone* to wreak havoc.
+Or is the git-subtree the wrong way to go?
 
-> So I think the only two cases worth filtering are:
-> 
->   1. Ones where we _know_ that the config is nonsense to pass along,
->      _and_ where a user might conceivably make use of the
->      just-the-top-level version of it (core.worktree
->      comes to mind, though of course they are probably better served by
->      "--work-tree" in such a case).
->   2. An option where we think there may be some security implication.
->      Setting "http.sslverify" to false does have some security
->      implications ("oops, I only meant to turn off verification for the
->      root repo, and I got MiTM-attacked for the submodules!"). But it's
->      so obscure and unlikely that I think the benefit outweighs it.
+Stackoverflow:
+http://stackoverflow.com/questions/36894522/git-subtree-checkout-specific-folder-under-other-name
 
-I can see that happening when somebody calls an alias with `git -c ...`
-and that alias performs actions in the top-level project as well as all
-submodules.
+Thank you great folks.
 
-But. Do we really have to be "Big Daddy" for users who do that?
-
-> I am OK staying with a whitelist.
-
-Me, too. But I am even more in favor of abandoning this "we know what is
-good for you" approach, i.e. that whitelist that filters
-CONFIG_DATA_ENVIRONMENT.
-
-Ciao,
-Dscho
+PS:
+Sorry if this is the wrong place for my question.
+Got a headsup to try here. ;)
