@@ -1,91 +1,106 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] http: expand http.cookieFile as a path
-Date: Fri, 29 Apr 2016 13:16:31 -0400
-Message-ID: <20160429171631.GA29571@sigill.intra.peff.net>
-References: <20160429062357.12647-1-computersforpeace@gmail.com>
- <20160429062357.12647-2-computersforpeace@gmail.com>
- <20160429141212.GB26643@sigill.intra.peff.net>
- <xmqqziscz6ej.fsf@gitster.mtv.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2] travis-ci: build documentation
+Date: Fri, 29 Apr 2016 10:27:19 -0700
+Message-ID: <CAGZ79kbBCM0CdBoeWTx9kWBBN1f-kuibpUNh9FacOb2xxCDPcw@mail.gmail.com>
+References: <1461922534-49293-1-git-send-email-larsxschneider@gmail.com>
+	<20160429121429.GB27952@sigill.intra.peff.net>
+	<vpqeg9o7gh4.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Brian Norris <computersforpeace@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 29 19:16:39 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	stefan.naewe@atlas-elektronik.com,
+	Junio C Hamano <gitster@pobox.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Apr 29 19:27:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1awC1u-00076v-QU
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 19:16:39 +0200
+	id 1awCCL-0004DE-Mb
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 19:27:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752454AbcD2RQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 13:16:35 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59246 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752272AbcD2RQe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 13:16:34 -0400
-Received: (qmail 18188 invoked by uid 102); 29 Apr 2016 17:16:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Apr 2016 13:16:33 -0400
-Received: (qmail 23838 invoked by uid 107); 29 Apr 2016 17:16:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Apr 2016 13:16:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Apr 2016 13:16:31 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqziscz6ej.fsf@gitster.mtv.corp.google.com>
+	id S1751834AbcD2R1W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 13:27:22 -0400
+Received: from mail-io0-f170.google.com ([209.85.223.170]:34824 "EHLO
+	mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751065AbcD2R1V (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 13:27:21 -0400
+Received: by mail-io0-f170.google.com with SMTP id d62so114357668iof.2
+        for <git@vger.kernel.org>; Fri, 29 Apr 2016 10:27:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=FZzLvWebpiAcDONsru6OECbuJykCpYMnBLAM7byKyCw=;
+        b=Yc9RPKkassxLgNw5BsNzKD+mL3EC/zHxbwfyrKfaKrpvAk3scl8FQbdxSduA1cd3t6
+         uPEqAIOCZe0zVr3cwr5hn4QpgRTFhjeAvrE5U1+nczASVZpaZs9uRjxPGALOlb55Qt/A
+         2QNwPMvKgmJNV/VCBELgMJEZ1PRqQYZ25SG4ifyWDAZ+HTTw50689LafW3R0Ne8c4oiG
+         pDBdi0fES3LFM6FeDdzkVA+IN+0wihrbQxn9elP7rUw+rs4sL8PSAab+86GyRX6m8whd
+         HAV8O7KME01l22f5TLriKi5ljqgl8PSXnhmEoJ3SkxrPPFqzQ62fq+Lu/RKVAtuRmb0+
+         q6uA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=FZzLvWebpiAcDONsru6OECbuJykCpYMnBLAM7byKyCw=;
+        b=Jg1fByFVp74k3k8q0/PrwUsww6s26XZPB1fDmCM6xZTuO19SGZ7vvB/TLPhAil2RSe
+         0qie26sE6VYYPaRN3xLivJlgaW2cWD/vp315LCX4cYe9WcAuEF+k9xUEVR8GtKvGyPLU
+         o1wiYgsdwmjMehgrNUwiM1N0ah2u6LC0lEmHU8lk6dQyeKbjs6hzTiDLxrqVyBerHbfT
+         WSIugRHi/CoxDUYRUV0RHFuvOEGCSXWtNlb5CgfBoKZByQU3Xb6+/mYNneHGbCcD+7rS
+         znPkGqH5whWnFfUWeDVEpF4qjgbTr5QcQ8hbVDMaBkwzgCu8/+5bTW5kIqQNH1Krw3jE
+         uEIg==
+X-Gm-Message-State: AOPr4FVRKIrIUt3vBbo4LdrRhnGzgnbSoADwVsHLUvTwe6Ligsgk5C4sy/SK3D+AtOfANQfpDcRrkUBBmg+CUePq
+X-Received: by 10.107.161.68 with SMTP id k65mr29047346ioe.110.1461950840027;
+ Fri, 29 Apr 2016 10:27:20 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Fri, 29 Apr 2016 10:27:19 -0700 (PDT)
+In-Reply-To: <vpqeg9o7gh4.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293030>
 
-On Fri, Apr 29, 2016 at 10:11:48AM -0700, Junio C Hamano wrote:
-
+On Fri, Apr 29, 2016 at 5:21 AM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
 > Jeff King <peff@peff.net> writes:
-> 
-> > I'm not sure if it's a good idea to go into so much detail about
-> > expand_user_path() here. There are a lot of options that use the same
-> > rules, and we probably don't want to go into a complete explanation
-> > inside each option's description. Is there a canonical definition of how
-> > we do expansion in config.txt that we can just reference (and if not,
-> > can we add one)?
-> 
-> We have a dedicated section for various value-types used in the
-> configuration variables already, because we needed to describe how
-> booleans and scaled integers can be spelled, and the pathname type
-> would fit there.
-> 
->  Documentation/config.txt | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 59d7046..1bf42a6 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -169,6 +169,11 @@ thing on the same output line (e.g. opening parenthesis before the
->  list of branch names in `log --decorate` output) is set to be
->  painted with `bold` or some other attribute.
->  
-> +pathname::
-> +	A variable that takes a pathname value can be given a
-> +	string that begins with "~/" or "~user/", and the usual
-> +	tilde expansion happens to such a string.
-> +
->  
->  Variables
->  ~~~~~~~~~
+>
+>> On Fri, Apr 29, 2016 at 11:35:34AM +0200, larsxschneider@gmail.com wrote:
+>>
+>>> +# The follow numbers need to be adjusted when new documentation is added.
+>>> +test_file_count html 233
+>>> +test_file_count xml 171
+>>> +test_file_count 1 152
+>>
+>> This seems like it will be really flaky and a pain in the future. I'm
+>> not really sure what it's accomplishing, either. The earlier steps would
+>> complain if something failed to render, wouldn't they? At some point we
+>> have to have some faith in "make doc".
+>
+> I agree. My proposal to check for a handful of generated files was just
+> because this extra paranoia was almost free (just 3 lines of code that
+> won't need particular maintenance).
+>
+> In this case, I'm afraid the maintenance cost is much bigger than the
+> expected benefits.
 
-Yeah, this is what I had in mind. My only reservation would be that we
-need to make sure it is clear that this applies only to keys marked as
-taking a "pathname" type in the documentation. I'm suspect there are
-ones that are logically paths but do not currently do the expansion, but
-the wording above makes it sound like any pathname-like thing does.
+So you proposed to check a handful files for its exact content?
 
-Alternatively, it might be worth going through the list to make sure all
-paths use git_config_pathname() internally. Brian asked earlier if the
-"no expansion" was an intentional policy, but it's not. It's just that
-pathname expansion came much later, and config keys were ported over to
-it one by one as people found it useful to do so.
+This could be less of maintenance if we'd check with a "larger as" operator
+such as
 
--Peff
+    test_file_count_more_than html 200
+
+using an arbitrary slightly smaller number.
+
+
+>
+> --
+> Matthieu Moy
+> http://www-verimag.imag.fr/~moy/
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
