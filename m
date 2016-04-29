@@ -1,7 +1,7 @@
 From: tboegi@web.de
-Subject: [PATCH v8 05/10] read-cache: factor out get_sha1_from_index() helper
-Date: Fri, 29 Apr 2016 17:02:00 +0200
-Message-ID: <1461942120-16101-1-git-send-email-tboegi@web.de>
+Subject: [PATCH v8 10/10] ce_compare_data() did not respect conversion
+Date: Fri, 29 Apr 2016 17:02:06 +0200
+Message-ID: <1461942126-16296-1-git-send-email-tboegi@web.de>
 References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -14,141 +14,197 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aw9rX-0006yu-CI
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 16:57:47 +0200
+	id 1aw9rY-0006yu-Fr
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 16:57:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753943AbcD2O5k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Apr 2016 10:57:40 -0400
-Received: from mout.web.de ([212.227.15.4]:58358 "EHLO mout.web.de"
+	id S1753948AbcD2O5n convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Apr 2016 10:57:43 -0400
+Received: from mout.web.de ([212.227.15.14]:50313 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753910AbcD2O5a (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 10:57:30 -0400
-Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb004) with
- ESMTPSA (Nemesis) id 0MPJya-1b0XZP3FvU-004Opn; Fri, 29 Apr 2016 16:57:27
+	id S1753910AbcD2O5l (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 10:57:41 -0400
+Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb001) with
+ ESMTPSA (Nemesis) id 0MBkal-1anasz1Ef9-00Ajo2; Fri, 29 Apr 2016 16:57:34
  +0200
 X-Mailer: git-send-email 2.0.0.rc1.6318.g0c2c796
 In-Reply-To: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:SRbxJMV9zrbp7wKGPMqXsfKniQvLGDaHn3WCiH3mEvgeu5FjaA1
- w5lJn1SPqVrLszuGAn2Y2H9Y1o7k+9Y3ldyOMw+IDwdu24Puip3Shak927h7MJAhUZwX4BI
- wMgQPp9Aj9Z+QoC0iQJTu89oKUT9t36Qpjo6LsnwLmpUqQV2PNmZ/ZvdSOia46XP0tpiGju
- 5NpcpHO7CgDXz9DYhTgEw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:JKrButfjo6k=:RIQWYlFFIupxfK9kgj0NBb
- U2brg9lhLby3zlVg9NhTZy/NVcqQS6v5ZjzESLo7rtWEkWLirXWNQMOZ7IMlKHD6J15Ftmym6
- usLzhFFX4A++rLkFkW90iHPegetd5GcjAA+5K3tNu+FS8m87DX97TCYXPrSLlqVC/RBiXrzi4
- eMTGZOUg45THB3lFboMPCAz1ogH1oo0cKvJUH7sMKdVdIiiv8FKwUSPTUiwVjm+OgDKiuBfDq
- cyHsaF/Zww4d1CbQRfMxxST2eocYvB8yNWs0Vx52fAp4sw3iJ0PJ3qeucqlAugE9IfjbwXHqb
- yoZauG/QgiQQJzvLK4MWr0wIRHvN8GK/fdE4KoeCPZl+pKZTddMZyUd1iE48XccHvoGOKR/1d
- amEUB4pcvSL3vDISymJBZ40H17T25FUr81UBbhvbHCBqOzs1EttMKV2/BgoWib9oQiswZkjkw
- O9K1/AxcWwOq6jnhqndaXKcddpO1hRemGJkkLQurLc5UmQoX2Rbfj38LqUc0LASzAoY81Wf4i
- JVLRlbI6rLsVaeXiLLpu8N3mkZvnQaORVGsGOllzKYCcKD8GT41acuXPRtErQeJw0d5byDmPw
- bWyH7QfKMhALAZ6q6jzpOl8jTc3OuVxx2w52nCCXL6VtoJq301I80Nu1jvXjKOh4xKRXu9NKj
- EnTV/trernvz5aIe3zLXHGX4R7w0P9tJXXFVjC1j1ppO3X9y4zqUD9lHthBBB7uZsHvfKcroJ
- uGdwOTmsNT0EimN4Nt60DXfnBHvM9JdJOhEhN8go9UpQMkhd3pfXOHI73JzgMeLL2skPIpD9 
+X-Provags-ID: V03:K0:lbbv/tKkBAqkm611OVmh9koL5ZWvKhBtDW7By0nequTEQ0J3K2O
+ f+qOgjBQs/XGUA+8y5+ihxL6m07hpEGlElFLqRkcwWOwuRIA2snovpGSRSONOV2J0LfBjYw
+ Kqu5l+ktYisFIZJJQPEN11QU0ujjx3f1aa1hpYLNOtwbXx4hFBjNJMot1wHcbNoFo5Asz4n
+ a4mpTPEzTs3UDqg1Tm1XQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0+cD92HKoHY=:+2T7hx540FXU5xq+ZvZk6x
+ Bmsmx61l3NwCqG+9EFwzBamWjs2voy1ZyBK82FPtvl0eGOmBavH/os6zWzBZicc39RM3cK0mi
+ gmZY5jdI/FmAglZa9+xKBwnkYxit+7gJKFUdvY3A2PlqGRxh49DcjLsSbQGmJw4kQWrFp5D0s
+ snKbS1pvAJAhRaVHQCF5ai4964QCgDppHD3qFCEBTuF/DZQC4DjfyRUeaI3eafWJ98X4kFG2J
+ 72wx43Pq/vBPF34Xa/ywtxv4tDQ2vg9tghKTmlhB5/AkaZDCOUcIvsHWhDjcrKYHnRAJQQeai
+ uvig6ynylHVl8wEwYlhPzMlj8UW354cYQ7fUzA5XqROFJ9wNi460Ic8KjC7Qu+bt/FMhhcNjQ
+ gdqDopQQv1qME2UL+Pp5+ccMCxzhicEirs+a+LsUlFQZaF2GmEYDHLrf4rFFnqbcHUqEuZ3zY
+ q5XmFdmlLjJgxol6gJsU8Lgg3CMIX1VYQxrQ5MRmEFVneGli6wBWKZDnZrF2BBnpVkxJjxJDP
+ jd9BKSdlF8pEcrmgpdnjw42sqWvZ555eDRfFiST5dnOqj2/2QYB15Rvh24LOi8NmD7cJNYjFk
+ AZ37hu2uI3mMhNIpXfvbLsCSn3SIa4bZ2x/IgfPgkuLNqy0GeCl7GLT5Fs2wPNEa8tl/Tn47X
+ bBiU2VfiTDa6/wAz1OlHGudz/H7J85PSpeVyX0ZL4ZfND6fNYQq9BxGeforUD1S9omNSZ1ck2
+ q07IvFxmzpGliR6T1LiJ+B7xYXkjNIMbwxGQHrdWeCxAhGAwicC0K+Y+bFwyhatMfMBk2uSU 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293015>
 
 =46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-=46actor out the retrieval of the sha1 for a given path in
-read_blob_data_from_index() into the function get_sha1_from_index().
+We define the working tree file is clean if either:
 
-This will be used in the next commit, when convert.c can do the
-analyze for "text=3Dauto" without slurping the whole blob into memory
-at once.
+  * the result of running convert_to_git() on the working tree
+    contents matches what is in the index (because that would mean
+    doing another "git add" on the path is a no-op); OR
 
-Add a wrapper definition get_sha1_from_cache().
+  * the result of running convert_to_working_tree() on the content
+    in the index matches what is in the working tree (because that
+    would mean doing another "git checkout -f" on the path is a
+    no-op).
 
+Add an extra check in ce_compare_data() in read_cache.c.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 ---
- cache.h      |  3 +++
- read-cache.c | 29 ++++++++++++++++++-----------
- 2 files changed, 21 insertions(+), 11 deletions(-)
+ read-cache.c               | 61 ++++++++++++++++++++++++++++++++++++++=
+++++++++
+ t/t6038-merge-text-auto.sh | 14 +++++------
+ 2 files changed, 68 insertions(+), 7 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index b829410..bd1210a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -379,6 +379,7 @@ extern void free_name_hash(struct index_state *ista=
-te);
- #define unmerge_cache_entry_at(at) unmerge_index_entry_at(&the_index, =
-at)
- #define unmerge_cache(pathspec) unmerge_index(&the_index, pathspec)
- #define read_blob_data_from_cache(path, sz) read_blob_data_from_index(=
-&the_index, (path), (sz))
-+#define get_sha1_from_cache(path)  get_sha1_from_index (&the_index, (p=
-ath))
- #endif
-=20
- enum object_type {
-@@ -1008,6 +1009,8 @@ static inline void *read_sha1_file(const unsigned=
- char *sha1, enum object_type *
- 	return read_sha1_file_extended(sha1, type, size, LOOKUP_REPLACE_OBJEC=
-T);
- }
-=20
-+const unsigned char *get_sha1_from_index(struct index_state *istate, c=
-onst char *path);
-+
- /*
-  * This internal function is only declared here for the benefit of
-  * lookup_replace_object().  Please do not call it directly.
 diff --git a/read-cache.c b/read-cache.c
-index d9fb78b..a3ef967 100644
+index a3ef967..48c4b31 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -2263,13 +2263,27 @@ int index_name_is_other(const struct index_stat=
-e *istate, const char *name,
-=20
- void *read_blob_data_from_index(struct index_state *istate, const char=
- *path, unsigned long *size)
- {
--	int pos, len;
-+	const unsigned char *sha1;
- 	unsigned long sz;
- 	enum object_type type;
- 	void *data;
-=20
--	len =3D strlen(path);
--	pos =3D index_name_pos(istate, path, len);
-+	sha1 =3D get_sha1_from_index(istate, path);
-+	if (!sha1)
-+		return NULL;
-+	data =3D read_sha1_file(sha1, &type, &sz);
-+	if (!data || type !=3D OBJ_BLOB) {
-+		free(data);
-+		return NULL;
-+	}
-+	if (size)
-+		*size =3D sz;
-+	return data;
-+}
-+
-+const unsigned char *get_sha1_from_index(struct index_state *istate, c=
-onst char *path)
-+{
-+	int pos =3D index_name_pos(istate, path, strlen(path));
- 	if (pos < 0) {
- 		/*
- 		 * We might be in the middle of a merge, in which
-@@ -2285,14 +2299,7 @@ void *read_blob_data_from_index(struct index_sta=
-te *istate, const char *path, un
- 	}
- 	if (pos < 0)
- 		return NULL;
--	data =3D read_sha1_file(istate->cache[pos]->sha1, &type, &sz);
--	if (!data || type !=3D OBJ_BLOB) {
--		free(data);
--		return NULL;
--	}
--	if (size)
--		*size =3D sz;
--	return data;
-+	return (istate->cache[pos]->sha1);
+@@ -156,17 +156,78 @@ void fill_stat_cache_info(struct cache_entry *ce,=
+ struct stat *st)
+ 		ce_mark_uptodate(ce);
  }
 =20
- void stat_validity_clear(struct stat_validity *sv)
++/*
++ * Compare the data in buf with the data in the file pointed by fd and
++ * return 0 if they are identical, and non-zero if they differ.
++ */
++static int compare_with_fd(const char *input, ssize_t len, int fd)
++{
++	for (;;) {
++		char buf[1024 * 16];
++		ssize_t chunk_len, read_len;
++
++		chunk_len =3D sizeof(buf) < len ? sizeof(buf) : len;
++		read_len =3D xread(fd, buf, chunk_len ? chunk_len : 1);
++
++		if (!read_len)
++			/* EOF on the working tree file */
++			return !len ? 0 : -1;
++
++		if (!len)
++			/* we expected there is nothing left */
++			return -1;
++
++		if (memcmp(buf, input, read_len))
++			return -1;
++		input +=3D read_len;
++		len -=3D read_len;
++	}
++}
++
+ static int ce_compare_data(const struct cache_entry *ce, struct stat *=
+st)
+ {
+ 	int match =3D -1;
+ 	int fd =3D open(ce->name, O_RDONLY);
+=20
++	/*
++	 * Would another "git add" on the path change what is in the
++	 * index for the path?
++	 */
+ 	if (fd >=3D 0) {
+ 		unsigned char sha1[20];
+ 		if (!index_fd(sha1, fd, st, OBJ_BLOB, ce->name, 0))
+ 			match =3D hashcmp(sha1, ce->sha1);
+ 		/* index_fd() closed the file descriptor already */
+ 	}
++	if (!match)
++		return match;
++
++	/*
++	 * Would another "git checkout -f" out of the index change
++	 * what is in the working tree file?
++	 */
++	fd =3D open(ce->name, O_RDONLY);
++	if (fd >=3D 0) {
++		enum object_type type;
++		unsigned long size_long;
++		void *data =3D read_sha1_file(ce->sha1, &type, &size_long);
++
++		if (type =3D=3D OBJ_BLOB) {
++			struct strbuf worktree =3D STRBUF_INIT;
++			if (convert_to_working_tree(ce->name, data,
++						    size_long,
++						    &worktree)) {
++				size_t size;
++				free(data);
++				data =3D strbuf_detach(&worktree, &size);
++				size_long =3D size;
++			}
++			if (!compare_with_fd(data, size_long, fd))
++				match =3D 0;
++		}
++		free(data);
++		close(fd);
++	}
+ 	return match;
+ }
+=20
+diff --git a/t/t6038-merge-text-auto.sh b/t/t6038-merge-text-auto.sh
+index 0108ead..565daf3 100755
+--- a/t/t6038-merge-text-auto.sh
++++ b/t/t6038-merge-text-auto.sh
+@@ -108,9 +108,9 @@ test_expect_success 'Merge addition of text=3Dauto'=
+ '
+=20
+ test_expect_success 'Detect CRLF/LF conflict after setting text=3Dauto=
+' '
+ 	echo "<<<<<<<" >expected &&
+-	echo first line | append_cr >>expected &&
+-	echo same line | append_cr >>expected &&
+-	echo =3D=3D=3D=3D=3D=3D=3D | append_cr >>expected &&
++	echo first line >>expected &&
++	echo same line >>expected &&
++	echo =3D=3D=3D=3D=3D=3D=3D >>expected &&
+ 	echo first line | append_cr >>expected &&
+ 	echo same line | append_cr >>expected &&
+ 	echo ">>>>>>>" >>expected &&
+@@ -121,14 +121,13 @@ test_expect_success 'Detect CRLF/LF conflict afte=
+r setting text=3Dauto' '
+ 	fuzz_conflict file >file.fuzzy &&
+ 	compare_files expected file.fuzzy
+ '
+-
+ test_expect_success 'Detect LF/CRLF conflict from addition of text=3Da=
+uto' '
+ 	echo "<<<<<<<" >expected &&
+ 	echo first line | append_cr >>expected &&
+ 	echo same line | append_cr >>expected &&
+-	echo =3D=3D=3D=3D=3D=3D=3D | append_cr >>expected &&
+-	echo first line | append_cr >>expected &&
+-	echo same line | append_cr >>expected &&
++	echo =3D=3D=3D=3D=3D=3D=3D  >>expected &&
++	echo first line >>expected &&
++	echo same line  >>expected &&
+ 	echo ">>>>>>>" >>expected &&
+ 	git config merge.renormalize false &&
+ 	rm -f .gitattributes &&
+@@ -138,6 +137,7 @@ test_expect_success 'Detect LF/CRLF conflict from a=
+ddition of text=3Dauto' '
+ 	compare_files expected file.fuzzy
+ '
+=20
++
+ test_expect_failure 'checkout -m after setting text=3Dauto' '
+ 	cat <<-\EOF >expected &&
+ 	first line
 --=20
 2.7.0.992.g0c2c796
