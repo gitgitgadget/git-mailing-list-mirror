@@ -1,91 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 2/3] connect: group CONNECT_DIAG_URL handling code
-Date: Fri, 29 Apr 2016 10:13:45 -0700
-Message-ID: <xmqqvb30z6ba.fsf@gitster.mtv.corp.google.com>
-References: <20160428232936.GA8663@glandium.org>
-	<1461890625-23222-1-git-send-email-mh@glandium.org>
-	<1461890625-23222-2-git-send-email-mh@glandium.org>
-	<xmqqeg9o1k40.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] http: expand http.cookieFile as a path
+Date: Fri, 29 Apr 2016 13:16:31 -0400
+Message-ID: <20160429171631.GA29571@sigill.intra.peff.net>
+References: <20160429062357.12647-1-computersforpeace@gmail.com>
+ <20160429062357.12647-2-computersforpeace@gmail.com>
+ <20160429141212.GB26643@sigill.intra.peff.net>
+ <xmqqziscz6ej.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Fri Apr 29 19:13:55 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Brian Norris <computersforpeace@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 29 19:16:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1awBzF-0005gU-J1
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 19:13:53 +0200
+	id 1awC1u-00076v-QU
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 19:16:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752418AbcD2RNu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 13:13:50 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59596 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751980AbcD2RNt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 13:13:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 077591755F;
-	Fri, 29 Apr 2016 13:13:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dOmLQ2JuatFhDSXb6ji6s2Kkre8=; b=PcZyBZ
-	valoVldVJWsLTcrhZQXlZVqgxQn5SZ0GVZ+E/xGQGiPxQf9nxM3iCZjcP1TKMjnN
-	FqPRvwE42N6Ot3qpeo3T9EabrejrqYuvxxg/JlC+EZU62YvgxyglvZA5grR26BMp
-	SERUGuO5Ou/sAIixrLqzl8akQORTpFdwqvs2k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QD9PAhTqeqjvMTtGZJeWRGtcV7ov5zwy
-	Vfqnl05tmQcnjjRwWrRAE2R/6vedVVBQvvqJcZ1AxCEtG0bTm32RkdbsHAPI8llu
-	yTC8zwXw849R7k31I6exEbRZu2CgCrkvH5RObYxqTXXiJtehwFR30HXMnfPeIZvG
-	5rlMzhc2m14=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id F056D1755E;
-	Fri, 29 Apr 2016 13:13:47 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 541311755D;
-	Fri, 29 Apr 2016 13:13:47 -0400 (EDT)
-In-Reply-To: <xmqqeg9o1k40.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 29 Apr 2016 08:59:43 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BC1ADEB8-0E2D-11E6-AD73-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1752454AbcD2RQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 13:16:35 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59246 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752272AbcD2RQe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 13:16:34 -0400
+Received: (qmail 18188 invoked by uid 102); 29 Apr 2016 17:16:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Apr 2016 13:16:33 -0400
+Received: (qmail 23838 invoked by uid 107); 29 Apr 2016 17:16:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Apr 2016 13:16:36 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Apr 2016 13:16:31 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqziscz6ej.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293029>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Apr 29, 2016 at 10:11:48AM -0700, Junio C Hamano wrote:
 
-> Mike Hommey <mh@glandium.org> writes:
->
->> Signed-off-by: Mike Hommey <mh@glandium.org>
->
-> I feel that this commit is under-explained.  I think you should feel
-> entitled to boast the goodness this brings to us louder in the log
-> message.
->
-> It bothers me somewhat that this ended up copying, not moving, a bit
-> of code to call get-host-and-port helper, but I do not think it is a
-> problem and it makes the codeflow easier to follow.  Attempt to
-> refactor it to reduce the duplication is likely to make it worse.
->
+> Jeff King <peff@peff.net> writes:
+> 
+> > I'm not sure if it's a good idea to go into so much detail about
+> > expand_user_path() here. There are a lot of options that use the same
+> > rules, and we probably don't want to go into a complete explanation
+> > inside each option's description. Is there a canonical definition of how
+> > we do expansion in config.txt that we can just reference (and if not,
+> > can we add one)?
+> 
+> We have a dedicated section for various value-types used in the
+> configuration variables already, because we needed to describe how
+> booleans and scaled integers can be spelled, and the pathname type
+> would fit there.
+> 
+>  Documentation/config.txt | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 59d7046..1bf42a6 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -169,6 +169,11 @@ thing on the same output line (e.g. opening parenthesis before the
+>  list of branch names in `log --decorate` output) is set to be
+>  painted with `bold` or some other attribute.
+>  
+> +pathname::
+> +	A variable that takes a pathname value can be given a
+> +	string that begins with "~/" or "~user/", and the usual
+> +	tilde expansion happens to such a string.
+> +
+>  
+>  Variables
+>  ~~~~~~~~~
 
-I hate to add a noise to the list, but while re-re-re-editing this
-message before sending it out, I accidentally dropped an important
-line here.  I said (and then removed by mistake):
+Yeah, this is what I had in mind. My only reservation would be that we
+need to make sure it is clear that this applies only to keys marked as
+taking a "pathname" type in the documentation. I'm suspect there are
+ones that are logically paths but do not currently do the expansion, but
+the wording above makes it sound like any pathname-like thing does.
 
-	I like what this patch does.
+Alternatively, it might be worth going through the list to make sure all
+paths use git_config_pathname() internally. Brian asked earlier if the
+"no expansion" was an intentional policy, but it's not. It's just that
+pathname expansion came much later, and config keys were ported over to
+it one by one as people found it useful to do so.
 
-> We used to allocate and prepare the child process structure 'conn',
-> then realized that we are not going to use it anyway and discarded,
-> only because the DIAG_URL check for SSH transport was done way too
-> late.  That wastage is removed by this change as well.
->
-> Another change I notice is that DIAG_URL code for PROTO_SSH did not
-> even kick in if transport_check_allowed("ssh") said no, but with
-> this new code Diag is always given, which makes it consistent with
-> PROTO_GIT codepath.
+-Peff
