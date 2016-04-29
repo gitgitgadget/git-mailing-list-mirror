@@ -1,99 +1,77 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCHv1] git-p4: workaround p4 removal of client directory
-Date: Fri, 29 Apr 2016 08:39:27 +0100
-Message-ID: <CAE5ih78yvMe2MLqE6+KOnPUd+D_0-cO5-LY2WsbjfMmTMqBK9w@mail.gmail.com>
-References: <1461915626-10250-1-git-send-email-luke@diamand.org>
-	<1461915626-10250-2-git-send-email-luke@diamand.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 24/29] ref_transaction_update(): check refname_is_safe()
+ at a minimum
+Date: Fri, 29 Apr 2016 09:42:58 +0200
+Message-ID: <57231082.50806@alum.mit.edu>
+References: <cover.1461768689.git.mhagger@alum.mit.edu>
+ <a67a1b745d0a14111c774f13a5776d3756cbf2f2.1461768690.git.mhagger@alum.mit.edu>
+ <xmqqtwim95cm.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Luke Diamand <luke@diamand.org>,
-	Jacob Smith <jaroslov@gmail.com>
-To: Git Users <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 29 09:39:39 2016
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, David Turner <dturner@twopensource.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Jeff King <peff@peff.net>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 29 09:43:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aw31W-0005Vx-1k
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 09:39:38 +0200
+	id 1aw353-0007Dn-8r
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 09:43:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752191AbcD2Hj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 03:39:29 -0400
-Received: from mail-oi0-f67.google.com ([209.85.218.67]:33658 "EHLO
-	mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750760AbcD2Hj2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 03:39:28 -0400
-Received: by mail-oi0-f67.google.com with SMTP id f63so17408750oig.0
-        for <git@vger.kernel.org>; Fri, 29 Apr 2016 00:39:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=8xNcuoxAqIe4x0S4mhHrrNXOxiJKhDGYNmZjoPHx8rQ=;
-        b=KGe7fpt133PyGKYff8nwul6xgEixgzSPmmnH9zz2TJmPW/5U85pqoOPROXlsJEqRyD
-         b9b9Y/RYxmobXideCgPKgfYMv47pptsgLBb4SbMdM7XirMz/wNEp7YyZ7Sp7VrGiJSpe
-         tKtXr2hZmW584RQpBjG5/0b3gNIGDWL395s2Q=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=8xNcuoxAqIe4x0S4mhHrrNXOxiJKhDGYNmZjoPHx8rQ=;
-        b=LDxrqYQaObn0u/w+Yk4UxHNX82eP4FaaEoFvLM/jhdR9usOQ8QeKM3tnXJTbDLwBv5
-         OeM3J5HmiMIzUbK3kv4Z2OF58QglC5u1YvW8xLlMxxgjaBHvWm2xGqEBzSPv9lRrxkWl
-         qmOD3OgN3pMlXAmsd30iKyRz8499Aw5A+PFxyzAuENYMEITRAMNcuSqfDyxVc/bBYuqo
-         rlNJzzjJLh9aJL+C5RToGf5mxn36FcaTvTORE1DkY37TkTYkem87y/2HbSO5YA7Vnf4h
-         CxHUTZUSmaNv0VrZdNNmSv686NgC/Hu0zaZx0Vcxb0JsZhBE9ezYErLAjgIYlw4FjkUJ
-         4w+A==
-X-Gm-Message-State: AOPr4FUT1t/N6ZxW0ltMvv8MCJQN0oQxcEWympK+rc4Q/q0wUIrsx7wUF7U1VaMMyoPoVGQa7NhXoho3MtbGCQ==
-X-Received: by 10.157.32.114 with SMTP id n105mr9127599ota.108.1461915567353;
- Fri, 29 Apr 2016 00:39:27 -0700 (PDT)
-Received: by 10.157.37.88 with HTTP; Fri, 29 Apr 2016 00:39:27 -0700 (PDT)
-In-Reply-To: <1461915626-10250-2-git-send-email-luke@diamand.org>
+	id S1752894AbcD2HnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 03:43:11 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:56151 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752892AbcD2HnI (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2016 03:43:08 -0400
+X-AuditID: 1207440f-8bbff700000008e4-04-572310856742
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id 8B.F3.02276.58013275; Fri, 29 Apr 2016 03:43:01 -0400 (EDT)
+Received: from [192.168.69.130] (p548D6182.dip0.t-ipconnect.de [84.141.97.130])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u3T7gwwT012431
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 29 Apr 2016 03:42:59 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.7.0
+In-Reply-To: <xmqqtwim95cm.fsf@gitster.mtv.corp.google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrLKsWRmVeSWpSXmKPExsUixO6iqNsqoBxu8P4xl8X8TScYLbqudDNZ
+	NPReYbbonvKW0eJHSw+zxcyr1g5sHjtn3WX3eNa7h9Hj4iVlj/1Lt7F5LHh+n93j8ya5ALYo
+	bpukxJKy4Mz0PH27BO6MtimXmAr2sVacnHiTsYFxNUsXIweHhICJxIKpQV2MXBxCAlsZJS7+
+	e8oE4ZxnkmjtP8ncxcjJISwQLXHn8hQ2EFtEQE1iYtshFoiinYwSd+Z/ZAVxmAXuM0psOd3F
+	ClLFJqArsainmQlkBa+ApsSquWwgJouAqsT1ySIgFaICIRLb1n0Dq+YVEJQ4OfMJC4jNKWAt
+	8eliJzuIzSygJ7Hj+i9WCFteYvvbOcwTGPlnIWmZhaRsFpKyBYzMqxjlEnNKc3VzEzNzilOT
+	dYuTE/PyUot0TfRyM0v0UlNKNzFCgpt/B2PXeplDjAIcjEo8vDPuKYULsSaWFVfmHmKU5GBS
+	EuUN4VQOF+JLyk+pzEgszogvKs1JLT7EKMHBrCTCO5MPKMebklhZlVqUD5OS5mBREudVX6Lu
+	JySQnliSmp2aWpBaBJOV4eBQkuB9BdIoWJSanlqRlplTgpBm4uAEGc4lJVKcmpeSWpRYWpIR
+	D4rI+GJgTIKkeID2ivCD7C0uSMwFikK0nmLU5Vjw4/ZaJiGWvPy8VClx3i6QHQIgRRmleXAr
+	YKnsFaM40MfCvDIgo3iAaRBu0iugJUxASwQ2KYIsKUlESEk1ME7ceL8vz1TF9KHKruiVhwN9
+	vVcqr2JOW3z97LqHV+2ENdZwBD11ezO/y2nrxj8L1+YtbG593zDHd9qW5N13JJ6l 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292978>
 
-Adding correct email for Jacob.
+On 04/27/2016 10:14 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> If the user has asked that a new value be set for a reference, we use
+>> check_refname_format() to verify that the reference name satisfies all
+>> of the rules. But in other cases, at least check that refname_is_safe().
+> 
+> It isn't clear to me what "in other cases" exactly refers to.  A
+> request to delete a ref would obviously one of those that do not
+> "ask that a new value be set", but are there other cases?
 
-On 29 April 2016 at 08:40, Luke Diamand <luke@diamand.org> wrote:
-> On some platforms, "p4 sync -f" will remove the workspace
-> directory after we have just created it; on some it won't.
-> This causes problems later when git finds itself in an
-> orphaned directory.
->
-> Workaround this by cd'ing back to the directory after
-> the "p4 sync -f".
->
-> Signed-off-by: Luke Diamand <luke@diamand.org>
-> ---
->  git-p4.py | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/git-p4.py b/git-p4.py
-> index 527d44b..2b75a61 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -1,4 +1,4 @@
-> -#!/usr/bin/env python
-> +#!/usr/bin/env python2
->  #
->  # git-p4.py -- A tool for bidirectional operation between a Perforce depot and git.
->  #
-> @@ -1956,6 +1956,9 @@ class P4Submit(Command, P4UserMap):
->              if new_client_dir:
->                  # old one was destroyed, and maybe nobody told p4
->                  p4_sync("...", "-f")
-> +
-> +                # sometimes p4 will unlink the directory and recreate it
-> +                chdir(self.clientPath, is_client_path=True)
->              else:
->                  p4_sync("...")
->          self.check()
-> --
-> 2.8.1.218.gd2cea43.dirty
->
+The other case is `verify`, which can be used to check the old value of
+a reference without modifying it. `verify` is exposed via `git
+update-ref --stdin`
+
+Michael
