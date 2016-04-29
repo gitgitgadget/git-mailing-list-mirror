@@ -1,83 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 29/29] lock_ref_sha1_basic(): only handle REF_NODEREF mode
-Date: Fri, 29 Apr 2016 08:43:46 -0700
-Message-ID: <xmqqinz01kul.fsf@gitster.mtv.corp.google.com>
-References: <cover.1461768689.git.mhagger@alum.mit.edu>
-	<a3d853510719a37c1e4bbb52261169c25b19c148.1461768690.git.mhagger@alum.mit.edu>
+From: Brian Norris <computersforpeace@gmail.com>
+Subject: Re: [PATCH 2/2] http: expand http.cookieFile as a path
+Date: Fri, 29 Apr 2016 08:55:32 -0700
+Message-ID: <20160429155532.GA57118@google.com>
+References: <20160429062357.12647-1-computersforpeace@gmail.com>
+ <20160429062357.12647-2-computersforpeace@gmail.com>
+ <20160429141212.GB26643@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, David Turner <dturner@twopensource.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Apr 29 17:43:54 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 29 17:55:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1awAaA-00080C-2v
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 17:43:54 +0200
+	id 1awAlY-0006M3-IF
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 17:55:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753581AbcD2Pnu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 11:43:50 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64090 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753496AbcD2Pnt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 11:43:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7A343163BF;
-	Fri, 29 Apr 2016 11:43:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GnlMP06OTAlELFP6PuIDrs04kHg=; b=ryCY06
-	00XAAA0Aas9fgpeS32uFZzvWcBKiuoNf/pfgZA1rL1Mro/Em1XEHS8Oop17BNRG8
-	rTxj6eUDtdLZVZns+LZhWasuWVcF3wTt1puwTBWJ8ky6KQ+w/gu2x/3VIAWg4did
-	lgELYVrxHUx5LDHYGn/3XnmtlpLYMfnqSepS0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=llMdB54N0FidR/hTfpmGmOPQQJ+nsgJW
-	4YoHItgdsxMEgq3q4RC24dk5UoTHoul27jVfXpdM3TrsjuLNTaobOcLQSXPf6+IT
-	3OfhLWTpIf5wUgmyQawdyEEwIqPOOPTJmt6aeeVHKluByYL85bGpZDGArCGJIPfp
-	Djb6S6u+EC0=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6FE5A163BE;
-	Fri, 29 Apr 2016 11:43:48 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C7131163BD;
-	Fri, 29 Apr 2016 11:43:47 -0400 (EDT)
-In-Reply-To: <a3d853510719a37c1e4bbb52261169c25b19c148.1461768690.git.mhagger@alum.mit.edu>
-	(Michael Haggerty's message of "Wed, 27 Apr 2016 18:57:46 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 29C5C2B4-0E21-11E6-B532-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1753874AbcD2Pzg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 11:55:36 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:33450 "EHLO
+	mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753637AbcD2Pzf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 11:55:35 -0400
+Received: by mail-pf0-f176.google.com with SMTP id 206so49911741pfu.0
+        for <git@vger.kernel.org>; Fri, 29 Apr 2016 08:55:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=g2x+/abFwDr0kTj3VwFgxfppco6lsqxeovIowuG80Ug=;
+        b=HmTY7tvT2fAhKCu9Toe7RaZLI4YJFJxEJ7kBRmfc/t1ygA9MnFsYqMVgYlnzopnuPA
+         1myVto2j3JCs+aMDQL29GHNaHSqMRAj2k/l3otiS+R+YSMsBEg+XIVtJtPLI51cq4wDI
+         luDbyucjrIgzTYS5e3DXp80Z/WnSw8oYBkLCox/qnM+QoFxmcVoObD6ZS1GGyxmq3Mm/
+         zdcr/DstKhigbI7NkSV31I9picBOpA2xL1VNQR5tOYSjHLsFsEq6Kp7oExL4L3YX7gG+
+         nhyJn3piblQeaK1yICEdV091HFt+/gjSp3EWAxNg14wI32J4Tyo+bwB3SmpnovZ4KibK
+         GF2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=g2x+/abFwDr0kTj3VwFgxfppco6lsqxeovIowuG80Ug=;
+        b=JsOnejXl8ZB6pwihJaw78+GfrwI8pllrl0B/1GJkLQ7vU6vLgaLHZDJnIi1FtjYYp8
+         B4TJnITIgYL8HP5fjtaSprM4OjQ4l/4VVY1uJNtnkTniZSYCxj3zkjYtkCe924WrqbDm
+         2AbryxSnpcH5OH8833JHqrJ16KAbCmxUBuXwFh9lo+/9fONKVdjs/d8U9ref3+M0HNY9
+         NgZDn3lLVBf0yS8jG8LdoDK1AA5i72DzGJBEh3R/HEn100Pzi4hnzrVcaGiuXk5YrPY/
+         5h0NDVHfTIUHLmWIBA5U1OkQvzDANfrQWbGo0DG+mn6HN58F6E5HqhQuBCx3z1r2y6s5
+         Jcrg==
+X-Gm-Message-State: AOPr4FVP9f2KOZqYE36ftPhB0DUHR3t8ZGJAl5VvvE/CDgjvotUb6XwoS0Skx3/uFTb92A==
+X-Received: by 10.98.28.84 with SMTP id c81mr30257658pfc.131.1461945335049;
+        Fri, 29 Apr 2016 08:55:35 -0700 (PDT)
+Received: from google.com ([2620:0:1000:1301:8d40:703e:9507:1fcf])
+        by smtp.gmail.com with ESMTPSA id g84sm24415589pfj.42.2016.04.29.08.55.34
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 29 Apr 2016 08:55:34 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20160429141212.GB26643@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293020>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Fri, Apr 29, 2016 at 10:12:12AM -0400, Jeff King wrote:
+> On Fri, Apr 29, 2016 at 12:23:57AM -0600, Brian Norris wrote:
+> 
+> > This should handle .gitconfig files that specify things like:
+> > 
+> > [http]
+> > 	cookieFile = "~/.gitcookies"
+> 
+> Seems like a good idea, and the implementation looks obviously correct.
+> 
+> For the documentation:
+> 
+> > diff --git a/Documentation/config.txt b/Documentation/config.txt
+> > index a775ad885a76..d3ef2d3b5d13 100644
+> > --- a/Documentation/config.txt
+> > +++ b/Documentation/config.txt
+> > @@ -1660,6 +1660,9 @@ http.cookieFile::
+> >  	in the Git http session, if they match the server. The file format
+> >  	of the file to read cookies from should be plain HTTP headers or
+> >  	the Netscape/Mozilla cookie file format (see linkgit:curl[1]).
+> > +	The value of `http.cookieFile` is subject to tilde expansion: `~/` is
+> > +	expanded to the value of `$HOME`, and `~user/` to the specified user's
+> > +	home directory.
+> >  	NOTE that the file specified with http.cookieFile is used only as
+> >  	input unless http.saveCookies is set.
+> 
+> I'm not sure if it's a good idea to go into so much detail about
+> expand_user_path() here. There are a lot of options that use the same
+> rules, and we probably don't want to go into a complete explanation
+> inside each option's description. Is there a canonical definition of how
+> we do expansion in config.txt that we can just reference (and if not,
+> can we add one)?
 
-> Now lock_ref_sha1_basic() is only called with flags==REF_NODEREF. So we
-> don't have to handle other cases anymore.
->
-> This enables several simplifications, the most interesting of which come
-> from the fact that ref_lock::orig_ref_name is now always the same as
-> ref_lock::ref_name:
->
-> * Remove ref_lock::orig_ref_name
-> * Remove local variable orig_refname from lock_ref_sha1_basic()
-> * commit_ref_update() never has to write to the reflog for
->   lock->orig_ref_name
->
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
->  refs/files-backend.c | 54 ++++++++++++++++++++--------------------------------
->  1 file changed, 21 insertions(+), 33 deletions(-)
+I mostly just copied from boilerplate on another option. IIRC, there
+were at least two other options that were documented similarly.
 
-Finished reading the whole thing and it made quite a lot of sense.
+I think it's very important to note this somehow in the documentation.
+For months, I've just had to keep a delta among the (otherwise
+identical, shared) .gitconfig on my various machines just to account for
+the different home directories. I thought that the "no-expansion" thing
+was an intentional policy, since there are various blogs/forums that
+mention the lack of this kind of expansion when you search for related
+problems. But apparently this was a bug/oversight. So having clear
+documentation to state the reality is imperative, IMO.
 
-Thanks.
+The best kind of documentation might mention that all paths can be
+expanded in this way, and then just include "path" language on the
+relevant options. But then we'd have to do a quick audit to make sure
+that every path-based option does indeed use this path-expansion helper.
+(As this patch proves, we haven't been very consistent so far.)
+
+If you have a good overall recommendation for this, I can try to send a
+new patch sometime next week.
+
+Brian
