@@ -1,77 +1,135 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 24/29] ref_transaction_update(): check refname_is_safe()
- at a minimum
-Date: Fri, 29 Apr 2016 09:42:58 +0200
-Message-ID: <57231082.50806@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 15/29] ref_transaction_create(): disallow recursive pruning
+Date: Fri, 29 Apr 2016 01:19:03 -0700
+Message-ID: <xmqq4mak3k08.fsf@gitster.mtv.corp.google.com>
 References: <cover.1461768689.git.mhagger@alum.mit.edu>
- <a67a1b745d0a14111c774f13a5776d3756cbf2f2.1461768690.git.mhagger@alum.mit.edu>
- <xmqqtwim95cm.fsf@gitster.mtv.corp.google.com>
+	<615204c877610855b02b21ce14efa5b7342182bc.1461768689.git.mhagger@alum.mit.edu>
+	<xmqq60v2anyo.fsf@gitster.mtv.corp.google.com>
+	<1461788637.11504.3.camel@twopensource.com>
+	<xmqqh9em93xo.fsf@gitster.mtv.corp.google.com>
+	<xmqqvb327nyz.fsf@gitster.mtv.corp.google.com>
+	<5723059C.5080406@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, David Turner <dturner@twopensource.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Jeff King <peff@peff.net>,
+Content-Type: text/plain
+Cc: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Jeff King <peff@peff.net>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 29 09:43:19 2016
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Apr 29 10:19:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aw353-0007Dn-8r
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 09:43:17 +0200
+	id 1aw3eD-0007fQ-He
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 10:19:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752894AbcD2HnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 03:43:11 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:56151 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752892AbcD2HnI (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2016 03:43:08 -0400
-X-AuditID: 1207440f-8bbff700000008e4-04-572310856742
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 8B.F3.02276.58013275; Fri, 29 Apr 2016 03:43:01 -0400 (EDT)
-Received: from [192.168.69.130] (p548D6182.dip0.t-ipconnect.de [84.141.97.130])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u3T7gwwT012431
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 29 Apr 2016 03:42:59 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.7.0
-In-Reply-To: <xmqqtwim95cm.fsf@gitster.mtv.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrLKsWRmVeSWpSXmKPExsUixO6iqNsqoBxu8P4xl8X8TScYLbqudDNZ
-	NPReYbbonvKW0eJHSw+zxcyr1g5sHjtn3WX3eNa7h9Hj4iVlj/1Lt7F5LHh+n93j8ya5ALYo
-	bpukxJKy4Mz0PH27BO6MtimXmAr2sVacnHiTsYFxNUsXIweHhICJxIKpQV2MXBxCAlsZJS7+
-	e8oE4ZxnkmjtP8ncxcjJISwQLXHn8hQ2EFtEQE1iYtshFoiinYwSd+Z/ZAVxmAXuM0psOd3F
-	ClLFJqArsainmQlkBa+ApsSquWwgJouAqsT1ySIgFaICIRLb1n0Dq+YVEJQ4OfMJC4jNKWAt
-	8eliJzuIzSygJ7Hj+i9WCFteYvvbOcwTGPlnIWmZhaRsFpKyBYzMqxjlEnNKc3VzEzNzilOT
-	dYuTE/PyUot0TfRyM0v0UlNKNzFCgpt/B2PXeplDjAIcjEo8vDPuKYULsSaWFVfmHmKU5GBS
-	EuUN4VQOF+JLyk+pzEgszogvKs1JLT7EKMHBrCTCO5MPKMebklhZlVqUD5OS5mBREudVX6Lu
-	JySQnliSmp2aWpBaBJOV4eBQkuB9BdIoWJSanlqRlplTgpBm4uAEGc4lJVKcmpeSWpRYWpIR
-	D4rI+GJgTIKkeID2ivCD7C0uSMwFikK0nmLU5Vjw4/ZaJiGWvPy8VClx3i6QHQIgRRmleXAr
-	YKnsFaM40MfCvDIgo3iAaRBu0iugJUxASwQ2KYIsKUlESEk1ME7ceL8vz1TF9KHKruiVhwN9
-	vVcqr2JOW3z97LqHV+2ENdZwBD11ezO/y2nrxj8L1+YtbG593zDHd9qW5N13JJ6l 
+	id S1752639AbcD2IT3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 04:19:29 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65378 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750925AbcD2ITH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 04:19:07 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A8B8E103FC;
+	Fri, 29 Apr 2016 04:19:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AbFWlD3WWoGQnHNNGSJFQvs/Ij8=; b=hjwgvR
+	1odkLJii6njDl47UXtgnGmoC1SjT9ftkv8+kNObO6DVJvFa43G0cG8V5XVkmXJrG
+	gfsspYPV2hZfZ/5HF1mUpMJkVGosg2B8/b8QiHxyRRx5VHdbVD2EBs4QYlIgkS59
+	8Pp0J6LWCwO+sB0P2lR3ke4tA0LKuq3u0MHgk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AQZqEv4JeWu5N3rrwcVq6EJrrU7xH0Uc
+	b1XdUQKKTD+oJ1ZXVOLOXXmM25OFFDUtvgwZG5mDwF/2TYJO9xal0wGWpireHHVw
+	RBzwGe25PU9IBx9+8IIB6Z40Ue4XdmNgVrP6HvkioXyW5dPkzSaqcv/gcnKMfztu
+	dfBcNBqMhb4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 98D68103FB;
+	Fri, 29 Apr 2016 04:19:05 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C1A2D103FA;
+	Fri, 29 Apr 2016 04:19:04 -0400 (EDT)
+In-Reply-To: <5723059C.5080406@alum.mit.edu> (Michael Haggerty's message of
+	"Fri, 29 Apr 2016 08:56:28 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 096A8948-0DE3-11E6-9DE3-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292979>
 
-On 04/27/2016 10:14 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> If the user has asked that a new value be set for a reference, we use
->> check_refname_format() to verify that the reference name satisfies all
->> of the rules. But in other cases, at least check that refname_is_safe().
-> 
-> It isn't clear to me what "in other cases" exactly refers to.  A
-> request to delete a ref would obviously one of those that do not
-> "ask that a new value be set", but are there other cases?
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-The other case is `verify`, which can be used to check the old value of
-a reference without modifying it. `verify` is exposed via `git
-update-ref --stdin`
+> But I think it would be cleaner to achieve that goal with the following
+> change:
+>
+> diff --git a/refs.c b/refs.c
+> index 5dc2473..1d4c12a 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -790,8 +790,10 @@ int ref_transaction_update(struct ref_transaction
+> *transaction,
+>  	if (transaction->state != REF_TRANSACTION_OPEN)
+>  		die("BUG: update called for transaction that is not open");
+>
+> -	if ((flags & REF_ISPRUNING) && !(flags & REF_NODEREF))
+> -		die("BUG: REF_ISPRUNING set without REF_NODEREF");
+> +	if (flags & REF_ISPRUNING) {
+> +		/* Pruning is always non-recursive */
+> +		flags |= REF_NODEREF;
+> +	}
+>
+>  	if (new_sha1 && !is_null_sha1(new_sha1) &&
+>  	    check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index 8fcbd7d..9faf17c 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -2116,7 +2116,7 @@ static void prune_ref(struct ref_to_prune *r)
+>  	transaction = ref_transaction_begin(&err);
+>  	if (!transaction ||
+>  	    ref_transaction_delete(transaction, r->name, r->sha1,
+> -				   REF_ISPRUNING | REF_NODEREF, NULL, &err) ||
+> +				   REF_ISPRUNING, NULL, &err) ||
+>  	    ref_transaction_commit(transaction, &err)) {
+>  		ref_transaction_free(transaction);
+>  		error("%s", err.buf);
+> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+> index 37a1a37..704eea7 100644
+> --- a/refs/refs-internal.h
+> +++ b/refs/refs-internal.h
+> @@ -15,7 +15,7 @@
+>
+>  /*
+>   * Used as a flag in ref_update::flags when a loose ref is being
+> - * pruned.
+> + * pruned. This flag implies REF_NODEREF.
+>   */
+>  #define REF_ISPRUNING	0x04
+>
+>
+> Note that patch "add_update(): initialize the whole ref_update" should
+> then be adjusted to do the flag-tweak in the add_update() function.
+> ...
+> If there are no objections, I will implement these changes in v2.
 
-Michael
+One worrysome point the above approach leaves is that nothing
+guarantees that nobody in the codepath from the callsite of
+ref-transaction-delete to ref-transaction-update looks at the flag
+and acts differently depending on REF_NODEREF bit.  During that
+time, REF_ISPRUNING call would not trigger (flag & REF_NODEREF)
+check, because "pruning implies no-deref" is done only after you
+reach transaction-update (i.e. the code you added in the first
+hunk), but any code after that "implie no-deref" happens will see
+REF_NODEREF bit in the flag word.
+
+As long as you can add some mechanism to make that a non-issue, I am
+fine with that approach.
+
+Thanks.
