@@ -1,73 +1,95 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] http: expand http.cookieFile as a path
-Date: Fri, 29 Apr 2016 10:12:12 -0400
-Message-ID: <20160429141212.GB26643@sigill.intra.peff.net>
-References: <20160429062357.12647-1-computersforpeace@gmail.com>
- <20160429062357.12647-2-computersforpeace@gmail.com>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH v2 1/4] rev-parse: fix some options when executed from subpath of main tree
+Date: Fri, 29 Apr 2016 16:21:31 +0200
+Message-ID: <20160429142131.16282-1-szeder@ira.uka.de>
+References: <1461361992-91918-2-git-send-email-rappazzo@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Brian Norris <computersforpeace@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 29 16:12:23 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+	gitster@pobox.com, sunshine@sunshineco.com, pclouds@gmail.com,
+	git@vger.kernel.org
+To: Michael Rappazzo <rappazzo@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 29 16:22:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aw99Y-0006Vn-Pr
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 16:12:21 +0200
+	id 1aw9Ip-00030a-27
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 16:21:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753422AbcD2OMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 10:12:17 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59107 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753404AbcD2OMP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 10:12:15 -0400
-Received: (qmail 8243 invoked by uid 102); 29 Apr 2016 14:12:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Apr 2016 10:12:14 -0400
-Received: (qmail 22033 invoked by uid 107); 29 Apr 2016 14:12:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Apr 2016 10:12:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Apr 2016 10:12:12 -0400
-Content-Disposition: inline
-In-Reply-To: <20160429062357.12647-2-computersforpeace@gmail.com>
+	id S1753271AbcD2OVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 10:21:51 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:57451 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753094AbcD2OVv (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2016 10:21:51 -0400
+Received: from x590cc487.dyn.telefonica.de ([89.12.196.135] helo=localhost.localdomain)
+	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
+	iface 141.3.10.81 id 1aw9Ia-0001dk-NI; Fri, 29 Apr 2016 16:21:42 +0200
+X-Mailer: git-send-email 2.8.1.404.g5513ce8
+In-Reply-To: <1461361992-91918-2-git-send-email-rappazzo@gmail.com>
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1461939702.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293001>
 
-On Fri, Apr 29, 2016 at 12:23:57AM -0600, Brian Norris wrote:
+[Resend to list, sorry for the duplicates.]
 
-> This should handle .gitconfig files that specify things like:
+> Executing `git-rev-parse` with `--git-common-dir`, `--git-path <path>`,
+> or `--shared-index-path` from the root of the main worktree results in
+> a relative path to the git dir.
 > 
-> [http]
-> 	cookieFile = "~/.gitcookies"
+> When executed from a subdirectory of the main tree, however, it incorrectly
+> returns a path which starts 'sub/path/.git'.
 
-Seems like a good idea, and the implementation looks obviously correct.
+This is not completely true, because '--git-path ...' returns a
+relative path starting with '.git':
 
-For the documentation:
+  $ git -C t/ rev-parse --git-dir --git-path objects --git-common-dir
+  /home/szeder/src/git/.git
+  .git/objects
+  t/.git
 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index a775ad885a76..d3ef2d3b5d13 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1660,6 +1660,9 @@ http.cookieFile::
->  	in the Git http session, if they match the server. The file format
->  	of the file to read cookies from should be plain HTTP headers or
->  	the Netscape/Mozilla cookie file format (see linkgit:curl[1]).
-> +	The value of `http.cookieFile` is subject to tilde expansion: `~/` is
-> +	expanded to the value of `$HOME`, and `~user/` to the specified user's
-> +	home directory.
->  	NOTE that the file specified with http.cookieFile is used only as
->  	input unless http.saveCookies is set.
+It's still wrong, of course.
 
-I'm not sure if it's a good idea to go into so much detail about
-expand_user_path() here. There are a lot of options that use the same
-rules, and we probably don't want to go into a complete explanation
-inside each option's description. Is there a canonical definition of how
-we do expansion in config.txt that we can just reference (and if not,
-can we add one)?
+> Change this to return the
+> proper relative path to the git directory.
 
--Peff
+I think returning absolute paths would be better.  It is consistent
+with the already properly working '--git-dir' option, which returns an
+absolute path in this case.  Furthermore, both '--git-path ...' and
+'--git-common-dir' already return absolute paths when run from a
+subdirectory of the .git directory:
+
+  $ git -C .git/refs rev-parse --git-dir --git-path objects --git-common-dir
+  /home/szeder/src/git/.git
+  /home/szeder/src/git/.git/objects
+  /home/szeder/src/git/.git
+
+> Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+> ---
+>  builtin/rev-parse.c | 19 ++++++++++++++-----
+>  1 file changed, 14 insertions(+), 5 deletions(-)
+
+This patch doesn't add any new tests, while subsequent patches of the
+series do nothing but add more tests.  Splitting up your changes this
+way doesn't add any value, it only increases the number of commits.  I
+think either:
+
+  - all those new tests could be added with this patch, or
+
+  - if you want to add the test separately, then add them before
+    this patch and mark them with 'test_expect_failure' to clearly
+    demonstrate what the series is about to fix, and flip them to
+    'test_expect_success' in this patch.
+
+  - An alternative way to split this series, following the "Make
+    separate commits for logically separate changes" guideline, would
+    be to fix and test these options in separate patches, i.e. fix and
+    test '--git-path ...' in one patch, then fix and test
+    '--git-common-dir' in the next, ...
