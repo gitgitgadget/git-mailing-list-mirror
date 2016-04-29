@@ -1,112 +1,129 @@
 From: tboegi@web.de
-Subject: [PATCH v8 02/10] convert: allow core.autocrlf=input and core.eol=crlf
-Date: Fri, 29 Apr 2016 17:01:55 +0200
-Message-ID: <1461942115-15982-1-git-send-email-tboegi@web.de>
+Subject: [PATCH v8 04/10] convert.c: ident + core.autocrlf didn't work
+Date: Fri, 29 Apr 2016 17:01:58 +0200
+Message-ID: <1461942118-16060-1-git-send-email-tboegi@web.de>
 References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 16:57:36 2016
+X-From: git-owner@vger.kernel.org Fri Apr 29 16:57:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aw9rJ-0006oF-CM
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 16:57:33 +0200
+	id 1aw9rJ-0006oF-Ui
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 16:57:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753850AbcD2O51 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Apr 2016 10:57:27 -0400
-Received: from mout.web.de ([212.227.15.4]:56842 "EHLO mout.web.de"
+	id S1753899AbcD2O5b convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Apr 2016 10:57:31 -0400
+Received: from mout.web.de ([212.227.15.4]:64886 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753899AbcD2O5Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 10:57:25 -0400
-Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0M1FqS-1bpES31B2e-00tEkw; Fri, 29 Apr 2016 16:57:23
+	id S1753906AbcD2O52 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 10:57:28 -0400
+Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb002) with
+ ESMTPSA (Nemesis) id 0MXHoz-1bA3gB1165-00WH9J; Fri, 29 Apr 2016 16:57:26
  +0200
 X-Mailer: git-send-email 2.0.0.rc1.6318.g0c2c796
 In-Reply-To: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:oOTlxq0fviUJvBokvXjBmFhsFrWjKCOGxZrN13E1RyQJTYPCuC7
- vRXD3A0IaMiOvaSKvCtb7NiJwJNwuNJjqZB7hFCs/wJYHeQ1GJLA6Pd8LTDwY2++PcgGOkg
- wo8K6xtvGNa3ezmqB+N8LHckiv9JbH0+h1B85SJlaPGiBzlGCyt5a8EcpUN4uFK69gJcci3
- CR72K/zcaAmskhkrcaPVw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:pZeMh9BgYM4=:wOuT4wQUhJvMei0uSPUcDc
- CTHmcL1vu97fnVCeY4nMu3nieuJHVwakafHVnXQs/ChwS4PaBdpNVc133m2doE6DfwWozomZq
- pqLj8JKSmT3FL+bx2eAglZzm/U5f2yfrEDJCq9ZlCP5FuboLaRiCswmeXO9DErniGBNSlEBdV
- QPMT4ZNxzyMf71o9MEH1TbRS7r3JyGxKM0bWuSD18wtBn5C7D1JHgi7MX5CkCupuShMiKIjpw
- xueFTnY7Aa/INDQr84NZayFwcNFR0frFT33p7xP9/a03h6XfkZeR2W7pkn5i+lsWH7DZCcT58
- xdaduuRc8eX5Pd2YxLrKOwyXtsXd9CC62wSBC7L9rGDJ1IART1NsbKTH6Wezfe5gLPmIbC+ki
- 3pa0m2CdS4MaWX7jbt4+4XWEnsfzRNZVowFtlxswQ/hf2bUjU1PULT/F5jOiGL9yj98VJR406
- wkP6Opo7Lada3SFiuEMoQv9CAenjG+0L62LvCadFm7qH8IgDq3JxKkF6ZOaQkbfjKsvUbKwlG
- +JsTxFC/73Plyo0tUOgza4i8cktoadswO6hrUx63w74rAaIcmFCrwZs0A2pjNwG+06ojqkc95
- eehg1Z/LjJibs+ckAe2HDmFUj18387bKJjXwaPxlG7YUH1Y7fbvGC91cpRLOgLL1wB5nESqF7
- EqkVhYMpPi44C6Wy4yElVgRpIU6j4Ntm3tIbMMuXIcoDnhMxsF5BDUpAjuymk8CdNkv6OevGQ
- m/OO1nPEg39ibhHn4YkcRgh2faTFTHBMZF/62u22kSH7YW0eTNrJfYKWrgdfN3/iggdJamYy 
+X-Provags-ID: V03:K0:MpoKe93mv+HtGZJCCCpDyZJWkQ+ZxVxV9cCWitfJe8yEEkYE7QU
+ t6MPvj1SlN9qHATDTmQwBwlTCvkvLjpP+W+E+nBEvt4lFLyGcPULXg01hQ9e3YFUcOPT/vm
+ Tzr2l60eNG8lIjcKKuBsC83fRC5wXeMYph6yLVD4q+o31TgE+CephSbLB1viDmSvzgu5kgR
+ 0RrDjmq9JCH1hnVinUkvQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:k3iW2N7PdUw=:x7s1c4kg522YJJwiEpA/jS
+ BNfm+WvhebazX53nCvKG3weLya2LegGuMc1ZsGMg3cYG4Bk40cDwvyj32xJGHkezW5gv7IiGF
+ Xam8CCR+vWzVDMyw9gRC//d5Zx9XO3sgXH/32gtAxW2PCuisNmgS4Ewds8AMRqH64MwRtuPlG
+ 4DdIaPaYfXYsajLpw7DOhiQUz3+7EeQkqOfFtKtQy72DixSOAb8ZitdfrlXOZTMBjiTDIdQ0w
+ asXYsWBU3Qw178IhFf/xNSucdSFN9H2ySHG8ld1Jvge8pczQdH9DZmvd9DmxIB+mScx2b7v5W
+ E83DG+pYQnhjECTuJTKBDIUeme4lVmjzVEcNgM4OsAt2ah85KM7NlPKdeyvOHtZ8zSAHfr6tO
+ uVgqQqWU/cTYxSo086vXpeUalo6nUJwdGnQVJV6Ouv1iIg+iPz8xz/liJ6/KyEHaEWAQD4+5a
+ EJB4BtI0lpI71bWW2j/1YMCHv+bjhGQgvehqlaQM2oyCGplx+xb9sFCJ2zI71PBCCI1A68CYK
+ DhUeTfkSlOMdznO2Vcg3qrkqyd0SBxavhD15Dd7VDX5u/TN/T2EIGY7+rcfsfBErZMLRIx/ls
+ E0MCDPaPiUPuw20kJ6YWuLTWlGJYwkiVKhQ2YqFzd0UCsks79wDql1wbWgUIfkkqsGsrA+DF3
+ w8kIYbVhfSjM6G/8Y3yZerYq0YpxkF8jEU7gIEeGJxfnjo5DMgI5WrUElqYrKCvG6nJaApL1X
+ dazv7Zu3MnN7uhmA5g9tq0G453WKIGE3hVpXmpIr51BV8uw8iY9T+FZ/WVKf0ztFipERDpps 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293009>
 
 =46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-Even though the configuration parser errors out when core.autocrlf
-is set to 'input' when core.eol is set to 'crlf', there is no need
-to do so, because the core.autocrlf setting trumps core.eol.
+When the ident attributes is set, get_stream_filter() did not obey
+core.autocrlf=3Dtrue, and the file was checked out with LF.
 
-Allow all combinations of core.crlf and core.eol and document
-that core.autocrlf overrides core.eol.
+Change the rule when a streaming filter can be used:
+- if an external filter is specified, don't use a stream filter.
+- if the worktree eol is CRLF and "auto" is active, don't use a stream =
+filter.
+- Otherwise the stream filter can be used.
+
+Add test cases in t0027.
 
 Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 ---
- Documentation/config.txt | 6 +++---
- config.c                 | 4 ----
- 2 files changed, 3 insertions(+), 7 deletions(-)
+ convert.c            | 19 +++++++------------
+ t/t0027-auto-crlf.sh |  2 +-
+ 2 files changed, 8 insertions(+), 13 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 2cd6bdd..4a27ad4 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -337,9 +337,9 @@ core.quotePath::
+diff --git a/convert.c b/convert.c
+index f524b8d..b1614bf 100644
+--- a/convert.c
++++ b/convert.c
+@@ -1380,27 +1380,22 @@ static struct stream_filter *ident_filter(const=
+ unsigned char *sha1)
+ struct stream_filter *get_stream_filter(const char *path, const unsign=
+ed char *sha1)
+ {
+ 	struct conv_attrs ca;
+-	enum crlf_action crlf_action;
+ 	struct stream_filter *filter =3D NULL;
 =20
- core.eol::
- 	Sets the line ending type to use in the working directory for
--	files that have the `text` property set.  Alternatives are
--	'lf', 'crlf' and 'native', which uses the platform's native
--	line ending.  The default value is `native`.  See
-+	files that have the `text` property set when core.autocrlf is false.
-+	Alternatives are 'lf', 'crlf' and 'native', which uses the platform's
-+	native line ending.  The default value is `native`.  See
- 	linkgit:gitattributes[5] for more information on end-of-line
- 	conversion.
+ 	convert_attrs(&ca, path);
+-
+ 	if (ca.drv && (ca.drv->smudge || ca.drv->clean))
+-		return filter;
++		return NULL;
++
++	if (ca.crlf_action =3D=3D CRLF_AUTO || ca.crlf_action =3D=3D CRLF_AUT=
+O_CRLF)
++		return NULL;
 =20
-diff --git a/config.c b/config.c
-index 9ba40bc..a6adc8b 100644
---- a/config.c
-+++ b/config.c
-@@ -803,8 +803,6 @@ static int git_default_core_config(const char *var,=
- const char *value)
+ 	if (ca.ident)
+ 		filter =3D ident_filter(sha1);
 =20
- 	if (!strcmp(var, "core.autocrlf")) {
- 		if (value && !strcasecmp(value, "input")) {
--			if (core_eol =3D=3D EOL_CRLF)
--				return error("core.autocrlf=3Dinput conflicts with core.eol=3Dcrlf=
-");
- 			auto_crlf =3D AUTO_CRLF_INPUT;
- 			return 0;
- 		}
-@@ -830,8 +828,6 @@ static int git_default_core_config(const char *var,=
- const char *value)
- 			core_eol =3D EOL_NATIVE;
- 		else
- 			core_eol =3D EOL_UNSET;
--		if (core_eol =3D=3D EOL_CRLF && auto_crlf =3D=3D AUTO_CRLF_INPUT)
--			return error("core.autocrlf=3Dinput conflicts with core.eol=3Dcrlf"=
-);
- 		return 0;
- 	}
+-	crlf_action =3D ca.crlf_action;
+-
+-	if ((crlf_action =3D=3D CRLF_BINARY) ||
+-			crlf_action =3D=3D CRLF_AUTO_INPUT ||
+-			(crlf_action =3D=3D CRLF_TEXT_INPUT))
+-		filter =3D cascade_filter(filter, &null_filter_singleton);
+-
+-	else if (output_eol(crlf_action) =3D=3D EOL_CRLF &&
+-		 !(crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_AUTO_CRLF=
+))
++	if (output_eol(ca.crlf_action) =3D=3D EOL_CRLF)
+ 		filter =3D cascade_filter(filter, lf_to_crlf_filter());
++	else
++		filter =3D cascade_filter(filter, &null_filter_singleton);
 =20
+ 	return filter;
+ }
+diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
+index fd5e326..9372589 100755
+--- a/t/t0027-auto-crlf.sh
++++ b/t/t0027-auto-crlf.sh
+@@ -493,7 +493,7 @@ fi
+ export CRLF_MIX_LF_CR MIX NL
+=20
+ # Same handling with and without ident
+-for id in ""
++for id in "" ident
+ do
+ 	for ceol in lf crlf native
+ 	do
 --=20
 2.7.0.992.g0c2c796
