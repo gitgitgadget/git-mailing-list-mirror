@@ -1,121 +1,64 @@
-From: Brian Norris <computersforpeace@gmail.com>
-Subject: Re: [PATCH 2/2] http: expand http.cookieFile as a path
-Date: Fri, 29 Apr 2016 08:55:32 -0700
-Message-ID: <20160429155532.GA57118@google.com>
-References: <20160429062357.12647-1-computersforpeace@gmail.com>
- <20160429062357.12647-2-computersforpeace@gmail.com>
- <20160429141212.GB26643@sigill.intra.peff.net>
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: [PATCH] t9824: fix wrong reference value
+Date: Fri, 29 Apr 2016 15:57:02 +0000
+Message-ID: <0102015462bcd1c3-4196e36b-515b-447f-beca-649922456098-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Apr 29 17:55:41 2016
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 29 17:57:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1awAlY-0006M3-IF
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 17:55:40 +0200
+	id 1awAn3-0007Cp-Fo
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 17:57:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753874AbcD2Pzg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 11:55:36 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:33450 "EHLO
-	mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753637AbcD2Pzf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 11:55:35 -0400
-Received: by mail-pf0-f176.google.com with SMTP id 206so49911741pfu.0
-        for <git@vger.kernel.org>; Fri, 29 Apr 2016 08:55:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=g2x+/abFwDr0kTj3VwFgxfppco6lsqxeovIowuG80Ug=;
-        b=HmTY7tvT2fAhKCu9Toe7RaZLI4YJFJxEJ7kBRmfc/t1ygA9MnFsYqMVgYlnzopnuPA
-         1myVto2j3JCs+aMDQL29GHNaHSqMRAj2k/l3otiS+R+YSMsBEg+XIVtJtPLI51cq4wDI
-         luDbyucjrIgzTYS5e3DXp80Z/WnSw8oYBkLCox/qnM+QoFxmcVoObD6ZS1GGyxmq3Mm/
-         zdcr/DstKhigbI7NkSV31I9picBOpA2xL1VNQR5tOYSjHLsFsEq6Kp7oExL4L3YX7gG+
-         nhyJn3piblQeaK1yICEdV091HFt+/gjSp3EWAxNg14wI32J4Tyo+bwB3SmpnovZ4KibK
-         GF2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=g2x+/abFwDr0kTj3VwFgxfppco6lsqxeovIowuG80Ug=;
-        b=JsOnejXl8ZB6pwihJaw78+GfrwI8pllrl0B/1GJkLQ7vU6vLgaLHZDJnIi1FtjYYp8
-         B4TJnITIgYL8HP5fjtaSprM4OjQ4l/4VVY1uJNtnkTniZSYCxj3zkjYtkCe924WrqbDm
-         2AbryxSnpcH5OH8833JHqrJ16KAbCmxUBuXwFh9lo+/9fONKVdjs/d8U9ref3+M0HNY9
-         NgZDn3lLVBf0yS8jG8LdoDK1AA5i72DzGJBEh3R/HEn100Pzi4hnzrVcaGiuXk5YrPY/
-         5h0NDVHfTIUHLmWIBA5U1OkQvzDANfrQWbGo0DG+mn6HN58F6E5HqhQuBCx3z1r2y6s5
-         Jcrg==
-X-Gm-Message-State: AOPr4FVP9f2KOZqYE36ftPhB0DUHR3t8ZGJAl5VvvE/CDgjvotUb6XwoS0Skx3/uFTb92A==
-X-Received: by 10.98.28.84 with SMTP id c81mr30257658pfc.131.1461945335049;
-        Fri, 29 Apr 2016 08:55:35 -0700 (PDT)
-Received: from google.com ([2620:0:1000:1301:8d40:703e:9507:1fcf])
-        by smtp.gmail.com with ESMTPSA id g84sm24415589pfj.42.2016.04.29.08.55.34
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 29 Apr 2016 08:55:34 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20160429141212.GB26643@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753637AbcD2P5G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 11:57:06 -0400
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:58542
+	"EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753317AbcD2P5F (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2016 11:57:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1461945422;
+	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=e7ugwIaI/NJcAJgcpuVt/tCt7aCkZhmGoegxzwirro8=;
+	b=CheDsfY52fr9EtvKVjlc60HuUS3DLETuqoEqcgutI4BjXI8SAvNJGLmTI9qH8X3d
+	pckalyQm9LbxO+02hPQMv087VMBmSjkJePHBcgEInMfoYEsqjIVmA0rmWYwxQihjbgH
+	mde49f4psh/zG7isf2cu8xg2O2WdHPFcWpXytKOM=
+X-SES-Outgoing: 2016.04.29-54.240.7.12
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293021>
 
-On Fri, Apr 29, 2016 at 10:12:12AM -0400, Jeff King wrote:
-> On Fri, Apr 29, 2016 at 12:23:57AM -0600, Brian Norris wrote:
-> 
-> > This should handle .gitconfig files that specify things like:
-> > 
-> > [http]
-> > 	cookieFile = "~/.gitcookies"
-> 
-> Seems like a good idea, and the implementation looks obviously correct.
-> 
-> For the documentation:
-> 
-> > diff --git a/Documentation/config.txt b/Documentation/config.txt
-> > index a775ad885a76..d3ef2d3b5d13 100644
-> > --- a/Documentation/config.txt
-> > +++ b/Documentation/config.txt
-> > @@ -1660,6 +1660,9 @@ http.cookieFile::
-> >  	in the Git http session, if they match the server. The file format
-> >  	of the file to read cookies from should be plain HTTP headers or
-> >  	the Netscape/Mozilla cookie file format (see linkgit:curl[1]).
-> > +	The value of `http.cookieFile` is subject to tilde expansion: `~/` is
-> > +	expanded to the value of `$HOME`, and `~user/` to the specified user's
-> > +	home directory.
-> >  	NOTE that the file specified with http.cookieFile is used only as
-> >  	input unless http.saveCookies is set.
-> 
-> I'm not sure if it's a good idea to go into so much detail about
-> expand_user_path() here. There are a lot of options that use the same
-> rules, and we probably don't want to go into a complete explanation
-> inside each option's description. Is there a canonical definition of how
-> we do expansion in config.txt that we can just reference (and if not,
-> can we add one)?
+0492eb4 fixed a broken &&-chain in this test which broke the test as it
+checked for a wrong size. The expected size of the file under test is
+39 bytes. The test checked that the size is 13 bytes. Fix the reference
+value to make the test pass, again.
 
-I mostly just copied from boilerplate on another option. IIRC, there
-were at least two other options that were documented similarly.
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
+ t/t9824-git-p4-git-lfs.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I think it's very important to note this somehow in the documentation.
-For months, I've just had to keep a delta among the (otherwise
-identical, shared) .gitconfig on my various machines just to account for
-the different home directories. I thought that the "no-expansion" thing
-was an intentional policy, since there are various blogs/forums that
-mention the lack of this kind of expansion when you search for related
-problems. But apparently this was a bug/oversight. So having clear
-documentation to state the reality is imperative, IMO.
+diff --git a/t/t9824-git-p4-git-lfs.sh b/t/t9824-git-p4-git-lfs.sh
+index 64f8d18..3fc6790 100755
+--- a/t/t9824-git-p4-git-lfs.sh
++++ b/t/t9824-git-p4-git-lfs.sh
+@@ -265,7 +265,7 @@ test_expect_success 'Add big files to repo and store files in LFS based on compr
+ 		# We only import HEAD here ("@all" is missing!)
+ 		git p4 clone --destination="$git" //depot &&
+ 
+-		test_file_in_lfs file6.bin 13 "content 6 bin 39 bytes XXXXXYYYYYZZZZZ" &&
++		test_file_in_lfs file6.bin 39 "content 6 bin 39 bytes XXXXXYYYYYZZZZZ" &&
+ 		test_file_count_in_dir ".git/lfs/objects" 1 &&
+ 
+ 		cat >expect <<-\EOF &&
 
-The best kind of documentation might mention that all paths can be
-expanded in this way, and then just include "path" language on the
-relevant options. But then we'd have to do a quick audit to make sure
-that every path-based option does indeed use this path-expansion helper.
-(As this patch proves, we haven't been very consistent so far.)
-
-If you have a good overall recommendation for this, I can try to send a
-new patch sometime next week.
-
-Brian
+--
+https://github.com/git/git/pull/235
