@@ -1,108 +1,160 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 11/15] diff: ignore submodules excluded by groups
-Date: Fri, 29 Apr 2016 11:37:49 -0700
-Message-ID: <xmqqlh3wxnuq.fsf@gitster.mtv.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 06/15] submodule init: redirect stdout to stderr
+Date: Fri, 29 Apr 2016 11:38:32 -0700
+Message-ID: <CAGZ79kawUMng_hPju3MDW2xFmKkhqOQMVihFTA+7Wt0EaNdpug@mail.gmail.com>
 References: <1461703833-10350-1-git-send-email-sbeller@google.com>
-	<1461703833-10350-12-git-send-email-sbeller@google.com>
+	<1461703833-10350-7-git-send-email-sbeller@google.com>
+	<xmqqy47wxocr.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: jrnieder@gmail.com, git@vger.kernel.org, Jens.Lehmann@web.de,
-	pclouds@gmail.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Apr 29 20:37:58 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 29 20:38:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1awDIb-0008Iu-Cr
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 20:37:57 +0200
+	id 1awDJF-00009H-F7
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 20:38:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751153AbcD2Shx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 14:37:53 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65188 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750714AbcD2Shw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 14:37:52 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C3F5B170FE;
-	Fri, 29 Apr 2016 14:37:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XXNHRtIlapFrupSXS33YMwtRSgk=; b=UVLuWn
-	6BUaUkrN4lFebP1cLC2E2sz7Mr74EkYe5IbXfzp71Ue4vnKjm4XRFocChHSO4MSz
-	9l91Ouh0m6f781A2bDCgdfk9L2YHYxp9JqS0eXr7tZ2R3atjxnM4vhDmh1JmrBSJ
-	+oRYa1osj9p+CwUpTrS7xuIPj7ucf9sExGWEo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Orkfa8EqhuFaNXbjG1vYvFtEdw9tRNwb
-	RkBu0DQxH56ISaTKQS5qT/ADJuljHnOFcvuFzSvTBFtl9H/6JU8iDp7A4mjg40ID
-	RE7W3ajLC3wmSKJFfoKGpG3kGVL1ws8aDY8EV+opRhrqbNSeDHFbdmoyGbEXCWe+
-	U6RkWEOvRjA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id BBFB9170FD;
-	Fri, 29 Apr 2016 14:37:51 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 18933170FC;
-	Fri, 29 Apr 2016 14:37:51 -0400 (EDT)
-In-Reply-To: <1461703833-10350-12-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Tue, 26 Apr 2016 13:50:29 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7A6AEEF2-0E39-11E6-BCF1-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1752065AbcD2Sif (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 14:38:35 -0400
+Received: from mail-io0-f172.google.com ([209.85.223.172]:36240 "EHLO
+	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751615AbcD2Sid (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 14:38:33 -0400
+Received: by mail-io0-f172.google.com with SMTP id u185so134551411iod.3
+        for <git@vger.kernel.org>; Fri, 29 Apr 2016 11:38:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=dEz7SL7fyRb4849xl/Y/cFxSuGOM7r0t3AvF/Fv/FYQ=;
+        b=obHxozqwz4Gnh/NDG1QOQlVHBTomtUpSXJHTD97IgaP7FliQWXxpLPJ5FCvgv30A+y
+         8VzMnsOCzbkszJ/NZdIpxkfFvv1y+YBsQD3Fm1UlXQ5whf7ly0tNVeiqemFcLPkZw7Jb
+         pq2e04/1SQnGs4WjiTU1oukVWGGcjOjSF4nNh7bo1L7IwBrLaiVc5eDuNObb/E1cocu1
+         E+q7Ucyq321hb5VAmZl4S/lbymjHCkx3RAzB19z6jPDM6Wuq+k8e4ZD65u31tOLGDX9b
+         2GKbdHRh3bSBTrC7ja4rFwxd68760fChbycTZrT1td78Q7g2++2EDEN5oRlFFH/ewV/8
+         3d8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=dEz7SL7fyRb4849xl/Y/cFxSuGOM7r0t3AvF/Fv/FYQ=;
+        b=HlfFtdaN5jo76X1xx/iNJkvBo8TZ8KVOb4I+OfIRY08UQrDfGk5Z1SawkAbBA+lapM
+         RgCI0AN/CShvvwTnhFQ0ASJh1R/TBJVzk1mjfJVi9EyDUhiCV+KPmoTDsTFgTCCo9bLr
+         GKF91Ndbkc5q5OCFj1dfGiq230P5tgUgtOAhhwMBWYlKIup6hMe88lkabvbBcBtm3/mk
+         nKlkHHG6VcmymB3jOFDJBKB8+PRPA6wh8WlVZuu+pjiy+6ydZvZ+RYYkE1dz5cd82TJh
+         GusjmuPobP6tp9GUpg0mv0Raa8phvR75/qXm28QmfmZ2ujqHx08ng0mL9xxET8R6xzZB
+         IG0A==
+X-Gm-Message-State: AOPr4FWjCAmnWbWwrAysosH8z0OsYPXb/c98AM/ViSWin2vLjEurAzNHTU/kcjPxwBlm2MLt5wlFecTh8p+IZ3dM
+X-Received: by 10.107.174.205 with SMTP id n74mr26054782ioo.96.1461955112629;
+ Fri, 29 Apr 2016 11:38:32 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Fri, 29 Apr 2016 11:38:32 -0700 (PDT)
+In-Reply-To: <xmqqy47wxocr.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293044>
 
-Stefan Beller <sbeller@google.com> writes:
-
-> We do not need to do anything special to initialize the `submodule_groups`
-> pointer as the diff options setup will fill in 0 by default.
+On Fri, Apr 29, 2016 at 11:27 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  diff.c | 3 +++
->  diff.h | 1 +
->  2 files changed, 4 insertions(+)
+>> Reroute the output of stdout to stderr as it is just informative
+>> messages, not to be consumed by machines.
+>>
+>> We want to init submodules from the helper for `submodule update`
+>> in a later patch and the stdout output of said helper is consumed
+>> by the parts of `submodule update` which are still written in shell.
+>> So we have to be careful which messages are on stdout.
+>>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>
+> I do not mind if this step is split out and queued as a separate
+> follow-up to sb/submodule-init.  The grouping and labelling is a
+> bigger and more important change that deserves attention without
+> distraction than this single step, and making as many such things
+> graduate and allowing us to forget about them is better ;-)
 
-Isn't this going in the opposite way from what you described in 0/15
-with analogy to how "ignore" mechanism works?  Just like a path is
-tracked once it is tracked, whether it matches an ignore pattern,
-shouldn't we be getting a summary for a submodule for any submodule
-once submodule/.git/HEAD is there (i.e. we can give a comparison),
-whether it is specified by a separate mechanism that acts from
-sideways (e.g. the "default group").
+Care to apply this onto the sb/submodule-init then?
 
-> diff --git a/diff.c b/diff.c
-> index 059123c..5808d8a 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -4921,10 +4921,13 @@ static int is_submodule_ignored(const char *path, struct diff_options *options)
->  {
->  	int ignored = 0;
->  	unsigned orig_flags = options->flags;
-> +	const struct submodule *sub = submodule_from_path(null_sha1, path);
->  	if (!DIFF_OPT_TST(options, OVERRIDE_SUBMODULE_CONFIG))
->  		set_diffopt_flags_from_submodule_config(options, path);
->  	if (DIFF_OPT_TST(options, IGNORE_SUBMODULES))
->  		ignored = 1;
-> +	if (!submodule_in_group(options->submodule_groups, sub))
-> +		ignored = 1;
->  	options->flags = orig_flags;
->  	return ignored;
->  }
-> diff --git a/diff.h b/diff.h
-> index e7d68ed..7d499fb 100644
-> --- a/diff.h
-> +++ b/diff.h
-> @@ -178,6 +178,7 @@ struct diff_options {
->  	void *output_prefix_data;
->  
->  	int diff_path_counter;
-> +	struct string_list *submodule_groups;
->  };
->  
->  enum color_diff {
+(It applies cleanly for me on top of "submodule--helper update-clone:
+abort gracefully on missing .gitmodules")
+
+I'll drop this patch in the groups series.
+
+Thanks,
+Stefan
+
+>
+>>  builtin/submodule--helper.c |  3 ++-
+>>  t/t7406-submodule-update.sh | 24 ++++++++++++++++++------
+>>  2 files changed, 20 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+>> index 23d7224..7b9a4d7 100644
+>> --- a/builtin/submodule--helper.c
+>> +++ b/builtin/submodule--helper.c
+>> @@ -362,7 +362,8 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+>>                       die(_("Failed to register url for submodule path '%s'"),
+>>                           displaypath);
+>>               if (!quiet)
+>> -                     printf(_("Submodule '%s' (%s) registered for path '%s'\n"),
+>> +                     fprintf(stderr,
+>> +                             _("Submodule '%s' (%s) registered for path '%s'\n"),
+>>                               sub->name, url, displaypath);
+>>       }
+>>
+>> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+>> index fd741f5..5f27879 100755
+>> --- a/t/t7406-submodule-update.sh
+>> +++ b/t/t7406-submodule-update.sh
+>> @@ -108,24 +108,36 @@ pwd=$(pwd)
+>>
+>>  cat <<EOF >expect
+>>  Submodule path '../super': checked out '$supersha1'
+>> -Submodule 'merging' ($pwd/merging) registered for path '../super/merging'
+>> -Submodule 'none' ($pwd/none) registered for path '../super/none'
+>> -Submodule 'rebasing' ($pwd/rebasing) registered for path '../super/rebasing'
+>> -Submodule 'submodule' ($pwd/submodule) registered for path '../super/submodule'
+>>  Submodule path '../super/merging': checked out '$mergingsha1'
+>>  Submodule path '../super/none': checked out '$nonesha1'
+>>  Submodule path '../super/rebasing': checked out '$rebasingsha1'
+>>  Submodule path '../super/submodule': checked out '$submodulesha1'
+>>  EOF
+>>
+>> +cat <<EOF >expect2
+>> +Submodule 'merging' ($pwd/merging) registered for path '../super/merging'
+>> +Submodule 'none' ($pwd/none) registered for path '../super/none'
+>> +Submodule 'rebasing' ($pwd/rebasing) registered for path '../super/rebasing'
+>> +Submodule 'submodule' ($pwd/submodule) registered for path '../super/submodule'
+>> +Cloning into '$pwd/recursivesuper/super/merging'...
+>> +done.
+>> +Cloning into '$pwd/recursivesuper/super/none'...
+>> +done.
+>> +Cloning into '$pwd/recursivesuper/super/rebasing'...
+>> +done.
+>> +Cloning into '$pwd/recursivesuper/super/submodule'...
+>> +done.
+>> +EOF
+>> +
+>>  test_expect_success 'submodule update --init --recursive from subdirectory' '
+>>       git -C recursivesuper/super reset --hard HEAD^ &&
+>>       (cd recursivesuper &&
+>>        mkdir tmp &&
+>>        cd tmp &&
+>> -      git submodule update --init --recursive ../super >../../actual
+>> +      git submodule update --init --recursive ../super >../../actual 2>../../actual2
+>>       ) &&
+>> -     test_cmp expect actual
+>> +     test_cmp expect actual &&
+>> +     test_cmp expect2 actual2
+>>  '
+>>
+>>  apos="'";
