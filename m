@@ -1,106 +1,94 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2] travis-ci: build documentation
-Date: Fri, 29 Apr 2016 10:27:19 -0700
-Message-ID: <CAGZ79kbBCM0CdBoeWTx9kWBBN1f-kuibpUNh9FacOb2xxCDPcw@mail.gmail.com>
-References: <1461922534-49293-1-git-send-email-larsxschneider@gmail.com>
-	<20160429121429.GB27952@sigill.intra.peff.net>
-	<vpqeg9o7gh4.fsf@anie.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] http: expand http.cookieFile as a path
+Date: Fri, 29 Apr 2016 10:27:30 -0700
+Message-ID: <xmqqr3doz5od.fsf@gitster.mtv.corp.google.com>
+References: <20160429062357.12647-1-computersforpeace@gmail.com>
+	<20160429062357.12647-2-computersforpeace@gmail.com>
+	<20160429141212.GB26643@sigill.intra.peff.net>
+	<xmqqziscz6ej.fsf@gitster.mtv.corp.google.com>
+	<20160429171631.GA29571@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	stefan.naewe@atlas-elektronik.com,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Apr 29 19:27:26 2016
+Content-Type: text/plain
+Cc: Brian Norris <computersforpeace@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 29 19:27:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1awCCL-0004DE-Mb
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 19:27:26 +0200
+	id 1awCCY-0004JN-Qm
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 19:27:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751834AbcD2R1W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 13:27:22 -0400
-Received: from mail-io0-f170.google.com ([209.85.223.170]:34824 "EHLO
-	mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751065AbcD2R1V (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 13:27:21 -0400
-Received: by mail-io0-f170.google.com with SMTP id d62so114357668iof.2
-        for <git@vger.kernel.org>; Fri, 29 Apr 2016 10:27:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=FZzLvWebpiAcDONsru6OECbuJykCpYMnBLAM7byKyCw=;
-        b=Yc9RPKkassxLgNw5BsNzKD+mL3EC/zHxbwfyrKfaKrpvAk3scl8FQbdxSduA1cd3t6
-         uPEqAIOCZe0zVr3cwr5hn4QpgRTFhjeAvrE5U1+nczASVZpaZs9uRjxPGALOlb55Qt/A
-         2QNwPMvKgmJNV/VCBELgMJEZ1PRqQYZ25SG4ifyWDAZ+HTTw50689LafW3R0Ne8c4oiG
-         pDBdi0fES3LFM6FeDdzkVA+IN+0wihrbQxn9elP7rUw+rs4sL8PSAab+86GyRX6m8whd
-         HAV8O7KME01l22f5TLriKi5ljqgl8PSXnhmEoJ3SkxrPPFqzQ62fq+Lu/RKVAtuRmb0+
-         q6uA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=FZzLvWebpiAcDONsru6OECbuJykCpYMnBLAM7byKyCw=;
-        b=Jg1fByFVp74k3k8q0/PrwUsww6s26XZPB1fDmCM6xZTuO19SGZ7vvB/TLPhAil2RSe
-         0qie26sE6VYYPaRN3xLivJlgaW2cWD/vp315LCX4cYe9WcAuEF+k9xUEVR8GtKvGyPLU
-         o1wiYgsdwmjMehgrNUwiM1N0ah2u6LC0lEmHU8lk6dQyeKbjs6hzTiDLxrqVyBerHbfT
-         WSIugRHi/CoxDUYRUV0RHFuvOEGCSXWtNlb5CgfBoKZByQU3Xb6+/mYNneHGbCcD+7rS
-         znPkGqH5whWnFfUWeDVEpF4qjgbTr5QcQ8hbVDMaBkwzgCu8/+5bTW5kIqQNH1Krw3jE
-         uEIg==
-X-Gm-Message-State: AOPr4FVRKIrIUt3vBbo4LdrRhnGzgnbSoADwVsHLUvTwe6Ligsgk5C4sy/SK3D+AtOfANQfpDcRrkUBBmg+CUePq
-X-Received: by 10.107.161.68 with SMTP id k65mr29047346ioe.110.1461950840027;
- Fri, 29 Apr 2016 10:27:20 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Fri, 29 Apr 2016 10:27:19 -0700 (PDT)
-In-Reply-To: <vpqeg9o7gh4.fsf@anie.imag.fr>
+	id S1752240AbcD2R1e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 13:27:34 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64386 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751065AbcD2R1e (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 13:27:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D277E15494;
+	Fri, 29 Apr 2016 13:27:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3xAoHmRk1tUVEtv8Tafdzm25p4w=; b=sun/OK
+	SbYfVxgAJdpn5lEMGgbOvrwNzcurCrltuEY6bNTrQwVxLaidh32HXi/QFSeG/kgj
+	Rn1D6KvmnO8EUV8a1mH6XNbfMFAVEBBbX1h3SLmrTWukMqPoJI5jdL/kTZeaDXPp
+	IdIRoMQyCJ937snnq5TdETV+6bl/6SqB66kgY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=izwY5qnlg50PRmDouB6FdP8eSV+UxviW
+	nMix/kL3ca7EiApIp0UNj7EaWRFbi+Ex95x5ej+YCXE6O5jFjv8G3AFiADDiR19/
+	FGP3fz3PUWV6GQ3v4xeIMFc4C7/gZ0u8LV70t1j0/992KkWCTrfZAsp8QaZ97qce
+	D+x2ao5uWts=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C90E115493;
+	Fri, 29 Apr 2016 13:27:32 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 113FB15492;
+	Fri, 29 Apr 2016 13:27:32 -0400 (EDT)
+In-Reply-To: <20160429171631.GA29571@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 29 Apr 2016 13:16:31 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A7AE4A26-0E2F-11E6-871A-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293031>
 
-On Fri, Apr 29, 2016 at 5:21 AM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Jeff King <peff@peff.net> writes:
->
->> On Fri, Apr 29, 2016 at 11:35:34AM +0200, larsxschneider@gmail.com wrote:
->>
->>> +# The follow numbers need to be adjusted when new documentation is added.
->>> +test_file_count html 233
->>> +test_file_count xml 171
->>> +test_file_count 1 152
->>
->> This seems like it will be really flaky and a pain in the future. I'm
->> not really sure what it's accomplishing, either. The earlier steps would
->> complain if something failed to render, wouldn't they? At some point we
->> have to have some faith in "make doc".
->
-> I agree. My proposal to check for a handful of generated files was just
-> because this extra paranoia was almost free (just 3 lines of code that
-> won't need particular maintenance).
->
-> In this case, I'm afraid the maintenance cost is much bigger than the
-> expected benefits.
+Jeff King <peff@peff.net> writes:
 
-So you proposed to check a handful files for its exact content?
+> Yeah, this is what I had in mind. My only reservation would be that we
+> need to make sure it is clear that this applies only to keys marked as
+> taking a "pathname" type in the documentation. I'm suspect there are
+> ones that are logically paths but do not currently do the expansion, but
+> the wording above makes it sound like any pathname-like thing does.
 
-This could be less of maintenance if we'd check with a "larger as" operator
-such as
+Yeah, my initial draft phrased it more like how we describe boolean,
+but somehow the language used there felt awkward to me.
 
-    test_file_count_more_than html 200
+With "A variable that take a pathname value", the users who read it
+would find "ones that are logically paths but do not do the
+expansion" and file a bug.  We'd resolve each of them by seeing if
+the documentation says the variable does take a pathname, and adjust
+either the documentation (if the value for the variable should not
+be expanded but the documentation hints it might be a pathname-like
+thing, clarify that it is not pathname-like at all) or the code (if
+the value for the variable should be expanded but we forgot, we call
+the user_path() function).
 
-using an arbitrary slightly smaller number.
+> Alternatively, it might be worth going through the list to make sure all
+> paths use git_config_pathname() internally.
 
+I was hoping that with the patch we can farm out the bug-hunting
+process to the end users.
 
->
-> --
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Brian asked earlier if the "no expansion" was an intentional
+> policy, but it's not. It's just that pathname expansion came much
+> later, and config keys were ported over to it one by one as people
+> found it useful to do so.
+
+Yes, that matches the actual order of events.
