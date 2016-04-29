@@ -1,58 +1,78 @@
-From: Jeff King <peff@peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCH v2] travis-ci: build documentation
-Date: Fri, 29 Apr 2016 10:32:54 -0400
-Message-ID: <20160429143254.GA27249@sigill.intra.peff.net>
+Date: Fri, 29 Apr 2016 16:40:10 +0200
+Message-ID: <vpqd1p8xyut.fsf@anie.imag.fr>
 References: <1461922534-49293-1-git-send-email-larsxschneider@gmail.com>
- <20160429121429.GB27952@sigill.intra.peff.net>
- <vpqeg9o7gh4.fsf@anie.imag.fr>
- <B5E5068F-7D69-41F8-BC33-E287567FD3AD@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	stefan.naewe@atlas-elektronik.com, gitster@pobox.com
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 29 16:33:02 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, stefan.naewe@atlas-elektronik.com,
+	gitster@pobox.com, peff@peff.net
+To: larsxschneider@gmail.com
+X-From: git-owner@vger.kernel.org Fri Apr 29 16:40:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aw9Ta-000147-ED
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 16:33:02 +0200
+	id 1aw9ax-0005en-Cg
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 16:40:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753321AbcD2Oc6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 10:32:58 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59131 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752950AbcD2Oc6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 10:32:58 -0400
-Received: (qmail 9612 invoked by uid 102); 29 Apr 2016 14:32:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Apr 2016 10:32:57 -0400
-Received: (qmail 22264 invoked by uid 107); 29 Apr 2016 14:32:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Apr 2016 10:32:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Apr 2016 10:32:54 -0400
-Content-Disposition: inline
-In-Reply-To: <B5E5068F-7D69-41F8-BC33-E287567FD3AD@gmail.com>
+	id S1753094AbcD2Okf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 10:40:35 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:43906 "EHLO mx1.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752819AbcD2Okf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 10:40:35 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u3TEe9DM016162
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Fri, 29 Apr 2016 16:40:09 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u3TEeA0K014984;
+	Fri, 29 Apr 2016 16:40:10 +0200
+In-Reply-To: <1461922534-49293-1-git-send-email-larsxschneider@gmail.com>
+	(larsxschneider@gmail.com's message of "Fri, 29 Apr 2016 11:35:34
+	+0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Fri, 29 Apr 2016 16:40:09 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u3TEe9DM016162
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1462545609.86061@mQ/z/s4lJPlmW5ybQIrMsA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293007>
 
-On Fri, Apr 29, 2016 at 04:22:05PM +0200, Lars Schneider wrote:
+larsxschneider@gmail.com writes:
 
-> >>> +# The follow numbers need to be adjusted when new documentation is added.
-> >>> +test_file_count html 233
-> >>> +test_file_count xml 171
-> >>> +test_file_count 1 152
-> [...]
-> I agree, too. I wasn't sure about this check. That's why I added
-> the little comment above to point out the problem.
-> 
-> Should I reroll?
+> +      before_install:
+> +      before_script: make doc
+> +      script: ci/test-documentation.sh
 
-IMHO, yes.
+If you are to re-roll, I think before_script and script should be
+merged, i.e. just write
 
--Peff
+script: ci/test-documentation.sh
+
+and have ci/test-documentation.sh be:
+
+#!/bin/sh
+
+set -e
+
+make doc
+test -s Documentation/git.html
+test -s Documentation/git.xml
+test -s Documentation/git.1
+
+In the perspective of using another CI tool, everything within ci/ is
+potentially shared between systems so I'd tend to minimize the content
+of .travis.yml in favor of ci/*
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
