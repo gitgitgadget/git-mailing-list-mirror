@@ -1,129 +1,385 @@
 From: tboegi@web.de
-Subject: [PATCH v8 04/10] convert.c: ident + core.autocrlf didn't work
-Date: Fri, 29 Apr 2016 17:01:58 +0200
-Message-ID: <1461942118-16060-1-git-send-email-tboegi@web.de>
+Subject: [PATCH v8 06/10] convert.c: stream and early out
+Date: Fri, 29 Apr 2016 17:02:01 +0200
+Message-ID: <1461942121-16140-1-git-send-email-tboegi@web.de>
 References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 16:57:35 2016
+X-From: git-owner@vger.kernel.org Fri Apr 29 16:57:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aw9rJ-0006oF-Ui
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 16:57:34 +0200
+	id 1aw9rW-0006yu-3E
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 16:57:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753899AbcD2O5b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Apr 2016 10:57:31 -0400
-Received: from mout.web.de ([212.227.15.4]:64886 "EHLO mout.web.de"
+	id S1753924AbcD2O5d convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Apr 2016 10:57:33 -0400
+Received: from mout.web.de ([212.227.15.14]:61889 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753906AbcD2O52 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 10:57:28 -0400
+	id S1753391AbcD2O5b (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 10:57:31 -0400
 Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb002) with
- ESMTPSA (Nemesis) id 0MXHoz-1bA3gB1165-00WH9J; Fri, 29 Apr 2016 16:57:26
+ ESMTPSA (Nemesis) id 0MJCEk-1axoY70k9a-002mUi; Fri, 29 Apr 2016 16:57:29
  +0200
 X-Mailer: git-send-email 2.0.0.rc1.6318.g0c2c796
 In-Reply-To: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:MpoKe93mv+HtGZJCCCpDyZJWkQ+ZxVxV9cCWitfJe8yEEkYE7QU
- t6MPvj1SlN9qHATDTmQwBwlTCvkvLjpP+W+E+nBEvt4lFLyGcPULXg01hQ9e3YFUcOPT/vm
- Tzr2l60eNG8lIjcKKuBsC83fRC5wXeMYph6yLVD4q+o31TgE+CephSbLB1viDmSvzgu5kgR
- 0RrDjmq9JCH1hnVinUkvQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:k3iW2N7PdUw=:x7s1c4kg522YJJwiEpA/jS
- BNfm+WvhebazX53nCvKG3weLya2LegGuMc1ZsGMg3cYG4Bk40cDwvyj32xJGHkezW5gv7IiGF
- Xam8CCR+vWzVDMyw9gRC//d5Zx9XO3sgXH/32gtAxW2PCuisNmgS4Ewds8AMRqH64MwRtuPlG
- 4DdIaPaYfXYsajLpw7DOhiQUz3+7EeQkqOfFtKtQy72DixSOAb8ZitdfrlXOZTMBjiTDIdQ0w
- asXYsWBU3Qw178IhFf/xNSucdSFN9H2ySHG8ld1Jvge8pczQdH9DZmvd9DmxIB+mScx2b7v5W
- E83DG+pYQnhjECTuJTKBDIUeme4lVmjzVEcNgM4OsAt2ah85KM7NlPKdeyvOHtZ8zSAHfr6tO
- uVgqQqWU/cTYxSo086vXpeUalo6nUJwdGnQVJV6Ouv1iIg+iPz8xz/liJ6/KyEHaEWAQD4+5a
- EJB4BtI0lpI71bWW2j/1YMCHv+bjhGQgvehqlaQM2oyCGplx+xb9sFCJ2zI71PBCCI1A68CYK
- DhUeTfkSlOMdznO2Vcg3qrkqyd0SBxavhD15Dd7VDX5u/TN/T2EIGY7+rcfsfBErZMLRIx/ls
- E0MCDPaPiUPuw20kJ6YWuLTWlGJYwkiVKhQ2YqFzd0UCsks79wDql1wbWgUIfkkqsGsrA+DF3
- w8kIYbVhfSjM6G/8Y3yZerYq0YpxkF8jEU7gIEeGJxfnjo5DMgI5WrUElqYrKCvG6nJaApL1X
- dazv7Zu3MnN7uhmA5g9tq0G453WKIGE3hVpXmpIr51BV8uw8iY9T+FZ/WVKf0ztFipERDpps 
+X-Provags-ID: V03:K0:qFaHC8hyvgSB5oNqP56DkEgv2Ny+neszheJKbetzL6EvG9Fop4x
+ ctNZBYlpyVANvTFdHdsc3HDKHTpdEVpXdzC4+QP6CtYt6Xyx3WCufJsK58CaTZM10ldKvyX
+ 49tWorQJdJ4v5v4AlZUTZ5Swxr2cGqfIuJ8gDvVFN6pTEStidROcG9ThSg9xkTRh2j+tXbM
+ E+oKNeua3UmqZVCOCZDAw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xZB5pakuCok=:EFj8wCAmbXHtpVexR9GHdc
+ FX0n2t1qcxUCjqgjpyGU2pF0rJU6XHclugQtkVt9jZfKTwtkjGYeaCv1nCCdgVapglxiaQPPh
+ gk7xcjq/KL2AeDx9+lIpPf6K1JF/lQGCz0RhMpT4kYUaCq0FRXiegnLa2qUBYyfJ6nia9aDmW
+ eDofRxjyTPnwc+/iOCS4V3ctvpfrP2A2okqKh5fVWBfoecyibElxu/p3kyIdCQDJukTqJN2Wk
+ KtTZkaHcotvc3kEiJun7Mq+quBcv2Bcv6MKzp59xQdO8D898ktsNs7y1HvWx83DjAWr1WEteI
+ b034gby87e9uJHJGaCbD3F4YUcP+xPqo+V0HBhS5kM2C+nXAeWRLNQSPzo3hvGPF47dtme/Y+
+ +vDKW+NLkUapnPGdILVW6bN4CQmOwA4Gp2bBuJ1DdBVqSIqGWiEEP11P2mDrDLyxkHBNr7FA7
+ 9nbKDEXIovxiXkzV8RDPjr2AXbMjQy3TQnfZ1+TONe3VAkecJAYc1jguBNxqiwNQmEKYPXGCB
+ 0Q0qdJMjPt+79YKQY7kJVD6DHhY+//j0OoVWImPhZ/ef2nNUuEWW1jaKc3XunNWwX7LMY6gWP
+ /h6PQ8d0F10kYxHjGYfsDJ5Q2P30+UrHXTZ2HAh+FfIozEdDmySyBG1DZ/LeO+HknPvIFswuE
+ whDzZmYx6E0+i3LyPJ5sf/wfwXUR18NsreSm4PmTCsS6A+Jw5hZCtgN6EfDMWD9z9s2wZJhU9
+ QrTktDNxPhrR/Mb1e0/Flo1DBQtHU0pgWD9cH5HDVjGqfx/uMi/6gcklVVXt40w0ZFvCBGxE 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293010>
 
 =46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-When the ident attributes is set, get_stream_filter() did not obey
-core.autocrlf=3Dtrue, and the file was checked out with LF.
+When statistics are done for the autocrlf handling, the search in
+the content can be stopped, if e.g
+- a search for binary is done, and a NUL character is found
+- a search for CRLF is done, and the first CRLF is found.
 
-Change the rule when a streaming filter can be used:
-- if an external filter is specified, don't use a stream filter.
-- if the worktree eol is CRLF and "auto" is active, don't use a stream =
-filter.
-- Otherwise the stream filter can be used.
+Similar when statistics for binary vs non-binary are gathered:
+Whenever a lone CR or NUL is found, the search can be aborted.
 
-Add test cases in t0027.
+When checking out files in "auto" mode, any file that has a "lone CR"
+or a CRLF will not be converted, so the search can be aborted early.
+
+Add the new bit, CONVERT_STAT_BITS_ANY_CR,
+which is set for either lone CR or CRLF.
+
+Many binary files have a NUL very early (within the first few bytes,
+latest within the first 1..2K).
+It is often not necessary to load the whole content of a file or blob
+into memory.
+
+Use a streaming handling for blobs and files in the worktree.
 
 Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 ---
- convert.c            | 19 +++++++------------
- t/t0027-auto-crlf.sh |  2 +-
- 2 files changed, 8 insertions(+), 13 deletions(-)
+ convert.c | 159 ++++++++++++++++++++++++++++++++++++++++--------------=
+--------
+ 1 file changed, 103 insertions(+), 56 deletions(-)
 
 diff --git a/convert.c b/convert.c
-index f524b8d..b1614bf 100644
+index b1614bf..24ab095 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -1380,27 +1380,22 @@ static struct stream_filter *ident_filter(const=
- unsigned char *sha1)
- struct stream_filter *get_stream_filter(const char *path, const unsign=
-ed char *sha1)
+@@ -3,6 +3,7 @@
+ #include "run-command.h"
+ #include "quote.h"
+ #include "sigchain.h"
++#include "streaming.h"
+=20
+ /*
+  * convert.c - convert a file when checking it out and checking it in.
+@@ -13,10 +14,10 @@
+  * translation when the "text" attribute or "auto_crlf" option is set.
+  */
+=20
+-/* Stat bits: When BIN is set, the txt bits are unset */
+ #define CONVERT_STAT_BITS_TXT_LF    0x1
+ #define CONVERT_STAT_BITS_TXT_CRLF  0x2
+ #define CONVERT_STAT_BITS_BIN       0x4
++#define CONVERT_STAT_BITS_ANY_CR    0x8
+=20
+ enum crlf_action {
+ 	CRLF_UNDEFINED,
+@@ -31,30 +32,36 @@ enum crlf_action {
+=20
+ struct text_stat {
+ 	/* NUL, CR, LF and CRLF counts */
+-	unsigned nul, lonecr, lonelf, crlf;
++	unsigned stat_bits, lonecr, lonelf, crlf;
+=20
+ 	/* These are just approximations! */
+ 	unsigned printable, nonprintable;
+ };
+=20
+-static void gather_stats(const char *buf, unsigned long size, struct t=
+ext_stat *stats)
++static void do_gather_stats(const char *buf, unsigned long size,
++			    struct text_stat *stats, unsigned earlyout)
  {
- 	struct conv_attrs ca;
--	enum crlf_action crlf_action;
- 	struct stream_filter *filter =3D NULL;
+ 	unsigned long i;
 =20
- 	convert_attrs(&ca, path);
+-	memset(stats, 0, sizeof(*stats));
 -
- 	if (ca.drv && (ca.drv->smudge || ca.drv->clean))
--		return filter;
-+		return NULL;
++	if (!buf || !size)
++		return;
+ 	for (i =3D 0; i < size; i++) {
+ 		unsigned char c =3D buf[i];
+ 		if (c =3D=3D '\r') {
++			stats->stat_bits |=3D CONVERT_STAT_BITS_ANY_CR;
+ 			if (i+1 < size && buf[i+1] =3D=3D '\n') {
+ 				stats->crlf++;
+ 				i++;
+-			} else
++				stats->stat_bits |=3D CONVERT_STAT_BITS_TXT_CRLF;
++			} else {
+ 				stats->lonecr++;
++				stats->stat_bits |=3D CONVERT_STAT_BITS_BIN;
++			}
+ 			continue;
+ 		}
+ 		if (c =3D=3D '\n') {
+ 			stats->lonelf++;
++			stats->stat_bits |=3D CONVERT_STAT_BITS_TXT_LF;
+ 			continue;
+ 		}
+ 		if (c =3D=3D 127)
+@@ -67,7 +74,7 @@ static void gather_stats(const char *buf, unsigned lo=
+ng size, struct text_stat *
+ 				stats->printable++;
+ 				break;
+ 			case 0:
+-				stats->nul++;
++				stats->stat_bits |=3D CONVERT_STAT_BITS_BIN;
+ 				/* fall through */
+ 			default:
+ 				stats->nonprintable++;
+@@ -75,6 +82,8 @@ static void gather_stats(const char *buf, unsigned lo=
+ng size, struct text_stat *
+ 		}
+ 		else
+ 			stats->printable++;
++		if (stats->stat_bits & earlyout)
++			break; /* We found what we have been searching for */
+ 	}
+=20
+ 	/* If file ends with EOF then don't count this EOF as non-printable. =
+*/
+@@ -86,41 +95,62 @@ static void gather_stats(const char *buf, unsigned =
+long size, struct text_stat *
+  * The same heuristics as diff.c::mmfile_is_binary()
+  * We treat files with bare CR as binary
+  */
+-static int convert_is_binary(unsigned long size, const struct text_sta=
+t *stats)
++static void convert_nonprintable(struct text_stat *stats)
+ {
+-	if (stats->lonecr)
+-		return 1;
+-	if (stats->nul)
+-		return 1;
+ 	if ((stats->printable >> 7) < stats->nonprintable)
+-		return 1;
+-	return 0;
++		stats->stat_bits |=3D CONVERT_STAT_BITS_BIN;
++}
 +
-+	if (ca.crlf_action =3D=3D CRLF_AUTO || ca.crlf_action =3D=3D CRLF_AUT=
-O_CRLF)
-+		return NULL;
-=20
- 	if (ca.ident)
- 		filter =3D ident_filter(sha1);
-=20
--	crlf_action =3D ca.crlf_action;
--
--	if ((crlf_action =3D=3D CRLF_BINARY) ||
--			crlf_action =3D=3D CRLF_AUTO_INPUT ||
--			(crlf_action =3D=3D CRLF_TEXT_INPUT))
--		filter =3D cascade_filter(filter, &null_filter_singleton);
--
--	else if (output_eol(crlf_action) =3D=3D EOL_CRLF &&
--		 !(crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_AUTO_CRLF=
-))
-+	if (output_eol(ca.crlf_action) =3D=3D EOL_CRLF)
- 		filter =3D cascade_filter(filter, lf_to_crlf_filter());
-+	else
-+		filter =3D cascade_filter(filter, &null_filter_singleton);
-=20
- 	return filter;
++static void gather_stats(const char *buf, unsigned long size,
++			 struct text_stat *stats, unsigned earlyout)
++{
++	memset(stats, 0, sizeof(*stats));
++	do_gather_stats(buf, size, stats, earlyout);
++	convert_nonprintable(stats);
  }
-diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
-index fd5e326..9372589 100755
---- a/t/t0027-auto-crlf.sh
-+++ b/t/t0027-auto-crlf.sh
-@@ -493,7 +493,7 @@ fi
- export CRLF_MIX_LF_CR MIX NL
 =20
- # Same handling with and without ident
--for id in ""
-+for id in "" ident
- do
- 	for ceol in lf crlf native
- 	do
+-static unsigned int gather_convert_stats(const char *data, unsigned lo=
+ng size)
++
++static unsigned get_convert_stats_sha1(unsigned const char *sha1,
++				       unsigned earlyout)
+ {
++	struct git_istream *st;
+ 	struct text_stat stats;
+-	int ret =3D 0;
+-	if (!data || !size)
+-		return 0;
+-	gather_stats(data, size, &stats);
+-	if (convert_is_binary(size, &stats))
+-		ret |=3D CONVERT_STAT_BITS_BIN;
+-	if (stats.crlf)
+-		ret |=3D CONVERT_STAT_BITS_TXT_CRLF;
+-	if (stats.lonelf)
+-		ret |=3D  CONVERT_STAT_BITS_TXT_LF;
++	enum object_type type;
++	unsigned long sz;
+=20
+-	return ret;
++	if (!sha1)
++		return 0;
++	memset(&stats, 0, sizeof(stats));
++	st =3D open_istream(sha1, &type, &sz, NULL);
++	if (!st) {
++		return 0;
++	}
++	if (type !=3D OBJ_BLOB)
++		goto close_and_exit_i;
++	for (;;) {
++		char buf[1024];
++		ssize_t readlen =3D read_istream(st, buf, sizeof(buf));
++		if (readlen < 0)
++			break;
++		if (!readlen)
++			break;
++		do_gather_stats(buf, (unsigned long)readlen, &stats, earlyout);
++		if (stats.stat_bits & earlyout)
++			break; /* We found what we have been searching for */
++	}
++close_and_exit_i:
++	close_istream(st);
++	convert_nonprintable(&stats);
++	return stats.stat_bits;
+ }
+=20
+-static const char *gather_convert_stats_ascii(const char *data, unsign=
+ed long size)
++static const char *convert_stats_ascii(unsigned convert_stats)
+ {
+-	unsigned int convert_stats =3D gather_convert_stats(data, size);
+-
++	unsigned mask =3D CONVERT_STAT_BITS_TXT_LF |
++		CONVERT_STAT_BITS_TXT_CRLF;
+ 	if (convert_stats & CONVERT_STAT_BITS_BIN)
+ 		return "-text";
+-	switch (convert_stats) {
++	switch (convert_stats & mask) {
+ 	case CONVERT_STAT_BITS_TXT_LF:
+ 		return "lf";
+ 	case CONVERT_STAT_BITS_TXT_CRLF:
+@@ -132,24 +162,45 @@ static const char *gather_convert_stats_ascii(con=
+st char *data, unsigned long si
+ 	}
+ }
+=20
++static unsigned get_convert_stats_wt(const char *path)
++{
++	struct text_stat stats;
++	unsigned earlyout =3D CONVERT_STAT_BITS_BIN;
++	int fd;
++	memset(&stats, 0, sizeof(stats));
++	fd =3D open(path, O_RDONLY);
++	if (fd < 0)
++		return 0;
++	for (;;) {
++		char buf[1024];
++		ssize_t readlen =3D read(fd, buf, sizeof(buf));
++		if (readlen < 0)
++			break;
++		if (!readlen)
++			break;
++		do_gather_stats(buf, (unsigned long)readlen, &stats, earlyout);
++		if (stats.stat_bits & earlyout)
++			break; /* We found what we have been searching for */
++	}
++	close(fd);
++	convert_nonprintable(&stats);
++	return stats.stat_bits;
++}
++
+ const char *get_cached_convert_stats_ascii(const char *path)
+ {
+-	const char *ret;
+-	unsigned long sz;
+-	void *data =3D read_blob_data_from_cache(path, &sz);
+-	ret =3D gather_convert_stats_ascii(data, sz);
+-	free(data);
+-	return ret;
++	unsigned convert_stats;
++	unsigned earlyout =3D CONVERT_STAT_BITS_BIN;
++	convert_stats =3D get_convert_stats_sha1(get_sha1_from_cache(path),
++					       earlyout);
++	return convert_stats_ascii(convert_stats);
+ }
+=20
+ const char *get_wt_convert_stats_ascii(const char *path)
+ {
+-	const char *ret =3D "";
+-	struct strbuf sb =3D STRBUF_INIT;
+-	if (strbuf_read_file(&sb, path, 0) >=3D 0)
+-		ret =3D gather_convert_stats_ascii(sb.buf, sb.len);
+-	strbuf_release(&sb);
+-	return ret;
++	unsigned convert_stats;
++	convert_stats =3D get_convert_stats_wt(path);
++	return convert_stats_ascii(convert_stats);
+ }
+=20
+ static int text_eol_is_crlf(void)
+@@ -219,16 +270,10 @@ static void check_safe_crlf(const char *path, enu=
+m crlf_action crlf_action,
+=20
+ static int has_cr_in_index(const char *path)
+ {
+-	unsigned long sz;
+-	void *data;
+-	int has_cr;
+-
+-	data =3D read_blob_data_from_cache(path, &sz);
+-	if (!data)
+-		return 0;
+-	has_cr =3D memchr(data, '\r', sz) !=3D NULL;
+-	free(data);
+-	return has_cr;
++	unsigned convert_stats;
++	convert_stats =3D get_convert_stats_sha1(get_sha1_from_cache(path),
++					       CONVERT_STAT_BITS_ANY_CR);
++	return convert_stats & CONVERT_STAT_BITS_ANY_CR;
+ }
+=20
+ static int crlf_to_git(const char *path, const char *src, size_t len,
+@@ -249,10 +294,10 @@ static int crlf_to_git(const char *path, const ch=
+ar *src, size_t len,
+ 	if (!buf && !src)
+ 		return 1;
+=20
+-	gather_stats(src, len, &stats);
++	gather_stats(src, len, &stats, CONVERT_STAT_BITS_BIN);
+=20
+ 	if (crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_AUTO_INPU=
+T || crlf_action =3D=3D CRLF_AUTO_CRLF) {
+-		if (convert_is_binary(len, &stats))
++		if (stats.stat_bits & CONVERT_STAT_BITS_BIN)
+ 			return 0;
+=20
+ 		if (crlf_action =3D=3D CRLF_AUTO_INPUT || crlf_action =3D=3D CRLF_AU=
+TO_CRLF) {
+@@ -309,11 +354,13 @@ static int crlf_to_worktree(const char *path, con=
+st char *src, size_t len,
+ {
+ 	char *to_free =3D NULL;
+ 	struct text_stat stats;
++	unsigned earlyout =3D CONVERT_STAT_BITS_TXT_CRLF | CONVERT_STAT_BITS_=
+BIN;
++
+=20
+ 	if (!len || output_eol(crlf_action) !=3D EOL_CRLF)
+ 		return 0;
+=20
+-	gather_stats(src, len, &stats);
++	gather_stats(src, len, &stats, earlyout);
+=20
+ 	/* No "naked" LF? Nothing to convert, regardless. */
+ 	if (!stats.lonelf)
+@@ -327,7 +374,7 @@ static int crlf_to_worktree(const char *path, const=
+ char *src, size_t len,
+ 				return 0;
+ 		}
+=20
+-		if (convert_is_binary(len, &stats))
++		if (stats.stat_bits & CONVERT_STAT_BITS_BIN)
+ 			return 0;
+ 	}
+=20
 --=20
 2.7.0.992.g0c2c796
