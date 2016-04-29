@@ -1,81 +1,144 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 24/29] ref_transaction_update(): check refname_is_safe() at a minimum
-Date: Fri, 29 Apr 2016 01:53:38 -0700
-Message-ID: <xmqqr3do23u5.fsf@gitster.mtv.corp.google.com>
-References: <cover.1461768689.git.mhagger@alum.mit.edu>
-	<a67a1b745d0a14111c774f13a5776d3756cbf2f2.1461768690.git.mhagger@alum.mit.edu>
-	<xmqqtwim95cm.fsf@gitster.mtv.corp.google.com>
-	<57231082.50806@alum.mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, David Turner <dturner@twopensource.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Apr 29 10:53:55 2016
+From: larsxschneider@gmail.com
+Subject: [PATCH v2] travis-ci: build documentation
+Date: Fri, 29 Apr 2016 11:35:34 +0200
+Message-ID: <1461922534-49293-1-git-send-email-larsxschneider@gmail.com>
+Cc: Matthieu.Moy@grenoble-inp.fr, stefan.naewe@atlas-elektronik.com,
+	gitster@pobox.com, peff@peff.net,
+	Lars Schneider <larsxschneider@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 29 11:35:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aw4BM-0006Fu-MZ
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 10:53:53 +0200
+	id 1aw4pw-000186-IV
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 11:35:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752168AbcD2Ixn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 04:53:43 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64870 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751663AbcD2Ixl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 04:53:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 74E12106C2;
-	Fri, 29 Apr 2016 04:53:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9dc+95o/4pJIC/Vl0FUlayibN7Q=; b=VQIlgT
-	KkrCdAobR8B5H772B7dUOUCITq1SKM2Kg+ENURyVfJkyv2I30yopYOpEfjcJrjNG
-	SnnumXdrVa5RNIWzhzC0TNdm79qbTYgriM/6+XUHLk8RPJk0bhdxUuhEsQ9oQxdJ
-	GIdjlqGv3GXbNDEKcY9D0zyfKcMNcaiwbDAoo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JfelgwfQXUzlfrr51vqucxF4iJtKrXTx
-	eDpSuSgYLUp9KLNBQgkwLY04RNgJnAbmYRgu9HaAQf3BJoGhc90jL5+3lPmFsIF6
-	dp5Wf3wjZmnm024QUIUXF9ddAnLcFL2k6ePDLE8A95MdDyOU05KyzosMZlBYPTfp
-	7C16GEez/4E=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6D35F106C1;
-	Fri, 29 Apr 2016 04:53:40 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D6998106C0;
-	Fri, 29 Apr 2016 04:53:39 -0400 (EDT)
-In-Reply-To: <57231082.50806@alum.mit.edu> (Michael Haggerty's message of
-	"Fri, 29 Apr 2016 09:42:58 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DE4354D4-0DE7-11E6-862A-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1751980AbcD2Jfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 05:35:39 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:37447 "EHLO
+	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751257AbcD2Jfi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 05:35:38 -0400
+Received: by mail-wm0-f46.google.com with SMTP id a17so26607667wme.0
+        for <git@vger.kernel.org>; Fri, 29 Apr 2016 02:35:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=eInv8rBdaOha1b0nG82hVXIR3kvcnuR+78y7+tbTJnY=;
+        b=0Gum2Q9zqilVpQrcN5AAyRTp39DjW8KZEcyNdEa8MccYFcqP/dxVtPhoQGdQXtvaL/
+         XXpbBWkjjVYdzXx5jPoHycAq1yC1BC7b/dRAARjzeoo1ijb4KHsOFgBSFPdHghfVDJ18
+         rsKSy8yaFM8wmu8H8+63p9XVFjjzIGrLCFf/2U0m7L24y8N23+doObKAHDEPyrM7r7S1
+         Uf2FvbgZ2Fu00CMKqa1GBW3X2uh0vBUJxsN8iV8ZD9F7lNHDsR9PgJReKhZjOg061JHy
+         uGG8Rl8L6Ef20kZ8qUYE02KTi8EYdubKpWsF8CRWUqToT4ZjFovI7qJ4lcle2kcY7KmM
+         wG8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=eInv8rBdaOha1b0nG82hVXIR3kvcnuR+78y7+tbTJnY=;
+        b=TkvkmLJ83AX3PWQ8aB9lCWdGuYsfwhDUiC1x9qr4axVkS8iGekYcsKGrRQn9KByTOH
+         8U7f7SxnO20obx1nDD9YwdVEuvLpdGQulI6uwKt5PCDnG8r9U0QuM9NxJ2WMDXib1Y5/
+         EHI1DNehxmcfAbCiRXr+wnnE5RpZxMoSabXIi5R3o9RJLDzof1B2qIpx0bcUFEgl7CMf
+         QumOhyuGRVJ06783hOnYwg/jwx7uAgvsJf1JL+oV90fmikWhbk5d9APoGlRzcue0WNVX
+         Je34ACsS5lPUfBbQrfa44o3lTOPix539+5ElRSJswYZRQGEngDuY4ZXA+RsIpE09qUq4
+         YuLg==
+X-Gm-Message-State: AOPr4FUgn2kwCc4V00NB5B06oAunNzOSlu8Fd+BdFBBTlx9XxF2otVKhdjHXVfPwgAvftw==
+X-Received: by 10.28.35.208 with SMTP id j199mr2850741wmj.22.1461922536797;
+        Fri, 29 Apr 2016 02:35:36 -0700 (PDT)
+Received: from slxBook3.fritz.box (p5DDB43DC.dip0.t-ipconnect.de. [93.219.67.220])
+        by smtp.gmail.com with ESMTPSA id c4sm13906800wjm.24.2016.04.29.02.35.35
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Fri, 29 Apr 2016 02:35:36 -0700 (PDT)
+X-Mailer: git-send-email 2.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292983>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+From: Lars Schneider <larsxschneider@gmail.com>
 
-> On 04/27/2016 10:14 PM, Junio C Hamano wrote:
->> Michael Haggerty <mhagger@alum.mit.edu> writes:
->> 
->>> If the user has asked that a new value be set for a reference, we use
->>> check_refname_format() to verify that the reference name satisfies all
->>> of the rules. But in other cases, at least check that refname_is_safe().
->> 
->> It isn't clear to me what "in other cases" exactly refers to.  A
->> request to delete a ref would obviously one of those that do not
->> "ask that a new value be set", but are there other cases?
->
-> The other case is `verify`, which can be used to check the old value of
-> a reference without modifying it. `verify` is exposed via `git
-> update-ref --stdin`
+Run "make doc" as separate Travis CI build job to check if all
+documentation can be built without errors.
 
-Thanks.
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
+
+diff to v1:
+* add quick sanity check to documentation results (thanks Matthieu)
+* fix typo in commits message (thanks Stefan)
+* move 'make doc' into seperate Travis CI build job (thanks Peff)
+* started to move CI helper scripts to /ci (thanks Matthieu & Junio)
+
+I really like the idea of the "/ci" directory. Over time I plan to
+migrate all non Travis-CI related code from .travis.yml to this directory.
+This would ease the transition to or parallel execution with another CI
+system (e.g. GitLab CI to test Git on Windows).
+
+Thanks,
+Lars
+
+
+ .travis.yml              | 15 +++++++++++++++
+ ci/test-documentation.sh | 23 +++++++++++++++++++++++
+ 2 files changed, 38 insertions(+)
+ create mode 100755 ci/test-documentation.sh
+
+diff --git a/.travis.yml b/.travis.yml
+index 78e433b..9f71d23 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -32,6 +32,21 @@ env:
+     # t9816 occasionally fails with "TAP out of sequence errors" on Travis CI OS X
+     - GIT_SKIP_TESTS="t9810 t9816"
+
++matrix:
++  include:
++    - env: Documentation
++      os: linux
++      compiler: clang
++      addons:
++        apt:
++          packages:
++          - asciidoc
++          - xmlto
++      before_install:
++      before_script: make doc
++      script: ci/test-documentation.sh
++      after_failure:
++
+ before_install:
+   - >
+     case "${TRAVIS_OS_NAME:-linux}" in
+diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
+new file mode 100755
+index 0000000..329ff4b
+--- /dev/null
++++ b/ci/test-documentation.sh
+@@ -0,0 +1,23 @@
++#!/bin/sh
++#
++# Perform a quick sanity check on documentation generated with 'make doc'.
++#
++
++set -e
++
++test_file_count () {
++    SUFFIX=$1
++    EXPECTED_COUNT=$2
++    ACTUAL_COUNT=$(find Documentation -type f -name "*.$SUFFIX" | wc -l)
++    echo "$ACTUAL_COUNT *.$SUFFIX files found. $EXPECTED_COUNT expected."
++    test $ACTUAL_COUNT -eq $EXPECTED_COUNT
++}
++
++test -s Documentation/git.html
++test -s Documentation/git.xml
++test -s Documentation/git.1
++
++# The follow numbers need to be adjusted when new documentation is added.
++test_file_count html 233
++test_file_count xml 171
++test_file_count 1 152
+--
+2.5.1
