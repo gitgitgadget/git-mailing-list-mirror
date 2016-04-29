@@ -1,84 +1,75 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH v2 3/4] t2027-worktree-list: add and adjust tests related to git-rev-parse
-Date: Fri, 29 Apr 2016 16:22:48 +0200
-Message-ID: <20160429142248.16496-1-szeder@ira.uka.de>
-References: <1461361992-91918-4-git-send-email-rappazzo@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 15/29] ref_transaction_create(): disallow recursive
+ pruning
+Date: Fri, 29 Apr 2016 16:29:03 +0200
+Message-ID: <57236FAF.7050201@alum.mit.edu>
+References: <cover.1461768689.git.mhagger@alum.mit.edu>
+ <615204c877610855b02b21ce14efa5b7342182bc.1461768689.git.mhagger@alum.mit.edu>
+ <xmqq60v2anyo.fsf@gitster.mtv.corp.google.com>
+ <1461788637.11504.3.camel@twopensource.com>
+ <xmqqh9em93xo.fsf@gitster.mtv.corp.google.com>
+ <xmqqvb327nyz.fsf@gitster.mtv.corp.google.com>
+ <5723059C.5080406@alum.mit.edu>
+ <xmqqzisc24en.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-	gitster@pobox.com, sunshine@sunshineco.com, pclouds@gmail.com,
-	git@vger.kernel.org
-To: Michael Rappazzo <rappazzo@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 29 16:23:13 2016
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Jeff King <peff@peff.net>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 29 16:29:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aw9K4-0003xC-Ad
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 16:23:12 +0200
+	id 1aw9QC-0007P7-VC
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 16:29:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753022AbcD2OXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 10:23:07 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:57502 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752764AbcD2OXG (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2016 10:23:06 -0400
-Received: from x590cc487.dyn.telefonica.de ([89.12.196.135] helo=localhost.localdomain)
-	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
-	iface 141.3.10.81 id 1aw9Js-0001hs-7o; Fri, 29 Apr 2016 16:23:01 +0200
-X-Mailer: git-send-email 2.8.1.404.g5513ce8
-In-Reply-To: <1461361992-91918-4-git-send-email-rappazzo@gmail.com>
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1461939782.
+	id S1753609AbcD2O3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 10:29:23 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:48479 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753588AbcD2O3V (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2016 10:29:21 -0400
+X-AuditID: 12074414-62bff700000008e6-d8-57236fb28641
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id 69.26.02278.2BF63275; Fri, 29 Apr 2016 10:29:06 -0400 (EDT)
+Received: from [192.168.69.130] (p548D6182.dip0.t-ipconnect.de [84.141.97.130])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u3TET3FE031875
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 29 Apr 2016 10:29:04 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.7.0
+In-Reply-To: <xmqqzisc24en.fsf@gitster.mtv.corp.google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrAKsWRmVeSWpSXmKPExsUixO6iqLspXznc4N0UOYv5m04wWnRd6Way
+	aOi9wmzRPeUto8WPlh5mi5lXrR3YPHbOusvu8ax3D6PHxUvKHvuXbmPzWPD8PrvH501yAWxR
+	3DZJiSVlwZnpefp2CdwZTxY1sRXcYKpYv62LtYFxClMXIyeHhICJxNOdq4FsLg4hga2MEuf6
+	j7JAOOeZJCY2nWcBqRIWCJT4+ekTG4gtIqAmMbHtEFTRHGaJY+susYE4zAL3GSXm/u9iBali
+	E9CVWNTTDLaDV0Bb4s+lo8wgNouAqsTWycfBJokKhEhsW/eNFaJGUOLkzCdg2zgFrCVm3WoG
+	q2cW0JPYcf0XK4QtL7H97RzmCYz8s5C0zEJSNgtJ2QJG5lWMcok5pbm6uYmZOcWpybrFyYl5
+	ealFuhZ6uZkleqkppZsYISEusoPxyEm5Q4wCHIxKPLwz7imFC7EmlhVX5h5ilORgUhLlvaqr
+	HC7El5SfUpmRWJwRX1Sak1p8iFGCg1lJhPdmDlCONyWxsiq1KB8mJc3BoiTO+22xup+QQHpi
+	SWp2ampBahFMVoaDQ0mCNzMPqFGwKDU9tSItM6cEIc3EwQkynEtKpDg1LyW1KLG0JCMeFJfx
+	xcDIBEnxAO29ALa3uCAxFygK0XqKUZdjwY/ba5mEWPLy81KlxHmdQHYIgBRllObBrYAltFeM
+	4kAfC/Mmg1TxAJMh3KRXQEuYgJYIbFIEWVKSiJCSamDUSn++jmPbjcfz7/5Zs7b3hd//dUm3
+	rla9k+oTyLv8rkWgnv/XbPbMt//+6q/pSAg9mbPqRZmfDY/J6/jjhcdlvlXazeT6 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293005>
 
-[Resend to list, sorry for the duplicates...]
+On 04/29/2016 10:41 AM, Junio C Hamano wrote:
+> [...Long, thoughtful comments omitted...]
+> So perhaps your original might be the best version
+> among those that have been discussed in this thread.
 
-> Adjust the incorrect expectation for `rev-parse --git-common-dir`.
-> 
-> Add a test for `git rev-parse --git-path` executed from a linked
-> worktree.
-> 
-> Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
-> ---
->  t/t2027-worktree-list.sh | 10 +++++++++-
->  1 file changed, 9 insertions(+), 1 deletion(-)
-> 
-> diff --git a/t/t2027-worktree-list.sh b/t/t2027-worktree-list.sh
-> index 1b1b65a..16eec6e 100755
-> --- a/t/t2027-worktree-list.sh
-> +++ b/t/t2027-worktree-list.sh
-> @@ -14,10 +14,18 @@ test_expect_success 'rev-parse --git-common-dir on main worktree' '
->  	test_cmp expected actual &&
->  	mkdir sub &&
->  	git -C sub rev-parse --git-common-dir >actual2 &&
-> -	echo sub/.git >expected2 &&
-> +	echo ../.git >expected2 &&
->  	test_cmp expected2 actual2
->  '
+Very well. I'll also add a comment near the definition of REF_ISPRUNING
+that it must only be used together with REF_NODEREF.
 
-This hunk must go into patch 1/4.
-
-The full test suite should pass after every single commit.  As patch
-1/4 fixes things, the changing behavior makes this test case fail,
-resulting in two commits in which 'make test' would fail.
-
-> +test_expect_success 'rev-parse --git-path objects linked worktree' '
-> +	echo "$(git rev-parse --show-toplevel)/.git/worktrees/linked-tree/objects" >expect &&
-> +	test_when_finished "rm -rf linked-tree && git worktree prune" &&
-> +	git worktree add --detach linked-tree master &&
-> +	git -C linked-tree rev-parse --git-path objects >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_expect_success '"list" all worktrees from main' '
->  	echo "$(git rev-parse --show-toplevel) $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
->  	test_when_finished "rm -rf here && git worktree prune" &&
-> -- 
-> 2.8.0
+Michael
