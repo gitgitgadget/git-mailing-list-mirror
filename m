@@ -1,82 +1,120 @@
-From: termnml tml <termnml@gmail.com>
-Subject: git-subtree checkout under alternate foldername (git version 2.8.1.windows.1)
-Date: Fri, 29 Apr 2016 14:33:38 +0200
-Message-ID: <CAEDerUrtWSeka5Er4FqktWvPWkD53VqQpvawu9DNtY-JKbMg8Q@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v5 2/2] submodule: pass on http.extraheader config
+ settings
+Date: Fri, 29 Apr 2016 14:35:07 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1604291429560.9313@virtualbox>
+References: <3b71deffa5d07cf73a793773cc3d60ff611843fa.1461759454.git.johannes.schindelin@gmx.de> <cover.1461837783.git.johannes.schindelin@gmx.de> <89d0024450b0e6e9997ad9e3d681248bde1bafc0.1461837783.git.johannes.schindelin@gmx.de>
+ <xmqqshy54j2h.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 14:33:44 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 29 14:35:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aw7c7-0005O4-B7
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 14:33:43 +0200
+	id 1aw7dm-00067o-Pe
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Apr 2016 14:35:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753000AbcD2Mdj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 08:33:39 -0400
-Received: from mail-oi0-f52.google.com ([209.85.218.52]:36194 "EHLO
-	mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752793AbcD2Mdj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 08:33:39 -0400
-Received: by mail-oi0-f52.google.com with SMTP id x201so116579611oif.3
-        for <git@vger.kernel.org>; Fri, 29 Apr 2016 05:33:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=i3g/y+RGOm/zqkHI99WLAQ4WmTkub332QcCXZvYQ11c=;
-        b=s7MIHSZrpgKDjtklhk/PSLp38pTVXCNCuWjz9ckHArHs/bHPiynBtgFzWKZejFk03P
-         3uzQkmvtkhlWJCSmAvLqYdQUvQgf+3kf0bMSE5SY9nUEabndDri5hEdyMMNfsVLKp2G2
-         mL2eQ9WZfYwrv/VeNxlIcXu1zajscrdXfYKCYv416+YZ8/zTrZqv8CsqxcAdct+LtPNk
-         Qnzxw8Afvw609e4jSPzgYlwTj3J3epEirh7zMlsj0oE0PNOZSiczBcN7XPCr4WP7nqS0
-         mXYYnRbb6ntbwyL6We3ssGglxZ+tdIkU/D5QYNvk+aJpsTsYJCAB0e0vWvLTyfH2eAEY
-         t/Jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=i3g/y+RGOm/zqkHI99WLAQ4WmTkub332QcCXZvYQ11c=;
-        b=SFQeDBcq7hCfQXxqCfAjfCNKvUkpTBG8KRoYExvJCuU52+mJXYmIWiYtiJsYBVtw9Q
-         gdFt87BgN6Zk3BY+w/mDdmeHj7ppf3I1z6VZrFusNeOKgQyhVDyd+cArChGFhURic8J+
-         m0nSdosy3ztNeR8Dpf2/mqOZ2kKmffebx5Fb70DAxbrvMQD+qSmDfJEdm6ERguzZDbV1
-         6/qcWOo+2uiPHTbFpiUeLAtEQxUPn8b78wcojbMT8LOUqO17MH5LdUB5Np5WiO6jtPmu
-         haDcApjCqpynAy4TcxsBYec0CnA7/U+mw0fmcHnX9vKHbCS3O5efHulVKEGJa0WMVou+
-         2RmA==
-X-Gm-Message-State: AOPr4FW4F/YOX8ljfyvDyE76zd9v2EmuvpGI993n2w9ACOQrNfbbGYq9Lez9m9cInAdyZ34IQgvBlo2ACFUnOQ==
-X-Received: by 10.157.49.118 with SMTP id v51mr9579347otd.97.1461933218044;
- Fri, 29 Apr 2016 05:33:38 -0700 (PDT)
-Received: by 10.157.24.17 with HTTP; Fri, 29 Apr 2016 05:33:38 -0700 (PDT)
+	id S1752793AbcD2MfX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 08:35:23 -0400
+Received: from mout.gmx.net ([212.227.17.22]:62336 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752625AbcD2MfW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 08:35:22 -0400
+Received: from virtualbox ([88.128.80.158]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Meduu-1bKF7f1dma-00OH9T; Fri, 29 Apr 2016 14:35:11
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqqshy54j2h.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:Fw5L4lfg313YrOB8nxYF29MjjUSiy+E6aOEP9896MIiiBjEzQkD
+ hCHK8FA4HXtK7aHyKD+g4QmVnCsMw1lhouh2yexdXVbN17WoJPn/fQJ0un4kXOv34SoCc8B
+ S+WNzm4l4YfrNnFn15dMnFwQEBhOCzqW6vfgHFe2PmL7VrpKqrveaCwUaI8VxlfDuWhdI77
+ cqXUmSeG15OGOhiC49/kQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3eV9qKJI5k4=:owm+i9HjI6VlIIgfVERnoB
+ mzacTbNzGiV+//gptQd7JDExTBCEiQfvbllU+4Uy6QbDhGEfaXcGvJLg8j5xIvusMkld6jwV7
+ UYgWhQjrBeBQJ9q5lsi3KeBoOkBHUgSo2tFhMQAnUWokRtf8tbi7O+baVmB48kgBHoYIpsg4+
+ gAL0K9yXjcBsmFu90Ew8KCxfr/y/KFCPM7Y4v9xicAMXZ1dznnt4SDHr4WnW6Ck0FRJedpmnM
+ TQV4ife8TSbf4n+UGEUKyzOO0zfXo3Ns+0pKs/M8NrPqVVP9uaLGCz/A8PpbwZHgwGTcKQgCI
+ t0cSK1hm61swbYdhu+0kbP+ZExZ4k8JVBW8MMLa2hg6nboW5lAEDES4gjCZCUE4psl+75f71D
+ 6OQiCzt+ANRQXlkjXJPV4tTufDeut4ZYqqoml7n7U32xbbfj5QSc4Q4M/xvl7vw/VUw8wwuZl
+ GH5BUoy5B0CQex2OJ4dy3nc8hPCmbiecx2Dm9P7VowYAvUISzQFb07NU1UDZqs3btl0ICND1X
+ bQib0J6p7TBtSoozJrTX2H23EZ0cjhugBByfaact6+hiUZjrhKGjcSBhzT2itpl08KJ1sVnt8
+ l3eegpiJY/PexKHDeEpJUSPsHYBEQYOmqAbvqiixZMPLNXBHn7Uq3DCZ1h0qqGjLYmW/01VnW
+ gbyAMhIstlhu9RzeK9MkWm1lM8S5yIXUe34v9lRGP6+L+1hrJxcq76zHQhRgsbCsecT2PMGW0
+ YRRMiCXIHew/qT8c8ZDds69Be2GVDB+bIwPgtYqaJQQbAg+OzRxLQEY/bbkfFdMuLU3ZfnZ5 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/292991>
 
-Hi people.
+Hi Junio,
 
-I want to creat a git repo with two upstreams.
+On Thu, 28 Apr 2016, Junio C Hamano wrote:
 
-The first is the root of JointsWP (https://github.com/JeremyEnglert/JointsWP
-) going straight to my root (repo /).
-No problem with this upstream-jointswp.
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > -     if (starts_with(var, "credential."))
+> > +     if (starts_with(var, "credential.") ||
+> > +                     (starts_with(var, "http.") &&
+> > +                      ends_with(var, ".extraheader")))
+> 
+> I know you are fond of indenting with HT without aligning things,
+> but this is going too far in the quest of making the code
+> unreadable.
 
-The second is the sub dir /templates of WooComerce (
-https://github.com/woothemes/woocommerce).
-he content in this one should go directly into my subdir /woocommerce.
+Hah. I am actually not fond of anything there, but I go with the default
+in my vim when selecting lines and pressing the '=' key...
 
-I was able to do a sparseCheckout to only catch the /templates subdir of
-the upstream(-woocommerce:/templates).
-Now I want to "mv or rename" the checked out /templates to /woocommerce.
-I want to keep full track of the commits done to /templates in the
-upstream-channel.
+If you know off-hand how to teach my vim to use your preferred indenting,
+I'll gladly just brow-beat it into submission.
 
-Or is the git-subtree the wrong way to go?
+>         if (starts_with(var, "credential.") ||
+>             (starts_with(var, "http.") && ends_with(var, ".extraheader")))
+> 
+> would make iteasier to see what are the top-level items (there are two)
+> and how they are related (just one of them needs to be satisfied).
 
-Stackoverflow:
-http://stackoverflow.com/questions/36894522/git-subtree-checkout-specific-folder-under-other-name
+Fine by me!
 
-Thank you great folks.
+> Assuming that we will discover more variables that can be safely
+> passed, I'd rather see the above written like this, though:
+> 
+>         if (starts_with(var, "credential."))
+>                 return 1;
+>         if (starts_with(var, "http.") && ends_with(var, ".extraheader"))
+>                 return 1;
+> 
+>         return 0;
+> 
+> Or even something along this line:
+> 
+>         struct whitelist {
+>                 const char *prefix;
+>                 const char *suffix;
+>         } whitelist[] = {
+>                 { "credential.", NULL },
+>                 { "http.", ".extraheader" },
+>         };
+> 
+>         for (i = 0; i < ARRAY_SIZE(whitelist); i++) {
+>                 struct whitelist *w = &whitelist[i];
+>                 if ((!w->prefix || starts_with(var, w->prefix)) &&
+>                     (!w->suffix || ends_with(var, w->suffix)))
+>                         return 1;
+>         }
+>         return 0;
 
-PS:
-Sorry if this is the wrong place for my question.
-Got a headsup to try here. ;)
+Iff. Iff we go with a white-list.
+
+However, I think you did a really good job arguing that the
+CONFIG_DATA_ENVIRONMENT filtering is, in fact, overzealous.
+
+Just let me know what to go with, and I'll update the patch accordingly.
+
+Ciao,
+Dscho
