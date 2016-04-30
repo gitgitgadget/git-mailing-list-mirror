@@ -1,208 +1,147 @@
 From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: [PATCH v15 2/7] test-parse-options: print quiet as integer
-Date: Sun,  1 May 2016 01:33:31 +0530
-Message-ID: <1462046616-2582-2-git-send-email-pranit.bauva@gmail.com>
+Subject: [PATCH v15 3/7] t0040-parse-options: improve test coverage
+Date: Sun,  1 May 2016 01:33:32 +0530
+Message-ID: <1462046616-2582-3-git-send-email-pranit.bauva@gmail.com>
 References: <1462046616-2582-1-git-send-email-pranit.bauva@gmail.com>
 Cc: sunshine@sunshineco.com, gitster@pobox.com,
 	Pranit Bauva <pranit.bauva@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 30 22:04:19 2016
+X-From: git-owner@vger.kernel.org Sat Apr 30 22:04:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1awb7h-0000zH-M7
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Apr 2016 22:04:18 +0200
+	id 1awb7m-00010z-5L
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Apr 2016 22:04:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751651AbcD3UEL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Apr 2016 16:04:11 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34618 "EHLO
+	id S1752173AbcD3UER (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Apr 2016 16:04:17 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:33061 "EHLO
 	mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751435AbcD3UEK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Apr 2016 16:04:10 -0400
-Received: by mail-pf0-f193.google.com with SMTP id 145so15365059pfz.1
-        for <git@vger.kernel.org>; Sat, 30 Apr 2016 13:04:09 -0700 (PDT)
+	with ESMTP id S1751814AbcD3UEQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Apr 2016 16:04:16 -0400
+Received: by mail-pf0-f193.google.com with SMTP id e190so17855989pfe.0
+        for <git@vger.kernel.org>; Sat, 30 Apr 2016 13:04:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fP8MrkkUEIpw9dXrYyOWRCiEWuYNRvqHUHyGbfXSg/A=;
-        b=nwn+uVjraOkH997PAA5PqJg8zjXZvJwDnAw1QrtxtAFJYwm3GfkfcY48t2DLdfJuiI
-         0wX6Gtstp6y3+qexb06nyEPfiggo67GrJ2ywGQQmyETYsvu5KQmSOOCBY6SEqmJ8i8YN
-         ySxJwIMw4kL0JM5Sy7Bu5cR3tbMGJX8SRfq0/0VWnQzFhyjCua9EJ7RyTj8FE6MI348v
-         1p/6XtxP7tIZF7PEkPKzm5n/uQaKPxSBmSB3C7cwvGaFFmK+fJt53DfsEjdDOoIHZ3ls
-         jAPu47iwf1LCqypdEFum1xG6Elt3dUBJE7P/aD7tY/YlB2sseL3uGdXfMT7RrarjBcJO
-         0zHQ==
+        bh=cVAx2lrYoc6vFhYgb56n++A0f8fEvOE2A2wEjWypeLc=;
+        b=BQFJ1t7PCUOPx1Rae6qv6QIir1tyOL3SzxUOZOZJK98nsOBgnS1Jp7Z8rUKwXmtrWA
+         NaZgF2kpZgsFBINDbX8a9CDr0JuZX6hkVt7A8ZSQ+YR/CpTCqaxZ9+Wypn7mRiih2GYo
+         A8p0NmQv7aLsy+7DpU3HkYZjQoas/OSjh9szLsY2/ChoG/hSX7JK5ap9E1LQ/C4A5GHK
+         FseAK8N14MFy2fM4cTXaAShHA0rfc+KECclmPuo7RzFX7V6NJQcUCO1TYyurVJ3flyu3
+         th3SOt3pDHETErySg2u8T27VKUjcDujnKQP6SwAh8i6NTE57ZZZH61QQNb8NI94JHk22
+         UuVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=fP8MrkkUEIpw9dXrYyOWRCiEWuYNRvqHUHyGbfXSg/A=;
-        b=VeF/l4tlv2eZj7mYlh7AfrcczSGJJBdw0QLPYDpsZ/iL4lbjPdxBGbCnLAKUXnAoJI
-         CzarmIMRAVJC0W9BJpgep5v9rgEFS//dNuK7CzZBiQpGy/A2CnHOcYVvuDPSq82jsZGD
-         hAHYeq1GjpTfBGipPZWSU/ydym0XNLR4ZqdUig98jioPlhyGuS697u5SPaOhr6HM77d9
-         mlBXZOPfOylsTlRB5mjaN7TbB4Wm3lZAhzV633VkJFj3qedWhxk+GmJDRnr4LNOMxKDt
-         WylwvGBthaA9Cy9GPGcM2Mlraqi4xCsaY8LGZPYGDBBAUDFCv/s5e1XJ9HI762XMFnF5
-         u1tA==
-X-Gm-Message-State: AOPr4FUz/XKF0SqQt5Ac9sHjdVXXZq3GJYXg7GOyQ7M5t0D3d8Jv+aZngr2r6YB5ZODFUQ==
-X-Received: by 10.98.79.213 with SMTP id f82mr38779894pfj.65.1462046649006;
-        Sat, 30 Apr 2016 13:04:09 -0700 (PDT)
+        bh=cVAx2lrYoc6vFhYgb56n++A0f8fEvOE2A2wEjWypeLc=;
+        b=ICIQZ0vsYIKcKQ250oMMqxj1hyD8ap49AdbTYsH6DQqZwf/HOK4aZl67EqRH1c9S2x
+         ch8vEruGqg3DgubOokl7+6+j0h6c51ALjK+DoYRftT6JZeaVuDtShL1ap4DGi8rgEgHy
+         FvQ4vVI9DrLfTnF87JJYk75GHKtVqz4Z3JcQ5aStMW4W/OfFHEcEq5aQZR1yprCL5Z1d
+         udk6H6ad3kpyaVbKsrmcCy6su/zLV62vFimAypOU/hW5cx3/fmJE+GbVTavSvKt2d0QN
+         T1a8WlQuS2SaG6GJ2CxqcYkuo1tQNpnuS5AiV4DkjXlT6zqeWy6iWz5NUAAOg4cKs0XK
+         akcA==
+X-Gm-Message-State: AOPr4FUChoglciSNbHfHR6F056wT/R6jRIAgMeFiJIIslcZV5Io9aazcWt3xLp3vTf1LLA==
+X-Received: by 10.98.0.202 with SMTP id 193mr38605595pfa.120.1462046655906;
+        Sat, 30 Apr 2016 13:04:15 -0700 (PDT)
 Received: from localhost.localdomain ([27.106.101.191])
-        by smtp.gmail.com with ESMTPSA id h85sm33329025pfj.52.2016.04.30.13.04.03
+        by smtp.gmail.com with ESMTPSA id h85sm33329025pfj.52.2016.04.30.13.04.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 30 Apr 2016 13:04:08 -0700 (PDT)
+        Sat, 30 Apr 2016 13:04:15 -0700 (PDT)
 X-Mailer: git-send-email 2.8.1
 In-Reply-To: <1462046616-2582-1-git-send-email-pranit.bauva@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293129>
 
-We would want to see how multiple --quiet options affect the value of
-the underlying variable (we may want "--quiet --quiet" to still be 1, or
-we may want to see the value incremented to 2). Show the value as
-integer to allow us to inspect it.
+Include tests to check for multiple levels of quiet and to check if the
+'--no-quiet' option sets it to 0.
+
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+
+---
+Link to v14:
+ - $gmane/288880
+
+Changes wrt v14:
+ - Change the test to use '-q -q -q --no-quiet' instead of just '--no-quiet'
+ - Move the test for '--no-verbose' from OPT_COUNTUP patch to this one.
 
 Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 ---
- t/t0040-parse-options.sh | 26 +++++++++++++-------------
- test-parse-options.c     |  2 +-
- 2 files changed, 14 insertions(+), 14 deletions(-)
+ t/t0040-parse-options.sh | 57 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 57 insertions(+)
 
 diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index 477fcff..450da45 100755
+index 450da45..57fc2a1 100755
 --- a/t/t0040-parse-options.sh
 +++ b/t/t0040-parse-options.sh
-@@ -64,7 +64,7 @@ timestamp: 0
- string: (not set)
- abbrev: 7
- verbose: 0
--quiet: no
-+quiet: 0
- dry run: no
- file: (not set)
- EOF
-@@ -164,7 +164,7 @@ timestamp: 0
- string: 123
- abbrev: 7
- verbose: 2
--quiet: no
-+quiet: 0
- dry run: yes
- file: prefix/my.file
- EOF
-@@ -184,7 +184,7 @@ timestamp: 0
- string: 321
- abbrev: 10
- verbose: 2
--quiet: no
-+quiet: 0
- dry run: no
- file: prefix/fi.le
- EOF
-@@ -212,7 +212,7 @@ timestamp: 0
- string: 123
- abbrev: 7
- verbose: 0
--quiet: no
-+quiet: 0
- dry run: no
- file: (not set)
- arg 00: a1
-@@ -235,7 +235,7 @@ timestamp: 0
- string: (not set)
- abbrev: 7
- verbose: 0
--quiet: no
-+quiet: 0
- dry run: no
- file: (not set)
- EOF
-@@ -264,7 +264,7 @@ timestamp: 0
- string: 123
- abbrev: 7
- verbose: 0
--quiet: no
-+quiet: 0
- dry run: no
- file: (not set)
- EOF
-@@ -303,7 +303,7 @@ timestamp: 0
- string: (not set)
- abbrev: 7
- verbose: 0
--quiet: no
-+quiet: 0
- dry run: no
- file: (not set)
- arg 00: --quux
-@@ -323,7 +323,7 @@ timestamp: 1
- string: (not set)
- abbrev: 7
- verbose: 0
--quiet: yes
-+quiet: 1
- dry run: no
- file: (not set)
- arg 00: foo
-@@ -345,7 +345,7 @@ timestamp: 0
- string: (not set)
- abbrev: 7
- verbose: 0
--quiet: no
-+quiet: 0
- dry run: no
- file: (not set)
- EOF
-@@ -374,7 +374,7 @@ timestamp: 0
- string: (not set)
- abbrev: 7
- verbose: 0
--quiet: no
-+quiet: 0
- dry run: no
- file: (not set)
- EOF
-@@ -399,7 +399,7 @@ timestamp: 0
- string: (not set)
- abbrev: 7
- verbose: 0
--quiet: no
-+quiet: 0
- dry run: no
- file: (not set)
- EOF
-@@ -430,7 +430,7 @@ timestamp: 0
- string: (not set)
- abbrev: 7
- verbose: 0
--quiet: no
-+quiet: 0
- dry run: no
- file: (not set)
- EOF
-@@ -449,7 +449,7 @@ timestamp: 0
- string: (not set)
- abbrev: 7
- verbose: 0
--quiet: no
-+quiet: 0
- dry run: no
- file: (not set)
- EOF
-diff --git a/test-parse-options.c b/test-parse-options.c
-index 2c8c8f1..86afa98 100644
---- a/test-parse-options.c
-+++ b/test-parse-options.c
-@@ -90,7 +90,7 @@ int main(int argc, char **argv)
- 	printf("string: %s\n", string ? string : "(not set)");
- 	printf("abbrev: %d\n", abbrev);
- 	printf("verbose: %d\n", verbose);
--	printf("quiet: %s\n", quiet ? "yes" : "no");
-+	printf("quiet: %d\n", quiet);
- 	printf("dry run: %s\n", dry_run ? "yes" : "no");
- 	printf("file: %s\n", file ? file : "(not set)");
+@@ -476,4 +476,61 @@ test_expect_success '--no-list resets list' '
+ 	test_cmp expect output
+ '
  
++cat >expect <<\EOF
++boolean: 0
++integer: 0
++magnitude: 0
++timestamp: 0
++string: (not set)
++abbrev: 7
++verbose: 0
++quiet: 3
++dry run: no
++file: (not set)
++EOF
++
++test_expect_success 'multiple quiet levels' '
++	test-parse-options -q -q -q >output 2>output.err &&
++	test_must_be_empty output.err &&
++	test_cmp expect output
++'
++
++cat >expect <<\EOF
++boolean: 0
++integer: 0
++magnitude: 0
++timestamp: 0
++string: (not set)
++abbrev: 7
++verbose: 0
++quiet: 0
++dry run: no
++file: (not set)
++EOF
++
++test_expect_success '--no-quiet sets quiet to 0' '
++	test-parse-options -q -q -q --no-quiet >output 2>output.err &&
++	test_must_be_empty output.err &&
++	test_cmp expect output
++'
++
++cat >expect <<\EOF
++boolean: 0
++integer: 0
++magnitude: 0
++timestamp: 0
++string: (not set)
++abbrev: 7
++verbose: 0
++quiet: 0
++dry run: no
++file: (not set)
++EOF
++
++test_expect_success '--no-verbose sets verbose to 0' '
++	test-parse-options --no-verbose >output 2> output.err &&
++	test_must_be_empty output.err &&
++	test_cmp expect output
++'
++
+ test_done
 -- 
 2.8.1
