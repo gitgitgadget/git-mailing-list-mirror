@@ -1,10 +1,11 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 49/83] builtin/apply: move 'lock_file' global into 'struct apply_state'
-Date: Sat, 30 Apr 2016 21:39:19 +0200
-Message-ID: <CAP8UFD1bDj2bnRSpo3Gp5B4Du6fNGSUfXv6dLL6Cs4KsJTw5Zg@mail.gmail.com>
+Subject: Re: [PATCH 51/83] builtin/apply: make apply_patch() return -1 instead
+ of die()ing
+Date: Sat, 30 Apr 2016 21:41:07 +0200
+Message-ID: <CAP8UFD2SzSXWSH8uB2iJ8-QpkYhXDNGbSks4Ua3TLrVH0a7Acw@mail.gmail.com>
 References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
-	<1461504863-15946-50-git-send-email-chriscool@tuxfamily.org>
-	<CAPig+cRSe8oOjo2h6SuJQyD+he_Q7zHfF4TivZ0amhAu4HLQ+g@mail.gmail.com>
+	<1461504863-15946-52-git-send-email-chriscool@tuxfamily.org>
+	<CAPig+cQTx3wyk0E-ZBaBYbjsXRqHPg1f6snZKGjWkrTq=fb6Vg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
@@ -17,75 +18,111 @@ Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sat Apr 30 21:39:31 2016
+X-From: git-owner@vger.kernel.org Sat Apr 30 21:41:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1awaji-0007PT-NB
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Apr 2016 21:39:31 +0200
+	id 1awalQ-0008D0-0m
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Apr 2016 21:41:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752190AbcD3TjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Apr 2016 15:39:22 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:34972 "EHLO
-	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751225AbcD3TjV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Apr 2016 15:39:21 -0400
-Received: by mail-wm0-f50.google.com with SMTP id e201so64075379wme.0
-        for <git@vger.kernel.org>; Sat, 30 Apr 2016 12:39:20 -0700 (PDT)
+	id S1752599AbcD3TlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Apr 2016 15:41:09 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:35409 "EHLO
+	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751225AbcD3TlI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Apr 2016 15:41:08 -0400
+Received: by mail-wm0-f46.google.com with SMTP id e201so64104471wme.0
+        for <git@vger.kernel.org>; Sat, 30 Apr 2016 12:41:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=97ePgSQ279CCXSmRRr3+ZdLW4K+XUaTEj5GTaMcnsQM=;
-        b=Itli7yg5YrSv0Xuwh9f1fhyjs5in/qLRSeKano+BhOw6ubYzY+RyB0CbAmVQXRlD2e
-         1laLp1recBexBRSulBm4LmziovM8XcVKF0RWkLekbdH3/m7P0HWSd7Itaf5A2Qxs9Tur
-         5A20Jbkyn23Kdc2LkPnbh6ymUALVr3w5cqC5rQXA4S5lJu4zy6FXYJRnGNlbwXfjnD6R
-         Qgwernlnc6wkOVb0F3HEw1T1WHQF8NkjvCidjuxfCoNIxLT+K+QJhVu9Z6cf3TfIuVdS
-         paCxFLx4RKJ4I3nNz0woaJbFlsCIaIZnSFpwpfPxjDMAFcuEAxOQoB4vnUp4JxM+TZc5
-         knAw==
+        bh=/hxgB4FIAcsrQIUbPWEods7Be7bFx7fnERbLgkjAeQY=;
+        b=ubiZf0czLO+0udqBg0ZCBdob5eACyHc5gaW2CAH6OSR+UkoRW7uvgxzC+vRHCANxMh
+         zcXZQwNY0nqHQQ6tSn3bpEZkrxiO6t9H4Q2Df5N8D6EGiUQBqM9lsllN8Lmllaw38DSf
+         8mU2dndIanxT762ASOvEpXDqX2UmJk/69jTrsev0hd1QdgcvySg+1UNtsFhim0ar/MSM
+         yhKJly9LaD/qC2EM2tIcD6+xkASH8r9Qimj8uy8I9yn5fcLTPN8uNLQryjV2zOOvnyud
+         Iv8w6r80VJ62C+DPxPNBKZMQMx8Uw6TmGxCgZpCZBvsRLMWqk3SoTYthejGIiqkMxOl4
+         YrcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=97ePgSQ279CCXSmRRr3+ZdLW4K+XUaTEj5GTaMcnsQM=;
-        b=dRiZ2WtrvRZ+A6QLMOHCY3toaxw0EWaOYSd1BOBosTwRaAP/XUZss2C/UqunFeIWN9
-         igqz4QLVl1RL7zDOnlbmSza3V/ugbE2RhZ5hZJYg92D7N9xWonJP21qLRrG0ITS8XGhA
-         bGFsnsiz/66thgXkzjhGTfcWAobYyaS1h15YDOcDgomryOMNJr1cNOGzakVWSXP5SYfT
-         /PkbpeMvi6z3TcVOfjR39GP6tJKjsdaDEXRK5VtCSUKiztomI+vwJpyVIInJMC6rswMh
-         0gVBqPejl73w+VLd0ZRRKMAmGo7W3+UCMtsAGrBYAGEX1H5GfWnJecT2VtcD2aKi/htK
-         cniQ==
-X-Gm-Message-State: AOPr4FXf+7Skl6zxo8PcUHHl1SwFOKdxOd8FyFPz/aSSCWLwZWd+dr52fosjnQ87hNOx+SO3PfKOj0MBlDhXGw==
-X-Received: by 10.28.129.22 with SMTP id c22mr11249651wmd.89.1462045159715;
- Sat, 30 Apr 2016 12:39:19 -0700 (PDT)
-Received: by 10.194.246.4 with HTTP; Sat, 30 Apr 2016 12:39:19 -0700 (PDT)
-In-Reply-To: <CAPig+cRSe8oOjo2h6SuJQyD+he_Q7zHfF4TivZ0amhAu4HLQ+g@mail.gmail.com>
+        bh=/hxgB4FIAcsrQIUbPWEods7Be7bFx7fnERbLgkjAeQY=;
+        b=QxTT5TltyPOonVGOaultW63VDJQjti8BKdKnfIbb29XcL6twLx+5YZPFv0HxGaeuFX
+         eSjdjr2q/htTHO+AncWNaPXvrdpjyqeGrY+BFHZr07arAf0yyS1bgRcMp502zO15gC3Y
+         eINCX9Wurc8fZpEJPX2CGtZjEZjNskIqImGGqrDeuELql2ykHmGXXCNz08wesQK2PnYX
+         9E4asnViHxxi808cmfUgORVPz5B82O46pW4mF4q6p3LT+/BG740TNEND6dD1C/izJf3V
+         cC2KArDwDHJPCsEPxCclLJbIuNgdKsBcnJx5JbDXgvdVCwLk24ihRxRw4uPRrrWvEzk3
+         nQsQ==
+X-Gm-Message-State: AOPr4FWm6Dlq4NcrHvmNccEpC4UU/vF9hAoau19ar9nrzAXPtZMGu5u0jNGUj4VhNPfTpVY2+qVLK1uecqLWrA==
+X-Received: by 10.28.169.11 with SMTP id s11mr11357400wme.62.1462045267126;
+ Sat, 30 Apr 2016 12:41:07 -0700 (PDT)
+Received: by 10.194.246.4 with HTTP; Sat, 30 Apr 2016 12:41:07 -0700 (PDT)
+In-Reply-To: <CAPig+cQTx3wyk0E-ZBaBYbjsXRqHPg1f6snZKGjWkrTq=fb6Vg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293126>
 
-On Mon, Apr 25, 2016 at 9:50 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> @@ -4515,8 +4521,6 @@ static int write_out_results(struct apply_state *state, struct patch *list)
->>         return errs;
->>  }
+On Tue, Apr 26, 2016 at 3:20 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Sun, Apr 24, 2016 at 9:33 AM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> To libify `git apply` functionality we have to signal errors
+>> to the caller instead of die()ing.
 >>
->> -static struct lock_file lock_file;
+>> As a first step in this direction, let's make apply_patch() return
+>> -1 in case of errors instead of dying. For now its only caller
+>> apply_all_patches() will exit(1) when apply_patch() return -1.
+>>
+>> In a later patch, apply_all_patches() will return -1 too instead of
+>> exiting.
+>>
+>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>> ---
+>> diff --git a/builtin/apply.c b/builtin/apply.c
+>> @@ -4522,6 +4522,14 @@ static int write_out_results(struct apply_state *state, struct patch *list)
+>>  static int apply_patch(struct apply_state *state,
+>>                        int fd,
+>>                        const char *filename,
+>> @@ -4564,7 +4572,7 @@ static int apply_patch(struct apply_state *state,
+>>         }
+>>
+>>         if (!list && !skipped_patch)
+>> -               die(_("unrecognized input"));
+>> +               return error(_("unrecognized input"));
+>>
+>>         if (state->whitespace_error && (state->ws_error_action == die_on_ws_error))
+>>                 state->apply = 0;
+>> @@ -4575,19 +4583,17 @@ static int apply_patch(struct apply_state *state,
+>>                 hold_locked_index(state->lock_file, 1);
+>>         }
+>>
+>> -       if (state->check_index) {
+>> -               if (read_cache() < 0)
+>> -                       die(_("unable to read index file"));
+>> -       }
+>> +       if (state->check_index && read_cache() < 0)
+>> +               return error(_("unable to read index file"));
+>>
+>>         if ((state->check || state->apply) &&
+>>             check_patch_list(state, list) < 0 &&
+>>             !state->apply_with_reject)
+>> -               exit(1);
+>> +               return -1;
+>>
+>>         if (state->apply && write_out_results(state, list)) {
+>>                 if (state->apply_with_reject)
+>> -                       exit(1);
+>> +                       return -1;
+>>                 /* with --3way, we still need to write the index out */
+>>                 return 1;
+>>         }
 >
-> Does the static lock_file in build_fake_ancestor() deserve the same
-> sort of treatment? (I haven't traced the code enough to answer this.)
+> Are these new 'returns' leaking 'list', 'buf', and 'fn_table' which
+> otherwise get released at the end of the function?
 
-Maybe yes we could do the same thing for this static lock_file, but
-this can be done later, and it could be a bit involved, so I prefer to
-not touch that for now.
-
-We are using the lock_file like this in build_fake_ancestor():
-
-    hold_lock_file_for_update(&lock, filename, LOCK_DIE_ON_ERROR);
-    if (write_locked_index(&result, &lock, COMMIT_LOCK))
-        return error("Could not write temporary index to %s", filename);
-
-so it looks like it is safe to call build_fake_ancestor() many times
-as long as it is not called by different threads.
+Yeah, you are right, I will fix that. Thanks.
