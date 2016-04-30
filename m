@@ -1,84 +1,125 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] xdiff: implement empty line chunk heuristic
-Date: Fri, 29 Apr 2016 23:06:20 -0400
-Message-ID: <20160430030620.GB25719@sigill.intra.peff.net>
-References: <1461079290-6523-1-git-send-email-sbeller@google.com>
- <1461079290-6523-3-git-send-email-sbeller@google.com>
- <CA+P7+xoqn3fxEZGn02ST1XV-2UpQGr3iwV-37R8pakFJy_9n0w@mail.gmail.com>
- <20160420041827.GA7627@sigill.intra.peff.net>
- <xmqqa8kcxip9.fsf@gitster.mtv.corp.google.com>
- <CA+P7+xpFCBU1xYbtcX8jtmDDyY8p0CiJJ=bexTmi=_vwWRZi0Q@mail.gmail.com>
- <xmqqwpngukin.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kZu=keNaCbt4T=CzH3i9qr+BxXw6AiWR-q1Cs4U80Jzng@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 19/29] refs: don't dereference on rename
+Date: Sat, 30 Apr 2016 05:48:50 +0200
+Message-ID: <57242B22.4050202@alum.mit.edu>
+References: <cover.1461768689.git.mhagger@alum.mit.edu>
+ <27f8b223e42dcf1cf3c010833e0aff7baa4559c2.1461768690.git.mhagger@alum.mit.edu>
+ <xmqqy47y98zx.fsf@gitster.mtv.corp.google.com>
+ <57230F71.2020401@alum.mit.edu> <1461972108.4123.43.camel@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Sat Apr 30 05:06:30 2016
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Jeff King <peff@peff.net>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+To: David Turner <dturner@twopensource.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 30 05:49:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1awLEi-00020H-UO
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Apr 2016 05:06:29 +0200
+	id 1awLu8-0002nI-QD
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Apr 2016 05:49:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752570AbcD3DGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 23:06:24 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59597 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752379AbcD3DGY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 23:06:24 -0400
-Received: (qmail 17045 invoked by uid 102); 30 Apr 2016 03:06:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Apr 2016 23:06:23 -0400
-Received: (qmail 28529 invoked by uid 107); 30 Apr 2016 03:06:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Apr 2016 23:06:25 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Apr 2016 23:06:20 -0400
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZu=keNaCbt4T=CzH3i9qr+BxXw6AiWR-q1Cs4U80Jzng@mail.gmail.com>
+	id S1752406AbcD3DtE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 23:49:04 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:64339 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752384AbcD3DtD (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2016 23:49:03 -0400
+X-AuditID: 1207440c-c53ff70000000b85-e0-57242b26132b
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id 58.C5.02949.62B24275; Fri, 29 Apr 2016 23:48:54 -0400 (EDT)
+Received: from [192.168.69.130] (p548D634F.dip0.t-ipconnect.de [84.141.99.79])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u3U3mpPI008321
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 29 Apr 2016 23:48:52 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.7.0
+In-Reply-To: <1461972108.4123.43.camel@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrCKsWRmVeSWpSXmKPExsUixO6iqKumrRJucL1N2WL+phOMFl1Xupks
+	GnqvMFt0T3nLaPGjpYfZYuZVawc2j52z7rJ7POvdw+hx8ZKyx/6l29g8Fjy/z+7xeZNcAFsU
+	t01SYklZcGZ6nr5dAnfGuo0zWAvOiVTcO/icuYHxokAXIyeHhICJxM4Jz9i7GLk4hAS2Mko8
+	7FnAAuGcY5JYd+AKC0iVsICNxJ6+K+wgtohAhMSSyftYIYramSTWvOkGc5gFdjBK3HrYxQZS
+	xSagK7Gop5kJxOYV0JZYPKGTGcRmEVCV6Hp8nhHEFhUIkdi27hsrRI2gxMmZT8C2cQpYSKz6
+	uhjMZhZQl/gz7xIzhC0vsf3tHOYJjPyzkLTMQlI2C0nZAkbmVYxyiTmlubq5iZk5xanJusXJ
+	iXl5qUW6hnq5mSV6qSmlmxghIc6zg/HbOplDjAIcjEo8vDPuKYULsSaWFVfmHmKU5GBSEuWt
+	WKQcLsSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmE95uGSrgQb0piZVVqUT5MSpqDRUmcV3WJup+Q
+	QHpiSWp2ampBahFMVoaDQ0mC94wmUKNgUWp6akVaZk4JQpqJgxNkOJeUSHFqXkpqUWJpSUY8
+	KC7ji4GRCZLiAdorpQWyt7ggMRcoCtF6ilFRSpy3HmSuAEgiozQPbiwscb1iFAf6Upg3FKSd
+	B5j04LpfAQ1mAhossEkRZHBJIkJKqoExQHf5rZNCAk2px9IXLZ9ju3GG6oMtzPuZAzKupF+0
+	e3LIyHSxws0w87aKh/M+nxYJ3MG+gN91T+LSF6JFD7g5Ge/aTGyI3XtQte5oy8nD 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293121>
 
-On Fri, Apr 29, 2016 at 03:35:54PM -0700, Stefan Beller wrote:
-
-> > -- >8 --
-> > diff: enable "compaction heuristics" and lose experimentation knob
-> >
-> > It seems that the new "find a good hunk boundary by locating a blank
-> > line" heuristics gives much more pleasant result without much
-> > noticeable downsides.  Let's make it the new algorithm for real,
-> > without the opt-out knob we added while experimenting with it.
+On 04/30/2016 01:21 AM, David Turner wrote:
+> On Fri, 2016-04-29 at 09:38 +0200, Michael Haggerty wrote:
+>> On 04/27/2016 08:55 PM, Junio C Hamano wrote:
+>>> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>>>
+>>>> @@ -2380,8 +2381,8 @@ int rename_ref(const char *oldrefname,
+>>>> const char *newrefname, const char *logms
+>>>>  		goto rollback;
+>>>>  	}
+>>>>  
+>>>> -	if (!read_ref_full(newrefname, RESOLVE_REF_READING,
+>>>> sha1, NULL) &&
+>>>> -	    delete_ref(newrefname, sha1, REF_NODEREF)) {
+>>>> +	if (!read_ref_full(newrefname, resolve_flags, sha1,
+>>>> NULL) &&
+>>>> +	    delete_ref(newrefname, NULL, REF_NODEREF)) {
+>>>
+>>> Could you explain s/sha1/NULL/ here in the proposed log message?
+>>
+>> Good question.
+>>
+>> Passing sha1 to delete_ref() doesn't add any safety, because the same
+>> sha1 was just read a moment before, and it is not used for anything
+>> else. So the check only protects us from a concurrent update to
+>> newrefname between the call to read_ref_full() and the call to
+>> delete_ref(). But such a race is indistinguishable from the case that
+>> a
+>> modification to newrefname happens just before the call to
+>> read_ref_full(), which would have the same outcome as the new code.
+>> So
+>> the "sha1" check only adds ways for the rename() to fail in
+>> situations
+>> where nothing harmful would have happened anyway.
+>>
+>> That being said, this is a very unlikely race, and I don't think it
+>> matters much either way. In any case, the change s/sha1/NULL/ here
+>> seems
+>> orthogonal to the rest of the patch.
+>>
+>> David, you wrote the original version of this patch. Am I overlooking
+>> something?
 > 
-> I would remove the opt-out knob much later in the game, i.e.
-> 
->     1) make a patch that removes the documentation only
->        before the next release (i.e. before 2.9)
->     2) make a patch to remove the actual (unlabeled) knobs,
->         merge into master before 2.10 (i.e. just after the 2.9 release)
+> I think I might have been handling some weird case related to symbolic
+> refs, but I don't recall the details.  Your argument seems right to me.
 
-Yeah, I think it might be a good idea to keep some sort of undocumented
-safety valve in the release, at least for a cycle or two. The heuristic
-won't _really_ see wide use until it is in a released version of git, as
-much as we would like it to be otherwise.
+Doh, of course. I should have just changed it back to `sha1` and run the
+test suite, then I would have seen the failure...
 
-So I am anticipating a possible conversation where somebody reports that
-the new output looks bad, and it would be nice to say "try it with this
-flag (or environment variable, or whatever) and see if that looks
-better".  And then based on that conversation we can decide what the
-right next is (a real user-visible flag, or reversion, or deciding the
-user's case isn't worth it). Or maybe if we're lucky that conversation
-never happens.
+The point is that `read_ref_full()` is now called with
+`RESOLVE_REF_NO_RECURSE` turned on. So if `newrefname` is a symbolic
+reference, then `read_ref_full()` sets `sha1` to zeros. But the
+pre-check for `delete_ref()` compares `old_sha1` to the recursively
+resolved value of the reference, so that check would fail. (In fact,
+`ref_transaction_delete()` refuses even to add the deletion to the
+transaction if `old_sha1` is zeros, so it doesn't even get that far.)
 
-The "whatever" in the instructions can obviously be "build with this
-patch" or "try with an older version of git", but we're a lot more
-likely to get a good response if it's easy for the user to do.
+So for shallow technical reasons we can't pass `sha1` to `delete_ref()`
+anymore, and for the deeper reasons discussed in this thread that's not
+a problem.
 
--Peff
+I'll document this in v2 of this patch.
+
+Michael
