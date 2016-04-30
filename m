@@ -1,172 +1,206 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v7 14/19] index-helper: kill mode
-Date: Fri, 29 Apr 2016 21:02:08 -0400
-Message-ID: <1461978133-13966-15-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v7 13/19] watchman: add a config option to enable the extension
+Date: Fri, 29 Apr 2016 21:02:07 -0400
+Message-ID: <1461978133-13966-14-git-send-email-dturner@twopensource.com>
 References: <1461978133-13966-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Sat Apr 30 03:03:10 2016
+X-From: git-owner@vger.kernel.org Sat Apr 30 03:03:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1awJJM-00089Y-Um
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Apr 2016 03:03:09 +0200
+	id 1awJJO-00089Y-F3
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Apr 2016 03:03:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753127AbcD3BDE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 21:03:04 -0400
-Received: from mail-qg0-f54.google.com ([209.85.192.54]:34680 "EHLO
-	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753046AbcD3BCk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 21:02:40 -0400
-Received: by mail-qg0-f54.google.com with SMTP id 90so34036066qgz.1
-        for <git@vger.kernel.org>; Fri, 29 Apr 2016 18:02:40 -0700 (PDT)
+	id S1753128AbcD3BDF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 21:03:05 -0400
+Received: from mail-qg0-f50.google.com ([209.85.192.50]:35474 "EHLO
+	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753044AbcD3BCj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 21:02:39 -0400
+Received: by mail-qg0-f50.google.com with SMTP id f74so49689681qge.2
+        for <git@vger.kernel.org>; Fri, 29 Apr 2016 18:02:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Yg1nQ1tLFmKbdEm9acNnEShDjhOQg3RzFJsCHoFCcU8=;
-        b=e+WmQCJ/o/Kt3wxTqyK5b6yufRzv4r9/7TG8dNJ2YQZEWCz20qNieYo8bOjKyUw1YS
-         gNGYr5o1FMy8HGV3wSbQb8j2rrWghvwLGfq6Jn6xq3LOaygf16mR2J8HQziR76I9CzQB
-         rkkcIFohCJOx8G7L9kwoGAM+W8BFcbeq5EdVrbunSCQ5fhYt6HsKyP3LyEMQs+b4JFDb
-         MHc7UGpx/riWmIvZhbdygzGwbQ6s664lKnQBIwCSWENS5YKv6/rRd9ue9jI49FRDriUw
-         zhlzrt/5pmKMhvtbx77mYJ2m+8D9bni+haHycUszDM/FBjyfqYR3hD5lwjmtxH1y0K+C
-         SfWA==
+        bh=UkJIyhQDqCUHt5XZFQGBs5w6rH7BvFSOD9t+UkRTCUc=;
+        b=Uua/5XuOJYGH+JGvYUVRJzsm5e5s/0yp0aNOksNKNVL0+8twF5J+uGi1yRxQyLaHsq
+         82Ek+kkdIMOKGtpJLEr1vYmxSZNWyifX39sD1qyZIhgL+8hQMzyqXHrrDdYUCuXGN76c
+         OH2KuNLqfTTzKrcWxLEMNXWj7iHnJ4pZEoSKvxZo7NHpwSXGaYUKeAnvG8GICXcKgtyD
+         3cneMFuTcnXY6tpw/9n6ECo06EvT+65tha7G9D5tlavCGY95ob+kTk/xnwJAfXoZnUlD
+         F67OJQW2MhMC7DX5gNp1GzNCHGHcESF/TNnkn6BVRAcJpSJHw+S9dTiVJNBMZzxtkqSS
+         YxUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Yg1nQ1tLFmKbdEm9acNnEShDjhOQg3RzFJsCHoFCcU8=;
-        b=B2mlNT1VbSLTO45c7moIsZHEH605z8JXhzXOfHc2NuVufKGE6dwMSZ0BPsCSjhcFw8
-         95EcSNvVbv7MmtwCKd6fOtGZkZghLPmRG/hUYV7TYogii/RcY2kKVxrm+N9Ks+If/Qc5
-         tSDY7iMK8IkK4TyYhJgHY6XfwQ3FKB3whlixiHNQzyETD2GpcgSE+emhP04DTWoEEKQE
-         1dn3D0h8iRKZUtmc8+pgUbY4O4KC6cepGQDjzSjEdt75BW0GKad08/y5sMeFZJZOociC
-         1pgKJVqOXg0vPAhu1+cLOrCQW2IVRoxqtQQfZAGFHx2rJoE/J3iWswhvhtqlQ7HDEVxQ
-         h8Jg==
-X-Gm-Message-State: AOPr4FXhQ/HGKVo0DOXR3qduYzQd+lKMghMBRS8yyXQDeMboUeb+nn+xEEOVT9/JxR5kTw==
-X-Received: by 10.140.96.227 with SMTP id k90mr21934886qge.34.1461978159503;
-        Fri, 29 Apr 2016 18:02:39 -0700 (PDT)
-Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id g11sm5284485qhg.22.2016.04.29.18.02.38
-        (version=TLSv1/SSLv3 cipher=OTHER);
+        bh=UkJIyhQDqCUHt5XZFQGBs5w6rH7BvFSOD9t+UkRTCUc=;
+        b=B7sU2fyTFCDYTRKjcRO2dKfE3besMSqB4iCExZ8rWpsgcfvFsQIO2u/ehsqile8YbI
+         WhgvTKRquORb/6zj1u9RRolgj7hy+1KCP6Ef4apNG1DVzEzchPItwR5my24oUblFVaeM
+         dAZCQeFSAdFr/FkJlYMwQvE+wLk5NWE9UKwRa2yt9je1/KEXy00GiZ7ZGy0cBY3b1J4H
+         sEtFEkBx2eI+7mO/vBdciTvPr+IfEqQYCG0KcjQoezlgCnw0T0iyPR+eY9c7cqOmdE93
+         S05XAPa9mXbUXY0uyHP0w605ZKHq77C2v+Nkk4JSlMl6/6XT+ygvh8oktXuYSFFb1NTC
+         OoCQ==
+X-Gm-Message-State: AOPr4FX/AuM2il/RUTM1scmtBHRIwc8NqAJFlbZ193Id6doA/CKWpTC/SfRDTOaH7Oa+dQ==
+X-Received: by 10.140.43.244 with SMTP id e107mr21174269qga.13.1461978158290;
         Fri, 29 Apr 2016 18:02:38 -0700 (PDT)
+Received: from ubuntu.twitter.biz ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id g11sm5284485qhg.22.2016.04.29.18.02.37
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 29 Apr 2016 18:02:37 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1461978133-13966-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293114>
 
-Add a new command (and command-line arg) to allow index-helpers to
-exit cleanly.
-
-This is mainly useful for tests.
+For installations that have centrally-managed configuration, it's
+easier to set a config once than to run update-index on every
+repository.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- Documentation/git-index-helper.txt |  3 +++
- index-helper.c                     | 31 ++++++++++++++++++++++++++++++-
- t/t7900-index-helper.sh            |  9 +++++++++
- 3 files changed, 42 insertions(+), 1 deletion(-)
+ .gitignore                    |  1 +
+ Documentation/config.txt      |  4 ++++
+ Makefile                      |  1 +
+ read-cache.c                  |  6 ++++++
+ t/t1701-watchman-extension.sh | 37 +++++++++++++++++++++++++++++++++++++
+ test-dump-watchman.c          | 16 ++++++++++++++++
+ 6 files changed, 65 insertions(+)
+ create mode 100755 t/t1701-watchman-extension.sh
+ create mode 100644 test-dump-watchman.c
 
-diff --git a/Documentation/git-index-helper.txt b/Documentation/git-index-helper.txt
-index 55a8a5a..addf694 100644
---- a/Documentation/git-index-helper.txt
-+++ b/Documentation/git-index-helper.txt
-@@ -40,6 +40,9 @@ OPTIONS
- --detach::
- 	Detach from the shell.
+diff --git a/.gitignore b/.gitignore
+index b92f122..e6a5b2c 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -188,6 +188,7 @@
+ /test-dump-cache-tree
+ /test-dump-split-index
+ /test-dump-untracked-cache
++/test-dump-watchman
+ /test-fake-ssh
+ /test-scrap-cache-tree
+ /test-genrandom
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 2cd6bdd..15001ce 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1848,6 +1848,10 @@ imap::
+ 	The configuration variables in the 'imap' section are described
+ 	in linkgit:git-imap-send[1].
  
-+--kill::
-+	Kill any running index-helper and clean up the socket
++index.addwatchmanextension::
++	Automatically add the watchman extension to the index whenever
++	it is written.
 +
- NOTES
- -----
+ index.version::
+ 	Specify the version with which new index files should be
+ 	initialized.  This does not affect existing repositories.
+diff --git a/Makefile b/Makefile
+index 65ab0f4..5f0a954 100644
+--- a/Makefile
++++ b/Makefile
+@@ -599,6 +599,7 @@ TEST_PROGRAMS_NEED_X += test-delta
+ TEST_PROGRAMS_NEED_X += test-dump-cache-tree
+ TEST_PROGRAMS_NEED_X += test-dump-split-index
+ TEST_PROGRAMS_NEED_X += test-dump-untracked-cache
++TEST_PROGRAMS_NEED_X += test-dump-watchman
+ TEST_PROGRAMS_NEED_X += test-fake-ssh
+ TEST_PROGRAMS_NEED_X += test-genrandom
+ TEST_PROGRAMS_NEED_X += test-hashmap
+diff --git a/read-cache.c b/read-cache.c
+index 1779fa2..5f5e933 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2426,6 +2426,7 @@ static int do_write_index(struct index_state *istate, int newfd,
+ 	int entries = istate->cache_nr;
+ 	struct stat st;
+ 	struct strbuf previous_name_buf = STRBUF_INIT, *previous_name;
++	int watchman = 0;
  
-diff --git a/index-helper.c b/index-helper.c
-index 6a61695..9ca2ca6 100644
---- a/index-helper.c
-+++ b/index-helper.c
-@@ -370,6 +370,8 @@ static void loop(int fd, int idle_in_seconds)
- 					 * alive, nothing to do.
- 					 */
- 				}
-+			} else if (!strcmp(buf, "die")) {
-+				break;
- 			} else {
- 				log_warning("BUG: Bogus command %s", buf);
- 			}
-@@ -400,10 +402,29 @@ static const char * const usage_text[] = {
- 	NULL
- };
+ 	for (i = removed = extended = 0; i < entries; i++) {
+ 		if (cache[i]->ce_flags & CE_REMOVE)
+@@ -2449,6 +2450,11 @@ static int do_write_index(struct index_state *istate, int newfd,
+ 	if (istate->version == 3 || istate->version == 2)
+ 		istate->version = extended ? 3 : 2;
  
-+static void request_kill(void)
-+{
-+	int fd = unix_stream_connect(git_path("index-helper.sock"));
++	if (!git_config_get_bool("index.addwatchmanextension", &watchman) &&
++	    watchman &&
++	    !the_index.last_update)
++		the_index.last_update = xstrdup("");
 +
-+	if (fd >= 0) {
-+		write_in_full(fd, "die", 4);
-+		close(fd);
-+	}
-+
-+	/*
-+	 * The child will try to do this anyway, but we want to be
-+	 * ready to launch a new daemon immediately after this command
-+	 * returns.
-+	 */
-+
-+	unlink(git_path("index-helper.sock"));
-+	return;
-+}
-+
- int main(int argc, char **argv)
- {
- 	const char *prefix;
--	int idle_in_seconds = 600, detach = 0;
-+	int idle_in_seconds = 600, detach = 0, kill = 0;
- 	int fd;
- 	struct strbuf socket_path = STRBUF_INIT;
- 	struct option options[] = {
-@@ -412,6 +433,7 @@ int main(int argc, char **argv)
- 		OPT_BOOL(0, "strict", &to_verify,
- 			 "verify shared memory after creating"),
- 		OPT_BOOL(0, "detach", &detach, "detach the process"),
-+		OPT_BOOL(0, "kill", &kill, "request that existing index helper processes exit"),
- 		OPT_END()
- 	};
+ 	hdr_version = istate->version;
  
-@@ -426,6 +448,13 @@ int main(int argc, char **argv)
- 			  options, usage_text, 0))
- 		die(_("too many arguments"));
- 
-+	if (kill) {
-+		if (detach)
-+			die(_("--kill doesn't want any other options"));
-+		request_kill();
-+		return 0;
-+	}
+ 	hdr.hdr_signature = htonl(CACHE_SIGNATURE);
+diff --git a/t/t1701-watchman-extension.sh b/t/t1701-watchman-extension.sh
+new file mode 100755
+index 0000000..71f1d46
+--- /dev/null
++++ b/t/t1701-watchman-extension.sh
+@@ -0,0 +1,37 @@
++#!/bin/sh
 +
- 	atexit(cleanup);
- 	sigchain_push_common(cleanup_on_signal);
- 
-diff --git a/t/t7900-index-helper.sh b/t/t7900-index-helper.sh
-index 114c112..e71b5af 100755
---- a/t/t7900-index-helper.sh
-+++ b/t/t7900-index-helper.sh
-@@ -20,4 +20,13 @@ test_expect_success 'index-helper smoke test' '
- 	test_path_is_missing .git/index-helper.sock
- '
- 
-+test_expect_success 'index-helper creates usable path file and can be killed' '
-+	test_when_finished "git index-helper --kill" &&
-+	test_path_is_missing .git/index-helper.sock &&
-+	git index-helper --detach &&
-+	test -S .git/index-helper.sock &&
-+	git index-helper --kill &&
-+	test_path_is_missing .git/index-helper.sock
++test_description='watchman extension smoke tests'
++
++# These don't actually test watchman interaction -- just the
++# index extension
++
++. ./test-lib.sh
++
++test_expect_success 'enable watchman' '
++	test_commit a &&
++	test-dump-watchman .git/index >actual &&
++	echo "last_update: (null)" >expect &&
++	test_cmp expect actual &&
++	git update-index --watchman &&
++	test-dump-watchman .git/index >actual &&
++	echo "last_update: " >expect &&
++	test_cmp expect actual
 +'
 +
- test_done
++test_expect_success 'disable watchman' '
++	git update-index --no-watchman &&
++	test-dump-watchman .git/index >actual &&
++	echo "last_update: (null)" >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'auto-enable watchman' '
++	test_config index.addwatchmanextension true &&
++	test_commit c &&
++	test-dump-watchman .git/index >actual &&
++	echo "last_update: " >expect &&
++	test_cmp expect actual
++'
++
++
++test_done
+diff --git a/test-dump-watchman.c b/test-dump-watchman.c
+new file mode 100644
+index 0000000..0314fa5
+--- /dev/null
++++ b/test-dump-watchman.c
+@@ -0,0 +1,16 @@
++#include "cache.h"
++#include "ewah/ewok.h"
++
++int main(int argc, char **argv)
++{
++	do_read_index(&the_index, argv[1], 1);
++	printf("last_update: %s\n", the_index.last_update ?
++	       the_index.last_update : "(null)");
++
++	/*
++	 * For now, we just dump last_update, since it is not reasonable
++	 * to populate the extension itself in tests.
++	 */
++
++	return 0;
++}
 -- 
 2.4.2.767.g62658d5-twtrsrc
