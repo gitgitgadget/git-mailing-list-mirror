@@ -1,119 +1,84 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: using git-difftool -d when cherry-picking
-Date: Fri, 29 Apr 2016 18:19:30 -0700
-Message-ID: <20160430011930.GA26977@gmail.com>
-References: <CAH9ve7x3GSVX1M3yuAY1VmM-WoFX36o-vihFQ3Jw-_SZ4Bh_og@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] xdiff: implement empty line chunk heuristic
+Date: Fri, 29 Apr 2016 23:06:20 -0400
+Message-ID: <20160430030620.GB25719@sigill.intra.peff.net>
+References: <1461079290-6523-1-git-send-email-sbeller@google.com>
+ <1461079290-6523-3-git-send-email-sbeller@google.com>
+ <CA+P7+xoqn3fxEZGn02ST1XV-2UpQGr3iwV-37R8pakFJy_9n0w@mail.gmail.com>
+ <20160420041827.GA7627@sigill.intra.peff.net>
+ <xmqqa8kcxip9.fsf@gitster.mtv.corp.google.com>
+ <CA+P7+xpFCBU1xYbtcX8jtmDDyY8p0CiJJ=bexTmi=_vwWRZi0Q@mail.gmail.com>
+ <xmqqwpngukin.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kZu=keNaCbt4T=CzH3i9qr+BxXw6AiWR-q1Cs4U80Jzng@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jan Smets <jan@smets.cx>
-X-From: git-owner@vger.kernel.org Sat Apr 30 03:19:44 2016
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Git mailing list <git@vger.kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Sat Apr 30 05:06:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1awJZP-0007Bu-Sy
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Apr 2016 03:19:44 +0200
+	id 1awLEi-00020H-UO
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Apr 2016 05:06:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752570AbcD3BTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 21:19:39 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:34586 "EHLO
-	mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752203AbcD3BTi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 21:19:38 -0400
-Received: by mail-pf0-f178.google.com with SMTP id y69so54766163pfb.1
-        for <git@vger.kernel.org>; Fri, 29 Apr 2016 18:19:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=8KuANY+OIPPWYvEYeSa4T8/pQYuZd8kkC/b05i8cy0k=;
-        b=Wcae5rQhUmhgOVzK6Kxj4yoQqqCFB1LTWmHlKTXaQprQlbAdU+bQqT8szzMNE22xsA
-         yDVzdO/PzGN+XydpJZ/Gsthvyn5m0X5o/6pxxy/4ojY4QOtQ+rssNMSuOVLX77qgjS+l
-         vh+injZayTtgrBcpFgTrBenUZwaU33xBukZO6tOgkWjfLvK0P6+SbTxeKddb62MOWyvw
-         uK6YdpAgTZ24UoZlq/KFGzn1sg7zSwHFTwP5sP7Rdm7FFyUszp13AIFDwT3f0hIC9yEt
-         PHuLtCmECXpK75m1PwmAmhKhmtJzqyByvjGZFLKM1QtkGoX4RvkecTXIgpxcaqM13WVE
-         n3kA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8KuANY+OIPPWYvEYeSa4T8/pQYuZd8kkC/b05i8cy0k=;
-        b=fQuIfQ36z6UnP3jAh8Oed3FUHFKKN7ptR6tXqq0v5qf5jBHHw1op707tABge6P5IOP
-         CDzcTWWqVB1s5Vky+wQ7He+JQ+G0nCQ+3Wlt3AAHsZnxd9LGs8My0rpQJXaZPGbu/VFZ
-         MwrHFhftCquaaxMmVGrZ+sAj41Ma9M4WhnLY5zI/u599rI5xDc46L6KFMIabQCi4wNQP
-         SSufBx8ROIoZDzxgxFVRZGSVSir835tRSktpifGE1XiAC6EXdYrVdZyqiNlHnsXD2AVy
-         bpnHMPTJmrCC9qXcGIam7YrqwJypJBMgMLXNSnYi5pxosTVHN18IjsbvSoeql8VqnKPq
-         TOtQ==
-X-Gm-Message-State: AOPr4FVhbF7hizZ58fKLquFnNH9oZ7VhV8UJhkfj9TxM/+HAVQH2AOTwwPpTnW33g4g9zQ==
-X-Received: by 10.98.49.134 with SMTP id x128mr33260912pfx.45.1461979178027;
-        Fri, 29 Apr 2016 18:19:38 -0700 (PDT)
-Received: from gmail.com (remote-11.disneyanimation.com. [198.187.190.11])
-        by smtp.gmail.com with ESMTPSA id l81sm26567581pfj.21.2016.04.29.18.19.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 29 Apr 2016 18:19:36 -0700 (PDT)
+	id S1752570AbcD3DGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 23:06:24 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59597 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752379AbcD3DGY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 23:06:24 -0400
+Received: (qmail 17045 invoked by uid 102); 30 Apr 2016 03:06:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Apr 2016 23:06:23 -0400
+Received: (qmail 28529 invoked by uid 107); 30 Apr 2016 03:06:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Apr 2016 23:06:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Apr 2016 23:06:20 -0400
 Content-Disposition: inline
-In-Reply-To: <CAH9ve7x3GSVX1M3yuAY1VmM-WoFX36o-vihFQ3Jw-_SZ4Bh_og@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <CAGZ79kZu=keNaCbt4T=CzH3i9qr+BxXw6AiWR-q1Cs4U80Jzng@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293120>
 
-On Wed, Apr 27, 2016 at 11:12:25AM +0200, Jan Smets wrote:
-> Hi
-> 
-> Please consider following example
-> 
-> #!/bin/bash
-> rm -rf /tmp/gittest
-> mkdir /tmp/gittest
-> cd /tmp/gittest
-> 
-> git init
-> 
-> echo $RANDOM > testfile
-> git add testfile
-> git commit -m test -a
-> 
-> git branch X
-> git checkout X
-> echo $RANDOM > testfile
-> git add testfile
-> git commit -m test -a
-> 
-> git checkout master
-> echo $RANDOM > testfile
-> git add testfile
-> git commit -m test -a
-> 
-> git cherry-pick X
-> git diff --raw
-> git difftool -d
-> 
-> 
-> This emulates a merge conflict when using git-cerry-pick.
-> 
-> $ git diff --raw
-> :000000 100644 0000000... 0000000... U  testfile
-> :100644 100644 a04e026... 0000000... M  testfile
-> 
-> When executing git difftool with the -d option :
-> 
-> /usr/lib/git-core/git-difftool line 260: File exists
-> 
-> A possible solution is to build an unique list in @working_tree
-> 
-> The purpose is to edit/resolve the conflict in the difftool.
+On Fri, Apr 29, 2016 at 03:35:54PM -0700, Stefan Beller wrote:
 
+> > -- >8 --
+> > diff: enable "compaction heuristics" and lose experimentation knob
+> >
+> > It seems that the new "find a good hunk boundary by locating a blank
+> > line" heuristics gives much more pleasant result without much
+> > noticeable downsides.  Let's make it the new algorithm for real,
+> > without the opt-out knob we added while experimenting with it.
+> 
+> I would remove the opt-out knob much later in the game, i.e.
+> 
+>     1) make a patch that removes the documentation only
+>        before the next release (i.e. before 2.9)
+>     2) make a patch to remove the actual (unlabeled) knobs,
+>         merge into master before 2.10 (i.e. just after the 2.9 release)
 
-That could be useful.  git-mergetool is intended to be used when
-merge conflicts exist, but it sounds like you may have already
-found a possible solution by making @working_tree unique.  Have
-you tested that to see if it skirts around the issue?
+Yeah, I think it might be a good idea to keep some sort of undocumented
+safety valve in the release, at least for a cycle or two. The heuristic
+won't _really_ see wide use until it is in a released version of git, as
+much as we would like it to be otherwise.
 
-If you have a patch I'd be happy to help review and test it.
--- 
-David
+So I am anticipating a possible conversation where somebody reports that
+the new output looks bad, and it would be nice to say "try it with this
+flag (or environment variable, or whatever) and see if that looks
+better".  And then based on that conversation we can decide what the
+right next is (a real user-visible flag, or reversion, or deciding the
+user's case isn't worth it). Or maybe if we're lucky that conversation
+never happens.
+
+The "whatever" in the instructions can obviously be "build with this
+patch" or "try with an older version of git", but we're a lot more
+likely to get a good response if it's easy for the user to do.
+
+-Peff
