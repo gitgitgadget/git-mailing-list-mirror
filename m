@@ -1,71 +1,119 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH 02/14] upload-pack.c: Refactor capability advertising
-Date: Fri, 29 Apr 2016 21:04:06 -0400
-Organization: Twitter
-Message-ID: <1461978246.4123.45.camel@twopensource.com>
-References: <1461972887-22100-1-git-send-email-sbeller@google.com>
-	 <1461972887-22100-3-git-send-email-sbeller@google.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: using git-difftool -d when cherry-picking
+Date: Fri, 29 Apr 2016 18:19:30 -0700
+Message-ID: <20160430011930.GA26977@gmail.com>
+References: <CAH9ve7x3GSVX1M3yuAY1VmM-WoFX36o-vihFQ3Jw-_SZ4Bh_og@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Sat Apr 30 03:04:16 2016
+To: Jan Smets <jan@smets.cx>
+X-From: git-owner@vger.kernel.org Sat Apr 30 03:19:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1awJKR-0000JY-Ck
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Apr 2016 03:04:15 +0200
+	id 1awJZP-0007Bu-Sy
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Apr 2016 03:19:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752696AbcD3BEL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Apr 2016 21:04:11 -0400
-Received: from mail-qg0-f46.google.com ([209.85.192.46]:35628 "EHLO
-	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752300AbcD3BEJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2016 21:04:09 -0400
-Received: by mail-qg0-f46.google.com with SMTP id f74so49698377qge.2
-        for <git@vger.kernel.org>; Fri, 29 Apr 2016 18:04:09 -0700 (PDT)
+	id S1752570AbcD3BTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Apr 2016 21:19:39 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:34586 "EHLO
+	mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752203AbcD3BTi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2016 21:19:38 -0400
+Received: by mail-pf0-f178.google.com with SMTP id y69so54766163pfb.1
+        for <git@vger.kernel.org>; Fri, 29 Apr 2016 18:19:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:mime-version:content-transfer-encoding;
-        bh=7pQ4z3OyLmWB77R2Icz1RfStPxsM4M6Bc+F1AqoUcLo=;
-        b=XHPBnJBszSAkIWcF5TYszhHQLOw70A68E/RxNsLi7VqcwtqkucwmABBOnkY3rzu+HX
-         UE2vKKo0lNEfFOit7V87DQAEqHWY9nbKA9RsztERACIAtFy1foFF7LdxHhuT0Dl2Ad08
-         bzsh/MKxPwPdCdkco6hovnJbTe8qZRHGshbjK+7TDFzl5PVBANa3U+V9j4F6VW7aszzR
-         b6BpdJFyV4wGi8CP2lzApM68ObRaafX8TCrre5TmeuacZl4I/UoTjj8fJfOp7RO0zZ+c
-         dugmdp3Ds77C5gWZ9bVU2l5usmEfrD0fWF2reyLZtr5FE+Cxxgeq7sTfmn7jWl923X8v
-         p2jw==
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=8KuANY+OIPPWYvEYeSa4T8/pQYuZd8kkC/b05i8cy0k=;
+        b=Wcae5rQhUmhgOVzK6Kxj4yoQqqCFB1LTWmHlKTXaQprQlbAdU+bQqT8szzMNE22xsA
+         yDVzdO/PzGN+XydpJZ/Gsthvyn5m0X5o/6pxxy/4ojY4QOtQ+rssNMSuOVLX77qgjS+l
+         vh+injZayTtgrBcpFgTrBenUZwaU33xBukZO6tOgkWjfLvK0P6+SbTxeKddb62MOWyvw
+         uK6YdpAgTZ24UoZlq/KFGzn1sg7zSwHFTwP5sP7Rdm7FFyUszp13AIFDwT3f0hIC9yEt
+         PHuLtCmECXpK75m1PwmAmhKhmtJzqyByvjGZFLKM1QtkGoX4RvkecTXIgpxcaqM13WVE
+         n3kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=7pQ4z3OyLmWB77R2Icz1RfStPxsM4M6Bc+F1AqoUcLo=;
-        b=KhBZGrq1MloSs1uEliMnHexRJgK6qV0IXRfo/lLdY2Xdw727bc7v1+hwS7O3zkogIC
-         c06Q0K/6+a8JdgCDco/STwbnEC+vjHCPQpBt1O7Qpi5thVors5M8dAXHaDL8cgucigOc
-         D+/Ppisc6NyrdqDpLHOuoZ7qBIp3iaD02iwDQsprUJJ76xjqFhHCiRA9yxmHR+lg4/DE
-         b4gK86p7d51/XfcJXDXE/gBQFvr7303DuK8MLnzqFxOwGzaNNlcmpKQagGQIWnVzu6Dh
-         7dQm1g0Op9ZkqY2hS9R/86erC5kK4+p/F3iTkyJSrohBqU6t6BijR0cTP4S11U/AITAh
-         6NvA==
-X-Gm-Message-State: AOPr4FWzKNkmXkTluRsSji5x5IeIlT/IokGERjlyd/vjGFbVVbBtFQ8BoW3ggi6EM330ew==
-X-Received: by 10.140.250.66 with SMTP id v63mr23256305qhc.101.1461978248122;
-        Fri, 29 Apr 2016 18:04:08 -0700 (PDT)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id s66sm5294612qha.44.2016.04.29.18.04.07
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 29 Apr 2016 18:04:07 -0700 (PDT)
-In-Reply-To: <1461972887-22100-3-git-send-email-sbeller@google.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=8KuANY+OIPPWYvEYeSa4T8/pQYuZd8kkC/b05i8cy0k=;
+        b=fQuIfQ36z6UnP3jAh8Oed3FUHFKKN7ptR6tXqq0v5qf5jBHHw1op707tABge6P5IOP
+         CDzcTWWqVB1s5Vky+wQ7He+JQ+G0nCQ+3Wlt3AAHsZnxd9LGs8My0rpQJXaZPGbu/VFZ
+         MwrHFhftCquaaxMmVGrZ+sAj41Ma9M4WhnLY5zI/u599rI5xDc46L6KFMIabQCi4wNQP
+         SSufBx8ROIoZDzxgxFVRZGSVSir835tRSktpifGE1XiAC6EXdYrVdZyqiNlHnsXD2AVy
+         bpnHMPTJmrCC9qXcGIam7YrqwJypJBMgMLXNSnYi5pxosTVHN18IjsbvSoeql8VqnKPq
+         TOtQ==
+X-Gm-Message-State: AOPr4FVhbF7hizZ58fKLquFnNH9oZ7VhV8UJhkfj9TxM/+HAVQH2AOTwwPpTnW33g4g9zQ==
+X-Received: by 10.98.49.134 with SMTP id x128mr33260912pfx.45.1461979178027;
+        Fri, 29 Apr 2016 18:19:38 -0700 (PDT)
+Received: from gmail.com (remote-11.disneyanimation.com. [198.187.190.11])
+        by smtp.gmail.com with ESMTPSA id l81sm26567581pfj.21.2016.04.29.18.19.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 29 Apr 2016 18:19:36 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAH9ve7x3GSVX1M3yuAY1VmM-WoFX36o-vihFQ3Jw-_SZ4Bh_og@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293119>
 
-On Fri, 2016-04-29 at 16:34 -0700, Stefan Beller wrote:
-> Instead of having the capabilities in a local string, keep them
-> in a struct outside the function. This will allow us in a later patch
+On Wed, Apr 27, 2016 at 11:12:25AM +0200, Jan Smets wrote:
+> Hi
+> 
+> Please consider following example
+> 
+> #!/bin/bash
+> rm -rf /tmp/gittest
+> mkdir /tmp/gittest
+> cd /tmp/gittest
+> 
+> git init
+> 
+> echo $RANDOM > testfile
+> git add testfile
+> git commit -m test -a
+> 
+> git branch X
+> git checkout X
+> echo $RANDOM > testfile
+> git add testfile
+> git commit -m test -a
+> 
+> git checkout master
+> echo $RANDOM > testfile
+> git add testfile
+> git commit -m test -a
+> 
+> git cherry-pick X
+> git diff --raw
+> git difftool -d
+> 
+> 
+> This emulates a merge conflict when using git-cerry-pick.
+> 
+> $ git diff --raw
+> :000000 100644 0000000... 0000000... U  testfile
+> :100644 100644 a04e026... 0000000... M  testfile
+> 
+> When executing git difftool with the -d option :
+> 
+> /usr/lib/git-core/git-difftool line 260: File exists
+> 
+> A possible solution is to build an unique list in @working_tree
+> 
+> The purpose is to edit/resolve the conflict in the difftool.
 
-nit: s/struct/array/
+
+That could be useful.  git-mergetool is intended to be used when
+merge conflicts exist, but it sounds like you may have already
+found a possible solution by making @working_tree unique.  Have
+you tested that to see if it skirts around the issue?
+
+If you have a patch I'd be happy to help review and test it.
+-- 
+David
