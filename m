@@ -1,77 +1,68 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] t5510: run auto-gc in the foreground
-Date: Sun,  1 May 2016 17:37:43 +0200
-Message-ID: <20160501153743.323-1-szeder@ira.uka.de>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v8 10/10] ce_compare_data() did not respect conversion
+Date: Sun, 1 May 2016 18:27:05 +0200
+Message-ID: <a571e222-68db-3dc1-1a94-d6b47feaf84d@web.de>
+References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
+ <1461942126-16296-1-git-send-email-tboegi@web.de>
+ <xmqqvb30w29z.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 01 17:43:02 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>, tboegi@web.de
+X-From: git-owner@vger.kernel.org Sun May 01 18:27:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1awtWQ-0000Z8-9m
-	for gcvg-git-2@plane.gmane.org; Sun, 01 May 2016 17:43:02 +0200
+	id 1awuDG-00057b-FW
+	for gcvg-git-2@plane.gmane.org; Sun, 01 May 2016 18:27:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751610AbcEAPiH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 May 2016 11:38:07 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:39351 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751467AbcEAPiG (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 May 2016 11:38:06 -0400
-Received: from x4db03e24.dyn.telefonica.de ([77.176.62.36] helo=localhost.localdomain)
-	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
-	iface 141.3.10.81 id 1awtRY-0000gW-O8; Sun, 01 May 2016 17:38:02 +0200
-X-Mailer: git-send-email 2.8.2.356.ge684b1d
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1462117082.
+	id S1752043AbcEAQ1O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 May 2016 12:27:14 -0400
+Received: from mout.web.de ([212.227.17.12]:60651 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751502AbcEAQ1O (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 May 2016 12:27:14 -0400
+Received: from macce.local ([195.252.60.88]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0LpO4v-1bZpWh2BUr-00f7GT; Sun, 01 May 2016 18:27:06
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:45.0)
+ Gecko/20100101 Thunderbird/45.0
+In-Reply-To: <xmqqvb30w29z.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:fA/dtFbfDYjLLAkoI59cIYLSKCcVBeE3E/su/IJiy5yM8tNm83l
+ InGgDcukjQ+RVuHpqVLOg6lzD3LllVWQY6vUI8+//bjpNs1zqaeDszKIlO+5pfkWj3LAd1a
+ 81RPWyXRHohhKu8M7OSdGwtYdOkrP99ynmRTl0mZYqyIL4rG+3Tor804wA/tXHQFUnH3shO
+ Aj7eIMesVOydxN/76bM5A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YPBFPl7tnAw=:TaWz/xBmlJRt6mUpL8lYgk
+ D5/xRW7N5H0/NCiMHnJJ5P/WqicY8/263u/ISTD0eOXSL1FhyAn+qR9/JtIU+x1ZbqYYJENUH
+ GycjuXECFAHu/f6YdUmc4yJI1yawnyF3ScaOCESn6/FUbfyfTJ3yd901RRfi3KRDN6cCfRzxS
+ Yl8B7ibWZLmTWDmdAoZAjUmkMSY7GirDW7x7Et5QKILjPx/rQhBGm/WGkMxEx6uyHYsPjnXa5
+ 34EjioB4N3WwyFT9IfnoRQcyrVWvYbo9GJLm7yHPksxJB/7ROqH2O9WxkN6PPt55A5IlfmzKT
+ k7m6vUC/TGE1DN82diTBMrmmAsfGtqNQFaP07eKdtfJwqmGvwfAZok5r/eKmEC2RU3hskLquK
+ h7tHqsMnR9MCnOnWbHTFR/IRhYMZUkKIbJx28K2uS0WcAnqgmS7uuYIhW8m5YHwv1jNDIBBHC
+ onzJZECik3lMvDDtuWpVdGG2mbuyz19t07bD5BD9kqsR4N4+phBxPRdaOf6xgXVzpkr+K6fRr
+ B6s3ZwaBsrtLZkIRZBGhu/7ySKr+xkkjUIhlRxAcyJsqhP8NSkb9zst0I2vjiRcpdE2yQf5WZ
+ YII614VEXSRwicOHn7gxOCysuB/0JaVRT2wd3jHobEqDq2iq7urwU06rs7MuyWx5NkfoSlkb3
+ 1l+cwnohRO0Jr4h0HUnZxueNnOH/4rtQDpuzrdAe/15iQjeGPw1bHqUIdVuTLfdPwLmOu1MfZ
+ kBb8jPi4PFD6nA9/RLwoq/qaNZxMc+VwMEQgDv2SZPPLuuw95VD2nU2GLscDyeoiF3MWsxB4 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293195>
 
-The last test added to 't5510-fetch' in 0898c9628104 (fetch: release
-pack files before garbage-collecting, 2016-01-13) may sporadically
-trigger following error message from the test harness:
+On 29.04.16 23:09, Junio C Hamano wrote:
 
-  rm: cannot remove 'trash directory.t5510-fetch/auto-gc/.git': Directo=
-ry not empty
+> Well, didn't I do exactly the above much earlier and discarded it
+> because that breaks the definition of "diff"?  Or is this doing
+> something differently?
 
-The test in question forces an auto-gc, which, if the system supports
-it, runs in the background by default, and occasionally takes long
-enough for the test to finish and for 'test_done' to start
-housekeeping.  This can lead to the test's 'git gc --auto' in the
-background and 'test_done's 'rm -rf $trash' in the foreground racing
-each other to create and delete files and directories.  It might just
-happen that 'git gc' re-creates a directory that 'rm -rf' already
-visited and removed, which ultimately triggers the above error.
+Yes, and I try to sneak it in anyway ;-)
 
-Disable detaching the auto-gc process to ensure that it finishes
-before the test can continue, thus avoiding this racy situation.
+I spend some time debugging how to get t6038 passed, and need
+some more time.
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
- t/t5510-fetch.sh | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 38321d19efbe..454d896390c0 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -682,6 +682,7 @@ test_expect_success 'fetching with auto-gc does not=
- lock up' '
- 	(
- 		cd auto-gc &&
- 		git config gc.autoPackLimit 1 &&
-+		git config gc.autoDetach false &&
- 		GIT_ASK_YESNO=3D"$D/askyesno" git fetch >fetch.out 2>&1 &&
- 		! grep "Should I try again" fetch.out
- 	)
---=20
-2.8.2.356.ge684b1d
+If 10/10 is a no-go (and it probably should be),
+does it make sense to keep 1/10..4/10 and discard 5..10 for the moment ?
