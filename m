@@ -1,111 +1,264 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v6 03/19] index-helper: new daemon for caching index and
- related stuff
-Date: Sun, 1 May 2016 07:22:01 +0700
-Message-ID: <CACsJy8AZihi2j=LLqhPvvLm2PPR4KZne2y9ENR4YDgY+tOXo0A@mail.gmail.com>
-References: <1461787481-877-1-git-send-email-dturner@twopensource.com>
- <1461787481-877-4-git-send-email-dturner@twopensource.com>
- <xmqq60v15zmq.fsf@gitster.mtv.corp.google.com> <1461955617.4123.37.camel@twopensource.com>
+Subject: Re: [PATCH] Move test-* to t/helper/ subdirectory
+Date: Sun, 1 May 2016 07:28:52 +0700
+Message-ID: <20160501002852.GA3963@lanh>
+References: <1460553762-12419-1-git-send-email-pclouds@gmail.com>
+ <xmqqwpnkc9ca.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8A8vbp4-LrxoNX510Nme97EKfu0hBBs-LDRap1Z5=v3rA@mail.gmail.com>
+ <20160427101833.GA5536@lanh>
+ <xmqqy47z9geq.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Sun May 01 02:22:39 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 01 02:29:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1awf9i-0007Mc-KI
-	for gcvg-git-2@plane.gmane.org; Sun, 01 May 2016 02:22:38 +0200
+	id 1awfG1-0001ZV-M8
+	for gcvg-git-2@plane.gmane.org; Sun, 01 May 2016 02:29:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752192AbcEAAWd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Apr 2016 20:22:33 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:34850 "EHLO
-	mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751403AbcEAAWc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 Apr 2016 20:22:32 -0400
-Received: by mail-lf0-f68.google.com with SMTP id u64so21643293lff.2
-        for <git@vger.kernel.org>; Sat, 30 Apr 2016 17:22:32 -0700 (PDT)
+	id S1751634AbcEAA3B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Apr 2016 20:29:01 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:34673 "EHLO
+	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751257AbcEAA27 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Apr 2016 20:28:59 -0400
+Received: by mail-pf0-f196.google.com with SMTP id 145so15638652pfz.1
+        for <git@vger.kernel.org>; Sat, 30 Apr 2016 17:28:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=mZqBlxwY0meWAR7iPJYpNKCZWtoJsRX7sTHsGdrRJsA=;
-        b=t5nOPIxBmZfF1gEbekQ78gxapgUrcpAxKtxmI4dv7i/8Fc9uBtb9kyty5eRoYR4yXo
-         Gkp1CTOmVTwXMY9vqp+CT1ss8VYGZII+m4l9Az4EiuG1FYFTckcc+Y1V2XIT7xy920ss
-         yZfrkdhs8A8frJhGQ7ZDkTtEqOk2Tm/z3r58y3NH46Vp8PouTDYN3XXYZN4azqN7cAKq
-         m/ftS1cUOqeZ5F0/1nWv/2v5KxE+WFb+G0HCKU006vV6G3xfeMHrIdawha2szrHl7DWH
-         kdu8Id5TeJrV9IwlkUpixoOXdiwJuPvFV9xS4SxpYTjmfYBlnR0nKeLgSAbec6Yo0ASt
-         TNOA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=XADlOzrhr4vOQ4Yz/LHMNzAPRZw3/PAOs+Scc64TWWc=;
+        b=gOs6pPTQdiz5tDpxr7nMreWwpaT30HUD++d9vbHBzhYn9LVbj2wWJ5Zw3w1tMHyDpD
+         s/lOrLc93CeEWzilRbu2aFcZfNXIK/o0PLN+LDJo6XPN2O3dWYnc/p7LqHRVGB5Jjmmd
+         3Bite/x3kSrtUxskoqr4fSgu5RwH+jeKatbHS49C3lOj77rQeAgGaftK2Na6I7VQCRNQ
+         Z32yqynhnttX997g9GrVUdfwt6lUmuT++EAkk1ltcbiUlSVn/g0DLM5W3iSHW53VkzSC
+         PrsISkXhYb5ZjsaoAtozpHcHCoEBjrxPCuWrQS5BOq/E536EeNKkNf/v9cplR/XXrasb
+         Y6Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=mZqBlxwY0meWAR7iPJYpNKCZWtoJsRX7sTHsGdrRJsA=;
-        b=UhrAwI2PnljQdqbF18q4r+/W4QhoOoCpCVN+6OziArPLVpEFV0pMXn33dpNBVj1dVb
-         6SfyCh3Rc1kDUOCaJs+lLy4AyXPuzClaJBNNfBmqOF6w5F/sdMl5kfZYodyZ4oGN6Zqk
-         rS/LpVaMdNUkC+bpB3L4qWftw8WubH6KjClG4tbpM/zoE7vDUIkNV0DPdv9IMx7pQb1E
-         pDKN89iWnwml8wwxmwtNUu1nZWl8CtPLgoXv/ce4nwbkCoQf25W2M/qoXazuhUfiucF1
-         hMx7rORF7x9U/dELP9Ilc8Hblhr8rO6l4Szpjm/VrryFdWghid5xkxVVeJMJ75On6/SN
-         tMJw==
-X-Gm-Message-State: AOPr4FVdLCwdVTDdPPa6Pz7nZeiLxX7ygDen6Z4gdVDm7pyU+e6XBCHyESKgdJf1SYbPrLIgcil2r9DWV1dwog==
-X-Received: by 10.112.54.132 with SMTP id j4mr11741262lbp.3.1462062150929;
- Sat, 30 Apr 2016 17:22:30 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Sat, 30 Apr 2016 17:22:01 -0700 (PDT)
-In-Reply-To: <1461955617.4123.37.camel@twopensource.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=XADlOzrhr4vOQ4Yz/LHMNzAPRZw3/PAOs+Scc64TWWc=;
+        b=W6yEEiU9raAWHmJ57b62d9cK6a5LiOoWQlmXvKee7adHAmOgBq815VE2kWaWSlx+jG
+         dw2E5ADn2/B6dw12lNh0Xxj9vMkEUgAw2xEQqTGXY/Njo6mz+a1nEcFokvqLYiRi7PVv
+         iGleyJ9XdF+857rlYNkfILoc5nhrVLTo/5f5ExRqpN2+tOgLKxBqkbdpSWEqz/pP5vFk
+         hlR5Tab5gUtvOzuiAaP7+RZKzO3ZgBCm5y3ZAekeDLFYmM8n2IhYshhM4TPJq8yHXvFz
+         mweIj+dlzCsE4KoIafmtdTER1V4uklTzpUJhawe7O6DtRBb5mh0qHDXD7yXyqsuB1sAa
+         x97A==
+X-Gm-Message-State: AOPr4FWaqqu0MyKncrWsFH0EDvzol9QPfJ0prNN1difq7tJpJ4ekWdC+Xgc4Q43PDdUf6A==
+X-Received: by 10.98.64.79 with SMTP id n76mr40461030pfa.149.1462062538985;
+        Sat, 30 Apr 2016 17:28:58 -0700 (PDT)
+Received: from lanh ([115.72.42.9])
+        by smtp.gmail.com with ESMTPSA id hk7sm34441265pad.25.2016.04.30.17.28.55
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 30 Apr 2016 17:28:57 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 01 May 2016 07:28:52 +0700
+Content-Disposition: inline
+In-Reply-To: <xmqqy47z9geq.fsf@gitster.mtv.corp.google.com>
+X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293135>
 
-On Sat, Apr 30, 2016 at 1:46 AM, David Turner <dturner@twopensource.com=
-> wrote:
-> On Thu, 2016-04-28 at 11:58 -0700, Junio C Hamano wrote:
->> David Turner <dturner@twopensource.com> writes:
->>
->> > From: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com=
->
->> > ...
->> > The biggest gain is not having to verify the trailing SHA-1, which
->> > takes lots of time especially on large index files. But this also
->> > opens doors for further optimiztions:
->>
->> optimizAtion
->>
->> > Git can poke the daemon via unix domain sockets to tell it to
->> > refresh
->> > the index cache, or to keep it alive some more minutes. It can't
->> > give
->> > any real index data directly to the daemon. Real data goes to disk
->> > first, then the daemon reads and verifies it from there. Poking
->> > only
->> > happens for $GIT_DIR/index, not temporary index files.
->>
->> Is this limited to "poking", or the helper daemon is not involved in
->> codepaths that handle temporary index at all?  It makes sense if it
->> is the latter, and it doesn't if it were the former, but it is
->> unclear in this paragraph.
->
-> It is in fact the latter.  Will clarify.
+On Wed, Apr 27, 2016 at 09:15:41AM -0700, Junio C Hamano wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
+> 
+> > This patch forces bin-wrappers regeneration every time a test program
+> > is updated. A bit wasteful, but I don't see a better option (which is
+> > also why I limit this to test programs only).
+> 
+> In other words, when we update the location where the programs that
+> would be eventually installed are created, we'd see the same
+> problem.
+> 
+> I actually wonder if it is a better overall structure to move
+> t/helper/test-foo back to test-foo, while keeping the source file
+> that contains main() for test-foo at t/helper/test-foo.c.  Then we
+> do not have to have many copies that are slightly different in
+> bin-wrappers, but they can all be
+> 
+> 	exec "${GIT_EXEC_PATH}/$0" "$@"
+> 
+> instead of "bin-wrappers/git-bar" being
+> 
+> 	exec "${GIT_EXEC_PATH}/git-bar" "$@"
+> 
+> and "bin-wrappers/test-foo" being
+> 
+> 	exec "${GIT_EXEC_PATH}/t/helper/test-foo" "$@"
+> 
 
-The intention is so. The execution is less than perfect. On the server
-side, the index-helper only concerns itself with .git/index only.
-Good. On the client side, is_main_index() is used to detect if it's
-$GIT_DIR/index. It checks if the given index_state pointer points to
-the_index and if so assumes that it is the main index.
+It's not a perfect solution (rebuild bin-wrappers when the real binary
+moves) but I think it's the best option so far. We can move test-*
+binaries back with this patch.
 
-That is not true when read_cache_from() is used with something other
-than git_index_file() as argument. Which is exactly what
-builtin/commit.c does in prepare_index(). .git/index.lock gets passed
-in instead. read-cache.c may "poke" or "refresh" (probably should
-rename these to "read" and "write") because is_main_index()
-incorrectly returns true. Luckily it will soon find out index-helper
-does not prepare shm for this particular index file and fall back to
-reading from disk. We waste some context switches though.
---=20
-Duy
+-- 8< --
+diff --git a/.gitignore b/.gitignore
+index 05cb58a..5087ce1 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -179,6 +179,39 @@
+ /gitweb/gitweb.cgi
+ /gitweb/static/gitweb.js
+ /gitweb/static/gitweb.min.*
++/test-chmtime
++/test-ctype
++/test-config
++/test-date
++/test-delta
++/test-dump-cache-tree
++/test-dump-split-index
++/test-dump-untracked-cache
++/test-fake-ssh
++/test-scrap-cache-tree
++/test-genrandom
++/test-hashmap
++/test-index-version
++/test-line-buffer
++/test-match-trees
++/test-mergesort
++/test-mktemp
++/test-parse-options
++/test-path-utils
++/test-prio-queue
++/test-read-cache
++/test-regex
++/test-revision-walking
++/test-run-command
++/test-sha1
++/test-sha1-array
++/test-sigchain
++/test-string-list
++/test-submodule-config
++/test-subprocess
++/test-svn-fe
++/test-urlmatch-normalization
++/test-wildmatch
+ /common-cmds.h
+ *.tar.gz
+ *.dsc
+diff --git a/Makefile b/Makefile
+index dd178ee..7a1c973 100644
+--- a/Makefile
++++ b/Makefile
+@@ -620,7 +620,7 @@ TEST_PROGRAMS_NEED_X += test-svn-fe
+ TEST_PROGRAMS_NEED_X += test-urlmatch-normalization
+ TEST_PROGRAMS_NEED_X += test-wildmatch
+ 
+-TEST_PROGRAMS = $(patsubst %,t/helper/%$X,$(TEST_PROGRAMS_NEED_X))
++TEST_PROGRAMS = $(patsubst %,%$X,$(TEST_PROGRAMS_NEED_X))
+ 
+ # List built-in command $C whose implementation cmd_$C() is not in
+ # builtin/$C.o but is linked in as part of some other command.
+@@ -1897,7 +1897,7 @@ VCSSVN_OBJS += vcs-svn/fast_export.o
+ VCSSVN_OBJS += vcs-svn/svndiff.o
+ VCSSVN_OBJS += vcs-svn/svndump.o
+ 
+-TEST_OBJS := $(patsubst %$X,%.o,$(TEST_PROGRAMS))
++TEST_OBJS := $(patsubst %,t/helper/%.o,$(TEST_PROGRAMS_NEED_X))
+ OBJECTS := $(LIB_OBJS) $(BUILTIN_OBJS) $(PROGRAM_OBJS) $(TEST_OBJS) \
+ 	$(XDIFF_OBJS) \
+ 	$(VCSSVN_OBJS) \
+@@ -2204,7 +2204,7 @@ bin-wrappers/%: wrap-for-bin.sh
+ 	@mkdir -p bin-wrappers
+ 	$(QUIET_GEN)sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+ 	     -e 's|@@BUILD_DIR@@|$(shell pwd)|' \
+-	     -e 's|@@PROG@@|$(patsubst test-%,t/helper/test-%,$(@F))|' < $< > $@ && \
++	     -e 's|@@PROG@@|$(@F)|'< $< > $@ && \
+ 	chmod +x $@
+ 
+ # GNU make supports exporting all variables by "export" without parameters.
+@@ -2224,24 +2224,24 @@ perf: all
+ 
+ .PHONY: test perf
+ 
+-t/helper/test-ctype$X: ctype.o
++test-ctype$X: ctype.o
+ 
+-t/helper/test-date$X: date.o ctype.o
++test-date$X: date.o ctype.o
+ 
+-t/helper/test-delta$X: diff-delta.o patch-delta.o
++test-delta$X: diff-delta.o patch-delta.o
+ 
+-t/helper/test-line-buffer$X: vcs-svn/lib.a
++test-line-buffer$X: vcs-svn/lib.a
+ 
+-t/helper/test-parse-options$X: parse-options.o parse-options-cb.o
++test-parse-options$X: parse-options.o parse-options-cb.o
+ 
+-t/helper/test-svn-fe$X: vcs-svn/lib.a
++test-svn-fe$X: vcs-svn/lib.a
+ 
+ .PRECIOUS: $(TEST_OBJS)
+ 
+-t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS)
++test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(filter %.a,$^) $(LIBS)
+ 
+-check-sha1:: t/helper/test-sha1$X
++check-sha1:: test-sha1$X
+ 	t/helper/test-sha1.sh
+ 
+ SP_OBJ = $(patsubst %.o,%.sp,$(C_OBJ))
+diff --git a/t/helper/test-sha1.sh b/t/helper/test-sha1.sh
+index 750b95a..cef4bcc 100755
+--- a/t/helper/test-sha1.sh
++++ b/t/helper/test-sha1.sh
+@@ -1,7 +1,7 @@
+ #!/bin/sh
+ 
+ dd if=/dev/zero bs=1048576 count=100 2>/dev/null |
+-/usr/bin/time t/helper/test-sha1 >/dev/null
++/usr/bin/time ./test-sha1 >/dev/null
+ 
+ while read expect cnt pfx
+ do
+@@ -11,7 +11,7 @@ do
+ 			test -z "$pfx" || echo "$pfx"
+ 			dd if=/dev/zero bs=1048576 count=$cnt 2>/dev/null |
+ 			perl -pe 'y/\000/g/'
+-		} | ./t/helper/test-sha1 $cnt
++		} | ./test-sha1 $cnt
+ 	)
+ 	if test "$expect" = "$actual"
+ 	then
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 150aeaf..c1efb8e 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -308,7 +308,7 @@ test_expect_success 'clone checking out a tag' '
+ 
+ setup_ssh_wrapper () {
+ 	test_expect_success 'setup ssh wrapper' '
+-		cp "$GIT_BUILD_DIR/t/helper/test-fake-ssh$X" \
++		cp "$GIT_BUILD_DIR/test-fake-ssh$X" \
+ 			"$TRASH_DIRECTORY/ssh-wrapper$X" &&
+ 		GIT_SSH="$TRASH_DIRECTORY/ssh-wrapper$X" &&
+ 		export GIT_SSH &&
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index cd0ecd4..0b47eb6 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -854,10 +854,10 @@ test -d "$GIT_BUILD_DIR"/templates/blt || {
+ 	error "You haven't built things yet, have you?"
+ }
+ 
+-if ! test -x "$GIT_BUILD_DIR"/t/helper/test-chmtime
++if ! test -x "$GIT_BUILD_DIR"/test-chmtime
+ then
+ 	echo >&2 'You need to build test-chmtime:'
+-	echo >&2 'Run "make t/helper/test-chmtime" in the source (toplevel) directory'
++	echo >&2 'Run "make test-chmtime" in the source (toplevel) directory'
+ 	exit 1
+ fi
+-- 8< --
+ 
