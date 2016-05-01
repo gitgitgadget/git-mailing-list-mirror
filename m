@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 38/41] unpack-trees.c: use error_errno()
-Date: Sun,  1 May 2016 18:14:54 +0700
-Message-ID: <1462101297-8610-39-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 39/41] upload-pack.c: use error_errno()
+Date: Sun,  1 May 2016 18:14:55 +0700
+Message-ID: <1462101297-8610-40-git-send-email-pclouds@gmail.com>
 References: <1462101297-8610-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,92 +10,80 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 01 13:18:47 2016
+X-From: git-owner@vger.kernel.org Sun May 01 13:18:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1awpOf-0008J2-Qi
-	for gcvg-git-2@plane.gmane.org; Sun, 01 May 2016 13:18:46 +0200
+	id 1awpOk-0008MA-SJ
+	for gcvg-git-2@plane.gmane.org; Sun, 01 May 2016 13:18:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752655AbcEALSl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 May 2016 07:18:41 -0400
-Received: from mail-pa0-f68.google.com ([209.85.220.68]:35775 "EHLO
-	mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752642AbcEALSk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 May 2016 07:18:40 -0400
-Received: by mail-pa0-f68.google.com with SMTP id zy2so19088311pac.2
-        for <git@vger.kernel.org>; Sun, 01 May 2016 04:18:40 -0700 (PDT)
+	id S1752065AbcEALSr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 May 2016 07:18:47 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:35435 "EHLO
+	mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752642AbcEALSq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 May 2016 07:18:46 -0400
+Received: by mail-pf0-f193.google.com with SMTP id r187so19012813pfr.2
+        for <git@vger.kernel.org>; Sun, 01 May 2016 04:18:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PSKZULM5i2x7a9EZ9bG6nSVgKmZmoZilR3Am0oc6Lfo=;
-        b=UeQEd/rsV7Zvm7/KWW2Gi9xX5wWaao60kMfqHY0+XE68hJ0XjIRhdNsy8d0IbeAA25
-         f2N+qb3pbjzL4bxAfmr5jCZ8RFsute8jBvk2MeOlochCtcmZ1CY1BoYxzjSy7OIVoBrI
-         itmZqZymEM5jNOm/nSvygMmkT+Z9VKoCytFHtJFgWqqUizpMQCOyh9Q3smQZK0bTMHPp
-         Yt8P0tg0wyiRDZjWsUHixD1HalRj8zNxMbhpz3xyK1U79rzo5THelhRsEDj2xq2D+uqj
-         W0CE8bFYt3ZDbuAvqrH7VGOUeOz/Yt9AjnM0C8EnCqGZ4qSy3DUGksvI2CjcX8TV7Auc
-         99Mg==
+        bh=GrMpYL76dCsegoGZnSvjOxowW8myTE9oSuxMkZa2abU=;
+        b=d152eXobflKPPQ72d2F1QZ78+fCC3wXcPdaO8SK5tNmTpDG1Bu93MKHhg85eGn5iru
+         /iQ3EkYHZC8M3PCSR6dDiOF0o0P8/fo2yS7wS4vTQzB3fr+by4d0Ds+uz0rrnc9X615m
+         FvQM3EDuiLUhb05pyXXZR+AaBxjLNph9HSyD9Z/Dtatarnc0zxL5cjgU7+FHo+9Nr5Ub
+         2zlGAN4V5ocazGJeqRvW327As9oz7zjixToTn3YRmY/kTM2Ui2HTHAwxo2qlNcuKxUzP
+         VxZgZ4pNmfDsGinXdQZmMPIj8nbyBYer2yqPjQOHwSjNKmdPSaqM0jwo1M2AY/AMGgXd
+         mguw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=PSKZULM5i2x7a9EZ9bG6nSVgKmZmoZilR3Am0oc6Lfo=;
-        b=aDch/JbLdY4cAA5CVL7gL9Am01kO9QzxpzOsA9jVjn4IBr5pCSdTszLD4x5OOWwXzO
-         jrHQWerzQGJ0gTuOspM/Iy3ESgu62oKzcyrDTReLOIvhOVvUAsyF3kd5I/fGGamWUAhw
-         y3wDDIH1bn3xplS5dZjpy70XJpJJWZOlrQr4TjVFLmt4pQRAqivM/L4uxRe+NQ68sXWc
-         dNIJ0nfEDDUJcA9ZRbBuLyuoNEdPRDbgObGbDHqptdGlgtLp7b6cNTMk1xqX2B9vyyg3
-         Bn/Durjy+6AeAZgbdiCarw0gyR0UZWsi5CY6kxC04/TQ9xqFF/82C3V8jkUU6+rTMJCo
-         PHCA==
-X-Gm-Message-State: AOPr4FXSsNc6Fo8O/C0T1kk+/t8VwxPG2wbbfxONYp6KVfBuXPC8ErEIC/gQs69Z8TWbaA==
-X-Received: by 10.66.251.132 with SMTP id zk4mr43605265pac.50.1462101520285;
-        Sun, 01 May 2016 04:18:40 -0700 (PDT)
+        bh=GrMpYL76dCsegoGZnSvjOxowW8myTE9oSuxMkZa2abU=;
+        b=SfMqxXOUkxDCn/i5zN4acPDm3GEcQqTltIwEKq2p9ROQW6mAwPMgOqcoftqSRVnqrQ
+         YrO3lJb1Tyy12HH1BnEHa/Jj7l+4VVjSgG/5zveG+MJ3pM+q6FSOUhlh23PQthEdwv2Q
+         m94pKys08jawPG1+OqYj1ieYx9Zygk3kHKhX2X5B840c/OhggelnCsOu4b2cXpxYp7xk
+         aOqyydO++E2yk2/PH1vMp+qVZu/LW2YbIrHAjL1fqHlMMLfPm4ehJzsgGd9RVGxmWZ4v
+         nNP2Ygpg8tsSdnq4slsavO22vK0lAOC6oAe7xlLEPUxaLBuBL3/TvFbrIo6TiclpmqjL
+         q/LQ==
+X-Gm-Message-State: AOPr4FVSohmXNHI8kGjA5INS27hVjECMX/I9QkEBqYTx+9HRXviQO1pTRy8nJhZpjTAkFg==
+X-Received: by 10.98.71.80 with SMTP id u77mr43389828pfa.119.1462101525495;
+        Sun, 01 May 2016 04:18:45 -0700 (PDT)
 Received: from lanh ([115.72.42.9])
-        by smtp.gmail.com with ESMTPSA id c2sm37103980pfc.40.2016.05.01.04.18.37
+        by smtp.gmail.com with ESMTPSA id 82sm37056370pfb.64.2016.05.01.04.18.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 01 May 2016 04:18:39 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 01 May 2016 18:18:35 +0700
+        Sun, 01 May 2016 04:18:44 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 01 May 2016 18:18:41 +0700
 X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
 In-Reply-To: <1462101297-8610-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293189>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- unpack-trees.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ upload-pack.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 9f55cc2..bb0d142 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1499,8 +1499,7 @@ static int verify_absent_1(const struct cache_ent=
-ry *ce,
+diff --git a/upload-pack.c b/upload-pack.c
+index dc802a0..f19444d 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -174,8 +174,7 @@ static void create_pack_file(void)
 =20
- 		path =3D xmemdupz(ce->name, len);
- 		if (lstat(path, &st))
--			ret =3D error("cannot stat '%s': %s", path,
--					strerror(errno));
-+			ret =3D error_errno("cannot stat '%s'", path);
- 		else
- 			ret =3D check_ok_to_remove(path, len, DT_UNKNOWN, NULL,
- 						 &st, error_type, o);
-@@ -1508,8 +1507,7 @@ static int verify_absent_1(const struct cache_ent=
-ry *ce,
- 		return ret;
- 	} else if (lstat(ce->name, &st)) {
- 		if (errno !=3D ENOENT)
--			return error("cannot stat '%s': %s", ce->name,
--				     strerror(errno));
-+			return error_errno("cannot stat '%s'", ce->name);
- 		return 0;
- 	} else {
- 		return check_ok_to_remove(ce->name, ce_namelen(ce),
+ 		if (ret < 0) {
+ 			if (errno !=3D EINTR) {
+-				error("poll failed, resuming: %s",
+-				      strerror(errno));
++				error_errno("poll failed, resuming");
+ 				sleep(1);
+ 			}
+ 			continue;
 --=20
 2.8.0.rc0.210.gd302cd2
