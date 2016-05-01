@@ -1,96 +1,98 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 08/41] builtin/mailsplit.c: use error_errno()
-Date: Sun, 1 May 2016 14:31:43 -0400
-Message-ID: <CAPig+cSVQMpA6kp5hH0aeMTBfTRW1m3VY-U8t2qjjSk_TnGV=A@mail.gmail.com>
-References: <1462101297-8610-1-git-send-email-pclouds@gmail.com>
-	<1462101297-8610-9-git-send-email-pclouds@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH 63/83] builtin/apply: make apply_all_patches() return -1
+ on error
+Date: Sun, 1 May 2016 20:32:31 +0200
+Message-ID: <CAP8UFD3c6YHi33kwu=yB60oRqv91GLDm7J4zb5nxcVi6XNJo9A@mail.gmail.com>
+References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
+	<1461504863-15946-64-git-send-email-chriscool@tuxfamily.org>
+	<CACsJy8CRiAhHqYDrJifhfarqzarEnuuJm4rw18zxnC9xaBwKNw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 01 20:31:51 2016
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 01 20:32:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aww9m-0005ib-GF
-	for gcvg-git-2@plane.gmane.org; Sun, 01 May 2016 20:31:50 +0200
+	id 1awwAY-00065E-UA
+	for gcvg-git-2@plane.gmane.org; Sun, 01 May 2016 20:32:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752058AbcEASbp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 May 2016 14:31:45 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:34008 "EHLO
-	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751087AbcEASbo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 May 2016 14:31:44 -0400
-Received: by mail-io0-f193.google.com with SMTP id d62so21091787iof.1
-        for <git@vger.kernel.org>; Sun, 01 May 2016 11:31:44 -0700 (PDT)
+	id S1752088AbcEASce (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 May 2016 14:32:34 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:37507 "EHLO
+	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751087AbcEAScd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 May 2016 14:32:33 -0400
+Received: by mail-wm0-f51.google.com with SMTP id a17so111956890wme.0
+        for <git@vger.kernel.org>; Sun, 01 May 2016 11:32:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-transfer-encoding;
-        bh=UY3BKBTj34xX34YZyTmnX9wcpM5AMKLD4VefVP/zEo0=;
-        b=iVMNFzZwl+kqxGLlEF2FJOy2Idd2CFxLu+vynILvE5i2utiveDxS9kPHCYuUz2/fdV
-         MfJ26SgmEef1Eplys7eYsUbqT3KAHXlbquekDREY/+mbZuft0g1zehN6pWmPB4hogVRf
-         a0Uw6ltHJgMVq9oaf6HGLpcQoMMmNz3Sfnk6zjBzJtdIeiUsxbbn7cWOJ/1J1rVTNJmZ
-         mKuk8nsmNWsYf6Ru+A21FOcgQC/DWq/Un6iYGABa5WaKnKXR05lgYuaEMWJ7cuUtTCIL
-         +A4gG0ujuKVvUTrinqBP8KDgMuz0aGsBBr9aR0vwdpEUJiLWYAZmT3UG38MusW9GQ669
-         xG5Q==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=oLJuwXhjqJmMwmWwdmpZbZHqwwq2B3qMVMgjsaw48KA=;
+        b=Nxo79i/i5luGIDlyvyftgyNTuCvacSUoF87WmrmR+R2mNiaXuVmkTCVSKOqkrCLDrP
+         yk8YDNabFLcRL4PcD86m/iTYTSi4qlfDfZKVbsD1Vp8JyXk7GSkBwW+sx3mQuF57TwQN
+         M/+SVNPwd9P3XzHRJhiK1hoUQjsijIDLPDtxPbc443M23QwYK4bDmBnoUahrg4VswfFG
+         C37BIkh0kGbztLpN44PNOmNrM7M23zx6grs0p0gnj+9Mkops3kNO2sjs/Sk4zIA87aSN
+         fxKI0R77qM4oDwOWm6tr+qmUxdLrVPZ4Qvuy34TNdSihCTyNWYgnMmlRJWt2LOJ8maJT
+         nx2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=UY3BKBTj34xX34YZyTmnX9wcpM5AMKLD4VefVP/zEo0=;
-        b=COTMqtz1LWsFiFzIgs2wJIRJFKFUVfw1uGERbAWoNCBLQ31C/ZZddlEM7SgIWHmPAU
-         nX4NBsi0L43Z3S562+Y3pRnK49Ma/bZQZ2P589zXk//YiMGqBn4L7MzN+SBjDLjQYG6c
-         Gn8P3CR/Tlkkvxqj65l2rI1Rb7HwSTTwFW4LYmI+qjLSfVu0ZIlVAt20mM76vuiZN43P
-         JaRvaWEP5CCUUjYdohhDpc5r+5cD3r5zvTT+l6vgmzNznsji+ilMAXOzLrwjFn5ybVWr
-         J0RaBOfMTF4/pIGF2IwPQgl8cJY02T6IiiFnHkcv4ffdSPmUyScpqf+g7b7dOFJsc7gS
-         DnRA==
-X-Gm-Message-State: AOPr4FVUYiwWlathlP7obZZbpqN9/F58a8YzQ29zEpfM1TMds+v/dQALUTMrO4YHDvDGv15/uO6WLAufg74TXQ==
-X-Received: by 10.107.47.37 with SMTP id j37mr34423623ioo.168.1462127503711;
- Sun, 01 May 2016 11:31:43 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Sun, 1 May 2016 11:31:43 -0700 (PDT)
-In-Reply-To: <1462101297-8610-9-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: Bkl0y09-DCPbpem3Xj521UJKJxk
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=oLJuwXhjqJmMwmWwdmpZbZHqwwq2B3qMVMgjsaw48KA=;
+        b=if5QHoI7dbc4q6KPovMzT9dDU41c1vAtsaZ56ZCceS4hP3pnIBwKpW67tjmC/zaWHe
+         5eh/2hYkrvHBH9d7kgX33Ioo0jHGZNnUjVA94mBAPgShqYWRgQZaKeFxt1BLIwbaMKYQ
+         AwfMZbnUjvfmT1Dz3Bo8jgj+T7iYrqRzJPnop3ly9CveMsGKob0e21WUNrZRuCaympjj
+         EZBuEQ9/qpdVbVO4ouCMeVWffMCjO2UoR2c4IIb5WMV2MrEX0jv11MRFYdUm5UvqUSyO
+         lXJlk2jHa5oa7vWkWezQ8gLKshV1ueZwhmDwZAIM8gie77gXRwfZkAsrPN4XsSHVvKW4
+         fdiw==
+X-Gm-Message-State: AOPr4FVwRTuB/tvFqbBQMXUDGWgoMMjqrDixJmSRsJan+YUbhm0mRG09gG4yYkWOtu8xo4YUwNHmhZF/7M9nAw==
+X-Received: by 10.28.128.83 with SMTP id b80mr15666969wmd.89.1462127551948;
+ Sun, 01 May 2016 11:32:31 -0700 (PDT)
+Received: by 10.194.246.4 with HTTP; Sun, 1 May 2016 11:32:31 -0700 (PDT)
+In-Reply-To: <CACsJy8CRiAhHqYDrJifhfarqzarEnuuJm4rw18zxnC9xaBwKNw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293203>
 
-On Sun, May 1, 2016 at 7:14 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
-uy <pclouds@gmail.com> wrote:
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
-> diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
-> @@ -109,7 +109,7 @@ static int populate_maildir_list(struct string_li=
-st *list, const char *path)
->                 if ((dir =3D opendir(name)) =3D=3D NULL) {
->                         if (errno =3D=3D ENOENT)
->                                 continue;
-> -                       error("cannot opendir %s (%s)", name, strerro=
-r(errno));
-> +                       error_errno("cannot opendir %s", name);
->                         goto out;
->                 }
-> @@ -210,7 +210,7 @@ static int split_mbox(const char *file, const cha=
-r *dir, int allow_bare,
->         int file_done =3D 0;
+On Mon, Apr 25, 2016 at 3:30 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Sun, Apr 24, 2016 at 8:34 PM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>>         if (state->update_index) {
+>>                 if (write_locked_index(&the_index, state->lock_file, COMMIT_LOCK))
+>> -                       die(_("Unable to write new index file"));
+>> +                       return error(_("Unable to write new index file"));
+>>         }
+>>
+>>         return !!errs;
+>> @@ -4698,5 +4698,8 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
+>>         if (check_apply_state(&state, force_apply))
+>>                 exit(1);
+>>
+>> -       return apply_all_patches(&state, argc, argv, options);
+>> +       if (apply_all_patches(&state, argc, argv, options))
+>> +               exit(1);
 >
->         if (!f) {
-> -               error("cannot open mbox %s", file);
-> +               error_errno("cannot open mbox %s", file);
+> Abusing exit() too much? This is cmd_apply(). A return should be
+> enough and you can do the !! trick that is used in
+> apply_all_patches(), shown just a little bit above.
 
-Unlike other cases in this patch which already printed
-strerror(errno), this one didn't, and the patch upgrades it to do so,
-which is valid since errno will not be clobbered between the preceding
-fopen() and this error_errno(). I see other patches in the series do
-likewise.
+Ok, I will use:
 
-The error("cannot read mbox %s"" just below this code doesn't deserve
-the same treatment because strbuf_getwholeline() doesn't promise a
-meaningful errno. Okay.
+    return !!apply_all_patches(&state, argc, argv, options);
+
+Thanks,
+Christian.
