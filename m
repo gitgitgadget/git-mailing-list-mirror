@@ -1,11 +1,10 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 54/83] builtin/apply: make parse_chunk() return a negative
- integer on error
-Date: Sun, 1 May 2016 21:51:56 +0200
-Message-ID: <CAP8UFD0U1eBGYsVdNovhAGJzc1L=svDpkunTmTGboKmxhFF5Ow@mail.gmail.com>
+Subject: Re: [PATCH 59/83] builtin/apply: move init_apply_state() to apply.c
+Date: Sun, 1 May 2016 22:19:31 +0200
+Message-ID: <CAP8UFD2T6naSMqK+yvBysw9-4hjN1yhUi33Cc73+ChFsistDBQ@mail.gmail.com>
 References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
-	<1461504863-15946-55-git-send-email-chriscool@tuxfamily.org>
-	<CAPig+cQbF_Xq2oB5ALQkj_Zdw8VR8kyVyinq_K24zGGK7Xundw@mail.gmail.com>
+	<1461504863-15946-60-git-send-email-chriscool@tuxfamily.org>
+	<CAPig+cTxZf=oMB=V5JoZNUO6eTtnabv7LinNo1LUeah6ofrbEA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
@@ -18,76 +17,69 @@ Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun May 01 21:52:03 2016
+X-From: git-owner@vger.kernel.org Sun May 01 22:19:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1awxPO-0001Z2-Sa
-	for gcvg-git-2@plane.gmane.org; Sun, 01 May 2016 21:52:03 +0200
+	id 1awxq8-0006Al-M2
+	for gcvg-git-2@plane.gmane.org; Sun, 01 May 2016 22:19:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752088AbcEATv6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 May 2016 15:51:58 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:38660 "EHLO
+	id S1752173AbcEAUTd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 May 2016 16:19:33 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:36731 "EHLO
 	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751942AbcEATv5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 May 2016 15:51:57 -0400
-Received: by mail-wm0-f49.google.com with SMTP id g17so113647649wme.1
-        for <git@vger.kernel.org>; Sun, 01 May 2016 12:51:57 -0700 (PDT)
+	with ESMTP id S1751942AbcEAUTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 May 2016 16:19:32 -0400
+Received: by mail-wm0-f49.google.com with SMTP id n129so86180755wmn.1
+        for <git@vger.kernel.org>; Sun, 01 May 2016 13:19:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=7ezptzzWb5BFb5+iD53mOG86G7g2q2VYXeM4XuokNpY=;
-        b=R9O9Sxp3KDaBA56vmUpR8UaEFiZqixlDXZIPV3L2MXMuYGUnmgp0/dpo3m+mfeHJH7
-         a5Ry3u2pRyUeWZm9p1hheqQMImKaKTheTruf0t8jWdMHf3Df1sANTvSGZbT52H9CL/oq
-         a0w4vkh4gOVyeJ6fA6iIkVdNpvoGaK0XQlqWFa5gxH37MO8crorlZ8wc30UmHY44XTBX
-         ExaCk6mSRY8oDBr8J+XERkQyeG2D4OfYqPW4htDBuN6yO+YdeobewBSj8WGUXPH5vppO
-         exL744rAXR+Bx83FbJpLFDCn2RJlvKXaGn3uYFQHObj+d2EkgpDF34DD06g9D0+Zy82r
-         bPcQ==
+        bh=eCXSM6HZTNCkIwQ0vF6T8qcX0mQ402rf2b/fPgOm9oo=;
+        b=zRISqLIlUTwvSoVMEWV/XGLoAj5rHTBkjgFvPZY+TiHc4Es9ctTMs/rjTlfdVRN3D0
+         A2s8UjrhixUjeYZKhDCnIj7pPBxEhYgiDc0SGpfkppQCzprL/ZEGOtzdIaie4SorqmLP
+         bJy6aNZ29Rxni4P+GdFn9XFQUoHpSFwQyUKa7oXQSbQz7McNDSg53Hm0fz8Ntsl+SMen
+         Ff1gv1nGtUd12ptq5MifFUve3ymp5XG6Z237i8Vq56sljTarwzpWcWeifl7SteK8B9UM
+         CYL/szwLlKKY9BWQ5Xrj4AebibGj6lFhKYUMP++iYSEOFdVnGZSB231REPa5mKu2MbKO
+         PXpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=7ezptzzWb5BFb5+iD53mOG86G7g2q2VYXeM4XuokNpY=;
-        b=PTao272pZqEBfDib4DjCFGCFXnSspiDrKKFqalgDqnCCNyumEq6G92rgESH0rtJ1NO
-         DWWp3tiRJZpilSUGsI+xnCuqpcCLDS8IUehHBlwcKkPrxHTWaps8ieMdbbVpFrYP3E6L
-         XgggFZVTQQkhMA03a31asBromhSwjG0LoGGlO2NIXoHD4LZa+FGucpN75/hkIQ5s29sw
-         XJBJcIHb/yqFCBC+2E4BADxoWqhCn3M/OEhjjyu01lXxT9K2NGxwYY5AJOEMKRwjCu+8
-         DtsEvFHL2p4Z8dK2VOX2AviOYUVY/wHLXuyw6flNf3ycHRdH5M7jqJEQVeiquPX45u06
-         N9ew==
-X-Gm-Message-State: AOPr4FWIYuXjhKMvuhBXGV1UyVlCo0B27FYfF1umeiV+PKkIenDLmEUHeFWYg2DP4fRGp0eK5jt3ZXVK0GZT9w==
-X-Received: by 10.28.158.79 with SMTP id h76mr14513695wme.79.1462132316570;
- Sun, 01 May 2016 12:51:56 -0700 (PDT)
-Received: by 10.194.246.4 with HTTP; Sun, 1 May 2016 12:51:56 -0700 (PDT)
-In-Reply-To: <CAPig+cQbF_Xq2oB5ALQkj_Zdw8VR8kyVyinq_K24zGGK7Xundw@mail.gmail.com>
+        bh=eCXSM6HZTNCkIwQ0vF6T8qcX0mQ402rf2b/fPgOm9oo=;
+        b=CWTmPTQQsqDD5YvU0NlrrvHBADBiGHvTLpOCGlOnoYiPQPZdIzhgWkZ+RbmkRvRqIE
+         RuiuqfAGdaP891GxEXgaG+6FxVafbT9m898/3755Nz/11cHMMZIdXRqenNjLdy4Y5O8/
+         IPeW82B9aLC7nQ7b9CtUMQDvR//4h/LmlXjdMA2onWksiXK6/rGOtqajpQwDTrZczGAf
+         b1pPUPHmbUjQrc+cB0Yuhe7lQ/PEMZgKk0lEoVabfBrkVwBckrcOHB/NYFkl1ogRFTRh
+         A5oJMf5d75aP8WXHC9R9fckHki3ky0p71NQi113jhw2xYLXwi1uWlmWUbXQrpDb4Q4IU
+         5KVA==
+X-Gm-Message-State: AOPr4FVtvhnVzBPZK1CXa4AdwcvmrykZ10N3fAWIirm4vy2fRF0dJxrOgHHxEZgixrs4JqggDW+6AhXqbWg6LQ==
+X-Received: by 10.28.129.22 with SMTP id c22mr15950219wmd.89.1462133971401;
+ Sun, 01 May 2016 13:19:31 -0700 (PDT)
+Received: by 10.194.246.4 with HTTP; Sun, 1 May 2016 13:19:31 -0700 (PDT)
+In-Reply-To: <CAPig+cTxZf=oMB=V5JoZNUO6eTtnabv7LinNo1LUeah6ofrbEA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293213>
 
-On Sun, May 1, 2016 at 9:04 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+On Sun, May 1, 2016 at 9:37 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
 > On Sun, Apr 24, 2016 at 9:33 AM, Christian Couder
 > <christian.couder@gmail.com> wrote:
->> This negative number can be -2 if no patch header has been found,
->> otherwise it is -1.
->>
->> As parse_chunk() is called only by apply_patch() which already
->> returns -1 when an error happened, let's make it return -1 when
->> parse_chunk() returns -1.
->>
 >> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 >> ---
->> diff --git a/builtin/apply.c b/builtin/apply.c
->> @@ -4566,6 +4567,8 @@ static int apply_patch(struct apply_state *state,
->>                 nr = parse_chunk(state, buf.buf + offset, buf.len - offset, patch);
->>                 if (nr < 0) {
->>                         free_patch(patch);
->> +                       if (nr == -1)
->> +                               return -1;
+>> diff --git a/apply.c b/apply.c
+>> @@ -0,0 +1,80 @@
+>> +#include "cache.h"
+>> +#include "apply.h"
+>> +
+>> +
+>> +
 >
-> Same comment as 51/83 about this leaking 'list', 'buf', and 'fn_table'.
+> Too many blank lines?
 
-Ok, thanks!
+Ok, I will remove 2 of them.
