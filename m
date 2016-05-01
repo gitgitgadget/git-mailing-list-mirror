@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 14/41] builtin/worktree.c: use error_errno()
-Date: Sun,  1 May 2016 18:14:30 +0700
-Message-ID: <1462101297-8610-15-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 16/41] combine-diff.c: use error_errno()
+Date: Sun,  1 May 2016 18:14:32 +0700
+Message-ID: <1462101297-8610-17-git-send-email-pclouds@gmail.com>
 References: <1462101297-8610-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,79 +10,81 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 01 13:16:35 2016
+X-From: git-owner@vger.kernel.org Sun May 01 13:16:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1awpMY-0007Bf-VZ
-	for gcvg-git-2@plane.gmane.org; Sun, 01 May 2016 13:16:35 +0200
+	id 1awpMk-0007HW-0e
+	for gcvg-git-2@plane.gmane.org; Sun, 01 May 2016 13:16:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752454AbcEALQb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 May 2016 07:16:31 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:36478 "EHLO
-	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752437AbcEALQa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 May 2016 07:16:30 -0400
-Received: by mail-pf0-f194.google.com with SMTP id p185so18815335pfb.3
-        for <git@vger.kernel.org>; Sun, 01 May 2016 04:16:30 -0700 (PDT)
+	id S1751809AbcEALQm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 May 2016 07:16:42 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:34980 "EHLO
+	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751483AbcEALQl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 May 2016 07:16:41 -0400
+Received: by mail-pf0-f195.google.com with SMTP id r187so19010348pfr.2
+        for <git@vger.kernel.org>; Sun, 01 May 2016 04:16:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aKLEVrD+0v5e5XIVY9tJEs+9ZFOYejn6v1Ggnnn7Lbg=;
-        b=NTekKMLRLjS0QXMNbXW5AkIaeGgxEdQkj0R8K5KvSGWy5COW0tWOa2Lr5PJM9sKddc
-         xNzG6feg5/sAuQ4eLlR7MItnU4cua90otCYsFV1+0raKvyCxqe9cfynW/f8gsB0uaBkG
-         u9PKspfsdQy0BI4ViDI26jwarwPOxOu1eBAbrydQawsjSyBzY6Qj5iA6oNtuK+QoY5SC
-         xOzqwK5vaScWE2uwd/d/0vv4uX+oH1KBrrkN/QR/iqJxsnICth4JYV/C3Xx4qVDBKxWz
-         taPDKH7op72DobCwAPL3fRjcBByx3oQvYveeIbwN6VpQx/DZ+DL54H4g1mrroRF7MQmE
-         KJQg==
+        bh=t2u5nQO3KDMy5bdZifRGPS5giGlr5MNQmeOmuk0Z0pc=;
+        b=kgW/cjv7+yU264c8VwFmhjkLCRu6JyB/VguX6ZXioIOqYWlW4YAKZzrDvCXLe0mso4
+         kqj6ic9d4AgH34ufKNxODhtgEiqR4UDEROK2GQREuTLs8143SE3RbTiTkeZaUQlLQREo
+         cq26PnujBtc1wW1OhEWTMRYJlLI+JMjJfBtmpS7K85zf/1RazpOt8woUCcJakSwocWax
+         xTYGrPBbZs+f9ix2+OY6fgn261jZeEnyLzjyYwIvy0c5SsRfW2njzJSrgaMQHnl+cV3S
+         To/CSW50XTgDgVz/O5LOsvVD0BiSoZtdlE8bCdpiJTsnZNLAOnHMCVIwUMRTaBEh86px
+         B3RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aKLEVrD+0v5e5XIVY9tJEs+9ZFOYejn6v1Ggnnn7Lbg=;
-        b=Q1hz1F5T2Q30xbe7h18f4dBqNtPh/DvbkHkgdYURce081WP9Z+M2gGPdk+/1nfXxEN
-         +7Tv4eNPp9dRRzxKEQlvEcXfyQbxn2kDDE63aYV9HrNQUD3Flq2WJ6nP+n9ym9HuLRDs
-         4OZkVAb+JxaLZIzJwonsOs8gC6EZ81Fz4ltPXJN/JtVmUHs7E1e6XPd8kpR25K4OTqgc
-         I4RPvDsoutpnh0rDJnBPZZp9YlpG9wpY2RUnFEwT0sTh2xZwUByDrLjvNP2rLfDDHQSh
-         ucJFFciy426jhSDkeJCXbjc92xgKM3QfXl7IupL4KcqVTDoJ3XHHVGlJPM/eIypC5u00
-         WQLw==
-X-Gm-Message-State: AOPr4FU+fvUc+rBh3gyWowbg5cv1pSgE1j2gYiA7lqGUVIV9HPaugaEUW48cFWGLn9w1pA==
-X-Received: by 10.98.41.65 with SMTP id p62mr42685206pfp.29.1462101390038;
-        Sun, 01 May 2016 04:16:30 -0700 (PDT)
+        bh=t2u5nQO3KDMy5bdZifRGPS5giGlr5MNQmeOmuk0Z0pc=;
+        b=Pofzk8CYro5StpWF+1F2+Tnjc+pFZcPfm0y1RR7KntN7jcUFEL87Som6QqGE/NaHcE
+         eE657B8gyBvyaU25TqkqdJB2agVTkFtw4Y3+nn3Z+GPdCkl/2LkpzOOMVy2mws7jPu+0
+         ZLTZOHBJvt0O2Fx+aDg0/NH5YKoQV5K1gaYg8xe2KF7xaORMb7Ymdrnvo1CTRumnkJ9+
+         mKGn0PBoagmhB2wOab9+36OHGItQr1R1Y0sD6p4Y/+NWnoDJZzpO+9kbPguYfZIVibdV
+         TDfjJ2AORpv0YMzPghSON4xQHY51sWW+KaIyAwnEnyUrKccDQN6QwTPK7DqHJz/xTn1K
+         wfvg==
+X-Gm-Message-State: AOPr4FXzMR4A98fImqC9XESHcUVB5fz2W0i+5uXuIsJEmzzdx55GBhWIwRr4Mp1uQAexZA==
+X-Received: by 10.98.26.205 with SMTP id a196mr42611010pfa.46.1462101400711;
+        Sun, 01 May 2016 04:16:40 -0700 (PDT)
 Received: from lanh ([115.72.42.9])
-        by smtp.gmail.com with ESMTPSA id 8sm37041772pfk.69.2016.05.01.04.16.26
+        by smtp.gmail.com with ESMTPSA id m12sm37066899pfi.5.2016.05.01.04.16.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 01 May 2016 04:16:28 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 01 May 2016 18:16:25 +0700
+        Sun, 01 May 2016 04:16:39 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 01 May 2016 18:16:36 +0700
 X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
 In-Reply-To: <1462101297-8610-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293165>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/worktree.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ combine-diff.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index d8e3795..331ecf6 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -110,7 +110,7 @@ static void prune_worktrees(void)
- 		if (ret < 0 && errno =3D=3D ENOTDIR)
- 			ret =3D unlink(path.buf);
- 		if (ret)
--			error(_("failed to remove: %s"), strerror(errno));
-+			error_errno(_("failed to remove '%s'"), path.buf);
- 	}
- 	closedir(dir);
- 	if (!show_only)
+diff --git a/combine-diff.c b/combine-diff.c
+index 0e1d4b0..8f2313d 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -1005,8 +1005,7 @@ static void show_patch_diff(struct combine_diff_p=
+ath *elem, int num_parent,
+ 			struct strbuf buf =3D STRBUF_INIT;
+=20
+ 			if (strbuf_readlink(&buf, elem->path, st.st_size) < 0) {
+-				error("readlink(%s): %s", elem->path,
+-				      strerror(errno));
++				error_errno("readlink(%s)", elem->path);
+ 				return;
+ 			}
+ 			result_size =3D buf.len;
 --=20
 2.8.0.rc0.210.gd302cd2
