@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 08/41] builtin/mailsplit.c: use error_errno()
-Date: Sun,  1 May 2016 18:14:24 +0700
-Message-ID: <1462101297-8610-9-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 07/41] builtin/help.c: use warning_errno()
+Date: Sun,  1 May 2016 18:14:23 +0700
+Message-ID: <1462101297-8610-8-git-send-email-pclouds@gmail.com>
 References: <1462101297-8610-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,116 +10,110 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 01 13:16:04 2016
+X-From: git-owner@vger.kernel.org Sun May 01 13:15:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1awpM3-0006up-3L
-	for gcvg-git-2@plane.gmane.org; Sun, 01 May 2016 13:16:03 +0200
+	id 1awpLx-0006t5-OY
+	for gcvg-git-2@plane.gmane.org; Sun, 01 May 2016 13:15:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752341AbcEALP7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 May 2016 07:15:59 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34828 "EHLO
-	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752323AbcEALP6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 May 2016 07:15:58 -0400
-Received: by mail-pf0-f196.google.com with SMTP id r187so19009518pfr.2
-        for <git@vger.kernel.org>; Sun, 01 May 2016 04:15:58 -0700 (PDT)
+	id S1752309AbcEALPy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 May 2016 07:15:54 -0400
+Received: from mail-pa0-f66.google.com ([209.85.220.66]:34434 "EHLO
+	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752272AbcEALPx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 May 2016 07:15:53 -0400
+Received: by mail-pa0-f66.google.com with SMTP id yl2so16151077pac.1
+        for <git@vger.kernel.org>; Sun, 01 May 2016 04:15:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=l7fguItTeRU64mb16Vtb6GT23zIscchs0Mh01Ss9lC8=;
-        b=s5064IZoYhVPiOzURCgf69GO9Q6N3ttMWm0E7j+Sm93Xdistso2VVdJtQJuU+Pghiw
-         p9n7LXJmskiKKep384SD1PlQnOX8v/hR82QOvzMCUJ/YwBXn4gSwxhJRrfXWdv1OieUP
-         LRppKgWoW8cjnDhdvbygAUcKKzKOYGwj/RTFCVK2Rbqr5Pe7MVRyousPUYv5lDNwUSS+
-         kujOdBaIWRZJHGZg7IR4TtOyqd7GHN5F3djqNQlzJv5IF0gX6DaEadrViB7whlswV7eL
-         /J3fVPvA3RfUh4zrlaVnVVfQVvKO/tqTQI3RuwZD+BgZrX0QJEj+nFbLq0OOzK2E6R1z
-         9+ag==
+        bh=hq/pO5wKM7a6zps/TIbbtOi8YUVnNsZVAgYTX2cnbiA=;
+        b=GPGdXAxSjc4FmXEoBqTsUAg0g6IwavLbA8Kirp4eRkmLuYU2ukq8YlURigXyj3dhfV
+         VTKTIXH0c9NxAkjPANi+mvD6ZC40PdedH29CX6OaTzUCaRGpQbl1ONYvqtC14DYOXtwO
+         3kT6t/E5P2xjf64+0j7ELYD0UzP0yR0X796x1Zyp7bYH+D4nfJVD/BrXBVWVuFbGodw4
+         i+G8YyJY90izdxGbaa5k2pCB4Yno+8/GQRZskfEtOas5vvO5kKSbdby/SAwb1j6frW53
+         dUCLoEut5HtLWbtvH9dXYYqTXqlKVukFq/9yfNEUerTyRllF5W2osexFvNcWY/vML7BM
+         PJGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=l7fguItTeRU64mb16Vtb6GT23zIscchs0Mh01Ss9lC8=;
-        b=Wo96gWbvkDoEYctO4bYM/JjqH10Ml2/3zmuKGoZbg2g3ZoIh9CHEJfh+Di3h+nfBAW
-         2GISGGGQ5LHwMQY0CzrDLsLKbWMxZ9ch5D6rb2pPbgmrENEV69wQPYURy2Glgkl6gAH/
-         Vq+BDcm6ip4NUY/c+9HciYJYjDnI5Cv+D+qaDUj2zKqCrl4zbH7MDOOpewP9tDi76NWy
-         JZfOO5izJpiZEOaQQtvQUUPc67V2K7iE4rYPEfROs/RkQvwcBktXRZ+i3yOm8GGs6xAA
-         79gPDviJQGe/PXsq7twCT+plTg+7ckGYdDwpigNIfhp3g2kYee51RJwCIzrvGcEzfyDQ
-         4BeQ==
-X-Gm-Message-State: AOPr4FXU3+oLKc1UJfRNnGIqPVlMoagaeYDKdCx0tQz2XTYDieM9U29LZ1fHRdl/E3N/rA==
-X-Received: by 10.98.86.24 with SMTP id k24mr43478811pfb.87.1462101357536;
-        Sun, 01 May 2016 04:15:57 -0700 (PDT)
+        bh=hq/pO5wKM7a6zps/TIbbtOi8YUVnNsZVAgYTX2cnbiA=;
+        b=kfMP1uodOJysjV48Hwmyk2uSM69Wv1Uredt2dp8RoRBpc2MheRX6BWIi47M0myjrOY
+         rpRj1XxHmLEl3wR8hWaeU20YTNPeZm417cY3b57BHzSJvpeU/1nIR0DsqsJZlbGgfz0F
+         dQpxdCcsO8X+ldUkcEERpcb1+p2Sm4XFdUQUZIjCRRLPIP7PCp5jY1ZZ3Mtbq59x7y/W
+         Juct9mY9x1hBBSL0/iOXBDAQqbA/JipvkljHqL2PiMyZEirWgneto6hbD2SzsJx4E2bl
+         FpbDSKaIFGZP5KktynA1r9q9kLu+4qgVJx7D1PTcUNgvtSC0MwLhb85NqVMgWC13QGv5
+         cnjg==
+X-Gm-Message-State: AOPr4FVvuoHa38+sBGHbU6Zm/5M012GFeisbHPPOgkXwgYDKEVdkGU4QCVpOU9jSb1/Jug==
+X-Received: by 10.66.75.97 with SMTP id b1mr42980698paw.54.1462101352425;
+        Sun, 01 May 2016 04:15:52 -0700 (PDT)
 Received: from lanh ([115.72.42.9])
-        by smtp.gmail.com with ESMTPSA id e7sm30127179pfa.28.2016.05.01.04.15.54
+        by smtp.gmail.com with ESMTPSA id zn7sm37346797pac.41.2016.05.01.04.15.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 01 May 2016 04:15:56 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 01 May 2016 18:15:53 +0700
+        Sun, 01 May 2016 04:15:51 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 01 May 2016 18:15:47 +0700
 X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
 In-Reply-To: <1462101297-8610-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293158>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/mailsplit.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ builtin/help.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
-index 104277a..4859ede 100644
---- a/builtin/mailsplit.c
-+++ b/builtin/mailsplit.c
-@@ -109,7 +109,7 @@ static int populate_maildir_list(struct string_list=
- *list, const char *path)
- 		if ((dir =3D opendir(name)) =3D=3D NULL) {
- 			if (errno =3D=3D ENOENT)
- 				continue;
--			error("cannot opendir %s (%s)", name, strerror(errno));
-+			error_errno("cannot opendir %s", name);
- 			goto out;
- 		}
-=20
-@@ -174,12 +174,12 @@ static int split_maildir(const char *maildir, con=
-st char *dir,
-=20
- 		f =3D fopen(file, "r");
- 		if (!f) {
--			error("cannot open mail %s (%s)", file, strerror(errno));
-+			error_errno("cannot open mail %s", file);
- 			goto out;
- 		}
-=20
- 		if (strbuf_getwholeline(&buf, f, '\n')) {
--			error("cannot read mail %s (%s)", file, strerror(errno));
-+			error_errno("cannot read mail %s", file);
- 			goto out;
- 		}
-=20
-@@ -210,7 +210,7 @@ static int split_mbox(const char *file, const char =
-*dir, int allow_bare,
- 	int file_done =3D 0;
-=20
- 	if (!f) {
--		error("cannot open mbox %s", file);
-+		error_errno("cannot open mbox %s", file);
- 		goto out;
+diff --git a/builtin/help.c b/builtin/help.c
+index 3c55ce4..8848013 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -127,7 +127,7 @@ static void exec_woman_emacs(const char *path, cons=
+t char *page)
+ 			path =3D "emacsclient";
+ 		strbuf_addf(&man_page, "(woman \"%s\")", page);
+ 		execlp(path, "emacsclient", "-e", man_page.buf, (char *)NULL);
+-		warning(_("failed to exec '%s': %s"), path, strerror(errno));
++		warning_errno(_("failed to exec '%s'"), path);
  	}
+ }
 =20
-@@ -318,7 +318,7 @@ int cmd_mailsplit(int argc, const char **argv, cons=
-t char *prefix)
- 		}
+@@ -148,7 +148,7 @@ static void exec_man_konqueror(const char *path, co=
+nst char *page)
+ 			path =3D "kfmclient";
+ 		strbuf_addf(&man_page, "man:%s(1)", page);
+ 		execlp(path, filename, "newTab", man_page.buf, (char *)NULL);
+-		warning(_("failed to exec '%s': %s"), path, strerror(errno));
++		warning_errno(_("failed to exec '%s'"), path);
+ 	}
+ }
 =20
- 		if (stat(arg, &argstat) =3D=3D -1) {
--			error("cannot stat %s (%s)", arg, strerror(errno));
-+			error_errno("cannot stat %s", arg);
- 			return 1;
- 		}
+@@ -157,7 +157,7 @@ static void exec_man_man(const char *path, const ch=
+ar *page)
+ 	if (!path)
+ 		path =3D "man";
+ 	execlp(path, "man", page, (char *)NULL);
+-	warning(_("failed to exec '%s': %s"), path, strerror(errno));
++	warning_errno(_("failed to exec '%s'"), path);
+ }
 =20
+ static void exec_man_cmd(const char *cmd, const char *page)
+@@ -165,7 +165,7 @@ static void exec_man_cmd(const char *cmd, const cha=
+r *page)
+ 	struct strbuf shell_cmd =3D STRBUF_INIT;
+ 	strbuf_addf(&shell_cmd, "%s %s", cmd, page);
+ 	execl(SHELL_PATH, SHELL_PATH, "-c", shell_cmd.buf, (char *)NULL);
+-	warning(_("failed to exec '%s': %s"), cmd, strerror(errno));
++	warning(_("failed to exec '%s'"), cmd);
+ }
+=20
+ static void add_man_viewer(const char *name)
 --=20
 2.8.0.rc0.210.gd302cd2
