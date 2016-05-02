@@ -1,92 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/2] travis-ci: build documentation
-Date: Mon, 02 May 2016 13:45:09 -0700
-Message-ID: <xmqq60uwrxyi.fsf@gitster.mtv.corp.google.com>
-References: <xmqqziscw2g7.fsf@gitster.mtv.corp.google.com>
-	<1462220405-12408-1-git-send-email-larsxschneider@gmail.com>
-	<1462220405-12408-3-git-send-email-larsxschneider@gmail.com>
+From: Tom Anderson <thomasanderson@google.com>
+Subject: Re: [PATCH] git-stash: add flag to skip "git reset --hard"
+Date: Mon, 2 May 2016 13:53:57 -0700
+Message-ID: <5727BE65.3040004@google.com>
+References: <57267BBE.9010707@google.com>
+ <xmqqeg9kti6x.fsf@gitster.mtv.corp.google.com> <5727A6DF.5020204@google.com>
+ <xmqqh9egs04d.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, peff@peff.net, Matthieu.Moy@grenoble-inp.fr,
-	sbeller@google.com
-To: larsxschneider@gmail.com
-X-From: git-owner@vger.kernel.org Mon May 02 22:45:20 2016
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 02 22:54:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axKiU-00081S-RP
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 22:45:19 +0200
+	id 1axKqy-0003fa-PJ
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 22:54:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755104AbcEBUpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 16:45:15 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64703 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754864AbcEBUpN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 16:45:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2988A189F9;
-	Mon,  2 May 2016 16:45:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YS6rKiBz24FXBfoDmqgjjvvIX98=; b=YrMLGn
-	ACPjUr7nKZ9jA1rhFJQisYLBHBMqUrZeZ01y6woWtb7/xv5GXwlujUL2ShrmShgT
-	MahUz0/lu494WCtsLAcUMVSZ9dWAjJxv46L4cHYrRFNNdIcSBtXl4Q9npfIUgFf1
-	VY2pY06uzCWwYdoUiO32OWDtsfnVOxLvyasjk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=l3hJHBA17MMCOEhJ8ozlkEwSZgyAbeFm
-	RjpnnnWVpzQgCZjm4mXXymw+vHlKxOneJUiIe9kv2RoOnYHzW1/bD+jzxYtR2fYd
-	bpd+RMtNnJD1U9qJeNJSpmIyypDd8/UcvW7XG20K+DNbjw+xehcfu39xCa9b5jtT
-	utasc2Hhk50=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F2CE189F8;
-	Mon,  2 May 2016 16:45:12 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7A3F6189F7;
-	Mon,  2 May 2016 16:45:11 -0400 (EDT)
-In-Reply-To: <1462220405-12408-3-git-send-email-larsxschneider@gmail.com>
-	(larsxschneider@gmail.com's message of "Mon, 2 May 2016 22:20:05
-	+0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C3B0EA98-10A6-11E6-9CC3-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1754885AbcEBUyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 16:54:00 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:33174 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753488AbcEBUx7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 16:53:59 -0400
+Received: by mail-pa0-f43.google.com with SMTP id xk12so148204pac.0
+        for <git@vger.kernel.org>; Mon, 02 May 2016 13:53:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=R1zySLrzzmBDvtbbHzXksHXQ+0mUj7XMakEmbl+A3Hc=;
+        b=RPsWdi6KyoCSIxA4ZMCEMhezfneG6MmzaZFreGzXJySFRjySLU7JLNSCGYC1EkmLk0
+         ZyXjz5/Z1K1yI2Gngv31TST5nwPkd/rTLeZUU4ntxTwtFHl//D7MaYMu6Y6LZ/s1Lonq
+         yNjcR67Un5BOuV4GpVAIZKjtHIBaxxjguSS5aSA2Akcogv+Fd/X4nbKLy4joww4wEyl+
+         +VbNf5OJ9Chgv6YqRhYZrK24bRMqlPHu1SfZ2bcOo3lemoX9W02lVz6nkkOi22GRizGG
+         PGdRPrwHrHQGOpKX3QGIZ6Y5n94247F2QWj2bqpUZgQqpC/FFz2ZwsQb9XFDX8235MT5
+         eJ4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=R1zySLrzzmBDvtbbHzXksHXQ+0mUj7XMakEmbl+A3Hc=;
+        b=Us56Fv2hPhK7BFtB5nHP6ySloWQ4sc2C/0Gmcxv9cAu9DGIWBSn5Vflze7qj8617Y7
+         39kjgLPzP8Wv/QE9LD65OpDjiYTZioUM7nATe5tGyosJDgcBX/2DdizlHKuR0D4HdUwX
+         BK622xdGVOMueotYozrTJwFGzFeXf9iw0Q0dZ6LmU0pSFLpdYofp4v+L2oAefkBVlsb/
+         MCiBYtaHTvk9iJy6JyFLiuOnkQlU746vCU9TIuIDXjpj1XbDFoEoCfkzfwpIP49l5yWf
+         UFcPxvksobqHbBu9079Xr5zfVqaSRgiVAtVbq1rAfDufIk+/91flaIiiR8J9PlJWB6to
+         4VzQ==
+X-Gm-Message-State: AOPr4FVpDrAgaZ27ULBv3CJdHrwqCvbOZoz3jQMykmamVDdpCav6K73z0RDsxLR+UpXyVOwN
+X-Received: by 10.66.78.104 with SMTP id a8mr4488320pax.88.1462222438447;
+        Mon, 02 May 2016 13:53:58 -0700 (PDT)
+Received: from thomasanderson.mtv.corp.google.com ([2620:0:1000:1600:a583:4c30:2a15:2c83])
+        by smtp.gmail.com with ESMTPSA id dh4sm47927510pad.37.2016.05.02.13.53.57
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 02 May 2016 13:53:57 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <xmqqh9egs04d.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293289>
 
-larsxschneider@gmail.com writes:
+What I want can be achieved using "git stash store `git stash create`"
 
-> +set -e
-> +
-> +LINKS=$(grep --recursive --only-matching --no-filename --perl-regexp \
-> +    '(?<=linkgit:).*?(?=\[\d+\])' Documentation/* \
-> +    | sort -u \
-> +)
-> +
-> +for LINK in $LINKS; do
-> +    echo "Checking linkgit:$LINK..."
-> +    test -s Documentation/$LINK.txt
-> +done
-
-Please separate the above link check out of this step and do so
-separately after the move of test body to a separate script
-settles.
-
-When you reintroduce the tests, please make sure the shell script
-follow the coding style of other scripts.  E.g. I do not think the
-last one in the $(...) needs a backslash continuation at all.  I am
-assuming that you are doing this only on Linux, in which case use of
-GNUism with grep may be fine.
-
-> +make check-builtins
-> +make check-docs
-> +make doc
-> +
-> +test -s Documentation/git.html
-> +test -s Documentation/git.xml
-> +test -s Documentation/git.1
+On 05/02/2016 12:58 PM, Junio C Hamano wrote:
+> Tom Anderson <thomasanderson@google.com> writes:
+>
+>> Yes, but I like my stashes to be saved in the ref namespace.
+> Isn't that something you can do so yourself with store_stash?
