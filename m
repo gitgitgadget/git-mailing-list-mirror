@@ -1,107 +1,86 @@
-From: Simon Oosthoek <s.oosthoek@xs4all.nl>
-Subject: Re: [PATCH] git-prompt: make colors available in custom prompts
-Date: Mon, 2 May 2016 08:40:07 +0200
-Message-ID: <5726F647.6030805@xs4all.nl>
-References: <1461301201-92142-1-git-send-email-andrew@schwartzmeyer.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] t5510: run auto-gc in the foreground
+Date: Mon, 2 May 2016 09:01:08 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605020859131.9313@virtualbox>
+References: <20160501153743.323-1-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: erdavila@gmail.com
-To: Andrew Schwartzmeyer <andrew@schwartzmeyer.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 02 08:40:24 2016
+Content-Type: multipart/mixed; BOUNDARY="8323329-1835063548-1462172469=:9313"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Mon May 02 09:01:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ax7Wo-0006eJ-Sc
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 08:40:23 +0200
+	id 1ax7r4-0000Dk-GY
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 09:01:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752873AbcEBGkN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 02:40:13 -0400
-Received: from lb1-smtp-cloud3.xs4all.net ([194.109.24.22]:42555 "EHLO
-	lb1-smtp-cloud3.xs4all.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751629AbcEBGkL (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2016 02:40:11 -0400
-Received: from ahtec.fritz.box ([62.251.42.129])
-	by smtp-cloud3.xs4all.net with ESMTP
-	id pJg71s0062nCm1a01Jg80f; Mon, 02 May 2016 08:40:09 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.1
-In-Reply-To: <1461301201-92142-1-git-send-email-andrew@schwartzmeyer.com>
+	id S1752817AbcEBHBP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 03:01:15 -0400
+Received: from mout.gmx.net ([212.227.17.21]:57259 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751187AbcEBHBO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 03:01:14 -0400
+Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MV30j-1bBZex1aSj-00YUKM; Mon, 02 May 2016 09:01:06
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <20160501153743.323-1-szeder@ira.uka.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:KdAJaFEyzXd+2hi0Ospl/BR5kmcEv1Q6Td2FzoALavzI/ywLKJz
+ dEHRjnIc6JVCIwOfOG7DpObJg1syNOqQ9SeOarKq+P0ABjEVDBVIcbuGe6D1OpE0gDISB4n
+ Bw+BeS/frIlvIB++tt/nRfO+maJo2IOBCJPGmnFfLB2uZYFs2sYh85yRRDhMKqFqW8NRlk3
+ mTabk1bZNRwkmi8L6K2yA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:TWcV+HEnVGA=:h/hjK+Ym9wQD+XGqHgZV/6
+ uJIz3j+4xc/s6u/th790l8oyVGaI75l5i8oS0wD95mFwKXTbO+Q4aiVUT9VcWwMbv+a5xH6wm
+ SIDhp3WK9I8w49CBFjdtVnjQYHjupg1pTl6TVYvW7zmCBUpiw2TInpttkvU61N+qQQ/qr+KsF
+ AUQ0w4PoW1oUgHftxcJ4Mp7PWZT8Vg7hFuEo4MQn+HheL9eYKErTF334wPEj0doz52PRE0I3x
+ CX7mwyJIEeQgai8vv8WlVNMSTNATDNJdclBkGe4UOFSKOC57U/iEC4CbNKNS/RBDONSUgHkyD
+ bXrAJz1+TnPufgc/U/y14MqIVhZXMVdxBz46h8nrwcgMNm0SDS00CKy1IKtbt8d0fvXe4MC2N
+ p3E+bFYIgqt/Ly/GQWrGXMoccff/VFbfQUGMAynBD0tsq4ck1H2EpSj7jR7WD3u6zI8EoH9bt
+ 2YY/ySb0qCgrGwkZmqXr7aJsBVLNdHQTPS8QC/6QM7GJQQO41cpeTnqYX9Oh/7SAJ7LA9RUxX
+ 0mKGDH2jIQ/wKp7VbJFZfPgjmmTTWU29WovPNh5TW8lebBGea5+744t9Fd2v6QWx2CRtNiksn
+ 2lrpSSrGkCviH+/QqdftZhaLGLze2Uut4gS+FraE7EXTijUXUCqcoQgiVfBtd1lt9gfdNtE6g
+ Aw8SrMwhBGqoWvbjr9habwX6mJokwpuFILaD/u8LpSNeSFcssnuGhhMeaPfoDicOSB1Oh1CMn
+ rMx2qrlkaP+jZmnlnJxHCQPcvSdvSOBRZXOOVleevoQwvWSn9Aj6moNKXhTCZ6m+2+bdGpI0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293221>
 
-Hi Andrew
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-sorry, I only noticed your request this morning...
+--8323329-1835063548-1462172469=:9313
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-On 22/04/16 07:00, Andrew Schwartzmeyer wrote:
-> This was disabled in the original implementation, probably because it
-> does not work if the __git_ps1 function is single-quoted. However, if
-> you double-quote per the updated documentation, you can have colors in
-> your custom Git prompt function, no problem.
->
-> Signed-off-by: Andrew Schwartzmeyer <andrew@schwartzmeyer.com>
-> ---
->   contrib/completion/git-prompt.sh | 12 ++++++------
->   1 file changed, 6 insertions(+), 6 deletions(-)
->
-> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-> index f18aedc73..ffe79168c 100644
-> --- a/contrib/completion/git-prompt.sh
-> +++ b/contrib/completion/git-prompt.sh
-> @@ -12,8 +12,8 @@
->   #        source ~/.git-prompt.sh
->   #    3a) Change your PS1 to call __git_ps1 as
->   #        command-substitution:
-> -#        Bash: PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
-> -#        ZSH:  setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
-> +#        Bash: PS1="[\u@\h \W$(__git_ps1 ' (%s)')]\$ "
-> +#        ZSH:  setopt PROMPT_SUBST ; PS1="[%n@%m %c$(__git_ps1 ' (%s)')]\$ "
+Hi G=C3=A1bor,
 
-I haven't tested this at all, but when using double quotes, you need to 
-at least check all the escapings, like \$ should probably be: \\\$ when 
-used in double quotes.
+On Sun, 1 May 2016, SZEDER G=C3=A1bor wrote:
 
->   #        the optional argument will be used as format string.
->   #    3b) Alternatively, for a slightly faster prompt, __git_ps1 can
->   #        be used for PROMPT_COMMAND in Bash or for precmd() in Zsh
-> @@ -82,8 +82,9 @@
->   #
->   # If you would like a colored hint about the current dirty state, set
->   # GIT_PS1_SHOWCOLORHINTS to a nonempty value. The colors are based on
-> -# the colored output of "git status -sb" and are available only when
-> -# using __git_ps1 for PROMPT_COMMAND or precmd.
-> +# the colored output of "git status -sb". If you are using your own
-> +# PROMPT_COMMAND function, you must use double-quotes when calling
-> +# __git_ps1, e.g. PS1="$(__git_ps1 '%s ')".
->   #
->   # If you would like __git_ps1 to do nothing in the case when the current
->   # directory is set up to be ignored by git, then set
-> @@ -499,8 +500,7 @@ __git_ps1 ()
->
->   	local z="${GIT_PS1_STATESEPARATOR-" "}"
->
-> -	# NO color option unless in PROMPT_COMMAND mode
-> -	if [ $pcmode = yes ] && [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
-> +	if [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
->   		__git_ps1_colorize_gitstring
->   	fi
->
->
+> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> index 38321d19efbe..454d896390c0 100755
+> --- a/t/t5510-fetch.sh
+> +++ b/t/t5510-fetch.sh
+> @@ -682,6 +682,7 @@ test_expect_success 'fetching with auto-gc does not l=
+ock up' '
+>  =09(
+>  =09=09cd auto-gc &&
+>  =09=09git config gc.autoPackLimit 1 &&
+> +=09=09git config gc.autoDetach false &&
+>  =09=09GIT_ASK_YESNO=3D"$D/askyesno" git fetch >fetch.out 2>&1 &&
+>  =09=09! grep "Should I try again" fetch.out
+>  =09)
 
-The original reason for not using colors in command substitution mode 
-was that the prompt string length was not calculated correctly by bash 
-and it messed up the commandline with very long commands (relative to 
-the terminal width), when browsing the command history.
-However I think I've seen this effect even with the new code, but I've 
-never dug into this.
+Sounds good to me.
 
-Cheers
+Alternatively, we could consider passing `-c gc.autoDetach=3Dfalse` instead=
+,
+to limit the scope. I am not insisting on it, of course ;-)
 
-Simon
+Ciao,
+Dscho
+--8323329-1835063548-1462172469=:9313--
