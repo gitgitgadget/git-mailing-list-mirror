@@ -1,130 +1,75 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 74/83] builtin/apply: make try_create_file() return -1 on error
-Date: Mon, 2 May 2016 14:01:13 -0400
-Message-ID: <CAPig+cQsS7x2qb8SphaAgdfpCLBQ-z=joL3w8RZH0HC9xRG54g@mail.gmail.com>
-References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
-	<1461504863-15946-75-git-send-email-chriscool@tuxfamily.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] xdiff: implement empty line chunk heuristic
+Date: Mon, 2 May 2016 14:02:31 -0400
+Message-ID: <20160502180231.GA8812@sigill.intra.peff.net>
+References: <CA+P7+xoqn3fxEZGn02ST1XV-2UpQGr3iwV-37R8pakFJy_9n0w@mail.gmail.com>
+ <20160420041827.GA7627@sigill.intra.peff.net>
+ <xmqqa8kcxip9.fsf@gitster.mtv.corp.google.com>
+ <CA+P7+xpFCBU1xYbtcX8jtmDDyY8p0CiJJ=bexTmi=_vwWRZi0Q@mail.gmail.com>
+ <xmqqwpngukin.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kZu=keNaCbt4T=CzH3i9qr+BxXw6AiWR-q1Cs4U80Jzng@mail.gmail.com>
+ <1461969582.731.1.camel@intel.com>
+ <CAGZ79kYx22oYobPxMkC03fGk-E9zaZZd2f+qafESkhcmFog7-w@mail.gmail.com>
+ <1461970113.731.3.camel@intel.com>
+ <xmqqfuu0uzn7.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 02 20:01:19 2016
+Content-Type: text/plain; charset=utf-8
+Cc: "Keller, Jacob E" <jacob.e.keller@intel.com>,
+	"sbeller@google.com" <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"jacob.keller@gmail.com" <jacob.keller@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 02 20:02:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axI9m-0001Ds-Bx
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 20:01:18 +0200
+	id 1axIB4-0001pK-Of
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 20:02:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754748AbcEBSBO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 14:01:14 -0400
-Received: from mail-ig0-f193.google.com ([209.85.213.193]:35826 "EHLO
-	mail-ig0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754672AbcEBSBO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 14:01:14 -0400
-Received: by mail-ig0-f193.google.com with SMTP id fn8so10930272igb.2
-        for <git@vger.kernel.org>; Mon, 02 May 2016 11:01:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=BFwRXK/69GMSXt4pXxBlRhDfSdT6BrZ6AORbvR11uZo=;
-        b=epS97mf6kAN7qny0Ph2X/74u4cUTXxaiHvYSIpbLZou8j3+U7iWI+QxO6tJqxfbX0T
-         RaNxkGjrIL3svSc3LLmNvjnef8klQaYzdUCbDfuQgg3yI4fixB09rhs7/MNz7PevoSOH
-         X0fkEi6t5nmbGfmWth+4JZf2j5WKT/XHAHvWLA9UkS3yptAfReOdEjJhe3t6s4DEZrjY
-         OEbgnfERIvYmrnILKapPQiKwT6VhYHOR+reYC81gTVUZXeHrnL0ZcZoifUd1b+a0CuK8
-         hi+RmDx4lWUb4sSIbq9YUGYbQR66hjWsxWTUhOHT1O2BsR4Rx6XwW14nzX/0Y+eJdF48
-         K/sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=BFwRXK/69GMSXt4pXxBlRhDfSdT6BrZ6AORbvR11uZo=;
-        b=T0/TLax1sl3kk+58W558+7zG0EIdSR54S5E8rvTjLZrrOv3ImK+3zqyHi208Xld4Bm
-         irgWt1ypZEngBvIPHlZgPeOTCTdeCk1/M6yr4oki6QSCPqtzow9NTu7ZW8RXWEJdxxWq
-         C53Qba7Wxp7RHTCz4OHBfET4gq9UFjtYSlgAGA1xYx8d8KQ8bhVEcnByjTHBUrJ7R7Qd
-         eYTpTjkIKCAsxvlP+z4cZCIJnn74CT3HlqoYH/WELgVREL5PauOD6mb3MHZ21pK10m11
-         ihCQ6lhKps75sHzpkiq3kCpJz5gqoIappRGy4HRx/Hd+WBA6j7FbQGN6sr3GWrkFhYsI
-         L5VA==
-X-Gm-Message-State: AOPr4FWx7lpEJOxfnOybe3giUNlA3ofT6e0R05GbEXlPrvXSEuDWhrYhIle4Of2AUhyRSPRjde/urZWcP2Cmng==
-X-Received: by 10.50.3.105 with SMTP id b9mr19067902igb.17.1462212073124; Mon,
- 02 May 2016 11:01:13 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Mon, 2 May 2016 11:01:13 -0700 (PDT)
-In-Reply-To: <1461504863-15946-75-git-send-email-chriscool@tuxfamily.org>
-X-Google-Sender-Auth: szkJYfh3TCbPr4qdt0Ptl-5_8no
+	id S1754376AbcEBSCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 14:02:36 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60419 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753818AbcEBSCe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 14:02:34 -0400
+Received: (qmail 6551 invoked by uid 102); 2 May 2016 18:02:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 May 2016 14:02:34 -0400
+Received: (qmail 16860 invoked by uid 107); 2 May 2016 18:02:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 May 2016 14:02:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 May 2016 14:02:31 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqfuu0uzn7.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293254>
 
-On Sun, Apr 24, 2016 at 9:34 AM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
-> diff --git a/builtin/apply.c b/builtin/apply.c
-> @@ -4145,28 +4151,32 @@ static int try_create_file(const char *path, unsigned int mode, const char *buf,
->         fd = open(path, O_CREAT | O_EXCL | O_WRONLY, (mode & 0100) ? 0777 : 0666);
->         if (fd < 0)
-> -               return -1;
-> +               return 1;
->
->         if (convert_to_working_tree(path, buf, size, &nbuf)) {
->                 size = nbuf.len;
->                 buf  = nbuf.buf;
->         }
-> -       write_or_die(fd, buf, size);
-> +
-> +       if (!write_or_whine_pipe(fd, buf, size, path)) {
-> +               strbuf_release(&nbuf);
-> +               return -1;
+On Mon, May 02, 2016 at 10:40:28AM -0700, Junio C Hamano wrote:
 
-This is leaking 'fd'.
+> "Keller, Jacob E" <jacob.e.keller@intel.com> writes:
+> 
+> > True. I think the chances that it needs such a thing are quite minor,
+> > and if an undocumented knob gets exposed it would have to become
+> > documented and maintained, so I'd prefer to avoid it. Given that the
+> > risk is pretty small I think that's ok.
+> 
+> OK, then let's do only the "documentation" part.
+> 
+> -- >8 --
+> Subject: [PATCH] diff: undocument the compaction heuristic knobs for experimentation
+> 
+> It seems that people around here are all happy with the updated
+> heuristics used to decide where the hunks are separated.  Let's keep
+> that as the default.  Even though we do not expect too much trouble
+> from the difference between the old and the new algorithms, just in
+> case let's leave the implementation of the knobs to turn it off for
+> emergencies.  There is no longer need for documenting them, though.
 
-> +       }
->         strbuf_release(&nbuf);
->
->         if (close(fd) < 0)
-> -               die_errno(_("closing file '%s'"), path);
-> +               return error(_("closing file '%s': %s"), path, strerror(errno));
->         return 0;
->  }
->
-> @@ -4208,12 +4227,15 @@ static void create_one_file(struct apply_state *state,
->                 for (;;) {
->                         char newpath[PATH_MAX];
->                         mksnpath(newpath, sizeof(newpath), "%s~%u", path, nr);
-> -                       if (!try_create_file(newpath, mode, buf, size)) {
-> +                       res = try_create_file(newpath, mode, buf, size);
-> +                       if (!res) {
->                                 if (!rename(newpath, path))
->                                         return;
->                                 unlink_or_warn(newpath);
->                                 break;
->                         }
-> +                       if (res < 0)
-> +                               exit(1);
+I agree with this reasoning. Thanks.
 
-Two issues:
-
-Getting the error case out of the way early (moving this 'if' just
-after 'res=...') would make it easier to reason about the remaining
-logic.
-
-It's already difficult to understand what the below 'errno' check is
-testing. try_create_file(), rename(), or unlink_or_warn()? Plopping
-this new error handling conditional in front of it divorces the
-'errno' check even further from whatever it is testing.
-
->                         if (errno != EEXIST)
->                                 break;
->                         ++nr;
+-Peff
