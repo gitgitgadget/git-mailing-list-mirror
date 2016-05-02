@@ -1,85 +1,106 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] Git v2.8.2
-Date: Mon, 02 May 2016 11:19:57 -0700
-Message-ID: <xmqqpot4tj8y.fsf@gitster.mtv.corp.google.com>
-References: <xmqq7ffgvzpn.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1604301749590.9313@virtualbox>
+Subject: Re: [PATCH 01/41] usage.c: move format processing out of die_errno()
+Date: Mon, 02 May 2016 11:26:02 -0700
+Message-ID: <xmqqlh3stiyt.fsf@gitster.mtv.corp.google.com>
+References: <1462101297-8610-1-git-send-email-pclouds@gmail.com>
+	<1462101297-8610-2-git-send-email-pclouds@gmail.com>
+	<CAPig+cQhQ2C-gOuQwJ9RBXM7HBBJkWORfRkq-t-PY=vvxgAonA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, git-for-windows@googlegroups.com,
-	Linux Kernel <linux-kernel@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: linux-kernel-owner@vger.kernel.org Mon May 02 20:20:29 2016
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon May 02 20:26:15 2016
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1axISI-0001iV-Kx
-	for glk-linux-kernel-3@plane.gmane.org; Mon, 02 May 2016 20:20:26 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1axIXs-0004Qt-ER
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 20:26:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754924AbcEBSUL (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 2 May 2016 14:20:11 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53532 "EHLO
+	id S1754958AbcEBS0J convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 May 2016 14:26:09 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50589 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754806AbcEBSUA (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 2 May 2016 14:20:00 -0400
+	with ESMTP id S1754781AbcEBS0G convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 May 2016 14:26:06 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 58FE116944;
-	Mon,  2 May 2016 14:19:59 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E918216A8C;
+	Mon,  2 May 2016 14:26:04 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=oVZkQ7BSxmuzJzpQD/yepYtsGRE=; b=SUusw3
-	oUwPPeESefNLSDW1rDn7GyYvU0vHw4BK3ukz6E3ZmCceQf/XsXMAofAuocdDO813
-	Xsu7dS4kKE/JYZQstwyF/CniN2wTB4hnNpDi6eGFbY+qrkAfnEBYdbieOQPn8vt+
-	TA4atOq+eQNwESQwsSlgCCwjt15NCKR+8P110=
+	:content-type:content-transfer-encoding; s=sasl; bh=QRGknIifYD6D
+	x5Acsn8OoVOpsSU=; b=b2I9CBQKBKRTSw6AvwnW3ohKEMBobS9MiNSPVK7YF4Nh
+	NsciUMuJe86QVACaGYaESTAJPNG0uhYs6RYdsojsstAgnb9yvh7cbxczHheS3JlU
+	sUH3OU1nuhRbi9l2nhjCGUMboz7Fdzsl+KCS0H4i0slGyh2PAKoqFRj0JOzgtOU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SHziwpJ6Ds69YJTZQ0sISk3kQFZOMKx3
-	uwiF25YiVenNOUsiBEoRUpDKN/EofaXOd3JBZec+8yrPAeoEXke8y4SYchcVvKA+
-	u80j+uMp1JeEVdyD7Ty9AZeoQd7OJGRDapqbHQlX+4CtJlfUgIBddEC2MNw26Qsb
-	E31tD5ZFkuY=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=K4qhTJ
+	xiRfB0PQ9SbCmWtgiza9AMhduWEwSg3BmWfALJa/YSIO3lgOWflS1nkA0kDoMGLY
+	TwqQI4RN65FUEP6l/HkiCG/9x/ozoQ3ZsOXkbVmYdpMEwvjesxgkStuO82S7uCzg
+	0zrDnmB30MN0XUA1h+7eq0/LzchMPj5MWGriQ=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 51B3016943;
-	Mon,  2 May 2016 14:19:59 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E014116A8A;
+	Mon,  2 May 2016 14:26:04 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BEA3416942;
-	Mon,  2 May 2016 14:19:58 -0400 (EDT)
-Importance: high
-In-Reply-To: <alpine.DEB.2.20.1604301749590.9313@virtualbox> (Johannes
-	Schindelin's message of "Sat, 30 Apr 2016 18:01:40 +0200 (CEST)")
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4DE5016A89;
+	Mon,  2 May 2016 14:26:04 -0400 (EDT)
+In-Reply-To: <CAPig+cQhQ2C-gOuQwJ9RBXM7HBBJkWORfRkq-t-PY=vvxgAonA@mail.gmail.com>
+	(Eric Sunshine's message of "Sun, 1 May 2016 14:23:34 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7A811122-1092-11E6-A87B-D05A70183E34-77302942!pb-smtp2.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+X-Pobox-Relay-ID: 5461C6DE-1093-11E6-AB31-D05A70183E34-77302942!pb-smtp2.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293262>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293263>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> ... However, I
-> decided to delay the release for a couple of days, for a couple of
-> reasons:
+> On Sun, May 1, 2016 at 7:14 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc=
+ Duy <pclouds@gmail.com> wrote:
+>> fmt_with_err() will be shared with the coming error_errno() and
+>> warning_errno().
+>>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+>> ---
+>> diff --git a/usage.c b/usage.c
+>> @@ -109,19 +109,12 @@ void NORETURN die(const char *err, ...)
+>> -void NORETURN die_errno(const char *fmt, ...)
+>> +static const char *fmt_with_err(const char *fmt)
+>>  {
+>> -       va_list params;
+>> -       char fmt_with_err[1024];
+>> +       static char fmt_with_err[1024];
 >
-> - I expect an update of the Git Credential Manager in the next few days.
+> Rather than this static buffer, did you consider having the caller
+> pass in the buffer?
 >
-> - OpenSSL is slated to receive critical updates on Tuesday and I plan to
->   incorporate these into Git for Windows' next version, too.
+>     static const char *fmt_with_err(char *buf, size_t n, const char *=
+fmt)
+>     {
+>         ...
+>         snprintf(buf, n, "%s: %s", fmt, str_error);
+>         return buf;
+>     }
 >
-> I will also use version 2.8.2 as an excuse to ship with support for the
-> extra HTTP headers configured via `http.extraheader`, which I hoped to
-> get into Git v2.8.2, too, because I'd like the feature to be available on
-> Linux and MacOSX, too.
+>     void die_errno(const char *fmt, ...)
+>     {
+>         char fmtbuf[1024];
+>         ...
+>         die_routine(fmt_with_err(fmtbuf, sizeof(fmtbuf), fmt),
+>             params);
+>         ...
+>     }
+>
+> Better? Worse? Indifferent?
 
-I am not sure if a new feature should go to the maintenance tracks.
+Caller supplied buffer would be the way to go when multiple threads
+could be showing errors and warnings, right?
 
-> In short: the tentative release date of Git for Windows v2.8.2 is
-> Tuesday, May 3rd, 2016.
-
-Thanks.  I do not think there is anything ultra-urgent in 2.8.2
-relative to 2.8.1, and synchronizing your release with the need on
-the Windows platform side sound very sensible.
+It would not make too much of a difference for die(), though.
