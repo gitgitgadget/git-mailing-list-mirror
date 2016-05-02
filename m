@@ -1,128 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] trailer: load config to handle core.commentChar
-Date: Mon, 02 May 2016 11:13:39 -0700
-Message-ID: <xmqqy47stjjg.fsf@gitster.mtv.corp.google.com>
-References: <1461873658-11394-1-git-send-email-rafalklys@wp.pl>
-	<CAPig+cT=Ca+Jd_SN_SM=iOmLnYtAt82dW7ammW4-AKdRReFfPA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv5 0/2] Implement the GIT_TRACE_CURL environment variable
+Date: Mon, 2 May 2016 14:13:47 -0400
+Message-ID: <20160502181347.GB8439@sigill.intra.peff.net>
+References: <20160502142813.50868-1-gitter.spiros@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Rafal Klys <rafalklys@wp.pl>, Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon May 02 20:13:50 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, tboegi@web.de, ramsay@ramsayjones.plus.com,
+	gitster@pobox.com, sunshine@sunshineco.com
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 02 20:13:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axILs-0006wQ-PC
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 20:13:49 +0200
+	id 1axILy-0006zK-TV
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 20:13:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754786AbcEBSNp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 14:13:45 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61320 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754913AbcEBSNn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 14:13:43 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id EC26216861;
-	Mon,  2 May 2016 14:13:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DxGpllEoSjN54oEs4KA3hIfurks=; b=pqZzxX
-	13bKCtakfIiPwyeMX2Son7/orYC+lQY/MVTyZhSHCOkI3G4BXkjFzSuSX2zomhTI
-	Dm+1K8Nu9MuSrceOI7nxLgqw+V3Fh1kRGfi4T1FNGysPuzW3zKPI3WM01Ocrngaw
-	het7YlS00PhIma3AKxo54/MriyhaK8M7Q495k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VZ+0PQ4XKMQqpRJcLt3HEA8mSZi4cc8z
-	7HoWUxMYvompKbwCygIsEy0BLtELPBrfr7htDoL5l0ZgqURSVpJwDaCPd+EIPQ1+
-	y8FmGZgtK5Ky6HiY/SuMb8YpMrRIu66fyYCfRXgj5QQfQ3kkkUdXNq1MS+50Yscw
-	htUk3cpfVzw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id E461116860;
-	Mon,  2 May 2016 14:13:41 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5DA081685F;
-	Mon,  2 May 2016 14:13:41 -0400 (EDT)
-In-Reply-To: <CAPig+cT=Ca+Jd_SN_SM=iOmLnYtAt82dW7ammW4-AKdRReFfPA@mail.gmail.com>
-	(Eric Sunshine's message of "Thu, 28 Apr 2016 17:12:16 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 998EC1D2-1091-11E6-93AD-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1754776AbcEBSNv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 14:13:51 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60444 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754767AbcEBSNu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 14:13:50 -0400
+Received: (qmail 7346 invoked by uid 102); 2 May 2016 18:13:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 May 2016 14:13:49 -0400
+Received: (qmail 17076 invoked by uid 107); 2 May 2016 18:14:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 May 2016 14:14:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 May 2016 14:13:47 -0400
+Content-Disposition: inline
+In-Reply-To: <20160502142813.50868-1-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293258>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On Mon, May 02, 2016 at 02:28:11PM +0000, Elia Pinto wrote:
 
-> In fact, this is such a simple fix that the subject suggested above
-> may itself be a sufficient commit message; any extra text might just
-> be noise since the patch itself contains enough information to
-> understand the problem and the fix.
+> -  redo the authorization header skip with a replace of possible sensitive data. 
+>    We prefer to print only:
+>        09:00:53.238330 http.c:534              => Send header: Authorization:  <redacted>
+>    intested of 
+>        09:00:53.238330 http.c:534              => Send header: Authorization:  Basic(o other scheme) <redacted>
+>    as it was done in the original proposed suggestion by Jeff King. 
+>    This is because i think it's better not to print even the authorization scheme.
 
-Sounds about right.
+I'm not sure I agree. If you're debugging curl's auth selection, that's
+omitting an important piece of data. And unlike the actual credential, I
+don't think it's particularly secret (and in many cases can be deduced
+from the "WWW-Authenticate" header the server sends, coupled with curl's
+code).
 
->> +       git config core.commentChar x &&
->> +       test_when_finished "git config --unset core.commentChar" &&
->
-> The above two lines could be collapsed to:
->
->     test_config core.commentChar x &&
+>    We add also the (previously missing) proxy-authorization case
 
-Yes.
+Good catch.
 
-> As this new test is effectively a copy of the preceding test, another
-> option would be to factor out the common code. For instance:
->
->     test_comment () {
->         cat basic_message >message_with_comments &&
->         sed -e "s/ Z\$/ /" >>message_with_comments <<-EOF &&
->             $1 comment
->         ...
->     }
->
->     test_expect_success 'with message that has comments' '
->         test_comment '#'
->     '
->
->     test_expect_success 'with message that has custom comment char' '
->         test_config core.commentChar x &&
->         test_comment x
->     '
->
-> Note that the backslash is dropped from -\EOF so that $1 can be
-> interpolated into the here-doc.
->
-> Such a re-factoring would be done as a preparatory patch, thus making
-> this a two-patch series, however, it's probably not worth it for only
-> two tests sharing common code. (Although, the following test is also
-> nearly identical...)
+> In this series i keep the original curl_dump parsing code, even though it is 
+> objectively difficult to read. This is because the same code is used internally by curl 
+> to do "ascii-trace" and is also reported in the libcurl code examples and test. 
+> I think this may make maintenance of code easier in the future (libcurl 
+> new dev, new features and so on) 
 
-This certainly does make the result easier to read through.
+I don't agree with this line of reasoning. The code in question is
+purely about how we format the output buffer, not about parsing what
+curl gives us. We _should_ be diverging if we prefer a different output
+format. And I don't think it's a question just of readability (though I
+do agree the existing one is hard to read); it also foils the redaction
+of the authorization header.
 
->> diff --git a/trailer.c b/trailer.c
->> @@ -483,7 +483,8 @@ static int git_trailer_default_config(const char *conf_key, const char *value, v
->>         const char *trailer_item, *variable_name;
->>
->>         if (!skip_prefix(conf_key, "trailer.", &trailer_item))
->> -               return 0;
->> +               /* for core.commentChar */
->> +               return git_default_config(conf_key, value, cb);
->
-> I'm a bit torn about this comment. On the one hand, it does add a bit
-> of value since it's not obvious at a glance what config from the
-> default set is needed by git-trailer, however, if git-trailer someday
-> takes advantage of some additional config from the default set, then
-> this comment will likely become outdated.
-
-This is a very good point.
-
-"I wanted the call here for core.commentChar" is better said in the
-log message, as that will not stay true forever, as other people
-will start depending on being able to access other variables and
-generally they would not go back to read this message (to update
-it).
+-Peff
