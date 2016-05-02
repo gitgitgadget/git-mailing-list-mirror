@@ -1,88 +1,86 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 03/14] upload-pack-2: Implement the version 2 of upload-pack
-Date: Mon, 2 May 2016 10:51:36 -0700
-Message-ID: <CAGZ79kavBUohoMcC3iEws5mVBQ6HZsR=HyBoxM1jxUVJ6Z1jkA@mail.gmail.com>
-References: <1461972887-22100-1-git-send-email-sbeller@google.com>
-	<1461972887-22100-4-git-send-email-sbeller@google.com>
-	<1462210997.4123.49.camel@twopensource.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 19/29] refs: don't dereference on rename
+Date: Mon, 02 May 2016 10:55:58 -0700
+Message-ID: <xmqq7ffcuyxd.fsf@gitster.mtv.corp.google.com>
+References: <cover.1461768689.git.mhagger@alum.mit.edu>
+	<27f8b223e42dcf1cf3c010833e0aff7baa4559c2.1461768690.git.mhagger@alum.mit.edu>
+	<xmqqy47y98zx.fsf@gitster.mtv.corp.google.com>
+	<57230F71.2020401@alum.mit.edu>
+	<1461972108.4123.43.camel@twopensource.com>
+	<57242B22.4050202@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Mon May 02 19:51:42 2016
+Content-Type: text/plain
+Cc: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon May 02 19:56:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axI0T-0005GQ-Q9
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 19:51:42 +0200
+	id 1axI4n-0007LM-KH
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 19:56:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754693AbcEBRvi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 13:51:38 -0400
-Received: from mail-io0-f174.google.com ([209.85.223.174]:32785 "EHLO
-	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754678AbcEBRvh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 13:51:37 -0400
-Received: by mail-io0-f174.google.com with SMTP id f89so175004584ioi.0
-        for <git@vger.kernel.org>; Mon, 02 May 2016 10:51:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=25/3uREYnuvKI6ofJs2faXm/GW3itPh3BFlcF3RHiPQ=;
-        b=ZDEoX8EKDZAwCWO52EQltfL+rnWKe7s7BS6RaBx2qKUfGiQ02pfoXBvkMRXwRR7SKK
-         2fTzm7EHIOzx3dTi1LbXb04f2D5kCCzbsw74NORvzuTPrFAw+IpzOY9jqXS9CSsCxffp
-         xinuqp72hBe9D04SvxAFUXrEMvPRFxCHdznRqTzeD6FyfWTnrxjn6W70TnzxdCJ0fSHP
-         KouRr/HbSE/u7PJJjheFhrY0G3q+b444t940wthKriMv+/aipts44aQDILQ/Nga1Dbh1
-         1lbW0qvG9KTMASb+8Cat0kBTa/rxx2s3Klc1jQSdaXOPaRwU/95vwCkvPxzXucYy9ZTH
-         JOLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=25/3uREYnuvKI6ofJs2faXm/GW3itPh3BFlcF3RHiPQ=;
-        b=jbRo3XgleEqXOmqWBZ8HGuPXdcGDYZENdaGi/IL3RCPCu8g+X9fvTU7IRshi144nyW
-         m8NosixeI6j+lRhJQTRHU3FQEDXpo5gifBitqRSx7QYQI8a+QRSD4+f2FKMlJek196Lv
-         ElsMt659g9YUl31H3gaYLRQWQwQmKbd9xIaaqFSbyI/xfsymPLlQvrDhGW+vX0rb3Bg2
-         2Ifb4/pglO4Wa285t4gkNrvy0aRt0hFObnJpCJiN+wv7X9g44BtSRsQldoJ4R/1UgKoW
-         zVKsyuFUn8c88+sN3Fn0Tr/dHxhnUyz4bnTBnRKv0OTIv5D4ZRplvFyiDelFQg3LoTCb
-         oFZg==
-X-Gm-Message-State: AOPr4FUBhhD79vMrnn1QlszNdKYiQH3F0ahbQJZqQCs4XWI1LFeF991ATCut1db9Q5Mdwq5IM6+v+dJhJHUL87OG
-X-Received: by 10.107.53.204 with SMTP id k73mr5893719ioo.174.1462211496266;
- Mon, 02 May 2016 10:51:36 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Mon, 2 May 2016 10:51:36 -0700 (PDT)
-In-Reply-To: <1462210997.4123.49.camel@twopensource.com>
+	id S1754659AbcEBR4G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 13:56:06 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60623 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753818AbcEBR4D (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 13:56:03 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5BD4F16551;
+	Mon,  2 May 2016 13:56:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0zIzDfFgZJ4SriJ8JjNpyYeV+qg=; b=XW+zuN
+	qny3WzcaiFy2OOeGlhRFsJ+7r0srg4oXvYtjyBFVoTD/7fxX7eez9iuG9HUUoNg8
+	tg2qPsUuKbVr/wJnczqj9PMF3nuwJevvOgLN4HDwXwyreY3ee4RA+HvjYl+ZAK8D
+	st97omAjLJ//mf7xVWmT0OQbVQNCEh8VY/x64=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AoDf+wLyeDnWFKddRWlwWKss2NmsgQ+E
+	r6FVU/ruMpjqNCbXlIeIQohPNaiTpOrZldjoCtSPmyHDT4BxPR2Bt/V4+TbEZJos
+	GycsU6mvqSd951cpCL8Fws9gttE4IFuMdLYyrKGE6SFOx87AEhptm/uTaGU9QjgQ
+	XXisafzeYwo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0E05E16550;
+	Mon,  2 May 2016 13:56:01 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 267B61654E;
+	Mon,  2 May 2016 13:56:00 -0400 (EDT)
+In-Reply-To: <57242B22.4050202@alum.mit.edu> (Michael Haggerty's message of
+	"Sat, 30 Apr 2016 05:48:50 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 210EC308-108F-11E6-B634-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293252>
 
-On Mon, May 2, 2016 at 10:43 AM, David Turner <dturner@twopensource.com> wrote:
-> On Fri, 2016-04-29 at 16:34 -0700, Stefan Beller wrote:
->> In upload-pack-2 we send each capability in its own packet buffer.
->> The construction of upload-pack-2 is a bit unfortunate as I would
->> like
->> it to not be depending on a symlink linking to upload-pack.c, but I
->> did
->> not find another easy way to do it. I would like it to generate
->> upload-pack-2.o from upload-pack.c but with '-DTRANSPORT_VERSION=2'
->> set.
->
-> Couldn't we check argv[0] and use that to determine protocol?  Then we
-> could symlink executables rather than source code.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-IIRC I proposed a similar thing earlier, i.e.
+> The point is that `read_ref_full()` is now called with
+> `RESOLVE_REF_NO_RECURSE` turned on. So if `newrefname` is a symbolic
+> reference, then `read_ref_full()` sets `sha1` to zeros.
 
-    if (argv[0] ends with 2)
-        do_protocol_v_2(...)
+Yes, that was an obvious rationale in the patch that was not
+explained in the proposed log message (and made me ask you to
+explain it).  I was wondering why this was not loosened
+conditionally (i.e. only pass null_sha1 when symbolic ref is
+involved, in which case you _must_ pass null_sha1 because we no
+longer have anything to compare with).
 
-but that may break (and confuse a lot!) some use cases.
-`git fetch` has the documented --upload-pack switch, so as a server-admin
-you are free to have git-upload-pack linking to
-"git-upload-pack-2.8" but additionally you still have
-"git-upload-pack-1.7" or "git-upload-pack-custom-2".
+Your explanation on the "in all possible interleaving, deletion of
+what might have been updated in the middle by other people does not
+matter" was a sufficient explanation why it does not have to be
+conditional.
 
-so I think we should not do that :(
-I do like to symlink the executables though.
+> I'll document this in v2 of this patch.
+
+Thanks.
