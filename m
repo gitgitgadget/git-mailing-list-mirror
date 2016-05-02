@@ -1,64 +1,61 @@
-From: Eric Wong <e@80x24.org>
-Subject: [PATCH] .mailmap: update to my shorter email address
-Date: Mon,  2 May 2016 19:31:21 +0000
-Message-ID: <20160502193121.29081-1-e@80x24.org>
+From: =?UTF-8?Q?Ren=c3=a9_Nyffenegger?= <mail@renenyffenegger.ch>
+Subject: Re: [PATCH] fix typo 'In such these cases'
+Date: Mon, 2 May 2016 21:41:13 +0200
+Message-ID: <5727AD59.3020905@renenyffenegger.ch>
+References: <572703EC.20405@renenyffenegger.ch>
+ <xmqqa8k8ti0q.fsf@gitster.mtv.corp.google.com>
+ <5727AA7F.70504@renenyffenegger.ch>
+ <xmqqlh3ss14j.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Eric Wong <e@80x24.org>,
-	Eric Wong <normalperson@yhbt.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 02 21:39:05 2016
+X-From: git-owner@vger.kernel.org Mon May 02 21:41:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axJgN-0003eI-8T
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 21:39:03 +0200
+	id 1axJib-0004ds-LF
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 21:41:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932113AbcEBTjA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 May 2016 15:39:00 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:45942 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932107AbcEBTi6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 15:38:58 -0400
-X-Greylist: delayed 449 seconds by postgrey-1.27 at vger.kernel.org; Mon, 02 May 2016 15:38:58 EDT
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D211C2018D;
-	Mon,  2 May 2016 19:31:28 +0000 (UTC)
+	id S1754832AbcEBTlS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 15:41:18 -0400
+Received: from belinda3.kreativmedia.ch ([80.74.158.27]:36728 "EHLO
+	belinda3.kreativmedia.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754680AbcEBTlR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 15:41:17 -0400
+Received: from [192.168.1.122] (214.181.202.62.dynamic.cgnat.res.cust.swisscom.ch [62.202.181.214])
+	by belinda3.kreativmedia.ch (Postfix) with ESMTPSA id E868FBDD8059;
+	Mon,  2 May 2016 21:41:13 +0200 (CEST)
+DomainKey-Signature: a=rsa-sha1;  q=dns; c=nofws;
+  s=default; d=renenyffenegger.ch;
+  b=OBg/sQ6j9E/AXQk3MRQNN6bt5r5OBZXOkDH1oZgruXg/U2jFQWQSQYMeGg0OR3YrJUbzGE+3N79/DeETi9/iy5hdW6i/OPtkW5jxUIPAqY68LqA3cMtgCDLm0a/H3JY+dsvzn1qcHgnZpUD1pdXlTFcyQNxfKThSiTt7yELExVI=;
+  h=Subject:To:References:Cc:From:Message-ID:Date:User-Agent:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <xmqqlh3ss14j.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293278>
 
-=46ollowing f916ab0ccc ("send-email: more meaningful Message-ID"),
-my own email address is too long :x
+> Re substance, I am wondering if "In such a case" might be better, by
+> the way.  That is:
+> 
+>  	A fast-forward is a special type of <<def_merge,merge>> where you have a
+>  	<<def_revision,revision>> and you are "merging" another
+>  	<<def_branch,branch>>'s changes that happen to be a descendant of what
+> -	you have. In such these cases, you do not make a new <<def_merge,merge>>
+> +	you have. In such a case, you do not make a new <<def_merge,merge>>
+>  	<<def_commit,commit>> but instead just update to his
+>  	revision. This will happen frequently on a
+> 
+> It is not like there are multiple variants of "fast-forward"
+> situations, in all of which the HEAD pointer is just moved without
+> creating a new commit.  There is only one variant of "fast-forward".
 
-While I could have an even shorter address by one character with
-"yhbt.net", "80x24.org" is more representative of my
-hacking-related pursuits.
-
-Signed-off-by: Eric Wong <e@80x24.org>
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- .mailmap | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/.mailmap b/.mailmap
-index e5b4126..a9162c0 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -51,6 +51,7 @@ Dirk S=C3=BCsserott <newsletter@dirk.my1.cc>
- Eric Blake <eblake@redhat.com> <ebb9@byu.net>
- Eric Hanchrow <eric.hanchrow@gmail.com> <offby1@blarg.net>
- Eric S. Raymond <esr@thyrsus.com>
-+Eric Wong <e@80x24.org> <normalperson@yhbt.net>
- Erik Faye-Lund <kusmabite@gmail.com> <kusmabite@googlemail.com>
- Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com> <eyvind-git@orakel.n=
-tnu.no>
- Florian Achleitner <florian.achleitner.2.6.31@gmail.com> <florian.achl=
-eitner2.6.31@gmail.com>
---=20
-EW
+That's correct. Your suggestion makes more sense.
+ 
