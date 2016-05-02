@@ -1,85 +1,141 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 0/3] preparatory patches for the submodule groups
-Date: Mon,  2 May 2016 15:24:01 -0700
-Message-ID: <1462227844-10624-1-git-send-email-sbeller@google.com>
+Subject: [PATCH 3/3] submodule init: redirect stdout to stderr
+Date: Mon,  2 May 2016 15:24:04 -0700
+Message-ID: <1462227844-10624-4-git-send-email-sbeller@google.com>
+References: <1462227844-10624-1-git-send-email-sbeller@google.com>
 Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
 To: gitster@pobox.com, Jens.Lehmann@web.de
-X-From: git-owner@vger.kernel.org Tue May 03 00:24:24 2016
+X-From: git-owner@vger.kernel.org Tue May 03 00:24:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axMGH-0003lb-Gy
-	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 00:24:17 +0200
+	id 1axMGQ-0003oe-Oi
+	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 00:24:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755216AbcEBWYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 18:24:12 -0400
-Received: from mail-pf0-f182.google.com ([209.85.192.182]:34435 "EHLO
-	mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755166AbcEBWYM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 18:24:12 -0400
-Received: by mail-pf0-f182.google.com with SMTP id y69so1004391pfb.1
-        for <git@vger.kernel.org>; Mon, 02 May 2016 15:24:11 -0700 (PDT)
+	id S932233AbcEBWYU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 18:24:20 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:33634 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932212AbcEBWYR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 18:24:17 -0400
+Received: by mail-pa0-f52.google.com with SMTP id xk12so1018686pac.0
+        for <git@vger.kernel.org>; Mon, 02 May 2016 15:24:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=6KB9V1Q6ZUHLTZiNnep5WOxNvSRVzMqmhN+BC22G1hg=;
-        b=DaJEqydlm7BoDiXumqoO2ZfomwFXDRkcDorl+SaabA9etC/pgTTBlfN30BuaImYLC8
-         XWg/D/xQxMATMHV/0XN1HAYBrafwYMtpplMBxyftGcByxX3pMW/wpD1Y6u+zlRj729l9
-         TsfJhEWDAAV5+KJG1H60J1r6WV1y5z66ytQZVFq+Hxwsx/spsd/fQ95r5WhjoqF/EEZM
-         t+XT2bDDn2kwvxZC/jA9BsGiksINRQAs+IfSCxakN46mCeaMGNmLDhbDUl51wHTo6DFn
-         yM6TmoDRmF6ayvyr3Vh4AKPQL01G47dbdLhPnAAn6Zqd1uFnsUEdsVP+tVRim7+JOQHN
-         ZgUA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=dTytx0Vh4/26P3KgUeR0TlokNHk1ZunPHG8M2hpArG4=;
+        b=LjF1QnWhTqN4ZOJnbLwOzVf9G2mRzoRCLK3N3LplzqskFWI4R2jySodWI2sHcS3vCH
+         9f4g3P8kw3HETBm0fRtMNv132+AOYPnXTRv6jpWAGTMyrdKy8EqKzC+p+qOVmKEc7CO7
+         prkRFUESRe3Vmkb8ihE6VU2QzpWi7uwJQxkNqXXQjbgE1PTtpOEQ1OZBuHN3MyAGCxYS
+         Vu8WEjePIoOdWDEQFYOQQRNNf5tzWUbOG24GzoiNlkrMt6nNmoRDY6DzUD8R+Lwb/lCH
+         v2Osvi/sIdGpBAOkhhPWC9kRR/fUcsFs3GsBiARb0VanNdInVM4RRlt0TKYuILslQXcA
+         Cbnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=6KB9V1Q6ZUHLTZiNnep5WOxNvSRVzMqmhN+BC22G1hg=;
-        b=BjEDshJR5tKonm+yczv4b3sy4vGohwt3Py1BhbTtqM8z9N8t+t+/eFep7UIWI5rZCY
-         qAyK4HKtAOAkCop3aLML2l6IbV3sGkoqGKz7JgHClm18NsJm4Nrz2CA0F3DBPmoV4uM2
-         IKRW02IBnBWERAaNjvxqDbKZoDLuAC+HMukqHpkvIKJT5S7v6+aEwXKhojtZTRRspSEN
-         rJbaWoRPuOd3LCmNDse1YnywjW5gHkTsRJ0pmzKTTGei14+rMZ5E6HitSWxViOTrDw4u
-         6+DsNwcPdyhJC0mwwTx3YE8NGbv71JQRZ3Sr3SeA5mv5y1lOJYmu9a26EjY1UuLOa2g0
-         YBWA==
-X-Gm-Message-State: AOPr4FUOTw3gE6Ljz9SlM6uTBCljt71zKNf+YWbUUdaphWNDQ91DvVS6eQuTJm1D4kcKY2NI
-X-Received: by 10.98.9.83 with SMTP id e80mr55282239pfd.34.1462227850932;
-        Mon, 02 May 2016 15:24:10 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=dTytx0Vh4/26P3KgUeR0TlokNHk1ZunPHG8M2hpArG4=;
+        b=FOyagKVMYqPFrxp9CkCvAlt3ReOUQFG3TB1/iLN0W6nq2xSggR0Ci1IR7OvExs27oS
+         mIILZDBJ/DvDAfG8hBbFWrAmt8ah+uKt5xGAQZS9UlaEq6TxJOXSHHmkIB5joLV4q3bv
+         dwkioegjdL032hQ/mIx1VSGRxrElhAkm0i7w2S6vEeqadoyYuEbipLH0M4FF8BYPB4o1
+         rsC9M0VPDgJaS11RxiCFV7myTnbUWE7fuTEovwcwhZI5mYKWDGcausUjjuByofoar7ML
+         3d/Hy6T1CqlJEDDiM5qGPlnsaG8YVnNpU9cgvmA3Tt+QhmTZbkLX+rGJ+2oVIJvoHoGY
+         E7Vg==
+X-Gm-Message-State: AOPr4FV7DfvfDAJBcyYui5thrfpokMggjDB+ifdJ3qa9hQqEyz0+eSk9dklWr6U58BSLEdKo
+X-Received: by 10.66.229.33 with SMTP id sn1mr55430635pac.49.1462227856377;
+        Mon, 02 May 2016 15:24:16 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:9831:74f0:67fd:61ba])
-        by smtp.gmail.com with ESMTPSA id d184sm295656pfc.27.2016.05.02.15.24.10
+        by smtp.gmail.com with ESMTPSA id dr4sm288348pac.11.2016.05.02.15.24.14
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 02 May 2016 15:24:10 -0700 (PDT)
+        Mon, 02 May 2016 15:24:14 -0700 (PDT)
 X-Mailer: git-send-email 2.8.0.37.gb114fff.dirty
+In-Reply-To: <1462227844-10624-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293297>
 
-These patches build on top of origin/sb/submodule-init and are preparatoy for
-the submodule groups series. Junio asked to send these preparatory patches
-as its own series to have a better mental focus when reviewing the groups
-series later.
+Reroute the output of stdout to stderr as it is just informative
+messages, not to be consumed by machines.
 
-When sending out a similar series end of last week[1], I went to far and included
-some questionable patches in the series, this series is about the minimum needed.
-(patch 1 is a test suite correctness patch, which would not be strictly needed)
+This should not regress any scripts that try to parse the
+current output, as the output is already internationalized
+and therefore unstable.
 
-Thanks,
-Stefan
+We want to init submodules from the helper for `submodule update`
+in a later patch and the stdout output of said helper is consumed
+by the parts of `submodule update` which are still written in shell.
+So we have to be careful which messages are on stdout.
 
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/293087
-
-Stefan Beller (3):
-  submodule deinit test: fix broken && chain in subshell
-  submodule deinit: lose requirement for giving '.'
-  submodule init: redirect stdout to stderr
-
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
  builtin/submodule--helper.c |  3 ++-
- git-submodule.sh            |  5 -----
- t/t7400-submodule-basic.sh  |  7 +++++--
  t/t7406-submodule-update.sh | 24 ++++++++++++++++++------
- 4 files changed, 25 insertions(+), 14 deletions(-)
+ 2 files changed, 20 insertions(+), 7 deletions(-)
 
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 5d05393..7f0941d 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -366,7 +366,8 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+ 			die(_("Failed to register url for submodule path '%s'"),
+ 			    displaypath);
+ 		if (!quiet)
+-			printf(_("Submodule '%s' (%s) registered for path '%s'\n"),
++			fprintf(stderr,
++				_("Submodule '%s' (%s) registered for path '%s'\n"),
+ 				sub->name, url, displaypath);
+ 	}
+ 
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index fd741f5..5f27879 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -108,24 +108,36 @@ pwd=$(pwd)
+ 
+ cat <<EOF >expect
+ Submodule path '../super': checked out '$supersha1'
+-Submodule 'merging' ($pwd/merging) registered for path '../super/merging'
+-Submodule 'none' ($pwd/none) registered for path '../super/none'
+-Submodule 'rebasing' ($pwd/rebasing) registered for path '../super/rebasing'
+-Submodule 'submodule' ($pwd/submodule) registered for path '../super/submodule'
+ Submodule path '../super/merging': checked out '$mergingsha1'
+ Submodule path '../super/none': checked out '$nonesha1'
+ Submodule path '../super/rebasing': checked out '$rebasingsha1'
+ Submodule path '../super/submodule': checked out '$submodulesha1'
+ EOF
+ 
++cat <<EOF >expect2
++Submodule 'merging' ($pwd/merging) registered for path '../super/merging'
++Submodule 'none' ($pwd/none) registered for path '../super/none'
++Submodule 'rebasing' ($pwd/rebasing) registered for path '../super/rebasing'
++Submodule 'submodule' ($pwd/submodule) registered for path '../super/submodule'
++Cloning into '$pwd/recursivesuper/super/merging'...
++done.
++Cloning into '$pwd/recursivesuper/super/none'...
++done.
++Cloning into '$pwd/recursivesuper/super/rebasing'...
++done.
++Cloning into '$pwd/recursivesuper/super/submodule'...
++done.
++EOF
++
+ test_expect_success 'submodule update --init --recursive from subdirectory' '
+ 	git -C recursivesuper/super reset --hard HEAD^ &&
+ 	(cd recursivesuper &&
+ 	 mkdir tmp &&
+ 	 cd tmp &&
+-	 git submodule update --init --recursive ../super >../../actual
++	 git submodule update --init --recursive ../super >../../actual 2>../../actual2
+ 	) &&
+-	test_cmp expect actual
++	test_cmp expect actual &&
++	test_cmp expect2 actual2
+ '
+ 
+ apos="'";
 -- 
 2.8.0.37.gb114fff.dirty
