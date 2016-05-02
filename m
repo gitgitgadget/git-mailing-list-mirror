@@ -1,121 +1,116 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-stash: add flag to skip "git reset --hard"
-Date: Mon, 02 May 2016 15:44:27 -0700
-Message-ID: <xmqqbn4oqdv8.fsf@gitster.mtv.corp.google.com>
-References: <57267BBE.9010707@google.com>
-	<xmqqeg9kti6x.fsf@gitster.mtv.corp.google.com>
-	<5727A6DF.5020204@google.com>
-	<xmqqh9egs04d.fsf@gitster.mtv.corp.google.com>
-	<5727BE65.3040004@google.com>
+Subject: Re: [PATCH v15 7/7] t/t7507: tests for broken behavior of status
+Date: Mon, 02 May 2016 16:07:22 -0700
+Message-ID: <xmqq7ffcqct1.fsf@gitster.mtv.corp.google.com>
+References: <1462046616-2582-1-git-send-email-pranit.bauva@gmail.com>
+	<1462046616-2582-7-git-send-email-pranit.bauva@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Tom Anderson <thomasanderson@google.com>
-X-From: git-owner@vger.kernel.org Tue May 03 00:44:36 2016
+Cc: git@vger.kernel.org, sunshine@sunshineco.com
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 03 01:07:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axMZw-0002JS-2Z
-	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 00:44:36 +0200
+	id 1axMw7-0001XD-GR
+	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 01:07:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755224AbcEBWob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 18:44:31 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57122 "EHLO
+	id S1755256AbcEBXH1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 19:07:27 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54598 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755199AbcEBWob (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 18:44:31 -0400
+	with ESMTP id S1755247AbcEBXH0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 19:07:26 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6214717230;
-	Mon,  2 May 2016 18:44:29 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1491119DE3;
+	Mon,  2 May 2016 19:07:25 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=olzyo+r08oCwoWmK6Vj86wqwOX8=; b=xlhRae
-	HqxFYrd5IYb/iMWJjjKWdbTfyUhF077U4bSKGkB6UZ5DsBT2OdWrxV4s5BwyvSOU
-	EXs4+iUEZiyFwT8xTrdyyKfY0STbX2Ot0MN3ny/djC0O33hdUOC/WXUqY+u0NNUz
-	6LOQ+Y6vADTsHAW2FKcAePloAavqnbyshCMfk=
+	:content-type; s=sasl; bh=peq5hgwh+q9mpzXxOYRo6We0Qlk=; b=VX0xFf
+	XZmxnbpDQ2uOTuz9IV9rsxJx0otrEYaRTRzfSF/JHUSEXXk6tkgTUbobcKebw3Mx
+	F23ZD9grimb5kQvG8Y7DSvgWmJ/lQCuUuzRsZEQ494MJWf3hNxCpAg5fZiGi+sv8
+	iocJQvuxkvOCNdhgSNjaJl89jXdUoZFdAAR90=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KQHG5+agtL58/+WTwPt2CGikjWlcwxao
-	r4tiJ7VDCI25t046wf0Euwbk5uotzPzkPTcaMOf5iIcIIpuMSn9rnhnjt4ODaIOo
-	FRpC/Q0qJsGIrISU08fNK6Lq6TRzsf9nY8ah6rYt6bHHXXx1elr0w7bjzY4AsZFU
-	YTDXQjaNGe0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5ACD01722F;
-	Mon,  2 May 2016 18:44:29 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=p/9+TtVSnXhFFghcct28zmxY0IjdNrm6
+	g8hZdFPk/kkTrv/lUxxMwMQL4ZzqrfJ4f5ol942U7rkaYx+pfjen95slxfmfADuj
+	BoTDTP/6OevwTbT/Bw2scgajOrXCa5RtJo6pkvo94U7wMgk79+LDn+mpIsLrkP6r
+	GOrCdbL1O6w=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0AB1E19DE2;
+	Mon,  2 May 2016 19:07:25 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C86071722E;
-	Mon,  2 May 2016 18:44:28 -0400 (EDT)
-In-Reply-To: <5727BE65.3040004@google.com> (Tom Anderson's message of "Mon, 2
-	May 2016 13:53:57 -0700")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6CA4219DE1;
+	Mon,  2 May 2016 19:07:24 -0400 (EDT)
+In-Reply-To: <1462046616-2582-7-git-send-email-pranit.bauva@gmail.com> (Pranit
+	Bauva's message of "Sun, 1 May 2016 01:33:36 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6DC8DD78-10B7-11E6-8346-D05A70183E34-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: A1B8859A-10BA-11E6-8364-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293300>
 
-Tom Anderson <thomasanderson@google.com> writes:
+Pranit Bauva <pranit.bauva@gmail.com> writes:
 
-> On 05/02/2016 12:58 PM, Junio C Hamano wrote:
->> Tom Anderson <thomasanderson@google.com> writes:
->>
->>> Yes, but I like my stashes to be saved in the ref namespace.
->> Isn't that something you can do so yourself with store_stash?
+> Variable named 'verbose' in builtin/commit.c is consumed by git-status
+> and git-commit so if a new verbose related behavior is introduced in
+> git-commit, then it should not affect the behavior of git-status.
 >
-> What I want can be achieved using "git stash store `git stash create`"
+> One previous commit (title: commit: add a commit.verbose config
+> variable) introduced a new config variable named commit.verbose,
+> so care should be taken that it would not affect the behavior of
+> status.
+>
+> Another previous commit (title: "parse-options.c: make OPTION_COUNTUP
+> respect "unspecified" values") changes the initial value of verbose
+> from 0 to -1. This can cause git-status to display a verbose output even
+> when it isn't supposed to.
+>
+> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+>
+> ---
+> This is a split off from the previous patch 6/6 as suggested by Eric
+> Sunshine.
 
-OK.
+If these are documenting what your previous patches broke, then
+there test body should describe what should happen, and then if it
+is broken, use test_expect_failure, no?
 
-I am not strongly opposed to either a new option to create
-(i.e. "create --store" stores a new stash entry) or a new
-subcommand.
+Your first test does "run status with commit.verbose is set, and
+make sure the "diff --git" does not appear", which is correct, so if
+it does not work, test_expect_failure would be the right thing to
+use.
 
-It just felt that a new option to "save" that deliberately breaks
-the basic premise of the command, i.e. "my working tree is a mess,
-and I want to revert it to the pristine state quickly to work on
-something else that is urgent, but I want to store the mess away
-instead of discarding, so that I can come back to it later", was
-totally out of place.  I.e.
+These, especially the latter, look rather unpleasant regressions to
+me, and the main commit.verbose change would need to be held back
+before they are fixed.
 
-	work work work to create a mess
-	git stash save
-        work on a quick and urgent stuff, knowing that you are
-        building on a solidly committed state
-        git commit
-        git stash pop
-        continue building on the mess
-
-is what "save" is about.
-
-As your workflow is quite different (without "reset --hard", you no
-longer can rely on the resulting state to be pristine, suitable to
-work on something totally unrelated), it would have needed way way
-more explanation in the description section to describe this quite
-different mode of operation, as it is quite incompatible to the way
-traditional "stash save" users would want to use the command for if
-you do not revert the working tree to the pristine state.  Instead
-you would do something else (which was not described--if the answer
-is "keep working, leading to the creation of the next commit", it is
-unclear what the resulting stash entry would be used for, as it
-obviously won't apply to that state, as the stashed change is
-already contained in that next commit).
-
-"git stash save --keep" is bad enough already; it does not give the
-user pristine state wrt the current HEAD--what it does is a pristine
-state wrt the next HEAD that _would_ have resulted if the stuff
-you've been working on and decided are good by doing "git add" is
-all committed.  In hindsight, it may have deserved a separate
-command to make it easier to explain to the end users.
-
-Let's not make it worse.
-
-This is a tangent, but I am not sure where your aversion to "reset
---hard" comes from.  If something was changed, mtime changes, and
-otherwise your build would break.  It's not like "reset --hard"
-touches mtime for every path in the working tree including unchanged
-ones.
+> ---
+>  t/t7507-commit-verbose.sh | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>
+> diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
+> index 2bb6d8d..00e0c3d 100755
+> --- a/t/t7507-commit-verbose.sh
+> +++ b/t/t7507-commit-verbose.sh
+> @@ -144,4 +144,14 @@ do
+>  	"
+>  done
+>  
+> +test_expect_success 'status ignores commit.verbose=true' '
+> +	git -c commit.verbose=true status >actual &&
+> +	! grep "^diff --git" actual
+> +'
+> +
+> +test_expect_success 'status does not verbose without --verbose' '
+> +	git status >actual &&
+> +	! grep "^diff --git" actual
+> +'
+> +
+>  test_done
