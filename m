@@ -1,118 +1,121 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] git-stash: Don't GPG sign when stashing changes
-Date: Mon, 02 May 2016 14:57:38 -0700
-Message-ID: <xmqqoa8oqg19.fsf@gitster.mtv.corp.google.com>
-References: <00000150dddb0eeb-b77240fb-1b63-4676-ac4b-1220b8d011ca-000000@eu-west-1.amazonses.com>
-	<01020154733c27e9-deaa7a20-1de6-416a-a7d4-3229854117eb-000000@eu-west-1.amazonses.com>
+Subject: [PATCH] commit-tree: do not pay attention to commit.gpgsign
+Date: Mon, 02 May 2016 14:58:45 -0700
+Message-ID: <xmqqlh3sqfze.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Cameron Currie <me@cameroncurrie.net>,
-	Daurnimator <quae@daurnimator.com>
-X-From: git-owner@vger.kernel.org Mon May 02 23:57:49 2016
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 02 23:58:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axLqe-0003MO-Df
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 23:57:48 +0200
+	id 1axLrh-0003mP-Ny
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 23:58:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755192AbcEBV5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 17:57:43 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50944 "EHLO
+	id S1755232AbcEBV6u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 17:58:50 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59082 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754953AbcEBV5m (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 17:57:42 -0400
+	with ESMTP id S1754411AbcEBV6t (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 17:58:49 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DC86F18AE2;
-	Mon,  2 May 2016 17:57:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/agIU4BvYb6b7mEeYBhgCWrv+jE=; b=BndZvg
-	QUEMkebSDnekZLnu/KK65MYSuLu/AXqfF2UubN4LTOjjlQ99rclr2BymQqI689Sz
-	HaWJmGMP2U7boDr9PPGgxD3FkqFW7KBpyWHw6b96kqMvCwo2W5JNCk50r6G3nRnI
-	5Fi6TdmAGWh1viNAGl131MYkaOfIOhNITvL/0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Z7fBBZS7jkYDi0FXMLsqtdPSkgokmau9
-	axjJkaZoLb9YfIKlFJJFlKV5OSeLrnANjGkKNHMDuj+Z/3t1jCUNY+G/Ii/XkwAr
-	Frqh/yI2XoZsp71oM5RW7wUOm7AJIhWAdkxR6Mquh7UCYzJCNrfiduG1m4n1HYbr
-	FoA8STNQ8gc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D4E0E18AE1;
-	Mon,  2 May 2016 17:57:40 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 01CBC19376;
+	Mon,  2 May 2016 17:58:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=K
+	APorVuoqHneEnUoOWZTiwlG5rU=; b=FWe6MYWQAAOnh+NebPAyQflZ6SDeRP+GY
+	x6MCdVnbP2dxE5R1DBt9RltG/cRDtjgjqMKinJ/ItK4dNNxvGJZ1N4v2wCpfNAYZ
+	SBMsCy8io9vdY1iOkfZTnIR2tXQvU354dLgsgkDhAlVdwio96u9sDJLNql3Vo3sY
+	PCsiulBKj0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=hdJ
+	NRi/QNuadsif2QkgO32zaKqy0mSRWS9wFuqArChsiuFYNCEXoBEx6T+2S0RDrgPp
+	FcGpaCfCq06iM9HLUkfWmwKTepbzCh86qvg6N9Hft/JEHwTDZbR+f0Xl2HTy42eh
+	fKRIXKdIPtGtfINrQmX8OdYPsjOr56tfVTvCyWt4=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EE9F319375;
+	Mon,  2 May 2016 17:58:47 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2ECA518AE0;
-	Mon,  2 May 2016 17:57:40 -0400 (EDT)
-In-Reply-To: <01020154733c27e9-deaa7a20-1de6-416a-a7d4-3229854117eb-000000@eu-west-1.amazonses.com>
-	(Cameron Currie's message of "Mon, 2 May 2016 20:50:02 +0000")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5E6AB19374;
+	Mon,  2 May 2016 17:58:47 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E3B66390-10B0-11E6-BADF-D05A70183E34-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 0BC3706C-10B1-11E6-B03D-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293292>
 
-Cameron Currie <me@cameroncurrie.net> writes:
+ba3c69a9 (commit: teach --gpg-sign option, 2011-10-05) introduced a
+"signed commit" by teaching --[no-gpg-sign option and commit.gpgsign
+configuration variable to various commands that create commits.
 
-> This is helpful for folks with commit.gpgsign = true in their .gitconfig.
->
-> Signed-off-by: Cameron Currie <me@cameroncurrie.net>
-> ---
+Teaching these to "git commit" and "git merge", both of which are
+end-user facing Porcelain commands, was perfectly fine.  Allowing
+the plumbing "git commit-tree" to suddenly change the behaviour to
+surprise the scripts by paying attention to commit.gpgsign was not.
 
-I do not think this is particularly a good change.
+Among the in-tree scripts, filter-branch, quiltimport, rebase and
+stash are the commands that run "commit-tree".  If any of these
+wants to allow users to always sign every single commit, they should
+offer their own configuration (e.g. "filterBranch..gpgsign") with an
+option to disable (e.g. "git filter-branch --no-gpgsign").
 
-There are a few other in-tree users of "git commit-tree",
-e.g. quiltimport and filter-branch, and their users would be hurt
-the same way if they set commit.gpgsign in the configuration.
+Ignoring commit.gpgsign option _obviously_ breaks the backward
+compatibility, but I seriously doubt anybody sane is depending on
+this misfeature that commit-tree blindly follows commit.gpgsign in
+any third-party script that calls it.
 
-I think it was a mistake that "commit-tree" was made to pay
-attention to the configuration variable in the first place.
-Allowing scripts that use commit-tree to explicitly pass -S to it is
-perfectly fine (and these calling scripts are welcome to honor
-commit.gpgsign by reading the configration themselves if their users
-want it that way).
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-I'll send a pair of proposed alternative solutions shortly.
+ * This is an simpler alternative that forces commit-tree callers
+   that want to honor commit.gpgsign to do so themselves.
 
->  git-stash.sh | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/git-stash.sh b/git-stash.sh
-> index c7c65e2..fcf01b9 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -85,7 +85,7 @@ create_stash () {
->  	# state of the index
->  	i_tree=$(git write-tree) &&
->  	i_commit=$(printf 'index on %s\n' "$msg" |
-> -		git commit-tree $i_tree -p $b_commit) ||
-> +		git commit-tree --no-gpg-sign $i_tree -p $b_commit) ||
->  		die "$(gettext "Cannot save the current index state")"
->  
->  	if test -n "$untracked"
-> @@ -99,7 +99,7 @@ create_stash () {
->  				rm -f "$TMPindex" &&
->  				git update-index -z --add --remove --stdin &&
->  				u_tree=$(git write-tree) &&
-> -				printf 'untracked files on %s\n' "$msg" | git commit-tree $u_tree  &&
-> +				printf 'untracked files on %s\n' "$msg" | git commit-tree --no-gpg-sign $u_tree  &&
->  				rm -f "$TMPindex"
->  		) ) || die "Cannot save the untracked files"
->  
-> @@ -153,7 +153,7 @@ create_stash () {
->  		stash_msg=$(printf 'On %s: %s' "$branch" "$stash_msg")
->  	fi
->  	w_commit=$(printf '%s\n' "$stash_msg" |
-> -	git commit-tree $w_tree -p $b_commit -p $i_commit $untracked_commit_option) ||
-> +	git commit-tree --no-gpg-sign $w_tree -p $b_commit -p $i_commit $untracked_commit_option) ||
->  	die "$(gettext "Cannot record working tree state")"
->  }
->  
->
-> --
-> https://github.com/git/git/pull/186
+ builtin/commit-tree.c | 15 +--------------
+ 1 file changed, 1 insertion(+), 14 deletions(-)
+
+diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
+index 3feeffe..e4ba0d8 100644
+--- a/builtin/commit-tree.c
++++ b/builtin/commit-tree.c
+@@ -8,7 +8,6 @@
+ #include "tree.h"
+ #include "builtin.h"
+ #include "utf8.h"
+-#include "gpg-interface.h"
+ 
+ static const char commit_tree_usage[] = "git commit-tree [(-p <sha1>)...] [-S[<keyid>]] [-m <message>] [-F <file>] <sha1>";
+ 
+@@ -28,18 +27,6 @@ static void new_parent(struct commit *parent, struct commit_list **parents_p)
+ 	commit_list_insert(parent, parents_p);
+ }
+ 
+-static int commit_tree_config(const char *var, const char *value, void *cb)
+-{
+-	int status = git_gpg_config(var, value, NULL);
+-	if (status)
+-		return status;
+-	if (!strcmp(var, "commit.gpgsign")) {
+-		sign_commit = git_config_bool(var, value) ? "" : NULL;
+-		return 0;
+-	}
+-	return git_default_config(var, value, cb);
+-}
+-
+ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+ {
+ 	int i, got_tree = 0;
+@@ -48,7 +35,7 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+ 	unsigned char commit_sha1[20];
+ 	struct strbuf buffer = STRBUF_INIT;
+ 
+-	git_config(commit_tree_config, NULL);
++	git_config(git_default_config, NULL);
+ 
+ 	if (argc < 2 || !strcmp(argv[1], "-h"))
+ 		usage(commit_tree_usage);
