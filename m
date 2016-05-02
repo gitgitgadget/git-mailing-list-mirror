@@ -1,61 +1,92 @@
-From: =?UTF-8?Q?Ren=c3=a9_Nyffenegger?= <mail@renenyffenegger.ch>
-Subject: Re: [PATCH] fix typo 'In such these cases'
-Date: Mon, 2 May 2016 21:41:13 +0200
-Message-ID: <5727AD59.3020905@renenyffenegger.ch>
-References: <572703EC.20405@renenyffenegger.ch>
- <xmqqa8k8ti0q.fsf@gitster.mtv.corp.google.com>
- <5727AA7F.70504@renenyffenegger.ch>
- <xmqqlh3ss14j.fsf@gitster.mtv.corp.google.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH 12/14] Add test for fetch-pack
+Date: Mon, 02 May 2016 15:45:50 -0400
+Organization: Twitter
+Message-ID: <1462218350.4123.74.camel@twopensource.com>
+References: <1461972887-22100-1-git-send-email-sbeller@google.com>
+	 <1461972887-22100-13-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 02 21:41:22 2016
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon May 02 21:45:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axJib-0004ds-LF
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 21:41:22 +0200
+	id 1axJn3-0006bh-8T
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 21:45:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754832AbcEBTlS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 15:41:18 -0400
-Received: from belinda3.kreativmedia.ch ([80.74.158.27]:36728 "EHLO
-	belinda3.kreativmedia.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754680AbcEBTlR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 15:41:17 -0400
-Received: from [192.168.1.122] (214.181.202.62.dynamic.cgnat.res.cust.swisscom.ch [62.202.181.214])
-	by belinda3.kreativmedia.ch (Postfix) with ESMTPSA id E868FBDD8059;
-	Mon,  2 May 2016 21:41:13 +0200 (CEST)
-DomainKey-Signature: a=rsa-sha1;  q=dns; c=nofws;
-  s=default; d=renenyffenegger.ch;
-  b=OBg/sQ6j9E/AXQk3MRQNN6bt5r5OBZXOkDH1oZgruXg/U2jFQWQSQYMeGg0OR3YrJUbzGE+3N79/DeETi9/iy5hdW6i/OPtkW5jxUIPAqY68LqA3cMtgCDLm0a/H3JY+dsvzn1qcHgnZpUD1pdXlTFcyQNxfKThSiTt7yELExVI=;
-  h=Subject:To:References:Cc:From:Message-ID:Date:User-Agent:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
-In-Reply-To: <xmqqlh3ss14j.fsf@gitster.mtv.corp.google.com>
+	id S1755036AbcEBTpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 15:45:54 -0400
+Received: from mail-qk0-f169.google.com ([209.85.220.169]:33313 "EHLO
+	mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754654AbcEBTpx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 15:45:53 -0400
+Received: by mail-qk0-f169.google.com with SMTP id n63so79523792qkf.0
+        for <git@vger.kernel.org>; Mon, 02 May 2016 12:45:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:mime-version:content-transfer-encoding;
+        bh=mqdr77cyvooPYPm0mjtzimwB20HCN4ugSkQfaJl5o3o=;
+        b=pZfAJcmDgRU4AqdZZf5EMfZXEbOq2HoYmwqfWguo5aj+NQpgMN0Hvg7jqcR2xxWDLD
+         ZpDT6wV1Bx7FRAYyyhck2Rdkk1+/qe5KkALLX2M+bnAtJ0Y8PUTL3jFU6O/1IcQrvU+q
+         BD3DiQRnNTdzAHGQC8mVmmIMXMUhY6DHkuglTP9hBRTf1asWQyOBJowPnH+gc7WCE+KQ
+         72eeeoiMoiGTtDhxzMNqHkwdb6yBlVdVWafp8J4jUIBkbneZJFIO6X8xHE5hWVmvorEo
+         OOrY347iOE1Rx6tauhlQRE4c1uzric7Qx2nflv+7bwanJbv4QEaHbyS2anB76cExDAfj
+         Rj3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:mime-version:content-transfer-encoding;
+        bh=mqdr77cyvooPYPm0mjtzimwB20HCN4ugSkQfaJl5o3o=;
+        b=UtyuYgh4sVzjrruLC5Ie7meIPtG3NOTpeo0bL3W72LEDytXEgxvpL7KV3TMK4A9iPI
+         xT8X+xQ4ugymF/eKn5M4F3mNy7Eot/fHWC6H2owBwlGjLsKEUFTZKix8gkAE0drYVRQs
+         rZDrcuKNhbtYuml9xgf9InyhuNkMWGPiBskNF3ittaCylSoE9ZEQvJBmdDWyCz8kHXFw
+         PCKxy9ZvgmBOt2pFAoMklAfKhX10glFNPy4We0s+Trji7DPEVKLNL8JYmQwHJAKt/MUG
+         JzALfXdI7NgN8nUw3KigEN5lZ3YoRoIwxkIDEhi/uc4LhYxoy5wK+UQxnWKb83oSRaiY
+         dHmw==
+X-Gm-Message-State: AOPr4FWuEHcvGoC4LjQARx8jY8839nsaNARx6oFO/Imrj/JtpgY0W3hgAMy3Tcunb2asZw==
+X-Received: by 10.233.237.193 with SMTP id c184mr33992392qkg.88.1462218351996;
+        Mon, 02 May 2016 12:45:51 -0700 (PDT)
+Received: from ubuntu ([8.25.196.25])
+        by smtp.gmail.com with ESMTPSA id a123sm9764443qkc.23.2016.05.02.12.45.50
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 02 May 2016 12:45:51 -0700 (PDT)
+In-Reply-To: <1461972887-22100-13-git-send-email-sbeller@google.com>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293279>
 
-> Re substance, I am wondering if "In such a case" might be better, by
-> the way.  That is:
-> 
->  	A fast-forward is a special type of <<def_merge,merge>> where you have a
->  	<<def_revision,revision>> and you are "merging" another
->  	<<def_branch,branch>>'s changes that happen to be a descendant of what
-> -	you have. In such these cases, you do not make a new <<def_merge,merge>>
-> +	you have. In such a case, you do not make a new <<def_merge,merge>>
->  	<<def_commit,commit>> but instead just update to his
->  	revision. This will happen frequently on a
-> 
-> It is not like there are multiple variants of "fast-forward"
-> situations, in all of which the HEAD pointer is just moved without
-> creating a new commit.  There is only one variant of "fast-forward".
+On Fri, 2016-04-29 at 16:34 -0700, Stefan Beller wrote:
+> +test_expect_success 'fetch-pack with protocol version 2' '
+> +	test_when_finished "rm -rf repo1" &&
+> +	mkdir repo1 &&
+> +	(
+> +		cd repo1 &&
+> +		git init &&
+> +		test_commit 1 &&
+> +		test_commit 2 &&
+> +		test_commit 3 &&
+> +		echo "$(git rev-parse master) refs/heads/master"
+> >expected &&
+> +		mkdir repo2 &&
+> +		(
+> +			cd repo2 &&
+> +			git init &&
+> +			git fetch-pack --transport-version=2 -
+> -upload-pack=git-upload-pack-2 ../.git refs/heads/master >../actual
+> +		) &&
+> +		test_cmp expected actual
+> +	)
+> +'
 
-That's correct. Your suggestion makes more sense.
- 
+This doesn't actually test that protocol v2 is in fact used (it just
+tests that --transport-version=2 doesn't crash).  It would be nice to
+actually test the version in-use.
