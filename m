@@ -1,109 +1,107 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH 06/14] remote.h: add get_remote_capabilities,
- request_capabilities
-Date: Mon, 02 May 2016 14:57:43 -0400
-Organization: Twitter
-Message-ID: <1462215463.4123.70.camel@twopensource.com>
-References: <1461972887-22100-1-git-send-email-sbeller@google.com>
-	 <1461972887-22100-7-git-send-email-sbeller@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv5 1/2] http.c: implement the GIT_TRACE_CURL environment variable
+Date: Mon, 02 May 2016 11:59:14 -0700
+Message-ID: <xmqq60uwthfh.fsf@gitster.mtv.corp.google.com>
+References: <20160502142813.50868-1-gitter.spiros@gmail.com>
+	<20160502142813.50868-2-gitter.spiros@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon May 02 20:57:53 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, tboegi@web.de, ramsay@ramsayjones.plus.com,
+	sunshine@sunshineco.com, peff@peff.net
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 02 20:59:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axJ2V-000241-TQ
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 20:57:52 +0200
+	id 1axJ3y-0002mC-Qh
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 20:59:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932093AbcEBS5s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 14:57:48 -0400
-Received: from mail-qg0-f48.google.com ([209.85.192.48]:35677 "EHLO
-	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932082AbcEBS5q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 14:57:46 -0400
-Received: by mail-qg0-f48.google.com with SMTP id f74so73506515qge.2
-        for <git@vger.kernel.org>; Mon, 02 May 2016 11:57:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:mime-version:content-transfer-encoding;
-        bh=PqKudN6dj3kMr8RWCCW9NF6/lGA0TWMQyDCA9Bigksc=;
-        b=fghjbnJaLoVQEceP2bUyTUIK8AOzMWQm8+wvGSjg0KEEEmw/SOYP1Px40z+U2c3H/p
-         aqM7qWgF/e87SAz/b/9lIIawJRZjmODQs217DtAufDLHTKUxBPBxlRyx099Y9uTkVdAy
-         SnDfHH4ijnhhychDlpvyqGyeJ3UXMuZgST9QZITenmJ4thirAhLcwT9gnmAAlFJw5Dc5
-         zviNoyuHvA4Wv1aYBzcpuYOjvdnd1+vUYA/IP8tiYdVDchG3dWB94uIngtSY0sKF7vkS
-         oHsP0qL3DL+jRox35sdvEoPF2HmjTXr7wgJpcjVjDqDUzCs4YjSfZxcUAaDFYcK4oRdn
-         BvTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=PqKudN6dj3kMr8RWCCW9NF6/lGA0TWMQyDCA9Bigksc=;
-        b=H8GpFqKC+P3Ksl1yi87vzlHAOwraaiibmsCiyS9Y7/Lb95DT7hKHpZk8Y7kU99+8qP
-         7hkyXi5K968dIxjvEOyrKK9zJf7nvDcQ3fcJzZOvdxM0/Ix+/W7X66J8VUIqyxdqr3/H
-         38PVfDPvk7PSXVfoazf/TKK5PsbMIY3dZvQ2IURKdM1OAOknDeF2O6vfu83vXraSxjaA
-         BuPwkSLffuza+PdzTbBf+5kNbvsV+6jrjGKAvplio8HH7biZoVLchx7kNUTSuH8fGFrJ
-         0Tmzf5ZVo0tvybrfqabJVfy18A67hmMc3M73xQUnR3zwFkwe5fYLDzA6PmzjoLsl5iEp
-         pMTg==
-X-Gm-Message-State: AOPr4FU+uJRgt3GlgfjYKZynDD4AXYFUC3WX+PRyhwOX7je6g3ZQCfADC3h8Xhcrc9utDw==
-X-Received: by 10.140.96.78 with SMTP id j72mr33670887qge.84.1462215465573;
-        Mon, 02 May 2016 11:57:45 -0700 (PDT)
-Received: from ubuntu ([8.25.196.25])
-        by smtp.gmail.com with ESMTPSA id q201sm9659308qke.11.2016.05.02.11.57.44
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 02 May 2016 11:57:44 -0700 (PDT)
-In-Reply-To: <1461972887-22100-7-git-send-email-sbeller@google.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S932115AbcEBS7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 14:59:19 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57954 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754821AbcEBS7S (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 14:59:18 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A1EEB1592B;
+	Mon,  2 May 2016 14:59:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UXOn6W7rujFm3XoCdWSIbi4DyiU=; b=MPCXJh
+	Y56XGr/vHjh/J30n5dwab4HWDJoHAXL0UCihwwVo43wGietgGqO3yfYePafZD5wa
+	ryzxVTDVzhkWWPX4r2xsi42OxCiYwpBk5khHQFuxnYtiC1gstMlJsZ2R/7RAZQhf
+	K2dFBSRN4n446cIYseIhPgM+cwMO0MLQuxt7o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LF5TkgwxMh3QRAwlFmYxOpbOUfstquG/
+	RNAyGBzmLC6exTZhp4eKM7Hu/XHCbUJglqvUTMVUHmUF1d0Oe0i4nJ65GmD/f4ql
+	OFl8vlxqQvmXxdfyF6twxOBgWsOpy968Cff0vvQXartuE8uxQIMVpilJcN7hY8Wk
+	W3+jPuMV1LY=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 97D251592A;
+	Mon,  2 May 2016 14:59:16 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E163E15929;
+	Mon,  2 May 2016 14:59:15 -0400 (EDT)
+In-Reply-To: <20160502142813.50868-2-gitter.spiros@gmail.com> (Elia Pinto's
+	message of "Mon, 2 May 2016 14:28:12 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F78274F4-1097-11E6-B3F5-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293269>
 
-On Fri, 2016-04-29 at 16:34 -0700, Stefan Beller wrote:
- 
-> +const char *known_capabilities[] = {
-> +	"multi_ack",
-> +	"thin-pack",
-> +	"side-band",
-> +	"side-band-64k",
-> +	"ofs-delta",
-> +	"shallow",
-> +	"no-progress",
-> +	"include-tag",
-> +	"multi_ack_detailed",
-> +	"allow-tip-sha1-in-want",
-> +	"allow-reachable-sha1-in-want",
-> +	"no-done",
-> +};
+Elia Pinto <gitter.spiros@gmail.com> writes:
 
-I wonder if it is possible to not repeat the list from upload-pack.c?
-It seems unfortunate to have to add the same string in two places
-whenever you add a capability.
-
-> +static int keep_capability(char *line)
-
-s/keep_/is_known_/ ?  Also it would be good to handle capabilities that
-are prefixes of others correctly.
-
+> +static void curl_dump(const char *text, unsigned char *ptr, size_t size, int nopriv)
 > +{
-> +	int i;
-> +	for (i = 0; i < ARRAY_SIZE(known_capabilities); i++)
-> +		if (starts_with(line, known_capabilities[i]))
-> +			return 1;
-> +	return 0;
-> +}
+> +	size_t i;
+> +	struct strbuf out = STRBUF_INIT;
+> +	unsigned int width = 80;
 > +
-> +void get_remote_capabilities(int in, char *src_buf, size_t src_len)
+> +	strbuf_addf(&out, "%s, %10.10ld bytes (0x%8.8lx)\n",
+> +		text, (long)size, (long)size);
+> +	trace_strbuf(&trace_curl, &out);
+> +
+> +	for (i = 0; i < size; i += width) {
+> +		...
+> +		for (w = 0; (w < width) && (i + w < size); w++) {
+> +			if ((i + w + 1 < size) && ptr[i + w] == '\r'
+> +			    && ptr[i + w + 1] == '\n') {
+> +				i += (w + 2 - width);
+> +				break;
+> +			}
+> +			strbuf_addch(&out, (ptr[i + w] >= 0x20)
+> +				&& (ptr[i + w] < 0x80) ? ptr[i + w] : '.');
+> +			if ((i + w + 2 < size)
+> +			    && ptr[i + w + 1] == '\r'
+> +			    && ptr[i + w + 2] == '\n') {
+> +				i += (w + 3 - width);
+> +				break;
+> +			}
+> +		}
+> +		...
+> +	}
+> +	strbuf_release(&out);
+> +}
 
-maybe rename "in" to "fd" or "in_fd"?  I don't immediately know what
-"in" is supposed to be when I just look at this signature.
+There is no change in this hard-to-read double-loop since the
+previous round?
 
-> +void request_capabilities(int out, struct string_list *list)
+> +int curl_trace(CURL *handle, curl_infotype type, char *data, size_t size, void *userp)
+> +{
+> +	const char *text;
+> +	(void)handle;		/* prevent compiler unused parameter warning if checked */
+> +	(void)userp;		/* prevent compiler unused parameter warning if checked */
 
-Maybe name this "send_capabilities_request"?
+I really do not want to see these casts.  Unused parameters are
+perfectly normal in a codebase with callback functions, no?  I do
+not think these are the first occurrences of unused parameters in
+our codebase, and I do not think we have such cast to void to them.
+Why add this ugliness only to here?
