@@ -1,93 +1,102 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 04/14] connect: rewrite feature parsing to work on string_list
-Date: Mon, 2 May 2016 11:46:41 -0700
-Message-ID: <CAGZ79kbUekUtfzmW00UbCy-Qpu5jVM0gE-6n=4N5++-T+Ed8+g@mail.gmail.com>
-References: <1461972887-22100-1-git-send-email-sbeller@google.com>
-	<1461972887-22100-5-git-send-email-sbeller@google.com>
-	<1462213121.4123.58.camel@twopensource.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fix typo 'In such these cases'
+Date: Mon, 02 May 2016 11:46:29 -0700
+Message-ID: <xmqqa8k8ti0q.fsf@gitster.mtv.corp.google.com>
+References: <572703EC.20405@renenyffenegger.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Mon May 02 20:46:53 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?Ren=C3=A9?= Nyffenegger <mail@renenyffenegger.ch>
+X-From: git-owner@vger.kernel.org Mon May 02 20:46:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axIrs-0005Ja-H6
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 20:46:52 +0200
+	id 1axIre-0005Es-6p
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 20:46:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754985AbcEBSqo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 14:46:44 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:38761 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754839AbcEBSqm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 14:46:42 -0400
-Received: by mail-ig0-f179.google.com with SMTP id m9so351404ige.1
-        for <git@vger.kernel.org>; Mon, 02 May 2016 11:46:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=mSoKHmF2jWZh65LzNaq9JuqN1n6B6JnOSTxvtTV1JUo=;
-        b=kYVbyDkph/GiQ6bSt5CkbuFTgRyvFBEqv2dBGic7tOAnEbzOZMMpYMx8aSQHhsK8nl
-         UFMOhBlULueRN9Eb/AcDQvAbZdQR9Cz1QauZb9e1R7q8t1NpkbBko/lP5pUOWjah6jEO
-         oZss/dFVKKNtkcR/NvWdT8YObAbxAqGckVq9dMAcLdTPejiir+GuqiD8D/L9grdqRNPi
-         FJmTyHRYaTqDMcbRFSUyQ85GtccR+SyrvzfpDwLg2iinj+eweLYUWbTbwxV1+rGJxoQ9
-         8eI58sOfJv94xtyp9DWFy6C7jLKpn98IP6zLeYJqZUDpVLc2jGyuofaypL5dGDIOtGkR
-         Zwpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=mSoKHmF2jWZh65LzNaq9JuqN1n6B6JnOSTxvtTV1JUo=;
-        b=P58DVQNTeGaEe9H/F3w0diYDPUkHWDaRgUsR4rMWRAdAjDL2bTYfR6ENQXLts/Jy8x
-         aNO+rXEUODAHyR6ZcY1Lvd0gSyMFQw6FoahBaAc6HJ11R2zId0z8csHGUzzX3CLVzaPA
-         o7U9vYGJdv62mXBXBc8v53cdVDQRKQzl0IwaxBiZ77qgbMBTk13lnuM7B0IdXSHdTvB8
-         koGXaRjYDVkVxfNNcvZD/rhaeylUC0LOGC6CgIekI3/d5X19gGTr95K4c0hd8t/c5Jft
-         45Z/5zFTXi/1kglTGEvk0699q/K6pya5c39/mkDyW317bAsXzuRrdH1cDYZUlH51jYFm
-         wJiA==
-X-Gm-Message-State: AOPr4FVJfZbDuvS4SCrpH7bGACRaVsnQgySziQ7YBi1bjkEQMVVZmC+QMSnpPi+S4VlkW+u0sa4DuevQq+vbig0g
-X-Received: by 10.50.102.207 with SMTP id fq15mr22929309igb.94.1462214801703;
- Mon, 02 May 2016 11:46:41 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Mon, 2 May 2016 11:46:41 -0700 (PDT)
-In-Reply-To: <1462213121.4123.58.camel@twopensource.com>
+	id S1754975AbcEBSqe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 May 2016 14:46:34 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54686 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754812AbcEBSqd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 May 2016 14:46:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id DCCB116E87;
+	Mon,  2 May 2016 14:46:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=vqQPxywRZH3t
+	aZYUpuOjncGglLA=; b=UTaAgJnp7E5WOz915PSSHjPwZJLXVyfxQSy16SuoEC0j
+	mp+OuPYfwGIg4Z74o42vN7tQephbXeD26hIMYJAbUTxye2fUfRAUMbVLA0DGjHU3
+	xvWsTYvgp09CnisFBKYogXMIHI5o7WAqzyjN2YHFUTRHSUuyuRxbWSlpJDz0Yng=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=UaJ/+Q
+	SOy3lNzgHdPWzOtJpit8bpkuVuwbk+kwYshs0HK5xdFmJHbipxBuv3RagLPCN4Sm
+	qJAt4msYTVZq7wc79ECyGtrXEtRVGFRhHhUEl+AxJU5y+mUhqycVWKIofrEwYmVt
+	bbFsu4UMdyobfknQZUHqu+wZfqxhGljy6HgTs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D34AC16E86;
+	Mon,  2 May 2016 14:46:31 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5377316E85;
+	Mon,  2 May 2016 14:46:31 -0400 (EDT)
+In-Reply-To: <572703EC.20405@renenyffenegger.ch> (=?utf-8?Q?=22Ren=C3=A9?=
+ Nyffenegger"'s message
+	of "Mon, 2 May 2016 09:38:20 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 2FBE759A-1096-11E6-B480-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293266>
 
-On Mon, May 2, 2016 at 11:18 AM, David Turner <dturner@twopensource.com> wrote:
-> On Fri, 2016-04-29 at 16:34 -0700, Stefan Beller wrote:
->> +             if (skip_prefix(item->string, "symref", &val)) {
->> +                     if (!val)
->> +                             continue;
->
-> This if should never happen (skip_prefix returns 0 in that case).  You
-> probably meant !*val -- but:
->
->> +                     val++; /* skip the = */
->
-> I think you should instead skip_prefix "symref=" because:
-> (a) it saves some code.
-> (b) it allows for capabilities like symref_foo to later be added.
->
->> +     struct string_list list = STRING_LIST_INIT_NODUP;
->
-> Maybe move the scope of list into the while loop below?
->
->>       char *line = packet_read_line(0, NULL);
->>       while (line) {
->> -             parse_features(line);
->> +             string_list_append(&list, line);
->> +             parse_features(&list);
->> +             string_list_clear(&list, 1);
->>               line = packet_read_line(0, NULL);
->
-> This is a bit convoluted in the one-feature-per-line case, but I guess
-> I understand that for the sake of generality it's useful.
+Ren=C3=A9 Nyffenegger <mail@renenyffenegger.ch> writes:
 
-Thanks for the review,
-Stefan
+> From 5e2b47833c8d434784fa1a797cfd6a087df10dc8 Mon Sep 17 00:00:00 200=
+1
+> From: =3D?UTF-8?q?Ren=3DC3=3DA9=3D20Nyffenegger?=3D <rene.nyffenegger=
+@adp-gmbh.ch>
+> Date: Mon, 2 May 2016 09:19:46 +0200
+> Subject: [PATCH] Documentation: Fix typo 'In such these cases'
+
+=46or the next time, remember that these four lines are usually not
+meant to go to the body of the e-mail.
+
+> Fix "In such these cases, ..." to "In such cases, ..."
+> in Documentation/glossary-content.txt
+
+Wow.  It is an ancient typo in 9290cd58 (Added definitions for a few
+words:, 2006-05-03) that survives to the day.
+
+Thanks.  Will queue.
+
+> Signed-off-by: Ren=C3=A9 Nyffenegger <mail@renenyffenegger.ch>
+> ---
+>  Documentation/glossary-content.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/glossary-content.txt b/Documentation/gloss=
+ary-content.txt
+> index cafc284..9ceca05 100644
+> --- a/Documentation/glossary-content.txt
+> +++ b/Documentation/glossary-content.txt
+> @@ -145,7 +145,7 @@ current branch integrates with) obviously do not =
+work, as there is no
+>  	A fast-forward is a special type of <<def_merge,merge>> where you h=
+ave a
+>  	<<def_revision,revision>> and you are "merging" another
+>  	<<def_branch,branch>>'s changes that happen to be a descendant of w=
+hat
+> -	you have. In such these cases, you do not make a new <<def_merge,me=
+rge>>
+> +	you have. In these cases, you do not make a new <<def_merge,merge>>
+>  	<<def_commit,commit>> but instead just update to his
+>  	revision. This will happen frequently on a
+>  	<<def_remote_tracking_branch,remote-tracking branch>> of a remote
