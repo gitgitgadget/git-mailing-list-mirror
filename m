@@ -1,93 +1,96 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 63/83] builtin/apply: make apply_all_patches() return -1
- on error
-Date: Mon, 2 May 2016 09:09:21 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605020907170.9313@virtualbox>
-References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org> <1461504863-15946-64-git-send-email-chriscool@tuxfamily.org> <CAPig+cSVCDNRup95ay=htiXiw0UCGs6boDuqovGnQJY8imbFhQ@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH] git-prompt: make colors available in custom prompts
+Date: Mon, 02 May 2016 09:15:55 +0200
+Message-ID: <87oa8p0w2c.fsf@linux-m68k.org>
+References: <1461301201-92142-1-git-send-email-andrew@schwartzmeyer.com>
+	<5726F647.6030805@xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon May 02 09:09:42 2016
+Content-Type: text/plain
+Cc: Andrew Schwartzmeyer <andrew@schwartzmeyer.com>,
+	git@vger.kernel.org, erdavila@gmail.com
+To: Simon Oosthoek <s.oosthoek@xs4all.nl>
+X-From: git-owner@vger.kernel.org Mon May 02 09:16:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ax7zB-0003j9-6Z
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 09:09:41 +0200
+	id 1ax85N-0006e6-QW
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 09:16:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752693AbcEBHJi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 03:09:38 -0400
-Received: from mout.gmx.net ([212.227.17.20]:53396 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751625AbcEBHJh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 03:09:37 -0400
-Received: from virtualbox ([37.24.143.127]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0LlpJU-1bWBkY2Y4G-00ZLwe; Mon, 02 May 2016 09:09:22
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CAPig+cSVCDNRup95ay=htiXiw0UCGs6boDuqovGnQJY8imbFhQ@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:1GgO5gyqSidzaDUK8NzxUt9K6KLsnjX2GxDnGe6bBeAQfMIQvy9
- ngI1Lit2Ev35MEYPZTB+K3HMKECgnnea6aYu5Z+6WTIPtDunrQz+YIPPd4vds+W/VuIBfs3
- hgnMrl9DBQbUFI+5iwXBCpnl5+2oRZh+lE5TJF0LmuqcLMPWWhNx26hhx+8uzP0b3vT+E26
- oJ+qxspbb+TfC5iT8+vWg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:2zsAbNworLM=:1K4oQ+VDlgxZeZeijGnn9F
- IbUZICdcvJtIFHF+LB8ePv3wAszyGEx5Ep/Pa6x5lXrGnV+awGWfsDiufmEtBNvuByQYeKJdc
- NiBCKb9Kn/D1/ZkLz8xrCT8gkTinHUnhJQi8A1+esmLEpR8uiKKIdxJmPBGHt7FSQMjuHEwvW
- K/1TCeoibWJW0hYq90/+pPc67Vj8Glf31jrC8ohE8gQUARVXtIVFS4Sp0wboyc2/hyWrc6DvD
- MLdmsZjEMn7ngYBfDRuFpamWwo/kSZx6NYj54JPEIzYUKat1EH9duApGBkq7wHS5ADJCv6SkL
- fJnoDH/0kxRy412LaChwBXJSpJ10Z+2/oeSrKiGk3uWXPJpRd0KdDSTzhZ7oYkT6HAuYkH5ro
- ZM3kd5LVnhsrgFzRv/fianTzbdWUzYQSnTlo7fNSE/J21GuXX3zpnd5Pizdry4VfeNeRyK0aG
- AQlUZtULo/XjhC1RjFEYvM7M7X59xNZAW9IalbMdP7WGypgOLB6aLFReAj6//DNB3jMswwXUU
- +rZNj96V900EiJoweTuUTouYiLsLCM1umaCj+yay9FOGRueLDhSnY+HGvjXzUVTyWTiG2O5YM
- 14svDREG0Tkscv29QHEzJKWiPTpF2ZcAbH7BfpZebzx063BefBOCTCNHK/FNLuYJSn2VKyM7+
- z0g3n+7RPUO39R+/S/iPc0KsGE+jPWvGXmoPZiUH2DABzMyNoPSddmWQBeEjtFBGb3bEF/WUY
- Gt4F2txSHzUKagNfH0vINcLT/pSzfig0ZBjEmqrEsG+i+cuuPWrVvDX7B6O47PvxIWHFffBh 
+	id S1752800AbcEBHQB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 03:16:01 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:49872 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751377AbcEBHQA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 03:16:00 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3qywZQ23Xlz3hknW;
+	Mon,  2 May 2016 09:15:58 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3qywZQ1YczzvhMg;
+	Mon,  2 May 2016 09:15:58 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id BI4CxHMltrJW; Mon,  2 May 2016 09:15:56 +0200 (CEST)
+X-Auth-Info: LGzpZoj6yBxIQxiZOMKEfvvQtmt0AAvZDTfihmxn7vvCfzr82AZDpTEu4VBOYksf
+Received: from igel.home (ppp-88-217-24-154.dynamic.mnet-online.de [88.217.24.154])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Mon,  2 May 2016 09:15:56 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id 0A4EC2C3730; Mon,  2 May 2016 09:15:55 +0200 (CEST)
+X-Yow: This is my WILLIAM BENDIX memorial CORNER where I worship William
+ Bendix like a GOD!!
+In-Reply-To: <5726F647.6030805@xs4all.nl> (Simon Oosthoek's message of "Mon, 2
+	May 2016 08:40:07 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.93 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293224>
 
-Hi Eric,
+Simon Oosthoek <s.oosthoek@xs4all.nl> writes:
 
-On Sun, 1 May 2016, Eric Sunshine wrote:
+> Hi Andrew
+>
+> sorry, I only noticed your request this morning...
+>
+> On 22/04/16 07:00, Andrew Schwartzmeyer wrote:
+>> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+>> index f18aedc73..ffe79168c 100644
+>> --- a/contrib/completion/git-prompt.sh
+>> +++ b/contrib/completion/git-prompt.sh
+>> @@ -12,8 +12,8 @@
+>>   #        source ~/.git-prompt.sh
+>>   #    3a) Change your PS1 to call __git_ps1 as
+>>   #        command-substitution:
+>> -#        Bash: PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+>> -#        ZSH:  setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
+>> +#        Bash: PS1="[\u@\h \W$(__git_ps1 ' (%s)')]\$ "
+>> +#        ZSH:  setopt PROMPT_SUBST ; PS1="[%n@%m %c$(__git_ps1 ' (%s)')]\$ "
+>
+> I haven't tested this at all, but when using double quotes, you need to at
+> least check all the escapings, like \$ should probably be: \\\$ when used
+> in double quotes.
 
-> On Sun, Apr 24, 2016 at 9:34 AM, Christian Couder
-> <christian.couder@gmail.com> wrote:
-> > Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> > ---
-> > diff --git a/builtin/apply.c b/builtin/apply.c
-> > @@ -4562,12 +4562,12 @@ static int apply_all_patches(struct apply_state *state,
-> >
-> >                 fd = open(arg, O_RDONLY);
-> >                 if (fd < 0)
-> > -                       die_errno(_("can't open patch '%s'"), arg);
-> > +                       return error(_("can't open patch '%s': %s"), arg, strerror(errno));
-> >                 read_stdin = 0;
-> >                 set_default_whitespace_mode(state);
-> >                 res = apply_patch(state, fd, arg, options);
-> >                 if (res < 0)
-> > -                       exit(1);
-> > +                       return -1;
-> 
-> This leaks 'fd', doesn't it?
+By using double quotes the command subsititution is expanded when PS1 is
+set, which makes it pretty useless.
 
-Indeed it does. I thought that I had sent a mail about fd leakage, just
-resent it. Such a leakage prevented the test suite from passing after
-applying this patch series on Windows and patching up several obvious
-compile problems.
+> The original reason for not using colors in command substitution mode was
+> that the prompt string length was not calculated correctly by bash and it
+> messed up the commandline with very long commands (relative to the
+> terminal width), when browsing the command history.
 
-Ciao,
-Dscho
+If you want to include control characters in the prompt that don't
+contribute to the length you have to enclose them in \[ \].  The problem
+is that \[ \] are processed before embedded command substitutions are
+expanded, thus they cannot produce such control characters.
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
