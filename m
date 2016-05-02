@@ -1,132 +1,101 @@
-From: larsxschneider@gmail.com
-Subject: [PATCH v3 2/2] travis-ci: build documentation
-Date: Mon,  2 May 2016 22:20:05 +0200
-Message-ID: <1462220405-12408-3-git-send-email-larsxschneider@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 1/2] Documentation: fix linkgit references
+Date: Mon, 2 May 2016 16:34:45 -0400
+Message-ID: <20160502203445.GA19509@sigill.intra.peff.net>
 References: <xmqqziscw2g7.fsf@gitster.mtv.corp.google.com>
  <1462220405-12408-1-git-send-email-larsxschneider@gmail.com>
-Cc: peff@peff.net, Matthieu.Moy@grenoble-inp.fr, sbeller@google.com,
-	gitster@pobox.com, Lars Schneider <larsxschneider@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 02 22:20:22 2016
+ <1462220405-12408-2-git-send-email-larsxschneider@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Matthieu.Moy@grenoble-inp.fr,
+	sbeller@google.com, gitster@pobox.com
+To: larsxschneider@gmail.com
+X-From: git-owner@vger.kernel.org Mon May 02 22:34:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axKKL-00052g-5Q
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 22:20:21 +0200
+	id 1axKYS-0003F9-VO
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 22:34:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932111AbcEBUUP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 16:20:15 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33110 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932110AbcEBUUL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 16:20:11 -0400
-Received: by mail-wm0-f68.google.com with SMTP id r12so406963wme.0
-        for <git@vger.kernel.org>; Mon, 02 May 2016 13:20:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1O3fDyD72D+6WsJCqPwEpj7+TPNI+KZg0Lto5mkFgYo=;
-        b=oM2L1fvwwl+i1lzSIlFXQmIQyUMg1+QnKMGmSWr5SMzvunUyQToHUsY7WGIsa4/1K1
-         r7kUxIuF9dr+cIxv5gG83KvO/Ec9zEHCyC+3j/1slSbY2heqYQilqRJG69wEbou35O9j
-         TzDoHlEHRcjkxzSgNxvo5MPIPPSv2frHqGvqox9kseK+NjoE5pG0VLaTtER7dY0FiK6C
-         FS+OrsMob6ONvpvL4uNKgtyVmU5PxOwt0cMN33wAcIhiAYR8qYZBu7nK7lPuq7Ck2kGA
-         z6DAUh2/6FxuYeQ59kx2a11TyHPGPRpAVH1YvLLKa4QrQ4f5myS1vhgERNqH8ZovsbR7
-         2Msg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=1O3fDyD72D+6WsJCqPwEpj7+TPNI+KZg0Lto5mkFgYo=;
-        b=RUnHQnh7kAS8IodkuIgaF6G40LiYAwDdjid06LCRTEIzFQj73jE4u83DUUJYzODyJ8
-         W2NT/lt4G7Wt627bSLyaWQV2W19dicL89llSv1A0PttO8zuF6GlQSAB86Wgyi1r6jGjH
-         iWbGulz6bgD9NCMV3OS0LlUfMFlcAm0ZCNQ6QchgMv6p8sFTG5+zvDV5955okF0/GDMQ
-         3KDJl5Oegvk741l4KIab3del61cR1UBHxhZ2sSQnyfki3ugPnLRKE97j1OLSgsHuKEhG
-         QUibuAJB2NE9ivw2L9GH0ahA+6ziIy/xUgRoPQj+E25RV5TCrdtUCGKSTKW+3PHLHuhI
-         tixg==
-X-Gm-Message-State: AOPr4FUeExTGTcfMOu/1m+MwJ26btERkFmDkGEgCAwGBk7O8bmFVz8eAletRU2Cv2uoshQ==
-X-Received: by 10.28.30.148 with SMTP id e142mr19963252wme.69.1462220409757;
-        Mon, 02 May 2016 13:20:09 -0700 (PDT)
-Received: from slxBook3.fritz.box (p5DDB4E4A.dip0.t-ipconnect.de. [93.219.78.74])
-        by smtp.gmail.com with ESMTPSA id v143sm20558672wmv.4.2016.05.02.13.20.08
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Mon, 02 May 2016 13:20:09 -0700 (PDT)
-X-Mailer: git-send-email 2.5.1
-In-Reply-To: <1462220405-12408-1-git-send-email-larsxschneider@gmail.com>
+	id S1754908AbcEBUeu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 May 2016 16:34:50 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60569 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754680AbcEBUet (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 16:34:49 -0400
+Received: (qmail 15767 invoked by uid 102); 2 May 2016 20:34:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 May 2016 16:34:48 -0400
+Received: (qmail 18700 invoked by uid 107); 2 May 2016 20:34:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 May 2016 16:34:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 May 2016 16:34:45 -0400
+Content-Disposition: inline
+In-Reply-To: <1462220405-12408-2-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293285>
 
-From: Lars Schneider <larsxschneider@gmail.com>
+On Mon, May 02, 2016 at 10:20:04PM +0200, larsxschneider@gmail.com wrot=
+e:
 
-Build documentation as separate Travis CI job to check for
-documentation errors.
+> From: Lars Schneider <larsxschneider@gmail.com>
+>=20
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> ---
 
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
- .travis.yml              | 15 +++++++++++++++
- ci/test-documentation.sh | 24 ++++++++++++++++++++++++
- 2 files changed, 39 insertions(+)
- create mode 100755 ci/test-documentation.sh
+=46ix how? Your commit message doesn't say why this is a good idea. Sin=
+ce
+this is v3, I'm guessing that reasoning is on the list, but it needs to
+be summarized here in the commit message.
 
-diff --git a/.travis.yml b/.travis.yml
-index 78e433b..55299bd 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -32,6 +32,21 @@ env:
-     # t9816 occasionally fails with "TAP out of sequence errors" on Travis CI OS X
-     - GIT_SKIP_TESTS="t9810 t9816"
- 
-+matrix:
-+  include:
-+    - env: Documentation
-+      os: linux
-+      compiler: clang
-+      addons:
-+        apt:
-+          packages:
-+          - asciidoc
-+          - xmlto
-+      before_install:
-+      before_script:
-+      script: ci/test-documentation.sh
-+      after_failure:
-+
- before_install:
-   - >
-     case "${TRAVIS_OS_NAME:-linux}" in
-diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
-new file mode 100755
-index 0000000..889e6fd
---- /dev/null
-+++ b/ci/test-documentation.sh
-@@ -0,0 +1,24 @@
-+#!/bin/sh
-+#
-+# Perform sanity checks on documentation and build it.
-+#
-+
-+set -e
-+
-+LINKS=$(grep --recursive --only-matching --no-filename --perl-regexp \
-+    '(?<=linkgit:).*?(?=\[\d+\])' Documentation/* \
-+    | sort -u \
-+)
-+
-+for LINK in $LINKS; do
-+    echo "Checking linkgit:$LINK..."
-+    test -s Documentation/$LINK.txt
-+done
-+
-+make check-builtins
-+make check-docs
-+make doc
-+
-+test -s Documentation/git.html
-+test -s Documentation/git.xml
-+test -s Documentation/git.1
--- 
-2.5.1
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index c7bbe98..c5f1d6b 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -894,7 +894,7 @@ branch.<name>.description::
+>  browser.<tool>.cmd::
+>  	Specify the command to invoke the specified browser. The
+>  	specified command is evaluated in shell with the URLs passed
+> -	as arguments. (See linkgit:git-web{litdd}browse[1].)
+> +	as arguments. (See linkgit:git-web--browse[1].)
+
+The existing code renders fine for me with "make git-config.1". But wit=
+h
+your patch, I get a unicode emdash, which is wrong:
+
+--- old	2016-05-02 16:27:53.242050262 -0400
++++ new	2016-05-02 16:27:57.742050360 -0400
+@@ -978,7 +978,7 @@
+=20
+        browser.<tool>.cmd
+            Specify the command to invoke the specified browser. The sp=
+ecified command is evaluated in shell with the
+-           URLs passed as arguments. (See git-web--browse(1).)
++           URLs passed as arguments. (See git-web=E2=80=94browse(1).)
+=20
+        browser.<tool>.path
+            Override the path for the given tool that may be used to br=
+owse HTML help (see -w option in git-help(1))
+
+In case it's hard to see with your font, the generated roff looks like
+this:
+
+-\fBgit-web--browse\fR(1)\&.)
++\fBgit-web\(embrowse\fR(1)\&.)
+
+So I think that's a step backwards. I did check the asciidoctor
+rendering on git-scm.com, though, and it gets the {litdd} case wrong. S=
+o
+I think it does need fixing, but we need a solution that looks correct
+in both cases. Maybe linkgit:`git-web--browse`[1] would work; it seems
+OK with my version of asciidoc, but I have a feeling it will run into
+the same problem with asciidoctor (if it's not respecting {litdd} in
+that context, it's probably also not respecting backticks).
+
+-Peff
