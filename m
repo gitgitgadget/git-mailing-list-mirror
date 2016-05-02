@@ -1,81 +1,82 @@
-From: Mike Hommey <mh@glandium.org>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
 Subject: Re: [PATCH 2/6] connect: uniformize and group CONNECT_DIAG_URL
  handling code
-Date: Mon, 2 May 2016 08:20:07 +0900
-Message-ID: <20160501232007.GA18006@glandium.org>
+Date: Mon, 2 May 2016 06:56:54 +0200
+Message-ID: <5726DE16.3030402@web.de>
 References: <1462082573-17992-1-git-send-email-mh@glandium.org>
  <1462082573-17992-3-git-send-email-mh@glandium.org>
- <ee3d1928-38c5-372c-223f-bd50bfb14930@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Torsten =?iso-8859-15?Q?B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon May 02 01:20:21 2016
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, tboegi@web.de
+To: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 02 06:58:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ax0ey-0008Dc-5H
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 01:20:20 +0200
+	id 1ax5vq-0000WO-Mx
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 06:58:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752470AbcEAXUR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 May 2016 19:20:17 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:37164 "EHLO
-	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752453AbcEAXUP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 May 2016 19:20:15 -0400
-Received: from glandium by zenigata with local (Exim 4.87)
-	(envelope-from <mh@glandium.org>)
-	id 1ax0el-0004jj-Oe; Mon, 02 May 2016 08:20:07 +0900
-Content-Disposition: inline
-In-Reply-To: <ee3d1928-38c5-372c-223f-bd50bfb14930@web.de>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.6.0 (2016-04-01)
+	id S1750911AbcEBE5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 00:57:32 -0400
+Received: from mout.web.de ([212.227.17.11]:56151 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750724AbcEBE5b (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 00:57:31 -0400
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0MKrU4-1ax5uo1Uy8-00017Y; Mon, 02 May 2016 06:57:02
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101
+ Icedove/38.7.0
+In-Reply-To: <1462082573-17992-3-git-send-email-mh@glandium.org>
+X-Provags-ID: V03:K0:olXWhJtF2YV335RENEVSk9zLjbtEcOrIhAz8LLrHIkwRqOjPQJ2
+ na12iPwT4ImgpgMTEmO4QkkgnLyqVaNJvG1gapRRsUkEjr/XYc7zF/qR6yfHve3v+qnKnAQ
+ Z7xnMYWMReJ2Xcp7hQjaCeeQjuf5+Xi+0FwCTrBPArNiWh02alBOwtK/FrY/SiCWJ2t1qVX
+ RSxckn3+NY5KrpycItElQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jI4Gzu/H0u4=:yw4GW+ptnAm6XkBsYxHBmA
+ 4bE+5rpjyFXqydnJTBZg73Wb8++8RWXy7W1oUQ13hCb5xOUJwGm+q+VJHFsUd6M8A2QGmixj1
+ n8TXR3Lf/E5WJJ0x0uO5cIR5qmZ74nR07SjUwikelwKg0AyKaYbWw6tDZNYVrQL5yKqHpRewH
+ +EiLBS6zsJ0ug45Cay6wFgkbfn7Ivb9KPVQOYzVIopFlAx9WqVSsJIz9bdXs6083ZTeM3AuUQ
+ ZDbzoB+scekQQw8qKW7RBjFxVsBIEtBOvfthGb5x1ledEkx2bNujJDryEjZzdQK491ok2Lka5
+ sPuRj5F9PrK9oo75OXt6fg3/+sVMH2zt5IWijHI8AegU24vUHWAgx523gqLP92JcKXoFzc/Wn
+ J8MOt+A5wXM6KinI5Z0ZQTlTZwDyxy4ub47r6a29n4hdREqFldG2RBXWuo5lpKVs+8a+f6cT6
+ uUYV6G63s0teLxiL3FO5ItXmkarQxhqokfmkJeJtaeO0483FW9LLDu/8VzHA4wkUwNEuT6i/W
+ nYN6Zkk/5hziDTR8p13a+hYVpbz/hYKgaByiyS7FEzG5Ip/SMCWFBbhvJcNrkAdwl1G1QO4TX
+ MWIjnMBdxGTaFsIIy5rWoDR9Tzs52/FqHWIoHoKc3T/hbGPVwzVvDQpCv7XZsGX1Y4w7S0YbQ
+ 1UVnge4HUVpC7rXU53K2Efldpx5NP+UYqiL4MIELgMhQ5SnFCaAGnM6Q7zYLFVzH33DZRnbZs
+ YXGUuqCoyHttH+eP2aQsDgNZjjpHVKE81IhwE5MJbeglfet6uANElaI/BR6MB6q8thWWSzk1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293218>
 
-On Sun, May 01, 2016 at 03:37:24PM +0200, Torsten B=F6gershausen wrote:
-> I skipped the dates and names (I was responsible for one regression)
-> I hope this gives a half-correct overview,
-> why I am reluctant to change any code in connect.c
-> unless there is a fix for a real world problem.
+On 05/01/2016 08:02 AM, Mike Hommey wrote:
+> +	if (flags & CONNECT_DIAG_URL) {
+>   		printf("Diag: url=%s\n", url ? url : "NULL");
+>   		printf("Diag: protocol=%s\n", prot_name(protocol));
+>   		printf("Diag: hostandport=%s\n", hostandport ? hostandport : "NULL");
+> +		printf("Diag: userandhost=%s\n", host ? host : "NULL");
+> +		printf("Diag: port=%s\n", port ? port : "NONE");
+>   		printf("Diag: path=%s\n", path ? path : "NULL");
+>   		conn = NULL;
+Does it make sense  to write the host twice?
+If things are cleaned up, would something like this make sense ?
 
-I don't agree that connect.c should be left untouched because it's
-fragile. On the contrary, if anything, it should be made less fragile.
-
-And the more I look at it, the more I'm tempted to just change the
-parse_connect_url function itself to do _all_ the parsing, instead of
-having some code paths invoke get_host_and_port and some others invoke
-get_port on top of that, for some effect that, when you look at the
-code, you can't know what it's supposed to be. If anything, my attempts
-at cleaning up the code, and partially failing are a demonstration that
-the code *does* need some clean up.
-
-> And even here, the test cases should be changed first (and reviewed) =
-in an own commit.
-> Marked as test_must_failure.
-> The c-code can be changed in the next commit, and the TC are marked a=
-s "test_expect_success"
-
-What is the benefit from doing so?
-
-> Back to another topic:
-> If you want to support the native Git-support for native HG via hg-se=
-rve,
-> I will be happy to assist with reviews.
-> Please, if possible, don't touch connect.c at all.
-> (Beside the memory leak fix).
->=20
-> It may be better to start with a real remote-helper and copy the code=
- from connect.c
-> And, later, if there are common code paths, refactor stuff.
-
-There *are* common code paths. Which is exactly why I'm trying to reuse
-connect.c without copying it.
-
-Mike
+		printf("Diag: url=%s\n", url ? url : "NULL");
+  		printf("Diag: protocol=%s\n", prot_name(protocol));
+		printf("Diag: user=%s\n", user ? user : "NULL");
+  		printf("Diag: host=%s\n", host ? host : "NULL");
+		printf("Diag: port=%s\n", port ? port : "NONE");
+  		printf("Diag: path=%s\n", path ? path : "NULL");
+  		
+or
+		printf("Diag: url=%s\n", url ? url : "NULL");
+  		printf("Diag: protocol=%s\n", prot_name(protocol));
+                 if (user)
+			printf("Diag: user=%s\n", user);
+  		printf("Diag: host=%s\n", host ? host : "NULL");
+		printf("Diag: port=%s\n", port ? port : "NONE");
+  		printf("Diag: path=%s\n", path ? path : "NULL");
