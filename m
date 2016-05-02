@@ -1,141 +1,114 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 2/2] xdiff: implement empty line chunk heuristic
-Date: Mon, 2 May 2016 10:45:41 -0700
-Message-ID: <CAGZ79kamc6keMC2foVieBjZctrHie+wizLzZC3YDS9uBGRCVzQ@mail.gmail.com>
-References: <1461079290-6523-1-git-send-email-sbeller@google.com>
-	<1461079290-6523-3-git-send-email-sbeller@google.com>
-	<CA+P7+xoqn3fxEZGn02ST1XV-2UpQGr3iwV-37R8pakFJy_9n0w@mail.gmail.com>
-	<20160420041827.GA7627@sigill.intra.peff.net>
-	<xmqqa8kcxip9.fsf@gitster.mtv.corp.google.com>
-	<CA+P7+xpFCBU1xYbtcX8jtmDDyY8p0CiJJ=bexTmi=_vwWRZi0Q@mail.gmail.com>
-	<xmqqwpngukin.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZu=keNaCbt4T=CzH3i9qr+BxXw6AiWR-q1Cs4U80Jzng@mail.gmail.com>
-	<1461969582.731.1.camel@intel.com>
-	<CAGZ79kYx22oYobPxMkC03fGk-E9zaZZd2f+qafESkhcmFog7-w@mail.gmail.com>
-	<1461970113.731.3.camel@intel.com>
-	<xmqqfuu0uzn7.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitweb: apply fallback encoding before highlight
+Date: Mon, 02 May 2016 10:49:41 -0700
+Message-ID: <xmqqbn4ouz7u.fsf@gitster.mtv.corp.google.com>
+References: <1461151948-38583-1-git-send-email-shin@kojima.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "Keller, Jacob E" <jacob.e.keller@intel.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"peff@peff.net" <peff@peff.net>,
-	"jacob.keller@gmail.com" <jacob.keller@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 02 19:46:09 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Christopher Wilson <cwilson@cdwilson.us>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Shin Kojima <shin@kojima.org>
+X-From: git-owner@vger.kernel.org Mon May 02 19:49:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axHv5-0002lh-Q7
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 19:46:08 +0200
+	id 1axHyg-0004RV-8M
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 19:49:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754778AbcEBRp5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 13:45:57 -0400
-Received: from mail-io0-f179.google.com ([209.85.223.179]:36691 "EHLO
-	mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754735AbcEBRpn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 13:45:43 -0400
-Received: by mail-io0-f179.google.com with SMTP id u185so204476803iod.3
-        for <git@vger.kernel.org>; Mon, 02 May 2016 10:45:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=Rf+eIxgQcMFtjKVWVaz6P9U6zI4hWzP/5lJ55JoYDmk=;
-        b=Cj8B/ov2MeMpqhp7dSW83xoilUYIuiaJYElZzdhNI1mcpI7M4WgAs1bucFF+gu1CE+
-         t0jL+uSt1qxsh57eR+OAiS88AF8pFWHxhNQZ0eg24y+0eoMjdZuhclZUrkHhqZa3j6Gl
-         ae4JNiPcoG7H9BQsxYtsgFxhoJEycP8SvR/GHLFn8Ih8U+Flm0KLVnNaC1v4Kmpsz537
-         KI+jdBH1CS6kCWB65VaQWvbTcw85393RdzNYXgx0njLNFKwdQx7Bc/mOsIMQSGztwZnc
-         5WPgJrTq/ULIhm1142M8rERr7la1AoEi/P7BGygNDQV6yZQyvBTZAyaEBqJbLoHNqkV+
-         gsMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=Rf+eIxgQcMFtjKVWVaz6P9U6zI4hWzP/5lJ55JoYDmk=;
-        b=XTx3UcVQfEglfsKuSKHm09yTlU8+ybUthr49lr8vBwMSrbd/nbAJILTMXsPI15ysCo
-         nYA82FI/chN7NMveKTZ8eF5xA2GhY9xjek3zPhKzgMBihlCzMmj5GGVnwSQjibvktqMg
-         wJCFT6VjFowiXlVoX+Nu8eFfZn9cYz1IKZYXTu7VrK3JfQOB0JBgY8ub4KKjbnkQKULq
-         DnMkJ5WSOFmOOyHjZlXw75KyqklAN447D9v/DPna8fE6YU5YHgWGUDR19V8nTka3YApq
-         489W4jV9s6G+4oOHWBfRXqvhXw40NxgtT9in6ECefC0Vbg8KRVB/8YohpTJi78/gPcU0
-         UDIQ==
-X-Gm-Message-State: AOPr4FXO0wlp6hd5NWdt0Bd9U8Ezfp6Yt9QvzMmX+I7p5Fdk5mLRUPjeKQtcIJvHR6h2PDgZxBvxMiYbe7hUV8iJ
-X-Received: by 10.107.174.205 with SMTP id n74mr40908381ioo.96.1462211142201;
- Mon, 02 May 2016 10:45:42 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Mon, 2 May 2016 10:45:41 -0700 (PDT)
-In-Reply-To: <xmqqfuu0uzn7.fsf@gitster.mtv.corp.google.com>
+	id S1754714AbcEBRtr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 May 2016 13:49:47 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59132 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754659AbcEBRtp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 May 2016 13:49:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3A3B11643A;
+	Mon,  2 May 2016 13:49:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=RnHv98Neb5Jx
+	/5xnJR87oVyZPv4=; b=NANIdAglLlnLFkf52iM27y2HQ7nMEAwoJlTUO4XuQP+P
+	0kw52N4QN25jfF60GqexrDJhkzA2H1vm1+n0O+OmFwj0u3uQppUWGeYpGrM03etP
+	PCqlCh8OGn0cCvPI8xHKF5OrwS0m3+yCIvF2Oglch0c47QVc81/Dzjo5mgTXTws=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=iN0uCN
+	j13ydVXGmPQGtBv1nZnounLzZpDwYZbCaWeMVpCcrC4hq17J/dvJ+3KbYnVL4ZVC
+	kIazStf8H7M1BaJCzxDaiatzaryQ9Xn7mNY4M0EOQMeRT0k93TsGtcVwvu95CUyW
+	Tn4p4OlQ0aFZ2Qo/HPXiaCgtTARflln5w77pg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3165B16438;
+	Mon,  2 May 2016 13:49:44 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7ADF416437;
+	Mon,  2 May 2016 13:49:43 -0400 (EDT)
+In-Reply-To: <1461151948-38583-1-git-send-email-shin@kojima.org> (Shin
+	Kojima's message of "Wed, 20 Apr 2016 20:32:28 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 4083E8CC-108E-11E6-952E-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293250>
 
-On Mon, May 2, 2016 at 10:40 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> "Keller, Jacob E" <jacob.e.keller@intel.com> writes:
->
->> True. I think the chances that it needs such a thing are quite minor,
->> and if an undocumented knob gets exposed it would have to become
->> documented and maintained, so I'd prefer to avoid it. Given that the
->> risk is pretty small I think that's ok.
->
-> OK, then let's do only the "documentation" part.
+Shin Kojima <shin@kojima.org> writes:
 
-The patch below looks good to me.
-
-Thanks,
-Stefan
-
+> Some multi-byte character encodings (such as Shift_JIS and GBK) have
+> characters whose final bytes is an ASCII '\' (0x5c), and they
+> will be displayed as funny-characters even if $fallback_encoding is
+> correct.  This is because `highlight` command always expects UTF-8
+> encoded strings from STDIN.
 >
-> -- >8 --
-> Subject: [PATCH] diff: undocument the compaction heuristic knobs for experimentation
+>     $ echo 'my $v =3D "=E7=94=B3";' | highlight --syntax perl | w3m -=
+T text/html -dump
+>     my $v =3D "=E7=94=B3";
 >
-> It seems that people around here are all happy with the updated
-> heuristics used to decide where the hunks are separated.  Let's keep
-> that as the default.  Even though we do not expect too much trouble
-> from the difference between the old and the new algorithms, just in
-> case let's leave the implementation of the knobs to turn it off for
-> emergencies.  There is no longer need for documenting them, though.
+>     $ echo 'my $v =3D "=E7=94=B3";' | iconv -f UTF-8 -t Shift_JIS | h=
+ighlight \
+>         --syntax perl | iconv -f Shift_JIS -t UTF-8 | w3m -T text/htm=
+l -dump
 >
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>     iconv: (stdin):9:135: cannot convert
+>     my $v =3D "
+>
+> This patch prepare git blob objects to be encoded into UTF-8 before
+> highlighting in the manner of `to_utf8` subroutine.
 > ---
->  Documentation/diff-config.txt  | 5 -----
->  Documentation/diff-options.txt | 6 ------
->  2 files changed, 11 deletions(-)
+
+The single liner Perl invoked from the script felt a bit too dense
+to my taste but other than that I have no complaints to what the
+patched code does.
+
+Jakub, does it look good to you, too?
+
+Please sign-off your patch (see Documentation/SubmittingPatches).
+
+Thanks.
+
+
+>  gitweb/gitweb.perl | 3 +++
+>  1 file changed, 3 insertions(+)
 >
-> diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
-> index 9bf3e92..6eaa452 100644
-> --- a/Documentation/diff-config.txt
-> +++ b/Documentation/diff-config.txt
-> @@ -166,11 +166,6 @@ diff.tool::
->
->  include::mergetools-diff.txt[]
->
-> -diff.compactionHeuristic::
-> -       Set this option to enable an experimental heuristic that
-> -       shifts the hunk boundary in an attempt to make the resulting
-> -       patch easier to read.
-> -
->  diff.algorithm::
->         Choose a diff algorithm.  The variants are as follows:
->  +
-> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-> index b513023..3ad6404 100644
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -63,12 +63,6 @@ ifndef::git-format-patch[]
->         Synonym for `-p --raw`.
->  endif::git-format-patch[]
->
-> ---compaction-heuristic::
-> ---no-compaction-heuristic::
-> -       These are to help debugging and tuning an experimental
-> -       heuristic that shifts the hunk boundary in an attempt to
-> -       make the resulting patch easier to read.
-> -
->  --minimal::
->         Spend extra time to make sure the smallest possible
->         diff is produced.
-> --
-> 2.8.2-458-gacc1066
->
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 05d7910..2fddf75 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -3935,6 +3935,9 @@ sub run_highlighter {
+> =20
+>  	close $fd;
+>  	open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | "=
+=2E
+> +	          quote_command($^X, '-CO', '-MEncode=3Ddecode,FB_DEFAULT',=
+ '-pse',
+> +	            '$_ =3D decode($fe, $_, FB_DEFAULT) if !utf8::decode($_=
+);',
+> +	            '--', "-fe=3D$fallback_encoding")." | ".
+>  	          quote_command($highlight_bin).
+>  	          " --replace-tabs=3D8 --fragment --syntax $syntax |"
+>  		or die_error(500, "Couldn't open file or run syntax highlighter");
