@@ -1,75 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/6] connect: uniformize and group CONNECT_DIAG_URL handling code
-Date: Mon, 02 May 2016 15:05:31 -0700
-Message-ID: <xmqqfuu0qfo4.fsf@gitster.mtv.corp.google.com>
-References: <1462082573-17992-1-git-send-email-mh@glandium.org>
-	<1462082573-17992-3-git-send-email-mh@glandium.org>
-	<5726DE16.3030402@web.de> <20160502083133.GA20929@glandium.org>
-	<57273A0B.5050409@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue May 03 00:05:40 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH 1/3] submodule deinit test: fix broken && chain in subshell
+Date: Mon,  2 May 2016 15:24:02 -0700
+Message-ID: <1462227844-10624-2-git-send-email-sbeller@google.com>
+References: <1462227844-10624-1-git-send-email-sbeller@google.com>
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com, Jens.Lehmann@web.de
+X-From: git-owner@vger.kernel.org Tue May 03 00:24:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axLyF-0006FN-L3
-	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 00:05:39 +0200
+	id 1axMGI-0003lb-3M
+	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 00:24:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755236AbcEBWFf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 May 2016 18:05:35 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64923 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755209AbcEBWFf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2016 18:05:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EF96819503;
-	Mon,  2 May 2016 18:05:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=0XKTb2hKepy0
-	Cms3LDwyBVmXngg=; b=nrSkkTwOGSwO//3wKwEAm9QhlGMjPSufGl3R345hI17/
-	/mOMAu7M4KGB0ywpvVTBg05665X2L2Ge00VGEbRFU/8JAQslPohD9CM0kiT4cfKm
-	mncpE/uGRlM2YQuBWI0z8fElLhFMUMJKVjI+hF5qwv7hLFw7wiKo0Kt6x+5uCMA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=sp3YUC
-	gVLmfuiCEmTZ8j5a0DdQfMhP9pEgckP6I/LghzYhFhJo/ZeDlrFVjnB8vosV5Qhq
-	GXBg92EIDf5oNLmmKJ9tU2jD6d765aQS5l2u6TFRRxmbVWXWkeMsFIBiz7m9ePFe
-	5U9R/yApqAUIOefDS+pYpx5NtI7eP4Am3ls14=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E682F19502;
-	Mon,  2 May 2016 18:05:33 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 53E2319501;
-	Mon,  2 May 2016 18:05:33 -0400 (EDT)
-In-Reply-To: <57273A0B.5050409@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Mon, 2 May 2016 13:29:15 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: FDBBBB9A-10B1-11E6-B13B-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S932199AbcEBWYO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 18:24:14 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:35477 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755166AbcEBWYN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 18:24:13 -0400
+Received: by mail-pa0-f53.google.com with SMTP id iv1so961434pac.2
+        for <git@vger.kernel.org>; Mon, 02 May 2016 15:24:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=hiBGt76+2PNJmbQO5xbJu1NP3rLYisaLDWf3e6YNq8c=;
+        b=eRN+f67Cx0BuuIat/OoJEQjU0sZLuery3SDBeyeZHbciRFO0cYFMd6mVMuQ4naOc/d
+         yX9Hhraq8uiS59+WlLbqdhT1B0a/gs2x641pc2FfuCeGRvMJUk9AhvYzoSshAOg1NQbN
+         YAFzij0EShdyP/cgpbaGSNmHnMMqThlk9Zgpo2ZTLJQqrg8PZUPmmn1m8ZZD10OpOQL7
+         lYS+zauMez5SthmDjgpNpVXVW/TXjTvsG8qY3W8HMUdxIf0Wtck8GGCqwQ1hEMTPo1ca
+         SGXHSLIidamb7tdX/qQekh2yE3JEzmgGhBakOXI3Qy7lR7nKgAiP14POW2BcoaoeazbG
+         6reA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=hiBGt76+2PNJmbQO5xbJu1NP3rLYisaLDWf3e6YNq8c=;
+        b=DIBWwCGA8HGncxdrJHmIRj/nVJcNipdOYAgqu1WufymZkAuVxeKRFFnh1TG71KEvc0
+         rhWn72kmlV8vFNBVWOLNZdE63xBtewFzveL0N7Ckn+BxFzYaVyfCoEvmi4pnzXCa5kAT
+         pXeFgrLDuwuJl+UGqvkCvMXtbgUGBHfin4txJc81QIfjWyMb562IiaIvZOXgHFNvKcwc
+         DSeEVGQ2JI22FF2M7UFP39izEVcKM/e5OdFiUcvkp2ZHHEwkvUIrJWIrGYu2eFAISXbU
+         GO/310PX4YYm5eOa8pHoNR61G6Ymj4NDNp/bsAudxiQATeWg2e7T50AZr0/Pr+B505z9
+         0fug==
+X-Gm-Message-State: AOPr4FXVZ8bGkP2vq/w6QhVuBpt46QMUWftteYFHgCfp6ZDd6iZDo19T9jA4xnmzo6L09sq+
+X-Received: by 10.66.65.109 with SMTP id w13mr54594457pas.142.1462227852268;
+        Mon, 02 May 2016 15:24:12 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:9831:74f0:67fd:61ba])
+        by smtp.gmail.com with ESMTPSA id 8sm266243pfk.69.2016.05.02.15.24.11
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 02 May 2016 15:24:11 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0.37.gb114fff.dirty
+In-Reply-To: <1462227844-10624-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293295>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ t/t7400-submodule-basic.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> git://host:[port]/path/to/repo
-> Knowing that, the "@" will be feed into the name resolver,
-> and that's OK.
-
-Is it OK?  It is plausible that our client side may even want to
-accept git://user:pass@host:port/local/part, and as an anonymous
-service, allow it to go to git://host:port/local/part without
-sending user:pass part over the wire.  Or with the same knowledge
-that git:// is an anonymous service, it is also a plausible policy
-to error such a request out.  To implement either needs a robust
-parsing of the URL, doesn't it?
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 814ee63..90d80d3 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -914,7 +914,7 @@ test_expect_success 'submodule deinit works on repository without submodules' '
+ 		git init &&
+ 		>file &&
+ 		git add file &&
+-		git commit -m "repo should not be empty"
++		git commit -m "repo should not be empty" &&
+ 		git submodule deinit .
+ 	)
+ '
+-- 
+2.8.0.37.gb114fff.dirty
