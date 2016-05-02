@@ -1,54 +1,54 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: [PATCH] commit-tree: do not pay attention to commit.gpgsign
-Date: Mon, 02 May 2016 14:58:45 -0700
-Message-ID: <xmqqlh3sqfze.fsf@gitster.mtv.corp.google.com>
+Date: Mon, 02 May 2016 14:59:49 -0700
+Message-ID: <xmqqk2jcqfxm.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 02 23:58:54 2016
+X-From: git-owner@vger.kernel.org Tue May 03 00:00:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axLrh-0003mP-Ny
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 23:58:54 +0200
+	id 1axLsj-0004Cn-0B
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 23:59:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755232AbcEBV6u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 17:58:50 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59082 "EHLO
+	id S1755182AbcEBV7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 17:59:53 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62877 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754411AbcEBV6t (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 17:58:49 -0400
+	with ESMTP id S1754411AbcEBV7w (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 17:59:52 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 01CBC19376;
-	Mon,  2 May 2016 17:58:48 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5E7E018B1B;
+	Mon,  2 May 2016 17:59:51 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=K
-	APorVuoqHneEnUoOWZTiwlG5rU=; b=FWe6MYWQAAOnh+NebPAyQflZ6SDeRP+GY
-	x6MCdVnbP2dxE5R1DBt9RltG/cRDtjgjqMKinJ/ItK4dNNxvGJZ1N4v2wCpfNAYZ
-	SBMsCy8io9vdY1iOkfZTnIR2tXQvU354dLgsgkDhAlVdwio96u9sDJLNql3Vo3sY
-	PCsiulBKj0=
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=/
+	DjFODId4rNjJ0OUixMDu68ciS0=; b=MCZHetULxxfrMK/iaWP1NDWyuVx6JJ6V5
+	GQcKRQhIshOZaTuBjoBdVxIemIbcYkgIraM8ymoEBMj3xKcCgIkGI2GD5+SpZkli
+	CAUK9gVJ/HK9qYQxInYMtCDzqD+U6zvt07EGB7YWhpDrAY9GgxWslTNZ+gcmMMoj
+	SbN4c2YMSo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=hdJ
-	NRi/QNuadsif2QkgO32zaKqy0mSRWS9wFuqArChsiuFYNCEXoBEx6T+2S0RDrgPp
-	FcGpaCfCq06iM9HLUkfWmwKTepbzCh86qvg6N9Hft/JEHwTDZbR+f0Xl2HTy42eh
-	fKRIXKdIPtGtfINrQmX8OdYPsjOr56tfVTvCyWt4=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EE9F319375;
-	Mon,  2 May 2016 17:58:47 -0400 (EDT)
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=cGm
+	DU8VCBDi0foAs+y6SXziTy4ij04dSMQFTvHL2CScC3JU/Vy3dNo2U+epguCxd7Ap
+	kN8iV5QAHzqJj0LD0aOtDEGvtXtY65Wt2QWj0Q7z6gOMNsfpqU8XoEGA+bCedwKW
+	6hYZsMfy+VB9u+tVnaPjpdm4D+Mlx3j22M28QoEU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 55BA218B1A;
+	Mon,  2 May 2016 17:59:51 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5E6AB19374;
-	Mon,  2 May 2016 17:58:47 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A35CF18B18;
+	Mon,  2 May 2016 17:59:50 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0BC3706C-10B1-11E6-B03D-9A9645017442-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 317BDF2E-10B1-11E6-8664-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293293>
 
 ba3c69a9 (commit: teach --gpg-sign option, 2011-10-05) introduced a
 "signed commit" by teaching --[no-gpg-sign option and commit.gpgsign
@@ -66,56 +66,72 @@ offer their own configuration (e.g. "filterBranch..gpgsign") with an
 option to disable (e.g. "git filter-branch --no-gpgsign").
 
 Ignoring commit.gpgsign option _obviously_ breaks the backward
-compatibility, but I seriously doubt anybody sane is depending on
+compatibility, and I seriously doubt anybody sane is depending on
 this misfeature that commit-tree blindly follows commit.gpgsign in
-any third-party script that calls it.
+any third-party script that calls it, but following the "be careful
+when removing (mis)features" tradition, let's give these scripts an
+escape hatch.  Passing the new --use-commit-gpgsign-config option to
+makes it pay attention to the commit.gpgsign configuration again.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
 
- * This is an simpler alternative that forces commit-tree callers
-   that want to honor commit.gpgsign to do so themselves.
-
- builtin/commit-tree.c | 15 +--------------
- 1 file changed, 1 insertion(+), 14 deletions(-)
+ builtin/commit-tree.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
-index 3feeffe..e4ba0d8 100644
+index 3feeffe..b023a6b 100644
 --- a/builtin/commit-tree.c
 +++ b/builtin/commit-tree.c
-@@ -8,7 +8,6 @@
- #include "tree.h"
- #include "builtin.h"
+@@ -10,9 +10,10 @@
  #include "utf8.h"
--#include "gpg-interface.h"
+ #include "gpg-interface.h"
  
- static const char commit_tree_usage[] = "git commit-tree [(-p <sha1>)...] [-S[<keyid>]] [-m <message>] [-F <file>] <sha1>";
+-static const char commit_tree_usage[] = "git commit-tree [(-p <sha1>)...] [-S[<keyid>]] [-m <message>] [-F <file>] <sha1>";
++static const char commit_tree_usage[] = "git commit-tree [(-p <sha1>)...] [-S[<keyid>]] [--use-commit-gpgsign-config] [-m <message>] [-F <file>] <sha1>";
  
-@@ -28,18 +27,6 @@ static void new_parent(struct commit *parent, struct commit_list **parents_p)
- 	commit_list_insert(parent, parents_p);
- }
+ static const char *sign_commit;
++static const char *config_sign_commit;
  
--static int commit_tree_config(const char *var, const char *value, void *cb)
--{
--	int status = git_gpg_config(var, value, NULL);
--	if (status)
--		return status;
--	if (!strcmp(var, "commit.gpgsign")) {
+ static void new_parent(struct commit *parent, struct commit_list **parents_p)
+ {
+@@ -34,7 +35,7 @@ static int commit_tree_config(const char *var, const char *value, void *cb)
+ 	if (status)
+ 		return status;
+ 	if (!strcmp(var, "commit.gpgsign")) {
 -		sign_commit = git_config_bool(var, value) ? "" : NULL;
--		return 0;
--	}
--	return git_default_config(var, value, cb);
--}
--
++		config_sign_commit = git_config_bool(var, value) ? "" : NULL;
+ 		return 0;
+ 	}
+ 	return git_default_config(var, value, cb);
+@@ -42,7 +43,7 @@ static int commit_tree_config(const char *var, const char *value, void *cb)
+ 
  int cmd_commit_tree(int argc, const char **argv, const char *prefix)
  {
- 	int i, got_tree = 0;
-@@ -48,7 +35,7 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+-	int i, got_tree = 0;
++	int i, got_tree = 0, use_commit_gpgsign_config = 0;
+ 	struct commit_list *parents = NULL;
+ 	unsigned char tree_sha1[20];
  	unsigned char commit_sha1[20];
- 	struct strbuf buffer = STRBUF_INIT;
+@@ -84,6 +85,11 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 		}
  
--	git_config(commit_tree_config, NULL);
-+	git_config(git_default_config, NULL);
++		if (!strcmp(arg, "--use-commit-gpgsign-config")) {
++			use_commit_gpgsign_config = 1;
++			continue;
++		}
++
+ 		if (!strcmp(arg, "-F")) {
+ 			int fd;
  
- 	if (argc < 2 || !strcmp(argv[1], "-h"))
- 		usage(commit_tree_usage);
+@@ -121,6 +127,9 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+ 			die_errno("git commit-tree: failed to read");
+ 	}
+ 
++	if (!sign_commit && use_commit_gpgsign_config)
++		sign_commit = config_sign_commit;
++
+ 	if (commit_tree(buffer.buf, buffer.len, tree_sha1, parents,
+ 			commit_sha1, NULL, sign_commit)) {
+ 		strbuf_release(&buffer);
