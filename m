@@ -1,86 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 19/29] refs: don't dereference on rename
-Date: Mon, 02 May 2016 10:55:58 -0700
-Message-ID: <xmqq7ffcuyxd.fsf@gitster.mtv.corp.google.com>
-References: <cover.1461768689.git.mhagger@alum.mit.edu>
-	<27f8b223e42dcf1cf3c010833e0aff7baa4559c2.1461768690.git.mhagger@alum.mit.edu>
-	<xmqqy47y98zx.fsf@gitster.mtv.corp.google.com>
-	<57230F71.2020401@alum.mit.edu>
-	<1461972108.4123.43.camel@twopensource.com>
-	<57242B22.4050202@alum.mit.edu>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 74/83] builtin/apply: make try_create_file() return -1 on error
+Date: Mon, 2 May 2016 14:01:13 -0400
+Message-ID: <CAPig+cQsS7x2qb8SphaAgdfpCLBQ-z=joL3w8RZH0HC9xRG54g@mail.gmail.com>
+References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
+	<1461504863-15946-75-git-send-email-chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon May 02 19:56:10 2016
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 02 20:01:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axI4n-0007LM-KH
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 19:56:09 +0200
+	id 1axI9m-0001Ds-Bx
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 20:01:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754659AbcEBR4G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 13:56:06 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60623 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753818AbcEBR4D (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 13:56:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5BD4F16551;
-	Mon,  2 May 2016 13:56:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0zIzDfFgZJ4SriJ8JjNpyYeV+qg=; b=XW+zuN
-	qny3WzcaiFy2OOeGlhRFsJ+7r0srg4oXvYtjyBFVoTD/7fxX7eez9iuG9HUUoNg8
-	tg2qPsUuKbVr/wJnczqj9PMF3nuwJevvOgLN4HDwXwyreY3ee4RA+HvjYl+ZAK8D
-	st97omAjLJ//mf7xVWmT0OQbVQNCEh8VY/x64=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AoDf+wLyeDnWFKddRWlwWKss2NmsgQ+E
-	r6FVU/ruMpjqNCbXlIeIQohPNaiTpOrZldjoCtSPmyHDT4BxPR2Bt/V4+TbEZJos
-	GycsU6mvqSd951cpCL8Fws9gttE4IFuMdLYyrKGE6SFOx87AEhptm/uTaGU9QjgQ
-	XXisafzeYwo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0E05E16550;
-	Mon,  2 May 2016 13:56:01 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 267B61654E;
-	Mon,  2 May 2016 13:56:00 -0400 (EDT)
-In-Reply-To: <57242B22.4050202@alum.mit.edu> (Michael Haggerty's message of
-	"Sat, 30 Apr 2016 05:48:50 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 210EC308-108F-11E6-B634-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1754748AbcEBSBO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 14:01:14 -0400
+Received: from mail-ig0-f193.google.com ([209.85.213.193]:35826 "EHLO
+	mail-ig0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754672AbcEBSBO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 14:01:14 -0400
+Received: by mail-ig0-f193.google.com with SMTP id fn8so10930272igb.2
+        for <git@vger.kernel.org>; Mon, 02 May 2016 11:01:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=BFwRXK/69GMSXt4pXxBlRhDfSdT6BrZ6AORbvR11uZo=;
+        b=epS97mf6kAN7qny0Ph2X/74u4cUTXxaiHvYSIpbLZou8j3+U7iWI+QxO6tJqxfbX0T
+         RaNxkGjrIL3svSc3LLmNvjnef8klQaYzdUCbDfuQgg3yI4fixB09rhs7/MNz7PevoSOH
+         X0fkEi6t5nmbGfmWth+4JZf2j5WKT/XHAHvWLA9UkS3yptAfReOdEjJhe3t6s4DEZrjY
+         OEbgnfERIvYmrnILKapPQiKwT6VhYHOR+reYC81gTVUZXeHrnL0ZcZoifUd1b+a0CuK8
+         hi+RmDx4lWUb4sSIbq9YUGYbQR66hjWsxWTUhOHT1O2BsR4Rx6XwW14nzX/0Y+eJdF48
+         K/sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=BFwRXK/69GMSXt4pXxBlRhDfSdT6BrZ6AORbvR11uZo=;
+        b=T0/TLax1sl3kk+58W558+7zG0EIdSR54S5E8rvTjLZrrOv3ImK+3zqyHi208Xld4Bm
+         irgWt1ypZEngBvIPHlZgPeOTCTdeCk1/M6yr4oki6QSCPqtzow9NTu7ZW8RXWEJdxxWq
+         C53Qba7Wxp7RHTCz4OHBfET4gq9UFjtYSlgAGA1xYx8d8KQ8bhVEcnByjTHBUrJ7R7Qd
+         eYTpTjkIKCAsxvlP+z4cZCIJnn74CT3HlqoYH/WELgVREL5PauOD6mb3MHZ21pK10m11
+         ihCQ6lhKps75sHzpkiq3kCpJz5gqoIappRGy4HRx/Hd+WBA6j7FbQGN6sr3GWrkFhYsI
+         L5VA==
+X-Gm-Message-State: AOPr4FWx7lpEJOxfnOybe3giUNlA3ofT6e0R05GbEXlPrvXSEuDWhrYhIle4Of2AUhyRSPRjde/urZWcP2Cmng==
+X-Received: by 10.50.3.105 with SMTP id b9mr19067902igb.17.1462212073124; Mon,
+ 02 May 2016 11:01:13 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Mon, 2 May 2016 11:01:13 -0700 (PDT)
+In-Reply-To: <1461504863-15946-75-git-send-email-chriscool@tuxfamily.org>
+X-Google-Sender-Auth: szkJYfh3TCbPr4qdt0Ptl-5_8no
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293253>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Sun, Apr 24, 2016 at 9:34 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+> diff --git a/builtin/apply.c b/builtin/apply.c
+> @@ -4145,28 +4151,32 @@ static int try_create_file(const char *path, unsigned int mode, const char *buf,
+>         fd = open(path, O_CREAT | O_EXCL | O_WRONLY, (mode & 0100) ? 0777 : 0666);
+>         if (fd < 0)
+> -               return -1;
+> +               return 1;
+>
+>         if (convert_to_working_tree(path, buf, size, &nbuf)) {
+>                 size = nbuf.len;
+>                 buf  = nbuf.buf;
+>         }
+> -       write_or_die(fd, buf, size);
+> +
+> +       if (!write_or_whine_pipe(fd, buf, size, path)) {
+> +               strbuf_release(&nbuf);
+> +               return -1;
 
-> The point is that `read_ref_full()` is now called with
-> `RESOLVE_REF_NO_RECURSE` turned on. So if `newrefname` is a symbolic
-> reference, then `read_ref_full()` sets `sha1` to zeros.
+This is leaking 'fd'.
 
-Yes, that was an obvious rationale in the patch that was not
-explained in the proposed log message (and made me ask you to
-explain it).  I was wondering why this was not loosened
-conditionally (i.e. only pass null_sha1 when symbolic ref is
-involved, in which case you _must_ pass null_sha1 because we no
-longer have anything to compare with).
+> +       }
+>         strbuf_release(&nbuf);
+>
+>         if (close(fd) < 0)
+> -               die_errno(_("closing file '%s'"), path);
+> +               return error(_("closing file '%s': %s"), path, strerror(errno));
+>         return 0;
+>  }
+>
+> @@ -4208,12 +4227,15 @@ static void create_one_file(struct apply_state *state,
+>                 for (;;) {
+>                         char newpath[PATH_MAX];
+>                         mksnpath(newpath, sizeof(newpath), "%s~%u", path, nr);
+> -                       if (!try_create_file(newpath, mode, buf, size)) {
+> +                       res = try_create_file(newpath, mode, buf, size);
+> +                       if (!res) {
+>                                 if (!rename(newpath, path))
+>                                         return;
+>                                 unlink_or_warn(newpath);
+>                                 break;
+>                         }
+> +                       if (res < 0)
+> +                               exit(1);
 
-Your explanation on the "in all possible interleaving, deletion of
-what might have been updated in the middle by other people does not
-matter" was a sufficient explanation why it does not have to be
-conditional.
+Two issues:
 
-> I'll document this in v2 of this patch.
+Getting the error case out of the way early (moving this 'if' just
+after 'res=...') would make it easier to reason about the remaining
+logic.
 
-Thanks.
+It's already difficult to understand what the below 'errno' check is
+testing. try_create_file(), rename(), or unlink_or_warn()? Plopping
+this new error handling conditional in front of it divorces the
+'errno' check even further from whatever it is testing.
+
+>                         if (errno != EEXIST)
+>                                 break;
+>                         ++nr;
