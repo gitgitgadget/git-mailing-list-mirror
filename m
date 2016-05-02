@@ -1,167 +1,75 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 10/10] submodule deinit: complain when given a file
- instead of a submodule
-Date: Mon, 2 May 2016 10:00:32 -0700
-Message-ID: <CAGZ79kY2hyRgn+oS436Hdr73ajW+Aeg+X-i5BSB41xqyfkz1Mw@mail.gmail.com>
-References: <1461976845-18228-1-git-send-email-sbeller@google.com>
-	<1461976845-18228-11-git-send-email-sbeller@google.com>
-	<CAP=KgsStNm7eUWRfzDPje8mAQ2hFCMJ6MpCeF_OgPvir244vgQ@mail.gmail.com>
-	<CAGZ79kZbb=PuTwfagDZETkFEaq-3Fp4Bd7ex03TMixUDLtZtiA@mail.gmail.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCHv5 1/2] http.c: implement the GIT_TRACE_CURL environment
+ variable
+Date: Mon, 2 May 2016 18:03:51 +0100
+Message-ID: <57278877.50907@ramsayjones.plus.com>
+References: <20160502142813.50868-1-gitter.spiros@gmail.com>
+ <20160502142813.50868-2-gitter.spiros@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Per Cederqvist <cederp@opera.com>
-X-From: git-owner@vger.kernel.org Mon May 02 19:00:43 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: tboegi@web.de, gitster@pobox.com, sunshine@sunshineco.com,
+	peff@peff.net
+To: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 02 19:04:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axHD8-0005gV-7K
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 19:00:42 +0200
+	id 1axHGT-0007OQ-I5
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 19:04:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754420AbcEBRAg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 13:00:36 -0400
-Received: from mail-io0-f180.google.com ([209.85.223.180]:32942 "EHLO
-	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754474AbcEBRAd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 13:00:33 -0400
-Received: by mail-io0-f180.google.com with SMTP id f89so173533604ioi.0
-        for <git@vger.kernel.org>; Mon, 02 May 2016 10:00:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=g/xN1kCe7cDB2QSWlvK1OcADzGFH/TdZFL2F6VT6GR0=;
-        b=kAvj4o16jKk9RJW9nygFRpOzCX318Sp4ynnqBHwFnFJR/IkuExv/dcbCQbTvFBpAqi
-         +Y/VBwAmlP+AUh4BZ4tOsFhbY7E07KW04+w0efscTlJnCct/uzl/AaGt39WxXBfhFFsX
-         UdaMK7ETJaZq9bIlNE4uIswKlo21B5EYKINfyvH8mNpd7txkqJnDZIALlGeHSdCeWeTR
-         PijJ+3Vw5o1Hokew1hfQsCdkASxkGkAXyS61lmhqwyVFk6RysvwH7A2sfYbpbBWuZr7K
-         QDcX42eZAuE+s6k7wo5eoY6EwLlw/1okoutIg6WtVwVhfu4jdjJ0u64IJxP5Yz1mnh6j
-         LvUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=g/xN1kCe7cDB2QSWlvK1OcADzGFH/TdZFL2F6VT6GR0=;
-        b=fcqFhzi52Q0g1INp5NgQ11npf8dZmOh0EcCpT6/+ZW1myCoH5W06bGkOA6JMVqaV10
-         n2TxXeJQorgf+hEPri3oQ/pEIPg9sQ4j9JQwSdeq5SiR1gLBFZ9DsRtF6w7Nybt4o/Ft
-         AlhuBxQZNxU1j5OpaLI/xdnynm+R4byq4bajRXf+s3q95y2EUPG+A9ID5lsZPCJgmXHa
-         p1nWuGrIbbDsKPJ4fKwjxkTKPlGKW+Yd/2EMF1NKBguwMyHlvc28uiVqeiOVJrRpu1WV
-         VStmDBRchRYCPt7J4Xjh1cCdjnQSzenDwFn1P86kUOpNCmmMJ6RGQcO9PXKyax1priKD
-         /pnQ==
-X-Gm-Message-State: AOPr4FX4EQwMDG/P6lyz+vkKrmx+cXNPdPPa/A8kW2PXTE1+wj4nA6sd98C1vsAZNBONqWKj8SIjqZJq1QK81Tl9
-X-Received: by 10.107.174.205 with SMTP id n74mr40675255ioo.96.1462208432710;
- Mon, 02 May 2016 10:00:32 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Mon, 2 May 2016 10:00:32 -0700 (PDT)
-In-Reply-To: <CAGZ79kZbb=PuTwfagDZETkFEaq-3Fp4Bd7ex03TMixUDLtZtiA@mail.gmail.com>
+	id S1754198AbcEBREG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 13:04:06 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:38227 "EHLO
+	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753598AbcEBRED (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 13:04:03 -0400
+Received: from [10.0.2.15] ([91.125.197.102])
+	by avasout07 with smtp
+	id pV3v1s0022D2Veb01V3woN; Mon, 02 May 2016 18:04:00 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=QqujpgGd c=1 sm=1 tr=0
+ a=mTUfFwB0nGOO66Ym8a+i3w==:117 a=mTUfFwB0nGOO66Ym8a+i3w==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
+ a=0UNnMH9RAlEhWUKK-JsA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.2
+In-Reply-To: <20160502142813.50868-2-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293242>
 
-On Mon, May 2, 2016 at 9:21 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Mon, May 2, 2016 at 1:26 AM, Per Cederqvist <cederp@opera.com> wrote:
->> After this change, what is the simplest way to programmatically
->> deinit any submodule that may exist, without failing if there are
->> none?
->>
->> "git commit" by default refuses to make an empty commit, but
->> it has the --allow-empty option.
->>
->> "git rm -r ." by default fails if there are no files in the repository,
->> but it has the --ignore-unmatch option.
->>
->> It makes sense that "git submodule deinit ." should fail if there
->> are no submodules, but please add support for --ignore-unmatch
->> at the same time.
 
-With this patch series, you can omit the trailing dot, i.e.
-"git submodule deinit" works. I just tested that and it works in
-repositories with no submodules as well as in empty repositories,
-but I'll add a test for that as well.
 
->
-> Oh right. I'll add the --ignore-unmatch option when rerolling this series.
->
-> Thanks,
-> Stefan
->
->>
->>     /ceder
->>
->>
->> On Sat, Apr 30, 2016 at 2:40 AM, Stefan Beller <sbeller@google.com> wrote:
->>> This also improves performance for listing submodules, because
->>> S_ISGITLINK is both faster as match_pathspec as well as expected to
->>> be true in fewer cases, so putting it first in the condition will speed
->>> up the loop to compute all submodules.
->>>
->>> As this partially reverts 84ba959bbdf0 (submodule: fix regression for
->>> deinit without submodules, 2016-03-22), this also disallows the use
->>> of `git submodule deinit .` to deinit all submodules, when no
->>> submodules are present. `deinit .` continues to work on repositories,
->>> which have at least one submodule.
->>>
->>> CC: Per Cederqvist <cederp@opera.com>
->>> Signed-off-by: Stefan Beller <sbeller@google.com>
->>> ---
->>>
->>>
->>>> Patch 10 is a controversial thing I'd assume as it breaks existing users.
->>>> We should take it for the next major release (i.e. 3.0)
->>>> I just want to put it out here now.
->>>
->>>  builtin/submodule--helper.c |  6 +++---
->>>  t/t7400-submodule-basic.sh  | 15 ++++++++++++++-
->>>  2 files changed, 17 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
->>> index 7f0941d..e41de3e 100644
->>> --- a/builtin/submodule--helper.c
->>> +++ b/builtin/submodule--helper.c
->>> @@ -242,9 +242,9 @@ static int module_list_compute(int argc, const char **argv,
->>>         for (i = 0; i < active_nr; i++) {
->>>                 const struct cache_entry *ce = active_cache[i];
->>>
->>> -               if (!match_pathspec(pathspec, ce->name, ce_namelen(ce),
->>> -                                   0, ps_matched, 1) ||
->>> -                   !S_ISGITLINK(ce->ce_mode))
->>> +               if (!S_ISGITLINK(ce->ce_mode) ||
->>> +                   !match_pathspec(pathspec, ce->name, ce_namelen(ce),
->>> +                                   0, ps_matched, 1))
->>>                         continue;
->>>
->>>                 ALLOC_GROW(list->entries, list->nr + 1, list->alloc);
->>> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
->>> index 53644da..361e6f6 100755
->>> --- a/t/t7400-submodule-basic.sh
->>> +++ b/t/t7400-submodule-basic.sh
->>> @@ -915,7 +915,20 @@ test_expect_success 'submodule deinit works on repository without submodules' '
->>>                 >file &&
->>>                 git add file &&
->>>                 git commit -m "repo should not be empty" &&
->>> -               git submodule deinit .
->>> +               git submodule deinit
->>> +       )
->>> +'
->>> +
->>> +test_expect_success 'submodule deinit refuses to deinit a file' '
->>> +       test_when_finished "rm -rf newdirectory" &&
->>> +       mkdir newdirectory &&
->>> +       (
->>> +               cd newdirectory &&
->>> +               git init &&
->>> +               >file &&
->>> +               git add file &&
->>> +               git commit -m "repo should not be empty" &&
->>> +               test_must_fail git submodule deinit file
->>>         )
->>>  '
->>>
->>> --
->>> 2.8.0.32.g71f8beb.dirty
->>>
+On 02/05/16 15:28, Elia Pinto wrote:
+
+[snip]
+
+> diff --git a/http.h b/http.h
+> index 36f558b..cd186a4 100644
+> --- a/http.h
+> +++ b/http.h
+> @@ -225,4 +225,8 @@ extern int finish_http_object_request(struct http_object_request *freq);
+>  extern void abort_http_object_request(struct http_object_request *freq);
+>  extern void release_http_object_request(struct http_object_request *freq);
+>  
+> +/* Debug callback and setup routine for curl_easy_setopt CURLOPT_DEBUGFUNCTION */
+> +void setup_curl_trace(CURL *handle);
+> +int curl_trace(CURL *handle, curl_infotype type, char *data, size_t size, void *userp);
+
+Given that you have wrapped the use of the debug callback into the
+setup_curl_trace() routine (good), do you still need to export the
+curl_trace() function?
+
+I would make that static, so that only setup_curl_trace() needs to
+be a public symbol. (I would also re-order the function definitions,
+so that setup_curl_trace() comes after curl_trace(), but that is a
+minor point).
+
+ATB,
+Ramsay Jones
