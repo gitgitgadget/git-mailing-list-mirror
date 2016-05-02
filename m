@@ -1,90 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 25/29] refs: resolve symbolic refs first
-Date: Mon, 02 May 2016 11:06:56 -0700
-Message-ID: <xmqq37q0uyf3.fsf@gitster.mtv.corp.google.com>
-References: <cover.1461768689.git.mhagger@alum.mit.edu>
-	<a33272db057ac6327cc0c87c002473c89ffcca6b.1461768690.git.mhagger@alum.mit.edu>
-	<1461886803.4123.14.camel@twopensource.com>
+From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: apply fallback encoding before highlight
+Date: Mon, 2 May 2016 20:12:52 +0200
+Message-ID: <CANQwDwfZPoNd7OTpSkEmf4amV0hh8kiuk3omwLCS0O=MZ1DB=A@mail.gmail.com>
+References: <1461151948-38583-1-git-send-email-shin@kojima.org> <xmqqbn4ouz7u.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	=?utf-8?B?Tmd1eeG7hW4gVGg=?= =?utf-8?B?w6FpIE5n4buNYw==?= Duy 
-	<pclouds@gmail.com>, Jeff King <peff@peff.net>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	git mailing list <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Mon May 02 20:07:04 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Shin Kojima <shin@kojima.org>, git <git@vger.kernel.org>,
+	Christopher Wilson <cwilson@cdwilson.us>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 02 20:13:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axIFL-0003rm-Fq
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 20:07:03 +0200
+	id 1axILi-0006sC-0F
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 20:13:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754850AbcEBSHB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 14:07:01 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59597 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754684AbcEBSG7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 14:06:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 73D6116792;
-	Mon,  2 May 2016 14:06:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aVV1zFIFygCpq0kWJGNwVPM7bhE=; b=b0hs/2
-	YVJt8BNy7KJTk/YP2x9sDhlOCGpWYA1U0B//loq6ij1gALXwp+fzrlHvsVCu/wNU
-	1FxUUPs06HEnN4pu347h5if8+HOtmse4xoKiHUCwARYfm69m3KaT2jTFrFl/LaQg
-	FtguSnRFc14NB5/veEBbTPJV+n1hhRPMg7ArU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RX95U0y0tgFlwsIeb5qoU/lmvqgN8PQC
-	ORNEBpo05vGx3S05rAwN9R6MPmFsH5Znq36h5sVbpM3C0qdO5Peznxrxma0KGi/v
-	zcwU7ygDu72ONQVJ+UD7Ckdqls5NESTmQfShIN4vDE5CF+ArdrEi3c536zafHs2x
-	5dRw78qWKh8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6C77216791;
-	Mon,  2 May 2016 14:06:58 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C4D5E16790;
-	Mon,  2 May 2016 14:06:57 -0400 (EDT)
-In-Reply-To: <1461886803.4123.14.camel@twopensource.com> (David Turner's
-	message of "Thu, 28 Apr 2016 19:40:03 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A9024252-1090-11E6-BCD6-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1754912AbcEBSNf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 14:13:35 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34234 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754829AbcEBSNd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 14:13:33 -0400
+Received: by mail-wm0-f68.google.com with SMTP id n129so18297344wmn.1
+        for <git@vger.kernel.org>; Mon, 02 May 2016 11:13:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=53XHXEFwXiqB4bFmHTGBvDkLSYxsemKIX2jqjEQ+s6o=;
+        b=Lg6eCbP45Qy78Iea8/xDWYTtuWxeqCc7VhTAridysui++o6ho2QvBp7lm5WxWtyio6
+         TgEJdkKsbsUmYl1jfSrSgNTWhcU/MVR1YFQ54r0BKAUxiD7DA3On6RD/FVuOv+Em8pCG
+         jLBn38/elLK7Ymc5RNpk65pUuNma7nnJ4oECi9TY1qNswQAasLfKMqLhSMME8JWIfSne
+         Hof2CmeLWI5ADhaKOWQn9ArkPzcO8ZLzTdRW0yH3PHGmi7h1qStuGEHHN1DPJomasGZ8
+         5miXzbIPFsG+ckMDuf6/t+LA1ugzfvG/tf90YvPupFm9RScOcQGY1dYedv2zW0KhT77I
+         dzIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=53XHXEFwXiqB4bFmHTGBvDkLSYxsemKIX2jqjEQ+s6o=;
+        b=QkxpntOb2YKz2mqxRyPVQ82wfSYUUQInGX59yjp+rq3yj2gwJuFNMmdGxEf3Ajh9Ys
+         DZX6u5YxAT4TuVrsg0bUg7bIpsIXRpodwEssIxuSPS/4Txt5XGCVBnZNYEOxOXOyPqAz
+         L6siNz64b9hIuSwgD4LaRJbEwEcXHJGGqOgGLvdVpsz/hIdU59Di1ormumORoxT/+09p
+         essId80gg1g7r1ilbVTKR8Ntr6CUwgDH21Fh0z/nOwzS4U8TUDAuc7vGoKf3JvSAxSyk
+         K/abaarLCtXNLhQoS+72D203ynXfIwZJ31++nPg+2rm2oyi56fbyeMS/Hnp/mewMDTAJ
+         CSfA==
+X-Gm-Message-State: AOPr4FW1gSswV6yeM8TxvvoQT4TtOnnt20k1nOGP0sLgwd07kNQ/KvzXjMb7ES5Hglrtn/rOufOWozG5mT7+VQ==
+X-Received: by 10.195.6.65 with SMTP id cs1mr35639164wjd.8.1462212812108; Mon,
+ 02 May 2016 11:13:32 -0700 (PDT)
+Received: by 10.194.124.129 with HTTP; Mon, 2 May 2016 11:12:52 -0700 (PDT)
+In-Reply-To: <xmqqbn4ouz7u.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293256>
 
-David Turner <dturner@twopensource.com> writes:
-
-> On Wed, 2016-04-27 at 18:57 +0200, Michael Haggerty wrote:
-> +retry:
-> ...
->> +		if (--attempts_remaining > 0)
->> +			goto retry;
+On Mon, May 2, 2016 at 7:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Shin Kojima <shin@kojima.org> writes:
 >
-> could this be a loop instead of using gotos?
+>> This patch prepare git blob objects to be encoded into UTF-8 before
+>> highlighting in the manner of `to_utf8` subroutine.
+>> ---
+>
+> The single liner Perl invoked from the script felt a bit too dense
+> to my taste but other than that I have no complaints to what the
+> patched code does.
+>
+> Jakub, does it look good to you, too?
 
-It could be, but given that there are many such exit points, I do
-not think an added level of indentation with while() loop is
-particularly a good way to go.
+Yes, it looks all right to me. $^X is current Perl. -CO means that
+the output is utf8 (for `highlight` command), -p means read all lines
+and print them (it could be replaced by "print" command in one-liner),
+-s is here to pass $fallback_encoding as $fe (it could be replaced,
+but it would require some fiddling with quoting $s), -e '...' means
+execute one line.
 
-Unless that big body of code that is looped around by implicit "goto
-retry" is made into a helper function to perform one round of attempt,
-which may result in one of success, temporary failure, final failure.
-Then we could do:
+> Please sign-off your patch (see Documentation/SubmittingPatches).
+>
+> Thanks.
+>
+>
+>>  gitweb/gitweb.perl | 3 +++
+>>  1 file changed, 3 insertions(+)
+>>
+>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+>> index 05d7910..2fddf75 100755
+>> --- a/gitweb/gitweb.perl
+>> +++ b/gitweb/gitweb.perl
+>> @@ -3935,6 +3935,9 @@ sub run_highlighter {
+>>
+>>       close $fd;
+>>       open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
+>> +               quote_command($^X, '-CO', '-MEncode=decode,FB_DEFAULT', '-pse',
+>> +                 '$_ = decode($fe, $_, FB_DEFAULT) if !utf8::decode($_);',
+>> +                 '--', "-fe=$fallback_encoding")." | ".
+>>                 quote_command($highlight_bin).
+>>                 " --replace-tabs=8 --fragment --syntax $syntax |"
+>>               or die_error(500, "Couldn't open file or run syntax highlighter");
 
-	int attempts_remaining = N;
-        int failed_hard = 0;
-        while (!failed_hard && attempts_remaining--)
-        	failed_hard = attempt();
-	
-and the end result _may_ become easier to read (even though I have
-to think for a second what the correct code should look like that
-comes after the loop).
+
+
+-- 
+Jakub Narebski
