@@ -1,130 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] xdiff: implement empty line chunk heuristic
-Date: Mon, 02 May 2016 10:40:28 -0700
-Message-ID: <xmqqfuu0uzn7.fsf@gitster.mtv.corp.google.com>
-References: <1461079290-6523-1-git-send-email-sbeller@google.com>
-	<1461079290-6523-3-git-send-email-sbeller@google.com>
-	<CA+P7+xoqn3fxEZGn02ST1XV-2UpQGr3iwV-37R8pakFJy_9n0w@mail.gmail.com>
-	<20160420041827.GA7627@sigill.intra.peff.net>
-	<xmqqa8kcxip9.fsf@gitster.mtv.corp.google.com>
-	<CA+P7+xpFCBU1xYbtcX8jtmDDyY8p0CiJJ=bexTmi=_vwWRZi0Q@mail.gmail.com>
-	<xmqqwpngukin.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZu=keNaCbt4T=CzH3i9qr+BxXw6AiWR-q1Cs4U80Jzng@mail.gmail.com>
-	<1461969582.731.1.camel@intel.com>
-	<CAGZ79kYx22oYobPxMkC03fGk-E9zaZZd2f+qafESkhcmFog7-w@mail.gmail.com>
-	<1461970113.731.3.camel@intel.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 73/83] builtin/apply: make write_out_results() return -1
+ on error
+Date: Mon, 2 May 2016 13:42:55 -0400
+Message-ID: <CAPig+cTpTYowkeO-cDd-87aAw_tRHvdhV4BaBveg25MvsDAd4w@mail.gmail.com>
+References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
+	<1461504863-15946-74-git-send-email-chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "sbeller\@google.com" <sbeller@google.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	"peff\@peff.net" <peff@peff.net>,
-	"jacob.keller\@gmail.com" <jacob.keller@gmail.com>
-To: "Keller\, Jacob E" <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Mon May 02 19:40:37 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 02 19:43:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axHpl-0000Ad-Bb
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 19:40:37 +0200
+	id 1axHs5-0001Ib-G5
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 19:43:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754704AbcEBRke (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 13:40:34 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56893 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754376AbcEBRkc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 13:40:32 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 958D518B37;
-	Mon,  2 May 2016 13:40:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ycMgv7VIzNDIfR3YOVNaj5/qK9M=; b=ZiVdz8
-	QBO6sLWXMKCXE+qsfrVMSQBncVo6dWQcCnHfW9KTPE5or5YxeJBt/0obcuCsYzNZ
-	d9pp7KC+s26B077f69dkscjaVPRo8so3H5yT1BePoMUQ9HsR3cq5IRgYx+J3yZtx
-	vAGYG3Jg7fMdJgThVhCj/nnp73GAli4QFEI4E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cW6ak98gR68+Kd2jyKeJPMFBbI09LqR0
-	Q7l/Pgmr4JHJdqYZYUfCl61chzO0SiRzFzaJk/tRXmR76CPQgn6UJJb9HIhvA9xk
-	ZoyLkZVIFyYmxeuXpl+12QEoF1dZyRVlejH9jC+YqHoEnvTyJnmVwSxy9Gag8ZZ1
-	Zj7o5BOqyuE=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8BAEE18B36;
-	Mon,  2 May 2016 13:40:30 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CE40018B35;
-	Mon,  2 May 2016 13:40:29 -0400 (EDT)
-In-Reply-To: <1461970113.731.3.camel@intel.com> (Jacob E. Keller's message of
-	"Fri, 29 Apr 2016 22:48:33 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F68BD58C-108C-11E6-8499-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1754681AbcEBRm6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 13:42:58 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:36501 "EHLO
+	mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754224AbcEBRm4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 13:42:56 -0400
+Received: by mail-io0-f194.google.com with SMTP id k129so23207625iof.3
+        for <git@vger.kernel.org>; Mon, 02 May 2016 10:42:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=EIOT9t+89CUS175s6DYoLkkpd9IU+hu4LTgQPBuM3dI=;
+        b=arRtnCdwwYFt6RnM75hjiACv9Mnx3hO4bYhq8/egSVTB7P3PZ5NF55On1Wpd/sCtku
+         Aryd9AePvWixX31nDTfm/fp5EyKtx37qxFB/bD02PhCZr90LlAkciI0r2ydgEuso9gh+
+         pkDZGvCL2ClkLo6qku3KZnDMdZWzZGbHEri6lz8t2ekkf5an5N3C6sTBKeimgzVl6i09
+         rbjH++dQe5QEvBQky1nD8solcuT3O/om5QaODNmlAYbEJXcU8/DK77Wri877P9nha51m
+         +2ydG+xsEaMQrOkxlEsJ7DtvrDP+RacMknyCFeLaN2z1AJ2Wu6e9mwWkaun0We0KiCIV
+         k0aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=EIOT9t+89CUS175s6DYoLkkpd9IU+hu4LTgQPBuM3dI=;
+        b=c9vpCrxurugq5MSp8Da4IjXtlWbVwt7e63VBJ+ENRpdEXS6Dls4orPK7/LBImh4nQt
+         pdU6Dbqu5LTFOAKM8SaxIgFxP7BaDTovrGvrkEpmgLnDR8PmkDDUCRqPunCuwTRiZufv
+         ANJAoetj0rEcw00pDm9USCG9fBdUnoz67jk3i3ffKrdhpXXkIKz66XukdojZjOkCA9N2
+         dYwzApIsKSOOQFAKZCvwi9RLvKIi6S8Rv4qnz2ySqjLiv2xeTkeyZQXVWGdNPhjqnkYF
+         pbfcOYa/WtBsr0RB/Jex+fMn7xI9tBKvQp3a6KvBU/+QtcwLJNK9QsNoQVNClK2H6idJ
+         bppA==
+X-Gm-Message-State: AOPr4FWsiYyhY9ixnJ5Vkzx2QbhadH95vLWMWxQNAzxGHCp26mYe8Uvkau6+r40cLUl+fsYcfsp5FW35fbIxyQ==
+X-Received: by 10.107.9.102 with SMTP id j99mr41583871ioi.104.1462210975957;
+ Mon, 02 May 2016 10:42:55 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Mon, 2 May 2016 10:42:55 -0700 (PDT)
+In-Reply-To: <1461504863-15946-74-git-send-email-chriscool@tuxfamily.org>
+X-Google-Sender-Auth: KBpXeAGMgpdlBTMJ9Ij761eWpDo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293247>
 
-"Keller, Jacob E" <jacob.e.keller@intel.com> writes:
+On Sun, Apr 24, 2016 at 9:34 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+> diff --git a/builtin/apply.c b/builtin/apply.c
+> @@ -4381,7 +4387,7 @@ static int write_out_results(struct apply_state *state, struct patch *list)
+>                                 errs = 1;
+>                         else {
+>                                 if (write_out_one_result(state, l, phase))
+> -                                       exit(1);
+> +                                       return -1;
 
-> True. I think the chances that it needs such a thing are quite minor,
-> and if an undocumented knob gets exposed it would have to become
-> documented and maintained, so I'd prefer to avoid it. Given that the
-> risk is pretty small I think that's ok.
+Isn't this leaking 'string_list cpath'?
 
-OK, then let's do only the "documentation" part.
+>                                 if (phase == 1) {
+>                                         if (write_out_one_reject(state, l))
+>                                                 errs = 1;
+> @@ -4484,11 +4490,16 @@ static int apply_patch(struct apply_state *state,
+>             !state->apply_with_reject)
+>                 return -1;
+>
+> -       if (state->apply && write_out_results(state, list)) {
+> -               if (state->apply_with_reject)
+> +       if (state->apply) {
+> +               int res = write_out_results(state, list);
+> +               if (res < 0)
+>                         return -1;
 
--- >8 --
-Subject: [PATCH] diff: undocument the compaction heuristic knobs for experimentation
+Mentioned previously: Leaking 'list', 'buf', 'fn_table'.
 
-It seems that people around here are all happy with the updated
-heuristics used to decide where the hunks are separated.  Let's keep
-that as the default.  Even though we do not expect too much trouble
-from the difference between the old and the new algorithms, just in
-case let's leave the implementation of the knobs to turn it off for
-emergencies.  There is no longer need for documenting them, though.
+> -               /* with --3way, we still need to write the index out */
+> -               return 1;
+> +               if (res > 0) {
+> +                       if (state->apply_with_reject)
+> +                               return -1;
+> +                       /* with --3way, we still need to write the index out */
+> +                       return 1;
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/diff-config.txt  | 5 -----
- Documentation/diff-options.txt | 6 ------
- 2 files changed, 11 deletions(-)
+Not the fault of this patch, but this 'return' in the original code
+was also leaking 'list', 'buf', 'fn_table', right?
 
-diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
-index 9bf3e92..6eaa452 100644
---- a/Documentation/diff-config.txt
-+++ b/Documentation/diff-config.txt
-@@ -166,11 +166,6 @@ diff.tool::
- 
- include::mergetools-diff.txt[]
- 
--diff.compactionHeuristic::
--	Set this option to enable an experimental heuristic that
--	shifts the hunk boundary in an attempt to make the resulting
--	patch easier to read.
--
- diff.algorithm::
- 	Choose a diff algorithm.  The variants are as follows:
- +
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index b513023..3ad6404 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -63,12 +63,6 @@ ifndef::git-format-patch[]
- 	Synonym for `-p --raw`.
- endif::git-format-patch[]
- 
----compaction-heuristic::
----no-compaction-heuristic::
--	These are to help debugging and tuning an experimental
--	heuristic that shifts the hunk boundary in an attempt to
--	make the resulting patch easier to read.
--
- --minimal::
- 	Spend extra time to make sure the smallest possible
- 	diff is produced.
--- 
-2.8.2-458-gacc1066
+> +               }
+>         }
+>
+>         if (state->fake_ancestor &&
