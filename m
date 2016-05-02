@@ -1,107 +1,128 @@
-From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: apply fallback encoding before highlight
-Date: Mon, 2 May 2016 20:12:52 +0200
-Message-ID: <CANQwDwfZPoNd7OTpSkEmf4amV0hh8kiuk3omwLCS0O=MZ1DB=A@mail.gmail.com>
-References: <1461151948-38583-1-git-send-email-shin@kojima.org> <xmqqbn4ouz7u.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] trailer: load config to handle core.commentChar
+Date: Mon, 02 May 2016 11:13:39 -0700
+Message-ID: <xmqqy47stjjg.fsf@gitster.mtv.corp.google.com>
+References: <1461873658-11394-1-git-send-email-rafalklys@wp.pl>
+	<CAPig+cT=Ca+Jd_SN_SM=iOmLnYtAt82dW7ammW4-AKdRReFfPA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Shin Kojima <shin@kojima.org>, git <git@vger.kernel.org>,
-	Christopher Wilson <cwilson@cdwilson.us>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 02 20:13:38 2016
+Content-Type: text/plain
+Cc: Rafal Klys <rafalklys@wp.pl>, Git List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon May 02 20:13:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axILi-0006sC-0F
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 20:13:38 +0200
+	id 1axILs-0006wQ-PC
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 20:13:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754912AbcEBSNf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 14:13:35 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34234 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754829AbcEBSNd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 14:13:33 -0400
-Received: by mail-wm0-f68.google.com with SMTP id n129so18297344wmn.1
-        for <git@vger.kernel.org>; Mon, 02 May 2016 11:13:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=53XHXEFwXiqB4bFmHTGBvDkLSYxsemKIX2jqjEQ+s6o=;
-        b=Lg6eCbP45Qy78Iea8/xDWYTtuWxeqCc7VhTAridysui++o6ho2QvBp7lm5WxWtyio6
-         TgEJdkKsbsUmYl1jfSrSgNTWhcU/MVR1YFQ54r0BKAUxiD7DA3On6RD/FVuOv+Em8pCG
-         jLBn38/elLK7Ymc5RNpk65pUuNma7nnJ4oECi9TY1qNswQAasLfKMqLhSMME8JWIfSne
-         Hof2CmeLWI5ADhaKOWQn9ArkPzcO8ZLzTdRW0yH3PHGmi7h1qStuGEHHN1DPJomasGZ8
-         5miXzbIPFsG+ckMDuf6/t+LA1ugzfvG/tf90YvPupFm9RScOcQGY1dYedv2zW0KhT77I
-         dzIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=53XHXEFwXiqB4bFmHTGBvDkLSYxsemKIX2jqjEQ+s6o=;
-        b=QkxpntOb2YKz2mqxRyPVQ82wfSYUUQInGX59yjp+rq3yj2gwJuFNMmdGxEf3Ajh9Ys
-         DZX6u5YxAT4TuVrsg0bUg7bIpsIXRpodwEssIxuSPS/4Txt5XGCVBnZNYEOxOXOyPqAz
-         L6siNz64b9hIuSwgD4LaRJbEwEcXHJGGqOgGLvdVpsz/hIdU59Di1ormumORoxT/+09p
-         essId80gg1g7r1ilbVTKR8Ntr6CUwgDH21Fh0z/nOwzS4U8TUDAuc7vGoKf3JvSAxSyk
-         K/abaarLCtXNLhQoS+72D203ynXfIwZJ31++nPg+2rm2oyi56fbyeMS/Hnp/mewMDTAJ
-         CSfA==
-X-Gm-Message-State: AOPr4FW1gSswV6yeM8TxvvoQT4TtOnnt20k1nOGP0sLgwd07kNQ/KvzXjMb7ES5Hglrtn/rOufOWozG5mT7+VQ==
-X-Received: by 10.195.6.65 with SMTP id cs1mr35639164wjd.8.1462212812108; Mon,
- 02 May 2016 11:13:32 -0700 (PDT)
-Received: by 10.194.124.129 with HTTP; Mon, 2 May 2016 11:12:52 -0700 (PDT)
-In-Reply-To: <xmqqbn4ouz7u.fsf@gitster.mtv.corp.google.com>
+	id S1754786AbcEBSNp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 14:13:45 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61320 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754913AbcEBSNn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 14:13:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id EC26216861;
+	Mon,  2 May 2016 14:13:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DxGpllEoSjN54oEs4KA3hIfurks=; b=pqZzxX
+	13bKCtakfIiPwyeMX2Son7/orYC+lQY/MVTyZhSHCOkI3G4BXkjFzSuSX2zomhTI
+	Dm+1K8Nu9MuSrceOI7nxLgqw+V3Fh1kRGfi4T1FNGysPuzW3zKPI3WM01Ocrngaw
+	het7YlS00PhIma3AKxo54/MriyhaK8M7Q495k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VZ+0PQ4XKMQqpRJcLt3HEA8mSZi4cc8z
+	7HoWUxMYvompKbwCygIsEy0BLtELPBrfr7htDoL5l0ZgqURSVpJwDaCPd+EIPQ1+
+	y8FmGZgtK5Ky6HiY/SuMb8YpMrRIu66fyYCfRXgj5QQfQ3kkkUdXNq1MS+50Yscw
+	htUk3cpfVzw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E461116860;
+	Mon,  2 May 2016 14:13:41 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5DA081685F;
+	Mon,  2 May 2016 14:13:41 -0400 (EDT)
+In-Reply-To: <CAPig+cT=Ca+Jd_SN_SM=iOmLnYtAt82dW7ammW4-AKdRReFfPA@mail.gmail.com>
+	(Eric Sunshine's message of "Thu, 28 Apr 2016 17:12:16 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 998EC1D2-1091-11E6-93AD-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293257>
 
-On Mon, May 2, 2016 at 7:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Shin Kojima <shin@kojima.org> writes:
->
->> This patch prepare git blob objects to be encoded into UTF-8 before
->> highlighting in the manner of `to_utf8` subroutine.
->> ---
->
-> The single liner Perl invoked from the script felt a bit too dense
-> to my taste but other than that I have no complaints to what the
-> patched code does.
->
-> Jakub, does it look good to you, too?
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Yes, it looks all right to me. $^X is current Perl. -CO means that
-the output is utf8 (for `highlight` command), -p means read all lines
-and print them (it could be replaced by "print" command in one-liner),
--s is here to pass $fallback_encoding as $fe (it could be replaced,
-but it would require some fiddling with quoting $s), -e '...' means
-execute one line.
+> In fact, this is such a simple fix that the subject suggested above
+> may itself be a sufficient commit message; any extra text might just
+> be noise since the patch itself contains enough information to
+> understand the problem and the fix.
 
-> Please sign-off your patch (see Documentation/SubmittingPatches).
+Sounds about right.
+
+>> +       git config core.commentChar x &&
+>> +       test_when_finished "git config --unset core.commentChar" &&
 >
-> Thanks.
+> The above two lines could be collapsed to:
 >
+>     test_config core.commentChar x &&
+
+Yes.
+
+> As this new test is effectively a copy of the preceding test, another
+> option would be to factor out the common code. For instance:
 >
->>  gitweb/gitweb.perl | 3 +++
->>  1 file changed, 3 insertions(+)
+>     test_comment () {
+>         cat basic_message >message_with_comments &&
+>         sed -e "s/ Z\$/ /" >>message_with_comments <<-EOF &&
+>             $1 comment
+>         ...
+>     }
+>
+>     test_expect_success 'with message that has comments' '
+>         test_comment '#'
+>     '
+>
+>     test_expect_success 'with message that has custom comment char' '
+>         test_config core.commentChar x &&
+>         test_comment x
+>     '
+>
+> Note that the backslash is dropped from -\EOF so that $1 can be
+> interpolated into the here-doc.
+>
+> Such a re-factoring would be done as a preparatory patch, thus making
+> this a two-patch series, however, it's probably not worth it for only
+> two tests sharing common code. (Although, the following test is also
+> nearly identical...)
+
+This certainly does make the result easier to read through.
+
+>> diff --git a/trailer.c b/trailer.c
+>> @@ -483,7 +483,8 @@ static int git_trailer_default_config(const char *conf_key, const char *value, v
+>>         const char *trailer_item, *variable_name;
 >>
->> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
->> index 05d7910..2fddf75 100755
->> --- a/gitweb/gitweb.perl
->> +++ b/gitweb/gitweb.perl
->> @@ -3935,6 +3935,9 @@ sub run_highlighter {
->>
->>       close $fd;
->>       open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
->> +               quote_command($^X, '-CO', '-MEncode=decode,FB_DEFAULT', '-pse',
->> +                 '$_ = decode($fe, $_, FB_DEFAULT) if !utf8::decode($_);',
->> +                 '--', "-fe=$fallback_encoding")." | ".
->>                 quote_command($highlight_bin).
->>                 " --replace-tabs=8 --fragment --syntax $syntax |"
->>               or die_error(500, "Couldn't open file or run syntax highlighter");
+>>         if (!skip_prefix(conf_key, "trailer.", &trailer_item))
+>> -               return 0;
+>> +               /* for core.commentChar */
+>> +               return git_default_config(conf_key, value, cb);
+>
+> I'm a bit torn about this comment. On the one hand, it does add a bit
+> of value since it's not obvious at a glance what config from the
+> default set is needed by git-trailer, however, if git-trailer someday
+> takes advantage of some additional config from the default set, then
+> this comment will likely become outdated.
 
+This is a very good point.
 
-
--- 
-Jakub Narebski
+"I wanted the call here for core.commentChar" is better said in the
+log message, as that will not stay true forever, as other people
+will start depending on being able to access other variables and
+generally they would not go back to read this message (to update
+it).
