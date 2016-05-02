@@ -1,114 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: apply fallback encoding before highlight
-Date: Mon, 02 May 2016 10:49:41 -0700
-Message-ID: <xmqqbn4ouz7u.fsf@gitster.mtv.corp.google.com>
-References: <1461151948-38583-1-git-send-email-shin@kojima.org>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 03/14] upload-pack-2: Implement the version 2 of upload-pack
+Date: Mon, 2 May 2016 10:51:36 -0700
+Message-ID: <CAGZ79kavBUohoMcC3iEws5mVBQ6HZsR=HyBoxM1jxUVJ6Z1jkA@mail.gmail.com>
+References: <1461972887-22100-1-git-send-email-sbeller@google.com>
+	<1461972887-22100-4-git-send-email-sbeller@google.com>
+	<1462210997.4123.49.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Christopher Wilson <cwilson@cdwilson.us>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Shin Kojima <shin@kojima.org>
-X-From: git-owner@vger.kernel.org Mon May 02 19:49:51 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Mon May 02 19:51:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axHyg-0004RV-8M
-	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 19:49:50 +0200
+	id 1axI0T-0005GQ-Q9
+	for gcvg-git-2@plane.gmane.org; Mon, 02 May 2016 19:51:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754714AbcEBRtr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 May 2016 13:49:47 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59132 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754659AbcEBRtp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2016 13:49:45 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3A3B11643A;
-	Mon,  2 May 2016 13:49:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=RnHv98Neb5Jx
-	/5xnJR87oVyZPv4=; b=NANIdAglLlnLFkf52iM27y2HQ7nMEAwoJlTUO4XuQP+P
-	0kw52N4QN25jfF60GqexrDJhkzA2H1vm1+n0O+OmFwj0u3uQppUWGeYpGrM03etP
-	PCqlCh8OGn0cCvPI8xHKF5OrwS0m3+yCIvF2Oglch0c47QVc81/Dzjo5mgTXTws=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=iN0uCN
-	j13ydVXGmPQGtBv1nZnounLzZpDwYZbCaWeMVpCcrC4hq17J/dvJ+3KbYnVL4ZVC
-	kIazStf8H7M1BaJCzxDaiatzaryQ9Xn7mNY4M0EOQMeRT0k93TsGtcVwvu95CUyW
-	Tn4p4OlQ0aFZ2Qo/HPXiaCgtTARflln5w77pg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3165B16438;
-	Mon,  2 May 2016 13:49:44 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7ADF416437;
-	Mon,  2 May 2016 13:49:43 -0400 (EDT)
-In-Reply-To: <1461151948-38583-1-git-send-email-shin@kojima.org> (Shin
-	Kojima's message of "Wed, 20 Apr 2016 20:32:28 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4083E8CC-108E-11E6-952E-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1754693AbcEBRvi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 May 2016 13:51:38 -0400
+Received: from mail-io0-f174.google.com ([209.85.223.174]:32785 "EHLO
+	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754678AbcEBRvh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2016 13:51:37 -0400
+Received: by mail-io0-f174.google.com with SMTP id f89so175004584ioi.0
+        for <git@vger.kernel.org>; Mon, 02 May 2016 10:51:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=25/3uREYnuvKI6ofJs2faXm/GW3itPh3BFlcF3RHiPQ=;
+        b=ZDEoX8EKDZAwCWO52EQltfL+rnWKe7s7BS6RaBx2qKUfGiQ02pfoXBvkMRXwRR7SKK
+         2fTzm7EHIOzx3dTi1LbXb04f2D5kCCzbsw74NORvzuTPrFAw+IpzOY9jqXS9CSsCxffp
+         xinuqp72hBe9D04SvxAFUXrEMvPRFxCHdznRqTzeD6FyfWTnrxjn6W70TnzxdCJ0fSHP
+         KouRr/HbSE/u7PJJjheFhrY0G3q+b444t940wthKriMv+/aipts44aQDILQ/Nga1Dbh1
+         1lbW0qvG9KTMASb+8Cat0kBTa/rxx2s3Klc1jQSdaXOPaRwU/95vwCkvPxzXucYy9ZTH
+         JOLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=25/3uREYnuvKI6ofJs2faXm/GW3itPh3BFlcF3RHiPQ=;
+        b=jbRo3XgleEqXOmqWBZ8HGuPXdcGDYZENdaGi/IL3RCPCu8g+X9fvTU7IRshi144nyW
+         m8NosixeI6j+lRhJQTRHU3FQEDXpo5gifBitqRSx7QYQI8a+QRSD4+f2FKMlJek196Lv
+         ElsMt659g9YUl31H3gaYLRQWQwQmKbd9xIaaqFSbyI/xfsymPLlQvrDhGW+vX0rb3Bg2
+         2Ifb4/pglO4Wa285t4gkNrvy0aRt0hFObnJpCJiN+wv7X9g44BtSRsQldoJ4R/1UgKoW
+         zVKsyuFUn8c88+sN3Fn0Tr/dHxhnUyz4bnTBnRKv0OTIv5D4ZRplvFyiDelFQg3LoTCb
+         oFZg==
+X-Gm-Message-State: AOPr4FUBhhD79vMrnn1QlszNdKYiQH3F0ahbQJZqQCs4XWI1LFeF991ATCut1db9Q5Mdwq5IM6+v+dJhJHUL87OG
+X-Received: by 10.107.53.204 with SMTP id k73mr5893719ioo.174.1462211496266;
+ Mon, 02 May 2016 10:51:36 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Mon, 2 May 2016 10:51:36 -0700 (PDT)
+In-Reply-To: <1462210997.4123.49.camel@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293251>
 
-Shin Kojima <shin@kojima.org> writes:
-
-> Some multi-byte character encodings (such as Shift_JIS and GBK) have
-> characters whose final bytes is an ASCII '\' (0x5c), and they
-> will be displayed as funny-characters even if $fallback_encoding is
-> correct.  This is because `highlight` command always expects UTF-8
-> encoded strings from STDIN.
+On Mon, May 2, 2016 at 10:43 AM, David Turner <dturner@twopensource.com> wrote:
+> On Fri, 2016-04-29 at 16:34 -0700, Stefan Beller wrote:
+>> In upload-pack-2 we send each capability in its own packet buffer.
+>> The construction of upload-pack-2 is a bit unfortunate as I would
+>> like
+>> it to not be depending on a symlink linking to upload-pack.c, but I
+>> did
+>> not find another easy way to do it. I would like it to generate
+>> upload-pack-2.o from upload-pack.c but with '-DTRANSPORT_VERSION=2'
+>> set.
 >
->     $ echo 'my $v =3D "=E7=94=B3";' | highlight --syntax perl | w3m -=
-T text/html -dump
->     my $v =3D "=E7=94=B3";
->
->     $ echo 'my $v =3D "=E7=94=B3";' | iconv -f UTF-8 -t Shift_JIS | h=
-ighlight \
->         --syntax perl | iconv -f Shift_JIS -t UTF-8 | w3m -T text/htm=
-l -dump
->
->     iconv: (stdin):9:135: cannot convert
->     my $v =3D "
->
-> This patch prepare git blob objects to be encoded into UTF-8 before
-> highlighting in the manner of `to_utf8` subroutine.
-> ---
+> Couldn't we check argv[0] and use that to determine protocol?  Then we
+> could symlink executables rather than source code.
 
-The single liner Perl invoked from the script felt a bit too dense
-to my taste but other than that I have no complaints to what the
-patched code does.
+IIRC I proposed a similar thing earlier, i.e.
 
-Jakub, does it look good to you, too?
+    if (argv[0] ends with 2)
+        do_protocol_v_2(...)
 
-Please sign-off your patch (see Documentation/SubmittingPatches).
+but that may break (and confuse a lot!) some use cases.
+`git fetch` has the documented --upload-pack switch, so as a server-admin
+you are free to have git-upload-pack linking to
+"git-upload-pack-2.8" but additionally you still have
+"git-upload-pack-1.7" or "git-upload-pack-custom-2".
 
-Thanks.
-
-
->  gitweb/gitweb.perl | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 05d7910..2fddf75 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -3935,6 +3935,9 @@ sub run_highlighter {
-> =20
->  	close $fd;
->  	open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | "=
-=2E
-> +	          quote_command($^X, '-CO', '-MEncode=3Ddecode,FB_DEFAULT',=
- '-pse',
-> +	            '$_ =3D decode($fe, $_, FB_DEFAULT) if !utf8::decode($_=
-);',
-> +	            '--', "-fe=3D$fallback_encoding")." | ".
->  	          quote_command($highlight_bin).
->  	          " --replace-tabs=3D8 --fragment --syntax $syntax |"
->  		or die_error(500, "Couldn't open file or run syntax highlighter");
+so I think we should not do that :(
+I do like to symlink the executables though.
