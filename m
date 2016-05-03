@@ -1,170 +1,101 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 2/3] submodule deinit: lose requirement for giving '.'
-Date: Tue, 3 May 2016 11:07:27 -0700
-Message-ID: <CAGZ79kaHmtRooJ7J6BknqWDkVFN0Bx3xngkEH0CnAp7Aaehnig@mail.gmail.com>
-References: <1462227844-10624-1-git-send-email-sbeller@google.com>
-	<1462227844-10624-3-git-send-email-sbeller@google.com>
-	<xmqqoa8nnjld.fsf@gitster.mtv.corp.google.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.8.2
+Date: Tue, 3 May 2016 20:29:20 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605032028450.9313@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 03 20:07:36 2016
+Content-Type: multipart/mixed; BOUNDARY="8323329-527511090-1462300161=:9313"
+To: git-for-windows@googlegroups.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 20:29:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axejM-00052t-Rh
-	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 20:07:33 +0200
+	id 1axf4c-0008QN-Fo
+	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 20:29:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934331AbcECSH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2016 14:07:29 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:36337 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934275AbcECSH2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2016 14:07:28 -0400
-Received: by mail-ig0-f180.google.com with SMTP id u10so123920993igr.1
-        for <git@vger.kernel.org>; Tue, 03 May 2016 11:07:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=PhtpBEI8McEiyQJSe03oukrks50y86Y6Hxem5IzsQ4c=;
-        b=kp7Gej0TvJ3+lQx/vdNrB2NOO6FhJ1mbWISQB9U/YeSYWShynbpmQpI2+tiM6F3FKN
-         RVcCtBNmbSWJbxI0LnIDwbrsI7LjjJk+lvHrXHag6YitODMA5urCbf+HT6NbNXX0RYgs
-         RCZT6GXj3/SjCw2dkCvFwqOUyJrUf20j5Xi/AvbSUyqL6hzxgz9D3aAFB3CgDN66kRRe
-         HZvddW5Qt+wX7Np8gIn44x5cAo5iJ6qfocJM5phVZpU+kI7wAh/AaNsmPQGRo8kbIyE1
-         +x1ch+uNwRJwqQYnpxoLgbNzpgReN94GT56osoc9eaBJWnST22aNh/cYHqn5rLlo0++A
-         3hJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=PhtpBEI8McEiyQJSe03oukrks50y86Y6Hxem5IzsQ4c=;
-        b=GJyOwVAxLHhwnTGW7xfu9eddJtdSUMDihXxE+QYey6F1k1fhAvkeNoDzYTUXE3c6Fp
-         RtkSxhymXKexvBp5cJVOpGZ8jcIlpLX69fOcrQBf9Su/wGjXW0C7JTzZAH68r4KgugXe
-         ra6NmIBtSyB/6S5uzS3aFTduEFlDWVKaCmwE4aXLFZvD2CxSMkcsWXG52+DWaruO9jm5
-         xYTebpyVrNDkJhrFtWsw+6DWvMOgHTO9Qum9vlWjB1AnjANer3uV6Dd4cEbsW7BKZD9n
-         N9ZmX9gcYj4FD7q/79/Zgz9XnSKf6CQCd89u1bfwxPTfcOy03dij3lM7ZYk3FcY1+fIk
-         jr4g==
-X-Gm-Message-State: AOPr4FU9F78kcMhzhhaOjT1OzzTOwfhHX3N10Ve4XB2++i+952JrlgT4Q614fb27fBFO6PVksU5srH0ppqWXf+op
-X-Received: by 10.50.29.45 with SMTP id g13mr28908088igh.93.1462298847187;
- Tue, 03 May 2016 11:07:27 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Tue, 3 May 2016 11:07:27 -0700 (PDT)
-In-Reply-To: <xmqqoa8nnjld.fsf@gitster.mtv.corp.google.com>
+	id S933873AbcECS30 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2016 14:29:26 -0400
+Received: from mout.gmx.net ([212.227.17.21]:61826 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932756AbcECS3Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2016 14:29:25 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0Lh7M3-1bUE102qWt-00oV4s; Tue, 03 May 2016 20:29:21
+ +0200
+X-X-Sender: virtualbox@virtualbox
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:CodODmdEj720b9TOpqDkY53TECKusck8djAPIJ+i4Rj24aXiDzo
+ inuyQQKHrmy9LfFocJIQi+TJNLSvFFj5xtnQrNWiZzlbu/zus6KXLixTPffZmVPYzraHXq1
+ iOf/eDWaQ0NzDZm614LJgiD2WQ1fNHAPKPijlJabw1zZQkJudu1l9X4R7WVYoya1PWBedyY
+ jczTN0tLxfEhgbMxfCwFw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:RMpgrTdHPu4=:GHPBL3scBuT8zWVFoQadyt
+ xssVV1TEB9vpKPodL+blRyZp6iTcNc6RCRUvHQYRobRS7JtYzmRK6mOx5FOLs2uG4CTdI2NPd
+ 87yDtA4JjXDRoVE7phV7WftuNLQGrdQjCzbfQEd1zm0CvOLjem5Pl8n4vXXG0uXsaVFheaemR
+ sQ2rGhRVr/Mym6U5toOnMN4MtBRRgfouWBA6Lr/SAS+rRZ5sXH8AMfTRotL+DdATxUvXLE8+q
+ M12vsPIltfDLVUY+FkAxx/yH9eCguQ2g1FZVtDEFJfnJ1Jq6THss+n2lmzf0hBpeWPtgXrqwh
+ FnMQGZsRE3xdCT337P1B46o3MAsWACr/AK2k181SK3pZD6Q0ElORf+mTAHa87Mt4HKaViN7Mc
+ eAOylyZEwvzt2s/h5VEIfVi2P/5+X9xA9uR7KNbcK1gOKvfRqhg61j2oE1qhOkMEq0ZFZd4b5
+ nyrCvSualDKWJ48BaSefUWJxBN6FCCwEd+LZAgkg9LqJNV9XjivILIHNzMoEBwvXHWUNib0VJ
+ 19SjELxR5hWm0QvGwL4GdFxOVLY6JRT2z+vFj7xwL8vif466xo8Cgn9Wds4yGRiLn7tSVf1tw
+ holemBGm7EBWj5/1x7p0M6NCo3h25w1ETB6QuIZQayd++egtFAqNSjav69uaRpQIJdRsvEb/I
+ U5Ez0plFdxrUprt5UW3IfisXOLNVtRr8dmy8W8XW+kUwjUk52D4BMJvgetqNnQBfge/RGxLkQ
+ paAgMnwsABeHzcus9jkezjXCgOz4mQ9ZJDLRG0k/l6JZGH9fB99CwjLiby4rOgbMWs7oULLc 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293430>
 
-On Tue, May 3, 2016 at 10:21 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> The discussion in [1] realized that '.' is a faulty suggestion as
->> there is a corner case where it fails:
->>
->>> "submodule deinit ." may have "worked" in the sense that you would
->>> have at least one path in your tree and avoided this "nothing
->>> matches" most of the time.  It would have still failed with the
->>> exactly same error if run in an empty repository, i.e.
->>>
->>>        $ E=/var/tmp/x/empty && rm -fr "$E" && mkdir -p "$E" && cd "$E"
->>>        $ git init
->>>        $ rungit v2.6.6 submodule deinit .
->>>        error: pathspec '.' did not match any file(s) known to git.
->>>        Did you forget to 'git add'?
->>>        $ >file && git add file
->>>        $ rungit v2.6.6 submodule deinit .
->>>        $ echo $?
->>>        0
->>
->> Allow no argument for `submodule deinit` to mean all submodules
->> and add a test to check for the corner case of an empty repository.
->>
->> There is no need to update the documentation as it did not describe the
->> special case '.' to remove all submodules.
->
-> OK, and the reason why there is no need to update the actual code,
-> other than the "do not allow" gate, is because "submodule--helper
-> list" aka module_list already knows to list everything if no
-> pathspec is given.  Am I reading the code (not in the patch)
-> correctly?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-You are correct.
+--8323329-527511090-1462300161=:9313
+Content-Type: text/plain; charset=X-UNKNOWN
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
->
->> [1] http://news.gmane.org/gmane.comp.version-control.git/289535
->
-> The old discussion thread raises a good point.  The refusal to
-> accept no-pathspec form for a potentially destructive "deinit" may
-> have been a safety measure, even though the suggested way to tell
-> the command "Yes, I know I want to deinit everything" was not a
-> good one (i.e. it resulted in an error if your project did not have
-> any files tracked yet).
->
-> So possible ways forward may be
->
->  - to remove the safety altogether; or
->  - keep the safety, but give a better suggestion to say "Yes, deinit
->    everything".
->
-> And this patch decides to take the former approach?
+Dear Git users,
 
-Yes.
+It is my pleasure to announce that Git for Windows 2.8.2 is available from:
 
->
-> I am wondering if this can be solved in a cleaner way to teach
-> "deinit" take a new "--all" option instead, e.g. something like...
->
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 82e95a9..4b84116 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -405,6 +405,7 @@ cmd_init()
->  cmd_deinit()
->  {
->         # parse $args after "submodule ... deinit".
-> +       deinit_all=
->         while test $# -ne 0
->         do
->                 case "$1" in
-> @@ -414,6 +415,9 @@ cmd_deinit()
->                 -q|--quiet)
->                         GIT_QUIET=1
->                         ;;
-> +               -a|--all)
-> +                       deinit_all=t
-> +                       ;;
->                 --)
->                         shift
->                         break
-> @@ -428,9 +432,9 @@ cmd_deinit()
->                 shift
->         done
->
-> -       if test $# = 0
-> +       if test $# = 0 && test -z "$deinit_all"
->         then
-> -               die "$(eval_gettext "Use '.' if you really want to deinitialize all submodules")"
-> +               die "$(eval_gettext "Use '--all' if you really want to deinitialize all submodules")"
->         fi
->
->         git submodule--helper list --prefix "$wt_prefix" "$@" |
->
->
-> That would work even in the pathological "empty directory that has
-> nothing to match even '.'" case without losing the safety, no?
+=09https://git-for-windows.github.io/
 
-It would work for the case
+Changes since Git for Windows v2.8.1 (April 4th 2016)
 
-    git submodule deinit --all # as you would expect.
+New Features
 
-    git submodule deinit --all COPYIN* # would break
-    git submodule deinit --all . # may break
-    git submodule deinit --all path/to/some/submodules/ # would be unclear to me
+  =E2=80=A2 Comes with Git v2.8.2.
+  =E2=80=A2 Starting with version 2.8.2, Git for Windows is also published =
+as a
+    NuGet package.
+  =E2=80=A2 Comes with Git Credential Manager v1.3.0.
 
-So maybe we want to add a check that no pathspec arguments are given when
---all is given?
+Bug Fixes
+
+  =E2=80=A2 FSCache is now enabled by default even when upgrading from prev=
+ious
+    Git for Windows versions.
+  =E2=80=A2 We now add git.exe to the PATH by default even when upgrading f=
+rom
+    previous Git for Windows versions.
+  =E2=80=A2 Git GUI now sets author information correctly when amending.
+  =E2=80=A2 OpenSSL received a critical update to version 1.0.2h.
+
+Filename | SHA-256
+-------- | -------
+Git-2.8.2-64-bit.exe | c2ce14a52dfd6d5c1bbfcc291f219962cc93c2945a1a8faa6e3d=
+0ccd63bdbc1d
+Git-2.8.2-32-bit.exe | 512ad6c406d448610a5745dab94dad2a34d964d33f79dbd2c480=
+247462ea328a
+PortableGit-2.8.2-64-bit.7z.exe | 553acbf46bacc67c73b954689ad3d9ac294bf9cbe=
+249a5b78159a1f92f37105b
+PortableGit-2.8.2-32-bit.7z.exe | da25bc12efa864cda53dc6485c84dd8b0d41883dd=
+360db505c026c284ef58d8e
+Git-2.8.2-64-bit.tar.bz2 | 7bc4202a419c6405db8587eccf04a120fab25ebb95cc3cb6=
+a2312fd1ae3e2576
+Git-2.8.2-32-bit.tar.bz2 | 458321df021f3a26f2a92e21cb21c9cb3173c7733af349fa=
+2c099261099d69b2
+
+Ciao,
+Johannes
+--8323329-527511090-1462300161=:9313--
