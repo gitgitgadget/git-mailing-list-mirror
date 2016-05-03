@@ -1,7 +1,7 @@
 From: Mike Hommey <mh@glandium.org>
-Subject: [PATCH v4 11/11] connect: move ssh command line preparation to a separate function
-Date: Tue,  3 May 2016 17:50:52 +0900
-Message-ID: <1462265452-32360-12-git-send-email-mh@glandium.org>
+Subject: [PATCH v4 09/11] connect: use "-l user" instead of "user@" on ssh command line
+Date: Tue,  3 May 2016 17:50:50 +0900
+Message-ID: <1462265452-32360-10-git-send-email-mh@glandium.org>
 References: <1462082573-17992-1-git-send-email-mh@glandium.org>
  <1462265452-32360-1-git-send-email-mh@glandium.org>
 Cc: gitster@pobox.com, tboegi@web.de
@@ -12,160 +12,146 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axW33-0004la-GW
-	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 10:51:17 +0200
+	id 1axW34-0004la-2x
+	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 10:51:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755820AbcECIvG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2016 04:51:06 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:51942 "EHLO
+	id S1755821AbcECIvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2016 04:51:08 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:51960 "EHLO
 	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755801AbcECIu6 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1755799AbcECIu6 (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 3 May 2016 04:50:58 -0400
 Received: from glandium by zenigata with local (Exim 4.87)
 	(envelope-from <glandium@glandium.org>)
-	id 1axW2e-0008R9-OJ; Tue, 03 May 2016 17:50:52 +0900
+	id 1axW2e-0008R5-LL; Tue, 03 May 2016 17:50:52 +0900
 X-Mailer: git-send-email 2.8.1.16.gaa70619.dirty
 In-Reply-To: <1462265452-32360-1-git-send-email-mh@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293338>
+
+While it is not strictly necessary, it makes the connect code simpler
+when there is user.
 
 Signed-off-by: Mike Hommey <mh@glandium.org>
 ---
- connect.c | 109 ++++++++++++++++++++++++++++++++++----------------------------
- 1 file changed, 59 insertions(+), 50 deletions(-)
+ connect.c        | 12 ++++--------
+ t/t5601-clone.sh | 52 ++++++++++++++++++++++++++++++++++++++++++++--------
+ 2 files changed, 48 insertions(+), 16 deletions(-)
+
+This is entirely optional.
 
 diff --git a/connect.c b/connect.c
-index 215d6d9..37b3140 100644
+index 2c5b722..0cec822 100644
 --- a/connect.c
 +++ b/connect.c
-@@ -673,6 +673,62 @@ static enum protocol parse_connect_url(const char *url_orig, char **ret_user,
- 	return protocol;
- }
- 
-+static int prepare_ssh_command(struct argv_array *cmd, const char *user,
-+			       const char *host, const char *port, int flags)
-+{
-+	const char *ssh;
-+	int putty = 0, tortoiseplink = 0, use_shell = 1;
-+	transport_check_allowed("ssh");
-+
-+	ssh = getenv("GIT_SSH_COMMAND");
-+	if (!ssh) {
-+		const char *base;
-+		char *ssh_dup;
-+
-+		/*
-+		 * GIT_SSH is the no-shell version of
-+		 * GIT_SSH_COMMAND (and must remain so for
-+		 * historical compatibility).
-+		 */
-+		use_shell = 0;
-+
-+		ssh = getenv("GIT_SSH");
-+		if (!ssh)
-+			ssh = "ssh";
-+
-+		ssh_dup = xstrdup(ssh);
-+		base = basename(ssh_dup);
-+
-+		tortoiseplink = !strcasecmp(base, "tortoiseplink") ||
-+			!strcasecmp(base, "tortoiseplink.exe");
-+		putty = tortoiseplink ||
-+			!strcasecmp(base, "plink") ||
-+			!strcasecmp(base, "plink.exe");
-+
-+		free(ssh_dup);
-+	}
-+
-+	argv_array_push(cmd, ssh);
-+	if (flags & CONNECT_IPV4)
-+		argv_array_push(cmd, "-4");
-+	else if (flags & CONNECT_IPV6)
-+		argv_array_push(cmd, "-6");
-+	if (tortoiseplink)
-+		argv_array_push(cmd, "-batch");
-+	if (port) {
-+		/* P is for PuTTY, p is for OpenSSH */
-+		argv_array_push(cmd, putty ? "-P" : "-p");
-+		argv_array_push(cmd, port);
-+	}
-+	if (user) {
-+		argv_array_push(cmd, "-l");
-+		argv_array_push(cmd, user);
-+	}
-+	argv_array_push(cmd, host);
-+
-+	return use_shell;
-+}
-+
- static struct child_process no_fork = CHILD_PROCESS_INIT;
- 
- /*
-@@ -767,59 +823,12 @@ struct child_process *git_connect(int fd[2], const char *url,
- 
- 		/* remove repo-local variables from the environment */
- 		conn->env = local_repo_env;
--		conn->use_shell = 1;
- 		conn->in = conn->out = -1;
- 		if (protocol == PROTO_SSH) {
--			const char *ssh;
--			int putty = 0, tortoiseplink = 0;
--			transport_check_allowed("ssh");
--
--			ssh = getenv("GIT_SSH_COMMAND");
--			if (!ssh) {
--				const char *base;
--				char *ssh_dup;
--
--				/*
--				 * GIT_SSH is the no-shell version of
--				 * GIT_SSH_COMMAND (and must remain so for
--				 * historical compatibility).
--				 */
--				conn->use_shell = 0;
--
--				ssh = getenv("GIT_SSH");
--				if (!ssh)
--					ssh = "ssh";
--
--				ssh_dup = xstrdup(ssh);
--				base = basename(ssh_dup);
--
--				tortoiseplink = !strcasecmp(base, "tortoiseplink") ||
--					!strcasecmp(base, "tortoiseplink.exe");
--				putty = tortoiseplink ||
--					!strcasecmp(base, "plink") ||
--					!strcasecmp(base, "plink.exe");
--
--				free(ssh_dup);
--			}
--
--			argv_array_push(&conn->args, ssh);
--			if (flags & CONNECT_IPV4)
--				argv_array_push(&conn->args, "-4");
--			else if (flags & CONNECT_IPV6)
--				argv_array_push(&conn->args, "-6");
--			if (tortoiseplink)
--				argv_array_push(&conn->args, "-batch");
--			if (port) {
--				/* P is for PuTTY, p is for OpenSSH */
--				argv_array_push(&conn->args, putty ? "-P" : "-p");
--				argv_array_push(&conn->args, port);
--			}
--			if (user) {
--				argv_array_push(&conn->args, "-l");
--				argv_array_push(&conn->args, user);
--			}
--			argv_array_push(&conn->args, host);
-+			conn->use_shell = prepare_ssh_command(
-+				&conn->args, host, port, flags);
+@@ -812,14 +812,10 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 				argv_array_push(&conn->args, port);
+ 			}
+ 			if (user) {
+-				struct strbuf userandhost = STRBUF_INIT;
+-				strbuf_addstr(&userandhost, user);
+-				strbuf_addch(&userandhost, '@');
+-				strbuf_addstr(&userandhost, host);
+-				argv_array_push(&conn->args, userandhost.buf);
+-				strbuf_release(&userandhost);
+-			} else
+-				argv_array_push(&conn->args, host);
++				argv_array_push(&conn->args, "-l");
++				argv_array_push(&conn->args, user);
++			}
++			argv_array_push(&conn->args, host);
  		} else {
-+			conn->use_shell = 1;
  			transport_check_allowed("file");
  		}
- 		argv_array_push(&conn->args, cmd.buf);
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index c1efb8e..98fe861 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -464,38 +464,74 @@ test_expect_success 'clone ssh://host.xz:22/~repo' '
+ '
+ 
+ #IPv6
+-for tuah in ::1 [::1] [::1]: user@::1 user@[::1] user@[::1]: [user@::1] [user@::1]:
++for tah in ::1 [::1] [::1]:
++do
++	ehost=$(echo $tah | sed -e "s/1]:/1]/ "| tr -d "[]")
++	test_expect_success "clone ssh://$tah/home/user/repo" "
++	  test_clone_url ssh://$tah/home/user/repo $ehost /home/user/repo
++	"
++done
++
++for tuah in user@::1 user@[::1] user@[::1]: [user@::1] [user@::1]:
+ do
+ 	ehost=$(echo $tuah | sed -e "s/1]:/1]/ "| tr -d "[]")
++	ehost=${ehost#user@}
+ 	test_expect_success "clone ssh://$tuah/home/user/repo" "
+-	  test_clone_url ssh://$tuah/home/user/repo $ehost /home/user/repo
++	  test_clone_url ssh://$tuah/home/user/repo '-l user $ehost' /home/user/repo
+ 	"
+ done
+ 
+ #IPv6 from home directory
+-for tuah in ::1 [::1] user@::1 user@[::1] [user@::1]
++for tah in ::1 [::1]
++do
++	eah=$(echo $tah | tr -d "[]")
++	test_expect_success "clone ssh://$tah/~repo" "
++	  test_clone_url ssh://$tah/~repo $eah '~repo'
++	"
++done
++
++for tuah in user@::1 user@[::1] [user@::1]
+ do
+ 	euah=$(echo $tuah | tr -d "[]")
++	eah=${euah#user@}
+ 	test_expect_success "clone ssh://$tuah/~repo" "
+-	  test_clone_url ssh://$tuah/~repo $euah '~repo'
++	  test_clone_url ssh://$tuah/~repo '-l user' $eah '~repo'
+ 	"
+ done
+ 
+ #IPv6 with port number
+-for tuah in [::1] user@[::1] [user@::1]
++for tah in [::1]
++do
++	eah=$(echo $tah | tr -d "[]")
++	test_expect_success "clone ssh://$tah:22/home/user/repo" "
++	  test_clone_url ssh://$tah:22/home/user/repo '-p 22' $eah /home/user/repo
++	"
++done
++
++for tuah in user@[::1] [user@::1]
+ do
+ 	euah=$(echo $tuah | tr -d "[]")
++	eah=${euah#user@}
+ 	test_expect_success "clone ssh://$tuah:22/home/user/repo" "
+-	  test_clone_url ssh://$tuah:22/home/user/repo '-p 22' $euah /home/user/repo
++	  test_clone_url ssh://$tuah:22/home/user/repo '-p 22 -l user' $eah /home/user/repo
+ 	"
+ done
+ 
+ #IPv6 from home directory with port number
+-for tuah in [::1] user@[::1] [user@::1]
++for tah in [::1]
++do
++	eah=$(echo $tah | tr -d "[]")
++	test_expect_success "clone ssh://$tah:22/~repo" "
++	  test_clone_url ssh://$tah:22/~repo '-p 22' $eah '~repo'
++	"
++done
++
++for tuah in user@[::1] [user@::1]
+ do
+ 	euah=$(echo $tuah | tr -d "[]")
++	eah=${euah#user@}
+ 	test_expect_success "clone ssh://$tuah:22/~repo" "
+-	  test_clone_url ssh://$tuah:22/~repo '-p 22' $euah '~repo'
++	  test_clone_url ssh://$tuah:22/~repo '-p 22 -l user' $eah '~repo'
+ 	"
+ done
+ 
 -- 
 2.8.1.16.gaa70619.dirty
