@@ -1,73 +1,76 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH v4 09/11] connect: use "-l user" instead of "user@" on
- ssh command line
-Date: Wed, 4 May 2016 07:52:48 +0900
-Message-ID: <20160503225248.GC21973@glandium.org>
-References: <1462082573-17992-1-git-send-email-mh@glandium.org>
- <1462265452-32360-1-git-send-email-mh@glandium.org>
- <1462265452-32360-10-git-send-email-mh@glandium.org>
- <CAPig+cTTeJf+ACfJ8yDj3tbiwUEhcjgn=MiDkzgDk7sYu4FA+w@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] submodule deinit: require '--all' instead of '.' for all submodules
+Date: Tue, 3 May 2016 16:02:27 -0700
+Message-ID: <CAGZ79kaHs6TgxQpPUOKA7NQ8k0r80RrGg7aTtxN90FXwLBsVeA@mail.gmail.com>
+References: <1462313499-6760-1-git-send-email-sbeller@google.com>
+	<xmqqy47qkc87.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79ka8RQmNzzKJ9r_GsLkSCK5Thewsz9scZvwpJb0Pf_+NRg@mail.gmail.com>
+	<xmqqoa8mkb4l.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Torsten =?iso-8859-15?Q?B=F6gershausen?= <tboegi@web.de>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed May 04 00:52:58 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Per Cederqvist <cederp@opera.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 04 01:02:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axjBZ-0000L6-W4
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 00:52:58 +0200
+	id 1axjKs-0004Ku-Cf
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 01:02:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933680AbcECWwy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2016 18:52:54 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:53094 "EHLO
-	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932265AbcECWwx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2016 18:52:53 -0400
-Received: from glandium by zenigata with local (Exim 4.87)
-	(envelope-from <mh@glandium.org>)
-	id 1axjBQ-0005ur-DQ; Wed, 04 May 2016 07:52:48 +0900
-Content-Disposition: inline
-In-Reply-To: <CAPig+cTTeJf+ACfJ8yDj3tbiwUEhcjgn=MiDkzgDk7sYu4FA+w@mail.gmail.com>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.6.0 (2016-04-01)
+	id S1756834AbcECXC3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2016 19:02:29 -0400
+Received: from mail-io0-f178.google.com ([209.85.223.178]:35355 "EHLO
+	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756824AbcECXC2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2016 19:02:28 -0400
+Received: by mail-io0-f178.google.com with SMTP id d62so37994816iof.2
+        for <git@vger.kernel.org>; Tue, 03 May 2016 16:02:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=3C4apaKw5Qh6+M4zlqgJbt/2lRsqOc8/mv736Fo0zzM=;
+        b=NboPdf+FOUaUinCsqOyS2CFzg+azC5IbT7M0MTlxYPKCiRtghndvDo1GPSF+VqXpNw
+         Q8ehaPFzxTm7Ia/x+XXAkPnjUeswvZDiLV9buwO2CjX93Qy4chO1/SCHy+lrVqsAcKFB
+         sg9oe3I3Pt11s7AqKNeGCVqweBxqR5Clm97O1J5rOq5uh8Bir7ce3VhfnyWlQuTFYbVK
+         qYu3e47ajUiIEMuecR0vJZAuh9S2pm1+DH4zfSE6za9pFKNE+wTZAybme/epPtsLXIIX
+         miYMUy09mpDAfe+CYesxuSM8TX/ZcDcy1+dv+2wbbYV7bLRfybegfLOONvmEYXJF0bIK
+         Ex7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=3C4apaKw5Qh6+M4zlqgJbt/2lRsqOc8/mv736Fo0zzM=;
+        b=RCEUc+dMTq17lwWJ0oadMasOZVlYe9YpSY6CyjdCJOVOKk9pI7HYgKCjEcwlvcEpGn
+         /mQdDuv50AVxSCtXmI9sIT3hFEgQ+DbReKL7b4XqHUOALe7121hujlGsfQH5cJo27n0+
+         fqhelFJE4N9lCL4lmfclgcSrfIQT5dvoNL5j18oWCpP/X1TDZs8bblXnkJRdsOiDumld
+         nQUnRLVOngaGDPl9d83GbbQEzycquMCoVzaYR6uf7vsYdktu/kDl+vDNwJ8nJoef2ZX3
+         6vwpoxkQRtew3lLOzsc0lyZyjsYCF6PEKFWdBqBbzD2JC2BOgwWPO5WZJUxIjF6fnDr1
+         yqXA==
+X-Gm-Message-State: AOPr4FXeNYjK9oyMf2AAjTaklkJ9MeTJ/E+lfxKeOxN+ORthLwQexcjMqJU0hcO5DLkcp36mHkspv0ISwQemvOcx
+X-Received: by 10.107.161.68 with SMTP id k65mr7306838ioe.110.1462316547349;
+ Tue, 03 May 2016 16:02:27 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Tue, 3 May 2016 16:02:27 -0700 (PDT)
+In-Reply-To: <xmqqoa8mkb4l.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293477>
 
-On Tue, May 03, 2016 at 01:33:24PM -0400, Eric Sunshine wrote:
-> On Tue, May 3, 2016 at 4:50 AM, Mike Hommey <mh@glandium.org> wrote:
-> > While it is not strictly necessary, it makes the connect code simpler
-> > when there is user.
-> >
-> > Signed-off-by: Mike Hommey <mh@glandium.org>
-> > ---
-> > diff --git a/connect.c b/connect.c
-> > @@ -812,14 +812,10 @@ struct child_process *git_connect(int fd[2], const char *url,
-> >                         if (user) {
-> > -                               struct strbuf userandhost = STRBUF_INIT;
-> > -                               strbuf_addstr(&userandhost, user);
-> > -                               strbuf_addch(&userandhost, '@');
-> > -                               strbuf_addstr(&userandhost, host);
-> > -                               argv_array_push(&conn->args, userandhost.buf);
-> > -                               strbuf_release(&userandhost);
-> > -                       } else
-> > -                               argv_array_push(&conn->args, host);
-> > +                               argv_array_push(&conn->args, "-l");
-> > +                               argv_array_push(&conn->args, user);
-> > +                       }
-> > +                       argv_array_push(&conn->args, host);
-> 
-> Even simpler would be a one-liner for the user case:
-> 
->     if (user)
->         argv_array_pushf(&conn->args, "%s@%s"", user, host);
+On Tue, May 3, 2016 at 3:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> So eventually (i.e. after the submodule groups lands)
+>> "submodule deinit ." will start acting weird again?
+>
+> It would be nice if it never acts in a weird way, but that is all
+> future development, not related to this fix, no?
 
-Oh, I should have read the argv-array.h header. Thanks.
-
-Mike
+Yes, just this patch is fine. Though lacking documentation.
+I'll send an update.
