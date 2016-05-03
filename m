@@ -1,96 +1,86 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 09/11] connect: use "-l user" instead of "user@" on ssh
- command line
-Date: Tue, 3 May 2016 13:33:24 -0400
-Message-ID: <CAPig+cTTeJf+ACfJ8yDj3tbiwUEhcjgn=MiDkzgDk7sYu4FA+w@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 09/11] connect: use "-l user" instead of "user@" on ssh command line
+Date: Tue, 03 May 2016 10:50:50 -0700
+Message-ID: <xmqqk2jbni85.fsf@gitster.mtv.corp.google.com>
 References: <1462082573-17992-1-git-send-email-mh@glandium.org>
 	<1462265452-32360-1-git-send-email-mh@glandium.org>
 	<1462265452-32360-10-git-send-email-mh@glandium.org>
+	<8f470378-07a9-525b-ff8b-f0de011019cb@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Tue May 03 19:33:32 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue May 03 19:51:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axeCP-0003sp-Py
-	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 19:33:30 +0200
+	id 1axeTa-0004V2-An
+	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 19:51:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934351AbcECRd1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2016 13:33:27 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:36572 "EHLO
-	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934134AbcECRdZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2016 13:33:25 -0400
-Received: by mail-io0-f193.google.com with SMTP id k129so2982461iof.3
-        for <git@vger.kernel.org>; Tue, 03 May 2016 10:33:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=xQXkTp5qTbCxAuD3mE8xQqKTq6EeeEFwxExDJaUZeVY=;
-        b=AZmEZ+E9DHeTG3FLyf2IGVhxAaFnh1LJ43hChFOMQ3jVKeITJ9ISohKT5MLjooaPGl
-         08oibds2H2+IiKSBl4Xw3+ZLmZ/na4a9u4SEg0AkpSO73+NqTPwrIQXuL3G+hFnw+c/L
-         1qTKqMMEKpZYZm9eTAjwnuNnnnuVnvRG35WarPI4tboEZvNTWLQRCTkVbNqPV2csuBLW
-         P53WTF0BytDlZ8W/yV6Tw7IMWbtmnZQCFtzqYh9636HlbTvBBd+ieVXmTLsOgUbGCldM
-         uSqRxMnfPN31NXps0ucuzX0qI+HTQwuS99lYI4m0zfiWhRwXfNj43TkEM0T74h7MOXuE
-         XZsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=xQXkTp5qTbCxAuD3mE8xQqKTq6EeeEFwxExDJaUZeVY=;
-        b=nN7TcYgHjORo1MB4zluF1POdsEKh0h9P+7e+FhKhwr+CtkcYc7m3KIHhF5hlLv/PC0
-         BjTFsKUYTWWH7no3NB4GJYDPndPlxDKC7GcxbNEQcJGhOMjLs6RqGdMHYr9yDklCqjR7
-         TzL1kS3x9qiWdftOjmmmwqyfzccaih5/vp6Ui841pZLNK3IWYQUauX5WW/AMMP8MTNvc
-         KUKlvWRDSQ5USCx/zpy4dsZ7zyG+4/JiYyLMjWVcUqXgn1dLlIEDHW/1GS4mLK/QHfUZ
-         pGSr9plB0JeG7CYb09OVFzT1hltIXM5BvUojtS3rjcGep2TnjBtWemfJyCe81SR1p709
-         eWXg==
-X-Gm-Message-State: AOPr4FXSIH5skxQu66Wa3lMgqZpLR451sufJZdX+mbokF2efHRLtZsWKCTS8jhPASWlXFtKfW+gjU8HHKEeABw==
-X-Received: by 10.107.132.66 with SMTP id g63mr5226279iod.34.1462296804616;
- Tue, 03 May 2016 10:33:24 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Tue, 3 May 2016 10:33:24 -0700 (PDT)
-In-Reply-To: <1462265452-32360-10-git-send-email-mh@glandium.org>
-X-Google-Sender-Auth: lnAXzwJL2UuyHQVkkHKHADNAV8Y
+	id S934363AbcECRu7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 May 2016 13:50:59 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63798 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933825AbcECRu5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 May 2016 13:50:57 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0A97219844;
+	Tue,  3 May 2016 13:50:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=04cmoW5HRQdy
+	jcJmYkGna/Nfzkk=; b=xPJUtJE14zVfY/BlvhweNRi7sfVQWHD7v4HzzMGymU57
+	9m/4z+l/AQ8ExITOLQ5MUJ+S3A3ZoKD5TEh+a4Erfm3CsV3+kWZsb8JnFduWh210
+	rfh3L2o8bd95SehL3+PVHTgI+pEi7AZqk+VwJdSUyHgbP2qSbJSxHLWgmcloiyk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=qog42/
+	oiiVtfJAkRmYr0weWY8GiO6IzGS/9TjZ8uD+teQz6mmI4gESLg9paOe9HEGJ27km
+	LDirxlYfrQmeVwUnkcq+vePOWTkwEV1kq9+v61T+nrqdFVuJ25/2O43aEXdGABT5
+	qpeltFSUyNtIkgC6J0vnnqLwBXhfTgbE7tdP4=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0194519843;
+	Tue,  3 May 2016 13:50:54 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6978719841;
+	Tue,  3 May 2016 13:50:53 -0400 (EDT)
+In-Reply-To: <8f470378-07a9-525b-ff8b-f0de011019cb@web.de> ("Torsten
+	=?utf-8?Q?B=C3=B6gershausen=22's?= message of "Tue, 3 May 2016 18:25:05
+ +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 949BCB18-1157-11E6-8103-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293422>
 
-On Tue, May 3, 2016 at 4:50 AM, Mike Hommey <mh@glandium.org> wrote:
-> While it is not strictly necessary, it makes the connect code simpler
-> when there is user.
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+
+> On 2016-05-03 10.50, Mike Hommey wrote:
+>> While it is not strictly necessary, it makes the connect code simple=
+r
+>> when there is user.
+>>=20
 >
-> Signed-off-by: Mike Hommey <mh@glandium.org>
-> ---
-> diff --git a/connect.c b/connect.c
-> @@ -812,14 +812,10 @@ struct child_process *git_connect(int fd[2], const char *url,
->                         if (user) {
-> -                               struct strbuf userandhost = STRBUF_INIT;
-> -                               strbuf_addstr(&userandhost, user);
-> -                               strbuf_addch(&userandhost, '@');
-> -                               strbuf_addstr(&userandhost, host);
-> -                               argv_array_push(&conn->args, userandhost.buf);
-> -                               strbuf_release(&userandhost);
-> -                       } else
-> -                               argv_array_push(&conn->args, host);
-> +                               argv_array_push(&conn->args, "-l");
-> +                               argv_array_push(&conn->args, user);
-> +                       }
-> +                       argv_array_push(&conn->args, host);
+> That commit message does't tell too much, I think.
 
-Even simpler would be a one-liner for the user case:
+"Doesn't tell too much" is not necessarily bad, but "tells too
+little" is, and I think this tells me enough to say it is not a good
+change ;-)
 
-    if (user)
-        argv_array_pushf(&conn->args, "%s@%s"", user, host);
-    else
-        argv_array_push(&conn->args, host);
+> Besides that, I'm sure it will break (at least) my ssh wrapper script=
+s,
+> which rely on user@host to be passed into the script.
 
->                 } else {
->                         transport_check_allowed("file");
->                 }
+Thanks for bringing it up.  "By reducing the language we accept it
+makes my coding simpler" is not a good excuse to break existing
+users, and "While it is not strictly necessary, " is a good hint
+that the author _knows_ that the change can either (1) be done
+without, or (2) be done in a way that does not break existing users
+and yet make the end result easier to read.
