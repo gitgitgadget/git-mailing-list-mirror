@@ -1,148 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] submodule deinit: lose requirement for giving '.'
-Date: Tue, 03 May 2016 10:21:18 -0700
-Message-ID: <xmqqoa8nnjld.fsf@gitster.mtv.corp.google.com>
-References: <1462227844-10624-1-git-send-email-sbeller@google.com>
-	<1462227844-10624-3-git-send-email-sbeller@google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 08/11] connect: change the --diag-url output to
+ separate user and host
+Date: Tue, 3 May 2016 13:23:37 -0400
+Message-ID: <CAPig+cTYjY7=8YqGy_4dNKK7JWinShjTR-nEMY2V6gudzS2Bgw@mail.gmail.com>
+References: <1462082573-17992-1-git-send-email-mh@glandium.org>
+	<1462265452-32360-1-git-send-email-mh@glandium.org>
+	<1462265452-32360-9-git-send-email-mh@glandium.org>
+	<c1cc0220-d239-1589-9957-1ef8a6245d54@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jens.Lehmann@web.de, git@vger.kernel.org
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue May 03 19:21:28 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Mike Hommey <mh@glandium.org>, Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue May 03 19:23:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axe0l-0006cu-C8
-	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 19:21:27 +0200
+	id 1axe2x-0007mq-4g
+	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 19:23:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933320AbcECRVX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2016 13:21:23 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57281 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756039AbcECRVW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2016 13:21:22 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5468117FF9;
-	Tue,  3 May 2016 13:21:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Pu9zpQXESlK8rFK48BvsCL0Sy6k=; b=YI41XK
-	pu6S/80NEHr874tTvk4iGQjao0LsPxQbzjJI4ytKbfS7BlKGEmI/BfsTyn4yvEAn
-	vU9bm7TeK4om/kZd977b4KejWXg72G1+CB3eelRTed+Vhg2gJGKAQ8IADZbFsH9M
-	mQ/otbHvDsfV2CsQcwh/tH5yJKC2VHC8sO38Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=U7S/ZhSfor2+KoY+8R4tHLUcEeggx/9X
-	mOJTiDc86Yo7ESGG29zdzBTQVb9r/IXjyzw4h7oInfrnAObd+cNfLbV5VsGcQQFl
-	wedICa7sN4WJ4gHTMZv8OrB/HM04UMEWDiFaa3pQTyDxk5wD3iY2RoT6cOGv5rXl
-	SL8b9yqR8cw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 48C1C17FF6;
-	Tue,  3 May 2016 13:21:21 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 95A6F17FF5;
-	Tue,  3 May 2016 13:21:20 -0400 (EDT)
-In-Reply-To: <1462227844-10624-3-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Mon, 2 May 2016 15:24:03 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 73EE0AD8-1153-11E6-A825-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S933979AbcECRXj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 May 2016 13:23:39 -0400
+Received: from mail-io0-f196.google.com ([209.85.223.196]:35865 "EHLO
+	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933972AbcECRXi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 May 2016 13:23:38 -0400
+Received: by mail-io0-f196.google.com with SMTP id k129so2959622iof.3
+        for <git@vger.kernel.org>; Tue, 03 May 2016 10:23:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-transfer-encoding;
+        bh=/G3yy2//338NYDmQcFlz8r9gHirADy8X8nRchJbJLqg=;
+        b=YB3Lov2ZDHtd9cYRXboKvzDkevhpwkcqd+MtxkR/++Q1TBk2rLSGt4aTM0itPOYeYq
+         mEc8c2hu1pRALwE1gxyGx+PNo5/6n2UlhVHm/sLTBHgo62ysR9bqR4DXKlk383AbYpSc
+         sGDxihDXAsZyetx2bTp6vMPPG1KkgHBLXF785tPPD4/qBy/qiAr9b8KEr5eVK3YdfW0W
+         kXxN0TPmw7LN36JyM+Uh5hXBOALIL5xHRaWk8BcwFM2fWHN1NYJgcCEwnkZIGGEIeVvM
+         s2xk8FgZ6x5znY4aTM592RgoJAf+6B5iy4dZeDaDdOO9DfOHFlvQP6IIQ1jaEZ/pE8TG
+         lIwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=/G3yy2//338NYDmQcFlz8r9gHirADy8X8nRchJbJLqg=;
+        b=T2JzwYsAnPU+YwrESvLwm/V/7/2lxECC1iky1XDDJtZteco91zwRqOYYEfuidJMz8k
+         SMy2q1Na7jCG7SwqmRNTkF4HUpKKPVkrwJtoDbBvYYJQPb1cqUySPVAHfa8B4pZmtIDX
+         IXVto8wlXUhT2YUtBC5bOFlQDcZ1FFPfPR7Ov29/ZHmAypGB5/rtJqmbOMZQXLpP6Nv3
+         WsB91k6/8MDtY8rnhZz8IK06pt+z4v1HqTgNKtSGRTG9gAO3e2ROVNtnRiWJuMizElC4
+         vauiI1rywr1tUJve039vDMHnXt3MJ77iC6ekX6n2R3gBjrzQJPXHhpZxyaT9GyGfH1dJ
+         PU0g==
+X-Gm-Message-State: AOPr4FXq4YFqZcPoPoJK15koKTNl8JLTm5OiokBfBH9qjOa/BgMpliY46a36eGRZDgDdEfc76Y2VuX+6CwzLCg==
+X-Received: by 10.107.25.13 with SMTP id 13mr3945738ioz.104.1462296217934;
+ Tue, 03 May 2016 10:23:37 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Tue, 3 May 2016 10:23:37 -0700 (PDT)
+In-Reply-To: <c1cc0220-d239-1589-9957-1ef8a6245d54@web.de>
+X-Google-Sender-Auth: zKYbi319T3Cu9A3XxcUNZxydr90
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293420>
 
-Stefan Beller <sbeller@google.com> writes:
-
-> The discussion in [1] realized that '.' is a faulty suggestion as
-> there is a corner case where it fails:
+On Tue, May 3, 2016 at 12:20 PM, Torsten B=C3=B6gershausen <tboegi@web.=
+de> wrote:
+> On 2016-05-03 10.50, Mike Hommey wrote:
+>> -     git fetch-pack --diag-url "$1" | grep -v host=3D | grep -v por=
+t=3D >actual &&
+>> +     git fetch-pack --diag-url "$1" | grep -v user=3D | grep -v hos=
+t=3D | grep -v port=3D >actual &&
+> Running grep a couple of times is probably not optimal in terms of sp=
+awning a
+> process....
+> Does
 >
->> "submodule deinit ." may have "worked" in the sense that you would
->> have at least one path in your tree and avoided this "nothing
->> matches" most of the time.  It would have still failed with the
->> exactly same error if run in an empty repository, i.e.
->>
->>        $ E=/var/tmp/x/empty && rm -fr "$E" && mkdir -p "$E" && cd "$E"
->>        $ git init
->>        $ rungit v2.6.6 submodule deinit .
->>        error: pathspec '.' did not match any file(s) known to git.
->>        Did you forget to 'git add'?
->>        $ >file && git add file
->>        $ rungit v2.6.6 submodule deinit .
->>        $ echo $?
->>        0
->
-> Allow no argument for `submodule deinit` to mean all submodules
-> and add a test to check for the corner case of an empty repository.
->
-> There is no need to update the documentation as it did not describe the
-> special case '.' to remove all submodules.
+> git fetch-pack --diag-url "$1" | egrep -v "user=3D|host=3D|port=3D" >=
+actual &&
+> work ?
+> or the version like this:
+> git fetch-pack --diag-url "$1" | egrep -v "(user|host|port)=3D" >actu=
+al &&
 
-OK, and the reason why there is no need to update the actual code,
-other than the "do not allow" gate, is because "submodule--helper
-list" aka module_list already knows to list everything if no
-pathspec is given.  Am I reading the code (not in the patch)
-correctly?
+I always worry about portability problems with these "advanced"
+expressions in grep and sed, however, both of these work fine under
+Mac OS X and FreeBSD (which is where problems often manifest).
 
-> [1] http://news.gmane.org/gmane.comp.version-control.git/289535
+An alterante expression which shouldn't raise any portability alarms wo=
+uld be:
 
-The old discussion thread raises a good point.  The refusal to
-accept no-pathspec form for a potentially destructive "deinit" may
-have been a safety measure, even though the suggested way to tell
-the command "Yes, I know I want to deinit everything" was not a
-good one (i.e. it resulted in an error if your project did not have
-any files tracked yet).
-
-So possible ways forward may be
-
- - to remove the safety altogether; or
- - keep the safety, but give a better suggestion to say "Yes, deinit
-   everything".
-
-And this patch decides to take the former approach?
-
-I am wondering if this can be solved in a cleaner way to teach
-"deinit" take a new "--all" option instead, e.g. something like...
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 82e95a9..4b84116 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -405,6 +405,7 @@ cmd_init()
- cmd_deinit()
- {
- 	# parse $args after "submodule ... deinit".
-+	deinit_all=
- 	while test $# -ne 0
- 	do
- 		case "$1" in
-@@ -414,6 +415,9 @@ cmd_deinit()
- 		-q|--quiet)
- 			GIT_QUIET=1
- 			;;
-+		-a|--all)
-+			deinit_all=t
-+			;;
- 		--)
- 			shift
- 			break
-@@ -428,9 +432,9 @@ cmd_deinit()
- 		shift
- 	done
- 
--	if test $# = 0
-+	if test $# = 0 && test -z "$deinit_all"
- 	then
--		die "$(eval_gettext "Use '.' if you really want to deinitialize all submodules")"
-+		die "$(eval_gettext "Use '--all' if you really want to deinitialize all submodules")"
- 	fi
- 
- 	git submodule--helper list --prefix "$wt_prefix" "$@" |
-
-
-That would work even in the pathological "empty directory that has
-nothing to match even '.'" case without losing the safety, no?
+    sed -e /user=3D/d -e /host=3D/d -e /port=3D/d
