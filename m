@@ -1,130 +1,112 @@
-From: =?UTF-8?Q?erik_elfstr=C3=B6m?= <erik.elfstrom@gmail.com>
-Subject: Re: Git 2.8.1 fails test 32 of t7300-clean.sh, breaks profile build
-Date: Tue, 3 May 2016 23:28:09 +0200
-Message-ID: <CAMpP7NbeELYQvZ1A1acA-V6jZVRvNzjbAqD6zd2YoJvGT5Dxxw@mail.gmail.com>
-References: <CAA6PgK7b=ithSYREV5axaE3fmRG5Vp06UtWiZXD-aJuZKfEVYA@mail.gmail.com>
-	<CAA6PgK4of46eEJOJstnVvPvDFqU_OC5QVz9LWxyKgqHt9V5ySQ@mail.gmail.com>
-	<CAGZ79kYy=+xz5k0pN+MZTRBALd-sqbQ0TePNjkx6itjQpbRUvA@mail.gmail.com>
-	<CAA6PgK4M2Ag6anEFYakW9NJe0ehTtS1UEQmDWe387W_uV-MCXA@mail.gmail.com>
-	<CAGZ79kav27h+_eswTd3hRWjYhH5aApVcERa1bSxKD8p2R50HTw@mail.gmail.com>
-	<CAPc5daX4noqHaOZCrZ78s0ytFBkeU7znXs0QY1LXEw8w3RnQ1A@mail.gmail.com>
-	<20160503184841.GA30530@sigill.intra.peff.net>
-	<CAGZ79kYxSCsXGLBoBTAOLfe_pOu7YNBQoccs_fA0btEzpnU=-w@mail.gmail.com>
-	<20160503190053.GC30530@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] preparatory patches for the submodule groups
+Date: Tue, 03 May 2016 14:32:38 -0700
+Message-ID: <xmqqfutylte1.fsf@gitster.mtv.corp.google.com>
+References: <1462227844-10624-1-git-send-email-sbeller@google.com>
+	<xmqqwpnalwf8.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kakayOhPkCK4hbRkj-h2Bt+PqD69EgHk-chbu4xCA8_pA@mail.gmail.com>
+	<xmqqoa8mlutg.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kbm5y+LeyA_dwQWKFNaa42280cOvwQYZTP=-aRnySsB1A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jan Keromnes <janx@linux.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 03 23:28:16 2016
+Content-Type: text/plain
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue May 03 23:32:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axhrc-0004Q5-4t
-	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 23:28:16 +0200
+	id 1axhvy-0006bJ-TO
+	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 23:32:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756505AbcECV2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2016 17:28:11 -0400
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:33612 "EHLO
-	mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756177AbcECV2K (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2016 17:28:10 -0400
-Received: by mail-qk0-f172.google.com with SMTP id n63so15497785qkf.0
-        for <git@vger.kernel.org>; Tue, 03 May 2016 14:28:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=sZ2HrjFgSulWtsbz+XP0hdzrAPwMlcVM7WDEZ3STfeM=;
-        b=irCqMbCxRCxLi2L5J9snUBksM6yPU3/qi6cYfFKGgucmwK2XtQWIq2tfqZ0BWtkwik
-         OVtzvi9BajqMvm2GyTFEc0PJtmLj5nHY42/6mgDGVrosFPJXy6vfVSwh11I7qIp+b7zn
-         xez+ehrYWBe+rachnnyoPiyHx+Kjdj2t/35r5gaFWJNwoig1wPMTLyRzFzxTo+Kzljlt
-         i2qKl+jY03rehQPVaDpToswyYv5pF8uGdieTmc1yTfA8yNhG0x+KbWVvXnwaXIxQqgfr
-         NR2H1MdgMpKGcv9taE9szZYxoNZ9fkLgsY+WRa0gUL0/64DMOnjwO4h0vIJBeTKHyJ94
-         0qLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=sZ2HrjFgSulWtsbz+XP0hdzrAPwMlcVM7WDEZ3STfeM=;
-        b=Zz0ZVABp63atA1oFlYTUGj/XYq7060gr+C5lmyDKiInb3ogqLLIcRJK+CYBdWm4Aj3
-         50B7gCGec4xVjzV1vxUkaBYRE4CKxPX4QfCPu4f/DiLOZUda0TuPAC8rABeiocISYwC7
-         Ufi4B3psabuXbOdvIzthz9q8iKes2LbBZEVOM0vyUoT3xNgesetHvgnCoeN/PeEzvCce
-         rmK2ZvWnSrm2ZJlsbms3stsLODRtIehKuHvH7jYY6b/UNNHBHKYoL2npO4bOgHht28ol
-         w46MbkGVLQcFgSC9bQiakyZEQhY3fHP+mLj3PBVO5jPmBuue+VcI/o+G6ySbl4KEeMWJ
-         8iUQ==
-X-Gm-Message-State: AOPr4FXJoVjer8uUn9runmdFAD5C+kteSIOp8sPyDVnvhiGEVwiiUZhw1QdfSD7Kd4HTLaQj/CQYUPv9Khqcew==
-X-Received: by 10.55.215.85 with SMTP id m82mr5379020qki.154.1462310889483;
- Tue, 03 May 2016 14:28:09 -0700 (PDT)
-Received: by 10.55.161.144 with HTTP; Tue, 3 May 2016 14:28:09 -0700 (PDT)
-In-Reply-To: <20160503190053.GC30530@sigill.intra.peff.net>
+	id S1756633AbcECVcn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2016 17:32:43 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59631 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756541AbcECVcm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2016 17:32:42 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C71C1185D8;
+	Tue,  3 May 2016 17:32:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EzN3tp/3FQWtFDE3b5Oy2LO1n5Y=; b=UUg/t1
+	erik635SLazFoWeXjoxHBHabk5I+nahOyNJkxJnxTSi7t4slCnW3iIiduRRtwoCE
+	oedzrhmmsEVVOoiclxkH5uZM7MczHBkslDMvfeY77G7PcQey0btfbx+s4tCSwGoo
+	+zOe2N/Sfw/ltfH4BwQfzMhz6SD+NDmLHhIUs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Qwr8VtSBXdVxyW2+bbvagjgMZoKVZmI3
+	Ri672uKoD4Gbxlifxy5tz10vwB6g+SfB7JvbMaZHDuCdtCgovzuPPHYR7onqKiO7
+	+2wPKfF2ughfnazehPLch4cOMhArMYBQAF4XQPFNcy2OTJlKupenjp1X9G0nWcEN
+	rzgU99AiCXY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id BF9A8185D7;
+	Tue,  3 May 2016 17:32:40 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 38E79185D6;
+	Tue,  3 May 2016 17:32:40 -0400 (EDT)
+In-Reply-To: <CAGZ79kbm5y+LeyA_dwQWKFNaa42280cOvwQYZTP=-aRnySsB1A@mail.gmail.com>
+	(Stefan Beller's message of "Tue, 3 May 2016 14:12:47 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 90154898-1176-11E6-A096-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293460>
 
-Thanks for fixing the missing SANITY prerequisite Stefan.
+Stefan Beller <sbeller@google.com> writes:
 
-As for the error handling logic in setup.c: is_nonbare_repository_dir
-(was clean.c: is_git_repository) my reasoning is as follows:
+>>> * I think we want to head for consistency, eventually.
+>>>    e.g. commands with no arguments such as tag, branch
+>>>    give a list of their respective domain.
+>>
+>> Isn't that a historical mistake we are regretting, though?  Only
+>> after many other operation modes were invented and "create X" proves
+>> not to be the only primary modes we had to invent "tag -l" and
+>> "branch -l".  Aren't we better off not having "no option means list"
+>> kind of default?
+>
+> listing is not destructive, and I really like to not type a single dash
+> for some commands.
 
-READ_GITFILE_ERR_STAT_FAILED
-READ_GITFILE_ERR_NOT_A_FILE:
+Actually, listing is destructive to the user's cognitive state.
 
-When checking random paths for .git files these are the common error
-modes, file is not there or it is a directory. This should not be
-interpreted as a valid .git file.
+I wouldn't be surprised if many people wished that "git branch" did
+not list (and required "git branch -l" to list) to scroll everything
+they are looking away but instead showed what the current branch is.
+
+>>>    Subcommands do not give lists by default, e.g.
+>>>    `git stash clear`, `git remote prune`
+>>>    which are the moral equivalent to
+>>>    `git submodule deinit` just work as they were told, no --switch needed.
+>>
+>> I wouldn't say "git rm" should remove everything by extending that
+>> logic, but I can certainly buy if somebody argues "git submodule
+>> deinit" is not destructive enough to warrant extra safety.
+>
+> `git rm` is a command, not a subcommand though.
+
+Yes, it is a command, just like branch and tag you brought up.
+
+"git branch -d" is not a command, but a mode of operation.  If we
+did the "mode word" UI [*1*], it would have been a subcommand.  And
+I certainly would not say it should remove everything if there is no
+argument on the command line.
+
+I am not sure where you are going with that though anyway.
+
+I think the "safety" is about forcing user to be more explicit when
+triggering mass destruction, and I do not think it matters if that
+destruction is done by a first-class subcommand of "git", or
+subsubcommand.
 
 
-READ_GITFILE_ERR_OPEN_FAILED
-READ_GITFILE_ERR_READ_FAILED:
+[References]
 
-Here we found a .git file but could not open and read it to verify
-that it is valid. Treating it as valid is the safest option for clean.
-For resolve_gitlink_ref I think it maybe leads to the creation of a
-redundant ref cache entries but I don't think this is a problem unless
-someone has a huge amount of unreadable .git files lying around.
-
-
-READ_GITFILE_ERR_TOO_LARGE:
-
-File is absurdly large (1MB), very unlikely to be a valid .git file.
-
-
-READ_GITFILE_ERR_INVALID_FORMAT
-READ_GITFILE_ERR_NO_PATH:
-
-File is malformed in some way, either the "gitdir:" prefix is missing
-or the path is missing. Could theoretically be a corrupted .git file
-but seems unlikely.
-
-
-READ_GITFILE_ERR_NOT_A_REPO:
-
-This is maybe a bit more suspicious. Here we have found a .git file,
-it has the format "gitdir: some/path" but
-is_git_directory("some/path") returned false, meaning that "some/path"
-does not fulfill:
-
-/*
- * Test if it looks like we're at a git directory.
- * We want to see:
- *
- *  - either an objects/ directory _or_ the proper
- *    GIT_OBJECT_DIRECTORY environment variable
- *  - a refs/ directory
- *  - either a HEAD symlink or a HEAD file that is formatted as
- *    a proper "ref:", or a regular file HEAD that has a properly
- *    formatted sha1 object name.
-*/
-
-Technically we don't have a valid .git file here but we have something
-that really tries to be. I guess it is debatable what the correct
-conservative choice is here and if it is the same for all callers.
-
-/Erik
+*1* http://thread.gmane.org/gmane.comp.version-control.git/231376/focus=231478
