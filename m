@@ -1,115 +1,71 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: t7900-*.sh tesr #5 failure
-Date: Tue, 3 May 2016 22:34:58 +0100
-Message-ID: <57291982.2000904@ramsayjones.plus.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t7300: mark test with SANITY
+Date: Tue, 3 May 2016 17:35:56 -0400
+Message-ID: <20160503213556.GA25133@sigill.intra.peff.net>
+References: <1462301672-20866-1-git-send-email-sbeller@google.com>
+ <20160503190417.GD30530@sigill.intra.peff.net>
+ <xmqqmvo7lz5f.fsf@gitster.mtv.corp.google.com>
+ <20160503211528.GA32737@sigill.intra.peff.net>
+ <xmqqk2jalu03.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue May 03 23:35:14 2016
+Cc: Roberto Tyley <roberto.tyley@gmail.com>,
+	Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+	janx@linux.com, Lars Schneider <larsxschneider@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 03 23:36:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axhyL-0007jW-CW
-	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 23:35:13 +0200
+	id 1axhzA-00086Y-CM
+	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 23:36:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756544AbcECVfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2016 17:35:07 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:54150 "EHLO
-	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756519AbcECVfG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2016 17:35:06 -0400
-Received: from [10.0.2.15] ([91.125.197.102])
-	by avasout07 with smtp
-	id pxb11s0092D2Veb01xb259; Tue, 03 May 2016 22:35:03 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=QqujpgGd c=1 sm=1 tr=0
- a=mTUfFwB0nGOO66Ym8a+i3w==:117 a=mTUfFwB0nGOO66Ym8a+i3w==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
- a=dRJa9r4XlhsGZmygdbYA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.2
+	id S1756547AbcECVgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2016 17:36:00 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33452 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756430AbcECVf7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2016 17:35:59 -0400
+Received: (qmail 29372 invoked by uid 102); 3 May 2016 21:35:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 03 May 2016 17:35:58 -0400
+Received: (qmail 2327 invoked by uid 107); 3 May 2016 21:36:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 03 May 2016 17:36:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 May 2016 17:35:56 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqk2jalu03.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293462>
 
-Hi David,
+On Tue, May 03, 2016 at 02:19:24PM -0700, Junio C Hamano wrote:
 
-Test t7900.5 fails for me, thus:
+> Jeff King <peff@peff.net> writes:
+> 
+> > Maybe. I admit to not really using the Travis tests myself, as they are
+> > way too slow and cumbersome to debug compared to just running "make
+> > test".  The primary value to me of centralized CI is:
+> >
+> >   1. _If_ people are looking at PRs on GitHub, the test status is shown
+> >      right there in the PR, without a reviewer having to wonder whether
+> >      the submitter ran "make test". But since I don't ever look at PRs
+> >      for Git, that's not helpful.
+> 
+> What I was hoping was that bots like SubmitGit could look at that
+> status.
 
-  $ ./t7900-index-helper.sh -i -v -x -d
-  
-  ...
-  
-  + test -S .git/index-helper.sock
-  + git status
-  On branch master
-  Untracked files:
-    (use "git add <file>..." to include in what will be committed)
-  
-  	err
-  
-  nothing added to commit but untracked files present (use "git add" to track)
-  + test -S .git/index-helper.sock
-  + grep -q . err
-  error: last command exited with $?=1
-  not ok 5 - index-helper autorun works
-  #	
-  #		rm -f .git/index-helper.sock &&
-  #		git status &&
-  #		test_path_is_missing .git/index-helper.sock &&
-  #		test_config indexhelper.autorun true &&
-  #		git status &&
-  #		test -S .git/index-helper.sock &&
-  #		git status 2>err &&
-  #		test -S .git/index-helper.sock &&
-  #		! grep -q . err &&
-  #		git index-helper --kill &&
-  #		test_config indexhelper.autorun false &&
-  #		git status &&
-  #		test_path_is_missing .git/index-helper.sock
-  #	
-  $ cd trash\ directory.t7900-index-helper/
-  $ ls
-  err  x.t
-  $ cat err
-  warning: We requested watchman support from index-helper, but it doesn't support it. Please use a version of git index-helper with watchman support.
-  $ 
+Yeah, I think that would be pretty trivial to do. It's already
+interacting with GitHub's API, and I think there's a simple call to
+query the test status (so it wouldn't even require SubmitGit talking to
+Travis directly).
 
-[Yes, that is one long line in err!]
+I don't think that really solves the problem overall, though. SubmitGit
+is still a minority of patch submissions (and I wouldn't expect that to
+change, but maybe I'm just a curmudgeon).
 
-[At least, this is one of the failures, I have also seen git status failing
-with a SIGPIPE.]
-
-Note that I do not have the watchman libraries etc., so USE_WATCHMAN is
-not defined. Note also, that I had an instance of git-index-helper still
-running after the test failure (which I kill-ed).
-
-I haven't spent any time debuging this, but some questions spring to
-mind:
-
-    - can index-helper be used without watchman support?
-
-    - why is index-helper requesting watchman support, when it was
-      built without USE_WATCHMAN being defined?
-
-    - why is read-cache.o exporting the verify_index and
-      write_watchman_ext symbols?
-
-    - is index-helper any use/help without watchman support?
-
-    - is '! grep -q . err' meant to determine if the err file is
-      empty (ie git status did not issue an error message)?
-      [if yes, maybe 'test_must_be_empty err &&' would read better!]
-
-Unfortunately, I have to run now, ...
-
-ATB,
-Ramsay Jones
+-Peff
