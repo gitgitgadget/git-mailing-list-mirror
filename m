@@ -1,74 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8 10/10] ce_compare_data() did not respect conversion
-Date: Tue, 03 May 2016 11:31:25 -0700
-Message-ID: <xmqqbn4nngci.fsf@gitster.mtv.corp.google.com>
-References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
-	<1461942126-16296-1-git-send-email-tboegi@web.de>
-	<xmqqvb30w29z.fsf@gitster.mtv.corp.google.com>
-	<a571e222-68db-3dc1-1a94-d6b47feaf84d@web.de>
-	<xmqqtwigtjfg.fsf@gitster.mtv.corp.google.com>
-	<xmqqpot4s1ap.fsf@gitster.mtv.corp.google.com>
-	<55d60bb1-8626-4c97-630c-1a9f114c46b4@web.de>
+Subject: Re: [PATCH v2] gitweb: apply fallback encoding before highlight
+Date: Tue, 03 May 2016 11:33:42 -0700
+Message-ID: <xmqq7ffbng8p.fsf@gitster.mtv.corp.google.com>
+References: <xmqqbn4ouz7u.fsf@gitster.mtv.corp.google.com>
+	<1462280451-43388-1-git-send-email-shin@kojima.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue May 03 20:31:36 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Christopher Wilson <cwilson@cdwilson.us>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Shin Kojima <shin@kojima.org>
+X-From: git-owner@vger.kernel.org Tue May 03 20:33:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axf6c-000187-OL
-	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 20:31:35 +0200
+	id 1axf8p-0002C2-OV
+	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 20:33:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756117AbcECSba convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 May 2016 14:31:30 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58351 "EHLO
+	id S932832AbcECSds (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2016 14:33:48 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53824 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755635AbcECSb3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 May 2016 14:31:29 -0400
+	with ESMTP id S1755635AbcECSdr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2016 14:33:47 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 71C7719D29;
-	Tue,  3 May 2016 14:31:28 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A1AFF16B12;
+	Tue,  3 May 2016 14:33:44 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=WOchAoWlTCMn
-	kwgGvw/gUBEvRDc=; b=Hlvf5+K1xrwsjxVWDbl23CGesf4r5lX830NNUXzbC8vV
-	LjQwCKKkx7F3oQllaa1HOsT5svikwON1z/oXPTInp61TSAMpsiY6sD80bdWDR+fw
-	hXsLsbmoEtt8c+N6WqFpelG1HWDIZt60/1MlceGmTN/b+BND71z2AuTo6Whonao=
+	:content-type; s=sasl; bh=9o9C/u5l2pJaKCCCATIEPQDRsIE=; b=puhaKy
+	9J3ASpHf+pls9dNBDIobmM1qkDT8DjLdYQx3NYvvThhq/8u8MPwg1dEKrwWorame
+	VS8REQUlLQfW/OZWX4t0CYJ7QrUNcHPqCT2Fjg2KABcHq6pOwwP0+6TOcbvDSHHc
+	s5UHsA9R8yvEB1RihTCBK+5ljsTK+gT997rqQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=eV18UC
-	Smnxg/bxfNAS4Reu17qq2Qj1rSl7dK/phoAGARU81IDRfGIHTANIKzDuriSibWjK
-	zfpTJ350sbYE6zsENEBavDx/K/8zaYiosMUOUE8ysv6NulcciRwppSpIZpa70Q9B
-	cDRSvAlSpekEMa83d/GlzZAEyRPDhcXuFFvGw=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5FD9019D28;
-	Tue,  3 May 2016 14:31:28 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=XLO42F6a58Z+AGN/UsftfuTRHRW4IUyE
+	tkVo9BpzWV8YIbCznJ3ynHMgBvlTfyeX+lrJM0/2EavFXrnANMWDo7lqmeNjHW58
+	DXHKea7pqpTzwYYNZIseedxLUp57eUheTChSDWrfwRgM+RetkRVJ2NDxNbPj8Nl6
+	srOjR4lzO4I=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 99BD816B11;
+	Tue,  3 May 2016 14:33:44 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AE56819D27;
-	Tue,  3 May 2016 14:31:27 -0400 (EDT)
-In-Reply-To: <55d60bb1-8626-4c97-630c-1a9f114c46b4@web.de> ("Torsten
-	=?utf-8?Q?B=C3=B6gershausen=22's?= message of "Tue, 3 May 2016 18:02:07
- +0200")
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 11B6016B0F;
+	Tue,  3 May 2016 14:33:44 -0400 (EDT)
+In-Reply-To: <1462280451-43388-1-git-send-email-shin@kojima.org> (Shin
+	Kojima's message of "Tue, 3 May 2016 22:00:51 +0900")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3F8DA4CE-115D-11E6-AE67-9A9645017442-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 90D4F224-115D-11E6-9364-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293432>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Shin Kojima <shin@kojima.org> writes:
 
-> This will probably take some time, so that's why I asked if 1/10..4/1=
-0 could
-> proceed as is ?
+> Some multi-byte character encodings (such as Shift_JIS and GBK) have
+> characters whose final bytes is an ASCII '\' (0x5c), and they
+> will be displayed as funny-characters even if $fallback_encoding is
+> correct.
 
-Sure, I wasn't saying 1-4 looked wrong at all.  I was wondering why
-the ones in the middle, especially 7, shouldn't be moved forward
-together with them.
+Just out of curiosity, do people still use Shift_JIS aka MS-Kanji?
+It feels so last-decade, if not last-century ;-)
