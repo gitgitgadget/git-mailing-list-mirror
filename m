@@ -1,100 +1,106 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH v15 7/7] t/t7507: tests for broken behavior of status
-Date: Tue, 3 May 2016 09:09:20 +0530
-Message-ID: <CAFZEwPOAWh48YCxA3B+kRxVpkwN32OHW7Qrb9ajs2Cy0S8sjLw@mail.gmail.com>
-References: <1462046616-2582-1-git-send-email-pranit.bauva@gmail.com>
-	<1462046616-2582-7-git-send-email-pranit.bauva@gmail.com>
-	<xmqq7ffcqct1.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] commit-tree: do not pay attention to commit.gpgsign
+Date: Tue, 3 May 2016 00:12:57 -0400
+Message-ID: <20160503041256.GA30529@sigill.intra.peff.net>
+References: <xmqqlh3sqfze.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 03 05:39:43 2016
+X-From: git-owner@vger.kernel.org Tue May 03 06:13:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axRBX-0005Bb-0U
-	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 05:39:43 +0200
+	id 1axRhx-0007U8-75
+	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 06:13:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932503AbcECDjY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 May 2016 23:39:24 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:33463 "EHLO
-	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932223AbcECDjV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2016 23:39:21 -0400
-Received: by mail-yw0-f193.google.com with SMTP id y6so618901ywe.0
-        for <git@vger.kernel.org>; Mon, 02 May 2016 20:39:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=6x6r/exmcSYIpy2kXslxgIx+bZlhfPOJchyJmDznfHg=;
-        b=H5OgwPy1Ob1MGoge2c+vJHxSob59CBMaRwy2EmaJG/mPGdgkhofyKte9aWLF+M7EPz
-         ej9f5jxf1U8Y2OG+OdwqpeR8ZT9Mb+9S+wSne7P2pAAvxcE/tY030BjRqYTxWHYJRypN
-         0e/R+dR5je3g6Fvsk5Ut7QD92jv1yMi/G9KObvnorjtIZAiuJbuEAmqjLAQwUp8Pfnur
-         YHWk1KCSYnZarphM3G2RAJLm7DErXs/vnyBsZeKNfQXZQ9bMTbE2KdHh5OTKNVpJxBA6
-         OTHQABi92OGGKDFWOERv4gVwPqxdEhCReHzGYETowCfauaWDIclB/Ymad6MySWihC80C
-         9E1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=6x6r/exmcSYIpy2kXslxgIx+bZlhfPOJchyJmDznfHg=;
-        b=AWXrcXiKGqH8oJEGktTLgZjxPP4kTj5dJJqCWcX8Orqy/F5ooj2tgTyAeeI5cHbvkf
-         YsHzu4n+NbcLjHv9vD+F9OUycvjJQa9WVOgIs7AE1gmciN8MXx9FTvst9XeHwRxZejwI
-         EYIZ00ymNn1SNPZwTJ1acYCd63SC8mpWaCDeO8snJeHnGvQnGWs7LjySoenAydyOKPf9
-         vrdoAXMctw6TCK7XOjx4xiTD8uFh+6/1ZVev6ug5JM35gNHHQ7Sk4N4OcRok91LSEtcr
-         FMnIm8ybN53I+JHjLcqLPuw0TcTD84dd4w98IxNvlO1yy76Ew3+I47/oGzJhSEeGUDFA
-         LAew==
-X-Gm-Message-State: AOPr4FVGuUbXy/34ieuDCDlTuT0Y78RUJj0SdfcdOLLgiybO6NkbcAuMcyJxqxDafmwz2QdtzWThh9kq3aNvsw==
-X-Received: by 10.13.244.134 with SMTP id d128mr63478ywf.72.1462246760833;
- Mon, 02 May 2016 20:39:20 -0700 (PDT)
-Received: by 10.13.219.213 with HTTP; Mon, 2 May 2016 20:39:20 -0700 (PDT)
-In-Reply-To: <xmqq7ffcqct1.fsf@gitster.mtv.corp.google.com>
+	id S1750765AbcECENB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2016 00:13:01 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60778 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750713AbcECENA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2016 00:13:00 -0400
+Received: (qmail 9107 invoked by uid 102); 3 May 2016 04:12:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 03 May 2016 00:12:59 -0400
+Received: (qmail 22124 invoked by uid 107); 3 May 2016 04:13:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 03 May 2016 00:13:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 May 2016 00:12:57 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqlh3sqfze.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293318>
 
-On Tue, May 3, 2016 at 4:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Pranit Bauva <pranit.bauva@gmail.com> writes:
->
->> Variable named 'verbose' in builtin/commit.c is consumed by git-status
->> and git-commit so if a new verbose related behavior is introduced in
->> git-commit, then it should not affect the behavior of git-status.
->>
->> One previous commit (title: commit: add a commit.verbose config
->> variable) introduced a new config variable named commit.verbose,
->> so care should be taken that it would not affect the behavior of
->> status.
->>
->> Another previous commit (title: "parse-options.c: make OPTION_COUNTUP
->> respect "unspecified" values") changes the initial value of verbose
->> from 0 to -1. This can cause git-status to display a verbose output even
->> when it isn't supposed to.
->>
->> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
->>
->> ---
->> This is a split off from the previous patch 6/6 as suggested by Eric
->> Sunshine.
->
-> If these are documenting what your previous patches broke, then
-> there test body should describe what should happen, and then if it
-> is broken, use test_expect_failure, no?
->
-> Your first test does "run status with commit.verbose is set, and
-> make sure the "diff --git" does not appear", which is correct, so if
-> it does not work, test_expect_failure would be the right thing to
-> use.
->
-> These, especially the latter, look rather unpleasant regressions to
-> me, and the main commit.verbose change would need to be held back
-> before they are fixed.
+On Mon, May 02, 2016 at 02:58:45PM -0700, Junio C Hamano wrote:
 
-I agree that using test_expect_failure would be a better way of going
-with this thing. Thanks. Will send an updated patch for this.
+> ba3c69a9 (commit: teach --gpg-sign option, 2011-10-05) introduced a
+> "signed commit" by teaching --[no-gpg-sign option and commit.gpgsign
+> configuration variable to various commands that create commits.
+> 
+> Teaching these to "git commit" and "git merge", both of which are
+> end-user facing Porcelain commands, was perfectly fine.  Allowing
+> the plumbing "git commit-tree" to suddenly change the behaviour to
+> surprise the scripts by paying attention to commit.gpgsign was not.
+> 
+> Among the in-tree scripts, filter-branch, quiltimport, rebase and
+> stash are the commands that run "commit-tree".  If any of these
+> wants to allow users to always sign every single commit, they should
+> offer their own configuration (e.g. "filterBranch..gpgsign") with an
+> option to disable (e.g. "git filter-branch --no-gpgsign").
+> 
+> Ignoring commit.gpgsign option _obviously_ breaks the backward
+> compatibility, but I seriously doubt anybody sane is depending on
+> this misfeature that commit-tree blindly follows commit.gpgsign in
+> any third-party script that calls it.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> 
+>  * This is an simpler alternative that forces commit-tree callers
+>    that want to honor commit.gpgsign to do so themselves.
+
+I don't have any such scripts myself (aside from git-stash, whose
+signing behavior is moderately annoying), but I think this simpler form
+is fine. There is already an escape hatch for scripts, and it is:
+
+  if test "$(git config --bool commit.gpgsign)" = "true"; then
+          sign=-S
+  else
+          sign=
+  fi
+
+  git commit-tree $sign ...
+
+That is a few more lines than "--use-commit-gpgsign-config", but it's
+simple enough to be acceptable, and matches the same technique that
+other config options need when used with plumbing.
+
+So I think the motivation and premise are good, but...
+
+> -static int commit_tree_config(const char *var, const char *value, void *cb)
+> -{
+> -	int status = git_gpg_config(var, value, NULL);
+> -	if (status)
+> -		return status;
+> -	if (!strcmp(var, "commit.gpgsign")) {
+> -		sign_commit = git_config_bool(var, value) ? "" : NULL;
+> -		return 0;
+> -	}
+> -	return git_default_config(var, value, cb);
+> -}
+> -
+
+I think this may be going too far. If I do "git commit-tree -S", I'd
+expect it to use gpg.program, but here you are dropping the call to
+git_gpg_config. Likewise for user.signingkey.
+
+So I think you just want to drop the commit.gpgsign block here, and keep
+the rest.
+
+-Peff
