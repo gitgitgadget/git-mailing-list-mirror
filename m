@@ -1,67 +1,102 @@
-From: Lev <leventelist@gmail.com>
-Subject: remotes
-Date: Tue, 3 May 2016 18:16:24 +0200
-Message-ID: <20160503181624.1504eb0a@laborpc>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 12/41] builtin/update-index.c: prefer "err" to "errno"
+ in process_lstat_error
+Date: Tue, 3 May 2016 12:52:01 -0400
+Message-ID: <CAPig+cRASxkmgRt_gK89-qtqVPuWzq5TynaXzBY4iqcCdo2Cqg@mail.gmail.com>
+References: <1462101297-8610-1-git-send-email-pclouds@gmail.com>
+	<1462277054-5943-1-git-send-email-pclouds@gmail.com>
+	<1462277054-5943-13-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: base64
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 03 18:51:13 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 03 18:52:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axdXA-0007zG-Le
-	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 18:50:53 +0200
+	id 1axdYV-0000iy-5v
+	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 18:52:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756233AbcECQun (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2016 12:50:43 -0400
-Received: from mail1.kabelnet.hu ([79.121.0.7]:54661 "EHLO mail.kabelnet.hu"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755635AbcECQum (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2016 12:50:42 -0400
-X-Greylist: delayed 2048 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 May 2016 12:50:42 EDT
-Received: from 5e1be956.mobile.pool.telekom.hu ([94.27.233.86] helo=chacha.levafreebsd.org)
-	by mail.kabelnet.hu with esmtpsa (TLS1.2:DHE_RSA_AES_256_CBC_SHA256:256)
-	(Exim 4.80)
-	(envelope-from <leventelist@gmail.com>)
-	id 1axczr-0004TX-9L
-	for git@vger.kernel.org; Tue, 03 May 2016 18:16:29 +0200
-Received: from laborpc (unknown [192.168.1.179])
-	by chacha.levafreebsd.org (Postfix) with ESMTPS id 23AB3E9F1B6
-	for <git@vger.kernel.org>; Tue,  3 May 2016 18:16:25 +0200 (CEST)
-X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.25; i586-pc-linux-gnu)
-X-Spam-Score: 3.4 (+++)
-X-Spam-Report: Spam detection software, running on the system "spamd2.kabelnet.hu",
- has NOT identified this incoming email as spam.  The original
- message has been attached to this so you can view it or label
- similar future email.  If you have any questions, see
- the administrator of that system for details.
- Content preview:  Dear List, I accidentally added a remote of another repository
-    to my config file. And so I merged two different repositories together. Is
-    there any real user case for this? Is there any way to prevent this happening?
-    [...] 
- Content analysis details:   (3.4 points, 5.0 required)
-  pts rule name              description
- ---- ---------------------- --------------------------------------------------
-  0.0 FSL_HELO_NON_FQDN_1    No description available.
-  0.0 FREEMAIL_FROM          Sender email is commonly abused enduser mail provider
-                             (leventelist[at]gmail.com)
-  0.0 DKIM_ADSP_CUSTOM_MED   No valid author signature, adsp_override is
-                             CUSTOM_MED
-  1.7 MIME_BASE64_TEXT       RAW: Message text disguised using base64 encoding
-  0.8 RDNS_NONE              Delivered to internal network by a host with no rDNS
-  0.9 NML_ADSP_CUSTOM_MED    ADSP custom_med hit, and not from a mailing list
-X-Scan-Signature: 9524fb9e753911cde8111ed9f87fc0b5
+	id S1756287AbcECQwG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 May 2016 12:52:06 -0400
+Received: from mail-ig0-f195.google.com ([209.85.213.195]:34991 "EHLO
+	mail-ig0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756281AbcECQwD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 May 2016 12:52:03 -0400
+Received: by mail-ig0-f195.google.com with SMTP id fn8so3158189igb.2
+        for <git@vger.kernel.org>; Tue, 03 May 2016 09:52:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-transfer-encoding;
+        bh=+uUcRSaq4q5Av3k7Ca6CvQIZc3U753bU483tKi9ue2E=;
+        b=vVoB8rS512AwlHQLZO21tbKGWIdjZcDyGOyNj0bxwympdYPmWKDJOh56lzDQyCOAyH
+         5z47WkVl0SGKRvuZSsV89rZi7HAaTy5CupI+/VonPCVSBWjxi/lSmiJbEE4Pgg5tgi3s
+         oyVDMnwTMSYrD1QkWbrs8cgsctrn45Q5sV0qNF/fjS7R7qxIQHn3bU/7bbHpfo7efMtB
+         azmJFitDvWWECWDMUD48O5EjjEWJk1jkufWlGqs3C7Aur2WrhmR/5RfnOrfqNozQO6/J
+         wdYh4sFPBf6VZSD+94UT9IgAHTtQ88VIPFMFyz1ByRoTRasclhFoSv+Gt/esWeprd01b
+         +hQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=+uUcRSaq4q5Av3k7Ca6CvQIZc3U753bU483tKi9ue2E=;
+        b=J0xW+T9p3Jjkl3N8tKAPqaMLu3UAb7LB5ww9nrIIR8XbRvc1AXua6EDadKvhAz9PoC
+         uXuVlbxH2Y7VkkmwuWErDlX37Jec3Xt1ELSFpnSuxvrlbVn58PPrhQKl0enKHDusF3Hy
+         ir9yIQrGphXyVka3+iXWBXPQl+5IJ4oUuTlMNtvqxQAdqCDIvmKX3V6/I1Vt/JzovNKX
+         U2yVpXd9x4eG3IQ31NlosBd9bG19xs8vrPwrFM9mOd7lviJ9Yej3Bon/v+eEmfhmf8vc
+         DmmB2oe4WUdR/kkWOujY3b117yCV/HbjAxdP1G7vrU1b69WGkQMTiSHzYhd6e+/JhrMA
+         jYJw==
+X-Gm-Message-State: AOPr4FXVzQVzhreWc4Hl5JyuEnr04XIDnEwalgBIamwgmisp1cDAPT46I5jFrhY4eYhg4dTDTun/I1gNIGqFqw==
+X-Received: by 10.50.224.148 with SMTP id rc20mr14634733igc.73.1462294322022;
+ Tue, 03 May 2016 09:52:02 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Tue, 3 May 2016 09:52:01 -0700 (PDT)
+In-Reply-To: <1462277054-5943-13-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: Nn9D0oX5cqrDExGHRq5SgguM3XU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293417>
 
-RGVhciBMaXN0LA0KDQoNCkkgYWNjaWRlbnRhbGx5IGFkZGVkIGEgcmVtb3RlIG9mIGFub3RoZXIg
-cmVwb3NpdG9yeSB0byBteSBjb25maWcgZmlsZS4gQW5kIHNvIEkNCm1lcmdlZCB0d28gZGlmZmVy
-ZW50IHJlcG9zaXRvcmllcyB0b2dldGhlci4gSXMgdGhlcmUgYW55IHJlYWwgdXNlciBjYXNlIGZv
-cg0KdGhpcz8gSXMgdGhlcmUgYW55IHdheSB0byBwcmV2ZW50IHRoaXMgaGFwcGVuaW5nPw0KDQpU
-aGFua3MsDQpMZXYNCg==
+On Tue, May 3, 2016 at 8:03 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
+uy <pclouds@gmail.com> wrote:
+> "errno" is already passed in as "err". Here we should use err instead=
+ of
+> errno. errno is probably a copy/paste mistake in e011054 (Teach
+> git-update-index about gitlinks - 2007-04-12)
+
+Thanks, this version is quite sensible and doesn't trigger any
+feelings of discomfort[1].
+
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/293150/focu=
+s=3D293205
+
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  builtin/update-index.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/update-index.c b/builtin/update-index.c
+> index 1c94ca5..b8b8522 100644
+> --- a/builtin/update-index.c
+> +++ b/builtin/update-index.c
+> @@ -255,7 +255,7 @@ static int process_lstat_error(const char *path, =
+int err)
+>  {
+>         if (err =3D=3D ENOENT || err =3D=3D ENOTDIR)
+>                 return remove_one_path(path);
+> -       return error("lstat(\"%s\"): %s", path, strerror(errno));
+> +       return error("lstat(\"%s\"): %s", path, strerror(err));
+>  }
+>
+>  static int add_one_path(const struct cache_entry *old, const char *p=
+ath, int len, struct stat *st)
+> --
+> 2.8.0.rc0.210.gd302cd2
