@@ -1,97 +1,99 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 0/3] preparatory patches for the submodule groups
-Date: Tue, 3 May 2016 14:12:47 -0700
-Message-ID: <CAGZ79kbm5y+LeyA_dwQWKFNaa42280cOvwQYZTP=-aRnySsB1A@mail.gmail.com>
-References: <1462227844-10624-1-git-send-email-sbeller@google.com>
-	<xmqqwpnalwf8.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kakayOhPkCK4hbRkj-h2Bt+PqD69EgHk-chbu4xCA8_pA@mail.gmail.com>
-	<xmqqoa8mlutg.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t7300: mark test with SANITY
+Date: Tue, 3 May 2016 17:15:29 -0400
+Message-ID: <20160503211528.GA32737@sigill.intra.peff.net>
+References: <1462301672-20866-1-git-send-email-sbeller@google.com>
+ <20160503190417.GD30530@sigill.intra.peff.net>
+ <xmqqmvo7lz5f.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+	janx@linux.com, Lars Schneider <larsxschneider@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 03 23:12:54 2016
+X-From: git-owner@vger.kernel.org Tue May 03 23:15:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axhcj-0005Mj-5k
-	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 23:12:53 +0200
+	id 1axhfM-0006gX-Ah
+	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 23:15:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756561AbcECVMt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2016 17:12:49 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:34599 "EHLO
-	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756536AbcECVMs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2016 17:12:48 -0400
-Received: by mail-io0-f178.google.com with SMTP id 190so35820210iow.1
-        for <git@vger.kernel.org>; Tue, 03 May 2016 14:12:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=1y3YW+5n7Aem43UKxmYb3yEF0QANPDT2Na6zTA1+MGc=;
-        b=HLmegpOq48dNCH7dXKEkGCKvz0Sf6oKBQqtVcDk6FuJdBLPSc38nT0iBdqYwNsxkB7
-         03THm9Lrm625wW0YI/gcPhhRnXNhVT7bFTHjgPTAGYclcPEp+QS52JE85n1lnldVZYrl
-         vAEmxOT9TzgKJNfKrsbgvSV0EFx7E3FKRY8PEmlhc6k4My+gWSS81AurBo4SGQ6KoOux
-         ZIlyio41rWZlYawtOr5BNZ+C9CZP15I1OdtdoAxNh2Nbt80KGZakw1WDV9aFG2zSkHNN
-         mEzZO4uGnErelPBTAgLDVzKDlDjTr58Pd6Q2fLlzjEZsaaH9iAXKGB513Q2bLrhvKFCg
-         cGhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=1y3YW+5n7Aem43UKxmYb3yEF0QANPDT2Na6zTA1+MGc=;
-        b=mL4g2696se0K/Z503ck1GGyBQ5J50as+KikOy7qWE70hx94OksEiODpEcwAwPoPAvz
-         qA5nxIH/OMsaGph830EMd11XsYZmGDndK99J9hGcTXVX4vWaaIL2kxKnRXC71rVW/dd6
-         Mtc5Q14sUdyDx8c71fcLU5PSRQIz4geNKFnGE4JLktwmJKeMD7eTcT6xt/yOvzf5Io2O
-         aDXzZnWW+AhNgiBt2dbkObnMcUGnL8z/n9P/nm0KpObih3qs6D6x8GtdXC4wX6KYUGVb
-         uMfR9+0eTf3uabmbn7cLwEZUAC1cbdgjfDBPKbl47xdu7gove7ZedQUnNy56/U8IXPfs
-         V3WQ==
-X-Gm-Message-State: AOPr4FX0yYJxIji2YrFmBue6rJFgjR392lLxHOMNu891Eyk0qHkzCO+M0YjpBZn5ISkSD+btWsjKeGo4+qQNTIno
-X-Received: by 10.107.53.204 with SMTP id k73mr5907972ioo.174.1462309967407;
- Tue, 03 May 2016 14:12:47 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Tue, 3 May 2016 14:12:47 -0700 (PDT)
-In-Reply-To: <xmqqoa8mlutg.fsf@gitster.mtv.corp.google.com>
+	id S1756572AbcECVPc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2016 17:15:32 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33422 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756534AbcECVPc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2016 17:15:32 -0400
+Received: (qmail 28169 invoked by uid 102); 3 May 2016 21:15:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 03 May 2016 17:15:31 -0400
+Received: (qmail 1986 invoked by uid 107); 3 May 2016 21:15:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 03 May 2016 17:15:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 May 2016 17:15:29 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqmvo7lz5f.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293456>
 
-On Tue, May 3, 2016 at 2:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> I have your patch here and have a "-a and pathspec are incompatible" fix
->> build on top.
->> * I do wonder if we want to have the shortform '-a' though.
->
-> I do not particularly care.  I was merely matching the other two
-> options there.
->
->> * I think we want to head for consistency, eventually.
->>    e.g. commands with no arguments such as tag, branch
->>    give a list of their respective domain.
->
-> Isn't that a historical mistake we are regretting, though?  Only
-> after many other operation modes were invented and "create X" proves
-> not to be the only primary modes we had to invent "tag -l" and
-> "branch -l".  Aren't we better off not having "no option means list"
-> kind of default?
+On Tue, May 03, 2016 at 12:28:12PM -0700, Junio C Hamano wrote:
 
-listing is not destructive, and I really like to not type a single dash
-for some commands.
+> By the way, it is easy to make a mistake like this, not to notice it
+> during a review, and to leave it unnoticed for a long time,
+> especially because I do not think anybody active in the development
+> community runs tests as 'root'.
 
->
->>    Subcommands do not give lists by default, e.g.
->>    `git stash clear`, `git remote prune`
->>    which are the moral equivalent to
->>    `git submodule deinit` just work as they were told, no --switch needed.
->
-> I wouldn't say "git rm" should remove everything by extending that
-> logic, but I can certainly buy if somebody argues "git submodule
-> deinit" is not destructive enough to warrant extra safety.
+I think the advice for running the tests as root has long been: don't.
+But I guess some people are in situations where it's hard to do
+otherwise.
 
-`git rm` is a command, not a subcommand though.
+I'm torn on whether it really matters or not. On the one hand, if a
+breakage that is purely in a test and not in git itself goes for a long
+time without anyone noticing, it's not really hurting anyone. On the
+other, "noticing" and "reporting" are two different things; there may be
+people who run "make test" and give up.
+
+FWIW, I just did a "sudo make test" and the only other failures were
+around HTTP (which correctly punts with "you can't run http tests as
+root", but I set GIT_TEST_HTTPD=1, which turns skipping them into an
+error).
+
+> Perhaps in a future update, Travis should learn a step to catch
+> breakages like like this.  Or perhaps it is not worth the effort?
+
+Maybe. I admit to not really using the Travis tests myself, as they are
+way too slow and cumbersome to debug compared to just running "make
+test".  The primary value to me of centralized CI is:
+
+  1. _If_ people are looking at PRs on GitHub, the test status is shown
+     right there in the PR, without a reviewer having to wonder whether
+     the submitter ran "make test". But since I don't ever look at PRs
+     for Git, that's not helpful.
+
+  2. Quicker testing on a variety of platforms that I don't have.
+
+     We've known for years that the tip of master passes your "make
+     test" under Linux, but other-platform breakage slips through, and
+     we rely on people who use those platforms to report. But that may
+     not happen in a timely way, and CI can let us know sooner.
+
+     Right now we've taken a baby step there. CI auto-builds for various
+     setups, but we still rely on people who care about those platforms
+     to look at the results and surface the data to the list. If we
+     tested individual topics picked up from the mailing list and sent
+     out an email saying "by the way, this is broken on platform X",
+     that would go a long way (and would help point 1, too). I think
+     there was some discussion in the 0day thread elsewhere on the list,
+     but I didn't follow it too closely.
+
+Anyway, back to the original question. I do think "test as root" can be
+considered another platform, which makes it a good match for CI. But at
+the same time, I don't know that it has ever surfaced an actual bug in
+_Git_, and not just the test suite. So seeing those bugs quickly is a
+lot less interesting.
+
+-Peff
