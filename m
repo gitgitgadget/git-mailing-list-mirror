@@ -1,104 +1,85 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH v15 7/7] t/t7507: tests for broken behavior of status
-Date: Tue, 3 May 2016 21:48:17 +0530
-Message-ID: <CAFZEwPMef2TnFS9yT6Gh-L8MwnWogzsNthktAN4CxjOxbY5JFw@mail.gmail.com>
-References: <1462046616-2582-1-git-send-email-pranit.bauva@gmail.com>
-	<1462046616-2582-7-git-send-email-pranit.bauva@gmail.com>
-	<xmqq7ffcqct1.fsf@gitster.mtv.corp.google.com>
-	<CAFZEwPOAWh48YCxA3B+kRxVpkwN32OHW7Qrb9ajs2Cy0S8sjLw@mail.gmail.com>
-	<CAPig+cR7pPHZv_z3G+BsLPqP7WYSVUb_7c2qmM+0y-TFeWjaSg@mail.gmail.com>
-	<CAFZEwPMLcyAu67MrVWKpN2ytAFaB6rOj4ASUi3VG81DSS0Euiw@mail.gmail.com>
-	<CAPig+cQC0r6Lm9kOFQ2xukN-GiU0iTV5BNc7W8t4f0trkdtHsQ@mail.gmail.com>
-	<CAFZEwPOYi0rv-WhVuV5ALwd=2_w2F2aeKN61EoZxswQQRGqcnA@mail.gmail.com>
-	<CAPig+cRa4z2ZUsQ7a-w1MT8S=haaqFeELK8fjwp62BZLBfnnQQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] submodule deinit test: fix broken && chain in subshell
+Date: Tue, 03 May 2016 09:19:07 -0700
+Message-ID: <xmqqvb2vnmh0.fsf@gitster.mtv.corp.google.com>
+References: <1462227844-10624-1-git-send-email-sbeller@google.com>
+	<1462227844-10624-2-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue May 03 18:19:05 2016
+Content-Type: text/plain
+Cc: Jens.Lehmann@web.de, git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue May 03 18:19:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axd1j-0007U0-Vy
-	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 18:18:24 +0200
+	id 1axd2a-0008AC-Ir
+	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 18:19:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756190AbcECQST (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2016 12:18:19 -0400
-Received: from mail-yw0-f175.google.com ([209.85.161.175]:36757 "EHLO
-	mail-yw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756113AbcECQSS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2016 12:18:18 -0400
-Received: by mail-yw0-f175.google.com with SMTP id o66so26470087ywc.3
-        for <git@vger.kernel.org>; Tue, 03 May 2016 09:18:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=o8lkoPwUy6GOnHtk/Cd3G81yQxn2XBXIk+bk197XK9E=;
-        b=cbMHYeyBZYwJnoOUJppG4sdJMXRC8fWEDyvMTAk4wheTTpt0+D4ISOffl3hokua3t9
-         +3SZ1nD6DdhigM4sa+sdPmOAJ1TpFEVrpok4MAGo3w67o3XMUPF1Kw5/21p5xr5T+tdI
-         tWBPjopc3tJ47vcPL1Nhq3Mwfw2Xph8OaTgVdKAMvVuAgUBqC3h80VO/uuzH9OT3EjLM
-         fAUR/lnjvDjTt5ixX6aj/jGOEEhGTXQtVCLEdIxd+q8fJrFUS5ObeXL9OwA+qwiN8ohR
-         3yIYgqWXO+amKWu4RxZasa3P7W1qlpBDiMh3dtsqhkCME4IqunQkguyEwE/3akruRc8e
-         sMSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=o8lkoPwUy6GOnHtk/Cd3G81yQxn2XBXIk+bk197XK9E=;
-        b=ejDcyQw8cSsteP8UJCjVFSNdbsjKFjQ3lcbsKMsdGH6eHONKcrOgOWyvNjjSy8GCK+
-         ojiNHljmWKHHNZhH6wO8RB1i1xG3G5R+pP+XdXDCBlO9Old1xGj6EeWQ5dVgVAnCbyGb
-         2PXjQK5SMlaaksk0QSRwkdCXvrusR8k9oWtTXFmsVu88Dmgm4RKYjfLKArtdLP/8q0xK
-         eOblQ0UsDCmAtdM97Ng3etScr2EgjnX/A1/41/uQKkRIraON4cERYjVMR6hHqDuAlbH3
-         OFKTSTgqaZ8teD85uRoU43dvHxtbll5R6bbVE562J4iNfBkQBz4v5d1Tc1ZSZfmLIQtD
-         JzaQ==
-X-Gm-Message-State: AOPr4FXsnfeWQHNSjK2jKTSkBH1SiYjoRUY4vKpi34uHby8/ZKX/tw31Y1wmEqkI63nrD3CWwreU89w6seiGBw==
-X-Received: by 10.13.244.134 with SMTP id d128mr1693014ywf.72.1462292297693;
- Tue, 03 May 2016 09:18:17 -0700 (PDT)
-Received: by 10.13.219.213 with HTTP; Tue, 3 May 2016 09:18:17 -0700 (PDT)
-In-Reply-To: <CAPig+cRa4z2ZUsQ7a-w1MT8S=haaqFeELK8fjwp62BZLBfnnQQ@mail.gmail.com>
+	id S933606AbcECQTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2016 12:19:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55207 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933513AbcECQTL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2016 12:19:11 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 516C217A1E;
+	Tue,  3 May 2016 12:19:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DKmJpdlB09huXXYZxn0RQbVnXls=; b=aM3VTY
+	5C+SQEb4XFVl+4sLoYzYh7xNLKDGyOu3jTZmUrnF6WAmS31wRj0JJ0TwpPhcOYVm
+	c8sTNk3xfA7r5QAXswhtZH8UdtuTUoxu62hvbKnGHSMV1LJE1MsPMN3xX1p97YWJ
+	QtO6BLE2H6wNDdzSpa1B0Ka1CFTwqbaVtFqXw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=R2AAqzw0XUZ6bLaheO2A8nBuLHYc1hab
+	f8sAeUg5K8ibGwjRc2O08wHBf/ZV2PHk3MyFMj1bZ5NqAIBiSHIJ5fqThEnF7wjT
+	cqFjOF5SCW5K4eotz8rDPDafAmyIQZEvKkRltnrXQzl6RJ5CeznLubr6Mb/hcsOn
+	FZc5B0EPJPc=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 496B817A1C;
+	Tue,  3 May 2016 12:19:10 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8495417A1B;
+	Tue,  3 May 2016 12:19:09 -0400 (EDT)
+In-Reply-To: <1462227844-10624-2-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Mon, 2 May 2016 15:24:02 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C408DB8C-114A-11E6-A6EE-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293411>
 
-On Tue, May 3, 2016 at 9:47 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Tue, May 3, 2016 at 5:18 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->> On Tue, May 3, 2016 at 12:19 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>>>> Step back a moment and recall why these tests were added. Earlier
->>>>> rounds of this series were buggy and caused regressions in git-status.
->>>>> As a consequence, reviewers suggested[1,2] that you improve test
->>>>> coverage to ensure that such breakage is caught early.
->>>>>
->>>>> The point of these new tests is to prevent regressions caused by
->>>>> *subsequent* changes, which is why it was suggested that these tests
->>>>> be added early (as a "preparatory patch"[3]), not at the very end of
->>>>> the series as done here in v15.
->>>>
->>>> Sure! I just wanted the commit message to be detailed as per the
->>>> guidelines given by SubmittingPatches. I will swap the patch 6/7 and
->>>> patch 7/7 changing the commit message. Also I will make the commit
->>>> message less detailed.
->>>
->>> This patch should be inserted before 4/7 since it needs to protect
->>> against breakage which might occur when 4/7 changes the behavior of
->>> OPTION_COUNTUP.
->>
->> I forgot to mention about this earlier. When I was rebasing, this stroked me.
->> I guess making any changes in ordering the commits will make one of
->> the test as absurd. One of the test uses a configuration variable
->> 'commit.verbose' will won't be effective before the patch 6/7. So I
->> guess I will have to only change the commit message to reflect as
->> "improving test coverage".
+Stefan Beller <sbeller@google.com> writes:
+
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  t/t7400-submodule-basic.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> I also had intended to talk about this but forgot. What would be quite
-> logical is to introduce only the "git-status without --verbose" test
-> in this new "improve coverage" patch before 4/7. The other test, which
-> ensures that git-status doesn't regress with commit.verbose, would
-> then very naturally be included in the patch which adds the
-> commit.verbose functionality (currently patch 6/7).
+> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+> index 814ee63..90d80d3 100755
+> --- a/t/t7400-submodule-basic.sh
+> +++ b/t/t7400-submodule-basic.sh
+> @@ -914,7 +914,7 @@ test_expect_success 'submodule deinit works on repository without submodules' '
+>  		git init &&
+>  		>file &&
+>  		git add file &&
+> -		git commit -m "repo should not be empty"
+> +		git commit -m "repo should not be empty" &&
+>  		git submodule deinit .
+>  	)
+>  '
 
-Sure. Will do. Thanks!
+Thanks.
+
+As this was introduced by 84ba959b (submodule: fix regression for
+deinit without submodules, 2016-03-22), which was merged to the
+mainline at v2.8.0-rc4-8-g2a4c8c3 and applies there, let's queue it
+there.
