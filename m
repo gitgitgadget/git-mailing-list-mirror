@@ -1,11 +1,11 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 63/83] builtin/apply: make apply_all_patches() return -1
+Subject: Re: [PATCH 67/83] builtin/apply: make build_fake_ancestor() return -1
  on error
-Date: Tue, 3 May 2016 15:01:16 +0200
-Message-ID: <CAP8UFD3NXo4vMBK9-3LChWcoSj7y_nKeea-RLyGmdy7kVvhabA@mail.gmail.com>
+Date: Tue, 3 May 2016 15:52:37 +0200
+Message-ID: <CAP8UFD0FcxrmqXjJZpdkc0akY4ZDGGY+dEwDg-EGAFAXV_=e5w@mail.gmail.com>
 References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
-	<1461504863-15946-64-git-send-email-chriscool@tuxfamily.org>
-	<CAPig+cSVCDNRup95ay=htiXiw0UCGs6boDuqovGnQJY8imbFhQ@mail.gmail.com>
+	<1461504863-15946-68-git-send-email-chriscool@tuxfamily.org>
+	<CAPig+cSMLCg49O3tf=g2qDi-TUz-xsdW-ac_Eze9g=XsCKSSJA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
@@ -18,72 +18,106 @@ Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue May 03 15:01:28 2016
+X-From: git-owner@vger.kernel.org Tue May 03 15:52:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axZx7-0005pw-I7
-	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 15:01:25 +0200
+	id 1axakl-0003He-Ph
+	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 15:52:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933431AbcECNBU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2016 09:01:20 -0400
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:34085 "EHLO
-	mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932762AbcECNBR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2016 09:01:17 -0400
-Received: by mail-wm0-f53.google.com with SMTP id v200so28385788wmv.1
-        for <git@vger.kernel.org>; Tue, 03 May 2016 06:01:16 -0700 (PDT)
+	id S1755515AbcECNwk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2016 09:52:40 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:35047 "EHLO
+	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755316AbcECNwj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2016 09:52:39 -0400
+Received: by mail-wm0-f52.google.com with SMTP id e201so147627526wme.0
+        for <git@vger.kernel.org>; Tue, 03 May 2016 06:52:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=WpJcaRWUP7ZfggkJCO5Rd/m/r0Xvf1XSRRpwMhPXUW0=;
-        b=vRUJndd8J6gpCfXr6bSI4RVHiGj/gRgpa8yB7KTGdVTJLiyQvfBCMDNWZQr0ulm9uz
-         iEpi2o2digmylOZaWxszE+s7HwBj+mBDWGUqb8LiJPCSgi8967cl0WGqZ4eTjJN5Pp7g
-         HnNlFyp7aZ5RzKhNffRuqOG/TRPM0oFc822KpOqdV3fmf0wlaLLntmv4Wo1nn6RymeE7
-         klbCM+KbdIYZDdJxyCC0zDSqFeYCKfhhKRfHeoXYMu0fCL/vrzE+nxLFB8L3LxZehKoa
-         EDj/Nzq+9SuFSiLe0YqrrTu+3UF8G3xcwDidaW8C4BLbI+GYc44fY6U/4VInHy+8w9d8
-         M9ew==
+        bh=nBIanzPglCbqqbhD8tFQvXQnm2UxUvWfM9VReTdoxsA=;
+        b=kmZuSChZNLw8e71DkSQM7z9l9QIuKq2xivas98JIxjBcbijw/dzc5v3aPJZAt5QPeO
+         fGdLLsSaPG7p04ONaatKjF6luyhWds7Ew4SMx1lBxEtbMrcXTW89VV5kazoG5Q7IxOS4
+         cP07SEG1Y4GOSK1lCPILD6D0m6S+hJyVgc4/UDlEtOXeN2Lw0Wf5nuBUdgcNbJmRxntH
+         cYcq36R8PWMqoppB5Q9485QadxggHf/uE5TOj673i5m3Bo3URl2g1j6mTFBQV1mbHfSn
+         MKV0bTXsiXij9G1LeEGFvUrXKpvl0b21OZ1zGEcb1d+n+7h8+Jmw/QZU+Qa5U9lFC/hT
+         GbtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=WpJcaRWUP7ZfggkJCO5Rd/m/r0Xvf1XSRRpwMhPXUW0=;
-        b=Eilwji4yLolDAZVIYFZOl+24iLZ8+Rz5jDZrpwBpY3JWacbUmJn7rDpm4zPKsGrZyw
-         Byqd8cRb2sS4s+Qe5L4Ay6bMJ3XEcjQVPNx4cQPIg1TcxzApVuaRe4f8qEcUBhVAD22X
-         tXnQwoC38AS/4TwlkRLIRGBt5DhPBB4CXZ7atEPGK3OZh/LaM/B8WhwSfRfOxdiSp4iX
-         T4Es4RusqbJVAPbyIfavc+HzLA306xXiG1gvRAdMEOmnpQr2pu/kM7oLXh4lhFY9QKpx
-         kygxo52ugfNeNCeJLtVP8R5b8V8gIrI0y9TWG9M8E4sQRkAXpsjO+sD3Ec36alA6qi1L
-         foBA==
-X-Gm-Message-State: AOPr4FVU3Tn9g54Z6FIuUVzE3KJeMgfBJbBlrf696gP8+eABZA7gQtkP9ziddXp6ZNZdZfuie5KgI2jfguth9Q==
-X-Received: by 10.28.151.133 with SMTP id z127mr3140855wmd.79.1462280476108;
- Tue, 03 May 2016 06:01:16 -0700 (PDT)
-Received: by 10.194.246.4 with HTTP; Tue, 3 May 2016 06:01:16 -0700 (PDT)
-In-Reply-To: <CAPig+cSVCDNRup95ay=htiXiw0UCGs6boDuqovGnQJY8imbFhQ@mail.gmail.com>
+        bh=nBIanzPglCbqqbhD8tFQvXQnm2UxUvWfM9VReTdoxsA=;
+        b=DGfyRGqvQ8ywIjGGxgVH7KaNpXe4r57ialpUzUH1H6R0ezQKCR95iobuxXmFvRd5Ab
+         stoFg2/27Rcp7xgl885S5Xz6tMBrc72IhPWxIvTs0aNMNPrqkorM21f78ZT9YXBtWJvi
+         GmiM9w2YqSgOQwfbC3X225KORnLZlXv3zX7QRKhWK51mg3oInKukV45d42KhzAbK/ogp
+         jQqRC5UC8ZiYJt7UbJn1b0E/+k556PV537AuNyRtEGPVsP7DAejzVflvYh/XtF/bqsI3
+         0k79jcsJrJbvdm6LOQ1OHhbOGyFCGOk3M01UvirrsWkLFvQJ9/gcdjcbCPiPURxc1ga+
+         BiBw==
+X-Gm-Message-State: AOPr4FUPIf6466fVR9YpkBwY7aWduQwEAifUWybVqlToQVvcNDsnsaJ8lCgDFSJy7c+1wlK/n1TGVBtQ2jeEOA==
+X-Received: by 10.194.117.70 with SMTP id kc6mr3351253wjb.94.1462283557665;
+ Tue, 03 May 2016 06:52:37 -0700 (PDT)
+Received: by 10.194.246.4 with HTTP; Tue, 3 May 2016 06:52:37 -0700 (PDT)
+In-Reply-To: <CAPig+cSMLCg49O3tf=g2qDi-TUz-xsdW-ac_Eze9g=XsCKSSJA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293399>
 
-On Sun, May 1, 2016 at 11:03 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> @@ -4590,10 +4590,10 @@ static int apply_all_patches(struct apply_state *state,
->>                                 squelched);
->>                 }
->>                 if (state->ws_error_action == die_on_ws_error)
->> -                       die(Q_("%d line adds whitespace errors.",
->> -                              "%d lines add whitespace errors.",
->> -                              state->whitespace_error),
->> -                           state->whitespace_error);
->> +                       return error(Q_("%d line adds whitespace errors.",
->> +                                       "%d lines add whitespace errors.",
->> +                                       state->whitespace_error),
->> +                                    state->whitespace_error);
+On Mon, May 2, 2016 at 9:32 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Sun, Apr 24, 2016 at 9:34 AM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>> ---
+>> diff --git a/builtin/apply.c b/builtin/apply.c
+>> @@ -3913,31 +3913,34 @@ static void build_fake_ancestor(struct patch *list, const char *filename)
+>>                 ce = make_cache_entry(patch->old_mode, sha1, name, 0, 0);
+>>                 if (!ce)
+>> -                       die(_("make_cache_entry failed for path '%s'"), name);
+>> +                       return error(_("make_cache_entry failed for path '%s'"),
+>> +                                    name);
+>>                 if (add_index_entry(&result, ce, ADD_CACHE_OK_TO_ADD))
+>> -                       die ("Could not add %s to temporary index", name);
+>> +                       return error("Could not add %s to temporary index",
+>> +                                    name);
 >
-> How does this new 'return' relate to the logic below which updates the
-> index? Does the index need to be updated here now too?
+> What happens to 'ce' here? Does it leak?
 
-I think it is the right thing to do not to update the index when there
-are whitespaces and state->ws_error_action == die_on_ws_error.
+Yeah, I think it leaks.
+
+>>         }
+>>
+>>         hold_lock_file_for_update(&lock, filename, LOCK_DIE_ON_ERROR);
+>>         if (write_locked_index(&result, &lock, COMMIT_LOCK))
+>> -               die ("Could not write temporary index to %s", filename);
+>> +               return error("Could not write temporary index to %s", filename);
+>
+> What happens with 'result'? Does it need to be discarded?
+
+Yeah, I think so.
+
+>>         discard_index(&result);
+>> +       return 0;
+>>  }
+>>
+>>  static void stat_patch_list(struct apply_state *state, struct patch *patch)
+>> @@ -4470,8 +4473,9 @@ static int apply_patch(struct apply_state *state,
+>>                 return 1;
+>>         }
+>>
+>> -       if (state->fake_ancestor)
+>> -               build_fake_ancestor(list, state->fake_ancestor);
+>> +       if (state->fake_ancestor &&
+>> +           build_fake_ancestor(list, state->fake_ancestor))
+>> +               return -1;
+>
+> Same comment as earlier patches: Leaking 'list', 'buf', 'fn_table'.
+
+Ok, I will take care of these.
+
+Thanks,
+Christian.
