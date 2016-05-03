@@ -1,86 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 09/11] connect: use "-l user" instead of "user@" on ssh command line
-Date: Tue, 03 May 2016 10:50:50 -0700
-Message-ID: <xmqqk2jbni85.fsf@gitster.mtv.corp.google.com>
-References: <1462082573-17992-1-git-send-email-mh@glandium.org>
-	<1462265452-32360-1-git-send-email-mh@glandium.org>
-	<1462265452-32360-10-git-send-email-mh@glandium.org>
-	<8f470378-07a9-525b-ff8b-f0de011019cb@web.de>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH 2/2] xdiff: implement empty line chunk heuristic
+Date: Tue, 3 May 2016 10:55:09 -0700
+Message-ID: <CA+P7+xp=8hTgLkmsUFW2d6VF82hEdYxGa48N5HLY-gj1H3WJzQ@mail.gmail.com>
+References: <CA+P7+xoqn3fxEZGn02ST1XV-2UpQGr3iwV-37R8pakFJy_9n0w@mail.gmail.com>
+ <20160420041827.GA7627@sigill.intra.peff.net> <xmqqa8kcxip9.fsf@gitster.mtv.corp.google.com>
+ <CA+P7+xpFCBU1xYbtcX8jtmDDyY8p0CiJJ=bexTmi=_vwWRZi0Q@mail.gmail.com>
+ <xmqqwpngukin.fsf@gitster.mtv.corp.google.com> <CAGZ79kZu=keNaCbt4T=CzH3i9qr+BxXw6AiWR-q1Cs4U80Jzng@mail.gmail.com>
+ <1461969582.731.1.camel@intel.com> <CAGZ79kYx22oYobPxMkC03fGk-E9zaZZd2f+qafESkhcmFog7-w@mail.gmail.com>
+ <1461970113.731.3.camel@intel.com> <xmqqfuu0uzn7.fsf@gitster.mtv.corp.google.com>
+ <20160502180231.GA8812@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue May 03 19:51:15 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Keller, Jacob E" <jacob.e.keller@intel.com>,
+	"sbeller@google.com" <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 03 19:55:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axeTa-0004V2-An
-	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 19:51:14 +0200
+	id 1axeXr-0006z8-5Y
+	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 19:55:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934363AbcECRu7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 May 2016 13:50:59 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63798 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933825AbcECRu5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 May 2016 13:50:57 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0A97219844;
-	Tue,  3 May 2016 13:50:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=04cmoW5HRQdy
-	jcJmYkGna/Nfzkk=; b=xPJUtJE14zVfY/BlvhweNRi7sfVQWHD7v4HzzMGymU57
-	9m/4z+l/AQ8ExITOLQ5MUJ+S3A3ZoKD5TEh+a4Erfm3CsV3+kWZsb8JnFduWh210
-	rfh3L2o8bd95SehL3+PVHTgI+pEi7AZqk+VwJdSUyHgbP2qSbJSxHLWgmcloiyk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=qog42/
-	oiiVtfJAkRmYr0weWY8GiO6IzGS/9TjZ8uD+teQz6mmI4gESLg9paOe9HEGJ27km
-	LDirxlYfrQmeVwUnkcq+vePOWTkwEV1kq9+v61T+nrqdFVuJ25/2O43aEXdGABT5
-	qpeltFSUyNtIkgC6J0vnnqLwBXhfTgbE7tdP4=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0194519843;
-	Tue,  3 May 2016 13:50:54 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6978719841;
-	Tue,  3 May 2016 13:50:53 -0400 (EDT)
-In-Reply-To: <8f470378-07a9-525b-ff8b-f0de011019cb@web.de> ("Torsten
-	=?utf-8?Q?B=C3=B6gershausen=22's?= message of "Tue, 3 May 2016 18:25:05
- +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 949BCB18-1157-11E6-8103-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S934561AbcECRze (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2016 13:55:34 -0400
+Received: from mail-oi0-f48.google.com ([209.85.218.48]:36774 "EHLO
+	mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932756AbcECRza (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2016 13:55:30 -0400
+Received: by mail-oi0-f48.google.com with SMTP id x201so36060279oif.3
+        for <git@vger.kernel.org>; Tue, 03 May 2016 10:55:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=/I+MkvZQOA6V+hZX2lolcJjnjSvMdastBWiBZf0cp1o=;
+        b=nL7skYTmjGOV8pOwcX6XyZCFaJc2g3OdkrMgRzTzVc9JBjk83Bd/56JbkTUHh/EL62
+         WoOK90UpMz6B8pg4Hqwu1qwRGfTMSR1T8Y2abiGieCyw1tDs+a6Q1L78wdzWTDYK3Y1h
+         XkWVH4TWs3DYIKlO9F0V8iynwvthElh3cS/0HjUIeFUBaej2mcuZMakyC7mcuHUPUwty
+         Z9KR/AWDZHIiz9wapkaM5ZWWjDT50hCVx+sFq51mTPF8PLJu9WJCDXZkCQ4D+Y1v7k7s
+         0XuwHuECZ5Rzf3IuLYa11BF6mI2h1CgBVtLUaAL7eWH38eUtvI4RK9Ioap1/xJ3uVqrA
+         iWlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=/I+MkvZQOA6V+hZX2lolcJjnjSvMdastBWiBZf0cp1o=;
+        b=jIQX/quj8dgIlA+yDb/NZ4CGPxQvX1selyu3vI4p7y3VL7KGf60BtQ5U4ujsV3HwmD
+         I4cng5M0E8hV2tSiW7rTEpHb8pYHT/Jc+WSGyELgFNhxCv740Oii935HwXPv1BWyYdNg
+         KtbEI35QJl6u4r9vtkqGlJ2oD4EuqyMgNqC3eLG3Qio62zjXGTrdRyzI9QVaxVxI0dwb
+         6oa8Yt9tU5eAL+2H4o9ONPvPNGAEF5/lG1uPWxGo9rHN1Q2Xjn1f15PJiH1NqOu9YYEg
+         flZbgb/z8UbIAL6C3qstqINbUa8DWnlkFnBivJixJNciKJCvafTMmzUN6uhqnRK70PSQ
+         pAqw==
+X-Gm-Message-State: AOPr4FXbzaXag0bi/S97SbwOlFuJWhJDpy67XYPB5j2Lvr+A+DNr9jgHV04zKRRab2LwQ8U3/PjvxCjL7mPH4Q==
+X-Received: by 10.202.60.194 with SMTP id j185mr2141516oia.196.1462298129614;
+ Tue, 03 May 2016 10:55:29 -0700 (PDT)
+Received: by 10.182.117.132 with HTTP; Tue, 3 May 2016 10:55:09 -0700 (PDT)
+In-Reply-To: <20160502180231.GA8812@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293423>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
-
-> On 2016-05-03 10.50, Mike Hommey wrote:
->> While it is not strictly necessary, it makes the connect code simple=
-r
->> when there is user.
->>=20
+On Mon, May 2, 2016 at 11:02 AM, Jeff King <peff@peff.net> wrote:
+> On Mon, May 02, 2016 at 10:40:28AM -0700, Junio C Hamano wrote:
 >
-> That commit message does't tell too much, I think.
+>> "Keller, Jacob E" <jacob.e.keller@intel.com> writes:
+>>
+>> > True. I think the chances that it needs such a thing are quite minor,
+>> > and if an undocumented knob gets exposed it would have to become
+>> > documented and maintained, so I'd prefer to avoid it. Given that the
+>> > risk is pretty small I think that's ok.
+>>
+>> OK, then let's do only the "documentation" part.
+>>
+>> -- >8 --
+>> Subject: [PATCH] diff: undocument the compaction heuristic knobs for experimentation
+>>
+>> It seems that people around here are all happy with the updated
+>> heuristics used to decide where the hunks are separated.  Let's keep
+>> that as the default.  Even though we do not expect too much trouble
+>> from the difference between the old and the new algorithms, just in
+>> case let's leave the implementation of the knobs to turn it off for
+>> emergencies.  There is no longer need for documenting them, though.
+>
+> I agree with this reasoning. Thanks.
+>
+> -Peff
 
-"Doesn't tell too much" is not necessarily bad, but "tells too
-little" is, and I think this tells me enough to say it is not a good
-change ;-)
+I think I agree too.
 
-> Besides that, I'm sure it will break (at least) my ssh wrapper script=
-s,
-> which rely on user@host to be passed into the script.
-
-Thanks for bringing it up.  "By reducing the language we accept it
-makes my coding simpler" is not a good excuse to break existing
-users, and "While it is not strictly necessary, " is a good hint
-that the author _knows_ that the change can either (1) be done
-without, or (2) be done in a way that does not break existing users
-and yet make the end result easier to read.
+Thanks,
+Jake
