@@ -1,110 +1,117 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 81/83] apply: roll back index in case of error
-Date: Tue, 3 May 2016 14:57:52 +0200
-Message-ID: <CAP8UFD0tGruUTrk5aJ7oGM9jj1HzpM2afqEsJfKyuDB+CWc=fQ@mail.gmail.com>
-References: <1461505189-16234-1-git-send-email-chriscool@tuxfamily.org>
-	<1461505189-16234-2-git-send-email-chriscool@tuxfamily.org>
-	<alpine.DEB.2.20.1604251802480.2896@virtualbox>
+From: Shin Kojima <shin@kojima.org>
+Subject: [PATCH v2] gitweb: apply fallback encoding before highlight
+Date: Tue,  3 May 2016 22:00:51 +0900
+Message-ID: <1462280451-43388-1-git-send-email-shin@kojima.org>
+References: <xmqqbn4ouz7u.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue May 03 14:57:58 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Christopher Wilson <cwilson@cdwilson.us>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Shin Kojima <shin@kojima.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 15:01:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axZtl-0004VC-SE
-	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 14:57:58 +0200
+	id 1axZx6-0005pw-Vw
+	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 15:01:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933259AbcECM5y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2016 08:57:54 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:37227 "EHLO
-	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932903AbcECM5x (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2016 08:57:53 -0400
-Received: by mail-wm0-f49.google.com with SMTP id a17so37654270wme.0
-        for <git@vger.kernel.org>; Tue, 03 May 2016 05:57:53 -0700 (PDT)
+	id S933420AbcECNBO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 May 2016 09:01:14 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:35649 "EHLO
+	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932762AbcECNBM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2016 09:01:12 -0400
+Received: by mail-pf0-f196.google.com with SMTP id r187so1949868pfr.2
+        for <git@vger.kernel.org>; Tue, 03 May 2016 06:01:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=qPPZzx9bAYPy/xBfPyBI0LazSKTz7eNtttgVYFNLaVM=;
-        b=I/A2Q5oG8gKvNdbYFlDCJOMUlwTYWQhakLXgp6NB41YI6tTSEfW92tfoCnC7euDVV2
-         dHSUVZXaDohcdDE/mJgpZVJ0Jm0WccvAW9eExhz5hDJhMcw+nh3Ea3nJAe6M6xtABmN4
-         +a8TI+mGA7cdSwgX3fbRjl1Z7jY0pahJz6WUZ8hgL8Yb6A59aqKjeIlZtscxLa3jdWd2
-         eetrpE4Kz5uvyV1vrV96ZPeKi5ddkSOhXsurZAKX8dFEsOuQcWgOaevz1bLkTgyW8Mof
-         ZwX1DN0qCIW+LQpX8AWOC057+z3R5wEsSq6F/h2uMKQpFta3qIqjWvYUwQCmz3PGPhDr
-         kuJQ==
+        d=kojima-org.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=XKZV5Wr4sHLrhEsYy/C62gUgHtwq6xBtObZUtu54MnQ=;
+        b=cG24UdB806x+9Etd7yLjTT2B9BpHSN/MijbsrUmO5um+zmP4xSeSQ9pAYA4uNLGgON
+         2swZxUYmDuXrXizbaTI24BzwWFXZ9G74mLhsXlgV9H2EMAIbxg5IoOhtNA+i3ezK/qO7
+         KgSpBZVTqu6WGWn3mE/K6sbvp8C4LpFh+0OXbCnoLbDteQyy1w0ANXKc0hq7H1yaEDGW
+         Xy6linwvuAR58dv/MBZC/9M+ajDkkgNcVfGAZC1WJ3hp+n3vhp6vnY5EY6+LwVZOj2Xx
+         PqSnICIdy/zzTSf1cym/4mvoiHr+nvhFZlmhnxGLhZq9rKxUahc1DGN73v2TbJ9no8yr
+         hA5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=qPPZzx9bAYPy/xBfPyBI0LazSKTz7eNtttgVYFNLaVM=;
-        b=FcWeKX47joGKyvZEC5+w3dXByggQWeSIqjaywTXYIQryE3urn8/s0HlCr7qr2PbJhy
-         f032hMuq1G6ZOjt/Uo0tZnUAS8lHAde6xP7jjcwxGzFKg3/472YHGRqOqGpTevFXhez/
-         111oTOF5NVCQ/yiWuFQ9pdz7J6oPY+wLLCP2x7w8LjnqA2G7nifuyPSHwJbfvzZBOJ7P
-         mPm2evqm4qSQOfqEWVvImN+HUeExhvMcJvdH/nsgmDjEcXcG8Y9f9hCoBtdLO+JPaaIy
-         cohFY6Yjtaa7bhkJJ0zQ0mENTrdPtOCaHlUcRhIj+npMzVH66LSC+PbKLgtn7PY5k8nE
-         ajsA==
-X-Gm-Message-State: AOPr4FXHLKPb0GvYxgxbK/93bGFzeg9JNMfj4ClFPL+ERlgb5q9e9HGzYrHHYWuS/JAARs61CIjwsf1fm9Pkdg==
-X-Received: by 10.194.20.162 with SMTP id o2mr2767190wje.78.1462280272064;
- Tue, 03 May 2016 05:57:52 -0700 (PDT)
-Received: by 10.194.246.4 with HTTP; Tue, 3 May 2016 05:57:51 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1604251802480.2896@virtualbox>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=XKZV5Wr4sHLrhEsYy/C62gUgHtwq6xBtObZUtu54MnQ=;
+        b=hcE7izj9TwzTEaoePGpwIS4bphaZUsIa4+Sx/ggB7EWdUw9gfEQKBK1jJhVPSl3pbT
+         cHDbgl+qbraq2dPO1WXzQRfsmplzJVn+m8WTrMDhS3XLZ69JFkPjGD7lHjwA2dgKD7qo
+         nbyN1yquJwgcX5N7zTIXsvJ1apQ/jle3Xq7AyKTXZXIvvLv6ftC9r9gcbczicEP4tYjH
+         7VZs2zgagmvuz9sG2IQMVu3J3Ww2GWBj2uUbj9y7HZlpda+W7OPLDaAG7Zzjnz8DabzQ
+         lKuKHBpeRooGBUA7JqdgDNuCC0/oS0ayBcxyIUVOqeksZTeQuHpMHE6dUZwpqEiCwNoT
+         XLkA==
+X-Gm-Message-State: AOPr4FXhoen9+jDUyFoMpDrR9KrdpjWFkBokAk5kbqfUGkl0+U2T85M5NZ/r25mxD59Yyg==
+X-Received: by 10.98.67.143 with SMTP id l15mr3238149pfi.114.1462280470883;
+        Tue, 03 May 2016 06:01:10 -0700 (PDT)
+Received: from localhost.localdomain (182-167-204-232f1.hyg1.eonet.ne.jp. [182.167.204.232])
+        by smtp.gmail.com with ESMTPSA id 8sm5884556pfk.69.2016.05.03.06.01.08
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Tue, 03 May 2016 06:01:09 -0700 (PDT)
+X-Mailer: git-send-email 2.8.2
+In-Reply-To: <xmqqbn4ouz7u.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293397>
 
-Hi Dscho,
+Some multi-byte character encodings (such as Shift_JIS and GBK) have
+characters whose final bytes is an ASCII '\' (0x5c), and they
+will be displayed as funny-characters even if $fallback_encoding is
+correct.  This is because `highlight` command always expects UTF-8
+encoded strings from STDIN.
 
-On Mon, Apr 25, 2016 at 6:06 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Chris,
->
-> On Sun, 24 Apr 2016, Christian Couder wrote:
->
->> @@ -4734,16 +4737,22 @@ int apply_all_patches(struct apply_state *state,
->>               read_stdin = 0;
->>               set_default_whitespace_mode(state);
->>               res = apply_patch(state, fd, arg, options);
->> -             if (res < 0)
->> +             if (res < 0) {
->> +                     if (state->lock_file)
->> +                             rollback_lock_file(state->lock_file);
->>                       return -1;
->> +             }
->>               errs |= res;
->>               close(fd);
->
-> In case of error, this leaves fd open, which in the end will prevent the
-> "patch" file, and hence the "rebase-apply/" directory from being removed
-> on Windows. This triggered a failure of t4014 here (and possibly more, but
-> it took me quite a while to track this down, what with builtin/am.c's
-> am_destroy() not bothering at all to check the return value of
-> remove_dir_recursively(), resulting in the error to be caught only much,
-> much later).
+    $ echo 'my $v =3D "=E7=94=B3";' | highlight --syntax perl | w3m -T =
+text/html -dump
+    my $v =3D "=E7=94=B3";
 
-Sorry about that and thanks for tracking down the source of the test failure.
-I fixed this by moving the "close(fd)" call just after the "apply_patch()" call.
+    $ echo 'my $v =3D "=E7=94=B3";' | iconv -f UTF-8 -t Shift_JIS | hig=
+hlight \
+        --syntax perl | iconv -f Shift_JIS -t UTF-8 | w3m -T text/html =
+-dump
 
-> Could you please review all open()/close() and fopen()/fclose() calls in
-> your patch series, to make sure that there are no mistakes? A passing test
-> suite does not really make me confident here, as our code coverage is not
-> quite 100%.
+    iconv: (stdin):9:135: cannot convert
+    my $v =3D "
 
-Ok, I will have another look at the 2 other places where there are
-open()/close() or fopen()/fclose() calls.
+This patch prepare git blob objects to be encoded into UTF-8 before
+highlighting in the manner of `to_utf8` subroutine.
+
+Signed-off-by: Shin Kojima <shin@kojima.org>
+---
+
+Changes for v2:
+    - Add Signed-off-by
 
 Thanks,
-Christian.
+Shin Kojima
+
+ gitweb/gitweb.perl | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 05d7910..2fddf75 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3935,6 +3935,9 @@ sub run_highlighter {
+=20
+ 	close $fd;
+ 	open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
++	          quote_command($^X, '-CO', '-MEncode=3Ddecode,FB_DEFAULT', '=
+-pse',
++	            '$_ =3D decode($fe, $_, FB_DEFAULT) if !utf8::decode($_);=
+',
++	            '--', "-fe=3D$fallback_encoding")." | ".
+ 	          quote_command($highlight_bin).
+ 	          " --replace-tabs=3D8 --fragment --syntax $syntax |"
+ 		or die_error(500, "Couldn't open file or run syntax highlighter");
+--=20
+2.8.2
