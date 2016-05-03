@@ -1,103 +1,87 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] remote.c: specify correct plural form in "commit diverge" message
-Date: Tue, 3 May 2016 16:32:19 +0700
-Message-ID: <CACsJy8B2i1ef57xgrRAYkkpWL1-Lz5O7_Zcje1pJ6eLuMry18w@mail.gmail.com>
-References: <2A734D896A45164C887E476E942BF4F9B5F721@CINMBCNA09.e2k.ad.ge.com>
- <1462234350-30902-1-git-send-email-pclouds@gmail.com> <CAGZ79kayCBNn8e5TzD+zhPEopOVTvsTUfy=_9UGP43vktsdFLQ@mail.gmail.com>
- <CACsJy8C0mFfHQ+GSdJyXLc=SArnxKfZCFV7LJkoqEPs0ekzDZg@mail.gmail.com>
- <20160503042008.GB30529@sigill.intra.peff.net> <CACsJy8Bqs5dnKc=VPeuqPZ4OUWVdhYNbewWc5rs-R3FGoZuQ5g@mail.gmail.com>
- <20160503044805.GB32259@sigill.intra.peff.net>
+Subject: Re: [PATCH 01/41] usage.c: move format processing out of die_errno()
+Date: Tue, 3 May 2016 16:39:45 +0700
+Message-ID: <CACsJy8DS5-dL8p8iMQs5B1++GaXNQWwdxUeaMCeZ12OoQcPO7Q@mail.gmail.com>
+References: <1462101297-8610-1-git-send-email-pclouds@gmail.com>
+ <1462101297-8610-2-git-send-email-pclouds@gmail.com> <CAPig+cQhQ2C-gOuQwJ9RBXM7HBBJkWORfRkq-t-PY=vvxgAonA@mail.gmail.com>
+ <xmqqlh3stiyt.fsf@gitster.mtv.corp.google.com> <20160503044528.GA32259@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	ernesto.alfonsogonzalez@ge.com
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 03 11:32:56 2016
+X-From: git-owner@vger.kernel.org Tue May 03 11:40:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axWhL-0002GI-US
-	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 11:32:56 +0200
+	id 1axWoZ-0004xh-TL
+	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 11:40:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751637AbcECJcw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2016 05:32:52 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:33770 "EHLO
-	mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750728AbcECJcv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2016 05:32:51 -0400
-Received: by mail-lf0-f68.google.com with SMTP id p64so1450827lfg.0
-        for <git@vger.kernel.org>; Tue, 03 May 2016 02:32:50 -0700 (PDT)
+	id S932683AbcECJkS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2016 05:40:18 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:33909 "EHLO
+	mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932269AbcECJkR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2016 05:40:17 -0400
+Received: by mail-lf0-f67.google.com with SMTP id m101so1353353lfi.1
+        for <git@vger.kernel.org>; Tue, 03 May 2016 02:40:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=0MpEP0cGaKsmltmYsqWVSi7uKMc1TM8w+Qe1PrRtCA8=;
-        b=pN/ZD8WVdlS/Yu1WMF9OJVBMg4gEE3dWxagE7Tua5Y3wIL6HLVg6HY28e1ICPhpsup
-         9zk3LuynUxnOy6scPOOO/VM1evwzaAZq03yxUBZARsRxkmfDl7vaQx5QLDPqAJU2VztW
-         ZHWS7B4c6icagwunA95S4bM/aLeO8Zj8eOimIXOcZRpCNYEh/+5edA6QGKGjVYBxeMxA
-         euDcqRtQI1GdffJf4NRvDZmSaPZKjSqtQ/ti9NGHov+h96MH2jOolqTmzhAdyGcej5Wu
-         7Tc95QWiY6J2v/tIfdw/7fQvTuYQONCCJXGjelE2216FnE4iRC7R9TjMk/hKrETuvKMr
-         G3xQ==
+        bh=NnyRLbyKXrrH1j+u6HMz9Qo/Fb9PWmqmDCsaI6bCLt0=;
+        b=CoAllej8bcXg3Etxc9oFlVb3qICbR/cLevB2zu5J9cnBLpEYtlMqoGDAjU8qXdhSDW
+         x+6ltjFx/bRUPPvQfyMUz1s3V9ua7dt64pmooHFICOUZ6s6MpZgyi9MinKusa7ilNkgL
+         JcbSjkvyGgHkaeyA2UOdzhK6x48B3yqQxuMjmeKV7lTGQCO00CwNhsHKT7qsazQ4J5mx
+         WUemfWH0imt3t/W4hp/cU9LO4bDoVoAbYaLMSdutrH5pOlGJkUrebWM/XmDM1yMbLa9j
+         nlbgAynhowMxcRf3NW156M21r2cI6rkNyHLK5LsvsDVKmQx4DZbfmfUoShJg20TAk3U8
+         /xaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=0MpEP0cGaKsmltmYsqWVSi7uKMc1TM8w+Qe1PrRtCA8=;
-        b=SnD038Ojno59zDY7TBymnIj/dA3rmc684CdRwq6lfaaDzms/Rmqgp14H5UxTugJpOO
-         R/GX0rpSvyQYAXOsnpWEsKuxDLW/hre+XMT1vmsOEgKgXjAJ2DUsrEDAPcHhK3ovazkx
-         hy1U+wWapBMqMQsXeK0U7hKT9WUloIns3tXXGRr0uz/tyBXETFQON33RLjvaCF4U1RZV
-         OoQ5xn85GwFLkocxvL7gLinYGQsMF4niuTtr/3dA3vYxmSImp6g3QUdLsQNBCObXtig0
-         vr1wWjjJnAdkyjpXs28Nj6N9/HIYrvNIQtVpMnmeZf/FZ6BBZn9l/YgE54bMunY1JAE7
-         dpRg==
-X-Gm-Message-State: AOPr4FX/ZV9j7kKcKWqKOakuCD6ZHr0/m4d0e8ONqIbfxFwt1E3kC58VrSSQlBFOUmdCH539q8yntAasSSe3KA==
-X-Received: by 10.25.165.135 with SMTP id o129mr747387lfe.162.1462267969156;
- Tue, 03 May 2016 02:32:49 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Tue, 3 May 2016 02:32:19 -0700 (PDT)
-In-Reply-To: <20160503044805.GB32259@sigill.intra.peff.net>
+        bh=NnyRLbyKXrrH1j+u6HMz9Qo/Fb9PWmqmDCsaI6bCLt0=;
+        b=ImFPyp4myE8gc6/ltv1n0KP3DyzwYV6lTWKCijghdSCQ73HmpU46DnYy3gbZInPn23
+         crQDjqDee7EEDnxVLSi9+opOdYphVLBbrManlSHzU1ZnY5O6U1izK5OV6TStMH/AWWPJ
+         iCZDVAXxv/vYq5lLSM6eI84ESQUSsw4atYBg/XvPhvLxRfidSdgKbyokAv5ZRSaW+YYT
+         +p1bVdj9u3vMHvMpf7lt2sOMHSBrJGHnG0Eg843Lih55Q8o6X7pA/6pyA2MvStXKciS6
+         40rYYMBamqg4onVI5GIw+CdK71ySDBtlrGKjdz7Udicn+5+X+8R/obJtRPdvL999hSUW
+         Gk5w==
+X-Gm-Message-State: AOPr4FU/MvnmZIQyTfT4uKwVHSLqsYIsC6USZRQQTGEt7mthOyvmXqi1v8/KhqUsv1/tcBm9OZxC2zq+vsYxfg==
+X-Received: by 10.25.211.75 with SMTP id k72mr745324lfg.45.1462268415191; Tue,
+ 03 May 2016 02:40:15 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Tue, 3 May 2016 02:39:45 -0700 (PDT)
+In-Reply-To: <20160503044528.GA32259@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293350>
 
-On Tue, May 3, 2016 at 11:48 AM, Jeff King <peff@peff.net> wrote:
-> On Tue, May 03, 2016 at 11:43:41AM +0700, Duy Nguyen wrote:
+On Tue, May 3, 2016 at 11:45 AM, Jeff King <peff@peff.net> wrote:
+> On Mon, May 02, 2016 at 11:26:02AM -0700, Junio C Hamano wrote:
 >
->> On Tue, May 3, 2016 at 11:20 AM, Jeff King <peff@peff.net> wrote:
->> > Note that I do not think the singular case can ever trigger with your
->> > new code. We know that both "ours" and "theirs" are non-zero to get to
->> > this message, which means "ours + theirs" must be at least 2 (barring
->> > negative commit counts, of course :) ).
->> >
->> > So you could probably replace the Q_() with just a _().
+>> Caller supplied buffer would be the way to go when multiple threads
+>> could be showing errors and warnings, right?
 >>
->> Problem is there are languages with more than one plural form (and the
->> winner is Arabic with six(!) forms [1]). So even if singular form is
->> never used, I think we still should stick to Q_().
+>> It would not make too much of a difference for die(), though.
 >
-> Neat, I didn't know Q_() could handle that (I guess you are stuck
-> specifying only the two cases in the untranslated form, but the PO files
-> can do magic in the backend).
+> I think it can matter for die(). This is happening above the pluggable
+> die_routine() layer, so it's possible for an async task to call die()
+> which will end in pthread_exit(), while the main program is calling
+> die() to end in regular exit().
 >
-> It would be nice if there were some way to mark it as "this string will
-> never be shown", or "will always be >= 2" as a hint for translators. I
-> guess those can go in a specially-formatted comment.
+> I imagine it's exceedingly unlikely, and of course both threads are
+> dying anyway, but it could result in some pretty weird memory errors.
+> It's probably worth taking precautions against, especially because it's
+> to easy to do so.
 
-Yep, that's the only way I know. But it's probably not good for this
-purpose. Imagine if the code is moved around a bit and this exact
-string can take n == 1 (probably not given the "x _and_ y commits"
-pattern) then we need to tell all translators (optional hints are not
-enough) to translate the "n < 2" part or empty string can be printed.
-And at least in _() case, empty string is an indication of
-untranslated messages, the translator would just translate anyway so
-he/she can identify new messages easier.
-
-On the practical side, since
-this string has been here for a long time, it's been already
-translated in all supported languages (except it.po), hinting now
-won't help much (besides it.po)
+So, sum it up, the new fmt_with_err() will take a buffer and size.
+die_errno() sticks to its static buffer as before. error_errno() and
+warning_errno() can allocate 1k on stack to be more
+multithread-friendly. Let me know if some other change is needed.
 -- 
 Duy
