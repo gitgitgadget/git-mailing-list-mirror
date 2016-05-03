@@ -1,169 +1,203 @@
-From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
-Subject: Re: [PATCH] t5510: run auto-gc in the foreground
-Date: Tue, 03 May 2016 13:50:28 +0200
-Message-ID: <20160503135028.Horde.jeJdKT1kb2NTVAS1HpcsQh2@webmail.informatik.kit.edu>
-References: <20160501153743.323-1-szeder@ira.uka.de>
- <alpine.DEB.2.20.1605020859131.9313@virtualbox>
- <20160503015526.Horde.e0uZ0P4BqpNnwx_zmhu3WfE@webmail.informatik.kit.edu>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2 00/41] Add and use error_errno() and warning_errno()
+Date: Tue,  3 May 2016 19:03:33 +0700
+Message-ID: <1462277054-5943-1-git-send-email-pclouds@gmail.com>
+References: <1462101297-8610-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed	DelSp=Yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue May 03 13:51:16 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 14:06:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axYrC-000271-ID
-	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 13:51:14 +0200
+	id 1axZ5m-0007yn-MA
+	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 14:06:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932498AbcECLvI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 May 2016 07:51:08 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:52557 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932252AbcECLvH convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 3 May 2016 07:51:07 -0400
-Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	iface 141.3.10.81 id 1axYr0-0001bs-SI; Tue, 03 May 2016 13:51:02 +0200
-Received: from apache by webmail.ira.uka.de with local (Exim 4.84_2)
-	(envelope-from <szeder@ira.uka.de>)
-	id 1axYqS-00029N-P3; Tue, 03 May 2016 13:50:28 +0200
-Received: from x590e24b5.dyn.telefonica.de (x590e24b5.dyn.telefonica.de
- [89.14.36.181]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
- Tue, 03 May 2016 13:50:28 +0200
-In-Reply-To: <20160503015526.Horde.e0uZ0P4BqpNnwx_zmhu3WfE@webmail.informatik.kit.edu>
-User-Agent: Horde Application Framework 5
-Content-Disposition: inline
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1462276262.
+	id S932526AbcECMGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2016 08:06:14 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:33556 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755482AbcECMGN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2016 08:06:13 -0400
+Received: by mail-pa0-f54.google.com with SMTP id xk12so8961564pac.0
+        for <git@vger.kernel.org>; Tue, 03 May 2016 05:06:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=6kVFrEAgGRUMenp1B5B9FfONjsTP7YIvoPyI0Nh1z9k=;
+        b=EFNqY5aav9g/oGFdTfXR6Y6IQWNmYn8+5KjMh0tJlQFxO4dhr+PNYF8or14GNCWZc1
+         /hTYug+iaubcIAAYm1Lzq6VO0dc/BK0Csyfj1ZyEMl86URbj2/GB7Tlede+1Iw91DYLQ
+         GRxL/xhlSZOW4aHiySOHWypYNCcAx4vD4qGpzYPCLUP+HQV6nZJu9SA559gij8SICSZ2
+         HDKzUWWaSsg3dz8FDKfQFHH7pIIxQbkksQJXE51okr9oqpSTFdji0tZeZVttEzO2RpzK
+         bzhATMHTspR+IwLDpFVbEcTpLHzJFXs6NHXNCmaQRTwajI9RY2B7pN9ZwmWuJRNPMzJO
+         5ZUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=6kVFrEAgGRUMenp1B5B9FfONjsTP7YIvoPyI0Nh1z9k=;
+        b=VBSL8wXht+OhX9wkftutJJDgG6ahZaerXXmQtA8ARh+k9TBSEQRRBKWf0FaGQ5MqlJ
+         Zcz5ljHP41SEVFd0yuggNgEptNl9aYCfNYYZ2XMI5fEtAfHSKpvuFVPQiyxiUOrEEKjI
+         p9lIsJNg4J7nxFz07K3gPS2OkGXAyeG6KlxJ9yQPr8UrUAMlk/pHV0ItmLPj9wrdSihM
+         KEzO7wYCgeZHQHKaiLk8YO5HOvnW5L8ZIePvSD0wumNrfDjq48j17BAQiUxxo7n+59mI
+         +1XZb5y1uL9f06jzEy108eGKjQ5bI+1oPS7xkTWnm2O1sZjNtTR3pU1rywjc0CC0oKGu
+         aWJA==
+X-Gm-Message-State: AOPr4FUKMkB0XP4ayTVKMGLBkf8RQGTKQqwVJ4EaIxIjkkrBVOUKfQ7QN2oN1gqhXA6I+A==
+X-Received: by 10.66.123.105 with SMTP id lz9mr2856157pab.37.1462277173032;
+        Tue, 03 May 2016 05:06:13 -0700 (PDT)
+Received: from lanh ([115.72.42.9])
+        by smtp.gmail.com with ESMTPSA id 5sm5490900pfn.46.2016.05.03.05.06.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 03 May 2016 05:06:11 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Tue, 03 May 2016 19:06:08 +0700
+X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
+In-Reply-To: <1462101297-8610-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293353>
 
+Changes are in
 
-Quoting SZEDER G=C3=A1bor <szeder@ira.uka.de>:
+  [01/41] usage.c: move format processing out of die_errno()
+  [02/41] usage.c: add warning_errno() and error_errno()
+  [12/41] builtin/update-index.c: prefer "err" to "errno" in process_lstat_error
+  [17/41] compat/win32/syslog.c: use warning_errno()
+  [27/41] grep.c: use error_errno()
 
-> Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de>:
->
->> Hi G=C3=A1bor,
->>
->> On Sun, 1 May 2016, SZEDER G=C3=A1bor wrote:
->>
->>> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
->>> index 38321d19efbe..454d896390c0 100755
->>> --- a/t/t5510-fetch.sh
->>> +++ b/t/t5510-fetch.sh
->>> @@ -682,6 +682,7 @@ test_expect_success 'fetching with auto-gc does
->>> not lock up' '
->>> 	(
->>> 		cd auto-gc &&
->>> 		git config gc.autoPackLimit 1 &&
->>> +		git config gc.autoDetach false &&
->>> 		GIT_ASK_YESNO=3D"$D/askyesno" git fetch >fetch.out 2>&1 &&
->>> 		! grep "Should I try again" fetch.out
->>> 	)
->>
->> Sounds good to me.
->
-> There is something still bothering me, though.
->
-> I take this was a Windows-specific issue; deleting open files on Linu=
-x is
-> no brainer.  According to a comment on the original Git for Windows i=
-ssue
-> at github[1], 'git gc' runs in the background by default on Windows a=
-s well.
+12/41 is basically a revert with s/strerror(errno)/strerror(err)/.
+Interdiff from v1
 
-Ok, having slept on it, it was a false alarm.
-
-Though 'git gc --auto' claims "Auto packing the repository in backgroun=
-d for
-optimum performance." on Windows, it does in fact runs in the foregroun=
-d.
-
-'git gc --auto' first prints that message, unless gc.autoDetach is disa=
-bled,
-and then calls daemonize() to go to the background.  However, daemonize=
-() is
-basically a no-op on Windows, thus 'git gc' will remain in the foregrou=
-nd and
-the sequence I described below is impossible.  Good.
-
-Perhaps it would be worth updating 'git gc' to not lie about going to t=
-he
-background when we can already know in advance that it won't.
-
-
-
-> Now, it's 'git gc --auto' that's trying to delete pack and index file=
-s that
-> became redundant after repacking, and when it can't delete those file=
-s,
-> then complains.  I.e. those "Should I try again" questions the test l=
-ooks
-> for come from 'git gc', not from 'git fetch'.  So far so good.
->
-> Let's assume that someone inconsiderately removes that closed_all_pac=
-k()
-> call added to cmd_fetch(), basically reverting the fix in 0898c962810=
-4.
-> The test added in the same commit (i.e. not including my fix here) sh=
-ould
-> still be able to catch it, but I think it's possible that it sometime=
-s
-> remains unnoticed. Consider the following sequence:
->
->    1. 'git fetch' does its thing, including opening pack and index fi=
-les.
->    2. 'git fetch' launches 'git gc --auto' which then goes into backg=
-round.
->    3. The scheduler happens to decide that it's 'git fetch's turn aga=
-in,
->       and it finishes, including closing all opened pack and index fi=
-les.
->    4. 'git gc' gets a chance to proceed, repacks and then manages to =
-delete
->       all redundant pack and index files successfully.
->    5. 'grep' doesn't find the string it looks for.
->    6. The test succeeds.
->
-> And the background 'git gc --auto' doesn't even have to be delayed th=
-at
-> long, because 'git fetch' exits immediately after launching it.  That=
-'s
-> considerably shorter than the delay necessary for the 'rm -rf' error =
-I
-> described in the commit message, because for the latter 'git fetch' m=
-ust
-> finish, 'grep' must run, and 'test_done' must write the test results =
-and
-> start 'rm -rf $trash' while 'git gc' is still running in the backgrou=
-nd.
->
-> So, if I'm right, then my fix is not just about avoiding a sporadic e=
-rror
-> from the test harness, but it's also important for the test's
-> correctness.  But am I right?  Alas I don't have a Git for Windows de=
-v
-> environment to play around with this.
->
-> [1] - =20
-> https://github.com/git-for-windows/git/issues/500#issuecomment-149933=
-531
->
->
-> G=C3=A1bor
->
->
->> Alternatively, we could consider passing `-c gc.autoDetach=3Dfalse` =
-instead,
->> to limit the scope. I am not insisting on it, of course ;-)
->>
->> Ciao,
->> Dscho
+-- 8< --
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 0c539ed..b8b8522 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -251,11 +251,11 @@ static int remove_one_path(const char *path)
+  *    succeeds.
+  *  - permission error. That's never ok.
+  */
+-static int process_lstat_error(const char *path)
++static int process_lstat_error(const char *path, int err)
+ {
+-	if (errno == ENOENT || errno == ENOTDIR)
++	if (err == ENOENT || err == ENOTDIR)
+ 		return remove_one_path(path);
+-	return error_errno("lstat(\"%s\")", path);
++	return error("lstat(\"%s\"): %s", path, strerror(err));
+ }
+ 
+ static int add_one_path(const struct cache_entry *old, const char *path, int len, struct stat *st)
+@@ -382,7 +382,7 @@ static int process_path(const char *path)
+ 	 * what to do about the pathname!
+ 	 */
+ 	if (lstat(path, &st) < 0)
+-		return process_lstat_error(path);
++		return process_lstat_error(path, errno);
+ 
+ 	if (S_ISDIR(st.st_mode))
+ 		return process_directory(path, len, &st);
+diff --git a/compat/win32/syslog.c b/compat/win32/syslog.c
+index 1c2ae18..6c7c9b6 100644
+--- a/compat/win32/syslog.c
++++ b/compat/win32/syslog.c
+@@ -28,7 +28,7 @@ void syslog(int priority, const char *fmt, ...)
+ 	va_end(ap);
+ 
+ 	if (str_len < 0) {
+-		warning_errno("vsnprintf failed:");
++		warning_errno("vsnprintf failed");
+ 		return;
+ 	}
+ 
+diff --git a/grep.c b/grep.c
+index 87c1890..4f3779a 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1732,7 +1732,7 @@ static int grep_source_load_file(struct grep_source *gs)
+ 	if (lstat(filename, &st) < 0) {
+ 	err_ret:
+ 		if (errno != ENOENT)
+-			error_errno(_("'%s'"), filename);
++			error_errno("'%s'", filename);
+ 		return -1;
+ 	}
+ 	if (!S_ISREG(st.st_mode))
+diff --git a/usage.c b/usage.c
+index af1b7d1..1dad03f 100644
+--- a/usage.c
++++ b/usage.c
+@@ -109,9 +109,8 @@ void NORETURN die(const char *err, ...)
+ 	va_end(params);
+ }
+ 
+-static const char *fmt_with_err(const char *fmt)
++static const char *fmt_with_err(char *buf, int n, const char *fmt)
+ {
+-	static char fmt_with_err[1024];
+ 	char str_error[256], *err;
+ 	int i, j;
+ 
+@@ -129,12 +128,13 @@ static const char *fmt_with_err(const char *fmt)
+ 		}
+ 	}
+ 	str_error[j] = 0;
+-	snprintf(fmt_with_err, sizeof(fmt_with_err), "%s: %s", fmt, str_error);
+-	return fmt_with_err;
++	snprintf(buf, n, "%s: %s", fmt, str_error);
++	return buf;
+ }
+ 
+ void NORETURN die_errno(const char *fmt, ...)
+ {
++	char buf[1024];
+ 	va_list params;
+ 
+ 	if (die_is_recursing()) {
+@@ -144,16 +144,17 @@ void NORETURN die_errno(const char *fmt, ...)
+ 	}
+ 
+ 	va_start(params, fmt);
+-	die_routine(fmt_with_err(fmt), params);
++	die_routine(fmt_with_err(buf, sizeof(buf), fmt), params);
+ 	va_end(params);
+ }
+ 
+ int error_errno(const char *fmt, ...)
+ {
++	char buf[1024];
+ 	va_list params;
+ 
+ 	va_start(params, fmt);
+-	error_routine(fmt_with_err(fmt), params);
++	error_routine(fmt_with_err(buf, sizeof(buf), fmt), params);
+ 	va_end(params);
+ 	return -1;
+ }
+@@ -171,10 +172,11 @@ int error(const char *err, ...)
+ 
+ void warning_errno(const char *warn, ...)
+ {
++	char buf[1024];
+ 	va_list params;
+ 
+ 	va_start(params, warn);
+-	warn_routine(fmt_with_err(warn), params);
++	warn_routine(fmt_with_err(buf, sizeof(buf), warn), params);
+ 	va_end(params);
+ }
+ 
+-- 8< --
+--
+Duy
