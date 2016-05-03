@@ -1,119 +1,222 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH v15 7/7] t/t7507: tests for broken behavior of status
-Date: Tue, 3 May 2016 14:48:24 +0530
-Message-ID: <CAFZEwPOYi0rv-WhVuV5ALwd=2_w2F2aeKN61EoZxswQQRGqcnA@mail.gmail.com>
-References: <1462046616-2582-1-git-send-email-pranit.bauva@gmail.com>
-	<1462046616-2582-7-git-send-email-pranit.bauva@gmail.com>
-	<xmqq7ffcqct1.fsf@gitster.mtv.corp.google.com>
-	<CAFZEwPOAWh48YCxA3B+kRxVpkwN32OHW7Qrb9ajs2Cy0S8sjLw@mail.gmail.com>
-	<CAPig+cR7pPHZv_z3G+BsLPqP7WYSVUb_7c2qmM+0y-TFeWjaSg@mail.gmail.com>
-	<CAFZEwPMLcyAu67MrVWKpN2ytAFaB6rOj4ASUi3VG81DSS0Euiw@mail.gmail.com>
-	<CAPig+cQC0r6Lm9kOFQ2xukN-GiU0iTV5BNc7W8t4f0trkdtHsQ@mail.gmail.com>
+From: Jan Keromnes <janx@linux.com>
+Subject: Re: Git 2.8.1 fails test 32 of t7300-clean.sh, breaks profile build
+Date: Tue, 3 May 2016 11:19:07 +0200
+Message-ID: <CAA6PgK4M2Ag6anEFYakW9NJe0ehTtS1UEQmDWe387W_uV-MCXA@mail.gmail.com>
+References: <CAA6PgK7b=ithSYREV5axaE3fmRG5Vp06UtWiZXD-aJuZKfEVYA@mail.gmail.com>
+	<CAA6PgK4of46eEJOJstnVvPvDFqU_OC5QVz9LWxyKgqHt9V5ySQ@mail.gmail.com>
+	<CAGZ79kYy=+xz5k0pN+MZTRBALd-sqbQ0TePNjkx6itjQpbRUvA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue May 03 11:18:37 2016
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue May 03 11:19:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axWTU-0005qE-Sa
-	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 11:18:37 +0200
+	id 1axWU8-00067R-Ps
+	for gcvg-git-2@plane.gmane.org; Tue, 03 May 2016 11:19:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755315AbcECJS1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2016 05:18:27 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:34636 "EHLO
-	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751412AbcECJSZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2016 05:18:25 -0400
-Received: by mail-yw0-f194.google.com with SMTP id i22so1119175ywc.1
-        for <git@vger.kernel.org>; Tue, 03 May 2016 02:18:25 -0700 (PDT)
+	id S1755530AbcECJTL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2016 05:19:11 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34129 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750728AbcECJTJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2016 05:19:09 -0400
+Received: by mail-wm0-f65.google.com with SMTP id n129so2645236wmn.1
+        for <git@vger.kernel.org>; Tue, 03 May 2016 02:19:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=I4UVacYwLv5xqoZ1ZjjTmGpOPA3KLvsPnFAbpZr99Tg=;
-        b=K5AfHt6JwK88sEKoVh63J6IUOZwhLVSLvHNlz+ZeQXvqV0xW0RT76WWhyvNXsi+QbS
-         doM48NNx71at1qw5ZDEaISrLoi93deJgRiW3RWgw7hpW4b6vKudp6iYUyjH4rfdlzq5F
-         UDLF30+8P2sxoIKj/zkvdrd0i7aiKVYQgU23pCFwMOiX0BMzbeTF5+Oo6x6Eub71fGqF
-         WYP0e3ZFmDhhtJN0MGK4V1bBquDvpWekNd8KvpNRJ0eKCMWJQW2WXxMd8llhSIt8QiY6
-         2C5YcgPkEIPMWNoUlt7q2mq7CiGCRY4qdoYsG7Qb7eE4z1rigJEw0oY4AUyRsOQuGF1F
-         7QuQ==
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=Iy6CJjjNm8FQCqjg2EXtnFGQkIaW1pJghRXojGaD6e8=;
+        b=HWId+NEJf4+FyRSHg8Bx7ySuQcj6KOz+JCIiQfWAreoCiUZNWhZb8VxrKeaVELprtH
+         18NcxMkndPB1iaj/LwLFgp3xyS38GZpwcGa7Uj+HZjc7EOVeFRsV2Pk3GGkVLkyb95Oo
+         dNMM5G5TfXIhJpyur7bRoVZMFFTHyivrd5VeoMUbQDEJTDFOkNA0wxR0fXX2FzgBiEkR
+         0+MeVgObzUmRHlkKONW7CgyAzsn9/qbbNRI5hmXryCcQ1mEbCx/Zef5pUobasEdvqH5S
+         xhR3sgfzMhxsCxYs7n3/LG+sDw47iWKxa3SQi2sFvU9hGwezSxgilrJ7uzKVa/0LmTSD
+         7wqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=I4UVacYwLv5xqoZ1ZjjTmGpOPA3KLvsPnFAbpZr99Tg=;
-        b=k+urTPPHaoicbVtwtcr9Ld6tLv9nCblEaTbq52n6yRBkXbfgEGvtwhYraKSawopwVe
-         D/Guxj1LdPRxg1WlLIUNSqGVWJBuik3Z3SYFO3YLUK6wgdSifq7OIWdB0QVML6HHUZAi
-         yFr81CcRBk3mdvn/6bBZ+G7VH/808zf8Sq/TcwPHrL91ADjL5gfzsLigoiFwwzYUFDTy
-         6kWzRuO6lq9Tl8l42H49mjx/56p05Kn1l79QCaSoMQxwA8FWBXp5RvgxQr28/M88Wfis
-         oQkxa3aGA6UUsgE/zrVlI2k039+PbZeAZgTS8hL8QPy6NYJCz9Qyg3ea8dzHvW2AACN4
-         er7A==
-X-Gm-Message-State: AOPr4FWcydP1Yls7SF37dh3RV7IkxPRdkPl5nG5zB5xEtZSqviYHB32c3lkeaINPbOq9fh47qHw89QeWum5Agg==
-X-Received: by 10.129.134.133 with SMTP id w127mr506547ywf.252.1462267104856;
- Tue, 03 May 2016 02:18:24 -0700 (PDT)
-Received: by 10.13.219.213 with HTTP; Tue, 3 May 2016 02:18:24 -0700 (PDT)
-In-Reply-To: <CAPig+cQC0r6Lm9kOFQ2xukN-GiU0iTV5BNc7W8t4f0trkdtHsQ@mail.gmail.com>
+        bh=Iy6CJjjNm8FQCqjg2EXtnFGQkIaW1pJghRXojGaD6e8=;
+        b=EZmgSs6Z1GuUt/nbravI+ueZSduV5Yayx51lMVU29KTpi7kUY+4ZBkoVyPSNQPkv9k
+         vNs2hxh3uDAYH46GFmikJxbQ9thpNnIFPVMgWlxQnNwh64LJPFx73Nqa+1bR0NiE7HR1
+         SL06TNdOBiqAAnQirHUUUKUlcQGV8zRxrlw3WNJcyokLh/OlFjtqvkhPX9w3ajfLusas
+         GgorTIskskIM1k9Z6d8NtC6ZA90svln9ykZ+o7soFoMqGOP0P1mQoXbomUsyNK/YNKD1
+         mLOeox2uA4bTXILEUSnmWg7edJrZk30xcsW8+wek2axE+OlZzLL/Ga83T5DSpb6eIj3g
+         iTWw==
+X-Gm-Message-State: AOPr4FXykl+Yldhorqrx3aSO0eCjIIeWijxZInv4SvZlHjYO7nULpU8FbLFtHQ8SNx2pme1lDgsiCVim/3Sp9Q==
+X-Received: by 10.194.96.10 with SMTP id do10mr1668814wjb.132.1462267147282;
+ Tue, 03 May 2016 02:19:07 -0700 (PDT)
+Received: by 10.28.175.74 with HTTP; Tue, 3 May 2016 02:19:07 -0700 (PDT)
+In-Reply-To: <CAGZ79kYy=+xz5k0pN+MZTRBALd-sqbQ0TePNjkx6itjQpbRUvA@mail.gmail.com>
+X-Google-Sender-Auth: rZP5wgdwmi2iEiJ-OHRCkQiWFCA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293348>
 
-On Tue, May 3, 2016 at 12:19 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Tue, May 3, 2016 at 2:42 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->> On Tue, May 3, 2016 at 10:42 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>> On Mon, May 2, 2016 at 11:39 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->>>> I agree that using test_expect_failure would be a better way of going
->>>> with this thing. Thanks. Will send an updated patch for this.
->>>
->>> Please don't. test_expect_failure() is not warranted.
+Thanks for your replies! I was able to reproduce to failure on Git 2.8.2.
+
+Steps:
+
+# Build Git 2.8.2 and run t/t7300-clean.sh in a Dockerfile based on
+ubuntu:14.04.
+RUN mkdir /tmp/git \
+ && cd /tmp/git \
+ && curl https://www.kernel.org/pub/software/scm/git/git-2.8.2.tar.xz | tar xJ \
+ && cd git-2.8.2 \
+ && make all && cd t && ./t7300-clean.sh -d -i -v -x
+
+Logs:
+
+expecting success:
+        rm -fr to_clean possible_sub1 &&
+        mkdir to_clean possible_sub1 &&
+        test_when_finished "rm -rf possible_sub*" &&
+        echo "gitdir: foo" >possible_sub1/.git &&
+        >possible_sub1/hello.world &&
+        chmod 0 possible_sub1/.git &&
+        >to_clean/should_clean.this &&
+        git clean -f -d &&
+        test_path_is_file possible_sub1/.git &&
+        test_path_is_file possible_sub1/hello.world &&
+        test_path_is_missing to_clean
+
++ rm -fr to_clean possible_sub1
++ mkdir to_clean possible_sub1
++ test_when_finished rm -rf possible_sub*
++ test 0 = 0
++ test_cleanup={ rm -rf possible_sub*
+                } && (exit "$eval_ret"); eval_ret=$?; :
++ echo gitdir: foo
++
++ chmod 0 possible_sub1/.git
++
++ git clean -f -d
+Skipping repository baz/boo
+Skipping repository foo/
+Removing possible_sub1/
+Skipping repository repo/
+Skipping repository sub2/
+Removing to_clean/
++ test_path_is_file possible_sub1/.git
++ test -f possible_sub1/.git
++ echo File possible_sub1/.git doesn't exist.
++ false
+error: last command exited with $?=1
+File possible_sub1/.git doesn't exist.
+not ok 32 - should avoid cleaning possible submodules
+#
+#               rm -fr to_clean possible_sub1 &&
+#               mkdir to_clean possible_sub1 &&
+#               test_when_finished "rm -rf possible_sub*" &&
+#               echo "gitdir: foo" >possible_sub1/.git &&
+#               >possible_sub1/hello.world &&
+#               chmod 0 possible_sub1/.git &&
+#               >to_clean/should_clean.this &&
+#               git clean -f -d &&
+#               test_path_is_file possible_sub1/.git &&
+#               test_path_is_file possible_sub1/hello.world &&
+#               test_path_is_missing to_clean
+#
+
+Judging from the line "Removing possible_sub1/", it looks like Git
+2.8.2 removes a possible submodule while executing `git clean -f -d`,
+whereas the test expects it not to.
+
+Is it possible to make Git's output even more verbose, so that it
+tells why it decides to remove "possible_sub1"? Are you able to
+reproduce this test fail on your side?
+
+This prevents doing a full profile build.
+
+Best,
+Jan
+
+On Fri, Apr 29, 2016 at 7:06 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Fri, Apr 29, 2016 at 5:53 AM, Jan Keromnes <janx@linux.com> wrote:
+>> Hello,
 >>
->> I got confused between test_must_fail and test_expect_failure. I
->> thought Junio mentioned to use test_must_fail and remove the " ! "
->> sign.
+>> I tried running a full profile build of Git 2.8.1, but it looks like
+>> test #32 in `t7300-clean.sh` fails:
 >>
->>> Step back a moment and recall why these tests were added. Earlier
->>> rounds of this series were buggy and caused regressions in git-status.
->>> As a consequence, reviewers suggested[1,2] that you improve test
->>> coverage to ensure that such breakage is caught early.
->>>
->>> The problems which caused the regressions were addressed in later
->>> versions of the series, thus using test_expect_success() is indeed
->>> correct, whereas test_expect_failure(), which illustrates broken
->>> behavior, would be the wrong choice.
->>>
->>> The point of these new tests is to prevent regressions caused by
->>> *subsequent* changes, which is why it was suggested that these tests
->>> be added early (as a "preparatory patch"[3]), not at the very end of
->>> the series as done here in v15.
->>>
->>> This patch's commit message is perhaps a bit too detailed about what
->>> could have gone wrong in earlier patches in this series; indeed, it
->>> misled Junio into thinking that patches in this series did break
->>> behavior, when in fact, it was instead previous rounds of this series
->>> which were buggy. If you instead make this a preparatory patch[3],
->>> then you can sell it more simply by explaining that git-commit and
->>> git-status share implementation (without necessarily going into detail
->>> about exactly what is shared), and that you're improving test coverage
->>> to ensure that changes specific to git-commit don't accidentally
->>> impact git-status, as well.
+>> Commands:
 >>
->> Sure! I just wanted the commit message to be detailed as per the
->> guidelines given by SubmittingPatches. I will swap the patch 6/7 and
->> patch 7/7 changing the commit message. Also I will make the commit
->> message less detailed.
+>>> curl https://www.kernel.org/pub/software/scm/git/git-2.8.1.tar.xz | tar xJ
+>>> cd git-2.8.1
+>>> make prefix=/usr profile-install install-man -j18
+>>
+>> Logs of test-suite that fails:
+>>
+>> *** t7300-clean.sh ***
+>> ok 1 - setup
+>> ok 2 - git clean with skip-worktree .gitignore
+>> ok 3 - git clean
+>> ok 4 - git clean src/
+>> ok 5 - git clean src/ src/
+>> ok 6 - git clean with prefix
+>> ok 7 - git clean with relative prefix
+>> ok 8 - git clean with absolute path
+>> ok 9 - git clean with out of work tree relative path
+>> ok 10 - git clean with out of work tree absolute path
+>> ok 11 - git clean -d with prefix and path
+>> ok 12 - git clean symbolic link
+>> ok 13 - git clean with wildcard
+>> ok 14 - git clean -n
+>> ok 15 - git clean -d
+>> ok 16 - git clean -d src/ examples/
+>> ok 17 - git clean -x
+>> ok 18 - git clean -d -x
+>> ok 19 - git clean -d -x with ignored tracked directory
+>> ok 20 - git clean -X
+>> ok 21 - git clean -d -X
+>> ok 22 - git clean -d -X with ignored tracked directory
+>> ok 23 - clean.requireForce defaults to true
+>> ok 24 - clean.requireForce
+>> ok 25 - clean.requireForce and -n
+>> ok 26 - clean.requireForce and -f
+>> ok 27 - core.excludesfile
+>> ok 28 # skip removal failure (missing SANITY)
+>> ok 29 - nested git work tree
+>> ok 30 - should clean things that almost look like git but are not
+>> ok 31 - should not clean submodules
+>> not ok 32 - should avoid cleaning possible submodules
+>> #
+>> #               rm -fr to_clean possible_sub1 &&
+>> #               mkdir to_clean possible_sub1 &&
+>> #               test_when_finished "rm -rf possible_sub*" &&
+>> #               echo "gitdir: foo" >possible_sub1/.git &&
+>> #               >possible_sub1/hello.world &&
+>> #               chmod 0 possible_sub1/.git &&
+>> #               >to_clean/should_clean.this &&
+>> #               git clean -f -d &&
+>> #               test_path_is_file possible_sub1/.git &&
+>> #               test_path_is_file possible_sub1/hello.world &&
+>> #               test_path_is_missing to_clean
+>> #
+>>
+>> Best,
+>> Jan
 >
-> This patch should be inserted before 4/7 since it needs to protect
-> against breakage which might occur when 4/7 changes the behavior of
-> OPTION_COUNTUP.
-
-I forgot to mention about this earlier. When I was rebasing, this stroked me.
-I guess making any changes in ordering the commits will make one of
-the test as absurd. One of the test uses a configuration variable
-'commit.verbose' will won't be effective before the patch 6/7. So I
-guess I will have to only change the commit message to reflect as
-"improving test coverage".
+> Thanks for reporting the bug!
+>
+> Have a look at t/README to run the tests with command line arguments.
+> (I usually run tests as ./tXXXfoo.sh -d -i -v -x with these arguments,
+> though I cannot remember what each of that does. One of it makes the
+> test suite stop on a failing test, such that you can cd into the testing
+> directory and check the state of the file. (Which are present, which are gone?)
+>
+> With these arguments it is also very verbose, and it would tell
+> you what is wrong (is the assertion wrong in the `test_path_is_file/missing`
+> or is it `git clean` segfaulting?)
+>
+> As Johannes said, it makes sense that you debug into that as
+> no one could reproduce it thus far on their system.
+>
+> Thanks,
+> Stefan
