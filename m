@@ -1,94 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mingw: introduce the 'core.hideDotFiles' setting
-Date: Wed, 04 May 2016 12:06:12 -0700
-Message-ID: <xmqqr3dhhcd7.fsf@gitster.mtv.corp.google.com>
-References: <17d30bb680a0452efd7b3c4f42e2f94478a86273.1462372716.git.johannes.schindelin@gmx.de>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH 1/2] bisect--helper: use OPT_CMDMODE instead of OPT_BOOL
+Date: Wed, 4 May 2016 21:07:23 +0200
+Message-ID: <CAP8UFD2qoCPkbDid+k6Lydh7JTM5VhQzxTSuJuRa40sw54_aZw@mail.gmail.com>
+References: <01020153a254974b-68f7d16a-66d7-4dc1-805d-2185ff1b3ebf-000000@eu-west-1.amazonses.com>
+	<1462338472-3581-1-git-send-email-pranit.bauva@gmail.com>
+	<1462338472-3581-2-git-send-email-pranit.bauva@gmail.com>
+	<CAPig+cQxpZXKqykFoa2kzCZSC2YqpPXnGocs2YttcJ+rCxmzgQ@mail.gmail.com>
+	<CAP8UFD1+kEwFhAoveOTYt8NEOK=98W-00nNF+Yoe6kQAYJa6SQ@mail.gmail.com>
+	<alpine.DEB.2.20.1605041304050.9313@virtualbox>
+	<CAP8UFD2k=JMYUg1SPE1TP6uD1bUnheYs8YhFDrzgEny85ocQFw@mail.gmail.com>
+	<alpine.DEB.2.20.1605041416030.9313@virtualbox>
+	<CAP8UFD0QeZqLaPwFe5wo0n1fdtSppJmYdUDc+Yo1duH1uyWbpw@mail.gmail.com>
+	<alpine.DEB.2.20.1605041654300.9313@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Erik Faye-Lund <kusmabite@googlemail.com>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 04 21:06:22 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Pranit Bauva <pranit.bauva@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Lars Schneider <larsxschneider@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 04 21:07:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ay27o-00065M-VW
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 21:06:21 +0200
+	id 1ay28w-0006oh-3t
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 21:07:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752311AbcEDTGR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 15:06:17 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56790 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750825AbcEDTGP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 15:06:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A64817E7D;
-	Wed,  4 May 2016 15:06:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PQ7LUb3WCN1uthDUd8rsDFoD6u8=; b=EnTClt
-	zrx6TpTt0X46wnXsGHEtmLRwidmGdLqZJngRhViWIqRS1AReNr97Di/Gx8NP/9rI
-	cq+9yEHwXE8wQA90C9tCpf+alF3asakVfVM4r0YFRwzPPurHj3AVDttIj+jbpcYe
-	1Yd+GIiFpGHxTfG0vdurF/xhz2kRDFm6vzz+0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=V6Ssf+GuVEJFGB1aQr7nHyqLSZQW+U7W
-	MwN3hpimBKw+vRKnuXb1V4x5iytdms3QP/bmLqEexqFIqPJu2TkjhU7fZmiaUZze
-	E6z8Bz66EM/PIoi0coVwWkH771O/SC6PH2+VYSaxEU8LdkKxWtW3gMMfmkhWNjE3
-	ZNSFFNFZDFo=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7D7E117E7C;
-	Wed,  4 May 2016 15:06:14 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E467417E7B;
-	Wed,  4 May 2016 15:06:13 -0400 (EDT)
-In-Reply-To: <17d30bb680a0452efd7b3c4f42e2f94478a86273.1462372716.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Wed, 4 May 2016 16:40:45 +0200
-	(CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 457366CA-122B-11E6-975D-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752560AbcEDTH0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 15:07:26 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:36354 "EHLO
+	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751436AbcEDTHZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 15:07:25 -0400
+Received: by mail-wm0-f49.google.com with SMTP id n129so201461406wmn.1
+        for <git@vger.kernel.org>; Wed, 04 May 2016 12:07:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=A4ixhGnVc9EycrB3ZF3pezZH24BlPkcU3Qg26I+t0qs=;
+        b=tmysGcfbUXJiSp7wVUBg84HdBfVFIYSbEbqxsbWbZePwvdysYXAJUx92t/Sx2Lo7kY
+         C/YkOngBHu8xT3wzZufky8akcl4xbgAVOMqoVGPYHoxZZdbxG1GQ2NinZFYnF+MWC5rj
+         wEfYqtKI9Bn5A4q2Q8rnzllTv95qSUmB+IXUYaf9eus89Gk6Hazdcpd49wqetPHcAnga
+         dqC0OpyB7/jqb/Rxa94MvYh3OqfxszwtNT4NZaxFh5pwoHt8kuWAK7WkAtay3UXQkiq9
+         6/tV7JC+E0wjf3EEVbwYuN+467FWCDwqb/ShB4Z1/tARgfRKDbGeGn8mq6Yyh3FjCPFA
+         3HBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=A4ixhGnVc9EycrB3ZF3pezZH24BlPkcU3Qg26I+t0qs=;
+        b=YNiNurENRIoPW2Q07qqF3k07ze3vvasMO2R5cRLbnvQi8UaaPbZ0OH2PWWYNeFZB+W
+         vpZgy+0Z681DKTRTmdVK+9atFNLv5WdbH0+p9f6YogXnfBYxQK3XYzGBZpcrVzH4uXlw
+         NJWZhuDCQslXX15g0Fx3Uobfj9Gn+Z1gADsqSoifMZMh/EB66n0+DqFaplSObpKqdUV8
+         eC4lRDaE6V60Gid58x3ufeTAl+ahPDDDuCMXZTQj6FFxBkGxHJn5+kYHqd+o/Xsw/C6l
+         dfI8cfj0HON5gqouEJaqphKplqHb0IIJApn4XpSCsMngqBAZFkWm834y5Q01E7FSUctc
+         OkkA==
+X-Gm-Message-State: AOPr4FUWvm3M4u9iF7ZGTSy2Wt+sc16CL87qChxg+5FX/WokK90lHYtoOI3Sf/SYXGQI5Hb7D76AReo03Vthfw==
+X-Received: by 10.28.151.133 with SMTP id z127mr10336965wmd.79.1462388843726;
+ Wed, 04 May 2016 12:07:23 -0700 (PDT)
+Received: by 10.194.246.4 with HTTP; Wed, 4 May 2016 12:07:23 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1605041654300.9313@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293569>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Hi Dscho,
 
-> diff --git a/builtin/init-db.c b/builtin/init-db.c
-> index b2d8d40..c4269ac 100644
-> --- a/builtin/init-db.c
-> +++ b/builtin/init-db.c
-> @@ -370,6 +370,7 @@ int init_db(const char *template_dir, unsigned int flags)
->  	check_repository_format();
->  
->  	reinit = create_default_files(template_dir);
-> +	mark_as_git_dir(get_git_dir());
->  
->  	create_object_directory();
->  
+On Wed, May 4, 2016 at 4:56 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Christian,
+>
+> On Wed, 4 May 2016, Christian Couder wrote:
+>
+>> My intent was to try to show that there is some important value to make
+>> the subject close to the "low level" thing the patch actually does.
+>
+> I disagree. The place to describe low-level details that are not
+> immediately obvious from the patch is the commit message. Way, way down on
+> the bottom.
+>
+> The commit message should start with a subject that gives me a good clue
+> why this is a good change. A low-level detail won't do that very often.
 
-I agree with the goal of the change, but I am having a hard time
-justifying this addition.  Primarily because I do not understand the
-need for this.
+Let me give you another example.
 
-In order to be prepared to handle HIDE_DOTFILES_TRUE case,
-mingw_mkdir() needs to be taught about needs_hiding() and
-make_hidden() already.  Why isn't it sufficient to teach
-needs_hiding() to check with !strcmp(basename(path, ".git"))
-under HIDE_DOTFILES_DOTGITONLY?
+You want to do X and you discover that you need to tweek knob foo to
+do X, and also that tweeking knob foo is a good thing to do in general
+(for example it could be a refactoring that save some lines of code).
+So you create a patch that tweeks knob foo and call it "prepare to do
+X", and then send it so that it can be merged. Then you want to do X
+but you are interupted by an event, for example you boss tells you to
+do Y instead of X right away because of an urgent business need. So
+you do Y instead of X. And then sometimes later (it could be weeks,
+months or years later), when you are finished with Y, you now want to
+go back to your previous work on X. At that time you discover that you
+need to tweek knob bar (it could be another refactoring of another
+part of the code), but you forgot about your previous patch that
+tweeked knob foo, so you call your new patch that tweeks knob bar
+"prepare to do X". As your previous patch that was also called
+"prepare to do X" has already been integrated, you now have too
+patches that do different things that are called the same, and you can
+easily mistake the first one for the second one.
 
-I do not understand why core.hideDotFiles needs to be explicitly
-copied to the config file in the resulting repository, either.
-
-Once you created a repository, Git won't unhide the hidden .git of
-that reposiotry, so the idea must be to propagate the setting to a
-new repository that will further be created, but wouldn't that get
-the "please hide" preference from the same place as we have got the
-preference to hide .git when the current repository was created
-anyway?
+If you had just called your first patch "tweek knob foo" and the
+second patch "tweek knob bar", it would be much clearer which patch
+does what.
