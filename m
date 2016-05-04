@@ -1,83 +1,103 @@
 From: Brian Norris <computersforpeace@gmail.com>
-Subject: [PATCH v2 2/3] Documentation: config: improve word ordering for http.cookieFile
-Date: Wed,  4 May 2016 11:42:14 -0700
-Message-ID: <1462387335-57937-2-git-send-email-computersforpeace@gmail.com>
+Subject: [PATCH v2 3/3] http: expand http.cookieFile as a path
+Date: Wed,  4 May 2016 11:42:15 -0700
+Message-ID: <1462387335-57937-3-git-send-email-computersforpeace@gmail.com>
 References: <1462387335-57937-1-git-send-email-computersforpeace@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Brian Norris <computersforpeace@gmail.com>
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 04 20:42:59 2016
+X-From: git-owner@vger.kernel.org Wed May 04 20:43:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ay1lA-0000qE-LM
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 20:42:57 +0200
+	id 1ay1lG-0000vX-CS
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 20:43:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752697AbcEDSmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752622AbcEDSmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Wed, 4 May 2016 14:42:53 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:33281 "EHLO
-	mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751056AbcEDSmv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 14:42:51 -0400
-Received: by mail-pf0-f180.google.com with SMTP id 206so28339411pfu.0
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:35558 "EHLO
+	mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750825AbcEDSmw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 14:42:52 -0400
+Received: by mail-pf0-f178.google.com with SMTP id 77so28071534pfv.2
         for <git@vger.kernel.org>; Wed, 04 May 2016 11:42:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=zu0UVA/XKi7JqJeYWwrqrR/9BixG2z3wLWQfYWnxIkQ=;
-        b=jcpjDbP9NDQJm5DXN3xPpGhKMakofrJ1eGBqTSXmmvgPEqbFgJrIS5b9uribg480kr
-         /bPlZzPubFQOLzrTnObSN4DuuX4v7PrF92WhakjcXmvKeGJjMZknVOFwnCZil6aJzQvg
-         AajQaELaBPovnnauCbjv1oBr6RJQMLeFU6fCMLHUaRqygpe+g9zyo+RW4H+456WNlM4L
-         m4UoJxQcWZJMBs0y5zhtY7FDyR8B3RLINpguxdNEL+SCln4weY9eHBNk1gydQdMvjxFJ
-         4o7RWjSsFWbzBWE81uwSFbmCjmm9IWDy6pp6pw6evonj05PMS42wJOwlwpW2xyVcuFye
-         4AYw==
+        bh=LOKvieJiHEqjHDQ4+N1F2YAfLBHSd9ps0s8SZjyIwvA=;
+        b=tdOgxwqseIVur/vyJyb3Uq3a9WvrdeMxhmkiLla6vy77OND72jMo5GKMKoIec0sPli
+         N1wWEUfRjLGrQqo8tHVhAl/ZFQB+k2EpNzNVd6UJzgCKvAJ1qRM0MhjFr5nHQOmruSwQ
+         D1cd/hK2A13ioN7RzSGdCvDrra3ABHM82KDJP1N0/g67imA4VR9mjcyZ5jyijat4LkuU
+         gwR5w+fgxGzZIEIjL1SsYHN17/IbQvkGm/9pbfjc7R1mIcJ91Xw3EfB+s3EwgOuEPd1V
+         3upGXfIg7ecSEdaERu6Vb6HXUbxeGdv2s653p84pfbbR+FYyLfAk51F9K0mGUcsCKqBH
+         wv8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=zu0UVA/XKi7JqJeYWwrqrR/9BixG2z3wLWQfYWnxIkQ=;
-        b=anM8LJcIHlgOg9vzXCCwL1ahSpFmY9nY3548OQe0Oqg4hC2AkF6b8oMi4amPGrO4LR
-         hxvoZFpijkuDAlXZRVF6iB+t2bJ9d5Tb5IRbDxYPxWtF+DrZE6OSf8Fal8+7pg+K61Tp
-         sdIwVzMtNAGc/tZY9AGXOt3JWpNDwmgXCpMsoz43QKdKc5of5pDfV78+C30sEXPYn0yd
-         PmtbdiLQaLuM2MaFPqmLDA49NyAI78L3sr7+ZOpQMbAOTqz+dO8erwtF/ePzvTf8hyCp
-         RrljBx+GucrslcutMUR1KP8pQQwSGs0sg5sAahO+gX07LTfdsyFwR4d+m7VpHyaj0OPi
-         jHjg==
-X-Gm-Message-State: AOPr4FU1CZx2QA4qc0BHomT57LgbF2/9jmPZ9Fkhfda9nQO/kurPYZF1Q2PSovxougGldA==
-X-Received: by 10.98.87.220 with SMTP id i89mr14018461pfj.107.1462387370517;
-        Wed, 04 May 2016 11:42:50 -0700 (PDT)
+        bh=LOKvieJiHEqjHDQ4+N1F2YAfLBHSd9ps0s8SZjyIwvA=;
+        b=LaVeV7BWzSAjztfLfIftxHZz4Fm3RDOAKMgk1UtJEpvf3gJu9mVRiVhTR9CzKZoU+Q
+         hl1oJlKsw6C6CqxC/7Y1f/yeg3g5dzP6aWxcAtGcqhjb2/hq/Fh0DgcDhDfDKrMtmCNS
+         HqG8sSKW4EuxQpwCvOHt+tl8FyLOjgp4V0l0rgNmX+X2B/Lr3GTlfzwQvF9Ls5vQsxze
+         863FAzrWcDNhLQexmWVthiccfqv6jPrZmovQjeSKAdq6TWUXghSWzlpXfbgk9HIrX9+J
+         sMVnXBd7rT2Nw8hTubJxqjzMGaqcaGVsH1kElKATzOb5GxE/28S9Vq2EdOIpdgfPPvHt
+         nEMw==
+X-Gm-Message-State: AOPr4FU5MDVteCX9vAiIZP7HJJWjFdMYMYKFyoAJSC22fTNf+ot0jYO4IB470B/S/P037w==
+X-Received: by 10.98.78.132 with SMTP id c126mr14158306pfb.129.1462387371256;
+        Wed, 04 May 2016 11:42:51 -0700 (PDT)
 Received: from ban.mtv.corp.google.com ([172.22.64.120])
-        by smtp.gmail.com with ESMTPSA id k78sm7785955pfk.70.2016.05.04.11.42.49
+        by smtp.gmail.com with ESMTPSA id k78sm7785955pfk.70.2016.05.04.11.42.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 04 May 2016 11:42:49 -0700 (PDT)
+        Wed, 04 May 2016 11:42:50 -0700 (PDT)
 X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
 In-Reply-To: <1462387335-57937-1-git-send-email-computersforpeace@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293563>
+
+This should handle .gitconfig files that specify things like:
+
+[http]
+	cookieFile = "~/.gitcookies"
 
 Signed-off-by: Brian Norris <computersforpeace@gmail.com>
 ---
-v2: no change
+v2: rework documentation now that 'pathname' is documented centrally
 
- Documentation/config.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/config.txt | 3 ++-
+ http.c                   | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 7264abf7f85e..e655b9729a7d 100644
+index e655b9729a7d..4c3cd7621ad0 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -1668,7 +1668,7 @@ http.cookieFile::
+@@ -1664,7 +1664,8 @@ http.emptyAuth::
+ 	authentication.
+ 
+ http.cookieFile::
+-	File containing previously stored cookie lines which should be used
++	The pathname of a file containing previously stored cookie lines,
++	which should be used
  	in the Git http session, if they match the server. The file format
  	of the file to read cookies from should be plain HTTP headers or
  	the Netscape/Mozilla cookie file format (see linkgit:curl[1]).
--	NOTE that the file specified with http.cookieFile is only used as
-+	NOTE that the file specified with http.cookieFile is used only as
- 	input unless http.saveCookies is set.
+diff --git a/http.c b/http.c
+index 4304b80ad3ac..1044f9ba0e28 100644
+--- a/http.c
++++ b/http.c
+@@ -293,7 +293,7 @@ static int http_options(const char *var, const char *value, void *cb)
+ 		return git_config_string(&http_proxy_authmethod, var, value);
  
- http.saveCookies::
+ 	if (!strcmp("http.cookiefile", var))
+-		return git_config_string(&curl_cookie_file, var, value);
++		return git_config_pathname(&curl_cookie_file, var, value);
+ 	if (!strcmp("http.savecookies", var)) {
+ 		curl_save_cookies = git_config_bool(var, value);
+ 		return 0;
 -- 
 2.8.0.rc3.226.g39d4020
