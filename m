@@ -1,258 +1,284 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH v5 4/4] hooks: Add ability to specify where the hook directory is
-Date: Wed,  4 May 2016 20:18:48 +0000
-Message-ID: <1462393128-26762-5-git-send-email-avarab@gmail.com>
-References: <xmqqinz4f8mg.fsf@gitster.mtv.corp.google.com>
- <1462393128-26762-1-git-send-email-avarab@gmail.com>
+From: Eric Chamberland <Eric.Chamberland@giref.ulaval.ca>
+Subject: Re: git status core dump with bad sector!
+Date: Wed, 4 May 2016 16:37:25 -0400
+Organization: http://www.giref.ulaval.ca
+Message-ID: <572A5D85.8040203@giref.ulaval.ca>
+References: <570FB06D.5060308@giref.ulaval.ca>
+ <20160422051111.GA32107@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 04 22:20:08 2016
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 04 22:37:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ay3HA-0005bI-Rq
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 22:20:05 +0200
+	id 1ay3YI-0007bN-BV
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 22:37:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755105AbcEDUTl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 May 2016 16:19:41 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:33972 "EHLO
-	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755152AbcEDUTh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 16:19:37 -0400
-Received: by mail-wm0-f50.google.com with SMTP id v200so36864383wmv.1
-        for <git@vger.kernel.org>; Wed, 04 May 2016 13:19:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=wrhCYwLaqq+tJ4Xnjggi9FkpGYUSaq7Xq4OEnGmOUu8=;
-        b=KJbHE1Vl+AvkuLgYpqhP6KtYfJ3rCI5Cj0DhtIdZsG1NyJE1IWJK1kS2zBWTBP3xtP
-         oqTWkuLibfe+cL1BrrMYFgs/sLdW8DVrvECN8DZcx4/i0L+JkRqQqGxHsPTfNz6GWgSt
-         jPROIVvfPVFadzaoqyEKgcppkAmp/DKO1fPgHL3NycdylOoMOODGx6XStDUf3kZjdchC
-         vNBs14M2BdQ398Mj+bUHUVzJU93bSXIhX36qtP/fCDm5DNijpelXhiF/DFsO6v4kx2zt
-         tfw9zFOq9agR0eIAdUIlLjcAUhclvMYFsnXBIQgy+B+Dudk5zMSOVabh2wrZOMchV2sE
-         NMeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=wrhCYwLaqq+tJ4Xnjggi9FkpGYUSaq7Xq4OEnGmOUu8=;
-        b=B7m7HlV1OcF+A1QZ2XvQnLy+5FTx89hoE8TBvWmLr3DP/DIzV/O/j+hEehQAF5wGCv
-         Jf8BKzVZyP0AHqcVgEwVbqbZwJKyaa2SNIKXDWE7hKSr+HnhrV7YaP1j6XIOb/z/Sd1y
-         rWCzP+lv87xB+pKqXZswEsz/rz4SLV5oaM1PASgZkZ/ZMVfSFObEP5cVg7BC3Mu6J7Yz
-         UUtUMBFWMtWazz0BgHqpgRWRMynoPOIM6yRVeEQ6J7nAffZWkWG2p37mOJRxlD2WD3Az
-         FneCCSZ89KmwzSfIUBrxqfNCwRy+iIP33a8KXOxBQrybdhsOvMPQsgkMcgNdjDzlBirT
-         T5ew==
-X-Gm-Message-State: AOPr4FX1C9IGngQczbo0h+visVJEGcjGCCjH7Lf6cLt9vnce8kcBXZZc3gMjAvoAp4Ux5w==
-X-Received: by 10.28.147.135 with SMTP id v129mr31016614wmd.65.1462393175858;
-        Wed, 04 May 2016 13:19:35 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id w79sm6795893wme.19.2016.05.04.13.19.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 04 May 2016 13:19:35 -0700 (PDT)
-X-Mailer: git-send-email 2.1.3
-In-Reply-To: <1462393128-26762-1-git-send-email-avarab@gmail.com>
+	id S1754067AbcEDUhm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 May 2016 16:37:42 -0400
+Received: from interne.giref.ulaval.ca ([132.203.7.102]:13018 "EHLO
+	mailhost.giref.ulaval.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752738AbcEDUhl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 16:37:41 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mailhost.giref.ulaval.ca (Postfix) with ESMTP id 5B7D4280A5C;
+	Wed,  4 May 2016 16:37:39 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at giref.ulaval.ca
+Received: from mailhost.giref.ulaval.ca ([127.0.0.1])
+	by localhost (mailhost.giref.ulaval.ca [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Z3OP7wqKLh30; Wed,  4 May 2016 16:37:25 -0400 (EDT)
+Received: from [132.203.7.36] (lorien.giref.ulaval.ca [132.203.7.36])
+	by mailhost.giref.ulaval.ca (Postfix) with ESMTP id CC242280863;
+	Wed,  4 May 2016 16:37:25 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.0
+In-Reply-To: <20160422051111.GA32107@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293588>
 
-Change the hardcoded lookup for .git/hooks/* to optionally lookup in
-$(git config core.hooksPath)/* instead.
+Hi,
 
-This is essentially a more intrusive version of the git-init ability to
-specify hooks on init time via init templates.
+sorry for the delay...
 
-The difference between that facility and this feature is that this can
-be set up after the fact via e.g. ~/.gitconfig or /etc/gitconfig to
-apply for all your personal repositories, or all repositories on the
-system.
-
-I plan on using this on a centralized Git server where users can create
-arbitrary repositories under /gitroot, but I'd like to manage all the
-hooks that should be run centrally via a unified dispatch mechanism.
-
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+On 22/04/16 01:11 AM, Jeff King wrote:
+> On Thu, Apr 14, 2016 at 10:59:57AM -0400, Eric Chamberland wrote:
 >
----
- Documentation/config.txt     | 17 +++++++++++++++++
- Documentation/githooks.txt   | 12 ++++++++----
- cache.h                      |  1 +
- config.c                     |  3 +++
- environment.c                |  1 +
- run-command.c                |  5 ++++-
- t/t1350-config-hooks-path.sh | 37 ++++++++++++++++++++++++++++++++++++=
-+
- 7 files changed, 71 insertions(+), 5 deletions(-)
- create mode 100755 t/t1350-config-hooks-path.sh
+>> just cloned a repo and it checked-out wihtout any error (with git 2.=
+2.0) but
+>> got come corrupted files (because I got some sdd failures).
+>>
+>> Then, I get a git core dump when trying to "git status" into the rep=
+o which
+>> have a "bad sector" on sdd drive (crypted partition).
+>>
+>> I tried with git 2.2.0 AND git version 2.8.1.185.gdc0db2c.dirty (jus=
+t
+>> modified the Makefile to remove STRIP part)
+>>
+>> In both cases, I have a  Bus error (core dumped)
+>
+> Interesting. There was a known issue with reading corrupted pack .idx
+> files, but it was fixed in v2.8.0. So this could be a new thing.
+>
+> SIGBUS is somewhat rare, though (usually just accessing unmapped memo=
+ry
+> should get us a SIGSEGV). What platform are you on? I seem to recall
+> that hardware like ARM that cares about memory alignment is more like=
+ly
+> to get a SIGBUS.
+>
+Linux ... 3.7.10-1.45-desktop #1 SMP PREEMPT Tue Dec 16 20:27:58 UTC=20
+2014 (4c885a1) x86_64 x86_64 x86_64 GNU/Linux
+df .
+=46ilesystem                                     1K-blocks      Used=20
+Available Use% Mounted on
+/dev/mapper/cr_ata-ST31000524AS_6VPCXHSW-part1 961430856 699476812=20
+213116108  77% /pmi
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 42d2b50..9a74acd 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -618,6 +618,23 @@ core.attributesFile::
- 	$XDG_CONFIG_HOME/git/attributes. If $XDG_CONFIG_HOME is either not
- 	set or empty, $HOME/.config/git/attributes is used instead.
-=20
-+core.hooksPath::
-+	By default Git will look for your hooks in the
-+	'$GIT_DIR/hooks' directory. Set this to different path,
-+	e.g. '/etc/git/hooks', and Git will try to find your hooks in
-+	that directory, e.g. '/etc/git/hooks/pre-receive' instead of
-+	in '$GIT_DIR/hooks/pre-receive'.
-++
-+The path can be either absolute or relative. A relative path is
-+taken as relative to the directory where the hooks are run (see
-+the "DESCRIPTION" section of linkgit:githooks[5]).
-++
-+This configuration variable is useful in cases where you'd like to
-+centrally configure your Git hooks instead of configuring them on a
-+per-repository basis, or as a more flexible and centralized
-+alterantive to having an `init.templateDir` where you've changed
-+default hooks.
-+
- core.editor::
- 	Commands such as `commit` and `tag` that lets you edit
- 	messages by launching an editor uses the value of this
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 13f9a18..6f562cd 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -7,15 +7,19 @@ githooks - Hooks used by Git
-=20
- SYNOPSIS
- --------
--$GIT_DIR/hooks/*
-+$GIT_DIR/hooks/* (or \`git config core.hooksPath`/*)
-=20
-=20
- DESCRIPTION
- -----------
-=20
--Hooks are programs you can place in the `$GIT_DIR/hooks` directory to
--trigger actions at certain points in git's execution. Hooks that don't
--have the executable bit set are ignored.
-+Hooks are programs you can place in a hooks directory to trigger
-+actions at certain points in git's execution. Hooks that don't have
-+the executable bit set are ignored.
-+
-+By default the hooks directory is `$GIT_DIR/hooks`, but that can be
-+changed via the `core.hooksPath` configuration variable (see
-+linkgit:git-config[1]).
-=20
- Hooks don't need to worry about the user's current working
- directory. Before Git invokes a hook it changes its working
-diff --git a/cache.h b/cache.h
-index fd728f0..c071f5d 100644
---- a/cache.h
-+++ b/cache.h
-@@ -654,6 +654,7 @@ extern int warn_on_object_refname_ambiguity;
- extern const char *apply_default_whitespace;
- extern const char *apply_default_ignorewhitespace;
- extern const char *git_attributes_file;
-+extern const char *git_hooks_path;
- extern int zlib_compression_level;
- extern int core_compression_level;
- extern int core_compression_seen;
-diff --git a/config.c b/config.c
-index 10b5c95..51f80e4 100644
---- a/config.c
-+++ b/config.c
-@@ -717,6 +717,9 @@ static int git_default_core_config(const char *var,=
- const char *value)
- 	if (!strcmp(var, "core.attributesfile"))
- 		return git_config_pathname(&git_attributes_file, var, value);
-=20
-+	if (!strcmp(var, "core.hookspath"))
-+		return git_config_pathname(&git_hooks_path, var, value);
-+
- 	if (!strcmp(var, "core.bare")) {
- 		is_bare_repository_cfg =3D git_config_bool(var, value);
- 		return 0;
-diff --git a/environment.c b/environment.c
-index 57acb2f..2857e3f 100644
---- a/environment.c
-+++ b/environment.c
-@@ -31,6 +31,7 @@ const char *git_log_output_encoding;
- const char *apply_default_whitespace;
- const char *apply_default_ignorewhitespace;
- const char *git_attributes_file;
-+const char *git_hooks_path;
- int zlib_compression_level =3D Z_BEST_SPEED;
- int core_compression_level;
- int core_compression_seen;
-diff --git a/run-command.c b/run-command.c
-index e4593cd..f5c57a5 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -825,7 +825,10 @@ const char *find_hook(const char *name)
- 	static struct strbuf path =3D STRBUF_INIT;
-=20
- 	strbuf_reset(&path);
--	strbuf_git_path(&path, "hooks/%s", name);
-+	if (git_hooks_path)
-+		strbuf_addf(&path, "%s/%s", git_hooks_path, name);
-+	else
-+		strbuf_git_path(&path, "hooks/%s", name);
- 	if (access(path.buf, X_OK) < 0)
- 		return NULL;
- 	return path.buf;
-diff --git a/t/t1350-config-hooks-path.sh b/t/t1350-config-hooks-path.s=
-h
-new file mode 100755
-index 0000000..6e4586a
---- /dev/null
-+++ b/t/t1350-config-hooks-path.sh
-@@ -0,0 +1,37 @@
-+#!/bin/sh
-+
-+test_description=3D'Test the core.hooksPath configuration variable'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'set up a pre-commit hook in core.hooksPath' '
-+	mkdir -p .git/custom-hooks .git/hooks &&
-+	write_script .git/custom-hooks/pre-commit <<-\EOF &&
-+	echo CUSTOM >>actual
-+EOF
-+	write_script .git/hooks/pre-commit <<-\EOF
-+	echo NORMAL >>actual
-+EOF
-+'
-+
-+test_expect_success 'Check that various forms of specifying core.hooks=
-Path work' '
-+	test_commit no_custom_hook &&
-+	git config core.hooksPath .git/custom-hooks &&
-+	test_commit have_custom_hook &&
-+	git config core.hooksPath .git/custom-hooks/ &&
-+	test_commit have_custom_hook_trailing_slash &&
-+	git config core.hooksPath "$PWD/.git/custom-hooks" &&
-+	test_commit have_custom_hook_abs_path &&
-+	git config core.hooksPath "$PWD/.git/custom-hooks/" &&
-+	test_commit have_custom_hook_abs_path_trailing_slash &&
-+	cat >expect <<-\EOF &&
-+	NORMAL
-+	CUSTOM
-+	CUSTOM
-+	CUSTOM
-+	CUSTOM
-+EOF
-+	test_cmp expect actual
-+'
-+
-+test_done
---=20
-2.1.3
+model name      : Intel(R) Xeon(R) CPU           X5690  @ 3.47GHz
+
+>> Program received signal SIGBUS, Bus error.
+>> 0x00007ffff7866d58 in ?? () from /lib64/libcrypto.so.1.0.0
+>> (gdb) bt
+>> #0  0x00007ffff7866d58 in ?? () from /lib64/libcrypto.so.1.0.0
+>> #1  0x3334d90d8c20f3f0 in ?? ()
+>> #2  0xe59b5a6cd844a601 in ?? ()
+>> #3  0xc587a53f67985ae7 in ?? ()
+>> #4  0x3ce81893e5541777 in ?? ()
+>> #5  0xdeb18349a4b042ea in ?? ()
+>> #6  0x8254de489067ec4b in ?? ()
+>> #7  0x6fbef2439704c81b in ?? ()
+>> #8  0xe0eee2bb385a96da in ?? ()
+>> #9  0x00007ffff6e19ab3 in ?? ()
+>> #10 0x00007fffffffc4d0 in ?? ()
+>> #11 0x000000000000001d in ?? ()
+>> #12 0x00007ffff7863f80 in SHA1_Update () from /lib64/libcrypto.so.1.=
+0.0
+>> #13 0x00000000005102c0 in write_sha1_file_prepare
+>> (buf=3Dbuf@entry=3D0x7ffff6c81000, len=3D1673936, type=3D<optimized =
+out>,
+>> sha1=3Dsha1@entry=3D0x7fffffffc750 "\340_~", hdr=3Dhdr@entry=3D0x7ff=
+fffffc570 "blob
+>> 1673936",
+>
+> So I'd assume here that the problem is in accessing the memory in "bu=
+f".
+> to actually compute the sha1. That is mmap'd data, but the process is
+> fairly bland (mmap however many bytes stat() tells us the file has, a=
+nd
+> then compute the sha1). You mentioned a bad sector; could it be that =
+the
+> filesystem is corrupted, and the OS is giving us SIGBUS when trying t=
+o
+> read unavailable bytes from an mmap'd file?
+
+Yes it could be that...
+
+>
+> That would explain the SIGBUS versus SIGSEGV.
+>
+> What happens if you "cat" the file in question:
+
+hmmm, it shows the beginning of the file, then ends with:
+
+cat: Avion.Quadratique.cont.vtu.etalon: Input/output error
+
+also, this appear in /var/log/messages:
+
+2016-05-04T16:33:19.243595-04:00 melkor kernel: [1096660.854161]=20
+ata4.00: exception Emask 0x0 SAct 0x1 SErr 0x0 action 0x0
+2016-05-04T16:33:19.243609-04:00 melkor kernel: [1096660.854165]=20
+ata4.00: irq_stat 0x40000008
+2016-05-04T16:33:19.243610-04:00 melkor kernel: [1096660.854168]=20
+ata4.00: failed command: READ FPDMA QUEUED
+2016-05-04T16:33:19.243611-04:00 melkor kernel: [1096660.854175]=20
+ata4.00: cmd 60/08:00:70:30:c6/00:00:53:00:00/40 tag 0 ncq 4096 in
+2016-05-04T16:33:19.243612-04:00 melkor kernel: [1096660.854175]=20
+   res 41/40:08:71:30:c6/00:00:53:00:00/00 Emask 0x409 (media error) <F=
+>
+2016-05-04T16:33:19.243613-04:00 melkor kernel: [1096660.854178]=20
+ata4.00: status: { DRDY ERR }
+2016-05-04T16:33:19.243614-04:00 melkor kernel: [1096660.854180]=20
+ata4.00: error: { UNC }
+2016-05-04T16:33:19.340479-04:00 melkor kernel: [1096660.950794]=20
+ata4.00: configured for UDMA/133
+2016-05-04T16:33:19.340484-04:00 melkor kernel: [1096660.950806] sd=20
+3:0:0:0: [sdb] Unhandled sense code
+2016-05-04T16:33:19.340485-04:00 melkor kernel: [1096660.950809] sd=20
+3:0:0:0: [sdb]
+2016-05-04T16:33:19.340485-04:00 melkor kernel: [1096660.950811] Result=
+:=20
+hostbyte=3DDID_OK driverbyte=3DDRIVER_SENSE
+2016-05-04T16:33:19.340486-04:00 melkor kernel: [1096660.950814] sd=20
+3:0:0:0: [sdb]
+2016-05-04T16:33:19.340486-04:00 melkor kernel: [1096660.950815] Sense=20
+Key : Medium Error [current] [descriptor]
+2016-05-04T16:33:19.340486-04:00 melkor kernel: [1096660.950819]=20
+Descriptor sense data with sense descriptors (in hex):
+2016-05-04T16:33:19.340487-04:00 melkor kernel: [1096660.950820]=20
+  72 03 11 04 00 00 00 0c 00 0a 80 00 00 00 00 00
+2016-05-04T16:33:19.340487-04:00 melkor kernel: [1096660.950829]=20
+  53 c6 30 71
+2016-05-04T16:33:19.340488-04:00 melkor kernel: [1096660.950834] sd=20
+3:0:0:0: [sdb]
+2016-05-04T16:33:19.340488-04:00 melkor kernel: [1096660.950836] Add.=20
+Sense: Unrecovered read error - auto reallocate failed
+2016-05-04T16:33:19.340489-04:00 melkor kernel: [1096660.950839] sd=20
+3:0:0:0: [sdb] CDB:
+2016-05-04T16:33:19.340489-04:00 melkor kernel: [1096660.950840]=20
+Read(10): 28 00 53 c6 30 70 00 00 08 00
+2016-05-04T16:33:19.340489-04:00 melkor kernel: [1096660.950848]=20
+end_request: I/O error, dev sdb, sector 1405497457
+2016-05-04T16:33:19.340490-04:00 melkor kernel: [1096660.950870] ata4:=20
+EH complete
+2016-05-04T16:33:22.157550-04:00 melkor kernel: [1096663.764515]=20
+ata4.00: exception Emask 0x0 SAct 0x1 SErr 0x0 action 0x0
+2016-05-04T16:33:22.157561-04:00 melkor kernel: [1096663.764519]=20
+ata4.00: irq_stat 0x40000008
+2016-05-04T16:33:22.157563-04:00 melkor kernel: [1096663.764522]=20
+ata4.00: failed command: READ FPDMA QUEUED
+2016-05-04T16:33:22.157564-04:00 melkor kernel: [1096663.764529]=20
+ata4.00: cmd 60/08:00:70:30:c6/00:00:53:00:00/40 tag 0 ncq 4096 in
+2016-05-04T16:33:22.157565-04:00 melkor kernel: [1096663.764529]=20
+   res 41/40:08:71:30:c6/00:00:53:00:00/00 Emask 0x409 (media error) <F=
+>
+2016-05-04T16:33:22.157566-04:00 melkor kernel: [1096663.764532]=20
+ata4.00: status: { DRDY ERR }
+2016-05-04T16:33:22.157567-04:00 melkor kernel: [1096663.764534]=20
+ata4.00: error: { UNC }
+2016-05-04T16:33:22.180479-04:00 melkor kernel: [1096663.787215]=20
+ata4.00: configured for UDMA/133
+2016-05-04T16:33:22.180485-04:00 melkor kernel: [1096663.787225] sd=20
+3:0:0:0: [sdb] Unhandled sense code
+2016-05-04T16:33:22.180486-04:00 melkor kernel: [1096663.787228] sd=20
+3:0:0:0: [sdb]
+2016-05-04T16:33:22.180486-04:00 melkor kernel: [1096663.787230] Result=
+:=20
+hostbyte=3DDID_OK driverbyte=3DDRIVER_SENSE
+2016-05-04T16:33:22.180487-04:00 melkor kernel: [1096663.787232] sd=20
+3:0:0:0: [sdb]
+2016-05-04T16:33:22.180487-04:00 melkor kernel: [1096663.787234] Sense=20
+Key : Medium Error [current] [descriptor]
+2016-05-04T16:33:22.180487-04:00 melkor kernel: [1096663.787237]=20
+Descriptor sense data with sense descriptors (in hex):
+2016-05-04T16:33:22.180488-04:00 melkor kernel: [1096663.787238]=20
+  72 03 11 04 00 00 00 0c 00 0a 80 00 00 00 00 00
+2016-05-04T16:33:22.180488-04:00 melkor kernel: [1096663.787247]=20
+  53 c6 30 71
+2016-05-04T16:33:22.180489-04:00 melkor kernel: [1096663.787252] sd=20
+3:0:0:0: [sdb]
+2016-05-04T16:33:22.180489-04:00 melkor kernel: [1096663.787254] Add.=20
+Sense: Unrecovered read error - auto reallocate failed
+2016-05-04T16:33:22.180490-04:00 melkor kernel: [1096663.787256] sd=20
+3:0:0:0: [sdb] CDB:
+2016-05-04T16:33:22.180490-04:00 melkor kernel: [1096663.787258]=20
+Read(10): 28 00 53 c6 30 70 00 00 08 00
+2016-05-04T16:33:22.180490-04:00 melkor kernel: [1096663.787266]=20
+end_request: I/O error, dev sdb, sector 1405497457
+2016-05-04T16:33:22.180491-04:00 melkor kernel: [1096663.787280] ata4:=20
+EH complete
+
+
+>
+>> #15 0x00000000005159f8 in index_mem (sha1=3Dsha1@entry=3D0x7fffffffc=
+750
+>> "\340_~", buf=3Dbuf@entry=3D0x7ffff6c81000, size=3D1673936,
+>> type=3Dtype@entry=3DOBJ_BLOB,
+>>      path=3Dpath@entry=3D0x80a818 "Ressources/dev/Test.ExportationVT=
+K/Ressources.Avion/Avion.Quadratique.cont.vtu.etalon",
+>> flags=3Dflags@entry=3D0) at sha1_file.c:3305
+>
+> Can it show all of the bytes? I guess from the "size" field it's too =
+big
+> to manually verify, but "cat >/dev/null" should be enough to see if w=
+e
+> can read the whole thing.
+>
+>> Ii would have expected git to first gave me an error when checking o=
+ut the
+>> files!!! Here is the log:
+>>
+>> Checking out files:  99% (28645/28934)
+>> Checking out files: 100% (28934/28934)
+>> Checking out files: 100% (28934/28934), done.
+>> Already on 'master'
+>> Your branch is up-to-date with 'origin/master'.
+>>      On valide le d=C3=A9p=C3=B4t TestValidation avec la r=C3=A9f=C3=
+=A9rence:
+>> 9b4a485202b2b52922377842c15bfd605d240667
+>> HEAD is now at 9b4a485 BUG: On sp=C3=A9cifie bash comme shell...
+>>
+>> But at least 1 file is corrupted!
+>>
+>> I keep preciously this faulty repo to further investigation with som=
+eone who
+>> can help dig into the coredump and correct it...
+>
+> So _if_ my guess is right that you have filesystem corruption, git ma=
+y
+> not even know about it. It wrote the file, and the OS said "OK,
+> success", not knowing it had been partially corrupted.
+
+ok, I see...
+>
+> And if that guess is right, it also means there's no git bug to fix.
+> SIGBUS is the natural way for the OS to tell the process that mmap'd
+> data isn't available.
+
+doh... then forget about this...
+
+Thanks for the enlightments! :)
+
+Eric
+>
+> -Peff
+>
