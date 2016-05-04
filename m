@@ -1,84 +1,79 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH 2/2] bisect: rewrite `check_term_format` shell function in C
-Date: Wed, 4 May 2016 13:10:21 +0530
-Message-ID: <CAFZEwPOU_CNPMxTwuXf64rMrjApm7dfsjEr7i4xE=M3Ak9xdrw@mail.gmail.com>
-References: <01020153a254974b-68f7d16a-66d7-4dc1-805d-2185ff1b3ebf-000000@eu-west-1.amazonses.com>
-	<1462338472-3581-1-git-send-email-pranit.bauva@gmail.com>
-	<1462338472-3581-3-git-send-email-pranit.bauva@gmail.com>
-	<CAPig+cRL7QkQHpSmeKEYECd9JQO8B29OOJoGx2AQORPfmW7QQQ@mail.gmail.com>
-	<CAFZEwPNKug1pvGC1fTvZzVPBGKy71fw6S3qcx_fx98nYZasR3w@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v6 0/2] Add support for sending additional HTTP headers
+Date: Wed, 4 May 2016 03:45:59 -0400
+Message-ID: <20160504074559.GA3077@sigill.intra.peff.net>
+References: <cover.1461837783.git.johannes.schindelin@gmx.de>
+ <cover.1462342213.git.johannes.schindelin@gmx.de>
+ <20160504062618.GA9849@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed May 04 09:40:29 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 04 09:46:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axrQ2-0006yd-R4
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 09:40:27 +0200
+	id 1axrVX-0000w9-Vq
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 09:46:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756681AbcEDHkX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 03:40:23 -0400
-Received: from mail-yw0-f170.google.com ([209.85.161.170]:32920 "EHLO
-	mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750993AbcEDHkW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 03:40:22 -0400
-Received: by mail-yw0-f170.google.com with SMTP id t10so71792309ywa.0
-        for <git@vger.kernel.org>; Wed, 04 May 2016 00:40:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=gXv9530/x8+oyTWfd4scyT9IwdueEKpQxGZyJtruEWM=;
-        b=FL1o2VHDJGy/n2RrLNseW9SSP04TTvf+K5cTnkasnUurlymWxFDR1jR7z066NiuI+3
-         UQYB9jEJuEvviYmtjAVo183nTcFGoIYYFa0t3PNXM0r4CkytDrGSes2qMqi6UhpCNnNg
-         IGhn1Hh8afqk5qedw+JSUrdIbHGCUiGx8Do9+QMgdTze2Ftz1BH5S/2jovGtnw6iDd+E
-         zMMpNRb95U91Dxsq3SkLEYpUtiLDmXU/1JGduydxDF1982XA9Rxfc6u4sPHomyJNfw5n
-         O//MOtPkFf/OE3UhEIf8dLAZExm1RBiDIeGMc5a645aWMWy06bO+SZenYXwBxXa3TdJl
-         HiuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=gXv9530/x8+oyTWfd4scyT9IwdueEKpQxGZyJtruEWM=;
-        b=YoNDVDmz+fTM/ipHkssHMYBn49KmlOyulSXQ+4wfuIlNJCT1KywnO2f/j9db2L6xJe
-         zMc1Q2lVcLzCGhV4fOaFPUKeufrOqn1GS8LIqV4cK4kOX+f2SnRNv+IEhPZsvjgJsrKq
-         HqYMwTnhzR3YJ6Np/B5fX79pfJcsKfXxfLEzi13CqJBL0yY9fVc0UaP9meMsABtdSyx6
-         5ADoFC1c4jOCaTAVgfsp+ja6SqFkgu+tQvKMNH7tsQrtVAExKq9Tlc3TbdDANFnZ7Qg5
-         w6joODLupo2MDww3mJy03/hn28PRpo+gZ9XOWtCq50XwLvZxGtu2bx8s3xvdo0fCv3xB
-         q+vw==
-X-Gm-Message-State: AOPr4FVh4TMTysBJZPyhuj6r5LK3x00RsGW+UwqGwmdzuVjFWYKhPIsQClrBTSjuXh/1QHuIzxT2Zlo0We0o9A==
-X-Received: by 10.37.216.133 with SMTP id p127mr4004527ybg.154.1462347621458;
- Wed, 04 May 2016 00:40:21 -0700 (PDT)
-Received: by 10.13.219.213 with HTTP; Wed, 4 May 2016 00:40:21 -0700 (PDT)
-In-Reply-To: <CAFZEwPNKug1pvGC1fTvZzVPBGKy71fw6S3qcx_fx98nYZasR3w@mail.gmail.com>
+	id S1756934AbcEDHqD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 03:46:03 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33724 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751256AbcEDHqD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 03:46:03 -0400
+Received: (qmail 27314 invoked by uid 102); 4 May 2016 07:46:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 May 2016 03:46:02 -0400
+Received: (qmail 7693 invoked by uid 107); 4 May 2016 07:46:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 May 2016 03:46:13 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 May 2016 03:45:59 -0400
+Content-Disposition: inline
+In-Reply-To: <20160504062618.GA9849@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293508>
 
-On Wed, May 4, 2016 at 1:06 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+On Wed, May 04, 2016 at 02:26:18AM -0400, Jeff King wrote:
 
->
-> [1]: http://article.gmane.org/gmane.comp.version-control.git/293489
->
-> [2]: http://article.gmane.org/gmane.comp.version-control.git/293489
->
-> [3]: http://article.gmane.org/gmane.comp.version-control.git/293489
+> >   submodule: pass on http.extraheader config settings
+> 
+> IMHO this should come on top of jk/submodule-config-sanitize-fix (I was
+> surprised at first that your test worked at all, but that is because it
+> is using "clone", which is the one code path that works).
+> 
+> But I think we are waiting on going one of two paths:
+> 
+>   1. drop sanitizing entirely
+> 
+>   2. fix sanitizing and add more variables to it
+> 
+> If we go the route of (2), then we'd want my fix topic and this patch.
+> And if not, then we don't need any of it (just a patch dropping the
+> filtering, which AFAIK nobody has written yet).
 
-These are incorrect links.
+Actually, I think this last bit is not quite true. If we want to go back
+to "nothing gets passed to submodules", we can drop all of my patches,
+but I don't think anybody wants to do that.
 
-The correct ones are:
-[1]: http://article.gmane.org/gmane.comp.version-control.git/289477
+But if we want "everything gets passed to submodules", then we do need
+something like my patch series, because every use of local_repo_env
+needs to be come "local_repo_env excluding GIT_CONFIG_PARAMETERS". I
+don't think we want to simply drop that variable from local_repo_env
+(which would also mean that it would be propagated to a local
+git-upload-pack, for example, along with any third-party scripts that
+use rev-parse --local-env-vars).
 
-[2]: http://article.gmane.org/gmane.comp.version-control.git/289487
+So I think we'd actually want my series as a preliminary fix, followed
+by dropping the whitelist entirely on top of that, and then probably
+simplifying the shell sanitize_submodule_env() on top of that (it would
+be correct without the whitelist, but you can also trivially implement
+it without having to call submodule--helper at all).
 
-[3]: http://article.gmane.org/gmane.comp.version-control.git/289511
+-Peff
