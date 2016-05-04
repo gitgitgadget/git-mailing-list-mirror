@@ -1,115 +1,77 @@
-From: <yohann.benedic@orange.com>
-Subject: RE: Splitting a project into branches afterwards
-Date: Wed, 4 May 2016 09:52:29 +0000
-Message-ID: <23776_1462355550_5729C65E_23776_11197_1_2D437EEBD32B444FBE10D6D0DC89390A0FC6189C@OPEXCLILM21.corporate.adroot.infra.ftgroup>
-References: <loom.20160503T090745-628@post.gmane.org>
-	<xmqqoa8mi64h.fsf@gitster.mtv.corp.google.com>
- <xmqqk2jai5fb.fsf@gitster.mtv.corp.google.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: What's cooking in git.git (May 2016, #01; Tue, 3)
+Date: Wed, 4 May 2016 12:04:12 +0200
+Message-ID: <CACBZZX4maJDn7wF68f0wFkjeN0W0pVcfDrMNwqB78TD2cMOdeQ@mail.gmail.com>
+References: <xmqqshxykb9k.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 04 12:02:31 2016
+X-From: git-owner@vger.kernel.org Wed May 04 12:04:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axtdU-0001dX-Hf
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 12:02:28 +0200
+	id 1axtfZ-0002Vw-Ox
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 12:04:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757222AbcEDKCZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 06:02:25 -0400
-Received: from relais-ias91.francetelecom.com ([193.251.215.91]:33061 "EHLO
-	relais-inet.francetelecom.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757098AbcEDKCY (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 May 2016 06:02:24 -0400
-X-Greylist: delayed 590 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 May 2016 06:02:23 EDT
-Received: from omfedm06.si.francetelecom.fr (unknown [xx.xx.xx.2])
-	by omfedm13.si.francetelecom.fr (ESMTP service) with ESMTP id AEDBA324849;
-	Wed,  4 May 2016 11:52:30 +0200 (CEST)
-Received: from Exchangemail-eme2.itn.ftgroup (unknown [10.114.31.69])
-	by omfedm06.si.francetelecom.fr (ESMTP service) with ESMTP id 8A28327C07D;
-	Wed,  4 May 2016 11:52:30 +0200 (CEST)
-Received: from OPEXCLILM21.corporate.adroot.infra.ftgroup
- ([fe80::e92a:c932:907e:8f06]) by OPEXCLILMA2.corporate.adroot.infra.ftgroup
- ([fe80::bc1c:ad2f:eda3:8c3d%18]) with mapi id 14.03.0294.000; Wed, 4 May 2016
- 11:52:30 +0200
-Thread-Topic: Splitting a project into branches afterwards
-Thread-Index: AQHRpeBW5Tes43mutUqwnOIocYGMKZ+ofWXA
-In-Reply-To: <xmqqk2jai5fb.fsf@gitster.mtv.corp.google.com>
-Accept-Language: fr-FR, en-US
-Content-Language: fr-FR
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.168.234.3]
-X-PMX-Version: 6.2.1.2478543, Antispam-Engine: 2.7.2.2107409, Antispam-Data: 2016.5.4.91518
+	id S1757418AbcEDKEd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 06:04:33 -0400
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:33742 "EHLO
+	mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757182AbcEDKEc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 06:04:32 -0400
+Received: by mail-qk0-f176.google.com with SMTP id n63so21503685qkf.0
+        for <git@vger.kernel.org>; Wed, 04 May 2016 03:04:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=tJXzoJ8XvesQsnpBBtgnd9XuQp0p7zDR6YNtPL2Ha5E=;
+        b=wTAS3ngecgXqFQYdaB1Fld2+KS3eq6P46u9JJfi8pKKl61yt3M48poMN1N2XxgBXk3
+         x9UgefPzAaTYhEU6b/xYUCn/kZlGFejvPNghozikoumkuaAM25dP9cmH0CbGeLUC8xYC
+         zOcVHfpNA3mNtq2QcWP/s7uzUXvvbIQMwz4D2XUNOJVL4mcIjviFiPMM1O7cRZRFuVbG
+         qhbCnlC5JxbgEaEzNZxaPPP/CL3tbDDI+8CjOJQysRU9yhuMfRg6tlrqnldqYn/icluA
+         zMVRuOH0IneIPIYQEkJEPs3wRYBSAY7wHci1HGz/Wv/1m7yUWMPhcoLahH4TMhPsKBa5
+         jlhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=tJXzoJ8XvesQsnpBBtgnd9XuQp0p7zDR6YNtPL2Ha5E=;
+        b=A1Mfdg9nie4F+q+z9gvlN9z1KemRXfZZDkpnY8iJhQ6n7FSSoyWoKDSQ6vEJnTSgIL
+         KY9mDZO8p6IDWjOrnaFkz6hYBid9EOI6gCXdIzUAguwv/JsJ5rQyR+O1SivqTbwNHOga
+         NbJKsLECPuZnZ0fS65ppEvznj7XTBq+s2ukubH7xpdLxVdGTvUFYEUnS5iD722/u//eH
+         4JzpRQnqnVq2quYLJCeoun3SSbv8dnf4fs40DwJMtcM/4LNCfvgPsatHpkVqj47IA/HR
+         d9g0cbIl3Y8oZGDSRciXwgo0jVRm/9Bc1loVvp3lYc0B/7mQkvyVUzUndyfM/NXlJ1RI
+         oMdQ==
+X-Gm-Message-State: AOPr4FVjfDZBas25I30oziOZwm2lK/m+UYMdGIDfwm8k/nGpeea1T+fqY5TXuU3PCXmYm1XPkwX2GcjxsKBMrw==
+X-Received: by 10.55.161.7 with SMTP id k7mr7724455qke.112.1462356271619; Wed,
+ 04 May 2016 03:04:31 -0700 (PDT)
+Received: by 10.55.77.133 with HTTP; Wed, 4 May 2016 03:04:12 -0700 (PDT)
+In-Reply-To: <xmqqshxykb9k.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293529>
 
-PkluIGFkZGl0aW9uLCBJIHdvdWxkIGltYWdpbmUgdGhhdCB5b3UgaGF2ZSB0aGlzOg0KPg0KPiAg
-ICAgIEYrQg0KPiAgICAgLw0KPiAtLS1YLS0tRg0KPiAgICAgXA0KPiAgICAgIEYrQQ0KPg0KPigu
-Li4pDQo+ICAgICAgICAgIEYrQg0KPiAgICAgICAgIC8NCj4gLS0tWC0tLUYNCj4gICAgICAgICBc
-DQo+ICAgICAgICAgIEYrQQ0KPg0KDQpIaSwNCg0KVGhhbmsgeW91IGZvciB5b3VyIGFuc3dlciA6
-KQ0KSSBkb24ndCB1bmRlcnN0YW5kIHRoZSBkaWZmZXJlbmNlIGJldHdlZW4gdGhlIHR3byBkaWFn
-cmFtcy4gSSBjYW4gc2VlIHRoZSBicmFuY2ggcG9pbnRzIGFyZSBkaWZmZXJlbnQgYnV0IHdoeSBp
-cyBpdCByZWxldmFudD8NCg0KSSBwcm9iYWJseSBzaG91bGQgaGF2ZSBpbmNsdWRlZCBkaWFncmFt
-cyBpbiBteSBvcmlnaW5hbCBwb3N0LiBIZXJlIGlzIHdoYXQgSSBoYXZlLCB3aXRoIHlvdXIgbm90
-YXRpb25zLCBhbmQgd2l0aCBBaSwgQmksIEZpIGRlbm90aW5nIGNvbW1pdHMgdGhhdCBpbnRyb2R1
-Y2UgY2hhbmdlcyBpbiBwcm9kdWN0IEEsIHByb2R1Y3QgQiBhbmQgdGhlIGZyYW1ld29yayByZXNw
-ZWN0aXZlbHk6DQoNCi0tRjEtLS0tQjEtLS0tQTEtLS0tQTItLS0tRjItLS0tQjI9WA0KDQpXaGF0
-IEkgd2lzaCBJIGhhZA0KDQogICAgICAgIEExIC0tLS0gQTItLS0tKz1BDQogICAgICAvICAgICAg
-ICAgICAgICAgICAgICAgLw0KLS1GMS0tLS0tLS0tLS0tLS0tLS1GMj1GDQogICAgICBcICAgICAg
-ICAgICAgICAgICAgICAgIFwNCiAgICAgICAgQjEtLS0tLS0tLS0tLS0tLS0rLS0tLS1CMj1CDQoN
-ClRoYW5rcyB0byB5b3VyIHBvc3QsIEkgbm93IHJlYWxpemUgdGhhdCBtZXJnZXMgc2hvdWxkIG9u
-bHkgYnJpbmcgbmV3IGZyYW1ld29yayBzdHVmZiBpbnRvIHByb2R1Y3Qgc3BlY2lmaWMgYnJhbmNo
-ZXMgYW5kIG5vdCB0aGUgb3RoZXIgd2F5IGFyb3VuZCAoaWUuIElmIEkgaGFwcGVuZWQgdG8gaGF2
-ZSBmaXhlZCBhIGZyYW1ld29yayBpc3N1ZSBpbiBhIGJyYW5jaCBkZXJpdmVkIGZyb20gcHJvZHVj
-dCBBLCBJIHNob3VsZCByZWJhc2UgaXQgb250byB0aGUgZnJhbWV3b3JrLCBtZXJnZSBpdCBpbiB0
-aGUgZnJhbWV3b3JrIGFuZCB0aGVuIG1lcmdlIHRoZSBmcmFtZXdvcmsgaW50byB0aGUgcHJvZHVj
-dCBBIGJyYW5jaCwgaXQgbWFrZXMgcGVyZmVjdCBzZW5zZSkuDQoNCkkgZG9uJ3QgcmVhbGx5IGNh
-cmUgaWYgSSBjYW4gcmV3cml0ZSB0aGUgaGlzdG9yeSB0aGlzIHdheSAodW5sZXNzIGl0IHR1cm5z
-IG91dCB0byBiZSBzdXBlciBlYXN5KSBhcyBsb25nIGFzIEkgY2FuIHNldCB1cCB0aGUgcmVwb3Np
-dG9yeSBzbyB0aGF0IEkgY2FuIHdvcmsgdGhpcyB3YXkgZnJvbSBub3cgb24uIFNvIGhlcmUgaXMg
-bXkgYXR0ZW1wdCBmcm9tIHRoZSBjdXJyZW50IGhpc3RvcnksIGludHJvZHVjaW5nIHRoZSBmcmFt
-ZXdvcmsgYnJhbmNoIGFuZCB0aGUgbmV3IHByb2R1Y3QgYnJhbmNoZXMgd2l0aCB0aGVpciByZXNw
-ZWN0aXZlICJpbml0aWFsX3JlbW92YWwiIGNvbW1pdHM6IEF4IG1lYW5zIHJlbW92ZSBwcm9kdWN0
-IEEgc3BlY2lmaWMgY29kZSwgc2FtZSBmb3IgQnguDQoNCiAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQngtLS0tLS0tLS0rPUEgKG5vdyBjb250YWlu
-cyBBeCwgd2hpY2ggaXMgbm90IHN1aXRhYmxlKQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgIC8gICBcICAgICAgICAvDQotLUYxLS0tLUIxLS0tLUEx
-LS0tLUEyLS0tLUYyLS0tLUIyLS0tKy0tLUYzPUYNCiAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICBcICAgLyAgICAgICBcDQogICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIEF4LS0tLS0tLS0rPUIgKG5vdyBj
-b250YWlucyBCeCwgd2hpY2ggaXMgbm90IHN1aXRhYmxlKQ0KDQpOb3RpY2UgdGhhdCBJIGFwcGxp
-ZWQgQXggYW5kIEJ4IHRvIEYgaW4gb3JkZXIgdG8gY2xlYXIgaXQgZnJvbSB0aGUgcHJvZHVjdCBz
-cGVjaWZpYyBjb2RlLiBZZXQsIGRvaW5nIHNvIHdpbGwgZXZlbnR1YWxseSBicmluZyBBeCB0byBi
-cmFuY2ggQSBhbmQgQnggdG8gYnJhbmNoIEIsIGtpbGxpbmcgdGhlbS4gSSBjYW4ndCBmaW5kIGEg
-d2F5IHRvIGF2b2lkIHRoaXMgd2hpbGUgY2xlYXJpbmcgdGhlIEYgYnJhbmNoIG90aGVyIHRoYW4g
-Y2hlcnJ5LXBpY2tpbmcgRjMgb3IgYW55IHJlYmFzZSBzb2x1dGlvbnMuDQoNCk5vdyBJIGJlbGll
-dmUgeW91J3JlIHN1Z2dlc3Rpbmcgbm90IHRvIGFwcGx5IEF4IGFuZCBCeCB0byBGLCBhbmQgaGVu
-Y2UgaGF2ZSB0aGUgcHJvZHVjdCBzcGVjaWZpYyBjb2RlIHJlbWFpbiBpbiBhIGRlYWQgc3RhdGUg
-aW4gRi4gVGhhdCB3aWxsIGRvIGFuZCBpdCBwcm9iYWJseSBpcyB3aGF0IEkgd2lsbCBlbmQgdXAg
-ZG9pbmcsIHVubGVzcyBhbm90aGVyIGlkZWEgY29tZXMgb3V0Lg0KDQpUaGFuayB5b3UNCg0KWW9o
-YW5uDQoKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fXwoKQ2UgbWVzc2FnZSBldCBzZXMgcGllY2VzIGpvaW50ZXMgcGV1dmVudCBj
-b250ZW5pciBkZXMgaW5mb3JtYXRpb25zIGNvbmZpZGVudGllbGxlcyBvdSBwcml2aWxlZ2llZXMg
-ZXQgbmUgZG9pdmVudCBkb25jCnBhcyBldHJlIGRpZmZ1c2VzLCBleHBsb2l0ZXMgb3UgY29waWVz
-IHNhbnMgYXV0b3Jpc2F0aW9uLiBTaSB2b3VzIGF2ZXogcmVjdSBjZSBtZXNzYWdlIHBhciBlcnJl
-dXIsIHZldWlsbGV6IGxlIHNpZ25hbGVyCmEgbCdleHBlZGl0ZXVyIGV0IGxlIGRldHJ1aXJlIGFp
-bnNpIHF1ZSBsZXMgcGllY2VzIGpvaW50ZXMuIExlcyBtZXNzYWdlcyBlbGVjdHJvbmlxdWVzIGV0
-YW50IHN1c2NlcHRpYmxlcyBkJ2FsdGVyYXRpb24sCk9yYW5nZSBkZWNsaW5lIHRvdXRlIHJlc3Bv
-bnNhYmlsaXRlIHNpIGNlIG1lc3NhZ2UgYSBldGUgYWx0ZXJlLCBkZWZvcm1lIG91IGZhbHNpZmll
-LiBNZXJjaS4KClRoaXMgbWVzc2FnZSBhbmQgaXRzIGF0dGFjaG1lbnRzIG1heSBjb250YWluIGNv
-bmZpZGVudGlhbCBvciBwcml2aWxlZ2VkIGluZm9ybWF0aW9uIHRoYXQgbWF5IGJlIHByb3RlY3Rl
-ZCBieSBsYXc7CnRoZXkgc2hvdWxkIG5vdCBiZSBkaXN0cmlidXRlZCwgdXNlZCBvciBjb3BpZWQg
-d2l0aG91dCBhdXRob3Jpc2F0aW9uLgpJZiB5b3UgaGF2ZSByZWNlaXZlZCB0aGlzIGVtYWlsIGlu
-IGVycm9yLCBwbGVhc2Ugbm90aWZ5IHRoZSBzZW5kZXIgYW5kIGRlbGV0ZSB0aGlzIG1lc3NhZ2Ug
-YW5kIGl0cyBhdHRhY2htZW50cy4KQXMgZW1haWxzIG1heSBiZSBhbHRlcmVkLCBPcmFuZ2UgaXMg
-bm90IGxpYWJsZSBmb3IgbWVzc2FnZXMgdGhhdCBoYXZlIGJlZW4gbW9kaWZpZWQsIGNoYW5nZWQg
-b3IgZmFsc2lmaWVkLgpUaGFuayB5b3UuCgo=
+On Wed, May 4, 2016 at 12:49 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> * ab/hooks (2016-04-26) 4 commits
+>  - hooks: allow customizing where the hook directory is
+>  - githooks.txt: minor improvements to the grammar & phrasing
+>  - githooks.txt: amend dangerous advice about 'update' hook ACL
+>  - githooks.txt: improve the intro section
+>
+>  A new configuration variable core.hooksPath allows customizing
+>  where the hook directory is.
+>
+>  Almost there.
+>  ($gmane/292635)
+
+I've been on vacation so I haven't sent a v5 yet, I'll be doing so
+SOON in a series that'll address Junio's outstanding commets.
+
+If anyone has any last minute comments that haven't been covered in
+that now would be a good time.
