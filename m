@@ -1,72 +1,94 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (May 2016, #01; Tue, 3)
-Date: Wed, 4 May 2016 08:09:54 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605040808340.9313@virtualbox>
-References: <xmqqshxykb9k.fsf@gitster.mtv.corp.google.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v6 0/2] Add support for sending additional HTTP headers
+Date: Wed, 4 May 2016 08:14:07 +0200 (CEST)
+Message-ID: <cover.1462342213.git.johannes.schindelin@gmx.de>
+References: <cover.1461837783.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 04 08:10:13 2016
+X-From: git-owner@vger.kernel.org Wed May 04 08:14:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axq0h-00083c-24
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 08:10:11 +0200
+	id 1axq4k-0001mc-DX
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 08:14:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757277AbcEDGKE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 02:10:04 -0400
-Received: from mout.gmx.net ([212.227.15.19]:49838 "EHLO mout.gmx.net"
+	id S1757066AbcEDGOS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 02:14:18 -0400
+Received: from mout.gmx.net ([212.227.15.15]:64697 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757205AbcEDGKB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 02:10:01 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MEWkb-1aqzRC0CT3-00Fihm; Wed, 04 May 2016 08:09:55
+	id S1751853AbcEDGOR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 02:14:17 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MaZWz-1bD2Vd431V-00K9M2; Wed, 04 May 2016 08:14:09
  +0200
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqshxykb9k.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <cover.1461837783.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:5vP92yvSiysN2i6q8cnEwQOktStWCMCoaN/InprqtpItGui7QwF
- 6mqWRxTGhvDYTi5rKWxac3Xe4wAmNDFciNYJiEdxyPmVx3wrNbAYsBVYOvYsN7kH5Voj3pS
- M5Kgu31dtlHB168+FL//c77axwFrQNSj9FKKuCE9KMk+kMYsqZKM6xBE79H+68Q6gn8d0CF
- Vm+SvdC3+jgDBxMVhKuog==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:eXBzF/C5i/s=:bxCo/ds0J+F8BZS08FcJWU
- VH53DOAUKRj84Lynqrrcq6UdCNZDtYLIPS8uUz5TP+tF9eg8SzVXJhymoI7LNiNmZT4adSJub
- O6O85GlReRV2mH2LpTqkc4TuQfBmal9di+metoHL2VIWmDBc0AbV/CLwKmOpN+0sqUC0iB+Qh
- F8F1C+udOZiH9xU/VLzaOVXjZ0mv/qwJeuj55xQnly6uA1d0pEEmod2mPYuOeNtmFelQvx3Tl
- gpOaFqlnXVUNOAt21zF3HYe8zDIELYmLz6wyaup7B+wDATxgnsK+CpcTIlq8TR7Dkuh0z9IEB
- pcBTIsYFC/hJ2/g246YL8/vvQu30ATQAF70fK5eT7qs+ygJ1SsjD9VqeDI8+wwDpThmQ7hgFK
- Ju2ofI+QXnzmdC/fNnv/0fkV5sGkzgQjXaw6L6Ap2EVZTmRO7AW7WYPAxDxdxbtlSPO9mHfhI
- SqzI4rkNhQJ3tO4bkOBleaRPzJ+deiQl4FeT4V/hlpvlB2iqbf5q6lxRRqp6rpU2yOriFaNgl
- Lt5yyCpF8bX3NMnT5+GYSly8MbpfQJG1WLlBZgS5A1ieonize27WXAGzmq/vO4Wqff4GBog7i
- jTq0CZZNZ8oq7oz2JVYesVSmHmCL1xIvmyRnFGbAUS3eg7j0RWQ5HvsX/BBNS1d4JLkWdbR4w
- KuS9NgdBePGuwREVwPRgm1Qp+F1/4yjRsl2OvVf7brc3v2FtGEBMSyRphtYAhD5xrfOjNqc7c
- 2dJf4y4wfHYaU7ai2+vR+6u3gsFYOJhPDgsbluW8W2+4Qj5BJbdvt2ueYSSpbjeUIRYe+IQM 
+X-Provags-ID: V03:K0:22RMD4keK6enX5vvn+DSNm/7Oh0aJsZHeiVhCOLXemu7mmxcKli
+ vvmKOIerw3Vpicc+Z6OBCG3535Tt+pRybEj+KpjLQEc9VWkkj51+zadriJ/YRIRjk8LKWRx
+ 6XNaLcA6XwHpRHHdc0uEcjMIny28fJ50rqaxaZ74mOkqkmnteeu1cbspGpDmAZ0xE0iAsUG
+ mSvro9/nPPAukm6Zqgu9w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Z0qEsoJXVM8=:+MQmnqMzofFrun9OH+VEKE
+ AS0BRYHuKKwKu2eD6bNsgRd8nkOPpXWaPFkNiebcRn1nAOl45XwYlAA+0Szh/c12dHzYb1uc0
+ QIJN9RtYwGCiUeh2cg5BZSG19w6CXXgCKyUYSwUw9VTzgRopyyApP2OAnUf7uUnpU39b+7tWF
+ srYH9mi40D2F9z39Tf5LwgAlfBvk4LuL4B1fBDRYjRDonO8KY/nE0dS+1n0WbFZ9aMus70dFD
+ i6OXzFrZkISVesI1wu21DEg67ai0uhoDOqTyJry4JFkgkEZwDdp0bn5Bm85ztAjLIF8yclOC6
+ fd42Vh0pBPvA/baKTM1ljNbvWgwnibraO63XKM95cioE3phnwxPZRgoEKmZaPyQ5QYw2a8u/e
+ dgV1HeR31cC7znEj6xXznv1Oqn7oFXgsDMy4YgXcmPhIcojCy82cOaM+5tby0Y3CwC8ZfAlqL
+ 0/F9UAVGgYWurwHfvch9Mii4rodT2tcMGip8ELnZEI4a6iWaHgnanlmR8He/oJlEyMOMYN5x6
+ BwntUjD3tyTfizPH1/ipNSUUfiUNSAd/OLOjKc5h09VRBKTK5xltpszdXYPbRH/cSLxl4ltAK
+ He58RVVOAVGVkGTjaE4Zyw7XGHM0Ua206opi+QlpvS/zv2n3W98a/waix8Ot39niWznF63K+3
+ A4rj+EsUQ0WXPBLklCGQzsxI2kVzQIVYWguYMFKovYACW1H4JuWz/HlVj8bte10DMbG6rqKmr
+ wlIZSE2DCU4Qll5oH0J+VrYKgB/l8Iltgl0HKR+qlSdgbMR6+96Rqwls5hgCKsC2Ougl7e+z 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293496>
 
-Hi Junio,
+My use case is an army of build agents that need only limited and
+selective access to otherwise private repositories.
 
-On Tue, 3 May 2016, Junio C Hamano wrote:
+v6 supports submodules better by allowing
 
-> * js/http-custom-headers (2016-04-27) 1 commit
->   (merged to 'next' on 2016-04-27 at 0c97a50)
->  + http: support sending custom HTTP headers
-> 
->  HTTP transport clients learned to throw extra HTTP headers at the
->  server, specified via http.extraHeader configuration variable.
-> 
->  Will merge to 'master'.
+	git -c http.extraheader submodule update
 
-This misses the rather crucial support for `git -c ... submodule ...` that
-I sent out earlier. I will send out another iteration with the indentation
-as per your wishes. Please let me know whether you want the second patch
-as a separate "patch series" instead.
+to work as one would expect intuitively.
 
-Ciao,
-Dscho
+Johannes Schindelin (2):
+  http: support sending custom HTTP headers
+  submodule: pass on http.extraheader config settings
+
+ Documentation/config.txt    |  6 ++++++
+ builtin/submodule--helper.c |  3 ++-
+ http-push.c                 | 10 +++++-----
+ http.c                      | 35 ++++++++++++++++++++++++++++++++---
+ http.h                      |  1 +
+ remote-curl.c               |  4 ++--
+ t/lib-httpd/apache.conf     |  8 ++++++++
+ t/t5551-http-fetch-smart.sh | 16 ++++++++++++++++
+ 8 files changed, 72 insertions(+), 11 deletions(-)
+
+Interdiff vs v5:
+
+ diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+ index b338f93..789e081 100644
+ --- a/builtin/submodule--helper.c
+ +++ b/builtin/submodule--helper.c
+ @@ -128,8 +128,7 @@ static int module_name(int argc, const char **argv, const char *prefix)
+  static int submodule_config_ok(const char *var)
+  {
+  	if (starts_with(var, "credential.") ||
+ -			(starts_with(var, "http.") &&
+ -			 ends_with(var, ".extraheader")))
+ +	    (starts_with(var, "http.") && ends_with(var, ".extraheader")))
+  		return 1;
+  	return 0;
+  }
+
+-- 
+2.8.1.306.gff998f2
