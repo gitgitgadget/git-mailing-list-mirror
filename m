@@ -1,97 +1,188 @@
-From: Brian Norris <computersforpeace@gmail.com>
-Subject: Re: [PATCH v2 3/3] http: expand http.cookieFile as a path
-Date: Wed, 4 May 2016 12:35:31 -0700
-Message-ID: <20160504193531.GA62336@google.com>
-References: <1462387335-57937-1-git-send-email-computersforpeace@gmail.com>
- <1462387335-57937-3-git-send-email-computersforpeace@gmail.com>
- <20160504193051.GF21259@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 1/2] Documentation: fix linkgit references
+Date: Wed, 04 May 2016 12:57:31 -0700
+Message-ID: <xmqq7ff9h9zo.fsf@gitster.mtv.corp.google.com>
+References: <E4A56B4E-6F2E-44E3-870B-D1D3A71B2869@gmail.com>
+	<1462351116-19308-1-git-send-email-larsxschneider@gmail.com>
+	<1462351116-19308-2-git-send-email-larsxschneider@gmail.com>
+	<F6210682-2FCA-423D-B6D3-06938C95D497@gmail.com>
+	<5729DF25.7030503@ramsayjones.plus.com>
+	<xmqqd1p1ivfw.fsf@gitster.mtv.corp.google.com>
+	<xmqqvb2thczf.fsf@gitster.mtv.corp.google.com>
+	<20160504192516.GD21259@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	git@vger.kernel.org, Matthieu.Moy@grenoble-inp.fr,
+	sbeller@google.com
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 04 21:35:40 2016
+X-From: git-owner@vger.kernel.org Wed May 04 21:57:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ay2aB-0005sp-B3
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 21:35:39 +0200
+	id 1ay2vj-0001MY-G6
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 21:57:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753005AbcEDTff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 15:35:35 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:34890 "EHLO
-	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751125AbcEDTff (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 15:35:35 -0400
-Received: by mail-pf0-f171.google.com with SMTP id 77so28493443pfv.2
-        for <git@vger.kernel.org>; Wed, 04 May 2016 12:35:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=XqSCDlxLD+wFPT91HsCaywsrbmcHso9kUlXlY9IuqeE=;
-        b=BikKUGgUX/klR6gf3m78EQcMhiB0HpDI6WHxrtVDCDrnsnzQ2niwP6WpqIw2Ia6xOV
-         hCuraPr4qoItBN9AOa38XVoQLmetjQbDX9LQTVm6/PlxLZixo2U8l0BYTbKCYD04Dxqe
-         LDuXSrAd3Taqyc5y4DgaYgi3vpZsi14N7jFhnuZr2WsEU9JSABXhgKWiLaQdebQ0kjBD
-         t3cB9W5tZzcGKQSYE5JFQTFiVGAv6cEHnY1A3RBFuLehDEdf17jEXxE6o99PdCTyRITt
-         g5DH1JgrpBI3/WqJ6syuH6E4uG86LcyRWatR+FbHKviY5i5VXeRgdmipg/9hItr+yobt
-         nrjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=XqSCDlxLD+wFPT91HsCaywsrbmcHso9kUlXlY9IuqeE=;
-        b=ZebAGhdBf7WGXyqFrudRoDz9sj0OCuq9CZFO+DnG3jC+FqgBYrD3zS7msjNx8iKKaW
-         bNmLzoJZMdWHdsIRf4c7qbDB6QpQvE38rTZfxfin2c2gTE+UU/KN4411qJpA0HDLhBEe
-         RMP+rULqGwYwOuc6EU5Rvoj+ipuokBp9YjVgr08Z4b8hXcj+XPV3JxHpDnEZSYIchOyx
-         C3FUgFrPcKn5cYi5yWfd7Fbdm86WIvQTypEMk1+MhrAhudG4dpI951oGxXdB+kZxnpil
-         hHGi7R7RLOEAI4/vcgVhmxPAQjOvTiErwbih3IRZkbm10MTtg4jHPMyHXSfFd9R7afKp
-         xyEw==
-X-Gm-Message-State: AOPr4FU3IjIQVY2KQOTuVkjdRguVL0W44jHLlvAEFHtM2EjhfB21CNaQKUAZKTI4GSkBQg==
-X-Received: by 10.98.38.66 with SMTP id m63mr14518686pfm.57.1462390534279;
-        Wed, 04 May 2016 12:35:34 -0700 (PDT)
-Received: from google.com ([2620:0:1000:1301:83a:44ea:311e:857])
-        by smtp.gmail.com with ESMTPSA id ve11sm7974938pab.21.2016.05.04.12.35.33
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 04 May 2016 12:35:33 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20160504193051.GF21259@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754017AbcEDT5j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 15:57:39 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53588 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752399AbcEDT5e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 15:57:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0736E17695;
+	Wed,  4 May 2016 15:57:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DAGbTUBCrPLCyYCzsmXps1KQi6M=; b=ltC+Ko
+	g61poRoQKjZbkLRlghejtxpP22777/PlIn5SI1QF9kcTU+1ogKR8xKj4rXpVSbbK
+	n8zgVJ/FzZr1+Mw4XjQPzcopoLxN121FWcgcPxys00B/5GckDQAiJBTii1kYt6OP
+	/6pNw/0NpgIM76o53pj8/KdgGHmkZzPvcd75w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MaMLzPIN1E9IUnVNNYU0IiWZ2s3Fd4MA
+	9Ntn7ffbNikwG9o9KIMOxjMO5em43BlJiwSmFcpDYDC6yZmzkEw37j8X5V5n4VMB
+	vk75Y9i6mA09laSiZy5JNtO9WXAPNovzUgJddDvJSRZmpo5v2WTD6TbqcrBEl8uS
+	lXRfCJ55sOM=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id F1B2317694;
+	Wed,  4 May 2016 15:57:32 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7069D17693;
+	Wed,  4 May 2016 15:57:32 -0400 (EDT)
+In-Reply-To: <20160504192516.GD21259@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 4 May 2016 15:25:16 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 706ED38A-1232-11E6-A5A0-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293578>
 
-On Wed, May 04, 2016 at 03:30:51PM -0400, Jeff King wrote:
-> On Wed, May 04, 2016 at 11:42:15AM -0700, Brian Norris wrote:
-> 
-> > diff --git a/Documentation/config.txt b/Documentation/config.txt
-> > index e655b9729a7d..4c3cd7621ad0 100644
-> > --- a/Documentation/config.txt
-> > +++ b/Documentation/config.txt
-> > @@ -1664,7 +1664,8 @@ http.emptyAuth::
-> >  	authentication.
-> >  
-> >  http.cookieFile::
-> > -	File containing previously stored cookie lines which should be used
-> > +	The pathname of a file containing previously stored cookie lines,
-> > +	which should be used
-> >  	in the Git http session, if they match the server. The file format
-> >  	of the file to read cookies from should be plain HTTP headers or
-> >  	the Netscape/Mozilla cookie file format (see linkgit:curl[1]).
-> 
-> I think we usually re-wrap paragraphs when adding to the documentation,
-> but I do not have a strong opinion (and certainly understand the reasons
-> for not doing so).
+Jeff King <peff@peff.net> writes:
 
-I chose the wrapping mostly based on the diff suggestions y'all kindly
-provided :)
+> Likewise, I think we could build the whole HTML source and then actually
+> just look for broken links in it. But that script would probably end up
+> looking similar to this one, with s/linkgit/href/. But it does more
+> directly measure what we want, which is that the rendered doc is usable;
 
-I can rewrap and resend if necessary.
+I debated about this myself, but chose to inspect the source
+material, as that approach is easier to give actionable lint output
+to the user that points out the file:lineno to be corrected.
 
-> The whole series looks fine to me. Thanks.
+> it would catch something like using "--" instead of "{litdd}".
 
-Thanks,
-Brian
+That is true indeed.  With the "source" approach, that would indeed
+be harder.
+
+>> +#!/bin/sh
+>> +
+>> +git grep -l linkgit: Documentation/ |
+>> +while read path
+>> +do
+>> +	perl -e '
+>
+> Is it worth just making this a perl script, rather than a shell script
+> with a giant inline perl script? Perl is actually really good at doing
+> that "grep" as it reads the file. :)
+
+OK.
+
+-- >8 --
+From: Junio C Hamano <gitster@pobox.com>
+Date: Wed, 4 May 2016 11:48:06 -0700
+Subject: [PATCH v2] ci: validate "gitlink:" in documentation
+
+It is easy to add incorrect "linkgit:<page>[<section>]" references
+to our documentation suite.  Catch these common classes of errors:
+
+ * Referring to Documentation/<page>.txt that does not exist.
+
+ * Referring to a <page> outside the Git suite.  In general, <page>
+   must begin with "git".
+
+ * Listing the manual <section> incorrectly.  The first line of the
+   Documentation/<page>.txt must end with "(<section>)".
+
+with a new script "ci/lint-gitlink".
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ ci/lint-gitlink | 60 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 60 insertions(+)
+ create mode 100755 ci/lint-gitlink
+
+diff --git a/ci/lint-gitlink b/ci/lint-gitlink
+new file mode 100755
+index 0000000..bb73e89
+--- /dev/null
++++ b/ci/lint-gitlink
+@@ -0,0 +1,60 @@
++#!/usr/bin/perl
++
++use File::Find;
++
++my $found_errors = 0;
++
++sub report {
++	my ($where, $what, $error) = @_;
++	print "$where: $error: $what\n";
++	$found_errors = 1;
++}
++
++sub grab_section {
++	my ($page) = @_;
++	open my $fh, "<", "Documentation/$page.txt";
++	my $firstline = <$fh>;
++	chomp $firstline;
++	close $fh;
++	my ($section) = ($firstline =~ /.*\((\d)\)$/);
++	return $section;
++}
++
++sub lint {
++	my ($file) = @_;
++	open my $fh, "<", $file
++		or return;
++	while (<$fh>) {
++		my $where = "$file:$.";
++		while (s/linkgit:((.*?)\[(\d)\])//) {
++			my ($target, $page, $section) = ($1, $2, $3);
++
++			# De-AsciiDoc
++			$page =~ s/{litdd}/--/g;
++
++			if ($page !~ /^git/) {
++				report($where, $target, "nongit link");
++				next;
++			}
++			if (! -f "Documentation/$page.txt") {
++				report($where, $target, "no such source");
++				next;
++			}
++			$real_section = grab_section($page);
++			if ($real_section != $section) {
++				report($where, $target,
++					"wrong section (should be $real_section)");
++				next;
++			}
++		}
++	}
++	close $fh;
++}
++
++sub lint_it {
++	lint($File::Find::name) if -f;
++}
++
++find({ wanted => \&lint_it, no_chdir => 1 }, "Documentation");
++
++exit $found_errors;
+-- 
+2.8.2-498-g6350fe8
