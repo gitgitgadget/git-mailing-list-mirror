@@ -1,159 +1,117 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: avoid duplicate patches from git log ?
-Date: Wed, 4 May 2016 13:58:57 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605041347170.9313@virtualbox>
-References: <712E44CFAD1A41A982AEF1540C1F9F80@PhilipOakley><20160503220039.GB25133@sigill.intra.peff.net> <xmqqbn4mlrk2.fsf@gitster.mtv.corp.google.com> <E735FEEE2908434F874CAD1874307E38@PhilipOakley>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH 2/2] bisect: rewrite `check_term_format` shell function in C
+Date: Wed, 4 May 2016 17:30:10 +0530
+Message-ID: <CAFZEwPMM9vg7pAZwqwaC2HUWo+xnq3X6SrTQEUc20bs_nbzMmw@mail.gmail.com>
+References: <01020153a254974b-68f7d16a-66d7-4dc1-805d-2185ff1b3ebf-000000@eu-west-1.amazonses.com>
+	<1462338472-3581-1-git-send-email-pranit.bauva@gmail.com>
+	<1462338472-3581-3-git-send-email-pranit.bauva@gmail.com>
+	<CAPig+cRL7QkQHpSmeKEYECd9JQO8B29OOJoGx2AQORPfmW7QQQ@mail.gmail.com>
+	<CAFZEwPNKug1pvGC1fTvZzVPBGKy71fw6S3qcx_fx98nYZasR3w@mail.gmail.com>
+	<alpine.DEB.2.20.1605041309430.9313@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Git List <git@vger.kernel.org>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Wed May 04 13:59:15 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	christain.couder@gmail.com,
+	Lars Schneider <larsxschneider@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 04 14:00:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axvSU-00034a-SG
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 13:59:15 +0200
+	id 1axvTV-0003Yh-FN
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 14:00:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753119AbcEDL7J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 07:59:09 -0400
-Received: from mout.gmx.net ([212.227.17.21]:51354 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752656AbcEDL7H (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 07:59:07 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MEbYb-1ar2mR0tUP-00FiY0; Wed, 04 May 2016 13:58:58
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <E735FEEE2908434F874CAD1874307E38@PhilipOakley>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:kCJIXdgUFUTWr7UcD7mZnrRoE3/XfmP1mZtynyu/O5ovmjiR0kl
- wzMQ08Zrn7DnihrrxovKtdbs0X1hG3m5NI7prdM96k5K6IRnfDvtYz4McraZC9aIKsQnfkv
- Nhlrm6NoTcXnPIK2A+urO6cR5RFaHNzEUlJgemdu/Y/2+VLsGpe/bbIawFO1OJ9XDF7UkN1
- rugGBbAGNmlO2OHYWkUWQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:c43Q12u5+2Q=:xOZVvzYXW1QsgipEavL0U7
- QuXVlBnOSQXpBu+p0HmZY/2C5FksJ0Ydle6HEhCVFdddlHFnpNuBnQXzgYNJt7swoKqoGcsbP
- IMhU8MMTcW4mQ+ABFIsmZtSqk/uf6zUa5VmgyhdizeUtpSQKQielnD9uXPGf8x4wQAHyAHkZT
- H97Sl1VP78cyOeW48kCynR1s+vQLnOwj5jh0TtCXr5uD1jQh9eaEEfV0nMhCx1eMbJnulYjeu
- QqoPHX9UUeDnLDM2cdSY/d/2AztdTjHEFzWJ/Tt16fBLXXk1x0ANDa4qwL+4v62qkcg5nlzZ7
- Ij3GrmmbbIWSwpVKtGmAxj/PBpUlwBmUglBwydoTP7bT3Tyly0271QsOuKRTIz5DsWkAaK4BP
- SO+4Qu1gaidAvd+JI117Kw+tF6MUctCXH10ffg6wft8QEbvc1UOLyK3T96uvHdrHVFASJ1Pc3
- 40pFowLJJqy9/PdLdF6AmcB+nCc0e8waSFVavXKYoDRzLxEu3QG6g5PyEAo6KH0zy2+7DdX+Y
- tv3W/rAmv7c+aNW69yAXbwxwLG/UEGEX+uYSdEzPJXaXUcw8iBicNoogP9xdmw3qqhjmzycAR
- PNuqXB8sBe/WM84Uk7W9c7kGnYG4Nc7oZjl6zXedKYgytXDLen8UvhUq8iyBJRF3wgZ+my67C
- jhrzqnml3q/3DYSAo5Tw6fAI7+34GfTF6DvHsv+m6JnMkOyK4ICwkvvOHN9LfcJibe/wfm7sQ
- qO1/XSrOGzKIxLHo4IOAlJj9ra48XWQ34ehs4ZXn4Ai6jjnkjmjp2sHPqmQkwtpr2ndwbse4 
+	id S1752406AbcEDMAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 08:00:13 -0400
+Received: from mail-yw0-f181.google.com ([209.85.161.181]:34342 "EHLO
+	mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751763AbcEDMAL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 08:00:11 -0400
+Received: by mail-yw0-f181.google.com with SMTP id j74so74159277ywg.1
+        for <git@vger.kernel.org>; Wed, 04 May 2016 05:00:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=IXo9iLhrbzxqmIJ7U1xtCanPl2GuPWFZCr3jKBAUSQI=;
+        b=fMpFasSbWYlCMczRP4b+d6wQx9Qsp/44lF7c5nFgcjQnaeSZbF3dPxbuFmy7R9EzMi
+         wi98aqwG4vMmqLWzJmyQLIIe9bKXq6fAj6Eyy39KVD9Ad4DsadKeYKcOSJZzaQGFp/r2
+         P+KRNIYRQrcYylEOg3a0YD+/HszfzaW7uvblZBYXG+RSs9IqyJTty2cDgezJXdz86BgX
+         Ito3l8Yy2am8xUddbxi/8BVLECsKzUZOEfKAIfrRg+u9Hg788u/wX9iuMQW+EMq38ZXt
+         Hblkd7xJnq9E16G2+1KICGlNjx++Nsw/AcjUfyQ2dumHW1Ed3OOqS51HSCyuc/esibMa
+         0dYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=IXo9iLhrbzxqmIJ7U1xtCanPl2GuPWFZCr3jKBAUSQI=;
+        b=aYJmhZQZYA6w38Wd9/KBiIDNKDoYGiFEI4F8e+2FPxQFH7LZeCy4i18pY8pTaW3nDC
+         3WaIB4eaocLXKC+YTjXQBTmNG2oHw+psBLUDXh/qwSSKz5dOH6wTEmt6hWdDZFi8ZAxB
+         i05LSdl1c6BpYQyF9nFG3yZY15aiUuklE17AmEOWRD0oM0KOyusbWXGnWmydD/VXhfVO
+         Xk0nuqarR5IMcQ6bFnoHkQnbEEuIjZlIbU8W+a84cdETVM7TPXM3XDL+3DicVPktbw0s
+         ra/sdQTvtcOZyr0A0IAwBHY1FusiSX2BzHj/Vf5rfbxStyytW3B6813jSkp+NaWP1GMH
+         2BnA==
+X-Gm-Message-State: AOPr4FWsgyUSa0s6NTeZ3XM/mNslLEQByzM1aubqPd9iZJJjhF1X74+lFwfK7k42ItkeafZzE65WF13JnO2Irg==
+X-Received: by 10.37.118.200 with SMTP id r191mr1165135ybc.80.1462363210946;
+ Wed, 04 May 2016 05:00:10 -0700 (PDT)
+Received: by 10.13.219.213 with HTTP; Wed, 4 May 2016 05:00:10 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1605041309430.9313@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293543>
 
-Hi Philip,
+On Wed, May 4, 2016 at 4:43 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Pranit,
+>
+> On Wed, 4 May 2016, Pranit Bauva wrote:
+>
+>> On Wed, May 4, 2016 at 12:22 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> > On Wed, May 4, 2016 at 1:07 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>> >
+>> >> +static int one_of(const char *term, ...)
+>> >> +{
+>> >> +       va_list matches;
+>> >> +       const char *match;
+>> >> +
+>> >> +       va_start(matches, term);
+>> >> +       while ((match = va_arg(matches, const char *)) != NULL)
+>> >> +               if (!strcmp(term, match))
+>> >> +                       return 1;
+>> >
+>> > Is it wise to return here without invoking va_end()?
+>>
+>> I guess since it already checks for NULL, invoking va_end() will make
+>> it redundant[3].
+>
+> Actually, this is my fault (I suggested that form of the one_of()
+> function). The man page for va_end() clearly states that every call to
+> va_start() needs to be paired with a corresponding va_end(), so it is
+> incorrect to return without a call to va_end().
+>
+> Maybe something like instead?
+>
+>         static int one_of(const char *term, ...)
+>         {
+>                 int res = 0;
+>                 va_list matches;
+>                 const char *match;
+>
+>                 va_start(matches, term);
+>                 while (!res && (match = va_arg(matches, const char *)))
+>                         res = !strcmp(term, match);
+>                 va_end(matches);
+>
+>                 return res;
+>         }
+> Ciao,
+> Dscho
 
-On Tue, 3 May 2016, Philip Oakley wrote:
-
-> From: "Junio C Hamano" <gitster@pobox.com>
-> > Jeff King <peff@peff.net> writes:
-> >
-> > > On Tue, May 03, 2016 at 09:11:55PM +0100, Philip Oakley wrote:
-> > >
-> > > > However, as the G4W project (https://github.com/git-for-windows/git/)
-> > > > follows the main git repo and its releases, it needs to rebase it's
-> > > > fixup
-> > > > patches, while retaining their original series, so has repeated copies
-> > > > of
-> > > > those fix patches on the second parent path (a technique Dscho called
-> > > > rebasing merges).
-> > > >
-> > > > for example:
-> > > > > bf1a7ff (MinGW: disable CRT command line globbing, 2011-01-07)
-> > > > > a05e9a8 (MinGW: disable CRT command line globbing, 2011-01-07)
-> > > > > 45cfa35 (MinGW: disable CRT command line globbing, 2011-01-07)
-> > > > > 1d35390 (MinGW: disable CRT command line globbing, 2011-01-07)
-> > > > > 022e029 (MinGW: disable CRT command line globbing, 2011-01-07)
-> > > >
-> > > >
-> > > > How can I filter out all the duplicate patches which are identical other
-> > > > than the commit date?
-> > > >
-> > > > The --left --right and --cherry don't appear to do what I'd expect/hope.
-> > > > Any
-> > > > suggestions?
-> > >
-> > > I don't think there's a good way right now. The option that suppresses
-> > > commits is --cherry-pick, but it wants there to be a "left" and "right"
-> > > from a symmetric difference, and to cull duplicates from the various
-> > > sides.
-> > >
-> > > I think you really just want to keep a running list of all of the
-> > > commits you've seen and cull any duplicates. I guess you'd want this as
-> > > part of the history simplification step, so that whole uninteresting
-> > > side-branches are culled.
-> > >
-> > > The obvious choice for matching two commits is patch-id, though it can
-> > > be expensive to generate. There have been patches playing around with
-> > > caching in the past, but nothing merged. For your purposes, I suspect
-> > > matching an "(author, authordate, subject)" tuple would be sufficient
-> > > and fast.
-> >
-> > What would be really interesting is what should happen when the side
-> > "rebase merge" branch that is supposed to be irrelevant for the
-> > purpose of explaining the overall history does not become empty
-> > after such filtering operation.  The merge commit itself may claim
-> > that both branches are equivalent, but in reality it may turn out
-> > that the merge failed to reflect the effect of some other changes in
-> > the history of the side branch in the result--which would be a
-> > ticking time-bomb for future mismerges waiting to happen.
-> 
-> I think that's a misunderstanding of the development process for an "on
-> top of" project, where the upstream would not be expected to take all
-> the fixups for that project's customers.
-
-Exactly. The merging-rebase technique only makes sense when the entire set
-of changes is rebased.
-
-Please note that I do drop some patches from time to time, so what Junio
-fears is actually not a time bomb, but rather the intended benefit.
-
-The *real* advantage of the merging-rebase technique is that contributors
-can easily call `git rebase origin/master` *even after* origin was
-"rebased". Because it was both rebased, and not rebased.
-
-> The releases of the project do need to be retained in the history, but
-> because of the "on top of" policy, the prior release becomes a second
-> parent to a "theirs" merge commit of the upstream (and subsequent rebase
-> on top of that).
-
-This is a secondary concern, true. But we could easily tag the releases
-and then continue `master` with a rebased version, i.e. `master` would
-usually not fast-forward from tagged commits.
-
-But it would make contributing much harder than it already is.
-
-> It may be that Peff's suggestion is a workable heuristic for a rebase
-> flow where one could eliminate those duplicates quite easily. I just had
-> a feeling that there was already something that did the patch-id thing
-> for duplicate removals, but obviously I had that wrong.
-
-Oh, we do have that logic, it is the --cherry option of the rev-list
-machinery. It's just that due to the merging-rebase technique, you cannot
-have your desired commits on one side and the undesired ones on the other
-side of the "...".
-
-Unless...
-
-Unless you play games with the grafts. You *could* pretend that the "Start
-the merging-rebase" commit had only its first parent, using a graft. Then
-"git log --cherry --right-only SECOND_PARENT...HEAD" (where SECOND_PARENT
-would be the culled second parent of that merge commit) would have the
-intended result.
-
-You should not forget to remove the graft afterwards, though. (You *might*
-be able to finagle something more temporary by using `git replace`,
-dunno, still finicky.)
-
-Ciao,
-Dscho
+Thanks for this. I had little idea about variable arguments before. I
+have searched it now. Will use your bits.
