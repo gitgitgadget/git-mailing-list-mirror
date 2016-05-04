@@ -1,121 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 0/2] Add support for sending additional HTTP headers
-Date: Wed, 04 May 2016 11:23:57 -0700
-Message-ID: <xmqq4madisw2.fsf@gitster.mtv.corp.google.com>
-References: <cover.1461837783.git.johannes.schindelin@gmx.de>
-	<cover.1462342213.git.johannes.schindelin@gmx.de>
-	<20160504062618.GA9849@sigill.intra.peff.net>
-	<xmqq7ffajmvz.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1605041316160.9313@virtualbox>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: Portability of git shell scripts?
+Date: Wed, 4 May 2016 20:35:51 +0200
+Message-ID: <cdb4e001-7dc7-3c3b-27ca-2c970135805a@web.de>
+References: <CALR6jEh5dAcnqiyo4kXkj+8imfQQd0nT=baPOW_qbJpJwmFsyw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 04 20:24:09 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Armin Kunaschik <megabreit@googlemail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 04 20:36:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ay1Sx-00072y-1a
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 20:24:07 +0200
+	id 1ay1eV-0005OR-Cr
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 20:36:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753850AbcEDSYC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 14:24:02 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63814 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752124AbcEDSYA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 14:24:00 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6341E18173;
-	Wed,  4 May 2016 14:23:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PU+VEv+q4wzls9lIeRkYfieIf3M=; b=BKO66D
-	j2aGRYiiMPcoohinfUXrdcNkYpzjr2JdULRvriwdmhVqUxxxk/JJ3oT6If9Rl0kL
-	tTb9bWM9F0oAUqwA+77sappavN351QEvyyZCAJHMJUjKnWZYT/Sdf8+5jyJ2Onih
-	NFSZGpJZTXMHdwk5fEBgpPHgtCQM+D4YTrnXg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QfjRhKPYD+F+/9DNlJlxg9u1ZHm2LaCO
-	b0KL9Lpa5HFotHco2AgeHCC+B5j+AfVWzf7Yj6BI8k+EQQEMQ8pxLA6rkpxbB92P
-	c1xy7baxU8U+KJ9Bse8jR2HeFu0QMEVxmEBXzuwpBNjBri7EbMBmRHkTvk2LgZ5E
-	s6JEbRHBXuc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5B8EE18172;
-	Wed,  4 May 2016 14:23:59 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D5DA518171;
-	Wed,  4 May 2016 14:23:58 -0400 (EDT)
-In-Reply-To: <alpine.DEB.2.20.1605041316160.9313@virtualbox> (Johannes
-	Schindelin's message of "Wed, 4 May 2016 13:20:34 +0200 (CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5E709158-1225-11E6-BC23-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1755380AbcEDSf5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 May 2016 14:35:57 -0400
+Received: from mout.web.de ([212.227.15.14]:52559 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753694AbcEDSf4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 14:35:56 -0400
+Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb004) with
+ ESMTPSA (Nemesis) id 0LgK3g-1bU7MC0sei-00nfmC; Wed, 04 May 2016 20:35:52
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
+ Gecko/20100101 Thunderbird/45.0
+In-Reply-To: <CALR6jEh5dAcnqiyo4kXkj+8imfQQd0nT=baPOW_qbJpJwmFsyw@mail.gmail.com>
+X-Provags-ID: V03:K0:oLcZeb3eXv0kEFkG7+bnU2nS7ntLrTKhjW/gSd+eC0yW+vLFvnL
+ j/gsu4FeIcRnp5D8W0lNc0bN9eGBKnb2Prg2qMq9MsKbZK0eJUZ1p1cWDM1CxekUnidmBPM
+ fRnKpBEd/9lYkWYwS3PKQAdsW+6rEBKRC7yffBpwS6PPxOuz/Wj2vZslQkr+aCvG9X6KwZ2
+ KCG6fICqw7PrRJ6nA6tTQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jGoUxBxvo8g=:GyFLeHb63rOnkKTw/huvU7
+ x3hatqCwCjXEmf2MYQ3UvdxcKqB/+NRWSXWPfmiHsyWsue0swNRvkCTvweExpnVZLkwZPVeBY
+ nwL3DP2/gfux52cEkSsd0xd2lPipF3rW/7pa/AijUKy3QWDC0TAW4OQPQmy8bHqryWM4lIxh3
+ l0m+lJ6KaGPSbEcLQKYX7hPqzG9gaBOOrJD1Wb4yFW3vt1di+UUl1Q17Tfu80yLi884cXQkvc
+ TT6/CSt6hEN1BF7W0FiagPptkhCQ+tQMf8PzFYovxVYH+gU79ap1uSTq+oRTracjPTJWp6hnL
+ O2JDrXlx/3YRV7axhefM5p1ynwT6RiymjulAbO0Dwr96ixTEA4EOZcoOlqkZ15w4EGUZkd2MV
+ yyVtRNLgLQINQ2cPvAsP9C4v2lyt4FawRDYJn4Jzvq+s/d3wZsRy2MDJaiSIJREy2kEIwKQi2
+ 4yiCJsMHHg7+3aC6kgx6mFDETMA5TFPSVXNlPDWgLpY942jcoYgJIj/xoXtkXkb55OZAkMX3W
+ uj8uSy0hPja0Nrkn79s2MkVMZzFcBER7FuooQyyFMWC0BzsM4bgb8QhDLiBVhiGmXG5q9Mt8G
+ MnvQzm88UZls9IgdYmy98FsQTkHUMKEtySVRTPwXiNYXd7FkavGMkoK6/1L2zWPdJuKN9o9fI
+ xJm+ncJa+yMIrcN8PIEGgatG9EPedBSPKpYhlRScqVNLCysQRxfxllNaiU1XbEH5RGL4JB8jp
+ 6qxgvETHlm1X8O833hoOgVeqa2IF7sP9MSbMAbZ07k0ajF3RD6rzZCehvFKbJ/s/y0OWALrm 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293561>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 04.05.16 20:17, Armin Kunaschik wrote:
+> Hi list,
+>=20
+> I'm trying to compile/test/use git 2.8.2 on AIX 6.1 with no bash avai=
+lable.
+> /bin/sh is a hard link to /bin/ksh which is a ksh88, a posix shell.
+> Is this supposed to work?
+>=20
+> As an example: make test fails on nearly every t34* test and on tests
+> which contain rebase.
+> The installation of bash (and manually changing the shebang to
+> /bin/bash) "fixes" all rebase test failures. So obviously git-rebase
+> is not portable at some point.
+>=20
+> Does it make any sense to put work into making these scripts portable=
+,
+> that is, work with posix shells?
+> And, as last resort, is it possible to configure git use bash in some
+> or all shell scripts?
+>=20
+> Regards,
+> Armin
+The Makefile has a knob to use a specifc shell:
 
-> Hi Junio,
->
-> On Wed, 4 May 2016, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->> 
->> >>   submodule: pass on http.extraheader config settings
->> >
->> > IMHO this should come on top of jk/submodule-config-sanitize-fix (I was
->> > surprised at first that your test worked at all, but that is because it
->> > is using "clone", which is the one code path that works).
->> 
->> Yes.
->
-> Okay.
->
->> > But I think we are waiting on going one of two paths:
->> >
->> >   1. drop sanitizing entirely
->> >
->> >   2. fix sanitizing and add more variables to it
->> >
->> > If we go the route of (2), then we'd want my fix topic and this patch.
->> > And if not, then we don't need any of it (just a patch dropping the
->> > filtering, which AFAIK nobody has written yet).
->> 
->> Doubly yes.  That is why I didn't pick up 2/2 in the previous round
->> and also jk/submodule-config-sanitize-fix is not in 'next' for the
->> same reason.
->
-> Okay. It was not clear to me that the indentation was not the reason it
-> was ignored.
+# Define SHELL_PATH to a POSIX shell if your /bin/sh is broken.
 
-It wasn't even ignored. I looked at it carefully, noticed that it
-contradicts with what you said in a different message, and made a
-concious decision to wait.
+Does this help ?
 
->> I agree with you that we have not yet reached concensus on which one
->> of the two we would want to take.  I was sort of surprised to see
->> 2/2 sent again, after seeing that Dscho sounded strongly in favor of
->> not filtering the passed configuration variables, which would make
->> the patch unnecessary.
->
-> Hah, my opinion matters after all.
+Otherwise:
+I don't know how much posix ksh88 is, it may help, if you can post some=
+ output ?
 
-When your proposal ends up getting rejected, it is not because your
-opinion does not matter.  In any case, for this one, the reason I
-decided to wait until the "filter or not filter, and if filter, use
-whitelist or blacklist" discussion settles does not depend whether I
-happen to agreed with your preference (which is "not to filter").
-
-That is, there is a difference between "I will not apply this ever,
-because I know the outcome of the the other discussion already and
-it will make this patch unnecessary", and "I cannot decide to apply
-this yet, because this may be needed if the other discussion goes in
-a certain way but this may turn out to be unnecessary if it goes in
-another way."  And the topic branch having only the first one is
-because this case was (and I think still is) the latter.
+I use sometimes
+debug=3Dt verbose=3Dt ./t34XXXX.sh 2>&1 =E2=89=A4 tee xx.txt
+but there may be better debugging utilities these days.
