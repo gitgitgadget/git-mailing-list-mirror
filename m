@@ -1,75 +1,123 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v8 10/10] ce_compare_data() did not respect conversion
-Date: Wed, 4 May 2016 06:07:21 +0200
-Message-ID: <57297579.6060805@web.de>
-References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
- <1461942126-16296-1-git-send-email-tboegi@web.de>
- <xmqqvb30w29z.fsf@gitster.mtv.corp.google.com>
- <a571e222-68db-3dc1-1a94-d6b47feaf84d@web.de>
- <xmqqtwigtjfg.fsf@gitster.mtv.corp.google.com>
- <xmqqpot4s1ap.fsf@gitster.mtv.corp.google.com>
- <55d60bb1-8626-4c97-630c-1a9f114c46b4@web.de>
- <xmqqbn4nngci.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed May 04 06:07:49 2016
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: [PATCH 1/2] bisect--helper: use OPT_CMDMODE instead of OPT_BOOL
+Date: Wed,  4 May 2016 10:37:51 +0530
+Message-ID: <1462338472-3581-2-git-send-email-pranit.bauva@gmail.com>
+References: <01020153a254974b-68f7d16a-66d7-4dc1-805d-2185ff1b3ebf-000000@eu-west-1.amazonses.com>
+ <1462338472-3581-1-git-send-email-pranit.bauva@gmail.com>
+Cc: Pranit Bauva <pranit.bauva@gmail.com>, chriscool@tuxfamily.org,
+	christain.couder@gmail.com, Johannes.Schindelin@gmx.de,
+	larsxschneider@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 04 07:08:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axo6G-0007B3-9r
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 06:07:48 +0200
+	id 1axp3J-0004y1-CF
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 07:08:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750916AbcEDEHl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 May 2016 00:07:41 -0400
-Received: from mout.web.de ([212.227.17.11]:50912 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750708AbcEDEHk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 00:07:40 -0400
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0MLgZ5-1ay5D91lLv-000qPy; Wed, 04 May 2016 06:07:28
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101
- Icedove/38.7.0
-In-Reply-To: <xmqqbn4nngci.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:QtLLsxm0gZGr2uSBIISnmueHAEULOLFNJfU7YrV2X5wwHDyYwF8
- 0JFXB8MHNgzwmCmZzUdzNtVWA9jJNlnUES+46hNm5VMclh8QYXX3LeBfGgrnX/X9Pv0FOFE
- GD2r1aVwcuo9joVED86DLNFeOTp5zN8WI8F0HlLDEpjlDBLtgT+mRsbLQewbuDrA2CXWbyK
- RsE1sFJaGibC9A+TbwfHA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:L/319yR9lkI=:x5Kxdlm43Hq2uzr0V2LFuf
- PYRwcZF5Y+J6Gnm8FVvjdDAbLE1bu8lqT2R0rC6vGzp6OwyImLC1jy3CUZL7E9Ttp5OEiPZ84
- /OnyqcyI1C6Jax6fCdmFThFGx7KLD/HZmgVgLySW/AVLYQzjyVY26zvduMp2XCK8q80l8xII5
- 4vdErJwmyaMojZ+eeuPXOai8HB/QB4Q5lRb3PNddzyIkBWamMjXTOssDHcWv1Ignwj2GaF4Fi
- fOGM6d9saVc6Wm/qx1qdf4LNtyl4ks+30PcSmkDo8iTw4v9k65sI4s3NOJjw6j80BPJ3+IiDh
- z87h5dJvBrsYPfXKbC/0RNcSThpfWcKMCDQKX2anoN+CA0ctTmBXFnBGNBT9FyDcxDk2v8IUU
- M6Mo+m47A9O3h+kX0lF2z2aSUg1vNX6UAT7HKvZv2+vWXcx5jUhOYZfaSA4NpKGGl9M7snhG9
- 1A7LH0zmyFg4JeVuVIilBDWXpDyqtUSiqEvYip9Xd0f8iyX/qZijrj9ysOwGIRGm7EEP4bmGw
- mhRL4XJ4LfRbGF+Wo2xO8jXOJRBB39/ypV9YBVSvT4jVmihaLXb/9mLS6bXjUaGUJ3e/59H8u
- Wfeb5tnzgj0qQvCZTkE2E6yvdbjHFqTMS1rLuL2l9bj/4grtPMUSx4mQG2ExUzH/KwzTOFBok
- alHJEdGOM9Br1607t0/gR1G6QY/WpacShCAGMDrFapwBdYbH3IQ7xf2qvh3jBOfh8Zb7dJ/fb
- VH1pjQpflFcQs4CzFSflfcAericmR+K2xuHbCXQt16hGj6ohg8N5BDe75B0WYfwOrXoaASgF 
+	id S1751309AbcEDFIp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 01:08:45 -0400
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:36157 "EHLO
+	mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751152AbcEDFIo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 01:08:44 -0400
+Received: by mail-pf0-f175.google.com with SMTP id c189so21219268pfb.3
+        for <git@vger.kernel.org>; Tue, 03 May 2016 22:08:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :in-reply-to:references;
+        bh=NXYUaRoTUX0wV3LQNvcAdnXDHjTo6Kn0Z5SziJblcC0=;
+        b=IvTaPVzNZl8j+lkwydWdsQ8eugC72X06qmJsza0PBa7meBcuh3Ys95EVdhmjUfuohz
+         GlLMeqfndie3Xmyzi6iYYUygnMcUR437GXgg2fX8WrzrsH0CQCPzf63yk0f7RrA95pUK
+         3IDCcqtRIY+rnQL6fclkf50fHOwUJgG/n05TVZ92Wer1OgnI1sJ1xz6JE2kQp3DL5eKz
+         JoAo6tmKruBzpae1yRI8a4G/q9rtslt8kt2LDeFRoza4n2VE9uohac5Vw5Pd01zPXGsL
+         fVPMBC7fuSBWINAqP61ZB++XF5GFLsVXMRqfAB1LNJrYnoRkVw7e2IaK8ZF/RRt21Gka
+         U34A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:in-reply-to:references;
+        bh=NXYUaRoTUX0wV3LQNvcAdnXDHjTo6Kn0Z5SziJblcC0=;
+        b=eVtvZy8tJ32WngNng8QaIwOs2Tpj4ZS1QeSTsAgzg5edr0Sa4bvjxXre3ITYPT1jrt
+         oRUtYC/jqJPV4Ke2hvKGArxCZncFV7b3smVwih6jNv8mUiQoGKodf+fBRvdA0S0Wov+O
+         SbCGs5+2vQN0+xypnaXfdEK/tCMgY8KCI80Cl0/YoX/l3m8eZvhp9XmwVFGEHaPPl7Cv
+         GT77WBXyb3ROD4CP00Fw04LJmzICBwhuK0hwZ1bJftzoGHbnTUng6FgZcPQbhDYr82ya
+         IMxwqOBt8AuGzQl0zZ+42xaQl2Za8qqOKt8PD1vgXZp1cxXdRa/laL6Ozmo2hZKoMcHY
+         XxIw==
+X-Gm-Message-State: AOPr4FUFv4VSaVeKTAsV9HBUOmLyzbh2cINMTgaInprwi9gUayUL3KLZPS8mO6QEzAViFg==
+X-Received: by 10.98.5.196 with SMTP id 187mr9405947pff.103.1462338523282;
+        Tue, 03 May 2016 22:08:43 -0700 (PDT)
+Received: from localhost.localdomain ([183.87.83.50])
+        by smtp.gmail.com with ESMTPSA id p189sm2171709pfb.51.2016.05.03.22.08.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 03 May 2016 22:08:42 -0700 (PDT)
+X-Mailer: git-send-email 2.8.1
+In-Reply-To: <1462338472-3581-1-git-send-email-pranit.bauva@gmail.com>
+In-Reply-To: <01020153a254974b-68f7d16a-66d7-4dc1-805d-2185ff1b3ebf-000000@eu-west-1.amazonses.com>
+References: <01020153a254974b-68f7d16a-66d7-4dc1-805d-2185ff1b3ebf-000000@eu-west-1.amazonses.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293487>
 
-On 05/03/2016 08:31 PM, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->
->> This will probably take some time, so that's why I asked if 1/10..4/=
-10 could
->> proceed as is ?
-> Sure, I wasn't saying 1-4 looked wrong at all.  I was wondering why
-> the ones in the middle, especially 7, shouldn't be moved forward
-> together with them.
-The main reason is, that 7 breaks t6038 under Windows.
-(And I discovered that too late :-(
-And as Windows is the platform being most interested in CRLF handling,
-I need to re-do some work.
+`--next-all` is meant to be used as a sub command to support multiple
+"operation mode" though the current implementation does not contain any
+other sub command along side with `--next-all` but further commits will
+include some more subcommands.
+
+Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+Mentored-by: Christain Couder <chriscool@tuxfamily.org>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+---
+ builtin/bisect--helper.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
+
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 3324229..5f6ef8c 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -8,13 +8,17 @@ static const char * const git_bisect_helper_usage[] = {
+ 	NULL
+ };
+ 
++enum sub_commands {
++	NEXT_ALL = 1
++};
++
+ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+-	int next_all = 0;
++	int sub_command = 0;
+ 	int no_checkout = 0;
+ 	struct option options[] = {
+-		OPT_BOOL(0, "next-all", &next_all,
+-			 N_("perform 'git bisect next'")),
++		OPT_CMDMODE(0, "next-all", &sub_command,
++			 N_("perform 'git bisect next'"), NEXT_ALL),
+ 		OPT_BOOL(0, "no-checkout", &no_checkout,
+ 			 N_("update BISECT_HEAD instead of checking out the current commit")),
+ 		OPT_END()
+@@ -23,9 +27,14 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, options,
+ 			     git_bisect_helper_usage, 0);
+ 
+-	if (!next_all)
++	if (!sub_command)
+ 		usage_with_options(git_bisect_helper_usage, options);
+ 
+-	/* next-all */
+-	return bisect_next_all(prefix, no_checkout);
++	switch (sub_command) {
++	case NEXT_ALL:
++		return bisect_next_all(prefix, no_checkout);
++	default:
++		die(_("bug: unknown subcommand '%d'"), sub_command);
++	}
++	return 0;
+ }
+-- 
+2.8.1
