@@ -1,113 +1,153 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 06/14] remote.h: add get_remote_capabilities, request_capabilities
-Date: Wed, 4 May 2016 09:44:20 -0700
-Message-ID: <CAGZ79kbi+g2EnZosyYpAMfj8rFFV45vtgyeEJR3Fe8LG+zut7Q@mail.gmail.com>
-References: <1461972887-22100-1-git-send-email-sbeller@google.com>
-	<1461972887-22100-7-git-send-email-sbeller@google.com>
-	<1462215463.4123.70.camel@twopensource.com>
-	<20160503053337.GA17986@sigill.intra.peff.net>
-	<1462310486.4123.81.camel@twopensource.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 1/2] Documentation: fix linkgit references
+Date: Wed, 04 May 2016 10:28:51 -0700
+Message-ID: <xmqqd1p1ivfw.fsf@gitster.mtv.corp.google.com>
+References: <E4A56B4E-6F2E-44E3-870B-D1D3A71B2869@gmail.com>
+	<1462351116-19308-1-git-send-email-larsxschneider@gmail.com>
+	<1462351116-19308-2-git-send-email-larsxschneider@gmail.com>
+	<F6210682-2FCA-423D-B6D3-06938C95D497@gmail.com>
+	<5729DF25.7030503@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Wed May 04 18:44:28 2016
+Content-Type: text/plain
+Cc: Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org,
+	peff@peff.net, Matthieu.Moy@grenoble-inp.fr, sbeller@google.com
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+X-From: git-owner@vger.kernel.org Wed May 04 19:29:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axzuV-0001NX-5U
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 18:44:27 +0200
+	id 1ay0bf-0001FH-5H
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 19:29:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754093AbcEDQoX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 12:44:23 -0400
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:33967 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753621AbcEDQoW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 12:44:22 -0400
-Received: by mail-ig0-f170.google.com with SMTP id u5so26538342igk.1
-        for <git@vger.kernel.org>; Wed, 04 May 2016 09:44:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=cgV5SREl3M8vC9qqhrkEoyi2YtJd/Cm0PulxKkPZ9sY=;
-        b=ouiF3QEgJNl1kc9pRqxoAzA6Qx8iWOO9AJl8AyLcAX7xQHxlcXg8WUgX/bw4wDWfXF
-         pgTbuCiLo36RxIM5VgDWPC/KhN6Oirc5hpZd0C75Q72i4irqT/JVxTfMRqrtkxIroh7W
-         qxDwvMNXLIDocYdup2UKuqG2AxYzDALCVJDcYDJFKcOLqQpCIEqqOXnpFBCQvCqADOMo
-         awiVzyUrJl8zw3V75Q/qkLzScY7HUNVMiuVtnAVbTEqnAaokGVVeGRUwm1jQXSVNatB5
-         Be3cQgBT/W3CN7X74FJ1+wUriRpgVNeCusMrr7qUCo7raovI4s55xfSmx4uig0wcveNy
-         nOkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=cgV5SREl3M8vC9qqhrkEoyi2YtJd/Cm0PulxKkPZ9sY=;
-        b=QfnF8wJTVDaQZCc9inDkQfCX9mUtckrhKcchvlo8I6rSixVyyfMLFXQhnqGuCEem9/
-         +/JIeKDej1aYWZ0n1FLyyBqs9IRc0hd2aoZLL0xggkFSrXUjLOl5M/o2IatzoRpHkWgJ
-         d/BU8FX/47Cj4gx8ZDQJVt+AnzHXGdNOXzU3bzlhOqKotcG0q6BHlYoGSqdmIQ1OG1Ct
-         q7gvsJG7c/4fsZOjJpY1rFExwhBi/hu+GqZJ23bwAv5Zr/ZrpXrVouAyeuvVtnF1CN2J
-         sMDnFh8h8n14b2RI9flRDdKl4Oi6jUnEmV6HPvRtRjehojPdSK1M2i5x6AFfj6sJYHJ5
-         Dm1w==
-X-Gm-Message-State: AOPr4FUj+a2Ui+W08JJ+oPC94VkODJommsdAXIyer2ZzMdf4u98dU2hAcOW7m4GOHoTUAFv2wO5cZAFVHGjaYnS0
-X-Received: by 10.50.30.228 with SMTP id v4mr12273440igh.85.1462380260333;
- Wed, 04 May 2016 09:44:20 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Wed, 4 May 2016 09:44:20 -0700 (PDT)
-In-Reply-To: <1462310486.4123.81.camel@twopensource.com>
+	id S1754587AbcEDR24 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 13:28:56 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58177 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753355AbcEDR2z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 13:28:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D746116F6D;
+	Wed,  4 May 2016 13:28:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9kB6I03LVxRTHuaGWUFOR4WjRY4=; b=CrLveh
+	h6T2cHZ+MsPMpKPYh9dZ+6bUAQlHO2S5X6dQULgEAyrfmx66u1gFRWKVhcUgrNmf
+	qLqcYaiv/qJl5xTzrv32jucRcjvPkg6GyC+QjoGnW7TSR1HpFNBc8D0I7bwXD53/
+	ENtqMiXEV8TP+miLWJz04FK4LZgbXOGKFgz7g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=I/nBw335GTj4bsl8/q6CsdTiVSor5fYk
+	mGbG5B6WegGVI0staGAIYRzN0H+wszT1WM7/4I3nxYmI9YAkJWusXSkR2+LNHlut
+	DxNQq0AUhjAO/zVabfwtcibwRo0FzXsj8AfB5rSwvqrWzUGBtOlVOV/tCg23IQPH
+	bzRpThO/Ugo=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CE8EC16F6C;
+	Wed,  4 May 2016 13:28:53 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 432E716F6B;
+	Wed,  4 May 2016 13:28:53 -0400 (EDT)
+In-Reply-To: <5729DF25.7030503@ramsayjones.plus.com> (Ramsay Jones's message
+	of "Wed, 4 May 2016 12:38:13 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: AC2F4ED2-121D-11E6-ABE0-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293554>
 
-On Tue, May 3, 2016 at 2:21 PM, David Turner <dturner@twopensource.com> wrote:
-> On Tue, 2016-05-03 at 01:33 -0400, Jeff King wrote:
->> On Mon, May 02, 2016 at 02:57:43PM -0400, David Turner wrote:
->>
->> > On Fri, 2016-04-29 at 16:34 -0700, Stefan Beller wrote:
->> >
->> > > +const char *known_capabilities[] = {
->> > > + "multi_ack",
->> > > + "thin-pack",
->> > > + "side-band",
->> > > + "side-band-64k",
->> > > + "ofs-delta",
->> > > + "shallow",
->> > > + "no-progress",
->> > > + "include-tag",
->> > > + "multi_ack_detailed",
->> > > + "allow-tip-sha1-in-want",
->> > > + "allow-reachable-sha1-in-want",
->> > > + "no-done",
->> > > +};
->> >
->> > I wonder if it is possible to not repeat the list from upload
->> > -pack.c?
->> > It seems unfortunate to have to add the same string in two places
->> > whenever you add a capability.
->>
->> I think that in general, we'd stop adding capabilities to v1. If you
->> have a client which speaks the new capability, then it should also be
->> speaking the new protocol. That's not strictly true if other non
->> -git.git
->> implementations want to learn capability X but not protocol v2, but I
->> think in practice it's not an unreasonable world view.
->>
->> I guess there may be a grey area for a while, though, where even
->> v2-capable clients don't end up speaking it, because they don't yet
->> know
->> that a particular server can handle it. So any capabilities added in
->> that grey area may want to go to both v1 and v2.
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+
+>>> diff --git a/Documentation/git-check-ignore.txt b/Documentation/git-check-ignore.txt
+>>> index e94367a..9a85998 100644
+>>> --- a/Documentation/git-check-ignore.txt
+>>> +++ b/Documentation/git-check-ignore.txt
+>>> @@ -112,7 +112,7 @@ EXIT STATUS
+>>> SEE ALSO
+>>> --------
+>>> linkgit:gitignore[5]
+>>> -linkgit:gitconfig[5]
+>>> +linkgit:git-config[5]
 >
-> OK, but then there should be one list per protocol version rather than
-> two copies of the same list.
->
+> I think Junio already noted, git-config is in section 1 not 5.
 
-I thought this is by design as upload-pack is a different program, i.e. it
-could be developed out of sync with the client, adding/removing
-capabilities there but not in fetch-pack. That doesn't make sense though.
+Not just that, I am afraid.  This came from 368aa529 (add
+git-check-ignore sub-command, 2013-01-06) and it added these:
 
-We could introduce known_capabilities_v1 and _v2 respectively in shared
-header files, though.
++linkgit:gitignore[5]
++linkgit:gitconfig[5]
++linkgit:git-ls-files[5]
+
+The last one was later corrected, but who knows what other mistakes
+there are?
+
+So I used the script attached at the bottom to audit the whole
+thing, and the result is here.
+
+-- >8 --
+Documentation/config.txt:1497: nongit link: :git-gui[1]
+Documentation/config.txt:1662: nongit link: curl[1]
+Documentation/diff-options.txt:274: wrong section (should be 5): gitattributes[1]
+Documentation/git-check-ignore.txt:115: no such source: gitconfig[5]
+Documentation/git-filter-branch.txt:208: nongit link: rev-list[1]
+Documentation/git-for-each-ref.txt:182: nongit link: :git-rev-list[1]
+Documentation/git-notes.txt:405: wrong section (should be 1): git[7]
+Documentation/technical/api-credentials.txt:246: wrong section (should be 1): git-credential[7]
+Documentation/technical/api-credentials.txt:271: wrong section (should be 1): git-config[5]
+-- 8< --
+
+I do not think there is any false positive above, so perhaps the
+checker script below can be used as the link checker we discussed?
+
+-- >8 --
+#!/bin/sh
+
+git grep -l linkgit: Documentation/ |
+while read path
+do
+	perl -e '
+	sub report {
+		my ($where, $what, $error) = @_;
+		print "$where: $error: $what\n";
+	}
+
+	sub grab_section {
+		my ($page) = @_;
+		open my $fh, "<", "Documentation/$page.txt";
+		my $firstline = <$fh>;
+		chomp $firstline;
+		close $fh;
+		my ($section) = ($firstline =~ /.*\((\d)\)$/);
+		return $section;
+	}
+
+	while (<>) {
+		my $where = "$ARGV:$.";
+		while (s/linkgit:((.*?)\[(\d)\])//) {
+			my ($target, $page, $section) = ($1, $2, $3);
+
+			# De-AsciiDoc
+			$page =~ s/{litdd}/--/g;
+
+			if ($page !~ /^git/) {
+				report($where, $target, "nongit link");
+				next;
+			}
+			if (! -f "Documentation/$page.txt") {
+				report($where, $target, "no such source");
+				next;
+			}
+			$real_section = grab_section($page); 
+			if ($real_section != $section) {
+				report($where, $target,
+					"wrong section (should be $real_section)");
+				next;
+			}
+		}
+	}
+        ' "$path"
+done
