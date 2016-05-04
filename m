@@ -1,107 +1,89 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v6 0/2] Add support for sending additional HTTP headers
-Date: Wed, 4 May 2016 13:20:34 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605041316160.9313@virtualbox>
-References: <cover.1461837783.git.johannes.schindelin@gmx.de> <cover.1462342213.git.johannes.schindelin@gmx.de> <20160504062618.GA9849@sigill.intra.peff.net> <xmqq7ffajmvz.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH] submodule: stop sanitizing config options
+Date: Wed, 4 May 2016 13:25:20 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605041324030.9313@virtualbox>
+References: <cover.1461837783.git.johannes.schindelin@gmx.de> <cover.1462342213.git.johannes.schindelin@gmx.de> <20160504062618.GA9849@sigill.intra.peff.net> <20160504074559.GA3077@sigill.intra.peff.net> <20160504080047.GA2436@sigill.intra.peff.net>
+ <xmqqwpnai6em.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+	Jacob Keller <jacob.keller@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 04 13:20:53 2016
+X-From: git-owner@vger.kernel.org Wed May 04 13:25:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axurK-0002AX-PC
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 13:20:51 +0200
+	id 1axuw7-0004MV-Hz
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 13:25:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752468AbcEDLUr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 07:20:47 -0400
-Received: from mout.gmx.net ([212.227.17.22]:54179 "EHLO mout.gmx.net"
+	id S1752300AbcEDLZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 07:25:42 -0400
+Received: from mout.gmx.net ([212.227.17.21]:55621 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751912AbcEDLUq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 07:20:46 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0Lskr7-1bdG2v0vGb-012L6Z; Wed, 04 May 2016 13:20:36
+	id S1752175AbcEDLZm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 07:25:42 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MPHrQ-1b2IeQ1m1Q-004OoH; Wed, 04 May 2016 13:25:22
  +0200
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqq7ffajmvz.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqwpnai6em.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:W64UKy3IFBrcV9zlTocucBBT0jBt+y54iqoOIj4krF5n7a6cumb
- nHeGXPybYxAqqJFH9Pw4K6Z2WEDYXiUujBNeXijAPtONBRWI3JqrHww7pfDvxthDHf12tIu
- FIdLTutC99cS4H/NZa5zYG+cugKR1bh7z0ev5ipXHlu0FFWBb5CuvztHhLtEwlX2r7LX93h
- CjjHcbJqcLK/fGXCDUnYQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fotGmDYmWHQ=:kcwPRc2dqdIsx7vyxA9VVp
- zkWanhJC8gGPYLwRjBYM2hID+q006+N+vIfXxmOBgKW/mo/4uNssLA837nBIV50A5I/PxAlxZ
- U2rR9heFtKKHsVnuqA9a9Afmv5KwsjI6AbuseoHFLSwm24KnpgiXYewLY8HQfjGZJUtM42Sf0
- T+0hLQ+mXI1fsaLEUmV5olDPPnCSMeMv+N/ekO4VLiWJBlQWxmmmR5z1804RJAmdDBjJfK7AY
- M+bvG5PXDK0O2j08HRKoR7PuTWvKwMMn07S1dkygpBThlOF2iJ9rOYnDTrjo7nF5o8AYBoQWl
- 2ukUpwU8iqgAfb3NdMUFN3p86P5cwUqBcUvQF82XDJqQMBQWs/k5w0684yTEkOAy73lJ2WaM/
- LMtI8LgtGeo8ufd7T0id0nGxQ8zv14K+AV4mq7uurnIIcj5GxfDinh69E+2KLUHftQR2Ws73q
- nA3U4Ry2MJbLjr64J87I2jx2VgtrA/QM7pecQW/fWoR3zbDAvIGckrybL1xXF4IJctAhBjfuk
- 4BFS+V2wS1Yx5WPkkLEtFi0ZSrDDPyE0M+tYT825GO2YNpbp8Ha7aV1dD/dNeJv+uYqHJi30i
- lOKQzn2U65ZVzhVEluK4o1EwdvPRZiZ1QposkuwtVx2KFF0b1Ut4L8SfyXVUu2ZqFQLyj1DRw
- qdgSw7wxsWjLrlVSL4aUoITKy9bHgH30ZQXLxQf8WeyMnm9UVIkGygemJGVEZ1lckgp/oHcNH
- Mw0thMZ0TxRru2NJ2FQ6BsFMRMmumor6dKsYRnHywTtrTTMJg287pNEPrzf0HMGdFpMETg35 
+X-Provags-ID: V03:K0:e9ZTHOo+LKFYCzRtLVapD69uICxCKQia2gR7PCZsgTHr+kv6u+U
+ 6x75Rt4VTt5BUv1PWXl20M5y3uyyVTl7+PxCCn3ovwlfKTKW6OxUE0uvwazAT8g2PPLYOST
+ EB87Z6mwK0vAfd/gzCvFe58NRwTJx7d5SHgmz/RAmNy1b6X7XCv1iOAu42iemijIVi+q1qc
+ QhbugVGooTCtsS58IJ5QA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:mmV7i6C3/2U=:vSVe2vglcndSOJyEIVSioD
+ +gSb5D+k9k7Zl/srPlMxQGWyq+z4sLHSqcH6K8yYtSdhTDT54dv4JMxTO3Km9zLmkJBdslGz/
+ WSFs8hQA7DumXwp2Orgq+ZUDvpj3PZqwmG0nscR0rCo4xk/tdj6ZUz2/HowmF6JF9jM4lwzdw
+ H7kfd0EBlY8YUedyRV4GS5AjVUwPiMtbWI0nkOXdFSLGF/zSBRiL/KOwx1uYI7Sac6NEHSlQX
+ EdxTwHSle6HPLR9ExlTOy/aBa4o8hmeyY8ffvkiw+G9hQZiLTGGmwV1+2S2XvBw+cqSGdjOVG
+ OWbrDyW/34lXgVUdDCJ4Xuc5VDk8/32O04Or2fqUG+gYjsdXlNGvq7yGw75MlEGDs+XQ2kwqN
+ 8K/GQLgqpZFxXLUnOdqEWGhJT2VRZKz7DjDMAB1vZmZ7LBJufGBNqbgMdNQLWQ9FvEfJUsgAf
+ d7YI5yb48qXN+A7wd9bGe+pa5XetaWDlO6bJPBhO5R1f1y30P5CqhxvsxjLZ4KicdRqlpEse0
+ BjYMigAVzo+arpFQVZoqfXkOVP2aqHt5w3IzGlfHRcx+s/QYroaJF+s0wqYi46VG0FKOTNK9K
+ 2h24ngsbAmaQJdNgpiYjrX2uAPJqpU/YV1stiaAJUGCNg6LJiBiGQuyr+WpxCF7qfgiZYtjgv
+ /FCmMf+yp5Neb9L319tJFZUUpxL0bOZH8Ws0X35llgBYK/F3X5gR23/+8ZuR05RKNAlPzXm4n
+ JdCJ2DhUl+Bb7StzlQaQIbEY9Ym1dOf10gGLVWqjt7STpDTzQRKGaAdGraLR3KLp7zAz+A58 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293535>
 
-Hi Junio,
+Hi,
 
 On Wed, 4 May 2016, Junio C Hamano wrote:
 
 > Jeff King <peff@peff.net> writes:
 > 
-> >>   submodule: pass on http.extraheader config settings
+> > [+cc Stefan and Jacob since this is really resuming that earlier thread]
+> > ...
+> >> 
+> >> So I think we'd actually want my series as a preliminary fix, followed
+> >> by dropping the whitelist entirely on top of that, and then probably
+> >> simplifying the shell sanitize_submodule_env() on top of that (it would
+> >> be correct without the whitelist, but you can also trivially implement
+> >> it without having to call submodule--helper at all).
 > >
-> > IMHO this should come on top of jk/submodule-config-sanitize-fix (I was
-> > surprised at first that your test worked at all, but that is because it
-> > is using "clone", which is the one code path that works).
+> > I think we'd actually do it all in one, and that patch looks something
+> > like the one below (on top of jk/submodule-config-sanitize-fix).
+> >
+> > I don't feel that strongly about going either direction with this, but I
+> > figure it doesn't hurt to make the patch so we know what the actual
+> > option looks like.
 > 
-> Yes.
+> I do not feel strongly either, but I suspect "we do not filter"
+> would be a lot easier to explain than "we pass these selected
+> things, each with such and such justification why it has to be
+> passed down".
 
-Okay.
+I really like the simplicity of the rationale.
 
-> > But I think we are waiting on going one of two paths:
-> >
-> >   1. drop sanitizing entirely
-> >
-> >   2. fix sanitizing and add more variables to it
-> >
-> > If we go the route of (2), then we'd want my fix topic and this patch.
-> > And if not, then we don't need any of it (just a patch dropping the
-> > filtering, which AFAIK nobody has written yet).
-> 
-> Doubly yes.  That is why I didn't pick up 2/2 in the previous round
-> and also jk/submodule-config-sanitize-fix is not in 'next' for the
-> same reason.
+> Nice code reduction is very attractive, too, but that is secondary.
 
-Okay. It was not clear to me that the indentation was not the reason it
-was ignored.
-
-> I agree with you that we have not yet reached concensus on which one
-> of the two we would want to take.  I was sort of surprised to see
-> 2/2 sent again, after seeing that Dscho sounded strongly in favor of
-> not filtering the passed configuration variables, which would make
-> the patch unnecessary.
-
-Hah, my opinion matters after all.
-
-Yes, I am in favor of not filtering any config settings passed through the
-command-line.
-
-But traditionally, I did not always get what I strongly preferred, and in
-this case it is really important to me that support for `git -c
-http.extraheader=... submodule ...` be part of an official Git version
-soon.
-
-I just *really* would hate for, say, 2.9.0 to be released with `git -c
-http.extraheader=Hello:\ Junio submodule update --init` not working as
-intended.
+Me, too. It just makes things simpler.
 
 Ciao,
 Dscho
