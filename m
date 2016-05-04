@@ -1,85 +1,89 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] bisect--helper: use OPT_CMDMODE instead of OPT_BOOL
-Date: Wed, 04 May 2016 00:28:21 -0700
-Message-ID: <xmqqbn4mjn8q.fsf@gitster.mtv.corp.google.com>
-References: <01020153a254974b-68f7d16a-66d7-4dc1-805d-2185ff1b3ebf-000000@eu-west-1.amazonses.com>
-	<1462338472-3581-1-git-send-email-pranit.bauva@gmail.com>
-	<1462338472-3581-2-git-send-email-pranit.bauva@gmail.com>
-	<CAPig+cQxpZXKqykFoa2kzCZSC2YqpPXnGocs2YttcJ+rCxmzgQ@mail.gmail.com>
+Subject: Re: [PATCH v6 0/2] Add support for sending additional HTTP headers
+Date: Wed, 04 May 2016 00:36:00 -0700
+Message-ID: <xmqq7ffajmvz.fsf@gitster.mtv.corp.google.com>
+References: <cover.1461837783.git.johannes.schindelin@gmx.de>
+	<cover.1462342213.git.johannes.schindelin@gmx.de>
+	<20160504062618.GA9849@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Pranit Bauva <pranit.bauva@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	christain.couder@gmail.com,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Lars Schneider <larsxschneider@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed May 04 09:28:30 2016
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 04 09:36:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axrET-0001im-RC
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 09:28:30 +0200
+	id 1axrLu-00057V-Hx
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 09:36:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751501AbcEDH2Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 03:28:25 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54801 "EHLO
+	id S1757229AbcEDHgG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 03:36:06 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58589 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751256AbcEDH2Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 03:28:25 -0400
+	with ESMTP id S1752421AbcEDHgF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 03:36:05 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B5BA411559;
-	Wed,  4 May 2016 03:28:23 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2828111602;
+	Wed,  4 May 2016 03:36:03 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Uyp4Wn3A73chQVExVWQ3OnU8oes=; b=Pjf+g/
-	4yBctV6zld6OYct1lCHwnWdhESOynkDtdsvfyAfX3dNucTcNOG+UejhYWBsjiG9Y
-	o/ADvkkgUolmTfvm59woGuiCkJHsDanxlklXGAuiGXVdwPXd+yZs1k9XMwv7/lTb
-	XIhhZPgcLhfiXlb96cG57oibc/7Aevy7TM+2k=
+	:content-type; s=sasl; bh=oiY+Lz1pgVdSxlZid/T3CJ/0PP4=; b=GLjmLF
+	JcVZpiRhTUPrIsU7gEnH1/nXDRJ+C80iE3Q35A4V/BrzJXJcgMe/JbymJcjZRV19
+	D0GqsB3/ojs5bUmTUvYiWT2Hsl0bYuOXXhbaDc8oBxiELw4+sWSToD3HZd5PLf4e
+	D1n1EAqqxetplnxoJ6gZtql3KGjwr+/hga0mg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BzX9hmKMtpKpIxYBJKvKPjXj63skD1p5
-	+si0jMX7k1BDNu3ScnBvDvgrYMBAuKraBCGsC2ASNtf0yDBjXaxWMkGxm1/gr4RB
-	07S7F/feTQq+PMkN9gb8COaf9nRI8zzIRD3YOTrSSh8psCQJqhkT3LgsApxB2l6O
-	08bxRYDYkZM=
+	:content-type; q=dns; s=sasl; b=v48TKof6uoLENwseRb2wwMi+2G0tn0zO
+	HfBXhb++BWYr0MLL8O77idTrsGMomYcgjgyeBzhl726GPsNqVEuGEmK2O5r5LtZl
+	P1S1yEn9kV25Z8Ge3Lwv+h2YQVM6Ft2HpAvm0Pho22I8nq11a6zGSEJiE1t7l3zT
+	WB+14JJmv2c=
 Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id ACB8611553;
-	Wed,  4 May 2016 03:28:23 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 21BC011601;
+	Wed,  4 May 2016 03:36:03 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0979B11550;
-	Wed,  4 May 2016 03:28:23 -0400 (EDT)
-In-Reply-To: <CAPig+cQxpZXKqykFoa2kzCZSC2YqpPXnGocs2YttcJ+rCxmzgQ@mail.gmail.com>
-	(Eric Sunshine's message of "Wed, 4 May 2016 02:07:50 -0400")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 92664115FE;
+	Wed,  4 May 2016 03:36:02 -0400 (EDT)
+In-Reply-To: <20160504062618.GA9849@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 4 May 2016 02:26:19 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C87DAC90-11C9-11E6-A1EC-9A9645017442-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: DA5F33E2-11CA-11E6-A82D-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293505>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> +enum sub_commands {
+>>   submodule: pass on http.extraheader config settings
 >
-> How about calling this 'enum subcommand' (no underscore, non-plural)?
->
->> +       NEXT_ALL = 1
->> +};
->> +
->>  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
->>  {
->> -       int next_all = 0;
->> +       int sub_command = 0;
->
-> s/sub_command/subcommand/
+> IMHO this should come on top of jk/submodule-config-sanitize-fix (I was
+> surprised at first that your test worked at all, but that is because it
+> is using "clone", which is the one code path that works).
 
-Non-plural is a good suggestion, but remember that you are using
-OPT_CMDMODE to parse out that thing.  There is already a name for
-that concept: "command name".  Why not name these after that phrase,
-just like merge-base, replace, and tag already do?
+Yes.
+
+> But I think we are waiting on going one of two paths:
+>
+>   1. drop sanitizing entirely
+>
+>   2. fix sanitizing and add more variables to it
+>
+> If we go the route of (2), then we'd want my fix topic and this patch.
+> And if not, then we don't need any of it (just a patch dropping the
+> filtering, which AFAIK nobody has written yet).
+
+Doubly yes.  That is why I didn't pick up 2/2 in the previous round
+and also jk/submodule-config-sanitize-fix is not in 'next' for the
+same reason.
+
+I agree with you that we have not yet reached concensus on which one
+of the two we would want to take.  I was sort of surprised to see
+2/2 sent again, after seeing that Dscho sounded strongly in favor of
+not filtering the passed configuration variables, which would make
+the patch unnecessary.
