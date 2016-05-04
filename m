@@ -1,73 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4 1/2] Documentation: fix linkgit references
-Date: Wed, 4 May 2016 17:31:50 -0400
-Message-ID: <20160504213149.GA22828@sigill.intra.peff.net>
-References: <1462351116-19308-1-git-send-email-larsxschneider@gmail.com>
- <1462351116-19308-2-git-send-email-larsxschneider@gmail.com>
- <F6210682-2FCA-423D-B6D3-06938C95D497@gmail.com>
- <5729DF25.7030503@ramsayjones.plus.com>
- <xmqqd1p1ivfw.fsf@gitster.mtv.corp.google.com>
- <xmqqvb2thczf.fsf@gitster.mtv.corp.google.com>
- <20160504192516.GD21259@sigill.intra.peff.net>
- <xmqq7ff9h9zo.fsf@gitster.mtv.corp.google.com>
- <20160504200635.GA22787@sigill.intra.peff.net>
- <xmqq8tzpfrt0.fsf@gitster.mtv.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv3] submodule deinit: require '--all' instead of '.' for
+ all submodules
+Date: Wed, 4 May 2016 14:34:11 -0700
+Message-ID: <CAGZ79kbdnKMxrp_rQp7k-G6mveNYxES4XB-+2jh2e4+_RwPeyQ@mail.gmail.com>
+References: <1462321992-15153-1-git-send-email-sbeller@google.com>
+	<1462324785-26389-1-git-send-email-sbeller@google.com>
+	<xmqqlh3pft91.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	git@vger.kernel.org, Matthieu.Moy@grenoble-inp.fr,
-	sbeller@google.com
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 04 23:32:00 2016
+X-From: git-owner@vger.kernel.org Wed May 04 23:34:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ay4Ol-0005B3-Mq
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 23:32:00 +0200
+	id 1ay4Qz-0006We-VX
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 23:34:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753040AbcEDVbx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 17:31:53 -0400
-Received: from cloud.peff.net ([50.56.180.127]:34245 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752702AbcEDVbx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 17:31:53 -0400
-Received: (qmail 5510 invoked by uid 102); 4 May 2016 21:31:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 May 2016 17:31:52 -0400
-Received: (qmail 14243 invoked by uid 107); 4 May 2016 21:32:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 May 2016 17:32:04 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 May 2016 17:31:50 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqq8tzpfrt0.fsf@gitster.mtv.corp.google.com>
+	id S1753289AbcEDVeO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 17:34:14 -0400
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:32809 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752702AbcEDVeN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 17:34:13 -0400
+Received: by mail-ig0-f174.google.com with SMTP id c3so157329igl.0
+        for <git@vger.kernel.org>; Wed, 04 May 2016 14:34:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=SIAPT2hqStv7I9cH0Mtdj5j4Zhh+j0I2kCZdOQVDPSA=;
+        b=hgtWgk97WPOWfvXstrir+Tf4oQN7eNFZdq+gxOP0RI2fMO8QATC+Sbp2a+pyYxFaC5
+         PFE9c7IsHYL2SS8A2MuhcxylIuQk/y1SIBBh9zJOaSR8tLWBcgcx2YKs729GFhpUHPXB
+         5Z+Fpu8899tUWhonXQ8G4KNChYECFao9X+IJuJhcEl1bTUvn3JysFgWl9ed1yqMjnGYt
+         MEQnewVtv7iSY4mFai7IbSW5g93RMJyORzgpXMNFXGom6QE0Gv5qC/A/cQ98NGPMQUVl
+         OuSpbizsipp/WHV2+5Gv89eO2Tbmc+zzYGJHhwt7NJ1lkm73LKQbLEIBk6mKhD9tTrIE
+         G1jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=SIAPT2hqStv7I9cH0Mtdj5j4Zhh+j0I2kCZdOQVDPSA=;
+        b=PeAQAeaVDUTmAJr6B2NBuRu7//oRTw7rFQQtlY1//VapwQo7uQvdvddr7s6W/cka7R
+         K6IYCOZq8wbJGTyleVCYXLUAWp9qCqthWtiMOyECgfGpudhKijftzoc+s459oiAr1lIl
+         7BD51SlHl7Z1B2zgbVyKqz7NZTd3/8XM3TRLHqGr9bCnsuEYD+8rybXdmNhiRPVghSzn
+         3qiaxPcg3MDZTZm/VxVUaTq7giw9sdYT4L1zpQCiN9fBhtAc5eYXBKDk426iP6ichakX
+         zuGE2UeXjRm4DUYNBsvkl4sIZrz07DAYHI8CUkMbZMGjzAviYN7OrGWJsv4tGEGwNHQD
+         C/jg==
+X-Gm-Message-State: AOPr4FWtYZgMgS3t3yiZIBv35xjJP8FLvdmtJwBltEysCgFh7DyX6ixZ4VJmCVgwtHlLAF/KblKnCKWCtIzRdBZt
+X-Received: by 10.50.170.68 with SMTP id ak4mr13804193igc.93.1462397652080;
+ Wed, 04 May 2016 14:34:12 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Wed, 4 May 2016 14:34:11 -0700 (PDT)
+In-Reply-To: <xmqqlh3pft91.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293596>
 
-On Wed, May 04, 2016 at 02:15:39PM -0700, Junio C Hamano wrote:
+On Wed, May 4, 2016 at 1:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> > make sense? Or a simpler but non-streaming spelling:
-> >
-> >   my @files = map { chomp; $_ } `git ls-files`;
-> 
-> I forgot to say that I wanted not to rely on "git" (i.e. OK to use
-> this on tarball extract).
+> I think this sentence talks about "working tree" (as opposed to
+> "worktree"), so s/work tree/working tree/.
 
-Oh, that's a good idea.
+I'll fix this up in a resend, though it may be a fix on its own.
 
-> > Or just taking the list of files on the command line as your original
-> > did, and feeding `ls-files` from the caller. That also lets you do
-> > "link-gitlink git-foo.txt", etc.
-> 
-> Yes, I think that is the most sensible.
+So the two "official" terms are working tree (files on your disk)
+and worktree (the command) and we don't want to have anything in between?
+(e.g. work tree for working tree?)
 
-Yeah, and then the Makefile can drive it from $(MAN_TXT), etc, without
-requiring git (which I think is what you were getting at, but just
-spelling it out for myself and the list).
-
--Peff
+Or as `grep -r "work tree"` puts it, we may want to have an extra cleanup patch
+and not do it here for this single occurrence.
