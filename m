@@ -1,90 +1,145 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] submodule: stop sanitizing config options
-Date: Wed, 04 May 2016 11:43:47 -0700
-Message-ID: <xmqqzis5hdek.fsf@gitster.mtv.corp.google.com>
-References: <cover.1461837783.git.johannes.schindelin@gmx.de>
-	<cover.1462342213.git.johannes.schindelin@gmx.de>
-	<20160504062618.GA9849@sigill.intra.peff.net>
-	<20160504074559.GA3077@sigill.intra.peff.net>
-	<20160504080047.GA2436@sigill.intra.peff.net>
+Subject: Re: [PATCH v4 1/2] Documentation: fix linkgit references
+Date: Wed, 04 May 2016 11:52:52 -0700
+Message-ID: <xmqqvb2thczf.fsf@gitster.mtv.corp.google.com>
+References: <E4A56B4E-6F2E-44E3-870B-D1D3A71B2869@gmail.com>
+	<1462351116-19308-1-git-send-email-larsxschneider@gmail.com>
+	<1462351116-19308-2-git-send-email-larsxschneider@gmail.com>
+	<F6210682-2FCA-423D-B6D3-06938C95D497@gmail.com>
+	<5729DF25.7030503@ramsayjones.plus.com>
+	<xmqqd1p1ivfw.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 04 20:43:57 2016
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
+	peff@peff.net, Matthieu.Moy@grenoble-inp.fr, sbeller@google.com
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 04 20:53:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ay1m7-0001RE-Ey
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 20:43:55 +0200
+	id 1ay1uv-0006hK-O1
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 20:53:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751621AbcEDSnv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 14:43:51 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56500 "EHLO
+	id S1751311AbcEDSw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 14:52:56 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59718 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750965AbcEDSnv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 14:43:51 -0400
+	with ESMTP id S1750825AbcEDSwz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 14:52:55 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DDC4F1842E;
-	Wed,  4 May 2016 14:43:49 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 13F8017CD7;
+	Wed,  4 May 2016 14:52:54 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=R2W2HsyJNdtR1GLoYeoVNbdRFRk=; b=UvFUxD
-	VJjATi10bagS4t2x1hMHeKvNOq27/YAFzyforx6sWiTIC5XmnEkIxB6zIB1lunxs
-	Nl3Y2BC7+1jR7m6P0nipZ0l8m532nDCesyrVp5+ijmu0QeLgikJrSFgAciSfnunt
-	gp7jK8yM8EynVnoLVYgZctOD5zdtmrwQU2eQQ=
+	:content-type; s=sasl; bh=HYeQ/yH2/AzyyzT9JIK7II2Ha6Y=; b=NGE1f3
+	gzADqpCNIlli3A1k6DabzpOBS6Txf4T2HYv0RpC9uYR8n1pZw6+yppeNsJVo5UvE
+	Xx52vmQVSalk27dJ56N+mf3xhCpKayuv5qQ7BLk9fItpbrDc8BNnu3nBC0DkDD3S
+	LFldCDml+OPEWBm60tYuWUirkoxh172PVMcbg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=upeGA90tr1gBW+23JV85hUqrie+dQ5C+
-	KeUXBPKQO1mWbNNbxoYyavbN8Hp5LB20gZGNrznrNGyIDO9QqeGiYHQk64slXefJ
-	7YT5Sswt+BS3npm3njj9A+30xnsnzKUxwwuW3dxD9l0nOtFkUt0zd2Cgnjxi/3X8
-	kW0aoO+Vdm4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D2F311842D;
-	Wed,  4 May 2016 14:43:49 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=CnVsPxpH+BOuTjy544PiQm6amfMJCPfW
+	R8lvz24HxtGr5VybI+f/GssjTpzxHkDxy2GDil5ikdv2w62mXoiI40Rn0CuAh68o
+	vHBDxHkrSl2oxn4FCzRg0KK78mz0TfT5HIbB5nipROmw1m4Dy0TQauqkjBnJgVRE
+	46UE2o2BXhQ=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0AD0B17CD6;
+	Wed,  4 May 2016 14:52:54 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5CBB51842C;
-	Wed,  4 May 2016 14:43:49 -0400 (EDT)
-In-Reply-To: <20160504080047.GA2436@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 4 May 2016 04:00:47 -0400")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7A14117CD5;
+	Wed,  4 May 2016 14:52:53 -0400 (EDT)
+In-Reply-To: <xmqqd1p1ivfw.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 04 May 2016 10:28:51 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2408B600-1228-11E6-B76D-D05A70183E34-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 6863EF08-1229-11E6-996A-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293566>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 3a40d4b..c9d53e1 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -197,9 +197,9 @@ isnumber()
->  # of the settings from GIT_CONFIG_PARAMETERS.
->  sanitize_submodule_env()
->  {
-> -	sanitized_config=$(git submodule--helper sanitize-config)
-> +	save_config=$GIT_CONFIG_PARAMETERS
->  	clear_local_git_env
-> -	GIT_CONFIG_PARAMETERS=$sanitized_config
-> +	GIT_CONFIG_PARAMETERS=$save_config
->  	export GIT_CONFIG_PARAMETERS
->  }
+> I do not think there is any false positive above, so perhaps the
+> checker script below can be used as the link checker we discussed?
 
-This does "clear the obviously per-repository stuff, but add back in
-anything that came from -c".  If it is easy to do "add anything that
-came from -c, and then clear the obviously per-repository stuff", we
-don't even have to say "exporting core.worktree down may hurt; do
-not do it then", which may be the best of both worlds?
+-- >8 --
+Subject: [PATCH] ci: validate "gitlink:" in documentation
 
-Or have we decided that even sharing core.worktree may have a valid
-use case and it is better not to filter them?
+It is easy to add incorrect "linkgit:<page>[<section>]" references
+to our documentation suite.  Catch these common classes of errors:
+
+ * Referring to Documentation/<page>.txt that does not exist.
+
+ * Referring to a <page> outside the Git suite.  In general, <page>
+   must begin with "git".
+
+ * Listing the manual <section> incorrectly.  The first line of the
+   Documentation/<page>.txt must end with "(<section>)".
+
+with a new script ci/lint-gitlink.sh.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ ci/lint-gitlink.sh | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
+ create mode 100755 ci/lint-gitlink.sh
+
+diff --git a/ci/lint-gitlink.sh b/ci/lint-gitlink.sh
+new file mode 100755
+index 0000000..2379626
+--- /dev/null
++++ b/ci/lint-gitlink.sh
+@@ -0,0 +1,47 @@
++#!/bin/sh
++
++git grep -l linkgit: Documentation/ |
++while read path
++do
++	perl -e '
++	sub report {
++		my ($where, $what, $error) = @_;
++		print "$where: $error: $what\n";
++	}
++
++	sub grab_section {
++		my ($page) = @_;
++		open my $fh, "<", "Documentation/$page.txt";
++		my $firstline = <$fh>;
++		chomp $firstline;
++		close $fh;
++		my ($section) = ($firstline =~ /.*\((\d)\)$/);
++		return $section;
++	}
++
++	while (<>) {
++		my $where = "$ARGV:$.";
++		while (s/linkgit:((.*?)\[(\d)\])//) {
++			my ($target, $page, $section) = ($1, $2, $3);
++
++			# De-AsciiDoc
++			$page =~ s/{litdd}/--/g;
++
++			if ($page !~ /^git/) {
++				report($where, $target, "nongit link");
++				next;
++			}
++			if (! -f "Documentation/$page.txt") {
++				report($where, $target, "no such source");
++				next;
++			}
++			$real_section = grab_section($page);
++			if ($real_section != $section) {
++				report($where, $target,
++					"wrong section (should be $real_section)");
++				next;
++			}
++		}
++	}
++	' "$path"
++done
+-- 
+2.8.2-498-g6350fe8
