@@ -1,75 +1,137 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] bisect--helper: use OPT_CMDMODE instead of
- OPT_BOOL
-Date: Wed, 4 May 2016 16:56:22 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605041654300.9313@virtualbox>
-References: <01020153a254974b-68f7d16a-66d7-4dc1-805d-2185ff1b3ebf-000000@eu-west-1.amazonses.com> <1462338472-3581-1-git-send-email-pranit.bauva@gmail.com> <1462338472-3581-2-git-send-email-pranit.bauva@gmail.com> <CAPig+cQxpZXKqykFoa2kzCZSC2YqpPXnGocs2YttcJ+rCxmzgQ@mail.gmail.com>
- <CAP8UFD1+kEwFhAoveOTYt8NEOK=98W-00nNF+Yoe6kQAYJa6SQ@mail.gmail.com> <alpine.DEB.2.20.1605041304050.9313@virtualbox> <CAP8UFD2k=JMYUg1SPE1TP6uD1bUnheYs8YhFDrzgEny85ocQFw@mail.gmail.com> <alpine.DEB.2.20.1605041416030.9313@virtualbox>
- <CAP8UFD0QeZqLaPwFe5wo0n1fdtSppJmYdUDc+Yo1duH1uyWbpw@mail.gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [RFD/PATCH] submodule doc: describe where we can configure them
+Date: Wed, 4 May 2016 17:01:44 +0200
+Message-ID: <20160504150143.GA8575@sandbox>
+References: <1462317985-640-1-git-send-email-sbeller@google.com>
+ <20160503235652.GA395@google.com>
+ <CAGZ79kb4GNZi93JpsPKUb7ScmePqDC1Xp+WZTGD7hfPUn9tWaQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Pranit Bauva <pranit.bauva@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Lars Schneider <larsxschneider@gmail.com>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 04 16:56:55 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed May 04 17:46:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axyEQ-0004LX-CO
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 16:56:54 +0200
+	id 1axz01-0000Ku-24
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 17:46:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752714AbcEDO4g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 10:56:36 -0400
-Received: from mout.gmx.net ([212.227.17.21]:60682 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751311AbcEDO4f (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 10:56:35 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0M1jKo-1bmDUg1Vt4-00tmRO; Wed, 04 May 2016 16:56:24
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CAP8UFD0QeZqLaPwFe5wo0n1fdtSppJmYdUDc+Yo1duH1uyWbpw@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:AoH0vJbQcVNAafZhJQewMm2vObzO1H+iubbNv+3HH5vcMckX90R
- OMO45hIN8PFJ52v3ZK6ilnpQGDWJdFCeOeYx3MSljMYmmBJWEwfRRd/BKDfZjEjSHNWPwN5
- 4GG3lGh7GubaHblUlaUuYLAtEQudKJVdME1YcFEGEF4zQFx2jpTV4qsRTrcTFaxjoMt0zaj
- 5yxlvum8bBL/Syfcq+63w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:kGmqRRlK1RY=:T7lzJXiNYlWqw1eXWO2+O7
- LCLehbwHxzjwixzGMvfo4szbv20w3TEtenvrztHkiUAUds2x3DAgPQP5c4UtzX5FoHcx0alrC
- sbukg3wXRJy4QqT/yb7x9R4Zs4oUJ3l9KbmZ3Pnx2rYo/7f5WhuXizex0oT7eeyULY6uvwONk
- g09TMN9hAzEtB42mZO7UIiNN/UMXLzQEjUjj2QhMwoCI3BdNECa++nbMF8zNtWU54XpabIR/N
- zjwmmNLp7mBT6DGGUfitRtFeE8gcTgih9+sfALBVnGd0jytJzAeDc+DU5+iCwzcUwc2o/MfTq
- VHwiYLZ7HfoJATZRgdmuwIbsMgXCj/iXsnMA5ogOW6y27pDOrCVhGZW5gOhpvQjWrpBJQmBkc
- yV9tVG19nHFfozyBiUwWONoDG/Qb7104EhvUOXUWKSTIP7750DUSTICXIiKXxCTOEJlkBiGCg
- 1zqr7jEYIlHgx+FOKF1xF1RebvXmONpjuWj611iy5iBjKnw+xXEskAW+suhv9QWpXAYGkSdt3
- 0mbNaSsJb90EuXWbH7pfFXsCdtU9pgrt5lPvpxHuIzOIoy06idF36KlgfU44j5Zjh8wRd2Q3X
- UlYWIErgJ2npk/u2TGueVUoq5AWaIhHf7kUbKdd2S+AtFoAdXPYOCdxBTSLA5/55GPM/nuSTu
- KzpRIqqcWLnR2xHPNxGhff3xDKXA45TS8uWD3adslZKTtFY7vgAbdVa7ve0dWxrgwgTqVhooo
- AjiWRlXq8HK09HkiyWiZki+Ih+eMwta7/TBODow1G7atsCoSULJU52XhtX0=
+	id S1753873AbcEDPpr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 11:45:47 -0400
+Received: from smtprelay05.ispgateway.de ([80.67.31.97]:48036 "EHLO
+	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753832AbcEDPpp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 11:45:45 -0400
+X-Greylist: delayed 2636 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 May 2016 11:45:45 EDT
+Received: from [84.141.121.223] (helo=sandbox)
+	by smtprelay05.ispgateway.de with esmtpsa (TLSv1.2:AES128-GCM-SHA256:128)
+	(Exim 4.84)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1axyJ8-0007bq-04; Wed, 04 May 2016 17:01:46 +0200
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kb4GNZi93JpsPKUb7ScmePqDC1Xp+WZTGD7hfPUn9tWaQ@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293551>
 
-Hi Christian,
+On Tue, May 03, 2016 at 05:59:58PM -0700, Stefan Beller wrote:
+> On Tue, May 3, 2016 at 4:56 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> > Stefan Beller wrote:
+> >
+> >> This is similar to the gitignore document, but doesn't mirror
+> >> the current situation. It is rather meant to start a discussion for
+> >> the right approach for mirroring repositories with submodules.
+> >
+> > Ooh.
+> 
+> Thanks for writing such a detailed answer. :)
 
-On Wed, 4 May 2016, Christian Couder wrote:
+BTW, here is a pointer to the discussion (and what I wrote down) about
+this from back in 2014:
 
-> My intent was to try to show that there is some important value to make
-> the subject close to the "low level" thing the patch actually does.
+https://github.com/jlehmann/git-submod-enhancements/wiki/Ideas#special-ref-overriding-gitmodules-values
 
-I disagree. The place to describe low-level details that are not
-immediately obvious from the patch is the commit message. Way, way down on
-the bottom.
+> > To fix this, we could allow additional .gitmodules settings to be put
+> > in another ref (perhaps something like "refs/repository/config" to allow
+> > sharing additional repository-specific configuration in other files
+> > within the same tree --- e.g., branch descriptions).  The semantics:
+> >
+> > * If there is a gitmodules file in refs/repository/config in the
+> >   repository I clone, then the submodule settings from it are stored
+> >   locally somewhere that overrides .gitmodules.  Perhaps
+> >   .git/info/<remotename>/gitmodules?
+> >
+> > * Later fetches from the remote would also update this gitmodules
+> >   file.
+> >
+> > * Settings from this gitmodules file can be overridden locally
+> >   using 'git config' until an explicit "git submodule sync" to
+> >   override the local configuration.
+> >
+> > What do you think?
+> >
+> > If two different remotes provide conflicting values for a setting
+> > in their gitmodules files, git would error out and ask the user
+> > to intervene with a tie-breaking "git config" setting.
+> 
+> Let's look at an example with C mirroring from B, who mirrors from A.
+> 
+> The user who clones the superproject from C may want to obtain submodules
+> from either C or B or A. All this can be configured in
+> the refs/repository/config value of C, but in case it is not configured in C,
+> it may fall back to the same branch from B. When and how would B get
+> that branch?
 
-The commit message should start with a subject that gives me a good clue
-why this is a good change. A low-level detail won't do that very often.
+I think B has to setup that branch on its own when it starts to mirror
+A and uses different submodule urls or other configs.
 
-Ciao,
-Johannes
+Jonathan you suggested to copy the content from a remote to
+.git/info/<remotename>/gitmodules locally. How would one get it to the
+remote side? It seems to me as if we would need to implement additional
+infrastructure to do this. Would it not be simpler if we just kept it on
+a ref on the local side as well? We already have the infrastructure to
+read those values from a ref. We only would need to add something to
+write them. Then a simple push, which could be aliased in form of a
+git-submodule subcommand, suffices to get the values to the remote.
+
+That also solves issues when people clone from their working copy.
+
+I would like to think a little bit further about the conflict situation
+when two remotes are providing values. Configuring this looks to me like
+a nightmare for users. Maybe there is some sort of elegant solution?
+E.g. like we use the values from remote A during a fetch from A, the
+ones from B during a fetch from B and no values from a special ref in
+case there is no remote operation involved. Since the main goal is to
+support forking of submodules isn't there always a remote operation
+involved?
+
+My suggested scheme above does not solve the currently quite typical use
+case where you might 'git fetch' without submodules first and then do
+the submodule fetches during a 'git submodule update'. On the other hand
+in the 'ideal future world' where submodules behave like "normal files" the
+fetch will be done during the superproject fetch so in that case we
+could solve such conflicts.
+
+The main thing which we could keep in mind is that we only allow certain
+values in such special refs. E.g. only the ones needed to support the
+fork workflow. BTW, do we actually need to change other values than the
+URL? Addtionally we ignore other values that are more related to the
+overall project structure. E.g. like submodule.<name>.ignore.
+
+Ok after writing this it really feels like special casing a lot. I would
+not really call it elegant. At the same time limiting these special refs
+to one special use case (forking) might help us to keep the user
+interface[1] simpler and conflict free in the long run. Not sure. What
+do you think?
+
+Cheers Heiko
+
+[1] Which is not the simplest already.
