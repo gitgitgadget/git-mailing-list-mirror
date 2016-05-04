@@ -1,89 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] submodule: stop sanitizing config options
-Date: Wed, 4 May 2016 13:25:20 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605041324030.9313@virtualbox>
-References: <cover.1461837783.git.johannes.schindelin@gmx.de> <cover.1462342213.git.johannes.schindelin@gmx.de> <20160504062618.GA9849@sigill.intra.peff.net> <20160504074559.GA3077@sigill.intra.peff.net> <20160504080047.GA2436@sigill.intra.peff.net>
- <xmqqwpnai6em.fsf@gitster.mtv.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v3 2/2] travis-ci: build documentation
+Date: Wed, 04 May 2016 13:27:22 +0200
+Message-ID: <vpq1t5it65h.fsf@anie.imag.fr>
+References: <xmqqziscw2g7.fsf@gitster.mtv.corp.google.com>
+	<1462220405-12408-1-git-send-email-larsxschneider@gmail.com>
+	<1462220405-12408-3-git-send-email-larsxschneider@gmail.com>
+	<xmqq60uwrxyi.fsf@gitster.mtv.corp.google.com>
+	<6483CF6A-5C14-42C9-BE1A-6D6AA33999BB@gmail.com>
+	<xmqq8tzrp2pd.fsf@gitster.mtv.corp.google.com>
+	<32CC7549-3A50-42F3-A6CC-9B15EFA01A46@gmail.com>
+	<CAP8UFD2XXE2Hh9NxMFS3dvaJk90LgwdbDcXmHvVir6MEKu2B3Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-	Jacob Keller <jacob.keller@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 04 13:25:49 2016
+Content-Type: text/plain
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Users <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Stefan Beller <sbeller@google.com>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 04 13:27:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axuw7-0004MV-Hz
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 13:25:47 +0200
+	id 1axuyC-0005N8-Rc
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 13:27:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752300AbcEDLZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 07:25:42 -0400
-Received: from mout.gmx.net ([212.227.17.21]:55621 "EHLO mout.gmx.net"
+	id S1751180AbcEDL1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 07:27:53 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:51465 "EHLO mx2.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752175AbcEDLZm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 07:25:42 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MPHrQ-1b2IeQ1m1Q-004OoH; Wed, 04 May 2016 13:25:22
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqwpnai6em.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:e9ZTHOo+LKFYCzRtLVapD69uICxCKQia2gR7PCZsgTHr+kv6u+U
- 6x75Rt4VTt5BUv1PWXl20M5y3uyyVTl7+PxCCn3ovwlfKTKW6OxUE0uvwazAT8g2PPLYOST
- EB87Z6mwK0vAfd/gzCvFe58NRwTJx7d5SHgmz/RAmNy1b6X7XCv1iOAu42iemijIVi+q1qc
- QhbugVGooTCtsS58IJ5QA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mmV7i6C3/2U=:vSVe2vglcndSOJyEIVSioD
- +gSb5D+k9k7Zl/srPlMxQGWyq+z4sLHSqcH6K8yYtSdhTDT54dv4JMxTO3Km9zLmkJBdslGz/
- WSFs8hQA7DumXwp2Orgq+ZUDvpj3PZqwmG0nscR0rCo4xk/tdj6ZUz2/HowmF6JF9jM4lwzdw
- H7kfd0EBlY8YUedyRV4GS5AjVUwPiMtbWI0nkOXdFSLGF/zSBRiL/KOwx1uYI7Sac6NEHSlQX
- EdxTwHSle6HPLR9ExlTOy/aBa4o8hmeyY8ffvkiw+G9hQZiLTGGmwV1+2S2XvBw+cqSGdjOVG
- OWbrDyW/34lXgVUdDCJ4Xuc5VDk8/32O04Or2fqUG+gYjsdXlNGvq7yGw75MlEGDs+XQ2kwqN
- 8K/GQLgqpZFxXLUnOdqEWGhJT2VRZKz7DjDMAB1vZmZ7LBJufGBNqbgMdNQLWQ9FvEfJUsgAf
- d7YI5yb48qXN+A7wd9bGe+pa5XetaWDlO6bJPBhO5R1f1y30P5CqhxvsxjLZ4KicdRqlpEse0
- BjYMigAVzo+arpFQVZoqfXkOVP2aqHt5w3IzGlfHRcx+s/QYroaJF+s0wqYi46VG0FKOTNK9K
- 2h24ngsbAmaQJdNgpiYjrX2uAPJqpU/YV1stiaAJUGCNg6LJiBiGQuyr+WpxCF7qfgiZYtjgv
- /FCmMf+yp5Neb9L319tJFZUUpxL0bOZH8Ws0X35llgBYK/F3X5gR23/+8ZuR05RKNAlPzXm4n
- JdCJ2DhUl+Bb7StzlQaQIbEY9Ym1dOf10gGLVWqjt7STpDTzQRKGaAdGraLR3KLp7zAz+A58 
+	id S1750911AbcEDL1w (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 07:27:52 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u44BRKJ1026815
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 4 May 2016 13:27:21 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u44BRMrV010740;
+	Wed, 4 May 2016 13:27:22 +0200
+In-Reply-To: <CAP8UFD2XXE2Hh9NxMFS3dvaJk90LgwdbDcXmHvVir6MEKu2B3Q@mail.gmail.com>
+	(Christian Couder's message of "Wed, 4 May 2016 11:11:44 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Wed, 04 May 2016 13:27:21 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u44BRKJ1026815
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1462966041.70169@eHHUokQmRrJ5dxCsDjwoBw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293536>
 
-Hi,
+Christian Couder <christian.couder@gmail.com> writes:
 
-On Wed, 4 May 2016, Junio C Hamano wrote:
+> You might also want to check:
+>
+> http://www.shellcheck.net/
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > [+cc Stefan and Jacob since this is really resuming that earlier thread]
-> > ...
-> >> 
-> >> So I think we'd actually want my series as a preliminary fix, followed
-> >> by dropping the whitelist entirely on top of that, and then probably
-> >> simplifying the shell sanitize_submodule_env() on top of that (it would
-> >> be correct without the whitelist, but you can also trivially implement
-> >> it without having to call submodule--helper at all).
-> >
-> > I think we'd actually do it all in one, and that patch looks something
-> > like the one below (on top of jk/submodule-config-sanitize-fix).
-> >
-> > I don't feel that strongly about going either direction with this, but I
-> > figure it doesn't hurt to make the patch so we know what the actual
-> > option looks like.
-> 
-> I do not feel strongly either, but I suspect "we do not filter"
-> would be a lot easier to explain than "we pass these selected
-> things, each with such and such justification why it has to be
-> passed down".
+Indeed, it's also an excellent tool to check for common mistakes in
+shell scripts (there are many, and shellcheck is good at pointing them
+out and explaining them).
 
-I really like the simplicity of the rationale.
+http://www.shellcheck.net/
 
-> Nice code reduction is very attractive, too, but that is secondary.
+(Available online and as a command-line tool)
 
-Me, too. It just makes things simpler.
-
-Ciao,
-Dscho
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
