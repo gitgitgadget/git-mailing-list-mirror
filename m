@@ -1,86 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 03/14] upload-pack-2: Implement the version 2 of upload-pack
-Date: Wed, 04 May 2016 13:11:07 -0700
-Message-ID: <xmqqvb2tfusk.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 04/14] connect: rewrite feature parsing to work on string_list
+Date: Wed, 04 May 2016 13:13:42 -0700
+Message-ID: <xmqqr3dhfuo9.fsf@gitster.mtv.corp.google.com>
 References: <1461972887-22100-1-git-send-email-sbeller@google.com>
-	<1461972887-22100-4-git-send-email-sbeller@google.com>
-	<1462210997.4123.49.camel@twopensource.com>
+	<1461972887-22100-5-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Wed May 04 22:11:16 2016
+Cc: dturner@twopensource.com, git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed May 04 22:13:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ay38d-0000Hf-Bf
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 22:11:15 +0200
+	id 1ay3B8-0001b9-Pn
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 22:13:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751713AbcEDULL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 16:11:11 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55974 "EHLO
+	id S1753526AbcEDUNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 16:13:46 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64635 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751311AbcEDULL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 16:11:11 -0400
+	with ESMTP id S1752698AbcEDUNq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 16:13:46 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8DC4217860;
-	Wed,  4 May 2016 16:11:09 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0A0201805D;
+	Wed,  4 May 2016 16:13:45 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TLEgVD1vUdkz0xxPacXXed1PCT4=; b=eMif9B
-	7lcE1MN5fACu2FM7YO10jCOBwLMgKLYYsmKLhPl24u05fiMYceY0ir5kQDs85zED
-	+mvDzCYWiyNFPBrsu0Yj5GmJiUUdcQjbqB1n+1MLt3TIBdoyAQMk+p+bY9TqAu/y
-	wPN6727BXLU9CwoEhAdTzj7pioHm/KiV55bt0=
+	:content-type; s=sasl; bh=HJse5M7NUPG5+IIBeOz0A/wEdmo=; b=esna7F
+	BwKvt/xgbpu9ytyCpSAWin6WOM7+Vd8UkpT4Thd2l4OHHWEg5wz+M3ZQlkz3mwVu
+	WdtKB7DASv1ORjnNkST4muC+t0koRjlafbymvkiFIE2YOcAbmYY2dylYnEjs8tZG
+	WKvMhQH1hoa2BdjhCexkFSx7gjYKNHanKbI9M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WKXWHL6ga+7q4/mzfurW/prcGfFXibBt
-	Dv7vufQPo6CAp2uGm2pybO6QFcqyvf18+mKG/XA+yvTHrZ7gL9dHBONt32UnQzo9
-	l48vkxYxrI093JcX6dblB6k59z3/mwTUkdEht9nRCmZ/u6reEWKXTwxwjt0yAWFG
-	fNqFZWaod34=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 84EDC1785F;
-	Wed,  4 May 2016 16:11:09 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=rLjc4wgpblk2MWcl/gzKnbUJYCOWvM6T
+	5th+kYARHM+z/Mv+roP4Y0n1yB8yFePCbhpRq35KX+PjHxKgfkRL6XlJgbUUcQGm
+	9CJ0PgA4pysyTB/Wq71hd4l+K67wWkouz8MGxcDFFXNmrOX5I9ovBRZ//R2nkGbw
+	G2RlBgfRVZI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 013521805C;
+	Wed,  4 May 2016 16:13:45 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EE1081785E;
-	Wed,  4 May 2016 16:11:08 -0400 (EDT)
-In-Reply-To: <1462210997.4123.49.camel@twopensource.com> (David Turner's
-	message of "Mon, 02 May 2016 13:43:17 -0400")
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7DF7718059;
+	Wed,  4 May 2016 16:13:44 -0400 (EDT)
+In-Reply-To: <1461972887-22100-5-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Fri, 29 Apr 2016 16:34:37 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 57135C6A-1234-11E6-B323-9A9645017442-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: B3C95EE6-1234-11E6-A6C4-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293582>
 
-David Turner <dturner@twopensource.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> On Fri, 2016-04-29 at 16:34 -0700, Stefan Beller wrote:
->> In upload-pack-2 we send each capability in its own packet buffer.
->> The construction of upload-pack-2 is a bit unfortunate as I would
->> like
->> it to not be depending on a symlink linking to upload-pack.c, but I
->> did
->> not find another easy way to do it. I would like it to generate
->> upload-pack-2.o from upload-pack.c but with '-DTRANSPORT_VERSION=2'
->> set.
+> Later on when we introduce the version 2 transport protocol, the
+> capabilities will not be transported in one lone string but each
+
+s/lone/long/, I think.
+
+> capability will be carried in its own pkt line.
 >
-> Couldn't we check argv[0] and use that to determine protocol?  Then we
-> could symlink executables rather than source code.
+> To reuse existing infrastructure we would either need to join the
+> capabilities into a single string again later or refactor the current
+> capability parsing to be using a data structure which fits both
+> versions of the transport protocol. We chose to implement the later.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  builtin/receive-pack.c | 15 ++++++---
+>  connect.c              | 82 +++++++++++++++++++++++---------------------------
+>  connect.h              |  2 +-
+>  upload-pack.c          | 13 ++++++--
+>  4 files changed, 58 insertions(+), 54 deletions(-)
 
-Yeah, I do not have a good suggestion on the mechanism to actually
-switch between behaviours other than what was already been discussed
-in the thread, but the code resulting from the patch proposed is too
-ugly with full of #ifdef for it to be the final form.
+I am not sure if the churn is make a right tradeoff here.
 
-Just to make sure nobody gets me wrong; it is OK as a POC to move
-the discussion forward.
-
-A production quality implemention however would need to either be a
-single executable that switches behaviour at runtime, or two
-executables, each with its own *.c file with its own main(), that
-share code in another common *.c file, I would think.
+A loop to concatenate each segment into a strbuf before passing it
+to parse_feature_request would be at most 5 lines long, no?
