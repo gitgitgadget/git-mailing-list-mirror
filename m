@@ -1,256 +1,253 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFD/PATCH] submodule doc: describe where we can configure them
-Date: Tue, 3 May 2016 17:59:58 -0700
-Message-ID: <CAGZ79kb4GNZi93JpsPKUb7ScmePqDC1Xp+WZTGD7hfPUn9tWaQ@mail.gmail.com>
-References: <1462317985-640-1-git-send-email-sbeller@google.com>
-	<20160503235652.GA395@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 04 03:00:08 2016
+Subject: [PATCHv3] submodule deinit: require '--all' instead of '.' for all submodules
+Date: Tue,  3 May 2016 18:19:45 -0700
+Message-ID: <1462324785-26389-1-git-send-email-sbeller@google.com>
+References: <1462321992-15153-1-git-send-email-sbeller@google.com>
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de,
+	Stefan Beller <sbeller@google.com>
+To: jrnieder@gmail.com, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed May 04 03:20:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axlAc-0001KF-LH
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 03:00:07 +0200
+	id 1axlTw-0000ry-Jn
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 03:20:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756924AbcEDBAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 May 2016 21:00:00 -0400
-Received: from mail-io0-f170.google.com ([209.85.223.170]:34302 "EHLO
-	mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756856AbcEDA77 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2016 20:59:59 -0400
-Received: by mail-io0-f170.google.com with SMTP id 190so40039619iow.1
-        for <git@vger.kernel.org>; Tue, 03 May 2016 17:59:59 -0700 (PDT)
+	id S933215AbcEDBTy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 May 2016 21:19:54 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:35401 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932868AbcEDBTy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2016 21:19:54 -0400
+Received: by mail-pa0-f45.google.com with SMTP id iv1so17287699pac.2
+        for <git@vger.kernel.org>; Tue, 03 May 2016 18:19:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=svRlVrPwzkVetp6rSEZihCYt3VsFVZp7YjCUlOxFaeQ=;
-        b=Cuo9iDNdogr4cSJssN2La8RZorcFB9OvTdReR4ImgYx+KNIXZCd72oEzoMYvuI8QrL
-         cr4qum0IVBrkx9oCH68U02e/rYbX6NyQJFQXnNYGI11Oa49VUjvWSVbru3GL5oRKJBzF
-         WP3Ci0LnJCECclB5H7LZqaDvtrqdZC/GBM41/eJMadSlkvP8oM8ECrc5YYEhSJzySTZj
-         l2LoVvMXmyY8nSE2EgN0jrY35uQWiLnz8sumlSsLBaNGZe6gUxdkOUMjQjVGIg6lm4Jy
-         AqK/airh8yLC44DRaeE7+s74CiE0yIy44IZAC0BYfByro7DoMKrLxMEXy4suWjX3K9qD
-         1ftA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=uYU4hXQY6jsB3UwMGqAId+rNaoIx9vABU3T3ghlDTh4=;
+        b=h6TC18AOmuOXuiqAe0YbwZpWyB2MUwYfapidrsi6Ep9ooW8yIQfPGlaQ5sjF/CFksU
+         qXcrEiLvkXJTlfCW44o8FBDX+m7Ks+PIYP+++yIi7yfSIp3FxKLbnPXM0dzjEXnuvjXf
+         nt3CeAkUTlUrZdvgA0tc+i6xvZmcnzNcOLgEKrcZY4lWf1QaPLPCifKVTo2NNTgDdgQW
+         ZA2QKIR2228/+JvFXLhImnaPD7KXvaHf8/Ix5OP9BxeOEEMQjG0ptKhB+tRpCEqjtYHy
+         bgoZ7PXNtZvsc09CuSFq+UFemft8NHeVJ6447CaiIp4sP+DCgOiKrR61iv+Qh0caTQ7p
+         HWuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=svRlVrPwzkVetp6rSEZihCYt3VsFVZp7YjCUlOxFaeQ=;
-        b=gJJ8uJZvCmGx7/1mqTy+VDyt+jgyPLSel+e5O/YAp/s0fPY1Z1J54318AqLzt1o9ah
-         kYfFoCk1HhO/u4mezD7RyJEkBIT5GvvhCIqELT0dte8WjFQTyh0OIsmXYUhur3ttihwb
-         aAI5EeNfK98Cg5xe/jHAEA1GmBDeUQ1o5U7veQBFIb1vmMZZZdK/6H0DIroIdRHf7r7B
-         2yvE3uPaTcBVBnbsp6FIH+TOyZyeBCjQb7LK7gcbBIqLAKJFbJTxbd2jTT60GRADCSGc
-         BEy0wCcfNuMkwyXOmI8V2zS3hUdZu8iUYzJcv3hFNHDVPkz4zR4GQxsgHCJ54omoyP1B
-         j5dg==
-X-Gm-Message-State: AOPr4FWb0REynSgJzPDV79cQniLNO9lWlD2QG+FP3k+J6S25GY3b4zXHvVAQRQtO4YLNe52hDj+g7EblgkpWPQej
-X-Received: by 10.107.53.204 with SMTP id k73mr6841842ioo.174.1462323598135;
- Tue, 03 May 2016 17:59:58 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Tue, 3 May 2016 17:59:58 -0700 (PDT)
-In-Reply-To: <20160503235652.GA395@google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=uYU4hXQY6jsB3UwMGqAId+rNaoIx9vABU3T3ghlDTh4=;
+        b=KBX09g637lt2VSt0EYJm2vsXdRRqGu6LVqNIRQszHzYDSbWZv2ZRRWnLM5Xa55WuSW
+         JQgS2PG1ISCTzxqh07NEIkegHgvt6zF5vVqY1xM2Mjzd1OvI1x0VfsYi9jwcFA1L1PsR
+         imFjmeEmi4tEQ3tPVqndFghDtk9bESRIeoNE/Gp7qBtlpszR2m7dgrt//d3Ml1rhBPg3
+         5fbDOM2Ml4jbf9YP8G5bPEKXclTMXjzD3BCJPGA3ukC9YKI9eNpZyK1Z1W6mC6bxlXf8
+         H2N+oYHr4xGte+x8S59RXr3O7TgIO5LXMHgvZJBoigP2raeBqrB4bsS8Z5BFL/xHEcdP
+         sRFQ==
+X-Gm-Message-State: AOPr4FVjsbBdUecFodrSaetXQG85R1InJZs0PKs1S96RprTay81+Ygsjf4ITMOOYsg4w+kY5
+X-Received: by 10.66.139.9 with SMTP id qu9mr8165388pab.101.1462324793061;
+        Tue, 03 May 2016 18:19:53 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:81d8:5415:7a03:cda9])
+        by smtp.gmail.com with ESMTPSA id x89sm1028433pfa.87.2016.05.03.18.19.52
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 03 May 2016 18:19:52 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0.rc4.9.g9db9a47
+In-Reply-To: <1462321992-15153-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293485>
 
-On Tue, May 3, 2016 at 4:56 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Stefan Beller wrote:
->
->> This is similar to the gitignore document, but doesn't mirror
->> the current situation. It is rather meant to start a discussion for
->> the right approach for mirroring repositories with submodules.
->
-> Ooh.
+The discussion in [1] realized that '.' is a faulty suggestion as
+there is a corner case where it fails:
 
-Thanks for writing such a detailed answer. :)
+> "submodule deinit ." may have "worked" in the sense that you would
+> have at least one path in your tree and avoided this "nothing
+> matches" most of the time.  It would have still failed with the
+> exactly same error if run in an empty repository, i.e.
+>
+>        $ E=/var/tmp/x/empty && rm -fr "$E" && mkdir -p "$E" && cd "$E"
+>        $ git init
+>        $ rungit v2.6.6 submodule deinit .
+>        error: pathspec '.' did not match any file(s) known to git.
+>        Did you forget to 'git add'?
+>        $ >file && git add file
+>        $ rungit v2.6.6 submodule deinit .
+>        $ echo $?
+>        0
 
->
-> [...]
->> --- a/Documentation/git-submodule.txt
->> +++ b/Documentation/git-submodule.txt
->> @@ -59,6 +59,22 @@ instead of treating the other project as a submodule. Directories
->>  that come from both projects can be cloned and checked out as a whole
->>  if you choose to go that route.
->>
->> +Submodule operations can be configured using the following mechanisms
->> +(from highest to lowest precedence):
->> +
->> + * the command line for those commands that support taking submodule specs.
->> +
->> + * the configuration file `$GIT_DIR/config`.
->> +
->> + * the configuration file `config` found in the `refs/submodule/config` branch.
->> +   This can be used to overwrite the upstream configuration in the `.gitmodules`
->> +   file without changing the history of the project.
->> +   Useful options here are overwriting the base, where relative URLs apply to,
->> +   when mirroring only parts of the larger collection of submodules.
->> +
->> + * the `.gitmodules` file inside the repository. A project usually includes this
->> +   file to suggest defaults for the upstream collection of repositories.
->
-> (This documentation probably belongs in gitmodules(5) --- then,
-> git-submodule(1) could focus on command-line usage and point there for
-> configuration information.)
+So instead of a path spec add a parameter '--all' to deinit all submodules
+and add a test to check for the corner case of an empty repository.
 
-That makes sense!
+The code only needs to learn about the '--all' parameter and doesn't
+require further changes as `git submodule--helper list "$@"` will list
+all submodules in case of "$@" being empty.
 
->
-> There are two aspects of this to be separated: what governs the behavior
-> of commands running locally, and where we get information about
-> submodules from a remote repository.
+[1] http://news.gmane.org/gmane.comp.version-control.git/289535
 
-After reading the first time, this seems to also contain "historical context".
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
->
-> Local commands
-> --------------
-> The original submodule design was that local commands rely on
-> information from .git/config, and that information gets copied there
-> from .gitmodules when a submodule is initialized.  That way, a local
-> user can specify their preferred mirror or other options using some
-> straightforward 'git config' commands.
->
-> As a side effect, the settings in .git/config tell git which submodules
-> to pay attention to (which submodules were initialized).
->
-> When .gitmodules changes, the settings in .git/config are left alone,
-> since the end user *might* have manually set something up and we don't
-> want to trample on it.
->
-> This design is somewhat problematic for a few reasons:
->
-> - When I want to stop paying attention to a particular submodule and
->   start paying attention to it again later, all my local settings are
->   gone.
->
-> - When upstream adds a new submodule, I have to do the same manual
->   work to change the options for that new submodule.
->
-> - When upstream changes submodule options (perhaps to fix a URL
->   typo), I don't get those updates.
->
-> A fix is to use settings from .git/config when present and fall back
-> to .gitmodules when not.  I believe the submodule code has been slowly
-> moving in that direction for new features.  Perhaps we can do so for
-> existing features (like submodule.*.url) too.
->
-> An alternative would have been to introduce a .git/info/submodules
-> file that overrides settings from .gitmodules, analagous to
-> .git/info/excludes overriding .gitignore and .git/info/attributes
-> overriding .gitattributes.  We are already using .git/config for
-> this so that doesn't seem necessary.
+Changes since v2:
+* dedented section in documentation for --all, as it broke asciidoc.
+* Using a consistent usage string in git-modules.sh (both at top as well as in
+  the die message) as well as in the documentation.
 
-I don't know if it is a worthwhile goal nevertheless to move
-the information about submodules to .git/info/submodules eventually
-as that brings consistency across different features of Git?
+Jonathan writes:
+>> It is a fix for a corner case, but it is renaming the switch, so I would
+>> expect that we'd wait for a new version at least.
+> The bug was that the documentation and error message gave advice that
+> didn't work.
 
->
-> Remote repositories
-> -------------------
-> The .gitmodules file has some odd properties as a place to put
-> configuration:
->
-> - it is versioned.  There is no way to change URLs in an old version
->   of .gitmodules retroactively when a URL has changed.
+By having the old way untested, we do not give guarantees any more about the '.'
+case, which may be used in scripts and break, no?
 
-I would not call it odd for having one versioned place. Consider your
-build process is updated and the new build process produces new
-intermediate files. You would add these files to the .gitignore file
-eventually, but when building old revisions with the new build chain
-you'd be surprised by all those untracked files being displayed.
-Or another example: Recently in git.git some test helper files were moved.
-By checking out an older version of git you see a lot of test-* files
-in your worktree although they were ignored at another revision.
-
-That paragraph got longer than expected, but I just wanted to say that
-being versioned can be either good or bad.
-
->
-> - it is controlled by whoever writes history.  There is no way for me
->   to change the URLs in my mirror of https://gerrit.googlesource.com/gerrit
->   to match my mirror's different filesystem layout without producing
->   my own history that diverges from the commits I am mirroring.
-
-To come up with an analogy to ignored files:
-If I use a project and use a different build system, I may see untracked
-files as they are not ignored by the .gitignore file.
-
-Then I have a way of ignoring them nevertheless in .git/info/excludes.
-Sharing this information beyond this repository is hard though, but
-that wasn't seen as a feature yet?
-
->
-> When the URLs in .gitmodules are relative URLs, this means that if
-> I mirror a superproject, I have to mirror all its submodules, too,
-> with the same layout.  It's not so easy for me to publish my copy
-> of the parent project and the one subproject I made changes in --- I
-> have to mirror everything.  In particular, this means I can't mirror
-> https://gerrit.googlesource.com/gerrit to github.
-
-because the way repository URLs work are different for these 2 hosts.
-googlesource.com allows to have URLs that are nested in another level
-e.g. Gerrit references "../plugins/download-commands", such that
-remote URL becomes https://gerrit.googlesource.com/plugins/download-commands
-
-At Github we cannot create another level of nesting as their naming follows the
-owner/name scheme.
-
->
-> When the URLs in .gitmodules are absolute URLs, this means that if
-> I mirror a superproject, I cannot ask people consuming my mirror to
-> use my mirrors of child projects, too.  I cannot publish my copy of
-> the parent project and the one subproject I made changes in and
-> expect people to be able to "git clone --recurse-submodules" the
-> result successfully.
-
-
->
-> It is as though refs were stored in a .gitrefs file, with all the
-> attendant disadvantages, instead of being a separate component of
-> the repository that a particular repository owner can manipulate
-> without changing history.
->
-> To fix this, we could allow additional .gitmodules settings to be put
-> in another ref (perhaps something like "refs/repository/config" to allow
-> sharing additional repository-specific configuration in other files
-> within the same tree --- e.g., branch descriptions).  The semantics:
->
-> * If there is a gitmodules file in refs/repository/config in the
->   repository I clone, then the submodule settings from it are stored
->   locally somewhere that overrides .gitmodules.  Perhaps
->   .git/info/<remotename>/gitmodules?
->
-> * Later fetches from the remote would also update this gitmodules
->   file.
->
-> * Settings from this gitmodules file can be overridden locally
->   using 'git config' until an explicit "git submodule sync" to
->   override the local configuration.
->
-> What do you think?
->
-> If two different remotes provide conflicting values for a setting
-> in their gitmodules files, git would error out and ask the user
-> to intervene with a tie-breaking "git config" setting.
-
-Let's look at an example with C mirroring from B, who mirrors from A.
-
-The user who clones the superproject from C may want to obtain submodules
-from either C or B or A. All this can be configured in
-the refs/repository/config value of C, but in case it is not configured in C,
-it may fall back to the same branch from B. When and how would B get
-that branch?
-
-Thanks for writing out this detailed brain dump :)
+Thanks,
 Stefan
 
->
-> Thanks,
-> Jonathan
+ Documentation/git-submodule.txt | 12 +++++++++++-
+ git-submodule.sh                | 14 +++++++++++---
+ t/t7400-submodule-basic.sh      | 14 +++++++++-----
+ 3 files changed, 31 insertions(+), 9 deletions(-)
+
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 1572f05..24d7197 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 	      [--reference <repository>] [--depth <depth>] [--] <repository> [<path>]
+ 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
+ 'git submodule' [--quiet] init [--] [<path>...]
+-'git submodule' [--quiet] deinit [-f|--force] [--] <path>...
++'git submodule' [--quiet] deinit [-f|--force] (-a|--all|[--] <path>...)
+ 'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch]
+ 	      [-f|--force] [--rebase|--merge] [--reference <repository>]
+ 	      [--depth <depth>] [--recursive] [--] [<path>...]
+@@ -144,6 +144,11 @@ deinit::
+ 	you really want to remove a submodule from the repository and commit
+ 	that use linkgit:git-rm[1] instead.
+ +
++To unregister all submodules use `--all` with no path spec. In
++version 2.8 and prior, you were advised to give '.' to unregister
++all submodules. This may continue to work in the future, but as the
++path spec '.' may include regular files, this could stop working.
+++
+ If `--force` is specified, the submodule's work tree will be removed even if
+ it contains local modifications.
+ 
+@@ -247,6 +252,11 @@ OPTIONS
+ --quiet::
+ 	Only print error messages.
+ 
++-a::
++--all::
++	This option is only valid for the deinit command. Unregister all
++	submodules in the work tree.
++
+ -b::
+ --branch::
+ 	Branch of repository to add as submodule.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 43c68de..6dabb56 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -8,7 +8,7 @@ dashless=$(basename "$0" | sed -e 's/-/ /')
+ USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
+    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] init [--] [<path>...]
+-   or: $dashless [--quiet] deinit [-f|--force] [--] <path>...
++   or: $dashless [--quiet] deinit [-f|--force] (-a|--all| [--] <path>...)
+    or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--reference <repository>] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
+    or: $dashless [--quiet] foreach [--recursive] <command>
+@@ -521,6 +521,7 @@ cmd_init()
+ cmd_deinit()
+ {
+ 	# parse $args after "submodule ... deinit".
++	deinit_all=
+ 	while test $# -ne 0
+ 	do
+ 		case "$1" in
+@@ -530,6 +531,9 @@ cmd_deinit()
+ 		-q|--quiet)
+ 			GIT_QUIET=1
+ 			;;
++		-a|--all)
++			deinit_all=t
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -544,9 +548,13 @@ cmd_deinit()
+ 		shift
+ 	done
+ 
+-	if test $# = 0
++	if test -n "$deinit_all" && test "$#" -ne 0
++	then
++		die "$(eval_gettext "usage: $dashless [--quiet] deinit [-f|--force] (--all | [--] <path>...)")"
++	fi
++	if test $# = 0 && test -z "$deinit_all"
+ 	then
+-		die "$(eval_gettext "Use '.' if you really want to deinitialize all submodules")"
++		die "$(eval_gettext "Use '--all' if you really want to deinitialize all submodules")"
+ 	fi
+ 
+ 	git submodule--helper list --prefix "$wt_prefix" "$@" |
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index e1abd19..6e28ea5 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -11,6 +11,10 @@ subcommands of git submodule.
+ 
+ . ./test-lib.sh
+ 
++test_expect_success 'submodule deinit works on empty repository' '
++	git submodule deinit --all
++'
++
+ test_expect_success 'setup - initial commit' '
+ 	>t &&
+ 	git add t &&
+@@ -858,7 +862,7 @@ test_expect_success 'submodule deinit works on repository without submodules' '
+ 		>file &&
+ 		git add file &&
+ 		git commit -m "repo should not be empty"
+-		git submodule deinit .
++		git submodule deinit --all
+ 	)
+ '
+ 
+@@ -887,12 +891,12 @@ test_expect_success 'submodule deinit from subdirectory' '
+ 	rmdir init
+ '
+ 
+-test_expect_success 'submodule deinit . deinits all initialized submodules' '
++test_expect_success 'submodule deinit --all deinits all initialized submodules' '
+ 	git submodule update --init &&
+ 	git config submodule.example.foo bar &&
+ 	git config submodule.example2.frotz nitfol &&
+ 	test_must_fail git submodule deinit &&
+-	git submodule deinit . >actual &&
++	git submodule deinit --all >actual &&
+ 	test -z "$(git config --get-regexp "submodule\.example\.")" &&
+ 	test -z "$(git config --get-regexp "submodule\.example2\.")" &&
+ 	test_i18ngrep "Cleared directory .init" actual &&
+@@ -958,11 +962,11 @@ test_expect_success 'submodule deinit is silent when used on an uninitialized su
+ 	git submodule deinit init >actual &&
+ 	test_i18ngrep ! "Submodule .example. (.*) unregistered for path .init" actual &&
+ 	test_i18ngrep "Cleared directory .init" actual &&
+-	git submodule deinit . >actual &&
++	git submodule deinit --all >actual &&
+ 	test_i18ngrep ! "Submodule .example. (.*) unregistered for path .init" actual &&
+ 	test_i18ngrep "Submodule .example2. (.*) unregistered for path .example2" actual &&
+ 	test_i18ngrep "Cleared directory .init" actual &&
+-	git submodule deinit . >actual &&
++	git submodule deinit --all >actual &&
+ 	test_i18ngrep ! "Submodule .example. (.*) unregistered for path .init" actual &&
+ 	test_i18ngrep ! "Submodule .example2. (.*) unregistered for path .example2" actual &&
+ 	test_i18ngrep "Cleared directory .init" actual &&
+-- 
+2.8.0.rc4.9.g9db9a47
