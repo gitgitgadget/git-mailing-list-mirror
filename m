@@ -1,87 +1,83 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: Portability of git shell scripts?
-Date: Wed, 4 May 2016 20:35:51 +0200
-Message-ID: <cdb4e001-7dc7-3c3b-27ca-2c970135805a@web.de>
-References: <CALR6jEh5dAcnqiyo4kXkj+8imfQQd0nT=baPOW_qbJpJwmFsyw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Armin Kunaschik <megabreit@googlemail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 04 20:36:04 2016
+From: Brian Norris <computersforpeace@gmail.com>
+Subject: [PATCH v2 2/3] Documentation: config: improve word ordering for http.cookieFile
+Date: Wed,  4 May 2016 11:42:14 -0700
+Message-ID: <1462387335-57937-2-git-send-email-computersforpeace@gmail.com>
+References: <1462387335-57937-1-git-send-email-computersforpeace@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Brian Norris <computersforpeace@gmail.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 04 20:42:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ay1eV-0005OR-Cr
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 20:36:03 +0200
+	id 1ay1lA-0000qE-LM
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 20:42:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755380AbcEDSf5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 May 2016 14:35:57 -0400
-Received: from mout.web.de ([212.227.15.14]:52559 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753694AbcEDSf4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 14:35:56 -0400
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb004) with
- ESMTPSA (Nemesis) id 0LgK3g-1bU7MC0sei-00nfmC; Wed, 04 May 2016 20:35:52
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
- Gecko/20100101 Thunderbird/45.0
-In-Reply-To: <CALR6jEh5dAcnqiyo4kXkj+8imfQQd0nT=baPOW_qbJpJwmFsyw@mail.gmail.com>
-X-Provags-ID: V03:K0:oLcZeb3eXv0kEFkG7+bnU2nS7ntLrTKhjW/gSd+eC0yW+vLFvnL
- j/gsu4FeIcRnp5D8W0lNc0bN9eGBKnb2Prg2qMq9MsKbZK0eJUZ1p1cWDM1CxekUnidmBPM
- fRnKpBEd/9lYkWYwS3PKQAdsW+6rEBKRC7yffBpwS6PPxOuz/Wj2vZslQkr+aCvG9X6KwZ2
- KCG6fICqw7PrRJ6nA6tTQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:jGoUxBxvo8g=:GyFLeHb63rOnkKTw/huvU7
- x3hatqCwCjXEmf2MYQ3UvdxcKqB/+NRWSXWPfmiHsyWsue0swNRvkCTvweExpnVZLkwZPVeBY
- nwL3DP2/gfux52cEkSsd0xd2lPipF3rW/7pa/AijUKy3QWDC0TAW4OQPQmy8bHqryWM4lIxh3
- l0m+lJ6KaGPSbEcLQKYX7hPqzG9gaBOOrJD1Wb4yFW3vt1di+UUl1Q17Tfu80yLi884cXQkvc
- TT6/CSt6hEN1BF7W0FiagPptkhCQ+tQMf8PzFYovxVYH+gU79ap1uSTq+oRTracjPTJWp6hnL
- O2JDrXlx/3YRV7axhefM5p1ynwT6RiymjulAbO0Dwr96ixTEA4EOZcoOlqkZ15w4EGUZkd2MV
- yyVtRNLgLQINQ2cPvAsP9C4v2lyt4FawRDYJn4Jzvq+s/d3wZsRy2MDJaiSIJREy2kEIwKQi2
- 4yiCJsMHHg7+3aC6kgx6mFDETMA5TFPSVXNlPDWgLpY942jcoYgJIj/xoXtkXkb55OZAkMX3W
- uj8uSy0hPja0Nrkn79s2MkVMZzFcBER7FuooQyyFMWC0BzsM4bgb8QhDLiBVhiGmXG5q9Mt8G
- MnvQzm88UZls9IgdYmy98FsQTkHUMKEtySVRTPwXiNYXd7FkavGMkoK6/1L2zWPdJuKN9o9fI
- xJm+ncJa+yMIrcN8PIEGgatG9EPedBSPKpYhlRScqVNLCysQRxfxllNaiU1XbEH5RGL4JB8jp
- 6qxgvETHlm1X8O833hoOgVeqa2IF7sP9MSbMAbZ07k0ajF3RD6rzZCehvFKbJ/s/y0OWALrm 
+	id S1752697AbcEDSmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 14:42:53 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:33281 "EHLO
+	mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751056AbcEDSmv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 14:42:51 -0400
+Received: by mail-pf0-f180.google.com with SMTP id 206so28339411pfu.0
+        for <git@vger.kernel.org>; Wed, 04 May 2016 11:42:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=zu0UVA/XKi7JqJeYWwrqrR/9BixG2z3wLWQfYWnxIkQ=;
+        b=jcpjDbP9NDQJm5DXN3xPpGhKMakofrJ1eGBqTSXmmvgPEqbFgJrIS5b9uribg480kr
+         /bPlZzPubFQOLzrTnObSN4DuuX4v7PrF92WhakjcXmvKeGJjMZknVOFwnCZil6aJzQvg
+         AajQaELaBPovnnauCbjv1oBr6RJQMLeFU6fCMLHUaRqygpe+g9zyo+RW4H+456WNlM4L
+         m4UoJxQcWZJMBs0y5zhtY7FDyR8B3RLINpguxdNEL+SCln4weY9eHBNk1gydQdMvjxFJ
+         4o7RWjSsFWbzBWE81uwSFbmCjmm9IWDy6pp6pw6evonj05PMS42wJOwlwpW2xyVcuFye
+         4AYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=zu0UVA/XKi7JqJeYWwrqrR/9BixG2z3wLWQfYWnxIkQ=;
+        b=anM8LJcIHlgOg9vzXCCwL1ahSpFmY9nY3548OQe0Oqg4hC2AkF6b8oMi4amPGrO4LR
+         hxvoZFpijkuDAlXZRVF6iB+t2bJ9d5Tb5IRbDxYPxWtF+DrZE6OSf8Fal8+7pg+K61Tp
+         sdIwVzMtNAGc/tZY9AGXOt3JWpNDwmgXCpMsoz43QKdKc5of5pDfV78+C30sEXPYn0yd
+         PmtbdiLQaLuM2MaFPqmLDA49NyAI78L3sr7+ZOpQMbAOTqz+dO8erwtF/ePzvTf8hyCp
+         RrljBx+GucrslcutMUR1KP8pQQwSGs0sg5sAahO+gX07LTfdsyFwR4d+m7VpHyaj0OPi
+         jHjg==
+X-Gm-Message-State: AOPr4FU1CZx2QA4qc0BHomT57LgbF2/9jmPZ9Fkhfda9nQO/kurPYZF1Q2PSovxougGldA==
+X-Received: by 10.98.87.220 with SMTP id i89mr14018461pfj.107.1462387370517;
+        Wed, 04 May 2016 11:42:50 -0700 (PDT)
+Received: from ban.mtv.corp.google.com ([172.22.64.120])
+        by smtp.gmail.com with ESMTPSA id k78sm7785955pfk.70.2016.05.04.11.42.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 04 May 2016 11:42:49 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
+In-Reply-To: <1462387335-57937-1-git-send-email-computersforpeace@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293562>
 
-On 04.05.16 20:17, Armin Kunaschik wrote:
-> Hi list,
->=20
-> I'm trying to compile/test/use git 2.8.2 on AIX 6.1 with no bash avai=
-lable.
-> /bin/sh is a hard link to /bin/ksh which is a ksh88, a posix shell.
-> Is this supposed to work?
->=20
-> As an example: make test fails on nearly every t34* test and on tests
-> which contain rebase.
-> The installation of bash (and manually changing the shebang to
-> /bin/bash) "fixes" all rebase test failures. So obviously git-rebase
-> is not portable at some point.
->=20
-> Does it make any sense to put work into making these scripts portable=
-,
-> that is, work with posix shells?
-> And, as last resort, is it possible to configure git use bash in some
-> or all shell scripts?
->=20
-> Regards,
-> Armin
-The Makefile has a knob to use a specifc shell:
+Signed-off-by: Brian Norris <computersforpeace@gmail.com>
+---
+v2: no change
 
-# Define SHELL_PATH to a POSIX shell if your /bin/sh is broken.
+ Documentation/config.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Does this help ?
-
-Otherwise:
-I don't know how much posix ksh88 is, it may help, if you can post some=
- output ?
-
-I use sometimes
-debug=3Dt verbose=3Dt ./t34XXXX.sh 2>&1 =E2=89=A4 tee xx.txt
-but there may be better debugging utilities these days.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 7264abf7f85e..e655b9729a7d 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1668,7 +1668,7 @@ http.cookieFile::
+ 	in the Git http session, if they match the server. The file format
+ 	of the file to read cookies from should be plain HTTP headers or
+ 	the Netscape/Mozilla cookie file format (see linkgit:curl[1]).
+-	NOTE that the file specified with http.cookieFile is only used as
++	NOTE that the file specified with http.cookieFile is used only as
+ 	input unless http.saveCookies is set.
+ 
+ http.saveCookies::
+-- 
+2.8.0.rc3.226.g39d4020
