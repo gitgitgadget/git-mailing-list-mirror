@@ -1,77 +1,193 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv3] submodule deinit: require '--all' instead of '.' for
- all submodules
-Date: Wed, 4 May 2016 14:34:11 -0700
-Message-ID: <CAGZ79kbdnKMxrp_rQp7k-G6mveNYxES4XB-+2jh2e4+_RwPeyQ@mail.gmail.com>
-References: <1462321992-15153-1-git-send-email-sbeller@google.com>
-	<1462324785-26389-1-git-send-email-sbeller@google.com>
-	<xmqqlh3pft91.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 1/2] Documentation: fix linkgit references
+Date: Wed, 04 May 2016 14:34:23 -0700
+Message-ID: <xmqq4madfqxs.fsf@gitster.mtv.corp.google.com>
+References: <1462351116-19308-1-git-send-email-larsxschneider@gmail.com>
+	<1462351116-19308-2-git-send-email-larsxschneider@gmail.com>
+	<F6210682-2FCA-423D-B6D3-06938C95D497@gmail.com>
+	<5729DF25.7030503@ramsayjones.plus.com>
+	<xmqqd1p1ivfw.fsf@gitster.mtv.corp.google.com>
+	<xmqqvb2thczf.fsf@gitster.mtv.corp.google.com>
+	<20160504192516.GD21259@sigill.intra.peff.net>
+	<xmqq7ff9h9zo.fsf@gitster.mtv.corp.google.com>
+	<20160504200635.GA22787@sigill.intra.peff.net>
+	<xmqq8tzpfrt0.fsf@gitster.mtv.corp.google.com>
+	<20160504213149.GA22828@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 04 23:34:19 2016
+Content-Type: text/plain
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	git@vger.kernel.org, Matthieu.Moy@grenoble-inp.fr,
+	sbeller@google.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 04 23:34:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ay4Qz-0006We-VX
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 23:34:18 +0200
+	id 1ay4RD-0006db-7o
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 23:34:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753289AbcEDVeO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 17:34:14 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:32809 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752702AbcEDVeN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 17:34:13 -0400
-Received: by mail-ig0-f174.google.com with SMTP id c3so157329igl.0
-        for <git@vger.kernel.org>; Wed, 04 May 2016 14:34:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=SIAPT2hqStv7I9cH0Mtdj5j4Zhh+j0I2kCZdOQVDPSA=;
-        b=hgtWgk97WPOWfvXstrir+Tf4oQN7eNFZdq+gxOP0RI2fMO8QATC+Sbp2a+pyYxFaC5
-         PFE9c7IsHYL2SS8A2MuhcxylIuQk/y1SIBBh9zJOaSR8tLWBcgcx2YKs729GFhpUHPXB
-         5Z+Fpu8899tUWhonXQ8G4KNChYECFao9X+IJuJhcEl1bTUvn3JysFgWl9ed1yqMjnGYt
-         MEQnewVtv7iSY4mFai7IbSW5g93RMJyORzgpXMNFXGom6QE0Gv5qC/A/cQ98NGPMQUVl
-         OuSpbizsipp/WHV2+5Gv89eO2Tbmc+zzYGJHhwt7NJ1lkm73LKQbLEIBk6mKhD9tTrIE
-         G1jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=SIAPT2hqStv7I9cH0Mtdj5j4Zhh+j0I2kCZdOQVDPSA=;
-        b=PeAQAeaVDUTmAJr6B2NBuRu7//oRTw7rFQQtlY1//VapwQo7uQvdvddr7s6W/cka7R
-         K6IYCOZq8wbJGTyleVCYXLUAWp9qCqthWtiMOyECgfGpudhKijftzoc+s459oiAr1lIl
-         7BD51SlHl7Z1B2zgbVyKqz7NZTd3/8XM3TRLHqGr9bCnsuEYD+8rybXdmNhiRPVghSzn
-         3qiaxPcg3MDZTZm/VxVUaTq7giw9sdYT4L1zpQCiN9fBhtAc5eYXBKDk426iP6ichakX
-         zuGE2UeXjRm4DUYNBsvkl4sIZrz07DAYHI8CUkMbZMGjzAviYN7OrGWJsv4tGEGwNHQD
-         C/jg==
-X-Gm-Message-State: AOPr4FWtYZgMgS3t3yiZIBv35xjJP8FLvdmtJwBltEysCgFh7DyX6ixZ4VJmCVgwtHlLAF/KblKnCKWCtIzRdBZt
-X-Received: by 10.50.170.68 with SMTP id ak4mr13804193igc.93.1462397652080;
- Wed, 04 May 2016 14:34:12 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Wed, 4 May 2016 14:34:11 -0700 (PDT)
-In-Reply-To: <xmqqlh3pft91.fsf@gitster.mtv.corp.google.com>
+	id S1753391AbcEDVe1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 17:34:27 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60285 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752124AbcEDVe1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 17:34:27 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B199718523;
+	Wed,  4 May 2016 17:34:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=IlkbIA6W/2ZYeE2xarVeZMLvNuA=; b=TthvRa
+	CR3tY2jSPMwBlxMD/OQnhjyqVGXErwTHsKoD5mxo2JIoEPdZb4yBAQrVGmY9qxa2
+	jq+XfSHbFBg8N/2fFuZPFqVha65ADa4/M47NDhDcas4PjUuW3+AkR3KYv+QlBszg
+	PgTAOpd3XhIiH6NCWVLiT6q8jaktNkXOvm8SI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RLTtuNu5gPqorRQBOtbRNSLSBWokrffZ
+	YHMO3a7f1jbmcy+i2+lqYB7L5iXHqLw2RAdy/lkG46iZsA9umDhW0iQ23M2RqvEE
+	5i63JkXXg0y9BPYlQCVYbsWiTM+e7mjjXshJ3Y1+nh8+xaiRu2i2vfAHZyFGVbrC
+	wMvP0gjC85w=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AAC7718522;
+	Wed,  4 May 2016 17:34:25 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 34E6D18521;
+	Wed,  4 May 2016 17:34:25 -0400 (EDT)
+In-Reply-To: <20160504213149.GA22828@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 4 May 2016 17:31:50 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F9114D5A-123F-11E6-B162-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293597>
 
-On Wed, May 4, 2016 at 1:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Third time's a charm, perhaps?
+ 
+-- >8 --
+Subject: [PATCH] ci: validate "gitlink:" in documentation
 
-> I think this sentence talks about "working tree" (as opposed to
-> "worktree"), so s/work tree/working tree/.
+It is easy to add incorrect "linkgit:<page>[<section>]" references
+to our documentation suite.  Catch these common classes of errors:
 
-I'll fix this up in a resend, though it may be a fix on its own.
+ * Referring to Documentation/<page>.txt that does not exist.
 
-So the two "official" terms are working tree (files on your disk)
-and worktree (the command) and we don't want to have anything in between?
-(e.g. work tree for working tree?)
+ * Referring to a <page> outside the Git suite.  In general, <page>
+   must begin with "git".
 
-Or as `grep -r "work tree"` puts it, we may want to have an extra cleanup patch
-and not do it here for this single occurrence.
+ * Listing the manual <section> incorrectly.  The first line of the
+   Documentation/<page>.txt must end with "(<section>)".
+
+with a new script "ci/lint-gitlink", and drive it from "make check-docs".
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/Makefile |  5 +++++
+ Makefile               |  1 +
+ ci/lint-gitlink        | 56 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 62 insertions(+)
+ create mode 100755 ci/lint-gitlink
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 3e39e28..e9cd43d 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -204,6 +204,7 @@ ifndef V
+ 	QUIET_DBLATEX	= @echo '   ' DBLATEX $@;
+ 	QUIET_XSLTPROC	= @echo '   ' XSLTPROC $@;
+ 	QUIET_GEN	= @echo '   ' GEN $@;
++	QUIET_LINT	= @echo '   ' LINT $@;
+ 	QUIET_STDERR	= 2> /dev/null
+ 	QUIET_SUBDIR0	= +@subdir=
+ 	QUIET_SUBDIR1	= ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
+@@ -427,4 +428,8 @@ quick-install-html: require-htmlrepo
+ print-man1:
+ 	@for i in $(MAN1_TXT); do echo $$i; done
+ 
++lint-docs::
++	$(QUIET_LINT)$(foreach txt,$(patsubst %.html,%.txt,$(DOC_HTML)), \
++	../ci/lint-gitlink $(txt))
++
+ .PHONY: FORCE
+diff --git a/Makefile b/Makefile
+index 2742a69..61bd0ab 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2496,6 +2496,7 @@ ALL_COMMANDS += git-gui git-citool
+ 
+ .PHONY: check-docs
+ check-docs::
++	$(MAKE) -C Documentation lint-docs
+ 	@(for v in $(ALL_COMMANDS); \
+ 	do \
+ 		case "$$v" in \
+diff --git a/ci/lint-gitlink b/ci/lint-gitlink
+new file mode 100755
+index 0000000..6b6bf91
+--- /dev/null
++++ b/ci/lint-gitlink
+@@ -0,0 +1,56 @@
++#!/usr/bin/perl
++
++my $found_errors = 0;
++
++sub report {
++	my ($where, $what, $error) = @_;
++	print "$where: $error: $what\n";
++	$found_errors = 1;
++}
++
++sub grab_section {
++	my ($page) = @_;
++	open my $fh, "<", "$page.txt";
++	my $firstline = <$fh>;
++	chomp $firstline;
++	close $fh;
++	my ($section) = ($firstline =~ /.*\((\d)\)$/);
++	return $section;
++}
++
++sub lint {
++	my ($file) = @_;
++	open my $fh, "<", $file
++		or return;
++	while (<$fh>) {
++		my $where = "$file:$.";
++		while (s/linkgit:((.*?)\[(\d)\])//) {
++			my ($target, $page, $section) = ($1, $2, $3);
++
++			# De-AsciiDoc
++			$page =~ s/{litdd}/--/g;
++
++			if ($page !~ /^git/) {
++				report($where, $target, "nongit link");
++				next;
++			}
++			if (! -f "$page.txt") {
++				report($where, $target, "no such source");
++				next;
++			}
++			$real_section = grab_section($page);
++			if ($real_section != $section) {
++				report($where, $target,
++					"wrong section (should be $real_section)");
++				next;
++			}
++		}
++	}
++	close $fh;
++}
++
++for (@ARGV) {
++	lint($_);
++}
++
++exit $found_errors;
+-- 
+2.8.2-498-g6350fe8
