@@ -1,284 +1,276 @@
-From: Eric Chamberland <Eric.Chamberland@giref.ulaval.ca>
-Subject: Re: git status core dump with bad sector!
-Date: Wed, 4 May 2016 16:37:25 -0400
-Organization: http://www.giref.ulaval.ca
-Message-ID: <572A5D85.8040203@giref.ulaval.ca>
-References: <570FB06D.5060308@giref.ulaval.ca>
- <20160422051111.GA32107@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3] submodule deinit: require '--all' instead of '.' for all submodules
+Date: Wed, 04 May 2016 13:44:26 -0700
+Message-ID: <xmqqlh3pft91.fsf@gitster.mtv.corp.google.com>
+References: <1462321992-15153-1-git-send-email-sbeller@google.com>
+	<1462324785-26389-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 04 22:37:47 2016
+Content-Type: text/plain
+Cc: jrnieder@gmail.com, git@vger.kernel.org, Jens.Lehmann@web.de
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed May 04 22:44:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ay3YI-0007bN-BV
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 22:37:46 +0200
+	id 1ay3es-0002xG-CS
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 22:44:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754067AbcEDUhm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 May 2016 16:37:42 -0400
-Received: from interne.giref.ulaval.ca ([132.203.7.102]:13018 "EHLO
-	mailhost.giref.ulaval.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752738AbcEDUhl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 16:37:41 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mailhost.giref.ulaval.ca (Postfix) with ESMTP id 5B7D4280A5C;
-	Wed,  4 May 2016 16:37:39 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at giref.ulaval.ca
-Received: from mailhost.giref.ulaval.ca ([127.0.0.1])
-	by localhost (mailhost.giref.ulaval.ca [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Z3OP7wqKLh30; Wed,  4 May 2016 16:37:25 -0400 (EDT)
-Received: from [132.203.7.36] (lorien.giref.ulaval.ca [132.203.7.36])
-	by mailhost.giref.ulaval.ca (Postfix) with ESMTP id CC242280863;
-	Wed,  4 May 2016 16:37:25 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.0
-In-Reply-To: <20160422051111.GA32107@sigill.intra.peff.net>
+	id S1754498AbcEDUoa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 16:44:30 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55620 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752820AbcEDUo3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 16:44:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5EAF517D64;
+	Wed,  4 May 2016 16:44:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0eaQsFSLJYhWklIBpL+vAHjwiVE=; b=bFvW/d
+	75g/rQjUpPaX1/KyvIqqOE6gLS3raWBpcKBIB7SXQCw2t+876MuNVpN6yimWGzoV
+	icVkXG4HuO1NKoBm4eVNI6eizQugFVkpLcFCmKu99ZClvKjc6JO6/9iNN0r23aWN
+	FyVto/6kjRYHyraMi3Lijoshd/BwdQBJ2Hl5s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ND5SefGnZJIzJo5IQFMpX4xplEwT51xy
+	QpQA2GIUvtCJ6BD0J7YJkSr2j7HoLaqTMlHtaKLSCGIAKzLv0Vogs9RgWYhj7ssw
+	WtUF/IDkEFqK8YI4/ZmB7z3ipEvbJGk9FXnqaM5s4S6FFJPeny6ssx3i2LQfaEaW
+	+v5PnTuNnm8=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 56D3D17D62;
+	Wed,  4 May 2016 16:44:28 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B0ADE17D61;
+	Wed,  4 May 2016 16:44:27 -0400 (EDT)
+In-Reply-To: <1462324785-26389-1-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Tue, 3 May 2016 18:19:45 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: FE764F5E-1238-11E6-897D-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293589>
 
-Hi,
+Stefan Beller <sbeller@google.com> writes:
 
-sorry for the delay...
+> The discussion in [1] realized that '.' is a faulty suggestion as
+> there is a corner case where it fails:
 
-On 22/04/16 01:11 AM, Jeff King wrote:
-> On Thu, Apr 14, 2016 at 10:59:57AM -0400, Eric Chamberland wrote:
+A discussion does not "realize" (you may say "the discussion made me
+realize" but that gets personal and subjective description that is
+irrelevant in the project history), and this phrase has been
+bothering me since the original round.
+
+Perhaps s/realized/pointed out/ or something?
+
 >
->> just cloned a repo and it checked-out wihtout any error (with git 2.=
-2.0) but
->> got come corrupted files (because I got some sdd failures).
+>> "submodule deinit ." may have "worked" in the sense that you would
+>> have at least one path in your tree and avoided this "nothing
+>> matches" most of the time.  It would have still failed with the
+>> exactly same error if run in an empty repository, i.e.
 >>
->> Then, I get a git core dump when trying to "git status" into the rep=
-o which
->> have a "bad sector" on sdd drive (crypted partition).
->>
->> I tried with git 2.2.0 AND git version 2.8.1.185.gdc0db2c.dirty (jus=
-t
->> modified the Makefile to remove STRIP part)
->>
->> In both cases, I have a  Bus error (core dumped)
+>>        $ E=/var/tmp/x/empty && rm -fr "$E" && mkdir -p "$E" && cd "$E"
+>>        $ git init
+>>        $ rungit v2.6.6 submodule deinit .
+>>        error: pathspec '.' did not match any file(s) known to git.
+>>        Did you forget to 'git add'?
+>>        $ >file && git add file
+>>        $ rungit v2.6.6 submodule deinit .
+>>        $ echo $?
+>>        0
 >
-> Interesting. There was a known issue with reading corrupted pack .idx
-> files, but it was fixed in v2.8.0. So this could be a new thing.
+> So instead of a path spec add a parameter '--all' to deinit all submodules
+
+s/path spec/pathspec/;
+s/a parameter '--all'/the '--all' option/;
+
+> and add a test to check for the corner case of an empty repository.
 >
-> SIGBUS is somewhat rare, though (usually just accessing unmapped memo=
-ry
-> should get us a SIGSEGV). What platform are you on? I seem to recall
-> that hardware like ARM that cares about memory alignment is more like=
-ly
-> to get a SIGBUS.
->
-Linux ... 3.7.10-1.45-desktop #1 SMP PREEMPT Tue Dec 16 20:27:58 UTC=20
-2014 (4c885a1) x86_64 x86_64 x86_64 GNU/Linux
-df .
-=46ilesystem                                     1K-blocks      Used=20
-Available Use% Mounted on
-/dev/mapper/cr_ata-ST31000524AS_6VPCXHSW-part1 961430856 699476812=20
-213116108  77% /pmi
+> The code only needs to learn about the '--all' parameter and doesn't
 
-model name      : Intel(R) Xeon(R) CPU           X5690  @ 3.47GHz
+Likewise.
 
->> Program received signal SIGBUS, Bus error.
->> 0x00007ffff7866d58 in ?? () from /lib64/libcrypto.so.1.0.0
->> (gdb) bt
->> #0  0x00007ffff7866d58 in ?? () from /lib64/libcrypto.so.1.0.0
->> #1  0x3334d90d8c20f3f0 in ?? ()
->> #2  0xe59b5a6cd844a601 in ?? ()
->> #3  0xc587a53f67985ae7 in ?? ()
->> #4  0x3ce81893e5541777 in ?? ()
->> #5  0xdeb18349a4b042ea in ?? ()
->> #6  0x8254de489067ec4b in ?? ()
->> #7  0x6fbef2439704c81b in ?? ()
->> #8  0xe0eee2bb385a96da in ?? ()
->> #9  0x00007ffff6e19ab3 in ?? ()
->> #10 0x00007fffffffc4d0 in ?? ()
->> #11 0x000000000000001d in ?? ()
->> #12 0x00007ffff7863f80 in SHA1_Update () from /lib64/libcrypto.so.1.=
-0.0
->> #13 0x00000000005102c0 in write_sha1_file_prepare
->> (buf=3Dbuf@entry=3D0x7ffff6c81000, len=3D1673936, type=3D<optimized =
-out>,
->> sha1=3Dsha1@entry=3D0x7fffffffc750 "\340_~", hdr=3Dhdr@entry=3D0x7ff=
-fffffc570 "blob
->> 1673936",
->
-> So I'd assume here that the problem is in accessing the memory in "bu=
-f".
-> to actually compute the sha1. That is mmap'd data, but the process is
-> fairly bland (mmap however many bytes stat() tells us the file has, a=
-nd
-> then compute the sha1). You mentioned a bad sector; could it be that =
-the
-> filesystem is corrupted, and the OS is giving us SIGBUS when trying t=
-o
-> read unavailable bytes from an mmap'd file?
+> require further changes as `git submodule--helper list "$@"` will list
+> all submodules in case of "$@" being empty.
 
-Yes it could be that...
+I'd propose doing s/in case of.../when "$@" is empty./
 
->
-> That would explain the SIGBUS versus SIGSEGV.
->
-> What happens if you "cat" the file in question:
+> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+> index 1572f05..24d7197 100644
+> --- a/Documentation/git-submodule.txt
+> +++ b/Documentation/git-submodule.txt
+> @@ -13,7 +13,7 @@ SYNOPSIS
+>  	      [--reference <repository>] [--depth <depth>] [--] <repository> [<path>]
+>  'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
+>  'git submodule' [--quiet] init [--] [<path>...]
+> -'git submodule' [--quiet] deinit [-f|--force] [--] <path>...
+> +'git submodule' [--quiet] deinit [-f|--force] (-a|--all|[--] <path>...)
+>  'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch]
+>  	      [-f|--force] [--rebase|--merge] [--reference <repository>]
+>  	      [--depth <depth>] [--recursive] [--] [<path>...]
+> @@ -144,6 +144,11 @@ deinit::
+>  	you really want to remove a submodule from the repository and commit
+>  	that use linkgit:git-rm[1] instead.
+>  +
+> +To unregister all submodules use `--all` with no path spec. In
 
-hmmm, it shows the beginning of the file, then ends with:
+s/path spec/pathspec/;  But I'd rather see something more like this
+instead of the first sentence:
 
-cat: Avion.Quadratique.cont.vtu.etalon: Input/output error
-
-also, this appear in /var/log/messages:
-
-2016-05-04T16:33:19.243595-04:00 melkor kernel: [1096660.854161]=20
-ata4.00: exception Emask 0x0 SAct 0x1 SErr 0x0 action 0x0
-2016-05-04T16:33:19.243609-04:00 melkor kernel: [1096660.854165]=20
-ata4.00: irq_stat 0x40000008
-2016-05-04T16:33:19.243610-04:00 melkor kernel: [1096660.854168]=20
-ata4.00: failed command: READ FPDMA QUEUED
-2016-05-04T16:33:19.243611-04:00 melkor kernel: [1096660.854175]=20
-ata4.00: cmd 60/08:00:70:30:c6/00:00:53:00:00/40 tag 0 ncq 4096 in
-2016-05-04T16:33:19.243612-04:00 melkor kernel: [1096660.854175]=20
-   res 41/40:08:71:30:c6/00:00:53:00:00/00 Emask 0x409 (media error) <F=
->
-2016-05-04T16:33:19.243613-04:00 melkor kernel: [1096660.854178]=20
-ata4.00: status: { DRDY ERR }
-2016-05-04T16:33:19.243614-04:00 melkor kernel: [1096660.854180]=20
-ata4.00: error: { UNC }
-2016-05-04T16:33:19.340479-04:00 melkor kernel: [1096660.950794]=20
-ata4.00: configured for UDMA/133
-2016-05-04T16:33:19.340484-04:00 melkor kernel: [1096660.950806] sd=20
-3:0:0:0: [sdb] Unhandled sense code
-2016-05-04T16:33:19.340485-04:00 melkor kernel: [1096660.950809] sd=20
-3:0:0:0: [sdb]
-2016-05-04T16:33:19.340485-04:00 melkor kernel: [1096660.950811] Result=
-:=20
-hostbyte=3DDID_OK driverbyte=3DDRIVER_SENSE
-2016-05-04T16:33:19.340486-04:00 melkor kernel: [1096660.950814] sd=20
-3:0:0:0: [sdb]
-2016-05-04T16:33:19.340486-04:00 melkor kernel: [1096660.950815] Sense=20
-Key : Medium Error [current] [descriptor]
-2016-05-04T16:33:19.340486-04:00 melkor kernel: [1096660.950819]=20
-Descriptor sense data with sense descriptors (in hex):
-2016-05-04T16:33:19.340487-04:00 melkor kernel: [1096660.950820]=20
-  72 03 11 04 00 00 00 0c 00 0a 80 00 00 00 00 00
-2016-05-04T16:33:19.340487-04:00 melkor kernel: [1096660.950829]=20
-  53 c6 30 71
-2016-05-04T16:33:19.340488-04:00 melkor kernel: [1096660.950834] sd=20
-3:0:0:0: [sdb]
-2016-05-04T16:33:19.340488-04:00 melkor kernel: [1096660.950836] Add.=20
-Sense: Unrecovered read error - auto reallocate failed
-2016-05-04T16:33:19.340489-04:00 melkor kernel: [1096660.950839] sd=20
-3:0:0:0: [sdb] CDB:
-2016-05-04T16:33:19.340489-04:00 melkor kernel: [1096660.950840]=20
-Read(10): 28 00 53 c6 30 70 00 00 08 00
-2016-05-04T16:33:19.340489-04:00 melkor kernel: [1096660.950848]=20
-end_request: I/O error, dev sdb, sector 1405497457
-2016-05-04T16:33:19.340490-04:00 melkor kernel: [1096660.950870] ata4:=20
-EH complete
-2016-05-04T16:33:22.157550-04:00 melkor kernel: [1096663.764515]=20
-ata4.00: exception Emask 0x0 SAct 0x1 SErr 0x0 action 0x0
-2016-05-04T16:33:22.157561-04:00 melkor kernel: [1096663.764519]=20
-ata4.00: irq_stat 0x40000008
-2016-05-04T16:33:22.157563-04:00 melkor kernel: [1096663.764522]=20
-ata4.00: failed command: READ FPDMA QUEUED
-2016-05-04T16:33:22.157564-04:00 melkor kernel: [1096663.764529]=20
-ata4.00: cmd 60/08:00:70:30:c6/00:00:53:00:00/40 tag 0 ncq 4096 in
-2016-05-04T16:33:22.157565-04:00 melkor kernel: [1096663.764529]=20
-   res 41/40:08:71:30:c6/00:00:53:00:00/00 Emask 0x409 (media error) <F=
->
-2016-05-04T16:33:22.157566-04:00 melkor kernel: [1096663.764532]=20
-ata4.00: status: { DRDY ERR }
-2016-05-04T16:33:22.157567-04:00 melkor kernel: [1096663.764534]=20
-ata4.00: error: { UNC }
-2016-05-04T16:33:22.180479-04:00 melkor kernel: [1096663.787215]=20
-ata4.00: configured for UDMA/133
-2016-05-04T16:33:22.180485-04:00 melkor kernel: [1096663.787225] sd=20
-3:0:0:0: [sdb] Unhandled sense code
-2016-05-04T16:33:22.180486-04:00 melkor kernel: [1096663.787228] sd=20
-3:0:0:0: [sdb]
-2016-05-04T16:33:22.180486-04:00 melkor kernel: [1096663.787230] Result=
-:=20
-hostbyte=3DDID_OK driverbyte=3DDRIVER_SENSE
-2016-05-04T16:33:22.180487-04:00 melkor kernel: [1096663.787232] sd=20
-3:0:0:0: [sdb]
-2016-05-04T16:33:22.180487-04:00 melkor kernel: [1096663.787234] Sense=20
-Key : Medium Error [current] [descriptor]
-2016-05-04T16:33:22.180487-04:00 melkor kernel: [1096663.787237]=20
-Descriptor sense data with sense descriptors (in hex):
-2016-05-04T16:33:22.180488-04:00 melkor kernel: [1096663.787238]=20
-  72 03 11 04 00 00 00 0c 00 0a 80 00 00 00 00 00
-2016-05-04T16:33:22.180488-04:00 melkor kernel: [1096663.787247]=20
-  53 c6 30 71
-2016-05-04T16:33:22.180489-04:00 melkor kernel: [1096663.787252] sd=20
-3:0:0:0: [sdb]
-2016-05-04T16:33:22.180489-04:00 melkor kernel: [1096663.787254] Add.=20
-Sense: Unrecovered read error - auto reallocate failed
-2016-05-04T16:33:22.180490-04:00 melkor kernel: [1096663.787256] sd=20
-3:0:0:0: [sdb] CDB:
-2016-05-04T16:33:22.180490-04:00 melkor kernel: [1096663.787258]=20
-Read(10): 28 00 53 c6 30 70 00 00 08 00
-2016-05-04T16:33:22.180490-04:00 melkor kernel: [1096663.787266]=20
-end_request: I/O error, dev sdb, sector 1405497457
-2016-05-04T16:33:22.180491-04:00 melkor kernel: [1096663.787280] ata4:=20
-EH complete
+	When the command is run without pathspec, it errors out,
+	instead of deinit-ing everything, to prevent mistakes.
 
 
->
->> #15 0x00000000005159f8 in index_mem (sha1=3Dsha1@entry=3D0x7fffffffc=
-750
->> "\340_~", buf=3Dbuf@entry=3D0x7ffff6c81000, size=3D1673936,
->> type=3Dtype@entry=3DOBJ_BLOB,
->>      path=3Dpath@entry=3D0x80a818 "Ressources/dev/Test.ExportationVT=
-K/Ressources.Avion/Avion.Quadratique.cont.vtu.etalon",
->> flags=3Dflags@entry=3D0) at sha1_file.c:3305
->
-> Can it show all of the bytes? I guess from the "size" field it's too =
-big
-> to manually verify, but "cat >/dev/null" should be enough to see if w=
-e
-> can read the whole thing.
->
->> Ii would have expected git to first gave me an error when checking o=
-ut the
->> files!!! Here is the log:
->>
->> Checking out files:  99% (28645/28934)
->> Checking out files: 100% (28934/28934)
->> Checking out files: 100% (28934/28934), done.
->> Already on 'master'
->> Your branch is up-to-date with 'origin/master'.
->>      On valide le d=C3=A9p=C3=B4t TestValidation avec la r=C3=A9f=C3=
-=A9rence:
->> 9b4a485202b2b52922377842c15bfd605d240667
->> HEAD is now at 9b4a485 BUG: On sp=C3=A9cifie bash comme shell...
->>
->> But at least 1 file is corrupted!
->>
->> I keep preciously this faulty repo to further investigation with som=
-eone who
->> can help dig into the coredump and correct it...
->
-> So _if_ my guess is right that you have filesystem corruption, git ma=
-y
-> not even know about it. It wrote the file, and the OS said "OK,
-> success", not knowing it had been partially corrupted.
+> +version 2.8 and prior, you were advised to give '.' to unregister
+> +all submodules. This may continue to work in the future, but as the
+> +path spec '.' may include regular files, this could stop working.
 
-ok, I see...
->
-> And if that guess is right, it also means there's no git bug to fix.
-> SIGBUS is the natural way for the OS to tell the process that mmap'd
-> data isn't available.
+	... the command gave a suggestion to use '.' to unregister
+	all submodules when it was invoked without any argument, but
+	this suggestion did not work and gave a wrong message if you
+	followed in pathological cases and is no longer recommended.
 
-doh... then forget about this...
+Do not predict the future in the documentation when we ourselves
+have not committed to any concrete plan.
 
-Thanks for the enlightments! :)
+>  If `--force` is specified, the submodule's work tree will be removed even if
+>  it contains local modifications.
 
-Eric
->
-> -Peff
->
+I think this sentence talks about "working tree" (as opposed to
+"worktree"), so s/work tree/working tree/.
+
+> @@ -247,6 +252,11 @@ OPTIONS
+>  --quiet::
+>  	Only print error messages.
+>  
+> +-a::
+> +--all::
+> +	This option is only valid for the deinit command. Unregister all
+> +	submodules in the work tree.
+
+Likewise.
+
+>  -b::
+>  --branch::
+>  	Branch of repository to add as submodule.
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 43c68de..6dabb56 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -8,7 +8,7 @@ dashless=$(basename "$0" | sed -e 's/-/ /')
+>  USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
+>     or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
+>     or: $dashless [--quiet] init [--] [<path>...]
+> -   or: $dashless [--quiet] deinit [-f|--force] [--] <path>...
+> +   or: $dashless [--quiet] deinit [-f|--force] (-a|--all| [--] <path>...)
+>     or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--reference <repository>] [--recursive] [--] [<path>...]
+>     or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
+>     or: $dashless [--quiet] foreach [--recursive] <command>
+> @@ -521,6 +521,7 @@ cmd_init()
+>  cmd_deinit()
+>  {
+>  	# parse $args after "submodule ... deinit".
+> +	deinit_all=
+>  	while test $# -ne 0
+>  	do
+>  		case "$1" in
+> @@ -530,6 +531,9 @@ cmd_deinit()
+>  		-q|--quiet)
+>  			GIT_QUIET=1
+>  			;;
+> +		-a|--all)
+> +			deinit_all=t
+> +			;;
+>  		--)
+>  			shift
+>  			break
+> @@ -544,9 +548,13 @@ cmd_deinit()
+>  		shift
+>  	done
+>  
+> -	if test $# = 0
+> +	if test -n "$deinit_all" && test "$#" -ne 0
+> +	then
+> +		die "$(eval_gettext "usage: $dashless [--quiet] deinit [-f|--force] (--all | [--] <path>...)")"
+
+I doubt that "usage:" wants to go thru l10n.
+
+I suspect that it is more friendly to the user to say that in prose,
+i.e.e.g. "--all and pathspec cannot be given at the same time", than
+forcing them to grok the (alternative|possibilities).
+
+> +	fi
+> +	if test $# = 0 && test -z "$deinit_all"
+>  	then
+> -		die "$(eval_gettext "Use '.' if you really want to deinitialize all submodules")"
+> +		die "$(eval_gettext "Use '--all' if you really want to deinitialize all submodules")"
+>  	fi
+
+This is good.
+
+>  	git submodule--helper list --prefix "$wt_prefix" "$@" |
+> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+> index e1abd19..6e28ea5 100755
+> --- a/t/t7400-submodule-basic.sh
+> +++ b/t/t7400-submodule-basic.sh
+> @@ -11,6 +11,10 @@ subcommands of git submodule.
+>  
+>  . ./test-lib.sh
+>  
+> +test_expect_success 'submodule deinit works on empty repository' '
+> +	git submodule deinit --all
+> +'
+> +
+>  test_expect_success 'setup - initial commit' '
+>  	>t &&
+>  	git add t &&
+> @@ -858,7 +862,7 @@ test_expect_success 'submodule deinit works on repository without submodules' '
+>  		>file &&
+>  		git add file &&
+>  		git commit -m "repo should not be empty"
+> -		git submodule deinit .
+> +		git submodule deinit --all
+>  	)
+>  '
+>  
+> @@ -887,12 +891,12 @@ test_expect_success 'submodule deinit from subdirectory' '
+>  	rmdir init
+>  '
+>  
+> -test_expect_success 'submodule deinit . deinits all initialized submodules' '
+> +test_expect_success 'submodule deinit --all deinits all initialized submodules' '
+>  	git submodule update --init &&
+>  	git config submodule.example.foo bar &&
+>  	git config submodule.example2.frotz nitfol &&
+>  	test_must_fail git submodule deinit &&
+> -	git submodule deinit . >actual &&
+> +	git submodule deinit --all >actual &&
+>  	test -z "$(git config --get-regexp "submodule\.example\.")" &&
+>  	test -z "$(git config --get-regexp "submodule\.example2\.")" &&
+>  	test_i18ngrep "Cleared directory .init" actual &&
+> @@ -958,11 +962,11 @@ test_expect_success 'submodule deinit is silent when used on an uninitialized su
+>  	git submodule deinit init >actual &&
+>  	test_i18ngrep ! "Submodule .example. (.*) unregistered for path .init" actual &&
+>  	test_i18ngrep "Cleared directory .init" actual &&
+> -	git submodule deinit . >actual &&
+> +	git submodule deinit --all >actual &&
+>  	test_i18ngrep ! "Submodule .example. (.*) unregistered for path .init" actual &&
+>  	test_i18ngrep "Submodule .example2. (.*) unregistered for path .example2" actual &&
+>  	test_i18ngrep "Cleared directory .init" actual &&
+> -	git submodule deinit . >actual &&
+> +	git submodule deinit --all >actual &&
+>  	test_i18ngrep ! "Submodule .example. (.*) unregistered for path .init" actual &&
+>  	test_i18ngrep ! "Submodule .example2. (.*) unregistered for path .example2" actual &&
+>  	test_i18ngrep "Cleared directory .init" actual &&
+
+I would have expected that we'd be testing both '.' and '--all', by
+keeping the '.' tests as they were and adding tests for '--all'.  It
+is not like we are discouraging use of '.' when the repository is
+known to have submodule(s) and '.' is expected to match.
+
+Other than that, looks good to me.  Thanks.
