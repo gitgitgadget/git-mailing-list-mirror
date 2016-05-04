@@ -1,130 +1,106 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 78/83] Move libified code from builtin/apply.c to apply.{c,h}
-Date: Wed, 4 May 2016 12:39:07 +0200
-Message-ID: <CAP8UFD3o_u48rRHP7ZOWnVH7X0O5wwM-Gk-VpH5PP_kFx19ZpQ@mail.gmail.com>
-References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
-	<1461504863-15946-79-git-send-email-chriscool@tuxfamily.org>
-	<CACsJy8Cb20L=y_=J6S5=rngvH1n0aWvtf5eJrXP-df0aoiJyrQ@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] bisect--helper: use OPT_CMDMODE instead of
+ OPT_BOOL
+Date: Wed, 4 May 2016 13:02:49 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605041259180.9313@virtualbox>
+References: <01020153a254974b-68f7d16a-66d7-4dc1-805d-2185ff1b3ebf-000000@eu-west-1.amazonses.com> <1462338472-3581-1-git-send-email-pranit.bauva@gmail.com> <1462338472-3581-2-git-send-email-pranit.bauva@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 04 12:39:16 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org, chriscool@tuxfamily.org,
+	christain.couder@gmail.com, larsxschneider@gmail.com
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 04 13:03:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axuD5-0001Ct-Dc
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 12:39:15 +0200
+	id 1axua4-0002qM-HM
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 13:03:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757671AbcEDKjK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 06:39:10 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:38072 "EHLO
-	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757663AbcEDKjJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 06:39:09 -0400
-Received: by mail-wm0-f48.google.com with SMTP id g17so85940626wme.1
-        for <git@vger.kernel.org>; Wed, 04 May 2016 03:39:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=xl3HqQSz+MpgBTUn/lzwvIpcjQFJ4JhQOgrIDyNPGOM=;
-        b=K/1D4kPQmFr8i7FcOeDtgAlRRfsjpmZ4dSAP/wWjUzQEX2oe4Jf/15VzAm+D0A6Lsy
-         A3cb+HtW+uKD1/QsFDd75ZnVrtgfokc5sa3D5Zc+HCe6EjmUcRIiXXBbzQvoSFsdPyRG
-         5liH3WYQi3eRY6AJ+3EJgwzn2hLI+Cp2RqjF9tfg7JRQe4c5yoJAsWx3+ZaOvvNsbPMF
-         7UqEWSKuGFQ6nVFO4YgODP7dwDEp3Q2Jic3h8CAYklKvpY/7FAUkS+zUHDJEFVtaPHDd
-         ScWBtyl+ywIO+W5Lm41WssrTaX6gMzyZj8glgpA8FFPucWm1qUB+fmFUQOdoUnZV0FiE
-         qGdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=xl3HqQSz+MpgBTUn/lzwvIpcjQFJ4JhQOgrIDyNPGOM=;
-        b=haq5+nXvmscky4yM+X5czFbeSCmwcByrpC2gUcsmYnULJaeBFE9/GncfH0ScGhH7XJ
-         iG+AHqT4Jy6AjfShwTilBv9cfnxajcJUGpl0wDyFmx1FfwBsg8BEfRnqWyaCXh+EVYqd
-         vVm5Wjs0HqNZZGjOVHJpJH0R35pxIu8XuFO9yg/m2oxpPX8kcPKhttXHzVqB1LzbWtLN
-         Oei1AS8ZxYqcSj4cPB9yDK0GyVcL2pKpnRoovUn6eJujMcQX+Zg/KRMCV3mkOrGW5v/k
-         c3MRavUJoNm6Q3TmCuhpsjpgmqMSRqLAh3AZz4jiuKisXSsZkPHAnNveUCVHFFB5etE7
-         khBQ==
-X-Gm-Message-State: AOPr4FXpZ9Gg4JPMv4dw1XZlZO/F9N2Zf59bfoybpdY5hIg3jb7qzA5FupzkVEgWpDmQ3rBLGXlvxvpONHQ1fg==
-X-Received: by 10.28.129.22 with SMTP id c22mr31238120wmd.89.1462358347739;
- Wed, 04 May 2016 03:39:07 -0700 (PDT)
-Received: by 10.194.246.4 with HTTP; Wed, 4 May 2016 03:39:07 -0700 (PDT)
-In-Reply-To: <CACsJy8Cb20L=y_=J6S5=rngvH1n0aWvtf5eJrXP-df0aoiJyrQ@mail.gmail.com>
+	id S1757596AbcEDLC4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 07:02:56 -0400
+Received: from mout.gmx.net ([212.227.17.22]:55868 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751606AbcEDLC4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 07:02:56 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MCggg-1aph7J06bK-009P2R; Wed, 04 May 2016 13:02:51
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <1462338472-3581-2-git-send-email-pranit.bauva@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:0z0LhfrJ6zKQIW+IEd3SwxYszGbpqBRmBpq7UN5xwPhvtyZJb/d
+ z6nZFbvtDTbXC56igUwGRsxGL+8k6bO5J0KNTk7QvDpE6dU708/9DjSMOnM4E7uf65zmYFo
+ 3qzEztU+wkeuvnzEg+prcrjgWWUnp3ZC2AKZJ5BJmspVpaNpiYYgIqj+BOuoBZW7bfbSPvS
+ AXj2mRldKUJUcrisC3qqg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:X2GUzoKBdHc=:HFw0aC0Nm9dGFq7wcTXNDO
+ WdGq11YDnHWkD59R7b3iz/EG0DiEO9m/SdANVvPfbk+P9Fgfi5nJGBi7/LBC8iV4ceCLCMpya
+ 5GdNkk0xLkwMid6hVbg0G7HQleFxk2Tfo2QgGkWmSlX+xPaEHbaDBweY3z6mt6s69C4t9BP+i
+ iEPH6eU0FIGow65HHVHUFT3lQ0KQhfo6Jirx5v382g6erngM8DzuoEF9QqC7NP9deGmaZZtUR
+ oEJptwBj1W2ftn7MTK1mnmyAnxQEHRtYqcCtQD4bPQjMTO7bRtH0AOpFXO1DDw/f4lu7cRGfs
+ ARm707mf+kfg3qQ6feyvbI/8XsrUoNvcEOU0DvzVZd4XqtGfVTz0kbqWPp2fb8X0H+e0FgWXJ
+ OURRlhBeqMV+PXnD8QbXmnjBZtfSnEGW4SfUTaqRT3XJbQhohpQ2xfxR6bhOAnisi0w7eWt00
+ GAT2F7kzbGMBAgFwdR7D68JUhkvcPcf42D9hWflyxnD20CKWph+U/6DeBmlaW0FZTeIKZn+UR
+ 8DrGecbl6HoDeZ5JzAtV/1dtfwdSrLGhE3wElqLRDlu7Fx28DOyTznErLus4/XF4QMHS03xNn
+ ZVH3l02Xil8VvFVW60y0jgEVFp0bkTUdMvFHgVQUUoICs+c8AIUppPPLFERHDre6JA5TSyzkq
+ 0u8RGIq2Lwrnwv52bcDaXEILx54fHNTCI0E6VP8csBMMV9OsYjxzXtMgd164+DpHs5GLiNvd9
+ bD9bA7S49GicrAV/drlQTGIW4qpiuMZWfwl3LvueOpzEamb3MoUO7SmnIWsckx6HeCX8+yt/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293531>
 
-On Mon, Apr 25, 2016 at 3:46 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Sun, Apr 24, 2016 at 8:34 PM, Christian Couder
-> <christian.couder@gmail.com> wrote:
->> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->> ---
->>  apply.c         | 4678 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
->>  apply.h         |   19 +
->>  builtin/apply.c | 4677 ------------------------------------------------------
->>  3 files changed, 4695 insertions(+), 4679 deletions(-)
->
-> Maybe if you can rearrange functions in the right order in
-> builtin/apply.c first and move everything in one patch (i.e. apply.c
-> is created here), rename detection kicks in realizes apply.c is a
-> rename of (old) builtin/apply.c and only shows the diff of (new)
-> builtin/apply.c which is about 90 lines... I haven't tested if this is
-> true though.
+Hi Pranit,
 
-Right now I get:
+On Wed, 4 May 2016, Pranit Bauva wrote:
 
-> git log --summary -M -C -B -1 20f1d27
-commit 20f1d274609f5dde2eaaa279e7ee79fd5ef9c849
-Author: Christian Couder <chriscool@tuxfamily.org>
-Date:   Fri Apr 22 20:55:46 2016 +0200
+> `--next-all` is meant to be used as a sub command to support multiple
+> "operation mode" though the current implementation does not contain any
+> other sub command along side with `--next-all` but further commits will
+> include some more subcommands.
 
-    Move libified code from builtin/apply.c to apply.{c,h}
+That is a good explanation.
 
-    Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> index 3324229..5f6ef8c 100644
+> --- a/builtin/bisect--helper.c
+> +++ b/builtin/bisect--helper.c
+> @@ -8,13 +8,17 @@ static const char * const git_bisect_helper_usage[] = {
+>  	NULL
+>  };
+>  
+> +enum sub_commands {
 
- copy builtin/apply.c => apply.c (96%)
- rewrite builtin/apply.c (96%)
+Instead of "sub_commands" and ...
 
-And using format-patch:
+> +	NEXT_ALL = 1
+> +};
+> +
+>  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+>  {
+> -	int next_all = 0;
+> +	int sub_command = 0;
 
-> git format-patch -M -C -B -1  -o ../../patches/test-libify-apply-use-in-am/ 20f1d27
-../../patches/test-libify-apply-use-in-am/0001-Move-libified-code-from-builtin-apply.c-to-apply.-c-.patch
-> wc ../../patches/test-libify-apply-use-in-am/0001-Move-libified-code-from-builtin-apply.c-to-apply.-c-.patch
-  5264  23426 147133
-../../patches/test-libify-apply-use-in-am/0001-Move-libified-code-from-builtin-apply.c-to-apply.-c-.patch
+... sub_command, seeing as you convert things into ...
 
-The previous patch was:
+>  	int no_checkout = 0;
+>  	struct option options[] = {
+> -		OPT_BOOL(0, "next-all", &next_all,
+> -			 N_("perform 'git bisect next'")),
+> +		OPT_CMDMODE(0, "next-all", &sub_command,
+> +			 N_("perform 'git bisect next'"), NEXT_ALL),
 
-> wc ../../patches/libify-apply-use-in-am25/0078-Move-libified-code-from-builtin-apply.c-to-apply.-c-.patch
-  9436  41887 254435
-../../patches/libify-apply-use-in-am25/0078-Move-libified-code-from-builtin-apply.c-to-apply.-c-.patch
+... using CMDMODE, how about using `enum mode` and `int mode`? And
+actually `enum mode mode` instead of `int mode`. Or...
 
-So it is better, though not really as small as I would like.
+Actually, it could be even more concise by writing
 
-I am also not so sure that moving everything in one patch would make
-things much smaller.
-By the way at one point I have to create apply.h from some of the
-content of builtin/apply.c (like the struct apply_state) and I don't
-know if you are talking about that too.
+	enum { NEXT_ALL = 1 } mode = 0;
 
-If you want you can try using the latest version of the series:
+There is not really a need for that enum to be in a different scope than
+cmd_bisect__helper(), and neither does it need to be named...
 
-https://github.com/chriscool/git/commits/libify-apply-use-in-am39
-
-Right now I think I will just use -M -C -B with format-patch for v2.
-
-Thanks,
-Christian.
+Ciao,
+Dscho
