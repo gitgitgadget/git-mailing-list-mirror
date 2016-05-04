@@ -1,133 +1,130 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] t5510: run auto-gc in the foreground
-Date: Wed, 4 May 2016 07:48:25 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605040741500.9313@virtualbox>
-References: <20160501153743.323-1-szeder@ira.uka.de> <alpine.DEB.2.20.1605020859131.9313@virtualbox> <20160503015526.Horde.e0uZ0P4BqpNnwx_zmhu3WfE@webmail.informatik.kit.edu> <20160503135028.Horde.jeJdKT1kb2NTVAS1HpcsQh2@webmail.informatik.kit.edu>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/2] bisect--helper: use OPT_CMDMODE instead of OPT_BOOL
+Date: Wed, 4 May 2016 02:07:50 -0400
+Message-ID: <CAPig+cQxpZXKqykFoa2kzCZSC2YqpPXnGocs2YttcJ+rCxmzgQ@mail.gmail.com>
+References: <01020153a254974b-68f7d16a-66d7-4dc1-805d-2185ff1b3ebf-000000@eu-west-1.amazonses.com>
+	<1462338472-3581-1-git-send-email-pranit.bauva@gmail.com>
+	<1462338472-3581-2-git-send-email-pranit.bauva@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-196050737-1462340906=:9313"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Wed May 04 07:48:51 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	christain.couder@gmail.com,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Lars Schneider <larsxschneider@gmail.com>
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 04 08:08:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axpg2-00064f-T8
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 07:48:51 +0200
+	id 1axpyp-00070d-H4
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 08:08:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756908AbcEDFsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 01:48:43 -0400
-Received: from mout.gmx.net ([212.227.15.18]:59749 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751574AbcEDFsl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 01:48:41 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LxPNC-1biYYy1w0Q-01707i; Wed, 04 May 2016 07:48:26
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160503135028.Horde.jeJdKT1kb2NTVAS1HpcsQh2@webmail.informatik.kit.edu>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:DcBhEn8weTLtuC49klVnXWagFmUco8YF1ZsGrk0qIUmCJoBg2qA
- MZNGjcdpR6kDoTIxxkRVMf8sQwAQm0wHUVzkaiv/2iEH1BJmcmlkPfen3ui4UCUQ3lLyarf
- +YJJPi91LEVtKpYVCnCOpSeiNQtK6Anm1vfhUO/r0Prncx82TT4gBIjdoSr6um9Dq/ME1Fn
- YmFc7xs4iizaJLU1XNXtQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OPDGZJNs/wQ=:j8jXJCVI+mADb8O/3ogSaa
- zTM4HEpXNsUZMlzldvlyI6JLKCYVrfRrxbgz/udqikR+I/P3CFQUAxmQxHu6pCFlkw/VSqbi8
- aaKjhUgy967WJq0su31JwlRsmBFUxl1lLKcYbcet7HA92Z4YcIw7M9pa/yMFCRp3mJbEYxoHX
- TjqKywtnqsC5QKAld/b1XgRT98SJnRTZHhs7e8XGlJDqdrJHIVDbw6NWA+6pZhPSsPEqEv5XS
- OwHb9xq+PksRr0TUUvqyRyAAf5TKjRiuez+tI2LCJ7sfkpzcbCXzz+s0iny07v7UeHE8xnY3z
- USshdGraKuZ9rtjOo9fgUpB1/zsuahv+2MJCQNau3RM2Q8tyEfUCOWCz0hvQxasHWJ6/CdOme
- njsL8cp91f/j9u2bfK2umO0LmdpM5ybjituJNbBr7mHD2ajV2ktKsspil0/yEYp3tiC6xsdI7
- ZJKJqNLBc2Ap1GsWUPfXDJI+J56gbX1AxbG5xM4Ha9/XDWJl7KjARnnvu8xMd9aHiT7c/yvtU
- jNwcL/zDMKSZuep4i8STC48VbOrFh/8oXC1N/EaMyfPOzDmhlfmiBmJG9Ce8+fssVlgeoUXWt
- eqxjh2XfcJJcND+ZMVjk5aQThGIcdS/5qEAHvCASzUtZjuqnh0A9Afw8UHuWEib3RZf66/ZjB
- PAoVr6V2qntVCUsTenGQkfnN32fsTdHvcH717YkCIT2thXWAnSQ5nNhr4+Ar2qvirT+Hsb9ab
- Yg5Vu497Qt8O2v++gIv/Nua3PUH1WZ01cIYRCKDE5xbhaVk5PSmJJ98whWbAqZ+cGBMC3t0c 
+	id S1757306AbcEDGIK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 02:08:10 -0400
+Received: from mail-ig0-f193.google.com ([209.85.213.193]:33098 "EHLO
+	mail-ig0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757307AbcEDGHv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 02:07:51 -0400
+Received: by mail-ig0-f193.google.com with SMTP id rc4so4907778igc.0
+        for <git@vger.kernel.org>; Tue, 03 May 2016 23:07:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=ctQrfXwICwkm83cCkvltxxdu3lmRdKp6cx99VC1ZryA=;
+        b=BS+AhCAArOTMiDHhyCR/551k38O2Q//CUN6rnAk0oHjFMUYgtmwxh7+/QOSAynQP/z
+         mYQm/BCFsYlwbOcB1eq9aeWLge+fFSbkYAuNy79TvMPVubNELIuy7HC2fqKySWBE6Z/7
+         FxtvebngUY3jZKpTpbxyIIvUqt12PM0qLg9JcUUcmqTPEFDvMLpm0FZIpUQE2sk3ZfNG
+         LSUJbavkeTfJD2lRou8kpQ6NxILhvNFETEbJ0pFek879MiMFDLr+DQWKvHGiJRx0/Qyc
+         /NwQSD+YTBjMCsNKGq9MInn4/KTXASdKoqMyC6V5AuDgWgDz5+C3syptPCFjaFb0G1oR
+         8kDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=ctQrfXwICwkm83cCkvltxxdu3lmRdKp6cx99VC1ZryA=;
+        b=GrOJbn3pBl+q8JNt3ZfkxbMRK0dD2eQpsnjhm90Rxa3qQInm/dd1/hVaiM82SC4byN
+         iueZt/NOrOllkM55KFKUOzkW+KlB5vtpbUIq56tYqrYwEAZaUuigW9MZqnILAqEY0oZu
+         /vRBGGmgg5a8Uc2vL7te02rlALzXOg1kyrZtjM8kaJY0VfEbME71Ji87L51Rcp/gTrvh
+         IiO6OySPA4Sj2O6oJi1JhErHHe00nfXxFndO7iarkbnnTn/oJKvjjxGdlXv6kacF7Fv5
+         vVQRmC+BMyCLC22HD/wc023Zt7Yxtl1ocO8KbfLoPB62/PMH+P7cipaqGT6429q9vlPj
+         KY8g==
+X-Gm-Message-State: AOPr4FVpM6iW+rh7+fOvY25U8IIPOzlJjiMNbcudcI5mTcrQJKSG9OZ7pXJaYsogx72/lYfGaLiRKJ8UnCwviQ==
+X-Received: by 10.50.3.105 with SMTP id b9mr8532348igb.17.1462342070895; Tue,
+ 03 May 2016 23:07:50 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Tue, 3 May 2016 23:07:50 -0700 (PDT)
+In-Reply-To: <1462338472-3581-2-git-send-email-pranit.bauva@gmail.com>
+X-Google-Sender-Auth: 3WmGDDdHUoGD9QY-xzIMy71hURk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293494>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Wed, May 4, 2016 at 1:07 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+> bisect--helper: use OPT_CMDMODE instead of OPT_BOOL
 
---8323329-196050737-1462340906=:9313
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+This subject is too low-level, talking about implementation details,
+whereas it should be giving a high-level summary of the change.
 
-Hi G=C3=A1bor,
+> `--next-all` is meant to be used as a sub command to support multiple
+> "operation mode" though the current implementation does not contain any
+> other sub command along side with `--next-all` but further commits will
+> include some more subcommands.
 
-On Tue, 3 May 2016, SZEDER G=C3=A1bor wrote:
+You've spelled this as both "sub command" and "subcommand". Choose one
+and stick with it. ("subcommand" is probably more common.)
 
-> Quoting SZEDER G=C3=A1bor <szeder@ira.uka.de>:
->=20
-> >Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> >
-> > >Hi G=C3=A1bor,
-> > >
-> > >On Sun, 1 May 2016, SZEDER G=C3=A1bor wrote:
-> > >
-> > > >diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-> > > >index 38321d19efbe..454d896390c0 100755
-> > > >--- a/t/t5510-fetch.sh
-> > > >+++ b/t/t5510-fetch.sh
-> > > >@@ -682,6 +682,7 @@ test_expect_success 'fetching with auto-gc does
-> > > >not lock up' '
-> > > > (
-> > > >  cd auto-gc &&
-> > > >  git config gc.autoPackLimit 1 &&
-> > > >+=09=09git config gc.autoDetach false &&
-> > > >  GIT_ASK_YESNO=3D"$D/askyesno" git fetch >fetch.out 2>&1 &&
-> > > >  ! grep "Should I try again" fetch.out
-> > > > )
-> > >
-> > >Sounds good to me.
-> >
-> >There is something still bothering me, though.
-> >
-> >I take this was a Windows-specific issue; deleting open files on Linux i=
-s
-> >no brainer.  According to a comment on the original Git for Windows issu=
-e
-> >at github[1], 'git gc' runs in the background by default on Windows as w=
-ell.
->=20
-> Ok, having slept on it, it was a false alarm.
->=20
-> Though 'git gc --auto' claims "Auto packing the repository in background =
-for
-> optimum performance." on Windows, it does in fact runs in the foreground.
+> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+> ---
+> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> @@ -8,13 +8,17 @@ static const char * const git_bisect_helper_usage[] = {
+>         NULL
+>  };
+>
+> +enum sub_commands {
 
-Thanks for checking. I ran out of time yesterday.
+How about calling this 'enum subcommand' (no underscore, non-plural)?
 
-> 'git gc --auto' first prints that message, unless gc.autoDetach is disabl=
-ed,
-> and then calls daemonize() to go to the background.  However, daemonize()=
- is
-> basically a no-op on Windows, thus 'git gc' will remain in the foreground=
- and
-> the sequence I described below is impossible.  Good.
+> +       NEXT_ALL = 1
+> +};
+> +
+>  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+>  {
+> -       int next_all = 0;
+> +       int sub_command = 0;
 
-Oh, right. I think this will take a lot of energy to fix: daemonize()'s
-functionality is not really available, indeed. What *is* available is a
-spawn() that detaches the new process.
+s/sub_command/subcommand/
 
-> Perhaps it would be worth updating 'git gc' to not lie about going to the
-> background when we can already know in advance that it won't.
+>         struct option options[] = {
+> -               OPT_BOOL(0, "next-all", &next_all,
+> -                        N_("perform 'git bisect next'")),
+> +               OPT_CMDMODE(0, "next-all", &sub_command,
+> +                        N_("perform 'git bisect next'"), NEXT_ALL),
+> @@ -23,9 +27,14 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+>         argc = parse_options(argc, argv, prefix, options,
+>                              git_bisect_helper_usage, 0);
+>
+> -       if (!next_all)
+> +       if (!sub_command)
+>                 usage_with_options(git_bisect_helper_usage, options);
+>
+> -       /* next-all */
+> -       return bisect_next_all(prefix, no_checkout);
+> +       switch (sub_command) {
+> +       case NEXT_ALL:
+> +               return bisect_next_all(prefix, no_checkout);
+> +       default:
+> +               die(_("bug: unknown subcommand '%d'"), sub_command);
 
-Hmm.  https://github.com/git/git/blob/master/builtin/gc.c#L372-L373
-already looks correct (should it really know that we cannot daemonize()?
-What about other code paths using that function?):
+s/bug/BUG/
 
-=09=09=09if (detach_auto)
-=09=09=09=09fprintf(stderr, _("Auto packing the repository in background fo=
-r optimum performance.\n"));
-=09=09=09else
-=09=09=09=09fprintf(stderr, _("Auto packing the repository for optimum perf=
-ormance.\n"));
+Also, as this is a programmer error rather than an end-user error, it
+does not need to be localized, thus drop the _(...).
 
-Ciao,
-Dscho
---8323329-196050737-1462340906=:9313--
+> +       }
+> +       return 0;
+>  }
