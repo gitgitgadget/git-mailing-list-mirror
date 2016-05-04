@@ -1,109 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 1/2] Documentation: fix linkgit references
-Date: Wed, 04 May 2016 14:15:39 -0700
-Message-ID: <xmqq8tzpfrt0.fsf@gitster.mtv.corp.google.com>
-References: <E4A56B4E-6F2E-44E3-870B-D1D3A71B2869@gmail.com>
-	<1462351116-19308-1-git-send-email-larsxschneider@gmail.com>
-	<1462351116-19308-2-git-send-email-larsxschneider@gmail.com>
-	<F6210682-2FCA-423D-B6D3-06938C95D497@gmail.com>
-	<5729DF25.7030503@ramsayjones.plus.com>
-	<xmqqd1p1ivfw.fsf@gitster.mtv.corp.google.com>
-	<xmqqvb2thczf.fsf@gitster.mtv.corp.google.com>
-	<20160504192516.GD21259@sigill.intra.peff.net>
-	<xmqq7ff9h9zo.fsf@gitster.mtv.corp.google.com>
-	<20160504200635.GA22787@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Portability of git shell scripts?
+Date: Wed, 4 May 2016 17:20:28 -0400
+Message-ID: <20160504212028.GG21259@sigill.intra.peff.net>
+References: <CALR6jEh5dAcnqiyo4kXkj+8imfQQd0nT=baPOW_qbJpJwmFsyw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	git@vger.kernel.org, Matthieu.Moy@grenoble-inp.fr,
-	sbeller@google.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 04 23:15:47 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Armin Kunaschik <megabreit@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed May 04 23:20:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ay494-0004Cp-Sw
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 23:15:47 +0200
+	id 1ay4Dl-0006yx-NE
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 23:20:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752712AbcEDVPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 17:15:43 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53284 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751844AbcEDVPm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 17:15:42 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B8A2D18CC2;
-	Wed,  4 May 2016 17:15:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CRYFDgvco5o1/11mQ2vlsF8+Mlc=; b=mNTOen
-	X7Xpnv7fkw/8z4FGvvuYp+VxklOxraPk8rC4cvQT9m2ACZ2CWhCfkImD19MVzCgq
-	Hq6F4d3t/DkQZk1q7+tj+kHqvKARMbZK0ae6YSM8wnSZZ/e7063uzh50awtDVrRx
-	IvRLmbP0xMFbjs/1bDMY8+zRkOApykk5iygtE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=parRSIl1WuwPtSzCpmTVo8hz2lLlyivW
-	eLNrz3upAghG53njVFaJArQkgMsM9fI621+gy7l4wjt7INEsTBylxcwaW8tbILAT
-	HYRKwMM1I8DLP4g91yE8zn9zQHugX8+fv8Q1lmUgCujtUFQ+hYn00iPvF4ytm+96
-	HeVRZ8v5cUc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B04CA18CC1;
-	Wed,  4 May 2016 17:15:41 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1A4F018CC0;
-	Wed,  4 May 2016 17:15:41 -0400 (EDT)
-In-Reply-To: <20160504200635.GA22787@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 4 May 2016 16:06:36 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5B148B50-123D-11E6-83CD-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1754236AbcEDVUc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 17:20:32 -0400
+Received: from cloud.peff.net ([50.56.180.127]:34234 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753028AbcEDVUb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 17:20:31 -0400
+Received: (qmail 4746 invoked by uid 102); 4 May 2016 21:20:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 May 2016 17:20:30 -0400
+Received: (qmail 14180 invoked by uid 107); 4 May 2016 21:20:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 May 2016 17:20:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 May 2016 17:20:28 -0400
+Content-Disposition: inline
+In-Reply-To: <CALR6jEh5dAcnqiyo4kXkj+8imfQQd0nT=baPOW_qbJpJwmFsyw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293594>
 
-Jeff King <peff@peff.net> writes:
+On Wed, May 04, 2016 at 08:17:38PM +0200, Armin Kunaschik wrote:
 
-> On Wed, May 04, 2016 at 12:57:31PM -0700, Junio C Hamano wrote:
->
->> > Is it worth just making this a perl script, rather than a shell script
->> > with a giant inline perl script? Perl is actually really good at doing
->> > that "grep" as it reads the file. :)
->> 
->> OK.
->
-> Hmm. This new version uses File::Find:
->
->> +sub lint_it {
->> +	lint($File::Find::name) if -f;
->> +}
->> +
->> +find({ wanted => \&lint_it, no_chdir => 1 }, "Documentation");
->
-> That will inspect non-source files, too.
->
-> Would:
->
->   open(my $files, '-|', qw(git ls-files));
->   while (<$files>) {
->     chomp;
->     ...
->   }
->
-> make sense? Or a simpler but non-streaming spelling:
->
->   my @files = map { chomp; $_ } `git ls-files`;
+> I'm trying to compile/test/use git 2.8.2 on AIX 6.1 with no bash available.
+> /bin/sh is a hard link to /bin/ksh which is a ksh88, a posix shell.
+> Is this supposed to work?
 
-I forgot to say that I wanted not to rely on "git" (i.e. OK to use
-this on tarball extract).
+We aim for a practical subset of Bourne shells, including bash, dash,
+ash, ksh, etc. There's at least one Bourne-ish shell known not to work,
+which is Solaris /bin/sh[1]. POSIX is usually a good guide, but we aim
+for practical portability more than adhering strictly to the standards
+document.
 
-> Or just taking the list of files on the command line as your original
-> did, and feeding `ls-files` from the caller. That also lets you do
-> "link-gitlink git-foo.txt", etc.
+I've tested with mksh in the past (though it's possible that we've
+introduced a regression since then). But I think we've run into problems
+with ksh93[2]. I don't know about ksh88, or what construct it doesn't
+like.  It may or may not be easy to work around.
 
-Yes, I think that is the most sensible.
+> As an example: make test fails on nearly every t34* test and on tests
+> which contain rebase.
+> The installation of bash (and manually changing the shebang to
+> /bin/bash) "fixes" all rebase test failures. So obviously git-rebase
+> is not portable at some point.
+
+Right. Any modern-ish Bourne shell will do, so moving to bash is one way
+to fix it.
+
+> Does it make any sense to put work into making these scripts portable,
+> that is, work with posix shells?
+
+Maybe. :) If you can find what it is that ksh88 is unhappy with, we can
+see how painful it is to adapt to. But given my looking into ksh93 in
+[2], I suspect it will be easier to just use a more modern shell.
+
+> And, as last resort, is it possible to configure git use bash in some
+> or all shell scripts?
+
+You can set SHELL_PATH in your config.mak file.
+
+-Peff
+
+[1] Solaris /bin/sh doesn't even understand $(), so we declared it as
+    hopeless long ago. I think most people just replace it with bash,
+    but I suspect /usr/xpg6/bin/sh probably works, too.
+
+[2] http://thread.gmane.org/gmane.comp.version-control.git/268657/focus=268666
