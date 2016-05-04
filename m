@@ -1,102 +1,107 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] bisect: rewrite `check_term_format` shell function
- in C
-Date: Wed, 4 May 2016 13:13:18 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605041309430.9313@virtualbox>
-References: <01020153a254974b-68f7d16a-66d7-4dc1-805d-2185ff1b3ebf-000000@eu-west-1.amazonses.com> <1462338472-3581-1-git-send-email-pranit.bauva@gmail.com> <1462338472-3581-3-git-send-email-pranit.bauva@gmail.com> <CAPig+cRL7QkQHpSmeKEYECd9JQO8B29OOJoGx2AQORPfmW7QQQ@mail.gmail.com>
- <CAFZEwPNKug1pvGC1fTvZzVPBGKy71fw6S3qcx_fx98nYZasR3w@mail.gmail.com>
+Subject: Re: [PATCH v6 0/2] Add support for sending additional HTTP headers
+Date: Wed, 4 May 2016 13:20:34 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605041316160.9313@virtualbox>
+References: <cover.1461837783.git.johannes.schindelin@gmx.de> <cover.1462342213.git.johannes.schindelin@gmx.de> <20160504062618.GA9849@sigill.intra.peff.net> <xmqq7ffajmvz.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	christain.couder@gmail.com,
-	Lars Schneider <larsxschneider@gmail.com>
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 04 13:13:31 2016
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 04 13:20:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axukF-0007Bw-G8
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 13:13:31 +0200
+	id 1axurK-0002AX-PC
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 13:20:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757270AbcEDLN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 07:13:26 -0400
-Received: from mout.gmx.net ([212.227.17.22]:52586 "EHLO mout.gmx.net"
+	id S1752468AbcEDLUr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 07:20:47 -0400
+Received: from mout.gmx.net ([212.227.17.22]:54179 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757197AbcEDLNZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 07:13:25 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MS0c2-1b51Te0iFO-00THLK; Wed, 04 May 2016 13:13:20
+	id S1751912AbcEDLUq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 07:20:46 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0Lskr7-1bdG2v0vGb-012L6Z; Wed, 04 May 2016 13:20:36
  +0200
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CAFZEwPNKug1pvGC1fTvZzVPBGKy71fw6S3qcx_fx98nYZasR3w@mail.gmail.com>
+In-Reply-To: <xmqq7ffajmvz.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:UIBFxLvdMzqrcbuva6q7vbf57gpPObWzWpUxjQSBXWedhJBd3gZ
- nVCWJD6pxVzdbTmqRafUT8YUxLZJ9ZUXLZgzbFUQr6kkxoyMdJEtg965uSC8f4vOhi4nBeX
- efAF1MUt3IKAaLhyn47Tpn4eRkcuE9rtG3+lAHce2FuvEbR8MPBueP/WdBv0it5DiE/6yMt
- hvnjfNE9Pd/tswdm1Gurg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mOqi9u6W90Y=:UhsxDWp2DSzUNjDOMwA+hW
- /pdS1cRF4kW9w2CW0rRPKlaYe8e5tl+gy4jeYIwyj4Os4vDiGngIAWQtHs3Jndz3kzjwIVKhs
- yVjb5dTBsq9Yd0BoVHtC/+s3REidU85LrJHIawHwA++FN/zMLkjgiEFnhThsMzFCodCtYx8ld
- LSRhKZwcmmx4mg/4q0n4wY+ziDcscDVHUo8zla24kKnC7feetNFAMtXALy8pq1fdTXgnbF2qC
- dBoOVkeMfhQYLS4ykJdMLWsnpP35FG1KrtG7dm2ihZYufCT+KHa7T0j0dHa3yLm5FP6Lh3D+n
- xYjLP5c1bbpJ3BAQBqtweKlgj12TNQxdwsT5Xfng6h5JjS784WsQi7SaMZCRgaofjz7yfiBOY
- t3t04+HQS2Y1c8gTxSNTfSbavnamgs23Ip4+D6l6W5SDeUt5UgBysuoAmv916k/L7J8ns14Ik
- Nu3y7OC9th4gMJlpTPa8LKjtF10/oFrdRWYJl515JwRDAU97jsuEONjq2b7MvKMArbf8bU/XP
- V3uViRQRakxR1rnsa2/ijv9BN6rsBGglsbUsNXTMzokwYZ82V6Vh8MTNbMTlHkPp3oycbM+Js
- OpZdfjP4ZRCL/YZC3TgJ3rrPO/4TrOJLFERp4mYcC+lQQxWEZmTD7AuNwnDa6WS2941QxpIko
- M6htegNcJ34XQ5xoW88l49/5FAs7SZ9fASM2FsvHN/5wzfKkAvg4gVUMY9s+dILnYyKy/b2Aw
- QUUtFakQi88m06tfErL071YMZm3oU6+U5mcku/NI9au8Jj/WdmG3EMavGjcsVa9fpJGRUQHB 
+X-Provags-ID: V03:K0:W64UKy3IFBrcV9zlTocucBBT0jBt+y54iqoOIj4krF5n7a6cumb
+ nHeGXPybYxAqqJFH9Pw4K6Z2WEDYXiUujBNeXijAPtONBRWI3JqrHww7pfDvxthDHf12tIu
+ FIdLTutC99cS4H/NZa5zYG+cugKR1bh7z0ev5ipXHlu0FFWBb5CuvztHhLtEwlX2r7LX93h
+ CjjHcbJqcLK/fGXCDUnYQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fotGmDYmWHQ=:kcwPRc2dqdIsx7vyxA9VVp
+ zkWanhJC8gGPYLwRjBYM2hID+q006+N+vIfXxmOBgKW/mo/4uNssLA837nBIV50A5I/PxAlxZ
+ U2rR9heFtKKHsVnuqA9a9Afmv5KwsjI6AbuseoHFLSwm24KnpgiXYewLY8HQfjGZJUtM42Sf0
+ T+0hLQ+mXI1fsaLEUmV5olDPPnCSMeMv+N/ekO4VLiWJBlQWxmmmR5z1804RJAmdDBjJfK7AY
+ M+bvG5PXDK0O2j08HRKoR7PuTWvKwMMn07S1dkygpBThlOF2iJ9rOYnDTrjo7nF5o8AYBoQWl
+ 2ukUpwU8iqgAfb3NdMUFN3p86P5cwUqBcUvQF82XDJqQMBQWs/k5w0684yTEkOAy73lJ2WaM/
+ LMtI8LgtGeo8ufd7T0id0nGxQ8zv14K+AV4mq7uurnIIcj5GxfDinh69E+2KLUHftQR2Ws73q
+ nA3U4Ry2MJbLjr64J87I2jx2VgtrA/QM7pecQW/fWoR3zbDAvIGckrybL1xXF4IJctAhBjfuk
+ 4BFS+V2wS1Yx5WPkkLEtFi0ZSrDDPyE0M+tYT825GO2YNpbp8Ha7aV1dD/dNeJv+uYqHJi30i
+ lOKQzn2U65ZVzhVEluK4o1EwdvPRZiZ1QposkuwtVx2KFF0b1Ut4L8SfyXVUu2ZqFQLyj1DRw
+ qdgSw7wxsWjLrlVSL4aUoITKy9bHgH30ZQXLxQf8WeyMnm9UVIkGygemJGVEZ1lckgp/oHcNH
+ Mw0thMZ0TxRru2NJ2FQ6BsFMRMmumor6dKsYRnHywTtrTTMJg287pNEPrzf0HMGdFpMETg35 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293534>
 
-Hi Pranit,
+Hi Junio,
 
-On Wed, 4 May 2016, Pranit Bauva wrote:
+On Wed, 4 May 2016, Junio C Hamano wrote:
 
-> On Wed, May 4, 2016 at 12:22 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > On Wed, May 4, 2016 at 1:07 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> >
-> >> +static int one_of(const char *term, ...)
-> >> +{
-> >> +       va_list matches;
-> >> +       const char *match;
-> >> +
-> >> +       va_start(matches, term);
-> >> +       while ((match = va_arg(matches, const char *)) != NULL)
-> >> +               if (!strcmp(term, match))
-> >> +                       return 1;
-> >
-> > Is it wise to return here without invoking va_end()?
+> Jeff King <peff@peff.net> writes:
 > 
-> I guess since it already checks for NULL, invoking va_end() will make
-> it redundant[3].
+> >>   submodule: pass on http.extraheader config settings
+> >
+> > IMHO this should come on top of jk/submodule-config-sanitize-fix (I was
+> > surprised at first that your test worked at all, but that is because it
+> > is using "clone", which is the one code path that works).
+> 
+> Yes.
 
-Actually, this is my fault (I suggested that form of the one_of()
-function). The man page for va_end() clearly states that every call to
-va_start() needs to be paired with a corresponding va_end(), so it is
-incorrect to return without a call to va_end().
+Okay.
 
-Maybe something like instead?
+> > But I think we are waiting on going one of two paths:
+> >
+> >   1. drop sanitizing entirely
+> >
+> >   2. fix sanitizing and add more variables to it
+> >
+> > If we go the route of (2), then we'd want my fix topic and this patch.
+> > And if not, then we don't need any of it (just a patch dropping the
+> > filtering, which AFAIK nobody has written yet).
+> 
+> Doubly yes.  That is why I didn't pick up 2/2 in the previous round
+> and also jk/submodule-config-sanitize-fix is not in 'next' for the
+> same reason.
 
-	static int one_of(const char *term, ...)
-	{
-		int res = 0;
-		va_list matches;
-		const char *match;
+Okay. It was not clear to me that the indentation was not the reason it
+was ignored.
 
-		va_start(matches, term);
-		while (!res && (match = va_arg(matches, const char *)))
-			res = !strcmp(term, match);
-		va_end(matches);
+> I agree with you that we have not yet reached concensus on which one
+> of the two we would want to take.  I was sort of surprised to see
+> 2/2 sent again, after seeing that Dscho sounded strongly in favor of
+> not filtering the passed configuration variables, which would make
+> the patch unnecessary.
 
-		return res;
-	}
+Hah, my opinion matters after all.
+
+Yes, I am in favor of not filtering any config settings passed through the
+command-line.
+
+But traditionally, I did not always get what I strongly preferred, and in
+this case it is really important to me that support for `git -c
+http.extraheader=... submodule ...` be part of an official Git version
+soon.
+
+I just *really* would hate for, say, 2.9.0 to be released with `git -c
+http.extraheader=Hello:\ Junio submodule update --init` not working as
+intended.
+
 Ciao,
 Dscho
