@@ -1,106 +1,114 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v15 3/7] t0040-parse-options: improve test coverage
-Date: Wed, 4 May 2016 04:36:54 -0400
-Message-ID: <CAPig+cTW9=w8fMTwcF-Z6DPmXMM4qiWZA=7S1GcFEoGG8hPUtw@mail.gmail.com>
-References: <1462046616-2582-1-git-send-email-pranit.bauva@gmail.com>
-	<1462046616-2582-3-git-send-email-pranit.bauva@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Splitting a project into branches afterwards
+Date: Wed, 04 May 2016 01:38:32 -0700
+Message-ID: <xmqqk2jai5fb.fsf@gitster.mtv.corp.google.com>
+References: <loom.20160503T090745-628@post.gmane.org>
+	<xmqqoa8mi64h.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 04 10:37:01 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Yohann =?utf-8?B?QsOpbsOpZGlj?= <yohann.benedic@orange.com>
+X-From: git-owner@vger.kernel.org Wed May 04 10:38:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1axsIn-0005yn-D1
-	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 10:37:01 +0200
+	id 1axsKR-0006e8-NZ
+	for gcvg-git-2@plane.gmane.org; Wed, 04 May 2016 10:38:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757664AbcEDIg5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 04:36:57 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:34312 "EHLO
-	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757603AbcEDIgz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 04:36:55 -0400
-Received: by mail-io0-f193.google.com with SMTP id d62so5207437iof.1
-        for <git@vger.kernel.org>; Wed, 04 May 2016 01:36:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=62eeA1DohcuN/EVHgfPZVC2kRxjyqOzZvNhoVbJ4l/4=;
-        b=DhvWy5uMww9DeIdyWmSVU45aNFuRNVDND6k7ngyqJK/43Kz3Z4wVFY4ilDFfIVMdfp
-         zaQ6/k8pHqke/UUL71EX66M5sq1h4IlVSna7OKu24avnxWTkjV34PZ9Szd3dYnu41qw0
-         9hYSsfWGqerUoRPCTQxQ2qo824n3nQqtN0CEuWE1ikSxu19UqsA6WSfgnw8qsQgHelsh
-         VpwCoV320yTh7tIYrwhvMiUP4yF1ISVdv0GqaOdATpr8QhrXniut5slVWY1H+33rDMKt
-         QFpCrG8WllQ8oPtZZmpIyYAptF+Fb/e1Z6GKg7CZIxS2mXvXYCN2ygA0KbRN0lcW96kT
-         6Hmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=62eeA1DohcuN/EVHgfPZVC2kRxjyqOzZvNhoVbJ4l/4=;
-        b=TjPDTPF9mGOgFXS3oKHw1U01m6K7DBBtDeWNGYWlXHmi6EwXwzB6JVIdxGoOFQeX0o
-         Ndad4ni1xrQiQjh7rj5hD5Z115cmEx+7CovoxWm0q23YlJ1HbStqY2+1MosY/I26k7Dw
-         keCGAqZ9h5lkkuC2KgFYcjE8Db5rCzaSuN8oHhnQkWXiYVncyFdzOXovTSa3oqQpr3fb
-         NB6RLI2duenY/+uAFFZezBI5UZuCrgVl88wVZj94nscqPQQR5vRnR8HXH7JFXZyHgTDE
-         VykpOY5gwAIAaVm+9PdqBt8Q8aSO09YU0+nac7PyVzM/bvPUPDqvh3MchpAnlnB7sJrZ
-         yP5A==
-X-Gm-Message-State: AOPr4FUsAg1mNP/UTQAg/fctuNxag8b3TU91/T/yXRuYliBFb7KIq7VaTuOiZP3ocXGCj70zKTj/02Ks0UUjEg==
-X-Received: by 10.107.47.37 with SMTP id j37mr8671707ioo.168.1462351014800;
- Wed, 04 May 2016 01:36:54 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Wed, 4 May 2016 01:36:54 -0700 (PDT)
-In-Reply-To: <1462046616-2582-3-git-send-email-pranit.bauva@gmail.com>
-X-Google-Sender-Auth: u9m3seZvmsGNS_ziEYg7gE9AGNw
+	id S1757713AbcEDIii convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 May 2016 04:38:38 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61586 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757618AbcEDIig convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 May 2016 04:38:36 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1DA5111AAC;
+	Wed,  4 May 2016 04:38:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=fGB/f6ObEO+7
+	djxzTsCrzfJDSbw=; b=TRiPcy9B+iwtndAyts3I3n95ewfvq0X6Dxem1D/o/wij
+	gUx9JvsFWKIMFer/Ru398l3VOijvp6bF2OYs0ehT7pqwXmQ3NMjjWrBBduYselou
+	XQbus+f8VuzcvUgybqAZyrJgflgf6V7wQrHYFKOlEoaAFhXmqTWaq7JFZCu79uk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=naauz/
+	vVtiCX/YO/WBJdR3A5Ggf9PLM50UPtYL3g7xfUq4bN9ZQvIxlQpR7stg+5YDNqXO
+	+bFmJpVS5e1qvORfm3W6b6LY823ORxyLsg+d/8pwcZNWwAbl2E8G3p75+79yBbyy
+	yWUHGpY+L2N2KYXMnKQ49mK8+r++bfasMhhgI=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1508E11AA9;
+	Wed,  4 May 2016 04:38:35 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7A62211AA8;
+	Wed,  4 May 2016 04:38:34 -0400 (EDT)
+In-Reply-To: <xmqqoa8mi64h.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 04 May 2016 01:23:26 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 96ADEACC-11D3-11E6-BA98-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293520>
 
-On Sat, Apr 30, 2016 at 4:03 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> Include tests to check for multiple levels of quiet and to check if the
-> '--no-quiet' option sets it to 0.
+Junio C Hamano <gitster@pobox.com> writes:
 
-As this patch is also adding a test of --[no-]verbose, the commit
-message should mention it.
+> Yohann B=C3=A9n=C3=A9dic <yohann.benedic@orange.com> writes:
+>
+>> branch. If the framework branch moves forward, I want my product_A b=
+ranch to=20
+>> be able follow along : that's a merge of the framework from product_=
+A. In=20
+>> product_A, I might fix something from the framework and need to patc=
+h the=20
+>> latter. That's a merge in the other direction.
+>
+> Instead of doing a mixed ball of wax on product specific branch,
+> can't you do the latter by (1) fix something that belongs to the
+> framework part of the system on the framework branch, (2) merge that
+> to product A branch, and then (3) use that fixed framework code to
+> update the product A?  That way you would never have to merge
+> product specific part to the framework, which is meant to be product
+> agnistic (which is the whole point of your "initial removal" done on
+> the framework branch, if I am reading you correctly).
 
-More below...
+In addition, I would imagine that you have this:
 
-> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-> ---
-> diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-> @@ -476,4 +476,61 @@ test_expect_success '--no-list resets list' '
-> +test_expect_success 'multiple quiet levels' '
-> +       test-parse-options -q -q -q >output 2>output.err &&
-> +       test_must_be_empty output.err &&
-> +       test_cmp expect output
-> +'
-> +
-> +test_expect_success '--no-quiet sets quiet to 0' '
-> +       test-parse-options -q -q -q --no-quiet >output 2>output.err &&
-> +       test_must_be_empty output.err &&
-> +       test_cmp expect output
-> +'
+      F+B
+     /
+ ---X---F
+     \
+      F+A
 
-It wouldn't hurt to have two tests for --no-quiet: one which tests
---no-quiet alone to ensure that 'quiet' *remains* at 0, and one which
-tests --no-quiet in combination with some --quiet's to ensure that
-'quiet' is *reset* to 0. These tests would give you good coverage for
-changes by subsequent patches, such as the OPTION_COUNTUP patch which
-flips the initial value to -1.
+where F stands for "framework part", A stands for "product A" and X
+is F+A+B (i.e. everything).  The first thing I would do if that is
+what you have is to abandon the product specific branches directly
+forked from the "everything" and instead form a history of this
+shape:
 
-> +
-> +test_expect_success '--no-verbose sets verbose to 0' '
-> +       test-parse-options --no-verbose >output 2> output.err &&
-> +       test_must_be_empty output.err &&
-> +       test_cmp expect output
-> +'
+          F+B
+         /
+ ---X---F
+         \
+          F+A
 
-One would expect to see 'verbose' get the same treatment of having a
-test invoke --verbose multiple times. (Yes, I realize that the "long
-options" test does just this, but testing multiple --verbose's is not
-its primary purpose, so having a test which does test multiple
---verbose's as its primary purpose can be beneficial and is less
-likely to be broken by someone in the future.)
+That is, make the commit marked F in the updated history, whose tree
+has only the framework part, the new "birth" of your company's
+source code, where other product specific branches all fork off of.
+
+Then touch the common framework only on its own branch, occasionally
+merging that down to (all) product specific branches, change product
+specific parts only on their own product specific branch, and merge
+only in one direction (i.e. framework to product), never in reverse.
+
+          F+B
+         /
+ ---X---F-----F'-----F''   ... framework evolves this way
+         \            \   =20
+          F+A---F+A'---F''+A'  ... product A evolves this way
