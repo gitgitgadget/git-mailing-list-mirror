@@ -1,7 +1,7 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v8 04/19] index-helper: add --strict
-Date: Thu,  5 May 2016 17:46:56 -0400
-Message-ID: <1462484831-13643-5-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v8 02/19] read-cache: allow to keep mmap'd memory after reading
+Date: Thu,  5 May 2016 17:46:54 -0400
+Message-ID: <1462484831-13643-3-git-send-email-dturner@twopensource.com>
 References: <1462484831-13643-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -9,218 +9,146 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, pclouds@gmail.com,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>
-X-From: git-owner@vger.kernel.org Thu May 05 23:48:42 2016
+X-From: git-owner@vger.kernel.org Thu May 05 23:48:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayR8U-00006d-1H
-	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 23:48:42 +0200
+	id 1ayR8d-0000Dd-FL
+	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 23:48:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757814AbcEEVse convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2016 17:48:34 -0400
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:36659 "EHLO
-	mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757812AbcEEVrb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2016 17:47:31 -0400
-Received: by mail-qk0-f175.google.com with SMTP id x7so50844033qkd.3
-        for <git@vger.kernel.org>; Thu, 05 May 2016 14:47:30 -0700 (PDT)
+	id S1757850AbcEEVrb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2016 17:47:31 -0400
+Received: from mail-qg0-f48.google.com ([209.85.192.48]:34925 "EHLO
+	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755959AbcEEVr2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2016 17:47:28 -0400
+Received: by mail-qg0-f48.google.com with SMTP id f74so47440224qge.2
+        for <git@vger.kernel.org>; Thu, 05 May 2016 14:47:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=FeDvJMLSbeaSGYLoT+3r+TBQFo5bH3+83aJaslKMuHg=;
-        b=VxNUqLLAZLij+j4SZLs4Cb/69eBznfxUNhjiyxPd4p+RyY5iQMsZ/VxawRHyUR95Ln
-         PSIjjhtD1QqL+MY6+CYLGbWCsUggwY3QidEJwjeIqR7zT3QxKMPcpDdaNI9Oln/tStBG
-         Cdu+FPuqXC/yRVthtEkSOp3l+89qc3ZFZZDal5Kdd/9VwY9MFLtTZqXlDcpI8ZLsgfQq
-         GF+ZDSvXXGxB8Ocsg3VPIZgROicIiQ48F40h+2CJ3u3YZf1W10YXnR1r1Ddll9A/dj19
-         tQm9wQY6/bOSpAs7FAFIo5efvsblkjmBBR/w9+K+ndZuHWKKRxgNSb2BfbJ5c9fAZXn1
-         XVjQ==
+        bh=qWsQqUT0TEbkQssEa8cmGJohJfXp0Da97rhFbruFwGg=;
+        b=b4ozA7RWvIVW8Er9MXOs3MeGyZerbQxFLdE6/sJkB4o4JDfofTVs4aJ8JOZxNDUFK4
+         MLh5kiHOkZsCP8Q41ZZwav+jVmYEWJBDLpM9CZ8JguPf+GdSxRcibP9Hxx6DQz6P6OV2
+         oMYUp9Y0Z1gtJAxqWgx6twPwdRsfOHuXDC7Ifp1bbYEh84WIiiVRc7aIKz97s/oeTlN0
+         EWbDWGjGtHmKLPUch2GsjIEVLFmVg0M9oA7Vnk1UBWDuhqqVO4aNA3UgHcpmYyFFy02z
+         x1dvzDZsiE+M+icZWgNjOfz5ZRrYk2/xfONW1qkV0e4/mrwCpIhsA5+DYKUfcPEg8IIN
+         11Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=FeDvJMLSbeaSGYLoT+3r+TBQFo5bH3+83aJaslKMuHg=;
-        b=BNJ76TKE65C+v47vMQ0G/EYlQx30qolOycnwvkKafF4PFyVFHHk8Si/Jb7bF4TCMTD
-         mlsDcWLM/GCROq5mF7fVDNOjP9aAHXvSxRTTuaE9SNISLGuxuIlkcV2iw30Kp1wBNXGE
-         9bZoJOxXNsZHY9kIUHOCL776XRIXfqPSUcqQg3kAzVntvO5eHRvqaI90KGjjYE+vhFj1
-         7XDO8asHUwYH+TvlrVXwiA33DGjdjTZTuuN9iMr98zKEbKZDz+5QaVMycORzGbjbC/j7
-         N3ZEkPJd54AqyQIRYCgjJR2IWUi1uUHoNQppTFw36CzSl/DZNX6Pn8onhOI2mFjMA44k
-         INVQ==
-X-Gm-Message-State: AOPr4FWvRDes0BvO5tvABC2q44OHO8TQM3RcwA9/E19gwN3oiDO9953qwSlS0qczvRb3Og==
-X-Received: by 10.55.106.3 with SMTP id f3mr17660415qkc.177.1462484850126;
-        Thu, 05 May 2016 14:47:30 -0700 (PDT)
+        bh=qWsQqUT0TEbkQssEa8cmGJohJfXp0Da97rhFbruFwGg=;
+        b=OTBQLHdy0IiEm8Z9zZYNc/ZNAYLjEq56SAS2LcPzltAbmZBI6uLz7e2C6g+wZ8F1Da
+         ybvRKBz0nd7c5urTQNqSDCUR509PvK9uF2+VmQcRlKcDItKin159Zv9Eite5tapoO1DT
+         HZyUP2mOivPRGw71ElpxxPQ+FjMmGFszgwJoUdb2gHJCY+tNQwLpXlzEX5mdWg11W7pu
+         qNsAd39K1UOAqpnlCEQr7QPaKFoJqN+DtbYJMWL+TSzcgc289uYjaAEYsk/CsY4lTfX1
+         i6dT2yCPYDQrjT9znMi9jUFv+CwodGwNdB+QWsoDfx6pmd+oF++P2Q7TRE44dYijGG0Q
+         dwkg==
+X-Gm-Message-State: AOPr4FUt9tgpKlm4K04Kc6njoh6yx74K5dNOtvCV+uXY53yliIC9ROibnZhZGxWspZbbUQ==
+X-Received: by 10.141.3.66 with SMTP id f63mr17749097qhd.55.1462484847114;
+        Thu, 05 May 2016 14:47:27 -0700 (PDT)
 Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id g186sm4393740qke.49.2016.05.05.14.47.28
+        by smtp.gmail.com with ESMTPSA id g186sm4393740qke.49.2016.05.05.14.47.25
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 05 May 2016 14:47:29 -0700 (PDT)
+        Thu, 05 May 2016 14:47:25 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1462484831-13643-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293704>
 
 =46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
 
-There are "holes" in the index-helper approach because the shared
-memory is not verified again by git. If $USER is compromised, shared
-memory could be modified. But anyone who could do this could already
-modify $GIT_DIR/index. A more realistic risk is some bugs in
-index-helper that produce corrupt shared memory. --strict is added to
-avoid that.
+Later, we will introduce git index-helper to share this memory with
+other git processes.
 
-Strictly speaking there's still a very small gap where corrupt shared
-memory could still be read by git: after we write the trailing SHA-1 in
-the shared memory (thus signaling "this shm is ready") and before
-verify_shm() detects an error.
+We only unmap it when we discard the index (although the kernel may of
+course choose to page it out).
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- Documentation/git-index-helper.txt |  9 +++++++
- cache.h                            |  1 +
- index-helper.c                     | 48 ++++++++++++++++++++++++++++++=
-++++++++
- read-cache.c                       |  9 ++++---
- 4 files changed, 64 insertions(+), 3 deletions(-)
+ cache.h      |  3 +++
+ read-cache.c | 13 ++++++++++++-
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-index-helper.txt b/Documentation/git-ind=
-ex-helper.txt
-index f892184..1f92c89 100644
---- a/Documentation/git-index-helper.txt
-+++ b/Documentation/git-index-helper.txt
-@@ -25,6 +25,15 @@ OPTIONS
- 	Exit if the cached index is not accessed for `<n>`
- 	seconds. Specify 0 to wait forever. Default is 600.
-=20
-+--strict::
-+--no-strict::
-+	Strict mode makes index-helper verify the shared memory after
-+	it's created. If the result does not match what's read from
-+	$GIT_DIR/index, the shared memory is destroyed. This makes
-+	index-helper take more than double the amount of time required
-+	for reading an index, but because it will happen in the
-+	background, it's not noticable. `--strict` is enabled by default.
-+
- NOTES
- -----
-=20
 diff --git a/cache.h b/cache.h
-index 2d7af6f..6cb0d02 100644
+index b829410..4180e2b 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -345,6 +345,7 @@ struct index_state {
- 		  * on it.
- 		  */
- 		 to_shm : 1,
-+		 always_verify_trailing_sha1 : 1,
+@@ -333,11 +333,14 @@ struct index_state {
+ 	struct split_index *split_index;
+ 	struct cache_time timestamp;
+ 	unsigned name_hash_initialized : 1,
++		 keep_mmap : 1,
  		 initialized : 1;
  	struct hashmap name_hash;
  	struct hashmap dir_hash;
-diff --git a/index-helper.c b/index-helper.c
-index b9443f4..bc7e110 100644
---- a/index-helper.c
-+++ b/index-helper.c
-@@ -17,6 +17,7 @@ struct shm {
+ 	unsigned char sha1[20];
+ 	struct untracked_cache *untracked;
++	void *mmap;
++	size_t mmap_size;
+ };
 =20
- static struct shm shm_index;
- static struct shm shm_base_index;
-+static int to_verify =3D 1;
-=20
- static void release_index_shm(struct shm *is)
- {
-@@ -114,11 +115,56 @@ static void share_index(struct index_state *istat=
-e, struct shm *is)
- 	hashcpy((unsigned char *)new_mmap + istate->mmap_size - 20, is->sha1)=
-;
- }
-=20
-+static int verify_shm(void)
-+{
-+	int i;
-+	struct index_state istate;
-+	memset(&istate, 0, sizeof(istate));
-+	istate.always_verify_trailing_sha1 =3D 1;
-+	istate.to_shm =3D 1;
-+	i =3D read_index(&istate);
-+	if (i !=3D the_index.cache_nr)
-+		goto done;
-+	for (; i < the_index.cache_nr; i++) {
-+		struct cache_entry *base, *ce;
-+		/* namelen is checked separately */
-+		const unsigned int ondisk_flags =3D
-+			CE_STAGEMASK | CE_VALID | CE_EXTENDED_FLAGS;
-+		unsigned int ce_flags, base_flags, ret;
-+		base =3D the_index.cache[i];
-+		ce =3D istate.cache[i];
-+		if (ce->ce_namelen !=3D base->ce_namelen ||
-+		    strcmp(ce->name, base->name)) {
-+			warning("mismatch at entry %d", i);
-+			break;
-+		}
-+		ce_flags =3D ce->ce_flags;
-+		base_flags =3D base->ce_flags;
-+		/* only on-disk flags matter */
-+		ce->ce_flags   &=3D ondisk_flags;
-+		base->ce_flags &=3D ondisk_flags;
-+		ret =3D memcmp(&ce->ce_stat_data, &base->ce_stat_data,
-+			     offsetof(struct cache_entry, name) -
-+			     offsetof(struct cache_entry, ce_stat_data));
-+		ce->ce_flags =3D ce_flags;
-+		base->ce_flags =3D base_flags;
-+		if (ret) {
-+			warning("mismatch at entry %d", i);
-+			break;
-+		}
-+	}
-+done:
-+	discard_index(&istate);
-+	return i =3D=3D the_index.cache_nr;
-+}
-+
- static void share_the_index(void)
- {
- 	if (the_index.split_index && the_index.split_index->base)
- 		share_index(the_index.split_index->base, &shm_base_index);
- 	share_index(&the_index, &shm_index);
-+	if (to_verify && !verify_shm())
-+		cleanup_shm();
- 	discard_index(&the_index);
- }
-=20
-@@ -247,6 +293,8 @@ int main(int argc, char **argv)
- 	struct option options[] =3D {
- 		OPT_INTEGER(0, "exit-after", &idle_in_seconds,
- 			    N_("exit if not used after some seconds")),
-+		OPT_BOOL(0, "strict", &to_verify,
-+			 "verify shared memory after creating"),
- 		OPT_END()
- 	};
-=20
+ extern struct index_state the_index;
 diff --git a/read-cache.c b/read-cache.c
-index 1a5a03d..d7849d6 100644
+index 16cc487..3cb0ec3 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -1674,9 +1674,12 @@ int do_read_index(struct index_state *istate, co=
+@@ -1574,6 +1574,10 @@ int do_read_index(struct index_state *istate, co=
 nst char *path, int must_exist)
+ 	mmap =3D xmmap(NULL, mmap_size, PROT_READ, MAP_PRIVATE, fd, 0);
+ 	if (mmap =3D=3D MAP_FAILED)
+ 		die_errno("unable to map index file");
++	if (istate->keep_mmap) {
++		istate->mmap =3D mmap;
++		istate->mmap_size =3D mmap_size;
++	}
+ 	close(fd);
 =20
- 	istate->mmap =3D mmap;
- 	istate->mmap_size =3D mmap_size;
--	if (try_shm(istate) &&
--	    verify_hdr(istate->mmap, istate->mmap_size) < 0)
--		goto unmap;
-+	if (try_shm(istate)) {
-+		if (verify_hdr(istate->mmap, istate->mmap_size) < 0)
-+			goto unmap;
-+	} else if (istate->always_verify_trailing_sha1 &&
-+		   verify_hdr(istate->mmap, istate->mmap_size) < 0)
-+			goto unmap;
- 	hdr =3D mmap =3D istate->mmap;
- 	mmap_size =3D istate->mmap_size;
- 	if (!istate->keep_mmap)
+ 	hdr =3D mmap;
+@@ -1626,11 +1630,13 @@ int do_read_index(struct index_state *istate, c=
+onst char *path, int must_exist)
+ 		src_offset +=3D 8;
+ 		src_offset +=3D extsize;
+ 	}
+-	munmap(mmap, mmap_size);
++	if (!istate->keep_mmap)
++		munmap(mmap, mmap_size);
+ 	return istate->cache_nr;
+=20
+ unmap:
+ 	munmap(mmap, mmap_size);
++	istate->mmap =3D NULL;
+ 	die("index file corrupt");
+ }
+=20
+@@ -1655,6 +1661,7 @@ int read_index_from(struct index_state *istate, c=
+onst char *path)
+ 		discard_index(split_index->base);
+ 	else
+ 		split_index->base =3D xcalloc(1, sizeof(*split_index->base));
++	split_index->base->keep_mmap =3D istate->keep_mmap;
+ 	ret =3D do_read_index(split_index->base,
+ 			    git_path("sharedindex.%s",
+ 				     sha1_to_hex(split_index->base_sha1)), 1);
+@@ -1698,6 +1705,10 @@ int discard_index(struct index_state *istate)
+ 	free(istate->cache);
+ 	istate->cache =3D NULL;
+ 	istate->cache_alloc =3D 0;
++	if (istate->keep_mmap && istate->mmap) {
++		munmap(istate->mmap, istate->mmap_size);
++		istate->mmap =3D NULL;
++	}
+ 	discard_split_index(istate);
+ 	free_untracked_cache(istate->untracked);
+ 	istate->untracked =3D NULL;
 --=20
 2.4.2.767.g62658d5-twtrsrc
