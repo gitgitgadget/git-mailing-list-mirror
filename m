@@ -1,146 +1,111 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv4] submodule deinit: require '--all' instead of '.' for
- all submodules
-Date: Thu, 5 May 2016 12:20:37 -0700
-Message-ID: <20160505192036.GA22726@google.com>
-References: <1462401603-2067-1-git-send-email-sbeller@google.com>
- <20160504232642.GC395@google.com>
- <CAGZ79kbeCCcmGh57zUdQ=BzFOWUiwj8-3nM4dbK9yONbrmLaPw@mail.gmail.com>
- <20160504235914.GD395@google.com>
- <xmqqmvo4bcwf.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v16 0/7] config commit verbose
+Date: Thu, 05 May 2016 12:21:53 -0700
+Message-ID: <xmqq7ff8b99q.fsf@gitster.mtv.corp.google.com>
+References: <1462046616-2582-1-git-send-email-pranit.bauva@gmail.com>
+	<1462441802-4768-1-git-send-email-pranit.bauva@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 05 21:21:13 2016
+Content-Type: text/plain
+Cc: sunshine@sunshineco.com, szeder@ira.uka.de, git@vger.kernel.org
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 05 21:22:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayOpl-0002Ys-3i
-	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 21:21:13 +0200
+	id 1ayOqX-0003A6-2O
+	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 21:22:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756213AbcEETVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2016 15:21:09 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:35281 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755067AbcEETVH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2016 15:21:07 -0400
-Received: by mail-pa0-f54.google.com with SMTP id iv1so38887207pac.2
-        for <git@vger.kernel.org>; Thu, 05 May 2016 12:21:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=b42tFCxUaLEGvCF1WgF4h0rq+pk80LLjO40ebKXX5Tc=;
-        b=ZZB7xh57CADrRSJDTEPg4kfyyit22hrXDX6Jl6Tf47EmwvhOV8B/Vo//WMqkZ44zMY
-         TABIKQLHqYz6nC/zbwx9K+FzdBABfYHCzbdZfodPT0CW9Hj7RWoqnUJI6VqqPx/Crvs3
-         +0I5kJ2LEjeWzn44UeseqYm99Lg5lRiDynFJzLVWb7jwCBZ+kAfPqlD/VBlg4k/r0yz9
-         Tevk8n1tD/a0a1HwH7Th45wZR9BLd9YI/jZBTwDno/4CgWiWKnQ3/ZwMj5w2D4Xyg/I3
-         3m0NUL2BFYzDvCyAPNUu6DVWN7wdKnEixKOkJFIw5OG72sh/kOUjsRxSMSrjtQVxaFhR
-         I6IA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=b42tFCxUaLEGvCF1WgF4h0rq+pk80LLjO40ebKXX5Tc=;
-        b=IcMLTUB1y+pwQqJTUBj8AdBdNN5FyLPDnndW8Eqy3wge2q92AxlOFLHkbz18KuYrps
-         +H1ObIGOLRE/Zr5zjjn0ouzLpln5OTS9DHirX1KL/uy01rOJ14FE154m6ZGK1t+aZpZ3
-         khUsdTEglb3B57F8VH0uXei4sQwVfb/9+oC3x0YE5Z0mzribinz0D4UbYRIHmVaOW0dR
-         YhTGHdfwBmeXfwgzX5J1oF3rsCCXzBXgRkDP9SHyHKY99Oa6ln1CWIsuZjab7o+QOjCj
-         H/djOB5xBsW6y2zlZJw3XzeLgOTaYJYmBGxCoxUt2kXcT70yxDvXPswoDSpmqblv7nv1
-         pBNA==
-X-Gm-Message-State: AOPr4FVv6ymSpLt90epVv3SG45VmZb8PEeRDKuWqhdxmoWasD72iA3YBfDRsvHB7a5wnEA==
-X-Received: by 10.66.237.66 with SMTP id va2mr22998957pac.2.1462476066950;
-        Thu, 05 May 2016 12:21:06 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b4e5:604e:91a7:f7e7])
-        by smtp.gmail.com with ESMTPSA id m184sm15489148pfb.22.2016.05.05.12.21.05
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 05 May 2016 12:21:06 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <xmqqmvo4bcwf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755500AbcEETV5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2016 15:21:57 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57038 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754293AbcEETV4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2016 15:21:56 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2AAE719301;
+	Thu,  5 May 2016 15:21:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1G1EsQhMgttbsyTqzwX4QJCztNw=; b=qk6DZZ
+	XIhyfMzef67I1j964wo8vJBdju11UEOY25t2tLzQgxP9YBtL66pgMA9G2UDjX2K2
+	2QnOHKnloebDxCkLqO1oT0TNis5QQKETMGg7+LloNXd9QP1yaIFmJHWP64m2AwZr
+	prKuR5ziaN/wtPWSyyX589qstchEgE96n3504=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gWwiJ2+5M3Z2RaHguL9xs2E2B1+LIn/K
+	bxTrV2UPXmZVYNL03LOyAe+GIig1URWH6uxbkafeICrWOQiClI6K+BWz1YK77MvU
+	16uzfM1RRe3LuTWs8pn5owlbrDHQclljO9KEsJCP7zq1fPndPtM9MH8HiMvXMTgo
+	QsL/nVRpi+o=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2063E19300;
+	Thu,  5 May 2016 15:21:55 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 92B5C192FE;
+	Thu,  5 May 2016 15:21:54 -0400 (EDT)
+In-Reply-To: <1462441802-4768-1-git-send-email-pranit.bauva@gmail.com> (Pranit
+	Bauva's message of "Thu, 5 May 2016 15:19:55 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A08C2C2E-12F6-11E6-A5E0-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293666>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Pranit Bauva <pranit.bauva@gmail.com> writes:
 
->> I mean low level as in implementation detail.  The human user would
->> wonder "what is incompatible about them?  Why are you stopping me from
->> what I am trying to do?"
+> This series of patches add a configuration variable for verbose in
+> git-commit.
 >
-> Maybe s/incompatible/inconsistent/ is what you are after?  Why are
-> you stopping me from what I am trying to do?  Because you are asking
-> to do two contradicting things.  Do you want to nuke everything, or
-> do you want to keep everything outside what you specified?
+> Link to v15:
+> http://thread.gmane.org/gmane.comp.version-control.git/293127
 >
-> After being saved countless times from a stupid mistake
->
->     $ git commit -a -s foo.c
->
-> that was caused by habitually typing "-a", when I do want to limit
-> the changes to record to a specific path (or two) with similar
-> safety, I do not think "what is incompatible about them" is a valid
-> question.
+> Changes wrt v15:
+>  * Remove the previous patch 7/7 and split the tests. Include one in
+>    initial patch 6/7. The other one is introduced in a separate commit
+>    after 4/7.
+>  * Include tests in patch 3/6 for --no-quiet without -q, multiple verbose,
+>    --no-verbose with -v as suggested by Eric Sunshine
 
-Yes, 'inconsistent' works better than 'incompatible'.  Stepping back,
-what I meant is that when I pass an invalid set of command line
-arguments, it's difficult to give advice back because it's not obvious
-what I intended to do.
+Thanks for a pleasant read.  Modulo minor readability nits I sent
+separately on 7/7, this looked good.
 
-When I say "git submodule deinit --all -- foo/", I'm most likely trying
-to deinit all submodules within the foo subdirectory.  That's a
-perfectly consistent thing to want --- it just doesn't match what the
-command is expecting.  It is more helpful for the command to tell me
-what it is expecting me to do instead instead of just telling me that what
-I gave it is wrong.
+A tangent that we may want to think about after this series lands
+and dust settles is to make test-parse-options simpler to use.  I
+see many instances of this repeated:
 
-The ideal would be something like "git check-attr"'s error_with_usage.
-It tells in a targetted way where my error was and also gives a guide
-of what to do instead.
+        cat >expect <<\EOF
+        boolean: 0
+        integer: 0
+        magnitude: 0
+        timestamp: 0
+        string: (not set)
+        abbrev: 7
+        verbose: 0
+        quiet: 3
+        dry run: no
+        file: (not set)
+        EOF
 
-	$ git submodule deinit --all lib/
-	error: paths with --all do not make sense
-	usage: git submodule deinit [-f | --force] (--all | [--] <path>...)
+        test_expect_success 'multiple quiet levels' '
+                test-parse-options -q -q -q >output 2>output.err &&
+                test_must_be_empty output.err &&
+                test_cmp expect output
+        '
 
-Thanks,
-Jonathan
+But the only thing this test cares about is if "quiet: 3" is in the
+output.  I think we should be able to write the above 18 lines with
+just four lines, like this:
 
--- >8 --
-Subject: git-sh-setup: add error_with_usage helper
+	test_expect_success 'multiple quiet levels' '
+		test-parse-options --expect="quiet: 3" -q -q -q
+	'
 
-When given an impossible set of options, this allows a command to
-print a targetted message followed by a short usage string that tells
-the user both (1) what part of their command wasn't supported (what
-went wrong) and (2) what correct usage looks like (what to do
-instead).
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- git-sh-setup.sh | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index c48139a..2b56636 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -63,6 +63,11 @@ say () {
- 	fi
- }
- 
-+error_with_usage () {
-+	printf >&2 'error: %s\n' "$*"
-+	usage
-+}
-+
- if test -n "$OPTIONS_SPEC"; then
- 	usage() {
- 		"$0" -h
--- 
+There may be a handful of tests that care about more than one
+variable, and the current output format must be used when the
+new --expect option is not given, but I suspect that the majority of
+tests would want the concise form.
