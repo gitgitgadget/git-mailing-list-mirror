@@ -1,84 +1,66 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH] pathspec: remove check_path_for_gitlink
-Date: Thu,  5 May 2016 15:31:37 -0700
-Message-ID: <1462487497-28394-1-git-send-email-sbeller@google.com>
-Cc: pclouds@gmail.com, git@vger.kernel.org,
-	Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri May 06 00:31:46 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v8 08/19] read-cache: add watchman 'WAMA' extension
+Date: Thu, 05 May 2016 15:44:29 -0700
+Message-ID: <xmqq37pw9lbm.fsf@gitster.mtv.corp.google.com>
+References: <1462484831-13643-1-git-send-email-dturner@twopensource.com>
+	<1462484831-13643-9-git-send-email-dturner@twopensource.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, pclouds@gmail.com,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Fri May 06 00:44:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayRo9-0005rs-9i
-	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 00:31:45 +0200
+	id 1ayS0d-0006mZ-Ne
+	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 00:44:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754220AbcEEWbl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2016 18:31:41 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:34561 "EHLO
-	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752471AbcEEWbl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2016 18:31:41 -0400
-Received: by mail-pf0-f171.google.com with SMTP id y69so41917506pfb.1
-        for <git@vger.kernel.org>; Thu, 05 May 2016 15:31:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=DKHZi4c6adicl+k4o0w/erQ7jzf6uYqyke8ox6gJXOg=;
-        b=aGsfN8XKOeseO7Pwcyw8wMcO6AS1JtcuQmqlPXKej3wDPODO5nTylFBZsKa6PSaoiF
-         VfSN8e4pA4VopCDHJiIwpstG07A8cIQ43txQKmC1icVNpzkjQdU4A6bQJoGlVhgUhIA0
-         RPkI6QY1T/xX9nZ0Jo2TkgDXi0qstLYCaXcjFqg2JCUN9duS8IjWFYjmnfJztDgaAx4a
-         kNHUO9EKYswY1d68T2YscWRa84YrMmc9cy6tt/l1nvXj0tbJPLeujdNsVKlS6lbRXJv0
-         xIz9r385t/avsaKnvFAEozuMwpSGkRmlMY1olvjJnrkrTk09IC5XRnbUaNMiVsCM4/u6
-         4Tkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=DKHZi4c6adicl+k4o0w/erQ7jzf6uYqyke8ox6gJXOg=;
-        b=lERk5yNYSiUJnLLJfAAVb5ma3w8sojXc1RSDru9QK/zK1aJDTe4W4OjQxxAGYzCVkS
-         dJlhRBbtOu02PsY7k6uofQxrfkK6AztZOjggCTzV1PcM3iCeyof50i1Wg9Gl8qxjZFAq
-         oQBcgTsElVn/XRACg9OAWvJ9r6S0bhTri4V5xGDiuUIZwd+ssYePwx6Z+7fHSu0bpXdJ
-         ne5DBDttuYvXqeZF3YUQP7c6e3b16/5gpH72XLnTNaQoX5NdnsQ/h/r9QkA4vUVBQO+1
-         Mpf8suSHZYBxloYiQCkiMCjMEoG9QV4XdSRVsd+3sXJjclkGvHv3G1bA6Tj1pydgeJrl
-         bAIA==
-X-Gm-Message-State: AOPr4FXr92rDmlpSFwMDYTSEZb3kSXMeIfd4tooHotPTq548fUJI5tahDiSUwBHsSxlQOzcn
-X-Received: by 10.98.79.213 with SMTP id f82mr23970164pfj.65.1462487500427;
-        Thu, 05 May 2016 15:31:40 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:35ed:c390:3d1b:b3bd])
-        by smtp.gmail.com with ESMTPSA id xd14sm16048572pac.6.2016.05.05.15.31.39
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 05 May 2016 15:31:39 -0700 (PDT)
-X-Mailer: git-send-email 2.8.0.1.g3af9c03
+	id S1758158AbcEEWof (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2016 18:44:35 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59818 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758151AbcEEWod (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2016 18:44:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6981719AB4;
+	Thu,  5 May 2016 18:44:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pPnVr29yyRXKgE0svy5EQ00Qgsg=; b=n9plp9
+	x7xxivmXte/MSHl7A8r1ToW4VNw/zuIDC7w4UHdqTB7D50rJYvh5yksefBKuGK08
+	GJ+/3PsWUy4NpN7uuUksZ32M9CZGDztr2UAfj7NmWuiUug5gcYOUSBk9ds6uqnn3
+	EUdYWMiDC2sFyutRlrLGcmHfHD9q66rHbmMXU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=B9Um4EXUHcN8vs7737M7sRbHYr9b8S9F
+	EOBRFuAxl3VzPaLqTBOb4RnsfAtK9wgB667fmRdLmjRQbBn8X/APic3FBdXAX/gL
+	1i1R3kELcDT10qc438kVGwVIm/U7GDdTP/xCKH6t9uSZZF9841HZm7l+D7cAosiK
+	IpIFlsK+Txs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6195819AB3;
+	Thu,  5 May 2016 18:44:32 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D14E819AB2;
+	Thu,  5 May 2016 18:44:31 -0400 (EDT)
+In-Reply-To: <1462484831-13643-9-git-send-email-dturner@twopensource.com>
+	(David Turner's message of "Thu, 5 May 2016 17:47:00 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: EED64F06-1312-11E6-ACEF-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293714>
 
-`check_path_for_gitlink` was introduced in 9d67b61f739a (2013-01-06,
-add.c: extract check_path_for_gitlink() from treat_gitlinks() for reuse)
-but the implementation was removed in 5a76aff1a6 (2013-07-14, add:
-convert to use parse_pathspec).
+David Turner <dturner@twopensource.com> writes:
 
-Remove the declaration from the header as well.
+> +void write_watchman_ext(struct strbuf *sb, struct index_state* istate)
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- pathspec.h | 1 -
- 1 file changed, 1 deletion(-)
+void write_watchman_ext(struct strbuf *sb, struct index_state *istate)
 
-diff --git a/pathspec.h b/pathspec.h
-index 0c11262..b596aed 100644
---- a/pathspec.h
-+++ b/pathspec.h
-@@ -96,7 +96,6 @@ static inline int ps_strcmp(const struct pathspec_item *item,
- 
- extern char *find_pathspecs_matching_against_index(const struct pathspec *pathspec);
- extern void add_pathspec_matches_against_index(const struct pathspec *pathspec, char *seen);
--extern const char *check_path_for_gitlink(const char *path);
- extern void die_if_path_beyond_symlink(const char *path, const char *prefix);
- 
- #endif /* PATHSPEC_H */
--- 
-2.8.0.1.g3af9c03
+Asterisk sticks to the variable, not to the type.
