@@ -1,87 +1,130 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH v4 01/11] add fetch-pack --diag-url tests for some corner
- cases
-Date: Fri, 6 May 2016 06:52:29 +0900
-Message-ID: <20160505215229.GA31157@glandium.org>
-References: <1462082573-17992-1-git-send-email-mh@glandium.org>
- <1462265452-32360-1-git-send-email-mh@glandium.org>
- <1462265452-32360-2-git-send-email-mh@glandium.org>
- <xmqqzis7nn02.fsf@gitster.mtv.corp.google.com>
- <20160503224830.GA21973@glandium.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] exec_cmd.c, sideband.c, Makefile: avoid multiple PREFIX definitions
+Date: Thu, 05 May 2016 15:02:17 -0700
+Message-ID: <xmqqk2j89n9y.fsf@gitster.mtv.corp.google.com>
+References: <1462483733-3496-1-git-send-email-philipoakley@iee.org>
+	<1462483733-3496-2-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, tboegi@web.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 05 23:52:43 2016
+Content-Type: text/plain
+Cc: GitList <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git-for-windows <git-for-windows@googlegroups.com>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Fri May 06 00:02:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayRCK-00030i-M7
-	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 23:52:41 +0200
+	id 1ayRLl-0001S2-0Z
+	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 00:02:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757449AbcEEVwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2016 17:52:37 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:42880 "EHLO
-	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755959AbcEEVwg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2016 17:52:36 -0400
-Received: from glandium by zenigata with local (Exim 4.87)
-	(envelope-from <mh@glandium.org>)
-	id 1ayRC9-00086z-Dd; Fri, 06 May 2016 06:52:29 +0900
-Content-Disposition: inline
-In-Reply-To: <20160503224830.GA21973@glandium.org>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.6.0 (2016-04-01)
+	id S1756644AbcEEWCV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2016 18:02:21 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53547 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756245AbcEEWCU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2016 18:02:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5B7A7189AD;
+	Thu,  5 May 2016 18:02:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GcFwETs5D0CNprTKo0z3i3stmW8=; b=id6Py/
+	fgd1hPTsr1JdZgX+KlyTfTNXmCEalnJSBk5ungoQrH4pYgbsYTHwqB2ZAjFGorzr
+	90fnk3KftTM/0sSEng5ErSp2H+j6/mzKwqxpcl2UTYXHX6hTA53uQxUDWbumeTNk
+	HVA3LKWWnfzoTY2cwM6FK9GZsuBP7chCPrqHM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xpkQYeb32SR6OqisdgoWEkAHJ9paYRSJ
+	vsK1oLrn8QPtpQTC7kpNB9ennegYJw4cqNl+X/SY3Wg32SanZnCcvFQh0NvB9J58
+	6bu9gSyMIrbM8zhx8HL6SKNH74/wBI4y9KWmOgwX7R2MvlC2TUDl6bYR56c+rlte
+	IeAMDpmtqu0=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 53711189AC;
+	Thu,  5 May 2016 18:02:19 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C5B55189AB;
+	Thu,  5 May 2016 18:02:18 -0400 (EDT)
+In-Reply-To: <1462483733-3496-2-git-send-email-philipoakley@iee.org> (Philip
+	Oakley's message of "Thu, 5 May 2016 22:28:53 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 0904FDE2-130D-11E6-AC1D-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293711>
 
-On Wed, May 04, 2016 at 07:48:30AM +0900, Mike Hommey wrote:
-> On Tue, May 03, 2016 at 09:07:41AM -0700, Junio C Hamano wrote:
-> > Mike Hommey <mh@glandium.org> writes:
-> > 
-> > > t5603-clone-dirname uses url patterns that are not tested with
-> > > fetch-pack --diag-url, and it would be useful if they were.
-> > >
-> > > Interestingly, some of those tests, involving both a port and a
-> > > user:password pair, don't currently pass. Note that even if a
-> > > user:password pair is actually not supported by git, the values used
-> > > could be valid user names (user names can actually contain colons
-> > > and at signs), and are still worth testing the url parser for.
-> > 
-> > I am not sure about the last part of this (and the tests in the
-> > patch for them).  When you are constrained by the Common Internet
-> > Scheme Syntax, i.e.
-> > 
-> >     <scheme>://<user>:<password>@<host>:<port>/<url-path>
-> > 
-> > you cannot have arbitrary characters in these parts; within the user
-> > and password field, any ":", "@", or "/" must be encoded.
-> > 
-> > Which maens that for the purpose of the parser you are modifying,
-> > you can rely on these three special characters to parse things out
-> > (decoding after the code determines which part is user and which
-> > part is password is a separate issue).
-> 
-> t5603-clone-dirname contains a test for e.g. ssh://user:passw@rd@host:1234/
-> That's the basis for these additions. Whether that should work or not is
-> besides what I was interested in, which was to have a single test file to
-> run to test my changes, instead of several.
-> 
-> Strictly speaking, this patch is not necessary, because it only covers
-> things that I found while breaking other tests.
-> 
-> So, there are multiple possible ways forward here:
-> - Completely remove this patch for v5 of the series.
-> - Remove the user:passw@rd cases because of the @.
-> - Remove the user:password cases because we do nothing with the password
->   anyways.
-> - A combination of both of the above.
+Philip Oakley <philipoakley@iee.org> writes:
 
-Any opinions on this?
+> The short and sweet PREFIX can be confused when used in many places.
+>
+> Rename both usages to better describe their purpose.
+>
+> Noticed when compiling Git for Windows using MSVC/Visual Studio which
+> reports the conflict beteeen the command line definition and the
+> definition in sideband.c
 
-Mike
+Good eyes.
+
+>
+> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+> ---
+>  Makefile   | 2 +-
+>  exec_cmd.c | 4 ++--
+>  sideband.c | 6 +++---
+>  3 files changed, 6 insertions(+), 6 deletions(-)
+>
+> diff --git a/Makefile b/Makefile
+> index 33b0f76..bcdd3ec 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1973,7 +1973,7 @@ exec_cmd.sp exec_cmd.s exec_cmd.o: GIT-PREFIX
+>  exec_cmd.sp exec_cmd.s exec_cmd.o: EXTRA_CPPFLAGS = \
+>  	'-DGIT_EXEC_PATH="$(gitexecdir_SQ)"' \
+>  	'-DBINDIR="$(bindir_relative_SQ)"' \
+> -	'-DPREFIX="$(prefix_SQ)"'
+> +	'-DEXEC_PREFIX="$(prefix_SQ)"'
+
+I am not entirely happy with this name as the name can be easily
+confused with GIT_EXEC_PATH.
+
+This is a fallback used under RUNTIME_PREFIX option, if I am reading
+the code correctly, so the name should hint the linkage between the
+"runtime prefix" mechanism and this variable.
+
+Perhaps RUNTIME_PREFIX_FALLBACK?  Used at only two places, that
+should not be an overlong name.
+
+DISPLAY_PREFIX is OK, as it is an entirely a local thing to
+sideband.c, but with the externally visible PREFIX fixed to be a
+more appropriate name that hints its relation with the "runtime
+prefix" mechanism, it may be better not to even touch it.
+
+>  builtin/init-db.sp builtin/init-db.s builtin/init-db.o: GIT-PREFIX
+>  builtin/init-db.sp builtin/init-db.s builtin/init-db.o: EXTRA_CPPFLAGS = \
+> diff --git a/exec_cmd.c b/exec_cmd.c
+> index 9d5703a..2a79781 100644
+> --- a/exec_cmd.c
+> +++ b/exec_cmd.c
+> @@ -12,7 +12,7 @@ char *system_path(const char *path)
+>  #ifdef RUNTIME_PREFIX
+>  	static const char *prefix;
+>  #else
+> -	static const char *prefix = PREFIX;
+> +	static const char *prefix = EXEC_PREFIX;
+>  #endif
+>  	struct strbuf d = STRBUF_INIT;
+>  
+> @@ -27,7 +27,7 @@ char *system_path(const char *path)
+>  	    !(prefix = strip_path_suffix(argv0_path, GIT_EXEC_PATH)) &&
+>  	    !(prefix = strip_path_suffix(argv0_path, BINDIR)) &&
+>  	    !(prefix = strip_path_suffix(argv0_path, "git"))) {
+> -		prefix = PREFIX;
+> +		prefix = EXEC_PREFIX;
+>  		trace_printf("RUNTIME_PREFIX requested, "
+>  				"but prefix computation failed.  "
+>  				"Using static fallback '%s'.\n", prefix);
