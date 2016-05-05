@@ -1,78 +1,210 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv5] submodule deinit: require '--all' instead of '.' for
- all submodules
-Date: Thu, 5 May 2016 13:54:41 -0700
-Message-ID: <CAPc5daU5xLP9XghK=FfpubF96a-t+gqbg4YCBDdWc35Og8EUZA@mail.gmail.com>
-References: <1462477952-6669-1-git-send-email-sbeller@google.com> <20160505203705.GB22726@google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 11/15] diff: ignore submodules excluded by groups
+Date: Thu, 5 May 2016 14:02:58 -0700
+Message-ID: <CAGZ79kYGbjOKPQk8A-ag+JgvybW4Kf5=g8azVAOoMq79oXc5-Q@mail.gmail.com>
+References: <1461703833-10350-1-git-send-email-sbeller@google.com>
+	<1461703833-10350-12-git-send-email-sbeller@google.com>
+	<xmqqlh3wxnuq.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kaOXxqDEqVnf5K3QjXg5bfmKW2XkmPT-mqJ93+RF5N40g@mail.gmail.com>
+	<CAGZ79ka37jWYDJrAWy5KLhaaJmrLRbmTzRC6A5DneuE63+XCeQ@mail.gmail.com>
+	<xmqqy47o9s1h.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 05 22:55:15 2016
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 05 23:03:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayQIk-0004H5-HR
-	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 22:55:14 +0200
+	id 1ayQQM-0001dg-KP
+	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 23:03:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756526AbcEEUzD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2016 16:55:03 -0400
-Received: from mail-yw0-f172.google.com ([209.85.161.172]:34824 "EHLO
-	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755906AbcEEUzC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2016 16:55:02 -0400
-Received: by mail-yw0-f172.google.com with SMTP id g133so143931966ywb.2
-        for <git@vger.kernel.org>; Thu, 05 May 2016 13:55:01 -0700 (PDT)
+	id S1757146AbcEEVDB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2016 17:03:01 -0400
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:37930 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756740AbcEEVDA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2016 17:03:00 -0400
+Received: by mail-ig0-f181.google.com with SMTP id m9so25052986ige.1
+        for <git@vger.kernel.org>; Thu, 05 May 2016 14:03:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=M1jS9FWHCuBJQTdGGLTKTKJx2F/6Xlvdz9rPGelKG/o=;
-        b=uIMOPhleP2Cbd0rubLeiqzwurSdTjaoO26WQsoKu2aNh3BrgasOw4OkEqXcGSs4L4F
-         huRfHvmuxGQycffbabJV0/m2JGEZhs/IdRk8maIXOOS28JuRNG4i7JEflzqFpt8stgHM
-         zR/NOQvDrGx5B17vILUdryLJ1IaQG/zTBpXZZxwMi8wrzvOU7UXB4qg8jywzgQuReyo5
-         yNSATX3Rq1mR0ubZpVHYNxwm3gjSVz2V26dNsjVTvepoJRS8uEaIYYk6L//eAFc3vpnX
-         gpjWyo3FvBR7YaAaHIKywuNV9+UxKveXePL6dSmY3z+2XGbzqNpvhMhr03DZeeL4iDLh
-         qsBQ==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=OSf413estdql5paiOtuBelz7DivLdVq/r/YUFF00YEw=;
+        b=NC82IkiINfcLip31PJwm2uHfZN3GBJnmOLA4r4hOEGLxO3BrmjgETnVwG/rjemujHI
+         Eorm76aU9sTVr1HmeZijS+4/pDK+nQikDIPk51e//D9Zko8tG4Zx8LHvWTJTxRspgjEq
+         xcWkAHAm34XIZ/fM5+QfZFwYShcGP1zcd+E+bvyDL+GUs81H6adeZLNezrfXQeCvPikQ
+         R4J/YFhOqWs1c27jTUulLPFLdXZdKBefQ1l0q/IcLXH/ZNL994FcBODA0WXcJ/4dGKd+
+         Kn56/lAc18S5yWUnrls1P51s2LcDqxa3haKKeX4VlyQpRX7b/Vok+zl2Rb6czxD1s+SV
+         39jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=M1jS9FWHCuBJQTdGGLTKTKJx2F/6Xlvdz9rPGelKG/o=;
-        b=USPC2HTjpZQZvfu2SfAUI1MEozgMNSPSKUPaVHgbiBcnFfzFCRT4FurgLBTSkJ7hcZ
-         P29zoBF2jZ6ZQ1192GiDnx+d9vblz2hoJk//TJIHkQ2/ppnOPgZu+6srhHi4GFyhjSX4
-         igwbc1zRiafBNfQ70TlCjRTnpow3cpK6ErB7FFKpMxVANkma+7JQxIbwsNXmH76Bq2mr
-         7Vac/iwwbccO2bTVgoijmMvdu301ctFTnNU1zw7AGHLOkJCoPLv7T3+pefvxhq8G4ZNj
-         YiF8SHki0J7a+dq6yWFPSKv3iV+zemK8BDPghIvXK0AAft5yGCZwZ47sGOQPggzj3s3D
-         LdVw==
-X-Gm-Message-State: AOPr4FWjwC/ax97nbd9F2bbiUtf/uceRRjW40zhgcNUdIjI5uTpddRzJGPgvxvitSwVbCSASLXfFyjDC2o6q2w==
-X-Received: by 10.129.161.72 with SMTP id y69mr9446626ywg.191.1462481700524;
- Thu, 05 May 2016 13:55:00 -0700 (PDT)
-Received: by 10.13.251.71 with HTTP; Thu, 5 May 2016 13:54:41 -0700 (PDT)
-In-Reply-To: <20160505203705.GB22726@google.com>
-X-Google-Sender-Auth: OPdRp4FccWKVTDbbVUX5K_a0cqY
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=OSf413estdql5paiOtuBelz7DivLdVq/r/YUFF00YEw=;
+        b=GLKVPIFIiKv2sq6SRqt5LjpbbXQqsiacz/yXiF2FUsak/dRuoWuLoXucm8QzpjRm++
+         u52gFzqKfB6829dHTksGO7+CRfknlHY7uENssXvnPoKaF6tFOoM0TjZbt/AO8+xQqRDS
+         49S8Tqtw+qqe29gJLkT6JG3BniUe/n/Bd98aWFJFXPr18XrECPRJJcpI4tpBoHHK5Jfw
+         If8+ALrYbzdz2GmOJxArYlF8kecWouHHql//baWHfAg6Hq0qOQ4MM+8crI11dI061Y/d
+         xiYZMG2yp7tdFB0AlOrcxmMTy4iT6IqzlrjwMTQ3roKz4GxAnexlz6HCKq3VEBE8l2Ka
+         AY2g==
+X-Gm-Message-State: AOPr4FWtliHu6or/O6V92zbIxIV/nSlOm8CJ9Q5EtmbxGUyutGr2Dkugt5Mq5e0xIHyXYM4o0J7RGoch+rDHEDFk
+X-Received: by 10.50.30.228 with SMTP id v4mr6331521igh.85.1462482179110; Thu,
+ 05 May 2016 14:02:59 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Thu, 5 May 2016 14:02:58 -0700 (PDT)
+In-Reply-To: <xmqqy47o9s1h.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293680>
 
-On Thu, May 5, 2016 at 1:37 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Stefan Beller wrote:
+On Thu, May 5, 2016 at 1:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
->>>        $ rungit v2.6.6 submodule deinit .
->>>        error: pathspec '.' did not match any file(s) known to git.
->>>        Did you forget to 'git add'?
-> [...]
->> So instead of a pathspec add the '--all' option to deinit all submodules
->> and add a test to check for the corner case of an empty repository.
-> [...]
->> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> Any thoughts on my thoughts below?
+>>
+>>> So here is a thought experiment:
+>>>
+>>>     # get all submodules into the work tree
+>>>     git submodule update --recursive --init
+>>>
+>>>     # The selected default group will not include all submodules
+>>>     git config submodule.defaultGroup "*SomeLabel"
+>>>
+>>>     git status
+>>>     # What do we expect now?
+>>>     # either a "nothing to commit, working directory clean"
+>>>     # or rather what was described in 0/15:
+>>>
+>>>         More than 2 submodules (123 actually) including
+>>>             'path/foo'
+>>>             'lib/baz'
+>>>         are checked out, but not part of the default group.
+>>>         You can add these submodules via
+>>>             git config --add submodule.defaultGroup ./path/foo
+>>>             git config --add submodule.defaultGroup ./lib/baz
 >
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> That may be an interesting thing to know, but I am not sure if it
+> adds value to the user.  The user wanted the defaultGroup to be
+> the set of submodules labeled with SomeLabel, and an alternative
+> valid suggestion could be
+>
+>         'path/foo' and other submodules are not part of what you are
+>         interested in; if you want to deinitialize them, do
+>
+>             git submodule deinit !defaultGroup
+>
+> Both look equally valid to me, but offering both would be way too
+> much.  I'd say you should give that only with "status -v" or
+> something, perhaps?
+>
+>>> If we want to go with the second option,
+>
+> You already lost me here, as it is not clear what two "options" you
+> are comparing.
 
-Thanks, both. Will queue.
+The first option is giving nothing:
+
+     git config submodule.defaultGroup "*SomeLabel"
+     git -C submodule-not-labeled reset --hard HEAD^
+     git status
+     # all good, no report about  submodule-not-labeled
+     # because it is not in the default group.
+     # (This is implemented in the series)
+
+The "second option" is some sort of reporting. Either what I or you proposed.
+
+>
+>>> If we want to go with the second option, the design described in 0/15
+>>> is broken. Going one step further:
+>>>
+>>> ...
+>>>     # But what about subC which is not in the default group? It was
+>>> changed as well.
+>
+> So why not show it?  Is there anything controversial?
+
+The user made clear to not be interested in subC by setting
+up the default group.
+
+>
+> If you are truly not interested in it by excluding it from the
+> default group, you wouldn't have touched it in the first place.
+
+Well it can get out of sync by not touching it as well, because others
+changed the submodule pointer who are interested in that though.
+
+    # in the superproject
+    git checkout new-version
+    git submodule update
+    # checks out submodules to their version
+
+    git checkout some-ancient-version
+    git submodule update
+    # this would only update the submodules in the defaultGroup,
+    # not those which are initialized but "uninteresting"
+    # the labeling may have changed between the different versions
+    git status
+    # I don't want to see any submodule changes here.
+    # but there may be a submodule which is not at the right version
+    # as `git submodule update` only paid attention to the default group.
+
+> If
+> you did touch it, then you are showing some special interest that
+> overrides what you said in the default mechanism.
+>
+> In short, I think I understood what you wanted with your analogy to
+> the ignore/exclude mechanism in 0/15.  Default is a handy way to say
+> "I do not want to bother specifying everything from the command line
+> every time" but we can say that it is nothing more than that.  That
+> is exactly how the ignore/exclude mechanism is used--"git add" by
+> default will not add those that are ignored when discovering paths
+> by recursively descending, but once added, that is part of what the
+> user told Git that she cares about.
+>
+>>> In case we report these submodules which are checked out but not in
+>>> the default group, we probably want to adapt "git submodule update" to
+>>> un-checkout the work tree of the submodules in case they are clean.
+>
+> Why?
+>
+> Letting them know that they have such an option, and giving them a
+> way to tell which submodules fall into that category, are both good
+> things.  But why is it a good thing to automatically clean what the
+> user has checked out (which I expect that she expects to remain
+> until she explicitly tells us otherwise)?
+>
+> We do not automatically "git rm" a clean tracked path that happens
+> to match .gitignore pattern and I do not think it is a good thing to
+> do so.
+
+git rm changes the index (which may show up in the next commit)
+
+The state of a submodule (un-initialized, initialized, checked out)
+doesn't change the index or anything. Only the working tree is affected.
+
+And by flipping between the initialized and checked-out state we do not
+lose any information (such as user configured remote urls) nor does it
+affect the "state" (index, recorded tree, history) of the repository.
+
+So I just wonder if
+
+    git init <submodule group spec>
+    git deinit ! <submodule group spec>
+
+should be done in `git submodule update <submodule group spec>`
+(or by having the default group configured and running `git submodule update`
+with no arguments.)
+
+
+
+>
+> Puzzled.
+>
