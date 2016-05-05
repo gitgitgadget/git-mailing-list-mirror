@@ -1,179 +1,303 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] gc --auto: don't lie about running in background on Windows
-Date: Thu, 05 May 2016 09:28:59 -0700
-Message-ID: <xmqqbn4kcvuc.fsf@gitster.mtv.corp.google.com>
-References: <20160505171430.Horde.-GuvDpZBfS8VI1Zcfn4bJQI@webmail.informatik.kit.edu>
-	<20160505151646.13189-1-szeder@ira.uka.de>
+Subject: Re: [PATCH] submodule: stop sanitizing config options
+Date: Thu, 05 May 2016 09:59:15 -0700
+Message-ID: <xmqq60uscufw.fsf@gitster.mtv.corp.google.com>
+References: <cover.1461837783.git.johannes.schindelin@gmx.de>
+	<cover.1462342213.git.johannes.schindelin@gmx.de>
+	<20160504062618.GA9849@sigill.intra.peff.net>
+	<20160504074559.GA3077@sigill.intra.peff.net>
+	<20160504080047.GA2436@sigill.intra.peff.net>
+	<CAGZ79kaUiVLuXvpLPKuZZ55zbQXA3Wt7WP3a_65gBW2Cj-gMoQ@mail.gmail.com>
+	<20160505012219.GA15090@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Thu May 05 18:29:10 2016
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 05 18:59:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayM9G-00020R-8X
-	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 18:29:10 +0200
+	id 1ayMcd-0007BL-6Q
+	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 18:59:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756834AbcEEQ3F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2016 12:29:05 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54325 "EHLO
+	id S1757727AbcEEQ7W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2016 12:59:22 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50887 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754519AbcEEQ3D convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 May 2016 12:29:03 -0400
+	with ESMTP id S1757425AbcEEQ7V (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2016 12:59:21 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CAD15188A6;
-	Thu,  5 May 2016 12:29:01 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0AC2E18DB8;
+	Thu,  5 May 2016 12:59:18 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=lzEoxLFA5HYP
-	zaFBYBhVGUArw0Y=; b=g52FBOHJelv345tf34PTVCtVknmlpcjr/KJuSzq5dPLb
-	q6Ic89Fq24CCniau6Z/2ZurTc/tH//s2tsUI7VcxFtSc3daG7PI/NJkxWw3XguA2
-	mYdSbFoyOvpM6cVaO48ZqQK8zqyaxKs1bUL/cDyC08ZQ//3pcpEkKRIrfveQTdg=
+	:content-type; s=sasl; bh=4/z1yAKs70XIZBD/1QDLdjflzhY=; b=GNOH90
+	a4c4DvbRDmFwYVdx9qrzMsdbr2+tLjoCwxn0Y5t8GTEt5K6asgfF5TlVKyl3jFHw
+	1ZK9Ehxjm9pOFPGfjlymRwcpOLdTiWW5PF1NGD2HikfI27BNOguYMlHshtTczMRv
+	mXSIWFvOVJ5g4zlSBoJt/ySm5vzWIyQ7p+5WY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Fi/I5f
-	NnbwKUenAODKapA+8zhXbCjHEHZGzf7YjSlTfyyv8Osov/8xeRTvX6Lz48w6T3Mm
-	cX1lSWPRU3TXzWyVo3B0gVVMS2ejK+1EWxV+UGta2bdQ3IPBSqS5477JqFOXfFxz
-	tCp50ckPsaJWkOeuCnjBq8uNSPuw9aPsifptQ=
+	:content-type; q=dns; s=sasl; b=suwDMU5AZR62kXQsinRw9mBWwe1YG9Vo
+	yIvaKFvXWBR/g0XV/QZ9jb+RbINj4c1OEGiEAnt8M3CJAAj6ZbotvwDQP1D7f/eZ
+	XkDM83MvVF7Am8C85zqJ5z1pGNB/J7Q0JpZd1YjlqPfkFtx9lEEArMKP5bVbZq+f
+	cqsEHjfgDfA=
 Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C1C90188A5;
-	Thu,  5 May 2016 12:29:01 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 022C218DB6;
+	Thu,  5 May 2016 12:59:18 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 335E5188A4;
-	Thu,  5 May 2016 12:29:01 -0400 (EDT)
-In-Reply-To: <20160505151646.13189-1-szeder@ira.uka.de> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?=
-	message of "Thu, 5 May 2016 17:16:46 +0200")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 70E0218DB5;
+	Thu,  5 May 2016 12:59:17 -0400 (EDT)
+In-Reply-To: <20160505012219.GA15090@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 4 May 2016 21:22:19 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7985F83E-12DE-11E6-A548-9A9645017442-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: B417D004-12E2-11E6-AC68-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293652>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+Jeff King <peff@peff.net> writes:
 
-> Arguably this helper function could be just a simple variable.  I
-> opted for a function because:
+> Here's a version of my patch that should apply for you (no
+> semantic changes, just differences in the surrounding context):
+
+Sorry for the trouble.
+
+I queued jk/submodule-c-credential to be mergeable to 'maint', as it
+could be argued two ways.  We can say that not propagating -c down
+is a bug and the series is a bugfix.  Or it is merely a known
+limitation and the series is a new feature.  I was leaning towards
+the former, but I was also willing to declare that is a known bug
+that will left unfixed in the maintenance track.
+
+If I knew the 5 patches on jk/submodule-config-sanitize-fix was what
+we would eventually agree to be the right change, I would have
+applied them directly on top of jk/submodule-c-credential instead of
+forking a separate branch for them.  That way, either the "bugfix"
+would all go to 'maint', or the "feature" wouldn't, and we do not
+have to worry about making a mistake to merge only half-done state
+(i.e. jk/submodule-c-credential that passes only the credential.*
+configuration) that nobody would want to 'maint'.
+
+But when I picked up jk/submodule-config-sanitize-fix, I didn't have
+enough time to think things through or carefully read the discussion
+to convince myself that we already had a list concensus, so I queued
+it separately only to make sure I won't lose track of it--I can come
+back to it later that way.
+
+It probably is a good time to merge jk/submodule-config-sanitize-fix
+into jk/submodule-c-credential (i.e. a mere fast-forward), remove
+that "-fix" branch, and apply this patch directly on top of the
+resulting jk/submodule-c-credential.  That will make the whole thing
+a 13-patch series, consisting of:
+
+ 7 patches up to the current jk/submodule-c-credential
+  d1f8849 git_config_push_parameter: handle empty GIT_CONFIG_PARAMETERS
+  14111fc git: submodule honor -c credential.* from command line
+  e70986d quote: implement sq_quotef()
+  7dad263 submodule: fix segmentation fault in submodule--helper clone
+  717416c submodule: fix submodule--helper clone usage
+  08e0970 submodule: check argc count for git submodule--helper clone
+  d10e3b4 submodule: don't pass empty string arguments to submodule--helper clone
+ 
+ 5 patches up to the current jk/submodule-config-sanitize-fix
+  c12e865 submodule: use prepare_submodule_repo_env consistently
+  4638728 submodule--helper: move config-sanitizing to submodule.c
+  860cba6 submodule: export sanitized GIT_CONFIG_PARAMETERS
+  455d22c t5550: break submodule config test into multiple sub-tests
+  1149ee2 t5550: fix typo in $HTTPD_URL
+
+ 1 patch (this one)
+  4e6706a submodule: stop sanitizing config options
+
+whose early 7 patches have already been merged to 'master' (and none
+has been merged to 'maint').
+
+> -- >8 --
+> Subject: [PATCH] submodule: stop sanitizing config options
 >
->   - I preferred a single '#ifdef NO_POSIX_GOODIES', and putting a
->     static variable so near to EOF felt just wrong.  (And this is why
->     it's not an inline-able function defined in a header file.)
+> The point of having a whitelist of command-line config
+> options to pass to submodules was two-fold:
 >
->   - currently we know already at compile time that Windows can't
->     daemonize, but in the future we might want to extend this helper
->     function to perform some runtime checks, too.  But this is perhap=
-s
->     like preparing for crossing a bridge where we'll never get to.
-
-Alternatively, the implementation of daemonize() and can_daemonize()
-can live in compat/ and have the #ifdef switch in git-compat-util.h,
-e.g. something along the lines of these:
-
-	<< git-compat-util.h >>
-	... after conditional inclusion of compat/mingw.h ...
-	#ifndef can_daemonize
-        #define can_daemonize() 1
-	#endif
-       =20
-	<< compat/mingw.h >>
-	#define can_daemonize() 0
-	#define daemonize() mingw_daemonize()
-
-	<< setup.c >>
-        ...
-        #ifndef NO_POSIX_GOODIES
-        int daemonize(void)
-        {
-            ... no ifdef around here ...
-	}
-	#endif
-
-We can be even more purist and move the daemonize() implementation
-for POSIX to compat/posix.c to keep the generic part even more
-platform agnostic, which would remove the only #ifdef in setup.c,
-but that might be going a bit too far.
-
-These possible implementation choices aside, the goal of this patch
-is a worthwhile thing to do, I would think.
-
-Thanks.
-
->  builtin/gc.c |  1 +
->  cache.h      |  1 +
->  setup.c      | 17 +++++++++++++++--
->  3 files changed, 17 insertions(+), 2 deletions(-)
+>   1. It prevented obvious nonsense like using core.worktree
+>      for multiple repos.
 >
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index c583aad6ec28..79a0f6dc1126 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -368,6 +368,7 @@ int cmd_gc(int argc, const char **argv, const cha=
-r *prefix)
->  		 */
->  		if (!need_to_gc())
->  			return 0;
-> +		detach_auto &=3D can_daemonize();
->  		if (!quiet) {
->  			if (detach_auto)
->  				fprintf(stderr, _("Auto packing the repository in background for=
- optimum performance.\n"));
-> diff --git a/cache.h b/cache.h
-> index fd728f079320..3662e5aabb98 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -524,6 +524,7 @@ extern int set_git_dir_init(const char *git_dir, =
-const char *real_git_dir, int);
->  extern int init_db(const char *template_dir, unsigned int flags);
-> =20
->  extern void sanitize_stdfds(void);
-> +extern int can_daemonize(void);
->  extern int daemonize(void);
-> =20
->  #define alloc_nr(x) (((x)+16)*3/2)
-> diff --git a/setup.c b/setup.c
-> index c86bf5c9fabe..6187a4ad9c47 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -1033,12 +1033,25 @@ void sanitize_stdfds(void)
->  		close(fd);
->  }
-> =20
-> +#ifdef NO_POSIX_GOODIES
-> +int can_daemonize(void)
-> +{
-> +	return 0;
-> +}
-> +
->  int daemonize(void)
->  {
-> -#ifdef NO_POSIX_GOODIES
->  	errno =3D ENOSYS;
->  	return -1;
-> +}
->  #else
-> +int can_daemonize(void)
-> +{
-> +	return 1;
-> +}
-> +
-> +int daemonize(void)
-> +{
->  	switch (fork()) {
->  		case 0:
->  			break;
-> @@ -1054,5 +1067,5 @@ int daemonize(void)
->  	close(2);
->  	sanitize_stdfds();
+>   2. It could prevent surprise when the user did not mean
+>      for the options to leak to the submodules (e.g.,
+>      http.sslverify=false).
+>
+> For case 1, the answer is mostly "if it hurts, don't do
+> that". For case 2, we can note that any such example has a
+> matching inverted surprise (e.g., a user who meant
+> http.sslverify=true to apply everywhere, but it didn't).
+>
+> So this whitelist is probably not giving us any benefit, and
+> is already creating a hassle as people propose things to put
+> on it. Let's just drop it entirely.
+>
+> Note that we still need to keep a special code path for
+> "prepare the submodule environment", because we still have
+> to take care to pass through $GIT_CONFIG_PARAMETERS (and
+> block the rest of the repo-specific environment variables).
+>
+> We can do this easily from within the submodule shell
+> script, which lets us drop the submodule--helper option
+> entirely (and it's OK to do so because as a "--" program, it
+> is entirely a private implementation detail).
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  builtin/submodule--helper.c  | 17 -----------------
+>  git-submodule.sh             |  4 ++--
+>  submodule.c                  | 39 +--------------------------------------
+>  t/t7412-submodule--helper.sh | 26 --------------------------
+>  4 files changed, 3 insertions(+), 83 deletions(-)
+>  delete mode 100755 t/t7412-submodule--helper.sh
+>
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 16d6432..89250f0 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -260,22 +260,6 @@ static int module_clone(int argc, const char **argv, const char *prefix)
 >  	return 0;
-> -#endif
 >  }
-> +#endif /* #ifdef NO_POSIX_GOODIES */
+>  
+> -static int module_sanitize_config(int argc, const char **argv, const char *prefix)
+> -{
+> -	struct strbuf sanitized_config = STRBUF_INIT;
+> -
+> -	if (argc > 1)
+> -		usage(_("git submodule--helper sanitize-config"));
+> -
+> -	git_config_from_parameters(sanitize_submodule_config, &sanitized_config);
+> -	if (sanitized_config.len)
+> -		printf("%s\n", sanitized_config.buf);
+> -
+> -	strbuf_release(&sanitized_config);
+> -
+> -	return 0;
+> -}
+> -
+>  struct cmd_struct {
+>  	const char *cmd;
+>  	int (*fn)(int, const char **, const char *);
+> @@ -285,7 +269,6 @@ static struct cmd_struct commands[] = {
+>  	{"list", module_list},
+>  	{"name", module_name},
+>  	{"clone", module_clone},
+> -	{"sanitize-config", module_sanitize_config},
+>  };
+>  
+>  int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 91f5856..b1c056c 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -197,9 +197,9 @@ isnumber()
+>  # of the settings from GIT_CONFIG_PARAMETERS.
+>  sanitize_submodule_env()
+>  {
+> -	sanitized_config=$(git submodule--helper sanitize-config)
+> +	save_config=$GIT_CONFIG_PARAMETERS
+>  	clear_local_git_env
+> -	GIT_CONFIG_PARAMETERS=$sanitized_config
+> +	GIT_CONFIG_PARAMETERS=$save_config
+>  	export GIT_CONFIG_PARAMETERS
+>  }
+>  
+> diff --git a/submodule.c b/submodule.c
+> index c18ab9b..d598881 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -1098,50 +1098,13 @@ void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir)
+>  	strbuf_release(&rel_path);
+>  	free((void *)real_work_tree);
+>  }
+> -/*
+> - * Rules to sanitize configuration variables that are Ok to be passed into
+> - * submodule operations from the parent project using "-c". Should only
+> - * include keys which are both (a) safe and (b) necessary for proper
+> - * operation.
+> - */
+> -static int submodule_config_ok(const char *var)
+> -{
+> -	if (starts_with(var, "credential."))
+> -		return 1;
+> -	return 0;
+> -}
+> -
+> -int sanitize_submodule_config(const char *var, const char *value, void *data)
+> -{
+> -	struct strbuf *out = data;
+> -
+> -	if (submodule_config_ok(var)) {
+> -		if (out->len)
+> -			strbuf_addch(out, ' ');
+> -
+> -		if (value)
+> -			sq_quotef(out, "%s=%s", var, value);
+> -		else
+> -			sq_quote_buf(out, var);
+> -	}
+> -
+> -	return 0;
+> -}
+>  
+>  void prepare_submodule_repo_env(struct argv_array *out)
+>  {
+>  	const char * const *var;
+>  
+>  	for (var = local_repo_env; *var; var++) {
+> -		if (!strcmp(*var, CONFIG_DATA_ENVIRONMENT)) {
+> -			struct strbuf sanitized_config = STRBUF_INIT;
+> -			git_config_from_parameters(sanitize_submodule_config,
+> -						   &sanitized_config);
+> -			argv_array_pushf(out, "%s=%s", *var, sanitized_config.buf);
+> -			strbuf_release(&sanitized_config);
+> -		} else {
+> +		if (strcmp(*var, CONFIG_DATA_ENVIRONMENT))
+>  			argv_array_push(out, *var);
+> -		}
+>  	}
+> -
+>  }
+> diff --git a/t/t7412-submodule--helper.sh b/t/t7412-submodule--helper.sh
+> deleted file mode 100755
+> index 149d428..0000000
+> --- a/t/t7412-submodule--helper.sh
+> +++ /dev/null
+> @@ -1,26 +0,0 @@
+> -#!/bin/sh
+> -#
+> -# Copyright (c) 2016 Jacob Keller
+> -#
+> -
+> -test_description='Basic plumbing support of submodule--helper
+> -
+> -This test verifies the submodule--helper plumbing command used to implement
+> -git-submodule.
+> -'
+> -
+> -. ./test-lib.sh
+> -
+> -test_expect_success 'sanitize-config clears configuration' '
+> -	git -c user.name="Some User" submodule--helper sanitize-config >actual &&
+> -	test_must_be_empty actual
+> -'
+> -
+> -sq="'"
+> -test_expect_success 'sanitize-config keeps credential.helper' '
+> -	git -c credential.helper=helper submodule--helper sanitize-config >actual &&
+> -	echo "${sq}credential.helper=helper${sq}" >expect &&
+> -	test_cmp expect actual
+> -'
+> -
+> -test_done
