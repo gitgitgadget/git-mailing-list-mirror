@@ -1,139 +1,152 @@
-From: Orgad Shaneh <orgads@gmail.com>
-Subject: [PATCH] git-gui: Do not reset author details on amend
-Date: Thu,  5 May 2016 17:23:02 +0300
-Message-ID: <1462458182-4488-1-git-send-email-orgads@gmail.com>
-Cc: Orgad Shaneh <orgads@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 05 16:23:41 2016
+From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] t5510: run auto-gc in the foreground
+Date: Thu, 05 May 2016 17:14:30 +0200
+Message-ID: <20160505171430.Horde.-GuvDpZBfS8VI1Zcfn4bJQI@webmail.informatik.kit.edu>
+References: <20160501153743.323-1-szeder@ira.uka.de>
+ <alpine.DEB.2.20.1605020859131.9313@virtualbox>
+ <20160503015526.Horde.e0uZ0P4BqpNnwx_zmhu3WfE@webmail.informatik.kit.edu>
+ <20160503135028.Horde.jeJdKT1kb2NTVAS1HpcsQh2@webmail.informatik.kit.edu>
+ <alpine.DEB.2.20.1605040741500.9313@virtualbox>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8;
+	format=flowed	DelSp=Yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu May 05 17:14:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayKBn-0003q4-2m
-	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 16:23:39 +0200
+	id 1ayKzA-0006e1-Nq
+	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 17:14:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755270AbcEEOXf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2016 10:23:35 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36250 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754542AbcEEOXe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2016 10:23:34 -0400
-Received: by mail-wm0-f66.google.com with SMTP id w143so3762730wmw.3
-        for <git@vger.kernel.org>; Thu, 05 May 2016 07:23:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=IonPhCaUoFoP6uWoAIORSNIJEOfUfn4oFFSBxiqmpVc=;
-        b=ppzk+P0O3sZTyxsYcFplwtHEsLA8uQe9BH54fF7qy22f+GlqYYATfcWeOhf2sApTAR
-         BlRhv7GZXoJU0HzA0QfktDhd1bU4M92f8pO1eY4cklfBqU2om5F3/L5hiA6ylpi1/tM5
-         UxcfMRQFzzs13xijuf2wBTHLWZug+02NrCt43A7RArmwcub2IRCYAKBNQBgeCb2/MG8z
-         tq0yrvZYiNXlODaroG/CblYAzKux2eBe0emS8gY26efxiU1VaD0wUImyCY3TV4ZvwoNh
-         rZ+k912DHRjTXlHjhFU3Zu9qJ5MVJfwjWXTfl+vcnxp1kyl2YDnYTfb8KPJEntSY8Uhr
-         O3xQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=IonPhCaUoFoP6uWoAIORSNIJEOfUfn4oFFSBxiqmpVc=;
-        b=i4GaBEknOec9HJ/n2NEPLnU4lN1Z2jhyvfyv/t+20SRLv82JvohcdZ8wnOOee1U7VC
-         yFJJVla8ND4C5T3ZVJR46Fp3AXAIh2J28T7QpqvrHZTnyt/wMQu8AX1Vct+JFywRUlZF
-         GfwQ+9l6oQuSfhWhoMRNUl18gkqm90w8u+p2/XxHH3XxmH3CulmJ8h29+haQzB8KlFpB
-         M7qI1VmxuvvNDi7QU9HAR3EoY7bIPoN7FQGGO2lGhFFgY5Z8Qa7N+vxFcYn79m1nB+Qg
-         xGBUXyDRFUWxDf2wSf7nOBI+vCbU9V6jbBN+QZKMT0OdQX0MtVPVoxfNwMdXwj2xKz4T
-         YiYg==
-X-Gm-Message-State: AOPr4FV3Mr4FtGrLXHsYGaJ2JtDIsVR8ILqayBEpytrJGsmADNSpF3FFJ2MNtat9dSCpYA==
-X-Received: by 10.28.144.11 with SMTP id s11mr3621969wmd.72.1462458213355;
-        Thu, 05 May 2016 07:23:33 -0700 (PDT)
-Received: from localhost.localdomain ([95.86.77.111])
-        by smtp.gmail.com with ESMTPSA id u4sm10025456wjz.4.2016.05.05.07.23.30
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 05 May 2016 07:23:31 -0700 (PDT)
-X-Mailer: git-send-email 2.8.1
+	id S1755051AbcEEPOg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2016 11:14:36 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:33915 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753503AbcEEPOf convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 5 May 2016 11:14:35 -0400
+Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	iface 141.3.10.81 id 1ayKz1-0008Sm-BM; Thu, 05 May 2016 17:14:31 +0200
+Received: from apache by webmail.ira.uka.de with local (Exim 4.84_2)
+	(envelope-from <szeder@ira.uka.de>)
+	id 1ayKz0-0004jS-UI; Thu, 05 May 2016 17:14:30 +0200
+Received: from x4db01ee5.dyn.telefonica.de (x4db01ee5.dyn.telefonica.de
+ [77.176.30.229]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
+ Thu, 05 May 2016 17:14:30 +0200
+In-Reply-To: <alpine.DEB.2.20.1605040741500.9313@virtualbox>
+User-Agent: Horde Application Framework 5
+Content-Disposition: inline
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1462461271.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293649>
 
-git commit --amend preserves the author details unless --reset-author is
-given.
 
-git-gui discards the author details on amend.
+Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de>:
 
-Fix by reading the author details along with the commit message, and
-setting the appropriate environment variables required for preserving
-them.
+> Hi G=C3=A1bor,
+>
+> On Tue, 3 May 2016, SZEDER G=C3=A1bor wrote:
+>
+>> Quoting SZEDER G=C3=A1bor <szeder@ira.uka.de>:
+>>
+>> >Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+>> >
+>> > >Hi G=C3=A1bor,
+>> > >
+>> > >On Sun, 1 May 2016, SZEDER G=C3=A1bor wrote:
+>> > >
+>> > > >diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+>> > > >index 38321d19efbe..454d896390c0 100755
+>> > > >--- a/t/t5510-fetch.sh
+>> > > >+++ b/t/t5510-fetch.sh
+>> > > >@@ -682,6 +682,7 @@ test_expect_success 'fetching with auto-gc =
+does
+>> > > >not lock up' '
+>> > > > (
+>> > > >  cd auto-gc &&
+>> > > >  git config gc.autoPackLimit 1 &&
+>> > > >+		git config gc.autoDetach false &&
+>> > > >  GIT_ASK_YESNO=3D"$D/askyesno" git fetch >fetch.out 2>&1 &&
+>> > > >  ! grep "Should I try again" fetch.out
+>> > > > )
+>> > >
+>> > >Sounds good to me.
+>> >
+>> >There is something still bothering me, though.
+>> >
+>> >I take this was a Windows-specific issue; deleting open files on Li=
+nux is
+>> >no brainer.  According to a comment on the original Git for Windows=
+ issue
+>> >at github[1], 'git gc' runs in the background by default on =20
+>> Windows as well.
+>>
+>> Ok, having slept on it, it was a false alarm.
+>>
+>> Though 'git gc --auto' claims "Auto packing the repository in backgr=
+ound for
+>> optimum performance." on Windows, it does in fact runs in the foregr=
+ound.
+>
+> Thanks for checking. I ran out of time yesterday.
+>
+>> 'git gc --auto' first prints that message, unless gc.autoDetach is d=
+isabled,
+>> and then calls daemonize() to go to the background.  However, daemon=
+ize() is
+>> basically a no-op on Windows, thus 'git gc' will remain in the =20
+>> foreground and
+>> the sequence I described below is impossible.  Good.
+>
+> Oh, right. I think this will take a lot of energy to fix: daemonize()=
+'s
+> functionality is not really available, indeed. What *is* available is=
+ a
+> spawn() that detaches the new process.
+>
+>> Perhaps it would be worth updating 'git gc' to not lie about going t=
+o the
+>> background when we can already know in advance that it won't.
+>
+> Hmm.  https://github.com/git/git/blob/master/builtin/gc.c#L372-L373
+> already looks correct (should it really know that we cannot daemonize=
+()?
+>
+> 			if (detach_auto)
+> 				fprintf(stderr, _("Auto packing the repository in background for =
+=20
+> optimum performance.\n"));
+> 			else
+> 				fprintf(stderr, _("Auto packing the repository for optimum =20
+> performance.\n"));
 
-Reported long ago in the mailing list[1].
+It is only correct as far as the value of the 'gc.autoDetach' config
+variable is concerned, which is enabled by default, even on Windows, wh=
+ere
+it can't go to the background.
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/243921
+> (should it really know that we cannot daemonize()?
+> What about other code paths using that function?):
 
-Signed-off-by: Orgad Shaneh <orgads@gmail.com>
----
- git-gui/lib/commit.tcl | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+daemonize() is currently only used in the 'git gc --auto' code path and=
+ in
+'git daemon', which doesn't announce that it is about to go in the
+background.  Then there is the WIP index-helper, which will use daemoni=
+ze()
+as well, but it won't announce that either.
 
-diff --git a/git-gui/lib/commit.tcl b/git-gui/lib/commit.tcl
-index 864b687..60edf99 100644
---- a/git-gui/lib/commit.tcl
-+++ b/git-gui/lib/commit.tcl
-@@ -1,8 +1,13 @@
- # git-gui misc. commit reading/writing support
- # Copyright (C) 2006, 2007 Shawn Pearce
- 
-+set author_name ""
-+set author_email ""
-+set author_date ""
-+
- proc load_last_commit {} {
- 	global HEAD PARENT MERGE_HEAD commit_type ui_comm
-+	global author_name author_email author_date
- 	global repo_config
- 
- 	if {[llength $PARENT] == 0} {
-@@ -34,6 +39,10 @@ You are currently in the middle of a merge that has not been fully completed.  Y
- 					lappend parents [string range $line 7 end]
- 				} elseif {[string match {encoding *} $line]} {
- 					set enc [string tolower [string range $line 9 end]]
-+				} elseif {[regexp "author (.*)\\s<(.*)>\\s(\\d.*$)" $line all name email time]} {
-+					set author_name $name
-+					set author_email $email
-+					set author_date $time
- 				}
- 			}
- 			set msg [read $fd]
-@@ -107,8 +116,12 @@ proc do_signoff {} {
- 
- proc create_new_commit {} {
- 	global commit_type ui_comm
-+	global author_name author_email author_date
- 
- 	set commit_type normal
-+	set author_name ""
-+	set author_email ""
-+	set author_date ""
- 	$ui_comm delete 0.0 end
- 	$ui_comm edit reset
- 	$ui_comm edit modified false
-@@ -327,6 +340,7 @@ proc commit_committree {fd_wt curHEAD msg_p} {
- 	global ui_comm selected_commit_type
- 	global file_states selected_paths rescan_active
- 	global repo_config
-+	global env author_name author_email author_date
- 
- 	gets $fd_wt tree_id
- 	if {[catch {close $fd_wt} err]} {
-@@ -366,6 +380,11 @@ A rescan will be automatically started now.
- 		}
- 	}
- 
-+	if {$author_name ne ""} {
-+		set env(GIT_AUTHOR_NAME) $author_name
-+		set env(GIT_AUTHOR_EMAIL) $author_email
-+		set env(GIT_AUTHOR_DATE) $author_date
-+	}
- 	# -- Create the commit.
- 	#
- 	set cmd [list commit-tree $tree_id]
--- 
-2.8.1
+Being the sole callsite that makes such an announcement, I think it sho=
+uld
+know or at least should check whether "daemonizing" is possible. (as
+opposed to e.g. teaching daemonize() to print such messages)
+
+
+G=C3=A1bor
