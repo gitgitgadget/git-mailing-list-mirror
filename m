@@ -1,114 +1,107 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH v15 3/7] t0040-parse-options: improve test coverage
-Date: Thu, 5 May 2016 10:16:03 +0530
-Message-ID: <CAFZEwPN84Qr2z4M7DQFWda3JO7Ut-4FWO5G8+ExwSobwcyM6Fw@mail.gmail.com>
-References: <1462046616-2582-1-git-send-email-pranit.bauva@gmail.com>
-	<1462046616-2582-3-git-send-email-pranit.bauva@gmail.com>
-	<CAPig+cTW9=w8fMTwcF-Z6DPmXMM4qiWZA=7S1GcFEoGG8hPUtw@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH 78/83] Move libified code from builtin/apply.c to apply.{c,h}
+Date: Thu, 5 May 2016 10:50:08 +0200
+Message-ID: <CAP8UFD0Ku_q56JMvyh9UncJ2D+QsOcB4Svyr5ZWj+KqAaHORMw@mail.gmail.com>
+References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
+	<1461504863-15946-79-git-send-email-chriscool@tuxfamily.org>
+	<CACsJy8Cb20L=y_=J6S5=rngvH1n0aWvtf5eJrXP-df0aoiJyrQ@mail.gmail.com>
+	<CAP8UFD3o_u48rRHP7ZOWnVH7X0O5wwM-Gk-VpH5PP_kFx19ZpQ@mail.gmail.com>
+	<CACsJy8AtEv9HHOJUDVKmO=qLkWctvS2zoGdo03jtQwyy2kKzRQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu May 05 06:46:12 2016
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 05 10:50:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayBAx-0006IK-Oe
-	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 06:46:12 +0200
+	id 1ayEzG-0003H6-Tk
+	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 10:50:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750905AbcEEEqG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2016 00:46:06 -0400
-Received: from mail-yw0-f169.google.com ([209.85.161.169]:33105 "EHLO
-	mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750746AbcEEEqF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2016 00:46:05 -0400
-Received: by mail-yw0-f169.google.com with SMTP id t10so128887699ywa.0
-        for <git@vger.kernel.org>; Wed, 04 May 2016 21:46:04 -0700 (PDT)
+	id S1756106AbcEEIuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2016 04:50:13 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:36264 "EHLO
+	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752474AbcEEIuK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2016 04:50:10 -0400
+Received: by mail-wm0-f52.google.com with SMTP id n129so11696420wmn.1
+        for <git@vger.kernel.org>; Thu, 05 May 2016 01:50:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=VPDLGWxFcV4IH8vd4gWH4FPwKiWodf5Egh/e0LgJvUQ=;
-        b=yAAXFrmrPEIz5h8Xsy++b7WoD8nCgYaiCejxj2mEcvTkTyQ9BoRXqs9ApzljqoaxO3
-         q8Puvu6sOopldYt8Mkn91PLLq1uyCwocDNgi+wp3LDjeqxsC743B4ynpHgsnIzFzR9Lk
-         MSyDtan8QJlffRSRYyJIBwZY06pPgf0az35PmwgsG2pD5t/RgVgEplR86VTs+MkozI+Y
-         eJn+8ES7+DscNu8lTK0A20g2J7Hksj9IhPR/5b/ep9kPQZitae//X1kERMi3BnyPc4bl
-         HWls95F3ytGgMDxMa79H2d/3zKA2DqEGWEoYdRuMILN4vltLGR3ccbQOJKNjMq+/NwWy
-         Tnug==
+        bh=PRsA5AjaVMNtaMob3qxFr6LT+KWWpNlvYntkwOaoaSo=;
+        b=pc/e4xmTJjKDsRPTtuYudT9gKzvKdnU1zr70U3v9Dj5xZzdiBGm1kg+uLBCxAG9kxb
+         AgdIoHpDiLVsosfTV1LkPKRqqQIOsO2R5jngSQBtgS64RPNmcfK+jXozWyvz6s5Jw4M7
+         40nXySHatAkEh0P8QrxmAD7UYYrT/xCo0E7KLkcbBakNkxFG0LJUOUx9KtpX4GLQxlWM
+         wkZMsEXTowDcVIpuNsWaa9NkwSCJyZh9md4g07c9LSFIZYLMgCxokfhkF6igue//44v5
+         Y6Tif5E2EkuIznUw9wKLuz645GEr9bD3meIcKLolY0iauXulwpDjpQejaRjX+KKQJ9mX
+         5oww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=VPDLGWxFcV4IH8vd4gWH4FPwKiWodf5Egh/e0LgJvUQ=;
-        b=Q/v/18l5OHVCS6yrMnnwKnCG/vgytefDn7gpUyBHQgxIBd/SLDTZhzOaEHe/2IkB04
-         dHiVIuEPl/wmdotUcfUuseM4DL2fKq5j3V0ZOZvD2qEdyDfITBtP4sGTZBszTvm6asOV
-         q8nUbHHQj6jTMdO5Ut3d9LRzuM6+hADxh9dtMUekC3/fQosh4uDrxuHPsLb780zs7UW8
-         H8FNmSA7u2K6KcQg6zp5h6otSt8WZuOlLkNMZYCv2C8WrPHT+bOvSZCjUyNyy0ZP1mrw
-         NDB7LgC7PgKIFAiTfc3LF9r+XjN47z2glIhCszTyxHaCiYBJrElB2dVRz9VTTAjPF6c4
-         qG+A==
-X-Gm-Message-State: AOPr4FUFEPxBhbl6Y+v/zNYUYBAIVVof0X0xxOKkEC5MmXZFUCwSobv+m3//w1ZJUDtPs0HuYLPKfE50xFiyYg==
-X-Received: by 10.13.221.212 with SMTP id g203mr7309978ywe.68.1462423564027;
- Wed, 04 May 2016 21:46:04 -0700 (PDT)
-Received: by 10.13.219.213 with HTTP; Wed, 4 May 2016 21:46:03 -0700 (PDT)
-In-Reply-To: <CAPig+cTW9=w8fMTwcF-Z6DPmXMM4qiWZA=7S1GcFEoGG8hPUtw@mail.gmail.com>
+        bh=PRsA5AjaVMNtaMob3qxFr6LT+KWWpNlvYntkwOaoaSo=;
+        b=bhI6KhDfhPowi4TgOhJBpELuor/tkl4TAusf7oIhnmoNqb/jaZeo6DumqN2NflegYn
+         tJuEKiHjsrnZjo+3IlRYnagJ0hYE6xH/2Ac/tcvgzxR8Yzy9tNjiFjzdrf8RuboQ+7TB
+         Kp+vPAa6PRBYVm92UC5XMuji4m6xW7eAaNrgqalQ6Zroj0S3p20t9thGlSceY90mIyrl
+         otfqSD3N/UxjoG5Qr17dTf1zBz0Z1eni9Uj/lIrJTOzMCrJ9g8oe7gVJDSh2cFvnb4Ya
+         +hbAlAwwql2UvFrwzk4FSZx9S3bMt4sPRYAjQP0ogmr5g5/lA5efKYIo/NpP84PQGVah
+         KAnw==
+X-Gm-Message-State: AOPr4FUwqOJVRTvtir5rmc41nEHG0iBb+Ewo6A2LoYYSfFJ8j3Ob3SMyzDRL4+n1t89WHV0belto6OObvKDmUw==
+X-Received: by 10.28.128.83 with SMTP id b80mr2194278wmd.89.1462438208827;
+ Thu, 05 May 2016 01:50:08 -0700 (PDT)
+Received: by 10.194.246.4 with HTTP; Thu, 5 May 2016 01:50:08 -0700 (PDT)
+In-Reply-To: <CACsJy8AtEv9HHOJUDVKmO=qLkWctvS2zoGdo03jtQwyy2kKzRQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293633>
 
-On Wed, May 4, 2016 at 2:06 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Sat, Apr 30, 2016 at 4:03 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->> Include tests to check for multiple levels of quiet and to check if the
->> '--no-quiet' option sets it to 0.
+On Wed, May 4, 2016 at 1:32 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Wed, May 4, 2016 at 5:39 PM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>>
+>> Right now I get:
+>>
+>>> git log --summary -M -C -B -1 20f1d27
+>> commit 20f1d274609f5dde2eaaa279e7ee79fd5ef9c849
+>> Author: Christian Couder <chriscool@tuxfamily.org>
+>> Date:   Fri Apr 22 20:55:46 2016 +0200
+>>
+>>     Move libified code from builtin/apply.c to apply.{c,h}
+>>
+>>     Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>>
+>>  copy builtin/apply.c => apply.c (96%)
+>>  rewrite builtin/apply.c (96%)
 >
-> As this patch is also adding a test of --[no-]verbose, the commit
-> message should mention it.
-
-Will include this in commit message.
-
+> Ah.. I forgot about -B to break rename pairs! This looks good. I
+> really need to go back to diff rename hints series, so we can annotate
+> this commit and don't have to use -B every time.
 >
-> More below...
+>> And using format-patch:
+>>
+>>> git format-patch -M -C -B -1  -o ../../patches/test-libify-apply-use-in-am/ 20f1d27
+>> ../../patches/test-libify-apply-use-in-am/0001-Move-libified-code-from-builtin-apply.c-to-apply.-c-.patch
+>>> wc ../../patches/test-libify-apply-use-in-am/0001-Move-libified-code-from-builtin-apply.c-to-apply.-c-.patch
+>>   5264  23426 147133
 >
->> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
->> ---
->> diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
->> @@ -476,4 +476,61 @@ test_expect_success '--no-list resets list' '
->> +test_expect_success 'multiple quiet levels' '
->> +       test-parse-options -q -q -q >output 2>output.err &&
->> +       test_must_be_empty output.err &&
->> +       test_cmp expect output
->> +'
->> +
->> +test_expect_success '--no-quiet sets quiet to 0' '
->> +       test-parse-options -q -q -q --no-quiet >output 2>output.err &&
->> +       test_must_be_empty output.err &&
->> +       test_cmp expect output
->> +'
->
-> It wouldn't hurt to have two tests for --no-quiet: one which tests
-> --no-quiet alone to ensure that 'quiet' *remains* at 0, and one which
-> tests --no-quiet in combination with some --quiet's to ensure that
-> 'quiet' is *reset* to 0. These tests would give you good coverage for
-> changes by subsequent patches, such as the OPTION_COUNTUP patch which
-> flips the initial value to -1.
+> It's a lot of lines, but if you look at diff stat, it's 244 insertions
+> and 4906 deletions. I _think_ deletions are something reviewers don't
+> have to pay much attention to (trusting that git moves code
+> correctly), so only 244 lines to review are really nice. But I may be
+> wrong.
 
-Will add them
-
->> +
->> +test_expect_success '--no-verbose sets verbose to 0' '
->> +       test-parse-options --no-verbose >output 2> output.err &&
->> +       test_must_be_empty output.err &&
->> +       test_cmp expect output
->> +'
->
-> One would expect to see 'verbose' get the same treatment of having a
-> test invoke --verbose multiple times. (Yes, I realize that the "long
-> options" test does just this, but testing multiple --verbose's is not
-> its primary purpose, so having a test which does test multiple
-> --verbose's as its primary purpose can be beneficial and is less
-> likely to be broken by someone in the future.)
-
-Sure. Having another test dedicated wouldn't hurt.
+Yeah, you are right. I hadn't looked at the diff stat. Thanks.
