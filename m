@@ -1,168 +1,266 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv4] submodule deinit: require '--all' instead of '.' for
- all submodules
-Date: Wed, 4 May 2016 16:59:14 -0700
-Message-ID: <20160504235914.GD395@google.com>
-References: <1462401603-2067-1-git-send-email-sbeller@google.com>
- <20160504232642.GC395@google.com>
- <CAGZ79kbeCCcmGh57zUdQ=BzFOWUiwj8-3nM4dbK9yONbrmLaPw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] submodule: stop sanitizing config options
+Date: Wed, 4 May 2016 21:22:19 -0400
+Message-ID: <20160505012219.GA15090@sigill.intra.peff.net>
+References: <cover.1461837783.git.johannes.schindelin@gmx.de>
+ <cover.1462342213.git.johannes.schindelin@gmx.de>
+ <20160504062618.GA9849@sigill.intra.peff.net>
+ <20160504074559.GA3077@sigill.intra.peff.net>
+ <20160504080047.GA2436@sigill.intra.peff.net>
+ <CAGZ79kaUiVLuXvpLPKuZZ55zbQXA3Wt7WP3a_65gBW2Cj-gMoQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
+	Jacob Keller <jacob.keller@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu May 05 01:59:25 2016
+X-From: git-owner@vger.kernel.org Thu May 05 03:22:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ay6hQ-0000r2-23
-	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 01:59:24 +0200
+	id 1ay7zp-00030s-71
+	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 03:22:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754904AbcEDX7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 May 2016 19:59:19 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:35854 "EHLO
-	mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754519AbcEDX7S (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2016 19:59:18 -0400
-Received: by mail-pf0-f176.google.com with SMTP id c189so31806079pfb.3
-        for <git@vger.kernel.org>; Wed, 04 May 2016 16:59:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=BjcNjhTRC5wSTVeZQMeKeMj45s+Jx/lecMxYQLdWoNo=;
-        b=qurpKmN2Cv5y02Ce9hFIUvVxzx+xeQUVgzwpiNcvpKQ/TAHaSjSjmejqbNFvfEcjZK
-         HrkpRWBVAOqIXnnCCjEde7kMR24535EzN5nRB/pfj5GQPP+ElDQ3TthA1E4jadSpi43d
-         Lw0nJpTtjUVSaKv5L2Ii/0YuO5JJwo5XjwwSFBy+PTC+HiXKvL3q33oP66nXdp6grW8n
-         mdoq//8790pi+uumYp8N2FhILL1ySEERoWE4ijsHxL7G83KhKXYvKnkMNzpjHsuMYBlW
-         1pSyUnIA+XsvfjSVrkORfsOz2gisk6rKfXCpi9y04J6KQD5fuFQ7sjX6wEj08IRV69qD
-         8fJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=BjcNjhTRC5wSTVeZQMeKeMj45s+Jx/lecMxYQLdWoNo=;
-        b=EuFtRRad9B/9vCPpCDrcqOERFBXF4f1pJJmSJgiJ/lufzBv0BWaXFaEY6XkrDGDJQD
-         5rODtpe7BLA1KJToMb3eNTGUrAIJYtJ7Kk/qVjGEW0TN6Ri9YoRWIHv4HdfEvd2j44js
-         PI1Lug/NDRWMvkVJspLpaCwqvi3NZGJgpHb7WH9yPK3Z+PSgpteMv/OSMBuq7ksfavR4
-         en7TfjTGWe2ZUWpD5qshYQaTg5z3A7Nqkg8iMZxJdVcWFO+mMcMzXe5ANVv/nECY/2Pe
-         LW/G22S/Oe4ijVEzIiOoz3tpA1sXTsYDBAQKawMYYItHZHJ8ZMH5UbI1Cm0bnlrBrrRn
-         8EQQ==
-X-Gm-Message-State: AOPr4FX93TYmqeT+9+MpFqKvwv+Fobfv0ZPdDBpCuxNicM1Uy2Al0GTMARNWBHyaP2rk2w==
-X-Received: by 10.98.84.65 with SMTP id i62mr16135633pfb.97.1462406357524;
-        Wed, 04 May 2016 16:59:17 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:2402:f378:bbc1:db8f])
-        by smtp.gmail.com with ESMTPSA id s64sm8603159pfi.77.2016.05.04.16.59.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 04 May 2016 16:59:16 -0700 (PDT)
+	id S1755123AbcEEBWY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 May 2016 21:22:24 -0400
+Received: from cloud.peff.net ([50.56.180.127]:34427 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754726AbcEEBWW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2016 21:22:22 -0400
+Received: (qmail 17891 invoked by uid 102); 5 May 2016 01:22:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 May 2016 21:22:22 -0400
+Received: (qmail 16142 invoked by uid 107); 5 May 2016 01:22:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 May 2016 21:22:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 May 2016 21:22:19 -0400
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kbeCCcmGh57zUdQ=BzFOWUiwj8-3nM4dbK9yONbrmLaPw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CAGZ79kaUiVLuXvpLPKuZZ55zbQXA3Wt7WP3a_65gBW2Cj-gMoQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293630>
 
-Stefan Beller wrote:
-> On Wed, May 4, 2016 at 4:26 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+On Wed, May 04, 2016 at 03:53:26PM -0700, Stefan Beller wrote:
 
->> I think this paragraph could be removed.  --all is explained lower
->> down and the error message points it out to users who need it.
->
-> When we want to keep supporting '.' forever, I would remove this section.
+> > I think we'd actually do it all in one, and that patch looks something
+> > like the one below (on top of jk/submodule-config-sanitize-fix).
+> 
+>     $ git checkout origin/jk/submodule-config-sanitize-fix
+>     $ git am p
+> Applying: submodule: stop sanitizing config options
+> error: patch failed: builtin/submodule--helper.c:246
+> error: builtin/submodule--helper.c: patch does not apply
+> error: patch failed: submodule.c:1131
+> error: submodule.c: patch does not apply
+> Patch failed at 0001 submodule: stop sanitizing config options
+> 
+> So if you want some documentation on top of that, where would I base it on?
 
-Yes, please.  We can't remove something like that without a deprecation
-process that I don't think is worth it here.
+I build the patches for jk/submodule-config-sanitize-fix on top of
+master as of the other day, and then built this most recent patch on top
+of that.
 
-[...]
->>> +-a::
->>> +--all::
->>> +     This option is only valid for the deinit command. Unregister all
->>> +     submodules in the working tree.
->>
->> This could use an explanation of why I'd want to use it.  E.g.
->>
->>         This option is only valid for the deinit command. Unregister all
->>         submodules. Scripts should use this option instead of passing '.'
->>         to deinit because it works even in an empty repository with no
->>         submodules present.
->
-> I would not want to mention '.' in the documentation. this can read:
->
->     As a user I am fine to use '.' and then I wonder when it breaks.
+Looks like Junio applied them directly on the tip of
+jk/submodule-c-credential, and had to wiggle the code in submodule.c,
+which conflicted with the parallel-process stuff that was merged in
+between. Since the new patch updates that code, it will likewise run
+into conflicts.
 
-Sorry for the lack of clarity.  By referencing scripts I was referring
-to "callers that want to be able to run the same command in all
-situations, even the edge case of no files present".  I agree with you
-that humans should care just as much as scripts about things that will
-break and that we shouldn't break them. :)
+I don't think there's a strict right answer here; if the original buggy
+submodule-c-credential code had been released, we would definitely want
+to build off of it for "maint" releases. But it wasn't, so master is
+"just as good" in a sense. But I think Junio makes it a habit to apply
+fixes as far back as the introduced bug, even when it's not going to
+maint.
 
-[...]
->>> @@ -257,8 +270,8 @@ OPTIONS
->>>  --force::
->>>       This option is only valid for add, deinit and update commands.
->>>       When running add, allow adding an otherwise ignored submodule path.
->>> -     When running deinit the submodule work trees will be removed even if
->>> -     they contain local changes.
->>> +     When running deinit the submodule working trees will be removed even
->>> +     if they contain local changes.
->>
->> Unrelated change?
->
-> It's close enough for deinit to squash it in here, no?
+So since that's what published, it makes sense to build on that. Here's
+a version of my patch that should apply for you (no semantic changes,
+just differences in the surrounding context):
 
-My preference would be to have a separate patch since its commit message
-can explain the purpose.  I don't care much --- it was just something I
-noticed while reviewing the rest.
+-- >8 --
+Subject: [PATCH] submodule: stop sanitizing config options
 
-[...]
->>> +     if test -n "$deinit_all" && test "$#" -ne 0
->>> +     then
->>> +             die "$(eval_gettext "--all and pathspec are incompatible")"
->>
->> This message still feels too low-level to me, but I might be swimming
->> uphill here.
->>
->> Another option would be to call 'usage' and be done.
->
-> I had that idea as well, but I think pointing out the low level is better
-> than giving the high level again, so the user immediately sees what's wrong.
+The point of having a whitelist of command-line config
+options to pass to submodules was two-fold:
 
-I mean low level as in implementation detail.  The human user would
-wonder "what is incompatible about them?  Why are you stopping me from
-what I am trying to do?"  Most likely the user was trying to do
-something other than specify a path, since they also passed --all.  If
-I run something like
+  1. It prevented obvious nonsense like using core.worktree
+     for multiple repos.
 
-	git submodule deinit force --all
+  2. It could prevent surprise when the user did not mean
+     for the options to leak to the submodules (e.g.,
+     http.sslverify=false).
 
-and the output tells me that --all and pathspec are incompatible then
-I just scratch my head more.
+For case 1, the answer is mostly "if it hurts, don't do
+that". For case 2, we can note that any such example has a
+matching inverted surprise (e.g., a user who meant
+http.sslverify=true to apply everywhere, but it didn't).
 
-We can do
+So this whitelist is probably not giving us any benefit, and
+is already creating a hassle as people propose things to put
+on it. Let's just drop it entirely.
 
-	USAGE="$dashless [--quiet] deinit [-f|--force] (--all | [--] <path>...)"
-	usage
+Note that we still need to keep a special code path for
+"prepare the submodule environment", because we still have
+to take care to pass through $GIT_CONFIG_PARAMETERS (and
+block the rest of the repo-specific environment variables).
 
-to print the subcommand's usage.  git commandline tools don't
-translate any usage strings today, so not getting translation here
-wouldn't feel out of place.
+We can do this easily from within the submodule shell
+script, which lets us drop the submodule--helper option
+entirely (and it's OK to do so because as a "--" program, it
+is entirely a private implementation detail).
 
-[...]
->> In the context of the original motivation: this patch improves the
->> advice printed by plain "git submodule deinit" but doesn't help with
->> existing callers that might have run "git submodule deinit .".  It might
->> make sense to handle '.' as a historical special case in a separate
->> patch.
->
-> Once we change how '.' is handled we can do that?
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/submodule--helper.c  | 17 -----------------
+ git-submodule.sh             |  4 ++--
+ submodule.c                  | 39 +--------------------------------------
+ t/t7412-submodule--helper.sh | 26 --------------------------
+ 4 files changed, 3 insertions(+), 83 deletions(-)
+ delete mode 100755 t/t7412-submodule--helper.sh
 
-It's harmless even before then.  Anyway, I meant "as a preparatory step
-before such a change that would otherwise be backward incompatible."
-
-Thanks,
-Jonathan
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 16d6432..89250f0 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -260,22 +260,6 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
+ 
+-static int module_sanitize_config(int argc, const char **argv, const char *prefix)
+-{
+-	struct strbuf sanitized_config = STRBUF_INIT;
+-
+-	if (argc > 1)
+-		usage(_("git submodule--helper sanitize-config"));
+-
+-	git_config_from_parameters(sanitize_submodule_config, &sanitized_config);
+-	if (sanitized_config.len)
+-		printf("%s\n", sanitized_config.buf);
+-
+-	strbuf_release(&sanitized_config);
+-
+-	return 0;
+-}
+-
+ struct cmd_struct {
+ 	const char *cmd;
+ 	int (*fn)(int, const char **, const char *);
+@@ -285,7 +269,6 @@ static struct cmd_struct commands[] = {
+ 	{"list", module_list},
+ 	{"name", module_name},
+ 	{"clone", module_clone},
+-	{"sanitize-config", module_sanitize_config},
+ };
+ 
+ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 91f5856..b1c056c 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -197,9 +197,9 @@ isnumber()
+ # of the settings from GIT_CONFIG_PARAMETERS.
+ sanitize_submodule_env()
+ {
+-	sanitized_config=$(git submodule--helper sanitize-config)
++	save_config=$GIT_CONFIG_PARAMETERS
+ 	clear_local_git_env
+-	GIT_CONFIG_PARAMETERS=$sanitized_config
++	GIT_CONFIG_PARAMETERS=$save_config
+ 	export GIT_CONFIG_PARAMETERS
+ }
+ 
+diff --git a/submodule.c b/submodule.c
+index c18ab9b..d598881 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1098,50 +1098,13 @@ void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir)
+ 	strbuf_release(&rel_path);
+ 	free((void *)real_work_tree);
+ }
+-/*
+- * Rules to sanitize configuration variables that are Ok to be passed into
+- * submodule operations from the parent project using "-c". Should only
+- * include keys which are both (a) safe and (b) necessary for proper
+- * operation.
+- */
+-static int submodule_config_ok(const char *var)
+-{
+-	if (starts_with(var, "credential."))
+-		return 1;
+-	return 0;
+-}
+-
+-int sanitize_submodule_config(const char *var, const char *value, void *data)
+-{
+-	struct strbuf *out = data;
+-
+-	if (submodule_config_ok(var)) {
+-		if (out->len)
+-			strbuf_addch(out, ' ');
+-
+-		if (value)
+-			sq_quotef(out, "%s=%s", var, value);
+-		else
+-			sq_quote_buf(out, var);
+-	}
+-
+-	return 0;
+-}
+ 
+ void prepare_submodule_repo_env(struct argv_array *out)
+ {
+ 	const char * const *var;
+ 
+ 	for (var = local_repo_env; *var; var++) {
+-		if (!strcmp(*var, CONFIG_DATA_ENVIRONMENT)) {
+-			struct strbuf sanitized_config = STRBUF_INIT;
+-			git_config_from_parameters(sanitize_submodule_config,
+-						   &sanitized_config);
+-			argv_array_pushf(out, "%s=%s", *var, sanitized_config.buf);
+-			strbuf_release(&sanitized_config);
+-		} else {
++		if (strcmp(*var, CONFIG_DATA_ENVIRONMENT))
+ 			argv_array_push(out, *var);
+-		}
+ 	}
+-
+ }
+diff --git a/t/t7412-submodule--helper.sh b/t/t7412-submodule--helper.sh
+deleted file mode 100755
+index 149d428..0000000
+--- a/t/t7412-submodule--helper.sh
++++ /dev/null
+@@ -1,26 +0,0 @@
+-#!/bin/sh
+-#
+-# Copyright (c) 2016 Jacob Keller
+-#
+-
+-test_description='Basic plumbing support of submodule--helper
+-
+-This test verifies the submodule--helper plumbing command used to implement
+-git-submodule.
+-'
+-
+-. ./test-lib.sh
+-
+-test_expect_success 'sanitize-config clears configuration' '
+-	git -c user.name="Some User" submodule--helper sanitize-config >actual &&
+-	test_must_be_empty actual
+-'
+-
+-sq="'"
+-test_expect_success 'sanitize-config keeps credential.helper' '
+-	git -c credential.helper=helper submodule--helper sanitize-config >actual &&
+-	echo "${sq}credential.helper=helper${sq}" >expect &&
+-	test_cmp expect actual
+-'
+-
+-test_done
+-- 
+2.8.2.600.g439cdc9
