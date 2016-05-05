@@ -1,210 +1,124 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 11/15] diff: ignore submodules excluded by groups
-Date: Thu, 5 May 2016 14:02:58 -0700
-Message-ID: <CAGZ79kYGbjOKPQk8A-ag+JgvybW4Kf5=g8azVAOoMq79oXc5-Q@mail.gmail.com>
-References: <1461703833-10350-1-git-send-email-sbeller@google.com>
-	<1461703833-10350-12-git-send-email-sbeller@google.com>
-	<xmqqlh3wxnuq.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kaOXxqDEqVnf5K3QjXg5bfmKW2XkmPT-mqJ93+RF5N40g@mail.gmail.com>
-	<CAGZ79ka37jWYDJrAWy5KLhaaJmrLRbmTzRC6A5DneuE63+XCeQ@mail.gmail.com>
-	<xmqqy47o9s1h.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 05 23:03:09 2016
+From: Philip Oakley <philipoakley@iee.org>
+Subject: [PATCH] exec_cmd.c, sideband.c, Makefile: avoid multiple PREFIX definitions
+Date: Thu,  5 May 2016 22:28:53 +0100
+Message-ID: <1462483733-3496-2-git-send-email-philipoakley@iee.org>
+References: <1462483733-3496-1-git-send-email-philipoakley@iee.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git-for-windows <git-for-windows@googlegroups.com>
+To: GitList <git@vger.kernel.org>, Self <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Thu May 05 23:29:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayQQM-0001dg-KP
-	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 23:03:07 +0200
+	id 1ayQpf-0003FO-3l
+	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 23:29:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757146AbcEEVDB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2016 17:03:01 -0400
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:37930 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756740AbcEEVDA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2016 17:03:00 -0400
-Received: by mail-ig0-f181.google.com with SMTP id m9so25052986ige.1
-        for <git@vger.kernel.org>; Thu, 05 May 2016 14:03:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=OSf413estdql5paiOtuBelz7DivLdVq/r/YUFF00YEw=;
-        b=NC82IkiINfcLip31PJwm2uHfZN3GBJnmOLA4r4hOEGLxO3BrmjgETnVwG/rjemujHI
-         Eorm76aU9sTVr1HmeZijS+4/pDK+nQikDIPk51e//D9Zko8tG4Zx8LHvWTJTxRspgjEq
-         xcWkAHAm34XIZ/fM5+QfZFwYShcGP1zcd+E+bvyDL+GUs81H6adeZLNezrfXQeCvPikQ
-         R4J/YFhOqWs1c27jTUulLPFLdXZdKBefQ1l0q/IcLXH/ZNL994FcBODA0WXcJ/4dGKd+
-         Kn56/lAc18S5yWUnrls1P51s2LcDqxa3haKKeX4VlyQpRX7b/Vok+zl2Rb6czxD1s+SV
-         39jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=OSf413estdql5paiOtuBelz7DivLdVq/r/YUFF00YEw=;
-        b=GLKVPIFIiKv2sq6SRqt5LjpbbXQqsiacz/yXiF2FUsak/dRuoWuLoXucm8QzpjRm++
-         u52gFzqKfB6829dHTksGO7+CRfknlHY7uENssXvnPoKaF6tFOoM0TjZbt/AO8+xQqRDS
-         49S8Tqtw+qqe29gJLkT6JG3BniUe/n/Bd98aWFJFXPr18XrECPRJJcpI4tpBoHHK5Jfw
-         If8+ALrYbzdz2GmOJxArYlF8kecWouHHql//baWHfAg6Hq0qOQ4MM+8crI11dI061Y/d
-         xiYZMG2yp7tdFB0AlOrcxmMTy4iT6IqzlrjwMTQ3roKz4GxAnexlz6HCKq3VEBE8l2Ka
-         AY2g==
-X-Gm-Message-State: AOPr4FWtliHu6or/O6V92zbIxIV/nSlOm8CJ9Q5EtmbxGUyutGr2Dkugt5Mq5e0xIHyXYM4o0J7RGoch+rDHEDFk
-X-Received: by 10.50.30.228 with SMTP id v4mr6331521igh.85.1462482179110; Thu,
- 05 May 2016 14:02:59 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Thu, 5 May 2016 14:02:58 -0700 (PDT)
-In-Reply-To: <xmqqy47o9s1h.fsf@gitster.mtv.corp.google.com>
+	id S1756213AbcEEV3G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2016 17:29:06 -0400
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:7085 "EHLO
+	smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755965AbcEEV3E (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2016 17:29:04 -0400
+Received: from localhost.localdomain ([92.22.61.226])
+	by smtp.talktalk.net with SMTP
+	id yQpRaUc28eSy4yQpSagc1I; Thu, 05 May 2016 22:29:02 +0100
+X-Originating-IP: [92.22.61.226]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=bsEOPwSi c=1 sm=1 tr=0 a=PhzTUH1fCcwppfJjoMy/AA==:117
+ a=PhzTUH1fCcwppfJjoMy/AA==:17 a=xtxXYLxNAAAA:8 a=mH-QBqSHHxjn49LXL0wA:9
+ a=xts0dhWdiJbonKbuqhAr:22
+X-Mailer: git-send-email 2.8.1.windows.1
+In-Reply-To: <1462483733-3496-1-git-send-email-philipoakley@iee.org>
+X-CMAE-Envelope: MS4wfI7vgFOllc9dkECLHpUYoHh/OXziKet9Tj9q3TnIS0m/gRs2fhODIu9UB6Chcp7ESsk0GorVWNjHh+tcppi4VCjRi9MhmQuhuXusp6FXZX0HAyUasfOD
+ Q7qfQxltSXStJBkobYRDfrP6rrmcZ8tInU4yo5Xv9KT3TdVzXRDCXz4krDOpHrJBNSZV67lHCVGrdISw78Acu1KIpLEHzkHbT4wMMekfNWyAWgGwHIqjRK3F
+ mRqOoduTpQz+5GVxIaVEjCTAcbUAZVDdpaZAyRnI2WEd3gtLeyB+i2Ego0dvQE6zFq8fOypcn9A471/BmnOFDH5Amdx4LpJLvNIDA7SKWyw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293681>
 
-On Thu, May 5, 2016 at 1:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> Any thoughts on my thoughts below?
->>
->>> So here is a thought experiment:
->>>
->>>     # get all submodules into the work tree
->>>     git submodule update --recursive --init
->>>
->>>     # The selected default group will not include all submodules
->>>     git config submodule.defaultGroup "*SomeLabel"
->>>
->>>     git status
->>>     # What do we expect now?
->>>     # either a "nothing to commit, working directory clean"
->>>     # or rather what was described in 0/15:
->>>
->>>         More than 2 submodules (123 actually) including
->>>             'path/foo'
->>>             'lib/baz'
->>>         are checked out, but not part of the default group.
->>>         You can add these submodules via
->>>             git config --add submodule.defaultGroup ./path/foo
->>>             git config --add submodule.defaultGroup ./lib/baz
->
-> That may be an interesting thing to know, but I am not sure if it
-> adds value to the user.  The user wanted the defaultGroup to be
-> the set of submodules labeled with SomeLabel, and an alternative
-> valid suggestion could be
->
->         'path/foo' and other submodules are not part of what you are
->         interested in; if you want to deinitialize them, do
->
->             git submodule deinit !defaultGroup
->
-> Both look equally valid to me, but offering both would be way too
-> much.  I'd say you should give that only with "status -v" or
-> something, perhaps?
->
->>> If we want to go with the second option,
->
-> You already lost me here, as it is not clear what two "options" you
-> are comparing.
+The short and sweet PREFIX can be confused when used in many places.
 
-The first option is giving nothing:
+Rename both usages to better describe their purpose.
 
-     git config submodule.defaultGroup "*SomeLabel"
-     git -C submodule-not-labeled reset --hard HEAD^
-     git status
-     # all good, no report about  submodule-not-labeled
-     # because it is not in the default group.
-     # (This is implemented in the series)
+Noticed when compiling Git for Windows using MSVC/Visual Studio which
+reports the conflict beteeen the command line definition and the
+definition in sideband.c
 
-The "second option" is some sort of reporting. Either what I or you proposed.
+Signed-off-by: Philip Oakley <philipoakley@iee.org>
+---
+ Makefile   | 2 +-
+ exec_cmd.c | 4 ++--
+ sideband.c | 6 +++---
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
->
->>> If we want to go with the second option, the design described in 0/15
->>> is broken. Going one step further:
->>>
->>> ...
->>>     # But what about subC which is not in the default group? It was
->>> changed as well.
->
-> So why not show it?  Is there anything controversial?
-
-The user made clear to not be interested in subC by setting
-up the default group.
-
->
-> If you are truly not interested in it by excluding it from the
-> default group, you wouldn't have touched it in the first place.
-
-Well it can get out of sync by not touching it as well, because others
-changed the submodule pointer who are interested in that though.
-
-    # in the superproject
-    git checkout new-version
-    git submodule update
-    # checks out submodules to their version
-
-    git checkout some-ancient-version
-    git submodule update
-    # this would only update the submodules in the defaultGroup,
-    # not those which are initialized but "uninteresting"
-    # the labeling may have changed between the different versions
-    git status
-    # I don't want to see any submodule changes here.
-    # but there may be a submodule which is not at the right version
-    # as `git submodule update` only paid attention to the default group.
-
-> If
-> you did touch it, then you are showing some special interest that
-> overrides what you said in the default mechanism.
->
-> In short, I think I understood what you wanted with your analogy to
-> the ignore/exclude mechanism in 0/15.  Default is a handy way to say
-> "I do not want to bother specifying everything from the command line
-> every time" but we can say that it is nothing more than that.  That
-> is exactly how the ignore/exclude mechanism is used--"git add" by
-> default will not add those that are ignored when discovering paths
-> by recursively descending, but once added, that is part of what the
-> user told Git that she cares about.
->
->>> In case we report these submodules which are checked out but not in
->>> the default group, we probably want to adapt "git submodule update" to
->>> un-checkout the work tree of the submodules in case they are clean.
->
-> Why?
->
-> Letting them know that they have such an option, and giving them a
-> way to tell which submodules fall into that category, are both good
-> things.  But why is it a good thing to automatically clean what the
-> user has checked out (which I expect that she expects to remain
-> until she explicitly tells us otherwise)?
->
-> We do not automatically "git rm" a clean tracked path that happens
-> to match .gitignore pattern and I do not think it is a good thing to
-> do so.
-
-git rm changes the index (which may show up in the next commit)
-
-The state of a submodule (un-initialized, initialized, checked out)
-doesn't change the index or anything. Only the working tree is affected.
-
-And by flipping between the initialized and checked-out state we do not
-lose any information (such as user configured remote urls) nor does it
-affect the "state" (index, recorded tree, history) of the repository.
-
-So I just wonder if
-
-    git init <submodule group spec>
-    git deinit ! <submodule group spec>
-
-should be done in `git submodule update <submodule group spec>`
-(or by having the default group configured and running `git submodule update`
-with no arguments.)
-
-
-
->
-> Puzzled.
->
+diff --git a/Makefile b/Makefile
+index 33b0f76..bcdd3ec 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1973,7 +1973,7 @@ exec_cmd.sp exec_cmd.s exec_cmd.o: GIT-PREFIX
+ exec_cmd.sp exec_cmd.s exec_cmd.o: EXTRA_CPPFLAGS = \
+ 	'-DGIT_EXEC_PATH="$(gitexecdir_SQ)"' \
+ 	'-DBINDIR="$(bindir_relative_SQ)"' \
+-	'-DPREFIX="$(prefix_SQ)"'
++	'-DEXEC_PREFIX="$(prefix_SQ)"'
+ 
+ builtin/init-db.sp builtin/init-db.s builtin/init-db.o: GIT-PREFIX
+ builtin/init-db.sp builtin/init-db.s builtin/init-db.o: EXTRA_CPPFLAGS = \
+diff --git a/exec_cmd.c b/exec_cmd.c
+index 9d5703a..2a79781 100644
+--- a/exec_cmd.c
++++ b/exec_cmd.c
+@@ -12,7 +12,7 @@ char *system_path(const char *path)
+ #ifdef RUNTIME_PREFIX
+ 	static const char *prefix;
+ #else
+-	static const char *prefix = PREFIX;
++	static const char *prefix = EXEC_PREFIX;
+ #endif
+ 	struct strbuf d = STRBUF_INIT;
+ 
+@@ -27,7 +27,7 @@ char *system_path(const char *path)
+ 	    !(prefix = strip_path_suffix(argv0_path, GIT_EXEC_PATH)) &&
+ 	    !(prefix = strip_path_suffix(argv0_path, BINDIR)) &&
+ 	    !(prefix = strip_path_suffix(argv0_path, "git"))) {
+-		prefix = PREFIX;
++		prefix = EXEC_PREFIX;
+ 		trace_printf("RUNTIME_PREFIX requested, "
+ 				"but prefix computation failed.  "
+ 				"Using static fallback '%s'.\n", prefix);
+diff --git a/sideband.c b/sideband.c
+index fde8adc..d448ba7 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -13,7 +13,7 @@
+  * the remote died unexpectedly.  A flush() concludes the stream.
+  */
+ 
+-#define PREFIX "remote:"
++#define DISPLAY_PREFIX "remote:"
+ 
+ #define ANSI_SUFFIX "\033[K"
+ #define DUMB_SUFFIX "        "
+@@ -22,13 +22,13 @@
+ 
+ int recv_sideband(const char *me, int in_stream, int out)
+ {
+-	unsigned pf = strlen(PREFIX);
++	unsigned pf = strlen(DISPLAY_PREFIX);
+ 	unsigned sf;
+ 	char buf[LARGE_PACKET_MAX + 2*FIX_SIZE];
+ 	char *suffix, *term;
+ 	int skip_pf = 0;
+ 
+-	memcpy(buf, PREFIX, pf);
++	memcpy(buf, DISPLAY_PREFIX, pf);
+ 	term = getenv("TERM");
+ 	if (isatty(2) && term && strcmp(term, "dumb"))
+ 		suffix = ANSI_SUFFIX;
+-- 
+2.8.1.windows.1
