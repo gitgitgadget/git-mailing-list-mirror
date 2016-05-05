@@ -1,215 +1,125 @@
 From: Stefan Beller <sbeller@google.com>
 Subject: Re: [PATCHv4] submodule deinit: require '--all' instead of '.' for
  all submodules
-Date: Thu, 5 May 2016 11:11:17 -0700
-Message-ID: <CAGZ79kah7Ry5j6+2n4ndcw5=RqT7wDOsRL7zPE7UphtSE5ib1Q@mail.gmail.com>
+Date: Thu, 5 May 2016 12:02:31 -0700
+Message-ID: <CAGZ79kbxDbmeh-rTHAqykjLBZ47HAviA11Q9LLYpcwT-Wr9X0A@mail.gmail.com>
 References: <1462401603-2067-1-git-send-email-sbeller@google.com>
 	<20160504232642.GC395@google.com>
 	<CAGZ79kbeCCcmGh57zUdQ=BzFOWUiwj8-3nM4dbK9yONbrmLaPw@mail.gmail.com>
-	<xmqqr3dgbd3k.fsf@gitster.mtv.corp.google.com>
+	<20160504235914.GD395@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
+Cc: Junio C Hamano <gitster@pobox.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>,
 	Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 05 20:11:26 2016
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 05 21:02:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayNkB-0001hP-Tv
-	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 20:11:24 +0200
+	id 1ayOXl-0005sC-18
+	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 21:02:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754522AbcEESLT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2016 14:11:19 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:34039 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750888AbcEESLS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2016 14:11:18 -0400
-Received: by mail-ig0-f175.google.com with SMTP id u5so3713665igk.1
-        for <git@vger.kernel.org>; Thu, 05 May 2016 11:11:18 -0700 (PDT)
+	id S1755393AbcEETCd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2016 15:02:33 -0400
+Received: from mail-io0-f175.google.com ([209.85.223.175]:35185 "EHLO
+	mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753955AbcEETCc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2016 15:02:32 -0400
+Received: by mail-io0-f175.google.com with SMTP id d62so93766660iof.2
+        for <git@vger.kernel.org>; Thu, 05 May 2016 12:02:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=PNKuIMfSRZRqN9MlW5ht/vXrvaj8rETrt2eFL9/ZG1U=;
-        b=dOKmJB0aWFXvRU2CcvFVNuhO3a2GYJi008dL0QiZ2Kp+ur2fv4236nkS2bqNEo9LGy
-         86ZPM07TbCen6AJq0pEJJXwiweUMIo1+68SQ1IBRFr66KhuKSTMOUei8Qg3FZmI1Otg1
-         tRgTwK1S1+IBnaDPqfTslV9zUYAxAEweJS/ieMDh4YEkYyeKCMn27K4U3JFNrTO5/jAD
-         p82bmUXEYafNDmlpSR/yajv1XhRX5euZAKNglC7vy85/SDD8xCA9DBU6tRbUzGX9PFWn
-         ffcxCc6vmodncEGVhY5f5eDxbpx35wa5pkXMWnKvRZ6yEHrPTcXNxe5BuXXAcKy6QLYk
-         +Wuw==
+        bh=+T5emyDANiwe1K+FSKuhdOcJ7oJW2uHzOvJPj3tBT2I=;
+        b=k/wOPZQAywjwl1YyZhNP6XrGywmjT6DsbyWAS//weRd4m7NOPYY5oHe3PuGJfxohPk
+         EtHHVed/SxundfHhHoZaJoJ59FSKjvWVpvbXbm6Q9JlFDO/QawfDRm0IMJ69Ts2O5skc
+         bsDpXrX8mflQnq2xKq2AD+CmJogJK1VbT3L58uB+T6uEYLVfbULUHY3d3c6iGWXNn1A5
+         URDDBbbkUUrmKI1OVB4bGCixlXRfUClhWzt2BaSxNbrkx+J1ah2ktKRk/tmHYOnRy2tG
+         SQ/TkqKCres1Dsys7NTMZ8VoMzrqxE6BQiWiGhiII/qKw+68E8LqCungBO/ZuQDZ2/0s
+         Lk7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=PNKuIMfSRZRqN9MlW5ht/vXrvaj8rETrt2eFL9/ZG1U=;
-        b=IOPSAC5C3NnJPCKBQLGDr7V0cwJ1WZ3ZsIKKZhHlGAmlx3fksBLQ61w+cAntMBXdji
-         O8pjVlF2ci9uXn0vfOSo44DiMpX9rTgeHvPQMAqmW8AX0sR2yroBntnCHpd+rSVx9blP
-         ZhWDVHZJ5fg+3elG4RZqRbF47hUSfmqQQnNqQx2gd6CiiZ0Hj+5nwiFkivLoizgW3LR/
-         llYCtrU9s91v4hYnOx+djS0pdGy8AVk2gt9La5AHcgPs3f22NIwPYt2iDvISwhn2Eol5
-         prQpcIFTxZ14o+5DFm4a633N/+nNDGhE7Qk8+gvHgqRrXDk88YH86jt6140WWkuEHJPo
-         57Lw==
-X-Gm-Message-State: AOPr4FWqo7zmCpC/FP9HtNZSnPqMqsEW4IHBa7gvRzcWn8YwdvE7z37jexJ9NtyVb4IY1W6jpvC/gYfE7GXto/c/
-X-Received: by 10.50.170.68 with SMTP id ak4mr5445798igc.93.1462471877668;
- Thu, 05 May 2016 11:11:17 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Thu, 5 May 2016 11:11:17 -0700 (PDT)
-In-Reply-To: <xmqqr3dgbd3k.fsf@gitster.mtv.corp.google.com>
+        bh=+T5emyDANiwe1K+FSKuhdOcJ7oJW2uHzOvJPj3tBT2I=;
+        b=TzXTOCDwxmu+8HB0Z4LZtR5PB1aIq6icYXiMFzVq5Bik76RgHWTuDp+WrY3P6unuNK
+         8tsbcZGvemCPnc4yMcIPbLsyEPNsg5jSotgG+W+F0quFyYNe8QQyv8B8VBfVw3UiKN7w
+         y49Ab3N+wKSvgX2/ASLOKUxjEsf1U7Hk892G1zmqnFxC4CybuV/uj5i+vvSFcTCiZZ/w
+         NvrxtH6FGJLZb8kCF6sPn7Jj5v6ICWbN8qReKSQ/g/Ix9qkBj9nRV5LKqNf2HSAXtS2Y
+         Q4qm2SKGEWhM+/TnAyE3cHkkmRu2aVkf0kKQMw2IKOFIIMtQrJk7K3ybFkLBr5tatWh+
+         my0g==
+X-Gm-Message-State: AOPr4FUK0FWwl0T9bXcdTcrofWG+jfZLPu2lHSZfWWWRWDYK7kfLBPkAIVb4E2ieSUe9ALvSplhhCno5m2hZMOjV
+X-Received: by 10.107.174.205 with SMTP id n74mr19002263ioo.96.1462474951448;
+ Thu, 05 May 2016 12:02:31 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Thu, 5 May 2016 12:02:31 -0700 (PDT)
+In-Reply-To: <20160504235914.GD395@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293661>
 
-On Thu, May 5, 2016 at 10:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->>>> +When the command is run without pathspec, it errors out,
->>>> +instead of deinit-ing everything, to prevent mistakes. In
->>>> +version 2.8 and before the command gave a suggestion to use
->>>> +'.' to unregister all submodules when it was invoked without
->>>> +any argument, but this suggestion did not work and gave a
->>>> +wrong message if you followed it in pathological cases and is
->>>> +no longer recommended.
->>>
->>> Why tell the user what happened in 2.8 and earlier?  It's not clear what
->>> the reader would do with that information.
->>
->> Because people may wonder what happened to '.' ?
->
-> I am to blame on that final text, but I think Jonathan is right.
-> "In version 2.8 and earlier..." can just go.  Users may need to
-> understand why no-arg form is not a silent no-op but an error,
-> and they need to know how to de-init everything with the version
-> of Git they have (i.e. with "--all").  Compared to these two,
-> "Your fingers may have been trained to say '.', but it was found
-> not to work in pathological cases" is of much lessor importance,
-> especially because with or without this patch, the definition of
-> "pathological" cases does not change.
+On Wed, May 4, 2016 at 4:59 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-So we'll only give
-
-    When the command is run without pathspec, it errors out,
-    instead of deinit-ing everything, to prevent mistakes.
-
->
->>> I think this paragraph could be removed.  --all is explained lower
->>> down and the error message points it out to users who need it.
->>
->> When we want to keep supporting '.' forever, I would remove this section.
->
-> I am not sure what you mean by "keep supporting '.'".  If your
-> repository has any tracked path, "deinit ." would deinit all
-> submodules, with or without this change.
->
-> Are you worried about the future change you are planning to that
-> involves reverting 84ba959b (submodule: fix regression for deinit
-> without submodules, 2016-03-22), after which a pathspec that does
-> not match any submodule would become a "possible typo" error?
-
-When redoing the groups series, I may or may not go that route.
-It sounds compelling to me.
-
->
-> It is true that '.' would error out if there is no submodule in the
-> repository, as opposed to erroring out only when there is no tracked
-> path, which is what you get with today's version (and the version
-> with this fix in the patch under discussion).  But '.' is not
-> special with respect to that change.  'README' would also error out
-> if there is no submodule whose path matches that pathspec in that
-> future version, as opposed to erroring out only if 'README' is not
-> tracked at all in today's version.
->
-> Or are you thinking that it may be better to give '.' a special
-> meaning, iow, not treating it as just a regular pathspec?  Perhaps
-> make '.' to mean "everything but it is not an error if there is none
-> to begin with"?  I fear that going in that direction would deform
-> the mental model the users would form from seeing how commands
-> behave when given a pathspec.  The "." would still look like any
-> other pathspec elements, and I am sure you will not special case "."
-> in the usage string but will claim that it is covered by the mention
-> of <pathspec> at the end of the command line in the usage string,
-> so you are making them expect that "." used as a pathspec would
-> behave like that for all other places that we take pathspec, when
-> in reality, only "submodule deinit" make it behave differently.
->
-> Which I do not think is particularly a good idea.
-
-I did not think special casing '.'. (I did in the very first patch, but I
-understand that it's a bad idea now, so I do not think of it again)
-
->
->>> Not about this patch: the organization of options is a little strange.
->>> A separate section with options for each subcommand would be easier to
->>> read.
->>
->> I agree.
->
-> I agree.
->
->>> Do we want to claim the short-and-sweet option -a?  (I don't mind but it
->>> doesn't seem necessary.)
->>
->> We do.
->
-> I don't, but I do not care too deeaply.
-
-Me neither, so I'll remove the short option.
-
->
->
->>>> @@ -257,8 +270,8 @@ OPTIONS
->>>>  --force::
->>>>       This option is only valid for add, deinit and update commands.
->>>>       When running add, allow adding an otherwise ignored submodule path.
->>>> -     When running deinit the submodule work trees will be removed even if
->>>> -     they contain local changes.
->>>> +     When running deinit the submodule working trees will be removed even
->>>> +     if they contain local changes.
->>>
->>> Unrelated change?
->>
->> It's close enough for deinit to squash it in here, no?
->
-> More importantly, the patch adds a new instance of "working tree" to
-> the documentation elsewhere; fixing this existing instance of "work
-> tree" is relevant from consistency's point of view.
->
->>>> @@ -544,9 +548,13 @@ cmd_deinit()
->>>>               shift
->>>>       done
->>>>
->>>> -     if test $# = 0
->>>> +     if test -n "$deinit_all" && test "$#" -ne 0
->>>> +     then
->>>> +             die "$(eval_gettext "--all and pathspec are incompatible")"
->>>
->>> This message still feels too low-level to me, but I might be swimming
->>> uphill here.
 >>>
 >>> Another option would be to call 'usage' and be done.
 >>
 >> I had that idea as well, but I think pointing out the low level is better
 >> than giving the high level again, so the user immediately sees what's wrong.
 >
-> I do not particularly see the message low-level.  Jonathan, what do
-> you have against pointing out the exact problem?  After seeing the
-> usage string that also talks about --quite, --force, etc., I have to
-> somehow realize that these are irrelevant noises that have nothing
-> to do with the error, and puzzle out that the (choose|from|here) is
-> telling me that I cannot give pathspec when I am giving --all
-> myself.
+> I mean low level as in implementation detail.  The human user would
+> wonder "what is incompatible about them?  Why are you stopping me from
+> what I am trying to do?"  Most likely the user was trying to do
+> something other than specify a path, since they also passed --all.  If
+> I run something like
 >
->> Once we change how '.' is handled we can do that?
 >
-> Again, I am worried about "Once we change how ...".
 
-By that I mainly mean reverting 84ba959b (submodule: fix
-regression for deinit without submodules, 2016-03-22),
-but I am aware that this is a major change as it breaks
-existing users.
 
-Thanks,
-Stefan
+    $ git submodule deinit force --all
+    error: unknown option `all'
+    usage: git submodule--helper list [--prefix=<path>] [<path>...]
+
+        --prefix <path>       alternative anchor for relative paths
+
+`force` is seen as the first pathspec, so "force --all" is given to the
+`submodule--helper list`, which gives a less than optimal error message
+
+    $ git submodule deinit --all force
+gettext: unrecognized option '--all and pathspec are incompatible'
+Try 'gettext --help' for more information.
+envsubst: unrecognized option '--all and pathspec are incompatible'
+Try 'envsubst --help' for more information.
+envsubst: unrecognized option '--all and pathspec are incompatible'
+Try 'envsubst --help' for more information.
+
+We should not put --all as the first thing in the error message.
+
+    $ git submodule deinit --all force
+    pathspec and --all are incompatible
+
+With the next patch this is the error message. I think the missing
+dashes for force are quite visible as force is after --all.
+
+>
+> and the output tells me that --all and pathspec are incompatible then
+> I just scratch my head more.
+>
+> We can do
+>
+>         USAGE="$dashless [--quiet] deinit [-f|--force] (--all | [--] <path>...)"
+>         usage
+>
+> to print the subcommand's usage.  git commandline tools don't
+> translate any usage strings today, so not getting translation here
+> wouldn't feel out of place.
+
+We can have both? I'd prefer not rewriting the USAGE string here
+as it would easily be out of sync in the future?
+I tried to just grep the deinit line from the USAGe though, but that doesn't
+look right as it would need some post processing. (remove the "or:")
+and processing the USAGE string also doesn't sound future proof.
