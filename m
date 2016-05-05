@@ -1,111 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v16 0/7] config commit verbose
-Date: Thu, 05 May 2016 12:21:53 -0700
-Message-ID: <xmqq7ff8b99q.fsf@gitster.mtv.corp.google.com>
-References: <1462046616-2582-1-git-send-email-pranit.bauva@gmail.com>
-	<1462441802-4768-1-git-send-email-pranit.bauva@gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: Submodule's .git file contains absolute path when created using
+ 'git clone --recursive'
+Date: Thu, 5 May 2016 12:32:28 -0700
+Message-ID: <CAGZ79kYjw6vzf7rf_-bOiMmm0VtAwO03vpk67QP4u2m_N_Mm4g@mail.gmail.com>
+References: <loom.20160505T140253-275@post.gmane.org>
+	<CAGZ79kYmh9wtzXdThzPTdEZ5SsKznYxze6EvmbaZdGog4yydNA@mail.gmail.com>
+	<CAK1enhO-2Ne4XVqRNXz+6Jd7uEEHde8-_xzwWzXh=b01bZhj0g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: sunshine@sunshineco.com, szeder@ira.uka.de, git@vger.kernel.org
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 05 21:22:02 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Loet Avramson <loet@forter.com>
+X-From: git-owner@vger.kernel.org Thu May 05 21:32:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayOqX-0003A6-2O
-	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 21:22:01 +0200
+	id 1ayP0j-0002UI-Rk
+	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 21:32:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755500AbcEETV5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2016 15:21:57 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57038 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754293AbcEETV4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2016 15:21:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2AAE719301;
-	Thu,  5 May 2016 15:21:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1G1EsQhMgttbsyTqzwX4QJCztNw=; b=qk6DZZ
-	XIhyfMzef67I1j964wo8vJBdju11UEOY25t2tLzQgxP9YBtL66pgMA9G2UDjX2K2
-	2QnOHKnloebDxCkLqO1oT0TNis5QQKETMGg7+LloNXd9QP1yaIFmJHWP64m2AwZr
-	prKuR5ziaN/wtPWSyyX589qstchEgE96n3504=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gWwiJ2+5M3Z2RaHguL9xs2E2B1+LIn/K
-	bxTrV2UPXmZVYNL03LOyAe+GIig1URWH6uxbkafeICrWOQiClI6K+BWz1YK77MvU
-	16uzfM1RRe3LuTWs8pn5owlbrDHQclljO9KEsJCP7zq1fPndPtM9MH8HiMvXMTgo
-	QsL/nVRpi+o=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2063E19300;
-	Thu,  5 May 2016 15:21:55 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 92B5C192FE;
-	Thu,  5 May 2016 15:21:54 -0400 (EDT)
-In-Reply-To: <1462441802-4768-1-git-send-email-pranit.bauva@gmail.com> (Pranit
-	Bauva's message of "Thu, 5 May 2016 15:19:55 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A08C2C2E-12F6-11E6-A5E0-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1756585AbcEETca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2016 15:32:30 -0400
+Received: from mail-io0-f172.google.com ([209.85.223.172]:34878 "EHLO
+	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755702AbcEETc3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2016 15:32:29 -0400
+Received: by mail-io0-f172.google.com with SMTP id d62so94569171iof.2
+        for <git@vger.kernel.org>; Thu, 05 May 2016 12:32:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=0u/j/Bh2h3cUm8jVLwa5mhgV66be7CeFjxUN0tk9P+k=;
+        b=guSSrdwz2f8Y8vv3sQgPtNZe+sOvo+AwJ7uoVs0z1hcBzSeOYpal6IWL6tq279cEos
+         8hNFjhQArzNjmlGCLwuWBlG7DJDT2Aswhyv2pBgwv6j2xEU4I6QUuwU0jMJdO55OXfM0
+         UGWCo/E0/SS+XEZZH06ffVmnmZw0PdEC6JoVOOoI4Gmj4CLy4g+ohV7lIeJV899Uh0Dh
+         LJ+jAfPkFmu0PFVnbn7A5kCHqVkjx3tXvofoGRgdlVtK9lcjsEEGi2SP48wO7Gf2enbH
+         q2x6BLrlwb+DfjKVezuGusn5OpqgE/n9zlhD0NbliZVH1qBlKZ8F9XQ7oOeVIru+BnQr
+         4nZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=0u/j/Bh2h3cUm8jVLwa5mhgV66be7CeFjxUN0tk9P+k=;
+        b=WLXqdji5Tcib1v4D7TjjTzc/TQxqceeMeoOEC8BAwMlhAh1KDaJXhbKoFIDQfEp6hL
+         VJWPxuhsjCxp7k1zeB7IfjtvDuD9W/Mex9sO8Yk1nwhe3y2m9fLdhQjEgo9tI+oOqUx4
+         EcTV6uVrZLj+6iQxqvfW1VNVigtigKszINIEdP97ePoZMLZs7Uj6peMRRCefwjohoztk
+         Slo/pUK+4VvhGkve2HQ/nOgZ7oYXEyieNQadxOg+bUW+41Woe48kgKYLVX+iEEZpwgz0
+         8fmzmsIiGbNzSG1ZvIVLGZHJ4/05ixas2t3S2kfj0Eb3g6ZNPxHn+ijOfBz3j0WDUV1/
+         2NQA==
+X-Gm-Message-State: AOPr4FUcV3LhVvcstNVWnjjjhZHcHdRnviM8tEC4wNqKwQq07Lt6JmvE6lPcbyO/htBarTqOCPehNiooANdeLOVv
+X-Received: by 10.107.53.204 with SMTP id k73mr18975101ioo.174.1462476748352;
+ Thu, 05 May 2016 12:32:28 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Thu, 5 May 2016 12:32:28 -0700 (PDT)
+In-Reply-To: <CAK1enhO-2Ne4XVqRNXz+6Jd7uEEHde8-_xzwWzXh=b01bZhj0g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293667>
 
-Pranit Bauva <pranit.bauva@gmail.com> writes:
-
-> This series of patches add a configuration variable for verbose in
-> git-commit.
+On Thu, May 5, 2016 at 12:20 PM, Loet Avramson <loet@forter.com> wrote:
+> It happened on 2.8.1, also reproducible on 2.8.2.
+> Haven't had the time to dive deeper into the code but my guess is that
+> relative_path() returns different results in those 2 cases or maybe
+> the way git-submodule.sh handles it.
 >
-> Link to v15:
-> http://thread.gmane.org/gmane.comp.version-control.git/293127
->
-> Changes wrt v15:
->  * Remove the previous patch 7/7 and split the tests. Include one in
->    initial patch 6/7. The other one is introduced in a separate commit
->    after 4/7.
->  * Include tests in patch 3/6 for --no-quiet without -q, multiple verbose,
->    --no-verbose with -v as suggested by Eric Sunshine
 
-Thanks for a pleasant read.  Modulo minor readability nits I sent
-separately on 7/7, this looked good.
+Then you found a new bug, congratulations. ;)
+Thanks for reporting.
 
-A tangent that we may want to think about after this series lands
-and dust settles is to make test-parse-options simpler to use.  I
-see many instances of this repeated:
+The shell script uses relative_path() only for displaying paths,
+not for writing them to the .git file.
 
-        cat >expect <<\EOF
-        boolean: 0
-        integer: 0
-        magnitude: 0
-        timestamp: 0
-        string: (not set)
-        abbrev: 7
-        verbose: 0
-        quiet: 3
-        dry run: no
-        file: (not set)
-        EOF
+it really boils down to different environments
+"git submodule update --init --recursive" is called from
+(either manually or from `git clone`).
 
-        test_expect_success 'multiple quiet levels' '
-                test-parse-options -q -q -q >output 2>output.err &&
-                test_must_be_empty output.err &&
-                test_cmp expect output
-        '
+Apart from that there are no immediate bells ringing,
+are you doing any weird stuff with the file system (soft/hard
+links) ?
 
-But the only thing this test cares about is if "quiet: 3" is in the
-output.  I think we should be able to write the above 18 lines with
-just four lines, like this:
-
-	test_expect_success 'multiple quiet levels' '
-		test-parse-options --expect="quiet: 3" -q -q -q
-	'
-
-There may be a handful of tests that care about more than one
-variable, and the current output format must be used when the
-new --expect option is not given, but I suspect that the majority of
-tests would want the concise form.
+Thanks,
+Stefan
