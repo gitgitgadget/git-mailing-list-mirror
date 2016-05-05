@@ -1,167 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v16 7/7] commit: add a commit.verbose config variable
-Date: Thu, 05 May 2016 12:14:30 -0700
-Message-ID: <xmqqbn4kb9m1.fsf@gitster.mtv.corp.google.com>
-References: <1462046616-2582-1-git-send-email-pranit.bauva@gmail.com>
-	<1462441802-4768-1-git-send-email-pranit.bauva@gmail.com>
-	<1462441802-4768-8-git-send-email-pranit.bauva@gmail.com>
+From: Loet Avramson <loet@forter.com>
+Subject: Re: Submodule's .git file contains absolute path when created using
+ 'git clone --recursive'
+Date: Thu, 5 May 2016 22:20:46 +0300
+Message-ID: <CAK1enhO-2Ne4XVqRNXz+6Jd7uEEHde8-_xzwWzXh=b01bZhj0g@mail.gmail.com>
+References: <loom.20160505T140253-275@post.gmane.org>
+	<CAGZ79kYmh9wtzXdThzPTdEZ5SsKznYxze6EvmbaZdGog4yydNA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: sunshine@sunshineco.com, szeder@ira.uka.de, git@vger.kernel.org
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 05 21:14:41 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu May 05 21:20:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayOjO-0006Dp-8Q
-	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 21:14:38 +0200
+	id 1ayOpQ-0002K7-BS
+	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 21:20:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754771AbcEETOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2016 15:14:34 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55866 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753503AbcEETOe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2016 15:14:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id E351617EFF;
-	Thu,  5 May 2016 15:14:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Vql7xmanhRmokaw3Hs5Iheho980=; b=I9wWQr
-	C/YwpC5bXo4DYQMOvl8yJjWXh3q5thVgHYy8aQ3f38e3C3JsSPhvfhaz/b1bRwTO
-	qKPuF1fGCIgZX7Ojmpkcae514Eeem4tEUEvkaNJg1FjBukBbojWkKpS49hhybs6Q
-	qjQgH8MlpGYrNLETQrNFCGUzcX/PhsTvH7VKQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=A3luumGyV66cSnS802pVx+1PeH+lLGWZ
-	6fzbMY/lNIA0RDdoLi0Kxfpcr+5HJ+d0SMhB9frzWRXzj6MCJCIuC9yLpMKpCtHU
-	cKdCTD95F/UAdfdoc9W6MabyBeW1mZjMYA00RVCVKbl7yIUACVlJ54kO+xkaRdx/
-	jcOOvfEAr80=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DBB2917EFE;
-	Thu,  5 May 2016 15:14:32 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 27A3117EFD;
-	Thu,  5 May 2016 15:14:32 -0400 (EDT)
-In-Reply-To: <1462441802-4768-8-git-send-email-pranit.bauva@gmail.com> (Pranit
-	Bauva's message of "Thu, 5 May 2016 15:20:02 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 98D4B830-12F5-11E6-8566-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1755541AbcEETUs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2016 15:20:48 -0400
+Received: from mail-yw0-f178.google.com ([209.85.161.178]:33467 "EHLO
+	mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754682AbcEETUr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2016 15:20:47 -0400
+Received: by mail-yw0-f178.google.com with SMTP id t10so157548717ywa.0
+        for <git@vger.kernel.org>; Thu, 05 May 2016 12:20:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=forter-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=tSKJ5Mxg94b7aFqz3a9C2dH49gIne9yvYQ7XZfpQu88=;
+        b=gD+LH1wA1/rjtiYf6GOXwhctu3hLEtAOlcb/fEm435IFBmGqNrCh/jIQ00L7b82UZY
+         G7eXHBLQMOzhnk84hEd18kU68tHSRzot8t8ww64n7JrzCW8A5t4rkjxiSNSFPCA9uVFC
+         HhJ8fWkoThJH1F0UUfpoW6pvHBxoyZBC3pxe885hhD14xMw1eIO8GxK75chbA2VrabA1
+         yl/31nJGuN3/z32IkBvXsEmfNr06J7sZ93l9D3RHRqFhv7WZ8Xn24wpF4Ua908PCsDXt
+         7a9RaLduEA8gU/o8+gaPQvq5LrltQHME45MsFdo2leg6iLZqWIna2kfpRCx8zzUQHQUr
+         5AjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=tSKJ5Mxg94b7aFqz3a9C2dH49gIne9yvYQ7XZfpQu88=;
+        b=EuZRjkvgMGpWXw/W/q5DbHNR69WnOBUitm+RnOihOoNaNSDDGsK4PL/ui6ktM79Czq
+         UbcsVC497yU5YX5sqrHKHbWL5ffxY9a4k2JdW6w8PzWp4YFrmYuYEPk3R/WkiYD2D9qN
+         /nFe7P5ZE46IfSCkME9YMrkgJyQ46fepK22BmEgRE1YnzT7dTk4VG6KfiSYgD+HbIxzs
+         EKuGWTFlgxJ6wOPFLtVDHIO6RlSlNJ1Pr+/As4VEtM1APVTnbvMLmCBG3BQ0xtLrEev2
+         GrvqT7CTC+TNQarNRndzz+L8lenvi2a+P31c7zLhoIWjNSXH3rPdzqI8ZFUbGkFc54wZ
+         ymQw==
+X-Gm-Message-State: AOPr4FV6O4WTo8hWqwbiGdmog1wUzj+EdnID46V+KEMTYWdIzPct4LybrEftPmMuXqrulJ1KFNXBvxXlII+w3dkO
+X-Received: by 10.159.33.234 with SMTP id 97mr10121846uac.90.1462476046498;
+ Thu, 05 May 2016 12:20:46 -0700 (PDT)
+Received: by 10.176.0.147 with HTTP; Thu, 5 May 2016 12:20:46 -0700 (PDT)
+In-Reply-To: <CAGZ79kYmh9wtzXdThzPTdEZ5SsKznYxze6EvmbaZdGog4yydNA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293664>
 
-Pranit Bauva <pranit.bauva@gmail.com> writes:
+It happened on 2.8.1, also reproducible on 2.8.2.
+Haven't had the time to dive deeper into the code but my guess is that
+relative_path() returns different results in those 2 cases or maybe
+the way git-submodule.sh handles it.
 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 391126e..114ffc9 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -113,7 +113,9 @@ static char *edit_message, *use_message;
->  static char *fixup_message, *squash_message;
->  static int all, also, interactive, patch_interactive, only, amend, signoff;
->  static int edit_flag = -1; /* unspecified */
-> -static int quiet, verbose, no_verify, allow_empty, dry_run, renew_authorship;
-> +static int config_verbose = -1; /* unspecified */
-> +static int verbose = -1; /* unspecified */
-> +static int quiet, no_verify, allow_empty, dry_run, renew_authorship;
-
-The name does not make it clear that config_verbose is only for
-"commit" and not relevant to "status".
-
-> @@ -1364,6 +1366,8 @@ int cmd_status(int argc, const char **argv, const char *prefix)
->  			     builtin_status_usage, 0);
->  	finalize_colopts(&s.colopts, -1);
->  	finalize_deferred_config(&s);
-> +	if (verbose == -1)
-> +		verbose = 0;
-
-Mental note: cmd_status() does not use git_commit_config() but uses
-git_status_config(), hence config_verbose is not affected.  But
-because verbose is initialised to -1, the code needs to turn it off
-like this.
-
-> @@ -1664,6 +1673,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->  	argc = parse_and_validate_options(argc, argv, builtin_commit_options,
->  					  builtin_commit_usage,
->  					  prefix, current_head, &s);
-> +	if (verbose == -1)
-> +		verbose = (config_verbose < 0) ? 0 : config_verbose;
-> +
-
-cmd_commit() does use git_commit_config(), and verbose is
-initialised -1, so without command line option, we fall back to
-config_verbose if it is set from the configuration.
-
-I wonder if the attached patch squashed into this commit makes
-things easier to understand, though.  The points are:
-
- - We rename the configuration to make it clear that it is about
-   "commit" and does not apply to "status".
-
- - We initialize verbose to 0 as before.  The only thing "git
-   status" cares about is if "--verbose" was given.  Giving it
-   "--no-verbose" or nothing should not make any difference.
-
- - But we do need to stuff -1 to verbose in "git commit" before
-   handling the command line options, because the distinction
-   between having "--no-verbose" and not having any matter there,
-   and we do so in cmd_commit(), i.e. only place where it matters.
-
- builtin/commit.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 583d1e3..a486620 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -113,9 +113,8 @@ static char *edit_message, *use_message;
- static char *fixup_message, *squash_message;
- static int all, also, interactive, patch_interactive, only, amend, signoff;
- static int edit_flag = -1; /* unspecified */
--static int config_verbose = -1; /* unspecified */
--static int verbose = -1; /* unspecified */
--static int quiet, no_verify, allow_empty, dry_run, renew_authorship;
-+static int quiet, verbose, no_verify, allow_empty, dry_run, renew_authorship;
-+static int config_commit_verbose = -1; /* unspecified */
- static int no_post_rewrite, allow_empty_message;
- static char *untracked_files_arg, *force_date, *ignore_submodule_arg;
- static char *sign_commit;
-@@ -1366,8 +1365,6 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 			     builtin_status_usage, 0);
- 	finalize_colopts(&s.colopts, -1);
- 	finalize_deferred_config(&s);
--	if (verbose == -1)
--		verbose = 0;
- 
- 	handle_untracked_files_arg(&s);
- 	if (show_ignored_in_status)
-@@ -1521,7 +1518,7 @@ static int git_commit_config(const char *k, const char *v, void *cb)
- 	}
- 	if (!strcmp(k, "commit.verbose")) {
- 		int is_bool;
--		config_verbose = git_config_bool_or_int(k, v, &is_bool);
-+		config_commit_verbose = git_config_bool_or_int(k, v, &is_bool);
- 		return 0;
- 	}
- 
-@@ -1670,11 +1667,12 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		if (parse_commit(current_head))
- 			die(_("could not parse HEAD commit"));
- 	}
-+	verbose = -1; /* unspecified */
- 	argc = parse_and_validate_options(argc, argv, builtin_commit_options,
- 					  builtin_commit_usage,
- 					  prefix, current_head, &s);
- 	if (verbose == -1)
--		verbose = (config_verbose < 0) ? 0 : config_verbose;
-+		verbose = (config_commit_verbose < 0) ? 0 : config_commit_verbose;
- 
- 	if (dry_run)
- 		return dry_run_commit(argc, argv, prefix, current_head, &s);
+On Thu, May 5, 2016 at 8:22 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Thu, May 5, 2016 at 5:51 AM, Loet Avramson <loet@forter.com> wrote:
+>> Hi,
+>>
+>> According to git-clone man page - running 'git clone --recursive' "...is
+>> equivalent to running 'git submodule update --init --recursive' immediately
+>> after the clone is finished...", though I found a little difference between
+>> the two regarding the submodule's .git file:
+>>
+>> 1. Running 'git clone' and 'git submodule update --init --recursive'
+>> separately will create the .git file in each submodule containing a relative
+>> path to the superproject's .git directory as expected.
+>>
+>> 2. Running 'git clone --recursive' will create the .git file containing an
+>> *absolute* path to the superproject's .git directory. (as it was expected
+>> using git versions 1.7.8 - 1.7.10 as far as I understand)
+>>
+>> Not sure if that's a bug but it got stuff behaving really weird in a specific
+>> usecase on one of our environments. It would be highly appreciated to update
+>> the docs at least.
+>
+> Which version of Git are you using?
+>
+> See[1] for how clone handles submodules. (It's a call to submodule
+> update --init --recursive)
+>
+> There was a bug with recursive submodules in the 2.7 time frame and
+> that got fixed in [2].
+>
+> So could you make sure your version of Git contains these fixes?
+>
+>
+>
+> [1] https://kernel.googlesource.com/pub/scm/git/git/+/master/builtin/clone.c#734
+> [2] https://kernel.googlesource.com/pub/scm/git/git/+/7307dd898988c79fc687051e783b3cac8488a559
+> specially https://kernel.googlesource.com/pub/scm/git/git/+/f8eaa0ba98b3bd9cb9035eba184a2d9806d30b27
+>
+>
+>
+>>
+>> Thanks.
+>>
+>>  -Loet
+>>
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
