@@ -1,114 +1,146 @@
-From: Loet Avramson <loet@forter.com>
-Subject: Re: Submodule's .git file contains absolute path when created using
- 'git clone --recursive'
-Date: Thu, 5 May 2016 22:20:46 +0300
-Message-ID: <CAK1enhO-2Ne4XVqRNXz+6Jd7uEEHde8-_xzwWzXh=b01bZhj0g@mail.gmail.com>
-References: <loom.20160505T140253-275@post.gmane.org>
-	<CAGZ79kYmh9wtzXdThzPTdEZ5SsKznYxze6EvmbaZdGog4yydNA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv4] submodule deinit: require '--all' instead of '.' for
+ all submodules
+Date: Thu, 5 May 2016 12:20:37 -0700
+Message-ID: <20160505192036.GA22726@google.com>
+References: <1462401603-2067-1-git-send-email-sbeller@google.com>
+ <20160504232642.GC395@google.com>
+ <CAGZ79kbeCCcmGh57zUdQ=BzFOWUiwj8-3nM4dbK9yONbrmLaPw@mail.gmail.com>
+ <20160504235914.GD395@google.com>
+ <xmqqmvo4bcwf.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu May 05 21:20:54 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 05 21:21:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayOpQ-0002K7-BS
-	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 21:20:52 +0200
+	id 1ayOpl-0002Ys-3i
+	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 21:21:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755541AbcEETUs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2016 15:20:48 -0400
-Received: from mail-yw0-f178.google.com ([209.85.161.178]:33467 "EHLO
-	mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754682AbcEETUr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2016 15:20:47 -0400
-Received: by mail-yw0-f178.google.com with SMTP id t10so157548717ywa.0
-        for <git@vger.kernel.org>; Thu, 05 May 2016 12:20:47 -0700 (PDT)
+	id S1756213AbcEETVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2016 15:21:09 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:35281 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755067AbcEETVH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2016 15:21:07 -0400
+Received: by mail-pa0-f54.google.com with SMTP id iv1so38887207pac.2
+        for <git@vger.kernel.org>; Thu, 05 May 2016 12:21:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=forter-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=tSKJ5Mxg94b7aFqz3a9C2dH49gIne9yvYQ7XZfpQu88=;
-        b=gD+LH1wA1/rjtiYf6GOXwhctu3hLEtAOlcb/fEm435IFBmGqNrCh/jIQ00L7b82UZY
-         G7eXHBLQMOzhnk84hEd18kU68tHSRzot8t8ww64n7JrzCW8A5t4rkjxiSNSFPCA9uVFC
-         HhJ8fWkoThJH1F0UUfpoW6pvHBxoyZBC3pxe885hhD14xMw1eIO8GxK75chbA2VrabA1
-         yl/31nJGuN3/z32IkBvXsEmfNr06J7sZ93l9D3RHRqFhv7WZ8Xn24wpF4Ua908PCsDXt
-         7a9RaLduEA8gU/o8+gaPQvq5LrltQHME45MsFdo2leg6iLZqWIna2kfpRCx8zzUQHQUr
-         5AjA==
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=b42tFCxUaLEGvCF1WgF4h0rq+pk80LLjO40ebKXX5Tc=;
+        b=ZZB7xh57CADrRSJDTEPg4kfyyit22hrXDX6Jl6Tf47EmwvhOV8B/Vo//WMqkZ44zMY
+         TABIKQLHqYz6nC/zbwx9K+FzdBABfYHCzbdZfodPT0CW9Hj7RWoqnUJI6VqqPx/Crvs3
+         +0I5kJ2LEjeWzn44UeseqYm99Lg5lRiDynFJzLVWb7jwCBZ+kAfPqlD/VBlg4k/r0yz9
+         Tevk8n1tD/a0a1HwH7Th45wZR9BLd9YI/jZBTwDno/4CgWiWKnQ3/ZwMj5w2D4Xyg/I3
+         3m0NUL2BFYzDvCyAPNUu6DVWN7wdKnEixKOkJFIw5OG72sh/kOUjsRxSMSrjtQVxaFhR
+         I6IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=tSKJ5Mxg94b7aFqz3a9C2dH49gIne9yvYQ7XZfpQu88=;
-        b=EuZRjkvgMGpWXw/W/q5DbHNR69WnOBUitm+RnOihOoNaNSDDGsK4PL/ui6ktM79Czq
-         UbcsVC497yU5YX5sqrHKHbWL5ffxY9a4k2JdW6w8PzWp4YFrmYuYEPk3R/WkiYD2D9qN
-         /nFe7P5ZE46IfSCkME9YMrkgJyQ46fepK22BmEgRE1YnzT7dTk4VG6KfiSYgD+HbIxzs
-         EKuGWTFlgxJ6wOPFLtVDHIO6RlSlNJ1Pr+/As4VEtM1APVTnbvMLmCBG3BQ0xtLrEev2
-         GrvqT7CTC+TNQarNRndzz+L8lenvi2a+P31c7zLhoIWjNSXH3rPdzqI8ZFUbGkFc54wZ
-         ymQw==
-X-Gm-Message-State: AOPr4FV6O4WTo8hWqwbiGdmog1wUzj+EdnID46V+KEMTYWdIzPct4LybrEftPmMuXqrulJ1KFNXBvxXlII+w3dkO
-X-Received: by 10.159.33.234 with SMTP id 97mr10121846uac.90.1462476046498;
- Thu, 05 May 2016 12:20:46 -0700 (PDT)
-Received: by 10.176.0.147 with HTTP; Thu, 5 May 2016 12:20:46 -0700 (PDT)
-In-Reply-To: <CAGZ79kYmh9wtzXdThzPTdEZ5SsKznYxze6EvmbaZdGog4yydNA@mail.gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=b42tFCxUaLEGvCF1WgF4h0rq+pk80LLjO40ebKXX5Tc=;
+        b=IcMLTUB1y+pwQqJTUBj8AdBdNN5FyLPDnndW8Eqy3wge2q92AxlOFLHkbz18KuYrps
+         +H1ObIGOLRE/Zr5zjjn0ouzLpln5OTS9DHirX1KL/uy01rOJ14FE154m6ZGK1t+aZpZ3
+         khUsdTEglb3B57F8VH0uXei4sQwVfb/9+oC3x0YE5Z0mzribinz0D4UbYRIHmVaOW0dR
+         YhTGHdfwBmeXfwgzX5J1oF3rsCCXzBXgRkDP9SHyHKY99Oa6ln1CWIsuZjab7o+QOjCj
+         H/djOB5xBsW6y2zlZJw3XzeLgOTaYJYmBGxCoxUt2kXcT70yxDvXPswoDSpmqblv7nv1
+         pBNA==
+X-Gm-Message-State: AOPr4FVv6ymSpLt90epVv3SG45VmZb8PEeRDKuWqhdxmoWasD72iA3YBfDRsvHB7a5wnEA==
+X-Received: by 10.66.237.66 with SMTP id va2mr22998957pac.2.1462476066950;
+        Thu, 05 May 2016 12:21:06 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b4e5:604e:91a7:f7e7])
+        by smtp.gmail.com with ESMTPSA id m184sm15489148pfb.22.2016.05.05.12.21.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 05 May 2016 12:21:06 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqmvo4bcwf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293665>
 
-It happened on 2.8.1, also reproducible on 2.8.2.
-Haven't had the time to dive deeper into the code but my guess is that
-relative_path() returns different results in those 2 cases or maybe
-the way git-submodule.sh handles it.
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-On Thu, May 5, 2016 at 8:22 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Thu, May 5, 2016 at 5:51 AM, Loet Avramson <loet@forter.com> wrote:
->> Hi,
->>
->> According to git-clone man page - running 'git clone --recursive' "...is
->> equivalent to running 'git submodule update --init --recursive' immediately
->> after the clone is finished...", though I found a little difference between
->> the two regarding the submodule's .git file:
->>
->> 1. Running 'git clone' and 'git submodule update --init --recursive'
->> separately will create the .git file in each submodule containing a relative
->> path to the superproject's .git directory as expected.
->>
->> 2. Running 'git clone --recursive' will create the .git file containing an
->> *absolute* path to the superproject's .git directory. (as it was expected
->> using git versions 1.7.8 - 1.7.10 as far as I understand)
->>
->> Not sure if that's a bug but it got stuff behaving really weird in a specific
->> usecase on one of our environments. It would be highly appreciated to update
->> the docs at least.
+>> I mean low level as in implementation detail.  The human user would
+>> wonder "what is incompatible about them?  Why are you stopping me from
+>> what I am trying to do?"
 >
-> Which version of Git are you using?
+> Maybe s/incompatible/inconsistent/ is what you are after?  Why are
+> you stopping me from what I am trying to do?  Because you are asking
+> to do two contradicting things.  Do you want to nuke everything, or
+> do you want to keep everything outside what you specified?
 >
-> See[1] for how clone handles submodules. (It's a call to submodule
-> update --init --recursive)
+> After being saved countless times from a stupid mistake
 >
-> There was a bug with recursive submodules in the 2.7 time frame and
-> that got fixed in [2].
+>     $ git commit -a -s foo.c
 >
-> So could you make sure your version of Git contains these fixes?
->
->
->
-> [1] https://kernel.googlesource.com/pub/scm/git/git/+/master/builtin/clone.c#734
-> [2] https://kernel.googlesource.com/pub/scm/git/git/+/7307dd898988c79fc687051e783b3cac8488a559
-> specially https://kernel.googlesource.com/pub/scm/git/git/+/f8eaa0ba98b3bd9cb9035eba184a2d9806d30b27
->
->
->
->>
->> Thanks.
->>
->>  -Loet
->>
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> that was caused by habitually typing "-a", when I do want to limit
+> the changes to record to a specific path (or two) with similar
+> safety, I do not think "what is incompatible about them" is a valid
+> question.
+
+Yes, 'inconsistent' works better than 'incompatible'.  Stepping back,
+what I meant is that when I pass an invalid set of command line
+arguments, it's difficult to give advice back because it's not obvious
+what I intended to do.
+
+When I say "git submodule deinit --all -- foo/", I'm most likely trying
+to deinit all submodules within the foo subdirectory.  That's a
+perfectly consistent thing to want --- it just doesn't match what the
+command is expecting.  It is more helpful for the command to tell me
+what it is expecting me to do instead instead of just telling me that what
+I gave it is wrong.
+
+The ideal would be something like "git check-attr"'s error_with_usage.
+It tells in a targetted way where my error was and also gives a guide
+of what to do instead.
+
+	$ git submodule deinit --all lib/
+	error: paths with --all do not make sense
+	usage: git submodule deinit [-f | --force] (--all | [--] <path>...)
+
+Thanks,
+Jonathan
+
+-- >8 --
+Subject: git-sh-setup: add error_with_usage helper
+
+When given an impossible set of options, this allows a command to
+print a targetted message followed by a short usage string that tells
+the user both (1) what part of their command wasn't supported (what
+went wrong) and (2) what correct usage looks like (what to do
+instead).
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ git-sh-setup.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index c48139a..2b56636 100644
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -63,6 +63,11 @@ say () {
+ 	fi
+ }
+ 
++error_with_usage () {
++	printf >&2 'error: %s\n' "$*"
++	usage
++}
++
+ if test -n "$OPTIONS_SPEC"; then
+ 	usage() {
+ 		"$0" -h
+-- 
