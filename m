@@ -1,11 +1,8 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v8 08/19] read-cache: add watchman 'WAMA' extension
-Date: Thu,  5 May 2016 17:47:00 -0400
-Message-ID: <1462484831-13643-9-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v8 12/19] unpack-trees: preserve index extensions
+Date: Thu,  5 May 2016 17:47:04 -0400
+Message-ID: <1462484831-13643-13-git-send-email-dturner@twopensource.com>
 References: <1462484831-13643-1-git-send-email-dturner@twopensource.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, pclouds@gmail.com,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>
@@ -15,346 +12,160 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayR7l-00082K-PU
-	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 23:47:58 +0200
+	id 1ayR7m-00082K-VN
+	for gcvg-git-2@plane.gmane.org; Thu, 05 May 2016 23:47:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757943AbcEEVrn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 May 2016 17:47:43 -0400
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:35466 "EHLO
-	mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757934AbcEEVrg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2016 17:47:36 -0400
-Received: by mail-qk0-f175.google.com with SMTP id j68so38888752qke.2
-        for <git@vger.kernel.org>; Thu, 05 May 2016 14:47:35 -0700 (PDT)
+	id S1757950AbcEEVrt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2016 17:47:49 -0400
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:33945 "EHLO
+	mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757917AbcEEVrq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2016 17:47:46 -0400
+Received: by mail-qk0-f178.google.com with SMTP id r184so50943058qkc.1
+        for <git@vger.kernel.org>; Thu, 05 May 2016 14:47:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=fKkVdVT4JaQA0S3SuOBdr8EyqRnalJtjGJGDCh3ILHM=;
-        b=lKVfRAyrcoCJcjIn6nNLr1i3FX3ZwP181yv+2ETq70s6iE1POFOeREk16fX5MPNrZi
-         gaEkDZ1z5j4/J6QJVMggf0yZinK586R+uYAH7IsQMNWonD6p7Jh/kPs0ES90tYUTBS6E
-         R5BRHDPyLSwIbhE46S+AESCzl/WQGi5nKRVMT8FSbTLHKvzpTe12/Aab2rWkr3iC1plz
-         ao1m9na2FZCo2YiSTjiEqmhqH+dNxSucXqoVn6+o1aKq5dmxbYgEIIdapVpSrqSjHDpG
-         MR2DNOo6ec6K85qXvqHvAnQONktk9Lr95muYKk6EqbyWowGu4oupP6az4kL5nzehAI7P
-         vbWQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=gkTK0O1V8R7LQDI/dIopowwZyS/eF6MgMZR6yezZdTU=;
+        b=WjxwgBFdDP2SCK6rjtV5lL0DnkmpGwW9WkXSEpgmrEWWvS/8Ognlb52PS2Yy+0Fg10
+         K39SJPo2LWMo8gn7xuX9GvhGwcltxJNt0MDf2Zo5jcg3bMamM243eeq8lwY9utoyVGGS
+         G6q5oqFlj93pETo50dClkIczizWShxgKlzH7xCR/7tManpjrF/obTugtUIxFfSemz12D
+         CK19z2rRz/p2kxzoNh86+8IQqBCcU8nJXcQAM7XJNTXhPpWG13PVcaxvNMvbAnQZrMp4
+         hJjGONqBMvaNoFXKClBSd0LVub53d+D0ushrm/MiKGKjkXIV51e2LSTdds2tUYQtdneR
+         yUhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=fKkVdVT4JaQA0S3SuOBdr8EyqRnalJtjGJGDCh3ILHM=;
-        b=YfiA5rZq9rxuULrvgbwRoNy1DmumU+E71oZaIgJltKql7wd6bNLIMpCEXFTVD31ST1
-         qeTId9KXhsrSU4+J/HZFIZ+rXxi+ls6bhU+wS9TuvOHfRfBlmIcX6+sRH6VC7Ms5wMUX
-         E6XTMbc53PR/l+hdiYsmkgOJ7cw9bzYVyDd3YfVvvqDQBwESfouuablSv5l9pNoqGb8y
-         scStxQu0r9Qgr/kH2Q6mOuqke/PBRfR4kcu99u4i3dAoRcTLPR7k0G61avcMblNE2GuU
-         6AjnzSG+sUqd8j7tS7WcwPTbItP7rfSXeGNu0F2xGYYqE5kfkiwdeByFcXF9BH8bZcNi
-         LDvg==
-X-Gm-Message-State: AOPr4FVdfHCavNBEAwsEtwlMBQHAZYIdOu0ea+hLwaszckB36BxKqdkXY2FTgB2keAwYlA==
-X-Received: by 10.55.17.134 with SMTP id 6mr17580530qkr.207.1462484855278;
-        Thu, 05 May 2016 14:47:35 -0700 (PDT)
+         :references;
+        bh=gkTK0O1V8R7LQDI/dIopowwZyS/eF6MgMZR6yezZdTU=;
+        b=RVfYXqc7/F4o63ewdTziGQhx9uOistkouUGhYUTdFy7LCZuhegbazpdJbo7t+uydoG
+         MGBuwJpxTgaJrwTaavUKYYE0XycwvykNBShGPnCbAoed7s4xTryTxx0z09jeUSDuY4Qx
+         XfMngOCUX2NC/WbI1hi0MgqisffyuZUEzP8B9iX4VPgDncPaqCdNJNOsVB3LlqSJKd2T
+         D9NqJKhA2jcVzbZ7m4KvJ6gYcZZvjxs8+SLCM23wEdwBwGvEtBtzGaDthA12oVmDfm0n
+         jWXZmJY2rdg31ddjqcRnwutohB7z11TLD0V5EIZEF0wKQCGUZCzyRMOrs8ETtlOysG+y
+         ShcA==
+X-Gm-Message-State: AOPr4FXVzrz8VJ6JxsAHZSSkYeiwFS/RcIInPGmIU5kPRKCUkzPDKJYOVwUgEbZJ0ofUoA==
+X-Received: by 10.55.24.159 with SMTP id 31mr17729904qky.123.1462484860890;
+        Thu, 05 May 2016 14:47:40 -0700 (PDT)
 Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id g186sm4393740qke.49.2016.05.05.14.47.33
+        by smtp.gmail.com with ESMTPSA id g186sm4393740qke.49.2016.05.05.14.47.39
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 05 May 2016 14:47:34 -0700 (PDT)
+        Thu, 05 May 2016 14:47:39 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1462484831-13643-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293693>
 
-=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+Make git checkout (and other unpack_tree operations) preserve the
+untracked cache and watchman status. This is valuable for two reasons:
 
-The extension contains a bitmap, one bit for each entry in the
-index. If the n-th bit is zero, the n-th entry is considered
-unchanged, we can ce_mark_uptodate() it without refreshing. If the bit
-is non-zero and we found out the corresponding file is clean after
-refresh, we can clear the bit.
+1. Often, an unpack_tree operation will not touch large parts of the
+working tree, and thus most of the untracked cache will continue to be
+valid.
 
-In addition, there's a list of directories in the untracked-cache
-to invalidate (because they have new or modified entries).
+2. Even if the untracked cache were entirely invalidated by such an
+operation, the user has signaled their intention to have such a cache,
+and we don't want to throw it away.
 
-The 'skipping refresh' bit is not in this patch yet as we would need
-watchman. More details in later patches.
+The same logic applies to the watchman state.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- Documentation/technical/index-format.txt |  22 ++++++
- cache.h                                  |   4 ++
- dir.h                                    |   3 +
- read-cache.c                             | 117 +++++++++++++++++++++++=
-+++++++-
- 4 files changed, 144 insertions(+), 2 deletions(-)
+ cache.h                           |  1 +
+ read-cache.c                      |  8 ++++++++
+ t/t7063-status-untracked-cache.sh | 22 ++++++++++++++++++++++
+ t/test-lib-functions.sh           |  4 ++++
+ unpack-trees.c                    |  1 +
+ 5 files changed, 36 insertions(+)
 
-diff --git a/Documentation/technical/index-format.txt b/Documentation/t=
-echnical/index-format.txt
-index ade0b0c..86ed3a6 100644
---- a/Documentation/technical/index-format.txt
-+++ b/Documentation/technical/index-format.txt
-@@ -295,3 +295,25 @@ The remaining data of each directory block is grou=
-ped by type:
-     in the previous ewah bitmap.
-=20
-   - One NUL.
-+
-+=3D=3D Watchman cache
-+
-+  The watchman cache tracks files for which watchman has told us about
-+  changes.  The signature for this extension is { 'W', 'A', 'M', 'A' }=
-=2E
-+
-+  The extension starts with
-+
-+  - A NUL-terminated string: the watchman vector clock at the last
-+    time we heard from watchman.
-+
-+  - 32-bit bitmap size: the size of the CE_WATCHMAN_DIRTY bitmap
-+
-+  - 32-bit untracked cache entry count: the number of dirty untracked
-+    cache entries
-+
-+  - An ewah bitmap, the n-th bit indicates whether the n-th index entr=
-y
-+    is CE_WATCHMAN_DIRTY.
-+
-+  - a list of N NUL-terminated strings.  Each is a directory that shou=
-ld
-+    be marked dirty in the untracked cache because watchman has told u=
-s
-+    about an update to a file in it.
 diff --git a/cache.h b/cache.h
-index 4c1529a..f10992d 100644
+index a167920..e65234d 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -182,6 +182,8 @@ struct cache_entry {
- #define CE_VALID     (0x8000)
- #define CE_STAGESHIFT 12
-=20
-+#define CE_WATCHMAN_DIRTY  (0x0001)
-+
- /*
-  * Range 0xFFFF0FFF in ce_flags is divided into
-  * two parts: in-memory flags and on-disk ones.
-@@ -320,6 +322,7 @@ static inline unsigned int canon_mode(unsigned int =
-mode)
- #define CACHE_TREE_CHANGED	(1 << 5)
- #define SPLIT_INDEX_ORDERED	(1 << 6)
- #define UNTRACKED_CHANGED	(1 << 7)
-+#define WATCHMAN_CHANGED	(1 << 8)
-=20
- struct split_index;
- struct untracked_cache;
-@@ -353,6 +356,7 @@ struct index_state {
- 	struct untracked_cache *untracked;
- 	void *mmap;
- 	size_t mmap_size;
-+	char *last_update;
- };
-=20
- extern struct index_state the_index;
-diff --git a/dir.h b/dir.h
-index 3ec3fb0..3d540de 100644
---- a/dir.h
-+++ b/dir.h
-@@ -142,6 +142,9 @@ struct untracked_cache {
- 	int gitignore_invalidated;
- 	int dir_invalidated;
- 	int dir_opened;
-+	/* watchman invalidation data */
-+	unsigned int use_watchman : 1;
-+	struct string_list invalid_untracked;
- };
-=20
- struct dir_struct {
+@@ -580,6 +580,7 @@ extern void write_watchman_ext(struct strbuf *sb, struct index_state* istate);
+ #define CLOSE_LOCK		(1 << 1)
+ extern int write_locked_index(struct index_state *, struct lock_file *lock, unsigned flags);
+ extern int discard_index(struct index_state *);
++extern void move_index_extensions(struct index_state *dst, struct index_state *src);
+ extern int unmerged_index(const struct index_state *);
+ extern int verify_path(const char *path);
+ extern int index_dir_exists(struct index_state *istate, const char *name, int namelen);
 diff --git a/read-cache.c b/read-cache.c
-index d7849d6..e640098 100644
+index b44b18b..4ad2c19 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -21,6 +21,7 @@
- #include "unix-socket.h"
- #include "pkt-line.h"
- #include "sigchain.h"
-+#include "ewah/ewok.h"
-=20
- static struct cache_entry *refresh_cache_entry(struct cache_entry *ce,
- 					       unsigned int options);
-@@ -43,11 +44,13 @@ static struct cache_entry *refresh_cache_entry(stru=
-ct cache_entry *ce,
- #define CACHE_EXT_RESOLVE_UNDO 0x52455543 /* "REUC" */
- #define CACHE_EXT_LINK 0x6c696e6b	  /* "link" */
- #define CACHE_EXT_UNTRACKED 0x554E5452	  /* "UNTR" */
-+#define CACHE_EXT_WATCHMAN 0x57414D41	  /* "WAMA" */
-=20
- /* changes that can be kept in $GIT_DIR/index (basically all extension=
-s) */
- #define EXTMASK (RESOLVE_UNDO_CHANGED | CACHE_TREE_CHANGED | \
- 		 CE_ENTRY_ADDED | CE_ENTRY_REMOVED | CE_ENTRY_CHANGED | \
--		 SPLIT_INDEX_ORDERED | UNTRACKED_CHANGED)
-+		 SPLIT_INDEX_ORDERED | UNTRACKED_CHANGED | \
-+		 WATCHMAN_CHANGED)
-=20
- struct index_state the_index;
- static const char *alternate_index_output;
-@@ -1222,8 +1225,13 @@ int refresh_index(struct index_state *istate, un=
-signed int flags,
- 			continue;
-=20
- 		new =3D refresh_cache_ent(istate, ce, options, &cache_errno, &change=
-d);
--		if (new =3D=3D ce)
-+		if (new =3D=3D ce) {
-+			if (ce->ce_flags & CE_WATCHMAN_DIRTY) {
-+				ce->ce_flags          &=3D ~CE_WATCHMAN_DIRTY;
-+				istate->cache_changed |=3D WATCHMAN_CHANGED;
-+			}
- 			continue;
-+		}
- 		if (!new) {
- 			const char *fmt;
-=20
-@@ -1367,6 +1375,94 @@ static int verify_hdr(const struct cache_header =
-*hdr, unsigned long size)
- 	return 0;
- }
-=20
-+static void mark_no_watchman(size_t pos, void *data)
-+{
-+	struct index_state *istate =3D data;
-+	assert(pos < istate->cache_nr);
-+	istate->cache[pos]->ce_flags |=3D CE_WATCHMAN_DIRTY;
-+}
-+
-+static int read_watchman_ext(struct index_state *istate, const void *d=
-ata,
-+			     unsigned long sz)
-+{
-+	struct ewah_bitmap *bitmap;
-+	int ret, len;
-+	uint32_t bitmap_size;
-+	uint32_t untracked_nr;
-+
-+	if (memchr(data, 0, sz) =3D=3D NULL)
-+		return error("invalid extension");
-+
-+	len =3D strlen(data) + 1;
-+	memcpy(&bitmap_size, (const char *)data + len, 4);
-+	memcpy(&untracked_nr, (const char *)data + len + 4, 4);
-+	untracked_nr =3D ntohl(untracked_nr);
-+	bitmap_size =3D ntohl(bitmap_size);
-+
-+	bitmap =3D ewah_new();
-+	ret =3D ewah_read_mmap(bitmap, (const char *)data + len + 8, bitmap_s=
-ize);
-+	if (ret !=3D bitmap_size) {
-+		ewah_free(bitmap);
-+		return error("failed to parse ewah bitmap reading watchman index ext=
-ension");
-+	}
-+	istate->last_update =3D xstrdup(data);
-+	ewah_each_bit(bitmap, mark_no_watchman, istate);
-+	ewah_free(bitmap);
-+
-+	/*
-+	 * TODO: update the untracked cache from the untracked data in this
-+	 * extension.
-+	 */
-+	return 0;
-+}
-+
-+static int untracked_entry_append(struct string_list_item *item, void =
-*sbvoid)
-+{
-+	struct strbuf *sb =3D sbvoid;
-+
-+	strbuf_addstr(sb, item->string);
-+	strbuf_addch(sb, 0);
-+	return 0;
-+}
-+
-+void write_watchman_ext(struct strbuf *sb, struct index_state* istate)
-+{
-+	struct ewah_bitmap *bitmap;
-+	int i;
-+	int ewah_start;
-+	int ewah_size =3D 0;
-+	int fixup =3D 0;
-+
-+	strbuf_add(sb, istate->last_update, strlen(istate->last_update) + 1);
-+	fixup =3D sb->len;
-+	strbuf_add(sb, &ewah_size, 4); /* we'll fix this up later */
-+	if (istate->untracked) {
-+		uint32_t nr =3D istate->untracked->invalid_untracked.nr;
-+		nr =3D htonl(nr);
-+		strbuf_add(sb, &nr, 4);
-+	} else {
-+		/* zero */
-+		strbuf_add(sb, &ewah_size, 4);
-+	}
-+
-+	ewah_start =3D sb->len;
-+	bitmap =3D ewah_new();
-+	for (i =3D 0; i < istate->cache_nr; i++)
-+		if (istate->cache[i]->ce_flags & CE_WATCHMAN_DIRTY)
-+			ewah_set(bitmap, i);
-+	ewah_serialize_strbuf(bitmap, sb);
-+	ewah_free(bitmap);
-+
-+	/* fix up size field */
-+	ewah_size =3D sb->len - ewah_start;
-+	ewah_size =3D htonl(ewah_size);
-+	memcpy(sb->buf + fixup, &ewah_size, 4);
-+
-+	if (istate->untracked)
-+		for_each_string_list(&istate->untracked->invalid_untracked,
-+				     untracked_entry_append, sb);
-+}
-+
- static int read_index_extension(struct index_state *istate,
- 				const char *ext, void *data, unsigned long sz)
- {
-@@ -1384,6 +1480,11 @@ static int read_index_extension(struct index_sta=
-te *istate,
- 	case CACHE_EXT_UNTRACKED:
- 		istate->untracked =3D read_untracked_extension(data, sz);
- 		break;
-+
-+	case CACHE_EXT_WATCHMAN:
-+		read_watchman_ext(istate, data, sz);
-+		break;
-+
- 	default:
- 		if (*ext < 'A' || 'Z' < *ext)
- 			return error("index uses %.4s extension, which we do not understand=
-",
-@@ -1817,6 +1918,8 @@ int discard_index(struct index_state *istate)
- 	istate->untracked =3D NULL;
- 	istate->from_shm =3D 0;
- 	istate->to_shm   =3D 0;
-+	free(istate->last_update);
-+	istate->last_update =3D NULL;
- 	return 0;
- }
-=20
-@@ -2214,6 +2317,16 @@ static int do_write_index(struct index_state *is=
-tate, int newfd,
- 		if (err)
- 			return -1;
+@@ -2770,3 +2770,11 @@ void stat_validity_update(struct stat_validity *sv, int fd)
+ 		fill_stat_data(sv->sd, &st);
  	}
-+	if (!strip_extensions && istate->last_update) {
-+		struct strbuf sb =3D STRBUF_INIT;
+ }
 +
-+		write_watchman_ext(&sb, istate);
-+		err =3D write_index_ext_header(&c, newfd, CACHE_EXT_WATCHMAN, sb.len=
-) < 0
-+			|| ce_write(&c, newfd, sb.buf, sb.len) < 0;
-+		strbuf_release(&sb);
-+		if (err)
-+			return -1;
-+	}
-=20
- 	if (ce_flush(&c, newfd, istate->sha1) || fstat(newfd, &st))
- 		return -1;
---=20
++void move_index_extensions(struct index_state *dst, struct index_state *src)
++{
++	dst->untracked = src->untracked;
++	src->untracked = NULL;
++	dst->last_update = src->last_update;
++	src->last_update = NULL;
++}
+diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+index a971884..083516d 100755
+--- a/t/t7063-status-untracked-cache.sh
++++ b/t/t7063-status-untracked-cache.sh
+@@ -646,4 +646,26 @@ test_expect_success 'test ident field is working' '
+ 	test_cmp ../expect ../err
+ '
+ 
++test_expect_success 'untracked cache survives a checkout' '
++	git commit --allow-empty -m empty &&
++	test-dump-untracked-cache >../before &&
++	test_when_finished  "git checkout master" &&
++	git checkout -b other_branch &&
++	test-dump-untracked-cache >../after &&
++	test_cmp ../before ../after &&
++	test_commit test &&
++	test-dump-untracked-cache >../before &&
++	git checkout master &&
++	test-dump-untracked-cache >../after &&
++	test_cmp ../before ../after
++'
++
++test_expect_success 'untracked cache survives a commit' '
++	test-dump-untracked-cache >../before &&
++	git add done/two &&
++	git commit -m commit &&
++	test-dump-untracked-cache >../after &&
++	test_cmp ../before ../after
++'
++
+ test_done
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 8d99eb3..e974b5b 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -186,6 +186,10 @@ test_commit () {
+ 		test_tick
+ 	fi &&
+ 	git commit $signoff -m "$1" &&
++	if [ "$(git config core.bare)" = false ]
++	then
++	    git update-index --force-untracked-cache
++	fi
+ 	git tag "${4:-$1}"
+ }
+ 
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 9f55cc2..fc90eb3 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1215,6 +1215,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 						  WRITE_TREE_SILENT |
+ 						  WRITE_TREE_REPAIR);
+ 		}
++		move_index_extensions(&o->result, o->dst_index);
+ 		discard_index(o->dst_index);
+ 		*o->dst_index = o->result;
+ 	} else {
+-- 
 2.4.2.767.g62658d5-twtrsrc
