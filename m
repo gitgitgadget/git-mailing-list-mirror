@@ -1,145 +1,103 @@
 From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
-Subject: Re: [PATCH v2 1/4] rev-parse: fix some options when executed from
- subpath of main tree
-Date: Fri, 06 May 2016 16:13:12 +0200
-Message-ID: <20160506161312.Horde.7i8_sE5ISIqccneOIfinvCX@webmail.informatik.kit.edu>
-References: <1461361992-91918-2-git-send-email-rappazzo@gmail.com>
- <20160429135051.15492-1-szeder@ira.uka.de>
- <CANoM8SWBzFiHGc3zAwndyx+GUkWQGDoaewVVQtH-06jazAn8uQ@mail.gmail.com>
+Subject: Re: [PATCH v16 0/7] config commit verbose
+Date: Fri, 06 May 2016 16:20:58 +0200
+Message-ID: <20160506162058.Horde.toAFyoD2uVNcv2x2Ssx_9zt@webmail.informatik.kit.edu>
+References: <1462046616-2582-1-git-send-email-pranit.bauva@gmail.com>
+ <1462441802-4768-1-git-send-email-pranit.bauva@gmail.com>
+ <xmqq7ff8b99q.fsf@gitster.mtv.corp.google.com>
+ <CAPig+cQO3W4WthHstrVFWziU2RAuNyEzeQwBEyDXG8dghRjECQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed	DelSp=Yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?utf-8?b?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Mike Rappazzo <rappazzo@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 06 16:13:30 2016
+	Pranit Bauva <pranit.bauva@gmail.com>,
+	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri May 06 16:21:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aygVV-0006Cu-SL
-	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 16:13:30 +0200
+	id 1aygd3-0002yw-QP
+	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 16:21:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757983AbcEFONV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 May 2016 10:13:21 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:40450 "EHLO
+	id S1757850AbcEFOVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2016 10:21:07 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:40578 "EHLO
 	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757073AbcEFONU convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 6 May 2016 10:13:20 -0400
+	by vger.kernel.org with ESMTP id S1757007AbcEFOVF (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 May 2016 10:21:05 -0400
 Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
 	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	iface 141.3.10.81 id 1aygVG-000502-8n; Fri, 06 May 2016 16:13:14 +0200
+	iface 141.3.10.81 id 1aygcm-0005YG-Gz; Fri, 06 May 2016 16:21:00 +0200
 Received: from apache by webmail.ira.uka.de with local (Exim 4.84_2)
 	(envelope-from <szeder@ira.uka.de>)
-	id 1aygVE-0006aD-QS; Fri, 06 May 2016 16:13:12 +0200
+	id 1aygcl-0006wl-0y; Fri, 06 May 2016 16:20:59 +0200
 Received: from x4db02b4a.dyn.telefonica.de (x4db02b4a.dyn.telefonica.de
  [77.176.43.74]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
- Fri, 06 May 2016 16:13:12 +0200
-In-Reply-To: <CANoM8SWBzFiHGc3zAwndyx+GUkWQGDoaewVVQtH-06jazAn8uQ@mail.gmail.com>
+ Fri, 06 May 2016 16:20:58 +0200
+In-Reply-To: <CAPig+cQO3W4WthHstrVFWziU2RAuNyEzeQwBEyDXG8dghRjECQ@mail.gmail.com>
 User-Agent: Horde Application Framework 5
 Content-Disposition: inline
 X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1462543994.
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1462544460.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293784>
 
 
-Quoting Mike Rappazzo <rappazzo@gmail.com>:
+Quoting Eric Sunshine <sunshine@sunshineco.com>:
 
-> On Fri, Apr 29, 2016 at 9:50 AM, SZEDER G=C3=A1bor <szeder@ira.uka.de=
-> wrote:
->>> Executing `git-rev-parse` with `--git-common-dir`, `--git-path <pat=
-h>`,
->>> or `--shared-index-path` from the root of the main worktree results=
- in
->>> a relative path to the git dir.
+> On Thu, May 5, 2016 at 3:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Pranit Bauva <pranit.bauva@gmail.com> writes:
+>>> This series of patches add a configuration variable for verbose in
+>>> git-commit.
 >>>
->>> When executed from a subdirectory of the main tree, however, it inc=
-orrectly
->>> returns a path which starts 'sub/path/.git'.
+>>> Changes wrt v15:
+>>> * Remove the previous patch 7/7 and split the tests. Include one in
+>>>   initial patch 6/7. The other one is introduced in a separate commit
+>>>   after 4/7.
+>>> * Include tests in patch 3/6 for --no-quiet without -q, multiple verbose,
+>>>   --no-verbose with -v as suggested by Eric Sunshine
 >>
->> This is not completely true, because '--git-path ...' returns a
->> relative path starting with '.git':
->>
->>  $ git -C t/ rev-parse --git-dir --git-path objects --git-common-dir
->>  /home/szeder/src/git/.git
->>  .git/objects
->>  t/.git
->>
->> It's still wrong, of course.
+>> Thanks for a pleasant read.  Modulo minor readability nits I sent
+>> separately on 7/7, this looked good.
 >
-> I'll try to reword this to make it indicate that the value isn't
-> always incorrect.
-
-Not sure I understand your intention about rewording, in particular tha=
-t
-"isn't always incorrect" part.  Just to make sure there is no
-misunderstanding let's have a look at the two broken cases:
-
-    $ git -C t/ rev-parse --git-common-dir
-    t/.git
-
-Obviously wrong.
-This is what you correctly described in the commit message as
-"incorrectly returns a path which starts 'sub/path/.git'.
-
-    $ git -C t/ rev-parse --git-path objects
-    .git/objects
-
-Wrong as well.  It would be correct if we were at the top of the workin=
-g
-tree, but we are not.  It must be relative to the directory where '-C t=
-/'
-brought us.
-Your description in the commit message implies that '--git-path <path>'
-is wrong in the same way as '--git-common-dir' is, i.e. in this case
-would also return the relative path starting with the subdirectory.
-That is apparently not the case.
-
-My point in the previous email was that both are wrong when executed in
-a subdir of the working tree, but they are wrong in different ways.  An=
-d
-they are always wrong when executed from a subdir of the working tree.
-I would have described the current wrong behavior as:
-
-    When executed from a subdirectory of the working tree, however,
-    '--git-common-dir' incorrectly returns a path which starts
-    'sub/path/.git', while '--git-path <path>' incorrectly returns a pa=
-th
-    relative to the top of the working tree.
-
-(Still hasn't looked at shared index...)
-
->>> Change this to return the
->>> proper relative path to the git directory.
->>
->> I think returning absolute paths would be better.  It is consistent
->> with the already properly working '--git-dir' option, which returns =
-an
->> absolute path in this case.  Furthermore, both '--git-path ...' and
->> '--git-common-dir' already return absolute paths when run from a
->> subdirectory of the .git directory:
->>
->>  $ git -C .git/refs rev-parse --git-dir --git-path objects --git-com=
-mon-dir
->>  /home/szeder/src/git/.git
->>  /home/szeder/src/git/.git/objects
->>  /home/szeder/src/git/.git
->>
+> Agreed, this version was a more pleasant and coherent read than  
+> previous ones.
 >
-> I agree with this, but at one point Junio suggested that it should
-> return the relative path[1],
+> Considering that this series is already at v16 and the 7/7 review
+> comments were very minor, I'd be fine seeing this series land as-is,
+> rather than expecting v17.
 
-I wasn't aware of Junio's suggestion.
+v16, wow, I totally lost track of this series, sorry.
 
-It shouldn't really matter in practice, because both the absolute and
-relative paths will ultimately lead to the same place.  However, I
-still think that for consistency's sake absolute paths would be better
-when executed in a subdir of the working tree.
+And I hate to bring this up this late again... at v16 of a now 7 patch
+series, when all this started out like two months ago as a GSoC mini
+project...
+But I do it anyway.  Oh well.
+
+A while ago in a related thread Peff remarked about 'git commit's
+'--quiet' and '--verbose' options:
+
+    I think that is a UX mistake, and we would not do
+    it that way if designing from scratch. But we're stuck with it for
+    historical reasons (I'd probably name "--verbose" as "--show-diff" or
+    something if writing it today).
+
+http://thread.gmane.org/gmane.comp.version-control.git/289027/focus=289069
+
+Then I replied:
+
+    However, that doesn't mean that we have to spread this badly chosen
+    name from options to config variables, does it?  I think that if we
+    are going to define a new config variable today, then it should be
+    named properly, and it's better not to call it 'commit.verbose', but
+    'commit.showDiff' or something.
+
+http://thread.gmane.org/gmane.comp.version-control.git/289027/focus=289303
+
+Any thoughts on this?  Before a poorly named config variable enters to
+the codebase and we'll have to maintain it "forever"...
