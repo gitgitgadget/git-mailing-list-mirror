@@ -1,115 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 11/15] diff: ignore submodules excluded by groups
-Date: Fri, 06 May 2016 11:59:47 -0700
-Message-ID: <xmqqy47n2esc.fsf@gitster.mtv.corp.google.com>
-References: <1461703833-10350-1-git-send-email-sbeller@google.com>
-	<1461703833-10350-12-git-send-email-sbeller@google.com>
-	<xmqqlh3wxnuq.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kaOXxqDEqVnf5K3QjXg5bfmKW2XkmPT-mqJ93+RF5N40g@mail.gmail.com>
-	<CAGZ79ka37jWYDJrAWy5KLhaaJmrLRbmTzRC6A5DneuE63+XCeQ@mail.gmail.com>
-	<xmqqy47o9s1h.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kYGbjOKPQk8A-ag+JgvybW4Kf5=g8azVAOoMq79oXc5-Q@mail.gmail.com>
-	<xmqqfutw9mfs.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kYKbef7DTkmE3Vf3C=PLfgB3xf0ikVKHFUfQ8+KkgGHPg@mail.gmail.com>
-	<xmqqfutw85oz.fsf@gitster.mtv.corp.google.com>
-	<xmqqa8k37m6i.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kY5uDzG8PDLMh5e9afg+S3oTjEjq2aRo+s4ud86UCxZQA@mail.gmail.com>
+Subject: Re: [PATCH] pathspec: remove check_path_for_gitlink
+Date: Fri, 06 May 2016 12:02:46 -0700
+Message-ID: <xmqqr3df2end.fsf@gitster.mtv.corp.google.com>
+References: <1462487497-28394-1-git-send-email-sbeller@google.com>
+	<xmqqbn4k85lm.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kY65Fo4+_a1B8J0h7PymGWUSoAdb1eb5YVfG55=30oPEg@mail.gmail.com>
+	<xmqqy47o6q71.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8BbWyw37sQkAq-B_De87N3XzZA9A1fm1A8A7MzfPBtdrw@mail.gmail.com>
+	<CAGZ79kaBh-SogYrMcVfgE1DS464oK2Z01ZqpBiM0eSHKMPU1Fw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Duy Nguyen <pclouds@gmail.com>
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri May 06 20:59:56 2016
+X-From: git-owner@vger.kernel.org Fri May 06 21:03:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aykyh-0005dv-4Y
-	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 20:59:55 +0200
+	id 1ayl1g-00088V-4P
+	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 21:03:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758557AbcEFS7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2016 14:59:51 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57876 "EHLO
+	id S1758692AbcEFTCv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2016 15:02:51 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50850 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758541AbcEFS7u (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2016 14:59:50 -0400
+	with ESMTP id S1756794AbcEFTCu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2016 15:02:50 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1E6DA17276;
-	Fri,  6 May 2016 14:59:49 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 71ECA19E9B;
+	Fri,  6 May 2016 15:02:49 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=y/3tCH95DULqEd9jQRFxz1UOp6o=; b=qnTKIq
-	XNG7XMWqQaYkT/EfG4qcm+kKDZirn4FSrv+4wDnKklLaCw1G92nJvR/OaLYKvMZ7
-	koaUvxM9cYliF2m0YuUjNHyW3TBgM1XHxWvKJ4hZDumAimcHJgyuuRXsbMBJhIbj
-	ahTiBzUkPodaoVLakEdeLhc64FCJohnl8QQw0=
+	:content-type; s=sasl; bh=I3HSgJzhFBqyD5FtDzPDB7zbHuI=; b=vkaNGG
+	WeTJWn+ulyCqvyEgAU2RBwr+RF/Zcy5l77JSLPC46CHc0qT2oLhANEzKxDPdbpEJ
+	hyQzlGiOrID+JM6FQiSJRo+cR8ClFvNMzbNlSxqaltCjmgGW1E54q6o5mAq2KkC6
+	ERq1WIYAO0DAfVoBTxXsv267DsYYqTlTaxajM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sdFhdgT/QG7JAP/YENs4CAWOjc8fSXe7
-	t7yXxhXmmwej0jyF1Mpb2WHV6MOpLTfzRwH59zKgGOWSGHDfrBDtW/AI26L9o3ci
-	gB4DQi+vlT31OsjBkkg6BuS6rhhBnbY+O4aiQdpwwD81l4+vIY0ZYyMd4WXUIaBb
-	rOmrrTlT3Jc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1647E17274;
-	Fri,  6 May 2016 14:59:49 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=BsOG4aAfm/h/D7uaNEdMCI1H1AHMxh/y
+	Pw6qBB6p4EdGLIo0XU+oCZFsca4tp5b3x1yZvJ4J+VVdFIvz73vYA8Dgph8T+0lQ
+	kA1JOw0sFJ0LD0uDm5ZhOY3Tn54tkk+G718NiBMlNHAh/WQrP4AvmcR1lW8iijxE
+	zDyem6J7+aE=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 69DA619E98;
+	Fri,  6 May 2016 15:02:49 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8CC4317270;
-	Fri,  6 May 2016 14:59:48 -0400 (EDT)
-In-Reply-To: <CAGZ79kY5uDzG8PDLMh5e9afg+S3oTjEjq2aRo+s4ud86UCxZQA@mail.gmail.com>
-	(Stefan Beller's message of "Fri, 6 May 2016 11:23:59 -0700")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 715A419E95;
+	Fri,  6 May 2016 15:02:48 -0400 (EDT)
+In-Reply-To: <CAGZ79kaBh-SogYrMcVfgE1DS464oK2Z01ZqpBiM0eSHKMPU1Fw@mail.gmail.com>
+	(Stefan Beller's message of "Fri, 6 May 2016 10:13:32 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B497478C-13BC-11E6-A730-D05A70183E34-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 1FCF42FC-13BD-11E6-BE93-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293849>
 
 Stefan Beller <sbeller@google.com> writes:
 
->> Further suppose that the user needs to view a submodule outside the
->> default group temporarily (imagine: for a day or two), while
->> carrying out some specific task.  Perhaps she is working on the
->> documentation submodule, which is her primary task hence her
->> configuration file specifies it as the default, but needs to see the
->> submodule that houses the implementation to describe the behaviour.
+> On Fri, May 6, 2016 at 3:30 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+>> On Fri, May 6, 2016 at 6:27 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Stefan Beller <sbeller@google.com> writes:
+>>>
+>>>>> I wonder if the patches mentioned have something to do with the "git
+>>>>> add deep/in/the/tree" that fails to notice deep/in/ is an unrelated
+>>>>> repository in some way?
 >>
->> So she does "init code-module/"; this has explicit pathspec, so
->> there is no difference between the two.  Now, while reading the code
->> module, she finds a typo in a comment, and wants to fix it.  We will
->> start to see differences.
+>> The same functionality is added in 8745024 (parse_pathspec: support
+>> stripping/checking submodule paths - 2013-07-14) so if it didn't fail
+>> to notice that before 5a76aff1a6 and did after, it's a bug.
 >
-> Another way (3) is to add code-module/ to the "set of interesting
-> submodules, i.e. to the default group"
+> The bug seems to have existed before. However in the bug we are talking
+> about the nested repo is not a submodule yet.
 
-I do not want to force her to do more than "submodule deinit" when
-she is done with that temporary task that required her to have
-code-module/ checked out, which is what you are doing with such a
-change.  So that is a non-starter to me.
+That agrees with Duy's recollection below:
 
->> The amount of "extra" in the first use case necessary for (1) is
->> greater than the amount of "extra" in the second use case necessary
->> for (2), though.  In addition, in the second use case, (1) makes it
->> easier for the user to miss important changes she made outside the
->> area of her usual attention, while (2) forces her to make a
->> conscious effort to exclude them.  These are the reasons why I have
->> a slight preference for (2) over (1).
->>
->
-> That makes sense.
->
-> So with (2)
->  * there is no need to modify status, diff, log for the default case and the
->     --recursive \*default" may come later, so the initial series can be smaller.
->  *
+>> I vaguely recall this symptom. It has something to do with the index,
+>> the check we do requires a gitlink in the index, I think. So if the
+>> gitlink entry is not in the index, our protection line fails.
 
-I sense a premature "Send" button here ;-)
-
-In any case, I care much more about the "making it harder to miss
-things outside the usual area of attention" benefit than "the user
-may have to type less more often" benefit, even though both are
-slightly in favor between (1) and (2).
+So are we all on the same page that this is a bug now?
