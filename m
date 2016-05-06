@@ -1,103 +1,98 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: /* compiler workaround */ - what was the issue?
-Date: Fri, 6 May 2016 13:01:34 -0700
-Message-ID: <CAGZ79kby0Z1FMUT-w8h=YfRxsmyXaiE2pA_VoJ0g9wn0Mzk2Wg@mail.gmail.com>
-References: <AA5B2B1715BAF7438221293187A417A7BDE9D11D@desmdswms002.des.grplnk.net>
-	<17E04501C9474282B87758C7998A1F5B@PhilipOakley>
-	<xmqqtwic9o88.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8CBuU8H8r_f4KsnLkhLtfRv0nDo4hGS31LVn0e1Y_3OAQ@mail.gmail.com>
-	<51C902B1F7464CF2B58EB0E495F86BB5@PhilipOakley>
-	<572CDCFF.9050607@ramsayjones.plus.com>
-	<xmqq60ur3tlu.fsf@gitster.mtv.corp.google.com>
-	<572CF0D5.6010305@xiplink.com>
-	<xmqqinyr2c3d.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] pathspec: remove check_path_for_gitlink
+Date: Fri, 06 May 2016 13:09:55 -0700
+Message-ID: <xmqqd1oz2bjg.fsf@gitster.mtv.corp.google.com>
+References: <1462487497-28394-1-git-send-email-sbeller@google.com>
+	<xmqqbn4k85lm.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kY65Fo4+_a1B8J0h7PymGWUSoAdb1eb5YVfG55=30oPEg@mail.gmail.com>
+	<xmqqy47o6q71.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8BbWyw37sQkAq-B_De87N3XzZA9A1fm1A8A7MzfPBtdrw@mail.gmail.com>
+	<CAGZ79kaBh-SogYrMcVfgE1DS464oK2Z01ZqpBiM0eSHKMPU1Fw@mail.gmail.com>
+	<xmqqr3df2end.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kaJYngaZfhx060C06J57aDqPJfdMD8xzK4dW4nvvktMLQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Marc Branchaud <marcnarc@xiplink.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Duy Nguyen <pclouds@gmail.com>, Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 06 22:01:42 2016
+Content-Type: text/plain
+Cc: felix@debuggable.com, Duy Nguyen <pclouds@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri May 06 22:10:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aylwS-0004kV-8T
-	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 22:01:40 +0200
+	id 1aym4Z-00033Y-I3
+	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 22:10:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758696AbcEFUBg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2016 16:01:36 -0400
-Received: from mail-ig0-f176.google.com ([209.85.213.176]:36727 "EHLO
-	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758152AbcEFUBf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2016 16:01:35 -0400
-Received: by mail-ig0-f176.google.com with SMTP id u10so55760613igr.1
-        for <git@vger.kernel.org>; Fri, 06 May 2016 13:01:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=Dzx6/K1aVpOwSXMdoVFyDvZcjUC6/OcT6dDDccv+N0k=;
-        b=jiFr5AwcUeuTy44Jd1N4+1QBDif052UTtmHVtvT9Il3njAiQVvZxw7b4+WxI5bCthV
-         fY9prZUkpmgP0zA10h5bJ+VD+GtcEbw4HgB2K6pWRGTTBB4WaLNdhHP7oXggcOeL09xZ
-         v6SK25uigW1LTnv1P4ClB4zZcCKSLQr8kjJbSf/feAl3NQKzQOPTGqqh8DRAUVA/pbdy
-         nyfyVSad/+shQFOBG+JRD7+1bQV0+Y1GfGBazj2zODtgauWHRN44UqtZpm1aSwhXZfDK
-         a0/qKYdhZ3k1d+fbirsN2Gk7c9rdvbUd99sk0Po9tMT/mIbF5JfrlkLRch5daiJyvjez
-         EteQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=Dzx6/K1aVpOwSXMdoVFyDvZcjUC6/OcT6dDDccv+N0k=;
-        b=KoSCbBulthpr7EngdTIbc3asrgS2vnHva37mX4X8aHuut7tQywTqL28zQ/RkUajH1G
-         +sPfi/kLURbWuuB4AM3mPU1worultuGSHpKbG1KwOKzFP5IfoP1AvzyfKcEG+nheTzPP
-         WAGp6+QJ2/guZabxgeJcNgiBbX19CTAm7idC8G7ktgip+Nxw3TfD4FPStze5kFURzRaB
-         MdmJraKXhLtEa0VLgOcec+quqWAV5MWAixPB5UhF7JVQCShtNqwQRhMPODiEOpoQDqI7
-         SWp2Q15oomL6K1BL9/61IU6TGW4udN4ATh/mOPrVsx5d9fW2tjTXsBh4Zof9bhRbLeTJ
-         NRDg==
-X-Gm-Message-State: AOPr4FXM2c4/OuCFBd0FrAv1gm+8qBnFOtCngDba7VWEEVuMfEhkStEF06N/FNuQony4S6uBustRGBgLG2tD1Amy
-X-Received: by 10.50.29.45 with SMTP id g13mr12615745igh.93.1462564894525;
- Fri, 06 May 2016 13:01:34 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Fri, 6 May 2016 13:01:34 -0700 (PDT)
-In-Reply-To: <xmqqinyr2c3d.fsf@gitster.mtv.corp.google.com>
+	id S1758826AbcEFUJ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2016 16:09:59 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53588 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758265AbcEFUJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2016 16:09:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8F24A18963;
+	Fri,  6 May 2016 16:09:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=u3+GSbyhbptxxdNqiJP5gGtSnzw=; b=fNw9h+
+	pEE8MCLLTIaK4nwjpf6eF93BARPaq9SQ7wmyxiOKZYT/ofbHgesgLVz69UrG+WOy
+	0SYFyMqsobdmUG+TqbTEvi4jTvwzL8lZ6HQjdKjHg2aUXrg0fdZtmh60h4cG0g43
+	rmomhyKuXPxnTGv3SvaHOT0O3CTzFsIZhEsEw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=e0TjbQnlcRhKGZQ5pAsgY6NKmSSo3WeB
+	9Kk+qguJJt4bEofxhNsZW0XwSERkHflRJki2s/AN72qYnRXv1y2Fmo/jn0fhpSYs
+	ychENRwmhXfghPMRONSHkC0oQHuVMQ4zuthbqtCJo+conkUEnUG0Qk7XGh1+Cr8m
+	Icq8Vgwbc3U=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8660018962;
+	Fri,  6 May 2016 16:09:57 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0074918961;
+	Fri,  6 May 2016 16:09:56 -0400 (EDT)
+In-Reply-To: <CAGZ79kaJYngaZfhx060C06J57aDqPJfdMD8xzK4dW4nvvktMLQ@mail.gmail.com>
+	(Stefan Beller's message of "Fri, 6 May 2016 12:18:38 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8100B58E-13C6-11E6-B480-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293856>
 
-On Fri, May 6, 2016 at 12:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Marc Branchaud <marcnarc@xiplink.com> writes:
->
->> On 2016-05-06 02:54 PM, Junio C Hamano wrote:
->>>
->>> I wonder if can we come up with a short and sweet notation to remind
->>> futhre readers that this "initialization" is not initializing but
->>> merely squelching warnings from stupid compilers, and agree to use
->>> it consistently?
->>
->> Perhaps
->>
->>       #define COMPILER_UNINITIALIZED_WARNING_INITIALIZER 0
->>
->> or, for short-and-sweet
->>
+Stefan Beller <sbeller@google.com> writes:
 
-           /* Here could go a longer explanation than the 4 character
-define :) */
->>       #define CUWI 0
->>
->> ?
->>
->> :)
+> It was a bug, but now people in the outside world consider it a feature.
+> Search for "Git fake submodules" and you'll find a few users who use this
+> technique successfully.
 >
-> I get that smiley.
->
-> I was hinting to keep the /* compiler workaround */ comment, but
-> in a bit shorter form.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> I do not think fixing this bug would do good. So maybe we just let it slip?
+
+I am OK with leaving it unfixed, iow, we just say this:
+
+    If deep/in is a different repository, whether it is a submodule,
+    "git add deep/in/the/tree/is-a-leaf.txt" will give an undefined
+    result.
+
+But that is totally different from accepting it as a feature.  If we
+were to accept it as a feature (and we will not), then
+
+    I did "git add deep/in/the/tree/is-a-leaf.txt" and have kept the
+    path tracked.  Today I did "git add deep/*" and then the path
+    disappeared from my project--I now only have deep/in as a
+    submodule, which is not what I want.
+
+would become a valid bug report.  I do not want to see that happen.
+
+I.e. I am *NOT* OK with polluting the codebase with a hack to
+respond to such a bug report, e.g. by adding a rule that says "if a
+file deep/in/the/tree/is-a-leaf.txt is tracked and deep/in is a
+repository, 'git add deep/in' must fail".
+
+The stance "It is a bug, but we do not fix it right now.  The
+behaviour is undefined" also leaves the door open for a future
+enhancement that allows 'git add deep/in/the/tree/is-a-leaf.txt' to
+be an equivalent to 'git -C deep/in/the/tree add is-a-leaf.txt'.
