@@ -1,54 +1,94 @@
-From: Li Peng <lip@dtdream.com>
-Subject: [PATCH] pack-protocol.txt: fix duplicate words of "the"
-Date: Fri,  6 May 2016 20:00:13 +0800
-Message-ID: <1462536013-16557-1-git-send-email-lip@dtdream.com>
-Cc: peff@peff.net, Li Peng <lip@dtdream.com>
+From: Stefan Dotterweich <stefandotterweich@gmx.de>
+Subject: Re: [PATCH v2] gitk: Fix missing commits when using -S or -G
+Date: Fri, 6 May 2016 14:16:54 +0200
+Message-ID: <572C8B36.2000106@gmx.de>
+References: <572C8665.8090707@gmx.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Paul Mackerras <paulus@samba.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 06 14:00:48 2016
+X-From: git-owner@vger.kernel.org Fri May 06 14:05:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayeR5-00089c-0e
-	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 14:00:47 +0200
+	id 1ayeVg-0002xl-JL
+	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 14:05:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932223AbcEFMAn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2016 08:00:43 -0400
-Received: from smtp2203-239.mail.aliyun.com ([121.197.203.239]:59377 "EHLO
-	smtp2203-239.mail.aliyun.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932200AbcEFMAn (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 May 2016 08:00:43 -0400
-X-Alimail-AntiSpam: AC=CONTINUE;BC=0.04987657|-1;FP=0|0|0|0|0|-1|-1|-1;HT=e02c03288;MF=lip@dtdream.com;NM=1;PH=DS;RN=3;RT=3;SR=0;TI=SMTPD_----4mMLI1Y_1462536015;
-Received: from localhost.localdomain(mailfrom:lip@dtdream.com ip:111.198.29.130)
-          by smtp.aliyun-inc.com(10.147.41.138);
-          Fri, 06 May 2016 20:00:21 +0800
-X-Mailer: git-send-email 1.8.3.1
+	id S1758359AbcEFMF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2016 08:05:29 -0400
+Received: from mout.gmx.net ([212.227.17.21]:52712 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758083AbcEFMF2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2016 08:05:28 -0400
+Received: from [192.168.1.68] ([2.242.37.191]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MDFB2-1ar05A0VeG-00GXLi; Fri, 06 May 2016 14:05:24
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.0
+In-Reply-To: <572C8665.8090707@gmx.de>
+X-Provags-ID: V03:K0:raSYEkzplDukTTWUFoTBEfHiFkpC4SYkZeBDOJ/a9dT4lgQooT9
+ NPmAROolFxgq1j9zgoIgbngIPmkdi3Dju6kPS1q0xg6ZeO9jL4+/vd+IbI7kQaldlFi2Z5h
+ jDRkVeP0t79Ddobu1TTywEFpdgVuy0Uc/Pg5eTHBqYqUxKjxVL7GOpPAaUZ/TSGL9Ilndxf
+ /DVFe6Jqd540gbEQQNvrg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0RtFL7aACwM=:ZsUZbShSgyEIdTE/l16MJl
+ EhV4FLjRx2PGQ8r4XxOrPpoEhhLV/dsw5re+2fhDH2JkwKG+1x2AdOc2sddlyf+FN00tGe7JV
+ ULFIuSEnDoNmsRy1eNSFdI9XdF1eKnbr1ETRPb88W3Nf+EX8qpfDg52Bz7aFmJjNtj2HE3g7u
+ kyP68/yqt8J0BbbbpHuzmKofRwDmtWvTINZaqV/NAiS7XpJPfNvHzkh0KDAw0c5+Tpg9picoN
+ UBEQscP5tkQWJQp6U1VuKC+xSW2LuU7cV/nP2LYFD3WyFSxPfYayrPVWfa3GTsyZQdTDkki6V
+ GTvcHtcfUtuoCklJIpTktAwz2qDdwTggOi95iy5yXPvOfbnjySVVl5BrWsvvYnEX0SP1Vtyyk
+ TuPjqymBFoLAf0XBNBD8P1de0xPik/4cnW6mR1xxu7u8LplsO0xVPlXgDyuKJQ9oje2IxR2VP
+ PPZLuJUU3h3w/UwiVRrOQHqWu7yBewWOxHu1a9VEg6C3QukQyySxXVimC6rxSDRD5oCjSvQCf
+ UhTNuQvUgy7DNJTiMP1x0GGlZRwM2fkpzItRRmGEynEAWwoex3kksmOPdAw8JQRkiInn2bBqv
+ WIjJSmVwieY5L/Fsj7qk8YeyELhk0LkPMpi4IBPFqhRkYNii5P80iJAqygQeMTLhvqN0aa5wI
+ dlGs4zSi4a8/REX5Nh5gYHT4gnpyoHDvOjLGKL6Xh6q8OCyeiid8OhAlwkyDWrtewkUlJZ//n
+ c3zgdF/MngN2NLw+2+CS1WYoqqbC9HmqOxLmr9crghkFMLcafwm4Xpyvp5IqQkqeyQ9BOF6A 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293764>
 
-Remove duplicate "the".
+When -S or -G is used as a filter option, the resulting commit list
+rarely contains all matching commits. Only a certain number of commits
+are displayed and the rest are missing.
 
-Signed-off-by: Li Peng <lip@dtdream.com>
+"git log --boundary -S" does not return as many boundary commits as you
+might expect. gitk makes up for this in closevargs() by adding missing
+parent (boundary) commits. However, it does not change $numcommits,
+which limits how many commits are shown. In the end, some commits at the
+end of the commit list are simply not shown.
+
+Change $numcommits whenever a missing parent is added.
+
+Signed-off-by: Stefan Dotterweich <stefandotterweich@gmx.de>
 ---
- Documentation/technical/pack-protocol.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ gitk | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-index c6977bb..8b36343 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -526,7 +526,7 @@ Push Certificate
+diff --git a/gitk b/gitk
+index 805a1c7..b0da174 100755
+--- a/gitk
++++ b/gitk
+@@ -1315,7 +1315,7 @@ proc commitonrow {row} {
  
- A push certificate begins with a set of header lines.  After the
- header and an empty line, the protocol commands follow, one per
--line. Note that the the trailing LF in push-cert PKT-LINEs is _not_
-+line. Note that the trailing LF in push-cert PKT-LINEs is _not_
- optional; it must be present.
+ proc closevarcs {v} {
+     global varctok varccommits varcid parents children
+-    global cmitlisted commitidx vtokmod
++    global cmitlisted commitidx vtokmod numcommits
  
- Currently, the following header fields are defined:
+     set missing_parents 0
+     set scripts {}
+@@ -1339,7 +1339,7 @@ proc closevarcs {v} {
+ 		modify_arc $v $b
+ 	    }
+ 	    lappend varccommits($v,$b) $p
+-	    incr commitidx($v)
++	    set numcommits [incr commitidx($v)]
+ 	    set scripts [check_interest $p $scripts]
+ 	}
+     }
 -- 
-1.8.3.1
+2.7.4
