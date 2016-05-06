@@ -1,132 +1,97 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: /* compiler workaround */ - what was the issue?
-Date: Fri, 6 May 2016 22:17:09 +0100
-Message-ID: <572D09D5.4060600@ramsayjones.plus.com>
-References: <AA5B2B1715BAF7438221293187A417A7BDE9D11D@desmdswms002.des.grplnk.net>
- <17E04501C9474282B87758C7998A1F5B@PhilipOakley>
- <xmqqtwic9o88.fsf@gitster.mtv.corp.google.com>
- <CACsJy8CBuU8H8r_f4KsnLkhLtfRv0nDo4hGS31LVn0e1Y_3OAQ@mail.gmail.com>
- <51C902B1F7464CF2B58EB0E495F86BB5@PhilipOakley>
- <572CDCFF.9050607@ramsayjones.plus.com>
- <xmqq60ur3tlu.fsf@gitster.mtv.corp.google.com>
- <572CFCBC.3020103@ramsayjones.plus.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/2] rev-parse tests: add tests executed from a subdirectory
+Date: Fri, 06 May 2016 15:10:07 -0700
+Message-ID: <xmqqy47m25z4.fsf@gitster.mtv.corp.google.com>
+References: <1462541720-79553-1-git-send-email-rappazzo@gmail.com>
+	<1462541720-79553-2-git-send-email-rappazzo@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Duy Nguyen <pclouds@gmail.com>, Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 06 23:17:21 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, pclouds@gmail.com, szeder@ira.uka.de
+To: Michael Rappazzo <rappazzo@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 07 00:10:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayn7g-0006oB-B3
-	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 23:17:20 +0200
+	id 1aynww-0007TP-BW
+	for gcvg-git-2@plane.gmane.org; Sat, 07 May 2016 00:10:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758495AbcEFVRO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 May 2016 17:17:14 -0400
-Received: from avasout08.plus.net ([212.159.14.20]:56696 "EHLO
-	avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756722AbcEFVRN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2016 17:17:13 -0400
-Received: from [10.0.2.15] ([91.125.197.102])
-	by avasout08 with smtp
-	id r9H91s0022D2Veb019HA3i; Fri, 06 May 2016 22:17:11 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=O6PEx0JW c=1 sm=1 tr=0
- a=mTUfFwB0nGOO66Ym8a+i3w==:117 a=mTUfFwB0nGOO66Ym8a+i3w==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=N659UExz7-8A:10
- a=EBOSESyhAAAA:8 a=musMPx6A3WLis0h5T4cA:9 a=pILNOxqGKmIA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.2
-In-Reply-To: <572CFCBC.3020103@ramsayjones.plus.com>
+	id S1758653AbcEFWKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2016 18:10:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63770 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758408AbcEFWKL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2016 18:10:11 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C78181A732;
+	Fri,  6 May 2016 18:10:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nwRRlZ+dzYX6P9ekZa+PYjiBIl8=; b=xsmY7j
+	HIfqHMt9oFdxmofDWI0FeOc6/VLoT1BmZsgDXkAembP3LwJstx/dSVNTUQkbvxXC
+	hsJhdw16YJuF5bnK/0J5ekWxmKTCj4OvZkzuPhVGuKt+ZLfu0Mg5gNP2YO6dwMbn
+	FKufai/b60pdwIp3p5VN0Xpe9txk9lwTVa1W8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=r7xtlE/dUNxtscQPdJgwl6XTcAT6wo5C
+	hDvMWizBHycl/Vx/XfUHzwLdLSzG3XlFFgzSTYEztIGT2mr4m8mNYfqpzuSezZaK
+	gs84/yGM976iw/zseWRGvK4BJ78Lkxd02zjgyr+4n6/kqXZS2NvmG6k72omwUEmU
+	/WV3PZVikSg=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BFDB01A731;
+	Fri,  6 May 2016 18:10:09 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 49D191A730;
+	Fri,  6 May 2016 18:10:09 -0400 (EDT)
+In-Reply-To: <1462541720-79553-2-git-send-email-rappazzo@gmail.com> (Michael
+	Rappazzo's message of "Fri, 6 May 2016 09:35:19 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 4BDEED38-13D7-11E6-95B7-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293863>
 
+Michael Rappazzo <rappazzo@gmail.com> writes:
 
+> t1500-rev-parse contains envrionment leaks (changing dir without
+> changing back, setting config variables, etc).  Add a test to clean this
+> up up so that future tests can be added without worry of any setting
+> from a previous test.
 
-On 06/05/16 21:21, Ramsay Jones wrote:
-> On 06/05/16 19:54, Junio C Hamano wrote:
->> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
->>
-[snip]
+This is a wonderful thing to do, but...
 
-> I still can't get gcc to complain, e.g. (on top of above):
->=20
->   $ git diff
->   diff --git a/builtin/rev-list.c b/builtin/rev-list.c
->   index deae1f3..845fcdc 100644
->   --- a/builtin/rev-list.c
->   +++ b/builtin/rev-list.c
->   @@ -377,7 +377,7 @@ int cmd_rev_list(int argc, const char **argv, c=
-onst char *prefix)
->                   mark_edges_uninteresting(&revs, show_edge);
->   =20
->           if (bisect_list) {
->   -               int reaches =3D 0, all =3D 0;
->   +               int reaches, all;
->   =20
->                   revs.commits =3D find_bisection(revs.commits, &reac=
-hes, &all,
->                                                 bisect_find_all);
->   $ rm builtin/rev-list.o
->   $ make V=3D1 CFLAGS=3D'-g -O3 -Wall -Wextra -Wuninitialized -Wno-un=
-used-parameter' builtin/rev-list.o
->   cc -o builtin/rev-list.o -c -MF builtin/.depend/rev-list.o.d -MQ bu=
-iltin/rev-list.o -MMD -MP  -g -O3 -Wall -Wextra -Wuninitialized -Wno-un=
-used-parameter -I. -DHAVE_ALLOCA_H -DUSE_CURL_FOR_IMAP_SEND  -DHAVE_PAT=
-HS_H -DHAVE_DEV_TTY -DXDL_FAST_HASH -DHAVE_CLOCK_GETTIME -DHAVE_CLOCK_M=
-ONOTONIC -DHAVE_GETDELIM -DSHA1_HEADER=3D'<openssl/sha.h>'  -DNO_STRLCP=
-Y -DNO_MKSTEMPS -DSHELL_PATH=3D'"/bin/sh"'  builtin/rev-list.c
->   In file included from ./cache.h:4:0,
->                    from builtin/rev-list.c:1:
->   ./git-compat-util.h: In function =91xsize_t=92:
->   ./git-compat-util.h:838:10: warning: comparison between signed and =
-unsigned integer expressions [-Wsign-compare]
->     if (len > (size_t) len)
->             ^
->   $=20
+>  test_rev_parse toplevel false false true '' .git
+>  
+> @@ -84,4 +85,41 @@ test_rev_parse 'GIT_DIR=../repo.git, core.bare = true' true false false ''
+>  git config --unset core.bare
+>  test_rev_parse 'GIT_DIR=../repo.git, core.bare undefined' false false true ''
+>  
+> +test_expect_success 'cleanup from the previous tests' '
+> +	cd .. &&
+> +	rm -r work &&
 
-BTW, another patch that I have hanging around ... this time the
-patch below was built on master from a couple of years ago (so,
-I haven't bothered to rebase it, but you should get the idea):
+Instead of cleaning things up like this, could you please please
+please fix these existing tests that chdir around without being in a
+subshell?  If the "previous tests" failed before going down as this
+step expects, the "cd .. && rm -r" can make things worse.
 
-ATB,
-Ramsay Jones
+> +	mv repo.git .git &&
+> +	unset GIT_DIR &&
+> +	unset GIT_CONFIG &&
 
--- >8 --
-Subject: [PATCH] git-compat-util.h: xsize_t(): avoid signed comparison =
-warnings
+The spirit of this change is to make the test more independent from
+the effects of what happened previously.  Use sane_unset so that
+we do not have to worry about previous step that may have failed
+before it has a chance to set GIT_DIR and GIT_CONFIG (which would
+cause these unset to fail).
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
- git-compat-util.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+> +	git config core.bare $original_core_bare
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index c07e0c1..3a9cf6c 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -838,9 +838,10 @@ static inline char *xstrdup_or_null(const char *st=
-r)
-=20
- static inline size_t xsize_t(off_t len)
- {
--	if (len > (size_t) len)
-+	size_t r =3D (size_t)len;
-+	if (len !=3D (off_t)r)
- 		die("Cannot handle files this big");
--	return (size_t)len;
-+	return r;
- }
-=20
- __attribute__((format (printf, 3, 4)))
---=20
-2.8.0
+Is this (rather, the capturing of $original_core_bare up above)
+necessary?  We are in the default 'trash' repository when the
+capturing happens, and we know it is not a bare repository, right?
