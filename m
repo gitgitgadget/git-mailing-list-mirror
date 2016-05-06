@@ -1,92 +1,102 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH] t3513: do not compress backup tar file
-Date: Fri,  6 May 2016 11:37:05 -0700
-Message-ID: <20160506183705.8214-1-sbeller@google.com>
-Cc: git@vger.kernel.org, peff@peff.net, megabreit@googlemail.com,
-	Jens.Lehmann@web.de, Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri May 06 20:37:18 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: /* compiler workaround */ - what was the issue?
+Date: Fri, 06 May 2016 11:54:21 -0700
+Message-ID: <xmqq60ur3tlu.fsf@gitster.mtv.corp.google.com>
+References: <AA5B2B1715BAF7438221293187A417A7BDE9D11D@desmdswms002.des.grplnk.net>
+	<17E04501C9474282B87758C7998A1F5B@PhilipOakley>
+	<xmqqtwic9o88.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8CBuU8H8r_f4KsnLkhLtfRv0nDo4hGS31LVn0e1Y_3OAQ@mail.gmail.com>
+	<51C902B1F7464CF2B58EB0E495F86BB5@PhilipOakley>
+	<572CDCFF.9050607@ramsayjones.plus.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Philip Oakley <philipoakley@iee.org>,
+	Duy Nguyen <pclouds@gmail.com>, Git List <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+X-From: git-owner@vger.kernel.org Fri May 06 20:54:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aykcm-0004NS-Iq
-	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 20:37:16 +0200
+	id 1ayktS-0001IB-B8
+	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 20:54:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758463AbcEFShL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2016 14:37:11 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:33712 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758152AbcEFShK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2016 14:37:10 -0400
-Received: by mail-pa0-f52.google.com with SMTP id xk12so50393128pac.0
-        for <git@vger.kernel.org>; Fri, 06 May 2016 11:37:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=L8mL86IQDB8RaYr2ju5KNKefDrLGl8L6u+kTiZpGacA=;
-        b=X2weeNa6Cu0Wqxk6faNQU0nilVfKVXIuB3BFLE1i/JOd+Epni0uuTvBVMB6YDrrbxc
-         Jq2HX/uTmpP7hvOZVrBJd0wn3lbxshU1CzaBz7JKfZSS4T5Mj4fVRXizjVefY/q59M1i
-         toAon/gJQwEujMcvFj/Ymq3K3bJnaCZZrzLBAG7jE2cqDyMZMkQZn0K4kjXpJ7/5fzEr
-         WDa/xFrw/DdkSG9aF3wOYQPxfOy/za67DCxvPFLCjYnzz4Er3khZLxK/q9wxg9nBGrB3
-         1I+RziMeWsB0JTp/nOdO3LHq518c6HvWCu2YFo9PqLMknP200G1j+mNQTv/QnHLC/nyD
-         zNbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=L8mL86IQDB8RaYr2ju5KNKefDrLGl8L6u+kTiZpGacA=;
-        b=S9x0BRtS8ht09XFa+FiLtHLjk4JmOd627SK4SnN9bGfJA3yRPUXhLGzVdIFIRv3vZD
-         QgO12I/srpmY2FcJG+O2OEBah+yCNTVoxEqWjD+B07XbVCwp9X38ebayYzJTndozX96B
-         dE8Ty9jHn5HFsIGu9WSsNrxUNTS++5T+RjXNukEZJmK09A4E3xs23n7gT30L1gKdVea7
-         8tTTkAv8Nvf7yuXy3uPDFIET1ziTHGUJBQLajiN51L0etdNE+o9bM5uI5+inECnbGpsG
-         XXPBvNtJ+u7/rhvP6/55iUux/1g7+vSr1DlNqP417u7q8ESCQLBGBYMeZizX09vAGOdq
-         Hnlw==
-X-Gm-Message-State: AOPr4FViJOd3O2oxzmy/FEAgn3gqy6aI6c93n2GQl2cgxBgIcBDAHBHzYDz1Dy3qmMscnQm9
-X-Received: by 10.66.145.35 with SMTP id sr3mr30718285pab.82.1462559829136;
-        Fri, 06 May 2016 11:37:09 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:3c48:9bf6:3477:be87])
-        by smtp.gmail.com with ESMTPSA id qb1sm22726500pac.44.2016.05.06.11.37.08
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 06 May 2016 11:37:08 -0700 (PDT)
-X-Mailer: git-send-email 2.8.2.335.g4bb51ae.dirty
+	id S1758432AbcEFSy0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2016 14:54:26 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60790 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758144AbcEFSyZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2016 14:54:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2DBFA17196;
+	Fri,  6 May 2016 14:54:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mtuBMAleXwlymE4pYa5lZ+g815M=; b=bxysP5
+	yTJlNd5aLBgE/5nBJ6MGM4Na+TCQ2wS8QlxlyokAngVKunTphwQD2g0vLPCMYvm3
+	m/UD1fr5r0xFZwZa7hfQ0ZWapFcWopbLYktlqMT5IoI3digQJoBkFZe++/7zzEEn
+	pyYuVhEyZUUrNAzfZDGgAekI+pimDf4y904U8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IAZ1CRbX0rmK1ajkOKtObzg9hlM0x7GR
+	MLOLTtAqVSDNGpmYMYOFG7r4wctlGlX2kn8E1IJisi57WyNvLjGGcJ16jK99KHYM
+	fIKrTC4qZfo/R1r953Xg6AY/QjYHDgBsXMgglsQeGY2qZm5RT2a3qxvd7SB8seOR
+	pSjlJJDpO74=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 248D017195;
+	Fri,  6 May 2016 14:54:24 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9A83C17192;
+	Fri,  6 May 2016 14:54:23 -0400 (EDT)
+In-Reply-To: <572CDCFF.9050607@ramsayjones.plus.com> (Ramsay Jones's message
+	of "Fri, 6 May 2016 19:05:51 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F2E79D94-13BB-11E6-B3CE-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293847>
 
-Armin Kunaschik <megabreit@googlemail.com> wrote:
-> I'm trying to compile/test/use git 2.8.2 on AIX 6.1 with
-> no bash available.
-...
-> make test does not make it through t3513-revert-submodule.sh anymore.
-> The test is not portable since it uses the z-flags of GNU-tar. When -z
-> is removed, (and extension is changed back to tar) everything runs and
-> tests smoothly.
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- t/t3513-revert-submodule.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> The patch below applies to master (I haven't checked for any more
+> additions).
+>
+>  	if (bisect_list) {
+> -		int reaches = reaches, all = all;
+> +		int reaches = 0, all = 0;
 
-diff --git a/t/t3513-revert-submodule.sh b/t/t3513-revert-submodule.sh
-index a1c4e02..db93781 100755
---- a/t/t3513-revert-submodule.sh
-+++ b/t/t3513-revert-submodule.sh
-@@ -14,11 +14,11 @@ test_description='revert can handle submodules'
- git_revert () {
- 	git status -su >expect &&
- 	ls -1pR * >>expect &&
--	tar czf "$TRASH_DIRECTORY/tmp.tgz" * &&
-+	tar cf "$TRASH_DIRECTORY/tmp.tar" * &&
- 	git checkout "$1" &&
- 	git revert HEAD &&
- 	rm -rf * &&
--	tar xzf "$TRASH_DIRECTORY/tmp.tgz" &&
-+	tar xf "$TRASH_DIRECTORY/tmp.tar" &&
- 	git status -su >actual &&
- 	ls -1pR * >>actual &&
- 	test_cmp expect actual &&
--- 
-2.8.2.335.g4bb51ae.dirty
+One thing that is somewhat sad is that this makes future readers
+wonder if these values '0' are sensible initial values.
+
+Having to wonder "is it sensible to initialize this variable to 0?
+Shouldn't it be initialized to INT_MAX instead?" is wasting their
+time exactly because we _know_ these are not even "initial values".
+We know these do not have to be initialized, because some more
+appropriate values will get assigned to them before they are used,
+and have these only because some compilers get it wrong.
+
+The original "reaches = reaches" had the documentation value (at
+least for those who knew the convention) to save the readers from
+wasting their time that way.  Now these 0 are indistinguishable from
+the other initializations that require to be zero.
+
+> diff --git a/read-cache.c b/read-cache.c
+> index d9fb78b..978d6b6 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -1870,7 +1870,7 @@ static int ce_write_entry(git_SHA_CTX *c, int fd, struct cache_entry *ce,
+>  {
+>  	int size;
+>  	struct ondisk_cache_entry *ondisk;
+> -	int saved_namelen = saved_namelen; /* compiler workaround */
+> +	int saved_namelen = 0;
+
+I wonder if can we come up with a short and sweet notation to remind
+futhre readers that this "initialization" is not initializing but
+merely squelching warnings from stupid compilers, and agree to use
+it consistently?
