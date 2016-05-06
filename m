@@ -1,235 +1,89 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 3/3] test-parse-options: --expect=<string> option to
- simplify tests
-Date: Thu, 5 May 2016 17:41:03 -0700
-Message-ID: <CAGZ79kY+9BUjcbpSA8sAqd=qZ5niZ2CDsPeGuXhK+yqZY4hL9Q@mail.gmail.com>
-References: <xmqq7ff8b99q.fsf@gitster.mtv.corp.google.com>
-	<20160505215056.28224-1-gitster@pobox.com>
-	<20160505215056.28224-4-gitster@pobox.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] submodule: stop sanitizing config options
+Date: Thu, 5 May 2016 21:00:54 -0400
+Message-ID: <20160506010053.GA15474@sigill.intra.peff.net>
+References: <cover.1462342213.git.johannes.schindelin@gmx.de>
+ <20160504062618.GA9849@sigill.intra.peff.net>
+ <20160504074559.GA3077@sigill.intra.peff.net>
+ <20160504080047.GA2436@sigill.intra.peff.net>
+ <CAGZ79kaUiVLuXvpLPKuZZ55zbQXA3Wt7WP3a_65gBW2Cj-gMoQ@mail.gmail.com>
+ <20160505012219.GA15090@sigill.intra.peff.net>
+ <xmqq60uscufw.fsf@gitster.mtv.corp.google.com>
+ <20160505201416.GD9162@sigill.intra.peff.net>
+ <xmqqtwic6pxs.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kZ4wOQrZETB4UVVRO6oecF-qqjzb9hP6-JenNxFNfjiLw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 06 02:41:12 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri May 06 03:01:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayTpP-0007wC-E8
-	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 02:41:11 +0200
+	id 1ayU8b-0005kB-DB
+	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 03:01:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757609AbcEFAlH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 May 2016 20:41:07 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:37831 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757294AbcEFAlF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2016 20:41:05 -0400
-Received: by mail-ig0-f179.google.com with SMTP id s8so28697435ign.0
-        for <git@vger.kernel.org>; Thu, 05 May 2016 17:41:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=tgdRRKT8FSKHiYV397XNOmM2KC/id3FYzfkfUlv0W7A=;
-        b=ogeACDa2aHDuNd4XfaVknveouDo6QNWa89njNlVExIxnM1yxJ/56SVA3jaOFDSdxt4
-         LNiE6AtBh0pRkPoeYaOdLC6QEyHfuC1ov7skaONRBQJYVc8LAaiapBb6BDT+Ai0vuQip
-         lRGMVMfmCCKDKVBmrsGhkoMbBeRrcbbLakQTXgaRQAfAjbjFR80Rs1GP3Z494l/yY9iR
-         cIQ1MKfJhqdVoxYieCBX0bc1Tih1InHKDlUkHy2e9Z6CGCp8BeJf6GykenDSH7qf98Iv
-         khPZTGXUBI9zdn8Z92HMTy97tFmoEuB9RXHfqJYvNChlAKRDyqNTx6PBlQHaZv9nIg5m
-         YuUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=tgdRRKT8FSKHiYV397XNOmM2KC/id3FYzfkfUlv0W7A=;
-        b=T5DTDG6VHkZjbQKpyNW6LHs/pEUk/Y8+1AzAq344615SBE2y9cslvDdW6HltAGJuMd
-         qewtthDdKvvdDfOEKZF1bnP17jqKghG3q6s1Yj4ae8svU/F/wfekBK6MvMACk9j/p8Bi
-         LcD5Ht5Rf0Plla0gPfEHcwvEDQVWahflFv9iw8DYNiiU+Kiu+2lwm8voZGTja9rGKOTL
-         6kkPUVIu44KS/FfD6m1E1HET0VJpt3ryQDLeMv2/j9dRh8KhjhwP8JHi5W/NtuQAABJc
-         sBNqykGSg+S7fQn2ErIVQ8XvVaS3Q9L8nEKx6hU9yQjBYsQwmvsPQj2rjzQS3Jt2JeAL
-         S6KA==
-X-Gm-Message-State: AOPr4FXGRGOWAi+Uph6PZpJ+Y0Sp1oJNpMy5I5r24hKFR9TIOuAG+7vvvYsHjd9d4Diijj63OXsareezNg+Rt95c
-X-Received: by 10.50.111.15 with SMTP id ie15mr7432203igb.94.1462495263868;
- Thu, 05 May 2016 17:41:03 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Thu, 5 May 2016 17:41:03 -0700 (PDT)
-In-Reply-To: <20160505215056.28224-4-gitster@pobox.com>
+	id S1755393AbcEFBA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 May 2016 21:00:58 -0400
+Received: from cloud.peff.net ([50.56.180.127]:34877 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754196AbcEFBA5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2016 21:00:57 -0400
+Received: (qmail 30878 invoked by uid 102); 6 May 2016 01:00:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 May 2016 21:00:56 -0400
+Received: (qmail 23790 invoked by uid 107); 6 May 2016 01:01:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 May 2016 21:01:08 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 May 2016 21:00:54 -0400
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kZ4wOQrZETB4UVVRO6oecF-qqjzb9hP6-JenNxFNfjiLw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293733>
 
-On Thu, May 5, 2016 at 2:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Existing tests in t0040 follow a rather verbose pattern:
->
->         cat >expect <<\EOF
->         boolean: 0
->         integer: 0
->         magnitude: 0
->         timestamp: 0
->         string: (not set)
->         abbrev: 7
->         verbose: 0
->         quiet: 3
->         dry run: no
->         file: (not set)
->         EOF
->
->         test_expect_success 'multiple quiet levels' '
->                 test-parse-options -q -q -q >output 2>output.err &&
->                 test_must_be_empty output.err &&
->                 test_cmp expect output
->         '
->
-> But the only thing this test cares about is if "quiet: 3" is in the
-> output.  We should be able to write the above 18 lines with just
-> four lines, like this:
->
->         test_expect_success 'multiple quiet levels' '
->                 test-parse-options --expect="quiet: 3" -q -q -q
->         '
->
-> Teach the new --expect=<string> option to test-parse-options helper.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  t/t0040-parse-options.sh |  1 +
->  test-parse-options.c     | 68 +++++++++++++++++++++++++++++++++++++++++++++---
->  2 files changed, 66 insertions(+), 3 deletions(-)
->
-> diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-> index dbaee55..d678fbf 100755
-> --- a/t/t0040-parse-options.sh
-> +++ b/t/t0040-parse-options.sh
-> @@ -45,6 +45,7 @@ Standard options
->      -v, --verbose         be verbose
->      -n, --dry-run         dry run
->      -q, --quiet           be quiet
-> +    --expect <string>     expected output in the variable dump
->
->  EOF
->
-> diff --git a/test-parse-options.c b/test-parse-options.c
-> index 3db4332..010f3b2 100644
-> --- a/test-parse-options.c
-> +++ b/test-parse-options.c
-> @@ -14,6 +14,7 @@ static char *string = NULL;
->  static char *file = NULL;
->  static int ambiguous;
->  static struct string_list list;
-> +static struct string_list expect;
->
->  static struct {
->         int called;
-> @@ -40,6 +41,62 @@ static int number_callback(const struct option *opt, const char *arg, int unset)
->         return 0;
->  }
->
-> +/*
-> + * See if expect->string ("label: value") has a line in output that
-> + * begins with "label:", and if the line in output matches it.
-> + */
-> +static int match_line(struct string_list_item *expect, struct strbuf *output)
-> +{
-> +       const char *label = expect->string;
-> +       const char *colon = strchr(label, ':');
-> +       const char *scan = output->buf;
-> +       size_t label_len, expect_len;
-> +
-> +       if (!colon)
-> +               die("Malformed --expect value: %s", label);
-> +       label_len = colon - label;
-> +
-> +       while (scan < output->buf + output->len) {
-> +               const char *next;
-> +               scan = memmem(scan, output->buf + output->len - scan,
-> +                             label, label_len);
-> +               if (!scan)
-> +                       return 0;
-> +               if (scan == output->buf || scan[-1] == '\n')
+On Thu, May 05, 2016 at 05:23:51PM -0700, Stefan Beller wrote:
 
-Does scan[-1] work for the first line?
+> >> -/*
+> >> - * This function is intended as a callback for use with
+> >> - * git_config_from_parameters(). It ignores any config options which
+> >> - * are not suitable for passing along to a submodule, and accumulates the rest
+> >> - * in "data", which must be a pointer to a strbuf. The end result can
+> >> - * be put into $GIT_CONFIG_PARAMETERS for passing to a sub-process.
+> >> - */
+> >> -int sanitize_submodule_config(const char *var, const char *value, void *data);
+> >> -
+> >>  /*
+> >>   * Prepare the "env_array" parameter of a "struct child_process" for executing
+> >>   * a submodule by clearing any repo-specific envirionment variables, but
+> >> - * retaining any config approved by sanitize_submodule_config().
+> >> + * retaining any config in the environment.
+> >>   */
+> >>  void prepare_submodule_repo_env(struct argv_array *out);
+> >>
+> >>
+> >> -Peff
+> >
+> > Hmph, Stefan, do you want to keep this (if you want to resurrect the
+> > function in some future, for example)?
+> 
+> IMHO it is easier to revert or rewrite than to carry unused code?
+> Unused code is not tested and untested code is broken code.
+> And relying on broken code in the future will guarantee bugs.
+> (Sure new code may also have bugs, but I just think that bugs
+> in newly written code can be fixed easier)
+> 
+> I would prefer to get rid of it, i.e. taking that patch.
 
-> +                       break;
-> +               next = strchr(scan + label_len, '\n');
-> +               if (!next)
-> +                       return 0;
-> +               scan = next + 1;
-> +       }
-> +
-> +       /*
-> +        * scan points at a line that begins with the label we are
-> +        * looking for.  Does it match?
-> +        */
-> +       expect_len = strlen(expect->string);
-> +
-> +       if (output->buf + output->len <= scan + expect_len)
-> +               return 0; /* value not long enough */
-> +       if (memcmp(scan, expect->string, expect_len))
-> +               return 0; /* does not match */
-> +
-> +       return (scan + expect_len < output->buf + output->len &&
-> +               scan[expect_len] == '\n');
-> +}
-> +
-> +static int show_expected(struct string_list *list, struct strbuf *output)
-> +{
-> +       struct string_list_item *expect;
-> +       int found_mismatch = 0;
-> +
-> +       for_each_string_list_item(expect, list) {
-> +               if (!match_line(expect, output))
-> +                       found_mismatch = 1;
-> +       }
-> +       return found_mismatch;
-> +}
-> +
->  int main(int argc, char **argv)
->  {
->         const char *prefix = "prefix/";
-> @@ -87,6 +144,8 @@ int main(int argc, char **argv)
->                 OPT__VERBOSE(&verbose, "be verbose"),
->                 OPT__DRY_RUN(&dry_run, "dry run"),
->                 OPT__QUIET(&quiet, "be quiet"),
-> +               OPT_STRING_LIST(0, "expect", &expect, "string",
-> +                               "expected output in the variable dump"),
->                 OPT_END(),
->         };
->         int i;
-> @@ -117,7 +176,10 @@ int main(int argc, char **argv)
->         for (i = 0; i < argc; i++)
->                 strbuf_addf(&output, "arg %02d: %s\n", i, argv[i]);
->
-> -       printf("%s", output.buf);
-> -
-> -       return 0;
-> +       if (expect.nr)
-> +               return show_expected(&expect, &output);
+Keep in mind this squash is just dropping the _declaration_. The code
+itself was dropped in the earlier patch. (And I agree there isn't a good
+reason to keep it when we can easily "git revert" later).
 
-On a philosophical level this patch series is adding a
-trailing "|grep $X" for the test-parse-options.
-I think such a grep pattern is a good thing because it is
-cheap to implement in unix like environments.
-
-This however is a lot of C code for finding specific subsets
-in the output, so it is not quite cheap. Then we could also go
-the non-wasteful way and instead check what to add to the strbuf
-instead of filtering afterwards, i.e. each strbuf_add is guarded by
-an
-
-     if (is_interesting_output(...))
-        strbuf_add(...)
-
-> +       else {
-> +               printf("%s", output.buf);
-> +               return 0;
-> +       }
->  }
-> --
-> 2.8.2-505-gdbd0e1d
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-Peff
