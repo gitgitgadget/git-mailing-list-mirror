@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 22/33] refs: allow log-only updates
-Date: Fri,  6 May 2016 18:14:03 +0200
-Message-ID: <8cc803f8b0b5e3a38d98781095b0093114b23e32.1462550456.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 33/33] lock_ref_sha1_basic(): only handle REF_NODEREF mode
+Date: Fri,  6 May 2016 18:14:14 +0200
+Message-ID: <1b71052522155c73624dde29ddf1d613b56ff5fa.1462550456.git.mhagger@alum.mit.edu>
 References: <cover.1462550456.git.mhagger@alum.mit.edu>
 Cc: Jeff King <peff@peff.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -9,136 +9,234 @@ Cc: Jeff King <peff@peff.net>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>,
 	David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Fri May 06 18:22:39 2016
+X-From: git-owner@vger.kernel.org Fri May 06 18:22:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayiWQ-0005jp-GZ
-	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 18:22:34 +0200
+	id 1ayiWg-0005yJ-No
+	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 18:22:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758161AbcEFQWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2016 12:22:32 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:55623 "EHLO
+	id S1758232AbcEFQWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2016 12:22:47 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:55626 "EHLO
 	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758140AbcEFQWb (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 May 2016 12:22:31 -0400
-X-AuditID: 1207440e-ef3ff700000008c5-a9-572cc304da20
+	by vger.kernel.org with ESMTP id S1758140AbcEFQWq (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 May 2016 12:22:46 -0400
+X-AuditID: 1207440e-ef3ff700000008c5-c7-572cc3177ba5
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 4D.0E.02245.403CC275; Fri,  6 May 2016 12:15:00 -0400 (EDT)
+	by  (Symantec Messaging Gateway) with SMTP id C0.1E.02245.713CC275; Fri,  6 May 2016 12:15:19 -0400 (EDT)
 Received: from michael.fritz.box (p508EA663.dip0.t-ipconnect.de [80.142.166.99])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u46GEHV4031758
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u46GEHVF031758
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Fri, 6 May 2016 12:14:58 -0400
+	Fri, 6 May 2016 12:15:18 -0400
 X-Mailer: git-send-email 2.8.1
 In-Reply-To: <cover.1462550456.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrHIsWRmVeSWpSXmKPExsUixO6iqMtyWCfcYEOnmsX8TScYLbqudDNZ
-	NPReYba4vWI+s0X3lLeMFj9aepgtZl61dmD3+Pv+A5PHzll32T2e9e5h9Lh4Sdlj/9JtbB4L
-	nt9n9/i8SS6APYrbJimxpCw4Mz1P3y6BO2PytLssBTclK7b/fcbWwLhKpIuRk0NCwETi0Plb
-	bCC2kMBWRon/TQVdjFxA9nEmiWVze8ESbAK6Eot6mplAbBGBCImGVy2MXYwcHMwCnxklVnKD
-	hIUFzCTm3ZzLDGKzCKhKLN17EaycVyBK4sGNlawQu+QkLk9/ADaSU8BC4lDvcSaIveYSHWtv
-	sE9g5FnAyLCKUS4xpzRXNzcxM6c4NVm3ODkxLy+1SNdYLzezRC81pXQTIyS8+HYwtq+XOcQo
-	wMGoxMObcVI7XIg1say4MvcQoyQHk5Io7/cCnXAhvqT8lMqMxOKM+KLSnNTiQ4wSHMxKIrxX
-	9gHleFMSK6tSi/JhUtIcLErivGpL1P2EBNITS1KzU1MLUotgsjIcHEoSvIcOAjUKFqWmp1ak
-	ZeaUIKSZODhBhnNJiRSn5qWkFiWWlmTEg8I/vhgYASApHqC9fIdA9hYXJOYCRSFaTzHqchzZ
-	f28tkxBLXn5eqpQ471yQHQIgRRmleXArYMnkFaM40MfCvJdBqniAiQhu0iugJUxAS97P1QRZ
-	UpKIkJJqYHS/0rKB+wcDR9OOUDn7RDPLDK/FXFO9+T9suHwlqvHK8UmFO/e9vMo8LfLBrI+M
-	jztNr310FlVfOW/3YfV00zNPV66dmW/xZd//xreTN87d/iPE/PbbqPjV90oX3DOP 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrPIsWRmVeSWpSXmKPExsUixO6iqCt+WCfc4P0dY4v5m04wWnRd6Way
+	aOi9wmxxe8V8ZovuKW8ZLX609DBbzLxq7cDu8ff9ByaPnbPusns8693D6HHxkrLH/qXb2DwW
+	PL/P7vF5k1wAexS3TVJiSVlwZnqevl0Cd0b3p42sBT+NKjZv2sjSwPhWo4uRk0NCwESiZ9pf
+	5i5GLg4hga2MEud29TFBOMeZJFqudjGDVLEJ6Eos6mlmArFFBCIkGl61MHYxcnAwC3xmlFjJ
+	DRIWFvCV2LzuO1gJi4CqxLLXc1hBbF6BKIkDdzayQiyTk7g8/QEbiM0pYCFxqPc4WL2QgLlE
+	x9ob7BMYeRYwMqxilEvMKc3VzU3MzClOTdYtTk7My0st0jXWy80s0UtNKd3ECAkwvh2M7etl
+	DjEKcDAq8fBmnNQOF2JNLCuuzD3EKMnBpCTK+71AJ1yILyk/pTIjsTgjvqg0J7X4EKMEB7OS
+	CO+VfUA53pTEyqrUonyYlDQHi5I4r9oSdT8hgfTEktTs1NSC1CKYrAwHh5IE76GDQI2CRanp
+	qRVpmTklCGkmDk6Q4VxSIsWpeSmpRYmlJRnxoAiILwbGAEiKB2gv3yGQvcUFiblAUYjWU4y6
+	HEf231vLJMSSl5+XKiXOOxdkhwBIUUZpHtwKWDp5xSgO9LEw72WQKh5gKoKb9ApoCRPQkvdz
+	NUGWlCQipKQaGPMWbO3cevUW65Hi6+8+fN2Wk7hTXTxH0uUYw4zfX7kEEmqdGp4W3Iz5nGOp
+	FOzz7PNH4VNdLT/e7Wozrci/FRdjbDDhLnPuBH7W2LqEOa7nVx/38D5g6vxmIc+b 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293829>
 
-From: David Turner <dturner@twopensource.com>
+Now lock_ref_sha1_basic() is only called with flags==REF_NODEREF. So we
+don't have to handle other cases anymore.
 
-The refs infrastructure learns about log-only ref updates, which only
-update the reflog.  Later, we will use this to separate symbolic
-reference resolution from ref updating.
+This enables several simplifications, the most interesting of which come
+from the fact that ref_lock::orig_ref_name is now always the same as
+ref_lock::ref_name:
 
-Signed-off-by: David Turner <dturner@twopensource.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+* Remove ref_lock::orig_ref_name
+* Remove local variable orig_refname from lock_ref_sha1_basic()
+* ref_name can be initialize once and its value reused
+* commit_ref_update() never has to write to the reflog for
+  lock->orig_ref_name
+
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 16 ++++++++++------
- refs/refs-internal.h |  7 +++++++
- 2 files changed, 17 insertions(+), 6 deletions(-)
+ refs/files-backend.c | 54 +++++++++++++++++++---------------------------------
+ 1 file changed, 20 insertions(+), 34 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index f4f7953..3f546d0 100644
+index a180b9e..71e068b 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -2683,7 +2683,7 @@ static int commit_ref_update(struct ref_lock *lock,
+@@ -7,7 +7,6 @@
+ 
+ struct ref_lock {
+ 	char *ref_name;
+-	char *orig_ref_name;
+ 	struct lock_file *lk;
+ 	struct object_id old_oid;
+ };
+@@ -1522,7 +1521,6 @@ static void unlock_ref(struct ref_lock *lock)
+ 	if (lock->lk)
+ 		rollback_lock_file(lock->lk);
+ 	free(lock->ref_name);
+-	free(lock->orig_ref_name);
+ 	free(lock);
+ }
+ 
+@@ -1576,7 +1574,6 @@ static int lock_raw_ref(const char *refname, int mustexist,
+ 	*lock_p = lock = xcalloc(1, sizeof(*lock));
+ 
+ 	lock->ref_name = xstrdup(refname);
+-	lock->orig_ref_name = xstrdup(refname);
+ 	strbuf_git_path(&ref_file, "%s", refname);
+ 
+ retry:
+@@ -1964,14 +1961,13 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 					    struct strbuf *err)
+ {
+ 	struct strbuf ref_file = STRBUF_INIT;
+-	struct strbuf orig_ref_file = STRBUF_INIT;
+-	const char *orig_refname = refname;
+ 	struct ref_lock *lock;
+ 	int last_errno = 0;
+-	int lflags = 0;
++	int lflags = LOCK_NO_DEREF;
+ 	int mustexist = (old_sha1 && !is_null_sha1(old_sha1));
+-	int resolve_flags = 0;
++	int resolve_flags = RESOLVE_REF_NO_RECURSE;
+ 	int attempts_remaining = 3;
++	int resolved;
+ 
+ 	assert(err);
+ 
+@@ -1981,46 +1977,39 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 		resolve_flags |= RESOLVE_REF_READING;
+ 	if (flags & REF_DELETING)
+ 		resolve_flags |= RESOLVE_REF_ALLOW_BAD_NAME;
+-	if (flags & REF_NODEREF) {
+-		resolve_flags |= RESOLVE_REF_NO_RECURSE;
+-		lflags |= LOCK_NO_DEREF;
+-	}
+ 
+-	refname = resolve_ref_unsafe(refname, resolve_flags,
+-				     lock->old_oid.hash, type);
+-	if (!refname && errno == EISDIR) {
++	strbuf_git_path(&ref_file, "%s", refname);
++	resolved = !!resolve_ref_unsafe(refname, resolve_flags,
++					lock->old_oid.hash, type);
++	if (!resolved && errno == EISDIR) {
+ 		/*
+ 		 * we are trying to lock foo but we used to
+ 		 * have foo/bar which now does not exist;
+ 		 * it is normal for the empty directory 'foo'
+ 		 * to remain.
+ 		 */
+-		strbuf_git_path(&orig_ref_file, "%s", orig_refname);
+-		if (remove_empty_directories(&orig_ref_file)) {
++		if (remove_empty_directories(&ref_file)) {
+ 			last_errno = errno;
+-			if (!verify_refname_available_dir(orig_refname, extras, skip,
++			if (!verify_refname_available_dir(refname, extras, skip,
+ 							  get_loose_refs(&ref_cache), err))
+ 				strbuf_addf(err, "there are still refs under '%s'",
+-					    orig_refname);
++					    refname);
+ 			goto error_return;
+ 		}
+-		refname = resolve_ref_unsafe(orig_refname, resolve_flags,
+-					     lock->old_oid.hash, type);
++		resolved = !!resolve_ref_unsafe(refname, resolve_flags,
++						lock->old_oid.hash, type);
+ 	}
+-	if (!refname) {
++	if (!resolved) {
+ 		last_errno = errno;
+ 		if (last_errno != ENOTDIR ||
+-		    !verify_refname_available_dir(orig_refname, extras, skip,
++		    !verify_refname_available_dir(refname, extras, skip,
+ 						  get_loose_refs(&ref_cache), err))
+ 			strbuf_addf(err, "unable to resolve reference '%s': %s",
+-				    orig_refname, strerror(last_errno));
++				    refname, strerror(last_errno));
+ 
+ 		goto error_return;
+ 	}
+ 
+-	if (flags & REF_NODEREF)
+-		refname = orig_refname;
+-
+ 	/*
+ 	 * If the ref did not exist and we are creating it, make sure
+ 	 * there is no existing packed ref whose name begins with our
+@@ -2037,8 +2026,6 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 	lock->lk = xcalloc(1, sizeof(struct lock_file));
+ 
+ 	lock->ref_name = xstrdup(refname);
+-	lock->orig_ref_name = xstrdup(orig_refname);
+-	strbuf_git_path(&ref_file, "%s", refname);
+ 
+  retry:
+ 	switch (safe_create_leading_directories_const(ref_file.buf)) {
+@@ -2081,7 +2068,6 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 
+  out:
+ 	strbuf_release(&ref_file);
+-	strbuf_release(&orig_ref_file);
+ 	errno = last_errno;
+ 	return lock;
+ }
+@@ -2878,9 +2864,7 @@ static int commit_ref_update(struct ref_lock *lock,
+ 			     struct strbuf *err)
+ {
+ 	clear_loose_ref_cache(&ref_cache);
+-	if (log_ref_write(lock->ref_name, lock->old_oid.hash, sha1, logmsg, 0, err) < 0 ||
+-	    (strcmp(lock->ref_name, lock->orig_ref_name) &&
+-	     log_ref_write(lock->orig_ref_name, lock->old_oid.hash, sha1, logmsg, 0, err) < 0)) {
++	if (log_ref_write(lock->ref_name, lock->old_oid.hash, sha1, logmsg, 0, err)) {
+ 		char *old_msg = strbuf_detach(err, NULL);
+ 		strbuf_addf(err, "cannot update the ref '%s': %s",
+ 			    lock->ref_name, old_msg);
+@@ -2888,7 +2872,8 @@ static int commit_ref_update(struct ref_lock *lock,
+ 		unlock_ref(lock);
+ 		return -1;
+ 	}
+-	if (strcmp(lock->orig_ref_name, "HEAD") != 0) {
++
++	if (strcmp(lock->ref_name, "HEAD") != 0) {
+ 		/*
+ 		 * Special hack: If a branch is updated directly and HEAD
+ 		 * points to it (may happen on the remote side of a push
+@@ -2904,6 +2889,7 @@ static int commit_ref_update(struct ref_lock *lock,
+ 		unsigned char head_sha1[20];
+ 		int head_flag;
+ 		const char *head_ref;
++
+ 		head_ref = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
+ 					      head_sha1, &head_flag);
+ 		if (head_ref && (head_flag & REF_ISSYMREF) &&
+@@ -2916,6 +2902,7 @@ static int commit_ref_update(struct ref_lock *lock,
  			}
  		}
  	}
--	if (commit_ref(lock)) {
-+	if (!(flags & REF_LOG_ONLY) && commit_ref(lock)) {
++
+ 	if (commit_ref(lock)) {
  		strbuf_addf(err, "couldn't set '%s'", lock->ref_name);
  		unlock_ref(lock);
- 		return -1;
-@@ -3101,7 +3101,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 			goto cleanup;
- 		}
- 		if ((update->flags & REF_HAVE_NEW) &&
--		    !(update->flags & REF_DELETING)) {
-+		    !(update->flags & REF_DELETING) &&
-+		    !(update->flags & REF_LOG_ONLY)) {
- 			int overwriting_symref = ((update->type & REF_ISSYMREF) &&
- 						  (update->flags & REF_NODEREF));
+@@ -3021,7 +3008,6 @@ int set_worktree_head_symref(const char *gitdir, const char *target)
+ 	lock = xcalloc(1, sizeof(struct ref_lock));
+ 	lock->lk = &head_lock;
+ 	lock->ref_name = xstrdup(head_rel);
+-	lock->orig_ref_name = xstrdup(head_rel);
  
-@@ -3133,8 +3134,9 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 		}
- 		if (!(update->flags & REF_NEEDS_COMMIT)) {
- 			/*
--			 * We didn't have to write anything to the lockfile.
--			 * Close it to free up the file descriptor:
-+			 * We didn't call write_ref_to_lockfile(), so
-+			 * the lockfile is still open. Close it to
-+			 * free up the file descriptor:
- 			 */
- 			if (close_ref(update->lock)) {
- 				strbuf_addf(err, "couldn't close '%s.lock'",
-@@ -3149,7 +3151,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 	for (i = 0; i < transaction->nr; i++) {
- 		struct ref_update *update = updates[i];
+ 	ret = create_symref_locked(lock, head_rel, target, NULL);
  
--		if (update->flags & REF_NEEDS_COMMIT) {
-+		if (update->flags & REF_NEEDS_COMMIT ||
-+		    update->flags & REF_LOG_ONLY) {
- 			if (commit_ref_update(update->lock,
- 					      update->new_sha1, update->msg,
- 					      update->flags, err)) {
-@@ -3168,7 +3171,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 	for (i = 0; i < transaction->nr; i++) {
- 		struct ref_update *update = updates[i];
- 
--		if (update->flags & REF_DELETING) {
-+		if (update->flags & REF_DELETING &&
-+		    !(update->flags & REF_LOG_ONLY)) {
- 			if (delete_ref_loose(update->lock, update->type, err)) {
- 				ret = TRANSACTION_GENERIC_ERROR;
- 				goto cleanup;
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 1f94f7a..85f4650 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -43,6 +43,13 @@
-  */
- 
- /*
-+ * Used as a flag in ref_update::flags when we want to log a ref
-+ * update but not actually perform it.  This is used when a symbolic
-+ * ref update is split up.
-+ */
-+#define REF_LOG_ONLY 0x80
-+
-+/*
-  * Return true iff refname is minimally safe. "Safe" here means that
-  * deleting a loose reference by this name will not do any damage, for
-  * example by causing a file that is not a reference to be deleted.
 -- 
 2.8.1
