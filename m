@@ -1,109 +1,90 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 05/13] worktree.c: mark current worktree
-Date: Fri, 6 May 2016 03:51:59 -0400
-Message-ID: <CAPig+cQszEZLaebwqXNny6_EnhFpwU1xYqEX2_0N=vTEXTk2Fw@mail.gmail.com>
-References: <1461158693-21289-1-git-send-email-pclouds@gmail.com>
-	<1461330096-21783-1-git-send-email-pclouds@gmail.com>
-	<1461330096-21783-6-git-send-email-pclouds@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: Found possible branch point, then "Use of uninitialized value $u
+ in substitution/concatenation"
+Date: Fri, 6 May 2016 10:27:44 +0200
+Message-ID: <CAP8UFD0k0Kx306S3y-Kd5328j0MDNL+ewCJvXbsJ1nzsJYRdtg@mail.gmail.com>
+References: <CALZdSA_pDy=B-bgB-vjpi1yjgtse_-07ewXSX0_GsYhLfOUbzw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Reto_Habl=C3=BCtzel?= <rethab.ch@gmail.com>,
-	Mike Rappazzo <rappazzo@gmail.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 06 09:52:09 2016
+Cc: git <git@vger.kernel.org>
+To: Thierry Suzanne <thierry@yellownemo.com>
+X-From: git-owner@vger.kernel.org Fri May 06 10:27:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayaYS-0001YX-2I
-	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 09:52:08 +0200
+	id 1ayb71-0007QS-DO
+	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 10:27:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756767AbcEFHwC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 May 2016 03:52:02 -0400
-Received: from mail-ig0-f195.google.com ([209.85.213.195]:32891 "EHLO
-	mail-ig0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756737AbcEFHwA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 May 2016 03:52:00 -0400
-Received: by mail-ig0-f195.google.com with SMTP id rc4so4365372igc.0
-        for <git@vger.kernel.org>; Fri, 06 May 2016 00:52:00 -0700 (PDT)
+	id S1751644AbcEFI1r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2016 04:27:47 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:38232 "EHLO
+	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751420AbcEFI1q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2016 04:27:46 -0400
+Received: by mail-wm0-f48.google.com with SMTP id g17so65400371wme.1
+        for <git@vger.kernel.org>; Fri, 06 May 2016 01:27:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-transfer-encoding;
-        bh=oSOXsUnbEEv5hrmaynKj/gVAPHRB65wSxfSdgaUIy+k=;
-        b=TbD0kXTQ8PNcqXqUWqcNLBb/ZDdpomjIxitkxWECSlUapREn4P3z85Pj3flUchZ5VQ
-         u6mrxNKj867eVF7sXCUP1lPvWo8UCLpT9dVzwfh0bpJaH6RYONNMrC1Bx6iAHjWFTBYC
-         UoCxA/SolQENjYeUnY5SXj+eU8vjr8ztmghnIr3O+aJCiwk0s57BRZIfLBExiSs8Phd+
-         sUxVruYvt9EH3QUTauK4L5GI4v9Tqa8YHVdnGjMzfWiqX6CLtK4wzpR6boijTFZ4r6b6
-         Ky4AMFNe632B0zPGe593fAa02PQ6JIGwD2jMNYi7LcHgK8T+JIGbKSavoNIPYoaepd4w
-         qd1w==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=AB1M+zx12ON2FSuUOdNyMcQB2GgqyrqVOQZmF/9+CgU=;
+        b=GLJYRCfF8HXVVkumwzMqw1/NKCEOFMMSoFJdklAkeZLALfXM5euJwyDolbxElD0wkx
+         h8ZexF7ZZuhHD0SDYOWEXo5j81FRHuSV2kcc5KY9PB7QCZB5NfBbt/l0KfE41ZK7/Py+
+         yFq32ktiU6Yt77fHr1bDa7+Bdt+UR3eme1VV263SP/Z+tlHC/E3sa+35bbRMdlF5j6SB
+         ie7GiXd3KXjgKasHrBX0oVgh2gUQGvAcqvAPs6pLtjztvLGdsChd0P76kpUjuhgkuH7K
+         RcJ2zEvLZMBfRMWkCBaetJTnMq70XgE7cFSdnPa6rFk4gak11HCDyF7Lj2xf85pw2TAM
+         mm+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=oSOXsUnbEEv5hrmaynKj/gVAPHRB65wSxfSdgaUIy+k=;
-        b=NAcMjoN0ZL4atZUD6danjxQeXVzcQoQLam0dKKU3N0Msi5FQUI3EPcTGBLdos1Uf9f
-         sSV+aE/YVZ3MRSdfRU9hpBxy8vULmhCrVhAMpDxWl65cwRKViKZYoiEWjKJFG8OzqslB
-         ddd6NAmrxZjBF4ExRH69ipPIExnBRVburbUd8VGv/+TkfMNMp27sIp2p2CgCIk2cTSPp
-         EjV4+B2IXbR95U35/RSzqfEnkpA4UlcQYjxtMEyrejgByNOCR0+NtXOTihVdkvO19AXT
-         VlUdHk2CY4viswaZ/d/hYkgjLQL+fGoih0un/c76gneucsrqG/NDL0kO/18p6VUriynH
-         Z+7w==
-X-Gm-Message-State: AOPr4FVelCvz1W9Y2q1Dlqli5bwTpxCLmfWI9rqUEM0ssH1grk9XX/wKBajD0N9EiCwjubaVguTIJSjuGY5BYw==
-X-Received: by 10.50.3.105 with SMTP id b9mr8801291igb.17.1462521119924; Fri,
- 06 May 2016 00:51:59 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Fri, 6 May 2016 00:51:59 -0700 (PDT)
-In-Reply-To: <1461330096-21783-6-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: oNu7VkZyNBwongRZNBIZv4VHmx8
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=AB1M+zx12ON2FSuUOdNyMcQB2GgqyrqVOQZmF/9+CgU=;
+        b=TPWQN1sHtHsDqV+E8h/tsd8LskQ88hW9IOBFdK9aIKAGTx/n4B0VuTcNS3jFZJeQyU
+         HT7Jy9EGKHNJRgPzFmDpPu9Lk147HORUBsu8/UESQCJ4Eni4rRGsgbSSEDWwInBzdT5t
+         WzsyJg7i/dPcDuM7dGrCjJeQu+1AjWrj+5CDqTZ7MKL1+G8YfMu+wapP9qRTNe2cbBsx
+         NetSctBmGxdj4ge+YBjR84ddRKt8UWQP9cLL0XCJxlb+bgEcFNlO0Zr5HR4ae5qYIsNm
+         MKzeP4U6lgXrtYKZo3gGAC6PteIeAyt1VMbeLODvlI0t5CzHU6WpeXZXuum2T98yARIa
+         4pnQ==
+X-Gm-Message-State: AOPr4FVDKzFryqCn1elD7ooK7gZbxoV/K71+NmJZn/proLlMuH8rzH88gqxBM7MOf7q0OUL0Vz2LAuitL4pKOA==
+X-Received: by 10.194.117.70 with SMTP id kc6mr20305369wjb.94.1462523264458;
+ Fri, 06 May 2016 01:27:44 -0700 (PDT)
+Received: by 10.194.246.4 with HTTP; Fri, 6 May 2016 01:27:44 -0700 (PDT)
+In-Reply-To: <CALZdSA_pDy=B-bgB-vjpi1yjgtse_-07ewXSX0_GsYhLfOUbzw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293753>
 
-On Fri, Apr 22, 2016 at 9:01 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
-> diff --git a/worktree.c b/worktree.c
-> @@ -147,6 +150,25 @@ done:
-> +static void mark_current_worktree(struct worktree **worktrees)
-> +{
-> +       struct strbuf git_dir =3D STRBUF_INIT;
-> +       struct strbuf path =3D STRBUF_INIT;
-> +       int i;
-> +
-> +       strbuf_addstr(&git_dir, absolute_path(get_git_dir()));
+Hi,
 
-This could also just be:
+On Thu, May 5, 2016 at 12:43 PM, Thierry Suzanne <thierry@yellownemo.com> wrote:
+>
+> Looking at svn.pm, I can see we're in find_parent_branch() which
+> outputs the message "Found possible branch point". It then calls
+> other_gs($new_url, $url, $branch_from, $r, $self->{ref_id});
+>
+> which itself calls:
+> Git::SVN->find_by_url($new_url, $url, $branch_from);
+>
+> which calls:
+> resolve_local_globs($u, $fetch, $globspec);
+>
+> and resolve_local_globs is where the error is thrown on line 100/101:
+> my $u = (::cmt_metadata("$refname"))[0];
+> $u =~ s!^\Q$url\E(/|$)!! or die
+>
+> I made a mistake in my command line for sure, so this might not be a
+> bug, I'm just emailing all this if someone think it could be handled
+> differently or a better error shown.
 
-    char *git_dir =3D xstrdup(absolute_path(...));
+Yeah, there is a die() calls above and also one on line 101, so it
+looks like $u could be checked between line 100 and line 101 and die()
+could be called if it is not properly defined.
 
-with a corresponding 'free(git_dir)' below.
+Could you send a patch to do something like that?
 
-> +       for (i =3D 0; worktrees[i]; i++) {
-> +               struct worktree *wt =3D worktrees[i];
-> +               strbuf_addstr(&path, absolute_path(get_worktree_git_d=
-ir(wt)));
-> +               wt->is_current =3D !fspathcmp(git_dir.buf, path.buf);
-
-Similarly, it looks like 'path' doesn't need to be a strbuf at all
-since the result of absolute_path() should remain valid long enough
-for fspathcmp(). It could just be:
-
-    const char *path =3D absolute_path(...);
-    wt->is_current =3D !fspathcmp(git_dir, path);
-
-But these are very minor; probably not worth a re-roll.
-
-> +               strbuf_reset(&path);
-> +               if (wt->is_current)
-> +                       break;
-> +       }
-> +       strbuf_release(&git_dir);
-> +       strbuf_release(&path);
-> +}
+Thanks,
+Christian.
