@@ -1,222 +1,238 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 11/15] diff: ignore submodules excluded by groups
-Date: Fri, 6 May 2016 11:23:59 -0700
-Message-ID: <CAGZ79kY5uDzG8PDLMh5e9afg+S3oTjEjq2aRo+s4ud86UCxZQA@mail.gmail.com>
-References: <1461703833-10350-1-git-send-email-sbeller@google.com>
-	<1461703833-10350-12-git-send-email-sbeller@google.com>
-	<xmqqlh3wxnuq.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kaOXxqDEqVnf5K3QjXg5bfmKW2XkmPT-mqJ93+RF5N40g@mail.gmail.com>
-	<CAGZ79ka37jWYDJrAWy5KLhaaJmrLRbmTzRC6A5DneuE63+XCeQ@mail.gmail.com>
-	<xmqqy47o9s1h.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kYGbjOKPQk8A-ag+JgvybW4Kf5=g8azVAOoMq79oXc5-Q@mail.gmail.com>
-	<xmqqfutw9mfs.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kYKbef7DTkmE3Vf3C=PLfgB3xf0ikVKHFUfQ8+KkgGHPg@mail.gmail.com>
-	<xmqqfutw85oz.fsf@gitster.mtv.corp.google.com>
-	<xmqqa8k37m6i.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] utf8: fix duplicate words of "the"
+Date: Fri, 06 May 2016 11:30:31 -0700
+Message-ID: <xmqqa8k33upk.fsf@gitster.mtv.corp.google.com>
+References: <1462537893-18493-1-git-send-email-lip@dtdream.com>
+	<20160506130922.GA5051@sigill.intra.peff.net>
+	<xmqqoa8j3xk7.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 06 20:24:07 2016
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Li Peng <lip@dtdream.com>
+X-From: git-owner@vger.kernel.org Fri May 06 20:30:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aykQ2-0002Ny-Vp
-	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 20:24:07 +0200
+	id 1aykWN-0007Ty-T9
+	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 20:30:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758223AbcEFSYB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2016 14:24:01 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:36854 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758091AbcEFSYA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2016 14:24:00 -0400
-Received: by mail-ig0-f180.google.com with SMTP id u10so53402785igr.1
-        for <git@vger.kernel.org>; Fri, 06 May 2016 11:24:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=8m+OwRuuzrUhyQVoUZuaDtvIK4zHXDZxICPf0+ZGnDk=;
-        b=brsPcqsN2H/wXnTN4uVwdVLd90K0B3EcqN/Rw/EqWP+51jy/rBzrHXkCQHq8nzPdHJ
-         ISJkuZbCDAcGOj36MQdgBVRmpREc3/nit90TaB7SbhBFVfsavSLDTZoQi3+BwDzsUK0D
-         A3SjNyYxWB2PGpTbE5eofpa5HcdAoX0RZ9btDYSxGu6kmCXMY/Y2ki9KqV61HohPnWfG
-         K+H1tdGZfExg1zIu6vBmyptIjhbQ6FfzR3nG95L7iOefpTE6/bpygTqeHKk7fCP2SD6v
-         AZd9gv16oen5cg3Kc5PZMuhhus4rmVxsGjxfmbxeGBxu2EIzNjl7ZJzWu6GTTQIrbUYL
-         50pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=8m+OwRuuzrUhyQVoUZuaDtvIK4zHXDZxICPf0+ZGnDk=;
-        b=keV+LdzdP7/4FKz/aX1h1mopHYrrVc8Fr+XsXA9FZR4DCrfp4LdnnGenu04hEcH2MN
-         allt0Er8Nfk7L/iJ+O5do+IjdZQXDNYTQkdNt+Z8rh95BC7z/DTsV+06JvZNLf15vqZ9
-         zEh5vWUiOMUcsiC/CbD8GxwciTNruPvEg/vzFEctSgtnLe+wezT48NqIbuRShk/efra7
-         gQ4G7W76I0Xkp1zRi0Tb4l0ESTKFc0c2PxwMSs773uqj0/yAzMKYnt44HJqFNu0G/6bB
-         X+reDbCRWI/hnQ654UnAM5md4ufE9IoAnNWXC8/oVisxbnnZ2zK+6mmoYr3aLl4StB/Z
-         RHPg==
-X-Gm-Message-State: AOPr4FUMfO0QLN21XhIUgqFVh4qBwZWx517d4HjKwLZeKW259YbCI6RVqt29F65/JE+Z3oOxxWBSJLUf+0RahHA/
-X-Received: by 10.50.30.228 with SMTP id v4mr12197752igh.85.1462559039553;
- Fri, 06 May 2016 11:23:59 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Fri, 6 May 2016 11:23:59 -0700 (PDT)
-In-Reply-To: <xmqqa8k37m6i.fsf@gitster.mtv.corp.google.com>
+	id S1758578AbcEFSag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2016 14:30:36 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61289 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758208AbcEFSaf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2016 14:30:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4EA8017E33;
+	Fri,  6 May 2016 14:30:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TGEziyn9E/w7sr/oAf/Z3Nl0tko=; b=H2pHhU
+	j4IltxPKMCQhDi2/1QDdcRPhBgdwYmNYhRxCVHWZsDK4/i76tCLPHeyFTvW3L1+m
+	ziIc4/Z2PnqfE6GsPiY4SLuTz6atEAHQ94wgLtJS+zF664oTU47pEjY2S2NGWunb
+	2QZUk2tR/AP+l30Kn+rGT4UcsnM00TOBU5YSs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gU5kuPAC0cT38rwf1wMCMGuE81RR3DWf
+	VyMHZy/WW1xnu3c6MsRQPk0RYpDTEbDI6vDR+SVqk3h4SoSf5js60RX/aKE0ftP6
+	aI8KXTnSYQGBtZKn8EGHsRRcXHRnxZQ2LIyp+0xXOMFUSEBdNLmepOxU7DD9taRq
+	IkmwGeztQzY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4649C17E31;
+	Fri,  6 May 2016 14:30:33 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B364917E30;
+	Fri,  6 May 2016 14:30:32 -0400 (EDT)
+In-Reply-To: <xmqqoa8j3xk7.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 06 May 2016 10:28:56 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 9E0620F0-13B8-11E6-B9E0-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293844>
 
-On Thu, May 5, 2016 at 11:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Jeff King <peff@peff.net> writes:
+>>
+>> IMHO it would be fine to just do all of these in a single patch. They're
+>> different files, yes, but it's all conceptually the same change.
 >
->> The set of submodules you "init" to the working tree are the ones
->> that are interesting to you.  So once the tree is populated, you do
->> not ever have to look at the "defaultGroup" configuration.  You just
->> need to look at the working tree.
->> ...
->
-> I forgot to prefix the first few paragraphs of that message with
-> "Here is how my version of the world should work."  I did not mean
-> to say "Here is how you must make your work work, or I won't talk to
-> you."  I was just hurried as I had to tend to other topics.
->
-> I actually do not care too deeply (except for the "automatically
-> remove" part, which I do not think we should do), as I do not think
-> there is a big fundamental difference between the two views.  To
-> make sure we are on the same page, let me rephrase the two views I
-> have in mind.
+> I can squash them into a single one.  So far, everything except two
+> I saw was good.
 
-Ok, maybe we can leave that automatically remove part out for the
-first series. (Eventually submodules should behave like files and we
-delete files on checkout all the time, and it's a reasonable default)
+So I tentatively queued this.
 
-So I think to reduce scope to only cover the clone/update first, all
-other operations behave like today, i.e.
+-- >8 --
+From: Li Peng <lip@dtdream.com>
+Date: Fri, 6 May 2016 20:36:46 +0800
+Subject: [PATCH] typofix: assorted typofixes in comments, documentation and
+ messages
 
-    git clone --recurse-submodules --init-submodule=label
---init-submodule=label2   git://...
-    # will clone the superproject and recursively
-    # checkout any submodule being labeled label or label2
+Many instances of duplicate words (e.g. "the the path") and
+a few typoes are fixed, originally in multiple patches.
 
-    git config submodule.defaultGroups default
-    git config --add submodule.defaultGroups devel
-    # configure which submodules you are interested in.
+    wildmatch: fix duplicate words of "the"
+    t: fix duplicate words of "output"
+    transport-helper: fix duplicate words of "read"
+    Git.pm: fix duplicate words of "return"
+    path: fix duplicate words of "look"
+    pack-protocol.txt: fix duplicate words of "the"
+    precompose-utf8: fix typo of "sequences"
+    split-index: fix typo
+    worktree.c: fix typo
+    remote-ext: fix typo
 
-    git submodule add --label <name> git://... ..
-    # record a label while adding a submodule
+Signed-off-by: Li Peng <lip@dtdream.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/technical/pack-protocol.txt | 2 +-
+ builtin/remote-ext.c                      | 2 +-
+ compat/precompose_utf8.c                  | 2 +-
+ path.c                                    | 2 +-
+ perl/Git.pm                               | 2 +-
+ split-index.c                             | 2 +-
+ t/t0000-basic.sh                          | 2 +-
+ transport-helper.c                        | 2 +-
+ wildmatch.c                               | 2 +-
+ worktree.c                                | 2 +-
+ 10 files changed, 10 insertions(+), 10 deletions(-)
 
-    git submodule update --init-labeled(=*label)
-    # will update all initialized submodules
-    # and learn a new switch to also initialize the grouped
-    # submodules (either the specified group or if none given
-    # the default group as configured before)
-
-
-
-
-    git status
-    git diff
-    git submodule summary
-    # care about all initialized submodules, i.e. (2) below
-    # a switch for recurse=label will be in a later series.
-
-
-
->
-> The difference is what should happen when the user does not give any
-> pathspec, *label, or :name to limit the set of submodules to act on,
-> which, traditionally meant to work on everything, and we are trying
-> to change that to some "default".
->
->  (1) The default set is what the configuration file says is the
->      default group.  The working tree state is ignored.
->
->  (2) The default set is what the configuration file says is the
->      default group, plus those the user showed interest by doing
->      "submodule init".
->
-> Suppose that the user has a mostly satisfactory default configured,
-> i.e. the set of submodules the configuration file says is the default
-> is both necessary and sufficient to carry out her daily task.  Then
-> there is no difference between the two.
->
-> Further suppose that the user needs to view a submodule outside the
-> default group temporarily (imagine: for a day or two), while
-> carrying out some specific task.  Perhaps she is working on the
-> documentation submodule, which is her primary task hence her
-> configuration file specifies it as the default, but needs to see the
-> submodule that houses the implementation to describe the behaviour.
->
-> So she does "init code-module/"; this has explicit pathspec, so
-> there is no difference between the two.  Now, while reading the code
-> module, she finds a typo in a comment, and wants to fix it.  We will
-> start to see differences.
-
-Another way (3) is to add code-module/ to the "set of interesting
-submodules, i.e. to the default group"
-
-    git config --all submodule.defaultGroup ./code-module
-    git submodule update
-
->
->  * When she wants to get a bird's eye view of everything she cares
->    about at the moment, i.e. wants to view the state of her usual
->    modules plus the code-module she is visiting, (1) is more
->    cumbersome.
->
->    With (1), "diff --recursive" will not step outside of her
->    configured default, so she says "diff --recursive \*default
->    code-module/" to say "I want to see both my default submodule(s)
->    and the one I checked out by hand".
->
->    With (2), she does not have to do anything special, as manually
->    checked out code-module/ will be acted upon, in addition to the
->    configured default.
-
-In (3), diff --recursive will also just work fine.
-
->
->
->  * When she wants to see her usual modules ignoring the one-off
->    checkout, (1) is easier.
-
-In (3) you'd do
-
-    git config --unset submodule.defaultGroup ./code-module
-    # optionally: git submodule update
-
->
->    With (1), she can say "diff --recursive" and done.
->
->    With (2), she needs to say "diff --recursive \*default" to
->    explicitly state "I may have checkouts of other submodules, but
->    this time I want to view only the usual default of mine".
-
-and diff --recursive works fine again as well.
-
->
-> The difference is not that big either case.
->
-> Whichever way we choose to make the default behaviour, the user
-> needs to type a bit extra when asking a behaviour that is different
-> from the default behaviour.
->
-> The amount of "extra" in the first use case necessary for (1) is
-> greater than the amount of "extra" in the second use case necessary
-> for (2), though.  In addition, in the second use case, (1) makes it
-> easier for the user to miss important changes she made outside the
-> area of her usual attention, while (2) forces her to make a
-> conscious effort to exclude them.  These are the reasons why I have
-> a slight preference for (2) over (1).
->
-
-That makes sense.
-
-So with (2)
- * there is no need to modify status, diff, log for the default case and the
-    --recursive \*default" may come later, so the initial series can be smaller.
- *
+diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
+index c6977bb..8b36343 100644
+--- a/Documentation/technical/pack-protocol.txt
++++ b/Documentation/technical/pack-protocol.txt
+@@ -526,7 +526,7 @@ Push Certificate
+ 
+ A push certificate begins with a set of header lines.  After the
+ header and an empty line, the protocol commands follow, one per
+-line. Note that the the trailing LF in push-cert PKT-LINEs is _not_
++line. Note that the trailing LF in push-cert PKT-LINEs is _not_
+ optional; it must be present.
+ 
+ Currently, the following header fields are defined:
+diff --git a/builtin/remote-ext.c b/builtin/remote-ext.c
+index 7457c74..88eb8f9 100644
+--- a/builtin/remote-ext.c
++++ b/builtin/remote-ext.c
+@@ -168,7 +168,7 @@ static int command_loop(const char *child)
+ 		size_t i;
+ 		if (!fgets(buffer, MAXCOMMAND - 1, stdin)) {
+ 			if (ferror(stdin))
+-				die("Comammand input error");
++				die("Command input error");
+ 			exit(0);
+ 		}
+ 		/* Strip end of line characters. */
+diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
+index dfbe6d8..4293b53 100644
+--- a/compat/precompose_utf8.c
++++ b/compat/precompose_utf8.c
+@@ -147,7 +147,7 @@ struct dirent_prec_psx *precompose_utf8_readdir(PREC_DIR *prec_dir)
+ 				if (errno || inleft) {
+ 					/*
+ 					 * iconv() failed and errno could be E2BIG, EILSEQ, EINVAL, EBADF
+-					 * MacOS X avoids illegal byte sequemces.
++					 * MacOS X avoids illegal byte sequences.
+ 					 * If they occur on a mounted drive (e.g. NFS) it is not worth to
+ 					 * die() for that, but rather let the user see the original name
+ 					*/
+diff --git a/path.c b/path.c
+index 969b494..a5e953f 100644
+--- a/path.c
++++ b/path.c
+@@ -134,7 +134,7 @@ static struct common_dir common_list[] = {
+  * definite
+  * definition
+  *
+- * The trie would look look like:
++ * The trie would look like:
+  * root: len = 0, children a and d non-NULL, value = NULL.
+  *    a: len = 2, contents = bc, value = (data for "abc")
+  *    d: len = 2, contents = ef, children i non-NULL, value = (data for "def")
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 49eb88a..ce7e4e8 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -393,7 +393,7 @@ sub command_close_pipe {
+ Execute the given C<COMMAND> in the same way as command_output_pipe()
+ does but return both an input pipe filehandle and an output pipe filehandle.
+ 
+-The function will return return C<($pid, $pipe_in, $pipe_out, $ctx)>.
++The function will return C<($pid, $pipe_in, $pipe_out, $ctx)>.
+ See C<command_close_bidi_pipe()> for details.
+ 
+ =cut
+diff --git a/split-index.c b/split-index.c
+index 968b780..3c75d4b 100644
+--- a/split-index.c
++++ b/split-index.c
+@@ -60,7 +60,7 @@ static void mark_base_index_entries(struct index_state *base)
+ 	 * To keep track of the shared entries between
+ 	 * istate->base->cache[] and istate->cache[], base entry
+ 	 * position is stored in each base entry. All positions start
+-	 * from 1 instead of 0, which is resrved to say "this is a new
++	 * from 1 instead of 0, which is reserved to say "this is a new
+ 	 * entry".
+ 	 */
+ 	for (i = 0; i < base->cache_nr; i++)
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index 79b9074..60811a3 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -98,7 +98,7 @@ check_sub_test_lib_test () {
+ }
+ 
+ check_sub_test_lib_test_err () {
+-	name="$1" # stdin is the expected output output from the test
++	name="$1" # stdin is the expected output from the test
+ 	# expected error output is in descriptior 3
+ 	(
+ 		cd "$name" &&
+diff --git a/transport-helper.c b/transport-helper.c
+index b934183..13b7a57 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -1152,7 +1152,7 @@ static void udt_close_if_finished(struct unidirectional_transfer *t)
+ }
+ 
+ /*
+- * Tries to read read data from source into buffer. If buffer is full,
++ * Tries to read data from source into buffer. If buffer is full,
+  * no data is read. Returns 0 on success, -1 on error.
+  */
+ static int udt_do_read(struct unidirectional_transfer *t)
+diff --git a/wildmatch.c b/wildmatch.c
+index f91ba99..57c8765 100644
+--- a/wildmatch.c
++++ b/wildmatch.c
+@@ -136,7 +136,7 @@ static int dowild(const uchar *p, const uchar *text, unsigned int flags)
+ 				/*
+ 				 * Try to advance faster when an asterisk is
+ 				 * followed by a literal. We know in this case
+-				 * that the the string before the literal
++				 * that the string before the literal
+ 				 * must belong to "*".
+ 				 * If match_slash is false, do not look past
+ 				 * the first slash as it cannot belong to '*'.
+diff --git a/worktree.c b/worktree.c
+index 6181a66..89ebe67 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -18,7 +18,7 @@ void free_worktrees(struct worktree **worktrees)
+ 
+ /*
+  * read 'path_to_ref' into 'ref'.  Also if is_detached is not NULL,
+- * set is_detached to 1 (0) if the ref is detatched (is not detached).
++ * set is_detached to 1 (0) if the ref is detached (is not detached).
+  *
+  * $GIT_COMMON_DIR/$symref (e.g. HEAD) is practically outside $GIT_DIR so
+  * for linked worktrees, `resolve_ref_unsafe()` won't work (it uses
+-- 
+2.8.2-507-g43e827d
