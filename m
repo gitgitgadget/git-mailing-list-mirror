@@ -1,109 +1,116 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 80/83] run-command: make dup_devnull() non static
-Date: Fri, 6 May 2016 17:34:33 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605061733170.2963@virtualbox>
-References: <1461505189-16234-1-git-send-email-chriscool@tuxfamily.org> <alpine.DEB.2.20.1604251704300.2896@virtualbox> <CAP8UFD2f1L3YKNBA4zP1bmGe8BQitxZp-aDsGP5UTDv06LbLBg@mail.gmail.com> <572BA80E.3000309@kdbg.org>
- <CAP8UFD35L8P2YJbbvg_-n9Nc61xMs+_2qBJwBxFzXeF-jA4WwQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 01/11] add fetch-pack --diag-url tests for some corner cases
+Date: Fri, 06 May 2016 08:52:14 -0700
+Message-ID: <xmqqoa8j5glt.fsf@gitster.mtv.corp.google.com>
+References: <1462082573-17992-1-git-send-email-mh@glandium.org>
+	<1462265452-32360-1-git-send-email-mh@glandium.org>
+	<1462265452-32360-2-git-send-email-mh@glandium.org>
+	<xmqqzis7nn02.fsf@gitster.mtv.corp.google.com>
+	<20160503224830.GA21973@glandium.org>
+	<20160505215229.GA31157@glandium.org>
+	<4349487f-716e-dadf-795b-cf790b03e02d@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Johannes Sixt <j6t@kdbg.org>, git <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 06 17:35:02 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Fri May 06 17:52:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayhmO-0001Hz-RN
-	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 17:35:01 +0200
+	id 1ayi3C-0006lp-Tp
+	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 17:52:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758143AbcEFPe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2016 11:34:57 -0400
-Received: from mout.gmx.net ([212.227.15.19]:57666 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758037AbcEFPe4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2016 11:34:56 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MXIov-1bB6Gl1fSH-00WIrd; Fri, 06 May 2016 17:34:34
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CAP8UFD35L8P2YJbbvg_-n9Nc61xMs+_2qBJwBxFzXeF-jA4WwQ@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:Y5dPoipeZ1svo5W5naS2skI2nrHF46Ea//2+NVg0A/7L8rNm0ip
- 9vs600xk5w2J0ZINmppsHb/KzezjWmYcxeV8UAmtDhfPdeuSrAqnTivq90diUxcxEkv528F
- p1wpGzOjvUvguO2hu6IdvX+0Sn+kuTBCGuFWq4nJ4K2D1xYMgEbgLzBVkXCJRSLx+3Rij4Q
- lRJjPI1qE5CWUjpSHJK5Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:dI+weC/P20U=:xNDEGP8w/mG5aweyxTnfvp
- pzyEQoNXQVo1YO6CjdlnzBFgQm2/O/ublcqIS2VKFAoxXIEnKPH/Zxr1jhLRq2h0AHrtye+T2
- e3A+tYx1rZ5s76BHDpu9TFkQDndOG1FNRYodBnGowXdeJiMJY6vgcaY9BLQBzKjK8CGk6KVxx
- C0IiajAV+5oX+f5hlNUyK/kOt2UaiVtNj/Xym4PyxWhZpvp/3S/2CtlWGDp/cgTjflmo0Qchr
- NF4FNknxSAfEu7Q6AU7kSBFwE97Hr9RmX1qKslddvHrrN8llNwUZ34FVKHcUzt4IOveMYr+um
- BN1GWLLrPXO75V3PsI5XRd+jFObwISshKzllxJxiIrXPVE0y0TbLOyckT5Lkc0jx31NVM6sxP
- 1sgqvetxx0dwM/dnzCWsUrxSPnZNgkmMpE/myekaTNuxiz0Jl79wK3ytF+UhMJFEDmYUmEOvY
- CzB/e88EUpKodespKVhKmPNz5ZyI8KLhEbVSpu7tkK0jq8BBqC0nLGp9xFbyOH0CTGwR9CBKV
- +UJL+lvix+JhQAXd+R4PhR9oBtrJS/b7YD79VaSP1OCSbq6kASluWR0gk5h1/lZk6p+qqRIq3
- KWhW6t0/NhWUr8PyZRnMTrKxWf1/SvylNnlKXME9tZGnTmGpoLCISwCDujw43XY9Ys3OQNdA3
- gJNMIOp5RxPfxujNbGQnb/emfNFRlE+Rn+Ww7rdAB8uj/3HtEWv1WgyL7t/nw0mT225brOSL8
- VVWwt2bhO1CfnW2jrJqukNsfl0ApQyLNBmFKanym6MQXt+v1d3S2LtdwGVsHrpMThNna5fSi 
+	id S1758161AbcEFPwT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 May 2016 11:52:19 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64297 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758083AbcEFPwS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 May 2016 11:52:18 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0105B1670D;
+	Fri,  6 May 2016 11:52:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=p36UnkikHG0p
+	8z7w1feX4H2mLjU=; b=cBcQa/Cb49S/6PLfj6D6kEJQ4oShVlxzsX39nxAko3bo
+	ExxDn0NL4MCBg8epyHG6hAztvuYtWj1TxehfwEkeoJtIPRIYhgXAbhrYz2U5uLfa
+	7JoUXGtuioyOSBg1mnhOcbCKKSxsd8VXph29dQvUkW32DsAXHcL8CJEujnWo6yY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=jIxcqx
+	RRgid4ECO5EYknSFDu/OflF0QNcQ55V6JhioD+m45xCxIT6koH56eCKqVB4a1ogg
+	AvYWR5UuTJL3QIcpAfQIP/wVMaud2UI4O6Ic3DhVTgPdw+VJjM2yMD2SHO67YA9h
+	OkOCQ112CejNFZo2DjXZxHGdVwr+6L9XP+OuE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id EC5DF1670C;
+	Fri,  6 May 2016 11:52:16 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 76F5A1670B;
+	Fri,  6 May 2016 11:52:16 -0400 (EDT)
+In-Reply-To: <4349487f-716e-dadf-795b-cf790b03e02d@web.de> ("Torsten
+	=?utf-8?Q?B=C3=B6gershausen=22's?= message of "Fri, 6 May 2016 06:17:04
+ +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 81D1AA8C-13A2-11E6-8478-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293792>
 
-Hi Chris,
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-On Fri, 6 May 2016, Christian Couder wrote:
+> ssh itself does not use a password:
+> ...
+> Neither does Git.
+> ...
+> The user:password came in here:
+> Commit 92722efec01f67a54b
+> clone: do not use port number as dir name
+>
+> Actually, looking back, it may have been better to say
+> git clone ssh://aaaa:bbbb@host:/path
+> is illegal and simply die() out.
 
-> On Thu, May 5, 2016 at 10:07 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> > Am 05.05.2016 um 11:50 schrieb Christian Couder:
-> >>
-> >> On Mon, Apr 25, 2016 at 5:05 PM, Johannes Schindelin
-> >> <Johannes.Schindelin@gmx.de> wrote:
-> >>>
-> >>> Hi Chris,
-> >>>
-> >>> On Sun, 24 Apr 2016, Christian Couder wrote:
-> >>>
-> >>>> diff --git a/run-command.c b/run-command.c
-> >>>> index 8c7115a..29d2bda 100644
-> >>>> --- a/run-command.c
-> >>>> +++ b/run-command.c
-> >>>> @@ -85,7 +85,7 @@ static inline void close_pair(int fd[2])
-> >>>>   }
-> >>>>
-> >>>>   #ifndef GIT_WINDOWS_NATIVE
-> >>>> -static inline void dup_devnull(int to)
-> >>>> +void dup_devnull(int to)
-> >>>>   {
-> >>>
-> >>>
-> >>> The #ifndef GIT_WINDOWS_NATIVE rings very, very loud alarm bells.
-> >>
-> >>
-> >> Yeah, but I must say that I don't know what I should do about this.
-> >> Do you have a suggestion? Should I try to implement the same function
-> >> for Windows?
+RFC2396, which updated RFC1738, discourages the use of :password
+in "3.2.2 Server-based Naming Authority", for obvious reasons.
 
-No, you should change the code that requires that ugly dup()ing so that it
-can be configured to shut up.
+   Some URL schemes use the format "user:password" in the userinfo
+   field.  This practice is NOT RECOMMENDED ...
 
-> > No, just remove the #ifndef brackets. There is already code in
-> > compat/mingw.c that treats the file name "/dev/null" specially.
-> 
-> Ok, I will do that in the same patch though the "#ifndef
-> GIT_WINDOWS_NATIVE" was already there before.
+and then this is marked as deprecated in RFC3986 "3.2.1. User
+Information".
 
-The idea was that compat/mingw.c is *really* only for the MINGW version,
-not for the MSVC version.
+   Use of the format "user:password" in the userinfo field is
+   deprecated.  Applications should not render as clear text any
+   data after the first colon (":") character found within a
+   userinfo subcomponent unless the data after the colon is the
+   empty string (indicating no password).
 
-Ciao,
-Dscho
+However, at the parser level that _knows_ the syntax, you shouldn't
+be unilaterally turning these "not recommended" and "deprecated" to
+"forbidden".  It should be prepared to see ':' to its input, if only
+to correctly recognize that as an attempt to express :password, in
+order to be able to hide the data after the first colon when running
+in verbose mode for example.
+
+I'd recommend that the parser to allow <user>:<password>@<host>, and
+at least notice ':' that appears before the first '@' as having a
+depreated form of <userinfo>.  After stripping <scheme>:// from the
+front, it is OK to assume that everything before the first '@' is
+<userinfo> (in RFC2396 lingo), and everything in <userinfo> that is
+before the first ':' is <user> when doing so. =20
+
+>>> ...  When you are constrained by the Common Internet
+>>> Scheme Syntax, i.e.
+>>>
+>>>     <scheme>://<user>:<password>@<host>:<port>/<url-path>
+>>>
+>>> you cannot have arbitrary characters in these parts; within the use=
+r
+>>> and password field, any ":", "@", or "/" must be encoded.
