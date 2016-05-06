@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 32/33] commit_ref_update(): remove the flags parameter
-Date: Fri,  6 May 2016 18:14:13 +0200
-Message-ID: <678e70dd4fa33223bb5a870d7196413dbfad2c3e.1462550456.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 30/33] lock_ref_for_update(): don't re-read non-symbolic references
+Date: Fri,  6 May 2016 18:14:11 +0200
+Message-ID: <bb0e9b5dd81738f584d3e0b11907345721b0ed2e.1462550456.git.mhagger@alum.mit.edu>
 References: <cover.1462550456.git.mhagger@alum.mit.edu>
 Cc: Jeff King <peff@peff.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -15,107 +15,125 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayiPV-00005T-2F
-	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 18:15:25 +0200
+	id 1ayiPU-00005T-Fr
+	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 18:15:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758738AbcEFQPV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2016 12:15:21 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:56573 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758677AbcEFQPT (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 May 2016 12:15:19 -0400
-X-AuditID: 12074412-51bff700000009f7-55-572cc315c83d
+	id S1758731AbcEFQPT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2016 12:15:19 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:58926 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758725AbcEFQPP (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 May 2016 12:15:15 -0400
+X-AuditID: 1207440f-8bbff700000008e4-22-572cc312f386
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 0E.62.02551.513CC275; Fri,  6 May 2016 12:15:18 -0400 (EDT)
+	by  (Symantec Messaging Gateway) with SMTP id F6.D5.02276.213CC275; Fri,  6 May 2016 12:15:14 -0400 (EDT)
 Received: from michael.fritz.box (p508EA663.dip0.t-ipconnect.de [80.142.166.99])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u46GEHVE031758
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u46GEHVC031758
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Fri, 6 May 2016 12:15:16 -0400
+	Fri, 6 May 2016 12:15:13 -0400
 X-Mailer: git-send-email 2.8.1
 In-Reply-To: <cover.1462550456.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrDIsWRmVeSWpSXmKPExsUixO6iqCt2WCfc4NMJXov5m04wWnRd6Way
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrPIsWRmVeSWpSXmKPExsUixO6iqCt0WCfcYMV9DYv5m04wWnRd6Way
 	aOi9wmxxe8V8ZovuKW8ZLX609DBbzLxq7cDu8ff9ByaPnbPusns8693D6HHxkrLH/qXb2DwW
-	PL/P7vF5k1wAexS3TVJiSVlwZnqevl0Cd8ajQ+oFC8UqZj/fxdjA2CzUxcjJISFgIrF82QUm
-	EFtIYCujxI/2rC5GLiD7OJPErj2T2UESbAK6Eot6msGKRAQiJBpetTB2MXJwMAt8ZpRYyQ1i
-	Cgt4SpzvSAOpYBFQlfg7+z4riM0rECWx90cXI8QqOYnL0x+wgdicAhYSh3qPQ601l+hYe4N9
-	AiPPAkaGVYxyiTmlubq5iZk5xanJusXJiXl5qUW6Znq5mSV6qSmlmxghoSW0g3H9SblDjAIc
-	jEo8vBkntcOFWBPLiitzDzFKcjApifJ+L9AJF+JLyk+pzEgszogvKs1JLT7EKMHBrCTCe2Uf
-	UI43JbGyKrUoHyYlzcGiJM77c7G6n5BAemJJanZqakFqEUxWhoNDSYK3+RBQo2BRanpqRVpm
-	TglCmomDE2Q4l5RIcWpeSmpRYmlJRjwo9OOLgcEPkuIB2ssH0s5bXJCYCxSFaD3FqMtxZP+9
-	tUxCLHn5ealS4rxzDwIVCYAUZZTmwa2AJZJXjOJAHwvzXgap4gEmIbhJr4CWMAEteT9XE2RJ
-	SSJCSqqBcXHSxn0bXlls4HzkHqg5aya74PtzIl/vPS/fJ371amdGQnVeuSuvY3Ch1LFXEWtt
-	hX3Su1nnqHYcWPrkl/r5dVFvec7JRBf2/yj5+I4hgut89OfVpZUP6n5tSUq2Krp5 
+	PL/P7vF5k1wAexS3TVJiSVlwZnqevl0Cd8aEF1PZC7rEK66taGdqYJwp1MXIySEhYCKx4Pwx
+	9i5GLg4hga2MEnPv3WCDcI4zSUx585UdpIpNQFdiUU8zE4gtIhAh0fCqhbGLkYODWeAzo8RK
+	bpCwsECYRO+x66wgNouAqsT9e5NYQGxegSiJZ1d/MkEsk5O4PP0BG4jNKWAhcaj3OFhcSMBc
+	omPtDfYJjDwLGBlWMcol5pTm6uYmZuYUpybrFicn5uWlFuma6OVmluilppRuYoQEGP8Oxq71
+	MocYBTgYlXh4M05qhwuxJpYVV+YeYpTkYFIS5f1eoBMuxJeUn1KZkVicEV9UmpNafIhRgoNZ
+	SYT3yj6gHG9KYmVValE+TEqag0VJnFd9ibqfkEB6YklqdmpqQWoRTFaGg0NJgvfQQaBGwaLU
+	9NSKtMycEoQ0EwcnyHAuKZHi1LyU1KLE0pKMeFAExBcDYwAkxQO0Vx6knbe4IDEXKArReopR
+	l+PI/ntrmYRY8vLzUqXEeeeCFAmAFGWU5sGtgKWTV4ziQB8L83IfAqriAaYiuEmvgJYwAS15
+	P1cTZElJIkJKqoEx3vZasJTGhx4vA4cqw/1GG8/viNhz/iCTrOXdO8t6l6jMtZG1DmBumFS6
+	eO/+58xlRU+ytybe3fXCysiYfc/7QkfR4D8F53Kftuv2LzXiSXu2x22lfuPUmK1V 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293814>
 
-commit_ref_update() is now only called with flags=0. So remove the flags
-parameter entirely.
+Before the previous patch, our first read of the reference happened
+before the reference was locked, so we couldn't trust its value and had
+to read it again. But now that our first read of the reference happens
+after acquiring the lock, there is no need to read it a second time. So
+move the read_ref_full() call into the (update->type & REF_ISSYMREF)
+block.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ refs/files-backend.c | 52 ++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 32 insertions(+), 20 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 08ec293..a180b9e 100644
+index 799866f..a9066ba 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -2541,7 +2541,7 @@ static int write_ref_to_lockfile(struct ref_lock *lock,
- 				 const unsigned char *sha1, struct strbuf *err);
- static int commit_ref_update(struct ref_lock *lock,
- 			     const unsigned char *sha1, const char *logmsg,
--			     int flags, struct strbuf *err);
-+			     struct strbuf *err);
+@@ -3430,33 +3430,45 @@ static int lock_ref_for_update(struct ref_update *update,
  
- int rename_ref(const char *oldrefname, const char *newrefname, const char *logmsg)
- {
-@@ -2617,7 +2617,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 	hashcpy(lock->old_oid.hash, orig_sha1);
+ 	lock = update->lock;
  
- 	if (write_ref_to_lockfile(lock, orig_sha1, &err) ||
--	    commit_ref_update(lock, orig_sha1, logmsg, 0, &err)) {
-+	    commit_ref_update(lock, orig_sha1, logmsg, &err)) {
- 		error("unable to write current sha1 into %s: %s", newrefname, err.buf);
- 		strbuf_release(&err);
- 		goto rollback;
-@@ -2637,7 +2637,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 	flag = log_all_ref_updates;
- 	log_all_ref_updates = 0;
- 	if (write_ref_to_lockfile(lock, orig_sha1, &err) ||
--	    commit_ref_update(lock, orig_sha1, NULL, 0, &err)) {
-+	    commit_ref_update(lock, orig_sha1, NULL, &err)) {
- 		error("unable to write current sha1 into %s: %s", oldrefname, err.buf);
- 		strbuf_release(&err);
- 	}
-@@ -2875,12 +2875,12 @@ static int write_ref_to_lockfile(struct ref_lock *lock,
-  */
- static int commit_ref_update(struct ref_lock *lock,
- 			     const unsigned char *sha1, const char *logmsg,
--			     int flags, struct strbuf *err)
-+			     struct strbuf *err)
- {
- 	clear_loose_ref_cache(&ref_cache);
--	if (log_ref_write(lock->ref_name, lock->old_oid.hash, sha1, logmsg, flags, err) < 0 ||
-+	if (log_ref_write(lock->ref_name, lock->old_oid.hash, sha1, logmsg, 0, err) < 0 ||
- 	    (strcmp(lock->ref_name, lock->orig_ref_name) &&
--	     log_ref_write(lock->orig_ref_name, lock->old_oid.hash, sha1, logmsg, flags, err) < 0)) {
-+	     log_ref_write(lock->orig_ref_name, lock->old_oid.hash, sha1, logmsg, 0, err) < 0)) {
- 		char *old_msg = strbuf_detach(err, NULL);
- 		strbuf_addf(err, "cannot update the ref '%s': %s",
- 			    lock->ref_name, old_msg);
-@@ -2916,7 +2916,7 @@ static int commit_ref_update(struct ref_lock *lock,
- 			}
+-	if (read_ref_full(update->refname,
+-			  mustexist ? RESOLVE_REF_READING : 0,
+-			  lock->old_oid.hash, NULL)) {
+-		if (update->flags & REF_HAVE_OLD) {
+-			strbuf_addf(err, "cannot lock ref '%s': can't resolve old value",
+-				    update->refname);
+-			return TRANSACTION_GENERIC_ERROR;
+-		} else {
+-			hashclr(lock->old_oid.hash);
+-		}
+-	}
+-	if ((update->flags & REF_HAVE_OLD) &&
+-	    hashcmp(lock->old_oid.hash, update->old_sha1)) {
+-		strbuf_addf(err, "cannot lock ref '%s': is at %s but expected %s",
+-			    update->refname,
+-			    sha1_to_hex(lock->old_oid.hash),
+-			    sha1_to_hex(update->old_sha1));
+-		return TRANSACTION_GENERIC_ERROR;
+-	}
+-
+ 	if (update->type & REF_ISSYMREF) {
++		if (read_ref_full(update->refname,
++				  mustexist ? RESOLVE_REF_READING : 0,
++				  lock->old_oid.hash, NULL)) {
++			if (update->flags & REF_HAVE_OLD) {
++				strbuf_addf(err, "cannot lock ref '%s': can't resolve old value",
++					    update->refname);
++				return TRANSACTION_GENERIC_ERROR;
++			} else {
++				hashclr(lock->old_oid.hash);
++			}
++		}
++		if ((update->flags & REF_HAVE_OLD) &&
++		    hashcmp(lock->old_oid.hash, update->old_sha1)) {
++			strbuf_addf(err, "cannot lock ref '%s': is at %s but expected %s",
++				    update->refname,
++				    sha1_to_hex(lock->old_oid.hash),
++				    sha1_to_hex(update->old_sha1));
++			return TRANSACTION_GENERIC_ERROR;
++		}
++
+ 		if (!(update->flags & REF_NODEREF)) {
+ 			ret = split_symref_update(update, referent.buf, transaction,
+ 						  affected_refnames, err);
+ 			if (ret)
+ 				return ret;
  		}
++	} else if ((update->flags & REF_HAVE_OLD) &&
++		   hashcmp(lock->old_oid.hash, update->old_sha1)) {
++		if (is_null_sha1(update->old_sha1))
++			strbuf_addf(err, "cannot lock ref '%s': reference already exists",
++				    update->refname);
++		else
++			strbuf_addf(err, "cannot lock ref '%s': is at %s but expected %s",
++				    update->refname,
++				    sha1_to_hex(lock->old_oid.hash),
++				    sha1_to_hex(update->old_sha1));
++
++		return TRANSACTION_GENERIC_ERROR;
  	}
--	if (!(flags & REF_LOG_ONLY) && commit_ref(lock)) {
-+	if (commit_ref(lock)) {
- 		strbuf_addf(err, "couldn't set '%s'", lock->ref_name);
- 		unlock_ref(lock);
- 		return -1;
+ 
+ 	if ((update->flags & REF_HAVE_NEW) &&
 -- 
 2.8.1
