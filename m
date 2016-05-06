@@ -1,51 +1,107 @@
-From: mpmlmmawvx7958@silvaonline.biz
-Subject: OK DEAR
-Date: Fri, 06 May 2016 17:48:15 -1100
-Message-ID: <905181.71707.qm@smtp103.biz.mail.gq1.yahoo.com>
-Reply-To: vivianeric44@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] t0040: remove unused test helpers
+Date: Fri, 06 May 2016 11:00:42 -0700
+Message-ID: <xmqqeg9f3w39.fsf_-_@gitster.mtv.corp.google.com>
+References: <xmqq7ff8b99q.fsf@gitster.mtv.corp.google.com>
+	<20160505215056.28224-1-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: Recipients <mpmlmmawvx7958@silvaonline.biz>
-X-From: git-owner@vger.kernel.org Fri May 06 19:57:32 2016
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 06 20:00:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayk0H-0006Nj-MA
-	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 19:57:30 +0200
+	id 1ayk3W-0000X1-7L
+	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 20:00:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758478AbcEFR5U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2016 13:57:20 -0400
-Received: from smtp103.biz.mail.gq1.yahoo.com ([98.137.12.178]:20072 "EHLO
-	smtp103.biz.mail.gq1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758408AbcEFR5U convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 6 May 2016 13:57:20 -0400
-X-Greylist: delayed 404 seconds by postgrey-1.27 at vger.kernel.org; Fri, 06 May 2016 13:57:19 EDT
-Received: (qmail 93739 invoked from network); 6 May 2016 17:50:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1462557034; bh=K6m+IGjh9iXYuZB36quHRZXEHUNLlS3CSnpvnqFy8sw=; h=Message-ID:Content-Type:MIME-Version:Content-Transfer-Encoding:Content-Description:Subject:To:From:Date:Reply-To; b=6ulgeAQvguLlzLPh5smLss2HQyDdz3k1mV2dtIZy2cc3KmR+5baMjZq42TrCo80GGiRtuIIRhhR/3izka+t1Zb+vCN0mJhenVu/XmNFTXVug3d7mHN6msT8BdiJJjuyQgVHlj94oWAVY61GkAC6LdGJxrsdf/Xww+KE6I58JP20=
-X-Yahoo-Newman-Property: ymail-3
-X-YMail-OSG: of.dX0sVM1moQA9O9HvePz19bzhvk_PVqHjKVeNtbTdQu0b
- 2iYj3rDNXVdmOwuNWbjL2Tzk_d2qvapvyxx1WzRSLLAkisyEBeIHMDvL2Mtt
- 8q0xZPBribgdmzpSKahyWApgPD4vKvNAlW803yhbXlo.b9fEKAmuGPz6qhD2
- w6UT0YRDXFHDSwR9icZsn_78xvIxxYd4r3iPcfNdemeLZZOpD_RS2n2A9Qus
- 3V9T0tDPOTf1gQRJP7V2G44FpSLVASh7tLraVCrQl6oFzd2loQH_hk_pRm5r
- DqJbHMrAF7F6VWicdghREGY1el3hr_l1kQYOpQJ2HJbqXpJQciObJ84bI2zS
- qdQf.kfbYiKFaS.CaMiPiTBsub5WMPBnYtBDaU9l16YRDvduKf6K8axtR2Zq
- bgNTixoSJD0jljNoIgsBLqo6hnX8fcZGO1y9jm1Xt9GzpcqynKk3Z_cvkwE8
- FcRz8TvmoJft_0q2o9FvBL3.ptXyAyonEqdaWRIUOpfzwWiQ34Kstm_YJSoj
- QHfie4G8CXbrvZ4IwJRfFxDy9Q9SwKuE8hqmQoetOxRpIIh9DK70rxbbzHZi
- MQGJR7esi98_NMp8XU2.TvDJKBJtJ.2xjC9lRB8CoD5L8x9O7cpTp6_JM4R1
- SVn_GnqCQVVSvag--
-X-Yahoo-SMTP: 9n.G8PiswBCYHLpV7Ebpk1KbA.6N8uY0J82soTpJcbnVR25gtZdTxLh_KoGb0khBWNSP8nQ-
-Content-Description: Mail message body
+	id S1758208AbcEFSAq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2016 14:00:46 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53655 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755867AbcEFSAq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2016 14:00:46 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 813BD179A8;
+	Fri,  6 May 2016 14:00:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TU9T1AelDqi5T8KYg0mDOjM0xe4=; b=vnU7XL
+	UNocqh2fiaaKbRmqt71pl7JNfUpra/jvgsSp5qj4+FcYEkl2iWkYhsgbe7jIF9Nd
+	lC/amVZRTQ8VdmNN4vXeWSLZSI7kie4hqoXD3vra+bC8vGVOsKvsMcPipSZSMa3R
+	cASev9Wf8IrgidRZn8ihK5Gu78auiqfZtXVJ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gc5zlQ0fyFu1MzfYAcfXmxWcdIJs9A0p
+	+yjD4+0uhx28lnDydHH4/+tx06cic3lgtQirGd/0YU0I/+r2uzzKRxE10qdoDgFS
+	qq9KE4ZvPa6pdFLmIQTX7N5ua4WUqF7LfWjutiPbMtMGbVzrLNPEFisFDPL3+TR6
+	RA9BX/SSUn8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7A97B179A7;
+	Fri,  6 May 2016 14:00:44 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 02610179A6;
+	Fri,  6 May 2016 14:00:43 -0400 (EDT)
+In-Reply-To: <20160505215056.28224-1-gitster@pobox.com> (Junio C. Hamano's
+	message of "Thu, 5 May 2016 14:50:53 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 73DC7AE4-13B4-11E6-8DB7-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293841>
 
-My greeting to you over there and i hope all is fine, how are you doing, please my dear i saw your profile on FB and i
-became interested to know more about you, and i hope it will be the same from you, please i will like you to contact me
-to my email so that i will tell you more about me below,( vivianeric44@gmail.com
+9a001381 (Fix tests under GETTEXT_POISON on parseopt, 2012-08-27)
+introduced check_i18n, but the helper was never used from the
+beginning.
+
+The same commit also introduced check_unknown_i18n to replace the
+helper check_unknown and changed all users of the latter to use the
+former, but failed to remove check_unknown itself.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t0040-parse-options.sh | 24 ------------------------
+ 1 file changed, 24 deletions(-)
+
+diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+index d678fbf..5c8c72a 100755
+--- a/t/t0040-parse-options.sh
++++ b/t/t0040-parse-options.sh
+@@ -81,30 +81,6 @@ check() {
+ 	test_cmp expect output
+ }
+ 
+-check_i18n() {
+-	what="$1" &&
+-	shift &&
+-	expect="$1" &&
+-	shift &&
+-	sed "s/^$what .*/$what $expect/" <expect.template >expect &&
+-	test-parse-options $* >output 2>output.err &&
+-	test_must_be_empty output.err &&
+-	test_i18ncmp expect output
+-}
+-
+-check_unknown() {
+-	case "$1" in
+-	--*)
+-		echo error: unknown option \`${1#--}\' >expect ;;
+-	-*)
+-		echo error: unknown switch \`${1#-}\' >expect ;;
+-	esac &&
+-	cat expect.err >>expect &&
+-	test_must_fail test-parse-options $* >output 2>output.err &&
+-	test_must_be_empty output &&
+-	test_cmp expect output.err
+-}
+-
+ check_unknown_i18n() {
+ 	case "$1" in
+ 	--*)
+-- 
+2.8.2-507-g43e827d
