@@ -1,98 +1,120 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: fix link to parent diff with pathinfo
-Date: Fri, 06 May 2016 15:21:55 -0700
-Message-ID: <xmqqmvo225fg.fsf@gitster.mtv.corp.google.com>
-References: <1462529978-31322-1-git-send-email-rbraun@sceen.net>
+Subject: Re: [PATCH] t3513: do not compress backup tar file
+Date: Fri, 06 May 2016 15:45:16 -0700
+Message-ID: <xmqqinyq24cj.fsf@gitster.mtv.corp.google.com>
+References: <20160506183705.8214-1-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-To: Richard Braun <rbraun@sceen.net>
-X-From: git-owner@vger.kernel.org Sat May 07 00:22:03 2016
+Cc: git@vger.kernel.org, peff@peff.net, megabreit@googlemail.com,
+	Jens.Lehmann@web.de
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Sat May 07 00:45:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayo8I-0000KQ-Tm
-	for gcvg-git-2@plane.gmane.org; Sat, 07 May 2016 00:22:03 +0200
+	id 1ayoUx-0002OK-2Z
+	for gcvg-git-2@plane.gmane.org; Sat, 07 May 2016 00:45:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758899AbcEFWV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2016 18:21:59 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56598 "EHLO
+	id S1758929AbcEFWpU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2016 18:45:20 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59993 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758670AbcEFWV6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2016 18:21:58 -0400
+	with ESMTP id S1758568AbcEFWpT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2016 18:45:19 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 63ABB18DE7;
-	Fri,  6 May 2016 18:21:57 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 27D9A170D5;
+	Fri,  6 May 2016 18:45:18 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=z9z+klcq7z0UUL09KQMJXgSSYzM=; b=Npu6pi
-	CHepjMS/iju4qxl1/nsbji/zPRFRUW3Yo6Of6Mt8fUWGIXFUcoBX5es0ravEg/tA
-	aeIa/Kmloc+iThKFnsnny/UsvAHDFlgpu4+X44F8gG+tQckiSb0dFBqAL0WzFWMl
-	9/ejpPaLJ9Ic1DRVEjUrk0rOlQgEaEfedlX0E=
+	:content-type; s=sasl; bh=+67aaV2xI0j/5xYf8voMioFe57k=; b=r00vVV
+	YfiyyK+KBaPwDAbCbbBCLXQDtbGG0yyjv0tr8T+qdM51Gx7uiF5e0su2JsQwI81Z
+	KltykwpYZjKDzy1HrpxJ9pux12n93jolm5+BY4LqTgqD7a51fpM/IvLD5tuSQyiT
+	r9NYSv7G3ZnK7lYA6xHCkQelMhQJhKDdix798=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZkGgbN7HdWxHoBbIAORe8+Ovc6rMOP0u
-	iZgpoErBkKv2zZoBxlV7ZgVF5LPJV9h8u2ADyIa60WwA6MMhJX4mHUCFbp8yI2Pl
-	0wRL9brMJPNpGRINPIZDXOkuKlUMP+1IGPcmapzHmGRNVqsq7xlq2GuySkYI3hs+
-	apywr6xppKE=
+	:content-type; q=dns; s=sasl; b=YgP+OlNfUutAIWnjQOq0eVsLWSeXzTa7
+	J+/bP0CkyPyPyfBBEpomh+dWv4rrHW/cvSxy6eWK48dhVvuHkjGakj0k2tL/c9hZ
+	+l/s2XHiJnVAPTsD+INUMQHu3TVhGni/0eTfe61fq+JVN3bsftyiw0/uT2lpDHS0
+	i5dEYKg1WD4=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5C3F718DE6;
-	Fri,  6 May 2016 18:21:57 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1DCDD170D4;
+	Fri,  6 May 2016 18:45:18 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DB6C618DDC;
-	Fri,  6 May 2016 18:21:56 -0400 (EDT)
-In-Reply-To: <1462529978-31322-1-git-send-email-rbraun@sceen.net> (Richard
-	Braun's message of "Fri, 6 May 2016 12:19:38 +0200")
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 92652170D3;
+	Fri,  6 May 2016 18:45:17 -0400 (EDT)
+In-Reply-To: <20160506183705.8214-1-sbeller@google.com> (Stefan Beller's
+	message of "Fri, 6 May 2016 11:37:05 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F1A11114-13D8-11E6-9F7C-D05A70183E34-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 34833766-13DC-11E6-9959-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293866>
 
-Richard Braun <rbraun@sceen.net> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> Signed-off-by: Richard Braun <rbraun@sceen.net>
+> Armin Kunaschik <megabreit@googlemail.com> wrote:
+>> I'm trying to compile/test/use git 2.8.2 on AIX 6.1 with
+>> no bash available.
+> ...
+>> make test does not make it through t3513-revert-submodule.sh anymore.
+>> The test is not portable since it uses the z-flags of GNU-tar. When -z
+>> is removed, (and extension is changed back to tar) everything runs and
+>> tests smoothly.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
 
-Could you justify your change with a bit more than "fix"?  That is,
+Thanks for a quick fix.  Even though "no bash" and "AIX 6.1" are
+interesting details that are part of a good bug report, these are
+irrelevant noise for a commit that fixes a bug that is unrelated to
+them, so let's rephrase the message and queue it, like this:
 
-    gitweb, when used with PATH_INFO, shows a link to parent diff
-    like [fill in the blank].  However, it is wrong because [fill in
-    the blank].
+    t3513: do not compress backup tar file
 
-    Make it show it like [fill in the blank].  Because [fill in the
-    blank], delete 'hash_parent' element from the %params hash once
-    we used it; otherwise [fill in the blank to describe "this bad
-    thing happens"].
+    The test uses the 'z' option, i.e. "compress the output while at
+    it", which is GNUism and not portable.
 
-or something like that.
+    Reported-by: Armin Kunaschik <megabreit@googlemail.com>
+    Signed-off-by: Stefan Beller <sbeller@google.com>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-Thanks.
-
->  gitweb/gitweb.perl | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
+>  t/t3513-revert-submodule.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 05d7910..f7f7936 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -1423,7 +1423,12 @@ sub href {
->  			delete $params{'hash'};
->  			delete $params{'hash_base'};
->  		} elsif (defined $params{'hash'}) {
-> -			$href .= esc_path_info($params{'hash'});
-> +			if (defined $params{'hash_parent'}) {
-> +				$href .= esc_path_info($params{'hash_parent'});
-> +				delete $params{'hash_parent'};
-> +			} else {
-> +				$href .= esc_path_info($params{'hash'});
-> +			}
->  			delete $params{'hash'};
->  		}
+> diff --git a/t/t3513-revert-submodule.sh b/t/t3513-revert-submodule.sh
+> index a1c4e02..db93781 100755
+> --- a/t/t3513-revert-submodule.sh
+> +++ b/t/t3513-revert-submodule.sh
+> @@ -14,11 +14,11 @@ test_description='revert can handle submodules'
+>  git_revert () {
+>  	git status -su >expect &&
+>  	ls -1pR * >>expect &&
+> -	tar czf "$TRASH_DIRECTORY/tmp.tgz" * &&
+> +	tar cf "$TRASH_DIRECTORY/tmp.tar" * &&
+>  	git checkout "$1" &&
+>  	git revert HEAD &&
+>  	rm -rf * &&
+> -	tar xzf "$TRASH_DIRECTORY/tmp.tgz" &&
+> +	tar xf "$TRASH_DIRECTORY/tmp.tar" &&
+>  	git status -su >actual &&
+>  	ls -1pR * >>actual &&
+>  	test_cmp expect actual &&
+
+This is not a new problem, but these "ls -1pR" and "rm -rf *" makes
+me wonder if it is the best way to test what is being tested.
+
+The title says "revert can handle submodules", but when it sees that
+revert finishes successfully, it discards the resulting working tree
+state with "rm -rf *" (Yuck) and repopulates with the state before
+the 'checkout && revert' sequence, so the 'status' and 'ls' are not
+testing what 'revert' did at all.
+
+Shouldn't it be testing HEAD^{tree} before "checkout && revert" and
+after and make sure they match, and checking the working state left
+by 'revert' without clobbering it with tarball extract?
