@@ -1,172 +1,222 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: /* compiler workaround */ - what was the issue?
-Date: Fri, 6 May 2016 19:05:51 +0100
-Message-ID: <572CDCFF.9050607@ramsayjones.plus.com>
-References: <AA5B2B1715BAF7438221293187A417A7BDE9D11D@desmdswms002.des.grplnk.net>
- <17E04501C9474282B87758C7998A1F5B@PhilipOakley>
- <xmqqtwic9o88.fsf@gitster.mtv.corp.google.com>
- <CACsJy8CBuU8H8r_f4KsnLkhLtfRv0nDo4hGS31LVn0e1Y_3OAQ@mail.gmail.com>
- <51C902B1F7464CF2B58EB0E495F86BB5@PhilipOakley>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 11/15] diff: ignore submodules excluded by groups
+Date: Fri, 6 May 2016 11:23:59 -0700
+Message-ID: <CAGZ79kY5uDzG8PDLMh5e9afg+S3oTjEjq2aRo+s4ud86UCxZQA@mail.gmail.com>
+References: <1461703833-10350-1-git-send-email-sbeller@google.com>
+	<1461703833-10350-12-git-send-email-sbeller@google.com>
+	<xmqqlh3wxnuq.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kaOXxqDEqVnf5K3QjXg5bfmKW2XkmPT-mqJ93+RF5N40g@mail.gmail.com>
+	<CAGZ79ka37jWYDJrAWy5KLhaaJmrLRbmTzRC6A5DneuE63+XCeQ@mail.gmail.com>
+	<xmqqy47o9s1h.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kYGbjOKPQk8A-ag+JgvybW4Kf5=g8azVAOoMq79oXc5-Q@mail.gmail.com>
+	<xmqqfutw9mfs.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kYKbef7DTkmE3Vf3C=PLfgB3xf0ikVKHFUfQ8+KkgGHPg@mail.gmail.com>
+	<xmqqfutw85oz.fsf@gitster.mtv.corp.google.com>
+	<xmqqa8k37m6i.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Philip Oakley <philipoakley@iee.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 06 20:06:05 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 06 20:24:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayk8b-0004kc-7b
-	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 20:06:05 +0200
+	id 1aykQ2-0002Ny-Vp
+	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 20:24:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758780AbcEFSF5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2016 14:05:57 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:47979 "EHLO
-	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756380AbcEFSFz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2016 14:05:55 -0400
-Received: from [10.0.2.15] ([91.125.197.102])
-	by avasout07 with smtp
-	id r65r1s0022D2Veb0165s2j; Fri, 06 May 2016 19:05:53 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=QqujpgGd c=1 sm=1 tr=0
- a=mTUfFwB0nGOO66Ym8a+i3w==:117 a=mTUfFwB0nGOO66Ym8a+i3w==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
- a=pGLkceISAAAA:8 a=ybZZDoGAAAAA:8 a=xtxXYLxNAAAA:8 a=EBOSESyhAAAA:8
- a=T28VAxbOeHHkhyd23_AA:9 a=QEXdDO2ut3YA:10 a=6kGIvZw6iX1k4Y-7sg4_:22
- a=0RhZnL1DYvcuLYC8JZ5M:22 a=xts0dhWdiJbonKbuqhAr:22 a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.2
-In-Reply-To: <51C902B1F7464CF2B58EB0E495F86BB5@PhilipOakley>
+	id S1758223AbcEFSYB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2016 14:24:01 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:36854 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758091AbcEFSYA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2016 14:24:00 -0400
+Received: by mail-ig0-f180.google.com with SMTP id u10so53402785igr.1
+        for <git@vger.kernel.org>; Fri, 06 May 2016 11:24:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=8m+OwRuuzrUhyQVoUZuaDtvIK4zHXDZxICPf0+ZGnDk=;
+        b=brsPcqsN2H/wXnTN4uVwdVLd90K0B3EcqN/Rw/EqWP+51jy/rBzrHXkCQHq8nzPdHJ
+         ISJkuZbCDAcGOj36MQdgBVRmpREc3/nit90TaB7SbhBFVfsavSLDTZoQi3+BwDzsUK0D
+         A3SjNyYxWB2PGpTbE5eofpa5HcdAoX0RZ9btDYSxGu6kmCXMY/Y2ki9KqV61HohPnWfG
+         K+H1tdGZfExg1zIu6vBmyptIjhbQ6FfzR3nG95L7iOefpTE6/bpygTqeHKk7fCP2SD6v
+         AZd9gv16oen5cg3Kc5PZMuhhus4rmVxsGjxfmbxeGBxu2EIzNjl7ZJzWu6GTTQIrbUYL
+         50pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=8m+OwRuuzrUhyQVoUZuaDtvIK4zHXDZxICPf0+ZGnDk=;
+        b=keV+LdzdP7/4FKz/aX1h1mopHYrrVc8Fr+XsXA9FZR4DCrfp4LdnnGenu04hEcH2MN
+         allt0Er8Nfk7L/iJ+O5do+IjdZQXDNYTQkdNt+Z8rh95BC7z/DTsV+06JvZNLf15vqZ9
+         zEh5vWUiOMUcsiC/CbD8GxwciTNruPvEg/vzFEctSgtnLe+wezT48NqIbuRShk/efra7
+         gQ4G7W76I0Xkp1zRi0Tb4l0ESTKFc0c2PxwMSs773uqj0/yAzMKYnt44HJqFNu0G/6bB
+         X+reDbCRWI/hnQ654UnAM5md4ufE9IoAnNWXC8/oVisxbnnZ2zK+6mmoYr3aLl4StB/Z
+         RHPg==
+X-Gm-Message-State: AOPr4FUMfO0QLN21XhIUgqFVh4qBwZWx517d4HjKwLZeKW259YbCI6RVqt29F65/JE+Z3oOxxWBSJLUf+0RahHA/
+X-Received: by 10.50.30.228 with SMTP id v4mr12197752igh.85.1462559039553;
+ Fri, 06 May 2016 11:23:59 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Fri, 6 May 2016 11:23:59 -0700 (PDT)
+In-Reply-To: <xmqqa8k37m6i.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293843>
+
+On Thu, May 5, 2016 at 11:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> The set of submodules you "init" to the working tree are the ones
+>> that are interesting to you.  So once the tree is populated, you do
+>> not ever have to look at the "defaultGroup" configuration.  You just
+>> need to look at the working tree.
+>> ...
+>
+> I forgot to prefix the first few paragraphs of that message with
+> "Here is how my version of the world should work."  I did not mean
+> to say "Here is how you must make your work work, or I won't talk to
+> you."  I was just hurried as I had to tend to other topics.
+>
+> I actually do not care too deeply (except for the "automatically
+> remove" part, which I do not think we should do), as I do not think
+> there is a big fundamental difference between the two views.  To
+> make sure we are on the same page, let me rephrase the two views I
+> have in mind.
+
+Ok, maybe we can leave that automatically remove part out for the
+first series. (Eventually submodules should behave like files and we
+delete files on checkout all the time, and it's a reasonable default)
+
+So I think to reduce scope to only cover the clone/update first, all
+other operations behave like today, i.e.
+
+    git clone --recurse-submodules --init-submodule=label
+--init-submodule=label2   git://...
+    # will clone the superproject and recursively
+    # checkout any submodule being labeled label or label2
+
+    git config submodule.defaultGroups default
+    git config --add submodule.defaultGroups devel
+    # configure which submodules you are interested in.
+
+    git submodule add --label <name> git://... ..
+    # record a label while adding a submodule
+
+    git submodule update --init-labeled(=*label)
+    # will update all initialized submodules
+    # and learn a new switch to also initialize the grouped
+    # submodules (either the specified group or if none given
+    # the default group as configured before)
 
 
 
-On 06/05/16 14:15, Philip Oakley wrote:
-> From: "Duy Nguyen" <pclouds@gmail.com>
->> On Fri, May 6, 2016 at 4:41 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> "Philip Oakley" <philipoakley@iee.org> writes:
->>>
->>>>     int saved_namelen = saved_namelen; /* compiler workaround */
->>>>
->>>> Which then becomes an MSVC compile warning C4700: uninitialized local
->>>> variable.
->>>>
->>>> I'm wondering what was the compiler workaround being referred to? i.e. why
->>>> does it need that tweak? There's no mention of the reason in the commit
->>>> message.
->>>
->>> That was a fairly well-known workaround for GCC that issues a false
->>> warning that variable is used before initialized.  I thought we
->>> stopped using it several years ago in new code after doing a bulk
->>> sanitizing
->>
->> I guess that's 803a777 (cat-file: Fix an gcc -Wuninitialized warning -
->> 2013-03-26) and more commits around that time. The split-index commit
->> is in 2014. I must have missed the trend.
->>
->>> (I think the new recommended workaround was to initialise
->>> such a variable to the nil value like '0' for integers).
->>
->> Yep. First Jeff removed the " = xxx" part from "xxx = xxx" then Ramsay
->> added the " = NULL" back. So we probably just do "int saved_namelen =
->> 0;" in this case.
->> -- 
-> Thanks,
-> 
-> I'll try and work up a patch - probably next week as I'm away for the weekend.
 
-Yeah, I don't remember why these were left over from the previous
-attempt to clean these up (maybe they conflicted with in-flight
-topics?), but I have had a patch hanging around ... :-D
+    git status
+    git diff
+    git submodule summary
+    # care about all initialized submodules, i.e. (2) below
+    # a switch for recurse=label will be in a later series.
 
-The patch below applies to master (I haven't checked for any more
-additions).
 
-ATB,
-Ramsay Jones
 
--- >8 --
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] -Wuninitialized: remove a gcc specific workaround
+>
+> The difference is what should happen when the user does not give any
+> pathspec, *label, or :name to limit the set of submodules to act on,
+> which, traditionally meant to work on everything, and we are trying
+> to change that to some "default".
+>
+>  (1) The default set is what the configuration file says is the
+>      default group.  The working tree state is ignored.
+>
+>  (2) The default set is what the configuration file says is the
+>      default group, plus those the user showed interest by doing
+>      "submodule init".
+>
+> Suppose that the user has a mostly satisfactory default configured,
+> i.e. the set of submodules the configuration file says is the default
+> is both necessary and sufficient to carry out her daily task.  Then
+> there is no difference between the two.
+>
+> Further suppose that the user needs to view a submodule outside the
+> default group temporarily (imagine: for a day or two), while
+> carrying out some specific task.  Perhaps she is working on the
+> documentation submodule, which is her primary task hence her
+> configuration file specifies it as the default, but needs to see the
+> submodule that houses the implementation to describe the behaviour.
+>
+> So she does "init code-module/"; this has explicit pathspec, so
+> there is no difference between the two.  Now, while reading the code
+> module, she finds a typo in a comment, and wants to fix it.  We will
+> start to see differences.
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
- builtin/rev-list.c | 2 +-
- fast-import.c      | 4 ++--
- merge-recursive.c  | 2 +-
- read-cache.c       | 2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
+Another way (3) is to add code-module/ to the "set of interesting
+submodules, i.e. to the default group"
 
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 275da0d..deae1f3 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -377,7 +377,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 		mark_edges_uninteresting(&revs, show_edge);
- 
- 	if (bisect_list) {
--		int reaches = reaches, all = all;
-+		int reaches = 0, all = 0;
- 
- 		revs.commits = find_bisection(revs.commits, &reaches, &all,
- 					      bisect_find_all);
-diff --git a/fast-import.c b/fast-import.c
-index 9fc7093..ca66d80 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -2935,7 +2935,7 @@ static void cat_blob(struct object_entry *oe, unsigned char sha1[20])
- 
- static void parse_get_mark(const char *p)
- {
--	struct object_entry *oe = oe;
-+	struct object_entry *oe = NULL;
- 	char output[42];
- 
- 	/* get-mark SP <object> LF */
-@@ -2952,7 +2952,7 @@ static void parse_get_mark(const char *p)
- 
- static void parse_cat_blob(const char *p)
- {
--	struct object_entry *oe = oe;
-+	struct object_entry *oe = NULL;
- 	unsigned char sha1[20];
- 
- 	/* cat-blob SP <object> LF */
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 06d31ed..9cecc24 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1897,7 +1897,7 @@ int merge_recursive(struct merge_options *o,
- {
- 	struct commit_list *iter;
- 	struct commit *merged_common_ancestors;
--	struct tree *mrtree = mrtree;
-+	struct tree *mrtree = NULL;
- 	int clean;
- 
- 	if (show(o, 4)) {
-diff --git a/read-cache.c b/read-cache.c
-index d9fb78b..978d6b6 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1870,7 +1870,7 @@ static int ce_write_entry(git_SHA_CTX *c, int fd, struct cache_entry *ce,
- {
- 	int size;
- 	struct ondisk_cache_entry *ondisk;
--	int saved_namelen = saved_namelen; /* compiler workaround */
-+	int saved_namelen = 0;
- 	char *name;
- 	int result;
- 
--- 
-2.8.0
+    git config --all submodule.defaultGroup ./code-module
+    git submodule update
+
+>
+>  * When she wants to get a bird's eye view of everything she cares
+>    about at the moment, i.e. wants to view the state of her usual
+>    modules plus the code-module she is visiting, (1) is more
+>    cumbersome.
+>
+>    With (1), "diff --recursive" will not step outside of her
+>    configured default, so she says "diff --recursive \*default
+>    code-module/" to say "I want to see both my default submodule(s)
+>    and the one I checked out by hand".
+>
+>    With (2), she does not have to do anything special, as manually
+>    checked out code-module/ will be acted upon, in addition to the
+>    configured default.
+
+In (3), diff --recursive will also just work fine.
+
+>
+>
+>  * When she wants to see her usual modules ignoring the one-off
+>    checkout, (1) is easier.
+
+In (3) you'd do
+
+    git config --unset submodule.defaultGroup ./code-module
+    # optionally: git submodule update
+
+>
+>    With (1), she can say "diff --recursive" and done.
+>
+>    With (2), she needs to say "diff --recursive \*default" to
+>    explicitly state "I may have checkouts of other submodules, but
+>    this time I want to view only the usual default of mine".
+
+and diff --recursive works fine again as well.
+
+>
+> The difference is not that big either case.
+>
+> Whichever way we choose to make the default behaviour, the user
+> needs to type a bit extra when asking a behaviour that is different
+> from the default behaviour.
+>
+> The amount of "extra" in the first use case necessary for (1) is
+> greater than the amount of "extra" in the second use case necessary
+> for (2), though.  In addition, in the second use case, (1) makes it
+> easier for the user to miss important changes she made outside the
+> area of her usual attention, while (2) forces her to make a
+> conscious effort to exclude them.  These are the reasons why I have
+> a slight preference for (2) over (1).
+>
+
+That makes sense.
+
+So with (2)
+ * there is no need to modify status, diff, log for the default case and the
+    --recursive \*default" may come later, so the initial series can be smaller.
+ *
