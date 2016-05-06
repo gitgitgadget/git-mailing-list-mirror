@@ -1,223 +1,139 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: [PATCH v5 2/2] bisect: rewrite `check_term_format` shell function in C
-Date: Fri,  6 May 2016 20:19:27 +0530
-Message-ID: <1462546167-1125-3-git-send-email-pranit.bauva@gmail.com>
-References: <1462338472-3581-1-git-send-email-pranit.bauva@gmail.com>
- <1462546167-1125-1-git-send-email-pranit.bauva@gmail.com>
-Cc: christian.couder@gmail.com, chriscool@tuxfamily.org,
-	larsxschneider@gmail.com, Johannes.Schindelin@gmx.de,
-	sunshine@sunshineco.com, git@vger.kernel.org,
-	Pranit Bauva <pranit.bauva@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri May 06 16:52:55 2016
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] mingw: introduce the 'core.hideDotFiles' setting
+Date: Fri, 6 May 2016 17:19:23 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605061658580.2963@virtualbox>
+References: <17d30bb680a0452efd7b3c4f42e2f94478a86273.1462372716.git.johannes.schindelin@gmx.de> <xmqqr3dhhcd7.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Cc: Erik Faye-Lund <kusmabite@googlemail.com>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 06 17:19:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayh7c-0001nI-Jv
-	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 16:52:52 +0200
+	id 1ayhXj-0005wD-BY
+	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 17:19:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758262AbcEFOwu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2016 10:52:50 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:36212 "EHLO
-	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757956AbcEFOwt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2016 10:52:49 -0400
-Received: by mail-pf0-f194.google.com with SMTP id p185so12446957pfb.3
-        for <git@vger.kernel.org>; Fri, 06 May 2016 07:52:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=E/P6O7534kN5cMJ9GUMFBEK/RvYNPST/7WPiomkXy0c=;
-        b=FA9nUQjQGIVFEg5uu864IHLnCtRSwgtRJ9ihzvkqN19Ko8XQ01tGdNCA+Ij/dTetPv
-         9YJuH1bsxh3YQw59mGkZR7PF0eH1hU87+G29HBl3PFTqZUAdK2B5xqR0OAU/AHbLPQuK
-         qB0xyXc/5XhmFtAr6dm7LR+4yau+gdzo+Onw0i0gXNhQQnc21x6nDXmahCQwcdbKOexg
-         ITXy+1CVcKsIWA/7jOV5P/YA20zuZX+udzVeBABs71IPH5fRcXYN/O9OFBGT2Ww4r791
-         TwxChO+mMLbX+P3bGKGRKEf0n79u3rhTNzL/wrBUnpUSQQn63bsRZHQC8xIzc9k6f8Sk
-         XZEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=E/P6O7534kN5cMJ9GUMFBEK/RvYNPST/7WPiomkXy0c=;
-        b=HdpoduD1TCKQ1viStIR+FZAd6sIdhkYo2FNhs8FDANKNHzSuJDiYooEhIYV98MX52x
-         y4MVWb3bX5Twna+5ZmOvo8UKdd0lQgXmbVpWwVupUASLgCl5z+FRDXHHwWEzhgVITYcL
-         q91RwX7vVjGvP0CUB2NLYeP/adP7wJVF2fPuLyG2SVBbOkOYD7vDr2iEjTDc+8dQvGT3
-         9C/DFcTNAzmoxP03WDIiQM0Q2BG5twnWQbHa+XNWK6nl81/F7ymgwpIcIS5n8YIuZSNm
-         1/BkXFNW7eRgK/mhWQwRVXrFFXSYJOnRxpoNuRnJOwfyKxZ53nerUB8k/XWWnf8cZugc
-         rxuw==
-X-Gm-Message-State: AOPr4FW0CipLwHpm0bM3EcHDZR5F9oBcHWjrH5s6UjlKDupQsY3nUqQHiqf4xPAG4u9uzA==
-X-Received: by 10.98.79.199 with SMTP id f68mr29670154pfj.44.1462546368730;
-        Fri, 06 May 2016 07:52:48 -0700 (PDT)
-Received: from localhost.localdomain ([183.87.140.254])
-        by smtp.gmail.com with ESMTPSA id dh4sm21775410pad.37.2016.05.06.07.52.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 06 May 2016 07:52:47 -0700 (PDT)
-X-Mailer: git-send-email 2.8.1
-In-Reply-To: <1462546167-1125-1-git-send-email-pranit.bauva@gmail.com>
+	id S1758446AbcEFPTq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2016 11:19:46 -0400
+Received: from mout.gmx.net ([212.227.15.19]:51835 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758040AbcEFPTo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2016 11:19:44 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LqzEB-1bcyAC30i3-00eaiw; Fri, 06 May 2016 17:19:23
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqqr3dhhcd7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:p2yi1kIo82OzmR3pMUu3YW+N6x24SsnTIQjxD6aafNnu3v93uSC
+ CyIPq6cWvCCXJUaG7Iilz511LbS0MF0rg+g3/H5VtbyknW2J5tuP8/X2iD78by3eSzqnX4d
+ zdihp9kz0+5dOz3qMIgC571cv7UtRtpvKhR3T59bRByeXHccVPoVGYjMifDngHI6ZYh9LRJ
+ 5bguS+egeV/99wGmQRLBg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:HSFGJ5MjtRA=:+qXyJT1cCO5BlfXv1rur6i
+ 0r2H9AuXl2KMI0fsekRBBKfLs/zU+U751+vMIMnDbe6hHYLDijAZ89LjeACiK4PEfifKBh9o1
+ a4hHQ5sJI8VgP6uiQ7l/6amWFayx0LtKmHaugm2RofDJvxtPL4ltqMsOob9iyLmhhng1o41iM
+ rGjAZ7+nrobRVX4iu8E3NcIYVABfVTi4aGHOLKyYUvzfe+ZEV13nCBYNbKjFW2lf8ysVC+3vS
+ Z0G+hsp13SBR02x6l7H7jAmLbMTt+Ne9IOlpJpE6c6yn6kUL1cSe6yDxxWgzvhl1bTsIsGSAo
+ ReMv1DvIAsTgZ/nZQUbx1gPxdRs25CKTV6ZJ2w8tDcb3bIL0UmR+aHNi97Duor4cLphqUKrOJ
+ lXhJs6NQmnHEFehTx2+l9Niq7/nPvugfFlULbMr/LJaRa144uIoQ6TWLOuhCnllTCOEsgxRoo
+ P3A8Rk4wOV0+HXNOZqt25WdYGIURO1agCwfgntpojPq+LDFCtrDxrInwoNGl+uQBWBsZHyc8W
+ rnKXxOaFiw3c4Z8goFPPfqesJUA/eWKtEJTLmUSoIzp4RtJGaJaAsM7IPUmRVdrAFYXjYH3a9
+ oXB35pdEBj0Qpig/lC0YYsxYg/hcXBRjlLCiAbOsFc7JQEPeGu5Kr8r/4nxgnA9Jb8iiBFZ7D
+ zeLb4B2ICdMN1i8bW7wb6qKJKSa/mRTjlSLg4qo9Dw/knJqTQteSnuq6ybJbW6nhhJfU8vwfE
+ 2Ck588UWhSEz8OCe59m83ffm2ay50JCEbsil0UXPGkCC8xJ0rX3e61lfkirakZwJTCGj389k 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293788>
 
-Reimplement the `check_term_format` shell function in C and add
-a `--check-term-format` subcommand to `git bisect--helper` to call it
-from git-bisect.sh
+Hi Junio,
 
-Using `--check-term-format` subcommand is a temporary measure to port
-shell function to C so as to use the existing test suite. As more
-functions are ported, this subcommand will loose its existence and will
-be called by some other method/subcommand. For eg. In conversion of
-write_terms() of git-bisect.sh, the subcommand will be removed and
-instead check_term_format() will be called in its C implementation while
-a new subcommand will be introduced for write_terms().
+On Wed, 4 May 2016, Junio C Hamano wrote:
 
-Helped-by: Johannes Schindelein <Johannes.Schindelein@gmx.de>
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
----
- builtin/bisect--helper.c | 57 +++++++++++++++++++++++++++++++++++++++++++++++-
- git-bisect.sh            | 31 ++------------------------
- 2 files changed, 58 insertions(+), 30 deletions(-)
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > diff --git a/builtin/init-db.c b/builtin/init-db.c
+> > index b2d8d40..c4269ac 100644
+> > --- a/builtin/init-db.c
+> > +++ b/builtin/init-db.c
+> > @@ -370,6 +370,7 @@ int init_db(const char *template_dir, unsigned int flags)
+> >  	check_repository_format();
+> >  
+> >  	reinit = create_default_files(template_dir);
+> > +	mark_as_git_dir(get_git_dir());
+> >  
+> >  	create_object_directory();
+> >  
+> 
+> I agree with the goal of the change, but I am having a hard time
+> justifying this addition.  Primarily because I do not understand the
+> need for this.
+> 
+> In order to be prepared to handle HIDE_DOTFILES_TRUE case,
+> mingw_mkdir() needs to be taught about needs_hiding() and
+> make_hidden() already.  Why isn't it sufficient to teach
+> needs_hiding() to check with !strcmp(basename(path, ".git"))
+> under HIDE_DOTFILES_DOTGITONLY?
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index d8de651..cc50438 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -2,16 +2,65 @@
- #include "cache.h"
- #include "parse-options.h"
- #include "bisect.h"
-+#include "refs.h"
- 
- static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --next-all [--no-checkout]"),
-+	N_("git bisect--helper --check-term-format <term> <orig_term>"),
- 	NULL
- };
- 
- enum subcommand {
--	NEXT_ALL = 1
-+	NEXT_ALL = 1,
-+	CHECK_TERM_FMT
- };
- 
-+/*
-+ * To check whether the string `term` belongs to the set of strings
-+ * included in the variable arguments.
-+ */
-+static int one_of(const char *term, ...)
-+{
-+	int res = 0;
-+	va_list matches;
-+	const char *match;
-+
-+	va_start(matches, term);
-+	while (!res && (match=va_arg(matches, const char *)))
-+		res = !strcmp(term, match);
-+	va_end(matches);
-+
-+	return res;
-+}
-+
-+static int check_term_format(const char *term, const char *orig_term)
-+{
-+	struct strbuf new_term = STRBUF_INIT;
-+	strbuf_addf(&new_term, "refs/bisect/%s", term);
-+
-+	if (check_refname_format(new_term.buf, 0)) {
-+		strbuf_release(&new_term);
-+		return error(_("'%s' is not a valid term"), term);
-+	}
-+	strbuf_release(&new_term);
-+
-+	if (one_of(term, "help", "start", "skip", "next", "reset",
-+			"visualize", "replay", "log", "run", NULL))
-+		return error(_("can't use the builtin command '%s' as a term"), term);
-+
-+	/*
-+	 * In theory, nothing prevents swapping completely good and bad,
-+	 * but this situation could be confusing and hasn't been tested
-+	 * enough. Forbid it for now.
-+	 */
-+
-+	if ((strcmp(orig_term, "bad") && one_of(term, "bad", "new", NULL)) ||
-+		 (strcmp(orig_term, "good") && one_of(term, "good", "old", NULL)))
-+		return error(_("can't change the meaning of the term '%s'"), term);
-+
-+	return 0;
-+}
-+
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	int subcommand = 0;
-@@ -19,6 +68,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 	struct option options[] = {
- 		OPT_CMDMODE(0, "next-all", &subcommand,
- 			 N_("perform 'git bisect next'"), NEXT_ALL),
-+		OPT_CMDMODE(0, "check-term-format", &subcommand,
-+			 N_("check format of the term"), CHECK_TERM_FMT),
- 		OPT_BOOL(0, "no-checkout", &no_checkout,
- 			 N_("update BISECT_HEAD instead of checking out the current commit")),
- 		OPT_END()
-@@ -33,6 +84,10 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 	switch (subcommand) {
- 	case NEXT_ALL:
- 		return bisect_next_all(prefix, no_checkout);
-+	case CHECK_TERM_FMT:
-+		if (argc != 2)
-+			die(_("--check-term-format requires two arguments"));
-+		return check_term_format(argv[0], argv[1]);
- 	default:
- 		die("BUG: unknown subcommand '%d'", subcommand);
- 	}
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 5d1cb00..7d7965d 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -564,38 +564,11 @@ write_terms () {
- 	then
- 		die "$(gettext "please use two different terms")"
- 	fi
--	check_term_format "$TERM_BAD" bad
--	check_term_format "$TERM_GOOD" good
-+	git bisect--helper --check-term-format "$TERM_BAD" bad || exit
-+	git bisect--helper --check-term-format "$TERM_GOOD" good || exit
- 	printf '%s\n%s\n' "$TERM_BAD" "$TERM_GOOD" >"$GIT_DIR/BISECT_TERMS"
- }
- 
--check_term_format () {
--	term=$1
--	git check-ref-format refs/bisect/"$term" ||
--	die "$(eval_gettext "'\$term' is not a valid term")"
--	case "$term" in
--	help|start|terms|skip|next|reset|visualize|replay|log|run)
--		die "$(eval_gettext "can't use the builtin command '\$term' as a term")"
--		;;
--	bad|new)
--		if test "$2" != bad
--		then
--			# In theory, nothing prevents swapping
--			# completely good and bad, but this situation
--			# could be confusing and hasn't been tested
--			# enough. Forbid it for now.
--			die "$(eval_gettext "can't change the meaning of term '\$term'")"
--		fi
--		;;
--	good|old)
--		if test "$2" != good
--		then
--			die "$(eval_gettext "can't change the meaning of term '\$term'")"
--		fi
--		;;
--	esac
--}
--
- check_and_set_terms () {
- 	cmd="$1"
- 	case "$cmd" in
--- 
-2.8.1
+The reason was that I wanted to avoid to compare a name unnecessarily when
+I already had a code path that knew perfectly well that a given directory
+is the .git/ directory.
+
+I made the change. It was more painful than I expected, as two bugs were
+uncovered, both introduced after the original patch by Erik.
+
+First bug: basename() on Windows used to not remove the trailing slashes.
+Since we adjusted it, to conform with the POSIX specs, the implicit
+mkdir() in copy_templates() could replace the trailing slash by a NUL,
+breaking the template copying (it truncated pretty much all paths). I did
+not catch this earlier because basename() was only called with
+HIDE_DOTFILES_TRUE, and that case was never thoroughly tested.
+
+So I had to reroll a non-modifying basename(). It's not elegant to have
+this, but it is better than strdup()ing each and every path, just to
+determine whether the basename starts with a dot (or is equal to ".git")
+or not.
+
+Second bug: when we switched to override open()/fopen()/freopen() using
+Windows' UTF-16 functions, we lost the ability to open hidden files
+(internally, _wopen() uses CreateFile(), which allows the equivalent of
+O_CREAT only if the attributes match any existing files' attributes
+*exactly*, and there is no way to tell _wopen() that we want to create a
+hidden file).
+
+Again, this was only exercised with HIDE_DOTFILES_TRUE until the change
+proposed by you: needs_hiding() now also triggers for .git *files* in
+HIDE_DOTFILES_DOTGITONLY mode.
+
+It worries me slightly that the new code is so different from the code
+that was tried and tested through all those years (although admittedly it
+is unlikely anybody ever ran with core.hideDotFiles = true, given above
+findings). But I guess that cannot be helped. Not unless we reintroduce
+those two bugs.
+
+> I do not understand why core.hideDotFiles needs to be explicitly
+> copied to the config file in the resulting repository, either.
+> 
+> Once you created a repository, Git won't unhide the hidden .git of
+> that reposiotry, so the idea must be to propagate the setting to a
+> new repository that will further be created, but wouldn't that get
+> the "please hide" preference from the same place as we have got the
+> preference to hide .git when the current repository was created
+> anyway?
+
+I had a look in the mail archives, and it looks as if I wanted to support
+`git clone -c core.hideDotFiles...`. I introduced a new regression test
+and verified that we no longer need to write that config setting
+explicitly.
+
+I will send out v2 as soon as the test suite passed (which is hopefully
+30-45 minutes from now).
+
+Ciao,
+Dscho
