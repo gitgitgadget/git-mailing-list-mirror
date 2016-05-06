@@ -1,138 +1,118 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mingw: introduce the 'core.hideDotFiles' setting
-Date: Fri, 06 May 2016 09:34:07 -0700
-Message-ID: <xmqqh9eb5eo0.fsf@gitster.mtv.corp.google.com>
-References: <17d30bb680a0452efd7b3c4f42e2f94478a86273.1462372716.git.johannes.schindelin@gmx.de>
-	<xmqqr3dhhcd7.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1605061658580.2963@virtualbox>
+Subject: Re: [PATCH] exec_cmd.c, sideband.c, Makefile: avoid multiple PREFIX definitions
+Date: Fri, 06 May 2016 09:55:11 -0700
+Message-ID: <xmqqd1oz5dow.fsf@gitster.mtv.corp.google.com>
+References: <1462483733-3496-1-git-send-email-philipoakley@iee.org>
+	<1462483733-3496-2-git-send-email-philipoakley@iee.org>
+	<xmqqk2j89n9y.fsf@gitster.mtv.corp.google.com>
+	<1C7D96C1B53D45CCAA8658C9DBB1AAB5@PhilipOakley>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Erik Faye-Lund <kusmabite@googlemail.com>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri May 06 18:34:18 2016
+Cc: "GitList" <git@vger.kernel.org>,
+	"Johannes Schindelin" <johannes.schindelin@gmx.de>
+To: "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Fri May 06 18:55:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayihl-0006xv-0k
-	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 18:34:17 +0200
+	id 1ayj2A-00070R-KL
+	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 18:55:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756247AbcEFQeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2016 12:34:11 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50682 "EHLO
+	id S1758612AbcEFQzQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2016 12:55:16 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56509 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751695AbcEFQeL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2016 12:34:11 -0400
+	with ESMTP id S1758028AbcEFQzP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2016 12:55:15 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C0DE318A91;
-	Fri,  6 May 2016 12:34:09 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B0E3618CF5;
+	Fri,  6 May 2016 12:55:13 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=44DEoF0voXXhJX6JeAyRPjFiU/o=; b=k9thnC
-	J9XkteiklZnu62tHBZwFLgYO4e/60VU3VV1+LUFUi1spVVEIY9t9OqOKqRzWS8b2
-	L7JHCOAClTGUXVt5J00886WQVxgxuRoUak9cTPXgwiMQTd55rZmpNaJiF/ZMo5ha
-	MRDAe4f/XwScqunw4a3GeBZ3w1mvF3IfC98O0=
+	:content-type; s=sasl; bh=N+SmCg8ZsS6LoqeiAqqvAr5nObk=; b=hh4tLY
+	n3eDkzQL+2Hx9tqgW3cbwcW/j7ZxltTbPpN7ESVpC+p+ut3jiP1GJfPx4cDjgc6W
+	l4VquYXMSilyizIdpYnWe6jlSQAoUuld8EYJExF0OvbFhEXUb12Ml5tn0PWIGbVt
+	fHLSCUKbG1N5FIP/NpbbcvAXU/qD5z192Dnkc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=B5qkxITGKBuztbgVFg7vZBG8fWrC4YmY
-	GmZMploef5T2fttkvuyNtK9BgFchcVllACbutMVl6Swbbn3qN8fR+QYKG9M9qQN+
-	+iuoUUD5XoRT2YANSoIdWs65xxT/jLi+QXl2JM9yyth8QSA6VpuYaSIPgJK5INaq
-	jNfZ/cZDbNg=
+	:content-type; q=dns; s=sasl; b=nBHd/DJImZKWUNkTEq8IyDfMgWvAyiAo
+	ljeCUTh6XViQqId00NegPv8LviLAVWua9WYZbuzl+33YgDRavEtycmwo+XoGGXBo
+	LPKul0jCAVKfrdCgNarTsJcuUs1ckjLXXg1e9s348vEpm5jPDleqRmXUIL6Ctw4T
+	GD+8FvrrF7M=
 Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B7E9318A90;
-	Fri,  6 May 2016 12:34:09 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A905818CF4;
+	Fri,  6 May 2016 12:55:13 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 369F318A8F;
-	Fri,  6 May 2016 12:34:09 -0400 (EDT)
-In-Reply-To: <alpine.DEB.2.20.1605061658580.2963@virtualbox> (Johannes
-	Schindelin's message of "Fri, 6 May 2016 17:19:23 +0200 (CEST)")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4005E18CF3;
+	Fri,  6 May 2016 12:55:13 -0400 (EDT)
+In-Reply-To: <1C7D96C1B53D45CCAA8658C9DBB1AAB5@PhilipOakley> (Philip Oakley's
+	message of "Fri, 6 May 2016 08:23:23 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5B86CF5A-13A8-11E6-BF89-9A9645017442-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 4CF368D8-13AB-11E6-9FCB-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293831>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Dropped "git-for-windows" <git-for-windows@googlegroups.com> from
+the Cc: list, as I seem to be getting bounces from it due to its
+moderation policy.
 
->> I agree with the goal of the change, but I am having a hard time
->> justifying this addition.  Primarily because I do not understand the
->> need for this.
->> 
->> In order to be prepared to handle HIDE_DOTFILES_TRUE case,
->> mingw_mkdir() needs to be taught about needs_hiding() and
->> make_hidden() already.  Why isn't it sufficient to teach
->> needs_hiding() to check with !strcmp(basename(path, ".git"))
->> under HIDE_DOTFILES_DOTGITONLY?
->
-> The reason was that I wanted to avoid to compare a name unnecessarily when
-> I already had a code path that knew perfectly well that a given directory
-> is the .git/ directory.
->
-> I made the change. It was more painful than I expected, as two bugs were
-> uncovered, both introduced after the original patch by Erik.
-> ...
-> It worries me slightly that the new code is so different from the code
-> that was tried and tested through all those years (although admittedly it
-> is unlikely anybody ever ran with core.hideDotFiles = true, given above
-> findings). But I guess that cannot be helped. Not unless we reintroduce
-> those two bugs.
+"Philip Oakley" <philipoakley@iee.org> writes:
 
-I have a huge preference for a code that has been production for
-years over a new code that would cook at most two weeks in 'next'.
-As I said, the part regarding the mark_as_git_dir() in the message
-you are responding to was me asking you to explain, not me objecting
-to the code.
+> Perhaps EXEC_CMD_PREFIX, for that is what it is?
 
-> I had a look in the mail archives, and it looks as if I wanted to support
-> `git clone -c core.hideDotFiles...`. I introduced a new regression test
-> and verified that we no longer need to write that config setting
-> explicitly.
+That name is doubly wrong, I have to say.
 
-If you are sure we do not need that, that is one less reason we
-would be better off without mark_as_git_dir().  It was another way
-how a $GIT_DIR creation codepath behaved differently from other
-mingw_mkdir() codepath in the patch.
+This is used only after RUNTIME_PREFIX heuristics to learn the
+binary location from argv[0] fails, or the result of it does not
+have expected suffix string (i.e. GIT_EXEC_PATH . BINDIR . "git").
+The code even says this:
 
-Having said that, I actually was leaning towards an opinion that it
-might actually be better to have mark_as_git_dir() there.  Platforms
-may need to do other things in their implementation of the function
-to tweak things inside $GIT_DIR, just like you had to have a place
-to add configuration variables and mark_as_git_dir() was the perfect
-place for it.
+	if (!prefix &&
+	    !(prefix = strip_path_suffix(argv0_path, GIT_EXEC_PATH)) &&
+	    !(prefix = strip_path_suffix(argv0_path, BINDIR)) &&
+	    !(prefix = strip_path_suffix(argv0_path, "git"))) {
+		prefix = PREFIX;
+		trace_printf("RUNTIME_PREFIX requested, "
+				"but prefix computation failed.  "
+				"Using static fallback '%s'.\n", prefix);
+	}
 
-But mark_as_git_dir() is not a generic enough name to express its
-purpose.  It wasn't even when all it did was to see the
-HIDE_DOTFILES configuration and hide it (you are not marking it, in
-the sense that after you return, you cannot tell which directories
-are "marked" as "git_dir" by only looking at the resulting
-filesystem entities), and as an all-purpose place to hook platform
-specific tweaks, it is even less about "marking it as a $GIT_DIR".
+Notice "static fallback" there?
 
-A name that hints the fact that it is a place to do a platform
-specific extra preparation of $GIT_DIR would be more appropriate.
+I have a very strong preference for the name to reflect that fact.
+I.e.  send a signal to those who do not use RUNTIME_PREFIX
+configuration that they do not have to care.
 
-So given the knowledge that
+Also "EXEC" is wrong, too.  The way the 'prefix' variable we see
+above is used is that system_path() takes a directory path to
+various installed component of the Git package, e.g. GIT_MAN_PATH
+is the location for manual pages, as its "path" parameter, and
+then 
 
- - I am not fundamentally opposed to having an extra call there;
- - in fact, I suspect it may even be a good thing to have one;
- - I am not entirely happy with the name mark_as_git_dir; and
- - the rewrite to lose that call was more painful than anticipated.
+	strbuf_addf(&d, "%s/%s", prefix, path);
 
-would you still choose to lose the extra call and go with
-!stricmp(basename(path), ".git")?  The best approach for v2 might be
-to
+is used to formulate the absolute path for it.  A name with "EXEC"
+in it would incorrectly hint that it points at a rough equivalent to
+/usr/local/bin/ or /usr/local/libexec/git/, but PREFIX corresponds
+more to /usr/local/.
 
- - Keep the two bugfixes that was uncovered during this exercise;
- - keep the change to init_db() to add a call to mark_as_git_dir();
- - optionally, come up with a better name for that function; and
- - drop the setting of configuration varaibles that was unnecessary.
+Even if J6t's point about these two separate PREFIXes should never
+exist at the same time is correct, I think it is a good change to
+use a more explicit name for this variable that is used to
+communicate between Makefile and the *.c source.
 
-That is what I think, with the new knowledge I learned from your
-message.
+As to your "RUNTIME_PREFIX_FALLBACK is very long" objection, I do
+not care ;-) More seriously, this is not something typed very often.
+It appears only twice in this codepath and having clear names to
+tell readers what it is about is much more important.
+
+I do agree the most logical name, after understanding all of the
+above, which is RUNTIME_PREFIX_STATIC_FALLBACK, may be a bit too
+long, though.
