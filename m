@@ -1,118 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] exec_cmd.c, sideband.c, Makefile: avoid multiple PREFIX definitions
-Date: Fri, 06 May 2016 09:55:11 -0700
-Message-ID: <xmqqd1oz5dow.fsf@gitster.mtv.corp.google.com>
-References: <1462483733-3496-1-git-send-email-philipoakley@iee.org>
-	<1462483733-3496-2-git-send-email-philipoakley@iee.org>
-	<xmqqk2j89n9y.fsf@gitster.mtv.corp.google.com>
-	<1C7D96C1B53D45CCAA8658C9DBB1AAB5@PhilipOakley>
+From: Armin Kunaschik <megabreit@googlemail.com>
+Subject: Re: Portability of git shell scripts?
+Date: Fri, 6 May 2016 18:57:45 +0200
+Message-ID: <CALR6jEiWQUO0WsOVah2O+9-j2Qx7juYjP7cb1v+P=Ey0oqQszg@mail.gmail.com>
+References: <CALR6jEh5dAcnqiyo4kXkj+8imfQQd0nT=baPOW_qbJpJwmFsyw@mail.gmail.com>
+	<20160504212028.GG21259@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "GitList" <git@vger.kernel.org>,
-	"Johannes Schindelin" <johannes.schindelin@gmx.de>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Fri May 06 18:55:23 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 06 18:57:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayj2A-00070R-KL
-	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 18:55:22 +0200
+	id 1ayj4Z-0000ci-I3
+	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 18:57:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758612AbcEFQzQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2016 12:55:16 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56509 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758028AbcEFQzP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2016 12:55:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B0E3618CF5;
-	Fri,  6 May 2016 12:55:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=N+SmCg8ZsS6LoqeiAqqvAr5nObk=; b=hh4tLY
-	n3eDkzQL+2Hx9tqgW3cbwcW/j7ZxltTbPpN7ESVpC+p+ut3jiP1GJfPx4cDjgc6W
-	l4VquYXMSilyizIdpYnWe6jlSQAoUuld8EYJExF0OvbFhEXUb12Ml5tn0PWIGbVt
-	fHLSCUKbG1N5FIP/NpbbcvAXU/qD5z192Dnkc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nBHd/DJImZKWUNkTEq8IyDfMgWvAyiAo
-	ljeCUTh6XViQqId00NegPv8LviLAVWua9WYZbuzl+33YgDRavEtycmwo+XoGGXBo
-	LPKul0jCAVKfrdCgNarTsJcuUs1ckjLXXg1e9s348vEpm5jPDleqRmXUIL6Ctw4T
-	GD+8FvrrF7M=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A905818CF4;
-	Fri,  6 May 2016 12:55:13 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4005E18CF3;
-	Fri,  6 May 2016 12:55:13 -0400 (EDT)
-In-Reply-To: <1C7D96C1B53D45CCAA8658C9DBB1AAB5@PhilipOakley> (Philip Oakley's
-	message of "Fri, 6 May 2016 08:23:23 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4CF368D8-13AB-11E6-9FCB-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1758646AbcEFQ5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2016 12:57:47 -0400
+Received: from mail-yw0-f177.google.com ([209.85.161.177]:35020 "EHLO
+	mail-yw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758620AbcEFQ5q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2016 12:57:46 -0400
+Received: by mail-yw0-f177.google.com with SMTP id g133so193737036ywb.2
+        for <git@vger.kernel.org>; Fri, 06 May 2016 09:57:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=8tRTqGAoS1AQeuqQ26bI7VfuzwjV8eoqdPeoap5d3As=;
+        b=Q5AT9PEPrpwZ2QccZvuLvVveQPlCWO9GG+65oecTr5w3yf8VSOSqsjKNOqYu3Q6tRJ
+         a0URrMAc6gXY4cg9atV/uFn00Mlahk1RBiPnHV/04JwC7IgPjSWsDV/bMKF5sD1Cm5CV
+         HGsHT8JwCAWxZCkjqkr9p43V5uTjocyU5mDrM7hr1lr6BsUValzyUtczbXqVqPC2z4KW
+         WqnB35ESB/xgqE16jtLv2QvJOvItVYASh2mh0Im+j90KKus+b8pCq4xdXcaTF9hi0ItH
+         6QBV/GwJqaPjhCR6uY9f8HvTJAqFC2/xXR3QNJu2cHYHWG4NQPglFRrLMebCK4DGjDxI
+         RabQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=8tRTqGAoS1AQeuqQ26bI7VfuzwjV8eoqdPeoap5d3As=;
+        b=P62tY1CZ5Yoj89/IBQ6mXrV5yXLLDyuEC/eL+Imi95U2Nr4YZXoyt7yoQxVDOvPwiq
+         imtqiwQ7k/oDnfD5w6j/vctOUId4XV8mU4J3ppiiO82kiki1NDmYy0pR/LMgbzOoN4TN
+         G8uqh30y/l/RvLVNKnTFPk9Fi4q+kG9BG05CFKDx3mDq03uYdRvAxGv6KHb6bF9aqauR
+         6QCB4Iz9nquLg27q5qpIaN8aqc9dgw18E1d3CY+mRPL2O4h1+X1HDwypHjpWtryrG6wx
+         yQrMDcA7juFGg4yrL+jBKwMKNk6kYb1NPq4pI/26ZOX5yjEyt2VBmKkHThowX2PLKRiR
+         DF3w==
+X-Gm-Message-State: AOPr4FVr6yUqFB73wRnq1EEArxRNOep0K+c7bm09dplU0tgP+V3M0OhNepIGSH/jkNdd1eaGJ4j+v/3IIR3nOw==
+X-Received: by 10.129.160.74 with SMTP id x71mr12875732ywg.131.1462553865865;
+ Fri, 06 May 2016 09:57:45 -0700 (PDT)
+Received: by 10.129.45.132 with HTTP; Fri, 6 May 2016 09:57:45 -0700 (PDT)
+In-Reply-To: <20160504212028.GG21259@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293832>
 
-Dropped "git-for-windows" <git-for-windows@googlegroups.com> from
-the Cc: list, as I seem to be getting bounces from it due to its
-moderation policy.
+On Wed, May 4, 2016 at 11:20 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, May 04, 2016 at 08:17:38PM +0200, Armin Kunaschik wrote:
+>
+>> I'm trying to compile/test/use git 2.8.2 on AIX 6.1 with no bash available.
+>> /bin/sh is a hard link to /bin/ksh which is a ksh88, a posix shell.
+>> Is this supposed to work?
+>
+> We aim for a practical subset of Bourne shells, including bash, dash,
+> ash, ksh, etc. There's at least one Bourne-ish shell known not to work,
+> which is Solaris /bin/sh[1]. POSIX is usually a good guide, but we aim
+> for practical portability more than adhering strictly to the standards
+> document.
+>
+> I've tested with mksh in the past (though it's possible that we've
+> introduced a regression since then). But I think we've run into problems
+> with ksh93[2]. I don't know about ksh88, or what construct it doesn't
+> like.  It may or may not be easy to work around.
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+In general ksh (88 or 93) is posix compliant... and bash is moving away
+from posix. :-) But I know what you mean.
 
-> Perhaps EXEC_CMD_PREFIX, for that is what it is?
+>> As an example: make test fails on nearly every t34* test and on tests
+>> which contain rebase.
+>> The installation of bash (and manually changing the shebang to
+>> /bin/bash) "fixes" all rebase test failures. So obviously git-rebase
+>> is not portable at some point.
+>
+> Right. Any modern-ish Bourne shell will do, so moving to bash is one way
+> to fix it.
 
-That name is doubly wrong, I have to say.
+My last compile of git 2.2.2 did far better than the current 2.8.2. So
+it looks like
+there were more recent changes that broke portability.
 
-This is used only after RUNTIME_PREFIX heuristics to learn the
-binary location from argv[0] fails, or the result of it does not
-have expected suffix string (i.e. GIT_EXEC_PATH . BINDIR . "git").
-The code even says this:
+>> Does it make any sense to put work into making these scripts portable,
+>> that is, work with posix shells?
+>
+> Maybe. :) If you can find what it is that ksh88 is unhappy with, we can
+> see how painful it is to adapt to. But given my looking into ksh93 in
+> [2], I suspect it will be easier to just use a more modern shell.
 
-	if (!prefix &&
-	    !(prefix = strip_path_suffix(argv0_path, GIT_EXEC_PATH)) &&
-	    !(prefix = strip_path_suffix(argv0_path, BINDIR)) &&
-	    !(prefix = strip_path_suffix(argv0_path, "git"))) {
-		prefix = PREFIX;
-		trace_printf("RUNTIME_PREFIX requested, "
-				"but prefix computation failed.  "
-				"Using static fallback '%s'.\n", prefix);
-	}
+Regarding [2] this was a bug which was fixed quite fast. To me this is no
+real showstopper. Modernity of ksh93 depends on the letter after the 93 :-)
 
-Notice "static fallback" there?
+>> And, as last resort, is it possible to configure git use bash in some
+>> or all shell scripts?
+>
+> You can set SHELL_PATH in your config.mak file.
 
-I have a very strong preference for the name to reflect that fact.
-I.e.  send a signal to those who do not use RUNTIME_PREFIX
-configuration that they do not have to care.
+I tried a build with SHELL_PATH=/bin/bash. Many problems "went away".
+Others appeared. I'll give it a few more days to look into it.
 
-Also "EXEC" is wrong, too.  The way the 'prefix' variable we see
-above is used is that system_path() takes a directory path to
-various installed component of the Git package, e.g. GIT_MAN_PATH
-is the location for manual pages, as its "path" parameter, and
-then 
+First finding:
+make test does not make it through t3513-revert-submodule.sh anymore.
+The test is not portable since it uses the z-flags of GNU-tar. When -z
+is removed,
+(and extension is changed back to tar) everything runs and tests smoothly.
 
-	strbuf_addf(&d, "%s/%s", prefix, path);
+Is this report enough to start the magic to change things?
 
-is used to formulate the absolute path for it.  A name with "EXEC"
-in it would incorrectly hint that it points at a rough equivalent to
-/usr/local/bin/ or /usr/local/libexec/git/, but PREFIX corresponds
-more to /usr/local/.
-
-Even if J6t's point about these two separate PREFIXes should never
-exist at the same time is correct, I think it is a good change to
-use a more explicit name for this variable that is used to
-communicate between Makefile and the *.c source.
-
-As to your "RUNTIME_PREFIX_FALLBACK is very long" objection, I do
-not care ;-) More seriously, this is not something typed very often.
-It appears only twice in this codepath and having clear names to
-tell readers what it is about is much more important.
-
-I do agree the most logical name, after understanding all of the
-above, which is RUNTIME_PREFIX_STATIC_FALLBACK, may be a bit too
-long, though.
+Regards,
+Armin
