@@ -1,238 +1,193 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] utf8: fix duplicate words of "the"
-Date: Fri, 06 May 2016 11:30:31 -0700
-Message-ID: <xmqqa8k33upk.fsf@gitster.mtv.corp.google.com>
-References: <1462537893-18493-1-git-send-email-lip@dtdream.com>
-	<20160506130922.GA5051@sigill.intra.peff.net>
-	<xmqqoa8j3xk7.fsf@gitster.mtv.corp.google.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: /* compiler workaround */ - what was the issue?
+Date: Fri, 6 May 2016 19:33:13 +0100
+Organization: OPDS
+Message-ID: <0727E275927743DF94CFEC8615D7E90B@PhilipOakley>
+References: <AA5B2B1715BAF7438221293187A417A7BDE9D11D@desmdswms002.des.grplnk.net> <17E04501C9474282B87758C7998A1F5B@PhilipOakley> <xmqqtwic9o88.fsf@gitster.mtv.corp.google.com> <CACsJy8CBuU8H8r_f4KsnLkhLtfRv0nDo4hGS31LVn0e1Y_3OAQ@mail.gmail.com> <51C902B1F7464CF2B58EB0E495F86BB5@PhilipOakley> <572CDCFF.9050607@ramsayjones.plus.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Li Peng <lip@dtdream.com>
-X-From: git-owner@vger.kernel.org Fri May 06 20:30:40 2016
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Git List" <git@vger.kernel.org>
+To: "Duy Nguyen" <pclouds@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Ramsay Jones" <ramsay@ramsayjones.plus.com>
+X-From: git-owner@vger.kernel.org Fri May 06 20:33:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aykWN-0007Ty-T9
-	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 20:30:40 +0200
+	id 1aykYw-0001Fh-SX
+	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 20:33:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758578AbcEFSag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2016 14:30:36 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61289 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758208AbcEFSaf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2016 14:30:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4EA8017E33;
-	Fri,  6 May 2016 14:30:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TGEziyn9E/w7sr/oAf/Z3Nl0tko=; b=H2pHhU
-	j4IltxPKMCQhDi2/1QDdcRPhBgdwYmNYhRxCVHWZsDK4/i76tCLPHeyFTvW3L1+m
-	ziIc4/Z2PnqfE6GsPiY4SLuTz6atEAHQ94wgLtJS+zF664oTU47pEjY2S2NGWunb
-	2QZUk2tR/AP+l30Kn+rGT4UcsnM00TOBU5YSs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gU5kuPAC0cT38rwf1wMCMGuE81RR3DWf
-	VyMHZy/WW1xnu3c6MsRQPk0RYpDTEbDI6vDR+SVqk3h4SoSf5js60RX/aKE0ftP6
-	aI8KXTnSYQGBtZKn8EGHsRRcXHRnxZQ2LIyp+0xXOMFUSEBdNLmepOxU7DD9taRq
-	IkmwGeztQzY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4649C17E31;
-	Fri,  6 May 2016 14:30:33 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B364917E30;
-	Fri,  6 May 2016 14:30:32 -0400 (EDT)
-In-Reply-To: <xmqqoa8j3xk7.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 06 May 2016 10:28:56 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9E0620F0-13B8-11E6-B9E0-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1758397AbcEFSdP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2016 14:33:15 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:32859 "EHLO
+	smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755867AbcEFSdO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2016 14:33:14 -0400
+Received: from PhilipOakley ([92.22.46.244])
+	by smtp.talktalk.net with SMTP
+	id ykYpafzU6UaZtykYpatdKG; Fri, 06 May 2016 19:33:12 +0100
+X-Originating-IP: [92.22.46.244]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=M4MPEG4s c=1 sm=1 tr=0 a=mT+4QNHrLP0fZcn6BgyYDQ==:117
+ a=mT+4QNHrLP0fZcn6BgyYDQ==:17 a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8
+ a=pGLkceISAAAA:8 a=ybZZDoGAAAAA:8 a=xtxXYLxNAAAA:8 a=VwQbUJbxAAAA:8
+ a=9cA-FBq-5ee3QkNXIcEA:9 a=x8gzFH9gYPwA:10 a=yJM6EZoI5SlJf8ks9Ge_:22
+ a=6kGIvZw6iX1k4Y-7sg4_:22 a=0RhZnL1DYvcuLYC8JZ5M:22 a=xts0dhWdiJbonKbuqhAr:22
+ a=AjGcO6oz07-iQ99wixmX:22
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfBuvf1P7b3/6Ha4ajfMiK5qylkIvNoeUdc8PRDK1lCMIJrQZKUzz5Y94FZ0sWgMX2Ah6E4wJ1S3tsM7AGWKnSKzBih+/2tBlyvlKNsFCSPA8qfn2DtJ1
+ 7shWTtLMWo2p1vqjQLTxq5D817ssReeobp76GA705K4+VAgQxfqGo6rJEvSeSRS/9ZkEAiTlW/S8r4+xO1MsMzcdK4H/lcRIJYla9jf2Rc3vqcAV2W7Ki535
+ BpZNS2pJatqZUCY3OPpn8fAd3y4OWeMCkDttLz2NnRc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293845>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Jeff King <peff@peff.net> writes:
+From: "Ramsay Jones" <ramsay@ramsayjones.plus.com>
+> On 06/05/16 14:15, Philip Oakley wrote:
+>> From: "Duy Nguyen" <pclouds@gmail.com>
+>>> On Fri, May 6, 2016 at 4:41 AM, Junio C Hamano <gitster@pobox.com> 
+>>> wrote:
+>>>> "Philip Oakley" <philipoakley@iee.org> writes:
+>>>>
+>>>>>     int saved_namelen = saved_namelen; /* compiler workaround */
+>>>>>
+>>>>> Which then becomes an MSVC compile warning C4700: uninitialized local
+>>>>> variable.
+>>>>>
+>>>>> I'm wondering what was the compiler workaround being referred to? i.e. 
+>>>>> why
+>>>>> does it need that tweak? There's no mention of the reason in the 
+>>>>> commit
+>>>>> message.
+>>>>
+>>>> That was a fairly well-known workaround for GCC that issues a false
+>>>> warning that variable is used before initialized.  I thought we
+>>>> stopped using it several years ago in new code after doing a bulk
+>>>> sanitizing
+>>>
+>>> I guess that's 803a777 (cat-file: Fix an gcc -Wuninitialized warning -
+>>> 2013-03-26) and more commits around that time. The split-index commit
+>>> is in 2014. I must have missed the trend.
+>>>
+>>>> (I think the new recommended workaround was to initialise
+>>>> such a variable to the nil value like '0' for integers).
+>>>
+>>> Yep. First Jeff removed the " = xxx" part from "xxx = xxx" then Ramsay
+>>> added the " = NULL" back. So we probably just do "int saved_namelen =
+>>> 0;" in this case.
+>>> -- 
+>> Thanks,
 >>
->> IMHO it would be fine to just do all of these in a single patch. They're
->> different files, yes, but it's all conceptually the same change.
+>> I'll try and work up a patch - probably next week as I'm away for the 
+>> weekend.
 >
-> I can squash them into a single one.  So far, everything except two
-> I saw was good.
+> Yeah, I don't remember why these were left over from the previous
+> attempt to clean these up (maybe they conflicted with in-flight
+> topics?), but I have had a patch hanging around ... :-D
+>
+> The patch below applies to master (I haven't checked for any more
+> additions).
 
-So I tentatively queued this.
+Looks good to me. Catches those I've seen.
 
--- >8 --
-From: Li Peng <lip@dtdream.com>
-Date: Fri, 6 May 2016 20:36:46 +0800
-Subject: [PATCH] typofix: assorted typofixes in comments, documentation and
- messages
+Have a good weekend all.
 
-Many instances of duplicate words (e.g. "the the path") and
-a few typoes are fixed, originally in multiple patches.
-
-    wildmatch: fix duplicate words of "the"
-    t: fix duplicate words of "output"
-    transport-helper: fix duplicate words of "read"
-    Git.pm: fix duplicate words of "return"
-    path: fix duplicate words of "look"
-    pack-protocol.txt: fix duplicate words of "the"
-    precompose-utf8: fix typo of "sequences"
-    split-index: fix typo
-    worktree.c: fix typo
-    remote-ext: fix typo
-
-Signed-off-by: Li Peng <lip@dtdream.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/technical/pack-protocol.txt | 2 +-
- builtin/remote-ext.c                      | 2 +-
- compat/precompose_utf8.c                  | 2 +-
- path.c                                    | 2 +-
- perl/Git.pm                               | 2 +-
- split-index.c                             | 2 +-
- t/t0000-basic.sh                          | 2 +-
- transport-helper.c                        | 2 +-
- wildmatch.c                               | 2 +-
- worktree.c                                | 2 +-
- 10 files changed, 10 insertions(+), 10 deletions(-)
-
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-index c6977bb..8b36343 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -526,7 +526,7 @@ Push Certificate
- 
- A push certificate begins with a set of header lines.  After the
- header and an empty line, the protocol commands follow, one per
--line. Note that the the trailing LF in push-cert PKT-LINEs is _not_
-+line. Note that the trailing LF in push-cert PKT-LINEs is _not_
- optional; it must be present.
- 
- Currently, the following header fields are defined:
-diff --git a/builtin/remote-ext.c b/builtin/remote-ext.c
-index 7457c74..88eb8f9 100644
---- a/builtin/remote-ext.c
-+++ b/builtin/remote-ext.c
-@@ -168,7 +168,7 @@ static int command_loop(const char *child)
- 		size_t i;
- 		if (!fgets(buffer, MAXCOMMAND - 1, stdin)) {
- 			if (ferror(stdin))
--				die("Comammand input error");
-+				die("Command input error");
- 			exit(0);
- 		}
- 		/* Strip end of line characters. */
-diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
-index dfbe6d8..4293b53 100644
---- a/compat/precompose_utf8.c
-+++ b/compat/precompose_utf8.c
-@@ -147,7 +147,7 @@ struct dirent_prec_psx *precompose_utf8_readdir(PREC_DIR *prec_dir)
- 				if (errno || inleft) {
- 					/*
- 					 * iconv() failed and errno could be E2BIG, EILSEQ, EINVAL, EBADF
--					 * MacOS X avoids illegal byte sequemces.
-+					 * MacOS X avoids illegal byte sequences.
- 					 * If they occur on a mounted drive (e.g. NFS) it is not worth to
- 					 * die() for that, but rather let the user see the original name
- 					*/
-diff --git a/path.c b/path.c
-index 969b494..a5e953f 100644
---- a/path.c
-+++ b/path.c
-@@ -134,7 +134,7 @@ static struct common_dir common_list[] = {
-  * definite
-  * definition
-  *
-- * The trie would look look like:
-+ * The trie would look like:
-  * root: len = 0, children a and d non-NULL, value = NULL.
-  *    a: len = 2, contents = bc, value = (data for "abc")
-  *    d: len = 2, contents = ef, children i non-NULL, value = (data for "def")
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 49eb88a..ce7e4e8 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -393,7 +393,7 @@ sub command_close_pipe {
- Execute the given C<COMMAND> in the same way as command_output_pipe()
- does but return both an input pipe filehandle and an output pipe filehandle.
- 
--The function will return return C<($pid, $pipe_in, $pipe_out, $ctx)>.
-+The function will return C<($pid, $pipe_in, $pipe_out, $ctx)>.
- See C<command_close_bidi_pipe()> for details.
- 
- =cut
-diff --git a/split-index.c b/split-index.c
-index 968b780..3c75d4b 100644
---- a/split-index.c
-+++ b/split-index.c
-@@ -60,7 +60,7 @@ static void mark_base_index_entries(struct index_state *base)
- 	 * To keep track of the shared entries between
- 	 * istate->base->cache[] and istate->cache[], base entry
- 	 * position is stored in each base entry. All positions start
--	 * from 1 instead of 0, which is resrved to say "this is a new
-+	 * from 1 instead of 0, which is reserved to say "this is a new
- 	 * entry".
- 	 */
- 	for (i = 0; i < base->cache_nr; i++)
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 79b9074..60811a3 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -98,7 +98,7 @@ check_sub_test_lib_test () {
- }
- 
- check_sub_test_lib_test_err () {
--	name="$1" # stdin is the expected output output from the test
-+	name="$1" # stdin is the expected output from the test
- 	# expected error output is in descriptior 3
- 	(
- 		cd "$name" &&
-diff --git a/transport-helper.c b/transport-helper.c
-index b934183..13b7a57 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -1152,7 +1152,7 @@ static void udt_close_if_finished(struct unidirectional_transfer *t)
- }
- 
- /*
-- * Tries to read read data from source into buffer. If buffer is full,
-+ * Tries to read data from source into buffer. If buffer is full,
-  * no data is read. Returns 0 on success, -1 on error.
-  */
- static int udt_do_read(struct unidirectional_transfer *t)
-diff --git a/wildmatch.c b/wildmatch.c
-index f91ba99..57c8765 100644
---- a/wildmatch.c
-+++ b/wildmatch.c
-@@ -136,7 +136,7 @@ static int dowild(const uchar *p, const uchar *text, unsigned int flags)
- 				/*
- 				 * Try to advance faster when an asterisk is
- 				 * followed by a literal. We know in this case
--				 * that the the string before the literal
-+				 * that the string before the literal
- 				 * must belong to "*".
- 				 * If match_slash is false, do not look past
- 				 * the first slash as it cannot belong to '*'.
-diff --git a/worktree.c b/worktree.c
-index 6181a66..89ebe67 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -18,7 +18,7 @@ void free_worktrees(struct worktree **worktrees)
- 
- /*
-  * read 'path_to_ref' into 'ref'.  Also if is_detached is not NULL,
-- * set is_detached to 1 (0) if the ref is detatched (is not detached).
-+ * set is_detached to 1 (0) if the ref is detached (is not detached).
-  *
-  * $GIT_COMMON_DIR/$symref (e.g. HEAD) is practically outside $GIT_DIR so
-  * for linked worktrees, `resolve_ref_unsafe()` won't work (it uses
--- 
-2.8.2-507-g43e827d
+>
+> ATB,
+> Ramsay Jones
+>
+> -- >8 --
+> From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> Subject: [PATCH] -Wuninitialized: remove a gcc specific workaround
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+> builtin/rev-list.c | 2 +-
+> fast-import.c      | 4 ++--
+> merge-recursive.c  | 2 +-
+> read-cache.c       | 2 +-
+> 4 files changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+> index 275da0d..deae1f3 100644
+> --- a/builtin/rev-list.c
+> +++ b/builtin/rev-list.c
+> @@ -377,7 +377,7 @@ int cmd_rev_list(int argc, const char **argv, const 
+> char *prefix)
+>  mark_edges_uninteresting(&revs, show_edge);
+>
+>  if (bisect_list) {
+> - int reaches = reaches, all = all;
+> + int reaches = 0, all = 0;
+>
+>  revs.commits = find_bisection(revs.commits, &reaches, &all,
+>        bisect_find_all);
+> diff --git a/fast-import.c b/fast-import.c
+> index 9fc7093..ca66d80 100644
+> --- a/fast-import.c
+> +++ b/fast-import.c
+> @@ -2935,7 +2935,7 @@ static void cat_blob(struct object_entry *oe, 
+> unsigned char sha1[20])
+>
+> static void parse_get_mark(const char *p)
+> {
+> - struct object_entry *oe = oe;
+> + struct object_entry *oe = NULL;
+>  char output[42];
+>
+>  /* get-mark SP <object> LF */
+> @@ -2952,7 +2952,7 @@ static void parse_get_mark(const char *p)
+>
+> static void parse_cat_blob(const char *p)
+> {
+> - struct object_entry *oe = oe;
+> + struct object_entry *oe = NULL;
+>  unsigned char sha1[20];
+>
+>  /* cat-blob SP <object> LF */
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index 06d31ed..9cecc24 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -1897,7 +1897,7 @@ int merge_recursive(struct merge_options *o,
+> {
+>  struct commit_list *iter;
+>  struct commit *merged_common_ancestors;
+> - struct tree *mrtree = mrtree;
+> + struct tree *mrtree = NULL;
+>  int clean;
+>
+>  if (show(o, 4)) {
+> diff --git a/read-cache.c b/read-cache.c
+> index d9fb78b..978d6b6 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -1870,7 +1870,7 @@ static int ce_write_entry(git_SHA_CTX *c, int fd, 
+> struct cache_entry *ce,
+> {
+>  int size;
+>  struct ondisk_cache_entry *ondisk;
+> - int saved_namelen = saved_namelen; /* compiler workaround */
+> + int saved_namelen = 0;
+>  char *name;
+>  int result;
+>
+> -- 
+> 2.8.0
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
