@@ -1,107 +1,172 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] t0040: remove unused test helpers
-Date: Fri, 06 May 2016 11:00:42 -0700
-Message-ID: <xmqqeg9f3w39.fsf_-_@gitster.mtv.corp.google.com>
-References: <xmqq7ff8b99q.fsf@gitster.mtv.corp.google.com>
-	<20160505215056.28224-1-gitster@pobox.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: /* compiler workaround */ - what was the issue?
+Date: Fri, 6 May 2016 19:05:51 +0100
+Message-ID: <572CDCFF.9050607@ramsayjones.plus.com>
+References: <AA5B2B1715BAF7438221293187A417A7BDE9D11D@desmdswms002.des.grplnk.net>
+ <17E04501C9474282B87758C7998A1F5B@PhilipOakley>
+ <xmqqtwic9o88.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8CBuU8H8r_f4KsnLkhLtfRv0nDo4hGS31LVn0e1Y_3OAQ@mail.gmail.com>
+ <51C902B1F7464CF2B58EB0E495F86BB5@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 06 20:00:50 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Philip Oakley <philipoakley@iee.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 06 20:06:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayk3W-0000X1-7L
-	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 20:00:50 +0200
+	id 1ayk8b-0004kc-7b
+	for gcvg-git-2@plane.gmane.org; Fri, 06 May 2016 20:06:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758208AbcEFSAq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2016 14:00:46 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53655 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755867AbcEFSAq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2016 14:00:46 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 813BD179A8;
-	Fri,  6 May 2016 14:00:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TU9T1AelDqi5T8KYg0mDOjM0xe4=; b=vnU7XL
-	UNocqh2fiaaKbRmqt71pl7JNfUpra/jvgsSp5qj4+FcYEkl2iWkYhsgbe7jIF9Nd
-	lC/amVZRTQ8VdmNN4vXeWSLZSI7kie4hqoXD3vra+bC8vGVOsKvsMcPipSZSMa3R
-	cASev9Wf8IrgidRZn8ihK5Gu78auiqfZtXVJ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gc5zlQ0fyFu1MzfYAcfXmxWcdIJs9A0p
-	+yjD4+0uhx28lnDydHH4/+tx06cic3lgtQirGd/0YU0I/+r2uzzKRxE10qdoDgFS
-	qq9KE4ZvPa6pdFLmIQTX7N5ua4WUqF7LfWjutiPbMtMGbVzrLNPEFisFDPL3+TR6
-	RA9BX/SSUn8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7A97B179A7;
-	Fri,  6 May 2016 14:00:44 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 02610179A6;
-	Fri,  6 May 2016 14:00:43 -0400 (EDT)
-In-Reply-To: <20160505215056.28224-1-gitster@pobox.com> (Junio C. Hamano's
-	message of "Thu, 5 May 2016 14:50:53 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 73DC7AE4-13B4-11E6-8DB7-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1758780AbcEFSF5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2016 14:05:57 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:47979 "EHLO
+	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756380AbcEFSFz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2016 14:05:55 -0400
+Received: from [10.0.2.15] ([91.125.197.102])
+	by avasout07 with smtp
+	id r65r1s0022D2Veb0165s2j; Fri, 06 May 2016 19:05:53 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=QqujpgGd c=1 sm=1 tr=0
+ a=mTUfFwB0nGOO66Ym8a+i3w==:117 a=mTUfFwB0nGOO66Ym8a+i3w==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
+ a=pGLkceISAAAA:8 a=ybZZDoGAAAAA:8 a=xtxXYLxNAAAA:8 a=EBOSESyhAAAA:8
+ a=T28VAxbOeHHkhyd23_AA:9 a=QEXdDO2ut3YA:10 a=6kGIvZw6iX1k4Y-7sg4_:22
+ a=0RhZnL1DYvcuLYC8JZ5M:22 a=xts0dhWdiJbonKbuqhAr:22 a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.2
+In-Reply-To: <51C902B1F7464CF2B58EB0E495F86BB5@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293842>
 
-9a001381 (Fix tests under GETTEXT_POISON on parseopt, 2012-08-27)
-introduced check_i18n, but the helper was never used from the
-beginning.
 
-The same commit also introduced check_unknown_i18n to replace the
-helper check_unknown and changed all users of the latter to use the
-former, but failed to remove check_unknown itself.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+On 06/05/16 14:15, Philip Oakley wrote:
+> From: "Duy Nguyen" <pclouds@gmail.com>
+>> On Fri, May 6, 2016 at 4:41 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> "Philip Oakley" <philipoakley@iee.org> writes:
+>>>
+>>>>     int saved_namelen = saved_namelen; /* compiler workaround */
+>>>>
+>>>> Which then becomes an MSVC compile warning C4700: uninitialized local
+>>>> variable.
+>>>>
+>>>> I'm wondering what was the compiler workaround being referred to? i.e. why
+>>>> does it need that tweak? There's no mention of the reason in the commit
+>>>> message.
+>>>
+>>> That was a fairly well-known workaround for GCC that issues a false
+>>> warning that variable is used before initialized.  I thought we
+>>> stopped using it several years ago in new code after doing a bulk
+>>> sanitizing
+>>
+>> I guess that's 803a777 (cat-file: Fix an gcc -Wuninitialized warning -
+>> 2013-03-26) and more commits around that time. The split-index commit
+>> is in 2014. I must have missed the trend.
+>>
+>>> (I think the new recommended workaround was to initialise
+>>> such a variable to the nil value like '0' for integers).
+>>
+>> Yep. First Jeff removed the " = xxx" part from "xxx = xxx" then Ramsay
+>> added the " = NULL" back. So we probably just do "int saved_namelen =
+>> 0;" in this case.
+>> -- 
+> Thanks,
+> 
+> I'll try and work up a patch - probably next week as I'm away for the weekend.
+
+Yeah, I don't remember why these were left over from the previous
+attempt to clean these up (maybe they conflicted with in-flight
+topics?), but I have had a patch hanging around ... :-D
+
+The patch below applies to master (I haven't checked for any more
+additions).
+
+ATB,
+Ramsay Jones
+
+-- >8 --
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] -Wuninitialized: remove a gcc specific workaround
+
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
- t/t0040-parse-options.sh | 24 ------------------------
- 1 file changed, 24 deletions(-)
+ builtin/rev-list.c | 2 +-
+ fast-import.c      | 4 ++--
+ merge-recursive.c  | 2 +-
+ read-cache.c       | 2 +-
+ 4 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index d678fbf..5c8c72a 100755
---- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -81,30 +81,6 @@ check() {
- 	test_cmp expect output
- }
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 275da0d..deae1f3 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -377,7 +377,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 		mark_edges_uninteresting(&revs, show_edge);
  
--check_i18n() {
--	what="$1" &&
--	shift &&
--	expect="$1" &&
--	shift &&
--	sed "s/^$what .*/$what $expect/" <expect.template >expect &&
--	test-parse-options $* >output 2>output.err &&
--	test_must_be_empty output.err &&
--	test_i18ncmp expect output
--}
--
--check_unknown() {
--	case "$1" in
--	--*)
--		echo error: unknown option \`${1#--}\' >expect ;;
--	-*)
--		echo error: unknown switch \`${1#-}\' >expect ;;
--	esac &&
--	cat expect.err >>expect &&
--	test_must_fail test-parse-options $* >output 2>output.err &&
--	test_must_be_empty output &&
--	test_cmp expect output.err
--}
--
- check_unknown_i18n() {
- 	case "$1" in
- 	--*)
+ 	if (bisect_list) {
+-		int reaches = reaches, all = all;
++		int reaches = 0, all = 0;
+ 
+ 		revs.commits = find_bisection(revs.commits, &reaches, &all,
+ 					      bisect_find_all);
+diff --git a/fast-import.c b/fast-import.c
+index 9fc7093..ca66d80 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -2935,7 +2935,7 @@ static void cat_blob(struct object_entry *oe, unsigned char sha1[20])
+ 
+ static void parse_get_mark(const char *p)
+ {
+-	struct object_entry *oe = oe;
++	struct object_entry *oe = NULL;
+ 	char output[42];
+ 
+ 	/* get-mark SP <object> LF */
+@@ -2952,7 +2952,7 @@ static void parse_get_mark(const char *p)
+ 
+ static void parse_cat_blob(const char *p)
+ {
+-	struct object_entry *oe = oe;
++	struct object_entry *oe = NULL;
+ 	unsigned char sha1[20];
+ 
+ 	/* cat-blob SP <object> LF */
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 06d31ed..9cecc24 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1897,7 +1897,7 @@ int merge_recursive(struct merge_options *o,
+ {
+ 	struct commit_list *iter;
+ 	struct commit *merged_common_ancestors;
+-	struct tree *mrtree = mrtree;
++	struct tree *mrtree = NULL;
+ 	int clean;
+ 
+ 	if (show(o, 4)) {
+diff --git a/read-cache.c b/read-cache.c
+index d9fb78b..978d6b6 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1870,7 +1870,7 @@ static int ce_write_entry(git_SHA_CTX *c, int fd, struct cache_entry *ce,
+ {
+ 	int size;
+ 	struct ondisk_cache_entry *ondisk;
+-	int saved_namelen = saved_namelen; /* compiler workaround */
++	int saved_namelen = 0;
+ 	char *name;
+ 	int result;
+ 
 -- 
-2.8.2-507-g43e827d
+2.8.0
