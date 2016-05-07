@@ -1,78 +1,115 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: t6044 broken on pu
-Date: Sat, 07 May 2016 14:19:47 +0200
-Message-ID: <878tzmrrfg.fsf@linux-m68k.org>
-References: <7d747193-7ba1-e274-86dc-427ed0f124c9@web.de>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH v5 0/2] bisect--helper: rewrite of check-term-format()
+Date: Sat, 7 May 2016 18:37:50 +0530
+Message-ID: <CAFZEwPOA9c8eQAacnuB1n=juOhN1zsMdzcupS3ijqwYFPRrW4A@mail.gmail.com>
+References: <1462338472-3581-1-git-send-email-pranit.bauva@gmail.com>
+	<1462546167-1125-1-git-send-email-pranit.bauva@gmail.com>
+	<xmqqtwia25qc.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: newren@gmail.com, Git Mailing List <git@vger.kernel.org>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sat May 07 14:20:00 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 07 15:14:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1az1DD-0007nY-37
-	for gcvg-git-2@plane.gmane.org; Sat, 07 May 2016 14:19:59 +0200
+	id 1az1xh-0002T4-ME
+	for gcvg-git-2@plane.gmane.org; Sat, 07 May 2016 15:08:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752156AbcEGMTw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 May 2016 08:19:52 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:45042 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751925AbcEGMTw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 May 2016 08:19:52 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3r274h3mh8z3hjTg;
-	Sat,  7 May 2016 14:19:48 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3r274h3Q4yzvh1k;
-	Sat,  7 May 2016 14:19:48 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id HbgE-_UjlYUb; Sat,  7 May 2016 14:19:47 +0200 (CEST)
-X-Auth-Info: siwtYZmDr+miBerpAXCEHUuXxO1TayXsZ9fid9QkX/QYBwUQWTTvh56QWOVmyyU3
-Received: from igel.home (ppp-88-217-9-210.dynamic.mnet-online.de [88.217.9.210])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Sat,  7 May 2016 14:19:47 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id 70E942C0861; Sat,  7 May 2016 14:19:47 +0200 (CEST)
-X-Yow: I've been WRITING to SOPHIA LOREN every 45 MINUTES since JANUARY 1ST!!
-In-Reply-To: <7d747193-7ba1-e274-86dc-427ed0f124c9@web.de> ("Torsten
-	=?utf-8?Q?B=C3=B6gershausen=22's?= message of "Sat, 7 May 2016 14:00:08
- +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.93 (gnu/linux)
+	id S1752179AbcEGNHw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 May 2016 09:07:52 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:33293 "EHLO
+	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752030AbcEGNHv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 May 2016 09:07:51 -0400
+Received: by mail-yw0-f195.google.com with SMTP id y6so19642717ywe.0
+        for <git@vger.kernel.org>; Sat, 07 May 2016 06:07:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=ahLa0ZffswE7Z3417ORmre3ttLW3Rb7VYXxVe7QdkGQ=;
+        b=wnc03oC8esqNj5nxjy1UInty/xTAiTAtpQkXslfRxCYLuuY7aUK9yVRpSWdxfZ6upy
+         OxyJes98cjUT8tA+kXYdRxABSULFaN24geJ5CYXB4Z1+LaFLkxJI/9vltP3xt7POO0Qm
+         QRkqQEhZLWCJGuoiE6cLfEFEUrEp7yBQBJ6TNWGlNpO7H5xUaqSlh4pRjYSvq66QqT9/
+         MKETsrYM7f79VNqMHUQQGHP4lZolrvOY1VRMGN61yxW0/nISNE4EUSyYrdn1jopeXKhf
+         L+UqZKGgz0DP8fhbmUOSGKMQNZ1o/mdrmfRVj6PSHCEdF9IV6uTlO2Fhg8iSJ+i3tzbr
+         9wYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=ahLa0ZffswE7Z3417ORmre3ttLW3Rb7VYXxVe7QdkGQ=;
+        b=gpIHHLqrFcHU6UoIcOnAnX4UP/WafYTqthfwrJJ30VUFKcgTCX3nrX2CT/UPgi4WP2
+         70Q6B5Zt6y/UBCcxVDzKuwu2fiOOiqXZqHs2y+ZQyecaB3fxPJreAV6v2NaHCdr+C3ji
+         SnHeqHVX+v9bNeJtKRbDkgcHVvqphf6agves9+XbnhU8HbviAfoXRxZdJSeW9o38OY53
+         4ohMZGDk9xddQ9+JWyKqEzaBe48he8kcsDBX+EvbtNZ5AF5KqtmCdSgUdsO90s1C2UAn
+         r8gSU7i4GFf6P3D9IfHtkq8xaeRtxZdsgZOokTfK8fYBUlXA4VZHqULGV7z/ESueb7Zg
+         SqoQ==
+X-Gm-Message-State: AOPr4FWixVM1eYtd5vnxXSRXWfCfRje1O9BvVCpBc97DYvkf5wqzKgOFOeuxOqiaawjZ6xSIvj0GNENzoYN5qg==
+X-Received: by 10.129.134.133 with SMTP id w127mr14671325ywf.252.1462626471006;
+ Sat, 07 May 2016 06:07:51 -0700 (PDT)
+Received: by 10.13.219.213 with HTTP; Sat, 7 May 2016 06:07:50 -0700 (PDT)
+In-Reply-To: <xmqqtwia25qc.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293894>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
-
-> The "seq" is not understood by all shells,
-> using printf fixes this,
+On Sat, May 7, 2016 at 3:45 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Pranit Bauva <pranit.bauva@gmail.com> writes:
 >
-> index 20a3ffe..48d964e 100755
-> --- a/t/t6044-merge-unrelated-index-changes.sh
-> +++ b/t/t6044-merge-unrelated-index-changes.sh
-> @@ -20,7 +20,7 @@ test_description=3D"merges with unrelated index cha=
-nges"
->  #   Commit E: renames a->subdir/a, adds subdir/e
+>> A very interesting fact to note:
+>> I made a mistake by dropping of the first argument 'term' in the function
+>> one_of() and compiled and the test suite passed fully (which was pointed
+>> out by Christian). This shows that the test coverage is incomplete.
+>> I am
+>> currently writing tests to improve on that coverage. It will be included
+>> separately.
+>>
+>> Link to v4: http://thread.gmane.org/gmane.comp.version-control.git/293488
+>>
+>> Changes wrt v4:
+>>  * Stick with 'subcommand' in the commit message.
+>>  * Rename enum as 'subcommand' to make it singular.
 >
->  test_expect_success 'setup trivial merges' '
-> -       seq 1 10 >a &&
-> +       printf 1 2 3 4 5 7 8 9 10 >a &&
+> I've already said what needs to be said on this.
+>
+>>  * s/bug/BUG/g
+>>  * Drop _() in the default of switch case
+>>  * Use some suggestions for commit message no. 2 and also include why I am
+>>    using subcommand.
+>
+> I am not particularly impressed by the rationale, though.
+>
+> As a starter project to show that you learned how to add a new mode
+> to bisect--helper, check-term-format may be a small enough function
+> that is easy to dip the toe into the codebase, so in that sense it
+> may be an appropriate first step, but otherwise it is not all that
+> interesting, especially when we _know_ that it will be discarded.
 
-$ printf 1 2 3 4 5 7 8 9 10
-1
+I do understand that check-term-format was a suggestion just for me to
+"Get a taste" for the project.
+I have now also converted write_terms() function. I have made a PR[1]
+which needs a few things to be addressed.
+Just a summary of what the PR does:
+ * Converts the shell function write() terms to C
+ * Adds a subcommand for write_terms()
+ * Remove the subcommand for check_term_format()
+ * Call the method check_term_format() from inside write_terms().
 
-Andreas.
+Do you want me to include both of the functions check_term_format()
+and write_terms() in the same commit or a different commit.
 
---=20
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
-ED5
-"And now for something completely different."
+OR,
+I completely missed your point and you want me to go the Eric Sunshine's way?
+
+[1]: https://github.com/pranitbauva1997/git/pull/3
