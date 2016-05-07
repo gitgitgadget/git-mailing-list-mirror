@@ -1,71 +1,125 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: t6044 broken on pu
-Date: Sat, 7 May 2016 14:00:08 +0200
-Message-ID: <7d747193-7ba1-e274-86dc-427ed0f124c9@web.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 80/83] run-command: make dup_devnull() non static
+Date: Sat, 7 May 2016 14:13:24 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605071409490.2963@virtualbox>
+References: <1461505189-16234-1-git-send-email-chriscool@tuxfamily.org> <alpine.DEB.2.20.1604251704300.2896@virtualbox> <CAP8UFD2f1L3YKNBA4zP1bmGe8BQitxZp-aDsGP5UTDv06LbLBg@mail.gmail.com> <572BA80E.3000309@kdbg.org> <CAP8UFD35L8P2YJbbvg_-n9Nc61xMs+_2qBJwBxFzXeF-jA4WwQ@mail.gmail.com>
+ <alpine.DEB.2.20.1605061733170.2963@virtualbox> <CAP8UFD0ht+ozCMguGwBc19dd9ViXG4tTE0mdaOQ+JVXhSOk02Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: newren@gmail.com, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 07 14:00:56 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Johannes Sixt <j6t@kdbg.org>, git <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 07 14:14:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1az0uk-00023a-Jf
-	for gcvg-git-2@plane.gmane.org; Sat, 07 May 2016 14:00:54 +0200
+	id 1az17b-0003S6-5d
+	for gcvg-git-2@plane.gmane.org; Sat, 07 May 2016 14:14:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752721AbcEGMAc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 May 2016 08:00:32 -0400
-Received: from mout.web.de ([212.227.15.3]:56888 "EHLO mout.web.de"
+	id S1752146AbcEGMNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 May 2016 08:13:46 -0400
+Received: from mout.gmx.net ([212.227.17.22]:50302 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752640AbcEGMAW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 May 2016 08:00:22 -0400
-Received: from macce.local ([195.252.60.88]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0LbIiI-1bNeUV2hT8-00ksw2; Sat, 07 May 2016 14:00:17
+	id S1751925AbcEGMNp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 May 2016 08:13:45 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Ldspr-1bPaDY4AuB-00j0r5; Sat, 07 May 2016 14:13:24
  +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:45.0)
- Gecko/20100101 Thunderbird/45.0
-X-Provags-ID: V03:K0:/VGxd8IeJ+D0XmH04axVCLTA53tXx4pKelerIHiWcN210mcRHUb
- GIEoNUC5yUoHDz8g8EV/L2SvOSkxkk+gup8GtM5WOOToH28nHp3UyH/f2F3ckZ98WO0Uw72
- i5hGvDughuYY/27OfkJSKyACCtKby0V+r7DySycEdhW0HIX8Brsk5RVoaKRVmJGAuvtsoAG
- WQddDcm1/ziagwKMjn7Rw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:2SVI7S8cZ2o=:7FUWEqnVtGw0p8fg32VQgg
- Tnan1/GOLcxadIGdpbnyoQYbiLUT5iIbBBZNtMumtUySS/o+nN+EAqhD4rBhuY25DLWwASz6h
- 3lNQJG25/xR9iy2q42VDAchNyzcqNycMdz9Y98Wdz9TeCnmkPqnHy1ML3g39f6vCpxKgcRP0P
- 4ZkAv4RoFdGk3fxKH4H+Wdz6SIAmPg3gIa3oI8BboJZhJI+Y5luXk9u0qpOqtlQJ+cL5z5AZb
- Qy1cOPkr4iDxe9MEVVPDrLq0tEw3lmXDhbkTsglIkq3nBxNEL0UErxNIzhPFhSIqV+RFSfXXr
- HuYnl0l84iwhEJfMSU+pzxHOnOPuMuUIwJyqmB968XWmnYvy0lcqZNVUiwaufHfKjYKQoyo51
- p9aHvgO9Nq29ERP9Or6AM4nVPXXPaPcEb3ikUVT3A/lavJbo2j4Beq0z88jQLEscSIPU7FiOz
- o3pgxbZpHk5q9RzzcZzmB91pLRTqAztW0yaoLoSVyzRHBOVqWBXVU8GwRHEbdpFsUhciMBhbS
- vz9yQjJmHhGYDttOeqjtJKr9kQYuPhr5voFxxDg91zsDOMSTLU4bWGEo95RVcHyMeHMozAdrh
- VuTVJLQw7GlBVY4J4dOpB+cD1trQ4kU4tlpQRELW322QWTGqytpHLYHfVByRSPatUIi7wXJ/w
- ZObr95WXADqE8qPSJjm7aU1Xn7rMZq7YCKOsQ/NoPHAlr9tGwQQMlRT5AJtC6ibQh7e/moFO7
- BE7+NmPLf4pVPW2Nd4m8F2FOaVSzeQEWg45Ll7LCk5yhGpO8TEgnqLVYnzmmpEDxHEQEdd/S 
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <CAP8UFD0ht+ozCMguGwBc19dd9ViXG4tTE0mdaOQ+JVXhSOk02Q@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:KzWUvID0MDaahfX1Y8Bu4dXwOuKY+MjB9igurBJZFVvpcumBtmf
+ zCu4l1Ym+M8u9nzs4JCprHFhmYLTeNzrcMqUmEb+R4YTz4zfL/J21bJSFnnS+zf6k0SL+VH
+ kXnfn9u+I6jAcvlTi+dXTVknGxTtlRi5M9cLlDjlXfj7k/c7suLBC3JR4MmAUHgdk2kjwAz
+ NW0Fy38Af2OB6sOKqldeA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/GzoPjoEw6s=:GvgU5yrK4uPd1RE+9wiv7w
+ MiYxhRiRQ67O1DttlBfZsWxj0BHvxvOc0NhMkKqZS2GNAccwfO3WCAr3hq5OV5qV28nFfJmSZ
+ yE6/wh0DySIEiqJMG79MYP0krCK+jXdRMQFTGnJI+2uKsRk2TRrb8YXjhS1BgYRwE3bssecqW
+ SdhV8uo9fmlmg3h9f1A9Bjgpf5dfEXkTMrI0V3i6fSOPh2YnRpjGOmE1MTngXJIDv2yXeuXDa
+ /K/9d6/NMDAxKi4lPB3eFfg6/f/50a0I+cQtf3o/t02wcWpRGaETfmk6l/pm89Tu19WbBbhY/
+ gNPfVzjG24h2dQH78LCFjm21Tz0c5vtwkOVhECKncq1ASrnF1j6VGXItEppXMlIRXFhshQKda
+ Tslr3HRbGCZ62d9zYegbNuI1KcUy18xJcPW7WeUd710OFGtGm5NzZG9kPD/NgS2G1kYBLRLhQ
+ xDyhi7z06to+82DBtLTYJJGM3qpXZEAgqDNrrlRaPem12A5BkpXCUJpw3Q2+DgaM62Avl8B21
+ Agqih0rExKTaQ+M2If9wauldMvk55fOV02DKbsRlMiZuPszyEKu5l490M4JROhFOr+k71ECQ/
+ HdzM11u/Ismm7gviD6jldJNx6zXuWutF9VYZVb3eCk14YE8p6kUThTWKPb2gwgcNstGd++XXo
+ Vl9bt6vEYRI172ZzU4mZrcPFpmMDsqU9LdUihL+fVu2UJx1pBBsTA3kDpXX66O+e0aOWeCuQS
+ hTxuPlSdLNEABBVir8TXYqmZRYuool7qALBj/bVJM2OcDM+1VPBxisSqCxoMWcZle1YUkD8s 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293892>
 
-The "seq" is not understood by all shells,
-using printf fixes this,
+Hi Chris,
 
-index 20a3ffe..48d964e 100755
---- a/t/t6044-merge-unrelated-index-changes.sh
-+++ b/t/t6044-merge-unrelated-index-changes.sh
-@@ -20,7 +20,7 @@ test_description="merges with unrelated index changes"
- #   Commit E: renames a->subdir/a, adds subdir/e
+On Sat, 7 May 2016, Christian Couder wrote:
 
- test_expect_success 'setup trivial merges' '
--       seq 1 10 >a &&
-+       printf 1 2 3 4 5 7 8 9 10 >a &&
-        git add a &&
-        test_tick && git commit -m A &&
+> On Fri, May 6, 2016 at 5:34 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Fri, 6 May 2016, Christian Couder wrote:
+> >
+> >> On Thu, May 5, 2016 at 10:07 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+> >> > Am 05.05.2016 um 11:50 schrieb Christian Couder:
+> >> >>
+> >> >> On Mon, Apr 25, 2016 at 5:05 PM, Johannes Schindelin
+> >> >> <Johannes.Schindelin@gmx.de> wrote:
+> >> >>>
+> >> >>> Hi Chris,
+> >> >>>
+> >> >>> On Sun, 24 Apr 2016, Christian Couder wrote:
+> >> >>>
+> >> >>>> diff --git a/run-command.c b/run-command.c
+> >> >>>> index 8c7115a..29d2bda 100644
+> >> >>>> --- a/run-command.c
+> >> >>>> +++ b/run-command.c
+> >> >>>> @@ -85,7 +85,7 @@ static inline void close_pair(int fd[2])
+> >> >>>>   }
+> >> >>>>
+> >> >>>>   #ifndef GIT_WINDOWS_NATIVE
+> >> >>>> -static inline void dup_devnull(int to)
+> >> >>>> +void dup_devnull(int to)
+> >> >>>>   {
+> >> >>>
+> >> >>>
+> >> >>> The #ifndef GIT_WINDOWS_NATIVE rings very, very loud alarm bells.
+> >> >>
+> >> >>
+> >> >> Yeah, but I must say that I don't know what I should do about this.
+> >> >> Do you have a suggestion? Should I try to implement the same function
+> >> >> for Windows?
+> >
+> > No, you should change the code that requires that ugly dup()ing so that it
+> > can be configured to shut up.
+> 
+> After taking a look, it looks like a routine that does nothing could
+> be passed to set_error_routine() and that could do part of the trick.
+> 
+> This part might not be too ugly, but it would anyway be more complex,
+> less close to what the code is doing now and more error prone, as one
+> also need to make sure that for example no warning() or
+> fprintf(stderr, ...) are called and nothing is printed on stdout.
 
-@@ -42,7 +42,7 @@ test_expect_success 'setup trivial merges' '
-        test_tick && git commit -m C &&
+I am afraid that you *have* to do that, though, if you truly want to
+libify the code.
 
-        git checkout D &&
--       seq 2 10 >a &&
-+       printf 2 3 4 5 7 8 9 10 >a &&
+Of course you can go with really ugly workarounds instead. Something like
+a global flag that die() and error() and warning() respect. It would
+incur some technical debt, but it would make your life easier in the short
+run.
+
+Both the real solution and the workaround would be better than the current
+version of the patches that dup() back and forth, just to avoid addressing
+the real problem.
+
+Ciao,
+Dscho
