@@ -1,385 +1,145 @@
-From: tboegi@web.de
-Subject: [PATCH v9 2/6] convert.c: stream and early out
-Date: Sat,  7 May 2016 08:11:00 +0200
-Message-ID: <1462601460-23543-1-git-send-email-tboegi@web.de>
-References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] mingw: introduce the 'core.hideDotFiles' setting
+Date: Sat, 7 May 2016 08:44:22 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605070801540.2963@virtualbox>
+References: <17d30bb680a0452efd7b3c4f42e2f94478a86273.1462372716.git.johannes.schindelin@gmx.de> <xmqqr3dhhcd7.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1605061658580.2963@virtualbox> <xmqqh9eb5eo0.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 07 08:06:29 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Erik Faye-Lund <kusmabite@googlemail.com>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 07 08:45:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayvNk-0003c4-N8
-	for gcvg-git-2@plane.gmane.org; Sat, 07 May 2016 08:06:29 +0200
+	id 1ayvz4-00005t-JU
+	for gcvg-git-2@plane.gmane.org; Sat, 07 May 2016 08:45:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751857AbcEGGGM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 May 2016 02:06:12 -0400
-Received: from mout.web.de ([212.227.17.11]:57715 "EHLO mout.web.de"
+	id S1751018AbcEGGok (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 May 2016 02:44:40 -0400
+Received: from mout.gmx.net ([212.227.17.21]:49766 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750738AbcEGGGH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 May 2016 02:06:07 -0400
-Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb103) with
- ESMTPSA (Nemesis) id 0MNcMo-1b1hb73P3K-0079yN; Sat, 07 May 2016 08:06:03
+	id S1750740AbcEGGok (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 May 2016 02:44:40 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LwJko-1biY3e1IFS-0186OF; Sat, 07 May 2016 08:44:20
  +0200
-X-Mailer: git-send-email 2.0.0.rc1.6318.g0c2c796
-In-Reply-To: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:cOwTEhtMBoF1PO7iY8fzHg9/LQ72wCn8+nS+xX3e3kHcjm6KmMk
- I2eAkmRTnTMcsjil/kM6lnWA0PZx3E5it9m2Eqd8Dt5XjxNrMij/SoeaEdEyO7yYDCkLhj/
- AHMGAzjeRmm2WtFL9h3Uxahw+OiSAlHw0v8XTPqkxk5OGTWm3j271eG1Lu0UpX/1mlBQHmk
- YMWTV9FWJZwas+1B8z0ew==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:A5zKQUMU+qs=:6w7RDmmFYsdXOoChr7Wr/E
- p7vffDT0oug20sCIzHgrchryI6x4/Dv8UiAvKz2Qqng/mb59v9QWaRVO7vvV0udR/EnnLm1pz
- nG/yN4eMZ/Z7QTC3FJ13NNNmKJ98pdTarIVoUPMeWCsM4Ly0Njjhw2brzg0Y7E44H4HQtl4rZ
- V1yUdPBnVwkPbnU7Ke81RcRHqTZMvcOqlwEaKEbP/t10muEi5MOcINTxExXczs/jFFwMrc543
- huLeC1eEhFy+8i2kwosb50whoOdTLKKdUoCGQvwFnHmTneXtd0JZsSaccBRgLDrHQp+bHaNwi
- +sSktWr6ddveickfl6Lu8TVf6H4BuLRPxTkO5KafxL6CQYKtp2mIsYxHh3qddeZshH0mCz6sE
- dI/1LNh16+o/hRDP4KZo07plQIWGSUlPmc9gIkwWzdc0dCt8PR7whF4GJP+cQ2SkSRF2bJF5R
- z7Zai9LiQlMt0vJMpXXX7eY4JSzCYIZRghp8It6wHSdQJzlqQmt0mvUejnQyE6kfhXHfA1R7J
- RmmmPPzt+wjtT414uDM9UQSP1mFdueumbN6xJzVSk9VbtkB6e1w8JmZgQdP0Z1hOGKXL9JWHE
- voD7INNhSNDO4gvNVRwO5f695RbohcCfK6Q82q8QUDvWkLJJo8szBlnYo8rIMvy4I0HvhPuFN
- 6aYwkDjL6zC0KUn+lLhWvZ1eD5wF4DCiDeoWn2gfoxYQwg+WYtIkxp1G1oNh0xw/4wJ1V8DIw
- h4JZl9beWKM44QrLk6jcQ3bK/YBRhMysrdj8P74AGimsFfXBfP74q1AsPcrVdsab7tqwFXSn 
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqqh9eb5eo0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:TxhAWkTGyFtjiVjh92aHIE83hsTo9X322cVkggDSiYN2yJaDYlc
+ 5CeIPS05uFIvE2yTxmbLD/nQTOG1Ofzuv3O8wT1P+6p5vQoi/9mRIQxiJTxKb0GZZovUmvh
+ NRr+0d8JPAALMf5BBHtv5pbFa7ZFMnzUfudYQ9eA19UR/+OMoCcAO4NHWEvQGSPb1mAkZlq
+ 0lkvrn2Mj01Wrg6b/PV2w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:hy5ZW2CoDWQ=:pNm2SjpEAK5bvWq1gHSUro
+ JciHImX9zKv/3eSi9bcbB5uCSWaHHKJkiwDhjV4OJjdSnBkqc5DUUv9j6y/4ZiA2XB18V7qnZ
+ VbPS1vSFWleZWnWQMIMU8dseygUDDd8Dj8LOCeSEBKZTGglHf6SfzVF0wd5KciijjQDGjevoy
+ 0pXw52r4jbubi/6Ms5P0vyA0FdF0CkC4i7JEFWQal3m0CnFBRKh63UORq28lb7EM18r5Pxz4F
+ HXtF5ohHB9pFvT2NNQyoFSOhg1gY4UvojK0TS4va/XuV1jH5S+trVXctP1m6YHeflgq3W2MQI
+ ArkaQHlGTcbJMMBOZQdYZ0XKlIECQ20hkzBwXqQK31GQDEjgm4ZvbWPYl8ey7YG5LYkKUIXqv
+ Ix+6XnF1u3u6YWA9xAfCHigrJ8aeYjwHRCK2uQoCPtlJL2y+QmS22oh8l/YTK/xsQS09v6Cnw
+ dei0uPQQkCAanNlxqSlQPhz9+JFmKXkxEuexJlbiFHBCuWr5Hw81AWqtqcVIGwhfMxrXKv1qz
+ yF8eJjwCTGw/HsMV+H69y625mcI/nCk6r3CBPyE+tv5dt0nl8ncnRBCpCbqC+FzZbyfaUxcKc
+ pQlJ663zh0KQGerVzY6/e9wfVHZBZEUFl8kki4uRCccCdkfaxh9wSfQawszgl9FhD7bU2ih94
+ BHgTGQtPJ39VH4Kqa9idKJR6cmdN2zWgH1uYfTIbJI8HsQC0gqTngn/EJesWFNr7iFVk2okxn
+ nxbI9LBgL5xsabphWdMafAH1fnctBHoFb9qUs5BVatYPWts68E3q1z0px+jZe0bisvafCIy+ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293882>
 
-=46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
+Hi Junio,
 
-When statistics are done for the autocrlf handling, the search in
-the content can be stopped, if e.g
-- a search for binary is done, and a NUL character is found
-- a search for CRLF is done, and the first CRLF is found.
+On Fri, 6 May 2016, Junio C Hamano wrote:
 
-Similar when statistics for binary vs non-binary are gathered:
-Whenever a lone CR or NUL is found, the search can be aborted.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> I agree with the goal of the change, but I am having a hard time
+> >> justifying this addition.  Primarily because I do not understand the
+> >> need for this.
+> >> 
+> >> In order to be prepared to handle HIDE_DOTFILES_TRUE case,
+> >> mingw_mkdir() needs to be taught about needs_hiding() and
+> >> make_hidden() already.  Why isn't it sufficient to teach
+> >> needs_hiding() to check with !strcmp(basename(path, ".git")) under
+> >> HIDE_DOTFILES_DOTGITONLY?
+> >
+> > The reason was that I wanted to avoid to compare a name unnecessarily
+> > when I already had a code path that knew perfectly well that a given
+> > directory is the .git/ directory.
+> >
+> > I made the change. It was more painful than I expected, as two bugs
+> > were uncovered, both introduced after the original patch by Erik.
+> > ...
+> > It worries me slightly that the new code is so different from the code
+> > that was tried and tested through all those years (although admittedly
+> > it is unlikely anybody ever ran with core.hideDotFiles = true, given
+> > above findings). But I guess that cannot be helped. Not unless we
+> > reintroduce those two bugs.
+> 
+> I have a huge preference for a code that has been production for
+> years over a new code that would cook at most two weeks in 'next'.
 
-When checking out files in "auto" mode, any file that has a "lone CR"
-or a CRLF will not be converted, so the search can be aborted early.
+I agree. However, it does not fill me with confidence that we did not
+catch those two bugs earlier. Even one round of reviews (including a
+partial rewrite) was better than all that time since the regressions were
+introduced.
 
-Add the new bit, CONVERT_STAT_BITS_ANY_CR,
-which is set for either lone CR or CRLF.
+Besides, your innocuous remark that needs_hiding() could determine whether
+we are looking at ".git" revealed a problem with the original design:
+there can be .git *files*. Support for .git files was introduced in
+February 2008, so it is my fault that I did not catch this in January
+2010, when I added the "dotGitOnly" option.
 
-Many binary files have a NUL very early (within the first few bytes,
-latest within the first 1..2K).
-It is often not necessary to load the whole content of a file or blob
-into memory.
+I do not think that we can fix this design other than abandoning the
+mark_as_git_dir() function.
 
-Use a streaming handling for blobs and files in the worktree.
+> As I said, the part regarding the mark_as_git_dir() in the message
+> you are responding to was me asking you to explain, not me objecting
+> to the code.
 
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
- convert.c | 159 ++++++++++++++++++++++++++++++++++++++++--------------=
---------
- 1 file changed, 103 insertions(+), 56 deletions(-)
+I understood. My initial reaction was: it makes a total lot of sense to
+simplify the patch by removing that global.
 
-diff --git a/convert.c b/convert.c
-index b1614bf..24ab095 100644
---- a/convert.c
-+++ b/convert.c
-@@ -3,6 +3,7 @@
- #include "run-command.h"
- #include "quote.h"
- #include "sigchain.h"
-+#include "streaming.h"
-=20
- /*
-  * convert.c - convert a file when checking it out and checking it in.
-@@ -13,10 +14,10 @@
-  * translation when the "text" attribute or "auto_crlf" option is set.
-  */
-=20
--/* Stat bits: When BIN is set, the txt bits are unset */
- #define CONVERT_STAT_BITS_TXT_LF    0x1
- #define CONVERT_STAT_BITS_TXT_CRLF  0x2
- #define CONVERT_STAT_BITS_BIN       0x4
-+#define CONVERT_STAT_BITS_ANY_CR    0x8
-=20
- enum crlf_action {
- 	CRLF_UNDEFINED,
-@@ -31,30 +32,36 @@ enum crlf_action {
-=20
- struct text_stat {
- 	/* NUL, CR, LF and CRLF counts */
--	unsigned nul, lonecr, lonelf, crlf;
-+	unsigned stat_bits, lonecr, lonelf, crlf;
-=20
- 	/* These are just approximations! */
- 	unsigned printable, nonprintable;
- };
-=20
--static void gather_stats(const char *buf, unsigned long size, struct t=
-ext_stat *stats)
-+static void do_gather_stats(const char *buf, unsigned long size,
-+			    struct text_stat *stats, unsigned earlyout)
- {
- 	unsigned long i;
-=20
--	memset(stats, 0, sizeof(*stats));
--
-+	if (!buf || !size)
-+		return;
- 	for (i =3D 0; i < size; i++) {
- 		unsigned char c =3D buf[i];
- 		if (c =3D=3D '\r') {
-+			stats->stat_bits |=3D CONVERT_STAT_BITS_ANY_CR;
- 			if (i+1 < size && buf[i+1] =3D=3D '\n') {
- 				stats->crlf++;
- 				i++;
--			} else
-+				stats->stat_bits |=3D CONVERT_STAT_BITS_TXT_CRLF;
-+			} else {
- 				stats->lonecr++;
-+				stats->stat_bits |=3D CONVERT_STAT_BITS_BIN;
-+			}
- 			continue;
- 		}
- 		if (c =3D=3D '\n') {
- 			stats->lonelf++;
-+			stats->stat_bits |=3D CONVERT_STAT_BITS_TXT_LF;
- 			continue;
- 		}
- 		if (c =3D=3D 127)
-@@ -67,7 +74,7 @@ static void gather_stats(const char *buf, unsigned lo=
-ng size, struct text_stat *
- 				stats->printable++;
- 				break;
- 			case 0:
--				stats->nul++;
-+				stats->stat_bits |=3D CONVERT_STAT_BITS_BIN;
- 				/* fall through */
- 			default:
- 				stats->nonprintable++;
-@@ -75,6 +82,8 @@ static void gather_stats(const char *buf, unsigned lo=
-ng size, struct text_stat *
- 		}
- 		else
- 			stats->printable++;
-+		if (stats->stat_bits & earlyout)
-+			break; /* We found what we have been searching for */
- 	}
-=20
- 	/* If file ends with EOF then don't count this EOF as non-printable. =
-*/
-@@ -86,41 +95,62 @@ static void gather_stats(const char *buf, unsigned =
-long size, struct text_stat *
-  * The same heuristics as diff.c::mmfile_is_binary()
-  * We treat files with bare CR as binary
-  */
--static int convert_is_binary(unsigned long size, const struct text_sta=
-t *stats)
-+static void convert_nonprintable(struct text_stat *stats)
- {
--	if (stats->lonecr)
--		return 1;
--	if (stats->nul)
--		return 1;
- 	if ((stats->printable >> 7) < stats->nonprintable)
--		return 1;
--	return 0;
-+		stats->stat_bits |=3D CONVERT_STAT_BITS_BIN;
-+}
-+
-+static void gather_stats(const char *buf, unsigned long size,
-+			 struct text_stat *stats, unsigned earlyout)
-+{
-+	memset(stats, 0, sizeof(*stats));
-+	do_gather_stats(buf, size, stats, earlyout);
-+	convert_nonprintable(stats);
- }
-=20
--static unsigned int gather_convert_stats(const char *data, unsigned lo=
-ng size)
-+
-+static unsigned get_convert_stats_sha1(unsigned const char *sha1,
-+				       unsigned earlyout)
- {
-+	struct git_istream *st;
- 	struct text_stat stats;
--	int ret =3D 0;
--	if (!data || !size)
--		return 0;
--	gather_stats(data, size, &stats);
--	if (convert_is_binary(size, &stats))
--		ret |=3D CONVERT_STAT_BITS_BIN;
--	if (stats.crlf)
--		ret |=3D CONVERT_STAT_BITS_TXT_CRLF;
--	if (stats.lonelf)
--		ret |=3D  CONVERT_STAT_BITS_TXT_LF;
-+	enum object_type type;
-+	unsigned long sz;
-=20
--	return ret;
-+	if (!sha1)
-+		return 0;
-+	memset(&stats, 0, sizeof(stats));
-+	st =3D open_istream(sha1, &type, &sz, NULL);
-+	if (!st) {
-+		return 0;
-+	}
-+	if (type !=3D OBJ_BLOB)
-+		goto close_and_exit_i;
-+	for (;;) {
-+		char buf[1024];
-+		ssize_t readlen =3D read_istream(st, buf, sizeof(buf));
-+		if (readlen < 0)
-+			break;
-+		if (!readlen)
-+			break;
-+		do_gather_stats(buf, (unsigned long)readlen, &stats, earlyout);
-+		if (stats.stat_bits & earlyout)
-+			break; /* We found what we have been searching for */
-+	}
-+close_and_exit_i:
-+	close_istream(st);
-+	convert_nonprintable(&stats);
-+	return stats.stat_bits;
- }
-=20
--static const char *gather_convert_stats_ascii(const char *data, unsign=
-ed long size)
-+static const char *convert_stats_ascii(unsigned convert_stats)
- {
--	unsigned int convert_stats =3D gather_convert_stats(data, size);
--
-+	unsigned mask =3D CONVERT_STAT_BITS_TXT_LF |
-+		CONVERT_STAT_BITS_TXT_CRLF;
- 	if (convert_stats & CONVERT_STAT_BITS_BIN)
- 		return "-text";
--	switch (convert_stats) {
-+	switch (convert_stats & mask) {
- 	case CONVERT_STAT_BITS_TXT_LF:
- 		return "lf";
- 	case CONVERT_STAT_BITS_TXT_CRLF:
-@@ -132,24 +162,45 @@ static const char *gather_convert_stats_ascii(con=
-st char *data, unsigned long si
- 	}
- }
-=20
-+static unsigned get_convert_stats_wt(const char *path)
-+{
-+	struct text_stat stats;
-+	unsigned earlyout =3D CONVERT_STAT_BITS_BIN;
-+	int fd;
-+	memset(&stats, 0, sizeof(stats));
-+	fd =3D open(path, O_RDONLY);
-+	if (fd < 0)
-+		return 0;
-+	for (;;) {
-+		char buf[1024];
-+		ssize_t readlen =3D read(fd, buf, sizeof(buf));
-+		if (readlen < 0)
-+			break;
-+		if (!readlen)
-+			break;
-+		do_gather_stats(buf, (unsigned long)readlen, &stats, earlyout);
-+		if (stats.stat_bits & earlyout)
-+			break; /* We found what we have been searching for */
-+	}
-+	close(fd);
-+	convert_nonprintable(&stats);
-+	return stats.stat_bits;
-+}
-+
- const char *get_cached_convert_stats_ascii(const char *path)
- {
--	const char *ret;
--	unsigned long sz;
--	void *data =3D read_blob_data_from_cache(path, &sz);
--	ret =3D gather_convert_stats_ascii(data, sz);
--	free(data);
--	return ret;
-+	unsigned convert_stats;
-+	unsigned earlyout =3D CONVERT_STAT_BITS_BIN;
-+	convert_stats =3D get_convert_stats_sha1(get_sha1_from_cache(path),
-+					       earlyout);
-+	return convert_stats_ascii(convert_stats);
- }
-=20
- const char *get_wt_convert_stats_ascii(const char *path)
- {
--	const char *ret =3D "";
--	struct strbuf sb =3D STRBUF_INIT;
--	if (strbuf_read_file(&sb, path, 0) >=3D 0)
--		ret =3D gather_convert_stats_ascii(sb.buf, sb.len);
--	strbuf_release(&sb);
--	return ret;
-+	unsigned convert_stats;
-+	convert_stats =3D get_convert_stats_wt(path);
-+	return convert_stats_ascii(convert_stats);
- }
-=20
- static int text_eol_is_crlf(void)
-@@ -219,16 +270,10 @@ static void check_safe_crlf(const char *path, enu=
-m crlf_action crlf_action,
-=20
- static int has_cr_in_index(const char *path)
- {
--	unsigned long sz;
--	void *data;
--	int has_cr;
--
--	data =3D read_blob_data_from_cache(path, &sz);
--	if (!data)
--		return 0;
--	has_cr =3D memchr(data, '\r', sz) !=3D NULL;
--	free(data);
--	return has_cr;
-+	unsigned convert_stats;
-+	convert_stats =3D get_convert_stats_sha1(get_sha1_from_cache(path),
-+					       CONVERT_STAT_BITS_ANY_CR);
-+	return convert_stats & CONVERT_STAT_BITS_ANY_CR;
- }
-=20
- static int crlf_to_git(const char *path, const char *src, size_t len,
-@@ -249,10 +294,10 @@ static int crlf_to_git(const char *path, const ch=
-ar *src, size_t len,
- 	if (!buf && !src)
- 		return 1;
-=20
--	gather_stats(src, len, &stats);
-+	gather_stats(src, len, &stats, CONVERT_STAT_BITS_BIN);
-=20
- 	if (crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_AUTO_INPU=
-T || crlf_action =3D=3D CRLF_AUTO_CRLF) {
--		if (convert_is_binary(len, &stats))
-+		if (stats.stat_bits & CONVERT_STAT_BITS_BIN)
- 			return 0;
-=20
- 		if (crlf_action =3D=3D CRLF_AUTO_INPUT || crlf_action =3D=3D CRLF_AU=
-TO_CRLF) {
-@@ -309,11 +354,13 @@ static int crlf_to_worktree(const char *path, con=
-st char *src, size_t len,
- {
- 	char *to_free =3D NULL;
- 	struct text_stat stats;
-+	unsigned earlyout =3D CONVERT_STAT_BITS_TXT_CRLF | CONVERT_STAT_BITS_=
-BIN;
-+
-=20
- 	if (!len || output_eol(crlf_action) !=3D EOL_CRLF)
- 		return 0;
-=20
--	gather_stats(src, len, &stats);
-+	gather_stats(src, len, &stats, earlyout);
-=20
- 	/* No "naked" LF? Nothing to convert, regardless. */
- 	if (!stats.lonelf)
-@@ -327,7 +374,7 @@ static int crlf_to_worktree(const char *path, const=
- char *src, size_t len,
- 				return 0;
- 		}
-=20
--		if (convert_is_binary(len, &stats))
-+		if (stats.stat_bits & CONVERT_STAT_BITS_BIN)
- 			return 0;
- 	}
-=20
---=20
-2.0.0.rc1.6318.g0c2c796
+It was more painful than anticipated only because I did not expect any
+bugs to be revealed in the process, certainly not hard-to-debug ones (I
+had to patch submodule--helper's code to allow attaching a debugger at a
+very specific point during t1013 so I could single-step through it, and it
+took quite a couple of iterations to pinpoint the problem).
+
+Even as it was painful, it was useful, too, though, as bugs were revealed
+and squashed. And an additional test was introduced and unnecessary code
+was dropped.
+
+In the same vein, was wondering whether we want to hide those Windows-only
+core config options behind a platform_core_config() which would then be
+#define'd to point to mingw_core_config()?
+
+> So given the knowledge that
+> 
+>  - I am not fundamentally opposed to having an extra call there; - in
+>  fact, I suspect it may even be a good thing to have one; - I am not
+>  entirely happy with the name mark_as_git_dir; and - the rewrite to lose
+>  that call was more painful than anticipated.
+> 
+> would you still choose to lose the extra call and go with
+> !stricmp(basename(path), ".git")?  The best approach for v2 might be to
+> 
+>  - Keep the two bugfixes that was uncovered during this exercise; - keep
+>  the change to init_db() to add a call to mark_as_git_dir(); -
+>  optionally, come up with a better name for that function; and - drop
+>  the setting of configuration varaibles that was unnecessary.
+
+Well, given that I learned that I cannot use basename() but have to
+partially copy its code, the simpler solution *is* to abandon the
+mark_as_git_dir() approach.
+
+See v2 (my apologies for sending it only today, I encountered a bug in my
+patch series sending script and was unable to fix it yesterday).
+
+Ciao,
+Dscho
