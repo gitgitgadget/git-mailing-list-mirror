@@ -1,73 +1,94 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] mingw: introduce the 'core.hideDotFiles' setting
-Date: Sat, 7 May 2016 08:01:43 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605070800060.2963@virtualbox>
-References: <17d30bb680a0452efd7b3c4f42e2f94478a86273.1462372716.git.johannes.schindelin@gmx.de> <xmqqr3dhhcd7.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1605061658580.2963@virtualbox> <xmqqh9eb5eo0.fsf@gitster.mtv.corp.google.com>
- <xmqqwpn73y3v.fsf@gitster.mtv.corp.google.com>
+From: tboegi@web.de
+Subject: [PATCH v9 0/6] convert-eol-autocrlf, old 5..10 now 1..6
+Date: Sat,  7 May 2016 08:10:56 +0200
+Message-ID: <1462601456-23439-1-git-send-email-tboegi@web.de>
+References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Erik Faye-Lund <kusmabite@googlemail.com>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 07 08:02:20 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 07 08:06:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayvJj-0000Qq-8Y
-	for gcvg-git-2@plane.gmane.org; Sat, 07 May 2016 08:02:19 +0200
+	id 1ayvNV-0003Rf-Sk
+	for gcvg-git-2@plane.gmane.org; Sat, 07 May 2016 08:06:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750936AbcEGGCE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 May 2016 02:02:04 -0400
-Received: from mout.gmx.net ([212.227.15.19]:56810 "EHLO mout.gmx.net"
+	id S1750985AbcEGGGF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 May 2016 02:06:05 -0400
+Received: from mout.web.de ([212.227.17.12]:50462 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750738AbcEGGCD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 May 2016 02:02:03 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0ML72n-1ayeKF18nB-000I0P; Sat, 07 May 2016 08:01:42
+	id S1750738AbcEGGGD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 May 2016 02:06:03 -0400
+Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0LnS4I-1bZeq61dKo-00hbBq; Sat, 07 May 2016 08:06:00
  +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqwpn73y3v.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:ZCcSCkACGWVP+h5zlTx9GT7zIqCi3AvdBtFDb7BnzVJygRXPUZO
- Cl4NPKHetSlnb5wA9PejMYJpTMfDl7kgz5MwomVt25wXfuYUj+TMpyX/ZN9Xr72cVg78vzc
- RuK37X6I2vjcWnS9niCNoqWzanRvCdBXVPK9oufVTlxwF/AEVt/kN9J7dVusINCxpKYV8CI
- /0H6UIhTALOmmsoanlPzw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:PmJJH07/h0I=:TpmA3Ht3eCjfQRtiRWQz90
- xgBRKKzGyn9GIbIm6EesFGPJ7lh60qB9OyZg60A5LTJeZMjXNb4mlcCBs9wfqTnW+bvzFBgT4
- fx7ivArZpZ7e8T+AsNivZg7GTsV56UxiuI2f0+CmcsQMKZg5J0OUbRkOdsnu6TeQicfjZI96i
- Avhr1P4ZJCZiwycB8MLgg/ELTfKUZhThe0+k68YAGB8/kThWTA1MekFxPYL2iO9Us8/Uq0XIK
- cm6ipGxeni6xwcxyfhhmRo7GySdJdiaBzOiFtiHClChX2vBc7bmQ7q+POwf44khCHhO4R3d2T
- 8ODFpbWt3AFff4sV1RYn9vNDRWj5KaYfMQGYWNqmaYOv9wzRk6IzRvIACfkk5AfWoFSNLUfg0
- dgTkCR2KFwYnsSX4nPw72d+nVza4HQ4TtW2/mj1LMn0+1trRmZHQsVCXtVHWSCk5dtUzfGpzP
- hhrGIiIhfLZjCxIuAw7UtvKVo/oe7UR1/+wBmSCWTME5cVa6CZVz8g1KcvfEljtAFNBqw11ZP
- AuB2fjq6nYmoHzusqqPoe13fUlyDvk8ibNLCnbm/Opdltkm/TcBFEQ+9Y1H+yn/Tdb3Mg2ek+
- xxru5pob5HnkMDcU+wL0GdJso97nKL2lmhLNiHNm7IcsmfiUoa/1vM5/ZLSHLFn8UWoHsZKI8
- ZAb2u3WIlsZKlk1uBSZwRK8Z+8th8nrl2umPSYmsPZFit6g5YOFhRe4fWcPnI9lKkkYmeca0V
- BM9cJE+VfxtNJEM/7UHdGRvJMua/DN9eduoy7BpbSJLz0Kat7/rTyMliEbgGLvafPHl82iQJ 
+X-Mailer: git-send-email 2.0.0.rc1.6318.g0c2c796
+In-Reply-To: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:KVcNbspapE+1lraq4hM2K7O5tCvIwkwFkaINe+gne8rXuQF8J//
+ TrkOVLredm/TvUezp40kaMJ5grivuWxZ5T+82Yp/7k/BfdkVq0I2Z1nURfFlw9la9P4Gh/5
+ XPbN95QZccW+l2O3qf4aIKNfApOAwC9OVDbZ5tnxUdeFFVF+aaZhw2Z1TvL77Ip6bJEM67s
+ fSVnbOZvo1i25Er4OqMUQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:FUtWSHSO9mo=:HxnScVvZG2i1O41tdGXUCq
+ NYqAc0bntBA4UbYdZUX0EOvfMK+12vVF0TsASRXCzix+nsYvFCyEyNeMcaF7K+O0irnli6fcu
+ N6hQldRXAz2oDOlFV11WwWl7u0lfCUAdkdA0+KAmFibLhduHkmTrvrCFlwuaFSYdpIPiRLb49
+ HBkHeB+JEweIHe68ojJ6UPI7+IkJQd4DEe1ghUT1AAiGuPJQxZxQ3cyVu9VwPqqUsTx5qd92g
+ MphjfMSBye4VBeX7AhiSVjU+PgztkbpSCa0mWOKL9sOIgfKJ1ICo3sK8FiHRwaBSwoEZqb8eF
+ SV4AainucCcmuRtVLR0gjkjfGcuBks8C08anu3TGaeuVpcZ7UUFDBZaUkX4tyBR8HUqou/bft
+ ho2g/fX2vMLUfkeS+WWxxmKIyckPNIsCA2WdWe3Mn7PW5aPaf47EBB4/c2XwNtenfCy70plty
+ 3kxmO76Dd8aRK+DMDjXapP8HXlR77amxMTJZGlc2VcbkDGFYlTz2f7pIVVrwvaIDUGcK2ijnE
+ otlFnn4Nr3ja4zkxR2UfOEHvTMnXU+6GXLIcSiDKxljhdxtcxjfXcnqTy0nyKwTvqhKzftWfy
+ vjbEbXWAZTIP6NjrXhHKR1ISOnO1Wdq+LyWtufHIfNK0A+pX82g7gElFNy+7HEF0OhMJsWLnU
+ 3Ezx9rI12fDh+F3sALZzMmfwULKU8Vtr83prwT3dkTB1a6D9O3T/96b7aebolrMZ6D71A0d8q
+ 9an6lLW669GuEA7UeB8z++lvRc7YbMgDfu4r84bZlOWN8MX0nt5yyLMiFSexMyPElWO/fW/A 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293875>
 
-Hi Junio,
+=46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-On Fri, 6 May 2016, Junio C Hamano wrote:
+Changes since v8:
+  As discussed earlier,  1..4 should be broken out into=20
+  tb/autocrlf-fix or so.
+  1..4 are not part of this series any more.
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > If you are sure we do not need that, that is one less reason we
-> > would be better off without mark_as_git_dir().
-> 
-> Oops.  To many rounds of rewriting followed by a rather careless
-> final round of reading.  I couldn't decide between "That is one less
-> reason why we need it" and "That is one more reason why we are
-> better off without it".
+  The old 10/10 is now 6/6.
+  It is replaced by "ce_compare_data() checks for a sha1 of a path"
+    It now checks for "What would git add change in the index",
+    and not "is the working tree clean after checkout" -=20
+    thats how it should be.
+    Basically an old limititation of "has_crlf_in_index()" has been fou=
+nd and
+    fixed.
+    The commit message may need some tweaking, and
+    even the implementation, so feedback is welcome.
+    Beside that, I haven't run the tests under Windows yet.
 
-Heh. For the record, I did understand what you meant the first time round.
+Torsten B=C3=B6gershausen (6):
+  read-cache: factor out get_sha1_from_index() helper
+  convert.c: stream and early out
+  convert: unify the "auto" handling of CRLF
+  convert.c: more safer crlf handling with text attribute
+  t6038; use crlf on all platforms
+  convert: ce_compare_data() checks for a sha1 of a path
 
-Ciao,
-Dscho
+ Documentation/config.txt        |  14 +-
+ Documentation/gitattributes.txt |  24 ++-
+ cache.h                         |   4 +
+ convert.c                       | 362 +++++++++++++++++++++++++++-----=
+--------
+ convert.h                       |  26 ++-
+ read-cache.c                    |  33 ++--
+ sha1_file.c                     |  17 +-
+ t/t0025-crlf-auto.sh            |  12 +-
+ t/t0027-auto-crlf.sh            |  98 +++++------
+ t/t6038-merge-text-auto.sh      |  60 +++----
+ 10 files changed, 407 insertions(+), 243 deletions(-)
+
+--=20
+2.0.0.rc1.6318.g0c2c796
