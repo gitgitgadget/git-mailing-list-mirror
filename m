@@ -1,84 +1,116 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v2 2/2] mingw: remove unnecessary definition
-Date: Sat, 7 May 2016 08:45:09 +0200 (CEST)
-Message-ID: <fc2b034244a6f63de354c91d41ecc82d4ef40420.1462603453.git.johannes.schindelin@gmx.de>
-References: <17d30bb680a0452efd7b3c4f42e2f94478a86273.1462372716.git.johannes.schindelin@gmx.de> <cover.1462603453.git.johannes.schindelin@gmx.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Erik Faye-Lund <kusmabite@googlemail.com>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 07 08:45:40 2016
+From: Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH] Git/SVN: die when there is no commit metadata
+Date: Sat,  7 May 2016 08:58:43 +0200
+Message-ID: <1462604323-18545-1-git-send-email-chriscool@tuxfamily.org>
+Cc: Thierry Suzanne <thierry@yellownemo.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Wong <normalperson@yhbt.net>,
+	"Michael G . Schwern" <schwern@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 07 08:59:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ayvzd-0000Zb-EA
-	for gcvg-git-2@plane.gmane.org; Sat, 07 May 2016 08:45:37 +0200
+	id 1aywCv-0003DV-3Z
+	for gcvg-git-2@plane.gmane.org; Sat, 07 May 2016 08:59:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751741AbcEGGpd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 May 2016 02:45:33 -0400
-Received: from mout.gmx.net ([212.227.17.22]:63258 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751072AbcEGGpc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 May 2016 02:45:32 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MGzwE-1av8Lo36oM-00DmkF; Sat, 07 May 2016 08:45:06
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <cover.1462603453.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:ecmG597XZgghe137LtT9NOC+ydL6S5boedZmFJtlarXs/HnZ3Ck
- Z+xjJ9mWaPHSV1qtO/ZzTkUKNX+kAiA6P9YbLEo/SngMzF4jtBQGPxTlAzQ1awf9BL+t6fk
- aCwX3KBvdnrWiKxjN6DzyDhedim8qt2O913TE+dbmGtqp4llDC/8+F5KDChSOPx96xkBsPt
- d58O1oy8MOcPnvHhnSRpw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Igv4+qjDG1Y=:3rqmmW/UALL8DMQ3G8knR1
- d4brsLXPj36y5vb0zTr2OxqcHDiyY9QGA/NW5fjEavWkCQn4Nx0lz3U0GaKcpEQb4GDESxrTb
- pGjNLoYE2O0SZTHDr2f8bI4KR8A9r4TKv496dYLUNpN8OPfv/OQDeNd/C6/N2Eaz0bKfLpf6+
- 5lwynsKMt+IeOvZnzPRy8M1EyC+3plfkVC0oGI3JN+RIjnvFwCXt14q51inw6yTOsYyayNF/3
- MZxNvejORicSEW82eglmHJH/lJJh7oCvLsjbwSTj1fqbtrFrZu4HJ+kBHlcWn/7XPP8R4b/qd
- 1RqKSsPmcFzYj1GtAnVVxj22hgKk929xmQucf8TNfUSJfbWouMf5tx5E1CtDtQOvcTbdcnPSp
- T7m3zt3jUht9MsNorzKf3O1cFTutAXApCNaHSF4Ov/4ih4xA7xXvt6ZGv2fDjdGhjeKf5e78y
- 39ffAUjVB++2epn4iRGj4M8TY48CBna5BC1Se3I4h2wDTJWnHPGn0jlKLKBMVvRcHA1U1sGic
- N+Kx0ciCiLg1P4jz6gTWau2wxRUCUAPCca8cAhtHRjMIpfuMcJWU3CvNROTU6HFuNBGZ+q7Ur
- F/YW8YbQw01suzoxaeOFhz8eQ6gq2kJHRmqSvhXatjnAQLY+21gRObnkwTlcP+AzXZRPKlHG4
- skeO5jR3dMJlW17AfSTMRboXx0lMc1Q1SSIufsoGVk2DoaTO71NZsTRAZRGuZmxXQluiacgAr
- 2WwVdgpRqsEZST1aZAujvudNT1Gk2iTKdM6UBJz60eVqexRQkaa6PoduJPfnUE6QVgLAJkgk 
+	id S1751011AbcEGG7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 May 2016 02:59:13 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:37203 "EHLO
+	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750738AbcEGG7M (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 May 2016 02:59:12 -0400
+Received: by mail-wm0-f51.google.com with SMTP id a17so107999265wme.0
+        for <git@vger.kernel.org>; Fri, 06 May 2016 23:59:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=I+8j8FBKzhs9e+HLuPxEaX0EFNsfCOrKf0aodlAfNY0=;
+        b=b0FgYHCZ3WhuulmHcQuZnt9g4IkjrLUZsCiNovLtktLo0x3VMYvqWe5AJcAtrdZCqP
+         j3+KD63Hw1mqlsWlw9+fjwzv2AEcTkEqu0GfPlTiixPEZAxoHmPM5dC3/ZC+2O3rnd9l
+         XWHxqTi0Fe3WfiHioWueODd78nc+Y4bRI1+pWuKnezFVZPDrSjxgohkHS5VRsCIAMEoQ
+         fvSODTmab6iyiHFMljrxKJEXmO/oGROb7XF3/iNWoGeBrfb5qiXhl+KzJyRJ9SylSN05
+         kn/1c63FABw4jlbT2hoO/2XfJkc4hpDMpcbR5RgEv4lVt6PZdgv95pZI0Ri6nnR8S4lB
+         K1Hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=I+8j8FBKzhs9e+HLuPxEaX0EFNsfCOrKf0aodlAfNY0=;
+        b=lMl0z7bmWEcy/r7WG9aflS95O3vyXoRC8c0xnmA0noedFx1k35xEepoWdvMHUf0spu
+         cVeA7fEfRFBwxq6PI2UFrAhdCnO5IUOs8lNBDawolhwlyipJoU2RrPydyDAv59WaxrL3
+         y7eYQA7K7fGjgaJ1vig+HQXFRcRJTwq3RM1GPkBWIBW9k6+8bV+AFXrlfZCBfZX0CtsW
+         divG3ABG2t4FwUd3pf3r8WcECYnNDU1c1kHBxqc4YYoKBOfRoeLHFBL6W8S0ZsAiecUQ
+         t0he79aejItLdTaUbVAE/orTpwu7WijtWb7r/gl65A11GGgF2ZfjCUghKpp4ipzpd1YR
+         c7eA==
+X-Gm-Message-State: AOPr4FUev0UL/yBNuc1usASgzaPVS3jalf5YHfp82EqpqxwXGfWteXml2mVVELdc5bTZSw==
+X-Received: by 10.194.122.199 with SMTP id lu7mr25199822wjb.40.1462604350435;
+        Fri, 06 May 2016 23:59:10 -0700 (PDT)
+Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
+        by smtp.gmail.com with ESMTPSA id d23sm12265196wmd.1.2016.05.06.23.59.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 06 May 2016 23:59:09 -0700 (PDT)
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.8.0.rc2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293886>
 
-For some reason, the definition of the MINGW version of
-`mark_as_git_dir()` slipped into this developer's patch series to
-support building Git for Windows.
+When passing a bad --trunk option to `git svn clone`, like for example the
+same URL that we are cloning:
 
-As the `mark_as_git_dir()` function is not needed at all anymore (it was
-used originally to support the core.hideDotFiles = gitDirOnly setting,
-but we now use a different method to support that case), let's just
-remove it.
+  C:\Windows\system32>git svn clone
+  https://mycompany.svn.beanstalkapp.com/myproject --no-metadata -A
+  c:\temp\svn_to_git_users.txt
+  --trunk=https://mycompany.svn.beanstalkapp.com/myproject
+  --tags=https://mycompany.svn.beanstalkapp.com/myproject/tags
+  --branches=https://mycompany.svn.beanstalkapp.com/myproject/branches
+  c:\code\Git_myproject
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+One gets an "Use of uninitialized value $u in substitution (s///)" error:
+
+  [...]
+  W: +empty_dir: branches/20080918_DBDEPLOY/vendor/src/csharp/MS WCSF
+  Contrib/src/Services
+  W: +empty_dir: branches/20080918_DBDEPLOY/vendor/src/csharp/RealWorldControls/References
+  r530 = c276e3b039d8e38759c6fb17443349732552d7a2 (refs/remotes/origin/trunk)
+  Found possible branch point:
+  https://mycompany.svn.beanstalkapp.com/myproject/trunk =>
+  https://mycompany.svn.beanstalkapp.com/myproject/branches/20080918_DBDEPLOY,
+  529
+  Use of uninitialized value $u in substitution (s///) at
+  /mingw32/share/perl5/site_perl/Git/SVN.pm line 101.
+  Use of uninitialized value $u in concatenation (.) or string at
+  /mingw32/share/perl5/site_perl/Git/SVN.pm line 101.
+  refs/remotes/origin/trunk:
+  'https://mycompany.svn.beanstalkapp.com/myproject' not found in ''
+  C:\Windows\system32>
+
+Let's fix that by just die()ing when we have an uninitialized value because we
+cannot get commit metadata from a ref.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- compat/mingw.h | 3 ---
- 1 file changed, 3 deletions(-)
+ perl/Git/SVN.pm | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 1de70ff..a1808b4 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -416,9 +416,6 @@ int mingw_offset_1st_component(const char *path);
- void mingw_open_html(const char *path);
- #define open_html mingw_open_html
- 
--void mingw_mark_as_git_dir(const char *dir);
--#define mark_as_git_dir mingw_mark_as_git_dir
--
- /**
-  * Converts UTF-8 encoded string to UTF-16LE.
-  *
+diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+index b2c14e2..d94d01c 100644
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -97,7 +97,8 @@ sub resolve_local_globs {
+ 				    "existing: $existing\n",
+ 				    " globbed: $refname\n";
+ 			}
+-			my $u = (::cmt_metadata("$refname"))[0];
++			my $u = (::cmt_metadata("$refname"))[0] or die
++			    "$refname: no associated commit metadata\n";
+ 			$u =~ s!^\Q$url\E(/|$)!! or die
+ 			  "$refname: '$url' not found in '$u'\n";
+ 			if ($pathname ne $u) {
 -- 
-2.8.2.463.g99156ee
+2.8.0.rc2
