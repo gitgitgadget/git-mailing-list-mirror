@@ -1,66 +1,77 @@
-From: Eric Wong <e@80x24.org>
-Subject: Re: [PATCH] Git/SVN: die when there is no commit metadata
-Date: Sun, 8 May 2016 01:00:29 +0000
-Message-ID: <20160508010029.GA11559@dcvr.yhbt.net>
-References: <1462604323-18545-1-git-send-email-chriscool@tuxfamily.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: t6044 broken on pu
+Date: Sat, 07 May 2016 19:21:32 -0700
+Message-ID: <xmqqa8k11e8j.fsf@gitster.mtv.corp.google.com>
+References: <7d747193-7ba1-e274-86dc-427ed0f124c9@web.de>
+	<878tzmrrfg.fsf@linux-m68k.org>
+	<d1fcc54b-ddd7-b03b-79fa-2112a3f43141@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Thierry Suzanne <thierry@yellownemo.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Michael G . Schwern" <schwern@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 08 03:00:43 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Andreas Schwab <schwab@linux-m68k.org>, newren@gmail.com,
+	Git Mailing List <git@vger.kernel.org>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun May 08 04:21:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azD5P-0005i6-48
-	for gcvg-git-2@plane.gmane.org; Sun, 08 May 2016 03:00:43 +0200
+	id 1azELn-0004M5-PK
+	for gcvg-git-2@plane.gmane.org; Sun, 08 May 2016 04:21:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751190AbcEHBAd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 May 2016 21:00:33 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:33877 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751155AbcEHBAd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 May 2016 21:00:33 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06A791FAB2;
-	Sun,  8 May 2016 01:00:30 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1462604323-18545-1-git-send-email-chriscool@tuxfamily.org>
+	id S1751217AbcEHCVg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 May 2016 22:21:36 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64590 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751141AbcEHCVg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 May 2016 22:21:36 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 94AA718629;
+	Sat,  7 May 2016 22:21:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=ZQ2WEq6T+58Y
+	QMftXhXeSGZELlw=; b=ZHf31gAkpmvswx/u0ggt+BXeSOZVSZIwUah9Qs/8Pehu
+	Bjq6vS51zXcH2k93lwdpN9y6umfCJLtzDTEnTET1nLMz42yz6HRatWa94s7KvYsk
+	Mm3QDS6DS6NPuivEgyeoZMxE9qc63rq1iyi0Fup9gjX3kfEFkzLFU6MSjik/Q3s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=jAQczD
+	6UfD4DkMVeFfdplsfH1OGr8Z9k8ddci1I7SKpNy0OR2XAA8LylmiLndSEOBTN8lX
+	yr+oteV0dyV7YMDHHroBE54n2upP6ArhFqVsTvLjx/+Hr8nYNtnpeHU3bCqAtFuX
+	u7z01xqitU4uEUpLJPBkr892daAZfWmhofurE=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8D51418628;
+	Sat,  7 May 2016 22:21:34 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 121BB18627;
+	Sat,  7 May 2016 22:21:34 -0400 (EDT)
+In-Reply-To: <d1fcc54b-ddd7-b03b-79fa-2112a3f43141@web.de> ("Torsten
+	=?utf-8?Q?B=C3=B6gershausen=22's?= message of "Sat, 7 May 2016 18:18:30
+ +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 95819638-14C3-11E6-82AE-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293907>
 
-Christian Couder <christian.couder@gmail.com> wrote:
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-Thanks Christian,
-Signed-off-by: Eric Wong <e@80x24.org>
+> That's true, but the test passes anyway.
 
-...And pushed to my svn/bad-ref branch for Junio.
-(I don't think I'll have other git-svn-related changes
- immediately pending)
+You can also remove the body of the test and replace it with "true"
+and say "the test passes anyway".  Changing the test to use a file
+with only one line is irresponsible, if you do not know the nature
+of expected future bug that requires 10 lines to be there to
+manifest that the test wants to try.
 
-The following changes since commit 63a35025b11bf0e7ef39693aeea3b639a066b7b8:
-
-  Sync with maint (2016-05-06 14:53:45 -0700)
-
-are available in the git repository at:
-
-  git://bogomips.org/git-svn.git svn/bad-ref
-
-for you to fetch changes up to 523a33ca17c76bee007d7394fb3930266c577c02:
-
-  Git/SVN: die when there is no commit metadata (2016-05-08 00:50:19 +0000)
-
-----------------------------------------------------------------
-Christian Couder (1):
-      Git/SVN: die when there is no commit metadata
-
- perl/Git/SVN.pm | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+test_seq was invented exactly for the purpose of accomodating
+platforms that lack seq, so using it would probably be the best
+first step.  Updating implementation of test_seq to avoid $PERL
+would be a separate step, if desired (I personally do not think
+that is worth it).
