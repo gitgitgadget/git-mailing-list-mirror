@@ -1,97 +1,112 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] Move test-* to t/helper/ subdirectory
-Date: Sun, 8 May 2016 16:51:46 +0700
-Message-ID: <CACsJy8DtFLkfqSHRjFU4N9H9C3MfVOn-XEy4yOwneQaatvvDkQ@mail.gmail.com>
-References: <1460553762-12419-1-git-send-email-pclouds@gmail.com>
- <xmqqwpnkc9ca.fsf@gitster.mtv.corp.google.com> <CACsJy8A8vbp4-LrxoNX510Nme97EKfu0hBBs-LDRap1Z5=v3rA@mail.gmail.com>
- <20160427101833.GA5536@lanh> <xmqqy47z9geq.fsf@gitster.mtv.corp.google.com>
- <20160501002852.GA3963@lanh> <20160501060009.GA30748@lanh>
- <xmqqk2jcuzx7.fsf@gitster.mtv.corp.google.com> <CACsJy8B16SWsu5xTHdPcR4dz4_z+Br5EGGbJ+B5SChA=sWo-bg@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v3 37/41] transport-helper.c: use error_errno()
+Date: Sun,  8 May 2016 16:47:57 +0700
+Message-ID: <1462700881-25108-38-git-send-email-pclouds@gmail.com>
+References: <1462277054-5943-1-git-send-email-pclouds@gmail.com>
+ <1462700881-25108-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 08 11:53:07 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 08 11:53:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azLNw-0003EA-Ux
-	for gcvg-git-2@plane.gmane.org; Sun, 08 May 2016 11:52:25 +0200
+	id 1azLNx-0003EA-Ni
+	for gcvg-git-2@plane.gmane.org; Sun, 08 May 2016 11:52:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751151AbcEHJwU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1751198AbcEHJwW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2016 05:52:22 -0400
+Received: from mail-pa0-f65.google.com ([209.85.220.65]:36667 "EHLO
+	mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750901AbcEHJwU (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 8 May 2016 05:52:20 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:36061 "EHLO
-	mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750901AbcEHJwS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2016 05:52:18 -0400
-Received: by mail-lf0-f67.google.com with SMTP id y84so17996984lfc.3
-        for <git@vger.kernel.org>; Sun, 08 May 2016 02:52:17 -0700 (PDT)
+Received: by mail-pa0-f65.google.com with SMTP id i5so13724751pag.3
+        for <git@vger.kernel.org>; Sun, 08 May 2016 02:52:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=fE8KJzOLmVYQaCguKDbixoaO5ZM6aHOViHR8+5KeNcs=;
-        b=X8jJvp1c9yYfNvKSRdSoCPq6GX63aSrqzRAz/hkkn63wzVFvgD98YIyldxvhG0OpuE
-         T5H3NzJIM9vzkrt1jVZ4bPMNUC1vlO/bkULh1ugVzMOz2CAhLgSE7kwU8c850Ew9hv2d
-         xvPGvfXh45icmdfh3iuur4+x8oAUY9d633T+JiQRm1v9AVtj7EvCoavdDL+XR7l5PGFK
-         ZG9Csx3WTmb56LQSZiZfJVI4kME6EyCfCWFCrvEwpOx4YxQkXTbqOWMLOgFrcl7ODe4f
-         z3lATgd3HFlEdroq0R5Rc+ALWbgxAWoR3GmiHxbrPH4PAkKFxDubgcpkSD7dFbeKIMqI
-         9AuQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=UVMDjXB7MwRk56ezfUFvtUWFXZYtncTgl5sm5H4rVkU=;
+        b=EdnCL4Vi6RPzsdCMIQXfcid91xPjb4M9Q+HNrvFsQHdNkmEyM/bE40tSz2H59RqBSG
+         ZDm9LNRocu3TNlbjO6I2RGUrdjpWp1rbsCStjv+zuTXbGKwoUSphRWlGuFshR2LxDzGe
+         NTqXCJBUWtPhJl5ss0bwNzGcOoQIQKqOrYfQoF4p09jy6WlY4GZHsOtEJSa22qmEk5qU
+         eo7tmaUqJ6q4K7jH6Khy+p3tmFojffXxCUE5M5iTU7vEvjpnVPdAxytA3ES/ofBd+oKR
+         4pQYh1eA0IhFS0E4gum6r35moGUiq1fgVLUbv1NWkrEFp18AZibnqSFxstyHcXawnisl
+         R/IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=fE8KJzOLmVYQaCguKDbixoaO5ZM6aHOViHR8+5KeNcs=;
-        b=k9+dK5HHv8K8E9LGO7G55HkEa+abouFsLfcgGJg7WFxz5ey1dccCYBebEw5JLhwBl5
-         Mf0yt+qoOuaGKEC7xjibXIaWuIjQxb+pA+ibH6vCL0nAYK++/TDVs0SF+q81KiilapDk
-         avAZC1f8SJH8haqqskjSLX4nyxI91t0dB5Ob9Ko2OYGlNOU0RKrbmoEzkRksLsM3qVqC
-         HHWuAaUEfNkZipF4e64lOdNTQj521lnSENyUHwvmLlQEQW4sKwPX87Rj02BrJcqK4fyN
-         wL3EE6wzgB8Ckck3xFh6xJSYaCk2S9sMmltrYzSBwpdEUuriySxTKQ4/hXr7JipE3w2S
-         BwAQ==
-X-Gm-Message-State: AOPr4FXURExYYLJNBi6jotAYIfyNhJhUmCu2FspMbvBpBzJaSLks3D1TI3VOuB1cFOGTPWTzd8JCNhE0IeNTIw==
-X-Received: by 10.112.199.198 with SMTP id jm6mr13433692lbc.80.1462701136536;
- Sun, 08 May 2016 02:52:16 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Sun, 8 May 2016 02:51:46 -0700 (PDT)
-In-Reply-To: <CACsJy8B16SWsu5xTHdPcR4dz4_z+Br5EGGbJ+B5SChA=sWo-bg@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=UVMDjXB7MwRk56ezfUFvtUWFXZYtncTgl5sm5H4rVkU=;
+        b=IvDkuAU42s/mlgpeagDYUT4it1SuTzz1t3UQRODCYrpx34pkxWaX1osK+iRcox+w61
+         +Y5sU0/ThdoIuNeBl1elaLELgl7u3/Hu0MUriCbSEy0Z62kDIHPpeAKbiprLrge9PfmR
+         zdb/QLud9qnpu0W7RlcenmK7Ueb+52/9IW174ypxMuVJbKt3v6oXEr+WGSaTRpVkJtAa
+         Av5aE/YZ37E6OG2RFjJ5FbJIU+fxtrIQ9npbAT38Tlb+zhTmuVVxK+Cdytf2egykanPl
+         gkyAqdmQnIS6iUnD2rGN3O2qKwU23jZEjyQvJYlQFGquxeGA6C3brR8m35ACBU6lgt2E
+         OgYg==
+X-Gm-Message-State: AOPr4FVv+7l8nU4pCLd3DE9Z8kW/+hMKOOGILH3G/YRNyX8ShwGgjQvMaCE1BX/o2MkgSQ==
+X-Received: by 10.66.90.136 with SMTP id bw8mr41924606pab.52.1462701140352;
+        Sun, 08 May 2016 02:52:20 -0700 (PDT)
+Received: from lanh ([115.72.42.9])
+        by smtp.gmail.com with ESMTPSA id z63sm32766090pfb.47.2016.05.08.02.52.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 08 May 2016 02:52:19 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 08 May 2016 16:52:19 +0700
+X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
+In-Reply-To: <1462700881-25108-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293947>
 
-So among the options we have so far, which way should we go, or leave it as is?
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ transport-helper.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-On Tue, May 3, 2016 at 7:15 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Tue, May 3, 2016 at 12:34 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Duy Nguyen <pclouds@gmail.com> writes:
->>
->>> I may have rushed to judgement. wrap-for-bin.sh has always been the
->>> dependency for bin-wrappers/*. If we force that file to change, then
->>> bin-wrappers/* will be recreated when switching branches. So how about
->>> this?
->>
->> I do not think you are "force updating wrap-for-bin" in any way in
->> the patch, though.  You are building it in such a way that it does
->> not have to get updated within the revision that contains e6e7530
->> (assuming that this will be queued directly on top it and merged to
->> everywhere e6e7530 is contained).
->
-> Yep.
->
->> The new case/esac looks somewhat bad (its knowing that where test-*
->> lives, test-* is the only thing that is special, etc. troubles me at
->> the same time that case/esac is funnily formated).
->
-> We could just make some random changes in this file. That would have
-> the same effect.
->
->> Where does "@@PATH@@" come from and who rewrites it?  Is that a
->> misspelt "@@PROG@@"?
->
-> Yep. Should have run make distclean before testing :(
-> --
-> Duy
--- 
-Duy
+diff --git a/transport-helper.c b/transport-helper.c
+index b934183..f09fadc 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -1166,7 +1166,7 @@ static int udt_do_read(struct unidirectional_tran=
+sfer *t)
+ 	bytes =3D read(t->src, t->buf + t->bufuse, BUFFERSIZE - t->bufuse);
+ 	if (bytes < 0 && errno !=3D EWOULDBLOCK && errno !=3D EAGAIN &&
+ 		errno !=3D EINTR) {
+-		error("read(%s) failed: %s", t->src_name, strerror(errno));
++		error_errno("read(%s) failed", t->src_name);
+ 		return -1;
+ 	} else if (bytes =3D=3D 0) {
+ 		transfer_debug("%s EOF (with %i bytes in buffer)",
+@@ -1193,7 +1193,7 @@ static int udt_do_write(struct unidirectional_tra=
+nsfer *t)
+ 	transfer_debug("%s is writable", t->dest_name);
+ 	bytes =3D xwrite(t->dest, t->buf, t->bufuse);
+ 	if (bytes < 0 && errno !=3D EWOULDBLOCK) {
+-		error("write(%s) failed: %s", t->dest_name, strerror(errno));
++		error_errno("write(%s) failed", t->dest_name);
+ 		return -1;
+ 	} else if (bytes > 0) {
+ 		t->bufuse -=3D bytes;
+@@ -1306,7 +1306,7 @@ static int tloop_join(pid_t pid, const char *name=
+)
+ {
+ 	int tret;
+ 	if (waitpid(pid, &tret, 0) < 0) {
+-		error("%s process failed to wait: %s", name, strerror(errno));
++		error_errno("%s process failed to wait", name);
+ 		return 1;
+ 	}
+ 	if (!WIFEXITED(tret) || WEXITSTATUS(tret)) {
+--=20
+2.8.0.rc0.210.gd302cd2
