@@ -1,92 +1,122 @@
-From: Vasco Almeida <vascomalmeida@sapo.pt>
-Subject: [PATCH] i18n: remote: add comment for translators
-Date: Sun,  8 May 2016 20:00:18 +0000
-Message-ID: <1462737618-32228-1-git-send-email-vascomalmeida@sapo.pt>
-Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
-	Ralf Thielow <ralf.thielow@gmail.com>,
-	Alexander Shopov <ash@kambanaria.org>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Dimitriy Ryazantcev <DJm00n@mail.ru>,
-	Alex Henrie <alexhenrie24@gmail.com>,
-	Marco Paolone <marcopaolone@gmail.com>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	Ray Chen <oldsharp@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Changwoo Ryu <cwryu@debian.org>,
-	Stefano Lattarini <stefano.lattarini@gmail.com>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-	=?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
-	<vnwildman@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 08 22:00:53 2016
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH 78/83] Move libified code from builtin/apply.c to apply.{c,h}
+Date: Sun, 8 May 2016 22:11:41 +0200
+Message-ID: <CAP8UFD1UMJXkPx1zHMK4sJrueMeXE=5uT+oPp1D31+dsU55AFw@mail.gmail.com>
+References: <1461504863-15946-1-git-send-email-chriscool@tuxfamily.org>
+	<1461504863-15946-79-git-send-email-chriscool@tuxfamily.org>
+	<CACsJy8Cb20L=y_=J6S5=rngvH1n0aWvtf5eJrXP-df0aoiJyrQ@mail.gmail.com>
+	<CAP8UFD3o_u48rRHP7ZOWnVH7X0O5wwM-Gk-VpH5PP_kFx19ZpQ@mail.gmail.com>
+	<CACsJy8AtEv9HHOJUDVKmO=qLkWctvS2zoGdo03jtQwyy2kKzRQ@mail.gmail.com>
+	<CAP8UFD0Ku_q56JMvyh9UncJ2D+QsOcB4Svyr5ZWj+KqAaHORMw@mail.gmail.com>
+	<CAP8UFD0ktQyk3SHFbq=fjK8++UArNmy+3p3CCgHaDBT5WRwU6Q@mail.gmail.com>
+	<xmqq4maa3nfm.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 08 22:11:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azUsl-0007AT-7X
-	for gcvg-git-2@plane.gmane.org; Sun, 08 May 2016 22:00:51 +0200
+	id 1azV3M-0002HE-6V
+	for gcvg-git-2@plane.gmane.org; Sun, 08 May 2016 22:11:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751026AbcEHUAd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 May 2016 16:00:33 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:52567 "EHLO sapo.pt"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750999AbcEHUAb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2016 16:00:31 -0400
-Received: (qmail 3082 invoked from network); 8 May 2016 20:00:29 -0000
-Received: (qmail 28031 invoked from network); 8 May 2016 20:00:29 -0000
-Received: from unknown (HELO localhost.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
-          (envelope-sender <vascomalmeida@sapo.pt>)
-          by mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 8 May 2016 20:00:28 -0000
-X-PTMail-RemoteIP: 85.246.157.91
-X-PTMail-AllowedSender-Action: 
-X-PTMail-Service: default
-X-Mailer: git-send-email 2.7.3
+	id S1750904AbcEHULn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 May 2016 16:11:43 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:35029 "EHLO
+	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750865AbcEHULm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 May 2016 16:11:42 -0400
+Received: by mail-wm0-f41.google.com with SMTP id e201so113750312wme.0
+        for <git@vger.kernel.org>; Sun, 08 May 2016 13:11:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=ahesSgWpbFYBCFc3csAdwOe3xQp6M4qRg46oLrSOv+o=;
+        b=FXJ+jvP8mRSPFL0IL1w4F5s2o50x15O4VBLISIVBVuniAS+P+TH+d1jlFYOZ/xIMFw
+         0LrXkuNLxTqupYATB9uJEpZJ9UEW0yME/LlChxBJ1bMn4GbLqna3QorHgiQA/RtTIq66
+         H4jBACip46V+ZtPYq9pLE0suGtWhHeX87otdWcrfnNFRmiD0R50E18C4tP/F3VGkXxO/
+         OpDRGzW/VpbWKvDnGy+0caCxK4Y4+8gJKjmbFzBMgZcRDya2O9/aJQzWdBp/jU8sRrYd
+         jRoLqAl+A/NJFUVzDH3x1U+S0BW6Ms7Hr4JuYLrtvpYphAgXnAS4TrFu7mmdBktLybNk
+         edng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=ahesSgWpbFYBCFc3csAdwOe3xQp6M4qRg46oLrSOv+o=;
+        b=AmCWfy8IfiXcZKgIPy4bGqqUvD62s2xttPXn2Q1go4fLyzlc1kjKlLO9gmI1JMHdXB
+         GI6PeyGmrf4VuaUQN0pI65Powgn5RFZ0jF5dRz6yqPC4aIQl7PT42WGIaGmeKf82DsXl
+         KsBNmfigYDfo0XmO/TwdbiFdlAln1W+SYksMpNFYwvmkRS54JhLDIR1ZB7Jew/bYPeLO
+         CrRDAfHkXB7KuNi8lQE5/Du9d3n1D65zrWWKBtfDjnW5k/jedHl89HUdkFWLnEbvPaG1
+         fbeG6AiyVVK7G9cihfiQ6+RtJu4A/ntkYRwn9OwgMcUtO1we4sg2BetE4TAQdstGk+M+
+         Wjbg==
+X-Gm-Message-State: AOPr4FXVvzzjiTIYBmFpXC3Q4yaHL+Lm9K04Z2lbbe/twbW8yhKUkp5KpZJiHSEbMIjeILFTL0eByTrDT3zQ+A==
+X-Received: by 10.28.169.11 with SMTP id s11mr7983447wme.62.1462738301380;
+ Sun, 08 May 2016 13:11:41 -0700 (PDT)
+Received: by 10.194.246.4 with HTTP; Sun, 8 May 2016 13:11:41 -0700 (PDT)
+In-Reply-To: <xmqq4maa3nfm.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293978>
 
-Add comment drawing translator attention in order to align "Push
-URL:" and "Fetch URL:" fields translation of git remote show output.
+On Fri, May 6, 2016 at 11:07 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+>> By the way does someone know how such a patch can be applied?
+>
+> I think in mid Feb 2015 I sent out a message that says "'diff -B -M'
+> gives a broken result, do not use it".
+> I do not have time to dig the mail archive right now.
+>
+> Perhaps this one?
+>
+>     http://thread.gmane.org/gmane.linux.kernel/1879635
 
-Aligning both fields makes the output more appealing and easier to
-grasp.
+I get something strange with only -B:
 
-Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
----
+$ git reset --keep 20f1d27~
+$ git format-patch -B -1  -o ../../patches/test-libify-apply-use-in-am/ 20f1d27
+../../patches/test-libify-apply-use-in-am/0001-Move-libified-code-from-builtin-apply.c-to-apply.-c-.patch
+$ wc ../../patches/test-libify-apply-use-in-am/0001-Move-libified-code-from-builtin-apply.c-to-apply.-c-.patch
+  5264  23426 147127
+../../patches/test-libify-apply-use-in-am/0001-Move-libified-code-from-builtin-apply.c-to-apply.-c-.patch
 
-Translators, you can check if your translation does align these
-fields by issuing, for instance
+I get a conflict with `git am`:
 
-$ git remote show -n origin
-* remote origin
-  Fetch URL: https://github.com/git/git.git
-  Push  URL: https://github.com/git/git.git
-<snip>
+$ git am --3way
+../../patches/test-libify-apply-use-in-am/0001-Move-libified-code-from-builtin-apply.c-to-apply.-c-.patch
+Applying: Move libified code from builtin/apply.c to apply.{c,h}
+Using index info to reconstruct a base tree...
+Falling back to patching base and 3-way merge...
+Auto-merging apply.c
+CONFLICT (add/add): Merge conflict in apply.c
+error: Failed to merge in the changes.
+Patch failed at 0001 Move libified code from builtin/apply.c to apply.{c,h}
+The copy of the patch that failed is found in: .git/rebase-apply/patch
+When you have resolved this problem, run "git am --continue".
+If you prefer to skip this patch, run "git am --skip" instead.
+To restore the original branch and stop patching, run "git am --abort".
 
-I know Portuguese translation align these fields. I know that French
-and Deutsch translations don't, but don't know about others.
+But it works using `git apply --3way`:
 
-Obviously, this detail is not important, but now you know about it.
-
- builtin/remote.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/builtin/remote.c b/builtin/remote.c
-index fda5c2e..d33766b 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -1154,6 +1154,8 @@ static int show(int argc, const char **argv)
- 			url_nr = states.remote->url_nr;
- 		}
- 		for (i = 0; i < url_nr; i++)
-+			/* TRANSLATORS: the colon ':' should align with
-+			   the one in "  Fetch URL: %s" translation */
- 			printf_ln(_("  Push  URL: %s"), url[i]);
- 		if (!i)
- 			printf_ln(_("  Push  URL: %s"), "(no URL)");
--- 
-2.7.3
+$ git reset --hard HEAD
+HEAD is now at 557f659 apply: rename and move opt constants to apply.h
+$ git apply --3way
+../../patches/test-libify-apply-use-in-am/0001-Move-libified-code-from-builtin-apply.c-to-apply.-c-.patch
+Falling back to three-way merge...
+Applied patch to 'apply.c' cleanly.
+$ git am --continue
+Applying: Move libified code from builtin/apply.c to apply.{c,h}
