@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 32/41] rerere.c: use error_errno() and warning_errno()
-Date: Sun,  8 May 2016 16:47:52 +0700
-Message-ID: <1462700881-25108-33-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 33/41] run-command.c: use error_errno()
+Date: Sun,  8 May 2016 16:47:53 +0700
+Message-ID: <1462700881-25108-34-git-send-email-pclouds@gmail.com>
 References: <1462277054-5943-1-git-send-email-pclouds@gmail.com>
  <1462700881-25108-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,118 +13,135 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 08 11:53:53 2016
+X-From: git-owner@vger.kernel.org Sun May 08 11:53:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azLNR-0002cx-GQ
-	for gcvg-git-2@plane.gmane.org; Sun, 08 May 2016 11:51:53 +0200
+	id 1azLNY-0002mJ-9N
+	for gcvg-git-2@plane.gmane.org; Sun, 08 May 2016 11:52:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751162AbcEHJvu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2016 05:51:50 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34881 "EHLO
-	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751151AbcEHJvt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2016 05:51:49 -0400
-Received: by mail-pf0-f196.google.com with SMTP id r187so16140814pfr.2
-        for <git@vger.kernel.org>; Sun, 08 May 2016 02:51:49 -0700 (PDT)
+	id S1751168AbcEHJv4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2016 05:51:56 -0400
+Received: from mail-pa0-f65.google.com ([209.85.220.65]:32863 "EHLO
+	mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751151AbcEHJvz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 May 2016 05:51:55 -0400
+Received: by mail-pa0-f65.google.com with SMTP id gh9so13697397pac.0
+        for <git@vger.kernel.org>; Sun, 08 May 2016 02:51:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=58ErpoAVMLSuG4Zu8bRhgSvY8+jH+m9A+GB4WeCWkiQ=;
-        b=FYOYgdb+v+ZY9LuxfNJ1O6dp8e1ixKYw9NDIq2wL3dKMZdCMz9rYHc45FxjTq3AAyT
-         0AICz0sfqGe5E5orKfR3lvv8q3zInwv/efZOF/op6/gPemxkdtxOjtiB9ogFhpuw9AQb
-         sxVbXHixBqLW1jHN7MKxH8505tFg8WgBCnkvM6xognQ0MaoDrOuKFNZRU9JiQ0GiS4Nu
-         EBoLuXHol0sOXpGE4YFQ6Y/Um3G4hGbt0kWN2zK0PKQQDBOpZBr1nhO8MxR0fOb9GwvV
-         Lr//uWnDdozb3kXa764ZYVzPatYmGK7cfXeEHHqpp3TCK9VKKbJg6EiMoQ7xib8iqzhV
-         h81g==
+        bh=UHO+kv4XdLapel/fDeP654YK4xCQ/QV/SKzmL4Zh9VY=;
+        b=ZfBoYpgkZKadursWv9wO4EM2Drdtj6KBxd7BM1okMG8neLKRdd6ZtWiaHxmmI0EIdn
+         c/fZpAHpNB+/LGSVf3yHWjK8oglrYiLZZGru/6vHTxmkWDq7B/OgY5YRYxVrlyJrVg4d
+         HF58GqGiTWDUt/mgvtHDsFxtflsCxnao/IM70KLEapfDZ0+nBLVL/KwCViOoX0ZDz0aZ
+         WFPUzfzZOP707oI0ZwxNNpP+L3qWn2ioDxPboZA0A3jcvH/0tM5DnaXqcfGIGrYiL1mK
+         7NxZFtaxW88rLgpxTfMyBcJkH0L31+Te/uQPAragOhkcLWJrRUeFIX+NwkydTa8/faaH
+         IuPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=58ErpoAVMLSuG4Zu8bRhgSvY8+jH+m9A+GB4WeCWkiQ=;
-        b=L5HjfB0xl+OmjNn5oNC7Y1q4esebDsNI+8+aRnZp59Uex+6n5U3GnC6wYj4rHnzgt4
-         TRbBKwX051DNjjhbjhldDQ/E3rQKY1TPzM3drIP9baccvQNHKDZf+UMJVgf5y2I/RYLE
-         O6xNvcgzRE7NLzbDQunQC9i4GIswL+AKiKgdRoCMCDFH1yTuCYDezRH3JiVAqr0xMM1W
-         AOf0f8nLuoPVJOWeuxnCRj5bdRPIM1XYIrTKxBbH0nGDRMQy+W7AH+GPBIUb7E4lshjH
-         cFpjGHmybkBVLIearEyrC9Hrj9P+/xxfhv+mrwdbqnT0FeIKfPOFoJw3GEBmg2bWV4pp
-         BSDg==
-X-Gm-Message-State: AOPr4FUqsBcP5AEYt2PwYTVN5tlb9ru6SCmSHq5WzdGemUW9amxSgrjuXRIuApLRU9J5MA==
-X-Received: by 10.98.46.71 with SMTP id u68mr42375880pfu.136.1462701108811;
-        Sun, 08 May 2016 02:51:48 -0700 (PDT)
+        bh=UHO+kv4XdLapel/fDeP654YK4xCQ/QV/SKzmL4Zh9VY=;
+        b=N2pSdojJk5MaMmxgLjntAgIZ3DkDp9swSjs8eR5F0wyp79j+bn6Vx+CI7vHzGdXvsc
+         pLS1Tk1L0TX17tvByWK1qSJv0tMz+S/Ce5B6Y0s1UXHKT991PTC20G+ZcGUULWsuZZ5Z
+         tt0o6mvTb0ozLS9PGCzITLdjADaztLjl4+2WROIInwGYTgdoi3Rl9QTHvfyYvsSzzBXr
+         wjJ+EKc3VeutFlXVxz7e5VUsHtHeSfE+sj33NQXSG8MeQI906/OhDKOjROiWNCY5+ylz
+         Ev6sR88+O6iAKVqeeqEuMoppivjyODsQZsLmVLV+WgZjS5+E3eFZvzO5X0BCyHjwe/3n
+         zC/Q==
+X-Gm-Message-State: AOPr4FVNog/i2Qu03OlZLUKnr4dy6E+ZmyMpgqFXX/R7if4RyOAIjsn0t1keHNPCthtVmg==
+X-Received: by 10.66.66.234 with SMTP id i10mr42571060pat.114.1462701115214;
+        Sun, 08 May 2016 02:51:55 -0700 (PDT)
 Received: from lanh ([115.72.42.9])
-        by smtp.gmail.com with ESMTPSA id b64sm32754201pfa.48.2016.05.08.02.51.44
+        by smtp.gmail.com with ESMTPSA id 64sm24627681pfk.69.2016.05.08.02.51.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 08 May 2016 02:51:47 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 08 May 2016 16:51:48 +0700
+        Sun, 08 May 2016 02:51:53 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 08 May 2016 16:51:54 +0700
 X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
 In-Reply-To: <1462700881-25108-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293953>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- rerere.c | 18 +++++++-----------
- 1 file changed, 7 insertions(+), 11 deletions(-)
+ run-command.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/rerere.c b/rerere.c
-index c8b9f40..1810c04 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -501,8 +501,7 @@ static int handle_file(const char *path, unsigned c=
-har *sha1, const char *output
- 		error("There were errors while writing %s (%s)",
- 		      path, strerror(io.io.wrerror));
- 	if (io.io.output && fclose(io.io.output))
--		io.io.wrerror =3D error("Failed to flush %s: %s",
--				      path, strerror(errno));
-+		io.io.wrerror =3D error_errno("Failed to flush %s", path);
+diff --git a/run-command.c b/run-command.c
+index e4593cd..842c8d1 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -233,7 +233,7 @@ static int wait_or_whine(pid_t pid, const char *arg=
+v0, int in_signal)
 =20
- 	if (hunk_no < 0) {
- 		if (output)
-@@ -684,20 +683,17 @@ static int merge(const struct rerere_id *id, cons=
-t char *path)
- 	 * Mark that "postimage" was used to help gc.
- 	 */
- 	if (utime(rerere_path(id, "postimage"), NULL) < 0)
--		warning("failed utime() on %s: %s",
--			rerere_path(id, "postimage"),
+ 	if (waiting < 0) {
+ 		failed_errno =3D errno;
+-		error("waitpid for %s failed: %s", argv0, strerror(errno));
++		error_errno("waitpid for %s failed", argv0);
+ 	} else if (waiting !=3D pid) {
+ 		error("waitpid is confused (%s)", argv0);
+ 	} else if (WIFSIGNALED(status)) {
+@@ -420,8 +420,7 @@ fail_pipe:
+ 		}
+ 	}
+ 	if (cmd->pid < 0)
+-		error("cannot fork() for %s: %s", cmd->argv[0],
 -			strerror(errno));
-+		warning_errno("failed utime() on %s",
-+			      rerere_path(id, "postimage"));
++		error_errno("cannot fork() for %s", cmd->argv[0]);
+ 	else if (cmd->clean_on_exit)
+ 		mark_child_for_cleanup(cmd->pid);
 =20
- 	/* Update "path" with the resolution */
- 	f =3D fopen(path, "w");
- 	if (!f)
--		return error("Could not open %s: %s", path,
--			     strerror(errno));
-+		return error_errno("Could not open %s", path);
- 	if (fwrite(result.ptr, result.size, 1, f) !=3D 1)
--		error("Could not write %s: %s", path, strerror(errno));
-+		error_errno("Could not write %s", path);
- 	if (fclose(f))
--		return error("Writing %s failed: %s", path,
--			     strerror(errno));
-+		return error_errno("Writing %s failed", path);
+@@ -482,7 +481,7 @@ fail_pipe:
+ 			cmd->dir, fhin, fhout, fherr);
+ 	failed_errno =3D errno;
+ 	if (cmd->pid < 0 && (!cmd->silent_exec_failure || errno !=3D ENOENT))
+-		error("cannot spawn %s: %s", cmd->argv[0], strerror(errno));
++		error_errno("cannot spawn %s", cmd->argv[0]);
+ 	if (cmd->clean_on_exit && cmd->pid >=3D 0)
+ 		mark_child_for_cleanup(cmd->pid);
 =20
- out:
- 	free(cur.ptr);
-@@ -1071,7 +1067,7 @@ static int rerere_forget_one_path(const char *pat=
-h, struct string_list *rr)
- 	if (unlink(filename))
- 		return (errno =3D=3D ENOENT
- 			? error("no remembered resolution for %s", path)
--			: error("cannot unlink %s: %s", filename, strerror(errno)));
-+			: error_errno("cannot unlink %s", filename));
+@@ -703,7 +702,7 @@ int start_async(struct async *async)
+ 		if (pipe(fdin) < 0) {
+ 			if (async->out > 0)
+ 				close(async->out);
+-			return error("cannot create pipe: %s", strerror(errno));
++			return error_errno("cannot create pipe");
+ 		}
+ 		async->in =3D fdin[1];
+ 	}
+@@ -715,7 +714,7 @@ int start_async(struct async *async)
+ 				close_pair(fdin);
+ 			else if (async->in)
+ 				close(async->in);
+-			return error("cannot create pipe: %s", strerror(errno));
++			return error_errno("cannot create pipe");
+ 		}
+ 		async->out =3D fdout[0];
+ 	}
+@@ -740,7 +739,7 @@ int start_async(struct async *async)
 =20
- 	/*
- 	 * Update the preimage so that the user can resolve the
+ 	async->pid =3D fork();
+ 	if (async->pid < 0) {
+-		error("fork (async) failed: %s", strerror(errno));
++		error_errno("fork (async) failed");
+ 		goto error;
+ 	}
+ 	if (!async->pid) {
+@@ -787,7 +786,7 @@ int start_async(struct async *async)
+ 	{
+ 		int err =3D pthread_create(&async->tid, NULL, run_thread, async);
+ 		if (err) {
+-			error("cannot create thread: %s", strerror(err));
++			error_errno("cannot create thread");
+ 			goto error;
+ 		}
+ 	}
 --=20
 2.8.0.rc0.210.gd302cd2
