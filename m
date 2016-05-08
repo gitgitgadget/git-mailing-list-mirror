@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 41/41] wrapper.c: use warning_errno()
-Date: Sun,  8 May 2016 16:48:01 +0700
-Message-ID: <1462700881-25108-42-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 31/41] reachable.c: use error_errno()
+Date: Sun,  8 May 2016 16:47:51 +0700
+Message-ID: <1462700881-25108-32-git-send-email-pclouds@gmail.com>
 References: <1462277054-5943-1-git-send-email-pclouds@gmail.com>
  <1462700881-25108-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,90 +13,81 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 08 11:52:55 2016
+X-From: git-owner@vger.kernel.org Sun May 08 11:53:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azLOL-0003gh-4s
-	for gcvg-git-2@plane.gmane.org; Sun, 08 May 2016 11:52:49 +0200
+	id 1azLNL-0002XW-FT
+	for gcvg-git-2@plane.gmane.org; Sun, 08 May 2016 11:51:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751214AbcEHJwp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2016 05:52:45 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34525 "EHLO
-	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750935AbcEHJwo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2016 05:52:44 -0400
-Received: by mail-pf0-f196.google.com with SMTP id 145so13763671pfz.1
-        for <git@vger.kernel.org>; Sun, 08 May 2016 02:52:44 -0700 (PDT)
+	id S1751155AbcEHJvo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2016 05:51:44 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:34339 "EHLO
+	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750716AbcEHJvn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 May 2016 05:51:43 -0400
+Received: by mail-pf0-f195.google.com with SMTP id 145so13762627pfz.1
+        for <git@vger.kernel.org>; Sun, 08 May 2016 02:51:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7zGjjoMd5v+yqCY0NwfAPvmNf/zgFDVyxhJglKTYk1Q=;
-        b=m4Yf+cprksIfUAMCjTZqkVitlYHV5+b8VW6HC/WDjrgxoULg+mwnB2FTz8kmO7WmQW
-         CDGUgt58b8OKbBFxfSlNQLotoYjC7B8DDGpzoDSuEe1t39FmNfYQwO1N15QnH/Uin6pU
-         145nQc9R9EoQg1V+sVCdpkRbOm/Ocpz3MIRk49gBzLt0bEhuaUAni2WM1dVnJ8AZjS6U
-         tlsTsmKhMZorek76aoKACrw6W+5lI2AGS6QOjROmj3y6c1gU/iMc9wxWtlkgJ4fDKQkP
-         3W3peJgrfZ6GOl8NtDSFcuVT/4sehbI5tN48ygNzNyTJRUju9l3EbQlnbOJZF1eAdzs9
-         iufw==
+        bh=sptAnTVgqTWhli92LdRfu18uo8C7gDdNccorqSAaOVE=;
+        b=HG+Opk7Ig2HGe2LXVNb0VlCWwGW+kfRKJeV/+Fn7MaWusGaYCB6pz4dGdVIWwfjfTv
+         07iUE1hoh0XEpSGgKtuNa3aZ5HFN7BNTui/lbgEhCOqNQEYO4GW+l8w5yNO/2F9kC26V
+         tlZGTMZvHUiyW2MNgIM2te7jW3TpeahD/Q6aYRb3UNACDWS2ItBGKEXSJ1sV/vh5GQYF
+         mWjDRg0Vx2a+E2WSiJkjp0LcHbW000HEOk943rqz8QfEEu4fOLwIYnfTzn9ENlF77tn5
+         WF8s/CLyojpFYYmjwWFJIyP01QV8MVMG84qd4g8mbiOzI/hA8v0TsQONinciyRj4o2Dk
+         8/4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7zGjjoMd5v+yqCY0NwfAPvmNf/zgFDVyxhJglKTYk1Q=;
-        b=OsfdfdjDH7Dac6ESbkg+HpikjV6feLPeA0Q9i/uN0AqWRILvPF3QAFc7EH2tmayWPm
-         0oHQzHLPB3PSldFf+jELHl1ghtf/97674BWul7GdsEBXl90AH4F2xlT7xmTrR7Lu10dU
-         +7LafZM1fxPdMqKfplZb+r4fKNB9AZoMYKHpW82mcXwgJQPYEHTGkLnv11sWhmYwqvZd
-         Z9wLZGhSeXeImMtYxB98ytnvfN53N0b0keXOlrnfAqioz5268n7EyJWVY+7jbeNzpZFn
-         Z028Jdk66rqnGnTFIhXJjZJo5VaOKLweMTiM1gDWQpICTsmYfJGd5t1H4UW2sKPzXqa9
-         WoKQ==
-X-Gm-Message-State: AOPr4FUytFnpKq9g/9p4pt5BVkGoo7G/OZkHG5EL85NNINc4/h2kR10MEmL07z5ugcPqcg==
-X-Received: by 10.98.53.65 with SMTP id c62mr10756058pfa.47.1462701164410;
-        Sun, 08 May 2016 02:52:44 -0700 (PDT)
+        bh=sptAnTVgqTWhli92LdRfu18uo8C7gDdNccorqSAaOVE=;
+        b=JzOSkG/d7RFQTZgjqgCRuhpuOXSBfdnknzE7hMJuHGhauBHaTf16oYhY7R9oLLLhbf
+         kG+pTMmQvIUW67ZmKcEs9N0g643G2ibxbFZCAIH5HtiwgEdWa1gRuK852+ERTz8+8Fhj
+         XHwud+e9pwq55ihIrO3K5B0yh3iNZvu1zcTG+xz78Sn9xCn8rZlj8JU+E5rtVxFS0fhc
+         DMBXQGqGTuWf8s3QunGXFmcs9iEY6gcCJmatlR00Kdnuqa0nNx31uPkbqJqZjUX5xxyL
+         mHg9iaa2tMVlG52foutWNznMG9EC25RawDLyH3o45C1RtPiQeJW5hOJZSHS53gjHx46R
+         6RKA==
+X-Gm-Message-State: AOPr4FV5C/omVbDHFRW2hN4HQIZDB2pkEYU/E0ktOM/fO7pZw/3WRNGl1qJyoYADD0oPPw==
+X-Received: by 10.98.41.65 with SMTP id p62mr41483141pfp.29.1462701102690;
+        Sun, 08 May 2016 02:51:42 -0700 (PDT)
 Received: from lanh ([115.72.42.9])
-        by smtp.gmail.com with ESMTPSA id 133sm32766111pfw.35.2016.05.08.02.52.40
+        by smtp.gmail.com with ESMTPSA id q70sm32737727pfj.81.2016.05.08.02.51.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 08 May 2016 02:52:43 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 08 May 2016 16:52:44 +0700
+        Sun, 08 May 2016 02:51:41 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 08 May 2016 16:51:42 +0700
 X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
 In-Reply-To: <1462700881-25108-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293945>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- wrapper.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ reachable.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/wrapper.c b/wrapper.c
-index 9afc1a0..3df2fe0 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -572,7 +572,7 @@ static int warn_if_unremovable(const char *op, cons=
-t char *file, int rc)
- 	if (!rc || errno =3D=3D ENOENT)
- 		return 0;
- 	err =3D errno;
--	warning("unable to %s %s: %s", op, file, strerror(errno));
-+	warning_errno("unable to %s %s", op, file);
- 	errno =3D err;
- 	return rc;
- }
-@@ -608,7 +608,7 @@ int remove_or_warn(unsigned int mode, const char *f=
-ile)
+diff --git a/reachable.c b/reachable.c
+index ed35201..d0199ca 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -119,8 +119,7 @@ static int add_recent_loose(const unsigned char *sh=
+a1,
+ 		 */
+ 		if (errno =3D=3D ENOENT)
+ 			return 0;
+-		return error("unable to stat %s: %s",
+-			     sha1_to_hex(sha1), strerror(errno));
++		return error_errno("unable to stat %s", sha1_to_hex(sha1));
+ 	}
 =20
- void warn_on_inaccessible(const char *path)
- {
--	warning(_("unable to access '%s': %s"), path, strerror(errno));
-+	warning_errno(_("unable to access '%s'"), path);
- }
-=20
- static int access_error_is_ok(int err, unsigned flag)
+ 	add_recent_object(sha1, st.st_mtime, data);
 --=20
 2.8.0.rc0.210.gd302cd2
