@@ -1,89 +1,134 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 80/83] run-command: make dup_devnull() non static
-Date: Sun, 8 May 2016 17:15:53 +0700
-Message-ID: <CACsJy8DUcLWQ6AwyLE+CF+TxZtqDLS=82peizSf4TrZ3q=qjJg@mail.gmail.com>
-References: <1461505189-16234-1-git-send-email-chriscool@tuxfamily.org>
- <alpine.DEB.2.20.1604251704300.2896@virtualbox> <CAP8UFD2f1L3YKNBA4zP1bmGe8BQitxZp-aDsGP5UTDv06LbLBg@mail.gmail.com>
- <572BA80E.3000309@kdbg.org> <CAP8UFD35L8P2YJbbvg_-n9Nc61xMs+_2qBJwBxFzXeF-jA4WwQ@mail.gmail.com>
- <alpine.DEB.2.20.1605061733170.2963@virtualbox> <CAP8UFD0ht+ozCMguGwBc19dd9ViXG4tTE0mdaOQ+JVXhSOk02Q@mail.gmail.com>
- <alpine.DEB.2.20.1605071409490.2963@virtualbox> <CAP8UFD2wFZgOzmadm7X2988RyDGve92TsoMHPf2S5Ydyhc=Nyg@mail.gmail.com>
- <alpine.DEB.2.20.1605080811380.4092@virtualbox>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>, git <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun May 08 12:17:42 2016
+From: Vasco Almeida <vascomalmeida@sapo.pt>
+Subject: [PATCH 2/5] git-gui i18n: internationalize use of colon punctuation
+Date: Sun,  8 May 2016 10:52:55 +0000
+Message-ID: <1462704778-4722-2-git-send-email-vascomalmeida@sapo.pt>
+References: <1462704778-4722-1-git-send-email-vascomalmeida@sapo.pt>
+Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
+	"Shawn O . Pearce" <spearce@spearce.org>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 08 12:54:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azLlb-0001kg-4V
-	for gcvg-git-2@plane.gmane.org; Sun, 08 May 2016 12:16:51 +0200
+	id 1azMLy-0006aR-Ai
+	for gcvg-git-2@plane.gmane.org; Sun, 08 May 2016 12:54:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750767AbcEHKQ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 May 2016 06:16:26 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:34700 "EHLO
-	mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750698AbcEHKQZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2016 06:16:25 -0400
-Received: by mail-lf0-f65.google.com with SMTP id m101so18013831lfi.1
-        for <git@vger.kernel.org>; Sun, 08 May 2016 03:16:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=lu2WuGLWD/X2SqKzF9s4ulOpA6vIZqmT8n5sPEH13b8=;
-        b=c45M1hnb+ieHqLgY10n0qMOAvZsOZeZopCPXPKSynd/3jPwGU0b4kfCW3NQqLKh+GZ
-         P+QutnmoHQHnVp7GLZD91baAM5TU9Ox52W+oOZp6pGFWYBiDsBJ6oZZm3XLoUWNXMijA
-         /vCuGYGD9p1JXtqK2tnZgE01Nh5vWYB8k/KzBMwVno/C9rkjLdt/2LyeSg2ZBpVSdHb9
-         cm/bhb2xtiZ1zGKircOnUFT0EkqlkPUrX7pSrjvBPEF+6wjuTy43n/hSddx8lkCXB36e
-         6gyMAhJCkuVcoQgNqaewHp8noMsPqainVTVm5XcE8xeZcmdaeN1IzlATukzs1cCNNzTI
-         HPDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=lu2WuGLWD/X2SqKzF9s4ulOpA6vIZqmT8n5sPEH13b8=;
-        b=LXIHrl7TDJ9jPohIJrHIngv4dpZl2fTp3Ll+pZ0aZB7ZU5nlvB05s3IB+ZOgKCuB9b
-         FfJRYIJk0LAJoueiWzpHPnEzOqsMiScP/KaKNgX491fhiENTL5ZRA4MPAySgCHWuqi/V
-         9oMUXHm0vRK0i6MNiAmJjxKRurbbpxjlEvMCPdv62NW3J8HAfP40uNoDhM+22klRtRnn
-         qTLCGrSA0xbDZHXOWcRltbzTFLH3mHso05rFvYKLe/gDPehCkwT7e7uKKqHrYSNL4bib
-         ZuBSMCKV1zjC6QY7U39/od2I6/HKIfEugSKjblH+KvtxVsjt/DV2zMKdVxTkMd/WQeNx
-         Fafw==
-X-Gm-Message-State: AOPr4FViFzoe9v5givvEdv45gEMo+TJmpB+aBenZuE4ubfgqvQM1V88zgYjdxUlDP6+eekWhy9AgtoE/Eit4yA==
-X-Received: by 10.112.170.106 with SMTP id al10mr2133465lbc.12.1462702583191;
- Sun, 08 May 2016 03:16:23 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Sun, 8 May 2016 03:15:53 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1605080811380.4092@virtualbox>
+	id S1750822AbcEHKyO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 May 2016 06:54:14 -0400
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:43901 "EHLO sapo.pt"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750798AbcEHKyN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 May 2016 06:54:13 -0400
+Received: (qmail 23191 invoked from network); 8 May 2016 10:54:10 -0000
+Received: (qmail 14520 invoked from network); 8 May 2016 10:54:10 -0000
+Received: from unknown (HELO localhost.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
+          (envelope-sender <vascomalmeida@sapo.pt>)
+          by mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
+          for <git@vger.kernel.org>; 8 May 2016 10:54:09 -0000
+X-PTMail-RemoteIP: 85.246.157.91
+X-PTMail-AllowedSender-Action: 
+X-PTMail-Service: default
+X-Mailer: git-send-email 2.7.3
+In-Reply-To: <1462704778-4722-1-git-send-email-vascomalmeida@sapo.pt>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293960>
 
-On Sun, May 8, 2016 at 1:33 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> The claim is that this libifies the procedure. But it makes the code
-> really nasty for use as a library: if this is run in a thread (and you
-> know that we are going to have to do this in the near future, for
-> performance reasons), it will completely mess up all the other threads
-> because it messes with the global file descriptors.
+Internationalize use of colon punctuation ':' in options window, windows
+titles, database statistics window. Some languages might use a different
+style, for instance French uses "User Name :" (space before colon).
 
-I vote one step at a time, leave multi-thread support for future.
-There's a lot more shared state than file descriptors anyway, at least
-there are object db and index access and probably a couple of hidden
-static variables somewhere. And I'm not sure if multi-thread really
-helps here. Are we really CPU-bound? If object inflation causes that
-(wild guess), can we just inflate ahead in some separate process and
-pass the result back?
+Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
+---
+ lib/branch_delete.tcl | 2 +-
+ lib/database.tcl      | 2 +-
+ lib/error.tcl         | 2 +-
+ lib/option.tcl        | 8 ++++----
+ 4 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/lib/branch_delete.tcl b/lib/branch_delete.tcl
+index 867938e..9aef0c9 100644
+--- a/lib/branch_delete.tcl
++++ b/lib/branch_delete.tcl
+@@ -128,7 +128,7 @@ method _delete {} {
+ 		set b [lindex $i 0]
+ 		set o [lindex $i 1]
+ 		if {[catch {git branch -D $b} err]} {
+-			append failed " - $b: $err\n"
++			append failed [mc " - %s:" $b] " $err\n"
+ 		}
+ 	}
+ 
+diff --git a/lib/database.tcl b/lib/database.tcl
+index 1f187ed..8bd4b8e 100644
+--- a/lib/database.tcl
++++ b/lib/database.tcl
+@@ -54,7 +54,7 @@ proc do_stats {} {
+ 			set value "$value[lindex $s 2]"
+ 		}
+ 
+-		${NS}::label $w.stat.l_$name -text "$label:" -anchor w
++		${NS}::label $w.stat.l_$name -text [mc "%s:" $label] -anchor w
+ 		${NS}::label $w.stat.v_$name -text $value -anchor w
+ 		grid $w.stat.l_$name $w.stat.v_$name -sticky we -padx {0 5}
+ 	}
+diff --git a/lib/error.tcl b/lib/error.tcl
+index c0fa69a..9b7d229 100644
+--- a/lib/error.tcl
++++ b/lib/error.tcl
+@@ -113,7 +113,7 @@ proc hook_failed_popup {hook msg {is_fatal 1}} {
+ 
+ 	bind $w <Visibility> "grab $w; focus $w"
+ 	bind $w <Key-Return> "destroy $w"
+-	wm title $w [strcat "[appname] ([reponame]): " [mc "error"]]
++	wm title $w [mc "%s (%s): error" [appname] [reponame]]
+ 	wm deiconify $w
+ 	tkwait window $w
+ }
+diff --git a/lib/option.tcl b/lib/option.tcl
+index b5b6b2f..e43971b 100644
+--- a/lib/option.tcl
++++ b/lib/option.tcl
+@@ -179,7 +179,7 @@ proc do_options {} {
+ 			i-* {
+ 				regexp -- {-(\d+)\.\.(\d+)$} $type _junk min max
+ 				${NS}::frame $w.$f.$optid
+-				${NS}::label $w.$f.$optid.l -text "$text:"
++				${NS}::label $w.$f.$optid.l -text [mc "%s:" $text]
+ 				pack $w.$f.$optid.l -side left -anchor w -fill x
+ 				tspinbox $w.$f.$optid.v \
+ 					-textvariable ${f}_config_new($name) \
+@@ -194,7 +194,7 @@ proc do_options {} {
+ 			c -
+ 			t {
+ 				${NS}::frame $w.$f.$optid
+-				${NS}::label $w.$f.$optid.l -text "$text:"
++				${NS}::label $w.$f.$optid.l -text [mc "%s:" $text]
+ 				${NS}::entry $w.$f.$optid.v \
+ 					-width 20 \
+ 					-textvariable ${f}_config_new($name)
+@@ -217,7 +217,7 @@ proc do_options {} {
+ 			s {
+ 				set opts [eval [lindex $option 3]]
+ 				${NS}::frame $w.$f.$optid
+-				${NS}::label $w.$f.$optid.l -text "$text:"
++				${NS}::label $w.$f.$optid.l -text [mc "%s:" $text]
+ 				if {$use_ttk} {
+ 					ttk::combobox $w.$f.$optid.v \
+ 						-textvariable ${f}_config_new($name) \
+@@ -279,7 +279,7 @@ proc do_options {} {
+ 			[font configure $font -size]
+ 
+ 		${NS}::frame $w.global.$name
+-		${NS}::label $w.global.$name.l -text "$text:"
++		${NS}::label $w.global.$name.l -text [mc "%s:" $text]
+ 		${NS}::button $w.global.$name.b \
+ 			-text [mc "Change Font"] \
+ 			-command [list \
 -- 
-Duy
+2.7.3
