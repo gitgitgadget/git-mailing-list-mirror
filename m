@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 20/41] copy.c: use error_errno()
-Date: Sun,  8 May 2016 16:47:40 +0700
-Message-ID: <1462700881-25108-21-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 21/41] credential-cache--daemon.c: use warning_errno()
+Date: Sun,  8 May 2016 16:47:41 +0700
+Message-ID: <1462700881-25108-22-git-send-email-pclouds@gmail.com>
 References: <1462277054-5943-1-git-send-email-pclouds@gmail.com>
  <1462700881-25108-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,90 +13,85 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 08 11:51:50 2016
+X-From: git-owner@vger.kernel.org Sun May 08 11:52:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azLME-0001GE-Vl
-	for gcvg-git-2@plane.gmane.org; Sun, 08 May 2016 11:50:39 +0200
+	id 1azLMK-0001R9-M3
+	for gcvg-git-2@plane.gmane.org; Sun, 08 May 2016 11:50:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751072AbcEHJuf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2016 05:50:35 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:33165 "EHLO
-	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751064AbcEHJue (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2016 05:50:34 -0400
-Received: by mail-pf0-f195.google.com with SMTP id y7so13783333pfb.0
-        for <git@vger.kernel.org>; Sun, 08 May 2016 02:50:33 -0700 (PDT)
+	id S1751081AbcEHJul convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2016 05:50:41 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:36349 "EHLO
+	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751076AbcEHJuk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 May 2016 05:50:40 -0400
+Received: by mail-pf0-f194.google.com with SMTP id p185so16154085pfb.3
+        for <git@vger.kernel.org>; Sun, 08 May 2016 02:50:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9gdftNInvYkBsfXxTpXaj8uI5t5aQ7m0JqFwg6BLLAk=;
-        b=A3+IxFPdu+N99jKtBTXVrjXQjVEGVnjCjRoOqvuzhAoDFNexXGm44MnDGCP+wo2tF7
-         JEaJImVI+Q1S78cI1a58GOufNQl+myTDi/Ulgsbh6agaCg0KKe3Y9o+Xt7BM3CCU6CQl
-         xKhCyo9BtoU5gPhDwnbRIJTYtKDbRYRlOeLQ25K12/es5y+Vk8iiLpWw8NSBO87ghprB
-         bqBE7jBnkSagW4HiC/hw+o7BdV5DjnGDc9m23SGZxSkNfvJgN1G132kpnFLj4dc9SsYt
-         onKyYTLRy9O6dMR81V6IyewE7YdiY0q1oebHhHZ6sK/UoO/MQygDGo2gGiEaX3z+ofg2
-         GhXg==
+        bh=8KpiPtnYMV+UpotVKa/Dy5aIZrExOkIAmVS6xXS605w=;
+        b=iBuKl2UiUgeCmCOzvStUP6xhMWVMmKHaqkdewOF5JFEzSuQDaTJ1AxZg6Lxa87VpIR
+         f62cmw/mrg/fUz0Fzv34nI9QN765Dgxnr/FT1WnaO59R2avpPKRJJ2gb8SiCP35gJO+z
+         ehGVzQCmWiKNIupHJq3uIUMgqoJnI+RO/GW5u96+Z+PvZbVJh+Z8IoJ54QlQSoGLJFZF
+         3CJdcGNEw8Z9hNCOQTYIfI9fgmnOVhj8aZt+9QZte+wdnBPSq4BLVeD6p0PCX1jcqUfx
+         ucEuzchTJhTp+Xh60v4gKbUF8b36wzipRQSMuD8MDg9LEsC9lRGkGnUSVRTMXwK29f2r
+         0c1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9gdftNInvYkBsfXxTpXaj8uI5t5aQ7m0JqFwg6BLLAk=;
-        b=RCkKCgVPU5od2ZECRO9KgJQVmEilFBOnVSEYxe2AD7x4URMZzudK4JdAE5oN+ovo8N
-         1r47aC8I9ilDwixfemMOy0xCZwBmrNJmm8sT2e78wJ9S/7DfomedJtFyNdBv1XOOoPOF
-         /OhD72mjIkQ/vk2JPHbzipbxJdCMcpVTdY8mbeh4RhMb0G0La2aSaSTMUQYL578oKxBU
-         eqtg4CXbmxlva3HMsXBJcaeq78XHuRshyyB8sRijGyqzdAgIK+ZgEwDB0jmvkFlsmn7z
-         UVwTErD7ATfCoKT1YIxft4SguwLHV71Ge13ec6Dhp/eHYL3oaPPR9aA0EzF5s2uPW3mi
-         24ng==
-X-Gm-Message-State: AOPr4FX0H/SDirt+kBpBvzlTs4Ymu+Xk0OPw+7cw4OVHlZIl+ahzCHQ9JS5Re5j7e7aNSA==
-X-Received: by 10.98.82.208 with SMTP id g199mr41821979pfb.113.1462701033442;
-        Sun, 08 May 2016 02:50:33 -0700 (PDT)
+        bh=8KpiPtnYMV+UpotVKa/Dy5aIZrExOkIAmVS6xXS605w=;
+        b=RhZz1Zd+VNuBBCmSLJX8DN9Bi2HXP6OZ6PvvfTnGLyCmdgTQOYmrpEi4Kk83kZ0W0j
+         hv7lGlq53UzCdZNhNFe9Pchgs+9uipgepFKMpxmnPM5f1vGltqKkm3k6hKpnHr70FGVD
+         gxGOZWxxxcUpVSz7Ph7LMzlPN4vZ6uyaYA6C7BiCu77BewlYiPd1V3rQaK3YGp2n4amg
+         mClG5O6yTagltT7WSCucMomAidC/bTVXI1TqovwwdyEl+i9CHsJ3qv/CuMdP+bG8gcnf
+         FrYircTqtJVpZX/i3No5zls8UXQRuKa+RS3NQYJUfVfN054eIxw1zBTyyyoNORGtQ0/y
+         cH8g==
+X-Gm-Message-State: AOPr4FWAbqyWrhHGqusbaIZ06/139OXvpTYEQKWw7dQZl57650L3J6IWsP3hBl5jkKOfIw==
+X-Received: by 10.98.44.149 with SMTP id s143mr3518165pfs.31.1462701039597;
+        Sun, 08 May 2016 02:50:39 -0700 (PDT)
 Received: from lanh ([115.72.42.9])
-        by smtp.gmail.com with ESMTPSA id p187sm8100215pfb.3.2016.05.08.02.50.29
+        by smtp.gmail.com with ESMTPSA id w187sm32746756pfw.50.2016.05.08.02.50.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 08 May 2016 02:50:31 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 08 May 2016 16:50:32 +0700
+        Sun, 08 May 2016 02:50:38 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 08 May 2016 16:50:39 +0700
 X-Mailer: git-send-email 2.8.0.rc0.210.gd302cd2
 In-Reply-To: <1462700881-25108-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293934>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- copy.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ credential-cache--daemon.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/copy.c b/copy.c
-index 574fa1f..4de6a11 100644
---- a/copy.c
-+++ b/copy.c
-@@ -42,15 +42,15 @@ int copy_file(const char *dst, const char *src, int=
- mode)
- 	status =3D copy_fd(fdi, fdo);
- 	switch (status) {
- 	case COPY_READ_ERROR:
--		error("copy-fd: read returned %s", strerror(errno));
-+		error_errno("copy-fd: read returned");
- 		break;
- 	case COPY_WRITE_ERROR:
--		error("copy-fd: write returned %s", strerror(errno));
-+		error_errno("copy-fd: write returned");
- 		break;
- 	}
- 	close(fdi);
- 	if (close(fdo) !=3D 0)
--		return error("%s: close error: %s", dst, strerror(errno));
-+		return error_errno("%s: close error", dst);
+diff --git a/credential-cache--daemon.c b/credential-cache--daemon.c
+index 291c0fd..1f14d56 100644
+--- a/credential-cache--daemon.c
++++ b/credential-cache--daemon.c
+@@ -179,12 +179,12 @@ static int serve_cache_loop(int fd)
 =20
- 	if (!status && adjust_shared_perm(dst))
- 		return -1;
+ 		client =3D accept(fd, NULL, NULL);
+ 		if (client < 0) {
+-			warning("accept failed: %s", strerror(errno));
++			warning_errno("accept failed");
+ 			return 1;
+ 		}
+ 		client2 =3D dup(client);
+ 		if (client2 < 0) {
+-			warning("dup failed: %s", strerror(errno));
++			warning_errno("dup failed");
+ 			close(client);
+ 			return 1;
+ 		}
 --=20
 2.8.0.rc0.210.gd302cd2
