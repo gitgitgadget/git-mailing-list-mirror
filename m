@@ -1,117 +1,166 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH v5 0/2] bisect--helper: rewrite of check-term-format()
-Date: Sun, 8 May 2016 11:53:53 +0530
-Message-ID: <CAFZEwPML8MCAL2quAN3ExMFXrhjS07g3KEC-WuSfYAXc2WQKuQ@mail.gmail.com>
-References: <1462338472-3581-1-git-send-email-pranit.bauva@gmail.com>
-	<1462546167-1125-1-git-send-email-pranit.bauva@gmail.com>
-	<xmqqtwia25qc.fsf@gitster.mtv.corp.google.com>
-	<CAFZEwPOA9c8eQAacnuB1n=juOhN1zsMdzcupS3ijqwYFPRrW4A@mail.gmail.com>
-	<xmqq60up1e24.fsf@gitster.mtv.corp.google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 80/83] run-command: make dup_devnull() non static
+Date: Sun, 8 May 2016 08:33:26 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605080811380.4092@virtualbox>
+References: <1461505189-16234-1-git-send-email-chriscool@tuxfamily.org> <alpine.DEB.2.20.1604251704300.2896@virtualbox> <CAP8UFD2f1L3YKNBA4zP1bmGe8BQitxZp-aDsGP5UTDv06LbLBg@mail.gmail.com> <572BA80E.3000309@kdbg.org> <CAP8UFD35L8P2YJbbvg_-n9Nc61xMs+_2qBJwBxFzXeF-jA4WwQ@mail.gmail.com>
+ <alpine.DEB.2.20.1605061733170.2963@virtualbox> <CAP8UFD0ht+ozCMguGwBc19dd9ViXG4tTE0mdaOQ+JVXhSOk02Q@mail.gmail.com> <alpine.DEB.2.20.1605071409490.2963@virtualbox> <CAP8UFD2wFZgOzmadm7X2988RyDGve92TsoMHPf2S5Ydyhc=Nyg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 08 08:24:07 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Johannes Sixt <j6t@kdbg.org>, git <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 08 08:34:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azI8M-0000eq-85
-	for gcvg-git-2@plane.gmane.org; Sun, 08 May 2016 08:24:06 +0200
+	id 1azII4-0001pB-1W
+	for gcvg-git-2@plane.gmane.org; Sun, 08 May 2016 08:34:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751116AbcEHGXz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 May 2016 02:23:55 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:35559 "EHLO
-	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750981AbcEHGXy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2016 02:23:54 -0400
-Received: by mail-yw0-f196.google.com with SMTP id v81so20991346ywa.2
-        for <git@vger.kernel.org>; Sat, 07 May 2016 23:23:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=3pg6NuuTkRSty126kq0U+DuMUOSZVZAZPjsEX5kQNq8=;
-        b=ll9K/Z+/vxU+CrQZT8CuhSiPxMTiUhenla5PfSvbB1QRnOetwlWA4RbN2Yesar51HY
-         wZceUNWWWgQr8fNNwdiSu8s+A6TWHnIJ/WWcLBtU7Ld6G2HsqaNRTY/dCsldGIrM5h8z
-         DYw1VftkjG7VJjhqr+oneYNT0ZGkZAZzz1rxI3K3YxAdc6yTOeHb6tVupwm6UdqJ+RTE
-         51hu/De0xjLismDWwp2pgzU76zdflXMWLf+mikZ1UAmtsG1yx0mUvsV0Zal/kleTsGAH
-         uGdz2x70b1jt3qQcAL2ZE9hTJAswQoeUTAMEksN3lGAJd80K0f2kj3wUTM/k6dyP3V8Q
-         49bA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=3pg6NuuTkRSty126kq0U+DuMUOSZVZAZPjsEX5kQNq8=;
-        b=WdVEE4jzYeN/EC/ZtWA4wrVEUVsYB0UMICMw/JB9/JDbuOuhvVISlln25NEjw30oID
-         zHUnf2M+RHT3644GyA/300pzHvCUgGhZe1qxg8LBiUKVy0ONKNepYFY36S9LyIx0xnsj
-         +7TLYHr03q97q49cO5CYtF/ndSYTshMsBj8uRgvPgCjslWWNpaS+WGwl1wzzZhBJcyrH
-         pYFnDuJJSjnQdBzdkUUT7xqd9KgLkIv/D/10UFVTJrHw98XxXNffmlzbs7C5dnS6CtDV
-         dVdH4jQHQ7+HiDfOz98DFGSjI4qHYSfOYVE9zIkte14usMTSMt9ETreCCxTC2o2ZOfi6
-         SEbQ==
-X-Gm-Message-State: AOPr4FXY5MXMzxxZoiRnvnV98yS9M+vnNEpMfMGwfr6Bxg5p1SiTO+hoUGSpUNXQtjmyOxFbDkXlBos0zVXBSA==
-X-Received: by 10.129.41.8 with SMTP id p8mr16323873ywp.154.1462688633433;
- Sat, 07 May 2016 23:23:53 -0700 (PDT)
-Received: by 10.13.219.213 with HTTP; Sat, 7 May 2016 23:23:53 -0700 (PDT)
-In-Reply-To: <xmqq60up1e24.fsf@gitster.mtv.corp.google.com>
+	id S1751138AbcEHGdz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 May 2016 02:33:55 -0400
+Received: from mout.gmx.net ([212.227.17.21]:56622 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751080AbcEHGdy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 May 2016 02:33:54 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Lm6IP-1bYcxt11Qv-00Zd0u; Sun, 08 May 2016 08:33:28
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <CAP8UFD2wFZgOzmadm7X2988RyDGve92TsoMHPf2S5Ydyhc=Nyg@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:hF5ScgGQamxdETevPDKSBt24xrQP61EfqitZF5KQWJ9BXHvzPy6
+ MheQQ1ozrUqdiplbOMYrrxkVuEZN2XhzRHBQSkbCKqyQjJSt7h2Ns8khXOQF8SYY334Hp7B
+ wX0SmwKXnvt2m/Xdn4oOIP73nza3JD7pBbx+I/ljb2P8fKTvrXwaCk0VrzSics3QgAl36If
+ Qtxmq3Q0gvD8zGx4ncwSQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tUDQ3CODxgk=:OAJ0UOjih0IzBO80oNaWex
+ /NkpFRDyGmEaaXEPrpH6y2hQtoJ7VUoxXhVU1pGhyBVczK3sEzatOj/XwtR3jbJa/2h35nSCm
+ EHdpKgmF4ENKssk+9kCUYBuT7ieVFA8OsZhXjkm8r2Xv1KflUMPPh6d1JPvR0oBDubbhjrCe3
+ NARTJup/dj+MfDBLLzL7Bmz8iQpwxErzlsHRZX13w46LnEE5r3x16hSItDKPnnqTIJdaUq+y7
+ niunNGEhclG+VDpKK08YYgHoSNbsIv1UAE5NzuqZCW01E1/iUIzw06Xs+LR88sxT8f3wV62wj
+ T8AyKHHJKitthMQI4mFl+Vdn5sWQ+fWU37J+FfW9a2jxjTMVZJPJJ2sTapQ1BwEjjIYq5B5+v
+ n9IrLJx3Izz8ebqrMaoNI+t3aygT32CnzNMMpBbZR3avpOpvlL0k4kU+QYISEllCawZije24Z
+ psWYnrnU/fjhliwRTidgSCALijl9rHB7BeOToKpN/s4THyPyctgN+AJLxsU+uixK9gq6oB033
+ bizLF92tsdB+vYi5oB739xM4h84JlZJyGQq7vGmYIRL5fzhkYN/1huhQdYvfJRHZMISR/mSev
+ tcNP9VGccqc66Zq2WNh1inyTUetKPAmALHjFQXTY4PKPRibnZP9Kbugu4GNizAwf3Ihx3JjSP
+ bnkgj6nsKZmAsO8UaeofcIj4ydz94MRk8EAFAW7btcgD42Rz3DK5DKIHpzJbg9ROVC4eI0Itz
+ LkilR98dtfdkx1I9OsKLzo+W2p/HxXXt1eTZ9CmszJqDswq3FF1+LOttMVJ+jIOrCQc5kowD 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293910>
 
-On Sun, May 8, 2016 at 7:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Pranit Bauva <pranit.bauva@gmail.com> writes:
->
->> I completely missed your point and you want me to go the Eric Sunshine's way?
->
-> I am neutral.
->
-> When I read your response to Eric's "top down" suggestion, I didn't
-> quite get much more than "I started going this way, and I do not
-> want to change to the other direction.", which was what I had the
-> most trouble with.  If your justification for the approach to start
-> from building a tiny bottom layer that will need to be dismantled
-> soon and repeat that (which sounds somewhat wasteful) were more
-> convincing, I may have felt differently.
+Hi Chris,
 
-Sorry if it seemed that "I have done quite some work and I don't want
-to scrape it off and redo everything". This isn't a case for me. I
-think of this as just a small part in the process of learning and my
-efforts would be completely wasted as I can still reuse the methods I
-wrote. This is still open for a "philosophical" discussion. I am
-assuming 1e1ea69fa4e is how Eric is suggesting.
+On Sat, 7 May 2016, Christian Couder wrote:
 
-Why I think its better to go the subcommand way:
- * I can test **C implementation** of the function to verify whether
-it was done in a proper way. By using a "top down" approach, I can
-make the test suite passing by running the code from git-bisect.sh not
-the re-written C code.
- * I have made a very few minor mistakes in conversion of
-check_term_format() which just messed up my head (I actually spent 3
-days before Christian pointed out that '!' was missing). Imagine
-debugging the complete git-bisect.sh to find a very small error after
-a complete implementation.
- * Using subcommands, I can easily verify whether I have done it the
-right way or not.
- * It makes the review process very simple. The reviewers/testers can
-verify that my method is working correctly and well computers can
-detect errors better than humans.
- * I can convert small functions which can be reviewed easily rather
-than dumping a big series.
+> On Sat, May 7, 2016 at 2:13 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Sat, 7 May 2016, Christian Couder wrote:
+> >
+> >> On Fri, May 6, 2016 at 5:34 PM, Johannes Schindelin
+> >> <Johannes.Schindelin@gmx.de> wrote:
+> >> >
+> >> > No, you should change the code that requires that ugly dup()ing so
+> >> > that it can be configured to shut up.
+> >>
+> >> After taking a look, it looks like a routine that does nothing could
+> >> be passed to set_error_routine() and that could do part of the trick.
+> >>
+> >> This part might not be too ugly, but it would anyway be more complex,
+> >> less close to what the code is doing now and more error prone, as one
+> >> also need to make sure that for example no warning() or
+> >> fprintf(stderr, ...) are called and nothing is printed on stdout.
+> >
+> > I am afraid that you *have* to do that, though, if you truly want to
+> > libify the code.
+> >
+> > Of course you can go with really ugly workarounds instead. Something
+> > like a global flag that die() and error() and warning() respect. It
+> > would incur some technical debt, but it would make your life easier in
+> > the short run.
+> >
+> > Both the real solution and the workaround would be better than the
+> > current version of the patches that dup() back and forth, just to
+> > avoid addressing the real problem.
+> 
+> The code that is now in master in builtin/am.c does:
+> 
+>     if (state->threeway && !index_file) {
+>         cp.no_stdout = 1;
+>         cp.no_stderr = 1;
+>     }
+> 
+> and in run-command.c there is already:
+> 
+>         if (cmd->no_stdout)
+>             dup_devnull(1);
+>         [...]
+>         if (cmd->no_stderr)
+>             dup_devnull(2);
 
-What I think is that the bottom up approach will make life easier for
-the me and for reviewer. Yes, it does make the code "unclean" for the
-time being and if it is between releases then all the more painful.
-Well, the latter part can be avoided by keeping it in next.
+Of course it does that. Because there is no other way, that's why: you
+cannot change the code that is spawned by start_command().
 
-Please point out if I am mistaken about anything.
+> for Linux and the following for Windows:
+> 
+>     if (cmd->no_stderr)
+>         fherr = open("/dev/null", O_RDWR);
+>         [...]
+>     if (cmd->no_stdout)
+>         fhout = open("/dev/null", O_RDWR);
 
-Regards,
-Pranit Bauva
+And it is very well contained on Windows. No other callers. The code
+is limited to run_command.c.
+
+> so the current code is already using dup_devnull() for Linux that you
+> don't want me to use, and it looks like there is already a simple way
+> to do that on Windows.
+
+The difference between the code in master and what your patches try to do
+is that in the latter case, you want to dup() just for a while, to shut up
+a code path that is not only known very well, but our very own code that
+is easily changed, only to dup() it *back* in the end.
+
+The claim is that this libifies the procedure. But it makes the code
+really nasty for use as a library: if this is run in a thread (and you
+know that we are going to have to do this in the near future, for
+performance reasons), it will completely mess up all the other threads
+because it messes with the global file descriptors.
+
+And that is why it is ugly: it incurs an enormous technical debt that will
+make code changes substantially more complicated down the road.
+
+In essence, you save yourself a little time by sloppily dup()ing back and
+forth. At the expense of making the life much harder for the developer who
+needs to use your code as a library function.
+
+And actually, hiding even fatal errors might be an ugly side effect of the
+current implementation, an unfortunate implementation detail, really, not
+something we want to preserve when libifying the code. And actually,
+dup()ing the *caller's* stdout is not exactly preserving the current
+behavior that dup()s the *called process'* stdout.
+
+So yes, I find the proposed patch inelegant.
+
+If others are okay with this, I will shut up. But I have to point out that
+it is ugly code, plain and simple, that silences an entire global file
+descriptor, just temporarily, only to avoid a careful set of patches that
+introduces a silent mode to the library functions that need to be called,
+which might even facilitate other libifying efforts.
+
+I hope you do not take this as a personal attack. It is not intended as
+such. It is intended to help end up with the best possible code quality.
+
+Ciao,
+Johannes
