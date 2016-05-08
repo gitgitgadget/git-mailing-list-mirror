@@ -1,232 +1,109 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/2] rev-parse tests: add tests executed from a subdirectory
-Date: Sun, 08 May 2016 11:05:54 -0700
-Message-ID: <xmqqvb2ozapp.fsf@gitster.mtv.corp.google.com>
-References: <1462541720-79553-1-git-send-email-rappazzo@gmail.com>
-	<1462541720-79553-2-git-send-email-rappazzo@gmail.com>
-	<xmqqy47m25z4.fsf@gitster.mtv.corp.google.com>
-	<CANoM8SVr1_G6KevbGSHifGyQS-ei57q+5D+GE_QmKvf_ysF2Sg@mail.gmail.com>
+Subject: Re: t6044 broken on pu
+Date: Sun, 08 May 2016 11:20:14 -0700
+Message-ID: <xmqqoa8gza1t.fsf@gitster.mtv.corp.google.com>
+References: <7d747193-7ba1-e274-86dc-427ed0f124c9@web.de>
+	<878tzmrrfg.fsf@linux-m68k.org>
+	<d1fcc54b-ddd7-b03b-79fa-2112a3f43141@web.de>
+	<xmqqa8k11e8j.fsf@gitster.mtv.corp.google.com>
+	<5618208c-ce45-d65c-abf8-498cfe0f2f84@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmc=?= =?utf-8?B?4buNYw==?= 
-	<pclouds@gmail.com>,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Mike Rappazzo <rappazzo@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 08 20:06:18 2016
+Cc: Andreas Schwab <schwab@linux-m68k.org>, newren@gmail.com,
+	Git Mailing List <git@vger.kernel.org>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun May 08 20:20:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azT5s-0000lH-I7
-	for gcvg-git-2@plane.gmane.org; Sun, 08 May 2016 20:06:16 +0200
+	id 1azTJY-0007Hj-E3
+	for gcvg-git-2@plane.gmane.org; Sun, 08 May 2016 20:20:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750929AbcEHSGA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2016 14:06:00 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63434 "EHLO
+	id S1751061AbcEHSUU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2016 14:20:20 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53877 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750913AbcEHSF6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 May 2016 14:05:58 -0400
+	with ESMTP id S1751053AbcEHSUS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 May 2016 14:20:18 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8C66118CE0;
-	Sun,  8 May 2016 14:05:56 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0FE9718FD2;
+	Sun,  8 May 2016 14:20:17 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=QNaHXDT83EUV
-	SZ9qwATHLra+xu8=; b=rOKJQmEgQlitckNLF6+puFd6YTBwAHqPO7KID3FQIdjh
-	idTGQHAusjdy8kxL06Pmk542MN9eSWOQKjh0yyM12CzNM6EoKc4BXjL4h8+PB3m7
-	YVWAQNNCSif8TnyiWoBcYwOeVytq7E8HY85fxQhR/Xdg6GfFlvvhKy3UutULL2I=
+	:content-type:content-transfer-encoding; s=sasl; bh=nFG/vFdh4lIb
+	U0GrTHWdnAwjMf4=; b=Tsm67ZJ+YVc8JaEMMgeZ5RKq0s2sFvD+9Q2qbUw9wFa2
+	KhKQcOg78hgW3jrKVfX1sb+Si0MWirkCglMvUHA/0rMFZBL7FXpN/6hW7lrvIwAE
+	hjUJgmbZxj7E4OGjgGDoRTHJH+oPf1TluE28vltPFGAyd4gwJTK/D/aZzMI2EPk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=a/Myoo
-	16nHZ7CDskVqrbFah05TkLNr0O+mnc9FV02IwIgRbwJClyuS+dKYSwmadBCZiNuV
-	a+ZJFBkH9+27j4QJQH+We12SzIBtS4jft4KeKk/ddxNYPBr4nQLxglFLvH0/tRMy
-	Mim/Y2/GosZp+NNeGbBDyrEFSOYfGm7TJccns=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=yc9jB+
+	PDAPZZ+Y4yP8zVjnPThCdwXup0F1pYheHukCv7oyoRp/X6dmhE32bR7TrLciRfcv
+	3Rhvtpor0Como6HhCSvYGO+AewB4dLplNfqyzel0uC+LEqAHZyPqsdY9G4yWlPP1
+	0Cnt422aVPZPfZ6COcEqZFKpySbsiO5b7K9k0=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 81EB218CDF;
-	Sun,  8 May 2016 14:05:56 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 068E618FD1;
+	Sun,  8 May 2016 14:20:17 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E2C9F18CDD;
-	Sun,  8 May 2016 14:05:55 -0400 (EDT)
-In-Reply-To: <CANoM8SVr1_G6KevbGSHifGyQS-ei57q+5D+GE_QmKvf_ysF2Sg@mail.gmail.com>
-	(Mike Rappazzo's message of "Sat, 7 May 2016 09:35:29 -0400")
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8690718FD0;
+	Sun,  8 May 2016 14:20:16 -0400 (EDT)
+In-Reply-To: <5618208c-ce45-d65c-abf8-498cfe0f2f84@web.de> ("Torsten
+	=?utf-8?Q?B=C3=B6gershausen=22's?= message of "Sun, 8 May 2016 08:54:06
+ +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 82A44B8A-1547-11E6-8811-D05A70183E34-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 8393238E-1549-11E6-B99E-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293971>
 
-Mike Rappazzo <rappazzo@gmail.com> writes:
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
->> Instead of cleaning things up like this, could you please please
->> please fix these existing tests that chdir around without being in a
->> subshell?  If the "previous tests" failed before going down as this
->> step expects, the "cd .. && rm -r" can make things worse.
+> May a  simple
+>  printf "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n"
+>
+> be an option ?
 
-> I originally copied the pattern from above this code:
-> ...
-> but G=C3=A1bor had an objection to it [2].  So I went with this simpl=
-e cleanup test.
+If you were to do that, at least have the decency to make it more
+readable by doing something like:
 
-The "|| exit 1" you see everywhere is a sure sign that these tests
-are not designed correctly.  These existing tests that do too many
-things outside test_expect_success block needs to be redone, so that
-each of them can do what it wants to test even when previous ones
-failed.
+	printf "%s\n" 1 2 3 4 5 6 7 8 9 10
 
-What I had in mind was more a long the lines of this change. I only
-did the first several just for illustration (I added an 'exit' to
-mark where I stopped), but I think you get the idea.  The point is
-that by doing things in subprocess inside test_expect_success you
-can avoid disrupting the main test process even when a test fails as
-much as possible, and this illustrates how you would deal with the
-"cd" and "export".  What I didn't handle was the updates to
-=2Egit/config whose effects by earlier tests are relied on later tests
-in this illustration.
+;-)
 
-As to "table driven" vs "explicitly spelling out scripts, accepting
-some code repetition", I tend to favor the latter slightly, unless
-the table driven approach is done in such a way that each of its
-tests are truly independent from one another, i.e. if a row of the
-table represents one test, the tests would not be disrupted by
-reordering the rows, inserting a new row in the middle, or removing
-an existing row.  From my experience, "table-driven" sets of tests
-whose rows have inter-dependency has been much harder to debug when
-I had to hunt down a bug that manifests itself only in one test in
-the middle.
+But as I said, as a response to "t6044 broken on pu" bug report,
+s/seq/test_seq/ is the only sensible change.
 
-Hope this helps clarify what I meant.
+Improving "test_seq, the alternative to seq" is a separate topic.
 
- t/t1500-rev-parse.sh | 82 ++++++++++++++++++++++++++++++--------------=
---------
- 1 file changed, 48 insertions(+), 34 deletions(-)
+If you have aversion to $PERL, perhaps do them without using
+anything what is not expected to be built-in in modern shells,
+perhaps like this?
 
-diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
-index 48ee077..22b52c0 100755
---- a/t/t1500-rev-parse.sh
-+++ b/t/t1500-rev-parse.sh
-@@ -5,65 +5,79 @@ test_description=3D'test git rev-parse'
-=20
- test_rev_parse() {
- 	name=3D$1
--	shift
--
--	test_expect_success "$name: is-bare-repository" \
--	"test '$1' =3D \"\$(git rev-parse --is-bare-repository)\""
-+	prep=3D$2
-+	shift 2
-+
-+	test_expect_success "$name: is-bare-repository" "
-+	(
-+		$prep &&
-+		test '$1' =3D \"\$(git rev-parse --is-bare-repository)\"
-+	)"
- 	shift
- 	[ $# -eq 0 ] && return
-=20
--	test_expect_success "$name: is-inside-git-dir" \
--	"test '$1' =3D \"\$(git rev-parse --is-inside-git-dir)\""
-+	test_expect_success "$name: is-inside-git-dir" "
-+	(
-+		$prep &&
-+		test '$1' =3D \"\$(git rev-parse --is-inside-git-dir)\"
-+	)"
- 	shift
- 	[ $# -eq 0 ] && return
-=20
--	test_expect_success "$name: is-inside-work-tree" \
--	"test '$1' =3D \"\$(git rev-parse --is-inside-work-tree)\""
-+	test_expect_success "$name: is-inside-work-tree" "
-+	(
-+		$prep &&
-+		test '$1' =3D \"\$(git rev-parse --is-inside-work-tree)\"
-+	)"
- 	shift
- 	[ $# -eq 0 ] && return
-=20
--	test_expect_success "$name: prefix" \
--	"test '$1' =3D \"\$(git rev-parse --show-prefix)\""
-+	test_expect_success "$name: prefix" "
-+	(
-+		$prep &&
-+		test '$1' =3D \"\$(git rev-parse --show-prefix)\"
-+	)"
- 	shift
- 	[ $# -eq 0 ] && return
-=20
--	test_expect_success "$name: git-dir" \
--	"test '$1' =3D \"\$(git rev-parse --git-dir)\""
-+	test_expect_success "$name: git-dir" "
-+	(
-+		$prep &&
-+		test '$1' =3D \"\$(git rev-parse --git-dir)\"
-+	)"
- 	shift
- 	[ $# -eq 0 ] && return
+ t/test-lib-functions.sh | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 8d99eb3..4edddac 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -739,7 +739,12 @@ test_seq () {
+ 	2)	;;
+ 	*)	error "bug in the test script: not 1 or 2 parameters to test_seq" =
+;;
+ 	esac
+-	perl -le 'print for $ARGV[0]..$ARGV[1]' -- "$@"
++	test_seq_counter__=3D$1
++	while test "$test_seq_counter__" -le $2
++	do
++		echo "$test_seq_counter__"
++		test_seq_counter__=3D$((test_seq_counter__ + 1))
++	done
  }
 =20
--# label is-bare is-inside-git is-inside-work prefix git-dir
-+# label prep is-bare is-inside-git is-inside-work prefix git-dir
-=20
- ROOT=3D$(pwd)
-+mkdir -p sub/dir work
-=20
--test_rev_parse toplevel false false true '' .git
-+test_rev_parse toplevel : false false true '' .git
-=20
--cd .git || exit 1
--test_rev_parse .git/ false true false '' .
--cd objects || exit 1
--test_rev_parse .git/objects/ false true false '' "$ROOT/.git"
--cd ../.. || exit 1
-+test_rev_parse .git 'cd .git' false true false '' .
-=20
--mkdir -p sub/dir || exit 1
--cd sub/dir || exit 1
--test_rev_parse subdirectory false false true sub/dir/ "$ROOT/.git"
--cd ../.. || exit 1
-+test_rev_parse .git/objects/ 'cd .git/objects' false true false '' "$R=
-OOT/.git"
-=20
--git config core.bare true
--test_rev_parse 'core.bare =3D true' true false false
-+test_rev_parse subdirectory 'cd sub/dir' \
-+	false false true sub/dir/ "$ROOT/.git"
-=20
--git config --unset core.bare
--test_rev_parse 'core.bare undefined' false false true
-+test_rev_parse 'core.bare =3D true' 'git config core.bare true' \
-+	true false false
-=20
--mkdir work || exit 1
--cd work || exit 1
--GIT_DIR=3D../.git
--GIT_CONFIG=3D"$(pwd)"/../.git/config
--export GIT_DIR GIT_CONFIG
-+test_rev_parse 'core.bare undefined' 'git config --unset core.bare || =
-:' \
-+	false false true
-=20
--git config core.bare false
--test_rev_parse 'GIT_DIR=3D../.git, core.bare =3D false' false false tr=
-ue ''
-+test_rev_parse 'GIT_DIR=3D../.git, core.bare =3D false' '
-+	cd work &&=20
-+	GIT_DIR=3D../.git &&
-+	GIT_CONFIG=3D"$(pwd)"/../.git/config &&
-+	export GIT_DIR GIT_CONFIG &&
-+	git config core.bare false' \
-+	false false true ''
-+
-+exit
-=20
- git config core.bare true
- test_rev_parse 'GIT_DIR=3D../.git, core.bare =3D true' true false fals=
-e ''
+ # This function can be used to schedule some commands to be run
