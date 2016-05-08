@@ -1,90 +1,116 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v5 1/2] bisect--helper: use OPT_CMDMODE instead of
- OPT_BOOL
-Date: Sun, 8 May 2016 09:04:12 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605080858190.4092@virtualbox>
-References: <1462338472-3581-1-git-send-email-pranit.bauva@gmail.com> <1462546167-1125-1-git-send-email-pranit.bauva@gmail.com> <1462546167-1125-2-git-send-email-pranit.bauva@gmail.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH v5 1/2] bisect--helper: use OPT_CMDMODE instead of OPT_BOOL
+Date: Sun, 8 May 2016 12:47:23 +0530
+Message-ID: <CAFZEwPOy5avk=3WKj0AdP-j7Ump4ie90+CeFTj6K83EMj-pQQA@mail.gmail.com>
+References: <1462338472-3581-1-git-send-email-pranit.bauva@gmail.com>
+	<1462546167-1125-1-git-send-email-pranit.bauva@gmail.com>
+	<1462546167-1125-2-git-send-email-pranit.bauva@gmail.com>
+	<alpine.DEB.2.20.1605080858190.4092@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: gitster@pobox.com, christian.couder@gmail.com,
-	chriscool@tuxfamily.org, larsxschneider@gmail.com,
-	sunshine@sunshineco.com, git@vger.kernel.org
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 08 09:04:28 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun May 08 09:17:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azIlP-0006HW-Es
-	for gcvg-git-2@plane.gmane.org; Sun, 08 May 2016 09:04:27 +0200
+	id 1azIy4-0002kf-3V
+	for gcvg-git-2@plane.gmane.org; Sun, 08 May 2016 09:17:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751144AbcEHHEX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 May 2016 03:04:23 -0400
-Received: from mout.gmx.net ([212.227.17.21]:60122 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751129AbcEHHEX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2016 03:04:23 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MELdk-1ash2y1nZ2-00FRPw; Sun, 08 May 2016 09:04:12
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <1462546167-1125-2-git-send-email-pranit.bauva@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:o+mcmtddR9WGNvCijBs/xw1Ooh4kvjbgU7U6gT/oIYIbl7dj4At
- C+qTyweoaM4aP32RGz3BD57NLkO+3PY0t5SWB8875Fw5PKokKuQiUu7pRb1NbuMJ32e6Vfl
- gzEpwZy/2eoYFZCscUo/R4pXQsLCQMKQh1QKVSY80PnNg1musK/wTXlLN1h+zLcFs6Ue/ds
- l6VJOFPtxK6GnHLsGJwNQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:SvU54yzlm1c=:IEcs8n+8DzFcJKAmyQtg9K
- VwdNXZVhF0WbimXcq3pthJwE4mIvIFNebHDFxZ86YzHULoFf2c0qfNJ9VAWOGEkh317IJudla
- uG4Jg06V7oOSSEjFrjuvoXDSQmHGkZ1rIBQJvg+FnNapsAWYXRjKZdhtHjQmAExX7Wo9UDmXB
- lmKgfE14e21vYl5/eLejKCcuEP3Uz42Kt6zXTZ517r/Hyabd46YNp4PDwFqx3ej7zw7nDUzhP
- 8QS+z/FwGDjxUOfV1sI0a7GYi4o4K88lcByEwn8WuadylAMXOHyA9acwSlc6TYvMehiuN3Jcf
- W7DGcmvc+0zXM4r6LJ1dcfJboRtQdGnB0dzx9bqZcWkOYs+A2gI9YxaljbpHQipbdzpT41jmi
- 8h2+mVIqmCzF1Ap4POPeOGxUSEkO/MBdZqEq+9+NN+UGKDNaPcSH6oF8X2tdnymXVz7DBPQ+/
- TU5syNpAMDw88GbL4mzEmXbBv0suYCXigGAy8NX1F8ZJSG9ZoLulBr7IPE6d9RLp5ijHhZmCl
- bQCfXOPGsIh+kGseqtinMYqTd1/sVdVmHXgFTrxYcVzL3PMoBXXm/NJJqpJrvK9w301cFKLNd
- H7VDA4oqt8tBULXsr5r4zvsu0K2GrG+RoLVUR+1k4vdoFksrLfXOT67DB9TQN9ulb6AmuQazd
- nC7Z1rDheTckMbKJTehx3R6Nyp6ajmq3zRQQWCGkfDlCzvFY1AQcb7z5xUghr8R9P2k4MEGgP
- KFGDeCykr9hnZRpZdwdXtmMaKWy0AW9AyGKt3yBxQZTjIqwJSE3Fuop02fjI77V6fNVp57lV 
+	id S1751176AbcEHHRY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 May 2016 03:17:24 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:33145 "EHLO
+	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751134AbcEHHRY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 May 2016 03:17:24 -0400
+Received: by mail-yw0-f196.google.com with SMTP id y6so20859231ywe.0
+        for <git@vger.kernel.org>; Sun, 08 May 2016 00:17:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=Vw2YTy4Bjw+cTWsZvtNsJ6P0R3tlNoYQUW7f6FEsOQ8=;
+        b=B0tWhjfb0LQmqXmygQ0Iw0CU7O+A3IlTjihGVLhPlwNM8xi9zASibR8DiDt3XNKPJr
+         yEYPAkqFTXP/lXBVT8WQof32ZU5kiGGW/kC5zulN/Rbk86RqOOOJoAOMefcsk2dLTAcd
+         7YnxjOmC17CDuHqpcUxodOpzCq/E6oQw5bCslYovFHwM1wYbdIrTLfqxipJEFV2k7WQe
+         Nv307KfyMmeGs0Zkk8nyP7mmT18hbqqvYa1xx40KClhBCZ9gOP03JDT0sLHk74wOYIt+
+         FHeH/SZBWcG4mS+ir5LEJMUYPy0mzbkobBmy4/at2eh//TSPH2B9DAcBn+61PLU3STyc
+         LSyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=Vw2YTy4Bjw+cTWsZvtNsJ6P0R3tlNoYQUW7f6FEsOQ8=;
+        b=eCpJxzj2baEc3J4vfp8WVnSgmOwhxeyluFFWQdz2QtQwB5r14tSu2su+XmMYomc1M5
+         p00cyeppJxi3Ceeqp5cVmgX9GH9EHvuWrpGBgPieiJQS4/vww3xad+6T+U0qaMuAUji3
+         g2q4JLAfTqBZsRM3ZRxnukrAUCQxC4GH97/SSxLz3OT7U/p76yKf2v0cFtAEtO/WMus7
+         2Nl7o+WcO+qwdeu3pLwGSECVxDFUybQbjtufU9ymtopiNMnPmNnY3I1HLskDU7NeHAlM
+         K0pQpjExySeHgGOSo1035rirjypMpBhcm2q6ShTExXIQ9kbvT636ZtFk2u75FAEFjOJW
+         hjcQ==
+X-Gm-Message-State: AOPr4FXVTn5SCnrU0csAEmgHwke+bkhDIQEXILNUfUmLNXIp6wSQsMEjBDUL+6rsXqlUsBVd9GdI/ASa6BTp0Q==
+X-Received: by 10.13.221.212 with SMTP id g203mr16873019ywe.68.1462691843304;
+ Sun, 08 May 2016 00:17:23 -0700 (PDT)
+Received: by 10.13.219.213 with HTTP; Sun, 8 May 2016 00:17:23 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1605080858190.4092@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293914>
 
-Hi Pranit,
+On Sun, May 8, 2016 at 12:34 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Pranit,
+>
+> On Fri, 6 May 2016, Pranit Bauva wrote:
+>
+>> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+>> index 3324229..d8de651 100644
+>> --- a/builtin/bisect--helper.c
+>> +++ b/builtin/bisect--helper.c
+>> @@ -8,13 +8,17 @@ static const char * const git_bisect_helper_usage[] = {
+>>       NULL
+>>  };
+>>
+>> +enum subcommand {
+>> +     NEXT_ALL = 1
+>> +};
+>
+> I still do not think that this enum needs to have file scope. Function
+> scope is enough.
 
-On Fri, 6 May 2016, Pranit Bauva wrote:
+In the very initial patch I made it in function scope. To which you
+pointed out[1] that in all other examples but for one have file scope
+so then I thought maybe that exception was a wrong example and I
+should stick to the convention of putting it in file scope. But now I
+also realize that builtin/replace.c uses "cmdmode" instead of
+"subcommand" so I am still wondering what would be the most
+appropriate?
 
-> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> index 3324229..d8de651 100644
-> --- a/builtin/bisect--helper.c
-> +++ b/builtin/bisect--helper.c
-> @@ -8,13 +8,17 @@ static const char * const git_bisect_helper_usage[] = {
->  	NULL
->  };
->  
-> +enum subcommand {
-> +	NEXT_ALL = 1
-> +};
+>>  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+>>  {
+>> -     int next_all = 0;
+>> +     int subcommand = 0;
+>
+> Since subcommand is not simply an integer, but wants to take on the values
+> defined in the enum above, the type should be changed accordingly. You
+> could do it this way (short and sweet, with the appropriate scope):
+>
+>         enum { NEXT_ALL = 1 } subcommand = 0;
+>
+> See https://github.com/git/git/blob/v2.8.2/builtin/replace.c#L423-L430 for
+> an example (which uses "cmdmode" instead of "subcommand", too).
+>
+> Ciao,
+> Dscho
+[1]: http://article.gmane.org/gmane.comp.version-control.git/289653
 
-I still do not think that this enum needs to have file scope. Function
-scope is enough.
-
->  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
->  {
-> -	int next_all = 0;
-> +	int subcommand = 0;
-
-Since subcommand is not simply an integer, but wants to take on the values
-defined in the enum above, the type should be changed accordingly. You
-could do it this way (short and sweet, with the appropriate scope):
-
-	enum { NEXT_ALL = 1 } subcommand = 0;
-
-See https://github.com/git/git/blob/v2.8.2/builtin/replace.c#L423-L430 for
-an example (which uses "cmdmode" instead of "subcommand", too).
-
-Ciao,
-Dscho
+Regards,
+Pranit Bauva
