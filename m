@@ -1,179 +1,111 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: t6392 broken on pu (Mac OS X)
-Date: Mon, 9 May 2016 12:07:25 -0400
-Message-ID: <20160509160725.GA11861@sigill.intra.peff.net>
-References: <dea0877d-fe83-fb47-4df3-21fd69d8421d@web.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: t6044 broken on pu
+Date: Mon, 9 May 2016 12:02:45 -0400
+Message-ID: <CAPig+cTyEU1gEwD5AuODkLzF--EOqo5_MQHD5QEFpb8dgh_wrw@mail.gmail.com>
+References: <7d747193-7ba1-e274-86dc-427ed0f124c9@web.de>
+	<878tzmrrfg.fsf@linux-m68k.org>
+	<d1fcc54b-ddd7-b03b-79fa-2112a3f43141@web.de>
+	<xmqqa8k11e8j.fsf@gitster.mtv.corp.google.com>
+	<5618208c-ce45-d65c-abf8-498cfe0f2f84@web.de>
+	<xmqqoa8gza1t.fsf@gitster.mtv.corp.google.com>
+	<CANgJU+V9+-hTFvDxCGbQxFcHMRcFaP-NdS_P93DqXuxi1Lh4mg@mail.gmail.com>
+	<20160509083323.GB14299@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: demerphq <demerphq@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Andreas Schwab <schwab@linux-m68k.org>, newren@gmail.com,
 	Git Mailing List <git@vger.kernel.org>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon May 09 18:19:25 2016
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon May 09 18:20:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azniX-0000Vt-NF
-	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 18:07:34 +0200
+	id 1azndz-0004PS-Oz
+	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 18:02:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751754AbcEIQH3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 May 2016 12:07:29 -0400
-Received: from cloud.peff.net ([50.56.180.127]:36353 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751646AbcEIQH3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2016 12:07:29 -0400
-Received: (qmail 18467 invoked by uid 102); 9 May 2016 16:07:28 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 09 May 2016 12:07:28 -0400
-Received: (qmail 20171 invoked by uid 107); 9 May 2016 16:07:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 09 May 2016 12:07:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 May 2016 12:07:25 -0400
-Content-Disposition: inline
-In-Reply-To: <dea0877d-fe83-fb47-4df3-21fd69d8421d@web.de>
+	id S1751526AbcEIQCr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 May 2016 12:02:47 -0400
+Received: from mail-io0-f169.google.com ([209.85.223.169]:33236 "EHLO
+	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751430AbcEIQCq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2016 12:02:46 -0400
+Received: by mail-io0-f169.google.com with SMTP id f89so176585854ioi.0
+        for <git@vger.kernel.org>; Mon, 09 May 2016 09:02:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=788ovWyNOzryCdyCazhWIC8y+M4Hkb7iv3elKI1fNqI=;
+        b=Qg4Eh6ktD1pFa2haN2siRI4UUR0xfmZrQhcGjlZp5FOhed3Q15jZr8j3ei3s0Jp4mt
+         ltioUC5nq9bXyFZJx04k8kHYOkIwBKQfl//rSR5S7R3OXNZeNspR+qGVpaIPdgd7xHxO
+         u5QMlY8SwUCSiJKc4Z3blm16NCrSrmf2nUHVtsBCwzvfeWAhhPNSOpG3EBG2vQ9VdSXd
+         UAx1BxgfnSU1g3mKckvdFQUaOB9GBFJ452C2fOEdhXgwM6AmHHOXRrkGKZ15IEUynGCK
+         QywWSo5RpzxEvQJVqiBcN/PRDg/5hGJMvpyab7kmq7wbnG9qvlUbbkyvGW1bDo7twpoN
+         HQJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=788ovWyNOzryCdyCazhWIC8y+M4Hkb7iv3elKI1fNqI=;
+        b=VeYqAcKdFDF1IOHU1LUGuvUzQeIIZXZDUZKFN/fgeI5rTjyC+SNEQdP8AIWu8rGS/t
+         mA0OJomoBma9nB7QKvdXtlmsE1aGwA9G5f65wUOIQL6whHIpcHaTG7PsqjVVbLJL7Rvn
+         lVQ/fJ/22y2vQFX29RhbsKktjtWi3cezRQTQ55JE0MN36X5niXTF78VOXU/fJkN2mG+e
+         4IAgTJgDnjx3kDAepC+z9Jc4TaHissCufuD8ryJfn1fn+R4Ye2wI6BQsqoGoBIf3+9l5
+         K2LAlddTMaRDLZ9uOOMvuSxICuAZ3emkTD3ayiBUvo0zaUbPCOMvCLh3U9F6r6slpSe8
+         obSA==
+X-Gm-Message-State: AOPr4FWlsHkrqZOJ8XL1gAsCdC1gJISUFMxFpkXcypjJ0crFp0pH2PTqtk2roS31WYuhpPhQtoo8+IsyrmMKog==
+X-Received: by 10.107.132.66 with SMTP id g63mr41333312iod.34.1462809765911;
+ Mon, 09 May 2016 09:02:45 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Mon, 9 May 2016 09:02:45 -0700 (PDT)
+In-Reply-To: <20160509083323.GB14299@sigill.intra.peff.net>
+X-Google-Sender-Auth: l_UZqNm1gcv-ptnci_zxRoKbbMc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294006>
 
-On Sat, May 07, 2016 at 06:15:19PM +0200, Torsten B=C3=B6gershausen wro=
-te:
+On Mon, May 9, 2016 at 4:33 AM, Jeff King <peff@peff.net> wrote:
+> On Mon, May 09, 2016 at 08:30:51AM +0200, demerphq wrote:
+>> > -       perl -le 'print for $ARGV[0]..$ARGV[1]' -- "$@"
+>> > +       test_seq_counter__=$1
+>> > +       while test "$test_seq_counter__" -le $2
+>> > +       do
+>> > +               echo "$test_seq_counter__"
+>> > +               test_seq_counter__=$((test_seq_counter__ + 1))
+>> > +       done
+>> >  }
+>>
+>> Is that perl snippet ever called with non-numeric output?
+>>
+>> perl -le 'print for $ARGV[0]..$ARGV[1]' -- A E
+>> A
+>> B
+>> C
+>> D
+>> E
+>
+> I had that thought, too, but I think it would be an error to do so.
+> test_seq is supposed to be a replacement for "seq", which does not
+> understand non-numeric sequences.
 
-> These tests fail here under Mac OS,
-> they pass under Linux:
-> commit ff3d9b660a4b6e9d3eeb664ce1febe717adff737
-> I haven't had a chance to dig further.
+Although, the comment block just above test_seq() in
+test-lib-functions.sh says otherwise:
 
-I assume you mean t6302. It looks like the difference is not Mac OS, bu=
-t
-rather that the GPG prerequisite is not fulfilled, so we are missing a
-few of the tags.
+    Print a sequence of numbers or letters in increasing order.  This
+    is similar to GNU seq(1), but the latter might not be available
+    everywhere (and does not do letters).  It may be used like:
 
-Commit 618310a introduced a helper to munge the "expect" output. Using
-that fixes some of the cases, but not test 34. That one is expecting
-blank lines for tags, so test_prepare_expect doesn't know which lines
-are related to GPG.
-
-We could fix it by tweaking the test like this:
-
-diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filt=
-er.sh
-index 7420e48..04042e1 100755
---- a/t/t6302-for-each-ref-filter.sh
-+++ b/t/t6302-for-each-ref-filter.sh
-@@ -343,29 +343,27 @@ test_expect_success 'improper usage of %(if), %(t=
-hen), %(else) and %(end) atoms'
- '
-=20
- test_expect_success 'check %(if)...%(then)...%(end) atoms' '
--	git for-each-ref --format=3D"%(if)%(authorname)%(then)%(authorname): =
-%(refname)%(end)" >actual &&
--	cat >expect <<-\EOF &&
--	A U Thor: refs/heads/master
--	A U Thor: refs/heads/side
--	A U Thor: refs/odd/spot
--
--
--
--	A U Thor: refs/tags/foo1.10
--	A U Thor: refs/tags/foo1.3
--	A U Thor: refs/tags/foo1.6
--	A U Thor: refs/tags/four
--	A U Thor: refs/tags/one
--
--	A U Thor: refs/tags/three
--	A U Thor: refs/tags/two
-+	git for-each-ref --format=3D"%(refname):%(if)%(authorname)%(then) aut=
-hor=3D%(authorname)%(end)" >actual &&
-+	test_prepare_expect >expect <<-\EOF &&
-+	refs/heads/master: author=3DA U Thor
-+	refs/heads/side: author=3DA U Thor
-+	refs/odd/spot: author=3DA U Thor
-+	refs/tags/annotated-tag:
-+	refs/tags/doubly-annotated-tag:
-+	refs/tags/foo1.10: author=3DA U Thor
-+	refs/tags/foo1.3: author=3DA U Thor
-+	refs/tags/foo1.6: author=3DA U Thor
-+	refs/tags/four: author=3DA U Thor
-+	refs/tags/one: author=3DA U Thor
-+	refs/tags/three: author=3DA U Thor
-+	refs/tags/two: author=3DA U Thor
- 	EOF
- 	test_cmp expect actual
- '
-=20
- test_expect_success 'check %(if)...%(then)...%(else)...%(end) atoms' '
- 	git for-each-ref --format=3D"%(if)%(authorname)%(then)%(authorname)%(=
-else)No author%(end): %(refname)" >actual &&
--	cat >expect <<-\EOF &&
-+	test_prepare_expect >expect <<-\EOF &&
- 	A U Thor: refs/heads/master
- 	A U Thor: refs/heads/side
- 	A U Thor: refs/odd/spot
-@@ -385,7 +383,7 @@ test_expect_success 'check %(if)...%(then)...%(else=
-)...%(end) atoms' '
- '
- test_expect_success 'ignore spaces in %(if) atom usage' '
- 	git for-each-ref --format=3D"%(refname:short): %(if)%(HEAD)%(then)Hea=
-d ref%(else)Not Head ref%(end)" >actual &&
--	cat >expect <<-\EOF &&
-+	test_prepare_expect >expect <<-\EOF &&
- 	master: Head ref
- 	side: Not Head ref
- 	odd/spot: Not Head ref
-
-
-Though we'd perhaps want to tweak the subsequent tests to use the same
-format, just to make things easier to read later.
-
-However, I wonder if we could improve on the strategy in 618310a, and
-simply create non-signed versions of the "signed" tags when GPG is not
-available. That would make tests looking at the whole ref namespace
-more consistent. And any tests which wanted to look specifically at the
-signed attributes should be protected with the GPG prereq anyway (it
-doesn't look like there are any currently, though).
-
-I.e., something like:
-
-diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filt=
-er.sh
-index 7420e48..a3df472 100755
---- a/t/t6302-for-each-ref-filter.sh
-+++ b/t/t6302-for-each-ref-filter.sh
-@@ -6,12 +6,8 @@ test_description=3D'test for-each-refs usage of ref-fi=
-lter APIs'
- . "$TEST_DIRECTORY"/lib-gpg.sh
-=20
- test_prepare_expect () {
--	if test_have_prereq GPG
--	then
--		cat
--	else
--		sed '/signed/d'
--	fi
-+	# XXX this could now go away entirely, and just use cat in each test
-+	cat
- }
-=20
- test_expect_success 'setup some history and refs' '
-@@ -24,9 +20,12 @@ test_expect_success 'setup some history and refs' '
- 	git tag -m "Annonated doubly" doubly-annotated-tag annotated-tag &&
- 	if test_have_prereq GPG
- 	then
--		git tag -s -m "A signed tag" signed-tag &&
--		git tag -s -m "Signed doubly" doubly-signed-tag signed-tag
-+		sign=3D-s
-+	else
-+		sign=3D
- 	fi &&
-+	git tag $sign -m "A signed tag" signed-tag &&
-+	git tag $sign -m "Signed doubly" doubly-signed-tag signed-tag &&
- 	git checkout master &&
- 	git update-ref refs/odd/spot master
- '
-
--Peff
+    for i in $(test_seq 100)
+    do
+        for j in $(test_seq 10 20)
+        do
+            for k in $(test_seq a z)
+            do
+                echo $i-$j-$k
+            done
+        done
+    done
