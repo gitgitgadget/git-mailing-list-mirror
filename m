@@ -1,98 +1,85 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v7 1/3] tests: Adjust the configuration for Apache 2.2
-Date: Mon, 9 May 2016 08:18:52 +0200 (CEST)
-Message-ID: <4a15c4e6c35cfb425da568d87e8b20b984e5325c.1462774709.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v7 2/3] t5551: make the test for extra HTTP headers more
+ robust
+Date: Mon, 9 May 2016 08:19:00 +0200 (CEST)
+Message-ID: <f29dac327aeac23677aec955f5b46a7a4702abfe.1462774709.git.johannes.schindelin@gmx.de>
 References: <cover.1462342213.git.johannes.schindelin@gmx.de> <cover.1462774709.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Lars Schneider <larsxschneider@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 09 08:19:47 2016
+X-From: git-owner@vger.kernel.org Mon May 09 08:20:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azeXJ-0003jt-6E
-	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 08:19:21 +0200
+	id 1azeXD-0003fo-5g
+	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 08:19:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751140AbcEIGTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2016 02:19:13 -0400
-Received: from mout.gmx.net ([212.227.17.20]:56101 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751120AbcEIGTI (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751139AbcEIGTI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Mon, 9 May 2016 02:19:08 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MY3Ho-1b46VF0LCq-00Uttp; Mon, 09 May 2016 08:18:49
+Received: from mout.gmx.net ([212.227.15.19]:65469 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751000AbcEIGTF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2016 02:19:05 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0M9b03-1auw743tYl-00CxbC; Mon, 09 May 2016 08:18:58
  +0200
 X-X-Sender: virtualbox@virtualbox
 In-Reply-To: <cover.1462774709.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:IErU7orFww9+BTpyNYDTnvRIjOA+peBkThJXXkkhU5ESfxCGya4
- 608mcApbYuzhvgxM5O86/quKtG6I2CJuSPlhQ/G+z4Gqz6Ssfb83+CR9DLLFDX1qrsl38vb
- Wvbz8OrVJfrVNLlGGJIuzqgRtvfoFmhz5zFj2JVBr2SB6ZFCg/ILyIdjOCkxJ72zPx8Nhl9
- DrHE+Rnd2pUvs4rnQX11A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:koDLmHKZT1Q=:TkPFgP25BRbXxayo34ezQM
- 7MX6m4IwO0reVx8KAilB2MgQzQfaFwnDebWvPuiaSeOnuTEJHt2IxUA6s2LW+G3NzaYFKbKs8
- 4DP+TuyXs8EMZacChjGP2VAHi5Ts6HloKWypYHnF8mTLFdT0qswcvSryQ/+mVU9D8IasGYvto
- YCEeqwkdkyjVwamZPdjVCCaZrOCETyV0Y7l9zmTdZDFkcgvRv4JA8zlkuVWQhobEP60Yu+h8e
- Oo/Sy1atyFQM/iam3SUz8gwZpHvtyvsKNTZo+dkVjLuit7RXJKg6SxRpoMLXYXUy4+PqrKiTi
- seQOzrXh2iAXUEBR1uRz1x/2cCAqGnSo6pW/kZipCBI1QNK+mmYrBM/9hwHEJHfFL5dYJ16b8
- aG2C68WqCjmKbg7h5jxNuXZiHbM0cNz2u6Z84FiGhdQcPbdyr3/YPX397AnbJWwsGTpgaVV9u
- zcf+MfDkjMLoxoDoF7Wge7MroyMLeUC+u9QHoZ6vvM+Q8gQ0u901OGaX/CPTMI2eIzY6bHsbl
- lFcr+dW7b5/3BqSgyGoomBYz7dAcB5PwH1BQxLknIuLNssBmdHy4Ail7YmFW2czTXv0NVUyUD
- mvCdoY8SbqCrkY0bIOdSzLt48fRmBmBDfdTK2DA0HBVyMukvk3oRmovNN/3zPRfyHxMnekqZU
- GNf12cu8sGUmpQ4hdOw43S81ApxChszBmxM3r82fC6tQ/KuUHJng+/eOvS+lShmxGdmrF92G5
- tCMhx0gFhHn+fkStLT4mYcUAd3sRrnAYKauZHoDAUh82CK9WYt8HXv4F5ylh/W+Z4wTXr3e1 
+X-Provags-ID: V03:K0:b3V9lUTix76c0P3Q0+HmLd84mIerEgYAQ9wh9xBKDsfu2TQd+tN
+ hvYd7w/drJGHyIqIYHx4LrRiMXobL+PmzV/3s7rV+cEUUKRR/aihScDH8Th7/RCWgiaL471
+ WM5Uns9glByQJrS2f455L6tgKEp07dD3tdmTGnjNoUAB/ruefeV3rtTWqT5w6h2hHw5x0QG
+ Vk84pKEGoKwMZ0jb/yRfw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:IUnnQP6tKWw=:gCktlluu1BzGA1xkEwjYe0
+ 3KFd8itIQAHFnIX9+ZfTrF6UlfdJBBkDEBLm+rjEMocGFyG0B8Ba1u0j4v41JA6APY+oLArTu
+ OZtyZb3L6HhkDOy8SRaZvelsdXwQY1t5pzHc0s+ZU5nVznVcbQJmFJrE/4lhpZbmnt41GJX5E
+ YFGGH/W79RbPav6pMxUkzf60PUmdH9J/BtvVO1zKPjUoGTihuYDPjgUNpVokep4YHkhau5r0y
+ 5pfp4zyZZ+QqCtCuzvtbwwlkXIFTwvKKMDWO6+f2uoKrseb6HQgxkvOMG+L9o9/YCFVrFbEsw
+ PfejkZ4lfnW+63hmKpRT1UFsgqj5tKl97O118hiJXMSOYCrQ1GKMu2IB0rD0zUBS/eMmAQmF4
+ uji3zFzMBC973RFe9H6zEmIQPGUWWe1UUaiw7Vq6uJckP4VlM3AhywC93gqbvnSpkDmClWjKG
+ +31vkjoUKev8BOqOpu9PdaccReQyskWaIXDgnyfYoxkLpM36WfHxla5F+VRJI+lqTllu6ufzN
+ qdBatIY5X9VKK3h5/6Y801LhLLRDXOk5rEOZfAoG0yR/axrWWjrTCjppgLqe85whcy9Ou+OTl
+ mStyz/gSUzWTMQq9e0rsXPMhPR2FgAXp50I/H/40O0hv9Z40EcfEXIzfqq+FFgognrMeAddvM
+ LGHkucRGvMJDKmN59ZEK5HEV6tJqanrae8ViKW5RJCIaMG4MfT8cD4vgHQenpXBXjZPchpGTd
+ hsy4FigxQ7NEQ7W39EZZSdfIakdjx0wix8mVBPUs37BU0Ra2hbmgwP9txG2x9pNLSPteKZod 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293987>
 
-Lars Schneider noticed that the configuration introduced to test the extra
-HTTP headers cannot be used with Apache 2.2 (which is still actively
-maintained, as pointed out by Junio Hamano).
+To test that extra HTTP headers are passed correctly, t5551 verifies that
+a fetch succeeds when two required headers are passed, and that the fetch
+does not succeed when those headers are not passed.
 
-To let the tests pass with Apache 2.2 again, let's substitute the
-offending <RequireAll> and `expr` by using old school RewriteCond
-statements.
+However, this test would also succeed if the configuration required only
+one header. As Apache's configuration is notoriously tricky (this
+developer frequently requires StackOverflow's help to understand Apache's
+documentation), especially when still supporting the 2.2 line, let's just
+really make sure that the test verifies what we want it to verify.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/lib-httpd/apache.conf | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ t/t5551-http-fetch-smart.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-index b8ed96f..29b34bb 100644
---- a/t/lib-httpd/apache.conf
-+++ b/t/lib-httpd/apache.conf
-@@ -103,10 +103,6 @@ Alias /auth/dumb/ www/auth/dumb/
- 	Header set Set-Cookie name=value
- </LocationMatch>
- <LocationMatch /smart_headers/>
--	<RequireAll>
--		Require expr %{HTTP:x-magic-one} == 'abra'
--		Require expr %{HTTP:x-magic-two} == 'cadabra'
--	</RequireAll>
- 	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
- 	SetEnv GIT_HTTP_EXPORT_ALL
- </LocationMatch>
-@@ -136,6 +132,14 @@ RewriteRule ^/ftp-redir/(.*)$ ftp://localhost:1000/$1 [R=302]
- RewriteRule ^/loop-redir/x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-(.*) /$1 [R=302]
- RewriteRule ^/loop-redir/(.*)$ /loop-redir/x-$1 [R=302]
+diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+index e44fe72..43b257e 100755
+--- a/t/t5551-http-fetch-smart.sh
++++ b/t/t5551-http-fetch-smart.sh
+@@ -283,7 +283,8 @@ test_expect_success EXPENSIVE 'http can handle enormous ref negotiation' '
+ '
  
-+# Apache 2.2 does not understand <RequireAll>, so we use RewriteCond.
-+# And as RewriteCond unfortunately lacks "not equal" matching, we use this
-+# ugly trick to fail *unless* the two headers are present.
-+RewriteCond %{HTTP:x-magic-one} =abra
-+RewriteCond %{HTTP:x-magic-two} =cadabra
-+RewriteRule ^/smart_headers/.* - [L]
-+RewriteRule ^/smart_headers/.* - [F]
-+
- <IfDefine SSL>
- LoadModule ssl_module modules/mod_ssl.so
- 
+ test_expect_success 'custom http headers' '
+-	test_must_fail git fetch "$HTTPD_URL/smart_headers/repo.git" &&
++	test_must_fail git -c http.extraheader="x-magic-two: cadabra" \
++		fetch "$HTTPD_URL/smart_headers/repo.git" &&
+ 	git -c http.extraheader="x-magic-one: abra" \
+ 	    -c http.extraheader="x-magic-two: cadabra" \
+ 	    fetch "$HTTPD_URL/smart_headers/repo.git"
 -- 
 2.8.2.463.g99156ee
