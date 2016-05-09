@@ -1,166 +1,316 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v9 11/19] update-index: enable/disable watchman support
-Date: Mon,  9 May 2016 16:48:41 -0400
-Message-ID: <1462826929-7567-12-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v9 18/19] trace: measure where the time is spent in the index-heavy operations
+Date: Mon,  9 May 2016 16:48:48 -0400
+Message-ID: <1462826929-7567-19-git-send-email-dturner@twopensource.com>
 References: <1462826929-7567-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Mon May 09 22:49:45 2016
+X-From: git-owner@vger.kernel.org Mon May 09 22:50:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azs7O-0003yU-OO
-	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 22:49:31 +0200
+	id 1azs7l-0004LM-5i
+	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 22:49:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752634AbcEIUtW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 May 2016 16:49:22 -0400
-Received: from mail-qg0-f50.google.com ([209.85.192.50]:33444 "EHLO
-	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752463AbcEIUtT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2016 16:49:19 -0400
-Received: by mail-qg0-f50.google.com with SMTP id f92so95678699qgf.0
-        for <git@vger.kernel.org>; Mon, 09 May 2016 13:49:19 -0700 (PDT)
+	id S1752849AbcEIUtf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 May 2016 16:49:35 -0400
+Received: from mail-qg0-f49.google.com ([209.85.192.49]:33497 "EHLO
+	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752671AbcEIUt3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2016 16:49:29 -0400
+Received: by mail-qg0-f49.google.com with SMTP id f92so95681277qgf.0
+        for <git@vger.kernel.org>; Mon, 09 May 2016 13:49:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=DSr2DGtyMt6TUopcmYTDQ2btCuOfdB6/kMtI5ERbNfM=;
-        b=xRKp6q9KMgiLyny7XPoMlW23bMsFe1la/KnuiF213cqec/XsWr1wgR0bJmUSy44C74
-         XlpWNS/Qa2TGOQkOmXpHKwcV784vUabJdzzxvUvEgjDFBTjzSiUo7VoYotM8GXDO/DI4
-         5y27SStZpxmzEDJHES7kXMCE6tD6LhYVoqsGdv0wBgOFyBL7mwBblWMV5PbNmCJnbd6q
-         nDDvlLkTGoFflgfbdFYMnbo7p9MYjWVCh+da0yKit68kZczQtJ50p/s9SHwXa9FPAPdv
-         dnUcT4bDMwFzJVpa0wFlsWEYG2lIgKTSB/1mr6Nq4nfZwdzrXdqE6y0rLycKWvK59RM3
-         Bckw==
+        bh=QuDpau/lHTpj3t+tHT9Z6zlFx4K04d5w+OXyweAGsrk=;
+        b=TLW9GmyT7gXtLymgzJyrHPC2VqpKrl9LHRasPdqbAGfCOpscaC7HvO9mRn7i/mdHf/
+         hYTD9gP12Olk8x3hHW0CNQm2rddNBp6+UP2TVqMC2gdyCXM7JMu/7NSc2Asvrpj4ROQz
+         pNjthbOlY/6nVhp6wQKuE97EWbFXdwt0s+mKXgRZhPC8xCZICp8GJ1t7bMulq0foUooP
+         I7/wSQVbshJrJnSN85I7d/8XHywMQ1JLKWZFL68WexR6ccaNVSYIgxMcDkHL6VIr4K5E
+         3ebQz8pTF4bf9xz////56I00D7ragDFUSm77+YVfraJ3BV1EBvj8vaqX9BtoeVguAiz/
+         4ZzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=DSr2DGtyMt6TUopcmYTDQ2btCuOfdB6/kMtI5ERbNfM=;
-        b=jfr1bRG1XpuvQcz+00OgiJBt2D/QFFhENmO0EiYOHypdM98xTy6ZebeJnkSw19HaDU
-         DKhnEIBlGzqiEs3CNzzBARQZONCy1FVJam7J1NgzQYWQv3neiUeuM23snuLbNKp0xgp7
-         XlxMDz2SWpXdHE4Nn/29fgwDkEYZwF3M/SjYEWOBcEkZ4p0J7XCSLSL9kVvdZTmEYXtb
-         dNO7WBnYh48gKVsm+M9wNEqM8/1VTm/r06b5J7tXbpiEGHbQBS1ofUxDxtqbmu9KxVG8
-         8IxgyypPHPxqDWfribDhcU5pCIVTeDE05ymCGuCem5eo7KB2SrTVT6bz9kLwIfztuZ8Y
-         iE7A==
-X-Gm-Message-State: AOPr4FXYOBuj4/R6J5d1+TioxxrCVcjC0u2AR/2A6xuydVCw4CoNpUeZZ8Gog3i49EUGjw==
-X-Received: by 10.140.156.81 with SMTP id c78mr39989434qhc.58.1462826958515;
-        Mon, 09 May 2016 13:49:18 -0700 (PDT)
+        bh=QuDpau/lHTpj3t+tHT9Z6zlFx4K04d5w+OXyweAGsrk=;
+        b=k1VOWeEHI5/LhhTGEyFx8mAGN7y4Ik6UaDiatA3WHyLEltI69HDLQ5eixiYs1pYhpG
+         wr3SFi8YmpoS+YlPV9YKDs2YEjGlyDnweGdQ8RhNA9Xlz5mZgNYG00nBaY/T9FLdIo2g
+         g6NswCHLTn6moUvewOlNWgTGbkxTULgdeTNienMSEy3byrflK/pAiScg2AvjtYEGg6Ed
+         ebQxcLE2GKWNziOZVXgctF2Bv0lA9ERl6vnCwDfWbVkVkT42BJaq4uNUkh5EbPjNIG5C
+         l4G3HTuXtyG+QopLEkTrvJnrjiyNzrZ8JMAe06+IgTwO7ZTbeka3oRnw6MWPj8cTkISh
+         SSHg==
+X-Gm-Message-State: AOPr4FWOvsLHU3yXJH3WcN43CI2HFGBVwnd4nHundvBYPc8NwrPfuSnTdXtkhQuuczhRlA==
+X-Received: by 10.140.151.206 with SMTP id 197mr40020832qhx.4.1462826967968;
+        Mon, 09 May 2016 13:49:27 -0700 (PDT)
 Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id n1sm12729182qkn.3.2016.05.09.13.49.17
+        by smtp.gmail.com with ESMTPSA id n1sm12729182qkn.3.2016.05.09.13.49.26
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 09 May 2016 13:49:17 -0700 (PDT)
+        Mon, 09 May 2016 13:49:26 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1462826929-7567-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294051>
 
 =46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+
+All the known heavy code blocks are measured (except object database
+access). This should help identify if an optimization is effective or
+not. An unoptimized git-status would give something like below (92% of
+time is accounted). To sum up the effort of making git scale better:
+
+ - read cache line is being addressed by index-helper
+ - preload/refresh index by watchman
+ - read packed refs by lmdb backend
+ - diff-index by rebuilding cache-tree
+ - read directory by untracked cache and watchman
+ - write index by split index
+ - name hash potientially by index-helper
+
+read-cache.c:2075         performance: 0.004058570 s: read cache .../in=
+dex
+preload-index.c:104       performance: 0.004419864 s: preload index
+read-cache.c:1265         performance: 0.000185224 s: refresh index
+refs/files-backend.c:1100 performance: 0.001935788 s: read packed refs
+diff-lib.c:240            performance: 0.000144132 s: diff-files
+diff-lib.c:506            performance: 0.013592000 s: diff-index
+name-hash.c:128           performance: 0.000614177 s: initialize name h=
+ash
+dir.c:2030                performance: 0.015814103 s: read directory
+read-cache.c:2565         performance: 0.004052343 s: write index, chan=
+ged mask =3D 2
+trace.c:420               performance: 0.048365509 s: git command: './g=
+it' 'status'
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- Documentation/git-index-helper.txt |  3 +++
- Documentation/git-update-index.txt |  6 ++++++
- builtin/update-index.c             | 16 ++++++++++++++++
- 3 files changed, 25 insertions(+)
+ diff-lib.c           |  4 ++++
+ dir.c                |  2 ++
+ name-hash.c          |  2 ++
+ preload-index.c      |  2 ++
+ read-cache.c         | 11 +++++++++++
+ refs/files-backend.c |  2 ++
+ 6 files changed, 23 insertions(+)
 
-diff --git a/Documentation/git-index-helper.txt b/Documentation/git-ind=
-ex-helper.txt
-index cce00cb..55a8a5a 100644
---- a/Documentation/git-index-helper.txt
-+++ b/Documentation/git-index-helper.txt
-@@ -18,6 +18,9 @@ each with a submodule, you might need four index-help=
-ers.  (In practice,
- this is only worthwhile for large indexes, so only use it if you notic=
-e
- that git status is slow).
+diff --git a/diff-lib.c b/diff-lib.c
+index bc49c70..7af7f9a 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -90,6 +90,7 @@ int run_diff_files(struct rev_info *revs, unsigned in=
+t option)
+ 	int diff_unmerged_stage =3D revs->max_count;
+ 	unsigned ce_option =3D ((option & DIFF_RACY_IS_MODIFIED)
+ 			      ? CE_MATCH_RACY_IS_DIRTY : 0);
++	uint64_t start =3D getnanotime();
 =20
-+If you want the index-helper to accelerate untracked file checking,
-+run git update-index --watchman before using it.
-+
- OPTIONS
- -------
+ 	diff_set_mnemonic_prefix(&revs->diffopt, "i/", "w/");
 =20
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-upd=
-ate-index.txt
-index c6cbed1..6736487 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -19,6 +19,7 @@ SYNOPSIS
- 	     [--ignore-submodules]
- 	     [--[no-]split-index]
- 	     [--[no-|test-|force-]untracked-cache]
-+	     [--[no-]watchman]
- 	     [--really-refresh] [--unresolve] [--again | -g]
- 	     [--info-only] [--index-info]
- 	     [-z] [--stdin] [--index-version <n>]
-@@ -176,6 +177,11 @@ may not support it yet.
- --no-untracked-cache::
- 	Enable or disable untracked cache feature. Please use
- 	`--test-untracked-cache` before enabling it.
-+
-+--watchman::
-+--no-watchman::
-+	Enable or disable watchman support. This is, at present,
-+	only useful with git index-helper.
- +
- These options take effect whatever the value of the `core.untrackedCac=
-he`
- configuration variable (see linkgit:git-config[1]). But a warning is
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 1c94ca5..a3b4b5d 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -914,6 +914,7 @@ int cmd_update_index(int argc, const char **argv, c=
-onst char *prefix)
+@@ -236,6 +237,7 @@ int run_diff_files(struct rev_info *revs, unsigned =
+int option)
+ 	}
+ 	diffcore_std(&revs->diffopt);
+ 	diff_flush(&revs->diffopt);
++	trace_performance_since(start, "diff-files");
+ 	return 0;
+ }
+=20
+@@ -491,6 +493,7 @@ static int diff_cache(struct rev_info *revs,
+ int run_diff_index(struct rev_info *revs, int cached)
  {
- 	int newfd, entries, has_errors =3D 0, nul_term_line =3D 0;
- 	enum uc_mode untracked_cache =3D UC_UNSPECIFIED;
-+	int use_watchman =3D -1;
- 	int read_from_stdin =3D 0;
- 	int prefix_length =3D prefix ? strlen(prefix) : 0;
- 	int preferred_index_format =3D 0;
-@@ -1012,6 +1013,8 @@ int cmd_update_index(int argc, const char **argv,=
- const char *prefix)
- 			    N_("test if the filesystem supports untracked cache"), UC_TEST)=
-,
- 		OPT_SET_INT(0, "force-untracked-cache", &untracked_cache,
- 			    N_("enable untracked cache without testing the filesystem"), UC=
-_FORCE),
-+		OPT_BOOL(0, "watchman", &use_watchman,
-+			N_("use or not use watchman to reduce refresh cost")),
- 		OPT_END()
- 	};
+ 	struct object_array_entry *ent;
++	uint64_t start =3D getnanotime();
 =20
-@@ -1149,6 +1152,19 @@ int cmd_update_index(int argc, const char **argv=
-, const char *prefix)
- 		die("Bug: bad untracked_cache value: %d", untracked_cache);
+ 	ent =3D revs->pending.objects;
+ 	if (diff_cache(revs, ent->item->oid.hash, ent->name, cached))
+@@ -500,6 +503,7 @@ int run_diff_index(struct rev_info *revs, int cache=
+d)
+ 	diffcore_fix_diff_index(&revs->diffopt);
+ 	diffcore_std(&revs->diffopt);
+ 	diff_flush(&revs->diffopt);
++	trace_performance_since(start, "diff-index");
+ 	return 0;
+ }
+=20
+diff --git a/dir.c b/dir.c
+index 5058b29..c56a8b9 100644
+--- a/dir.c
++++ b/dir.c
+@@ -2183,6 +2183,7 @@ int read_directory(struct dir_struct *dir, const =
+char *path, int len, const stru
+ {
+ 	struct path_simplify *simplify;
+ 	struct untracked_cache_dir *untracked;
++	uint64_t start =3D getnanotime();
+=20
+ 	/*
+ 	 * Check out create_simplify()
+@@ -2224,6 +2225,7 @@ int read_directory(struct dir_struct *dir, const =
+char *path, int len, const stru
+ 	free_simplify(simplify);
+ 	qsort(dir->entries, dir->nr, sizeof(struct dir_entry *), cmp_name);
+ 	qsort(dir->ignored, dir->ignored_nr, sizeof(struct dir_entry *), cmp_=
+name);
++	trace_performance_since(start, "read directory %.*s", len, path);
+ 	if (dir->untracked) {
+ 		static struct trace_key trace_untracked_stats =3D TRACE_KEY_INIT(UNT=
+RACKED_STATS);
+ 		trace_printf_key(&trace_untracked_stats,
+diff --git a/name-hash.c b/name-hash.c
+index 6d9f23e..b3966d8 100644
+--- a/name-hash.c
++++ b/name-hash.c
+@@ -115,6 +115,7 @@ static int cache_entry_cmp(const struct cache_entry=
+ *ce1,
+ static void lazy_init_name_hash(struct index_state *istate)
+ {
+ 	int nr;
++	uint64_t start =3D getnanotime();
+=20
+ 	if (istate->name_hash_initialized)
+ 		return;
+@@ -124,6 +125,7 @@ static void lazy_init_name_hash(struct index_state =
+*istate)
+ 	for (nr =3D 0; nr < istate->cache_nr; nr++)
+ 		hash_index_entry(istate, istate->cache[nr]);
+ 	istate->name_hash_initialized =3D 1;
++	trace_performance_since(start, "initialize name hash");
+ }
+=20
+ void add_name_hash(struct index_state *istate, struct cache_entry *ce)
+diff --git a/preload-index.c b/preload-index.c
+index c1fe3a3..7bb4809 100644
+--- a/preload-index.c
++++ b/preload-index.c
+@@ -72,6 +72,7 @@ static void preload_index(struct index_state *index,
+ {
+ 	int threads, i, work, offset;
+ 	struct thread_data data[MAX_PARALLEL];
++	uint64_t start =3D getnanotime();
+=20
+ 	if (!core_preload_index)
+ 		return;
+@@ -100,6 +101,7 @@ static void preload_index(struct index_state *index=
+,
+ 		if (pthread_join(p->pthread, NULL))
+ 			die("unable to join threaded lstat");
+ 	}
++	trace_performance_since(start, "preload index");
+ }
+ #endif
+=20
+diff --git a/read-cache.c b/read-cache.c
+index ebbcb7f..c547b0b 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1189,6 +1189,7 @@ int refresh_index(struct index_state *istate, uns=
+igned int flags,
+ 	const char *typechange_fmt;
+ 	const char *added_fmt;
+ 	const char *unmerged_fmt;
++	uint64_t start =3D getnanotime();
+=20
+ 	modified_fmt =3D (in_porcelain ? "M\t%s\n" : "%s: needs update\n");
+ 	deleted_fmt =3D (in_porcelain ? "D\t%s\n" : "%s: needs update\n");
+@@ -1263,6 +1264,7 @@ int refresh_index(struct index_state *istate, uns=
+igned int flags,
+=20
+ 		replace_index_entry(istate, i, new);
+ 	}
++	trace_performance_since(start, "refresh index");
+ 	return has_errors;
+ }
+=20
+@@ -2086,12 +2088,15 @@ int read_index_from(struct index_state *istate,=
+ const char *path)
+ {
+ 	struct split_index *split_index;
+ 	int ret;
++	uint64_t start;
+=20
+ 	/* istate->initialized covers both .git/index and .git/sharedindex.xx=
+x */
+ 	if (istate->initialized)
+ 		return istate->cache_nr;
+=20
++	start =3D getnanotime();
+ 	ret =3D do_read_index(istate, path, 0);
++	trace_performance_since(start, "read cache %s", path);
+=20
+ 	split_index =3D istate->split_index;
+ 	if (!split_index || is_null_sha1(split_index->base_sha1)) {
+@@ -2106,6 +2111,7 @@ int read_index_from(struct index_state *istate, c=
+onst char *path)
+ 	split_index->base->keep_mmap =3D istate->keep_mmap;
+ 	split_index->base->to_shm    =3D istate->to_shm;
+ 	split_index->base->from_shm  =3D istate->from_shm;
++	start =3D getnanotime();
+ 	ret =3D do_read_index(split_index->base,
+ 			    git_path("sharedindex.%s",
+ 				     sha1_to_hex(split_index->base_sha1)), 1);
+@@ -2117,6 +2123,9 @@ int read_index_from(struct index_state *istate, c=
+onst char *path)
+ 		    sha1_to_hex(split_index->base->sha1));
+ 	merge_base_index(istate);
+ 	post_read_index_from(istate);
++	trace_performance_since(start, "read cache %s",
++				git_path("sharedindex.%s",
++					 sha1_to_hex(split_index->base_sha1)));
+=20
+ done:
+ 	if (ret > 0 && istate->from_shm && istate->last_update)
+@@ -2462,6 +2471,7 @@ static int do_write_index(struct index_state *ist=
+ate, int newfd,
+ 	struct stat st;
+ 	struct strbuf previous_name_buf =3D STRBUF_INIT, *previous_name;
+ 	int watchman =3D 0;
++	uint64_t start =3D getnanotime();
+=20
+ 	for (i =3D removed =3D extended =3D 0; i < entries; i++) {
+ 		if (cache[i]->ce_flags & CE_REMOVE)
+@@ -2582,6 +2592,7 @@ static int do_write_index(struct index_state *ist=
+ate, int newfd,
+ 		return -1;
+ 	istate->timestamp.sec =3D (unsigned int)st.st_mtime;
+ 	istate->timestamp.nsec =3D ST_MTIME_NSEC(st);
++	trace_performance_since(start, "write index, changed mask =3D %x", is=
+tate->cache_changed);
+ 	return 0;
+ }
+=20
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 81f68f8..57571ce 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1048,6 +1048,7 @@ static void read_packed_refs(FILE *f, struct ref_=
+dir *dir)
+ 	struct ref_entry *last =3D NULL;
+ 	struct strbuf line =3D STRBUF_INIT;
+ 	enum { PEELED_NONE, PEELED_TAGS, PEELED_FULLY } peeled =3D PEELED_NON=
+E;
++	uint64_t start =3D getnanotime();
+=20
+ 	while (strbuf_getwholeline(&line, f, '\n') !=3D EOF) {
+ 		unsigned char sha1[20];
+@@ -1096,6 +1097,7 @@ static void read_packed_refs(FILE *f, struct ref_=
+dir *dir)
  	}
 =20
-+	if (use_watchman > 0) {
-+		the_index.last_update    =3D xstrdup("");
-+		the_index.cache_changed |=3D WATCHMAN_CHANGED;
-+#ifndef USE_WATCHMAN
-+		warning("git was built without watchman support -- I'm "
-+			"adding the extension here, but it probably won't "
-+			"do you any good.");
-+#endif
-+	} else if (!use_watchman) {
-+		the_index.last_update    =3D NULL;
-+		the_index.cache_changed |=3D WATCHMAN_CHANGED;
-+	}
-+
- 	if (active_cache_changed) {
- 		if (newfd < 0) {
- 			if (refresh_args.flags & REFRESH_QUIET)
+ 	strbuf_release(&line);
++	trace_performance_since(start, "read packed refs");
+ }
+=20
+ /*
 --=20
 2.4.2.767.g62658d5-twtrsrc
