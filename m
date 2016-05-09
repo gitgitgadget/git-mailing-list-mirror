@@ -1,61 +1,111 @@
-From: Stefan Dotterweich <stefandotterweich@gmx.de>
-Subject: Re: [PATCH v2] gitk: Fix missing commits when using -S or -G
-Date: Mon, 9 May 2016 07:33:42 +0200
-Message-ID: <fea42c3e-a028-3204-690f-88843d31c264@gmx.de>
-References: <572C8665.8090707@gmx.de> <572C8B36.2000106@gmx.de>
- <20160509034519.GC12515@fergus.ozlabs.ibm.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v7 3/3] submodule: pass on http.extraheader config settings
+Date: Mon, 9 May 2016 08:19:09 +0200 (CEST)
+Message-ID: <554ebb7aa9c4a9974181ff932f1695aca3b42abf.1462774709.git.johannes.schindelin@gmx.de>
+References: <cover.1462342213.git.johannes.schindelin@gmx.de> <cover.1462774709.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@ozlabs.org>
-X-From: git-owner@vger.kernel.org Mon May 09 07:22:31 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Lars Schneider <larsxschneider@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 09 08:19:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azdeH-0002YR-Nf
-	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 07:22:30 +0200
+	id 1azeXJ-0003jt-QB
+	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 08:19:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750964AbcEIFWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2016 01:22:17 -0400
-Received: from mout.gmx.net ([212.227.15.15]:49918 "EHLO mout.gmx.net"
+	id S1751150AbcEIGTS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 May 2016 02:19:18 -0400
+Received: from mout.gmx.net ([212.227.17.21]:65443 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750864AbcEIFWQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2016 01:22:16 -0400
-Received: from [192.168.1.68] ([2.242.217.14]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MfF6I-1bFd2E2Uaw-00OonS; Mon, 09 May 2016 07:22:12
+	id S1751145AbcEIGTR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2016 02:19:17 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MFz0E-1ao5YF2oEQ-00Et66; Mon, 09 May 2016 08:19:05
  +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.0
-In-Reply-To: <20160509034519.GC12515@fergus.ozlabs.ibm.com>
-X-Provags-ID: V03:K0:PbW6BQ9K/qbv++zPIYP0odC9tHY45ONKeZzQoRo/hiWGvt+ve1H
- 2Y2/siFATwCNQLSHNdYB7IMM2G7HXjcHw35gDtc2L4DSJeJyddSiaswpdUE4k2KIRwXU7nz
- YgYZLxyrkKA8eoeRSZdyx+hTld9NsB/gqj14cS5D13sOMVMhY2+f9IMjKIY7HPYOduk1Fsi
- +gLbR7XTOjD5Rc951RDTA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Ie6/Qmt7UHA=:hP+c0VlA0mpEuIYhlDGTFX
- uTCVXQeVzu7rePpboG+VMYPeE+p0680QKQwwJaUOKDmgN7buacyXEKvhcSVCGdR/4N0A2xooF
- YBmNWAgxkHb6SyAkco7+/wPC3ZZd7jf6xZJx8R8BTU9C1i3kuCGXbW+X8VkRwip3w7N77xK+6
- roKnboJqcC/GyOgSEObF8VQC08OXycuRemeVD0qJBba6pIOb7JAFW6ra+N2H5/XDp6aYsxWE6
- bUK4evSheYpNrFrnz7IGp8NmNhe+kN3FEF8YWiSna9JWSHYLjiY11CBUTOpoH66V37UhV5Ep2
- sCy5srmZawzTNea8ejrsF3oyGlqjOtjWRh8MLB7ToZmIwSitZ9BCsrgjLTUZSOvLodupH3wD6
- 6casDk+DRICTk0kmMpwMlsl4mjSP66A+QSqnadiAflG8wy7JnI2GLHl9MU89P/LpVnVnf8Jnq
- Id8ttYOkUvAoL0gi5HnMEAX6GseAEaawJDhtIvwhlupdoRSKGcPGEMDQNlVzDX2+oLR99+e6x
- Vo38qnsz0rYY4nF2zkL4pEIwz6Myo5NHuUj7qe3GDljXrRVJlOjj1seK0Nw2iPqDkLi+FDcBz
- 6hET2ADCmLirZyp+LFWDRmvuDxrgpNs/7vwgfnNR1mo8kYjS7TV9PzB2m6J/8ByffKJaGIJGZ
- v1LWFVbBKFuBhBf9cUtIJX5Pn3Sd/5bfWAU96HuNqaEY14LBcvMjzDYGgbkJd/m7XWtSzXNtW
- 74PvVh4OqtPe+vZuvlEdiK/x4exgfmFUdLGh+Odr5S2Q4+gw1lR2m871rQSzeF5+Pv53OLN9 
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <cover.1462774709.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:P1gLPyODrIBIcm/ebeDpamdiIiiJD/ys+6XD2dAjcMvTefPPYpT
+ +ufw6uSs3h/6Rzxxningcin9r1Ytp26U+t7Qr4JDWdcZerwazrbmXLxZmeQOXgzw79pnv3Z
+ ikXTQNo8QexVNNxKviWaM7ND776aRxNEv+uf73WLQ/Ts7QrgNidyaap7M6z2VIBUiwh+zpD
+ amhCrv3dOSkwS3SxZxjmA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:EPvkErPqzAM=:+zTR5HtpHx3vbIZJgRQhi9
+ Xgj90MjvIcknldrasEspT3NenEb+QdOEsvYpReYp6o/z9JucK99zPJRX9lV2V6OTd4oOWaP7R
+ 0K6KDiBGXHKDfeWnqbo7q+SlIcgwCHutEKMTib4pLSjA0gQupJ6775A27gNGB4Sohf3mIKZLQ
+ gMiAfU4/6lySYD1p9gNGiTpB5dqePfTQ53R8un5VlXfrtGMP5xHB4TK1RgE07e8Yfon7Jq/IR
+ Acg3NdTqH3cPt1yznO3M95S/WMEYyLkkRiKHolZlKRSST+hPdKNOtg1WhL4Yjr3GsHW2YaCEO
+ vIZGn4M68WiNqVY+yph7kmARLDGin52fkiS90pIVDhgfIfaptEclbSRnCW6pRq+GCzViy7Bgb
+ cxO1tJXz2+QuojniyPHc+OLDeYzUgUWG3sT3ENacKkjaOzZtlwcvL2LvjUG1tKIYzPioc4AZA
+ S3qZKi3QYAtZmspY4Sw/4GbSUsVHVgieFCxPJtfvwJyUFoYPccKzSwRelU+oLy6kUerMqlBO9
+ R97AFGHPDRo4E6v3hLBC20a3lnvTHUz0RtznmRXOJrO2m/BsP/PMz1tTwA9r1Gxy5AVHfwdzA
+ I5yXe4IG972HcV/RHnlHzfz1Jub5rsyVfw5SwVaIaHfq8pdgICgo0QHMzd3SW1KF6TIMjn8D5
+ pzZ+dFrzYNTgOPlmczb7JzZ18/8gYZYM0+rGLUhRJw+SMfmdcR8EMZLU5Yh2+apH10BnJ8B0n
+ 4fjcUXiUa/J6sqOYJ1pFoxjAHqzbAjotyyUyKFahiA41mvYWzZ8uBLGczK+Dq4xznwntDbrk 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293984>
 
-> Nice catch; however, we should only update numcommits if the commits
-> are for the current view, i.e. if $v == $curview.
->
-> Do you want to update the patch?  If you prefer, I can update the
-> patch and put a note in the commit message about the issue.
+To support this developer's use case of allowing build agents token-based
+access to private repositories, we introduced the http.extraheader
+feature, allowing extra HTTP headers to be sent along with every HTTP
+request.
 
-Sure, feel free to update the patch as you see fit.
+This patch allows us to configure these extra HTTP headers for use with
+`git submodule update`, too. It requires somewhat special handling:
+submodules do not share the parent project's config. It would be
+incorrect to simply reuse that specific part of the parent's config.
+Instead, the config option needs to be specified on the command-line or
+in ~/.gitconfig or friends.
+
+Example: git -c http.extraheader="Secret: Sauce" submodule update --init
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/submodule--helper.c |  3 ++-
+ t/t5551-http-fetch-smart.sh | 11 ++++++++++-
+ 2 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 3bd6883..789e081 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -127,7 +127,8 @@ static int module_name(int argc, const char **argv, const char *prefix)
+  */
+ static int submodule_config_ok(const char *var)
+ {
+-	if (starts_with(var, "credential."))
++	if (starts_with(var, "credential.") ||
++	    (starts_with(var, "http.") && ends_with(var, ".extraheader")))
+ 		return 1;
+ 	return 0;
+ }
+diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+index 43b257e..2f375eb 100755
+--- a/t/t5551-http-fetch-smart.sh
++++ b/t/t5551-http-fetch-smart.sh
+@@ -287,7 +287,16 @@ test_expect_success 'custom http headers' '
+ 		fetch "$HTTPD_URL/smart_headers/repo.git" &&
+ 	git -c http.extraheader="x-magic-one: abra" \
+ 	    -c http.extraheader="x-magic-two: cadabra" \
+-	    fetch "$HTTPD_URL/smart_headers/repo.git"
++	    fetch "$HTTPD_URL/smart_headers/repo.git" &&
++	git update-index --add --cacheinfo 160000,$(git rev-parse HEAD),sub &&
++	git config -f .gitmodules submodule.sub.path sub &&
++	git config -f .gitmodules submodule.sub.url \
++		"$HTTPD_URL/smart_headers/repo.git" &&
++	git submodule init sub &&
++	test_must_fail git submodule update sub &&
++	git -c http.extraheader="x-magic-one: abra" \
++	    -c http.extraheader="x-magic-two: cadabra" \
++		submodule update sub
+ '
+ 
+ stop_httpd
+-- 
+2.8.2.463.g99156ee
