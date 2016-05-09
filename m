@@ -1,119 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v9 1/6] read-cache: factor out get_sha1_from_index() helper
-Date: Mon, 09 May 2016 12:54:37 -0700
-Message-ID: <xmqqy47jt3b6.fsf@gitster.mtv.corp.google.com>
-References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
-	<1462601458-23498-1-git-send-email-tboegi@web.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: t6044 broken on pu
+Date: Mon, 9 May 2016 16:10:47 -0400
+Message-ID: <CAPig+cSg7e=aV4YmJ2iioo6GHB7ZeNREKC-20X47F=5MbzDQLA@mail.gmail.com>
+References: <7d747193-7ba1-e274-86dc-427ed0f124c9@web.de>
+	<878tzmrrfg.fsf@linux-m68k.org>
+	<d1fcc54b-ddd7-b03b-79fa-2112a3f43141@web.de>
+	<xmqqa8k11e8j.fsf@gitster.mtv.corp.google.com>
+	<5618208c-ce45-d65c-abf8-498cfe0f2f84@web.de>
+	<xmqqoa8gza1t.fsf@gitster.mtv.corp.google.com>
+	<CANgJU+V9+-hTFvDxCGbQxFcHMRcFaP-NdS_P93DqXuxi1Lh4mg@mail.gmail.com>
+	<20160509083323.GB14299@sigill.intra.peff.net>
+	<CAPig+cTyEU1gEwD5AuODkLzF--EOqo5_MQHD5QEFpb8dgh_wrw@mail.gmail.com>
+	<20160509161226.GB11861@sigill.intra.peff.net>
+	<xmqqr3dbulyp.fsf@gitster.mtv.corp.google.com>
+	<xmqqh9e7ulie.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: tboegi@web.de
-X-From: git-owner@vger.kernel.org Mon May 09 21:54:46 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, demerphq <demerphq@gmail.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Elijah Newren <newren@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 09 22:10:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azrGP-00017Y-CO
-	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 21:54:45 +0200
+	id 1azrW5-0003oZ-Tj
+	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 22:10:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751256AbcEITyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2016 15:54:41 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59977 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751069AbcEITyl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2016 15:54:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9EC561A845;
-	Mon,  9 May 2016 15:54:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sDP/C/vIWuhHxIdTQL5LOnoAmYQ=; b=aSopRW
-	SHBcs01tJNa21O5NNsxBVgU9l+BhJ2i1MD9iNYu3CQsfEJPiaRIahAgJwkBu7AzN
-	O4m0rWz5+7kVICgbZATfwZY1vEIq3e4obbOo/2mEImO/sHmjfkCEGE97oYhHRaCz
-	iFHIXueslQbwxUtQpDM/p9vPZT+LoQgUc6TCI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YbavzbgF3NxSBonFYjBQSfCmH3okZRYM
-	gRBU8RpJT1Ev2hSkgd4M+T+X1doAKMCoRXY0/x6iNsNKEdhukuzvG07ij6ZExRfn
-	TZxewNycOf4DPnvM/MkesBH7mgwDM2kCAQFEtEW5U8mBChQbz9O9BqXehS2SGALd
-	DI3990Lw1Y4=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 96C9F1A844;
-	Mon,  9 May 2016 15:54:39 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E4BCA1A843;
-	Mon,  9 May 2016 15:54:38 -0400 (EDT)
-In-Reply-To: <1462601458-23498-1-git-send-email-tboegi@web.de>
-	(tboegi@web.de's message of "Sat, 7 May 2016 08:10:58 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DD08AF7A-161F-11E6-8F07-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752073AbcEIUKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 May 2016 16:10:55 -0400
+Received: from mail-io0-f196.google.com ([209.85.223.196]:35320 "EHLO
+	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751613AbcEIUKx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2016 16:10:53 -0400
+Received: by mail-io0-f196.google.com with SMTP id u185so22085590iod.2
+        for <git@vger.kernel.org>; Mon, 09 May 2016 13:10:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=gqNygSPHZ7Txplb2l40tsQlKMhlp32jO40Vc61+g23s=;
+        b=ELzC6rxavjat52B/LGm+u5UTu2QgceUHTYEBOLHhBjf2XeJGn+Gg5JsvUqlymT+RR8
+         2iTn4LHD/Tm7N7+lj5CLORnwUaCpJznxun0sS7sAWQ2EBhsgopzF9zsoxCPz+iKjQ5LG
+         BBp0+Z6E37d/uYsRst2a4uivX82wr0pXIPl8o7Q0HSPua7Tdx0IGRvLh/+qe77awcrFr
+         qAWPt/vgizK7NFCMThSkPvrImZb7i4V3GgWQ2BvoJbIGH+VPpzqGADTxs/yAfh++vrDM
+         i9U7nT8tx4aZXv7KCuv2fuyrjVM5x7HXM3eK5KRDNvbb8XeH7NIAhIAYAV4l2mowGYYH
+         9pCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=gqNygSPHZ7Txplb2l40tsQlKMhlp32jO40Vc61+g23s=;
+        b=epUvdWO0E5Fl2FblnsUWbRbrcpefii8rOkMcpyNOWsbiFLF30HzvCuEngEv9/LFMgx
+         1YgZm/OZpfy1LvFrb9eXltLFQcrJ13M+10F1ks9pntVmBbMB2l5uWTsqsL7qgwpG7Qd3
+         NBntBne1IrOj731rOcB8mfgwmNc7BMDjjgvucy7vC2J60tfaptTl8/ZxBLTThI3HTROC
+         Rb9ogJz41jGCU3V9L4psZxsCMi66B+7z1sliM1yFpU+DdC0wWmpcVh2J6YqfBaTaYDAN
+         h/oadXhid7sChh9+KTkCvFeGz4ngXxStgAPg/121lZ6XEvP4dWeorGz76Pol4IctOo3M
+         9LBQ==
+X-Gm-Message-State: AOPr4FX4TMEPIA2v4Nc5bmK2X82HWNu/LRDO9pWzReH5n6QE5Hp2AD+MNYDF3wdjtRCLJ+7j45sC+yLiKjdwrw==
+X-Received: by 10.107.132.66 with SMTP id g63mr42610541iod.34.1462824647959;
+ Mon, 09 May 2016 13:10:47 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Mon, 9 May 2016 13:10:47 -0700 (PDT)
+In-Reply-To: <xmqqh9e7ulie.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: K97LuCtH5kLsNI5LCD6l0FxwYLY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294045>
 
-tboegi@web.de writes:
+On Mon, May 9, 2016 at 2:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Subject: test-lib-functions.sh: remove misleading comment on test_seq
+>
+> We never used the "letters" form since we came up with "test_seq" to
+> replace use of non-portable "seq" in our test script, which we
+> introduced it at d17cf5f3 (tests: Introduce test_seq, 2012-08-04).
+>
+> We use this helper to either iterate for N times (i.e. the values on
+> the lines do not even matter), or just to get N distinct strings
+> (i.e. the values on the lines themselves do not really matter, but
+> we care that they are different from each other and reproducible).
+>
+> Stop promising that we may allow using "letters"; this would open an
+> easier reimplementation that does not rely on $PERL, if somebody
+> later wants to.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> @@ -718,20 +718,13 @@ test_cmp_rev () {
+> -# Print a sequence of numbers or letters in increasing order.  This is
+> -# similar to GNU seq(1), but the latter might not be available
+> -# everywhere (and does not do letters).  It may be used like:
+> -#
+> -#      for i in $(test_seq 100)
+> -#      do
+> -#              for j in $(test_seq 10 20)
+> -#              do
+> -#                      for k in $(test_seq a z)
+> -#                      do
+> -#                              echo $i-$j-$k
+> -#                      done
+> -#              done
+> -#      done
+> +# Print a sequence of integers in increasing order, either with
+> +# two arguments (start and end):
+> +#
+> +#     test_seq 1 5 -- outputs 1 2 3 4 5 one line at a time
+> +#
+> +# or with one argument (end), in which case it starts counting
+> +# from 1.
 
-> +#define get_sha1_from_cache(path)  get_sha1_from_index (&the_index, (path))
->  #endif
+This new documentation is quite readable. Thanks.
 
-Micronit: lose the extra SP; i.e. "get_sha1_from_index(&the_index, (path))".
-
-> diff --git a/read-cache.c b/read-cache.c
-> index d9fb78b..a3ef967 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -2263,13 +2263,27 @@ int index_name_is_other(const struct index_state *istate, const char *name,
->  
->  void *read_blob_data_from_index(struct index_state *istate, const char *path, unsigned long *size)
->  {
-> -	int pos, len;
-> +	const unsigned char *sha1;
->  	unsigned long sz;
->  	enum object_type type;
->  	void *data;
->  
-> -	len = strlen(path);
-> -	pos = index_name_pos(istate, path, len);
-> +	sha1 = get_sha1_from_index(istate, path);
-> +	if (!sha1)
-> +		return NULL;
-> +	data = read_sha1_file(sha1, &type, &sz);
-> +	if (!data || type != OBJ_BLOB) {
-> +		free(data);
-> +		return NULL;
-> +	}
-> +	if (size)
-> +		*size = sz;
-> +	return data;
-> +}
-> +
-> +const unsigned char *get_sha1_from_index(struct index_state *istate, const char *path)
-> +{
-> +	int pos = index_name_pos(istate, path, strlen(path));
->  	if (pos < 0) {
->  		/*
->  		 * We might be in the middle of a merge, in which
-> @@ -2285,14 +2299,7 @@ void *read_blob_data_from_index(struct index_state *istate, const char *path, un
->  	}
->  	if (pos < 0)
->  		return NULL;
-> +	return (istate->cache[pos]->sha1);
-
-Micronit: lose the extra () pair around what is returned.
-
-I wondered if we can share more code with this helper and
-get_sha1_with_context_1(), which is the canonical copy of this logic
-used to parse ":$path" and get the object name at $path in the
-index, but this is sufficiently low-level and such a refactoring
-of small code would not be of great benefit, so this patch is OK.
-
-Thanks.
-
->  }
->  
->  void stat_validity_clear(struct stat_validity *sv)
+>  test_seq () {
+>         case $# in
