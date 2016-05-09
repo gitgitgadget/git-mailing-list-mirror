@@ -1,79 +1,64 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] t6302: simplify non-gpg cases
-Date: Mon, 9 May 2016 17:37:54 -0400
-Message-ID: <CAPig+cT_njtzMuuk=mFWraUtpZwU3OrJPho7=dbLgKf=inBFAg@mail.gmail.com>
-References: <dea0877d-fe83-fb47-4df3-21fd69d8421d@web.de>
-	<20160509160725.GA11861@sigill.intra.peff.net>
-	<CAPig+cQ2kSVzy0K303J3Guhk3-NzcReb5V7ohqOy2pPL_5GrSA@mail.gmail.com>
-	<20160509164859.GA8231@sigill.intra.peff.net>
-	<CAPig+cQPbwM0+6yruK0VKKq2ujFLoCLogS7eQNN7WWgRjG5V0w@mail.gmail.com>
-	<CAOLa=ZSZqs=++Hf8CF3pWEnJqmOA9ajuX03hzLMkuQ+ehXXCVQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v9 00/19] index-helper/watchman
+Date: Mon, 09 May 2016 14:40:16 -0700
+Message-ID: <xmqqa8jyuczj.fsf@gitster.mtv.corp.google.com>
+References: <1462826929-7567-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 09 23:38:01 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, pclouds@gmail.com
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Mon May 09 23:40:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azssK-0007En-5Q
-	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 23:38:00 +0200
+	id 1azsuh-0001a4-To
+	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 23:40:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752192AbcEIVh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2016 17:37:56 -0400
-Received: from mail-io0-f181.google.com ([209.85.223.181]:34236 "EHLO
-	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751468AbcEIVhz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2016 17:37:55 -0400
-Received: by mail-io0-f181.google.com with SMTP id 190so186433455iow.1
-        for <git@vger.kernel.org>; Mon, 09 May 2016 14:37:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=eHYFtX4xbY19BIm29hU3Y1gHdRWcx/mx8lr5F9Y1+Ow=;
-        b=pkh9UasKDRWUHWk2yL8VpSHaF1xI0pVcrFqSrrzbX6W3NTWGmtVPLkToOCUpUYXwBa
-         jE0cI3j+wShb0uJucBExiveSLYF9U43andq8eEW6hSzRXKcd1KoWyWrGlMT0pKZ/oWlf
-         e7saqDsmiHyuLBxrt39SXhvw3SUBD/aLBmSKAFjNjomKgqhwd+nQP0phOv1nxcRiKlDA
-         urAo5Cxiw+4MpJQUHeRSyVL8BJUYT/AZJzMaoNNPjluALXZnIhXS/AyzPtk+ARq0TpQ1
-         x/hxbjs0Ge3VPgX9gAtrOvSY6UU1TX6xUYf62hr6Xtn3lIhesnNHkGiBAYqx0IZQ4+EZ
-         9dNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=eHYFtX4xbY19BIm29hU3Y1gHdRWcx/mx8lr5F9Y1+Ow=;
-        b=JZOp7YKoxvWVOJbB42LG9RjPBSdBWpwS/m0A4F9J2qvTJAc6EiPPwx4Cz1n9vXXkyz
-         JISbbi9b8hBd0ThYfBY7ZhDAlsbqkrbwXSbbwCbvK6askJUjalgXwFtODEg7f+vivkna
-         nsz+NVRh9m+wawk/3ZiFY3tDEYrIpLFQQmBdAycvhZ8v+6saE0mAr55M92e5FISKeDF/
-         n6q5pRo63rGD8AuRW0i+JIoOeU9/g3X/lmBnoEUabZU+O6TPxlcU7J0y5+8OGG+5V58l
-         Boz1ePc5sh7L3ipB1j21fiGSZnlYnkqgPnGp9EXYjPj7ku7xApkKSnIpZC+NFOjnC8gA
-         CLoQ==
-X-Gm-Message-State: AOPr4FVgB6/d1bbDsHtilW9FiX1ndTKo6hY8DevQ83giBivcTgUFJ6Sf+FTgmVg8Gvjg+jr5NvpNbEy8llGETQ==
-X-Received: by 10.107.132.66 with SMTP id g63mr42948672iod.34.1462829874430;
- Mon, 09 May 2016 14:37:54 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Mon, 9 May 2016 14:37:54 -0700 (PDT)
-In-Reply-To: <CAOLa=ZSZqs=++Hf8CF3pWEnJqmOA9ajuX03hzLMkuQ+ehXXCVQ@mail.gmail.com>
-X-Google-Sender-Auth: cpNKyEnWyqi_7SzcNBnfsm58fLA
+	id S1753019AbcEIVkV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 May 2016 17:40:21 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57250 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752994AbcEIVkU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2016 17:40:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7E14F1A8CD;
+	Mon,  9 May 2016 17:40:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pGnU9D2m6+KMVpeH/NR/zGcuyBc=; b=bc/gF/
+	gUO6/vSs+l0Yz7YcMW3I4NkxnBamkI8BzGAAMP2vvzCgrWUVZgwca9gey9s08fOM
+	h2brA7lMJEM6JGsvdAUrnWszN+/VOCwKR36W0iv/v11/ahzUeelJxVc4zQ68XWAc
+	GS2uoFAWu2N8kUFTTyoZCRelxkuavM7ScK99c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AVyM1zMqMNLuA50+u5hTLDrPBQcuHud0
+	Kt8mieEAmWVMfpW7njS8Lj5x8Ju158cieYBdfVfUvjctvA1uIz50PRYWzc6cJVBB
+	Y9YAPjwgce8vL0MH72igs4BhBmgcHwQWQyImESv/icRWc2DDsOey0Gs0VpRGi9RC
+	CtVIdp459qo=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 742611A8CC;
+	Mon,  9 May 2016 17:40:18 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E25441A8CB;
+	Mon,  9 May 2016 17:40:17 -0400 (EDT)
+In-Reply-To: <1462826929-7567-1-git-send-email-dturner@twopensource.com>
+	(David Turner's message of "Mon, 9 May 2016 16:48:30 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 9F5E079C-162E-11E6-A882-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294075>
 
-On Mon, May 9, 2016 at 4:24 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> On Mon, May 9, 2016 at 11:17 PM, Eric Sunshine <sunshine@sunshineco.com>
-> wrote:
->> Should we cite bc9acea (ref-filter: implement %(if), %(then), and
->> %(else) atoms, 2016-04-25) here as an example of a commit for which
->> this was problematic (and which indeed broke the tests when GPG is
->> unavailable)?
->
-> But it's still in pu and I'll be re-rolling it, would that be acceptable?
+Hmmm, I seem to be getting
 
-Ah right, therefore, no reason to cite that particular commit. Peff's
-description is fine as-is.
+    $ cat t/trash*7900*/err
+    fatal: Already running
+
+after running t7900 and it fails at #5, after applying
+"index-helper: optionally automatically run".
