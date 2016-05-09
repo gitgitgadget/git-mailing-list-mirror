@@ -1,141 +1,202 @@
-From: Thierry Suzanne <thierry@yellownemo.com>
-Subject: Re: Found possible branch point, then "Use of uninitialized value $u
- in substitution/concatenation"
-Date: Mon, 9 May 2016 18:35:31 +0100
-Message-ID: <CALZdSA8KU__QAywW8CoJ5=DVWPUOpyoo0Je83+6yU4CbS+PM6A@mail.gmail.com>
-References: <CALZdSA_pDy=B-bgB-vjpi1yjgtse_-07ewXSX0_GsYhLfOUbzw@mail.gmail.com>
-	<CAP8UFD0k0Kx306S3y-Kd5328j0MDNL+ewCJvXbsJ1nzsJYRdtg@mail.gmail.com>
-	<CALZdSA_eF--tdDAPwEfopioB+X=n7Xti-ixGNJqEwvDdCwo2pg@mail.gmail.com>
-	<CAP8UFD2dH+nDdpiURK=MePz-JiOOcv3V=NJWjdMYo--oyNZ04g@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: Re: [RFD/PATCH] submodule doc: describe where we can configure them
+Date: Mon, 9 May 2016 10:32:50 -0700
+Message-ID: <CAGZ79kZ+WzVwhj77zkHKbX-PmgfPvCO9qcX07vyC-BG+nDhWxA@mail.gmail.com>
+References: <1462317985-640-1-git-send-email-sbeller@google.com>
+	<20160503235652.GA395@google.com>
+	<CAGZ79kb4GNZi93JpsPKUb7ScmePqDC1Xp+WZTGD7hfPUn9tWaQ@mail.gmail.com>
+	<20160504150143.GA8575@sandbox>
+	<CAGZ79kZs5zLAUdi53D=pTyFZF__73ZbW4o28C2hOuTV7_NfaDQ@mail.gmail.com>
+	<20160508215401.GA59077@book.hvoigt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 09 19:37:07 2016
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Mon May 09 19:37:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azp5l-0003rj-4I
-	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 19:35:37 +0200
+	id 1azp3R-0001Ua-Cb
+	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 19:33:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751072AbcEIRfd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2016 13:35:33 -0400
-Received: from mail-ig0-f194.google.com ([209.85.213.194]:36609 "EHLO
-	mail-ig0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750919AbcEIRfc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2016 13:35:32 -0400
-Received: by mail-ig0-f194.google.com with SMTP id c3so11984565igl.3
-        for <git@vger.kernel.org>; Mon, 09 May 2016 10:35:32 -0700 (PDT)
+	id S1751350AbcEIRdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 May 2016 13:33:08 -0400
+Received: from mail-io0-f176.google.com ([209.85.223.176]:34975 "EHLO
+	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751643AbcEIRcw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2016 13:32:52 -0400
+Received: by mail-io0-f176.google.com with SMTP id d62so179508124iof.2
+        for <git@vger.kernel.org>; Mon, 09 May 2016 10:32:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=yellownemo-com.20150623.gappssmtp.com; s=20150623;
+        d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=zFrdWxF7Sxm41OO5S1Vv6lunG4IB+wpk30nIeFN3G6A=;
-        b=Mte1qWqFCpnV2q4QIeyJ6LOM2u/m2nCOdOM0dVZGHKiKbuv1eM5+9PKPq/xOQ5JZFC
-         FHF8/TLDcONmhH3aEvMx6QRC/6atszzxgcqo/IoifZL1JAMSpSlQOjyQstSeeg3i0vbT
-         lV/MwIaJrouFJMv0mJOJJ1frGoard+BXzHE7WjksbAfYLN9cleMnMiZSVKwUGpIdT50D
-         cHP7vDC9ISdSnzQ18+KpPOGBOZDDJd6yRlwg64svFJ+ERJRddc9gqmQcpczgRe9ynt/7
-         zMwB5FNgzvEIiUb+Gd419OXn8Oq16haPGUEifX8qVSHYuIOOLH6AEHNN/AetEbXbmpeS
-         TLbQ==
+        bh=Oh/jyiTBn9a8vEdTzJrdu/ZX+rPi6Ay2GyrO0Maw+e0=;
+        b=GGBkA5y3cWzdpd/XVtbI/QGoxz4tSKZJeKPpN0qkJt2p9HyXFS88QqjO9kjtg5MJek
+         LcRVtLOm7ESNz/r0YM8zqD9mfsY+re5cEv5e1LT4faP4GA2IoLznwmvfkConesEMvbrm
+         FhtiOdyQkIOZiEPct2RqSL7RhKk6iO18NhKAKprSteCScYvDdk71q+oYpgb8vBVUMzSI
+         Y+S6psZGAsNBwvAPKCxO0rePW6fcubmL/FrQ10d+OaNaek0B+CJNmvEBMs+1fUjIHCkY
+         e7ZGATxIRUQeZYYsMW0FZ44K/nxKgeWZ4Z0XW3XSK8Ex1AWsDhgDRGHxvmAa3oDaQxrV
+         Q0NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=zFrdWxF7Sxm41OO5S1Vv6lunG4IB+wpk30nIeFN3G6A=;
-        b=T4lm/hOdyX5wXbA5YN+Rqo0hgFbovQbnKTjCnaXzU6HhlBJB2zCSy94X+T57PbJuhv
-         2jK/UUmwrQHkAEZ/lyl6cwqOn0ztcds5w1BIqTqt8oXZD2Q8XdOf6L0BJnL2UMZeYhCq
-         rnlSh6vS0Pu7kGxmGc/TbU9HhKDixj0BrWXlcX1wLbfciHDGmOd1XSWOHYr1/6ylNB1m
-         FnEjWK/+3wPPLifUOcaGKraV1euxoUXl4iijCbV9ZbahfIpaAVtG+LmETNUgVD09Yh5h
-         H7s2LUMsxdvhmlAhUGjTT4PWXY8hjkFMQo8XrlvHOvN4aAFk3OkHy0Zzh5c5Rq7FU7Pu
-         0oww==
-X-Gm-Message-State: AOPr4FVQwXaqOCZyAh47D3+O0/NIkiRdfk2fzJeg84+W3Bnvs1MGdpaV4+GKhEDVNZqJx7RuTJGHW98UbUCRQg==
-X-Received: by 10.50.10.165 with SMTP id j5mr12284153igb.29.1462815331531;
- Mon, 09 May 2016 10:35:31 -0700 (PDT)
-Received: by 10.36.8.5 with HTTP; Mon, 9 May 2016 10:35:31 -0700 (PDT)
-X-Originating-IP: [86.28.149.6]
-In-Reply-To: <CAP8UFD2dH+nDdpiURK=MePz-JiOOcv3V=NJWjdMYo--oyNZ04g@mail.gmail.com>
+        bh=Oh/jyiTBn9a8vEdTzJrdu/ZX+rPi6Ay2GyrO0Maw+e0=;
+        b=Yl/z5SwdL/8hWoOgH3/kUSOwKWibgFbvmdI1mP/G5LqU2ily3vuseouVDHbNKUi5rM
+         iVSQwaaDXwxorkfDItq5fBgk/ZCAvG8m2mvu7MCxceI6mZARzPA8Orkx/nFv9uPYSObo
+         KJlT4nfaq1ElZwJ0wHXich3Ne4Gs4dpqQZbxyD3Wcr7uk7T7Qd/mxfBTLKX1CtLzar80
+         3m8WweeWRwZDLMSJIWF5UuVEXamgUmKonSYbxsVjzjJqj+PwsK2IM2/86WmrMcu2JjBW
+         800QeA6AWr/sYmwgJ9bYFMrViTal3kDZCfyllp8UcPK1qKMMZKpHRtfbI3lARSNdGqlQ
+         qzAA==
+X-Gm-Message-State: AOPr4FUmEdP9ZNnCxg8yFpp/o4sxtamZ6yoYiPg5JtLePeWuowtnDlOwZL2VHXjXIf1XI5AQPOpNT40UTCzJ0YdY
+X-Received: by 10.107.161.68 with SMTP id k65mr43497617ioe.110.1462815170490;
+ Mon, 09 May 2016 10:32:50 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Mon, 9 May 2016 10:32:50 -0700 (PDT)
+In-Reply-To: <20160508215401.GA59077@book.hvoigt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294024>
 
-On 7 May 2016 at 08:07, Christian Couder <christian.couder@gmail.com> wrote:
+>> Here is what I imagine
+>> When B mirrors from A, B sets up this special ref for its repository,
+>> e.g. refs/meta/submodule-B and have a symbolic ref pointing at that.
+>> (e.g. SUBMODULE_CONFIG pointing at refs/meta/submodule-B,
+>> which has a worktree which contains a .gitmodules files which
+>> sets up
+>>   "submodule.baz.url = http://B/baz"
+>>   "submodule.relativeBase = http://A"
+>>
+>> That way anyone cloning from B would get
+>> the superproject and the submodule baz from B while the
+>> rest of the submodules are found at A.
 >
-> On Fri, May 6, 2016 at 5:31 PM, Thierry Suzanne <thierry@yellownemo.com> wrote:
-> > Sorry, can't help :(
+> This sounds sensible. But my imagination of a conflict was in a
+> different way. E.g. project A has a submodule B. And now A has a remote
+> 1 where you publish and maybe another remote 2 where someone else (a
+> colleague?) publishes. Which configuration do you use? Here the two
+> remotes are independent instead of subsequent forks. In this case my
+> solution would be to use the configuration branch from 1 for B when
+> interacting with 1. I do not have completely checked whether we always
+> have a remote at hand for such a resolution.
+
+I think it is the responsibility of the pusher to make sure the
+configuration is sane.
+So if I were to push to remote 2 and you push to remote 1, we'd both configure
+the special branch of our superprojects for these remotes for that submodule.
+
+If the superproject has relative urls for the submodule, all we had to do was
+unset (or overwrite) the submodule.baseConfig.
+
 >
-> I just sent a patch. It would be nice if you could test it to confirm
-> that you get a nicer error message.
+>> When C mirrors from A, they add another branch  refs/meta/submodule-C,
+>> which can either be a fork of refs/meta/submodule-B with some changes on
+>> top of it or it can add a reference to refs/meta/submodule-B, i.e. the
+>> configuration
+>> would be:
+>>
+>>   "submodule.baseConfig = refs/meta/submodule-B"
+>>   "submodule.foo.url = ssh://C/foo"
+>>
+>> and SUBMODULE_CONFIG would point at refs/meta/submodule-C.
+>>
+>> When cloning from C, the user would get
+>>
+>>  * the superproject from C
+>>  * submodule foo from C
+>>  * submodule baz from B
+>>  * all other submodules from A
+>>
+>> By the inheriting property of the branch of B there are no conflicting values.
+>> C could just overwrite submodule.baseConfig for example.
 >
-> Also please reply below other people's comments, as customary on this list.
+> So that means in the default case we create a chain of all previous
+> forks embedded in repository database.
 
+Not necessarily. I was just pointing out that this was possible. The
+intermediate
+party could decide that their upstream is too unreliable and not point
+to their upstream.
 
-Hi,
+This would incur the cost of having to clone all submodules and
+overwriting the absolute
+urls. For the relative URLs this would just work as of now.
 
-Amended my local svn.pm file with your 2 lines.
+All I wanted with that example is to offer the flexibility to not have
+to clone all the
+submodule, but I can fork a mega-project with 100s of submodules and maybe
+just fiddle with one of them and then publish that.
 
-First time:
-------------------
-C:\code\myproduct\trunk>git svn clone
-https://mycompany.svn.beanstalkapp.com/myproduct --no-metadata -A
-c:\temp\svn_to_git_users.txt
---trunk=https://mycompany.svn.beanstalkapp.com/myproduct
---tags=https://mycompany.svn.beanstalkapp.com/myproduct/tags
---branches=https://mycompany.svn.beanstalkapp.com/myproduct/branches
-c:\code\Git_TestPatch
-[....]
-W: +empty_dir: branches/20080918_DBDEPLOY/vendor/src/csharp/MS WCSF
-Contrib/src/Extensions/Silverlight
-W: +empty_dir: branches/20080918_DBDEPLOY/vendor/src/csharp/MS WCSF
-Contrib/src/Services
-W: +empty_dir: branches/20080918_DBDEPLOY/vendor/src/csharp/RealWorldControls/References
-r530 = c276e3b039d8e38759c6fb17443349732552d7a2 (refs/remotes/origin/trunk)
-Found possible branch point:
-https://mycompany.svn.beanstalkapp.com/myproduct/trunk =>
-https://mycompany.svn.beanstalkapp.com/myproduct/branches/20080918_DBDEPLOY,
-529
-Initializing parent: refs/remotes/origin/20080918_DBDEPLOY@529
-W: +empty_dir: trunk/etc
-W: +empty_dir: trunk/src/csharp
-[...]
-W: +empty_dir: trunk/test
-W: +empty_dir: trunk/vendor
-r5 = c71eabc20ff1f4e3fd728727470a2fa5a3802891
-(refs/remotes/origin/20080918_DBDEPLOY@529)
-        A       src/database/tables/IllustrationRow.tbl
-        A       src/database/tables/LegalEntity.tbl
-        [...]
-------------------
+> I am not saying that this is
+> necessarily a bad thing but I feel that it is a new property which we
+> should think about. It helps because users will get updated values from
+> sources that are in the chain. On the other hand it adds a lot of
+> dependencies which are point of failures in case a remote disappears. I
+> am undecided on this. I would prefer if we could let people play with it
+> a little (maybe on pu?) and then decide if there are practical pitfalls
+> with this.
+>
+>> > My suggested scheme above does not solve the currently quite typical use
+>> > case where you might 'git fetch' without submodules first and then do
+>> > the submodule fetches during a 'git submodule update'. On the other hand
+>> > in the 'ideal future world' where submodules behave like "normal files" the
+>> > fetch will be done during the superproject fetch so in that case we
+>> > could solve such conflicts.
+>> >
+>> > The main thing which we could keep in mind is that we only allow certain
+>> > values in such special refs. E.g. only the ones needed to support the
+>> > fork workflow. BTW, do we actually need to change other values than the
+>> > URL? Addtionally we ignore other values that are more related to the
+>> > overall project structure. E.g. like submodule.<name>.ignore.
+>>
+>> Maybe we want to have a dedicated protocol field, eventually.
+>> A,B,C may have different standards on what they use by default.
+>> e.g. Use ssh at kernel.org, but http in a corporate mirror, because http is
+>> the only protocol not blocked by firewall. So I could imagine that a
+>> complete mirror of submodules with relative URLs wants to only replace
+>> ssh by http.
+>
+> By this you mean 'submodule.relativeBase' that you introduced above
+> right? Or something similar. These values I would still consider them
+> URL'ish. But my question was more geared towards this direction: Are
+> there other values than the ones used to assemble the URL that make
+> sense to share?
+>
+> E.g.: Someone might want to fork a repository and might want to change
+> the default set of submodules that are populated with 'git submodule
+> update --init'. Is this something we should allow via these special refs
+> or is this actually changing the project structure and should also be
+> reflected in project history? IMO the latter is the case.
 
-No error!
-Ctrl+C to interrupt, ran exact same command again, this time the new error:
-------------------
-C:\code\myproduct\trunk>git svn clone
-https://mycompany.svn.beanstalkapp.com/myproduct --no-metadata -A
-c:\temp\svn_to_git_users.txt
---trunk=https://mycompany.svn.beanstalkapp.com/myproduct
---tags=https://mycompany.svn.beanstalkapp.com/myproduct/tags
---branches=https://mycompany.svn.beanstalkapp.com/myproduct/branches
-c:\code\Git_TestPatch
-Found possible branch point:
-https://mycompany.svn.beanstalkapp.com/myproduct/trunk =>
-https://mycompany.svn.beanstalkapp.com/myproduct/branches/20080918_DBDEPLOY,
-529
-refs/remotes/origin/20080918_DBDEPLOY@529: no associated commit metadata
+That sounds reasonable.
 
-C:\code\myproduct\trunk>
-------------------
+>
+> Only things like the technical organisation (like the place where a
+> repository can be found) justify to be outside of the repository IMO.
+>
+> A repository without submodules does have one collection of remote
+> repository urls. To me adding proper fork support seems be the switch
+> from one collection for one repository to many collections for many
+> repositories. Since this one collection is already outside of the
+> superproject it makes sense to do the same for the submodules. So my
+> question reformulated could be: Are there more values we currently keep
+> inside the repository for submodules that actually belong outside? A
+> good indication could be that they are already outside in the
+> superproject.
+>
+> I did not find any flaw in these statements yet, but maybe I am
+> oversimplifying?
 
-So the repro steps are potentially different. Anyway, thanks for
-taking interest and handling the error nicely.
+They sound right to me.
 
-For the error message, as a beginner end user converting svn to git,
-the message "no associated commit metadata" doesn't really make me
-think my command line is wrong. But I'm sure with time this message
-will appear on stackoverflow with its true meaning :-)
+>
+> Cheers Heiko
 
-Thanks,
-T
+Thanks for the discussion :)
+Stefan
