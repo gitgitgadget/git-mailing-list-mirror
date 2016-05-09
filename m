@@ -1,100 +1,123 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: t6044 broken on pu
-Date: Mon, 9 May 2016 17:27:54 -0400
-Message-ID: <CAPig+cQopZta6bs8JBV23iP4xpaPk2Y4UZ5E6rWeTEtYxW=uJA@mail.gmail.com>
-References: <7d747193-7ba1-e274-86dc-427ed0f124c9@web.de>
-	<878tzmrrfg.fsf@linux-m68k.org>
-	<d1fcc54b-ddd7-b03b-79fa-2112a3f43141@web.de>
-	<xmqqa8k11e8j.fsf@gitster.mtv.corp.google.com>
-	<5618208c-ce45-d65c-abf8-498cfe0f2f84@web.de>
-	<xmqqoa8gza1t.fsf@gitster.mtv.corp.google.com>
-	<CANgJU+V9+-hTFvDxCGbQxFcHMRcFaP-NdS_P93DqXuxi1Lh4mg@mail.gmail.com>
-	<20160509083323.GB14299@sigill.intra.peff.net>
-	<CAPig+cTyEU1gEwD5AuODkLzF--EOqo5_MQHD5QEFpb8dgh_wrw@mail.gmail.com>
-	<20160509161226.GB11861@sigill.intra.peff.net>
-	<xmqqr3dbulyp.fsf@gitster.mtv.corp.google.com>
-	<xmqqh9e7ulie.fsf@gitster.mtv.corp.google.com>
-	<xmqqeg9bszw0.fsf@gitster.mtv.corp.google.com>
+Subject: Re: t4151 missing quotes
+Date: Mon, 9 May 2016 17:35:11 -0400
+Message-ID: <CAPig+cSRUqSQZ1G73X6szfXjJEwopaO20H_k2vrmmy1qpEftLQ@mail.gmail.com>
+References: <CALR6jEiBsU+jQ8VoRsniMdztCpVDemQ3r00W-OXdRP6ZEt9CFg@mail.gmail.com>
+	<CAPig+cTbAA8xDWvCXbBF+HJpxONS38hcjAiNuocC+PUBro9ALg@mail.gmail.com>
+	<CALR6jEgaNSAQOpxSK46h71PMRhakDa=UCC5gbTyg77BcaOaoPg@mail.gmail.com>
+	<xmqq37pruklb.fsf@gitster.mtv.corp.google.com>
+	<CAPig+cS4Bj4N8d1a29z8=f30owOec1pB=yF32ZUPmDH2Tu2kXA@mail.gmail.com>
+	<xmqqmvnzt0yx.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, demerphq <demerphq@gmail.com>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Elijah Newren <newren@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Cc: Armin Kunaschik <megabreit@googlemail.com>,
+	Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 09 23:32:26 2016
+X-From: git-owner@vger.kernel.org Mon May 09 23:35:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azsij-0005S2-8V
-	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 23:28:05 +0200
+	id 1azspk-0002SX-Nn
+	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 23:35:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752849AbcEIV14 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2016 17:27:56 -0400
-Received: from mail-ig0-f193.google.com ([209.85.213.193]:32839 "EHLO
-	mail-ig0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751468AbcEIV1z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2016 17:27:55 -0400
-Received: by mail-ig0-f193.google.com with SMTP id rc4so12437105igc.0
-        for <git@vger.kernel.org>; Mon, 09 May 2016 14:27:55 -0700 (PDT)
+	id S1751628AbcEIVfN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 May 2016 17:35:13 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:33979 "EHLO
+	mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751468AbcEIVfM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2016 17:35:12 -0400
+Received: by mail-io0-f195.google.com with SMTP id d62so19885236iof.1
+        for <git@vger.kernel.org>; Mon, 09 May 2016 14:35:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc;
-        bh=2gHhRlVruCT1RLKwGGWNmDjHJYKr5IPIHh3DIUd1idA=;
-        b=Eh0y1B0Nj7DF6X2kZM/fMNjoxaWuLJKE3fioMYiWTXjkKnyPMF5ci4Jk0GdapIwAhi
-         BCej+RviDj0Pb/AmfvypYfh1K18y+Z/ZmDPYNZWdYW1PSOBSRmNxH3rgvxjUqze50z4K
-         r9gZ6UBmQJac+M0p3U6n0X2SySYxYfevYJrhMyDnWY0zuP9ofMMrMaNX9BTxhemoULda
-         8ZwVsPKBrO+x39wOjQ0Tvsa+jJGU4HP19Iho6w9sEDw6HZVq4sGyk4QdfHQFYGXVm6IN
-         S3ad+j1jmQQdP+qQCX2bo/9WhUTS73iQ29f80OJfwoA4+lRzqYrK0MkIvfH4puuE8Qjs
-         5UpQ==
+        bh=Uki9sT4mDOStGZL8/4L+DXIRgN3tjwbhANsM/mbK1XM=;
+        b=gVHoVAzG1PPUG2E/fZmfCQB5wfSGAxl7SMddgyGQHj6z2yAcyVzmvI1sDX6xbc1o2z
+         +bVI7gdrQdp18cCxsrL8Mm8SCoPQF5hw+KcA6B4wXlvPipZiEZiMIF9XG/oSWkmNA8Jo
+         uIPR1INoRN32n4LJZJ06BhkRLrooU0liqSvQ9lYMtewuQKOfAI2e6RVVfQvRaqqhS+e4
+         pRx/2EVef8XUh9E3tlbtUjrVhHzgUKzpHFuIjtBccvxor2SWYREDWOsZcEFb6rhEFQ5u
+         ZjhCptndMYniiVRM3BlUSQ/ybZyFrfeuxVJ0n2ff6QJjS47SXDC9l2jtxearF0mnCwrC
+         nrKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=2gHhRlVruCT1RLKwGGWNmDjHJYKr5IPIHh3DIUd1idA=;
-        b=dNvZ3yMCOdm0vqpQgrQ9wagggqXnyBPszjnuwm/pFhi6KJKyzWX9fHRkqDWBdgRO9F
-         JjFr0bDmOHD1nJ6fMC6/RKMvAWwvQlNAJTPpc7GWdJKvo1lTU7vg5Kk2APvLI8yw9IX+
-         G0Qb4BfMffz4nCPfzMTFSCFuCxxbs8gDjobWx1VV9eekV94yz5KbQpwSdg/q5bc0vEHb
-         TfAf7MB6zNnO7OHcda/uwAefa6LLBZATvgyltO8IuKiOeRfgtro0ry2WbsK/aMD4jfrS
-         kefcQ+is+8VFTQP/ukHoo2Fse6ht23rfoehrsz9z05wrBEcoGGOKTjRWV9RUAtJp3SK1
-         ZlaQ==
-X-Gm-Message-State: AOPr4FXJrjC+FLJy+Wx+dFrqtbnKHdQauvAj4Spkr/sbTkBInhh2XuwVvbzTq/NMpzAhK/SQpPRIyD0RJ5h03w==
-X-Received: by 10.50.3.105 with SMTP id b9mr13483677igb.17.1462829274526; Mon,
- 09 May 2016 14:27:54 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Mon, 9 May 2016 14:27:54 -0700 (PDT)
-In-Reply-To: <xmqqeg9bszw0.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: tvFOBhKnTcP6xe_L11n0i2ZIZEI
+        bh=Uki9sT4mDOStGZL8/4L+DXIRgN3tjwbhANsM/mbK1XM=;
+        b=fjhD5+xdlvMjMro5Ebz4OA3aiM1XMV8tTbibKkNHYJxt6VYiWOCMcabdGCuUnCAeKy
+         lloGc6g5BdSC9elK45n3an9YMHarDTe3Q+ibMJdscYaZ81qnJ3adbw/4Tc6w0xJ4odvx
+         fop2Psz1KOhZsC0h3/qdJsizY6E4xTKBcqlhnvnZsF3i5FHAI8sMkzY4U2sFCKlj3i5Q
+         BdYSZH3kjfiZ18Hn5rnITNsGHX6TtKKvhNpb3npEyV8BOzK8eBHJrNeBN1PBSdPWcEtq
+         T+RpjzzGmWhtDbktndTWsPPZAbR2iS3hWdPIzF6ijUns23BnF1WVo/2mgzH8mX8Au1RP
+         rnHA==
+X-Gm-Message-State: AOPr4FXJJDda/wDNpkogUHlpSBFR7N2YlsFleXpmu4ogFJCVcwn+ndg2/0Jnzs64QUrhDIE1f22hHCADIfacJg==
+X-Received: by 10.107.132.66 with SMTP id g63mr42939379iod.34.1462829711170;
+ Mon, 09 May 2016 14:35:11 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Mon, 9 May 2016 14:35:11 -0700 (PDT)
+In-Reply-To: <xmqqmvnzt0yx.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: OSXGZoHV14DbTD22qQRgFaA5mJE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294073>
 
-On Mon, May 9, 2016 at 5:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Subject: [PATCH] test-lib-functions.sh: rewrite test_seq without Perl
+On Mon, May 9, 2016 at 4:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>> On Mon, May 9, 2016 at 2:56 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Something like this follows Documentation/SubmittingPatches [...]
+>>>
+>>> -- >8 --
+>>> From: Armin Kunaschik <megabreit@googlemail.com>
+>>> Subject: t4151: make sure argument to 'test -z' is given
+>>>
+>>> 88d50724 (am --skip: revert changes introduced by failed 3way merge,
+>>> 2015-06-06), unlike all the other patches in the series, forgot to
+>>> quote the output from "$(git ls-files -u)" when using it as the
+>>> argument to "test -z", leading to a syntax error.
+>>
+>> To make it clear that this was not a syntax error in the typical case,
+>> it might make sense to say:
+>>
+>>     ...potentially leading to a syntax error if some earlier tests failed.
 >
-> Rewrite the 'seq' imitation only with commands and features
-> that are typically found as built-in in modern POSIX shells,
-> instead of relying on Perl to run a single-liner.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> @@ -679,7 +679,12 @@ test_seq () {
->         2)      ;;
->         *)      error "bug in the test script: not 1 or 2 parameters to test_seq" ;;
->         esac
-> -       perl -le 'print for $ARGV[0]..$ARGV[1]' -- "$@"
-> +       test_seq_counter__=$1
-> +       while test "$test_seq_counter__" -le "$2"
-> +       do
-> +               echo "$test_seq_counter__"
-> +               test_seq_counter__=$(( $test_seq_counter__ + 1 ))
-> +       done
->  }
+> Hmph, do we have a broken &&-chain?
 
-Looks (obviously) correct and works as expected on Mac and BSD.
+I don't know. Unfortunately, Armin didn't provide much information in
+his initial email, saying only "skipping through some failed tests",
+which doesn't necessarily indicate if those tests failed or if he
+somehow manually skipped them.
+
+> If an earlier test fails and leaves an unmerged path, "ls-files -u"
+> would give some output, so "test -z" would get one or more non-empty
+> strings; if we feed multiple, this would fail.  But we would not have
+> even run "test -z" as long as we properly &&-chain these tests.
+>
+> I think the real issue is when the earlier step succeeds and does
+> not leave any unmerged path.  In that case, we would run "test -z"
+> without anything else on the command line, which would lead to an
+> syntax error.
+>
+>     Side Note: /usr/bin/test and test (built into bash and dash)
+>     seem not to care about the lack of string in "test -z <string>"
+>     and "test -n <string>".  It appears to me that they just take
+>     "-z" and "-n" without "<string>" as a special case of "test
+>     <string>" that is fed "-z" or "-n" as <string>.  Apparently, the
+>     platform Armin is working on doesn't.
+
+I also tested on Mac OS X and BSD, and they happily accept bare "test
+-n", as well (though, I don't doubt that there are old shells which
+complain).
+
+> Perhaps
+>
+>     ... leading to a syntax error on some platforms whose "test"
+>     does not interpret "test -z" (no other arguments) as testing if
+>     a string "-z" is the null string (which GNU test and test that
+>     is built into bash and dash seem to do).
+>
+> would be an improvement?
+
+Yes, that sounds good.
