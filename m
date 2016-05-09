@@ -1,127 +1,86 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Re: t6044 broken on pu
-Date: Mon, 9 May 2016 08:30:51 +0200
-Message-ID: <CANgJU+V9+-hTFvDxCGbQxFcHMRcFaP-NdS_P93DqXuxi1Lh4mg@mail.gmail.com>
-References: <7d747193-7ba1-e274-86dc-427ed0f124c9@web.de>
-	<878tzmrrfg.fsf@linux-m68k.org>
-	<d1fcc54b-ddd7-b03b-79fa-2112a3f43141@web.de>
-	<xmqqa8k11e8j.fsf@gitster.mtv.corp.google.com>
-	<5618208c-ce45-d65c-abf8-498cfe0f2f84@web.de>
-	<xmqqoa8gza1t.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Andreas Schwab <schwab@linux-m68k.org>, newren@gmail.com,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 09 08:32:29 2016
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v7 2/3] t5551: make the test for extra HTTP headers more robust
+Date: Mon, 9 May 2016 09:56:29 +0200
+Message-ID: <BC0E627C-416C-41AA-9D09-68634845BC3D@gmail.com>
+References: <cover.1462342213.git.johannes.schindelin@gmx.de> <cover.1462774709.git.johannes.schindelin@gmx.de> <f29dac327aeac23677aec955f5b46a7a4702abfe.1462774709.git.johannes.schindelin@gmx.de>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 09 09:56:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azeiX-0006ap-FE
-	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 08:30:57 +0200
+	id 1azg3i-000073-9s
+	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 09:56:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750914AbcEIGax convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 May 2016 02:30:53 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35070 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750879AbcEIGax convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 May 2016 02:30:53 -0400
-Received: by mail-wm0-f68.google.com with SMTP id e201so19029039wme.2
-        for <git@vger.kernel.org>; Sun, 08 May 2016 23:30:52 -0700 (PDT)
+	id S1753321AbcEIH4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 May 2016 03:56:37 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:35530 "EHLO
+	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752974AbcEIH4e convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 May 2016 03:56:34 -0400
+Received: by mail-wm0-f51.google.com with SMTP id e201so125548076wme.0
+        for <git@vger.kernel.org>; Mon, 09 May 2016 00:56:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=PqDallsoDBkDALiFUiNxtBNQexYj+X0XTcqSj49XfTo=;
-        b=EcP/0XwenM9S5poA5DGBq7BjYoLqYuBrN1lTATW2OwdYNWXNsPnLqWUqDxWfpapvKO
-         XsQlg3TCW25YZcmy6lQvOtEFFxmoCjUp8sDxPcePcD0LH3sa2FE9Lr0hL+HcwedMQHlD
-         /n22OdBqvoXOP6jWMVRAxQqXoavvp4kqNT9/IzvEYNlwPJDXcREjoF7H2ufNshDKCSxb
-         2+7DLWSq9R294BmxUVsqdS/e9H42OcbVJXvamAzTxngAAZ4/tzBkdKnfEWKTeOZUfte5
-         mw0Pj7ZQtu3y9k2oO5D4C77ursL7791HHcgAFlrWAAniG1bas5sN1xPJGmBlbz/SdMGf
-         XdNw==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=mQOq8utFnmHjoYQDPdoiG/r6c+iiH9t/zgbg4WJ80tQ=;
+        b=gA+XQ4fUOlJsWiMp+tYI5NmjRlKMzC3QJKMESo9lDkxrnd7ClySCVPQNKOWZ8qfYst
+         7S0qk4UHQYQRB6/GDDOAmLN5UqYvARtBt3KdLPt3lktm2OkxifWmb3P9nItSKw2s0bFC
+         cBEU6xWr/S3R1fizx8l3SuigSZqSeApbkGshdJfbmCoDx7t84c5HTtnjbsURX/0tiZ3p
+         RunRfrMsRf1WDoXstEHRM29iqXkqyrGTOd5VDTpCbTjoCj0/RV+NHDAL3mKH4uMwYQHL
+         Y3P74SUjzzUw/tFFqiEczdl1sApd2epAScgq0SQd2V0ocldtxBauWPsB6Q27mFnbNPjY
+         gNMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=PqDallsoDBkDALiFUiNxtBNQexYj+X0XTcqSj49XfTo=;
-        b=GTQCInITR4+wlVJjV1Ve7FoUX++8zCCQsYtNIWvKV7CF/5yfaq4hV0l+Lrvqn/ZPps
-         7xn//Bwy8AYPVx1OxKaCRQwzp4TBxaZ+FvGlJnGHdE7nhzlLJXgfJYc5457riP8fDmUj
-         Rme4JA2J0IDWZYpM9qq3NJKlhKhQ2QhR/DVWawjHKufjhoORBqYl1HOcvqmN4AbLYGZt
-         D1MlgWnsKmlRSBnKZxJCBp8dyf0m9wuMD7E2MZlYi/QTvUYyCrp7nfTFwaH7JKzXmrOq
-         xm3PNs6WXgcNB0clhKUFiqvuRprphuLiLYAd3CiQZEaupp3m8pNgZ2DBRSjUd4xBHXix
-         O3DQ==
-X-Gm-Message-State: AOPr4FUWnEAaFO1JvCazHDlRKriIPgvhK/1BPlV4nqXfJAvo90gIhSND8NNPegqed7cfaxcYoL9gI6mxmu4t4w==
-X-Received: by 10.28.154.73 with SMTP id c70mr9720013wme.12.1462775452007;
- Sun, 08 May 2016 23:30:52 -0700 (PDT)
-Received: by 10.194.26.232 with HTTP; Sun, 8 May 2016 23:30:51 -0700 (PDT)
-In-Reply-To: <xmqqoa8gza1t.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=mQOq8utFnmHjoYQDPdoiG/r6c+iiH9t/zgbg4WJ80tQ=;
+        b=cvbG9QirLlyXAWFJ5PtyQDKzwtBRD4hxxAzKcD4F0Sn1vv4y5Fecd/c1EVEFOzm5T8
+         7adlEcrIURQ74vQiUazMQdfzKPbeEV+YeTClnrgSQNULXGA+hYmJlgxlNPv4jbp4utYy
+         +gs1CG6NMjLr5o5pGdCfE+uPokmb/tzwtwZDeuXygfjjDDEF1eglihZeAYsr8PbW5m6R
+         N2WQJH9H+WMx7gcUtcdKs9X134mbjbAg9huka56B+8KjzRzz2vgh9+Y1NrhNyS4klWHf
+         E/9w2wlJqV7WiZPA3X9VwWSSIS+Yo9sECqPLAlSOR0wdX5h3OJwT4XMoCrOlk29YCVz/
+         DgYw==
+X-Gm-Message-State: AOPr4FXzAT7JouCl6Gcckc2Z3jdZUP2fQo9nlhoh6lAfojE4KEOmJje9i0+q9cq+VijUlw==
+X-Received: by 10.28.184.22 with SMTP id i22mr9785545wmf.41.1462780592744;
+        Mon, 09 May 2016 00:56:32 -0700 (PDT)
+Received: from slxbook3.fritz.box (p5DDB7587.dip0.t-ipconnect.de. [93.219.117.135])
+        by smtp.gmail.com with ESMTPSA id k62sm9669015wmb.7.2016.05.09.00.56.30
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 09 May 2016 00:56:31 -0700 (PDT)
+In-Reply-To: <f29dac327aeac23677aec955f5b46a7a4702abfe.1462774709.git.johannes.schindelin@gmx.de>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293988>
-
-On 8 May 2016 at 20:20, Junio C Hamano <gitster@pobox.com> wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->
->> May a  simple
->>  printf "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n"
->>
->> be an option ?
->
-> If you were to do that, at least have the decency to make it more
-> readable by doing something like:
->
->         printf "%s\n" 1 2 3 4 5 6 7 8 9 10
->
-> ;-)
->
-> But as I said, as a response to "t6044 broken on pu" bug report,
-> s/seq/test_seq/ is the only sensible change.
->
-> Improving "test_seq, the alternative to seq" is a separate topic.
->
-> If you have aversion to $PERL, perhaps do them without using
-> anything what is not expected to be built-in in modern shells,
-> perhaps like this?
->
->  t/test-lib-functions.sh | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index 8d99eb3..4edddac 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -739,7 +739,12 @@ test_seq () {
->         2)      ;;
->         *)      error "bug in the test script: not 1 or 2 parameters =
-to test_seq" ;;
->         esac
-> -       perl -le 'print for $ARGV[0]..$ARGV[1]' -- "$@"
-> +       test_seq_counter__=3D$1
-> +       while test "$test_seq_counter__" -le $2
-> +       do
-> +               echo "$test_seq_counter__"
-> +               test_seq_counter__=3D$((test_seq_counter__ + 1))
-> +       done
->  }
-
-Is that perl snippet ever called with non-numeric output?
-
-perl -le 'print for $ARGV[0]..$ARGV[1]' -- A E
-A
-B
-C
-D
-E
-
-Yves
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/293989>
 
 
+On 09 May 2016, at 08:19, Johannes Schindelin <johannes.schindelin@gmx.de> wrote:
 
---=20
-perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
+> To test that extra HTTP headers are passed correctly, t5551 verifies that
+> a fetch succeeds when two required headers are passed, and that the fetch
+> does not succeed when those headers are not passed.
+> 
+> However, this test would also succeed if the configuration required only
+> one header. As Apache's configuration is notoriously tricky (this
+> developer frequently requires StackOverflow's help to understand Apache's
+> documentation), especially when still supporting the 2.2 line, let's just
+> really make sure that the test verifies what we want it to verify.
+
+Haha. Me, too :-) After I wasn't able to find a working solution myself
+I posted a question on ServerFault [1] ... I will test your solution
+tomorrow!
+
+Cheers,
+Lars
+
+[1] https://serverfault.com/questions/775515/requireall-require-expr-equivalent-in-apache-2-2-22-to-check-for-headers
