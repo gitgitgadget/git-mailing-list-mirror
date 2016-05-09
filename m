@@ -1,110 +1,91 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: t4151 missing quotes
-Date: Mon, 9 May 2016 12:22:14 -0400
-Message-ID: <CAPig+cTbAA8xDWvCXbBF+HJpxONS38hcjAiNuocC+PUBro9ALg@mail.gmail.com>
-References: <CALR6jEiBsU+jQ8VoRsniMdztCpVDemQ3r00W-OXdRP6ZEt9CFg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFD/PATCH] submodule doc: describe where we can configure them
+Date: Mon, 09 May 2016 09:19:44 -0700
+Message-ID: <xmqqlh3jxkyn.fsf@gitster.mtv.corp.google.com>
+References: <1462317985-640-1-git-send-email-sbeller@google.com>
+	<20160503235652.GA395@google.com>
+	<xmqqd1p1frw4.fsf@gitster.mtv.corp.google.com>
+	<20160508220127.GB59077@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Armin Kunaschik <megabreit@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon May 09 18:23:18 2016
+Content-Type: text/plain
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Mon May 09 18:24:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aznwq-0006C5-II
-	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 18:22:20 +0200
+	id 1aznuS-0003cy-33
+	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 18:19:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751057AbcEIQWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2016 12:22:16 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:36204 "EHLO
-	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750983AbcEIQWP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2016 12:22:15 -0400
-Received: by mail-io0-f196.google.com with SMTP id k129so19105972iof.3
-        for <git@vger.kernel.org>; Mon, 09 May 2016 09:22:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=PzpOoS04YubcJvLFYRi4CyO46HTL2hyCJTrHV7fsS14=;
-        b=Xn8zF7z1mFtCT/xq4cVoZQenHq2mlrFntnEFjPQi7IoRF5SQVBwpoy/NQJuPoUiU4w
-         g4EznIR3gsGc1urSPF76XoHv5FmEoZHb8GYo3A8CRIwlUZieLGevF1WRr5rxYd1R+eo/
-         xDGpJ31ucpish4LkIcgdRxtxfs82CqlupnrGbOIzftBce8wbU/d/4IgyeBSF3si8vAZU
-         SGWlkcrCUwxcQeaND5iCGlem2/AU2CuXgvR0SMwEM3Mnah2890tq+17JA83Lqz6DDy5b
-         +88UovyvfQ/3QOmhXy+HB7E5E0ck4d3Iq8Ri0V7cSBJONrTeVvrLIbiTQ6TKuOE034/f
-         hxhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=PzpOoS04YubcJvLFYRi4CyO46HTL2hyCJTrHV7fsS14=;
-        b=Ha5IGBtmi+DbtCg6BvYbjbBSRaL12raLkITq5GCWEjVzZRRVNyXWobVeoCeCOeSC07
-         QULxKeDPi38Cr//PEZN1qpzAXMuNrftCPoospkGznzjnXVlCP0N8Yq5qPCQsUfFZbPqU
-         eMJwEos1eB26Q47Y5OH/5ffeL1g9jwpTAiGvE+1QIaEHKidJPEK71IerkVIyV4sD2LWY
-         Epdr2aumh4vkEoNM7/M11LsPg4ktb/DShnIyVjj36p/eqqJhU9qsJWr1DSQPGKfnZjIO
-         q3GzFHSj/kgpTIoxA/J5KhuKRFkf7mb+zSV5y9/dnZi7HiOa1tvCUnsItEkO+0j6JkqN
-         Nk9w==
-X-Gm-Message-State: AOPr4FVvDHo0nGSMcc/fXddwuG1XKoaWLBlNDAmeb+F2hrDC+2E8MKqEg2niYS/i8MJHpUY3RlxB2bOL5jdvcQ==
-X-Received: by 10.107.47.37 with SMTP id j37mr37019577ioo.168.1462810934889;
- Mon, 09 May 2016 09:22:14 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Mon, 9 May 2016 09:22:14 -0700 (PDT)
-In-Reply-To: <CALR6jEiBsU+jQ8VoRsniMdztCpVDemQ3r00W-OXdRP6ZEt9CFg@mail.gmail.com>
-X-Google-Sender-Auth: FWlvhAHIuVqho9C3-9sn4KO4sdA
+	id S1751295AbcEIQTs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 May 2016 12:19:48 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59923 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750927AbcEIQTr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2016 12:19:47 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 68156178CF;
+	Mon,  9 May 2016 12:19:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vyZX/FaRxbruSRY0y4VIZFySdhg=; b=Q7+p7m
+	L8ffdetuqa1a2he0HM19AJKTuUQmyoD0/gSv99E1SFnPu4BxINubtksRvVkD9CGv
+	+JTnF8dEcS3QBQjT02yKdu3Sxyp3BV1LSUTv/DINJWp+Pr6xz3VA532+Tjb0n3Z+
+	CzzLo0Jq4TG40Vei4s+oyKVAmXTN+n8P+H2Z4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qR8uJ9ojqDXQHO3RXvi3Vso6E8ZUNzyC
+	+2UBWMjpVuhED2oY9hzauVHROVy0baqI7MIxCwAurBaTd4gj10ukJ0ZnjMzGgl3Q
+	WDQwihStc8ok2jkAvCPaTdj5BWZSHm+oW2bFv/2EuHf+pfrWQHrnKI0uELEBD34L
+	RCFY9e0In9Y=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5FBFB178CE;
+	Mon,  9 May 2016 12:19:46 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DAF36178CD;
+	Mon,  9 May 2016 12:19:45 -0400 (EDT)
+In-Reply-To: <20160508220127.GB59077@book.hvoigt.net> (Heiko Voigt's message
+	of "Mon, 9 May 2016 00:01:28 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D82EB47C-1601-11E6-BC26-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294009>
 
-On Mon, May 9, 2016 at 12:09 PM, Armin Kunaschik
-<megabreit@googlemail.com> wrote:
-> skipping through some failed tests I found more (smaller) problems
-> inside the test... when test arguments are empty they need to be
-> quoted (quite a lot test in this sentence).
+Heiko Voigt <hvoigt@hvoigt.net> writes:
+
+>> > - When upstream adds a new submodule, I have to do the same manual
+>> >   work to change the options for that new submodule.
+>> 
+>> Because a new module is not automatically "init"ed by default?
+>> 
+>> Isn't "config only" vs "config with gitmodules fallback" orthogonal
+>> to that issue?
 >
-> Error is like
-> t4151-am-abort.sh[5]: test: argument expected
+> What do you mean with "orthogonal to that issue"? AFAICS a gitmodule
+> fallback does not have that issue.
 >
-> My patch:
->
-> *** t4151-am-abort.sh   Mon May  9 17:51:44 2016
-> --- t4151-am-abort.sh.orig      Fri Apr 29 23:37:00 2016
-> ***************
-> *** 67,73 ****
->   test_expect_success 'am -3 --skip removes otherfile-4' '
->         git reset --hard initial &&
->         test_must_fail git am -3 0003-*.patch &&
-> !       test 3 -eq "$(git ls-files -u | wc -l)" &&
->         test 4 = "$(cat otherfile-4)" &&
->         git am --skip &&
->         test_cmp_rev initial HEAD &&
-> --- 67,73 ----
->   test_expect_success 'am -3 --skip removes otherfile-4' '
->         git reset --hard initial &&
->         test_must_fail git am -3 0003-*.patch &&
-> !       test 3 -eq $(git ls-files -u | wc -l) &&
->         test 4 = "$(cat otherfile-4)" &&
->         git am --skip &&
->         test_cmp_rev initial HEAD &&
-> ***************
+> Actually I would see it more like:
+> .gitmodule is the default and .git/config a possibility to override.
 
-Some comments:
+The way I read Jonathan's "I have to do the same manual..." above is:
 
-Quoting the output of 'wc -l' will break the tests on Mac OS X and BSD
-since the output contains leading whitespace which won't match the "3"
-on the other side of the '='.
+  Back when I cloned, the upstream had one submodule A.  I didn't like
+  some aspect of the configuration for that submodule so I did a
+  customization in [submodule "A"] section of .git/config for it.
 
-Your diff is backward, comparing 'current' against 'original', which
-makes it difficult to read. Reviewers on this list expect to see
-'original' compared against 'current'.
+  Now the upstream added another submodule B.  I want a tweak similar
+  to what I did to A applied to this one, but that would mean I need
+  to edit the entry in .git/config copied by "init" from .gitmodules.
 
-Use a unified format to make the diff easier to read; or just use
-git-diff or git-format patch, which is even simpler.
-
-It's not clear how the output of 'wc -l' could ever be the empty
-string. Perhaps git-ls-files is dying and causing the pipe to abort
-before 'wc -l' ever outputs anything? Without additional information
-about the problem you're experiencing, it's difficult to judge if this
-change is a good idea.
+I do not see how difference between ".git/config is the only source
+of truth" or ".git/config overrides what is in .gitmodules" would
+matter to the above scenario.
