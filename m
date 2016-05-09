@@ -1,108 +1,166 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: t4151 missing quotes
-Date: Mon, 09 May 2016 13:45:10 -0700
-Message-ID: <xmqqmvnzt0yx.fsf@gitster.mtv.corp.google.com>
-References: <CALR6jEiBsU+jQ8VoRsniMdztCpVDemQ3r00W-OXdRP6ZEt9CFg@mail.gmail.com>
-	<CAPig+cTbAA8xDWvCXbBF+HJpxONS38hcjAiNuocC+PUBro9ALg@mail.gmail.com>
-	<CALR6jEgaNSAQOpxSK46h71PMRhakDa=UCC5gbTyg77BcaOaoPg@mail.gmail.com>
-	<xmqq37pruklb.fsf@gitster.mtv.corp.google.com>
-	<CAPig+cS4Bj4N8d1a29z8=f30owOec1pB=yF32ZUPmDH2Tu2kXA@mail.gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: [PATCH v9 11/19] update-index: enable/disable watchman support
+Date: Mon,  9 May 2016 16:48:41 -0400
+Message-ID: <1462826929-7567-12-git-send-email-dturner@twopensource.com>
+References: <1462826929-7567-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Armin Kunaschik <megabreit@googlemail.com>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon May 09 22:46:29 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Turner <dturner@twopensource.com>
+To: git@vger.kernel.org, pclouds@gmail.com
+X-From: git-owner@vger.kernel.org Mon May 09 22:49:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azs3S-0000CT-Vs
-	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 22:45:27 +0200
+	id 1azs7O-0003yU-OO
+	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 22:49:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751600AbcEIUpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2016 16:45:15 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63171 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751259AbcEIUpO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2016 16:45:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0FB341AFC0;
-	Mon,  9 May 2016 16:45:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZRGqQ2PmeUVlhnIZlRz4663j7BY=; b=cRd6KA
-	BUVTF3Ge69sfq+36UQ8KmrKKUa2plyClNJd8NQF67BbAq8HcscdrBDVLp9V7bU5V
-	YQKoOMYWlnJqB9y4eHoM0tCKZJboWCb5l/LyQxaM58sReVmAtnRHM6fN0PLgV2qN
-	0ot9GmXeg6K1JZgkvWZnEJA/emy4CIrtkmjzo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jsIZCI/KU1v9gwTDG/FwdpXz/xAlW7uA
-	WwoZflW06QDfxCNiNuum01thSpa5vgE1FN5CYmzpYLcg0+R39vVily9Y/xyPRzpD
-	Bs9dkZb0fi+LnYgJjUD9Z1DksWmZ+TT4MdU0HvurLQTa4txVyEXeEZW+u8b9IASg
-	wIFk1gHdvJ0=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0795F1AFBF;
-	Mon,  9 May 2016 16:45:13 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 84D441AFBE;
-	Mon,  9 May 2016 16:45:12 -0400 (EDT)
-In-Reply-To: <CAPig+cS4Bj4N8d1a29z8=f30owOec1pB=yF32ZUPmDH2Tu2kXA@mail.gmail.com>
-	(Eric Sunshine's message of "Mon, 9 May 2016 16:16:03 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: ED348840-1626-11E6-8EEA-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752634AbcEIUtW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 May 2016 16:49:22 -0400
+Received: from mail-qg0-f50.google.com ([209.85.192.50]:33444 "EHLO
+	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752463AbcEIUtT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2016 16:49:19 -0400
+Received: by mail-qg0-f50.google.com with SMTP id f92so95678699qgf.0
+        for <git@vger.kernel.org>; Mon, 09 May 2016 13:49:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=DSr2DGtyMt6TUopcmYTDQ2btCuOfdB6/kMtI5ERbNfM=;
+        b=xRKp6q9KMgiLyny7XPoMlW23bMsFe1la/KnuiF213cqec/XsWr1wgR0bJmUSy44C74
+         XlpWNS/Qa2TGOQkOmXpHKwcV784vUabJdzzxvUvEgjDFBTjzSiUo7VoYotM8GXDO/DI4
+         5y27SStZpxmzEDJHES7kXMCE6tD6LhYVoqsGdv0wBgOFyBL7mwBblWMV5PbNmCJnbd6q
+         nDDvlLkTGoFflgfbdFYMnbo7p9MYjWVCh+da0yKit68kZczQtJ50p/s9SHwXa9FPAPdv
+         dnUcT4bDMwFzJVpa0wFlsWEYG2lIgKTSB/1mr6Nq4nfZwdzrXdqE6y0rLycKWvK59RM3
+         Bckw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=DSr2DGtyMt6TUopcmYTDQ2btCuOfdB6/kMtI5ERbNfM=;
+        b=jfr1bRG1XpuvQcz+00OgiJBt2D/QFFhENmO0EiYOHypdM98xTy6ZebeJnkSw19HaDU
+         DKhnEIBlGzqiEs3CNzzBARQZONCy1FVJam7J1NgzQYWQv3neiUeuM23snuLbNKp0xgp7
+         XlxMDz2SWpXdHE4Nn/29fgwDkEYZwF3M/SjYEWOBcEkZ4p0J7XCSLSL9kVvdZTmEYXtb
+         dNO7WBnYh48gKVsm+M9wNEqM8/1VTm/r06b5J7tXbpiEGHbQBS1ofUxDxtqbmu9KxVG8
+         8IxgyypPHPxqDWfribDhcU5pCIVTeDE05ymCGuCem5eo7KB2SrTVT6bz9kLwIfztuZ8Y
+         iE7A==
+X-Gm-Message-State: AOPr4FXYOBuj4/R6J5d1+TioxxrCVcjC0u2AR/2A6xuydVCw4CoNpUeZZ8Gog3i49EUGjw==
+X-Received: by 10.140.156.81 with SMTP id c78mr39989434qhc.58.1462826958515;
+        Mon, 09 May 2016 13:49:18 -0700 (PDT)
+Received: from ubuntu.twitter.biz ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id n1sm12729182qkn.3.2016.05.09.13.49.17
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 09 May 2016 13:49:17 -0700 (PDT)
+X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
+In-Reply-To: <1462826929-7567-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294050>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
 
-> On Mon, May 9, 2016 at 2:56 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Something like this follows Documentation/SubmittingPatches [...]
->>
->> -- >8 --
->> From: Armin Kunaschik <megabreit@googlemail.com>
->> Subject: t4151: make sure argument to 'test -z' is given
->>
->> 88d50724 (am --skip: revert changes introduced by failed 3way merge,
->> 2015-06-06), unlike all the other patches in the series, forgot to
->> quote the output from "$(git ls-files -u)" when using it as the
->> argument to "test -z", leading to a syntax error.
->
-> To make it clear that this was not a syntax error in the typical case,
-> it might make sense to say:
->
->     ...potentially leading to a syntax error if some earlier tests failed.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+Signed-off-by: David Turner <dturner@twopensource.com>
+---
+ Documentation/git-index-helper.txt |  3 +++
+ Documentation/git-update-index.txt |  6 ++++++
+ builtin/update-index.c             | 16 ++++++++++++++++
+ 3 files changed, 25 insertions(+)
 
-Hmph, do we have a broken &&-chain?
-
-If an earlier test fails and leaves an unmerged path, "ls-files -u"
-would give some output, so "test -z" would get one or more non-empty
-strings; if we feed multiple, this would fail.  But we would not have
-even run "test -z" as long as we properly &&-chain these tests.
-
-I think the real issue is when the earlier step succeeds and does
-not leave any unmerged path.  In that case, we would run "test -z"
-without anything else on the command line, which would lead to an
-syntax error.
-
-    Side Note: /usr/bin/test and test (built into bash and dash)
-    seem not to care about the lack of string in "test -z <string>"
-    and "test -n <string>".  It appears to me that they just take
-    "-z" and "-n" without "<string>" as a special case of "test
-    <string>" that is fed "-z" or "-n" as <string>.  Apparently, the
-    platform Armin is working on doesn't.
-
-Perhaps
-
-    ... leading to a syntax error on some platforms whose "test"
-    does not interpret "test -z" (no other arguments) as testing if
-    a string "-z" is the null string (which GNU test and test that
-    is built into bash and dash seem to do).
-
-would be an improvement?
+diff --git a/Documentation/git-index-helper.txt b/Documentation/git-ind=
+ex-helper.txt
+index cce00cb..55a8a5a 100644
+--- a/Documentation/git-index-helper.txt
++++ b/Documentation/git-index-helper.txt
+@@ -18,6 +18,9 @@ each with a submodule, you might need four index-help=
+ers.  (In practice,
+ this is only worthwhile for large indexes, so only use it if you notic=
+e
+ that git status is slow).
+=20
++If you want the index-helper to accelerate untracked file checking,
++run git update-index --watchman before using it.
++
+ OPTIONS
+ -------
+=20
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-upd=
+ate-index.txt
+index c6cbed1..6736487 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -19,6 +19,7 @@ SYNOPSIS
+ 	     [--ignore-submodules]
+ 	     [--[no-]split-index]
+ 	     [--[no-|test-|force-]untracked-cache]
++	     [--[no-]watchman]
+ 	     [--really-refresh] [--unresolve] [--again | -g]
+ 	     [--info-only] [--index-info]
+ 	     [-z] [--stdin] [--index-version <n>]
+@@ -176,6 +177,11 @@ may not support it yet.
+ --no-untracked-cache::
+ 	Enable or disable untracked cache feature. Please use
+ 	`--test-untracked-cache` before enabling it.
++
++--watchman::
++--no-watchman::
++	Enable or disable watchman support. This is, at present,
++	only useful with git index-helper.
+ +
+ These options take effect whatever the value of the `core.untrackedCac=
+he`
+ configuration variable (see linkgit:git-config[1]). But a warning is
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 1c94ca5..a3b4b5d 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -914,6 +914,7 @@ int cmd_update_index(int argc, const char **argv, c=
+onst char *prefix)
+ {
+ 	int newfd, entries, has_errors =3D 0, nul_term_line =3D 0;
+ 	enum uc_mode untracked_cache =3D UC_UNSPECIFIED;
++	int use_watchman =3D -1;
+ 	int read_from_stdin =3D 0;
+ 	int prefix_length =3D prefix ? strlen(prefix) : 0;
+ 	int preferred_index_format =3D 0;
+@@ -1012,6 +1013,8 @@ int cmd_update_index(int argc, const char **argv,=
+ const char *prefix)
+ 			    N_("test if the filesystem supports untracked cache"), UC_TEST)=
+,
+ 		OPT_SET_INT(0, "force-untracked-cache", &untracked_cache,
+ 			    N_("enable untracked cache without testing the filesystem"), UC=
+_FORCE),
++		OPT_BOOL(0, "watchman", &use_watchman,
++			N_("use or not use watchman to reduce refresh cost")),
+ 		OPT_END()
+ 	};
+=20
+@@ -1149,6 +1152,19 @@ int cmd_update_index(int argc, const char **argv=
+, const char *prefix)
+ 		die("Bug: bad untracked_cache value: %d", untracked_cache);
+ 	}
+=20
++	if (use_watchman > 0) {
++		the_index.last_update    =3D xstrdup("");
++		the_index.cache_changed |=3D WATCHMAN_CHANGED;
++#ifndef USE_WATCHMAN
++		warning("git was built without watchman support -- I'm "
++			"adding the extension here, but it probably won't "
++			"do you any good.");
++#endif
++	} else if (!use_watchman) {
++		the_index.last_update    =3D NULL;
++		the_index.cache_changed |=3D WATCHMAN_CHANGED;
++	}
++
+ 	if (active_cache_changed) {
+ 		if (newfd < 0) {
+ 			if (refresh_args.flags & REFRESH_QUIET)
+--=20
+2.4.2.767.g62658d5-twtrsrc
