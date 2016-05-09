@@ -1,99 +1,119 @@
-From: "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: RE: /* compiler workaround */ - what was the issue?
-Date: Mon, 9 May 2016 15:49:53 -0400
-Message-ID: <009801d1aa2b$f89f2530$e9dd6f90$@nexbridge.com>
-References: <AA5B2B1715BAF7438221293187A417A7BDE9D11D@desmdswms002.des.grplnk.net><17E04501C9474282B87758C7998A1F5B@PhilipOakley><xmqqtwic9o88.fsf@gitster.mtv.corp.google.com><CACsJy8CBuU8H8r_f4KsnLkhLtfRv0nDo4hGS31LVn0e1Y_3OAQ@mail.gmail.com><51C902B1F7464CF2B58EB0E495F86BB5@PhilipOakley><572CDCFF.9050607@ramsayjones.plus.com><xmqq60ur3tlu.fsf@gitster.mtv.corp.google.com><572CF0D5.6010305@xiplink.com><xmqqinyr2c3d.fsf@gitster.mtv.corp.google.com> <CAGZ79kby0Z1FMUT-w8h=YfRxsmyXaiE2pA_VoJ0g9wn0Mzk2Wg@mail.gmail.com> <9836AC86AA754C27AFD5D87519DF1402@PhilipOakley>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v9 1/6] read-cache: factor out get_sha1_from_index() helper
+Date: Mon, 09 May 2016 12:54:37 -0700
+Message-ID: <xmqqy47jt3b6.fsf@gitster.mtv.corp.google.com>
+References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
+	<1462601458-23498-1-git-send-email-tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-Cc: "'Marc Branchaud'" <marcnarc@xiplink.com>,
-	"'Ramsay Jones'" <ramsay@ramsayjones.plus.com>,
-	"'Duy Nguyen'" <pclouds@gmail.com>,
-	"'Git List'" <git@vger.kernel.org>
-To: "'Philip Oakley'" <philipoakley@iee.org>,
-	"'Stefan Beller'" <sbeller@google.com>,
-	"'Junio C Hamano'" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 09 21:50:30 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: tboegi@web.de
+X-From: git-owner@vger.kernel.org Mon May 09 21:54:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azrCG-0004YP-QU
-	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 21:50:29 +0200
+	id 1azrGP-00017Y-CO
+	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 21:54:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751438AbcEITuR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2016 15:50:17 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:48992 "EHLO
-	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751335AbcEITuQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 May 2016 15:50:16 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [174.112.90.66])
-	(authenticated bits=0)
-	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id u49Jnxpt026563
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Mon, 9 May 2016 15:50:00 -0400 (EDT)
-	(envelope-from rsbecker@nexbridge.com)
-In-Reply-To: <9836AC86AA754C27AFD5D87519DF1402@PhilipOakley>
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQDlSvIpG+Of9GRgOJuVtc5cQDj9MwJWa0HIAPsSfG8CBLQthgHZ56IoAsjAwpcC7ujIWgD/NCo5AYnc62MCSBqkBAH7SBUwoOwflLA=
-Content-Language: en-ca
+	id S1751256AbcEITyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 May 2016 15:54:41 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59977 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751069AbcEITyl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2016 15:54:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9EC561A845;
+	Mon,  9 May 2016 15:54:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sDP/C/vIWuhHxIdTQL5LOnoAmYQ=; b=aSopRW
+	SHBcs01tJNa21O5NNsxBVgU9l+BhJ2i1MD9iNYu3CQsfEJPiaRIahAgJwkBu7AzN
+	O4m0rWz5+7kVICgbZATfwZY1vEIq3e4obbOo/2mEImO/sHmjfkCEGE97oYhHRaCz
+	iFHIXueslQbwxUtQpDM/p9vPZT+LoQgUc6TCI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YbavzbgF3NxSBonFYjBQSfCmH3okZRYM
+	gRBU8RpJT1Ev2hSkgd4M+T+X1doAKMCoRXY0/x6iNsNKEdhukuzvG07ij6ZExRfn
+	TZxewNycOf4DPnvM/MkesBH7mgwDM2kCAQFEtEW5U8mBChQbz9O9BqXehS2SGALd
+	DI3990Lw1Y4=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 96C9F1A844;
+	Mon,  9 May 2016 15:54:39 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E4BCA1A843;
+	Mon,  9 May 2016 15:54:38 -0400 (EDT)
+In-Reply-To: <1462601458-23498-1-git-send-email-tboegi@web.de>
+	(tboegi@web.de's message of "Sat, 7 May 2016 08:10:58 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: DD08AF7A-161F-11E6-8F07-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294044>
 
-On May 9, 2016 3:40 PM Philip Oakley wrote:
-> From: "Stefan Beller" <sbeller@google.com>
-> > On Fri, May 6, 2016 at 12:57 PM, Junio C Hamano <gitster@pobox.com>
-> wrote:
-> >> Marc Branchaud <marcnarc@xiplink.com> writes:
-> >>
-> >>> On 2016-05-06 02:54 PM, Junio C Hamano wrote:
-> >>>>
-> >>>> I wonder if can we come up with a short and sweet notation to
-> >>>> remind futhre readers that this "initialization" is not
-> >>>> initializing but merely squelching warnings from stupid compilers,
-> >>>> and agree to use it consistently?
-> >>>
-> >>> Perhaps
-> >>>
-> >>>       #define COMPILER_UNINITIALIZED_WARNING_INITIALIZER 0
-> >>>
-> >>> or, for short-and-sweet
-> >>>
-> >
-> >           /* Here could go a longer explanation than the 4 character
-> > define :) */
-> >>>       #define CUWI 0
-> >>>
-> >>> ?
-> >>>
-> >>> :)
-> >>
-> >> I get that smiley.
-> >>
-> >> I was hinting to keep the /* compiler workaround */ comment, but in a
-> >> bit shorter form.
-> >> --
-> 
-> For some background, I found $gmane/169098/focus=169104 which covers
-> some of the issues (the focused msg is one from Junio). Hannes then notes
-> ($gmane/169121) that the current xx = xx; could be seen as possible
-> undefined behaviour - perhaps one of those 'no good solution' problems.
-> 
-> Perhaps a suitable name...
-> 
-> #define SUPPRESS_COMPILER_UNINITIALIZED_WARNING 0
-> /* Use when some in-use compiler is unable to determine if the variable is
-> used uninitialized, and no good default value is available */
-> 
-> Though, where best to put it?
+tboegi@web.de writes:
 
-I would suggest this type of approach should be detected in the configure script and added automagically (as best as possible) or as a hint supplied by the platform's own specific configuration files if necessary as a last gasp.
+> +#define get_sha1_from_cache(path)  get_sha1_from_index (&the_index, (path))
+>  #endif
 
--- Brief whoami: NonStop&UNIX developer since approximately UNIX(421664400)/NonStop(211288444200000000)
--- In my real life, I talk too much.
+Micronit: lose the extra SP; i.e. "get_sha1_from_index(&the_index, (path))".
+
+> diff --git a/read-cache.c b/read-cache.c
+> index d9fb78b..a3ef967 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -2263,13 +2263,27 @@ int index_name_is_other(const struct index_state *istate, const char *name,
+>  
+>  void *read_blob_data_from_index(struct index_state *istate, const char *path, unsigned long *size)
+>  {
+> -	int pos, len;
+> +	const unsigned char *sha1;
+>  	unsigned long sz;
+>  	enum object_type type;
+>  	void *data;
+>  
+> -	len = strlen(path);
+> -	pos = index_name_pos(istate, path, len);
+> +	sha1 = get_sha1_from_index(istate, path);
+> +	if (!sha1)
+> +		return NULL;
+> +	data = read_sha1_file(sha1, &type, &sz);
+> +	if (!data || type != OBJ_BLOB) {
+> +		free(data);
+> +		return NULL;
+> +	}
+> +	if (size)
+> +		*size = sz;
+> +	return data;
+> +}
+> +
+> +const unsigned char *get_sha1_from_index(struct index_state *istate, const char *path)
+> +{
+> +	int pos = index_name_pos(istate, path, strlen(path));
+>  	if (pos < 0) {
+>  		/*
+>  		 * We might be in the middle of a merge, in which
+> @@ -2285,14 +2299,7 @@ void *read_blob_data_from_index(struct index_state *istate, const char *path, un
+>  	}
+>  	if (pos < 0)
+>  		return NULL;
+> +	return (istate->cache[pos]->sha1);
+
+Micronit: lose the extra () pair around what is returned.
+
+I wondered if we can share more code with this helper and
+get_sha1_with_context_1(), which is the canonical copy of this logic
+used to parse ":$path" and get the object name at $path in the
+index, but this is sufficiently low-level and such a refactoring
+of small code would not be of great benefit, so this patch is OK.
+
+Thanks.
+
+>  }
+>  
+>  void stat_validity_clear(struct stat_validity *sv)
