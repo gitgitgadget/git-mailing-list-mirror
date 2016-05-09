@@ -1,129 +1,179 @@
-From: Armin Kunaschik <megabreit@googlemail.com>
-Subject: t4151 missing quotes
-Date: Mon, 9 May 2016 18:09:45 +0200
-Message-ID: <CALR6jEiBsU+jQ8VoRsniMdztCpVDemQ3r00W-OXdRP6ZEt9CFg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: t6392 broken on pu (Mac OS X)
+Date: Mon, 9 May 2016 12:07:25 -0400
+Message-ID: <20160509160725.GA11861@sigill.intra.peff.net>
+References: <dea0877d-fe83-fb47-4df3-21fd69d8421d@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 09 18:17:21 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon May 09 18:19:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aznkk-0002lZ-EZ
-	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 18:09:50 +0200
+	id 1azniX-0000Vt-NF
+	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 18:07:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751511AbcEIQJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2016 12:09:46 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:34417 "EHLO
-	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750916AbcEIQJq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2016 12:09:46 -0400
-Received: by mail-yw0-f195.google.com with SMTP id i22so23652377ywc.1
-        for <git@vger.kernel.org>; Mon, 09 May 2016 09:09:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=0yjr1irgneDigdCWvWAXIge6hPuJhMvZY32yAVclr8A=;
-        b=K/7xnqty9F3k7mkXUiiLPccubhoVuCUC9hrinUvq+DZvJTEM37gr2XGSWQvxkNtfgd
-         wd+AGEuce09eW5AWvXgPWHcd5tksoA8a9YRZJvC6D4UUKn2/okMqJP9iKaQ3KFeWqNL0
-         ykuejSjDDtBfPDfHUbATlPeP1HxE/QWSzX8L50PV1wb4sNSU/FZfb75excDUMzYWkxa7
-         VgYQHpTs1usuZiVoL8ZiCE4029K3LRdF+lkX6Q0JCk0TqPVa4COn9s8IySkPvnBfaYT/
-         rvqIrGd/peojx8VsR6T5Cclp78YMFnwBfCMnwKFfLW9/HVlyYO75jVWoiWIXE4sbOl0Y
-         Kp8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=0yjr1irgneDigdCWvWAXIge6hPuJhMvZY32yAVclr8A=;
-        b=IWLOzcLCU3nSUp8cTcEAmx7/xb3upppoFyQJey9FiopW/XCHJFQh2cFacX8yDvJmDb
-         RQwYU1noqFpKNY9fw+Y8ajrTCosOKg3MqiKJLb2og1dYKjVOZizOHua/vkgHW35fKBkV
-         3MZ41gy+1Bf974UTGkxIkzP/OgjRU1AWMVtQ0+15BQfp0rA5odmXHuS2E/ChlRN0vWYr
-         0U+m0HhNRSTYlfgQtNVD8LZGMLjhKQgsaPEPRlnIOSGM2o6m3nxv18UhCXM7AHaRiT+M
-         S3qhHmTGf3Jk8jGo+TC8XGY30iOiy6xHChAn1ky/r5tJ9s/lIWO8oVJ5vB54v1pcE2tO
-         9cGw==
-X-Gm-Message-State: AOPr4FUs52/ivV/ZexOcWFOmg5wAMO3P78YFK5aoVeYKM4hOflwC9FpIndWpJ6FqlYeRT5W8hA5xlhThsXbPJg==
-X-Received: by 10.37.204.142 with SMTP id l136mr20315060ybf.13.1462810185169;
- Mon, 09 May 2016 09:09:45 -0700 (PDT)
-Received: by 10.129.45.132 with HTTP; Mon, 9 May 2016 09:09:45 -0700 (PDT)
+	id S1751754AbcEIQH3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 May 2016 12:07:29 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36353 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751646AbcEIQH3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2016 12:07:29 -0400
+Received: (qmail 18467 invoked by uid 102); 9 May 2016 16:07:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 09 May 2016 12:07:28 -0400
+Received: (qmail 20171 invoked by uid 107); 9 May 2016 16:07:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 09 May 2016 12:07:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 May 2016 12:07:25 -0400
+Content-Disposition: inline
+In-Reply-To: <dea0877d-fe83-fb47-4df3-21fd69d8421d@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294005>
 
-Hi there,
+On Sat, May 07, 2016 at 06:15:19PM +0200, Torsten B=C3=B6gershausen wro=
+te:
 
-skipping through some failed tests I found more (smaller) problems
-inside the test... when test arguments are empty they need to be
-quoted (quite a lot test in this sentence).
+> These tests fail here under Mac OS,
+> they pass under Linux:
+> commit ff3d9b660a4b6e9d3eeb664ce1febe717adff737
+> I haven't had a chance to dig further.
 
-Error is like
-t4151-am-abort.sh[5]: test: argument expected
+I assume you mean t6302. It looks like the difference is not Mac OS, bu=
+t
+rather that the GPG prerequisite is not fulfilled, so we are missing a
+few of the tags.
 
-My patch:
+Commit 618310a introduced a helper to munge the "expect" output. Using
+that fixes some of the cases, but not test 34. That one is expecting
+blank lines for tags, so test_prepare_expect doesn't know which lines
+are related to GPG.
 
-*** t4151-am-abort.sh   Mon May  9 17:51:44 2016
---- t4151-am-abort.sh.orig      Fri Apr 29 23:37:00 2016
-***************
-*** 67,73 ****
-  test_expect_success 'am -3 --skip removes otherfile-4' '
-        git reset --hard initial &&
-        test_must_fail git am -3 0003-*.patch &&
-!       test 3 -eq "$(git ls-files -u | wc -l)" &&
-        test 4 = "$(cat otherfile-4)" &&
-        git am --skip &&
-        test_cmp_rev initial HEAD &&
---- 67,73 ----
-  test_expect_success 'am -3 --skip removes otherfile-4' '
-        git reset --hard initial &&
-        test_must_fail git am -3 0003-*.patch &&
-!       test 3 -eq $(git ls-files -u | wc -l) &&
-        test 4 = "$(cat otherfile-4)" &&
-        git am --skip &&
-        test_cmp_rev initial HEAD &&
-***************
-*** 78,88 ****
-  test_expect_success 'am -3 --abort removes otherfile-4' '
-        git reset --hard initial &&
-        test_must_fail git am -3 0003-*.patch &&
-!       test 3 -eq "$(git ls-files -u | wc -l)" &&
-        test 4 = "$(cat otherfile-4)" &&
-        git am --abort &&
-        test_cmp_rev initial HEAD &&
-!       test -z "$(git ls-files -u)" &&
-        test_path_is_missing otherfile-4
-  '
+We could fix it by tweaking the test like this:
 
---- 78,88 ----
-  test_expect_success 'am -3 --abort removes otherfile-4' '
-        git reset --hard initial &&
-        test_must_fail git am -3 0003-*.patch &&
-!       test 3 -eq $(git ls-files -u | wc -l) &&
-        test 4 = "$(cat otherfile-4)" &&
-        git am --abort &&
-        test_cmp_rev initial HEAD &&
-!       test -z $(git ls-files -u) &&
-        test_path_is_missing otherfile-4
-  '
+diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filt=
+er.sh
+index 7420e48..04042e1 100755
+--- a/t/t6302-for-each-ref-filter.sh
++++ b/t/t6302-for-each-ref-filter.sh
+@@ -343,29 +343,27 @@ test_expect_success 'improper usage of %(if), %(t=
+hen), %(else) and %(end) atoms'
+ '
+=20
+ test_expect_success 'check %(if)...%(then)...%(end) atoms' '
+-	git for-each-ref --format=3D"%(if)%(authorname)%(then)%(authorname): =
+%(refname)%(end)" >actual &&
+-	cat >expect <<-\EOF &&
+-	A U Thor: refs/heads/master
+-	A U Thor: refs/heads/side
+-	A U Thor: refs/odd/spot
+-
+-
+-
+-	A U Thor: refs/tags/foo1.10
+-	A U Thor: refs/tags/foo1.3
+-	A U Thor: refs/tags/foo1.6
+-	A U Thor: refs/tags/four
+-	A U Thor: refs/tags/one
+-
+-	A U Thor: refs/tags/three
+-	A U Thor: refs/tags/two
++	git for-each-ref --format=3D"%(refname):%(if)%(authorname)%(then) aut=
+hor=3D%(authorname)%(end)" >actual &&
++	test_prepare_expect >expect <<-\EOF &&
++	refs/heads/master: author=3DA U Thor
++	refs/heads/side: author=3DA U Thor
++	refs/odd/spot: author=3DA U Thor
++	refs/tags/annotated-tag:
++	refs/tags/doubly-annotated-tag:
++	refs/tags/foo1.10: author=3DA U Thor
++	refs/tags/foo1.3: author=3DA U Thor
++	refs/tags/foo1.6: author=3DA U Thor
++	refs/tags/four: author=3DA U Thor
++	refs/tags/one: author=3DA U Thor
++	refs/tags/three: author=3DA U Thor
++	refs/tags/two: author=3DA U Thor
+ 	EOF
+ 	test_cmp expect actual
+ '
+=20
+ test_expect_success 'check %(if)...%(then)...%(else)...%(end) atoms' '
+ 	git for-each-ref --format=3D"%(if)%(authorname)%(then)%(authorname)%(=
+else)No author%(end): %(refname)" >actual &&
+-	cat >expect <<-\EOF &&
++	test_prepare_expect >expect <<-\EOF &&
+ 	A U Thor: refs/heads/master
+ 	A U Thor: refs/heads/side
+ 	A U Thor: refs/odd/spot
+@@ -385,7 +383,7 @@ test_expect_success 'check %(if)...%(then)...%(else=
+)...%(end) atoms' '
+ '
+ test_expect_success 'ignore spaces in %(if) atom usage' '
+ 	git for-each-ref --format=3D"%(refname:short): %(if)%(HEAD)%(then)Hea=
+d ref%(else)Not Head ref%(end)" >actual &&
+-	cat >expect <<-\EOF &&
++	test_prepare_expect >expect <<-\EOF &&
+ 	master: Head ref
+ 	side: Not Head ref
+ 	odd/spot: Not Head ref
 
-***************
-*** 146,152 ****
-        git reset &&
-        rm -f otherfile-4 otherfile-2 file-1 file-2 &&
-        test_must_fail git am -3 initial.patch 0003-*.patch &&
-!       test 3 -eq "$(git ls-files -u | wc -l)" &&
-        test 4 = "$(cat otherfile-4)" &&
-        git am --abort &&
-        test -z "$(git ls-files -u)" &&
---- 146,152 ----
-        git reset &&
-        rm -f otherfile-4 otherfile-2 file-1 file-2 &&
-        test_must_fail git am -3 initial.patch 0003-*.patch &&
-!       test 3 -eq $(git ls-files -u | wc -l) &&
-        test 4 = "$(cat otherfile-4)" &&
-        git am --abort &&
-        test -z "$(git ls-files -u)" &&
 
-Regards,
-Armin
+Though we'd perhaps want to tweak the subsequent tests to use the same
+format, just to make things easier to read later.
+
+However, I wonder if we could improve on the strategy in 618310a, and
+simply create non-signed versions of the "signed" tags when GPG is not
+available. That would make tests looking at the whole ref namespace
+more consistent. And any tests which wanted to look specifically at the
+signed attributes should be protected with the GPG prereq anyway (it
+doesn't look like there are any currently, though).
+
+I.e., something like:
+
+diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filt=
+er.sh
+index 7420e48..a3df472 100755
+--- a/t/t6302-for-each-ref-filter.sh
++++ b/t/t6302-for-each-ref-filter.sh
+@@ -6,12 +6,8 @@ test_description=3D'test for-each-refs usage of ref-fi=
+lter APIs'
+ . "$TEST_DIRECTORY"/lib-gpg.sh
+=20
+ test_prepare_expect () {
+-	if test_have_prereq GPG
+-	then
+-		cat
+-	else
+-		sed '/signed/d'
+-	fi
++	# XXX this could now go away entirely, and just use cat in each test
++	cat
+ }
+=20
+ test_expect_success 'setup some history and refs' '
+@@ -24,9 +20,12 @@ test_expect_success 'setup some history and refs' '
+ 	git tag -m "Annonated doubly" doubly-annotated-tag annotated-tag &&
+ 	if test_have_prereq GPG
+ 	then
+-		git tag -s -m "A signed tag" signed-tag &&
+-		git tag -s -m "Signed doubly" doubly-signed-tag signed-tag
++		sign=3D-s
++	else
++		sign=3D
+ 	fi &&
++	git tag $sign -m "A signed tag" signed-tag &&
++	git tag $sign -m "Signed doubly" doubly-signed-tag signed-tag &&
+ 	git checkout master &&
+ 	git update-ref refs/odd/spot master
+ '
+
+-Peff
