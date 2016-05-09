@@ -1,98 +1,116 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/33] Yet more preparation for reference backends
-Date: Mon, 09 May 2016 14:05:04 -0700
-Message-ID: <xmqqinynt01r.fsf@gitster.mtv.corp.google.com>
-References: <cover.1462550456.git.mhagger@alum.mit.edu>
-	<1462824758.24478.37.camel@twopensource.com>
+Subject: Re: t6044 broken on pu
+Date: Mon, 09 May 2016 14:08:31 -0700
+Message-ID: <xmqqeg9bszw0.fsf@gitster.mtv.corp.google.com>
+References: <7d747193-7ba1-e274-86dc-427ed0f124c9@web.de>
+	<878tzmrrfg.fsf@linux-m68k.org>
+	<d1fcc54b-ddd7-b03b-79fa-2112a3f43141@web.de>
+	<xmqqa8k11e8j.fsf@gitster.mtv.corp.google.com>
+	<5618208c-ce45-d65c-abf8-498cfe0f2f84@web.de>
+	<xmqqoa8gza1t.fsf@gitster.mtv.corp.google.com>
+	<CANgJU+V9+-hTFvDxCGbQxFcHMRcFaP-NdS_P93DqXuxi1Lh4mg@mail.gmail.com>
+	<20160509083323.GB14299@sigill.intra.peff.net>
+	<CAPig+cTyEU1gEwD5AuODkLzF--EOqo5_MQHD5QEFpb8dgh_wrw@mail.gmail.com>
+	<20160509161226.GB11861@sigill.intra.peff.net>
+	<xmqqr3dbulyp.fsf@gitster.mtv.corp.google.com>
+	<xmqqh9e7ulie.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Mon May 09 23:08:53 2016
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	demerphq <demerphq@gmail.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Andreas Schwab <schwab@linux-m68k.org>, newren@gmail.com,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon May 09 23:13:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azsMc-0001nN-Pm
-	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 23:05:15 +0200
+	id 1azsQB-000585-TJ
+	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 23:08:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751441AbcEIVFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2016 17:05:09 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55605 "EHLO
+	id S1752666AbcEIVIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 May 2016 17:08:36 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54817 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751036AbcEIVFI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2016 17:05:08 -0400
+	with ESMTP id S1752599AbcEIVIe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2016 17:08:34 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 214881869C;
-	Mon,  9 May 2016 17:05:07 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 522801A36E;
+	Mon,  9 May 2016 17:08:33 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tkJna7sVSeQ8m3QO/rdnqUywALA=; b=QNY4rL
-	5aaHAnMg/VnuaNkBmPfuSv5GrtIuS8SRaitEvLS/iQ0/CoCS851uMUD+f1mxlW1u
-	X8qbe3YCQKjEFXPk4hdeWT7Px5m4iwFuM2hWxBCFeSuyyVU9X5COQRsEmRm8mFVc
-	LVILRhE1ddiduuOmklnuX/I3q305/rJLsaME4=
+	:content-type; s=sasl; bh=wPTjw7L7BoAlSxBrXpfPlWyVw84=; b=Hppy8h
+	6GZMJOnlj4qsVzVt3ZdIcp9XhQY+b/LsXnoWQQiuUKsttPpVz/W0Tcc0VcZuuIeR
+	4hdmTa9dY7RsWFQvsxsGAoHWWLuT+yl6nOtRwN1YtPCUKksHN4KRJioQTxVFgZtm
+	rnYAR7ybbVSWKtVYHwhENTpF2BdB3zNEA/P5Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YlosgAJBOZXw3dkqvgL6WBkL8DKK+FDe
-	4ti0DT9gFwxQubzeA/60j0bdW/ascNnZ4u3bwbjuLKU4V1BnSJQbWACOWeXta88k
-	0FOG5k40o9nMEE7wupnRutc68usC0Is8fmZUfYpBnko8TdQDlsdk9grfs8etPuBN
-	rAkTRzyQmfw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 194D01869A;
-	Mon,  9 May 2016 17:05:07 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=FZNiQM00OcXlzb58rbEEo8MCupabdQuz
+	4YlqTFxOFWmhJt8mnKOsRd5coAXNGMpaTFCz1Q1ogxOHPr88HyLdAEu/uG6XgMb9
+	OCnALZlVj5Pmd7FVMSDKbS43lH61zlVJShmXu541aGjKntOfrlbi+4ppWe25xX+g
+	XMwqdgXHgYk=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 496EE1A36D;
+	Mon,  9 May 2016 17:08:33 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D22E218698;
-	Mon,  9 May 2016 17:05:05 -0400 (EDT)
-In-Reply-To: <1462824758.24478.37.camel@twopensource.com> (David Turner's
-	message of "Mon, 09 May 2016 16:12:38 -0400")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B85FD1A36A;
+	Mon,  9 May 2016 17:08:32 -0400 (EDT)
+Importance: high
+In-Reply-To: <xmqqh9e7ulie.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 09 May 2016 11:36:09 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B47A746C-1629-11E6-9A8E-D05A70183E34-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 2FD5C882-162A-11E6-8068-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294071>
 
-David Turner <dturner@twopensource.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Fri, 2016-05-06 at 18:13 +0200, Michael Haggerty wrote:
->> Thanks to David, Junio, and Peff for their comments on v1 of this
->> patch series [1]. I think I have addressed all of the points that
->> were
->> brought up. Plus I fixed a pre-existing bug that I noticed myself
->> while adding some more tests; see the first bullet point below for
->> more information.
->> 
->> Changes between v1 and v2:
->> 
->> * Prefixed the patch series with three new patches that demonstrate
->>   and fix some bugs in reference resolution that I noticed while
->>   inspecting this series:
->> 
->>   * "t1404: demonstrate a bug resolving references" -- this
->>     demonstrates a bug that has existed since at least 2.5.0.
->>   * "read_raw_ref(): don't get confused by an empty directory"
->>   * "commit_ref(): if there is an empty dir in the way, delete it"
+> Stop promising that we may allow using "letters"; this would open an
+> easier reimplementation that does not rely on $PERL, if somebody
+> later wants to.
 >
-> I generally like to put the bug fixes before the tests for those fixes
-> (so that bisect on the complete suite works).  But maybe the git policy
-> is different.
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-The Git policy only asks not to break bisection.
+And I am not the one who particularly wants to, but here is the
+previous patch sent elsewhere in the thread.
 
-As long as patch that adds a new test that comes before a patch that
-fixes the issue marks the new test with test_expect_failure, and a
-later patch that fixes the issue turns it into test_expect_success,
-bisection would not break.
+-- >8 --
+Subject: [PATCH] test-lib-functions.sh: rewrite test_seq without Perl
 
-The "demonstrate an existing breakage first" order makes it slightly
-easier to review and follow a long series, as it forces the reviewer
-to see the issue first and think about possible avenues to solve it
-for themselves, before seeing a paticular solution.  For a trivial
-single-issue fix, it is not necessary (including a fix and a test to
-protect the fix from future breakage in the same patch is a norm).
+Rewrite the 'seq' imitation only with commands and features
+that are typically found as built-in in modern POSIX shells,
+instead of relying on Perl to run a single-liner.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/test-lib-functions.sh | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 39b8151..9734e32 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -679,7 +679,12 @@ test_seq () {
+ 	2)	;;
+ 	*)	error "bug in the test script: not 1 or 2 parameters to test_seq" ;;
+ 	esac
+-	perl -le 'print for $ARGV[0]..$ARGV[1]' -- "$@"
++	test_seq_counter__=$1
++	while test "$test_seq_counter__" -le "$2"
++	do
++		echo "$test_seq_counter__"
++		test_seq_counter__=$(( $test_seq_counter__ + 1 ))
++	done
+ }
+ 
+ # This function can be used to schedule some commands to be run
+-- 
+2.8.2-557-gee41d5e
