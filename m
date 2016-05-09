@@ -1,125 +1,138 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: t6392 broken on pu (Mac OS X)
-Date: Mon, 9 May 2016 12:30:43 -0400
-Message-ID: <CAPig+cQ2kSVzy0K303J3Guhk3-NzcReb5V7ohqOy2pPL_5GrSA@mail.gmail.com>
-References: <dea0877d-fe83-fb47-4df3-21fd69d8421d@web.de>
-	<20160509160725.GA11861@sigill.intra.peff.net>
+From: Armin Kunaschik <megabreit@googlemail.com>
+Subject: Re: t4151 missing quotes
+Date: Mon, 9 May 2016 18:35:49 +0200
+Message-ID: <CALR6jEgaNSAQOpxSK46h71PMRhakDa=UCC5gbTyg77BcaOaoPg@mail.gmail.com>
+References: <CALR6jEiBsU+jQ8VoRsniMdztCpVDemQ3r00W-OXdRP6ZEt9CFg@mail.gmail.com>
+	<CAPig+cTbAA8xDWvCXbBF+HJpxONS38hcjAiNuocC+PUBro9ALg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon May 09 18:30:51 2016
+Cc: Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon May 09 18:35:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azo53-0005ol-69
-	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 18:30:49 +0200
+	id 1azo9z-0002vM-3P
+	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 18:35:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752078AbcEIQap convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 May 2016 12:30:45 -0400
-Received: from mail-ig0-f195.google.com ([209.85.213.195]:33740 "EHLO
-	mail-ig0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751412AbcEIQao convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 May 2016 12:30:44 -0400
-Received: by mail-ig0-f195.google.com with SMTP id rc4so11835077igc.0
-        for <git@vger.kernel.org>; Mon, 09 May 2016 09:30:44 -0700 (PDT)
+	id S1751261AbcEIQfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 May 2016 12:35:51 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:33938 "EHLO
+	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751080AbcEIQfu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2016 12:35:50 -0400
+Received: by mail-yw0-f195.google.com with SMTP id i22so23705413ywc.1
+        for <git@vger.kernel.org>; Mon, 09 May 2016 09:35:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-transfer-encoding;
-        bh=szb8arU0qpzePBOuM+wkgfwpgUBYfqEHNLxwzQoY03g=;
-        b=ZQEew2Hc6350cYafTRVLcKOsLKMoZ/ONQUECuWzRX+soTOUEDQoQlXLkdIb5hM9Gt0
-         vFBLo5p6Hz2Xw0KT5xSjzOtgiqDamHYWrgL026LBjM6+F1VFoP/eu8AIlFIw7DLBdpyr
-         sLdIuTg6CN8uY7X/HHcPatcd9fsi9jxv//GZfKEhRtWwSi0mMrV8bE89nUKf4JXrN64H
-         NFgfxtEnb4GmwLdHXBjs56C5ZunpKgjUheN0WxGsZ5wC/jN1Q6VB7lwmms2bYKF0rkFM
-         qANCMDcLNF0FYsnmkbdcrHfFgOoRuiuukE8OpV39plUjdezFDYnXczHUkSrSRS4z496y
-         ecZw==
+        d=googlemail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=qkqL+l0JvSYM9Pq0KucFNmZ6Uu6uoLZhcIb5xi9IPf4=;
+        b=LTlrc+heV8t7Q9wd/3uMKU9mMEHl99gCzYO3UaLDFKDK7s5D32o2b1p2y2f6zUCU7u
+         4Ivwz8pMAvYVDHGPLYeKD1eYrVUNbOudiPKMQzM+cNNPBlbkdJ89jAeEGYqLyKelLgQP
+         38qO6FzmqTRZHRWqcDYqbSufHFS0t1fSNqHMx/ea4CQGlovIyZWM0HNUJukMcei7hA6s
+         Vph1Ij74wMZTmH3RzeMXMGnxgD8XM8DXRvrPPVrFjb5ZhZxsfXMmxvUQULl70f7AEeYt
+         5dvcQkh+ZgQvODRgwhvm/l684JyTtohlXyYgsXgRaNUjTTDnmGhyV40BGoM1gtouJeFQ
+         D5qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=szb8arU0qpzePBOuM+wkgfwpgUBYfqEHNLxwzQoY03g=;
-        b=cpk8XdZTjPR5zmg2q5H6ymBfDv+khqc4KnE1NPe/1umso4BlNgdaTkuxnSxLQeTdpZ
-         bA0OtzmZ2hsrBG7Ekd5f7fAMYjxLMUbrrSih0se8Ro7V4owy85kWwCNbscCeVcIkXCj4
-         xMVzRcKMxwPGFzpfjdj0atAZS7pLmza4AScB1jso07CXc8/3ZciRbnYfn8E65hzZP9hm
-         mrgoYlhPcsZBERvZTRPQzOxSIYnS9muhtCKh27Ygh2fYPte9Whwtk/uHyJS4Ifko5Ht3
-         H6OQJQsXzJ5fzoZvA3toP21yUQyOYpuWuuCyMCeZgoffFzeu+FdwiLvSdFZSX/vyc1J+
-         wM2Q==
-X-Gm-Message-State: AOPr4FVYldmcbmflrl8MRNnhdN53KMT98lQpQxFZQvcOAroFaxvXQRkvEjYX2xa/Uu/RPJetyV1CWLb6ih3NPQ==
-X-Received: by 10.50.6.15 with SMTP id w15mr12672330igw.91.1462811443566; Mon,
- 09 May 2016 09:30:43 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Mon, 9 May 2016 09:30:43 -0700 (PDT)
-In-Reply-To: <20160509160725.GA11861@sigill.intra.peff.net>
-X-Google-Sender-Auth: UbrLI7Re68CdMIwzOWBUT4V2Tl4
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=qkqL+l0JvSYM9Pq0KucFNmZ6Uu6uoLZhcIb5xi9IPf4=;
+        b=ZjlY8jD8nfBpZ5vKrPMSfj7iL/FM4Oc8pDlen2V5kX3mgeMC4XmhbJWL044xkmJXLc
+         SzgUmettAsG8kuGqsL8g7e+NTBqLg+95krXwjKqEIXa7oIAmjS0CB8wZNjzcMp+RfSs7
+         2cTRVpRBwYEbF9HnTtPXlYvFxZhOQajtiXOCKaxuhdgAJt+lgTEC7UXhrTKuqq8uTZch
+         67YTRZBXfIJ8z7iiKoZc/2/IiF9VRG2RcVu706Q3pTkMgBYbXhYVbJ1p44C7Op0/8JPa
+         IQgvgIvLgkDO5HEFdn+oDQfJkhkV+HqUE0/H2vv/VHICjxMyGHRSMUyVvcM5qvzGw1kI
+         ZZ7w==
+X-Gm-Message-State: AOPr4FXjbR89ORDXtegwWonOZF5HhHSo+gBrEBY5DfGNA6rELnhu57M/jtAPb518ZupmcMUXAdi4DP+iPL7qmA==
+X-Received: by 10.129.124.8 with SMTP id x8mr19750955ywc.200.1462811749290;
+ Mon, 09 May 2016 09:35:49 -0700 (PDT)
+Received: by 10.129.45.132 with HTTP; Mon, 9 May 2016 09:35:49 -0700 (PDT)
+In-Reply-To: <CAPig+cTbAA8xDWvCXbBF+HJpxONS38hcjAiNuocC+PUBro9ALg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294013>
 
-On Mon, May 9, 2016 at 12:07 PM, Jeff King <peff@peff.net> wrote:
-> On Sat, May 07, 2016 at 06:15:19PM +0200, Torsten B=C3=B6gershausen w=
-rote:
->> These tests fail here under Mac OS,
->> they pass under Linux:
->> commit ff3d9b660a4b6e9d3eeb664ce1febe717adff737
->> I haven't had a chance to dig further.
->
-> I assume you mean t6302. It looks like the difference is not Mac OS, =
-but
-> rather that the GPG prerequisite is not fulfilled, so we are missing =
-a
-> few of the tags.
->
-> Commit 618310a introduced a helper to munge the "expect" output. Usin=
-g
-> that fixes some of the cases, but not test 34. That one is expecting
-> blank lines for tags, so test_prepare_expect doesn't know which lines
-> are related to GPG.
->
-> We could fix it by tweaking the test like this:
-> [...snip...]
-> However, I wonder if we could improve on the strategy in 618310a, and
-> simply create non-signed versions of the "signed" tags when GPG is no=
-t
-> available. That would make tests looking at the whole ref namespace
-> more consistent. And any tests which wanted to look specifically at t=
-he
-> signed attributes should be protected with the GPG prereq anyway (it
-> doesn't look like there are any currently, though).
->
-> I.e., something like:
-> [...snip...]
->  test_expect_success 'setup some history and refs' '
-> @@ -24,9 +20,12 @@ test_expect_success 'setup some history and refs' =
-'
->         git tag -m "Annonated doubly" doubly-annotated-tag annotated-=
-tag &&
->         if test_have_prereq GPG
->         then
-> -               git tag -s -m "A signed tag" signed-tag &&
-> -               git tag -s -m "Signed doubly" doubly-signed-tag signe=
-d-tag
-> +               sign=3D-s
-> +       else
-> +               sign=3D
->         fi &&
-> +       git tag $sign -m "A signed tag" signed-tag &&
-> +       git tag $sign -m "Signed doubly" doubly-signed-tag signed-tag=
- &&
->         git checkout master &&
->         git update-ref refs/odd/spot master
->  '
+Sorry, this was my first patch to the list. I'll do better :-)
+You are right about the "wc -l" parts. Maybe I was a bit over
+pessimistic. Throw away my last mail.
+In my case test 9 ran unsuccessful because of an empty "git ls-files -u"
 
-The latter seems very preferable, though perhaps it could be made more
-concise like this?
+This reduces the diff to this one (hopefully the right way now):
+*** ./t4151-am-abort.sh.orig    Fri Apr 29 23:37:00 2016
+--- ./t4151-am-abort.sh Mon May  9 18:28:18 2016
+***************
+*** 82,88 ****
+        test 4 = "$(cat otherfile-4)" &&
+        git am --abort &&
+        test_cmp_rev initial HEAD &&
+!       test -z $(git ls-files -u) &&
+        test_path_is_missing otherfile-4
+  '
 
-    sign=3D
-    test_have_prereq GPG && sign=3D-s
+--- 82,88 ----
+        test 4 = "$(cat otherfile-4)" &&
+        git am --abort &&
+        test_cmp_rev initial HEAD &&
+!       test -z "$(git ls-files -u)" &&
+        test_path_is_missing otherfile-4
+  '
 
-(But that's a minor issue.)
+All the other similar occurrences are correctly quoted.
+
+On Mon, May 9, 2016 at 6:22 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Mon, May 9, 2016 at 12:09 PM, Armin Kunaschik
+> <megabreit@googlemail.com> wrote:
+>> skipping through some failed tests I found more (smaller) problems
+>> inside the test... when test arguments are empty they need to be
+>> quoted (quite a lot test in this sentence).
+>>
+>> Error is like
+>> t4151-am-abort.sh[5]: test: argument expected
+>>
+>> My patch:
+>>
+>> *** t4151-am-abort.sh   Mon May  9 17:51:44 2016
+>> --- t4151-am-abort.sh.orig      Fri Apr 29 23:37:00 2016
+>> ***************
+>> *** 67,73 ****
+>>   test_expect_success 'am -3 --skip removes otherfile-4' '
+>>         git reset --hard initial &&
+>>         test_must_fail git am -3 0003-*.patch &&
+>> !       test 3 -eq "$(git ls-files -u | wc -l)" &&
+>>         test 4 = "$(cat otherfile-4)" &&
+>>         git am --skip &&
+>>         test_cmp_rev initial HEAD &&
+>> --- 67,73 ----
+>>   test_expect_success 'am -3 --skip removes otherfile-4' '
+>>         git reset --hard initial &&
+>>         test_must_fail git am -3 0003-*.patch &&
+>> !       test 3 -eq $(git ls-files -u | wc -l) &&
+>>         test 4 = "$(cat otherfile-4)" &&
+>>         git am --skip &&
+>>         test_cmp_rev initial HEAD &&
+>> ***************
+>
+> Some comments:
+>
+> Quoting the output of 'wc -l' will break the tests on Mac OS X and BSD
+> since the output contains leading whitespace which won't match the "3"
+> on the other side of the '='.
+>
+> Your diff is backward, comparing 'current' against 'original', which
+> makes it difficult to read. Reviewers on this list expect to see
+> 'original' compared against 'current'.
+>
+> Use a unified format to make the diff easier to read; or just use
+> git-diff or git-format patch, which is even simpler.
+>
+> It's not clear how the output of 'wc -l' could ever be the empty
+> string. Perhaps git-ls-files is dying and causing the pipe to abort
+> before 'wc -l' ever outputs anything? Without additional information
+> about the problem you're experiencing, it's difficult to judge if this
+> change is a good idea.
