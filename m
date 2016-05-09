@@ -1,81 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 1/3] tests: Adjust the configuration for Apache 2.2
-Date: Mon, 09 May 2016 10:41:18 -0700
-Message-ID: <xmqqzirzuo1t.fsf@gitster.mtv.corp.google.com>
-References: <cover.1462342213.git.johannes.schindelin@gmx.de>
-	<cover.1462774709.git.johannes.schindelin@gmx.de>
-	<4a15c4e6c35cfb425da568d87e8b20b984e5325c.1462774709.git.johannes.schindelin@gmx.de>
-	<20160509080315.GA14383@sigill.intra.peff.net>
-	<alpine.DEB.2.20.1605091557050.4092@virtualbox>
-	<20160509142711.GA9552@sigill.intra.peff.net>
-	<alpine.DEB.2.20.1605091710310.4092@virtualbox>
-	<xmqqwpn3w5c7.fsf@gitster.mtv.corp.google.com>
-	<20160509165139.GA10048@sigill.intra.peff.net>
+From: tboegi@web.de
+Subject: [PATCH v1 1/1] t5601: Remove trailing space in sed expression
+Date: Mon,  9 May 2016 19:53:12 +0200
+Message-ID: <1462816392-29561-1-git-send-email-tboegi@web.de>
+References: <CALR6jEhTTo-6fgy3_TnGseXJr2OZM+cK+t4BCVEzpCZNfhn5Bg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon May 09 19:46:17 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: megabreit@googlemail.com,
+	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 09 19:48:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azpBN-0001QS-UW
-	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 19:41:26 +0200
+	id 1azpI1-0008Io-Vj
+	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 19:48:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751193AbcEIRlW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2016 13:41:22 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62908 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751154AbcEIRlV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2016 13:41:21 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 116BB18352;
-	Mon,  9 May 2016 13:41:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aL5JAcIsoEaSIUPrwb97krOfDGw=; b=odg38q
-	LG7D9wid1c4GUlws2jKgcrFZy8uyXsYrLsVLDgC9mPhWDmKjd3kQnVh1+Qul8yRb
-	kug5NtWxcJJnIfAY1N8/taw+9GWoGLv5dm0OQb4Cgx7ag/8qp3ifMxDauLvJZAnF
-	Zvf31oYXRCD4ZYMOqNHwfmfgcz+ioFb09dAew=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rYDUqsBIETtmFZzsVbaSd7uw87hWcnnl
-	ExyX2M+o8dQ1JM9/nGVzIuXtUG2108nARt2NAF4DuSdkm5g8Qx7zkpq9xqZc0DaB
-	atMQzT6AWykozv1I6URTZwjOYTSa//7wa2ShDPno3Gwk0W4BmbdufTojkslVJiY7
-	zLtSr5tJCBA=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 09AB518351;
-	Mon,  9 May 2016 13:41:20 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7096D18350;
-	Mon,  9 May 2016 13:41:19 -0400 (EDT)
-In-Reply-To: <20160509165139.GA10048@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 9 May 2016 12:51:39 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3CF90D52-160D-11E6-99C4-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1751526AbcEIRsO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 May 2016 13:48:14 -0400
+Received: from mout.web.de ([212.227.17.11]:52892 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751040AbcEIRsN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2016 13:48:13 -0400
+Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0Lzb94-1bdozb0nkA-014ofC; Mon, 09 May 2016 19:48:09
+ +0200
+X-Mailer: git-send-email 2.0.0.rc1.6318.g0c2c796
+In-Reply-To: <CALR6jEhTTo-6fgy3_TnGseXJr2OZM+cK+t4BCVEzpCZNfhn5Bg@mail.gmail.com>
+X-Provags-ID: V03:K0:92/UvMgnv8QY2UqOIMi9246PrA6noOkd5S0qHxfL/qBB34QP2wO
+ +werU/Jz2AK0+qMpcc4K3N2Q5M0pcoqK7QWFTXXeVb7ZG1JPUEVmOGV3x92F17ctHIrVyyO
+ t4q3VbkWfZfpP5UG4KPAIJeLlnD5VSybbDYUgP0F8aS8bgX6vTqWwopvUULnN5CbDLtJ3hs
+ 0CsGUPMBp3Z+iJZOqvXwQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:NdUFAKfEuhE=:cBcphugwYpfJieToBkPs+Y
+ Lug5UFpklFHaGPLZSEjo8wsmcAmQ9CpkQnkfut9QtHrjEKYSZ+A7aJraUjZqXtgGJchdJmeYg
+ FVLzLs2LZOdv3HjR+1EaLMup7VnNH+ugpjX0xVhyoBAVK5kg1WCitBBzEpqSMKN7uTGIHSkWK
+ AAelm8CrhGvA8e7OgLuUbs7/B2XUdjIxAlMcHBlJiopbdf0Qu0V9o7ERXgbUEnY1W86moM3gz
+ 4jR+W5gIF86w3XaPjWoOh248srAEt5LtodCHSMLCHU+Nx5YoMX1E3BHnT5GvZt/m6/W16Fl3y
+ r2ne3YBcbNBsF/Qp5KXsQXMbG/uhEW6lK9DLZTEieRkmPX3erkjpBbWEiaiAMpu6aGuGrJTbQ
+ KpNPZxLzi98YhVlSCuG8EyWJU6j8mA1CWyeNoNoXBPBhgV6VejoIubVGHYVjxJlo3DrG98Lin
+ ZtxVQ7NyAjJaktMufeJ2O0Guh9zSdzEK4lEcbWSsz3aoYYLaAi+CJUHImthhpb4RT1z8q5sJU
+ 4Psdwtz2cgfCFIi+F/CVv9kuv/5FTxRNWJSTA9BU3ngfLqWE/bN4MgaBBHmD+x2nOq4q6v6uo
+ BhiTBSL8zpxC5dIMZkbakCSI13eOd53sWzAzEZHiLdy+sfwNqD9jaAwmY2LRmpZTl2GNT9X9P
+ vCt/OFC7g5LC7vtbO93WGWDEoZAJCS2dtw1XGuNfTVR24EABtU5GvNdvj1jLkBta8k2TPCRup
+ M8Bo3E9riNSgtdDuQHEBGOo3Lw1MnXkccnvMTwupADAd04bHrqSnLwkT38lflcvJzLmIyJtR 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294027>
 
-Jeff King <peff@peff.net> writes:
+=46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-> On Mon, May 09, 2016 at 09:42:32AM -0700, Junio C Hamano wrote:
->
->> > Hopefully your patch to remove the -c ... sanitizing makes it to `master`
->> > soon, then I can submit my next iteration.
->> 
->> Or we can just merge that "do not sanitize" branch in, and then
->> queue the "next iteration" which I'd assume would only be the test
->> addition?
->
-> I think we'd also want the change to the test script to make sure that
-> it fails with only a single header (Dscho's patch 2).
+The sed expression for IPv6, "Tested User And Host" or "tuah" used a wr=
+ong
+sed expression, which doesn't work under all versions of sed.
 
-I think so, too.
+Reported-By: Armin Kunaschik <megabreit@googlemail.com>
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+ t/t5601-clone.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 150aeaf..a433394 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -466,7 +466,7 @@ test_expect_success 'clone ssh://host.xz:22/~repo' =
+'
+ #IPv6
+ for tuah in ::1 [::1] [::1]: user@::1 user@[::1] user@[::1]: [user@::1=
+] [user@::1]:
+ do
+-	ehost=3D$(echo $tuah | sed -e "s/1]:/1]/ "| tr -d "[]")
++	ehost=3D$(echo $tuah | sed -e "s/1]:/1]/" | tr -d "[]")
+ 	test_expect_success "clone ssh://$tuah/home/user/repo" "
+ 	  test_clone_url ssh://$tuah/home/user/repo $ehost /home/user/repo
+ 	"
+--=20
+2.0.0.rc1.6318.g0c2c796
