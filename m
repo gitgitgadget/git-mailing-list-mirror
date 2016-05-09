@@ -1,7 +1,7 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
 Subject: Re: t6044 broken on pu
-Date: Mon, 09 May 2016 14:08:31 -0700
-Message-ID: <xmqqeg9bszw0.fsf@gitster.mtv.corp.google.com>
+Date: Mon, 9 May 2016 17:27:54 -0400
+Message-ID: <CAPig+cQopZta6bs8JBV23iP4xpaPk2Y4UZ5E6rWeTEtYxW=uJA@mail.gmail.com>
 References: <7d747193-7ba1-e274-86dc-427ed0f124c9@web.de>
 	<878tzmrrfg.fsf@linux-m68k.org>
 	<d1fcc54b-ddd7-b03b-79fa-2112a3f43141@web.de>
@@ -14,103 +14,87 @@ References: <7d747193-7ba1-e274-86dc-427ed0f124c9@web.de>
 	<20160509161226.GB11861@sigill.intra.peff.net>
 	<xmqqr3dbulyp.fsf@gitster.mtv.corp.google.com>
 	<xmqqh9e7ulie.fsf@gitster.mtv.corp.google.com>
+	<xmqqeg9bszw0.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	demerphq <demerphq@gmail.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Andreas Schwab <schwab@linux-m68k.org>, newren@gmail.com,
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, demerphq <demerphq@gmail.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Elijah Newren <newren@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon May 09 23:13:18 2016
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 09 23:32:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azsQB-000585-TJ
-	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 23:08:56 +0200
+	id 1azsij-0005S2-8V
+	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 23:28:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752666AbcEIVIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2016 17:08:36 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54817 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752599AbcEIVIe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2016 17:08:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 522801A36E;
-	Mon,  9 May 2016 17:08:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wPTjw7L7BoAlSxBrXpfPlWyVw84=; b=Hppy8h
-	6GZMJOnlj4qsVzVt3ZdIcp9XhQY+b/LsXnoWQQiuUKsttPpVz/W0Tcc0VcZuuIeR
-	4hdmTa9dY7RsWFQvsxsGAoHWWLuT+yl6nOtRwN1YtPCUKksHN4KRJioQTxVFgZtm
-	rnYAR7ybbVSWKtVYHwhENTpF2BdB3zNEA/P5Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FZNiQM00OcXlzb58rbEEo8MCupabdQuz
-	4YlqTFxOFWmhJt8mnKOsRd5coAXNGMpaTFCz1Q1ogxOHPr88HyLdAEu/uG6XgMb9
-	OCnALZlVj5Pmd7FVMSDKbS43lH61zlVJShmXu541aGjKntOfrlbi+4ppWe25xX+g
-	XMwqdgXHgYk=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 496EE1A36D;
-	Mon,  9 May 2016 17:08:33 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B85FD1A36A;
-	Mon,  9 May 2016 17:08:32 -0400 (EDT)
-Importance: high
-In-Reply-To: <xmqqh9e7ulie.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 09 May 2016 11:36:09 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2FD5C882-162A-11E6-8068-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752849AbcEIV14 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 May 2016 17:27:56 -0400
+Received: from mail-ig0-f193.google.com ([209.85.213.193]:32839 "EHLO
+	mail-ig0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751468AbcEIV1z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2016 17:27:55 -0400
+Received: by mail-ig0-f193.google.com with SMTP id rc4so12437105igc.0
+        for <git@vger.kernel.org>; Mon, 09 May 2016 14:27:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=2gHhRlVruCT1RLKwGGWNmDjHJYKr5IPIHh3DIUd1idA=;
+        b=Eh0y1B0Nj7DF6X2kZM/fMNjoxaWuLJKE3fioMYiWTXjkKnyPMF5ci4Jk0GdapIwAhi
+         BCej+RviDj0Pb/AmfvypYfh1K18y+Z/ZmDPYNZWdYW1PSOBSRmNxH3rgvxjUqze50z4K
+         r9gZ6UBmQJac+M0p3U6n0X2SySYxYfevYJrhMyDnWY0zuP9ofMMrMaNX9BTxhemoULda
+         8ZwVsPKBrO+x39wOjQ0Tvsa+jJGU4HP19Iho6w9sEDw6HZVq4sGyk4QdfHQFYGXVm6IN
+         S3ad+j1jmQQdP+qQCX2bo/9WhUTS73iQ29f80OJfwoA4+lRzqYrK0MkIvfH4puuE8Qjs
+         5UpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=2gHhRlVruCT1RLKwGGWNmDjHJYKr5IPIHh3DIUd1idA=;
+        b=dNvZ3yMCOdm0vqpQgrQ9wagggqXnyBPszjnuwm/pFhi6KJKyzWX9fHRkqDWBdgRO9F
+         JjFr0bDmOHD1nJ6fMC6/RKMvAWwvQlNAJTPpc7GWdJKvo1lTU7vg5Kk2APvLI8yw9IX+
+         G0Qb4BfMffz4nCPfzMTFSCFuCxxbs8gDjobWx1VV9eekV94yz5KbQpwSdg/q5bc0vEHb
+         TfAf7MB6zNnO7OHcda/uwAefa6LLBZATvgyltO8IuKiOeRfgtro0ry2WbsK/aMD4jfrS
+         kefcQ+is+8VFTQP/ukHoo2Fse6ht23rfoehrsz9z05wrBEcoGGOKTjRWV9RUAtJp3SK1
+         ZlaQ==
+X-Gm-Message-State: AOPr4FXJrjC+FLJy+Wx+dFrqtbnKHdQauvAj4Spkr/sbTkBInhh2XuwVvbzTq/NMpzAhK/SQpPRIyD0RJ5h03w==
+X-Received: by 10.50.3.105 with SMTP id b9mr13483677igb.17.1462829274526; Mon,
+ 09 May 2016 14:27:54 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Mon, 9 May 2016 14:27:54 -0700 (PDT)
+In-Reply-To: <xmqqeg9bszw0.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: tvFOBhKnTcP6xe_L11n0i2ZIZEI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294072>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Stop promising that we may allow using "letters"; this would open an
-> easier reimplementation that does not rely on $PERL, if somebody
-> later wants to.
+On Mon, May 9, 2016 at 5:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Subject: [PATCH] test-lib-functions.sh: rewrite test_seq without Perl
+>
+> Rewrite the 'seq' imitation only with commands and features
+> that are typically found as built-in in modern POSIX shells,
+> instead of relying on Perl to run a single-liner.
 >
 > Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> @@ -679,7 +679,12 @@ test_seq () {
+>         2)      ;;
+>         *)      error "bug in the test script: not 1 or 2 parameters to test_seq" ;;
+>         esac
+> -       perl -le 'print for $ARGV[0]..$ARGV[1]' -- "$@"
+> +       test_seq_counter__=$1
+> +       while test "$test_seq_counter__" -le "$2"
+> +       do
+> +               echo "$test_seq_counter__"
+> +               test_seq_counter__=$(( $test_seq_counter__ + 1 ))
+> +       done
+>  }
 
-And I am not the one who particularly wants to, but here is the
-previous patch sent elsewhere in the thread.
-
--- >8 --
-Subject: [PATCH] test-lib-functions.sh: rewrite test_seq without Perl
-
-Rewrite the 'seq' imitation only with commands and features
-that are typically found as built-in in modern POSIX shells,
-instead of relying on Perl to run a single-liner.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/test-lib-functions.sh | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 39b8151..9734e32 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -679,7 +679,12 @@ test_seq () {
- 	2)	;;
- 	*)	error "bug in the test script: not 1 or 2 parameters to test_seq" ;;
- 	esac
--	perl -le 'print for $ARGV[0]..$ARGV[1]' -- "$@"
-+	test_seq_counter__=$1
-+	while test "$test_seq_counter__" -le "$2"
-+	do
-+		echo "$test_seq_counter__"
-+		test_seq_counter__=$(( $test_seq_counter__ + 1 ))
-+	done
- }
- 
- # This function can be used to schedule some commands to be run
--- 
-2.8.2-557-gee41d5e
+Looks (obviously) correct and works as expected on Mac and BSD.
