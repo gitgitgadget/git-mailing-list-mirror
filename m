@@ -1,316 +1,206 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v9 18/19] trace: measure where the time is spent in the index-heavy operations
-Date: Mon,  9 May 2016 16:48:48 -0400
-Message-ID: <1462826929-7567-19-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v9 13/19] watchman: add a config option to enable the extension
+Date: Mon,  9 May 2016 16:48:43 -0400
+Message-ID: <1462826929-7567-14-git-send-email-dturner@twopensource.com>
 References: <1462826929-7567-1-git-send-email-dturner@twopensource.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Mon May 09 22:50:30 2016
+X-From: git-owner@vger.kernel.org Mon May 09 22:50:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1azs7l-0004LM-5i
-	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 22:49:53 +0200
+	id 1azs7l-0004LM-Us
+	for gcvg-git-2@plane.gmane.org; Mon, 09 May 2016 22:49:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752849AbcEIUtf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 May 2016 16:49:35 -0400
-Received: from mail-qg0-f49.google.com ([209.85.192.49]:33497 "EHLO
-	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752671AbcEIUt3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2016 16:49:29 -0400
-Received: by mail-qg0-f49.google.com with SMTP id f92so95681277qgf.0
-        for <git@vger.kernel.org>; Mon, 09 May 2016 13:49:28 -0700 (PDT)
+	id S1752853AbcEIUtg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 May 2016 16:49:36 -0400
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:36121 "EHLO
+	mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752345AbcEIUt1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2016 16:49:27 -0400
+Received: by mail-qk0-f176.google.com with SMTP id x7so101937376qkd.3
+        for <git@vger.kernel.org>; Mon, 09 May 2016 13:49:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=QuDpau/lHTpj3t+tHT9Z6zlFx4K04d5w+OXyweAGsrk=;
-        b=TLW9GmyT7gXtLymgzJyrHPC2VqpKrl9LHRasPdqbAGfCOpscaC7HvO9mRn7i/mdHf/
-         hYTD9gP12Olk8x3hHW0CNQm2rddNBp6+UP2TVqMC2gdyCXM7JMu/7NSc2Asvrpj4ROQz
-         pNjthbOlY/6nVhp6wQKuE97EWbFXdwt0s+mKXgRZhPC8xCZICp8GJ1t7bMulq0foUooP
-         I7/wSQVbshJrJnSN85I7d/8XHywMQ1JLKWZFL68WexR6ccaNVSYIgxMcDkHL6VIr4K5E
-         3ebQz8pTF4bf9xz////56I00D7ragDFUSm77+YVfraJ3BV1EBvj8vaqX9BtoeVguAiz/
-         4ZzA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=U2eRmQLrNqMLgl5rjKW7y4wi31W9qXAFldpNk9WJIu8=;
+        b=rwlZkqAHkvnRf94P1fHZb4p36Ksxhg/ebb48KBxEXSTe5XpulJyAH/brAQ8CxCvWMe
+         Pl024U4BDL8OILQumMo4ilB6AU7uZI3bgnTwex6/j4VsADWDF318w435bfExpnbKa0sZ
+         5mcDh5+nbAOgbtjhCy4gd0Kn8ZnmSLV4Bua1e4JgDPuK1EfNWByxDDoClsGviFC5ysIY
+         3np9x5v+mqB1oQZnezVHUlJPr0y48krRSMMwg8Bg9w7W9B5juZpPUjaBry0r6MqxCIsu
+         09WTFvxLMKv2fH6wlnkZRmMAGR2T/anK60HkyMoSIn3rbCb4JCXmyrkkvskAXtOdjOmc
+         vVlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=QuDpau/lHTpj3t+tHT9Z6zlFx4K04d5w+OXyweAGsrk=;
-        b=k1VOWeEHI5/LhhTGEyFx8mAGN7y4Ik6UaDiatA3WHyLEltI69HDLQ5eixiYs1pYhpG
-         wr3SFi8YmpoS+YlPV9YKDs2YEjGlyDnweGdQ8RhNA9Xlz5mZgNYG00nBaY/T9FLdIo2g
-         g6NswCHLTn6moUvewOlNWgTGbkxTULgdeTNienMSEy3byrflK/pAiScg2AvjtYEGg6Ed
-         ebQxcLE2GKWNziOZVXgctF2Bv0lA9ERl6vnCwDfWbVkVkT42BJaq4uNUkh5EbPjNIG5C
-         l4G3HTuXtyG+QopLEkTrvJnrjiyNzrZ8JMAe06+IgTwO7ZTbeka3oRnw6MWPj8cTkISh
-         SSHg==
-X-Gm-Message-State: AOPr4FWOvsLHU3yXJH3WcN43CI2HFGBVwnd4nHundvBYPc8NwrPfuSnTdXtkhQuuczhRlA==
-X-Received: by 10.140.151.206 with SMTP id 197mr40020832qhx.4.1462826967968;
-        Mon, 09 May 2016 13:49:27 -0700 (PDT)
+         :references;
+        bh=U2eRmQLrNqMLgl5rjKW7y4wi31W9qXAFldpNk9WJIu8=;
+        b=RQZIXoq1VKhLCPN0ZELikz/g/5XVvI2afDfwcutD36pBNc4BpBnfJyexN2TjkZwmcx
+         +ShkxDyJVvDoXCI5vH+U6RqX5ht3+1JT9hlWQ8+S0NrFdLc3goc9Ric8lVrOS1cPBc7O
+         +c5aDOjH305gG6KvL073QeSo8V7yb7eL5HVvJmY5cLyAZHbIH7DLznSTSuQHyz/EICiQ
+         Lu6aC4I73Ol520B+R8O/AJqTsSkSniV495wN5FvAkcaAqQAdPg6/+D8e1Dd1dWWnbOew
+         PdHfJkK3WB25NS2fzbDyXFtEjQkeGOOKRAPzvryEyphE/UxYaDCl7tp2lg+INUPgOrhL
+         EhZg==
+X-Gm-Message-State: AOPr4FUXes/+LocfLT8Z0SmPj8hdQt88nS3e42zlnui6t8gARojDE2rI3F7DWIXxKiConw==
+X-Received: by 10.55.77.202 with SMTP id a193mr40295830qkb.48.1462826961114;
+        Mon, 09 May 2016 13:49:21 -0700 (PDT)
 Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id n1sm12729182qkn.3.2016.05.09.13.49.26
+        by smtp.gmail.com with ESMTPSA id n1sm12729182qkn.3.2016.05.09.13.49.19
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 09 May 2016 13:49:26 -0700 (PDT)
+        Mon, 09 May 2016 13:49:20 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1462826929-7567-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294052>
 
-=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+For installations that have centrally-managed configuration, it's
+easier to set a config once than to run update-index on every
+repository.
 
-All the known heavy code blocks are measured (except object database
-access). This should help identify if an optimization is effective or
-not. An unoptimized git-status would give something like below (92% of
-time is accounted). To sum up the effort of making git scale better:
-
- - read cache line is being addressed by index-helper
- - preload/refresh index by watchman
- - read packed refs by lmdb backend
- - diff-index by rebuilding cache-tree
- - read directory by untracked cache and watchman
- - write index by split index
- - name hash potientially by index-helper
-
-read-cache.c:2075         performance: 0.004058570 s: read cache .../in=
-dex
-preload-index.c:104       performance: 0.004419864 s: preload index
-read-cache.c:1265         performance: 0.000185224 s: refresh index
-refs/files-backend.c:1100 performance: 0.001935788 s: read packed refs
-diff-lib.c:240            performance: 0.000144132 s: diff-files
-diff-lib.c:506            performance: 0.013592000 s: diff-index
-name-hash.c:128           performance: 0.000614177 s: initialize name h=
-ash
-dir.c:2030                performance: 0.015814103 s: read directory
-read-cache.c:2565         performance: 0.004052343 s: write index, chan=
-ged mask =3D 2
-trace.c:420               performance: 0.048365509 s: git command: './g=
-it' 'status'
-
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- diff-lib.c           |  4 ++++
- dir.c                |  2 ++
- name-hash.c          |  2 ++
- preload-index.c      |  2 ++
- read-cache.c         | 11 +++++++++++
- refs/files-backend.c |  2 ++
- 6 files changed, 23 insertions(+)
+ .gitignore                    |  1 +
+ Documentation/config.txt      |  4 ++++
+ Makefile                      |  1 +
+ read-cache.c                  |  6 ++++++
+ t/t1701-watchman-extension.sh | 37 +++++++++++++++++++++++++++++++++++++
+ test-dump-watchman.c          | 16 ++++++++++++++++
+ 6 files changed, 65 insertions(+)
+ create mode 100755 t/t1701-watchman-extension.sh
+ create mode 100644 test-dump-watchman.c
 
-diff --git a/diff-lib.c b/diff-lib.c
-index bc49c70..7af7f9a 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -90,6 +90,7 @@ int run_diff_files(struct rev_info *revs, unsigned in=
-t option)
- 	int diff_unmerged_stage =3D revs->max_count;
- 	unsigned ce_option =3D ((option & DIFF_RACY_IS_MODIFIED)
- 			      ? CE_MATCH_RACY_IS_DIRTY : 0);
-+	uint64_t start =3D getnanotime();
-=20
- 	diff_set_mnemonic_prefix(&revs->diffopt, "i/", "w/");
-=20
-@@ -236,6 +237,7 @@ int run_diff_files(struct rev_info *revs, unsigned =
-int option)
- 	}
- 	diffcore_std(&revs->diffopt);
- 	diff_flush(&revs->diffopt);
-+	trace_performance_since(start, "diff-files");
- 	return 0;
- }
-=20
-@@ -491,6 +493,7 @@ static int diff_cache(struct rev_info *revs,
- int run_diff_index(struct rev_info *revs, int cached)
- {
- 	struct object_array_entry *ent;
-+	uint64_t start =3D getnanotime();
-=20
- 	ent =3D revs->pending.objects;
- 	if (diff_cache(revs, ent->item->oid.hash, ent->name, cached))
-@@ -500,6 +503,7 @@ int run_diff_index(struct rev_info *revs, int cache=
-d)
- 	diffcore_fix_diff_index(&revs->diffopt);
- 	diffcore_std(&revs->diffopt);
- 	diff_flush(&revs->diffopt);
-+	trace_performance_since(start, "diff-index");
- 	return 0;
- }
-=20
-diff --git a/dir.c b/dir.c
-index 5058b29..c56a8b9 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2183,6 +2183,7 @@ int read_directory(struct dir_struct *dir, const =
-char *path, int len, const stru
- {
- 	struct path_simplify *simplify;
- 	struct untracked_cache_dir *untracked;
-+	uint64_t start =3D getnanotime();
-=20
- 	/*
- 	 * Check out create_simplify()
-@@ -2224,6 +2225,7 @@ int read_directory(struct dir_struct *dir, const =
-char *path, int len, const stru
- 	free_simplify(simplify);
- 	qsort(dir->entries, dir->nr, sizeof(struct dir_entry *), cmp_name);
- 	qsort(dir->ignored, dir->ignored_nr, sizeof(struct dir_entry *), cmp_=
-name);
-+	trace_performance_since(start, "read directory %.*s", len, path);
- 	if (dir->untracked) {
- 		static struct trace_key trace_untracked_stats =3D TRACE_KEY_INIT(UNT=
-RACKED_STATS);
- 		trace_printf_key(&trace_untracked_stats,
-diff --git a/name-hash.c b/name-hash.c
-index 6d9f23e..b3966d8 100644
---- a/name-hash.c
-+++ b/name-hash.c
-@@ -115,6 +115,7 @@ static int cache_entry_cmp(const struct cache_entry=
- *ce1,
- static void lazy_init_name_hash(struct index_state *istate)
- {
- 	int nr;
-+	uint64_t start =3D getnanotime();
-=20
- 	if (istate->name_hash_initialized)
- 		return;
-@@ -124,6 +125,7 @@ static void lazy_init_name_hash(struct index_state =
-*istate)
- 	for (nr =3D 0; nr < istate->cache_nr; nr++)
- 		hash_index_entry(istate, istate->cache[nr]);
- 	istate->name_hash_initialized =3D 1;
-+	trace_performance_since(start, "initialize name hash");
- }
-=20
- void add_name_hash(struct index_state *istate, struct cache_entry *ce)
-diff --git a/preload-index.c b/preload-index.c
-index c1fe3a3..7bb4809 100644
---- a/preload-index.c
-+++ b/preload-index.c
-@@ -72,6 +72,7 @@ static void preload_index(struct index_state *index,
- {
- 	int threads, i, work, offset;
- 	struct thread_data data[MAX_PARALLEL];
-+	uint64_t start =3D getnanotime();
-=20
- 	if (!core_preload_index)
- 		return;
-@@ -100,6 +101,7 @@ static void preload_index(struct index_state *index=
-,
- 		if (pthread_join(p->pthread, NULL))
- 			die("unable to join threaded lstat");
- 	}
-+	trace_performance_since(start, "preload index");
- }
- #endif
-=20
+diff --git a/.gitignore b/.gitignore
+index b92f122..e6a5b2c 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -188,6 +188,7 @@
+ /test-dump-cache-tree
+ /test-dump-split-index
+ /test-dump-untracked-cache
++/test-dump-watchman
+ /test-fake-ssh
+ /test-scrap-cache-tree
+ /test-genrandom
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 2cd6bdd..15001ce 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1848,6 +1848,10 @@ imap::
+ 	The configuration variables in the 'imap' section are described
+ 	in linkgit:git-imap-send[1].
+ 
++index.addwatchmanextension::
++	Automatically add the watchman extension to the index whenever
++	it is written.
++
+ index.version::
+ 	Specify the version with which new index files should be
+ 	initialized.  This does not affect existing repositories.
+diff --git a/Makefile b/Makefile
+index 65ab0f4..5f0a954 100644
+--- a/Makefile
++++ b/Makefile
+@@ -599,6 +599,7 @@ TEST_PROGRAMS_NEED_X += test-delta
+ TEST_PROGRAMS_NEED_X += test-dump-cache-tree
+ TEST_PROGRAMS_NEED_X += test-dump-split-index
+ TEST_PROGRAMS_NEED_X += test-dump-untracked-cache
++TEST_PROGRAMS_NEED_X += test-dump-watchman
+ TEST_PROGRAMS_NEED_X += test-fake-ssh
+ TEST_PROGRAMS_NEED_X += test-genrandom
+ TEST_PROGRAMS_NEED_X += test-hashmap
 diff --git a/read-cache.c b/read-cache.c
-index ebbcb7f..c547b0b 100644
+index 76b65c2..7b7cb39 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -1189,6 +1189,7 @@ int refresh_index(struct index_state *istate, uns=
-igned int flags,
- 	const char *typechange_fmt;
- 	const char *added_fmt;
- 	const char *unmerged_fmt;
-+	uint64_t start =3D getnanotime();
-=20
- 	modified_fmt =3D (in_porcelain ? "M\t%s\n" : "%s: needs update\n");
- 	deleted_fmt =3D (in_porcelain ? "D\t%s\n" : "%s: needs update\n");
-@@ -1263,6 +1264,7 @@ int refresh_index(struct index_state *istate, uns=
-igned int flags,
-=20
- 		replace_index_entry(istate, i, new);
- 	}
-+	trace_performance_since(start, "refresh index");
- 	return has_errors;
- }
-=20
-@@ -2086,12 +2088,15 @@ int read_index_from(struct index_state *istate,=
- const char *path)
- {
- 	struct split_index *split_index;
- 	int ret;
-+	uint64_t start;
-=20
- 	/* istate->initialized covers both .git/index and .git/sharedindex.xx=
-x */
- 	if (istate->initialized)
- 		return istate->cache_nr;
-=20
-+	start =3D getnanotime();
- 	ret =3D do_read_index(istate, path, 0);
-+	trace_performance_since(start, "read cache %s", path);
-=20
- 	split_index =3D istate->split_index;
- 	if (!split_index || is_null_sha1(split_index->base_sha1)) {
-@@ -2106,6 +2111,7 @@ int read_index_from(struct index_state *istate, c=
-onst char *path)
- 	split_index->base->keep_mmap =3D istate->keep_mmap;
- 	split_index->base->to_shm    =3D istate->to_shm;
- 	split_index->base->from_shm  =3D istate->from_shm;
-+	start =3D getnanotime();
- 	ret =3D do_read_index(split_index->base,
- 			    git_path("sharedindex.%s",
- 				     sha1_to_hex(split_index->base_sha1)), 1);
-@@ -2117,6 +2123,9 @@ int read_index_from(struct index_state *istate, c=
-onst char *path)
- 		    sha1_to_hex(split_index->base->sha1));
- 	merge_base_index(istate);
- 	post_read_index_from(istate);
-+	trace_performance_since(start, "read cache %s",
-+				git_path("sharedindex.%s",
-+					 sha1_to_hex(split_index->base_sha1)));
-=20
- done:
- 	if (ret > 0 && istate->from_shm && istate->last_update)
-@@ -2462,6 +2471,7 @@ static int do_write_index(struct index_state *ist=
-ate, int newfd,
+@@ -2428,6 +2428,7 @@ static int do_write_index(struct index_state *istate, int newfd,
+ 	int entries = istate->cache_nr;
  	struct stat st;
- 	struct strbuf previous_name_buf =3D STRBUF_INIT, *previous_name;
- 	int watchman =3D 0;
-+	uint64_t start =3D getnanotime();
-=20
- 	for (i =3D removed =3D extended =3D 0; i < entries; i++) {
+ 	struct strbuf previous_name_buf = STRBUF_INIT, *previous_name;
++	int watchman = 0;
+ 
+ 	for (i = removed = extended = 0; i < entries; i++) {
  		if (cache[i]->ce_flags & CE_REMOVE)
-@@ -2582,6 +2592,7 @@ static int do_write_index(struct index_state *ist=
-ate, int newfd,
- 		return -1;
- 	istate->timestamp.sec =3D (unsigned int)st.st_mtime;
- 	istate->timestamp.nsec =3D ST_MTIME_NSEC(st);
-+	trace_performance_since(start, "write index, changed mask =3D %x", is=
-tate->cache_changed);
- 	return 0;
- }
-=20
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 81f68f8..57571ce 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1048,6 +1048,7 @@ static void read_packed_refs(FILE *f, struct ref_=
-dir *dir)
- 	struct ref_entry *last =3D NULL;
- 	struct strbuf line =3D STRBUF_INIT;
- 	enum { PEELED_NONE, PEELED_TAGS, PEELED_FULLY } peeled =3D PEELED_NON=
-E;
-+	uint64_t start =3D getnanotime();
-=20
- 	while (strbuf_getwholeline(&line, f, '\n') !=3D EOF) {
- 		unsigned char sha1[20];
-@@ -1096,6 +1097,7 @@ static void read_packed_refs(FILE *f, struct ref_=
-dir *dir)
- 	}
-=20
- 	strbuf_release(&line);
-+	trace_performance_since(start, "read packed refs");
- }
-=20
- /*
---=20
+@@ -2451,6 +2452,11 @@ static int do_write_index(struct index_state *istate, int newfd,
+ 	if (istate->version == 3 || istate->version == 2)
+ 		istate->version = extended ? 3 : 2;
+ 
++	if (!git_config_get_bool("index.addwatchmanextension", &watchman) &&
++	    watchman &&
++	    !the_index.last_update)
++		the_index.last_update = xstrdup("");
++
+ 	hdr_version = istate->version;
+ 
+ 	hdr.hdr_signature = htonl(CACHE_SIGNATURE);
+diff --git a/t/t1701-watchman-extension.sh b/t/t1701-watchman-extension.sh
+new file mode 100755
+index 0000000..71f1d46
+--- /dev/null
++++ b/t/t1701-watchman-extension.sh
+@@ -0,0 +1,37 @@
++#!/bin/sh
++
++test_description='watchman extension smoke tests'
++
++# These don't actually test watchman interaction -- just the
++# index extension
++
++. ./test-lib.sh
++
++test_expect_success 'enable watchman' '
++	test_commit a &&
++	test-dump-watchman .git/index >actual &&
++	echo "last_update: (null)" >expect &&
++	test_cmp expect actual &&
++	git update-index --watchman &&
++	test-dump-watchman .git/index >actual &&
++	echo "last_update: " >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'disable watchman' '
++	git update-index --no-watchman &&
++	test-dump-watchman .git/index >actual &&
++	echo "last_update: (null)" >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'auto-enable watchman' '
++	test_config index.addwatchmanextension true &&
++	test_commit c &&
++	test-dump-watchman .git/index >actual &&
++	echo "last_update: " >expect &&
++	test_cmp expect actual
++'
++
++
++test_done
+diff --git a/test-dump-watchman.c b/test-dump-watchman.c
+new file mode 100644
+index 0000000..0314fa5
+--- /dev/null
++++ b/test-dump-watchman.c
+@@ -0,0 +1,16 @@
++#include "cache.h"
++#include "ewah/ewok.h"
++
++int main(int argc, char **argv)
++{
++	do_read_index(&the_index, argv[1], 1);
++	printf("last_update: %s\n", the_index.last_update ?
++	       the_index.last_update : "(null)");
++
++	/*
++	 * For now, we just dump last_update, since it is not reasonable
++	 * to populate the extension itself in tests.
++	 */
++
++	return 0;
++}
+-- 
 2.4.2.767.g62658d5-twtrsrc
