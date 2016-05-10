@@ -1,114 +1,96 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 1/4] rev-parse: fix some options when executed from
- subpath of main tree
-Date: Tue, 10 May 2016 03:49:28 -0400
-Message-ID: <CAPig+cSZ9PXr4Wogt2EJAJyapso8hZVucQ2yvJpCRK35a2j8jg@mail.gmail.com>
-References: <1461361992-91918-2-git-send-email-rappazzo@gmail.com>
-	<20160429135051.15492-1-szeder@ira.uka.de>
-	<CANoM8SWBzFiHGc3zAwndyx+GUkWQGDoaewVVQtH-06jazAn8uQ@mail.gmail.com>
-	<20160506161312.Horde.7i8_sE5ISIqccneOIfinvCX@webmail.informatik.kit.edu>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 0/2] Support marking .git/ (or all files) as hidden
+ on Windows
+Date: Tue, 10 May 2016 10:41:20 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605101036460.4092@virtualbox>
+References: <17d30bb680a0452efd7b3c4f42e2f94478a86273.1462372716.git.johannes.schindelin@gmx.de> <cover.1462603453.git.johannes.schindelin@gmx.de> <xmqqposvw4fs.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mike Rappazzo <rappazzo@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Tue May 10 09:49:35 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Erik Faye-Lund <kusmabite@googlemail.com>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 10 10:41:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b02Q9-00044g-Qz
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 09:49:34 +0200
+	id 1b03Eo-0007tc-7x
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 10:41:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751720AbcEJHtb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 May 2016 03:49:31 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:35171 "EHLO
-	mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751209AbcEJHt3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 May 2016 03:49:29 -0400
-Received: by mail-io0-f195.google.com with SMTP id i75so154962ioa.2
-        for <git@vger.kernel.org>; Tue, 10 May 2016 00:49:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-transfer-encoding;
-        bh=Jao8CAr0k4uTjn9E366MwwvPqesIIQMfKXiPk719rWI=;
-        b=lidSPcXpweR4t9VeiiIMT+PSsOkM+ZvhxVK1Z1k4Gc89ANtV8V+jdabBj+E0V5yeV3
-         pncwx0VL/vCIpC+Op6a3CqaFGnOQBumfY23RPZzKwuBgOYAbkJTtIYzboPgZP3lYgzvZ
-         Q54Bgb3F1y/qJLfldHgmzNClkBNftJWtLh982IQe0VDV76fzHaS9MSkWn4kK7k3CPCKC
-         uxI8sloa5KbZ+3QybZdGkwFc+m/ZNHGoNCuJDmk3v5TPXBUqDHRpDc6cAPFlYn8BYMqZ
-         z3v/aulgEBMtmFyuhN5fNetNKzajrTLzD9g54Z/43Zjm8yuWTqsZpxAntlFY0bfF3P2W
-         ox4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=Jao8CAr0k4uTjn9E366MwwvPqesIIQMfKXiPk719rWI=;
-        b=P+2VSUam6wlchNMi78uCJ8MmJJemR4wEEe2COyVYKuyBd6VPH/ZIzvRbUs/bi266by
-         ZlYvUSvj0XChZ/COeOJi7FALPDxLwZkTlf2msmi2fQZ1ZVI1iIk7NEmu7YGw6iTrxgC2
-         a4rkbmKvA7z3UXCTctGgRoYmvy+ML+G4gWL0VsyVfXjRoqJehGOgNWIcWNetJEhp6Mfw
-         TUUAEc+fFYrW3Tau1du4c8jdMEUPxfLWmYuPZPd3vu9gVS3bDfxJ1D3GZsNGzd3tIMJ/
-         NQ4AvACYzwJV6n3PGVWQ7WiN0ChoxP8TyIk1N0aOnf/SHwSU6olP4EOxeXaccfco+9DY
-         k2sw==
-X-Gm-Message-State: AOPr4FWiH3txms+V0FGvJqzuAokxcd5bGqj8bN17OSu4UW9xMPp9/ORlT81FYKe131uFNX0eGlEShbZifm6Y8Q==
-X-Received: by 10.107.47.37 with SMTP id j37mr40254807ioo.168.1462866568992;
- Tue, 10 May 2016 00:49:28 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Tue, 10 May 2016 00:49:28 -0700 (PDT)
-In-Reply-To: <20160506161312.Horde.7i8_sE5ISIqccneOIfinvCX@webmail.informatik.kit.edu>
-X-Google-Sender-Auth: 33SNfl0SCzXg45dYoUh0LWo95UA
+	id S1751453AbcEJIln (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 04:41:43 -0400
+Received: from mout.gmx.net ([212.227.15.18]:51924 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751288AbcEJIlj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 04:41:39 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0Md3li-1bIGbT3IGo-00IEZK; Tue, 10 May 2016 10:41:21
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqqposvw4fs.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:Xu6VRrf+9kl0igUtzoi1b+OGZGkh+Gc3Svbjr8OSoyoCde6KZxC
+ UAtkpXvaWWYTJryyxNSjf+kYCvnY4VFw8xJZvG/R8Bo2nBHx0C3VC8fn5gTXrhJUXrGR+fL
+ rZHIXZ1paSCvZKRYTuKjXG1vZnBN/9FgzhRNcPSo6VKF6CAd3Fa9Yxtj8Xd+vtyxswTumrJ
+ UMngn//cO+mXG/TGe2woA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ozijfLGMyEI=:oOjXP9eN0z7a4uV59/dlCK
+ +KJYPvwKP5TIESxC842p6JQ5IDCPcY10x/8qlft1KZ12VjgJDTB2OJ6ojjmVmVspPXFTb2bkZ
+ 4rcTcpnA+gzSXf8YlXB7yWPXokOGxDttXVnsuse0qAaqKWFGJ+EpEhwvGEfjU03bkXAUGBZ6K
+ WcU4HaKA809OQR7V15vw5II6zBrCJwyQVZ8BeIx8aJXooBiVL92BPCaVIKx/fwU6Rxs4ppBNM
+ X34N8NjZTjhAZNp1UMiGhmp0/xxoS9KHW3G7MFbzhVImszOg5gdVdBmC54AtRO4lrGly6ESrB
+ VnA5zs3P0GZ9saYXzXEoknuyxZrY+fqXT4UQJCYhWORv06Ld3S93QeMoKBy7WneW6on/em5Jw
+ 75KgyWYyh1/LpVfk/yFUglBd7eEZtwyiD1xevY/w+aboqqf1MOEQkZ8TVpg0DKUPxyqig5rJZ
+ WoloMI0Nobjm/ucjhH8EKM4gfzAt/3Ckuj4DFXWFd5AcNWmbDzma2Y9osM7+Fy3ILQxsjfsB9
+ 3oAAvHZKOS2F1FGN3Ul7PjWa4w4pumosXu+3Qh53Tva7McDK7VXgo/I/kmXCgYkUYFoyXjlFa
+ Zu3NccqCENkqmlHfEPSAtRDLg+Hj8wUeQwsaJYe3CheUZlEmZxrApsPesDevSX6UrApyfEmwg
+ Z7RmY+fxJ5nQAjYExRSlAW6ob4WAE1uBdGproexOdHhDB4tHlmowgz130y6H2NtpRJM2KPSSQ
+ 1BTICg/ahmtfBpOpVBtx1qwwb9IafSBUjRMn0OBX/MMxuIje0dvDVNJyej1gX5SX+041TjGD 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294115>
 
-On Fri, May 6, 2016 at 10:13 AM, SZEDER G=C3=A1bor <szeder@ira.uka.de> =
-wrote:
-> Quoting Mike Rappazzo <rappazzo@gmail.com>:
->> I'll try to reword this to make it indicate that the value isn't
->> always incorrect.
->
-> Not sure I understand your intention about rewording, in particular t=
-hat
-> "isn't always incorrect" part.  Just to make sure there is no
-> misunderstanding let's have a look at the two broken cases:
->
->    $ git -C t/ rev-parse --git-common-dir
->    t/.git
->
-> Obviously wrong.
-> This is what you correctly described in the commit message as
-> "incorrectly returns a path which starts 'sub/path/.git'.
->
->    $ git -C t/ rev-parse --git-path objects
->    .git/objects
->
-> Wrong as well.  It would be correct if we were at the top of the work=
-ing
-> tree, but we are not.  It must be relative to the directory where '-C=
- t/'
-> brought us.
-> Your description in the commit message implies that '--git-path <path=
->'
-> is wrong in the same way as '--git-common-dir' is, i.e. in this case
-> would also return the relative path starting with the subdirectory.
-> That is apparently not the case.
->
-> My point in the previous email was that both are wrong when executed =
-in
-> a subdir of the working tree, but they are wrong in different ways.  =
-And
-> they are always wrong when executed from a subdir of the working tree=
-=2E
+Hi Junio,
 
-This explanation argues strongly in favor of placing each fix in a
-separate patch[1] so that each commit message can be tailored to
-precisely match the problem being fixed. Bundling the corresponding
-tests with the fix would be a bonus; no need for a lead-in patch
-introducing the tests en masse, and no need for test_expect_failure.
+On Mon, 9 May 2016, Junio C Hamano wrote:
 
-[1]: http://article.gmane.org/gmane.comp.version-control.git/293001/
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > This is a heavily version of patches we carried in Git for Windows for
+
+s/patches/patched/
+
+I wish I had a penny for each time I wrote this particular typo.
+
+> > way too long without submitting them upstream.
+> >
+> > In this iteration, I also claim authorship for the patch because by now
+> > Kusma's changes were so contorted and mutilated beyond recognition by me
+> > that I do not want anybody to blame him for my sins.
+> 
+> OK, so what do you want me to do with this "heavily modified
+> version"?  Earlier you responded:
+> 
+>     > I have a huge preference for a code that has been production for
+>     > years over a new code that would cook at most two weeks in 'next'.
+> 
+>     I agree. However, it does not fill me with confidence that we did not
+>     catch those two bugs earlier. Even one round of reviews (including a
+>     partial rewrite) was better than all that time since the regressions
+>     were introduced.
+> 
+> So do we want to follow the regular "a few days in 'pu' in case
+> somebody finds 'oops this trivial change is needed', a week or two
+> in 'next' for simmering as everybody else, and finally down to
+> 'master'" schedule?
+
+Well, I plan to include this patch (replacing the original version) in
+whatever Git for Windows version I release next. I guess that we can go
+with the regular way in git.git. You could just as well merge it to master
+right away, it won't matter much as far as Git for Windows is concerned.
+
+Ciao,
+Dscho
