@@ -1,123 +1,124 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v7 1/3] tests: Adjust the configuration for Apache 2.2
-Date: Tue, 10 May 2016 08:37:11 +0200
-Message-ID: <C5C883AD-E684-4D2F-811B-A479DE5E41AB@gmail.com>
-References: <cover.1462342213.git.johannes.schindelin@gmx.de> <cover.1462774709.git.johannes.schindelin@gmx.de> <4a15c4e6c35cfb425da568d87e8b20b984e5325c.1462774709.git.johannes.schindelin@gmx.de>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue May 10 08:37:22 2016
+From: Stephen & Linda Smith <ischis2@cox.net>
+Subject: Re: [PATCH] wt-status.c: set commitable bit if there is a meaningful merge.
+Date: Mon, 09 May 2016 21:51:19 -0700
+Message-ID: <5686039.PQA9zH74Pi@thunderbird>
+References: <72756249.nAoBccgOj7@thunderbird> <1455590305-30923-1-git-send-email-ischis2@cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Ovidiu Gheorghioiu <ovidiug@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 10 08:43:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b01IG-0003bI-Ko
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 08:37:20 +0200
+	id 1b01Oa-0002Vw-Ls
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 08:43:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751121AbcEJGhO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 02:37:14 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:36225 "EHLO
-	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751049AbcEJGhN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 May 2016 02:37:13 -0400
-Received: by mail-wm0-f47.google.com with SMTP id n129so164155769wmn.1
-        for <git@vger.kernel.org>; Mon, 09 May 2016 23:37:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=jgcfTgCvPZZdNhwPvUciawzJaKGkAaH34w16RksDxqU=;
-        b=J6/K88DuSb6VQK/4eIBG2DZY54au+rlO7bNDslcQNptBRKytBBacjTGzP1imStQQb6
-         hn1EwQBy12C+2t0aFf4Y3CNLPmOspi1QhKP/eJzn2gutcO/D4b6CyyOr7ZrbFE+2fmn1
-         z8PnUCLqUHv6Fv51gcJpqdwnnhy9O8keH7UafvoFz67tf2gvIU4iDL7kUmS3kiqrhGgL
-         dikI808Kfrtv6tOHH3s650HsTvRbs90xllUBQVowtLxl3lpU82y0UunOtNCpINV7LQtE
-         iLyZdUHs6b1mQIvfPl7MEbcaWvsa6XEnArdUK165xl9FOiyCT6VYIyr0X6JMJIeLjOsx
-         OZpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=jgcfTgCvPZZdNhwPvUciawzJaKGkAaH34w16RksDxqU=;
-        b=gH0S6lUfXe7Jm/yZlBSYEjOHiqD+4k1jnMEld3kHO1MYctCY7h0CqEdree0xGG5/Bx
-         wwmc2+ER5tz2Q50Oz8h5iu2c/sgebaFy43nTa/zhaGmyq3ZmD/4Dv6tZoK8P+h8y/Pj+
-         tE4fR6GUCf0MCv359Be02gGRgb8ZSiMBmLvzctb8g9n9v/lC8tvRl/vsEQxyCqXSTvco
-         CawLJpgzTZvSdK6Rx6FsZVzjY705w3vS/LCv3PprUzhL1Wfhxh1wtqz1B6V8CJ5IECvQ
-         27e4WVWZeaH4RDL5b48MUvTDyKO3+g8J8oO2KyewhSvHAPS0ElGA3xLkJq89temZTrFK
-         gc4w==
-X-Gm-Message-State: AOPr4FWWLVTBrH0qCQNLCiDoTW3YDxrVTUM6X7H/JaziaIG6kJsfWa97ossELCmd7HbDNQ==
-X-Received: by 10.194.61.231 with SMTP id t7mr41428064wjr.32.1462862231959;
-        Mon, 09 May 2016 23:37:11 -0700 (PDT)
-Received: from [10.32.249.146] (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id a207sm1145633wma.8.2016.05.09.23.37.10
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 09 May 2016 23:37:10 -0700 (PDT)
-In-Reply-To: <4a15c4e6c35cfb425da568d87e8b20b984e5325c.1462774709.git.johannes.schindelin@gmx.de>
-X-Mailer: Apple Mail (2.3124)
+	id S1751249AbcEJGnq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 02:43:46 -0400
+Received: from fed1rmfepo202.cox.net ([68.230.241.147]:43348 "EHLO
+	fed1rmfepo202.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750979AbcEJGno (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 02:43:44 -0400
+X-Greylist: delayed 6741 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 May 2016 02:43:44 EDT
+Received: from fed1rmimpo305.cox.net ([68.230.241.173])
+          by fed1rmfepo203.cox.net
+          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
+          id <20160510045121.MYWL27016.fed1rmfepo203.cox.net@fed1rmimpo305.cox.net>
+          for <git@vger.kernel.org>; Tue, 10 May 2016 00:51:21 -0400
+Received: from thunderbird ([68.231.74.134])
+	by fed1rmimpo305.cox.net with cox
+	id sUrL1s00F2tqoqC01UrLjl; Tue, 10 May 2016 00:51:20 -0400
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A020204.573168C8.00C5,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.1 cv=M9LtU3Es c=1 sm=1 tr=0
+ a=/Rt4pg3TtX3KzfzhvVoEow==:117 a=/Rt4pg3TtX3KzfzhvVoEow==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
+ a=yrkiwgmsf1kA:10 a=6FwhlGHFbFm3aAnB3G0A:9 a=CoUHzPLtwM_ZfEJQ:21
+ a=ENK3PvDoVmBf0Afc:21 a=CjuIK1q_8ugA:10
+X-CM-Score: 0.00
+Authentication-Results: cox.net; none
+Received: by thunderbird (Postfix, from userid 1000)
+	id 1B5B191EDE; Mon,  9 May 2016 21:51:20 -0700 (MST)
+User-Agent: KMail/5.0.2 (Linux/4.2.0-35-generic; KDE/5.15.0; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294102>
 
+On Tuesday, February 16, 2016 07:33:54 PM Junio C Hamano wrote:
+> > ---
+> 
+> I think I mislead you into a slightly wrong direction.  While the
+> single liner does improve the situation, I think this is merely a
+> band-aid upon closer inspection.  For example, if you changed your
+> "commit --dry-run" in your test to "commit --dry-run --short", you
+> would notice that the test would fail.
+> 
+I understand.
 
-> On 09 May 2016, at 08:18, Johannes Schindelin <johannes.schindelin@gmx.de> wrote:
+> In fact, "commit --dry-run" is already broken without this "a merge
+> ends up in a no-op" corner case.  The management of s->commitable
+> flag and dry_run_commit() that uses it are unfortunately more broken
+> than I originally thought.
 > 
-> Lars Schneider noticed that the configuration introduced to test the extra
-> HTTP headers cannot be used with Apache 2.2 (which is still actively
-> maintained, as pointed out by Junio Hamano).
+> If we check for places where s->committable is set, we notice that
+> there is only one location: wt_status_print_updated().  This function
+> runs an equivalent of "diff-index --cached" and flips s->committable
+> on when it sees any difference.
 > 
-> To let the tests pass with Apache 2.2 again, let's substitute the
-> offending <RequireAll> and `expr` by using old school RewriteCond
-> statements.
+> This function is only called from wt_status_print(), which in turn
+> is only called from run_status() in commit.c when the status format
+> is unspecified or set to STATUS_FORMAT_LONG.
+> 
+> So if you do this:
+> 
+>     $ git reset --hard HEAD
+>     $ >a-new-file && git add a-new-file
+>     $ git commit --dry-run --short; echo $?
+> 
+> you'd get "No, there is nothing interesting to commit", which is
+> clearly bogus.
+> 
+> I said s->committable is flipped on only when there is any change in
+> "diff-index --cached".  There is nothing that flips it off, by
+> noticing that there are unmerged paths, for example.  This is
+> another brokenness around "git commit --dry-run".  Imagine that you
+> are in a middle of a conflicted cherry-pick.  You did "git add" on a
+> resolved path and you still have another path whose conflict has not
+> been resolved.  If you run a "git commit --dry-run", you will hear
+> "Yes, you can make a meaningful commit", which again is clearly
+> bogus.
+> 
+Makes sense.
 
-All Apache 2.2 tests run nicely on Travis CI with Ubuntu and OSX using
-this patch series:
-https://travis-ci.org/larsxschneider/git/builds/128955548
+> These things need to be eventually fixed, and I think the fix will
+> involve revamping how we compute s->committable flag.  Most likely,
+> we won't be doing any of that in any wt_status function whose name
+> has "print" or "show" in it.  As the original designer of the wt_*
+> suite (before these multiple output formats are added), I would say
+> everything should happen inside the "collect" phase, if we wanted to
+> make s->committable bit usable.
+Tonight I started work on a patch to remove the two locations where 
+committable was set in  the *print* and *show* functions.  
 
-Thanks,
-Lars
+I believe that what you mean by the "collect" phase is the set of functions 
+that are in wt_status.c and have collect in the function name.
 
 > 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> t/lib-httpd/apache.conf | 12 ++++++++----
-> 1 file changed, 8 insertions(+), 4 deletions(-)
+> So in the sense, eventually the code updated by this patch will have
+> to be discarded when we fix the "commit --dry-run" in the right way,
+> but in the meantime, the patch does not make things worse, so let's
+> think about queuing it as-is for now as a stop-gap measure.
 > 
-> diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-> index b8ed96f..29b34bb 100644
-> --- a/t/lib-httpd/apache.conf
-> +++ b/t/lib-httpd/apache.conf
-> @@ -103,10 +103,6 @@ Alias /auth/dumb/ www/auth/dumb/
-> 	Header set Set-Cookie name=value
-> </LocationMatch>
-> <LocationMatch /smart_headers/>
-> -	<RequireAll>
-> -		Require expr %{HTTP:x-magic-one} == 'abra'
-> -		Require expr %{HTTP:x-magic-two} == 'cadabra'
-> -	</RequireAll>
-> 	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
-> 	SetEnv GIT_HTTP_EXPORT_ALL
-> </LocationMatch>
-> @@ -136,6 +132,14 @@ RewriteRule ^/ftp-redir/(.*)$ ftp://localhost:1000/$1 [R=302]
-> RewriteRule ^/loop-redir/x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-(.*) /$1 [R=302]
-> RewriteRule ^/loop-redir/(.*)$ /loop-redir/x-$1 [R=302]
-> 
-> +# Apache 2.2 does not understand <RequireAll>, so we use RewriteCond.
-> +# And as RewriteCond unfortunately lacks "not equal" matching, we use this
-> +# ugly trick to fail *unless* the two headers are present.
-> +RewriteCond %{HTTP:x-magic-one} =abra
-> +RewriteCond %{HTTP:x-magic-two} =cadabra
-> +RewriteRule ^/smart_headers/.* - [L]
-> +RewriteRule ^/smart_headers/.* - [F]
-> +
-> <IfDefine SSL>
-> LoadModule ssl_module modules/mod_ssl.so
-> 
-> -- 
-> 2.8.2.463.g99156ee
-> 
-> 
+I'm happy with moveing the patch from pu (where it is now) to next.   I've
+re-started my work on this.
+
+> Thanks.
