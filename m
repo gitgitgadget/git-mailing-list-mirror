@@ -1,385 +1,166 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v3 1/2] mingw: introduce the 'core.hideDotFiles' setting
-Date: Tue, 10 May 2016 13:59:11 +0200 (CEST)
-Message-ID: <23f987e18252bb9231937388567317e7e58ec048.1462881473.git.johannes.schindelin@gmx.de>
-References: <cover.1462603453.git.johannes.schindelin@gmx.de> <cover.1462881473.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v3 0/2] Support marking .git/ (or all files) as hidden on
+ Windows
+Date: Tue, 10 May 2016 13:59:04 +0200 (CEST)
+Message-ID: <cover.1462881473.git.johannes.schindelin@gmx.de>
+References: <cover.1462603453.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Erik Faye-Lund <kusmabite@googlemail.com>,
 	Pat Thoyts <patthoyts@users.sourceforge.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 10 13:59:37 2016
+X-From: git-owner@vger.kernel.org Tue May 10 13:59:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b06K7-00079E-67
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 13:59:35 +0200
+	id 1b06KD-0007GN-CJ
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 13:59:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751669AbcEJL7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 07:59:31 -0400
-Received: from mout.gmx.net ([212.227.15.19]:49824 "EHLO mout.gmx.net"
+	id S1751889AbcEJL7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 07:59:33 -0400
+Received: from mout.gmx.net ([212.227.15.19]:56739 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751492AbcEJL73 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 07:59:29 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LkgAG-1baG182JDY-00aSPk; Tue, 10 May 2016 13:59:14
+	id S1751492AbcEJL7c (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 07:59:32 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0Likl3-1bcAkx1xAz-00cwKE; Tue, 10 May 2016 13:59:06
  +0200
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <cover.1462881473.git.johannes.schindelin@gmx.de>
+In-Reply-To: <cover.1462603453.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:016Wx3jz15BkrnlrX/uMfcS9Oyx4aHpxClv7LbzRAmhkplr0Aov
- lp+yvOCp4NWvWMs3BousBPitNXhOshLpdrlJe84RDgsDH2tKRQeDC9OpMqdXZEYSuiNyjwe
- npETVXPNYmA0CUcqnYKJBM3rcF7DSsSwZyqkqSeGSI/eezIHApumPq3BFQI88CurLQ2BlWV
- pBsgbqJoscVx+kPGMbGSQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:R7uPdOubYXc=:94XkalLYT2q33dfkONdy7W
- 9YIRqWgexcdgZwo4OrJsm1jMizAcnh5AQm0BjZRLpd4qnyvPrbN9+T/Tos+oSr+qnC4KHLJF0
- +A3dXTpULSZZR+oXiKXaaBxUYrAnMOC8Fi/2G6thF2uupMqjGAVRYo0cwxkd8IaCbqMl2sUlt
- IvjtCWcuNWHs/9nxeUOpoPoXXxpKbcbtpwTfLE9H/ALHCRjHF+oM48S5jF5t1mLaOSKMajRLP
- Ii8L587fA90/jiEOt7ok9R/tMGkdjcXqxSTAEcTnCXd7Pkb0bJl8oVZI7yxEuXBlQbmbId9le
- Wo6bdKwdh0d3nQ4nLkJdYLjKC6fWqbZTrjd/1RxYQVteAQpHj+S4tB7AcrQ4blTr9jbisDEuj
- crNQcWj1zGYXDFv1t+c5p8RkiOCF3RwriHOzfKXbOPt4ek1aVS0UskrEuVzOqnrPicSgON6dr
- RHAPF/Q/3WCW9HEVbMTU0+S2kWxJGP1KcGkZTJI52qxs2TvqKlaWabeXfwTCacAcNOx/5n8YC
- BZYshQLnVAqEY5dMCEiJJnq3tUW33tUy1crdZrczdpzpL7jL6z0DECAGXkLzzCmm0g1JsTmV4
- AyUiWJaVaYte/L4kSMzYFQtQkpU4WFIqxr2E6BQL3TN+IWXTaF7Vnhnchq6/zRGoQvBWD6PiC
- PMR1LCnIDc30L8dYeiryEh5CDdWKemtZ+48ba7uSRY088CjgxtmvYTSkd70LM9s1lcHdYNbMg
- ozOZwc7d3wQyg3UlOJLmHZIP7i64abDGWx6n5m39BYvUuEC2Z9CjY/9Mgk70hHkw3e3bRgQ5 
+X-Provags-ID: V03:K0:KbDXWT2SR+oXAQDdt6braQzn8RvqShxMlUL86nXdZuZm/bas6Ie
+ MI9Sh5+mn2twADuojizbJLbqWwAFVdkbb8iZNwZaIpUoQJo7JtS7lkx0tKj0Xj71H9aYAQZ
+ rHtRmQObhhSlGtO4tSsU0RQBxpFC4wLodRpVlIlG3xu6xbD2eTEyRhi8ULuDJn7QRhSXFgA
+ UAxyYTc2qRr9qB9gWFf3g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7HJMWtw3SWc=:eCoK8D0GlMzrN5vGdPV94Z
+ cNx70qFVq7dRP99Q/bF0nraLhAJiZON8qFx3h/vsQjpssyVnkxeQ8ycAtxw8h/CrieK+vxN5Z
+ EOFtQIPG/MXTCuYV1RQKefQwRO6ejPalQWvjfophQlFoJBeubXFn+hEJoILH6tJgtfq7AwRUG
+ 4sDdYkjMLM3/f56QJ7PU8kSN9XC7McJOGCuBPvH4ivt1UL++D0sMYeRZbt/6KUb2K9LyJPPYL
+ PnBnZY7DAHHQ+xB84UNs1+cXIXZqcBc4sjj34UmpUgRt3G+KyCswqvmB2wfKoYmJFOXUgzIbY
+ 18jsniE4qjUFBpb7SGQoZzcvXjqt9rh9/jX1RhhB6pK8itSyo6YrV6UrKZWWPwWhHS3SVl81e
+ Wm1brrTqtGANKLv+NkVjtJUWnAe3zzdW2OECUFaiC1n1DzXTnQGXTWa+kfSdMW0BSd5OIGCng
+ LXuXjGICE8MQqbpDTXchZPxsNN3g1pPih+5zA3qDE/7O5lfJxjN5PZJM5YeW4CNbHFgInAObd
+ h9MwilORzVLweCLlgU6pkLmZ1ZRNRRbyyfxSZOUf9kFa+MOdoC9igRTR2grRQOEDreT+5Ox5N
+ noCxAQuIZJzuK189o6kiuBiY0sqGOHKw1B7q/X4ths0s/tKHiSXMvxdsGzM/lBPKvs9P8l7g0
+ p6SM/xOH1pECZ3vrlpxIH1dWnbqu9JceyDB1WNcFPcQgS1h8eHJoUFaIFGiHcfWN5D/H/uheR
+ JdNbdJed3iLva+ZPlHIifwaz9fi/T8qBIrfLJX1vmf2ZFHb93yAAEHEjQrl9h0PCc7kvOkh+ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294124>
 
-On Unix (and Linux), files and directories whose names start with a dot
-are usually not shown by default. This convention is used by Git: the
-.git/ directory should be left alone by regular users, and only accessed
-through Git itself.
+Windows does not share Unix' convention that files and directories whose
+names start with a dot are hidden. Hence `.git/`, for example, is in
+plain view, and caused quite a bit of trouble: some users wanted to peek
+inside and did not understand what it contains, others modified files.
 
-On Windows, no such convention exists. Instead, there is an explicit flag
-to mark files or directories as hidden.
+There was a stream of bug reports, until Git for Windows introduced the
+(opt-out) option to hide at least the .git/ directory by default. The
+option is configured via the config setting core.hideDotFiles, with the
+possible values false, true and dotGitOnly (the latter being the
+default).
 
-In the early days, Git for Windows did not mark the .git/ directory (or
-for that matter, any file or directory whose name starts with a dot)
-hidden. This lead to quite a bit of confusion, and even loss of data.
+This is a heavily version of patches we carried in Git for Windows for
+way too long without submitting them upstream.
 
-Consequently, Git for Windows introduced the core.hideDotFiles setting,
-with three possible values: true, false, and dotGitOnly, defaulting to
-marking only the .git/ directory as hidden.
+This iteration addresses Junio's most recent round of concerns. Oh, and
+while at it, it also avoids setting attributes unnecessarily.
 
-The rationale: users do not need to access .git/ directly, and indeed (as
-was demonstrated) should not really see that directory, either. However,
-not all dot files should be hidden by default, as e.g. Eclipse does not
-show them (and the user would therefore be unable to see, say, a
-.gitattributes file).
 
-In over five years since the last attempt to bring this patch into core
-Git, a slightly buggy version of this patch has served Git for Windows'
-users well: no single report indicated problems with the hidden .git/
-directory, and the stream of problems caused by the previously non-hidden
-.git/ directory simply stopped. The bugs have been fixed during the
-process of getting this patch upstream.
+Johannes Schindelin (2):
+  mingw: introduce the 'core.hideDotFiles' setting
+  mingw: remove unnecessary definition
 
-Note that there is a funny quirk we have to pay attention to when
-creating hidden files: we use Win32's _wopen() function which
-transmogrifies its arguments and hands off to Win32's CreateFile()
-function. That latter function errors out with ERROR_ACCESS_DENIED (the
-equivalent of EACCES) when the equivalent of the O_CREAT flag was passed
-and the file attributes (including the hidden flag) do not match an
-existing file's. And _wopen() accepts no parameter that would be
-transmogrified into said hidden flag. Therefore, we simply try again
-without O_CREAT.
-
-A slightly different method is required for our fopen()/freopen()
-function as we cannot even *remove* the implicit O_CREAT flag.
-Therefore, we briefly mark existing files as unhidden when opening them
-via fopen()/freopen().
-
-The ERROR_ACCESS_DENIED error can also be triggered by opening a file
-that is marked as a system file (which is unlikely to be tracked in
-Git), and by trying to create a file that has *just* been deleted and is
-awaiting the last open handles to be released (which would be handled
-better by the "Try again?" logic, a story for a different patch series,
-though). In both cases, it does not matter much if we try again without
-the O_CREAT flag, read: it does not hurt, either.
-
-For details how ERROR_ACCESS_DENIED can be triggered, see
-https://msdn.microsoft.com/en-us/library/windows/desktop/aa363858
-
-Original-patch-by: Erik Faye-Lund <kusmabite@gmail.com>
-Initial-Test-By: Pat Thoyts <patthoyts@users.sourceforge.net>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
  Documentation/config.txt |  6 ++++
  cache.h                  |  7 +++++
  compat/mingw.c           | 74 ++++++++++++++++++++++++++++++++++++++++++++++++
+ compat/mingw.h           |  3 --
  config.c                 |  8 ++++++
  environment.c            |  1 +
  t/t0001-init.sh          | 30 ++++++++++++++++++++
  t/t5611-clone-config.sh  | 20 +++++++++++++
- 7 files changed, 146 insertions(+)
+ 8 files changed, 146 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index f6a5106..e2bf0f8 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -279,6 +279,12 @@ See linkgit:git-update-index[1].
- +
- The default is true (when core.filemode is not specified in the config file).
- 
-+core.hideDotFiles::
-+	(Windows-only) If true, mark newly-created directories and files whose
-+	name starts with a dot as hidden.  If 'dotGitOnly', only the `.git/`
-+	directory is hidden, but no other files starting with a dot.  The
-+	default mode is to mark only the `.git/` directory as hidden.
-+
- core.ignoreCase::
- 	If true, this option enables various workarounds to enable
- 	Git to work better on filesystems that are not case sensitive,
-diff --git a/cache.h b/cache.h
-index ca23a39..5f72f59 100644
---- a/cache.h
-+++ b/cache.h
-@@ -701,6 +701,13 @@ extern int ref_paranoia;
- extern char comment_line_char;
- extern int auto_comment_line_char;
- 
-+enum hide_dotfiles_type {
-+	HIDE_DOTFILES_FALSE = 0,
-+	HIDE_DOTFILES_TRUE,
-+	HIDE_DOTFILES_DOTGITONLY
-+};
-+extern enum hide_dotfiles_type hide_dotfiles;
-+
- enum branch_track {
- 	BRANCH_TRACK_UNSPECIFIED = -1,
- 	BRANCH_TRACK_NEVER = 0,
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 0413d5c..a8218e6 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -286,6 +286,49 @@ int mingw_rmdir(const char *pathname)
- 	return ret;
- }
- 
-+static inline int needs_hiding(const char *path)
-+{
-+	const char *basename;
-+
-+	if (hide_dotfiles == HIDE_DOTFILES_FALSE)
-+		return 0;
-+
-+	/* We cannot use basename(), as it would remove trailing slashes */
-+	mingw_skip_dos_drive_prefix((char **)&path);
-+	if (!*path)
-+		return 0;
-+
-+	for (basename = path; *path; path++)
-+		if (is_dir_sep(*path)) {
-+			do {
-+				path++;
-+			} while (is_dir_sep(*path));
-+			/* ignore trailing slashes */
-+			if (*path)
-+				basename = path;
-+		}
-+
-+	if (hide_dotfiles == HIDE_DOTFILES_TRUE)
-+		return *basename == '.';
-+
-+	assert(hide_dotfiles == HIDE_DOTFILES_DOTGITONLY);
-+	return !strncasecmp(".git", basename, 4) &&
-+		(!basename[4] || is_dir_sep(basename[4]));
-+}
-+
-+static int set_hidden_flag(const wchar_t *path, int set)
-+{
-+	DWORD original = GetFileAttributesW(path), modified;
-+	if (set)
-+		modified = original | FILE_ATTRIBUTE_HIDDEN;
-+	else
-+		modified = original & ~FILE_ATTRIBUTE_HIDDEN;
-+	if (original == modified || SetFileAttributesW(path, modified))
-+		return 0;
-+	errno = err_win_to_posix(GetLastError());
-+	return -1;
-+}
-+
- int mingw_mkdir(const char *path, int mode)
- {
- 	int ret;
-@@ -293,6 +336,8 @@ int mingw_mkdir(const char *path, int mode)
- 	if (xutftowcs_path(wpath, path) < 0)
- 		return -1;
- 	ret = _wmkdir(wpath);
-+	if (!ret && needs_hiding(path))
-+		return set_hidden_flag(wpath, 1);
- 	return ret;
- }
- 
-@@ -319,6 +364,21 @@ int mingw_open (const char *filename, int oflags, ...)
- 		if (attrs != INVALID_FILE_ATTRIBUTES && (attrs & FILE_ATTRIBUTE_DIRECTORY))
- 			errno = EISDIR;
- 	}
-+	if ((oflags & O_CREAT) && needs_hiding(filename)) {
-+		/*
-+		 * Internally, _wopen() uses the CreateFile() API which errors
-+		 * out with an ERROR_ACCESS_DENIED if CREATE_ALWAYS was
-+		 * specified and an already existing file's attributes do not
-+		 * match *exactly*. As there is no mode or flag we can set that
-+		 * would correspond to FILE_ATTRIBUTE_HIDDEN, let's just try
-+		 * again *without* the O_CREAT flag (that corresponds to the
-+		 * CREATE_ALWAYS flag of CreateFile()).
-+		 */
-+		if (fd < 0 && errno == EACCES)
-+			fd = _wopen(wfilename, oflags & ~O_CREAT, mode);
-+		if (fd >= 0 && set_hidden_flag(wfilename, 1))
-+			warning("could not mark '%s' as hidden.", filename);
-+	}
- 	return fd;
- }
- 
-@@ -350,6 +410,7 @@ int mingw_fgetc(FILE *stream)
- #undef fopen
- FILE *mingw_fopen (const char *filename, const char *otype)
- {
-+	int hide = needs_hiding(filename);
- 	FILE *file;
- 	wchar_t wfilename[MAX_PATH], wotype[4];
- 	if (filename && !strcmp(filename, "/dev/null"))
-@@ -357,12 +418,19 @@ FILE *mingw_fopen (const char *filename, const char *otype)
- 	if (xutftowcs_path(wfilename, filename) < 0 ||
- 		xutftowcs(wotype, otype, ARRAY_SIZE(wotype)) < 0)
- 		return NULL;
-+	if (hide && !access(filename, F_OK) && set_hidden_flag(wfilename, 0)) {
-+		error("could not unhide %s", filename);
-+		return NULL;
-+	}
- 	file = _wfopen(wfilename, wotype);
-+	if (file && hide && set_hidden_flag(wfilename, 1))
-+		warning("could not mark '%s' as hidden.", filename);
- 	return file;
- }
- 
- FILE *mingw_freopen (const char *filename, const char *otype, FILE *stream)
- {
-+	int hide = needs_hiding(filename);
- 	FILE *file;
- 	wchar_t wfilename[MAX_PATH], wotype[4];
- 	if (filename && !strcmp(filename, "/dev/null"))
-@@ -370,7 +438,13 @@ FILE *mingw_freopen (const char *filename, const char *otype, FILE *stream)
- 	if (xutftowcs_path(wfilename, filename) < 0 ||
- 		xutftowcs(wotype, otype, ARRAY_SIZE(wotype)) < 0)
- 		return NULL;
-+	if (hide && !access(filename, F_OK) && set_hidden_flag(wfilename, 0)) {
-+		error("could not unhide %s", filename);
-+		return NULL;
-+	}
- 	file = _wfreopen(wfilename, wotype, stream);
-+	if (file && hide && set_hidden_flag(wfilename, 1))
-+		warning("could not mark '%s' as hidden.", filename);
- 	return file;
- }
- 
-diff --git a/config.c b/config.c
-index d2cfca1..bb83137 100644
---- a/config.c
-+++ b/config.c
-@@ -911,6 +911,14 @@ static int git_default_core_config(const char *var, const char *value)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "core.hidedotfiles")) {
-+		if (value && !strcasecmp(value, "dotgitonly"))
-+			hide_dotfiles = HIDE_DOTFILES_DOTGITONLY;
-+		else
-+			hide_dotfiles = git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	/* Add other config variables here and to Documentation/config.txt. */
- 	return 0;
- }
-diff --git a/environment.c b/environment.c
-index 2857e3f..ca72464 100644
---- a/environment.c
-+++ b/environment.c
-@@ -64,6 +64,7 @@ int core_apply_sparse_checkout;
- int merge_log_config = -1;
- int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
- unsigned long pack_size_limit_cfg;
-+enum hide_dotfiles_type hide_dotfiles = HIDE_DOTFILES_DOTGITONLY;
- 
- #ifndef PROTECT_HFS_DEFAULT
- #define PROTECT_HFS_DEFAULT 0
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index a5b9e7a..a6fdd5e 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -354,4 +354,34 @@ test_expect_success SYMLINKS 're-init to move gitdir symlink' '
- 	test_path_is_dir realgitdir/refs
- '
- 
-+# Tests for the hidden file attribute on windows
-+is_hidden () {
-+	# Use the output of `attrib`, ignore the absolute path
-+	case "$(attrib "$1")" in *H*?:*) return 0;; esac
-+	return 1
-+}
-+
-+test_expect_success MINGW '.git hidden' '
-+	rm -rf newdir &&
-+	(
-+		unset GIT_DIR GIT_WORK_TREE
-+		mkdir newdir &&
-+		cd newdir &&
-+		git init &&
-+		is_hidden .git
-+	) &&
-+	check_config newdir/.git false unset
-+'
-+
-+test_expect_success MINGW 'bare git dir not hidden' '
-+	rm -rf newdir &&
-+	(
-+		unset GIT_DIR GIT_WORK_TREE GIT_CONFIG
-+		mkdir newdir &&
-+		cd newdir &&
-+		git --bare init
-+	) &&
-+	! is_hidden newdir
-+'
-+
- test_done
-diff --git a/t/t5611-clone-config.sh b/t/t5611-clone-config.sh
-index 27d730c..e4850b7 100755
---- a/t/t5611-clone-config.sh
-+++ b/t/t5611-clone-config.sh
-@@ -37,4 +37,24 @@ test_expect_success 'clone -c config is available during clone' '
- 	test_cmp expect child/file
- '
- 
-+# Tests for the hidden file attribute on windows
-+is_hidden () {
-+	# Use the output of `attrib`, ignore the absolute path
-+	case "$(attrib "$1")" in *H*?:*) return 0;; esac
-+	return 1
-+}
-+
-+test_expect_success MINGW 'clone -c core.hideDotFiles' '
-+	test_commit attributes .gitattributes "" &&
-+	rm -rf child &&
-+	git clone -c core.hideDotFiles=false . child &&
-+	! is_hidden child/.gitattributes &&
-+	rm -rf child &&
-+	git clone -c core.hideDotFiles=dotGitOnly . child &&
-+	! is_hidden child/.gitattributes &&
-+	rm -rf child &&
-+	git clone -c core.hideDotFiles=true . child &&
-+	is_hidden child/.gitattributes
-+'
-+
- test_done
+Published-As: https://github.com/dscho/git/releases/tag/hide-dotgit-v3
+Interdiff vs v2:
+
+ diff --git a/cache.h b/cache.h
+ index 743b081..5f72f59 100644
+ --- a/cache.h
+ +++ b/cache.h
+ @@ -704,7 +704,7 @@ extern int auto_comment_line_char;
+  enum hide_dotfiles_type {
+  	HIDE_DOTFILES_FALSE = 0,
+  	HIDE_DOTFILES_TRUE,
+ -	HIDE_DOTFILES_DOTGITONLY,
+ +	HIDE_DOTFILES_DOTGITONLY
+  };
+  extern enum hide_dotfiles_type hide_dotfiles;
+  
+ diff --git a/compat/mingw.c b/compat/mingw.c
+ index 3ecde84..a8218e6 100644
+ --- a/compat/mingw.c
+ +++ b/compat/mingw.c
+ @@ -318,12 +318,12 @@ static inline int needs_hiding(const char *path)
+  
+  static int set_hidden_flag(const wchar_t *path, int set)
+  {
+ -	DWORD attribs = GetFileAttributesW(path);
+ +	DWORD original = GetFileAttributesW(path), modified;
+  	if (set)
+ -		attribs |= FILE_ATTRIBUTE_HIDDEN;
+ +		modified = original | FILE_ATTRIBUTE_HIDDEN;
+  	else
+ -		attribs &= ~FILE_ATTRIBUTE_HIDDEN;
+ -	if (SetFileAttributesW(path, attribs))
+ +		modified = original & ~FILE_ATTRIBUTE_HIDDEN;
+ +	if (original == modified || SetFileAttributesW(path, modified))
+  		return 0;
+  	errno = err_win_to_posix(GetLastError());
+  	return -1;
+ @@ -377,7 +377,7 @@ int mingw_open (const char *filename, int oflags, ...)
+  		if (fd < 0 && errno == EACCES)
+  			fd = _wopen(wfilename, oflags & ~O_CREAT, mode);
+  		if (fd >= 0 && set_hidden_flag(wfilename, 1))
+ -			warning("Could not mark '%s' as hidden.", filename);
+ +			warning("could not mark '%s' as hidden.", filename);
+  	}
+  	return fd;
+  }
+ @@ -419,12 +419,12 @@ FILE *mingw_fopen (const char *filename, const char *otype)
+  		xutftowcs(wotype, otype, ARRAY_SIZE(wotype)) < 0)
+  		return NULL;
+  	if (hide && !access(filename, F_OK) && set_hidden_flag(wfilename, 0)) {
+ -		error("Could not unhide %s", filename);
+ +		error("could not unhide %s", filename);
+  		return NULL;
+  	}
+  	file = _wfopen(wfilename, wotype);
+  	if (file && hide && set_hidden_flag(wfilename, 1))
+ -		warning("Could not mark '%s' as hidden.", filename);
+ +		warning("could not mark '%s' as hidden.", filename);
+  	return file;
+  }
+  
+ @@ -439,12 +439,12 @@ FILE *mingw_freopen (const char *filename, const char *otype, FILE *stream)
+  		xutftowcs(wotype, otype, ARRAY_SIZE(wotype)) < 0)
+  		return NULL;
+  	if (hide && !access(filename, F_OK) && set_hidden_flag(wfilename, 0)) {
+ -		error("Could not unhide %s", filename);
+ +		error("could not unhide %s", filename);
+  		return NULL;
+  	}
+  	file = _wfreopen(wfilename, wotype, stream);
+  	if (file && hide && set_hidden_flag(wfilename, 1))
+ -		warning("Could not mark '%s' as hidden.", filename);
+ +		warning("could not mark '%s' as hidden.", filename);
+  	return file;
+  }
+  
+
 -- 
 2.8.2.463.g99156ee
