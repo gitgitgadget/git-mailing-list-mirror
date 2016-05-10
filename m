@@ -1,77 +1,110 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] t3404: be resilient against running with the -x flag
-Date: Tue, 10 May 2016 16:58:01 -0400
-Message-ID: <20160510205800.GC19958@sigill.intra.peff.net>
-References: <cover.1462888768.git.johannes.schindelin@gmx.de>
- <alpine.DEB.2.20.1605101607180.4092@virtualbox>
- <xmqqshxpofqh.fsf@gitster.mtv.corp.google.com>
+From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 5/6] t1500: avoid setting environment variables outside
+ of tests
+Date: Tue, 10 May 2016 23:01:11 +0200
+Message-ID: <20160510230111.Horde.JpLRouwWbSCYp7yuvqhy5SS@webmail.informatik.kit.edu>
+References: <20160510052055.32924-1-sunshine@sunshineco.com>
+ <20160510052055.32924-6-sunshine@sunshineco.com>
+ <20160510183955.GA16211@sigill.intra.peff.net>
+ <CAPig+cRR49iJOkaLfynkvch4zUHVkpcJwVah0rvaEOeR7aY2Nw@mail.gmail.com>
+ <CAPig+cTtU9_3=2eu0boaPbXKXh2gngEe7byDpJuSFAR4rcbrMA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 10 22:58:11 2016
+Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michael Rappazzo <rappazzo@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue May 10 23:01:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0EjJ-0007Ue-Oo
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 22:58:10 +0200
+	id 1b0EmY-0002se-MG
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 23:01:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751642AbcEJU6F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 16:58:05 -0400
-Received: from cloud.peff.net ([50.56.180.127]:37265 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751325AbcEJU6E (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 16:58:04 -0400
-Received: (qmail 28720 invoked by uid 102); 10 May 2016 20:58:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 10 May 2016 16:58:03 -0400
-Received: (qmail 1358 invoked by uid 107); 10 May 2016 20:58:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 10 May 2016 16:58:17 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 May 2016 16:58:01 -0400
+	id S1752268AbcEJVBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 17:01:25 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:52671 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751466AbcEJVBZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 May 2016 17:01:25 -0400
+Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	iface 141.3.10.81 id 1b0EmL-0002fL-Fw; Tue, 10 May 2016 23:01:17 +0200
+Received: from apache by webmail.ira.uka.de with local (Exim 4.84_2)
+	(envelope-from <szeder@ira.uka.de>)
+	id 1b0EmF-0004bb-B5; Tue, 10 May 2016 23:01:11 +0200
+Received: from x4db0dd69.dyn.telefonica.de (x4db0dd69.dyn.telefonica.de
+ [77.176.221.105]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
+ Tue, 10 May 2016 23:01:11 +0200
+In-Reply-To: <CAPig+cTtU9_3=2eu0boaPbXKXh2gngEe7byDpJuSFAR4rcbrMA@mail.gmail.com>
+User-Agent: Horde Application Framework 5
 Content-Disposition: inline
-In-Reply-To: <xmqqshxpofqh.fsf@gitster.mtv.corp.google.com>
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1462914077.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294192>
 
-On Tue, May 10, 2016 at 12:49:42PM -0700, Junio C Hamano wrote:
 
-> I wonder if we can fix "-x" instead so that we do not have to
-> butcher tests like this patch does.  It was quite clear what it
-> expected to see before this patch, and it is sad that the workaround
-> makes less readable (and relies on the real output we are looking
-> for never begins with '+').
+Quoting Eric Sunshine <sunshine@sunshineco.com>:
 
-I don't think there is a scalable, portable way to do so. "-x" output is
-going to stderr, and is inherited by any functions or subshells. So
-either we have to ask "-x" output to go somewhere else, or we have to
-turn it off inside the functions and subshells. The latter requires
-tweaking each site, which isn't scalable. And there is no way to do the
-former in a portable way (AFAIK).
+> On Tue, May 10, 2016 at 3:12 PM, Eric Sunshine  
+> <sunshine@sunshineco.com> wrote:
+>> On Tue, May 10, 2016 at 2:39 PM, Jeff King <peff@peff.net> wrote:
+>>> On Tue, May 10, 2016 at 01:20:54AM -0400, Eric Sunshine wrote:
+>>>>       while :
+>>>>       do
+>>>>               case "$1" in
+>>>>               -C) dir="-C $2"; shift; shift ;;
+>>>>               -b) bare="$2"; shift; shift ;;
+>>>> +             -g) env="GIT_DIR=$2; export GIT_DIR"; shift; shift ;;
+>>>> @@ -36,6 +38,8 @@ test_rev_parse () {
+>>>>       do
+>>>>               expect="$1"
+>>>>               test_expect_success "$name: $o" '
+>>>> +                     test_when_finished "sane_unset GIT_DIR" &&
+>>>> +                     eval $env &&
+>>>
+>>> This will set up the sane_unset regardless of whether $env does
+>>> anything. Would it make more sense to stick the test_when_finished
+>>> inside $env? You could use regular unset then, too, since you know the
+>>> variable would be set.
+>>
+>> I didn't worry about it too much because the end result is effectively
+>> the same and, with all the 'case' arms being short one-liners, I think
+>> the code is a bit easier to read as-is; bundling 'test_when_finished'
+>> into the 'env' assignment line would probably require wrapping the
+>> line. I do like the improved encapsulation of your suggestion but
+>> don't otherwise feel strongly about it.
+>
+> Actually, I think we can have improved encapsulation and maintain
+> readability like this:
+>
+>     case "$1" in
+>     ...
+>     -g) env="$2"; shift;  shift ;;
+>     ...
+>     esac
+>
+>     ...
+>     test_expect_success "..." '
+>         if test -n "$env"
+>         do
+>             test_when_finished "unset GIT_DIR"
+>             GIT_DIR="$env"
+>             export GIT_DIR
+>         fi
+>         ...
+>     '
 
-That being said, bash supports BASH_XTRACEFD, so maybe something like
-this:
+I wonder if is it really necessary to specify the path to the .git
+directory via $GIT_DIR.  Would 'git --git-dir=/over/there' be just as
+good?  If yes, then how about
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 286c5f3..482ec11 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -321,6 +321,7 @@ then
- else
- 	exec 4>/dev/null 3>/dev/null
- fi
-+BASH_XTRACEFD=4
- 
- test_failure=0
- test_count=0
-
-would help Dscho's case (and people on other shells aren't helped, but
-they are not hurt either).
-
--Peff
+   git ${gitdir:+--git-dir="$gitdir"} rev-parse ...
