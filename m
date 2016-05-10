@@ -1,73 +1,88 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v9 00/19] index-helper/watchman
-Date: Tue, 10 May 2016 19:57:41 +0700
-Message-ID: <CACsJy8Bra1bzUkG8u_btR67fBUAckJyL29S8kr-kcd_3x76v-Q@mail.gmail.com>
-References: <1462826929-7567-1-git-send-email-dturner@twopensource.com>
- <xmqqa8jyuczj.fsf@gitster.mtv.corp.google.com> <1462832134.24478.49.camel@twopensource.com>
- <xmqqy47iswhj.fsf@gitster.mtv.corp.google.com> <xmqqtwi6svzx.fsf@gitster.mtv.corp.google.com>
- <1462835573.24478.53.camel@twopensource.com> <CACsJy8CN_KzoFaROAksSuT1-sJgxP6zd2iJbqq-Dqq6EQyD_Vg@mail.gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] Windows: only add a no-op pthread_sigmask() when needed
+Date: Tue, 10 May 2016 15:00:35 +0200 (CEST)
+Message-ID: <26c2fb5560246fc7f980da24a239edc333864527.1462885167.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue May 10 14:58:19 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 10 15:00:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b07Ev-0001iQ-MF
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 14:58:18 +0200
+	id 1b07HQ-0004V7-JA
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 15:00:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751554AbcEJM6O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 08:58:14 -0400
-Received: from mail-lf0-f53.google.com ([209.85.215.53]:32928 "EHLO
-	mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751242AbcEJM6N (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 08:58:13 -0400
-Received: by mail-lf0-f53.google.com with SMTP id y84so13876354lfc.0
-        for <git@vger.kernel.org>; Tue, 10 May 2016 05:58:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=bpYnp7Pzcvo2231O53SixJglEfgEw54ndQ0y0Wet4Vc=;
-        b=fpjIUv271aj78wZmkDgtbmyHwpgzI1tu5uVtMoou+4Fv+kuJ7TiHGhpWlW+akcXCu6
-         95KpvT+a3/Z0k3EPm/sg+gPYn9QiktN4nakW2s6z7wbsUusYcdXUCuyFlOC6BzGJ62rJ
-         ETlkxr7InZ17mT3eVWR/Cwl53j2T7flSkUUTEM7J6Jme/tqfDUjfiNdVAZbRpZu2R9w7
-         CAvMHgc+MMPqsgI36Evn8cC3b8fiFizjFo7st8rapstY3lBQHoA7QhzAsQphjIHOikrM
-         3KMNagHgbJIx+YE8Ef0jw8NzvT6dg8BZvrjifBPafAxr1rlD5SSojrducgTCJ7B8/3c9
-         QOJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=bpYnp7Pzcvo2231O53SixJglEfgEw54ndQ0y0Wet4Vc=;
-        b=btKv1KRRilhhglpngwfHTEnHqGCSEb5zZgiujjul4pxs7NW+caTl1yHL2wTMy7j8p1
-         mR6IDCIMdNTu+Ky+nvGLrZTA537kJihDyxiGmebs+C9QBnYsuyQMjp/iEIa5b+7cquBr
-         zsvPhdztAv+Dg6DNskLiEbVA3hvxnpNYA4lTOjPo8d19iFpxQICQT9cGJAC6/6oUbcu+
-         aa4zBPwlb9VIV+sKyPuze0P1qMVFQGwd2/fHf5/YCFHnnEd2l7wHHsLpcP/b7r/VZ9rD
-         JWF/B63F5Rr3gL0VzC9jI20cjlX65F+5TfvbdcX+VV3YHZ1cvBXEk3GSWYebWdpaJKE8
-         oWdA==
-X-Gm-Message-State: AOPr4FX9IS3GZkj5qlbEfFswJs3XwIRZa88Osn/Rb+gZqgidTi4e3dX44L7AuZtaxWV2yynpmoH3Onh0P0bM4A==
-X-Received: by 10.112.181.72 with SMTP id du8mr16768001lbc.137.1462885091573;
- Tue, 10 May 2016 05:58:11 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Tue, 10 May 2016 05:57:41 -0700 (PDT)
-In-Reply-To: <CACsJy8CN_KzoFaROAksSuT1-sJgxP6zd2iJbqq-Dqq6EQyD_Vg@mail.gmail.com>
+	id S1751537AbcEJNAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 09:00:49 -0400
+Received: from mout.gmx.net ([212.227.15.15]:60462 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750959AbcEJNAs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 09:00:48 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0LnfuZ-1bYKMZ2ajv-00hs4E; Tue, 10 May 2016 15:00:40
+ +0200
+X-X-Sender: virtualbox@virtualbox
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:YnGSUc+EntHxLTTO4B9wmOPcAJC29yk3brtL9QXPQDr8/2fXZvC
+ CBw6k0AS3L18sbiSQ0Vah6YnobPdeAllw1rh92q9b3fAWHAUHv7MdBlrI8GGV/oqQZVJBJ1
+ s9xXukWMqPQr/Ol4XnXZteOwM/1F63nDHvsWSuehvm7wO4p59dejLzynqPOpQ00Cd6Qxd0B
+ LYiiIZg0CEQ3X6808lQ9g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:FUmcQHu815k=:/TDn9DhJstmnfVInkBXThP
+ 6LTePxeBqLrunnv5SLVplq5tuH7zyy9V0epbsW3VPw4J9Sei+JkAkO72MVOc0MTDgD5ZANfgs
+ rm17+VdYLjGXemySw+4/uG72oSX1pwECEQ1Og94H27yZhhMc4eAS9z4VYmHksFH1EWhw/lWbV
+ 5XonFgFNonaySZ+4RZojf7L24PHryTwJgdFRHudZeADJCx1k5gEN45hzf4latFrja4EAOF/Uo
+ INNPUKHrR/cba0eZv52dIzGPxotsJ8WPvUPASD8rld4uyFZUXVe9nu2Nq/E4N/kcY9W+G14Dd
+ 3XTUqy+hd6mRK8GDKG2ZdtxjiBw8THdBjjSrV8PStRBO8tnRyprcJjK9uEnSr4P6QIha+sN+z
+ C5UR7dpytdLBq/OPIoIkJdiLtmI3+8YJyCkqZxRcveduCcJWTnPQmdSgxkS+mFkGcoQm7Ig2F
+ hre+esd9bNngE5BxoiI4FEeDCt8tQwa6gXhh65bJV5xo/hj2qQvpH79BzOabby6Puoc1jdpht
+ dwjuwFtoKSUkB9A4WQMdiNIkWRjg9CwOmulWwxSXc2f+XNbyUJI5PiFTzuscNkGWrTBVeyyE8
+ CI2/tFwLe2XHyOmrsC6QImpeF2kzQwWxFHf05YblLaXg0AInYfe7s9surIfINJUrbU9Eejt3J
+ FUlWB5HmVCVBg9jGlvzP/LN5QldlqHUNdYhCov8HI5HNFu3Hu1Q74d/5REgCQf2yC84ssUL/X
+ mtlxYvE9TlgYUC9uOnYYt9y/sis/4kABDzrj70blOFVKMv3ySC1biYa96DvWHQHQEGv3Tsls 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294129>
 
-On Tue, May 10, 2016 at 7:45 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> If --detach is used, log_warning() can't cover die(),
-> warning() or error(), most importantly die() for example because of
-> bugs.
+In f924b52 (Windows: add pthread_sigmask() that does nothing,
+2016-05-01), we introduced a no-op for Windows. However, this breaks
+building Git in Git for Windows' SDK because pthread_sigmask() is
+already a no-op there, #define'd in the pthread_signal.h header in
+/mingw64/x86_64-w64-mingw32/include/.
 
-A case for redirecting warning() is because watchman-support.c uses
-it. But because this file is only used by index-helper, you have
-another option, simply convert it to using log_warning().
+Let's guard the definition of pthread_sigmask() in #ifndef...#endif to
+make the code compile both with modern MinGW-w64 as well as with the
+previously common MinGW headers.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+
+	This patch is obviously based on 'next' (because 'master' does not
+	have the referenced commit yet).
+
+Published-As: https://github.com/dscho/git/releases/tag/mingw-sigmask-v1
+ compat/win32/pthread.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/compat/win32/pthread.h b/compat/win32/pthread.h
+index d336451..8df702c 100644
+--- a/compat/win32/pthread.h
++++ b/compat/win32/pthread.h
+@@ -104,9 +104,11 @@ static inline void *pthread_getspecific(pthread_key_t key)
+ 	return TlsGetValue(key);
+ }
+ 
++#ifndef pthread_sigmask
+ static inline int pthread_sigmask(int how, const sigset_t *set, sigset_t *oset)
+ {
+ 	return 0;
+ }
++#endif
+ 
+ #endif /* PTHREAD_H */
 -- 
-Duy
+2.8.2.463.g99156ee
