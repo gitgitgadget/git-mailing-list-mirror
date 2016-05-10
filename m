@@ -1,95 +1,95 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 05/13] worktree.c: mark current worktree
-Date: Tue, 10 May 2016 10:32:56 -0700
-Message-ID: <xmqq8tzhrf7b.fsf@gitster.mtv.corp.google.com>
-References: <1461158693-21289-1-git-send-email-pclouds@gmail.com>
-	<1461330096-21783-1-git-send-email-pclouds@gmail.com>
-	<1461330096-21783-6-git-send-email-pclouds@gmail.com>
-	<CAPig+cQszEZLaebwqXNny6_EnhFpwU1xYqEX2_0N=vTEXTk2Fw@mail.gmail.com>
-	<CACsJy8D+anuZ-278kaz2ewpcLCGOSrdn2Qq1F7fFTuVUTLv5Yw@mail.gmail.com>
-	<20160510141416.GA22672@lanh>
+Subject: Re: [PATCH v8 2/3] t5551: make the test for extra HTTP headers more robust
+Date: Tue, 10 May 2016 10:34:11 -0700
+Message-ID: <xmqq4ma5rf58.fsf@gitster.mtv.corp.google.com>
+References: <cover.1462774709.git.johannes.schindelin@gmx.de>
+	<cover.1462863934.git.johannes.schindelin@gmx.de>
+	<ff8cbab7e62211b13835e520d402fbd89b90849e.1462863934.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Reto =?utf-8?Q?Habl=C3=BCtzel?= <rethab.ch@gmail.com>,
-	Mike Rappazzo <rappazzo@gmail.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 10 19:33:08 2016
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Lars Schneider <larsxschneider@gmail.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue May 10 19:34:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0BWs-0005ZE-Cj
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 19:33:06 +0200
+	id 1b0BY3-000706-Nx
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 19:34:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751162AbcEJRdB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 13:33:01 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64693 "EHLO
+	id S1751182AbcEJReQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 13:34:16 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61258 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750864AbcEJRdA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 13:33:00 -0400
+	with ESMTP id S1750983AbcEJReP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 13:34:15 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6240F19DC9;
-	Tue, 10 May 2016 13:32:59 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C022519E0B;
+	Tue, 10 May 2016 13:34:13 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gfjZ4ecUjYWmiNDGAOoLOUYMzRg=; b=Wr61UD
-	I5BqXzgqz2VKQg/0sAnou8rfa4lZMQA8Bt6IiUMOQetAOCyed/c44NQ3XvDoHZUV
-	M8ENjBkE/BqhKhUCDleUQbkEZa86a2tXg8obucIHDkvbd/fPlJy5mdBPYEj2sEsd
-	7pVf/kLP4A3UMJlncrtlfiStfw9HC2vuMJxlM=
+	:content-type; s=sasl; bh=RWEYc08WZ22AoA1NgWKGq6e355A=; b=F6KXtT
+	Y0M+TmC7OotLylVwPjI0nak0m0yWM4ubE4ySNMWR/XIuVT/ccc+nfWVF+F7/Pav0
+	kTQB5c/li0tgu4OvfGVeuBj7YUV59o3Bgv9k8LTAJnT51D3bAEbtTLUk2XT0YR8A
+	aTycYaeVnhvQUbIUJhkix/7q40weGoaF+9Cu8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RwYzxsf11RG90XsbIUqejgArqPEuxynN
-	GjqzNFz8DcgyzNcoQOujforfadlgoQFaA3k1y5agl3lwhofkNw9/v+M6BBNEnRhC
-	T1TjIH2/krTho8DF51TaBHHS1oCu+4Lk/SQAYx+4taGbxoV24+XdA+R1FhDKxgTH
-	lR1sApDp81I=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 57C4719DC8;
-	Tue, 10 May 2016 13:32:59 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=hUA2WdZz29jeXrOOUePvCOX+gQ0m/SCe
+	mhjIfpiYSgmtKi8U9wwEOG/81KoZHmuWc0hzV6OV5HlfIFSG7RTq9/ytAKYaUOGr
+	kMrAIioXQ1SgTvqYS461l351bpm5Vg54LN8qvbX9XnD9Me89kwD8v/0/96nhQduH
+	pa8Tl1Tkvjw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B6B6E19E0A;
+	Tue, 10 May 2016 13:34:13 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BD4DF19DC7;
-	Tue, 10 May 2016 13:32:58 -0400 (EDT)
-In-Reply-To: <20160510141416.GA22672@lanh> (Duy Nguyen's message of "Tue, 10
-	May 2016 21:14:16 +0700")
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 30EFD19E09;
+	Tue, 10 May 2016 13:34:13 -0400 (EDT)
+In-Reply-To: <ff8cbab7e62211b13835e520d402fbd89b90849e.1462863934.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Tue, 10 May 2016 09:08:38 +0200
+	(CEST)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3CFEE222-16D5-11E6-AA55-9A9645017442-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 69508E5C-16D5-11E6-A5B2-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294163>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> On second thought, why hold patches back, lengthen the worktree-move
-> series and make it a pain to review? I moved a few patches from
-> worktree-move into this series and I took two other out to create
-> nd/error-errno. So I'm going to take more patches out of it, creating
-> two bite-sized series, to be sent shortly.
+> To test that extra HTTP headers are passed correctly, t5551 verifies that
+> a fetch succeeds when two required headers are passed, and that the fetch
+> does not succeed when those headers are not passed.
 >
-> The first one is purely cleanup (ok, 1/7 is not exactly cleanup)
+> However, this test would also succeed if the configuration required only
+> one header. As Apache's configuration is notoriously tricky (this
+> developer frequently requires StackOverflow's help to understand Apache's
+> documentation), especially when still supporting the 2.2 line, let's just
+> really make sure that the test verifies what we want it to verify.
 >
->   [1/7] completion: support git-worktree
->   [2/7] worktree.c: rewrite mark_current_worktree() to avoid
->   [3/7] git-worktree.txt: keep subcommand listing in alphabetical
->   [4/7] worktree.c: use is_dot_or_dotdot()
->   [5/7] worktree.c: add clear_worktree()
->   [6/7] worktree: avoid 0{40}, too many zeroes, hard to read
->   [7/7] worktree: simplify prefixing paths
->
-> And the second one adds "git worktree lock" and "git worktree
-> unlock". This series is built on top of the first one, it needs 1/7.
->
->   [1/5] worktree.c: add find_worktree_by_path()
->   [2/5] worktree.c: add is_main_worktree()
->   [3/5] worktree.c: add is_worktree_locked()
->   [4/5] worktree: add "lock" command
->   [5/5] worktree: add "unlock" command
->
-> After this, worktree-move becomes ~10 patch series.
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
 
-Yay.  Thanks; will take a look.
+Matches the previous one I queued with Reviewed-by: from Peff; good.
+
+>  t/t5551-http-fetch-smart.sh | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+> index e44fe72..43b257e 100755
+> --- a/t/t5551-http-fetch-smart.sh
+> +++ b/t/t5551-http-fetch-smart.sh
+> @@ -283,7 +283,8 @@ test_expect_success EXPENSIVE 'http can handle enormous ref negotiation' '
+>  '
+>  
+>  test_expect_success 'custom http headers' '
+> -	test_must_fail git fetch "$HTTPD_URL/smart_headers/repo.git" &&
+> +	test_must_fail git -c http.extraheader="x-magic-two: cadabra" \
+> +		fetch "$HTTPD_URL/smart_headers/repo.git" &&
+>  	git -c http.extraheader="x-magic-one: abra" \
+>  	    -c http.extraheader="x-magic-two: cadabra" \
+>  	    fetch "$HTTPD_URL/smart_headers/repo.git"
