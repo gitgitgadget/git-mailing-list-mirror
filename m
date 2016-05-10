@@ -1,162 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] test-lib: set BASH_XTRACEFD automatically
-Date: Tue, 10 May 2016 17:32:18 -0400
-Message-ID: <20160510213218.GA27028@sigill.intra.peff.net>
-References: <cover.1462888768.git.johannes.schindelin@gmx.de>
- <alpine.DEB.2.20.1605101607180.4092@virtualbox>
- <xmqqshxpofqh.fsf@gitster.mtv.corp.google.com>
- <20160510205800.GC19958@sigill.intra.peff.net>
- <xmqqpostmxah.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 00/33] Yet more preparation for reference backends
+Date: Tue, 10 May 2016 14:32:27 -0700
+Message-ID: <xmqqlh3hmwes.fsf@gitster.mtv.corp.google.com>
+References: <cover.1462550456.git.mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 10 23:32:27 2016
+Content-Type: text/plain
+Cc: David Turner <dturner@twopensource.com>, Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue May 10 23:32:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0FGU-0004gh-U0
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 23:32:27 +0200
+	id 1b0FGc-0004p5-LQ
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 23:32:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752785AbcEJVcX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 17:32:23 -0400
-Received: from cloud.peff.net ([50.56.180.127]:37312 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751410AbcEJVcW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 17:32:22 -0400
-Received: (qmail 30708 invoked by uid 102); 10 May 2016 21:32:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 10 May 2016 17:32:21 -0400
-Received: (qmail 2033 invoked by uid 107); 10 May 2016 21:32:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 10 May 2016 17:32:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 May 2016 17:32:18 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqpostmxah.fsf@gitster.mtv.corp.google.com>
+	id S1753116AbcEJVcc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 17:32:32 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51901 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753101AbcEJVcb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 17:32:31 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0F0891A34D;
+	Tue, 10 May 2016 17:32:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=leHtzhhn2N5HyoWDyyV4LyHw/5s=; b=GPvK9r
+	o1RkyEnABMQutcRx+QejBB3JE4N3bh4wjjbl7T8BjtEBg9b30djDzsUOwVfI/uW1
+	zTUriGSerZHS7q/+RJt8omYhvyBCedMlvm5wUY6loToTWCNUmh/nGX1FAPhTJZQs
+	95Pp7pS5TB6FPGs+pCMCeXnEq14WaAldSsbCk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UwKDw7H3iBXVviX/DlsxZyCBiN0hB5N1
+	DUw+o8ylTogEzLdF0F09CGPg04yIzx4N+YgLdAnT9icsGfLNxmKBv9zPNYvqLsdr
+	TylnLnHsv6STwPywWlhIZJ5ib8koZpRpYaXaj/MTAOXp5Kp5ZtTTNBBH41Qrjupw
+	iiJCnmgLFSY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 06A211A34C;
+	Tue, 10 May 2016 17:32:30 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8028B1A34A;
+	Tue, 10 May 2016 17:32:29 -0400 (EDT)
+In-Reply-To: <cover.1462550456.git.mhagger@alum.mit.edu> (Michael Haggerty's
+	message of "Fri, 6 May 2016 18:13:41 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B2993462-16F6-11E6-8B7A-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294198>
 
-On Tue, May 10, 2016 at 02:13:26PM -0700, Junio C Hamano wrote:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> > I don't think there is a scalable, portable way to do so. "-x" output is
-> > going to stderr, and is inherited by any functions or subshells. So
-> > either we have to ask "-x" output to go somewhere else, or we have to
-> > turn it off inside the functions and subshells. The latter requires
-> > tweaking each site, which isn't scalable. And there is no way to do the
-> > former in a portable way (AFAIK).
-> 
-> Yeah, that was the conclusion I was coming to; the same "unscalable"
-> argument applies to the patch under discussion, too.
+> ... I think I have addressed all of the points that were
+> brought up. Plus I fixed a pre-existing bug that I noticed myself
+> while adding some more tests; see the first bullet point below for
+> more information.
+>
+> Changes between v1 and v2:
+>
+> * Prefixed the patch series with three new patches that demonstrate
+>   and fix some bugs in reference resolution that I noticed while
+>   inspecting this series:
 
-I think munging the tests themselves is even more horrible than tweaking
-test_must_fail, but even the latter is not very scalable (test_must_fail
-is undoubtedly the most common function, but it's not the only one; and
-one may actually want to see its trace output anyway).
-
-> > +BASH_XTRACEFD=4
-> [...]
-> 
-> Yeah, something like that I would greatly appreciate.
-
-Here it is in patch form. It's sad that we can't automatically help
-people using dash (which includes myself). I suppose we could
-auto-reinvoke ourselves using bash if it is available, but that feels a
-bit too magical. I'm content to let "try running with bash" be a tool in
-our toolbox.
-
--- >8 --
-Subject: [PATCH] test-lib: set BASH_XTRACEFD automatically
-
-Passing "-x" to a test script enables the shell's "set -x"
-tracing, which can help with tracking down the command that
-is causing a failure. Unfortunately, it can also _cause_
-failures in some tests that redirect the stderr of a shell
-function.  Inside the function the shell continues to
-respect "set -x", and the trace output is collected along
-with whatever stderr is generated normally by the function.
-
-You can see an example of this by running:
-
-  ./t0040-parse-options.sh -x -i
-
-which will fail immediately in the first test, as it
-expects:
-
-  test_must_fail some-cmd 2>output.err
-
-to leave output.err empty (but with "-x" it has our trace
-output).
-
-Unfortunately there isn't a portable or scalable solution to
-this. We could teach test_must_fail to disable "set -x", but
-that doesn't help any of the other functions or subshells.
-
-However, we can work around it by pointing the "set -x"
-output to our descriptor 4, which always points to the
-original stderr of the test script. Unfortunately this only
-works for bash, but it's better than nothing (and other
-shells will just ignore the BASH_XTRACEFD variable).
-
-The patch itself is a trivial-looking one-liner, but there
-are a few subtleties worth mentioning:
-
-  - the variable is _not_ exported; the "set -x" is local to
-    our process, and so the tracefd should match
-
-  - this line has to come after we do the redirection for fd
-    4, as bash will otherwise complain during the variable
-    assignment
-
-  - likewise, we cannot ever unset this variable, as it
-    would close descriptor 4
-
-  - setting it once here is sufficient to cover both the
-    regular "-x" case (which implies "--verbose"), as well
-    as "--verbose-only=1". This works because the latter
-    flips "set -x" off and on for particular tests (if it
-    didn't, we would get tracing for all tests, as going to
-    descriptor 4 effectively circumvents the verbose flag).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/README      | 6 +++---
- t/test-lib.sh | 1 +
- 2 files changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/t/README b/t/README
-index 1dc908e..76a0daa 100644
---- a/t/README
-+++ b/t/README
-@@ -84,9 +84,9 @@ appropriately before running "make".
- 
- -x::
- 	Turn on shell tracing (i.e., `set -x`) during the tests
--	themselves. Implies `--verbose`. Note that this can cause
--	failures in some tests which redirect and test the
--	output of shell functions. Use with caution.
-+	themselves. Implies `--verbose`. Note that in non-bash shells,
-+	this can cause failures in some tests which redirect and test
-+	the output of shell functions. Use with caution.
- 
- -d::
- --debug::
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 286c5f3..482ec11 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -321,6 +321,7 @@ then
- else
- 	exec 4>/dev/null 3>/dev/null
- fi
-+BASH_XTRACEFD=4
- 
- test_failure=0
- test_count=0
--- 
-2.8.2.660.ge43c418
+I'd propose to wait for further comments a few more days and merge
+this to 'next' by the end of the week.
