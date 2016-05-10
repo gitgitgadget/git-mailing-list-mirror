@@ -1,89 +1,123 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 4/6] t1500: avoid setting configuration options outside of tests
-Date: Tue, 10 May 2016 02:34:30 -0400
-Message-ID: <CAPig+cTXOcUfO=EE5xhOjEgzSNtmhrD84PDMvVHX9hEmwuV==g@mail.gmail.com>
-References: <20160510052055.32924-1-sunshine@sunshineco.com>
-	<20160510052055.32924-5-sunshine@sunshineco.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Michael Rappazzo <rappazzo@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 10 08:35:25 2016
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v7 1/3] tests: Adjust the configuration for Apache 2.2
+Date: Tue, 10 May 2016 08:37:11 +0200
+Message-ID: <C5C883AD-E684-4D2F-811B-A479DE5E41AB@gmail.com>
+References: <cover.1462342213.git.johannes.schindelin@gmx.de> <cover.1462774709.git.johannes.schindelin@gmx.de> <4a15c4e6c35cfb425da568d87e8b20b984e5325c.1462774709.git.johannes.schindelin@gmx.de>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue May 10 08:37:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b01GJ-0001Kk-Ut
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 08:35:20 +0200
+	id 1b01IG-0003bI-Ko
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 08:37:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750953AbcEJGeb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 02:34:31 -0400
-Received: from mail-ig0-f194.google.com ([209.85.213.194]:33611 "EHLO
-	mail-ig0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750889AbcEJGeb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 02:34:31 -0400
-Received: by mail-ig0-f194.google.com with SMTP id rc4so507957igc.0
-        for <git@vger.kernel.org>; Mon, 09 May 2016 23:34:30 -0700 (PDT)
+	id S1751121AbcEJGhO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 02:37:14 -0400
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:36225 "EHLO
+	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751049AbcEJGhN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 May 2016 02:37:13 -0400
+Received: by mail-wm0-f47.google.com with SMTP id n129so164155769wmn.1
+        for <git@vger.kernel.org>; Mon, 09 May 2016 23:37:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=9gAm4kL9G8KAnezfZL1a1+Qy9W6EuCQ1nz4YleYfZJY=;
-        b=b2kNScN/tzQ+PielAdPYG9R7UPfKTnaK9JkcHHz1dl6cMo/Ko78tvFpO14bMeMNiMN
-         s9o1aheJJobud4c/FPXxBnWQm/YrC5WTM6GaKWGf0M5V0YJdBrYU2fvAeMCT0QBIL8Am
-         TyttkxrieGBbK3PqI8vfhnq8gX3zR8aNSruVDunJtTrJGwFpR4kQfXFcWPvAt3B2VB27
-         k186lSr+VtYabs9J0qucq5/o/Wo3Ho8qzF9ubK/95zRJLTHzXhYRzLJmL3/joHccfEOD
-         eCt29THBCSDba/7W+kdW0lkd2YGp3xjAsWYGxrkZTYPh0s1AI/vUS5AM9iMow102e7hd
-         mNIw==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=jgcfTgCvPZZdNhwPvUciawzJaKGkAaH34w16RksDxqU=;
+        b=J6/K88DuSb6VQK/4eIBG2DZY54au+rlO7bNDslcQNptBRKytBBacjTGzP1imStQQb6
+         hn1EwQBy12C+2t0aFf4Y3CNLPmOspi1QhKP/eJzn2gutcO/D4b6CyyOr7ZrbFE+2fmn1
+         z8PnUCLqUHv6Fv51gcJpqdwnnhy9O8keH7UafvoFz67tf2gvIU4iDL7kUmS3kiqrhGgL
+         dikI808Kfrtv6tOHH3s650HsTvRbs90xllUBQVowtLxl3lpU82y0UunOtNCpINV7LQtE
+         iLyZdUHs6b1mQIvfPl7MEbcaWvsa6XEnArdUK165xl9FOiyCT6VYIyr0X6JMJIeLjOsx
+         OZpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=9gAm4kL9G8KAnezfZL1a1+Qy9W6EuCQ1nz4YleYfZJY=;
-        b=in3cr12ydtF7vcYdW7ceAH/Wlsd7b79L6Zxj0f2pRwWCYFVnTdXDJbt36COQ5cW4Mu
-         j8FNlApKKHTC/nZ7Uc0/TvRJcHn56mXEpz+vqYlbb4LHPMEHjebqelQK+8Y66SKppg6a
-         +iBDTGCGmHnVY25Zwb0B/qFMvMXQqQXpzafmgWyGIV1Dm2hmE5JxlU/cB/m0jwDQ2MyN
-         RAiYEviRSCHItv01bIQ1tUNuZkEszuk5onHZP66SZvyUUH3gRTGkqWcCusgcovYnqEI6
-         l7aBqtQHeCtuEkrVOzxo84zWZ29EG/QE9GBMlt1km2lxSsYZdKMFFGZ44JVepCP0HttN
-         EunA==
-X-Gm-Message-State: AOPr4FWQMvmFwCafExciTEEbEuCT1rYJX61tk9dHsPFSnExzsoSaH9WcmZON5GeFc+kPEWFdeS3VR2Y1LQo1jw==
-X-Received: by 10.50.36.9 with SMTP id m9mr15899031igj.91.1462862070127; Mon,
- 09 May 2016 23:34:30 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Mon, 9 May 2016 23:34:30 -0700 (PDT)
-In-Reply-To: <20160510052055.32924-5-sunshine@sunshineco.com>
-X-Google-Sender-Auth: MRLxHflwd7HcBy2c_UD9LRoazSg
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=jgcfTgCvPZZdNhwPvUciawzJaKGkAaH34w16RksDxqU=;
+        b=gH0S6lUfXe7Jm/yZlBSYEjOHiqD+4k1jnMEld3kHO1MYctCY7h0CqEdree0xGG5/Bx
+         wwmc2+ER5tz2Q50Oz8h5iu2c/sgebaFy43nTa/zhaGmyq3ZmD/4Dv6tZoK8P+h8y/Pj+
+         tE4fR6GUCf0MCv359Be02gGRgb8ZSiMBmLvzctb8g9n9v/lC8tvRl/vsEQxyCqXSTvco
+         CawLJpgzTZvSdK6Rx6FsZVzjY705w3vS/LCv3PprUzhL1Wfhxh1wtqz1B6V8CJ5IECvQ
+         27e4WVWZeaH4RDL5b48MUvTDyKO3+g8J8oO2KyewhSvHAPS0ElGA3xLkJq89temZTrFK
+         gc4w==
+X-Gm-Message-State: AOPr4FWWLVTBrH0qCQNLCiDoTW3YDxrVTUM6X7H/JaziaIG6kJsfWa97ossELCmd7HbDNQ==
+X-Received: by 10.194.61.231 with SMTP id t7mr41428064wjr.32.1462862231959;
+        Mon, 09 May 2016 23:37:11 -0700 (PDT)
+Received: from [10.32.249.146] (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id a207sm1145633wma.8.2016.05.09.23.37.10
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 09 May 2016 23:37:10 -0700 (PDT)
+In-Reply-To: <4a15c4e6c35cfb425da568d87e8b20b984e5325c.1462774709.git.johannes.schindelin@gmx.de>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294101>
 
-On Tue, May 10, 2016 at 1:20 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> Ideally, each test should be responsible for setting up state it needs
-> rather than relying upon transient global state. Toward this end, teach
-> test_rev_parse() to accept a "-b <value>" option to allow callers to set
-> "core.bare" explicitly or undefine it, and take advantage of this new
-> option to avoid setting "core.bare" outside of tests.
-> [...snip...]
->
-> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+
+> On 09 May 2016, at 08:18, Johannes Schindelin <johannes.schindelin@gmx.de> wrote:
+> 
+> Lars Schneider noticed that the configuration introduced to test the extra
+> HTTP headers cannot be used with Apache 2.2 (which is still actively
+> maintained, as pointed out by Junio Hamano).
+> 
+> To let the tests pass with Apache 2.2 again, let's substitute the
+> offending <RequireAll> and `expr` by using old school RewriteCond
+> statements.
+
+All Apache 2.2 tests run nicely on Travis CI with Ubuntu and OSX using
+this patch series:
+https://travis-ci.org/larsxschneider/git/builds/128955548
+
+Thanks,
+Lars
+
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
-> diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
-> @@ -6,15 +6,25 @@ test_description='test git rev-parse'
-> +       case "$bare" in
-> +       '') ;;
-> +       t*) bare="test_config $dir core.bare true" ;;
-> +       f*) bare="test_config $dir core.bare false" ;;
-> +       u*) bare="test_unconfig $dir core.bare" ;;
-> +       *) error "test_rev_parse: unrecognized core.bare value '$bare'"
-
-Oops, this line lost its ;; at some point while refining the code.
-
-> +       esac
+> t/lib-httpd/apache.conf | 12 ++++++++----
+> 1 file changed, 8 insertions(+), 4 deletions(-)
+> 
+> diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+> index b8ed96f..29b34bb 100644
+> --- a/t/lib-httpd/apache.conf
+> +++ b/t/lib-httpd/apache.conf
+> @@ -103,10 +103,6 @@ Alias /auth/dumb/ www/auth/dumb/
+> 	Header set Set-Cookie name=value
+> </LocationMatch>
+> <LocationMatch /smart_headers/>
+> -	<RequireAll>
+> -		Require expr %{HTTP:x-magic-one} == 'abra'
+> -		Require expr %{HTTP:x-magic-two} == 'cadabra'
+> -	</RequireAll>
+> 	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
+> 	SetEnv GIT_HTTP_EXPORT_ALL
+> </LocationMatch>
+> @@ -136,6 +132,14 @@ RewriteRule ^/ftp-redir/(.*)$ ftp://localhost:1000/$1 [R=302]
+> RewriteRule ^/loop-redir/x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-(.*) /$1 [R=302]
+> RewriteRule ^/loop-redir/(.*)$ /loop-redir/x-$1 [R=302]
+> 
+> +# Apache 2.2 does not understand <RequireAll>, so we use RewriteCond.
+> +# And as RewriteCond unfortunately lacks "not equal" matching, we use this
+> +# ugly trick to fail *unless* the two headers are present.
+> +RewriteCond %{HTTP:x-magic-one} =abra
+> +RewriteCond %{HTTP:x-magic-two} =cadabra
+> +RewriteRule ^/smart_headers/.* - [L]
+> +RewriteRule ^/smart_headers/.* - [F]
 > +
+> <IfDefine SSL>
+> LoadModule ssl_module modules/mod_ssl.so
+> 
+> -- 
+> 2.8.2.463.g99156ee
+> 
+> 
