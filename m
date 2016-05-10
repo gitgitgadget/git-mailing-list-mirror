@@ -1,156 +1,98 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] t3404: be resilient against running with the -x flag
-Date: Tue, 10 May 2016 12:49:42 -0700
-Message-ID: <xmqqshxpofqh.fsf@gitster.mtv.corp.google.com>
-References: <cover.1462888768.git.johannes.schindelin@gmx.de>
-	<alpine.DEB.2.20.1605101607180.4092@virtualbox>
+Subject: Re: [PATCH 1/3] perf: let's disable symlinks on Windows
+Date: Tue, 10 May 2016 12:51:53 -0700
+Message-ID: <xmqqoa8dofmu.fsf@gitster.mtv.corp.google.com>
+References: <cover.1462894344.git.johannes.schindelin@gmx.de>
+	<alpine.DEB.2.20.1605101738390.4092@virtualbox>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org
 To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue May 10 21:49:55 2016
+X-From: git-owner@vger.kernel.org Tue May 10 21:52:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0DfE-0004to-UF
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 21:49:53 +0200
+	id 1b0DhJ-0007LJ-Iv
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 21:52:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752708AbcEJTtr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 15:49:47 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54216 "EHLO
+	id S1751590AbcEJTv6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 15:51:58 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63947 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751759AbcEJTtq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 15:49:46 -0400
+	with ESMTP id S1751288AbcEJTv5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 15:51:57 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 278D4192C8;
-	Tue, 10 May 2016 15:49:45 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EE5C5194E3;
+	Tue, 10 May 2016 15:51:55 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WXWbaV7j91t7RwQbqqHN4AQxMHc=; b=XMdDk5
-	Kn7U+RIyZHccWF6o8/7DG/G2Tr9JOItTNrbFk06I1MY+yvuSbc48vTteJeANmufb
-	P+Hwo5Au5/azeRHPtp8AUgAE0WK/LP2lj60yXjIPq5CD4dVzBJi2isksik3/vlmF
-	IklAXdGoPEnAQmo61ZoSfiUnBbSJ+5FE4vgqY=
+	:content-type; s=sasl; bh=UX14ahMCvZEeySm7lKxhrwjLG5E=; b=nwliyU
+	3U+gQszWw/3AvyuhaabnkOHJS+wJfE6qATLJU8PdenpyjsqdpUsDIsev65Epvr3/
+	5t9U1PNXC4oa/6WdkcHWDqewCpjPUnAqUoXH/Ae6v5uovFQ8KynSQFm1SR7Or0jL
+	a2Sk2qUEBAeBd9zdAHLm/U0pAV1LLbmDzcjKs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eAb+07MGZsFqbkPexwlyKAgD58tGvR+4
-	LicIsHISx8TOUXLPJ07VILYF5JESzYo89cRLpVMLJUjlVEw96T+X5JBTZphsVeCu
-	Gra9ekR4UE5Rg8YGp9lRPeFmyyvLjh7jb1Tk8WpyGgFS+a0cRfQ8n/wlgD1NTPkj
-	4zP9J4LW0jg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1F93C192C7;
-	Tue, 10 May 2016 15:49:45 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=aAHhY38eIxttzrkbuS2HPe3rJ65BziQs
+	4zEvtJNW22TARTZfLlTAEqSTtrMnceMBJZHV4Etsj/tqjyGKf6VW6ZOFS2SmYq1m
+	04iOyCjp8rFgoxkDKqSsYz2GPx1OdtulHJHnEG0x9/vMDmGa4x3UjeAbnsiZ1sTr
+	X7a/TsazI0Q=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E6474194E2;
+	Tue, 10 May 2016 15:51:55 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7CA16192C6;
-	Tue, 10 May 2016 15:49:44 -0400 (EDT)
-In-Reply-To: <alpine.DEB.2.20.1605101607180.4092@virtualbox> (Johannes
-	Schindelin's message of "Tue, 10 May 2016 16:07:22 +0200 (CEST)")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 61909194E0;
+	Tue, 10 May 2016 15:51:55 -0400 (EDT)
+In-Reply-To: <alpine.DEB.2.20.1605101738390.4092@virtualbox> (Johannes
+	Schindelin's message of "Tue, 10 May 2016 17:41:53 +0200 (CEST)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 57F409AA-16E8-11E6-90F4-D05A70183E34-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: A5F866B4-16E8-11E6-8271-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294180>
 
 Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> To: Junio C Hamano <gitster@pobox.com>
-> Cc: git@vger.kernel.org
+> In Git for Windows' SDK, Git's source code is always checked out
+> with symlinks disabled. The reason is that POSIX symlinks have no
+> accurate equivalent on Windows [*1*]. More precisely, though, it is
+> not just Git's source code but *all* source code that is checked
+> out with symlinks disabled: core.symlinks is set to false in the
+> system-wide gitconfig.
+>
+> Since the perf tests are run with the system-wide gitconfig *disabled*,
+> we have to make sure that the Git repository is initialized correctly
+> by configuring core.symlinks explicitly.
 
-Probably the above is the other way around.
+Is MINGW the right prerequisite to use here, or is SIMLINKS more
+appropriate?
 
-> The -x flag (trace commands) is a priceless tool when hunting down bugs
-> that trigger test failures. It is a worthless tool if the -x flag
-> *itself* triggers test failures.
-
-True.
-
-I wonder if we can fix "-x" instead so that we do not have to
-butcher tests like this patch does.  It was quite clear what it
-expected to see before this patch, and it is sad that the workaround
-makes less readable (and relies on the real output we are looking
-for never begins with '+').
-
-I do agree the change from 1d to /<expected string>/d in this patch
-is a very good thing; it makes it clear that we are excluding the
-"error: ", and expect that after removing the message what follows
-is the help text.  And in the spirit of that change, I think it is
-better to match /^error: / instead of /option .exec. requires.../.
-
-> So let's change the offending tests so that they are a bit less
-> stringent and do not stumble over the "+..." lines generated by the -x
-> flag.
+>
+> Footnote *1*:
+> https://github.com/git-for-windows/git/wiki/Symbolic-Links
 >
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->  t/t3404-rebase-interactive.sh | 67 ++++++++++---------------------------------
->  1 file changed, 15 insertions(+), 52 deletions(-)
+>  t/perf/perf-lib.sh | 4 ++++
+>  1 file changed, 4 insertions(+)
 >
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index 66348f1..25f1118 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -882,7 +882,8 @@ test_expect_success 'rebase -i --exec without <CMD>' '
->  	git reset --hard execute &&
->  	set_fake_editor &&
->  	test_must_fail git rebase -i --exec 2>tmp &&
-> -	sed -e "1d" tmp >actual &&
-> +	sed -e "/option .exec. requires a value/d" -e '/^+/d' \
-> +		tmp >actual &&
->  	test_must_fail git rebase -h >expected &&
->  	test_cmp expected actual &&
->  	git checkout master
-> @@ -1149,10 +1150,6 @@ test_expect_success 'drop' '
->  	test A = $(git cat-file commit HEAD^^ | sed -ne \$p)
->  '
->  
-> -cat >expect <<EOF
-> -Successfully rebased and updated refs/heads/missing-commit.
-> -EOF
-> -
->  test_expect_success 'rebase -i respects rebase.missingCommitsCheck = ignore' '
->  	test_config rebase.missingCommitsCheck ignore &&
->  	rebase_setup_and_clean missing-commit &&
-> @@ -1160,52 +1157,33 @@ test_expect_success 'rebase -i respects rebase.missingCommitsCheck = ignore' '
->  	FAKE_LINES="1 2 3 4" \
->  		git rebase -i --root 2>actual &&
->  	test D = $(git cat-file commit HEAD | sed -ne \$p) &&
-> -	test_cmp expect actual
-> +	test_i18ngrep \
-> +		"Successfully rebased and updated refs/heads/missing-commit." \
-> +		actual
-
-Is this string going to be i18n'ed?  If so this change is good, but
-it probably wants to be a separate "prepare for i18n" patch, not
-this "work around -x that pollutes 2>actual output" patch.
-
->  test_expect_success 'rebase -i respects rebase.missingCommitsCheck = warn' '
-> +	line="$(git rev-list --pretty=oneline --abbrev-commit -1 master)" &&
->  	test_config rebase.missingCommitsCheck warn &&
->  	rebase_setup_and_clean missing-commit &&
->  	set_fake_editor &&
->  	FAKE_LINES="1 2 3 4" \
->  		git rebase -i --root 2>actual &&
-> -	test_cmp expect actual &&
-> +	test_i18ngrep "Warning: some commits may have been dropped" actual &&
-> +	test_i18ngrep "^ - $line" actual &&
-
-The former is good in "prepare for i18n" patch.  The latter is not.
-
-test_i18ngrep is primarily to make sure what is *not* supposed to be
-localized are not localized.  GETTEXT_POISON build-time option
-builds Git with garbage translations for strings marked for
-localization, and test_i18ngrep knows to pretend the test always
-passes in POISON build.
-
-We test things that are _not_ to be localized with "grep", so a test
-with POISON build will catch if a string (like plumbing output) that
-are not supposed to be localized is marked for localization by
-mistake.
-
-I stop quoting here, but I think the remainder has the same
-over-eager use of i18ngrep.
+> diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
+> index 5cf74ed..e9020d0 100644
+> --- a/t/perf/perf-lib.sh
+> +++ b/t/perf/perf-lib.sh
+> @@ -97,6 +97,10 @@ test_perf_create_repo_from () {
+>  		done &&
+>  		cd .. &&
+>  		git init -q &&
+> +		if test_have_prereq MINGW
+> +		then
+> +			git config core.symlinks false
+> +		fi &&
+>  		mv .git/hooks .git/hooks-disabled 2>/dev/null
+>  	) || error "failed to copy repository '$source' to '$repo'"
+>  }
