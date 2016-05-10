@@ -1,136 +1,78 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 3/3] Add a perf test for rebase -i
-Date: Tue, 10 May 2016 17:45:08 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605101744060.4092@virtualbox>
-References: <cover.1462894344.git.johannes.schindelin@gmx.de>
+From: Sascha Silbe <sascha-ml-reply-to-2016-2@silbe.org>
+Subject: diff --break-rewrites for just a part of a file
+Date: Tue, 10 May 2016 18:22:34 +0200
+Message-ID: <toea8jx3mt1.fsf@mimosa.sascha.silbe.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 10 17:45:21 2016
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 10 18:32:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b09qb-0000sa-3T
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 17:45:21 +0200
+	id 1b0AZq-0003tB-LZ
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 18:32:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752306AbcEJPpQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 11:45:16 -0400
-Received: from mout.gmx.net ([212.227.17.20]:57834 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751409AbcEJPpP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 11:45:15 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0Lt1yI-1bk3LC2N6g-012cP0; Tue, 10 May 2016 17:45:08
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <cover.1462894344.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:1iCOmJsU/0DEBEv2SxCoQbwirLnhXVFZGd44SwalaBkaomdxpjj
- odmkZpcK9KE9OMO+VrvlApuQnyVQBHUf/I/ZlEhIphyOwZrfhwLs8Rt0UhL6CV01oZZEqfF
- c+t7xCUh5vgnDSm0PibNpzc8poM/3Xx6frn/CUXYwoOvM8uOlZDcu7ORT6r14G38YR+cbev
- NCXbcx/ax01LSbjl+zdjw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:JkpMBR20r9E=:b7YZwoHbT7Rmlvdi9D5C5E
- mbhIyRgwIRbIIVQs1CWvgqDXXxvDShAs5Pct+FmFh386XkrPfOcwRxYUp7ZzGxDU4jJTjCVt8
- 5qinDDBzkMT73f125VIQvB0CqFRTGnW/8HVksgmJhdNIRsHr+fhXCU8u3yN7ZIWxsdn5+EoK2
- tXWNkLnPhw7glUSRVSXCLJfLKx0nDa0uCFX552tAx51lUftZ3b4Kh1Oed2hSPTpmAuzqdP+k2
- pL8cwBraoO0D9B05lMDCgKnrKlRu0osfddP1sZ+aXTwZ2do3WssfX8RL6MZiXF9ODz1SCTU7Y
- 8o0wZ6Y/yxEd0Cgssh+iKoBinYVI/cSfDmSTk7dAKCBGEeEYt81I3d9vpjW1ZVMNmx2jbL+4i
- O3K8NBy/+0H58kKHWWNZiC3m2kvgYl0ZLqrLW0bv0XAcA/HIs4/uP8H64LnsnJEf3tnox/AG9
- h7GcAtjmL1/wfaLbBPI1epsC/i1Dg3AylkGFSZUam5PirlGOfTd9j4Z6wzb/36HCDb3szQgPb
- NFN68g0LBdDv4ZvYaaDqoUlV1muJ7y2d8kAi8rzd60Szhqt2Pl16AuybiP1pX3qhIv6NZLJ8p
- E0qCxRZtsNEdfHQdgUfDPvJyNiCWxzapmeDkdT53UKRUN9V/hS2p57jTtS7ZYoCvmCsHPSAZh
- r1b4WXfbU6HFSZKoN96cHXJeA+lSVlHBUQlJVw81HAbnjVLW7QuhoFah8pG2q/EpfDzAf/zhj
- OtfAH4BY5jjiV1JdD5XA6WhLDY3CLO5NaK7mTFRRSjiJF6DejbbAgGD9xs1Q2pD1z/GXa8c4 
+	id S1752198AbcEJQcB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 12:32:01 -0400
+Received: from bbox.sascha.silbe.org ([84.201.25.44]:60695 "EHLO
+	bbox.sascha.silbe.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751897AbcEJQcA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 12:32:00 -0400
+X-Greylist: delayed 525 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 May 2016 12:32:00 EDT
+Received: from mimosa.sascha.silbe.org (unknown [176.2.62.36])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client CN "", Issuer "stunnel Pseudo-CA" (verified OK))
+	by bbox.sascha.silbe.org (Postfix) with ESMTPS id 88298BF1A4
+	for <git@vger.kernel.org>; Tue, 10 May 2016 18:22:59 +0200 (CEST)
+Received: (nullmailer pid 24730 invoked by uid 8193);
+	Tue, 10 May 2016 16:22:55 -0000
+User-Agent: Notmuch/0.18.1 (http://notmuchmail.org) Emacs/23.4.1 (arm-unknown-linux-gnueabi)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294153>
 
-This developer spent a lot of time trying to speed up the interactive
-rebase, in particular on Windows. And will continue to do so.
+--=-=-=
 
-To make it easier to demonstrate the performance improvement, let's have
-a reproducible performance test.
+Hello,
 
-The topic branch we use to test performance was found using these shell
-commands (essentially searching for a long-enough topic branch in Git's
-own history that touched the same file multiple times):
+the other day I was reviewing a patch that replaced a large chunk in a
+Makefile with completely different logic. No matter what diff algorithm
+and options I threw at it, the diff would always synchronise at the
+empty lines between individual targets and thus show the rewrite of a
+larger section as complete replacements of many smaller, but directly
+adjacent sections (only separated by a blank line).
 
-	git rev-list --parents origin/master |
-	grep ' .* ' |
-	while read commit rest
-	do
-		patch_count=$(git rev-list --count $commit^..$commit^2)
-		test $patch_count -gt 20 || continue
+--break-rewrites would be nicely suited for this case, but once I dialed
+down the parameters enough for the option to apply at all, it showed the
+entire file as being replaced rather than just the section in between
+that actually changed. Is there a way to have --break-rewrites leave out
+the unchanged lines at beginning and end of the file?
 
-		merges="$(git rev-list --parents $commit^..$commit^2 |
-			grep ' .* ')"
-		test -z "$merges" || continue
+A combination of --break-rewrites and --inter-hunk-context that merges
+changes with less than the given number of unchanged lines between them
+into a single delete/insert change would be even better. But just
+ignoring the unchanged header and footer of a file for --break-rewrites
+would already go a long way.
 
-		patches_per_file="$(git log --pretty=%H --name-only \
-				$commit^..$commit^2 |
-			grep -v '^$' |
-			sort |
-			uniq -c -d |
-			sort -n -r)"
-		test -n "$patches_per_file" &&
-		test 20 -lt $(echo "$patches_per_file" |
-			sed -n '1s/^ *\([0-9]*\).*/\1/p') || continue
+Sascha
 
-		printf 'commit %s\n%s\n' "$commit" "$patches_per_file"
-	done
+--=-=-=
+Content-Type: application/pgp-signature
 
-Note that we can get away with *not* having to reset to the original
-branch tip before rebasing: we switch the first two "pick" lines every
-time, so we end up with the same patch order after two rebases, and the
-complexity of both rebases is equivalent.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/perf/p3404-rebase-interactive.sh | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
- create mode 100755 t/perf/p3404-rebase-interactive.sh
-
-diff --git a/t/perf/p3404-rebase-interactive.sh b/t/perf/p3404-rebase-interactive.sh
-new file mode 100755
-index 0000000..382163c
---- /dev/null
-+++ b/t/perf/p3404-rebase-interactive.sh
-@@ -0,0 +1,31 @@
-+#!/bin/sh
-+
-+test_description='Tests rebase -i performance'
-+. ./perf-lib.sh
-+
-+test_perf_default_repo
-+
-+# This commit merges a sufficiently long topic branch for reasonable
-+# performance testing
-+branch_merge=ba5312d
-+export branch_merge
-+
-+write_script swap-first-two.sh <<\EOF
-+case "$1" in
-+*/COMMIT_EDITMSG)
-+	mv "$1" "$1".bak &&
-+	sed -e '1{h;d}' -e 2G <"$1".bak >"$1"
-+	;;
-+esac
-+EOF
-+
-+test_expect_success 'setup' '
-+	git config core.editor "\"$PWD"/swap-first-two.sh\" &&
-+	git checkout -f $branch_merge^2
-+'
-+
-+test_perf 'rebase -i' '
-+	git rebase -i $branch_merge^
-+'
-+
-+test_done
--- 
-2.8.2.465.gb077790
+iQEcBAEBCgAGBQJXMgrLAAoJELpz82VMF3Da9GkH/2hR791ylUK4zUquSO7xqsIw
+FpnK0r9CGzffSeoEDEzrqF8Mnf2QNFJEk25sk4nkhmFpBmfhe6EnAAjNmVU5h1+j
+egC/2k1M+89LmXGUoQigj0dPDUk+LWiTEhlHs4PJ4Aj1V4mTwKUrQSXs30CzxiXM
+Vjp6KjlBURg28vgfxyKrff0KHZl2ofReu+Gnk2Bnw8OvOZ6F68fFbgmQgnCpBl2i
+I10BKOApL+0XZd58mf6pkQHfJvppektChaJmoPf6CaJ0xTVDV99DbnUEOKBgpx2d
+FwdbXNI05SW+I5jzIvPrNJnCgttSL4d2w4I3uxwuliKx3Ozlzzz1wEqag//bcPc=
+=BvuX
+-----END PGP SIGNATURE-----
+--=-=-=--
