@@ -1,76 +1,77 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: What's cooking in git.git (May 2016, #02; Fri, 6)
-Date: Tue, 10 May 2016 07:52:18 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605100751050.4092@virtualbox>
+Date: Tue, 10 May 2016 07:59:35 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605100757410.4092@virtualbox>
 References: <xmqqeg9e24ay.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 10 07:52:37 2016
+X-From: git-owner@vger.kernel.org Tue May 10 07:59:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b00ax-0004Ud-Q0
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 07:52:36 +0200
+	id 1b00hv-00044A-RF
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 07:59:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751263AbcEJFwb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 01:52:31 -0400
-Received: from mout.gmx.net ([212.227.15.18]:59935 "EHLO mout.gmx.net"
+	id S1751004AbcEJF7o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 01:59:44 -0400
+Received: from mout.gmx.net ([212.227.17.22]:52442 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751119AbcEJFwb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 01:52:31 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LoVOE-1bXgRk2W8w-00gUgd; Tue, 10 May 2016 07:52:18
+	id S1750890AbcEJF7n (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 01:59:43 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MCxfb-1arSGS2pcp-009g6M; Tue, 10 May 2016 07:59:35
  +0200
 X-X-Sender: virtualbox@virtualbox
 In-Reply-To: <xmqqeg9e24ay.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:ef1G87enzDa1GXH3wCmoSfVQ6xgu+7KyVAeMA/qCrPWieUa78wN
- lFwOLzRCtck/Tz/jnPSG5DxkcgozpoFnNnOuDliyYgVr1FzbDOhwz0OHmXuojsVSu8UnX1v
- y5Z7/IsQ3IxhHH+YiqsJ9UzATjSq3Tn8VJJ+AVI3zER41/oqLG1czgVISvX1EVcsWHZwCWu
- YTE875ki0O5fFLJoprHsA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:56Ya2yNljKI=:71aIvhJhlPAX15bd6Z3+tT
- jIpwp5ke52SSZRRIOJ5J9X7Mu3tusVhGgv9uC688Ahszl61XCRtuxTF+pUKBYYRvnooh5AcYH
- YYmq0Qs1ZViSzPRC4/hPZ8lKYPnuFP7jz8AL1w+Bz06LY6PijUIwMcjuZeR0LaYsF5SZWcddD
- SHwnhc8yyYFaF3VF5jNILUY/moBhs1APHzFupi/UUxnQnfj4T4x3nPhFRBuxuPc9wveml+mjZ
- nE+Nwipjuwzl0nqmx/HDcwUW32oaNObiTWUs2tA8CZISpZcaJshj9C+QgSwWdPortY4FwEvVC
- 2koFFvEbLwS3EsK0eO7Hn8y6K+b4/gY7qXWbHy3NK8t5CSo/TokbDgVIOSx5eU9PvuOFt5wd6
- WYl10TVYaxwLE6nNfzwr9py7xZhaBa7sp8RJx0TD+6kG6DAiHuSneZs3bSSzBcxqeq23YeYbj
- 5xQy0PULDIvaHvE5LKy24EMniY56d92YLU9pjcspWCu7/uULa8mNltK0FMioEhbl4Fw6+tVfH
- e3AG6+31ZseE9ErPN6yClU0iW//oBfgKPwZoyKRTptbdee1D9PW5S1CC3kk9FuEJ0toT1blzc
- 24LrKkSpNE42l8TBUIbyiYE00wOpwyKqoFPnj5bTsC6orJmEzG8UyiLqosU8721zbc1wPtP0N
- dro/tAe91CV2j+ALCTuCoZ6oQdY0yMTh13qGP0uGHMmOEUoePq25SEHAWpSMtPaN/q69E5CqY
- LiI/NhHPUN4M3lfJGBL7veTd9GgeW442cr0BRXX72+d0jdsgPJVwxqg/OiyHBFYMkqSzCLCm 
+X-Provags-ID: V03:K0:8pqackrXRN4IKQRvZGEnHYgBXSsKpE3IWkaBCz08gDp6vsnWqa5
+ 1/phcBS2at5O4/NqQiIsEANuxhf23arTbj+oSZ4iQtNRMzP2nJ6yUY/zP0B2DuNUjhs8g6Q
+ 3h7aNB28mSdEwzdqvdedM6QN4eoJFeOJyefGZrBctJ4StNPhQW599qj8ivvvXSHtncDa2hr
+ fdNuv8sZcTQZz3kgSfdBA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:eTVQOKtngmY=:JD9huevpTLGxkvecNiFWYQ
+ qHDor13X53XUutNgiou7IrGXXZ6pH7gBinz+DShYIITvKFDwioBOUIzGFu3FxafkMVV8dxehm
+ swAEWAmTE04MiXyc4M/y2F+Yw0gHGANygPDOm/oq72vL+XxQxhZrHgGKTlUdzkdMp6hLbvmJr
+ P2gfHFHZCeY/xM+SNHjmUzvYWV1v+QSeoFeA/CDdIrYVO7JcimUn41OixtKuXWGxnuXy7F1/H
+ vdKBnbSqthC8y26X5a+0bH4kobSSACC7DybMu1B/RhAH1BlhD4iAWXKfDwpsRBb/N54cbLTaY
+ O2+QwVVQIOiownciRplBSWhcJBGufuIDrmbS0yZLA0QGnnpi+OLVhcEaDqI19MRD/0CNxiJZ8
+ Zxuxibatn3aHlRj6NON/rNOIojMBv1QAa4tvXK5yPeCg6xZ8x2PnLMOa3al4sLf02vgEyoboF
+ YowK2CvgRwfFjbNczW5MHFx64Hi3SFlODxm+k4z9I4s/kKYMRcORrWwvvFH3UHqOnq5z/rtfJ
+ FJHK8A64XCZmjKhlmqt37N1d8s/Zji04pd+objhQYhbYQ5Z8V5Y6b9gdA2e+0Tc/WoGw+kzmR
+ BEAZgCqkfpPzL4B0HtAtCIivw7Q2uafnSmoUeiLwaqhYnrPWpj2ChTkTS0W5D0Yzvxc9hp7BZ
+ RaURiy9nBab9OryySK+V3ckks8lgu2Ub0CWTSbmSGnJ0oKvinjR95bX8CyTWHTI/A+zwqx1IL
+ fT0sM9WonWbx9TC1U8d9HYipJpaDQnRC2LXberjIPPYV6wxM7J0Yo9OQAqCXZDPOjZFOPDC8 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294096>
 
 Hi Junio,
 
 On Fri, 6 May 2016, Junio C Hamano wrote:
 
-> * jk/submodule-c-credential (2016-05-06) 6 commits
->  - submodule: stop sanitizing config options
->  - submodule: use prepare_submodule_repo_env consistently
->  - submodule--helper: move config-sanitizing to submodule.c
->  - submodule: export sanitized GIT_CONFIG_PARAMETERS
->  - t5550: break submodule config test into multiple sub-tests
->  - t5550: fix typo in $HTTPD_URL
+> * jc/fsck-nul-in-commit (2016-04-14) 2 commits
+>  - fsck: detect and warn a commit with embedded NUL
+>  - fsck_commit_buffer(): do not special case the last validation
 > 
->  An earlier addition of "sanitize_submodule_env" with 14111fc4 (git:
->  submodule honor -c credential.* from command line, 2016-02-29)
->  turned out to be a convoluted no-op; implement what it wanted to do
->  correctly.
+>  "git fsck" learned to catch NUL byte in a commit object as
+>  potential error and warn.
 > 
->  Everybody happy?
+>  What was the status of this one?  Ready to proceed?
 
-I cannot speak for everybody. I am happy, though. In particular with this
-topic branch ;-)
+I think this code looks fine. Maybe two comments on the test:
 
-Ciao,
+>               test_must_fail git -c fsck.nulInCommit=error fsck 2>warn.1 &&
+>               git fsck 2>warn.2 &&
+>               grep nulInCommit warn.2
+
+1) warn.1 is not used. Maybe skip that redirection?
+
+2) I was under the impression that we preferred test_i18ngrep over grep...
+
+Thanks,
 Dscho
