@@ -1,78 +1,77 @@
-From: Sascha Silbe <sascha-ml-reply-to-2016-2@silbe.org>
-Subject: diff --break-rewrites for just a part of a file
-Date: Tue, 10 May 2016 18:22:34 +0200
-Message-ID: <toea8jx3mt1.fsf@mimosa.sascha.silbe.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (May 2016, #02; Fri, 6)
+Date: Tue, 10 May 2016 10:07:08 -0700
+Message-ID: <xmqqtwi5rgeb.fsf@gitster.mtv.corp.google.com>
+References: <xmqqeg9e24ay.fsf@gitster.mtv.corp.google.com>
+	<B50A244E-05FE-48FF-9C9B-ED7AE35C5C7C@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 10 18:32:07 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 10 19:07:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0AZq-0003tB-LZ
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 18:32:07 +0200
+	id 1b0B7w-0001bB-W3
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 19:07:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752198AbcEJQcB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 12:32:01 -0400
-Received: from bbox.sascha.silbe.org ([84.201.25.44]:60695 "EHLO
-	bbox.sascha.silbe.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751897AbcEJQcA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 12:32:00 -0400
-X-Greylist: delayed 525 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 May 2016 12:32:00 EDT
-Received: from mimosa.sascha.silbe.org (unknown [176.2.62.36])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(Client CN "", Issuer "stunnel Pseudo-CA" (verified OK))
-	by bbox.sascha.silbe.org (Postfix) with ESMTPS id 88298BF1A4
-	for <git@vger.kernel.org>; Tue, 10 May 2016 18:22:59 +0200 (CEST)
-Received: (nullmailer pid 24730 invoked by uid 8193);
-	Tue, 10 May 2016 16:22:55 -0000
-User-Agent: Notmuch/0.18.1 (http://notmuchmail.org) Emacs/23.4.1 (arm-unknown-linux-gnueabi)
+	id S1751475AbcEJRHO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 13:07:14 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62955 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750978AbcEJRHN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 13:07:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D261F19A56;
+	Tue, 10 May 2016 13:07:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uno/fwFRuwqwsiHmG4W6to/aehg=; b=JUn4IS
+	7sZ35OtchoXT4ba+8jL9azCnVxR/vLLHq5y78b+WjvrYTy3rTIuHRQMaAG0Lin+f
+	Xmq6Clf4GECgwitkeGPryjZmompKWRNFhvHmavftE21wfflc2RZc9LIzi3jjAx2r
+	gs5fKqYs1z0JZ6XlkQJ28p+MDPfScmp4Cq4zI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OCzT7ZbdVpgrQEGhbgTRyJ/+v/9imUrI
+	TOe+Ikngsv+0yqN1Uq/34HVQP4k5F8Ar3xUYHaDik0Xxj4J4GS9tgtlfgds4SmUd
+	P6fKah93SafjBPCQ+h/kfotrkjTiIprbpT0FE97sLuqeMXVfjGF+P7QmuWb3RCiI
+	ev8RtW2j6W4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C71E719A53;
+	Tue, 10 May 2016 13:07:11 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2326319A52;
+	Tue, 10 May 2016 13:07:11 -0400 (EDT)
+In-Reply-To: <B50A244E-05FE-48FF-9C9B-ED7AE35C5C7C@gmail.com> (Lars
+	Schneider's message of "Tue, 10 May 2016 08:27:28 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A27F8830-16D1-11E6-A187-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294154>
 
---=-=-=
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-Hello,
+> A version with at least one section error is here:
+> http://article.gmane.org/gmane.comp.version-control.git/293521
+> Should I fix and reroll this patch?
 
-the other day I was reviewing a patch that replaced a large chunk in a
-Makefile with completely different logic. No matter what diff algorithm
-and options I threw at it, the diff would always synchronise at the
-empty lines between individual targets and thus show the rewrite of a
-larger section as complete replacements of many smaller, but directly
-adjacent sections (only separated by a blank line).
+I just compared this with jc/linkgit-fix, which was done until the
+script introduced by jc/doc-lint gets happy.  293521 covers the same
+spots, but misses the incorrect section numbers, so your reroll of it
+would end up looking exactly like jc/linkgit-fix, I would think.
 
---break-rewrites would be nicely suited for this case, but once I dialed
-down the parameters enough for the option to apply at all, it showed the
-entire file as being replaced rather than just the section in between
-that actually changed. Is there a way to have --break-rewrites leave out
-the unchanged lines at beginning and end of the file?
+> The Travis-CI documentation check build step did not make it in:
+> http://article.gmane.org/gmane.comp.version-control.git/293523
+> Is there something I can improve?
 
-A combination of --break-rewrites and --inter-hunk-context that merges
-changes with less than the given number of unchanged lines between them
-into a single delete/insert change would be even better. But just
-ignoring the unchanged header and footer of a file for --break-rewrites
-would already go a long way.
+Let me take another look later.
 
-Sascha
-
---=-=-=
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBCgAGBQJXMgrLAAoJELpz82VMF3Da9GkH/2hR791ylUK4zUquSO7xqsIw
-FpnK0r9CGzffSeoEDEzrqF8Mnf2QNFJEk25sk4nkhmFpBmfhe6EnAAjNmVU5h1+j
-egC/2k1M+89LmXGUoQigj0dPDUk+LWiTEhlHs4PJ4Aj1V4mTwKUrQSXs30CzxiXM
-Vjp6KjlBURg28vgfxyKrff0KHZl2ofReu+Gnk2Bnw8OvOZ6F68fFbgmQgnCpBl2i
-I10BKOApL+0XZd58mf6pkQHfJvppektChaJmoPf6CaJ0xTVDV99DbnUEOKBgpx2d
-FwdbXNI05SW+I5jzIvPrNJnCgttSL4d2w4I3uxwuliKx3Ozlzzz1wEqag//bcPc=
-=BvuX
------END PGP SIGNATURE-----
---=-=-=--
+Thanks for carefully going through the "What's cooking" report.  It
+really helps to make sure we move forward topics that need to.
