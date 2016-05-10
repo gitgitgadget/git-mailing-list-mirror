@@ -1,106 +1,83 @@
-From: Christian Halstrick <christian.halstrick@gmail.com>
-Subject: is ORIG_HEAD allowed to point to a non-existing object?
-Date: Tue, 10 May 2016 14:15:31 +0200
-Message-ID: <CAENte7jNxM7J9bWUnrOkLQJZ=8JEtYzw9-uxVkq-CpvGyk9UUw@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v9 00/19] index-helper/watchman
+Date: Tue, 10 May 2016 19:45:29 +0700
+Message-ID: <CACsJy8CN_KzoFaROAksSuT1-sJgxP6zd2iJbqq-Dqq6EQyD_Vg@mail.gmail.com>
+References: <1462826929-7567-1-git-send-email-dturner@twopensource.com>
+ <xmqqa8jyuczj.fsf@gitster.mtv.corp.google.com> <1462832134.24478.49.camel@twopensource.com>
+ <xmqqy47iswhj.fsf@gitster.mtv.corp.google.com> <xmqqtwi6svzx.fsf@gitster.mtv.corp.google.com>
+ <1462835573.24478.53.camel@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 10 14:16:01 2016
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Tue May 10 14:46:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b06a0-0007wx-44
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 14:16:00 +0200
+	id 1b0738-0005aW-Ez
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 14:46:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751730AbcEJMPy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 08:15:54 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:36089 "EHLO
-	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751692AbcEJMPw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 08:15:52 -0400
-Received: by mail-wm0-f50.google.com with SMTP id n129so175888725wmn.1
-        for <git@vger.kernel.org>; Tue, 10 May 2016 05:15:52 -0700 (PDT)
+	id S1751766AbcEJMqC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 08:46:02 -0400
+Received: from mail-lf0-f44.google.com ([209.85.215.44]:33808 "EHLO
+	mail-lf0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751347AbcEJMqA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 08:46:00 -0400
+Received: by mail-lf0-f44.google.com with SMTP id m64so13381522lfd.1
+        for <git@vger.kernel.org>; Tue, 10 May 2016 05:45:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=+JAMlJkT9Hv2q20CwUu13lPryEEmRRbkwu7yBvnMXRY=;
-        b=pW91/dkfwr5Z6x6gkL+Bl3rP8Prfe0B5O17zRf2w9KJqn1xCj/flUICTVesAdOdim2
-         ty74k2zqimzJjY+fA8HTFnNc/5EImYsJnQ1LPpSfHEqg1I7+9d+eLh9uyW1HqSrtQB1U
-         5OScvChula1mjbUQNbToB/JgPxX4PmluM/Pwgt/4Rx3nR1UYie84iI4F4z05WorRgBcP
-         CPtB9WeeTbbILSf8zYZEKA1DcLZgRIXnosrI9ygfvNXU24kL2AvUJ4BhCMMg2NBBX56I
-         +7gtoorg9FyZu+8tjwTDd0K9Uu/P+clVNj27es88LP8CZ6SHXYfrNx9LFi8ufcTDPxB9
-         F1Mw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=yqzYEVjDS/CTNhvypQIsBfBwL/K4c3ouQ2f5U4ckoB4=;
+        b=ZbCWpc5OSclxthHR+ttqfIDMjDSQfGa81aFF8zXoR5pA+sdsi1lYlrvZF6J/WLyyyw
+         AZ3qz9cgFCo0ojOs3fwcIVz8png6nFn1gASVF49n4yeeqSu3nd6pBwQWZbQWNoZ0CmTQ
+         AHdhf2z3nVQvLDCg/JFVADFSp9NZ6eVfARS+Lr6Te84WqvVeZ+bW6CYqPA6QQim/UN8q
+         Zj9juMLvhC8wDr81eMcAhnorx+v9iT4mFRJKD3fZR4Qj4tYmxoeJP3NLjxIsyIDS9kvu
+         VGkwhdCRO+zkljLBBRIH33XmoXNBf+4toHwnPJsQgPgnL/S+o01dqApibg8nKrK/3UVC
+         k8rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=+JAMlJkT9Hv2q20CwUu13lPryEEmRRbkwu7yBvnMXRY=;
-        b=HhqGEJvqtoLJuuJdFQqkBc1qXAZl9m+LU4o+M38blXNSjWze/pxLm6UiczWvV2us/c
-         QAf18t6B0udE0coEJ/DVQCfWg5of8HjCKhtUI4xlHahtwy+xJcTsrHbgEoyrP1wO5UBM
-         X+aSiiu++deaZQo6yhfco7+82eyw9+sqGmVgj1s9wIHSqL5wX1Sx6fSFSmz/TzWzoTFO
-         JYn8atZhXgH1imik26fG3eSUgDkATB6ZHICuASXGIJavYeyUEqiNTJVVNVevldhusrsi
-         qdsX54ywuZgg2bxBK9MOcCNUQvJnp83JhP+O37MG5MYsWOjvirS6wJ34e9e1Iu26qXRh
-         y4lg==
-X-Gm-Message-State: AOPr4FV545AW6iOxSOAHERVG1tKRz90pbaSf0AW5EehSBBcrSNssvDnfAPGWayDHa4tjiuIRqt1snpUhTIlIdQ==
-X-Received: by 10.28.54.224 with SMTP id y93mr16922434wmh.82.1462882551295;
- Tue, 10 May 2016 05:15:51 -0700 (PDT)
-Received: by 10.28.31.17 with HTTP; Tue, 10 May 2016 05:15:31 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=yqzYEVjDS/CTNhvypQIsBfBwL/K4c3ouQ2f5U4ckoB4=;
+        b=MuimHCnDTvzVI1qx3h0FIUPJYo9Q5HcIaLNcH+jrf4Bkm+E/eBGN+cqm650R7XK2CN
+         Y8KIxPR0mHp7ldh8TPzLOQkNV5J0GJWm31komigUFpPoGKq0IAhZC8NQ+lioNQOquEkw
+         xjQ0s8dXGo3hCqckZRxfzosrVSblWWoxN/wMc6EN3tNCGjdFNfJqeUKRhBjLpfR9Ri9h
+         u/VE7P+eQsLcAOPlKEYzO8+jhLYtkpfmtpkxd8Dx53ehTxoN6qArQJuYlj7J42C6mB0b
+         GdOPeijrxtplNLudpYybhhPtNEkRboeQszn5NYdwZOkGT0++0Q+x7WWS9DKadwWks2uS
+         rhPQ==
+X-Gm-Message-State: AOPr4FUS4ILT+sCF2YvmteiWWBmkAI8ZqOmTSbjmN1KMFqDT1gpeG10WwRAoM3ZiB/q/aCb8q1XO0fyizy3+bg==
+X-Received: by 10.25.42.147 with SMTP id q141mr17114713lfq.94.1462884359062;
+ Tue, 10 May 2016 05:45:59 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Tue, 10 May 2016 05:45:29 -0700 (PDT)
+In-Reply-To: <1462835573.24478.53.camel@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294127>
 
-If I do a "git-rebase -i ..." followed by "git reflog expire ..." and
-"git gc ..." then I can end up with a repo which has a ref ORIG_HEAD
-which points to a non-existing object.
+On Tue, May 10, 2016 at 6:12 AM, David Turner <dturner@twopensource.com> wrote:
+> I think that's a SIGPIPE on the first git status.  Weird, since I just
+> added sigpipe-avoidance code (in v8).  Does anyone have any idea why
+> the sigchain stuff isn't doing what I think it is?
 
-- Is this intended?
-- What's the reason to keep a ref which points to a non-existing object?
-- Are there any other refs which are allowed to point to non-existing objects?
+SIGPIPE code works. I tested with and without --detach (suspecting
+fork causing problems). I even logged all sigchain_push() calls to see
+if anybody else is interfering (none did, at least without watchman).
+Problem is elsewhere.
 
-Here is how I reproduced the problem:
-
-> git init
-Initialized empty Git repository in /tmp/yy/.git/
-> touch a
-> git add a
-> git commit -m addA
-[master (root-commit) ff82f68] addA
- 1 file changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 a
-> echo 2 >a
-> git commit -a -m modA
-[master f9ae5a7] modA
- 1 file changed, 1 insertion(+)
-> echo 3 >a
-> git commit -a -m 'fixup! modA'
-[master 271012b] fixup! modA
- 1 file changed, 1 insertion(+), 1 deletion(-)
-> git rebase -i --autosquash HEAD~~
-[detached HEAD 3eb17d4] modA
- 1 file changed, 1 insertion(+)
-Successfully rebased and updated refs/heads/master.
-> git rev-parse --short ORIG_HEAD
-271012b
-> git reflog expire --expire=now --all
-> git rev-parse 271012b
-271012be467fcbd62a875b7187c0e9871f62ac0d
-> git gc --prune=now
-Counting objects: 6, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (2/2), done.
-Writing objects: 100% (6/6), done.
-Total 6 (delta 1), reused 0 (delta 0)
-> git rev-parse 271012b
-271012b
-fatal: ambiguous argument '271012b': unknown revision or path not in
-the working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
-> git rev-parse --short ORIG_HEAD
-271012b
-
-Ciao
-  Chris
+There are two problems with logging code in index-helper though. The
+redirecting std{out,err} to /dev/null should only be done when
+--detach is given (and I' m quite sure daemonize() already takes care
+of that). If --detach is used, log_warning() can't cover die(),
+warning() or error(), most importantly die() for example because of
+bugs. I think you can call set_die_routine() and similar, just be
+careful not lead to recursive calls (die() is protected, but I dont
+think error and warning are).
+-- 
+Duy
