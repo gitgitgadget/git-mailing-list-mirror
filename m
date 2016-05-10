@@ -1,92 +1,85 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v8 3/3] submodule: ensure that -c http.extraheader is
- heeded
-Date: Tue, 10 May 2016 09:08:56 +0200 (CEST)
-Message-ID: <1b3d7bde2b92da7722ae46a2f76ccedf532ce35e.1462863934.git.johannes.schindelin@gmx.de>
-References: <cover.1462774709.git.johannes.schindelin@gmx.de> <cover.1462863934.git.johannes.schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v7 1/3] tests: Adjust the configuration for Apache 2.2
+Date: Tue, 10 May 2016 00:13:56 -0700
+Message-ID: <xmqqbn4es7uz.fsf@gitster.mtv.corp.google.com>
+References: <cover.1462342213.git.johannes.schindelin@gmx.de>
+	<cover.1462774709.git.johannes.schindelin@gmx.de>
+	<4a15c4e6c35cfb425da568d87e8b20b984e5325c.1462774709.git.johannes.schindelin@gmx.de>
+	<20160509080315.GA14383@sigill.intra.peff.net>
+	<alpine.DEB.2.20.1605091557050.4092@virtualbox>
+	<20160509142711.GA9552@sigill.intra.peff.net>
+	<alpine.DEB.2.20.1605091710310.4092@virtualbox>
+	<xmqqwpn3w5c7.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1605100832350.4092@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
 	Lars Schneider <larsxschneider@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 10 09:09:08 2016
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue May 10 09:14:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b01n2-0004aD-7b
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 09:09:08 +0200
+	id 1b01rq-0001Ps-RR
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 09:14:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751375AbcEJHJD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 03:09:03 -0400
-Received: from mout.gmx.net ([212.227.15.18]:54830 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750864AbcEJHJC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 03:09:02 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LjZhg-1bbHPc085o-00bZ2w; Tue, 10 May 2016 09:08:56
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <cover.1462863934.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:kCK1TSMvbSvfyXrFtzlJgpNa3SiwVA4AipQR/qfpMz5lUrSnM6+
- Nm/tmIThGk0ERdGqb/RavfJDPTisDHlqtnIs7qYmwkWzahnoIxisPP+JIqLq4IOLHmZl3dm
- sN6Z5kiWljRv29jS7K5g0kyxEakTuLFfi1MvEKHnIPxC3w9uVST1bK3wZGc9WUMWltt32Ur
- VIw/IrkD8mnGAxx8wdspQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:l9Y4/P6olY4=:pqtkP2I0AC4WBGbkKtjWUa
- 7okOM6kLItBQpJWF6f54E2ABDYexrA8oWmIHfZQIzFTKmS4LhD68oP7pt8kSK98bEkoOWudjT
- /cq4iuBcNePnLX/FrNAQBt8uzxKh9ojHSG3j159X3Ze6JKic4btn2aHz096WciRGkLGVmMfv8
- WBMqFkktllR4b6yMjk9uWh5NFzvDC6CTTUR5AsXKqJ4JNoEn0JxXqIpFxKVwPcqinNE/NHT9F
- q6qXHMYt70b6dqh8FNVH3P/GACiWXaaB4kQOMz4FPC7hHj1ZTjtM3mpsgtHMxCigbfVux6ljX
- +cjk2D9cOGt+DJmqXHCUF4Mx/NV/0FIrkpVTSZSrPSGAU013vExktE3j3KJ+jnnusPlD4Zmsi
- r8v8s4y+A2lIYs/87OKAT7AlYEB+L+9KodaPM5zPEjp3OWIgMBIrCP9iYG1vNJLaykTKnqvtD
- jINSG0Q2XxOaHRfOjNSpGRuJUqhws5gowGyn2iRUvaWHx+OpcHG1/ybjxbwxpKlLo9whxbo38
- RxYhRcEha728wYXPvfN3CCs3Olh8Lygcd8E7YcaM2jo+qFseVvKP1X3B+2UY5I59KiCP1Nur6
- xUYJ1JHUK6I5ZpTqGJe4geWj1fiVoDDp2jZRdJ5XITkRICK62B7YxfZi+F19nlZJW78IIcC16
- 2AjjqoiPO6eYWGgFTDpKYkILcChpouuaT2N2lch4L54ILYKCFF+2Cqdp2ZpWvOFIwHSUahfjQ
- X1z/Sxod6kpelhZjYfOSMqD8PQ/ouraIPkqt9loO0pwD2TvIbTEvQreKelczeJ+1F3ZODXar 
+	id S1751282AbcEJHOC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 03:14:02 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56780 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751274AbcEJHOA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 03:14:00 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0F1ABECEC;
+	Tue, 10 May 2016 03:13:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NtoM1ncHkbQJ/SnCwtywSSJYHT8=; b=i+ISMY
+	u0CbGhGhWnIF2nbgBegZUSeoQMwjtTG8u0P7/K0dkA3z/S4gbjC0T+MdxDL/G4Cj
+	/IrLcX6Ftvssv3+tKK19oY22cYgWhm8YhiC5SOhOubzj2G1dOlH19/RtpM4xU9bd
+	FSjaXySR5XxCqu42h3A/BZuMvBzf7Bgn/nbL0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=I0Z8GaC7UGa0qWL1GHKmsAgRBENAuSEv
+	/cKGyIhCt3aZ+NEQo8TYjYnuimbfI+Kcr7fiKQQZJ1zrrrZEfVd7PonmR+i/+Khz
+	FcyB0NzlHhTx4FbOjpq4Wke0L2RDr01a4wbNncHyLNwmXASQ8X818NJYCGU4HVR5
+	2kSbnQ9WHPY=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 06B15ECEB;
+	Tue, 10 May 2016 03:13:59 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 757B2ECEA;
+	Tue, 10 May 2016 03:13:58 -0400 (EDT)
+In-Reply-To: <alpine.DEB.2.20.1605100832350.4092@virtualbox> (Johannes
+	Schindelin's message of "Tue, 10 May 2016 08:53:07 +0200 (CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C39D39B6-167E-11E6-AA97-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294108>
 
-To support this developer's use case of allowing build agents token-based
-access to private repositories, we introduced the http.extraheader
-feature, allowing extra HTTP headers to be sent along with every HTTP
-request.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-This patch verifies that we can configure these extra HTTP headers via the
-command-line for use with `git submodule update`, too. Example: git -c
-http.extraheader="Secret: Sauce" submodule update --init
+>> To be honest, I do not quite understand why you call it "ugly hack"
+>> at all.
+>
+> Well, it is convoluted. I would have preferred to say "if this condition
+> is not met or that condition is not met, fail". Instead I had to say "If`
+> these two conditions are met, proceed as before. Otherwise, fail."
+>
+> And of course its ugliness increased in my mind because I had to go
+> through so many iterations until it finally worked. Not really
+> straight-forward a solution.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t5551-http-fetch-smart.sh | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-index 43b257e..2f375eb 100755
---- a/t/t5551-http-fetch-smart.sh
-+++ b/t/t5551-http-fetch-smart.sh
-@@ -287,7 +287,16 @@ test_expect_success 'custom http headers' '
- 		fetch "$HTTPD_URL/smart_headers/repo.git" &&
- 	git -c http.extraheader="x-magic-one: abra" \
- 	    -c http.extraheader="x-magic-two: cadabra" \
--	    fetch "$HTTPD_URL/smart_headers/repo.git"
-+	    fetch "$HTTPD_URL/smart_headers/repo.git" &&
-+	git update-index --add --cacheinfo 160000,$(git rev-parse HEAD),sub &&
-+	git config -f .gitmodules submodule.sub.path sub &&
-+	git config -f .gitmodules submodule.sub.url \
-+		"$HTTPD_URL/smart_headers/repo.git" &&
-+	git submodule init sub &&
-+	test_must_fail git submodule update sub &&
-+	git -c http.extraheader="x-magic-one: abra" \
-+	    -c http.extraheader="x-magic-two: cadabra" \
-+		submodule update sub
- '
- 
- stop_httpd
--- 
-2.8.2.463.g99156ee
+To my eyes without your battle scar, it felt more natural to say "If
+somebody says he is user $U and gives a password $P, let him in;
+keep everybody else out" when configuring a server than saying "Fail
+anybody whose user name is not $U or who says his password is not
+$P".  I can certainly understand if somebody who has spent a lot of
+effort to make things _fail_ finds the latter more natural.
