@@ -1,74 +1,65 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/33] Yet more preparation for reference backends
-Date: Tue, 10 May 2016 14:32:27 -0700
-Message-ID: <xmqqlh3hmwes.fsf@gitster.mtv.corp.google.com>
-References: <cover.1462550456.git.mhagger@alum.mit.edu>
+Subject: [Bug?] log -p -W showing the whole file for a patch that adds to the end?
+Date: Tue, 10 May 2016 14:51:03 -0700
+Message-ID: <xmqqh9e5mvjs.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: David Turner <dturner@twopensource.com>, Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 10 23:32:35 2016
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 10 23:51:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0FGc-0004p5-LQ
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 23:32:35 +0200
+	id 1b0FYe-0001Ju-Jk
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 23:51:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753116AbcEJVcc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 17:32:32 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51901 "EHLO
+	id S1751574AbcEJVvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 17:51:07 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59919 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753101AbcEJVcb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 17:32:31 -0400
+	with ESMTP id S1751293AbcEJVvG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 17:51:06 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0F0891A34D;
-	Tue, 10 May 2016 17:32:30 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B75E41A640;
+	Tue, 10 May 2016 17:51:05 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=leHtzhhn2N5HyoWDyyV4LyHw/5s=; b=GPvK9r
-	o1RkyEnABMQutcRx+QejBB3JE4N3bh4wjjbl7T8BjtEBg9b30djDzsUOwVfI/uW1
-	zTUriGSerZHS7q/+RJt8omYhvyBCedMlvm5wUY6loToTWCNUmh/nGX1FAPhTJZQs
-	95Pp7pS5TB6FPGs+pCMCeXnEq14WaAldSsbCk=
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=G
+	zPcLLMu/CDb0Na49Yl8ARHYvFs=; b=u//rMwHcFwEBJwjPaWc+b+ZUwLDxAq1zN
+	78Hmnhz25IxF4YVOhI/vQdFPVfC3e7xcujaeX0g8gN39n5poveBAssaJB8TfgqNq
+	An5QDsjlNqOB23UnGtciRtjjNed7QPje6w5BkKsuk+/d0IQZmi+H+0KoNH5HIcdi
+	bRhuxdyVrk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UwKDw7H3iBXVviX/DlsxZyCBiN0hB5N1
-	DUw+o8ylTogEzLdF0F09CGPg04yIzx4N+YgLdAnT9icsGfLNxmKBv9zPNYvqLsdr
-	TylnLnHsv6STwPywWlhIZJ5ib8koZpRpYaXaj/MTAOXp5Kp5ZtTTNBBH41Qrjupw
-	iiJCnmgLFSY=
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=v8fv0wguWJxJhpgh0lKTynoPoTUuL7YFnhHfw2CslLX8QOLGPZB9wnNa
+	YPamc+GDV+66Rbt9GZ4ff47PnpJFHz0nQNs1DOjhB3lNSkppku9FgEP6VIaranP1
+	jrpPAXtCMi+XB36i1UIXQW1LA0CMjgGUm5Wvo38wEUfnK+1quvg=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 06A211A34C;
-	Tue, 10 May 2016 17:32:30 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id AF80D1A63F;
+	Tue, 10 May 2016 17:51:05 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8028B1A34A;
-	Tue, 10 May 2016 17:32:29 -0400 (EDT)
-In-Reply-To: <cover.1462550456.git.mhagger@alum.mit.edu> (Michael Haggerty's
-	message of "Fri, 6 May 2016 18:13:41 +0200")
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 345D81A63E;
+	Tue, 10 May 2016 17:51:05 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B2993462-16F6-11E6-8B7A-D05A70183E34-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 4B976C4A-16F9-11E6-8385-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294199>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Just noticed a curiosity:
 
-> ... I think I have addressed all of the points that were
-> brought up. Plus I fixed a pre-existing bug that I noticed myself
-> while adding some more tests; see the first bullet point below for
-> more information.
->
-> Changes between v1 and v2:
->
-> * Prefixed the patch series with three new patches that demonstrate
->   and fix some bugs in reference resolution that I noticed while
->   inspecting this series:
+    $ git show -W 3e3ceaa58 quote.c
 
-I'd propose to wait for further comments a few more days and merge
-this to 'next' by the end of the week.
+shows the entire file.  The commit in question adds a whole new
+function at the end of the file.  If I move that addition to just
+before the last function the file already had before the change and
+amend the commit, "show -W" would work as expected, i.e. addition of
+the function, with three lines before and three lines after context.
+
+The -W feature was added by 14937c2c (diff: add option to show whole
+functions as context, 2011-10-09).
