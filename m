@@ -1,9 +1,10 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 1/7] completion: support git-worktree
-Date: Tue, 10 May 2016 21:15:47 +0700
-Message-ID: <20160510141553.22967-1-pclouds@gmail.com>
+Subject: [PATCH 2/7] worktree.c: rewrite mark_current_worktree() to avoid strbuf
+Date: Tue, 10 May 2016 21:15:48 +0700
+Message-ID: <20160510141553.22967-2-pclouds@gmail.com>
 References: <20160510141416.GA22672@lanh>
+ <20160510141553.22967-1-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -13,101 +14,104 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 10 16:16:28 2016
+X-From: git-owner@vger.kernel.org Tue May 10 16:16:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b08SX-0007Uh-DM
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 16:16:25 +0200
+	id 1b08Sf-0007aT-Pb
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 16:16:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752709AbcEJOQU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 May 2016 10:16:20 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:36326 "EHLO
-	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752670AbcEJOQT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 10:16:19 -0400
-Received: by mail-pf0-f196.google.com with SMTP id g132so1063446pfb.3
-        for <git@vger.kernel.org>; Tue, 10 May 2016 07:16:18 -0700 (PDT)
+	id S1752718AbcEJOQ1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 May 2016 10:16:27 -0400
+Received: from mail-pa0-f67.google.com ([209.85.220.67]:36722 "EHLO
+	mail-pa0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751129AbcEJOQZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 10:16:25 -0400
+Received: by mail-pa0-f67.google.com with SMTP id i5so996881pag.3
+        for <git@vger.kernel.org>; Tue, 10 May 2016 07:16:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=N66qpkgcJa093zynAHNGttx84cqYjabXsYdx45IMUXg=;
-        b=yiy20EIyHaGLlECAzv8FQ3zUkQW7vR1SIEfYvQW5Edj8kv0vddmrNpa7TXOXN/bB8U
-         Zq+WFengQ7kZIzWWId4SMT1NTGwl2tRDjEXtOpYozCQjPxIjkTyVKXAte0Aqsp9m1R+f
-         /dH9ZUKtTyJjLkaVncUPngOy1bHk5VGjW23aDC6ezpJYfzMhzw5918+OcTJkQCiRvyTG
-         6r5YYMOC727VYYbxrEgX8dBwMpd8bKb+0+0WSpfne6HkIgadLSkDUnuPIHExwFWN+6HG
-         Q3eO5Yal8uU4GeRdxnMrkDxkhgYQO+9QxtVdI7nMqLula4v1NmldjiEcYmon8vDZzTnS
-         ZvLg==
+        bh=CrcbaR7R+N53xDEDriWvIfvCmOQWMeQqh5mTLzvADEc=;
+        b=oWFxnYNS8RzZ1OwR4AxHw5SJd4zg2CFoCKkE+u01EznPHe5Mwyh/JVFfb8wdKc5Onp
+         PiLXnLsM6fcrl5gxlAsagOeP+exG7Sf1Eh8sS2b7dRDuEW6elA1a7K//it9zBRWZvUp9
+         aQSsb6lr32ZKON1Gri9RCg2WzayrYa6Gjgc/3knsv6gIC5Qzfd7M0h7AI1NK5p6xtLhr
+         sFZ9ly7U0hP5oJtOspJzgLUrFPOhIw5wSwVM3D7o2JR8aqaJIxv9zwMnef9oJNXtJ4XA
+         hAuZYQ3J15pcODZn7r9IIE1rd0POXLHOYBCpGbgLVep+ZKR8/eX1/v9xjACMXqIbXTZ9
+         H09g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=N66qpkgcJa093zynAHNGttx84cqYjabXsYdx45IMUXg=;
-        b=M8W9yUWT5qjJV1uaYvR5CJaSInCH5fy8wmlsVzRcREQRn2Wpn3KuALqLJ56uoP1NfV
-         zlKfYBf2B3NPRIk592JW2Y1EZIolf1pMWiwClkFZ1xPN0d4RUWHzFRg0VqliMcSp9HGf
-         F4c1fkfvv7/C98LWW2O1A3//4YYsggs6tbcsNrPDCUxjaQfGwmKmgdPxspUH/TN2hc23
-         gQY4u9cipE7rpk7iwG8V2SlIzOo9rt2sdsxTRUI64KHl2NiksRLV8fJ6dniTYNYV+oPy
-         KVjYMHMPhWNyqGCY3mtbxYQvnhk+8mAgfm8Hn0Ncc0b3Fo99hZ3mXJTbEZo1Bkz7UELS
-         DBIw==
-X-Gm-Message-State: AOPr4FUYuqtPvcEfY5Wj4fehPswm2hV3DZkKW0Lpi7ofBjCo4n0W8v8tRb3IzX+Mnm2ufg==
-X-Received: by 10.98.46.71 with SMTP id u68mr59426335pfu.136.1462889778444;
-        Tue, 10 May 2016 07:16:18 -0700 (PDT)
+        bh=CrcbaR7R+N53xDEDriWvIfvCmOQWMeQqh5mTLzvADEc=;
+        b=Qv9b776wgAA1uN/l2Tfaye0HFlRUGSZ7lUngtE2tvJtpIiybeQQD7O8JDqSTcAHUuT
+         twF8RMDLxLjHp6YopggP7NxuTR7yM4aLyQyGw1jSOKHS6MltuY9OFyifiZDWlDcepcXi
+         Wvtk5KUwH0iSHeM5H0UGPAocCbhipnarmUDJ3WJAtNe+0Qm7Rnv3GfHtTjZ1GTNmY/fm
+         hLXbAeZCev1TvYE8hWaIWcOuBlz0UUh/TxIzLoYCrxm2Sa96waY1zROC6+DksW4IEGuG
+         aB6MR3gr+P3ct0O+EEBT21i4dTvIcfwN6HD7U/hcpEBmKfdq7J0T1jf8dGHtm3r54S5s
+         Eeow==
+X-Gm-Message-State: AOPr4FXIoiJH74wy54Twi0Fe67eJ5UYdsbG9SI/Nt+j13CJ7yIyxralb7bZWoh4S9Ohsfw==
+X-Received: by 10.66.160.133 with SMTP id xk5mr59039999pab.71.1462889784596;
+        Tue, 10 May 2016 07:16:24 -0700 (PDT)
 Received: from lanh ([115.76.164.133])
-        by smtp.gmail.com with ESMTPSA id ve11sm4977298pab.21.2016.05.10.07.16.14
+        by smtp.gmail.com with ESMTPSA id i6sm4958571pfc.65.2016.05.10.07.16.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 May 2016 07:16:17 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Tue, 10 May 2016 21:16:20 +0700
+        Tue, 10 May 2016 07:16:23 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Tue, 10 May 2016 21:16:26 +0700
 X-Mailer: git-send-email 2.8.2.524.g6ff3d78
-In-Reply-To: <20160510141416.GA22672@lanh>
+In-Reply-To: <20160510141553.22967-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294137>
+
+strbuf is a bit overkill for this function. What we need is call
+absolute_path() twice and make sure the second call does not destroy th=
+e
+result of the first. One buffer allocation is enough.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- contrib/completion/git-completion.bash | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ worktree.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 3402475..d3ac391 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2595,6 +2595,29 @@ _git_whatchanged ()
- 	_git_log
+diff --git a/worktree.c b/worktree.c
+index 4817d60..6a11611 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -153,21 +153,19 @@ done:
+=20
+ static void mark_current_worktree(struct worktree **worktrees)
+ {
+-	struct strbuf git_dir =3D STRBUF_INIT;
+-	struct strbuf path =3D STRBUF_INIT;
++	char *git_dir =3D xstrdup(absolute_path(get_git_dir()));
+ 	int i;
+=20
+-	strbuf_addstr(&git_dir, absolute_path(get_git_dir()));
+ 	for (i =3D 0; worktrees[i]; i++) {
+ 		struct worktree *wt =3D worktrees[i];
+-		strbuf_addstr(&path, absolute_path(get_worktree_git_dir(wt)));
+-		wt->is_current =3D !fspathcmp(git_dir.buf, path.buf);
+-		strbuf_reset(&path);
+-		if (wt->is_current)
++		const char *wt_git_dir =3D get_worktree_git_dir(wt);
++
++		if (!fspathcmp(git_dir, absolute_path(wt_git_dir))) {
++			wt->is_current =3D 1;
+ 			break;
++		}
+ 	}
+-	strbuf_release(&git_dir);
+-	strbuf_release(&path);
++	free(git_dir);
  }
 =20
-+_git_worktree ()
-+{
-+	local subcommands=3D"add list prune"
-+	local subcommand=3D"$(__git_find_on_cmdline "$subcommands")"
-+	if [ -z "$subcommand" ]; then
-+		__gitcomp "$subcommands"
-+	else
-+		case "$subcommand,$cur" in
-+		add,--*)
-+			__gitcomp "--detach --force"
-+			;;
-+		list,--*)
-+			__gitcomp "--porcelain"
-+			;;
-+		prune,--*)
-+			__gitcomp "--dry-run --expire --verbose"
-+			;;
-+		*)
-+			;;
-+		esac
-+	fi
-+}
-+
- __git_main ()
- {
- 	local i c=3D1 command __git_dir
+ struct worktree **get_worktrees(void)
 --=20
 2.8.2.524.g6ff3d78
