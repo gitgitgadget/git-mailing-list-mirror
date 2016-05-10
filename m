@@ -1,77 +1,127 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: syntax error in git-rebase while running t34* tests
-Date: Tue, 10 May 2016 12:11:59 -0700
-Message-ID: <xmqq60ulpw1s.fsf@gitster.mtv.corp.google.com>
-References: <CALR6jEiF9Ooi1f0O3KG0wYmN0KRWBQTNarXx79-wBD2E-8q2jA@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 5/6] t1500: avoid setting environment variables outside of tests
+Date: Tue, 10 May 2016 15:12:23 -0400
+Message-ID: <CAPig+cRR49iJOkaLfynkvch4zUHVkpcJwVah0rvaEOeR7aY2Nw@mail.gmail.com>
+References: <20160510052055.32924-1-sunshine@sunshineco.com>
+	<20160510052055.32924-6-sunshine@sunshineco.com>
+	<20160510183955.GA16211@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>
-To: Armin Kunaschik <megabreit@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue May 10 21:12:29 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Michael Rappazzo <rappazzo@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 10 21:12:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0D53-0003Iz-D5
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 21:12:29 +0200
+	id 1b0D53-0003Iz-Vp
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 21:12:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751792AbcEJTMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 15:12:23 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59895 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752447AbcEJTME (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 15:12:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3514A18D09;
-	Tue, 10 May 2016 15:12:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=z05zyXr6JciP4iBpcWNnOB4S6G4=; b=PJ/yXC
-	4AwCHDpXnp14tpvRjxpVzSCQ1tzW6u7gQ54XMBE1E/PgCTKFyMUDEbtgygVUO6IR
-	rhnf2t3CxZSstdPln70z5/bPqLvJRrvu275sPvDfIK0gksFEyyx2jt/D/z7vlSXB
-	SHoVUcBKcxCX3XbkhNrl6YapVITjsVoeEknHs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cou/smYwyMDBJCMatY30Z83gvWGstmoW
-	3PxV6EJ2x3YoTCv5RLXIRaFgszKxA9X8lQlboyIWvezQmir3gdCiWO4RBNtB0q+c
-	lm/hVgKEOwifSvVJhMm5/n4T/n0hQ8uD6H2QIbFjXptcgqFOZ/yiik4ZBUEKkJyx
-	PoZNucsHy1Q=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2C78A18D08;
-	Tue, 10 May 2016 15:12:03 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9891A18D07;
-	Tue, 10 May 2016 15:12:02 -0400 (EDT)
-In-Reply-To: <CALR6jEiF9Ooi1f0O3KG0wYmN0KRWBQTNarXx79-wBD2E-8q2jA@mail.gmail.com>
-	(Armin Kunaschik's message of "Tue, 10 May 2016 19:29:51 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 13C47328-16E3-11E6-8CA2-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1751855AbcEJTM1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 15:12:27 -0400
+Received: from mail-ig0-f194.google.com ([209.85.213.194]:36688 "EHLO
+	mail-ig0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751800AbcEJTMY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 15:12:24 -0400
+Received: by mail-ig0-f194.google.com with SMTP id c3so2137557igl.3
+        for <git@vger.kernel.org>; Tue, 10 May 2016 12:12:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=4hPxCq72Am9j6ko3rdjBPFRCoUVmj3zD+/d8wSUtYRw=;
+        b=ZohvhxjgWJbWnPYBO/VVJuJ9NG1d9kB2fjlqFvXtzF43HXXLOT1koePFS7CneNBPWw
+         tFAVIgkbUTKNOWXwvhCg27F4KZW5SfbX/7Vz88/hM+arcY4XEZifyTSXDvfxjnBPwm4h
+         hvXUCEwlHDZCbkn1lav4pKsfNFFQhGl0FFG/gxIlcN/Y8oAIS3g0iZdXs1SN+tUnWp7K
+         k/DTWHAk3Kert5AxmJMIxAH80pG0aB1orQySzMc2+yCPrM2XqvqzMujJiPuyfOtMfbYO
+         o89xSpu54nKotsa9MAcbnneA6QVpXwL3hxC03Ejld1lOBaeDVP7YIOHTTFEdXZ83okMa
+         LHJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=4hPxCq72Am9j6ko3rdjBPFRCoUVmj3zD+/d8wSUtYRw=;
+        b=fcJXzcSLH2PBZPxmrmBXoTSvpdDEIjatbNflceKTcstFIB4cD5KWibQsJNbp33sMt+
+         W8MBZKh4rUNo/SydwuGSirrfoc4jDZ9PDJxa5//SYfwsLjxmLzG8m9J7n/tnqv6MK8yO
+         uKZ8o7TcwAK08n2skpdGoJo972u/pPK/04qPxbHZQ1I48PKdT5t5iEnRaiPm+dCKYxt7
+         ElpnWPeYMB+1CDIykGkylJT/9hSgouNcfMDoTRPRu0zBp1vkG7Ho67GcrUFKdFAvoyL5
+         SpNo57YrjcJiw6/r4QArcapn/ZJYeLRSh3e/rLU6JH6qvBi5rwRAUsu6bGaM/bKxVuja
+         Vjqw==
+X-Gm-Message-State: AOPr4FVvVYHwKb+YwJVGKzCKFtKVgHIqmUfUfIgckRT/0simlByawuHJfMeWl9T6RhymR5w183nt9rbS/5zd+w==
+X-Received: by 10.50.36.9 with SMTP id m9mr19560557igj.91.1462907543744; Tue,
+ 10 May 2016 12:12:23 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Tue, 10 May 2016 12:12:23 -0700 (PDT)
+In-Reply-To: <20160510183955.GA16211@sigill.intra.peff.net>
+X-Google-Sender-Auth: cyr8gWGJ_f5UhK-SAbTUNPW9tGs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294175>
 
-Armin Kunaschik <megabreit@googlemail.com> writes:
-
-> I fail to see why eval is really necessary here.
-
-It is necessary to work correctly with any strategy option with $IFS
-in it, I would think.  The calling script "git-rebase" accumulates
---strategy-option values after passing each of them through
-"rev-parse --sq-quote" for that reason.
-
-which means that eval'ed string here:
-
-> My quick and dirty hotfix is to place a
-> test -n "$strategy_opts" &&
-> in front of the eval.
-> The tests run fine after this change.
+On Tue, May 10, 2016 at 2:39 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, May 10, 2016 at 01:20:54AM -0400, Eric Sunshine wrote:
+>> diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+>> @@ -7,11 +7,13 @@ test_description='test git rev-parse'
+>>       while :
+>>       do
+>>               case "$1" in
+>>               -C) dir="-C $2"; shift; shift ;;
+>>               -b) bare="$2"; shift; shift ;;
+>> +             -g) env="GIT_DIR=$2; export GIT_DIR"; shift; shift ;;
 >
-> What do you think?
+> This will expand $2 inside $env, which is later eval'd. So funny things
+> happen if there are spaces or metacharacters. It looks like you only use
+> it with short relative paths ("../repo.git", etc), which is OK, but this
+> would probably break badly if we ever used absolute paths.
+>
+> I don't know if it's worth worrying about or not. The usual solution is
+> something like:
+>
+>   env_git_dir=$2
+>   env='GIT_DIR=$env_git_dir; export GIT_DIR'
+>   ...
+>   eval "$env"
 
-I do not see why "test -n &&" is necessary here, and would be very
-hesitant to accept a change that nobody understands why it works.
+Makes sense; I wasn't quite happy with having $2 interpolated
+unquoted. Like you, though, I don't know if it's worth worrying
+about...
+
+>> @@ -36,6 +38,8 @@ test_rev_parse () {
+>>       do
+>>               expect="$1"
+>>               test_expect_success "$name: $o" '
+>> +                     test_when_finished "sane_unset GIT_DIR" &&
+>> +                     eval $env &&
+>
+> I was surprised not to see quoting around $env here, but it probably
+> doesn't matter (I think it may affect how some whitespace is treated,
+> but the contents of $env are pretty tame).
+
+I flip-flopped on this one several times, quoting, and not quoting.
+Documentation for 'eval' says:
+
+    The args are read and concatenated together into a single
+    command.
+
+so, I ultimately left it unquoted, but don't feel strongly about it.
+
+> This will set up the sane_unset regardless of whether $env does
+> anything. Would it make more sense to stick the test_when_finished
+> inside $env? You could use regular unset then, too, since you know the
+> variable would be set.
+
+I didn't worry about it too much because the end result is effectively
+the same and, with all the 'case' arms being short one-liners, I think
+the code is a bit easier to read as-is; bundling 'test_when_finished'
+into the 'env' assignment line would probably require wrapping the
+line. I do like the improved encapsulation of your suggestion but
+don't otherwise feel strongly about it.
+
+Nevertheless, I can re-roll with these changes if you feel more
+strongly than I about it.
