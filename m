@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 4/7] worktree.c: use is_dot_or_dotdot()
-Date: Tue, 10 May 2016 21:15:50 +0700
-Message-ID: <20160510141553.22967-4-pclouds@gmail.com>
+Subject: [PATCH 6/7] worktree: avoid 0{40}, too many zeroes, hard to read
+Date: Tue, 10 May 2016 21:15:52 +0700
+Message-ID: <20160510141553.22967-6-pclouds@gmail.com>
 References: <20160510141416.GA22672@lanh>
  <20160510141553.22967-1-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -14,93 +14,80 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 10 16:16:44 2016
+X-From: git-owner@vger.kernel.org Tue May 10 16:17:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b08Sp-0007js-CI
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 16:16:43 +0200
+	id 1b08TG-00087u-9I
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 16:17:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752777AbcEJOQj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 May 2016 10:16:39 -0400
-Received: from mail-pa0-f65.google.com ([209.85.220.65]:35645 "EHLO
+	id S1752824AbcEJOQy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 May 2016 10:16:54 -0400
+Received: from mail-pa0-f65.google.com ([209.85.220.65]:35710 "EHLO
 	mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752705AbcEJOQi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 10:16:38 -0400
-Received: by mail-pa0-f65.google.com with SMTP id zy2so1176483pac.2
-        for <git@vger.kernel.org>; Tue, 10 May 2016 07:16:38 -0700 (PDT)
+	with ESMTP id S1752810AbcEJOQv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 10:16:51 -0400
+Received: by mail-pa0-f65.google.com with SMTP id zy2so1176891pac.2
+        for <git@vger.kernel.org>; Tue, 10 May 2016 07:16:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5kLTEGrQTc3gg7qfUyUKHBvOU+G0NwCzjRl4bNUJgAM=;
-        b=lwASt35DZ+0+1gT6fZauVdzfNQr6IadwJWw6zeP/Bca4QeXODwAeoCj6OFdnEudvX0
-         NlPcwhy91ten4j3NQVfKu3lJludvdnga2ID8k9xFjrCm01NZjGm2IXCwh2yBhuWFzLMt
-         6hUsOksB36HqZSGrdEs6S4huIlaHe6+xtLsua3c+Cimsd3IHHCpuiWP+C7b5eVFbJc9S
-         hnTwOM1WcJEjzhuDNLxb68jH0NREGdG9h/51V2jv8onY9lJHfTreExWf3rkELAHSJmtg
-         86m+EY6LmoKw0WURh2ibDR+xDU43rUYjEE6T/oLvmTIasgz0EDqY/FSzMIyVGvT+o9zW
-         8LEA==
+        bh=sx9msf4bJ3Je+/e9lGN2Ef9PagWRB/VfZLlVE0gnIfc=;
+        b=SSYz201oZMjY+D9wMnie0pN2lzCt7Hn/MZgOMQJ4MgpAe0iC8PoH4rw9GoENStus0F
+         qMQErFwW5FCdOjMc46DAJGcauo01MWgxvvTOgaGsankCv8nVsFIDxg8MhjilibEkDHI1
+         3NdBdvhtM9kNRUuXjnEiLwiWA+dQ9Iu/li0UjPGec8jYR8MUteEM2UQp34NiGiYJCLpB
+         oRlgy3c32U0MuI15HYe+iIHr0BVS7UO0aBIG0L/EXZ+OLWfpu6a1CCFjNqPlEEi+2h/D
+         xlww0Dv6Q5cA6y3nbIZWvORvWBublMVjvAZARocsNHkfOAd8Yi4OqWE1XcGWgnfiU4af
+         N8dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5kLTEGrQTc3gg7qfUyUKHBvOU+G0NwCzjRl4bNUJgAM=;
-        b=W8f7vwtNtD8nwshU2bUqxcjQi+cFkcwvAuQ1T03rFKlWFvmoUfcQSU9TIxuok5njFd
-         ofFzsyZ7sC+DCpLs0ktjMCAYxKzpD/CUQBTdqNP9xAFpfgIxsDnXaVOZ+CzVIc8ITrdQ
-         Vt52LyrO9tMo1jYc7vRTDN5k5l2CIZLfltL/jBKsmj0lhRf3ZQw5vuUtE01r2ub1Zecw
-         LUGuSOQRFW+tT4suTXMnx+DgF86MdB8aHfQq1UvHiCYmhYZvHfKOHY/LNG0+OSedzMps
-         MTA56u9ivRz3wzlbnmtoPqIAp2BguMnF3mTZTkgQrIJcLs/m+yXzBTaLJd9TCy5hqnPF
-         QJ3A==
-X-Gm-Message-State: AOPr4FVdB/lv3wsmDwrOmITyqIzlxq5zpQYqkKKhaLpNu1s3IAPmTGQzieqV6ce4srJjrQ==
-X-Received: by 10.66.89.228 with SMTP id br4mr58372061pab.110.1462889797841;
-        Tue, 10 May 2016 07:16:37 -0700 (PDT)
+        bh=sx9msf4bJ3Je+/e9lGN2Ef9PagWRB/VfZLlVE0gnIfc=;
+        b=Y3OuF8VV40W46KL6kQkCKhIjtWWeMftUKjsUYhFnuOCO5Gx13hD3K+8PkC4pXLmRCP
+         h04WP8agCpWjZ+dIdLeu28BAAKkcVLeNNYKhLCIpzgXfSY3s1zmgsQZaIpkopmoyX6d9
+         TlZAirh9ZSsiR1UaZ/X2XPgsxvEVzh+oZamIrwvJkiF8nuvPEuQXQdAPzffAauApykWr
+         Wuql5WgIws1bgrY9lhOghNBtiNs7KT5EDpibEnicAYsshwohRSqX6O1Adshh7qBiOx3H
+         hscM2oJ05YSfjiw7YnuGsbAMVqnN4iLFLu1UvLdkSr4A4Wa1XcjKf+GKFDijbhwZyxXA
+         unVA==
+X-Gm-Message-State: AOPr4FW4ZLddJ5m4R0Od+DfQHsCV8IWbthvmHCnuCBk795GQIEbLZ9emWQA+z8gOzhdDZg==
+X-Received: by 10.66.65.133 with SMTP id x5mr59263139pas.108.1462889810513;
+        Tue, 10 May 2016 07:16:50 -0700 (PDT)
 Received: from lanh ([115.76.164.133])
-        by smtp.gmail.com with ESMTPSA id e7sm4995683pfa.28.2016.05.10.07.16.33
+        by smtp.gmail.com with ESMTPSA id yl5sm4938569pac.38.2016.05.10.07.16.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 May 2016 07:16:36 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Tue, 10 May 2016 21:16:39 +0700
+        Tue, 10 May 2016 07:16:49 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Tue, 10 May 2016 21:16:52 +0700
 X-Mailer: git-send-email 2.8.2.524.g6ff3d78
 In-Reply-To: <20160510141553.22967-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294140>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
  builtin/worktree.c | 2 +-
- worktree.c         | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index bf80111..aaee0e2 100644
+index aaee0e2..b53f802 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -95,7 +95,7 @@ static void prune_worktrees(void)
- 	if (!dir)
- 		return;
- 	while ((d =3D readdir(dir)) !=3D NULL) {
--		if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
-+		if (is_dot_or_dotdot(d->d_name))
- 			continue;
- 		strbuf_reset(&reason);
- 		if (!prune_worktree(d->d_name, &reason))
-diff --git a/worktree.c b/worktree.c
-index 6a11611..f4a4f38 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -187,7 +187,7 @@ struct worktree **get_worktrees(void)
- 	if (dir) {
- 		while ((d =3D readdir(dir)) !=3D NULL) {
- 			struct worktree *linked =3D NULL;
--			if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
-+			if (is_dot_or_dotdot(d->d_name))
- 				continue;
-=20
- 			if ((linked =3D get_linked_worktree(d->d_name))) {
+@@ -262,7 +262,7 @@ static int add_worktree(const char *path, const cha=
+r *refname,
+ 	 */
+ 	strbuf_reset(&sb);
+ 	strbuf_addf(&sb, "%s/HEAD", sb_repo.buf);
+-	write_file(sb.buf, "0000000000000000000000000000000000000000");
++	write_file(sb.buf, sha1_to_hex(null_sha1));
+ 	strbuf_reset(&sb);
+ 	strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
+ 	write_file(sb.buf, "../..");
 --=20
 2.8.2.524.g6ff3d78
