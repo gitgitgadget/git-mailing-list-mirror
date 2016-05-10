@@ -1,9 +1,10 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 1/5] worktree.c: add find_worktree_by_path()
-Date: Tue, 10 May 2016 21:17:25 +0700
-Message-ID: <20160510141729.23063-1-pclouds@gmail.com>
+Subject: [PATCH 2/5] worktree.c: add is_main_worktree()
+Date: Tue, 10 May 2016 21:17:26 +0700
+Message-ID: <20160510141729.23063-2-pclouds@gmail.com>
 References: <20160510141416.GA22672@lanh>
+ <20160510141729.23063-1-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -19,108 +20,96 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b08Tn-0000DE-W5
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 16:17:44 +0200
+	id 1b08Tu-0000K5-JA
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 16:17:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752755AbcEJORj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 May 2016 10:17:39 -0400
-Received: from mail-pa0-f68.google.com ([209.85.220.68]:36039 "EHLO
-	mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751637AbcEJORj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 10:17:39 -0400
-Received: by mail-pa0-f68.google.com with SMTP id i5so998818pag.3
-        for <git@vger.kernel.org>; Tue, 10 May 2016 07:17:38 -0700 (PDT)
+	id S1752742AbcEJORq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 May 2016 10:17:46 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:36724 "EHLO
+	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751637AbcEJORp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 10:17:45 -0400
+Received: by mail-pf0-f194.google.com with SMTP id g132so1065761pfb.3
+        for <git@vger.kernel.org>; Tue, 10 May 2016 07:17:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=dRWyYysnroZbW6P6qb79lQvLROC0N9HIegL4KY0t+cA=;
-        b=JihqUsS20QZzfGP0YwKwLhxdbn8sblUC+7qa/orZPkP4F4sIR9is4Tz7aslSGu3vzQ
-         QSA2ZqbExdxff8ZchfM/nc1PzMDSLL6N4TG1Itxqoyx6o7VhQ2miEgNaBwiYoWuabBx7
-         Dxv+AR1F/iboi5VeqN/l+8cox4ehHpO+qk8j3EXvPHQEMN9MB18h+xw8hj406nNx2327
-         ENvyl4F5dVGQNII6K3g2X3xYwjHLvEzzfb6RApG7YYpWPJt2xkfUe+W2e8L/JgQhqATs
-         DNagrWRx/SKPLGBf+KeukoGlCg+8lSaiQC9do4uiyohYSgnu5lcS3Fct1UjSuQbVW1mc
-         7YZw==
+        bh=oxjSILARrH2kOrTsAwAbm8os2j3nAbAVjOcK57aGmuQ=;
+        b=Fgbg+ZeKOulEPZKhlZbFSrasnUGYJMditS2z3WROHpdpDM5sF2O5lYVcSg8vrw5qpt
+         FHGhz/xCWZurYOZziDC8dya/6a7yBPVqLqqbLhXyNGAL4zPV83z3/S77N1QZJMFi6pFl
+         SOmc98J5fEy+UFzhbN4S7weXJDG7ssZ9ZAb2vXzy+8Y1gvixHcPMtCgRrLqwNpHa8mxg
+         YuQpSJNHRrZl4V/CNY+OxdiSQPOG1YxvvUaqWkzpv7SykUKENmVrNZgqroDnjURaUaeB
+         p41oAsU5+SvvYz8Ur4ybphnshwkNS4lyLJUT9/oyrn156sn0tzG5XRgNW72+/coTQKSI
+         UnYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=dRWyYysnroZbW6P6qb79lQvLROC0N9HIegL4KY0t+cA=;
-        b=RGgdcRefl1Qt+TzfSkNVuCpul1gsNmdYDWW4Nt4HDNu4LzA46cvMc+We8xreOmstTL
-         h4s6BTbzFY95J0tZI59SYEBm9/pj4bgqTZKTPe8IFjcMuKnxPHWNOx3qb3CXued8t8Rt
-         i5o53cAG9A5iG/LJny6FOJE49/DVYG8tD26EX9PTvcTBYI2k0QKdGJ6XALETsskWwldd
-         SHeSuEkcAR1VGLUcqgXT1rOGx/YdZUkzYhLqshSUPtGXsxwINPdIRv3082bW9nCxexCq
-         p8cNdMzoj441IEKrQsWV/z1MdiV9N71JVngbTwKAIGoFW8yhdoCjSNAOMToAwISx701F
-         8kNQ==
-X-Gm-Message-State: AOPr4FWPgvAd85APk3ZbxpVz7nE6za6MQWKhkq8P7I73lWikYK0dKjvO1F9yyuCj357hIA==
-X-Received: by 10.66.156.232 with SMTP id wh8mr58937000pab.153.1462889858350;
-        Tue, 10 May 2016 07:17:38 -0700 (PDT)
+        bh=oxjSILARrH2kOrTsAwAbm8os2j3nAbAVjOcK57aGmuQ=;
+        b=mzumoyAw6hqG3dogNeNcRca41FkUFJseMU8fOFbdM0WjAEtsh9XfRJCdhPg42E+zxu
+         esBH4ts3UHFkHFA+aIHTeoZnUgC16OagfZIRcM7VGloQEn4/p/3LdCkz6fMljLCavr9Y
+         j3PyFG2Xgb5xOunWHQA2/XWZHxJitY3czW7VLrIp1hwV0GfiSyv4SikSXWSd5JfNpOEC
+         Jqv5AZGRRergal1rxyrPeAgFjBoLXP9MAucyn8MlH5zYB4rvrhcmrDv70wSgj7QJEf0h
+         J4TKbWjwxkRuWo0v1rxkXMtjzym0ZLS/HYZ6eEGrlQJKcqLhmrYbd7Bri6E40CK2fIVe
+         HCxg==
+X-Gm-Message-State: AOPr4FXI/NQXysOV61BZxYr/XWvWm6bOLul7y3C+tgCS5EywNTIfhArKt1YtPavE4HUukA==
+X-Received: by 10.98.38.196 with SMTP id m187mr22845094pfm.57.1462889865049;
+        Tue, 10 May 2016 07:17:45 -0700 (PDT)
 Received: from lanh ([115.76.164.133])
-        by smtp.gmail.com with ESMTPSA id dr4sm5001605pac.11.2016.05.10.07.17.34
+        by smtp.gmail.com with ESMTPSA id g77sm4953220pfg.78.2016.05.10.07.17.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 May 2016 07:17:37 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Tue, 10 May 2016 21:17:40 +0700
+        Tue, 10 May 2016 07:17:43 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Tue, 10 May 2016 21:17:46 +0700
 X-Mailer: git-send-email 2.8.2.524.g6ff3d78
-In-Reply-To: <20160510141416.GA22672@lanh>
+In-Reply-To: <20160510141729.23063-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294144>
 
-So far we haven't needed to identify an existing worktree from command
-line. Future commands such as lock or move will need it. There are of
-course other options for identifying a worktree, for example by branch
-or even by internal id. They may be added later if proved useful.
+Main worktree _is_ different. You can lock a linked worktree but not th=
+e
+main one, for example. Provide an API for checking that.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- worktree.c | 16 ++++++++++++++++
- worktree.h |  6 ++++++
- 2 files changed, 22 insertions(+)
+ worktree.c | 5 +++++
+ worktree.h | 5 +++++
+ 2 files changed, 10 insertions(+)
 
 diff --git a/worktree.c b/worktree.c
-index 335c58f..a6d1ad1 100644
+index a6d1ad1..37fea3d 100644
 --- a/worktree.c
 +++ b/worktree.c
-@@ -222,6 +222,22 @@ const char *get_worktree_git_dir(const struct work=
-tree *wt)
- 		return git_common_path("worktrees/%s", wt->id);
+@@ -238,6 +238,11 @@ struct worktree *find_worktree_by_path(struct work=
+tree **list,
+ 	return wt;
  }
 =20
-+struct worktree *find_worktree_by_path(struct worktree **list,
-+				       const char *path_)
++int is_main_worktree(const struct worktree *wt)
 +{
-+	char *path =3D xstrdup(real_path(path_));
-+	struct worktree *wt =3D NULL;
-+
-+	while (*list) {
-+		wt =3D *list++;
-+		if (!fspathcmp(path, real_path(wt->path)))
-+			break;
-+		wt =3D NULL;
-+	}
-+	free(path);
-+	return wt;
++	return wt && !wt->id;
 +}
 +
  int is_worktree_being_rebased(const struct worktree *wt,
  			      const char *target)
  {
 diff --git a/worktree.h b/worktree.h
-index 7430a4e..7775d1b 100644
+index 7775d1b..77a9e09 100644
 --- a/worktree.h
 +++ b/worktree.h
-@@ -29,6 +29,12 @@ extern struct worktree **get_worktrees(void);
-  */
- extern const char *get_worktree_git_dir(const struct worktree *wt);
+@@ -35,6 +35,11 @@ extern const char *get_worktree_git_dir(const struct=
+ worktree *wt);
+ extern struct worktree *find_worktree_by_path(struct worktree **list,
+ 					      const char *path_);
 =20
 +/*
-+ * Search a worktree by its path. Paths are normalized internally.
++ * Return true if the given worktree is the main one.
 + */
-+extern struct worktree *find_worktree_by_path(struct worktree **list,
-+					      const char *path_);
++extern int is_main_worktree(const struct worktree *wt);
 +
  /*
   * Free up the memory for worktree
