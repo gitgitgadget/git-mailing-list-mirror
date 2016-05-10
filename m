@@ -1,71 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: syntax error in git-rebase while running t34* tests
-Date: Tue, 10 May 2016 13:53:56 -0700
-Message-ID: <xmqqy47hmy6z.fsf@gitster.mtv.corp.google.com>
-References: <CALR6jEiF9Ooi1f0O3KG0wYmN0KRWBQTNarXx79-wBD2E-8q2jA@mail.gmail.com>
-	<xmqq60ulpw1s.fsf@gitster.mtv.corp.google.com>
-	<20160510204758.GB19958@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] t3404: be resilient against running with the -x flag
+Date: Tue, 10 May 2016 16:58:01 -0400
+Message-ID: <20160510205800.GC19958@sigill.intra.peff.net>
+References: <cover.1462888768.git.johannes.schindelin@gmx.de>
+ <alpine.DEB.2.20.1605101607180.4092@virtualbox>
+ <xmqqshxpofqh.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Armin Kunaschik <megabreit@googlemail.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 10 22:54:11 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 10 22:58:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0EfS-0002vX-0C
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 22:54:10 +0200
+	id 1b0EjJ-0007Ue-Oo
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 22:58:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752702AbcEJUyD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 16:54:03 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63031 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752577AbcEJUyB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 16:54:01 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3587F19E61;
-	Tue, 10 May 2016 16:53:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=X2W4LvTHnvRYv8wYHXOiu3EdTDw=; b=oBZcY/
-	gmB7E7cgjS9xD0yNM5NydUFkI/XepyIktM3UUU9mn8QodRAUYyMOXhxgywmuL1Mg
-	eC6+AJSS5wPPZvgMvim8b2uNxBAyljAKSFUt6qvWpqgTEGk6mlRh2Tmf89A3kJq/
-	jH1AKpLv0RkyzqSKnsbspTR0mV6DZO5ctfXjE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=M9bWtn91I3ykXYzifCD4ZFoonOmZt69I
-	uZm6FBOB7JbhcTClsiuc9ecTHLDxkXwTP1praEdhzWmtWBF2stqf6UHzBcD/2WIm
-	125/4lj5ZipF170qDiYpz+hIazLdXfNZMSShFlvUuClomwKg4o6V6xYbUGm1ICmG
-	mL9Phz0CJk0=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2E3C119E5F;
-	Tue, 10 May 2016 16:53:59 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A64DC19E5C;
-	Tue, 10 May 2016 16:53:58 -0400 (EDT)
-In-Reply-To: <20160510204758.GB19958@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 10 May 2016 16:47:58 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5137DC6E-16F1-11E6-9A01-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1751642AbcEJU6F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 16:58:05 -0400
+Received: from cloud.peff.net ([50.56.180.127]:37265 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751325AbcEJU6E (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 16:58:04 -0400
+Received: (qmail 28720 invoked by uid 102); 10 May 2016 20:58:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 10 May 2016 16:58:03 -0400
+Received: (qmail 1358 invoked by uid 107); 10 May 2016 20:58:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 10 May 2016 16:58:17 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 May 2016 16:58:01 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqshxpofqh.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294191>
 
-Jeff King <peff@peff.net> writes:
+On Tue, May 10, 2016 at 12:49:42PM -0700, Junio C Hamano wrote:
 
-> I think it is clear why it works. If $strategy_opts is empty, then the
-> code we generate looks like:
->
->   for strategy_opt in
->   do
->           ...
->   done
+> I wonder if we can fix "-x" instead so that we do not have to
+> butcher tests like this patch does.  It was quite clear what it
+> expected to see before this patch, and it is sad that the workaround
+> makes less readable (and relies on the real output we are looking
+> for never begins with '+').
 
-Ah, of course.  Thanks.
+I don't think there is a scalable, portable way to do so. "-x" output is
+going to stderr, and is inherited by any functions or subshells. So
+either we have to ask "-x" output to go somewhere else, or we have to
+turn it off inside the functions and subshells. The latter requires
+tweaking each site, which isn't scalable. And there is no way to do the
+former in a portable way (AFAIK).
+
+That being said, bash supports BASH_XTRACEFD, so maybe something like
+this:
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 286c5f3..482ec11 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -321,6 +321,7 @@ then
+ else
+ 	exec 4>/dev/null 3>/dev/null
+ fi
++BASH_XTRACEFD=4
+ 
+ test_failure=0
+ test_count=0
+
+would help Dscho's case (and people on other shells aren't helped, but
+they are not hurt either).
+
+-Peff
