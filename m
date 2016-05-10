@@ -1,114 +1,156 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 5/6] t1500: avoid setting environment variables outside of tests
-Date: Tue, 10 May 2016 15:48:56 -0400
-Message-ID: <CAPig+cTtU9_3=2eu0boaPbXKXh2gngEe7byDpJuSFAR4rcbrMA@mail.gmail.com>
-References: <20160510052055.32924-1-sunshine@sunshineco.com>
-	<20160510052055.32924-6-sunshine@sunshineco.com>
-	<20160510183955.GA16211@sigill.intra.peff.net>
-	<CAPig+cRR49iJOkaLfynkvch4zUHVkpcJwVah0rvaEOeR7aY2Nw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] t3404: be resilient against running with the -x flag
+Date: Tue, 10 May 2016 12:49:42 -0700
+Message-ID: <xmqqshxpofqh.fsf@gitster.mtv.corp.google.com>
+References: <cover.1462888768.git.johannes.schindelin@gmx.de>
+	<alpine.DEB.2.20.1605101607180.4092@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Michael Rappazzo <rappazzo@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 10 21:49:04 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue May 10 21:49:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0DeQ-0003uJ-NM
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 21:49:03 +0200
+	id 1b0DfE-0004to-UF
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 21:49:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751952AbcEJTs6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 15:48:58 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:35956 "EHLO
-	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751063AbcEJTs6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 15:48:58 -0400
-Received: by mail-io0-f193.google.com with SMTP id k129so2898358iof.3
-        for <git@vger.kernel.org>; Tue, 10 May 2016 12:48:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=mkOfkdkG+2jfJMhuKjJxv99xIB9DxjQBN828/5bSOp0=;
-        b=DD7DAna1EUcfrZ0H158se/5g4RUPyyFwtTd9VogYExuj9TOFQxcM6JwiCkxZimiJhg
-         mKr/Utojy3A8w/AOA1gHDE2qLnu8NTYJ0qMsh6SvlqblHgH0q42nQgFdQcPswtsEc6ko
-         pJWygLwxO7B3V5UdhtaUejXRgXsQz8KvGr2FhOZ1OD/h5v+uny1W/v4O8fbvLt/8uFJV
-         oBE4Vx2RkrTxhPUEh/wlM5grWvZQXRWefvi/Z30H9W1ucmxh23ux7GJ9XznMquuyDyW1
-         m4WgTK5P2ilu9EWkC6ZNJksC92IsLfXbAIhOhBgomJYe7Zk7EQJVDv4AtC+v1VmzQjff
-         o2Jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=mkOfkdkG+2jfJMhuKjJxv99xIB9DxjQBN828/5bSOp0=;
-        b=mko9TcRLgrhayDl1miPZauxRENLoPghdsMBLdP+5QJaI9FXQXwkPjg6J5p7gMYua93
-         +kGhaWO54y0/hUpcPI4pAmYtrAGyRG8qanLZZCDTnbAWuPvWllE1YIlrTdyZWtJ3xkqo
-         SsFGxZG+p8GW3J2VHOHuuVbnf8zKqFrtwFsQ5Jh3ez9MipYYcQ87EvFwGm7lBrjyeKzz
-         VRxV/czbV1qRguO+me3pfH8KdJfUEDt+gXgjhy6fIi/6B63/jHmsvUr2OJ7QCz0ns81t
-         6bysnxdtsJ1MoEhmLEo3yUXYhK/u90j8M+Rxoovv5LRYMT/zq3sP3PIX+tp7bEl/X0Yr
-         lkMw==
-X-Gm-Message-State: AOPr4FWI0TUXaDGXD3u+r+2Iydvud3vfrx0DNzhlihcmF90YV1HZfSByVKPusk0YgqY8SyFxW0Hf64sMsXCSXA==
-X-Received: by 10.107.132.66 with SMTP id g63mr2182iod.34.1462909737210; Tue,
- 10 May 2016 12:48:57 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Tue, 10 May 2016 12:48:56 -0700 (PDT)
-In-Reply-To: <CAPig+cRR49iJOkaLfynkvch4zUHVkpcJwVah0rvaEOeR7aY2Nw@mail.gmail.com>
-X-Google-Sender-Auth: LmZ7NPL6lruUA_B2KScTqj37F18
+	id S1752708AbcEJTtr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 15:49:47 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54216 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751759AbcEJTtq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 15:49:46 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 278D4192C8;
+	Tue, 10 May 2016 15:49:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WXWbaV7j91t7RwQbqqHN4AQxMHc=; b=XMdDk5
+	Kn7U+RIyZHccWF6o8/7DG/G2Tr9JOItTNrbFk06I1MY+yvuSbc48vTteJeANmufb
+	P+Hwo5Au5/azeRHPtp8AUgAE0WK/LP2lj60yXjIPq5CD4dVzBJi2isksik3/vlmF
+	IklAXdGoPEnAQmo61ZoSfiUnBbSJ+5FE4vgqY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eAb+07MGZsFqbkPexwlyKAgD58tGvR+4
+	LicIsHISx8TOUXLPJ07VILYF5JESzYo89cRLpVMLJUjlVEw96T+X5JBTZphsVeCu
+	Gra9ekR4UE5Rg8YGp9lRPeFmyyvLjh7jb1Tk8WpyGgFS+a0cRfQ8n/wlgD1NTPkj
+	4zP9J4LW0jg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1F93C192C7;
+	Tue, 10 May 2016 15:49:45 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7CA16192C6;
+	Tue, 10 May 2016 15:49:44 -0400 (EDT)
+In-Reply-To: <alpine.DEB.2.20.1605101607180.4092@virtualbox> (Johannes
+	Schindelin's message of "Tue, 10 May 2016 16:07:22 +0200 (CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 57F409AA-16E8-11E6-90F4-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294179>
 
-On Tue, May 10, 2016 at 3:12 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Tue, May 10, 2016 at 2:39 PM, Jeff King <peff@peff.net> wrote:
->> On Tue, May 10, 2016 at 01:20:54AM -0400, Eric Sunshine wrote:
->>>       while :
->>>       do
->>>               case "$1" in
->>>               -C) dir="-C $2"; shift; shift ;;
->>>               -b) bare="$2"; shift; shift ;;
->>> +             -g) env="GIT_DIR=$2; export GIT_DIR"; shift; shift ;;
->>> @@ -36,6 +38,8 @@ test_rev_parse () {
->>>       do
->>>               expect="$1"
->>>               test_expect_success "$name: $o" '
->>> +                     test_when_finished "sane_unset GIT_DIR" &&
->>> +                     eval $env &&
->>
->> This will set up the sane_unset regardless of whether $env does
->> anything. Would it make more sense to stick the test_when_finished
->> inside $env? You could use regular unset then, too, since you know the
->> variable would be set.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+
+> To: Junio C Hamano <gitster@pobox.com>
+> Cc: git@vger.kernel.org
+
+Probably the above is the other way around.
+
+> The -x flag (trace commands) is a priceless tool when hunting down bugs
+> that trigger test failures. It is a worthless tool if the -x flag
+> *itself* triggers test failures.
+
+True.
+
+I wonder if we can fix "-x" instead so that we do not have to
+butcher tests like this patch does.  It was quite clear what it
+expected to see before this patch, and it is sad that the workaround
+makes less readable (and relies on the real output we are looking
+for never begins with '+').
+
+I do agree the change from 1d to /<expected string>/d in this patch
+is a very good thing; it makes it clear that we are excluding the
+"error: ", and expect that after removing the message what follows
+is the help text.  And in the spirit of that change, I think it is
+better to match /^error: / instead of /option .exec. requires.../.
+
+> So let's change the offending tests so that they are a bit less
+> stringent and do not stumble over the "+..." lines generated by the -x
+> flag.
 >
-> I didn't worry about it too much because the end result is effectively
-> the same and, with all the 'case' arms being short one-liners, I think
-> the code is a bit easier to read as-is; bundling 'test_when_finished'
-> into the 'env' assignment line would probably require wrapping the
-> line. I do like the improved encapsulation of your suggestion but
-> don't otherwise feel strongly about it.
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  t/t3404-rebase-interactive.sh | 67 ++++++++++---------------------------------
+>  1 file changed, 15 insertions(+), 52 deletions(-)
+>
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index 66348f1..25f1118 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -882,7 +882,8 @@ test_expect_success 'rebase -i --exec without <CMD>' '
+>  	git reset --hard execute &&
+>  	set_fake_editor &&
+>  	test_must_fail git rebase -i --exec 2>tmp &&
+> -	sed -e "1d" tmp >actual &&
+> +	sed -e "/option .exec. requires a value/d" -e '/^+/d' \
+> +		tmp >actual &&
+>  	test_must_fail git rebase -h >expected &&
+>  	test_cmp expected actual &&
+>  	git checkout master
+> @@ -1149,10 +1150,6 @@ test_expect_success 'drop' '
+>  	test A = $(git cat-file commit HEAD^^ | sed -ne \$p)
+>  '
+>  
+> -cat >expect <<EOF
+> -Successfully rebased and updated refs/heads/missing-commit.
+> -EOF
+> -
+>  test_expect_success 'rebase -i respects rebase.missingCommitsCheck = ignore' '
+>  	test_config rebase.missingCommitsCheck ignore &&
+>  	rebase_setup_and_clean missing-commit &&
+> @@ -1160,52 +1157,33 @@ test_expect_success 'rebase -i respects rebase.missingCommitsCheck = ignore' '
+>  	FAKE_LINES="1 2 3 4" \
+>  		git rebase -i --root 2>actual &&
+>  	test D = $(git cat-file commit HEAD | sed -ne \$p) &&
+> -	test_cmp expect actual
+> +	test_i18ngrep \
+> +		"Successfully rebased and updated refs/heads/missing-commit." \
+> +		actual
 
-Actually, I think we can have improved encapsulation and maintain
-readability like this:
+Is this string going to be i18n'ed?  If so this change is good, but
+it probably wants to be a separate "prepare for i18n" patch, not
+this "work around -x that pollutes 2>actual output" patch.
 
-    case "$1" in
-    ...
-    -g) env="$2"; shift;  shift ;;
-    ...
-    esac
+>  test_expect_success 'rebase -i respects rebase.missingCommitsCheck = warn' '
+> +	line="$(git rev-list --pretty=oneline --abbrev-commit -1 master)" &&
+>  	test_config rebase.missingCommitsCheck warn &&
+>  	rebase_setup_and_clean missing-commit &&
+>  	set_fake_editor &&
+>  	FAKE_LINES="1 2 3 4" \
+>  		git rebase -i --root 2>actual &&
+> -	test_cmp expect actual &&
+> +	test_i18ngrep "Warning: some commits may have been dropped" actual &&
+> +	test_i18ngrep "^ - $line" actual &&
 
-    ...
-    test_expect_success "..." '
-        if test -n "$env"
-        do
-            test_when_finished "unset GIT_DIR"
-            GIT_DIR="$env"
-            export GIT_DIR
-        fi
-        ...
-    '
+The former is good in "prepare for i18n" patch.  The latter is not.
+
+test_i18ngrep is primarily to make sure what is *not* supposed to be
+localized are not localized.  GETTEXT_POISON build-time option
+builds Git with garbage translations for strings marked for
+localization, and test_i18ngrep knows to pretend the test always
+passes in POISON build.
+
+We test things that are _not_ to be localized with "grep", so a test
+with POISON build will catch if a string (like plumbing output) that
+are not supposed to be localized is marked for localization by
+mistake.
+
+I stop quoting here, but I think the remainder has the same
+over-eager use of i18ngrep.
