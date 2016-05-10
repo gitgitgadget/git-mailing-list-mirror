@@ -1,101 +1,85 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v8 0/3] Add support for sending additional HTTP headers (part
- 2)
-Date: Tue, 10 May 2016 09:08:15 +0200 (CEST)
-Message-ID: <cover.1462863934.git.johannes.schindelin@gmx.de>
-References: <cover.1462774709.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v8 2/3] t5551: make the test for extra HTTP headers more
+ robust
+Date: Tue, 10 May 2016 09:08:38 +0200 (CEST)
+Message-ID: <ff8cbab7e62211b13835e520d402fbd89b90849e.1462863934.git.johannes.schindelin@gmx.de>
+References: <cover.1462774709.git.johannes.schindelin@gmx.de> <cover.1462863934.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Lars Schneider <larsxschneider@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 10 09:08:44 2016
+X-From: git-owner@vger.kernel.org Tue May 10 09:08:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b01mb-0003nI-LW
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 09:08:42 +0200
+	id 1b01mq-0004Ll-IE
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 09:08:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751364AbcEJHIa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 03:08:30 -0400
-Received: from mout.gmx.net ([212.227.15.18]:63822 "EHLO mout.gmx.net"
+	id S1751372AbcEJHIr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 03:08:47 -0400
+Received: from mout.gmx.net ([212.227.15.18]:63567 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751152AbcEJHI3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 03:08:29 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LfC00-1bO8Bj3nnk-00omPn; Tue, 10 May 2016 09:08:16
+	id S1750864AbcEJHIq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 03:08:46 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0Ltqb7-1biotf40rl-011EWO; Tue, 10 May 2016 09:08:39
  +0200
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <cover.1462774709.git.johannes.schindelin@gmx.de>
+In-Reply-To: <cover.1462863934.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:nDApE/qXIm26SPQNXH+122ONy+S3TRyq1LnjeCdB9aDndFQSP5h
- hFu9lGNMUKvyECvhpkRGXXyKvehKWICqlKLCkd3iKMNhu55nx9kWZcekI7ZmKX4C4AEP31l
- dul4FiTIQzmK6nxXRTTqm7a0uBadlRJHx9a58vRaJUsOL7t3a5G9X1zUbTiXaIhBcsk8jJ3
- eRYURs2tM4LwFbMmMlUfA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:h9+0Pz0wSPQ=:Xea7UFhXi1HFWhmTG51dwf
- cS+qq8EQEtszsn4QjKvcugXMVaW8YvQFPol+LNIth5jVF/Xao+3pa3bnUaPVd4aHtL9+/Iaq4
- YWYt43QAoD18RXUcNDx7+NOG3cgJfha+z0QkpSg0DvcWsdLxQRhr4Es28MtnyqXKR+oc0UA/G
- gN7/xY14I2K/CPP61FCXi0PWfVetupwwOnqv3gCpZVvTOqgeKJiC4S5+hxt2vyRPEvbm6h3R3
- hxl0DtTOUX1GWNplACZ4dWkM2qLKhiwUfjhfHDJCjCElVTXkQf5LF9+o6JvmCqE6Bx2M6KhRL
- Xlzsmy1kJOoVGcl9n1sJMlH7vL87kVO4kPcZIhT/fe1SzJWEBuNYO1k1YlCOBoYZyhnwajSYQ
- j3FNdcGUsRXQGfy/mQh56I67QyR4/tsgbBPNsQnJp+gagSHIjpoqVI0SaiVGOsNGiChJi4Kq5
- rGm7Hwby8N9WD+tx40ENoZ3xPFmlEf8aNMjpjo+gnPQbPhxZkWO4WdC2k21gAm0bl6FaFqRdk
- 4uz99VsLB+h23kyO2W/JIZKnWCMDMrGAi7Lj+7LFu4XjRZvxLizq3yy9ztCoXLR0mrfQN3t79
- gnUXP6OC+d4clrn/Bo0yCPRyBevBhgldTcPoFkxQ6ku8cdOJH37EltdyItfbA/Ek474oO1o4/
- kn9Cst8ZvjjFKJ+hQs8FUBqna0Q/3I/GEDwZNBs3p84yQnbQRu03nDMd2JLtELHm3IrHwETdl
- byLOuwqy723phOVtGRO39yBCe5P0GaPURPBbRetote/D/b2wJpo1S3XiAe6UJOoCd7LwuUJP 
+X-Provags-ID: V03:K0:EhK0B7NfW1hPqq4D3Yhyh5x465n11ZkeOoIlWStetS8EOvWpUJq
+ OCJviPKuIk71RfTD2tbQcyy51O4uI1UF3BfqhlZdY6M5uw+TwZD+lkflh4Vri38ZZAQbuJm
+ A0U2ZjmKL9bNONJtib90VxwqEcxP/rVzZlPLO2xPQPSfYqtwe3wQFPRkLfdWlAtXh908ZBi
+ 9CU/CAW/hNy1V9t4EdBLw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:5vKyDGj/LHY=:TgXgsEQ5JKpnAINaIF4WUd
+ 8AW8HTKnd4h1A0SKOa5Y8BxEk+fkEc7z0AHqpQIS60p+3BM9DMQY7AhqSC8LCMdeF20cxE1MS
+ 4JjOsI7QrpDzPZ+HxudnXuOlG9WZtuwGYWXK1aq63Noj+jf1Yj1ccti1EBrfB4Jgq2qkcsVu5
+ 2xniXP8yCSm9h3iIXrNtDmwyLujCyHeciudGSyTYN14p0/zg5GXaBioAEl7B1KzZb/4m02n9S
+ 9MrlaNMy8WQga0PXFigYu9uMc3v7OQWWINM4u9kKILVzDCsk5PtSlVFX9OG8/uIc6uHkmgxit
+ 3RZZPGWxeqTRlhduTr0rkDMRKqei2xjqnBeCAJ1OZH/K4PUjnTGHQmZER9hYwwmOJsIVchPiK
+ 0keHIWpvoQ0Pvw99E8d8Wkr3FQf6eredcRKTZABPFf1oYtMrw9rU3F5bOBOL2h+EvkrSB6MZf
+ KJ6yxfzvpjcKl49RBKbc8AbgbCwmvsbXQcayXFCaFoItgqN1SWI/8zwGLu1ArIpFv1I8hgupj
+ 6/d18lyycTVD780bkz8n41GiS+MQlI4r40KUPn+HTJInNZhD0GOzIYvqe566B9YXlKt1lkar4
+ KHZdWhewEYUEN0jYus7fyaZBkDcn+FYEA6Js8GxLY2AfV95kQcA+aaoYxmpFHSDbVrpGXizDT
+ 9ZqlK2qwTSKG3e+o1DVbQw7B6epFVyD4jFaWoJU/gPuMAJazncWaWT6ob9kYu4jU/OayErngI
+ orDVvJm7XY4DOiPoLA0hLwIkdKebobfBaB6VLLrc+M0GAfZ/JnDt0694ULQfNNjcRy+z63lI 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294106>
 
-My use case is an army of build agents that need only limited and
-selective access to otherwise private repositories.
+To test that extra HTTP headers are passed correctly, t5551 verifies that
+a fetch succeeds when two required headers are passed, and that the fetch
+does not succeed when those headers are not passed.
 
-The first part already made it into `master`, this is the remainder.
+However, this test would also succeed if the configuration required only
+one header. As Apache's configuration is notoriously tricky (this
+developer frequently requires StackOverflow's help to understand Apache's
+documentation), especially when still supporting the 2.2 line, let's just
+really make sure that the test verifies what we want it to verify.
 
-This iteration is based on 'jk/submodule-c-credential' and therefore
-converted the original config-sanitizing patch into a test-only patch.
-This iteration also replaces the "ugly" comment with the explanation
-preferred by Junio.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t5551-http-fetch-smart.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-
-Johannes Schindelin (3):
-  tests: adjust the configuration for Apache 2.2
-  t5551: make the test for extra HTTP headers more robust
-  submodule: ensure that -c http.extraheader is heeded
-
- t/lib-httpd/apache.conf     | 16 ++++++++++++----
- t/t5551-http-fetch-smart.sh | 14 ++++++++++++--
- 2 files changed, 24 insertions(+), 6 deletions(-)
-
-Published-As: https://github.com/dscho/git/releases/tag/extra-http-headers-v8
+diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+index e44fe72..43b257e 100755
+--- a/t/t5551-http-fetch-smart.sh
++++ b/t/t5551-http-fetch-smart.sh
+@@ -283,7 +283,8 @@ test_expect_success EXPENSIVE 'http can handle enormous ref negotiation' '
+ '
+ 
+ test_expect_success 'custom http headers' '
+-	test_must_fail git fetch "$HTTPD_URL/smart_headers/repo.git" &&
++	test_must_fail git -c http.extraheader="x-magic-two: cadabra" \
++		fetch "$HTTPD_URL/smart_headers/repo.git" &&
+ 	git -c http.extraheader="x-magic-one: abra" \
+ 	    -c http.extraheader="x-magic-two: cadabra" \
+ 	    fetch "$HTTPD_URL/smart_headers/repo.git"
 -- 
-Interdiff vs v7:
-
- diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
- [no longer applies; skipped]
- diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
- index 29b34bb..018a83a 100644
- --- a/t/lib-httpd/apache.conf
- +++ b/t/lib-httpd/apache.conf
- @@ -133,8 +133,12 @@ RewriteRule ^/loop-redir/x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-(.*) /$1 [R=302
-  RewriteRule ^/loop-redir/(.*)$ /loop-redir/x-$1 [R=302]
-  
-  # Apache 2.2 does not understand <RequireAll>, so we use RewriteCond.
- -# And as RewriteCond unfortunately lacks "not equal" matching, we use this
- -# ugly trick to fail *unless* the two headers are present.
- +# And as RewriteCond does not allow testing for non-matches, we match
- +# the desired case first (one has abra, two has cadabra), and let it
- +# pass by marking the RewriteRule as [L], "last rule, do not process
- +# any other matching RewriteRules after this"), and then have another
- +# RewriteRule that matches all other cases and lets them fail via '[F]',
- +# "fail the request".
-  RewriteCond %{HTTP:x-magic-one} =abra
-  RewriteCond %{HTTP:x-magic-two} =cadabra
-  RewriteRule ^/smart_headers/.* - [L]
-
 2.8.2.463.g99156ee
