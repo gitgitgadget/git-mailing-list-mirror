@@ -1,85 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (May 2016, #02; Fri, 6)
-Date: Tue, 10 May 2016 00:20:31 -0700
-Message-ID: <xmqqy47iqszk.fsf@gitster.mtv.corp.google.com>
-References: <xmqqeg9e24ay.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1605100757410.4092@virtualbox>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 2/2] rev-parse: fix some options when executed from
+ subpath of main tree
+Date: Tue, 10 May 2016 03:38:34 -0400
+Message-ID: <CAPig+cQ9+=JcNguvuFN9GwHf1M1aLDNeyY8dJQLMkEGSXrU6Tg@mail.gmail.com>
+References: <1462541720-79553-1-git-send-email-rappazzo@gmail.com>
+	<1462541720-79553-3-git-send-email-rappazzo@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue May 10 09:20:39 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+To: Michael Rappazzo <rappazzo@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 10 09:38:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b01yA-0008GL-Ss
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 09:20:39 +0200
+	id 1b02Fq-0001hl-EU
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 09:38:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751252AbcEJHUf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 03:20:35 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52757 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751212AbcEJHUe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 03:20:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6BC5714CE7;
-	Tue, 10 May 2016 03:20:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5t+AkEj8hZ2kFaTpwXjLDcY9k8M=; b=IL4ixa
-	sD/LkjnndpJNvxUvRnrh2+YFUfvIOtHv3/cZYyuxOT3g/e7YGTxXJqs56frbbuW+
-	VEphcj6qO2vh6t0J9NjUlYdGLxAukNSdkpeQRIXThbDI4BfNMRnvkJmOX0PPdtSr
-	DJ6ZgVy6yv7rpR+2p3NRJ2hWNPKb203M4lfqU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rS/7xKJUtbpgOIFymK+nNeNLoVt5Bz7Y
-	9yNPfJ2L2/ssu+kOqCi888Xi4edaYsLe69xtIwR6QP44/J2uzUHxH7jCX268DFl+
-	HnyOCw89lY7KWvhA0JPu5ShsdHl33ak27+7mcEAapQQvBc1r1YXl8R2/uzZu5RuR
-	K0Ha5WbRSBs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 62C1C14CE6;
-	Tue, 10 May 2016 03:20:33 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D2A8414CE4;
-	Tue, 10 May 2016 03:20:32 -0400 (EDT)
-In-Reply-To: <alpine.DEB.2.20.1605100757410.4092@virtualbox> (Johannes
-	Schindelin's message of "Tue, 10 May 2016 07:59:35 +0200 (CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: AEAF501A-167F-11E6-AD23-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1751843AbcEJHih (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 03:38:37 -0400
+Received: from mail-ig0-f195.google.com ([209.85.213.195]:34764 "EHLO
+	mail-ig0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751041AbcEJHif (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 03:38:35 -0400
+Received: by mail-ig0-f195.google.com with SMTP id kj7so609714igb.1
+        for <git@vger.kernel.org>; Tue, 10 May 2016 00:38:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=S4GyFuNjsnBw02/y/kdw058QVBq9/OH7UD5CH/Tn5PY=;
+        b=TYrkcLwF/kQYKejrpZ/XWzbCSqJ9m2OeP/y+la5dr9Vw1E4eHYIblI3hj1i8zrLc1c
+         upg+f+GXZ73k30899Rf4P9zSZ7SLDC89c/drNxoey5Mkvp99ddm+0nXzZ+Qb12JlqzmS
+         VBvi/15IByqz8cTXAen8b1FgVRZLaG6YiO5oL2w86DmWoOx51RFloFyS4PyAVNVBRUHE
+         0HQpQQ05Vtnx3bWArCXCmWk8GpwVwD5rqO5Sbi+Dh7bvBx+VSS4FP7vU3rh91B904cUM
+         lxot1NY2x7fMOk0AUZ8G3gnliYiiv22OFLLEOa9KXH3EVTlKGWxbgoYMtScBvEiFNNrj
+         O4jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=S4GyFuNjsnBw02/y/kdw058QVBq9/OH7UD5CH/Tn5PY=;
+        b=RnAC2YFHuFDoelM2AMOkhv4vF/5mo4GUVftwLfPTj5QROyjGWmkQzh1CHmeErMG4lj
+         W5BEc81JVgfq48+vDOVxMBPHLeEO7SL4SG4BVmRCTDZkAcSSL7/JZNad1PX5+o+hK5ZA
+         Ne1PrX4Xy4mQoeENYeKNujI1eo3iJmmkfa/Lnea5M/i2r+FyyZJEGcoBsWunU5j6jL8N
+         6ZfDBHlcm0MbQaguklE4u7cDnnthsD8h88sdqBOuPbhXQvsbOLRuuNL2FdsCzpfji1l8
+         8Mg/hkQdMSNwrFgsn+jCqtmJpXqog7nkWuqN7WgjcWoMm0W/fdAullRAMiq8xbxiFhcO
+         Duzw==
+X-Gm-Message-State: AOPr4FWVD5WDkKzj6MaMXNYX76qrijGr0G6w+flKQ/7+RudHvEIFx5uFDJdOH6OaUHKRIAlMO+zG51d7O5mWJw==
+X-Received: by 10.50.6.15 with SMTP id w15mr16198581igw.91.1462865914170; Tue,
+ 10 May 2016 00:38:34 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Tue, 10 May 2016 00:38:34 -0700 (PDT)
+In-Reply-To: <1462541720-79553-3-git-send-email-rappazzo@gmail.com>
+X-Google-Sender-Auth: dZK5LBog6UldlbAnuBcsiRmEGj8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294113>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> On Fri, 6 May 2016, Junio C Hamano wrote:
+On Fri, May 6, 2016 at 9:35 AM, Michael Rappazzo <rappazzo@gmail.com> wrote:
+> Executing `git-rev-parse` with `--git-common-dir`, `--git-path <path>`,
+> or `--shared-index-path` from the root of the main worktree results in
+> a relative path to the git dir.
 >
->> * jc/fsck-nul-in-commit (2016-04-14) 2 commits
->>  - fsck: detect and warn a commit with embedded NUL
->>  - fsck_commit_buffer(): do not special case the last validation
->> 
->>  "git fsck" learned to catch NUL byte in a commit object as
->>  potential error and warn.
->> 
->>  What was the status of this one?  Ready to proceed?
+> When executed from a subdirectory of the main tree, it can incorrectly
+> return a path which starts 'sub/path/.git'.  Change this to return the
+> proper relative path to the git directory.
 >
-> I think this code looks fine. Maybe two comments on the test:
+> Related tests marked to expect failure are updated to expect success
 >
->>               test_must_fail git -c fsck.nulInCommit=error fsck 2>warn.1 &&
->>               git fsck 2>warn.2 &&
->>               grep nulInCommit warn.2
->
-> 1) warn.1 is not used. Maybe skip that redirection?
+> Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+> ---
+> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+> @@ -564,10 +564,13 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+>                 if (!strcmp(arg, "--git-path")) {
+> +                       struct strbuf sb = STRBUF_INIT;
+>                         if (!argv[i + 1])
+>                                 die("--git-path requires an argument");
+> -                       puts(git_path("%s", argv[i + 1]));
+> -                       i++;
+> +
+> +                       puts(relative_path(xstrfmt("%s/%s", get_git_dir(), argv[++i]),
+> +                               prefix, &sb));
 
-Or check it for expected result.  I don't know offhand which is better.
+This is leaking the result of xstrfmt().
 
-> 2) I was under the impression that we preferred test_i18ngrep over grep...
+> +                       strbuf_release(&sb);
+>                         continue;
+>                 }
+> @@ -811,7 +815,12 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+>                                 if (the_index.split_index) {
+>                                         const unsigned char *sha1 = the_index.split_index->base_sha1;
+> -                                       puts(git_path("sharedindex.%s", sha1_to_hex(sha1)));
+> +                                       struct strbuf sb = STRBUF_INIT;
+> +
+> +                                       puts(relative_path(
+> +                                               xstrfmt("%s/sharedindex.%s", get_git_dir(), sha1_to_hex(sha1)),
+> +                                               prefix, &sb));
 
-Only when the strings we are expecting are subject to i18n.  I
-somehow did not think your report() codepath has any i18n/l10n?
+Likewise leaking xstrfmt().
+
+> +                                       strbuf_release(&sb);
+>                                 }
+>                                 continue;
+>                         }
