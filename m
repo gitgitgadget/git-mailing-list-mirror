@@ -1,127 +1,74 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 5/6] t1500: avoid setting environment variables outside of tests
-Date: Tue, 10 May 2016 15:12:23 -0400
-Message-ID: <CAPig+cRR49iJOkaLfynkvch4zUHVkpcJwVah0rvaEOeR7aY2Nw@mail.gmail.com>
-References: <20160510052055.32924-1-sunshine@sunshineco.com>
-	<20160510052055.32924-6-sunshine@sunshineco.com>
-	<20160510183955.GA16211@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: diff --break-rewrites for just a part of a file
+Date: Tue, 10 May 2016 12:16:59 -0700
+Message-ID: <xmqq1t59pvtg.fsf@gitster.mtv.corp.google.com>
+References: <toea8jx3mt1.fsf@mimosa.sascha.silbe.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Michael Rappazzo <rappazzo@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 10 21:12:30 2016
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>
+To: Sascha Silbe <sascha-ml-reply-to-2016-2@silbe.org>
+X-From: git-owner@vger.kernel.org Tue May 10 21:17:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0D53-0003Iz-Vp
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 21:12:30 +0200
+	id 1b0D9e-0000M6-4m
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 21:17:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751855AbcEJTM1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 15:12:27 -0400
-Received: from mail-ig0-f194.google.com ([209.85.213.194]:36688 "EHLO
-	mail-ig0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751800AbcEJTMY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 15:12:24 -0400
-Received: by mail-ig0-f194.google.com with SMTP id c3so2137557igl.3
-        for <git@vger.kernel.org>; Tue, 10 May 2016 12:12:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=4hPxCq72Am9j6ko3rdjBPFRCoUVmj3zD+/d8wSUtYRw=;
-        b=ZohvhxjgWJbWnPYBO/VVJuJ9NG1d9kB2fjlqFvXtzF43HXXLOT1koePFS7CneNBPWw
-         tFAVIgkbUTKNOWXwvhCg27F4KZW5SfbX/7Vz88/hM+arcY4XEZifyTSXDvfxjnBPwm4h
-         hvXUCEwlHDZCbkn1lav4pKsfNFFQhGl0FFG/gxIlcN/Y8oAIS3g0iZdXs1SN+tUnWp7K
-         k/DTWHAk3Kert5AxmJMIxAH80pG0aB1orQySzMc2+yCPrM2XqvqzMujJiPuyfOtMfbYO
-         o89xSpu54nKotsa9MAcbnneA6QVpXwL3hxC03Ejld1lOBaeDVP7YIOHTTFEdXZ83okMa
-         LHJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=4hPxCq72Am9j6ko3rdjBPFRCoUVmj3zD+/d8wSUtYRw=;
-        b=fcJXzcSLH2PBZPxmrmBXoTSvpdDEIjatbNflceKTcstFIB4cD5KWibQsJNbp33sMt+
-         W8MBZKh4rUNo/SydwuGSirrfoc4jDZ9PDJxa5//SYfwsLjxmLzG8m9J7n/tnqv6MK8yO
-         uKZ8o7TcwAK08n2skpdGoJo972u/pPK/04qPxbHZQ1I48PKdT5t5iEnRaiPm+dCKYxt7
-         ElpnWPeYMB+1CDIykGkylJT/9hSgouNcfMDoTRPRu0zBp1vkG7Ho67GcrUFKdFAvoyL5
-         SpNo57YrjcJiw6/r4QArcapn/ZJYeLRSh3e/rLU6JH6qvBi5rwRAUsu6bGaM/bKxVuja
-         Vjqw==
-X-Gm-Message-State: AOPr4FVvVYHwKb+YwJVGKzCKFtKVgHIqmUfUfIgckRT/0simlByawuHJfMeWl9T6RhymR5w183nt9rbS/5zd+w==
-X-Received: by 10.50.36.9 with SMTP id m9mr19560557igj.91.1462907543744; Tue,
- 10 May 2016 12:12:23 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Tue, 10 May 2016 12:12:23 -0700 (PDT)
-In-Reply-To: <20160510183955.GA16211@sigill.intra.peff.net>
-X-Google-Sender-Auth: cyr8gWGJ_f5UhK-SAbTUNPW9tGs
+	id S1751406AbcEJTRK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 15:17:10 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51194 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750955AbcEJTRI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 15:17:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2D35919025;
+	Tue, 10 May 2016 15:17:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Crrq4K5B+V6+LpoKlPMGsiT8luY=; b=wDGQJl
+	EGW5yb2VEUQeqYjABPElPIXT3SNR3U99Cl7s8DNNVWyVdsU14jtPU1ST6V9hWYKF
+	DXIphKG7DnAw+k1CQvOrdq5avbmmvX2Akcknt0TIZOAffZRmTOI1OrLJHwh6Z5YR
+	i8NNjskF/oTNsvEz6YfVIZNbOOGt1Nd28AiWE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FEbxzvEn7BuX8g6/xvCgU6lSQk52WO34
+	YFHoZC/f37C1XY66J0iwcASc4c4MeQDnK7NqI7kEB1FD0TJqYPOWuVlYbavJDZno
+	X8kWGxdPdpASrciCge8QoHBSoheF7UpsyoU9uDZAKfeBkVaA2GnBmG2o8lxCvV2D
+	VGH0ijdLt/M=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2476F19024;
+	Tue, 10 May 2016 15:17:02 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8C81C19020;
+	Tue, 10 May 2016 15:17:01 -0400 (EDT)
+In-Reply-To: <toea8jx3mt1.fsf@mimosa.sascha.silbe.org> (Sascha Silbe's message
+	of "Tue, 10 May 2016 18:22:34 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C5F54EDC-16E3-11E6-819C-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294176>
 
-On Tue, May 10, 2016 at 2:39 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, May 10, 2016 at 01:20:54AM -0400, Eric Sunshine wrote:
->> diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
->> @@ -7,11 +7,13 @@ test_description='test git rev-parse'
->>       while :
->>       do
->>               case "$1" in
->>               -C) dir="-C $2"; shift; shift ;;
->>               -b) bare="$2"; shift; shift ;;
->> +             -g) env="GIT_DIR=$2; export GIT_DIR"; shift; shift ;;
->
-> This will expand $2 inside $env, which is later eval'd. So funny things
-> happen if there are spaces or metacharacters. It looks like you only use
-> it with short relative paths ("../repo.git", etc), which is OK, but this
-> would probably break badly if we ever used absolute paths.
->
-> I don't know if it's worth worrying about or not. The usual solution is
-> something like:
->
->   env_git_dir=$2
->   env='GIT_DIR=$env_git_dir; export GIT_DIR'
->   ...
->   eval "$env"
+Sascha Silbe <sascha-ml-reply-to-2016-2@silbe.org> writes:
 
-Makes sense; I wasn't quite happy with having $2 interpolated
-unquoted. Like you, though, I don't know if it's worth worrying
-about...
+> A combination of --break-rewrites and --inter-hunk-context that merges
+> changes with less than the given number of unchanged lines between them
+> into a single delete/insert change would be even better. But just
+> ignoring the unchanged header and footer of a file for --break-rewrites
+> would already go a long way.
 
->> @@ -36,6 +38,8 @@ test_rev_parse () {
->>       do
->>               expect="$1"
->>               test_expect_success "$name: $o" '
->> +                     test_when_finished "sane_unset GIT_DIR" &&
->> +                     eval $env &&
->
-> I was surprised not to see quoting around $env here, but it probably
-> doesn't matter (I think it may affect how some whitespace is treated,
-> but the contents of $env are pretty tame).
+That's interesting.  Break-rewrites as originally designed and
+implemented is only about "When the entire file been rewritten
+completely, it is easier to read when the diff did not pay any
+attention to those accidentally common lines".
 
-I flip-flopped on this one several times, quoting, and not quoting.
-Documentation for 'eval' says:
-
-    The args are read and concatenated together into a single
-    command.
-
-so, I ultimately left it unquoted, but don't feel strongly about it.
-
-> This will set up the sane_unset regardless of whether $env does
-> anything. Would it make more sense to stick the test_when_finished
-> inside $env? You could use regular unset then, too, since you know the
-> variable would be set.
-
-I didn't worry about it too much because the end result is effectively
-the same and, with all the 'case' arms being short one-liners, I think
-the code is a bit easier to read as-is; bundling 'test_when_finished'
-into the 'env' assignment line would probably require wrapping the
-line. I do like the improved encapsulation of your suggestion but
-don't otherwise feel strongly about it.
-
-Nevertheless, I can re-roll with these changes if you feel more
-strongly than I about it.
+We recently had a discussion on tweaking the logic used to merge and
+minimize hunks; the topic was about where to start the hunk boundary
+for maximum readability when the beginning and end of a hunk can be
+shifted around, but this smells like a similar issue.
