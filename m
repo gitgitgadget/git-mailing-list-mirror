@@ -1,114 +1,115 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Move test-* to t/helper/ subdirectory
-Date: Tue, 10 May 2016 13:23:29 -0700
-Message-ID: <xmqqbn4doe66.fsf@gitster.mtv.corp.google.com>
-References: <xmqqwpnkc9ca.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8A8vbp4-LrxoNX510Nme97EKfu0hBBs-LDRap1Z5=v3rA@mail.gmail.com>
-	<20160427101833.GA5536@lanh>
-	<xmqqy47z9geq.fsf@gitster.mtv.corp.google.com>
-	<20160501002852.GA3963@lanh> <20160501060009.GA30748@lanh>
-	<xmqqk2jcuzx7.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8B16SWsu5xTHdPcR4dz4_z+Br5EGGbJ+B5SChA=sWo-bg@mail.gmail.com>
-	<CACsJy8DtFLkfqSHRjFU4N9H9C3MfVOn-XEy4yOwneQaatvvDkQ@mail.gmail.com>
-	<xmqqposvxlpb.fsf@gitster.mtv.corp.google.com>
-	<20160510115856.GA1964@lanh>
+Subject: Re: [PATCH 2/3] perf: make the tests work in worktrees
+Date: Tue, 10 May 2016 13:28:17 -0700
+Message-ID: <xmqq7ff1ody6.fsf@gitster.mtv.corp.google.com>
+References: <cover.1462894344.git.johannes.schindelin@gmx.de>
+	<63972edcda32c3c927e956f2e96d5b61843d64f2.1462894344.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 10 22:23:39 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue May 10 22:28:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0EBu-0001tA-QS
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 22:23:39 +0200
+	id 1b0EGY-0007Rf-HH
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 22:28:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752669AbcEJUXe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 May 2016 16:23:34 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61885 "EHLO
+	id S1751466AbcEJU2W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 16:28:22 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63972 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752063AbcEJUXd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 May 2016 16:23:33 -0400
+	with ESMTP id S1751049AbcEJU2V (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 16:28:21 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 68DC3197FE;
-	Tue, 10 May 2016 16:23:32 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C0CD919A48;
+	Tue, 10 May 2016 16:28:19 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=q8A6Xy3pOlkM
-	8dTo0BVJPZ3kQoQ=; b=uaFmutfYO8wfVNP3MlPcY+YZpvXGlEMo+yqgeptRjoQZ
-	ZnImWoaZ765yixTGVa7iIB85wCJoauCJ9RRdNLuwO8MmdB02FKSzfUJ2XHi3UdbW
-	CZTcjXpgkwS7PIOm9rB5y4aDUUbYk/EY0UtGF+FHHXVT4R8bptb1nBdvctnSWPM=
+	:content-type; s=sasl; bh=GoHsgM3AJuGozc3eFp9x2hG0rqs=; b=PsnEfJ
+	24lZtk2a3ZcQMyH8ahKxVSY802JWwmXUaIAALw37IHgICqZDaAazaUH5mols/AOQ
+	drC9D0XPoR0CvsZeSF853bnCOH+mL7EyRoGvGj2NsRWBrqPhf7ti2c+qDxlBdmPG
+	7mI/fP2c+R4Zz0BvciBCQ5pd7dMQTy3iue2MY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=AAIycW
-	vW0m7D3OjrbVg/Toz3Eo+mwEvpxknoJ1KdkMxGfRc7q/yOSoEuvkxJRcnKxF5mzR
-	OVDdwnp2h485ACHMzHePJ9XqRgSUV1CXu9y+m6c/zktcW9VTW0ChU0C+cKY+hi9X
-	2dGfx9miJ7JMJauN4ZdH79Q/rFkdvnxDQ8lOk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5E958197FD;
-	Tue, 10 May 2016 16:23:32 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=GPb0LNGkgEiE9FvGe7nra+mNEpM8Yxeu
+	REGxWIfioHwN87QDOutlRLnYR420lA1iwqK8v+5DpZRbwEKs4IaGD5sKGJGj/svt
+	ZkOJExXKubx7Hyn+WBEWBTDZD3SEOZMeRC0JKqW6Av3uwy248YL1QjSdsAxanB8l
+	n3XxSxAxqJs=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B73D319A47;
+	Tue, 10 May 2016 16:28:19 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DC528197FC;
-	Tue, 10 May 2016 16:23:31 -0400 (EDT)
-In-Reply-To: <20160510115856.GA1964@lanh> (Duy Nguyen's message of "Tue, 10
-	May 2016 18:58:56 +0700")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 37DE219A46;
+	Tue, 10 May 2016 16:28:19 -0400 (EDT)
+In-Reply-To: <63972edcda32c3c927e956f2e96d5b61843d64f2.1462894344.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Tue, 10 May 2016 17:42:00 +0200
+	(CEST)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 105FB2EC-16ED-11E6-A3FD-D05A70183E34-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: BBA20E5C-16ED-11E6-AEE7-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294185>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> Or a simpler, more-to-the-point patch like this?
-
-I am OK with that, even though I find it a bit too "cute" for my
-taste.
-
-
-
-> -- 8< --
-> Subject: [PATCH] wrap-for-bin.sh: regenerate bin-wrappers when switch=
-ing branches
+> This patch makes perf-lib.sh more robust so that it can run correctly
+> even inside a worktree. For example, it assumed that $GIT_DIR/objects is
+> the objects directory (which is not the case for worktrees) and it used
+> the commondir file verbatim, even if it contained a relative path.
 >
-> Commit e6e7530 (test helpers: move test-* to t/helper/ subdirectory -
-> 2016-04-13) moves test-* to t/helper. However because bin-wrappers/*
-> only depend on wrap-for-bin.sh, when switching between a branch that =
-has
-> this commit and one that does not, bin-wrappers/* may not be regenera=
-ted
-> and point to the old/outdated test programs.
->
-> This commit makes a non-functional change in wrap-for-bin.sh, just
-> enough for 'make' to detect and re-execute wrap-for-bin.sh. When
-> switching between a branch containing both this commit and e6e7530 an=
-d
-> one containing neither, bin-wrappers/*, we should get fresh bin-wrapp=
-ers/*.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->  wrap-for-bin.sh | 1 +
->  1 file changed, 1 insertion(+)
+>  t/perf/perf-lib.sh | 14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
 >
-> diff --git a/wrap-for-bin.sh b/wrap-for-bin.sh
-> index db0ec6a..22b6e49 100644
-> --- a/wrap-for-bin.sh
-> +++ b/wrap-for-bin.sh
-> @@ -17,6 +17,7 @@ fi
->  GITPERLLIB=3D'@@BUILD_DIR@@/perl/blib/lib'"${GITPERLLIB:+:$GITPERLLI=
-B}"
->  GIT_TEXTDOMAINDIR=3D'@@BUILD_DIR@@/po/build/locale'
->  PATH=3D'@@BUILD_DIR@@/bin-wrappers:'"$PATH"
-> +
->  export GIT_EXEC_PATH GITPERLLIB PATH GIT_TEXTDOMAINDIR
-> =20
->  if test -n "$GIT_TEST_GDB"
+> diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
+> index e9020d0..e5682f7 100644
+> --- a/t/perf/perf-lib.sh
+> +++ b/t/perf/perf-lib.sh
+> @@ -80,22 +80,22 @@ test_perf_create_repo_from () {
+>  	error "bug in the test script: not 2 parameters to test-create-repo"
+>  	repo="$1"
+>  	source="$2"
+> -	source_git=$source/$(cd "$source" && git rev-parse --git-dir)
+> +	source_git="$(cd "$source" && git rev-parse --git-dir)"
+> +	objects_dir="$(git rev-parse --git-path objects)"
+
+I do not quite understand this change.  Whose object_dir is this
+looking into?  The original wanted to peek into $source/.git/objects/
+which may have been wrong when $source is borrowing from some other
+repository, but the new invocation of rev-parse --git-path objects
+is done inside what repository?  It does not seem to pay any attention
+to $source and the change below just copies from there into $repo.
+
+Confused.
+
+>  	mkdir -p "$repo/.git"
+>  	(
+> -		cd "$repo/.git" &&
+> -		{ cp -Rl "$source_git/objects" . 2>/dev/null ||
+> -			cp -R "$source_git/objects" .; } &&
+> +		{ cp -Rl "$objects_dir" "$repo/.git/" 2>/dev/null ||
+> +			cp -R "$objects_dir" "$repo/.git/"; } &&
+>  		for stuff in "$source_git"/*; do
+>  			case "$stuff" in
+> -				*/objects|*/hooks|*/config)
+> +				*/objects|*/hooks|*/config|*/commondir)
+>  					;;
+>  				*)
+> -					cp -R "$stuff" . || exit 1
+> +					cp -R "$stuff" "$repo/.git/" || exit 1
+>  					;;
+>  			esac
+>  		done &&
+> -		cd .. &&
+> +		cd "$repo" &&
+>  		git init -q &&
+>  		if test_have_prereq MINGW
+>  		then
