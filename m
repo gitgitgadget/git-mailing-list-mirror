@@ -1,116 +1,85 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/6] t1500: avoid setting environment variables outside of tests
-Date: Tue, 10 May 2016 13:07:27 -0700
-Message-ID: <xmqqk2j1oeww.fsf@gitster.mtv.corp.google.com>
-References: <20160510052055.32924-1-sunshine@sunshineco.com>
-	<20160510052055.32924-6-sunshine@sunshineco.com>
-	<20160510183955.GA16211@sigill.intra.peff.net>
-	<CAPig+cRR49iJOkaLfynkvch4zUHVkpcJwVah0rvaEOeR7aY2Nw@mail.gmail.com>
-	<CAPig+cTtU9_3=2eu0boaPbXKXh2gngEe7byDpJuSFAR4rcbrMA@mail.gmail.com>
+Subject: Re: wishlist; unify behavior while cloning non-bare repos over http to be in line with ssh/local
+Date: Tue, 10 May 2016 13:11:36 -0700
+Message-ID: <xmqqfutpoepz.fsf@gitster.mtv.corp.google.com>
+References: <20160506131855.GD7907@onerussian.com>
+	<20160510190652.GI7907@onerussian.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Michael Rappazzo <rappazzo@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue May 10 22:07:36 2016
+Cc: Git Gurus hangout <git@vger.kernel.org>,
+	Benjamin Poldrack <benjaminpoldrack@gmail.com>,
+	Michael Hanke <michael.hanke@gmail.com>
+To: Yaroslav Halchenko <yoh@onerussian.com>
+X-From: git-owner@vger.kernel.org Tue May 10 22:12:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0DwN-0000Eo-Og
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 22:07:36 +0200
+	id 1b0E0d-0005Pb-NP
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 22:12:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752557AbcEJUHc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 16:07:32 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58997 "EHLO
+	id S1753427AbcEJULm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 16:11:42 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51058 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752465AbcEJUHb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 16:07:31 -0400
+	with ESMTP id S1753396AbcEJULk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 16:11:40 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C2660196E6;
-	Tue, 10 May 2016 16:07:29 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id EDC6D1961F;
+	Tue, 10 May 2016 16:11:38 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hm0f/pWq3sVr4r1n3jpXWp2+wac=; b=S8EM+M
-	Jh6MarfyGGz4h1WivwnCaOT4jOPKSoj3J4/X4kTjAFQQjByAqogV1Z/KrAjrLX6u
-	gQbveHuAlQpN3kF4xC/FDqi63ukppso2Qahf1Pb3Rx/VEQzI9BgT+pS43ir/UC95
-	iXojtel0hQOXaD1dcc1TivMUrBHCKY9Jf4zQk=
+	:content-type; s=sasl; bh=Sof6fWsAZULI6ZG3/NbDwNvgxFg=; b=m0UfTA
+	Tb2Uyr0QTC/b7PE/GBomTP9ZdbJA3XAsLUyRdCBRuhuYONvQjcKcM3N8Xt622uzu
+	bO37e5IfOxJQ3wGvMe7LGK5CKGMj776/CXGUb15b1xHzZeeI0e/vMYrUEHXdojVE
+	ueHpmH1pVOKT2Ue6lmrVXzziy6132rKYWMjGM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JUyd1nUxd2JVhXdpTfF8kZ5IlCAB/DzM
-	mIrHoZOJrr95gnPzS/jpVSdbnbjtvj+eu7xYuqCGUgk15UHJYf3f2yt25/VBLww8
-	U3M9+OXTtH7Ax+a6CS9urEH4/uCQd4ZgvG36slMEh9lrm/PqNn5JU9s4P2/KFcWb
-	0FfL5AlvLgY=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B767E196E4;
-	Tue, 10 May 2016 16:07:29 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=CpwXl95VglPFXShRbKKY3+oSbyWmTCKY
+	xEEYTi4V3hvSpSZvQD38e4Kka132g8ROyHeJtiuAx5swpmMhACTkYYmsSELc+Gd0
+	h7Lre/SlenmZ/Wntt5nBx7EY45HNoBgjajr+oyib0EYzims1peSH+LkQXZd/0ntm
+	S8y/4vKdRzE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E54041961E;
+	Tue, 10 May 2016 16:11:38 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 39419196E3;
-	Tue, 10 May 2016 16:07:29 -0400 (EDT)
-In-Reply-To: <CAPig+cTtU9_3=2eu0boaPbXKXh2gngEe7byDpJuSFAR4rcbrMA@mail.gmail.com>
-	(Eric Sunshine's message of "Tue, 10 May 2016 15:48:56 -0400")
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6F9BE1961D;
+	Tue, 10 May 2016 16:11:38 -0400 (EDT)
+In-Reply-To: <20160510190652.GI7907@onerussian.com> (Yaroslav Halchenko's
+	message of "Tue, 10 May 2016 15:06:52 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D29E2594-16EA-11E6-A3F2-9A9645017442-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 6720CAF0-16EB-11E6-8D60-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294183>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Yaroslav Halchenko <yoh@onerussian.com> writes:
 
-> On Tue, May 10, 2016 at 3:12 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Tue, May 10, 2016 at 2:39 PM, Jeff King <peff@peff.net> wrote:
->>> On Tue, May 10, 2016 at 01:20:54AM -0400, Eric Sunshine wrote:
->>>>       while :
->>>>       do
->>>>               case "$1" in
->>>>               -C) dir="-C $2"; shift; shift ;;
->>>>               -b) bare="$2"; shift; shift ;;
->>>> +             -g) env="GIT_DIR=$2; export GIT_DIR"; shift; shift ;;
->>>> @@ -36,6 +38,8 @@ test_rev_parse () {
->>>>       do
->>>>               expect="$1"
->>>>               test_expect_success "$name: $o" '
->>>> +                     test_when_finished "sane_unset GIT_DIR" &&
->>>> +                     eval $env &&
->>>
->>> This will set up the sane_unset regardless of whether $env does
->>> anything. Would it make more sense to stick the test_when_finished
->>> inside $env? You could use regular unset then, too, since you know the
->>> variable would be set.
->>
->> I didn't worry about it too much because the end result is effectively
->> the same and, with all the 'case' arms being short one-liners, I think
->> the code is a bit easier to read as-is; bundling 'test_when_finished'
->> into the 'env' assignment line would probably require wrapping the
->> line. I do like the improved encapsulation of your suggestion but
->> don't otherwise feel strongly about it.
+> On Fri, 06 May 2016, Yaroslav Halchenko wrote:
 >
-> Actually, I think we can have improved encapsulation and maintain
-> readability like this:
+>> Dear Git Folks,
 >
->     case "$1" in
->     ...
->     -g) env="$2"; shift;  shift ;;
->     ...
->     esac
->
->     ...
->     test_expect_success "..." '
->         if test -n "$env"
->         do
->             test_when_finished "unset GIT_DIR"
->             GIT_DIR="$env"
->             export GIT_DIR
->         fi
->         ...
->     '
+>> Originally this issue was mentioned in previous thread [1], and I have decided
+>> to bring it into a separate thread.  ATM there is a dichotomy in git behavior
+>> between cloning non-bare repos:  if I clone over ssh or just locally by
+>> providing url without trailing /.git, git senses for /.git and works just fine
+>> with ssh or local repositories, but fails for "dummy" http ones, the demo
+>> script is here [2] which produces output listed below.  From which you can see
+>> that  cloning using http URL to the repository without /.git fails (git version
+>> 2.8.1, Debian).  As it was noted in [1], concern could have been to not
+>> traverse website since could lead to dangerous places.  But .git is under
+>> originating url directory, as well as info/ or HEAD or any other object
+>> accessed by git, so IMHO this concern is not a concern.
 
-That's even better.  Thanks.
+I am afraid that the reason why you saw no response is primarily
+because nobody is interested in extending dumb commit-walker HTTP
+transport after the world has largely moved on and abandoned it.
+
+The necessary update to the client might as simple as using
+$GIVEN_URL/.git/ and attempting the request again after seeing the
+probe for $GIVEN_URL/info/refs fails.
