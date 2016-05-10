@@ -1,98 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] perf: let's disable symlinks on Windows
-Date: Tue, 10 May 2016 12:51:53 -0700
-Message-ID: <xmqqoa8dofmu.fsf@gitster.mtv.corp.google.com>
-References: <cover.1462894344.git.johannes.schindelin@gmx.de>
-	<alpine.DEB.2.20.1605101738390.4092@virtualbox>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 5/6] t1500: avoid setting environment variables outside of tests
+Date: Tue, 10 May 2016 15:59:42 -0400
+Message-ID: <CAPig+cQ0jEt10p--K8jNrFBi21PkmFXuHpUPewuOWrpx+3Ma7g@mail.gmail.com>
+References: <20160510052055.32924-1-sunshine@sunshineco.com>
+	<20160510052055.32924-6-sunshine@sunshineco.com>
+	<20160510183955.GA16211@sigill.intra.peff.net>
+	<CAPig+cRR49iJOkaLfynkvch4zUHVkpcJwVah0rvaEOeR7aY2Nw@mail.gmail.com>
+	<CAPig+cTtU9_3=2eu0boaPbXKXh2gngEe7byDpJuSFAR4rcbrMA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue May 10 21:52:02 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Michael Rappazzo <rappazzo@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 10 21:59:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0DhJ-0007LJ-Iv
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 21:52:01 +0200
+	id 1b0Doq-00086E-8w
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 21:59:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751590AbcEJTv6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 15:51:58 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63947 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751288AbcEJTv5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 15:51:57 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EE5C5194E3;
-	Tue, 10 May 2016 15:51:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UX14ahMCvZEeySm7lKxhrwjLG5E=; b=nwliyU
-	3U+gQszWw/3AvyuhaabnkOHJS+wJfE6qATLJU8PdenpyjsqdpUsDIsev65Epvr3/
-	5t9U1PNXC4oa/6WdkcHWDqewCpjPUnAqUoXH/Ae6v5uovFQ8KynSQFm1SR7Or0jL
-	a2Sk2qUEBAeBd9zdAHLm/U0pAV1LLbmDzcjKs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aAHhY38eIxttzrkbuS2HPe3rJ65BziQs
-	4zEvtJNW22TARTZfLlTAEqSTtrMnceMBJZHV4Etsj/tqjyGKf6VW6ZOFS2SmYq1m
-	04iOyCjp8rFgoxkDKqSsYz2GPx1OdtulHJHnEG0x9/vMDmGa4x3UjeAbnsiZ1sTr
-	X7a/TsazI0Q=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E6474194E2;
-	Tue, 10 May 2016 15:51:55 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 61909194E0;
-	Tue, 10 May 2016 15:51:55 -0400 (EDT)
-In-Reply-To: <alpine.DEB.2.20.1605101738390.4092@virtualbox> (Johannes
-	Schindelin's message of "Tue, 10 May 2016 17:41:53 +0200 (CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A5F866B4-16E8-11E6-8271-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752253AbcEJT7o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 15:59:44 -0400
+Received: from mail-ig0-f195.google.com ([209.85.213.195]:35310 "EHLO
+	mail-ig0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751645AbcEJT7n (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 15:59:43 -0400
+Received: by mail-ig0-f195.google.com with SMTP id jn6so2256418igb.2
+        for <git@vger.kernel.org>; Tue, 10 May 2016 12:59:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=hbeIYySE8dTT4+IULKwLI0zyUzgl0UYrh8OeFtT8s3Q=;
+        b=Q+7Hz5KqsYZbJ+PEHzdxtJ6iC/qdTEwFFqT8E2TaK/IR8SzoiPFYMmrVfX0SPe0USr
+         DfVNAsxIA/85tH3F1RI4SuOAsJaxK7jyLjmrtwMce9rTH4Enxr+2mwuWGulLAcTc4xVC
+         LGZWDz3EviXKmcYAHaWiX0qUTuW8M2o2RBo4At3B6gu9mDcxgBia2F/IWW7BoP4SvJAt
+         K2YxTRxOww+2EROupb3TweiVSe9EFsmMZPGFbgLNIjputsCi/P7sq9zi8FhzK3EMVAxN
+         ic5tJMXTttf+IF+NPMLYRlQTMIjE2SYb43wWF7gpYZdbt6Dr+dyrlyzvrUx7YD/FntUL
+         QVjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=hbeIYySE8dTT4+IULKwLI0zyUzgl0UYrh8OeFtT8s3Q=;
+        b=cREGACoyJQ6YKhTPzzW+nzWVDveb+QQLBRD4S6j2m/sReB5QRhp6vuBYjiV/3MMqJH
+         x+zkbIndgcNnRUys1mCeywDE0YSrNk/8BPTk0YRpq8udv94pVjfN4927qd14JEFD/Vff
+         Jpbnd8D5xKCvnBdMU34HRfJ0g7Buuu2+lubUZ3oRFLvzGM0bhzDuEF4KgR+DV47TOQOl
+         RlaHgMmBGv/c4LSZfljJSVvHOqfB4R4xlh8IcynKlwUR4u2HdzoQeDnkZcKBNmAtThXX
+         bH8xpkVyFqyAbzU1DWlPQgW4QNLTX1+ck0F14ShazPr7V50tUl6gyWH1ts5f+XyRWIx/
+         UBzg==
+X-Gm-Message-State: AOPr4FUmJciMXMbBC+SkXnHyyg9XU2sWY2TPLnWaydo7v3JOZsy9uZQwbdzfAs/yqbyiM9e81jSG+QqhTWlCPg==
+X-Received: by 10.50.3.105 with SMTP id b9mr18969178igb.17.1462910382948; Tue,
+ 10 May 2016 12:59:42 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Tue, 10 May 2016 12:59:42 -0700 (PDT)
+In-Reply-To: <CAPig+cTtU9_3=2eu0boaPbXKXh2gngEe7byDpJuSFAR4rcbrMA@mail.gmail.com>
+X-Google-Sender-Auth: 4i8_sQa4T0U7-T9IDjGkV0CQYi0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294181>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Tue, May 10, 2016 at 3:48 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> Actually, I think we can have improved encapsulation and maintain
+> readability like this:
+>
+>     case "$1" in
+>     ...
+>     -g) env="$2"; shift;  shift ;;
+>     ...
+>     esac
+>
+>     ...
+>     test_expect_success "..." '
+>         if test -n "$env"
+>         do
+>             test_when_finished "unset GIT_DIR"
+>             GIT_DIR="$env"
+>             export GIT_DIR
+>         fi
+>         ...
+>     '
 
-> In Git for Windows' SDK, Git's source code is always checked out
-> with symlinks disabled. The reason is that POSIX symlinks have no
-> accurate equivalent on Windows [*1*]. More precisely, though, it is
-> not just Git's source code but *all* source code that is checked
-> out with symlinks disabled: core.symlinks is set to false in the
-> system-wide gitconfig.
->
-> Since the perf tests are run with the system-wide gitconfig *disabled*,
-> we have to make sure that the Git repository is initialized correctly
-> by configuring core.symlinks explicitly.
-
-Is MINGW the right prerequisite to use here, or is SIMLINKS more
-appropriate?
-
->
-> Footnote *1*:
-> https://github.com/git-for-windows/git/wiki/Symbolic-Links
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  t/perf/perf-lib.sh | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-> index 5cf74ed..e9020d0 100644
-> --- a/t/perf/perf-lib.sh
-> +++ b/t/perf/perf-lib.sh
-> @@ -97,6 +97,10 @@ test_perf_create_repo_from () {
->  		done &&
->  		cd .. &&
->  		git init -q &&
-> +		if test_have_prereq MINGW
-> +		then
-> +			git config core.symlinks false
-> +		fi &&
->  		mv .git/hooks .git/hooks-disabled 2>/dev/null
->  	) || error "failed to copy repository '$source' to '$repo'"
->  }
+At this point, I'd also rename 'env' to 'gitdir' to be more meaningful.
