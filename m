@@ -1,93 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 5/6] t1500: avoid setting environment variables outside
- of tests
-Date: Tue, 10 May 2016 14:39:55 -0400
-Message-ID: <20160510183955.GA16211@sigill.intra.peff.net>
-References: <20160510052055.32924-1-sunshine@sunshineco.com>
- <20160510052055.32924-6-sunshine@sunshineco.com>
+From: Yaroslav Halchenko <yoh@onerussian.com>
+Subject: Re: wishlist; unify behavior while cloning non-bare repos over http
+ to be in line with ssh/local
+Date: Tue, 10 May 2016 15:06:52 -0400
+Message-ID: <20160510190652.GI7907@onerussian.com>
+References: <20160506131855.GD7907@onerussian.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Michael Rappazzo <rappazzo@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue May 10 20:40:06 2016
+Cc: Benjamin Poldrack <benjaminpoldrack@gmail.com>,
+	Michael Hanke <michael.hanke@gmail.com>
+To: Git Gurus hangout <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 10 21:07:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0CZh-0007Wx-JE
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 20:40:05 +0200
+	id 1b0Czs-0005X5-UQ
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 21:07:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751496AbcEJSkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 14:40:00 -0400
-Received: from cloud.peff.net ([50.56.180.127]:37163 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751473AbcEJSj7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 14:39:59 -0400
-Received: (qmail 20843 invoked by uid 102); 10 May 2016 18:39:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 10 May 2016 14:39:58 -0400
-Received: (qmail 32548 invoked by uid 107); 10 May 2016 18:40:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 10 May 2016 14:40:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 May 2016 14:39:55 -0400
+	id S1751715AbcEJTG7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 15:06:59 -0400
+Received: from washoe.dartmouth.edu ([129.170.30.229]:36279 "EHLO
+	smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751569AbcEJTG6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 15:06:58 -0400
+Received: from smtp.onerussian.com ([192.168.100.6] helo=washoe.onerussian.com)
+	by smtp.onerussian.com with esmtps (TLS1.2:RSA_AES_128_CBC_SHA1:128)
+	(Exim 4.80)
+	(envelope-from <yoh@onerussian.com>)
+	id 1b0Czc-0003Uy-L4; Tue, 10 May 2016 15:06:52 -0400
+Received: from yoh by washoe.onerussian.com with local (Exim 4.84)
+	(envelope-from <yoh@onerussian.com>)
+	id 1b0Czc-0003Ut-Ft; Tue, 10 May 2016 15:06:52 -0400
 Content-Disposition: inline
-In-Reply-To: <20160510052055.32924-6-sunshine@sunshineco.com>
+In-Reply-To: <20160506131855.GD7907@onerussian.com>
+X-URL: http://www.onerussian.com
+X-Image-Url: http://www.onerussian.com/img/yoh.png
+X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
+X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-SA-Exim-Connect-IP: 192.168.100.6
+X-SA-Exim-Rcpt-To: git@vger.kernel.org, benjaminpoldrack@gmail.com, michael.hanke@gmail.com
+X-SA-Exim-Mail-From: yoh@onerussian.com
+X-SA-Exim-Scanned: No (on smtp.onerussian.com); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294173>
 
-On Tue, May 10, 2016 at 01:20:54AM -0400, Eric Sunshine wrote:
 
-> diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
-> index c058aa4..525e6d3 100755
-> --- a/t/t1500-rev-parse.sh
-> +++ b/t/t1500-rev-parse.sh
-> @@ -7,11 +7,13 @@ test_description='test git rev-parse'
->  test_rev_parse () {
->  	dir=
->  	bare=
-> +	env=
->  	while :
->  	do
->  		case "$1" in
->  		-C) dir="-C $2"; shift; shift ;;
->  		-b) bare="$2"; shift; shift ;;
-> +		-g) env="GIT_DIR=$2; export GIT_DIR"; shift; shift ;;
+On Fri, 06 May 2016, Yaroslav Halchenko wrote:
 
-This will expand $2 inside $env, which is later eval'd. So funny things
-happen if there are spaces or metacharacters. It looks like you only use
-it with short relative paths ("../repo.git", etc), which is OK, but this
-would probably break badly if we ever used absolute paths.
+> Dear Git Folks,
 
-I don't know if it's worth worrying about or not. The usual solution is
-something like:
+> Originally this issue was mentioned in previous thread [1], and I have decided
+> to bring it into a separate thread.  ATM there is a dichotomy in git behavior
+> between cloning non-bare repos:  if I clone over ssh or just locally by
+> providing url without trailing /.git, git senses for /.git and works just fine
+> with ssh or local repositories, but fails for "dummy" http ones, the demo
+> script is here [2] which produces output listed below.  From which you can see
+> that  cloning using http URL to the repository without /.git fails (git version
+> 2.8.1, Debian).  As it was noted in [1], concern could have been to not
+> traverse website since could lead to dangerous places.  But .git is under
+> originating url directory, as well as info/ or HEAD or any other object
+> accessed by git, so IMHO this concern is not a concern.
+> ...
 
-  env_git_dir=$2
-  env='GIT_DIR=$env_git_dir; export GIT_DIR'
-  ...
-  eval "$env"
+If there is a better venue (bug tracker?) to spark the interest
+and discussion, please let me know ;)
 
-> @@ -36,6 +38,8 @@ test_rev_parse () {
->  	do
->  		expect="$1"
->  		test_expect_success "$name: $o" '
-> +			test_when_finished "sane_unset GIT_DIR" &&
-> +			eval $env &&
-
-I was surprised not to see quoting around $env here, but it probably
-doesn't matter (I think it may affect how some whitespace is treated,
-but the contents of $env are pretty tame).
-
-This will set up the sane_unset regardless of whether $env does
-anything. Would it make more sense to stick the test_when_finished
-inside $env? You could use regular unset then, too, since you know the
-variable would be set.
-
--Peff
+-- 
+Yaroslav O. Halchenko
+Center for Open Neuroscience     http://centerforopenneuroscience.org
+Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
+Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
+WWW:   http://www.linkedin.com/in/yarik        
